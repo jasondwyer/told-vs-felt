@@ -1,0 +1,14 @@
+# External tool clone (see CLAUDE.md setup instructions) — not vendored here
+/jlens-qwen36/
+
+# Generated artifacts (lens fits, fingerprints, logs)
+/data/*
+!/data/.gitkeep
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# macOS
+.DS_Store
