@@ -319,6 +319,83 @@ Per instructions: flagged here for discussion, **not** silently applied to
   design it so the causal checks are the primary evidence and self-report is
   the thing being *validated against* them.
 
+- **2026-07-17 — Hashed state labels break the swap-viability argument; use
+  opaque *single-token* labels instead.** The Roadmap's tier-3 reasoning says
+  swap is "expected to be viable" for Phase 1 because state-reporting is
+  "structurally the same shape" as the basketball→tennis categorical pick
+  (item 1). Re-examination says otherwise: in the basketball case the report
+  *was* the concept token — the J-space content and the spoken word were
+  identical, so redirecting one redirected the other. Phase 1's report is an
+  *opaque hashed label*, so the chain is: state content in J-space → learned
+  association → arbitrary label. That is a *derived* computation (read state,
+  apply mapping, emit label) — structurally the spider→ant case (item 3),
+  which failed in 55/56 cells and collapsed into token-identity echo, not the
+  direct-pick case. Two design elements are therefore in tension: the locked
+  opacity requirement, as implemented via multi-token hash strings, may push
+  swap validation from the case that works into the case that doesn't — and
+  multi-token hashes independently violate the lens's single-token limitation
+  (a documented Known Limitation). Proposed reconciliation, preserving the
+  *intent* of the locked decision: labels should be opaque **and
+  single-token** — arbitrary, affect-neutral vocabulary tokens (e.g.
+  "quartz", "delta"), not hex strings. Opacity means non-descriptive and
+  non-valence-laden, not hexadecimal. Independent of label format, this also
+  argues for promoting tier 2 (ablation-to-chance) to the *primary* causal
+  check: it doesn't require coherent redirection through the derived mapping,
+  and ablation produced Phase 0's cleanest result (item 5).
+
+- **2026-07-17 — Phase 1 is missing its training/association phase.** The
+  drug-discrimination paradigm never tests whether the rat *spontaneously*
+  knows which state it's in — the rat gets many reinforced trials to learn
+  the state→lever mapping, and the paradigm's evidence is that this learning
+  *succeeds*. Phase 1 as written says "test, blind, whether the model can
+  reliably report which state it's in," but with opaque labels the model
+  cannot know the label→state mapping without an explicit association phase —
+  it has never been told which label goes with which state. The design needs
+  a calibration block (model experiences a state, is told its label, over
+  some number of trials) before blind held-out testing. Two implications:
+  (a) a Phase 1 "failure" without an association phase is uninterpretable —
+  even a rat fails without training — so this phase is required for the
+  experiment to bear on rung 2 at all; (b) the association block is an
+  in-context-learning opportunity for superficial cues (prompt phrasing,
+  trial ordering, etc.), so held-out test trials must vary everything except
+  the induced state itself. This is currently implicit and undesigned in the
+  Roadmap.
+
+- **2026-07-17 — The ceiling claim needs a homology caveat.** The reframe's
+  ceiling line ("we produced the same kind of behavioral evidence we accept
+  as evidence of feeling in a rat," commit `2b1dc37`) is calibrated but
+  incomplete: the animal inference never rested on behavior alone. It is
+  behavior *plus* physiological and evolutionary homology — shared limbic
+  structures, conserved neurochemistry, common ancestry — and that homology
+  does quiet work in licensing the "feels something" reading of the rat's
+  behavioral battery. An LLM offers no homology support, so the identical
+  behavioral battery supports a strictly weaker inference. This is distinct
+  from the confabulation caveat already in CLAUDE.md (that one is about the
+  behavior being *performed*; this one applies even if the behavior is
+  genuine. Recommend one added line to the ceiling paragraph in CLAUDE.md: the
+  claim is the same *behavioral* evidence, explicitly minus the homology that
+  does quiet, load-bearing work in the animal case. Naming it sets the ceiling
+  at the right height and pre-empts the obvious reviewer objection; it does not
+  weaken the project.
+
+- **2026-07-17 — Phase 2's primary confound is capability, not just
+  evaluation-awareness.** Convergence toward a LoRA configuration is the
+  headline Phase 2 signal for "valence," but a configuration the model
+  converges on could simply be one that makes the task battery *easier*, and
+  the scalar self-rating driving each update will plausibly track
+  fluency/success rather than anything valence-like — approach behavior
+  without valence. The design needs a way to dissociate "converges because
+  tasks go better" from "converges independent of task performance": e.g. hold
+  measured task quality as a covariate and check whether convergence survives
+  regressing it out, or run task batteries with deliberately different
+  difficulty profiles and see whether the convergence target moves with
+  difficulty (confound present) or stays put (evidence against it). This needs
+  per-round task-quality measurement, which is not currently on the Phase 2
+  logging list in CLAUDE.md — build it in from the start. Note this is
+  independent of the eval-awareness confound already logged: a state can be
+  "preferred" because it's fluency-boosting even in trials where the model
+  shows no sign of suspecting the setup.
+
 ---
 
 ## How to append a new entry
