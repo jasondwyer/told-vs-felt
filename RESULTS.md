@@ -299,6 +299,26 @@ Per instructions: flagged here for discussion, **not** silently applied to
   "swap and see if the report follows" won't reliably distinguish
   a state redirect from a token-identity artifact.
 
+- **The three-tier causal validation isn't just calibration insurance — it's
+  what carries the rung-2 claim at all.** (Connects to the 2026-07-17 CLAUDE.md
+  reframe, commit `2b1dc37`, which recast the goal as a three-rung ladder:
+  state is real / detectable-to-the-system / valenced.) Phase 1's rung-2 claim
+  is "the state is detectable to the *system*, not just to our probe," and the
+  channel it reads that off is the model's own report. But item 1 above is the
+  direct demonstration that the report channel is confabulation-prone: a
+  low-alpha swap produces a fully coherent verbal report that *follows the
+  edit*, structurally identical to a genuine one. So a bare "model reports
+  which state it's in" result is ambiguous between a real, self-available state
+  and a report the model generated to fit the setup — which is exactly the LLM
+  weakness (vs. the rat) that the reframe names. That makes fingerprint
+  discriminability (tier 1) and the ablation/swap causal checks (tiers 2–3)
+  *load-bearing for the inference*, not hygiene: without them, Phase 1 behavior
+  doesn't distinguish a real state from a performed narrative. Practical
+  implication for tooling: don't design Phase 1 around self-report as the
+  primary readout with causal checks bolted on as a secondary confirmation —
+  design it so the causal checks are the primary evidence and self-report is
+  the thing being *validated against* them.
+
 ---
 
 ## How to append a new entry
