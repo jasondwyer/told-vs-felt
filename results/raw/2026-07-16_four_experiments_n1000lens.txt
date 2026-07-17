@@ -1,0 +1,49 @@
+Command: JLENS_PATH=data/lens/neuronpedia_n1000.npz uv run python scripts/run_experiments.py
+Lens: data/lens/neuronpedia_n1000.npz (Neuronpedia, n_prompts=1000, source_layers=0..62,
+      fitted on bf16 HF weights over Salesforce-wikitext prompts, converted from
+      neuronpedia/jacobian-lens qwen3.6-27b/jlens/Salesforce-wikitext/*_n1000.pt)
+Same code as the n=20 run (pre-each_step-fix) -- direct lens-quality comparison.
+
+Loading model...
+  MLXLensModel(n_layers=64, d_model=5120)
+Loading lens...
+  JacobianLens(d_model=5120, n_prompts=1000, source_layers=[0..62])
+
+============================================================
+EXPERIMENT: spider -> ant swap (paper Fig 6)
+============================================================
+Baseline: ' 8.'
+  swap spider->ant at L48 alpha=3: ' 8.'
+  swap spider->ant at L52 alpha=3: ' 8.'
+  swap spider->ant at L57 alpha=3: ' 8.'
+  swap spider->ant at L60 alpha=3: ' 8.'
+  steer ant at L57 alpha=100: ' antonym to'
+  steer ant at L57 alpha=300: ' a multiple of'
+  steer ant at L57 alpha=1000: ' an even number'
+
+============================================================
+EXPERIMENT: inject 'lightning' (paper Fig 7)
+============================================================
+Baseline: "\n\n<think>\nHere's"
+  inject lightning at L57 alpha=100: 'ningún"\n\n<think>'
+  inject lightning at L57 alpha=300: '闪"\n\n<think>\n'
+  inject lightning at L57 alpha=1000: ' lightning\n\n<think>\nHere'
+
+============================================================
+EXPERIMENT: ablate J-space (paper Fig 8)
+============================================================
+Baseline: ' 8.\n\n<think>'
+  ablate top-16 at L48: ' 8.\n\n<think>'
+  ablate top-16 at L57: ' 8.\n\n<think>'
+
+============================================================
+EXPERIMENT: France -> China swap (paper Fig 9)
+============================================================
+  'The capital of France is'
+    baseline: ' Paris.\n\n'  | swap: ' China.\n\n'  (expect Paris -> Beijing?)
+  'The language spoken in France is'
+    baseline: ' French.\n'  | swap: ' China.\n'  (expect French -> Chinese?)
+  'France is located in the continent of'
+    baseline: ' Europe.\n'  | swap: ' Europe.\n'  (expect Europe -> Asia?)
+  'The currency of France is'
+    baseline: ' the euro.'  | swap: ' the euro.'  (expect euro -> yuan?)

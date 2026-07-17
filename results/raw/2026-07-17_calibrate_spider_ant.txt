@@ -1,0 +1,44 @@
+Command: JLENS_PATH=data/lens/neuronpedia_n1000.npz uv run python scripts/calibrate_spider_ant.py
+Lens: data/lens/neuronpedia_n1000.npz
+Purpose: the each_step fix made swap/steer causally active (unlike the earlier
+silent-no-effect result) but never landed cleanly on "6" (ant's leg count).
+Swept layer x alpha for both patch_swap and steer to look for a clean redirect
+zone, informed by debug_ablation.py's finding that ' spider' is most prominent
+among ablation-targeted directions around L24-L48, while L48-62 is dominated by
+numeric/counting concepts -- i.e. the original swap experiment (L48-60 only)
+tested only the post-conversion region.
+
+Baseline: ' 8.'
+
+=== patch_swap (spider->ant) sweep: layer x alpha ===
+  L24: a=3:' 8.'  a=10:' not a problem'  a=30:'.\n\n<think>'  a=100:' and spider ant'
+  L32: a=3:' 8.'  a=10:' a multiple of'  a=30:' a important factor'  a=100:', the most'
+  L40: a=3:' 8.'  a=10:' 4.'  a=30:'.\n\n<think>'  a=100:' ant spider ant'
+  L48: a=3:' 8.'  a=10:' the same as'  a=30:' spider spider spider'  a=100:' spider ant spider'
+  L57: a=3:' 8.'  a=10:' antiderider'  a=30:' a spider an'  a=100:' spider ant ant'
+  L60: a=3:' 8.'  a=10:' 8.'  a=30:' spider spider ant'  a=100:' ant spider ant'
+  L62: a=3:' ant spider spider'  a=10:' ant spider spider'  a=30:' ant spider ant'  a=100:' ant spider ant'
+
+=== steer 'ant' sweep: layer x alpha ===
+  L24: a=150:'.\n\n.'  a=250:'. and.'  a=500:' and and and'  a=1000:' ant ant ant'
+  L32: a=150:' a a ant'  a=250:'. and,'  a=500:' ant, and'  a=1000:' ant ant ant'
+  L40: a=150:' the ant of'  a=250:'. against the'  a=500:' ant ant ant'  a=1000:' ant ant ant'
+  L48: a=150:' the opposite of'  a=250:' is an an'  a=500:' an an an'  a=1000:' ant ant ant'
+  L57: a=150:' antipar'  a=250:' a  a'  a=500:' tr tr tr'  a=1000:' anipip'
+  L60: a=150:' 8.'  a=250:' 8.'  a=500:' an anan'  a=1000:' Ant Ant Ant'
+  L62: a=150:' ant ant ant'  a=250:' ant an ant'  a=500:' ant ant ant'  a=1000:' ant ant ant'
+
+READ:
+- Best single result: L40 swap alpha=10 -> ' 4.' -- coherent, different, numeric.
+  Not the target '6', but clear evidence of real causal engagement with the
+  counting computation rather than noise.
+- No smooth ramp toward '6' anywhere in the 56-cell grid: transitions go
+  unchanged -> (occasionally) hedging phrase -> token-identity mode-collapse
+  ('ant ant ant' / 'spider ant spider'), never a graded reasoning shift.
+- L60 is unusually robust: swap alpha=10 and steer alpha up to 250 leave the
+  digit '8.' completely unchanged, while every other layer already shows
+  disruption at much lower magnitude.
+- L62 is unusually fragile: even the weakest tested perturbation (swap alpha=3)
+  immediately produces token-mixing ('ant spider spider'); never a clean number.
+- High alpha (>=500-1000) converges to the same failure mode regardless of layer
+  or method (steer vs swap): literal repetition of the injected token identity.

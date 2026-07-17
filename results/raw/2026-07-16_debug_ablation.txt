@@ -1,0 +1,73 @@
+Command: uv run python scripts/debug_ablation.py
+Lens: data/lens/neuronpedia_n1000.npz
+Purpose: instrument ablate_topk directly (chosen tokens, residual-norm removed,
+whether the immediate next-token logits actually change) after the four-experiment
+run showed byte-identical output at L48/L57 regardless of lens.
+
+Prompt: 'The number of legs on the animal that spins webs is'
+Baseline next-token top-5 (no intervention):
+  ' ': 17.88
+  ' a': 16.88
+  ' the': 16.75
+  ' equal': 16.50
+  ' divisible': 16.38
+  margin (top1-top2): 1.00
+
+=== Layer 8 ===
+  J-lens readout here (unablated): '.', ' \n', ' \n\n', '...', '  \n'
+  ablate k=16/64/256: chosen tokens are generic/junk ('喵','得多','\n','金钱',' straw',...);
+    removed ~7.6-9.2% of residual norm; post-ablation top-5 UNCHANGED in all cases.
+
+=== Layer 16 ===
+  J-lens readout: '\n\n', ' though', ' --', ' just', ' even'
+  ablate k=16/64/256: removed ~7.8-9.1% of norm; UNCHANGED.
+
+=== Layer 24 ===
+  J-lens readout: '\n\n', ' \n\n', '\r\n\r\n', '  \n\n', ' ____'
+  ablate: chosen tokens include ' spider' (first appearance); removed ~15.5-17.6%; UNCHANGED.
+
+=== Layer 32 ===
+  J-lens readout: ' ____', ' ___', ' ______', '____', ' __'
+  ablate: chosen include ' habitat', ' bamboo', ' lizard'; removed ~15.6-17.4%; UNCHANGED.
+
+=== Layer 40 ===
+  J-lens readout: '____', ' ______', ' ____', ' ___', ' _____'
+  ablate: chosen include ' animals', ' spider', ' equals'; removed ~24.2-26.9%; UNCHANGED.
+
+=== Layer 48 ===
+  J-lens readout: '____', '___', ' ____', ' ___', ' ______'
+  ablate: chosen include ' equals', ' multiplied', ' spider'; removed ~27.0-31.6%; UNCHANGED.
+
+=== Layer 52 ===
+  J-lens readout: '____', '___', ' ____', ' ___', '________'
+  ablate: chosen include ' multiplied', ' number', ' divisible'; removed ~35.4-41.3%; UNCHANGED.
+
+=== Layer 56 ===
+  J-lens readout: '____', '___', ' ___', ' ____', '________'
+  ablate: chosen include ' divisible', ' odd', ' Fibonacci'; removed ~36.2-41.7%; UNCHANGED.
+
+=== Layer 57 ===
+  J-lens readout: '___', '____', ' ___', ' ____', '________'
+  ablate: chosen include ' divisible', ' twice', ' HALF'; removed ~38.0-42.6%; UNCHANGED.
+
+=== Layer 60 ===
+  J-lens readout: '____', ' ___', ' ____', '___', ' ______'
+  ablate k=16: removed 39.9%; UNCHANGED.
+  ablate k=64: removed 43.6%; CHANGED -- top-5 flips from [' ',' a',' the',' equal',' divisible']
+    to [' a',' ',' the',' not',' equal'] (order shuffled, ' ' demoted from #1 to #2)
+  ablate k=256: removed 42.6%; CHANGED (same as k=64)
+
+=== Layer 62 ===
+  J-lens readout: ' divisible', ' ____', '____', ' ______', ' ___'
+  ablate k=16: removed 42.2%; CHANGED -- top-5 -> [' half',' equal',' a',' the',' not']
+  ablate k=64: removed 46.1%; CHANGED -- top-5 -> [' half',' the',' a','\n',' not']
+  ablate k=256: removed 45.6%; CHANGED (same as k=64)
+
+KEY FINDING: the baseline next token after "...is" is ' ' (space), not a digit --
+the actual digit ('8') is the *second* generated token. generate()'s
+intervene_each_step defaults to False, so a full multi-token generate() call only
+applies the intervention on the prefill pass; the digit-determining step is
+generated un-intervened regardless of ablation strength. Separately: L48/L57
+(what run_experiments.py originally tested) remove too little residual norm
+(~30-40%) to move even the first token; L60/L62 do move it once k>=64. This
+explains the "zero effect" result without ablate_topk's math being broken.

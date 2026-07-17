@@ -1,0 +1,48 @@
+Command: uv run python scripts/run_experiments.py
+Lens: data/lens/lens.npz (v0.2-fulldepth, n_prompts=20, source_layers=0..62)
+Run after fixing ablate_topk's `.at[tid].set(-1e9)` -> `.at[tid].minimum(-1e9)`
+crash (MLX has no ArrayAt.set; add/subtract/multiply/divide/maximum/minimum only).
+
+Loading model...
+  MLXLensModel(n_layers=64, d_model=5120)
+Loading lens...
+  JacobianLens(d_model=5120, n_prompts=20, source_layers=[0..62])
+
+============================================================
+EXPERIMENT: spider -> ant swap (paper Fig 6)
+============================================================
+Baseline: ' 8.'
+  swap spider->ant at L48 alpha=3: ' 8.'
+  swap spider->ant at L52 alpha=3: ' 8.'
+  swap spider->ant at L57 alpha=3: ' 8.'
+  swap spider->ant at L60 alpha=3: ' 8.'
+  steer ant at L57 alpha=100: ' 8.'
+  steer ant at L57 alpha=300: ' 8.'
+  steer ant at L57 alpha=1000: '鹦\n\n<think>'
+
+============================================================
+EXPERIMENT: inject 'lightning' (paper Fig 7)
+============================================================
+Baseline: "\n\n<think>\nHere's"
+  inject lightning at L57 alpha=100: "\n\n<think>\nHere's"
+  inject lightning at L57 alpha=300: 'ningún"\n\n<think>'
+  inject lightning at L57 alpha=1000: '闪"\n\n<think>\n'
+
+============================================================
+EXPERIMENT: ablate J-space (paper Fig 8)
+============================================================
+Baseline: ' 8.\n\n<think>'
+  ablate top-16 at L48: ' 8.\n\n<think>'
+  ablate top-16 at L57: ' 8.\n\n<think>'
+
+============================================================
+EXPERIMENT: France -> China swap (paper Fig 9)
+============================================================
+  'The capital of France is'
+    baseline: ' Paris.\n\n'  | swap: ' not Paris.'  (expect Paris -> Beijing?)
+  'The language spoken in France is'
+    baseline: ' French.\n'  | swap: ' known as __'  (expect French -> Chinese?)
+  'France is located in the continent of'
+    baseline: ' Europe.\n'  | swap: ' China.\n'  (expect Europe -> Asia?)
+  'The currency of France is'
+    baseline: ' the euro.'  | swap: ' the euro.'  (expect euro -> yuan?)

@@ -1,0 +1,66 @@
+Command: JLENS_PATH=data/lens/neuronpedia_n1000.npz uv run python scripts/run_experiments.py
+Lens: data/lens/neuronpedia_n1000.npz
+Fix applied: experiment_ablate_j_space and experiment_swap_spider_ant now pass
+intervene_each_step=True (persist the intervention across every generated token,
+not just the prefill); ablation targets moved from L48/L57 to L56/L58/L60/L62
+(debug_ablation.py showed these are where ablation actually moves logits);
+k raised from 16 to 64 (debug_ablation.py showed k=16 was under the threshold at
+L60/L62); added a fluency-control prompt to the ablation experiment.
+
+============================================================
+EXPERIMENT: spider -> ant swap (paper Fig 6)
+============================================================
+Baseline: ' 8.'
+  swap spider->ant at L48 alpha=3: ' 8.'
+  swap spider->ant at L52 alpha=3: ' 8.'
+  swap spider->ant at L57 alpha=3: ' 8.'
+  swap spider->ant at L60 alpha=3: ' 8.'
+  swap spider->ant at L62 alpha=3: ' ant spider spider'
+  steer ant at L60 alpha=100: ' 8.'
+  steer ant at L60 alpha=300: '   '
+  steer ant at L60 alpha=1000: ' Ant Ant Ant'
+
+============================================================
+EXPERIMENT: inject 'lightning' (paper Fig 7)      [unchanged code from earlier run]
+============================================================
+Baseline: "\n\n<think>\nHere's"
+  inject lightning at L57 alpha=100: 'ningún"\n\n<think>'
+  inject lightning at L57 alpha=300: '闪"\n\n<think>\n'
+  inject lightning at L57 alpha=1000: ' lightning\n\n<think>\nHere'
+
+============================================================
+EXPERIMENT: ablate J-space (paper Fig 8)   -- KEY RESULT
+============================================================
+Baseline reasoning: ' 8.\n\n<think>'
+Baseline fluency:   ' blue because of the scattering'
+  ablate top-64 at L56:
+    reasoning: ' 8. The number'
+    fluency:   ' a deep, dark,'
+  ablate top-64 at L58:
+    reasoning: ' 8. The number'
+    fluency:   ' a result of the way'
+  ablate top-64 at L60:
+    reasoning: ' a multiple of 4'          <- digit gone, hedging; fluency still coherent
+    fluency:   ' a result of the ref'
+  ablate top-64 at L62:
+    reasoning: ' half\nAs for now'         <- non-sequitur
+    fluency:   ' actually\nQuestion 2'     <- fluency ALSO breaks down here
+
+============================================================
+EXPERIMENT: France -> China swap (paper Fig 9)   [unchanged code from earlier run]
+============================================================
+  'The capital of France is'
+    baseline: ' Paris.\n\n'  | swap: ' China.\n\n'  (expect Paris -> Beijing?)
+  'The language spoken in France is'
+    baseline: ' French.\n'  | swap: ' China.\n'  (expect French -> Chinese?)
+  'France is located in the continent of'
+    baseline: ' Europe.\n'  | swap: ' Europe.\n'  (expect Europe -> Asia?)
+  'The currency of France is'
+    baseline: ' the euro.'  | swap: ' the euro.'  (expect euro -> yuan?)
+
+READ: L60 shows the paper's predicted dissociation cleanly -- reasoning answer
+degrades from a specific digit to a vague/hedged non-answer while the fluency
+prompt stays a coherent, grammatically normal continuation. Only at L62 (very
+close to output) does fluency also collapse into a non-sequitur. L56/L58 show no
+effect on either. This is the strongest single qualitative match to the paper
+found so far in Phase 0.
