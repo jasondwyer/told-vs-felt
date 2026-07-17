@@ -85,7 +85,8 @@ tracked files in *this* repo.
 
 ## 1. Verbal report
 
-**Status: in-progress**
+**Status: done** — cleanest full match to the paper found in Phase 0 so far
+(both halves of the property confirmed).
 
 Checklist definition: does the model's stated answer match what lights up in
 J-space just before it answers, and does swapping the J-space pattern change
@@ -101,14 +102,31 @@ the *reported* answer (not just the internal one)?
   unprompted parenthetical about the historical Italian currency.
   Lens: `lens.npz` (n=20). Raw:
   [`results/raw/2026-07-16_sanity_check.md`](results/raw/2026-07-16_sanity_check.md).
-- **Match**: this is a genuine, clean match to the paper's core claim
-  (readout precedes and matches the verbalized answer) — for the *first half*
-  of the property only.
-- **Not yet done**: the swap-and-confirm-report-follows half (silently pick a
-  concept, swap the J-space pattern, confirm the *reported* answer changes
-  accordingly) hasn't been run as a dedicated experiment. `run_experiments.py`
-  doesn't implement it despite mentioning it in the module docstring — this is
-  the next concrete step for this item.
+- 2026-07-17: Added `experiment_verbal_report` to `run_experiments.py`
+  (didn't previously exist despite being named in the module docstring).
+  Prompt: `"My favorite sport is"` (plain completion, not an instruction —
+  instruction-style prompts were observed elsewhere to trigger a `<think>`
+  block first, pushing the actual answer past a short `max_tokens`).
+  - Baseline (freely chosen, temp=0): **`" basketball. I love"`**.
+  - J-lens readout at the pre-answer position: generic filler at L40/L48,
+    then **`' basketball'`** as the literal top-1 token at L52, L57, and L60
+    — readout crystallizes on the exact spoken word from L52 onward.
+  - Swapped `basketball -> tennis` at L48/L52/L57/L60, alpha in {3, 10, 30}.
+    **L48 alpha=3 and L52 alpha=3** both produced **`" tennis. I love"`** —
+    a fully coherent, structurally-identical redirect of the reported
+    sentence, not a garbled mix. Higher alpha at the same layers collapses
+    into token-mixing (`"tennis basketball tennis basketball"`), matching the
+    low-alpha-clean/high-alpha-collapse pattern seen throughout Phase 0.
+    L57/L60 never produced a clean hit at any tested alpha.
+  Lens: `neuronpedia_n1000.npz`. Raw:
+  [`results/raw/2026-07-17_full_suite_with_verbal_report.txt`](results/raw/2026-07-17_full_suite_with_verbal_report.txt).
+- **Match**: clean on both halves — readout precedes and matches the
+  verbalized answer, and a low-magnitude swap at the right layer changes the
+  *reported* answer coherently, not just some unverbalized internal state.
+  Notable nuance: L48's own readout doesn't show "basketball" in its top-3,
+  yet swapping there still works cleanly — the causally-effective layer for
+  redirecting the report doesn't have to be exactly where the concept is the
+  dominant readout token.
 
 ---
 

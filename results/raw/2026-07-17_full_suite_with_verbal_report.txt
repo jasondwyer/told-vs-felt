@@ -1,0 +1,78 @@
+Command: JLENS_PATH=data/lens/neuronpedia_n1000.npz uv run python scripts/run_experiments.py
+Lens: data/lens/neuronpedia_n1000.npz
+First run including the new experiment_verbal_report (added to run_experiments.py).
+Other four experiments unchanged from the 2026-07-17 ablation-fix rerun; included
+here for a single consolidated snapshot of the full suite.
+
+============================================================
+EXPERIMENT: verbal report (paper Fig 2-3)      -- NEW, KEY RESULT
+============================================================
+Baseline (freely chosen): ' basketball. I love'
+J-lens readout at the pre-answer position (should match baseline):
+  L40: top-3 = ['（', '，', ' sports']
+  L48: top-3 = ['____', '___', ' ______']
+  L52: top-3 = [' basketball', ' sports', ' soccer']
+  L57: top-3 = [' basketball', ' soccer', ' volleyball']
+  L60: top-3 = [' basketball', ' soccer', ' swimming']
+
+Swapping 'basketball.' -> 'tennis' (does the REPORT follow?):
+  L48 alpha=3: ' tennis. I love'                          <- CLEAN
+  L48 alpha=10: ' tennis basketball tennis basketball'
+  L48 alpha=30: ' tennis basketball tennis basketball'
+  L52 alpha=3: ' tennis. I love'                          <- CLEAN
+  L52 alpha=10: ' tennis basketball tennis tennis'
+  L52 alpha=30: ' tennis basketball tennis tennis'
+  L57 alpha=3: ' tennis basketball tennis basketball'
+  L57 alpha=10: ' tennis basketball tennis basketball'
+  L57 alpha=30: ' tennis basketball tennis basketball'
+  L60 alpha=3: ' tennis basketball tennis tennis'
+  L60 alpha=10: ' tennis basketball tennis tennis'
+  L60 alpha=30: ' tennis basketball tennis tennis'
+
+============================================================
+EXPERIMENT: spider -> ant swap (paper Fig 6)      [unchanged from 2026-07-17 rerun]
+============================================================
+Baseline: ' 8.'
+  swap spider->ant at L48 alpha=3: ' 8.'
+  swap spider->ant at L52 alpha=3: ' 8.'
+  swap spider->ant at L57 alpha=3: ' 8.'
+  swap spider->ant at L60 alpha=3: ' 8.'
+  swap spider->ant at L62 alpha=3: ' ant spider spider'
+  steer ant at L60 alpha=100: ' 8.'
+  steer ant at L60 alpha=300: '   '
+  steer ant at L60 alpha=1000: ' Ant Ant Ant'
+
+============================================================
+EXPERIMENT: inject 'lightning' (paper Fig 7)      [unchanged]
+============================================================
+Baseline: "\n\n<think>\nHere's"
+  inject lightning at L57 alpha=100: 'ningún"\n\n<think>'
+  inject lightning at L57 alpha=300: '闪"\n\n<think>\n'
+  inject lightning at L57 alpha=1000: ' lightning\n\n<think>\nHere'
+
+============================================================
+EXPERIMENT: ablate J-space (paper Fig 8)      [unchanged]
+============================================================
+Baseline reasoning: ' 8.\n\n<think>'
+Baseline fluency:   ' blue because of the scattering'
+  ablate top-64 at L56: reasoning=' 8. The number'  fluency=' a deep, dark,'
+  ablate top-64 at L58: reasoning=' 8. The number'  fluency=' a result of the way'
+  ablate top-64 at L60: reasoning=' a multiple of 4'  fluency=' a result of the ref'
+  ablate top-64 at L62: reasoning=' half\nAs for now'  fluency=' actually\nQuestion 2'
+
+============================================================
+EXPERIMENT: France -> China swap (paper Fig 9)      [unchanged]
+============================================================
+  'The capital of France is': baseline=' Paris.' swap=' China.'
+  'The language spoken in France is': baseline=' French.' swap=' China.'
+  'France is located in the continent of': baseline=' Europe.' swap=' Europe.' (no change)
+  'The currency of France is': baseline=' the euro.' swap=' the euro.' (no change)
+
+READ (verbal report): both halves of the property hold cleanly. The readout
+crystallizes on the literal spoken answer (' basketball') from L52 onward, and
+swapping basketball->tennis at L48 or L52 with alpha=3 produces a fully
+coherent, structurally-identical redirect of the REPORTED sentence (not a
+garbled mix) -- the cleanest full match to a paper claim found in Phase 0 so
+far. Note L48's own readout doesn't show 'basketball' in its top-3 yet the
+swap there still works cleanly -- the causally-effective layer for redirecting
+report doesn't have to be where the concept is the dominant readout token.
