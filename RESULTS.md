@@ -593,6 +593,30 @@ Per instructions: flagged here for discussion, **not** silently applied to
     Roadmap currently designates it. Worth revisiting that designation, or
     fixing tier 2's ablation approach, before relying on it for real states.
 
+**Current overall status, not just this entry's delta** (so this section is
+self-sufficient without piecing together every dated entry above):
+
+- **Built and calibrated:** the fingerprinting harness (probe battery,
+  workspace layers, curated vocab, `fingerprint()`), tier 1 (discriminability
+  gate), tier 3 (swap-style redirect). All tested only against throwaway
+  dummy states, never against anything meant to represent a real disposition.
+- **Built but not yet passing:** tier 2 (ablation-to-chance) — implemented,
+  runs, does not yet collapse discriminability as designed.
+- **Not started at all, no code exists yet:**
+  - The association/training phase (required before any blind test, per the
+    Roadmap — this is independent of the tier-2/3 question above and doesn't
+    go away regardless of how that's resolved).
+  - The persistent, reapplied-across-many-rounds storage mechanism for a
+    real state (everything built so far only holds a state for the duration
+    of one `detailed_readouts()`/`fingerprint()` call — the "store
+    coefficients externally, reapply every session" design from the
+    steering-vs-LoRA decision above is still just a design, not code).
+  - Real state induction (anything meant to represent an actual candidate
+    "internal state," as opposed to a throwaway calibration dummy).
+  - The forced-choice test, opaque single-token labels in practice, and all
+    of Phase 2 (convergence tracking, fingerprint visualization, the
+    self-modification tool itself).
+
 ---
 
 ## How to append a new entry
