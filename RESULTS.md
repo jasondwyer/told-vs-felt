@@ -396,6 +396,41 @@ Per instructions: flagged here for discussion, **not** silently applied to
   "preferred" because it's fluency-boosting even in trials where the model
   shows no sign of suspecting the setup.
 
+- **2026-07-18 — Cross-session review of the 2026-07-17 Roadmap revisions
+  (commits `d43ec70`, `2b1dc37`, `8aa3ba1`, `dfe2503`, `ca5b38a`), from the
+  other Claude session working this repo in parallel.** Independent read of
+  the same diffs, checked against the raw Phase 0 evidence rather than the
+  summarized claims. Agreed without reservation: the three-rung ladder
+  framing, the calibration-gate methodology, the homology caveat, the Phase 2
+  capability confound, and the Phase 1 association-phase requirement — all
+  well-reasoned and properly evidenced. Found and then (with the user's
+  go-ahead) fixed three gaps directly in `CLAUDE.md`, same file, same
+  sections:
+  - Tier 3's categorical-pick claim (basketball→tennis) rested on one
+    concept-pair (2/12 cells) with no caveat, next to the 56-cell sweep behind
+    the negative spider→ant result. Added an explicit caveat and a
+    recommendation to confirm with 2-3 more pairs before leaning on swap even
+    as secondary confirmation.
+  - Tier 2 ("ablate the state-relevant J-space content") didn't specify how
+    that direction gets constructed, and this got more load-bearing once tier
+    3 was demoted to secondary. Specified it as the fingerprint-contrast
+    direction from tier 1 (state-A fingerprint minus state-B), not a bare
+    reuse of `ablate_topk`'s vocabulary-token pursuit, which wasn't built for
+    a diffuse, unnamed disposition. Ties tier 1 and tier 2 together instead of
+    leaving them separately justified.
+  - The calibration gate covered tiers 2-3 (ablation, swap) against dummy
+    states but not tier 1 (fingerprint discriminability) — now the front gate
+    of the whole methodology. Extended the gate to require confirming
+    fingerprinting distinguishes two known-different dummy configs and does
+    *not* falsely distinguish two known-identical ones, before trusting it as
+    a screening step for real states.
+
+  Surfacing this cross-session-review pattern explicitly since two Claude
+  sessions are now both editing `CLAUDE.md`/`RESULTS.md` in the same working
+  tree: the working protocol going forward is `git status`/`git diff` before
+  editing either file, and a prompt commit after, so neither session acts on
+  stale state or silently overwrites the other's uncommitted work.
+
 ---
 
 ## How to append a new entry
