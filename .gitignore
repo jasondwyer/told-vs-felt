@@ -5,6 +5,9 @@
 /data/*
 !/data/.gitkeep
 
+# Local agent settings (Cowork / Claude Code) — machine-local, not shared
+/.claude/
+
 # Python
 __pycache__/
 *.pyc
