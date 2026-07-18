@@ -433,6 +433,48 @@ Per instructions: flagged here for discussion, **not** silently applied to
 
 ---
 
+## Phase 1 — early setup
+
+**Status: in-progress**
+
+- 2026-07-18 — **Design decision: Phase 1/2's state-induction mechanism is a
+  held, reapplied combination of multiple J-lens-derived steering vectors
+  across one or more layers, not LoRA.** LoRA is deferred to a new,
+  not-yet-defined "Phase 3" in `CLAUDE.md` (see that file for the full
+  reasoning); not dropped. In brief:
+  - Checked `mlx_lm`'s actual `LoRALinear` implementation: one of its two
+    low-rank matrices is zero-initialized (standard practice), so
+    `(x @ lora_a) @ lora_b` is exactly zero at init regardless of random
+    seed — an untrained LoRA adapter is a mathematical no-op. "Random init,
+    no training" was never actually an option for getting diverse states;
+    only a trained base adapter would produce one.
+  - A trained base adapter raises a hard-to-detect risk the prompt-level
+    narrative-silent framing doesn't cover: the training data/process could
+    bake affect-correlated directions into the weights themselves.
+  - Persistence — the property that made LoRA seem necessary (a standing
+    state explorable/returnable-to across many rounds) — isn't
+    LoRA-exclusive: `intervene_each_step=True` already persists a steering
+    intervention across every token in one generation; extending that
+    across many rounds is just storing the current combination of steering
+    directions as external state and reapplying it, same as a reloaded LoRA
+    adapter would be.
+  - LoRA's real advantage is expressiveness (reshapes computation across
+    many weight matrices at every position, vs. steering's additive nudge
+    at a chosen few points) — but that's exactly why LoRA states would need
+    the same J-lens fingerprinting workaround already built for Phase 2;
+    raw LoRA deltas have no inherent semantic meaning, while a
+    steering-vector combination stays comparatively self-describing.
+  - `mlx_lm` ships a full, ready-to-use LoRA tuner (`linear_to_lora_layers`,
+    `load_adapters`, a standard training loop) as an unused dependency —
+    confirmed via exploration — so deferring it is a cost/complexity
+    choice, not a capability gap.
+  - Concrete trigger for revisiting Phase 3: if Phase 1/2 run on
+    steering-vector combinations and show none of the hypothesized
+    discrimination/convergence behavior, that's the point to reconsider
+    whether LoRA's added expressiveness is what's missing.
+
+---
+
 ## How to append a new entry
 
 1. Add a dated bullet/row under the relevant checklist section (newest first
