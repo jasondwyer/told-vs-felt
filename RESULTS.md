@@ -593,6 +593,51 @@ Per instructions: flagged here for discussion, **not** silently applied to
     Roadmap currently designates it. Worth revisiting that designation, or
     fixing tier 2's ablation approach, before relying on it for real states.
 
+- 2026-07-18 — **Tier 2 fix attempt: multi-direction subspace ablation —
+  substantial improvement, not a full collapse.** Working hypothesis from
+  the previous entry (averaging the contrast vector across 12 probes washes
+  out real signal) tested directly: instead of one averaged contrast
+  direction per layer, computed a *separate* contrast direction per probe
+  (12 per layer, via `fingerprint.contrast_direction()` called once per
+  probe) and ablated their full joint span with a new
+  `interventions.ablate_subspace()` (Gram-Schmidt orthonormalize, then
+  sequential orthogonal projection — the multi-direction generalization of
+  `ablate_direction`).
+  - **Bug found and fixed en route:** `ablate_subspace`'s near-duplicate
+    check used an *absolute* norm threshold (1e-6) to decide whether a
+    direction was redundant after orthogonalization. Floating-point
+    cancellation error scales with vector magnitude, so for a norm-~70
+    direction, an exact duplicate left a residual comfortably above 1e-6
+    and was incorrectly kept as a spurious extra basis vector, corrupting
+    the projection. Fixed to a threshold relative to each direction's own
+    original norm.
+  - **Result:** ablating the full 12-direction span reduced the ablated
+    A-vs-B distance to 19.0 (euclidean), a **43% reduction** from the
+    33.1 un-ablated baseline (ratio 0.57) — compared to the single averaged
+    direction, which had made things slightly *worse* (ratio 1.16, previous
+    entry). A graded k-sweep (ablate only the first k of the 12 per-probe
+    directions) showed a clean, monotonic dose-response: k=1 (ratio 1.24,
+    still worse) → k=3 (0.72) → k=6 (0.63) → k=12 (0.57), with diminishing
+    returns setting in around k=6.
+  - Raw output:
+    [`results/raw/2026-07-18_phase1_tier2_v2_subspace_ablation.txt`](results/raw/2026-07-18_phase1_tier2_v2_subspace_ablation.txt).
+  - **Read:** the multi-direction hypothesis is directionally confirmed —
+    averaging genuinely was destroying real signal, and ablating more
+    per-probe-specific directions recovers real ablation power, monotonically.
+    But even the full 12-direction span leaves 57% of the original distance
+    intact, not a clean collapse to near-zero. Two candidate explanations,
+    neither chased further here: (1) `contrast_direction()` can only
+    construct directions expressible as combinations of the 369 curated
+    words' own J-lens vectors — real signal outside that span is
+    structurally invisible to this method; (2) the two dummy states are
+    induced at *two* layers (L48, L52), and independent per-layer ablation
+    may not fully capture whatever compounds across that interaction. Tier 2
+    is meaningfully improved but still short of a clean pass — worth
+    deciding whether 43% is "good enough" for the double-dissociation's
+    state-ablation arm (see the Flags entry above), or whether to keep
+    pushing (e.g. a larger probe battery, or checking whether residual
+    signal survives outside the curated vocabulary's span).
+
 **Current overall status, not just this entry's delta** (so this section is
 self-sufficient without piecing together every dated entry above):
 
@@ -600,8 +645,11 @@ self-sufficient without piecing together every dated entry above):
   workspace layers, curated vocab, `fingerprint()`), tier 1 (discriminability
   gate), tier 3 (swap-style redirect). All tested only against throwaway
   dummy states, never against anything meant to represent a real disposition.
-- **Built but not yet passing:** tier 2 (ablation-to-chance) — implemented,
-  runs, does not yet collapse discriminability as designed.
+- **Built, partially working:** tier 2 (ablation-to-chance) — the
+  multi-direction subspace fix gets a 43% distance reduction (up from a
+  single averaged direction making things slightly worse), but doesn't fully
+  collapse discriminability. Whether that's sufficient for the
+  double-dissociation's state-ablation arm is an open decision, not yet made.
 - **Not started at all, no code exists yet:**
   - The association/training phase (required before any blind test, per the
     Roadmap — this is independent of the tier-2/3 question above and doesn't

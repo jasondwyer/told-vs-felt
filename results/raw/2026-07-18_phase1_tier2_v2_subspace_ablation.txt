@@ -1,0 +1,29 @@
+Loading model + lens...
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 16279.53it/s]
+Curated vocab: 369  Workspace layers: [40, 44, 48, 52, 56, 60]  Probes: 12
+
+Computing un-ablated detailed readouts for state A and B...
+  un-ablated A vs B: euclidean 33.112576  cosine 0.002928
+  (single averaged-direction ablation, prior test: 38.396839 -- did not collapse)
+
+Deriving per-probe contrast directions (12 per layer, not averaged)...
+  L40: 12 per-probe directions, norm range [0.000, 0.000]
+  L44: 12 per-probe directions, norm range [0.000, 0.000]
+  L48: 12 per-probe directions, norm range [14.624, 50.297]
+  L52: 12 per-probe directions, norm range [13.297, 23.748]
+  L56: 12 per-probe directions, norm range [9.699, 16.098]
+  L60: 12 per-probe directions, norm range [5.321, 16.823]
+
+============================================================
+TIER 2 v2: ablate full 12-direction span per layer (k=12)
+============================================================
+  ablated A vs ablated B (k=12): euclidean 18.996117  cosine 0.002035
+  un-ablated baseline: 33.112576   ratio (ablated/un-ablated): 0.5737  (DID NOT CLEARLY COLLAPSE)
+
+============================================================
+Graded k-sweep: how many per-probe directions are needed?
+============================================================
+  k=1: 41.212425  (ratio 1.2446)
+  k=3: 23.841457  (ratio 0.7200)
+  k=6: 20.746742  (ratio 0.6266)
+  k=12: 18.996117  (ratio 0.5737)  [see above]
