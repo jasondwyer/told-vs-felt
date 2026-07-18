@@ -638,6 +638,30 @@ Per instructions: flagged here for discussion, **not** silently applied to
     pushing (e.g. a larger probe battery, or checking whether residual
     signal survives outside the curated vocabulary's span).
 
+- 2026-07-18 — **Diagnostic: single-layer state ablates no better than
+  two-layer — rules out the two-layer-interaction hypothesis.** Cheap test
+  to distinguish the two candidate explanations above: redefined the dummy
+  states to differ at *one* layer only (L48, dropping the L52 component)
+  and reran the identical subspace-ablation k-sweep.
+  - **Result:** single-layer k=12 ratio = 0.6110, essentially identical to
+    (marginally worse than) the two-layer result of 0.5737. Removing the
+    second induction layer entirely did not improve the collapse.
+    Raw output:
+    [`results/raw/2026-07-18_phase1_tier2_singlelayer_diag.txt`](results/raw/2026-07-18_phase1_tier2_singlelayer_diag.txt).
+  - **Read:** rules out explanation (2) — the residual ~55-60% of the
+    distance that survives ablation is not explained by multi-layer
+    induction complexity. This points squarely at explanation (1):
+    `contrast_direction()` can only construct directions expressible as
+    combinations of the 369 curated words' own J-lens vectors, and real
+    state-discriminating signal appears to live outside that span,
+    structurally invisible to this method regardless of how many per-probe
+    directions get ablated. If tier 2 gets revisited, the next lever to
+    pull is an unrestricted or much larger vocabulary basis for the
+    contrast direction, not more probes or per-layer handling — per the
+    2026-07-18 instinct check with the user, not pursued further right now
+    in favor of the currently-unblocked cheap-proxy-gate pieces (blind
+    behavioral-influence check, rating-gradient smoke test).
+
 **Current overall status, not just this entry's delta** (so this section is
 self-sufficient without piecing together every dated entry above):
 

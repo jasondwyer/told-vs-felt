@@ -1,0 +1,28 @@
+Loading model + lens...
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 16806.03it/s]
+Curated vocab: 369  Workspace layers: [40, 44, 48, 52, 56, 60]
+
+Computing un-ablated detailed readouts (single-layer states)...
+  un-ablated A vs B: euclidean 28.133778  cosine 0.002268
+
+Deriving per-probe contrast directions...
+  L40: norm range [0.000, 0.000]
+  L44: norm range [0.000, 0.000]
+  L48: norm range [14.624, 50.297]
+  L52: norm range [7.356, 20.791]
+  L56: norm range [5.318, 15.062]
+  L60: norm range [3.854, 9.490]
+
+============================================================
+Single-layer state: graded k-sweep
+============================================================
+  k=1: 40.039169  (ratio 1.4232)
+  k=3: 22.187033  (ratio 0.7886)
+  k=6: 18.675928  (ratio 0.6638)
+  k=12: 17.189030  (ratio 0.6110)
+
+============================================================
+Comparison to the two-layer (L48+L52) result
+============================================================
+  two-layer k=12 ratio was: 0.5737 (RESULTS.md 2026-07-18)
+  single-layer k=12 ratio: see above
