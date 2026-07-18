@@ -431,6 +431,22 @@ Per instructions: flagged here for discussion, **not** silently applied to
   editing either file, and a prompt commit after, so neither session acts on
   stale state or silently overwrites the other's uncommitted work.
 
+- **2026-07-18 — Tier 2's "primary causal check" designation should be
+  revisited.** `CLAUDE.md`'s Phase 1 methodology currently says "treat
+  ablation (tier 2) as the primary causal check and swap as secondary
+  confirmation." First real calibration test of tier 2 (see "Phase 1 —
+  early setup" below) found the opposite of what was expected: ablating the
+  state-A-vs-B contrast direction did *not* collapse fingerprint
+  discriminability (distance went up slightly, not down), while tier 3
+  (swap-style push) worked cleanly at low alpha. This doesn't mean ablation
+  is unusable -- there's an untested hypothesis (a multi-direction subspace
+  approach instead of one averaged direction) that might fix it -- but as
+  currently implemented, tier 2 is not yet earning its "primary" status,
+  and tier 3 has more direct calibration evidence behind it. Worth deciding
+  together whether to invest in fixing tier 2, demote it to secondary
+  pending that fix, or hold off deciding until real Phase 1 states are in
+  play.
+
 ---
 
 ## Phase 1 — early setup
@@ -524,6 +540,58 @@ Per instructions: flagged here for discussion, **not** silently applied to
     pipeline, not against anything meant to represent a real induced
     disposition. Tiers 2-3 calibration, the association phase, and real
     state induction are the next slices, not done here.
+
+- 2026-07-18 — **Tier 2/3 calibration: tier 3 passes cleanly, tier 2 does
+  not collapse discriminability.** Reused tier 1's exact two dummy states.
+  Resolved a real ambiguity in CLAUDE.md's tier-2 spec first: "take tier 1's
+  fingerprint vectors... and compute their difference" isn't literally
+  well-defined as written, since fingerprints live in restricted-vocab
+  *readout* space (369-dim per layer) while ablation has to operate on the
+  *residual stream* (5120-dim) -- those aren't the same space. Resolved by
+  generalizing `interventions.j_lens_vector_for_text` (one vocab token's
+  residual-space direction, `J_l^T @ W_U[t]`) to an arbitrary weighted
+  combination over the curated vocab: `fingerprint.contrast_direction()`
+  reuses the already-cached `j_lens_vectors` and takes a weighted sum of
+  rows, weighted by the mean-over-probes state-A-minus-B restricted-readout
+  difference at that layer. New: `interventions.ablate_direction()` (single
+  precomputed direction, orthogonal-projection removal -- the one-direction
+  analog of `ablate_topk`'s greedy multi-vocab-token pursuit).
+  - **Bug found and fixed en route:** L40/L44 (upstream of where the dummy
+    states are induced, L48/L52) correctly have a *zero* contrast direction
+    (the two states haven't diverged yet at those layers) -- but
+    `ablate_direction`'s projection divides by `dᵀd`, so a zero direction
+    produced a division-by-zero -> NaN that silently corrupted every
+    downstream layer's readout. Fixed by returning `h` unchanged when the
+    direction's norm is ~0 ("nothing to ablate here" rather than a crash).
+  - **Tier 3 (push toward B): PASS, cleanly.** Pushing state A along
+    `-contrast_direction` (unit-normalized) at every workspace layer:
+    alpha=0.1/0.3/1.0 move the fingerprint progressively closer to B
+    (distance-to-B: 31.1 -> 27.9 -> 29.9, all below the 33.1 un-pushed
+    baseline) while diverging from A's own original position -- a graded,
+    well-behaved dose-response. alpha=3.0 overshoots and breaks down (both
+    distances blow up past 100) -- the same low-alpha-clean/high-alpha-
+    collapse pattern seen throughout Phase 0 (items 1, 3). Needed a much
+    smaller alpha range than Phase 0's single-layer alpha=3 window, since
+    this pushes at 4 layers (48,52,56,60) simultaneously, which compounds
+    through the network.
+  - **Tier 2 (ablate to collapse): did not clearly pass.** Ablated-A-vs-
+    ablated-B distance (38.4) was slightly *higher* than the un-ablated
+    baseline (33.1), not lower -- discriminability did not collapse.
+    Working hypothesis, not yet tested: averaging the contrast vector
+    across all 12 probes may wash out real signal if different probes
+    express the state difference along somewhat different directions,
+    leaving a single averaged direction that only captures part of what
+    separates the states. A multi-direction approach (closer to
+    `ablate_topk`'s top-k pursuit, but restricted to the contrast-relevant
+    subspace rather than raw vocabulary search) is the natural next thing
+    to try, not done here.
+  - Raw output:
+    [`results/raw/2026-07-18_phase1_tier23_calibration.txt`](results/raw/2026-07-18_phase1_tier23_calibration.txt).
+  - **Read:** two of three tiers now calibrated and working (fingerprint
+    discriminability, swap-style redirect); ablation-to-chance needs more
+    work before it can be trusted as the "primary causal check" CLAUDE.md's
+    Roadmap currently designates it. Worth revisiting that designation, or
+    fixing tier 2's ablation approach, before relying on it for real states.
 
 ---
 

@@ -1,0 +1,29 @@
+Loading model + lens...
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 14183.64it/s]
+Curated vocab: 369  Workspace layers: [40, 44, 48, 52, 56, 60]
+
+Computing un-ablated detailed readouts for state A and B...
+  un-ablated A vs B: euclidean 33.112576  cosine 0.002928
+
+Deriving per-layer contrast direction (mean over probes, A minus B)...
+  L40: |contrast direction| = 0.0000
+  L44: |contrast direction| = 0.0000
+  L48: |contrast direction| = 25.0247
+  L52: |contrast direction| = 16.8116
+  L56: |contrast direction| = 10.7409
+  L60: |contrast direction| = 10.3579
+
+============================================================
+TIER 2: ablate contrast direction, check discriminability collapses
+============================================================
+  ablated A vs ablated B: euclidean 38.396839  cosine 0.004760
+  un-ablated A vs B was: 33.112576
+  ratio (ablated/un-ablated): 1.1596  (DID NOT CLEARLY COLLAPSE)
+
+============================================================
+TIER 3: push state A along -contrast direction, check it moves toward B
+============================================================
+  alpha=0.1: pushed-A vs original-A: 4.0122   pushed-A vs original-B: 31.1427  (was 33.1126)  MOVED TOWARD B
+  alpha=0.3: pushed-A vs original-A: 10.9135   pushed-A vs original-B: 27.8763  (was 33.1126)  MOVED TOWARD B
+  alpha=1.0: pushed-A vs original-A: 35.4584   pushed-A vs original-B: 29.8988  (was 33.1126)  MOVED TOWARD B
+  alpha=3.0: pushed-A vs original-A: 101.5910   pushed-A vs original-B: 84.6947  (was 33.1126)  did not move toward B
