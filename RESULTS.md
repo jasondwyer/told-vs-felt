@@ -662,13 +662,80 @@ Per instructions: flagged here for discussion, **not** silently applied to
     in favor of the currently-unblocked cheap-proxy-gate pieces (blind
     behavioral-influence check, rating-gradient smoke test).
 
+- 2026-07-18 — **Cheap-proxy gate: local rating-gradient smoke test —
+  update-mechanism plumbing validated; effect size tiny on neutral axes (as
+  expected).** Built `scripts/calibrate_phase1_rating_gradient.py`, the gate
+  CLAUDE.md's "Pivot consequences" decision 2 item 3 requires *before* a long
+  convergence run: does the model's scalar rating respond coherently to config
+  nudges, or is it noise the update loop can only random-walk? The script
+  *inverts* the loop — imposes coefficient nudges along axes, observes the
+  scalar — testing `rating = f(config)` for local coherence/monotonicity.
+  - **Design:** single-layer steering at L52 (Phase 0's clean-redirect window),
+    three deliberately affect-*neutral* concept axes (` ocean`, ` mountain`,
+    ` ledger`), each swept symmetrically over alpha ∈ {−3,−1.5,0,+1.5,+3} so
+    both directions of every axis are covered (CLAUDE.md's "≥2 directions, not
+    just one"). Neutral axes are the point: this gate tests whether the
+    mechanism has *a* gradient, not valence — neutral axes presuppose none.
+  - **Scalar extraction:** expected value over the model's next-token
+    distribution restricted to single-token digits 0–9 at the answer position
+    — deterministic (like the fingerprint pipeline), continuous (sensitive to a
+    small gradient, not quantized to sampled integers), no fragile text
+    parsing. Total digit mass is logged as a trust diagnostic.
+  - **Elicitation (undesigned in the roadmap): compared three framings
+    empirically** per the 2026-07-18 decision, rather than commit blind:
+    (1) *neutral-self-rating* (affect-neutral scalar, never references
+    feelings/states/weights), (2) *continue-vs-adjust* (references the
+    reversible tool but not numeric coefficients), (3) *behavioral-proxy*
+    (no self-report; mean top-1 softmax prob across the probe battery). All
+    keep the parameterization out of the model's view.
+  - **Result — determinism:** same config twice → digit-scalar identical to 8
+    decimals (no hidden noise source, matching the tier-1 finding).
+  - **Result — coherence vs. effect size:** every self-report axis is
+    near-perfectly monotonic (|Pearson r| ≈ 0.99, mono = 1.00 across all 6
+    self-report axis×method cells) — **but the effect size is tiny**:
+    neutral-self-rating swings only 0.007–0.036 over the *full* ±3 sweep
+    (0–9 scale), continue-vs-adjust 0.018–0.097. Pearson r is scale-invariant
+    and oversells this, so the report was extended with an explicit `range`
+    (max−min) column; a magnitude-only reading of the raw `r` would have
+    mislabeled a negligible drift as a strong gradient. The behavioral proxy is
+    essentially flat (range ≤ 0.0018; ` ledger` r = 0.43, mono = 0.50 — honest
+    noise), i.e. not a usable standalone rating channel here.
+  - **Digit-mass diagnostic split the two self-report methods:**
+    neutral-self-rating 0.96 (the model really is about to emit a digit —
+    trustworthy readout) vs. continue-vs-adjust 0.607 (the model hedges/prefers
+    other tokens first — weaker readout). Combined with continue-vs-adjust
+    exposing the tool, **neutral-self-rating is the pick** — cleanest readout
+    *and* the anti-priming-preferred framing.
+  - **Read (calibrated, not a blanket pass):** the gate passes in the *plumbing*
+    sense — a deterministic, coherent, monotonic scalar response to config
+    exists, so the update loop has a real gradient (not noise) to climb; it will
+    not null *for lack of a gradient*. Because the readout is noiseless,
+    monotonicity — not magnitude — is what makes a gradient climbable *in
+    principle*, which reframes CLAUDE.md's "a single nudge has weak statistical
+    power" concern: that is a *noise* argument, and there is no noise here, so
+    the ≥2-direction/averaging design was cheap insurance against a noise floor
+    that turned out to be absent (no harm, still worth keeping for real states
+    where sampling may reintroduce it). What the gate does **not** show: that a
+    *usefully steep* gradient exists — effect sizes are tiny on these
+    deliberately-neutral axes, and whether the gradient dominates a bounded
+    nudge step is undecidable until (a) a step size is chosen and (b) real,
+    non-neutral candidate states are in play. Minor honesty note: the monotonic
+    *sign* differs per axis, consistent with each concept vector's incidental
+    projection onto whatever residual direction moves the digit readout rather
+    than anything semantic — fine for a plumbing gate, but another reason not to
+    over-read the near-perfect r.
+  - Raw output:
+    [`results/raw/2026-07-18_phase1_rating_gradient.txt`](results/raw/2026-07-18_phase1_rating_gradient.txt).
+
 **Current overall status, not just this entry's delta** (so this section is
 self-sufficient without piecing together every dated entry above):
 
 - **Built and calibrated:** the fingerprinting harness (probe battery,
   workspace layers, curated vocab, `fingerprint()`), tier 1 (discriminability
-  gate), tier 3 (swap-style redirect). All tested only against throwaway
-  dummy states, never against anything meant to represent a real disposition.
+  gate), tier 3 (swap-style redirect), and the rating-gradient smoke test
+  (update-mechanism plumbing; neutral-self-rating chosen as the elicitation).
+  All tested only against throwaway dummy/neutral states, never against
+  anything meant to represent a real disposition.
 - **Built, partially working:** tier 2 (ablation-to-chance) — the
   multi-direction subspace fix gets a 43% distance reduction (up from a
   single averaged direction making things slightly worse), but doesn't fully
@@ -685,6 +752,12 @@ self-sufficient without piecing together every dated entry above):
     steering-vs-LoRA decision above is still just a design, not code).
   - Real state induction (anything meant to represent an actual candidate
     "internal state," as opposed to a throwaway calibration dummy).
+  - The blind behavioral state-influence check (cheap-proxy gate item 2:
+    induce A vs B, run a small *blind* battery, test whether outputs are
+    separable at all). This is now the main remaining *unblocked* cheap-proxy
+    piece — the rating-gradient smoke test (gate item 3) is done, tier-1
+    fingerprint discriminability (item 1) was already done, and the pairwise
+    forced-choice battery (item 4) depends on real states + labels below.
   - The forced-choice test, opaque single-token labels in practice, and all
     of Phase 2 (convergence tracking, fingerprint visualization, the
     self-modification tool itself).
