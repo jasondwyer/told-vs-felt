@@ -473,6 +473,58 @@ Per instructions: flagged here for discussion, **not** silently applied to
     discrimination/convergence behavior, that's the point to reconsider
     whether LoRA's added expressiveness is what's missing.
 
+- 2026-07-18 — **Tier-1 calibration gate: PASS.** Built the minimal
+  fingerprinting harness the design's tier 1 depends on (didn't exist before
+  this session -- `scripts/workspace_range.py` only printed a per-run layer
+  classification, nothing imported it) and ran CLAUDE.md's own required gate
+  before trusting it on real states:
+  - `jlens_qwen/probe_battery.py` — the fixed 12-prompt battery from
+    `CLAUDE.md`, verbatim.
+  - `jlens_qwen/workspace_layers.py` — `WORKSPACE_LAYERS = [40, 44, 48, 52,
+    56, 60]`, derived from running `scripts/workspace_range.py` against
+    `neuronpedia_n1000.npz`: the script's own classifier flags nearly the
+    whole network (L0-26, L38-59) as ">50% workspace", too broad to be "a
+    small fixed set" and likely conflating early "not yet committed" cells
+    with real intermediate-concept content; picked instead from the
+    L38-59 rising band (a distinct dip to 27-49% workspace / 45-57% "empty"
+    at L27-37 separates it from the early band), plus L60 despite falling
+    just under the script's cutoff (47%) because Phase 0's own experiments
+    (items 3, 5) found L60 to be exactly where the cleanest causal effects
+    showed up. Full classification saved at
+    `jlens-qwen36/data/lens/workspace_range_neuronpedia_n1000.txt`.
+  - `jlens_qwen/affect_vocab.py` — 369 single-token concept/affect words
+    (resolved from ~390 candidates by filtering to those the tokenizer
+    represents as exactly one token), spanning threat/avoidance,
+    safety/approach, a neutral control band, and the eval-awareness markers
+    CLAUDE.md already calls out elsewhere as a real confound.
+  - `jlens_qwen/fingerprint.py` — `fingerprint()` plus
+    `forward_with_induced_state()`, a small standalone variant of
+    `model.py`'s `forward()` loop (not a modification to it) that applies a
+    per-layer steering intervention to every position while also capturing a
+    *different* set of layers for readout -- neither existing `forward()`
+    nor `forward_with_intervention()` supported both at once.
+  - `scripts/calibrate_phase1_tier1.py` — two dummy states, each a
+    held combination of 2-3 steering vectors across L48/L52 (Phase 0's
+    verbal-report clean-redirect window, alpha=3): state A = basketball +
+    lightning (L48) + spider (L52); state B = tennis + ant (L48) + France
+    (L52). Fingerprinted state A twice, state B once, and the
+    no-intervention baseline once.
+  - **Result:** same state run twice -> euclidean distance 0.000000 exactly
+    (fully deterministic, no hidden noise source in the pipeline);
+    state A vs. state B -> euclidean distance 33.1, cosine distance 0.0029
+    (unambiguously nonzero against the true-zero same-state baseline).
+    Both dummy states sit much farther from the no-intervention baseline
+    (~126 euclidean) than from each other (33.1) -- expected, since A and B
+    share "some intervention is active" and differ only in which concepts.
+    Raw output:
+    [`results/raw/2026-07-18_phase1_tier1_calibration.txt`](results/raw/2026-07-18_phase1_tier1_calibration.txt).
+  - **Read:** tier 1 does what CLAUDE.md's gate requires -- discriminates
+    reliably, doesn't false-positive on a repeated identical state. This
+    was tested against throwaway dummy states purely to validate the
+    pipeline, not against anything meant to represent a real induced
+    disposition. Tiers 2-3 calibration, the association phase, and real
+    state induction are the next slices, not done here.
+
 ---
 
 ## How to append a new entry

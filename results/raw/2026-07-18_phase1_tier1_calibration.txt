@@ -1,0 +1,40 @@
+Loading model + lens...
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 14332.50it/s]
+  MLXLensModel(n_layers=64, d_model=5120)
+  JacobianLens(d_model=5120, n_prompts=1000, source_layers=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62])
+Curated vocab: 369 single-token words
+Workspace layers: [40, 44, 48, 52, 56, 60]
+Probe battery: 12 prompts
+
+Computing fingerprints (state A x2, state B, baseline)...
+  state A (run 1) done
+  state A (run 2) done
+  state B done
+  baseline done
+
+Fingerprint dim: 26568 (12 probes x 6 layers x 369 vocab)
+
+============================================================
+TIER-1 GATE: determinism (same state, twice)
+============================================================
+  A1 vs A2 -- euclidean: 0.000000  cosine dist: 0.000000
+
+============================================================
+TIER-1 GATE: discriminability (different states)
+============================================================
+  A1 vs B   -- euclidean: 33.112576  cosine dist: 0.002928
+  A2 vs B   -- euclidean: 33.112576  cosine dist: 0.002928
+
+============================================================
+Context: distance from no-intervention baseline
+============================================================
+  A1 vs baseline -- euclidean: 125.897484  cosine dist: 0.041689
+  B  vs baseline -- euclidean: 126.360847  cosine dist: 0.044901
+
+============================================================
+GATE VERDICT
+============================================================
+  same-state distance: 0.000000
+  diff-state distance (min over A1/A2 vs B): 33.112576
+  ratio (diff/same): 3311257553.1x
+  PASS: deterministic, and clearly discriminates the two dummy states.

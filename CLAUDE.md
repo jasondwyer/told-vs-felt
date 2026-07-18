@@ -7,7 +7,7 @@ Anthropic's July 2026 interpretability paper, *Verbalizable Representations Form
 This project has two parts, in sequence:
 
 - **Phase 0 (this file's focus):** replicate the paper's core findings locally, on our own hardware, against an open-weight model (Qwen3.6-27B), to ground everything that follows in a working, inspectable pipeline rather than taking the paper's results on faith.
-- **Phase 1 / Phase 2 (roadmap only — not yet built):** use the replicated J-lens as an instrument in a novel experiment testing whether LLMs have discriminable, and possibly valenced, internal states — modeled loosely on the drug discrimination paradigm from behavioral pharmacology. See "Roadmap" below. Do not start building Phase 1/2 tooling until Phase 0 is working and validated.
+- **Phase 1 (early setup in progress) / Phase 2 (roadmap only — not yet built):** use the replicated J-lens as an instrument in a novel experiment testing whether LLMs have discriminable, and possibly valenced, internal states — modeled loosely on the drug discrimination paradigm from behavioral pharmacology. See "Roadmap" below for the full design. Phase 1's tier-1 fingerprinting/calibration harness is the first slice under active development (see `RESULTS.md`'s "Phase 1 — early setup" section); do not start Phase 2 (self-modification/convergence) tooling until Phase 1 is validated.
 
 ## Hardware & environment
 
