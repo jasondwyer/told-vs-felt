@@ -94,6 +94,24 @@ For each, note where Qwen3.6-27B's results qualitatively match the paper's Claud
 
 This section preserves the reasoning behind Phase 1/2 so it isn't lost between sessions. Do not start implementation until Phase 0 is validated and we've explicitly agreed to move forward.
 
+> **STATUS (2026-07-19) — Phase 1/2 built on steering vectors; rung-3 result is
+> NEGATIVE; Phase 3 (LoRA) trigger reached; decision pending. See
+> [`FINDINGS.md`](FINDINGS.md) and `RESULTS.md`.** Phase 0 replicated all five
+> J-space properties. Phase 1/2 rung-3 tooling was built and validated against
+> controls (fingerprinting + tiers 1/3, state substrate, rating elicitation,
+> SPSA convergence loop, forced-choice mechanism — all instruments pass their
+> positive/negative controls). Run against dummy/neutral states, **both** rung-3
+> channels are flat: convergence-via-rating (the scalar rating is weak and
+> basis-agnostic) and forced-choice (steering bias does not propagate to the
+> choice position). Root cause is steering's known limitation vs. LoRA — weak +
+> local, not pervasive — which is exactly the Phase 3 reconsideration trigger
+> below. Per the user (2026-07-19) we are **documenting the negative and
+> rescoping, NOT starting the LoRA build**; LoRA remains the roadmap-sanctioned
+> escalation if we later choose to pursue a positive result, with its
+> baked-in-affect confound (see Phase 3) explicitly on the table. The design
+> text below is preserved as written; this note records the outcome so it isn't
+> read as still-open forward plan.
+
 ### What this line of work can and cannot show
 
 The goal is often shorthanded as "test whether the model feels something," but that phrase compresses three separable claims, and being precise about which is which is what keeps the design honest:
