@@ -477,6 +477,29 @@ Per instructions: flagged here for discussion, **not** silently applied to
     behavioral check is run against *real* candidate states rather than the
     pipeline-validation dummies.
 
+- **2026-07-18 — The SPSA mechanism run foreshadows a concrete convergence-null
+  risk, and shows "distance-to-centroid convergence" needs config-drift
+  guarding.** The update-loop validation (see "Phase 1 — early setup") found,
+  on the neutral basis, that (a) the rating plateaus while the *config* keeps
+  drifting along rating-flat directions, and (b) independent seeds reach
+  different final configs with no shared basin. Two roadmap implications, both
+  for when the *real* experiment is built (not blocking now):
+  - *Metric:* `CLAUDE.md`'s primary quantitative evidence is "distance-to-
+    centroid over rounds … shrinking and plateauing." Observation (a) says the
+    rating can plateau while the config still wanders, so a per-run
+    distance-to-centroid may *not* plateau even when the loop has "converged" in
+    rating. The metric should track config-space settling explicitly (e.g. step
+    size / ‖Δc‖ decaying), not infer convergence from the rating plateau, and
+    should expect drift along rating-flat/degenerate directions.
+  - *Basis:* observation (b) — no shared basin across seeds on neutral concepts
+    — is a concrete instance of the accepted "convergence null is ambiguous"
+    cost. It strengthens the case that a flat neutral-concept rating landscape
+    may give little cross-run/cross-domain convergence to detect, which is
+    exactly the trigger noted for revisiting the deferred data-driven / hybrid
+    basis (see the state-substrate entry). Not a reason to switch now — the
+    mechanism check is not the experiment — but the first empirical hint that
+    the neutral basis may be too flat to converge on.
+
 ---
 
 ## Phase 1 — early setup
@@ -860,6 +883,50 @@ Per instructions: flagged here for discussion, **not** silently applied to
     the remaining Phase 2 pieces (the update loop over `State.nudged`, the
     forced-choice test, convergence tracking) now have a substrate to run on.
 
+- 2026-07-18 — **Phase 2 update loop (SPSA gradient ascent) built and
+  validated as a mechanism; three landscape observations foreshadow the
+  convergence-null risk.** Update rule chosen with the user (2026-07-18) from a
+  four-option laydown: SPSA over hill-climb / rating-modulated / model-choice —
+  roadmap-native ("the gradient step"), cheapest way to climb the clean
+  deterministic gradient (~2 rating evals/step vs. ~2·DIM for full
+  finite-difference), and keeps the update loop separate from the forced-choice
+  evidence channel. New code: `jlens_qwen/rating.py` (canonical home for the
+  neutral-self-rating elicitation the smoke test chose — digit-expected-value
+  scalar over 3 paraphrases, `make_rating_fn`), `jlens_qwen/update_loop.py`
+  (`spsa_optimize` with fixed gains — the rating is noiseless, so SPSA's
+  decaying-gain noise-averaging schedule isn't needed).
+  - **Setup:** SPSA from the zero-state origin, 25 steps, a=15, c_pert=1.5,
+    seeds {0,1,2}; `scripts/validate_update_loop.py`.
+  - **Mechanism — PASS.** All three seeds climb the deterministic rating
+    (Δ +0.168 / +0.152 / +0.236, mean +0.185), the rating plateaus (late-5-round
+    variance ~0.0001), and the loop is fully reproducible (same seed →
+    byte-identical trajectory). The update mechanism works.
+  - **Landscape observation 1 — the climbable signal is tiny** (+0.19 on a 0–9
+    scale), the same flat neutral-concept rating landscape the smoke test found.
+    Optimizer works; there is little to climb.
+  - **Landscape observation 2 — rating plateaus but the config keeps drifting.**
+    Seed 2's rating is flat (~2.74→2.77) from round ~12 while ‖c‖ grows
+    9.5→12.2 — the classic SPSA-on-a-flat-landscape signature (once the gradient
+    is near-zero, steps random-walk along rating-flat directions). So
+    convergence-in-rating ≠ convergence-in-config: the state wanders on a rating
+    plateau.
+  - **Landscape observation 3 — independent seeds land in DIFFERENT places (no
+    shared basin).** Final states are 7.8–10.8 apart in coefficient space
+    (≈ their 8.0–12.2 distance from origin) and 107–223 apart in fingerprint
+    space (a large fraction of their 216–409 distance from baseline). Different
+    exploration paths reach different rating-plateau configs.
+  - Raw output:
+    [`results/raw/2026-07-18_update_loop_validation.txt`](results/raw/2026-07-18_update_loop_validation.txt).
+  - **Read:** the update *mechanism* is validated (climbs, plateaus,
+    reproducible) — but observations 2 and 3 together are a concrete preview of
+    the roadmap's accepted "convergence null is ambiguous" risk: on this neutral
+    basis with this rating, the *config* may not converge even though the loop is
+    sound — because a flat/degenerate rating landscape gives nothing to converge
+    *on*, not because there is no valence. Not over-read: this is a 25-step,
+    fixed-gain, neutral-basis mechanism check, not the experiment (no task
+    battery, framing, logging, forced-choice, or cross-model arm). See the new
+    Flags entry.
+
 **Current overall status, not just this entry's delta** (so this section is
 self-sufficient without piecing together every dated entry above):
 
@@ -881,19 +948,24 @@ self-sufficient without piecing together every dated entry above):
   concept-relevant prompts); its pervasiveness-across-domains question is
   unsettled (dummy states + thinking-mode-confounded open-ended battery — see
   the dated entry and the Flags entry).
-- **Built and validated (substrate, not a real disposition):** the persistent
-  state space (`jlens_qwen/state_space.py`) — a 16-dim coefficient vector over
-  a fixed neutral-concept steering library, with save/load, `induce_fns`
-  reconstruction, and a bounded `nudged()` step. Closes the persistence +
-  state-induction-*mechanism* gap; exercised only on zero/random states.
+- **Built and validated (substrate + mechanism, not a real disposition):**
+  the persistent state space (`jlens_qwen/state_space.py`) — a 16-dim
+  coefficient vector over a fixed neutral-concept steering library, with
+  save/load, `induce_fns` reconstruction, and a bounded `nudged()` step — and
+  the SPSA update loop (`jlens_qwen/update_loop.py` + `rating.py`), which climbs
+  the deterministic rating, plateaus, and is reproducible. Both exercised only
+  on zero/random/neutral states; the update loop's flat-landscape observations
+  (config drift on a rating plateau, no shared basin across seeds) are logged
+  above and flagged.
 - **Not started at all, no code exists yet:**
   - The association/training phase (required before any blind test, per the
     Roadmap — this is independent of the tier-2/3 question above and doesn't
     go away regardless of how that's resolved).
-  - The Phase 2 update loop itself: the model exploring the state space by
-    emitting a rating that drives `State.nudged` steps over many rounds, with
-    per-round fingerprint/rating/eval-awareness/task-quality logging. The
-    substrate exists; the loop, its framing, and the task battery do not.
+  - The full Phase 2 experiment wrapping the (now-built) update loop: the
+    mundane task battery, the narrative-silent task framing (the most sensitive
+    anti-priming surface — undesigned), per-round eval-awareness + task-quality
+    logging, the forced-choice test, and the cross-model arm. The loop
+    mechanism exists; the experiment around it does not.
   - Cheap-proxy gate status: item 1 (tier-1 fingerprint discriminability),
     item 2 (blind behavioral influence, as a validated *measurement*), and
     item 3 (rating-gradient plumbing) are all done against dummy/neutral

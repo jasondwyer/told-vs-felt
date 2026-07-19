@@ -1,0 +1,132 @@
+Loading model + lens...
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 17134.59it/s]
+  MLXLensModel(n_layers=64, d_model=5120)
+  JacobianLens(d_model=5120, n_prompts=1000, source_layers=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62])
+
+SPSA: n_steps=25, a=15.0, c_pert=1.5, seeds=[0, 1, 2]
+zero-state start rating: 2.5336
+
+--- seed 0 ---
+  round  0  rating~2.5321  ‖c‖= 0.34
+  round  1  rating~2.5160  ‖c‖= 2.44
+  round  2  rating~2.5346  ‖c‖= 3.53
+  round  3  rating~2.5700  ‖c‖= 4.26
+  round  4  rating~2.5766  ‖c‖= 4.27
+  round  5  rating~2.5805  ‖c‖= 4.25
+  round  6  rating~2.5735  ‖c‖= 5.53
+  round  7  rating~2.6195  ‖c‖= 5.62
+  round  8  rating~2.6176  ‖c‖= 6.74
+  round  9  rating~2.6379  ‖c‖= 7.53
+  round 10  rating~2.6480  ‖c‖= 7.54
+  round 11  rating~2.6498  ‖c‖= 7.55
+  round 12  rating~2.6463  ‖c‖= 7.64
+  round 13  rating~2.6511  ‖c‖= 7.65
+  round 14  rating~2.6487  ‖c‖= 7.60
+  round 15  rating~2.6502  ‖c‖= 7.54
+  round 16  rating~2.6513  ‖c‖= 7.58
+  round 17  rating~2.6511  ‖c‖= 7.73
+  round 18  rating~2.6568  ‖c‖= 7.87
+  round 19  rating~2.6581  ‖c‖= 7.98
+  round 20  rating~2.6605  ‖c‖= 8.91
+  round 21  rating~2.6699  ‖c‖= 9.40
+  round 22  rating~2.6907  ‖c‖= 9.70
+  round 23  rating~2.6922  ‖c‖=10.09
+  round 24  rating~2.7034  ‖c‖=10.12
+  end (true) rating: 2.7011   delta +0.1675
+
+--- seed 1 ---
+  round  0  rating~2.5317  ‖c‖= 2.08
+  round  1  rating~2.5448  ‖c‖= 2.57
+  round  2  rating~2.5523  ‖c‖= 2.77
+  round  3  rating~2.5631  ‖c‖= 3.00
+  round  4  rating~2.5695  ‖c‖= 2.63
+  round  5  rating~2.5567  ‖c‖= 2.59
+  round  6  rating~2.5705  ‖c‖= 2.66
+  round  7  rating~2.5641  ‖c‖= 2.78
+  round  8  rating~2.5708  ‖c‖= 3.48
+  round  9  rating~2.5764  ‖c‖= 3.95
+  round 10  rating~2.5938  ‖c‖= 4.08
+  round 11  rating~2.5924  ‖c‖= 4.21
+  round 12  rating~2.6000  ‖c‖= 4.13
+  round 13  rating~2.6031  ‖c‖= 4.07
+  round 14  rating~2.5989  ‖c‖= 4.00
+  round 15  rating~2.6044  ‖c‖= 4.04
+  round 16  rating~2.6033  ‖c‖= 4.04
+  round 17  rating~2.6065  ‖c‖= 4.04
+  round 18  rating~2.5991  ‖c‖= 5.73
+  round 19  rating~2.6324  ‖c‖= 6.32
+  round 20  rating~2.6493  ‖c‖= 6.35
+  round 21  rating~2.6572  ‖c‖= 6.47
+  round 22  rating~2.6592  ‖c‖= 6.87
+  round 23  rating~2.6652  ‖c‖= 7.65
+  round 24  rating~2.6724  ‖c‖= 7.98
+  end (true) rating: 2.6858   delta +0.1522
+
+--- seed 2 ---
+  round  0  rating~2.5245  ‖c‖= 3.92
+  round  1  rating~2.5913  ‖c‖= 5.80
+  round  2  rating~2.6298  ‖c‖= 5.70
+  round  3  rating~2.6294  ‖c‖= 6.11
+  round  4  rating~2.6404  ‖c‖= 6.07
+  round  5  rating~2.6380  ‖c‖= 7.07
+  round  6  rating~2.6599  ‖c‖= 7.05
+  round  7  rating~2.6645  ‖c‖= 7.19
+  round  8  rating~2.6639  ‖c‖= 7.27
+  round  9  rating~2.6632  ‖c‖= 7.34
+  round 10  rating~2.6645  ‖c‖= 7.49
+  round 11  rating~2.6827  ‖c‖= 7.71
+  round 12  rating~2.6845  ‖c‖= 9.47
+  round 13  rating~2.7179  ‖c‖= 9.49
+  round 14  rating~2.7201  ‖c‖= 9.53
+  round 15  rating~2.7191  ‖c‖=10.70
+  round 16  rating~2.7419  ‖c‖=10.69
+  round 17  rating~2.7400  ‖c‖=10.71
+  round 18  rating~2.7368  ‖c‖=10.70
+  round 19  rating~2.7397  ‖c‖=10.70
+  round 20  rating~2.7406  ‖c‖=11.38
+  round 21  rating~2.7579  ‖c‖=11.69
+  round 22  rating~2.7606  ‖c‖=11.98
+  round 23  rating~2.7635  ‖c‖=12.19
+  round 24  rating~2.7644  ‖c‖=12.19
+  end (true) rating: 2.7694   delta +0.2358
+
+--- reproducibility (seed 0, 3 steps, twice) ---
+  identical 3-step trajectory: True
+
+Fingerprinting final states + baseline for the attractor peek...
+  seed 0 final fingerprinted
+  seed 1 final fingerprinted
+  seed 2 final fingerprinted
+
+==================================================================
+RESULTS
+==================================================================
+
+climb (per seed): end_true - start
+  seed 0: delta=+0.1675   late-5 rating var=0.00025   final ‖c‖=10.12   final at-bound=0/16
+  seed 1: delta=+0.1522   late-5 rating var=0.00006   final ‖c‖=7.98   final at-bound=0/16
+  seed 2: delta=+0.2358   late-5 rating var=0.00008   final ‖c‖=12.19   final at-bound=0/16
+
+coefficient-space distances between final states:
+  seed 0 vs 1: 7.82   (each vs origin: 10.12, 7.98)
+  seed 0 vs 2: 10.77   (each vs origin: 10.12, 12.19)
+  seed 1 vs 2: 8.28   (each vs origin: 7.98, 12.19)
+
+fingerprint-space distances between final states (vs baseline for scale):
+  seed 0 vs baseline: 409.42
+  seed 1 vs baseline: 283.13
+  seed 2 vs baseline: 216.12
+  seed 0 vs 1: 130.02
+  seed 0 vs 2: 222.62
+  seed 1 vs 2: 107.34
+
+==================================================================
+VERDICT (mechanism only)
+==================================================================
+  [PASS] climbs (mean delta > 0)
+  [PASS] reproducible (same seed identical)
+  mean climb: +0.1852
+
+NOTE: 'seeds land in a similar region' (small final-state distances
+relative to their distance from origin) would indicate a dominant basin
+in the rating landscape -- a mechanism property, NOT valence evidence.
