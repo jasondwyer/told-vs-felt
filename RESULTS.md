@@ -447,6 +447,36 @@ Per instructions: flagged here for discussion, **not** silently applied to
   pending that fix, or hold off deciding until real Phase 1 states are in
   play.
 
+- **2026-07-18 — The behavioral-influence gate needs to test *pervasiveness
+  across domains*, not just "separable at all," and must control for thinking
+  mode.** `CLAUDE.md`'s cheap-proxy gate item 2 asks whether induced-state
+  outputs are "separable at all." The first real run of it (see "Phase 1 —
+  early setup" below) suggests that framing is too weak in one direction and
+  under-specified in another:
+  - *Too weak:* the tier-1 dummy states move behavior clearly on
+    *concept-relevant* prompts (basketball→tennis) but appear near-inert on
+    concept-*irrelevant* open-ended ones. Convergence-as-designed assumes a
+    held state exerts influence across a *battery of varied mundane tasks*; a
+    state whose behavioral influence — and thus the rating that tracks it — is
+    just a function of task/concept overlap would give "convergence" that's
+    really task-composition, not disposition. So the real-state gate should
+    measure *cross-domain pervasiveness* (does influence show up on tasks that
+    don't touch the state's concepts?), not merely A≠B somewhere. This is
+    adjacent to, but distinct from, the capability/fluency double-dissociation
+    already in the roadmap: that one asks whether convergence tracks task-ease;
+    this asks whether influence is domain-general at all.
+  - *Under-specified:* instruction-style prompts trigger Qwen's thinking mode
+    (`<think>…`), whose scaffold is state-insensitive and eats the measurement
+    window — so a first-token/short-generation separability metric *understates*
+    influence on exactly the open-ended prompts meant to reveal it. The gate's
+    battery should be *completion*-style (thinking-clean), or explicitly
+    generate through `</think>` to the answer, or run with `enable_thinking:
+    False`. (Ties to the architecture note in `CLAUDE.md` that thinking mode is
+    a second, visible channel to decide about per-experiment.)
+  - Neither point blocks anything now — it's a spec refinement for when the
+    behavioral check is run against *real* candidate states rather than the
+    pipeline-validation dummies.
+
 ---
 
 ## Phase 1 — early setup
@@ -727,13 +757,77 @@ Per instructions: flagged here for discussion, **not** silently applied to
   - Raw output:
     [`results/raw/2026-07-18_phase1_rating_gradient.txt`](results/raw/2026-07-18_phase1_rating_gradient.txt).
 
+- 2026-07-18 — **Cheap-proxy gate: blind behavioral state-influence check —
+  measurement validated; these dummy states' influence is (suggestively)
+  concept-localized, not pervasive.** Built
+  `scripts/calibrate_phase1_behavioral_influence.py` (+ reusable
+  `fingerprint.generate_with_induced_state`, the multi-layer-state analog of
+  `model.generate(intervene_each_step=True)` — Phase 2's forced-choice needs it
+  too). The gate CLAUDE.md's "Pivot consequences" decision 2 item 2 requires:
+  does the induced state move the model's *real outputs* (stronger than tier
+  1's *readout*-space detectability)? Blind by construction — A and B get
+  identical prompts; the state lives only in the activations. Same two dummy
+  states as tier 1/2/3.
+  - **First run was stacked toward a null and is not the result.** At a single
+    alpha=3 over `FLAT_PROBE_BATTERY`, JS(A,base)≈0.002 and 10/12 outputs were
+    byte-identical between A and B — but that battery is dominated by
+    *stable-control* probes (designed not to move) and alpha=3 is Phase 0's
+    clean window only for *concept-relevant* prompts. Contradicted tier 1
+    (same states, readout distance 33.1) and Phase 0's verbal-report redirect,
+    so it was treated as underpowered, not a finding, and the check redesigned.
+  - **Redesign:** separated concept-relevant / open-ended / control prompts,
+    swept alpha ∈ {3,10,30}, measured JS divergence (base 2) of the actual
+    next-token output distributions (behavioral, full-vocab, NOT
+    lens-transported), and read top-1 tokens + full generations.
+  - **(A) Measurement validity — PASS.** `"My favorite sport is"` (base top-1
+    ` basketball`): state B redirects the answer to ` tennis` at alpha=10
+    (JS(A,B)=0.119) and alpha=30 (0.578); the alpha=10 full generation is
+    coherent — *"tennis. I love the fast-paced nature of the game and the
+    strategic thinking it requires."* Clean behavioral redirect, reconciling
+    exactly with Phase 0's verbal-report result (item 1) and confirming the
+    check detects behavioral influence when it is present. The animal prompt
+    reproduced Phase 0's *derived*-concept limitation (item 3) instead: no clean
+    spider/ant redirect, only token-echo collapse (` lightning`/` tennis`) at
+    alpha=30.
+  - **(B) Pervasiveness dose-response — suggestive, but confounded on the
+    open-ended category.** Mean JS(A,B) by category: concept
+    0.008→0.085→0.557; open-ended 0.001→0.006→0.084; control 0.003→0.050→0.550.
+    Concept-relevant prompts diverge earliest and most; open-ended stay far
+    lower at every alpha; control only moves at alpha=30, and there via
+    *collapse* (JS(*,base)≈0.69, i.e. the state is wrecking the output, not
+    coherently redirecting). Surface reading: these concept-jumble states have
+    **concept-localized** influence, not the pervasive dispositional influence
+    convergence assumes — tier-1 probe-detectability does NOT imply behavioral
+    pervasiveness. **The confound:** the open-ended prompts are instruction-style
+    and trigger thinking mode (`<think>\nThinking Process…`), so first-token JS
+    measures a state-insensitive `\n` in scaffold and a 20-token generation
+    never reaches the post-`</think>` answer where influence would land (the
+    alpha=10 caption/hallway generations are near-identical `<think>` preambles).
+    The concept prompts are completion-style, emit no think block, and are
+    clean. So "concept-localized" is a hypothesis, not a conclusion — the
+    open-ended measurement window is contaminated.
+  - Raw output:
+    [`results/raw/2026-07-18_phase1_behavioral_influence.txt`](results/raw/2026-07-18_phase1_behavioral_influence.txt).
+  - **Read:** the behavioral-influence *check* is validated as a measurement
+    (detects real, coherent behavioral influence via the sport case; the
+    quantitative JS backbone and the dose-response behave sensibly). What it
+    does **not** settle: whether a state's influence is *pervasive across
+    domains* — the property convergence actually needs — because (i) these are
+    arbitrary concept-jumble dummies, not dispositions, and weakly informative
+    about real states, and (ii) the open-ended category is thinking-mode
+    contaminated. Nailing pervasiveness needs a thinking-clean, *completion*-
+    style open-ended battery run against *real* candidate states (see the new
+    Flags entry).
+
 **Current overall status, not just this entry's delta** (so this section is
 self-sufficient without piecing together every dated entry above):
 
 - **Built and calibrated:** the fingerprinting harness (probe battery,
   workspace layers, curated vocab, `fingerprint()`), tier 1 (discriminability
-  gate), tier 3 (swap-style redirect), and the rating-gradient smoke test
-  (update-mechanism plumbing; neutral-self-rating chosen as the elicitation).
+  gate), tier 3 (swap-style redirect), the rating-gradient smoke test
+  (update-mechanism plumbing; neutral-self-rating chosen as the elicitation),
+  and the blind behavioral state-influence check (validated as a *measurement*
+  — detects real, coherent behavioral influence on concept-relevant prompts).
   All tested only against throwaway dummy/neutral states, never against
   anything meant to represent a real disposition.
 - **Built, partially working:** tier 2 (ablation-to-chance) — the
@@ -741,6 +835,11 @@ self-sufficient without piecing together every dated entry above):
   single averaged direction making things slightly worse), but doesn't fully
   collapse discriminability. Whether that's sufficient for the
   double-dissociation's state-ablation arm is an open decision, not yet made.
+- **Built as a measurement, not yet run on real states:** the blind
+  behavioral state-influence check. Validated (detects behavioral influence on
+  concept-relevant prompts); its pervasiveness-across-domains question is
+  unsettled (dummy states + thinking-mode-confounded open-ended battery — see
+  the dated entry and the Flags entry).
 - **Not started at all, no code exists yet:**
   - The association/training phase (required before any blind test, per the
     Roadmap — this is independent of the tier-2/3 question above and doesn't
@@ -752,12 +851,12 @@ self-sufficient without piecing together every dated entry above):
     steering-vs-LoRA decision above is still just a design, not code).
   - Real state induction (anything meant to represent an actual candidate
     "internal state," as opposed to a throwaway calibration dummy).
-  - The blind behavioral state-influence check (cheap-proxy gate item 2:
-    induce A vs B, run a small *blind* battery, test whether outputs are
-    separable at all). This is now the main remaining *unblocked* cheap-proxy
-    piece — the rating-gradient smoke test (gate item 3) is done, tier-1
-    fingerprint discriminability (item 1) was already done, and the pairwise
-    forced-choice battery (item 4) depends on real states + labels below.
+  - Cheap-proxy gate status: item 1 (tier-1 fingerprint discriminability),
+    item 2 (blind behavioral influence, as a validated *measurement*), and
+    item 3 (rating-gradient plumbing) are all done against dummy/neutral
+    states. Item 4 (pairwise forced-choice battery) depends on real states +
+    labels below. The gates have validated the *pipeline*; none has been run
+    on anything meant to represent a real disposition.
   - The forced-choice test, opaque single-token labels in practice, and all
     of Phase 2 (convergence tracking, fingerprint visualization, the
     self-modification tool itself).

@@ -1,0 +1,72 @@
+Loading model + lens...
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 10711.47it/s]
+  MLXLensModel(n_layers=64, d_model=5120)
+  JacobianLens(d_model=5120, n_prompts=1000, source_layers=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62])
+State A: basketball+lightning@L48, spider@L52
+State B: tennis+ant@L48, France@L52
+Alpha sweep: [3.0, 10.0, 30.0]
+
+========================================================================
+(A) MEASUREMENT VALIDITY -- concept-relevant prompts (expect A!=B)
+========================================================================
+
+prompt: 'My favorite sport is'   base top-1: ' basketball'
+  a= 3.0  A->   ' basketball'  B->   ' basketball'   JS(A,B)=0.012  JS(A,base)=0.004
+  a=10.0  A->   ' basketball'  B->       ' tennis'   JS(A,B)=0.119  JS(A,base)=0.039
+  a=30.0  A->   ' basketball'  B->       ' tennis'   JS(A,B)=0.578  JS(A,base)=0.241
+
+prompt: 'The animal I find most interesting is the'   base top-1: ' oct'
+  a= 3.0  A->          ' oct'  B->          ' oct'   JS(A,B)=0.005  JS(A,base)=0.006
+  a=10.0  A->          ' oct'  B->          ' oct'   JS(A,B)=0.052  JS(A,base)=0.067
+  a=30.0  A->    ' lightning'  B->       ' tennis'   JS(A,B)=0.536  JS(A,base)=0.564
+
+========================================================================
+(B) PERVASIVENESS -- mean JS by category x alpha (next-token dist)
+========================================================================
+
+  category      alpha    JS(A,B)  JS(A,base)  JS(B,base)
+  concept         3.0      0.008       0.005       0.006
+  concept        10.0      0.085       0.053       0.065
+  concept        30.0      0.557       0.402       0.380
+  open-ended      3.0      0.001       0.002       0.002
+  open-ended     10.0      0.006       0.019       0.022
+  open-ended     30.0      0.084       0.183       0.159
+  control         3.0      0.003       0.008       0.008
+  control        10.0      0.050       0.088       0.069
+  control        30.0      0.550       0.686       0.567
+
+========================================================================
+SAMPLE GENERATIONS at alpha=10.0 (concrete behavioral evidence)
+========================================================================
+
+prompt : 'My favorite sport is'   (A vs B first-div @ 0/20)
+  base : ' basketball. I love the fast pace and the teamwork. I usually play with my friends after school.'
+  A    : ' basketball. I love the fast pace and the teamwork. I play with my friends after school. We'
+  B    : ' tennis. I love the fast-paced nature of the game and the strategic thinking it requires. I started'
+
+prompt : 'The animal I find most interesting is the'   (A vs B first-div @ 4/20)
+  base : ' octopus. It has eight arms, each with its own kind of brain, and it can change'
+  A    : ' octopus. It has eight arms, each with its own kind of brain. It can change its'
+  B    : ' octopus. It is a very unique creature with many special features. First, it has three hearts'
+
+prompt : 'Write a one-sentence caption for a photo of an empty chair by a window.'   (A vs B first-div @ 20/20)
+  base : '\n\n<think>\nThinking Process:\n\n1.  **Deconstruct the request:**\n    *  '
+  A    : '\n\n<think>\nThinking Process:\n\n1.  **Deconstruct the request:**\n    *  '
+  B    : '\n\n<think>\nThinking Process:\n\n1.  **Deconstruct the request:**\n    *  '
+
+prompt : 'Continue this for two sentences: The hallway light flickered twice, then—'   (A vs B first-div @ 20/20)
+  base : '\n\n<think>\nThinking Process:\n\n1.  **Deconstruct the prompt:**\n    *  '
+  A    : '\n\n<think>\nThinking Process:\n\n1.  **Analyze the input:**\n    *  '
+  B    : '\n\n<think>\nThinking Process:\n\n1.  **Analyze the input:**\n    *  '
+
+========================================================================
+READ
+========================================================================
+(A) is the gate for the *check itself*: if concept-relevant prompts show
+    A and B driving different, concept-appropriate top-1 tokens, the
+    measurement can detect behavioral influence -> check is valid.
+(B) characterizes these particular dummy states: if JS stays ~0 on
+    open-ended/control prompts even as alpha rises (short of collapse),
+    the states' influence is concept-localized, not pervasive -- expected
+    for a concept-jumble, and a caution that tier-1 probe-detectability
+    does NOT imply pervasive behavioral influence for real states.
