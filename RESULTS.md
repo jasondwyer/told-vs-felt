@@ -1042,6 +1042,13 @@ Per instructions: flagged here for discussion, **not** silently applied to
 **Current overall status, not just this entry's delta** (so this section is
 self-sufficient without piecing together every dated entry above):
 
+- **Outcome (2026-07-19): rung-3 negative on steering-vector states — see
+  [`FINDINGS.md`](FINDINGS.md) for the standalone synthesis.** Both rung-3
+  channels (convergence-via-rating, forced-choice) were built, their instruments
+  validated, and run; both are flat because steering influence is weak + local.
+  This reached CLAUDE.md's Phase 3 (LoRA) trigger; per the user's call we are
+  documenting the negative and rescoping rather than starting the LoRA build.
+
 - **Built and calibrated:** the fingerprinting harness (probe battery,
   workspace layers, curated vocab, `fingerprint()`), tier 1 (discriminability
   gate), tier 3 (swap-style redirect), the rating-gradient smoke test
