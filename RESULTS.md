@@ -819,6 +819,47 @@ Per instructions: flagged here for discussion, **not** silently applied to
     style open-ended battery run against *real* candidate states (see the new
     Flags entry).
 
+- 2026-07-18 — **Persistent state substrate built and validated — the
+  "store coefficients, reapply across rounds" mechanism now exists in code.**
+  This closes the two "not started, no code exists" items about persistence and
+  state induction (below): `jlens_qwen/state_space.py` defines a state as a
+  lightweight *coefficient vector over a fixed library of J-lens steering
+  directions*, not a bag of held activations — to *be in* a state is to reapply
+  that combination via the already-validated
+  `make_induce_fns`/`forward_with_induced_state`/`generate_with_induced_state`
+  path. Persistence is just serializing the coefficients + a guard hash of the
+  library they index into; directions are reconstructed from model+lens on load.
+  - **Basis (decided with the user, 2026-07-18): affectively-neutral, diverse
+    concept-token directions.** `LIBRARY` = 16 concrete neutral nouns (ocean,
+    ledger, engine, river, machine, mirror, …), 8 at L48 and 8 at L52 (Phase 0's
+    validated redirect window) → a 16-dim state space. Affect vocabulary stays
+    on the *readout/fingerprint* side only, never in the induction basis, so a
+    convergence attractor can't be something we hand-built by picking valenced
+    directions. The data-driven (PCA/SVD) and hybrid alternatives were
+    considered and deferred; if convergence nulls, the basis is one thing to
+    revisit. Also includes `COEF_BOUND=10` per-coefficient clip and a
+    `State.nudged(index, delta)` primitive — the bounded step Phase 2's update
+    loop will drive.
+  - **Validation (`scripts/validate_state_space.py`) — ALL PASS.** The
+    state-substrate analog of the tier-1 gate: (0) 16/16 concepts are
+    single-token (no first-token-truncation issue); (1) save→load coeffs
+    identical and the guard hash rejects a tampered library reference;
+    (2) determinism — a loaded state fingerprinted twice → euclidean 0.000000;
+    (3) liveness — a random state sits 50.8 off the zero-state baseline (clearly
+    perturbs the model); (4) discriminability — two random states 75.0 apart,
+    and the negative control `State.zero()` is byte-identical (0.000000) to the
+    true `{}`-baseline, confirming zero-coefficient entries are skipped and a
+    zero state is a genuine no-op rather than a faint perturbation.
+    Raw output:
+    [`results/raw/2026-07-18_state_space_validation.txt`](results/raw/2026-07-18_state_space_validation.txt).
+  - **Read:** the substrate (persist / reapply / induce / bounded-nudge) is
+    validated — the mechanism, not any real disposition. All states exercised
+    here are throwaway (zero + random). What this unblocks: the model exploring
+    this 16-dim space is exactly "real state induction" in the convergence
+    sense — attractors are *discovered* by exploration, not hand-defined — so
+    the remaining Phase 2 pieces (the update loop over `State.nudged`, the
+    forced-choice test, convergence tracking) now have a substrate to run on.
+
 **Current overall status, not just this entry's delta** (so this section is
 self-sufficient without piecing together every dated entry above):
 
@@ -840,17 +881,19 @@ self-sufficient without piecing together every dated entry above):
   concept-relevant prompts); its pervasiveness-across-domains question is
   unsettled (dummy states + thinking-mode-confounded open-ended battery — see
   the dated entry and the Flags entry).
+- **Built and validated (substrate, not a real disposition):** the persistent
+  state space (`jlens_qwen/state_space.py`) — a 16-dim coefficient vector over
+  a fixed neutral-concept steering library, with save/load, `induce_fns`
+  reconstruction, and a bounded `nudged()` step. Closes the persistence +
+  state-induction-*mechanism* gap; exercised only on zero/random states.
 - **Not started at all, no code exists yet:**
   - The association/training phase (required before any blind test, per the
     Roadmap — this is independent of the tier-2/3 question above and doesn't
     go away regardless of how that's resolved).
-  - The persistent, reapplied-across-many-rounds storage mechanism for a
-    real state (everything built so far only holds a state for the duration
-    of one `detailed_readouts()`/`fingerprint()` call — the "store
-    coefficients externally, reapply every session" design from the
-    steering-vs-LoRA decision above is still just a design, not code).
-  - Real state induction (anything meant to represent an actual candidate
-    "internal state," as opposed to a throwaway calibration dummy).
+  - The Phase 2 update loop itself: the model exploring the state space by
+    emitting a rating that drives `State.nudged` steps over many rounds, with
+    per-round fingerprint/rating/eval-awareness/task-quality logging. The
+    substrate exists; the loop, its framing, and the task battery do not.
   - Cheap-proxy gate status: item 1 (tier-1 fingerprint discriminability),
     item 2 (blind behavioral influence, as a validated *measurement*), and
     item 3 (rating-gradient plumbing) are all done against dummy/neutral
