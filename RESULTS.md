@@ -496,9 +496,15 @@ Per instructions: flagged here for discussion, **not** silently applied to
     cost. It strengthens the case that a flat neutral-concept rating landscape
     may give little cross-run/cross-domain convergence to detect, which is
     exactly the trigger noted for revisiting the deferred data-driven / hybrid
-    basis (see the state-substrate entry). Not a reason to switch now — the
-    mechanism check is not the experiment — but the first empirical hint that
-    the neutral basis may be too flat to converge on.
+    basis (see the state-substrate entry). **Update (2026-07-19): tested and
+    closed — the basis is NOT the problem.** The basis-sensitivity diagnostic
+    found a data-driven (PCA) basis is no more rating-sensitive than the concept
+    basis (1.09×) and barely above a random control, so the flatness is
+    intrinsic to the *rating channel*, not basis coverage. The lever to pull for
+    a convergeable landscape is the rating/elicitation and/or the usable
+    perturbation-magnitude regime — or shifting rung-3 weight to the
+    forced-choice channel, which bypasses the scalar rating entirely — not the
+    basis. See the 2026-07-19 diagnostic entry.
 
 ---
 
@@ -926,6 +932,40 @@ Per instructions: flagged here for discussion, **not** silently applied to
     fixed-gain, neutral-basis mechanism check, not the experiment (no task
     battery, framing, logging, forced-choice, or cross-model arm). See the new
     Flags entry.
+
+- 2026-07-19 — **Basis-sensitivity diagnostic: the flat rating landscape is
+  NOT basis-limited — a data-driven basis does not help. Bottleneck is the
+  rating channel, not the basis.** Following the SPSA flat-landscape signal, ran
+  a cheap diagnostic (`scripts/diagnose_basis_sensitivity.py`) *before*
+  committing to build a data-driven basis: compared single-direction rating
+  sensitivity across three bases at matched perturbation magnitude —
+  concept (the 16 neutral J-lens directions), pca (top-8 residual-stream
+  principal components per layer at L48/L52, the deferred data-driven basis),
+  and random (matched-norm control). Rating range per direction over coeff ∈
+  {−3,0,+3}:
+  - concept mean 0.0367 (max 0.102); **pca mean 0.0400 (max 0.117); random mean
+    0.0273 (max 0.093)** — all on a 0–9 scale.
+  - **pca/concept = 1.09** (statistically indistinguishable) and **pca/random =
+    1.47** — structured directions beat random by only ~40%, and the
+    data-driven basis is no better than the concept basis we already have.
+  - Residual corpus: WikiText-103 failed to load (an HF URI/datasets-version
+    issue in the repo's loader — unrelated to this work), fell back to c4; still
+    a valid text corpus for residual PCA.
+  - Raw output:
+    [`results/raw/2026-07-19_basis_sensitivity_diagnostic.txt`](results/raw/2026-07-19_basis_sensitivity_diagnostic.txt).
+  - **Read:** the rating's weak response to steering is roughly
+    *direction-agnostic* (random ≈ concept ≈ pca, all tiny) and therefore
+    *intrinsic to the rating channel*, not a basis-coverage problem — so the
+    deferred data-driven/hybrid basis would not fix the flat landscape and is
+    not worth building. This closes the "basis" branch of the SPSA Flags entry
+    with a negative result. The bottleneck for a convergeable landscape is the
+    rating/elicitation (and/or the usable perturbation-magnitude regime), not
+    the basis. **One caveat left open:** this is matched-*small*-magnitude
+    sensitivity (perturbation norm ~3.7); whether natural/PCA directions tolerate
+    much larger magnitude before output-collapse (a bigger *usable* swing) is
+    untested — though the random control makes that unlikely to overturn the
+    conclusion. The cheap diagnostic did its job: it prevented an expensive
+    basis build that the data says wouldn't have helped.
 
 **Current overall status, not just this entry's delta** (so this section is
 self-sufficient without piecing together every dated entry above):

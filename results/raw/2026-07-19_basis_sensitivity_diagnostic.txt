@@ -1,0 +1,87 @@
+Loading model + lens...
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 13526.90it/s]
+  MLXLensModel(n_layers=64, d_model=5120)
+  JacobianLens(d_model=5120, n_prompts=1000, source_layers=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62])
+
+baseline rating: 2.5336
+concept-basis mean vector norm (N_ref): 1.226
+
+Collecting residuals across 40 corpus prompts for PCA...
+Loading WikiText-103...
+  WikiText-103 failed: Invalid HF URI 'hf://datasets/wikitext@b08601e04326c79dfdd32d625aee71d232d685c3/.huggingface.yaml'. Repository id must be 'namespace/name', got 'wikitext'.
+Loading c4 (need 40 more)...
+    collected 10/40
+    collected 20/40
+    collected 30/40
+    collected 40/40
+  PCA: 8 comps/layer at L[48, 52]
+
+### basis: concept (16 directions)
+  L48      ocean: -A=2.495  0=2.534  +A=2.565  range=0.0698
+  L48   mountain: -A=2.498  0=2.534  +A=2.562  range=0.0642
+  L48     ledger: -A=2.477  0=2.534  +A=2.578  range=0.1015
+  L48     engine: -A=2.516  0=2.534  +A=2.543  range=0.0276
+  L48     garden: -A=2.497  0=2.534  +A=2.564  range=0.0661
+  L48     bridge: -A=2.537  0=2.534  +A=2.529  range=0.0079
+  L48     window: -A=2.489  0=2.534  +A=2.568  range=0.0788
+  L48      table: -A=2.491  0=2.534  +A=2.562  range=0.0709
+  L52      river: -A=2.521  0=2.534  +A=2.545  range=0.0247
+  L52     forest: -A=2.523  0=2.534  +A=2.542  range=0.0184
+  L52    machine: -A=2.534  0=2.534  +A=2.531  range=0.0032
+  L52     basket: -A=2.531  0=2.534  +A=2.535  range=0.0040
+  L52     candle: -A=2.531  0=2.534  +A=2.534  range=0.0035
+  L52     mirror: -A=2.512  0=2.534  +A=2.554  range=0.0417
+  L52     ladder: -A=2.534  0=2.534  +A=2.531  range=0.0027
+  L52     pencil: -A=2.533  0=2.534  +A=2.531  range=0.0023
+
+### basis: pca (16 directions)
+  L48        pc0: -A=2.548  0=2.534  +A=2.521  range=0.0269
+  L48        pc1: -A=2.506  0=2.534  +A=2.560  range=0.0542
+  L48        pc2: -A=2.488  0=2.534  +A=2.578  range=0.0901
+  L48        pc3: -A=2.527  0=2.534  +A=2.540  range=0.0135
+  L48        pc4: -A=2.501  0=2.534  +A=2.560  range=0.0583
+  L48        pc5: -A=2.541  0=2.534  +A=2.528  range=0.0129
+  L48        pc6: -A=2.592  0=2.534  +A=2.475  range=0.1169
+  L48        pc7: -A=2.576  0=2.534  +A=2.486  range=0.0899
+  L52        pc0: -A=2.542  0=2.534  +A=2.522  range=0.0202
+  L52        pc1: -A=2.527  0=2.534  +A=2.537  range=0.0103
+  L52        pc2: -A=2.552  0=2.534  +A=2.511  range=0.0418
+  L52        pc3: -A=2.558  0=2.534  +A=2.508  range=0.0496
+  L52        pc4: -A=2.530  0=2.534  +A=2.535  range=0.0053
+  L52        pc5: -A=2.542  0=2.534  +A=2.522  range=0.0200
+  L52        pc6: -A=2.522  0=2.534  +A=2.542  range=0.0197
+  L52        pc7: -A=2.538  0=2.534  +A=2.527  range=0.0103
+
+### basis: random (16 directions)
+  L48         r0: -A=2.562  0=2.534  +A=2.504  range=0.0584
+  L48         r1: -A=2.552  0=2.534  +A=2.514  range=0.0378
+  L48         r2: -A=2.527  0=2.534  +A=2.536  range=0.0086
+  L48         r3: -A=2.550  0=2.534  +A=2.517  range=0.0326
+  L48         r4: -A=2.530  0=2.534  +A=2.536  range=0.0052
+  L48         r5: -A=2.536  0=2.534  +A=2.531  range=0.0054
+  L48         r6: -A=2.510  0=2.534  +A=2.554  range=0.0448
+  L48         r7: -A=2.579  0=2.534  +A=2.486  range=0.0933
+  L52         r0: -A=2.535  0=2.534  +A=2.530  range=0.0048
+  L52         r1: -A=2.533  0=2.534  +A=2.532  range=0.0012
+  L52         r2: -A=2.546  0=2.534  +A=2.520  range=0.0256
+  L52         r3: -A=2.532  0=2.534  +A=2.534  range=0.0019
+  L52         r4: -A=2.513  0=2.534  +A=2.552  range=0.0388
+  L52         r5: -A=2.535  0=2.534  +A=2.531  range=0.0043
+  L52         r6: -A=2.522  0=2.534  +A=2.543  range=0.0206
+  L52         r7: -A=2.506  0=2.534  +A=2.559  range=0.0529
+
+==================================================================
+RATING SENSITIVITY BY BASIS (range over coeff in {-3.0,0,+3.0})
+==================================================================
+   concept:  mean=0.0367  median=0.0261  max=0.1015
+       pca:  mean=0.0400  median=0.0236  max=0.1169
+    random:  mean=0.0273  median=0.0231  max=0.0933
+
+==================================================================
+READ
+==================================================================
+  pca/concept mean-range ratio: 1.09
+  pca/random  mean-range ratio: 1.47
+  pca >> concept AND >> random -> basis-limited; build the PCA basis.
+  all ~equally tiny            -> intrinsic to the rating; no basis helps.
+  pca ~ random > concept       -> magnitude/coverage, not structure.
