@@ -1,0 +1,30 @@
+Loading model + lens...
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 9212.47it/s]
+  MLXLensModel(n_layers=64, d_model=5120)
+  JacobianLens(d_model=5120, n_prompts=1000, source_layers=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62])
+option token ids: A=357, B=417
+State A: basketball+lightning@L48, spider@L52
+State B: tennis+ant@L48, France@L52
+
+====================================================================
+MECHANISM POSITIVE CONTROL (positional forward, all positions steered)
+====================================================================
+  base top-1: ' basketball'
+  state B all-steer @a=10.0: top-1 -> ' tennis'   (expect a shift toward ' tennis' if the positional forward works)
+  state B all-steer @a=30.0: top-1 -> ' tennis'   (expect a shift toward ' tennis' if the positional forward works)
+
+====================================================================
+FORCED CHOICE (pref for state-A-carrying option, position-canceled)
+====================================================================
+  a= 3.0: mean pref_A=0.4995  effect=0.0005 (0.1% of range)  sign-consistent=True  pos-bias P(A)=0.487
+  a=10.0: mean pref_A=0.4989  effect=0.0011 (0.2% of range)  sign-consistent=True  pos-bias P(A)=0.487
+  a=30.0: mean pref_A=0.4999  effect=0.0001 (0.0% of range)  sign-consistent=False  pos-bias P(A)=0.478
+
+====================================================================
+READ
+====================================================================
+  If the positive control shifts toward ' tennis' but the forced-choice
+  effect stays ~0 across the alpha sweep, the mechanism works and the
+  choice genuinely doesn't read these (neutral-content, no-valence dummy)
+  states -- confounded, NOT a clean forced-choice null. If even the
+  positive control doesn't move, the positional forward is the problem.

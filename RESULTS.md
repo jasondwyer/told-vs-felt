@@ -477,6 +477,32 @@ Per instructions: flagged here for discussion, **not** silently applied to
     behavioral check is run against *real* candidate states rather than the
     pipeline-validation dummies.
 
+- **2026-07-19 — Phase 3 (LoRA) reconsideration trigger has been reached: both
+  rung-3 measurement channels fail on steering-vector states, and the failures
+  trace to the same root cause (steering influence is weak + local).** The
+  convergent evidence: the scalar rating is flat and basis-agnostic (rating-
+  gradient + SPSA + basis diagnostic), and the forced-choice channel is flat
+  because steering bias on option-passage tokens does not propagate to the
+  choice position (forced-choice probe, mechanism positive control passing). The
+  root cause is the property `CLAUDE.md`'s Phase 3 already identified as
+  steering's limitation vs. LoRA: steering is "an additive nudge at a chosen few
+  points," local to the steered positions, whereas LoRA "reshapes computation
+  across many weight matrices at every position" — pervasive, hence readable at a
+  downstream decision/readout position. `CLAUDE.md`'s Phase 3 names exactly this
+  as the trigger: *"if Phase 1/2 run on steering-vector combinations and show
+  none of the hypothesized discrimination/convergence behavior, that's the point
+  to reconsider whether LoRA's added expressiveness is what's missing."* We are
+  there. A decision point for the user, not a unilateral pivot. Honest options:
+  (a) reconsider the induction method → Phase 3 / LoRA (roadmap-sanctioned; much
+  bigger build, and LoRA carries its own baked-in-affect-confound risk that the
+  narrative-silent prompt framing does not cover, per Phase 3); (b) document the
+  negative result — the steering-vector approach doesn't support rung-3 on this
+  model — as a finding and rescope; (c) exhaust other steering-based
+  forced-choice designs first (low odds: the propagation failure is fairly
+  fundamental to comparison-based readout of local steering). Only the roadmap's
+  specced position-differential forced-choice was tested, so (a)'s "LoRA fixes
+  it" remains a hypothesis.
+
 - **2026-07-18 — The SPSA mechanism run foreshadows a concrete convergence-null
   risk, and shows "distance-to-centroid convergence" needs config-drift
   guarding.** The update-loop validation (see "Phase 1 — early setup") found,
@@ -966,6 +992,52 @@ Per instructions: flagged here for discussion, **not** silently applied to
     untested — though the random control makes that unlikely to overturn the
     conclusion. The cheap diagnostic did its job: it prevented an expensive
     basis build that the data says wouldn't have helped.
+
+- 2026-07-19 — **Forced-choice sensitivity probe: the mechanism works, but a
+  downstream choice cannot read position-differential steering states — the
+  state bias does not propagate through attention. Reaches the roadmap's Phase 3
+  (LoRA) reconsideration trigger.** After the scalar rating was found
+  intrinsically weak, forced choice was made the primary rung-3 channel
+  (bypasses the scalar rating; a binary *comparison* is psychophysically more
+  sensitive than an absolute scalar). Built `jlens_qwen/forced_choice.py`
+  (`forward_with_positional_state` — per-(layer, position) steering, so two
+  option passages in one context carry different states) + a sensitivity probe
+  (`scripts/probe_forced_choice.py`): identical passages, state X steers
+  Option-A's tokens and Y steers Option-B's, model picks A/B from the option-
+  token logits; position-swap cancels position bias, same-state gives the bias
+  baseline.
+  - **Mechanism positive control — PASS.** Applying steering to *every* position
+    via the new positional forward reproduces the known basketball→tennis
+    redirect (base ` basketball` → state-B all-steer → ` tennis` at α=10 and
+    α=30). So the positional forward is not a no-op.
+  - **Forced choice — flat across the whole α sweep.** Position-canceled
+    preference for the state-A-carrying option: effect 0.1% / 0.2% / 0.0% of the
+    choice range at α=3 / 10 / 30, not even sign-consistent at α=30. P(pick A)
+    was identical (to <0.001) whether Option A carried state A, state B, or the
+    same state on both — the choice is 100% position/passage bias.
+  - Raw output:
+    [`results/raw/2026-07-19_forced_choice_probe.txt`](results/raw/2026-07-19_forced_choice_probe.txt).
+  - **Read (the important part):** this is not a bug (positive control passes)
+    and not merely "dummy states lack valence" (the states are clearly different
+    — tier-1 distance 33 — yet don't perturb the choice *at all*, not even
+    without a preference direction). The clean contrast between the passing
+    control (steers the position right before the readout) and the failing
+    choice (steers only the passage tokens, needs the bias to reach the answer
+    position via attention) localizes the cause: **steering-induced state bias
+    is local to the steered positions and does not propagate to a downstream
+    decision position that would compare two states.** Comparison-based forced
+    choice over steering-induced states is therefore structurally unavailable —
+    both states would need to be readable at one decision point, which local
+    steering can't provide. Combined with the flat, basis-agnostic scalar rating,
+    this is a convergent result: **steering-vector states at usable magnitude are
+    too weak/local to support either rung-3 measurement (convergence-via-rating
+    or forced-choice) on neutral content.** That is exactly the concrete trigger
+    `CLAUDE.md`'s Phase 3 names for reconsidering LoRA — whose defining property
+    (reshapes computation at *every* position) is the pervasiveness that steering
+    lacks. Not overclaimed: only the roadmap's specced position-differential
+    forced-choice design was tested, and the "LoRA would fix it" step is a
+    hypothesis (with its own baked-in-affect-confound risk, per Phase 3), not
+    shown. See the new Flags entry.
 
 **Current overall status, not just this entry's delta** (so this section is
 self-sufficient without piecing together every dated entry above):
