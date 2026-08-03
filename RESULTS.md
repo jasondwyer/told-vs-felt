@@ -1263,7 +1263,48 @@ Per instructions: flagged here for discussion, **not** silently applied to
     non-diversity survives that recheck, it echoes the earlier
     measurable-vs-nameable tension and §3's tension, and the honest move is to
     weaken §2's claim rather than paper over it. This is a decision point, not a
-    clean proceed-to-§5.
+    clean proceed-to-§5. *[Substantially resolved 2026-08-03 by the diversity
+    recheck below — the 0.867 was a single-prompt artifact; across the full
+    battery the clean directions are diverse.]*
+
+- 2026-08-03 — **Diversity recheck: the screen's "one mode" (0.867) was a
+  SINGLE-PROMPT ARTIFACT. Across the full probe battery the clean directions'
+  effects are diverse (0.455, barely above a random-direction floor of 0.373),
+  so a diverse multi-direction strain axis IS buildable — yellow flag
+  substantially clears.** Ran `scripts/strain_diversity_recheck.py`: for each of
+  the 11 clean directions, steered next-token displacement (p_steered−p_base)
+  over all 12 probes; pairwise cosine per-probe and concatenated; random-
+  direction control.
+  - **Per-probe cosine** shows the confound directly: the high similarity was
+    specific to the constraining open-ended prompts — caption **0.867**,
+    "continue" **0.888** — while factual probes are 0.13–0.26, code 0.45–0.50,
+    social 0.54, procedural 0.47–0.53. So on most probe types the directions are
+    much more diverse than the caption suggested.
+  - **Concatenated across all 12 probes:** CLEAN mean pairwise cosine **0.455**
+    (min 0.049, max 0.948) vs the screen's single-caption 0.867 — the one-mode
+    reading was inflated by the caption.
+  - **Random-control twist:** the control is **0.373**, not ≈0 — so large-
+    perturbation displacements share a big *direction-independent* component
+    ("generic response to strain"). Clean directions (0.455) are therefore only
+    *modestly* more self-similar than random (0.373), i.e. nearly as diverse as
+    random directions. Good for building a diverse axis; flags that a generic
+    strain-response component exists (worth a glance, not obviously a handle).
+  - **Outliers / contamination:** per-direction mean-cosine-to-others is lowest
+    for −26 (0.222, the German switch) and −19 (0.328, degenerate) — both
+    contaminated, exclude from state construction; the genuine clean directions
+    sit ~0.36–0.57.
+  - Raw output:
+    [`results/raw/2026-08-03_strain_diversity_recheck.txt`](results/raw/2026-08-03_strain_diversity_recheck.txt).
+  - **Read:** the register-handle worry was largely a measurement artifact of
+    the caption prompt — across the battery, different clean directions produce
+    *diverse* effects, so a preference that tracks strain across a
+    *low-mutual-cosine subset* of clean directions could not be deflated as
+    "prefers one mode." Concrete recipe for §2 state construction: pick clean
+    directions (excluding −26/−19) with low pairwise cosine (they exist — min
+    0.049) for a diverse strain axis; optionally inspect the generic
+    strain-response component. This unblocks the §2 dissociation + §5
+    tie-construction build (with a diversity-selection step), the strain
+    substrate now validated end-to-end.
 
 **Current overall status, not just this entry's delta** (so this section is
 self-sufficient without piecing together every dated entry above):
