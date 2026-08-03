@@ -479,7 +479,11 @@ Per instructions: flagged here for discussion, **not** silently applied to
 
 - **2026-07-19 — Phase 3 (LoRA) reconsideration trigger has been reached: both
   rung-3 measurement channels fail on steering-vector states, and the failures
-  trace to the same root cause (steering influence is weak + local).** The
+  trace to the same root cause (steering influence is weak + local).**
+  *[Resolved 2026-08-01 → the trigger was answered with a redesign, not a LoRA
+  pivot: non-semantic states + strain axis + tie-construction/cost + drug-free
+  conditioned forced choice, with LoRA un-deferred only for conditioning. See
+  CLAUDE.md's "2026-08-01 — Pivot".]* The
   convergent evidence: the scalar rating is flat and basis-agnostic (rating-
   gradient + SPSA + basis diagnostic), and the forced-choice channel is flat
   because steering bias on option-passage tokens does not propagate to the
@@ -530,7 +534,11 @@ Per instructions: flagged here for discussion, **not** silently applied to
     a convergeable landscape is the rating/elicitation and/or the usable
     perturbation-magnitude regime — or shifting rung-3 weight to the
     forced-choice channel, which bypasses the scalar rating entirely — not the
-    basis. See the 2026-07-19 diagnostic entry.
+    basis. See the 2026-07-19 diagnostic entry. *[Scope note 2026-08-01 — this
+    tested *top*-variance PCA against the *scalar rating*; it does NOT refute the
+    2026-08-01 pivot's *tail*-PCA (low-variance) directions read via the new
+    (non-rating) channels. "Basis won't help the scalar rating" ≠ "the strain
+    axis won't help the tie/cost channels."]*
 
 ---
 
@@ -1046,8 +1054,14 @@ self-sufficient without piecing together every dated entry above):
   [`FINDINGS.md`](FINDINGS.md) for the standalone synthesis.** Both rung-3
   channels (convergence-via-rating, forced-choice) were built, their instruments
   validated, and run; both are flat because steering influence is weak + local.
-  This reached CLAUDE.md's Phase 3 (LoRA) trigger; per the user's call we are
-  documenting the negative and rescoping rather than starting the LoRA build.
+  This reached CLAUDE.md's Phase 3 (LoRA) trigger. **Superseded 2026-08-01:**
+  rather than stop, the design was reworked — see CLAUDE.md's "2026-08-01 —
+  Pivot" (non-semantic states, the strain axis, tie-construction, drug-free
+  forced choice, LoRA for conditioning only). The negative above is scoped to
+  the *first* design (semantic states + scalar rating + re-induction), not the
+  current one; its mechanistic core (steering weak + local) remains a live
+  caution the new channels must clear. Next build: the zero-cost strain
+  re-examination of the existing fingerprints (pivot §2).
 
 - **Built and calibrated:** the fingerprinting harness (probe battery,
   workspace layers, curated vocab, `fingerprint()`), tier 1 (discriminability

@@ -1,9 +1,21 @@
-# Finding: steering-vector states do not support rung-3 (valence) measurement on Qwen3.6-27B
+# Finding: *semantic* steering-vector states do not support rung-3 (valence) measurement on Qwen3.6-27B — first design, superseded by the 2026-08-01 redesign
 
 **Status:** interim negative result on a specific induction method. 2026-07-19.
 See [`RESULTS.md`](RESULTS.md) for the full dated experiment log and raw
 outputs, and [`CLAUDE.md`](CLAUDE.md) for the project design and the three-rung
 ladder this refers to.
+
+> **Scope, and what supersedes this (added 2026-08-01).** This negative is
+> specific to the *first* rung-3 design: **semantic** steering states (built
+> from J-lens vocabulary directions), read via the **scalar self-rating** and a
+> **re-induction** forced choice. The 2026-08-01 pivot in `CLAUDE.md` replaces
+> all three — non-semantic (tail-PCA / norm-matched-random) state directions, a
+> tie-construction / cost-breakpoint revealed-preference test, and a drug-free
+> conditioned-context forced choice. So this document is **not** a verdict on the
+> current approach; it is the evidence that motivated the redesign. What *does*
+> carry forward as a live caution: the **mechanistic core** — steering influence
+> at usable magnitude is weak and local — which the new behavioral channels must
+> still clear (hence the cheap strain re-examination is the next step).
 
 ## Summary
 
