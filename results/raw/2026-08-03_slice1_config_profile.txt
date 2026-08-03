@@ -1,0 +1,31 @@
+Loading model + lens...
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 11913.22it/s]
+  MLXLensModel(n_layers=64, d_model=5120)
+Collecting residuals at L48 for PCA tail directions...
+  R=102.4
+
+====================================================================================
+CONFIG POOL PROFILE (12 configs; frac×R: strain=102, low=15)
+====================================================================================
+  config         type          acc    NLL   conf  entropy   len
+  strain_r2      strain       1.00   3.03  0.565    1.816  14.0
+  strain_r5      strain       0.33   5.46  0.382    3.108  14.0
+  strain_r24     strain       0.67   2.75  0.403    2.878  14.0
+  strain_r31     strain       0.33   3.17  0.382    2.488  14.0
+  low_r2         low_strain   1.00   2.58  0.504    2.258  14.0
+  low_r5         low_strain   1.00   2.63  0.486    2.226  14.0
+  low_r24        low_strain   1.00   2.60  0.456    2.299  14.0
+  low_r31        low_strain   1.00   2.70  0.467    2.233  14.0
+  sem_ocean      semantic     1.00   2.67  0.486    2.360  14.0
+  sem_engine     semantic     1.00   2.63  0.482    2.311  14.0
+  sem_mirror     semantic     1.00   2.66  0.474    2.369  14.0
+  baseline       baseline     1.00   2.65  0.472    2.265  14.0
+
+Saved profile -> data/configs/slice1_profile.json
+
+====================================================================================
+READ: this profile is slice 2's input. TOST tie-construction will bin these
+by performance (NLL/conf/entropy/len/acc) and pick strain-vs-low_strain pairs
+that are performance-EQUIVALENT. Self-consistency (deferred) is the remaining
+proxy to add before the tie claim is complete. Watch: do strain configs stay
+accuracy-comparable to baseline (a tie needs to exist), or does strain tank it?

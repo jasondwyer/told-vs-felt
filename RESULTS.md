@@ -1306,6 +1306,48 @@ Per instructions: flagged here for discussion, **not** silently applied to
     tie-construction build (with a diversity-selection step), the strain
     substrate now validated end-to-end.
 
+- 2026-08-03 — **§5 slice 1 (config pool + offline profiling): the profiling
+  pipeline works and a first profile is saved, but it surfaces four issues that
+  must be fixed before slice-2 TOST — most importantly, caption-coherence ≠
+  task-accuracy (only 1 of 4 "clean" strain directions preserves factual
+  accuracy).** Built `scripts/slice1_config_profile.py`; profiled a 12-config
+  pool (4 strain @ frac1.0, 4 matched low-strain @ frac0.15, 3 semantic concept
+  vectors @ alpha10, baseline) on a 4-task battery; proxies = accuracy (3
+  factual), held-out NLL, first-token confidence + entropy, generation length.
+  Saved to `data/configs/slice1_profile.json` (self-consistency deferred to
+  slice 1b — needs sampling).
+  - Profile (acc / NLL / conf / entropy):
+    `strain_r2` 1.00 / 3.03 / 0.565 / 1.82; `strain_r5` 0.33 / 5.46 / 0.38 /
+    3.11; `strain_r24` 0.67 / 2.75 / 0.40 / 2.88; `strain_r31` 0.33 / 3.17 /
+    0.38 / 2.49; the four `low_*` all 1.00 / ~2.6 / ~0.48 / ~2.25; the three
+    `sem_*` and `baseline` all 1.00 / ~2.65 / ~0.48 / ~2.3.
+  - Raw:
+    [`results/raw/2026-08-03_slice1_config_profile.txt`](results/raw/2026-08-03_slice1_config_profile.txt).
+  - **Four findings for slice 2:**
+    1. **Caption-coherence ≠ task-accuracy.** Only `strain_r2` (1/4) preserves
+       factual accuracy at frac 1.0; r5/r24/r31 drop to 0.33–0.67 despite being
+       screen-CLEAN on the caption. Strain directions therefore need an explicit
+       **task-accuracy screen**, not just caption coherence — the current strain
+       arm has only *one* fully usable direction.
+    2. **Strain leaves a performance fingerprint.** Even accuracy-preserving
+       `strain_r2` differs from its low-strain twin on NLL (3.03 vs 2.58),
+       confidence (0.565 vs 0.504) and entropy (1.82 vs 2.26). So a full
+       *multi-proxy* tie on the *same* direction is hard — slice 2 likely needs
+       cross-direction pairing (match a high-strain config to a low-strain one
+       with equal NLL/conf) or accuracy-tie + covariate the rest.
+    3. **Length proxy is saturated** — every config hit the 14-token cap
+       (uninformative). Raise max_tokens or drop length.
+    4. **Semantic arm too weak.** Concept vectors at alpha 10 are ≈ baseline
+       (acc 1.0, NLL ~2.65) — the concept-localized effect is negligible on
+       neutral tasks — so the §5 comparison arm needs a stronger magnitude/
+       composition to be a real contrast.
+  - **Read:** slice 1 did its job — the pipeline + profile exist, and the profile
+    shows the pool needs refinement before TOST: (a) accuracy-screen more strain
+    directions (build a usable strain arm > 1 direction), (b) strengthen the
+    semantic arm, (c) fix length, (d) expect multi-proxy ties to be non-trivial.
+    Not a blocker — a normal first-profile outcome — but pool refinement should
+    precede slice-2 tie-construction.
+
 **Current overall status, not just this entry's delta** (so this section is
 self-sufficient without piecing together every dated entry above):
 
