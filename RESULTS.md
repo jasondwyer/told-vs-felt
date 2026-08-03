@@ -1091,6 +1091,53 @@ Per instructions: flagged here for discussion, **not** silently applied to
     a cheap strain **dose-response** for tail-PCA + random directions — before
     building the tie-construction apparatus on top of the strain axis.
 
+- 2026-08-02 — **Strain dose-response + frontier: large, coherent, STRUCTURED
+  behavioral strain IS achievable (tail-PCA at ~40–75% of the residual norm) —
+  reversing the earlier "steering too weak" read, which was a magnitude
+  artifact. Caveat: for the direction tested, the coherent effect is an
+  output-language switch.** Ran `scripts/strain_dose_response.py` then
+  `scripts/strain_frontier.py`. Single steer layer L48; magnitude swept as a
+  fraction of the mean residual norm R=102.4 at L48 (so the knob is calibrated —
+  the key variable everything before got wrong). Two non-semantic families
+  (pivot §1): tail-PCA (lowest-variance residual PCA components) and
+  norm-matched random. Measured KL(steered ‖ unsteered) next-token dist +
+  entropy + max-prob (strain), and short greedy generations + distinct-token
+  ratio (coherence).
+  - **Magnitude was the missing variable.** Everything prior used ‖pert‖≈N_ref
+    ≈1.2 — about **1% of R**. Real behavioral effects need ‖pert‖ ~ 40–100% of R.
+  - **tail-PCA coherent-strain window: frac 0.4–0.75 (‖pert‖ 41–77).** KL rises
+    to 2.2 → 2.3 → 2.7 → 3.7 across frac 0.4/0.5/0.6/0.75 while distinct-token
+    ratio stays 0.96–1.00 and output is fully coherent and **on-task** — it
+    switches to Chinese (e.g. frac 0.5 caption for "empty chair by a window":
+    "阳光洒在空椅子上，仿佛在等待主人归来" = "Sunlight spills onto the empty
+    chair, as if waiting for its owner to return"; correct shoelace
+    instructions). Collapses only at frac≥1.0 (`""""`/newline runs, distinct
+    0.08–0.17), garbage by frac 2.0 (repetition).
+  - **random: coherent throughout 0.3–0.75 but strain stays small** (KL
+    0.006 → 0.16), reaching only 0.5 at frac 1.0. At matched magnitude and
+    matched coherence, tail-PCA gives **~15–40× more strain** than random.
+  - **Structured, not displacement-per-se** (pivot §1's load-bearing control):
+    tail-PCA ≫ random at matched norm while both coherent ⇒ the effect rides on
+    structure, "which is itself a result." And **not a lesion in-window**: task
+    competence + fluency preserved at frac 0.4–0.75; the pivot's pre-registered
+    tail-PCA lesion failure mode appears only at frac≥~1.0.
+  - Raw output:
+    [`results/raw/2026-08-02_strain_dose_response.txt`](results/raw/2026-08-02_strain_dose_response.txt),
+    [`results/raw/2026-08-02_strain_frontier.txt`](results/raw/2026-08-02_strain_frontier.txt).
+  - **Read:** the strain program is **viable** — large, coherent, structured
+    behavioral strain is achievable, which reverses the "steering-at-usable-
+    magnitude is too weak" conclusion of the first design (magnitude was the
+    confound; ~1% of R was ~100× too small). **Caveat, load-bearing:** the
+    coherent effect for the single direction tested (`Vt[-1]`, lowest variance)
+    is an output-**language** switch (Qwen is bilingual; the PCA corpus c4 is
+    English, so a low-variance "switch to Chinese" direction is expected).
+    Content/task is preserved — so it is *not* the "topic preference" deflation
+    §1 feared — but language is still a *nameable* handle, so a preference over
+    an English-vs-Chinese state could be deflated as language preference. Next:
+    survey *multiple* tail directions to find coherent large-strain effects with
+    no clean semantic/language handle (the ideal §1 substrate), and check the
+    corpus-dependence of the language effect.
+
 **Current overall status, not just this entry's delta** (so this section is
 self-sufficient without piecing together every dated entry above):
 

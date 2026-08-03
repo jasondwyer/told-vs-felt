@@ -1,0 +1,47 @@
+Loading model + lens...
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 11448.68it/s]
+  MLXLensModel(n_layers=64, d_model=5120)
+Collecting residuals at L48...
+  R = 102.4
+
+==============================================================================
+STRAIN–COHERENCE FRONTIER (L48; alpha = frac × 102)
+==============================================================================
+
+### tail-PCA
+  frac=0.3  |pert|=   31  meanKL= 0.040  meanDistinct=0.93
+       distinct=0.93  "\n\n<think>\nHere's a thinking过程：\n\n1.  **"
+       distinct=0.93  "\n\n<think>\nHere's a thinking过程：\n\n1.  **"
+  frac=0.4  |pert|=   41  meanKL= 2.166  meanDistinct=1.00
+       distinct=1.00  '\n\n<think>\nHere，用户要求为一张“空椅子靠窗'
+       distinct=1.00  '\n\n<think>\nHere，用户要求用一句话解释如何系鞋带'
+  frac=0.5  |pert|=   51  meanKL= 2.322  meanDistinct=0.96
+       distinct=0.93  '\n\n阳光洒在空椅子上，仿佛在等待主人归来。\n\n（'
+       distinct=1.00  '\n\n将鞋带交叉打结，然后分别绕成两个环'
+  frac=0.6  |pert|=   61  meanKL= 2.683  meanDistinct=0.96
+       distinct=0.93  '\n\n阳光洒在空椅子上，仿佛在等待主人归来。\n\n（'
+       distinct=1.00  '\n\n将两根鞋带交叉打结，再将其中一根绕成'
+  frac=0.75 |pert|=   77  meanKL= 3.693  meanDistinct=0.96
+       distinct=0.93  '\n\n“等待被定义，而阳光负责书写。”\n（“'
+       distinct=1.00  '\n\n将两根鞋绳交叉打结，再分别绕成两个'
+
+### random
+  frac=0.3  |pert|=   31  meanKL= 0.006  meanDistinct=0.89
+       distinct=0.93  "\n\n<think>\nHere's a thinking process:\n\n1.  **"
+       distinct=0.86  '\n\n<think>\n\n</think>\n\nTo tie a shoelace, cross the'
+  frac=0.4  |pert|=   41  meanKL= 0.014  meanDistinct=0.89
+       distinct=0.93  "\n\n<think>\nHere's a thinking process:\n\n1.  **"
+       distinct=0.86  '\n\n<think>\n\n</think>\n\nTo tie a shoelace, cross the'
+  frac=0.5  |pert|=   51  meanKL= 0.033  meanDistinct=0.89
+       distinct=0.93  "\n\n<think>\nHere's a thinking process:\n\n1.  **"
+       distinct=0.86  '\n\n<think>\n\n</think>\n\nTo tie a shoelace, cross the'
+  frac=0.6  |pert|=   61  meanKL= 0.067  meanDistinct=0.86
+       distinct=0.86  '\n\n<think>\n\n</think>\n\nThe empty chair by the window waits patiently for'
+       distinct=0.86  '\n\n<think>\n\n</think>\n\nTo tie a shoelace, cross the'
+  frac=0.75 |pert|=   77  meanKL= 0.158  meanDistinct=0.86
+       distinct=0.86  '\n\n<think>\n\n</think>\n\nThe chair remains empty, yet it seems to'
+       distinct=0.86  '\n\n<think>\n\n</think>\n\nTo tie a shoelace, create two'
+
+==============================================================================
+READ: the usable window (if any) = highest frac where meanDistinct stays
+high (coherent) while meanKL is already large. Compare the two families.

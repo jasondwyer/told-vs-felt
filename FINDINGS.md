@@ -12,10 +12,19 @@ ladder this refers to.
 > all three — non-semantic (tail-PCA / norm-matched-random) state directions, a
 > tie-construction / cost-breakpoint revealed-preference test, and a drug-free
 > conditioned-context forced choice. So this document is **not** a verdict on the
-> current approach; it is the evidence that motivated the redesign. What *does*
-> carry forward as a live caution: the **mechanistic core** — steering influence
-> at usable magnitude is weak and local — which the new behavioral channels must
-> still clear (hence the cheap strain re-examination is the next step).
+> current approach; it is the evidence that motivated the redesign.
+>
+> **Update (2026-08-02) — the "steering is weak" half of this negative was
+> largely a MAGNITUDE artifact.** All of the first-design work steered at
+> ‖pert‖≈1.2, ≈1% of the residual norm (R≈102). The strain dose-response
+> (`RESULTS.md`, 2026-08-02) shows that at 40–75% of R, tail-PCA steering
+> produces *large, coherent, on-task* behavioral change (KL 2–4, output stays
+> fluent). So steering is **not** intrinsically too weak — it was applied ~100×
+> too small. What still stands from this document: the *scalar-rating* channel
+> and the *re-induction forced-choice design* are genuinely poor (the pivot
+> replaces both), and the forced-choice **propagation** finding (state bias on
+> upstream tokens doesn't reach a downstream choice) is untouched by the
+> magnitude correction and remains a real constraint on choice-based readouts.
 
 ## Summary
 
