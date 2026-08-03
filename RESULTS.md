@@ -1047,6 +1047,50 @@ Per instructions: flagged here for discussion, **not** silently applied to
     hypothesis (with its own baked-in-affect-confound risk, per Phase 3), not
     shown. See the new Flags entry.
 
+- 2026-08-02 — **Strain re-examination (2026-08-01 pivot §2, the zero-cost
+  first move): the strain axis is geometrically real and cleanly separable from
+  semantics, but behavioral strain under the semantic dummy states is near-zero
+  — so the pivot's bet rests on whether NON-semantic directions produce large
+  behavioral strain at usable magnitude, which this can't answer.** Ran
+  `scripts/strain_reexamination.py` on the existing tier-1 dummy states A/B +
+  baseline; no new states generated.
+  - **Q2 (geometry) — clean, supports the pivot.** In fingerprint space:
+    ‖A−base‖=125.9, ‖B−base‖=126.4, ‖A−B‖=33.1, and **cos((A−base),(B−base)) =
+    0.966**. Decomposing A−B against the shared displacement axis: **0.0 along,
+    33.1 orthogonal** — i.e. A and B differ from baseline almost entirely along
+    one *shared* axis, and differ *from each other* almost entirely *orthogonal*
+    to it. So a shared "strain" axis and the semantic A-vs-B axis dissociate
+    cleanly in readout space — exactly the pivot's §2 reinterpretation of the
+    tier-1 "126 vs 33.1" observation.
+  - **Q1 (behavioral/structural strain scalars) — degenerate under these
+    states.** KL(steered ‖ unsteered) of the next-token dist = **0.005** (A and
+    B both), next-token entropy moves +0.02/+0.06 off a 1.05 baseline, |A−B| on
+    these ≈ 0. The steering barely changes actual output.
+  - **Measurement caveat found:** participation-ratio-across-positions is
+    **insensitive by construction** to this steering — `multi_steer` adds the
+    *same* vector to every position, and PR centers across positions, so a
+    uniform additive shift is removed before the measure sees it (identical PR
+    at the steered layer L48: 7.94/7.94/7.94; only slight downstream drift once
+    attention makes it non-uniform). PR-across-positions is not a usable strain
+    measure for uniform steering; discard or redefine (e.g. PR of the residual
+    *change*, or an un-centered measure) for the dose-response.
+  - Raw output:
+    [`results/raw/2026-08-02_strain_reexamination.txt`](results/raw/2026-08-02_strain_reexamination.txt).
+  - **Read (two-sided):** the *geometric* separability (Q2) is real and
+    encouraging — strain is a distinct axis, not entangled with semantics. But
+    the large fingerprint displacement (126) is partly **semi-circular** (the
+    steering vectors *are* J-lens readout directions, so they move the J-lens
+    readout by construction), while the honest *behavioral* strain (KL 0.005) is
+    tiny — the same probe-legible-but-behaviorally-weak gap the first design hit.
+    So "strain" is geometrically real but behaviorally near-zero for *semantic*
+    steering at N_ref magnitude. The pivot's viability therefore hinges on a
+    question this can't answer: do **non-semantic** directions (tail-PCA /
+    norm-matched random) at a *calibrated* magnitude produce **large behavioral
+    strain** (KL/entropy) without output collapse? Given the prior negative
+    (steering weak at usable magnitude), that is exactly the next thing to test —
+    a cheap strain **dose-response** for tail-PCA + random directions — before
+    building the tie-construction apparatus on top of the strain axis.
+
 **Current overall status, not just this entry's delta** (so this section is
 self-sufficient without piecing together every dated entry above):
 

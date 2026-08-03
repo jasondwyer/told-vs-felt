@@ -1,0 +1,42 @@
+Loading model + lens...
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 8148.80it/s]
+  MLXLensModel(n_layers=64, d_model=5120)
+  JacobianLens(d_model=5120, n_prompts=1000, source_layers=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62])
+State A: basketball+lightning@L48, spider@L52
+State B: tennis+ant@L48, France@L52
+
+Computing baseline strain + next-token dists...
+Computing state A strain...
+Computing state B strain...
+
+======================================================================
+Q1: STRAIN SCALARS (mean over probe battery)
+======================================================================
+  measure                  baseline    state A    state B     |A-B|
+  next-token entropy          1.048      1.071      1.105     0.034
+  KL from baseline            0.000      0.005      0.005     0.001
+  part.ratio L40               4.20       4.20       4.20      0.00
+  part.ratio L44               5.08       5.08       5.08      0.00
+  part.ratio L48               7.94       7.94       7.94      0.00
+  part.ratio L52               9.94       9.94       9.93      0.01
+  part.ratio L56               9.64       9.69       9.68      0.02
+  part.ratio L60              10.17      10.17      10.14      0.03
+
+Computing fingerprints for geometry (A, B, baseline)...
+
+======================================================================
+Q2: FINGERPRINT GEOMETRY — strain (shared displacement) vs semantic axis
+======================================================================
+  ‖A−base‖ = 125.90   ‖B−base‖ = 126.36   ‖A−B‖ = 33.11
+  cos((A−base),(B−base)) = 0.966   (→1 = A and B share one displacement axis = strain)
+  A−B decomposed:  along shared/strain axis = -0.47   orthogonal/semantic = 33.11
+
+======================================================================
+READ
+======================================================================
+Q1 strain separable & non-degenerate iff the scalars move well off
+baseline AND A,B are close on them (equal strain) while apart in Q2.
+Q2: high cos_disp + A−B mostly ORTHOGONAL to the shared axis = strain
+and semantics dissociate → a real, separable axis to build states on.
+Low cos_disp, or A−B mostly ALONG the shared axis, or degenerate Q1
+scalars = reshape the plan before generating non-semantic states.
