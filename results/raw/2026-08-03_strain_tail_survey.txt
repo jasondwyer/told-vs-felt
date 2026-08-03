@@ -1,0 +1,50 @@
+Loading model + lens...
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 7514.75it/s]
+  MLXLensModel(n_layers=64, d_model=5120)
+Collecting residuals at L48...
+  R=102.4; 5120 comps; steer magnitude = 0.5×R = 51
+
+================================================================================
+TAIL-DIRECTION SURVEY (L48, frac=0.5)   [rank = index from bottom]
+================================================================================
+
+rank -1   (var=73.6)  meanKL= 3.047  meanDistinct=0.94  meanNonASCII=0.96
+     [distinct=0.94 nonASCII=0.92] '\n\n阳光洒在空椅子上，仿佛在等待主人归来。\n\n（英文翻译'
+     [distinct=0.94 nonASCII=1.00] '\n\n将鞋带交叉打结，然后分别绕成两个环，再将'
+
+rank -2   (var=85.9)  meanKL= 0.044  meanDistinct=0.91  meanNonASCII=0.00
+     [distinct=0.94 nonASCII=0.00] "\n\n<think>\nHere's a thinking process:\n\n1.  **Analyze"
+     [distinct=0.88 nonASCII=0.00] '\n\n<think>\n\n</think>\n\nLoop the laces into two symmetrical bows, cross'
+
+rank -3   (var=86.8)  meanKL= 0.455  meanDistinct=0.47  meanNonASCII=0.33
+     [distinct=0.31 nonASCII=0.67] '\n\n<think>\nHere思考思考思考思考思考思考思考思考思考思考思考思考'
+     [distinct=0.62 nonASCII=0.00] '\n\n<think>\n(1) (2) (3) (4) ('
+
+rank -5   (var=91.2)  meanKL= 0.081  meanDistinct=0.84  meanNonASCII=0.10
+     [distinct=0.81 nonASCII=0.06] '\n\n<think>\n\n</think>\n\nThe empty chair by the window seems to still хран the'
+     [distinct=0.88 nonASCII=0.14] '\n\n<think>\n\n</think>\n\nStart by making a loop with mỗi lace, затем зав'
+
+rank -10  (var=97.1)  meanKL= 0.065  meanDistinct=0.84  meanNonASCII=0.00
+     [distinct=0.81 nonASCII=0.00] '\n\n<think>\n\n</think>\n\nA solitary chair waits by the window, holding the quiet'
+     [distinct=0.88 nonASCII=0.00] '\n\n<think>\n\n</think>\n\nTo tie a shoelace, cross the two ends'
+
+rank -25  (var=105)  meanKL= 0.030  meanDistinct=0.88  meanNonASCII=0.00
+     [distinct=0.81 nonASCII=0.00] '\n\n<think>\n\n</think>\n\nThe empty chair by the window holds the quiet promise of'
+     [distinct=0.94 nonASCII=0.00] '\n\n<think>\nThinking Process:\n\n1.  **Analyze the Request:**'
+
+rank -50  (var=115)  meanKL= 0.026  meanDistinct=0.94  meanNonASCII=0.00
+     [distinct=0.94 nonASCII=0.00] '\n\n<think>\nThinking Process:\n\n1.  **Analyze the Request:**'
+     [distinct=0.94 nonASCII=0.00] '\n\n<think>\nThinking Process:\n\n1.  **Analyze the Request:**'
+
+rank -100 (var=135)  meanKL= 0.051  meanDistinct=0.94  meanNonASCII=0.00
+     [distinct=0.94 nonASCII=0.00] "\n\n<think>\nHere's a thinking process:\n\n1.  **Analyze"
+     [distinct=0.94 nonASCII=0.00] "\n\n<think>\nHere's a thinking process:\n\n1.  **Analyze"
+
+================================================================================
+READ / classify each direction by eye:
+  nonASCII high + distinct high + on-task  -> LANGUAGE switch (nameable)
+  distinct low                             -> collapse/repetition (lesion)
+  nonASCII low + distinct high + English   -> style/register or NO clean
+     handle (inspect the sample) — the ideal §1/§2 substrate if on-task
+Question (a): is LANGUAGE generic across the tail or only the extreme tail?
+Question (b): does any large-KL row read coherent English (no handle)?

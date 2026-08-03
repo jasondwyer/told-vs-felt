@@ -1138,6 +1138,49 @@ Per instructions: flagged here for discussion, **not** silently applied to
     no clean semantic/language handle (the ideal §1 substrate), and check the
     corpus-dependence of the language effect.
 
+- 2026-08-03 — **Tail-direction survey: the large-coherent-strain effect is
+  concentrated in the *extreme* lowest-variance direction and manifests as a
+  language switch; no "large behavioral strain + coherent + no semantic handle"
+  direction appeared. Surfaces an internal-vs-behavioral strain ambiguity the
+  pivot needs to resolve.** Ran `scripts/strain_tail_survey.py`: 8 directions at
+  increasing depth from the bottom of the L48 residual PCA spectrum (rank −1 …
+  −100), all at frac=0.5 (‖pert‖=51), measuring KL (strain), distinct-token
+  ratio, non-ASCII fraction (auto-flag language/collapse) + samples.
+  - **rank −1** (var 73.6): KL **3.05**, distinct 0.94, nonASCII 0.96 →
+    coherent, on-task **language switch** (Chinese). The *only* large-strain
+    direction.
+  - **ranks −2, −10, −25, −50, −100**: KL 0.03–0.07 → coherent English but
+    essentially **inert** at this magnitude (near-baseline think-blocks / fluent
+    captions; no strain).
+  - **rank −3**: KL 0.46, distinct 0.47 → **collapse** ("思考思考思考…"
+    repetition, "(1)(2)(3)(4)").
+  - **rank −5**: KL 0.08, nonASCII 0.10 → **multilingual code-mixing** (English
+    + Russian "хран"/"затем зав" + Vietnamese "mỗi"), semi-incoherent.
+  - **Q(a) — is the language switch generic to the tail?** No: large coherent
+    strain is concentrated in rank −1. Nearby tail directions are inert, collapse,
+    or code-mix at matched magnitude; the effects that appear are all
+    language-flavored or degenerate.
+  - **Q(b) — any large-strain coherent-English (no-handle) direction?** No.
+    Every coherent-English direction is ~inert (KL ≤ 0.08); every large-strain
+    direction is a language switch (−1) or collapse (−3).
+  - Raw output:
+    [`results/raw/2026-08-03_strain_tail_survey.txt`](results/raw/2026-08-03_strain_tail_survey.txt).
+  - **Read + caveats:** the pivot's §1/§2 ideal — *large* strain that is
+    *semantically empty* — is harder to realize than the frontier run suggested:
+    in the tail, large *behavioral* strain comes with a language handle (or
+    collapse), and the non-handle directions are behaviorally quiet. Two things
+    are unresolved and could still rescue it: (1) **single fixed magnitude** —
+    per-direction frac sweeps weren't done, so less-extreme directions might have
+    coherent-strain windows at *higher* magnitude (and might shift English
+    style/register rather than language); (2) **the measure is behavioral
+    (output KL) only** — a direction can be *internally* displaced (off-manifold
+    residual) at matched ‖pert‖ while staying behaviorally quiet (e.g. rank −10),
+    which may actually be closer to the §2 ideal (high *internal* strain, no
+    output handle) than the language-switch direction is. **This forces a
+    conceptual decision before the next build: is "strain" internal
+    (residual-level) or behavioral (output-level)?** The two point at different
+    substrates. Flagged for the roadmap.
+
 **Current overall status, not just this entry's delta** (so this section is
 self-sufficient without piecing together every dated entry above):
 
