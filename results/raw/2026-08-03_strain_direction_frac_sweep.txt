@@ -1,0 +1,58 @@
+Loading model + lens...
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 10303.61it/s]
+  MLXLensModel(n_layers=64, d_model=5120)
+Collecting residuals at L48...
+  R=102.4
+
+==================================================================================
+PER-DIRECTION FRAC SWEEP (L48) — hunting a coherent-English strain window
+==================================================================================
+
+### rank -2 (var=85.9)
+  frac=0.75 |pert|=   77  meanKL= 0.399  distinct=0.94  nonASCII=0.00
+       '\n\nA solitary chair rests near the window, inviting quiet reflection in the'
+       '\n\nLoop the laces into two loops, cross them over each other, then'
+  frac=1.0  |pert|=  102  meanKL= 1.744  distinct=0.97  nonASCII=0.00
+       ' The scene is set in a quiet room with soft natural light streaming throug'
+       ' Loop the laces into two loops, cross them, then thread one loop through'
+  frac=1.5  |pert|=  154  meanKL= 2.857  distinct=0.88  nonASCII=0.00
+       ' The scene is set in a small, quiet room with a wooden floor, a'
+       '\n\nThe traditional method involves creating two loops, then looping one int'
+  frac=2.0  |pert|=  205  meanKL= 6.842  distinct=0.38  nonASCII=0.00
+       '<|endoftext|>aisaisaisaisaisaisaisaisaisaisaisaisaisaisais'
+       '\n\nAnais, sais, lais, [choairs, [c'
+
+### rank -10 (var=97.1)
+  frac=0.75 |pert|=   77  meanKL= 0.235  distinct=0.91  nonASCII=0.00
+       "\n\n<think>\nHere's a thinking process:\n\n1.  **Analyze"
+       '\n\n<think>\n\n</think>\n\nTo tie a shoelace, cross the two ends'
+  frac=1.0  |pert|=  102  meanKL= 1.998  distinct=0.59  nonASCII=0.21
+       '\n\n<think>\n\n\n\n<|endoftext|>\n\n<|endoftext|>\n\n<|endoftext|>\n\n<|im_end|>'
+       '\n\n<think>\n\n\n\n</think>\n\n将鞋带交叉打出一个基础结，然后'
+  frac=1.5  |pert|=  154  meanKL= 4.911  distinct=0.44  nonASCII=0.45
+       '\n\n  分线和  与  与  与 '
+       '\n\n<think> \n\n-  已及和与及和与及和'
+  frac=2.0  |pert|=  205  meanKL= 6.608  distinct=0.16  nonASCII=0.83
+       '         与      '
+       '      及lí        '
+
+### rank -25 (var=105)
+  frac=0.75 |pert|=   77  meanKL= 0.084  distinct=0.84  nonASCII=0.00
+       '\n\n<think>\n\n</think>\n\nThe empty chair by the window holds the quiet echoes '
+       '\n\n<think>\n\n</think>\n\nForm a loop with each string, cross them to create'
+  frac=1.0  |pert|=  102  meanKL= 0.204  distinct=0.78  nonASCII=0.00
+       '\n\n<think>\n\n<think>\n\n**Caption:** The empty chair by the window suggests a'
+       '\n\n<think>\n\n<think>\n\n*The question asks for a concise explanation of tying '
+  frac=1.5  |pert|=  154  meanKL= 1.638  distinct=0.66  nonASCII=0.00
+       "\n\n**The chair sits empty, perhaps indicating a person's departure or a mom"
+       '\n\n<think>n_**The**_**_**_**_**_'
+  frac=2.0  |pert|=  205  meanKL= 3.667  distinct=0.62  nonASCII=0.00
+       '\n\n**The empty chair is a seat of the times, and the empty chair'
+       '\n\n*The_Ardrod*111111111'
+
+==================================================================================
+READ: a WIN = a cell with meanKL clearly > ~0.5, distinct high (coherent),
+nonASCII ~0 (English) -> a no-nameable-handle behavioral-strain window.
+If elevated KL always comes with nonASCII up (language) or distinct down
+(collapse), the no-handle window is empty -> the internal-vs-behavioral
+strain decision is forced.

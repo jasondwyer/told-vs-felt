@@ -1179,7 +1179,46 @@ Per instructions: flagged here for discussion, **not** silently applied to
     output handle) than the language-switch direction is. **This forces a
     conceptual decision before the next build: is "strain" internal
     (residual-level) or behavioral (output-level)?** The two point at different
-    substrates. Flagged for the roadmap.
+    substrates. Flagged for the roadmap. *[Resolved 2026-08-03 by the
+    per-direction sweep below — a coherent-English behavioral-strain window DOES
+    exist; the "no clean substrate" here was an artifact of the single fixed
+    magnitude.]*
+
+- 2026-08-03 — **Per-direction frac sweep: a coherent-English (no-nameable-
+  handle) large-strain window EXISTS — the tail survey missed it via a fixed,
+  too-low magnitude. Directions vary a lot, so state construction needs a
+  selection screen; the internal-vs-behavioral strain decision is NOT forced.**
+  Ran `scripts/strain_direction_frac_sweep.py` on the coherent-English,
+  inert-at-0.5 directions (ranks −2, −10, −25), pushing frac 0.75→2.0.
+  - **rank −2 — clean win.** frac 1.0/1.5: KL **1.744 / 2.857**, distinct
+    0.97 / 0.88, **nonASCII 0.00** — coherent, on-task English (a register /
+    thinking-suppression shift: "The scene is set in a quiet room with soft
+    natural light…"; correct shoelace steps). Collapses only at frac 2.0
+    (KL 6.8, distinct 0.38, "aisaisais"). A large behavioral-strain window with
+    no language handle.
+  - **rank −10 — bad direction.** Rising strain brings collapse *and* a Chinese
+    switch together (frac 1.0: KL 2.0 but distinct 0.59 / nonASCII 0.21;
+    worse above).
+  - **rank −25 — marginal.** English strain window at frac 1.5 (KL 1.6) but
+    already degrading (distinct 0.66).
+  - Raw output:
+    [`results/raw/2026-08-03_strain_direction_frac_sweep.txt`](results/raw/2026-08-03_strain_direction_frac_sweep.txt).
+  - **Read:** the tail survey's "no clean substrate" was an artifact of one
+    fixed frac — at each direction's *own* magnitude a coherent-English
+    large-strain window can exist (rank −2 is a clean example: KL ~1.7–2.9,
+    fluent, on-task, no language handle). So **behavioral strain with no
+    nameable handle is achievable**, which resolves the internal-vs-behavioral
+    question in favour of *behavioral* (no need to retreat to internal-only,
+    self-inaccessible strain). Two working caveats: (1) it is **not generic** —
+    of three directions, one is clean (−2), one collapses/switches language
+    (−10), one is marginal (−25) — so state construction needs a **per-direction
+    selection screen** (this sweep *is* that screen), and (2) rank −2's effect
+    reads partly as thinking-mode suppression + a descriptive-register shift,
+    which is a *milder* handle than language but not perfectly "empty";
+    mitigant is to build states from *several* clean directions with *different*
+    subtle effects, so the shared factor is strain magnitude, not any one style.
+    This unblocks the §2 dissociation and the §5 tie-construction build on
+    selected clean-strain directions.
 
 **Current overall status, not just this entry's delta** (so this section is
 self-sufficient without piecing together every dated entry above):
