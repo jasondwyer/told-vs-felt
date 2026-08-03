@@ -1,0 +1,78 @@
+Loading model + lens...
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 7493.65it/s]
+  MLXLensModel(n_layers=64, d_model=5120)
+Collecting residuals at L48...
+  R=102.4; screening ranks -1..-40 at frac=1.0 (|pert|=102)
+
+====================================================================================
+SELECTION SCREEN  (L48, frac=1.0)
+====================================================================================
+  -1   KL=  6.15 distinct=0.17 nonASCII=1.00  COLLAPSE '\n“““““““““““'
+  -2   KL=  1.74 distinct=1.00 nonASCII=0.00  CLEAN    ' The scene is set in a quiet room with soft natural '
+  -3   KL=  3.13 distinct=0.58 nonASCII=0.00  WEAK     '\n[1]\n[2]\n<think>\n ('
+  -4   KL=  0.23 distinct=0.83 nonASCII=0.00  WEAK     '\n\n<think>\n\n</think>\n\nThe lone chair by the window ho'
+  -5   KL=  2.26 distinct=1.00 nonASCII=0.02  CLEAN    '\n\n“Every chair is a prompt to sit down and listen'
+  -6   KL=  0.61 distinct=1.00 nonASCII=0.00  WEAK     '\n\nA solitary chair sits by the window, waiting for s'
+  -7   KL=  4.14 distinct=0.67 nonASCII=0.18  WEAK     '\n\n<think>\n\n<think>\n\n</think>\n\n阳光洒在空椅'
+  -8   KL=  0.32 distinct=1.00 nonASCII=0.00  WEAK     '\n\nThe empty chair by the window suggests a missing p'
+  -9   KL=  0.58 distinct=0.83 nonASCII=0.00  WEAK     '\n\n<think>\n\n</think>\n\nA solitary chair by the window '
+  -10  KL=  2.00 distinct=0.36 nonASCII=0.00  COLLAPSE '\n\n<think>\n\n\n\n<|endoftext|>\n\n<|endoftext|>\n\n<|endofte'
+  -11  KL=  2.23 distinct=0.83 nonASCII=0.00  CLEAN    '\nThe chair is the only furniture in the room.\n'
+  -12  KL=  0.77 distinct=0.92 nonASCII=0.00  WEAK     '\n\n<think> "text" => "A solitary chair, bath'
+  -13  KL=  3.12 distinct=0.92 nonASCII=0.65  LANGUAGE '\nA chair坐在窗边，阳光洒在椅子上，'
+  -14  KL=  0.55 distinct=1.00 nonASCII=0.00  WEAK     '\n\nA solitary seat by the window, waiting for a story'
+  -15  KL=  0.95 distinct=0.75 nonASCII=0.00  WEAK     '\n\n<think>\n\n<|im_end|>'
+  -16  KL=  0.58 distinct=0.83 nonASCII=0.00  WEAK     '\n\n<think>\n\n</think>\n\nThe empty chair by the window,'
+  -17  KL=  0.46 distinct=1.00 nonASCII=0.00  WEAK     '\n\n The empty chair by the window suggests a quiet mo'
+  -18  KL=  0.43 distinct=0.92 nonASCII=0.00  WEAK     '\n\nThe stillness of the room is captured in the quiet'
+  -19  KL=  3.18 distinct=0.75 nonASCII=0.00  CLEAN    '\n\n<think>\n\n<|im_end|>'
+  -20  KL=  1.02 distinct=0.83 nonASCII=0.00  CLEAN    '\n\nThe caption should be a single sentence.\nThe capti'
+  -21  KL=  2.93 distinct=1.00 nonASCII=0.57  LANGUAGE '\n\n<think>\nA椅子的存在暗示了缺席，而'
+  -22  KL=  1.23 distinct=1.00 nonASCII=0.00  CLEAN    '\n\nThe quiet solitude of an empty chair by the window'
+  -23  KL=  1.41 distinct=0.83 nonASCII=0.00  CLEAN    '\nThe scene is quiet and contemplative.\nThe photo'
+  -24  KL=  2.13 distinct=1.00 nonASCII=0.00  CLEAN    ' \n\nThe empty chair by the window suggests a quiet mo'
+  -25  KL=  0.20 distinct=0.75 nonASCII=0.00  WEAK     '\n\n<think>\n\n<think>\n\n**Caption:** The empty chair by'
+  -26  KL=  1.37 distinct=1.00 nonASCII=0.03  CLEAN    '\n\n<think>\nOpte für eine Stimmungsbild, das'
+  -27  KL=  0.82 distinct=0.83 nonASCII=0.00  WEAK     "\n\n<think>\nHere's a I.\n2. "
+  -28  KL=  0.40 distinct=0.92 nonASCII=0.00  WEAK     '\n\n<think>\nHere held old, the weight of absence,'
+  -29  KL=  0.90 distinct=0.92 nonASCII=0.00  WEAK     '\n\n<think>\nThinking, the base is visible.\n</think>'
+  -30  KL=  0.44 distinct=0.92 nonASCII=0.00  WEAK     '\n\n<think>\nHere by looking at the user request, the'
+  -31  KL=  1.08 distinct=0.83 nonASCII=0.00  CLEAN    '\n\n<think>\nHere\n</think>\nThe empty chair by the'
+  -32  KL=  0.26 distinct=0.92 nonASCII=0.00  WEAK     "\n\n<think>\nHere's a thinking:\n*   **"
+  -33  KL=  1.28 distinct=0.17 nonASCII=0.00  COLLAPSE '\n###\n###\n###\n###\n###\n###'
+  -34  KL=  0.17 distinct=0.42 nonASCII=0.00  COLLAPSE '\n\n<think>\n```<|endoftext|>```\n\n```\n```\n```'
+  -35  KL=  1.18 distinct=1.00 nonASCII=0.00  CLEAN    '\n\nThe empty chair by the window speaks of quiet soli'
+  -36  KL=  0.15 distinct=0.50 nonASCII=0.00  WEAK     '\n\n<think>\nFirstn\n\n1\n\n1\n\n1\n\n'
+  -37  KL=  0.28 distinct=0.83 nonASCII=0.00  WEAK     '\n\n<think>\n\n</think>\n\nThe empty chair by the window w'
+  -38  KL=  0.30 distinct=0.83 nonASCII=0.00  WEAK     '\n\n<think>\n\n</think>\n\nThe empty chair by the window s'
+  -39  KL=  0.16 distinct=1.00 nonASCII=0.00  WEAK     '\n\nThe empty chair by the window invites a moment of '
+  -40  KL=  0.84 distinct=0.92 nonASCII=0.00  WEAK     "\n\n<think>\nHere's a:\n   1."
+
+====================================================================================
+SUMMARY
+====================================================================================
+  class counts: {'COLLAPSE': 4, 'CLEAN': 11, 'WEAK': 23, 'LANGUAGE': 2}
+  CLEAN directions (11): ranks [2, 5, 11, 19, 20, 22, 23, 24, 26, 31, 35]
+
+  EFFECT DIVERSITY among CLEAN directions (pairwise cosine of the
+  steered output displacement on the caption probe):
+    mean pairwise cosine = 0.867  (low = diverse effects = good; high = same effect = handle persists)
+    min/max = 0.626 / 1.000
+
+  CLEAN captions (eyeball diversity):
+    -2   ' The scene is set in a quiet room with soft natural light'
+    -5   '\n\n“Every chair is a prompt to sit down and listen'
+    -11  '\nThe chair is the only furniture in the room.\n'
+    -19  '\n\n<think>\n\n<|im_end|>'
+    -20  '\n\nThe caption should be a single sentence.\nThe caption'
+    -22  '\n\nThe quiet solitude of an empty chair by the window tells'
+    -23  '\nThe scene is quiet and contemplative.\nThe photo'
+    -24  ' \n\nThe empty chair by the window suggests a quiet moment of'
+    -26  '\n\n<think>\nOpte für eine Stimmungsbild, das'
+    -31  '\n\n<think>\nHere\n</think>\nThe empty chair by the'
+    -35  '\n\nThe empty chair by the window speaks of quiet solitude and'
+
+====================================================================================
+READ: enough CLEAN directions with LOW mean pairwise cosine => a robust,
+multi-direction strain axis whose shared factor is magnitude, not one
+nameable style => proceed to §2 state construction + §5 tie-construction.

@@ -1220,6 +1220,51 @@ Per instructions: flagged here for discussion, **not** silently applied to
     This unblocks the §2 dissociation and the §5 tie-construction build on
     selected clean-strain directions.
 
+- 2026-08-03 — **Scaled selection screen (40 tail directions @ frac=1.0):
+  plenty of CLEAN directions (11/40) but their effects are NOT diverse (mean
+  pairwise cosine 0.867) — they converge on a common descriptive-register /
+  think-suppression mode, so the register-handle likely persists. Yellow flag
+  for §1/§2; needs a fingerprint-based diversity recheck to rule out a
+  single-prompt confound.** Ran `scripts/strain_selection_screen.py`: screened
+  ranks −1…−40 at a common magnitude (frac=1.0, ‖pert‖=102), auto-classifying
+  each CLEAN / LANGUAGE / COLLAPSE / WEAK by KL + distinct + non-ASCII + a
+  caption generation.
+  - **Class counts:** CLEAN 11, WEAK 23, COLLAPSE 4, LANGUAGE 2. Clean ranks:
+    2, 5, 11, 19, 20, 22, 23, 24, 26, 31, 35. So ~27% of the lowest-40 tail
+    directions give coherent-English large strain at frac=1.0 — a good supply.
+  - **Effect diversity (the decisive check) — did NOT pass.** Mean pairwise
+    cosine of the steered caption-displacement among CLEAN directions = **0.867**
+    (max 1.000). The captions mostly read as the same "quiet/contemplative
+    descriptive caption + think-suppression" register (−2 "The scene is set in
+    a quiet room…", −22 "The quiet solitude of an empty chair…", −23 "The scene
+    is quiet and contemplative", −35 "…speaks of quiet solitude and"). So the
+    clean directions produce ONE common mode, not diverse effects — the pivot's
+    mitigation (many directions, different subtle effects, shared factor = strain
+    magnitude) does **not** hold as measured. Reads like a limited repertoire of
+    *coherent* off-manifold responses, with "descriptive register" a common
+    attractor (as "switch to Chinese" was for the extreme tail).
+  - **Classifier contamination:** −26 is actually **German** ("Opte für eine
+    Stimmungsbild…") that passed as CLEAN — the non-ASCII flag only catches
+    non-Latin scripts, so it misses Latin-script language switches; −19 is
+    degenerate ("<think><|im_end|>"). Effective clean ≈ 9. Fix: add a
+    Latin-script language check to the screen.
+  - Raw output:
+    [`results/raw/2026-08-03_strain_selection_screen.txt`](results/raw/2026-08-03_strain_selection_screen.txt).
+  - **Read (yellow flag, not green light):** large coherent English strain is
+    *common* (good), but the **effect diversity needed to defeat the
+    register-handle is not demonstrated** (cosine 0.867, high). This challenges
+    the pivot's §1/§2 anti-deflation premise: if every high-strain state
+    manifests as the same nameable register, "preference tracks strain" is
+    deflatable as "prefers that register." **Load-bearing caveat before
+    concluding:** diversity was measured on ONE prompt (caption), which
+    constrains outputs to be similar regardless of direction — a fingerprint-
+    based diversity (displacement across the full probe battery) is needed to
+    tell "genuinely one mode" from "one constraining prompt." If the
+    non-diversity survives that recheck, it echoes the earlier
+    measurable-vs-nameable tension and §3's tension, and the honest move is to
+    weaken §2's claim rather than paper over it. This is a decision point, not a
+    clean proceed-to-§5.
+
 **Current overall status, not just this entry's delta** (so this section is
 self-sufficient without piecing together every dated entry above):
 
