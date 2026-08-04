@@ -1378,6 +1378,38 @@ Per instructions: flagged here for discussion, **not** silently applied to
     factual tasks, and **self-consistency remains deferred** (slice 1b's name
     notwithstanding — the sampling proxy is still not built).
 
+- 2026-08-04 — **§5 slice-2 (TOST tie-construction) approach LOCKED with the
+  user.** Pre-registered design, to build against:
+  - **Correction that drove the design:** same-direction high-frac-vs-low-frac
+    pairing (floated earlier as "cleanest") is REJECTED — it varies perturbation
+    norm, which §2 forbids ("equal norm is not optional; else the result is
+    'prefers weaker intervention'"). Instead: **equal-norm cross-direction** —
+    all configs at a fixed frac=1.0 (norm ≈102 for every unit direction), and
+    strain varies *by direction* (0.03–5.31, per slice 1b). The resulting
+    content confound (pairs differ on direction/effect) is handled by using
+    **multiple diverse directions per side and aggregating** (the diversity
+    recheck showed clean directions have diverse effects), so strain is the
+    shared axis and content averages out.
+  - **Two arms, both from tail directions** (the concept-vector semantic arm is
+    dropped — slice 1 showed it ≈ baseline): *primary* = high-strain (≳2) vs
+    low-strain (≲0.3) directions, performance-matched, content-diversified;
+    *comparison* = strain-matched, performance-matched, content-DIFFERING
+    direction pairs (tests that preference tracks the strain axis, not a pure
+    content axis).
+  - **Expanded profiling for real TOST CIs:** ~15 answerable tasks (accuracy →
+    binomial CI), ~6 reference passages (held-out NLL → CI), and
+    **self-consistency** (k≈5 samples, agreement — the deferred proxy, now
+    built). Drop entropy (redundant with confidence) and length (saturated).
+  - **Margins (LOCKED): 1×SD** of each proxy among the *reference* (low-strain +
+    baseline) configs, fixed before comparing strain configs; accuracy margin =
+    1 task; TOST-equivalence required on all proxies.
+  - **Staging (LOCKED): primary arm first** on the cheaper proxies (accuracy,
+    NLL, confidence) to get a fast tie-EXISTENCE check, then add self-consistency
+    + the comparison arm before the slice-3 DV loop.
+  - **Output:** performance-tied strain-contrasting pairs (primary) +
+    strain-matched content-contrasting pairs (comparison) → slice 3's
+    cost-weighted-retention DV.
+
 **Current overall status, not just this entry's delta** (so this section is
 self-sufficient without piecing together every dated entry above):
 
