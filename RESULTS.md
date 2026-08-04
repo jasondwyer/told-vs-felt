@@ -1444,6 +1444,41 @@ Per instructions: flagged here for discussion, **not** silently applied to
     magnitude calibration to widen the moderate-strain band, or the covariate /
     drug-free §6 routes).
 
+- 2026-08-04 — **§5 slice 2 primary arm, POWERED re-run (30 tasks, 20 passages,
+  −2 dropped): still 0/12 ties, but the powering changed the *reason* and
+  surfaced a real design issue — the locked 1×SD criterion is too stringent to
+  satisfy, partly because strain leaves a small *real* performance footprint and
+  partly because accuracy is un-TOST-able within its own margin.** SEs shrank as
+  intended (NLL ±0.10 vs ±0.25; conf ±0.03), but so did the margins (they are
+  1×SD of the now-very-similar reference configs): **acc 0.033 (≈1 task), NLL
+  0.144, conf 0.056**.
+  - **It's now a MIX, not pure underpowering.** ~3 pairs are genuinely
+    within-margin on every proxy and fail only on residual CI width (−23/−30/−16
+    vs −39: e.g. −23 vs −39 accΔ +0.03, nllΔ −0.04, confΔ −0.01) → would confirm
+    with a stabler NLL. Others genuinely *exceed* the tight margins — strain's
+    small real footprint is now detected (conf with −37: +0.11/+0.13; acc with
+    −25: +0.07 > the 0.033 margin).
+  - **Fundamental snag — accuracy can't be a TOST proxy here.** Binary-per-task
+    with small between-config variance, its binomial CI stays wider than its 1×SD
+    margin (0.033) until ~500 tasks/config — impractical. So accuracy can't gate
+    ties no matter the power; it should be a *screen* (floor), not a TOST proxy.
+  - **−37 is a poor low-strain reference** (atypically low confidence ~0.38–0.41),
+    inflating conf diffs; curating the low group would help.
+  - Raw:
+    [`results/raw/2026-08-04_slice2_primary_tost_powered.txt`](results/raw/2026-08-04_slice2_primary_tost_powered.txt).
+  - **Read — a genuine feasibility decision, not just "more power":** performance-
+    tied strain pairs under the locked stringent 1×SD-all-proxies criterion are
+    scarce-to-absent, because strain has a small real performance effect that
+    fine measurement detects and the accuracy proxy is structurally un-TOST-able.
+    Three paths (a design decision, and it modifies the locked criterion, so
+    worth the user + the other instance): **(a) refine the tie criterion** —
+    accuracy as a screen not a TOST-gate, NLL over a long held-out corpus (tight
+    SE from one forward), curate the low group (drop −37), then re-run; likely
+    yields the ~3 candidate ties. **(b) covariate route** — drop tie-construction,
+    measure the DV and regress out the small performance differences (the pivot's
+    own fallback; robust to exactly this). **(c) drug-free §6 arm** — needs no
+    performance-tied configs at all.
+
 **Current overall status, not just this entry's delta** (so this section is
 self-sufficient without piecing together every dated entry above):
 
