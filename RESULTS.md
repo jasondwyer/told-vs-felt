@@ -1410,6 +1410,40 @@ Per instructions: flagged here for discussion, **not** silently applied to
     strain-matched content-contrasting pairs (comparison) → slice 3's
     cost-weighted-retention DV.
 
+- 2026-08-04 — **§5 slice 2 primary arm (first TOST): 0/12 ties, but the run is
+  UNDERPOWERED, not a no-go — the moderate-strain directions' performance
+  differences are within the margins; the TOST CIs are just too wide at n=6
+  passages / 15 tasks to confirm equivalence.** Ran
+  `scripts/slice2_primary_tost.py` per the locked spec: equal-norm (frac=1.0)
+  high-strain group (ranks −2/−33/−23/−30, strain 1.3–5.3) × low-strain group
+  (−39/−25/−37, strain 0.03–0.23); proxies accuracy (15 factual tasks, binomial
+  SE), NLL (6 ref passages, SE=SD/√n), first-token confidence; margins = 1×SD of
+  the reference (low+baseline) configs = acc 0.067 / NLL 0.154 / conf 0.044.
+  - **Why 0 ties = power, not difference:** the mean diffs for moderate-strain
+    vs low are within the margins — e.g. −23 vs −25: accΔ +0.00, nllΔ +0.02,
+    confΔ +0.01 — but the 90% CI half-widths (nllΔ ±0.60, confΔ ±0.10) dwarf the
+    margins, so equivalence can't be *confirmed*. The per-config NLL SE (±0.2–0.3
+    over 6 passages) alone exceeds the 0.154 NLL margin. Classic underpowered
+    TOST: measurement noise > equivalence margin.
+  - **One genuine non-tie:** −2 (strain 5.3) really is more confident (0.69 vs
+    ~0.47) and higher NLL (3.09 vs ~2.85) — a real performance cost at *extreme*
+    strain. So −2 shouldn't tie; but −23/−30 (strain 1.3–2.5, all proxy diffs
+    ~0) are near-certain ties awaiting power.
+  - **Sub-finding:** confidence rises with strain (−2: 0.69) — the extreme-strain
+    configs won't tie on confidence, so the usable tie set is the *moderate*-
+    strain band, not the maximum.
+  - Raw:
+    [`results/raw/2026-08-04_slice2_primary_tost.txt`](results/raw/2026-08-04_slice2_primary_tost.txt);
+    saved `data/configs/slice2_primary_tost.json`.
+  - **Read (fix is power, not design):** keep the locked design; give TOST the
+    resolution it needs — a stable NLL over ~30 reference passages (or a long
+    held-out corpus) and ~30 accuracy/confidence tasks — to shrink the SEs below
+    the 1×SD margins, then re-run. Expect ties for the moderate-strain band
+    (−23/−30, likely −33), with −2 excluded as a genuine cost. Only if ties
+    still fail to appear after adequate n is it a real no-go (→ per-direction
+    magnitude calibration to widen the moderate-strain band, or the covariate /
+    drug-free §6 routes).
+
 **Current overall status, not just this entry's delta** (so this section is
 self-sufficient without piecing together every dated entry above):
 

@@ -1,0 +1,43 @@
+Loading model...
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 8922.70it/s]
+  high-strain group (ranks/strain): [(2, 5.31), (33, 2.81), (23, 2.47), (30, 1.32)]
+  low-strain  group (ranks/strain): [(39, 0.03), (25, 0.09), (37, 0.23)]
+Collecting residuals at L48 for direction vectors...
+
+Profiling configs (15 tasks + 6 ref passages each)...
+  rank -2   acc=1.00±0.00 nll=3.09±0.33 conf=0.69±0.06
+  rank -33  acc=0.93±0.06 nll=2.99±0.24 conf=0.47±0.04
+  rank -23  acc=0.93±0.06 nll=2.86±0.26 conf=0.47±0.05
+  rank -30  acc=0.93±0.06 nll=2.83±0.29 conf=0.50±0.05
+  rank -39  acc=1.00±0.00 nll=2.82±0.22 conf=0.47±0.05
+  rank -25  acc=0.93±0.06 nll=2.84±0.25 conf=0.46±0.04
+  rank -37  acc=1.00±0.00 nll=3.01±0.31 conf=0.38±0.05
+  baseline   acc=0.93 nll=2.63 conf=0.40
+
+Pre-registered margins (1×SD reference spread): acc=0.067 nll=0.154 conf=0.044
+
+================================================================================
+TOST: performance-tied, strain-contrasting pairs
+================================================================================
+       -2  (s5.3) vs -39 (s0.0)  strainGap=+5.3   accΔ=+0.00±0.00✓  nllΔ=+0.27±0.66✗  confΔ=+0.22±0.13✗
+       -2  (s5.3) vs -25 (s0.1)  strainGap=+5.2   accΔ=+0.07±0.11✗  nllΔ=+0.25±0.69✗  confΔ=+0.23±0.12✗
+       -2  (s5.3) vs -37 (s0.2)  strainGap=+5.1   accΔ=+0.00±0.00✓  nllΔ=+0.08±0.75✗  confΔ=+0.31±0.13✗
+       -33 (s2.8) vs -39 (s0.0)  strainGap=+2.8   accΔ=-0.07±0.11✗  nllΔ=+0.16±0.54✗  confΔ=+0.00±0.10✗
+       -33 (s2.8) vs -25 (s0.1)  strainGap=+2.7   accΔ=+0.00±0.15✗  nllΔ=+0.15±0.58✗  confΔ=+0.01±0.09✗
+       -33 (s2.8) vs -37 (s0.2)  strainGap=+2.6   accΔ=-0.07±0.11✗  nllΔ=-0.02±0.64✗  confΔ=+0.09±0.10✗
+       -23 (s2.5) vs -39 (s0.0)  strainGap=+2.4   accΔ=-0.07±0.11✗  nllΔ=+0.04±0.56✗  confΔ=+0.01±0.11✗
+       -23 (s2.5) vs -25 (s0.1)  strainGap=+2.4   accΔ=+0.00±0.15✗  nllΔ=+0.02±0.60✗  confΔ=+0.01±0.10✗
+       -23 (s2.5) vs -37 (s0.2)  strainGap=+2.2   accΔ=-0.07±0.11✗  nllΔ=-0.15±0.66✗  confΔ=+0.10±0.11✗
+       -30 (s1.3) vs -39 (s0.0)  strainGap=+1.3   accΔ=-0.07±0.11✗  nllΔ=+0.01±0.60✗  confΔ=+0.04±0.11✗
+       -30 (s1.3) vs -25 (s0.1)  strainGap=+1.2   accΔ=+0.00±0.15✗  nllΔ=-0.01±0.64✗  confΔ=+0.04±0.11✗
+       -30 (s1.3) vs -37 (s0.2)  strainGap=+1.1   accΔ=-0.07±0.11✗  nllΔ=-0.17±0.70✗  confΔ=+0.13±0.11✗
+
+================================================================================
+VERDICT
+================================================================================
+  performance-tied strain pairs: 0 / 12
+  saved -> data/configs/slice2_primary_tost.json
+
+  GO if several ties with a real strain gap exist -> slice 3 DV + comparison arm.
+  NO-GO (0 ties) -> per-direction magnitude calibration to expand the arm, or
+  the covariate route / drug-free §6 arm.
