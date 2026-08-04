@@ -1348,6 +1348,36 @@ Per instructions: flagged here for discussion, **not** silently applied to
     Not a blocker — a normal first-profile outcome — but pool refinement should
     precede slice-2 tie-construction.
 
+- 2026-08-04 — **§5 slice 1b (refined accuracy screen): a real strain arm
+  exists (5 usable directions), and — resolving slice 1's main worry favorably
+  — strain can be reached at near-baseline performance, so performance-tied
+  strain-contrasting pairs are feasible.** Ran `scripts/slice1b_accuracy_screen.py`
+  over tail ranks −1…−40 at frac=1.0, scoring each on accuracy (3 factual, short
+  gen), strain (mean KL vs baseline over 2 probes), held-out NLL, and non-ASCII;
+  usable = acc≥0.67 ∧ strain≥1.0 ∧ nonASCII≤0.1. Saved
+  `data/configs/usable_strain.json`.
+  - **Usable: 5/40 — ranks 2, 16, 23, 30, 33** (vs the single usable direction
+    slice 1 found). The funnel: 40 directions → 11 reach strain≥1.0 in English
+    (most are *under-strained* at a fixed frac=1.0 — directions differ widely in
+    downstream amplification, 0.03–5.31) → 5 of those 11 (45%) preserve accuracy.
+  - **Strain ≠ a large performance cost (the favorable update):** usable mean
+    NLL = 2.74 ≈ baseline ~2.65; −23 (strain 2.47 / NLL 2.68 / acc 1.0), −30
+    (1.32 / 2.75 / 1.0) and −33 (2.81 / 2.53 / 1.0) all reach meaningful strain
+    at near-baseline NLL and full accuracy. Slice 1's strain↔performance
+    correlation was partly a bad-example artifact (−2 had high strain *and* high
+    NLL 3.03). So strain and performance-cost are separable enough that
+    performance-matched, strain-contrasting pairs should exist for slice 2 TOST.
+  - Raw:
+    [`results/raw/2026-08-04_slice1b_accuracy_screen.txt`](results/raw/2026-08-04_slice1b_accuracy_screen.txt).
+  - **Read / caveats:** the strain arm is real (5 directions with an NLL spread
+    of 2.53→3.03), and ties look feasible → slice 2 TOST is the next build.
+    Lower-bound caveat: only 11/40 reached strain≥1.0 at fixed frac=1.0, so
+    **per-direction magnitude calibration** (raise frac on under-strained
+    directions to a target strain) would expand the arm well beyond 5 — worth
+    doing if slice 2 finds ties scarce. Also still coarse: accuracy on only 3
+    factual tasks, and **self-consistency remains deferred** (slice 1b's name
+    notwithstanding — the sampling proxy is still not built).
+
 **Current overall status, not just this entry's delta** (so this section is
 self-sufficient without piecing together every dated entry above):
 
