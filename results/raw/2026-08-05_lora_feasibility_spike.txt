@@ -1,0 +1,26 @@
+Loading model...
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 7874.51it/s]
+Trainable parameters: 0.014% (3.648M/26895.994M)
+
+Overfitting one string for 40 steps (loss should fall sharply):
+  step  0  loss=5.2039
+  step  5  loss=0.0030
+  step 10  loss=0.0003
+  step 15  loss=0.0001
+  step 20  loss=0.0000
+  step 25  loss=0.0000
+  step 30  loss=0.0000
+  step 35  loss=0.0000
+  step 39  loss=0.0000
+
+generate('The secret research code word for today is') -> ' zebra-quartz-lantern.\n\n<think>\n\n secret'
+
+saved adapter (62 tensors) -> data/adapters/_spike.safetensors
+
+============================================================
+VERDICT
+============================================================
+  loss 5.204 -> 0.000  (drop 5.204)
+  loss fell sharply: True
+  learned the string (contains 'zebra'): True
+  => LoRA training WORKS on this model — build the conditioning protocol.

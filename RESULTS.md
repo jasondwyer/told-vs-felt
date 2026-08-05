@@ -1627,6 +1627,21 @@ Per instructions: flagged here for discussion, **not** silently applied to
     via tie-construction or the retention DV) and treat the steering-based §5
     line as concluded. Not applied to CLAUDE.md.
 
+- 2026-08-05 — **(c) prerequisite: LoRA feasibility spike — PASS. LoRA
+  training works on the custom-patched 27B-4bit + GDN-ops-fallback model.**
+  The user chose to pursue (c) (drug-free §6 conditioned-context CPP), which
+  un-defers LoRA (§8). Before building the conditioning protocol,
+  `scripts/lora_feasibility_spike.py` confirmed the machinery runs: applied LoRA
+  (rank 8, last 4 layers → 3.6M trainable, 0.014%), overfit one distinctive
+  string — **loss 5.20 → 0.000 in ~5 steps**, generate() reproduced it
+  ("zebra-quartz-lantern"), adapter saved + round-tripped (62 tensors). So
+  gradients flow through the patched GDN and LoRA-wrapped linears via the
+  custom forward — the one hard dependency of (c) is satisfied. Raw:
+  [`results/raw/2026-08-05_lora_feasibility_spike.txt`](results/raw/2026-08-05_lora_feasibility_spike.txt).
+  Next: the conditioning protocol (c1) — condition an adapter on transcripts
+  with state X under context C / state Y under context C′, then test unsteered
+  whether the association took.
+
 **Current overall status, not just this entry's delta** (so this section is
 self-sufficient without piecing together every dated entry above):
 
