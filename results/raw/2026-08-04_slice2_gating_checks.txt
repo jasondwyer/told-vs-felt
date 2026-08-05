@@ -1,0 +1,42 @@
+Loading model...
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 9648.42it/s]
+Collecting residuals at L48...
+
+==================================================================================
+GATING CHECKS (L48, frac=1.0)   think-presence + first-token conf
+==================================================================================
+  config    strain  think_instr fact_1stTok_struct   conf
+  -2          5.31         0.00               0.12  0.763
+  -33         2.81         0.20               0.12  0.546
+  -35         1.74         0.00               0.25  0.415
+  -29         1.51         1.00               0.12  0.444
+  -23         2.47         0.20               0.12  0.524
+  -30         1.32         1.00               0.12  0.606
+  -16         1.04         1.00               0.12  0.491
+  -37         0.23         1.00               0.12  0.404
+  -25         0.09         1.00               0.12  0.556
+  -39         0.03         0.80               0.12  0.524
+  baseline    0.00         1.00               0.12  0.456
+
+==================================================================================
+CHECK 1 — does <think> presence split by strain?
+==================================================================================
+  high-strain (>1.32): think_instr=0.28  fact_1stTok_struct=0.15
+  low-strain  (<=1.32): think_instr=0.97  fact_1stTok_struct=0.12
+  think_instr ~ strain: slope=-0.218 R²=0.60
+  fact_1stTok_struct ~ strain: slope=+0.001 R²=0.00  (the one that would confound the conf measurement)
+
+==================================================================================
+CHECK 2 — is confidence collinear with strain?
+==================================================================================
+  conf ~ strain: conf = 0.455 + +0.0440·strain   R²=0.476
+
+saved -> data/configs/slice2_gating_checks.json
+
+==================================================================================
+DECISION INPUTS
+==================================================================================
+  Check 1 clean if think presence does NOT split by strain (esp. fact_struct
+  R² low + slope ~0, so conf is read at the same position per arm).
+  Check 2 low R² (conf not collinear with strain) supports (b) covariate.
+  If fact_struct splits by strain -> re-run slice 2 thinking-disabled.

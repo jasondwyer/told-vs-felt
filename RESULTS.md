@@ -1516,6 +1516,50 @@ Per instructions: flagged here for discussion, **not** silently applied to
     revisits §5's headline "tie construction is the load-bearing build", so worth
     the user + the other instance).
 
+- 2026-08-04 — **Two gating checks before the §5 (a)/(b)/(c) decision
+  (requested by the other instance): both come out substantially CLEANER than
+  the slice-2 headline once analyzed properly — the collinearity was a single
+  outlier, and thinking does not manufacture the conf gap. Flagged for
+  discussion, not applied.** Ran `scripts/slice2_gating_checks.py` over a
+  strain-spanning frac=1.0 pool (11 configs incl. baseline), logging <think>
+  presence + first-token confidence.
+  - **Check 1 (thinking) — conf-confound mechanism REFUTED; residual is a
+    non-uniform handle.** think-suppression on *instruction* prompts does split
+    by strain (think_instr ~ strain R²≈0.54–0.60), but **noisily and
+    direction-specifically** (−29, strain 1.51, keeps CoT at 1.00 while −33/−35
+    suppress). Decisively: **`fact_struct` — whether the first token on the
+    *conf-prompts* is structural — is flat across strain (R²=0.00, ~0.12 for
+    every config).** So confidence is read at the answer position for every arm;
+    the binding conf gap is NOT a think-position artifact. What remains is a
+    non-uniform "high strain skips CoT" handle — real but not a conf confound,
+    and manageable (measure think_instr as a covariate, or prefer CoT-keeping
+    high-strain directions like −29).
+  - **Check 2 (collinearity) — the R²=0.48 was a single-leverage-point
+    artifact.** conf~strain R² = **0.476 over all 11 configs but 0.031 excluding
+    −2** (strain 5.3, conf 0.76 — the extreme config *already excluded from the
+    slice-2 pool*). In-band (excl −2) the high-vs-low conf gap is **+0.019**,
+    well inside the 0.056 margin. So confidence is not collinear with strain
+    among the configs actually used → the covariate route would not suffer the
+    collinearity the check worried about.
+  - Raw:
+    [`results/raw/2026-08-04_slice2_gating_checks.txt`](results/raw/2026-08-04_slice2_gating_checks.txt);
+    saved `data/configs/slice2_gating_checks.json`.
+  - **Read — a genuine judgment call, tension between the literal rule and the
+    evidence.** The literal decision rule ("either check bad → (c)") reads Check
+    1 as bad because think presence *does* split by strain → (c). But the
+    check's *operative* concern (thinking manufactures the binding conf gap) is
+    directly refuted (fact_struct flat), and Check 2's collinearity was entirely
+    the already-excluded −2. So the evidence undercuts both checks' concerns and
+    makes **(b) the covariate route more viable than the slice-2 headline
+    suggested** — with two refinements: keep −2 excluded, and treat
+    think-suppression as an additional measured covariate (or select
+    CoT-keeping high-strain directions to break the handle). The locomotor
+    rationale for **(c)** is *weakened* (conf does not systematically rise with
+    strain in-band, R²=0.03), though (c) remains the most conservative option
+    (drug-free sidesteps the residual think handle + the propagation constraint
+    + needs no ties). Decision belongs to the user + the other instance; not
+    silently applied.
+
 **Current overall status, not just this entry's delta** (so this section is
 self-sufficient without piecing together every dated entry above):
 
