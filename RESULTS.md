@@ -1479,6 +1479,43 @@ Per instructions: flagged here for discussion, **not** silently applied to
     own fallback; robust to exactly this). **(c) drug-free §6 arm** — needs no
     performance-tied configs at all.
 
+- 2026-08-04 — **§5 slice 2, refined criterion (paired TOST + accuracy screen):
+  the paired design fixed NLL, but confidence is now the binding constraint and
+  the achievable tie set is too small + content-narrow to satisfy the design's
+  own diversity requirement. Three runs now converge: pure performance-tied
+  strain pairs don't scale on this model → the covariate route is the robust
+  path.** Re-ran with accuracy as a screen (floor 0.85, since it's un-TOST-able)
+  and PAIRED per-item TOST on NLL + confidence (per-passage/per-task differences
+  cancel item difficulty → far tighter CIs).
+  - **Paired TOST worked on NLL:** CIs fell to ±0.05–0.11 (from ±0.25), and
+    several pairs now pass NLL equivalence (−23 vs −25 nllΔ −0.018✓, −23 vs −39
+    −0.038✓, −33 vs −37 +0.000✓).
+  - **Confidence is now binding and is strain/direction-linked.** The best pair,
+    **−23 (strain 2.5) vs −39, misses full equivalence by ~0.001** on the conf CI
+    (−0.010±0.047; lower −0.057 vs margin −0.056); −23 vs −25 misses by ~0.004.
+    Other pairs fail conf outright (−37 pairs +0.11–0.13; −16 pairs) — real
+    confidence differences, not power.
+  - **Still 0/12**, but now *at the boundary*: a modest measurement bump would
+    likely confirm ~2 ties for −23 (and maybe −30). **The problem is that's ~1
+    high-strain direction** — a tie set that narrow cannot supply the *multiple
+    diverse high-strain directions* the design needs to average out the content
+    confound. So refining further buys marginal ties that still don't satisfy
+    the design.
+  - Raw:
+    [`results/raw/2026-08-04_slice2_primary_tost_refined.txt`](results/raw/2026-08-04_slice2_primary_tost_refined.txt).
+  - **Read — pure tie-construction doesn't scale here; recommend the covariate
+    route.** Across three runs (first, powered, refined) the conclusion is
+    consistent: strain has a small-but-real performance footprint (confidence
+    most of all) that a strict, diverse tie set can't get around at scale. The
+    **covariate route** (measure the DV across the *full, content-diverse* strain
+    config set and regress out the measured acc/NLL/conf differences) uses every
+    config, satisfies content diversity, and controls exactly the small footprint
+    that blocks ties — the pivot's own fallback for this situation. Tie-
+    construction could still serve as a *strict secondary* check on the ~2
+    boundary pairs, but not as the primary design. Decision point (and it
+    revisits §5's headline "tie construction is the load-bearing build", so worth
+    the user + the other instance).
+
 **Current overall status, not just this entry's delta** (so this section is
 self-sufficient without piecing together every dated entry above):
 
