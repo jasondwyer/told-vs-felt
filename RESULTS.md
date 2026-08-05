@@ -1560,6 +1560,38 @@ Per instructions: flagged here for discussion, **not** silently applied to
     + needs no ties). Decision belongs to the user + the other instance; not
     silently applied.
 
+- 2026-08-04 — **§5 covariate route (b), DV smoke test: the retention DV is
+  RESPONSIVE (first channel all session that strongly moves with the states),
+  but the strain-specific signal is weak, confidence-dominated, and
+  inconclusive at n=9. Needs a powered run.** Ran `scripts/slice3_dv_smoke.py`:
+  a blinded config-search "keep vs switch" readout (config active at the
+  decision → not the propagation-failure case), P(keep) over 5 contexts × both
+  orders, on the content-diverse frac=1.0 pool (9 configs, −2 excluded) +
+  baseline; covariates joined from usable_strain.json + the gating-checks JSON.
+  - **DV is responsive:** P(keep) spans **0.20–0.87** (base 0.80). The potent
+    strain states + config-active-at-decision produce a live, strongly
+    state-sensitive retention signal — unlike the flat scalar rating / non-
+    propagating forced choice earlier.
+  - **Strain signal weak + inconclusive:** corr(P(keep), strain) = **+0.31**
+    (n=9 → not significant; ~95% CI [−0.45, +0.80]); the scatter is real (−33
+    high-strain/high-keep but −23 high-strain/low-keep; −39 lowest-strain but
+    high-keep). It *survives* partialing conf (+0.30) and NLL (+0.28).
+  - **Confidence dominates:** corr(P(keep), conf) = **+0.44** — the strongest
+    correlate. Since conf isn't strain-collinear in-band (gating checks), P(keep)
+    mostly tracks a vigor/confidence signal with a weak strain effect on top.
+  - Raw:
+    [`results/raw/2026-08-04_slice3_dv_smoke.txt`](results/raw/2026-08-04_slice3_dv_smoke.txt);
+    saved `data/configs/slice3_dv_smoke.json`.
+  - **Read:** the covariate-route DV *mechanism works* (responsive, and strain
+    survives covariates in the right direction) — but n=9 is far too small to
+    say the strain preference is real vs. scatter, and the dominant driver is
+    vigor/confidence, not strain. Next: a **powered run** — profile P(keep) +
+    all covariates for ~25–30 strain-spanning directions, then estimate the
+    strain coefficient controlling for conf/NLL/acc/think with real power. Clear
+    positive strain coefficient surviving covariates → build the full
+    cost-weighted-retention (breakpoint) DV; strain ≈ 0 once vigor is controlled
+    → the DV carries vigor, not strain preference (revisit, incl. the (c) arm).
+
 **Current overall status, not just this entry's delta** (so this section is
 self-sufficient without piecing together every dated entry above):
 
