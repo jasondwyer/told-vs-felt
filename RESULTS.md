@@ -1592,6 +1592,41 @@ Per instructions: flagged here for discussion, **not** silently applied to
     cost-weighted-retention (breakpoint) DV; strain ≈ 0 once vigor is controlled
     → the DV carries vigor, not strain preference (revisit, incl. the (c) arm).
 
+- 2026-08-05 — **§5 covariate route (b), POWERED DV estimate (n=33): clean,
+  well-powered NULL — revealed retention preference does not track strain. (b)
+  fails its central test.** Ran `scripts/slice3_dv_powered.py`: P(keep) +
+  confidence profiled across 33 strain-spanning English configs (frac=1.0, −2
+  excluded); strain/acc/NLL from usable_strain.json; OLS of P(keep) on strain
+  controlling for conf/acc/NLL.
+  - **No strain effect:** simple corr(P(keep), strain) = **+0.10**; standardized
+    OLS **strain beta = +0.12, t = +0.59** (not significant); **partial
+    corr(P(keep), strain | conf,acc,NLL) = +0.11**. Per the pre-registered rule
+    (|t| < 1), the DV does not carry strain preference.
+  - **The smoke test's hints were n=9 noise:** the +0.31 strain correlation AND
+    the +0.44 confidence correlation both vanish at power (conf r = −0.08). So it
+    is not even the vigor-confound case — neither strain nor confidence nor
+    accuracy nor NLL explains retention.
+  - **DV is responsive but along an idiosyncratic axis:** P(keep) spans
+    0.13–0.97, so the config strongly moves retention — but orthogonally to
+    strain/performance/vigor. Retention is direction-specific, not strain-graded.
+  - Raw:
+    [`results/raw/2026-08-05_slice3_dv_powered.txt`](results/raw/2026-08-05_slice3_dv_powered.txt);
+    saved `data/configs/slice3_dv_powered.json`.
+  - **Read:** (b) the covariate route fails at power — retention does not track
+    strain, so there is nothing for the covariate regression to isolate. This is
+    a genuine null (n=33), not underpowering. Caveat: this is the *free*
+    keep/switch retention DV, not the cost-weighted (breakpoint) version (§7);
+    but a zero free-choice effect makes a cost-amplified effect unlikely (cost
+    amplifies an existing preference, it doesn't create one). Combined with
+    tie-construction not scaling (a), the two roads into §5 that don't require
+    conditioning have now both come up empty on this model. **(c) the drug-free
+    §6 arm** is structurally different (unsteered choice after context
+    conditioning) and remains untested — but the prior is now more pessimistic,
+    and it is a much larger build. Decision for the user + the other instance:
+    pursue (c), or record the accumulated negative (no detectable strain-valence
+    via tie-construction or the retention DV) and treat the steering-based §5
+    line as concluded. Not applied to CLAUDE.md.
+
 **Current overall status, not just this entry's delta** (so this section is
 self-sufficient without piecing together every dated entry above):
 

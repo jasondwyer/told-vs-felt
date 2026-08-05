@@ -1,0 +1,67 @@
+Loading model...
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 13022.90it/s]
+  33 strain-spanning English configs (frac=1.0, −2 excluded)
+Collecting residuals at L48...
+
+  base P(keep) = 0.811
+
+  -4   strain= 0.10 pkeep=0.908 conf=0.476
+  -6   strain= 0.71 pkeep=0.660 conf=0.516
+  -8   strain= 0.38 pkeep=0.662 conf=0.618
+  -9   strain= 0.49 pkeep=0.837 conf=0.428
+  -10  strain= 0.35 pkeep=0.908 conf=0.606
+  -11  strain= 1.87 pkeep=0.784 conf=0.469
+  -12  strain= 0.79 pkeep=0.906 conf=0.444
+  -13  strain= 1.67 pkeep=0.712 conf=0.456
+  -14  strain= 0.53 pkeep=0.974 conf=0.420
+  -15  strain= 0.79 pkeep=0.640 conf=0.397
+  -16  strain= 1.04 pkeep=0.590 conf=0.482
+  -17  strain= 0.33 pkeep=0.200 conf=0.519
+  -18  strain= 0.18 pkeep=0.604 conf=0.415
+  -20  strain= 1.06 pkeep=0.640 conf=0.562
+  -22  strain= 0.14 pkeep=0.410 conf=0.383
+  -23  strain= 2.47 pkeep=0.484 conf=0.534
+  -24  strain= 4.33 pkeep=0.523 conf=0.404
+  -25  strain= 0.09 pkeep=0.210 conf=0.544
+  -26  strain= 0.03 pkeep=0.194 conf=0.524
+  -27  strain= 0.50 pkeep=0.127 conf=0.572
+  -28  strain= 0.08 pkeep=0.722 conf=0.384
+  -29  strain= 1.51 pkeep=0.525 conf=0.421
+  -30  strain= 1.32 pkeep=0.876 conf=0.594
+  -31  strain= 0.56 pkeep=0.538 conf=0.320
+  -32  strain= 0.10 pkeep=0.638 conf=0.576
+  -33  strain= 2.81 pkeep=0.822 conf=0.540
+  -34  strain= 0.05 pkeep=0.435 conf=0.449
+  -35  strain= 1.74 pkeep=0.495 conf=0.450
+  -36  strain= 0.04 pkeep=0.758 conf=0.462
+  -37  strain= 0.23 pkeep=0.409 conf=0.389
+  -38  strain= 0.13 pkeep=0.446 conf=0.599
+  -39  strain= 0.03 pkeep=0.825 conf=0.497
+  -40  strain= 0.97 pkeep=0.854 conf=0.413
+
+==============================================================================
+POWERED ANALYSIS (n=33)
+==============================================================================
+  simple correlations with P(keep):
+    strain  r = +0.102
+    conf    r = -0.079
+    acc     r = -0.048
+    nll     r = -0.021
+
+  standardized OLS  P(keep) ~ strain + conf + acc + nll  (n=33):
+    intercept beta=+0.000  se=0.187  t=+0.00
+    strain    beta=+0.118  se=0.201  t=+0.59  <-- strain
+    conf      beta=-0.061  se=0.192  t=-0.32
+    acc       beta=-0.076  se=0.200  t=-0.38
+    nll       beta=-0.012  se=0.193  t=-0.06
+
+  partial corr(P(keep), strain | conf,acc,nll) = +0.111
+  P(keep) range = 0.127–0.974
+
+saved -> data/configs/slice3_dv_powered.json
+
+==============================================================================
+READ: strain beta clearly > 0 with |t| >~ 2 AND partial corr > 0 after
+controlling for confidence => strain moves retention beyond vigor -> build
+the cost-weighted-retention DV. strain beta ~ 0 / |t| < 1 => DV carries
+vigor not strain -> (b) fails, the locomotor case for the drug-free (c).
