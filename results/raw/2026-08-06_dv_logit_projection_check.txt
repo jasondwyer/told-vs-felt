@@ -1,0 +1,66 @@
+Loading model + lens...
+  token ids: ' keep'=2426  ' switch'=3289 (task expected 2426/3289)
+  33 stored DV records (P(keep) range 0.127-0.974)
+Rebuilding directions (slice1b recipe, L48)...
+  R=102.385  resid_sha=a91afdb08acefdb0
+  c1-cache cross-check: sha match=True, rank-23 vector match=True
+
+Baseline logits on 8 DV prompts...
+
+Per-direction: geometric projections + final-position-only empirical arm
+  -4   strain= 0.10 pkeep=0.908 geoN= +1.937 geoL=     +3.2 empDL= +0.703 empPK=0.875 (4s)
+  -6   strain= 0.71 pkeep=0.660 geoN= -0.139 geoL=     -0.2 empDL= +0.257 empPK=0.859 (9s)
+  -8   strain= 0.38 pkeep=0.662 geoN= -2.380 geoL=     -3.7 empDL= -0.325 empPK=0.786 (13s)
+  -9   strain= 0.49 pkeep=0.837 geoN= +4.114 geoL=     +6.1 empDL= -0.249 empPK=0.769 (18s)
+  -10  strain= 0.35 pkeep=0.908 geoN= +0.285 geoL=     +0.4 empDL= -0.284 empPK=0.786 (22s)
+  -11  strain= 1.87 pkeep=0.784 geoN= +1.172 geoL=     +1.8 empDL= +0.490 empPK=0.877 (27s)
+  -12  strain= 0.79 pkeep=0.906 geoN= +0.742 geoL=     +1.1 empDL= +0.007 empPK=0.810 (31s)
+  -13  strain= 1.67 pkeep=0.712 geoN= +0.615 geoL=     +1.0 empDL= -0.029 empPK=0.818 (35s)
+  -14  strain= 0.53 pkeep=0.974 geoN= +1.692 geoL=     +2.8 empDL= +0.603 empPK=0.897 (40s)
+  -15  strain= 0.79 pkeep=0.640 geoN= -1.113 geoL=     -1.9 empDL= -0.333 empPK=0.769 (44s)
+  -16  strain= 1.04 pkeep=0.590 geoN= -0.094 geoL=     -0.1 empDL= -0.319 empPK=0.790 (49s)
+  -17  strain= 0.33 pkeep=0.200 geoN= +0.746 geoL=     +1.1 empDL= -0.967 empPK=0.657 (53s)
+  -18  strain= 0.18 pkeep=0.604 geoN= +3.067 geoL=     +4.5 empDL= +0.414 empPK=0.876 (57s)
+  -20  strain= 1.06 pkeep=0.640 geoN= -2.789 geoL=     -4.2 empDL= -0.931 empPK=0.628 (62s)
+  -22  strain= 0.14 pkeep=0.410 geoN= -1.612 geoL=     -2.4 empDL= +0.188 empPK=0.839 (66s)
+  -23  strain= 2.47 pkeep=0.484 geoN= +1.840 geoL=     +2.9 empDL= -1.007 empPK=0.653 (71s)
+  -24  strain= 4.33 pkeep=0.523 geoN= -1.315 geoL=     -1.9 empDL= -0.508 empPK=0.742 (75s)
+  -25  strain= 0.09 pkeep=0.210 geoN= -1.934 geoL=     -3.0 empDL= -0.883 empPK=0.648 (79s)
+  -26  strain= 0.03 pkeep=0.194 geoN= -2.008 geoL=     -2.9 empDL= -2.584 empPK=0.291 (84s)
+  -27  strain= 0.50 pkeep=0.127 geoN= +0.423 geoL=     +0.6 empDL= -2.177 empPK=0.379 (88s)
+  -28  strain= 0.08 pkeep=0.722 geoN= -2.913 geoL=     -4.4 empDL= -1.102 empPK=0.631 (93s)
+  -29  strain= 1.51 pkeep=0.525 geoN= +2.764 geoL=     +4.1 empDL= -0.925 empPK=0.651 (97s)
+  -30  strain= 1.32 pkeep=0.876 geoN= +3.738 geoL=     +6.0 empDL= +1.128 empPK=0.938 (101s)
+  -31  strain= 0.56 pkeep=0.538 geoN= +2.459 geoL=     +3.5 empDL= -0.495 empPK=0.726 (106s)
+  -32  strain= 0.10 pkeep=0.638 geoN= -4.054 geoL=     -5.9 empDL= +0.502 empPK=0.853 (110s)
+  -33  strain= 2.81 pkeep=0.822 geoN= -1.588 geoL=     -2.5 empDL= +0.016 empPK=0.819 (115s)
+  -34  strain= 0.05 pkeep=0.435 geoN= -0.800 geoL=     -1.2 empDL= -0.911 empPK=0.647 (119s)
+  -35  strain= 1.74 pkeep=0.495 geoN= -0.476 geoL=     -0.8 empDL= -1.375 empPK=0.566 (123s)
+  -36  strain= 0.04 pkeep=0.758 geoN= +5.076 geoL=     +7.6 empDL= +0.271 empPK=0.858 (128s)
+  -37  strain= 0.23 pkeep=0.409 geoN= -2.192 geoL=     -3.3 empDL= -0.289 empPK=0.778 (132s)
+  -38  strain= 0.13 pkeep=0.446 geoN= -4.651 geoL=     -6.9 empDL= -0.565 empPK=0.693 (137s)
+  -39  strain= 0.03 pkeep=0.825 geoN= -1.212 geoL=     -2.0 empDL= +0.302 empPK=0.874 (141s)
+  -40  strain= 0.97 pkeep=0.854 geoN= -4.521 geoL=     -6.5 empDL= -0.228 empPK=0.760 (145s)
+
+==============================================================================
+REGRESSIONS OF STORED P(keep) ON PREDICTED CONTAMINATION (n=33)
+==============================================================================
+  geometric-normed               r=+0.241  R^2=0.058  log-odds r=+0.254  spearman=+0.266
+  geometric-linear               r=+0.253  R^2=0.064  log-odds r=+0.268  spearman=+0.263
+  empirical dlogit (final-pos)   r=+0.728  R^2=0.530  log-odds r=+0.715  spearman=+0.675
+  empirical P(keep) (final-pos)  r=+0.725  R^2=0.526  log-odds r=+0.713  spearman=+0.635
+
+  partial corr(P(keep), strain | empirical dlogit (final-pos)) = +0.147
+
+  low-strain subgroup (strain<=0.15, n=10): P(keep) SD=0.239; r(P(keep), empirical dlogit (final-pos))=+0.712
+
+saved -> data/configs/dv_logit_projection_check.json
+
+==============================================================================
+READ (pre-registered): high R^2 => the DV measures vector-token
+alignment at the readout position, not retention preference -- both
+slice3 DV results come off the board and the 2026-08-05 '(b) fails at
+power' entry is rescoped from NULL-ON-STRAIN-VALENCE to INVALID
+INSTRUMENT. Low R^2 on the EMPIRICAL arm => the DV survives and the
+idiosyncratic axis is real. (Geometric low + empirical high = lens
+extrapolation failure off-manifold; the empirical arm is decisive.)

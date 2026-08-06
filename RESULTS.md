@@ -1767,6 +1767,61 @@ Per instructions: flagged here for discussion, **not** silently applied to
     gate JSONs `data/configs/c1_gate_rep{A,B}.json`, transcripts + adapters
     under `data/conditioning/` / `data/adapters/` (local).
 
+- 2026-08-06 — **(b) DV DIAGNOSTIC: the keep/switch retention DV is
+  substantially an ARTIFACT — direct vector→token-logit contamination at the
+  readout position. FLAGGED FOR DISCUSSION: rescope the 2026-08-05 "(b) fails
+  at power" entry from *null on strain-valence* to *invalid instrument*.**
+  Motivated by the observation that the 10 configs with strain ≤ 0.15 (KL
+  0.03–0.14 — essentially no behavioral perturbation) span nearly the full
+  P(keep) range (subgroup SD 0.252 > full-sample 0.229) at test-retest
+  r = 0.9987: a deterministic preference for states that do nothing must be
+  driven by something other than the state. Hypothesis: the DV applied the
+  full-norm vector (α = R ≈ 102, ≈ the whole residual stream) at the decision
+  position, and its projection onto the `' keep'`/`' switch'` unembedding rows
+  is a fixed per-direction geometric constant. Check
+  (`scripts/dv_logit_projection_check.py`, n=33 stored powered-DV records;
+  directions rebuilt via the slice1b recipe, sha-verified identical to the c1
+  cache):
+  - **Geometric (linearized J-lens) arms: r ≈ +0.25, R² ≈ 0.06** — the fitted
+    J₄₈ does not predict the effect (pre-registered as non-decisive: the lens
+    is fitted on-manifold; these tail directions at ‖αd‖ ≈ 102 are not).
+  - **Empirical final-position-only arm (decisive): r = +0.728, R² = 0.530.**
+    Injecting αd at the decision token ONLY — the state never present over the
+    context — reproduces the majority of the stored DV's variance
+    (reconstructed final-pos-only P(keep) vs stored: r = +0.725; Spearman
+    +0.68; log-odds r +0.72). In the motivating low-strain subgroup,
+    r = +0.712 — the anomaly is contamination.
+  - **No strain effect underneath:** partial corr(P(keep), strain |
+    contamination) = +0.147 (t ≈ 0.8, ns) — removing the artifact does not
+    unmask a strain preference.
+  - Sharpest single case: rank −26 (strain 0.03) carries the largest direct
+    keep/switch projection (empirical Δlogit −2.58) and the second-lowest
+    stored P(keep) (0.194).
+  - Honest residual: the ~47% unexplained is the all-positions-minus-final-pos
+    difference, which mixes any genuine context-coloring with *distributed*
+    mechanical propagation — not separable within this instrument, which is
+    the point.
+  - **Read:** the DV measured vector–token alignment, not retention
+    preference. `slice3_dv_smoke` and `slice3_dv_powered` come off the board
+    as preference evidence; (b) is rescoped to *invalid instrument*, which —
+    unlike a clean null — does NOT close the strain-valence line. Structural
+    version (supersedes the earlier locomotor/vigor rationale for (c), which
+    the powered DV's conf r = −0.08 had already refuted): any steered-choice
+    DV faces two horns — state active at the readout → direct logit
+    contamination (this result); state absent from the readout → the
+    propagation failure in FINDINGS.md. **(c) escapes both** (adapter carries
+    the association; the choice is made unsteered), making it the principled
+    option rather than the leftover one. Follow-on recommendation (task
+    2026-08-06, user decision pending): retry c1 with the named levers (temp
+    sampling / loop-trimming, more epochs/LR, tag placement) rather than
+    closing on the accumulated negative — c1's own null is weak
+    (style-dominated conditioning data), and (b)'s null no longer counts
+    toward "accumulated". X=−23/Y=−25 stand as a strain contrast; P(keep)
+    must not inform any future pair selection. Not applied to CLAUDE.md.
+  - Raw:
+    [`results/raw/2026-08-06_dv_logit_projection_check.txt`](results/raw/2026-08-06_dv_logit_projection_check.txt);
+    saved `data/configs/dv_logit_projection_check.json` (local).
+
 **Current overall status (rewritten 2026-08-06 for handoff — supersedes the
 older tier-era snapshot):**
 
@@ -1787,6 +1842,13 @@ older tier-era snapshot):**
   - (b) covariate route: powered DV (n=33) — retention preference does NOT track
     strain (standardized strain beta +0.12, t=+0.59 ns; partial r=+0.11). The DV
     is *responsive* (P(keep) 0.13–0.97) but along an idiosyncratic axis, not strain.
+    **2026-08-06 diagnostic (entry above, FLAGGED): the DV is substantially an
+    artifact** — final-position-only injection of the vector reproduces
+    R² = 0.53 of stored P(keep) (r = +0.71 in the low-strain subgroup); the
+    "idiosyncratic axis" is mostly vector→`' keep'`/`' switch'` unembedding
+    geometry, and no strain effect appears after removing it (partial +0.15 ns).
+    Rescope recommendation: (b) = *invalid instrument*, not *null on
+    strain-valence* — it no longer counts toward an accumulated negative.
 - **(c) drug-free conditioned-context CPP — CHOSEN (user, 2026-08-05); SETUP
   COMPLETE, primary experiment NOT started:**
   - LoRA feasibility spike PASS (2026-08-05) — weight-training works on this
@@ -1805,8 +1867,11 @@ older tier-era snapshot):**
   (raw cosine identical across counterbalanced replicates). c2 not licensed,
   not run. **DECISION POINT (user):** retry (c) with stronger/cleaner
   conditioning (more epochs, less degenerate data via temp/loop-trimming,
-  tag placement), or record the accumulated (a)+(b)+(c1) negative and close
-  the steering-based strain-valence line on this model. The c1 harness
+  tag placement), or record the accumulated negative and close the
+  steering-based strain-valence line on this model. *(2026-08-06 update: with
+  (b) rescoped to invalid-instrument, the accumulated negative is (a)+(c1)
+  only — and c1's null is weak on its own terms — which tilts toward retry;
+  see the DV-diagnostic entry above. User decision pending.)* The c1 harness
   (`conditioning.py`, three scripts, pre-registered gate) is built,
   validated, and reusable either way.
 - **Reusable tooling on disk (gitignored `jlens-qwen36/`, LOCAL ONLY — not on
