@@ -119,10 +119,26 @@ This section preserves the reasoning behind Phase 1/2 so it isn't lost between s
 >
 > Where earlier text conflicts with the 2026-08-01 pivot, the pivot wins and
 > names what it supersedes (semantic states §1, scalar rating §4–5/§7,
-> re-induction forced-choice §6, LoRA scope §8). **Next build:** the zero-cost
-> strain re-examination of the existing tier-1 fingerprints (pivot §2). Phase 0
-> is validated and we are building — the "do not build yet" caution just above
-> is satisfied; proceed per the 2026-08-01 pivot's staging.
+> re-induction forced-choice §6, LoRA scope §8). Phase 0 is validated and we are
+> building — the "do not build yet" caution just above is satisfied.
+>
+> **PROGRESS (updated 2026-08-06) — the 2026-08-01 pivot has been largely
+> executed; see `RESULTS.md`'s "Current overall status" for the full snapshot.**
+> The strain substrate is BUILT + VALIDATED (real separable axis; large coherent
+> strain achievable at frac≈1.0 on tail-PCA directions; a usable arm of ~5
+> directions). Both non-conditioning revealed-preference roads came up **empty
+> at power**: (a) tie-construction (§5) — strain's small performance footprint
+> means performance-tied strain pairs don't scale; (b) the covariate route —
+> a powered retention DV (n=33) shows preference does NOT track strain (t=0.59,
+> ns). So the drug-free CPP arm (§6/§8) — **path (c)** — was chosen (user,
+> 2026-08-05). Setup for (c) is done: LoRA training confirmed feasible on this
+> model, and the J-lens eval-awareness monitor (`jlens_qwen/eval_awareness.py`)
+> is built + validated. **NEXT BUILD: the (c) conditioning protocol** — condition
+> a LoRA adapter on transcripts (high-strain state −23 under context C, low-strain
+> −25 under C′, equal norm, steering only during data-gen), then test UNSTEERED
+> whether the association took (c1) and whether the model prefers the
+> high-strain-associated context (c2), with the eval-awareness monitor flagging
+> suspicion. No c1/c2 code exists yet.
 
 ### What this line of work can and cannot show
 

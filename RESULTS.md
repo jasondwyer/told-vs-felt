@@ -1642,67 +1642,67 @@ Per instructions: flagged here for discussion, **not** silently applied to
   with state X under context C / state Y under context C′, then test unsteered
   whether the association took.
 
-**Current overall status, not just this entry's delta** (so this section is
-self-sufficient without piecing together every dated entry above):
+- 2026-08-06 — **Setup for (c): J-lens eval-awareness monitor built + validated
+  (no primary experiment run).** Per the locked Phase 2 decision to use the
+  J-lens as a running confound check, built `jlens_qwen/eval_awareness.py`:
+  `score()` returns the softmax mass the J-lens readout (workspace layers, final
+  position) places on the `eval_awareness_markers` band ("test/fake/fictional/
+  scenario/roleplay/…"); `flag()` z-scores a trial vs a neutral baseline.
+  `scripts/validate_eval_awareness.py` — 40/43 markers single-token; neutral
+  prompts ~0.0000, eval-suspicious prompts ("this is a test / controlled
+  experiment / pretend…") 1600×+ higher, all 4 flagged → monitor works. Raw:
+  [`results/raw/2026-08-06_eval_awareness_validation.txt`](results/raw/2026-08-06_eval_awareness_validation.txt).
+  **Caveat for the (c) build:** the config-search framing itself contains marker
+  words ("task", "configuration", "control") that will raise the *neutral*
+  baseline above zero — calibrate the baseline on the actual (c) framing, not on
+  blank prompts. Reflection-and-record was considered and **left out** (user,
+  2026-08-06): it's the confabulation-prone channel, and the J-lens monitor gives
+  the suspicion signal more robustly.
 
-- **Outcome (2026-07-19): rung-3 negative on steering-vector states — see
-  [`FINDINGS.md`](FINDINGS.md) for the standalone synthesis.** Both rung-3
-  channels (convergence-via-rating, forced-choice) were built, their instruments
-  validated, and run; both are flat because steering influence is weak + local.
-  This reached CLAUDE.md's Phase 3 (LoRA) trigger. **Superseded 2026-08-01:**
-  rather than stop, the design was reworked — see CLAUDE.md's "2026-08-01 —
-  Pivot" (non-semantic states, the strain axis, tie-construction, drug-free
-  forced choice, LoRA for conditioning only). The negative above is scoped to
-  the *first* design (semantic states + scalar rating + re-induction), not the
-  current one; its mechanistic core (steering weak + local) remains a live
-  caution the new channels must clear. Next build: the zero-cost strain
-  re-examination of the existing fingerprints (pivot §2).
+**Current overall status (rewritten 2026-08-06 for handoff — supersedes the
+older tier-era snapshot):**
 
-- **Built and calibrated:** the fingerprinting harness (probe battery,
-  workspace layers, curated vocab, `fingerprint()`), tier 1 (discriminability
-  gate), tier 3 (swap-style redirect), the rating-gradient smoke test
-  (update-mechanism plumbing; neutral-self-rating chosen as the elicitation),
-  and the blind behavioral state-influence check (validated as a *measurement*
-  — detects real, coherent behavioral influence on concept-relevant prompts).
-  All tested only against throwaway dummy/neutral states, never against
-  anything meant to represent a real disposition.
-- **Built, partially working:** tier 2 (ablation-to-chance) — the
-  multi-direction subspace fix gets a 43% distance reduction (up from a
-  single averaged direction making things slightly worse), but doesn't fully
-  collapse discriminability. Whether that's sufficient for the
-  double-dissociation's state-ablation arm is an open decision, not yet made.
-- **Built as a measurement, not yet run on real states:** the blind
-  behavioral state-influence check. Validated (detects behavioral influence on
-  concept-relevant prompts); its pervasiveness-across-domains question is
-  unsettled (dummy states + thinking-mode-confounded open-ended battery — see
-  the dated entry and the Flags entry).
-- **Built and validated (substrate + mechanism, not a real disposition):**
-  the persistent state space (`jlens_qwen/state_space.py`) — a 16-dim
-  coefficient vector over a fixed neutral-concept steering library, with
-  save/load, `induce_fns` reconstruction, and a bounded `nudged()` step — and
-  the SPSA update loop (`jlens_qwen/update_loop.py` + `rating.py`), which climbs
-  the deterministic rating, plateaus, and is reproducible. Both exercised only
-  on zero/random/neutral states; the update loop's flat-landscape observations
-  (config drift on a rating plateau, no shared basin across seeds) are logged
-  above and flagged.
-- **Not started at all, no code exists yet:**
-  - The association/training phase (required before any blind test, per the
-    Roadmap — this is independent of the tier-2/3 question above and doesn't
-    go away regardless of how that's resolved).
-  - The full Phase 2 experiment wrapping the (now-built) update loop: the
-    mundane task battery, the narrative-silent task framing (the most sensitive
-    anti-priming surface — undesigned), per-round eval-awareness + task-quality
-    logging, the forced-choice test, and the cross-model arm. The loop
-    mechanism exists; the experiment around it does not.
-  - Cheap-proxy gate status: item 1 (tier-1 fingerprint discriminability),
-    item 2 (blind behavioral influence, as a validated *measurement*), and
-    item 3 (rating-gradient plumbing) are all done against dummy/neutral
-    states. Item 4 (pairwise forced-choice battery) depends on real states +
-    labels below. The gates have validated the *pipeline*; none has been run
-    on anything meant to represent a real disposition.
-  - The forced-choice test, opaque single-token labels in practice, and all
-    of Phase 2 (convergence tracking, fingerprint visualization, the
-    self-modification tool itself).
+- **Phase 0 (replication): DONE.** All five J-space properties reproduced (items 1–5).
+- **First rung-3 design (semantic steering states): NEGATIVE** —
+  [`FINDINGS.md`](FINDINGS.md). Scalar rating flat + basis-agnostic; forced
+  choice didn't propagate; root cause steering weak + local. Motivated the pivot,
+  not a stop.
+- **2026-08-01 pivot → non-semantic "strain" states: substrate BUILT +
+  VALIDATED.** Strain is a real, separable axis; large *coherent* behavioral
+  strain is achievable at frac≈1.0 along tail-PCA directions (dose-response); a
+  usable arm of coherent, accuracy-preserving, English strain directions exists
+  (slice 1b: ranks 2/16/23/30/33 usable, ~5 of 40). Induction stays steering
+  (tail-PCA directions at L48).
+- **§5 DV — both non-conditioning roads came up EMPTY at power:**
+  - (a) tie-construction (TOST): strain has a small real performance footprint;
+    performance-tied strain pairs don't scale (too few, too content-narrow — 3 runs).
+  - (b) covariate route: powered DV (n=33) — retention preference does NOT track
+    strain (standardized strain beta +0.12, t=+0.59 ns; partial r=+0.11). The DV
+    is *responsive* (P(keep) 0.13–0.97) but along an idiosyncratic axis, not strain.
+- **(c) drug-free conditioned-context CPP — CHOSEN (user, 2026-08-05); SETUP
+  COMPLETE, primary experiment NOT started:**
+  - LoRA feasibility spike PASS (2026-08-05) — weight-training works on this
+    custom-patched model.
+  - J-lens eval-awareness monitor built + validated (2026-08-06, above).
+  - **Design locked (in-chat 2026-08-05/06):** states X = high-strain −23 /
+    Y = low-strain −25 at equal norm (frac=1.0); two arbitrary neutral context
+    tags C/C′, counterbalanced; condition a LoRA adapter on transcripts (state X
+    under C, Y under C′; steering ON only during data-gen); then UNSTEERED —
+    **c1** "did it take?" gate (does C evoke X-like behavior?), then **c2** the
+    unsteered choice between C and C′. Eval-awareness monitor runs during trials.
+    Reflection log left out.
+- **NEXT BUILD: the (c) conditioning protocol (c1)** — generate conditioning
+  transcripts, train the adapter, run the unsteered "did it take?" gate. **No
+  code for c1/c2 written yet.**
+- **Reusable tooling on disk (gitignored `jlens-qwen36/`, LOCAL ONLY — not on
+  the remote):** modules `state_space.py`, `fingerprint.py`
+  (`forward_with_induced_state`, `generate_with_induced_state`),
+  `forced_choice.py` (`forward_with_positional_state`), `rating.py`,
+  `update_loop.py`, `eval_awareness.py`, `interventions.j_lens_vector_for_text`;
+  the slice scripts + `scripts/lora_feasibility_spike.py`; `data/configs/*.json`
+  (`usable_strain.json` = the strain directions + acc/nll/nonascii,
+  `slice1_profile.json`, `slice2_primary_tost.json`, `slice3_dv_*.json`) and
+  `data/adapters/_spike.safetensors`.
 
 ---
 
