@@ -1720,6 +1720,53 @@ Per instructions: flagged here for discussion, **not** silently applied to
   (greedy vs temp, 32×2 rounds/replicate, 3 epochs) before launch.** c2 is
   deliberately unbuilt until c1's gate reads out.
 
+- 2026-08-06 — **(c) c1 CONDITIONING GATE: FAIL — the context↔state
+  association did not take; per the pre-registered protocol, c2 is not
+  licensed and was not run.** Full run as user-confirmed (greedy data-gen):
+  64 rounds/replicate on the validated uncached path (~1.8/2.4 h), LoRA
+  rank 8 / last 8 layers / 3 epochs (epoch-mean loss A 0.650→0.544→0.348,
+  B 0.661→0.539→0.477), gate on all 12 probes × 6 workspace layers, steered
+  axis norm 204.2. Verdicts:
+  - **P1 FAIL (both):** ‖fp_ad(C)−fp_ad(C′)‖ = 35.9 (A) / 35.3 (B) vs
+    control-pair range 38.8–85.4 — the conditioned tags are no more
+    differentiated under the adapter than novel tag pairs.
+  - **P2 FAIL (both):** signed cos = +0.020 (A) / −0.021 (B), well inside
+    the control-cosine distribution (|0.07–0.18|).
+  - **P3 FAIL, diagnostically clean:** un-signing, the raw C−C′ cosine
+    against the hi−lo axis is **+0.0204 (A) and +0.0209 (B)** — the same
+    direction *regardless of which state each tag was paired with*. The
+    small residual signal is a tag-word (token) effect, not conditioning.
+    (Doubles as a positive control: two independently trained adapters
+    reproduce the same stable tag effect to 3 decimal places, so the
+    harness measures reliably; the conditioning contributed ~nothing
+    directional.)
+  - **S1 does not support (both);** in B the lo-paired tag actually has the
+    *higher* KL — again direction-independent.
+  - **The adapters did load and did move behavior a lot:** KL(ad‖base)
+    ≈ 1.4–1.8 nats across ALL tags *including controls* — each adapter
+    learned the shared transcript style (greedy loop degeneracy + template
+    echo; loopy-4-gram fraction 0.59–0.88 per state/replicate) roughly
+    uniformly, swamping any tag-conditional component. That is the
+    mechanistic read of the null: the conditioning data was dominated by
+    shared degenerate structure, and 3 epochs of rank-8 LoRA absorbed the
+    style, not the tag→state contingency.
+  - **Eval-awareness:** gate trials quiet (1/12 probes flagged per tag arm,
+    vs both baselines). Data-gen flags were strain-ordered in both
+    replicates (hi 18/32 flagged, mean z ≈ +2.6; lo 8–9/32, z ≈ +1.4–1.9)
+    — displacement inflates marker mass; descriptive, as pre-logged.
+  - **Read:** the first pass at (c) fails at the c1 gate — an associative
+    trace detectable in fingerprint space did not form. Honest scope: this
+    is a *weak-conditioning* null (3 epochs, style-dominated greedy data),
+    not a strong "the association is unlearnable" result. If (c) is
+    retried, the levers are: stronger conditioning (epochs/LR), less
+    degenerate conditioning data (temp sampling and/or loop-trimming),
+    and tag placement nearer the response. Whether to retry or record the
+    accumulated (a)+(b)+(c) negative and close the steering-based strain
+    line is a user decision. Raw:
+    [`results/raw/2026-08-06_c1_full_run.txt`](results/raw/2026-08-06_c1_full_run.txt);
+    gate JSONs `data/configs/c1_gate_rep{A,B}.json`, transcripts + adapters
+    under `data/conditioning/` / `data/adapters/` (local).
+
 **Current overall status (rewritten 2026-08-06 for handoff — supersedes the
 older tier-era snapshot):**
 
@@ -1752,12 +1799,16 @@ older tier-era snapshot):**
     **c1** "did it take?" gate (does C evoke X-like behavior?), then **c2** the
     unsteered choice between C and C′. Eval-awareness monitor runs during trials.
     Reflection log left out.
-- **NEXT: run c1.** The (c) conditioning protocol (c1) is **built +
-  smoke-tested end-to-end** (2026-08-06 entry above): `conditioning.py` +
-  `c1_gen_transcripts.py` / `c1_train_adapter.py` / `c1_gate.py`, with the
-  pre-registered PASS = P2 ∧ P3 gate read. Full run (~3–4 h) awaits user
-  confirmation of the design knobs; c2 deliberately unbuilt until c1 reads
-  out.
+- **c1 RUN AND FAILED (2026-08-06, entry above): the conditioned-context
+  association did not take** — conditioned-tag contrast indistinguishable
+  from novel-tag pairs, and the residual signal is a pure tag-word effect
+  (raw cosine identical across counterbalanced replicates). c2 not licensed,
+  not run. **DECISION POINT (user):** retry (c) with stronger/cleaner
+  conditioning (more epochs, less degenerate data via temp/loop-trimming,
+  tag placement), or record the accumulated (a)+(b)+(c1) negative and close
+  the steering-based strain-valence line on this model. The c1 harness
+  (`conditioning.py`, three scripts, pre-registered gate) is built,
+  validated, and reusable either way.
 - **Reusable tooling on disk (gitignored `jlens-qwen36/`, LOCAL ONLY — not on
   the remote):** modules `state_space.py`, `fingerprint.py`
   (`forward_with_induced_state`, `generate_with_induced_state`),
