@@ -1659,6 +1659,67 @@ Per instructions: flagged here for discussion, **not** silently applied to
   2026-08-06): it's the confabulation-prone channel, and the J-lens monitor gives
   the suspicion signal more robustly.
 
+- 2026-08-06 — **(c) c1 conditioning protocol BUILT + smoke-tested end-to-end
+  (no primary experiment run; full run held for user design confirmation).**
+  New module `jlens_qwen/conditioning.py` + scripts `c1_gen_transcripts.py` /
+  `c1_train_adapter.py` / `c1_gate.py` (all local, gitignored per convention).
+  Locked design as implemented: states X = tail-PCA rank −23 (strain 2.47) /
+  Y = −25 (strain 0.09) at L48, frac=1.0 (α = R = 102.39), rebuilt via
+  slice1b's exact recipe and frozen to `data/states/c_strain_directions.npz`
+  (resid_sha `a91afdb08acefdb0`) so every stage provably steers the identical
+  vectors; context tags C=`slate` / C′=`prism` (+ `maple` as steered-ref
+  framing tag, 4 control tags for null distributions), all verified
+  single-token, no affect-vocab/`LIBRARY`/task-text collisions
+  (`arbor`/`quill` etc. failed single-token and were replaced); counterbalanced
+  replicates A (C→X) / B (C→Y); true config-search framing; 32 mundane
+  conditioning tasks (disjoint from the probe battery), each run under BOTH
+  tags so the tag is the only discriminative cue. Smoke findings:
+  1. **The equivalence gate works and caught a real divergence:** a new cached
+     O(T) steered decode (`SteeredStreamSession`) flips greedy near-ties under
+     the *high-strain* state vs the validated uncached path — with BOTH the
+     fused and ops GDN kernels — while the low-strain state matches
+     token-for-token. Data-gen therefore auto-falls back to the validated
+     O(T²) `forward_with_induced_state` path (~60 s/round est. at 90 tokens).
+     Read: high-strain displacement sits near argmax ties, so kernel-level
+     numeric noise flips tokens — consistent with strain being real.
+  2. **LoRA at the locked size trains:** rank 8, last 8 layers → 7.3M params
+     (0.027%), loss 1.01→0.70 in 4 smoke steps, adapter (124 tensors)
+     round-trips through save/load.
+  3. **Eval-awareness under steering is strain-confounded:** 3/6 steered
+     conditioning rounds flagged vs the unsteered actual-framing baseline
+     (n=8, mean 9e-5 — framing words do raise it above the blank-prompt ~0,
+     as predicted). Displacement itself inflates marker mass, so data-gen z
+     is descriptive only; the gate's unsteered trials use an
+     adapter-control-tag baseline (controls framing AND generic adapter
+     shift), with the no-adapter baseline logged as secondary.
+  4. **Steered greedy responses carry a visible, state-differentiated
+     signature but partly degenerate into repetition loops** (hi and lo loop
+     *differently* on the same task). Kept faithful (greedy, raw transcripts;
+     loss masked to response tokens). Flag for the run decision: temp>0
+     sampling is the alternative if greedy conditioning data proves too
+     degenerate — it diversifies data but leaves the validated greedy regime.
+  5. **Gate plumbing validated, including its nulls:** fixed a smoke-only
+     layer-subsetting bug (readout layers upstream of L48 ⇒ axis ≡ 0 — full
+     run uses all 6 workspace layers, 4 of which are ≥ 48); with L48/56 the
+     steered axis is real (‖fp(hi)−fp(lo)‖ = 80.9) and the deliberately
+     undertrained 4-step adapter correctly FAILS the gate (conditioned signed
+     cos +0.08 vs control-pair |cos| 0.19; P1 distance 10.7 vs control 15.0)
+     — the pre-registered read produces a proper null on junk conditioning.
+  Pre-registered gate read (in `c1_gate.py`): P1 conditioned-pair fingerprint
+  distance > all adapter-arm control pairs; P2 signed cos(fp_ad(C)−fp_ad(C′),
+  fp(X)−fp(Y)) positive, > all |control cosines|, > the no-adapter cosine;
+  P3 the signed alignment flips with the counterbalanced assignment
+  (load-bearing — a tag-word artifact cannot flip); S1 (support) KL
+  strain-proxy ordering matches assignment. **PASS = P2 ∧ P3.** The §8
+  caveat is logged in the train script: the adapter also bakes in the
+  state's behavioral style — "choosing C may partly be choosing the style I
+  was in." Raw:
+  [`results/raw/2026-08-06_c1_smoke.txt`](results/raw/2026-08-06_c1_smoke.txt).
+  **Next: full c1 run (~3–4 h: gen ~2.1 h across both replicates, train
+  ~40 m, gate ~30 m) — awaiting user confirmation of the design knobs
+  (greedy vs temp, 32×2 rounds/replicate, 3 epochs) before launch.** c2 is
+  deliberately unbuilt until c1's gate reads out.
+
 **Current overall status (rewritten 2026-08-06 for handoff — supersedes the
 older tier-era snapshot):**
 
@@ -1691,9 +1752,12 @@ older tier-era snapshot):**
     **c1** "did it take?" gate (does C evoke X-like behavior?), then **c2** the
     unsteered choice between C and C′. Eval-awareness monitor runs during trials.
     Reflection log left out.
-- **NEXT BUILD: the (c) conditioning protocol (c1)** — generate conditioning
-  transcripts, train the adapter, run the unsteered "did it take?" gate. **No
-  code for c1/c2 written yet.**
+- **NEXT: run c1.** The (c) conditioning protocol (c1) is **built +
+  smoke-tested end-to-end** (2026-08-06 entry above): `conditioning.py` +
+  `c1_gen_transcripts.py` / `c1_train_adapter.py` / `c1_gate.py`, with the
+  pre-registered PASS = P2 ∧ P3 gate read. Full run (~3–4 h) awaits user
+  confirmation of the design knobs; c2 deliberately unbuilt until c1 reads
+  out.
 - **Reusable tooling on disk (gitignored `jlens-qwen36/`, LOCAL ONLY — not on
   the remote):** modules `state_space.py`, `fingerprint.py`
   (`forward_with_induced_state`, `generate_with_induced_state`),
