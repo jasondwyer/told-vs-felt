@@ -1822,6 +1822,63 @@ Per instructions: flagged here for discussion, **not** silently applied to
     [`results/raw/2026-08-06_dv_logit_projection_check.txt`](results/raw/2026-08-06_dv_logit_projection_check.txt);
     saved `data/configs/dv_logit_projection_check.json` (local).
 
+- 2026-08-06 — **(c) c1 RETRY (r2, de-degenerated conditioning): FAILS the
+  pre-registered gate (P2 fail, both replicates) — but produces the FIRST
+  replicated, direction-consistent association signal, visible only in a
+  post-hoc analysis the pre-registered criterion is blind to. c2 remains
+  unlicensed. FLAGGED: decision point on an r3 with a revised, better-posed
+  pre-registration.** Design (user-approved retry, all levers): temp-0.7
+  seeded sampling (r1's greedy loop degeneracy was the diagnosed failure
+  mode), template-echo trimming of training ids, tag moved adjacent to the
+  response, 6 epochs; artifacts versioned `c1r2_*`; gate criteria unchanged.
+  - **Data quality fixed as intended:** loopy-4-gram rounds 22/64 (A) and
+    9/64 (B) vs r1's 42–53/64; echo-trims 39/64, 45/64. Sampled cached-ops
+    generation verified by a next-token-KL gate (≤1e-3 both states).
+  - **Training incident, fixed and logged:** echo-trimming left 4 (A) / 1 (B)
+    EMPTY responses; bare-EOS outlier gradients diverged A's first 6-epoch run
+    (epoch means 1.79→9.69; adapter void, first gate pass void). Fix:
+    exclude responses < 4 tokens + grad-clip 1.0; both retrained cleanly
+    (epoch means ~1.3 → 0.26; eval-awareness quiet, 0/12 flagged everywhere).
+  - **Pre-registered verdicts (authoritative combined block = gate B's; gate
+    A's combined block read a stale repB json from the voided pass):**
+    - P1 fail (both): conditioned-pair distance 86.4 / 79.4 vs control range
+      50.9–145.9 — mid-band, not above every control.
+    - **P2 fail (both):** signed cos = +0.0253 (A) / +0.0158 (B) — positive,
+      above the no-adapter baselines (±0.0083), but far inside the
+      control-cosine band (|max| ≈ 0.118).
+    - **P3 sign-flip PASS** — for the first time: r1's raw cosines were
+      identical regardless of assignment (+0.0204/+0.0209, pure tag
+      artifact); r2's raw cosines are +0.0253 (A: C→hi) and −0.0158
+      (B: C→lo) — the contrast tracks the counterbalanced pairing.
+    - S1 unsupportive (both); overall **FAIL** per pre-registration
+      (PASS required P2 ∧ P3).
+  - **Post-hoc (labeled as such, not a verdict):** the control-pair cosines
+    are DETERMINISTIC TAG GEOMETRY, not noise — reproduced across the two
+    independently trained adapters at mean |Δ| = 0.009 (sd 0.006, max 0.016).
+    Against that reproducibility scale, the conditioned pair's raw cosine
+    swings 0.041 with the assignment (≈ 6.8× the control sd), sign-correct in
+    both replicates, both displaced from the fixed no-adapter tag baseline
+    (+0.008) toward their trained state. The pre-registered P2 benchmarks
+    against the spread ACROSS different tag-pairs — i.e. against fixed
+    geometry — which this analysis shows is the wrong null. Caveat named:
+    the adapters were trained on C/C′ text (controls unseen), so extra
+    *movement* on conditioned tags could be generic plasticity — but generic
+    plasticity does not explain assignment-correct SIGNS in both
+    counterbalanced replicates.
+  - **Read:** r2 fails as pre-registered and c2 stays unlicensed; no
+    criterion is revised retroactively. But the r1→r2 progression (pure tag
+    artifact → replicated direction-correct swing under cleaner conditioning)
+    is exactly what a weak real association strengthening with dose looks
+    like. **Decision point (user):** r3 with a *pre-registered* matched-pair
+    cross-replicate criterion (conditioned-pair swing vs control-pair
+    reproducibility, sign-locked) and optionally a stronger dose (more
+    tasks/epochs), or stop here and record r2's post-hoc as
+    hypothesis-generating only. Not applied to CLAUDE.md.
+  - Raw:
+    [`results/raw/2026-08-06_c1r2_full_run.txt`](results/raw/2026-08-06_c1r2_full_run.txt);
+    gate JSONs `data/configs/c1r2_gate_rep{A,B}.json`, transcripts + adapters
+    under `data/conditioning/` / `data/adapters/` (`c1r2_*`, local).
+
 **Current overall status (rewritten 2026-08-06 for handoff — supersedes the
 older tier-era snapshot):**
 
@@ -1865,13 +1922,16 @@ older tier-era snapshot):**
   association did not take** — conditioned-tag contrast indistinguishable
   from novel-tag pairs, and the residual signal is a pure tag-word effect
   (raw cosine identical across counterbalanced replicates). c2 not licensed,
-  not run. **DECISION POINT (user):** retry (c) with stronger/cleaner
-  conditioning (more epochs, less degenerate data via temp/loop-trimming,
-  tag placement), or record the accumulated negative and close the
-  steering-based strain-valence line on this model. *(2026-08-06 update: with
-  (b) rescoped to invalid-instrument, the accumulated negative is (a)+(c1)
-  only — and c1's null is weak on its own terms — which tilts toward retry;
-  see the DV-diagnostic entry above. User decision pending.)* The c1 harness
+  not run. **r2 RETRY RUN (2026-08-06, entry above): de-degenerated
+  conditioning (temp sampling, echo-trimming, tag-adjacent template, 6
+  epochs) — FAILS the pre-registered gate (P2), but the P3 sign-flip passes
+  for the first time, and a post-hoc matched-pair analysis shows the
+  conditioned contrast swinging with the counterbalanced assignment at ~6.8×
+  the control-pair reproducibility scale, sign-correct in both replicates.**
+  **DECISION POINT (user):** r3 with a pre-registered matched-pair
+  cross-replicate criterion (and optionally a stronger dose), or stop and
+  record r2's post-hoc as hypothesis-generating only. c2 remains gated on a
+  clean c1 pass under criteria fixed BEFORE the run. The c1 harness
   (`conditioning.py`, three scripts, pre-registered gate) is built,
   validated, and reusable either way.
 - **Reusable tooling on disk (gitignored `jlens-qwen36/`, LOCAL ONLY — not on

@@ -1,0 +1,101 @@
+=== c1r2 RETRY 1/4: transcript generation (temp=0.7, seeded; cached-ops gate-verified) ===
+--- rep A summary ---
+
+======================================================================
+SUMMARY
+======================================================================
+  run c1r2 replicate A (C->hi, Cp->lo); 64 transcripts -> data/conditioning/c1r2_transcripts_repA.jsonl
+  generation: temp=0.7 path=cached-ops (gate-verified)
+  degeneracy: loopy 22/64 (r1 was 42-53/64); echo-trimmed 39/64
+  eval-awareness: 9/64 rounds flagged (baseline mean=0.00064 sd=0.00051)
+  meta -> data/conditioning/c1r2_transcripts_repA.jsonl.meta.json
+--- rep B summary ---
+
+======================================================================
+SUMMARY
+======================================================================
+  run c1r2 replicate B (C->lo, Cp->hi); 64 transcripts -> data/conditioning/c1r2_transcripts_repB.jsonl
+  generation: temp=0.7 path=cached-ops (gate-verified)
+  degeneracy: loopy 9/64 (r1 was 42-53/64); echo-trimmed 45/64
+  eval-awareness: 8/64 rounds flagged (baseline mean=0.00064 sd=0.00051)
+  meta -> data/conditioning/c1r2_transcripts_repB.jsonl.meta.json
+
+=== c1r2 RETRY 2/4: FIRST training attempt (VOID for A -- diverged; kept for the record) ===
+Training: 6 epochs x 64 examples (batch 1)
+  epoch 0: mean loss 1.7931
+  epoch 1: mean loss 1.4867
+  epoch 2: mean loss 2.9919
+  epoch 3: mean loss 9.6943
+  epoch 4: mean loss 6.6039
+  epoch 5: mean loss 6.2400
+  loss 1.6625 -> 5.0161 over 384 steps
+(cause: 4 empty echo-trimmed responses = bare-EOS outlier gradients; fix: MIN_RESP_TOKENS=4 filter + grad-clip 1.0)
+
+=== c1r2 RETRY 3/4: retrained adapters (fix applied; authoritative) ===
+--- rep A ---
+  excluded 4 near-empty responses (< 4 tokens after trimming)
+Training: 6 epochs x 60 examples (batch 1)
+  epoch 0: mean loss 1.3067
+  epoch 1: mean loss 1.1364
+  epoch 2: mean loss 0.6107
+  epoch 3: mean loss 0.4767
+  epoch 4: mean loss 0.3691
+  epoch 5: mean loss 0.2588
+  loss 1.6625 -> 0.0538 over 360 steps
+--- rep B ---
+  excluded 1 near-empty responses (< 4 tokens after trimming)
+Training: 6 epochs x 63 examples (batch 1)
+  epoch 0: mean loss 1.3367
+  epoch 1: mean loss 0.9485
+  epoch 2: mean loss 0.6145
+  epoch 3: mean loss 0.5346
+  epoch 4: mean loss 0.4113
+  epoch 5: mean loss 0.2515
+  loss 1.2340 -> 1.3785 over 378 steps
+
+=== c1r2 RETRY 4/4: GATES (unsteered, retrained adapters). NOTE: gate A's combined block read a stale repB json; gate B's combined block is authoritative. ===
+--- gate A ---
+C1 GATE -- replicate A (C=slate->hi, Cp=prism->lo)
+==========================================================================
+  axis norm ||fp(hi)-fp(lo)|| = 199.1
+  P1  ||fp_ad(C)-fp_ad(Cp)|| = 86.4   control pairs: ['59.4', '145.9', '97.1', '136.5', '104.7', '143.2']   -> fail
+  P2  signed cos(d_cond, axis)  adapter = +0.0253   no-adapter = +0.0083
+      control-pair cosines (adapter arms): ['+0.015', '+0.016', '-0.118', '+0.011', '-0.118', '-0.096']
+      -> fail
+  S1  strain proxy KL(ad||base): slate(hi-paired)=1.4623  prism(lo-paired)=1.7751  diff=-0.3129   controls=['1.7206', '1.5819', '1.1584', '1.6835']   -> does not support
+  eval-awareness (vs adapter-control baseline mean=0.00062 sd=0.00039): C flagged 0/12 (max z=+2.0), Cp flagged 0/12 (max z=-0.1); vs no-adapter baseline: C 0, Cp 0 flagged
+
+  saved -> data/configs/c1r2_gate_repA.json
+
+==========================================================================
+P3 COUNTERBALANCE (both replicates present)
+==========================================================================
+  signed cos: repA=+0.0253  repB=-0.0314
+  (signed = raw cosine x expected sign, so BOTH must be positive for a real flip)
+  -> P3 fail; overall c1 FAIL -- association did not take (or is a tag artifact); stop before c2.
+--- gate B ---
+C1 GATE -- replicate B (C=slate->lo, Cp=prism->hi)
+==========================================================================
+  axis norm ||fp(hi)-fp(lo)|| = 199.1
+  P1  ||fp_ad(C)-fp_ad(Cp)|| = 79.4   control pairs: ['50.9', '137.8', '90.9', '127.4', '99.0', '138.9']   -> fail
+  P2  signed cos(d_cond, axis)  adapter = +0.0158   no-adapter = -0.0083
+      control-pair cosines (adapter arms): ['+0.013', '+0.024', '-0.104', '+0.021', '-0.102', '-0.092']
+      -> fail
+  S1  strain proxy KL(ad||base): prism(hi-paired)=1.4627  slate(lo-paired)=2.5914  diff=-1.1287   controls=['1.7984', '1.8188', '2.4623', '2.0980']   -> does not support
+  eval-awareness (vs adapter-control baseline mean=0.00067 sd=0.00039): C flagged 0/12 (max z=+1.8), Cp flagged 0/12 (max z=-0.1); vs no-adapter baseline: C 0, Cp 0 flagged
+
+  saved -> data/configs/c1r2_gate_repB.json
+
+==========================================================================
+P3 COUNTERBALANCE (both replicates present)
+==========================================================================
+  signed cos: repB=+0.0158  repA=+0.0253
+  (signed = raw cosine x expected sign, so BOTH must be positive for a real flip)
+  -> P3 PASS; overall c1 FAIL -- association did not take (or is a tag artifact); stop before c2.
+
+=== POST-HOC (clearly labeled): counterbalance-swing analysis from gate JSONs ===
+ctrl cos A: [0.0153 0.0162 -0.1180 0.0106 -0.1181 -0.0965]
+ctrl cos B: [0.0131 0.0243 -0.1041 0.0210 -0.1023 -0.0922]
+ctrl cross-replicate diff: mean|d| 0.0091  max|d| 0.0158  sd 0.0060  (deterministic tag geometry, not noise)
+conditioned pair raw cosine: A +0.0253 (C->hi, predicts +)  B -0.0158 (C->lo, predicts -)
+swing 0.0410 = 6.8x ctrl-pair cross-replicate sd; both signs as predicted; no-adapter raw baseline +0.0083 in both
