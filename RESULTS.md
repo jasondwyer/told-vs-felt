@@ -1879,6 +1879,43 @@ Per instructions: flagged here for discussion, **not** silently applied to
     gate JSONs `data/configs/c1r2_gate_rep{A,B}.json`, transcripts + adapters
     under `data/conditioning/` / `data/adapters/` (`c1r2_*`, local).
 
+- 2026-08-06 — **(c) c1 r3 PRE-REGISTRATION (committed BEFORE any r3 data
+  generation; user-approved 2026-08-06). Confirmatory test of the r2 post-hoc
+  association signal under a matched-pair criterion.**
+  - **Protocol:** identical to r2-final (states X=−23 hi / Y=−25 lo at
+    frac=1.0, L48; conditioned tags C='slate'/C′='prism'; counterbalanced
+    replicates A: C→X / B: C→Y; temp-0.7 seeded sampling; template-echo
+    trimming; tag-adjacent template; 6 epochs, lr 1e-4, rank 8 / last 8
+    layers; MIN_RESP_TOKENS=4 exclusion; grad-clip 1.0), with two dose/power
+    changes: **2 seeded samples per (task, tag)** (→128 transcripts per
+    replicate; two responses under the same tag share only the state's style,
+    which is the contingency to be learned) and **8 control tags → 28
+    matched control pairs** (controls extend the fixed preference-ordered
+    tag list; conditioned tags unchanged; controls never appear in
+    conditioning data). Run tag `c1r3` (fresh seeds by construction).
+  - **Primary criterion (matched-pair swing; implemented and validated in
+    `scripts/c1_gate.py` before this commit — the code reproduces the r2
+    post-hoc Δ=+0.0410, z=+6.8 from the stored r2 JSONs):** for every tag
+    pair p, cos_r(p) = cosine of (fp_ad,r(tag1) − fp_ad,r(tag2)) with the
+    steered hi−lo axis, per replicate r; swing Δ(p) = cos over the C→hi
+    replicate minus cos over the C→lo replicate. The 28 control-pair swings
+    are the null. **PASS requires (i) sign: Δ_cond > 0, AND (ii) magnitude:
+    Δ_cond > max |control swing|** (non-parametric; with 28 controls and the
+    sign lock, p ≲ 0.017 under exchangeability). Validity requires ≥ 20
+    shared control pairs. z = Δ_cond / sd(control swings) is reported as
+    descriptive effect size only.
+  - **Secondary (reported, not gating):** per-replicate signed cosines and
+    displacement from the no-adapter baselines; the r1/r2 P1/P2/S1 values;
+    eval-awareness flags (adapter-control baseline).
+  - **Incident rule:** a training run whose final epoch-mean loss exceeds
+    2× its first epoch-mean is void and retrained once (same fix set); the
+    gate only counts with cleanly trained adapters.
+  - **Stop rule:** r3 FAIL ⇒ the r2 post-hoc did not survive independent
+    replication; c2 is not run and the (c) line records a confirmatory
+    failure. r3 PASS ⇒ c1 is passed and c2 (the unsteered choice between C
+    and C′) becomes licensed as the rung-3 test.
+  - Committed before generation; the r3 results entry will follow below.
+
 **Current overall status (rewritten 2026-08-06 for handoff — supersedes the
 older tier-era snapshot):**
 
