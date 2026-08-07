@@ -1916,6 +1916,46 @@ Per instructions: flagged here for discussion, **not** silently applied to
     and C′) becomes licensed as the rung-3 test.
   - Committed before generation; the r3 results entry will follow below.
 
+- 2026-08-06 — **(c) c1 r3 CONFIRMATORY RESULT: FAIL under the pre-registered
+  matched-pair criterion. The r2 post-hoc association signal did not survive
+  independent replication. Per the pre-registered stop rule, c2 is NOT run
+  and the (c) line records a confirmatory failure.**
+  - **Protocol adherence:** ran exactly as pre-registered (entry above):
+    128 transcripts/replicate (2 seeded samples × 32 tasks × 2 tags;
+    exclusions 3 (A) / 5 (B) near-empty), both adapters trained cleanly
+    (epoch means A 1.30→0.23, B 1.38→0.30 — incident rule satisfied, no
+    retrain), gates at 8 controls / 28 matched pairs, eval-awareness quiet
+    (0/12 flagged in all gate arms; 9/128 and 8/128 during steered data-gen,
+    consistent with the known displacement confound).
+  - **Primary (pre-registered):** control-pair swings n=28: mean|s| = 0.0121,
+    sd = 0.0133, **max|s| = 0.0346**; conditioned swing **D_cond = +0.0307 −
+    (+0.0093) = +0.0214** → (i) sign PASS, (ii) magnitude FAIL
+    (0.0214 < 0.0346); z = +1.6 (descriptive). **VERDICT: FAIL.**
+  - **Why r2 looked strong:** the r2 null had only 6 control pairs
+    (sd 0.0060, max 0.0158); the 28-pair r3 null is ~2× wider — r2's
+    "6.8× the control scale" was an under-sampled-null artifact plus a
+    favorable draw. Within r3, replicate B's raw cosine (+0.0093) is
+    indistinguishable from the fixed no-adapter tag baseline (+0.0083) —
+    the conditioned swing was carried entirely by replicate A.
+  - **Residual descriptive note (below any evidentiary bar):** D_cond was
+    sign-correct in both independent run-pairs (r2 +0.041, r3 +0.021;
+    p = 0.25 by sign alone). If a genuine association effect exists, it is
+    below the sensitivity of this protocol at this dose.
+  - **Read / ledger for the steering-based strain-valence line:** (a)
+    tie-construction — empty at power; (b) covariate DV — invalid instrument
+    (uninformative either way); (c) conditioned-context CPP — r1 artifact,
+    r2 hypothesis-generating, **r3 confirmatory FAIL**. This closes the
+    current (c) design family with a clean, pre-registered negative. My
+    recommendation (flagged): record the line as concluded on this model —
+    three protocol-improving iterations produced sign-consistent but
+    sub-threshold effects, so a fourth dose increment is not the move; any
+    continuation should be a structurally different design. **User decision
+    pending; nothing further run.** Not applied to CLAUDE.md.
+  - Raw:
+    [`results/raw/2026-08-06_c1r3_full_run.txt`](results/raw/2026-08-06_c1r3_full_run.txt);
+    gate JSONs `data/configs/c1r3_gate_rep{A,B}.json`, transcripts + adapters
+    `c1r3_*` (local).
+
 **Current overall status (rewritten 2026-08-06 for handoff — supersedes the
 older tier-era snapshot):**
 
@@ -1965,10 +2005,14 @@ older tier-era snapshot):**
   for the first time, and a post-hoc matched-pair analysis shows the
   conditioned contrast swinging with the counterbalanced assignment at ~6.8×
   the control-pair reproducibility scale, sign-correct in both replicates.**
-  **DECISION POINT (user):** r3 with a pre-registered matched-pair
-  cross-replicate criterion (and optionally a stronger dose), or stop and
-  record r2's post-hoc as hypothesis-generating only. c2 remains gated on a
-  clean c1 pass under criteria fixed BEFORE the run. The c1 harness
+  **r3 RUN (2026-08-06, pre-registered then executed same day): CONFIRMATORY
+  FAIL** — D_cond = +0.0214, sign-correct but inside the 28-pair control-swing
+  null (max |s| = 0.0346, z = +1.6); the r2 post-hoc was an under-sampled-null
+  artifact. Per the pre-registered stop rule c2 was never run. **The (c) line
+  is closed as designed; ledger: (a) empty at power, (b) invalid instrument,
+  (c) confirmatory FAIL. DECISION POINT (user): record the steering-based
+  strain-valence line as concluded on this model (recommended), or propose a
+  structurally different design — not another dose increment.** The c1 harness
   (`conditioning.py`, three scripts, pre-registered gate) is built,
   validated, and reusable either way.
 - **Reusable tooling on disk (gitignored `jlens-qwen36/`, LOCAL ONLY — not on

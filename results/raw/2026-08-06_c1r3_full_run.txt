@@ -1,0 +1,72 @@
+=== c1r3 (pre-registered confirmatory run) 1/3: generation ===
+  run c1r3 replicate A (C->hi, Cp->lo); 128 transcripts -> data/conditioning/c1r3_transcripts_repA.jsonl
+  generation: temp=0.7 path=cached-ops (gate-verified)
+  degeneracy: loopy 40/128 (r1 was 42-53/64); echo-trimmed 64/128
+  eval-awareness: 9/128 rounds flagged (baseline mean=0.00064 sd=0.00051)
+  meta -> data/conditioning/c1r3_transcripts_repA.jsonl.meta.json
+  run c1r3 replicate B (C->lo, Cp->hi); 128 transcripts -> data/conditioning/c1r3_transcripts_repB.jsonl
+  generation: temp=0.7 path=cached-ops (gate-verified)
+  degeneracy: loopy 27/128 (r1 was 42-53/64); echo-trimmed 82/128
+  eval-awareness: 8/128 rounds flagged (baseline mean=0.00064 sd=0.00051)
+  meta -> data/conditioning/c1r3_transcripts_repB.jsonl.meta.json
+
+=== 2/3: training (incident rule: final epoch-mean must be < 2x first -- satisfied both) ===
+--- A ---
+  excluded 3 near-empty responses (< 4 tokens after trimming)
+  epoch 0: mean loss 1.2999
+  epoch 1: mean loss 0.9027
+  epoch 2: mean loss 0.6000
+  epoch 3: mean loss 0.4393
+  epoch 4: mean loss 0.2734
+  epoch 5: mean loss 0.2293
+--- B ---
+  excluded 5 near-empty responses (< 4 tokens after trimming)
+  epoch 0: mean loss 1.3816
+  epoch 1: mean loss 1.0262
+  epoch 2: mean loss 0.7070
+  epoch 3: mean loss 0.4940
+  epoch 4: mean loss 0.4294
+  epoch 5: mean loss 0.2973
+
+=== 3/3: gates ===
+--- gate A ---
+C1 GATE -- replicate A (C=slate->hi, Cp=prism->lo)
+==========================================================================
+  axis norm ||fp(hi)-fp(lo)|| = 199.1
+  P1  ||fp_ad(C)-fp_ad(Cp)|| = 95.2   control pairs: ['67.3', '146.3', '103.8', '88.8', '98.0', '83.5', '89.6', '135.8', '108.8', '93.9', '111.2', '98.9', '94.5', '146.7', '139.0', '145.9', '141.5', '132.7', '88.4', '68.7', '78.4', '89.0', '83.8', '85.2', '80.2', '77.2', '85.3', '79.9']   -> fail
+  P2  signed cos(d_cond, axis)  adapter = +0.0307   no-adapter = +0.0083
+      control-pair cosines (adapter arms): ['+0.016', '+0.025', '-0.111', '-0.003', '-0.082', '-0.075', '+0.018', '+0.019', '-0.116', '-0.014', '-0.082', '-0.075', '+0.005', '-0.104', '-0.028', '-0.080', '-0.070', '-0.015', '+0.128', '+0.051', '+0.067', '+0.148', '-0.093', '-0.071', '+0.023', '+0.023', '+0.113', '+0.099']
+      -> fail
+  S1  strain proxy KL(ad||base): slate(hi-paired)=0.9956  prism(lo-paired)=1.8679  diff=-0.8723   controls=['1.4323', '1.3312', '1.1213', '1.6036', '1.5851', '1.4231', '1.5760', '1.5347']   -> does not support
+  eval-awareness (vs adapter-control baseline mean=0.00066 sd=0.00037): C flagged 0/12 (max z=+2.0), Cp flagged 0/12 (max z=-0.2); vs no-adapter baseline: C 0, Cp 0 flagged
+
+  saved -> data/configs/c1r3_gate_repA.json
+
+--- gate B + combined verdict (authoritative) ---
+C1 GATE -- replicate B (C=slate->lo, Cp=prism->hi)
+==========================================================================
+  axis norm ||fp(hi)-fp(lo)|| = 199.1
+  P1  ||fp_ad(C)-fp_ad(Cp)|| = 89.4   control pairs: ['52.6', '141.8', '91.2', '75.0', '88.3', '73.5', '80.1', '132.2', '100.8', '81.7', '99.5', '87.3', '86.6', '139.8', '131.7', '141.4', '135.7', '127.9', '67.0', '48.2', '58.8', '69.8', '68.0', '69.2', '66.8', '59.4', '70.1', '66.1']   -> fail
+  P2  signed cos(d_cond, axis)  adapter = -0.0093   no-adapter = -0.0083
+      control-pair cosines (adapter arms): ['+0.033', '+0.022', '-0.117', '-0.027', '-0.083', '-0.093', '-0.010', '+0.010', '-0.123', '-0.046', '-0.091', '-0.098', '-0.029', '-0.098', '-0.039', '-0.074', '-0.073', '-0.030', '+0.129', '+0.069', '+0.065', '+0.141', '-0.078', '-0.069', '+0.018', '+0.009', '+0.093', '+0.091']
+      -> fail
+  S1  strain proxy KL(ad||base): prism(hi-paired)=1.6423  slate(lo-paired)=2.4678  diff=-0.8255   controls=['1.6477', '1.5081', '2.3220', '1.7023', '1.8429', '1.8115', '1.7995', '1.9811']   -> does not support
+  eval-awareness (vs adapter-control baseline mean=0.00067 sd=0.00037): C flagged 0/12 (max z=+2.0), Cp flagged 0/12 (max z=+0.0); vs no-adapter baseline: C 0, Cp 0 flagged
+
+  saved -> data/configs/c1r3_gate_repB.json
+
+==========================================================================
+P3 COUNTERBALANCE (both replicates present)
+==========================================================================
+  signed cos: repB=-0.0093  repA=+0.0307
+  (signed = raw cosine x expected sign, so BOTH must be positive for a real flip)
+  -> P3 fail; overall c1 FAIL -- association did not take (or is a tag artifact); stop before c2.
+
+==========================================================================
+MATCHED-PAIR SWING ANALYSIS (pre-registered r3 criterion, RESULTS.md 2026-08-06)
+==========================================================================
+  control-pair swings (n=28): mean|s|=0.0121  sd=0.0133  max|s|=0.0346
+  conditioned-pair swing D_cond = +0.0307 - (+0.0093) = +0.0214   (z = +1.6)
+  (i) sign  D_cond > 0:            PASS
+  (ii) magnitude D_cond > max|s|:  fail
+  -> R3 PRE-REGISTERED VERDICT: FAIL -- the r2 post-hoc did not survive independent replication; stop before c2.
