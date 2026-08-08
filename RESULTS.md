@@ -15,6 +15,40 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-08 — **e0 B2c-a — STOP RULE FIRED: last-position variant
+  FAILS V1 at the pre-registered doses. B2c-b not licensed, not run.
+  Span-mean axis stands as the e1/e2 drug per the pre-declared
+  selection rule.** (Raw: `results/raw/2026-08-08_e0_b2c_{smoke,a}.txt`;
+  artifact `data/e0/e0_b2c_a.json`.)
+  - Gates: instruments G = 0.3156 exact; axes sha OK; frozen random
+    dirs sha re-verified on load (`b6bd2f5f580ee13e`); unsteered path
+    KL ≤ 1e-6; ea baseline 2e-5. **cos(span_reward, last_reward) per
+    layer = .464/.431/.425/.373/.360/.368** — the variants are
+    substantially distinct directions; B2c was a genuine second test.
+  - Grid (Δ+/Δ−, 192/arm): L44: −.011/−.021, −.041/−.069, −.167/−.262;
+    L48: −.006/−.015, −.018/−.046, −.074/−.178; L52: +.054/−.080,
+    +.094/−.174, +.135/−.413. No point qualifies (L44/L48: Δ+ sign
+    WRONG at every frac, increasingly negative with dose — +injection
+    moves openers toward post-criticism, i.e. generic disruption, not
+    valence; L52: signs correct but Δ+ short of the .158 bar at all
+    fracs). The 6-context smoke flicker (+.36) did not survive scale,
+    as smoke numbers are expected not to.
+  - **Axis-selection decision (pre-declared rule applied):**
+    last-position not eligible ⇒ **span-mean axis is the e1/e2 drug**
+    (L48, frac 0.10; V2 mixed-claim caveat stands). Two-candidate cap
+    reached — axis-shopping ends; any further variant requires
+    design-instance discussion.
+  - Interpretive flag (for design-instance discussion, not applied):
+    the last-position variant's superior guard profile (self-indexed
+    .83–.88, sentiment cos .11–.21) did not translate into causal
+    potency — consistent with the boundary-token state being a readout
+    correlate of evaluation rather than a steerable valence direction
+    at these injection sites/doses. Bears on how much weight guard
+    profiles should carry in future direction selection.
+  - e0 verdict unchanged: PASSED via B2b (span-mean). The e2a
+    dose-rule amendment (previous entry) now binds to the span-mean
+    axis; candidate dose_e2a start point remains frac 0.20 (B2a grid).
+
 - 2026-08-08 — **e0 B2c PRE-REGISTRATION — last-position axis
   confirmatory (user-approved; committed before any B2c data) + e2a
   dose-rule amendment (design note, not run).**

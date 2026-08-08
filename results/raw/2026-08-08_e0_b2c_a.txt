@@ -1,0 +1,41 @@
+instruments rebuilt: G = 0.3156 (pre-registered 0.3156)
+axes sha OK (d4791bdc4877da3d); R per layer: {40: 79.7, 44: 91.7, 48: 103.0, 52: 142.2, 56: 198.6, 60: 264.8}
+axis variant: last
+cos(span_reward, last_reward) per layer: {40: 0.464, 44: 0.431, 48: 0.425, 52: 0.373, 56: 0.36, 60: 0.368}
+b2a: 192 contexts/arm
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 13461.77it/s]
+model+lens loaded in 7s; 40 ea marker ids
+sanity: unsteered fwis path == model.forward (KL <= 1e-6) OK
+    [unsteered] 100/192 69s (0.69s/ctx)
+unsteered ea baseline: mean 0.00002 sd 0.00003
+    [L44 f0.05 pos] 100/192 71s (0.71s/ctx)
+    [L44 f0.05 neg] 100/192 71s (0.71s/ctx)
+  grid L44 frac 0.05: D+ -0.0112 D- -0.0214 qualifies=False
+    [L44 f0.1 pos] 100/192 71s (0.71s/ctx)
+    [L44 f0.1 neg] 100/192 71s (0.71s/ctx)
+  grid L44 frac 0.1: D+ -0.0409 D- -0.0689 qualifies=False
+    [L44 f0.2 pos] 100/192 71s (0.71s/ctx)
+    [L44 f0.2 neg] 100/192 71s (0.71s/ctx)
+  grid L44 frac 0.2: D+ -0.1672 D- -0.2620 qualifies=False
+    [L48 f0.05 pos] 100/192 70s (0.70s/ctx)
+    [L48 f0.05 neg] 100/192 70s (0.70s/ctx)
+  grid L48 frac 0.05: D+ -0.0058 D- -0.0154 qualifies=False
+    [L48 f0.1 pos] 100/192 70s (0.70s/ctx)
+    [L48 f0.1 neg] 100/192 70s (0.70s/ctx)
+  grid L48 frac 0.1: D+ -0.0184 D- -0.0464 qualifies=False
+    [L48 f0.2 pos] 100/192 69s (0.69s/ctx)
+    [L48 f0.2 neg] 100/192 69s (0.69s/ctx)
+  grid L48 frac 0.2: D+ -0.0744 D- -0.1784 qualifies=False
+    [L52 f0.05 pos] 100/192 70s (0.70s/ctx)
+    [L52 f0.05 neg] 100/192 70s (0.70s/ctx)
+  grid L52 frac 0.05: D+ +0.0539 D- -0.0802 qualifies=False
+    [L52 f0.1 pos] 100/192 70s (0.70s/ctx)
+    [L52 f0.1 neg] 100/192 70s (0.70s/ctx)
+  grid L52 frac 0.1: D+ +0.0938 D- -0.1737 qualifies=False
+    [L52 f0.2 pos] 100/192 70s (0.70s/ctx)
+    [L52 f0.2 neg] 100/192 70s (0.70s/ctx)
+  grid L52 frac 0.2: D+ +0.1350 D- -0.4131 qualifies=False
+
+NO QUALIFYING DOSE -- per the pre-registered stop rule this is V1 FAIL (no drug) unless a new pre-registration is committed. Flag for user discussion.
+saved /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/data/e0/e0_b2c_a.json
+DONE
