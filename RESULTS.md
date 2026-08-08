@@ -15,6 +15,20 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-08 — **cycle-3 doc verification flags (from the restructure's
+  full read of CLAUDE.md v2; flagged for discussion, not applied):**
+  - **Ledger rule 2 is stricter than the r2/r3 record it cites.** The rule
+    says "use the validated O(T²) uncached path whenever high-norm steering
+    is active," but r2/r3 sampled data-gen ran the cached-ops path behind a
+    per-state next-token-KL gate (≤ 1e-3 nats, both directions) — sound
+    because the near-tie argmax flip motivating the rule is greedy-specific
+    and irrelevant under temperature sampling. Decide whether rule 2 gets
+    that carve-out (sampled generation + KL gate ⇒ cached-ops allowed); the
+    strict reading costs ~8× wall-clock on any (d) distillation data-gen.
+  - Minor: the Environment note attributes the workspace-layer set to
+    `fingerprint.py`; it is defined in `workspace_layers.py` (fingerprint
+    imports it).
+
 - 2026-08-07 — **cycle-3 reset:** cycles 1–2 archived at tag
   `cycle-2-close`; operative docs = CLAUDE.md (v2) + PROPOSAL-d +
   PROPOSAL-e; FINDINGS-2.md is the cycle-2 synthesis.
