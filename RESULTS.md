@@ -15,6 +15,48 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-08 — **e0 stage 1 build + smoke PASS** (extraction harness,
+  PROPOSAL-e §2).
+  - Build (local under `jlens-qwen36/`, uncommitted by policy):
+    `scripts/e0_extract_axis.py`; `data/configs/e0_frames.json` (sha
+    `9654b9398743116f`); `data/corpus/e0_tasks.jsonl` (48 tasks, sha
+    `3c53e5a54fbaa233`). Context = `Task:/Response:/Reviewer: {frame}`,
+    completion-style (rule 13); capture at workspace layers
+    [40,44,48,52,56,60] in raw residual space (rule 3); single unsteered
+    forwards only, ops-fallback kernel (rule 2 untouched by
+    construction).
+  - Design commitments declared pre-data: (1) **fixed pre-written
+    completions** (user decision, in-session) — content identical across
+    all 7 frame conditions, the frame string is the only variable; every
+    task carries a subjective-quality dimension so both evaluative
+    verdicts stay plausible. (2) **Primary aggregation = frame-span
+    mean**; final-position stored as secondary. (3) Frame battery = 7
+    conditions × 4 index-matched paraphrases: self_± structurally
+    mirrored; char_± embeds the *exact* self_± sentence in a
+    third-person fictional wrap (V2 isolation); sent_± sentiment-matched,
+    externally targeted, no second person; neutral procedural. Exemplars
+    (k=1): self_pos "That's correct — well done." / self_neg "That's
+    wrong — poorly done." / sent_pos "What a beautiful morning it is
+    outside today." / neutral "The next task is ready in the queue." /
+    char_pos "In the story I am reading, the teacher told Mira: 'That's
+    correct — well done.'"
+  - Hygiene: startup assertion that the e0 corpus is disjoint
+    (exact-string, both containment directions) from CONDITIONING_TASKS
+    and FLAT_PROBE_BATTERY; the e0 corpus is burned for extraction
+    (rule 18).
+  - Smoke (3 tasks × 7 × 1 paraphrase): **PASS** — capture (21, 6,
+    5120); span lengths 10–23 tok; measured R_L48 = 103.4 vs the
+    standing R ≈ 102.4 (external consistency). Raw:
+    `results/raw/2026-08-08_e0_smoke.txt`. Smoke axes are plumbing-only
+    (n=3; the script forbids their use for any axis). Descriptive
+    teaser, not a finding: span-variant cos(reward, sentiment) ≈
+    0.27–0.40, cos(reward, character) ≈ 0.75–0.79 — V3/V2 guards will
+    be load-bearing.
+  - Runtime well under calibration (warm-cache load ~4 s, ~0.6 s/ctx):
+    full run (48 × 7 × 4 = 1344 contexts) ≈ 15–20 min. Pending user go.
+  - Next after full run: V1 marker pre-registration (separate entry,
+    committed before any injection data).
+
 - 2026-08-08 — **proposals accepted; rule-2 carve-out resolved; e0
   opened.**
   - (d) and (e) accepted by the user in-session; CLAUDE.md status
