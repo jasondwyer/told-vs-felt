@@ -15,6 +15,30 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-08 — **proposals accepted; rule-2 carve-out resolved; e0
+  opened.**
+  - (d) and (e) accepted by the user in-session; CLAUDE.md status
+    updated. Execution order: **e0 first**; order beyond e0 decided at
+    the PROPOSAL-e §7 gate.
+  - **Rule 2 amended (user decision, narrow carve-out):**
+    temperature-sampled steered generation may use the cached O(T) path
+    behind the per-state next-token-KL gate (≤ 1e-3 nats, both
+    directions), **re-validated per direction family and dose** (rule-1
+    spirit — the gate was validated on strain states; the reward axis is
+    a new family). Greedy readouts and any generation feeding a choice
+    DV stay on the uncached path.
+  - Correction to the earlier 08-08 flag's cost note: strict rule 2 does
+    **not** cost ~8× on (d) distillation data-gen — PROPOSAL-d §1 takes
+    activation targets from single teacher forwards over fixed text (no
+    generation loop; the full-sequence kernel is the validated one either
+    way). The carve-out's practical payoff is e2's steered sampled
+    session loops.
+  - workspace-layer attribution fixed in CLAUDE.md. Precise fact:
+    `WORKSPACE_LAYERS` is defined in `workspace_layers.py`;
+    `fingerprint.py` does **not** import it (its capture functions take
+    layers as parameters); `eval_awareness.py` is the module that imports
+    it. The earlier flag's "(fingerprint imports it)" was wrong.
+
 - 2026-08-08 — **cycle-3 doc verification flags (from the restructure's
   full read of CLAUDE.md v2; flagged for discussion, not applied):**
   - **Ledger rule 2 is stricter than the r2/r3 record it cites.** The rule

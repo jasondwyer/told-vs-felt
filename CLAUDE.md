@@ -35,7 +35,8 @@ administer one.
   §infrastructure.
 - Lenses: bundled `lens.npz` (n=20) and `neuronpedia_n1000.npz` (primary).
 - Residual norm at L48: R ≈ 102.4. Workspace-layer set as defined in
-  `fingerprint.py`.
+  `workspace_layers.py` (`WORKSPACE_LAYERS`; capture functions in
+  `fingerprint.py` take it as a parameter).
 - `data/`, `results/raw/` artifacts are local and gitignored — they do
   **not** travel between checkouts; only committed docs do.
 
@@ -71,11 +72,11 @@ Two proposal documents at repo root, composable — **(e) supplies the drug,
   exclusion: object-level semantics stay banned; the evaluative axis is
   the targeted exception, guarded by V2/V3.
 
-**Status: proposals pending user acceptance; execution order pending user
-decision.** What is already true regardless of order: **e0 (axis
-extraction + validation) is unblocked, cheapest, and first** — it is pure
-measurement, gates everything in (e), and its failure (V1) would redirect
-effort before any training build. Nothing else is licensed to run yet.
+**Status: (d) and (e) accepted by the user 2026-08-08 (in-session).
+Execution order: e0 first** — it is pure measurement, gates everything in
+(e), and its failure (V1) would redirect effort before any training build.
+Order beyond e0 is decided at the e0 decision gate (PROPOSAL-e §7);
+nothing besides e0 is licensed to run yet.
 
 ## Live constraints ledger
 
@@ -93,9 +94,15 @@ here.**
    frac sweep. *(Why: dose windows are family-specific; archive: 08-01
    §1, 08-03 sweeps.)*
 2. **Use the validated O(T²) uncached generation path whenever high-norm
-   steering is active.** The cached O(T) path flips greedy near-ties under
-   high displacement, both GDN kernels. *(FINDINGS-2 "substrate"; raw:
-   2026-08-06 c1 smoke.)*
+   steering is active and the readout is greedy or feeds a choice DV.**
+   The cached O(T) path flips greedy near-ties under high displacement,
+   both GDN kernels. **Narrow carve-out (2026-08-08):**
+   temperature-sampled generation may use the cached path behind the
+   per-state next-token-KL gate (≤ 1e-3 nats, both directions),
+   re-validated per direction family and dose (rule-1 spirit — the gate's
+   validation was on strain states); the flip mechanism is
+   greedy-specific. *(FINDINGS-2 "substrate"; raw: 2026-08-06 c1 smoke;
+   carve-out: r2/r3 sampled data-gen precedent, RESULTS.md 2026-08-08.)*
 3. **Extract and operate on states in raw residual space at workspace
    layers — never through the 369-word J-lens vocabulary basis.** ~57% of
    state-discriminating signal lies outside the vocab span. *(Archive:
