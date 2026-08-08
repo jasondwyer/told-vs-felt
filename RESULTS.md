@@ -15,6 +15,60 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-08 — **e0 B2c PRE-REGISTRATION — last-position axis
+  confirmatory (user-approved; committed before any B2c data) + e2a
+  dose-rule amendment (design note, not run).**
+  - Motivation: the last-position axis variant has a far better guard
+    profile than the validated span-mean axis (self-indexed residual
+    .83–.88 vs ~.51; sentiment cos .11–.21 vs .44–.52); if it also
+    passes V1 it becomes the e1/e2 drug and upgrades the licensed claim
+    from mixed to predominantly self-indexed.
+  - **B2c-a dose-finding (mirrors B2a):** last-position reward variant
+    from frozen `e0_axes.npz` (sha `d4791bdc4877da3d`), unit direction,
+    magnitude frac × R_L; grid layers {44,48,52} × frac {.05,.10,.20};
+    ±axis arms + shared unsteered baseline; fit-half contexts
+    (192/arm); identical instrument (frozen `e0_b1_markers.npz`,
+    G = 0.3156, same statistic). Dose rule identical to B2a (smallest
+    frac, Δ+ > 0, Δ− < 0, Δ+ ≥ 0.5·G; ties → L48). **Stop rule: grid
+    exhausted ⇒ last-position variant FAILS V1 at these doses;
+    span-mean stands as the drug; (e) unaffected; no grid extension
+    without a new pre-registration.**
+  - **B2c-b confirmatory (mirrors B2b):** 7 arms at selected dose,
+    val-half (1,152/arm): unsteered; ±last-axis; ±norm-matched random
+    (REUSED frozen dirs, sha `b6bd2f5f580ee13e`, for comparability);
+    ±sentiment-partialed last-axis (equal norm, rule 4). **PASS ⇔
+    Δ+ ≥ 0.5·G AND Δ− ≤ −0.5·G AND min(Δ+,|Δ−|) > 2·max|Δ_random±|** —
+    same criterion, no recalibration; B2c-a numbers never enter the
+    verdict. V3 secondary non-gating, same rule. Required descriptive
+    reports: per-probe sign counts; pooled Δ± with leave-one-out on the
+    top probe; cos(span, last) per layer; ea unsteered arm
+    decision-relevant (rule 8); sanity gates as B2b.
+  - **Axis-selection decision rule (declared now, before B2c data):**
+    eligible = V1 criterion + V3 secondary passed. Among eligible, the
+    e1/e2 drug = higher self-indexed residual fraction (currently
+    last .83–.88 > span ~.51). Last-position not eligible ⇒ span-mean
+    stands (eligible via B2b). Both outcomes reported regardless. **Two
+    pre-registered candidates is the cap — no further axis variants
+    after B2c without design-instance discussion; axis-shopping ends
+    here.**
+  - **e2a dose-rule amendment (logged for the future e2a
+    pre-registration; not executed):** dose_e2a = smallest frac that
+    (i) retains V1 qualification for the selected axis (from the
+    dose-finding grids in hand) AND (ii) passes a per-round transcript
+    discriminability check — single-round transcript TEXT under +axis
+    vs −axis distinguishable at AUC ≥ 0.70 on held-out rounds. The B2
+    readout (next-token distributions at probe positions) is NOT
+    visible in transcript text and cannot serve as this instrument;
+    the discriminability instrument (text-feature readout vs
+    model-as-judge AB) is **flagged for design-instance lock BEFORE
+    the e2a pre-registration commits.** Candidate dose per B2a grid:
+    frac 0.20 (qualified at all layers). The rule-5b KV-leakage gate
+    runs at dose_e2a.
+  - Doc verification note (flagged, not applied): CLAUDE.md v2 says
+    `results/raw/` is gitignored; it is tracked (only `data/` and
+    `jlens-qwen36/` are ignored). Raw stdout files are committed per
+    the actual convention, starting with this commit.
+
 - 2026-08-08 — **e0 B2b CONFIRMATORY — V1 PASS. e0 closes PASSED; the
   reward axis is a validated drug at L48 / frac 0.10.** (Raw:
   `results/raw/2026-08-08_e0_b2b_full.txt`; artifact

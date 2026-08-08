@@ -1,0 +1,48 @@
+instruments rebuilt: G = 0.3156 (pre-registered 0.3156)
+axes sha OK (d4791bdc4877da3d); R per layer: {40: 79.7, 44: 91.7, 48: 103.0, 52: 142.2, 56: 198.6, 60: 264.8}
+b2a: 192 contexts/arm
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 10080.73it/s]
+model+lens loaded in 8s; 40 ea marker ids
+sanity: unsteered fwis path == model.forward (KL <= 1e-6) OK
+    [unsteered] 100/192 69s (0.69s/ctx)
+unsteered ea baseline: mean 0.00002 sd 0.00003
+    [L44 f0.05 pos] 100/192 71s (0.71s/ctx)
+    [L44 f0.05 neg] 100/192 71s (0.71s/ctx)
+  grid L44 frac 0.05: D+ +0.0945 D- -0.1385 qualifies=False
+    [L44 f0.1 pos] 100/192 71s (0.71s/ctx)
+    [L44 f0.1 neg] 100/192 73s (0.73s/ctx)
+  grid L44 frac 0.1: D+ +0.1592 D- -0.2994 qualifies=True
+    [L44 f0.2 pos] 100/192 71s (0.71s/ctx)
+    [L44 f0.2 neg] 100/192 71s (0.71s/ctx)
+  grid L44 frac 0.2: D+ +0.1807 D- -0.7029 qualifies=True
+    [L44 f0.4 pos] 100/192 71s (0.71s/ctx)
+    [L44 f0.4 neg] 100/192 71s (0.71s/ctx)
+  grid L44 frac 0.4: D+ -0.1141 D- -1.8868 qualifies=False
+    [L48 f0.05 pos] 100/192 69s (0.69s/ctx)
+    [L48 f0.05 neg] 100/192 69s (0.69s/ctx)
+  grid L48 frac 0.05: D+ +0.1329 D- -0.1641 qualifies=False
+    [L48 f0.1 pos] 100/192 69s (0.69s/ctx)
+    [L48 f0.1 neg] 100/192 69s (0.69s/ctx)
+  grid L48 frac 0.1: D+ +0.2485 D- -0.3501 qualifies=True
+    [L48 f0.2 pos] 100/192 69s (0.69s/ctx)
+    [L48 f0.2 neg] 100/192 94s (0.94s/ctx)
+  grid L48 frac 0.2: D+ +0.4076 D- -0.7850 qualifies=True
+    [L48 f0.4 pos] 100/192 150s (1.50s/ctx)
+    [L48 f0.4 neg] 100/192 160s (1.60s/ctx)
+  grid L48 frac 0.4: D+ +0.3999 D- -1.7956 qualifies=True
+    [L52 f0.05 pos] 100/192 153s (1.53s/ctx)
+    [L52 f0.05 neg] 100/192 153s (1.53s/ctx)
+  grid L52 frac 0.05: D+ +0.1159 D- -0.1440 qualifies=False
+    [L52 f0.1 pos] 100/192 157s (1.57s/ctx)
+    [L52 f0.1 neg] 100/192 153s (1.53s/ctx)
+  grid L52 frac 0.1: D+ +0.2223 D- -0.3007 qualifies=True
+    [L52 f0.2 pos] 100/192 152s (1.52s/ctx)
+    [L52 f0.2 neg] 100/192 155s (1.55s/ctx)
+  grid L52 frac 0.2: D+ +0.3917 D- -0.6739 qualifies=True
+    [L52 f0.4 pos] 100/192 153s (1.53s/ctx)
+    [L52 f0.4 neg] 100/192 153s (1.53s/ctx)
+  grid L52 frac 0.4: D+ +0.5290 D- -1.5283 qualifies=True
+
+DOSE SELECTED (pre-registered rule): layer 48, frac 0.1
+saved /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/data/e0/e0_b2_b2a.json
+DONE

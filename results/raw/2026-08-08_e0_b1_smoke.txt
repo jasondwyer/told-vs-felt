@@ -1,0 +1,13 @@
+e0 B1: 3 tasks x 2 conds x 1 paras x 3 probes = 18 contexts
+shas: corpus 3c53e5a54fbaa233 frames 9654b9398743116f probes ec2296182e726969
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 8418.67it/s]
+model loaded in 3s
+class confidence: 36 token ids
+class hedging: 36 token ids
+capture done: 18 contexts in 12s
+
+=== B1 marker report ===
+  class confidence: {"fit": {"mean_pos": 0.0009876845870167017, "mean_neg": 0.001133446116000414, "cohens_d": -0.17}}
+  class hedging: {"fit": {"mean_pos": 0.009610731154680252, "mean_neg": 0.012141143903136253, "cohens_d": -0.321}}
+  (smoke: fit/val half empty -- readout skipped)
+DONE

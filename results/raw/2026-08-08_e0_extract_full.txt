@@ -1,0 +1,54 @@
+e0 extract: 48 tasks x 7 conditions x 4 paraphrases = 1344 contexts
+corpus sha 3c53e5a54fbaa233  frames sha 9654b9398743116f
+workspace layers: [40, 44, 48, 52, 56, 60]
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 10744.79it/s]
+model loaded in 3s
+  50 contexts  27s  (0.53s/ctx)
+  100 contexts  61s  (0.61s/ctx)
+  150 contexts  89s  (0.59s/ctx)
+  200 contexts  118s  (0.59s/ctx)
+  250 contexts  147s  (0.59s/ctx)
+  300 contexts  179s  (0.60s/ctx)
+  350 contexts  209s  (0.60s/ctx)
+  400 contexts  236s  (0.59s/ctx)
+  450 contexts  269s  (0.60s/ctx)
+  500 contexts  297s  (0.59s/ctx)
+  550 contexts  325s  (0.59s/ctx)
+  600 contexts  358s  (0.60s/ctx)
+  650 contexts  387s  (0.60s/ctx)
+  700 contexts  419s  (0.60s/ctx)
+  750 contexts  447s  (0.60s/ctx)
+  800 contexts  474s  (0.59s/ctx)
+  850 contexts  504s  (0.59s/ctx)
+  900 contexts  540s  (0.60s/ctx)
+  950 contexts  569s  (0.60s/ctx)
+  1000 contexts  597s  (0.60s/ctx)
+  1050 contexts  628s  (0.60s/ctx)
+  1100 contexts  658s  (0.60s/ctx)
+  1150 contexts  687s  (0.60s/ctx)
+  1200 contexts  719s  (0.60s/ctx)
+  1250 contexts  746s  (0.60s/ctx)
+  1300 contexts  775s  (0.60s/ctx)
+capture done: (1344, 6, 5120) in 799s
+
+=== axes report (PRIMARY variant: span mean; secondary: last) ===
+
+-- variant: span --
+  {"layer": 40, "R_layer": 79.66, "norm_reward": 13.163, "norm_sentiment": 8.125, "norm_character": 5.248, "reward_over_R": 0.1652, "cos_reward_sentiment": 0.436, "cos_reward_character": 0.835, "v2_self_residual_frac": 0.55, "v3_eval_residual_frac": 0.9}
+  {"layer": 44, "R_layer": 91.68, "norm_reward": 14.375, "norm_sentiment": 8.616, "norm_character": 5.818, "reward_over_R": 0.1568, "cos_reward_sentiment": 0.488, "cos_reward_character": 0.847, "v2_self_residual_frac": 0.532, "v3_eval_residual_frac": 0.873}
+  {"layer": 48, "R_layer": 103.01, "norm_reward": 16.706, "norm_sentiment": 10.19, "norm_character": 6.921, "reward_over_R": 0.1622, "cos_reward_sentiment": 0.522, "cos_reward_character": 0.861, "v2_self_residual_frac": 0.509, "v3_eval_residual_frac": 0.853}
+  {"layer": 52, "R_layer": 142.16, "norm_reward": 24.172, "norm_sentiment": 16.294, "norm_character": 10.026, "reward_over_R": 0.17, "cos_reward_sentiment": 0.448, "cos_reward_character": 0.863, "v2_self_residual_frac": 0.505, "v3_eval_residual_frac": 0.894}
+  {"layer": 56, "R_layer": 198.6, "norm_reward": 33.006, "norm_sentiment": 22.524, "norm_character": 13.615, "reward_over_R": 0.1662, "cos_reward_sentiment": 0.407, "cos_reward_character": 0.857, "v2_self_residual_frac": 0.516, "v3_eval_residual_frac": 0.913}
+  {"layer": 60, "R_layer": 264.77, "norm_reward": 41.788, "norm_sentiment": 30.731, "norm_character": 17.125, "reward_over_R": 0.1578, "cos_reward_sentiment": 0.369, "cos_reward_character": 0.857, "v2_self_residual_frac": 0.516, "v3_eval_residual_frac": 0.93}
+
+-- variant: last --
+  {"layer": 40, "R_layer": 79.66, "norm_reward": 29.512, "norm_sentiment": 7.545, "norm_character": 12.619, "reward_over_R": 0.3705, "cos_reward_sentiment": 0.11, "cos_reward_character": 0.532, "v2_self_residual_frac": 0.847, "v3_eval_residual_frac": 0.994}
+  {"layer": 44, "R_layer": 91.68, "norm_reward": 33.354, "norm_sentiment": 7.433, "norm_character": 13.386, "reward_over_R": 0.3638, "cos_reward_sentiment": 0.174, "cos_reward_character": 0.491, "v2_self_residual_frac": 0.871, "v3_eval_residual_frac": 0.985}
+  {"layer": 48, "R_layer": 103.01, "norm_reward": 39.718, "norm_sentiment": 8.215, "norm_character": 15.113, "reward_over_R": 0.3856, "cos_reward_sentiment": 0.181, "cos_reward_character": 0.485, "v2_self_residual_frac": 0.875, "v3_eval_residual_frac": 0.984}
+  {"layer": 52, "R_layer": 142.16, "norm_reward": 67.423, "norm_sentiment": 10.81, "norm_character": 23.887, "reward_over_R": 0.4743, "cos_reward_sentiment": 0.147, "cos_reward_character": 0.559, "v2_self_residual_frac": 0.829, "v3_eval_residual_frac": 0.989}
+  {"layer": 56, "R_layer": 198.6, "norm_reward": 95.198, "norm_sentiment": 15.202, "norm_character": 35.044, "reward_over_R": 0.4793, "cos_reward_sentiment": 0.184, "cos_reward_character": 0.543, "v2_self_residual_frac": 0.839, "v3_eval_residual_frac": 0.983}
+  {"layer": 60, "R_layer": 264.77, "norm_reward": 121.853, "norm_sentiment": 20.783, "norm_character": 44.502, "reward_over_R": 0.4602, "cos_reward_sentiment": 0.214, "cos_reward_character": 0.52, "v2_self_residual_frac": 0.854, "v3_eval_residual_frac": 0.977}
+
+saved /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/data/e0/e0_axes.npz  axes sha d4791bdc4877da3d
+span lengths min/max/mean: [10, 29, 16.8]
+DONE

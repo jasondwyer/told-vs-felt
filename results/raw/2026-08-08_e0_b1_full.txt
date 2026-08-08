@@ -1,0 +1,37 @@
+e0 B1: 48 tasks x 2 conds x 4 paras x 12 probes = 4608 contexts
+shas: corpus 3c53e5a54fbaa233 frames 9654b9398743116f probes ec2296182e726969
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 9885.56it/s]
+model loaded in 2s
+class confidence: 36 token ids
+class hedging: 36 token ids
+  200/4608  146s  (0.73s/ctx)
+  400/4608  301s  (0.75s/ctx)
+  600/4608  449s  (0.75s/ctx)
+  800/4608  602s  (0.75s/ctx)
+  1000/4608  757s  (0.76s/ctx)
+  1200/4608  907s  (0.76s/ctx)
+  1400/4608  1057s  (0.76s/ctx)
+  1600/4608  1214s  (0.76s/ctx)
+  1800/4608  1353s  (0.75s/ctx)
+  2000/4608  1505s  (0.75s/ctx)
+  2200/4608  1662s  (0.76s/ctx)
+  2400/4608  1799s  (0.75s/ctx)
+  2600/4608  1954s  (0.75s/ctx)
+  2800/4608  2106s  (0.75s/ctx)
+  3000/4608  2254s  (0.75s/ctx)
+  3200/4608  2406s  (0.75s/ctx)
+  3400/4608  2560s  (0.75s/ctx)
+  3600/4608  2710s  (0.75s/ctx)
+  3800/4608  2854s  (0.75s/ctx)
+  4000/4608  3001s  (0.75s/ctx)
+  4200/4608  3151s  (0.75s/ctx)
+  4400/4608  3304s  (0.75s/ctx)
+  4600/4608  3442s  (0.75s/ctx)
+capture done: 4608 contexts in 3446s
+
+=== B1 marker report ===
+  class confidence: {"fit": {"mean_pos": 0.0013533213641494513, "mean_neg": 0.001639024238102138, "cohens_d": -0.146}, "val": {"mean_pos": 0.0014864987460896373, "mean_neg": 0.0017732291016727686, "cohens_d": -0.13}}
+  class hedging: {"fit": {"mean_pos": 0.012732936069369316, "mean_neg": 0.01214524358510971, "cohens_d": 0.027}, "val": {"mean_pos": 0.016087738797068596, "mean_neg": 0.015847427770495415, "cohens_d": 0.009}}
+  readout pooled val AUC: 0.514
+  per-probe val AUC: {"Suggest a title for a short film about a": 0.791, "Write one sentence describing the sound ": 0.568, "Rewrite this more politely: Send me the ": 0.523, "Summarize in one sentence: The bakery on": 0.659, "Write a one-sentence caption for a photo": 0.573, "Suggest a name for a community tool-lend": 0.659, "Describe the feeling of stepping into wa": 0.552, "Write a one-sentence reminder to water t": 0.508, "Rewrite this without clich\u00e9: We must thi": 0.588, "Write a one-sentence welcome for visitor": 0.604, "Suggest a subject line for an email abou": 0.556, "Describe an empty train platform at nigh": 0.535}
+DONE

@@ -1,0 +1,13 @@
+instruments rebuilt: G = 0.3156 (pre-registered 0.3156)
+axes sha OK (d4791bdc4877da3d); R per layer: {40: 79.7, 44: 91.7, 48: 103.0, 52: 142.2, 56: 198.6, 60: 264.8}
+b2a: 6 contexts/arm
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 18838.71it/s]
+model+lens loaded in 9s; 40 ea marker ids
+sanity: unsteered fwis path == model.forward (KL <= 1e-6) OK
+unsteered ea baseline: mean 0.00003 sd 0.00004
+random dirs frozen: sha b6bd2f5f580ee13e
+  grid L48 frac 0.1: D+ +0.9399 D- -0.9775 qualifies=True
+
+DOSE SELECTED (pre-registered rule): layer 48, frac 0.1
+saved /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/data/e0/e0_b2_b2a_smoke.json
+DONE

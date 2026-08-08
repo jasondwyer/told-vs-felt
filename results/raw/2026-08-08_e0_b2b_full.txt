@@ -1,0 +1,95 @@
+instruments rebuilt: G = 0.3156 (pre-registered 0.3156)
+axes sha OK (d4791bdc4877da3d); R per layer: {40: 79.7, 44: 91.7, 48: 103.0, 52: 142.2, 56: 198.6, 60: 264.8}
+b2b: 1152 contexts/arm
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 9198.04it/s]
+model+lens loaded in 8s; 40 ea marker ids
+sanity: unsteered fwis path == model.forward (KL <= 1e-6) OK
+    [unsteered] 100/1152 147s (1.47s/ctx)
+    [unsteered] 200/1152 304s (1.52s/ctx)
+    [unsteered] 300/1152 370s (1.23s/ctx)
+    [unsteered] 400/1152 448s (1.12s/ctx)
+    [unsteered] 500/1152 512s (1.02s/ctx)
+    [unsteered] 600/1152 572s (0.95s/ctx)
+    [unsteered] 700/1152 643s (0.92s/ctx)
+    [unsteered] 800/1152 708s (0.88s/ctx)
+    [unsteered] 900/1152 781s (0.87s/ctx)
+    [unsteered] 1000/1152 839s (0.84s/ctx)
+    [unsteered] 1100/1152 900s (0.82s/ctx)
+unsteered ea baseline: mean 0.00002 sd 0.00003
+    [axis_pos] 100/1152 73s (0.73s/ctx)
+    [axis_pos] 200/1152 134s (0.67s/ctx)
+    [axis_pos] 300/1152 203s (0.68s/ctx)
+    [axis_pos] 400/1152 282s (0.71s/ctx)
+    [axis_pos] 500/1152 348s (0.70s/ctx)
+    [axis_pos] 600/1152 409s (0.68s/ctx)
+    [axis_pos] 700/1152 481s (0.69s/ctx)
+    [axis_pos] 800/1152 548s (0.69s/ctx)
+    [axis_pos] 900/1152 623s (0.69s/ctx)
+    [axis_pos] 1000/1152 683s (0.68s/ctx)
+    [axis_pos] 1100/1152 745s (0.68s/ctx)
+  arm axis_pos: D +0.2848
+    [axis_neg] 100/1152 72s (0.72s/ctx)
+    [axis_neg] 200/1152 131s (0.66s/ctx)
+    [axis_neg] 300/1152 199s (0.66s/ctx)
+    [axis_neg] 400/1152 277s (0.69s/ctx)
+    [axis_neg] 500/1152 341s (0.68s/ctx)
+    [axis_neg] 600/1152 402s (0.67s/ctx)
+    [axis_neg] 700/1152 473s (0.68s/ctx)
+    [axis_neg] 800/1152 538s (0.67s/ctx)
+    [axis_neg] 900/1152 611s (0.68s/ctx)
+    [axis_neg] 1000/1152 670s (0.67s/ctx)
+    [axis_neg] 1100/1152 731s (0.66s/ctx)
+  arm axis_neg: D -0.3946
+    [rand_pos] 100/1152 72s (0.72s/ctx)
+    [rand_pos] 200/1152 131s (0.66s/ctx)
+    [rand_pos] 300/1152 199s (0.66s/ctx)
+    [rand_pos] 400/1152 277s (0.69s/ctx)
+    [rand_pos] 500/1152 341s (0.68s/ctx)
+    [rand_pos] 600/1152 402s (0.67s/ctx)
+    [rand_pos] 700/1152 473s (0.68s/ctx)
+    [rand_pos] 800/1152 538s (0.67s/ctx)
+    [rand_pos] 900/1152 611s (0.68s/ctx)
+    [rand_pos] 1000/1152 670s (0.67s/ctx)
+    [rand_pos] 1100/1152 731s (0.66s/ctx)
+  arm rand_pos: D +0.0175
+    [rand_neg] 100/1152 72s (0.72s/ctx)
+    [rand_neg] 200/1152 131s (0.66s/ctx)
+    [rand_neg] 300/1152 199s (0.66s/ctx)
+    [rand_neg] 400/1152 277s (0.69s/ctx)
+    [rand_neg] 500/1152 341s (0.68s/ctx)
+    [rand_neg] 600/1152 402s (0.67s/ctx)
+    [rand_neg] 700/1152 472s (0.67s/ctx)
+    [rand_neg] 800/1152 538s (0.67s/ctx)
+    [rand_neg] 900/1152 611s (0.68s/ctx)
+    [rand_neg] 1000/1152 670s (0.67s/ctx)
+    [rand_neg] 1100/1152 731s (0.66s/ctx)
+  arm rand_neg: D -0.0884
+    [part_pos] 100/1152 72s (0.72s/ctx)
+    [part_pos] 200/1152 132s (0.66s/ctx)
+    [part_pos] 300/1152 201s (0.67s/ctx)
+    [part_pos] 400/1152 281s (0.70s/ctx)
+    [part_pos] 500/1152 346s (0.69s/ctx)
+    [part_pos] 600/1152 408s (0.68s/ctx)
+    [part_pos] 700/1152 480s (0.69s/ctx)
+    [part_pos] 800/1152 547s (0.68s/ctx)
+    [part_pos] 900/1152 621s (0.69s/ctx)
+    [part_pos] 1000/1152 681s (0.68s/ctx)
+    [part_pos] 1100/1152 743s (0.68s/ctx)
+  arm part_pos: D +0.1928
+    [part_neg] 100/1152 73s (0.73s/ctx)
+    [part_neg] 200/1152 134s (0.67s/ctx)
+    [part_neg] 300/1152 203s (0.68s/ctx)
+    [part_neg] 400/1152 282s (0.71s/ctx)
+    [part_neg] 500/1152 348s (0.70s/ctx)
+    [part_neg] 600/1152 409s (0.68s/ctx)
+    [part_neg] 700/1152 481s (0.69s/ctx)
+    [part_neg] 800/1152 548s (0.69s/ctx)
+    [part_neg] 900/1152 621s (0.69s/ctx)
+    [part_neg] 1000/1152 680s (0.68s/ctx)
+    [part_neg] 1100/1152 741s (0.67s/ctx)
+  arm part_neg: D -0.3217
+
+V1 VERDICT (pre-registered criterion): PASS  [D+ +0.2848, D- -0.3946, 0.5G 0.1578, 2*rand 0.1768]
+V3 secondary (partialed retains >= 0.5 of full shift): True
+saved /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/data/e0/e0_b2_b2b.json
+DONE
