@@ -15,6 +15,29 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-08 — **e0 B2a dose-finding — DOSE SELECTED: L48, frac 0.10**
+  (pre-registered rule; smoke + full raw:
+  `results/raw/2026-08-08_e0_b2a_{smoke,full}.txt`; artifacts
+  `data/e0/e0_b2_b2a.json`; random dirs frozen pre-run, sha
+  `b6bd2f5f580ee13e`).
+  - Sanity gates all passed pre-data: instruments rebuilt to G = 0.3156
+    exactly; axes sha verified; unsteered fwis path == model.forward
+    (KL ≤ 1e-6); ea baseline mean 2e-5 (sd 3e-5).
+  - Grid (Δ+ / Δ−, 192 contexts/arm): L44: .095/−.139, .159/−.299,
+    .181/−.703, **−.114**/−1.887; L48: .133/−.164, .249/−.350,
+    .408/−.785, .400/−1.796; L52: .116/−.144, .222/−.301, .392/−.674,
+    .529/−1.528. Qualifying set = all three layers at frac .10–.20 plus
+    L48/L52 at .40; smallest frac ties → L48 per rule.
+  - Structure (descriptive): orderly dose-response, directions correct
+    at every layer already at frac .05 (below the effect-size bar);
+    overdose signature at frac .40 (L44 Δ+ sign flip; −arm magnitudes
+    balloon to −1.5..−1.9, consistent with generic degradation reading
+    as post-criticism — the B2b random-direction arms exist to separate
+    exactly that from valence).
+  - Selected injection: unit span reward axis at L48, α = 0.10 × R_48
+    ≈ 10.3 — manifold-typical, low-displacement (the V4 minimum
+    effective dose, as designed). B2b confirmatory pending user go.
+
 - 2026-08-08 — **e0 V1 B2 PRE-REGISTRATION** (committed before any
   injection data; user selected "proceed to B2" at the flagged fork).
   - **Instrument (locked):** the 12 per-probe mean-difference readouts,
