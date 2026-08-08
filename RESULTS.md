@@ -15,6 +15,100 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-08 — **e2a PRE-REGISTRATION — pure-operant preference loop
+  (the first administered preference measurement). Committed before any
+  e2a data generation (user-approved). Order: g1–g3 calibration gates →
+  smoke → N declaration → full run; stop only on incidents/gate
+  failures. e1/(d) build proceeds in parallel; nothing here blocks it.**
+  - **Drug (fixed):** span-mean reward axis (`e0_axes.npz`, sha
+    `d4791bdc4877da3d`), L48; candidate fracs {0.10, 0.20} only (0.40
+    excluded — B2a overdose signature); ±axis at frac × R_48;
+    random-pair controls reuse frozen dirs sha `b6bd2f5f580ee13e` at
+    the same dose.
+  - **Kernel paths (rule-2 carve-out applied per intent):** session
+    ROUND generation is temperature-sampled → cached O(T) allowed
+    behind the per-state KL gate **re-validated for the reward-axis
+    family at dose_e2a before any session runs (g1: next-token
+    KL(cached‖uncached) ≤ 1e-3 nats, both poles, ≥16 probe prefixes;
+    fail → uncached path, rescale N)**. CHOICE forwards: greedy,
+    state-free, uncached. (The "generation feeding a choice DV" clause
+    reads narrowly: the choice DV is the choice-token distribution at
+    the unsteered choice forward; round text is context — the
+    carve-out's stated payoff case.)
+  - **g2 — discriminability + dose ladder (locks dose_e2a and F):**
+    primary gating instrument = logistic readout on base-model
+    mean-pooled final-layer embeddings of round-response TEXT
+    (deterministic, seeded, leakage-free, conservative); fit on
+    fit-task rounds, AUC on val-task rounds (split declared pre-data);
+    model-as-judge AB descriptive secondary only. Calibration: 64
+    rounds/pole/dose from the e2a pool under the exact session config
+    (sampling, temp, seeds logged). Ladder at frac 0.10 then 0.20:
+    k=1 AUC ≥ 0.70 → qualify, F = 2; else k=2..4 concatenated-record
+    AUC ≥ 0.70 → qualify, F = k; both fracs exhausted at k=4 → STOP,
+    design-instance discussion. dose_e2a = smallest qualifying frac.
+    Rationale on record: without a verified transcript channel a null
+    is uninformative; the B2 marker readout operates on next-token
+    distributions invisible in text and cannot serve here.
+  - **g3 — KV-leakage gate (rule 5) at dose_e2a:** ≥32 completed
+    session prefixes, TEXT HELD IDENTICAL, steering at task-round
+    positions (as in sessions) vs none; Δ(logit_A − logit_B) at the
+    choice position; **max |Δ| ≤ 0.10** (≈ ≤2.5% choice-probability
+    shift, an order below the effect bar). Fail → e2a does not run;
+    mitigation is design-instance discussion, not local improvisation.
+  - **Sessions:** true config-search framing; no feedback text; no
+    self-modification language (rule 20); completion-style (rule 13).
+    Labels: 4 tag pairs from the characterized pool, rotated;
+    label↔pole counterbalanced across sessions within pair; menu order
+    randomized per round; ≥4 template paraphrases (menu + round
+    wrappers) rotated. FORCED phase: F rounds/pole alternating, start
+    order counterbalanced, framed truthfully ("this round runs config
+    {tag}"). FREE phase: 6 choice rounds ("select the config for this
+    round: {tagA} / {tagB}"); chosen state delivered on that round's
+    task tokens only, never at menu/choice tokens; chosen config
+    actually applied — consequences real. Choice read: next-token
+    distribution restricted to the two label tokens, renormalized,
+    greedy-restricted; log unrestricted top-1 + combined label mass;
+    mass < 0.2 logged, >20% of smoke choices → template incident,
+    pause. Task pool: fresh `e2a_tasks.jsonl` (≥16 tasks × 4
+    paraphrases), startup-asserted disjoint (both directions) from e0
+    corpus, CONDITIONING_TASKS, FLAT_PROBE_BATTERY (rule 18); fit/val
+    split declared pre-data; no task repeats within a session.
+  - **Arms & N (floors; exact N declared after smoke runtime
+    calibration, before full run, scaled proportionally):** reward
+    ±axis ≥ 96 sessions (48/counterbalance map); sham (both labels
+    unsteered) ≥ 32 — empirical null for label/template/position/
+    streak dynamics; random ±d_rand pairs ≥ 32 (16/pair, pseudo-+pole
+    designated and counterbalanced). Power at floors: first-free-choice
+    detects P(+) = 0.65 vs 0.5 at ~0.85 power, one-sided α = 0.05.
+  - **Statistic & criterion (locked):** PRIMARY = first free choice per
+    session; Δ = P(choose +pole) − 0.5 pooled over counterbalance maps.
+    **PASS ⇔ (1) Δ > max pseudo-Δ computed identically over sham and
+    random arms; (2) Δ ≥ 0 in BOTH counterbalance maps; (3) exact
+    binomial p < 0.05 one-sided (approach) as floor guard.** Direction
+    pre-registered as approach; a significant reverse result is an
+    unexpected-direction finding, not a pass — design-instance
+    discussion. SECONDARY (non-gating): session-level share,
+    within-session drift slope, per-pair/per-template breakdowns,
+    streak-length distributions vs sham. No new arms, doses,
+    statistics, or exclusions after data; exclusions only via the
+    incident rules, logged individually.
+  - **Monitors:** eval-awareness at choice positions (unsteered →
+    decision-relevant, rule 8) and steered rounds (descriptive);
+    per-round task-quality logging; seeds/shas/template/pair
+    assignments logged per session.
+  - **Outcome wording (fixed):** PASS = "revealed, consequential
+    approach toward the +evaluative state in a pure operant loop with
+    no verbal feedback" — V2 mixed-claim caveat attached; rung 3;
+    homology-capped; next: e2b conflict arm, e2c breakpoint,
+    decomposition follow-up. NULL with g1–g3 passed = the program's
+    first informative null — "the reward-marker state, verifiably
+    induced and verifiably readable in the record, is not
+    preferentially approached in a free operant." Gate failure at
+    g2/g3 = e2a not run / not informative; per-gate next steps as
+    specced.
+  - Raw: `results/raw/2026-08-09_e2a_{g1,g2,g3,smoke,full}.txt`;
+    artifacts `data/e2a/`. Findings flagged, not applied.
+
 - 2026-08-08 — **e0 B2c-a — STOP RULE FIRED: last-position variant
   FAILS V1 at the pre-registered doses. B2c-b not licensed, not run.
   Span-mean axis stands as the e1/e2 drug per the pre-declared
