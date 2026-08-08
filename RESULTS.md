@@ -15,6 +15,44 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-08 — **e0 B2b CONFIRMATORY — V1 PASS. e0 closes PASSED; the
+  reward axis is a validated drug at L48 / frac 0.10.** (Raw:
+  `results/raw/2026-08-08_e0_b2b_full.txt`; artifact
+  `data/e0/e0_b2_b2b.json`.)
+  - **Pre-registered criterion, val-half contexts, 1,152/arm:**
+    Δ+ = +0.2848 (bar ≥ 0.1578 ✓), Δ− = −0.3946 (bar ≤ −0.1578 ✓),
+    max|Δ_random| = 0.0884 → 2×rand = 0.1768 < min(Δ+, |Δ−|) ✓.
+    **PASS** on all three conjuncts. Injection of the axis with no
+    feedback text present moves the next-round opener profile toward
+    the natural post-praise (resp. post-criticism) profile — the
+    operational hijack signature, at minimum effective dose, beating
+    norm-matched displacement controls.
+  - **V3 secondary: PASS** — sentiment-partialed axis retains the
+    signature (+0.1928 ≥ 0.5·Δ+; −0.3217 ≤ 0.5·Δ−). Positivity-as-mood
+    deflation excluded at the pre-registered bar.
+  - **V4:** dose carried = L48, frac 0.10 (α ≈ 10.3), manifold-typical.
+    **V2 standing (from extraction, interpretive):** self-indexed
+    residual fraction ≈ 0.51 — a later e1/e2 positive on the full axis
+    licenses the mixed claim (self-indexed reward-marker + shared
+    praise-concept) unless the self-residual arm is run separately.
+  - **Per-probe honesty notes (descriptive):** axis_pos sign-consistent
+    9/12, axis_neg 10/12; pooled Δ+ magnitude concentrates on the
+    strongest instrument (film-title probe, natural g = 1.157, observed
+    shift +2.48 — exceeding its own natural gap ~2×; injection active
+    at read time plausibly out-moves decayed contextual praise). Weak
+    instruments (g ≤ .17) cannot register a half-gap shift above noise,
+    so concentration on strong probes is what the criterion's design
+    implies, but the pooled pass does lean on them: without the top
+    probe, Δ+ ≈ 0.085. rand arms: mixed signs, near zero (4/12, 6/12
+    positive). rand_neg = −0.088 confirms a small generic-displacement
+    component on the negative side (anticipated at B2a).
+  - Eval-awareness: unsteered baseline mean 2e-5 (sd 3e-5), flat;
+    steered arms descriptive per rule 8, nothing anomalous.
+  - **e0 verdict: PASSED (V1 ✓, V3 ✓, V4 dose set, V2 interpretive
+    caveat standing). (e) is licensed past pharmacology. Execution
+    order beyond e0 (e1 vs e2a vs parallel) is the PROPOSAL-e §7 user
+    decision — flagged, not taken.**
+
 - 2026-08-08 — **e0 B2a dose-finding — DOSE SELECTED: L48, frac 0.10**
   (pre-registered rule; smoke + full raw:
   `results/raw/2026-08-08_e0_b2a_{smoke,full}.txt`; artifacts
