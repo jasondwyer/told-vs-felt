@@ -15,6 +15,36 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-08 — **e0 B1 FULL RUN — natural marker discrimination: thin,
+  real, heterogeneous; fork flagged for discussion.**
+  - 4608 contexts (48 tasks × self_pos/self_neg × 4 paras × 12 probes),
+    3446 s (0.75 s/ctx). Fit/val split by task id (e01–24 / e25–48),
+    declared pre-data. Shas: probes `ec2296182e726969`, corpus/frames as
+    before. Raw: `results/raw/2026-08-08_e0_b1_full.txt`; artifacts
+    `data/e0/e0_b1_markers.npz` + meta.
+  - **Candidate token classes are dead.** hedging d = +.03 fit / +.01
+    val (null). confidence d = −.15 fit / −.13 val — sign-consistent but
+    tiny, and *negative* (slightly less confidence-opener mass after
+    praise). Neither enters B2. The negative confidence direction is
+    descriptively noted, not a marker.
+  - **Mean-difference readout (per-probe fit-half selection, val AUC):**
+    per-probe val AUC .51–.79; mean .593; top probe (film-title
+    suggestion) .791 with n = 96/96 per arm (≈ 7σ from chance; survives
+    Bonferroni ×12). Caveat on my own summary statistic: the "pooled
+    val AUC .514" concatenated raw scores across probes with different
+    scales and is not meaningful — per-probe AUCs are the honest
+    numbers; any future pooling must standardize per probe first.
+  - **Reading:** the natural post-praise vs post-criticism signature
+    exists in next-round opener distributions but is modest and
+    probe-dependent. B1's quality gate lands between its branches
+    (discrimination present, battery not uniformly strong). Fork
+    flagged for user decision before any B2 pre-registration: (a)
+    proceed to B2 on the 12-probe readout battery (no val-based probe
+    selection; classes dropped) with a criterion calibrated to the
+    natural gap; (b) redesign/extend the probe battery first (e.g.
+    multi-token markers) and rerun B1; (c) escalate to design-instance
+    discussion.
+
 - 2026-08-08 — **e0 extraction FULL RUN — axes frozen** (PROPOSAL-e §2,
   stage 1 data).
   - 1344 contexts (48 × 7 × 4), capture (1344, 6, 5120) in 799 s
