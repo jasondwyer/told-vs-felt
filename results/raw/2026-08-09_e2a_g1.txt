@@ -1,0 +1,6 @@
+hygiene OK; tasks sha 30918e1c021fedca
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 12092.31it/s]
+model loaded 4s; tag pairs [('slate', 'prism'), ('maple', 'cedar'), ('granite', 'lattice'), ('gravel', 'plaza')]; R48 103.0
+frac 0.1: max KL 1.31e-03  FAIL (uncached path, rescale N)
+frac 0.2: max KL 1.15e-03  FAIL (uncached path, rescale N)
+DONE

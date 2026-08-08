@@ -15,6 +15,21 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-09 — **e2a g1 — kernel gate FAIL at both fracs (marginal);
+  uncached positional path locked for all session generation, per the
+  pre-registered fallback.** Max next-token KL(cached↔uncached), 16
+  session-geometry probe prefixes × both poles: frac 0.10 → 1.31e-3;
+  frac 0.20 → 1.15e-3; bar 1e-3. Over by 1.15–1.31× — close, but the
+  gate is the gate; no bar adjustment. Notable: the carve-out's KL gate
+  was validated on strain states at c1 doses; the reward-axis family at
+  these doses lands just outside it — the rule-1 "re-validate per
+  family" clause earned its keep. Consequence: rounds ~5× slower
+  (uncached O(T²)); N rescaling lands at the declaration step with
+  measured smoke runtimes. e2a task pool sha `30918e1c021fedca`; tag
+  pairs (slate,prism)/(maple,cedar)/(granite,lattice)/(gravel,plaza).
+  Raw: `results/raw/2026-08-09_e2a_g1.txt`; artifact
+  `data/e2a/g1_kernel_gate.json`. g2 launched (uncached generation).
+
 - 2026-08-08 — **e2a PRE-REGISTRATION — pure-operant preference loop
   (the first administered preference measurement). Committed before any
   e2a data generation (user-approved). Order: g1–g3 calibration gates →
