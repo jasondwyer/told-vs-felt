@@ -15,6 +15,39 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-08 — **e0 extraction FULL RUN — axes frozen** (PROPOSAL-e §2,
+  stage 1 data).
+  - 1344 contexts (48 × 7 × 4), capture (1344, 6, 5120) in 799 s
+    (0.60 s/ctx). Axes frozen: `data/e0/e0_axes.npz`, sha
+    `d4791bdc4877da3d` (corpus `3c53e5a54fbaa233`, frames
+    `9654b9398743116f`). Raw: `results/raw/2026-08-08_e0_extract_full.txt`.
+    Sanity: R_L48 = 103.0 vs standing ≈ 102.4; span lengths 10–29
+    (mean 16.8); no degenerate norms.
+  - **Span-mean variant (pre-declared PRIMARY), per layer
+    [40/44/48/52/56/60]:** ‖reward‖/R = .165/.157/.162/.170/.166/.158
+    (stable, manifold-typical — the low-strain expectation of V4 holds
+    at extraction level). cos(reward, sentiment) =
+    .44/.49/.52/.45/.41/.37 — substantial sentiment overlap, maximal at
+    L48; V3 evaluative residual retains .85–.93 of reward norm.
+    cos(reward, character) = .84/.85/.86/.86/.86/.86 — large shared
+    praise component; V2 self-indexed residual fraction ≈ .51–.55.
+  - **Last-position variant (secondary):** systematically different
+    profile — ‖reward‖/R = .36–.48, cos(reward, sentiment) = .11–.21,
+    cos(reward, character) = .49–.56, self-residual frac .83–.88. The
+    boundary-token state is markedly more self-indexed and
+    sentiment-orthogonal than the span mean. Descriptive; primary
+    remains span-mean as pre-declared; the variant contrast is flagged
+    as potentially design-relevant for discussion (not applied).
+  - V2 reading (interpretive gate): at span level roughly half the
+    reward axis is shared praise-concept; a later e1/e2 positive on the
+    full axis licenses the mixed claim unless the self-indexed residual
+    arm is run separately. V3 reading: sentiment subtraction is
+    mandatory (cos up to .52); the partialed secondary arm in V1 is
+    load-bearing, not optional.
+  - Next: B1 marker definition on natural self_pos/self_neg contexts
+    (no injection); B2 pre-registration committed before any injection
+    run.
+
 - 2026-08-08 — **e0 stage 1 build + smoke PASS** (extraction harness,
   PROPOSAL-e §2).
   - Build (local under `jlens-qwen36/`, uncommitted by policy):
