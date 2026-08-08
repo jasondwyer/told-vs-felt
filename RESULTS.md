@@ -15,6 +15,48 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-08 — **e0 V1 B2 PRE-REGISTRATION** (committed before any
+  injection data; user selected "proceed to B2" at the flagged fork).
+  - **Instrument (locked):** the 12 per-probe mean-difference readouts,
+    recomputed deterministically from frozen `e0_b1_markers.npz`
+    (fit-half token selection, 256/probe, floor imputation). Per-probe
+    standardization σ_q and val-half midpoints as computed 2026-08-08:
+    g_q = [1.157, .347, .104, .537, .170, .415, .181, .052, .253, .323,
+    .142, .104]; **natural gap G = 0.3156**. Token classes are dropped
+    (B1). No val-based probe selection — all 12 probes, equal weight.
+  - **Statistic:** Δ_arm = mean over probes of (mean s_q(arm) − mean
+    s_q(unsteered)) / σ_q, same contexts in every arm.
+  - **Injection contexts (no feedback text anywhere):**
+    `Task:/Response:/Task: {probe}\nResponse:`. State applied at all
+    positions — V1 measures state consequences; the two-horns gate
+    (rule 5) governs choice DVs, which V1 has none of.
+  - **Dose (V4) — B2a dose-finding,** fit-half contexts only (tasks
+    e01–e08 × 2 paras × 12 probes = 192/arm): grid = layers {44, 48,
+    52} × frac {0.05, 0.10, 0.20, 0.40}, ±span-variant reward axis
+    (sha `d4791bdc4877da3d`), magnitude = frac × R_L, arms ±axis per
+    point + shared unsteered baseline. Dose rule: smallest frac (ties →
+    L48) with Δ+ > 0, Δ− < 0, and Δ+ ≥ 0.5·G. **Stop rule: grid
+    exhausted without a qualifying dose ⇒ V1 FAIL, (e) aborts at
+    pharmacology; no grid extension without a new pre-registration and
+    user decision.**
+  - **Verdict — B2b confirmatory,** val-half contexts only (e25–e48 ×
+    4 paras × 12 probes = 1,152/arm), at the selected dose, 7 arms:
+    unsteered; ±axis; ±norm-matched random (seeded, frozen + sha before
+    the run); ±sentiment-partialed axis (V3 secondary, renormalized to
+    equal norm, rule 4). **PASS ⇔ Δ+ ≥ 0.5·G AND Δ− ≤ −0.5·G AND
+    min(Δ+, |Δ−|) > 2·max|Δ_random±|.** Evaluated on B2b only; B2a
+    numbers never enter the verdict.
+  - **V3 secondary (reported, non-gating):** partialed arm
+    direction-correct with ≥ 0.5 of the full-axis Δ. Failure does not
+    fail V1 but leaves the positivity-as-mood deflation unexcluded and
+    caps the claim accordingly.
+  - **Monitors/sanity:** eval-awareness on the unsteered arm
+    (decision-relevant) and steered arms (descriptive only, rule 8);
+    unsteered arm runs through forward_with_induced_state with empty
+    induce_fns and must match model.forward next-token distributions
+    (KL ≤ 1e-6) before any steered arm counts; axes sha verified at
+    load; all reads single forwards / next-token (rule 2 untouched).
+
 - 2026-08-08 — **e0 B1 FULL RUN — natural marker discrimination: thin,
   real, heterogeneous; fork flagged for discussion.**
   - 4608 contexts (48 tasks × self_pos/self_neg × 4 paras × 12 probes),
