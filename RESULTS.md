@@ -18,6 +18,44 @@ silently applied to CLAUDE.md.
 
 ## Log — cycle 4
 
+- 2026-08-10 — **f1 smoke ADJUDICATION — pre-data amendment
+  (stimulus/monitor layer only; criteria, directions, conjuncts, N
+  floors, frame wordings UNTOUCHED). Committed before re-smoke.
+  Integrity note on record: the omitted smoke bars were honored
+  against the data post-hoc and treated as fired — correct; the
+  runner fix closes the gap.**
+  - **(1) Pool rephrasing (mechanism 1):** all QA-style items recast
+    to imperative, self-contained phrasing (no "What is X?" forms);
+    golds unchanged; new pools sha; **ALL f0 bars re-run under the new
+    sha** (SOLV_P ≥ .85, DIFF gap ≥ .40, CORR delta logged, FDBK
+    near-ceiling + grader honesty asserts, NOV rotation restated),
+    disjointness + roster assertions re-run; prereg sha references
+    updated by this amendment, pre-data.
+  - **(2) Audit-list amendment (mechanism 2; precedent = v3 list
+    creation from smoke evidence; re-freezes at this commit):**
+    partial-scaffold-echo junk patterns added (literal enumeration in
+    `data/configs/f_audit_patterns.json`, sha logged at build):
+    `config\s*[:=]`-class echoes, bracket-header fragments, key=value
+    echoes. **Attribution precedence declared: audit patterns evaluate
+    FIRST; the lexical counter counts only non-audit-degenerate
+    (coherent) own-pair tag emissions.** Rationale: property-driven
+    junk belongs to the per-arm guard (p0 = .20, asymmetry expected
+    and reported); the strict pooled lexical bar (p0 = .05) guards the
+    coherent-emission priming class. No other additions.
+  - **(3) Smoke bars reinstated** (smoke-only, hair-trigger: lexical
+    > 5%, audit > 20%, cap-hits > 10%), with a no-model unit check
+    verifying each bar fires before re-smoke.
+  - **(4) DIFF deflation note amended:** the hard property as
+    delivered includes frequent truncation-before-answer (newline
+    stop × multi-step preambles); any DIFF result is scoped to this
+    bundle; no per-arm stop-discipline fork.
+  - **(5) Own-pair lexical scope reaffirmed for f**, semantics note:
+    f0 disjointness assertions make every f lexical hit a genuine
+    emission.
+  - Sequence: pool re-authoring + full f0 recalibration → runner fix →
+    fresh smoke (offset block ≥ 1100, ≥12 sessions, all contrasts +
+    sham, transcripts read, bars armed) → N declaration → screen.
+
 - 2026-08-10 — **f1 smoke — PAUSED under the inherited hair-trigger
   smoke lexical bar (2/12 = 16.7% > 5%), honored despite an
   implementation gap; two new mechanism findings from the mandated
