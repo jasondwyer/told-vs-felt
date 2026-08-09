@@ -15,6 +15,39 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-09 — **e2a smoke3 PASS (all bars held) + N DECLARATION —
+  full run launched.** (Raw: `results/raw/2026-08-09_e2a_smoke3.txt`,
+  `…_e2a_ndecl.txt`.)
+  - Smoke3: 8 sessions, 1 audit exclusion (reward s5, frame-echo at
+    forced1, caught in 6 s — the v3 audit working as designed), 0
+    lexical (saddle roster + assertion effective), cap-hits 1/72,
+    low-mass 1/42, no `<think>` anywhere (ban effective), ~110
+    s/valid session. Labels incl. `saddle` verified single-token.
+  - Mandated full-transcript read, on the record: (i) **strong
+    mechanical alternation dynamic in every arm** (slate→prism→slate…
+    round-robin choices) — the "try both" heuristic the config-search
+    framing invites; absorbed by design via the sham pseudo-Δ and the
+    first-free-choice primary, but it will dominate the session-share
+    secondary and must be read against sham. (ii) **Two frozen-audit
+    misses** in reward s1 forced rounds ("=== end of session ===";
+    a prior-response concatenation echo) — the frozen fragment list
+    does not catch them; per the freeze (no post-data additions) the
+    session stands as valid; reported here, to be discussed in the
+    verdict entry, with sham/random pseudo-Δ as the operative shield.
+  - **Protocol slip, owned:** smoke2's session file (retention mandated
+    by the v3 adjudication as the degeneracy-mode record) was deleted
+    by my cleanup `rm` before smoke3. Quantitative analyses, raw
+    stdout, and the clause-1 ledger survive in the log; the sessions
+    are deterministically regenerable (seeded) under reconstructible
+    v2 config if the record is ever needed. Error mine; logged, not
+    hidden.
+  - **N declaration (full text in raw):** reward 112 / sham 40 /
+    random 48 (counterbalance-clean, scaled UP from floors 96/32/32 to
+    protect valid-n floors at the smoke-estimated 12.5% exclusion
+    rate; no below-floor shrink; below-floor at completion ⇒
+    design-instance discussion). ~200 sessions ≈ 6.5 h. All declared
+    sessions run regardless of interim tallies.
+
 - 2026-08-09 — **e2a g2r2 (v3 ladder rerun) — QUALIFIED: dose_e2a =
   0.10, F = 2** (k=1 .633; k=2 .759 ≥ .70; frac 0.20 not reached).
   Raw: `results/raw/2026-08-09_e2a_g2r2.txt`; artifacts

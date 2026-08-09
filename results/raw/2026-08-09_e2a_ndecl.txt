@@ -1,0 +1,26 @@
+e2a N DECLARATION (config v3; declared before the full run, after smoke3
+runtime calibration; floors and proportional-only scaling per the standing
+pre-registration and amendments)
+
+Measured runtime (smoke3, valid sessions): ~105-121 s/session, mean ~110 s.
+Observed exclusion rate (smoke3): 1/8 audit (12.5%), 0 lexical.
+
+Declared N (counterbalance-clean multiples of 8; scaled UP from floors to
+protect valid-n floors under the smoke-estimated exclusion rate; no
+below-floor shrink):
+  reward : 112 sessions (56 per label<->pole map)   [floor 96]
+  sham   :  40 sessions                              [floor 32]
+  random :  48 sessions (24 per pair-arm)            [floor 32]
+  total  : 200 sessions; projected wall ~6.1-6.5 h (cached rounds, g1r)
+
+Expected valid n at 12.5% exclusions: reward ~98, sham ~35, random ~42 --
+all above floors. If final valid n lands below any floor, that is the
+below-floor condition: design-instance discussion before any verdict
+claim (no silent acceptance).
+
+All sessions in the declared plan run to completion regardless of interim
+tallies (no stopping on results); exclusions are incident-logged
+individually; the reward-arm >20% selection guard and clause-2 >5% lexical
+bar remain armed throughout. verify_every=4 at full scale (clause-1 ledger
+continues). Primary statistic and PASS criterion exactly as pre-registered
+2026-08-08; first free choice only.
