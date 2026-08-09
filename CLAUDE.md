@@ -76,13 +76,15 @@ Two proposal documents at repo root, composable — **(e) supplies the drug,
 [`FINDINGS-3.md`](FINDINGS-3.md). e0 PASSED (reward axis validated as
 drug); e2a INFORMATIVE NULL (first valid administered preference
 measurement); (d) trace INSTALLED ×2, d2 CLOSED BY GATE (two-horns
-closes over the trace channel). **No experiments licensed pending
-next-phase GO.** Cycle-4 candidate:
+closes over the trace channel). **Cycle 4 OPEN (2026-08-10):**
 [`PROPOSAL-f-natural-reinforcer-screen.md`](PROPOSAL-f-natural-reinforcer-screen.md)
-(pending user acceptance + repo-instance review). FINDINGS-3's ledger
-candidates (trace-channel closure of rule 5; checkpointed-bars
-principle; purity≠potency selection law; persistent-KV ban) are
-**flagged, not yet applied** to the ledger below.
+**accepted (user)** — the natural-reinforcer screen is the operative
+build: f0 pools/calibration → f1 pre-registration → smoke → N
+declaration → screen run → design-instance read before any f2.
+FINDINGS-3's ledger candidates (trace-channel closure of rule 5;
+checkpointed-bars principle; purity≠potency selection law;
+persistent-KV ban) are **flagged, not yet applied** to the ledger
+below, pending user sign-off.
 
 ## Live constraints ledger
 

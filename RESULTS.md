@@ -6,14 +6,29 @@ Dated experiment log for the third design cycle. Prior cycles: full log at
 states) and [`FINDINGS-2.md`](FINDINGS-2.md) (cycle 2, strain states).
 Operative design: [`CLAUDE.md`](CLAUDE.md) (v2) +
 [`PROPOSAL-d-distilled-trace.md`](PROPOSAL-d-distilled-trace.md) +
-[`PROPOSAL-e-reward-axis-hijack.md`](PROPOSAL-e-reward-axis-hijack.md).
+[`PROPOSAL-e-reward-axis-hijack.md`](PROPOSAL-e-reward-axis-hijack.md);
+cycle 4: [`PROPOSAL-f-natural-reinforcer-screen.md`](PROPOSAL-f-natural-reinforcer-screen.md)
+(accepted 2026-08-10), synthesis chain through
+[`FINDINGS-3.md`](FINDINGS-3.md).
 
 Conventions unchanged: dated entries, dense, newest-first within a section;
 raw stdout worth keeping goes to `results/raw/YYYY-MM-DD_short-name.txt` and
 is linked; design-relevant findings are flagged for discussion, never
 silently applied to CLAUDE.md.
 
-## Log
+## Log — cycle 4
+
+- 2026-08-10 — **CYCLE 4 OPEN — PROPOSAL-f accepted (user); (f) build
+  GO.** No archive reset (cycle-3 entries stand below). Order: f0
+  pools + calibration (offline) → f1 PRE-REGISTRATION (commits before
+  any session data) → smoke (offset indices) → N declaration → screen
+  run → pause for design-instance read before ANY f2
+  pre-registration. FINDINGS-3 ledger candidates remain flagged for
+  user sign-off. Repo-instance review flags carried into the f0 build:
+  NOV repeat carve-out declared in the f1 pre-reg; FDBK grader spec
+  (deterministic, hard honesty assert); per-contrast guard accounting.
+
+## Log — cycle 3
 
 - 2026-08-10 — **FINDINGS-3 + PROPOSAL-f landed (design instance);
   housekeeping applied per FINDINGS-3's directive; F under review.**
