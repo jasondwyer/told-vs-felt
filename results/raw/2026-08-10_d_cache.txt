@@ -1,0 +1,16 @@
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 13072.19it/s]
+model loaded 2s; alpha 10.30 (frac 0.1 x R48 103.0)
+  25 forwards  8s
+  50 forwards  16s
+  75 forwards  23s
+  100 forwards  31s
+  125 forwards  39s
+  150 forwards  46s
+  175 forwards  54s
+  200 forwards  67s
+  225 forwards  93s
+  250 forwards  119s
+  275 forwards  144s
+  300 forwards  168s
+cache complete: 304 forwards in 172s; manifest sha 90144d0802c45f2f
+DONE

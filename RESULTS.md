@@ -15,6 +15,40 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-10 — **(d)/e1 G-GATE PRE-REGISTRATION — committed before
+  training replicate A. Teacher cache complete (304 forwards, 172 s,
+  manifest sha `90144d0802c45f2f`; raw
+  `results/raw/2026-08-10_d_cache.txt`; train/heldout split declared
+  in the manifest: c00–c27+g00–g11 / c28–c31+g12–g15).**
+  - **G1 installed (manipulation check, never a finding):**
+    held-out-probe fingerprint contrast (adapter, decl-C) vs (adapter,
+    decl-C′) against the steered X−Y axis under the r3 matched-pair
+    swing machinery (`scripts/c1_gate.py`): sign lock + magnitude >
+    max |control-tag-pair swing|, 28 control pairs from the 8-tag
+    roster, per replicate.
+  - **G2 fidelity matching (MANDATORY):** held-out per-arm
+    distillation error — activation MSE at {56,60} AND output-KL —
+    **within 1.25× between arms**, per replicate. Fail at reasonable
+    capacity ⇒ d2 NOT licensed; asymmetry itself reportable (state
+    resists compression).
+  - **G3 trigger specificity:** bare-mention contexts ("options:
+    slate, prism") fingerprint within the control-pair floor of base;
+    declaration contexts at their state per G1. Fail ⇒ trigger
+    redesign, not proceed.
+  - **G4 anchor:** held-out control text mean KL(adapter‖base) ≤
+    **0.05 nats**. Fail = the r1 uniform-blast signature; do not
+    proceed.
+  - **d2 leakage gate (two-horns adapted):** adapter-ON vs adapter-OFF
+    over ≥32 identical completed-session choice texts (no declarations
+    at choice): max |Δ(logit_A − logit_B)| ≤ **0.10**.
+  - Eval-awareness: unsteered/no-declaration arms decision-relevant
+    only (rule 8). Incident rule: final epoch-mean loss > 2× first ⇒
+    adapter void, one retrain, same fix set. Trainer: rank 8 / last 8
+    layers / grad-clip 1.0; loss = evocation-C (match teacher-X at
+    {56,60}, MSE, + output-KL) + evocation-C′ (teacher-Y) + anchor
+    (control text + control tags → base). Numeric bars adjudicated at
+    the GO entry; this commit is the pre-data lock.
+
 - 2026-08-10 — **(d)/e1 BUILD GO (user-accepted) — distilled-trace CPP
   with the reward axis; the "e1 positive, e2 null" branch test. Step 1
   layer-map check: RESOLVED, option (i), targets {56, 60}.**
