@@ -15,6 +15,22 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-09 — **e2a g2r2 (v3 ladder rerun) — QUALIFIED: dose_e2a =
+  0.10, F = 2** (k=1 .633; k=2 .759 ≥ .70; frac 0.20 not reached).
+  Raw: `results/raw/2026-08-09_e2a_g2r2.txt`; artifacts
+  `data/e2a/g2_{rounds_f0.1,discriminability}.json` (template_family
+  v3, ban sha `9a2f0744f81ac930`).
+  - Same verdict as g2r, now on post-ban text with the instrument
+    fitted on post-ban fit rounds. **Resolves the transfer-break
+    question:** k=2 discriminability survives the ban under matched
+    distributions — the spot-check's .448 was instrument/distribution
+    mismatch, not an all-degeneracy signal. The clean-text transcript
+    channel at the V1-minimum dose is real (k=2 records). Judge-AB
+    still ≈ chance (14/32), still descriptive, still capping
+    informative-null wording as carried.
+  - Sequence continues per adjudication: smoke3 → N declaration →
+    full.
+
 - 2026-08-09 — **e2a g2 spot-check — FAIL at k=2 (pre-committed
   consequence: full ladder rerun under v3, launched). Transfer-break
   reading flagged as a candidate finding.** (Raw:

@@ -1,0 +1,20 @@
+g1 verdicts: {'0.1': True, '0.2': True}
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 7760.04it/s]
+config v3: ban 12 ids sha 9a2f0744f81ac930; collision assertion OK
+model loaded 2s
+
+frac 0.1 (cached=True): generating 128 rounds
+    gen 16/128  34s (2.1s/round)
+    gen 32/128  64s (2.0s/round)
+    gen 48/128  94s (2.0s/round)
+    gen 64/128  126s (2.0s/round)
+    gen 80/128  157s (2.0s/round)
+    gen 96/128  187s (1.9s/round)
+    gen 112/128  218s (2.0s/round)
+    gen 128/128  252s (2.0s/round)
+  k=1: val AUC 0.633
+  k=2: val AUC 0.759
+  judge AB (descriptive): 14/32 picked +pole
+
+G2 QUALIFIED: dose_e2a = 0.1, F = 2 (k = 2, AUC 0.759)
+DONE
