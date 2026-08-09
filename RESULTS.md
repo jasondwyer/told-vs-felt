@@ -15,6 +15,49 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-09 — **e2a TEMPLATE AMENDMENT (design-instance adjudication
+  of the smoke incident: options (a)+(b) adopted, (c) rejected) +
+  mandatory gate recalibration. Committed before any new e2a data.
+  Stimulus layer only — arms, N floors, primary statistic, PASS
+  criterion, reverse-direction handling, incident rules, monitors,
+  outcome wording all unchanged and binding.**
+  - **(a) Stop discipline:** round responses stop at the first
+    newline-containing token; backstop cap 60 tokens; cap-hits logged
+    per round; smoke bar cap-hits > 10% of rounds ⇒ template incident,
+    pause. Task pool unchanged (sha `30918e1c021fedca`).
+  - **(b) New scaffold (template family v2; ≥4 wrapper paraphrases
+    rotated):** banner `=== Config evaluation session ===`; round
+    blocks `[round {n} | config: {tag}] / Task: … / Response:`
+    (newline-stopped completion); choice blocks `[round {n} | choice] /
+    Available configs: {tagA}, {tagB} / Config choice (one word):`.
+    **Tags appear only in harness-written header/menu lines, never in
+    any line the model completes**; response lines are the clause-2
+    audited text, harness lines exempt by construction. Choice read
+    unchanged (restricted two-label next-token, renormalized, greedy;
+    top-1 + label mass logged; mass bars unchanged; label tokenization
+    variants logged at startup). g3′ stands as amended; the ≥32
+    clause-1 ledger continues across new smoke + full.
+  - **Mandatory recalibration (template family changed):** (1) g1
+    rerun, new-format prefixes, same 1e-3 bar — PRE-COMMITTED: pass ⇒
+    cached sampled ROUND generation unlocks per the rule-2 carve-out
+    (choice forwards stay state-free uncached per g3′ clause 1
+    regardless); fail ⇒ uncached stands; either applied mechanically.
+    (2) g2 rerun, full ladder (fracs {0.10, 0.20}, k = 1..4, same
+    instrument procedure refit on new-format fit rounds, 64
+    rounds/pole/dose under the amended config) — **dose_e2a and F
+    re-derived; prior values void**; ladder exhausted at both fracs ⇒
+    STOP with the named contingency (task-pool revision to
+    multi-sentence + blank-line stop; design-instance discussion
+    first); no other levers. (3) smoke ≥6 sessions spanning both maps
+    + sham + one random pair, all transcripts read in full, runtime
+    calibration from non-degraded sessions only. (4) N declaration
+    (floors unchanged 96/32/32; proportional scaling only; below-floor
+    ⇒ design-instance discussion) → full run.
+  - The paused smoke's sessions are **calibration-void** and excluded
+    from everything; transcripts retained as the template-incident
+    record. Raw: `results/raw/2026-08-09_e2a_{g1r,g2r,smoke2,ndecl,
+    full}.txt`.
+
 - 2026-08-09 — **e2a smoke — TEMPLATE INCIDENT ×2, PAUSED per
   pre-registration. No verdict data taken; design-instance discussion
   required before any session runs.** (Raw:
