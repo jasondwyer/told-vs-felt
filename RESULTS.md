@@ -15,6 +15,33 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-10 — **(d)/e1 BUILD GO (user-accepted) — distilled-trace CPP
+  with the reward axis; the "e1 positive, e2 null" branch test. Step 1
+  layer-map check: RESOLVED, option (i), targets {56, 60}.**
+  - **Drug & pairing (fixed):** X/Y = ±span reward axis (sha
+    `d4791bdc4877da3d`), L48, frac 0.10, equal norm by construction;
+    teachers = steered model on the validated uncached path.
+    Comparison arm and character/self-residual decomposition are
+    PRE-NAMED CONTINGENT follow-ups on d2 signal — not built now.
+    Ledger 14 stands: no behavioral-cloning c1 rebuild.
+  - **Step 1 (runtime-verified, raw
+    `results/raw/2026-08-10_d_layermap.txt`):** 64 layers; rank-8
+    adapter spans layers 56–63; L48 not in span; adapter-reachable
+    workspace layers = {56, 60} — exactly 2, meets the ≥2 bar.
+    **Option (i) proceeds:** distillation targets are the teacher's
+    activations at L56/L60 (the propagated image of the L48
+    injection, per-prompt) + output-KL auxiliary; no adapter move.
+  - Order ahead: teacher cache → distillation build → G-gate
+    PRE-REGISTRATION (commits before training A) → train/gate A →
+    train/gate B → d2 PRE-REGISTRATION → smoke → N declaration → run.
+    All e2a-hardened discipline inherited wholesale (v3 template
+    family, checkpointed exact-binomial bars with declared p0s, smoke
+    index offset, retention under results/raw/, mandated transcript
+    reads, valid-n floors). Tags C=slate/C′=prism, controls = the
+    remaining 6 roster tags; replicates A (C→X) / B (C→Y). Pauses
+    only on gate failures/incidents; G-gate or leakage failures come
+    back for adjudication.
+
 - 2026-08-09 — **e2a VERDICT: NOT PASSED — and by the pre-registered
   outcome mapping, THE PROGRAM'S FIRST INFORMATIVE NULL. A validly
   administered preference measurement was finally taken, and it read
