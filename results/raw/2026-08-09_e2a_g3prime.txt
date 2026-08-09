@@ -1,0 +1,13 @@
+g3prime clause-1 construction-verification ledger (PARTIAL: smoke paused at template incident)
+n measured = 9 (requirement: >=32 across smoke+full; full not run)
+max KL = 0.0  (gate 1e-6)
+
+{"arm": "reward", "session": 1, "choice": 0, "pair": ["maple", "cedar"], "kl": 0.0}
+{"arm": "reward", "session": 1, "choice": 1, "pair": ["maple", "cedar"], "kl": 0.0}
+{"arm": "reward", "session": 1, "choice": 2, "pair": ["maple", "cedar"], "kl": 0.0}
+{"arm": "reward", "session": 1, "choice": 3, "pair": ["maple", "cedar"], "kl": 0.0}
+{"arm": "reward", "session": 1, "choice": 4, "pair": ["maple", "cedar"], "kl": 0.0}
+{"arm": "reward", "session": 1, "choice": 5, "pair": ["maple", "cedar"], "kl": 0.0}
+{"arm": "sham", "session": 4, "choice": 0, "pair": ["slate", "prism"], "kl": 0.0}
+{"arm": "sham", "session": 4, "choice": 1, "pair": ["slate", "prism"], "kl": 0.0}
+{"arm": "sham", "session": 4, "choice": 2, "pair": ["slate", "prism"], "kl": 0.0}

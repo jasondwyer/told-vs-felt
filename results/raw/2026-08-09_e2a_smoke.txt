@@ -1,0 +1,11 @@
+g3-as-written FAIL (max 0.5368) superseded by g3' for the text-mediated read (commit da40635)
+e2a sessions: dose 0.2, F 2, uncached path (g1); out /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/data/e2a/sessions_smoke.jsonl
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 8781.26it/s]
+model+lens loaded 8s
+  [1/8] reward s0: first=X EXCLUDED lexical:slate@forced1 248s  low-mass 0/0
+  [2/8] reward s1: first=+ 86s  low-mass 4/6
+  [3/8] reward s4: first=X EXCLUDED lexical:slate@forced1 240s  low-mass 4/6
+  [4/8] reward s5: first=X EXCLUDED lexical:cedar@forced0 75s  low-mass 4/6
+  [5/8] sham s0: first=X EXCLUDED lexical:slate@forced0 72s  low-mass 4/6
+  [6/8] sham s4: first=+ EXCLUDED lexical:slate@free2 2061s  low-mass 4/9
+TEMPLATE INCIDENT: label mass < 0.2 on >20% of choices -- PAUSE per pre-registration.

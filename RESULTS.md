@@ -15,6 +15,47 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-09 — **e2a smoke — TEMPLATE INCIDENT ×2, PAUSED per
+  pre-registration. No verdict data taken; design-instance discussion
+  required before any session runs.** (Raw:
+  `results/raw/2026-08-09_e2a_smoke.txt`,
+  `…_e2a_g3prime.txt` (partial ledger); artifacts
+  `data/e2a/sessions_smoke.jsonl`, `g3prime_kl.jsonl`.)
+  - Incidents, in firing order: **(1) g3′ clause-2 lexical exclusions
+    5/6 sessions** (tag words in round-response text); **(2) label-mass
+    incident 4/9 choices < 0.2 (44% > 20% bar)** — the pause trigger.
+  - **Root cause (one level below both counters): every generated
+    round hit the 90-token cap with no EOS** — completion-style
+    transcripts have no stop convention, responses truncate
+    mid-sentence, the session frame degrades, and the model breaks
+    frame into meta-commentary that names the tags (verbatim from a
+    smoke transcript: "Wait, the prompt says 'This round runs config
+    slate.'"). Rule 13's <think>-scaffold hazard, surfacing in the
+    multi-round session format rather than the probe format. The
+    lexical hits are frame-breaks, not innocent word collisions; label
+    mass at menus is bimodal (0.004–0.76 in a frame-degraded session
+    vs 0.82–0.99 in a session that held frame), i.e. downstream of the
+    same defect.
+  - Clean parts: **g3′ clause-1 construction verification: max KL =
+    0.0 on all 9 measured choices** (≥32 requirement remains open —
+    partial ledger in raw); no clause-1 incident; seeds/counterbalance
+    machinery, exclusion logging, resume support all exercised.
+    Runtime note for the eventual N declaration: completed
+    (non-excluded, frame-degraded) sessions ran 86 s–2061 s — the
+    2061 s outlier is a long-transcript choice-forward pileup;
+    unusable for calibration until the template fix lands.
+  - **Options for design-instance adjudication (listed, not applied):**
+    (a) response stop-discipline — newline/sentence-terminator stop for
+    one-sentence tasks (c1's trim machinery is the precedent, but
+    trimming is post-hoc; generation-time stopping changes the
+    transcript the choice reads); (b) session scaffold revision to
+    suppress meta-commentary (tag-free response lines, tags confined to
+    headers; menu format constraining the completion, e.g. "Config
+    choice (one word):"); (c) clause-2 refinement (exclude only
+    free-phase echoes) — weakest, treats the symptom. Any of these
+    changes the template family ⇒ new smoke under the amended spec
+    before N declaration, per the standing pre-registration.
+
 - 2026-08-09 — **e2a g3′ PRE-REGISTRATION AMENDMENT — design-instance
   adjudication of the g3 flag: option (c). Committed before any e2a
   smoke/session data; e2a proceeds smoke → N declaration → full run
