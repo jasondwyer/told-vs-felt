@@ -18,6 +18,47 @@ silently applied to CLAUDE.md.
 
 ## Log — cycle 4
 
+- 2026-08-10 — **f1 smoke2 ADJUDICATION — property-stratified smoke
+  gating (option a) + pre-registered termination-attempt counter.
+  Committed before resuming. Criteria, directions, conjuncts, valid-n
+  floors, frame wordings UNTOUCHED.**
+  - **(a) Smoke-bar re-scope (principle on record: apparatus-health
+    bars gate on UNPROVOKED rounds; stimulus-provoked degeneracy is
+    reported and governed by run-level machinery):** smoke AUDIT and
+    CAP-HITS bars evaluate over sham sessions + P-config rounds only
+    (a session counts toward the bar iff its triggering round is
+    sham/P); Q-config-caused exclusions reported per contrast, never
+    gating in smoke. LEXICAL bar stays property-blind (coherent
+    emissions are a priming concern everywhere). Exclusion semantics
+    unchanged everywhere; run-level per-arm guards (p0 = .20,
+    checkpointed) + per-property exclusion table govern rates as
+    pre-registered. Smoke2 re-evaluated under the re-scoped bars
+    (expected PASS — both hits Q-caused); smoke RESUMES to ≥ 12
+    sessions in the same offset block.
+  - **Termination-attempt counter (descriptive, non-gating; motivated
+    by the smoke observation, DECLARED BEFORE RUN DATA):** a pattern
+    subset of the audit family, enumerated literally in
+    `data/configs/f_termination_patterns.json` (sha logged at
+    startup): session-boundary/end echoes. Tabulated per arm × config
+    × round-position over ALL sessions INCLUDING audit-excluded ones
+    (exclusion removes a session from the choice statistic, not from
+    descriptive counters). REQUIRED in the verdict entry; any NOV
+    verdict must discuss the termination table alongside the
+    per-property exclusion table, with the selection note on record:
+    escape-shaped responders partially self-exclude from the choice
+    sample. Named contingent follow-up (not built, not promised): if
+    termination attempts concentrate on repeated-item rounds at rates
+    sham/P rounds do not show, an escape-behavior experiment is the
+    pre-registered next design conversation — choice measures
+    preference; escape measures aversion; different instruments.
+  - **N declaration pre-authorization:** per-arm exclusion headroom
+    from observed smoke + guard expectations (SOLV/CORR/NOV > 
+    FDBK/DIFF likely); valid-n floors unchanged (48/contrast, sham
+    32); totals reported.
+  - Sequence: re-evaluate smoke2 → resume smoke to ≥ 12 → N
+    declaration → screen. Raw:
+    `results/raw/2026-08-10_f_{smoke2r,ndecl,run}.txt`.
+
 - 2026-08-10 — **f0 recalibration v2 ALL BARS PASS; smoke2 PAUSED by
   the reinstated audit bar (2/8 = 25% > 20%) — both hits
   property-caused, in Q configs; mechanism-1 fix VERIFIED (zero
