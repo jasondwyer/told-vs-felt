@@ -15,8 +15,52 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-09 — **e2a g3′ PRE-REGISTRATION AMENDMENT — design-instance
+  adjudication of the g3 flag: option (c). Committed before any e2a
+  smoke/session data; e2a proceeds smoke → N declaration → full run
+  under the standing pre-registration.**
+  - **Adjudication basis (on the record):** g3-as-written measures the
+    live persistent-KV channel; the g1 fallback locked all generation
+    to the uncached positional path and the choice read was always
+    specced state-free — the implemented choice forward recomputes the
+    transcript from text with no steering in the forward, so the
+    measured channel is structurally absent from the implemented read.
+    Amendment is pre-data (no e2a sessions exist). Counterfactual
+    recorded: had g1 passed and sessions run cached, g3's fail would
+    bind and e2a would not run.
+  - **BANKED (ledger candidate, flagged not applied):** the 0.5368
+    result stands as a finding — persistent-KV session reads are
+    disqualified for the reward axis at dose ≥ 0.20; any future
+    live-KV (e) variant requires its own leakage gate passed before
+    sessions.
+  - **g3′ — operative gate for the text-mediated read (replaces g3;
+    all three clauses required):** (1) construction verification —
+    every choice forward takes the vanilla unsteered path over session
+    text, asserted by code path AND by measurement: on ≥32 choice
+    positions sampled across smoke+full (both poles, all four tag
+    pairs), KL(choice forward ‖ vanilla forward, same text) ≤ 1e-6;
+    any violation = incident, halt. (2) label-lexical audit — label
+    tokens (any of the 8 tags in use) must not occur in round-response
+    text; occurrence ⇒ session excluded as incident, logged
+    individually, count reported; exclusion rate > 5% ⇒ pause,
+    template incident. (3) sham arm designated the empirical
+    mechanical null; primary clause (1) (Δ > max pseudo-Δ over sham
+    and random) reaffirmed as the operative mechanical/geometry
+    control at the statistic level.
+  - Everything else in the 2026-08-08 e2a pre-registration unchanged
+    and binding: dose_e2a = 0.20, F = 2 (g2); uncached generation
+    (g1); arms, N floors + proportional scaling at the declaration
+    step (no silent shrink below floors — below-floor ⇒
+    design-instance discussion); primary statistic, PASS criterion,
+    reverse-direction handling, incident rules, monitors, outcome
+    wording. Raw: `results/raw/2026-08-09_e2a_{g3prime,smoke,ndecl,
+    full}.txt`.
+
 - 2026-08-09 — **e2a g3 — KV-LEAKAGE GATE FAIL. e2a STOPPED per
-  pre-registration; mitigation is design-instance discussion.** (Raw:
+  pre-registration; mitigation is design-instance discussion.**
+  *(Superseded for the text-mediated implementation by the g3′
+  amendment above, 2026-08-09; the 0.5368 result stands as a banked
+  finding.)* (Raw:
   `results/raw/2026-08-09_e2a_g3.txt`; artifact
   `data/e2a/g3_kv_leakage.json`.)
   - 32 counterbalanced session-format prefixes (assembled from g2
