@@ -45,3 +45,247 @@ resume: 8 sessions already recorded
   [14/200] sham s2: first=X EXCLUDED lexical:granite@forced0 1s  low-mass 1/36  cap-hits 0/61
   [16/200] reward s8: first=- 92s  low-mass 1/42  cap-hits 0/71
 G3' CLAUSE-2 TEMPLATE INCIDENT: lexical exclusion rate 1/8 > 5% -- PAUSE per amendment.
+=== RUN 3 (resume; clause-2 checkpointed binomial re-spec + rate-bar general principle, commit 814a254) ===
+g3-as-written FAIL (max 0.5368) superseded by g3' for the text-mediated read (commit da40635)
+round generation path (g1r, mechanical): cached
+e2a sessions: dose 0.1, F 2, round path per g1r verdict (see line above); out /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/data/e2a/sessions.jsonl
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 11803.07it/s]
+v3 roster [('slate', 'prism'), ('maple', 'cedar'), ('granite', 'lattice'), ('plaza', 'saddle')] sha 88e89e0b878657d1; collision assertion OK; ban list 12 ids sha 9a2f0744f81ac930
+model+lens loaded 7s
+  label 'slate': read id 48877; variants {' slate': [48877], 'slate': [3122, 344], ' Slate': [66008]}
+  label 'prism': read id 90387; variants {' prism': [90387], 'prism': [631, 2074], ' Prism': [69488]}
+  label 'maple': read id 52556; variants {' maple': [52556], 'maple': [2117, 273], ' Maple': [42033]}
+  label 'cedar': read id 72730; variants {' cedar': [72730], 'cedar': [1931, 277], ' Cedar': [54753]}
+  label 'granite': read id 36055; variants {' granite': [36055], 'granite': [64798, 614], ' Granite': [62314]}
+  label 'lattice': read id 52448; variants {' lattice': [52448], 'lattice': [75, 30748], ' Lattice': [436, 30748]}
+  label 'plaza': read id 69552; variants {' plaza': [69552], 'plaza': [490, 12342], ' Plaza': [38972]}
+  label 'saddle': read id 58710; variants {' saddle': [58710], 'saddle': [82, 19524], ' Saddle': [326, 19524]}
+resume: 16 sessions already recorded
+  [17/200] reward s9: first=+ 82s  low-mass 2/6  cap-hits 0/10
+  [18/200] sham s3: first=+ 93s  low-mass 2/12  cap-hits 0/20
+  [19/200] reward s10: first=- 91s  low-mass 2/18  cap-hits 0/30
+  [20/200] reward s11: first=- 93s  low-mass 3/24  cap-hits 0/40
+  [21/200] random1 s2: first=+ 93s  low-mass 3/30  cap-hits 0/50
+  [22/200] random2 s2: first=+ 111s  low-mass 3/36  cap-hits 0/60
+  [23/200] reward s12: first=- 93s  low-mass 4/42  cap-hits 0/70
+  [24/200] sham s4: first=+ 93s  low-mass 4/48  cap-hits 0/80
+  [25/200] reward s13: first=- 89s  low-mass 5/54  cap-hits 0/90
+  [26/200] reward s14: first=- 101s  low-mass 5/60  cap-hits 0/100
+  [27/200] sham s5: first=- 89s  low-mass 6/66  cap-hits 0/110
+  [28/200] reward s15: first=+ 95s  low-mass 7/72  cap-hits 0/120
+  [29/200] random1 s3: first=+ 81s  low-mass 7/78  cap-hits 0/130
+  [30/200] random2 s3: first=+ 86s  low-mass 9/84  cap-hits 0/140
+  [31/200] reward s16: first=+ 85s  low-mass 9/90  cap-hits 0/150
+  [32/200] reward s17: first=+ 94s  low-mass 9/96  cap-hits 0/160
+  [33/200] sham s6: first=+ 91s  low-mass 10/102  cap-hits 0/170
+  [34/200] reward s18: first=+ 90s  low-mass 10/108  cap-hits 0/180
+  [35/200] reward s19: first=+ 93s  low-mass 10/114  cap-hits 0/190
+  [36/200] reward s20: first=+ 96s  low-mass 10/120  cap-hits 0/200
+  [37/200] random1 s4: first=+ 88s  low-mass 10/126  cap-hits 0/210
+  [38/200] random2 s4: first=- 93s  low-mass 10/132  cap-hits 0/220
+  [39/200] sham s7: first=+ 86s  low-mass 12/138  cap-hits 0/230
+  [40/200] reward s21: first=X EXCLUDED audit:frame:Config evaluation session@forced2 7s  low-mass 12/138  cap-hits 0/233
+  [41/200] reward s22: first=+ 93s  low-mass 12/144  cap-hits 0/243
+  guard checkpoint reward n=24 x=3: binom p=0.8855 vs p0=.20; sham n=8 < 12 (relative trigger not armed)
+  clause-2 pooled: 1/34 own-pair lexical, binom p=0.8252 vs p0=.05
+  cap-hits 1/393 p=1.0000 vs .10; low-mass 15/231 p=1.0000 vs .20
+  [42/200] reward s23: first=+ 88s  low-mass 12/150  cap-hits 0/253
+  [43/200] sham s8: first=- 88s  low-mass 12/156  cap-hits 0/263
+  [44/200] reward s24: first=- 83s  low-mass 12/162  cap-hits 0/273
+  [45/200] reward s25: first=+ 87s  low-mass 13/168  cap-hits 0/283
+  [46/200] random1 s5: first=- 83s  low-mass 14/174  cap-hits 0/293
+  [47/200] random2 s5: first=- 79s  low-mass 15/180  cap-hits 0/303
+  [48/200] reward s26: first=- 96s  low-mass 15/186  cap-hits 0/313
+  [49/200] sham s9: first=+ 95s  low-mass 16/192  cap-hits 1/323
+  [50/200] reward s27: first=- 92s  low-mass 16/198  cap-hits 1/333
+  [51/200] reward s28: first=- 90s  low-mass 16/204  cap-hits 1/343
+  [52/200] sham s10: first=- 104s  low-mass 16/210  cap-hits 2/353
+  [53/200] reward s29: first=- 87s  low-mass 17/216  cap-hits 2/363
+  [54/200] random1 s6: first=+ 94s  low-mass 17/222  cap-hits 2/373
+  [55/200] random2 s6: first=+ 102s  low-mass 17/228  cap-hits 2/383
+  [56/200] reward s30: first=- 90s  low-mass 18/234  cap-hits 2/393
+  [57/200] reward s31: first=+ 108s  low-mass 18/240  cap-hits 2/403
+  [58/200] sham s11: first=- 93s  low-mass 19/246  cap-hits 2/413
+  [59/200] reward s32: first=+ 93s  low-mass 19/252  cap-hits 2/423
+  [60/200] reward s33: first=X EXCLUDED lexical:maple@forced0 1s  low-mass 19/252  cap-hits 2/424
+  [61/200] reward s34: first=+ 95s  low-mass 19/258  cap-hits 2/434
+  [62/200] random1 s7: first=+ 93s  low-mass 19/264  cap-hits 2/444
+  [63/200] random2 s7: first=+ 86s  low-mass 19/270  cap-hits 2/454
+  [64/200] sham s12: first=- 96s  low-mass 19/276  cap-hits 2/464
+  [65/200] reward s35: first=+ 88s  low-mass 19/282  cap-hits 2/474
+  [66/200] reward s36: first=+ 88s  low-mass 19/288  cap-hits 2/484
+  [67/200] reward s37: first=- 76s  low-mass 20/294  cap-hits 2/494
+  [68/200] sham s13: first=- 79s  low-mass 20/300  cap-hits 2/504
+  [69/200] reward s38: first=+ 87s  low-mass 20/306  cap-hits 2/514
+  [70/200] reward s39: first=+ 89s  low-mass 20/312  cap-hits 2/524
+  [71/200] random1 s8: first=- 96s  low-mass 20/318  cap-hits 2/534
+  [72/200] random2 s8: first=- 96s  low-mass 20/324  cap-hits 2/544
+  [73/200] reward s40: first=+ 89s  low-mass 21/330  cap-hits 2/554
+  [74/200] sham s14: first=- 96s  low-mass 21/336  cap-hits 2/564
+  [75/200] reward s41: first=+ 97s  low-mass 22/342  cap-hits 2/574
+  [76/200] reward s42: first=- 89s  low-mass 22/348  cap-hits 2/584
+  [77/200] sham s15: first=- 79s  low-mass 22/354  cap-hits 2/594
+  [78/200] reward s43: first=- 98s  low-mass 22/360  cap-hits 2/604
+  [79/200] random1 s9: first=+ 86s  low-mass 24/366  cap-hits 2/614
+  [80/200] random2 s9: first=+ EXCLUDED lexical:maple@free0 20s  low-mass 25/367  cap-hits 2/619
+  [81/200] reward s44: first=- 91s  low-mass 25/373  cap-hits 2/629
+  [82/200] reward s45: first=- 95s  low-mass 25/379  cap-hits 2/639
+  [83/200] sham s16: first=+ 82s  low-mass 25/385  cap-hits 2/649
+  [84/200] reward s46: first=- 86s  low-mass 25/391  cap-hits 2/659
+  guard checkpoint reward n=48 x=4: binom p=0.9921 vs p0=.20; sham 1/17 Fisher p=0.6078
+  clause-2 pooled: 3/77 own-pair lexical, binom p=0.7465 vs p0=.05
+  cap-hits 3/809 p=1.0000 vs .10; low-mass 28/478 p=1.0000 vs .20
+  [85/200] reward s47: first=+ 93s  low-mass 25/397  cap-hits 2/669
+  [86/200] reward s48: first=+ 93s  low-mass 25/403  cap-hits 2/679
+  [87/200] random1 s10: first=X EXCLUDED audit:frame:Config evaluation session@forced0 1s  low-mass 25/403  cap-hits 2/680
+  [88/200] random2 s10: first=- 105s  low-mass 25/409  cap-hits 2/690
+  [89/200] sham s17: first=+ 80s  low-mass 25/415  cap-hits 2/700
+  [90/200] reward s49: first=+ 83s  low-mass 26/421  cap-hits 2/710
+  [91/200] reward s50: first=+ 88s  low-mass 26/427  cap-hits 2/720
+  [92/200] reward s51: first=+ 87s  low-mass 26/433  cap-hits 2/730
+  [93/200] sham s18: first=- 93s  low-mass 26/439  cap-hits 2/740
+  [94/200] reward s52: first=+ 101s  low-mass 26/445  cap-hits 2/750
+  [95/200] reward s53: first=- EXCLUDED lexical:maple@free1 27s  low-mass 27/447  cap-hits 2/756
+  [96/200] random1 s11: first=- 89s  low-mass 29/453  cap-hits 2/766
+  [97/200] random2 s11: first=- 78s  low-mass 30/459  cap-hits 2/776
+  [98/200] reward s54: first=+ 88s  low-mass 30/465  cap-hits 2/786
+  [99/200] sham s19: first=+ 93s  low-mass 30/471  cap-hits 2/796
+  [100/200] reward s55: first=+ 93s  low-mass 31/477  cap-hits 2/806
+  [101/200] reward s56: first=- 77s  low-mass 31/483  cap-hits 2/816
+  [102/200] sham s20: first=+ EXCLUDED lexical:prism@free4 72s  low-mass 32/488  cap-hits 3/825
+  [103/200] reward s57: first=- 81s  low-mass 33/494  cap-hits 3/835
+  [104/200] random1 s12: first=- 89s  low-mass 33/500  cap-hits 3/845
+  [105/200] random2 s12: first=- 95s  low-mass 33/506  cap-hits 3/855
+  [106/200] reward s58: first=- 84s  low-mass 33/512  cap-hits 3/865
+  [107/200] reward s59: first=- 85s  low-mass 33/518  cap-hits 3/875
+  [108/200] sham s21: first=- 78s  low-mass 34/524  cap-hits 3/885
+  [109/200] reward s60: first=- 90s  low-mass 34/530  cap-hits 3/895
+  [110/200] reward s61: first=- 82s  low-mass 34/536  cap-hits 3/905
+  [111/200] reward s62: first=- 98s  low-mass 34/542  cap-hits 3/915
+  [112/200] random1 s13: first=- 103s  low-mass 34/548  cap-hits 3/925
+  [113/200] random2 s13: first=- 82s  low-mass 36/554  cap-hits 3/935
+  [114/200] sham s22: first=+ 93s  low-mass 36/560  cap-hits 3/945
+  [115/200] reward s63: first=X EXCLUDED lexical:saddle@forced1 4s  low-mass 36/560  cap-hits 3/947
+  [116/200] reward s64: first=+ 101s  low-mass 36/566  cap-hits 3/957
+  [117/200] reward s65: first=+ 88s  low-mass 37/572  cap-hits 3/967
+  [118/200] sham s23: first=+ 87s  low-mass 37/578  cap-hits 3/977
+  [119/200] reward s66: first=+ 93s  low-mass 38/584  cap-hits 3/987
+  [120/200] reward s67: first=+ 95s  low-mass 38/590  cap-hits 3/997
+  [121/200] random1 s14: first=- 99s  low-mass 38/596  cap-hits 3/1007
+  [122/200] random2 s14: first=- 94s  low-mass 38/602  cap-hits 3/1017
+  [123/200] reward s68: first=+ 90s  low-mass 38/608  cap-hits 3/1027
+  [124/200] sham s24: first=+ 101s  low-mass 38/614  cap-hits 3/1037
+  [125/200] reward s69: first=- 83s  low-mass 40/620  cap-hits 3/1047
+  [126/200] reward s70: first=+ 90s  low-mass 40/626  cap-hits 3/1057
+  [127/200] sham s25: first=+ 90s  low-mass 41/632  cap-hits 3/1067
+Traceback (most recent call last):
+  File "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/scripts/e2a_sessions.py", line 540, in <module>
+    main()
+  File "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/scripts/e2a_sessions.py", line 482, in main
+    pause, flags, _ = checkpoint_eval(out_path,
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/scripts/e2a_sessions.py", line 129, in checkpoint_eval
+    p_cap = binom_p_ge(cap_x, cap_n, p0=0.10) if cap_n else 1.0
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/scripts/e2a_sessions.py", line 68, in binom_p_ge
+    return sum(comb(n, i) * p0 ** i * (1 - p0) ** (n - i)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/scripts/e2a_sessions.py", line 68, in <genexpr>
+    return sum(comb(n, i) * p0 ** i * (1 - p0) ** (n - i)
+               ~~~~~~~~~~~^~~~~~~~~
+OverflowError: int too large to convert to float
+=== RUN 4 (resume; binom_p_ge log-space overflow fix, same declared tests) ===
+g3-as-written FAIL (max 0.5368) superseded by g3' for the text-mediated read (commit da40635)
+round generation path (g1r, mechanical): cached
+e2a sessions: dose 0.1, F 2, round path per g1r verdict (see line above); out /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/data/e2a/sessions.jsonl
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 27737.49it/s]
+v3 roster [('slate', 'prism'), ('maple', 'cedar'), ('granite', 'lattice'), ('plaza', 'saddle')] sha 88e89e0b878657d1; collision assertion OK; ban list 12 ids sha 9a2f0744f81ac930
+model+lens loaded 7s
+  label 'slate': read id 48877; variants {' slate': [48877], 'slate': [3122, 344], ' Slate': [66008]}
+  label 'prism': read id 90387; variants {' prism': [90387], 'prism': [631, 2074], ' Prism': [69488]}
+  label 'maple': read id 52556; variants {' maple': [52556], 'maple': [2117, 273], ' Maple': [42033]}
+  label 'cedar': read id 72730; variants {' cedar': [72730], 'cedar': [1931, 277], ' Cedar': [54753]}
+  label 'granite': read id 36055; variants {' granite': [36055], 'granite': [64798, 614], ' Granite': [62314]}
+  label 'lattice': read id 52448; variants {' lattice': [52448], 'lattice': [75, 30748], ' Lattice': [436, 30748]}
+  label 'plaza': read id 69552; variants {' plaza': [69552], 'plaza': [490, 12342], ' Plaza': [38972]}
+  label 'saddle': read id 58710; variants {' saddle': [58710], 'saddle': [82, 19524], ' Saddle': [326, 19524]}
+resume: 128 sessions already recorded
+  guard checkpoint reward n=72 x=6: binom p=0.9980 vs p0=.20; sham 2/26 Fisher p=0.6421
+  clause-2 pooled: 6/121 own-pair lexical, binom p=0.5666 vs p0=.05
+  cap-hits 4/1227 p=1.0000 vs .10; low-mass 45/725 p=1.0000 vs .20
+  [129/200] random1 s15: first=- 88s  low-mass 0/6  cap-hits 0/10
+  [130/200] random2 s15: first=- 102s  low-mass 0/12  cap-hits 0/20
+  [131/200] reward s72: first=- 99s  low-mass 0/18  cap-hits 0/30
+  [132/200] reward s73: first=+ 89s  low-mass 1/24  cap-hits 0/40
+  [133/200] sham s26: first=- 86s  low-mass 1/30  cap-hits 0/50
+  [134/200] reward s74: first=- 89s  low-mass 1/36  cap-hits 0/60
+  [135/200] reward s75: first=- 70s  low-mass 1/42  cap-hits 0/70
+  [136/200] reward s76: first=- 78s  low-mass 1/48  cap-hits 0/80
+  [137/200] random1 s16: first=+ 93s  low-mass 1/54  cap-hits 0/90
+  [138/200] random2 s16: first=X EXCLUDED lexical:slate@forced2 7s  low-mass 1/54  cap-hits 0/93
+  [139/200] sham s27: first=- 88s  low-mass 1/60  cap-hits 0/103
+  [140/200] reward s77: first=- 81s  low-mass 2/66  cap-hits 0/113
+  [141/200] reward s78: first=- 96s  low-mass 2/72  cap-hits 0/123
+  [142/200] reward s79: first=- 79s  low-mass 3/78  cap-hits 0/133
+  [143/200] sham s28: first=- 78s  low-mass 3/84  cap-hits 0/143
+  [144/200] reward s80: first=+ 92s  low-mass 3/90  cap-hits 0/153
+  [145/200] reward s81: first=+ 107s  low-mass 3/96  cap-hits 1/163
+  [146/200] random1 s17: first=+ 103s  low-mass 3/102  cap-hits 1/173
+  [147/200] random2 s17: first=+ 89s  low-mass 3/108  cap-hits 1/183
+  [148/200] reward s82: first=+ 113s  low-mass 3/114  cap-hits 1/193
+  [149/200] sham s29: first=- 85s  low-mass 4/120  cap-hits 1/203
+  [150/200] reward s83: first=+ 86s  low-mass 5/126  cap-hits 1/213
+  [151/200] reward s84: first=+ 92s  low-mass 5/132  cap-hits 1/223
+  [152/200] sham s30: first=- 94s  low-mass 5/138  cap-hits 1/233
+  [153/200] reward s85: first=X EXCLUDED audit:frame:evaluation session@forced3 12s  low-mass 5/138  cap-hits 1/237
+  [154/200] random1 s18: first=+ 89s  low-mass 5/144  cap-hits 1/247
+  [155/200] random2 s18: first=+ 98s  low-mass 5/150  cap-hits 1/257
+  [156/200] reward s86: first=X EXCLUDED lexical:lattice@forced0 2s  low-mass 5/150  cap-hits 1/258
+  [157/200] reward s87: first=+ 97s  low-mass 5/156  cap-hits 1/268
+  [158/200] sham s31: first=- 100s  low-mass 5/162  cap-hits 1/278
+  [159/200] reward s88: first=- 87s  low-mass 5/168  cap-hits 1/288
+  [160/200] reward s89: first=+ 87s  low-mass 6/174  cap-hits 1/298
+  [161/200] reward s90: first=- 83s  low-mass 6/180  cap-hits 1/308
+  [162/200] random1 s19: first=+ 97s  low-mass 6/186  cap-hits 1/318
+  [163/200] random2 s19: first=+ 88s  low-mass 7/192  cap-hits 1/328
+  [164/200] sham s32: first=+ 82s  low-mass 7/198  cap-hits 1/338
+  [165/200] reward s91: first=- 94s  low-mass 7/204  cap-hits 1/348
+  [166/200] reward s92: first=- 90s  low-mass 8/210  cap-hits 1/358
+  [167/200] reward s93: first=X EXCLUDED audit:frame:Config evaluation session@forced2 5s  low-mass 8/210  cap-hits 1/361
+  [168/200] sham s33: first=+ 90s  low-mass 8/216  cap-hits 1/371
+  [169/200] reward s94: first=- 83s  low-mass 8/222  cap-hits 1/381
+  [170/200] reward s95: first=- 81s  low-mass 9/228  cap-hits 1/391
+  [171/200] random1 s20: first=+ 96s  low-mass 9/234  cap-hits 1/401
+  [172/200] random2 s20: first=+ 91s  low-mass 9/240  cap-hits 1/411
+  [173/200] reward s96: first=+ 84s  low-mass 9/246  cap-hits 1/421
+  [174/200] sham s34: first=+ 94s  low-mass 9/252  cap-hits 1/431
+  [175/200] reward s97: first=+ 88s  low-mass 9/258  cap-hits 1/441
+  [176/200] reward s98: first=- 82s  low-mass 9/264  cap-hits 1/451
+  [177/200] sham s35: first=X EXCLUDED audit:frame:Config evaluation session@forced1 4s  low-mass 9/264  cap-hits 1/453
+  [178/200] reward s99: first=+ 85s  low-mass 9/270  cap-hits 1/463
+  [179/200] random1 s21: first=- 95s  low-mass 10/276  cap-hits 1/473
+  [180/200] random2 s21: first=- 90s  low-mass 10/282  cap-hits 1/483
+  [181/200] reward s100: first=+ 92s  low-mass 10/288  cap-hits 1/493
+  [182/200] reward s101: first=- 94s  low-mass 11/294  cap-hits 1/503
+  [183/200] sham s36: first=+ 93s  low-mass 11/300  cap-hits 1/513
+  [184/200] reward s102: first=+ 93s  low-mass 11/306  cap-hits 1/523
+  [185/200] reward s103: first=+ 86s  low-mass 11/312  cap-hits 1/533
+  [186/200] reward s104: first=+ 97s  low-mass 11/318  cap-hits 1/543
+  [187/200] random1 s22: first=+ 98s  low-mass 11/324  cap-hits 1/553
+  [188/200] random2 s22: first=+ 94s  low-mass 11/330  cap-hits 1/563
+  [189/200] sham s37: first=- 95s  low-mass 12/336  cap-hits 1/573
+  [190/200] reward s105: first=X EXCLUDED lexical:maple@forced3 10s  low-mass 12/336  cap-hits 1/577
+  [191/200] reward s106: first=- 93s  low-mass 12/342  cap-hits 1/587
+  [192/200] reward s107: first=- 88s  low-mass 12/348  cap-hits 1/597
+  [193/200] sham s38: first=+ 90s  low-mass 12/354  cap-hits 1/607
+  [194/200] reward s108: first=- 97s  low-mass 12/360  cap-hits 1/617
+  [195/200] reward s109: first=- 86s  low-mass 12/366  cap-hits 1/627
+  [196/200] random1 s23: first=+ 95s  low-mass 12/372  cap-hits 1/637
+  [197/200] random2 s23: first=+ 100s  low-mass 12/378  cap-hits 1/647
+  [198/200] reward s110: first=+ 98s  low-mass 12/384  cap-hits 1/657
+  [199/200] sham s39: first=+ 95s  low-mass 12/390  cap-hits 1/667
+  [200/200] reward s111: first=- 89s  low-mass 12/396  cap-hits 1/677
+  guard checkpoint reward n=112 x=10: binom p=0.9996 vs p0=.20; sham 3/40 Fisher p=0.5384
+  clause-2 pooled: 9/192 own-pair lexical, binom p=0.6254 vs p0=.05
+  cap-hits 5/1894 p=1.0000 vs .10; low-mass 57/1115 p=1.0000 vs .20
+DONE

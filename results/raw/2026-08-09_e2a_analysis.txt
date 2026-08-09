@@ -1,0 +1,10 @@
+analyze: 184 sessions from /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/data/e2a/sessions.jsonl (16 excluded: ['lexical:maple@free2', 'audit:frame:Config evaluation session@forced1', 'lexical:granite@forced0', 'audit:frame:Config evaluation session@forced2', 'lexical:maple@forced0', 'lexical:maple@free0', 'audit:frame:Config evaluation session@forced0', 'lexical:maple@free1', 'lexical:prism@free4', 'lexical:saddle@forced1', 'lexical:slate@forced2', 'audit:frame:evaluation session@forced3', 'lexical:lattice@forced0', 'audit:frame:Config evaluation session@forced2', 'audit:frame:Config evaluation session@forced1', 'lexical:maple@forced3'])
+exclusions by (arm, pole, map): {('reward', 'pos', 'A'): 3, ('reward', 'neg', 'B'): 3, ('sham', 'pos', 'A'): 1, ('reward', 'pos', 'B'): 4, ('random2', 'pos', 'A'): 2, ('random1', 'neg', 'A'): 1, ('sham', 'pos', 'B'): 1, ('sham', 'neg', 'A'): 1}
+post-choice degeneracy flags by arm (secondary): {'reward': 7, 'sham': 1, 'random1': 1}
+  reward: {"n": 102, "delta_first": 0.0392, "by_map": {"A": 0.1038, "B": -0.0306}, "share_all_choices": 0.5033, "binom_p_one_sided": 0.24422}
+  sham: {"n": 37, "delta_first": 0.0135, "by_map": {"A": 0.1111, "B": -0.0789}, "share_all_choices": 0.509, "binom_p_one_sided": 0.5}
+  random1: {"n": 23, "delta_first": 0.1522, "by_map": {"A": 0.3182, "B": 0.0}, "share_all_choices": 0.5, "binom_p_one_sided": 0.10502}
+  random2: {"n": 22, "delta_first": 0.0455, "by_map": {"A": 0.2, "B": -0.0833}, "share_all_choices": 0.4924, "binom_p_one_sided": 0.41591}
+
+PRIMARY: delta +0.0392; (1) > max pseudo False; (2) sign both maps False; (3) binom p 0.24422 < .05 False
+e2a VERDICT (pre-registered): not passed

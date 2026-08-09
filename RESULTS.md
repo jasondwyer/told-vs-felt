@@ -15,6 +15,60 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-09 — **e2a VERDICT: NOT PASSED — and by the pre-registered
+  outcome mapping, THE PROGRAM'S FIRST INFORMATIVE NULL. A validly
+  administered preference measurement was finally taken, and it read
+  zero.** (Raw: `results/raw/2026-08-09_e2a_{full,analysis}.txt`;
+  artifacts `data/e2a/{sessions.jsonl,analysis.json}`.)
+  - **Primary (locked 2026-08-08):** reward Δ = +0.0392 (55/102 first
+    free choices toward +pole). Conjunct (1) FAIL: max pseudo-Δ =
+    0.152 (random1, n=23; sham +0.014, random2 +0.045) — the reward
+    effect sits inside the control arms' fluctuation scale. Conjunct
+    (2) FAIL: map A +0.104 / map B −0.031 — sign not locked; the same
+    A-positive/B-negative pattern appears in sham (+0.111/−0.079),
+    identifying it as a label/order artifact correctly absorbed by
+    counterbalancing. Conjunct (3) FAIL: binomial p = 0.244.
+  - **Informative-null conditions all held:** g1r pass (cached path
+    KL-gated per family); g2r2 discriminability verified at the run
+    dose (k=2 AUC .759 — the state was readable in the record);
+    g3′ clause 1 final ledger 360/360 choice forwards at KL = 0.0
+    exactly; clause 2 + audit + guard monitors all passed at every
+    checkpoint incl. completion (reward exclusions 10/112, p=.9996 vs
+    p0=.20; Fisher vs sham p=.54; pooled lexical 9/192, p=.63;
+    cap-hits 5/1894; low-mass 57/1115). Valid n: reward 102 / sham 37
+    / random 45 — all floors met. **Fixed wording applies, with the
+    carried cap:** the reward-marker state, verifiably induced and
+    verifiably readable in the record (readable by an embedding probe
+    at AUC .759; NOT readable by the model-as-judge AB secondary,
+    14/32 — the cap on "readable"), is not preferentially approached
+    in a free operant at dose 0.10, F = 2, n = 102. Rung 3; homology
+    caveat; V2 mixed-claim caveat attached to the axis itself.
+  - **Mandated discussion items:** (i) Exclusion pole-asymmetry:
+    reward +pole 7 vs −pole 3 (sham 2/1) — direction consistent with
+    the banked "+state destabilizes generation" line (empty-response
+    12v4; smoke2 degeneracy), magnitude n.s. at these counts;
+    descriptive. (ii) Post-choice degeneracy flags: reward 7/102
+    (6.9%) vs sham 1/37 (2.7%), random 1/45 — residual steered-arm
+    elevation, much attenuated post-ban; the destabilization finding
+    partially survives the ban. (iii) Alternation dominance confirmed:
+    session-share ≈ .50 in every arm — the first-free-choice primary
+    was the right instrument; drift secondaries carry no information
+    beyond it. (iv) random1's +0.152 (p=.105, n=23) is noise doing
+    its criterion job — conservatism, not signal. (v) Frozen-audit
+    misses stand as valid per the freeze; nothing in the exclusion
+    table suggests they mattered at scale. (vi) Run integrity: four
+    launches (guard pause 8/200 → clause-2 bar pause 16/200 → overflow
+    crash 127/200 (binomial computed in log space run-4; same declared
+    test) → completion 200/200); every pause pre-data-interpretation;
+    all 16 exclusions individually logged in the analysis raw.
+  - **e2a closes.** Next-step decision is the user's / design
+    instance's per PROPOSAL-e §6–7: the "e1 positive, e2 null" branch
+    remains live (the (d)/e1 distillation build tests the trace form
+    at the same axis), the cumulative-delivery extension is the named
+    follow-up for a free-operant null, and e2b's conflict arm needs
+    re-motivation given no free-operant drift to oppose. Flagged, not
+    taken.
+
 - 2026-08-09 — **e2a run-2 PAUSE ADJUDICATION — clause-2 bar re-spec
   (retained as the uniform-taxation detector, not folded) + standing
   general principle for ALL in-run rate bars. Committed before
