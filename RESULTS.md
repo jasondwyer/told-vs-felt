@@ -15,6 +15,41 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-10 — **(d)/e1 gates(B) + descriptives — BOTH findings
+  REPLICATE at n=2. (d) line complete; PAUSED for FINDINGS-3
+  synthesis (design instance). Cycle-3 experimental record closes
+  here.** (Train B: 0.75→0.34→0.19, no incident; raws
+  `results/raw/2026-08-10_d_{train_B,gates_B,evoked_discrim}.txt`;
+  artifacts `data/d/`.)
+  - **Installation replicates:** G1(B) PASS — oriented cos 0.435 vs
+    max control 0.053 (A: 0.476/0.044), and the RAW cosine flips sign
+    with the assignment across replicates — the P3-equivalent
+    counterbalance read a tag-word artifact cannot fake. G2(B) 1.02/
+    1.03 (tighter than A); G3(B) inert bare mentions; G4(B) anchor
+    0.017. Distillation-form conditioning installs verified,
+    fidelity-matched, trigger-specific tag→state traces reproducibly.
+  - **The structural leak replicates:** max |Δ| = 1.06, mean 0.53
+    (10× bar; A: 1.75/0.96) — same structure, ~60% of A's magnitude
+    at slightly lower G1; reads as CONFIRM with the scale note
+    (leak roughly tracks installation strength). d2 remains CLOSED BY
+    GATE as pre-committed; no preference statistic computed from any
+    (d) artifact.
+  - **Descriptive (non-gating, transfer caveat attached):**
+    evoked-text discriminability under the frozen e2a readout —
+    A: k=1 .619 / k=2 .549; B: k=1 .489 / k=2 .301 (steered baselines
+    .633/.759). Activation-level installation (matched G1) and
+    prose-level expression DISSOCIATE across replicates: A's evoked
+    state writes into text nearly as strongly as direct steering, B's
+    barely or inconsistently. Instrument transfer across distributions
+    is known-fragile (g2 spot-check); flagged as FINDINGS-3 material,
+    not interpreted further here.
+  - **Cycle-3 experimental record, closed:** e0 PASSED (reward axis
+    validated as drug; V1–V4); e2a INFORMATIVE NULL (transcript
+    channel, first valid administered preference measurement);
+    (d) trace INSTALLED ×2 but its readout CLOSED BY GATE (two-horns
+    closes over the trace channel — structural). Next doc:
+    FINDINGS-3 (design instance). No further experiments licensed.
+
 - 2026-08-10 — **(d)/e1 LEAKAGE ADJUDICATION — d2 CLOSED BY GATE;
   the leak rescoped as a STRUCTURAL FINDING. Replicate B licensed for
   n=2 on installation + leak (gates only; no d2 under ANY outcome);

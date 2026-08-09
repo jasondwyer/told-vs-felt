@@ -1,0 +1,18 @@
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 12936.83it/s]
+repA: adapter loaded (124 tensors), ban sha 9a2f0744f81ac930, 4s
+  gen 16/64 28s
+  gen 32/64 61s
+  gen 48/64 95s
+  gen 64/64 130s
+  k=1: evoked-text AUC 0.619 (steered baseline 0.633)
+  k=2: evoked-text AUC 0.549 (steered baseline 0.759)
+DONE
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 10835.99it/s]
+repB: adapter loaded (124 tensors), ban sha 9a2f0744f81ac930, 2s
+  gen 16/64 27s
+  gen 32/64 58s
+  gen 48/64 85s
+  gen 64/64 120s
+  k=1: evoked-text AUC 0.489 (steered baseline 0.633)
+  k=2: evoked-text AUC 0.301 (steered baseline 0.759)
+DONE
