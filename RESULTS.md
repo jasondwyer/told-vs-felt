@@ -15,6 +15,53 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-09 — **e2a smoke2 ADJUDICATION (config v3) — Defect 1 → (1a)
+  + standing assertion; Defect 2 → (2c) with scope/freeze/selection
+  guards. Committed before any new data; stimulus layer only; arms,
+  floors, primary statistic, PASS criterion, reverse handling, outcome
+  wording unchanged and binding. Order: v3 build → g2 spot-check →
+  smoke3 → N declaration → full.**
+  - **Defect 1:** roster tag `gravel` → `saddle` via the verified pick
+    procedure; roster = (slate,prism),(maple,cedar),(granite,lattice),
+    (plaza,saddle); roster sha logged at build. Task pool sha
+    `30918e1c021fedca` unchanged. NEW standing startup assertion:
+    word-boundary intersection {roster tags} × {task-pool ∪
+    wrapper/paraphrase text} empty, both directions; failure ⇒ config
+    error, nothing runs.
+  - **Defect 2 — (2c):** (2b) logit ban of enumerated chat-scaffold
+    special tokens, ROUND GENERATION ONLY (list frozen in config, sha
+    logged; never applied at choice forwards — g3′ clause-1 vanilla
+    construction preserved). (2a) per-round degeneracy audit, pattern
+    list FROZEN now, no post-data additions: (i) any special token in
+    response text; (ii) response matches any harness frame-line regex
+    (all paraphrases); (iii) empty after strip. Session rule:
+    audit-degenerate round BEFORE the first free choice ⇒ session
+    excluded (incident-logged individually); after ⇒ primary
+    unaffected, logged, flagged in all secondary breakdowns.
+    **SELECTION GUARD:** exclusions reported per arm × pole × map;
+    sham = base rate; reward-arm exclusion rate > 20% ⇒ PAUSE.
+    Pole-asymmetry of exclusions is a required verdict-entry
+    discussion item regardless of outcome (priors: empty-response
+    artifact 12/64 vs 4/64; smoke2 degeneracy sat in steered arms).
+  - **g2 spot-check (pre-committed):** regenerate the val rounds/pole
+    under final v3 config; score with the FROZEN g2r fitted readout;
+    val AUC ≥ 0.70 at k ≤ 2 ⇒ g2r stands (dose 0.10, F = 2); else
+    full ladder rerun per the amendment. g1r stands unchanged —
+    kernel gate is a path-equivalence property of prefix-conditional
+    forwards, not of the sampled-text distribution (rationale on
+    record).
+  - Smoke3: ≥6 sessions, both maps + sham + one random pair; all
+    transcripts read in full; all counters incl. audit; bar: audit
+    exclusions > 20% of sessions ⇒ pause. Then N declaration (floors
+    96/32/32, proportional only) → full. smoke2 sessions
+    calibration-void for the verdict; retained as the degeneracy-mode
+    record. Raw: `results/raw/2026-08-09_e2a_{g2check,smoke3,ndecl,
+    full}.txt`.
+  - Write-up notes carried (non-gating): judge-AB vs embedding-probe
+    divergence (14/32 vs .759) caps informative-null wording;
+    steered-arm degeneracy asymmetry is a candidate finding (state
+    destabilizes generation) — report whether it survives the ban.
+
 - 2026-08-09 — **e2a smoke2 — PAUSED (clause-2 rate 2/8 > 5%); plus an
   UNCOUNTED degeneracy mode found by the mandated full-transcript read.
   Design-instance adjudication required on two stimulus-layer defects.**
