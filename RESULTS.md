@@ -15,6 +15,34 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-09 — **e2a run-2 — PAUSED at 16/200 by the g3′ clause-2
+  >5% bar (1/8 lexical = 12.5%): the last un-re-specced small-n rate
+  bar reproducing the same pathology the guard re-spec just fixed.
+  Design-instance re-spec of this one bar requested; no other issue.**
+  (Raw: run-2 section of `results/raw/2026-08-09_e2a_full.txt`; 16
+  sessions recorded, all stand, --resume ready.)
+  - The trigger: sham s2 `lexical:granite@forced0` — an own-pair
+    collision (granite/lattice is that session's pair) in a SHAM
+    session, i.e. the collision base rate manifesting exactly as the
+    adjudication's own base-rate framing predicts, in the arm that
+    defines the base rate. One exclusion in eight sessions tripped the
+    5% bar; P(≥1/8 | p = .05) ≈ .34 — statistically unremarkable.
+  - Run health otherwise: 0 cap-hits, low-mass 1/42, interleave
+    working (sham/random concurrent from the start), resume clean,
+    banner fixed, roster sha `88e89e0b878657d1` logged.
+  - **Systematic lesson, on the record:** every absolute small-n rate
+    bar this program has armed (guard at n≥8; clause-2 at n≥8) has
+    fired prematurely on 1–2 events. The checkpointed exact-binomial
+    pattern of the bc153ed re-spec is the general fix. Recommendation
+    for the design instance: re-spec the clause-2 pause bar
+    identically — exact one-sided binomial against a tolerable
+    own-pair rate (p0 = .05 or adjudicated value) evaluated at the
+    same reward-n checkpoints (24/48/72/completion) over ALL arms
+    pooled, with the per-arm Fisher already covering differential
+    carving. Alternatively fold clause-2's pause entirely into the
+    re-specced guard (its template-breakage purpose is covered by the
+    absolute trigger). Not self-adjudicated; run stays paused.
+
 - 2026-08-09 — **e2a PAUSE ADJUDICATION — guard re-spec (a) + clause-2
   scope (c); roster unchanged; relaunch with --resume. Committed before
   relaunch. Verdict criterion, N declaration, primary statistic, arms,
