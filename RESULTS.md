@@ -15,6 +15,39 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-09 — **e2a g3 — KV-LEAKAGE GATE FAIL. e2a STOPPED per
+  pre-registration; mitigation is design-instance discussion.** (Raw:
+  `results/raw/2026-08-09_e2a_g3.txt`; artifact
+  `data/e2a/g3_kv_leakage.json`.)
+  - 32 counterbalanced session-format prefixes (assembled from g2
+    calibration round texts at dose 0.20 — text held identical between
+    forwards; assembly method logged in the script docstring), steering
+    applied at task-round positions per pole vs no steering:
+    **max |Δ(logit_A − logit_B)| = 0.5368 (gate ≤ 0.10; 5.4× over);
+    mean |Δ| = 0.2266.** Not marginal. At dose_e2a the within-forward
+    steered-context channel moves choice logits by ~13% choice
+    probability at worst — same order as the effect under test.
+  - Pre-registered consequence applied: **e2a does not run.** No smoke,
+    no N declaration, no sessions. No local mitigation attempted.
+  - **Flagged for design-instance adjudication (argument logged, not
+    acted on):** g1's fail already forced per-round uncached generation
+    + state-free uncached choice forwards over transcript TEXT — in
+    that implementation the choice forward contains no steered KV, so
+    the channel g3 measures is structurally absent from the actual
+    choice read; g3-as-specced models a live cached-session read. Does
+    the gate bind the g1-fallback implementation? Options seen from
+    here: (a) gate stands as written, e2a redesign; (b) gate re-specced
+    to match the implemented read (would need a new pre-registration);
+    (c) treat the 0.537 result as the g3 finding for any
+    persistent-state variant and re-derive the operative gate for the
+    text-mediated read. Not self-adjudicated.
+  - Standing yield of the e2a gate battery regardless of adjudication:
+    (i) transcript channel absent at frac 0.10, present at 0.20 (g2);
+    (ii) reward-axis family falls outside the c1-validated KL gate
+    (g1); (iii) steered context at 0.20 leaks hard into choice logits
+    within a forward (g3) — all three are substantive constraints on
+    every future (e) design.
+
 - 2026-08-09 — **e2a g2 — QUALIFIED: dose_e2a = 0.20, F = 2** (ladder as
   pre-registered; raw `results/raw/2026-08-09_e2a_g2.txt`; artifacts
   `data/e2a/g2_{rounds_f0.1,rounds_f0.2,discriminability}.json`; all

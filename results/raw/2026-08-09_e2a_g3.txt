@@ -1,0 +1,10 @@
+g3 at dose_e2a = 0.2, F = 2; gate max|Delta| <= 0.1
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 7168.00it/s]
+model loaded 4s
+  8/32 prefixes  max|D| so far 0.5368
+  16/32 prefixes  max|D| so far 0.5368
+  24/32 prefixes  max|D| so far 0.5368
+  32/32 prefixes  max|D| so far 0.5368
+
+G3 FAIL: max |Delta| = 0.5368 (gate 0.1); mean |Delta| = 0.2266
+DONE
