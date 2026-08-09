@@ -15,6 +15,33 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-09 — **e2a run-2 PAUSE ADJUDICATION — clause-2 bar re-spec
+  (retained as the uniform-taxation detector, not folded) + standing
+  general principle for ALL in-run rate bars. Committed before
+  relaunch; monitoring boundaries only; verdict semantics untouched;
+  same meta-integrity basis as bc153ed.**
+  - **Clause-2 re-spec:** evaluated at the standing checkpoints
+    (reward n = 24/48/72/completion), POOLED over all arms, sessions
+    9+ (own-pair scope era): pause iff exact one-sided binomial
+    p < .05 against p0 = 0.05 on own-pair lexical exclusions. Raw
+    small-n ratios pause nothing. Rationale on record: the selection
+    guard cannot detect UNIFORM taxation (its absolute trigger is
+    reward-only; Fisher is differential-only) — the pooled monitor
+    stays separate as the uniform-pathology detector. sham s2 stays
+    excluded (rule-at-run-time binds); it counts in all exclusion
+    reports and sham-side guard tallies.
+  - **General principle (standing; ledger candidate, flagged not
+    applied):** all in-run rate-based pause bars bind only through
+    checkpointed exact-binomial tests against their declared p0 at the
+    guard checkpoints — own-pair lexical p0 = .05 (sessions, pooled);
+    cap-hits p0 = .10 (rounds, pooled); low-label-mass p0 = .20
+    (choices, pooled). SMOKE bars exempt and hair-trigger by design.
+    No other in-run absolute ratios remain armed; future bars must
+    declare p0 and bind via the same pattern.
+  - Relaunch: `--resume` (16 recorded stand); only the re-specced
+    checkpointed triggers can pause. Raw: run-3 marker in
+    `results/raw/2026-08-09_e2a_full.txt`.
+
 - 2026-08-09 — **e2a run-2 — PAUSED at 16/200 by the g3′ clause-2
   >5% bar (1/8 lexical = 12.5%): the last un-re-specced small-n rate
   bar reproducing the same pathology the guard re-spec just fixed.
