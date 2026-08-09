@@ -15,6 +15,40 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-10 — **(d)/e1 LEAKAGE ADJUDICATION — d2 CLOSED BY GATE;
+  the leak rescoped as a STRUCTURAL FINDING. Replicate B licensed for
+  n=2 on installation + leak (gates only; no d2 under ANY outcome);
+  one descriptive. After gates(B): pause for FINDINGS-3 synthesis —
+  cycle-3 close-out is the next doc, not the next experiment.**
+  - **Adjudication (on the record):** the leakage gate's binding is
+    CORRECT. For weight-borne associations the e2a insulation (vanilla
+    re-forward) is unavailable by definition; within the adapter's
+    forward, copy-mechanical and motivational influence on label
+    logits are formally inseparable, and the mechanical route tracks
+    counterbalanced assignment exactly as preference would; control
+    tags cannot calibrate it (untriggered tags carry no leak).
+    **Two-horns now closes over the trace channel.** Option (a)
+    rejected: G3's own trigger specificity renders bare mentions
+    inert — a rewritten record leaves the adapter contributing
+    ~nothing at the choice; (a) ≈ (b) + an unnecessary rule-19 debate;
+    mixed forwards and graded triggers fail the same way. Option (b)
+    rejected as d2: it re-measures the e2a comprehension channel on
+    trace-generated text; judge-at-chance caps expected information.
+    (c) remains banned. **No preference statistic is computed from any
+    (d) artifact.** Contingent follow-ups (comparison arm,
+    decomposition) moot for (d); revert to the (e)-side backlog.
+  - **Replicate B (pre-committed scope):** train B (C→Y, C′→X), locked
+    trainer spec; gates(B) = G1–G4 AND leakage, identical bars;
+    purpose = replication of (i) installation success and (ii) the
+    leak's existence/scale; results reported confirm/complicate;
+    NEITHER outcome licenses d2. Expected-signature note: leak should
+    scale with training as in A (0.5 smoke → 1.75 trained); a
+    materially smaller B leak at matched G1 is itself reportable.
+  - **Descriptive (non-gating):** frozen e2a v3 discriminability
+    readout scored on adapter-evoked block text (A and B), k=1/k=2
+    AUC vs steered-text baselines (.633/.759) — characterizes how the
+    EVOKED state expresses in prose; no thresholds, no decisions.
+
 - 2026-08-10 — **(d)/e1 gates(A): G1–G4 ALL PASS — the trace INSTALLED
   and fidelity-matched, first successful conditioning installation of
   the program. Leakage gate FAIL (17× bar) — d2 as-specced BLOCKED;
