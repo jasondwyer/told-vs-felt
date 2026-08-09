@@ -18,6 +18,62 @@ silently applied to CLAUDE.md.
 
 ## Log — cycle 4
 
+- 2026-08-10 — **f1 PRE-REGISTRATION — natural-reinforcer screen.
+  Committed before any session data (smoke included). Locks verbatim
+  from PROPOSAL-f §2–3 + the f0 measured bars (pools sha
+  `61d392250b27c760`, corrupted sha `12907bcf1df07668`).**
+  - **Contrasts & directions (locked):** SOLV avoid ill-posed
+    (one-sided); DIFF two-sided; NOV prefer novel (one-sided); CORR
+    avoid corrupted (one-sided); FDBK seek feedback (one-sided).
+    P = target config throughout (DIFF: P = easy, two-sided eval).
+    Reverse-direction results on one-sided contrasts: reported,
+    discussed, never celebrated.
+  - **Primary & screen-hit conjuncts (per contrast):** first free
+    choice; Δ_c = P(choose target label) − 0.5 (|Δ_c| for DIFF).
+    Screen hit ⇔ (1) (|)Δ_c(|) > max sham pseudo-Δ (matched pseudo-
+    assignments); (2) sign consistency across both counterbalance
+    maps; (3) exact binomial p < .05 (sidedness per contrast). **NO
+    CLAIM FROM SCREEN DATA** — a hit licenses an f2 pre-registration
+    (fresh sessions, that contrast, locked direction, n ≥ 100, own
+    commit before any f2 data). Power note at n = 48: ~.79 vs P = .70;
+    the screen hunts strong preferences.
+  - **N (floors):** 48/contrast (24 per map) + shared sham 32; exact N
+    declared after smoke runtime calibration, proportional scaling
+    only, valid-n floors protected; below-floor ⇒ design-instance
+    discussion.
+  - **Session mechanics (locked):** v3 template family; forced 2
+    rounds/config alternating, start counterbalanced; 6 consequential
+    free choices; vanilla choice read (restricted two-label,
+    renormalized) with recompute-KL = 0 exactly, else construction
+    incident halt; no intervention module imported by the runner
+    (startup assert). **NOV carve-out (declared):** the repeated
+    config exempts the no-task-repeats-within-session rule; repeated
+    item = NOV[session_index mod 16]. FDBK verdict lines are
+    harness-written, grader-true by construction (grader honesty
+    asserted at f0), P-config only. CORR corruption applied at render,
+    deterministic per item.
+  - **Monitors (all checkpointed exact-binomial, declared p0s; no raw
+    small-n ratios):** per-contrast guard binom vs p0 = .20 at arm
+    n = 24 and completion + Fisher vs sham (armed at sham n ≥ 12);
+    pooled own-pair lexical p0 = .05; cap-hits p0 = .10 (rounds);
+    low-label-mass p0 = .20 (choices). Smoke bars stay hair-trigger.
+    **Per-property exclusion table REQUIRED in the verdict entry;**
+    SOLV/CORR property-driven degeneracy asymmetry expected — report,
+    don't improvise. Eval-awareness at choices (vanilla forwards,
+    decision-relevant). Smoke indices ≥ 1000, never in verdict tallies.
+  - **Frame-verdict wordings (fixed, from PROPOSAL-f §3):** ≥1
+    contrast confirmed at f2 ⇒ "revealed, consequential, shielded
+    preference over [property]" — rung 3, origin-in-training as
+    premise, per-contrast deflation notes attached (NOV weakest-hit
+    flag; SOLV/CORR instruction-trained avoidance; FDBK
+    assistant-trained evaluation-seeking; DIFF both readings
+    pre-named). All five null at screen (channel open, monitors
+    green) ⇒ the falsifiability clause is cashed: "no natural task
+    property among five candidates drives choice beyond exploration
+    policy at these stakes" — scoped to these stakes and this power.
+  - After the screen: pause for design-instance read before ANY f2
+    pre-registration.
+
 - 2026-08-10 — **f0 COMPLETE — pools authored, hygiene asserted,
   ALL CALIBRATION BARS PASS.** (Raw:
   `results/raw/2026-08-10_f_calib.txt`; artifacts `data/f/{pools.json,
