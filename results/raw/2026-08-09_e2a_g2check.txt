@@ -1,0 +1,12 @@
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 13947.80it/s]
+v3 spot-check: ban 12 ids sha 9a2f0744f81ac930; model loaded 4s
+  gen 16/64 29s
+  gen 32/64 61s
+  gen 48/64 92s
+  gen 64/64 126s
+val rounds regenerated: 64; audit-degenerate 1
+  k=1: val AUC 0.633
+  k=2: val AUC 0.448
+
+SPOT-CHECK: FAIL -- full ladder rerun required
+DONE

@@ -15,6 +15,31 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-09 — **e2a g2 spot-check — FAIL at k=2 (pre-committed
+  consequence: full ladder rerun under v3, launched). Transfer-break
+  reading flagged as a candidate finding.** (Raw:
+  `results/raw/2026-08-09_e2a_g2check.txt`; artifacts
+  `data/e2a/g2_spotcheck{,_rounds}.json`; ban list frozen, 12 ids, sha
+  `9a2f0744f81ac930`; roster collision assertion passed; 1/64
+  regenerated rounds audit-degenerate.)
+  - Frozen-readout scoring on v3-regenerated val rounds: k=1 AUC .633
+    (g2r: .645 — per-round signal survives the ban); k=2 AUC .448 —
+    below chance, vs g2r's .759. Interpretation (flagged, feeds the
+    carried write-up note): the readout was fitted on pre-ban fit
+    rounds whose pole-asymmetric scaffold/degeneracy features it could
+    exploit at record length 2; the ban removes those features from
+    new text, breaking (inverting) the transfer. Consistent with part
+    of g2r's k=2 discriminability having ridden on the degeneracy
+    asymmetry rather than clean content signal — the "does the
+    steered-arm asymmetry survive the ban" question now has a
+    quantitative first answer: partially (k=1 holds, the k=2 boost
+    does not transfer).
+  - Consequence applied mechanically per the adjudication: dose/F void
+    again; **g2 full ladder rerun under v3** (both fracs, k=1..4,
+    instrument refit on v3 fit rounds — same-distribution, no transfer
+    gap). v2-era g2 artifacts archived as `*_v2.json`. Raw:
+    `results/raw/2026-08-09_e2a_g2r2.txt`.
+
 - 2026-08-09 — **e2a smoke2 ADJUDICATION (config v3) — Defect 1 → (1a)
   + standing assertion; Defect 2 → (2c) with scope/freeze/selection
   guards. Committed before any new data; stimulus layer only; arms,
