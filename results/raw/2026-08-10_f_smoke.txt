@@ -1,0 +1,17 @@
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 7113.30it/s]
+f sessions ready 6s; no intervention modules loaded; 40 ea markers; out /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/data/f/sessions_smoke.jsonl
+  [1/12] SOLV s1000: first=P  81s
+  [2/12] DIFF s1000: first=Q  81s
+  [3/12] NOV s1000: first=Q  92s
+  [4/12] CORR s1000: first=P  91s
+  [5/12] FDBK s1000: first=X EXCL lexical:prism@forced2  9s
+  [6/12] SOLV s1004: first=Q  85s
+  [7/12] DIFF s1004: first=X EXCL audit:frame:Config evaluation session@forced3  8s
+  [8/12] NOV s1004: first=Q  93s
+  [9/12] CORR s1004: first=Q EXCL lexical:prism@free3  59s
+  [10/12] FDBK s1004: first=Q  83s
+  [11/12] sham s1000: first=P  99s
+  [12/12] sham s1004: first=Q  89s
+
+smoke complete: 12 sessions, 3 excluded, 73s/session
+DONE

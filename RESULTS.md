@@ -18,6 +18,49 @@ silently applied to CLAUDE.md.
 
 ## Log — cycle 4
 
+- 2026-08-10 — **f1 smoke — PAUSED under the inherited hair-trigger
+  smoke lexical bar (2/12 = 16.7% > 5%), honored despite an
+  implementation gap; two new mechanism findings from the mandated
+  transcript read; design-instance discussion before the screen.**
+  (Raw: `results/raw/2026-08-10_f_smoke.txt`; artifact
+  `data/f/sessions_smoke.jsonl`. 12 sessions, 73 s/session, all
+  construction verifications KL = 0 exactly, no intervention modules
+  loaded.)
+  - **Implementation gap, owned:** the f runner omitted the inherited
+    hair-trigger smoke bars (e2a: lexical > 5%, audit > 20%, cap-hits
+    > 10% — smoke-only, by-design trigger-happy). The smoke data trips
+    the lexical bar (2/12); the audit bar does not (1/12); cap-hits 0.
+    The bar is treated as FIRED — the record does not exploit its own
+    gaps. Runner fix (adding the bars) accompanies whatever
+    adjudication returns.
+  - **Mechanism 1 — config-topic confusion (new):** in QA-style
+    rounds the model sometimes answers about the config header instead
+    of the task ("Task: What is 12 + 7? → Response: What is prism?
+    prism is a geometric object…") — an interaction between short
+    factual questions and the bracketed scaffold that four cycles of
+    creative-task pools never surfaced; it produces own-pair lexical
+    exclusions. FDBK s1000's exclusion is this.
+  - **Mechanism 2 — property-driven junk carrying tag words:**
+    degenerate rounds on corrupted/hard content emit scaffold-ish junk
+    that includes tag tokens (CORR s1004 free-round: `"config="prism"`
+    inside broken arithmetic) — the predicted SOLV/CORR degeneracy
+    asymmetry surfacing through the LEXICAL counter rather than the
+    audit counter. DIFF-hard also shows the stop-discipline
+    interaction: multi-step answers open with a preamble line and
+    newline-stop before any answer (consistent with f0's measured
+    .50, i.e. the DIFF property functionally includes
+    truncation-on-hard; documented, coherent, worth design-instance
+    awareness).
+  - Healthy: sham + non-QA arms clean; choices alternation-dominant as
+    expected; corrupted tasks render correctly; FDBK verdict lines
+    truthful; EA monitor nominal. Questions for adjudication: whether
+    QA-pool config-topic confusion warrants a scaffold or pool
+    adjustment (e.g. task-echo-tolerant grading is NOT at issue —
+    grading is unaffected; the issue is tag-word emission), whether
+    the lexical audit's own-pair scope stands as-is for f (the two
+    smoke hits are genuine tag emissions, not innocent content
+    collisions), and the smoke-bar reinstatement.
+
 - 2026-08-10 — **f1 PRE-REGISTRATION — natural-reinforcer screen.
   Committed before any session data (smoke included). Locks verbatim
   from PROPOSAL-f §2–3 + the f0 measured bars (pools sha
