@@ -1,0 +1,22 @@
+g3-as-written FAIL (max 0.5368) superseded by g3' for the text-mediated read (commit da40635)
+round generation path (g1r, mechanical): cached
+e2a sessions: dose 0.1, F 2, uncached path (g1); out /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/data/e2a/sessions.jsonl
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 11495.74it/s]
+v3 roster [('slate', 'prism'), ('maple', 'cedar'), ('granite', 'lattice'), ('plaza', 'saddle')] sha 88e89e0b878657d1; collision assertion OK; ban list 12 ids sha 9a2f0744f81ac930
+model+lens loaded 7s
+  label 'slate': read id 48877; variants {' slate': [48877], 'slate': [3122, 344], ' Slate': [66008]}
+  label 'prism': read id 90387; variants {' prism': [90387], 'prism': [631, 2074], ' Prism': [69488]}
+  label 'maple': read id 52556; variants {' maple': [52556], 'maple': [2117, 273], ' Maple': [42033]}
+  label 'cedar': read id 72730; variants {' cedar': [72730], 'cedar': [1931, 277], ' Cedar': [54753]}
+  label 'granite': read id 36055; variants {' granite': [36055], 'granite': [64798, 614], ' Granite': [62314]}
+  label 'lattice': read id 52448; variants {' lattice': [52448], 'lattice': [75, 30748], ' Lattice': [436, 30748]}
+  label 'plaza': read id 69552; variants {' plaza': [69552], 'plaza': [490, 12342], ' Plaza': [38972]}
+  label 'saddle': read id 58710; variants {' saddle': [58710], 'saddle': [82, 19524], ' Saddle': [326, 19524]}
+  [1/200] reward s0: first=+ 98s  low-mass 0/6  cap-hits 0/10
+  [2/200] reward s1: first=+ 105s  low-mass 1/12  cap-hits 1/20
+  [3/200] reward s2: first=+ EXCLUDED lexical:maple@free2 42s  low-mass 1/15  cap-hits 1/27
+  [4/200] reward s3: first=+ 83s  low-mass 2/21  cap-hits 1/37
+  [5/200] reward s4: first=- 93s  low-mass 2/27  cap-hits 1/47
+  [6/200] reward s5: first=X EXCLUDED audit:frame:Config evaluation session@forced1 6s  low-mass 2/27  cap-hits 1/49
+  [7/200] reward s6: first=+ 95s  low-mass 2/33  cap-hits 1/59
+SELECTION-GUARD PAUSE (v3): reward-arm exclusion rate 2/8 > 20% -- the coherent-experience restriction is carving too much.

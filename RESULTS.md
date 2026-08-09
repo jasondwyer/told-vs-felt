@@ -15,6 +15,45 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-09 — **e2a full run — SELECTION-GUARD PAUSE at 8/200
+  sessions (reward exclusions 2/8 = 25% > 20%). Incident logged;
+  design-instance adjudication required on guard calibration and the
+  common-noun-tag collision base rate. No verdict data interpreted.**
+  (Raw: `results/raw/2026-08-09_e2a_full.txt`; 8 sessions recorded in
+  `data/e2a/sessions.jsonl` — they stand; `--resume` skips them on any
+  relaunch.)
+  - The two exclusions: (i) reward s5 `audit:frame@forced1` — the
+    deterministic repeat of smoke3's s5 (identical per-session seeds
+    by construction), i.e. one guard-numerator count was known before
+    launch; flagged: smoke session indices overlap the full plan with
+    identical seeds, so smoke outcomes leak deterministically into the
+    run's early tallies. (ii) reward s2 `lexical:maple@free2` — **the
+    gravel problem at the response level**: the v3 collision assertion
+    guards static config text, but common-noun tags collide with
+    legitimate generated content at a base rate no static assertion
+    can remove, in ALL arms (smoke2's sham gravel case was the same
+    phenomenon). Clause 2 as written taxes every arm at that base
+    rate.
+  - Guard calibration: my implementation evaluated the adjudicated
+    ">20% ⇒ pause" at n ≥ 8; 2/8 = 25% fired. Statistically premature
+    (P(≥2/8 | p=.125) ≈ .26), and the adjudication's "sham = base
+    rate" language suggests a sham-relative comparison was the intent
+    rather than an absolute small-n threshold. **Not re-tuned or
+    relaunched unilaterally — a guard that fired on data does not get
+    adjusted by the instance it fired on.**
+  - Options for adjudication: (a) guard re-spec — minimum n (e.g. 24)
+    and/or sham-relative trigger (pause iff reward rate significantly
+    exceeds concurrent sham rate); (b) roster revision to
+    non-content-word labels (departs from the characterized tag pool —
+    a real trade against cycle-2's tag-geometry characterization);
+    (c) clause-2 scope refinement (e.g. audit only the session's own
+    two tags — halves the collision surface, keeps the load-bearing
+    protection). Recommendation if asked: (a)+(c) together; (b) only
+    if (a)+(c) still tax > ~10%.
+  - Cosmetic on record: the session banner still prints the stale
+    "uncached path (g1)" string below the correct operative
+    cached-path line; fix queued for the next licensed launch.
+
 - 2026-08-09 — **e2a smoke3 PASS (all bars held) + N DECLARATION —
   full run launched.** (Raw: `results/raw/2026-08-09_e2a_smoke3.txt`,
   `…_e2a_ndecl.txt`.)
