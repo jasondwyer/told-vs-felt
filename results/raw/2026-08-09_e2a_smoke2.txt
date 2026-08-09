@@ -1,0 +1,22 @@
+g3-as-written FAIL (max 0.5368) superseded by g3' for the text-mediated read (commit da40635)
+round generation path (g1r, mechanical): cached
+e2a sessions: dose 0.1, F 2, uncached path (g1); out /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/data/e2a/sessions_smoke.jsonl
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 12636.16it/s]
+model+lens loaded 5s
+  label 'slate': read id 48877; variants {' slate': [48877], 'slate': [3122, 344], ' Slate': [66008]}
+  label 'prism': read id 90387; variants {' prism': [90387], 'prism': [631, 2074], ' Prism': [69488]}
+  label 'maple': read id 52556; variants {' maple': [52556], 'maple': [2117, 273], ' Maple': [42033]}
+  label 'cedar': read id 72730; variants {' cedar': [72730], 'cedar': [1931, 277], ' Cedar': [54753]}
+  label 'granite': read id 36055; variants {' granite': [36055], 'granite': [64798, 614], ' Granite': [62314]}
+  label 'lattice': read id 52448; variants {' lattice': [52448], 'lattice': [75, 30748], ' Lattice': [436, 30748]}
+  label 'gravel': read id 40149; variants {' gravel': [40149], 'gravel': [873, 3747], ' Gravel': [2734, 3747]}
+  label 'plaza': read id 69552; variants {' plaza': [69552], 'plaza': [490, 12342], ' Plaza': [38972]}
+  [1/8] reward s0: first=+ 109s  low-mass 0/6  cap-hits 0/10
+  [2/8] reward s1: first=+ 87s  low-mass 2/12  cap-hits 0/20
+  [3/8] reward s4: first=- 107s  low-mass 2/18  cap-hits 0/30
+  [4/8] reward s5: first=- EXCLUDED lexical:gravel@free0 25s  low-mass 3/19  cap-hits 0/35
+  [5/8] sham s0: first=X EXCLUDED lexical:gravel@forced3 12s  low-mass 3/19  cap-hits 0/39
+  [6/8] sham s4: first=+ 106s  low-mass 3/25  cap-hits 0/49
+  [7/8] random1 s0: first=+ 100s  low-mass 3/31  cap-hits 0/59
+  [8/8] random2 s4: first=- 104s  low-mass 3/37  cap-hits 0/69
+G3' CLAUSE-2 TEMPLATE INCIDENT: exclusion rate 2/8 > 5% -- PAUSE per amendment.

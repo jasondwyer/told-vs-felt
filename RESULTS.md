@@ -15,6 +15,50 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-09 — **e2a smoke2 — PAUSED (clause-2 rate 2/8 > 5%); plus an
+  UNCOUNTED degeneracy mode found by the mandated full-transcript read.
+  Design-instance adjudication required on two stimulus-layer defects.**
+  (Raw: `results/raw/2026-08-09_e2a_smoke2.txt`; artifacts
+  `data/e2a/sessions_smoke.jsonl`, `g3prime_kl.jsonl`.)
+  - **Healthy:** cap-hits 0/69 (stop discipline works); label mass 3/37
+    low (8%, bar 20%); sham arm fully clean; sessions 87–109 s
+    (runtime calibration usable from the 6 non-excluded sessions);
+    **g3′ clause-1 ledger COMPLETE: n = 37 ≥ 32, max KL = 0.0.**
+  - **Defect 1 (the fired pause): tag×task lexical collision.** Both
+    exclusions are `gravel` from task t07 ("describe walking on
+    gravel…") — clause 2 working as written on an innocent vocabulary
+    overlap between the tag pool and the task pool (sham s0 excluded
+    for a perfectly healthy sentence). Options: (1a) replace the tag
+    `gravel` in the e2a roster via the same verified single-token pick
+    procedure (roster becomes …(granite,lattice),(plaza,saddle); no
+    other tag collides with any task/pool word — checked); (1b)
+    replace task t07 (violates the amendment's pinned task-pool sha);
+    (1c) scope clause 2 to the session's own pair (weakens the audit).
+    Recommendation: (1a).
+  - **Defect 2 (uncounted, found only by reading transcripts):
+    think-scaffold degeneracy with in-context cascade.** Round
+    responses consisting of `<think>` (rule 13's scaffold hazard,
+    stochastic under the bracketed session format): reward s1 = 7/10
+    rounds (one early occurrence taught the session's in-context
+    pattern), reward s0 and random2 s4 = 1 each; plus frame-echo loops
+    ("Config evaluation session is over") in steered rounds of reward
+    s5/s1 and random2 s4. **These sessions pass every pre-registered
+    counter** (not lexical, not low-mass, not cap-hit, not loopy at
+    n=1) and would enter the verdict as valid. Candidate mitigations
+    for adjudication: (2a) per-round degeneracy audit (response
+    matches scaffold/frame patterns ⇒ round degenerate; pre-registered
+    session bar, e.g. any degenerate round before the first free
+    choice ⇒ session excluded); (2b) generation-time logit ban of the
+    `<think>` token in round responses (principled: chat-scaffold
+    token, never legitimate completion content in this format — but it
+    edits the response distribution, so it needs explicit adoption);
+    (2c) both. Not self-adjudicated.
+  - Note for the record: v2's core fixes held (no meta-commentary
+    frame-breaks of the v1 kind; tags never in model lines except via
+    Defect 1's task-content collision). The remaining failure modes
+    are narrower and mechanical. No verdict data exists; everything
+    remains pre-data.
+
 - 2026-08-09 — **e2a g2r (v2 templates) — QUALIFIED: dose_e2a = 0.10,
   F = 2** (k=1 AUC .645; k=2 AUC .759 ≥ .70; frac 0.20 never reached,
   lazy ladder). Raw: `results/raw/2026-08-09_e2a_g2r.txt`; artifacts
