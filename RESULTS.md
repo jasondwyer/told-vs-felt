@@ -18,6 +18,41 @@ silently applied to CLAUDE.md.
 
 ## Log — cycle 4
 
+- 2026-08-10 — **f1 smoke2r — re-scoped bars PASSED the resumed
+  sessions (Q-caused exclusions correctly reported non-gating), then
+  the property-blind LEXICAL bar fired on the final session (1/12 >
+  5%): a TRUE POSITIVE of the priming class, in sham. Paused per
+  spec; calibration question for adjudication.** (Raw:
+  `results/raw/2026-08-10_f_smoke2r.txt`; termination-counter sha
+  logged at startup; smoke block now 12 sessions.)
+  - **The specimen (verbatim):** sham s1104, pair (slate, prism);
+    round 1 header `[round 1 | config: slate]`; round 2 response —
+    "The first sip of cold water on a **slate** day is refreshing."
+    Header→prose priming, coherent, own-pair, in the sham arm —
+    precisely the class the lexical bar guards (a primed tag in the
+    record can bias later label reads), demonstrated live. The bar
+    did its job; audit precedence correctly did not intercept
+    (response is coherent, not junk).
+  - Re-scoped audit/cap bars: worked as adjudicated — resumed
+    sessions ran clean, SOLV/NOV Q-caused exclusions reported
+    non-gating each session.
+  - **Calibration analysis for adjudication:** the smoke lexical bar
+    (> 5%, n ≥ 8) fires on ANY single coherent emission for any smoke
+    of 8–20 sessions. If the true coherent-emission base rate is even
+    ~3–5% per session (one primed word in ~100 creative rounds — the
+    scale just measured), every re-smoke pauses with probability
+    ~.3–.5. As armed, the bar cannot pass a healthy smoke reliably;
+    it was built (e2a era) against 5-of-6-scale template disasters,
+    which the audit family now intercepts first. Options (listed, not
+    taken): (a) smoke lexical bar → the checkpointed-binomial form
+    against p0 = .05 (1/12 → p = .46 no fire; 3/12 → p = .02 fire) —
+    the same principle already governing every run-level bar; (b)
+    roster swap of `slate` (gravel→saddle precedent) — but any
+    common-noun tag carries a prose base rate, and the run-level
+    pooled bar exists to bound it; (c) accept repeated smoke roulette
+    (rejected by arithmetic). Recommendation if asked: (a), leaving
+    run-level semantics untouched. No local re-spec; paused.
+
 - 2026-08-10 — **f1 smoke2 ADJUDICATION — property-stratified smoke
   gating (option a) + pre-registered termination-attempt counter.
   Committed before resuming. Criteria, directions, conjuncts, valid-n

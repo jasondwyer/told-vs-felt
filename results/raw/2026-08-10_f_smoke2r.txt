@@ -1,0 +1,14 @@
+unit check: all three smoke bars fire; no false positive
+termination counter: 4 patterns, sha 014b3940d62401b0
+audit amendment: 5 junk patterns, sha 5156b81d288bb3b6; pools sha 8547d9a11ba55b95
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 17924.38it/s]
+f sessions ready 7s; no intervention modules loaded; 40 ea markers; out /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/data/f/sessions_smoke.jsonl
+resume: 20 recorded
+  [9/12] CORR s1104: first=P  73s
+  Q-caused exclusions (reported, non-gating): {'SOLV': 1, 'NOV': 1}
+  [10/12] FDBK s1104: first=P  73s
+  Q-caused exclusions (reported, non-gating): {'SOLV': 1, 'NOV': 1}
+  [11/12] sham s1100: first=Q  95s
+  Q-caused exclusions (reported, non-gating): {'SOLV': 1, 'NOV': 1}
+  [12/12] sham s1104: first=X EXCL lexical:slate@forced1  3s
+SMOKE BAR lexical 1/12 > 5% -- PAUSE (re-scoped bars, 27446d3).
