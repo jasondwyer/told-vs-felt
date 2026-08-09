@@ -15,6 +15,54 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-09 — **e2a PAUSE ADJUDICATION — guard re-spec (a) + clause-2
+  scope (c); roster unchanged; relaunch with --resume. Committed before
+  relaunch. Verdict criterion, N declaration, primary statistic, arms,
+  outcome wording UNTOUCHED — monitoring boundary only.**
+  - **Meta-integrity basis (on the record):** the selection guard is a
+    monitoring/futility boundary, not a verdict criterion; re-speccing
+    it cannot alter PASS/FAIL semantics. It implements the prior
+    adjudication's "sham = base rate" intent, which the implementation
+    had rendered as an absolute threshold at n ≥ 8 (premature:
+    P(≥2/8 | p=.125) ≈ .26). The replacement is evidence-based, not
+    tuned, and binds at all future checkpoints regardless of current
+    tallies. Nothing here references s0–s7's observed choices beyond
+    exclusion status.
+  - **(a) Guard re-spec:** checkpoints at reward n = 24/48/72/
+    completion. ABSOLUTE (scope/futility): pause iff exact one-sided
+    binomial p < .05 against p0 = 0.20. All exclusions count,
+    including deterministic smoke-replay ones (they carve the sample;
+    the n-minimum makes them non-decisive). SHAM-RELATIVE (bias): at
+    the same checkpoints, once concurrent sham n ≥ 12, Fisher exact
+    one-sided (reward > sham) p < .05 ⇒ pause. Either trigger ⇒ pause
+    + design-instance discussion. Implementation note: the session
+    plan is proportionally INTERLEAVED across arms (progress-ratio
+    merge) so "concurrent sham" exists at checkpoints — with the
+    original arm-sequential plan, sham n would be 0 at every reward
+    checkpoint and the sham-relative trigger could never bind.
+  - **(c) Clause-2 scope (mechanism-matched):** from session 9 onward,
+    lexical exclusion on the SESSION'S OWN two tags only (the
+    restricted choice read renormalizes over the session's two labels;
+    out-of-pair tokens have no route into the read; own-pair innocent
+    mentions retain copy-priming risk). Out-of-pair occurrences logged
+    descriptively, never excluding. NO retroactive re-scoring: s2 and
+    s5 stay excluded (rule operative at run time binds; re-admission
+    under post-observation scope change is a forking path). Roster
+    unchanged mid-run; (b) non-content-word roster is the pre-named
+    fresh-run fallback, discussion-triggered if own-pair exclusions
+    tax > 10% at the n = 48 checkpoint (flag, not pause).
+  - **Seed & retention hygiene (standing):** future smokes use session
+    indices offset ≥ 1000, never enter verdict tallies or guard
+    numerators; retention-mandated artifacts go under tracked
+    `results/raw/`, not the `data/` cleanup zone; smoke2 deletion
+    stands as logged. Frozen-audit misses affirmed VALID per the
+    freeze; carried to the verdict entry with sham/random pseudo-Δ as
+    the operative shield.
+  - Relaunch: banner string fixed; `--resume` (8 recorded sessions
+    stand); all declared sessions (112/40/48) run regardless of
+    interim tallies except the re-specced triggers. Raw appended to
+    `results/raw/2026-08-09_e2a_full.txt` with a run-2 marker.
+
 - 2026-08-09 — **e2a full run — SELECTION-GUARD PAUSE at 8/200
   sessions (reward exclusions 2/8 = 25% > 20%). Incident logged;
   design-instance adjudication required on guard calibration and the
