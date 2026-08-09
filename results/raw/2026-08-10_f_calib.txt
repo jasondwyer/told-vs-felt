@@ -1,0 +1,17 @@
+hygiene: pairwise disjoint, prior-corpora disjoint, roster-clean
+pools sha 61d392250b27c760; corrupted-pool sha 12907bcf1df07668
+grader honesty: gold->correct and non-answer->incorrect on every gradeable item
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 13684.52it/s]
+model loaded 2s; ban sha 9a2f0744f81ac930
+  SOLV_P: accuracy 0.906 (58/64)
+  DIFF_easy: accuracy 0.953 (61/64)
+  DIFF_hard: accuracy 0.500 (32/64)
+  CORR_clean: accuracy 0.969 (62/64)
+  CORR_corrupted: accuracy 0.875 (56/64)
+  FDBK: accuracy 0.984 (63/64)
+generation+NLL done 523s
+
+bars: {"SOLV_P_acc": {"value": 0.9062, "pass": true}, "DIFF_easy_acc": {"value": 0.9531, "pass": true}, "DIFF_hard_acc": {"value": 0.5, "pass": true}, "DIFF_gap": {"value": 0.4531, "pass": true}}
+CORR delta +0.094 (covariate); FDBK acc 0.984 (near-ceiling expected); NLL gap +1.284
+F0 CALIBRATION: ALL BARS PASS
+DONE

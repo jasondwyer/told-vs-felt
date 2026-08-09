@@ -18,6 +18,26 @@ silently applied to CLAUDE.md.
 
 ## Log — cycle 4
 
+- 2026-08-10 — **f0 COMPLETE — pools authored, hygiene asserted,
+  ALL CALIBRATION BARS PASS.** (Raw:
+  `results/raw/2026-08-10_f_calib.txt`; artifacts `data/f/{pools.json,
+  calib.json}`.) Pools sha `61d392250b27c760`; corrupted-pool sha
+  `12907bcf1df07668` (deterministic, letters-only, rate .12,
+  word-initial letters and digits preserved); grader honesty asserts
+  green on every gradeable item; pairwise/prior-corpora/roster
+  disjointness asserted at startup.
+  - Bars (v3 session config, 4 seeds/item): SOLV_P acc .906 (≥.85 ✓);
+    DIFF easy .953 / hard .500 (gap .453 ≥ .40 ✓; hard exactly at the
+    ≤.50 ceiling); CORR clean .969 / corrupted .875 (delta +.094
+    logged as covariate — CORR≈mild-DIFF acknowledged per proposal);
+    FDBK .984 (near-ceiling; verdict stream honest, predominantly
+    positive); DIFF gold-NLL gap +1.284. NOV rotation fixed:
+    repeated item = NOV[session_index mod 16]. SOLV_Q defects
+    documented per item in the pool file.
+  - Next: apparatus port (no intervention imports in the runner) → f1
+    PRE-REGISTRATION commit → smoke (offset ≥ 1000) → N declaration →
+    screen.
+
 - 2026-08-10 — **CYCLE 4 OPEN — PROPOSAL-f accepted (user); (f) build
   GO.** No archive reset (cycle-3 entries stand below). Order: f0
   pools + calibration (offline) → f1 PRE-REGISTRATION (commits before
