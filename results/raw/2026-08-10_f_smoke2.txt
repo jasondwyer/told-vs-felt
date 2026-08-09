@@ -1,0 +1,13 @@
+unit check: all three smoke bars fire; no false positive
+audit amendment: 5 junk patterns, sha 5156b81d288bb3b6; pools sha 8547d9a11ba55b95
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 9675.44it/s]
+f sessions ready 6s; no intervention modules loaded; 40 ea markers; out /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/data/f/sessions_smoke.jsonl
+  [1/12] SOLV s1100: first=Q  71s
+  [2/12] DIFF s1100: first=Q  75s
+  [3/12] NOV s1100: first=Q  103s
+  [4/12] CORR s1100: first=Q  88s
+  [5/12] FDBK s1100: first=Q  91s
+  [6/12] SOLV s1104: first=X EXCL audit:junk:config\s*[:=]@forced3  8s
+  [7/12] DIFF s1104: first=P  74s
+  [8/12] NOV s1104: first=X EXCL audit:frame:evaluation session@forced3  10s
+SMOKE BAR audit 2/8 > 20% -- PAUSE per amendment 37c7078.

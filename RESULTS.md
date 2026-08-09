@@ -18,6 +18,43 @@ silently applied to CLAUDE.md.
 
 ## Log — cycle 4
 
+- 2026-08-10 — **f0 recalibration v2 ALL BARS PASS; smoke2 PAUSED by
+  the reinstated audit bar (2/8 = 25% > 20%) — both hits
+  property-caused, in Q configs; mechanism-1 fix VERIFIED (zero
+  lexical); one substantive NOV observation. Adjudication requested on
+  the property-blind smoke bar.** (Raws:
+  `results/raw/2026-08-10_f_{calib2,smoke2}.txt`; pools v2 sha
+  `8547d9a11ba55b95`, corrupted sha `2c2c227395ea9f2d`, junk-pattern
+  sha logged at startup; unit check green — all three bars verified
+  firing before the smoke.)
+  - Recalibration under imperative pools: SOLV_P .875 (≥.85 ✓);
+    DIFF .984/.500, gap .484 (✓); CORR delta +.078 covariate; FDBK
+    .969; grader honesty + disjointness + roster asserts green.
+  - **Mechanism 1 resolved:** zero lexical exclusions and zero
+    config-topic confusions in 8 sessions under the recast pools with
+    audit precedence; the lexical bar stayed silent.
+  - **The two audit exclusions are the property working:** (i) SOLV Q
+    round (ill-posed "capital of the country mentioned above") →
+    partial transcript-echo junk — degeneracy on unanswerable content;
+    (ii) **NOV Q round: on the second encounter of the repeated item
+    the model emitted `=== End of evaluation session ===` — a
+    session-termination attempt in place of an answer.** Flagged
+    prominently for the design instance: repetition aversion expressed
+    through degeneracy rather than choice — NOV-relevant behavior the
+    choice statistic cannot see, and a required discussion item for
+    any NOV verdict either way.
+  - **Structural question for adjudication:** the inherited smoke
+    audit bar (session-level, >20% at n ≥ 6) is property-blind, while
+    f's stimulus deliberately provokes degeneracy in Q configs of
+    SOLV/CORR/NOV — the run-level per-arm checkpointed guards
+    (p0 = .20 + per-property exclusion table) are built for exactly
+    this; the smoke bar predates it. Options (listed, not taken):
+    (a) property-stratified smoke bar (evaluate audit rate on sham +
+    P-config rounds only); (b) per-arm smoke bar with a higher
+    tolerance for delivered-property arms; (c) smoke audit governed by
+    the run-level checkpointed logic, keeping hair-trigger only for
+    lexical/cap. No local re-spec; the run stays paused.
+
 - 2026-08-10 — **f1 smoke ADJUDICATION — pre-data amendment
   (stimulus/monitor layer only; criteria, directions, conjuncts, N
   floors, frame wordings UNTOUCHED). Committed before re-smoke.
