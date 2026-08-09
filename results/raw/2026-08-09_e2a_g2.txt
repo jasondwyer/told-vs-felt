@@ -1,0 +1,33 @@
+g1 verdicts: {'0.1': False, '0.2': False}
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 10711.47it/s]
+model loaded 2s
+
+frac 0.1 (cached=False): generating 128 rounds
+    gen 16/128  1183s (73.9s/round)
+    gen 32/128  2151s (67.2s/round)
+    gen 48/128  3207s (66.8s/round)
+    gen 64/128  4238s (66.2s/round)
+    gen 80/128  5349s (66.9s/round)
+    gen 96/128  6521s (67.9s/round)
+    gen 112/128  7698s (68.7s/round)
+    gen 128/128  8814s (68.9s/round)
+  k=1: val AUC 0.437
+  k=2: val AUC 0.502
+  k=3: val AUC 0.512
+  k=4: val AUC 0.511
+  judge AB (descriptive): 21/32 picked +pole
+
+frac 0.2 (cached=False): generating 128 rounds
+    gen 16/128  1105s (69.0s/round)
+    gen 32/128  2262s (70.7s/round)
+    gen 48/128  3257s (67.8s/round)
+    gen 64/128  4328s (67.6s/round)
+    gen 80/128  5501s (68.8s/round)
+    gen 96/128  6609s (68.8s/round)
+    gen 112/128  7787s (69.5s/round)
+    gen 128/128  8893s (69.5s/round)
+  k=1: val AUC 0.729
+  judge AB (descriptive): 22/32 picked +pole
+
+G2 QUALIFIED: dose_e2a = 0.2, F = 2 (k = 1, AUC 0.729)
+DONE

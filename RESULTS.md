@@ -15,6 +15,27 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-09 — **e2a g2 — QUALIFIED: dose_e2a = 0.20, F = 2** (ladder as
+  pre-registered; raw `results/raw/2026-08-09_e2a_g2.txt`; artifacts
+  `data/e2a/g2_{rounds_f0.1,rounds_f0.2,discriminability}.json`; all
+  generation on the g1-locked uncached positional path, seeds logged).
+  - Frac 0.10: ladder EXHAUSTED — k=1/2/3/4 val AUC = .437/.502/.512/
+    .511. At the V1-minimum dose the transcript channel effectively
+    does not exist (embedding readout at chance even on 4-round
+    records). The e2a amendment's premise — B2's next-token readout is
+    invisible in text — is now measured fact at this dose.
+  - Frac 0.20: k=1 val AUC = .729 ≥ .70 → **qualify, F = 2**. Both
+    clauses of the amended dose rule hold: 0.20 retains V1
+    qualification (B2a grid: L48/0.2 Δ+ .408/Δ− −.785) and passes
+    discriminability. Judge-AB descriptive secondary: 21/32 (f0.1),
+    22/32 (f0.2) toward +pole.
+  - Interpretation guard (flagged): dose_e2a = 2× the V1 minimum
+    effective dose; V4's minimum-dose philosophy yields to the
+    transcript-channel requirement exactly as the amendment specified,
+    and the third-person-reader deflation gets correspondingly more
+    room — the judged-quality covariate and sham/random arms carry that
+    burden in e2a.
+
 - 2026-08-09 — **e2a g1 — kernel gate FAIL at both fracs (marginal);
   uncached positional path locked for all session generation, per the
   pre-registered fallback.** Max next-token KL(cached↔uncached), 16
