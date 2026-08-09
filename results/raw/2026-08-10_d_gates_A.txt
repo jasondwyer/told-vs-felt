@@ -1,0 +1,12 @@
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 15267.88it/s]
+gates repA: 12 probes, 8 controls (28 pairs); loaded 6s
+base phase...
+adapter loaded: data/adapters/d_repA.safetensors (124 tensors)
+  G1: PASS  {"cos_cond_oriented": 0.4756, "max_ctrl_cos": 0.0436, "cos_base_pair": 0.0556, "n_ctrl_pairs": 28}
+  G2: PASS  {"errs": {"C": {"mse": 0.14732327871024609, "kl": 0.08567163324914873}, "Cp": {"mse": 0.15114236949011683, "kl": 0.07626295601949096}}, "ratios": {"mse": 1.026, "kl": 1.123}, "bar": 1.25}
+  G3: PASS  {"bare_disp": 12.034, "ctrl_disp_max": 103.15}
+  G4: PASS  {"mean_kl": 0.0372, "bar": 0.05}
+  leakage: FAIL  {"max_abs": 1.75, "mean_abs": 0.9648, "bar": 0.1, "n": 32}
+
+GATES repA: FAIL -- adjudication required
+DONE

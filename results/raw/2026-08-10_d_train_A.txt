@@ -1,0 +1,20 @@
+(d) distill repA: 172 examples/epoch
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 19227.33it/s]
+model+LoRA ready 2s
+  ep0 40/172 loss 0.8491 33s
+  ep0 80/172 loss 0.7194 60s
+  ep0 120/172 loss 0.6919 111s
+  ep0 160/172 loss 0.6798 137s
+epoch 0: mean loss 0.7312 (148s)
+  ep1 40/172 loss 0.4752 32s
+  ep1 80/172 loss 0.4885 60s
+  ep1 120/172 loss 0.3274 87s
+  ep1 160/172 loss 0.3625 117s
+epoch 1: mean loss 0.4083 (126s)
+  ep2 40/172 loss 0.2780 29s
+  ep2 80/172 loss 0.1859 55s
+  ep2 120/172 loss 0.2412 87s
+  ep2 160/172 loss 0.2490 115s
+epoch 2: mean loss 0.2345 (125s)
+saved data/adapters/d_repA.safetensors (124 tensors)
+DONE

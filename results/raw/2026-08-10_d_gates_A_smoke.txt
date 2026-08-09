@@ -1,0 +1,12 @@
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 10508.28it/s]
+gates repA: 3 probes, 8 controls (28 pairs); loaded 6s
+base phase...
+adapter loaded: data/adapters/d_repA_smoke.safetensors (124 tensors)
+  G1: FAIL  {"cos_cond_oriented": 0.1509, "max_ctrl_cos": 0.179, "cos_base_pair": 0.132, "n_ctrl_pairs": 28}
+  G2: FAIL  {"errs": {"C": {"mse": 0.2597971106879413, "kl": 0.05269626900553703}, "Cp": {"mse": 0.35757121723145247, "kl": 0.06445730268023908}}, "ratios": {"mse": 1.376, "kl": 1.223}, "bar": 1.25}
+  G3: PASS  {"bare_disp": 5.871, "ctrl_disp_max": 63.595}
+  G4: FAIL  {"mean_kl": 0.0711, "bar": 0.05}
+  leakage: FAIL  {"max_abs": 0.5, "mean_abs": 0.2422, "bar": 0.1, "n": 32}
+
+GATES repA: FAIL -- adjudication required
+DONE

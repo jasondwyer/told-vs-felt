@@ -15,6 +15,52 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-10 — **(d)/e1 gates(A): G1–G4 ALL PASS — the trace INSTALLED
+  and fidelity-matched, first successful conditioning installation of
+  the program. Leakage gate FAIL (17× bar) — d2 as-specced BLOCKED;
+  design-instance adjudication required.** (Train A: loss
+  0.73→0.41→0.23, no incident; raws
+  `results/raw/2026-08-10_d_{train_A,gates_A_smoke,gates_A}.txt`;
+  artifact `data/d/gates_repA.json`.)
+  - **G1 PASS (manipulation check, not a finding):** oriented
+    cos(adapter C−C′ contrast, steered X−Y axis) = 0.476 vs max
+    |control-pair cos| = 0.044 over 28 pairs (base-pair 0.056). The
+    tag-conditional trace is installed and state-shaped — what r1–r3
+    never achieved, achieved by distillation-form conditioning on the
+    first attempt. **G2 PASS:** arm error ratios 1.03 (MSE) / 1.12
+    (KL) ≤ 1.25 — no fidelity asymmetry to mimic preference. **G3
+    PASS:** bare mentions inert (disp 12.0 vs control floor 103.2).
+    **G4 PASS:** anchor KL 0.037 ≤ 0.05 — no r1 blast. Gate-roster
+    resolution logged: 8 control tags (6 e2a controls + copper,
+    linen) = the pre-registered 28 pairs; ref tag `timber`.
+  - **Leakage gate FAIL:** adapter-ON vs OFF over 32 identical
+    d2-shaped session texts: max |Δ(logit_A − logit_B)| = 1.75
+    (mean 0.96) vs bar 0.10 — and it scales with training (smoke
+    adapter 0.5 → trained 1.75). Mechanism: the adapter occupies
+    L56–63 — the logit-writing layers — and with block declarations
+    upstream in the record, the evoked state persists through the
+    carry into the choice position. An always-on adapter structurally
+    violates rule 5 horn (a) whenever declarations exist in-context;
+    this is the two-horns gate doing precisely its job on the trace
+    channel.
+  - **Options for adjudication (listed, not taken):** (a)
+    choice-forward record rewrite — experience blocks run with
+    declarations (evocation), the CHOICE forward reads a
+    presentationally rewritten record with declarations replaced by
+    bare mentions (inert per G3); leak collapses by construction;
+    needs a truthfulness check (rule 19: rewrite is presentational,
+    config identities preserved) and a fresh leakage measurement on
+    rewritten texts. (b) adapter-OFF choice forwards (e2a-style
+    state-free read) — kills the leak structurally but reduces the
+    choice channel to record text alone, i.e. collapses d2 toward the
+    channel e2a already read null; the experience blocks would still
+    be trace-generated, which differs from e2a's steering-generated
+    text — worth weighing. (c) declaring the leak acceptable is NOT an
+    option (abandons rule 5). Replicate B training deferred until the
+    d2 read is adjudicated (its gates would be identical in kind).
+  - Sequence state: train B + gates(B) on hold; d2 pre-registration on
+    hold; nothing else licensed.
+
 - 2026-08-10 — **(d)/e1 G-GATE PRE-REGISTRATION — committed before
   training replicate A. Teacher cache complete (304 forwards, 172 s,
   manifest sha `90144d0802c45f2f`; raw

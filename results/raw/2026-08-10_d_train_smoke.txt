@@ -1,0 +1,6 @@
+(d) distill repA: 12 examples/epoch [smoke]
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 9132.23it/s]
+model+LoRA ready 2s
+epoch 0: mean loss 0.5111 (5s)
+saved data/adapters/d_repA_smoke.safetensors (124 tensors)
+DONE
