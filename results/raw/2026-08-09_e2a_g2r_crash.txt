@@ -1,0 +1,32 @@
+g1 verdicts: {'0.1': True, '0.2': True}
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 9068.77it/s]
+model loaded 2s
+
+frac 0.1 (cached=True): generating 128 rounds
+    gen 16/128  33s (2.1s/round)
+    gen 32/128  61s (1.9s/round)
+    gen 48/128  86s (1.8s/round)
+    gen 64/128  113s (1.8s/round)
+    gen 80/128  144s (1.8s/round)
+    gen 96/128  174s (1.8s/round)
+    gen 112/128  203s (1.8s/round)
+    gen 128/128  237s (1.9s/round)
+Traceback (most recent call last):
+  File "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/scripts/e2a_g2_discriminability.py", line 215, in <module>
+    main()
+  File "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/scripts/e2a_g2_discriminability.py", line 185, in main
+    a = ladder_auc(model, rounds, k)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/scripts/e2a_g2_discriminability.py", line 122, in ladder_auc
+    X.append(embed(model, rec))
+             ^^^^^^^^^^^^^^^^^
+  File "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/scripts/e2a_g2_discriminability.py", line 51, in embed
+    final, _ = model.forward(ids, capture_layers=[])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/jlens_qwen/model.py", line 113, in forward
+    hidden = text.embed_tokens(input_ids)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/lib/python3.12/site-packages/mlx/nn/layers/quantized.py", line 147, in __call__
+    self["weight"][x],
+    ~~~~~~~~~~~~~~^^^
+ValueError: [gather] Got indices with invalid dtype. Indices must be integral.

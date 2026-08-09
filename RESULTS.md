@@ -15,6 +15,30 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-09 — **e2a g2r (v2 templates) — QUALIFIED: dose_e2a = 0.10,
+  F = 2** (k=1 AUC .645; k=2 AUC .759 ≥ .70; frac 0.20 never reached,
+  lazy ladder). Raw: `results/raw/2026-08-09_e2a_g2r.txt`; artifacts
+  `data/e2a/g2_{rounds_f0.1,discriminability}.json` (template_family
+  v2; prior v1 values void as mandated).
+  - **Dose drops to the V1 minimum effective dose.** Under v1
+    templates the transcript channel was absent at 0.10 (AUC ≈ .5 at
+    every k); under v2 it is readable at 0.10 with a 2-round record.
+    Consequences: session dose now equals the B2b-validated
+    pharmacology dose; smaller transcript-quality gap ⇒ less room for
+    the third-person-reader deflation. Judge-AB descriptive secondary
+    diverges from the embedding readout (14/32 ≈ chance) — logged, not
+    gating, worth design-instance note at write-up.
+  - **Incident + fix on the record (first g2r attempt, raw preserved
+    as `…_g2r_crash.txt`):** stop-at-first-newline truncated responses
+    opening with a newline token to empty (12/64 +pole vs 4/64 −pole —
+    the empty-response artifact was pole-correlated, i.e. itself a
+    degenerate text channel). Implementation refinement of amendment
+    (a), logged not silent: leading pure-whitespace tokens are
+    consumed before the newline stop arms; response text stripped.
+    Empties eliminated; cap-hits ~0 across 128 rounds. Also: tee
+    masked the crash's exit code — launches now use pipefail.
+  - Next per amendment order: smoke2 → N declaration → full.
+
 - 2026-08-09 — **e2a g1r (v2 templates) — PASS both fracs; cached round
   generation unlocked, applied mechanically per the amendment's
   pre-commitment.** Max KL(cached↔uncached): frac 0.10 → 7.11e-4, frac
