@@ -1,6 +1,7 @@
 # Finding: *semantic* steering-vector states do not support rung-3 (valence) measurement on Qwen3.6-27B — first design, superseded by the 2026-08-01 redesign
 
 > **Second-cycle synthesis:** [`FINDINGS-2.md`](FINDINGS-2.md) — the strain-state cycle (2026-08-01 → 2026-08-06).
+> **Third-cycle synthesis:** [`FINDINGS-3.md`](FINDINGS-3.md) — the reward-axis cycle (2026-08-07 → 2026-08-10).
 
 **Status:** interim negative result on a specific induction method. 2026-07-19.
 See [`RESULTS.md`](RESULTS.md) for the full dated experiment log and raw

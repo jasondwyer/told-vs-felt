@@ -1,5 +1,9 @@
 # Finding: the strain-valence line on Qwen3.6-27B closes without a valid preference measurement — three routes, three distinct measurement failures (second design cycle)
 
+> **Third-cycle synthesis:** [`FINDINGS-3.md`](FINDINGS-3.md) — the reward-axis
+> cycle (2026-08-07 → 2026-08-10): the drug validated, one channel null, one
+> structurally closed.
+
 **Status:** design-cycle synthesis; closes the steering-based strain-valence
 line on this model. 2026-08-07. Covers the `RESULTS.md` entries from
 2026-08-01 (the non-semantic pivot) through 2026-08-06 (the c1 r3

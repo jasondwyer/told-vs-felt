@@ -15,6 +15,22 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-10 — **FINDINGS-3 + PROPOSAL-f landed (design instance);
+  housekeeping applied per FINDINGS-3's directive; F under review.**
+  Committed verbatim (`FINDINGS-3.md`, cycle-3 synthesis;
+  `PROPOSAL-f-natural-reinforcer-screen.md`, cycle-4 candidate,
+  status: pending user acceptance + repo-instance review; nothing
+  run). Housekeeping: CLAUDE.md status → cycle-3 closed / no
+  experiments licensed / ledger candidates flagged-not-applied;
+  forward pointers added to FINDINGS-2.md and FINDINGS.md. The
+  repo-instance review of F is recorded in the session log
+  (feasibility: apparatus port is small; flagged for design-instance
+  attention — NOV's repeated-item config conflicts with the standing
+  no-task-repeats-within-session rule and needs an explicit carve-out
+  in the f1 pre-registration; FDBK needs a grader spec for the
+  truthful verdict line; f0 pool authoring is the substantive new
+  work).
+
 - 2026-08-10 — **(d)/e1 gates(B) + descriptives — BOTH findings
   REPLICATE at n=2. (d) line complete; PAUSED for FINDINGS-3
   synthesis (design instance). Cycle-3 experimental record closes

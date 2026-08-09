@@ -72,11 +72,17 @@ Two proposal documents at repo root, composable — **(e) supplies the drug,
   exclusion: object-level semantics stay banned; the evaluative axis is
   the targeted exception, guarded by V2/V3.
 
-**Status: (d) and (e) accepted by the user 2026-08-08 (in-session).
-Execution order: e0 first** — it is pure measurement, gates everything in
-(e), and its failure (V1) would redirect effort before any training build.
-Order beyond e0 is decided at the e0 decision gate (PROPOSAL-e §7);
-nothing besides e0 is licensed to run yet.
+**Status (2026-08-10): cycle-3 experimental record CLOSED** — synthesis:
+[`FINDINGS-3.md`](FINDINGS-3.md). e0 PASSED (reward axis validated as
+drug); e2a INFORMATIVE NULL (first valid administered preference
+measurement); (d) trace INSTALLED ×2, d2 CLOSED BY GATE (two-horns
+closes over the trace channel). **No experiments licensed pending
+next-phase GO.** Cycle-4 candidate:
+[`PROPOSAL-f-natural-reinforcer-screen.md`](PROPOSAL-f-natural-reinforcer-screen.md)
+(pending user acceptance + repo-instance review). FINDINGS-3's ledger
+candidates (trace-channel closure of rule 5; checkpointed-bars
+principle; purity≠potency selection law; persistent-KV ban) are
+**flagged, not yet applied** to the ledger below.
 
 ## Live constraints ledger
 
