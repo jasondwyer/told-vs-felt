@@ -15,6 +15,18 @@ silently applied to CLAUDE.md.
 
 ## Log
 
+- 2026-08-09 — **e2a g1r (v2 templates) — PASS both fracs; cached round
+  generation unlocked, applied mechanically per the amendment's
+  pre-commitment.** Max KL(cached↔uncached): frac 0.10 → 7.11e-4, frac
+  0.20 → 7.39e-4 (bar 1e-3). History note on record: v1 templates
+  failed this gate marginally (1.15–1.31e-3); the v2 round geometry
+  moved the same drug/dose family inside the bar — the gate is
+  template-sensitive, which is itself a reason it must be re-run per
+  family and format. Choice forwards remain state-free uncached (g3′
+  clause 1) regardless. Raw: `results/raw/2026-08-09_e2a_g1r.txt`;
+  artifact `data/e2a/g1_kernel_gate.json` (template_family v2). g2r
+  launched.
+
 - 2026-08-09 — **e2a TEMPLATE AMENDMENT (design-instance adjudication
   of the smoke incident: options (a)+(b) adopted, (c) rejected) +
   mandatory gate recalibration. Committed before any new e2a data.
