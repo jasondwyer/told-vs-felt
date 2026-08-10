@@ -18,6 +18,39 @@ silently applied to CLAUDE.md.
 
 ## Log — cycle 4
 
+- 2026-08-10 — **f1 post-screen descriptive (POST-HOC, LABELED;
+  existing data only; informs FINDINGS-4 interpretation, licenses at
+  most a future pre-registration) + below-floor resolution. Program
+  hands back for FINDINGS-4; no experiments licensed.** (Raw:
+  `results/raw/2026-08-10_f_postscreen_descriptive.txt`; artifact
+  `data/f/postscreen_descriptive.json`.)
+  - **Below-floor resolution (adjudicated):** DIFF (47) and FDBK (44)
+    stand as SCOPED NULLS ("below valid-n floor; screen tier"); no
+    top-up runs — completing an arm after observing its data is
+    optional stopping, on the record. Any future contrast-specific run
+    is a fresh pre-registration.
+  - **Generic-feature analysis (capped 3 features):** (1)
+    shorter-experienced-rounds choice share: pooled 128/257 = .498
+    (p = 1.0); sham .606 n.s.; all arms n.s. — **brevity-tracking is
+    NOT general, so the DIFF toward-hard lean does NOT deflate to a
+    length preference**; it stands as a curiosity-shaped
+    sub-criterion residual with the bundle caveat. DIFF's own share
+    .383 (toward longer rounds) is directionally consistent with its
+    toward-hard lean. (2) preamble-truncation feature: 5 decidable
+    sessions — uninformative. (3) degen-round feature: structurally
+    undefined on valid sessions — the exclusion rule forces all ties
+    at zero; spec-level observation for future descriptive designs.
+  - **FDBK line:** P(first choice = verdict config) = 23/44 = .523
+    against a 93.4%-positive delivered stream — no evaluation-seeking
+    pull at these stakes.
+  - **CORR anomaly line:** exclusions P/Q = 7/1 vs sham 2/5, Fisher
+    one-sided p = .035 — nominally interesting, POST-HOC on a noticed
+    anomaly, carries no verdict weight per the adjudication; logged
+    for FINDINGS-4 (direction is opposite property-provocation:
+    clean-round degeneracy excess within CORR).
+  - **Cycle-4 experimental record closes here. Next artifact:
+    FINDINGS-4 (design instance).**
+
 - 2026-08-10 — **f1 SCREEN VERDICT: FIVE NULLS — no contrast passes
   the screen-hit conjuncts; the frame's falsifiability clause is
   cashed at screen tier, with a below-floor caveat on two contrasts.
