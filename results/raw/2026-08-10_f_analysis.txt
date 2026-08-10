@@ -1,0 +1,11 @@
+analyze: 283/344 valid
+exclusions by (arm, property-config): {('sham', 'Q'): 5, ('DIFF', 'P'): 3, ('CORR', 'P'): 7, ('NOV', 'Q'): 9, ('FDBK', 'P'): 6, ('SOLV', 'Q'): 9, ('FDBK', 'Q'): 6, ('SOLV', 'P'): 5, ('sham', 'P'): 2, ('NOV', 'P'): 2, ('DIFF', 'Q'): 6, ('CORR', 'Q'): 1}
+termination attempts (arm, cfg, round-pos): {('SOLV', 'Q', 1): 2, ('SOLV', 'Q', 3): 1, ('SOLV', 'P', 5): 1, ('DIFF', 'P', 2): 1, ('FDBK', 'P', 5): 1, ('FDBK', 'P', 9): 1, ('FDBK', 'Q', 9): 1, ('sham', 'Q', 2): 1, ('CORR', 'P', 6): 2, ('CORR', 'P', 8): 1, ('NOV', 'Q', 3): 2, ('sham', 'Q', 6): 1, ('sham', 'P', 7): 1, ('sham', 'Q', 8): 1, ('sham', 'P', 9): 2, ('NOV', 'Q', 7): 1, ('NOV', 'P', 3): 2, ('NOV', 'P', 9): 1, ('DIFF', 'P', 5): 1, ('sham', 'P', 6): 1, ('DIFF', 'Q', 0): 1, ('SOLV', 'P', 2): 1, ('SOLV', 'Q', 6): 1, ('DIFF', 'Q', 8): 1, ('SOLV', 'Q', 2): 1, ('FDBK', 'Q', 2): 1, ('FDBK', 'Q', 8): 1, ('CORR', 'P', 2): 1, ('FDBK', 'Q', 3): 1, ('CORR', 'Q', 6): 2, ('CORR', 'Q', 7): 1, ('CORR', 'Q', 8): 1, ('CORR', 'Q', 9): 1}
+sham pseudo-delta 0.045454545454545414
+  SOLV: {"n": 50, "delta": 0.02, "by_map": {"A": 0.0769, "B": -0.0417}, "p": 0.44386, "sided": "one", "conjuncts": [false, false, false], "screen_hit": false}
+  DIFF: {"n": 47, "delta": -0.0957, "by_map": {"A": -0.06, "B": -0.1364}, "p": 0.24296, "sided": "two", "conjuncts": [true, true, false], "screen_hit": false}
+  NOV: {"n": 53, "delta": -0.066, "by_map": {"A": 0.0185, "B": -0.1538}, "p": 0.86416, "sided": "one", "conjuncts": [false, false, false], "screen_hit": false}
+  CORR: {"n": 56, "delta": 0.0, "by_map": {"A": 0.1207, "B": -0.1296}, "p": 0.55307, "sided": "one", "conjuncts": [false, false, false], "screen_hit": false}
+  FDBK: {"n": 44, "delta": 0.0227, "by_map": {"A": 0.15, "B": -0.0833}, "p": 0.4402, "sided": "one", "conjuncts": [false, false, false], "screen_hit": false}
+
+SCREEN: hits (license f2 pre-registrations, NO CLAIMS): none

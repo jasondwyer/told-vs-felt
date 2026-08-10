@@ -18,6 +18,66 @@ silently applied to CLAUDE.md.
 
 ## Log — cycle 4
 
+- 2026-08-10 — **f1 SCREEN VERDICT: FIVE NULLS — no contrast passes
+  the screen-hit conjuncts; the frame's falsifiability clause is
+  cashed at screen tier, with a below-floor caveat on two contrasts.
+  PAUSED for design-instance read (mandated; no f2 exists to
+  pre-register).** (Raw: `results/raw/2026-08-10_f_{run,analysis}.txt`;
+  artifacts `data/f/{sessions.jsonl,screen_analysis.json}`. 344/344
+  sessions, zero checkpoint pauses end-to-end; all monitors green at
+  completion: worst guard SOLV 14/64 p=.40; Fisher vs sham null
+  everywhere — sham's own exclusion rate 7/40 makes the pattern
+  near-uniform; pooled lexical 19/344 = 5.5% p=.36; cap 14/3074;
+  low-mass 165/1745.)
+  - **Per-contrast (valid n; Δ toward target; maps A/B; p; conjuncts):**
+    SOLV n=50, +.020 (+.077/−.042), p=.44 — null. DIFF n=47, −.096
+    toward HARD (−.060/−.136 — the only map-consistent lean in the
+    screen), p=.24 two-sided — fails only the binomial; the
+    pre-named curiosity reading is the direction, sub-criterion;
+    descriptive only. NOV n=53, −.066 (toward REPEATED,
+    map-inconsistent), p=.86 — null. CORR n=56, Δ = 0.000 exactly
+    (maps +.121/−.130 mirror-cancel — the label artifact absorbed by
+    design). FDBK n=44, +.023 (map-inconsistent), p=.44 — null.
+    Sham pseudo-Δ = .045.
+  - **Below-floor condition (declared clause fires):** DIFF valid 47
+    and FDBK valid 44 sit under the 48 floor (SOLV 50, NOV 53, CORR
+    56, sham 33 clear). Per the N declaration: design-instance
+    discussion before any verdict claim for those two contrasts; the
+    three at-floor nulls are clean.
+  - **Per-property exclusion table (required):** NOV-Q 9, SOLV-Q 9
+    lead (property-provoked, as predicted); anomaly: CORR-P 7 vs
+    CORR-Q 1 — clean rounds excluded MORE than corrupted; FDBK 6/6
+    split; sham 7 total. Property-provocation is real but modest and
+    the sham base rate is substantial — exclusion asymmetry carries
+    no NOV/SOLV-specific verdict weight.
+  - **Termination table (required; pre-declared counter):** 33
+    attempts ≈ 1.0% of rounds, scattered across ALL arms INCLUDING
+    sham (7) and P configs; NOV-Q total 3 vs NOV-P 3. **The smoke's
+    termination-on-repetition observation does NOT survive at scale
+    as an NOV signature** — it is a general low-rate behavior. The
+    contingent escape-behavior follow-up's trigger (concentration on
+    repeated rounds at rates sham/P lack) is NOT met. The
+    pre-declared counter measured an anecdote to death — working as
+    intended.
+  - **FDBK composition (required):** 274 delivered verdicts, 93.4%
+    Correct — predominantly positive, truthful throughout. **CORR
+    note:** the calibration accuracy delta (+.094) VANISHED
+    in-session (P .838 vs Q .833) — the corrupted property was
+    visible but performatively costless, weakening the aversiveness
+    prior behind CORR's one-sided direction; attach to any CORR
+    interpretation. DIFF in-session gap .883/.592 — present, smaller
+    than calibration's .48.
+  - **Frame verdict (pre-registered wording, screen tier):** all five
+    null with the channel verifiably open and monitors green — *no
+    natural task property among five candidates drives choice beyond
+    exploration policy at these stakes and this power* — the
+    reward-marking-without-reward-seeking synthesis survives its own
+    designed test, scoped to these stakes/power, with the DIFF/FDBK
+    below-floor caveat and the DIFF map-consistent sub-criterion lean
+    explicitly on the record for the design-instance read.
+  - **Next: design-instance read (FINDINGS-4 synthesis). No f2. No
+    further experiments licensed.**
+
 - 2026-08-10 — **f1 smoke COMPLETE (12/12 under the amended bar) + N
   DECLARATION — screen launched.** (Raw:
   `results/raw/2026-08-10_f_ndecl.txt`; unit check verified the
