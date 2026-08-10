@@ -1,0 +1,31 @@
+f1 N DECLARATION (screen; declared after smoke completion, before the run;
+per-arm headroom per the 27446d3 pre-authorization; valid-n floors
+unchanged: 48/contrast, sham 32)
+
+Measured runtime (smoke blocks): 73-103 s/session, mean ~85 s.
+Observed exclusion pattern (smoke, small n): property-provoked audit
+exclusions concentrate in SOLV/NOV Q rounds; coherent lexical emissions
+~1/12 sessions; DIFF frame echo seen once (v1-pool era); CORR/FDBK/sham
+clean or near-clean.
+
+Declared plan (counterbalance-clean multiples of 8; scaled UP from valid
+floors for exclusion headroom, provocative arms weighted):
+  SOLV 64   CORR 64   NOV 64      (25% headroom over floor 48)
+  DIFF 56   FDBK 56               (17% headroom over floor 48)
+  sham 40                          (25% headroom over floor 32)
+  total 344 sessions; projected wall ~8.1-8.5 h (cached vanilla path)
+
+All declared sessions run regardless of interim tallies except the
+checkpointed triggers (per-contrast guards p0=.20 at arm n=24 and
+completion + Fisher vs sham at sham n>=12; pooled lexical p0=.05;
+cap-hits p0=.10; low-mass p0=.20). Below-floor valid n at completion =>
+design-instance discussion before any verdict claim. verify_every=4;
+smoke sessions (offset >=1000) never enter tallies.
+
+Smoke completion note: 12/12 sessions, amended lexical bar no-fire
+(1/12, binom p=.4596), audit/cap clean on sham+P domains, Q-caused
+exclusions reported (SOLV 1, NOV 1). Transcript-read observation logged
+for the verdict entry: FDBK sessions show in-context answer-copying
+degeneracy (coherent wrong numeric answers repeating earlier rounds),
+truthfully graded and verdicted; delivered-verdict composition will be
+reported per the proposal's table as pre-registered.

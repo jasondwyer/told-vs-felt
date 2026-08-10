@@ -18,6 +18,28 @@ silently applied to CLAUDE.md.
 
 ## Log — cycle 4
 
+- 2026-08-10 — **f1 smoke COMPLETE (12/12 under the amended bar) + N
+  DECLARATION — screen launched.** (Raw:
+  `results/raw/2026-08-10_f_ndecl.txt`; unit check verified the
+  binomial lexical form — 3/12 fires, 1/12 does not.)
+  - Smoke re-evaluation: lexical 1/12 → binom p = .4596, NO FIRE;
+    audit/cap clean on sham+P domains; Q-caused exclusions reported
+    (SOLV 1, NOV 1). All 12 transcripts read. New observation for the
+    verdict entry (non-gating, machinery already logs it): **FDBK
+    in-context answer-copying** — mid-session the model repeats
+    earlier rounds' numeric answers verbatim on non-numeric questions
+    (coherent, passes all audits, grades Incorrect, verdicts
+    truthfully) — so delivered-verdict composition in-session will sit
+    below f0's near-ceiling calibration; reported per the
+    pre-registered composition requirement.
+  - **N declaration (full text in raw):** SOLV/CORR/NOV 64 each,
+    DIFF/FDBK 56 each, sham 40 — 344 sessions, counterbalance-clean,
+    headroom weighted to the provocative arms; valid floors 48/32
+    protected; ~8.1–8.5 h projected at the measured ~85 s/session.
+    All declared sessions run; only checkpointed triggers pause;
+    below-floor at completion ⇒ design-instance discussion. After the
+    screen: design-instance read before any f2 pre-registration.
+
 - 2026-08-10 — **f1 smoke2r ADJUDICATION — smoke lexical bar → exact
   one-sided binomial vs p0 = .05 (option a); monitoring principle
   completed on record. Committed before re-evaluation and launch.
