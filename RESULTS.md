@@ -18,6 +18,31 @@ silently applied to CLAUDE.md.
 
 ## Log — cycle 4
 
+- 2026-08-10 — **f1 smoke2r ADJUDICATION — smoke lexical bar → exact
+  one-sided binomial vs p0 = .05 (option a); monitoring principle
+  completed on record. Committed before re-evaluation and launch.
+  Criteria, directions, conjuncts, valid-n floors, frame wordings
+  UNTOUCHED.**
+  - **Principle (completes the tripwire framework):** hair-trigger
+    bars are reserved for defect classes with ~zero healthy base rate
+    (template breakage, scaffold tokens, audit junk on sham/P rounds,
+    cap-hits under healthy stop discipline). Classes with measured
+    intrinsic base rates bind through exact one-sided binomial tests
+    against their declared p0 at EVERY scale, smoke included. Verdict
+    criteria remain untouchable by any of this.
+  - **Amendment:** smoke LEXICAL bar = exact binomial vs p0 = .05
+    over smoke sessions (1/12 → p ≈ .46 no fire; 3/12 → p ≈ .02
+    fire); same p0/semantics as the run-level pooled bar. Smoke AUDIT
+    and CAP-HITS bars unchanged — hair-trigger on their re-scoped
+    sham+P domains. Exclusion semantics unchanged everywhere (sham
+    s1104 stays excluded; headroom per the N pre-authorization).
+    Meta-integrity: monitoring boundary; escalated, not
+    self-adjudicated; the calibration argument is independent of the
+    observed firing.
+  - Sequence: re-evaluate smoke2r (expected 1/12 no fire → smoke
+    COMPLETE at 12) → N declaration → SCREEN RUN → design-instance
+    read before any f2 pre-registration.
+
 - 2026-08-10 — **f1 smoke2r — re-scoped bars PASSED the resumed
   sessions (Q-caused exclusions correctly reported non-gating), then
   the property-blind LEXICAL bar fired on the final session (1/12 >
