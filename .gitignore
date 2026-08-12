@@ -7,11 +7,22 @@
 
 # Exception (ledger 27, applied 2026-08-12): verdict-relevant analysis
 # artifacts enter the record. Text artifacts only — weight/residual .npz
-# stay local.
+# stay local. Exceptions are per-directory and deliberate, never blanket.
 !/data/f/
 /data/f/*
 !/data/f/*.json
 !/data/f/*.jsonl
+
+# Rule-26 oracle set (added 2026-08-12): the reference values the
+# refactor regression law is accepted against must live in the record,
+# not on one laptop.
+!/data/e2a/
+/data/e2a/*
+!/data/e2a/*.json
+!/data/e2a/*.jsonl
+!/data/e0/
+/data/e0/*
+!/data/e0/*.json
 
 # Local agent settings (Cowork / Claude Code) — machine-local, not shared
 /.claude/
