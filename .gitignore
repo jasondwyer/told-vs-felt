@@ -30,6 +30,12 @@
 !/data/e0/e0_axes.npz
 !/data/e0/e0_random_dirs.npz
 
+# Ledger-26 regression verdicts: the record of whether a refactor was
+# accepted belongs in the repo, not on the machine that ran it (ledger 27).
+!/data/regression/
+/data/regression/*
+!/data/regression/*.json
+
 # r3 confirmatory gate results: the matched-pair criterion (rule 9) is
 # regression-tested against these, and the ledger-26 analysis suite must be
 # runnable on the box. Named explicitly -- data/configs/ otherwise stays local.

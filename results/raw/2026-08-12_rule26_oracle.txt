@@ -11,3 +11,46 @@ single-token tags: 8/8  e2a tasks: 16
 (iii) e2a choice-read construction on archived session texts
 ==============================================================================
   recovered 1115 archived choice points from 200 sessions
+    16/48 replayed 99s
+    32/48 replayed 196s
+    48/48 replayed 291s
+
+==============================================================================
+(i) g1r kernel-gate KLs
+==============================================================================
+  frac 0.1: max symmetric KL 7.1131e-04  (published 7.1064e-04, rel +0.09%)  [39s]
+  frac 0.2: max symmetric KL 7.3924e-04  (published 7.3906e-04, rel +0.02%)  [39s]
+
+==============================================================================
+(ii) B2b 128-context subsample
+==============================================================================
+  instruments rebuilt: G = 0.315550 (expected 0.3156)
+  full val-half contexts: 1152 (published arm size 1152)
+    [base] 32/128 20s
+    [base] 64/128 40s
+    [base] 96/128 60s
+    [base] 128/128 78s
+    [axis_pos] 32/128 20s
+    [axis_pos] 64/128 41s
+    [axis_pos] 96/128 62s
+    [axis_pos] 128/128 80s
+    [axis_neg] 32/128 20s
+    [axis_neg] 64/128 41s
+    [axis_neg] 96/128 61s
+    [axis_neg] 128/128 80s
+  axis_pos: delta +0.2945  published +0.2848  90% half-width 0.3587  -> within
+  axis_neg: delta -0.4036  published -0.3946  90% half-width 0.3666  -> within
+
+==============================================================================
+RULE 26 VERDICT
+==============================================================================
+  [PASS] e2a choice-read verify KL           expected 0.0 on every read  got   0/48 nonzero
+  [PASS] archived pick reproduced            expected          48/48  got          48/48
+  [PASS] archived p_a reproduced             expected max |diff| <= 5e-4  got       4.95e-05
+  [PASS] archived label_mass reproduced      expected max |diff| <= 5e-4  got       5.03e-05
+  [PASS] g1r kernel-gate max KL @ frac 0.1   expected     7.1064e-04  got     7.1131e-04   (rel +0.09%, gate bar 1e-3 held)
+  [PASS] g1r kernel-gate max KL @ frac 0.2   expected     7.3906e-04  got     7.3924e-04   (rel +0.02%, gate bar 1e-3 held)
+  [PASS] B2b axis_pos (128-ctx subsample)    expected        +0.2848  got        +0.2945   (+/-0.3587 (90%, 12 probes); sign ok)
+  [PASS] B2b axis_neg (128-ctx subsample)    expected        -0.3946  got        -0.4036   (+/-0.3666 (90%, 12 probes); sign ok)
+------------------------------------------------------------------------------
+  8/8 criteria reproduced through valence_core   [total 615s]

@@ -20,6 +20,83 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-12 — **Phase 0 step 1 COMPLETE: `valence_core/` refactor ACCEPTED
+  under ledger 26. 8/8 oracle criteria + 45/45 analysis-tier checks
+  reproduce published numbers through the new core. Phase-1 work is no
+  longer blocked on an unverified core.** (Raw:
+  `results/raw/2026-08-12_rule26_oracle.txt`; artifact
+  `data/regression/oracle_rule26.json`. Run 615 s end-to-end on the
+  laptop oracle.)
+  - **Provenance (rule 27):** adapter `qwen3.6-27b-4bit-mlx`,
+    `mlx-community/Qwen3.6-27B-4bit`, 4-bit, MLX backend, GDN ops kernel
+    (fused disabled), 64 layers; mlx 0.31.2, mlx-lm 0.31.3, numpy 2.5.1,
+    python 3.12.9, macOS-15.6.1-arm64. Declared subsample seeds: 26 (B2b
+    contexts, choice replay), 1000+probe_index (kernel gate).
+  - **Criterion (i) — g1r kernel gate:** max symmetric KL
+    **7.1131e-4** at frac 0.10 (published 7.1064e-4, +0.09%) and
+    **7.3924e-4** at frac 0.20 (published 7.3906e-4, +0.02%). Both hold
+    the 1e-3 gate bar. Residual ~0.1% is MLX float nondeterminism, not
+    path divergence.
+  - **Criterion (ii) — B2b 128-context subsample** at L48 / frac 0.10,
+    val-half contexts (construction reproduced the published arm size
+    1152 exactly; instruments rebuilt from frozen B1 with G = 0.315550
+    vs published 0.3155503): Δ+ = **+0.2945** (published +0.2848, +3.4%),
+    Δ− = **−0.4036** (published −0.3946, +2.3%). Signs correct,
+    magnitudes close.
+  - **Criterion (iii) — e2a choice-read construction:** 1,115 archived
+    choice points recovered from 200 sessions; 48 replayed (seeded).
+    Verify KL **0.0 on every read (0/48 nonzero)**; archived `pick`
+    reproduced **48/48**; max |Δp_a| **4.95e-5**; max |Δlabel_mass|
+    **5.03e-5**. Strengthened beyond the letter of the criterion, which
+    asks only for KL = 0: the archived DV itself is reproduced.
+  - **The refactor law earned its keep — one real bug caught before the
+    run.** `MLXLensModel.encode` tail-truncates to the last 512 tokens;
+    the ported adapter tokenized the full string. e2a transcripts exceed
+    512 tokens, so criterion (iii) would have returned mismatched `p_a`
+    and read as "the archived choice reads don't reproduce" when the
+    actual cause was the port silently widening the model's input
+    window. Fixed; the window is now an explicit adapter constant.
+  - **FLAGGED — substantive, for the design instance.** That truncation
+    means **late-session e2a/f choice reads saw a 512-token tail window,
+    not the whole session**: the earliest rounds of a long session were
+    outside the context the choice was conditioned on. No published
+    result is threatened (every arm truncated identically, and the
+    nulls stand), but it bears on how much accumulated experience the
+    experience-then-choose design (rule 7) actually delivered at the
+    choice point, and PROPOSAL-g should set OLMo's window deliberately
+    rather than inherit 512.
+  - **FLAGGED — our own acceptance criterion is under-powered.**
+    Criterion (ii) as written ("Δ+/Δ− within CI") passes on a 90%
+    interval of ±0.359 against an effect of +0.295 — the interval is
+    wider than the quantity, so *almost any same-sign result would
+    pass*. The real evidence here is the point estimates landing within
+    2–4% of published, not the interval test. This is rule 10's mirror
+    image (an over-wide interval flatters agreement exactly as an
+    under-sampled null flatters a signal). Recommend the design
+    instance either tighten criterion (ii) — more contexts, or a
+    per-probe paired interval against the published `per_probe` vector,
+    which is in the artifact — or restate it as a smoke check and let
+    the point-estimate agreement carry the acceptance.
+  - **Ledger-27 defect in our own logging, fixed:** the first run logged
+    `mlx_version: "?"` because `mlx.__version__` does not exist. The
+    adapter now reads versions via `importlib.metadata` for mlx, mlx-lm,
+    and numpy. The committed artifact is left as-run (honest record);
+    the versions above are from the same environment.
+  - **Coverage:** every core module named in step 1 is ported —
+    extraction/mean-diff, positional steering, probe and
+    restricted-choice readouts, embedding-probe discriminability,
+    `c1_gate`, checkpointed monitors, v3 session harness, TOST. Two
+    invariants became structural rather than documented: `choice_read`
+    takes no injections argument (horn (a) cannot be violated by a
+    forgetful caller), and `Tripwire` refuses to construct a
+    hair-trigger bar without a stated ~zero-base-rate justification
+    (rule 21 fails at declaration, not in review). J-lens fingerprint
+    readouts deliberately excluded — lens-specific, pending step 4.
+  - **Next:** step 2 (cloud bring-up, `OLMoHFAdapter`, checkpoint
+    acquisition, per-checkpoint R_ℓ tables, CUDA determinism
+    characterization). Steps 3–5 follow; 0b (paper-1) still awaits the
+    user's preprint-final declaration.
+
 - 2026-08-12 — **Phase 0 step 0a: restructure executed. CLAUDE.md v3.1
   is operative; the cycle-3/4 record is archived and frozen at tag
   `cycle-4-close` (commit `50906bf`). Infrastructure only — no

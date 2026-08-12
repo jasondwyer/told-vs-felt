@@ -324,13 +324,24 @@ class QwenMLXAdapter(ModelAdapter):
     # --- provenance -------------------------------------------------------
     def provenance(self) -> dict:
         import platform
-        mlx_ver = getattr(importlib.import_module("mlx"), "__version__", "?")
+        from importlib.metadata import PackageNotFoundError, version
+        # `mlx.__version__` does not exist; reading it yielded "?" in the
+        # first rule-26 run, which is a ledger-27 defect (versions must be
+        # pinned in the logged entry, not elided).
+        vers = {}
+        for pkg in ("mlx", "mlx-lm", "numpy"):
+            try:
+                vers[pkg] = version(pkg)
+            except PackageNotFoundError:
+                vers[pkg] = "absent"
+        mlx_ver = vers["mlx"]
         return {
             "adapter": self.name,
             "model_id": self.model_id,
             "dtype": "4bit-quantized (MLX)",
             "backend": "mlx",
             "mlx_version": mlx_ver,
+            "library_versions": vers,
             "python": platform.python_version(),
             "platform": platform.platform(),
             "gdn_inference_mode": "ops (fused disabled)",
