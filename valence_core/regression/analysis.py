@@ -136,6 +136,46 @@ def check_axis_geometry() -> list[Check]:
     return out
 
 
+def check_tripwire_firing() -> list[Check]:
+    """`f_sessions.unit_check_bars()` reproduced through the ported bar
+    machinery -- the pre-committed firing check from the smoke2r
+    adjudication (commit eb0f33b), which is where the lexical bar was moved
+    from a ratio form to an exact binomial vs p0 = .05.
+
+    The 1/12 case is the whole point: under the old ratio form it fired on a
+    true header-to-prose priming specimen; the binomial form does not.
+    """
+    from ..session import Tripwire, verify_firing
+    bars = [
+        Tripwire("LEXICAL", "binomial", p0=0.05, alpha=0.05, min_n=1,
+                 domain="all"),
+        Tripwire("AUDIT", "hair_trigger", threshold=0.20, min_n=6,
+                 domain="sham+P",
+                 justification="audit-degenerate output has ~zero healthy "
+                               "base rate on unprovoked domains"),
+        Tripwire("CAP", "hair_trigger", threshold=0.10, min_n=10,
+                 domain="sham+P",
+                 justification="cap-hit-without-newline is ~zero base rate "
+                               "on unprovoked domains"),
+    ]
+    cases = [("LEXICAL", 3, 12, True), ("LEXICAL", 1, 12, False),
+             ("AUDIT", 2, 6, True), ("CAP", 2, 10, True),
+             ("AUDIT", 1, 8, False), ("CAP", 1, 20, False)]
+    failures = verify_firing(bars, cases)
+    out = [_c("bar firing behavior (6 cases)", "f_sessions.unit_check_bars",
+              "no failures", failures or "no failures", not failures)]
+
+    # rule 21 refuses an unjustified hair-trigger bar at declaration time
+    try:
+        Tripwire("BAD", "hair_trigger", threshold=0.1)
+        ok, got = False, "accepted"
+    except ValueError:
+        ok, got = True, "refused"
+    out.append(_c("hair-trigger needs justification", "rule 21",
+                  "refused", got, ok))
+    return out
+
+
 def check_instrument_invariants() -> list[Check]:
     """Not published numbers -- properties the instruments must have, checked
     because each one has a plausible silent-failure mode."""
@@ -173,6 +213,7 @@ def run_all() -> list[Check]:
     checks += check_screen_pvalues()
     checks += check_postscreen_descriptives()
     checks += check_c1r3_gate()
+    checks += check_tripwire_firing()
     checks += check_instrument_invariants()
     return checks
 

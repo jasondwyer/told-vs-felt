@@ -33,7 +33,12 @@ import numpy as np
 from .adapters.base import Injection, ModelAdapter
 
 EPS = 1e-12
-VERIFY_KL_BAR = 1e-6           # g3' clause 1
+# g3' clause 1 was stated as <= 1e-6 in e2a; the v3 session harness hardened
+# it to exact equality (`if kl != 0.0: HALT`) and that is the operative form
+# -- rule-26 criterion (iii) is "KL = 0.0 exactly". The looser bar is kept
+# reachable for the e2a-era comparison only.
+VERIFY_KL_BAR = 0.0
+VERIFY_KL_BAR_E2A = 1e-6
 
 
 def softmax(logits: np.ndarray) -> np.ndarray:
@@ -119,8 +124,8 @@ def assert_construction_stable(read: ChoiceRead,
         raise ValueError("choice_read was not run with verify=True")
     if read.verify_kl > bar:
         raise SystemExit(
-            f"CONSTRUCTION DRIFT (g3' clause 1): symmetric verify KL "
-            f"{read.verify_kl:.3e} > {bar:.0e} on an identical code path")
+            f"CONSTRUCTION INCIDENT (g3' clause 1): symmetric verify KL "
+            f"{read.verify_kl!r} > {bar!r} on an identical code path -- HALT")
 
 
 @dataclass
