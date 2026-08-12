@@ -48,7 +48,17 @@ def _ensure_clone_on_path() -> None:
 class QwenMLXAdapter(ModelAdapter):
     name = "qwen3.6-27b-4bit-mlx"
 
-    def __init__(self, model=None, model_id: str = "mlx-community/Qwen3.6-27B-4bit"):
+    # `MLXLensModel.encode` truncates to the LAST `max_length` tokens. Every
+    # published cycle-3/4 number was produced through that truncation, so the
+    # oracle must keep it: e2a session transcripts exceed 512 tokens, which
+    # means late-session choice reads saw a tail window, not the whole
+    # session. Preserved here for fidelity and flagged as a design question
+    # for Phase 2 -- a Phase-2 adapter must declare its own window rather
+    # than inherit this one (rule 1's spirit: nothing carries across models).
+    ENCODE_MAX_LENGTH = 512
+
+    def __init__(self, model=None, model_id: str = "mlx-community/Qwen3.6-27B-4bit",
+                 max_length: int | None = None):
         _ensure_clone_on_path()
         self._mx = importlib.import_module("mlx.core")
         self._model_mod = importlib.import_module("jlens_qwen.model")
@@ -56,6 +66,8 @@ class QwenMLXAdapter(ModelAdapter):
         self._cond = importlib.import_module("jlens_qwen.conditioning")
         self._patch_gdn = importlib.import_module("jlens_qwen.patch_gdn")
         self.model_id = model_id
+        self.max_length = (self.ENCODE_MAX_LENGTH if max_length is None
+                           else max_length)
         self._model = model if model is not None else self._model_mod.load(model_id)
         # Ops kernel, not fused: every published strain/accuracy number was
         # measured on it (conditioning.SteeredStreamSession's own note).
@@ -63,8 +75,15 @@ class QwenMLXAdapter(ModelAdapter):
 
     # --- tokenization -----------------------------------------------------
     def encode(self, text: str, add_special_tokens: bool = True) -> list[int]:
-        return list(self._model.tokenizer.encode(
+        """Tail-truncating to `max_length`, exactly as `MLXLensModel.encode`
+        does. `add_special_tokens=False` callers (single-token tag lookups)
+        are short and unaffected, but the truncation is applied uniformly so
+        there is one encode path, not two."""
+        ids = list(self._model.tokenizer.encode(
             text, add_special_tokens=add_special_tokens))
+        if self.max_length and len(ids) > self.max_length:
+            ids = ids[-self.max_length:]
+        return ids
 
     def decode(self, ids: Sequence[int]) -> str:
         return self._model.tokenizer.decode(list(ids))
