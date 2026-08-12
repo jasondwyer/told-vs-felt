@@ -23,6 +23,12 @@
 !/data/e0/
 /data/e0/*
 !/data/e0/*.json
+# Frozen DIRECTION artifacts only (~1.2 MB): rule 1 sha-verifies against
+# these and every published dose is a fraction of the R_l in the meta.
+# Named explicitly -- e0_residuals.npz (202 MB of raw residuals) stays local,
+# and a bare *.npz exception would sweep it in.
+!/data/e0/e0_axes.npz
+!/data/e0/e0_random_dirs.npz
 
 # Local agent settings (Cowork / Claude Code) — machine-local, not shared
 /.claude/

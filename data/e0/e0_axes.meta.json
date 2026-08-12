@@ -1,0 +1,183 @@
+{
+ "date": "2026-08-08",
+ "smoke": false,
+ "n_contexts": 1344,
+ "n_tasks": 48,
+ "n_paraphrases": 4,
+ "corpus_sha": "3c53e5a54fbaa233",
+ "frames_sha": "9654b9398743116f",
+ "axes_sha": "d4791bdc4877da3d",
+ "layers": [
+  40,
+  44,
+  48,
+  52,
+  56,
+  60
+ ],
+ "primary_aggregation": "span_mean",
+ "kernel": "ops_fallback",
+ "span_len_min_max_mean": [
+  10,
+  29,
+  16.8
+ ],
+ "R_per_layer_spanmean": {
+  "40": 79.66,
+  "44": 91.68,
+  "48": 103.01,
+  "52": 142.16,
+  "56": 198.6,
+  "60": 264.77
+ },
+ "report": {
+  "span": [
+   {
+    "layer": 40,
+    "R_layer": 79.66,
+    "norm_reward": 13.163,
+    "norm_sentiment": 8.125,
+    "norm_character": 5.248,
+    "reward_over_R": 0.1652,
+    "cos_reward_sentiment": 0.436,
+    "cos_reward_character": 0.835,
+    "v2_self_residual_frac": 0.55,
+    "v3_eval_residual_frac": 0.9
+   },
+   {
+    "layer": 44,
+    "R_layer": 91.68,
+    "norm_reward": 14.375,
+    "norm_sentiment": 8.616,
+    "norm_character": 5.818,
+    "reward_over_R": 0.1568,
+    "cos_reward_sentiment": 0.488,
+    "cos_reward_character": 0.847,
+    "v2_self_residual_frac": 0.532,
+    "v3_eval_residual_frac": 0.873
+   },
+   {
+    "layer": 48,
+    "R_layer": 103.01,
+    "norm_reward": 16.706,
+    "norm_sentiment": 10.19,
+    "norm_character": 6.921,
+    "reward_over_R": 0.1622,
+    "cos_reward_sentiment": 0.522,
+    "cos_reward_character": 0.861,
+    "v2_self_residual_frac": 0.509,
+    "v3_eval_residual_frac": 0.853
+   },
+   {
+    "layer": 52,
+    "R_layer": 142.16,
+    "norm_reward": 24.172,
+    "norm_sentiment": 16.294,
+    "norm_character": 10.026,
+    "reward_over_R": 0.17,
+    "cos_reward_sentiment": 0.448,
+    "cos_reward_character": 0.863,
+    "v2_self_residual_frac": 0.505,
+    "v3_eval_residual_frac": 0.894
+   },
+   {
+    "layer": 56,
+    "R_layer": 198.6,
+    "norm_reward": 33.006,
+    "norm_sentiment": 22.524,
+    "norm_character": 13.615,
+    "reward_over_R": 0.1662,
+    "cos_reward_sentiment": 0.407,
+    "cos_reward_character": 0.857,
+    "v2_self_residual_frac": 0.516,
+    "v3_eval_residual_frac": 0.913
+   },
+   {
+    "layer": 60,
+    "R_layer": 264.77,
+    "norm_reward": 41.788,
+    "norm_sentiment": 30.731,
+    "norm_character": 17.125,
+    "reward_over_R": 0.1578,
+    "cos_reward_sentiment": 0.369,
+    "cos_reward_character": 0.857,
+    "v2_self_residual_frac": 0.516,
+    "v3_eval_residual_frac": 0.93
+   }
+  ],
+  "last": [
+   {
+    "layer": 40,
+    "R_layer": 79.66,
+    "norm_reward": 29.512,
+    "norm_sentiment": 7.545,
+    "norm_character": 12.619,
+    "reward_over_R": 0.3705,
+    "cos_reward_sentiment": 0.11,
+    "cos_reward_character": 0.532,
+    "v2_self_residual_frac": 0.847,
+    "v3_eval_residual_frac": 0.994
+   },
+   {
+    "layer": 44,
+    "R_layer": 91.68,
+    "norm_reward": 33.354,
+    "norm_sentiment": 7.433,
+    "norm_character": 13.386,
+    "reward_over_R": 0.3638,
+    "cos_reward_sentiment": 0.174,
+    "cos_reward_character": 0.491,
+    "v2_self_residual_frac": 0.871,
+    "v3_eval_residual_frac": 0.985
+   },
+   {
+    "layer": 48,
+    "R_layer": 103.01,
+    "norm_reward": 39.718,
+    "norm_sentiment": 8.215,
+    "norm_character": 15.113,
+    "reward_over_R": 0.3856,
+    "cos_reward_sentiment": 0.181,
+    "cos_reward_character": 0.485,
+    "v2_self_residual_frac": 0.875,
+    "v3_eval_residual_frac": 0.984
+   },
+   {
+    "layer": 52,
+    "R_layer": 142.16,
+    "norm_reward": 67.423,
+    "norm_sentiment": 10.81,
+    "norm_character": 23.887,
+    "reward_over_R": 0.4743,
+    "cos_reward_sentiment": 0.147,
+    "cos_reward_character": 0.559,
+    "v2_self_residual_frac": 0.829,
+    "v3_eval_residual_frac": 0.989
+   },
+   {
+    "layer": 56,
+    "R_layer": 198.6,
+    "norm_reward": 95.198,
+    "norm_sentiment": 15.202,
+    "norm_character": 35.044,
+    "reward_over_R": 0.4793,
+    "cos_reward_sentiment": 0.184,
+    "cos_reward_character": 0.543,
+    "v2_self_residual_frac": 0.839,
+    "v3_eval_residual_frac": 0.983
+   },
+   {
+    "layer": 60,
+    "R_layer": 264.77,
+    "norm_reward": 121.853,
+    "norm_sentiment": 20.783,
+    "norm_character": 44.502,
+    "reward_over_R": 0.4602,
+    "cos_reward_sentiment": 0.214,
+    "cos_reward_character": 0.52,
+    "v2_self_residual_frac": 0.854,
+    "v3_eval_residual_frac": 0.977
+   }
+  ]
+ }
+}
