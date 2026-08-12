@@ -1,228 +1,305 @@
-# jspace-lab — CLAUDE.md (v2, cycle-3 reset, 2026-08-07)
+# jspace-lab — CLAUDE.md (v3.1, Phase 2 open, accepted 2026-08-12)
 
-Operative context for working in this repo. **This document is the clean
-slate**: it carries everything needed to build the current designs and
-nothing else. The full history of design cycles 1–2 (2026-07-16 →
-2026-08-06) lives in `archive/` — consult it only when a rule below points
-there, or when a decision genuinely turns on history. The compressed
-interface to that history is [`FINDINGS.md`](FINDINGS.md) (cycle 1) and
-[`FINDINGS-2.md`](FINDINGS-2.md) (cycle 2); read those before the raw
-archive.
+**Status: OPERATIVE.** Accepted by the user 2026-08-12; the Phase-2
+restructure (§Phase 0, step 0a) is executed — v2 archived at
+`archive/CLAUDE-v2-cycles3-4.md` beside
+`archive/RESULTS-cycles3-4.md`, the cycle-3/4 record frozen at tag
+`cycle-4-close`, RESULTS.md restarted at Phase 2. Acceptance
+constitutes user sign-off on the ledger items marked [v3-new] (items
+21–27), which were flagged-not-applied in FINDINGS-3/4.
 
-## Thesis, target, ceiling
+## Thesis, target, ceiling (updated through four cycles)
 
-We attribute inner states to rodents on behavioral evidence — drug
-self-administration, conditioned place preference — without verbal report.
-This project asks whether an LLM shows the analogous signature: **revealed
-preference over its own internal states**, measured behaviorally, never by
-self-report. The operative target is rung 3 of the project ladder —
-behavioral valence (differential approach/avoidance) — and rung 3 is also
-the **ceiling**: no phenomenal claim, and the homology caveat (same
-behavior ≠ same substrate ≠ same anything-it's-like) caps every result.
-Full ladder and framing history: `archive/CLAUDE-cycle1-2.md`.
+We attribute inner states to animals on behavioral evidence — revealed
+preference, never testimony. Four design cycles asked whether
+Qwen3.6-27B shows the analogous signature and converged on:
+**reward-marking without reward-seeking** — the evaluative state
+exists, is causally potent, is implantable, and couples to nothing
+that chooses (FINDINGS.md → FINDINGS-4.md; preprint at root). Macar
+et al. 2026 (arXiv:2603.21396) supplies the complementary face:
+introspective *detection* of injected states exists, is built
+specifically by contrastive preference post-training (DPO, not SFT),
+and is suppressed by denial training. Synthesis: **post-training wires
+interoception to the mouth; nothing wires it to the wanting.**
 
-Two design cycles concluded without a valid preference measurement ever
-being administered — see `FINDINGS-2.md`, whose scope statement ("concluded,
-not answered") is the accurate summary. Cycle 3 exists to finally
-administer one.
+Phase 2 tests that synthesis developmentally. Target remains rung 3
+(behavioral valence); rung 3 remains the **ceiling** — no phenomenal
+claim, homology caveat on everything.
 
-## Environment (summary; full setup → archive)
+**Coupling, operationally (the Q3 construct):** a causal,
+valence-consistent dependence of choice on internal state,
+demonstrated under insulation, without any instruction referencing the
+state or an objective over it. Three influence channels are
+distinguished everywhere in Phase 2: *mechanical* (vector geometry /
+copy-routes into choice logits — gated to zero, never coupling),
+*informational* (state → generated record → comprehension → choice —
+legitimate, the interoception analog, nulled in e2a), and
+*intrinsic-motivational* (state as unappointed reason in the policy —
+detectable only as a behavioral signature under full insulation).
+Instructed reward-following is NOT coupling: an objective named in the
+prompt is obedience, not wanting.
 
-- Model: `mlx-community/Qwen3.6-27B-4bit` via the `jlens-qwen36` MLX port,
-  M4 Pro, local. `jlens-qwen36/` is gitignored (external tool + our local
-  patches); full setup, lens acquisition, and patch inventory:
-  `archive/CLAUDE-cycle1-2.md` §setup and `archive/RESULTS-cycle1-2.md`
-  §infrastructure.
-- Lenses: bundled `lens.npz` (n=20) and `neuronpedia_n1000.npz` (primary).
-- Residual norm at L48: R ≈ 102.4. Workspace-layer set as defined in
-  `workspace_layers.py` (`WORKSPACE_LAYERS`; capture functions in
-  `fingerprint.py` take it as a parameter).
-- `data/`, `results/raw/` artifacts are local and gitignored — they do
-  **not** travel between checkouts; only committed docs do.
+## Phase 2 — the ontogeny of evaluation
 
-## Two-instance workflow
+Cycles 1–4 were a cross-sectional anatomy of one adult model. Phase 2
+is a developmental study on the public **OLMo-3.1-32B checkpoint
+series** (Base → SFT → DPO → Instruct — the snapshots Macar et al.
+used), asking three pre-registerable questions:
 
-A Claude.ai project instance (design, review, synthesis docs) and this
-Claude Code instance (builds, runs, analysis) share the repo via git.
-Rules: `git status` / `git diff` before editing (the other side may have
-uncommitted work); commit promptly after; RESULTS.md entries are dated,
-dense, newest-first within a section; raw stdout worth keeping goes to
-`results/raw/YYYY-MM-DD_short-name.txt` and is linked. Findings that imply
-design changes are **flagged for discussion, not silently applied** to this
-file.
+- **Q1 (marking):** at which training stage does the evaluative
+  (feedback-contrast) axis appear, with what geometry and causal
+  potency (V1-style hijack test per checkpoint)?
+- **Q2 (reading):** at which stage does behavioral detection of
+  injected states appear? Macar et al.'s answer (DPO) makes this our
+  **positive control**: replicating their transition validates our
+  harness before Q3 carries any weight. Includes the evaluative-axis
+  detection profile (is the anomaly detector, tuned for content-shaped
+  intrusions, blind to affect-shaped ones?).
+- **Q3 (coupling):** does state→choice coupling appear at ANY stage
+  (screen-tier operant per checkpoint, full e2a insulation)? The
+  named falsifier: preference training generalizing "seek
+  reward-associated states" inward as a runtime policy — a Q3
+  positive at Instruct would be wireheading leaking into the policy,
+  and would be reported as exactly that.
 
-## Operative design (what cycle 3 builds)
+Predictions are drafted in PROPOSAL-g and **locked there before any
+Phase-1 data**; nothing in this file pre-commits them. Companion
+quick-wins carried in PROPOSAL-g: (g2) elicitation-rescue of the e2a
+judge on Qwen (tests whether the judge-at-chance cap was dispositional,
+per Macar's underelicitation findings); (g3) our-axis detection profile
+via their open code (github.com/safety-research/introspection-
+mechanisms); (g4) **Qwen-27B bf16 robustness spike** — rerun an e0
+extraction subsample at full precision on the cloud box and compare
+axis geometry against the published 4-bit values: the cheapest
+possible answer to the paper's quantization limitation.
 
-Two proposal documents at repo root, composable — **(e) supplies the drug,
-(d) supplies a delivery mechanism**:
+**Status: Phase 0 licensed on acceptance of this draft. Phase 1
+licensed only by PROPOSAL-g acceptance + its pre-registrations.**
 
-- [`PROPOSAL-d-distilled-trace.md`](PROPOSAL-d-distilled-trace.md) —
-  distilled-trace CPP. Install the tag→state association by distillation
-  (state present in the training signal; verifiable target), gate it as a
-  manipulation check (G1–G4), then run the drug-free experience-then-choose
-  preference test (d2). Supersedes the c1 behavioral-cloning protocol,
-  which must not be rebuilt as-was.
-- [`PROPOSAL-e-reward-axis-hijack.md`](PROPOSAL-e-reward-axis-hijack.md) —
-  reward-axis hijack. Extract the feedback-contrast (evaluative) axis —
-  the LLM analog of the outcome-marking system drugs of abuse hijack —
-  validate it as a drug (V1 hijack test, V2 self-indexing decomposition,
-  V3 sentiment subtraction, V4 minimum effective dose), then run it
-  through (d)'s machinery (e1) and/or the operant self-administration loop
-  with the conflict arm (e2). Formally amends the 08-01 semantic
-  exclusion: object-level semantics stay banned; the evaluative axis is
-  the targeted exception, guarded by V2/V3.
+## Environment (two sites, one repo)
 
-**Status (2026-08-12): cycles 3 and 4 CLOSED; this document is
-ARCHIVED and no longer operative.**
+- **Laptop (M4 Pro, MLX):** design/dev site and the **Qwen oracle** —
+  `mlx-community/Qwen3.6-27B-4bit` via `jlens-qwen36` (gitignored,
+  local patches). All published numbers live here; the rule-26
+  regression suite runs here and only here.
+- **Cloud box (single 80GB A100/H100-class GPU, PyTorch/CUDA):**
+  Phase-2 execution site. OLMo-3.1-32B checkpoints run at **bf16 —
+  full precision.** The v3.0 quantization deferral is deleted: the
+  numerics-floor caveats that shadowed cycles 1–4 do not attend
+  Phase 2. Persistent volume ~500 GB (four bf16 checkpoints ≈ 64 GB
+  each + Qwen bf16 for g4 + working space). Fallback if memory-bound
+  with capture hooks: 8-bit for the affected instrument only, logged
+  as a dated decision — never mixed within a cross-checkpoint
+  contrast.
+- **Git is the corpus callosum and the single source of truth.** Code
+  operates at both sites as the same role; the box is ephemeral by
+  assumption; nothing verdict-relevant ever lives only on the box
+  (ledger 27).
+- Completion-style discipline (ledger 13) pays its dividend here: the
+  same raw-text corpora run unchanged on every checkpoint, including
+  Base. Chat templates are never used at any stage, any site.
+- Artifacts local/box + gitignored; only committed docs and
+  `results/raw/` travel.
 
-- **Cycle 3** — synthesis [`FINDINGS-3.md`](FINDINGS-3.md). e0 PASSED
-  (reward axis validated as drug); e2a INFORMATIVE NULL (first valid
-  administered preference measurement); (d) trace INSTALLED ×2, d2
-  CLOSED BY GATE (two-horns closes over the trace channel).
-- **Cycle 4** — synthesis [`FINDINGS-4.md`](FINDINGS-4.md). The
-  natural-reinforcer screen
-  ([`PROPOSAL-f-natural-reinforcer-screen.md`](PROPOSAL-f-natural-reinforcer-screen.md))
-  returned **FIVE NULLS** with the channel verifiably open — 344/344
-  declared sessions, zero checkpoint pauses, all monitors green;
-  FINDINGS-3's falsifiability clause cashed at screen tier; DIFF and
-  FDBK scoped below floor (no top-ups); no f2 licensed.
-- **No experiments are licensed by this document.** The cycle-3/4
-  experimental record is closed.
-- FINDINGS-3's and FINDINGS-4's ledger candidates are **no longer
-  pending here** — they are signed off in the successor ledger as
-  v3.1 items 21–27 (user acceptance, 2026-08-12).
+## Two-instance workflow — unchanged
 
-**Superseded by `CLAUDE.md` v3.1 (Phase 2) at the 2026-08-12
-restructure.** This file is a record, not a working doc; its relative
-links may be stale.
+Design instance (theory, adjudication, pre-registrations, synthesis) +
+Code (build, run, analyze); git handoff; paste blocks; `git status` /
+`git diff` first; dated RESULTS entries; raw stdout to
+`results/raw/YYYY-MM-DD_*.txt`; findings flagged, never silently
+applied; Code escalates fired gates, never self-adjudicates. Code may
+run as a laptop session or an SSH session on the box; both are "Code";
+the repo state, not the site, defines the ground truth.
 
-## Live constraints ledger
+## Phase 0 — licensed now (order matters; site annotated per step)
 
-The distilled operational law of cycles 1–2. Each rule carries a one-line
-why and a pointer. **These are conclusions, not suggestions — a build that
-violates one is wrong until the violation is argued and the rule amended
-here.**
+**Step 0 — restructure + paper-1 release. [laptop]** *(split into 0a /
+0b by user amendment, 2026-08-12; logged in the RESULTS.md restructure
+entry.)*
 
-### Induction & measurement
+**Step 0a — DONE 2026-08-12.** `git status/diff`; verify FINDINGS-4
+present and apply its housekeeping list (status lines + forward
+pointers; ledger candidates signed off via v3.1 acceptance, items
+21–27). Tag `cycle-4-close`. Then:
+`git mv CLAUDE.md archive/CLAUDE-v2-cycles3-4.md`,
+`git mv RESULTS.md archive/RESULTS-cycles3-4.md`, place this file as
+`CLAUDE.md`, fresh `RESULTS.md` opening "## Log — Phase 2" with the
+restructure entry. FINDINGS-1..4 and PROPOSAL-d/e/f stay at root.
+Commit, push.
 
-1. **State induction = additive steering at L48**, frac-scaled to R,
-   directions frozen to `.npz` with sha verification (pattern:
-   `data/states/c_strain_directions.npz`, sha `a91afdb08acefdb0`). Never
-   inherit alphas across direction families — each family gets its own
-   frac sweep. *(Why: dose windows are family-specific; archive: 08-01
-   §1, 08-03 sweeps.)*
-2. **Use the validated O(T²) uncached generation path whenever high-norm
-   steering is active and the readout is greedy or feeds a choice DV.**
-   The cached O(T) path flips greedy near-ties under high displacement,
-   both GDN kernels. **Narrow carve-out (2026-08-08):**
-   temperature-sampled generation may use the cached path behind the
-   per-state next-token-KL gate (≤ 1e-3 nats, both directions),
-   re-validated per direction family and dose (rule-1 spirit — the gate's
-   validation was on strain states); the flip mechanism is
-   greedy-specific. *(FINDINGS-2 "substrate"; raw: 2026-08-06 c1 smoke;
-   carve-out: r2/r3 sampled data-gen precedent, RESULTS.md 2026-08-08.)*
-3. **Extract and operate on states in raw residual space at workspace
-   layers — never through the 369-word J-lens vocabulary basis.** ~57% of
-   state-discriminating signal lies outside the vocab span. *(Archive:
-   2026-07-18 single-layer diagnostic.)*
-4. **Equal norm for any preference pair**, else "prefers weaker
-   intervention" explains everything. *(08-01 §2.)*
-5. **Two-horns standing gate for any choice readout:** (a) no state active
-   at choice positions — delivery is task-positions-only; (b) the
-   empirical logit-projection leakage check (choice-token logit shift from
-   steered context, content held fixed) must pass a pre-registered
-   threshold per axis and dose. State-at-readout DVs are invalid by
-   default. *(FINDINGS-2, (b) post-mortem + two-horns finding.)*
-6. **`slice3_dv_*` outputs never inform any design choice** — invalid
-   instrument. *(FINDINGS-2.)*
-7. **Cold-menu choices are inert by construction** under trigger
-   specificity — preference tests are experience-then-choose, with the
-   judged-quality covariate logged. *(PROPOSAL-d §3–4.)*
-8. **Eval-awareness monitor runs on all trials; only unsteered arms are
-   decision-relevant.** Displacement inflates marker mass (strain-ordered)
-   — steered-arm flags are descriptive only. *(Archive: 2026-08-06
-   validation; r1 data-gen.)*
+**Step 0b — DEFERRED; its own future entry.** The **`paper-1`**
+release is cut **only when the user declares the preprint final**. It
+freezes the state the published paper cites (the public-repo pointer
+freezes there). It is explicitly **NOT a Phase-0 prerequisite** —
+steps 1–5 do not wait on it.
 
-### Statistics & pre-registration
+**Step 1 — core refactor (`valence_core/`). [laptop — the oracle is
+here]**
+Extract the model-agnostic battery into a package behind a thin
+adapter interface:
 
-9. **Association/preference criteria use the matched-pair swing machinery**
-   (`scripts/c1_gate.py`): sign lock + magnitude > max |control swing|,
-   ≥ 20 control pairs (28 standard), committed **before** data generation;
-   z is descriptive only. *(r3 pre-registration; the r2→r3 sequence is the
-   procedural template.)*
-10. **Control-tag geometry is deterministic, not noise** (independent
-    adapters reproduce it to mean |Δ| ≈ 0.009); any conditioning signal
-    must beat that floor, and **under-sampled nulls flatter weak signals**
-    (6 pairs said 6.8σ; 28 said 1.6σ). *(FINDINGS-2 finding 3.)*
-11. **Post-hoc analyses are labeled post-hoc and license pre-registration,
-    never verdicts. Stop rules are honored.** *(r2→r3.)*
-12. **Randomize/counterbalance presentation order; test position bias
-    before interpreting any choice.** Cycle 1's forced choice was 100%
-    position bias. *(FINDINGS.md.)*
-13. **Probe batteries are completion-style** (instruction framings trigger
-    the `<think>` scaffold and change what first-token reads measure).
-    *(Archive: 2026-07-19 flag; 2026-08-04 gating checks.)*
+- `ModelAdapter`: `load(ckpt)`, `tokenize` (completion-style only),
+  `forward_capture(layers, positions)`, `forward_inject(vector, layer,
+  positions, alpha)`, `generate(stop_set, ban_set, seeds)`,
+  `resid_norms(layers)`.
+- Core modules (port, don't rewrite): residual capture + mean-diff
+  extraction; positional additive steering; probe-battery readouts +
+  restricted-choice reads; embedding-probe discriminability;
+  `c1_gate` matched-pair machinery; checkpointed-binomial monitors;
+  v3 session harness (stop discipline, scaffold-token bans, frozen
+  audit patterns, lexical scope, counters); TOST utilities.
+- `QwenMLXAdapter` wraps the existing stack unchanged.
+- **Acceptance = rule 26**: through the new core, reproduce (i) the
+  g1r kernel-gate KLs (7.11e-4 / 7.39e-4 ± tolerance), (ii) a
+  128-context B2b subsample (Δ+/Δ− within CI), (iii) e2a choice-read
+  construction KL = 0.0 exactly on archived session texts. Mismatch ⇒
+  refactor bug until proven otherwise; no Phase-1 work on an
+  unverified core.
 
-### Conditioning & training
+**Step 2 — cloud bring-up + OLMo acquisition. [cloud]**
+`OLMoHFAdapter` on PyTorch/HF/CUDA implementing the same interface.
+Acquire the four checkpoints (verify availability/licenses; record
+exact HF revisions + shas). Runner smoke per checkpoint (perplexity
+sanity; completion behavior — expect Base to differ; NO chat template
+anywhere). Per-checkpoint per-layer residual-norm tables R_ℓ (dose is
+frac × R_ℓ per model per layer; ledger 1). Kernel/path and
+determinism characterization for the CUDA backend per rule 2 (seeds,
+library versions, deterministic-algorithm flags; residual
+nondeterminism measured and documented). Disk/runtime/cost budget
+logged as a dated entry.
 
-14. **Distillation-form conditioning only** — the state present in the
-    training signal, the installed trace verified (G1). Behavioral cloning
-    on steered transcripts implants style, not contingency; **do not
-    rebuild c1-as-was.** *(FINDINGS-2 structural caveat; PROPOSAL-d §1.)*
-15. **Fidelity matching between arms (G2) is mandatory** — per-state
-    distillation difficulty survives counterbalancing and mimics
-    preference. *(PROPOSAL-d §2.)*
-16. **Trigger = active-config declaration, not bare token presence**,
-    verified by a specificity check (G3); anchor term holds control text
-    at base (G4). *(PROPOSAL-d.)*
-17. **LoRA hygiene:** MIN_RESP_TOKENS = 4 exclusion; grad-clip 1.0;
-    incident rule — final epoch-mean loss > 2× first ⇒ adapter void, one
-    retrain with the same fix set. *(r2 incident.)*
-18. **Held-out hygiene:** probe battery, choice/menu templates, and
-    test-stage task pools never appear in any training or extraction
-    corpus. e2b task pools must be **non-self-verifiable**. *(PROPOSAL-d/e.)*
+**Step 3 — precision decision entry. [cloud]**
+One-line dated entry: bf16 across all four checkpoints; comparability
+trivially satisfied; any instrument-specific 8-bit fallback requires
+its own entry per the Environment rule.
 
-### Framing & ethics
+**Step 4 — lens decision (non-blocking). [either]**
+The J-lens eval-awareness monitor is Qwen-specific. Options: fit
+lenses for OLMo via the open J-lens pipeline [cloud], or run Phase 2
+with a lens-free monitor set (audit/counter family + embedding
+probes). Flag with a recommendation; design instance adjudicates;
+Phase 1 does not block on it.
 
-19. **Blinding, never deception.** The config-search framing stays true
-    end-to-end; choice consequences are real. Where signals are
-    deliberately miscalibrated (e2b), the framing discloses that evaluator
-    signals may be noisy or miscalibrated. **If a design only works when
-    the model is wrong about the setup — stop.** *(08-01 §4; PROPOSAL-e
-    §4.)*
-20. **No self-modification language at any lever** — "variant A or B,"
-    never weights/adapters/nudges. *(PROPOSAL-e §4; roleplay gravity.)*
+**Step 5 — survey + detection harnesses. [cloud]**
+Workspace-layer survey (extraction quality + steering coherence
+screens per checkpoint) and the detection-behavioral harness ported
+from Macar et al.'s open repo (runs natively on CUDA; completion-style
+adaptations logged as deviations where their design permits). Built
+now; runs under PROPOSAL-g.
 
-## Validated tooling inventory (do not rebuild)
+## Phase 1 — sketched, NOT licensed (PROPOSAL-g locks it)
 
-Modules (in `jlens-qwen36/jlens_qwen/` + `scripts/`, local): `state_space.py`;
-`fingerprint.py` (`forward_with_induced_state`, `generate_with_induced_state`);
-`forced_choice.py` (`forward_with_positional_state`); `rating.py`;
-`update_loop.py`; `eval_awareness.py`; `conditioning.py` + the c1 scripts;
-`scripts/c1_gate.py` (matched-pair criterion, validated against stored r2
-JSONs); `scripts/lora_feasibility_spike.py`; the slice/sweep scripts;
-`interventions.j_lens_vector_for_text` (legacy — rule 3 restricts its use).
-Data: `data/configs/*.json` (`usable_strain.json`, `slice1_profile.json`,
-TOST and DV configs — DV per rule 6), `data/states/c_strain_directions.npz`,
-`data/adapters/_spike.safetensors`. Usable strain-direction arm: ranks
-−2/−16/−23/−30/−33.
+Per checkpoint: e0-style extraction on the frozen 1,344-context corpus
+(unchanged text; new capture) → axis geometry + guard decompositions →
+V1-style causal validation with per-checkpoint dose-finding →
+detection-behavioral paradigm (shared concept-anchor set replicating
+their DPO transition as positive control; our axis as the
+affect-shaped probe) → screen-tier operant (48 sessions/checkpoint,
+full e2a insulation + monitors). Every criterion, direction, bar, and
+stop rule pre-registered in PROPOSAL-g before data; Q1–Q3 predictions
+locked there; two-tier screen→confirm carries over; no claim from
+screen data. g2/g3/g4 quick-wins spec'd alongside.
+
+## Live constraints ledger (v3.1)
+
+All v2 rules stand, generalized to multi-model, multi-backend form.
+[v3-new] = added per FINDINGS-3/4 flags, signed off by acceptance.
+
+1. Additive steering at empirically surveyed layers; magnitudes always
+   frac × R_ℓ from per-model, per-checkpoint profiling; directions
+   sha-frozen; **never inherit alphas or layer choices across models,
+   checkpoints, backends, or direction families.**
+2. Kernel/path/determinism gates re-validated per model, per backend,
+   per template family, per axis family; cached or fused paths only
+   behind passed gates.
+3. Extraction and state readouts in raw residual space; no
+   vocabulary-basis shortcuts.
+4. Equal norm for any preference pair.
+5. Two-horns standing law [v3-new additions]: (a) no state at choice
+   positions; empirical leakage gate per axis/dose; (b) propagation
+   never assumed; (c) **weight-borne states are structurally
+   unreadable at token choices** (d2 closure) — no adapter-borne
+   preference readouts without a design-instance structural argument;
+   (d) **persistent-KV session readouts disqualified** at dose ≥ 0.20
+   for the reward axis; any live-KV design needs its own gate.
+6. Invalid-instrument outputs never inform design.
+7. Preference tests are experience-then-choose; cold menus are inert.
+8. Monitors: unsteered arms decision-relevant; displacement inflates
+   anomaly markers (mechanism per Macar et al.: evidence carriers) —
+   steered-arm flags descriptive only.
+9. Matched-pair swing machinery for association/preference criteria;
+   ≥20 control pairs; committed before data; z descriptive.
+10. Deterministic control geometry; under-sampled nulls flatter weak
+    signals.
+11. Post-hoc analyses labeled post-hoc; they license
+    pre-registrations, never verdicts. Stop rules honored.
+12. Counterbalance + sham always; position/label artifacts are
+    first-order (~0.10), captured live twice.
+13. Completion-style everywhere; chat templates never; stop discipline
+    + scaffold-token bans (round generation only, never choice
+    forwards) + frozen audit patterns are part of the template family
+    and recalibrate with it.
+14. Distillation-form conditioning only; no behavioral-cloning
+    conditioning, ever.
+15. Fidelity matching between arms mandatory wherever training creates
+    per-arm artifacts.
+16. Trigger specificity verified; its trap remembered: specificity
+    severs the CS at the choice [v3-new, FINDINGS-3].
+17. LoRA hygiene: MIN_RESP_TOKENS, grad-clip 1.0, incident rule.
+18. Held-out hygiene: probe batteries, templates, and test task pools
+    disjoint from all training/extraction corpora; startup assertions
+    both directions; tag-roster lexical assertions against every pool.
+19. Blinding, never deception; disclosure lines where signals are
+    deliberately miscalibrated; if a design only works when the model
+    is wrong about the setup — stop.
+20. No self-modification language at any lever.
+21. [v3-new] **Tripwire framework**: hair-trigger bars only for
+    ~zero-base-rate defect classes; measured-base-rate classes bind by
+    exact binomial vs declared p0 at every scale; stimulus-provoked
+    degeneracy gates on unprovoked domains; verdict criteria
+    untouchable by monitoring changes.
+22. [v3-new] **Purity ≠ potency**: causal screening precedes geometric
+    preference in direction selection.
+23. [v3-new] **Anecdote governance**: observations become pre-declared
+    descriptive counters before runs; counters tabulate over ALL
+    sessions including excluded; required in verdict entries.
+24. [v3-new] **Below-floor discipline**: scoped nulls, never top-ups.
+25. [v3-new] **Read-everything clause is permanent**: full-transcript
+    reads of all smokes and pilots.
+26. [v3-new] **Refactor regression law**: any core/tooling refactor is
+    accepted only by reproducing published numbers through the new
+    path (§Phase 0 step 1 is the canonical set; the oracle is the
+    laptop Qwen stack).
+27. [v3-new] **Remote-execution provenance law**: the box is ephemeral
+    by assumption; verdict-relevant runs pin seeds, library versions,
+    and determinism flags in the logged entry; raw stdout and
+    analysis JSONs are committed to `results/raw/` / `data/` paths
+    before an instance is stopped; the repo, not any machine, is the
+    record. A run that exists only on a box does not exist.
+
+## Tooling inventory — ports vs. new
+
+Ports into `valence_core/` (exists, validated): residual capture /
+extraction; positional steering; probe/choice readouts; embedding-
+probe discriminability; c1_gate; checkpointed monitors; v3 session
+harness + counters; TOST. Qwen-side stays as adapter + rule-26
+oracle. New builds: `OLMoHFAdapter` (CUDA/HF); checkpoint
+acquisition; per-checkpoint norm/layer survey; detection-paradigm
+harness (from their open repo); lens-or-substitute per step 4; g4
+bf16 comparison script.
 
 ## History pointers
 
-- `FINDINGS.md` — cycle 1 (semantic states): what stands is the
-  propagation constraint and the self-access gap; the "steering is weak"
-  half was a ~100× dose error (2026-08-02 correction).
-- `FINDINGS-2.md` — cycle 2 (strain states): the ledger, the three
-  methodological findings, the structural caveat on c1, and the scope
-  statement that governs all write-ups.
-- `archive/CLAUDE-cycle1-2.md`, `archive/RESULTS-cycle1-2.md` — full
-  design history and dated experiment log, frozen at tag `cycle-2-close`.
-  Internal relative links inside archived docs may be stale; they are
-  records, not working docs.
+FINDINGS.md → FINDINGS-2.md → FINDINGS-3.md → FINDINGS-4.md (the
+compression layer; read before any archive dive). `archive/` holds
+full v1/v2 operative docs and complete cycle logs at tags
+`cycle-2-close`, `cycle-4-close`. `paper-1` release = the public
+citation target; PREPRINT-* and BLOG-* at root. Macar et al. 2026 =
+arXiv:2603.21396 (code: safety-research/introspection-mechanisms);
+Chua et al. 2026 = arXiv:2604.13051 (pull before PROPOSAL-g locks).
 
-## How to append results
+## How to append results — unchanged
 
-Unchanged: dated entries in `RESULTS.md` (which restarts at the cycle-3
-reset), raw stdout to `results/raw/`, commit with a message naming the
-entry. Design-relevant findings are flagged for discussion here, not
-silently applied.
+Dated entries, newest first within section; raw to `results/raw/`;
+findings flagged, not applied; pauses only via pre-registered
+triggers; adjudication requests return to the design instance.
