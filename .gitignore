@@ -30,6 +30,14 @@
 !/data/e0/e0_axes.npz
 !/data/e0/e0_random_dirs.npz
 
+# r3 confirmatory gate results: the matched-pair criterion (rule 9) is
+# regression-tested against these, and the ledger-26 analysis suite must be
+# runnable on the box. Named explicitly -- data/configs/ otherwise stays local.
+!/data/configs/
+/data/configs/*
+!/data/configs/c1r3_gate_repA.json
+!/data/configs/c1r3_gate_repB.json
+
 # Local agent settings (Cowork / Claude Code) — machine-local, not shared
 /.claude/
 
