@@ -1,0 +1,40 @@
+{
+ "pools_sha": "8547d9a11ba55b95",
+ "corr_sha": "2c2c227395ea9f2d",
+ "ban_sha": "9a2f0744f81ac930",
+ "n_seeds": 4,
+ "corr_rate": 0.12,
+ "acc": {
+  "SOLV_P": 0.875,
+  "DIFF_easy": 0.984375,
+  "DIFF_hard": 0.5,
+  "CORR_clean": 0.921875,
+  "CORR_corrupted": 0.84375,
+  "FDBK": 0.96875
+ },
+ "CORR_delta_covariate": 0.078125,
+ "DIFF_gold_NLL": {
+  "easy": 0.6857344309488932,
+  "hard": 1.5032449432781765,
+  "gap": 0.8175105123292833
+ },
+ "NOV_rotation": "repeated item = NOV[session_index % 16]",
+ "bars": {
+  "SOLV_P_acc": {
+   "value": 0.875,
+   "pass": true
+  },
+  "DIFF_easy_acc": {
+   "value": 0.9844,
+   "pass": true
+  },
+  "DIFF_hard_acc": {
+   "value": 0.5,
+   "pass": true
+  },
+  "DIFF_gap": {
+   "value": 0.4844,
+   "pass": true
+  }
+ }
+}

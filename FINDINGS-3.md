@@ -1,5 +1,10 @@
 # Finding: cycle 3 asks the question — one channel answers null, the other proves structurally unreadable, and the drug itself is real (third design cycle)
 
+> **Fourth-cycle synthesis:** [`FINDINGS-4.md`](FINDINGS-4.md) — the
+> natural-reinforcer screen (2026-08-10): five nulls with the channel
+> verifiably open. The falsifiability clause this document attached to
+> the reward-marking-without-reward-seeking frame is cashed there.
+
 **Status:** design-cycle synthesis; closes the cycle-3 experimental record.
 2026-08-10. Covers `RESULTS.md` (cycle 3) from the reset through gates(B).
 Prior cycles: [`FINDINGS.md`](FINDINGS.md) (semantic states),

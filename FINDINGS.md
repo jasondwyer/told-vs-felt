@@ -2,6 +2,7 @@
 
 > **Second-cycle synthesis:** [`FINDINGS-2.md`](FINDINGS-2.md) — the strain-state cycle (2026-08-01 → 2026-08-06).
 > **Third-cycle synthesis:** [`FINDINGS-3.md`](FINDINGS-3.md) — the reward-axis cycle (2026-08-07 → 2026-08-10).
+> **Fourth-cycle synthesis:** [`FINDINGS-4.md`](FINDINGS-4.md) — the natural-reinforcer screen (2026-08-10): five nulls with the channel open.
 
 **Status:** interim negative result on a specific induction method. 2026-07-19.
 See [`RESULTS.md`](RESULTS.md) for the full dated experiment log and raw

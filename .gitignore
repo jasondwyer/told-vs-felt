@@ -5,6 +5,14 @@
 /data/*
 !/data/.gitkeep
 
+# Exception (ledger 27, applied 2026-08-12): verdict-relevant analysis
+# artifacts enter the record. Text artifacts only — weight/residual .npz
+# stay local.
+!/data/f/
+/data/f/*
+!/data/f/*.json
+!/data/f/*.jsonl
+
 # Local agent settings (Cowork / Claude Code) — machine-local, not shared
 /.claude/
 

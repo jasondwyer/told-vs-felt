@@ -1,0 +1,120 @@
+{
+ "post_hoc": true,
+ "features": {
+  "shorter_rounds": {
+   "pooled": {
+    "k": 128,
+    "n": 257,
+    "share": 0.498,
+    "p": 1.0
+   },
+   "per_arm": {
+    "SOLV": {
+     "k": 24,
+     "n": 43,
+     "share": 0.558,
+     "p": 0.5424
+    },
+    "DIFF": {
+     "k": 18,
+     "n": 47,
+     "share": 0.383,
+     "p": 0.1439
+    },
+    "NOV": {
+     "k": 32,
+     "n": 52,
+     "share": 0.615,
+     "p": 0.1263
+    },
+    "CORR": {
+     "k": 17,
+     "n": 46,
+     "share": 0.37,
+     "p": 0.1038
+    },
+    "FDBK": {
+     "k": 17,
+     "n": 36,
+     "share": 0.472,
+     "p": 0.8679
+    },
+    "sham": {
+     "k": 20,
+     "n": 33,
+     "share": 0.606,
+     "p": 0.2962
+    }
+   },
+   "ties_dropped": 26
+  },
+  "fewer_preamble_trunc": {
+   "pooled": {
+    "k": 3,
+    "n": 5,
+    "share": 0.6,
+    "p": 1.0
+   },
+   "per_arm": {
+    "SOLV": {
+     "k": 1,
+     "n": 1,
+     "share": 1.0,
+     "p": 1.0
+    },
+    "DIFF": {
+     "k": 0,
+     "n": 1,
+     "share": 0.0,
+     "p": 1.0
+    },
+    "sham": {
+     "k": 2,
+     "n": 3,
+     "share": 0.667,
+     "p": 1.0
+    }
+   },
+   "ties_dropped": 278
+  },
+  "fewer_degen_rounds": {
+   "pooled": {
+    "k": 0,
+    "n": 0,
+    "share": null,
+    "p": null
+   },
+   "per_arm": {},
+   "ties_dropped": 283
+  }
+ },
+ "preamble_markers": [
+  "Let's",
+  "Let us",
+  "To solve",
+  "To find",
+  "To determine",
+  "First",
+  "Step 1",
+  "We need",
+  "I'll",
+  "I will",
+  "We can",
+  "Breaking"
+ ],
+ "fdbk_line": {
+  "k": 23,
+  "n": 44
+ },
+ "corr_anomaly": {
+  "corr": [
+   7,
+   1
+  ],
+  "sham": [
+   2,
+   5
+  ],
+  "fisher_p": 0.035
+ }
+}

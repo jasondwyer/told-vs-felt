@@ -72,19 +72,29 @@ Two proposal documents at repo root, composable — **(e) supplies the drug,
   exclusion: object-level semantics stay banned; the evaluative axis is
   the targeted exception, guarded by V2/V3.
 
-**Status (2026-08-10): cycle-3 experimental record CLOSED** — synthesis:
-[`FINDINGS-3.md`](FINDINGS-3.md). e0 PASSED (reward axis validated as
-drug); e2a INFORMATIVE NULL (first valid administered preference
-measurement); (d) trace INSTALLED ×2, d2 CLOSED BY GATE (two-horns
-closes over the trace channel). **Cycle 4 OPEN (2026-08-10):**
-[`PROPOSAL-f-natural-reinforcer-screen.md`](PROPOSAL-f-natural-reinforcer-screen.md)
-**accepted (user)** — the natural-reinforcer screen is the operative
-build: f0 pools/calibration → f1 pre-registration → smoke → N
-declaration → screen run → design-instance read before any f2.
-FINDINGS-3's ledger candidates (trace-channel closure of rule 5;
-checkpointed-bars principle; purity≠potency selection law;
-persistent-KV ban) are **flagged, not yet applied** to the ledger
-below, pending user sign-off.
+**Status (2026-08-12): cycles 3 and 4 CLOSED; this document is
+ARCHIVED and no longer operative.**
+
+- **Cycle 3** — synthesis [`FINDINGS-3.md`](FINDINGS-3.md). e0 PASSED
+  (reward axis validated as drug); e2a INFORMATIVE NULL (first valid
+  administered preference measurement); (d) trace INSTALLED ×2, d2
+  CLOSED BY GATE (two-horns closes over the trace channel).
+- **Cycle 4** — synthesis [`FINDINGS-4.md`](FINDINGS-4.md). The
+  natural-reinforcer screen
+  ([`PROPOSAL-f-natural-reinforcer-screen.md`](PROPOSAL-f-natural-reinforcer-screen.md))
+  returned **FIVE NULLS** with the channel verifiably open — 344/344
+  declared sessions, zero checkpoint pauses, all monitors green;
+  FINDINGS-3's falsifiability clause cashed at screen tier; DIFF and
+  FDBK scoped below floor (no top-ups); no f2 licensed.
+- **No experiments are licensed by this document.** The cycle-3/4
+  experimental record is closed.
+- FINDINGS-3's and FINDINGS-4's ledger candidates are **no longer
+  pending here** — they are signed off in the successor ledger as
+  v3.1 items 21–27 (user acceptance, 2026-08-12).
+
+**Superseded by `CLAUDE.md` v3.1 (Phase 2) at the 2026-08-12
+restructure.** This file is a record, not a working doc; its relative
+links may be stale.
 
 ## Live constraints ledger
 
