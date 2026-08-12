@@ -132,6 +132,18 @@ class QwenMLXAdapter(ModelAdapter):
                   for l in acts},
             n_positions=len(list(ids)))
 
+    def embed(self, text: str) -> np.ndarray:
+        """Exactly `e2a_g2_discriminability.embed`: vanilla forward, mean over
+        positions of the post-norm final residual, float64. The empty-string
+        guard is kept -- a degenerate round would otherwise fail to encode,
+        and dropping it silently would change the sample."""
+        mx = self._mx
+        ids = mx.array([self.encode(text if text.strip() else " ")])
+        final, _ = self._model.forward(ids, capture_layers=[])
+        v = final[0].astype(mx.float32).mean(axis=0)
+        mx.eval(v)
+        return np.array(v.tolist(), dtype=np.float64)
+
     # --- generation -------------------------------------------------------
     def generate(self, prefix_text: str, segment_text: str,
                  injections: Sequence[Injection] = (),
@@ -268,24 +280,27 @@ class QwenMLXAdapter(ModelAdapter):
         """Mean L2 residual norm per layer, averaged over all positions of
         all `texts`.
 
-        NOTE for the Qwen oracle: this is the *general* profiler, for new
-        models. Cycle-3/4 doses were computed against
-        `e0_axes.meta.json:R_per_layer_spanmean`, a span-restricted mean over
-        the e0 extraction corpus. Reproducing a published Qwen dose means
-        loading that frozen value, not re-measuring here (rule 1 is about
-        never inheriting a dose *across* models; within one model the frozen
-        number is authoritative).
+        Convention, matching `e0_extract_axis.py` exactly: per text, the mean
+        L2 norm over its positions; then the mean of those per-text means.
+        That is NOT the same as a global mean over all positions when texts
+        differ in length, and the published `R_per_layer_spanmean` (R48 =
+        103.01) is the former -- so this must be too, or the repo would carry
+        two incompatible definitions of the quantity every dose is a fraction
+        of.
+
+        For span-restricted profiling over an extraction corpus (the e0 case,
+        where only the frame span counts), use
+        `valence_core.extract.resid_norm_table`, which takes the boundaries
+        into account. This method is the whole-text profiler.
         """
         layers = sorted(set(int(l) for l in layers))
-        totals = {l: 0.0 for l in layers}
-        counts = {l: 0 for l in layers}
+        per_text = {l: [] for l in layers}
         for text in texts:
             res = self.forward(self.encode(text), capture_layers=layers)
             for l in layers:
                 h = res.acts[l]                       # [S, D]
-                totals[l] += float(np.linalg.norm(h, axis=-1).sum())
-                counts[l] += h.shape[0]
-        return {l: totals[l] / max(counts[l], 1) for l in layers}
+                per_text[l].append(float(np.linalg.norm(h, axis=-1).mean()))
+        return {l: float(np.mean(per_text[l])) for l in layers}
 
     # --- provenance -------------------------------------------------------
     def provenance(self) -> dict:

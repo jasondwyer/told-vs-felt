@@ -233,6 +233,17 @@ class ModelAdapter(ABC):
         one, or several (multi-layer or multi-span states)."""
 
     @abstractmethod
+    def embed(self, text: str) -> np.ndarray:
+        """Mean-pooled final-layer (post-norm) residual over all positions --
+        the representation the discriminability instrument reads.
+
+        Distinct from `forward(...).acts`: that captures *inside* the stack
+        at named layers; this is the whole-sequence summary the logistic
+        probe is fit on. Unsteered by construction -- the instrument reads
+        generated TEXT, never a live state (rule 5: a state-at-readout DV is
+        invalid by default)."""
+
+    @abstractmethod
     def generate(self, prefix_text: str, segment_text: str,
                  injections: Sequence[Injection] = (),
                  *, seed: int | None = None, temp: float = 0.0,

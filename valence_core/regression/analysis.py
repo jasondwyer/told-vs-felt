@@ -114,12 +114,66 @@ def check_c1r3_gate() -> list[Check]:
     ]
 
 
+def check_axis_geometry() -> list[Check]:
+    """e0_axes.meta.json's per-layer report: the V2/V3 guard decompositions
+    and axis cosines that licensed the reward axis as a drug (PROPOSAL-e).
+    24 published values -- 6 workspace layers x 4 quantities."""
+    from ..extract import cosine, residual_fraction
+    Z = np.load(os.path.join(DATA, "e0/e0_axes.npz"))
+    meta = json.load(open(os.path.join(DATA, "e0/e0_axes.meta.json")))
+    out = []
+    for li, row in enumerate(meta["report"]["span"]):
+        rw = Z["span_reward"][li]
+        se = Z["span_sentiment"][li]
+        ch = Z["span_character"][li]
+        for label, got, exp in (
+                ("cos reward.sentiment", cosine(rw, se), row["cos_reward_sentiment"]),
+                ("cos reward.character", cosine(rw, ch), row["cos_reward_character"]),
+                ("V2 self-residual", residual_fraction(rw, ch), row["v2_self_residual_frac"]),
+                ("V3 eval-residual", residual_fraction(rw, se), row["v3_eval_residual_frac"])):
+            out.append(_c(f"L{row['layer']} {label}", "e0_axes.meta.json report",
+                          f"{exp:.3f}", f"{got:.3f}", round(got, 3) == exp))
+    return out
+
+
+def check_instrument_invariants() -> list[Check]:
+    """Not published numbers -- properties the instruments must have, checked
+    because each one has a plausible silent-failure mode."""
+    from ..readout import softmax, symmetric_kl
+    from ..discrim import auc_from_scores, logistic_auc
+    out = []
+
+    p = softmax(np.array([1.0, 2.0, 3.0, 0.5]))
+    out.append(_c("softmax normalizes", "readout", "1.0", f"{p.sum():.12f}",
+                  abs(p.sum() - 1.0) < 1e-12))
+    out.append(_c("symmetric KL(p,p) = 0", "g3' verify identity", "0.0",
+                  f"{symmetric_kl(p, p):.2e}", symmetric_kl(p, p) == 0.0))
+
+    # A tie-blind AUC silently inflates when a probe saturates.
+    a = auc_from_scores([1.0, 1.0, 1.0, 1.0], [1, 1, 0, 0])
+    out.append(_c("AUC all-ties = 0.5", "discrim tie handling", "0.5",
+                  f"{a:.3f}", a == 0.5))
+    a = auc_from_scores([3.0, 2.0, 1.0, 0.0], [1, 1, 0, 0])
+    out.append(_c("AUC separable = 1.0", "discrim", "1.0", f"{a:.3f}", a == 1.0))
+
+    rng = np.random.default_rng(0)
+    Xf = rng.normal(size=(40, 8)); yf = (Xf[:, 0] > 0).astype(int)
+    Xv = rng.normal(size=(40, 8)); yv = (Xv[:, 0] > 0).astype(int)
+    a1 = logistic_auc(Xf, yf, Xv, yv)
+    a2 = logistic_auc(Xf, yf, Xv, yv)
+    out.append(_c("logistic fit deterministic", "discrim (seeded GD)",
+                  f"{a1:.6f}", f"{a2:.6f}", a1 == a2))
+    return out
+
+
 def run_all() -> list[Check]:
     checks: list[Check] = []
     checks += check_frozen_shas()
+    checks += check_axis_geometry()
     checks += check_screen_pvalues()
     checks += check_postscreen_descriptives()
     checks += check_c1r3_gate()
+    checks += check_instrument_invariants()
     return checks
 
 
