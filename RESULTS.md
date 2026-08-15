@@ -20,6 +20,57 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-12 — **Rule-26 criterion (ii) TIGHTENED and re-locked
+  (user-directed). Pre-registration entry: committed BEFORE the run that
+  evaluates it; no data seen under the new criterion at time of writing.**
+  - **Why.** The original criterion ("a 128-context B2b subsample, Δ+/Δ−
+    within CI") was flagged as under-powered in the step-1 acceptance
+    entry below, and its own first run demonstrated the defect: the 90%
+    interval came out at ±0.359 against an effect of +0.295. An interval
+    wider than the quantity it tests accepts almost any same-sign result.
+  - **Diagnosis — the defect was not sample size, it was pairing.** The
+    interval was built from the spread of the 12 per-probe deltas, which
+    are heterogeneous *by design* (published axis_pos `per_probe` runs
+    +2.481 to −0.4163). That between-probe spread is a property of the
+    instrument battery, is shared by both measurements, and cancels
+    exactly under a probe-to-probe paired comparison. Adding contexts
+    would have shrunk the wrong variance component.
+  - **The tightened criterion — three conjuncts, all required, for
+    axis_pos and axis_neg:**
+    - **(ii-a) Paired per-probe equivalence.** TOST on the 12 paired
+      differences (reproduced − published `per_probe`), margin
+      **0.1578 = 0.5·G**, the pre-registered V1 bar quantity: a
+      per-probe reproduction error below it cannot move any verdict
+      conjunct. This is the substantive upgrade — **it inverts the
+      burden of proof.** The old test failed only if the reproduction
+      was wildly off, so noise *helped* it pass; an equivalence test
+      can only pass by being close.
+    - **(ii-b) Scalar point estimate.** |Δ_repro − Δ_published| ≤
+      **0.05** σ (the old form's effective tolerance was ±0.36; the
+      observed deviations under it were 0.0097 / 0.0090).
+    - **(ii-c) Verdict preservation.** The original pre-registered V1
+      rule — Δ+ ≥ 0.5·G AND Δ− ≤ −0.5·G AND min(Δ+,|Δ−|) >
+      2·max|Δ_rand| — re-evaluated on the reproduced arms, must return
+      the published verdict (PASS). Requires the ±random arms, so the
+      frozen random-direction path is now exercised too. This is the
+      conjunct a reader actually cares about: not "do the numbers look
+      similar" but "would the refactored core have produced the same
+      published verdict".
+  - **Sampling.** Stratified — equal contexts per probe, removing "which
+    probes got sampled" as a noise source. Default `N_PER_PROBE = None`
+    = all 96/probe = **1,152 contexts/arm, the full published arm size**:
+    an exact reproduction with no subsampling noise at all, which also
+    removes any need to argue about a margin's power.
+  - **Cost.** 5 arms × 1,152 contexts ≈ 5,760 forwards at the measured
+    ~0.62 s/context ≈ 60 min on the laptop oracle. Accepted as a
+    one-time cost for a core-acceptance gate.
+  - **Scope note.** `part_pos`/`part_neg` (the V3 sentiment-partialled
+    secondary) are not run: they carry the "v3_secondary_retains" flag,
+    not the V1 verdict. Declared out of scope for (ii), not silently
+    dropped.
+  - CLAUDE.md §Phase 0 step 1 amended to carry the new wording; the
+    superseded form is quoted there so the change is legible.
+
 - 2026-08-12 — **Phase 0 step 1 COMPLETE: `valence_core/` refactor ACCEPTED
   under ledger 26. 8/8 oracle criteria + 45/45 analysis-tier checks
   reproduce published numbers through the new core. Phase-1 work is no

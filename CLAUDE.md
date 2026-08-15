@@ -150,11 +150,22 @@ adapter interface:
   audit patterns, lexical scope, counters); TOST utilities.
 - `QwenMLXAdapter` wraps the existing stack unchanged.
 - **Acceptance = rule 26**: through the new core, reproduce (i) the
-  g1r kernel-gate KLs (7.11e-4 / 7.39e-4 ± tolerance), (ii) a
-  128-context B2b subsample (Δ+/Δ− within CI), (iii) e2a choice-read
-  construction KL = 0.0 exactly on archived session texts. Mismatch ⇒
-  refactor bug until proven otherwise; no Phase-1 work on an
-  unverified core.
+  g1r kernel-gate KLs (7.11e-4 / 7.39e-4 ± tolerance), (ii) the B2b
+  arms **[criterion tightened 2026-08-12, user-directed; the original
+  "128-context subsample, Δ+/Δ− within CI" was under-powered — its
+  interval came out wider than the effect it tested, because it was
+  *unpaired* over a deliberately heterogeneous 12-probe battery]**,
+  now three conjuncts: **(ii-a)** paired per-probe TOST against the
+  published `per_probe` vectors, margin 0.5·G = 0.1578 — an
+  equivalence test, so it can only pass by being close, where the old
+  form could pass by being noisy; **(ii-b)** scalar |ΔΔ| ≤ 0.05 σ;
+  **(ii-c)** the original pre-registered V1 rule re-evaluated on the
+  reproduced arms (Δ+ ≥ 0.5·G, Δ− ≤ −0.5·G, min(Δ+,|Δ−|) >
+  2·max|Δ_rand|) must return the published verdict — sampling
+  stratified per probe, full 96/probe by default; (iii) e2a
+  choice-read construction KL = 0.0 exactly on archived session texts.
+  Mismatch ⇒ refactor bug until proven otherwise; no Phase-1 work on
+  an unverified core.
 
 **Step 2 — cloud bring-up + OLMo acquisition. [cloud]**
 `OLMoHFAdapter` on PyTorch/HF/CUDA implementing the same interface.

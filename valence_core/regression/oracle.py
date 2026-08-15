@@ -38,7 +38,6 @@ import numpy as np
 
 from ..adapters.base import Injection, PositionSpec
 from ..readout import choice_read, softmax, symmetric_kl
-from ..stats import Z90
 
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DATA = os.path.join(REPO, "data")
@@ -52,8 +51,48 @@ B2B_LAYER, B2B_FRAC = 48, 0.10
 VAL_TASKS_B2B = [f"e{i:02d}" for i in range(25, 49)]
 SEL = 256
 G_EXPECTED = 0.3156
-N_B2B_CONTEXTS = 128
 N_CHOICE_READS = 48
+
+# --- criterion (ii), TIGHTENED. Pre-registered 2026-08-12, committed
+# --- before the run that evaluates it. -----------------------------------
+#
+# The original form ("a 128-context B2b subsample, delta+/delta- within CI")
+# was under-powered, and its own first run showed why: the 90% interval came
+# out at +/-0.359 against an effect of +0.295, so it was wider than the
+# quantity it tested and would have accepted almost any same-sign result.
+#
+# The defect was NOT sample size -- it was that the interval was *unpaired*.
+# It was built from the spread of the 12 per-probe deltas, which are
+# enormously heterogeneous by construction (published axis_pos per_probe
+# runs +2.481 down to -0.4163). That between-probe spread is a property of
+# the instrument battery, is shared by both measurements, and cancels
+# exactly when the comparison is paired probe-to-probe.
+#
+# Three changes, in increasing order of importance:
+#
+#   1. STRATIFIED sampling -- equal contexts per probe, so "which probes got
+#      sampled" stops being a noise source. N_PER_PROBE = None runs the full
+#      96/probe (1152/arm), i.e. an exact reproduction with no subsampling
+#      noise at all.
+#   2. PAIRED per-probe equivalence via TOST against the published
+#      per_probe vector. This inverts the burden of proof, which is the
+#      real point: the old test failed only if the reproduction was wildly
+#      off, so noise helped it pass. An equivalence test can only pass by
+#      being *close*. Margin = 0.5*G = 0.1578, the pre-registered V1 bar
+#      quantity -- a per-probe reproduction error smaller than this cannot
+#      move any verdict conjunct.
+#   3. VERDICT PRESERVATION -- re-evaluate the original pre-registered V1
+#      PASS rule (D+ >= 0.5G AND D- <= -0.5G AND min(D+,|D-|) > 2*max|D_rand|)
+#      on the reproduced arms, which requires the random arms too. This is
+#      the conjunct that actually matters to a reader: not "do the numbers
+#      look similar" but "would the refactored core have produced the same
+#      published verdict".
+#
+# Acceptance = all three conjuncts, for axis_pos and axis_neg.
+N_PER_PROBE: int | None = None      # None = full 96/probe = exact reproduction
+B2B_TOST_MARGIN = 0.1578            # 0.5 * G
+B2B_POINT_TOL = 0.05                # sigma units, scalar |delta| deviation
+B2B_VERDICT_ARMS = ("axis_pos", "axis_neg", "rand_pos", "rand_neg")
 
 
 @dataclass
@@ -190,7 +229,7 @@ def build_instruments():
 def check_b2b(adapter) -> list[Result]:
     instruments, G = build_instruments()
     if instruments is None:
-        return [Result("B2b 128-context subsample", "delta +.2848/-.3946",
+        return [Result("B2b reproduction", "delta +.2848/-.3946",
                        "SKIP", False,
                        note="e0_b1_markers.npz absent (clone-only artifact)")]
     if abs(G - G_EXPECTED) > 1e-3:
@@ -202,7 +241,7 @@ def check_b2b(adapter) -> list[Result]:
     tasks_p = os.path.join(CLONE, "data/corpus/e0_tasks.jsonl")
     probes_p = os.path.join(CLONE, "data/configs/e0_probes.json")
     if not (os.path.exists(tasks_p) and os.path.exists(probes_p)):
-        return [Result("B2b 128-context subsample", "delta +.2848/-.3946",
+        return [Result("B2b reproduction", "delta +.2848/-.3946",
                        "SKIP", False, note="e0 corpus absent (clone-only)")]
     tasks = {json.loads(l)["id"]: json.loads(l)
              for l in open(tasks_p) if l.strip()}
@@ -218,11 +257,30 @@ def check_b2b(adapter) -> list[Result]:
                                      f"Task: {probe}\nResponse:"))
     print(f"  full val-half contexts: {len(contexts)} (published arm size 1152)",
           flush=True)
-    rng = np.random.default_rng(26)               # declared subsample seed
-    pick = sorted(rng.choice(len(contexts), size=N_B2B_CONTEXTS, replace=False))
-    sub = [contexts[i] for i in pick]
+
+    # Stratified: equal contexts per probe. N_PER_PROBE None -> take all,
+    # which makes this an exact reproduction rather than a subsample.
+    by_probe: dict[int, list] = {}
+    for qi, text in contexts:
+        by_probe.setdefault(qi, []).append((qi, text))
+    rng = np.random.default_rng(26)               # declared sampling seed
+    sub = []
+    for qi in sorted(by_probe):
+        pool = by_probe[qi]
+        if N_PER_PROBE is None or N_PER_PROBE >= len(pool):
+            sub.extend(pool)
+        else:
+            idx = sorted(rng.choice(len(pool), size=N_PER_PROBE, replace=False))
+            sub.extend(pool[i] for i in idx)
+    per_probe_n = len(sub) // len(by_probe)
+    print(f"  stratified: {len(sub)} contexts/arm, {per_probe_n}/probe "
+          f"across {len(by_probe)} probes"
+          + ("  [FULL -- exact reproduction, no subsampling noise]"
+             if N_PER_PROBE is None else ""), flush=True)
 
     rw, R = load_axis(B2B_LAYER)
+    Rz = np.load(os.path.join(DATA, "e0/e0_random_dirs.npz"))
+    rand_u = Rz[f"L{B2B_LAYER}"].astype(np.float64)
 
     def arm_scores(injections, tag):
         scores = [[] for _ in instruments]
@@ -248,26 +306,68 @@ def check_b2b(adapter) -> list[Result]:
                       (inst["sigma"] + 1e-12))
         return float(np.mean(ds)), np.array(ds)
 
-    base = arm_scores([], "base")
-    pos = arm_scores([Injection.at_frac(rw, B2B_LAYER, +B2B_FRAC, R)], "axis_pos")
-    neg = arm_scores([Injection.at_frac(rw, B2B_LAYER, -B2B_FRAC, R)], "axis_neg")
+    from ..stats import paired_tost
 
-    ref = json.load(open(os.path.join(DATA, "e0/e0_b2_b2b.json")))["arms"]
+    base = arm_scores([], "base")
+    arms = {}
+    for name, u, sign in (("axis_pos", rw, +1), ("axis_neg", rw, -1),
+                          ("rand_pos", rand_u, +1), ("rand_neg", rand_u, -1)):
+        inj = Injection.at_frac(u, B2B_LAYER, sign * B2B_FRAC, R)
+        arms[name] = delta(arm_scores([inj], name), base)
+
+    ref = json.load(open(os.path.join(DATA, "e0/e0_b2_b2b.json")))
+    ref_arms, published_crit = ref["arms"], ref["criterion"]
     out = []
-    for name, arm, published in (("axis_pos", pos, ref["axis_pos"]["delta"]),
-                                 ("axis_neg", neg, ref["axis_neg"]["delta"])):
-        d, per = delta(arm, base)
-        # per-probe SE across the 12 instruments -> 90% interval, the same
-        # convention the program's TOST intervals use (Z90).
-        half = Z90 * float(np.std(per, ddof=1) / np.sqrt(len(per)))
-        within = abs(d - published) <= half
-        print(f"  {name}: delta {d:+.4f}  published {published:+.4f}  "
-              f"90% half-width {half:.4f}  -> "
-              f"{'within' if within else 'OUTSIDE'}", flush=True)
-        out.append(Result(f"B2b {name} (128-ctx subsample)",
-                          f"{published:+.4f}", f"{d:+.4f}", within,
-                          note=f"+/-{half:.4f} (90%, 12 probes); "
-                               f"sign {'ok' if np.sign(d) == np.sign(published) else 'FLIPPED'}"))
+
+    # --- conjunct 1: paired per-probe equivalence (TOST) ------------------
+    for name in ("axis_pos", "axis_neg"):
+        d, per = arms[name]
+        pub_per = np.array(ref_arms[name]["per_probe"], dtype=np.float64)
+        t = paired_tost(per, pub_per, B2B_TOST_MARGIN)
+        lo, hi = t.ci
+        print(f"  {name}: paired per-probe mean diff {t.mean_diff:+.4f}  "
+              f"90% CI [{lo:+.4f}, {hi:+.4f}]  margin +/-{t.margin}  -> "
+              f"{'EQUIVALENT' if t.equivalent else 'NOT equivalent'}",
+              flush=True)
+        out.append(Result(
+            f"B2b {name} paired per-probe TOST",
+            f"CI within +/-{t.margin}", f"[{lo:+.4f}, {hi:+.4f}]",
+            t.equivalent,
+            note=f"mean diff {t.mean_diff:+.4f}, n={t.n} probes, "
+                 f"half-width {t.half_width:.4f}"))
+
+    # --- conjunct 2: scalar point estimate --------------------------------
+    for name in ("axis_pos", "axis_neg"):
+        d, _ = arms[name]
+        pub = ref_arms[name]["delta"]
+        dev = abs(d - pub)
+        print(f"  {name}: delta {d:+.4f}  published {pub:+.4f}  "
+              f"|dev| {dev:.4f} vs tol {B2B_POINT_TOL}  -> "
+              f"{'ok' if dev <= B2B_POINT_TOL else 'OUT OF TOLERANCE'}",
+              flush=True)
+        out.append(Result(f"B2b {name} point estimate", f"{pub:+.4f}",
+                          f"{d:+.4f}", dev <= B2B_POINT_TOL,
+                          note=f"|dev| {dev:.4f} <= {B2B_POINT_TOL}"))
+
+    # --- conjunct 3: verdict preservation ---------------------------------
+    half_g = 0.5 * G
+    d_pos, d_neg = arms["axis_pos"][0], arms["axis_neg"][0]
+    max_rand = max(abs(arms["rand_pos"][0]), abs(arms["rand_neg"][0]))
+    v1 = (d_pos >= half_g and d_neg <= -half_g
+          and min(d_pos, abs(d_neg)) > 2 * max_rand)
+    print(f"  V1 rule: D+ {d_pos:+.4f} >= {half_g:.4f} AND "
+          f"D- {d_neg:+.4f} <= {-half_g:.4f} AND "
+          f"min {min(d_pos, abs(d_neg)):.4f} > 2*max|D_rand| "
+          f"{2 * max_rand:.4f}  -> {'PASS' if v1 else 'FAIL'}", flush=True)
+    print(f"    (published: D+ {published_crit['D_pos']:+.4f}, "
+          f"D- {published_crit['D_neg']:+.4f}, "
+          f"max|D_rand| {published_crit['max_abs_D_rand']:.4f}, "
+          f"V1_PASS {published_crit['V1_PASS']})", flush=True)
+    out.append(Result(
+        "B2b V1 verdict preserved", f"PASS (published {published_crit['V1_PASS']})",
+        "PASS" if v1 else "FAIL", v1 == bool(published_crit["V1_PASS"]),
+        note=f"D+ {d_pos:+.4f}, D- {d_neg:+.4f}, "
+             f"max|D_rand| {max_rand:.4f} (published {published_crit['max_abs_D_rand']:.4f})"))
     return out
 
 
@@ -373,7 +473,7 @@ def main() -> int:
         else:
             results += check_kernel(adapter, tasks, tag_ids)
     if args.check in ("all", "b2b"):
-        _banner("(ii) B2b 128-context subsample")
+        _banner("(ii) B2b reproduction -- paired per-probe TOST + verdict preservation")
         results += check_b2b(adapter)
 
     _banner("RULE 26 VERDICT")
