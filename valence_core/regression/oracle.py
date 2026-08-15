@@ -329,12 +329,19 @@ def check_b2b(adapter) -> list[Result]:
               f"90% CI [{lo:+.4f}, {hi:+.4f}]  margin +/-{t.margin}  -> "
               f"{'EQUIVALENT' if t.equivalent else 'NOT equivalent'}",
               flush=True)
+        # Full precision into the note: the published `per_probe` is stored
+        # rounded to 4dp, so 4dp is the ceiling of what this comparison can
+        # *claim*, but the reproduced side's own magnitudes are worth having
+        # in the record rather than rounded away (ledger 27).
         out.append(Result(
             f"B2b {name} paired per-probe TOST",
             f"CI within +/-{t.margin}", f"[{lo:+.4f}, {hi:+.4f}]",
             t.equivalent,
-            note=f"mean diff {t.mean_diff:+.4f}, n={t.n} probes, "
-                 f"half-width {t.half_width:.4f}"))
+            note=f"mean diff {t.mean_diff:+.3e}, max|per-probe diff| "
+                 f"{float(np.max(np.abs(per - pub_per))):.3e}, "
+                 f"n={t.n} probes, half-width {t.half_width:.3e} "
+                 f"(published per_probe is 4dp-rounded: that is the "
+                 f"precision ceiling of this comparison)"))
 
     # --- conjunct 2: scalar point estimate --------------------------------
     for name in ("axis_pos", "axis_neg"):

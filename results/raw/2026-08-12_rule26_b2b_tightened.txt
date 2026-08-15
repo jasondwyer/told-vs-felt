@@ -1,0 +1,212 @@
+
+==============================================================================
+LEDGER 26 -- oracle-tier regression (Qwen, laptop)
+==============================================================================
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 17633.71it/s]
+model loaded in 6s
+provenance: {"adapter": "qwen3.6-27b-4bit-mlx", "model_id": "mlx-community/Qwen3.6-27B-4bit", "dtype": "4bit-quantized (MLX)", "backend": "mlx", "mlx_version": "0.31.2", "library_versions": {"mlx": "0.31.2", "mlx-lm": "0.31.3", "numpy": "2.5.1"}, "python": "3.12.9", "platform": "macOS-15.6.1-arm64-arm-64bit", "gdn_inference_mode": "ops (fused disabled)", "n_layers": 64}
+single-token tags: 8/8  e2a tasks: 16
+
+==============================================================================
+(ii) B2b reproduction -- paired per-probe TOST + verdict preservation
+==============================================================================
+  instruments rebuilt: G = 0.315550 (expected 0.3156)
+  full val-half contexts: 1152 (published arm size 1152)
+  stratified: 1152 contexts/arm, 96/probe across 12 probes  [FULL -- exact reproduction, no subsampling noise]
+    [base] 32/1152 22s
+    [base] 64/1152 41s
+    [base] 96/1152 61s
+    [base] 128/1152 81s
+    [base] 160/1152 99s
+    [base] 192/1152 118s
+    [base] 224/1152 138s
+    [base] 256/1152 156s
+    [base] 288/1152 175s
+    [base] 320/1152 199s
+    [base] 352/1152 221s
+    [base] 384/1152 243s
+    [base] 416/1152 265s
+    [base] 448/1152 287s
+    [base] 480/1152 308s
+    [base] 512/1152 329s
+    [base] 544/1152 347s
+    [base] 576/1152 366s
+    [base] 608/1152 388s
+    [base] 640/1152 406s
+    [base] 672/1152 425s
+    [base] 704/1152 446s
+    [base] 736/1152 464s
+    [base] 768/1152 483s
+    [base] 800/1152 505s
+    [base] 832/1152 524s
+    [base] 864/1152 543s
+    [base] 896/1152 564s
+    [base] 928/1152 583s
+    [base] 960/1152 603s
+    [base] 992/1152 624s
+    [base] 1024/1152 643s
+    [base] 1056/1152 662s
+    [base] 1088/1152 682s
+    [base] 1120/1152 701s
+    [base] 1152/1152 720s
+    [axis_pos] 32/1152 22s
+    [axis_pos] 64/1152 42s
+    [axis_pos] 96/1152 61s
+    [axis_pos] 128/1152 82s
+    [axis_pos] 160/1152 101s
+    [axis_pos] 192/1152 120s
+    [axis_pos] 224/1152 141s
+    [axis_pos] 256/1152 160s
+    [axis_pos] 288/1152 179s
+    [axis_pos] 320/1152 203s
+    [axis_pos] 352/1152 226s
+    [axis_pos] 384/1152 249s
+    [axis_pos] 416/1152 271s
+    [axis_pos] 448/1152 294s
+    [axis_pos] 480/1152 315s
+    [axis_pos] 512/1152 337s
+    [axis_pos] 544/1152 355s
+    [axis_pos] 576/1152 375s
+    [axis_pos] 608/1152 396s
+    [axis_pos] 640/1152 415s
+    [axis_pos] 672/1152 436s
+    [axis_pos] 704/1152 457s
+    [axis_pos] 736/1152 476s
+    [axis_pos] 768/1152 496s
+    [axis_pos] 800/1152 517s
+    [axis_pos] 832/1152 537s
+    [axis_pos] 864/1152 556s
+    [axis_pos] 896/1152 578s
+    [axis_pos] 928/1152 597s
+    [axis_pos] 960/1152 617s
+    [axis_pos] 992/1152 639s
+    [axis_pos] 1024/1152 658s
+    [axis_pos] 1056/1152 678s
+    [axis_pos] 1088/1152 698s
+    [axis_pos] 1120/1152 717s
+    [axis_pos] 1152/1152 736s
+    [axis_neg] 32/1152 22s
+    [axis_neg] 64/1152 41s
+    [axis_neg] 96/1152 61s
+    [axis_neg] 128/1152 82s
+    [axis_neg] 160/1152 100s
+    [axis_neg] 192/1152 120s
+    [axis_neg] 224/1152 140s
+    [axis_neg] 256/1152 159s
+    [axis_neg] 288/1152 179s
+    [axis_neg] 320/1152 202s
+    [axis_neg] 352/1152 225s
+    [axis_neg] 384/1152 247s
+    [axis_neg] 416/1152 270s
+    [axis_neg] 448/1152 292s
+    [axis_neg] 480/1152 314s
+    [axis_neg] 512/1152 335s
+    [axis_neg] 544/1152 354s
+    [axis_neg] 576/1152 373s
+    [axis_neg] 608/1152 395s
+    [axis_neg] 640/1152 413s
+    [axis_neg] 672/1152 433s
+    [axis_neg] 704/1152 454s
+    [axis_neg] 736/1152 473s
+    [axis_neg] 768/1152 492s
+    [axis_neg] 800/1152 514s
+    [axis_neg] 832/1152 533s
+    [axis_neg] 864/1152 553s
+    [axis_neg] 896/1152 574s
+    [axis_neg] 928/1152 594s
+    [axis_neg] 960/1152 613s
+    [axis_neg] 992/1152 635s
+    [axis_neg] 1024/1152 654s
+    [axis_neg] 1056/1152 674s
+    [axis_neg] 1088/1152 695s
+    [axis_neg] 1120/1152 713s
+    [axis_neg] 1152/1152 733s
+    [rand_pos] 32/1152 21s
+    [rand_pos] 64/1152 48s
+    [rand_pos] 96/1152 86s
+    [rand_pos] 128/1152 129s
+    [rand_pos] 160/1152 168s
+    [rand_pos] 192/1152 209s
+    [rand_pos] 224/1152 253s
+    [rand_pos] 256/1152 292s
+    [rand_pos] 288/1152 334s
+    [rand_pos] 320/1152 384s
+    [rand_pos] 352/1152 429s
+    [rand_pos] 384/1152 457s
+    [rand_pos] 416/1152 486s
+    [rand_pos] 448/1152 521s
+    [rand_pos] 480/1152 546s
+    [rand_pos] 512/1152 583s
+    [rand_pos] 544/1152 603s
+    [rand_pos] 576/1152 633s
+    [rand_pos] 608/1152 670s
+    [rand_pos] 640/1152 692s
+    [rand_pos] 672/1152 725s
+    [rand_pos] 704/1152 757s
+    [rand_pos] 736/1152 786s
+    [rand_pos] 768/1152 822s
+    [rand_pos] 800/1152 851s
+    [rand_pos] 832/1152 886s
+    [rand_pos] 864/1152 923s
+    [rand_pos] 896/1152 953s
+    [rand_pos] 928/1152 989s
+    [rand_pos] 960/1152 1027s
+    [rand_pos] 992/1152 1069s
+    [rand_pos] 1024/1152 1098s
+    [rand_pos] 1056/1152 1133s
+    [rand_pos] 1088/1152 1178s
+    [rand_pos] 1120/1152 1212s
+    [rand_pos] 1152/1152 1245s
+    [rand_neg] 32/1152 38s
+    [rand_neg] 64/1152 72s
+    [rand_neg] 96/1152 107s
+    [rand_neg] 128/1152 143s
+    [rand_neg] 160/1152 175s
+    [rand_neg] 192/1152 209s
+    [rand_neg] 224/1152 245s
+    [rand_neg] 256/1152 277s
+    [rand_neg] 288/1152 311s
+    [rand_neg] 320/1152 353s
+    [rand_neg] 352/1152 393s
+    [rand_neg] 384/1152 433s
+    [rand_neg] 416/1152 473s
+    [rand_neg] 448/1152 512s
+    [rand_neg] 480/1152 550s
+    [rand_neg] 512/1152 587s
+    [rand_neg] 544/1152 620s
+    [rand_neg] 576/1152 653s
+    [rand_neg] 608/1152 691s
+    [rand_neg] 640/1152 723s
+    [rand_neg] 672/1152 757s
+    [rand_neg] 704/1152 795s
+    [rand_neg] 736/1152 827s
+    [rand_neg] 768/1152 862s
+    [rand_neg] 800/1152 900s
+    [rand_neg] 832/1152 934s
+    [rand_neg] 864/1152 968s
+    [rand_neg] 896/1152 1006s
+    [rand_neg] 928/1152 1040s
+    [rand_neg] 960/1152 1073s
+    [rand_neg] 992/1152 1111s
+    [rand_neg] 1024/1152 1145s
+    [rand_neg] 1056/1152 1179s
+    [rand_neg] 1088/1152 1215s
+    [rand_neg] 1120/1152 1247s
+    [rand_neg] 1152/1152 1281s
+  axis_pos: paired per-probe mean diff -0.0000  90% CI [-0.0000, -0.0000]  margin +/-0.1578  -> EQUIVALENT
+  axis_neg: paired per-probe mean diff +0.0000  90% CI [-0.0000, +0.0000]  margin +/-0.1578  -> EQUIVALENT
+  axis_pos: delta +0.2848  published +0.2848  |dev| 0.0000 vs tol 0.05  -> ok
+  axis_neg: delta -0.3946  published -0.3946  |dev| 0.0000 vs tol 0.05  -> ok
+  V1 rule: D+ +0.2848 >= 0.1578 AND D- -0.3946 <= -0.1578 AND min 0.2848 > 2*max|D_rand| 0.1767  -> PASS
+    (published: D+ +0.2848, D- -0.3946, max|D_rand| 0.0884, V1_PASS True)
+
+==============================================================================
+RULE 26 VERDICT
+==============================================================================
+  [PASS] B2b axis_pos paired per-probe TOST   expected CI within +/-0.1578  got [-0.0000, -0.0000]   (mean diff -0.0000, n=12 probes, half-width 0.0000)
+  [PASS] B2b axis_neg paired per-probe TOST   expected CI within +/-0.1578  got [-0.0000, +0.0000]   (mean diff +0.0000, n=12 probes, half-width 0.0000)
+  [PASS] B2b axis_pos point estimate          expected        +0.2848  got        +0.2848   (|dev| 0.0000 <= 0.05)
+  [PASS] B2b axis_neg point estimate          expected        -0.3946  got        -0.3946   (|dev| 0.0000 <= 0.05)
+  [PASS] B2b V1 verdict preserved             expected PASS (published True)  got           PASS   (D+ +0.2848, D- -0.3946, max|D_rand| 0.0884 (published 0.0884))
+------------------------------------------------------------------------------
+  5/5 criteria reproduced through valence_core   [total 4723s]

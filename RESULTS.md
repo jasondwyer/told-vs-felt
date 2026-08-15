@@ -20,6 +20,49 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-12 — **Criterion (ii) re-run under the tightened form: 5/5 PASS,
+  and the reproduction is EXACT at the precision the published artifact
+  records. Step 1's acceptance is now carried by a criterion that could
+  have failed.** (Raw:
+  `results/raw/2026-08-12_rule26_b2b_tightened.txt`; artifact
+  `data/regression/oracle_rule26.json`. 4,723 s, full 1,152 contexts ×
+  5 arms.)
+  - **(ii-a) Paired per-probe TOST:** axis_pos mean paired difference
+    and 90% CI both **0.0000** (margin ±0.1578); axis_neg identical.
+    EQUIVALENT on both.
+  - **(ii-b) Point estimates:** Δ+ = **+0.2848** vs published +0.2848;
+    Δ− = **−0.3946** vs published −0.3946. |dev| = 0.0000 on both
+    (tolerance 0.05).
+  - **(ii-c) Verdict preserved:** V1 rule re-evaluated on the reproduced
+    arms — D+ +0.2848 ≥ 0.1578 AND D− −0.3946 ≤ −0.1578 AND
+    min(0.2848) > 2·max|D_rand| (0.1767) → **PASS**, matching the
+    published `V1_PASS: true`. max|D_rand| = **0.0884**, matching the
+    published 0.0884 exactly — so the frozen random-direction path
+    reproduces too.
+  - **This retroactively explains the first run's 2–4% deviations.** The
+    128-context subsample gave +0.2945 / −0.4036; the full-arm
+    reproduction gives the published values exactly. Those deviations
+    were **entirely subsampling noise, not refactor drift** — which was
+    the hypothesis, now confirmed rather than assumed. The port has no
+    detectable numerical divergence from the original stack on this
+    path.
+  - **Honest limitation on the word "exact".** The published `per_probe`
+    vectors are stored rounded to 4 dp, so 4 dp is the ceiling of what
+    this comparison can claim; agreement is exact *at that precision*,
+    not demonstrated below it. The harness now records the reproduced
+    side's full-precision magnitudes so future runs are not capped by
+    their own logging as well.
+  - **Was the tightening worth it?** Yes, and not because it failed —
+    because it could have. The old form would have passed this run too,
+    but it would equally have passed a reproduction that was 0.30 off.
+    The new form's margin (±0.1578) turned out to be enormously
+    conservative against a true error of ~0, which is the right
+    direction for a margin to be wrong in.
+  - **Runtime note (for calibration):** 1,152-context arms ran 720–736 s
+    each for the first three, then 1,245 s and 1,281 s for the last two
+    — sustained-load thermal throttling, ~1.7×. Budget long
+    multi-arm laptop runs at the throttled rate, not the opening rate.
+
 - 2026-08-12 — **Rule-26 criterion (ii) TIGHTENED and re-locked
   (user-directed). Pre-registration entry: committed BEFORE the run that
   evaluates it; no data seen under the new criterion at time of writing.**

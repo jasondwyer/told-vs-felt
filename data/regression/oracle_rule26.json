@@ -4,7 +4,12 @@
   "model_id": "mlx-community/Qwen3.6-27B-4bit",
   "dtype": "4bit-quantized (MLX)",
   "backend": "mlx",
-  "mlx_version": "?",
+  "mlx_version": "0.31.2",
+  "library_versions": {
+   "mlx": "0.31.2",
+   "mlx-lm": "0.31.3",
+   "numpy": "2.5.1"
+  },
   "python": "3.12.9",
   "platform": "macOS-15.6.1-arm64-arm-64bit",
   "gdn_inference_mode": "ops (fused disabled)",
@@ -12,60 +17,39 @@
  },
  "results": [
   {
-   "name": "e2a choice-read verify KL",
-   "expected": "0.0 on every read",
-   "got": "0/48 nonzero",
+   "name": "B2b axis_pos paired per-probe TOST",
+   "expected": "CI within +/-0.1578",
+   "got": "[-0.0000, -0.0000]",
    "ok": true,
-   "note": ""
+   "note": "mean diff -0.0000, n=12 probes, half-width 0.0000"
   },
   {
-   "name": "archived pick reproduced",
-   "expected": "48/48",
-   "got": "48/48",
+   "name": "B2b axis_neg paired per-probe TOST",
+   "expected": "CI within +/-0.1578",
+   "got": "[-0.0000, +0.0000]",
    "ok": true,
-   "note": ""
+   "note": "mean diff +0.0000, n=12 probes, half-width 0.0000"
   },
   {
-   "name": "archived p_a reproduced",
-   "expected": "max |diff| <= 5e-4",
-   "got": "4.95e-05",
-   "ok": true,
-   "note": ""
-  },
-  {
-   "name": "archived label_mass reproduced",
-   "expected": "max |diff| <= 5e-4",
-   "got": "5.03e-05",
-   "ok": true,
-   "note": ""
-  },
-  {
-   "name": "g1r kernel-gate max KL @ frac 0.1",
-   "expected": "7.1064e-04",
-   "got": "7.1131e-04",
-   "ok": true,
-   "note": "rel +0.09%, gate bar 1e-3 held"
-  },
-  {
-   "name": "g1r kernel-gate max KL @ frac 0.2",
-   "expected": "7.3906e-04",
-   "got": "7.3924e-04",
-   "ok": true,
-   "note": "rel +0.02%, gate bar 1e-3 held"
-  },
-  {
-   "name": "B2b axis_pos (128-ctx subsample)",
+   "name": "B2b axis_pos point estimate",
    "expected": "+0.2848",
-   "got": "+0.2945",
+   "got": "+0.2848",
    "ok": true,
-   "note": "+/-0.3587 (90%, 12 probes); sign ok"
+   "note": "|dev| 0.0000 <= 0.05"
   },
   {
-   "name": "B2b axis_neg (128-ctx subsample)",
+   "name": "B2b axis_neg point estimate",
    "expected": "-0.3946",
-   "got": "-0.4036",
+   "got": "-0.3946",
    "ok": true,
-   "note": "+/-0.3666 (90%, 12 probes); sign ok"
+   "note": "|dev| 0.0000 <= 0.05"
+  },
+  {
+   "name": "B2b V1 verdict preserved",
+   "expected": "PASS (published True)",
+   "got": "PASS",
+   "ok": true,
+   "note": "D+ +0.2848, D- -0.3946, max|D_rand| 0.0884 (published 0.0884)"
   }
  ],
  "n_fail": 0
