@@ -20,6 +20,59 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-17 — **Ledger item 28 added (user-directed): the
+  apparatus-hazards clause now has a home. The last FINDINGS-4 ledger
+  candidate is closed; no flagged candidates remain outstanding.**
+  Analysis-tier suite 45 → 48.
+  - **Correction to the step-0a audit.** That entry recorded the
+    addendum as "partially distributed across rules 13/18/21" with only
+    the exclusion-rule clause unhomed. Re-reading FINDINGS-4
+    methodological finding 5 against the ledger, **three of its four
+    sub-clauses were unhomed**, not one: the exclusion-rule clause, the
+    *precedence* half of the attribution clause (rule 21 scopes which
+    domain a bar reads, but never says the tolerant counter evaluates
+    first), and the template-adjacency clause. Only the base-rate
+    clause was genuinely carried, by rules 21 + 18. Item 28 therefore
+    has three parts, and says so rather than restating what 21/18
+    already hold.
+  - **The degen-round case is not what the shorthand suggests, and the
+    ledger text now states it exactly.** "Structurally undefined" is
+    not "the feature is constant". Checking
+    `data/f/postscreen_descriptive.json`: `fewer_degen_rounds` was a
+    **within-session paired contrast**, and the exclusion rule removed
+    every session in which the two configs could differ — **283 ties
+    out of 283 valid sessions, n = 0 decidable observations.** My first
+    operationalization (count degen rounds per session) was wrong and
+    varies fine on the same data ([0..4] on both samples); the failure
+    lives in the *paired contrast*, not the raw count. The near-miss
+    beside it: `fewer_preamble_trunc`, n = 5 of 283 (278 ties), which
+    FINDINGS-4 called uninformative.
+  - **Item 28, in brief:** (a) descriptive features are defined against
+    the exclusion rule, with a decidable-n floor declared on the
+    post-exclusion sample before the run; (b) attribution precedence is
+    declared and the tolerant audit counter goes first; (c) template
+    adjacency is a stimulus variable — rule 18's lexical assertions are
+    necessary, not sufficient.
+  - **28(a) is structural, matching how 21 and 23 were done.**
+    `valence_core.session.FeatureSpec` requires the analysis domain
+    ("valid" = post-exclusion) and a decidable-n floor at declaration;
+    `check_feature_defined` returns a diagnosis when a feature has zero
+    decidable observations on its own domain, and
+    `assert_features_defined` raises at startup rather than at
+    analysis. 28(b) was already enforced by `classify_response`
+    (audit-before-lexical); 28(c) is design discipline with no
+    mechanical form, and is stated as such.
+  - **Three regression checks, grounded in the published artifact
+    rather than synthetic cases** — the machinery must return the three
+    verdicts f1 actually produced: `fewer_degen_rounds` flagged
+    structurally undefined (0 of 283), `fewer_preamble_trunc` flagged
+    below a 5% share floor (5 of 283), `shorter_rounds` clean (257 of
+    283, the pooled 128/257 line). Suite now 48/48.
+  - **Remaining open flag:** the 512-token choice-read window (step-1
+    entry below) is still an open Phase-2 design question and is
+    deliberately not resolved here — it needs a decision about OLMo's
+    session geometry, not a ledger rule.
+
 - 2026-08-12 — **Criterion (ii) re-run under the tightened form: 5/5 PASS,
   and the reproduction is EXACT at the precision the published artifact
   records. Step 1's acceptance is now carried by a criterion that could

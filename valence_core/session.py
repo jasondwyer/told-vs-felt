@@ -262,6 +262,73 @@ def fisher_two_groups(a: int, n1: int, c: int, n2: int) -> float:
     return fisher_one_sided(a, n1 - a, c, n2 - c)
 
 
+# --- feature definition vs the exclusion rule (rule 28a) ------------------
+@dataclass(frozen=True)
+class FeatureSpec:
+    """A descriptive feature, declared together with the sample it is
+    defined ON and the decidable-n it needs there.
+
+    Rule 28(a). The failure this prevents is specific and was observed at
+    scale: f1's `fewer_degen_rounds` was a within-session paired contrast,
+    and the exclusion rule removed every session in which the two configs
+    could differ -- so on the 283 surviving sessions it tied 283 times and
+    had **zero** decidable observations. It measured the exclusion rule and
+    nothing else. `fewer_preamble_trunc` was the near-miss at n = 5.
+
+    Declaring `domain` and `min_decidable` before the run turns "is this
+    feature even askable after exclusions?" from a post-hoc discovery into
+    a startup check.
+    """
+
+    name: str
+    domain: str = "valid"            # "valid" (post-exclusion) | "all"
+    min_decidable: int = 1
+    min_decidable_frac: float = 0.0  # optional share-of-domain floor
+
+    def __post_init__(self) -> None:
+        if self.domain not in ("valid", "all"):
+            raise ValueError(
+                f"{self.name}: domain must be 'valid' (post-exclusion) or "
+                f"'all', got {self.domain!r}")
+
+
+def check_feature_defined(spec: FeatureSpec, n_decidable: int,
+                          n_domain: int) -> str | None:
+    """Diagnosis string, or None if the feature is usable.
+
+    `n_decidable` is the count AFTER dropping ties/undecidables;
+    `n_domain` is the size of the declared analysis sample.
+    """
+    if n_domain <= 0:
+        return f"{spec.name}: empty analysis domain {spec.domain!r}"
+    if n_decidable <= 0:
+        return (f"{spec.name}: STRUCTURALLY UNDEFINED on domain "
+                f"{spec.domain!r} -- 0 decidable of {n_domain} "
+                f"({n_domain} ties). The exclusion rule, not the sessions, "
+                f"is producing this (rule 28a)")
+    if n_decidable < spec.min_decidable:
+        return (f"{spec.name}: below declared floor -- {n_decidable} "
+                f"decidable of {n_domain}, floor {spec.min_decidable}")
+    frac = n_decidable / n_domain
+    if frac < spec.min_decidable_frac:
+        return (f"{spec.name}: below declared share floor -- "
+                f"{n_decidable}/{n_domain} = {frac:.1%} < "
+                f"{spec.min_decidable_frac:.1%}")
+    return None
+
+
+def assert_features_defined(specs: Sequence[FeatureSpec],
+                            counts: Mapping[str, tuple[int, int]]) -> None:
+    """Startup form: raise if any declared feature is undefined or below
+    floor on its own domain. Call before the run, not at analysis."""
+    problems = [d for s in specs
+                if s.name in counts
+                and (d := check_feature_defined(s, *counts[s.name]))]
+    if problems:
+        raise SystemExit("FEATURE DEFINITION FAIL (rule 28a):\n  "
+                         + "\n  ".join(problems))
+
+
 # --- descriptive counters (rule 23) ---------------------------------------
 @dataclass
 class DescriptiveCounters:
@@ -309,4 +376,5 @@ class DescriptiveCounters:
 __all__ = ["assert_modules_absent", "normalize", "grade", "lexical_hit",
            "DEFAULT_SCAFFOLD_STRINGS", "build_ban_list",
            "AuditSpec", "classify_response", "Tripwire", "check_bars",
+           "FeatureSpec", "check_feature_defined", "assert_features_defined",
            "verify_firing", "fisher_two_groups", "DescriptiveCounters"]

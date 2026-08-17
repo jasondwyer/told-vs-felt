@@ -176,6 +176,52 @@ def check_tripwire_firing() -> list[Check]:
     return out
 
 
+def check_feature_definition() -> list[Check]:
+    """Rule 28(a) against the real f1 post-screen artifact.
+
+    Three published features, three verdicts the machinery must return:
+    `fewer_degen_rounds` tied on all 283 valid sessions (n = 0 decidable)
+    and is structurally undefined; `fewer_preamble_trunc` survived with
+    n = 5 of 283 and is below any sane share floor; `shorter_rounds`
+    had n = 257 and is usable. FINDINGS-4 §6 reports exactly this.
+    """
+    from ..session import FeatureSpec, check_feature_defined
+    d = json.load(open(os.path.join(DATA, "f/postscreen_descriptive.json")))
+    feats = d["features"]
+    out = []
+
+    def domain_n(f):
+        pooled = feats[f]["pooled"]
+        return int(pooled["n"] or 0), int(pooled["n"] or 0) + feats[f]["ties_dropped"]
+
+    n_dec, n_dom = domain_n("fewer_degen_rounds")
+    diag = check_feature_defined(FeatureSpec("fewer_degen_rounds"), n_dec, n_dom)
+    out.append(_c("degen-round feature undefined post-exclusion",
+                  "FINDINGS-4 §6 / methodological 5",
+                  "0 decidable of 283", f"{n_dec} decidable of {n_dom}",
+                  n_dec == 0 and n_dom == 283 and diag is not None
+                  and "STRUCTURALLY UNDEFINED" in diag))
+
+    n_dec, n_dom = domain_n("fewer_preamble_trunc")
+    diag = check_feature_defined(
+        FeatureSpec("fewer_preamble_trunc", min_decidable_frac=0.05),
+        n_dec, n_dom)
+    out.append(_c("preamble-trunc feature below share floor",
+                  "FINDINGS-4 §6 (\"uninformative\")",
+                  "5 decidable, flagged", f"{n_dec} decidable, "
+                  f"{'flagged' if diag else 'NOT flagged'}",
+                  n_dec == 5 and diag is not None))
+
+    n_dec, n_dom = domain_n("shorter_rounds")
+    diag = check_feature_defined(FeatureSpec("shorter_rounds"), n_dec, n_dom)
+    out.append(_c("shorter-rounds feature usable",
+                  "FINDINGS-4 §6 (pooled 128/257)",
+                  "257 decidable, clean", f"{n_dec} decidable, "
+                  f"{'flagged' if diag else 'clean'}",
+                  n_dec == 257 and diag is None))
+    return out
+
+
 def check_instrument_invariants() -> list[Check]:
     """Not published numbers -- properties the instruments must have, checked
     because each one has a plausible silent-failure mode."""
@@ -214,6 +260,7 @@ def run_all() -> list[Check]:
     checks += check_postscreen_descriptives()
     checks += check_c1r3_gate()
     checks += check_tripwire_firing()
+    checks += check_feature_definition()
     checks += check_instrument_invariants()
     return checks
 

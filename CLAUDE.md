@@ -215,6 +215,9 @@ screen data. g2/g3/g4 quick-wins spec'd alongside.
 
 All v2 rules stand, generalized to multi-model, multi-backend form.
 [v3-new] = added per FINDINGS-3/4 flags, signed off by acceptance.
+[v3.1-new] = added after acceptance by explicit user direction, dated
+inline; item 28 closes the last FINDINGS-4 ledger candidate, which the
+step-0a audit found only partly absorbed by rules 13/18/21.
 
 1. Additive steering at empirically surveyed layers; magnitudes always
    frac × R_ℓ from per-model, per-checkpoint profiling; directions
@@ -287,6 +290,31 @@ All v2 rules stand, generalized to multi-model, multi-backend form.
     analysis JSONs are committed to `results/raw/` / `data/` paths
     before an instance is stopped; the repo, not any machine, is the
     record. A run that exists only on a box does not exist.
+28. [v3.1-new, user-directed 2026-08-17] **Apparatus-hazards law**
+    (completion-style multi-round; FINDINGS-4 methodological finding 5,
+    the residue not already carried elsewhere — its base-rate clause
+    lives in rules 21 + 18 and is not restated here):
+    (a) **Descriptive features are defined against the exclusion rule,
+    not alongside it.** An exclusion can strip a feature of every
+    decidable observation on the surviving sample: f1's
+    `fewer_degen_rounds` was a within-session paired contrast, and the
+    exclusion rule removed every session in which the two configs
+    could differ — **283 ties out of 283 valid sessions, n = 0
+    decidable.** It measured the exclusion rule, not the sessions.
+    (`fewer_preamble_trunc` was the near-miss at n = 5.) Declare each
+    feature's decidable-n floor *on the post-exclusion sample* before
+    the run; a paired feature that ties on its whole analysis domain
+    is not a feature.
+    (b) **Attribution precedence is declared, and the tolerant counter
+    goes first.** Where a stimulus provokes junk, the audit evaluates
+    before any strict counter; otherwise a design pauses on its own
+    stimulus. Rule 21 scopes *which domain* a degeneracy bar reads;
+    this scopes *which counter claims a given response*.
+    (c) **Template adjacency is a stimulus variable.** Short-QA items
+    next to bracketed headers create a config-topic attractor ("What
+    is prism?"). Roster tokens and item shape are checked against the
+    wrapper, not only against the pools — rule 18's lexical assertions
+    are necessary, not sufficient.
 
 ## Tooling inventory — ports vs. new
 
