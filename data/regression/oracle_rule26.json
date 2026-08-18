@@ -13,43 +13,39 @@
   "python": "3.12.9",
   "platform": "macOS-15.6.1-arm64-arm-64bit",
   "gdn_inference_mode": "ops (fused disabled)",
-  "n_layers": 64
+  "n_layers": 64,
+  "choice_window_declared": 512,
+  "legacy_truncate_512": true,
+  "n_encodes_clipped": 5
  },
  "results": [
   {
-   "name": "B2b axis_pos paired per-probe TOST",
-   "expected": "CI within +/-0.1578",
-   "got": "[-0.0000, -0.0000]",
+   "name": "e2a choice-read verify KL",
+   "expected": "0.0 on every read",
+   "got": "0/48 nonzero",
    "ok": true,
-   "note": "mean diff -0.0000, n=12 probes, half-width 0.0000"
+   "note": ""
   },
   {
-   "name": "B2b axis_neg paired per-probe TOST",
-   "expected": "CI within +/-0.1578",
-   "got": "[-0.0000, +0.0000]",
+   "name": "archived pick reproduced",
+   "expected": "48/48",
+   "got": "48/48",
    "ok": true,
-   "note": "mean diff +0.0000, n=12 probes, half-width 0.0000"
+   "note": ""
   },
   {
-   "name": "B2b axis_pos point estimate",
-   "expected": "+0.2848",
-   "got": "+0.2848",
+   "name": "archived p_a reproduced",
+   "expected": "max |diff| <= 5e-4",
+   "got": "4.95e-05",
    "ok": true,
-   "note": "|dev| 0.0000 <= 0.05"
+   "note": ""
   },
   {
-   "name": "B2b axis_neg point estimate",
-   "expected": "-0.3946",
-   "got": "-0.3946",
+   "name": "archived label_mass reproduced",
+   "expected": "max |diff| <= 5e-4",
+   "got": "5.03e-05",
    "ok": true,
-   "note": "|dev| 0.0000 <= 0.05"
-  },
-  {
-   "name": "B2b V1 verdict preserved",
-   "expected": "PASS (published True)",
-   "got": "PASS",
-   "ok": true,
-   "note": "D+ +0.2848, D- -0.3946, max|D_rand| 0.0884 (published 0.0884)"
+   "note": ""
   }
  ],
  "n_fail": 0

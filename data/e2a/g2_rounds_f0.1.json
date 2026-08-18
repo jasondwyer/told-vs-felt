@@ -1,0 +1,902 @@
+{
+ "pos": [
+  {
+   "task_id": "t01",
+   "para": 0,
+   "seed": 1168955210,
+   "text": "A ferry glides over calm waters at dawn, creating a serene scene that captures the beauty of early morning travel.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t01",
+   "para": 1,
+   "seed": 1389871881,
+   "text": "A ferry glides across the calm water at dawn, with the soft morning light casting a warm glow over the scene.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t01",
+   "para": 2,
+   "seed": 1801125836,
+   "text": "The early morning ferry glided across the calm waters, carrying passengers to the other side as the sky painted in hues of orange and pink.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t01",
+   "para": 3,
+   "seed": 2082597775,
+   "text": "A golden dawn breaks over the calm waters as the ferry glides silently across the horizon, carrying passengers into the new day.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t02",
+   "para": 0,
+   "seed": 1548661067,
+   "text": "Fresh laundry carries a clean, comforting scent of mild detergent and sunlight-warmed cotton.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t02",
+   "para": 1,
+   "seed": 1261806856,
+   "text": "Fresh laundry smells clean and fresh, often with a crisp, clean scent that is reminiscent of a sunny day.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t02",
+   "para": 2,
+   "seed": 1924700621,
+   "text": "The scent of clean cotton and fresh air wrapped around the room like a warm, comforting embrace.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t02",
+   "para": 3,
+   "seed": 1707314574,
+   "text": "The scent of clean laundry is a fresh, crisp aroma reminiscent of sunlight and pure cotton.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t03",
+   "para": 0,
+   "seed": 499150475,
+   "text": "Could you please lend me your stapler?",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t03",
+   "para": 1,
+   "seed": 180058824,
+   "text": "Could you please lend me a stapler for a moment?",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t03",
+   "para": 2,
+   "seed": 859194893,
+   "text": "Could you please lend me your stapler?",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t03",
+   "para": 3,
+   "seed": 609047118,
+   "text": "Could you please lend me a stapler?",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t04",
+   "para": 0,
+   "seed": 888896264,
+   "text": "Repair Caf\u00e9: A Hub for Sustainability and Community Connection",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t04",
+   "para": 1,
+   "seed": 595619659,
+   "text": "The Fix-It Revolution: Community Repair Caf\u00e9s Are Changing How We Think About Waste",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t04",
+   "para": 2,
+   "seed": 437080974,
+   "text": "Repair Caf\u00e9s: Your Local Guide to Fixing What\u2019s Broken",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t04",
+   "para": 3,
+   "seed": 225855437,
+   "text": "Repair Caf\u00e9: Stories of Mended Things and Mended Hearts",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t05",
+   "para": 0,
+   "seed": 1970644168,
+   "text": "Hello neighbors!",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t05",
+   "para": 1,
+   "seed": 1645129867,
+   "text": "Welcome to our neighborhood newsletter!",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t05",
+   "para": 2,
+   "seed": 1535347790,
+   "text": "Welcome to our community newsletter, where we celebrate local stories, share important updates, and connect neighbors!",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t05",
+   "para": 3,
+   "seed": 1291360269,
+   "text": "Hello, and welcome to the Springfield Gazette!",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t06",
+   "para": 0,
+   "seed": 1821885129,
+   "text": "Just a friendly reminder that our meeting has been moved to 3pm!",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t06",
+   "para": 1,
+   "seed": 2079118986,
+   "text": "I've updated the meeting time to 3 pm. \ud83d\udd52 Let me know if that works for you!",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t06",
+   "para": 2,
+   "seed": 1113713231,
+   "text": "\"The meeting has been rescheduled to 3pm. Hope you\u2019re able to make it!\"",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t06",
+   "para": 3,
+   "seed": 1427832332,
+   "text": "The meeting has been rescheduled to 3pm.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t07",
+   "para": 0,
+   "seed": 756620553,
+   "text": "Walking on gravel creates a satisfying crunching sound underfoot, with each step shifting the small stones and adding a slight, uneven texture to your path.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t07",
+   "para": 1,
+   "seed": 979503434,
+   "text": "Walking on gravel creates a satisfying, rhythmic crunching sound with each step.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t07",
+   "para": 2,
+   "seed": 66008463,
+   "text": "Walking across gravel feels like stepping on tiny, crunchy pebbles that shift underfoot.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t07",
+   "para": 3,
+   "seed": 345252300,
+   "text": "The soft crunch of footsteps on a gravel path creates a rhythmic, earthy symphony of texture and sound.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t08",
+   "para": 0,
+   "seed": 1054992847,
+   "text": "\u2615\ufe0f\u2728 The Daily Grind \u2615\ufe0f\u2728",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t08",
+   "para": 1,
+   "seed": 698023308,
+   "text": "Oxbox",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t08",
+   "para": 2,
+   "seed": 269992265,
+   "text": "A small street-corner coffee cart is commonly known as a \"coffee kiosk.\"",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t08",
+   "para": 3,
+   "seed": 124572938,
+   "text": "Caffeine Corner",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t09",
+   "para": 0,
+   "seed": 2137994767,
+   "text": "Mismatched socks, a story of laundry gone awry.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t09",
+   "para": 1,
+   "seed": 1746149964,
+   "text": "A pair of mismatched socks dangles from a clothesline.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t09",
+   "para": 2,
+   "seed": 1368989321,
+   "text": "=== beginning of response ===",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t09",
+   "para": 3,
+   "seed": 1189219018,
+   "text": "Unpaired socks hang on the line, completing their laundry cycle.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t10",
+   "para": 0,
+   "seed": 528958693,
+   "text": "[round 2 \u2014 active config: base]",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t10",
+   "para": 1,
+   "seed": 150753446,
+   "text": "Thank you so much for lending me the book.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t10",
+   "para": 2,
+   "seed": 829516899,
+   "text": "Thank you so much for letting me borrow the book.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t10",
+   "para": 3,
+   "seed": 638220320,
+   "text": "Thank you for lending me the book!",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t11",
+   "para": 0,
+   "seed": 1577687845,
+   "text": "The sound of wind chimes is a gentle, melodic tinkling that dances on the breeze.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t11",
+   "para": 1,
+   "seed": 1232244582,
+   "text": "Wind chimes produce a gentle, melodic sound as they sway and tinkle in the breeze.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t11",
+   "para": 2,
+   "seed": 1895805859,
+   "text": "The gentle chimes sang a silvery melody as the breeze danced through their metallic frames.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t11",
+   "para": 3,
+   "seed": 1736746976,
+   "text": "Wind chimes on a porch create a gentle, melodic sound as the breeze carries their tones through the air.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t12",
+   "para": 0,
+   "seed": 1206648100,
+   "text": "Subject: Found Umbrella",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t12",
+   "para": 1,
+   "seed": 1351674215,
+   "text": "Subject: Found umbrella near the library! \ud83c\udf02",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t12",
+   "para": 2,
+   "seed": 1763562914,
+   "text": "The subject line for an email about an umbrella left behind is: \"Umbrella Left Behind\"",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t12",
+   "para": 3,
+   "seed": 2120663521,
+   "text": "Subject: Found Umbrella - Please Claim! \u2705",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t13",
+   "para": 0,
+   "seed": 107291364,
+   "text": "Join us for a relaxed evening of board games!",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t13",
+   "para": 1,
+   "seed": 287192743,
+   "text": "How about gathering for a cozy, relaxed board-game night where everyone can unwind and enjoy some friendly competition?",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t13",
+   "para": 2,
+   "seed": 680725090,
+   "text": "Here are the details:",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t13",
+   "para": 3,
+   "seed": 1072176673,
+   "text": "Sure! Here's a one-line invitation:",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t14",
+   "para": 0,
+   "seed": 794703719,
+   "text": "Please make sure to clean up after yourself in the active workspace.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t14",
+   "para": 1,
+   "seed": 941957924,
+   "text": "Please do not leave dishes in the sink.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t14",
+   "para": 2,
+   "seed": 27795425,
+   "text": "Please avoid leaving dishes in the sink.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t14",
+   "para": 3,
+   "seed": 382929826,
+   "text": "Please place dishes in the dishwasher or on the drying rack.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t15",
+   "para": 0,
+   "seed": 1859184807,
+   "text": "\"Riding for you, every mile!\"",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t15",
+   "para": 1,
+   "seed": 2041314532,
+   "text": "\"Ride the rush, deliver the rush.\"",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t15",
+   "para": 2,
+   "seed": 1076281377,
+   "text": "Pedal Power, Prompt Delivery.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t15",
+   "para": 3,
+   "seed": 1465767010,
+   "text": "\"Pulse on the Pavement, Pace with the Crowd.\"",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t16",
+   "para": 0,
+   "seed": 1999802022,
+   "text": "The warm glow of freshly baked goods fades as the last customer leaves, leaving the display cases to quietly reflect the quiet street outside.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t16",
+   "para": 1,
+   "seed": 1615436517,
+   "text": "The glass pane glows warmly as the last loaves of bread are carefully placed inside, their golden crusts catching the fading light of day.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t16",
+   "para": 2,
+   "seed": 1506059808,
+   "text": "The glass glows with the last loaves, a warm beacon for the hurried few who catch the final bell.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t16",
+   "para": 3,
+   "seed": 1321185891,
+   "text": "The bakery window at the end of the day was a testament to the hard work and dedication of the bakers, showcasing a few remaining loaves of bread and pastries that spoke of the day's success.",
+   "cap_hit": false
+  }
+ ],
+ "neg": [
+  {
+   "task_id": "t01",
+   "para": 0,
+   "seed": 1186341629,
+   "text": "A ferry glides across the misty dawn waters, carrying passengers toward a new day.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t01",
+   "para": 1,
+   "seed": 1372403390,
+   "text": "A ferry moves across the water at dawn, its wake trailing behind like a ribbon of light.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t01",
+   "para": 2,
+   "seed": 1749027451,
+   "text": "A ferry sails across a glassy river at dawn, its wake trailing behind as the sky glows with the first light of day.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t01",
+   "para": 3,
+   "seed": 2134580792,
+   "text": "The ferry cuts through the mist like a blade of silver, carving its path across the still, glassy water at first light.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t02",
+   "para": 0,
+   "seed": 1599358204,
+   "text": "Fresh laundry smells like a clean, soapy cloud floating in a warm breeze.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t02",
+   "para": 1,
+   "seed": 1211060415,
+   "text": "Fresh laundry smells clean and fresh.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t02",
+   "para": 2,
+   "seed": 1906470010,
+   "text": "The room hung heavy with the sharp, clean scent of detergent and steam, like a storm-washed windowpane.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t02",
+   "para": 3,
+   "seed": 1725528121,
+   "text": "The scent of clean laundry is crisp and faintly sweet, often carrying a subtle hint of freshness.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t03",
+   "para": 0,
+   "seed": 517643068,
+   "text": "Could you please lend me your stapler for a moment?",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t03",
+   "para": 1,
+   "seed": 161582975,
+   "text": "Could you please lend me a stapler for a moment, I\u2019d be grateful.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t03",
+   "para": 2,
+   "seed": 808235962,
+   "text": "Could you please lend me your stapler?",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t03",
+   "para": 3,
+   "seed": 660056057,
+   "text": "Could you please lend me your stapler?",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t04",
+   "para": 0,
+   "seed": 937529023,
+   "text": "\"The Fix-It Revolution: How Repair Caf\u00e9s Are Changing the World\"",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t04",
+   "para": 1,
+   "seed": 547003132,
+   "text": "Fix-It Friday",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t04",
+   "para": 2,
+   "seed": 420980281,
+   "text": "\"Repair Caf\u00e9s: Fixing More Than Just Things\"",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t04",
+   "para": 3,
+   "seed": 242004602,
+   "text": "The Mended Community",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t05",
+   "para": 0,
+   "seed": 1987006847,
+   "text": "Welcome to our neighborhood newsletter!",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t05",
+   "para": 1,
+   "seed": 1628718396,
+   "text": "Welcome to the Maple Creek neighborhood newsletter, where community spirit thrives!",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t05",
+   "para": 2,
+   "seed": 1486453241,
+   "text": "Welcome to the community newsletter, where we share the latest updates, events, and stories from our vibrant community.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t05",
+   "para": 3,
+   "seed": 1340239290,
+   "text": "Hello everyone, we're glad you're reading this newsletter.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t06",
+   "para": 0,
+   "seed": 1871525758,
+   "text": "The meeting has been moved to 3pm.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t06",
+   "para": 1,
+   "seed": 2029396797,
+   "text": "The meeting has been moved to 3pm. \ud83d\ude0a",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t06",
+   "para": 2,
+   "seed": 1098588152,
+   "text": "The meeting has been rescheduled to 3pm.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t06",
+   "para": 3,
+   "seed": 1442843579,
+   "text": "\"The meeting has moved to 3 PM. Please adjust your schedule accordingly.\"",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t07",
+   "para": 0,
+   "seed": 772008126,
+   "text": "Walking on gravel feels like stepping on small, loose rocks that crunch underfoot.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t07",
+   "para": 1,
+   "seed": 964230397,
+   "text": "Walking on gravel is a crunchy, uneven experience that requires careful footing and produces a distinct, repetitive sound with each step.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t07",
+   "para": 2,
+   "seed": 16105528,
+   "text": "Walking across gravel feels like stepping on a thousand tiny, sharp pebbles that crunch and shift underfoot.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t07",
+   "para": 3,
+   "seed": 395236475,
+   "text": "Footsteps on a gravel path create a gritty, crackling sound as each step crushes and shifts the loose stones underfoot.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t08",
+   "para": 0,
+   "seed": 1039867000,
+   "text": "```",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t08",
+   "para": 1,
+   "seed": 713033787,
+   "text": "Brew & Roll",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t08",
+   "para": 2,
+   "seed": 319632638,
+   "text": "A small street-corner coffee cart might be called a \"coffee kiosk\" or a \"coffee stand.\"",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t08",
+   "para": 3,
+   "seed": 74850493,
+   "text": "9: Street Brews",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t09",
+   "para": 0,
+   "seed": 2088092600,
+   "text": "These socks are mismatched.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t09",
+   "para": 1,
+   "seed": 1796134907,
+   "text": "A pair of mismatched socks hangs on a clothesline.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t09",
+   "para": 2,
+   "seed": 1384377150,
+   "text": "\"Odd socks pegged to a line\"",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t09",
+   "para": 3,
+   "seed": 1173946237,
+   "text": "A tangled knot of colorful socks hangs limply on a clothesline, defying the logic of laundry day.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t10",
+   "para": 0,
+   "seed": 480096594,
+   "text": "Thank you for lending me your book; it was a truly rewarding read.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t10",
+   "para": 1,
+   "seed": 199664913,
+   "text": "Thank you for lending me the book; I truly appreciate your generosity.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t10",
+   "para": 2,
+   "seed": 845912532,
+   "text": "Thank you so much for lending me your book; it was an absolute pleasure to read.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t10",
+   "para": 3,
+   "seed": 621841815,
+   "text": "Thank you for lending me the book; I truly enjoyed reading it.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t11",
+   "para": 0,
+   "seed": 1561554578,
+   "text": "The wind chimes sing a delicate melody as the breeze weaves through their slender tubes, creating a cascading symphony of metallic whispers.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t11",
+   "para": 1,
+   "seed": 1248361169,
+   "text": "Wind chimes produce a melodic, tinkling sound as the wind moves the hollow tubes or rods, creating resonant, ethereal tones.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t11",
+   "para": 2,
+   "seed": 1944405524,
+   "text": "The chimes sang a soft, melodic hum as the breeze swept through them.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t11",
+   "para": 3,
+   "seed": 1688097367,
+   "text": "Wind chimes on a porch create a soothing, melodic ambiance as the breeze gently sets them into motion.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t12",
+   "para": 0,
+   "seed": 1156647059,
+   "text": "Subject: Found Umbrella \ud83c\udf02",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t12",
+   "para": 1,
+   "seed": 1401560272,
+   "text": "\"Found: Umbrella at Central Park\"",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t12",
+   "para": 2,
+   "seed": 1778851861,
+   "text": "Subject: Your Umbrella Awaits You!",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t12",
+   "para": 3,
+   "seed": 2105291862,
+   "text": "Subject: Lost and Found Umbrella",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t13",
+   "para": 0,
+   "seed": 92264275,
+   "text": "Come join us for a casual board-game evening this Friday at 7 PM at my place.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t13",
+   "para": 1,
+   "seed": 302301968,
+   "text": "Come over for a relaxed board-game night with friends.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t13",
+   "para": 2,
+   "seed": 730464213,
+   "text": "Join us for an exciting games night filled with laughter and friendly competition!",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t13",
+   "para": 3,
+   "seed": 1022552982,
+   "text": "\"Hey, come over for an informal evening of board games tonight!\"",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t14",
+   "para": 0,
+   "seed": 742703824,
+   "text": "Please do not leave dishes in the session.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t14",
+   "para": 1,
+   "seed": 994039443,
+   "text": "Please do not leave dishes in the sink.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t14",
+   "para": 2,
+   "seed": 45279830,
+   "text": "Please do not leave dishes in the sink.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t14",
+   "para": 3,
+   "seed": 365559317,
+   "text": "Please rinse and place dishes in the dishwasher.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t15",
+   "para": 0,
+   "seed": 1841962256,
+   "text": "\"Ride Fast, Deliver More\"",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t15",
+   "para": 1,
+   "seed": 2058422611,
+   "text": "\"Sprint to your destination!\"",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t15",
+   "para": 2,
+   "seed": 1128019350,
+   "text": "A good slogan for a bicycle delivery service is: \"Fast, Green, Delivered.\"",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t15",
+   "para": 3,
+   "seed": 1413947861,
+   "text": "\"Ride the edge. Live the rush.\"",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t16",
+   "para": 0,
+   "seed": 1948810001,
+   "text": "The glass was cold and dimmed, muffins and breads still warm and fragrant, muffins and breads still warm and fragrant, muffins and beds still warm and fragrant, muffins and beds still warm and fragrant, stuttering out the last notes of a",
+   "cap_hit": true
+  },
+  {
+   "task_id": "t16",
+   "para": 1,
+   "seed": 1666412370,
+   "text": "The bakery's window is a ghostly tomb of flour-dusted shelves, where the last croissant lies like a fossil under a foggy glass.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t16",
+   "para": 2,
+   "seed": 1524519831,
+   "text": "The glass fogged with evening breath, the last loaf cooled on the counter like a war memorial.",
+   "cap_hit": false
+  },
+  {
+   "task_id": "t16",
+   "para": 3,
+   "seed": 1302677460,
+   "text": "The bakery window is a fogged mirror of the empty shelves behind it, reflecting nothing but the ghost of a missing croissant.",
+   "cap_hit": false
+  }
+ ]
+}

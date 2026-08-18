@@ -452,7 +452,11 @@ def main() -> int:
     _banner("LEDGER 26 -- oracle-tier regression (Qwen, laptop)")
     t0 = time.time()
     from ..adapters.qwen_mlx import QwenMLXAdapter
-    adapter = QwenMLXAdapter()
+    # legacy_truncate=True is REQUIRED here and only here: rule 26 reproduces
+    # published numbers, and every published choice read went through the
+    # 512-token tail window. New work runs full-session (CHOICE_WINDOW).
+    # Clipped encodes are counted and reported in provenance.
+    adapter = QwenMLXAdapter(legacy_truncate=True)
     print(f"model loaded in {time.time() - t0:.0f}s")
     print(f"provenance: {json.dumps(adapter.provenance())}", flush=True)
 

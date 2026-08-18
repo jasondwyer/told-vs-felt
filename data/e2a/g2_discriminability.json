@@ -1,0 +1,23 @@
+{
+ "bar": 0.7,
+ "template_family": "v3",
+ "ban_sha": "9a2f0744f81ac930",
+ "fracs": {
+  "0.1": {
+   "aucs": {
+    "1": 0.633,
+    "2": 0.759
+   },
+   "use_cached": true,
+   "judge_plus": 14,
+   "judge_total": 32
+  }
+ },
+ "verdict": {
+  "dose_e2a": 0.1,
+  "F": 2,
+  "k": 2,
+  "auc": 0.759,
+  "use_cached": true
+ }
+}

@@ -1,0 +1,26 @@
+
+==============================================================================
+LEDGER 26 -- oracle-tier regression (Qwen, laptop)
+==============================================================================
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 17718.85it/s]
+model loaded in 5s
+provenance: {"adapter": "qwen3.6-27b-4bit-mlx", "model_id": "mlx-community/Qwen3.6-27B-4bit", "dtype": "4bit-quantized (MLX)", "backend": "mlx", "mlx_version": "0.31.2", "library_versions": {"mlx": "0.31.2", "mlx-lm": "0.31.3", "numpy": "2.5.1"}, "python": "3.12.9", "platform": "macOS-15.6.1-arm64-arm-64bit", "gdn_inference_mode": "ops (fused disabled)", "n_layers": 64, "choice_window_declared": 512, "legacy_truncate_512": true, "n_encodes_clipped": 0}
+single-token tags: 8/8  e2a tasks: 16
+
+==============================================================================
+(iii) e2a choice-read construction on archived session texts
+==============================================================================
+  recovered 1115 archived choice points from 200 sessions
+    16/48 replayed 98s
+    32/48 replayed 195s
+    48/48 replayed 288s
+
+==============================================================================
+RULE 26 VERDICT
+==============================================================================
+  [PASS] e2a choice-read verify KL        expected 0.0 on every read  got   0/48 nonzero
+  [PASS] archived pick reproduced         expected          48/48  got          48/48
+  [PASS] archived p_a reproduced          expected max |diff| <= 5e-4  got       4.95e-05
+  [PASS] archived label_mass reproduced   expected max |diff| <= 5e-4  got       5.03e-05
+------------------------------------------------------------------------------
+  4/4 criteria reproduced through valence_core   [total 294s]

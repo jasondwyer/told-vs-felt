@@ -270,6 +270,37 @@ class ModelAdapter(ABC):
     def n_layers(self) -> int:
         ...
 
+    # --- context window (PROPOSAL-g clause, adapter contract) -------------
+    #
+    # The choice-read window is a DECLARED per-adapter constant, never
+    # inherited from a library default. The Qwen oracle taught this the
+    # expensive way: `MLXLensModel.encode` carried a `max_length=512`
+    # default, every published choice read went through it, and nobody
+    # chose 512 for a scientific reason -- it was a signature default that
+    # became an experimental parameter by inheritance.
+    #
+    # `choice_window` is None here on purpose: an adapter that does not
+    # declare one cannot perform a choice read at all.
+    choice_window: int | None = None
+
+    def assert_choice_window(self, n_tokens: int,
+                             where: str = "choice_read") -> None:
+        """Per-read assertion. A prefix longer than the declared window
+        would be silently clipped, so it is an incident: escalate, never
+        widen the window mid-run."""
+        w = self.choice_window
+        if w is None:
+            raise SystemExit(
+                f"WINDOW NOT DECLARED: {type(self).__name__} must set "
+                f"`choice_window` explicitly before a choice read. Context-"
+                f"window behavior is never inherited from a library default.")
+        if n_tokens > w:
+            raise SystemExit(
+                f"WINDOW INCIDENT at {where}: prefix is {n_tokens} tokens, "
+                f"declared choice_window is {w}. This read would be clipped "
+                f"and the session's early rounds would silently leave the "
+                f"context. Escalate to the design instance.")
+
     # --- provenance -------------------------------------------------------
     @abstractmethod
     def provenance(self) -> dict:

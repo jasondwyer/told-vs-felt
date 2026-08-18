@@ -48,17 +48,25 @@ def _ensure_clone_on_path() -> None:
 class QwenMLXAdapter(ModelAdapter):
     name = "qwen3.6-27b-4bit-mlx"
 
-    # `MLXLensModel.encode` truncates to the LAST `max_length` tokens. Every
-    # published cycle-3/4 number was produced through that truncation, so the
-    # oracle must keep it: e2a session transcripts exceed 512 tokens, which
-    # means late-session choice reads saw a tail window, not the whole
-    # session. Preserved here for fidelity and flagged as a design question
-    # for Phase 2 -- a Phase-2 adapter must declare its own window rather
-    # than inherit this one (rule 1's spirit: nothing carries across models).
-    ENCODE_MAX_LENGTH = 512
+    # DECLARED choice-read window (PROPOSAL-g clause, adopted 2026-08-18).
+    # Chosen, not inherited: the tokenizer reports model_max_length 262144
+    # and `MLXLensModel.encode` carried a max_length=512 default -- neither
+    # is a scientific choice, and the 512 became an experimental parameter
+    # purely by inheritance. 8192 is declared with headroom against the
+    # measured ceiling: the window-coverage audit (2026-08-18) found the
+    # longest archived choice-read prefix across e2a+f to be 666 tokens.
+    # A session that grows past 8192 is an incident, not a silent clip.
+    CHOICE_WINDOW = 8192
+    #
+    # Historical fidelity only: the 512-token tail truncation every
+    # published cycle-3/4 number was produced through. Reachable ONLY via
+    # legacy_truncate=True, which the rule-26 oracle sets explicitly. New
+    # work runs full-session.
+    LEGACY_ENCODE_MAX_LENGTH = 512
 
     def __init__(self, model=None, model_id: str = "mlx-community/Qwen3.6-27B-4bit",
-                 max_length: int | None = None):
+                 choice_window: int | None = None,
+                 legacy_truncate: bool = False):
         _ensure_clone_on_path()
         self._mx = importlib.import_module("mlx.core")
         self._model_mod = importlib.import_module("jlens_qwen.model")
@@ -66,8 +74,19 @@ class QwenMLXAdapter(ModelAdapter):
         self._cond = importlib.import_module("jlens_qwen.conditioning")
         self._patch_gdn = importlib.import_module("jlens_qwen.patch_gdn")
         self.model_id = model_id
-        self.max_length = (self.ENCODE_MAX_LENGTH if max_length is None
-                           else max_length)
+        self.legacy_truncate = bool(legacy_truncate)
+        self.max_length = (self.LEGACY_ENCODE_MAX_LENGTH
+                           if self.legacy_truncate else None)
+        # Startup assertion: the window is declared, positive, and (in
+        # legacy mode) consistent with the truncation actually applied.
+        self.choice_window = (
+            self.LEGACY_ENCODE_MAX_LENGTH if self.legacy_truncate
+            else (self.CHOICE_WINDOW if choice_window is None else choice_window))
+        if not isinstance(self.choice_window, int) or self.choice_window <= 0:
+            raise ValueError(
+                f"choice_window must be a positive int, got "
+                f"{self.choice_window!r}")
+        self.n_clipped = 0
         self._model = model if model is not None else self._model_mod.load(model_id)
         # Ops kernel, not fused: every published strain/accuracy number was
         # measured on it (conditioning.SteeredStreamSession's own note).
@@ -75,13 +94,17 @@ class QwenMLXAdapter(ModelAdapter):
 
     # --- tokenization -----------------------------------------------------
     def encode(self, text: str, add_special_tokens: bool = True) -> list[int]:
-        """Tail-truncating to `max_length`, exactly as `MLXLensModel.encode`
-        does. `add_special_tokens=False` callers (single-token tag lookups)
-        are short and unaffected, but the truncation is applied uniformly so
-        there is one encode path, not two."""
+        """Full-session by default. Under `legacy_truncate=True` it tail-
+        truncates to 512 exactly as `MLXLensModel.encode` did, which is the
+        path every published cycle-3/4 number came through -- kept reachable
+        for rule-26 reproduction and for nothing else."""
         ids = list(self._model.tokenizer.encode(
             text, add_special_tokens=add_special_tokens))
         if self.max_length and len(ids) > self.max_length:
+            # Legacy mode only. Counted rather than silent: the count is
+            # reported in provenance, which is precisely what was missing
+            # when this truncation shaped every published choice read.
+            self.n_clipped += 1
             ids = ids[-self.max_length:]
         return ids
 
@@ -346,4 +369,7 @@ class QwenMLXAdapter(ModelAdapter):
             "platform": platform.platform(),
             "gdn_inference_mode": "ops (fused disabled)",
             "n_layers": self.n_layers,
+            "choice_window_declared": self.choice_window,
+            "legacy_truncate_512": self.legacy_truncate,
+            "n_encodes_clipped": self.n_clipped,
         }

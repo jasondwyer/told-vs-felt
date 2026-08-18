@@ -99,6 +99,11 @@ def choice_read(adapter: ModelAdapter, transcript_text: str,
     tie-break heuristic.
     """
     ids = adapter.encode(transcript_text)
+    # PROPOSAL-g clause: the declared window is asserted at every read, not
+    # assumed. A prefix past it would be silently clipped and the session's
+    # early rounds would leave the context without anyone noticing -- which
+    # is exactly what happened under the inherited 512 default.
+    adapter.assert_choice_window(len(ids), where="choice_read")
     res = adapter.forward(ids, capture_layers=())
     p = softmax(res.logits)
     ia, ib = label_ids[label_a], label_ids[label_b]

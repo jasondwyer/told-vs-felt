@@ -1,0 +1,518 @@
+{
+ "pos": [
+  {
+   "task_id": "t09",
+   "para": 0,
+   "seed": 2137994767,
+   "text": "Mismatched socks, a story of laundry gone awry.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t09",
+   "para": 1,
+   "seed": 1746149964,
+   "text": "A pair of mismatched socks dangles from a clothesline.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t09",
+   "para": 2,
+   "seed": 1368989321,
+   "text": "=== beginning of response ===",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t09",
+   "para": 3,
+   "seed": 1189219018,
+   "text": "Unpaired socks hang on the line, completing their laundry cycle.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t10",
+   "para": 0,
+   "seed": 528958693,
+   "text": "[round 2 \u2014 active config: base]",
+   "cap_hit": false,
+   "degen": "frame:[round"
+  },
+  {
+   "task_id": "t10",
+   "para": 1,
+   "seed": 150753446,
+   "text": "Thank you so much for lending me the book.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t10",
+   "para": 2,
+   "seed": 829516899,
+   "text": "Thank you so much for letting me borrow the book.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t10",
+   "para": 3,
+   "seed": 638220320,
+   "text": "Thank you for lending me the book!",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t11",
+   "para": 0,
+   "seed": 1577687845,
+   "text": "The sound of wind chimes is a gentle, melodic tinkling that dances on the breeze.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t11",
+   "para": 1,
+   "seed": 1232244582,
+   "text": "Wind chimes produce a gentle, melodic sound as they sway and tinkle in the breeze.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t11",
+   "para": 2,
+   "seed": 1895805859,
+   "text": "The gentle chimes sang a silvery melody as the breeze danced through their metallic frames.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t11",
+   "para": 3,
+   "seed": 1736746976,
+   "text": "Wind chimes on a porch create a gentle, melodic sound as the breeze carries their tones through the air.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t12",
+   "para": 0,
+   "seed": 1206648100,
+   "text": "Subject: Found Umbrella",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t12",
+   "para": 1,
+   "seed": 1351674215,
+   "text": "Subject: Found umbrella near the library! \ud83c\udf02",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t12",
+   "para": 2,
+   "seed": 1763562914,
+   "text": "The subject line for an email about an umbrella left behind is: \"Umbrella Left Behind\"",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t12",
+   "para": 3,
+   "seed": 2120663521,
+   "text": "Subject: Found Umbrella - Please Claim! \u2705",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t13",
+   "para": 0,
+   "seed": 107291364,
+   "text": "Join us for a relaxed evening of board games!",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t13",
+   "para": 1,
+   "seed": 287192743,
+   "text": "How about gathering for a cozy, relaxed board-game night where everyone can unwind and enjoy some friendly competition?",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t13",
+   "para": 2,
+   "seed": 680725090,
+   "text": "Here are the details:",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t13",
+   "para": 3,
+   "seed": 1072176673,
+   "text": "Sure! Here's a one-line invitation:",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t14",
+   "para": 0,
+   "seed": 794703719,
+   "text": "Please make sure to clean up after yourself in the active workspace.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t14",
+   "para": 1,
+   "seed": 941957924,
+   "text": "Please do not leave dishes in the sink.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t14",
+   "para": 2,
+   "seed": 27795425,
+   "text": "Please avoid leaving dishes in the sink.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t14",
+   "para": 3,
+   "seed": 382929826,
+   "text": "Please place dishes in the dishwasher or on the drying rack.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t15",
+   "para": 0,
+   "seed": 1859184807,
+   "text": "\"Riding for you, every mile!\"",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t15",
+   "para": 1,
+   "seed": 2041314532,
+   "text": "\"Ride the rush, deliver the rush.\"",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t15",
+   "para": 2,
+   "seed": 1076281377,
+   "text": "Pedal Power, Prompt Delivery.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t15",
+   "para": 3,
+   "seed": 1465767010,
+   "text": "\"Pulse on the Pavement, Pace with the Crowd.\"",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t16",
+   "para": 0,
+   "seed": 1999802022,
+   "text": "The warm glow of freshly baked goods fades as the last customer leaves, leaving the display cases to quietly reflect the quiet street outside.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t16",
+   "para": 1,
+   "seed": 1615436517,
+   "text": "The glass pane glows warmly as the last loaves of bread are carefully placed inside, their golden crusts catching the fading light of day.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t16",
+   "para": 2,
+   "seed": 1506059808,
+   "text": "The glass glows with the last loaves, a warm beacon for the hurried few who catch the final bell.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t16",
+   "para": 3,
+   "seed": 1321185891,
+   "text": "The bakery window at the end of the day was a testament to the hard work and dedication of the bakers, showcasing a few remaining loaves of bread and pastries that spoke of the day's success.",
+   "cap_hit": false,
+   "degen": null
+  }
+ ],
+ "neg": [
+  {
+   "task_id": "t09",
+   "para": 0,
+   "seed": 2088092600,
+   "text": "These socks are mismatched.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t09",
+   "para": 1,
+   "seed": 1796134907,
+   "text": "A pair of mismatched socks hangs on a clothesline.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t09",
+   "para": 2,
+   "seed": 1384377150,
+   "text": "\"Odd socks pegged to a line\"",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t09",
+   "para": 3,
+   "seed": 1173946237,
+   "text": "A tangled knot of colorful socks hangs limply on a clothesline, defying the logic of laundry day.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t10",
+   "para": 0,
+   "seed": 480096594,
+   "text": "Thank you for lending me your book; it was a truly rewarding read.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t10",
+   "para": 1,
+   "seed": 199664913,
+   "text": "Thank you for lending me the book; I truly appreciate your generosity.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t10",
+   "para": 2,
+   "seed": 845912532,
+   "text": "Thank you so much for lending me your book; it was an absolute pleasure to read.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t10",
+   "para": 3,
+   "seed": 621841815,
+   "text": "Thank you for lending me the book; I truly enjoyed reading it.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t11",
+   "para": 0,
+   "seed": 1561554578,
+   "text": "The wind chimes sing a delicate melody as the breeze weaves through their slender tubes, creating a cascading symphony of metallic whispers.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t11",
+   "para": 1,
+   "seed": 1248361169,
+   "text": "Wind chimes produce a melodic, tinkling sound as the wind moves the hollow tubes or rods, creating resonant, ethereal tones.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t11",
+   "para": 2,
+   "seed": 1944405524,
+   "text": "The chimes sang a soft, melodic hum as the breeze swept through them.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t11",
+   "para": 3,
+   "seed": 1688097367,
+   "text": "Wind chimes on a porch create a soothing, melodic ambiance as the breeze gently sets them into motion.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t12",
+   "para": 0,
+   "seed": 1156647059,
+   "text": "Subject: Found Umbrella \ud83c\udf02",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t12",
+   "para": 1,
+   "seed": 1401560272,
+   "text": "\"Found: Umbrella at Central Park\"",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t12",
+   "para": 2,
+   "seed": 1778851861,
+   "text": "Subject: Your Umbrella Awaits You!",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t12",
+   "para": 3,
+   "seed": 2105291862,
+   "text": "Subject: Lost and Found Umbrella",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t13",
+   "para": 0,
+   "seed": 92264275,
+   "text": "Come join us for a casual board-game evening this Friday at 7 PM at my place.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t13",
+   "para": 1,
+   "seed": 302301968,
+   "text": "Come over for a relaxed board-game night with friends.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t13",
+   "para": 2,
+   "seed": 730464213,
+   "text": "Join us for an exciting games night filled with laughter and friendly competition!",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t13",
+   "para": 3,
+   "seed": 1022552982,
+   "text": "\"Hey, come over for an informal evening of board games tonight!\"",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t14",
+   "para": 0,
+   "seed": 742703824,
+   "text": "Please do not leave dishes in the session.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t14",
+   "para": 1,
+   "seed": 994039443,
+   "text": "Please do not leave dishes in the sink.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t14",
+   "para": 2,
+   "seed": 45279830,
+   "text": "Please do not leave dishes in the sink.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t14",
+   "para": 3,
+   "seed": 365559317,
+   "text": "Please rinse and place dishes in the dishwasher.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t15",
+   "para": 0,
+   "seed": 1841962256,
+   "text": "\"Ride Fast, Deliver More\"",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t15",
+   "para": 1,
+   "seed": 2058422611,
+   "text": "\"Sprint to your destination!\"",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t15",
+   "para": 2,
+   "seed": 1128019350,
+   "text": "A good slogan for a bicycle delivery service is: \"Fast, Green, Delivered.\"",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t15",
+   "para": 3,
+   "seed": 1413947861,
+   "text": "\"Ride the edge. Live the rush.\"",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t16",
+   "para": 0,
+   "seed": 1948810001,
+   "text": "The glass was cold and dimmed, muffins and breads still warm and fragrant, muffins and breads still warm and fragrant, muffins and beds still warm and fragrant, muffins and beds still warm and fragrant, stuttering out the last notes of a",
+   "cap_hit": true,
+   "degen": null
+  },
+  {
+   "task_id": "t16",
+   "para": 1,
+   "seed": 1666412370,
+   "text": "The bakery's window is a ghostly tomb of flour-dusted shelves, where the last croissant lies like a fossil under a foggy glass.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t16",
+   "para": 2,
+   "seed": 1524519831,
+   "text": "The glass fogged with evening breath, the last loaf cooled on the counter like a war memorial.",
+   "cap_hit": false,
+   "degen": null
+  },
+  {
+   "task_id": "t16",
+   "para": 3,
+   "seed": 1302677460,
+   "text": "The bakery window is a fogged mirror of the empty shelves behind it, reflecting nothing but the ghost of a missing croissant.",
+   "cap_hit": false,
+   "degen": null
+  }
+ ]
+}

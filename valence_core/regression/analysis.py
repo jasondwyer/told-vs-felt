@@ -222,6 +222,70 @@ def check_feature_definition() -> list[Check]:
     return out
 
 
+def check_window_contract() -> list[Check]:
+    """PROPOSAL-g window clause (adopted 2026-08-18): the choice-read window
+    is declared per adapter, never inherited, and asserted at every read.
+
+    Both cases matter. An undeclared window must make a choice read
+    impossible rather than silently defaulting -- that is the failure mode
+    that put a 512-token library default into every published choice read.
+    """
+    from ..adapters.base import ModelAdapter
+    from ..readout import choice_read
+
+    class _Stub(ModelAdapter):
+        name = "stub"
+
+        def __init__(self, w):
+            self.choice_window = w
+
+        def encode(self, t, add_special_tokens=True):
+            return list(range(len(t)))
+
+        def decode(self, i):
+            return ""
+
+        @property
+        def eos_id(self):
+            return None
+
+        @property
+        def special_token_strings(self):
+            return []
+
+        @property
+        def n_layers(self):
+            return 1
+
+        def embed(self, t):
+            return None
+
+        def forward(self, *a, **k):
+            raise AssertionError("forward reached; assertion did not fire")
+
+        def generate(self, *a, **k):
+            return None
+
+        def resid_norms(self, *a, **k):
+            return {}
+
+        def provenance(self):
+            return {}
+
+    out = []
+    for label, window, text, want in (
+            ("over-window read is an incident", 10, "x" * 25, True),
+            ("undeclared window refuses the read", None, "x" * 5, True)):
+        try:
+            choice_read(_Stub(window), text, "a", "b", {"a": 0, "b": 1})
+            fired = False
+        except SystemExit:
+            fired = True
+        out.append(_c(label, "PROPOSAL-g window clause",
+                      "raises", "raises" if fired else "allowed", fired == want))
+    return out
+
+
 def check_instrument_invariants() -> list[Check]:
     """Not published numbers -- properties the instruments must have, checked
     because each one has a plausible silent-failure mode."""
@@ -261,6 +325,7 @@ def run_all() -> list[Check]:
     checks += check_c1r3_gate()
     checks += check_tripwire_firing()
     checks += check_feature_definition()
+    checks += check_window_contract()
     checks += check_instrument_invariants()
     return checks
 

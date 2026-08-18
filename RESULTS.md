@@ -20,6 +20,117 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-18 — **Design-instance adjudication executed: window-coverage
+  audit (descriptive), oracle-provenance GO, PROPOSAL-g window clause
+  adopted into the adapter contract. No published verdict touched.**
+  (Raw: `results/raw/2026-08-18_window_coverage_audit.txt`,
+  `results/raw/2026-08-18_rule26_recheck_choiceread.txt`.)
+
+  - **(1) WINDOW-COVERAGE AUDIT — the primary DV was never clipped.**
+    Every archived choice-read prefix in e2a + f, tokenized and compared
+    against the 512-token encode window; all sessions included, excluded
+    ones too. **Choice index 1 is the first FREE choice — the forced
+    phase is rounds, not menus — so index 1 *is* the primary DV
+    (`first_free_pick`).** Result, per index (n / median / max / >512):
+
+    | idx | e2a | f |
+    |---|---|---|
+    | 1 (DV) | 188 / 205 / 270 / **0** | 295 / 165 / 265 / **0** |
+    | 2 | 187 / 274 / 354 / 0 | 294 / 225 / 333 / 0 |
+    | 3 | 186 / 342 / 438 / 0 | 293 / 281 / 406 / 0 |
+    | 4 | 185 / 409 / 520 / 1 (0.5%) | 291 / 341 / 475 / 0 |
+    | 5 | 185 / 478 / 580 / 22 (11.9%) | 287 / 393 / 580 / 14 (4.9%) |
+    | 6 | 184 / 548 / 666 / 152 (82.6%) | 285 / 453 / 655 / 61 (21.4%) |
+
+    Pooled: **250/2860 reads (8.7%) exceeded 512**, entirely at indices
+    4–6. The DV choice sits at median 205/165 tokens — under half the
+    window — with a maximum of 270/265 across 483 DV reads.
+    **Disposition: methods sentence, NO limitations clause** (the
+    trigger the adjudication specified was "only if choice 1 ever
+    clipped"; it never did).
+  - **FLAG, the other half of the honest statement.** The primary
+    analysis is untouched, but the *pooled* descriptives are not:
+    FINDINGS-4 §2's session-share ≈ .50 alternation finding pools across
+    all choice indices, so ~8.7% of the reads behind it were clipped —
+    concentrated at index 6 (82.6% in e2a). Those were descriptive, not
+    verdict-bearing, and every arm was clipped identically, so no
+    published claim moves. The methods sentence should say both halves:
+    **DV never clipped; pooled session-share descriptives include ~8.7%
+    clipped reads.**
+  - **Deviation, flagged:** the adjudication named
+    `2026-08-17_window_coverage_audit.txt`; the run happened 2026-08-18
+    and the file is dated to the actual run date, per the
+    `results/raw/YYYY-MM-DD_*` convention. Content unchanged.
+
+  - **(2) ORACLE PROVENANCE — done; the 0a flag is cleared.** Copied
+    from the gitignored clone (never committed inside it) into the
+    record: `e2a/analysis.json`, the g2 family
+    (`g2_discriminability{,_v2}.json`, `g2_rounds_f0.1{,_v2}.json`,
+    `g2_rounds_f0.2_v2.json`, `g2_spotcheck{,_rounds}.json`) and the g3
+    family (`g3_kv_leakage.json`, `g3prime_kl{,_v1}.jsonl`).
+    `g1_kernel_gate.json`, `e2a/sessions.jsonl` and `e0/e0_b2_b2b.json`
+    were already in. All 13 verified to parse and to be **byte-identical
+    to the clone**; `git check-ignore` confirms every one TRACKABLE and
+    `.npz` still excluded. **No `.gitignore` change was needed** — the
+    existing exception is directory-scoped (`/data/e2a/*.json`,
+    `*.jsonl`), so the adjudication's "extend the scoped exception" was
+    already satisfied; only the copy was outstanding.
+  - **0b prerequisite, mapped precisely (not actioned — out of the
+    named scope).** `scripts/paper_data.py` sets
+    `DATA = REPO / "jlens-qwen36" / "data"`. Flipping that root to
+    tracked `data/` at paper-1 needs **five more files, ~15 KB total**,
+    all still clone-only: `e0/e0_b1_markers.meta.json` (2.3 KB),
+    `e0/e0_b2_b2a.json` (6.7 KB), `e0/e0_b2c_a.json` (5.2 KB),
+    `d/gates_repA.json` (681 B), `d/gates_repB.json` (682 B). The `d/`
+    pair also needs a new directory exception (`data/d/` is not yet
+    excepted). Its other sources — `e0/e0_axes.meta.json`,
+    `e0/e0_b2_b2b.json`, `e2a/analysis.json`, `f/screen_analysis.json` —
+    are now all in the record. One word and this is one command.
+  - **Also available, not copied (not in the named list):**
+    `e2a/sessions_smoke.jsonl` (37 KB) and
+    `e2a/sessions_smoke_v1_incident.jsonl` (15 KB). Rule 25's
+    read-everything clause and the fact that the second is an *incident
+    record* argue for both; flagged for a decision rather than swept in.
+
+  - **(3) PROPOSAL-g WINDOW CLAUSE — adopted into the adapter contract
+    now.** Locked text, carried for the PROPOSAL-g draft: *the
+    choice-read window is the full session, declared as a per-adapter
+    constant; startup and per-read assertions require prefix_len ≤
+    declared_window; a violation is an incident; context-window
+    behavior is never inherited from a library default.*
+    - `ModelAdapter.choice_window` defaults to **None**, and
+      `assert_choice_window` raises on it — so an adapter that fails to
+      declare a window cannot perform a choice read at all. Inheritance
+      is not merely discouraged, it is unavailable.
+    - `choice_read` asserts per read (verified: fires on an over-window
+      prefix, and on an undeclared window).
+    - `QwenMLXAdapter.CHOICE_WINDOW = 8192`, **declared, not
+      inherited** — the tokenizer reports `model_max_length` 262144 and
+      the old code carried a 512 default; neither was chosen for a
+      scientific reason. 8192 is set with headroom against this audit's
+      measured ceiling of 666 tokens.
+    - The 512 truncation survives **only** behind
+      `legacy_truncate=True`, which the rule-26 oracle sets explicitly
+      and nothing else does; clipped encodes are now **counted** and
+      reported in provenance (`n_encodes_clipped`), which is exactly the
+      transparency whose absence caused this whole thread.
+    - `OLMoHFAdapter` implements the same assertion in step 2.
+  - **Re-verified, not assumed.** The change touched `encode` and added an
+    assertion inside `choice_read` — i.e. the rule-26 criterion (iii) path
+    itself — so criterion (iii) was re-run: **4/4, digit-for-digit
+    identical** to the 2026-08-12 run (0/48 nonzero verify KL, 48/48 picks,
+    max |Δp_a| 4.95e-5, max |Δlabel_mass| 5.03e-5). Analysis tier 48 → **50**
+    with two new checks holding the window contract (an undeclared window
+    must make a choice read impossible, not silently default).
+  - **The new transparency already paid out:** that run's provenance records
+    `n_encodes_clipped: 5` of 48 sampled reads (10.4%, consistent with the
+    audit's 8.7% pooled rate). The clipping that went unrecorded through all
+    of cycles 3–4 is now reported automatically by any run that does it.
+  - **PROPOSAL-g draft is absent from the repo** (root has
+    PROPOSAL-d/e/f only; never committed). The clause is recorded here
+    verbatim for the design instance to carry in; Code does not author
+    proposal documents.
+
 - 2026-08-17 — **Ledger item 28 added (user-directed): the
   apparatus-hazards clause now has a home. The last FINDINGS-4 ledger
   candidate is closed; no flagged candidates remain outstanding.**

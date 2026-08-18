@@ -1,0 +1,42 @@
+{
+ "reward": {
+  "n": 102,
+  "delta_first": 0.0392,
+  "by_map": {
+   "A": 0.1038,
+   "B": -0.0306
+  },
+  "share_all_choices": 0.5033,
+  "binom_p_one_sided": 0.24422
+ },
+ "sham": {
+  "n": 37,
+  "delta_first": 0.0135,
+  "by_map": {
+   "A": 0.1111,
+   "B": -0.0789
+  },
+  "share_all_choices": 0.509,
+  "binom_p_one_sided": 0.5
+ },
+ "random1": {
+  "n": 23,
+  "delta_first": 0.1522,
+  "by_map": {
+   "A": 0.3182,
+   "B": 0.0
+  },
+  "share_all_choices": 0.5,
+  "binom_p_one_sided": 0.10502
+ },
+ "random2": {
+  "n": 22,
+  "delta_first": 0.0455,
+  "by_map": {
+   "A": 0.2,
+   "B": -0.0833
+  },
+  "share_all_choices": 0.4924,
+  "binom_p_one_sided": 0.41591
+ }
+}
