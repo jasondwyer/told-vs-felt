@@ -185,6 +185,20 @@ def load_d_gates() -> pd.DataFrame:
         j = _load(f"d/gates_rep{rep}.json")
         if j:
             flat = pd.json_normalize(j, sep=".")
+            # The gate artifacts already carry a top-level "replicate" key,
+            # so a bare insert() raises "cannot insert replicate, already
+            # exists". Drop-then-insert is robust whether or not the key is
+            # present, and keeps the column first. The assert refuses to
+            # silently relabel an artifact filed under the wrong replicate
+            # -- a mismatch here would mean rep A's gates were being read
+            # as rep B's, which is the counterbalance (rule 12) inverted.
+            if "replicate" in flat.columns:
+                declared = set(flat["replicate"].dropna().unique())
+                if declared and declared != {rep}:
+                    raise ValueError(
+                        f"d/gates_rep{rep}.json declares replicate "
+                        f"{declared}, expected {{'{rep}'}}")
+                flat = flat.drop(columns=["replicate"])
             flat.insert(0, "replicate", rep)
             frames.append(flat)
     return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()

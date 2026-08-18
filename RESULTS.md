@@ -131,6 +131,33 @@ applied to CLAUDE.md.
     verbatim for the design instance to carry in; Code does not author
     proposal documents.
 
+- 2026-08-18 — **`load_d_gates` fixed (user-directed); equivalence check
+  re-run: 8/8 loaders now execute and match across roots. The paper-1
+  DATA-root flip is clear.**
+  - **Fix** (`scripts/paper_data.py:181`): the gate artifacts carry a
+    top-level `"replicate"` key, so `pd.json_normalize` emits that column
+    and the bare `flat.insert(0, "replicate", rep)` raised. Now
+    drop-then-insert — robust whether or not the artifact carries the
+    key, and the column stays first.
+  - **A guard added rather than a silent overwrite.** Overwriting would
+    have relabelled a mis-filed artifact without comment, and for *these*
+    files that is not a cosmetic risk: reading rep A's gates as rep B's
+    is the rule-12 counterbalance inverted, which is exactly the error
+    class the c1 gate's P3 conjunct exists to catch. The loader now
+    raises if a file's declared replicate disagrees with the slot it is
+    loaded into. Verified by staging a deliberately mislabelled copy:
+    `d/gates_repB.json declares replicate {'A'}, expected {'B'}`. Both
+    real artifacts agree with their slots (A→A, B→B).
+  - **Equivalence re-run, all 8 loaders, clone vs tracked `data/`:**
+    `axis_geometry`, `b1_markers`, `b2b`, `b2c`, `d_gates`,
+    `dose_response`, `e2a`, `f_screen` — **every one byte-identical
+    across roots, none erroring.** `load_all()` through the flipped root
+    returns 12 tables; `d_gates` is (2, 26) with `replicate` first, both
+    replicates present, no duplicate columns.
+  - `paper_data.py`'s `DATA` root is still the clone: the flip itself
+    remains a 0b action, and was applied in memory only for this check.
+    valence_core suite unaffected at 50/50.
+
 - 2026-08-18 — **0b artifact set completed (user-directed): the five
   `paper_data.py` sources + both e2a smoke files pulled into the record.
   The paper-1 DATA-root flip is now PROVEN equivalent, not merely
