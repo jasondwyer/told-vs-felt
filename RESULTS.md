@@ -131,6 +131,43 @@ applied to CLAUDE.md.
     verbatim for the design instance to carry in; Code does not author
     proposal documents.
 
+- 2026-08-18 — **0b artifact set completed (user-directed): the five
+  `paper_data.py` sources + both e2a smoke files pulled into the record.
+  The paper-1 DATA-root flip is now PROVEN equivalent, not merely
+  unblocked — and the proof surfaced a pre-existing bug that would have
+  fired at 0b.**
+  - **Copied** (all byte-identical to the clone, all parse):
+    `e0/e0_b1_markers.meta.json` (2.3 KB), `e0/e0_b2_b2a.json` (6.7 KB),
+    `e0/e0_b2c_a.json` (5.2 KB), `d/gates_repA.json` (681 B),
+    `d/gates_repB.json` (682 B), `e2a/sessions_smoke.jsonl` (37 KB,
+    8 rows), `e2a/sessions_smoke_v1_incident.jsonl` (15 KB, 6 rows —
+    an incident record, per rule 25).
+  - **New `.gitignore` exception for `data/d/`, JSON only.** Verified:
+    the two gate JSONs are trackable; `adapter.safetensors` and
+    `teacher_cache/*.npz` probes are still ignored. `data/d/`'s other
+    contents (`evoked_discrim_rep{A,B}.json`, `gates_repA_smoke.json`)
+    were outside the named scope and are NOT copied.
+  - **Flip verification (the point of the exercise).** Rather than
+    assert the files are sufficient, every `paper_data.py` loader was
+    run against both roots and its DataFrame hashed:
+    `load_axis_geometry`, `load_b1_markers`, `load_b2b`, `load_b2c`,
+    `load_dose_response`, `load_e2a`, `load_f_screen` — **all
+    byte-identical from tracked `data/` and from the clone.** The flip
+    is safe. `paper_data.py` itself is unmodified; the flip was applied
+    in memory only, since the design instance placed it at paper-1.
+  - **FLAG — `load_d_gates` is broken, pre-existing, and blocks 0b.**
+    It raises `ValueError: cannot insert replicate, already exists`
+    **identically from both roots**, so this is not caused by the copy
+    or the flip. Cause: `d/gates_rep{A,B}.json` already carry a
+    top-level `"replicate"` key, so `pd.json_normalize` emits that
+    column and `scripts/paper_data.py:188`'s
+    `flat.insert(0, "replicate", rep)` collides with it. 7 of 8 loaders
+    are fine. The one-line fix is to skip the insert when the column
+    exists (or overwrite and reorder), but `paper_data.py` generates
+    paper figures and is not Code's to edit unasked — flagged for a
+    decision. Left broken, it fires the moment the DATA root flips at
+    paper-1.
+
 - 2026-08-18 — **Provenance correction (process, not results).** Commit
   `947b9ea` also contains two files that were not part of the
   adjudication and are not mentioned in its message:

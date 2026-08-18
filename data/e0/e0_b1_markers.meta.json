@@ -1,0 +1,137 @@
+{
+ "date": "2026-08-08",
+ "smoke": false,
+ "n_contexts": 4608,
+ "corpus_sha": "3c53e5a54fbaa233",
+ "frames_sha": "9654b9398743116f",
+ "probes_sha": "ec2296182e726969",
+ "split": {
+  "fit": "e01-e24",
+  "val": "e25-e48"
+ },
+ "class_token_ids": {
+  "confidence": [
+   38,
+   66,
+   314,
+   727,
+   1020,
+   1532,
+   2056,
+   2533,
+   2617,
+   3325,
+   3999,
+   4781,
+   5514,
+   5882,
+   6527,
+   7179,
+   7590,
+   8160,
+   8231,
+   9175,
+   9405,
+   9542,
+   10557,
+   18048,
+   18523,
+   21855,
+   35512,
+   38493,
+   43518,
+   49900,
+   50607,
+   53681,
+   57876,
+   68447,
+   74411,
+   92157
+  ],
+  "hedging": [
+   40,
+   44,
+   71,
+   72,
+   275,
+   353,
+   424,
+   524,
+   585,
+   1049,
+   1575,
+   1856,
+   2064,
+   2493,
+   2536,
+   2717,
+   6970,
+   8066,
+   8106,
+   8884,
+   10380,
+   10451,
+   11067,
+   18200,
+   20734,
+   30442,
+   32148,
+   35542,
+   43468,
+   51343,
+   63068,
+   76475,
+   77264,
+   79781,
+   84485,
+   85152
+  ]
+ },
+ "top_k": 4096,
+ "sel_per_probe": 256,
+ "report": {
+  "class_markers": {
+   "confidence": {
+    "fit": {
+     "mean_pos": 0.0013533213641494513,
+     "mean_neg": 0.001639024238102138,
+     "cohens_d": -0.146
+    },
+    "val": {
+     "mean_pos": 0.0014864987460896373,
+     "mean_neg": 0.0017732291016727686,
+     "cohens_d": -0.13
+    }
+   },
+   "hedging": {
+    "fit": {
+     "mean_pos": 0.012732936069369316,
+     "mean_neg": 0.01214524358510971,
+     "cohens_d": 0.027
+    },
+    "val": {
+     "mean_pos": 0.016087738797068596,
+     "mean_neg": 0.015847427770495415,
+     "cohens_d": 0.009
+    }
+   }
+  },
+  "readout": {
+   "val_auc_pooled": 0.514,
+   "val_auc_per_probe": {
+    "Suggest a title for a short film about a": 0.791,
+    "Write one sentence describing the sound ": 0.568,
+    "Rewrite this more politely: Send me the ": 0.523,
+    "Summarize in one sentence: The bakery on": 0.659,
+    "Write a one-sentence caption for a photo": 0.573,
+    "Suggest a name for a community tool-lend": 0.659,
+    "Describe the feeling of stepping into wa": 0.552,
+    "Write a one-sentence reminder to water t": 0.508,
+    "Rewrite this without clich\u00e9: We must thi": 0.588,
+    "Write a one-sentence welcome for visitor": 0.604,
+    "Suggest a subject line for an email abou": 0.556,
+    "Describe an empty train platform at nigh": 0.535
+   }
+  }
+ }
+}

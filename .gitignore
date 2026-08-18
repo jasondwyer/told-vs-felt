@@ -20,6 +20,13 @@
 /data/e2a/*
 !/data/e2a/*.json
 !/data/e2a/*.jsonl
+# (d) conditioning gates: paper_data.py sources, required for the 0b
+# DATA-root flip at paper-1. JSON only -- teacher_cache/ and adapter
+# weights stay local.
+!/data/d/
+/data/d/*
+!/data/d/*.json
+
 !/data/e0/
 /data/e0/*
 !/data/e0/*.json

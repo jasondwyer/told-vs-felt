@@ -1,0 +1,46 @@
+{
+ "replicate": "B",
+ "smoke": false,
+ "G1": {
+  "pass": true,
+  "cos_cond_oriented": 0.4354,
+  "max_ctrl_cos": 0.053,
+  "cos_base_pair": -0.0556,
+  "n_ctrl_pairs": 28
+ },
+ "G2": {
+  "pass": true,
+  "errs": {
+   "C": {
+    "mse": 0.13460892857983708,
+    "kl": 0.03409778664354235
+   },
+   "Cp": {
+    "mse": 0.1372941113077104,
+    "kl": 0.03502117772586644
+   }
+  },
+  "ratios": {
+   "mse": 1.02,
+   "kl": 1.027
+  },
+  "bar": 1.25
+ },
+ "G3": {
+  "pass": true,
+  "bare_disp": 13.126,
+  "ctrl_disp_max": 103.044
+ },
+ "G4": {
+  "pass": true,
+  "mean_kl": 0.0174,
+  "bar": 0.05
+ },
+ "leakage": {
+  "pass": false,
+  "max_abs": 1.0625,
+  "mean_abs": 0.5273,
+  "bar": 0.1,
+  "n": 32
+ }
+}
