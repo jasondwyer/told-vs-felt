@@ -131,6 +131,24 @@ applied to CLAUDE.md.
     verbatim for the design instance to carry in; Code does not author
     proposal documents.
 
+- 2026-08-18 — **Provenance correction (process, not results).** Commit
+  `947b9ea` also contains two files that were not part of the
+  adjudication and are not mentioned in its message:
+  `scripts/paper_data.py` (10 KB) and `paper_analysis.ipynb` (52 KB),
+  both placed in the working tree by the design instance and swept in by
+  a `git add -A`. Both are legitimate repo assets — the paper-artifact
+  loader the adjudication itself references, and a 3-cell notebook that
+  calls it — and nothing in them is verdict-bearing, but they were
+  committed before being read, which is not the standard this record
+  holds. Noted rather than rewritten: the history is shared and the
+  files belong here. Code's habit corrected to staging explicit paths.
+  - **FLAG:** `paper_analysis.ipynb` carries **51 KB of its 52 KB as an
+    embedded PNG output** (the rendered inverted-U figure). Committed
+    notebook outputs re-serialize on every execution, so this file will
+    churn in diffs. Worth deciding before `paper-1` freezes the public
+    pointer: strip outputs on commit, or keep them so the figure is
+    visible without running the notebook.
+
 - 2026-08-17 — **Ledger item 28 added (user-directed): the
   apparatus-hazards clause now has a home. The last FINDINGS-4 ledger
   candidate is closed; no flagged candidates remain outstanding.**
