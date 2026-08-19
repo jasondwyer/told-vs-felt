@@ -131,6 +131,78 @@ applied to CLAUDE.md.
     verbatim for the design instance to carry in; Code does not author
     proposal documents.
 
+- 2026-08-19 — **Step 2 item 1: per-file SHA-256 for all four bf16 sets,
+  into the manifest. These are now the provenance anchors.** (Raw:
+  `results/raw/2026-08-19_olmo_hashes.txt`; artifact
+  `data/olmo/manifest.json`. 29 files, 258 GB, 445 s.)
+  - **Why these and not upstream identity.** Acquisition re-serialized
+    every stage through `save_pretrained`, so our shard files do **not**
+    match the HF originals byte-for-byte and never will. The record's
+    anchor is therefore two-part: the **pinned source revision** says
+    where the weights came from, the **per-file hashes** say exactly
+    what we hold. Neither alone is sufficient.
+  - Every file is hashed, not just shards — a swapped tokenizer or
+    config changes results as surely as a swapped shard and is far
+    easier to do by accident. Per checkpoint: 7 files (instruct 8), plus
+    an aggregate digest over the per-file hashes in sorted filename
+    order: base `94ca97da5dc1ee40…`, sft `ecce20615022c203…`, dpo
+    `c6e5e2abe093d0fc…`, instruct `0708cef365591a3b…`.
+  - Shard sizes are identical across all four (49,838,971,528 +
+    14,628,156,496) with **distinct hashes** — the expected signature of
+    four genuinely different models sharing one architecture.
+  - **Noted:** `instruct/` is the only stage shipping a
+    `chat_template.jinja`. It is never applied (rule 13), but its
+    presence is consistent with the generation finding logged below.
+
+- 2026-08-19 — **Step 2 item 3: the smoke pointer now resolves — and
+  pulling the logs into the record surfaced a stage-dependent
+  completion-style artifact that bears on Q2. FLAGGED, not actioned.**
+  (Raw: `results/raw/2026-08-19_smoke_{base,sft,dpo,instruct}.txt`.)
+  - **Pointer resolution.** The generation-path smokes *did* run per
+    checkpoint (four completions each, greedy and sampled, no chat
+    template anywhere), but their logs lived only on the box — so by
+    ledger 27 they did not exist in the record, and the earlier
+    reconciliation entry's "see the entries below" pointed at nothing.
+    Now pulled, with this dated line. The reconciliation entry's claim
+    was true of the work and false of the record; that gap is the thing
+    ledger 27 exists to prevent.
+  - **Every adapter method exercised on real weights, all four stages:**
+    tokenizer round-trip, forward + capture at 3 layers, the
+    PROPOSAL-g window assertion (fires as designed), perplexity,
+    generation (greedy + sampled), embed, and a 3-layer R_l probe.
+  - **Perplexity on held-out prose, completion-style:** base 32.1, sft
+    64.0, dpo 68.7, instruct 68.2.
+  - **THE FINDING — the two preference-trained stages emit a chat
+    scaffold token instead of an answer:**
+
+    | stage | first generated content (greedy and sampled) |
+    |---|---|
+    | base | `'Yellow'` |
+    | sft | `'Yellow'` |
+    | **dpo** | **`'<\|im_end\|>'`** |
+    | **instruct** | **`'<\|im_end\|>'`** |
+
+    Base and SFT complete `Task: Name one colour of a ripe lemon.\nResponse:`
+    correctly. DPO and Instruct emit `<|im_end|>` first.
+  - **Why this is not cosmetic.** (a) It switches on **at DPO** — the
+    exact transition Macar et al. identify and that Q2 uses as its
+    positive control, so a stage-dependent apparatus artifact sits
+    precisely where Q2 is most load-bearing. (b) Rule 13's ban list
+    already covers *round generation* (`build_ban_list` bans
+    `<|im_end|>`), but bans are deliberately **never** applied at choice
+    forwards, because a ban there would edit the DV. So if DPO/Instruct
+    put mass on `<|im_end|>` at a choice position, `label_mass` would be
+    systematically depressed and `top1_is_label` systematically False
+    **for two of four stages** — a cross-checkpoint confound in the
+    primary DV, not in a monitor. (c) It is consistent with `instruct/`
+    being the only stage that ships a chat template.
+  - **Recommended characterization (Phase-0 apparatus work, ~15 min
+    GPU, not Phase-1 data):** per stage, generation with and without the
+    scaffold ban list, plus where the probability mass actually goes on
+    a choice-shaped probe. That answers whether rule 13's existing
+    machinery is sufficient or whether PROPOSAL-g needs a design
+    response. Held pending the design instance.
+
 - 2026-08-19 — **CUDA determinism + kernel-path characterization COMPLETE
   (rule 2). THE BACKEND OF RECORD. Measured residual nondeterminism is
   EXACTLY ZERO, and the cached path is licensed with no KL budget at

@@ -1,0 +1,70 @@
+=== loading dpo ===
+
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]
+Loading weights:  17%|█▋        | 122/707 [00:00<00:00, 1178.76it/s]
+Loading weights:  34%|███▍      | 240/707 [00:00<00:00, 604.32it/s] 
+Loading weights:  45%|████▍     | 315/707 [00:00<00:00, 508.75it/s]
+Loading weights:  53%|█████▎    | 374/707 [00:00<00:00, 507.04it/s]
+Loading weights:  65%|██████▍   | 457/707 [00:00<00:00, 579.60it/s]
+Loading weights:  74%|███████▎  | 521/707 [00:00<00:00, 582.44it/s]
+Loading weights:  82%|████████▏ | 583/707 [00:01<00:00, 568.78it/s]
+Loading weights:  91%|█████████ | 643/707 [00:01<00:00, 575.75it/s]
+Loading weights:  99%|█████████▉| 703/707 [00:01<00:00, 563.03it/s]
+Loading weights: 100%|██████████| 707/707 [00:01<00:00, 578.80it/s]
+loaded in 137s
+provenance: {
+ "adapter": "olmo-hf",
+ "path": "/workspace/models/dpo",
+ "dtype": "bfloat16",
+ "backend": "torch/cuda",
+ "device": "cuda",
+ "gpu": "NVIDIA A100-SXM4-80GB",
+ "cuda": "12.8",
+ "capability": [
+  8,
+  0
+ ],
+ "deterministic": true,
+ "cublas_workspace_config": ":4096:8",
+ "seed": 20260818,
+ "choice_window_declared": 8192,
+ "n_layers": 64,
+ "library_versions": {
+  "torch": "2.8.0+cu128",
+  "transformers": "5.15.0",
+  "accelerate": "1.14.0",
+  "safetensors": "0.8.0",
+  "huggingface_hub": "1.28.0",
+  "numpy": "2.1.2"
+ },
+ "python": "3.12.3"
+}
+
+=== 2. tokenizer round-trip ===
+  26 tokens | round-trip preserves text: True
+
+=== 3. forward + capture ===
+  logits (100278,) finite=True top=' The'
+  layer 20: (26, 5120) mean|h| 22.9
+  layer 32: (26, 5120) mean|h| 52.8
+  layer 44: (26, 5120) mean|h| 67.3
+
+=== 4. window assertion (PROPOSAL-g) ===
+  raises as designed: WINDOW INCIDENT at choice_read: prefix is 8193 tokens, declared choice...
+
+=== 5. perplexity sanity (completion-style, no chat template) ===
+  loss 4.229  ppl 68.7  plausible
+
+=== 6. generate (completion-style) ===
+  greedy   '<|im_end|>' stop=newline cap=False
+  sampled  '<|im_end|>' stop=newline cap=False
+
+=== 7. embed ===
+  dim 5120 finite=True norm 43.4
+
+=== 8. resid_norms (rule 1: per checkpoint) ===
+  R_20 = 22.45
+  R_32 = 50.86
+  R_44 = 65.08
+
+SMOKE COMPLETE in 138s

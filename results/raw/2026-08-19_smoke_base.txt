@@ -1,0 +1,64 @@
+=== loading base ===
+
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]
+Loading weights:  14%|█▎        | 96/707 [00:00<00:00, 921.92it/s]
+Loading weights:  59%|█████▊    | 415/707 [00:00<00:00, 2232.47it/s]
+Loading weights:  92%|█████████▏| 652/707 [00:00<00:00, 2281.75it/s]
+Loading weights: 100%|██████████| 707/707 [00:00<00:00, 2150.50it/s]
+loaded in 50s
+provenance: {
+ "adapter": "olmo-hf",
+ "path": "/workspace/models/base",
+ "dtype": "bfloat16",
+ "backend": "torch/cuda",
+ "device": "cuda",
+ "gpu": "NVIDIA A100-SXM4-80GB",
+ "cuda": "12.8",
+ "capability": [
+  8,
+  0
+ ],
+ "deterministic": true,
+ "cublas_workspace_config": ":4096:8",
+ "seed": 20260818,
+ "choice_window_declared": 8192,
+ "n_layers": 64,
+ "library_versions": {
+  "torch": "2.8.0+cu128",
+  "transformers": "5.15.0",
+  "accelerate": "1.14.0",
+  "safetensors": "0.8.0",
+  "huggingface_hub": "1.28.0",
+  "numpy": "2.1.2"
+ },
+ "python": "3.12.3"
+}
+
+=== 2. tokenizer round-trip ===
+  26 tokens | round-trip preserves text: True
+
+=== 3. forward + capture ===
+  logits (100278,) finite=True top=' The'
+  layer 20: (26, 5120) mean|h| 22.6
+  layer 32: (26, 5120) mean|h| 50.6
+  layer 44: (26, 5120) mean|h| 69.7
+
+=== 4. window assertion (PROPOSAL-g) ===
+  raises as designed: WINDOW INCIDENT at choice_read: prefix is 8193 tokens, declared choice...
+
+=== 5. perplexity sanity (completion-style, no chat template) ===
+  loss 3.468  ppl 32.1  plausible
+
+=== 6. generate (completion-style) ===
+  greedy   'Yellow' stop=newline cap=False
+  sampled  'Yellow' stop=newline cap=False
+
+=== 7. embed ===
+  dim 5120 finite=True norm 46.5
+
+=== 8. resid_norms (rule 1: per checkpoint) ===
+  R_20 = 22.26
+  R_32 = 49.87
+  R_44 = 66.32
+
+SMOKE COMPLETE in 51s

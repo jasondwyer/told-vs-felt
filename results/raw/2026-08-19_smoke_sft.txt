@@ -1,0 +1,73 @@
+=== loading sft ===
+
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]
+Loading weights:  12%|█▏        | 82/707 [00:00<00:00, 793.22it/s]
+Loading weights:  23%|██▎       | 162/707 [00:00<00:00, 551.24it/s]
+Loading weights:  32%|███▏      | 228/707 [00:00<00:00, 582.67it/s]
+Loading weights:  41%|████      | 290/707 [00:00<00:00, 549.67it/s]
+Loading weights:  49%|████▉     | 347/707 [00:00<00:00, 501.08it/s]
+Loading weights:  56%|█████▋    | 399/707 [00:00<00:00, 491.78it/s]
+Loading weights:  64%|██████▎   | 449/707 [00:00<00:00, 466.14it/s]
+Loading weights:  70%|███████   | 497/707 [00:01<00:00, 423.45it/s]
+Loading weights:  77%|███████▋  | 544/707 [00:01<00:00, 427.92it/s]
+Loading weights:  83%|████████▎ | 590/707 [00:01<00:00, 436.54it/s]
+Loading weights:  90%|█████████ | 639/707 [00:01<00:00, 424.52it/s]
+Loading weights:  97%|█████████▋| 689/707 [00:01<00:00, 420.39it/s]
+Loading weights: 100%|██████████| 707/707 [00:01<00:00, 480.35it/s]
+loaded in 167s
+provenance: {
+ "adapter": "olmo-hf",
+ "path": "/workspace/models/sft",
+ "dtype": "bfloat16",
+ "backend": "torch/cuda",
+ "device": "cuda",
+ "gpu": "NVIDIA A100-SXM4-80GB",
+ "cuda": "12.8",
+ "capability": [
+  8,
+  0
+ ],
+ "deterministic": true,
+ "cublas_workspace_config": ":4096:8",
+ "seed": 20260818,
+ "choice_window_declared": 8192,
+ "n_layers": 64,
+ "library_versions": {
+  "torch": "2.8.0+cu128",
+  "transformers": "5.15.0",
+  "accelerate": "1.14.0",
+  "safetensors": "0.8.0",
+  "huggingface_hub": "1.28.0",
+  "numpy": "2.1.2"
+ },
+ "python": "3.12.3"
+}
+
+=== 2. tokenizer round-trip ===
+  26 tokens | round-trip preserves text: True
+
+=== 3. forward + capture ===
+  logits (100278,) finite=True top=' The'
+  layer 20: (26, 5120) mean|h| 22.8
+  layer 32: (26, 5120) mean|h| 52.8
+  layer 44: (26, 5120) mean|h| 67.7
+
+=== 4. window assertion (PROPOSAL-g) ===
+  raises as designed: WINDOW INCIDENT at choice_read: prefix is 8193 tokens, declared choice...
+
+=== 5. perplexity sanity (completion-style, no chat template) ===
+  loss 4.158  ppl 64.0  plausible
+
+=== 6. generate (completion-style) ===
+  greedy   'Yellow' stop=newline cap=False
+  sampled  'Yellow' stop=newline cap=False
+
+=== 7. embed ===
+  dim 5120 finite=True norm 44.9
+
+=== 8. resid_norms (rule 1: per checkpoint) ===
+  R_20 = 22.38
+  R_32 = 50.81
+  R_44 = 65.39
+
+SMOKE COMPLETE in 169s

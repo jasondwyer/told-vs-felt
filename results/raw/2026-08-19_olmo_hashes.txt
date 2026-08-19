@@ -1,0 +1,38 @@
+  base/config.json                            fb68c4a03d7c76c0…         2,565    0.0s
+  base/generation_config.json                 22f3a81ca2eba62d…            69    0.0s
+  base/model-00001-of-00002.safetensors       d384e7200a3b7288… 49,838,971,528   39.3s
+  base/model-00002-of-00002.safetensors       3a76a8b39b4d15a6… 14,628,156,496   11.5s
+  base/model.safetensors.index.json           d5ee0e4ca1a9d612…        59,071    0.0s
+  base/tokenizer.json                         18e309ad7f9c6003…     7,137,558    0.0s
+  base/tokenizer_config.json                  2317ca4e61ec1f0d…           331    0.0s
+  base: 7 files, aggregate 94ca97da5dc1ee40…
+
+  sft/config.json                            d4353598256e1c18…         2,561    0.0s
+  sft/generation_config.json                 5ef6cdd2cad01339…           117    0.0s
+  sft/model-00001-of-00002.safetensors       dff78e31dabd8fc0… 49,838,971,528   93.1s
+  sft/model-00002-of-00002.safetensors       22760ed16b777f8d… 14,628,156,496   26.3s
+  sft/model.safetensors.index.json           d5ee0e4ca1a9d612…        59,071    0.0s
+  sft/tokenizer.json                         75f0d78a15d3bd66…     7,137,556    0.0s
+  sft/tokenizer_config.json                  781d8fc9378824b3…           342    0.0s
+  sft: 7 files, aggregate ecce20615022c203…
+
+  dpo/config.json                            d4353598256e1c18…         2,561    0.0s
+  dpo/generation_config.json                 5ef6cdd2cad01339…           117    0.0s
+  dpo/model-00001-of-00002.safetensors       19113448c9b068d3… 49,838,971,528   87.1s
+  dpo/model-00002-of-00002.safetensors       470d3b9372f85bbf… 14,628,156,496   26.2s
+  dpo/model.safetensors.index.json           d5ee0e4ca1a9d612…        59,071    0.0s
+  dpo/tokenizer.json                         75f0d78a15d3bd66…     7,137,556    0.0s
+  dpo/tokenizer_config.json                  781d8fc9378824b3…           342    0.0s
+  dpo: 7 files, aggregate c6e5e2abe093d0fc…
+
+  instruct/chat_template.jinja                    49a944c9814e130b…         2,748    0.0s
+  instruct/config.json                            2b88d809d17fddbb…         2,562    0.0s
+  instruct/generation_config.json                 7f366a60e746e126…           208    0.0s
+  instruct/model-00001-of-00002.safetensors       c6ef45ecb3e412e7… 49,838,971,528  113.0s
+  instruct/model-00002-of-00002.safetensors       7eb9e173b067e8b7… 14,628,156,496   48.6s
+  instruct/model.safetensors.index.json           d5ee0e4ca1a9d612…        59,071    0.0s
+  instruct/tokenizer.json                         75f0d78a15d3bd66…     7,137,556    0.0s
+  instruct/tokenizer_config.json                  781d8fc9378824b3…           342    0.0s
+  instruct: 8 files, aggregate 0708cef365591a3b…
+
+manifest updated: /workspace/models/manifest.json  [445s]

@@ -6,7 +6,39 @@
   "n_params": 32233522176,
   "size_gb": 64.5,
   "path": "/workspace/models/base",
-  "acquired_utc": "2026-08-19T03:42:37Z"
+  "acquired_utc": "2026-08-19T03:42:37Z",
+  "files": {
+   "config.json": {
+    "sha256": "fb68c4a03d7c76c0f07ad17867c1215896910d094cb3dd11f86a9362d2f81503",
+    "bytes": 2565
+   },
+   "generation_config.json": {
+    "sha256": "22f3a81ca2eba62d7f13df71765e258d808217d3c5823be65ac834b741be9b83",
+    "bytes": 69
+   },
+   "model-00001-of-00002.safetensors": {
+    "sha256": "d384e7200a3b7288838a00ca6ec6fefe52525a41d21ab2af058a9c01256a19bc",
+    "bytes": 49838971528
+   },
+   "model-00002-of-00002.safetensors": {
+    "sha256": "3a76a8b39b4d15a6c53787750fc4069b79ec468114b36c51bea850e75be84447",
+    "bytes": 14628156496
+   },
+   "model.safetensors.index.json": {
+    "sha256": "d5ee0e4ca1a9d61242584ff2c5d0255d96584276c5479b3a4acc13f53e2722b4",
+    "bytes": 59071
+   },
+   "tokenizer.json": {
+    "sha256": "18e309ad7f9c60037eaf26aca401a96128187cad2bdfa01a508dca7526bf6300",
+    "bytes": 7137558
+   },
+   "tokenizer_config.json": {
+    "sha256": "2317ca4e61ec1f0d8b0f578cbf621ed6aa42e3299f538a58a67e1a89dd32ab04",
+    "bytes": 331
+   }
+  },
+  "files_aggregate_sha256": "94ca97da5dc1ee407334af196679d0c33209fc2e8a9ad9ca87a95ea612112aa1",
+  "n_files": 7
  },
  "sft": {
   "repo": "allenai/Olmo-3.1-32B-Instruct-SFT",
@@ -15,7 +47,39 @@
   "n_params": 32233522176,
   "size_gb": 64.5,
   "path": "/workspace/models/sft",
-  "acquired_utc": "2026-08-19T04:12:16Z"
+  "acquired_utc": "2026-08-19T04:12:16Z",
+  "files": {
+   "config.json": {
+    "sha256": "d4353598256e1c180b31b12a792d7d3481b440b0bb814d1e46f0149835731458",
+    "bytes": 2561
+   },
+   "generation_config.json": {
+    "sha256": "5ef6cdd2cad01339a1edd1e67dfee62239f7e3d6d954af8b725b3d15bbd01fdf",
+    "bytes": 117
+   },
+   "model-00001-of-00002.safetensors": {
+    "sha256": "dff78e31dabd8fc01f777ea43b737f2adf29b586ef3823771ac8781e7aeb8f92",
+    "bytes": 49838971528
+   },
+   "model-00002-of-00002.safetensors": {
+    "sha256": "22760ed16b777f8d7fde83aa356faab8c280763fa045f54376f1f464b04b5e23",
+    "bytes": 14628156496
+   },
+   "model.safetensors.index.json": {
+    "sha256": "d5ee0e4ca1a9d61242584ff2c5d0255d96584276c5479b3a4acc13f53e2722b4",
+    "bytes": 59071
+   },
+   "tokenizer.json": {
+    "sha256": "75f0d78a15d3bd663a07d3313056cf91b0d64ab45605501cb6dedbbe54817a3e",
+    "bytes": 7137556
+   },
+   "tokenizer_config.json": {
+    "sha256": "781d8fc9378824b34bb51f1d4592851917ce1cb8fc583bd1b8223e0d95924548",
+    "bytes": 342
+   }
+  },
+  "files_aggregate_sha256": "ecce20615022c2038199b7959ce1b239d6267270fb6a88e375f9d8da06f01ab5",
+  "n_files": 7
  },
  "dpo": {
   "repo": "allenai/Olmo-3.1-32B-Instruct-DPO",
@@ -24,7 +88,39 @@
   "n_params": 32233522176,
   "size_gb": 64.5,
   "path": "/workspace/models/dpo",
-  "acquired_utc": "2026-08-19T04:42:42Z"
+  "acquired_utc": "2026-08-19T04:42:42Z",
+  "files": {
+   "config.json": {
+    "sha256": "d4353598256e1c180b31b12a792d7d3481b440b0bb814d1e46f0149835731458",
+    "bytes": 2561
+   },
+   "generation_config.json": {
+    "sha256": "5ef6cdd2cad01339a1edd1e67dfee62239f7e3d6d954af8b725b3d15bbd01fdf",
+    "bytes": 117
+   },
+   "model-00001-of-00002.safetensors": {
+    "sha256": "19113448c9b068d3a7873ac1156727bef12d7aa6e97ba8c500d9d5584549b8c1",
+    "bytes": 49838971528
+   },
+   "model-00002-of-00002.safetensors": {
+    "sha256": "470d3b9372f85bbff775addf4049f33990b13714e14010b20c10983e7ef4d3a0",
+    "bytes": 14628156496
+   },
+   "model.safetensors.index.json": {
+    "sha256": "d5ee0e4ca1a9d61242584ff2c5d0255d96584276c5479b3a4acc13f53e2722b4",
+    "bytes": 59071
+   },
+   "tokenizer.json": {
+    "sha256": "75f0d78a15d3bd663a07d3313056cf91b0d64ab45605501cb6dedbbe54817a3e",
+    "bytes": 7137556
+   },
+   "tokenizer_config.json": {
+    "sha256": "781d8fc9378824b34bb51f1d4592851917ce1cb8fc583bd1b8223e0d95924548",
+    "bytes": 342
+   }
+  },
+  "files_aggregate_sha256": "c6e5e2abe093d0fcb6050500bdb7dc13998fa51fdde47cc93bffded126f33e60",
+  "n_files": 7
  },
  "instruct": {
   "repo": "allenai/Olmo-3.1-32B-Instruct",
@@ -33,6 +129,42 @@
   "n_params": 32233522176,
   "size_gb": 64.5,
   "path": "/workspace/models/instruct",
-  "acquired_utc": "2026-08-19T04:58:55Z"
+  "acquired_utc": "2026-08-19T04:58:55Z",
+  "files": {
+   "chat_template.jinja": {
+    "sha256": "49a944c9814e130bd3cc80a2420c55ff22e24a4e4ba97009aa60000909b5eac3",
+    "bytes": 2748
+   },
+   "config.json": {
+    "sha256": "2b88d809d17fddbb6568a192775b26b3ca159d967ff6a23db5a3e67f976e50e4",
+    "bytes": 2562
+   },
+   "generation_config.json": {
+    "sha256": "7f366a60e746e1269ec7e212e84a26d339db74778423c325ee0ab39710716c3a",
+    "bytes": 208
+   },
+   "model-00001-of-00002.safetensors": {
+    "sha256": "c6ef45ecb3e412e7b69d060a822215b4ceb9e189182bc0d13767b15040066122",
+    "bytes": 49838971528
+   },
+   "model-00002-of-00002.safetensors": {
+    "sha256": "7eb9e173b067e8b705989302c88ce552ea0fce7029ba9af6eb8974fab1aed957",
+    "bytes": 14628156496
+   },
+   "model.safetensors.index.json": {
+    "sha256": "d5ee0e4ca1a9d61242584ff2c5d0255d96584276c5479b3a4acc13f53e2722b4",
+    "bytes": 59071
+   },
+   "tokenizer.json": {
+    "sha256": "75f0d78a15d3bd663a07d3313056cf91b0d64ab45605501cb6dedbbe54817a3e",
+    "bytes": 7137556
+   },
+   "tokenizer_config.json": {
+    "sha256": "781d8fc9378824b34bb51f1d4592851917ce1cb8fc583bd1b8223e0d95924548",
+    "bytes": 342
+   }
+  },
+  "files_aggregate_sha256": "0708cef365591a3b4f95e9986d2e8bb81de9fa521676c8343895527bf7b4e643",
+  "n_files": 8
  }
 }
