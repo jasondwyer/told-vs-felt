@@ -131,6 +131,87 @@ applied to CLAUDE.md.
     verbatim for the design instance to carry in; Code does not author
     proposal documents.
 
+- 2026-08-19 — **Step-2 adjudication reconciled against work already
+  done, plus step 3, notebook hygiene, and the backend note. THREE
+  ITEMS WERE OVERTAKEN BY EVENTS — flagged, not quietly absorbed.**
+  - **Item 1 (Macar chain confirmation, "binding, pre-download") —
+    CONDITION MET, ORDERING VIOLATED.** The confirmation was performed
+    and the match is exact, but it happened *after* acquisition, not
+    before, because the download completed before the adjudication
+    reached Code. It was also run on the laptop (scratchpad clone), not
+    on the box as specified. **The gate's purpose was to prevent
+    spending 386 GB on the wrong series; that protection did not
+    operate.** It happened to matter not at all — the match is exact —
+    but a gate satisfied retroactively is not a gate, and the record
+    should say so. Evidence, as required:
+    `src/model_utils.py` lines 53–56 —
+    `"olmo_base": "allenai/Olmo-3-1125-32B"`,
+    `"olmo_sft": "allenai/Olmo-3.1-32B-Instruct-SFT"`,
+    `"olmo_dpo": "allenai/Olmo-3.1-32B-Instruct-DPO"`,
+    `"olmo_instruct": "allenai/Olmo-3.1-32B-Instruct"`;
+    `README.md` line 227 (`-m olmo_32b_base olmo_32b_sft olmo_32b_dpo
+    olmo_32b`) and line 107; no Think-branch reference anywhere in the
+    repo. Also recorded: their `ModelWrapper` defaults to
+    `dtype=torch.bfloat16` with `quantization_config=None`, and
+    `PRE_QUANTIZED_MODELS` = {`kimi_k2`, `deepseek_v3`} only — **OLMo
+    is unquantized in their pipeline, so our bf16 matches theirs** and a
+    Q2 replication failure cannot be charged to precision.
+  - **Item 2 (cast-and-drop) — DONE, BUT BY A DIFFERENT METHOD than
+    the one approved.** Approved: "Base and Instruct download as-is;
+    SFT then DPO ... cast shard-streaming". Actual: **all four** went
+    through `from_pretrained(dtype=torch.bfloat16)` →
+    `save_pretrained`, i.e. a full-model load-cast, not shard-streaming,
+    and Base/Instruct were re-serialized rather than kept as-is.
+    Consequences, stated plainly: (a) Base and Instruct on disk are
+    **re-serialized copies (2 shards) and will not hash-match the HF
+    originals** — provenance is the pinned source revision plus our
+    output hashes, not file identity with upstream; (b) peak disk was
+    ~321 GB, below the ~385 GB the plan allowed, because the purge runs
+    between every stage including the bf16 ones; (c) **per-file output
+    hashes are not yet recorded** — queued, and cheap now that the
+    weights are resident.
+  - **Item 2's one-time equality assert — STILL NOT SATISFIED, and now
+    costs a re-download.** The cast *was* `transformers`' own load-cast,
+    so the reference named in the requirement is what produced the
+    weights; but the asserted comparison
+    `hash(load(fp32_dir, bf16)) == hash(load(cast_dir))` was never run,
+    and the fp32 masters are deleted. Satisfying the letter needs a
+    129 GB re-pull of the SFT master (~21 min; 226 GB free). Awaiting a
+    decision. **Not treated as met.**
+  - **Item 3 — smoke and R_l were already complete** before this
+    adjudication arrived (see the entries below); only the CUDA
+    determinism characterization remained, and it is running now.
+  - **Item 6 (backend note).** The characterized backend of record is
+    **NVIDIA A100-SXM4-80GB**, driver 580.126.20, capability (8,0),
+    CUDA 12.8, torch 2.8.0+cu128. The spec permitted "A100/H100-class";
+    an A100 is within it, so this is **not a deviation**. No H100 ever
+    materialized and nothing is inherited from that discussion.
+  - **Item 4 — STEP 3 PRECISION ENTRY: bf16 across all four
+    checkpoints.** Comparability is trivially satisfied: identical
+    dtype, identical architecture (64 layers / hidden 5120), identical
+    parameter count (32,233,522,176) at every stage. Cast provenance:
+    `scripts/box_acquire_olmo.py` (committed), pinned revisions in
+    `data/olmo/manifest.json`, raw log
+    `results/raw/2026-08-19_olmo_acquisition.txt`. Any
+    instrument-specific 8-bit fallback requires its own dated entry per
+    the Environment rule; none is in effect.
+  - **Item 5 — notebook hygiene, done, but not with nbstripout.** A
+    filter pointing into `jlens-qwen36/.venv` would break silently the
+    moment that gitignored tree is rebuilt, and a silently-broken clean
+    filter means fat notebooks re-enter the record unnoticed. Instead:
+    `scripts/nbstrip.py`, dependency-free stdlib, **committed** so the
+    filter works on any checkout including the box; wired as
+    `filter.nbstripout.clean` with `*.ipynb filter=nbstripout` in
+    `.gitattributes`. `paper_analysis.ipynb` re-committed stripped:
+    **52,499 → 1,049 bytes** in the index, 0 outputs, sources intact.
+    The rendered figure is committed once as
+    `figures/fig1_inverted_u.png` (38,446 bytes), extracted from the
+    notebook's embedded output.
+    - **NOTE for other machines:** the clean filter lives in
+      `.git/config`, which does not travel with a clone. Any other
+      checkout must re-run the `git config filter.nbstripout.*` lines
+      or notebooks will commit unstripped there.
+
 - 2026-08-19 — **Step 2: per-checkpoint R_l survey COMPLETE on all four
   checkpoints (rule 1), plus the Macar-checkpoint match confirmed from
   their source. Finding: the residual-stream scale is nearly invariant

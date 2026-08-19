@@ -42,9 +42,15 @@ prompt is obedience, not wanting.
 ## Phase 2 — the ontogeny of evaluation
 
 Cycles 1–4 were a cross-sectional anatomy of one adult model. Phase 2
-is a developmental study on the public **OLMo-3.1-32B checkpoint
-series** (Base → SFT → DPO → Instruct — the snapshots Macar et al.
-used), asking three pre-registerable questions:
+is a developmental study on the public **OLMo-3.1-32B instruct
+lineage** — Base `allenai/Olmo-3-1125-32B` (the Olmo-3 pretrain the
+3.1 chain declares as `base_model`; no separate 3.1 base exists) →
+`Olmo-3.1-32B-Instruct-SFT` → `Olmo-3.1-32B-Instruct-DPO` →
+`Olmo-3.1-32B-Instruct`; lineage verified by card-declared
+`base_model` links, shas pinned in the step-2 RESULTS entry. The
+*Think* branch is a different lineage and is not this series; exact
+match to Macar et al.'s checkpoints is confirmed from their released
+configs before acquisition. Three pre-registerable questions:
 
 - **Q1 (marking):** at which training stage does the evaluative
   (feedback-contrast) axis appear, with what geometry and causal
@@ -83,11 +89,16 @@ licensed only by PROPOSAL-g acceptance + its pre-registrations.**
   local patches). All published numbers live here; the rule-26
   regression suite runs here and only here.
 - **Cloud box (single 80GB A100/H100-class GPU, PyTorch/CUDA):**
-  Phase-2 execution site. OLMo-3.1-32B checkpoints run at **bf16 —
-  full precision.** The v3.0 quantization deferral is deleted: the
-  numerics-floor caveats that shadowed cycles 1–4 do not attend
-  Phase 2. Persistent volume ~500 GB (four bf16 checkpoints ≈ 64 GB
-  each + Qwen bf16 for g4 + working space). Fallback if memory-bound
+  Phase-2 execution site. OLMo checkpoints run at **bf16 — full
+  precision.** SFT and DPO ship fp32 (129 GB each) and are **cast to
+  bf16 on acquisition, fp32 masters dropped after hash-verified cast**
+  (decision 2026-08-18; cast equality asserted against transformers'
+  own load-cast on one checkpoint before the pattern is trusted). The
+  v3.0 quantization deferral is deleted: the numerics-floor caveats
+  that shadowed cycles 1–4 do not attend Phase 2. Persistent volume
+  466 GB (four bf16 checkpoints ≈ 64 GB each + Qwen bf16 for g4 +
+  working space; casts sequenced so fp32 masters never coexist and
+  peak usage stays under the volume). Fallback if memory-bound
   with capture hooks: 8-bit for the affected instrument only, logged
   as a dated decision — never mixed within a cross-checkpoint
   contrast.
