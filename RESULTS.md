@@ -131,6 +131,66 @@ applied to CLAUDE.md.
     verbatim for the design instance to carry in; Code does not author
     proposal documents.
 
+- 2026-08-18 — **Phase 0 step 2 (partial): cloud box up, bring-up done,
+  `valence_core` verified 50/50 on CUDA, and the OLMo checkpoint series
+  located and lineage-verified. Acquisition NOT started — pending a
+  decision (below).**
+  - **Box** (RunPod, us-ca-2): NVIDIA **A100-SXM4-80GB** (81920 MiB),
+    driver 580.126.20, capability (8,0), bf16 supported. Root disk is
+    only **30 GB**; `/workspace` is a **466 GB** network volume. Every
+    cache is pinned to `/workspace` in `/workspace/env.sh` — a default
+    HF cache on the root disk would have died on the first checkpoint.
+  - **Stack (ledger 27):** python 3.12.3, torch **2.8.0+cu128**, cuda
+    12.8, transformers **5.15.0**, accelerate 1.14.0, safetensors 0.8.0,
+    huggingface_hub 1.28.0, numpy 2.1.2, pandas 3.0.5. Installed into a
+    venv at `/workspace/venv` created with `--system-site-packages`, so
+    torch stays the image's CUDA-matched build and our packages survive
+    pod restarts on the persistent volume.
+  - **`olmo3` is registered in transformers 5.15.0** — the one real
+    gating risk for step 2, cleared.
+  - **Repo reaches the box by `rsync`, not `git clone`:** the GitHub
+    repo is private, so a clone needs credentials. Rsync from the laptop
+    keeps credentials off an ephemeral box entirely; artifacts return
+    the same way and are committed from the laptop. `jlens-qwen36/`
+    (7.8 GB, MLX-only) deliberately does not travel.
+  - **`valence_core` reproduces 50/50 on the box** — every published
+    number, on CUDA hardware, with no MLX present and no model loaded.
+    The core traveled intact.
+  - **CHECKPOINT SERIES — FLAG: the names in this file are wrong, and
+    the base is an Olmo-3, not a 3.1.** CLAUDE.md §Phase 2 says "the
+    public OLMo-3.1-32B checkpoint series (Base → SFT → DPO →
+    Instruct)". There is no `Olmo-3.1-32B` base. The chain that exists
+    is verified by each card's declared `base_model`, and it is
+    unbroken:
+
+    | stage | repo | sha | weights |
+    |---|---|---|---|
+    | Base | `allenai/Olmo-3-1125-32B` | `c2b61dae89a1` | 64 GB |
+    | SFT | `allenai/Olmo-3.1-32B-Instruct-SFT` | `152782ecc41a` | **129 GB** |
+    | DPO | `allenai/Olmo-3.1-32B-Instruct-DPO` | `fc84a4f69991` | **129 GB** |
+    | Instruct | `allenai/Olmo-3.1-32B-Instruct` | `ac0587e4a774` | 64 GB |
+
+    All apache-2.0, all ungated, all `model_type: olmo3`, all 64 layers
+    / hidden 5120 — architecture uniform across the chain, so layer
+    indices are at least comparable in principle (rule 1 still forbids
+    inheriting the *choice* of layers). `Olmo-3.1-32B-Think` exists but
+    descends from `Olmo-3-32B-Think-DPO` — a different branch, not our
+    series.
+  - **FLAG — SFT and DPO ship at fp32 (129 GB each), not bf16.**
+    Acquisition is therefore **386 GB**, not the ~256 GB the Environment
+    section assumed, against a 466 GB volume — and that leaves no room
+    for the Qwen bf16 g4 spike (~54 GB) plus working space. Step 3
+    already declares bf16 across all four, so casting to bf16 on disk
+    and dropping the fp32 masters is *consistent with* the accepted
+    precision decision rather than a deviation: 4 × 64 GB = 256 GB
+    resident, ~210 GB free. Recommended, but it is the design
+    instance's call and acquisition is held until it is made.
+  - **FLAG for the design instance:** CLAUDE.md says these are "the
+    snapshots Macar et al. used". Code cannot verify what the paper
+    used; if their transition was measured on the *Think* branch rather
+    than the Instruct chain, Q2's positive control points at a different
+    four checkpoints. Worth confirming before 386 GB moves.
+
 - 2026-08-18 — **`load_d_gates` fixed (user-directed); equivalence check
   re-run: 8/8 loaders now execute and match across roots. The paper-1
   DATA-root flip is clear.**
