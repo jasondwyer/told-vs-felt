@@ -1,0 +1,13 @@
+{
+ "repo": "allenai/Olmo-3.1-32B-Instruct-SFT",
+ "revision": "152782ecc41a",
+ "cast_dir": "/workspace/models/sft",
+ "n_tensors": 707,
+ "n_elements": 32233522176,
+ "aggregate_fp32_loadcast": "8de2191a417797df1ef3c41c49ade1ace84080c4ccf39d84d0d1f1d80f6c9914",
+ "aggregate_cast_dir": "8de2191a417797df1ef3c41c49ade1ace84080c4ccf39d84d0d1f1d80f6c9914",
+ "key_sets_identical": true,
+ "n_per_tensor_mismatches": 0,
+ "mismatched_keys": [],
+ "PASS": true
+}

@@ -131,6 +131,41 @@ applied to CLAUDE.md.
     verbatim for the design instance to carry in; Code does not author
     proposal documents.
 
+- 2026-08-19 — **Step 2 item 2: the hash-verified-cast requirement is
+  SATISFIED BY MEASUREMENT. PASS — our stored bf16 cast is
+  tensor-for-tensor identical to transformers' own load-cast of the
+  fp32 master. The flag opened on 2026-08-18 is closed.** (Raw:
+  `results/raw/2026-08-19_cast_equality_sft.txt`; artifact
+  `data/olmo/cast_equality_sft.json`.)
+  - **Subject:** `allenai/Olmo-3.1-32B-Instruct-SFT` @ `152782ecc41a`,
+    fp32 master re-pulled to a temp dir (1187 s, 129 GB; 242 GB free
+    before, ≥140 GB bar cleared).
+  - **Comparison is over LOADED TENSOR VALUES, not files** — the
+    distinction is the whole point. Acquisition re-serialized every
+    checkpoint, so file hashes differ *by construction*; a file-level
+    comparison would have failed for a reason with nothing to do with
+    the cast, and "failed" here is defined as an incident.
+  - **Result:** key sets identical (**707 vs 707**), **0 per-tensor
+    mismatches**, 32,233,522,176 elements on both sides, aggregate
+    digest `8de2191a417797df1ef3c41c…` on both. Exact.
+  - **Memory discipline held:** the two models were never co-resident —
+    load, digest in sorted key order, free, then load the second. Note
+    the timings, which confirm it: fp32 load 424 s (cold, 129 GB off
+    NFS) vs cast_dir load **2 s** (64 GB, page-cache warm) — a
+    co-resident implementation would have shown neither pattern.
+  - **On PASS the pattern is trusted and the temp deleted** (227 GB
+    free after). One checkpoint licenses the cast method; the other
+    three are frozen independently by item 1's per-file hashes. Had it
+    failed, the standing instruction was to touch nothing and
+    escalate — the script implements that asymmetry rather than
+    leaving it to judgment.
+  - **What this closes.** The flag first raised 2026-08-18 (cast
+    performed before the requirement existed, fp32 masters already
+    dropped) is now discharged on the merits rather than waived. The
+    honest form of the earlier claim — "the cast *was* transformers'
+    load-cast, so the reference is what produced the weights" — is now
+    a measured fact instead of an argument from construction.
+
 - 2026-08-19 — **Step 2 item 1: per-file SHA-256 for all four bf16 sets,
   into the manifest. These are now the provenance anchors.** (Raw:
   `results/raw/2026-08-19_olmo_hashes.txt`; artifact
