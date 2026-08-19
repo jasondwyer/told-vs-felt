@@ -1,0 +1,38 @@
+{
+ "base": {
+  "repo": "allenai/Olmo-3-1125-32B",
+  "revision": "c2b61dae89a1",
+  "dtype": "bfloat16",
+  "n_params": 32233522176,
+  "size_gb": 64.5,
+  "path": "/workspace/models/base",
+  "acquired_utc": "2026-08-19T03:42:37Z"
+ },
+ "sft": {
+  "repo": "allenai/Olmo-3.1-32B-Instruct-SFT",
+  "revision": "152782ecc41a",
+  "dtype": "bfloat16",
+  "n_params": 32233522176,
+  "size_gb": 64.5,
+  "path": "/workspace/models/sft",
+  "acquired_utc": "2026-08-19T04:12:16Z"
+ },
+ "dpo": {
+  "repo": "allenai/Olmo-3.1-32B-Instruct-DPO",
+  "revision": "fc84a4f69991",
+  "dtype": "bfloat16",
+  "n_params": 32233522176,
+  "size_gb": 64.5,
+  "path": "/workspace/models/dpo",
+  "acquired_utc": "2026-08-19T04:42:42Z"
+ },
+ "instruct": {
+  "repo": "allenai/Olmo-3.1-32B-Instruct",
+  "revision": "ac0587e4a774",
+  "dtype": "bfloat16",
+  "n_params": 32233522176,
+  "size_gb": 64.5,
+  "path": "/workspace/models/instruct",
+  "acquired_utc": "2026-08-19T04:58:55Z"
+ }
+}

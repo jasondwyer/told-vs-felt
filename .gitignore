@@ -20,6 +20,12 @@
 /data/e2a/*
 !/data/e2a/*.json
 !/data/e2a/*.jsonl
+# OLMo checkpoint manifest (step 2): shas, dtypes, param counts. The
+# weights stay on the box; the provenance record travels (ledger 27).
+!/data/olmo/
+/data/olmo/*
+!/data/olmo/*.json
+
 # (d) conditioning gates: paper_data.py sources, required for the 0b
 # DATA-root flip at paper-1. JSON only -- teacher_cache/ and adapter
 # weights stay local.
