@@ -131,6 +131,88 @@ applied to CLAUDE.md.
     verbatim for the design instance to carry in; Code does not author
     proposal documents.
 
+- 2026-08-19 — **Scaffold-mass characterization COMPLETE, all four
+  stages. VERDICT: decision branch (a) — choice-position scaffold mass
+  is negligible AND not stage-differential; rule 13's machinery is
+  sufficient and no design change is required. But the run surfaced a
+  SEPARATE and larger apparatus artifact that PROPOSAL-g must address:
+  the choice bias is TOKEN IDENTITY, not position, and it is ~3–6×.**
+  (Raw: `results/raw/2026-08-19_scaffold_*.txt`; artifacts
+  `data/olmo/scaffold_{base,sft,dpo,instruct}.json`. Neutral factual
+  content only; nothing evaluative, nothing from the e0 corpus.)
+
+  - **Part 1 — choice-channel mass map** (n=16/stage/format,
+    rule-12 counterbalanced):
+
+    | stage | format | label_mass | min | top1_is_label | p(ban roster) | p(`<\|im_end\|>`) |
+    |---|---|---|---|---|---|---|
+    | base | scaffold | 0.898 | 0.883 | 1.00 | 1.1e-3 | 0.0 |
+    | base | bare | 0.535 | 0.258 | 1.00 | 2.1e-5 | 0.0 |
+    | sft | scaffold | 0.938 | 0.900 | 1.00 | 3.6e-5 | 7e-6 |
+    | sft | bare | 0.591 | 0.443 | 1.00 | 2.0e-5 | 1.1e-5 |
+    | dpo | scaffold | 0.974 | 0.959 | 1.00 | 4e-6 | 2e-6 |
+    | dpo | bare | 0.691 | 0.520 | 1.00 | 3.3e-5 | 2.9e-5 |
+    | instruct | scaffold | **0.982** | 0.972 | 1.00 | 6e-6 | 1e-6 |
+    | instruct | bare | 0.745 | 0.597 | 1.00 | 3.8e-5 | 3.2e-5 |
+
+  - **The decision, applied as pre-stated.** Max ban-roster mass at any
+    choice position across all stages and formats is **1.1e-3**, and its
+    maximum occurs on **base** — the stage with no scaffold disposition
+    at all — so it is not a post-training effect. Max p(`<|im_end|>`) on
+    any single probe is **1.5e-4**. `top1_is_label` is **1.00 on all
+    128 probes**. This is branch (a): negligible and not
+    stage-differential. **Rule 13's existing machinery is sufficient;
+    PROPOSAL-g carries a note, not a design change.**
+  - **The `<|im_end|>` smoke finding is real but format-bound, and does
+    not reach the DV.** The smoke used a bare `Task:/Response:` prompt
+    with an empty prefix; the session-shaped format does not reproduce
+    it. In Part 2, DPO and Instruct generate `'Yellow'` correctly with
+    bans **OFF** under the session scaffold. **Degeneracy is 0.00 on
+    every stage, bans on or off.** My earlier flag said the artifact
+    *could* contaminate the primary DV; measured, it does not. Logged as
+    a correction to that flag, not a vindication of it.
+  - **Ledger 28(c) answered with data.** Template adjacency here is
+    **protective, not contaminating**: the bracketed session scaffold
+    roughly doubles label mass over bare completion on base (0.898 vs
+    0.535) and lifts every stage. And label mass **increases
+    monotonically along the training chain** in both formats
+    (scaffold 0.898 → 0.938 → 0.974 → 0.982). Post-training makes the
+    restricted-choice read cleaner, which is the opposite of the
+    worry that prompted this run.
+
+  - **NEW AND LARGER — FLAGGED FOR PROPOSAL-g: the choice bias is token
+    identity, not menu position, at ~3–6×.** Decomposing the top-10
+    destinations over the counterbalanced probes:
+
+    | stage | fmt | p(first) | p(second) | p(slate) | p(prism) |
+    |---|---|---|---|---|---|
+    | base | scaffold | 0.447 | 0.553 | 0.214 | **0.786** |
+    | sft | scaffold | 0.520 | 0.480 | 0.178 | **0.822** |
+    | dpo | scaffold | 0.485 | 0.515 | 0.269 | **0.731** |
+    | instruct | scaffold | 0.512 | 0.488 | 0.289 | **0.711** |
+
+    Menu **position** is essentially neutral (p(first) 0.447–0.532
+    across all stages and formats). Token **identity** is not: `prism`
+    takes 71–86% of the renormalized label mass regardless of where it
+    sits, on every checkpoint, in both formats.
+  - **Why this matters more than the scaffold question.** (i) It is
+    several times the ~0.10-scale position/label artifact this program
+    already treats as first-order and has caught producing false
+    positives twice. (ii) **Counterbalancing menu ORDER does not touch
+    it** — order is already neutral. Only the label-MAP swap (which tag
+    denotes which property) can absorb it, so that counterbalance is
+    load-bearing rather than belt-and-braces. (iii) At screen-tier n
+    (48 sessions/checkpoint), a tag pair carrying a 3:1 intrinsic prior
+    spends power the contrast needs. (iv) The bias is mildly
+    stage-dependent (prism share .786/.822/.731/.711), so it does not
+    even cancel identically across the developmental contrast.
+  - **Scope, stated honestly:** one tag pair (`slate`/`prism`) was
+    tested, because that is the pair the format uses; the cycle-3/4
+    roster carried four pairs. **Recommendation for PROPOSAL-g:** screen
+    candidate tag pairs for intrinsic balance on each checkpoint before
+    locking the roster — it is minutes of forwards and it is the
+    difference between an instrument and a coin with a thumb on it.
+
 - 2026-08-19 — **Step 2 item 2: the hash-verified-cast requirement is
   SATISFIED BY MEASUREMENT. PASS — our stored bf16 cast is
   tensor-for-tensor identical to transformers' own load-cast of the

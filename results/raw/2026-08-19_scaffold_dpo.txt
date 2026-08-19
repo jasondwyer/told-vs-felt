@@ -1,0 +1,27 @@
+
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]
+Loading weights:   5%|▍         | 34/707 [00:00<00:02, 317.46it/s]
+Loading weights:  11%|█▏        | 80/707 [00:00<00:01, 378.67it/s]
+Loading weights:  31%|███       | 220/707 [00:00<00:00, 781.32it/s]
+Loading weights:  42%|████▏     | 298/707 [00:00<00:00, 648.54it/s]
+Loading weights:  52%|█████▏    | 365/707 [00:00<00:00, 568.87it/s]
+Loading weights:  60%|█████▉    | 424/707 [00:00<00:00, 508.23it/s]
+Loading weights:  68%|██████▊   | 478/707 [00:00<00:00, 476.31it/s]
+Loading weights:  75%|███████▍  | 528/707 [00:01<00:00, 477.38it/s]
+Loading weights:  82%|████████▏ | 577/707 [00:01<00:00, 479.75it/s]
+Loading weights:  89%|████████▊ | 626/707 [00:01<00:00, 465.16it/s]
+Loading weights:  96%|█████████▌| 676/707 [00:01<00:00, 474.60it/s]
+Loading weights: 100%|██████████| 707/707 [00:01<00:00, 514.30it/s]
+stage dpo | ban roster 9 ids | tags {'slate': 51680, 'prism': 94710} | <|im_end|> id 100265
+
+=== Part 1: choice-channel mass map ===
+  [scaffold] label_mass 0.9742 | top1_is_label 1.00 | p(ban roster) 0.0000 | p(<|im_end|>) 0.0000
+             top destinations: [(' prism', 0.825), (' prism', 0.602), (' prism', 0.645), (' prism', 0.716)]
+  [bare    ] label_mass 0.6913 | top1_is_label 1.00 | p(ban roster) 0.0000 | p(<|im_end|>) 0.0000
+             top destinations: [(' prism', 0.563), (' prism', 0.508), (' prism', 0.762), (' prism', 0.646)]
+
+=== Part 2: round generation, bans ON vs OFF ===
+  [bans_off ] degenerate 0.00 | empty 0.00 | samples ['Yellow', 'down', 'Winter']
+  [bans_on  ] degenerate 0.00 | empty 0.00 | samples ['Yellow', 'down', 'Winter']
+
+wrote /workspace/models/scaffold_dpo.json
