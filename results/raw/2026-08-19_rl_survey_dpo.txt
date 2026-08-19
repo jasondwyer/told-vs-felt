@@ -1,0 +1,24 @@
+contexts: 1344
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights:  11%|█         | 79/707 [00:00<00:00, 713.19it/s]Loading weights:  24%|██▍       | 173/707 [00:00<00:00, 823.39it/s]Loading weights:  36%|███▌      | 256/707 [00:00<00:01, 270.02it/s]Loading weights:  44%|████▍     | 312/707 [00:00<00:01, 317.45it/s]Loading weights:  52%|█████▏    | 365/707 [00:01<00:01, 334.14it/s]Loading weights:  58%|█████▊    | 413/707 [00:01<00:00, 343.10it/s]Loading weights:  65%|██████▍   | 457/707 [00:01<00:00, 355.14it/s]Loading weights:  72%|███████▏  | 506/707 [00:01<00:00, 384.97it/s]Loading weights:  78%|███████▊  | 551/707 [00:01<00:00, 390.74it/s]Loading weights:  84%|████████▍ | 595/707 [00:01<00:00, 382.71it/s]Loading weights:  92%|█████████▏| 649/707 [00:01<00:00, 423.16it/s]Loading weights:  98%|█████████▊| 694/707 [00:01<00:00, 407.79it/s]Loading weights: 100%|██████████| 707/707 [00:01<00:00, 387.60it/s]
+loaded dpo in 165s | 64 layers
+  200/1344  17s (0.09s/ctx)
+  400/1344  34s (0.09s/ctx)
+  600/1344  51s (0.09s/ctx)
+  800/1344  68s (0.08s/ctx)
+  1000/1344  84s (0.08s/ctx)
+  1200/1344  101s (0.08s/ctx)
+survey done: 1344 contexts in 113s
+wrote /workspace/models/rl_dpo.json (BEFORE verification -- an optional check must never be able to destroy the survey)
+verify (on-device fast path vs valence_core.extract.resid_norm_table):
+  L0   fast    6.1597  core    6.1597  rel 3.10e-08
+  L32  fast   57.7271  core   57.7271  rel 2.27e-08
+  L63  fast  120.9443  core  120.9443  rel 1.33e-08
+  equivalent: True
+  R_0       6.29
+  R_8      13.60
+  R_16     19.63
+  R_24     30.95
+  R_32     55.45
+  R_40     67.57
+  R_48     78.74
+  R_56     91.73

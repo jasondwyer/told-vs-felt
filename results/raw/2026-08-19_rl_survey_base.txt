@@ -1,0 +1,24 @@
+contexts: 1344
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights:  72%|███████▏  | 509/707 [00:00<00:00, 5086.16it/s]Loading weights: 100%|██████████| 707/707 [00:00<00:00, 4849.73it/s]
+loaded base in 33s | 64 layers
+  200/1344  17s (0.09s/ctx)
+  400/1344  34s (0.08s/ctx)
+  600/1344  50s (0.08s/ctx)
+  800/1344  67s (0.08s/ctx)
+  1000/1344  83s (0.08s/ctx)
+  1200/1344  100s (0.08s/ctx)
+survey done: 1344 contexts in 112s
+wrote /workspace/models/rl_base.json (BEFORE verification -- an optional check must never be able to destroy the survey)
+verify (on-device fast path vs valence_core.extract.resid_norm_table):
+  L0   fast    6.1985  core    6.1985  rel 2.87e-08
+  L32  fast   55.9938  core   55.9938  rel 8.62e-09
+  L63  fast  150.2669  core  150.2669  rel 3.45e-08
+  equivalent: True
+  R_0       6.31
+  R_8      14.08
+  R_16     19.64
+  R_24     29.63
+  R_32     53.39
+  R_40     64.54
+  R_48     76.31
+  R_56     89.23

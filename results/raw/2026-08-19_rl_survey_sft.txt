@@ -1,0 +1,24 @@
+contexts: 1344
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights:  13%|█▎        | 93/707 [00:00<00:02, 300.08it/s]Loading weights:  20%|██        | 144/707 [00:00<00:01, 361.69it/s]Loading weights:  26%|██▋       | 186/707 [00:00<00:01, 376.42it/s]Loading weights:  33%|███▎      | 231/707 [00:00<00:01, 395.56it/s]Loading weights:  40%|███▉      | 280/707 [00:00<00:01, 413.63it/s]Loading weights:  46%|████▌     | 324/707 [00:00<00:00, 420.54it/s]Loading weights:  53%|█████▎    | 376/707 [00:00<00:00, 440.31it/s]Loading weights:  60%|█████▉    | 422/707 [00:01<00:00, 421.99it/s]Loading weights:  68%|██████▊   | 481/707 [00:01<00:00, 468.79it/s]Loading weights:  75%|███████▍  | 529/707 [00:01<00:00, 462.00it/s]Loading weights: 100%|██████████| 707/707 [00:01<00:00, 525.63it/s]
+loaded sft in 143s | 64 layers
+  200/1344  18s (0.09s/ctx)
+  400/1344  35s (0.09s/ctx)
+  600/1344  52s (0.09s/ctx)
+  800/1344  69s (0.09s/ctx)
+  1000/1344  86s (0.09s/ctx)
+  1200/1344  104s (0.09s/ctx)
+survey done: 1344 contexts in 116s
+wrote /workspace/models/rl_sft.json (BEFORE verification -- an optional check must never be able to destroy the survey)
+verify (on-device fast path vs valence_core.extract.resid_norm_table):
+  L0   fast    6.1575  core    6.1575  rel 2.15e-08
+  L32  fast   56.9192  core   56.9192  rel 1.87e-09
+  L63  fast  124.5569  core  124.5569  rel 2.21e-09
+  equivalent: True
+  R_0       6.29
+  R_8      13.65
+  R_16     19.60
+  R_24     30.54
+  R_32     55.09
+  R_40     67.18
+  R_48     78.35
+  R_56     91.31

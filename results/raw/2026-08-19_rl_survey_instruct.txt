@@ -1,0 +1,24 @@
+contexts: 1344
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights:  16%|█▌        | 112/707 [00:00<00:00, 1113.92it/s]Loading weights:  32%|███▏      | 224/707 [00:00<00:00, 680.35it/s] Loading weights:  43%|████▎     | 302/707 [00:00<00:00, 554.50it/s]Loading weights:  51%|█████▏    | 364/707 [00:00<00:00, 533.14it/s]Loading weights:  60%|█████▉    | 421/707 [00:00<00:00, 509.06it/s]Loading weights:  67%|██████▋   | 474/707 [00:00<00:00, 474.56it/s]Loading weights:  74%|███████▍  | 523/707 [00:01<00:00, 449.70it/s]Loading weights:  84%|████████▍ | 594/707 [00:01<00:00, 503.05it/s]Loading weights:  92%|█████████▏| 647/707 [00:01<00:00, 507.60it/s]Loading weights: 100%|██████████| 707/707 [00:01<00:00, 558.73it/s]
+loaded instruct in 145s | 64 layers
+  200/1344  18s (0.09s/ctx)
+  400/1344  35s (0.09s/ctx)
+  600/1344  52s (0.09s/ctx)
+  800/1344  70s (0.09s/ctx)
+  1000/1344  87s (0.09s/ctx)
+  1200/1344  104s (0.09s/ctx)
+survey done: 1344 contexts in 116s
+wrote /workspace/models/rl_instruct.json (BEFORE verification -- an optional check must never be able to destroy the survey)
+verify (on-device fast path vs valence_core.extract.resid_norm_table):
+  L0   fast    6.1589  core    6.1589  rel 1.71e-08
+  L32  fast   57.8047  core   57.8047  rel 1.76e-08
+  L63  fast  120.4333  core  120.4333  rel 9.94e-09
+  equivalent: True
+  R_0       6.29
+  R_8      13.60
+  R_16     19.65
+  R_24     30.95
+  R_32     55.50
+  R_40     67.63
+  R_48     78.69
+  R_56     91.61

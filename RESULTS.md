@@ -131,6 +131,87 @@ applied to CLAUDE.md.
     verbatim for the design instance to carry in; Code does not author
     proposal documents.
 
+- 2026-08-19 — **Step 2: per-checkpoint R_l survey COMPLETE on all four
+  checkpoints (rule 1), plus the Macar-checkpoint match confirmed from
+  their source. Finding: the residual-stream scale is nearly invariant
+  across post-training in the mid-stack and moves sharply only in the
+  last three layers.** (Raw: `results/raw/2026-08-19_rl_survey_*.txt`;
+  artifacts `data/olmo/rl_{base,sft,dpo,instruct}.json`.)
+  - **Method.** Frozen 1,344-context e0 corpus (48 tasks x 7 conditions
+    x 4 paraphrases), unchanged text, all 64 layers, span-mean
+    definition identical to `e0_extract_axis.py` so R_l means one thing
+    repo-wide. Norms reduced on-device. Each stage's fast path was
+    checked against `valence_core.extract.resid_norm_table` — **all four
+    `equivalent: True`**, so the definition is verified, not assumed.
+  - **Control that makes the comparison legitimate:** span lengths are
+    identical across all four ([9, 28, 15.8] min/max/mean). Same
+    stimulus, same tokenizer, same spans — so cross-checkpoint R_l
+    differences are the model, not the measurement.
+  - **The result:**
+
+    | | mean \|ΔR\|/R | max | at |
+    |---|---|---|---|
+    | base → sft | 2.73% | 16.89% | L63 |
+    | sft → dpo | 0.75% | 6.81% | L63 |
+    | dpo → instruct | 0.08% | 0.50% | L63 |
+    | **base → instruct** | **3.44%** | **22.94%** | **L63** |
+
+    Mid-stack (L16–56) the worst inheritance error is **4.87%**. The
+    entire divergence lives in the top three layers — L61 (5%), L62
+    (15%), L63 (23%) — where base runs *hotter* than every post-trained
+    stage (161.62 → 134.33 → 125.18 → 124.55).
+  - **What this buys Phase 1.** Rule 1 forbids inheriting a dose across
+    checkpoints; this quantifies what the rule is worth. In the
+    mid-stack, where workspace layers have historically been chosen,
+    inheriting would cost <5% — cheap insurance. At the top of the
+    stack it would cost up to 23%, which is a materially different
+    intervention. **If PROPOSAL-g's layer selection lands above ~L60,
+    per-checkpoint dosing is not a formality but a correctness
+    requirement.**
+  - **Developmental shape, flagged as descriptive.** The scale shift is
+    almost entirely base→SFT (2.73% of the 3.44% total); DPO adds
+    0.75% and Instruct 0.08%. Perplexity on held-out prose moves the
+    same way (32.1 → 64.0 → 68.7 → 68.2): SFT does the work, preference
+    training barely moves either quantity. This is a *norm/perplexity*
+    observation, not evidence about the evaluative axis — Q1 asks a
+    different question and is not licensed. Logged so PROPOSAL-g can
+    decide whether it predicts anything.
+  - **Macar-checkpoint match: CONFIRMED from their released code**
+    (CLAUDE.md now requires this). `src/model_utils.py` maps
+    `olmo_base/sft/dpo/instruct` to exactly the four repos acquired;
+    README §3.3 states "base → SFT → DPO → instruct"; no Think-branch
+    reference exists in the repo. **Their precision matches ours:**
+    `ModelWrapper` defaults to `dtype=torch.bfloat16`,
+    `quantization_config` defaults to None, and `PRE_QUANTIZED_MODELS`
+    contains only `kimi_k2`/`deepseek_v3` — OLMo is not quantized in
+    their pipeline. A Q2 replication failure therefore cannot be
+    attributed to a precision mismatch. (Their layer sweep used
+    25/32/38/45/51 — context only; rule 1 still forbids inheriting the
+    choice.)
+  - **FLAG — the hash-verified-cast requirement postdates the
+    acquisition and is NOT satisfied.** CLAUDE.md now requires "fp32
+    masters dropped after hash-verified cast ... cast equality asserted
+    against transformers' own load-cast on one checkpoint before the
+    pattern is trusted". Precisely: the cast *was* transformers' own
+    load-cast (`from_pretrained(dtype=torch.bfloat16)`), so the
+    reference the requirement names is what produced the weights — that
+    half is self-satisfying. What was not done is the hash verification,
+    and the fp32 masters are already dropped, so the letter of it now
+    needs a 129 GB re-pull of one master (SFT; 226 GB free, ~21 min). A
+    cheaper partial — reload each saved copy and verify save→load
+    fidelity — covers serialization but not the fp32 comparison.
+    Awaiting a decision; not silently treated as met.
+  - **Also into the record:** the frozen e0 corpus itself
+    (`data/corpus/e0_tasks.jsonl`, `data/configs/e0_frames.json`,
+    byte-identical to the clone). Phase 1 reruns this exact text on
+    every checkpoint, so it cannot live on one laptop.
+  - **Bug caught and fixed mid-run:** the survey's optional equivalence
+    check ran *before* the JSON write and crashed on a swapped argument
+    order, destroying 115 s of completed compute. Fixed twice over —
+    correct argument order, and the survey output is now written before
+    any optional check runs. An equivalence test must never be able to
+    destroy the result it validates.
+
 - 2026-08-18 — **Phase 0 step 2 (partial): cloud box up, bring-up done,
   `valence_core` verified 50/50 on CUDA, and the OLMo checkpoint series
   located and lineage-verified. Acquisition NOT started — pending a
