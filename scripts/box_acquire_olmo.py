@@ -49,7 +49,16 @@ def free_gb(p: Path) -> float:
 
 
 def dir_gb(p: Path) -> float:
-    return sum(f.stat().st_size for f in p.rglob("*") if f.is_file()) / 1e9
+    """Real bytes on disk. Must NOT follow symlinks: the HF cache stores one
+    blob under blobs/ and symlinks it from snapshots/, so a naive walk counts
+    every shard twice and reports ~2x (this overstated the base purge as
+    129 GB when 64 GB was freed)."""
+    tot = 0
+    for f in p.rglob("*"):
+        st = f.lstat()
+        if not f.is_symlink() and f.is_file():
+            tot += st.st_size
+    return tot / 1e9
 
 
 def log(msg: str) -> None:
