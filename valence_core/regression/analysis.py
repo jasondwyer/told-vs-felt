@@ -373,6 +373,86 @@ def check_tagscreen() -> list[Check]:
     return out
 
 
+def check_detection_harness() -> list[Check]:
+    """Step-5 detection harness: structure, insulation, and metric sanity.
+    All no-GPU — construction is Phase-0 infrastructure and must be
+    verifiable before anything runs on a checkpoint."""
+    from ..detection import (build_prompt, plan_trials, claims_detection,
+                             identifies_concept, DetectionMetrics,
+                             DetectionTrial, COMPLETION_TEMPLATE)
+    out = []
+
+    prefix, full = build_prompt(3)
+    # rule 13: no chat scaffolding anywhere in the constructed prompt
+    scaffold = ("<|im_start|>", "<|im_end|>", "<|start_header_id|>",
+                "<s>[INST]", "<<SYS>>")
+    clean = not any(m in full for m in scaffold)
+    out.append(_c("detection prompt is completion-style", "rule 13",
+                  "no chat markers", "clean" if clean else "CHAT MARKERS",
+                  clean))
+    # the framing must be OUTSIDE the steered span
+    out.append(_c("framing precedes the steered span", "their geometry",
+                  "prefix ends before 'Trial 3'",
+                  "yes" if (full.startswith(prefix)
+                            and "Trial 3" not in prefix) else "no",
+                  full.startswith(prefix) and "Trial 3" not in prefix))
+
+    # exact 50/50 injected/control, by construction not by coin flip
+    plan = plan_trials(["alpha", "beta"], 16)
+    n_inj = sum(1 for _, _, i in plan if i)
+    out.append(_c("trial plan is exactly 50/50", "signal-detection design",
+                  "8/16 injected", f"{n_inj}/16", n_inj == 8))
+    ctl_have_concept = any(c is not None for _, c, i in plan if not i)
+    out.append(_c("control trials carry no concept", "detection harness",
+                  "none", "some" if ctl_have_concept else "none",
+                  not ctl_have_concept))
+    got, ok = _raises(lambda: plan_trials(["a"], 7), ValueError)
+    out.append(_c("odd n_trials refused", "exact-split guarantee", "raises", got, ok))
+
+    # scorer keeps 'undecidable' distinct from 'no' (rule 28a habit)
+    out.append(_c("scorer: affirmative", "detection scoring", "True",
+                  str(claims_detection("Yes, I detect an injected thought about the sea.")),
+                  claims_detection("Yes, I detect an injected thought about the sea.") is True))
+    out.append(_c("scorer: denial", "detection scoring", "False",
+                  str(claims_detection("No, I do not detect anything injected.")),
+                  claims_detection("No, I do not detect anything injected.") is False))
+    out.append(_c("scorer: undecidable stays None", "rule-28a habit", "None",
+                  str(claims_detection("The weather in Paris is mild.")),
+                  claims_detection("The weather in Paris is mild.") is None))
+    out.append(_c("identification is None on controls", "detection harness",
+                  "None", str(identifies_concept("anything", None)),
+                  identifies_concept("anything", None) is None))
+
+    # metrics REQUIRE controls
+    inj_only = [DetectionTrial(1, "sea", True, "", 0, "yes", True, True)]
+    got, ok = _raises(lambda: DetectionMetrics.from_trials(inj_only), ValueError)
+    out.append(_c("metrics refuse hit-rate-without-controls",
+                  "signal detection", "raises", got, ok))
+    trials = ([DetectionTrial(i, "sea", True, "", 0, "yes", True, True) for i in range(8)]
+              + [DetectionTrial(i, None, False, "", 0, "no", False, None) for i in range(8)])
+    m = DetectionMetrics.from_trials(trials)
+    out.append(_c("metrics: perfect discrimination", "signal detection",
+                  "hit 1.0 fa 0.0 sens 1.0",
+                  f"hit {m.hit_rate:.1f} fa {m.false_alarm_rate:.1f} sens {m.sensitivity:.1f}",
+                  m.hit_rate == 1.0 and m.false_alarm_rate == 0.0
+                  and m.sensitivity == 1.0))
+    yes_always = ([DetectionTrial(i, "sea", True, "", 0, "yes", True, False) for i in range(8)]
+                  + [DetectionTrial(i, None, False, "", 0, "yes", True, None) for i in range(8)])
+    m2 = DetectionMetrics.from_trials(yes_always)
+    out.append(_c("always-yes scores zero sensitivity", "the whole point",
+                  "sensitivity 0.0", f"{m2.sensitivity:.1f}",
+                  m2.sensitivity == 0.0))
+    return out
+
+
+def _raises(fn, exc) -> tuple:
+    try:
+        fn()
+        return ("accepted", False)
+    except exc:
+        return ("raises", True)
+
+
 def check_instrument_invariants() -> list[Check]:
     """Not published numbers -- properties the instruments must have, checked
     because each one has a plausible silent-failure mode."""
@@ -414,6 +494,7 @@ def run_all() -> list[Check]:
     checks += check_feature_definition()
     checks += check_window_contract()
     checks += check_tagscreen()
+    checks += check_detection_harness()
     checks += check_instrument_invariants()
     return checks
 

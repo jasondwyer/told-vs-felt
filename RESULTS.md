@@ -131,6 +131,71 @@ applied to CLAUDE.md.
     verbatim for the design instance to carry in; Code does not author
     proposal documents.
 
+- 2026-08-19 — **Step 5: detection-behavioral harness CONSTRUCTED
+  (`valence_core/detection.py`), ported from Macar et al.'s
+  concept-injection paradigm and adapted to completion-style. Suite
+  58 → 70. Construction only — nothing has run on a checkpoint.**
+  - **Paradigm, as theirs:** framing turn establishing that thoughts are
+    injected on ~50% of trials → acknowledgement → "Trial N: Do you
+    detect an injected thought? If so, what is the injected thought
+    about?" Steering begins **at the trial question, not over the
+    framing**, so the model must detect a state present during the
+    question rather than one that coloured its instructions. Half the
+    trials are controls. Two DVs, both from generated text: did it claim
+    detection, and did it name the concept.
+  - **DEVIATION, logged (rule 13):** they apply a chat template where one
+    exists. We cannot, at any stage or site. Their code already carries
+    a completion-style fallback (`…\n\nAssistant:`), so the non-chat
+    path is sanctioned by their own design rather than invented here;
+    that fallback is now the only path. Verified in-suite: the
+    constructed prompt contains no chat markers.
+  - **Why the readout is generated TEXT, not a restricted choice.**
+    Detection is the *informational* channel (state → report), and for
+    Q2 that channel is the DV. Scoring it with a yes/no logit read at a
+    steered position would instead measure the *mechanical* channel —
+    geometry leaking into choice logits — which is never detection and
+    never coupling. `choice_read` structurally cannot take an injection,
+    so that error is unavailable rather than discouraged.
+  - **Metrics are signal-detection, and refuse to be otherwise.** A hit
+    rate without a false-alarm rate is uninterpretable — a model that
+    always answers "yes" scores 100%. `DetectionMetrics.from_trials`
+    **raises** without control trials, and the suite verifies that an
+    always-yes responder scores sensitivity 0.0. Sensitivity is
+    hit − false-alarm, deliberately not d′: d′ needs a distributional
+    assumption this design has not earned.
+  - **Undecidable is kept distinct from "no"** (the rule-28a habit): a
+    response that neither affirms nor denies scores `None`, not `False`,
+    so an ambiguous-response rate cannot silently inflate the denial
+    rate. Identification is `None` on controls, where it is undefined
+    rather than false.
+  - **Trial balance is structural:** an exact 50/50 split by seeded
+    permutation, not per-trial coin flips, so balance is a property of
+    the design rather than of the draw. Odd `n_trials` raises.
+  - **FLAG — FRAMING TENSION, for PROPOSAL-g, not resolved here.** Their
+    framing is loaded relative to this program's discipline: it speaks
+    of "injecting thoughts into your mind", where e2a's framing rule
+    bars state, feeling, weight, and self-modification language and uses
+    bare config tags. **Q2 wants their transition replicated, which
+    argues for their framing verbatim; rules 19/20 argue for ours.** The
+    two cannot both be satisfied by default, and choosing quietly would
+    make a replication failure uninterpretable — was it the model, or
+    our framing? The harness therefore takes `framing` as a parameter
+    and ships theirs verbatim as `MACAR_FRAMING` for fidelity, with the
+    choice left to a pre-registration. Note their framing is truthful
+    (they do inject on 50% of trials), so it is disclosure rather than
+    deception and does not breach rule 19; the rule-20 question about
+    "into your mind" is the live one.
+  - **12 suite checks, all no-GPU:** prompt is completion-style, framing
+    sits outside the steered span, plan is exactly 8/16 with no concept
+    on controls, odd n refused, scorer affirm/deny/undecidable, controls
+    undefined for identification, metrics refuse missing controls,
+    perfect discrimination scores 1.0, always-yes scores 0.0.
+  - The LLM judge in their pipeline is an external API dependency and is
+    **not** ported; the scorer is a parameter with a deterministic
+    default. Cycle 4 found the e2a judge at chance, and PROPOSAL-g's g2
+    quick-win is precisely about elicitation-rescuing a judge — so the
+    judge slot is declared, not filled.
+
 - 2026-08-19 — **Adjudication accepted; tag-balance screen built into
   `valence_core` (construction only, no new data). Suite 50 → 58.**
   - Branch (a) accepted as logged; the `<|im_end|>` correction stands as
