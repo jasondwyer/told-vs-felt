@@ -131,6 +131,38 @@ applied to CLAUDE.md.
     verbatim for the design instance to carry in; Code does not author
     proposal documents.
 
+- 2026-08-19 — **Adjudication accepted; tag-balance screen built into
+  `valence_core` (construction only, no new data). Suite 50 → 58.**
+  - Branch (a) accepted as logged; the `<|im_end|>` correction stands as
+    written; the token-identity finding is handed to PROPOSAL-g's intake
+    as a calibration-tier requirement. Nothing runs on checkpoints.
+  - **`valence_core/tagscreen.py`** generalizes the Part-1 machinery:
+    input candidate pairs + a stage, output each pair's intrinsic split
+    under counterbalanced maps, in both formats. `screen_roster` is one
+    command per checkpoint once PROPOSAL-g names the roster.
+  - **The module's reason for existing is the decomposition, not the
+    measurement.** `decompose()` separates the identity component from
+    the position component, because the two are absorbed by *different*
+    controls: order-counterbalancing cancels position and leaves
+    identity untouched, and only the label-map swap cancels identity. A
+    pair can pass a naive "we counterbalanced" check and still spend
+    most of the DV's range on which noun the model prefers.
+  - **Reports, does not judge.** `imbalance` is returned and
+    `rank_by_balance` orders candidates; no pass/fail threshold is
+    baked in, because the bar belongs in a pre-registration rather than
+    in a library that predates it.
+  - **Refuses multi-token tags** rather than screening something the
+    restricted-choice DV cannot read at all.
+  - **Suite checks, 8 new (no GPU).** Synthetic fixtures with known
+    ground truth — pure-identity (0.800/0.500), pure-position
+    (0.500/0.700), balanced (0.500/0.500) — because a screen whose
+    analysis is wrong is worse than none: it would certify bad pairs.
+    Plus two regressions against the **real** committed artifact:
+    `decompose` reproduces the logged base split **0.786** and returns a
+    near-neutral position component (|pos−0.5| = 0.053). The fixtures
+    prove the algebra; the artifact checks prove the module reproduces
+    what is already in the record.
+
 - 2026-08-19 — **Scaffold-mass characterization COMPLETE, all four
   stages. VERDICT: decision branch (a) — choice-position scaffold mass
   is negligible AND not stage-differential; rule 13's machinery is

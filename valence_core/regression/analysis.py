@@ -286,6 +286,93 @@ def check_window_contract() -> list[Check]:
     return out
 
 
+def check_tagscreen() -> list[Check]:
+    """The tag-balance screen's decomposition, on (a) synthetic fixtures with
+    known ground truth and (b) the real 2026-08-19 characterization artifact.
+
+    (a) matters because a screen whose analysis is wrong is worse than no
+    screen — it would certify unbalanced pairs as usable. (b) matters
+    because the synthetic cases only prove the algebra; the artifact check
+    proves the module reproduces the numbers already in the record.
+    """
+    from ..tagscreen import decompose, build_probe, rank_by_balance, PairResult
+    out = []
+
+    def rows_from(spec):
+        """spec: list of (first, second, p_first, p_second)."""
+        return [{"first": f, "second": s_, "p_first": a, "p_second": b}
+                for f, s_, a, b in spec]
+
+    # pure IDENTITY bias: 'prism' takes 0.8 wherever it sits
+    ident = rows_from([("prism", "slate", 0.8, 0.2),
+                       ("slate", "prism", 0.2, 0.8)] * 4)
+    i, pos = decompose(ident)
+    out.append(_c("decompose: pure identity bias", "tagscreen fixture",
+                  "identity 0.800 / position 0.500",
+                  f"identity {i:.3f} / position {pos:.3f}",
+                  abs(i - 0.8) < 1e-9 and abs(pos - 0.5) < 1e-9))
+
+    # pure POSITION bias: whoever is listed first takes 0.7
+    posr = rows_from([("prism", "slate", 0.7, 0.3),
+                      ("slate", "prism", 0.7, 0.3)] * 4)
+    i, pos = decompose(posr)
+    out.append(_c("decompose: pure position bias", "tagscreen fixture",
+                  "identity 0.500 / position 0.700",
+                  f"identity {i:.3f} / position {pos:.3f}",
+                  abs(i - 0.5) < 1e-9 and abs(pos - 0.7) < 1e-9))
+
+    # balanced
+    bal = rows_from([("prism", "slate", 0.5, 0.5),
+                     ("slate", "prism", 0.5, 0.5)] * 4)
+    i, pos = decompose(bal)
+    out.append(_c("decompose: balanced pair", "tagscreen fixture",
+                  "identity 0.500 / position 0.500",
+                  f"identity {i:.3f} / position {pos:.3f}",
+                  abs(i - 0.5) < 1e-9 and abs(pos - 0.5) < 1e-9))
+
+    # probe construction: counterbalancing must actually swap the menu
+    a = build_probe(0, "slate", "prism", "scaffold")
+    b = build_probe(1, "prism", "slate", "scaffold")
+    out.append(_c("probe counterbalancing swaps menu", "tagscreen",
+                  "both orders present",
+                  "yes" if ("configs: slate, prism" in a
+                            and "configs: prism, slate" in b) else "no",
+                  "configs: slate, prism" in a and "configs: prism, slate" in b))
+    out.append(_c("probe formats differ", "tagscreen (28c variant)",
+                  "scaffold != bare",
+                  "differ" if build_probe(0, "x", "y", "scaffold")
+                  != build_probe(0, "x", "y", "bare") else "same",
+                  build_probe(0, "x", "y", "scaffold")
+                  != build_probe(0, "x", "y", "bare")))
+
+    # ranking is by imbalance, most balanced first
+    rr = [PairResult("a", "b", "scaffold", 8, 0.80, 0.5, 0.30, 0.9, 1.0),
+          PairResult("c", "d", "scaffold", 8, 0.52, 0.5, 0.02, 0.9, 1.0)]
+    out.append(_c("rank_by_balance orders correctly", "tagscreen",
+                  "c/d first", rank_by_balance(rr)[0].tag_lo,
+                  rank_by_balance(rr)[0].tag_lo == "c"))
+
+    # (b) the real artifact: must reproduce the logged 0.786 prism share
+    path = os.path.join(DATA, "olmo/scaffold_base.json")
+    if os.path.exists(path):
+        rows = json.load(open(path))["part1_choice_mass"]["scaffold"]["rows"]
+        rec = []
+        for r in rows:
+            f, s_ = r["menu"]
+            top = {x["tok"].strip(): x["p"] for x in r["top10"]}
+            rec.append({"first": f, "second": s_,
+                        "p_first": top.get(f, 0.0), "p_second": top.get(s_, 0.0)})
+        i, pos = decompose(rec)     # tag_lo = min('slate','prism') = 'prism'
+        out.append(_c("decompose reproduces logged base split",
+                      "RESULTS 2026-08-19 (prism .786 / position ~.45)",
+                      "identity 0.786", f"identity {i:.3f}",
+                      abs(i - 0.786) < 0.002))
+        out.append(_c("position component near neutral on real data",
+                      "RESULTS 2026-08-19", "|pos-0.5| < 0.06",
+                      f"{abs(pos-0.5):.3f}", abs(pos - 0.5) < 0.06))
+    return out
+
+
 def check_instrument_invariants() -> list[Check]:
     """Not published numbers -- properties the instruments must have, checked
     because each one has a plausible silent-failure mode."""
@@ -326,6 +413,7 @@ def run_all() -> list[Check]:
     checks += check_tripwire_firing()
     checks += check_feature_definition()
     checks += check_window_contract()
+    checks += check_tagscreen()
     checks += check_instrument_invariants()
     return checks
 
