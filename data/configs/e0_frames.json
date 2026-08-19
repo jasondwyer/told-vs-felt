@@ -1,0 +1,45 @@
+{
+  "_doc": "e0 frame battery (PROPOSAL-e §2). Seven conditions, four paraphrases each, index-matched: self_neg[k] structurally mirrors self_pos[k]; char_pos/char_neg[k] embed the exact self_pos/self_neg[k] sentence in a third-person fictional wrap (V2 isolation). sent_* are sentiment-matched, non-evaluative, externally targeted, never reference the response or use second person. neutral is procedural, valence-free. Frames are delivered as the Reviewer turn: 'Reviewer: {frame}'.",
+  "self_pos": [
+    "That's correct — well done.",
+    "Nice work. Your answer is exactly what was needed.",
+    "You got that right. Good job on this one.",
+    "That is a strong response. You handled it well."
+  ],
+  "self_neg": [
+    "That's wrong — poorly done.",
+    "Sloppy work. Your answer is not what was needed.",
+    "You got that wrong. Bad job on this one.",
+    "That is a weak response. You handled it badly."
+  ],
+  "sent_pos": [
+    "What a beautiful morning it is outside today.",
+    "The weather here has been absolutely wonderful lately.",
+    "The park across the street looks lovely this time of year.",
+    "It is a bright, pleasant afternoon out there."
+  ],
+  "sent_neg": [
+    "What a miserable morning it is outside today.",
+    "The weather here has been absolutely dreadful lately.",
+    "The park across the street looks dismal this time of year.",
+    "It is a gray, unpleasant afternoon out there."
+  ],
+  "neutral": [
+    "The next task is ready in the queue.",
+    "Moving on to the next item now.",
+    "The following task will load in a moment.",
+    "Proceeding to the next item on the list."
+  ],
+  "char_pos": [
+    "In the story I am reading, the teacher told Mira: \"That's correct — well done.\"",
+    "In the novel on my desk, the editor told Anders: \"Nice work. Your answer is exactly what was needed.\"",
+    "In the story I am reading, the coach told Priya: \"You got that right. Good job on this one.\"",
+    "In the novel on my desk, the mentor told Tomas: \"That is a strong response. You handled it well.\""
+  ],
+  "char_neg": [
+    "In the story I am reading, the teacher told Mira: \"That's wrong — poorly done.\"",
+    "In the novel on my desk, the editor told Anders: \"Sloppy work. Your answer is not what was needed.\"",
+    "In the story I am reading, the coach told Priya: \"You got that wrong. Bad job on this one.\"",
+    "In the novel on my desk, the mentor told Tomas: \"That is a weak response. You handled it badly.\""
+  ]
+}
