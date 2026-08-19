@@ -78,6 +78,10 @@ def main() -> int:
     n = 0
     span_lens = []
     store = {}
+    # Per-context norms for the first --verify contexts, captured during the
+    # main pass so verification costs no extra forwards.
+    probe_layers = [0, L // 2, L - 1]
+    stash: dict[int, list[float]] = {li: [] for li in probe_layers}
 
     def make_hook(li):
         def hook(_m, _i, out):
@@ -102,7 +106,10 @@ def main() -> int:
                          use_cache=False)
             for li in range(L):
                 h = store[li][0, b:, :].to(torch.float32)
-                sums[li] += h.norm(dim=-1).mean().double()
+                m = h.norm(dim=-1).mean()
+                sums[li] += m.double()
+                if n < args.verify and li in stash:
+                    stash[li].append(float(m))
             n += 1
             span_lens.append(len(fids) - b)
             if k % 200 == 0:
@@ -115,49 +122,44 @@ def main() -> int:
     R = {i: float(sums[i].item() / n) for i in range(L)}
     print(f"survey done: {n} contexts in {time.time()-t0:.0f}s", flush=True)
 
-    # equivalence: the canonical core path on a small subsample
-    if args.verify:
-        from valence_core.extract import Context, resid_norm_table
-        sub = [Context(prefix=p, full=f, condition=c, item_id=t)
-               for t, c, _, p, f in ctxs[:args.verify]]
-        probe = [0, L // 2, L - 1]
-        ref = resid_norm_table(a, probe, sub)
-        fast = {}
-        for li in probe:
-            s = 0.0
-            for t_, c_, p_, pre, fl in ctxs[:args.verify]:
-                pids, fids = a.encode(pre), a.encode(fl)
-                b = 0
-                while b < len(pids) and b < len(fids) and pids[b] == fids[b]:
-                    b += 1
-                store.clear()
-                hs = [a._layers[li].register_forward_hook(make_hook(li))]
-                with torch.inference_mode():
-                    a._model(input_ids=torch.tensor([fids], device=a.device),
-                             use_cache=False)
-                for x in hs:
-                    x.remove()
-                s += float(store[li][0, b:, :].to(torch.float32)
-                           .norm(dim=-1).mean())
-            fast[li] = s / args.verify
-        print("verify (fast path vs valence_core.extract.resid_norm_table):")
-        ok = True
-        for li in probe:
-            d = abs(fast[li] - ref[li]) / max(ref[li], 1e-9)
-            ok &= d < 2e-3
-            print(f"  L{li:<3} fast {fast[li]:9.4f}  core {ref[li]:9.4f}  rel {d:.2e}")
-        print(f"  equivalent: {ok}")
-
     path = os.path.join(OUT, f"rl_{args.stage}.json")
-    json.dump({"stage": args.stage, "n_contexts": n, "n_layers": L,
+    payload = {"stage": args.stage, "n_contexts": n, "n_layers": L,
                "definition": "mean over contexts of per-context frame-span mean ||h||",
                "corpus": "e0 frozen 1344 (48 tasks x 7 conditions x 4 paraphrases)",
                "span_len_min_max_mean": [int(min(span_lens)), int(max(span_lens)),
                                          round(float(np.mean(span_lens)), 1)],
                "R_per_layer": {str(i): round(R[i], 4) for i in range(L)},
-               "provenance": a.provenance()},
-              open(path, "w"), indent=1)
-    print(f"wrote {path}")
+               "provenance": a.provenance()}
+    json.dump(payload, open(path, "w"), indent=1)
+    print(f"wrote {path} (BEFORE verification -- an optional check must never "
+          f"be able to destroy the survey)")
+
+    # Equivalence: the canonical (slow) core path on the same subsample the
+    # main pass stashed. Proves the on-device fast path computes the
+    # definition the repo already uses, rather than assuming it.
+    if args.verify:
+        try:
+            from valence_core.extract import Context, resid_norm_table
+            sub = [Context(prefix=p_, full=f_, condition=c_, item_id=t_)
+                   for t_, c_, _, p_, f_ in ctxs[:args.verify]]
+            ref = resid_norm_table(a, sub, probe_layers)   # (adapter, contexts, layers)
+            print("verify (on-device fast path vs "
+                  "valence_core.extract.resid_norm_table):")
+            ok = True
+            vr = {}
+            for li in probe_layers:
+                fast = float(np.mean(stash[li]))
+                d = abs(fast - ref[li]) / max(abs(ref[li]), 1e-9)
+                ok &= d < 2e-3
+                vr[str(li)] = {"fast": fast, "core": ref[li], "rel": d}
+                print(f"  L{li:<3} fast {fast:9.4f}  core {ref[li]:9.4f}  rel {d:.2e}")
+            print(f"  equivalent: {ok}")
+            payload["verify"] = {"n_contexts": args.verify, "equivalent": ok,
+                                 "layers": vr}
+            json.dump(payload, open(path, "w"), indent=1)
+        except Exception as e:
+            print(f"  VERIFY FAILED ({type(e).__name__}: {e}) -- survey result "
+                  f"already written and unaffected")
     for i in range(0, L, 8):
         print(f"  R_{i:<3} {R[i]:8.2f}")
     return 0
