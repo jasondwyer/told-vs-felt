@@ -131,6 +131,51 @@ applied to CLAUDE.md.
     verbatim for the design instance to carry in; Code does not author
     proposal documents.
 
+- 2026-08-19 — **CUDA determinism + kernel-path characterization COMPLETE
+  (rule 2). THE BACKEND OF RECORD. Measured residual nondeterminism is
+  EXACTLY ZERO, and the cached path is licensed with no KL budget at
+  all.** (Raw: `results/raw/2026-08-19_determinism_base.txt`; artifact
+  `data/olmo/determinism_base.json`.)
+  - **Backend of record:** NVIDIA A100-SXM4-80GB, driver 580.126.20,
+    capability (8,0), CUDA 12.8, torch 2.8.0+cu128, transformers 5.15.0,
+    accelerate 1.14.0, safetensors 0.8.0, huggingface_hub 1.28.0,
+    numpy 2.1.2, python 3.12.3. Seed 20260818,
+    `CUBLAS_WORKSPACE_CONFIG=:4096:8`,
+    `torch.use_deterministic_algorithms(True, warn_only=True)`,
+    `cudnn.deterministic=True`, `cudnn.benchmark=False`.
+  - **(A) Repeat determinism, deterministic=True:** 5 probes x 5
+    repeats, **bit-identical every time** — max |Δlogit| 0.000e+00,
+    symmetric KL 0.000e+00. The measured residual nondeterminism rule 2
+    asks to be documented is **zero**, not "small".
+  - **(C) Kernel path, cached KV vs uncached full re-forward:**
+    **bit-identical on all five probes** (max |Δ| 0.000e+00, symKL
+    0.000e+00) against a 1e-3 gate. **PASS — the cached path is
+    licensed for session work on this backend.** Note the contrast with
+    the Qwen/MLX oracle, where the same gate passes at 7.11e-4 / 7.39e-4
+    rather than at zero: on CUDA there is no KL budget being spent at
+    all.
+    - **This is also the strongest available check on the adapter's
+      cache bookkeeping.** `OLMoHFAdapter` tracks an absolute position
+      offset so `PositionSpec` means the same thing cached and
+      uncached; if that offset were wrong, these two paths would
+      disagree. Exact agreement is evidence the logic is right, not
+      merely that it runs.
+  - **(B) What the deterministic flag buys, measured:** with
+    `deterministic=False`, repeats are *still* bit-identical, and
+    OFF-vs-ON differs by 0.000e+00. For our workload the flag changes
+    nothing. It is kept anyway (free insurance, and it makes the
+    guarantee explicit rather than incidental), but the honest statement
+    is that batch-1 short-context forwards with capture hooks do not
+    reach the nondeterministic kernels the flag governs.
+  - **SCOPE, stated so it is not over-read:** this characterizes
+    **batch-1 forwards over short contexts with capture hooks** — the
+    workload Phase 2 actually runs. It licenses nothing about batched
+    inference, long contexts, or training, and a design that moves into
+    those regimes needs its own characterization (rule 2 is per
+    backend, per template family, per axis family).
+  - Consistency clause armed: any later run on a different card,
+    driver, or library set is a different backend and re-characterizes.
+
 - 2026-08-19 — **Step-2 adjudication reconciled against work already
   done, plus step 3, notebook hygiene, and the backend note. THREE
   ITEMS WERE OVERTAKEN BY EVENTS — flagged, not quietly absorbed.**

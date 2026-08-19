@@ -1,0 +1,178 @@
+{
+ "stage": "base",
+ "repeats": 5,
+ "provenance": {
+  "adapter": "olmo-hf",
+  "path": "/workspace/models/base",
+  "dtype": "bfloat16",
+  "backend": "torch/cuda",
+  "device": "cuda",
+  "gpu": "NVIDIA A100-SXM4-80GB",
+  "cuda": "12.8",
+  "capability": [
+   8,
+   0
+  ],
+  "deterministic": true,
+  "cublas_workspace_config": ":4096:8",
+  "seed": 20260818,
+  "choice_window_declared": 8192,
+  "n_layers": 64,
+  "library_versions": {
+   "torch": "2.8.0+cu128",
+   "transformers": "5.15.0",
+   "accelerate": "1.14.0",
+   "safetensors": "0.8.0",
+   "huggingface_hub": "1.28.0",
+   "numpy": "2.1.2"
+  },
+  "python": "3.12.3"
+ },
+ "A_repeat_deterministic": {
+  "all_exact": true,
+  "max_abs": 0.0,
+  "max_kl": 0.0,
+  "rows": [
+   {
+    "max_abs": 0.0,
+    "mean_abs": 0.0,
+    "kl": 0.0,
+    "exact": true
+   },
+   {
+    "max_abs": 0.0,
+    "mean_abs": 0.0,
+    "kl": 0.0,
+    "exact": true
+   },
+   {
+    "max_abs": 0.0,
+    "mean_abs": 0.0,
+    "kl": 0.0,
+    "exact": true
+   },
+   {
+    "max_abs": 0.0,
+    "mean_abs": 0.0,
+    "kl": 0.0,
+    "exact": true
+   },
+   {
+    "max_abs": 0.0,
+    "mean_abs": 0.0,
+    "kl": 0.0,
+    "exact": true
+   }
+  ]
+ },
+ "C_kernel_path": {
+  "max_kl": 0.0,
+  "bar_1e-3": true,
+  "all_exact": true,
+  "rows": [
+   {
+    "max_abs": 0.0,
+    "mean_abs": 0.0,
+    "kl": 0.0,
+    "exact": true
+   },
+   {
+    "max_abs": 0.0,
+    "mean_abs": 0.0,
+    "kl": 0.0,
+    "exact": true
+   },
+   {
+    "max_abs": 0.0,
+    "mean_abs": 0.0,
+    "kl": 0.0,
+    "exact": true
+   },
+   {
+    "max_abs": 0.0,
+    "mean_abs": 0.0,
+    "kl": 0.0,
+    "exact": true
+   },
+   {
+    "max_abs": 0.0,
+    "mean_abs": 0.0,
+    "kl": 0.0,
+    "exact": true
+   }
+  ]
+ },
+ "B_deterministic_off": {
+  "repeat_all_exact": true,
+  "max_repeat_abs": 0.0,
+  "max_vs_det_abs": 0.0,
+  "max_vs_det_kl": 0.0,
+  "rows": [
+   {
+    "repeat": {
+     "max_abs": 0.0,
+     "kl": 0.0,
+     "exact": true
+    },
+    "vs_deterministic": {
+     "max_abs": 0.0,
+     "mean_abs": 0.0,
+     "kl": 0.0,
+     "exact": true
+    }
+   },
+   {
+    "repeat": {
+     "max_abs": 0.0,
+     "kl": 0.0,
+     "exact": true
+    },
+    "vs_deterministic": {
+     "max_abs": 0.0,
+     "mean_abs": 0.0,
+     "kl": 0.0,
+     "exact": true
+    }
+   },
+   {
+    "repeat": {
+     "max_abs": 0.0,
+     "kl": 0.0,
+     "exact": true
+    },
+    "vs_deterministic": {
+     "max_abs": 0.0,
+     "mean_abs": 0.0,
+     "kl": 0.0,
+     "exact": true
+    }
+   },
+   {
+    "repeat": {
+     "max_abs": 0.0,
+     "kl": 0.0,
+     "exact": true
+    },
+    "vs_deterministic": {
+     "max_abs": 0.0,
+     "mean_abs": 0.0,
+     "kl": 0.0,
+     "exact": true
+    }
+   },
+   {
+    "repeat": {
+     "max_abs": 0.0,
+     "kl": 0.0,
+     "exact": true
+    },
+    "vs_deterministic": {
+     "max_abs": 0.0,
+     "mean_abs": 0.0,
+     "kl": 0.0,
+     "exact": true
+    }
+   }
+  ]
+ }
+}
