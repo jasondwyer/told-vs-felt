@@ -112,6 +112,27 @@ licensed only by PROPOSAL-g acceptance + its pre-registrations.**
 - Artifacts local/box + gitignored; only committed docs and
   `results/raw/` travel.
 
+**Respawn protocol** (design-instance amendment, 2026-08-19). Pods are
+ephemeral; the network volume and this protocol are what persist. On
+any new or replacement box, before any experimental forward:
+
+- **(i) INTEGRITY** — re-hash every file under `/workspace/models/`
+  against `data/olmo/manifest.json`; any mismatch is an incident: stop,
+  touch nothing, escalate.
+- **(ii) BACKEND** — re-run the determinism + kernel-path
+  characterization on the new backend and log it as a dated entry; the
+  backend of record for any campaign is the one its own runs were
+  characterized on.
+
+Both PASS before anything runs. **Consistency clause, tightened:** a
+verdict campaign completes on ONE characterized backend — a
+mid-campaign box change aborts and restarts the campaign on the new
+backend; campaigns are never spliced across backends.
+
+Step (i) is executable, not aspirational: `scripts/box_respawn_check.py`
+runs it against the committed manifest and exits non-zero on any
+mismatch.
+
 ## Two-instance workflow — unchanged
 
 Design instance (theory, adjudication, pre-registrations, synthesis) +

@@ -131,6 +131,47 @@ applied to CLAUDE.md.
     verbatim for the design instance to carry in; Code does not author
     proposal documents.
 
+- 2026-08-19 — **CLAUDE.md §Environment amended: respawn protocol
+  (design-instance authored) applied verbatim, and its step (i) made
+  executable.**
+  - Protocol as authored: on any new or replacement box, **(i)** re-hash
+    every file under `/workspace/models/` against
+    `data/olmo/manifest.json` — mismatch is an incident, stop and
+    escalate; **(ii)** re-run the determinism + kernel-path
+    characterization on the new backend and log it dated. Both PASS
+    before anything runs. Consistency clause tightened: a verdict
+    campaign completes on ONE characterized backend; a mid-campaign box
+    change **aborts and restarts** the campaign, never splices.
+  - **Step (i) is now `scripts/box_respawn_check.py`** rather than
+    prose. A protocol that lives only in a document gets skipped on the
+    box where it matters most, at the moment someone is in a hurry to
+    start a run. It checks in both directions — MISSING (manifest lists
+    a file the volume lacks), EXTRA (volume holds a weights file the
+    manifest never recorded), MISMATCH (same path, different bytes) —
+    verifies size before hashing, exits non-zero on any problem, and
+    prints the escalation language. Its failure path is exercised;
+    the pass path runs on the box at respawn.
+  - It also refuses to imply step (ii): a PASS message explicitly states
+    that the backend characterization is still owed. An integrity gate
+    that quietly reads as "all clear" is how the second gate gets
+    skipped.
+  - **The two adjudications compose.** Step (i) is only mechanical
+    because item 1 of the earlier block recorded per-file SHA-256 for
+    all 29 files; without that manifest this protocol would have no
+    referent.
+  - **PLANNING IMPLICATION, flagged for PROPOSAL-g.** The tightened
+    clause interacts with "the box is ephemeral by assumption": a
+    verdict campaign must now be *sized to complete within one box
+    session*, because a reclaim mid-campaign forfeits the whole run
+    rather than resuming it. From measured timings on this backend
+    (model load ~150 s cold; 1,344 capture forwards ≈ 2 min; cached
+    generation on the licensed path), a screen-tier operant at 48
+    sessions × 4 checkpoints is a **multi-hour single-box commitment**.
+    Two consequences worth pre-registering rather than discovering:
+    verdict campaigns should not run on interruptible/spot capacity,
+    and campaign N should be chosen with the abort-and-restart cost in
+    view, not only with statistical power in view.
+
 - 2026-08-19 — **Step 5: detection-behavioral harness CONSTRUCTED
   (`valence_core/detection.py`), ported from Macar et al.'s
   concept-injection paradigm and adapted to completion-style. Suite
