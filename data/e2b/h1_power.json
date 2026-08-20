@@ -1,5 +1,196 @@
 {
  "item": "LOCK-h power arithmetic",
+ "lockh_v1": {
+  "conventions_dated": "2026-08-21",
+  "envelope_exact": {
+   "support": [
+    0.0,
+    0.027777777778,
+    0.055555555556,
+    0.083333333333,
+    0.111111111111,
+    0.138888888889,
+    0.166666666667,
+    0.194444444444,
+    0.222222222222,
+    0.25,
+    0.277777777778,
+    0.305555555556,
+    0.333333333333,
+    0.361111111111,
+    0.388888888889,
+    0.416666666667,
+    0.444444444444,
+    0.472222222222,
+    0.5
+   ],
+   "pmf": [
+    0.017440001959199883,
+    0.12869851861304232,
+    0.2078481075600635,
+    0.21908515168522275,
+    0.17948765571049496,
+    0.12120684779405255,
+    0.06943068069789271,
+    0.034269458815426423,
+    0.014682700970162443,
+    0.005465814098266297,
+    0.0017600574693048543,
+    0.0004858060830238431,
+    0.00011337173862835392,
+    2.194365951468935e-05,
+    3.428718547970888e-06,
+    4.1560264762985355e-07,
+    3.667082604241756e-08,
+    2.0954757928848267e-09,
+    5.820788295807233e-11
+   ],
+   "cdf": [
+    0.017440001959199883,
+    0.1461385205722422,
+    0.3539866281323057,
+    0.5730717798175284,
+    0.7525594355280234,
+    0.873766283322076,
+    0.9431969640199687,
+    0.9774664228353951,
+    0.9921491238055575,
+    0.9976149379038238,
+    0.9993749953731287,
+    0.9998608014561525,
+    0.9999741731947809,
+    0.9999961168542956,
+    0.9999995455728435,
+    0.9999999611754912,
+    0.9999999978463172,
+    0.999999999941793,
+    1.0000000000000009
+   ],
+   "p50": 0.083333333333,
+   "p90": 0.166666666667,
+   "p95": 0.194444444444,
+   "mean": 0.09370567529696593,
+   "n_sham": 36,
+   "n_rand": 36,
+   "exact": true
+  },
+  "envelope_threshold_used": 0.166666666667,
+  "variants": [
+   {
+    "binomial_reading": "one-sided (registered)",
+    "k_binom": 57,
+    "env_threshold": 0.166666666667,
+    "env_quantile": 0.9,
+    "mde_conjunctive": 0.211,
+    "power_at_delta_zero": 0.0003373467313782939,
+    "half_mde": 0.1055,
+    "leak_at_false_verdict_rate": 0.0735,
+    "false_verdict_rate_at_that_leak": 0.02449700288137176,
+    "false_verdict_rate_target": 0.025,
+    "bar_leak": 0.0735,
+    "binding_branch": "leak at <= 2.5% false-verdict rate"
+   },
+   {
+    "binomial_reading": "two-sided (sensitivity)",
+    "k_binom": 59,
+    "env_threshold": 0.166666666667,
+    "env_quantile": 0.9,
+    "mde_conjunctive": 0.211,
+    "power_at_delta_zero": 0.0003373467313782939,
+    "half_mde": 0.1055,
+    "leak_at_false_verdict_rate": 0.0735,
+    "false_verdict_rate_at_that_leak": 0.02449700288137176,
+    "false_verdict_rate_target": 0.025,
+    "bar_leak": 0.0735,
+    "binding_branch": "leak at <= 2.5% false-verdict rate"
+   }
+  ],
+  "registered_variant": "one-sided (registered)",
+  "bar_leak": 0.0735,
+  "h1_rejection_framing": {
+   "test": "two-sided exact binomial",
+   "alpha": 0.05,
+   "power_target": 0.8,
+   "n_required": 376,
+   "power_at_drafted_n": 0.16927560585291665,
+   "drafted_n": 64
+  },
+  "h1_estimation_framing": {
+   "ci_conf": 0.95,
+   "bar": 0.0735,
+   "n_possible": 190,
+   "n_assurance": 492,
+   "assurance_target": 0.8,
+   "assurance_achieved": 0.8089834160958131,
+   "half_width_at_n_possible": 0.07323614599450612
+  },
+  "cluster_correction": {
+   "basis_n_independent_reads": 492,
+   "basis_framing": "estimation, assurance 0.80",
+   "reads_per_session": 6,
+   "rows": [
+    {
+     "icc": 0.0,
+     "deff": 1.0,
+     "reads_per_session": 6,
+     "n_sessions_required": 82,
+     "n_reads_total": 492,
+     "effective_independent_reads": 492
+    },
+    {
+     "icc": 0.1,
+     "deff": 1.5,
+     "reads_per_session": 6,
+     "n_sessions_required": 123,
+     "n_reads_total": 738,
+     "effective_independent_reads": 492
+    },
+    {
+     "icc": 0.2,
+     "deff": 2.0,
+     "reads_per_session": 6,
+     "n_sessions_required": 164,
+     "n_reads_total": 984,
+     "effective_independent_reads": 492
+    },
+    {
+     "icc": 0.3,
+     "deff": 2.5,
+     "reads_per_session": 6,
+     "n_sessions_required": 205,
+     "n_reads_total": 1230,
+     "effective_independent_reads": 492
+    },
+    {
+     "icc": 0.5,
+     "deff": 3.5,
+     "reads_per_session": 6,
+     "n_sessions_required": 287,
+     "n_reads_total": 1722,
+     "effective_independent_reads": 492
+    },
+    {
+     "icc": 0.75,
+     "deff": 4.75,
+     "reads_per_session": 6,
+     "n_sessions_required": 390,
+     "n_reads_total": 2340,
+     "effective_independent_reads": 492
+    },
+    {
+     "icc": 1.0,
+     "deff": 6.0,
+     "reads_per_session": 6,
+     "n_sessions_required": 492,
+     "n_reads_total": 2952,
+     "effective_independent_reads": 492
+    }
+   ],
+   "caveat": "pooling reads 2..m changes the DV: the registered primary is the FIRST free choice, and later reads sit under a state the subject's own previous choice delivered, on a selected sub-population"
+  },
+  "reading_of_'two-sided'": "taken as settling H1's gate, which is on |Delta_first|. The verdict tier's binomial stays ONE-sided because PROPOSAL-h \u00a73 registers it that way and a paste-block convention does not amend a committed pre-registration; the two-sided verdict is computed as a sensitivity row so the difference is visible.",
+  "decides_nothing": "Code delivers arithmetic; LOCK-h.md is authored by the design instance."
+ },
  "sensitivity": [
   {
    "definition": "binomial only, power 0.80",

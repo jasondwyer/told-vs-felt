@@ -1,0 +1,65 @@
+DECLARED INVOCATION: scripts/h1_power.py (defaults: n_verdict 96, n_map 48, n_h1 64, n_sham/n_rand 36, alpha 0.05, power 0.80, env-quantile 0.90, false-verdict-rate 0.025, reads-per-session 6, ci-conf 0.95)
+(eval):4: command not found: timeout
+=== LOCK-h power arithmetic (PROPOSAL-h §2 H1) ===
+  verdict n = 96, alpha = 0.05 one-sided, MDE at power 0.8
+
+  critical value: k >= 57/96 (exact one-sided p <= 0.05)
+  MDE_verdict = 0.1300 in SHARE units (true share 0.6300)
+              = 0.2600 if Delta is written as a +arm-minus-(-arm) difference
+  bar_leak = 0.5 x MDE_verdict = 0.0650 (share units)
+
+  H1 at n = 64: power to detect a true leak of bar_leak
+    two-sided exact, alpha 0.05: power = 0.137  -> FAILS the >= 0.8 requirement
+    n required for power >= 0.8: 470  (7.3x the drafted 64)
+    PROPOSAL-h §2: 'if 64 is insufficient under the computed numbers, H1 extends before opening, never after.'
+
+  control envelope (max |pseudo-Delta| over sham n=36 and random n=36, 200,000 sims):
+    mean 0.0936 | median 0.0833 | p90 0.1667 | p95 0.1944
+    binomial MDE 0.1300 vs envelope p90 0.1667 -> the ENVELOPE conjunct usually dominates
+    so MDE_verdict from the binomial alone is a LOWER BOUND on the conjunctive criterion's true MDE
+
+  sensitivity -- required H1 n for power >= 0.8, by how MDE_verdict is defined:
+    binomial only, power 0.80          MDE 0.1300  bar_leak 0.0650  n >= 470  (7.3x drafted)
+    binomial only, power 0.90          MDE 0.1515  bar_leak 0.0757  n >= 348  (5.4x drafted)
+    conjunctive proxy: envelope p90    MDE 0.1667  bar_leak 0.0833  n >= 282  (4.4x drafted)
+    conjunctive proxy: envelope p95    MDE 0.1944  bar_leak 0.0972  n >= 212  (3.3x drafted)
+    every reading needs more than the drafted 64; the cheapest is 212
+
+==========================================================================
+  LOCK-h v1 TABLE -- design-instance conventions, 2026-08-21
+==========================================================================
+  verdict tier: marker n = 96 (48/map), sham n = 36, random n = 36
+  control envelope, EXACT (not simulated): p50 0.0833 | p90 0.1667 | p95 0.1944 | mean 0.0937
+  envelope conjunct held at p90 = 0.1667
+  binomial conjunct: k >= 57 one-sided (registered, PROPOSAL-h §3); k >= 59 if read two-sided
+  sign-lock conjunct: Delta >= 0 in BOTH maps of 48
+
+  binomial reading          MDE_conj   0.5xMDE  leak@2.5%  bar_leak  binds
+  one-sided (registered)      0.2110    0.1055     0.0735    0.0735  leak at <= 2.5% false-verdict rate
+  two-sided (sensitivity)     0.2110    0.1055     0.0735    0.0735  leak at <= 2.5% false-verdict rate
+
+  type-I of the full conjunction at Delta = 0: 0.00034 one-sided (the sign-lock and envelope conjuncts, not the binomial, are what hold it there)
+
+  --- H1 n under bar_leak = 0.0735 (leak at <= 2.5% false-verdict rate) ---
+  rejection framing (two-sided exact, power >= 0.80): n >= 376
+    power at the drafted n = 64: 0.169
+  estimation framing (95% CI upper bound <= bar):
+    n at which the gate CAN pass (Delta-hat = 0): 190  (half-width 0.0732)
+    n at which it passes with probability >= 0.80 when the true leak is 0: 492 (achieved 0.809)
+
+  --- pooled within-session reads, cluster-corrected (m = 6, e2a lineage) ---
+  sessions needed to buy 492 independent-equivalent reads:
+      ICC   DEFF  sessions  total reads
+     0.00   1.00        82          492
+     0.10   1.50       123          738
+     0.20   2.00       164          984
+     0.30   2.50       205         1230
+     0.50   3.50       287         1722
+     0.75   4.75       390         2340
+     1.00   6.00       492         2952
+  NOTE: pooling reads 2..6 changes the DV (later reads sit under a self-delivered state, on a selected sub-population). Arithmetic only.
+
+  ARITHMETIC ONLY -- LOCK-h.md is design-instance authored.
+
+wrote /Users/jasondwyer/Documents/code/jspace-lab/data/e2b/h1_power.json
+  ARITHMETIC ONLY -- LOCK-h.md is design-instance authored.

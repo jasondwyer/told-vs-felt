@@ -1,0 +1,21 @@
+DECLARED INVOCATION: jlens-qwen36/.venv/bin/python scripts/s2_extract_vignette.py  (defaults: committed s2_vignette_frames.json, layers 40,44,48,52,56,60)
+=== S2 step 1: vignette axis extraction ===
+  frames: /Users/jasondwyer/Documents/code/jspace-lab/data/configs/s2_vignette_frames.json
+  construct: circumstantial-affect vignette (self-involving, non-evaluative): affect induced by circumstance, second person, with no appraisal of the response anywhere in the frame
+  GROUNDED: True  (stimulus approved verbatim, adjudication 2026-08-20)
+  rule 18: 8 frames disjoint from 4 pools, both directions
+  contexts: 384 (48 tasks x 2 conditions x 4 paraphrases)
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 10037.65it/s]
+  model loaded in 3s
+  50/384 contexts
+  100/384 contexts
+  150/384 contexts
+  200/384 contexts
+  250/384 contexts
+  300/384 contexts
+  350/384 contexts
+
+  R_l: {'40': 76.7, '44': 91.71, '48': 104.17, '52': 145.18, '56': 204.16, '60': 272.11}
+  span lens (min/max/mean): [15, 19, 16.4]
+  axes sha: 4dec6d97e1b87734
+  wrote /Users/jasondwyer/Documents/code/jspace-lab/data/e0/s2_vignette_axis.npz + s2_vignette_axis.meta.json (262s total)

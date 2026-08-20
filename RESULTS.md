@@ -20,6 +20,202 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-20 — **LOCK-h v1 arithmetic under the 2026-08-21 conventions:
+  `bar_leak` = 0.0735, and it is set by the false-verdict-rate
+  ceiling, not by half the MDE. H1 needs n = 376 (rejection framing) or
+  492 (estimation framing) — not 64, and not the 212–470 the earlier
+  reading bracketed.**
+  ([`data/e2b/h1_power.json`](data/e2b/h1_power.json) → `lockh_v1`;
+  raw [`2026-08-20_h1_power_lockh_v1.txt`](results/raw/2026-08-20_h1_power_lockh_v1.txt))
+  - **The four open assumptions are now settled, and two framings the
+    2026-08-20 arithmetic never computed are added.** Δ_first pooled over
+    all marker sessions with the sign-lock as a *conjunct*; MDE at 80%
+    power; H1 two-sided; MDE_verdict taken as the **conjunctive** MDE with
+    the envelope conjunct held at p90; `bar_leak = min(0.5 × MDE_conj,
+    leak at ≤ 2.5% false-verdict rate)`; plus an estimation-gate variant
+    and a cluster correction. The legacy section is untouched and
+    reproduces bit-identically (13/13 keys vs the committed artifact), so
+    the 2026-08-20 numbers remain derivable from the same script.
+  - **The conjunction is far harder than the binomial alone.** MDE_conj =
+    **0.2110** vs 0.1300 binomial-only. The envelope conjunct at p90
+    (0.16667) requires k ≥ **65**/96; the binomial conjunct requires only
+    k ≥ 57. The envelope, not the binomial, is the criterion.
+  - **One-sided vs two-sided is therefore moot.** Read two-sided the
+    binomial needs k ≥ 59 — still under 65. Both readings return the
+    identical MDE_conj, `leak@2.5%`, and `bar_leak`. The ambiguity in the
+    convention list costs nothing and needs no adjudication.
+  - **Which branch binds, and it is not the registered one.** 0.5 ×
+    MDE_conj = 0.1055; the leak sustaining a ≤ 2.5% false-verdict rate is
+    **0.0735** (achieved rate 0.0245). `min` takes 0.0735 — so under v1 the
+    half-MDE formula in PROPOSAL-h §2 is **not** what sets the bar; the
+    false-verdict ceiling is ~30% stricter.
+  - **Type-I of the full conjunction at Δ = 0 is 0.00034**, one-sided. The
+    sign-lock and envelope conjuncts hold it there; the nominal α = .05
+    binomial is nowhere near binding. A verdict that fires is expensive to
+    fire by chance — which is exactly why a *systematic* leak, not noise,
+    is the threat the H1 gate exists for.
+  - **H1's n, three ways at bar_leak = 0.0735:**
+
+    | framing | n | note |
+    |---|---|---|
+    | rejection: two-sided exact, power ≥ 0.80 | **376** | power at drafted n = 64 is **0.169** |
+    | estimation: 95% CI upper bound ≤ bar, *can* pass | 190 | half-width 0.0732 — only on a perfect Δ̂ = 0 draw |
+    | estimation: passes w.p. ≥ 0.80 when the true leak is 0 | **492** | achieved 0.809 |
+
+    The estimation gate needs **more** than the rejection gate, which is
+    not a paradox: "power to detect a leak of `bar_leak`" and "certify an
+    interval inside `bar_leak`" are different demands, and only the second
+    is what a *budget* actually claims. Which one LOCK-h adopts is a
+    design decision with a 116-session price tag.
+  - **Cluster correction for pooled within-session reads** (m = 6, e2a
+    lineage), on the 492-read estimation basis: ICC 0 → 82 sessions;
+    0.1 → 123; 0.2 → 164; 0.3 → 205; 0.5 → 287; 0.75 → 390; 1.0 → 492
+    (DEFF = 6, pooling buys exactly nothing — the formula's sanity check).
+    **FLAGGED — substantive:** pooling reads 2..6 *changes the DV*. The
+    registered primary is the FIRST free choice, whose live state is the
+    counterbalanced forced-phase state; later reads sit under a state the
+    subject's own previous choice delivered, on a selected sub-population.
+    The arithmetic says what pooling would buy **if** the reads were
+    exchangeable. Whether they may be pooled at all is the design
+    instance's call, not arithmetic's.
+  - **The control envelope is now computed exactly** rather than simulated:
+    it is the max of two independent folded binomials, so its distribution
+    is a closed-form product of CDFs. Exact p90 0.166667 / p95 0.194444 —
+    identical to the 200k-sim values (the support is discrete); exact mean
+    0.093706 vs simulated 0.093639. The simulated version is retained for
+    continuity with the committed artifact. Rule 10's under-sampled-null
+    hazard no longer applies to this conjunct.
+  - **FLAG — apparatus, cheap to fix, cost one detour tonight:** *no python
+    on the laptop has scipy* — not the venv, not system, not miniconda, not
+    homebrew. `h1_power.py` has needed it since it was written, and the
+    committed numbers were produced elsewhere. It was run here from a
+    throwaway venv in the session scratchpad (`python3 -m venv` + `pip
+    install scipy`), deliberately **not** by installing into the user's
+    miniconda base, because that env is the Qwen stack every published
+    number depends on and a numpy upgrade mid-campaign is not a risk worth
+    taking for a power calculation. The durable fix is to reimplement the
+    handful of `stats.binom` / `stats.beta` calls in numpy (all four are
+    exactly computable) so the script runs anywhere the suite runs —
+    proposed, not done, since it touches numbers-producing code and would
+    need its own rule-26-style reproduction check.
+  - ARITHMETIC ONLY. `LOCK-h.md` is design-instance authored; nothing here
+    instantiates a bar.
+
+- 2026-08-20 — **S2 step 1: the vignette axis exists. Axis sha
+  `4dec6d97e1b87734`, 384 contexts, 262 s. Step 2 (the 11-arm panel)
+  launched immediately after and is in flight.**
+  ([`data/e0/s2_vignette_axis.npz`](data/e0/s2_vignette_axis.npz) +
+  `.meta.json`; raw
+  [`2026-08-20_s2_extract_vignette.txt`](results/raw/2026-08-20_s2_extract_vignette.txt))
+  - Construct of record: *circumstantial-affect vignette (self-involving,
+    non-evaluative)* — `GROUNDED: True`, stimulus approved verbatim by the
+    2026-08-20 adjudication. 48 tasks x 2 conditions x 4 paraphrases = 384
+    contexts, delivered through the e0 `Task:/Response:/Reviewer: {frame}`
+    construction unchanged, so the axis differs from its neighbours in
+    stimulus content and nothing else.
+  - Rule 18 asserted before the model loaded: 8 frames disjoint from 4
+    pools, both directions.
+  - `R_l` (span-mean): 40 → 76.70, 44 → 91.71, 48 → 104.17, 52 → 145.18,
+    56 → 204.16, 60 → 272.11. Span lengths 15/19/16.4 (min/max/mean).
+  - The `.npz` is committed under a new named exception in `.gitignore`,
+    beside `e0_axes.npz` and `e0_random_dirs.npz` and for the same reason:
+    it is a frozen, sha-pinned direction the discriminant table is computed
+    against, and the only panel member not already inside `e0_axes.npz`.
+    A bare `*.npz` exception would sweep in the 202 MB residual dump, so
+    the file is named, as the others are.
+
+- 2026-08-20 — **H3 ran on Qwen: only 3/8 candidate pairs clear the
+  0.50 ± 0.10 identity band on the primary (scaffold) format. A screening
+  outcome, not a fired gate — but two findings should reach the design
+  instance before any replacement roster is proposed.**
+  ([`data/e2b/h3_tagscreen.json`](data/e2b/h3_tagscreen.json); raw
+  [`2026-08-20_h3_tagscreen.txt`](results/raw/2026-08-20_h3_tagscreen.txt);
+  8/8 pairs single-token on this tokenizer, 0 dropped; n = 16/pair/format,
+  143 s)
+
+  | pair | tags | scaffold identity | imb | bare identity | imb | scaffold pos | bare pos |
+  |---|---|---|---|---|---|---|---|
+  | C1 | slate/prism | 0.481 | **0.019** ✓ | 0.618 | 0.118 | 0.573 | 0.733 |
+  | C4 | plaza/saddle | 0.477 | **0.023** ✓ | 0.423 | **0.077** ✓ | 0.531 | 0.749 |
+  | C3 | granite/lattice | 0.435 | **0.065** ✓ | 0.614 | 0.114 | 0.556 | 0.746 |
+  | N2 | quartz/ridge | 0.334 | 0.166 | 0.556 | **0.056** ✓ | 0.499 | 0.728 |
+  | N1 | canvas/copper | 0.328 | 0.172 | 0.544 | **0.044** ✓ | 0.486 | 0.714 |
+  | N3 | amber/velvet | 0.232 | 0.268 | 0.429 | **0.071** ✓ | 0.578 | 0.696 |
+  | C2 | maple/cedar | 0.207 | 0.293 | 0.170 | 0.330 | 0.534 | 0.614 |
+  | N4 | walnut/ember | 0.077 | 0.423 | 0.423 | **0.077** ✓ | 0.511 | 0.752 |
+
+  - **The OLMo identity prior does not transfer, and that is a result about
+    the record.** `prism` took 0.711–0.822 of the label mass on the OLMo
+    chain — the 2026-08-19 finding that made H3 mandatory. On Qwen, C1
+    (slate/prism) is the **most balanced pair on the primary format**
+    (identity 0.481, imbalance 0.019). The cycle-3/4 workhorse pair is
+    clean on the apparatus that produced the cycle-3/4 numbers, so no
+    published preference number is impeached by an identity prior on its
+    own tags. The screen was still right to run: it converted an
+    assumption into a measurement.
+  - **FLAGGED — substantive, and it should precede any replacement roster.
+    Format is not presentation; it trades identity bias against position
+    bias, and it changes what the instrument is.**
+    - *scaffold* (primary): position near-balanced (0.486–0.578), but
+      identity clears for only 3/8 — **and the label tokens are almost
+      never the model's top choice** (top1_is_label 0.00–0.12), carrying
+      0.13–0.39 of the mass.
+    - *bare*: identity clears for 5/8, but **every** pair carries a heavy
+      first-position bias (position 0.614–0.752), and labels are top-1
+      0.62–1.00 (label_mass 0.09–0.24).
+    - Only **C4 (plaza/saddle)** clears the band on both formats.
+    - Order counterbalancing absorbs a position bias in the mean but spends
+      DV range doing it (PROPOSAL-h §1's own argument, in reverse); an
+      identity prior it cannot touch at all. Which of the two e2b should
+      pay is a design question. Screening replacement candidates against
+      the scaffold band *before* it is answered risks aiming a screen at
+      the wrong criterion.
+  - **Recommendation (roster locks in LOCK-h, not here).** The cheapest
+    next iteration needs **no new stimulus and no new rule-18 work**: the
+    16 tags already in the roster are all single-token on this tokenizer
+    and already hygiene-verified, and re-pairing them explores 120 pairs of
+    approved material. An anchor-relative pull score (each tag against one
+    fixed tag, then form the closest-matched pairs and confirm-screen them)
+    costs ~6 minutes of model time and would very likely yield ≥ 4 clearing
+    pairs. Not run tonight, deliberately: it should be aimed after the
+    format question above is settled. Minutes, on the design instance's word.
+
+- 2026-08-20 — **The interpreter guard shipped with the very name it
+  protects left unbound. All three laptop scripts would have died on the
+  exact raw traceback the guard was written to abolish. Caught before any
+  run; repaired, and the repair proven to fire.**
+  - **The defect.** `79868f7` moved adapter construction out of `main()`
+    into a new `_new_qwen_adapter()` and deleted `from
+    valence_core.adapters.qwen_mlx import QwenMLXAdapter` from `main()` —
+    but never added it to the helper. The helper's `try:` body was left
+    indented 12 spaces, the vestige of the deleted line. `QwenMLXAdapter`
+    was unbound in `h3_tagscreen_qwen.py`, `s2_extract_vignette.py` and
+    `s2_neighbor_axes.py` — every laptop script the handoff lists as
+    runnable.
+  - **Why the guard could not catch its own failure.** `except
+    (ImportError, RuntimeError)` does not catch `NameError`. Each script
+    would have raised a bare `NameError: name 'QwenMLXAdapter' is not
+    defined` at the moment the model was to load — the guard turned into
+    the thing it existed to prevent, on the same three files, one commit
+    later.
+  - **`79868f7`'s own lesson, applied to `79868f7`.** That entry prescribes
+    importing each module and listing its functions, because *"compiling is
+    not evidence that a file still does what it did."* That check **passes**
+    here — no function was dropped this time (inventories verified
+    identical to `e1b5c77` on all three files). It could not have caught
+    this: the defect is not a missing function but an unbound global
+    *inside* one. **The check that catches this class is executing the
+    guarded path**, which is now also the habit.
+  - **Repair.** The deferred import moved inside the `try`, where it wraps
+    import *and* construction. It cannot live at module level (nothing
+    fails there — MLX loads in `__init__`, which is the original patch's
+    correct insight), and it cannot wrap construction alone (the name is
+    then never bound). The docstrings now say so, naming the commit.
+  - **Verified, not assumed.** In a fresh process per script with `mlx`
+    blocked at the meta-path, `_new_qwen_adapter()` raises `SystemExit`
+    naming `jlens-qwen36/.venv/bin/python` — **3/3, no `NameError`**.
+    Suite 130/130 at `79868f7`.
+
 - 2026-08-20 — **Handoff hardening: the laptop-side scripts named the
   wrong interpreter, which cost a session. Fixed at the source, in the
   error message, and in the handoff. Suite unchanged at 130/130.**

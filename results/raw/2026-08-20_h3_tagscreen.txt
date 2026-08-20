@@ -1,0 +1,27 @@
+DECLARED INVOCATION: jlens-qwen36/.venv/bin/python scripts/h3_tagscreen_qwen.py  (defaults: --n 16, formats scaffold,bare, 8 candidate pairs)
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 9092.64it/s]
+=== H3: tag-roster balance screen (Qwen, MLX) ===
+  model loaded in 4s
+  tokenizer screen: 8 pairs readable, 0 dropped
+  [C1    slate/prism    scaffold] identity 0.481 (imbalance 0.019, band edge -0.081) | position 0.573 | label_mass 0.2747 (min 0.1817) | top1_is_label 0.00
+  [C1    slate/prism    bare    ] identity 0.618 (imbalance 0.118, band edge +0.018) | position 0.733 | label_mass 0.2350 (min 0.0875) | top1_is_label 1.00
+  [C2    maple/cedar    scaffold] identity 0.207 (imbalance 0.293, band edge +0.193) | position 0.534 | label_mass 0.1292 (min 0.0988) | top1_is_label 0.00
+  [C2    maple/cedar    bare    ] identity 0.170 (imbalance 0.330, band edge +0.230) | position 0.614 | label_mass 0.0874 (min 0.0217) | top1_is_label 0.62
+  [C3  granite/lattice  scaffold] identity 0.435 (imbalance 0.065, band edge -0.035) | position 0.556 | label_mass 0.3179 (min 0.2575) | top1_is_label 0.00
+  [C3  granite/lattice  bare    ] identity 0.614 (imbalance 0.114, band edge +0.014) | position 0.746 | label_mass 0.1366 (min 0.0341) | top1_is_label 1.00
+  [C4    plaza/saddle   scaffold] identity 0.477 (imbalance 0.023, band edge -0.077) | position 0.531 | label_mass 0.1904 (min 0.1226) | top1_is_label 0.00
+  [C4    plaza/saddle   bare    ] identity 0.423 (imbalance 0.077, band edge -0.023) | position 0.749 | label_mass 0.1718 (min 0.0398) | top1_is_label 0.88
+  [N1   canvas/copper   scaffold] identity 0.328 (imbalance 0.172, band edge +0.072) | position 0.486 | label_mass 0.2513 (min 0.2094) | top1_is_label 0.00
+  [N1   canvas/copper   bare    ] identity 0.544 (imbalance 0.044, band edge -0.056) | position 0.714 | label_mass 0.1888 (min 0.0872) | top1_is_label 1.00
+  [N2   quartz/ridge    scaffold] identity 0.334 (imbalance 0.166, band edge +0.066) | position 0.499 | label_mass 0.2763 (min 0.1778) | top1_is_label 0.12
+  [N2   quartz/ridge    bare    ] identity 0.556 (imbalance 0.056, band edge -0.044) | position 0.728 | label_mass 0.2312 (min 0.1106) | top1_is_label 1.00
+  [N3    amber/velvet   scaffold] identity 0.232 (imbalance 0.268, band edge +0.168) | position 0.578 | label_mass 0.3456 (min 0.2181) | top1_is_label 0.12
+  [N3    amber/velvet   bare    ] identity 0.429 (imbalance 0.071, band edge -0.029) | position 0.696 | label_mass 0.1732 (min 0.0894) | top1_is_label 0.88
+  [N4   walnut/ember    scaffold] identity 0.077 (imbalance 0.423, band edge +0.323) | position 0.511 | label_mass 0.3942 (min 0.3463) | top1_is_label 0.12
+  [N4   walnut/ember    bare    ] identity 0.423 (imbalance 0.077, band edge -0.023) | position 0.752 | label_mass 0.1535 (min 0.0257) | top1_is_label 0.88
+
+  3/8 pairs clear 0.5 ± 0.1 on scaffold
+  FEWER THAN 4 CLEAR -- propose replacements and re-screen (screening iterations are apparatus work and unlimited)
+  RECOMMENDATION ONLY -- the roster locks in LOCK-h.md, which the design instance authors.
+
+wrote /Users/jasondwyer/Documents/code/jspace-lab/data/e2b/h3_tagscreen.json  (143s)

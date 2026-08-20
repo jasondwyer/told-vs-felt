@@ -49,6 +49,11 @@
 # and a bare *.npz exception would sweep it in.
 !/data/e0/e0_axes.npz
 !/data/e0/e0_random_dirs.npz
+# S2's vignette axis (492 KB): the third neighbour, extracted 2026-08-20.
+# Same standing as the two above -- a frozen, sha-pinned direction the
+# discriminant table is computed against, and the only panel member that
+# does not already live in e0_axes.npz.
+!/data/e0/s2_vignette_axis.npz
 # B1 marker battery (47.5 MB): the source the 12 B2b instruments are
 # recomputed from. Large, and admitted deliberately -- rule-26 criterion (ii)
 # rebuilds the instruments from THIS file, so storing only the derived

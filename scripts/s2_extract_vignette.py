@@ -116,13 +116,16 @@ def _new_qwen_adapter(**kwargs):
 
     Both failure modes are caught because they look identical to a user and
     share one fix: ImportError (this python has no MLX) and RuntimeError
-    (the clone itself is missing). Neither surfaces at import time -- the
-    adapter loads MLX in its constructor -- so the guard wraps CONSTRUCTION,
-    not the import. Wrapping the import was the first version and it never
-    fired.
+    (the clone itself is missing). The guard wraps the deferred import AND
+    the construction. It cannot be a module-level import -- nothing fails
+    there, the adapter loads MLX in its constructor -- and it cannot wrap
+    the construction alone: 79868f7 did exactly that, left the name
+    unbound, and turned the guard into the raw NameError it existed to
+    prevent.
     """
     try:
-            return QwenMLXAdapter(**kwargs)
+        from valence_core.adapters.qwen_mlx import QwenMLXAdapter
+        return QwenMLXAdapter(**kwargs)
     except (ImportError, RuntimeError) as exc:
         rel = os.path.relpath(os.path.abspath(__file__), REPO)
         raise SystemExit(
