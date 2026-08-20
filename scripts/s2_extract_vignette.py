@@ -31,8 +31,8 @@ row in a discriminant table reads as "we tested it and it did nothing".
 Site: laptop (the Qwen oracle). 384 contexts, one unsteered forward each.
 
 Usage:
-    python scripts/s2_extract_vignette.py
-    python scripts/s2_extract_vignette.py --frames data/configs/s2_vignette_frames.json
+    jlens-qwen36/.venv/bin/python scripts/s2_extract_vignette.py
+    jlens-qwen36/.venv/bin/python scripts/s2_extract_vignette.py --frames data/configs/s2_vignette_frames.json
 """
 from __future__ import annotations
 
@@ -102,6 +102,40 @@ def hygiene(frames: dict) -> None:
           f"{len(pools)} pools, both directions", flush=True)
 
 
+QWEN_PY = "jlens-qwen36/.venv/bin/python"
+
+
+def _new_qwen_adapter(**kwargs):
+    """Build the MLX adapter, or fail with the fix instead of a traceback.
+
+    Trap 3 in HANDOFF-2026-08-20, which has now cost real time: the system
+    `python3` has no numpy and no MLX, and the only interpreter that has
+    them is the one inside the gitignored clone. A raw traceback here reads
+    as "the repo is broken" when the repo is fine and the interpreter is
+    wrong.
+
+    Both failure modes are caught because they look identical to a user and
+    share one fix: ImportError (this python has no MLX) and RuntimeError
+    (the clone itself is missing). Neither surfaces at import time -- the
+    adapter loads MLX in its constructor -- so the guard wraps CONSTRUCTION,
+    not the import. Wrapping the import was the first version and it never
+    fired.
+    """
+    try:
+            return QwenMLXAdapter(**kwargs)
+    except (ImportError, RuntimeError) as exc:
+        rel = os.path.relpath(os.path.abspath(__file__), REPO)
+        raise SystemExit(
+            "\nWRONG INTERPRETER (or missing clone) -- not a broken repo.\n"
+            "  " + type(exc).__name__ + ": " + str(exc) + "\n\n"
+            "  This script needs MLX and the Qwen stack, which live only in\n"
+            "  the gitignored clone and its venv. Run it as:\n\n"
+            "      " + QWEN_PY + " " + rel + "\n\n"
+            "  System python3 has neither (HANDOFF-2026-08-20 trap 3). The\n"
+            "  model-free regression suite runs under any python with numpy;\n"
+            "  anything touching Qwen does not.\n")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--frames",
@@ -130,9 +164,8 @@ def main() -> int:
           f"({len(contexts) // 8} tasks x 2 conditions x 4 paraphrases)",
           flush=True)
 
-    from valence_core.adapters.qwen_mlx import QwenMLXAdapter
     t0 = time.time()
-    adapter = QwenMLXAdapter()          # new work: full-session window
+    adapter = _new_qwen_adapter()          # new work: full-session window
     print(f"  model loaded in {time.time() - t0:.0f}s", flush=True)
 
     cap = capture(adapter, contexts, layers)

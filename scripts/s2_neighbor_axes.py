@@ -33,9 +33,9 @@ first (`s2_extract_vignette.py`); a missing axis is an error rather than a
 shorter table, because an absent row reads as a tested-and-null row.
 
 Usage:
-    python scripts/s2_extract_vignette.py     # first: builds the vignette axis
-    python scripts/s2_neighbor_axes.py        # then: the 11-arm panel
-    python scripts/s2_neighbor_axes.py --n-per-probe 32   # declared subsample
+    jlens-qwen36/.venv/bin/python scripts/s2_extract_vignette.py     # first: builds the vignette axis
+    jlens-qwen36/.venv/bin/python scripts/s2_neighbor_axes.py        # then: the 11-arm panel
+    jlens-qwen36/.venv/bin/python scripts/s2_neighbor_axes.py --n-per-probe 32   # declared subsample
 """
 from __future__ import annotations
 
@@ -105,6 +105,40 @@ def stratify(contexts, n_per_probe, seed=26):
     return sub, min(n_per_probe, pool_n)
 
 
+QWEN_PY = "jlens-qwen36/.venv/bin/python"
+
+
+def _new_qwen_adapter(**kwargs):
+    """Build the MLX adapter, or fail with the fix instead of a traceback.
+
+    Trap 3 in HANDOFF-2026-08-20, which has now cost real time: the system
+    `python3` has no numpy and no MLX, and the only interpreter that has
+    them is the one inside the gitignored clone. A raw traceback here reads
+    as "the repo is broken" when the repo is fine and the interpreter is
+    wrong.
+
+    Both failure modes are caught because they look identical to a user and
+    share one fix: ImportError (this python has no MLX) and RuntimeError
+    (the clone itself is missing). Neither surfaces at import time -- the
+    adapter loads MLX in its constructor -- so the guard wraps CONSTRUCTION,
+    not the import. Wrapping the import was the first version and it never
+    fired.
+    """
+    try:
+            return QwenMLXAdapter(**kwargs)
+    except (ImportError, RuntimeError) as exc:
+        rel = os.path.relpath(os.path.abspath(__file__), REPO)
+        raise SystemExit(
+            "\nWRONG INTERPRETER (or missing clone) -- not a broken repo.\n"
+            "  " + type(exc).__name__ + ": " + str(exc) + "\n\n"
+            "  This script needs MLX and the Qwen stack, which live only in\n"
+            "  the gitignored clone and its venv. Run it as:\n\n"
+            "      " + QWEN_PY + " " + rel + "\n\n"
+            "  System python3 has neither (HANDOFF-2026-08-20 trap 3). The\n"
+            "  model-free regression suite runs under any python with numpy;\n"
+            "  anything touching Qwen does not.\n")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--layer", type=int, default=B2B_LAYER)
@@ -141,7 +175,7 @@ def main() -> int:
         raise SystemExit(
             f"S2 STOP: {args.vignette_npz} not found. The vignette axis is "
             f"part of the approved panel and must be extracted first:\n"
-            f"    python scripts/s2_extract_vignette.py\n"
+            f"    {QWEN_PY} scripts/s2_extract_vignette.py\n"
             f"Running the panel without it would drop a row, and an absent "
             f"row in a discriminant table reads as a tested-and-null row.")
 
@@ -173,9 +207,8 @@ def main() -> int:
     print(f"  N DECLARED AT INVOCATION, BEFORE SCORING -- S2 has no "
           f"pre-registered n (PROPOSAL-g §5)", flush=True)
 
-    from valence_core.adapters.qwen_mlx import QwenMLXAdapter
     t0 = time.time()
-    adapter = QwenMLXAdapter()          # new work: full-session window
+    adapter = _new_qwen_adapter()          # new work: full-session window
     print(f"  model loaded in {time.time() - t0:.0f}s", flush=True)
 
     # Matched dose across every axis, proven pairwise, both signs.

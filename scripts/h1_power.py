@@ -15,7 +15,9 @@ pre-registration does not state is surfaced as a named assumption with both
 branches computed, because picking one silently is how a bar ends up
 meaning something nobody registered.
 
-Model-free, no adapter, seconds. Re-run it after any change to n or alpha.
+Model-free, no adapter, seconds. Needs numpy + scipy but NOT MLX or
+the Qwen clone, so it runs under any python that has them -- including
+the box and any cloud session. Re-run it after any change to n or alpha.
 
 Usage:
     python scripts/h1_power.py

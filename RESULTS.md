@@ -20,6 +20,42 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-20 — **Handoff hardening: the laptop-side scripts named the
+  wrong interpreter, which cost a session. Fixed at the source, in the
+  error message, and in the handoff. Suite unchanged at 130/130.**
+  - **What happened.** The S2/H3 scripts' usage lines said `python
+    scripts/...`. On the laptop that is the system python, which has
+    neither numpy nor MLX, so the scripts died with a
+    missing-package error that read as a broken repo. It was trap 3 in
+    the handoff all along — *"the only Python with numpy/MLX is inside
+    the gitignored clone"* — but a trap listed in a document is not a
+    trap the running script tells you about.
+  - **Three fixes, because the trap has three surfaces.** Usage lines
+    now name `jlens-qwen36/.venv/bin/python`. A guard translates the
+    failure into the command that works. HANDOFF §0 carries the
+    which-python rule beside the which-site rule, and trap 3 now
+    carries the symptom.
+  - **The guard wraps CONSTRUCTION, not the import, and that is the
+    whole trick.** `QwenMLXAdapter` loads MLX in `__init__`, so nothing
+    fails at import time; the first version wrapped the import and
+    never fired once. It also catches **both** `ImportError` (this
+    python has no MLX) and `RuntimeError` (the clone is missing) —
+    indistinguishable to a user and identical in fix.
+  - **Incident, recorded because it nearly shipped.** The first patch
+    inserted the guard at the first blank-line `def` and excised
+    everything up to `def main()` — which silently deleted
+    `build_val_contexts` and `stratify` from the S2 runner. `py_compile`
+    passed. It was caught by importing the module and listing its
+    functions, not by the compiler. Scripts were reset to the committed
+    state and re-patched with the insertion anchored immediately before
+    `def main()`. **Compiling is not evidence that a file still does
+    what it did**; the check that caught it is now the habit.
+  - Handoff additions for the next thread: head of record `e1b5c77` and
+    the 103-vs-130 fingerprint (a suite printing 103 is on `main`,
+    missing the whole PROPOSAL-h batch); a §5b table of what is
+    runnable right now, by site, with commands and costs; the H1 power
+    finding added to the flag table with its anchor.
+
 - 2026-08-20 — **Consolidated batch reconciled. PROPOSAL-h's timestamp
   recorded; S2 adjudications applied (vignette grounded, persona settled,
   "Ho-style" retired); items 2 and 5 were already done and are not
