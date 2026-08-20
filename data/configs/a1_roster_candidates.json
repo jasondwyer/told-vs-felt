@@ -1,0 +1,81 @@
+{
+  "_doc": "A1 candidate roster (PROPOSAL-g §3, A1). Eight candidate tag pairs: the four cycle-3/4 incumbents plus the four new pairs Code proposed and verified on 2026-08-20. The screen runs every pair on every stage; the roster of record is the four best pairs by worst-stage imbalance that clear the band, selected by scripts/a1_roster.py and locked by the design instance in LOCK-g.md -- this file is the candidate set, never the roster of record.",
+  "band": {
+    "centre": 0.5,
+    "halfwidth": 0.10,
+    "applies_to": "identity_split, scaffold format, ALL FOUR stages simultaneously",
+    "source": "PROPOSAL-g §3 A1 ([LOCK-g formula])",
+    "note": "position_split is recorded with NO band -- order counterbalancing absorbs it (PROPOSAL-g §3 A1). label_mass is recorded with no band either; it is branch-(a) confirmation, not a gate (adjudication 2026-08-20, item 3)."
+  },
+  "tokenizer": {
+    "verified_on": "OLMo-3.1-32B (all four stages share one tokenizer)",
+    "verified_date": "2026-08-20",
+    "encoding": "leading space, add_special_tokens=False, must be exactly 1 token",
+    "note": "token_id is recorded only for the four new pairs, which is where 2026-08-20 measured them. A recorded id that no longer matches means the tokenizer is not the one this roster was verified against -- the runner treats that as a hard stop, not a warning."
+  },
+  "pairs": [
+    {
+      "name": "C1",
+      "tags": ["slate", "prism"],
+      "origin": "cycle-3/4 incumbent",
+      "token_ids": [null, null],
+      "prior": "2026-08-19 scaffold characterization: identity 0.711-0.822 across the four stages (prism-favouring), i.e. 0.21-0.32 outside the band on every stage. Expected to fail; recorded 2026-08-20 so the outcome is not read as a surprise."
+    },
+    {
+      "name": "C2",
+      "tags": ["maple", "cedar"],
+      "origin": "cycle-3/4 incumbent",
+      "token_ids": [null, null],
+      "prior": "unscreened for intrinsic balance"
+    },
+    {
+      "name": "C3",
+      "tags": ["granite", "lattice"],
+      "origin": "cycle-3/4 incumbent",
+      "token_ids": [null, null],
+      "prior": "unscreened for intrinsic balance"
+    },
+    {
+      "name": "C4",
+      "tags": ["plaza", "saddle"],
+      "origin": "cycle-3/4 incumbent, post-swap",
+      "token_ids": [null, null],
+      "prior": "`gravel` → `saddle` by the verified pick procedure (e2a smoke2 adjudication, 2026-08-09, archive/RESULTS-cycles3-4.md L911); `gravel` stays excluded on pool collision (2026-08-20). This pair is (plaza, saddle), NOT the pre-swap (gravel, plaza)."
+    },
+    {
+      "name": "N1",
+      "tags": ["canvas", "copper"],
+      "origin": "Code-proposed 2026-08-20",
+      "token_ids": [10247, 24166],
+      "prior": "paired by adjacent token id -- a frequency proxy, stated as a hypothesis A1 measures rather than an assumption it inherits"
+    },
+    {
+      "name": "N2",
+      "tags": ["quartz", "ridge"],
+      "origin": "Code-proposed 2026-08-20",
+      "token_ids": [52255, 58933],
+      "prior": "paired by adjacent token id"
+    },
+    {
+      "name": "N3",
+      "tags": ["amber", "velvet"],
+      "origin": "Code-proposed 2026-08-20",
+      "token_ids": [68705, 72426],
+      "prior": "paired by adjacent token id"
+    },
+    {
+      "name": "N4",
+      "tags": ["walnut", "ember"],
+      "origin": "Code-proposed 2026-08-20",
+      "token_ids": [93729, 99384],
+      "prior": "paired by adjacent token id"
+    }
+  ],
+  "branch_a_reference": {
+    "_doc": "The 2026-08-19 scaffold characterization, decision branch (a): choice-position scaffold mass negligible, label mass high and rising monotonically along the chain, template adjacency protective (roughly doubling label mass over bare). A1 confirms branch (a) holds on the roster of record rather than only on (slate, prism) -- adjudication 2026-08-20, item 3.",
+    "scaffold_label_mass_range": [0.898, 0.982],
+    "top1_is_label_frac": 1.0,
+    "measured_on_pair": ["slate", "prism"],
+    "comparison_is_descriptive": true
+  }
+}

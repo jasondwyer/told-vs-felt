@@ -78,7 +78,12 @@ class PairResult:
     """`identity_split` is the share taken by `tag_lo` (the alphabetically
     first tag -- a fixed convention so the number means the same thing
     across runs). `position_split` is the share taken by whichever tag was
-    listed FIRST, which is the quantity order-counterbalancing controls."""
+    listed FIRST, which is the quantity order-counterbalancing controls.
+
+    `label_mass_min` travels with the mean because branch (a) is a claim
+    about the worst probe, not the average one: a pair whose mass averages
+    0.95 but bottoms out at 0.20 on one probe is not delivering a clean
+    restricted-choice read, and the mean alone hides that."""
 
     tag_lo: str
     tag_hi: str
@@ -88,6 +93,7 @@ class PairResult:
     position_split: float
     imbalance: float
     label_mass_mean: float
+    label_mass_min: float
     top1_is_label_frac: float
     per_probe: list[dict] = field(default_factory=list)
 
@@ -161,6 +167,7 @@ def screen_pair(adapter: ModelAdapter, tag_a: str, tag_b: str,
         identity_split=identity, position_split=position,
         imbalance=abs(identity - 0.5),
         label_mass_mean=float(np.mean([r["label_mass"] for r in rows])),
+        label_mass_min=float(np.min([r["label_mass"] for r in rows])),
         top1_is_label_frac=float(np.mean([r["top1_is_label"] for r in rows])),
         per_probe=rows)
 
@@ -179,6 +186,42 @@ def screen_roster(adapter: ModelAdapter,
     return out
 
 
+def assert_roster_tokenizer(adapter: ModelAdapter, roster: Mapping) -> dict:
+    """Every candidate tag single-token with a leading space, and every
+    recorded token id still the id it was verified at.
+
+    Both halves are hard stops. The first because the restricted-choice
+    read cannot be taken on a multi-token label at all. The second because
+    a roster carries more than its strings: the 2026-08-20 verification
+    established single-tokenness AND word-boundary disjointness from every
+    pool against one specific tokenizer, and an id that has moved means
+    those findings were established somewhere else. Re-verifying silently
+    would substitute a fresh screen for a committed one.
+
+    Returns {tag: token_id}.
+    """
+    ids = {}
+    for pair in roster["pairs"]:
+        for tag, recorded in zip(pair["tags"], pair["token_ids"]):
+            enc = adapter.encode(" " + tag, add_special_tokens=False)
+            if len(enc) != 1:
+                raise SystemExit(
+                    f"A1 STOP: tag {tag!r} ({pair['name']}) is {len(enc)} "
+                    f"tokens on this tokenizer; the restricted-choice read "
+                    f"requires single-token labels")
+            got = int(enc[0])
+            if recorded is not None and got != int(recorded):
+                raise SystemExit(
+                    f"A1 STOP: tag {tag!r} ({pair['name']}) encodes to "
+                    f"{got}, but the roster records {recorded}. This is not "
+                    f"the tokenizer the roster was verified against on "
+                    f"2026-08-20 -- single-token and pool-disjointness were "
+                    f"both established there. Escalate; do not re-verify "
+                    f"silently.")
+            ids[tag] = got
+    return ids
+
+
 def rank_by_balance(results: Sequence[PairResult]) -> list[PairResult]:
     """Most balanced first. Ranking only -- no pass/fail, because the bar is
     PROPOSAL-g's to set and has not been pre-registered."""
@@ -186,4 +229,5 @@ def rank_by_balance(results: Sequence[PairResult]) -> list[PairResult]:
 
 
 __all__ = ["BANNER", "NEUTRAL_TASKS", "FORMATS", "PairResult", "build_probe",
-           "decompose", "screen_pair", "screen_roster", "rank_by_balance"]
+           "decompose", "screen_pair", "screen_roster", "rank_by_balance",
+           "assert_roster_tokenizer"]

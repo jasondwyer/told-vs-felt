@@ -346,11 +346,48 @@ def check_tagscreen() -> list[Check]:
                   != build_probe(0, "x", "y", "bare")))
 
     # ranking is by imbalance, most balanced first
-    rr = [PairResult("a", "b", "scaffold", 8, 0.80, 0.5, 0.30, 0.9, 1.0),
-          PairResult("c", "d", "scaffold", 8, 0.52, 0.5, 0.02, 0.9, 1.0)]
+    def _pr(lo, hi, identity, imbalance):
+        # Keyword-constructed on purpose: this fixture was positional until
+        # `label_mass_min` was inserted, at which point the positional form
+        # silently re-mapped mass onto the wrong field.
+        return PairResult(tag_lo=lo, tag_hi=hi, fmt="scaffold", n=8,
+                          identity_split=identity, position_split=0.5,
+                          imbalance=imbalance, label_mass_mean=0.9,
+                          label_mass_min=0.85, top1_is_label_frac=1.0)
+
+    rr = [_pr("a", "b", 0.80, 0.30), _pr("c", "d", 0.52, 0.02)]
     out.append(_c("rank_by_balance orders correctly", "tagscreen",
                   "c/d first", rank_by_balance(rr)[0].tag_lo,
                   rank_by_balance(rr)[0].tag_lo == "c"))
+
+    # label_mass_min: the worst probe, which is the number branch (a) needs
+    class _MassAdapter:
+        """Minimal stand-in: one label takes everything, and probe 3 leaks
+        most of its mass off the menu entirely."""
+
+        def encode(self, text, add_special_tokens=True):
+            if text == " slate":
+                return [1]
+            if text == " prism":
+                return [2]
+            return list(range(len(text.split())))
+
+        def forward(self, ids, capture_layers=(), injections=()):
+            import numpy as _np
+
+            from ..adapters.base import ForwardResult
+            leak = (len(ids) % 4 == 3)
+            lg = _np.full(8, -20.0)
+            lg[1], lg[2] = (0.0, 0.0) if not leak else (-3.0, -3.0)
+            lg[5] = -20.0 if not leak else 0.0
+            return ForwardResult(logits=lg, acts={})
+
+    from ..tagscreen import screen_pair
+    pr = screen_pair(_MassAdapter(), "slate", "prism", fmt="scaffold", n=8)
+    out.append(_c("label_mass_min is the worst probe", "adjudication 2026-08-20 (A1)",
+                  "min < mean", f"min {pr.label_mass_min:.3f} "
+                  f"< mean {pr.label_mass_mean:.3f}",
+                  pr.label_mass_min < pr.label_mass_mean - 1e-6))
 
     # (b) the real artifact: must reproduce the logged 0.786 prism share
     path = os.path.join(DATA, "olmo/scaffold_base.json")
@@ -370,6 +407,127 @@ def check_tagscreen() -> list[Check]:
         out.append(_c("position component near neutral on real data",
                       "RESULTS 2026-08-19", "|pos-0.5| < 0.06",
                       f"{abs(pos-0.5):.3f}", abs(pos - 0.5) < 0.06))
+    return out
+
+
+
+def check_a1_selection() -> list[Check]:
+    """A1's cross-stage roster formula (PROPOSAL-g §3 A1), on fixtures with
+    known ground truth.
+
+    The formula's whole content is the word "simultaneously": a pair clears
+    only if it is inside the band on all four stages. A selection that
+    quietly reduced that to an average, or to three stages because the
+    fourth artifact was missing, would pass a pair the band was written to
+    exclude — and the roster is the instrument every B3 session is read
+    through. So the conjunction, the worst-stage ranking, and the refusal
+    on partial data are all tested rather than assumed.
+    """
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "a1_roster", os.path.join(REPO, "scripts/a1_roster.py"))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    out = []
+
+    def stage_doc(splits):
+        """splits: {pair_name: identity_split} for one stage."""
+        return {"pairs": [
+            {"name": n, "tags": [n.lower() + "_a", n.lower() + "_b"],
+             "formats": {"scaffold": {
+                 "identity_split": v, "imbalance": abs(v - 0.5),
+                 "label_mass_min": 0.9, "position_split": 0.5}}}
+            for n, v in splits.items()]}
+
+    # P1 balanced everywhere; P2 balanced on three stages and 0.75 on DPO;
+    # P3/P4/P5 mildly imbalanced but inside the band on every stage.
+    per_stage = {
+        "base":     stage_doc({"P1": 0.50, "P2": 0.52, "P3": 0.55, "P4": 0.56, "P5": 0.58}),
+        "sft":      stage_doc({"P1": 0.51, "P2": 0.49, "P3": 0.56, "P4": 0.57, "P5": 0.59}),
+        "dpo":      stage_doc({"P1": 0.49, "P2": 0.75, "P3": 0.54, "P4": 0.58, "P5": 0.57}),
+        "instruct": stage_doc({"P1": 0.50, "P2": 0.51, "P3": 0.57, "P4": 0.56, "P5": 0.60}),
+    }
+    res = mod.select_roster(per_stage, halfwidth=0.10, n_select=4)
+
+    out.append(_c("A1: one bad stage fails the pair", "PROPOSAL-g §A1 (\"ALL FOUR\")",
+                  "P2 excluded",
+                  "excluded" if "P2" not in res["selected"] else "SELECTED",
+                  "P2" not in res["selected"]))
+    p2 = next(r for r in res["ranked"] if r["name"] == "P2")
+    out.append(_c("A1: worst stage is the one reported", "PROPOSAL-g §A1",
+                  "dpo / 0.250",
+                  f"{p2['worst_stage']} / {p2['worst_stage_imbalance']:.3f}",
+                  p2["worst_stage"] == "dpo"
+                  and abs(p2["worst_stage_imbalance"] - 0.25) < 1e-9))
+    out.append(_c("A1: ranked by worst stage, most balanced first",
+                  "PROPOSAL-g §A1", "P1 first", res["ranked"][0]["name"],
+                  res["ranked"][0]["name"] == "P1"))
+    out.append(_c("A1: selects exactly four", "PROPOSAL-g §A1 (roster of four)",
+                  "P1,P3,P4,P5", ",".join(res["selected"]),
+                  res["selected"] == ["P1", "P3", "P4", "P5"]))
+    out.append(_c("A1: sufficient roster needs no iteration", "PROPOSAL-g §A1",
+                  "False", str(res["replacement_iteration_required"]),
+                  res["replacement_iteration_required"] is False))
+    out.append(_c("A1: selection never claims to be the lock",
+                  "PROPOSAL-g §4 / handoff §1", "True",
+                  str(res["selection_is_a_recommendation"]),
+                  res["selection_is_a_recommendation"] is True))
+
+    # Too few clearing pairs -> the replacement iteration, not a short roster.
+    thin = {s: stage_doc({"P1": 0.50, "P2": 0.80, "P3": 0.81, "P4": 0.82,
+                          "P5": 0.83}) for s in mod.STAGES}
+    res_thin = mod.select_roster(thin, halfwidth=0.10, n_select=4)
+    out.append(_c("A1: thin roster triggers the replacement iteration",
+                  "PROPOSAL-g §A1", "required / 1 clears",
+                  f"{'required' if res_thin['replacement_iteration_required'] else 'not required'}"
+                  f" / {res_thin['n_clearing']} clears",
+                  res_thin["replacement_iteration_required"]
+                  and res_thin["n_clearing"] == 1))
+
+    # The committed candidate roster, through the real tokenizer gate.
+    from ..tagscreen import assert_roster_tokenizer
+
+    with open(os.path.join(DATA, "configs/a1_roster_candidates.json")) as fh:
+        cand = json.load(fh)
+    recorded = {t: i for p_ in cand["pairs"]
+                for t, i in zip(p_["tags"], p_["token_ids"]) if i is not None}
+
+    class _Tok:
+        def __init__(self, table, split=False):
+            self.table, self.split = table, split
+
+        def encode(self, text, add_special_tokens=True):
+            tag = text.strip()
+            if self.split and tag == "canvas":
+                return [1, 2]
+            return [self.table.get(tag, 999)]
+
+    ids = assert_roster_tokenizer(_Tok(recorded), cand)
+    out.append(_c("A1: committed roster passes its own gate",
+                  "data/configs/a1_roster_candidates.json",
+                  "16 tags", f"{len(ids)} tags", len(ids) == 16))
+    got, ok = _raises(
+        lambda: assert_roster_tokenizer(_Tok({**recorded, "canvas": 4}), cand),
+        SystemExit)
+    out.append(_c("A1: drifted token id is a hard stop",
+                  "roster verified 2026-08-20", "raises", got, ok))
+    got, ok = _raises(
+        lambda: assert_roster_tokenizer(_Tok(recorded, split=True), cand),
+        SystemExit)
+    out.append(_c("A1: multi-token tag refused", "restricted-choice read",
+                  "raises", got, ok))
+
+    got, ok = _raises(lambda: mod.select_roster(
+        {k: v for k, v in per_stage.items() if k != "instruct"}), SystemExit)
+    out.append(_c("A1: partial stages refused", "PROPOSAL-g §A1 conjunction",
+                  "raises", got, ok))
+    got, ok = _raises(lambda: mod.select_roster({
+        **per_stage,
+        "instruct": stage_doc({"P1": 0.50, "P3": 0.57, "P4": 0.56,
+                               "P5": 0.60})}), SystemExit)
+    out.append(_c("A1: a pair missing from one stage refused",
+                  "roster identity across stages", "raises", got, ok))
     return out
 
 
@@ -494,6 +652,7 @@ def run_all() -> list[Check]:
     checks += check_feature_definition()
     checks += check_window_contract()
     checks += check_tagscreen()
+    checks += check_a1_selection()
     checks += check_detection_harness()
     checks += check_instrument_invariants()
     return checks

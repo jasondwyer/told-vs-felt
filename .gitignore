@@ -67,6 +67,11 @@
 !/data/configs/e0_frames.json
 # e0 probe set: the 12 readout probes the B1/B2 instruments are indexed by.
 !/data/configs/e0_probes.json
+# A1 candidate roster: the eight pairs the box-side screen runs and the
+# token ids they were verified at. The screen is per-stage and the selection
+# is cross-stage, so both sites read this file; a roster that lived on one
+# machine would make the screens non-comparable.
+!/data/configs/a1_roster_candidates.json
 
 # e0 task corpus (48 tasks): the other half of the frozen 1,344-context
 # extraction stimulus.

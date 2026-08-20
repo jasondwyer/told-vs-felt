@@ -20,6 +20,71 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-20 — **A1 instrumented for the box (adjudication item 3):
+  per-pair, per-stage `label_mass` now travels with the screen; the
+  candidate roster is a committed config rather than a script constant;
+  cross-stage selection built and tested. Suite 70 → 83. Nothing run —
+  this is construction, and A1 still needs the box.**
+  - **Item 3 applied.** `PairResult` gains `label_mass_min` alongside
+    `label_mass_mean`, and `scripts/box_a1_tagscreen.py` reports both per
+    pair per stage plus `top1_is_label_frac`, contrasted against the
+    2026-08-19 reference (scaffold mass 0.898–0.982, top1 1.00) and the
+    scaffold/bare ratio that measured template adjacency. **The minimum
+    is the point:** branch (a) is a claim about the worst probe, and a
+    pair averaging 0.95 while bottoming out at 0.20 is not delivering a
+    clean restricted-choice read. Descriptive throughout — no bar is
+    applied, because none is pre-registered (rule 21).
+  - **Why this was needed at all:** branch (a) was established on
+    (slate, prism), which the 2026-08-19 prior expects A1 to *reject*.
+    If the roster of record ends up being four other pairs, branch (a)
+    would otherwise have been confirmed on an instrument the program no
+    longer uses.
+  - **Roster committed:** `data/configs/a1_roster_candidates.json`, the
+    8 pairs A1 names — four incumbents plus N1–N4 with the token ids
+    recorded on 2026-08-20. **Correction recovered from the archive:**
+    the fourth incumbent pair is **(plaza, saddle)**, not (gravel,
+    plaza) — `gravel` → `saddle` by the verified pick procedure at the
+    e2a smoke2 adjudication (2026-08-09,
+    `archive/RESULTS-cycles3-4.md` L911). Two archive entries still
+    print the pre-swap form, and the 2026-08-20 roster entry says only
+    that `gravel` remains excluded, so a fresh thread could have
+    screened the wrong pair.
+  - **Tokenizer gate** (`tagscreen.assert_roster_tokenizer`): every tag
+    single-token with a leading space, and every recorded id still that
+    id. Both are hard stops. The second matters because a roster carries
+    more than its strings — single-tokenness *and* pool disjointness were
+    established against one tokenizer, and an id that has moved means
+    those findings were established somewhere else. The gate escalates
+    rather than silently re-verifying.
+  - **The band is evaluated in exactly one place.** A1's criterion is a
+    conjunction over four stages, so the per-stage script cannot test it
+    and deliberately does not try — it prints distance from the band edge
+    as orientation only. `scripts/a1_roster.py` (site-agnostic, no GPU)
+    reads the four artifacts and applies the formula: clears iff inside
+    the band on *every* stage; ranked by worst stage; top four selected;
+    fewer than four clearing returns the replacement iteration rather
+    than a short roster. **It refuses partial data** — selecting on three
+    stages would weaken a four-way conjunction into a three-way one, and
+    the missing stage is exactly where the failing pair would have been
+    caught.
+  - **Selection is a recommendation and says so in its own payload.** The
+    roster of record enters through `LOCK-g.md`, which the design
+    instance authors.
+  - **DECLARED, because it is a criterion detail and belongs before the
+    data:** the band is read as **inclusive** — imbalance ≤ 0.10 clears.
+    A pair landing exactly on 0.100 is inside.
+  - **Fixture bug caught by the change, not by the suite.** The
+    `rank_by_balance` fixture built `PairResult` positionally, so
+    inserting `label_mass_min` silently re-mapped mass onto
+    `top1_is_label_frac`. Now keyword-constructed, with the reason in a
+    comment so it is not undone.
+  - Suite additions: worst-probe minimum is genuinely the minimum; the
+    committed roster passes its own gate (16 tags); drifted id and
+    multi-token tag both raise; the conjunction rejects a pair that is
+    balanced on three stages and 0.75 on DPO; ranking, selection size,
+    thin-roster iteration, partial-stage refusal, and the
+    not-the-lock flag. **70 → 83, all model-free.**
+
 - 2026-08-20 — **Last clone-only inputs pulled into the record; the
   ledger-26 oracle tier is now reproducible from the repo alone.**
   - Added, all byte-identical to the clone: `data/corpus/e2a_tasks.jsonl`
