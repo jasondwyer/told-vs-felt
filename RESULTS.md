@@ -20,6 +20,69 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-20 — **PROPOSAL-g committed as the pre-registration of record
+  (`72b09a9`, 2026-08-20 01:52:19 -0400 — that hash is the timestamp per
+  its own status line). A1 candidate roster proposed; S1 per-cell n
+  declared before scoring. Two flags, both raised BEFORE any data.**
+  - Committed **verbatim**, unedited. Its status line still reads "DRAFT
+    v1.0"; Code does not edit a pre-registration, so that is left for
+    the design instance. A1–A5 / B1–B3 / S1–S3 now supersede all prior
+    g2/g3/g4 references (§0.2).
+  - **A1, first half (laptop; the screen itself needs a box).** Eight new
+    candidates proposed, each verified **single-token with a leading
+    space on the OLMo tokenizer** and **word-boundary disjoint from
+    every pool** — e0 tasks + completions, e0 frames, e2a task
+    paraphrases, the probe battery, conditioning tasks, the neutral
+    filler, and (ledger 28c) the wrapper templates themselves:
+
+    | pair | tags | token ids |
+    |---|---|---|
+    | N1 | canvas / copper | 10247 / 24166 |
+    | N2 | quartz / ridge | 52255 / 58933 |
+    | N3 | amber / velvet | 68705 / 72426 |
+    | N4 | walnut / ember | 93729 / 99384 |
+
+    All eight cycle-3/4 tags re-verified single-token and pool-clean, so
+    the 8-pair roster A1 specifies is viable.
+  - **Pairing rationale, stated so A1 can falsify it:** pairs are formed
+    by **adjacent token id**, not by semantics. The 2026-08-19 finding
+    was that the bias is token *identity*, and the most plausible driver
+    of an identity prior is token frequency — for which BPE merge order
+    (id) is a rough proxy. So each pair joins two tags of similar
+    presumed frequency. This is a hypothesis A1 measures, not an
+    assumption it inherits.
+  - **The hygiene screen earned its place:** `harbor`, `lantern`,
+    `marble` and `kettle` are all single-token but collide with pool or
+    conditioning text and were dropped. `gravel` remains excluded from
+    cycle 3/4 for the same reason.
+  - **FLAG — expect A1 to fail the incumbent pair.** The band is
+    identity within 0.50 ± 0.10. The 2026-08-19 characterization put
+    (slate, prism) at 0.711–0.822 across the four stages, i.e.
+    imbalance 0.21–0.32, **two to three times outside the band on every
+    stage.** At least one incumbent pair is therefore likely to fail,
+    and the roster-of-four rule may need the replacement iteration §A1
+    provides for. Recorded now so the outcome is not read as surprising.
+  - **S1 per-cell n DECLARED BEFORE SCORING: n = 32, not the 64 §5
+    requests.** The corpus supports 32 val-half 2AFC items (8 val tasks
+    × 4 paraphrases, both poles present, both texts non-empty); fit half
+    supplies 32 items for the m=8 few-shot exemplars. k=2 draws from
+    C(32,2) = 496 distinct 2-subsets, so no reuse pressure. Eight cells
+    × 32 items × 2 position orders = 512 judge forwards.
+  - **FLAG — at n = 32 the interpretation map's middle branch is not
+    resolvable, and this matters before scoring, not after.** Clearing
+    chance one-sided at .05 needs **22/32 = .688**. The registered
+    anchors: chance .500 → CI [.336, .664]; probe k=1 .645 → CI
+    [.483, .796]; probe k=2 parity .759 → CI [.579, .867]. So an
+    observed .645 has an interval **containing both chance and probe
+    parity simultaneously** — S1 can cleanly separate "at chance" from
+    "parity-rescued" only if the result lands near one extreme. Any
+    intermediate outcome will be reported as the localization curve §5
+    anticipates, but it cannot adjudicate between the two headline
+    readings. Raising n is impossible without new Qwen sessions, which
+    §5 forbids; position-order counterbalancing doubles reads but not
+    independent items. Flagged for the design instance as a scope
+    limit of S1 as written, not a reason to change it.
+
 - 2026-08-18 — **Design-instance adjudication executed: window-coverage
   audit (descriptive), oracle-provenance GO, PROPOSAL-g window clause
   adopted into the adapter contract. No published verdict touched.**
