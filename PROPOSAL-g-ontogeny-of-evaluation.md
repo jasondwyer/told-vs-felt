@@ -1,9 +1,10 @@
 # PROPOSAL-g — The ontogeny of evaluation: when marking, reading, and wanting enter the developmental series
 
-**Status:** DRAFT v1.0, 2026-08-19, design instance. Becomes the
-pre-registration of record when Jason approves and commits it to the
-repo root; the commit hash is the timestamp. No Phase-2 verdict data
-may be collected before that commit. Numeric bars marked `[LOCK-g]`
+**Status:** LOCKED — pre-registration of record at commit `72b09a9`,
+2026-08-20 (the hash is the timestamp). Drafted 2026-08-19, design
+instance; committed verbatim. This status line is the sole post-commit
+edit (administrative, design-instance authored 2026-08-20, logged in
+RESULTS). Numeric bars marked `[LOCK-g]`
 are set by formula here and instantiated by Phase A; the instantiated
 values are committed as `LOCK-g.md` before any Phase B run.
 
