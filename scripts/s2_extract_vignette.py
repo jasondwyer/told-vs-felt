@@ -16,12 +16,17 @@ nothing else. An axis extracted through a different context shape would be
 incomparable in the discriminant table, which is the one thing the table
 exists to do.
 
-**The stimulus is PROPOSED, not adjudicated** (see `valence_core.neighbors`
-for why: "Ho-style" has no citation or corpus anywhere in the repo). The
-axis is written with `grounded: false` in its own metadata, and the
-qualification runner refuses to include it unless asked. Extraction itself
-is capture-only and harmless; what would not be harmless is the axis
-arriving in a table looking like the other two.
+**The stimulus is APPROVED VERBATIM** (design-instance adjudication
+2026-08-20), under the construct name of record "circumstantial-affect
+vignette (self-involving, non-evaluative)"; the placeholder "Ho-style" is
+retired. The axis is therefore a full member of the panel and can decide
+the registered §S2 reading.
+
+What it still lacks is history. Sentiment and character were extracted on
+2026-08-08 and have carried published numbers; this axis exists only once
+this script has run. That is why the panel runner treats a missing
+`s2_vignette_axis.npz` as an error rather than a smaller table -- an absent
+row in a discriminant table reads as "we tested it and it did nothing".
 
 Site: laptop (the Qwen oracle). 384 contexts, one unsteered forward each.
 
@@ -116,8 +121,8 @@ def main() -> int:
     print("=== S2 step 1: vignette axis extraction ===")
     print(f"  frames: {source}")
     print(f"  construct: {VIGNETTE.construct}")
-    print(f"  GROUNDED: {VIGNETTE.grounded}  -- the label 'Ho-style' is the "
-          f"design instance's to confirm or replace", flush=True)
+    print(f"  GROUNDED: {VIGNETTE.grounded}  (stimulus approved verbatim, "
+          f"adjudication 2026-08-20)", flush=True)
     hygiene(frames)
 
     contexts = build_contexts(frames)
@@ -142,9 +147,11 @@ def main() -> int:
         "item": "S2",
         "axis": "vignette",
         "grounded": VIGNETTE.grounded,
-        "stimulus_status": ("PROPOSED by Code 2026-08-20; not adjudicated. "
-                            "PROPOSAL-g §S2's 'Ho-style' has no citation or "
-                            "corpus in the repo."),
+        "stimulus_status": ("APPROVED VERBATIM, design-instance "
+                            "adjudication 2026-08-20. Construct name of "
+                            "record: circumstantial-affect vignette "
+                            "(self-involving, non-evaluative). The "
+                            "placeholder 'Ho-style' is retired."),
         "construct": VIGNETTE.construct,
         "frames_source": source,
         "frames": {k: list(v) for k, v in frames.items()},

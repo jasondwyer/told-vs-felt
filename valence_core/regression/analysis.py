@@ -543,26 +543,59 @@ def check_s2_neighbors() -> list[Check]:
     the dose), and an unadjudicated axis deciding a registered reading.
     """
     from ..extract import assert_disjoint, cosine
-    from ..neighbors import (GROUNDED_PANEL, REFERENCE, VIGNETTE,
-                             VIGNETTE_FRAMES, discriminant_table,
-                             load_axis_family, matched_injections,
-                             specificity_reading)
+    from ..neighbors import (CHARACTER, GROUNDED_PANEL, REFERENCE,
+                             NeighborSpec, VIGNETTE, VIGNETTE_FRAMES,
+                             discriminant_table, load_axis_family,
+                             matched_injections, specificity_reading)
     from ..adapters.base import Injection, assert_equal_norm
     out = []
 
     specs = (REFERENCE,) + GROUNDED_PANEL
-    out.append(_c("S2: grounded panel needs no new extraction",
-                  "PROPOSAL-g §S2 / e0 2026-08-08",
-                  "sentiment+character",
+    _axes_npz = os.path.join(DATA, "e0/e0_axes.npz")
+    frozen = (set(np.load(_axes_npz).files) if os.path.exists(_axes_npz)
+              else set())
+    out.append(_c("S2: the panel is all three neighbours",
+                  "adjudication 2026-08-20", "sentiment+character+vignette",
                   "+".join(s_.name for s_ in GROUNDED_PANEL),
-                  [s_.name for s_ in GROUNDED_PANEL] == ["sentiment", "character"]))
-    out.append(_c("S2: vignette is marked ungrounded",
-                  "no 'Ho-style' corpus in the repo", "False",
-                  str(VIGNETTE.grounded), VIGNETTE.grounded is False))
+                  [s_.name for s_ in GROUNDED_PANEL]
+                  == ["sentiment", "character", "vignette"]))
+    # Checked as a property of the frozen family rather than as a list, so
+    # the claim ("two of three need no new extraction") stays true to what
+    # is actually on disk if the panel is ever reordered or extended.
+    if frozen:
+        prior = [s_.name for s_ in GROUNDED_PANEL if s_.axis_key in frozen]
+        needs = [s_.name for s_ in GROUNDED_PANEL if s_.axis_key not in frozen]
+        out.append(_c("S2: two neighbours need no new extraction",
+                      "e0 2026-08-08 V2/V3 guards", "sentiment+character",
+                      "+".join(prior), prior == ["sentiment", "character"]))
+        out.append(_c("S2: the vignette is the one that must be built",
+                      "no extracted history", "vignette", "+".join(needs),
+                      needs == ["vignette"]))
+    out.append(_c("S2: vignette is grounded by adjudication",
+                  "design-instance adjudication 2026-08-20", "True",
+                  str(VIGNETTE.grounded), VIGNETTE.grounded is True))
+    out.append(_c("S2: construct name of record carries 'Ho-style' retired",
+                  "adjudication 2026-08-20",
+                  "circumstantial-affect",
+                  "present" if "circumstantial-affect" in VIGNETTE.construct
+                  else "MISSING",
+                  "circumstantial-affect" in VIGNETTE.construct
+                  and "Ho-style" not in VIGNETTE.construct))
+    out.append(_c("S2: persona slot settled on the character reading",
+                  "adjudication 2026-08-20", "character reading",
+                  "settled" if "CHARACTER reading" in CHARACTER.provenance
+                  else "UNSETTLED",
+                  "CHARACTER reading" in CHARACTER.provenance))
 
     axes_path = os.path.join(DATA, "e0/e0_axes.npz")
     if os.path.exists(axes_path):
-        axes = load_axis_family(DATA, 48, specs=specs)
+        # Frozen-backed specs only. The vignette is an approved panel member
+        # but its axis is built by a laptop run, so demanding it here would
+        # make a model-free suite un-runnable everywhere the axis has not
+        # been extracted yet -- including the box. The checks below are about
+        # the published guard geometry, which is exactly the frozen half.
+        frozen_specs = tuple(sp for sp in specs if sp.axis_key in frozen)
+        axes = load_axis_family(DATA, 48, specs=frozen_specs)
         meta = json.load(open(os.path.join(DATA, "e0/e0_axes.meta.json")))
         row = next(r for r in meta["report"]["span"] if r["layer"] == 48)
         cs = cosine(axes["reward"], axes["sentiment"])
@@ -680,16 +713,38 @@ def check_s2_neighbors() -> list[Check]:
                   "generic" if "generic" in reading2["branch"] else "specificity",
                   "generic" in reading2["branch"]))
 
+    # Rule 6 still has to be pinned, so it is exercised on a fabricated
+    # unadjudicated axis rather than on the vignette -- which is now
+    # approved, and whose exclusion would be the bug rather than the check.
+    UNADJUDICATED = NeighborSpec(
+        name="unadjudicated", axis_key="span_unadjudicated",
+        pos_condition="x_pos", neg_condition="x_neg",
+        construct="fixture: a stimulus nobody has ruled on", grounded=False,
+        provenance="regression fixture")
     ung = dict(arms)
-    ung["vignette_pos"], ung["vignette_neg"] = (9.0, np.zeros(1)), (-9.0, np.zeros(1))
+    ung["unadjudicated_pos"] = (9.0, np.zeros(1))
+    ung["unadjudicated_neg"] = (-9.0, np.zeros(1))
     r3 = specificity_reading(discriminant_table(
-        ung, G, specs=specs + (VIGNETTE,)))
-    out.append(_c("S2: an ungrounded axis cannot decide the reading",
+        ung, G, specs=specs + (UNADJUDICATED,)))
+    out.append(_c("S2: an unadjudicated axis cannot decide the reading",
                   "rule 6", "excluded / specificity",
-                  f"{'excluded' if 'vignette' in r3['excluded_ungrounded'] else 'INCLUDED'}"
+                  f"{'excluded' if 'unadjudicated' in r3['excluded_ungrounded'] else 'INCLUDED'}"
                   f" / {'specificity' if 'specificity' in r3['branch'] else 'generic'}",
-                  r3["excluded_ungrounded"] == ["vignette"]
+                  r3["excluded_ungrounded"] == ["unadjudicated"]
                   and "specificity" in r3["branch"]))
+    # ...and the converse, which is what the adjudication bought: an
+    # approved axis DOES decide it. Vignette at 0.90 must take the branch.
+    vg = dict(arms)
+    vg["vignette_pos"], vg["vignette_neg"] = (0.90, np.zeros(1)), (-0.90, np.zeros(1))
+    r4 = specificity_reading(discriminant_table(
+        vg, G, specs=specs))
+    out.append(_c("S2: the approved vignette DOES decide the reading",
+                  "adjudication 2026-08-20", "vignette / generic",
+                  f"{r4.get('strongest_neighbour')} / "
+                  f"{'generic' if 'generic' in r4['branch'] else 'specificity'}",
+                  r4.get("strongest_neighbour") == "vignette"
+                  and "generic" in r4["branch"]
+                  and not r4["excluded_ungrounded"]))
 
     # the S2 battery must be the qualification battery, not a variant
     import importlib.util

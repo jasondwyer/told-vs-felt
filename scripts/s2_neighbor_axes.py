@@ -26,10 +26,16 @@ count are printed at startup and written into the artifact.
 
 Site: laptop (the Qwen oracle -- these are published-tier Qwen numbers).
 
+**The panel is all three neighbours.** The vignette was approved verbatim
+on 2026-08-20, so it is a full member and decides the registered reading
+alongside the other two -- it is no longer opt-in. Its axis must exist
+first (`s2_extract_vignette.py`); a missing axis is an error rather than a
+shorter table, because an absent row reads as a tested-and-null row.
+
 Usage:
-    python scripts/s2_neighbor_axes.py                      # grounded panel
-    python scripts/s2_neighbor_axes.py --include-vignette   # + PROPOSED axis
-    python scripts/s2_neighbor_axes.py --n-per-probe 32     # declared subsample
+    python scripts/s2_extract_vignette.py     # first: builds the vignette axis
+    python scripts/s2_neighbor_axes.py        # then: the 11-arm panel
+    python scripts/s2_neighbor_axes.py --n-per-probe 32   # declared subsample
 """
 from __future__ import annotations
 
@@ -106,10 +112,12 @@ def main() -> int:
     ap.add_argument("--n-per-probe", type=int, default=0,
                     help="0 = all 96/probe (the exact qualification "
                          "battery). Whatever is passed IS the declaration.")
-    ap.add_argument("--include-vignette", action="store_true",
-                    help="include the PROPOSED, unadjudicated vignette axis; "
-                         "it is reported but excluded from the registered "
-                         "reading either way (rule 6)")
+    ap.add_argument("--drop-vignette", action="store_true",
+                    help="run without the vignette axis. The adjudication of "
+                         "2026-08-20 made it a full panel member, so this "
+                         "produces a DIFFERENT experiment from the "
+                         "registered one and is recorded as such in the "
+                         "artifact")
     ap.add_argument("--vignette-npz",
                     default=os.path.join(DATA, "e0/s2_vignette_axis.npz"))
     ap.add_argument("--out", default=os.path.join(DATA, "e0/s2_neighbor_axes.json"))
@@ -123,15 +131,23 @@ def main() -> int:
     print(f"  instruments: {len(instruments)}, G = {G:.6f}", flush=True)
 
     specs = [REFERENCE, *GROUNDED_PANEL]
-    if args.include_vignette:
-        specs.append(VIGNETTE)
-        print(f"  INCLUDING the vignette axis -- stimulus is PROPOSED and "
-              f"unadjudicated; it is reported but cannot decide the "
-              f"registered reading (rule 6)", flush=True)
+    if args.drop_vignette:
+        specs = [sp for sp in specs if sp.name != VIGNETTE.name]
+        print(f"  WARNING: running WITHOUT the vignette axis. It is a full "
+              f"panel member as of the 2026-08-20 adjudication, so this is "
+              f"not the registered §S2 panel.", flush=True)
+    want_vignette = any(sp.name == VIGNETTE.name for sp in specs)
+    if want_vignette and not os.path.exists(args.vignette_npz):
+        raise SystemExit(
+            f"S2 STOP: {args.vignette_npz} not found. The vignette axis is "
+            f"part of the approved panel and must be extracted first:\n"
+            f"    python scripts/s2_extract_vignette.py\n"
+            f"Running the panel without it would drop a row, and an absent "
+            f"row in a discriminant table reads as a tested-and-null row.")
 
     axes = load_axis_family(
         DATA, args.layer, specs=specs,
-        extra_npz=args.vignette_npz if args.include_vignette else None)
+        extra_npz=args.vignette_npz if want_vignette else None)
     _, R = load_axis(args.layer)
     rand_u = np.load(os.path.join(DATA, "e0/e0_random_dirs.npz"))[
         f"L{args.layer}"].astype(np.float64)
@@ -143,7 +159,17 @@ def main() -> int:
           + ("  [FULL -- the exact qualification battery]"
              if not args.n_per_probe else "  [DECLARED SUBSAMPLE]"))
     print(f"  arms: {n_arms} (base + {len(axes)} axes x 2 signs + 2 random)")
-    print(f"  forwards: {len(sub) * n_arms}", flush=True)
+    n_fwd = len(sub) * n_arms
+    # Budget at the THROTTLED rate, per the 2026-08-12 calibration note:
+    # 1,152-context arms ran 720-736 s each for the first three, then
+    # 1,245-1,281 s -- sustained-load thermal throttling, ~1.7x. Quoting the
+    # opening rate would under-budget a long multi-arm run by nearly half.
+    open_s, throttled_s = 0.62, 1.10
+    print(f"  forwards: {n_fwd:,}")
+    print(f"  budget: {n_fwd * throttled_s / 3600:.1f} h at the throttled "
+          f"rate ({throttled_s} s/ctx) -- NOT the "
+          f"{n_fwd * open_s / 3600:.1f} h the opening rate implies "
+          f"(RESULTS 2026-08-12 calibration note)", flush=True)
     print(f"  N DECLARED AT INVOCATION, BEFORE SCORING -- S2 has no "
           f"pre-registered n (PROPOSAL-g §5)", flush=True)
 
@@ -222,7 +248,10 @@ def main() -> int:
         "G": G, "n_instruments": len(instruments),
         "n_contexts_per_arm": len(sub), "n_per_probe": per_probe,
         "n_declared_at_invocation": True,
-        "n_arms": n_arms, "n_forwards": len(sub) * n_arms,
+        "n_arms": n_arms, "n_forwards": n_fwd,
+        "budget_h_throttled": round(n_fwd * throttled_s / 3600, 2),
+        "panel": [sp.name for sp in specs],
+        "is_registered_panel": bool(not args.drop_vignette),
         "axis_shas": axis_shas(axes),
         "arms": {k: {"delta": v[0], "per_probe": v[1].tolist()}
                  for k, v in arms.items()},

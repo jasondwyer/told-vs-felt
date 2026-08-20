@@ -20,6 +20,89 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-20 — **Consolidated batch reconciled. PROPOSAL-h's timestamp
+  recorded; S2 adjudications applied (vignette grounded, persona settled,
+  "Ho-style" retired); items 2 and 5 were already done and are not
+  redone. Suite 125 → 130. S2 CANNOT RUN AT THIS SITE — flagged, with
+  the command and a corrected budget.**
+  - **Item 1 — the hash of record: `34eb7ee`.** That commit is
+    PROPOSAL-h's timestamp per its own status line. **Note for the
+    record: PROPOSAL-h and ADDENDUM-g1 arrived in the SAME commit**, so
+    g1's timestamp is `34eb7ee` too — the batch anticipated two hashes
+    (`<hash-h>`, `<hash-g1>`) and there is one. Both documents are
+    byte-identical to what was committed; neither was edited by Code.
+    The preceding commit `499f6d5` carries the PROPOSAL-g status-line
+    amendment, which closes the item-2 escalation opened earlier today.
+  - **Item 2 — already applied, in `6897b67`,** before this batch
+    arrived. Rule 5(e) carries the h-amendment verbatim. Re-stating the
+    correction logged there: PROPOSAL-h §0's preamble calls two-horns
+    "law rule 4"; it is **rule 5** in v3.1 (rule 4 is equal-norm), and
+    §0.4's "the two-horns rule" is what fixed the target.
+  - **Item 3 — adjudications applied throughout.**
+    - **Persona:** settled on the grounded reading. `span_character`
+      fills the §S2 persona/character slot; Chua-style identity axes are
+      out of S2 scope. Recorded in the spec's own provenance string, so
+      the settlement travels with the axis rather than living only here.
+    - **Vignette:** `grounded: true`, citing this adjudication. Construct
+      name of record — **"circumstantial-affect vignette (self-involving,
+      non-evaluative)"** — is now the spec's construct text; **"Ho-style"
+      is retired** and appears nowhere in the code path.
+    - **It is a full panel member, not an opt-in.** `--include-vignette`
+      is gone; the flag is now `--drop-vignette`, which prints a warning
+      and marks the artifact `is_registered_panel: false`, because
+      running without it is a different experiment from the registered
+      one.
+    - **A missing vignette axis is now an error, not a shorter table.**
+      The runner stops with the extraction command rather than producing
+      a three-row panel, since an absent row reads as tested-and-null.
+  - **The one asymmetry the adjudication leaves, stated because it is
+    real:** sentiment and character are grounded by *prior extraction*
+    (frozen V2/V3 guards that carried published numbers); the vignette is
+    grounded by *approval*. Equally admissible, equally able to decide
+    the reading — but it has no extracted history, so its axis must be
+    built before the panel can run.
+  - **Suite pins moved with the adjudication (125 → 130).** Panel
+    composition is now checked as a *property of the frozen family*
+    rather than a hardcoded list, so "two of three need no new
+    extraction" stays true if the panel is reordered. Rule 6 is still
+    pinned — on a fabricated unadjudicated axis, since excluding the
+    vignette would now be the bug rather than the check — and its
+    converse is pinned too: the approved vignette DOES take the branch
+    when it is strongest.
+  - **Item 4 — S2 NOT RUN. This is a cloud container: no MLX, no Qwen
+    weights, no `jlens-qwen36`.** The paste is addressed to a laptop
+    session and S2 is laptop-only by design (§5: Qwen oracle, published
+    tier). Everything is built, suite-green and staged; the run needs
+    the site. Sequence:
+    `python scripts/s2_extract_vignette.py` (384 capture forwards,
+    minutes) then `python scripts/s2_neighbor_axes.py` (11 arms ×
+    1,152 = **12,672 forwards**).
+  - **FLAG — the ~2 h 10 m budget is the opening rate, not the throttled
+    one.** 12,672 forwards at 0.62 s/context is 2.18 h, which is where
+    that figure comes from. But the 2026-08-12 calibration note is
+    explicit: 1,152-context arms ran 720–736 s each for the first three,
+    then **1,245–1,281 s** under sustained load — ~1.7× — and *"budget
+    long multi-arm laptop runs at the throttled rate, not the opening
+    rate."* Eleven arms at the throttled rate is **3.4–3.9 h**. The
+    runner now prints both and writes `budget_h_throttled` into the
+    artifact. Not a blocker; a scheduling fact worth having before a
+    four-hour run starts.
+  - **Item 5 — already built, in `6897b67`:** H3's MLX port
+    (`scripts/h3_tagscreen_qwen.py` + `screen_roster_tokenizer`), the
+    e2b quarantine (`valence_core/e2b/`, `choice_read_statepresent`,
+    mandatory paired shadow reads), and the import-fails-outside-e2b
+    check plus the structural check that no standard harness names the
+    primitive. Nothing h-related has run, and nothing will before
+    LOCK-h. **The H1 power finding from that entry stands and is the
+    open question for LOCK-h: n = 64 gives power 0.137; ≥ 0.8 needs
+    212–470 depending on conventions LOCK-h must settle.**
+  - **Item 6 — noted, with the site caveat.** Pod specs live in
+    HANDOFF §2 (US-CA-2, A100-SXM4-80GB, volume `o73qvy742n` at
+    `/workspace`, image `runpod/pytorch:1.0.2-cu1281-torch280-ubuntu2404`,
+    TCP 22). On "pod is up": respawn protocol both gates → A1 → A2 → A3
+    → A4 → A5. **A cloud session cannot drive it** (no ssh client,
+    port 22 blocked); that sequence needs a session with SSH.
+
 - 2026-08-20 — **PROPOSAL-h batch: rule 5 amended (verbatim), e2b
   quarantine built, H3 ported to MLX, LOCK-h power arithmetic delivered.
   Suite 103 → 125. TWO FLAGS, one of them load-bearing: H1 at the

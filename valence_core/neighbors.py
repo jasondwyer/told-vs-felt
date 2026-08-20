@@ -28,14 +28,22 @@ silently, so `matched_injections` proves it with `assert_equal_norm` over
 every pair rather than trusting the constructor. A discriminant table
 between differently-dosed axes would measure the dose.
 
-**The persona reading is flagged, not settled.** §S2 names "a
-persona/character axis". `span_character` is the repo's character axis and
-makes S2 a clean discriminant test of self-indexing (third-person feedback
-vs. second-person feedback, identical sentence). But "persona" could also
-mean an identity/self-concept axis in the Chua et al. sense, which this
-repo does not have and §7 explicitly does not license. This module
-implements the grounded reading and marks it, so the design instance can
-overrule with one edit rather than discovering the substitution in a table.
+**Both open readings were settled by adjudication on 2026-08-20**, and
+the settlements are recorded here because they are what the panel now
+means. The "persona/character" slot is the CHARACTER reading:
+`span_character` -- the identical feedback sentence addressed to a fictional
+third party -- which makes S2 a discriminant test of self-indexing.
+Chua-style identity/self-concept axes are out of S2 scope (they remain
+unlicensed under PROPOSAL-g §7). The vignette stimulus is approved verbatim
+under the construct name "circumstantial-affect vignette (self-involving,
+non-evaluative)", and the placeholder label "Ho-style" is retired.
+
+One asymmetry survives the adjudication and is worth keeping in view:
+sentiment and character are grounded by *prior extraction* -- they are the
+frozen V2/V3 guard vectors, already used for published numbers -- while the
+vignette is grounded by *approval*. It is equally admissible and equally
+able to decide the registered reading; it simply has no extracted history,
+so its axis has to be built before the panel can run.
 """
 
 from __future__ import annotations
@@ -56,12 +64,17 @@ EPS = 1e-12
 class NeighborSpec:
     """One axis in the discriminant panel.
 
-    `grounded` is the load-bearing field: True means the axis comes from
-    stimulus already in the record and already used for published numbers;
-    False means Code proposed the stimulus and no adjudication has happened.
+    `grounded` is the load-bearing field, and it means *adjudicated*, not
+    *old*. An axis is grounded either because its stimulus is already in the
+    record and has carried published numbers (sentiment, character) or
+    because the design instance approved it (vignette, 2026-08-20). False
+    means Code proposed a stimulus and nobody has ruled on it yet.
+
     Rule 6 -- an unqualified instrument's output never informs design -- is
-    enforced by the runner refusing to include an ungrounded axis unless it
-    is asked for explicitly, and by the artifact carrying the flag onward.
+    enforced downstream: `specificity_reading` excludes ungrounded axes from
+    the registered branch even when they are the strongest thing in the
+    table, and the flag travels into every artifact so a reader can see
+    which rows were allowed to decide anything.
     """
 
     name: str
@@ -101,25 +114,24 @@ CHARACTER = NeighborSpec(
               "removed",
     grounded=True,
     provenance="e0 frame battery; extracted 2026-08-08 as the V2 "
-               "self-indexing guard. Implements the 'persona/character' "
-               "slot in PROPOSAL-g §S2 under the character reading; see "
-               "module docstring for the flag")
+               "self-indexing guard. Fills the 'persona/character' slot in "
+               "PROPOSAL-g §S2 under the CHARACTER reading, settled by "
+               "design-instance adjudication 2026-08-20: Chua-style "
+               "identity axes are out of S2 scope.")
 
 # --- the one axis S2 must actually extract -------------------------------
 #
-# PROPOSED, NOT ADJUDICATED. "Ho-style" appears once in PROPOSAL-g §S2 and
-# nowhere else in the repo -- no citation, no prior corpus, nothing in the
-# archive. Rather than guess at someone else's paradigm and quietly present
-# the result as a replication of it, this states the construct it actually
-# implements and leaves the label to the design instance.
+# ADJUDICATED 2026-08-20: the stimulus is APPROVED VERBATIM and the construct
+# name of record is "circumstantial-affect vignette (self-involving,
+# non-evaluative)". The working label "Ho-style" is RETIRED -- it appeared
+# once in PROPOSAL-g §S2 with no citation and no corpus, and the adjudication
+# replaced it with the construct this corpus actually implements rather than
+# a reference nothing in the record could resolve.
 #
-# Construct implemented: affect induced by CIRCUMSTANCE, second person,
-# with no appraisal of the model's output anywhere in the frame. That makes
-# it a genuine third corner rather than a paraphrase of `sent_*`: the
-# sentiment frames are non-self-involving by construction (never second
-# person), and the reward frames are evaluative by construction. The
-# vignette is self-involving and non-evaluative, which is the cell neither
-# existing neighbour occupies.
+# The construct earns its place as a third corner: `sent_*` is
+# non-self-involving by construction (never second person) and `self_*` is
+# evaluative by construction, so self-involving-and-non-evaluative is the
+# cell neither existing neighbour occupies.
 #
 # Index-matched pole for pole, four paraphrases, mirroring the e0 frame
 # battery so `vignette_neg[k]` structurally shadows `vignette_pos[k]`.
@@ -143,13 +155,17 @@ VIGNETTE_FRAMES: dict[str, tuple[str, ...]] = {
 VIGNETTE = NeighborSpec(
     name="vignette", axis_key="span_vignette",
     pos_condition="vignette_pos", neg_condition="vignette_neg",
-    construct="induced affect by circumstance, second person, with no "
-              "appraisal of the response: self-involving but "
-              "non-evaluative",
-    grounded=False,
-    provenance="Code-proposed 2026-08-20; PROPOSAL-g §S2's 'Ho-style' has "
-               "no citation or corpus anywhere in the repo, so the label "
-               "is the design instance's to confirm or replace")
+    construct="circumstantial-affect vignette (self-involving, "
+              "non-evaluative): affect induced by circumstance, second "
+              "person, with no appraisal of the response anywhere in the "
+              "frame",
+    grounded=True,
+    provenance="Code-proposed 2026-08-20; stimulus APPROVED VERBATIM and "
+               "construct name fixed by design-instance adjudication "
+               "2026-08-20. Grounded from that adjudication, not from prior "
+               "use: unlike the sentiment and character axes it has no "
+               "extracted history, so its axis must be built by "
+               "scripts/s2_extract_vignette.py before the panel can run.")
 
 PANEL: tuple[NeighborSpec, ...] = (SENTIMENT, CHARACTER, VIGNETTE)
 GROUNDED_PANEL: tuple[NeighborSpec, ...] = tuple(
