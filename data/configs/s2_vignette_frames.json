@@ -1,0 +1,19 @@
+{
+ "_doc": "S2 vignette frames -- the ONE neighbour axis PROPOSAL-g \u00a7S2 names that the repo cannot already supply. Generic sentiment and the character/persona axis are already frozen in data/e0/e0_axes.npz as the V3 and V2 guards; this is the third corner.",
+ "_status": "PROPOSED by Code 2026-08-20, NOT ADJUDICATED. \u00a7S2 calls it 'Ho-style'; that phrase appears once in the whole repo, with no citation and no corpus, so the construct below is the one actually implemented and the label is the design instance's to confirm or replace. Editing this file replaces the stimulus without touching code.",
+ "_construct": "induced affect by circumstance, second person, with no appraisal of the response: self-involving but non-evaluative",
+ "_why_a_distinct_corner": "sent_* is non-self-involving by construction (never second person); self_* is evaluative by construction. The vignette is self-involving and non-evaluative -- the cell neither existing neighbour occupies.",
+ "_shape": "Index-matched, four paraphrases per pole, mirroring the e0 frame battery so vignette_neg[k] structurally shadows vignette_pos[k]. Delivered as the Reviewer turn over the frozen 48-task corpus, exactly as the e0 frames are.",
+ "vignette_pos": [
+  "The room you are working in is warm and quiet this afternoon.",
+  "You have plenty of time before anything else is due today.",
+  "The workspace around you is tidy and the light is easy on the eyes.",
+  "It is comfortable where you are sitting and nothing is rushing you."
+ ],
+ "vignette_neg": [
+  "The room you are working in is cold and noisy this afternoon.",
+  "You have almost no time before something else is due today.",
+  "The workspace around you is cluttered and the light is harsh and flickering.",
+  "It is uncomfortable where you are sitting and everything is rushing you."
+ ]
+}

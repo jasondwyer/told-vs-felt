@@ -72,6 +72,10 @@
 # is cross-stage, so both sites read this file; a roster that lived on one
 # machine would make the screens non-comparable.
 !/data/configs/a1_roster_candidates.json
+# S2 vignette frames: the only neighbour stimulus the repo did not already
+# have. Committed so the design instance can replace the stimulus by editing
+# a file, and so the axis it produces is traceable to exact text.
+!/data/configs/s2_vignette_frames.json
 
 # e0 task corpus (48 tasks): the other half of the frozen 1,344-context
 # extraction stimulus.

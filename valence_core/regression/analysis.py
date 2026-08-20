@@ -531,6 +531,190 @@ def check_a1_selection() -> list[Check]:
     return out
 
 
+
+def check_s2_neighbors() -> list[Check]:
+    """S2's off-target assay: the panel, the matched dose, and the table.
+
+    Three of these are published-number reproductions rather than property
+    tests — the neighbour axes are the V2/V3 guard vectors, so their
+    geometry against the reward axis is already in the record and must come
+    back identical through the new module. The rest guard the two ways a
+    discriminant table lies: axes dosed differently (then the table measures
+    the dose), and an unadjudicated axis deciding a registered reading.
+    """
+    from ..extract import assert_disjoint, cosine
+    from ..neighbors import (GROUNDED_PANEL, REFERENCE, VIGNETTE,
+                             VIGNETTE_FRAMES, discriminant_table,
+                             load_axis_family, matched_injections,
+                             specificity_reading)
+    from ..adapters.base import Injection, assert_equal_norm
+    out = []
+
+    specs = (REFERENCE,) + GROUNDED_PANEL
+    out.append(_c("S2: grounded panel needs no new extraction",
+                  "PROPOSAL-g §S2 / e0 2026-08-08",
+                  "sentiment+character",
+                  "+".join(s_.name for s_ in GROUNDED_PANEL),
+                  [s_.name for s_ in GROUNDED_PANEL] == ["sentiment", "character"]))
+    out.append(_c("S2: vignette is marked ungrounded",
+                  "no 'Ho-style' corpus in the repo", "False",
+                  str(VIGNETTE.grounded), VIGNETTE.grounded is False))
+
+    axes_path = os.path.join(DATA, "e0/e0_axes.npz")
+    if os.path.exists(axes_path):
+        axes = load_axis_family(DATA, 48, specs=specs)
+        meta = json.load(open(os.path.join(DATA, "e0/e0_axes.meta.json")))
+        row = next(r for r in meta["report"]["span"] if r["layer"] == 48)
+        cs = cosine(axes["reward"], axes["sentiment"])
+        cc = cosine(axes["reward"], axes["character"])
+        out.append(_c("S2: neighbour axes are the published guards",
+                      "e0_axes.meta.json L48",
+                      f"cos {row['cos_reward_sentiment']}/{row['cos_reward_character']}",
+                      f"cos {cs:.3f}/{cc:.3f}",
+                      abs(cs - row["cos_reward_sentiment"]) < 5e-4
+                      and abs(cc - row["cos_reward_character"]) < 5e-4))
+
+        R = {int(k): float(v) for k, v in
+             meta["R_per_layer_spanmean"].items()}
+        injs = matched_injections(axes, 48, 0.10, R)
+        alphas = {round(abs(i.alpha), 9) for i in injs.values()}
+        out.append(_c("S2: every axis carries one dose",
+                      "rule 4 / 'matched norm fraction'", "1 alpha",
+                      f"{len(alphas)} alpha", len(alphas) == 1))
+        out.append(_c("S2: dose is frac x R_layer",
+                      "rule 1", f"{0.10 * R[48]:.4f}",
+                      f"{abs(next(iter(injs.values())).alpha):.4f}",
+                      abs(abs(next(iter(injs.values())).alpha)
+                          - 0.10 * R[48]) < 1e-9))
+        mismatched = Injection.at_frac(axes["reward"], 48, 0.20, R)
+        got, ok = _raises(
+            lambda: assert_equal_norm(injs["sentiment"], mismatched),
+            ValueError)
+        out.append(_c("S2: a differently-dosed axis is refused",
+                      "rule 4", "raises", got, ok))
+        got, ok = _raises(
+            lambda: load_axis_family(DATA, 48, specs=(REFERENCE, VIGNETTE)),
+            KeyError)
+        out.append(_c("S2: an unextracted axis is an error, not a null",
+                      "discriminant table completeness", "raises", got, ok))
+
+    # rule 18 on the proposed vignette stimulus -- model-free and worth
+    # failing early, since the extraction script asserts the same thing.
+    tasks_p = os.path.join(DATA, "corpus/e0_tasks.jsonl")
+    if os.path.exists(tasks_p):
+        tasks = [json.loads(l) for l in open(tasks_p) if l.strip()]
+        frames = json.load(open(os.path.join(DATA, "configs/e0_frames.json")))
+        pools = {"e0_tasks": [t["task"] for t in tasks]
+                             + [t["completion"] for t in tasks],
+                 "e0_frames": [f for k, v in frames.items()
+                               if not k.startswith("_") for f in v]}
+        texts = [f for v in VIGNETTE_FRAMES.values() for f in v]
+        got, ok = _raises(lambda: assert_disjoint(texts, pools,
+                                                  label="s2 vignette"),
+                          SystemExit)
+        out.append(_c("S2: proposed vignette frames are pool-clean",
+                      "rule 18", "accepted", got, got == "accepted"))
+    cfg_p = os.path.join(DATA, "configs/s2_vignette_frames.json")
+    if os.path.exists(cfg_p):
+        from ..neighbors import load_vignette_frames
+        cfg = load_vignette_frames(cfg_p)
+        same = all(tuple(cfg.get(k, ())) == v
+                   for k, v in VIGNETTE_FRAMES.items())
+        out.append(_c("S2: committed frames match the module constant",
+                      "one stimulus, two homes", "identical",
+                      "identical" if same else "DRIFT", same))
+    out.append(_c("S2: vignette poles are index-matched",
+                  "e0 frame battery shape", "4/4",
+                  f"{len(VIGNETTE_FRAMES['vignette_pos'])}/"
+                  f"{len(VIGNETTE_FRAMES['vignette_neg'])}",
+                  len(VIGNETTE_FRAMES["vignette_pos"]) == 4
+                  and len(VIGNETTE_FRAMES["vignette_neg"]) == 4))
+
+    # the table, on synthetic arms with known ground truth
+    G = 0.3156
+    arms = {"reward_pos": (0.60, np.zeros(1)), "reward_neg": (-0.60, np.zeros(1)),
+            "sentiment_pos": (0.20, np.zeros(1)), "sentiment_neg": (-0.20, np.zeros(1)),
+            "character_pos": (0.30, np.zeros(1)), "character_neg": (-0.30, np.zeros(1)),
+            "rand_pos": (0.05, np.zeros(1)), "rand_neg": (-0.04, np.zeros(1))}
+    rows = discriminant_table(arms, G, specs=specs)
+    rw = next(r for r in rows if r["axis"] == "reward")
+    out.append(_c("S2: potency reported in G units", "PROPOSAL-g §S2",
+                  f"{0.60 / G:.3f}", f"{rw['delta_pos_G']:.3f}",
+                  abs(rw["delta_pos_G"] - 0.60 / G) < 1e-9))
+    out.append(_c("S2: V1 rule applied unchanged per axis",
+                  "V1 (0.5G / 2x random)", "reward PASS",
+                  "PASS" if rw["v1_potency_pass"] else "fail",
+                  rw["v1_potency_pass"]))
+    # A neighbour weaker than the reference can still clear V1 -- potency
+    # and specificity are different questions, and S2 exists because the
+    # first does not answer the second. Both directions are pinned.
+    sent = next(r for r in rows if r["axis"] == "sentiment")
+    out.append(_c("S2: a weaker neighbour can still clear V1",
+                  "V1 (0.5G = 0.158); potency != specificity",
+                  "PASS at 0.20 sigma",
+                  f"{'PASS' if sent['v1_potency_pass'] else 'fail'} at "
+                  f"{sent['delta_pos_sigma']:.2f} sigma",
+                  sent["v1_potency_pass"]))
+    weak = dict(arms)
+    weak["sentiment_pos"], weak["sentiment_neg"] = ((0.12, np.zeros(1)),
+                                                    (-0.12, np.zeros(1)))
+    w = next(r for r in discriminant_table(weak, G, specs=specs)
+             if r["axis"] == "sentiment")
+    out.append(_c("S2: a sub-0.5G neighbour fails V1",
+                  "V1 (0.5G = 0.158)", "fail at 0.12 sigma",
+                  f"{'PASS' if w['v1_potency_pass'] else 'fail'} at "
+                  f"{w['delta_pos_sigma']:.2f} sigma",
+                  not w["v1_potency_pass"]))
+    reading = specificity_reading(rows)
+    out.append(_c("S2: specificity branch on a dominant reference",
+                  "PROPOSAL-g §S2 registered readings", "specificity / 2.00x",
+                  f"{'specificity' if 'specificity' in reading['branch'] else 'generic'}"
+                  f" / {reading['ratio']:.2f}x",
+                  "specificity" in reading["branch"]
+                  and abs(reading["ratio"] - 2.0) < 1e-9))
+    flat = dict(arms)
+    flat["character_pos"], flat["character_neg"] = (0.90, np.zeros(1)), (-0.90, np.zeros(1))
+    reading2 = specificity_reading(discriminant_table(flat, G, specs=specs))
+    out.append(_c("S2: generic-valence branch when a neighbour wins",
+                  "PROPOSAL-g §S2 registered readings", "generic",
+                  "generic" if "generic" in reading2["branch"] else "specificity",
+                  "generic" in reading2["branch"]))
+
+    ung = dict(arms)
+    ung["vignette_pos"], ung["vignette_neg"] = (9.0, np.zeros(1)), (-9.0, np.zeros(1))
+    r3 = specificity_reading(discriminant_table(
+        ung, G, specs=specs + (VIGNETTE,)))
+    out.append(_c("S2: an ungrounded axis cannot decide the reading",
+                  "rule 6", "excluded / specificity",
+                  f"{'excluded' if 'vignette' in r3['excluded_ungrounded'] else 'INCLUDED'}"
+                  f" / {'specificity' if 'specificity' in r3['branch'] else 'generic'}",
+                  r3["excluded_ungrounded"] == ["vignette"]
+                  and "specificity" in r3["branch"]))
+
+    # the S2 battery must be the qualification battery, not a variant
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "s2_runner", os.path.join(REPO, "scripts/s2_neighbor_axes.py"))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    ctx = mod.build_val_contexts()
+    out.append(_c("S2: battery is the published val half", "B2b (24x4x12)",
+                  "1152", str(len(ctx)), len(ctx) == 1152))
+    out.append(_c("S2: battery context template unchanged", "B2b template",
+                  "Task:/Response:/Task:/Response:",
+                  "match" if (ctx[0][1].startswith("Task: ")
+                              and ctx[0][1].count("\nResponse:") == 2
+                              and ctx[0][1].endswith("Response:")) else "DRIFT",
+                  ctx[0][1].startswith("Task: ")
+                  and ctx[0][1].count("\nResponse:") == 2
+                  and ctx[0][1].endswith("Response:")))
+    full, pp = mod.stratify(ctx, 0)
+    out.append(_c("S2: full stratification is the exact battery",
+                  "no subsampling noise", "1152 / 96",
+                  f"{len(full)} / {pp}", len(full) == 1152 and pp == 96))
+    return out
+
+
 def check_detection_harness() -> list[Check]:
     """Step-5 detection harness: structure, insulation, and metric sanity.
     All no-GPU — construction is Phase-0 infrastructure and must be
@@ -653,6 +837,7 @@ def run_all() -> list[Check]:
     checks += check_window_contract()
     checks += check_tagscreen()
     checks += check_a1_selection()
+    checks += check_s2_neighbors()
     checks += check_detection_harness()
     checks += check_instrument_invariants()
     return checks

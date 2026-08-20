@@ -20,6 +20,80 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-20 — **S2 BUILT (adjudication item 5): neighbour-axis panel,
+  matched-dose qualification battery, and the discriminant table.
+  Suite 83 → 103. Nothing run — this is construction; S2 executes on the
+  laptop oracle.**
+  - **The finding that shaped the build: two of the three neighbours need
+    no extraction at all.** §S2 names generic sentiment contrast, a
+    persona/character axis, and a vignette axis. The e0 frame battery
+    already carries `sent_pos`/`sent_neg` and `char_pos`/`char_neg`, and
+    the 2026-08-08 pass already froze both as `span_sentiment` and
+    `span_character` in `data/e0/e0_axes.npz`. They were built as the V3
+    and V2 *guards* — geometry used to license the reward axis — and S2
+    asks a different question of the same vectors: not how much of the
+    reward axis lies off them, but how hard they hit the behavioural
+    readout when injected in their own right. Same vectors, same corpus,
+    different instrument. **S2's extraction work is the vignette alone.**
+  - `valence_core/neighbors.py`: the panel as specs (each carrying its
+    construct, provenance, and a `grounded` flag), frozen-axis loading,
+    matched dosing, the discriminant table in G units, and the registered
+    §S2 readings.
+  - **Matched norm fraction is proven, not assumed.** Every axis is dosed
+    through `Injection.at_frac` on the model's own R table and then
+    checked pairwise with `assert_equal_norm`, randoms included. The
+    invariant already holds by construction, which is exactly why it is
+    asserted — a discriminant table between differently-dosed axes
+    measures the dose, and that failure is invisible in the output.
+  - **The reference arm re-runs in the same session** rather than being
+    quoted from 2026-08-08: a ratio between today's number and another
+    session's silently imports every difference between them.
+  - **FLAG — the persona reading is ambiguous and I did not settle it.**
+    §S2 says "a persona/character axis". `span_character` is the repo's
+    character axis (the identical feedback sentence addressed to a
+    fictional third party), which makes S2 a clean discriminant test of
+    self-indexing. But "persona" could equally mean an identity /
+    self-concept axis in the Chua et al. sense, which this repo does not
+    have and which §7 does not license. Built on the grounded reading,
+    marked in the module, one edit to overrule.
+  - **FLAG — "Ho-style" has no referent in this repo.** The phrase
+    appears exactly once (§S2) with no citation, no corpus, and nothing
+    in the archive; "vignette pharmacokinetics" in §7 is a planned item,
+    not an existing stimulus. Rather than guess at a paradigm and present
+    the result as a replication of it, the vignette axis is built with
+    its construct stated: **affect induced by circumstance, second
+    person, with no appraisal of the model's output anywhere in the
+    frame.** That is a genuine third corner — `sent_*` is
+    non-self-involving by construction (never second person) and
+    `self_*` is evaluative by construction, so self-involving-and-
+    non-evaluative is the cell neither existing neighbour occupies. The
+    frames are committed at `data/configs/s2_vignette_frames.json` so
+    the design instance replaces the stimulus by editing a file.
+  - **The vignette carries `grounded: false` everywhere it goes** — spec,
+    axis metadata, and the artifact — and `--include-vignette` is
+    opt-in. It is reported in the table and **excluded from the
+    registered reading** by construction (rule 6: an unadjudicated
+    instrument does not decide a claim). Suite-pinned in both
+    directions.
+  - **S2's n is not pre-registered** (§5 declares none), so the
+    invocation is the declaration and it is printed and written into the
+    artifact before any scoring — the S1 precedent, applied without
+    being asked twice.
+  - **Cost anchors, from the measured 0.62 s/context oracle rate.**
+    Grounded panel = 9 arms × 1,152 ≈ 10,368 forwards ≈ 1 h 45 m.
+    With the vignette = 11 arms × 1,152 ≈ 12,672 ≈ 2 h 10 m. Vignette
+    extraction is 384 capture forwards, single-digit minutes. Compare
+    the rule-26 B2b reproduction: 5 arms ≈ 60 min.
+  - Suite additions (83 → 103): the neighbour axes reproduce the
+    published guard cosines at L48 (0.522 / 0.861) through the new
+    module; one dose across every axis and `frac × R_ℓ` exact; a
+    differently-dosed axis refused; an unextracted axis raises rather
+    than yielding a missing row (an absent row reads as a null result);
+    the proposed vignette frames pass rule 18 against the e0 pools;
+    committed frames match the module constant; G-unit conversion; the
+    V1 rule applied unchanged per axis in both directions; both
+    registered branches; and the ungrounded-axis exclusion.
+
 - 2026-08-20 — **A1 instrumented for the box (adjudication item 3):
   per-pair, per-stage `label_mass` now travels with the screen; the
   candidate roster is a committed config rather than a script constant;
