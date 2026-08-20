@@ -55,7 +55,7 @@ path:
 python -m valence_core.regression.analysis
 ```
 
-Model-free; must print **70/70**. Runs anywhere, including the box, because
+Model-free; must print **103/103**. Runs anywhere, including the box, because
 it reads only committed artifacts. The oracle tier
 (`valence_core.regression.oracle`) needs the laptop Qwen stack and reproduces
 the three criteria that require real inference.

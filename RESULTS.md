@@ -20,6 +20,41 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-20 — **Adjudication batch received and actioned (S1 accepted;
+  A1 addition; sequence; S2 promoted). Items 3 and 5 are built and
+  committed above. Item 2 is BLOCKED at this site and is the only thing
+  in the batch not carried out.**
+  - **Item 1 — S1 accepted as logged.** The registered recognition-break
+    reading stands with the entry's scope wording: parity is rejected in
+    every cell, chance is compatible-not-proven. No further S1 cells; S1
+    is closed.
+  - **Item 2 — BLOCKED, needs the text or a laptop commit.** The
+    status-line amendment was applied *on disk by the design instance*,
+    which means it exists in the laptop working tree. This thread is a
+    cloud session working from a clean clone of `origin/main`
+    (`git status` empty, `origin/main` unmoved), so the edit is not
+    here and cannot be committed from here. It is not the kind of thing
+    to reconstruct from inference either: it is a pre-registration's
+    status line, which §0.2 and the 2026-08-20 entry both put outside
+    Code's authority to author. Escalated rather than approximated.
+  - **Item 3 — done** (entry above): per-pair, per-stage `label_mass`,
+    plus `label_mass_min`, plus the roster and selection machinery A1
+    needs to produce a roster of record.
+  - **Item 4 — sequence recorded**, and one correction to how it can be
+    started. Respawn (both gates) → A1 screen → A2 → A3 → A4 → A5
+    timing budget; LOCK-g stays design-instance authored. **The
+    execution site is the constraint, not the authorization:** a cloud
+    Code session has no `ssh` client, no outbound port 22, no MLX and no
+    GPU, so it cannot drive the box even once the pod exists, and it
+    cannot create the pod either (no RunPod MCP in this session; and per
+    HANDOFF §2 the MCP could not attach the network volume anyway). Pod
+    creation stays a console action; A-phase execution needs a session
+    with SSH. Recorded in HANDOFF §0.
+  - **Item 5 — done** (entry above): S2 built, and the build found that
+    two of its three neighbour axes were already in the record.
+  - Health check green throughout: **103/103** model-free, on this
+    site, after `pip install numpy scipy` into a bare container.
+
 - 2026-08-20 — **S2 BUILT (adjudication item 5): neighbour-axis panel,
   matched-dose qualification battery, and the discriminant table.
   Suite 83 → 103. Nothing run — this is construction; S2 executes on the
