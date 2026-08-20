@@ -42,6 +42,12 @@
 # and a bare *.npz exception would sweep it in.
 !/data/e0/e0_axes.npz
 !/data/e0/e0_random_dirs.npz
+# B1 marker battery (47.5 MB): the source the 12 B2b instruments are
+# recomputed from. Large, and admitted deliberately -- rule-26 criterion (ii)
+# rebuilds the instruments from THIS file, so storing only the derived
+# instruments would mean trusting a computation we could no longer check.
+# e0_residuals.npz (202 MB) remains excluded.
+!/data/e0/e0_b1_markers.npz
 
 # Ledger-26 regression verdicts: the record of whether a refactor was
 # accepted belongs in the repo, not on the machine that ran it (ledger 27).
@@ -59,6 +65,8 @@
 # e0 frame set: the frozen extraction stimulus. Phase 1 reruns the SAME
 # text on every checkpoint, so it has to be in the record, not one clone.
 !/data/configs/e0_frames.json
+# e0 probe set: the 12 readout probes the B1/B2 instruments are indexed by.
+!/data/configs/e0_probes.json
 
 # e0 task corpus (48 tasks): the other half of the frozen 1,344-context
 # extraction stimulus.

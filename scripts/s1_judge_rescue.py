@@ -40,7 +40,7 @@ from valence_core.readout import softmax
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROUNDS = os.path.join(REPO, "data/e2a/g2_rounds_f0.1.json")
-TASKS = os.path.join(REPO, "jlens-qwen36/data/corpus/e2a_tasks.jsonl")
+TASKS = os.path.join(REPO, "data/corpus/e2a_tasks.jsonl")
 VAL = {f"t{i:02d}" for i in range(9, 17)}
 FIT = {f"t{i:02d}" for i in range(1, 9)}
 SEP = "\n---\n"

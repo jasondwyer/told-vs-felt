@@ -20,9 +20,11 @@ consistent, the port is checked against the *recorded DV* of every sampled
 choice. A construction that drifted would show up as a changed p_a even if
 its verify KL were a clean zero.
 
-Some inputs (the e2a/e0 task corpora, the B1 marker artifact) remain in the
-gitignored clone; they are read-only here and their absence is reported as
-SKIP with the reason, never as a pass.
+Every input now lives in the record (2026-08-20): the e2a/e0 task corpora,
+the e0 probe set, and the B1 marker artifact were pulled out of the
+gitignored clone so this tier is reproducible from the repo alone. Only the
+Qwen weights themselves come from outside it. A missing input is still
+reported as SKIP with its reason, never as a pass.
 """
 
 from __future__ import annotations
@@ -41,7 +43,6 @@ from ..readout import choice_read, softmax, symmetric_kl
 
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DATA = os.path.join(REPO, "data")
-CLONE = os.path.join(REPO, "jlens-qwen36")
 
 LAYER = 48
 KERNEL_FRACS = (0.10, 0.20)
@@ -176,7 +177,7 @@ def build_instruments():
     artifact exactly as `e0_v1_hijack_b2.build_instruments` does. G is
     asserted against its pre-registered value -- if G drifts, nothing
     downstream is comparable."""
-    b1 = os.path.join(CLONE, "data/e0/e0_b1_markers.npz")
+    b1 = os.path.join(DATA, "e0/e0_b1_markers.npz")
     if not os.path.exists(b1):
         return None, None
     Z = np.load(b1)
@@ -231,18 +232,18 @@ def check_b2b(adapter) -> list[Result]:
     if instruments is None:
         return [Result("B2b reproduction", "delta +.2848/-.3946",
                        "SKIP", False,
-                       note="e0_b1_markers.npz absent (clone-only artifact)")]
+                       note="e0_b1_markers.npz absent from the record")]
     if abs(G - G_EXPECTED) > 1e-3:
         return [Result("B2b instrument G", f"{G_EXPECTED}", f"{G:.6f}", False,
                        note="instrument drift -- nothing downstream comparable")]
     print(f"  instruments rebuilt: G = {G:.6f} (expected {G_EXPECTED})",
           flush=True)
 
-    tasks_p = os.path.join(CLONE, "data/corpus/e0_tasks.jsonl")
-    probes_p = os.path.join(CLONE, "data/configs/e0_probes.json")
+    tasks_p = os.path.join(DATA, "corpus/e0_tasks.jsonl")
+    probes_p = os.path.join(DATA, "configs/e0_probes.json")
     if not (os.path.exists(tasks_p) and os.path.exists(probes_p)):
         return [Result("B2b reproduction", "delta +.2848/-.3946",
-                       "SKIP", False, note="e0 corpus absent (clone-only)")]
+                       "SKIP", False, note="e0 corpus absent from the record")]
     tasks = {json.loads(l)["id"]: json.loads(l)
              for l in open(tasks_p) if l.strip()}
     probes = json.load(open(probes_p))["probes"]
@@ -460,7 +461,7 @@ def main() -> int:
     print(f"model loaded in {time.time() - t0:.0f}s")
     print(f"provenance: {json.dumps(adapter.provenance())}", flush=True)
 
-    tasks_p = os.path.join(CLONE, "data/corpus/e2a_tasks.jsonl")
+    tasks_p = os.path.join(DATA, "corpus/e2a_tasks.jsonl")
     tasks = ([json.loads(l) for l in open(tasks_p) if l.strip()]
              if os.path.exists(tasks_p) else [])
     tag_ids = {}
@@ -480,7 +481,7 @@ def main() -> int:
         _banner("(i) g1r kernel-gate KLs")
         if not tasks:
             results.append(Result("g1r kernel gate", "KLs", "SKIP", False,
-                                  note="e2a_tasks.jsonl absent (clone-only)"))
+                                  note="e2a_tasks.jsonl absent from the record"))
         else:
             results += check_kernel(adapter, tasks, tag_ids)
     if args.check in ("all", "b2b"):

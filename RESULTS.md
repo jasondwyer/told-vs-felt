@@ -20,6 +20,33 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-20 — **Last clone-only inputs pulled into the record; the
+  ledger-26 oracle tier is now reproducible from the repo alone.**
+  - Added, all byte-identical to the clone: `data/corpus/e2a_tasks.jsonl`
+    (4.6 KB, 16 tasks × 4 paraphrases — the kernel-gate stimulus),
+    `data/configs/e0_probes.json` (2.3 KB, the 12 readout probes the
+    B1/B2 instruments are indexed by), and
+    **`data/e0/e0_b1_markers.npz` (47.5 MB)** — the source the 12 B2b
+    instruments are recomputed from.
+  - **Size decision, stated rather than buried:** the B1 artifact is
+    ~5.6× the previous entire `.git` (8.4 MB → ~56 MB), permanently in
+    history. Admitted deliberately: rule-26 criterion (ii) *rebuilds*
+    the instruments from this file, so storing only the derived
+    instruments (~50 KB) would mean trusting a computation that could no
+    longer be checked. `e0_residuals.npz` (202 MB) remains excluded —
+    verified still ignored.
+  - **Verified sufficient, not merely present:** `build_instruments()`
+    now runs off `data/` and returns **G = 0.315550**, matching the
+    published artifact's 0.315550304633827. That is the check that
+    matters — a file in the record that the code doesn't read, or reads
+    and disagrees with, is worse than no file.
+  - **Every path repointed:** `oracle.py` (B1, e0 tasks, e0 probes, e2a
+    tasks) and `scripts/s1_judge_rescue.py` now read `data/`; the dead
+    `CLONE` constant is removed from the oracle. Only the Qwen *weights*
+    still come from the gitignored clone. Absent inputs still report
+    SKIP with a reason, never a pass.
+  - Handoff trap 9 updated: it recorded these as outstanding.
+
 - 2026-08-20 — **S1 COMPLETE (judge-rescue matched ladder, Qwen, existing
   e2a corpus). RESULT: the judge is not rescued on any rung. Every one
   of the 8 cells fails to clear chance, and every cell's 95% CI

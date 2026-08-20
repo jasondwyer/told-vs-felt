@@ -1,0 +1,30 @@
+{
+  "_doc": "e0 V1 probe battery (PROPOSAL-e §2, B1). Each probe is a held-out mundane task appended to a context as the NEXT round, completion-style: 'Task: {probe}\\nResponse:' -- the marker read is the next-token distribution at the final position (the response-opener distribution). Probes are disjoint from the e0 extraction corpus, CONDITIONING_TASKS, and FLAT_PROBE_BATTERY, and are burned for V1. Token classes are CANDIDATE markers: B1 measures their natural post-praise vs post-criticism discrimination on a fit half (tasks split by id) and validates on the held-out half; only survivors enter the B2 pre-registration. Class words are resolved to token ids with leading-space and capitalization variants at runtime.",
+  "probes": [
+    "Suggest a title for a short film about a lost umbrella.",
+    "Write one sentence describing the sound of a busy café.",
+    "Rewrite this more politely: Send me the file now.",
+    "Summarize in one sentence: The bakery on Elm Street now opens an hour earlier on weekdays.",
+    "Write a one-sentence caption for a photo of a cat asleep on a stack of newspapers.",
+    "Suggest a name for a community tool-lending library.",
+    "Describe the feeling of stepping into warm sunlight in one sentence.",
+    "Write a one-sentence reminder to water the office plants.",
+    "Rewrite this without cliché: We must think outside the box.",
+    "Write a one-sentence welcome for visitors to a small museum.",
+    "Suggest a subject line for an email about a lost-and-found box.",
+    "Describe an empty train platform at night in one sentence."
+  ],
+  "classes": {
+    "confidence": ["Sure", "Certainly", "Absolutely", "Definitely", "Yes",
+                   "Here", "Of course", "Easy", "Gladly"],
+    "hedging": ["Perhaps", "Maybe", "Possibly", "Might", "Hmm", "Well",
+                "I think", "I suppose", "Not sure", "It depends"]
+  },
+  "readout": {
+    "type": "mean_difference_linear",
+    "storage": "per-context sparse top-4096 next-token log-probs, floor-imputed",
+    "selection": "top-256 tokens per probe by |mean log-prob difference| on the fit half, union across probes",
+    "validation": "AUC of the fit-half mean-difference readout on the held-out task half",
+    "split": "tasks e01-e24 = fit half, e25-e48 = validation half (fixed by id, declared before B1 data)"
+  }
+}
