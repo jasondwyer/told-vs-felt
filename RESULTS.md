@@ -131,6 +131,38 @@ applied to CLAUDE.md.
     verbatim for the design instance to carry in; Code does not author
     proposal documents.
 
+- 2026-08-19 — **Box TERMINATED. Phase 0 closes on the execution side;
+  the volume, the manifest, and the respawn gate are what carry
+  forward.**
+  - Pod `y5xyt9gztc629u` (A100-SXM4-80GB, US-CA-2) terminated after a
+    pre-flight check: 11 analysis artifacts in the repo (all previously
+    hash-matched against the box), 16 raw logs from 2026-08-19, 29
+    weight-file hashes in `data/olmo/manifest.json`, working tree clean
+    and 0/0 with origin. Nothing was stranded.
+  - **Network volume `o73qvy742n` (500 GB, US-CA-2) verified surviving
+    after termination** — it holds the 258 GB of bf16 checkpoints and
+    is untouched by pod lifecycle. Re-attaching requires a pod in
+    US-CA-2; that region lock is the standing constraint.
+  - **Standing authorization recorded (user, 2026-08-19):** Code
+    handles **pod** start/stop/terminate going forward — start still
+    flagged for a go because it spends money, stop and terminate taken
+    autonomously. **Volumes remain the user's**, always. The asymmetry
+    is deliberate: terminating a pod destroys a container whose only
+    unique content is a one-line shell hook, while deleting a volume
+    destroys 258 GB that would cost ~90 minutes to reacquire.
+  - **Resurrection path, in order:** create a pod in US-CA-2 attaching
+    `o73qvy742n` → `scripts/box_respawn_check.py` (protocol step (i);
+    exits non-zero on any MISSING/EXTRA/MISMATCH) → `box_determinism.py`
+    (step (ii), the backend of record) → only then any experimental
+    forward. `/workspace/venv` and the repo clone are on the volume and
+    survive; the `~/.bashrc` hook sourcing `env.sh` does not, and is one
+    line to restore.
+  - **State at Phase-0 close:** steps 1, 2, 3 complete and logged; step
+    4 (lens) DEFER pending PROPOSAL-g; step 5 harnesses constructed and
+    unrun; 0b awaiting the user's preprint-final declaration. Suite
+    70/70 model-free, 8/8 oracle-tier at last run. Nothing is queued for
+    a box until PROPOSAL-g lands.
+
 - 2026-08-19 — **Batch accepted (respawn placement, tagscreen, detection
   harness); framing tension resolved to a two-arm design; one new
   calibration row taken into PROPOSAL-g intake. No construction
