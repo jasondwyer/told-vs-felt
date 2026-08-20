@@ -131,6 +131,40 @@ applied to CLAUDE.md.
     verbatim for the design instance to carry in; Code does not author
     proposal documents.
 
+- 2026-08-19 — **Batch accepted (respawn placement, tagscreen, detection
+  harness); framing tension resolved to a two-arm design; one new
+  calibration row taken into PROPOSAL-g intake. No construction
+  changes. Phase 0 stands complete but for 0b and step 4.**
+  - **Framing tension — resolved by the design instance as two arms,
+    not one choice.** A MACAR_FRAMING fidelity arm carries the
+    positive-control criterion; a program-register arm runs secondary;
+    the arm delta becomes a named quantity. Locked with bars in
+    PROPOSAL-g. This is the right shape: it converts "which framing?"
+    from a confound into a measurement, so a Q2 replication failure can
+    be attributed to the model or to the register rather than being
+    uninterpretable. `detection.py` already takes `framing` as a
+    parameter, so both arms run without a code change.
+  - **New calibration-tier row (design instance):** per-stage
+    characterization of the `"…\n\nAssistant:"` fallback on neutral
+    content — undecidable and degeneracy base rates per stage, before
+    any Q2 run.
+  - **FLAG — that row is load-bearing, and here is why.** The scaffold
+    characterization showed the *bracketed session* format protects the
+    post-trained stages: DPO and Instruct answered correctly under it
+    even with bans off. But the detection harness does **not** use that
+    format — it uses their `User:/Assistant:` fallback, which is much
+    closer to the bare completion on which DPO and Instruct emitted
+    `<|im_end|>` instead of an answer. **The one format we have
+    evidence is protective is not the format Q2 will run in.** So the
+    calibration row is not hygiene; it is checking whether the Q2
+    harness has a usable response rate on exactly the two stages whose
+    transition Q2 exists to detect. If undecidable rates run high on
+    DPO/Instruct under the fallback, detection sensitivity is
+    attenuated at precisely the stages that matter, and the positive
+    control could fail for a format reason rather than a model reason.
+    Recorded here so the row is understood as a precondition rather
+    than a nicety.
+
 - 2026-08-19 — **CLAUDE.md §Environment amended: respawn protocol
   (design-instance authored) applied verbatim, and its step (i) made
   executable.**
