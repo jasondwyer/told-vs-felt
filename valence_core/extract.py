@@ -223,6 +223,50 @@ def freeze_sha(axes: Mapping[str, np.ndarray], order: Sequence[str]) -> str:
     return sha16_arr(np.stack([axes[a] for a in order]))
 
 
+# --- ADDENDUM-g1 anchor requirement --------------------------------------
+STAGE_SPLIT_KEYS = ("stage", "fit_ids", "val_ids")
+
+
+def assert_stage_splits(artifact: Mapping, where: str = "artifact") -> None:
+    """ADDENDUM-g1: an A3/A4 artifact must carry ITS OWN stage's fit/val
+    split, by item id.
+
+    g1 runs after B3 and trains the stage-matched embedding probe on that
+    stage's fit-half records, scoring it on the same val items the judge
+    sees. That comparison is only meaningful if judge and probe were given
+    identical materials -- which means the split has to be the one that
+    stage actually used, recovered from the record rather than recomputed
+    later from a rule.
+
+    Recomputing is the failure this guards. A split regenerated months on
+    from "tasks 1-24 are fit" looks right and silently stops being right the
+    moment any stage drops an item, reorders a corpus, or excludes a
+    session. By then the probe and the judge are scored on different items
+    and the dissociation g1 exists to detect -- reads but doesn't act -- is
+    unreadable.
+
+    Cheap now, impossible later: the split costs two id lists per stage at
+    write time, and cannot be reconstructed once the run is gone.
+    """
+    missing = [k for k in STAGE_SPLIT_KEYS
+               if k not in artifact or artifact[k] in (None, "", [], ())]
+    if missing:
+        raise ValueError(
+            f"{where}: missing per-stage split {missing} (ADDENDUM-g1). "
+            f"A3/A4 artifacts record stage, fit_ids and val_ids so g1's "
+            f"probe and judge can be scored on identical materials per "
+            f"stage; a split recomputed after the fact is not the split the "
+            f"stage ran.")
+    fit, val = set(artifact["fit_ids"]), set(artifact["val_ids"])
+    overlap = fit & val
+    if overlap:
+        raise ValueError(
+            f"{where}: fit/val overlap on {sorted(overlap)[:5]} "
+            f"({len(overlap)} ids) -- rule 18 both directions; a probe "
+            f"trained on its own test items measures nothing")
+
+
 __all__ = ["Context", "CaptureResult", "AxisReport", "assert_disjoint",
+           "STAGE_SPLIT_KEYS", "assert_stage_splits",
            "span_start", "capture", "resid_norm_table", "mean_diff_axis",
            "cosine", "residual_fraction", "axis_report", "freeze_sha"]

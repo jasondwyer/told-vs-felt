@@ -20,6 +20,97 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-20 — **PROPOSAL-h batch: rule 5 amended (verbatim), e2b
+  quarantine built, H3 ported to MLX, LOCK-h power arithmetic delivered.
+  Suite 103 → 125. TWO FLAGS, one of them load-bearing: H1 at the
+  drafted n = 64 has power 0.137, not ≥ 0.8 — its own escape clause
+  fires.**
+  - **Item 1 — CLAUDE.md amended, text verbatim, as rule 5(e).**
+    **CORRECTION, flagged not silently fixed:** PROPOSAL-h §0's preamble
+    says "Two-horns (law rule 4)". In CLAUDE.md v3.1 two-horns is **rule
+    5**; rule 4 is equal-norm for preference pairs. §0.4 correctly names
+    "the two-horns rule", so the amendment went to rule 5 and the
+    numbering slip is recorded here rather than propagated. Applying it
+    verbatim to the rule *numbered* 4 would have attached a
+    state-present exception to the equal-norm law.
+  - **Item 2 — e2b harness built, split by hazard.** The dangerous thing
+    is small and quarantined; everything testable is inert and
+    importable. `valence_core/e2b/records.py` carries provenance,
+    shadow pairing and leak arithmetic; `statepresent.py` holds the one
+    function that can put a state on the residual stream at a choice
+    position and **refuses to import** outside the e2b package or a
+    `scripts/e2b_*.py` runner.
+  - **The guard's first version was worthless and is recorded as such.**
+    It scanned the whole stack for a sanctioned frame — and since the
+    module lives inside the package it always found *itself*, sanctioning
+    every caller. It now consults only the importer. Both directions are
+    suite-pinned: the import fails here, and succeeds from an
+    `e2b_*.py` runner.
+  - **The guard is not claimed to be airtight, and the docstring says
+    so.** Anything that can import a sanctioned runner inherits the
+    capability; Python offers no way around that. The real guarantee is
+    structural and checked every run: **no module in `valence_core`
+    outside `e2b/` so much as names the primitive**, and `choice_read`'s
+    signature has not grown an injection parameter (rule 5(e)'s final
+    clause, "the insulated primitive is never modified").
+  - **Refusals at construction, not flags at analysis.** A state-present
+    read with incomplete provenance, a null dose, or no shadow cannot be
+    constructed — it is a read the amendment did not license, and the
+    only safe time to catch it is before it enters a campaign. A
+    "shadow" that carries provenance is refused too.
+  - **The leak summary splits by injected sign, and the suite pins why.**
+    A leak pushing the same way under +state and −state is a token-level
+    artifact the label-map counterbalance cancels; one that reverses
+    with the state is the leak that would masquerade as preference.
+    Pooling averages exactly that distinction away — fixtures confirm a
+    state-reversing leak of ±0.10 pools to 0.000.
+  - **Item 2 (H3) — the port was smaller than the word suggests.**
+    `tagscreen` already speaks `ModelAdapter`, so it runs on MLX
+    unchanged; the tokenizer half needed the work.
+    `assert_roster_tokenizer` enforces ids A1 pinned on the *OLMo*
+    tokenizer, which mean nothing on Qwen, so H3 gets
+    `screen_roster_tokenizer` — reports which pairs this tokenizer can
+    read, drops the rest **with a reason**. On a new apparatus a
+    multi-token tag is a screening outcome, not an incident.
+  - **Item 3 — LOCK-h power arithmetic, and it does not come out where
+    the draft assumed.** `scripts/h1_power.py`, model-free, re-runnable.
+    At verdict n = 96, exact one-sided α = .05: critical k ≥ 57/96,
+    **MDE_verdict = 0.130 in share units** (0.260 as a difference), so
+    **bar_leak = 0.065**.
+    **FLAG — H1 at n = 64 has power 0.137 against that bar. Power ≥ 0.8
+    needs n ≈ 470, 7.3× the drafted 64.** §2 anticipates exactly this:
+    *"if 64 is insufficient under the computed numbers, H1 extends
+    before opening, never after."* It is insufficient. Sensitivity
+    across every reading of the undeclared conventions: 470 / 348 / 282
+    / 212 — **the cheapest defensible reading still needs 212, 3.3×**.
+  - **FLAG — the control envelope usually dominates the binomial, which
+    makes MDE_verdict as drafted a lower bound.** Max |pseudo-Δ| across
+    sham (36) and random (36) under the null has p90 = 0.167 > the
+    binomial MDE 0.130 (200k sims). The verdict criterion is
+    conjunctive, so its true MDE is the larger of the two — and since
+    bar_leak is defined off MDE_verdict, a bigger MDE *helps* H1 (that
+    is the 282 row). Which definition LOCK-h adopts changes H1's n by
+    more than a factor of two.
+  - **Three conventions the arithmetic needed and the pre-registration
+    does not state**, surfaced rather than silently chosen: whether
+    Δ_first pools over all marker sessions or is computed within each
+    map and combined (effective n, and every number here, moves); the
+    power level MDE_verdict is quoted at (§2 declares a floor for H1,
+    none for the MDE itself); and one- vs two-sided for H1 — computed
+    two-sided, since its gate is on |Δ_first| and a one-sided reading
+    would inflate the power.
+  - **Item 4 — g1's anchor requirement made executable, not noted.**
+    `extract.assert_stage_splits` requires an A3/A4 artifact to carry
+    its own `stage`, `fit_ids`, `val_ids`, and refuses fit/val overlap.
+    The failure it guards is recomputation: a split regenerated later
+    from "tasks 1–24 are fit" looks right and stops being right the
+    moment a stage drops an item — after which g1's probe and judge are
+    scored on different materials and the reads-but-doesn't-act
+    dissociation is unreadable. Two id lists at write time;
+    unreconstructable once the run is gone.
+  - **Nothing was run.** H3 awaits the word (laptop, minutes); H1 awaits
+    LOCK-h. Suite **125/125** model-free.
+
 - 2026-08-20 — **Adjudication batch received and actioned (S1 accepted;
   A1 addition; sequence; S2 promoted). Items 3 and 5 are built and
   committed above. Item 2 is BLOCKED at this site and is the only thing

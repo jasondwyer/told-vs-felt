@@ -222,6 +222,46 @@ def assert_roster_tokenizer(adapter: ModelAdapter, roster: Mapping) -> dict:
     return ids
 
 
+def screen_roster_tokenizer(adapter: ModelAdapter,
+                            roster: Mapping) -> tuple[list, list]:
+    """Which candidate pairs this tokenizer can actually read.
+
+    The reporting sibling of `assert_roster_tokenizer`, and the distinction
+    is not cosmetic. `assert_` is for a roster whose ids are already pinned
+    on a known tokenizer: there, a surprise is an incident. This is for
+    carrying a roster to a NEW apparatus (H3 takes the cycle-3/4 roster to
+    Qwen, where the OLMo ids mean nothing), and there a multi-token tag is
+    an ordinary screening outcome -- the pair simply cannot be read, which
+    is what the screen exists to discover.
+
+    Recorded ids are deliberately NOT enforced here: they belong to whatever
+    tokenizer measured them. Enforcing them across apparatus would fail
+    every pair for the wrong reason.
+
+    Returns (usable, dropped); dropped rows carry the reason, because a pair
+    that vanishes without explanation reads as a pair that was never
+    considered.
+    """
+    usable, dropped = [], []
+    for pair in roster["pairs"]:
+        ids, why = {}, None
+        for tag in pair["tags"]:
+            enc = adapter.encode(" " + tag, add_special_tokens=False)
+            if len(enc) != 1:
+                why = (f"{tag!r} is {len(enc)} tokens on this tokenizer; "
+                       f"the restricted-choice read requires single-token "
+                       f"labels")
+                break
+            ids[tag] = int(enc[0])
+        if why:
+            dropped.append({"name": pair["name"], "tags": list(pair["tags"]),
+                            "reason": why})
+        else:
+            usable.append({"name": pair["name"], "tags": list(pair["tags"]),
+                           "token_ids": [ids[t] for t in pair["tags"]]})
+    return usable, dropped
+
+
 def rank_by_balance(results: Sequence[PairResult]) -> list[PairResult]:
     """Most balanced first. Ranking only -- no pass/fail, because the bar is
     PROPOSAL-g's to set and has not been pre-registered."""
@@ -230,4 +270,4 @@ def rank_by_balance(results: Sequence[PairResult]) -> list[PairResult]:
 
 __all__ = ["BANNER", "NEUTRAL_TASKS", "FORMATS", "PairResult", "build_probe",
            "decompose", "screen_pair", "screen_roster", "rank_by_balance",
-           "assert_roster_tokenizer"]
+           "assert_roster_tokenizer", "screen_roster_tokenizer"]

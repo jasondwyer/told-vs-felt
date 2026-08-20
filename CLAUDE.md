@@ -268,6 +268,12 @@ step-0a audit found only partly absorbed by rules 13/18/21.
    preference readouts without a design-instance structural argument;
    (d) **persistent-KV session readouts disqualified** at dose ≥ 0.20
    for the reward axis; any live-KV design needs its own gate.
+   (e) [h-amendment, PROPOSAL-h §0.4, design-instance authored, applied
+   on its commit `34eb7ee` 2026-08-20; text verbatim] *"Exception: a
+   state-present choice read may run only via a quarantined primitive
+   with per-read injection provenance and paired shadow reads, inside a
+   committed pre-registration whose leakage-budget gate has passed; the
+   insulated primitive is never modified."*
 6. Invalid-instrument outputs never inform design.
 7. Preference tests are experience-then-choose; cold menus are inert.
 8. Monitors: unsteered arms decision-relevant; displacement inflates

@@ -1,0 +1,66 @@
+{
+ "item": "LOCK-h power arithmetic",
+ "sensitivity": [
+  {
+   "definition": "binomial only, power 0.80",
+   "mde_verdict": 0.12999999999998568,
+   "bar_leak": 0.06499999999999284,
+   "h1_n_required": 470,
+   "multiple_of_drafted": 7.3
+  },
+  {
+   "definition": "binomial only, power 0.90",
+   "mde_verdict": 0.15149999999998331,
+   "bar_leak": 0.07574999999999166,
+   "h1_n_required": 348,
+   "multiple_of_drafted": 5.4
+  },
+  {
+   "definition": "conjunctive proxy: envelope p90",
+   "mde_verdict": 0.16666666666666663,
+   "bar_leak": 0.08333333333333331,
+   "h1_n_required": 282,
+   "multiple_of_drafted": 4.4
+  },
+  {
+   "definition": "conjunctive proxy: envelope p95",
+   "mde_verdict": 0.19444444444444442,
+   "bar_leak": 0.09722222222222221,
+   "h1_n_required": 212,
+   "multiple_of_drafted": 3.3
+  }
+ ],
+ "inputs": {
+  "n_verdict": 96,
+  "n_h1": 64,
+  "n_sham": 36,
+  "n_rand": 36,
+  "alpha": 0.05,
+  "mde_power": 0.8
+ },
+ "critical_k": 57,
+ "mde_verdict_share": 0.12999999999998568,
+ "mde_verdict_difference_convention": 0.25999999999997137,
+ "bar_leak_share": 0.06499999999999284,
+ "h1_power_at_drafted_n": 0.137345077786909,
+ "h1_meets_requirement": false,
+ "h1_n_required_for_power_0.8": 470,
+ "control_envelope": {
+  "mean": 0.09363875,
+  "median": 0.08333333333333337,
+  "p90": 0.16666666666666663,
+  "p95": 0.19444444444444442,
+  "max_seen": 0.3888888888888889,
+  "trials": 200000,
+  "n_sham": 36,
+  "n_rand": 36
+ },
+ "envelope_dominates_binomial": true,
+ "assumptions": [
+  "Delta_first is the pooled share over all marker-family sessions, so the exact binomial runs at the full n. If the counterbalanced Delta is instead computed within each map (n/2 each) and then combined, effective n falls and every number here moves.",
+  "MDE is quoted at power 0.8; PROPOSAL-h declares a power floor for H1 but not for MDE_verdict itself. That convention belongs in LOCK-h.",
+  "H1's power is computed two-sided because its gate is on |Delta_first|; a one-sided reading would inflate the power.",
+  "The binomial MDE ignores the control-envelope and sign-lock conjuncts, both of which can only make the verdict harder."
+ ],
+ "decides_nothing": "Code delivers arithmetic; LOCK-h.md is authored by the design instance."
+}

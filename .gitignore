@@ -20,6 +20,13 @@
 /data/e2a/*
 !/data/e2a/*.json
 !/data/e2a/*.jsonl
+
+# e2b artifacts (PROPOSAL-h §6). The power arithmetic and the H3 screen are
+# both instruments a later run has to be able to re-derive, not outputs.
+!/data/e2b/
+/data/e2b/*
+!/data/e2b/*.json
+!/data/e2b/*.jsonl
 # OLMo checkpoint manifest (step 2): shas, dtypes, param counts. The
 # weights stay on the box; the provenance record travels (ledger 27).
 !/data/olmo/
@@ -76,6 +83,10 @@
 # have. Committed so the design instance can replace the stimulus by editing
 # a file, and so the axis it produces is traceable to exact text.
 !/data/configs/s2_vignette_frames.json
+# H3 candidate roster: the Qwen-side tag screen PROPOSAL-h §2 gates e2b
+# on. Committed because the roster it locks is the instrument every e2b
+# session is read through.
+!/data/configs/h3_roster_candidates.json
 
 # e0 task corpus (48 tasks): the other half of the frozen 1,344-context
 # extraction stimulus.

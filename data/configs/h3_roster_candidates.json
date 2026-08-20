@@ -1,0 +1,118 @@
+{
+ "_doc": "H3 candidate roster (PROPOSAL-h \u00a72 H3) -- the cycle-3/4 roster plus candidates, screened for INTRINSIC balance on the Qwen apparatus. The cycle-3/4 pairs were order-counterbalanced but never identity-screened; the 2026-08-19 finding (bias is token identity, which order counterbalancing cannot absorb) makes this mandatory before e2b.",
+ "_apparatus": "Qwen3.6-27B-4bit, MLX, laptop. Token ids are NOT recorded here: the A1 ids were measured on the OLMo tokenizer and mean nothing on this one. H3 measures and records them into its own artifact; a later run can pin against that.",
+ "band": {
+  "centre": 0.5,
+  "halfwidth": 0.1,
+  "applies_to": "identity_split, scaffold format primary",
+  "source": "PROPOSAL-h \u00a72 H3, band as PROPOSAL-g A1",
+  "note": "Single apparatus, so unlike A1 this band is decidable within one run. position_split recorded with no band (order counterbalancing absorbs it); label_mass recorded with no band (\u00a72 H3 asks for it as a report)."
+ },
+ "pairs": [
+  {
+   "name": "C1",
+   "tags": [
+    "slate",
+    "prism"
+   ],
+   "origin": "cycle-3/4 incumbent",
+   "token_ids": [
+    null,
+    null
+   ],
+   "prior": "The e2a/f1 workhorse pair. On the OLMo chain prism took 0.711-0.822 of label mass; whether that transfers to Qwen is exactly what H3 measures. This pair carries every published cycle-3/4 preference number, so an imbalance here is a finding about the record, not only about e2b."
+  },
+  {
+   "name": "C2",
+   "tags": [
+    "maple",
+    "cedar"
+   ],
+   "origin": "cycle-3/4 incumbent",
+   "token_ids": [
+    null,
+    null
+   ],
+   "prior": "never identity-screened"
+  },
+  {
+   "name": "C3",
+   "tags": [
+    "granite",
+    "lattice"
+   ],
+   "origin": "cycle-3/4 incumbent",
+   "token_ids": [
+    null,
+    null
+   ],
+   "prior": "never identity-screened"
+  },
+  {
+   "name": "C4",
+   "tags": [
+    "plaza",
+    "saddle"
+   ],
+   "origin": "cycle-3/4 incumbent, post-swap",
+   "token_ids": [
+    null,
+    null
+   ],
+   "prior": "gravel -> saddle by the verified pick procedure (e2a smoke2 adjudication 2026-08-09); gravel stays excluded on pool collision. This pair is (plaza, saddle)."
+  },
+  {
+   "name": "N1",
+   "tags": [
+    "canvas",
+    "copper"
+   ],
+   "origin": "A1 candidate, Code-proposed 2026-08-20",
+   "token_ids": [
+    null,
+    null
+   ],
+   "prior": "single-token and pool-clean on the OLMo tokenizer; both properties must be re-established here"
+  },
+  {
+   "name": "N2",
+   "tags": [
+    "quartz",
+    "ridge"
+   ],
+   "origin": "A1 candidate, Code-proposed 2026-08-20",
+   "token_ids": [
+    null,
+    null
+   ],
+   "prior": "as N1"
+  },
+  {
+   "name": "N3",
+   "tags": [
+    "amber",
+    "velvet"
+   ],
+   "origin": "A1 candidate, Code-proposed 2026-08-20",
+   "token_ids": [
+    null,
+    null
+   ],
+   "prior": "as N1"
+  },
+  {
+   "name": "N4",
+   "tags": [
+    "walnut",
+    "ember"
+   ],
+   "origin": "A1 candidate, Code-proposed 2026-08-20",
+   "token_ids": [
+    null,
+    null
+   ],
+   "prior": "as N1"
+  }
+ ],
+ "_hygiene_note": "Pool disjointness for C1-C4 was established for the cycle-3/4 pools and holds. N1-N4 were verified word-boundary disjoint from the OLMo-side pools and the wrapper (ledger 28c) on 2026-08-20; if e2b introduces any new task pool, rule 18's assertion re-runs against it before the roster locks."
+}

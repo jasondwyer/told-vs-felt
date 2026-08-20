@@ -715,6 +715,197 @@ def check_s2_neighbors() -> list[Check]:
     return out
 
 
+
+def check_e2b_quarantine() -> list[Check]:
+    """The h-amendment's enforceable clauses (CLAUDE.md rule 5(e),
+    PROPOSAL-h §0.1-0.2).
+
+    These are the checks that make the exception inspectable forever, so
+    they are structural rather than behavioural wherever possible: an
+    import that must fail, a name that must appear nowhere, a signature that
+    must not grow. A quarantine asserted only in prose is a quarantine that
+    ends the first time someone needs the function.
+    """
+    import importlib
+    import inspect as _inspect
+
+    from ..e2b import (InjectionProvenance, PairedRead, StatePresentRead,
+                       assert_choice_read_uninjectable,
+                       assert_provenance_complete, leak_from_pair,
+                       summarize_leak)
+    out = []
+
+    # --- the quarantine itself -------------------------------------------
+    got, ok = _raises(
+        lambda: importlib.import_module("valence_core.e2b.statepresent"),
+        ImportError)
+    out.append(_c("e2b: quarantined primitive refuses import here",
+                  "rule 5(e) / PROPOSAL-h §0.1", "raises", got, ok))
+
+    # Stronger than the guard, and the check that actually holds the line:
+    # nothing in valence_core outside e2b/ may even NAME the primitive.
+    # `regression/` is excluded, and the exclusion is earned rather than
+    # convenient: this suite has to NAME the primitive in order to guard it,
+    # and the check directly above already proves the stronger fact for this
+    # package -- that importing it from here raises. Every other module gets
+    # the letter of the rule.
+    core = os.path.join(REPO, "valence_core")
+    offenders = []
+    for root, _dirs, files in os.walk(core):
+        base_dir = os.path.basename(root)
+        if base_dir in ("e2b", "regression") or "__pycache__" in root:
+            continue
+        for f in files:
+            if not f.endswith(".py"):
+                continue
+            with open(os.path.join(root, f)) as fh:
+                if "choice_read_statepresent" in fh.read():
+                    offenders.append(os.path.relpath(
+                        os.path.join(root, f), REPO))
+    out.append(_c("e2b: no standard harness names the primitive",
+                  "structural quarantine", "0 offenders",
+                  f"{len(offenders)} offenders" + (f" {offenders}" if offenders else ""),
+                  not offenders))
+
+    # --- 'the insulated primitive is never modified' ----------------------
+    got, ok = _raises(assert_choice_read_uninjectable, AssertionError)
+    out.append(_c("e2b: choice_read still cannot inject",
+                  "rule 5(e) final clause", "accepted", got,
+                  got == "accepted"))
+    sig = set(_inspect.signature(
+        importlib.import_module("valence_core.readout").choice_read).parameters)
+    out.append(_c("e2b: choice_read signature unchanged",
+                  "readout.choice_read", "no injection param",
+                  "clean" if not (sig & {"injections", "injection", "state"})
+                  else "GREW", not (sig & {"injections", "injection", "state"})))
+
+    # --- per-read injection provenance ------------------------------------
+    good = dict(axis="reward", layer=48, frac=0.1, alpha=10.301, sign=1,
+                r_layer=103.01, direction_sha="deadbeefdeadbeef")
+    prov = InjectionProvenance(**good)
+    got, ok = _raises(lambda: assert_provenance_complete(prov), ValueError)
+    out.append(_c("e2b: complete provenance is admissible",
+                  "rule 5(e)", "accepted", got, got == "accepted"))
+    for missing in ("direction_sha", "r_layer", "frac"):
+        partial = {k: v for k, v in good.items() if k != missing}
+        partial[missing] = None
+        got, ok = _raises(lambda p_=partial: assert_provenance_complete(p_),
+                          ValueError)
+        out.append(_c(f"e2b: provenance without {missing} is refused",
+                      "rule 5(e) 'on EVERY read'", "raises", got, ok))
+    got, ok = _raises(
+        lambda: assert_provenance_complete({**good, "frac": 0.0,
+                                            "alpha": 0.0}), ValueError)
+    out.append(_c("e2b: a null-dose 'state-present' read is refused",
+                  "a read with no state is a shadow read", "raises", got, ok))
+
+    # --- paired shadow reads ----------------------------------------------
+    from ..readout import ChoiceRead
+
+    def _sp(p_a=0.62, mass=0.95, pick="A", sign=1):
+        return StatePresentRead(pick=pick, p_a=p_a, p_b=1 - p_a,
+                                label_mass=mass, top1_id=1,
+                                top1_is_label=True,
+                                provenance=InjectionProvenance(
+                                    **{**good, "sign": sign,
+                                       "alpha": sign * 10.301}))
+
+    def _shadow(p_a=0.50, mass=0.97, pick="A"):
+        return ChoiceRead(pick=pick, p_a=p_a, p_b=1 - p_a, label_mass=mass,
+                          top1_id=1, top1_is_label=True)
+
+    got, ok = _raises(
+        lambda: PairedRead(state_present=_sp(), shadow=None,
+                           prefix_sha="abc"), ValueError)
+    out.append(_c("e2b: a state-present read without its shadow is refused",
+                  "PROPOSAL-h §0.2", "raises", got, ok))
+    got, ok = _raises(
+        lambda: PairedRead(state_present=_sp(), shadow=_sp(),
+                           prefix_sha="abc"), ValueError)
+    out.append(_c("e2b: a steered 'shadow' is refused",
+                  "the shadow must be state-free", "raises", got, ok))
+
+    pair = PairedRead(state_present=_sp(), shadow=_shadow(), prefix_sha="abc")
+    lk = leak_from_pair(pair)
+    out.append(_c("e2b: per-read leak is state-present minus shadow",
+                  "PROPOSAL-h §0.2 (i)", "d_p_a +0.120",
+                  f"d_p_a {lk['d_p_a']:+.3f}", abs(lk["d_p_a"] - 0.12) < 1e-9))
+    out.append(_c("e2b: leak reports label-mass displacement too",
+                  "horn (a) degrades before it biases", "-0.020",
+                  f"{lk['d_label_mass']:+.3f}",
+                  abs(lk["d_label_mass"] + 0.02) < 1e-9))
+    flip = PairedRead(state_present=_sp(pick="B"), shadow=_shadow(pick="A"),
+                      prefix_sha="abc")
+    out.append(_c("e2b: a flipped pick is recorded", "coarse leak measure",
+                  "True", str(leak_from_pair(flip)["flipped"]),
+                  leak_from_pair(flip)["flipped"] is True))
+
+    # --- the summary that H1 actually reads --------------------------------
+    # Common-mode leak: +0.10 under BOTH signs. A label-map counterbalance
+    # cancels this; it must not look like a state-reversing effect.
+    common = [PairedRead(state_present=_sp(p_a=0.60, sign=s),
+                         shadow=_shadow(p_a=0.50), prefix_sha="p")
+              for s in (1, -1)]
+    cs = summarize_leak(common)
+    out.append(_c("e2b: common-mode leak reads as common mode",
+                  "the counterbalance absorbs it",
+                  "reversing 0.000 / common +0.100",
+                  f"reversing {cs['state_reversing_half_gap']:+.3f} / "
+                  f"common {cs['common_mode']:+.3f}",
+                  abs(cs["state_reversing_half_gap"]) < 1e-9
+                  and abs(cs["common_mode"] - 0.10) < 1e-9))
+    # State-reversing leak: +0.10 on +state, -0.10 on -state. This is the
+    # one that would masquerade as preference, and it must not average away.
+    rev = [PairedRead(state_present=_sp(p_a=0.60 if s > 0 else 0.40, sign=s),
+                      shadow=_shadow(p_a=0.50), prefix_sha="p")
+           for s in (1, -1)]
+    rs = summarize_leak(rev)
+    out.append(_c("e2b: state-reversing leak survives the split",
+                  "the leak a counterbalance cannot absorb",
+                  "reversing +0.100 / common 0.000",
+                  f"reversing {rs['state_reversing_half_gap']:+.3f} / "
+                  f"common {rs['common_mode']:+.3f}",
+                  abs(rs["state_reversing_half_gap"] - 0.10) < 1e-9
+                  and abs(rs["common_mode"]) < 1e-9))
+    out.append(_c("e2b: pooling would have hidden it", "why the split exists",
+                  "pooled mean 0.000",
+                  f"{(rs['mean_d_p_a_on_pos'] + rs['mean_d_p_a_on_neg']) / 2:+.3f}",
+                  abs((rs["mean_d_p_a_on_pos"]
+                       + rs["mean_d_p_a_on_neg"]) / 2) < 1e-9))
+    return out
+
+
+def check_g1_stage_anchor() -> list[Check]:
+    """ADDENDUM-g1's probe-anchor requirement, made executable before the
+    artifacts it constrains exist.
+
+    g1 attaches to B3's completion, so the requirement lands on A3/A4
+    artifacts written long before anyone reads the addendum again. A note in
+    a document would be found late; a check that fails is found at write
+    time, which is the only moment the split can still be recorded.
+    """
+    from ..extract import assert_stage_splits
+    out = []
+    good = {"stage": "dpo", "fit_ids": ["e01", "e02"],
+            "val_ids": ["e25", "e26"]}
+    got, ok = _raises(lambda: assert_stage_splits(good), ValueError)
+    out.append(_c("g1: a complete per-stage split is admissible",
+                  "ADDENDUM-g1 probe anchor", "accepted", got,
+                  got == "accepted"))
+    for drop in ("stage", "fit_ids", "val_ids"):
+        got, ok = _raises(
+            lambda d=drop: assert_stage_splits({k: v for k, v in good.items()
+                                                if k != d}), ValueError)
+        out.append(_c(f"g1: artifact without {drop} is refused",
+                      "ADDENDUM-g1", "raises", got, ok))
+    got, ok = _raises(
+        lambda: assert_stage_splits({**good, "val_ids": ["e01", "e25"]}),
+        ValueError)
+    out.append(_c("g1: fit/val overlap is refused", "rule 18 both directions",
+                  "raises", got, ok))
+    return out
+
+
 def check_detection_harness() -> list[Check]:
     """Step-5 detection harness: structure, insulation, and metric sanity.
     All no-GPU — construction is Phase-0 infrastructure and must be
@@ -838,6 +1029,8 @@ def run_all() -> list[Check]:
     checks += check_tagscreen()
     checks += check_a1_selection()
     checks += check_s2_neighbors()
+    checks += check_e2b_quarantine()
+    checks += check_g1_stage_anchor()
     checks += check_detection_harness()
     checks += check_instrument_invariants()
     return checks
