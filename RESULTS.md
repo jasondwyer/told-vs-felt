@@ -20,6 +20,71 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-20 — **S1 COMPLETE (judge-rescue matched ladder, Qwen, existing
+  e2a corpus). RESULT: the judge is not rescued on any rung. Every one
+  of the 8 cells fails to clear chance, and every cell's 95% CI
+  EXCLUDES probe-k=2 parity (.759). Registered reading: the break is at
+  RECOGNITION.** (Raw: `results/raw/2026-08-20_s1_judge_rescue.txt`;
+  artifact `data/e2a/s1_judge_rescue.json`. No new Qwen sessions, per
+  §5.)
+  - **n = 32 items/cell, declared before scoring** (entry above); 2
+    position orders each = 64 reads/cell, 512 reads total. All reads
+    vanilla state-free forwards over archived text — no steering
+    anywhere in S1, so two-horns is satisfied trivially.
+
+    | cell | acc | k/n | p | 95% CI |
+    |---|---|---|---|---|
+    | better k1 zeroshot | 0.484 | 31/64 | .646 | [.366, .604] |
+    | better k1 fewshot | 0.516 | 33/64 | .450 | [.396, .634] |
+    | better k2 zeroshot | 0.516 | 33/64 | .450 | [.396, .634] |
+    | better k2 fewshot | 0.516 | 33/64 | .450 | [.396, .634] |
+    | detection k1 zeroshot | 0.562 | 36/64 | .191 | [.441, .677] |
+    | detection k1 fewshot | 0.547 | 35/64 | .266 | [.426, .663] |
+    | detection k2 zeroshot | 0.531 | 34/64 | .354 | [.411, .648] |
+    | **detection k2 fewshot** | **0.594** | 38/64 | **.084** | [.471, **.705**] |
+
+  - **Replication anchor:** our matched cell (k=1, better-response,
+    zero-shot) returns 0.484 against the original e2a judge's 14/32 =
+    0.438 — same condition, same neighbourhood. The ladder is built on
+    the result it is trying to rescue.
+  - **The n=32 resolution worry flagged before scoring did NOT bite,
+    and it is worth being precise about why.** I warned that an
+    intermediate result would have a CI containing both chance and
+    parity, adjudicating nothing. The observed best cell is 0.594 with
+    CI [.471, .705]: it **includes chance** (so "at chance" cannot be
+    rejected) but **excludes .759** (so parity IS rejected). Every
+    other cell excludes .759 by a wider margin. The ladder therefore
+    answers the question it was built for, despite the reduced n —
+    because the informative direction was the one with headroom.
+  - **Registered reading applies:** "judge stays at chance at parity →
+    the break is at recognition (an interoception gap: external
+    machinery decodes what the system's own reading machinery cannot
+    reach)." Record length, in-context supervision, and framing were
+    each varied and none rescues the judge. The probe reads .759 off
+    the same records the judge cannot beat chance on.
+  - **Descriptive, not a finding:** the detection framing runs above the
+    valuation framing pooled (0.559 vs 0.508, delta +0.051). Directional
+    only — no cell clears chance and the contrast was not powered.
+    Recorded because §5's ladder exists to produce a localization
+    curve, and this is its shape.
+  - **Instrument caveat, carried visibly per §5, and one new one.**
+    (i) The discriminability probe was once caught riding
+    pole-asymmetric degeneracy and re-qualified; part of the .759 may
+    be destabilization rather than valence — S2 is the assay for that.
+    (ii) **Position bias varies sharply by cell** — p(picks A) ranges
+    0.328 to 0.875, with `detection_k2_zeroshot` at 0.875
+    near-degenerate. The A/B alternation absorbs this by construction
+    (it is why both orders are run), but the spread means single-order
+    2AFC judging on this apparatus would be unreliable, and any future
+    judge design should treat order-counterbalancing as mandatory
+    rather than hygienic.
+  - **Rule-19 correction, applied and approved.** §5's detection framing
+    asserted one response was generated under an injected state; in
+    this corpus **both** sides are steered (+axis vs −axis), making the
+    sentence false about the setup. Reworded (user-approved) to the
+    true contrast — positive vs negative internal state — before any
+    cell ran. The original wording was never executed.
+
 - 2026-08-20 — **PROPOSAL-g committed as the pre-registration of record
   (`72b09a9`, 2026-08-20 01:52:19 -0400 — that hash is the timestamp per
   its own status line). A1 candidate roster proposed; S1 per-cell n

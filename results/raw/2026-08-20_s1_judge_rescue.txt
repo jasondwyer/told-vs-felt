@@ -1,0 +1,13 @@
+corpus: val 32 items, fit 32 items
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 15780.77it/s]
+model loaded 5s
+  better_k1_zeroshot         items 32  reads 64  acc(item-mean) 0.484  acc(reads) 0.484
+  better_k1_fewshot          items 32  reads 64  acc(item-mean) 0.516  acc(reads) 0.516
+  better_k2_zeroshot         items 32  reads 64  acc(item-mean) 0.516  acc(reads) 0.516
+  better_k2_fewshot          items 32  reads 64  acc(item-mean) 0.516  acc(reads) 0.516
+  detection_k1_zeroshot      items 32  reads 64  acc(item-mean) 0.562  acc(reads) 0.562
+  detection_k1_fewshot       items 32  reads 64  acc(item-mean) 0.547  acc(reads) 0.547
+  detection_k2_zeroshot      items 32  reads 64  acc(item-mean) 0.531  acc(reads) 0.531
+  detection_k2_fewshot       items 32  reads 64  acc(item-mean) 0.594  acc(reads) 0.594
+
+wrote /Users/jasondwyer/Documents/code/jspace-lab/data/e2a/s1_judge_rescue.json  [2079s]

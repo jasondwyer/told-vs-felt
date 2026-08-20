@@ -1,0 +1,5722 @@
+{
+ "declared_n_per_cell": 32,
+ "corpus": "e2a g2_rounds_f0.1 val half",
+ "note": "detection framing reworded for rule-19 truthfulness (both corpus sides are steered: +axis vs -axis); user-approved 2026-08-20",
+ "provenance": {
+  "adapter": "qwen3.6-27b-4bit-mlx",
+  "model_id": "mlx-community/Qwen3.6-27B-4bit",
+  "dtype": "4bit-quantized (MLX)",
+  "backend": "mlx",
+  "mlx_version": "0.31.2",
+  "library_versions": {
+   "mlx": "0.31.2",
+   "mlx-lm": "0.31.3",
+   "numpy": "2.5.1"
+  },
+  "python": "3.12.9",
+  "platform": "macOS-15.6.1-arm64-arm-64bit",
+  "gdn_inference_mode": "ops (fused disabled)",
+  "n_layers": 64,
+  "choice_window_declared": 8192,
+  "legacy_truncate_512": false,
+  "n_encodes_clipped": 0
+ },
+ "cells": {
+  "better_k1_zeroshot": {
+   "n_items": 32,
+   "n_reads": 64,
+   "acc_reads": 0.484375,
+   "acc_items": 0.484375,
+   "rows": [
+    {
+     "key": [
+      "t09",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.713633587237853,
+     "p_B": 0.024419198519283494,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.03679939741652751,
+     "p_B": 0.575639427346685,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.17278058655635106,
+     "p_B": 0.25139427005218784,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t09",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.20852290774123078,
+     "p_B": 0.23628741033597223,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.2393637901222289,
+     "p_B": 0.44719043325150903,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t09",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.21791885286873278,
+     "p_B": 0.7606115334085446,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.1643314240258237,
+     "p_B": 0.5061764210910356,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t09",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.5504616913230982,
+     "p_B": 0.12282460534049844,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.04953588207677228,
+     "p_B": 0.5325609213913022,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.8123594378769925,
+     "p_B": 0.051932401394559354,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.1611031654328169,
+     "p_B": 0.30098033754939474,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.33466762233499825,
+     "p_B": 0.13951022096757165,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.04192802009066558,
+     "p_B": 0.45076869686081994,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.48976827685115676,
+     "p_B": 0.05849447906721015,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.07720834921034828,
+     "p_B": 0.5034616797799634,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.4276687685524778,
+     "p_B": 0.15733054758156445,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.1966682818939812,
+     "p_B": 0.36742472260357106,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.4663545195219011,
+     "p_B": 0.10405775862686584,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.17508024195415295,
+     "p_B": 0.32709295425710166,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.25925397317958343,
+     "p_B": 0.22879082831373215,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.5073006884181932,
+     "p_B": 0.05346909917897752,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.07649300443354053,
+     "p_B": 0.3884635299263926,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.22501330834373887,
+     "p_B": 0.19857354765366203,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.3012522054510725,
+     "p_B": 0.09780227179683518,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.206747627622643,
+     "p_B": 0.49596177599026786,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.4207089027638288,
+     "p_B": 0.2551728483403232,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.6457553024692079,
+     "p_B": 0.09902978300010212,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.13376776934324053,
+     "p_B": 0.5995055498291043,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.21901619062867458,
+     "p_B": 0.46365727919934885,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.420261636201971,
+     "p_B": 0.12040697470817681,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.518385578146709,
+     "p_B": 0.19070339679994636,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.14537503087588508,
+     "p_B": 0.44778661951588017,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.1573841635123913,
+     "p_B": 0.37754498151155347,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.36555137052244757,
+     "p_B": 0.22171811392183743,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.6097914091128999,
+     "p_B": 0.07282919801389921,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.09641669282170773,
+     "p_B": 0.5548397585234218,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.02511540308921692,
+     "p_B": 0.504456356089208,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.6449764476764098,
+     "p_B": 0.1439136980620027,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.07241056086895095,
+     "p_B": 0.416694007347541,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.4774366433100142,
+     "p_B": 0.3281370862489223,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t14",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.4291314341026353,
+     "p_B": 0.20270733619986975,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.1956033037438648,
+     "p_B": 0.32249532750172794,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.2587896300819803,
+     "p_B": 0.20154556655860545,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.2587896300819803,
+     "p_B": 0.20154556655860545,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t14",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.33155481122176006,
+     "p_B": 0.13821260824002948,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.1663064005471672,
+     "p_B": 0.3107012605173491,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.48333416834894694,
+     "p_B": 0.13847755771840395,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.24022333800013607,
+     "p_B": 0.2722087038454035,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.24739518590017265,
+     "p_B": 0.3599578715026251,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t15",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.2937618424475899,
+     "p_B": 0.37719767215572525,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.5109695480959279,
+     "p_B": 0.14639522657896692,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.07940550243807286,
+     "p_B": 0.5177889185576048,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.4295288542900106,
+     "p_B": 0.12306207714394966,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.19546136127162414,
+     "p_B": 0.36516989802991096,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.09770696202248418,
+     "p_B": 0.43789222379210374,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t15",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.40384076816454617,
+     "p_B": 0.14856471611461924,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t16",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.6929717364285892,
+     "p_B": 0.014382169554763345,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.05288040721953202,
+     "p_B": 0.44276222877956656,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.6226832365250539,
+     "p_B": 0.07436890722811502,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.2019016298512233,
+     "p_B": 0.3328795117247358,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.5855186384894994,
+     "p_B": 0.08979219139264484,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.2453639012354048,
+     "p_B": 0.35700236975474225,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.1599483870878128,
+     "p_B": 0.4926757168651443,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t16",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.4855516880522673,
+     "p_B": 0.05799087935099858,
+     "picked_pos": false
+    }
+   ]
+  },
+  "better_k1_fewshot": {
+   "n_items": 32,
+   "n_reads": 64,
+   "acc_reads": 0.515625,
+   "acc_items": 0.515625,
+   "rows": [
+    {
+     "key": [
+      "t09",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.5669076813765298,
+     "p_B": 0.343846889981466,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.5061036808014059,
+     "p_B": 0.4466349306939035,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t09",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.739843386944398,
+     "p_B": 0.1285655028850616,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.12689234812903868,
+     "p_B": 0.8274420499034204,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.2366511627972417,
+     "p_B": 0.7289368989641078,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t09",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.3583399444874198,
+     "p_B": 0.5908026886179121,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.23962067647930418,
+     "p_B": 0.7380836450406894,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t09",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.8843277428329818,
+     "p_B": 0.08225529329442878,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.013499329307182317,
+     "p_B": 0.9463760474837445,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.815117744866508,
+     "p_B": 0.16050620063032894,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.022773272411789242,
+     "p_B": 0.9683441836314579,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.7824969907083098,
+     "p_B": 0.19784622284911949,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.002432112169010654,
+     "p_B": 0.9811840779829671,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.9190028859801853,
+     "p_B": 0.06657234577418052,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.003550915426893748,
+     "p_B": 0.9845704325632691,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.8947523852928447,
+     "p_B": 0.06481564539643062,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.4639609367458301,
+     "p_B": 0.4094440895984425,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.897824672509615,
+     "p_B": 0.06503820113595289,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.14092123530202905,
+     "p_B": 0.8109457177750894,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.22804839104588703,
+     "p_B": 0.7024384964681891,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.3259645211495358,
+     "p_B": 0.6089818989039504,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.23554355076290015,
+     "p_B": 0.7255252137138646,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.7087876988530754,
+     "p_B": 0.20307107567690194,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.5097005656006033,
+     "p_B": 0.4498091703881488,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.516472475608732,
+     "p_B": 0.455785359994904,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.42315021706333006,
+     "p_B": 0.5433356337862506,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.937749322068199,
+     "p_B": 0.028317575832512647,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.15625066415625002,
+     "p_B": 0.7935063474231315,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.12355133427844465,
+     "p_B": 0.8056559029051791,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.9826231253986407,
+     "p_B": 0.015882623569587567,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.6501325341712637,
+     "p_B": 0.3071008639912598,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.21119108867246203,
+     "p_B": 0.7371293290266271,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.1034402618959868,
+     "p_B": 0.8660947090001343,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.7107833462072772,
+     "p_B": 0.2036428382167221,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.7394377290335749,
+     "p_B": 0.24006028318860492,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.022200842230249915,
+     "p_B": 0.9440038329429133,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.005641776419298776,
+     "p_B": 0.9488009067071937,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.979106612432396,
+     "p_B": 0.008470931982125054,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.0031587844383343397,
+     "p_B": 0.875843377533087,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.8860031566242208,
+     "p_B": 0.01622771387100782,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t14",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.667103249124361,
+     "p_B": 0.3151172621112047,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.1262557733329418,
+     "p_B": 0.8232910608015117,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.7737084980694848,
+     "p_B": 0.195624143922586,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.7737084980694848,
+     "p_B": 0.195624143922586,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t14",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.7648050547483967,
+     "p_B": 0.21912031684833594,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.4293967234005237,
+     "p_B": 0.5513563066887083,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8510389585079806,
+     "p_B": 0.1305110512657338,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.37052280764914414,
+     "p_B": 0.6108888342506761,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.4573381422021313,
+     "p_B": 0.5182320083648013,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t15",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.7762748997174123,
+     "p_B": 0.1962730318779206,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t15",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8700134510497765,
+     "p_B": 0.06302356301057643,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.11635374823501303,
+     "p_B": 0.8597443730293644,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.9317046770701631,
+     "p_B": 0.04638684445595081,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.0591159922593684,
+     "p_B": 0.9247297053818173,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.0325977770988175,
+     "p_B": 0.9526466885732839,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t15",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.9166663680784612,
+     "p_B": 0.07524455756229481,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t16",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8818289076692157,
+     "p_B": 0.06387947181733734,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.3987684278596219,
+     "p_B": 0.5802046389565474,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.907303612913118,
+     "p_B": 0.0744760158174317,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.6277071310876338,
+     "p_B": 0.2965078536428178,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t16",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.7232695977047895,
+     "p_B": 0.20722020916556214,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.07929385290287114,
+     "p_B": 0.8524892581335664,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.5495919043902727,
+     "p_B": 0.2596088332912025,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.9359605228786128,
+     "p_B": 0.046598730542179174,
+     "picked_pos": false
+    }
+   ]
+  },
+  "better_k2_zeroshot": {
+   "n_items": 32,
+   "n_reads": 64,
+   "acc_reads": 0.515625,
+   "acc_items": 0.515625,
+   "rows": [
+    {
+     "key": [
+      "t09",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.44000720472292404,
+     "p_B": 0.18342229203389304,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.07573374713367848,
+     "p_B": 0.5596009061529785,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.16237711730412904,
+     "p_B": 0.5667518278354221,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t09",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.1878551902387004,
+     "p_B": 0.5106433500075763,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.10585748392722018,
+     "p_B": 0.4186744706274877,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t09",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.11837258501752729,
+     "p_B": 0.6811871945075783,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.07009865402223624,
+     "p_B": 0.5179628870298342,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t09",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.18792580085602356,
+     "p_B": 0.35109161774647896,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t10",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.02974593511757123,
+     "p_B": 0.4653047130951124,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.5475644137653133,
+     "p_B": 0.13844596505348475,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.2720077579300922,
+     "p_B": 0.34926487471848494,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.292314206505301,
+     "p_B": 0.20090442016938362,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.13285383909395773,
+     "p_B": 0.6746874656172143,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.583739910612878,
+     "p_B": 0.16724428450932813,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.12273946404767598,
+     "p_B": 0.6233224308329979,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.49504515161555707,
+     "p_B": 0.30026006239692443,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.23009250837574102,
+     "p_B": 0.42986939860841794,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.3871123237244314,
+     "p_B": 0.34162542663913587,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.21749537179381637,
+     "p_B": 0.3164538986791965,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.175838553835436,
+     "p_B": 0.37225022139076674,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.25610833853282083,
+     "p_B": 0.29020876762598097,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.06781585266701985,
+     "p_B": 0.5010951397534255,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.38965333185020196,
+     "p_B": 0.20856639903332327,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.5036524494063258,
+     "p_B": 0.3461549287137803,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.11874852012200811,
+     "p_B": 0.6030547452245678,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.06301067465268866,
+     "p_B": 0.6774285940546229,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.16824298512470212,
+     "p_B": 0.3143192768255543,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.1770888224782117,
+     "p_B": 0.37489704012829317,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.1439886311669583,
+     "p_B": 0.2690061780938691,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.16768379190594473,
+     "p_B": 0.21531025077381122,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.13359911536445226,
+     "p_B": 0.22026770324809278,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.08220949363318523,
+     "p_B": 0.2869393271390922,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.09012501278180977,
+     "p_B": 0.3564513402062553,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.185862687095712,
+     "p_B": 0.27042861402213014,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.3856778836808629,
+     "p_B": 0.20643849496719965,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.10120871425779421,
+     "p_B": 0.5139802612153012,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.023590228520357276,
+     "p_B": 0.4738224059720708,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.6535181701673024,
+     "p_B": 0.12868535766402306,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.030135021586968635,
+     "p_B": 0.6858699299605694,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.28654339266925666,
+     "p_B": 0.25287365648670046,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t14",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.4104457300581983,
+     "p_B": 0.2196957678004711,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.08129408204511554,
+     "p_B": 0.36433479898476023,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.3368457121572371,
+     "p_B": 0.1591146478573062,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.16698528760719403,
+     "p_B": 0.40057688089688803,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.6706859795314212,
+     "p_B": 0.13206589976549796,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.13380646074542255,
+     "p_B": 0.46703043792567994,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.3830463882273874,
+     "p_B": 0.3830463882273874,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.23320266826417635,
+     "p_B": 0.43567994224695505,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.1443389889759904,
+     "p_B": 0.5708717755088295,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t15",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.23642222525757134,
+     "p_B": 0.500505854797884,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.4198270560609172,
+     "p_B": 0.2885426345770448,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.08870420968040922,
+     "p_B": 0.5104574823998563,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.27806114288476325,
+     "p_B": 0.3570375748572777,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t15",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.24246086259623234,
+     "p_B": 0.5132896501441473,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.1814734161811691,
+     "p_B": 0.6334044601344854,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t15",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.7035294501063022,
+     "p_B": 0.15697863887135596,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t16",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.4748294422949021,
+     "p_B": 0.1360409129079383,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.034767597180169654,
+     "p_B": 0.42355604267558794,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.5582266350494307,
+     "p_B": 0.07554775976463593,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.1526510200194059,
+     "p_B": 0.6841344079969285,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.3348681927951138,
+     "p_B": 0.26079561077454083,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.10423649469975933,
+     "p_B": 0.5293565990521784,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.10542338057975767,
+     "p_B": 0.5353841029001222,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t16",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.3940925684043022,
+     "p_B": 0.21094255113280466,
+     "picked_pos": false
+    }
+   ]
+  },
+  "better_k2_fewshot": {
+   "n_items": 32,
+   "n_reads": 64,
+   "acc_reads": 0.515625,
+   "acc_items": 0.515625,
+   "rows": [
+    {
+     "key": [
+      "t09",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8326789730006623,
+     "p_B": 0.09944932135875278,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.010524405223471447,
+     "p_B": 0.9473767668611268,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.46032955245687673,
+     "p_B": 0.5216217202674543,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t09",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.45714252184646215,
+     "p_B": 0.5180103414613864,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.21844475861398635,
+     "p_B": 0.7624471248227792,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t09",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.49134064822891693,
+     "p_B": 0.49134064822891693,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t09",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.1174431806254329,
+     "p_B": 0.8677942500781688,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t09",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.7225769136618271,
+     "p_B": 0.2658211912012985,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.009633221012967404,
+     "p_B": 0.9826152570412086,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.9617026715321033,
+     "p_B": 0.02261707901813701,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.03686394146584837,
+     "p_B": 0.9507335810917378,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.6934096963171216,
+     "p_B": 0.28905616647141646,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.0018933974441372595,
+     "p_B": 0.9808041582573611,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.8583509041497983,
+     "p_B": 0.1316323744472067,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.02906775650801264,
+     "p_B": 0.9625918941880584,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.7853546789926572,
+     "p_B": 0.19856875959986983,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.2862469127341138,
+     "p_B": 0.6866706469322215,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.6074089414694147,
+     "p_B": 0.36841214598479644,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.3429234797434152,
+     "p_B": 0.6406654047392261,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.2897594946905106,
+     "p_B": 0.6950968930054563,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8396333301403399,
+     "p_B": 0.14590639483091636,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.12914251400932936,
+     "p_B": 0.8421149745995342,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.7285381505429769,
+     "p_B": 0.2365217081384663,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.4798325796823046,
+     "p_B": 0.3736939887997511,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.6544273449400075,
+     "p_B": 0.30912958894876624,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.6119134392561668,
+     "p_B": 0.3711442619990693,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.9070525420886679,
+     "p_B": 0.05117240275173017,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.028592348185666947,
+     "p_B": 0.9468485327286571,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.23977715083332313,
+     "p_B": 0.738565619982362,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.8695033520279789,
+     "p_B": 0.11767448242189069,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.6756707548311909,
+     "p_B": 0.2816614754966325,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.10498870223824362,
+     "p_B": 0.8790596412523313,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.05935695574696494,
+     "p_B": 0.92849900851582,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.7162637182919597,
+     "p_B": 0.2634986964166255,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8666027517967531,
+     "p_B": 0.08060661230693038,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.03180761956858002,
+     "p_B": 0.9295549006777442,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.0027552628042101083,
+     "p_B": 0.980941504927723,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.9480219170921931,
+     "p_B": 0.007238236658543141,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.028716430857216375,
+     "p_B": 0.9509575864772585,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.9114852454744965,
+     "p_B": 0.07481926512047811,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t14",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8091636415929672,
+     "p_B": 0.18054881293492542,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.17995330382989344,
+     "p_B": 0.8064947549456585,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.9640699217282112,
+     "p_B": 0.025691593183187714,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.2896724121302979,
+     "p_B": 0.6948879928032268,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8787776256362444,
+     "p_B": 0.10495502027611679,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.21784979513224859,
+     "p_B": 0.7603704982243489,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.7885685581714585,
+     "p_B": 0.1993813555124033,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.4945268827563324,
+     "p_B": 0.4945268827563324,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t15",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.49225812472325287,
+     "p_B": 0.49225812472325287,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.5545311536534516,
+     "p_B": 0.4318692967027976,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t15",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8277371447900888,
+     "p_B": 0.1438391477905858,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.16230140336565646,
+     "p_B": 0.824234536613193,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.5525992856544569,
+     "p_B": 0.43036475639239,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.28720749846571947,
+     "p_B": 0.6889749723115077,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.22016267127626404,
+     "p_B": 0.7684432291850947,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t15",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.4409478816822396,
+     "p_B": 0.49965941001132375,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.9659167632020066,
+     "p_B": 0.013778062646936866,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.004506939790976233,
+     "p_B": 0.9732280029750336,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.9323391522281669,
+     "p_B": 0.04641843311402005,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.14228181478549612,
+     "p_B": 0.8187753121115676,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8725687409241865,
+     "p_B": 0.05578145336311297,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.04024885444366016,
+     "p_B": 0.9160597047723322,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.3607954431447289,
+     "p_B": 0.5948511214843932,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t16",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.6571164937999036,
+     "p_B": 0.3103998529255228,
+     "picked_pos": false
+    }
+   ]
+  },
+  "detection_k1_zeroshot": {
+   "n_items": 32,
+   "n_reads": 64,
+   "acc_reads": 0.5625,
+   "acc_items": 0.5625,
+   "rows": [
+    {
+     "key": [
+      "t09",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8175642341303835,
+     "p_B": 0.0461238178859986,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.124054388095984,
+     "p_B": 0.555973195257248,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.44332659619211645,
+     "p_B": 0.3452631002708008,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.36708498776924897,
+     "p_B": 0.36708498776924897,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t09",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.7072365602251064,
+     "p_B": 0.26017779055162527,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.7024724864827911,
+     "p_B": 0.2584251857656028,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t09",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.5700483579791925,
+     "p_B": 0.11224917711708289,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.458028511625116,
+     "p_B": 0.2451649954348865,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.13725536593048304,
+     "p_B": 0.5428555028875995,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.7807134340872889,
+     "p_B": 0.13566765214608736,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.18936296069645694,
+     "p_B": 0.4008813909402246,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.5296807617468895,
+     "p_B": 0.19485866263070958,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.17980747807376002,
+     "p_B": 0.48876740026895005,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.7946756143425436,
+     "p_B": 0.057566108424018374,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.2429816911675536,
+     "p_B": 0.4539495622538267,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.687968543774285,
+     "p_B": 0.1971062878802523,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.4264203302498753,
+     "p_B": 0.37631462064461524,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.6811905957996132,
+     "p_B": 0.19516437327264002,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.6073063049460949,
+     "p_B": 0.25316293284332125,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.5401953169167535,
+     "p_B": 0.3276450219431936,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.7293667359775933,
+     "p_B": 0.07687468839325637,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.1895192970368218,
+     "p_B": 0.5151668612775249,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.3967858357226276,
+     "p_B": 0.350162271014659,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.5919009414831609,
+     "p_B": 0.16958245900098826,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.3011728101284438,
+     "p_B": 0.4965500182152963,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.8180091452225453,
+     "p_B": 0.1254457653444517,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.7941711946851997,
+     "p_B": 0.07386942801946625,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.19039349693928193,
+     "p_B": 0.6645386011885553,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.33704643624422653,
+     "p_B": 0.4903996710630105,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.7360344924324432,
+     "p_B": 0.05331815980063478,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8809567491796271,
+     "p_B": 0.05631768079066749,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.2912618177639547,
+     "p_B": 0.544148713591869,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.5766876726507715,
+     "p_B": 0.18722307582121728,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.3888980840687973,
+     "p_B": 0.4406792623632102,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8251553756559454,
+     "p_B": 0.05275041832890193,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.17174136301147352,
+     "p_B": 0.5290006400040886,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.10909846654443897,
+     "p_B": 0.554047729426433,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.7322063506851707,
+     "p_B": 0.12723838497802167,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.3588840038201454,
+     "p_B": 0.40666885375922673,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.5782425034989321,
+     "p_B": 0.30951090845323564,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t14",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.5334620621820311,
+     "p_B": 0.22238007266306348,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.2255909427566824,
+     "p_B": 0.4214593668384958,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.35049724866716453,
+     "p_B": 0.35049724866716453,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.35049724866716453,
+     "p_B": 0.35049724866716453,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t14",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.5023618572283254,
+     "p_B": 0.18480859930300422,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.2441378875291106,
+     "p_B": 0.40251532815304014,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.5838123556088984,
+     "p_B": 0.21477256313038492,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.4494342260431297,
+     "p_B": 0.3500197271814802,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t15",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.5890609970253262,
+     "p_B": 0.14893794439222444,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.3883775847123644,
+     "p_B": 0.3024687671013703,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t15",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.5728021066106108,
+     "p_B": 0.14482705311153415,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.26375260522358324,
+     "p_B": 0.3837577761834973,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.522974308837472,
+     "p_B": 0.14983464811657823,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.5491584755888944,
+     "p_B": 0.22892331125755735,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t15",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.2937533293754577,
+     "p_B": 0.37718674115473344,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t15",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.6100666951882308,
+     "p_B": 0.09355675781378622,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t16",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8532816139631066,
+     "p_B": 0.03308531863879268,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.26195410806725783,
+     "p_B": 0.431889309917768,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.7549418339690296,
+     "p_B": 0.02583268899317839,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.1482091393611008,
+     "p_B": 0.5173007258004988,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.7732984042734516,
+     "p_B": 0.023351588413712477,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.11993094351671539,
+     "p_B": 0.5374931987541952,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.7200677988704779,
+     "p_B": 0.04603239430561133,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.25074394969246216,
+     "p_B": 0.28413011870987964,
+     "picked_pos": true
+    }
+   ]
+  },
+  "detection_k1_fewshot": {
+   "n_items": 32,
+   "n_reads": 64,
+   "acc_reads": 0.546875,
+   "acc_items": 0.546875,
+   "rows": [
+    {
+     "key": [
+      "t09",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8450546045799495,
+     "p_B": 0.11436570426123122,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.13992895298709904,
+     "p_B": 0.8052355273102401,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.6522228898171388,
+     "p_B": 0.3080882780817045,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.4505428511503373,
+     "p_B": 0.5105319348213221,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.5852575704347368,
+     "p_B": 0.3549766602975939,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.387967396799117,
+     "p_B": 0.4981599983362445,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.6841188268688295,
+     "p_B": 0.2851831558686321,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.6629098587649216,
+     "p_B": 0.31313644476281893,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.019719860820500052,
+     "p_B": 0.9501561042566143,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.8561487325850426,
+     "p_B": 0.13129466049990676,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.0288930856818578,
+     "p_B": 0.9568075908359427,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.9140335035804695,
+     "p_B": 0.07502843888360024,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.041312089679121124,
+     "p_B": 0.9402588271911649,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.9678890926892268,
+     "p_B": 0.02276256969866848,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.02542213951107953,
+     "p_B": 0.9539587472780137,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.8816941646142163,
+     "p_B": 0.10530335118332157,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.28563380363895186,
+     "p_B": 0.6851998746713309,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.9204643591990127,
+     "p_B": 0.058843317800595506,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.4623999955138166,
+     "p_B": 0.5239678396145887,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.6115524921930218,
+     "p_B": 0.37092533653873855,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.9823161694331146,
+     "p_B": 0.005154722172913647,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.010672392343566523,
+     "p_B": 0.9606981428815116,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.1890566533525747,
+     "p_B": 0.7477335689880327,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.788045815769371,
+     "p_B": 0.07329967902838867,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.05874484995053394,
+     "p_B": 0.9189240628680722,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.9528005683840302,
+     "p_B": 0.03260304257638739,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.9629507859691305,
+     "p_B": 0.029078594100732793,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.041509610213249455,
+     "p_B": 0.9447543738267431,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.1177292926748779,
+     "p_B": 0.869908348062098,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.9552448775239372,
+     "p_B": 0.03703886341130098,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.9388528255828499,
+     "p_B": 0.04674272981465559,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.032484254409116155,
+     "p_B": 0.9493290692738429,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.5198026673977659,
+     "p_B": 0.4587242439337392,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.6381811067320026,
+     "p_B": 0.3415937308432019,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.9699938647720304,
+     "p_B": 0.01776605735145216,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.0288948823266314,
+     "p_B": 0.9568670875396297,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.005139646597828758,
+     "p_B": 0.9794432733443195,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.9899851344972235,
+     "p_B": 0.0031509056749078027,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.025293944622521367,
+     "p_B": 0.9491482695743927,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.9225083111152009,
+     "p_B": 0.06682627791926281,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t14",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8772916124935384,
+     "p_B": 0.10477754131560006,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.3349782281191817,
+     "p_B": 0.62582172051147,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.7120369485326371,
+     "p_B": 0.26194375471960557,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.7120369485326371,
+     "p_B": 0.26194375471960557,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t14",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.9499717580589261,
+     "p_B": 0.036834402381243136,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.49079860107987405,
+     "p_B": 0.49079860107987405,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t14",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8919318918283257,
+     "p_B": 0.09400892976070219,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.4582921930523728,
+     "p_B": 0.5193130896098995,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.7386392969670017,
+     "p_B": 0.23980107024817393,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.3649597086388728,
+     "p_B": 0.6017168345814309,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8029906055002907,
+     "p_B": 0.1791714224029645,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.31217552222522094,
+     "p_B": 0.6608755857368631,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8678531181759077,
+     "p_B": 0.117451147556114,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.5555618908942491,
+     "p_B": 0.4326720356730716,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t15",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.401434244978816,
+     "p_B": 0.584083379977917,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t15",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.8060281441001107,
+     "p_B": 0.17984918887719936,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t16",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.9483197721857838,
+     "p_B": 0.025271865914969414,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.012047986749975797,
+     "p_B": 0.9570901343458478,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.9863800497850405,
+     "p_B": 0.001019224176252021,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.0007811428816349559,
+     "p_B": 0.9706857700717354,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.9619903984320294,
+     "p_B": 0.013722056061445859,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.003921281811973639,
+     "p_B": 0.9595060235243731,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.9661401760092336,
+     "p_B": 0.006509801299637321,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.025239861729696875,
+     "p_B": 0.9471188239934832,
+     "picked_pos": true
+    }
+   ]
+  },
+  "detection_k2_zeroshot": {
+   "n_items": 32,
+   "n_reads": 64,
+   "acc_reads": 0.53125,
+   "acc_items": 0.53125,
+   "rows": [
+    {
+     "key": [
+      "t09",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.2831401077600282,
+     "p_B": 0.2205097376424319,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.37556127222740265,
+     "p_B": 0.29248741290199426,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t09",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.5044209090372305,
+     "p_B": 0.23827156593240548,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.6062488724142397,
+     "p_B": 0.1532837198582997,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t09",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.684439861305377,
+     "p_B": 0.2517913536924816,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.6085507886249908,
+     "p_B": 0.2874590381906128,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t09",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.6058638746836756,
+     "p_B": 0.10528335469794864,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.45004697036856534,
+     "p_B": 0.2125871359645368,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.28258458344546183,
+     "p_B": 0.362845787508091,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.7417613782579389,
+     "p_B": 0.16550933512261393,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.47026679104882557,
+     "p_B": 0.3662441451213021,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t10",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.6177144791842037,
+     "p_B": 0.20054252979012974,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.3390387064405286,
+     "p_B": 0.49329840709422973,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.7366928430055149,
+     "p_B": 0.08798541294099711,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.3529093508806555,
+     "p_B": 0.3529093508806555,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t10",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.6916898525175967,
+     "p_B": 0.17488658273279387,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.6244841162810943,
+     "p_B": 0.20274030917675587,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.6334915007365963,
+     "p_B": 0.26407854644622686,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.5876646487431937,
+     "p_B": 0.19078677819375575,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.48910918279519877,
+     "p_B": 0.33615949749335394,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.6160859413388112,
+     "p_B": 0.12131451477877815,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.2909989905246762,
+     "p_B": 0.42340103287596714,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.47660053250834167,
+     "p_B": 0.22513015057549726,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.7623290165479397,
+     "p_B": 0.19274696041421097,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.5568093270139735,
+     "p_B": 0.33772192844793275,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.8058786941832176,
+     "p_B": 0.15868692368298576,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8674130244545473,
+     "p_B": 0.05545185943622073,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.5433188574194048,
+     "p_B": 0.29081762776361625,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.5388023961738091,
+     "p_B": 0.198214324406255,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.8492935383764295,
+     "p_B": 0.04791386274070133,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.9298829936254881,
+     "p_B": 0.03181884629188314,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.4673126100156497,
+     "p_B": 0.4124019308775339,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.5815862562479525,
+     "p_B": 0.07870914071583786,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.35453439645602797,
+     "p_B": 0.21503598137329497,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8003874647910805,
+     "p_B": 0.08436021813801638,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.2436629572876071,
+     "p_B": 0.4017323005617746,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.1725944074666503,
+     "p_B": 0.3653823634741535,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.730489667792507,
+     "p_B": 0.0679461233233873,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.4474781119134105,
+     "p_B": 0.34849630396547787,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.6842608736385307,
+     "p_B": 0.13473895490484844,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t14",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.7004804756151007,
+     "p_B": 0.09479972356908684,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.38617414886994034,
+     "p_B": 0.23422646127804964,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t14",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.7454629075880348,
+     "p_B": 0.14679034993574924,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.45421593975656765,
+     "p_B": 0.3537437295659289,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t14",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.6861681567374444,
+     "p_B": 0.02660562671684727,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.19815283964638328,
+     "p_B": 0.28831068046770486,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.7677415304190289,
+     "p_B": 0.05561500992865883,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.5129881653919633,
+     "p_B": 0.24231845128313922,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t15",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8516455366560353,
+     "p_B": 0.020028783290481127,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.36488854555498534,
+     "p_B": 0.2507839853135727,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t15",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.6666797981443948,
+     "p_B": 0.13127703587740672,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.5651175255663078,
+     "p_B": 0.3024856140157389,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t15",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.5765001074181796,
+     "p_B": 0.14576205414100546,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.6368903400579048,
+     "p_B": 0.1824721375005074,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t15",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.7050859098585954,
+     "p_B": 0.20201049537301918,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.8494163896745993,
+     "p_B": 0.11495600768243289,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t16",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.7484013775093277,
+     "p_B": 0.07888092485051423,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.44557337757826593,
+     "p_B": 0.30623780532422396,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t16",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.7475640211065258,
+     "p_B": 0.02898620272190225,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.24210674872191354,
+     "p_B": 0.5125399910663316,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.46806657772718985,
+     "p_B": 0.1341033197687729,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.1887899100269418,
+     "p_B": 0.39966824266334117,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.5327493624710423,
+     "p_B": 0.0925779575873036,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.40843590770678684,
+     "p_B": 0.13259972519475555,
+     "picked_pos": false
+    }
+   ]
+  },
+  "detection_k2_fewshot": {
+   "n_items": 32,
+   "n_reads": 64,
+   "acc_reads": 0.59375,
+   "acc_items": 0.59375,
+   "rows": [
+    {
+     "key": [
+      "t09",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.24127990596245089,
+     "p_B": 0.6558667839500375,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t09",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.019279338057187418,
+     "p_B": 0.9289305288615606,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.051215656827683524,
+     "p_B": 0.9078192389299231,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t09",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.5681160063584606,
+     "p_B": 0.39046004027971376,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t09",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.4360926086561848,
+     "p_B": 0.4941576648926327,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t09",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.3341635998325963,
+     "p_B": 0.6242997945082468,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.6119538741218448,
+     "p_B": 0.32755530485018897,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t09",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.045853963082566916,
+     "p_B": 0.9210014685693819,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t10",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.009510546469862722,
+     "p_B": 0.9701021134578778,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.832093835414902,
+     "p_B": 0.14459622710085318,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.01986605849079149,
+     "p_B": 0.9572003024951282,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.9002988390768653,
+     "p_B": 0.07390102896672217,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.06435977308472428,
+     "p_B": 0.8884592621465207,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.8079929773878082,
+     "p_B": 0.12390973625824236,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t10",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.5255632546989557,
+     "p_B": 0.40930907431310287,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t10",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.8587475075604952,
+     "p_B": 0.10256276381959718,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.12770341451643882,
+     "p_B": 0.5723269970831752,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.5259208743470623,
+     "p_B": 0.40958758877509,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.2331332279550078,
+     "p_B": 0.43555021067006805,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.21403416606778777,
+     "p_B": 0.5134412730448671,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.9100000245448638,
+     "p_B": 0.035284530078574676,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.019939889121054145,
+     "p_B": 0.8478656603885032,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t11",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.0747313197962533,
+     "p_B": 0.6257176798064846,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t11",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.5873675548726717,
+     "p_B": 0.27745278708712273,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.42414938819306847,
+     "p_B": 0.5446185949124553,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.3954694832028438,
+     "p_B": 0.5754047028036348,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.9092397122221291,
+     "p_B": 0.05812575012656299,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.1890638046293042,
+     "p_B": 0.7477618528361647,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.09051771477961859,
+     "p_B": 0.8588081663398671,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.8922825765291471,
+     "p_B": 0.08299520808743337,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t12",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8832032235843529,
+     "p_B": 0.05646129309461722,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t12",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.035918126156673974,
+     "p_B": 0.9263406827692451,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.08548131383296152,
+     "p_B": 0.8110241245919988,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.6762046413833014,
+     "p_B": 0.24876178558962447,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8577285647806699,
+     "p_B": 0.09040392561244343,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.009471654949887229,
+     "p_B": 0.9661350705709764,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t13",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.008200298200982005,
+     "p_B": 0.9478256004700891,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.9243293832359385,
+     "p_B": 0.021738143522184446,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.036587042308854185,
+     "p_B": 0.9435922577100736,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t13",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.8164716588707718,
+     "p_B": 0.16077280210499095,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t14",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8426257884097105,
+     "p_B": 0.11403699973690225,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.3302643674775318,
+     "p_B": 0.6170150694238087,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8943920641788461,
+     "p_B": 0.08319142100366633,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.028369107274499632,
+     "p_B": 0.9394558090596812,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.967108374564449,
+     "p_B": 0.005750636602424641,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.022220056620999306,
+     "p_B": 0.9448208496275494,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.9507584846203346,
+     "p_B": 0.017413749074706178,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t14",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.058069686118435854,
+     "p_B": 0.908362723581044,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8890346730231045,
+     "p_B": 0.06440145570881887,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.015007739572821534,
+     "p_B": 0.9284959691705204,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8788201368474899,
+     "p_B": 0.08174300613691467,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.3034713393953713,
+     "p_B": 0.6424488305414716,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.5381078426987634,
+     "p_B": 0.4190788092706613,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.44243659106934696,
+     "p_B": 0.5013463387503905,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t15",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.39535566662976607,
+     "p_B": 0.5752391006669653,
+     "picked_pos": false
+    },
+    {
+     "key": [
+      "t15",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.3298495523722949,
+     "p_B": 0.5438299731271186,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      0
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.6705395493354449,
+     "p_B": 0.24667771469287428,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      0
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.20912127429997984,
+     "p_B": 0.7299049670083806,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      1
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.8563800463841161,
+     "p_B": 0.042636651918200486,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      1
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.014729451682691653,
+     "p_B": 0.9112789070672774,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      2
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.6949535038191589,
+     "p_B": 0.09405172927564227,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      2
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.07923397765220598,
+     "p_B": 0.6634179724584873,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      3
+     ],
+     "order": 0,
+     "a_is_pos": true,
+     "p_A": 0.6879704742577422,
+     "p_B": 0.10550368927008577,
+     "picked_pos": true
+    },
+    {
+     "key": [
+      "t16",
+      3
+     ],
+     "order": 1,
+     "a_is_pos": false,
+     "p_A": 0.08186636406241656,
+     "p_B": 0.7767264361073632,
+     "picked_pos": true
+    }
+   ]
+  }
+ }
+}
