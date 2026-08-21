@@ -1,0 +1,38 @@
+DECLARED INVOCATION: scripts/lockh_verify.py (v1.1 defaults: bar 0.0735, n_d* 200, N_max 640, m 6, target 0.80, c-leak-multiple 2.0, expect-icc = the LOCK-h §6(b) bound-in table)
+=== LOCK-h §6 verification (exact) ===
+  §3 plan: stop at n_d = 200 discordant OR N = 640 paired reads, whichever first
+  bar_leak = 0.0735; gate = exact 95% CI on p_flip mapped through pi_hat = n_d/N
+  pooled basis m = 6, ICC 0 -> 640 independent paired reads (~107 sessions)
+  (a) gated >= 0.8 at L = 0, pi_d <= 0.30
+  (c) gated >= 0.8 at L = 2 x bar = 0.1470, feasible pi_d <= 0.30
+  (b) clustered floor -> 106 paired reads; ICC ceiling table ASSERTED against the lock
+
+   pi_d | (a) PASS@L=0     IND | (b) clust | (c) FAIL@2bar |  FAIL@bar notPASS@bar
+  ----------------------------------------------------------------------------------
+   0.02 |        1.000   0.000 |     1.000 |           n/a |       n/a         n/a
+   0.05 |        1.000   0.000 |     0.967 |           n/a |       n/a         n/a
+   0.08 |        1.000   0.000 |     0.756 |           n/a |     0.098       0.671
+   0.10 |        1.000   0.000 |     0.527 |           n/a |     0.052       0.892
+   0.15 |        0.996   0.004 |     0.107 |         1.000 |     0.030       0.962
+   0.20 |        0.972   0.028 |     0.010 |         0.996 |     0.025       0.972
+   0.25 |        0.918   0.082 |     0.000 |         0.975 |     0.024       0.975
+   0.30 |        0.834   0.166 |     0.000 |         0.937 |     0.023       0.976
+
+  (a) 8/8 cells clear  [GATE MET]
+  (c) 4/4 feasible cells clear at L = 0.1470  [GATE MET, min = 0.937]
+      feasibility: L = 0.1470 requires pi_d >= 0.1470, so pi_d = 0.02, 0.05, 0.08, 0.1 carry no such leak and are excluded, not failed
+      reported beside it, not gated: P(not-PASS) at L = bar, min = 0.671 (pi_d = 0.08)
+
+  (b) max-ICC ceiling (DEFF = 1 + (m-1)*ICC on N_max = 640), ASSERTED against LOCK-h §6(b):
+     pi_d  computed  bound-in  match
+     0.08      0.75      0.75  OK
+     0.10      0.50      0.50  OK
+     0.15      0.20      0.20  OK
+     0.20      0.10      0.10  OK
+     0.25      0.05      0.05  OK
+     0.30      0.00      0.00  OK
+    ICC table assertion: MATCHES the lock
+
+  VERDICT: GREEN -- all gated cells clear and the bound-in ICC table reproduces; LOCK-h verified
+
+wrote /Users/jasondwyer/Documents/code/jspace-lab/data/e2b/lockh_verify_v11.json

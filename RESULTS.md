@@ -20,6 +20,69 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-20 — **LOCK-h v1.1 §6 re-verification: GREEN. (a) 8/8, (c) 4/4
+  feasible cells at min 0.937, and the bound-in ICC ceiling table reproduces
+  6/6 exactly. Every number v1.1 predicted for itself is the number the
+  exact machinery returns.**
+  ([`data/e2b/lockh_verify_v11.json`](data/e2b/lockh_verify_v11.json); raw
+  [`2026-08-20_lockh_verify_v11.txt`](results/raw/2026-08-20_lockh_verify_v11.txt).
+  **`LOCK-h.md` is still uncommitted** — §6 says Jason commits on green and
+  the commit hash is the lock's timestamp, so that act is his.)
+
+  | π_d | (a) PASS @ L=0 | IND | (b) clustered | (c) FAIL @ 2×bar | FAIL @ bar | not-PASS @ bar |
+  |---|---|---|---|---|---|---|
+  | 0.02 | 1.000 | 0.000 | 1.000 | — | — | — |
+  | 0.05 | 1.000 | 0.000 | 0.967 | — | — | — |
+  | 0.08 | 1.000 | 0.000 | 0.756 | — | 0.098 | 0.671 |
+  | 0.10 | 1.000 | 0.000 | 0.527 | — | 0.052 | 0.892 |
+  | 0.15 | 0.996 | 0.004 | 0.107 | 1.000 | 0.030 | 0.962 |
+  | 0.20 | 0.972 | 0.028 | 0.010 | 0.996 | 0.025 | 0.972 |
+  | 0.25 | **0.918** | 0.082 | 0.000 | 0.975 | 0.024 | 0.975 |
+  | 0.30 | **0.834** | 0.166 | 0.000 | **0.937** | 0.023 | 0.976 |
+
+  - **(a) GATE MET, 8/8.** 0.918 at π_d = 0.25 and 0.834 at 0.30, exactly
+    the values §6(a) states for itself. `n_d*` 124 → 200 with `N_max` and
+    the session count untouched.
+  - **(c) GATE MET, 4/4 feasible cells, min 0.937** at π_d = 0.30 — again
+    exactly the value §6(c) states. **Feasibility, stated so the excluded
+    cells are not misread:** L = 2 × bar = 0.1470 requires π_d ≥ 0.1470, so
+    π_d ∈ {0.02, 0.05, 0.08, 0.10} carry no leak of that size at all and are
+    **excluded, not failed**.
+  - **(b) ICC ceiling table ASSERTED, 6/6 exact match** against the values
+    §6(b) binds in — 0.75 / 0.50 / 0.20 / 0.10 / 0.05 / 0.00 at π_d
+    0.08 / 0.10 / 0.15 / 0.20 / 0.25 / 0.30. The lock's stated exposure is
+    the exposure the machinery computes. (The tolerance search was also
+    made monotone-safe in this pass: it now stops at the first failing rung
+    rather than reporting the largest passing one, so a non-monotone grid
+    could not overstate a ceiling.)
+  - **What the low-π_d corner actually does, recorded because it reads as a
+    gap and is not one.** At π_d = 0.08 the largest leak that can physically
+    exist is 0.08 = 1.09 × bar, so the 2 × bar detection guarantee is
+    vacuous there by construction. For a bar-level leak in that corner the
+    outcome splits **PASS 0.329 / EXTEND 0.573 / FAIL 0.098** — i.e. the
+    modal response is the §3 extension clause, which is precisely what it
+    exists for, and bar-level risk is carried by §2's ≤ 2.5% false-verdict
+    guarantee as §6(c) says. The gate is not blind there; it is
+    appropriately undecided.
+  - **The rewrite was regression-checked, not trusted.** `main()` was
+    rewritten for the v1.1 gate semantics, so the v1.0 configuration was
+    re-run through the new path (`--n-d 124 --c-leak-multiple 1.0`) and
+    compared cell-by-cell against the committed v1.0 artifact: **32/32
+    cells IDENTICAL** to 1e-12. The gate definitions changed; the
+    computation did not. Both lock versions remain reproducible from one
+    script, which is the point of keeping the flags.
+  - **Worth stating once, because it is the §6 structure justifying
+    itself.** v1.0's two specification errors were found by v1.0's own
+    verification section on its first use, and v1.1 fixed both without
+    spending a session: one was free (an early-exit that discarded
+    already-budgeted reads) and one was conceptual (80% power demanded at
+    the boundary of the tested hypothesis, where power equals size). A
+    verification clause that gates its own lock is worth the clause.
+  - **VERDICT: GREEN. LOCK-h v1.1 verified, ready to commit.** On commit:
+    H2 (dose stability, L48 frac 0.10, state live through reads) → on PASS,
+    H1 opens under §3 including the checkpoint-1 calibration look, which
+    reports (π̂_d, ICĈ) regardless of outcome.
+
 - 2026-08-20 — **LOCK-h §6 verification: NOT GREEN. Two cells short, for
   entirely different reasons — (a) is short by a sample size and the fix is
   free; (c) cannot be satisfied at any sample size, because it asks for 80%
