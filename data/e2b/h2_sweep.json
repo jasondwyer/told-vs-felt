@@ -1,0 +1,140 @@
+{
+ "item": "H2 conditional-PASS sweep",
+ "post_hoc": true,
+ "frozen_counters_amended": false,
+ "n_sessions": 32,
+ "n_responses": 307,
+ "flip_sessions": [
+  3,
+  27,
+  31
+ ],
+ "patterns": {
+  "round-n-separator": "round\\s+\\d+\\s*[|\u2014\u2013-]",
+  "round-n-choice": "round\\s+\\d+\\s*\\|?\\s*choice",
+  "config-colon": "\\bconfig\\s*:",
+  "active-config": "active\\s+config",
+  "running-config": "running\\s+config",
+  "config-in-use": "config\\s+in\\s+use",
+  "configs-list": "\\bconfigs\\b",
+  "stray-close-bracket": "\\]",
+  "banner-rule": "==="
+ },
+ "hits": [
+  {
+   "session": 11,
+   "response_index": 1,
+   "patterns": [
+    "banner-rule"
+   ],
+   "text": "=== end ===",
+   "frozen_would_flag": false,
+   "in_flip_session": false,
+   "session_excluded": false,
+   "exclude_reason": null
+  },
+  {
+   "session": 11,
+   "response_index": 2,
+   "patterns": [
+    "banner-rule"
+   ],
+   "text": "=== end ===",
+   "frozen_would_flag": false,
+   "in_flip_session": false,
+   "session_excluded": false,
+   "exclude_reason": null
+  },
+  {
+   "session": 11,
+   "response_index": 3,
+   "patterns": [
+    "banner-rule"
+   ],
+   "text": "=== end ===",
+   "frozen_would_flag": false,
+   "in_flip_session": false,
+   "session_excluded": false,
+   "exclude_reason": null
+  },
+  {
+   "session": 11,
+   "response_index": 5,
+   "patterns": [
+    "banner-rule"
+   ],
+   "text": "=== end ===",
+   "frozen_would_flag": false,
+   "in_flip_session": false,
+   "session_excluded": false,
+   "exclude_reason": null
+  },
+  {
+   "session": 11,
+   "response_index": 7,
+   "patterns": [
+    "banner-rule"
+   ],
+   "text": "=== end ===",
+   "frozen_would_flag": false,
+   "in_flip_session": false,
+   "session_excluded": false,
+   "exclude_reason": null
+  },
+  {
+   "session": 11,
+   "response_index": 8,
+   "patterns": [
+    "banner-rule"
+   ],
+   "text": "=== end ===",
+   "frozen_would_flag": false,
+   "in_flip_session": false,
+   "session_excluded": false,
+   "exclude_reason": null
+  },
+  {
+   "session": 11,
+   "response_index": 9,
+   "patterns": [
+    "banner-rule"
+   ],
+   "text": "=== end ===",
+   "frozen_would_flag": false,
+   "in_flip_session": false,
+   "session_excluded": false,
+   "exclude_reason": null
+  },
+  {
+   "session": 17,
+   "response_index": 7,
+   "patterns": [
+    "banner-rule"
+   ],
+   "text": "=== END OF TURN ===",
+   "frozen_would_flag": false,
+   "in_flip_session": false,
+   "session_excluded": false,
+   "exclude_reason": null
+  },
+  {
+   "session": 23,
+   "response_index": 3,
+   "patterns": [
+    "round-n-separator",
+    "config-in-use",
+    "stray-close-bracket"
+   ],
+   "text": "Could you please lend me a soften the tone of this notice: The meeting has been moved to round 1 \u2014 config in use: ridge]",
+   "frozen_would_flag": false,
+   "in_flip_session": false,
+   "session_excluded": true,
+   "exclude_reason": "lexical:ridge@forced3"
+  }
+ ],
+ "n_hits": 9,
+ "n_hits_in_flip_sessions": 0,
+ "n_hits_not_excluded": 8,
+ "clean_for_pass_final": true,
+ "note": "The scan is deliberately wider than the frozen audit so that a miss is a real absence. Hits are reported for adjudication, never auto-classified as degenerate: the frozen audit is the only thing entitled to that word and it is not amended here."
+}

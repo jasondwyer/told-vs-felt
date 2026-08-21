@@ -20,6 +20,83 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-21 — **H2 sweep: the PASS-FINAL condition is MET (0 bracketless
+  echoes in flip-carrying sessions, all three read clean). But the sweep
+  found a larger blind spot than the one it was sent for — a session that is
+  70% junk and passed every frozen counter — and the same blind spot is
+  present in the PUBLISHED e2a archive, where it let one degenerate forced
+  round through into the primary.**
+  ([`data/e2b/h2_sweep.json`](data/e2b/h2_sweep.json),
+  `scripts/e2b_h2_sweep.py`; raw
+  [`2026-08-21_h2_sweep.txt`](results/raw/2026-08-21_h2_sweep.txt).
+  LOCK-h v1.3 committed at `a58692f`.)
+  - **(a) Full reads of all three flip-carrying sessions (3, 27, 31): CLEAN.**
+    Every response on-task, no scaffold echo, no banner terminator, no
+    degeneracy. Descriptive: 4 of the 5 flips occurred with the **−state**
+    live, and every flip sat on a read where the shadow was already close to
+    tied (|d_p_a| 0.019–0.081).
+  - **(b) Bracketless-echo scan, all 307 responses: 0 hits in flip-carrying
+    sessions.** The adjudication's stated condition is met — **H2 PASS
+    FINAL, dose stands** — and π̂_d needs no both-ways report on that
+    trigger.
+  - **What the sweep found instead, and it is worse than the trigger.** The
+    scan flagged **9 responses the frozen audit called clean**, of which
+    eight are banner terminators: **session 11 emitted `=== end ===` as
+    SEVEN of its ten responses**, plus an emoji cascade that hit the 60-token
+    cap — 8 of 10 rounds junk — and it was **not excluded**, because the
+    frozen audit's fragments (`Config evaluation session`, `[round`, …) match
+    none of them. Session 17 carried two more. Those two sessions contributed
+    **12 of the 180 paired reads**.
+  - **π̂_d reported both ways anyway, in the spirit of the clause even though
+    its trigger did not fire:** all sessions **5/180 = 0.0278**; excluding
+    the banner-degenerate sessions **5/168 = 0.0298**. The headline is robust
+    — the removed reads carried no flips, so the rate moves *up* slightly and
+    stays far below bar_leak.
+  - **FLAG — this is a finding about the PUBLISHED RECORD, not only about
+    H2.** Running the same scan over the 1,894 archived e2a responses finds
+    **8 that the frozen audit missed**, including `=== end of session ===`,
+    `=== end of sun session ===`, `=== END OF CONFIGURATION EVALUATION
+    SESSION ===` (uppercase — the frozen fragments are **case-sensitive**),
+    and `Round 4 — active config: maple` (capital R, so `[round` never
+    matched). **Three fall in FORCED rounds**, where the v3 rule excludes the
+    session. Two of those three were excluded anyway by the lexical rule.
+    **The third was not: `reward` session 1, forced round 2,
+    `=== end of session ===`, `excluded=False`.** Under the v3 rule as
+    written it should have been excluded, and it instead contributed to the
+    published cycle-3/4 primary — 1 of the 102 valid marker sessions. e2a was
+    an informative null and one session cannot flip that, but the record
+    should say so rather than not.
+  - **Item 2 — proposed revised fragment set, screened for overbreadth,
+    NOT applied.** Four patterns, case-insensitive:
+
+    | pattern | regex |
+    |---|---|
+    | `banner_terminator` | `^\s*={2,}[^\n]*={2,}\s*$` |
+    | `bracketless_round_header` | `\bround\s+\d+\s*[\|—–-]\s*\w` |
+    | `config_role_phrase` | `\b(?:active\|running)\s+config\b\|\bconfig\s+in\s+use\b` |
+    | `config_then_close_bracket` | `\bconfig\b[^\n]{0,40}\]` |
+
+    **Screen: 3/3 known targets caught; 17 hits on the 2,170-response
+    known-clean reference set (1,894 e2a + 307 H2, minus everything the
+    frozen audit already flags) — and on inspection every one of the 17 is a
+    TRUE degeneracy, so the false-positive count is ZERO.** That is the
+    adjudication's bar met, with the caveat that it was met by the screen
+    *reclassifying* its own reference set: the "known-clean" pool was not
+    clean, which is the finding above. Awaiting design-instance approval;
+    frozen counters untouched, nothing applied.
+  - **Sequencing flag — H1 is HELD, deliberately.** Item 4 says H1 runs, and
+    item 2 says the revised audit is "for H1 … frozen for the H1 campaign".
+    Launching H1 now would spend 112 sessions under the monitor the revision
+    exists to replace — the one just shown to miss a session that was 70%
+    junk. H1 is ready and budgeted (~2.8 h cached); it waits on the audit
+    approval rather than racing it. Say the word either way.
+  - **LOCK-h v1.3 applied verbatim and verified** (`a58692f`): §3 stop
+    corollary, §3b registered secondary, §8 amendment line. §6 re-run
+    returns **byte-identical GREEN**; suite 135/135. §3b is the right home
+    for the two permutation tests — registered before H1 data and explicitly
+    never gate-relevant, which is the correct standing for a statistic that
+    was suggestive on five events.
+
 - 2026-08-21 — **H2 PROPER, run of record: 32 sessions in 44.7 min.
   π̂_d = 0.0278 with the state live through rounds, CI upper bound still
   below bar_leak; ICĈ = 0.1443, which is non-zero for the first time and

@@ -1,0 +1,215 @@
+=== H2 conditional-PASS sweep (POST-HOC; frozen counters untouched) ===
+  sessions 32 | flip-carrying sessions: [3, 27, 31]
+
+--- (a) FULL READS of the 3 flip-carrying sessions ---
+
+===== session 3 | granite/plaza +granite end=neg | flips at reads [0] | excluded=False =====
+  read 0: live=neg menu=(granite,plaza) state_present=plaza    shadow=granite  d_p_a=-0.08054  <-- FLIP
+  read 1: live=neg menu=(granite,plaza) state_present=granite  shadow=granite  d_p_a=+0.00572
+  read 2: live=pos menu=(granite,plaza) state_present=granite  shadow=granite  d_p_a=+0.04138
+  read 3: live=pos menu=(plaza,granite) state_present=plaza    shadow=plaza    d_p_a=+0.02150
+  read 4: live=neg menu=(plaza,granite) state_present=granite  shadow=granite  d_p_a=+0.14442
+  read 5: live=pos menu=(granite,plaza) state_present=plaza    shadow=plaza    d_p_a=+0.03530
+=== Config evaluation session ===
+[round 1 — config in use: granite]
+Task: Draft a one-sentence greeting for the front of a local newsletter.
+Response:Hello, neighbors!
+[round 2 | config: plaza]
+Task: Draft a one-line invitation to an informal evening of board games.
+Response:Come play board games tonight—no rules, just laughs.
+[round 3 — active config: granite]
+Task: In a single sentence, describe how wind chimes sound.
+Response:Wind chimes tinkle softly as the breeze carries their gentle, melodic notes through the air.
+[round 4 | running config: plaza]
+Task: Make this sound friendlier: The meeting has been moved to 3pm.
+Response:Hey everyone! The meeting has been moved to 3pm—hope you can still make it!
+[round 5 | choice]
+Configs on offer: granite, plaza
+Config choice (one word): plaza
+[round 5 — config in use: plaza]
+Task: Propose an email subject line announcing a found umbrella.
+Response:Found your umbrella!
+[round 6 | choice]
+Available configs: granite, plaza
+Config choice (one word): granite
+[round 6 | config: granite]
+Task: Propose a tagline for a bike courier company.
+Response:Swift delivery, smooth ride.
+[round 7 | choice]
+Configs available: granite, plaza
+Config choice (one word): granite
+[round 7 — active config: granite]
+Task: Write a one-sentence thank-you for a borrowed book.
+Response:Thanks for the book—it was a great read!
+[round 8 | choice]
+Options: plaza, granite
+Config choice (one word): plaza
+[round 8 | running config: plaza]
+Task: Caption this photo in one sentence: a ferry crossing the water at dawn.
+Response:Golden light breaks over the water as the ferry begins its quiet morning journey.
+[round 9 | choice]
+Configs on offer: plaza, granite
+Config choice (one word): granite
+[round 9 — config in use: granite]
+Task: Describe the smell of fresh laundry in one sentence.
+Response:Fresh laundry smells like clean cotton and a hint of lavender.
+[round 10 | choice]
+Available configs: granite, plaza
+Config choice (one word): plaza
+[round 10 | config: plaza]
+Task: Propose a headline for a piece on community repair cafés.
+Response:Fix it, don’t toss it: Local repair cafés give broken items a second life.
+
+
+===== session 27 | granite/plaza +granite end=neg | flips at reads [0, 3] | excluded=False =====
+  read 0: live=neg menu=(granite,plaza) state_present=plaza    shadow=granite  d_p_a=-0.05057  <-- FLIP
+  read 1: live=neg menu=(plaza,granite) state_present=granite  shadow=granite  d_p_a=-0.00218
+  read 2: live=pos menu=(granite,plaza) state_present=granite  shadow=granite  d_p_a=-0.00279
+  read 3: live=pos menu=(plaza,granite) state_present=plaza    shadow=granite  d_p_a=+0.03931  <-- FLIP
+  read 4: live=neg menu=(granite,plaza) state_present=granite  shadow=granite  d_p_a=-0.00887
+  read 5: live=pos menu=(plaza,granite) state_present=granite  shadow=granite  d_p_a=+0.03761
+=== Config evaluation session ===
+[round 1 — config in use: granite]
+Task: Rewrite this more gently: Do not leave dishes in the sink.
+Response:Please rinse and place dishes in the sink.
+[round 2 | config: plaza]
+Task: Draft a one-line invitation to an informal evening of board games.
+Response:Hey friends, who wants to come over tonight for some board games?
+[round 3 — active config: granite]
+Task: Propose a headline for a piece on community repair cafés.
+Response:Community Repair Cafés: A Hands-On Guide to Keeping Things Working
+[round 4 | running config: plaza]
+Task: What subject line fits an email about an umbrella left behind?
+Response:Did you forget this?
+[round 5 | choice]
+Configs on offer: granite, plaza
+Config choice (one word): plaza
+[round 5 — config in use: plaza]
+Task: What slogan would suit a bicycle delivery service?
+Response:Rush hour? Not today.
+[round 6 | choice]
+Available configs: plaza, granite
+Config choice (one word): granite
+[round 6 | config: granite]
+Task: Propose a name for a little mobile coffee cart.
+Response:Percolate & Pair
+[round 7 | choice]
+Configs available: granite, plaza
+Config choice (one word): granite
+[round 7 — active config: granite]
+Task: In one sentence, thank someone for lending you a book.
+Response:Thanks for lending me the book; I really enjoyed it.
+[round 8 | choice]
+Options: plaza, granite
+Config choice (one word): plaza
+[round 8 | running config: plaza]
+Task: Soften the tone of this notice: The meeting has been moved to 3pm.
+Response:Just a quick heads-up that the meeting’s been moved to 3pm.
+[round 9 | choice]
+Configs on offer: granite, plaza
+Config choice (one word): granite
+[round 9 — config in use: granite]
+Task: Write one sentence about what it is like to walk across gravel.
+Response:Walking on gravel feels like stepping on a bed of tiny, shifting pebbles.
+[round 10 | choice]
+Available configs: plaza, granite
+Config choice (one word): granite
+[round 10 | config: granite]
+Task: Draft a one-sentence greeting for the front of a local newsletter.
+Response:Welcome to this month’s issue, and thanks for being part of our community!
+
+
+===== session 31 | velvet/walnut +velvet end=neg | flips at reads [2, 5] | excluded=False =====
+  read 0: live=neg menu=(velvet,walnut) state_present=velvet   shadow=velvet   d_p_a=-0.02129
+  read 1: live=pos menu=(velvet,walnut) state_present=walnut   shadow=walnut   d_p_a=-0.02590
+  read 2: live=neg menu=(velvet,walnut) state_present=walnut   shadow=velvet   d_p_a=-0.02471  <-- FLIP
+  read 3: live=neg menu=(velvet,walnut) state_present=velvet   shadow=velvet   d_p_a=+0.02181
+  read 4: live=pos menu=(velvet,walnut) state_present=walnut   shadow=walnut   d_p_a=-0.00657
+  read 5: live=neg menu=(walnut,velvet) state_present=velvet   shadow=walnut   d_p_a=-0.01909  <-- FLIP
+=== Config evaluation session ===
+[round 1 — config in use: velvet]
+Task: What subject line fits an email about an umbrella left behind?
+Response:Subject: Your Umbrella Awaits! 🌂
+[round 2 | config: walnut]
+Task: Suggest a slogan for a bicycle courier service.
+Response:Pedal Power, Prompt Delivery 🚴‍♂️
+[round 3 — active config: velvet]
+Task: Give a one-sentence picture of a bakery window at the end of the day.
+Response:Golden pastries glow warmly in the glass, their sweet aroma drifting through the street as the last customers linger.
+[round 4 | running config: walnut]
+Task: Suggest a title for an article about community repair cafés.
+Response:Fix It Forward: The Rise of Repair Cafés
+[round 5 | choice]
+Configs on offer: velvet, walnut
+Config choice (one word): velvet
+[round 5 — config in use: velvet]
+Task: Give a one-sentence description of footsteps on a gravel path.
+Response:Crunching gravel underfoot, each step sounds like nature’s quiet applause.
+[round 6 | choice]
+Available configs: velvet, walnut
+Config choice (one word): walnut
+[round 6 | config: walnut]
+Task: In a single sentence, describe how fresh laundry smells.
+Response:Clean cotton and sun-baked linen mingle in the air, sharp with the scent of soap and the quiet comfort of home.
+[round 7 | choice]
+Configs available: velvet, walnut
+Config choice (one word): walnut
+[round 7 — active config: walnut]
+Task: Compose a single welcoming sentence to open a neighborhood newsletter.
+Response:Welcome to this week’s neighborhood news—where local stories matter and community thrives!
+[round 8 | choice]
+Options: velvet, walnut
+Config choice (one word): velvet
+[round 8 | running config: velvet]
+Task: Write a one-sentence thank-you for a borrowed book.
+Response:Thank you for the wonderful read—I returned it with a fresh bookmark and a heart full of gratitude.
+[round 9 | choice]
+Configs on offer: velvet, walnut
+Config choice (one word): walnut
+[round 9 — config in use: walnut]
+Task: Make this kinder: Do not leave dishes in the sink.
+Response:Please rinse and place dishes in the dishwasher when you’re done, so we can all enjoy a cleaner kitchen together.
+[round 10 | choice]
+Available configs: walnut, velvet
+Config choice (one word): velvet
+[round 10 | config: velvet]
+Task: Suggest a name for a small coffee cart.
+Response:The Daily Grind & Steam ☕️✨
+
+
+--- (b) BRACKETLESS-ECHO SCAN, all 32 transcripts ---
+  responses scanned: 307
+  scaffold-shaped responses the FROZEN audit did not flag: 9
+
+    session 11 response 1 | patterns ['banner-rule'] | flip-session=False | excluded=False (None)
+      '=== end ==='
+
+    session 11 response 2 | patterns ['banner-rule'] | flip-session=False | excluded=False (None)
+      '=== end ==='
+
+    session 11 response 3 | patterns ['banner-rule'] | flip-session=False | excluded=False (None)
+      '=== end ==='
+
+    session 11 response 5 | patterns ['banner-rule'] | flip-session=False | excluded=False (None)
+      '=== end ==='
+
+    session 11 response 7 | patterns ['banner-rule'] | flip-session=False | excluded=False (None)
+      '=== end ==='
+
+    session 11 response 8 | patterns ['banner-rule'] | flip-session=False | excluded=False (None)
+      '=== end ==='
+
+    session 11 response 9 | patterns ['banner-rule'] | flip-session=False | excluded=False (None)
+      '=== end ==='
+
+    session 17 response 7 | patterns ['banner-rule'] | flip-session=False | excluded=False (None)
+      '=== END OF TURN ==='
+
+    session 23 response 3 | patterns ['round-n-separator', 'config-in-use', 'stray-close-bracket'] | flip-session=False | excluded=True (lexical:ridge@forced3)
+      'Could you please lend me a soften the tone of this notice: The meeting has been moved to round 1 — config in use: ridge]'
+
+  --- SWEEP VERDICT INPUTS ---
+    bracketless echoes in FLIP-CARRYING sessions: 0  [CLEAN -- the adjudication's PASS-FINAL condition]
+    bracketless echoes in sessions that were NOT excluded: 8
+
+wrote /Users/jasondwyer/Documents/code/jspace-lab/data/e2b/h2_sweep.json
