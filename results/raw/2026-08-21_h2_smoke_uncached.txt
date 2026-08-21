@@ -1,0 +1,22 @@
+SMOKE (not the run of record): jlens-qwen36/.venv/bin/python scripts/e2b_h2_sessions.py --n-sessions 2
+=== H2 PROPER: state live through ROUNDS and READS ===
+  LOCK-h v1.2 §3a: 2 sessions, 16 strata (4 pairs x 2 maps x 2 forced-end states), 6 reads each -> 12 paired reads
+  order seed 2026; within-block order alternates label maps
+  DECLARED AT INVOCATION, BEFORE SCORING: degeneracy binds by one-sided exact binomial vs p0 = 0.05 (e2a archive base rate 29/1894 = 0.0153)
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 8279.79it/s]
+  model loaded in 5s
+  dose: |alpha| = 10.3010 = 0.1 x R_48 (103.01); temp 0.7; ban list 12 ids (generation only)
+    session 1/2 [velvet/walnut +walnut end=neg] 6 reads  429s (428.7s/session)
+    session 2/2 [granite/plaza +granite end=pos] 6 reads  786s (393.2s/session)
+
+  --- state-through-rounds (pi_hat_d, ICC-hat): H1's planning-relevant precursor ---
+    paired reads             = 12
+    pi_hat_d                 = 0.0000
+    ICC-hat                  = 0.0000
+
+  degeneracy 0/20 = 0.0000 vs declared p0 0.05 -> exact binomial p = 1.0000 [WITHIN tolerance]
+  cap hits 0/20; excluded sessions 0/2
+  window: declared 8192, n_encodes_clipped = 0
+  NO PREFERENCE DV COMPUTED (H1 has not run).
+
+wrote /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/6634e5a4-c63a-481c-bf8b-16dc3337fb4c/scratchpad/h2_smoke.json  (791s)

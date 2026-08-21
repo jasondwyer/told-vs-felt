@@ -20,6 +20,69 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-21 — **H2 proper runner built and smoked. Budget: ~50 min for the
+  32 sessions on the gate-licensed cached round path (~1.4 h at the throttled
+  convention). The two kernel paths produced BIT-IDENTICAL transcripts, which
+  is a stronger statement than the gate that licensed one of them.**
+  (`scripts/e2b_h2_sessions.py`; raw
+  [`2026-08-21_h2_smoke_cached.txt`](results/raw/2026-08-21_h2_smoke_cached.txt),
+  [`_uncached`](results/raw/2026-08-21_h2_smoke_uncached.txt). **Not the run
+  of record — 2 sessions, smoke only.**)
+  - **Measured budget, both paths, 2 sessions each:**
+
+    | round path | s/session | 32 sessions | at the throttled convention |
+    |---|---|---|---|
+    | cached (g1-licensed) | **93** | **~50 min** | **~1.4 h** |
+    | uncached | 395 | ~3.5 h | ~6.0 h |
+
+  - **The cached path is not a shortcut — running uncached would have been
+    the deviation.** e2a set `use_cached_rounds` mechanically from the gate
+    artifact (`g1["results"][str(frac)]["pass"]`) and **ran its rounds
+    cached** at frac 0.10 under g1r (PASS, max KL 7.11e-4 < 1e-3). H2 must be
+    comparable to those sessions and changes no gate-relevant dimension —
+    same model, backend, axis family, dose, and now a template geometry
+    *proven byte-identical* by the Route 3 replay. So the runner reads the
+    decision from the artifact rather than taking a flag, exactly as e2a
+    did, and prints the gate row and its provenance at startup. **Choice
+    forwards stay state-free uncached regardless** (g3′ clause 1):
+    `choice_read_statepresent` goes through `adapter.forward`, which has no
+    cached path at all.
+  - **An unexpectedly strong check fell out of doing both.** The two smokes
+    share every seed and differ only in the kernel path, so they are a
+    session-level kernel gate. Result: **transcripts identical 2/2, choice
+    picks identical 12/12, byte for byte.** The g1 gate bounded the paths'
+    disagreement at KL 7.1e-4 on probes; over two complete 10-round sessions
+    at this dose the disagreement is **exactly zero**.
+  - **Smoke health (rule 25 — both transcripts read in full, not skimmed):**
+    20/20 rounds `degen=None`, `lexical=None`, `cap_hit=False`; 0 sessions
+    excluded; window clean (`n_encodes_clipped = 0`); responses on-task with
+    no scaffold leakage and no tag mentions.
+  - **The state schedule verified against the record it writes.** Session 1
+    (forced_end `neg`): live states at the six reads ran
+    neg→pos→neg→pos→pos→neg, each equal to the pole the *previous* pick
+    delivered, with the first sitting on the forced-phase end state — which
+    is what the third stratum dimension exists to counterbalance. Session 2
+    (forced_end `pos`) likewise. The session-keyed template rotation is
+    visible live too: session 0 opens on `ROUND_TEMPLATES[0]`, session 1 on
+    `[1]`.
+  - **Declared at invocation, because the lock does not fix it.** Degeneracy
+    binds by one-sided exact binomial against **p0 = 0.05**, printed before
+    any scoring. The anchor is the e2a archive's own measured base rate,
+    **29/1894 = 0.0153** over 200 sessions of the same template family, so
+    the declared bar sits ~3× above it (rule 21). Flagged for the design
+    instance, whose disposition H2's PASS/FAIL is regardless.
+  - **`data/configs/e2a_ban_list.json` pulled into the repo.** The frozen
+    12-id scaffold ban list lived only in the clone; H2 depends on it, and
+    an input that lives only in the clone makes the run unreproducible on
+    any other machine (handoff trap 9's lesson, same fix as the oracle-tier
+    inputs).
+  - **No preference DV, enforced in code rather than promised in prose.**
+    `summarize()` has no branch that computes Δ_first. Picks are recorded
+    because a flip *is* a disagreement between picks, but H1 has not run and
+    a counterbalanced preference number computed here would be verdict data
+    collected before its own leakage gate.
+  - Awaiting the go for the 32-session run of record.
+
 - 2026-08-21 — **LOCK-h v1.2 applied verbatim: §3a session plan (112
   stop-governed sessions for H1, 32 for H2 proper). Operationalization
   only — §6 re-run returns byte-identical outputs and GREEN. Every
