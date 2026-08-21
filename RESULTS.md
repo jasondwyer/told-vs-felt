@@ -20,6 +20,73 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-21 — **H1 ran all 112 scheduled sessions and STOPPED SHORT of its
+  declared exit: N = 576 of 640 paired reads. The §3a schedule is sized as
+  if exclusions were zero and could not have reached 640 at any historically
+  observed exclusion rate. The gate is NOT evaluated. Design-instance
+  disposition required.**
+  ([`data/e2b/h1_sessions.json`](data/e2b/h1_sessions.json); raw
+  [`2026-08-21_h1_sessions.txt`](results/raw/2026-08-21_h1_sessions.txt);
+  audit v2 sha `7aa235d25eeb66dc` verified at startup; 8,732 s.)
+  - **What happened, arithmetically.** 112 sessions ran; **16 were excluded**
+    (14.3%); an excluded session contributes 0 reads, so 96 × 6 = **576**.
+    §3a budgeted 112 × 6 = 672 against N_max = 640 — **32 reads, 5.33
+    sessions of slack.** Sixteen exclusions cost 96.
+  - **This was not bad luck, and it is not audit v2's doing.** Delivering 640
+    reads at m = 6 needs **107 valid sessions**, so 112 scheduled permits at
+    most **5 exclusions — 4.5%**. Against every rate on the record:
+
+    | exclusion rate | valid of 112 | reads delivered | vs 640 |
+    |---|---|---|---|
+    | e2a archive, 8.0% | 103 | 618 | SHORT |
+    | H2 under audit v1, 6.2% | 105 | 630 | SHORT |
+    | H1 realised under audit v2, 14.3% | 96 | **576** | SHORT |
+
+    **The schedule could not have delivered its own stop at any rate ever
+    observed on this apparatus.** And audit v2 is not the cause: **1 of the
+    16 exclusions came from a new pattern; the other 15 would have fired
+    under the cycle-3/4 audit unchanged.**
+  - **My miss, stated plainly.** When §3a landed I verified 112 × 6 = 672 ≥
+    640 and reported "32 reads of slack, 5.33 sessions" — correct arithmetic,
+    and I did not check it against the exclusion rate sitting in the archive
+    I had already read (16/200). Verifying a number as stated is not the same
+    as verifying it is adequate, and the difference cost a 2.4 h campaign.
+  - **The gate is NOT evaluated, and that is deliberate.** §3 applies the
+    criterion "at stop", and exhausting the schedule is not one of the two
+    declared exits. Reporting a verdict from a plan that was not met is
+    exactly what a pre-registration exists to prevent.
+  - **What the run does say, DESCRIPTIVE and explicitly not the gate:**
+    n_d = **12**, **b = 6, c = 6**, so **L̂ = (b − c)/N = exactly
+    +0.00000**. π̂_d = 12/576 = **0.0208**, 95% CI **[0.0108, 0.0361]** —
+    upper bound far below bar_leak = 0.0735, and strikingly close to the
+    read-half precursor's 0.0208. The mapped L interval is
+    **[−0.01204, +0.01204]**, entirely inside (−0.0735, +0.0735).
+  - **One statistical point that matters for the disposition.** The stop was
+    driven by the schedule length and by exclusions arising in generation —
+    **never by the b/c split.** So conditional on n_d, b is still exactly
+    Binomial(n_d, ½) under the null, and the §3 exactness argument survives
+    intact. An evaluation at N = 576, or an extension to 640, is
+    statistically sound; what is missing is authorisation, not validity.
+  - **Options, with the arithmetic done:** (i) dispose the gate at N = 576 as
+    an amended exit; (ii) **extend by ~13 sessions** — 125 scheduled delivers
+    640 at the realised 14.3% rate — as a partial 8th block, which breaks
+    §3a's whole-block stratification; (iii) re-plan the schedule with an
+    exclusion allowance and re-run. Code recommends nothing here; the numbers
+    are above.
+  - **Checkpoints, all clean, no pause at any of them:** 128 reads π̂_d
+    0.0076 / ICĈ 0.0000; 256 → 0.0078 / 0.0000; 384 → 0.0104 / 0.0000;
+    512 → 0.0174 / 0.0296. Ceiling 1.00 throughout (π̂_d never approached
+    0.08), and the 0.30 stability ceiling was never neared.
+  - **Monitors:** degeneracy 27/1003 = 0.0269 against the declared p0 = 0.05,
+    exact binomial p = 0.9999 — within tolerance. Window clean, 0 clipped.
+    16 exclusions, all in the forced phase, which is the phase H1 shares
+    unchanged with H2 and e2a.
+  - **Reading flag still open.** H1's post-choice rounds ran UNSTEERED on
+    Code's reading of "both tags deliver identical nothing"; read states were
+    scheduled, never selected. If the design instance meant post-choice
+    rounds steered by the schedule, this campaign is the wrong one and would
+    need re-running regardless of the stop question.
+
 - 2026-08-21 — **Sweep batch applied: audit v2 approved and frozen
   (sha `7aa235d25eeb66dc`); the e2a published-record correction computed
   both ways and appended to the archive and FINDINGS-3. The published
