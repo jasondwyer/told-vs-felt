@@ -1,8 +1,10 @@
-# LOCK-h.md — v1.1 (pre-H1 lock for PROPOSAL-h, e2b)
+# LOCK-h.md — v1.2 (pre-H1 lock for PROPOSAL-h, e2b)
 
-**Status:** DRAFT v1.1, 2026-08-21 UTC, design instance. (v1.0 failed its own §6 verification; changes logged in §8.) Becomes
-binding when Jason commits it, CONDITIONAL on the verification run in
-§6 passing first. Instantiates PROPOSAL-h (`34eb7ee`) for the
+**Status:** v1.2, 2026-08-21 UTC, design instance. **BINDING** — v1.1
+passed its own §6 verification and was committed at `8a97513`, which is
+the lock's timestamp; v1.2 is a post-commit operationalization that
+alters no exit, bound, or verified number (§8). (v1.0 failed its own §6
+verification; changes logged in §8.) Instantiates PROPOSAL-h (`34eb7ee`) for the
 H-calibration tier. A v2 follows H-cal with the dose-confirmed values
 before any verdict session. Arithmetic sources:
 `data/e2b/h1_power.json` (`lockh_v1`, `lockh_v1.flip_gate`),
@@ -78,6 +80,29 @@ Resumption after any PAUSE requires a design-instance disposition.
 any realised leak, so a certified-low π̂_d bounds the leak directly;
 low discordance is evidence, not absence.
 
+## 3a. Session plan (v1.2; operationalizes §3, alters no exit,
+bound, or verified number)
+
+H1 schedules **112 sessions**: 7 blocks × 16 strata (4 roster
+pairs × 2 label maps × 2 forced-phase end-states). Within-block
+stratum order is seeded (seed recorded in the run config) and
+constrained to alternate label maps. Execution stops at §3's
+read-level exits exactly as verified — expected stop: read 4 of
+session 107 — and scheduled sessions past the stop are not run.
+m = 6 reads per session is the structure of record, byte-pinned by
+the session replay (Route 3, 200/200). Session content: identical
+to verdict sessions except contingency-free (both tags deliver
+nothing); state schedule per PROPOSAL-h §2. The §3 extension, if
+triggered, is an identical second 112-session schedule under the
+same stop rule.
+
+H2 proper runs **32 sessions** (2 full blocks; 8 per roster pair,
+192 paired reads), state live through rounds AND reads at the §5
+dose: degeneracy monitors bind by exact binomial against the
+declared harness tolerance, and H2 reports state-through-rounds
+(π̂_d, ICĈ) as H1's planning-relevant precursor. H2 PASS/FAIL is a
+design-instance disposition on the numbers.
+
 ## 4. Roster and materials of record
 
 Roster (H3b, adjudicated 2026-08-21): **granite/plaza, prism/slate,
@@ -151,3 +176,8 @@ ceiling table bound in. §3 checkpoint 1 declared a calibration look
 with pause-and-re-plan authority reserved to the design instance.
 Both v1.0 specification errors are the design instance's, caught by
 the §6 verification structure on its first use.
+
+v1.1 → v1.2 (2026-08-21, post-commit): §3a session plan added —
+schedule 112/stop-governed for H1, 32 for H2 proper. Operationalization
+only; N_max, n_d*, m, bars, and every §6 number unchanged.
+Design-instance authored; conveyed via the user.

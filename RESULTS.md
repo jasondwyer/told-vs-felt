@@ -20,6 +20,37 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-21 — **LOCK-h v1.2 applied verbatim: §3a session plan (112
+  stop-governed sessions for H1, 32 for H2 proper). Operationalization
+  only — §6 re-run returns byte-identical outputs and GREEN. Every
+  arithmetic claim in §3a independently checked and exact.**
+  - **Applied as authored.** §3a inserted after §3, the amendment line
+    appended to §8. Two edits were *not* dictated and are flagged: the
+    title and status line move v1.1 → v1.2 and now read **BINDING**
+    (v1.1 passed §6 and was committed at `8a97513`; the old status still
+    said "becomes binding when Jason commits it"), and the block's
+    paste-indentation was stripped so the heading sits at column 0 like
+    every other heading in the file. Content verbatim; say the word if
+    either should read differently.
+  - **The "no OC changes" claim, verified rather than accepted.** §6 re-run
+    after the edit: outputs **identical on every key**, VERDICT GREEN,
+    n_d* 200 / N_max 640 / bar 0.0735 / c_leak 0.1470 unchanged. Suite
+    135/135.
+  - **§3a's arithmetic checks out exactly, including the one number that
+    could have been loose.** 16 strata = 4 × 2 × 2 ✓. 7 × 16 = 112 ✓. 112 ×
+    m=6 = 672 paired reads against N_max = 640 — **32 reads of slack, 5.33
+    sessions** ✓. And read 640 lands at **session 107, read 4** — exactly
+    the stop §3a names, not approximately ✓. H2: 2 × 16 = 32, 8 per roster
+    pair, 32 × 6 = **192** paired reads ✓.
+  - **One structural consequence worth recording, because it makes the
+    "expected stop" stronger than "expected".** The n_d* exit can only fire
+    first if π_d ≥ n_d*/N_max = **0.3125**. §3's apparatus-stability ceiling
+    pauses the run at π̂_d > 0.30. So **N_max binds across the entire
+    licensed π_d range** — the read-4-of-session-107 stop is not a
+    typical case, it is the only reachable one short of a pause. The
+    read-half precursor (π̂_d = 0.0208) sits far below that, projecting
+    ~13 discordant pairs at the stop.
+
 - 2026-08-21 — **Route 3 acceptance MET on the first attempt: the
   reimplemented e2a session template rebuilds all 200 archived scaffoldings
   byte-for-byte, and all 200 RNG seed streams match. Committed as a suite
