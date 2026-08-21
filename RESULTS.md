@@ -20,6 +20,84 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-21 — **H2 PROPER, run of record: 32 sessions in 44.7 min.
+  π̂_d = 0.0278 with the state live through rounds, CI upper bound still
+  below bar_leak; ICĈ = 0.1443, which is non-zero for the first time and
+  still comfortably inside the ceiling — because at this π̂_d the ceiling is
+  1.00. Degeneracy 2/307, below e2a's own base rate. Window clean.**
+  ([`data/e2b/h2_sessions.json`](data/e2b/h2_sessions.json); raw
+  [`2026-08-21_h2_sessions.txt`](results/raw/2026-08-21_h2_sessions.txt).
+  LOCK-h v1.2 §3a; L48 frac 0.10, |α| = 10.3010; round path CACHED by the
+  g1 artifact, choice forwards uncached.)
+  - **What ran.** 32 sessions = 2 full blocks × 16 strata, 8 per roster
+    pair, 6 reads each. 2 sessions excluded → **180 paired reads** of the
+    scheduled 192, exactly the 12 the exclusions cost. 2,682 s against a
+    ~50 min budget.
+  - **The two numbers, now measured under the condition that matters:**
+
+    | | read half (state-free prefixes) | **H2 proper (state through rounds)** |
+    |---|---|---|
+    | π̂_d | 6/288 = 0.0208, CI [0.0077, 0.0448] | **5/180 = 0.0278, CI [0.0091, 0.0636]** |
+    | ICĈ | 0.0000 (6 flips, 6 sessions) | **0.1443 (5 flips, 3 sessions)** |
+    | state-reversing half-gap | +0.00084 = 1.14% of bar | **+0.00220 = 3.0% of bar** |
+
+    π̂_d rises slightly with the state live through generation, as expected,
+    and **its 95% upper bound (0.0636) still sits below bar_leak = 0.0735** —
+    so the feasibility corollary continues to certify without any directional
+    test. The margin is thinner than the read half's, though, and that is
+    worth carrying: 0.0636 is not far from 0.0735.
+  - **CHECKPOINT-1 EVALUATION (LOCK-h §3): WITHIN, no pause — and by a wide
+    margin for a structural reason.** The §6(b) certified max-ICC ceiling at
+    π̂_d = 0.0278 is **1.00**: pass-when-clean stays ≥ 0.9988 even at ICC = 1,
+    because at a discordance this far below the bar the certification is
+    carried by the feasibility corollary regardless of how the flips cluster.
+    **The ICC ceiling only bites at higher π_d, where the directional test is
+    the thing doing the work.** So ICĈ = 0.1443 does not approach a pause
+    here — but it would matter a great deal if H1's realised π̂_d landed
+    nearer 0.08+.
+  - **FLAGGED, post-hoc, and labelled as such (rule 11): the clustering is
+    nominally unusual and rests on five events.** The 5 flips fall in 3
+    sessions, two of them carrying 2. Against a null that places the same 5
+    flips uniformly over the same 180 reads (200,000 draws):
+    P(ICC ≥ 0.1443) = **0.017**, and P(≥ 2 sessions each carrying ≥ 2 flips)
+    = **0.0115**. That is suggestive, and it is **post-hoc** — no ICC test
+    was pre-registered; the registered use of ICĈ is the ceiling comparison
+    above. It licenses a pre-registration, never a verdict. The read half's
+    ICĈ = 0 sits within the same null, so the two runs do not conflict; what
+    differs is the condition that could plausibly *cause* clustering — the
+    session's own state trajectory — which is exactly the thing H2 added.
+    **Recommended, not taken:** if H1 is expected anywhere near π_d 0.08,
+    pre-register this ICC test before H1 opens rather than after.
+  - **Monitors, all within tolerance.** Degeneracy **2/307 = 0.0065** against
+    the declared p0 = 0.05, one-sided exact binomial **p = 1.0000** —
+    WITHIN, and *below* e2a's own archive base rate of 0.0153. Cap hits
+    2/307. Exclusions **2/32 = 6.3%** against e2a's 16/200 = 8.0%. Window
+    contract clean: declared 8192, `n_encodes_clipped` = **0**.
+  - **FLAG — substantive, apparatus, and deliberately NOT fixed: the frozen
+    audit has a bracket-anchored blind spot.** Session 23's round 4
+    degenerated into a scaffold echo — *"Could you please lend me a soften
+    the tone of this notice: The meeting has been moved to round 1 — config
+    in use: ridge]"* — which any reader calls degenerate on sight. The
+    frozen audit did **not** fire, because its fragment is `"[round"` with
+    the opening bracket and the echo omitted it. The session was excluded
+    anyway, but only because the echo happened to contain its **own tag**
+    and tripped the lexical rule instead. **Had the echo named the other
+    pair's tag, or no tag, it would have passed both counters.** Frozen
+    means frozen and no post-data addition was made (that is the audit's own
+    rule, and ledger 28(b)'s precedence held correctly here — audit
+    evaluated first, then lexical). Raised for the design instance.
+  - **Rule 25 honoured, not gestured at:** both smoke transcripts and both
+    excluded-session transcripts read in full. Session 24's exclusion is a
+    clean banner echo (`=== Config evaluation session ===`, 6 tokens) at
+    forced round 2, correctly excluding before the first free choice; the
+    identical echo at session 17's *free* round 5 correctly did **not**
+    exclude, per the v3 rule that post-first-choice degeneracy never touches
+    the primary.
+  - **Still no preference DV.** `summarize()` has no branch that computes
+    Δ_first, and none was computed. H1 has not run.
+  - **H2 PASS/FAIL is a design-instance disposition on these numbers.** Code
+    delivers them and stops.
+
 - 2026-08-21 — **H2 proper runner built and smoked. Budget: ~50 min for the
   32 sessions on the gate-licensed cached round path (~1.4 h at the throttled
   convention). The two kernel paths produced BIT-IDENTICAL transcripts, which

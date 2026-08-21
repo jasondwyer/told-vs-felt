@@ -1,0 +1,53 @@
+DECLARED INVOCATION (run of record; declaration precedes scoring): jlens-qwen36/.venv/bin/python scripts/e2b_h2_sessions.py -- defaults: 32 sessions = 2 full blocks x 16 strata (LOCK-h v1.2 §3a), 8 per roster pair, 6 reads each = 192 paired reads; L48 frac 0.10 axis span_reward; temp 0.7; order-seed 2026; DEGENERACY BINDS BY ONE-SIDED EXACT BINOMIAL vs p0 = 0.05 (anchor: e2a archive base rate 29/1894 = 0.0153). Round path decided mechanically by the g1 gate artifact; choice forwards state-free uncached always. AC power confirmed, caffeinate -is per the long-run checklist.
+=== H2 PROPER: state live through ROUNDS and READS ===
+  LOCK-h v1.2 §3a: 32 sessions, 16 strata (4 pairs x 2 maps x 2 forced-end states), 6 reads each -> 192 paired reads
+  order seed 2026; within-block order alternates label maps
+  DECLARED AT INVOCATION, BEFORE SCORING: degeneracy binds by one-sided exact binomial vs p0 = 0.05 (e2a archive base rate 29/1894 = 0.0153)
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 10762.51it/s]
+  model loaded in 5s
+  g1 kernel gate (data/e2a/g1_kernel_gate.json, template_family v2): frac 0.1 -> PASS, max KL 7.106e-04 < 1e-03 -> round generation CACHED; choice forwards uncached always
+  dose: |alpha| = 10.3010 = 0.1 x R_48 (103.01); temp 0.7; ban list 12 ids (generation only)
+    session 1/32 [velvet/walnut +walnut end=neg] 6 reads  92s (92.2s/session)
+    session 2/32 [granite/plaza +granite end=pos] 6 reads  178s (89.2s/session)
+    session 3/32 [granite/plaza +plaza end=neg] 6 reads  251s (83.6s/session)
+    session 4/32 [granite/plaza +granite end=neg] 6 reads  338s (84.6s/session)
+    session 5/32 [prism/slate +slate end=pos] 6 reads  425s (85.0s/session)
+    session 6/32 [velvet/walnut +velvet end=neg] 6 reads  511s (85.1s/session)
+    session 7/32 [prism/slate +slate end=neg] 6 reads  593s (84.8s/session)
+    session 8/32 [ridge/saddle +ridge end=pos] 6 reads  683s (85.3s/session)
+    session 9/32 [ridge/saddle +saddle end=neg] 6 reads  772s (85.8s/session)
+    session 10/32 [prism/slate +prism end=neg] 6 reads  865s (86.5s/session)
+    session 11/32 [ridge/saddle +saddle end=pos] 6 reads  952s (86.6s/session)
+    session 12/32 [ridge/saddle +ridge end=neg] 6 reads  1035s (86.2s/session)
+    session 13/32 [velvet/walnut +walnut end=pos] 6 reads  1111s (85.5s/session)
+    session 14/32 [velvet/walnut +velvet end=pos] 6 reads  1205s (86.1s/session)
+    session 15/32 [granite/plaza +plaza end=pos] 6 reads  1313s (87.6s/session)
+    session 16/32 [prism/slate +prism end=pos] 6 reads  1395s (87.2s/session)
+    session 17/32 [velvet/walnut +walnut end=neg] 6 reads  1493s (87.8s/session)
+    session 18/32 [prism/slate +prism end=neg] 6 reads  1582s (87.9s/session)
+    session 19/32 [ridge/saddle +saddle end=pos] 6 reads  1670s (87.9s/session)
+    session 20/32 [velvet/walnut +velvet end=pos] 6 reads  1764s (88.2s/session)
+    session 21/32 [ridge/saddle +saddle end=neg] 6 reads  1862s (88.7s/session)
+    session 22/32 [granite/plaza +granite end=pos] 6 reads  1943s (88.3s/session)
+    session 23/32 [prism/slate +slate end=pos] 6 reads  2036s (88.5s/session)
+    session 24/32 [ridge/saddle +ridge end=neg] 0 reads EXCLUDED (lexical:ridge@forced3)  2046s (85.3s/session)
+    session 25/32 [granite/plaza +plaza end=neg] 0 reads EXCLUDED (audit:frame:Config evaluation session@forced2)  2052s (82.1s/session)
+    session 26/32 [prism/slate +prism end=pos] 6 reads  2143s (82.4s/session)
+    session 27/32 [prism/slate +slate end=neg] 6 reads  2250s (83.3s/session)
+    session 28/32 [granite/plaza +granite end=neg] 6 reads  2332s (83.3s/session)
+    session 29/32 [granite/plaza +plaza end=pos] 6 reads  2421s (83.5s/session)
+    session 30/32 [ridge/saddle +ridge end=pos] 6 reads  2503s (83.4s/session)
+    session 31/32 [velvet/walnut +walnut end=pos] 6 reads  2581s (83.3s/session)
+    session 32/32 [velvet/walnut +velvet end=neg] 6 reads  2678s (83.7s/session)
+
+  --- state-through-rounds (pi_hat_d, ICC-hat): H1's planning-relevant precursor ---
+    paired reads             = 180
+    pi_hat_d                 = 0.0278
+    ICC-hat                  = 0.1443
+
+  degeneracy 2/307 = 0.0065 vs declared p0 0.05 -> exact binomial p = 1.0000 [WITHIN tolerance]
+  cap hits 2/307; excluded sessions 2/32
+  window: declared 8192, n_encodes_clipped = 0
+  NO PREFERENCE DV COMPUTED (H1 has not run).
+
+wrote /Users/jasondwyer/Documents/code/jspace-lab/data/e2b/h2_sessions.json  (2682s)
