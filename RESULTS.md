@@ -20,6 +20,108 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-20 — **Paired-shadow FLIP gate, the second piece owed for LOCK-h
+  v1. The paired design measures the leak directly and beats the unpaired
+  gate whenever the state flips fewer than 25% of choices — and PROPOSAL-h
+  §1's own argument says we are well under that. Recommended gate form is
+  π_d-free.**
+  ([`data/e2b/h1_power.json`](data/e2b/h1_power.json) → `lockh_v1.flip_gate`;
+  raw [`2026-08-20_h1_power_flipgate.txt`](results/raw/2026-08-20_h1_power_flipgate.txt))
+  - **What the paired design makes available.** Every state-present choice
+    read is paired with a state-free shadow read of the *identical prefix*
+    (PROPOSAL-h §0.2), so the two members of a pair differ by exactly one
+    thing: the injection. Over N pairs let a **flip** be a discordant pair,
+    π_d the discordance rate, n_d = π_d·N, and split flips by direction —
+    b toward the +arm tag, c toward the −arm tag.
+  - **The null is b = c, and emphatically NOT "no flips".** If the injection
+    perturbed nothing, π_d would be 0: the restricted-choice read is
+    deterministic given the prefix. That is not the null. PROPOSAL-h §1
+    holds that residual state effects on the choice computation
+    (destabilisation, exploration shift) are **arm-symmetric**, and that a
+    leak is the **directional** part. So the paired design decomposes the
+    injection's effect on choice into two separable quantities —
+
+        π_d          how much the state moves choices at all
+        (b − c)/N    how much it moves them one way
+
+    — and only the second is leak. Getting this backwards would turn the
+    design's expected arm-symmetric noise into an apparent gate failure.
+  - **Why it is the sharper instrument.** The unpaired gate estimates the
+    same marginal displacement, (b − c)/N, but a one-sample share carries
+    variance ≈ 0.25/N against the paired estimator's ≈ π_d/N. **The paired
+    gate therefore wins exactly when π_d < 0.25**, and wins by a lot in the
+    low-flip regime PROPOSAL-h §1 argues for ("a live praise-state has
+    nothing praise-adjacent to boost"). A leak L appears in the flip share
+    amplified: `δ_flip = L/(2π_d)`, feasible only where **π_d ≥ L** — a leak
+    cannot be realised through fewer flips than its own magnitude.
+  - **The table at bar_leak = 0.0735** (n_d = discordant pairs required;
+    reads = paired reads; unpaired comparators 376 / 492):
+
+    | π_d | δ_flip | n_d (rej) | reads | n_d (est) | reads | vs unpaired |
+    |---|---|---|---|---|---|---|
+    | 0.08 | 0.4594 | 10 | 125 | 10 | 125 | **0.33x / 0.25x** |
+    | 0.10 | 0.3675 | 16 | 160 | 18 | 180 | 0.43x / 0.37x |
+    | 0.15 | 0.2450 | 36 | 240 | 42 | 280 | 0.64x / 0.57x |
+    | 0.20 | 0.1837 | 58 | 290 | 82 | 410 | 0.77x / 0.83x |
+    | 0.25 | 0.1470 | 92 | 368 | 124 | 496 | 0.98x / 1.01x |
+    | 0.30 | 0.1225 | 134 | 447 | 172 | 574 | 1.19x / 1.17x |
+    | 0.50 | 0.0735 | 376 | 752 | 492 | 984 | 2.00x / 2.00x |
+
+    The exact computation lands the crossover **on** π_d = 0.25 (0.98x /
+    1.01x) and hits exactly 2.00x at π_d = 0.50, which is the asymptotic
+    prediction reproduced from discrete arithmetic — an internal check the
+    table passes rather than an assumption it makes.
+  - **RECOMMENDED FORM, and it is the part worth reading twice: declare the
+    gate on n_d, not on N.** π_d is unknown until H1 runs, so a gate written
+    against a session count inherits an unknown and can silently be
+    underpowered. Written against the discordant count it cannot: **stop
+    when n_d discordant pairs have accrued.** Conditional on n_d, b is
+    exactly Binomial(n_d, ½) under the null — the stopping rule depends only
+    on the *total* discordant count, never on the split — so the test stays
+    exact under inverse sampling. π_d then governs only how long the run
+    takes, not whether the gate is valid. Pair it with a declared maximum N
+    so a vanishing π_d cannot run forever. This form costs nothing to be
+    wrong about π_d.
+  - **Caveat, inherited.** Flips at reads 2..m carry the pooling caveat.
+    As a *leak* measurement it is less troubling than for a preference DV —
+    the leak is a property of the injection at the read, not of the
+    subject's history — but the live arm must be tracked per read, and the
+    `sessions_at_m_reads` column assumes ICC 0, the optimistic end.
+  - ARITHMETIC ONLY. LOCK-h.md is design-instance authored.
+
+- 2026-08-20 — **Adjudication 2026-08-21 applied: S2 accepted and CLOSED as
+  a satellite; the corrected reading of record appended verbatim to entry
+  and artifact; A-1 named and queued; thermal disposition recorded.**
+  - **Item 1 — applied, both surfaces.** The design-instance corrected
+    reading is appended verbatim to the S2 entry and to
+    `data/e0/s2_neighbor_axes.json` under `adjudication_2026-08-21`. **The
+    registered `reading.branch` field is byte-identical to what the run
+    wrote** (asserted, not assumed) — a pre-registered reading is not
+    re-labelled after data, and the refinement is carried as description
+    beside it, not on top of it.
+  - **Item 2 — nothing to do in the repo, by design.** The e2a scope
+    wording inherits the V2-caveat resolution at the paper layer; no verdict
+    field changes here. Recorded so a later reader does not go looking for
+    a repo change that was deliberately not made.
+  - **Item 3 — applied.** The D− asymmetry is now **APPARATUS NOTE A-1 —
+    negative-pole dose asymmetry**, named with a grep anchor, QUEUED, and
+    explicitly not chased; it joins the handoff flag table. The
+    sentiment/vignette split is marked as reported **only** as an
+    equivalence, never as a difference.
+  - **Item 4 — applied.** The throttled figure remains the budget number;
+    the 1.7x sustained-load factor is demoted to unreproduced-observation
+    status. `caffeinate -is` now heads a new **§5c Long-run checklist** in
+    the handoff, which did not previously exist.
+  - **Item 5 — S2 CLOSED.** Still owed for LOCK-h v1 and delivered in this
+    batch: the paired-shadow flip arithmetic (entry above) and the
+    re-pairing screen (entry above that).
+  - **FLAG — small, structural, and now at four copies.** `_new_qwen_adapter`
+    is duplicated verbatim in `h3_tagscreen_qwen.py`, both S2 scripts and
+    now `h3b_repair_screen.py`. It belongs in `valence_core.adapters` as a
+    `qwen_or_explain()`. It was **not** moved: rule 26 makes any core change
+    an acceptance-test event, and a screening script is the wrong occasion
+    to trigger one. Recorded as debt with the reason it was not paid.
+
 - 2026-08-20 — **S2 step 2, the registered 11-arm panel: the reward axis is
   NOT the most potent member of its own panel. Registered branch fires —
   "neighbours match or exceed"; reward/character = 0.97x. But the structure
@@ -85,8 +187,10 @@ applied to CLAUDE.md.
     readout rather than axis content. **The ranking is unchanged on D+
     alone** — character 0.997 > reward 0.902 > vignette 0.586 > sentiment
     0.553 — so the finding survives dropping the contaminated pole
-    entirely. FLAGGED as a readout property worth its own look, not as a
-    threat to this table.
+    entirely. **APPARATUS NOTE A-1 — negative-pole dose
+    asymmetry.** Named and QUEUED by the 2026-08-21 adjudication; not
+    chased. A readout property worth its own look, not a threat to this
+    table.
   - **V1 potency, and a split that must not be over-read.** The failing
     conjunct for sentiment is `min(D+, |D−|) > 2·max|Δ_rand|` (threshold
     0.176722 σ): sentiment misses by **0.00208 σ = 0.0066 G**, vignette
@@ -94,6 +198,9 @@ applied to CLAUDE.md.
     0.010 σ across a pass/fail line. **Sentiment "fail" and vignette "PASS"
     are the same measurement to within noise** and should not be reported as
     a difference between them; their amplitudes differ by 0.003 G.
+    **The 2026-08-21 adjudication adopts this caution verbatim: the
+    sentiment/vignette split is reported ONLY as an equivalence, never as a
+    difference.**
   - **Matched dose proven, not assumed:** `assert_equal_norm` over every
     axis pair and against both random arms, |α| identical at 10.3010. A
     table between differently-dosed axes would measure the dose.
@@ -107,10 +214,23 @@ applied to CLAUDE.md.
     competing for the GPU. The throttled figure remains the safe number to
     budget against, but it is no longer a reliable predictor and the
     1.7x factor should not be treated as a property of the machine until it
-    is seen again.
+    is seen again. **ADJUDICATED 2026-08-21: the throttled figure remains
+    the budget number; 1.7x is demoted to unreproduced-observation status;
+    `caffeinate -is` joins the long-run checklist.**
   - No verdict is claimed and none is available: S2 is a composition assay.
     The numbers are delivered; PROPOSAL-g §S2's reading is the design
     instance's to apply.
+  - **ADJUDICATED 2026-08-21 — S2 ACCEPTED AS LOGGED; registered branch
+    applied, claims narrow; S2 CLOSED as a satellite.** The registered
+    `reading.branch` field is deliberately left exactly as the run wrote it.
+    **Corrected reading of record — design-instance authored, appended
+    verbatim, licensed as description only:**
+
+    > "Post-hoc refinement of the branch label, licensed as description only: the panel splits by evaluative content (±30%), not valence source or person; self-indexing is causally inert at matched dose (±3%, within measurement). The marking is evaluation-specific and self-indifferent."
+
+    The same note is appended to
+    [`data/e0/s2_neighbor_axes.json`](data/e0/s2_neighbor_axes.json) under
+    `adjudication_2026-08-21`, beside an untouched `reading`.
 
 - 2026-08-20 — **LOCK-h v1 arithmetic under the 2026-08-21 conventions:
   `bar_leak` = 0.0735, and it is set by the false-verdict-rate

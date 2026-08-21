@@ -276,5 +276,14 @@
   "legacy_truncate_512": false,
   "n_encodes_clipped": 0
  },
- "runtime_s": 8036.1
+ "runtime_s": 8036.1,
+ "adjudication_2026-08-21": {
+  "status": "S2 ACCEPTED AS LOGGED; registered branch applied (claims narrow). S2 CLOSED as a satellite.",
+  "corrected_reading_of_record": "Post-hoc refinement of the branch label, licensed as description only: the panel splits by evaluative content (\u00b130%), not valence source or person; self-indexing is causally inert at matched dose (\u00b13%, within measurement). The marking is evaluation-specific and self-indifferent.",
+  "authored_by": "design instance, 2026-08-21; appended verbatim",
+  "scope": "DESCRIPTION ONLY. The registered `reading` field above is deliberately unchanged -- a pre-registered reading is not re-labelled after data.",
+  "sentiment_vignette": "reported ONLY as an equivalence, never as a difference (0.010 sigma across the pass/fail line, amplitudes 0.003 G apart)",
+  "queued_apparatus_note": "A-1 negative-pole dose asymmetry: rand+ +0.0175 vs rand- -0.0884 sigma, ratio 5.05. Named and queued, not chased. Ranking is unchanged on D+ alone.",
+  "thermal": "throttled figure remains the budget number; the 1.7x sustained-load factor is demoted to unreproduced-observation status; caffeinate -is joins the long-run checklist"
+ }
 }

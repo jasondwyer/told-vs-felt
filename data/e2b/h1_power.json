@@ -1,6 +1,114 @@
 {
  "item": "LOCK-h power arithmetic",
  "lockh_v1": {
+  "flip_gate": {
+   "bar_leak": 0.0735,
+   "alpha": 0.05,
+   "power": 0.8,
+   "ci_conf": 0.95,
+   "reads_per_session": 6,
+   "rows": [
+    {
+     "pi_d": 0.08,
+     "feasible": true,
+     "delta_flip": 0.459375,
+     "n_discordant_required_rejection": 10,
+     "paired_reads_rejection": 125,
+     "sessions_at_1_read": 125,
+     "sessions_at_m_reads_icc0": 21,
+     "n_discordant_required_estimation": 10,
+     "paired_reads_estimation": 125,
+     "vs_unpaired_rejection": 0.33,
+     "vs_unpaired_estimation": 0.25
+    },
+    {
+     "pi_d": 0.1,
+     "feasible": true,
+     "delta_flip": 0.36749999999999994,
+     "n_discordant_required_rejection": 16,
+     "paired_reads_rejection": 160,
+     "sessions_at_1_read": 160,
+     "sessions_at_m_reads_icc0": 27,
+     "n_discordant_required_estimation": 18,
+     "paired_reads_estimation": 180,
+     "vs_unpaired_rejection": 0.43,
+     "vs_unpaired_estimation": 0.37
+    },
+    {
+     "pi_d": 0.15,
+     "feasible": true,
+     "delta_flip": 0.245,
+     "n_discordant_required_rejection": 36,
+     "paired_reads_rejection": 240,
+     "sessions_at_1_read": 240,
+     "sessions_at_m_reads_icc0": 40,
+     "n_discordant_required_estimation": 42,
+     "paired_reads_estimation": 280,
+     "vs_unpaired_rejection": 0.64,
+     "vs_unpaired_estimation": 0.57
+    },
+    {
+     "pi_d": 0.2,
+     "feasible": true,
+     "delta_flip": 0.18374999999999997,
+     "n_discordant_required_rejection": 58,
+     "paired_reads_rejection": 290,
+     "sessions_at_1_read": 290,
+     "sessions_at_m_reads_icc0": 49,
+     "n_discordant_required_estimation": 82,
+     "paired_reads_estimation": 410,
+     "vs_unpaired_rejection": 0.77,
+     "vs_unpaired_estimation": 0.83
+    },
+    {
+     "pi_d": 0.25,
+     "feasible": true,
+     "delta_flip": 0.147,
+     "n_discordant_required_rejection": 92,
+     "paired_reads_rejection": 368,
+     "sessions_at_1_read": 368,
+     "sessions_at_m_reads_icc0": 62,
+     "n_discordant_required_estimation": 124,
+     "paired_reads_estimation": 496,
+     "vs_unpaired_rejection": 0.98,
+     "vs_unpaired_estimation": 1.01
+    },
+    {
+     "pi_d": 0.3,
+     "feasible": true,
+     "delta_flip": 0.1225,
+     "n_discordant_required_rejection": 134,
+     "paired_reads_rejection": 447,
+     "sessions_at_1_read": 447,
+     "sessions_at_m_reads_icc0": 75,
+     "n_discordant_required_estimation": 172,
+     "paired_reads_estimation": 574,
+     "vs_unpaired_rejection": 1.19,
+     "vs_unpaired_estimation": 1.17
+    },
+    {
+     "pi_d": 0.5,
+     "feasible": true,
+     "delta_flip": 0.0735,
+     "n_discordant_required_rejection": 376,
+     "paired_reads_rejection": 752,
+     "sessions_at_1_read": 752,
+     "sessions_at_m_reads_icc0": 126,
+     "n_discordant_required_estimation": 492,
+     "paired_reads_estimation": 984,
+     "vs_unpaired_rejection": 2.0,
+     "vs_unpaired_estimation": 2.0
+    }
+   ],
+   "unpaired_comparators": {
+    "rejection": 376,
+    "estimation": 492
+   },
+   "pi_d_free_form": "Declare the gate on n_d (discordant pairs) with a declared maximum N. Conditional on n_d, b ~ Binomial(n_d, 1/2) exactly under the null, so the test is valid whatever pi_d turns out to be; pi_d then sets only the run length.",
+   "null_is_not_no_flips": "pi_d = 0 is not the null -- the paired reads differ only by the injection, and arm-symmetric perturbation is expected (PROPOSAL-h \u00a71). The null is b = c.",
+   "caveat": "Flips at reads 2..m inherit the pooling caveat: the state live at a later read is one the subject's own previous choice delivered. As a LEAK measurement that is less troubling than for a preference DV -- the leak is a property of the injection at the read -- but the live arm must be tracked per read, and the sessions_at_m column assumes ICC 0, which is the optimistic end.",
+   "decides_nothing": "Code delivers arithmetic; LOCK-h.md is authored by the design instance."
+  },
   "conventions_dated": "2026-08-21",
   "envelope_exact": {
    "support": [

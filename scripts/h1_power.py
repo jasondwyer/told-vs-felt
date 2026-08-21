@@ -296,6 +296,119 @@ def cluster_table(n_reads_required: int, reads_per_session: int,
     return rows
 
 
+def flip_arithmetic(bar: float, alpha: float, power: float,
+                    reads_per_session: int, ci_conf: float,
+                    n_unpaired_rej: int, n_unpaired_est: int,
+                    pi_ds=(None, 0.08, 0.10, 0.15, 0.20, 0.25, 0.30, 0.50)) -> dict:
+    """The paired-shadow FLIP gate (PROPOSAL-h §0.2), owed for LOCK-h v1.
+
+    Every state-present choice read is paired with a state-free shadow read
+    of the IDENTICAL prefix, so the two members of a pair differ by exactly
+    one thing: the injection. That makes a within-pair statistic available
+    that the between-session Delta_first cannot see.
+
+    Definitions. Over N paired reads, call a pair DISCORDANT (a "flip") when
+    the two reads select different tags; let pi_d be the discordance rate,
+    n_d = pi_d x N the discordant count, and split the flips by direction:
+    b toward the +arm tag, c toward the -arm tag.
+
+    What the null actually is, and why it is not "no flips". If the
+    injection perturbed nothing, pi_d would be 0 and the paired reads would
+    be identical -- the restricted-choice read is deterministic given the
+    prefix. It is not the null. PROPOSAL-h §1 says the residual state
+    effects on the choice computation (destabilisation, exploration shift)
+    are ARM-SYMMETRIC; a leak is the DIRECTIONAL part. So the paired design
+    decomposes the injection's effect on choice into
+
+        pi_d          = how much the state moves choices at all, and
+        (b - c) / N   = how much it moves them one way
+
+    and only the second is leak. The null is b = c, i.e. the flip share
+    p_flip = b/(b+c) = 1/2 -- McNemar, tested exactly.
+
+    Why it is the sharper instrument. The marginal displacement the unpaired
+    gate estimates IS (b - c)/N, so both gates measure the same quantity,
+    but the paired estimator's variance is ~pi_d/N against ~0.25/N for a
+    one-sample share. The paired gate therefore wins whenever pi_d < 0.25,
+    and wins by a lot when the state rarely flips a choice -- which is the
+    regime PROPOSAL-h §1 argues we are in ("a live praise-state has nothing
+    praise-adjacent to boost"). A leak L in share units appears in the flip
+    share amplified by 1/(2 pi_d):
+
+        delta_flip = L / (2 pi_d),   feasible only where pi_d >= L.
+
+    THE PI_D-FREE FORM, and it is the recommendation worth reading twice.
+    pi_d is not known until H1 runs, so a gate written against N inherits an
+    unknown. Written against n_d it does not: stop collecting when the
+    discordant count reaches the declared n_d. Conditional on n_d, b is
+    exactly Binomial(n_d, 1/2) under the null -- the stopping rule depends
+    only on the TOTAL discordant count, never on the split -- so the test
+    stays exact under inverse sampling. pi_d then governs only how long the
+    run takes, not whether the gate is valid. A declared n_d with a declared
+    maximum N (so a vanishing pi_d cannot run forever) is the form that
+    costs nothing to be wrong about.
+    """
+    rows = []
+    for pi in pi_ds:
+        if pi is None:                       # the pi_d-free row, at the bar
+            continue
+        if pi < bar:                         # infeasible: p_flip would exceed 1
+            rows.append({"pi_d": pi, "feasible": False,
+                         "why": ("pi_d < bar_leak: a leak of that size "
+                                 "cannot be realised through fewer flips "
+                                 "than its own magnitude")})
+            continue
+        d_flip = bar / (2.0 * pi)
+        n_d = None
+        for n in range(2, 4001, 2):
+            if power_two_sided(n, alpha, d_flip) >= power:
+                n_d = n
+                break
+        est = est_gate_n(d_flip, ci_conf, 0.80) if d_flip < 0.5 else None
+        n_reads = int(np.ceil(n_d / pi)) if n_d else None
+        n_reads_est = (int(np.ceil(est["n_assurance"] / pi))
+                       if est and est["n_assurance"] else None)
+        rows.append({
+            "pi_d": pi, "feasible": True,
+            "delta_flip": d_flip,
+            "n_discordant_required_rejection": n_d,
+            "paired_reads_rejection": n_reads,
+            "sessions_at_1_read": n_reads,
+            "sessions_at_m_reads_icc0": (int(np.ceil(n_reads / reads_per_session))
+                                         if n_reads else None),
+            "n_discordant_required_estimation": (est["n_assurance"]
+                                                 if est else None),
+            "paired_reads_estimation": n_reads_est,
+            "vs_unpaired_rejection": (round(n_reads / n_unpaired_rej, 2)
+                                      if n_reads else None),
+            "vs_unpaired_estimation": (round(n_reads_est / n_unpaired_est, 2)
+                                       if n_reads_est else None)})
+    return {"bar_leak": bar, "alpha": alpha, "power": power,
+            "ci_conf": ci_conf, "reads_per_session": reads_per_session,
+            "rows": rows,
+            "unpaired_comparators": {"rejection": n_unpaired_rej,
+                                     "estimation": n_unpaired_est},
+            "pi_d_free_form": (
+                "Declare the gate on n_d (discordant pairs) with a declared "
+                "maximum N. Conditional on n_d, b ~ Binomial(n_d, 1/2) "
+                "exactly under the null, so the test is valid whatever pi_d "
+                "turns out to be; pi_d then sets only the run length."),
+            "null_is_not_no_flips": (
+                "pi_d = 0 is not the null -- the paired reads differ only by "
+                "the injection, and arm-symmetric perturbation is expected "
+                "(PROPOSAL-h §1). The null is b = c."),
+            "caveat": (
+                "Flips at reads 2..m inherit the pooling caveat: the state "
+                "live at a later read is one the subject's own previous "
+                "choice delivered. As a LEAK measurement that is less "
+                "troubling than for a preference DV -- the leak is a "
+                "property of the injection at the read -- but the live arm "
+                "must be tracked per read, and the sessions_at_m column "
+                "assumes ICC 0, which is the optimistic end."),
+            "decides_nothing": ("Code delivers arithmetic; LOCK-h.md is "
+                                "authored by the design instance.")}
+
+
 def lockh_v1(args, k_binom_1s: int) -> dict:
     """The LOCK-h v1 table. Arithmetic only -- it instantiates nothing."""
     env = exact_envelope(args.n_sham, args.n_rand)
@@ -390,8 +503,38 @@ def lockh_v1(args, k_binom_1s: int) -> dict:
           f"(later reads sit under a self-delivered state, on a selected "
           f"sub-population). Arithmetic only.")
 
+    flip = flip_arithmetic(bar, args.alpha, 0.80, args.reads_per_session,
+                           args.ci_conf, n_rej, est["n_assurance"],
+                           pi_ds=args.pi_d)
+    print(f"\n  --- paired-shadow FLIP gate (PROPOSAL-h §0.2) ---")
+    print(f"  null is b = c, NOT 'no flips': the paired reads differ only by")
+    print(f"  the injection, and arm-symmetric perturbation is expected.")
+    print(f"  a leak of {bar:.4f} appears in the flip share amplified by "
+          f"1/(2*pi_d).")
+    print(f"    {'pi_d':>5} {'d_flip':>7} {'n_d rej':>8} {'reads':>7} "
+          f"{'n_d est':>8} {'reads':>7}  vs unpaired ({n_rej}/{est['n_assurance']})")
+    for r in flip["rows"]:
+        if not r["feasible"]:
+            print(f"    {r['pi_d']:>5.2f}  INFEASIBLE -- {r['why']}")
+            continue
+        n_de = r["n_discordant_required_estimation"]
+        rd_e = r["paired_reads_estimation"]
+        vs_e = (f"{r['vs_unpaired_estimation']:.2f}x"
+                if r["vs_unpaired_estimation"] else "-")
+        print(f"    {r['pi_d']:>5.2f} {r['delta_flip']:>7.4f} "
+              f"{r['n_discordant_required_rejection']:>8} "
+              f"{r['paired_reads_rejection']:>7} "
+              f"{(n_de if n_de else '-'):>8} "
+              f"{(rd_e if rd_e else '-'):>7}  "
+              f"{r['vs_unpaired_rejection']:.2f}x / {vs_e}")
+    print(f"  RECOMMENDED FORM: declare the gate on n_d with a declared max "
+          f"N.\n    Conditional on n_d, b ~ Binomial(n_d, 1/2) exactly under "
+          f"the null, so\n    the test is valid whatever pi_d turns out to "
+          f"be; pi_d sets only run length.")
+
     print(f"\n  ARITHMETIC ONLY -- LOCK-h.md is design-instance authored.")
     return {
+        "flip_gate": flip,
         "conventions_dated": "2026-08-21",
         "envelope_exact": {k: (v.tolist() if isinstance(v, np.ndarray) else v)
                            for k, v in env.items()},
@@ -447,6 +590,11 @@ def main() -> int:
     ap.add_argument("--reads-per-session", type=int, default=6,
                     help="consequential free choices per session "
                          "(e2a lineage: 6), for the cluster correction")
+    ap.add_argument("--pi-d", default="0.08,0.10,0.15,0.20,0.25,0.30,0.50",
+                    type=lambda s: tuple(float(x) for x in s.split(",")),
+                    help="discordance rates to sweep for the paired-shadow "
+                         "flip gate; pi_d is unknown until H1 runs, which is "
+                         "why the recommended gate form is declared on n_d")
     ap.add_argument("--ci-conf", type=float, default=0.95,
                     help="confidence level for the estimation-gate "
                          "variant")
