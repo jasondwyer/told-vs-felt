@@ -20,6 +20,77 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-21 — **Route 3 acceptance MET on the first attempt: the
+  reimplemented e2a session template rebuilds all 200 archived scaffoldings
+  byte-for-byte, and all 200 RNG seed streams match. Committed as a suite
+  check; suite 130 → 135. LOCK-h v1.1 is committed at `8a97513`.**
+  (`valence_core/e2b/session.py`;
+  `check_e2a_session_reconstruction()` in the ledger-26 suite.)
+  - **Item 1 — the lock's timestamp is `8a97513`.** LOCK-h.md was committed
+    on Jason's word at the close of the previous exchange, after §6 returned
+    GREEN at `13b7c21`. Recorded here as the dated entry the adjudication
+    asks for: **that hash is the lock's timestamp**, and every H-tier item
+    below runs under it.
+  - **Item 2 — read half accepted as scoped.** Read-time-only, never H1's
+    planning π_d. The **low-discordance-pass reporting rule is ratified**:
+    when H1 exits with π̂_d < bar, the PASS is reported as certification by
+    low discordance, not as a powered directional test. The repair-beside
+    pattern is accepted as the pattern for provenance defects — repair
+    alongside, never over, what a run wrote.
+  - **Item 3 — the fork is closed, and the rotation was deterministic after
+    all.** The original runner seeds one generator per session,
+    `default_rng(crc32(f"{arm}|{s}") % 2**31)`, and draws everything from it
+    in a fixed order. **Both `arm` and `session` are recorded**, so the whole
+    stream is replayable from `data/e2a/sessions.jsonl` — task permutation,
+    paraphrase index per round, menu order, and every generation seed. The
+    scaffolding was never unrecoverable; it was only unwritten-down. The
+    declared-seeded-rotation contingency is **not needed and not activated**.
+  - **The acceptance result:**
+
+    | check | result |
+    |---|---|
+    | archived scaffoldings rebuilt byte-for-byte | **200/200** |
+    | RNG seed streams in step (recorded `seed` values) | **200/200** |
+    | template index keyed on SESSION, not round | confirmed |
+    | coincidence guard is discriminating | confirmed |
+
+    The **seed-stream match is the load-bearing one.** Matching text could in
+    principle be coincidence; a replay that is off by even one draw cannot
+    land on 200 recorded generation seeds. The walk is positional, not a
+    substring search — every harness-written byte must sit at exactly the
+    offset the replay puts it at, and the walk must consume the transcript
+    exactly.
+  - **A trap the archive-wide check caught and a spot check would not.** The
+    template index is `ROUND_TEMPLATES[(s + ri) % 4]` — keyed on the
+    **session**, not the round. Reading a single transcript suggests
+    `(round − 1) % 4`, which is *the same thing at session 0* and wrong
+    everywhere else. The suite now carries an explicit coincidence guard: it
+    picks a session where the two rules genuinely disagree, asserts the
+    archive follows the session-keyed one, **and asserts that the two rules
+    really do differ there** — a guard that cannot silently become vacuous.
+  - **The acceptance test was mutation-tested, and one of my own claims did
+    not survive it.** Pinning the paraphrase index to 0 → **0/200**.
+    Reversing `ROUND_TEMPLATES` → **0/200**. Drawing the paraphrase *inside*
+    the round loop, interleaved with the seed draws → **4/200**. But the
+    mutation I had asserted in the module docstring would desynchronise the
+    stream — pulling the permutation first and the paraphrase draws in a
+    second loop — **rebuilds 200/200**, because both forms draw the same
+    count in the same order. The claim was wrong and is corrected in the
+    code: what matters is that every paraphrase draw falls after the
+    permutation and **before any generation-seed draw**; how they are
+    written is immaterial.
+  - **Placement, and why it does not trigger rule 26.** The module is
+    `valence_core/e2b/session.py` — inside the e2b harness and the
+    quarantine boundary, which is how the adjudication's "NOT valence_core"
+    reads against a package whose e2b subtree *is* the harness. Nothing in
+    the general core imports it, so no published path changes and the
+    refactor law is not engaged. Per the adjudication, this module and the
+    four-copy `_new_qwen_adapter` debt are absorbed by **one** consolidation
+    event after H1.
+  - Suite **135/135** (was 130; the five new checks are the acceptance).
+    Next: H2 proper — state live through rounds AND reads, all four roster
+    pairs, degeneracy monitors, dose L48 frac 0.10.
+
 - 2026-08-21 — **H2 precursor (read half): a live state at the choice
   position barely moves this instrument. π̂_d = 0.0208, and its 95% upper
   bound is already below bar_leak — so on archived prefixes the feasibility

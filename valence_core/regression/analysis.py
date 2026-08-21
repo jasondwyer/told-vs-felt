@@ -930,6 +930,69 @@ def check_e2b_quarantine() -> list[Check]:
     return out
 
 
+def check_e2a_session_reconstruction() -> list[Check]:
+    """Route-3 acceptance (adjudication 2026-08-21): the reimplemented e2a
+    session template rebuilds the archive byte-for-byte.
+
+    This is the check that licenses generating NEW e2b sessions in the e2a
+    template family. The original runner lives only in the gitignored clone,
+    so "the same template" cannot be established by pointing at the code; it
+    has to be established against the record, over the whole record.
+    """
+    from ..e2b.session import (MENU_TEMPLATES, ROUND_TEMPLATES,
+                               verify_archive)
+    out = []
+    r = verify_archive(os.path.join(DATA, "e2a/sessions.jsonl"),
+                       os.path.join(DATA, "corpus/e2a_tasks.jsonl"))
+
+    out.append(_c("e2a template: every archived scaffolding rebuilt",
+                  "Route 3 acceptance", f"{r['n_sessions']}/{r['n_sessions']}",
+                  f"{r['n_reconstructed']}/{r['n_sessions']}",
+                  r["n_reconstructed"] == r["n_sessions"]))
+
+    # Independent of the text: a replay off by a single draw would still be
+    # able to match some strings, but it cannot match the recorded seeds.
+    out.append(_c("e2a template: RNG stream in step (recorded seeds)",
+                  "session_rng draw order",
+                  f"{r['n_sessions']}/{r['n_sessions']}",
+                  f"{r['n_seed_streams_matched']}/{r['n_sessions']}",
+                  r["n_seed_streams_matched"] == r["n_sessions"]))
+
+    # The coincidence guard. At session 0, `(s + ri) % 4` and `(round - 1)
+    # % 4` agree, so a single transcript "confirms" the wrong rule. Pick a
+    # session where the two rules genuinely disagree and show which one the
+    # archive follows.
+    from ..e2b.session import (N_FREE, SESSION_BANNER, load_tasks,
+                               session_rng, task_sequence)
+    rows = [json.loads(l) for l in
+            open(os.path.join(DATA, "e2a/sessions.jsonl")) if l.strip()]
+    tasks = load_tasks(os.path.join(DATA, "corpus/e2a_tasks.jsonl"))
+    row = next(x for x in rows if int(x["session"]) % 4 != 0 and x["rounds"])
+    s_i, F = int(row["session"]), int(row["F"])
+    _, ttext = task_sequence(session_rng(row["arm"], s_i), tasks,
+                             2 * F + N_FREE)[0]
+    tag0 = row["rounds"][0]["tag"]
+    seg_session = ROUND_TEMPLATES[s_i % 4].format(n=1, tag=tag0, task=ttext)
+    seg_round = ROUND_TEMPLATES[0].format(n=1, tag=tag0, task=ttext)
+    body = row["transcript"][len(SESSION_BANNER):]
+    got = ("session-keyed" if body.startswith(seg_session)
+           else "round-keyed" if body.startswith(seg_round) else "neither")
+    out.append(_c("e2a template: index keyed on SESSION, not round",
+                  f"archive {row['arm']} s{s_i} (s%4 != 0)",
+                  "session-keyed", got, got == "session-keyed"))
+    # and the guard is only meaningful if the two rules really differ here
+    out.append(_c("e2a template: coincidence guard is discriminating",
+                  f"s{s_i}: session-rule vs round-rule headers",
+                  "differ", "differ" if seg_session != seg_round else "same",
+                  seg_session != seg_round))
+
+    out.append(_c("e2a template: 4 round + 4 menu paraphrases",
+                  "template family", "4/4",
+                  f"{len(ROUND_TEMPLATES)}/{len(MENU_TEMPLATES)}",
+                  len(ROUND_TEMPLATES) == 4 and len(MENU_TEMPLATES) == 4))
+    return out
+
+
 def check_g1_stage_anchor() -> list[Check]:
     """ADDENDUM-g1's probe-anchor requirement, made executable before the
     artifacts it constrains exist.
@@ -1085,6 +1148,7 @@ def run_all() -> list[Check]:
     checks += check_a1_selection()
     checks += check_s2_neighbors()
     checks += check_e2b_quarantine()
+    checks += check_e2a_session_reconstruction()
     checks += check_g1_stage_anchor()
     checks += check_detection_harness()
     checks += check_instrument_invariants()
