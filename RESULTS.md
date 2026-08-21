@@ -20,6 +20,42 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-20 — **Adjudication 2026-08-21 (partial) applied: roster of record
+  locked to the continuity four, scaffold declared the format of record, and
+  the determinism certification promoted to APPARATUS RESULT D-1.**
+  - **Item 1 — H3b ACCEPTED, roster of record locked.** `granite/plaza`,
+    `prism/slate`, `velvet/walnut`, `ridge/saddle` — carried in
+    [`data/e2b/h3b_repair_screen.json`](data/e2b/h3b_repair_screen.json)
+    under `adjudication_2026-08-21.roster_of_record`, beside the run's own
+    `recommended_roster`, which is left exactly as written (asserted
+    unchanged). Declared **"an admissible four", never "the best four"** —
+    the design instance took the wording from the screen's own residual
+    measurement rather than from the rank order, which is the correct
+    reading and the one the entry argued for.
+  - **The format question is CLOSED, and it closes in the direction that
+    keeps the incumbent.** Scaffold is the **format of record**;
+    **bare-format balance is not a criterion for e2b**. The format-robust
+    alternative (`canvas/maple` in place of `prism/slate`) is recorded and
+    **not taken**. C1 therefore stays in the roster and continuity with
+    every published cycle-3/4 preference number is preserved. The open flag
+    raised in the H3 entry is marked RESOLVED there.
+  - **Item 2 — APPARATUS RESULT D-1: screen determinism certified.** The
+    5/5 bit-identical same-order repeats are promoted from a
+    reproducibility check inside H3b to a standing apparatus result. Its
+    scope, stated so it is not over-claimed later: it certifies that the
+    MLX apparatus, the probe construction and the restricted-choice readout
+    are **jointly bit-reproducible across processes and across hours** on
+    this machine. It says nothing about numerical agreement on any other
+    backend, which remains rule 2's business per site.
+  - **Item 3 — flip-gate conceptual core ACCEPTED** (b = c null;
+    directional-only leak). The n_d table and the π_d-free gate form did
+    not reach the design instance — a bridge outage, not a gap in the
+    record: both have been committed since `7302384`, in the flip-gate
+    entry and in
+    [`data/e2b/h1_power.json`](data/e2b/h1_power.json) → `lockh_v1.flip_gate`.
+    Nothing new was computed; the material was re-rendered verbatim in the
+    reply for hand-carriage. **LOCK-h v1 follows receipt.**
+
 - 2026-08-20 — **H3b, the re-pairing screen: a roster exists. 46/120
   pairings clear the band, best disjoint matching = 4 at imbalance
   0.001–0.007. The tags were never the problem — the arbitrary grouping
@@ -64,8 +100,11 @@ applied to CLAUDE.md.
     asserted.** Three pairs were screened in iteration 1 and again here with
     the starting presentation order **swapped** (the sorted-tag convention
     reversed them); five were screened in the same order. The five same-order
-    pairs reproduce **bit-identically** — Δ = 0.0000 on all five, which
-    also certifies the apparatus and the screen as fully deterministic. The
+    pairs reproduce **bit-identically** — Δ = 0.0000 on all five. That is
+    **APPARATUS RESULT D-1 — screen determinism certified**, noted by the
+    2026-08-21 adjudication as a result in its own right and not merely as
+    a check on this screen: the MLX apparatus, the probe construction and
+    the readout are jointly bit-reproducible across processes and hours. The
     three swapped-order pairs differ by **+0.0212, +0.0090, −0.0008**. So
     order-counterbalancing at n = 16 leaves a residual up to ~0.021 in
     `identity_split`, which is the same size as the sampling SE (median
@@ -85,6 +124,14 @@ applied to CLAUDE.md.
     the pair that carries the published cycle-3/4 numbers, or robustness to
     the format question that is still open.** Both rosters are in the
     artifact; Code does not pick between them.
+  - **ADJUDICATED 2026-08-21 — H3b ACCEPTED. Roster of record = the
+    CONTINUITY four: `granite/plaza`, `prism/slate`, `velvet/walnut`,
+    `ridge/saddle`.** Declared **"an admissible four", never "the best
+    four"** — the wording follows directly from the residual measurement
+    above, which cannot resolve the top group. The format-robust
+    alternative is **recorded, not taken**: **scaffold is the format of
+    record and bare-format balance is not a criterion for e2b.** The roster
+    locks in LOCK-h v1.
   - **Naming convention, stated once because tonight it was ambiguous.** Raw
     logs carry the **local** run date; the design instance's blocks and
     adjudications carry UTC and are therefore dated 2026-08-21 for work that
@@ -454,6 +501,11 @@ applied to CLAUDE.md.
       pay is a design question. Screening replacement candidates against
       the scaffold band *before* it is answered risks aiming a screen at
       the wrong criterion.
+    - **RESOLVED 2026-08-21 — flag closed.** Scaffold is the **format of
+      record** and **bare-format balance is not a criterion for e2b**. The
+      caution above was right to delay a replacement screen aimed at the
+      wrong criterion; the criterion is now declared, and H3b was screened
+      against it.
   - **Recommendation (roster locks in LOCK-h, not here).** The cheapest
     next iteration needs **no new stimulus and no new rule-18 work**: the
     16 tags already in the roster are all single-token on this tokenizer

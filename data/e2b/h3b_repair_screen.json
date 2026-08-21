@@ -28057,5 +28057,52 @@
  "matching_size": 4,
  "sufficient": true,
  "disjointness_enforced": true,
- "selection_is_a_recommendation": true
+ "selection_is_a_recommendation": true,
+ "adjudication_2026-08-21": {
+  "status": "H3b ACCEPTED.",
+  "roster_of_record": [
+   [
+    "granite",
+    "plaza"
+   ],
+   [
+    "prism",
+    "slate"
+   ],
+   [
+    "velvet",
+    "walnut"
+   ],
+   [
+    "ridge",
+    "saddle"
+   ]
+  ],
+  "roster_of_record_wording": "AN ADMISSIBLE FOUR -- never 'the best four'. The screen's own residual measurement (order-swap residual up to 0.021, sampling SE median 0.0156) cannot resolve the top group, and the wording follows that measurement rather than the rank order.",
+  "format_of_record": "scaffold",
+  "format_robust_alternative": {
+   "roster": [
+    [
+     "granite",
+     "plaza"
+    ],
+    [
+     "velvet",
+     "walnut"
+    ],
+    [
+     "ridge",
+     "saddle"
+    ],
+    [
+     "canvas",
+     "maple"
+    ]
+   ],
+   "disposition": "RECORDED, NOT TAKEN. Bare-format balance is not a criterion for e2b."
+  },
+  "apparatus_result_D1": "Screen determinism certified: 5/5 pairs re-screened under the SAME presentation order reproduced bit-identically (delta 0.0000). Noted as an apparatus result in its own right, not merely as a check on this screen.",
+  "locks_in": "LOCK-h v1",
+  "note": "`recommended_roster` above is the run's own scaffold-primary selection and is deliberately unchanged; the roster of record is carried here beside it."
+ }
 }
