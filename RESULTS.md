@@ -20,8 +20,69 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
-- 2026-08-21 — **H1 ran all 112 scheduled sessions and STOPPED SHORT of its
-  declared exit: N = 576 of 640 paired reads. The §3a schedule is sized as
+- 2026-08-21 — **H1-u redesignated and logged as the prefix-steering
+  comparison arm; LOCK-h v1.4 applied and §6-verified; H1 gate run of record
+  launched with steered rounds and the exclusion-robust schedule.**
+  - **Item 1 — H1-u.** The as-run campaign is relabelled **H1-u**
+    (unsteered-prefix auxiliary) in
+    [`data/e2b/h1u_sessions.json`](data/e2b/h1u_sessions.json) and its raw
+    log; the artifact carries a `designation` block stating **descriptive
+    standing only, gate never evaluated and never may be on it**, and naming
+    both defects — the unsteered-round reading *and* the short stop. The
+    comparison it now serves:
+
+    | campaign | prefix steering | π̂_d |
+    |---|---|---|
+    | read-half precursor | none (archived state-free prefixes) | 0.0208 |
+    | **H1-u** | forced phase only; post-choice rounds unsteered | **0.0208** |
+    | H2 proper | fully steered rounds | 0.0278 |
+
+    The read half and H1-u agree to four decimals across 288 and 576 reads,
+    so the whole **measured prefix-steering contribution to π̂_d is 0.0070**.
+    Small — and the reason the gate must nonetheless run steered is that
+    0.0070 is 9.5% of bar_leak, not nothing, and the gate certifies a
+    quantity the verdict tier will inherit.
+  - **Item 2 — LOCK-h v1.4 applied, §6 re-run byte-identical GREEN**
+    (`d94e281`). **Placement flagged rather than silently resolved:** the
+    steered-rounds clarification was specified for "§2's H1 paragraph", and
+    LOCK-h's §2 is *The bar* — it has no H1 paragraph. The sentence the
+    clarification corrects ("Session content: identical to verdict sessions
+    except contingency-free … state schedule per PROPOSAL-h §2") lives in
+    §3a, so the clarification is written immediately after it and the
+    placement is recorded in §8. If PROPOSAL-h §2 was meant — amending the
+    committed pre-registration rather than the lock that instantiates it —
+    that is a different act and needs saying.
+  - **Sizing checked, not assumed.** 640 reads at m = 6 needs **107 valid
+    sessions**: 112 tolerates 4.5% and delivers 570 at the realised 14.3%
+    rate (short, as run); **128 tolerates 16.4% and delivers 654**; the 160
+    cap tolerates 33.1%. Simulated across exclusion rates, the v1.4 schedule
+    reaches 640 without appending at ≤14.3%, appends twice and still reaches
+    it at 30%, and only falls short at 50% — far beyond anything observed.
+  - **Item 3 — the steering change, and the geometry it preserves.** The
+    verdict tier delivers a state at choice ci that is live through round ci
+    **and into read ci+1**. H1 substitutes the schedule for the choice and
+    changes nothing else: `read_state(ci)` alternates from the forced-phase
+    end state, and **round ci is generated under `read_state(ci+1)`** — the
+    state the next read will sit on. Verified on the smoke: reads alternate
+    from `forced_end` 12/12, round state equals the next read's state 12/12,
+    and both are independent of the picks.
+  - **Two harness defects caught before they reached the record.** A
+    2-session smoke dutifully headed for 160 sessions, because `--n-sessions`
+    is the *initial* schedule and the append contingency correctly grows it —
+    `--session-cap` is the limit. Documented in the usage line. And the first
+    gate launch was killed after 3 minutes because its run header still
+    printed the stale `rounds are UNSTEERED` line: the code was right and the
+    header lied, which in a run-of-record log is the same as being wrong. No
+    data from that launch is retained; the relaunch's header is quoted in the
+    raw log.
+  - H1 gate run of record in flight: 128 scheduled, steered rounds, audit v2
+    sha verified at startup, stop at n_d = 200 or N = 640, ~3.0 h.
+
+- 2026-08-21 — **[REDESIGNATED **H1-u**, auxiliary, by the 2026-08-21
+  adjudication — descriptive standing only, gate never evaluated. Two
+  defects, not one: the unsteered-round reading (corrected by LOCK-h v1.4 §2)
+  and the short stop below.]** H1-u ran all 112 scheduled sessions and
+  STOPPED SHORT of its declared exit: N = 576 of 640 paired reads. The §3a schedule is sized as
   if exclusions were zero and could not have reached 640 at any historically
   observed exclusion rate. The gate is NOT evaluated. Design-instance
   disposition required.**
@@ -81,11 +142,24 @@ applied to CLAUDE.md.
     exact binomial p = 0.9999 — within tolerance. Window clean, 0 clipped.
     16 exclusions, all in the forced phase, which is the phase H1 shares
     unchanged with H2 and e2a.
-  - **Reading flag still open.** H1's post-choice rounds ran UNSTEERED on
-    Code's reading of "both tags deliver identical nothing"; read states were
-    scheduled, never selected. If the design instance meant post-choice
-    rounds steered by the schedule, this campaign is the wrong one and would
-    need re-running regardless of the stop question.
+  - **Reading flag — RESOLVED against Code's reading (2026-08-21).** H1-u's
+    post-choice rounds ran UNSTEERED. LOCK-h v1.4 §2 clarifies that H1
+    sessions are identical to verdict sessions **including steered
+    post-choice rounds**, the schedule rather than the choice selecting each
+    round's state, so the gate certifies the leak in the verdict tier's own
+    prefix environment. This campaign is therefore the wrong one for the
+    gate and is retained as the **prefix-steering comparison arm**:
+
+    | campaign | prefix steering | π̂_d |
+    |---|---|---|
+    | read-half precursor | none (archived state-free prefixes) | 0.0208 |
+    | **H1-u** | forced phase only, post-choice rounds unsteered | **0.0208** |
+    | H2 proper | fully steered rounds | 0.0278 |
+
+    The read half and H1-u agree to four decimals, and the whole measured
+    **prefix-steering contribution to π̂_d is 0.0070** — small, and the only
+    reason the H1 gate must run in the steered environment rather than
+    inherit either number.
 
 - 2026-08-21 — **Sweep batch applied: audit v2 approved and frozen
   (sha `7aa235d25eeb66dc`); the e2a published-record correction computed

@@ -1,5 +1,5 @@
 {
- "item": "H1 leakage budget",
+ "item": "H1-u: unsteered-prefix auxiliary (NOT the H1 gate run)",
  "lock": "LOCK-h v1.3 \u00a73/\u00a73a",
  "audit_sha16": "7aa235d25eeb66dc",
  "round_path_cached": true,
@@ -39254,5 +39254,12 @@
  ],
  "runtime_s": 8731.6,
  "gate_evaluated": false,
- "decides_nothing": "Collection to a declared stop rule that depends only on totals. The \u00a73 gate is evaluated separately over this artifact."
+ "decides_nothing": "Collection to a declared stop rule that depends only on totals. The \u00a73 gate is evaluated separately over this artifact.",
+ "designation": {
+  "label": "H1-u",
+  "standing": "DESCRIPTIVE ONLY. The gate was never evaluated and never may be on this artifact.",
+  "why": "run under Code's reading that 'both tags deliver identical nothing' meant post-choice rounds UNSTEERED; LOCK-h v1.4 \u00a72 clarifies that H1 sessions carry STEERED post-choice rounds, the schedule selecting each round's state. Retained as the prefix-steering comparison arm.",
+  "also": "the run exhausted its 112-session schedule at N = 576 of 640 without reaching a declared \u00a73 exit -- a separate defect, corrected by v1.4's exclusion-robust schedule",
+  "redesignated": "adjudication 2026-08-21"
+ }
 }

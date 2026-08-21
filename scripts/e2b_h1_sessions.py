@@ -1,59 +1,64 @@
 #!/usr/bin/env python3
-"""H1 -- the leakage budget, run as locked (LOCK-h v1.3 §3 + §3a).
+"""H1 -- the leakage budget, run as locked (LOCK-h v1.4 §3 + §3a).
 
-The campaign the whole e2b exception is gated on. 112 sessions scheduled
-(7 blocks x 16 strata), execution stopping at §3's read-level exits:
-n_d = 200 discordant pairs or N = 640 paired reads, whichever comes first.
-Per the v1.3 recorded corollary the n_d* exit needs pi_d >= 0.3125, which the
-0.30 stability ceiling forbids, so N_max binds across the licensed range and
-the stop at **session 107, read 4** is the only reachable one short of a
-pause. Scheduled sessions past the stop are not run.
+The campaign the whole e2b exception is gated on. **128 sessions scheduled**
+(8 blocks x 16 strata); if the schedule exhausts before a §3 exit, whole
+blocks of 16 are appended to a hard cap of 160. Execution stops at §3's
+read-level exits: n_d = 200 discordant pairs or N = 640 paired reads.
 
-## How H1 differs from H2, which is the whole point of it
+## What v1.4 corrected, and why both corrections came from running
 
-PROPOSAL-h §2: sessions "identical to verdict sessions in every respect
-except that NO contingency differs between arms (both tags deliver identical
-nothing); the state is nonetheless live at choice reads per the delivery
-schedule (§3), alternating +/- by the counterbalanced forced-phase order."
+  * **Sizing.** v1.2 scheduled 112. Delivering 640 reads at m = 6 needs 107
+    VALID sessions, so 112 tolerated only 4.5% exclusions -- against observed
+    rates of 6.2-14.3%. The first campaign exhausted its schedule at N = 576
+    and never reached a declared exit. 128 tolerates 16.4%.
+  * **Round steering.** The first campaign read "both tags deliver identical
+    nothing" as leaving post-choice rounds UNSTEERED. v1.4 §3a clarifies the
+    opposite: H1 sessions are identical to verdict sessions **including
+    steered post-choice rounds**, the schedule rather than the choice
+    selecting each round's state, so the gate certifies the leak in the
+    verdict tier's own prefix environment. That run is retained as **H1-u**,
+    auxiliary and descriptive only.
 
-Read out into three concrete differences from `e2b_h2_sessions.py`:
+## The state schedule, which is the whole design
 
-  1. **Forced phase: unchanged.** Still steered by pole, still ending on the
-     stratum's forced-phase end state. The forced exposure is not a
-     contingency on choice.
-  2. **Post-choice rounds: UNSTEERED.** "Both tags deliver identical
-     nothing" is exactly that -- picking a tag delivers no state, so the
-     round that follows a choice is generated with no injection at all.
-     This is the one place H1's transcripts diverge from a verdict session.
-  3. **Read states: SCHEDULED, not selected.** The state live at read ci
-     alternates from the forced-phase end state -- `forced_end` when ci is
-     even, its opposite when odd -- and does **not** depend on what the
-     model picked. That is what licenses pooling all m = 6 reads (the
-     2026-08-21 design ruling: "H1 states are scheduled, nothing is
-     selected"), and it is why H1 can measure leak without measuring
-     preference.
+The verdict tier's geometry: the state delivered at choice ci is live
+through round ci AND into read ci+1; read 0 sits on the forced-phase end
+state. H1 replaces "choice" with "schedule" and changes nothing else:
 
-**This reading is Code's and is flagged as such in the dated entry.** The
-alternative -- post-choice rounds steered by the schedule -- would make
-"both tags deliver identical nothing" false, since a tag would then deliver
-a state. If the design instance meant that, the change is one line.
+    read_state(ci)  = forced_end if ci even else its opposite
+    round ci        is generated under read_state(ci + 1)
+
+so a round is steered by the state the NEXT read will sit on -- exactly as a
+verdict-tier round is steered by the state its own choice just delivered.
+Nothing depends on what the model picked, which is what licenses pooling all
+m = 6 reads (the 2026-08-21 ruling: "H1 states are scheduled, nothing is
+selected") and why H1 measures leak without measuring preference.
+
+Appending a block depends on reads and exclusions only, never on the b/c
+split, so §3's inverse-sampling exactness argument is untouched and §6's
+operating characteristics -- functions of reads, not sessions -- need no
+re-verification.
 
 ## What the run does and does not decide
 
 It records b, c, n_d and N and stops. **It does not evaluate the gate.** The
 §3 criterion needs an exact Clopper-Pearson interval and no python on this
 laptop has scipy (handoff trap 9), so gate evaluation is a separate
-scipy-side analysis over the committed artifact. That separation is a
-feature, not a workaround: the run's job is to collect to a declared stop
-rule that depends only on totals, and a runner that cannot compute the
-verdict cannot be accused of stopping when it liked the verdict.
+scipy-side analysis over the committed artifact. The separation is a
+feature: the stop rule depends only on totals, and a runner that cannot
+compute the verdict cannot be accused of stopping when it liked the verdict.
 
-Monitors: audit v2, frozen and sha-pinned, printed in the header.
+Monitors: audit v2, frozen, sha recomputed and checked at startup.
 
-Site: laptop (MLX). ~2.5 h on the gate-licensed cached round path.
+Site: laptop (MLX). ~3.3 h on the gate-licensed cached round path.
+
+`--n-sessions` is the INITIAL schedule, not a limit: if it exhausts before
+an exit, blocks are appended up to `--session-cap`. To cap a short run, set
+both (learned by launching a 2-session smoke that dutifully headed for 160).
 
 Usage:
-    jlens-qwen36/.venv/bin/python scripts/e2b_h1_sessions.py --n-sessions 1
+    jlens-qwen36/.venv/bin/python scripts/e2b_h1_sessions.py --n-sessions 2 --session-cap 2
     jlens-qwen36/.venv/bin/python scripts/e2b_h1_sessions.py
 """
 from __future__ import annotations
@@ -173,6 +178,13 @@ def run_session(adapter, idx, cell, tasks, inj, audit, ban_ids, temp,
     order = (["pos", "neg"] if start_plus else ["neg", "pos"]) * F
     assert order[-1] == cell["forced_end"]
 
+    opp = "neg" if cell["forced_end"] == "pos" else "pos"
+
+    def read_state(ci: int) -> str:
+        """State live at read ci: alternates from the forced-phase end
+        state, and never depends on what was picked."""
+        return cell["forced_end"] if ci % 2 == 0 else opp
+
     transcript = SESSION_BANNER
     rounds, choices = [], []
     excluded, reason, truncated = False, None, False
@@ -206,8 +218,7 @@ def run_session(adapter, idx, cell, tasks, inj, audit, ban_ids, temp,
             break
         n_round += 1
         # SCHEDULED, not selected: alternate from the forced-phase end state.
-        live = (cell["forced_end"] if ci % 2 == 0
-                else ("neg" if cell["forced_end"] == "pos" else "pos"))
+        live = read_state(ci)
         a, b = ((tag_plus, tag_minus) if rng.integers(2) == 0
                 else (tag_minus, tag_plus))
         menu = MENU_TEMPLATES[(idx + ci) % 4].format(n=n_round, a=a, b=b)
@@ -228,6 +239,7 @@ def run_session(adapter, idx, cell, tasks, inj, audit, ban_ids, temp,
         tid, ttext = seq[ti]; ti += 1
         rec = {"round": ci, "menu_a": a, "menu_b": b,
                "live_state_at_read": live, "scheduled_not_selected": True,
+               "round_state_delivered": read_state(ci + 1),
                "pick": pick, "shadow_pick": shadow, "flipped": flipped,
                "flip_direction": direction, "task": tid,
                "paired_read": d, "global_read_index": budget["N"]}
@@ -241,14 +253,19 @@ def run_session(adapter, idx, cell, tasks, inj, audit, ban_ids, temp,
             truncated = True
             transcript += menu + f" {pick}\n"
             break
-        # contingency-free: the pick delivers NOTHING, so this round is
-        # generated with no injection at all
+        # STEERED, by the schedule and not by the pick (LOCK-h v1.4 §3a).
+        # The verdict tier's geometry is: the state delivered at choice ci is
+        # live through round ci AND into read ci+1. Replacing "choice" with
+        # "schedule" keeps that geometry exactly -- so the round is generated
+        # under the state the NEXT read will sit on, which is what makes the
+        # gate certify the leak in the verdict tier's own prefix environment.
+        delivered = read_state(ci + 1)
         chosen = ROUND_TEMPLATES[(idx + ci) % 4].format(
             n=n_round, tag=pick, task=ttext)
         seed = int(rng.integers(2 ** 31))
         prefix = transcript + menu + f" {pick}\n"
-        g = adapter.generate(prefix, chosen, injections=[], seed=seed,
-                             temp=temp, max_tokens=STOP_CAP,
+        g = adapter.generate(prefix, chosen, injections=[inj[delivered]],
+                             seed=seed, temp=temp, max_tokens=STOP_CAP,
                              ban_ids=ban_ids, cached=cached)
         degen, lex = classify_response(g.text, audit, own)
         rec.update({"seed": seed, "n_tok": len(g.token_ids),
@@ -263,7 +280,10 @@ def run_session(adapter, idx, cell, tasks, inj, audit, ban_ids, temp,
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--n-sessions", type=int, default=112)
+    ap.add_argument("--n-sessions", type=int, default=128)
+    ap.add_argument("--session-cap", type=int, default=160,
+                    help="hard cap; whole blocks of 16 are appended "
+                         "until a §3 exit or this cap (LOCK-h v1.4)")
     ap.add_argument("--n-max", type=int, default=640)
     ap.add_argument("--n-d-star", type=int, default=200)
     ap.add_argument("--checkpoint-every", type=int, default=128)
@@ -293,15 +313,17 @@ def main() -> int:
     print("=== H1: the leakage budget, as locked (LOCK-h v1.3 §3/§3a) ===")
     print(f"  scheduled {args.n_sessions} sessions (7 blocks x 16 strata); "
           f"stop at n_d = {args.n_d_star} or N = {args.n_max} paired reads")
-    print(f"  v1.3 corollary: n_d* needs pi_d >= "
+    print(f"  stop corollary: n_d* needs pi_d >= "
           f"{args.n_d_star / args.n_max:.4f}, forbidden by the 0.30 ceiling "
           f"-> N_max binds; expected stop session 107, read 4")
     print(f"  AUDIT v2 FROZEN, sha16 = {acfg['sha16']} (verified) -- "
           f"{len(acfg['frame_fragments'])} fragments + "
           f"{len(acfg['junk_regex'])} junk patterns")
-    print(f"  CONTINGENCY-FREE: both tags deliver nothing, so post-choice "
-          f"rounds are UNSTEERED; read states are SCHEDULED (alternating "
-          f"from the forced-phase end state), never selected")
+    print(f"  CONTINGENCY-FREE, STEERED ROUNDS (LOCK-h v1.4): the SCHEDULE "
+          f"selects every state, the pick selects none. Reads alternate "
+          f"from the forced-phase end state; each post-choice round is "
+          f"steered by the state the NEXT read sits on -- the verdict "
+          f"tier's own geometry with the schedule in the choice's place.")
     print(f"  THIN-MARGIN NOTE (carried per the adjudication): H2's upper "
           f"bound was 0.0636 against bar 0.0735. If H1's CI crosses, the "
           f"directional test is the design working, not a surprise.",
@@ -336,9 +358,11 @@ def main() -> int:
     sessions, checkpoints = [], []
     next_cp = args.checkpoint_every
     t1 = time.time()
-    for i, cell in enumerate(sched):
+    i = 0
+    while i < len(sched):
         if budget["stop"]:
             break
+        cell = sched[i]
         s = run_session(adapter, i, cell, tasks, inj, audit, ban_ids,
                         args.temp, args.axis_key, cached, budget)
         sessions.append(s)
@@ -350,6 +374,17 @@ def main() -> int:
               + (f" EXCLUDED({s['exclude_reason']})" if s["excluded"] else "")
               + (" TRUNCATED" if s["truncated_by_stop"] else "")
               + f"  {el:.0f}s", flush=True)
+        i += 1
+        # v1.4: if the schedule exhausts before a §3 exit, append whole
+        # blocks of 16 until an exit or the hard cap. Appending depends on
+        # reads and exclusions only, never on the b/c split, so §3's
+        # exactness argument is untouched.
+        if (i >= len(sched) and not budget["stop"]
+                and len(sched) + 16 <= args.session_cap):
+            sched += block_order(cells, rng)
+            print(f"      --- SCHEDULE EXHAUSTED at {budget['N']} reads; "
+                  f"appending a block -> {len(sched)} scheduled (cap "
+                  f"{args.session_cap})", flush=True)
         while budget["N"] >= next_cp:
             flips = [[int(c["flipped"]) for c in x["choices"]]
                      for x in sessions if x["choices"]]
