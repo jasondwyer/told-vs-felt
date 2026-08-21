@@ -1,6 +1,6 @@
-# LOCK-h.md — v1.2 (pre-H1 lock for PROPOSAL-h, e2b)
+# LOCK-h.md — v1.3 (pre-H1 lock for PROPOSAL-h, e2b)
 
-**Status:** v1.2, 2026-08-21 UTC, design instance. **BINDING** — v1.1
+**Status:** v1.3, 2026-08-21 UTC, design instance. **BINDING** — v1.1
 passed its own §6 verification and was committed at `8a97513`, which is
 the lock's timestamp; v1.2 is a post-commit operationalization that
 alters no exit, bound, or verified number (§8). (v1.0 failed its own §6
@@ -76,6 +76,11 @@ checkpoints additionally enforce the apparatus-stability ceiling: if
 of choices has destabilised the instrument regardless of direction.
 Resumption after any PAUSE requires a design-instance disposition.
 
+**Recorded corollary (v1.3):** the n_d* exit requires
+π_d ≥ n_d*/N_max = 0.3125, which the 0.30 stability ceiling forbids;
+N_max therefore binds across the entire licensed range, and the stop at
+session 107, read 4 is the only reachable stop short of a pause.
+
 **Feasibility corollary, recorded for interpretation:** π_d ≥ |L| for
 any realised leak, so a certified-low π̂_d bounds the leak directly;
 low discordance is evidence, not absence.
@@ -102,6 +107,16 @@ dose: degeneracy monitors bind by exact binomial against the
 declared harness tolerance, and H2 reports state-through-rounds
 (π̂_d, ICĈ) as H1's planning-relevant precursor. H2 PASS/FAIL is a
 design-instance disposition on the numbers.
+
+## 3b. Registered secondary analyses (v1.3; never gate-relevant)
+
+On H1's realised flips: the exact uniform-placement permutation test
+(200,000 draws) on (i) ICC and (ii) the count of sessions carrying ≥ 2
+flips, α = .05 each, two-sided by tail probability. Significant → flips
+are session-structured; feeds the H1 report's mechanism discussion and
+any extension planning. Null → the i.i.d. treatment stands. H2's
+post-hoc values (0.017, 0.0115) may be cited descriptively beside the
+result, never pooled into it.
 
 ## 4. Roster and materials of record
 
@@ -176,6 +191,10 @@ ceiling table bound in. §3 checkpoint 1 declared a calibration look
 with pause-and-re-plan authority reserved to the design instance.
 Both v1.0 specification errors are the design instance's, caught by
 the §6 verification structure on its first use.
+
+v1.2 → v1.3 (2026-08-21): stop corollary recorded; §3b registered
+secondary added. No OC changes; §6 re-run must return byte-identical
+GREEN before commit.
 
 v1.1 → v1.2 (2026-08-21, post-commit): §3a session plan added —
 schedule 112/stop-governed for H1, 32 for H2 proper. Operationalization
