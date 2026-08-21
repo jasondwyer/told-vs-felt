@@ -1,0 +1,35 @@
+DECLARED INVOCATION: jlens-qwen36/.venv/bin/python scripts/e2b_h2_readstability.py  (defaults: pair prism,slate = roster-of-record ∩ archive; L48; frac 0.10; axis span_reward; e2a-excluded sessions omitted; sign alternates counterbalanced per read)
+=== H2 PRECURSOR: choice-read stability, state live ===
+  HALF OF H2. The generation half needs the e2a session runner, which lives only in the gitignored clone -- see the dated entry.
+  archive: 200 sessions, 50 on pair prism/slate
+  COVERAGE LIMIT: of the roster of record, only prism/slate appears in the archive; the other three pairs are unreachable by this route at any n.
+  axis span_reward @ L48, frac 0.1 (|alpha| = 10.3010 = 0.1 x R_48 = 103.01)
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 7764.15it/s]
+  label ids: {'prism': 90387, 'slate': 48877}
+  declared window: 8192; sign alternates per read, counterbalanced within session
+    10/50 sessions, 60 paired reads
+    20/50 sessions, 120 paired reads
+    30/50 sessions, 174 paired reads
+    40/50 sessions, 228 paired reads
+    50/50 sessions, 288 paired reads
+
+  paired reads: 288 (144 +state / 144 -state) over 48 sessions
+
+  --- the two numbers checkpoint 1 is defined to report ---
+    pi_hat_d (flip rate)     = 0.0208
+    ICC-hat (within-session) = 0.0000
+
+  in-vivo leak (PROPOSAL-h §0.2 (i)):
+    mean d_p_a on +state = +0.00002
+    mean d_p_a on -state = -0.00166
+    state-reversing half-gap = +0.00084  (the component a counterbalance CANNOT absorb)
+    common mode              = -0.00082  (the component it CAN)
+    mean |d_label_mass| = 0.01901
+
+  read quality, state-present vs shadow:
+    label_mass     0.7025 vs 0.7049
+    top1_is_label  0.7917 vs 0.7951
+
+  window contract: declared 8192, n_encodes_clipped = 0  [CLEAN]
+
+wrote /Users/jasondwyer/Documents/code/jspace-lab/data/e2b/h2_read_stability.json
