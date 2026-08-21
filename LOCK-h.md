@@ -1,6 +1,6 @@
-# LOCK-h.md — v1.3 (pre-H1 lock for PROPOSAL-h, e2b)
+# LOCK-h.md — v1.4 (pre-H1 lock for PROPOSAL-h, e2b)
 
-**Status:** v1.3, 2026-08-21 UTC, design instance. **BINDING** — v1.1
+**Status:** v1.4, 2026-08-21 UTC, design instance. **BINDING** — v1.1
 passed its own §6 verification and was committed at `8a97513`, which is
 the lock's timestamp; v1.2 is a post-commit operationalization that
 alters no exit, bound, or verified number (§8). (v1.0 failed its own §6
@@ -98,8 +98,26 @@ m = 6 reads per session is the structure of record, byte-pinned by
 the session replay (Route 3, 200/200). Session content: identical
 to verdict sessions except contingency-free (both tags deliver
 nothing); state schedule per PROPOSAL-h §2. The §3 extension, if
-triggered, is an identical second 112-session schedule under the
-same stop rule.
+triggered, is an identical second schedule under the same stop rule.
+
+**Clarification (v1.4):** H1 sessions are identical to verdict sessions
+including STEERED post-choice rounds — the schedule, not the choice,
+selects each round's state. The gate certifies the leak in the verdict
+tier's own prefix environment. The unsteered reading was run once
+(H1-u, auxiliary, 2026-08-21) before this clarification and is retained
+as the prefix-steering comparison arm.
+
+**v1.4 schedule:** H1 schedules 8 blocks × 16 strata = 128 sessions.
+If the schedule exhausts before a §3 exit, whole blocks of 16 are
+appended until an exit is reached or the hard cap of 160 sessions;
+stopping continues to depend only on totals (reads, exclusions), never
+on the b/c split, so §3's exactness argument is unchanged, and §6's
+operating characteristics are functions of reads, not sessions — no
+re-verification required. Sizing note of record: 640 reads needs 107
+valid sessions; 128 scheduled tolerates 16.4% exclusions against
+observed rates of 6.2–14.3%; v1.2's 112 tolerated 4.5% and could not
+have delivered its own stop — a design-instance sizing defect, found by
+running.
 
 H2 proper runs **32 sessions** (2 full blocks; 8 per roster pair,
 192 paired reads), state live through rounds AND reads at the §5
@@ -191,6 +209,13 @@ ceiling table bound in. §3 checkpoint 1 declared a calibration look
 with pause-and-re-plan authority reserved to the design instance.
 Both v1.0 specification errors are the design instance's, caught by
 the §6 verification structure on its first use.
+
+v1.3 → v1.4: two design-instance specification defects corrected —
+§3a sizing lacked an exclusion allowance; §2's H1 text under-specified
+round steering. Both found by execution; neither alters any §6 number.
+(Placement note: the clarification is written into §3a, against the
+session-content sentence it corrects; LOCK-h's §2 is "The bar" and
+carries no H1 paragraph.)
 
 v1.2 → v1.3 (2026-08-21): stop corollary recorded; §3b registered
 secondary added. No OC changes; §6 re-run must return byte-identical
