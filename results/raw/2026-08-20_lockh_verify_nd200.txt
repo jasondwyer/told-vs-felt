@@ -1,0 +1,50 @@
+DECLARED INVOCATION: scripts/lockh_verify.py --n-d 200 (N_max unchanged at 640) -- candidate adjustment, NOT the locked plan
+=== LOCK-h §6 verification (exact) ===
+  §3 plan: stop at n_d = 200 discordant OR N = 640 paired reads, whichever first
+  bar_leak = 0.0735; gate = exact 95% CI on p_flip mapped through pi_hat = n_d/N
+  pooled basis m = 6, ICC 0 -> 640 independent paired reads (~107 sessions)
+  clustered floor -> 106 independent paired reads
+
+   pi_d | (a) PASS@L=0     IND    FAIL | (b) clustered | (c) FAIL@bar notPASS@bar
+  ------------------------------------------------------------------------------------
+   0.02 |        1.000   0.000   0.000 |         1.000 |  n/a (pi_d < bar)
+   0.05 |        1.000   0.000   0.000 |         0.967 |  n/a (pi_d < bar)
+   0.08 |        1.000   0.000   0.000 |         0.756 |       0.098       0.671
+   0.10 |        1.000   0.000   0.000 |         0.527 |       0.052       0.892
+   0.15 |        0.996   0.004   0.000 |         0.107 |       0.030       0.962
+   0.20 |        0.972   0.028   0.000 |         0.010 |       0.025       0.972
+   0.25 |        0.918   0.082   0.000 |         0.000 |       0.024       0.975
+   0.30 |        0.834   0.166   0.000 |         0.000 |       0.023       0.976
+
+  (a) gated >= 0.8 for pi_d <= 0.30: 8/8 cells clear
+  (b) reported, not gated -- the clustered floor is the pessimistic bound; the literal 'm=1, 640 sessions' reading is identical to (a) by construction
+  (c) gated >= 0.8 for pi_d in [bar, 0.30]: 0/6 cells clear -- SHORT at pi_d = 0.08, 0.1, 0.15, 0.2, 0.25, 0.3
+
+  (c) IS NOT SHORT BY A SAMPLE SIZE -- it is a category error in the requirement.
+    A leak exactly ON the bar is the boundary of the tested hypothesis, where an interval
+    test's power equals its SIZE. P(FAIL) is pinned at alpha/2 = 0.025 for every n_d:
+    demonstrated at pi_d = 0.25, holding pi_hat fixed:
+      n_d =   124 (N =   496)  P(FAIL) = 0.025   P(PASS) = 0.023
+      n_d =   250 (N =  1000)  P(FAIL) = 0.024   P(PASS) = 0.023
+      n_d =   500 (N =  2000)  P(FAIL) = 0.024   P(PASS) = 0.020
+      n_d =  1000 (N =  4000)  P(FAIL) = 0.025   P(PASS) = 0.022
+      n_d =  2000 (N =  8000)  P(FAIL) = 0.023   P(PASS) = 0.024
+    Reachable restatements, with numbers, for the design instance to choose between:
+      P(FAIL) at L = 1.00 x bar = 0.0735: min over feasible pi_d = 0.023
+      P(FAIL) at L = 1.25 x bar = 0.0919: min over feasible pi_d = 0.127
+      P(FAIL) at L = 1.50 x bar = 0.1102: min over feasible pi_d = 0.393
+      P(FAIL) at L = 2.00 x bar = 0.1470: min over feasible pi_d = 0.937
+      P(not PASS) at L = bar: min over feasible pi_d = 0.671
+
+  (b) supplementary -- the ICC the plan can absorb (DEFF = 1 + (m-1)*ICC on N_max = 640):
+     pi_d  max ICC certifying
+     0.08                0.75
+     0.10                0.50
+     0.15                0.20
+     0.20                0.10
+     0.25                0.05
+     0.30                0.00
+
+  VERDICT: NOT GREEN -- reported to the design instance for adjustment per §6
+
+wrote data/e2b/lockh_verify_nd200.json

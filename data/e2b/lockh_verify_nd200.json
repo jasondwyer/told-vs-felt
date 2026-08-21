@@ -1,0 +1,742 @@
+{
+ "item": "LOCK-h \u00a76 verification",
+ "exact": true,
+ "bar_leak": 0.0735,
+ "n_d_star": 200,
+ "n_max": 640,
+ "m": 6,
+ "clustered_floor_reads": 106,
+ "target": 0.8,
+ "pi_grid": [
+  0.02,
+  0.05,
+  0.08,
+  0.1,
+  0.15,
+  0.2,
+  0.25,
+  0.3
+ ],
+ "rows": [
+  {
+   "pi_d": 0.02,
+   "a_pass_when_clean": 1.0,
+   "a_ind": 1.854544590458053e-24,
+   "a_fail": 2.781840285507866e-35,
+   "a_meets": true,
+   "b_clustered_pass_when_clean": 0.9998604948416846,
+   "b_basis": "106 paired reads (n_d* capped at 106)",
+   "c_feasible": false,
+   "c_fail_at_bar": null,
+   "c_not_pass_at_bar": null,
+   "c_meets_strict": null
+  },
+  {
+   "pi_d": 0.05,
+   "a_pass_when_clean": 0.9999999999601474,
+   "a_ind": 3.9853164774257423e-11,
+   "a_fail": 9.125901216160476e-21,
+   "a_meets": true,
+   "b_clustered_pass_when_clean": 0.9674193899814995,
+   "b_basis": "106 paired reads (n_d* capped at 106)",
+   "c_feasible": false,
+   "c_fail_at_bar": null,
+   "c_not_pass_at_bar": null,
+   "c_meets_strict": null
+  },
+  {
+   "pi_d": 0.08,
+   "a_pass_when_clean": 0.9999986450641744,
+   "a_ind": 1.3549358243694968e-06,
+   "a_fail": 4.887582246854526e-16,
+   "a_meets": true,
+   "b_clustered_pass_when_clean": 0.7561855962233602,
+   "b_basis": "106 paired reads (n_d* capped at 106)",
+   "c_feasible": true,
+   "c_fail_at_bar": 0.09837172698000335,
+   "c_not_pass_at_bar": 0.6713240648796974,
+   "c_meets_strict": false
+  },
+  {
+   "pi_d": 0.1,
+   "a_pass_when_clean": 0.999954037560713,
+   "a_ind": 4.5962439253595524e-05,
+   "a_fail": 3.364367623875e-14,
+   "a_meets": true,
+   "b_clustered_pass_when_clean": 0.5266439985635462,
+   "b_basis": "106 paired reads (n_d* capped at 106)",
+   "c_feasible": true,
+   "c_fail_at_bar": 0.051768835644365664,
+   "c_not_pass_at_bar": 0.8921739321625782,
+   "c_meets_strict": false
+  },
+  {
+   "pi_d": 0.15,
+   "a_pass_when_clean": 0.9961456289035928,
+   "a_ind": 0.0038543710743513676,
+   "a_fail": 2.2055575665182748e-11,
+   "a_meets": true,
+   "b_clustered_pass_when_clean": 0.10748990589171754,
+   "b_basis": "106 paired reads (n_d* capped at 106)",
+   "c_feasible": true,
+   "c_fail_at_bar": 0.029973824087065292,
+   "c_not_pass_at_bar": 0.9616609298786734,
+   "c_meets_strict": false
+  },
+  {
+   "pi_d": 0.2,
+   "a_pass_when_clean": 0.9722327684106014,
+   "a_ind": 0.027767230631418668,
+   "a_fail": 9.579802494943301e-10,
+   "a_meets": true,
+   "b_clustered_pass_when_clean": 0.009531895426512314,
+   "b_basis": "106 paired reads (n_d* capped at 106)",
+   "c_feasible": true,
+   "c_fail_at_bar": 0.02484470857479755,
+   "c_not_pass_at_bar": 0.9719186210058198,
+   "c_meets_strict": false
+  },
+  {
+   "pi_d": 0.25,
+   "a_pass_when_clean": 0.9181466091374735,
+   "a_ind": 0.08185337870256466,
+   "a_fail": 1.2159962038683851e-08,
+   "a_meets": true,
+   "b_clustered_pass_when_clean": 0.00038926137870717555,
+   "b_basis": "106 paired reads (n_d* capped at 106)",
+   "c_feasible": true,
+   "c_fail_at_bar": 0.0236830104892582,
+   "c_not_pass_at_bar": 0.9748103951185267,
+   "c_meets_strict": false
+  },
+  {
+   "pi_d": 0.3,
+   "a_pass_when_clean": 0.8336851598574858,
+   "a_ind": 0.1663147508605183,
+   "a_fail": 8.928199455212146e-08,
+   "a_meets": true,
+   "b_clustered_pass_when_clean": 7.3267181418525795e-06,
+   "b_basis": "106 paired reads (n_d* capped at 106)",
+   "c_feasible": true,
+   "c_fail_at_bar": 0.022876624364842255,
+   "c_not_pass_at_bar": 0.976153833916703,
+   "c_meets_strict": false
+  }
+ ],
+ "a_short_cells": [],
+ "c_short_cells": [
+  0.08,
+  0.1,
+  0.15,
+  0.2,
+  0.25,
+  0.3
+ ],
+ "green": false,
+ "c_structural_limit": {
+  "pi_d": 0.25,
+  "ladder": [
+   {
+    "n_d": 124,
+    "N_for_pi_hat": 496,
+    "P_fail": 0.02495147472114881,
+    "P_pass": 0.023136427075860676
+   },
+   {
+    "n_d": 250,
+    "N_for_pi_hat": 1000,
+    "P_fail": 0.024249368093678225,
+    "P_pass": 0.022701208682617796
+   },
+   {
+    "n_d": 500,
+    "N_for_pi_hat": 2000,
+    "P_fail": 0.023872207083175865,
+    "P_pass": 0.020411427610725348
+   },
+   {
+    "n_d": 1000,
+    "N_for_pi_hat": 4000,
+    "P_fail": 0.024894002375568023,
+    "P_pass": 0.022273640423649446
+   },
+   {
+    "n_d": 2000,
+    "N_for_pi_hat": 8000,
+    "P_fail": 0.022985436287341444,
+    "P_pass": 0.023734229517856396
+   }
+  ],
+  "limit": "alpha/2 = 0.025, flat in n_d",
+  "note": "A true leak exactly ON the bar is the boundary of the tested hypothesis, where an interval test's power equals its size: CI half-width and sampling SD both shrink like 1/sqrt(n_d), so P(FAIL) is pinned at alpha/2 = 0.025 for every n_d. The >= 0.80 requirement in \u00a76(c) is therefore not short by a sample size and no n_d*/N_max can satisfy it; it asks for 80% power at the one point where the test is defined to have 2.5%."
+ },
+ "c_fail_ladder": [
+  {
+   "leak_multiple_of_bar": 1.0,
+   "leak": 0.0735,
+   "cells": [
+    {
+     "pi_d": 0.08,
+     "p_fail": 0.09837172698000335
+    },
+    {
+     "pi_d": 0.1,
+     "p_fail": 0.051768835644365664
+    },
+    {
+     "pi_d": 0.15,
+     "p_fail": 0.029973824087065292
+    },
+    {
+     "pi_d": 0.2,
+     "p_fail": 0.02484470857479755
+    },
+    {
+     "pi_d": 0.25,
+     "p_fail": 0.0236830104892582
+    },
+    {
+     "pi_d": 0.3,
+     "p_fail": 0.022876624364842255
+    }
+   ],
+   "min_p_fail": 0.022876624364842255
+  },
+  {
+   "leak_multiple_of_bar": 1.25,
+   "leak": 0.091875,
+   "cells": [
+    {
+     "pi_d": 0.1,
+     "p_fail": 0.5818794098510106
+    },
+    {
+     "pi_d": 0.15,
+     "p_fail": 0.2727286302249973
+    },
+    {
+     "pi_d": 0.2,
+     "p_fail": 0.18645994289754653
+    },
+    {
+     "pi_d": 0.25,
+     "p_fail": 0.15051201959205018
+    },
+    {
+     "pi_d": 0.3,
+     "p_fail": 0.12666377531319273
+    }
+   ],
+   "min_p_fail": 0.12666377531319273
+  },
+  {
+   "leak_multiple_of_bar": 1.5,
+   "leak": 0.11024999999999999,
+   "cells": [
+    {
+     "pi_d": 0.15,
+     "p_fail": 0.7763521622539367
+    },
+    {
+     "pi_d": 0.2,
+     "p_fail": 0.5855870777195339
+    },
+    {
+     "pi_d": 0.25,
+     "p_fail": 0.4736730293279309
+    },
+    {
+     "pi_d": 0.3,
+     "p_fail": 0.39294207017582156
+    }
+   ],
+   "min_p_fail": 0.39294207017582156
+  },
+  {
+   "leak_multiple_of_bar": 2.0,
+   "leak": 0.147,
+   "cells": [
+    {
+     "pi_d": 0.15,
+     "p_fail": 0.9999937043094863
+    },
+    {
+     "pi_d": 0.2,
+     "p_fail": 0.9956257878380463
+    },
+    {
+     "pi_d": 0.25,
+     "p_fail": 0.9750283774476083
+    },
+    {
+     "pi_d": 0.3,
+     "p_fail": 0.9373302845809636
+    }
+   ],
+   "min_p_fail": 0.9373302845809636
+  }
+ ],
+ "b_icc_tolerance": {
+  "0.08": {
+   "pi_d": 0.08,
+   "max_icc_tolerated": 0.75,
+   "rows": [
+    {
+     "icc": 0.0,
+     "deff": 1.0,
+     "n_eff_reads": 640,
+     "pass_when_clean": 0.9999986450641744,
+     "meets": true
+    },
+    {
+     "icc": 0.02,
+     "deff": 1.1,
+     "n_eff_reads": 581,
+     "pass_when_clean": 0.9999936927938193,
+     "meets": true
+    },
+    {
+     "icc": 0.05,
+     "deff": 1.25,
+     "n_eff_reads": 512,
+     "pass_when_clean": 0.9999654863946329,
+     "meets": true
+    },
+    {
+     "icc": 0.1,
+     "deff": 1.5,
+     "n_eff_reads": 426,
+     "pass_when_clean": 0.999720624052396,
+     "meets": true
+    },
+    {
+     "icc": 0.15,
+     "deff": 1.75,
+     "n_eff_reads": 365,
+     "pass_when_clean": 0.9989644288374173,
+     "meets": true
+    },
+    {
+     "icc": 0.2,
+     "deff": 2.0,
+     "n_eff_reads": 320,
+     "pass_when_clean": 0.9966591523573531,
+     "meets": true
+    },
+    {
+     "icc": 0.3,
+     "deff": 2.5,
+     "n_eff_reads": 256,
+     "pass_when_clean": 0.9867311685180753,
+     "meets": true
+    },
+    {
+     "icc": 0.5,
+     "deff": 3.5,
+     "n_eff_reads": 182,
+     "pass_when_clean": 0.929779702271559,
+     "meets": true
+    },
+    {
+     "icc": 0.75,
+     "deff": 4.75,
+     "n_eff_reads": 134,
+     "pass_when_clean": 0.84951000805528,
+     "meets": true
+    },
+    {
+     "icc": 1.0,
+     "deff": 6.0,
+     "n_eff_reads": 106,
+     "pass_when_clean": 0.7561855962233602,
+     "meets": false
+    }
+   ]
+  },
+  "0.1": {
+   "pi_d": 0.1,
+   "max_icc_tolerated": 0.5,
+   "rows": [
+    {
+     "icc": 0.0,
+     "deff": 1.0,
+     "n_eff_reads": 640,
+     "pass_when_clean": 0.999954037560713,
+     "meets": true
+    },
+    {
+     "icc": 0.02,
+     "deff": 1.1,
+     "n_eff_reads": 581,
+     "pass_when_clean": 0.9998477320426082,
+     "meets": true
+    },
+    {
+     "icc": 0.05,
+     "deff": 1.25,
+     "n_eff_reads": 512,
+     "pass_when_clean": 0.9994234761530204,
+     "meets": true
+    },
+    {
+     "icc": 0.1,
+     "deff": 1.5,
+     "n_eff_reads": 426,
+     "pass_when_clean": 0.9973154809715846,
+     "meets": true
+    },
+    {
+     "icc": 0.15,
+     "deff": 1.75,
+     "n_eff_reads": 365,
+     "pass_when_clean": 0.992141763907584,
+     "meets": true
+    },
+    {
+     "icc": 0.2,
+     "deff": 2.0,
+     "n_eff_reads": 320,
+     "pass_when_clean": 0.9816328534263016,
+     "meets": true
+    },
+    {
+     "icc": 0.3,
+     "deff": 2.5,
+     "n_eff_reads": 256,
+     "pass_when_clean": 0.9457799203527985,
+     "meets": true
+    },
+    {
+     "icc": 0.5,
+     "deff": 3.5,
+     "n_eff_reads": 182,
+     "pass_when_clean": 0.8130166043506207,
+     "meets": true
+    },
+    {
+     "icc": 0.75,
+     "deff": 4.75,
+     "n_eff_reads": 134,
+     "pass_when_clean": 0.6654051400553587,
+     "meets": false
+    },
+    {
+     "icc": 1.0,
+     "deff": 6.0,
+     "n_eff_reads": 106,
+     "pass_when_clean": 0.5266439985635462,
+     "meets": false
+    }
+   ]
+  },
+  "0.15": {
+   "pi_d": 0.15,
+   "max_icc_tolerated": 0.2,
+   "rows": [
+    {
+     "icc": 0.0,
+     "deff": 1.0,
+     "n_eff_reads": 640,
+     "pass_when_clean": 0.9961456289035928,
+     "meets": true
+    },
+    {
+     "icc": 0.02,
+     "deff": 1.1,
+     "n_eff_reads": 581,
+     "pass_when_clean": 0.9922271082656934,
+     "meets": true
+    },
+    {
+     "icc": 0.05,
+     "deff": 1.25,
+     "n_eff_reads": 512,
+     "pass_when_clean": 0.982409513267244,
+     "meets": true
+    },
+    {
+     "icc": 0.1,
+     "deff": 1.5,
+     "n_eff_reads": 426,
+     "pass_when_clean": 0.9537648693843871,
+     "meets": true
+    },
+    {
+     "icc": 0.15,
+     "deff": 1.75,
+     "n_eff_reads": 365,
+     "pass_when_clean": 0.9110054747515043,
+     "meets": true
+    },
+    {
+     "icc": 0.2,
+     "deff": 2.0,
+     "n_eff_reads": 320,
+     "pass_when_clean": 0.8557080631249007,
+     "meets": true
+    },
+    {
+     "icc": 0.3,
+     "deff": 2.5,
+     "n_eff_reads": 256,
+     "pass_when_clean": 0.7293875763000878,
+     "meets": false
+    },
+    {
+     "icc": 0.5,
+     "deff": 3.5,
+     "n_eff_reads": 182,
+     "pass_when_clean": 0.4434947156350167,
+     "meets": false
+    },
+    {
+     "icc": 0.75,
+     "deff": 4.75,
+     "n_eff_reads": 134,
+     "pass_when_clean": 0.22267106220272484,
+     "meets": false
+    },
+    {
+     "icc": 1.0,
+     "deff": 6.0,
+     "n_eff_reads": 106,
+     "pass_when_clean": 0.10748990589171754,
+     "meets": false
+    }
+   ]
+  },
+  "0.2": {
+   "pi_d": 0.2,
+   "max_icc_tolerated": 0.1,
+   "rows": [
+    {
+     "icc": 0.0,
+     "deff": 1.0,
+     "n_eff_reads": 640,
+     "pass_when_clean": 0.9722327684106014,
+     "meets": true
+    },
+    {
+     "icc": 0.02,
+     "deff": 1.1,
+     "n_eff_reads": 581,
+     "pass_when_clean": 0.9544679982669861,
+     "meets": true
+    },
+    {
+     "icc": 0.05,
+     "deff": 1.25,
+     "n_eff_reads": 512,
+     "pass_when_clean": 0.9199452937729796,
+     "meets": true
+    },
+    {
+     "icc": 0.1,
+     "deff": 1.5,
+     "n_eff_reads": 426,
+     "pass_when_clean": 0.8430035626505455,
+     "meets": true
+    },
+    {
+     "icc": 0.15,
+     "deff": 1.75,
+     "n_eff_reads": 365,
+     "pass_when_clean": 0.7547825110546446,
+     "meets": false
+    },
+    {
+     "icc": 0.2,
+     "deff": 2.0,
+     "n_eff_reads": 320,
+     "pass_when_clean": 0.6581867903047676,
+     "meets": false
+    },
+    {
+     "icc": 0.3,
+     "deff": 2.5,
+     "n_eff_reads": 256,
+     "pass_when_clean": 0.47921494771711115,
+     "meets": false
+    },
+    {
+     "icc": 0.5,
+     "deff": 3.5,
+     "n_eff_reads": 182,
+     "pass_when_clean": 0.15568537173120245,
+     "meets": false
+    },
+    {
+     "icc": 0.75,
+     "deff": 4.75,
+     "n_eff_reads": 134,
+     "pass_when_clean": 0.03259119421798792,
+     "meets": false
+    },
+    {
+     "icc": 1.0,
+     "deff": 6.0,
+     "n_eff_reads": 106,
+     "pass_when_clean": 0.009531895426512314,
+     "meets": false
+    }
+   ]
+  },
+  "0.25": {
+   "pi_d": 0.25,
+   "max_icc_tolerated": 0.05,
+   "rows": [
+    {
+     "icc": 0.0,
+     "deff": 1.0,
+     "n_eff_reads": 640,
+     "pass_when_clean": 0.9181466091374735,
+     "meets": true
+    },
+    {
+     "icc": 0.02,
+     "deff": 1.1,
+     "n_eff_reads": 581,
+     "pass_when_clean": 0.8811868072167609,
+     "meets": true
+    },
+    {
+     "icc": 0.05,
+     "deff": 1.25,
+     "n_eff_reads": 512,
+     "pass_when_clean": 0.8185866833819697,
+     "meets": true
+    },
+    {
+     "icc": 0.1,
+     "deff": 1.5,
+     "n_eff_reads": 426,
+     "pass_when_clean": 0.6999258737287318,
+     "meets": false
+    },
+    {
+     "icc": 0.15,
+     "deff": 1.75,
+     "n_eff_reads": 365,
+     "pass_when_clean": 0.5820098379920869,
+     "meets": false
+    },
+    {
+     "icc": 0.2,
+     "deff": 2.0,
+     "n_eff_reads": 320,
+     "pass_when_clean": 0.466118899341555,
+     "meets": false
+    },
+    {
+     "icc": 0.3,
+     "deff": 2.5,
+     "n_eff_reads": 256,
+     "pass_when_clean": 0.26845740542831464,
+     "meets": false
+    },
+    {
+     "icc": 0.5,
+     "deff": 3.5,
+     "n_eff_reads": 182,
+     "pass_when_clean": 0.028775227523907394,
+     "meets": false
+    },
+    {
+     "icc": 0.75,
+     "deff": 4.75,
+     "n_eff_reads": 134,
+     "pass_when_clean": 0.0017006843480030505,
+     "meets": false
+    },
+    {
+     "icc": 1.0,
+     "deff": 6.0,
+     "n_eff_reads": 106,
+     "pass_when_clean": 0.00038926137870717555,
+     "meets": false
+    }
+   ]
+  },
+  "0.3": {
+   "pi_d": 0.3,
+   "max_icc_tolerated": 0.0,
+   "rows": [
+    {
+     "icc": 0.0,
+     "deff": 1.0,
+     "n_eff_reads": 640,
+     "pass_when_clean": 0.8336851598574858,
+     "meets": true
+    },
+    {
+     "icc": 0.02,
+     "deff": 1.1,
+     "n_eff_reads": 581,
+     "pass_when_clean": 0.785092866265751,
+     "meets": false
+    },
+    {
+     "icc": 0.05,
+     "deff": 1.25,
+     "n_eff_reads": 512,
+     "pass_when_clean": 0.7011932227875664,
+     "meets": false
+    },
+    {
+     "icc": 0.1,
+     "deff": 1.5,
+     "n_eff_reads": 426,
+     "pass_when_clean": 0.5556211191528044,
+     "meets": false
+    },
+    {
+     "icc": 0.15,
+     "deff": 1.75,
+     "n_eff_reads": 365,
+     "pass_when_clean": 0.4210332860881518,
+     "meets": false
+    },
+    {
+     "icc": 0.2,
+     "deff": 2.0,
+     "n_eff_reads": 320,
+     "pass_when_clean": 0.29465619663849546,
+     "meets": false
+    },
+    {
+     "icc": 0.3,
+     "deff": 2.5,
+     "n_eff_reads": 256,
+     "pass_when_clean": 0.09895592047992395,
+     "meets": false
+    },
+    {
+     "icc": 0.5,
+     "deff": 3.5,
+     "n_eff_reads": 182,
+     "pass_when_clean": 0.0018491422671032,
+     "meets": false
+    },
+    {
+     "icc": 0.75,
+     "deff": 4.75,
+     "n_eff_reads": 134,
+     "pass_when_clean": 3.064285657706083e-05,
+     "meets": false
+    },
+    {
+     "icc": 1.0,
+     "deff": 6.0,
+     "n_eff_reads": 106,
+     "pass_when_clean": 7.3267181418525795e-06,
+     "meets": false
+    }
+   ]
+  }
+ },
+ "ambiguities_resolved": {
+  "b_first_reads_floor": "Read literally (m=1, 640 sessions) \u00a76(b) is identical to (a) under ICC 0 and is not a bound of any kind. The pessimistic bound reported here is the fully-clustered one: N_max/m = 106 independent paired reads.",
+  "c_fail_definition": "FAIL is \u00a73's: mapped CI strictly beyond the bar. Both that and P(not PASS) are reported, because at a true leak exactly on the bar the strict reading is bounded by 1/2."
+ },
+ "decides_nothing": "Code verifies; \u00a76 adjustments and the commit are the design instance's and Jason's."
+}

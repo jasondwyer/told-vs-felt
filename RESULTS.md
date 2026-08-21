@@ -20,6 +20,91 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-20 — **LOCK-h §6 verification: NOT GREEN. Two cells short, for
+  entirely different reasons — (a) is short by a sample size and the fix is
+  free; (c) cannot be satisfied at any sample size, because it asks for 80%
+  power at the one point where the test is defined to have 2.5%.**
+  ([`data/e2b/lockh_verify.json`](data/e2b/lockh_verify.json),
+  [`lockh_verify_nd200.json`](data/e2b/lockh_verify_nd200.json); raw
+  [`2026-08-20_lockh_verify.txt`](results/raw/2026-08-20_lockh_verify.txt),
+  [`_nd200`](results/raw/2026-08-20_lockh_verify_nd200.txt);
+  `scripts/lockh_verify.py`. **LOCK-h.md is NOT committed** — §6 gates it and
+  §6 did not pass.)
+  - **Exact, and cross-checked against an independent Monte Carlo.** Every
+    distribution in the §3 plan is discrete and finite, so the whole
+    operating characteristic is a finite sum: the stopping law (negative
+    binomial for the n_d exit, binomial for the N_max exit) factorises from
+    the split, because the rule reads only the totals — which is the same
+    property that makes §3's conditional test exact under inverse sampling.
+    Enumeration vs 40k-trial MC agreed within ~1 MC SE on all four spot
+    cells (e.g. π_d = 0.30, L = 0: 0.5193 exact vs 0.5211 MC). Rule 10 says
+    an under-sampled null flatters a weak signal; a gate's own certification
+    is the last place to accept sampling error.
+
+  | π_d | (a) PASS @ L=0 | IND | (b) clustered floor | (c) FAIL @ bar | not-PASS @ bar |
+  |---|---|---|---|---|---|
+  | 0.02 | 1.000 | 0.000 | 1.000 | — (π_d < bar) | — |
+  | 0.05 | 1.000 | 0.000 | 0.967 | — (π_d < bar) | — |
+  | 0.08 | 1.000 | 0.000 | 0.756 | 0.098 | 0.671 |
+  | 0.10 | 1.000 | 0.000 | 0.527 | 0.052 | 0.892 |
+  | 0.15 | 0.996 | 0.004 | 0.107 | 0.030 | 0.962 |
+  | 0.20 | 0.957 | 0.043 | 0.010 | 0.026 | 0.972 |
+  | 0.25 | **0.787** | 0.213 | 0.000 | 0.023 | 0.976 |
+  | 0.30 | **0.519** | 0.481 | 0.000 | 0.022 | 0.978 |
+
+  - **(a) — 6/8 clear; short at π_d = 0.25 and 0.30. The fix costs nothing.**
+    **`n_d*` 124 → 200, `N_max` unchanged at 640** ⇒ **8/8 clear** (0.918 at
+    π_d = 0.25, 0.834 at 0.30), still ~107 sessions. The mechanism is worth
+    stating because it is counter-intuitive: at high π_d the n_d = 124 exit
+    fires *early and throws reads away*. Raising `n_d*` makes the N_max exit
+    the binding one there, so the run harvests ~160 discordant pairs instead
+    of stopping at 124 — the sessions were already budgeted. Confirmed by
+    saturation: every `n_d*` ≥ 200 against N_max = 640 returns the same
+    0.918 / 0.839. Full trade surface in the artifact.
+  - **(c) — 0/6 clear, and NO adjustment of `n_d*`/`N_max` can fix it. This
+    is a category error in the requirement, not a shortfall.** A true leak
+    sitting exactly ON the bar is the **boundary of the hypothesis the gate
+    tests**, and at its own boundary an interval test has power equal to its
+    **size**. The CI half-width and the sampling SD both shrink like
+    1/√n_d, so their ratio is frozen at the critical value and P(FAIL) is
+    **pinned at α/2 = 0.025 for every n_d** — demonstrated flat from n_d =
+    124 to n_d = 2000 with π̂_d held fixed: 0.025, 0.024, 0.024, 0.025,
+    0.023. §6(c) asks for 80% power at the one point where the test is
+    defined to have 2.5%.
+    - **Two reachable restatements, with numbers.** (i) **P(FAIL) ≥ 0.80 at
+      L = 2 × bar = 0.1470** — min over feasible π_d = **0.805** at the
+      locked `n_d*` = 124, and **0.937** under the (a) fix. Clears with
+      margin. (ii) **P(not PASS) ≥ 0.80 at L = bar** — min 0.671, clearing
+      for π_d ≥ 0.10 (0.892 and up) but failing at π_d = 0.08. The
+      intermediate rung does not work: 1.5 × bar gives only 0.393 even at
+      `n_d*` = 200, so 2 × bar is the first clean one.
+  - **(b) — reported not gated, and it is the plan's real exposure.** The
+    clustered floor collapses: 0.756 at π_d = 0.08, 0.527 at 0.10, 0.107 at
+    0.15, ~0 at 0.20 and above. **The whole plan rests on the m = 6 pooling
+    ruling**, and §3's argument for it is sound as far as it goes (H1 states
+    are scheduled, nothing is selected, so reads are exchangeable *as leak
+    measurements*) — but the arithmetic shows how much weight it carries.
+    Supplementary, to make the bound actionable: **max ICC the plan still
+    certifies under** = 0.75 (π_d 0.08), 0.50 (0.10), 0.20 (0.15), 0.10
+    (0.20), 0.05 (0.25, under the (a) fix), **0.00 (0.30)**. At the top of
+    the π_d range the plan needs *near-zero* within-session correlation.
+  - **Two §6 ambiguities, both resolved by computing both branches rather
+    than picking one.** §6(b)'s "first-reads-only floor (m = 1, 640 sessions
+    equivalent)" read literally is **identical to (a)** under ICC 0 and is
+    therefore not a bound of any kind; the bound reported as (b) is the
+    fully-clustered one, N_max/m = 106 paired reads. And §3's FAIL is
+    implemented as written — mapped CI strictly beyond the bar, with
+    everything else INDETERMINATE per "CI straddles the bar → extend once."
+    Both readings are recorded in the artifact under
+    `ambiguities_resolved`.
+  - **One property the gate has for free, noted because it looks like a
+    loophole and is not.** The mapped CI always lies inside [−π̂_d, +π̂_d],
+    so any stop with π̂_d < bar passes automatically. That is §3's own
+    feasibility corollary doing its work — a leak cannot exceed the
+    discordance carrying it — and it is why the low-π_d cells sit at 1.000.
+  - Code verifies; the §6 adjustment and the commit are the design
+    instance's and Jason's. Re-verification is one command.
+
 - 2026-08-20 — **Adjudication 2026-08-21 (partial) applied: roster of record
   locked to the continuity four, scaffold declared the format of record, and
   the determinism certification promoted to APPARATUS RESULT D-1.**
