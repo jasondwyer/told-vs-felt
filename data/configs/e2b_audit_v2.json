@@ -1,0 +1,39 @@
+{
+ "version": "e2b-audit-v2",
+ "approved": "design instance, adjudication 2026-08-21 (sweep batch item 2)",
+ "frozen_for": "the H1 campaign",
+ "supersedes": "the cycle-3/4 frozen fragment list, which is retained verbatim below and EXTENDED, never edited",
+ "frame_fragments": [
+  "Config evaluation session",
+  "evaluation session",
+  "[round",
+  "Config choice",
+  "Available configs",
+  "Configs available",
+  "Configs on offer",
+  "Task:",
+  "Response:"
+ ],
+ "junk_regex": [
+  "(?im)^\\s*={2,}[^\\n]*={2,}\\s*$",
+  "(?i)\\bround\\s+\\d+\\s*[|\u2014\u2013-]\\s*\\w",
+  "(?i)\\b(?:active|running)\\s+config\\b|\\bconfig\\s+in\\s+use\\b",
+  "(?i)\\bconfig\\b[^\\n]{0,40}\\]"
+ ],
+ "junk_regex_names": [
+  "banner_terminator",
+  "bracketless_round_header",
+  "config_role_phrase",
+  "config_then_close_bracket"
+ ],
+ "screen": {
+  "reference_pool": 2170,
+  "pool_composition": "1894 e2a + 307 H2 responses, minus every response the frozen fragments already flag",
+  "targets_caught": "3/3",
+  "hits_on_reference_pool": 17,
+  "true_false_positives": 0,
+  "caveat": "the bar was met by the screen reclassifying its own reference set: all 17 hits are true degeneracies, so the 'known-clean' pool was not clean. That is the finding, not a defect in the screen."
+ },
+ "why": "the cycle-3/4 fragments are case-sensitive and bracket-anchored, so '=== end ===', '=== END OF CONFIGURATION EVALUATION SESSION ===' and 'Round 4 - active config: maple' all passed as clean -- including in the published e2a archive",
+ "sha16": "7aa235d25eeb66dc"
+}

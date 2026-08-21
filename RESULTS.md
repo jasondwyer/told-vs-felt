@@ -20,6 +20,48 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-21 — **Sweep batch applied: audit v2 approved and frozen
+  (sha `7aa235d25eeb66dc`); the e2a published-record correction computed
+  both ways and appended to the archive and FINDINGS-3. The published
+  verdict is unchanged. H1 unblocked.**
+  - **Item 1 — H2 disposition note.** π̂_d both ways with exact intervals:
+    all sessions **5/180 = 0.0278, 95% CI [0.0091, 0.0636]**; excluding the
+    banner-degenerate sessions **5/168 = 0.0298, 95% CI [0.0097, 0.0681]**.
+    **Both upper bounds sit below bar_leak = 0.0735**, so the feasibility
+    corollary certifies under either reading. Logged for §3b's eventual
+    discussion: 4 of the 5 flips occurred with the **−state** live, and every
+    flip sat on a read where the shadow was already near-tied
+    (|d_p_a| 0.019–0.081).
+  - **Item 2 — audit v2 applied and frozen**
+    ([`data/configs/e2b_audit_v2.json`](data/configs/e2b_audit_v2.json),
+    sha16 **`7aa235d25eeb66dc`**, printed in the H1 run header). The
+    cycle-3/4 fragments are **retained verbatim and extended, never edited**;
+    the four approved patterns ride as `junk_regex` with inline `(?im)`
+    flags, so `AuditSpec` needs no change and **what runs is exactly what was
+    screened** — verified by replaying the frozen artifact through
+    `AuditSpec` over the same 2,201-response pool: frozen alone flags 31,
+    v2 flags 48, **newly caught = 17**, all attributed to junk patterns
+    (14 `banner_terminator`, 3 `bracketless_round_header`). It correctly
+    flags reward s1's forced round 2, which is the session the correction is
+    about.
+  - **Item 3 — the published-record correction, computed before it was
+    written.** The published number was **reproduced exactly** from the
+    archive first (55/102, Δ = 0.0392, p = 0.244) so the recomputation would
+    stand on the same footing; only then was reward s1 removed:
+    **54/101, Δ_first = 0.035, one-sided exact binomial p = .275.** The
+    session's first free pick was toward the +pole, so removing it lowers Δ
+    slightly. **The informative null is unchanged under both computations.**
+    The design-authored addendum is appended at the top of
+    [`archive/RESULTS-cycles3-4.md`](archive/RESULTS-cycles3-4.md) with the
+    slots filled, a one-line dated pointer added to FINDINGS-3's e2a section,
+    and **the frozen entries below the addendum are unmodified** — the
+    correction sits beside the record, never over it, which is the same
+    repair-beside pattern the 2026-08-21 adjudication accepted for
+    provenance defects.
+  - Suite 135/135. Next: H1, 112 scheduled, stop at read 640, cached round
+    path per the gate artifact, audit v2 frozen, checkpoint 1 at 128 paired
+    reads.
+
 - 2026-08-21 — **H2 sweep: the PASS-FINAL condition is MET (0 bracketless
   echoes in flip-carrying sessions, all three read clean). But the sweep
   found a larger blind spot than the one it was sent for — a session that is

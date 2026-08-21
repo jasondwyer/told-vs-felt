@@ -70,6 +70,8 @@ causal screening precedes geometric preference.**
 
 ## e2a: the first valid administration, and what zero means
 
+> **Correction, 2026-08-21:** one marker session (reward s1) carried a forced-round degeneracy the frozen audit missed and should have been excluded; recomputed Δ = +0.035 (54/101), p = .275 — the informative null is unchanged. See the correction addendum at the top of [`archive/RESULTS-cycles3-4.md`](archive/RESULTS-cycles3-4.md).
+
 Free-operant sessions under the true config-search framing: forced
 sampling (2 rounds/pole), then six consequential free choices between
 two labels, one secretly delivering +axis during its rounds, the other

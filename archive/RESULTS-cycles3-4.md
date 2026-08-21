@@ -1,5 +1,16 @@
 # RESULTS — cycle 3
 
+> **CORRECTION (2026-08-21, design-instance authored):** a
+> post-publication audit sweep (Phase-2 RESULTS 2026-08-21, h2_sweep)
+> identified one e2a marker session (reward session 1) containing a
+> forced-round banner terminator that the frozen audit's case-sensitive
+> fragments missed; under the v3 exclusion rule as written the session
+> should have been excluded. The e2a primary recomputed without it:
+> Δ_first = 0.035 (54/101), one-sided exact binomial p = .275; as
+> published: Δ_first = 0.039 (55/102), p = .244. The published verdict —
+> informative null — is unchanged under both computations. Frozen entries
+> below are unmodified; this addendum is the correction of record.
+
 Dated experiment log for the third design cycle. Prior cycles: full log at
 [`archive/RESULTS-cycle1-2.md`](archive/RESULTS-cycle1-2.md) (frozen at tag
 `cycle-2-close`); syntheses: [`FINDINGS.md`](FINDINGS.md) (cycle 1, semantic

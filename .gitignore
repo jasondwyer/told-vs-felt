@@ -98,6 +98,10 @@
 # gitignored clone until 2026-08-21 -- an input that lives only there
 # makes the run unreproducible on any other machine.
 !/data/configs/e2a_ban_list.json
+# e2b revised degeneracy audit (v2), approved 2026-08-21 and frozen for
+# the H1 campaign. The monitor a campaign ran under is part of its
+# record, and its sha is printed in the run header.
+!/data/configs/e2b_audit_v2.json
 
 # e0 task corpus (48 tasks): the other half of the frozen 1,344-context
 # extraction stimulus.
