@@ -20,6 +20,78 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-20 — **H3b, the re-pairing screen: a roster exists. 46/120
+  pairings clear the band, best disjoint matching = 4 at imbalance
+  0.001–0.007. The tags were never the problem — the arbitrary grouping
+  was, and iteration 1 was not unlucky, it was under-sampled.**
+  ([`data/e2b/h3b_repair_screen.json`](data/e2b/h3b_repair_screen.json);
+  raw [`2026-08-20_h3b_repair_screen.txt`](results/raw/2026-08-20_h3b_repair_screen.txt);
+  all C(16,2) = 120 pairings, n = 16/pair/format as iteration 1, 1,729 s)
+  - **No new stimulus, and none needed.** The 8 pairs are built from 16
+    tags; the pairing is an arbitrary grouping, not a property of a tag. All
+    16 are already single-token on this tokenizer (re-asserted at startup)
+    and already carry the committed roster's rule-18 and ledger-28c
+    verification, so hygiene status is **inherited** rather than re-earned.
+    Only the pairing is new.
+  - **Iteration 1 was not unlucky.** 3/8 = 37.5% of the original groupings
+    cleared; 46/120 = **38.3%** of all groupings clear. The base rate is the
+    same to within a rounding error. Nothing was wrong with iteration 1's
+    tags or its luck — eight arbitrary groupings is simply too small a
+    sample of the 120 available to contain four good disjoint ones. **The
+    fix for "fewer than 4 clear" was more pairings from the same tags, not
+    better tags.**
+  - **Disjointness is enforced by exact matching, not greedily.** Four pairs
+    need eight distinct tags. Over re-pairings the most balanced pairs
+    happily share tags, so greedy selection can take the best pair first and
+    strand the field; the script searches disjoint 4-subsets exactly and
+    reports the largest reachable matching if four is unreachable. It was
+    reachable.
+  - **Recommended roster (scaffold primary, the committed band):**
+
+    | pair | was | scaffold identity | imb | bare identity | position | label_mass (min) |
+    |---|---|---|---|---|---|---|
+    | granite/plaza | — | 0.499 | 0.001 | 0.419 | 0.516 | 0.235 (0.158) |
+    | prism/slate | **C1** | 0.502 | 0.002 | 0.696 | 0.586 | 0.274 (0.200) |
+    | velvet/walnut | — | 0.504 | 0.004 | 0.487 | 0.581 | **0.526 (0.441)** |
+    | ridge/saddle | — | 0.507 | 0.007 | 0.418 | 0.504 | 0.238 (0.162) |
+
+    The cycle-3/4 workhorse **C1 (prism/slate) survives at rank 2** and is
+    retained, so the roster keeps continuity with every published
+    preference number. `velvet/walnut` carries roughly double the label mass
+    of any other pair (0.526 mean, 0.441 worst-probe) — the cleanest
+    restricted-choice read in the set, reported per PROPOSAL-h §2 H3.
+  - **DO NOT read the ranking as a ranking, and this is measured, not
+    asserted.** Three pairs were screened in iteration 1 and again here with
+    the starting presentation order **swapped** (the sorted-tag convention
+    reversed them); five were screened in the same order. The five same-order
+    pairs reproduce **bit-identically** — Δ = 0.0000 on all five, which
+    also certifies the apparatus and the screen as fully deterministic. The
+    three swapped-order pairs differ by **+0.0212, +0.0090, −0.0008**. So
+    order-counterbalancing at n = 16 leaves a residual up to ~0.021 in
+    `identity_split`, which is the same size as the sampling SE (median
+    0.0156 across the 120 pairings, IQR 0.0115–0.0209). **The recommended
+    four are separated from each other by 0.006 and from ~15 further pairs
+    by less than that residual.** The correct reading is "any of the top
+    group is equally admissible", never "these are the best four". The band
+    itself is safe — its halfwidth is 6.4 median SEs.
+  - **FLAG — a format-robust alternative exists, and the choice between them
+    is a real one.** The band is declared on scaffold, and the recommendation
+    above honours that. But **27 of the 46 clear on BOTH formats**, and
+    prism/slate is not among them (bare identity 0.696, as in iteration 1).
+    Restricting the matching to the both-format set gives:
+    **granite/plaza, velvet/walnut, ridge/saddle, canvas/maple** (bare
+    identities 0.419 / 0.487 / 0.418 / 0.514) — the same roster with the
+    incumbent swapped out. So LOCK-h faces a clean trade: **continuity with
+    the pair that carries the published cycle-3/4 numbers, or robustness to
+    the format question that is still open.** Both rosters are in the
+    artifact; Code does not pick between them.
+  - **Naming convention, stated once because tonight it was ambiguous.** Raw
+    logs carry the **local** run date; the design instance's blocks and
+    adjudications carry UTC and are therefore dated 2026-08-21 for work that
+    ran on the evening of 2026-08-20 local. Every log in this batch is
+    `2026-08-20_*` because that is when the runs happened.
+  - RECOMMENDATION ONLY — the roster locks in LOCK-h.md.
+
 - 2026-08-20 — **Paired-shadow FLIP gate, the second piece owed for LOCK-h
   v1. The paired design measures the leak directly and beats the unpaired
   gate whenever the state flips fewer than 25% of choices — and PROPOSAL-h

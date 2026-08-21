@@ -1,0 +1,50 @@
+DECLARED INVOCATION: jlens-qwen36/.venv/bin/python scripts/h3b_repair_screen.py  (defaults: --n 16 matching H3 iteration 1, --primary scaffold per the committed band, all C(16,2)=120 pairings, no new stimulus)
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 10701.71it/s]
+=== H3b: re-pairing screen (Qwen, MLX) ===
+  model loaded in 5s
+  16 tags, all single-token, ids re-asserted vs iteration 1
+  pairings: 120 (all C(16,2)); band 0.5 +/- 0.1 on identity_split, scaffold primary
+  forwards: 1920 on scaffold, plus 16 per clearing pair on the other format
+  NO NEW STIMULUS -- rule 18 / 28c status inherited from the committed roster; only the pairing is new.
+    20/120 pairings  249s
+    40/120 pairings  500s
+    60/120 pairings  753s
+    80/120 pairings  1006s
+    100/120 pairings  1258s
+    120/120 pairings  1511s
+
+  46/120 pairings clear the band on scaffold
+  confirming 46 clearing pairs on bare...
+
+  rank  pair                 was   identity     imb     pos  lblmass  top1
+     1* granite/plaza        -        0.499   0.001   0.516   0.2349  0.00
+     2* prism/slate          C1       0.502   0.002   0.586   0.2740  0.00
+     3* velvet/walnut        -        0.504   0.004   0.581   0.5261  0.25
+     4* ridge/saddle         -        0.507   0.007   0.504   0.2376  0.00
+     5  ridge/slate          -        0.515   0.015   0.473   0.2260  0.00
+     6  canvas/ridge         -        0.484   0.016   0.527   0.2213  0.00
+     7  maple/saddle         -        0.484   0.016   0.601   0.1885  0.00
+     8  amber/granite        -        0.481   0.019   0.561   0.2566  0.00
+     9  plaza/saddle         C4       0.477   0.023   0.531   0.1904  0.00
+    10  canvas/maple         -        0.523   0.023   0.562   0.1602  0.00
+    11  copper/lattice       -        0.523   0.023   0.508   0.3599  0.00
+    12  granite/quartz       -        0.475   0.025   0.513   0.1932  0.00
+    13  lattice/maple        -        0.473   0.027   0.587   0.2508  0.00
+    14  lattice/prism        -        0.470   0.030   0.584   0.2951  0.00
+    15  canvas/quartz        -        0.469   0.031   0.546   0.1845  0.00
+    16  cedar/ember          -        0.539   0.039   0.454   0.1020  0.00
+    17  amber/lattice        -        0.460   0.040   0.564   0.3468  0.00
+    18  lattice/ridge        -        0.542   0.042   0.549   0.2524  0.00
+    19  quartz/saddle        -        0.452   0.048   0.536   0.1927  0.00
+    20  amber/cedar          -        0.548   0.048   0.464   0.1448  0.00
+
+  clearing on BOTH formats: 27 (granite/plaza, velvet/walnut, ridge/saddle, ridge/slate, canvas/ridge, maple/saddle, amber/granite, plaza/saddle ...)
+
+  best disjoint matching: 4 pair(s) -- ROSTER SIZE REACHED
+    granite/plaza        identity 0.499  imbalance 0.001
+    prism/slate          identity 0.502  imbalance 0.002
+    velvet/walnut        identity 0.504  imbalance 0.004
+    ridge/saddle         identity 0.507  imbalance 0.007
+
+  RECOMMENDATION ONLY -- the roster locks in LOCK-h.md, which the design instance authors.
+wrote /Users/jasondwyer/Documents/code/jspace-lab/data/e2b/h3b_repair_screen.json  (1729s)
