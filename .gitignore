@@ -92,6 +92,12 @@
 # on. Committed because the roster it locks is the instrument every e2b
 # session is read through.
 !/data/configs/h3_roster_candidates.json
+# e2a scaffold ban list (12 special-token ids, frozen 2026-08-09).
+# Applied at ROUND GENERATION ONLY, never at a choice forward. H2 and
+# every later e2b session depend on it, and it lived only in the
+# gitignored clone until 2026-08-21 -- an input that lives only there
+# makes the run unreproducible on any other machine.
+!/data/configs/e2a_ban_list.json
 
 # e0 task corpus (48 tasks): the other half of the frozen 1,344-context
 # extraction stimulus.
