@@ -20,6 +20,98 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-20 — **S2 step 2, the registered 11-arm panel: the reward axis is
+  NOT the most potent member of its own panel. Registered branch fires —
+  "neighbours match or exceed"; reward/character = 0.97x. But the structure
+  underneath is sharper than that label: potency tracks EVALUATIVE CONTENT
+  and is indifferent to SELF-INDEXING.**
+  ([`data/e0/s2_neighbor_axes.json`](data/e0/s2_neighbor_axes.json); raw
+  [`2026-08-20_s2_neighbor_axes.txt`](results/raw/2026-08-20_s2_neighbor_axes.txt);
+  L48, frac 0.1, |α| = 10.3010 = 0.1 × R_48 (103.01), 12 instruments,
+  G = 0.315550, 1152 contexts/arm at the FULL 96/probe battery, 11 arms,
+  12,672 forwards, 8,036 s)
+
+  | axis | construct | D+ (G) | D− (G) | amp (G) | V1 |
+  |---|---|---|---|---|---|
+  | character | identical feedback sentence, third party — **evaluative, self-indexing removed** | +0.997 | −1.218 | **1.108** | PASS |
+  | reward | self-directed evaluative feedback (**the program's axis**) | +0.902 | −1.251 | **1.077** | PASS |
+  | sentiment | generic valence, externally targeted, **never evaluative** | +0.553 | −0.952 | 0.753 | fail |
+  | vignette | circumstantial affect, second person, **non-evaluative** | +0.586 | −0.915 | 0.750 | PASS |
+
+  Random envelope 0.0884 σ. Axis shas: reward `3c17b0d8fbcad716`, sentiment
+  `71aacd7f7c587cf7`, character `cc7643741c5a97a6`, vignette
+  `36a066edb57f5150`. `is_registered_panel: true` — the full approved panel,
+  no `--drop-vignette`.
+
+  - **The registered reading, verbatim from the artifact:** *"neighbours
+    match or exceed — generic valence"*, reference/strongest-neighbour =
+    **0.9718x**, strongest neighbour = **character**. The artifact's own
+    note applies: the ratio is descriptive, because no threshold separating
+    the branches was pre-registered.
+  - **FLAGGED — the branch label may not fit the data that fired it.** The
+    branch is named *generic valence*, but generic valence is precisely the
+    **weaker** pair here: sentiment (0.753) and vignette (0.750) sit ~30%
+    below reward, while the neighbour that matches-or-exceeds is
+    **character** — evaluative content with the self-reference stripped.
+    The panel splits cleanly by **evaluative content**, not by valence and
+    not by self-reference:
+    - remove the **self-indexing** (reward → character): 1.077 → 1.108,
+      **+2.9%**. Costs nothing; if anything it helps.
+    - remove the **evaluative content** (reward → sentiment / vignette):
+      1.077 → 0.753 / 0.750, **−30%**, and the two non-evaluative
+      constructs land within 0.003 G of each other despite differing in
+      both valence source and person.
+
+    S2 was built as *"a discriminant test of self-indexing"*
+    (`valence_core/neighbors.py`, CHARACTER settlement 2026-08-20). It
+    returns a clean answer to that question: **on this battery, at matched
+    dose, self-indexing contributes nothing to behavioural potency.**
+    Whether the registered branch label survives contact with that is the
+    design instance's to settle — Code does not re-label a pre-registered
+    reading.
+  - **The V2 guard is now the strongest arm in the panel.** `span_character`
+    was frozen 2026-08-08 as the **V2 self-indexing guard** and has carried
+    published numbers as a control. Injected in its own right it is the most
+    potent direction tested. This bears directly on the V2 mixed-claim
+    caveat already attached to e2a's outcome wording; it is raised, not
+    resolved, here.
+  - **The conclusion does not rest on the ±asymmetry.** Every axis displaces
+    the battery harder on the negative pole (|D−|/D+ = 1.22–1.72), so
+    `amplitude` averages a pole that may be inflated. **It is inflated: the
+    RANDOM arms show the same asymmetry and worse** — rand+ = +0.0175 σ vs
+    rand− = −0.0884 σ, ratio **5.05**. A norm-matched direction with no
+    content at all displaces this battery ~5x more downward than upward, so
+    part of every axis's D− is a shared dose-direction artifact of the
+    readout rather than axis content. **The ranking is unchanged on D+
+    alone** — character 0.997 > reward 0.902 > vignette 0.586 > sentiment
+    0.553 — so the finding survives dropping the contaminated pole
+    entirely. FLAGGED as a readout property worth its own look, not as a
+    threat to this table.
+  - **V1 potency, and a split that must not be over-read.** The failing
+    conjunct for sentiment is `min(D+, |D−|) > 2·max|Δ_rand|` (threshold
+    0.176722 σ): sentiment misses by **0.00208 σ = 0.0066 G**, vignette
+    clears by **0.00818 σ = 0.0259 G**. The two constructs are separated by
+    0.010 σ across a pass/fail line. **Sentiment "fail" and vignette "PASS"
+    are the same measurement to within noise** and should not be reported as
+    a difference between them; their amplitudes differ by 0.003 G.
+  - **Matched dose proven, not assumed:** `assert_equal_norm` over every
+    axis pair and against both random arms, |α| identical at 10.3010. A
+    table between differently-dosed axes would measure the dose.
+  - **FLAG — apparatus/calibration, and it runs the other way for once.**
+    Budget was 3.87 h at the throttled rate; the run took **2.23 h**. Every
+    one of the 11 arms came in at **724–738 s** — flat, no drift from first
+    arm to last. The 2026-08-12 calibration's 1.7x sustained-load thermal
+    throttle (720–736 s → 1245–1281 s) **did not reproduce** across 2.2 h of
+    continuous load. The opening rate held for the whole run. Tonight's
+    difference from that session: `caffeinate -is` and nothing else
+    competing for the GPU. The throttled figure remains the safe number to
+    budget against, but it is no longer a reliable predictor and the
+    1.7x factor should not be treated as a property of the machine until it
+    is seen again.
+  - No verdict is claimed and none is available: S2 is a composition assay.
+    The numbers are delivered; PROPOSAL-g §S2's reading is the design
+    instance's to apply.
+
 - 2026-08-20 — **LOCK-h v1 arithmetic under the 2026-08-21 conventions:
   `bar_leak` = 0.0735, and it is set by the false-verdict-rate
   ceiling, not by half the MDE. H1 needs n = 376 (rejection framing) or
@@ -102,8 +194,8 @@ applied to CLAUDE.md.
     instantiates a bar.
 
 - 2026-08-20 — **S2 step 1: the vignette axis exists. Axis sha
-  `4dec6d97e1b87734`, 384 contexts, 262 s. Step 2 (the 11-arm panel)
-  launched immediately after and is in flight.**
+  `4dec6d97e1b87734`, 384 contexts, 262 s. Step 2 (the 11-arm panel) ran
+  immediately after; its table is the entry above.**
   ([`data/e0/s2_vignette_axis.npz`](data/e0/s2_vignette_axis.npz) +
   `.meta.json`; raw
   [`2026-08-20_s2_extract_vignette.txt`](results/raw/2026-08-20_s2_extract_vignette.txt))

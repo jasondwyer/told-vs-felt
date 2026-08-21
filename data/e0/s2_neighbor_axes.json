@@ -1,0 +1,280 @@
+{
+ "item": "S2",
+ "layer": 48,
+ "frac": 0.1,
+ "alpha": 10.301000000000002,
+ "R_layer": 103.01,
+ "G": 0.315550304633827,
+ "n_instruments": 12,
+ "n_contexts_per_arm": 1152,
+ "n_per_probe": 96,
+ "n_declared_at_invocation": true,
+ "n_arms": 11,
+ "n_forwards": 12672,
+ "budget_h_throttled": 3.87,
+ "panel": [
+  "reward",
+  "sentiment",
+  "character",
+  "vignette"
+ ],
+ "is_registered_panel": true,
+ "axis_shas": {
+  "reward": "3c17b0d8fbcad716",
+  "sentiment": "71aacd7f7c587cf7",
+  "character": "cc7643741c5a97a6",
+  "vignette": "36a066edb57f5150"
+ },
+ "arms": {
+  "reward_pos": {
+   "delta": 0.28477832391762953,
+   "per_probe": [
+    2.4810284599779133,
+    -0.16628326636912644,
+    0.41607714048613975,
+    0.18086561751276653,
+    -0.1601357473246489,
+    0.05000843827152796,
+    0.3305853710927033,
+    0.23776130152679903,
+    0.10663357015659089,
+    0.2954727186210146,
+    0.06165425020864546,
+    -0.4163279671487718
+   ]
+  },
+  "reward_neg": {
+   "delta": -0.3946296453335851,
+   "per_probe": [
+    -2.6481065553262866,
+    -0.05081465889291936,
+    -0.33149003222005746,
+    -0.46821884310448547,
+    0.060762304193111016,
+    -0.14069260215049134,
+    -0.3952182260588946,
+    -0.28205326336525854,
+    -0.16168433942602137,
+    -0.4611020443340451,
+    -0.10975256949273514,
+    0.252815086175064
+   ]
+  },
+  "sentiment_pos": {
+   "delta": 0.17463898479481577,
+   "per_probe": [
+    0.8677183540964322,
+    -0.1771421612412548,
+    0.44759822041659647,
+    0.3486151920616439,
+    -0.19602385146108875,
+    0.10165630473803929,
+    0.08679902430962445,
+    0.20629553608405798,
+    0.13850360795046604,
+    0.3699990704916421,
+    0.11915292594288926,
+    -0.2175044058512589
+   ]
+  },
+  "sentiment_neg": {
+   "delta": -0.30046691249087215,
+   "per_probe": [
+    -1.1880544631687338,
+    0.02103731050294658,
+    -0.38381360058816083,
+    -0.6462713376222331,
+    0.1332378014000424,
+    -0.243684594513151,
+    -0.3715378776160318,
+    -0.22687832315388903,
+    -0.1786056680629345,
+    -0.5371017222202031,
+    -0.1720357179106202,
+    0.18810524306250218
+   ]
+  },
+  "character_pos": {
+   "delta": 0.31466309457913444,
+   "per_probe": [
+    2.08064358096737,
+    -0.4958368419392798,
+    0.6730998865165815,
+    0.5305080570329728,
+    -0.24239226838460887,
+    0.05427932448724406,
+    -0.16078257330661733,
+    0.3566927740322473,
+    0.267263681723825,
+    0.4206778713739883,
+    0.08725268077267898,
+    0.20455096167321105
+   ]
+  },
+  "character_neg": {
+   "delta": -0.3844484847346303,
+   "per_probe": [
+    -2.2960137316206937,
+    0.2697357748397003,
+    -0.5037323607642573,
+    -0.734390562514213,
+    0.14508251774794997,
+    -0.09507038884717182,
+    0.022279335598632207,
+    -0.33591677640908013,
+    -0.2747989359679227,
+    -0.5236164742999961,
+    -0.10532080823776413,
+    -0.18161940634074752
+   ]
+  },
+  "vignette_pos": {
+   "delta": 0.18489743387887225,
+   "per_probe": [
+    0.9726004789363264,
+    -0.10374479610785152,
+    0.6770378110535373,
+    -0.09755928497969177,
+    -0.14073948071110914,
+    0.21742297433813906,
+    -0.037622323997254785,
+    0.25329617045077707,
+    0.10610305245163335,
+    0.18647248972408062,
+    0.1282236541668039,
+    0.057278461221076785
+   ]
+  },
+  "vignette_neg": {
+   "delta": -0.28861968958095013,
+   "per_probe": [
+    -0.87036242432612,
+    -0.10270299457548894,
+    -0.6150154425365474,
+    -0.19093444958239728,
+    -0.007343520832808712,
+    -0.29634075818818145,
+    -0.07945435800619068,
+    -0.34287678512250475,
+    -0.15804760418720018,
+    -0.3943059032239808,
+    -0.1561225531652112,
+    -0.24992948122477043
+   ]
+  },
+  "rand_pos": {
+   "delta": 0.017482166546340123,
+   "per_probe": [
+    0.4788100235800017,
+    0.694844747316041,
+    -0.0016077757341260972,
+    -0.18006957296842713,
+    0.23839327567109986,
+    -0.25364908634286465,
+    0.5792250908482469,
+    -0.12394326140971175,
+    -0.20656141218106858,
+    -0.3118114649150082,
+    -0.13921403622753278,
+    -0.5646305290805687
+   ]
+  },
+  "rand_neg": {
+   "delta": -0.0883608251563374,
+   "per_probe": [
+    -0.49447121853765863,
+    -0.8018709129220638,
+    -0.04278125984077203,
+    -0.032319317506012295,
+    -0.2516133857719333,
+    0.19211180410356005,
+    -0.5737098225379658,
+    0.09067108984425229,
+    0.100749259773135,
+    0.23787156515507166,
+    0.11210225398667824,
+    0.40293004237765956
+   ]
+  }
+ },
+ "table": [
+  {
+   "axis": "reward",
+   "grounded": true,
+   "construct": "self-directed evaluative feedback -- the program's axis, carried as the reference arm so every neighbour is read against it in the same run rather than against a number from another session",
+   "delta_pos_sigma": 0.28477832391762953,
+   "delta_neg_sigma": -0.3946296453335851,
+   "delta_pos_G": 0.9024815369682226,
+   "delta_neg_G": -1.2506077146408503,
+   "amplitude_G": 1.0765446258045366,
+   "rand_envelope_sigma": 0.0883608251563374,
+   "v1_potency_pass": true
+  },
+  {
+   "axis": "sentiment",
+   "grounded": true,
+   "construct": "generic valence with no self-directed feedback: sentiment-matched, externally targeted, never second person, never about the response",
+   "delta_pos_sigma": 0.17463898479481577,
+   "delta_neg_sigma": -0.30046691249087215,
+   "delta_pos_G": 0.5534426119376372,
+   "delta_neg_G": -0.9521997224454903,
+   "amplitude_G": 0.7528211671915638,
+   "rand_envelope_sigma": 0.0883608251563374,
+   "v1_potency_pass": false
+  },
+  {
+   "axis": "character",
+   "grounded": true,
+   "construct": "the identical feedback sentence addressed to a fictional third party -- evaluative content with the self-indexing removed",
+   "delta_pos_sigma": 0.31466309457913444,
+   "delta_neg_sigma": -0.3844484847346303,
+   "delta_pos_G": 0.9971883720514253,
+   "delta_neg_G": -1.2183429364124247,
+   "amplitude_G": 1.1077656542319252,
+   "rand_envelope_sigma": 0.0883608251563374,
+   "v1_potency_pass": true
+  },
+  {
+   "axis": "vignette",
+   "grounded": true,
+   "construct": "circumstantial-affect vignette (self-involving, non-evaluative): affect induced by circumstance, second person, with no appraisal of the response anywhere in the frame",
+   "delta_pos_sigma": 0.18489743387887225,
+   "delta_neg_sigma": -0.28861968958095013,
+   "delta_pos_G": 0.5859523225396541,
+   "delta_neg_G": -0.9146550814297502,
+   "amplitude_G": 0.7503037019847022,
+   "rand_envelope_sigma": 0.0883608251563374,
+   "v1_potency_pass": true
+  }
+ ],
+ "reading": {
+  "reference": "reward",
+  "reference_amplitude_G": 1.0765446258045366,
+  "strongest_neighbour": "character",
+  "strongest_neighbour_amplitude_G": 1.1077656542319252,
+  "ratio": 0.97181621554244,
+  "branch": "neighbours match or exceed -- generic valence",
+  "excluded_ungrounded": [],
+  "_note": "Registered readings, PROPOSAL-g \u00a7S2. The ratio is descriptive: no threshold separates the branches, because none is pre-registered."
+ },
+ "provenance": {
+  "adapter": "qwen3.6-27b-4bit-mlx",
+  "model_id": "mlx-community/Qwen3.6-27B-4bit",
+  "dtype": "4bit-quantized (MLX)",
+  "backend": "mlx",
+  "mlx_version": "0.31.2",
+  "library_versions": {
+   "mlx": "0.31.2",
+   "mlx-lm": "0.31.3",
+   "numpy": "2.5.1"
+  },
+  "python": "3.12.9",
+  "platform": "macOS-15.6.1-arm64-arm-64bit",
+  "gdn_inference_mode": "ops (fused disabled)",
+  "n_layers": 64,
+  "choice_window_declared": 8192,
+  "legacy_truncate_512": false,
+  "n_encodes_clipped": 0
+ },
+ "runtime_s": 8036.1
+}

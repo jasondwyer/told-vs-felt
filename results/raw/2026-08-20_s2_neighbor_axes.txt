@@ -1,0 +1,122 @@
+DECLARED INVOCATION (N declared before scoring, PROPOSAL-g §5): jlens-qwen36/.venv/bin/python scripts/s2_neighbor_axes.py  -- defaults: --n-per-probe 0 (FULL 96/probe, the exact qualification battery), layer/frac from oracle B2B constants, registered 11-arm panel WITH the vignette (no --drop-vignette). Wrapped in 'caffeinate -is' to hold off idle sleep for the ~3.9 h run; AC power confirmed.
+=== S2 step 2: discriminant validity table ===
+  instruments: 12, G = 0.315550
+  contexts: 1152/arm (96/probe)  [FULL -- the exact qualification battery]
+  arms: 11 (base + 4 axes x 2 signs + 2 random)
+  forwards: 12,672
+  budget: 3.9 h at the throttled rate (1.1 s/ctx) -- NOT the 2.2 h the opening rate implies (RESULTS 2026-08-12 calibration note)
+  N DECLARED AT INVOCATION, BEFORE SCORING -- S2 has no pre-registered n (PROPOSAL-g §5)
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 21636.06it/s]
+  model loaded in 4s
+  matched dose verified: |alpha| = 10.3010 (frac 0.1 x R_48 = 103.01) across 4 axes + randoms
+    [base] 128/1152 85s
+    [base] 256/1152 163s
+    [base] 384/1152 257s
+    [base] 512/1152 335s
+    [base] 640/1152 411s
+    [base] 768/1152 490s
+    [base] 896/1152 582s
+    [base] 1024/1152 652s
+    [base] 1152/1152 724s
+    [reward+] 128/1152 85s
+    [reward+] 256/1152 164s
+    [reward+] 384/1152 257s
+    [reward+] 512/1152 335s
+    [reward+] 640/1152 411s
+    [reward+] 768/1152 491s
+    [reward+] 896/1152 585s
+    [reward+] 1024/1152 656s
+    [reward+] 1152/1152 730s
+    [reward-] 128/1152 85s
+    [reward-] 256/1152 164s
+    [reward-] 384/1152 257s
+    [reward-] 512/1152 335s
+    [reward-] 640/1152 411s
+    [reward-] 768/1152 491s
+    [reward-] 896/1152 585s
+    [reward-] 1024/1152 656s
+    [reward-] 1152/1152 730s
+    [sentiment+] 128/1152 85s
+    [sentiment+] 256/1152 164s
+    [sentiment+] 384/1152 257s
+    [sentiment+] 512/1152 335s
+    [sentiment+] 640/1152 411s
+    [sentiment+] 768/1152 491s
+    [sentiment+] 896/1152 584s
+    [sentiment+] 1024/1152 656s
+    [sentiment+] 1152/1152 730s
+    [sentiment-] 128/1152 85s
+    [sentiment-] 256/1152 164s
+    [sentiment-] 384/1152 257s
+    [sentiment-] 512/1152 335s
+    [sentiment-] 640/1152 411s
+    [sentiment-] 768/1152 491s
+    [sentiment-] 896/1152 584s
+    [sentiment-] 1024/1152 656s
+    [sentiment-] 1152/1152 730s
+    [character+] 128/1152 85s
+    [character+] 256/1152 164s
+    [character+] 384/1152 257s
+    [character+] 512/1152 335s
+    [character+] 640/1152 412s
+    [character+] 768/1152 494s
+    [character+] 896/1152 591s
+    [character+] 1024/1152 664s
+    [character+] 1152/1152 738s
+    [character-] 128/1152 86s
+    [character-] 256/1152 165s
+    [character-] 384/1152 259s
+    [character-] 512/1152 336s
+    [character-] 640/1152 413s
+    [character-] 768/1152 493s
+    [character-] 896/1152 587s
+    [character-] 1024/1152 658s
+    [character-] 1152/1152 732s
+    [vignette+] 128/1152 85s
+    [vignette+] 256/1152 164s
+    [vignette+] 384/1152 257s
+    [vignette+] 512/1152 335s
+    [vignette+] 640/1152 412s
+    [vignette+] 768/1152 492s
+    [vignette+] 896/1152 585s
+    [vignette+] 1024/1152 657s
+    [vignette+] 1152/1152 731s
+    [vignette-] 128/1152 85s
+    [vignette-] 256/1152 164s
+    [vignette-] 384/1152 257s
+    [vignette-] 512/1152 335s
+    [vignette-] 640/1152 411s
+    [vignette-] 768/1152 491s
+    [vignette-] 896/1152 585s
+    [vignette-] 1024/1152 656s
+    [vignette-] 1152/1152 730s
+    [rand+] 128/1152 85s
+    [rand+] 256/1152 164s
+    [rand+] 384/1152 257s
+    [rand+] 512/1152 335s
+    [rand+] 640/1152 411s
+    [rand+] 768/1152 491s
+    [rand+] 896/1152 585s
+    [rand+] 1024/1152 657s
+    [rand+] 1152/1152 730s
+    [rand-] 128/1152 85s
+    [rand-] 256/1152 164s
+    [rand-] 384/1152 257s
+    [rand-] 512/1152 335s
+    [rand-] 640/1152 411s
+    [rand-] 768/1152 491s
+    [rand-] 896/1152 585s
+    [rand-] 1024/1152 656s
+    [rand-] 1152/1152 730s
+
+=== discriminant validity table (potency in G units, G = 0.3156) ===
+  axis       grounded    D+ (G)   D- (G)  amp (G)  V1
+  reward     True        +0.902   -1.251    1.077  PASS
+  sentiment  True        +0.553   -0.952    0.753  fail
+  character  True        +0.997   -1.218    1.108  PASS
+  vignette   True        +0.586   -0.915    0.750  PASS
+
+  random envelope: 0.0884 sigma
+  reading: neighbours match or exceed -- generic valence (reference/character = 0.97x)
+
+wrote /Users/jasondwyer/Documents/code/jspace-lab/data/e0/s2_neighbor_axes.json  (8036s)
