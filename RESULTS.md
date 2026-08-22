@@ -20,6 +20,73 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-22 — **Pod-blocked preparatory pass. The volume is intact and the
+  respawn integrity gate is now PROVEN to fire, not just present: exercised
+  against all seven failure modes on a synthetic fixture. Pod creation
+  remains a console action — `create-pod` still exposes no network-volume
+  parameter, re-confirmed against the live MCP schema rather than inherited
+  from the handoff.** (No model forwards; no Phase-2 data. Raw
+  [`2026-08-22_podprep.txt`](results/raw/2026-08-22_podprep.txt).)
+  - **RunPod state, read this session.** The MCP *was* authorised here,
+    against the handoff's expectation that a non-interactive thread cannot
+    reach it — so the state is measured, not assumed. **0 pods** (none
+    running, none stopped). Network volume **`o73qvy742n`** intact:
+    `holy_beige_viper_volume`, **500 GB**, **US-CA-2**, HIGH_PERFORMANCE.
+    **A100-SXM4-80GB**: secure cloud available, stock **Medium**,
+    **$1.59/hr**, CUDA 12.4 / 12.8 / 13.0 all AVAILABLE — 12.8 is the one
+    the image of record (`runpod/pytorch:1.0.2-cu1281-torch280-ubuntu2404`)
+    wants. No templates exist, so there is no saved-template route either.
+  - **The blocker is capability, not authorisation.** `create-pod`'s schema
+    carries only `volumeInGb` / `volumeMountPath`, which provision *new*
+    ephemeral storage. A pod created through it would mount an empty
+    `/workspace`, fail the respawn integrity gate, and put a 386 GB
+    re-download in front of A-phase. HANDOFF-2026-08-20 §2's finding is
+    therefore re-confirmed on today's schema and stands unchanged: **the pod
+    is created in the console**, region-locked to US-CA-2, with
+    `o73qvy742n` attached at `/workspace` and TCP 22 exposed.
+  - **Respawn step (i) is now verified executable.** CLAUDE.md §Environment
+    calls `box_respawn_check.py` "executable, not aspirational"; that had
+    never been demonstrated, and a gate that silently passes is worse than
+    no gate on the box where it matters. Run against a synthetic two-stage
+    fixture (`MODELS` / `MANIFEST` are env-overridable, so no box is
+    needed):
+
+    | case | exit | reported as |
+    |---|---|---|
+    | clean volume | **0** | INTEGRITY PASS, 4 files / 2 checkpoints |
+    | one byte flipped, size unchanged | **1** | `MISMATCH` |
+    | file deleted | **1** | `MISSING` |
+    | unlisted weights file added | **1** | `EXTRA (not in manifest)` |
+    | size changed | **1** | `size 903 != 900` |
+    | manifest absent | **2** | `ABORT: manifest not found` |
+    | whole checkpoint directory gone | **1** | `directory missing` |
+
+    Both asymmetries fire, the byte-level check is not shadowed by the size
+    check, and no failure mode exits 0. The committed manifest itself is
+    complete: four stages, **94 leaf entries**, per-file sha256 + bytes.
+  - **A carried handoff item is DISCHARGED.** HANDOFF-2026-08-20 §2 records
+    the design instance's PROPOSAL-g status-line amendment as applied to the
+    laptop working tree and never committed, with the repo still reading
+    "DRAFT v1.0". It was committed at **`499f6d5`**; PROPOSAL-g now reads
+    "**Status: LOCKED** — pre-registration of record at commit `72b09a9`",
+    and no occurrence of "DRAFT" survives in the document. That line of §2
+    is stale and should not be acted on.
+  - **A-phase readiness, so the next box session knows what it is starting
+    with.** Built and suite-covered: **A1** (`box_a1_tagscreen.py --stage`
+    ×4 → `a1_roster.py`, with `data/configs/a1_roster_candidates.json`
+    committed) and **A5** (`box_respawn_check.py`, verified above, +
+    `box_determinism.py`). Not yet built: **A2** (i) detection-elicitation
+    base-rate runner and (ii) neutral operant-session runner, **A3**
+    per-stage e0 extraction + guard profile, **A4** hijack / dose-ladder /
+    currency. Their libraries exist — `valence_core.detection`,
+    `valence_core.session`, `valence_core.extract`, `valence_core.gate` —
+    and so do their corpora (`data/corpus/e0_tasks.jsonl`,
+    `data/configs/e0_frames.json`, `e0_probes.json`); what is missing is the
+    box runners. CLAUDE.md §Phase 0 step 5 licenses building them now, and
+    none of that work needs a pod. **Flagged for a go, not started.**
+  - All ten `box_*` / `a1_*` scripts compile clean on this laptop; only
+    `box_respawn_check.py` runs without torch, and it is the one that had to.
+
 - 2026-08-22 — **CONSOLIDATION ACCEPTANCE EVENT: GREEN. The
   `_new_qwen_adapter` debt is paid into one
   `valence_core.adapters.qwen_or_explain()` across eight call sites, and the

@@ -1,0 +1,74 @@
+DECLARED INVOCATION: pod-blocked preparatory pass, laptop site. No model forwards, no Phase-2 data.
+
+=== 1. RunPod state (MCP was authorised this session) ===================
+  list-pods                -> 0 items
+  list-templates           -> 0 items
+  list-network-volumes     -> o73qvy742n  holy_beige_viper_volume  500 GB  US-CA-2  HIGH_PERFORMANCE
+  get-capacity A100-SXM4-80GB (secure) -> stock Medium, $1.59/hr,
+                              CUDA 12.4 AVAILABLE / 12.8 AVAILABLE / 13.0 AVAILABLE
+  create-pod schema        -> gpuTypeIds, imageName, templateId, cloudType, dataCenterIds,
+                              containerDiskInGb, volumeInGb, volumeMountPath, ports, env,
+                              sshPublicKey, name, gpuCount, computeType, containerRegistryAuthId
+                              NO network-volume parameter. HANDOFF-2026-08-20 §2 re-confirmed
+                              against today's schema, not inherited.
+
+=== 2. respawn step (i): box_respawn_check.py EXERCISED =================
+  synthetic fixture (MODELS/MANIFEST are env-overridable, so no box needed);
+  two stages, four files. Every failure mode fires; none exits 0.
+  exit=0  clean volume
+          INTEGRITY PASS — 4 files match the manifest across 2 checkpoints.
+  exit=1  one byte flipped (size unchanged)
+          INTEGRITY FAIL — 1 problem(s):
+          base/model-00001.safetensors: MISMATCH 9b8adb29c2250db3… != 84fac367a7f08923…
+  exit=1  file deleted
+          INTEGRITY FAIL — 1 problem(s):
+          sft/config.json: MISSING
+  exit=1  unlisted weights file added
+          INTEGRITY FAIL — 1 problem(s):
+          base/sneaky.safetensors: EXTRA (not in manifest)
+  exit=1  size changed
+          INTEGRITY FAIL — 1 problem(s):
+          base/model-00001.safetensors: size 903 != 900
+  exit=2  manifest absent
+          ABORT: manifest not found at /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/0ebd089b-a547-4f77-be8e-8a1964fe3755/scratchpad/respawn_fixture2/nope.json
+  exit=1  whole checkpoint directory gone
+          INTEGRITY FAIL — 1 problem(s):
+          sft: directory missing at /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/0ebd089b-a547-4f77-be8e-8a1964fe3755/scratchpad/respawn_fixture2/models/sft
+
+=== 3. committed manifest shape ========================================
+  stages: ['base', 'sft', 'dpo', 'instruct']
+  leaf entries: 94
+    base      allenai/Olmo-3-1125-32B            rev c2b61dae89a1  64.5 GB  7 files
+    sft       allenai/Olmo-3.1-32B-Instruct-SFT  rev 152782ecc41a  64.5 GB  7 files
+    dpo       allenai/Olmo-3.1-32B-Instruct-DPO  rev fc84a4f69991  64.5 GB  7 files
+    instruct  allenai/Olmo-3.1-32B-Instruct      rev ac0587e4a774  64.5 GB  8 files
+
+=== 4. carried handoff item, DISCHARGED ================================
+  HANDOFF-2026-08-20 §2: 'status-line amendment ... has never been committed'
+  committed at 499f6d5 PROPOSAL-g status-line amendment (design instance)
+  PROPOSAL-g line 3 now: **Status:** LOCKED — pre-registration of record at commit `72b09a9`,
+  occurrences of DRAFT in PROPOSAL-g: 0
+0
+
+=== 5. box / A-phase script compile check ==============================
+  OK  scripts/box_a1_tagscreen.py
+  OK  scripts/box_acquire_olmo.py
+  OK  scripts/box_cast_equality_assert.py
+  OK  scripts/box_determinism.py
+  OK  scripts/box_hash_checkpoints.py
+  OK  scripts/box_respawn_check.py
+  OK  scripts/box_rl_survey.py
+  OK  scripts/box_scaffold_characterization.py
+  OK  scripts/box_smoke_olmo.py
+  OK  scripts/a1_roster.py
+
+=== 6. A-phase readiness ===============================================
+  BUILT : A1  box_a1_tagscreen.py --stage <s> x4 -> a1_roster.py
+              (data/configs/a1_roster_candidates.json committed)
+          A5  box_respawn_check.py (verified above) + box_determinism.py
+  TO BUILD: A2 (i) detection-elicitation base rates, (ii) neutral operant sessions
+            A3 per-stage e0 extraction + guard profile
+            A4 hijack / dose ladder / currency G_c
+  Libraries exist (valence_core.detection / .session / .extract / .gate);
+  corpora exist (data/corpus/e0_tasks.jsonl, data/configs/e0_frames.json,
+  e0_probes.json). Missing piece is the box runners. Needs no pod.
