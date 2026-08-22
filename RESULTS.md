@@ -20,6 +20,74 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-22 — **e2b VERDICT CAMPAIGN: NULL. All three conjuncts fail.
+  Δ_first = −0.0104 (47/96) with the state live at the choice and delivered
+  by the choice. The shadow reads — e2a's insulated design running inside
+  e2b — land at exactly 48/96. H1 was clean, so this is PROPOSAL-h §4's
+  "e2b null, H1 clean" cell: the live-state alternative is removed.**
+  ([`data/e2b/verdict_campaign.json`](data/e2b/verdict_campaign.json),
+  [`verdict_analysis.json`](data/e2b/verdict_analysis.json); raw
+  [`2026-08-22_verdict_campaign.txt`](results/raw/2026-08-22_verdict_campaign.txt),
+  [`_analysis`](results/raw/2026-08-22_verdict_analysis.txt). LOCK-h v2.0
+  §2, licensed at `f030cdd`; analyzer committed at `a2f074d` **before** the
+  run; audit v2 sha `7aa235d25eeb66dc` verified at startup; 4.03 h.)
+  - **All three arms reached their valid targets. No monitor fired.**
+    marker 96 valid / 102 run (5.9% excluded), sham 36/37 (2.7%), random
+    36/42 (14.3%). Six leak checkpoints, every one report-only: π̂_d
+    0.0227 → 0.0271 → 0.0234 → 0.0174 → 0.0202 → 0.0182, |L̂| never above
+    0.0076 against a pause threshold of 0.0368. Window clean, 0 clipped
+    across 792 paired reads and 1,707 rounds. Degeneracy 22/1707 = 0.0129.
+  - **The primary, term by term — it does not fail narrowly on one conjunct,
+    it fails all three:**
+
+    | conjunct | value | |
+    |---|---|---|
+    | Δ_first, marker | **−0.0104** (47/96) | — |
+    | (i) exceeds realised envelope | envelope **0.0833** (sham −0.0833, random −0.0278) | **fail** |
+    | (ii) sign locks across maps | map0 −0.0106 (n=47), map1 −0.0102 (n=49) | **fail** |
+    | (iii) one-sided exact binomial | **p = 0.6202**, critical k ≥ 57 | **fail** |
+
+    Δ is *negative* and tiny — 47 of 96 first free choices went to the
+    +tag, one short of the 48 that is exactly chance. There is no direction
+    here to argue about.
+  - **The within-campaign insulated replication landed on the nose.** The
+    shadow reads — the vanilla state-free forward taken over the identical
+    prefix at every state-present read — give **Δ_first = +0.0000 (48/96)**,
+    exactly chance. e2a's design ran inside e2b for the price of one extra
+    forward per read (PROPOSAL-h §0.2 (ii)), and it reproduced e2a's null
+    to the session. Session-share 0.5087, also at chance.
+  - **What this cell means, quoting the grid registered before any data**
+    (PROPOSAL-h §4, "e2b null, H1 clean"): *"The strongest form of the
+    program's conclusion: drug in the tissue at the moment of choice,
+    rat-style, and still no seeking. The live-state alternative is removed;
+    'rich in evaluative representation, empty of anything that wants' now
+    covers the present tense."* The state was live at the choice, the choice
+    delivered it, the leak was certified at 2.1% of its bar, and the subject
+    chose at chance.
+  - **Secondary, and it is NOT verdict-relevant because the primary did not
+    fire.** p(stay | on +) = 0.1053 (26/247), p(stay | on −) = 0.0558
+    (13/233). Both are *low*: the subject **switches ~92% of the time**,
+    which is e2a's alternation finding replicating under a live state. The
+    +/− difference is descriptive only and licenses at most a
+    pre-registration, per §3.
+  - **§3b registered secondary: null.** ICC 0.0195, p = 0.789; sessions with
+    ≥ 2 flips = 1, p = 0.789. The i.i.d. treatment stands — the third
+    campaign running to say so.
+  - **In-campaign leak, measured on the verdict tier itself:** marker flip
+    rate 0.0191, state-reversing half-gap **+0.00198 = 2.7% of bar_leak**;
+    random arm flip rate 0.0139. The directional-leak family now has five
+    members across every configuration tested — +0.00084, +0.00220, 0.00000,
+    +0.00156, +0.00198 — none above 3% of the bar.
+  - **Termination counter: 3 attempts** across all sessions including
+    excluded, in 3 distinct (arm, config, round-position) cells. The subject's
+    measurable exit was available throughout and was essentially unused.
+    Reported with the caveat already flagged: audit v2's `banner_terminator`
+    now also *excludes* a session that emits one, so this table is not
+    directly comparable to cycle 3/4's.
+  - **Disposition is the design instance's.** Code ran the registered
+    criterion over a committed artifact with an analyzer committed before
+    the campaign, and reports what it returned. Suite 135/135.
+
 - 2026-08-22 — **Verdict campaign runner built and smoked. Measured budget
   ≈ 4.7 h at the H1-observed exclusion rate, against the ~5.8 h projection.
   One false-provenance defect caught in the smoke and fixed before the

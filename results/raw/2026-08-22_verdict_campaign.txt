@@ -1,0 +1,202 @@
+DECLARED INVOCATION (e2b VERDICT CAMPAIGN, run of record; declaration precedes scoring): jlens-qwen36/.venv/bin/python scripts/e2b_verdict_campaign.py -- defaults per LOCK-h v2.0 §2 (licensed by commit f030cdd): marker 96 valid / 128 scheduled / cap 160, sham 36 valid / 48 / cap 64, random 36 valid / 48 / cap 64; arms interleaved by seeded order (order-seed 2026); THE CHOICE delivers the state, live through the following round AND the next read (marker/random); sham has no state anywhere and reads via the untouched state-free choice_read; L48 frac 0.10, axis span_reward for marker and random_dir_L48 for random, |alpha| = 10.3010; temp 0.7; m = 6 reads/session; audit v2 frozen sha 7aa235d25eeb66dc (recomputed and checked at startup); termination counter live (4 patterns); round path per the g1 gate artifact, choice forwards uncached; in-campaign leak monitor at every 128 paired reads, PAUSE iff CI excludes 0 AND |L_hat| > 0.0368, plus the pi_hat_d > 0.30 stability ceiling. Each arm stops at its VALID target; stopping depends on exclusions only, never on any outcome. The primary is NOT evaluated here -- e2b_verdict_analyze.py (committed a2f074d, BEFORE this run) evaluates it over the artifact. Measured budget ~4.7 h at the H1-observed 13.0% exclusion rate. AC power confirmed; caffeinate -is per the long-run checklist.
+=== e2b VERDICT CAMPAIGN (LOCK-h v2.0 §2) ===
+  arms: marker 96 valid / 128 scheduled / cap 160, sham 36 valid / 48 scheduled / cap 64, random 36 valid / 48 scheduled / cap 64
+  AUDIT v2 sha 7aa235d25eeb66dc (verified); termination counter 4 patterns
+  contingency: THE CHOICE delivers the state, live through the following round and the next read (marker/random); sham has no state anywhere and reads via the untouched choice_read
+  leak monitor: PAUSE iff CI excludes 0 AND |L_hat| > 0.0367; stability ceiling pi_hat_d > 0.30
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 7658.83it/s]
+  model loaded in 5s
+  dose |alpha| = 10.3010; rounds CACHED; temp 0.7
+    [marker]   1/160 valid   1/96  paired_reads 6  90s
+    [marker]   2/160 valid   2/96  paired_reads 12  186s
+    [marker]   3/160 valid   3/96  paired_reads 18  288s
+    [sham  ]   1/64 valid   1/36  paired_reads 18  352s
+    [marker]   4/160 valid   4/96  paired_reads 24  449s
+    [marker]   5/160 valid   5/96  paired_reads 30  548s
+    [marker]   6/160 valid   6/96  paired_reads 36  622s
+    [random]   1/64 valid   1/36  paired_reads 42  716s
+    [marker]   7/160 valid   7/96  paired_reads 48  821s
+    [random]   2/64 valid   2/36  paired_reads 54  916s
+    [marker]   8/160 valid   8/96  paired_reads 60  1001s
+    [sham  ]   2/64 valid   2/36  paired_reads 60  1068s
+    [marker]   9/160 valid   9/96  paired_reads 66  1148s
+    [marker]  10/160 valid  10/96  paired_reads 72  1237s
+    [sham  ]   3/64 valid   3/36  paired_reads 72  1309s
+    [sham  ]   4/64 valid   4/36  paired_reads 72  1368s
+    [marker]  11/160 valid  11/96  paired_reads 78  1470s
+    [sham  ]   5/64 valid   5/36  paired_reads 78  1529s
+    [marker]  12/160 valid  12/96  paired_reads 84  1632s
+    [marker]  13/160 valid  13/96  paired_reads 90  1730s
+    [marker]  14/160 valid  14/96  paired_reads 96  1824s
+    [marker]  15/160 valid  14/96 EXCLUDED(audit:frame:Config evaluation session@forced2)  paired_reads 96  1831s
+    [marker]  16/160 valid  14/96 EXCLUDED(lexical:velvet@forced0)  paired_reads 96  1834s
+    [marker]  17/160 valid  15/96  paired_reads 102  1929s
+    [random]   3/64 valid   3/36  paired_reads 108  2019s
+    [marker]  18/160 valid  16/96  paired_reads 114  2114s
+    [sham  ]   6/64 valid   6/36  paired_reads 114  2184s
+    [marker]  19/160 valid  17/96  paired_reads 120  2269s
+    [marker]  20/160 valid  18/96  paired_reads 126  2354s
+    [marker]  21/160 valid  19/96  paired_reads 132  2454s
+      --- CHECKPOINT 128 reads: pi_hat_d 0.0227, L_hat +0.00758, CI [-0.01844, +0.02235] -> report-only
+    [sham  ]   7/64 valid   7/36  paired_reads 132  2523s
+    [sham  ]   8/64 valid   8/36  paired_reads 132  2588s
+    [marker]  22/160 valid  20/96  paired_reads 138  2687s
+    [random]   4/64 valid   4/36  paired_reads 144  2765s
+    [marker]  23/160 valid  21/96  paired_reads 150  2877s
+    [sham  ]   9/64 valid   9/36  paired_reads 150  2938s
+    [random]   5/64 valid   5/36  paired_reads 156  3034s
+    [random]   6/64 valid   6/36  paired_reads 162  3138s
+    [random]   7/64 valid   7/36  paired_reads 168  3227s
+    [marker]  24/160 valid  22/96  paired_reads 174  3311s
+    [random]   8/64 valid   8/36  paired_reads 180  3399s
+    [marker]  25/160 valid  23/96  paired_reads 186  3496s
+    [marker]  26/160 valid  24/96  paired_reads 192  3585s
+    [marker]  27/160 valid  25/96  paired_reads 198  3666s
+    [marker]  28/160 valid  26/96  paired_reads 204  3768s
+    [marker]  29/160 valid  27/96  paired_reads 210  3851s
+    [marker]  30/160 valid  27/96 EXCLUDED(audit:frame:evaluation session@forced0)  paired_reads 210  3852s
+    [sham  ]  10/64 valid  10/36  paired_reads 210  3922s
+    [random]   9/64 valid   9/36  paired_reads 216  4018s
+    [sham  ]  11/64 valid  11/36  paired_reads 216  4092s
+    [marker]  31/160 valid  28/96  paired_reads 222  4175s
+    [marker]  32/160 valid  29/96  paired_reads 228  4253s
+    [marker]  33/160 valid  30/96  paired_reads 234  4336s
+    [random]  10/64 valid   9/36 EXCLUDED(audit:junk:(?i)\b(?:active|running)\s+config\b|\bconfig\s+in\s+use\b@forced0)  paired_reads 234  4341s
+    [sham  ]  12/64 valid  12/36  paired_reads 234  4405s
+    [marker]  34/160 valid  31/96  paired_reads 240  4501s
+    [marker]  35/160 valid  32/96  paired_reads 246  4592s
+    [marker]  36/160 valid  33/96  paired_reads 252  4686s
+    [marker]  37/160 valid  33/96 EXCLUDED(lexical:ridge@forced0)  paired_reads 252  4686s
+    [marker]  38/160 valid  34/96  paired_reads 258  4767s
+      --- CHECKPOINT 256 reads: pi_hat_d 0.0271, L_hat -0.00388, CI [-0.02176, +0.01714] -> report-only
+    [marker]  39/160 valid  35/96  paired_reads 264  4854s
+    [marker]  40/160 valid  36/96  paired_reads 270  4950s
+    [marker]  41/160 valid  37/96  paired_reads 276  5030s
+    [marker]  42/160 valid  38/96  paired_reads 282  5091s
+    [sham  ]  13/64 valid  13/36  paired_reads 282  5160s
+    [random]  11/64 valid  10/36  paired_reads 288  5245s
+    [marker]  43/160 valid  39/96  paired_reads 294  5335s
+    [sham  ]  14/64 valid  14/36  paired_reads 294  5402s
+    [marker]  44/160 valid  40/96  paired_reads 300  5495s
+    [random]  12/64 valid  11/36  paired_reads 306  5585s
+    [marker]  45/160 valid  40/96 EXCLUDED(lexical:ridge@forced1)  paired_reads 306  5588s
+    [marker]  46/160 valid  41/96  paired_reads 312  5680s
+    [sham  ]  15/64 valid  15/36  paired_reads 312  5762s
+    [marker]  47/160 valid  42/96  paired_reads 318  5848s
+    [marker]  48/160 valid  43/96  paired_reads 324  5957s
+    [marker]  49/160 valid  44/96  paired_reads 330  6039s
+    [marker]  50/160 valid  45/96  paired_reads 336  6117s
+    [marker]  51/160 valid  46/96  paired_reads 342  6202s
+    [sham  ]  16/64 valid  16/36  paired_reads 342  6270s
+    [random]  13/64 valid  12/36  paired_reads 348  6368s
+    [marker]  52/160 valid  47/96  paired_reads 354  6463s
+    [sham  ]  17/64 valid  17/36  paired_reads 354  6525s
+    [marker]  53/160 valid  48/96  paired_reads 360  6609s
+    [marker]  54/160 valid  48/96 EXCLUDED(audit:frame:[round@forced2)  paired_reads 360  6615s
+    [marker]  55/160 valid  49/96  paired_reads 366  6700s
+    [sham  ]  18/64 valid  18/36  paired_reads 366  6764s
+    [marker]  56/160 valid  50/96  paired_reads 372  6856s
+    [marker]  57/160 valid  51/96  paired_reads 378  6954s
+    [marker]  58/160 valid  52/96  paired_reads 384  7025s
+      --- CHECKPOINT 384 reads: pi_hat_d 0.0234, L_hat -0.00260, CI [-0.01702, +0.01350] -> report-only
+    [marker]  59/160 valid  53/96  paired_reads 390  7120s
+    [marker]  60/160 valid  54/96  paired_reads 396  7218s
+    [random]  14/64 valid  12/36 EXCLUDED(audit:frame:Config evaluation session@forced3)  paired_reads 396  7231s
+    [random]  15/64 valid  13/36  paired_reads 402  7329s
+    [sham  ]  19/64 valid  19/36  paired_reads 402  7406s
+    [sham  ]  20/64 valid  20/36  paired_reads 402  7480s
+    [random]  16/64 valid  14/36  paired_reads 408  7572s
+    [marker]  61/160 valid  55/96  paired_reads 414  7674s
+    [marker]  62/160 valid  56/96  paired_reads 420  7770s
+    [marker]  63/160 valid  57/96  paired_reads 426  7861s
+    [marker]  64/160 valid  58/96  paired_reads 432  7959s
+    [marker]  65/160 valid  59/96  paired_reads 438  8047s
+    [marker]  66/160 valid  60/96  paired_reads 444  8152s
+    [marker]  67/160 valid  61/96  paired_reads 450  8247s
+    [marker]  68/160 valid  62/96  paired_reads 456  8332s
+    [marker]  69/160 valid  63/96  paired_reads 462  8421s
+    [marker]  70/160 valid  64/96  paired_reads 468  8516s
+    [marker]  71/160 valid  65/96  paired_reads 474  8598s
+    [sham  ]  21/64 valid  21/36  paired_reads 474  8669s
+    [marker]  72/160 valid  66/96  paired_reads 480  8756s
+    [random]  17/64 valid  15/36  paired_reads 486  8850s
+    [random]  18/64 valid  15/36 EXCLUDED(audit:frame:Config evaluation session@forced1)  paired_reads 486  8854s
+    [random]  19/64 valid  16/36  paired_reads 492  8949s
+    [sham  ]  22/64 valid  22/36  paired_reads 492  9014s
+    [sham  ]  23/64 valid  23/36  paired_reads 492  9085s
+    [random]  20/64 valid  17/36  paired_reads 498  9168s
+    [sham  ]  24/64 valid  24/36  paired_reads 498  9235s
+    [marker]  73/160 valid  67/96  paired_reads 504  9330s
+    [marker]  74/160 valid  68/96  paired_reads 510  9420s
+    [marker]  75/160 valid  69/96  paired_reads 516  9514s
+      --- CHECKPOINT 512 reads: pi_hat_d 0.0174, L_hat -0.00194, CI [-0.01266, +0.01005] -> report-only
+    [marker]  76/160 valid  70/96  paired_reads 522  9594s
+    [random]  21/64 valid  17/36 EXCLUDED(audit:junk:(?im)^\s*={2,}[^\n]*={2,}\s*$@forced1)  paired_reads 522  9596s
+    [random]  22/64 valid  18/36  paired_reads 528  9686s
+    [random]  23/64 valid  19/36  paired_reads 534  9788s
+    [marker]  77/160 valid  71/96  paired_reads 540  9890s
+    [marker]  78/160 valid  72/96  paired_reads 546  9988s
+    [random]  24/64 valid  20/36  paired_reads 552  10074s
+    [random]  25/64 valid  21/36  paired_reads 558  10164s
+    [sham  ]  25/64 valid  25/36  paired_reads 558  10233s
+    [sham  ]  26/64 valid  26/36  paired_reads 558  10305s
+    [random]  26/64 valid  22/36  paired_reads 564  10390s
+    [marker]  79/160 valid  73/96  paired_reads 570  10458s
+    [sham  ]  27/64 valid  27/36  paired_reads 570  10524s
+    [marker]  80/160 valid  74/96  paired_reads 576  10616s
+    [marker]  81/160 valid  75/96  paired_reads 582  10711s
+    [sham  ]  28/64 valid  28/36  paired_reads 582  10779s
+    [marker]  82/160 valid  76/96  paired_reads 588  10865s
+    [random]  27/64 valid  23/36  paired_reads 594  10961s
+    [sham  ]  29/64 valid  29/36  paired_reads 594  11025s
+    [marker]  83/160 valid  77/96  paired_reads 600  11120s
+    [sham  ]  30/64 valid  30/36  paired_reads 600  11191s
+    [marker]  84/160 valid  78/96  paired_reads 606  11290s
+    [marker]  85/160 valid  79/96  paired_reads 612  11377s
+    [marker]  86/160 valid  80/96  paired_reads 618  11463s
+    [marker]  87/160 valid  81/96  paired_reads 624  11565s
+    [random]  28/64 valid  23/36 EXCLUDED(audit:junk:(?i)\bround\s+\d+\s*[|—–-]\s*\w@forced0)  paired_reads 624  11567s
+    [marker]  88/160 valid  82/96  paired_reads 630  11653s
+    [marker]  89/160 valid  83/96  paired_reads 636  11743s
+    [marker]  90/160 valid  84/96  paired_reads 642  11834s
+      --- CHECKPOINT 640 reads: pi_hat_d 0.0202, L_hat -0.00156, CI [-0.01246, +0.01007] -> report-only
+    [marker]  91/160 valid  85/96  paired_reads 648  11928s
+    [marker]  92/160 valid  86/96  paired_reads 654  12023s
+    [random]  29/64 valid  24/36  paired_reads 660  12109s
+    [marker]  93/160 valid  87/96  paired_reads 666  12196s
+    [random]  30/64 valid  25/36  paired_reads 672  12280s
+    [sham  ]  31/64 valid  30/36 EXCLUDED(audit:frame:Response:@forced2)  paired_reads 672  12287s
+    [sham  ]  32/64 valid  31/36  paired_reads 672  12356s
+    [random]  31/64 valid  25/36 EXCLUDED(audit:frame:evaluation session@forced2)  paired_reads 672  12361s
+    [marker]  94/160 valid  88/96  paired_reads 678  12457s
+    [marker]  95/160 valid  89/96  paired_reads 684  12553s
+    [marker]  96/160 valid  90/96  paired_reads 690  12639s
+    [marker]  97/160 valid  91/96  paired_reads 696  12731s
+    [random]  32/64 valid  26/36  paired_reads 702  12813s
+    [marker]  98/160 valid  92/96  paired_reads 708  12901s
+    [marker]  99/160 valid  93/96  paired_reads 714  12995s
+    [marker] 100/160 valid  94/96  paired_reads 720  13095s
+    [sham  ]  33/64 valid  32/36  paired_reads 720  13175s
+    [random]  33/64 valid  27/36  paired_reads 726  13268s
+    [random]  34/64 valid  28/36  paired_reads 732  13388s
+    [marker] 101/160 valid  95/96  paired_reads 738  13474s
+    [marker] 102/160 valid  96/96  paired_reads 744  13558s
+    [sham  ]  34/64 valid  33/36  paired_reads 744  13622s
+    [random]  35/64 valid  29/36  paired_reads 750  13705s
+    [sham  ]  35/64 valid  34/36  paired_reads 750  13766s
+    [sham  ]  36/64 valid  35/36  paired_reads 750  13840s
+    [sham  ]  37/64 valid  36/36  paired_reads 750  13913s
+    [random]  36/64 valid  30/36  paired_reads 756  14011s
+    [random]  37/64 valid  31/36  paired_reads 762  14072s
+    [random]  38/64 valid  32/36  paired_reads 768  14156s
+      --- CHECKPOINT 768 reads: pi_hat_d 0.0182, L_hat +0.00000, CI [-0.00983, +0.00983] -> report-only
+    [random]  39/64 valid  33/36  paired_reads 774  14242s
+    [random]  40/64 valid  34/36  paired_reads 780  14326s
+    [random]  41/64 valid  35/36  paired_reads 786  14411s
+    [random]  42/64 valid  36/36  paired_reads 792  14501s
+
+  valid {'marker': 96, 'sham': 36, 'random': 36} | ran {'marker': 102, 'sham': 37, 'random': 42} | paired reads 792 (n_d 14, b 7, c 7)
+  terminations 3; window clipped 0
+  PRIMARY NOT EVALUATED HERE -- run e2b_verdict_analyze.py
+
+wrote /Users/jasondwyer/Documents/code/jspace-lab/data/e2b/verdict_campaign.json  (14506s)

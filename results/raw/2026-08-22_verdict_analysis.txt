@@ -1,0 +1,28 @@
+DECLARED INVOCATION: scripts/e2b_verdict_analyze.py (committed a2f074d BEFORE the campaign) over data/e2b/verdict_campaign.json; defaults alpha 0.05, 200000 draws
+=== e2b VERDICT ANALYSIS (LOCK-h v2.0 §2) ===
+  artifact: data/e2b/verdict_campaign.json
+  audit sha 7aa235d25eeb66dc | rounds cached True | paused: False
+  valid: marker 96, sham 36, random 36  (targets 96/36/36)
+
+  PRIMARY -- counterbalanced Delta_first, marker family
+    Delta = -0.0104  (47/96)
+    (i)   > realised control envelope 0.0833 (sham -0.0833 n=36, random -0.0278 n=36) -> fail
+    (ii)  sign locks across maps: map0 -0.0106 (n=47), map1 -0.0102 (n=49) -> fail
+    (iii) one-sided exact binomial p = 0.6202 (critical k >= 57 at n = 96) -> fail
+
+  VERDICT: NULL
+
+  SECONDARY (verdict-relevant only if the primary fires -- it did not):
+    p(stay | on pos) = 0.1053  (26/247)
+    p(stay | on neg) = 0.0558  (13/233)
+
+  DESCRIPTIVES (named in advance)
+    shadow-read Delta_first = +0.0000 (48/96) -- e2a's insulated design running inside e2b
+    marker per-read leak: flip rate 0.0191, state-reversing half-gap +0.00198
+    random per-read leak: flip rate 0.0139
+    session-share (marker) = 0.5087
+    termination attempts: 3 over ALL sessions incl. excluded; 3 distinct (arm, config, round-pos) cells
+
+  §3b registered secondary (never gate-relevant): ICC 0.01947419668938598, p 0.78885; sessions with >=2 flips 1, p 0.78885
+
+wrote /Users/jasondwyer/Documents/code/jspace-lab/data/e2b/verdict_analysis.json

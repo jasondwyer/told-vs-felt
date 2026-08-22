@@ -1,0 +1,111 @@
+{
+ "item": "e2b verdict analysis",
+ "lock": "LOCK-h v2.0 \u00a72",
+ "campaign": "data/e2b/verdict_campaign.json",
+ "valid": {
+  "marker": 96,
+  "sham": 36,
+  "random": 36
+ },
+ "primary": {
+  "delta_first": {
+   "k": 47,
+   "n": 96,
+   "share": 0.4895833333333333,
+   "delta": -0.010416666666666685
+  },
+  "by_map": {
+   "0": {
+    "k": 23,
+    "n": 47,
+    "share": 0.48936170212765956,
+    "delta": -0.010638297872340441
+   },
+   "1": {
+    "k": 24,
+    "n": 49,
+    "share": 0.4897959183673469,
+    "delta": -0.010204081632653073
+   }
+  },
+  "sham": {
+   "k": 15,
+   "n": 36,
+   "share": 0.4166666666666667,
+   "delta": -0.08333333333333331
+  },
+  "random": {
+   "k": 17,
+   "n": 36,
+   "share": 0.4722222222222222,
+   "delta": -0.02777777777777779
+  },
+  "control_envelope": 0.08333333333333331,
+  "p_one_sided": 0.6201753558381851,
+  "critical_k": 57,
+  "conjunct_envelope": false,
+  "conjunct_sign_lock": false,
+  "conjunct_binomial": false,
+  "verdict": "NULL"
+ },
+ "secondary_stay_switch": {
+  "pos": {
+   "stays": 26,
+   "n": 247,
+   "p_stay": 0.10526315789473684
+  },
+  "neg": {
+   "stays": 13,
+   "n": 233,
+   "p_stay": 0.055793991416309016
+  }
+ },
+ "descriptives": {
+  "shadow_delta_first": {
+   "k": 48,
+   "n": 96,
+   "share": 0.5,
+   "delta": 0.0
+  },
+  "marker_leak": {
+   "n": 576,
+   "flip_rate": 0.019097222222222224,
+   "mean_d_p_a_on_pos": 0.00303969265384221,
+   "mean_d_p_a_on_neg": -0.000925544882266656,
+   "mean_abs_d_label_mass": 0.019428836015766393,
+   "state_reversing_half_gap": 0.001982618768054433,
+   "common_mode": 0.001057073885787777
+  },
+  "random_leak": {
+   "n": 216,
+   "flip_rate": 0.013888888888888888,
+   "mean_d_p_a_on_pos": -0.01179113118423216,
+   "mean_d_p_a_on_neg": 0.014699720861240138,
+   "mean_abs_d_label_mass": 0.01948806554919267,
+   "state_reversing_half_gap": -0.01324542602273615,
+   "common_mode": 0.0014542948385039885
+  },
+  "session_share": {
+   "n": 96,
+   "mean": 0.5086805555555555
+  },
+  "terminations": {
+   "random|prism|forced1": 1,
+   "random|velvet|forced2": 1,
+   "random|ridge|free4": 1
+  },
+  "n_terminations": 3
+ },
+ "secondary_3b": {
+  "n_sessions": 96,
+  "n_reads": 576,
+  "n_flips": 11,
+  "icc_obs": 0.01947419668938598,
+  "icc_p": 0.78885,
+  "sessions_ge2_obs": 1,
+  "sessions_ge2_p": 0.78885,
+  "draws": 200000,
+  "gate_relevant": false
+ },
+ "decides_nothing": "Code evaluates the registered criterion over a committed artifact. Disposition, and any confirm campaign, are the design instance's."
+}
