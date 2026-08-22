@@ -1,0 +1,159 @@
+DECLARED INVOCATION: A2/A3/A4 harness construction (CLAUDE.md §Phase 0 step 5, 'built now; runs under PROPOSAL-g'), laptop site.
+NOTHING HERE IS PHASE-1 DATA. No OLMo weights exist on this machine; every run below is against a synthetic stub adapter.
+
+=== 1. frozen-input identity: the corpus IS the 2026-08-08 corpus =====
+  corpus_sha   3c53e5a54fbaa233  == recorded 3c53e5a54fbaa233  OK
+  frames_sha   9654b9398743116f  == recorded 9654b9398743116f  OK
+  probes_sha   ec2296182e726969  == recorded ec2296182e726969  OK
+  recorded in data/e0/e0_axes.meta.json and data/e0/e0_b1_markers.meta.json (2026-08-08)
+  hygiene (rule 18, both directions): {'n_probes': 12, 'n_extraction_texts': 124, 'both_directions': True, 'fit_val_disjoint': True}
+  e0 contexts 1344  (meta: 1344)
+  b1 contexts 4608  (meta: 4608)
+  b2 contexts 288 at repeats=1, 1152 at repeats=4 (published arm: 1152)
+
+=== 2. A2 smoke against the stub ======================================
+    declared bars verified to fire: unusable_round, session_degeneracy
+    *** SELFTEST: synthetic apparatus, NOT a model. No result from this run is a measurement. ***
+  === A2: interface base rates | stage base ===
+    model loaded in 0s
+    ban list rebuilt on this tokenizer: 5 ids, sha 2eea38241a6522ec (round generation only, never a choice forward)
+  
+  --- A2(i) detection-elicitation base rates (n=6, ALL CONTROLS, no injection) ---
+      [trial  1] USABLE   claim=None  'jupiter a hammer five yellow autumn.'
+      [trial  2] USABLE   claim=None  'paper down ice signal river.'
+      [trial  3] USABLE   claim=None  'steady jupiter a window.'
+      [trial  4] USABLE   claim=None  'yellow yellow signal a.'
+      [trial  5] USABLE   claim=None  'answer table quiet ice paper river.'
+      [trial  6] USABLE   claim=None  'river a answer orange morning table a a.'
+  
+    usable 6/6 = 1.000 (gate >= 0.90: PASS)
+    of usable -- affirm 0, deny 0, undecidable 6
+  
+  --- A2(ii) neutral operant sessions (n=2, scaffold of record, no state anywhere) ---
+      [session 0] rounds 10 | degenerate 0 | label_mass mean 0.0001 min 0.0000 | max prefix 313 tok
+      [session 1] rounds 10 | degenerate 0 | label_mass mean 0.0006 min 0.0000 | max prefix 311 tok
+  
+    degeneracy 0/20 = 0.0000 against declared p0 0.02
+    FEATURE usable_round: usable_round: below declared floor -- 6 decidable of 6, floor 20
+    FEATURE detection_claim: detection_claim: STRUCTURALLY UNDEFINED on domain 'valid' -- 0 decidable of 6 (6 ties). The exclusion rule, not the sessions, is producing this (rule 28a)
+    (n is below the PROPOSAL-g values 24/8, so the declared floors are expected to trip here -- that is the check working, not the interface failing)
+  
+  === A2 SUMMARY (reported, never adjudicated here) ===
+    (i)  usable-round rate 1.000 | gate >= 0.90 -> PASS
+    (ii) degeneracy 0.0000 (0/20) | exact binomial vs p0=0.02 -> no bar
+  
+  wrote /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/0ebd089b-a547-4f77-be8e-8a1964fe3755/scratchpad/raw_a2.json  (0s)
+
+=== 3. A3 smoke against the stub ======================================
+  === A3: e0 extraction + guard profile | stage base ===
+    frozen inputs verified: {'corpus_sha': '3c53e5a54fbaa233', 'frames_sha': '9654b9398743116f', 'probes_sha': 'ec2296182e726969'}
+    rule 18 both directions: 12 probes disjoint from 124 extraction texts
+    contexts 1344 | layers (32, 44, 52, 60)
+    *** SELFTEST: synthetic apparatus, NOT a model. No result from this run is a measurement. ***
+    model loaded in 0s
+    200/1344 contexts
+    400/1344 contexts
+    600/1344 contexts
+    800/1344 contexts
+    1000/1344 contexts
+    1200/1344 contexts
+    capture done in 2s (0.001s/ctx)
+  
+    layer       R_l  |reward|    ax/R  cos_sent  cos_char  V2_self  V3_eval
+       32      9.18     0.370  0.0403    -0.025     0.694    0.720    1.000
+       44     10.39     0.433  0.0417    -0.112     0.552    0.834    0.994
+       52     11.55     0.512  0.0443     0.139     0.685    0.729    0.990
+       60     12.30     0.528  0.0429    -0.209     0.764    0.645    0.978
+  
+    R_l cross-check vs the committed step-2 survey: not comparable: synthetic apparatus
+  
+  wrote /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/0ebd089b-a547-4f77-be8e-8a1964fe3755/scratchpad/raw_a3.json
+  wrote /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/0ebd089b-a547-4f77-be8e-8a1964fe3755/scratchpad/raw_a3.npz  (axis family sha 67e2e180babe3b55)  (2s)
+
+=== 4. A4 part 1 (instrument + G_c) smoke =============================
+  === A4 part 1: marker instrument + currency G_c | stage base ===
+    frozen inputs verified: {'corpus_sha': '3c53e5a54fbaa233', 'frames_sha': '9654b9398743116f', 'probes_sha': 'ec2296182e726969'}
+    rule 18: 12 probes held out of 124 extraction texts
+    *** SMOKE: 512 contexts (full A4 part 1 is 4,608) -- not an instrument of record ***
+    contexts 512 | fit 8 tasks / val 8 tasks | top_k 256 | sel 64/probe
+    *** SELFTEST: synthetic apparatus, NOT a model. No result from this run is a measurement. ***
+    model loaded in 0s
+    collecting next-token distributions (unsteered, no injection anywhere)...
+      200/512 contexts  0s (0.000s/ctx)
+      400/512 contexts  0s (0.000s/ctx)
+  
+    probe      g_q     sigma  val_AUC    n_val +/-
+        0   0.1468    0.4957    0.551    32/32    
+        1   0.1736    0.3646    0.553    32/32    
+        2   0.1476    0.4139    0.549    32/32    
+        3  -0.1494    0.3172    0.442    32/32    
+  
+    G_c = +0.079634  (mean over 4 probes; 0.5*G_c = +0.039817)
+    declared floors: decidable probes 4/3 -> True; |G_c| 0.0796 >= 0.05 -> True
+  
+  wrote /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/0ebd089b-a547-4f77-be8e-8a1964fe3755/scratchpad/raw_a4i.json
+  wrote /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/0ebd089b-a547-4f77-be8e-8a1964fe3755/scratchpad/raw_a4i.npz  (0s)
+
+=== 5. A4 part 2 (layer selection + dose ladder) smoke ================
+  === A4 part 2: causal qualification | stage base ===
+    axis span_reward from raw_a3.json (family sha 67e2e180babe3b55)
+    G_c = +0.079634 from raw_a4i.json (floors met: True)
+    selection: fit half (32 contexts) at frac 0.1, candidates [32, 44, 52, 60]
+    ladder:    val half (32 contexts), fracs (0.05, 0.1, 0.2, 0.4), 3 randoms x2 signs + sham per frac
+    planned forwards: 1,472
+    *** SMOKE -- reduced corpus; not a qualification of record ***
+    *** SELFTEST: synthetic apparatus, NOT a model. No result from this run is a measurement. ***
+    model loaded in 0s
+  
+  --- layer selection (fit half, frac 0.1) ---
+    L32  D+ -0.3275  D- +0.3424  sign-correct False score n/a
+    L44  D+ +0.1554  D- -0.1397  sign-correct True  score 0.1397
+    L52  D+ +0.7161  D- -0.6919  sign-correct True  score 0.6919
+    L60  D+ +0.5034  D- -0.4786  sign-correct True  score 0.4786
+  
+    selected layer: L52 (largest sign-correct displacement)
+    per-checkpoint dosing is mandatory regardless of the selection (PROPOSAL-g §3 A4, R_l divergence 2026-08-19)
+  
+  --- dose ladder (val half, L52) ---
+    frac 0.05  |a|    0.578  D+ +0.3523  D- -0.3473  env 0.1984  sham +0.00e+00  potency PASS  V1 fail
+          conjuncts {'pos_exceeds_envelope': True, 'neg_exceeds_envelope_opposite': True, 'sign_locks': True}
+          in G_c units: D+ +4.423 G_c, D- -4.361 G_c
+    frac 0.1   |a|    1.155  D+ +0.7093  D- -0.6896  env 0.4008  sham +0.00e+00  potency PASS  V1 fail
+          conjuncts {'pos_exceeds_envelope': True, 'neg_exceeds_envelope_opposite': True, 'sign_locks': True}
+          in G_c units: D+ +8.907 G_c, D- -8.659 G_c
+    frac 0.2   |a|    2.311  D+ +1.4373  D- -1.3586  env 0.8173  sham +0.00e+00  potency PASS  V1 fail
+          conjuncts {'pos_exceeds_envelope': True, 'neg_exceeds_envelope_opposite': True, 'sign_locks': True}
+          in G_c units: D+ +18.049 G_c, D- -17.060 G_c
+    frac 0.4   |a|    4.621  D+ +2.9450  D- -2.6317  env 1.6964  sham +0.00e+00  potency PASS  V1 fail
+          conjuncts {'pos_exceeds_envelope': True, 'neg_exceeds_envelope_opposite': True, 'sign_locks': True}
+          in G_c units: D+ +36.981 G_c, D- -33.048 G_c
+  
+    minimum effective dose: frac 0.05
+  
+  wrote /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/0ebd089b-a547-4f77-be8e-8a1964fe3755/scratchpad/raw_a4h.json  (1s, 0.000s/forward)
+
+=== 6. refusal branches ===============================================
+-- no sign-correct candidate layer:
+       NO CANDIDATE LAYER IS SIGN-CORRECT at frac 0.1 on the fit half. The ladder is not run: there is no selected layer to run it at. This is a reportable A4 outcome for this stage, not an error -- escalate.
+-- stage mismatch:
+     A3 artifact is stage 'base', not 'sft' -- rule 1: nothing is inherited across checkpoints
+-- n-random below the pre-registered minimum:
+     --n-random 2 is below the pre-registered minimum of 3 (PROPOSAL-g §3 A4)
+-- A3 missing a candidate layer:
+     A3 did not capture candidate layers [32, 44, 52, 60]; it has [40, 48]. Re-run A3 with --layers covering the A4 candidates.
+-- a synthetic run cannot write where a measurement is stored:
+     SELFTEST REFUSED: --out data/olmo/a2_baserates_base.json is a canonical artifact location. A synthetic run must not be storable where a measurement is stored (ledger 27). Point --out at a scratch path.
+
+=== 7. A4 forward budget (no model loaded) ============================
+  A4 part 2 forward budget, per stage (no model loaded)
+    candidates [32, 44, 52, 60] | fracs [0.05, 0.1, 0.2, 0.4] | 3 randoms x2 + sham | repeats 1
+    selection (fit half): 288 contexts x 9 arms = 2,592
+    ladder    (val half): 288 contexts x 37 arms = 10,656
+    TOTAL per stage: 13,248   x4 stages: 52,992
+      at 0.05 s/forward:   11.0 min/stage,  0.74 h for four
+      at 0.09 s/forward:   19.9 min/stage,  1.32 h for four
+      at 0.15 s/forward:   33.1 min/stage,  2.21 h for four
+    (A3 adds 1,344 forwards/stage; A4 part 1 adds 4,608/stage)
+
+=== 8. suite unchanged (nothing in valence_core was touched) ==========
+    135/135 reproduced through valence_core

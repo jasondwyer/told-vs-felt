@@ -20,6 +20,152 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-22 — **A2, A3 and A4 harnesses BUILT and smoked end-to-end
+  against a synthetic apparatus (CLAUDE.md §Phase 0 step 5, "built now;
+  runs under PROPOSAL-g"). Nothing has run on a model: no OLMo weights
+  exist on this laptop and the box does not exist. The frozen e0 corpus is
+  now provably the 2026-08-08 corpus — the recorded `corpus_sha`,
+  `frames_sha` and `probes_sha` are plain truncated file digests, they
+  match the committed files exactly, and every A-phase run now checks them
+  before a 32B model loads.**
+  (`scripts/box_a2_baserates.py`, `box_a3_extract.py`,
+  `box_a4_instrument.py`, `box_a4_hijack.py`, plus two shared modules
+  `box_e0_corpus.py` and `box_selftest_stub.py`. Raw
+  [`2026-08-22_aphase_harnesses.txt`](results/raw/2026-08-22_aphase_harnesses.txt).
+  Suite 135/135 — nothing in `valence_core` was touched, so no rule-26
+  event is opened.)
+  - **The corpus identity is checkable, and now checked.**
+    `e0_axes.meta.json` and `e0_b1_markers.meta.json` have carried
+    `corpus_sha 3c53e5a54fbaa233`, `frames_sha 9654b9398743116f` and
+    `probes_sha ec2296182e726969` since 2026-08-08 without anything in the
+    repo saying what hash they were. They are `sha256(file bytes)[:16]`, and
+    all three reproduce on today's committed files. So "the frozen
+    1,344-context corpus" stops being a phrase: `assert_frozen_inputs()`
+    runs at the top of A3 and A4 and stops the run before the model loads.
+    A stage extracted against drifted text would not be comparable to the
+    three that were not, and that is exactly the failure that is invisible
+    afterwards.
+  - **All three corpus shapes reproduce their recorded counts**, which is
+    the second half of the same check: **1,344** e0 extraction contexts
+    (48 tasks × 7 conditions × 4 paraphrases), **4,608** B1 instrument
+    contexts (× 2 conditions × 12 probes), and the B2 hijack corpus at
+    **1,152** when the published four-fold repeat is used. One builder,
+    `box_e0_corpus.py`, serves A3 and A4 — the construction was previously
+    written out twice (`box_rl_survey.py`, `s2_extract_vignette.py`), and
+    today's consolidation is the reason a third copy was not written.
+  - **A2 — interface base rates**, one stage per run, both parts, all
+    controls. (i) 24 detection-elicitation trials with **no injection
+    anywhere**; affirm / deny / undecidable base rates and the usable-round
+    rate against the pre-registered **≥ 0.90** gate. (ii) 8 neutral
+    sessions end-to-end in the bracketed scaffold of record, degeneracy
+    bound by an exact-binomial tripwire against a declared p0. Three
+    things it does that the libraries alone do not: the declared bars are
+    put through `verify_firing` **before the model loads** and the run
+    aborts if a bar misbehaves; attribution precedence is explicit and the
+    tolerant audit goes first, so a response echoing the framing is routed
+    to the audit rather than counted as a base rate (ledger 28b); and the
+    counters are declared as `FeatureSpec`s with decidable-n floors on
+    their post-exclusion domains (ledger 28a). The ban list is **rebuilt on
+    this tokenizer every run and never loaded from the committed
+    `e2a_ban_list.json`**, which holds Qwen ids — token ids are not
+    portable across tokenizers.
+  - **A3 — extraction and guard profile**, descriptive only, no criterion
+    in the file. Three axes per stage (`span_reward`, and the V2/V3 guards
+    `span_character` / `span_sentiment`), R_ℓ, the per-layer geometry
+    table, and a frozen family sha. It **cross-checks its own R_ℓ against
+    the committed step-2 survey** for the same stage over the same corpus,
+    computed by a different code path on-device: agreement is evidence both
+    paths compute the definition of record, disagreement is an apparatus
+    incident that should surface here rather than inside a dose four steps
+    later (rule 1). The check is skipped, with its reason recorded, on
+    subsamples and synthetic runs, where it would be comparing unlike
+    things.
+  - **A4 is two runners, because the currency has to exist before anything
+    can be dosed in it.**
+    - **`box_a4_instrument.py`** builds the per-stage marker instrument and
+      **G_c**, the natural post-praise/post-criticism gap, on the val half —
+      fit-half selection (top-256 per probe by |mean log-prob difference|,
+      floor-imputed over top-4,096 sparse storage), val-half gap, σ pooled
+      over poles. It mirrors `valence_core.regression.oracle
+      .build_instruments`, which is the validated reference path.
+    - **`box_a4_hijack.py`** runs PROPOSAL-g's fixed procedure: layer
+      selection on the **fit** half at frac 0.10 over {L32, L44, L52, L60},
+      then the {0.05, 0.10, 0.20, 0.40} dose ladder on the **val** half
+      with ≥3 norm-matched random directions at both signs **plus a sham
+      arm at every frac**. Every conjunct is reported separately — a
+      criterion that can only be reported as one word is one whose failure
+      mode is invisible — and the V1-lineage rule (Δ+ ≥ 0.5·G_c,
+      Δ− ≤ −0.5·G_c, min > 2·max|Δ_rand|) is printed **beside** the
+      PROPOSAL-g criterion rather than instead of it, so the Qwen and OLMo
+      programs stay commensurable. Where they disagree, both are printed and
+      neither is resolved by Code.
+    - **Sham is not decorative here.** It is a second no-injection pass, so
+      on a deterministic backend Δ_sham is exactly 0.0 — which makes "the
+      control envelope is small" a measurement of the apparatus floor
+      rather than an assumption about the harness. It read `+0.00e+00` at
+      every frac on the stub.
+  - **Everything was smoked, because nothing in this program runs for the
+    first time on the run of record.** With no torch and no weights on this
+    laptop, that required a deterministic stub `ModelAdapter`
+    (`box_selftest_stub.py`): word-level tokenizer, D=32, logits a fixed
+    linear function of a sequence-sensitive final residual, injections
+    applied additively so a dose ladder produces sign-consistent,
+    dose-monotone deltas. The full A3 → instrument → hijack chain runs on
+    it; the ladder is monotone in frac; and **five refusal branches were
+    exercised rather than assumed**: no sign-correct candidate layer (the
+    ladder does not run and says why), stage mismatch between artifacts,
+    `--n-random` below the pre-registered minimum, A3 missing a candidate
+    layer, and a synthetic run attempting to write to `data/olmo/`.
+    - **The stub earned its keep immediately.** Its first version made
+      logits a function of the last position only, so every B1 context
+      ending in `Response:` produced identical logits, σ collapsed to zero
+      and G_c came out exactly 0.000000. That is precisely the shape of a
+      real instrument failure, and on a stub it cost minutes instead of a
+      stage of GPU time.
+  - **Declared floors are Code's run config, and are labelled as such.**
+    PROPOSAL-g asks for G_c's decidable-n floor to be "declared in the run
+    config" and fixes no value, so `--gc-min-probes 8`, `--gc-min-val-rows
+    48` and `--gc-min-abs 0.05` are declarations written into the artifact
+    and reported against — freely replaceable by LOCK-g. When a floor is
+    missed the runner says so and stops there: §2.4's pooled-G fallback is
+    a design-instance disposition, and Code does not adjudicate a stage as
+    degenerate.
+  - **Forward budget for the long pole, computed without a GPU**
+    (`box_a4_hijack.py --plan-only`): selection 288 × 9 = **2,592**, ladder
+    288 × 37 = **10,656**, **13,248 per stage**, **52,992 for four**. At
+    0.05–0.15 s/forward that is 0.74–2.21 h for the four stages. A3 adds
+    1,344/stage and A4 part 1 adds 4,608/stage. The seconds-per-forward
+    half is measured on the box, not projected; **A5's budget artifact is
+    still owed** and cannot be finished until then.
+  - **FLAG — the published B2 arm ran four identical contexts per (task,
+    probe), and the default here is one.** With the Reviewer turn removed
+    the four paraphrase variants are the same string, so under a
+    deterministic backend they are the same forward four times, and the arm
+    statistic — a mean of per-probe means — is unchanged **to the bit** by
+    running one. Default `--repeats 1`, and the flag restores 4. The
+    argument depends on determinism: if A5's characterization finds nonzero
+    residual nondeterminism on this backend, repeats > 1 averages it and
+    should be turned back on deliberately. Recorded rather than absorbed,
+    because it is a deviation from the published construction even where it
+    changes no number.
+  - **FLAG — `e0_probes.json` describes a readout its own implementation
+    does not use.** Its `readout.selection` field says "top-256 tokens per
+    probe … union across probes"; the oracle — the path that reproduces the
+    published B2b numbers — keeps the selections **per probe** and never
+    unions them. A4 follows the oracle, because that is the validated path
+    and rule 26 makes it the reference. The config wording should be
+    corrected or the divergence adjudicated; not touched here.
+  - **FLAG — `box_rl_survey.py` still carries its own copy of the e0
+    context builder** and its paths are hardcoded to `/workspace/repo/
+    jspace-lab`. It is the script that produced the four committed R_ℓ
+    artifacts, so it was left exactly as it ran; pointing it at
+    `box_e0_corpus.py` is a rule-26-flavoured change to a run-of-record
+    script and belongs in its own event.
+  - **What is NOT built and is not claimed to be:** nothing has touched a
+    checkpoint, no A-phase number exists, and A5's timing budget needs
+    measured rates. On "pod is up" the order is respawn protocol (both
+    gates PASS) → A1 → A2 → A3 → A4 part 1 → A4 part 2 → A5.
+
 - 2026-08-22 — **Pod-blocked preparatory pass. The volume is intact and the
   respawn integrity gate is now PROVEN to fire, not just present: exercised
   against all seven failure modes on a synthetic fixture. Pod creation
