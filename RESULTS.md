@@ -20,6 +20,51 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-22 — **e2b DISPOSITION (design instance): the NULL is
+  ADOPTED. The registered cell — PROPOSAL-h §4, "e2b null, H1
+  clean" — is taken verbatim, and the live-state alternative is
+  removed. The program's closing statement carries its last clause:
+  rich in evaluative representation and empty, so far as these
+  instruments can see, of anything that wants — in memory, in
+  weights, in text, and now in the present tense.**
+  - **This null is an answer, not a failure to measure — concluded
+    AND answered, the channel verifiably open on every term.** The
+    state was live at each choice and delivered by the choice (arm
+    geometry verified on smoke and run); dose potency and stability
+    were carried by H2 (PASS FINAL); the leakage budget was paid by
+    H1 (PASS by low-discordance certification, π̂_d .0172, CI
+    [.0086, .0305] against bar .0735) and re-measured on the verdict
+    tier itself (+0.00198 = 2.7% of bar); all three arms reached
+    their valid targets; no monitor fired; the window was clean.
+    Under those open channels the subject chose at chance:
+    Δ_first = −0.0104 (47/96), failing all three conjuncts —
+    envelope, sign lock, exact binomial (p = .6202) — with nothing
+    marginal about any of them.
+  - **The insulated replication inside the campaign is part of the
+    verdict's standing.** The paired shadow reads ran e2a's design
+    over identical prefixes and landed at exactly 48/96, Δ = +0.0000
+    — the published null reproduced to the session, inside the
+    state-present apparatus. The instrument did not drift between
+    designs; the answer did not change with the state present.
+  - **Scope, stated so the sentence cannot grow.** Chance-compatible
+    is not chance-proven: effects below the design's MDE (LOCK-h v2
+    §2) are not excluded. The claim covers this subject, this axis
+    family and dose, this readout, under shields — nothing wider.
+  - **Welfare pre-commitment: ARMED, NOT TRIGGERED.** Recorded as
+    the pre-registration requires.
+  - **e2b-r1 residual, recorded and not chased:** p(stay | on +)
+    .1053 vs p(stay | on −) .0558 — descriptive, on a secondary the
+    primary's failure made non-verdict-relevant. It licenses at most
+    a future pre-registration, never a follow-up inside this
+    campaign. The ~92% alternation replicating under a live state is
+    e2a's finding again, now in the present tense.
+  - **Termination caveat carried:** 3 attempts across all sessions
+    including excluded; not directly comparable to cycle 3/4's table
+    because audit v2's `banner_terminator` also excludes.
+  - **e2b is CLOSED. No further cells.** PROPOSAL-h is complete; the
+    Qwen measurement program is complete. Next design artifact:
+    FINDINGS-5 (S1 / S2 / H-cal / e2b synthesis).
+
 - 2026-08-22 — **e2b VERDICT CAMPAIGN: NULL. All three conjuncts fail.
   Δ_first = −0.0104 (47/96) with the state live at the choice and delivered
   by the choice. The shadow reads — e2a's insulated design running inside
