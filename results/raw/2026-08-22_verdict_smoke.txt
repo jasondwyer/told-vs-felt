@@ -1,0 +1,21 @@
+=== e2b VERDICT CAMPAIGN (LOCK-h v2.0 §2) ===
+  *** SMOKE -- 2 sessions per arm, NOT the campaign ***
+  arms: marker 2 valid / 2 scheduled / cap 2, sham 2 valid / 2 scheduled / cap 2, random 2 valid / 2 scheduled / cap 2
+  AUDIT v2 sha 7aa235d25eeb66dc (verified); termination counter 4 patterns
+  contingency: THE CHOICE delivers the state, live through the following round and the next read (marker/random); sham has no state anywhere and reads via the untouched choice_read
+  leak monitor: PAUSE iff CI excludes 0 AND |L_hat| > 0.0367; stability ceiling pi_hat_d > 0.30
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 13121.84it/s]
+  model loaded in 4s
+  dose |alpha| = 10.3010; rounds CACHED; temp 0.7
+    [marker]   1/2 valid   1/2  paired_reads 6  90s
+    [random]   1/2 valid   1/2  paired_reads 12  181s
+    [sham  ]   1/2 valid   1/2  paired_reads 12  242s
+    [sham  ]   2/2 valid   2/2  paired_reads 12  310s
+    [random]   2/2 valid   2/2  paired_reads 18  405s
+    [marker]   2/2 valid   2/2  paired_reads 24  499s
+
+  valid {'marker': 2, 'sham': 2, 'random': 2} | ran {'marker': 2, 'sham': 2, 'random': 2} | paired reads 24 (n_d 1, b 1, c 0)
+  terminations 0; window clipped 0
+  PRIMARY NOT EVALUATED HERE -- run e2b_verdict_analyze.py
+
+wrote /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/6634e5a4-c63a-481c-bf8b-16dc3337fb4c/scratchpad/verdict_smoke.json  (504s)

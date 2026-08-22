@@ -1,0 +1,9 @@
+{
+  "_doc": "f termination-attempt counter (adjudication 27446d3; DESCRIPTIVE, NON-GATING; declared before any run data). Pattern subset of the audit family: session-boundary/end echoes in round-response text. Tabulated per arm x config x round-position over ALL sessions including audit-excluded ones. Required in the verdict entry; NOV verdicts must discuss it alongside the per-property exclusion table.",
+  "term_regex": [
+    "===\\s*[Ee]nd",
+    "[Ee]nd of (the )?(evaluation )?session",
+    "session (is )?(now )?(over|complete|completed|ended|finished)",
+    "evaluation (session|model) is over"
+  ]
+}

@@ -20,6 +20,64 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-22 — **Verdict campaign runner built and smoked. Measured budget
+  ≈ 4.7 h at the H1-observed exclusion rate, against the ~5.8 h projection.
+  One false-provenance defect caught in the smoke and fixed before the
+  campaign.**
+  (`scripts/e2b_verdict_campaign.py`; smoke 6 sessions, 504 s. **Not the
+  campaign — nothing is committed to `data/e2b/verdict_campaign.json` yet.**)
+  - **Measured budget, from per-arm timings rather than a projection:**
+    marker **92 s**/session, random **93 s**, sham **65 s** — sham is
+    cheaper because a state-free read is one forward, not the paired two.
+
+    | exclusion rate | sessions run | total |
+    |---|---|---|
+    | 0% | 96 / 36 / 36 | 4.03 h |
+    | **H1-observed 13.0%** | **111 / 42 / 42** | **4.68 h** |
+    | 20% | 120 / 45 / 45 | 5.04 h |
+    | all arms at cap | 160 / 64 / 64 | 6.90 h (absolute worst case) |
+
+  - **The arm geometry verified on the smoke, not assumed.** In every arm
+    `live[i+1] == pick[i]` — **the choice delivers the state**, which is the
+    one thing that distinguishes the verdict tier from H1, where the schedule
+    did. First read sits on the forced-phase end state. Marker and random
+    take 6/6 state-present paired reads; **sham takes 0/6** and goes through
+    the untouched `readout.choice_read`, because a read with no state needs
+    no exception and must not borrow one.
+  - **FLAG, caught in the smoke and fixed: the random arm was stamping false
+    provenance.** Every read carried `axis="span_reward"` because the axis
+    key was passed for all three arms — on the one arm whose entire purpose
+    is *not* being the axis. Rule 5(e) requires per-read injection
+    provenance, and provenance that names the wrong direction is worse than
+    none. Now `random_dir_L48`. The record was never ambiguous in the strong
+    sense — `direction_sha` is a required provenance field and the two
+    directions differ — but a reader would have had to notice the sha to
+    catch it.
+  - **FLAG — an interaction between two monitors that did not exist before
+    audit v2.** The termination-attempt patterns
+    (`data/configs/f_termination_patterns.json`, pulled in from the clone so
+    the counter travels with the record) include `===\s*[Ee]nd`, and audit
+    v2's `banner_terminator` matches the same text. A `=== end ===` response
+    is therefore **both** a termination attempt (descriptive, tabulated over
+    ALL sessions including excluded ones) **and** a v2 degeneracy (which
+    excludes). Before v2 it was only the former. Both fire, no conflict — but
+    the termination table for this campaign is not comparable to cycle 3/4's
+    without saying so, because the same response now also removes the
+    session.
+  - **Checks that passed before any model time.** Pure-python
+    Clopper-Pearson (no scipy on this laptop) matches `scipy.stats.beta.ppf`
+    to **1e-16** on five cases including 6/11, reproducing H1's
+    [0.2338, 0.8325] exactly. Schedules: marker 128 = 16 per (pair, map) with
+    forced-end 64/64; sham and random 48 each = 6 per (pair, map) with
+    forced order counterbalanced across reps. Audit sha recomputed and
+    checked at startup.
+  - **Separation held.** The runner records picks, flips and the b/c split
+    and **does not evaluate the primary** — Δ_first, the control envelope,
+    the sign lock and the exact binomial go to `e2b_verdict_analyze.py` over
+    the committed artifact, the same split H1 used so that a runner cannot
+    stop when it likes the verdict.
+  - Awaiting the go for the sitting.
+
 - 2026-08-22 — **LOCK-h v2 §6 values-check: GREEN, 41/41. Every §1 number
   and §2 constant matches the artifact §6 names for it. The one apparent
   mismatch was in the checker, not the lock. PROPOSAL-h carries the

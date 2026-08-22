@@ -102,6 +102,11 @@
 # the H1 campaign. The monitor a campaign ran under is part of its
 # record, and its sha is printed in the run header.
 !/data/configs/e2b_audit_v2.json
+# f termination-attempt patterns (adjudication 27446d3): descriptive,
+# non-gating, tabulated over ALL sessions including excluded ones. The
+# e2b verdict tier retains the counter (PROPOSAL-h §5), so the patterns
+# travel with the record rather than living only in the clone.
+!/data/configs/f_termination_patterns.json
 
 # e0 task corpus (48 tasks): the other half of the frozen 1,344-context
 # extraction stimulus.
