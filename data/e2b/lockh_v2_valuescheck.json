@@ -1,0 +1,309 @@
+{
+ "item": "LOCK-h v2 \u00a76 values-check",
+ "lock": "LOCK-h-v2.md",
+ "n_checks": 41,
+ "n_ok": 41,
+ "green": true,
+ "rows": [
+  {
+   "label": "\u00a71 dose layer",
+   "claim": 48,
+   "actual": 48,
+   "source": "h2_sessions.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 dose frac",
+   "claim": 0.1,
+   "actual": 0.1,
+   "source": "h2_sessions.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 |alpha|",
+   "claim": 10.301,
+   "actual": 10.301,
+   "source": "h2_sessions.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 H2 degeneracy (audit that ran)",
+   "claim": "2/307",
+   "actual": "2/307",
+   "source": "h2_sessions.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 H2 degeneracy under corrected lens ~0.036",
+   "claim": 0.036,
+   "actual": 0.036,
+   "source": "h2_sessions.json + h2_sweep.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 H2 declared p0",
+   "claim": 0.05,
+   "actual": 0.05,
+   "source": "h2_sessions.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 H2 window clean",
+   "claim": 0,
+   "actual": 0,
+   "source": "h2_sessions.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 H2 pi_hat_d",
+   "claim": 0.0278,
+   "actual": 0.0278,
+   "source": "h2_sessions.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 H1 N",
+   "claim": 640,
+   "actual": 640,
+   "source": "h1_sessions.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 H1 sessions run",
+   "claim": 123,
+   "actual": 123,
+   "source": "h1_sessions.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 H1 excluded",
+   "claim": 16,
+   "actual": 16,
+   "source": "h1_sessions.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 H1 no appended block",
+   "claim": 128,
+   "actual": 128,
+   "source": "h1_sessions.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 H1 n_d",
+   "claim": 11,
+   "actual": 11,
+   "source": "h1_sessions.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 H1 b",
+   "claim": 6,
+   "actual": 6,
+   "source": "h1_sessions.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 H1 c",
+   "claim": 5,
+   "actual": 5,
+   "source": "h1_sessions.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 H1 pi_hat_d",
+   "claim": 0.0172,
+   "actual": 0.0172,
+   "source": "h1_gate.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 H1 pi_hat_d CI",
+   "claim": [
+    0.0086,
+    0.0305
+   ],
+   "actual": [
+    0.0086,
+    0.0305
+   ],
+   "source": "h1_gate.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 H1 L_hat",
+   "claim": 0.00156,
+   "actual": 0.00156,
+   "source": "h1_gate.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 H1 mapped L CI",
+   "claim": [
+    -0.00915,
+    0.01143
+   ],
+   "actual": [
+    -0.00915,
+    0.01143
+   ],
+   "source": "h1_gate.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 H1 verdict PASS",
+   "claim": "PASS",
+   "actual": "PASS",
+   "source": "h1_gate.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 H1 certified by low discordance",
+   "claim": true,
+   "actual": true,
+   "source": "h1_gate.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 \u00a73b ICC",
+   "claim": 0.0,
+   "actual": 0.0,
+   "source": "h1_gate.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 \u00a73b ICC p",
+   "claim": 1.0,
+   "actual": 1.0,
+   "source": "h1_gate.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 \u00a73b sessions >=2 flips",
+   "claim": 0,
+   "actual": 0,
+   "source": "h1_gate.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 \u00a73b that p",
+   "claim": 1.0,
+   "actual": 1.0,
+   "source": "h1_gate.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 audit sha16 (recorded)",
+   "claim": "7aa235d25eeb66dc",
+   "actual": "7aa235d25eeb66dc",
+   "source": "e2b_audit_v2.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 audit sha16 (recomputed)",
+   "claim": "7aa235d25eeb66dc",
+   "actual": "7aa235d25eeb66dc",
+   "source": "recomputed from the artifact body",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 H1 ran under that sha",
+   "claim": "7aa235d25eeb66dc",
+   "actual": "7aa235d25eeb66dc",
+   "source": "h1_sessions.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 leak family: read half",
+   "claim": 0.00084,
+   "actual": 0.00084,
+   "source": "h2_read_stability.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 leak family: H2",
+   "claim": 0.0022,
+   "actual": 0.0022,
+   "source": "h2_sessions.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 leak family: H1-u",
+   "claim": 0.0,
+   "actual": 0.0,
+   "source": "h1u_sessions.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a71 leak family: H1",
+   "claim": 0.00156,
+   "actual": 0.00156,
+   "source": "h1_gate.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a72 envelope p90 = 0.167",
+   "claim": 0.167,
+   "actual": 0.167,
+   "source": "h1_power.json lockh_v1",
+   "ok": true
+  },
+  {
+   "label": "\u00a72 critical k >= 57 at n=96",
+   "claim": 57,
+   "actual": 57,
+   "source": "h1_power.json lockh_v1",
+   "ok": true
+  },
+  {
+   "label": "\u00a72 MDE 0.130 at 80% power",
+   "claim": 0.13,
+   "actual": 0.13,
+   "source": "h1_power.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a72 bar_leak 0.0735",
+   "claim": 0.0735,
+   "actual": 0.0735,
+   "source": "h1_power.json lockh_v1",
+   "ok": true
+  },
+  {
+   "label": "\u00a72 realised leak = 2.1% of bar",
+   "claim": 2.1,
+   "actual": 2.1,
+   "source": "h1_gate.json / h1_power.json",
+   "ok": true
+  },
+  {
+   "label": "\u00a72 monitor threshold bar_leak/2 (exact 0.03675 -> 4dp)",
+   "claim": "0.0368",
+   "actual": "0.0368",
+   "source": "h1_power.json lockh_v1",
+   "ok": true
+  },
+  {
+   "label": "\u00a72 marker n",
+   "claim": 96,
+   "actual": 96,
+   "source": "PROPOSAL-h \u00a73 (registered)",
+   "ok": true
+  },
+  {
+   "label": "\u00a72 sham n",
+   "claim": 36,
+   "actual": 36,
+   "source": "PROPOSAL-h \u00a73 (registered)",
+   "ok": true
+  },
+  {
+   "label": "\u00a72 random n",
+   "claim": 36,
+   "actual": 36,
+   "source": "PROPOSAL-h \u00a73 (registered)",
+   "ok": true
+  }
+ ],
+ "decides_nothing": "Transcription check only; the commit is the design instance's and Jason's."
+}

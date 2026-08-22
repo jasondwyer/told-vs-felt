@@ -20,6 +20,44 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-22 — **LOCK-h v2 §6 values-check: GREEN, 41/41. Every §1 number
+  and §2 constant matches the artifact §6 names for it. The one apparent
+  mismatch was in the checker, not the lock. PROPOSAL-h carries the
+  interpretive note (`b400083`).**
+  ([`data/e2b/lockh_v2_valuescheck.json`](data/e2b/lockh_v2_valuescheck.json);
+  `scripts/lockh_v2_valuescheck.py`; raw
+  [`2026-08-22_lockh_v2_valuescheck.txt`](results/raw/2026-08-22_lockh_v2_valuescheck.txt))
+  - **What was checked.** All 41: the dose triple (L48 / 0.10 / |α| =
+    10.3010), H2's degeneracy both ways, its declared p0, window, π̂_d; H1's
+    N / sessions-run / exclusions / no-appended-block, n_d and the b–c split,
+    π̂_d and its CI, L̂, the mapped L CI, the PASS and its
+    low-discordance standing, both §3b p-values; the audit sha **recorded,
+    recomputed from the artifact body, and matched against the sha H1
+    actually ran under**; the four-member directional-leak family; and §2's
+    envelope p90, critical k, MDE, bar_leak, the 2.1%-of-bar figure, the
+    monitor threshold, and the registered arm n's.
+  - **The apparent mismatch, and why it was mine.** The check first reported
+    §2's monitor threshold as 0.0367 against the lock's 0.0368. bar_leak/2 =
+    **0.03675 exactly**, and 0.0368 is its correct 4-dp rounding — but the
+    binary double is a hair under 0.03675, so Python's `round()` returns
+    0.0367. A second attempt with a 5e-05 float tolerance sat exactly on the
+    boundary and failed by 1.4e-19. Settled with `Decimal` and
+    `ROUND_HALF_UP`. **Two checker bugs, no lock defect** — recorded because
+    a values-check that reports a false mismatch is as costly as one that
+    misses a true one, and the failure mode (comparing rounded floats) will
+    recur.
+  - **Item 1 applied.** The interpretive note is **appended** at the end of
+    PROPOSAL-h, never edited into §2 — the pre-registration's hash is its
+    timestamp, so a clarification goes beside it. Same repair-beside pattern
+    as the e2a published-record correction and the H2 provenance defect.
+  - **Placement flag for the commit.** v2 is currently a standalone
+    `LOCK-h-v2.md`; the block specifies it becomes **LOCK-h.md's head
+    content with the v1.x text preserved below the amendment log**. That
+    assembly has not been done — it is mechanical, and Code will do it on the
+    word, or Jason can. Until then `LOCK-h.md` is still v1.4 and the verdict
+    tier is not licensed.
+  - **VERDICT: GREEN. LOCK-h v2 verified, ready to commit.**
+
 - 2026-08-21 — **H1 GATE RUN OF RECORD: reached its declared exit at
   session 123, read 4, and PASSES. N = 640, n_d = 11 (b = 6, c = 5),
   π̂_d = 0.0172, L̂ = +0.00156; mapped L CI [−0.00915, +0.01143] against a
