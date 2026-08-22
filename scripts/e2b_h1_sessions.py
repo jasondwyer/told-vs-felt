@@ -75,21 +75,21 @@ import numpy as np
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, REPO)
 
+from valence_core.adapters import qwen_or_explain               # noqa: E402
 from valence_core.adapters.base import Injection                # noqa: E402
 from valence_core.e2b import summarize_leak                     # noqa: E402
-from valence_core.e2b.session import (MENU_TEMPLATES,           # noqa: E402
-                                      N_FREE, ROUND_TEMPLATES,
-                                      SESSION_BANNER, STOP_CAP,
-                                      load_tasks, session_rng,
-                                      task_sequence)
 from valence_core.e2b.statepresent import (                     # noqa: E402
     choice_read_statepresent)
 from valence_core.regression.oracle import load_axis            # noqa: E402
 from valence_core.session import (AuditSpec, build_ban_list,    # noqa: E402
                                   classify_response)
+from valence_core.session_e2a import (MENU_TEMPLATES,           # noqa: E402
+                                      N_FREE, ROUND_TEMPLATES,
+                                      SESSION_BANNER, STOP_CAP,
+                                      load_tasks, session_rng,
+                                      task_sequence)
 
 DATA = os.path.join(REPO, "data")
-QWEN_PY = "jlens-qwen36/.venv/bin/python"
 F = 2
 TEMP = 0.7
 ROSTER = (("granite", "plaza"), ("prism", "slate"),
@@ -110,18 +110,6 @@ def icc_ceiling_at(pi: float) -> float:
         if pi <= edge:
             return val
     return 0.00
-
-
-def _new_qwen_adapter(**kwargs):
-    try:
-        from valence_core.adapters.qwen_mlx import QwenMLXAdapter
-        return QwenMLXAdapter(**kwargs)
-    except (ImportError, RuntimeError) as exc:
-        rel = os.path.relpath(os.path.abspath(__file__), REPO)
-        raise SystemExit(
-            "\nWRONG INTERPRETER (or missing clone) -- not a broken repo.\n"
-            "  " + type(exc).__name__ + ": " + str(exc) + "\n\n"
-            "  Run it as:\n\n      " + QWEN_PY + " " + rel + "\n")
 
 
 def strata() -> list[dict]:
@@ -332,7 +320,7 @@ def main() -> int:
     tasks = load_tasks(os.path.join(DATA, "corpus/e2a_tasks.jsonl"))
     u, R = load_axis(args.layer)
     t0 = time.time()
-    adapter = _new_qwen_adapter()
+    adapter = qwen_or_explain(__file__)
     print(f"  model loaded in {time.time() - t0:.0f}s", flush=True)
 
     ban_ids, ban_strings = build_ban_list(

@@ -20,6 +20,118 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-22 — **CONSOLIDATION ACCEPTANCE EVENT: GREEN. The
+  `_new_qwen_adapter` debt is paid into one
+  `valence_core.adapters.qwen_or_explain()` across eight call sites, and the
+  Route-3 e2a session template leaves the quarantine package for
+  `valence_core/session_e2a.py`. Suite 135/135 before and after — the whole
+  output byte-identical, check for check — and H3 re-run through the new
+  helper reproduces its committed artifact to the sha.**
+  (LOCK-h §7's queued event, sequenced strictly after the disposition entry
+  above per the 2026-08-22 adjudication. Refactor only: no criterion,
+  constant, corpus, dose or published number is touched. Raw
+  [`2026-08-22_consolidation.txt`](results/raw/2026-08-22_consolidation.txt).)
+  - **The debt was bigger than the lock records and less uniform than the
+    handoff records.** LOCK-h §7 says four copies; HANDOFF-2026-08-22 §2
+    corrected the count to eight. Both were right when written, and neither
+    is right about the shape: the eight are **four distinct variants**, not
+    eight verbatim copies. `h3_tagscreen_qwen`, `s2_extract_vignette` and
+    `s2_neighbor_axes` carry the full docstring and the long "wrong
+    interpreter" message; `h3b_repair_screen` carries the long message under
+    a docstring recording the debt itself; `e2b_h2_readstability` carries a
+    one-line docstring and a short message; `e2b_h2_sessions`,
+    `e2b_h1_sessions` and `e2b_verdict_campaign` carry the short message and
+    no docstring. Same `try`/`except`, same exception pair, same fix.
+  - **One behavioural delta, and it is on the failure path only.** The
+    consolidated function takes the LONG message — the one that names the
+    interpreter, the reason and the trap. The four short-message scripts now
+    print more than they used to when run under the wrong python; nothing
+    else about them changes. The rendered message was asserted byte-for-byte
+    against the long form *before* any script was touched. On the success
+    path the function does what all eight did — deferred import, construct,
+    return — so `valence_core` still imports on a machine with neither MLX
+    nor torch, which is asserted rather than assumed.
+  - **`caller_file` is passed explicitly at all eight sites.** The old helper
+    closed over its script's `__file__` and `REPO`; the moved one cannot.
+    Recovering the caller by walking the stack was rejected: it would make
+    the message depend on how the script was invoked, and the message is the
+    entire point of the function. `sys.argv[0]` is the fallback for a caller
+    with no `__file__`. `QWEN_PY` moves with the helper — one definition,
+    imported by `s2_neighbor_axes`, the one script that also uses it outside
+    the helper.
+  - **(b) The Route-3 module's permanent home is the general core, and the
+    reason is the quarantine's own principle.** `valence_core/e2b/` says of
+    itself that what lives there is split by hazard. This module has none:
+    no injection, no adapter, no state — it replays scaffolding from the
+    record and checks it against the archive. Two things follow from moving
+    it to `valence_core/session_e2a.py`. The e2a template stops being
+    reachable only through a quarantine namespace, which is what a general
+    instrument should be. And `statepresent`'s guard sanctions importers **by
+    directory** — every inert module parked in `e2b/` is one more module that
+    could hold the capability without tripping the guard — so moving this one
+    out makes the quarantine **narrower**, not wider. `records.py` stays
+    behind: rule 5(e)'s provenance machinery is e2b's subject matter, and
+    this is not. Convenient accident worth recording: `valence_core.e2b.session`
+    and `valence_core.session_e2a` are both 24 characters, so every
+    continuation line and `# noqa` column in the five import sites is
+    unchanged by the rename.
+  - **Rule 5(e) re-verified after the move, in both directions.**
+
+    | check | result |
+    |---|---|
+    | `import valence_core.e2b.statepresent` from an unsanctioned caller | `ImportError`, guard text unchanged |
+    | sanctioned `scripts/e2b_*.py` runners still import it | 4/4 clean |
+    | no module in `valence_core` outside `e2b/` names the primitive | 0 offenders — and `session_e2a.py` is now *inside* that scan |
+    | `readout.choice_read` still cannot inject; signature unchanged | PASS |
+    | modules sanctioned **by directory** | 2 (`records`, `statepresent`) — was 3 |
+
+  - **Acceptance, under ledger 26.** The suite is necessary and not
+    sufficient — it is model-free, and the helper is a model-loading path —
+    so a real adapter-constructing run is carried beside it.
+
+    | evidence | result |
+    |---|---|
+    | suite, pre-move (at `4fbe9a3`) | **135/135** |
+    | suite, post-move | **135/135**, output byte-identical to pre-move |
+    | Route-3 reconstruction through the new import path | **200/200** scaffoldings, **200/200** seed streams |
+    | H3 re-run through `qwen_or_explain()` vs `data/e2b/h3_tagscreen.json` | **identical sha256** `2b764063a1b6…`, 142 s against the published 143 s |
+    | e2b verdict smoke, post-move, `--out` to scratch | **every counter reproduced** vs the committed pre-move smoke — arm order, 2/2 valid per arm, cumulative paired reads 6/12/12/12/18/24, n_d 1 (b 1, c 0), 0 terminations, 0 clipped; wall-clock 506 s vs 504 s |
+
+  - **The suite stays at 135 deliberately.** A structural check pinning the
+    debt as paid — "no script defines a local `_new_qwen_adapter`", "exactly
+    one `qwen_or_explain`" — belongs to the same family as the quarantine's
+    offender scan and is **recommended**. It is not added here: it would move
+    the count off 135, which is the fingerprint every handoff uses to date a
+    checkout, and the rule-26 comparison is cleanest when the check list is
+    identical on both sides of the move. Design instance's call.
+  - **FLAG — a ninth Qwen construction path, out of scope and left alone.**
+    `scripts/s1_judge_rescue.py` never had the helper: it imports
+    `QwenMLXAdapter` at MODULE level and constructs it bare. It is the one
+    Qwen script that still answers a wrong interpreter with a raw traceback,
+    and it does so at import time, before argparse — so even `--help` fails.
+    One line converts it. Not done: scope (a) is the `_new_qwen_adapter`
+    debt, and this is not a copy of it.
+  - **FLAG — `--smoke` defaults its `--out` to the verdict artifact of
+    record.** `e2b_verdict_campaign.py --smoke` with no `--out` writes
+    `data/e2b/verdict_campaign.json` — the committed campaign — and the
+    module's own usage block shows exactly that invocation. It was harmless
+    when written, because the file did not exist yet; it is not harmless now.
+    Both smokes to date passed `--out` to a scratchpad and the record is
+    intact. A guard refusing the canonical path under `--smoke` is a
+    one-liner and is recommended.
+  - **Surveyed and left:** `valence_core/regression/oracle.py` constructs
+    `QwenMLXAdapter(legacy_truncate=True)` directly. That is a deliberate
+    legacy-path construction inside the core with its own deferred import,
+    not a copy of the helper, and it should not be printing a script-entry
+    message at anyone.
+  - **Nothing in the dated record was rewritten.** Four earlier entries name
+    `_new_qwen_adapter` and two name `valence_core/e2b/session.py`; they
+    describe the state on their own dates and are left exactly as written.
+    LOCK-h §7 likewise stands unedited. HANDOFF-2026-08-22 §2 (the one item
+    Code owed) and its §4 debt row are discharged by this entry, and the
+    handoff is left alone under its own precedence clause: where it and the
+    log disagree, the log is right.
+
 - 2026-08-22 — **e2b DISPOSITION (design instance): the NULL is
   ADOPTED. The registered cell — PROPOSAL-h §4, "e2b null, H1
   clean" — is taken verbatim, and the live-state alternative is

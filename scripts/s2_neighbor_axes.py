@@ -50,6 +50,7 @@ import numpy as np
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, REPO)
 
+from valence_core.adapters import QWEN_PY, qwen_or_explain           # noqa: E402
 from valence_core.adapters.base import Injection, assert_equal_norm  # noqa: E402
 from valence_core.neighbors import (GROUNDED_PANEL, REFERENCE,  # noqa: E402
                                     VIGNETTE, axis_shas,
@@ -103,43 +104,6 @@ def stratify(contexts, n_per_probe, seed=26):
                                 replace=False))
         sub.extend(pool[i] for i in idx)
     return sub, min(n_per_probe, pool_n)
-
-
-QWEN_PY = "jlens-qwen36/.venv/bin/python"
-
-
-def _new_qwen_adapter(**kwargs):
-    """Build the MLX adapter, or fail with the fix instead of a traceback.
-
-    Trap 3 in HANDOFF-2026-08-20, which has now cost real time: the system
-    `python3` has no numpy and no MLX, and the only interpreter that has
-    them is the one inside the gitignored clone. A raw traceback here reads
-    as "the repo is broken" when the repo is fine and the interpreter is
-    wrong.
-
-    Both failure modes are caught because they look identical to a user and
-    share one fix: ImportError (this python has no MLX) and RuntimeError
-    (the clone itself is missing). The guard wraps the deferred import AND
-    the construction. It cannot be a module-level import -- nothing fails
-    there, the adapter loads MLX in its constructor -- and it cannot wrap
-    the construction alone: 79868f7 did exactly that, left the name
-    unbound, and turned the guard into the raw NameError it existed to
-    prevent.
-    """
-    try:
-        from valence_core.adapters.qwen_mlx import QwenMLXAdapter
-        return QwenMLXAdapter(**kwargs)
-    except (ImportError, RuntimeError) as exc:
-        rel = os.path.relpath(os.path.abspath(__file__), REPO)
-        raise SystemExit(
-            "\nWRONG INTERPRETER (or missing clone) -- not a broken repo.\n"
-            "  " + type(exc).__name__ + ": " + str(exc) + "\n\n"
-            "  This script needs MLX and the Qwen stack, which live only in\n"
-            "  the gitignored clone and its venv. Run it as:\n\n"
-            "      " + QWEN_PY + " " + rel + "\n\n"
-            "  System python3 has neither (HANDOFF-2026-08-20 trap 3). The\n"
-            "  model-free regression suite runs under any python with numpy;\n"
-            "  anything touching Qwen does not.\n")
 
 
 def main() -> int:
@@ -211,7 +175,7 @@ def main() -> int:
           f"pre-registered n (PROPOSAL-g §5)", flush=True)
 
     t0 = time.time()
-    adapter = _new_qwen_adapter()          # new work: full-session window
+    adapter = qwen_or_explain(__file__)    # new work: full-session window
     print(f"  model loaded in {time.time() - t0:.0f}s", flush=True)
 
     # Matched dose across every axis, proven pairwise, both signs.

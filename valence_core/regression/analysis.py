@@ -939,7 +939,7 @@ def check_e2a_session_reconstruction() -> list[Check]:
     so "the same template" cannot be established by pointing at the code; it
     has to be established against the record, over the whole record.
     """
-    from ..e2b.session import (MENU_TEMPLATES, ROUND_TEMPLATES,
+    from ..session_e2a import (MENU_TEMPLATES, ROUND_TEMPLATES,
                                verify_archive)
     out = []
     r = verify_archive(os.path.join(DATA, "e2a/sessions.jsonl"),
@@ -962,7 +962,7 @@ def check_e2a_session_reconstruction() -> list[Check]:
     # % 4` agree, so a single transcript "confirms" the wrong rule. Pick a
     # session where the two rules genuinely disagree and show which one the
     # archive follows.
-    from ..e2b.session import (N_FREE, SESSION_BANNER, load_tasks,
+    from ..session_e2a import (N_FREE, SESSION_BANNER, load_tasks,
                                session_rng, task_sequence)
     rows = [json.loads(l) for l in
             open(os.path.join(DATA, "e2a/sessions.jsonl")) if l.strip()]

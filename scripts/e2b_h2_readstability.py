@@ -61,6 +61,7 @@ import numpy as np
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, REPO)
 
+from valence_core.adapters import qwen_or_explain           # noqa: E402
 from valence_core.adapters.base import Injection            # noqa: E402
 from valence_core.e2b import summarize_leak                 # noqa: E402
 from valence_core.e2b.statepresent import (                 # noqa: E402
@@ -69,20 +70,6 @@ from valence_core.regression.oracle import load_axis        # noqa: E402
 
 DATA = os.path.join(REPO, "data")
 CHOICE_PROMPT = "Config choice (one word):"
-QWEN_PY = "jlens-qwen36/.venv/bin/python"
-
-
-def _new_qwen_adapter(**kwargs):
-    """Build the MLX adapter, or fail with the fix instead of a traceback."""
-    try:
-        from valence_core.adapters.qwen_mlx import QwenMLXAdapter
-        return QwenMLXAdapter(**kwargs)
-    except (ImportError, RuntimeError) as exc:
-        rel = os.path.relpath(os.path.abspath(__file__), REPO)
-        raise SystemExit(
-            "\nWRONG INTERPRETER (or missing clone) -- not a broken repo.\n"
-            "  " + type(exc).__name__ + ": " + str(exc) + "\n\n"
-            "  Run it as:\n\n      " + QWEN_PY + " " + rel + "\n")
 
 
 def choice_prefixes(transcript: str) -> list[str]:
@@ -169,7 +156,7 @@ def main() -> int:
           f"(|alpha| = {args.frac * R[args.layer]:.4f} = "
           f"{args.frac} x R_{args.layer} = {R[args.layer]:.2f})")
 
-    adapter = _new_qwen_adapter()
+    adapter = qwen_or_explain(__file__)
     label_ids = {}
     for t in (tag_a, tag_b):
         enc = adapter.encode(" " + t, add_special_tokens=False)

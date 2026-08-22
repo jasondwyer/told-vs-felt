@@ -1,0 +1,121 @@
+DECLARED INVOCATION: consolidation acceptance event (LOCK-h §7, queued AFTER H1), laptop site, jlens-qwen36/.venv/bin/python.
+SCOPE, as adjudicated 2026-08-22 and no wider:
+  (a) _new_qwen_adapter x8 -> valence_core.adapters.qwen_or_explain()
+  (b) valence_core/e2b/session.py -> valence_core/session_e2a.py
+Refactor only. No criterion, constant, corpus, dose or published number touched.
+
+=== 1. SUITE, PRE-MOVE (tree at 4fbe9a3) ===============================
+  [PASS] logistic fit deterministic                                expected     1.000000 got     1.000000   (discrim (seeded GD))
+------------------------------------------------------------------------------
+  135/135 reproduced through valence_core
+
+=== 2. SUITE, POST-MOVE ================================================
+  [PASS] logistic fit deterministic                                expected     1.000000 got     1.000000   (discrim (seeded GD))
+------------------------------------------------------------------------------
+  135/135 reproduced through valence_core
+
+=== 3. diff(pre, post) over the FULL 140-line suite output =============
+  (empty) -- byte-identical, check for check, value for value
+
+=== 4. Route-3 reconstruction, through the NEW import path =============
+  [PASS] e2a template: every archived scaffolding rebuilt          expected      200/200 got      200/200   (Route 3 acceptance)
+  [PASS] e2a template: RNG stream in step (recorded seeds)         expected      200/200 got      200/200   (session_rng draw order)
+  [PASS] e2a template: index keyed on SESSION, not round           expected session-keyed got session-keyed   (archive reward s1 (s%4 != 0))
+  [PASS] e2a template: coincidence guard is discriminating         expected       differ got       differ   (s1: session-rule vs round-rule headers)
+  [PASS] e2a template: 4 round + 4 menu paraphrases                expected          4/4 got          4/4   (template family)
+
+=== 5. rule 5(e) quarantine, post-move =================================
+-- unsanctioned import:
+ImportError: valence_core.e2b.statepresent is quarantined (CLAUDE.md rule 5(e), PROPOSAL-h §0.1). It may be imported only from inside the e2b package or a scri
+-- sanctioned scripts/e2b_*.py runners (module-level statepresent import):
+     OK  scripts/e2b_h2_readstability.py
+     OK  scripts/e2b_h2_sessions.py
+     OK  scripts/e2b_h1_sessions.py
+     OK  scripts/e2b_verdict_campaign.py
+-- suite checks:
+  [PASS] e2b: quarantined primitive refuses import here            expected       raises got       raises   (rule 5(e) / PROPOSAL-h §0.1)
+  [PASS] e2b: no standard harness names the primitive              expected  0 offenders got  0 offenders   (structural quarantine)
+  [PASS] e2b: choice_read still cannot inject                      expected     accepted got     accepted   (rule 5(e) final clause)
+  [PASS] e2b: choice_read signature unchanged                      expected no injection param got        clean   (readout.choice_read)
+  [PASS] e2b: complete provenance is admissible                    expected     accepted got     accepted   (rule 5(e))
+  [PASS] e2b: provenance without direction_sha is refused          expected       raises got       raises   (rule 5(e) 'on EVERY read')
+  [PASS] e2b: provenance without r_layer is refused                expected       raises got       raises   (rule 5(e) 'on EVERY read')
+  [PASS] e2b: provenance without frac is refused                   expected       raises got       raises   (rule 5(e) 'on EVERY read')
+  [PASS] e2b: a null-dose 'state-present' read is refused          expected       raises got       raises   (a read with no state is a shadow read)
+  [PASS] e2b: a state-present read without its shadow is refused   expected       raises got       raises   (PROPOSAL-h §0.2)
+  [PASS] e2b: a steered 'shadow' is refused                        expected       raises got       raises   (the shadow must be state-free)
+  [PASS] e2b: per-read leak is state-present minus shadow          expected d_p_a +0.120 got d_p_a +0.120   (PROPOSAL-h §0.2 (i))
+  [PASS] e2b: leak reports label-mass displacement too             expected       -0.020 got       -0.020   (horn (a) degrades before it biases)
+  [PASS] e2b: a flipped pick is recorded                           expected         True got         True   (coarse leak measure)
+  [PASS] e2b: common-mode leak reads as common mode                expected reversing 0.000 / common +0.100 got reversing +0.000 / common +0.100   (the counterbalance absorbs it)
+  [PASS] e2b: state-reversing leak survives the split              expected reversing +0.100 / common 0.000 got reversing +0.100 / common +0.000   (the leak a counterbalance cannot absorb)
+  [PASS] e2b: pooling would have hidden it                         expected pooled mean 0.000 got       +0.000   (why the split exists)
+-- modules sanctioned BY DIRECTORY (guard _PKG_DIR prefix):
+     by_dir=True   valence_core/e2b/records.py
+     by_dir=True   valence_core/e2b/statepresent.py
+     by_dir=False  valence_core/session_e2a.py
+
+=== 6. ALL EIGHT call sites import clean ===============================
+     OK  scripts/h3_tagscreen_qwen.py
+     OK  scripts/h3b_repair_screen.py
+     OK  scripts/s2_extract_vignette.py
+     OK  scripts/s2_neighbor_axes.py
+     OK  scripts/e2b_h2_readstability.py
+     OK  scripts/e2b_h2_sessions.py
+     OK  scripts/e2b_h1_sessions.py
+     OK  scripts/e2b_verdict_campaign.py
+
+-- import policy held: no backend module loaded by importing the core
+     backend modules after core import: NONE
+
+=== 7. MODEL-BACKED ACCEPTANCE: H3 re-run through qwen_or_explain() ====
+  jlens-qwen36/.venv/bin/python scripts/h3_tagscreen_qwen.py --out <scratch>
+2b764063a1b635d35f0b989c204cd9ccdea7130bde21d57ea15bd0daa2745f30  data/e2b/h3_tagscreen.json
+2b764063a1b635d35f0b989c204cd9ccdea7130bde21d57ea15bd0daa2745f30  /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/0ebd089b-a547-4f77-be8e-8a1964fe3755/scratchpad/h3_tagscreen_reacceptance.json
+  BYTE-FOR-BYTE IDENTICAL to the committed artifact (142 s; published 143 s)
+
+=== 8. MODEL-BACKED ACCEPTANCE: e2b verdict-campaign smoke, post-move ==
+  jlens-qwen36/.venv/bin/python scripts/e2b_verdict_campaign.py --smoke --out <scratch>
+  (exercises qwen_or_explain() + session_e2a + the quarantined primitive together)
+
+-- POST-MOVE:
+     === e2b VERDICT CAMPAIGN (LOCK-h v2.0 §2) ===
+       *** SMOKE -- 2 sessions per arm, NOT the campaign ***
+       arms: marker 2 valid / 2 scheduled / cap 2, sham 2 valid / 2 scheduled / cap 2, random 2 valid / 2 scheduled / cap 2
+       AUDIT v2 sha 7aa235d25eeb66dc (verified); termination counter 4 patterns
+       contingency: THE CHOICE delivers the state, live through the following round and the next read (marker/random); sham has no state anywhere and reads via the untouched choice_read
+       leak monitor: PAUSE iff CI excludes 0 AND |L_hat| > 0.0367; stability ceiling pi_hat_d > 0.30
+       model loaded in 3s
+       dose |alpha| = 10.3010; rounds CACHED; temp 0.7
+         [marker]   1/2 valid   1/2  paired_reads 6  91s
+         [random]   1/2 valid   1/2  paired_reads 12  183s
+         [sham  ]   1/2 valid   1/2  paired_reads 12  244s
+         [sham  ]   2/2 valid   2/2  paired_reads 12  312s
+         [random]   2/2 valid   2/2  paired_reads 18  409s
+         [marker]   2/2 valid   2/2  paired_reads 24  503s
+     
+       valid {'marker': 2, 'sham': 2, 'random': 2} | ran {'marker': 2, 'sham': 2, 'random': 2} | paired reads 24 (n_d 1, b 1, c 0)
+       terminations 0; window clipped 0
+       PRIMARY NOT EVALUATED HERE -- run e2b_verdict_analyze.py
+     
+     wrote /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/0ebd089b-a547-4f77-be8e-8a1964fe3755/scratchpad/verdict_smoke_postmove.json  (506s)
+
+-- COMMITTED PRE-MOVE SMOKE, for comparison (results/raw/2026-08-22_verdict_smoke.txt):
+         [marker]   1/2 valid   1/2  paired_reads 6  90s
+         [random]   1/2 valid   1/2  paired_reads 12  181s
+         [sham  ]   1/2 valid   1/2  paired_reads 12  242s
+         [sham  ]   2/2 valid   2/2  paired_reads 12  310s
+         [random]   2/2 valid   2/2  paired_reads 18  405s
+         [marker]   2/2 valid   2/2  paired_reads 24  499s
+     
+       valid {'marker': 2, 'sham': 2, 'random': 2} | ran {'marker': 2, 'sham': 2, 'random': 2} | paired reads 24 (n_d 1, b 1, c 0)
+       terminations 0; window clipped 0
+       PRIMARY NOT EVALUATED HERE -- run e2b_verdict_analyze.py
+     
+     wrote /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/6634e5a4-c63a-481c-bf8b-16dc3337fb4c/scratchpad/verdict_smoke.json  (504s)
+
+-- EVERY COUNTER REPRODUCED: arm order, per-arm valid/ran 2/2, cumulative
+   paired reads 6/12/12/12/18/24, n_d 1 (b 1, c 0), terminations 0, clipped 0.
+   Wall-clock differs only (503s vs 499s to the last session; 506s vs 504s total).
+   The pre-move smoke's JSON went to that session's scratchpad and is gone, so
+   this comparison is at the counter level, not byte level.

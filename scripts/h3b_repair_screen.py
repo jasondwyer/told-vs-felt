@@ -49,38 +49,11 @@ import time
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, REPO)
 
+from valence_core.adapters import qwen_or_explain        # noqa: E402
 from valence_core.tagscreen import FORMATS, screen_pair  # noqa: E402
 
 DATA = os.path.join(REPO, "data")
 ROSTER = os.path.join(DATA, "configs/h3_roster_candidates.json")
-
-
-QWEN_PY = "jlens-qwen36/.venv/bin/python"
-
-
-def _new_qwen_adapter(**kwargs):
-    """Build the MLX adapter, or fail with the fix instead of a traceback.
-
-    Fourth copy of this helper (h3, s2 x2, here). That is a debt, not a
-    pattern: it belongs in `valence_core.adapters` as a `qwen_or_explain()`.
-    It is not moved here because rule 26 makes any core change an
-    acceptance-test event, and a screening script is the wrong occasion to
-    trigger one. FLAGGED in the dated entry instead.
-    """
-    try:
-        from valence_core.adapters.qwen_mlx import QwenMLXAdapter
-        return QwenMLXAdapter(**kwargs)
-    except (ImportError, RuntimeError) as exc:
-        rel = os.path.relpath(os.path.abspath(__file__), REPO)
-        raise SystemExit(
-            "\nWRONG INTERPRETER (or missing clone) -- not a broken repo.\n"
-            "  " + type(exc).__name__ + ": " + str(exc) + "\n\n"
-            "  This script needs MLX and the Qwen stack, which live only in\n"
-            "  the gitignored clone and its venv. Run it as:\n\n"
-            "      " + QWEN_PY + " " + rel + "\n\n"
-            "  System python3 has neither (HANDOFF-2026-08-20 trap 3). The\n"
-            "  model-free regression suite runs under any python with numpy;\n"
-            "  anything touching Qwen does not.\n")
 
 
 def best_matching(clearing: list[dict], size: int = 4) -> tuple[list, int]:
@@ -134,7 +107,7 @@ def main() -> int:
     original = {tuple(sorted(p["tags"])): p["name"] for p in roster["pairs"]}
 
     t0 = time.time()
-    adapter = _new_qwen_adapter()
+    adapter = qwen_or_explain(__file__)
     print("=== H3b: re-pairing screen (Qwen, MLX) ===")
     print(f"  model loaded in {time.time() - t0:.0f}s", flush=True)
 

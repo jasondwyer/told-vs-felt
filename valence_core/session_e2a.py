@@ -1,7 +1,7 @@
 """The e2a session template, reimplemented against `ModelAdapter` -- and
 proved equal to the original by reconstructing every archived transcript.
 
-WHY THIS MODULE EXISTS, and why it is here rather than in the general core.
+WHY THIS MODULE EXISTS.
 H2 needs sessions whose rounds are generated with the state live. The e2a
 session runner that produced the cycle-3/4 record lives only in the
 gitignored clone (`jlens_qwen/e2a.py`, `scripts/e2a_sessions.py`), so it is
@@ -10,11 +10,18 @@ reach the quarantined read primitive. The 2026-08-21 adjudication settled the
 fork on Route 3: reimplement against `ModelAdapter`, inside the e2b harness,
 with acceptance by byte-for-byte reconstruction of the archive.
 
-**It lives in `valence_core/e2b/` deliberately.** That is the e2b harness and
-the quarantine boundary; nothing in the general core imports it, so no
-published path changes and rule 26's refactor law is not triggered. The
-adjudication queues this module and the `_new_qwen_adapter` debt into one
-consolidation event after H1.
+**It lived in `valence_core/e2b/` until the consolidation event of
+2026-08-22, and the queued question was where its permanent home is.** The
+answer follows the quarantine's own principle: `e2b/` is split by hazard,
+and this module has none. It holds no injection, constructs no adapter, and
+cannot put a state anywhere -- it replays scaffolding from the record and
+checks it against the archive. Two things follow from moving it out. The
+e2a template stops being reachable only through a quarantine namespace,
+which is what a general instrument should be; and the set of modules
+`statepresent`'s guard sanctions BY DIRECTORY shrinks by one, so the
+quarantine gets narrower rather than wider. `records.py` stays inside,
+because the rule 5(e) provenance machinery is e2b's subject matter and this
+is not.
 
 ## Why byte-for-byte reconstruction is possible at all
 
