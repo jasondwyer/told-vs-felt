@@ -20,6 +20,64 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-21 — **H1 GATE RUN OF RECORD: reached its declared exit at
+  session 123, read 4, and PASSES. N = 640, n_d = 11 (b = 6, c = 5),
+  π̂_d = 0.0172, L̂ = +0.00156; mapped L CI [−0.00915, +0.01143] against a
+  bar of ±0.0735. The §3b registered secondaries are NULL — H2's post-hoc
+  clustering hint did not replicate.**
+  ([`data/e2b/h1_sessions.json`](data/e2b/h1_sessions.json),
+  [`h1_gate.json`](data/e2b/h1_gate.json); raw
+  [`2026-08-21_h1_gate.txt`](results/raw/2026-08-21_h1_gate.txt),
+  [`_eval`](results/raw/2026-08-21_h1_gate_eval.txt). Audit v2 sha
+  `7aa235d25eeb66dc` recomputed and verified at startup; rounds cached per
+  the g1 artifact; 9,693 s.)
+  - **The v1.4 schedule worked exactly as sized.** 123 sessions run of 128
+    scheduled, **16 excluded (13.0%)**, stop reached **without appending a
+    block**. v1.2's 112 could not have got there; 128 did, with 5 sessions
+    to spare. The sizing note is now a measurement rather than a projection.
+  - **Gate, per §3:** exact 95% CI on p_flip = 6/11 is [0.2338, 0.8325];
+    mapped through π̂_d it is **[−0.00915, +0.01143]**, entirely inside
+    (−0.0735, +0.0735). **VERDICT: PASS.**
+  - **Reported as CERTIFICATION BY LOW DISCORDANCE, per the rule ratified
+    2026-08-21 — not as a powered directional test.** π̂_d = 0.0172 sits
+    below the bar on its own, so the mapped interval lies inside
+    [−π̂_d, +π̂_d] whatever the b/c split; §3's feasibility corollary is what
+    certifies. π̂_d's own exact 95% CI is **[0.0086, 0.0305]**, upper bound
+    well below the bar — so the certification is not marginal, but it is
+    still a certification by *how little the state moves choices*, not by a
+    directional test that had power and found nothing.
+  - **§3b registered secondaries, both NULL** (200,000 uniform-placement
+    draws, two-sided by tail probability, α = .05 each): ICĈ = **0.0000**
+    against a null mean of 0.0103, **p = 1.0000**; sessions carrying ≥ 2
+    flips = **0** against a null mean of 0.415, **p = 1.0000**. **The i.i.d.
+    treatment stands.**
+    - **H2's post-hoc clustering did not replicate, and that is the useful
+      part.** H2 gave ICĈ = 0.1443 with permutation p ≈ 0.017 on five
+      events; H1, with 11 flips over 640 reads, finds **zero** sessions
+      carrying two flips where chance alone predicts 0.415. The earlier hint
+      was noise, as the entry that reported it cautioned — which is why it
+      was registered into §3b rather than acted on. H2's values are cited
+      here descriptively and are not pooled.
+  - **Where the leak actually landed.** L̂ = +0.00156 is **2.1% of
+    bar_leak**; the b/c split is 6/5, about as close to the b = c null as 11
+    events allow. Across the campaign family the directional component has
+    now been measured four times — read half +0.00084, H2 +0.00220, H1-u
+    exactly 0.00000, H1 +0.00156 — all inside 3% of the bar.
+  - **Monitors:** degeneracy **22/1111 = 0.0198** under audit v2 (which
+    catches strictly more than the monitor e2a ran); exclusions 16/123 =
+    13.0%; **window clean, 0 clipped** across 640 paired reads and 1,111
+    rounds. Checkpoints at 128/256/384/512/640 reads: π̂_d 0.0076, 0.0078,
+    0.0156, 0.0174, 0.0172; ICĈ 0.0000 at every one; ceiling 1.00
+    throughout; no pause, and the 0.30 stability ceiling never approached.
+  - **What this unblocks, and what it does not.** The leakage budget is paid:
+    PROPOSAL-h §2's gate on opening the verdict tier is satisfied on the
+    numbers. **The disposition is the design instance's**, and LOCK-h v2 is
+    still owed before any verdict session — §5 requires it to carry H2's
+    confirmed dose and stability numbers, H1's realised (n_d, N, π̂_d, CI),
+    and the verdict criteria restated with those values in place.
+  - Code evaluates the declared criterion over a committed artifact and
+    stops. Suite 135/135.
+
 - 2026-08-21 — **H1-u redesignated and logged as the prefix-steering
   comparison arm; LOCK-h v1.4 applied and §6-verified; H1 gate run of record
   launched with steered rounds and the exclusion-robust schedule.**

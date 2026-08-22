@@ -1,0 +1,57 @@
+{
+ "item": "H1 gate evaluation",
+ "lock": "LOCK-h v1.4 \u00a73 + \u00a73b",
+ "source": "data/e2b/h1_sessions.json",
+ "audit_sha16": "7aa235d25eeb66dc",
+ "stop_reason": "N_max",
+ "stop_at": {
+  "session": 123,
+  "read": 4
+ },
+ "N": 640,
+ "n_d": 11,
+ "b": 6,
+ "c": 5,
+ "pi_hat_d": 0.0171875,
+ "pi_hat_d_ci": [
+  0.008610369541674864,
+  0.030544703759136736
+ ],
+ "L_hat": 0.0015625,
+ "p_flip_ci": [
+  0.23379359765934518,
+  0.8325119059362929
+ ],
+ "L_ci": [
+  -0.009150845080460011,
+  0.011430096766560068
+ ],
+ "bar_leak": 0.0735,
+ "verdict": "PASS",
+ "certified_by_low_discordance": true,
+ "secondary_3b": {
+  "n_sessions": 107,
+  "n_reads": 640,
+  "n_flips": 11,
+  "icc_obs": 0.0,
+  "icc_p_two_sided": 1.0,
+  "sessions_ge2_obs": 0,
+  "sessions_ge2_p_two_sided": 1.0,
+  "draws": 200000,
+  "seed": 26,
+  "reading": "the i.i.d. treatment stands",
+  "gate_relevant": false
+ },
+ "monitors": {
+  "degeneracy": [
+   22,
+   1111
+  ],
+  "excluded": [
+   16,
+   123
+  ],
+  "clipped": 0
+ },
+ "decides_nothing": "Code evaluates the declared criterion over a committed artifact; the campaign's disposition is the design instance's."
+}

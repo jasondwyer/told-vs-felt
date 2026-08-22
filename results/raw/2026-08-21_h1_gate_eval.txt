@@ -1,0 +1,25 @@
+DECLARED INVOCATION: scripts/e2b_h1_gate.py (defaults: bar 0.0735, conf 0.95, 200000 draws, seed 26) over data/e2b/h1_sessions.json
+=== H1 GATE (LOCK-h v1.4 §3) ===
+  artifact: data/e2b/h1_sessions.json
+  audit sha 7aa235d25eeb66dc | rounds cached True | sessions run 123 of 128
+  STOP: N_max at {'session': 123, 'read': 4}
+  N = 640, n_d = 11 (b = 6, c = 5), pi_hat_d = 0.0172, L_hat = +0.00156
+
+  exact 95% CI on p_flip = 6/11: [0.2338, 0.8325]
+  mapped through pi_hat_d -> L CI = [-0.00915, +0.01143]
+  bar_leak = +/-0.0735
+
+  VERDICT: PASS
+  Reported as CERTIFICATION BY LOW DISCORDANCE, not as a powered directional test: pi_hat_d = 0.0172 is already below the bar, so the mapped interval lies inside [-pi_hat, +pi_hat] whatever the b/c split. §3's feasibility corollary -- a leak cannot exceed the discordance carrying it -- is what certifies here.
+  pi_hat_d exact 95% CI [0.0086, 0.0305]; upper below bar: True
+
+  --- §3b REGISTERED SECONDARIES (never gate-relevant) ---
+    107 sessions with reads, 640 reads, 11 flips
+    (i)  ICC-hat = 0.0000; null mean 0.0103 -> two-sided p = 1.0000  null
+    (ii) sessions with >= 2 flips = 0; null mean 0.415 -> two-sided p = 1.0000  null
+    reading: the i.i.d. treatment stands
+    H2's post-hoc values (0.017, 0.0115) are cited descriptively beside this, never pooled into it.
+
+  monitors: degeneracy 22/1111 = 0.0198; excluded 16/123; window clipped 0
+
+wrote /Users/jasondwyer/Documents/code/jspace-lab/data/e2b/h1_gate.json

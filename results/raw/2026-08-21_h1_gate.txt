@@ -1,0 +1,147 @@
+DECLARED INVOCATION (H1 GATE RUN OF RECORD; declaration precedes scoring): jlens-qwen36/.venv/bin/python scripts/e2b_h1_sessions.py -- defaults per LOCK-h v1.4 §3/§3a: 128 sessions scheduled (8 blocks x 16 strata), whole blocks of 16 appended if the schedule exhausts before a §3 exit, hard cap 160; STEERED post-choice rounds (the schedule selects every state, the pick selects none); stop at n_d = 200 OR N = 640 paired reads; m = 6 pooled; checkpoint every 128 reads; L48 frac 0.10 axis span_reward; temp 0.7; order-seed 2026; audit v2 frozen sha 7aa235d25eeb66dc (recomputed and checked at startup); round path per the g1 gate artifact; choice forwards state-free uncached. THIN-MARGIN NOTE: H2's upper bound 0.0636 vs bar 0.0735 -- if H1's CI crosses, the directional test is the design working, not a surprise. Supersedes H1-u (auxiliary, unsteered rounds, short stop). AC power confirmed; caffeinate -is per the long-run checklist. NOTE: a first launch at 17:16 was killed after 3 min because its run header still printed the stale 'rounds are UNSTEERED' line; no data from it is retained.
+=== H1: the leakage budget, as locked (LOCK-h v1.3 §3/§3a) ===
+  scheduled 128 sessions (7 blocks x 16 strata); stop at n_d = 200 or N = 640 paired reads
+  stop corollary: n_d* needs pi_d >= 0.3125, forbidden by the 0.30 ceiling -> N_max binds; expected stop session 107, read 4
+  AUDIT v2 FROZEN, sha16 = 7aa235d25eeb66dc (verified) -- 9 fragments + 4 junk patterns
+  CONTINGENCY-FREE, STEERED ROUNDS (LOCK-h v1.4): the SCHEDULE selects every state, the pick selects none. Reads alternate from the forced-phase end state; each post-choice round is steered by the state the NEXT read sits on -- the verdict tier's own geometry with the schedule in the choice's place.
+  THIN-MARGIN NOTE (carried per the adjudication): H2's upper bound was 0.0636 against bar 0.0735. If H1's CI crosses, the directional test is the design working, not a surprise.
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 15588.07it/s]
+  model loaded in 5s
+  g1 gate frac 0.1: PASS max KL 7.106e-04 -> rounds CACHED; choice forwards uncached always
+  dose |alpha| = 10.3010; temp 0.7
+    s1/128 [velvet/walnut +walnut end=neg] reads=6 N=6 n_d=0 (b0/c0)  86s
+    s2/128 [granite/plaza +granite end=pos] reads=6 N=12 n_d=0 (b0/c0)  180s
+    s3/128 [granite/plaza +plaza end=neg] reads=6 N=18 n_d=0 (b0/c0)  260s
+    s4/128 [granite/plaza +granite end=neg] reads=6 N=24 n_d=1 (b0/c1)  353s
+    s5/128 [prism/slate +slate end=pos] reads=6 N=30 n_d=1 (b0/c1)  438s
+    s6/128 [velvet/walnut +velvet end=neg] reads=6 N=36 n_d=1 (b0/c1)  519s
+    s7/128 [prism/slate +slate end=neg] reads=0 N=36 n_d=1 (b0/c1) EXCLUDED(audit:frame:Config evaluation session@forced1)  523s
+    s8/128 [ridge/saddle +ridge end=pos] reads=6 N=42 n_d=1 (b0/c1)  611s
+    s9/128 [ridge/saddle +saddle end=neg] reads=6 N=48 n_d=1 (b0/c1)  701s
+    s10/128 [prism/slate +prism end=neg] reads=6 N=54 n_d=1 (b0/c1)  800s
+    s11/128 [ridge/saddle +saddle end=pos] reads=6 N=60 n_d=1 (b0/c1)  894s
+    s12/128 [ridge/saddle +ridge end=neg] reads=6 N=66 n_d=1 (b0/c1)  990s
+    s13/128 [velvet/walnut +walnut end=pos] reads=6 N=72 n_d=1 (b0/c1)  1070s
+    s14/128 [velvet/walnut +velvet end=pos] reads=6 N=78 n_d=1 (b0/c1)  1165s
+    s15/128 [granite/plaza +plaza end=pos] reads=6 N=84 n_d=1 (b0/c1)  1263s
+    s16/128 [prism/slate +prism end=pos] reads=6 N=90 n_d=1 (b0/c1)  1354s
+    s17/128 [velvet/walnut +walnut end=neg] reads=0 N=90 n_d=1 (b0/c1) EXCLUDED(lexical:walnut@forced3)  1369s
+    s18/128 [prism/slate +prism end=neg] reads=6 N=96 n_d=1 (b0/c1)  1488s
+    s19/128 [ridge/saddle +saddle end=pos] reads=6 N=102 n_d=1 (b0/c1)  1569s
+    s20/128 [velvet/walnut +velvet end=pos] reads=0 N=102 n_d=1 (b0/c1) EXCLUDED(lexical:walnut@forced0)  1572s
+    s21/128 [ridge/saddle +saddle end=neg] reads=6 N=108 n_d=1 (b0/c1)  1667s
+    s22/128 [granite/plaza +granite end=pos] reads=6 N=114 n_d=1 (b0/c1)  1757s
+    s23/128 [prism/slate +slate end=pos] reads=6 N=120 n_d=1 (b0/c1)  1847s
+    s24/128 [ridge/saddle +ridge end=neg] reads=6 N=126 n_d=1 (b0/c1)  1943s
+    s25/128 [granite/plaza +plaza end=neg] reads=6 N=132 n_d=1 (b0/c1)  2041s
+      --- CHECKPOINT at 128 reads: pi_hat_d = 0.0076, ICC-hat = 0.0000, ceiling 1.00 -> within
+    s26/128 [prism/slate +prism end=pos] reads=0 N=132 n_d=1 (b0/c1) EXCLUDED(audit:frame:evaluation session@forced1)  2045s
+    s27/128 [prism/slate +slate end=neg] reads=6 N=138 n_d=1 (b0/c1)  2124s
+    s28/128 [granite/plaza +granite end=neg] reads=6 N=144 n_d=1 (b0/c1)  2220s
+    s29/128 [granite/plaza +plaza end=pos] reads=0 N=144 n_d=1 (b0/c1) EXCLUDED(audit:frame:evaluation session@forced3)  2231s
+    s30/128 [ridge/saddle +ridge end=pos] reads=6 N=150 n_d=1 (b0/c1)  2323s
+    s31/128 [velvet/walnut +walnut end=pos] reads=6 N=156 n_d=1 (b0/c1)  2412s
+    s32/128 [velvet/walnut +velvet end=neg] reads=6 N=162 n_d=2 (b0/c2)  2501s
+    s33/128 [prism/slate +slate end=neg] reads=6 N=168 n_d=2 (b0/c2)  2582s
+    s34/128 [velvet/walnut +velvet end=pos] reads=6 N=174 n_d=2 (b0/c2)  2671s
+    s35/128 [velvet/walnut +walnut end=pos] reads=6 N=180 n_d=2 (b0/c2)  2761s
+    s36/128 [granite/plaza +granite end=pos] reads=0 N=180 n_d=2 (b0/c2) EXCLUDED(lexical:plaza@forced1)  2765s
+    s37/128 [ridge/saddle +saddle end=neg] reads=6 N=186 n_d=2 (b0/c2)  2853s
+    s38/128 [granite/plaza +granite end=neg] reads=6 N=192 n_d=2 (b0/c2)  2939s
+    s39/128 [velvet/walnut +walnut end=neg] reads=6 N=198 n_d=2 (b0/c2)  3033s
+    s40/128 [ridge/saddle +ridge end=pos] reads=0 N=198 n_d=2 (b0/c2) EXCLUDED(audit:frame:Config evaluation session@forced1)  3037s
+    s41/128 [prism/slate +slate end=pos] reads=0 N=198 n_d=2 (b0/c2) EXCLUDED(audit:frame:Config evaluation session@forced1)  3039s
+    s42/128 [ridge/saddle +ridge end=neg] reads=6 N=204 n_d=2 (b0/c2)  3125s
+    s43/128 [granite/plaza +plaza end=pos] reads=6 N=210 n_d=2 (b0/c2)  3219s
+    s44/128 [velvet/walnut +velvet end=neg] reads=6 N=216 n_d=2 (b0/c2)  3311s
+    s45/128 [ridge/saddle +saddle end=pos] reads=6 N=222 n_d=2 (b0/c2)  3403s
+    s46/128 [prism/slate +prism end=neg] reads=0 N=222 n_d=2 (b0/c2) EXCLUDED(audit:junk:(?i)\bround\s+\d+\s*[|—–-]\s*\w@forced2)  3411s
+    s47/128 [granite/plaza +plaza end=neg] reads=6 N=228 n_d=2 (b0/c2)  3503s
+    s48/128 [prism/slate +prism end=pos] reads=6 N=234 n_d=2 (b0/c2)  3599s
+    s49/128 [velvet/walnut +walnut end=neg] reads=0 N=234 n_d=2 (b0/c2) EXCLUDED(audit:frame:Config evaluation session@forced2)  3605s
+    s50/128 [velvet/walnut +velvet end=pos] reads=6 N=240 n_d=2 (b0/c2)  3691s
+    s51/128 [prism/slate +slate end=pos] reads=6 N=246 n_d=2 (b0/c2)  3772s
+    s52/128 [ridge/saddle +ridge end=pos] reads=6 N=252 n_d=2 (b0/c2)  3858s
+    s53/128 [granite/plaza +plaza end=pos] reads=6 N=258 n_d=2 (b0/c2)  3947s
+      --- CHECKPOINT at 256 reads: pi_hat_d = 0.0078, ICC-hat = 0.0000, ceiling 1.00 -> within
+    s54/128 [prism/slate +prism end=neg] reads=6 N=264 n_d=3 (b1/c2)  4042s
+    s55/128 [ridge/saddle +saddle end=neg] reads=6 N=270 n_d=3 (b1/c2)  4128s
+    s56/128 [granite/plaza +granite end=neg] reads=6 N=276 n_d=3 (b1/c2)  4221s
+    s57/128 [prism/slate +slate end=neg] reads=6 N=282 n_d=3 (b1/c2)  4303s
+    s58/128 [prism/slate +prism end=pos] reads=0 N=282 n_d=3 (b1/c2) EXCLUDED(audit:frame:evaluation session@forced2)  4310s
+    s59/128 [velvet/walnut +walnut end=pos] reads=6 N=288 n_d=3 (b1/c2)  4403s
+    s60/128 [ridge/saddle +ridge end=neg] reads=6 N=294 n_d=3 (b1/c2)  4488s
+    s61/128 [granite/plaza +plaza end=neg] reads=6 N=300 n_d=3 (b1/c2)  4572s
+    s62/128 [granite/plaza +granite end=pos] reads=6 N=306 n_d=3 (b1/c2)  4660s
+    s63/128 [ridge/saddle +saddle end=pos] reads=6 N=312 n_d=4 (b1/c3)  4762s
+    s64/128 [velvet/walnut +velvet end=neg] reads=6 N=318 n_d=4 (b1/c3)  4852s
+    s65/128 [prism/slate +slate end=pos] reads=6 N=324 n_d=4 (b1/c3)  4939s
+    s66/128 [velvet/walnut +velvet end=pos] reads=6 N=330 n_d=4 (b1/c3)  5030s
+    s67/128 [ridge/saddle +saddle end=pos] reads=6 N=336 n_d=4 (b1/c3)  5118s
+    s68/128 [ridge/saddle +ridge end=pos] reads=6 N=342 n_d=5 (b2/c3)  5205s
+    s69/128 [velvet/walnut +walnut end=pos] reads=6 N=348 n_d=5 (b2/c3)  5299s
+    s70/128 [prism/slate +prism end=pos] reads=6 N=354 n_d=5 (b2/c3)  5388s
+    s71/128 [ridge/saddle +saddle end=neg] reads=6 N=360 n_d=5 (b2/c3)  5481s
+    s72/128 [granite/plaza +granite end=neg] reads=6 N=366 n_d=5 (b2/c3)  5575s
+    s73/128 [prism/slate +slate end=neg] reads=6 N=372 n_d=6 (b2/c4)  5651s
+    s74/128 [velvet/walnut +velvet end=neg] reads=6 N=378 n_d=6 (b2/c4)  5743s
+    s75/128 [granite/plaza +plaza end=neg] reads=6 N=384 n_d=6 (b2/c4)  5835s
+      --- CHECKPOINT at 384 reads: pi_hat_d = 0.0156, ICC-hat = 0.0000, ceiling 1.00 -> within
+    s76/128 [ridge/saddle +ridge end=neg] reads=6 N=390 n_d=6 (b2/c4)  5933s
+    s77/128 [velvet/walnut +walnut end=neg] reads=6 N=396 n_d=7 (b3/c4)  6025s
+    s78/128 [granite/plaza +granite end=pos] reads=6 N=402 n_d=7 (b3/c4)  6107s
+    s79/128 [granite/plaza +plaza end=pos] reads=6 N=408 n_d=7 (b3/c4)  6208s
+    s80/128 [prism/slate +prism end=neg] reads=6 N=414 n_d=7 (b3/c4)  6298s
+    s81/128 [velvet/walnut +walnut end=neg] reads=0 N=414 n_d=7 (b3/c4) EXCLUDED(audit:frame:evaluation session@forced3)  6310s
+    s82/128 [granite/plaza +granite end=neg] reads=6 N=420 n_d=7 (b3/c4)  6414s
+    s83/128 [granite/plaza +plaza end=pos] reads=6 N=426 n_d=7 (b3/c4)  6529s
+    s84/128 [velvet/walnut +velvet end=neg] reads=6 N=432 n_d=7 (b3/c4)  6617s
+    s85/128 [prism/slate +slate end=pos] reads=6 N=438 n_d=7 (b3/c4)  6706s
+    s86/128 [prism/slate +prism end=neg] reads=6 N=444 n_d=7 (b3/c4)  6791s
+    s87/128 [granite/plaza +plaza end=neg] reads=6 N=450 n_d=7 (b3/c4)  6879s
+    s88/128 [granite/plaza +granite end=pos] reads=6 N=456 n_d=7 (b3/c4)  6963s
+    s89/128 [ridge/saddle +saddle end=neg] reads=6 N=462 n_d=7 (b3/c4)  7050s
+    s90/128 [velvet/walnut +velvet end=pos] reads=6 N=468 n_d=8 (b4/c4)  7128s
+    s91/128 [prism/slate +slate end=neg] reads=6 N=474 n_d=8 (b4/c4)  7216s
+    s92/128 [ridge/saddle +ridge end=pos] reads=6 N=480 n_d=8 (b4/c4)  7296s
+    s93/128 [ridge/saddle +saddle end=pos] reads=6 N=486 n_d=8 (b4/c4)  7387s
+    s94/128 [ridge/saddle +ridge end=neg] reads=0 N=486 n_d=8 (b4/c4) EXCLUDED(audit:frame:evaluation session@forced3)  7397s
+    s95/128 [velvet/walnut +walnut end=pos] reads=0 N=486 n_d=8 (b4/c4) EXCLUDED(audit:frame:Config evaluation session@forced2)  7405s
+    s96/128 [prism/slate +prism end=pos] reads=6 N=492 n_d=9 (b5/c4)  7487s
+    s97/128 [ridge/saddle +ridge end=pos] reads=6 N=498 n_d=9 (b5/c4)  7578s
+    s98/128 [granite/plaza +plaza end=pos] reads=6 N=504 n_d=9 (b5/c4)  7675s
+    s99/128 [prism/slate +prism end=neg] reads=0 N=504 n_d=9 (b5/c4) EXCLUDED(audit:frame:Config evaluation session@forced1)  7679s
+    s100/128 [velvet/walnut +walnut end=neg] reads=6 N=510 n_d=9 (b5/c4)  7780s
+    s101/128 [granite/plaza +granite end=neg] reads=6 N=516 n_d=9 (b5/c4)  7874s
+      --- CHECKPOINT at 512 reads: pi_hat_d = 0.0174, ICC-hat = 0.0000, ceiling 1.00 -> within
+    s102/128 [velvet/walnut +walnut end=pos] reads=0 N=516 n_d=9 (b5/c4) EXCLUDED(lexical:velvet@forced1)  7879s
+    s103/128 [prism/slate +prism end=pos] reads=6 N=522 n_d=9 (b5/c4)  7964s
+    s104/128 [granite/plaza +plaza end=neg] reads=6 N=528 n_d=9 (b5/c4)  8054s
+    s105/128 [velvet/walnut +velvet end=pos] reads=6 N=534 n_d=10 (b6/c4)  8144s
+    s106/128 [ridge/saddle +saddle end=neg] reads=6 N=540 n_d=10 (b6/c4)  8223s
+    s107/128 [velvet/walnut +velvet end=neg] reads=6 N=546 n_d=10 (b6/c4)  8318s
+    s108/128 [prism/slate +slate end=pos] reads=6 N=552 n_d=10 (b6/c4)  8399s
+    s109/128 [ridge/saddle +ridge end=neg] reads=6 N=558 n_d=10 (b6/c4)  8494s
+    s110/128 [prism/slate +slate end=neg] reads=6 N=564 n_d=10 (b6/c4)  8586s
+    s111/128 [granite/plaza +granite end=pos] reads=6 N=570 n_d=10 (b6/c4)  8674s
+    s112/128 [ridge/saddle +saddle end=pos] reads=6 N=576 n_d=11 (b6/c5)  8759s
+    s113/128 [velvet/walnut +velvet end=neg] reads=6 N=582 n_d=11 (b6/c5)  8859s
+    s114/128 [granite/plaza +plaza end=pos] reads=6 N=588 n_d=11 (b6/c5)  8946s
+    s115/128 [prism/slate +prism end=pos] reads=6 N=594 n_d=11 (b6/c5)  9023s
+    s116/128 [prism/slate +slate end=neg] reads=6 N=600 n_d=11 (b6/c5)  9109s
+    s117/128 [velvet/walnut +velvet end=pos] reads=6 N=606 n_d=11 (b6/c5)  9201s
+    s118/128 [ridge/saddle +saddle end=neg] reads=6 N=612 n_d=11 (b6/c5)  9286s
+    s119/128 [ridge/saddle +ridge end=neg] reads=6 N=618 n_d=11 (b6/c5)  9376s
+    s120/128 [granite/plaza +plaza end=neg] reads=6 N=624 n_d=11 (b6/c5)  9457s
+    s121/128 [prism/slate +prism end=neg] reads=6 N=630 n_d=11 (b6/c5)  9550s
+    s122/128 [velvet/walnut +walnut end=neg] reads=6 N=636 n_d=11 (b6/c5)  9646s
+    s123/128 [granite/plaza +granite end=neg] reads=4 N=640 n_d=11 (b6/c5) TRUNCATED  9688s
+      --- CHECKPOINT at 640 reads: pi_hat_d = 0.0172, ICC-hat = 0.0000, ceiling 1.00 -> within
+
+  STOPPED: N_max at {'session': 123, 'read': 4} -- N = 640, n_d = 11 (b = 6, c = 5)
+  pi_hat_d = 0.0172; L_hat = (b - c)/N = +0.00156
+  sessions run 123 of 128 scheduled; excluded 16; degeneracy 22/1111
+  window: declared 8192, clipped 0
+  GATE NOT EVALUATED HERE -- the §3 criterion needs an exact CI and scipy; evaluate over this artifact.
+
+wrote /Users/jasondwyer/Documents/code/jspace-lab/data/e2b/h1_sessions.json  (9693s)
