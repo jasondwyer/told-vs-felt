@@ -50,12 +50,23 @@ applied to CLAUDE.md.
     PROPOSAL-h, never edited into §2 — the pre-registration's hash is its
     timestamp, so a clarification goes beside it. Same repair-beside pattern
     as the e2a published-record correction and the H2 provenance defect.
-  - **Placement flag for the commit.** v2 is currently a standalone
-    `LOCK-h-v2.md`; the block specifies it becomes **LOCK-h.md's head
-    content with the v1.x text preserved below the amendment log**. That
-    assembly has not been done — it is mechanical, and Code will do it on the
-    word, or Jason can. Until then `LOCK-h.md` is still v1.4 and the verdict
-    tier is not licensed.
+  - **ASSEMBLED 2026-08-22.** v2.0 is now `LOCK-h.md`'s head content with
+    the v1.x text below it, both halves verified **byte-for-byte**: the v2
+    head matches the delivered file exactly, and the 11,896-byte v1.x record
+    is identical to the previous `LOCK-h.md`. A separator marks the v1.x
+    record as the H-cal history, not operative for the verdict tier. The
+    standalone `LOCK-h-v2.md` is removed so two files cannot claim to be the
+    lock and drift.
+  - **A gap in this very check, found while assembling and closed.** The
+    values-check opened the lock file and **never read it** — it compared
+    numbers Code had typed into the checker against the artifacts, which
+    proves the artifacts agree with Code, not that the LOCK says what Code
+    thinks it says. A typo in the lock that Code did not replicate would have
+    passed 41/41. Each claim now carries a `needle` asserted against the lock
+    text: **18 located verbatim, 0 claimed but absent**, re-run against the
+    assembled file. The remaining 23 are derived or structural values with no
+    single literal form in the document, and are marked as such rather than
+    silently counted as located.
   - **VERDICT: GREEN. LOCK-h v2 verified, ready to commit.**
 
 - 2026-08-21 — **H1 GATE RUN OF RECORD: reached its declared exit at

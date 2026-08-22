@@ -1,3 +1,148 @@
+# LOCK-h.md — v2.0 (pre-VERDICT lock for PROPOSAL-h, e2b)
+
+**Status:** DRAFT v2.0, 2026-08-21 UTC, design instance. Supersedes
+v1.4 as the operative lock; becomes binding when Jason commits it
+after Code's values-check (§6). Required by PROPOSAL-h §5 before any
+verdict session. **v2 changes no operating characteristic, bar,
+formula, or exit — it carries the realised calibration values into
+the verdict tier's restatement.** The v1.x text remains in this file
+below the amendment log for the H-cal record.
+
+## 1. Calibration of record (realised)
+
+**Dose (H2 PASS FINAL, 2026-08-21):** e2a axis at **L48, frac 0.10**
+(|α| = 10.3010). Stability: degeneracy 2/307 under the audit that
+ran, ~0.036 under the corrected lens — both within the declared
+p0 = 0.05; window clean; π̂_d = 0.0278 (CI [0.0091, 0.0636]) with
+rounds fully steered; both-ways upper bounds below bar.
+
+**Leakage gate (H1 PASS, 2026-08-21, certification by low
+discordance):** N = 640 paired reads (123 sessions run, 16 excluded,
+v1.4 schedule, no appended block); **n_d = 11 (b = 6, c = 5);
+π̂_d = 0.0172, exact 95% CI [0.0086, 0.0305]; L̂ = +0.00156; mapped
+L CI [−0.00915, +0.01143] ⊂ (−0.0735, +0.0735).** §3b registered
+secondaries both null (ICĈ = 0.0000, p = 1.0; sessions with ≥2 flips
+= 0, p = 1.0); the i.i.d. treatment stands. Audit v2 frozen, sha16
+`7aa235d25eeb66dc`. Directional-leak family across all four
+measurements: +0.00084 / +0.00220 / 0.00000 / +0.00156 — never above
+3% of bar.
+
+## 2. Verdict tier, restated with values in place
+
+Everything below is PROPOSAL-h §3 with the calibration filled in;
+nothing is re-tuned.
+
+**Materials and structure.** Roster: the continuity four
+(granite/plaza, prism/slate, velvet/walnut, ridge/saddle), scaffold
+format, label maps counterbalanced, m = 6 reads per session
+(byte-pinned session structure), rounds **steered by the delivered
+contingency** (this is the verdict tier: the choice, not a schedule,
+selects the state), audit v2 frozen at the sha above, cached round
+path per the g1 artifact, choice forwards uncached, every
+state-present read paired with its vanilla shadow read.
+
+**Arms and n (as registered):** marker family **96 valid sessions**
+(+axis/−axis contingency by counterbalanced map); sham family **36
+valid** (no state anywhere); random family **36 valid**
+(norm-matched non-axis contingency, live per the identical schedule
+of delivery).
+
+**Schedule (v1.4 sizing law applied):** run-until-valid-targets.
+Marker: 8 blocks × 16 strata scheduled (128; tolerates 25%
+exclusions against the observed 6.2–14.3%). Sham and random: 48
+scheduled each, stratified over 4 pairs × 2 maps (8 strata, 6 per
+stratum), forced-order counterbalanced within strata by seeded
+assignment. Arms interleave by seeded order. Each arm stops when its
+valid target is reached; hard caps 160/64/64. Stopping depends only
+on validity counts (exclusions), never on any outcome — no exactness
+question arises.
+
+**Primary criterion (values in place):** counterbalanced Δ_first for
+the marker family PASSES iff, conjunctively: (i) it exceeds the
+campaign's own realised control envelope (max |pseudo-Δ| across the
+sham and random families; planning reference: p90 = 0.167 from the
+lockh arithmetic); (ii) sign locks across label maps; (iii)
+one-sided exact binomial p ≤ .05 at n = 96 (critical k ≥ 57;
+MDE 0.130 at 80% power). Residual-leak context, now measured: the
+certified leak bound is 0.0735 and the realised directional leak is
+2.1% of it. **Verdict:** the Q-e2b bet (null) stands iff the primary
+does not pass confirm; a screen-tier pass triggers the confirm
+campaign — an independent fresh-session campaign, marker n = 96,
+identical criteria — per PROPOSAL-h §3. Completing or extending any
+arm after seeing its data remains forbidden.
+
+**Secondary (registered):** the stay/switch matrix by current live
+state — p(stay | on +) vs p(stay | on −) — verdict-relevant only if
+the primary fires; alone it licenses at most a new pre-registration.
+
+**Descriptives (named in advance):** shadow-read Δ_first (the
+within-campaign insulated replication — e2a's design running inside
+e2b for free); per-read leak decomposition by injected sign;
+session-share; termination counter (retained, per PROPOSAL-h §5).
+
+**In-campaign leak monitor (declared):** at each 128-paired-read
+checkpoint, the mapped L CI is computed exactly as in H1. **PAUSE
+iff the CI excludes 0 AND |L̂| > bar_leak/2 (0.0368)** — a live-leak
+alarm routed to a design-instance disposition; report-only
+otherwise. The π̂_d > 0.30 stability ceiling carries over unchanged.
+Neither monitor can touch the verdict criteria (law rule 7).
+
+## 3. What fires what (registered consequences, restated)
+
+Primary passes screen + confirm → the PROPOSAL-h §5 welfare
+pre-commitment TRIGGERS: all subsequent −axis exposure designs
+undergo explicit re-review before any further campaign. Primary null
+→ the conclusion extends to the present tense per PROPOSAL-h §4's
+grid. The §3b permutation tests run again on the verdict campaign's
+realised flips, same standing (registered secondary, never
+gate-relevant).
+
+## 4. Pre-verdict checklist
+
+1. Interpretive note appended to PROPOSAL-h (steered-rounds
+   clarification; appended, never edited) — done per the 2026-08-21
+   block.
+2. Code values-check (§6 below) GREEN.
+3. Jason commits v2.0; the commit hash is the verdict tier's
+   license.
+
+## 5. Unchanged by v2
+
+Every §6 (v1.x) operating characteristic, the bar and its
+derivation, both H1 exits, the checkpoint structure, the roster, the
+dose, the quarantine, the paired-shadow requirement, and the welfare
+pre-commitment. The v1.x sections below the amendment log are the
+H-cal record and are not operative for the verdict tier except where
+§2 above incorporates them.
+
+## 6. Values-check required BEFORE this lock commits
+
+Code verifies, byte-for-byte against the committed artifacts: every
+number in §1 against `h2_sessions.json` / `h2_sweep.json` /
+`h1_sessions.json` / `h1_gate.json`; the audit sha against
+`e2b_audit_v2.json`; the criterion constants in §2 (envelope p90,
+critical k, MDE) against `h1_power.json` (`lockh_v1`). Any mismatch
+→ report, design instance corrects, re-check. On GREEN: commit.
+
+## 7. Amendment log (continued)
+
+v1.4 → v2.0 (2026-08-21): calibration values carried in; verdict
+tier restated with values; run-until-valid-targets schedule per the
+v1.4 sizing law; in-campaign leak monitor declared (report/pause
+only, criteria untouchable); no OC, bar, formula, or exit changed.
+
+---
+
+# The v1.x record (H-calibration tier)
+
+Everything below is the v1.0–v1.4 text **preserved byte-for-byte**, as
+v2.0's status line requires. It is the H-cal record: the derivation of the
+bar, both H1 exits, the §6 operating characteristics and their verification,
+and the amendment log through v1.4. It is **not operative for the verdict
+tier** except where §2 above incorporates it. Nothing in it has been edited
+— corrections and supersessions in this program sit beside the record, never
+over it.
+
 # LOCK-h.md — v1.4 (pre-H1 lock for PROPOSAL-h, e2b)
 
 **Status:** v1.4, 2026-08-21 UTC, design instance. **BINDING** — v1.1

@@ -1,6 +1,6 @@
-DECLARED INVOCATION: scripts/lockh_v2_valuescheck.py over LOCK-h-v2.md
+DECLARED INVOCATION: scripts/lockh_v2_valuescheck.py over the ASSEMBLED LOCK-h.md (v2 head + v1.x preserved), with lock-text location now asserted per claim
 === LOCK-h v2 §6 VALUES-CHECK ===
-  lock: LOCK-h-v2.md
+  lock: LOCK-h.md
 
   [OK ] §1 dose layer                                            lock 48                     artifact 48                     (h2_sessions.json)
   [OK ] §1 dose frac                                             lock 0.1                    artifact 0.1                    (h2_sessions.json)
@@ -43,6 +43,8 @@ DECLARED INVOCATION: scripts/lockh_v2_valuescheck.py over LOCK-h-v2.md
   [OK ] §2 marker n                                              lock 96                     artifact 96                     (PROPOSAL-h §3 (registered))
   [OK ] §2 sham n                                                lock 36                     artifact 36                     (PROPOSAL-h §3 (registered))
   [OK ] §2 random n                                              lock 36                     artifact 36                     (PROPOSAL-h §3 (registered))
+
+  lock-text location: 18 claims found verbatim in the lock; 0 claimed but NOT present
 
   41/41 verified
   VERDICT: GREEN
