@@ -193,3 +193,14 @@ per charter.
 
 On approval: commit (hash = timestamp), apply the CLAUDE.md amendment,
 relay the execution block.
+
+---
+
+**INTERPRETIVE NOTE (2026-08-21, design instance):** §2's H1 sentence
+"identical to verdict sessions in every respect except that no
+contingency differs" is to be read as INCLUDING steered post-choice
+rounds — the schedule, not the choice, selects each round's state. The
+gate certifies the leak in the verdict tier's prefix environment.
+Operative text: LOCK-h v1.4 §3a. One campaign (H1-u, 2026-08-21) ran
+under the other reading before this note and is retained as the
+prefix-steering comparison arm.
