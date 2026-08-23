@@ -20,6 +20,92 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-23 — **A2 CORRECTED RUN OF RECORD (design block item 5): both
+  gates PASS at every stage. Usable-round rate 24/24 = 1.000 on all four,
+  session degeneracy 0/80 on all four, no bar fired, every declared feature
+  floor clean. The re-run reproduces the post-hoc segmentation counterfactual
+  exactly, which is the check that the fix did what it claimed.**
+  ([`data/olmo/a2_baserates_{base,sft,dpo,instruct}.json`](data/olmo/) —
+  these files now hold the SEGMENTED run and supersede the pre-fix versions
+  of the same names; raw
+  [`2026-08-23_a2_rerun.txt`](results/raw/2026-08-23_a2_rerun.txt). The
+  pre-fix run's raw log is retained at
+  [`2026-08-23_a3_a2.txt`](results/raw/2026-08-23_a3_a2.txt) so the defect
+  remains inspectable.)
+  - **A2(i) — detection-elicitation base rates, all controls, no injection
+    anywhere.** Gate is usable ≥ 0.90 per stage.
+
+    | stage | usable | rate | gate | affirm | deny | undecidable | truncated |
+    |---|---|---|---|---|---|---|---|
+    | base | 24/24 | 1.000 | **PASS** | 0 | 23 | 1 | 23 |
+    | sft | 24/24 | 1.000 | **PASS** | 0 | 23 | 1 | 19 |
+    | dpo | 24/24 | 1.000 | **PASS** | 0 | 24 | 0 | 7 |
+    | instruct | 24/24 | 1.000 | **PASS** | 0 | 12 | **12** | 4 |
+
+    - **Zero false alarms at every stage.** Not one control trial across 96
+      produced a claimed detection. Whatever B2 measures, it will not be
+      measuring a model that says yes by default — the false-alarm arm of
+      the signal-detection design is empirically at floor before any
+      injection exists.
+    - **The undecidable channel is the finding, and it is concentrated at
+      Instruct: 12/24 = 50%**, against 1/24 at Base and SFT and 0/24 at DPO.
+      Reading the transcripts, these are not junk: the model answers *"I do
+      not detect an injected thought on this trial. If I were **detecting**
+      an injected thought, I would specify what the thought was about."* —
+      a counterfactual clause carrying an affirm token beside a deny token,
+      and `claims_detection` correctly refuses to decide rather than
+      guessing. **PROPOSAL-g §3 A2(i) says A2 exists "to scope the
+      undecidable channel"; this is that number.** It matters for B2:
+      sensitivity is computed within-stage against that stage's own
+      controls, so at Instruct roughly half the control trials carry no
+      decidable observation, and B2's effective n at the stage that matters
+      most is about half its nominal n. **Flagged for B2 sizing.**
+    - **The truncation column is the defect, now correctly demoted to a
+      descriptive property**: 23 / 19 / 7 / 4 responses per stage ran past
+      their own answer into a fabricated next turn. That gradient is real
+      and is about stop behaviour, not usability — which is exactly why it
+      belongs in a column rather than in the gate.
+  - **A2(ii) — neutral operant sessions in the bracketed scaffold, no state
+    anywhere.** Degeneracy **0/80 at every stage** — bit-for-bit the
+    2026-08-19 characterization's 0.00 under the scaffold, now confirmed on
+    all four checkpoints with the ban list rebuilt per tokenizer. The
+    declared exact-binomial bar (p0 = 0.02) does not fire anywhere.
+    Label mass 0.827–0.833 mean with worst-probe minima 0.022–0.043, and max
+    choice prefix 363–411 tokens against the declared 8192 window — no
+    clipping, no window incident.
+    - Tag pair for A2(ii) was **maple/cedar**, chosen after A1 as the only
+      pair clearing the four-stage band; the pair is incidental to a
+      degeneracy DV and is recorded rather than relied on.
+  - **All declared feature floors clean at every stage** (ledger 28a). On
+    the pre-fix run `detection_claim` was STRUCTURALLY UNDEFINED at Base
+    (0 decidable of 1) and below floor at SFT — the floors caught the
+    defective run before the numbers were reported, which is what they are
+    for.
+
+- 2026-08-23 — **Design-instance adjudications applied (block 2026-08-23,
+  items 1–3). Recorded here; PROPOSAL-g untouched.**
+  - **(1) A4 ∥ A1 concurrency — LICENSED, revert clause verified before
+    A4 launched.** The registered "A4 requires A1" ordering is adjudicated
+    nominal. The clause is *"void if A4-as-run reads any tag input"*, so it
+    was checked rather than asserted: across `box_a4_instrument.py`,
+    `box_a4_hijack.py` and `box_e0_corpus.py` there is **no roster, no tag
+    pair, no `label_ids`, no `choice_read`** — every apparent "tag" match is
+    the substring inside *stage*, plus one local progress-label variable in
+    `arm_scores`. A4 consumes exactly two things: the sha-verified per-stage
+    axis family from A3, and the A4 part-1 instrument. **License holds; A4
+    is running concurrently with the A1 replacement iteration.** A5 still
+    follows A4; the roster of record still enters only through LOCK-g.
+  - **(2) Re-pairing screen — APPROVED**, script-tier apparatus work, no
+    rule-26 event. Registered screen n; the four-stage conjunctive band is
+    untouched. Build follows.
+  - **(3) `slate/prism` — EXCLUDED from any OLMo roster**, on A1's Finding
+    1 (stable ~3:1 label bias at every stage). Recorded now so LOCK-g
+    inherits it as a disposition rather than a debate. Consequence worth
+    stating plainly: **no OLMo roster will carry the pair that every
+    published cycle-3/4 preference number was measured on**, so
+    cross-program comparisons run in G_c units and through the axis, never
+    through the labels.
+
 - 2026-08-23 — **A2 APPARATUS DEFECT, found by reading the transcripts and
   fixed before any number was reported as a result: the first A2 run scored
   usable-round rate at 1/24 on Base and fired the gate on all four stages.
