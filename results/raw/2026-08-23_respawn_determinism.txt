@@ -1,0 +1,54 @@
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights:  15%|█▍        | 105/707 [00:00<00:00, 878.88it/s]Loading weights:  27%|██▋       | 193/707 [00:00<00:00, 638.89it/s]Loading weights:  37%|███▋      | 260/707 [00:00<00:00, 545.05it/s]Loading weights:  45%|████▍     | 317/707 [00:00<00:00, 534.44it/s]Loading weights:  53%|█████▎    | 372/707 [00:00<00:00, 517.63it/s]Loading weights:  60%|██████    | 425/707 [00:00<00:00, 470.03it/s]Loading weights:  70%|███████   | 497/707 [00:00<00:00, 524.73it/s]Loading weights:  81%|████████  | 570/707 [00:01<00:00, 571.89it/s]Loading weights:  90%|████████▉ | 634/707 [00:01<00:00, 582.00it/s]Loading weights:  98%|█████████▊| 694/707 [00:01<00:00, 569.84it/s]Loading weights: 100%|██████████| 707/707 [00:01<00:00, 571.06it/s]
+{
+ "adapter": "olmo-hf",
+ "path": "/workspace/models/base",
+ "dtype": "bfloat16",
+ "backend": "torch/cuda",
+ "device": "cuda",
+ "gpu": "NVIDIA A100-SXM4-80GB",
+ "cuda": "12.8",
+ "capability": [
+  8,
+  0
+ ],
+ "deterministic": true,
+ "cublas_workspace_config": ":4096:8",
+ "seed": 20260818,
+ "choice_window_declared": 8192,
+ "n_layers": 64,
+ "library_versions": {
+  "torch": "2.8.0+cu128",
+  "transformers": "5.15.0",
+  "accelerate": "1.14.0",
+  "safetensors": "0.8.0",
+  "huggingface_hub": "1.28.0",
+  "numpy": "2.1.2"
+ },
+ "python": "3.12.3"
+}
+
+=== A. repeat determinism (deterministic=True) ===
+  probe 0: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 1: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 2: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 3: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 4: exact=True max|d|=0.000e+00 symKL=0.000e+00
+
+=== C. kernel path: cached vs uncached (rule-2 gate) ===
+  probe 0: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 1: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 2: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 3: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 4: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  worst symKL 0.000e+00 vs 1e-3 bar -> PASS (cached path licensed)
+
+=== B. deterministic_algorithms OFF ===
+Loading weights:   0%|          | 0/707 [00:00<?, ?it/s]Loading weights:  65%|██████▌   | 461/707 [00:00<00:00, 4597.36it/s]Loading weights: 100%|██████████| 707/707 [00:00<00:00, 4247.13it/s]
+  probe 0: repeat exact=True max|d|=0.000e+00 | vs det-ON max|d|=0.000e+00 symKL=0.000e+00
+  probe 1: repeat exact=True max|d|=0.000e+00 | vs det-ON max|d|=0.000e+00 symKL=0.000e+00
+  probe 2: repeat exact=True max|d|=0.000e+00 | vs det-ON max|d|=0.000e+00 symKL=0.000e+00
+  probe 3: repeat exact=True max|d|=0.000e+00 | vs det-ON max|d|=0.000e+00 symKL=0.000e+00
+  probe 4: repeat exact=True max|d|=0.000e+00 | vs det-ON max|d|=0.000e+00 symKL=0.000e+00
+
+wrote /workspace/models/determinism_base.json
+SUMMARY: repeat-exact(det ON)=True | cached==uncached exact=True maxKL=0.00e+00 | det-OFF repeat-exact=True

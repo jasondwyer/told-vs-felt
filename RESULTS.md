@@ -20,6 +20,72 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-23 — **RESPAWN PROTOCOL: BOTH GATES PASS on the new box. Volume
+  integrity is exact (29/29 files across 4 checkpoints), and the backend
+  re-characterization reproduces the terminated box's numbers to the bit —
+  every one of the three measurements is exactly 0.0. Phase-2 execution is
+  unblocked; this is the backend of record for the A-phase campaign.**
+  (Pod `uimuzt7d890y5b`, A100-SXM4-80GB, US-CA-2, `runpod/pytorch:1.0.2-
+  cu1281-torch280-ubuntu2404`, network volume `o73qvy742n` at `/workspace`.
+  Raw
+  [`2026-08-23_respawn_integrity.txt`](results/raw/2026-08-23_respawn_integrity.txt),
+  [`_determinism`](results/raw/2026-08-23_respawn_determinism.txt).)
+  - **Step (i) INTEGRITY — PASS.** `box_respawn_check.py` re-hashed every
+    file under `/workspace/models/` against the committed manifest:
+    **29 files matched across base / sft / dpo / instruct**, both directions
+    — nothing missing, nothing extra, no size or sha mismatch. 241 GB of
+    241 GB accounted for. The gate was verified to fire on all seven failure
+    modes yesterday, so a PASS here is a measurement rather than a hope.
+  - **Step (ii) BACKEND — PASS, and it is the cleanest possible result.**
+    `box_determinism.py --stage base --repeats 5`:
+
+    | measurement | result |
+    |---|---|
+    | A. repeat determinism (det ON) | exact, max\|d\| **0.000e+00**, symKL 0 |
+    | B. deterministic-algorithms OFF | repeat-exact, and **identical to ON** (max\|d\| 0.000e+00) |
+    | C. kernel path, cached vs uncached | exact, worst symKL **0.000e+00** vs the 1e-3 bar → **cached path licensed** |
+
+    - **What B buys.** The deterministic-algorithms flag costs nothing here
+      — OFF is already bit-exact and agrees with ON — so it stays on as
+      cheap insurance rather than as a load-bearing setting.
+    - **What C licenses.** Rule 2's kernel gate is satisfied on this
+      backend: the cached (KV) path and a full re-forward give bit-identical
+      first-token distributions, so session work may use the cached path.
+      This is the CUDA analog of the Qwen g1 gate, and unlike g1 (max KL
+      7.11e-4 against a 1e-3 bar) it is exactly zero.
+  - **The re-characterization reproduces the terminated box exactly.** A
+    field-by-field diff of the new artifact against the committed
+    `data/olmo/determinism_base.json` from 2026-08-19 shows **no
+    differences at all** — same three zeros, same provenance block, same
+    library versions (torch 2.8.0+cu128, transformers 5.15.0, numpy 2.1.2),
+    same seed 20260818, same `CUBLAS_WORKSPACE_CONFIG :4096:8`, same
+    declared window 8192. The provenance carries no machine identifier, so
+    the honest reading is not "the same machine" but **"this class of
+    backend is reproducible across machines"** — two physically different
+    A100-SXM4-80GBs under one image agree bit-for-bit. **The committed
+    artifact is therefore left as it stands**: rewriting it would change no
+    byte and would overwrite the provenance of the run that produced it.
+    The new raw log is the evidence that it was re-measured.
+  - **Consistency clause, restated because it now binds.** A verdict
+    campaign completes on ONE characterized backend. This box is that
+    backend for A-phase; if it dies mid-campaign, the campaign aborts and
+    restarts on the replacement, never splices.
+  - **Box housekeeping, recorded because it was not nothing.** The box repo
+    was at `72f6066` with 12 untracked files. Every one was hashed against
+    its committed counterpart **before** anything was removed: all 12
+    byte-identical, so nothing box-only existed to lose (two of them are the
+    frozen e0 inputs, hashing to `9654b93…` / `3c53e5a…` — the same frozen
+    shas `assert_frozen_inputs()` checks). The box cannot reach GitHub —
+    the repo is private and no credentials are on it — so the sync ran
+    through a **47 MB git bundle over ssh** rather than by putting a token
+    on an ephemeral machine. Box now at `5e0ffca`, matching origin.
+  - **FLAG — the `box` ssh alias was stale** (port 31189; the new pod is on
+    31085) and was updated on the laptop, backup at
+    `~/.ssh/config.bak-2026-08-23`. Every respawn will invalidate it again.
+    Worth noting in the handoff rather than rediscovering: the pod's ssh
+    endpoint is in the RunPod MCP's `list-pods` output under `ssh.direct`,
+    so it never needs to be asked for.
+
 - 2026-08-22 — **PROPOSAL-i RECONNAISSANCE (read-only; nothing designed,
   nothing built). Three answers, and one provenance defect in the ~57%
   claim: the number is the TWO-layer result, but the document that carries
