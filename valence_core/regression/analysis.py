@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import sys
 from dataclasses import dataclass
 
@@ -1152,7 +1153,66 @@ def run_all() -> list[Check]:
     checks += check_g1_stage_anchor()
     checks += check_detection_harness()
     checks += check_instrument_invariants()
+    checks += check_adapter_consolidation()
     return checks
+
+
+def check_adapter_consolidation() -> list[Check]:
+    """The consolidation of 2026-08-22, pinned so the debt cannot regrow.
+
+    `_new_qwen_adapter` reached EIGHT copies in four variants before it was
+    paid into `valence_core.adapters.qwen_or_explain()`, and it grew that
+    way for an ordinary reason: every new runner needed a model-loading
+    helper and copying one was the cheapest thing to do at the time.
+    Nothing in the codebase objected. This is the objection.
+
+    Declared as ONE check, per the adjudication that moved the suite to
+    136: a local redefinition and a second core definition are the same
+    defect seen from either end, and reporting them as one line keeps the
+    count a fingerprint rather than a running total.
+
+    Structural, in the same family as the quarantine's offender scan: it
+    reads the source tree rather than importing it, so a helper that is
+    defined but never called is still caught. It matches a `def` LINE
+    rather than a bare substring, which is what lets it scan its own file
+    -- the quarantine scan had to exclude `regression/` because it names
+    what it guards, and the first version of this check duly failed by
+    finding itself.
+    """
+    local_def = re.compile(r"^\s*def _new_qwen_adapter\b", re.M)
+    home_def = re.compile(r"^\s*def qwen_or_explain\b", re.M)
+    offenders, definitions = [], []
+    for root, _dirs, files in os.walk(REPO):
+        if any(part in root.split(os.sep)
+               for part in (".git", "__pycache__", "jlens-qwen36", "archive")):
+            continue
+        for f in sorted(files):
+            if not f.endswith(".py"):
+                continue
+            path = os.path.join(root, f)
+            rel = os.path.relpath(path, REPO)
+            with open(path) as fh:
+                src = fh.read()
+            if local_def.search(src):
+                offenders.append(rel)
+            if home_def.search(src):
+                definitions.append(rel)
+
+    import importlib
+    mod = importlib.import_module("valence_core.adapters")
+    reachable = callable(getattr(mod, "qwen_or_explain", None))
+    home = ["valence_core/adapters/__init__.py"]
+    ok = (not offenders) and definitions == home and reachable
+    got = f"{len(offenders)} local, {len(definitions)} definition(s)"
+    if not reachable:
+        got += ", NOT reachable as valence_core.adapters.qwen_or_explain"
+    if offenders:
+        got += f" {offenders}"
+    if definitions != home:
+        got += f" {definitions}"
+    return [_c("adapters: qwen helper has exactly one definition",
+               "LOCK-h §7 consolidation, 2026-08-22",
+               "0 local, 1 definition", got, ok)]
 
 
 def main() -> int:

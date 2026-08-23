@@ -45,8 +45,18 @@ laptop -- against a discordant count small enough for exact arithmetic.
 Site: laptop (MLX). Smoke first; the budget is measured, not projected.
 
 Usage:
-    jlens-qwen36/.venv/bin/python scripts/e2b_verdict_campaign.py --smoke
+    jlens-qwen36/.venv/bin/python scripts/e2b_verdict_campaign.py --smoke \
+        --out /tmp/verdict_smoke.json
     jlens-qwen36/.venv/bin/python scripts/e2b_verdict_campaign.py
+
+`--smoke` REQUIRES an explicit `--out` and refuses the canonical path. When
+this was written the default `--out` was harmless because
+`data/e2b/verdict_campaign.json` did not exist yet; it is the verdict of
+record now, and the smoke line above previously demonstrated the invocation
+that would overwrite it. Both smokes that ran passed `--out` to a
+scratchpad, so the record was never touched -- but a usage line showing a
+hazardous invocation is a loaded gun, and the guard below is what unloads it
+(design-instance adjudication 2026-08-22).
 """
 from __future__ import annotations
 
@@ -282,6 +292,21 @@ def main() -> int:
     ap.add_argument("--checkpoint-every", type=int, default=128)
     ap.add_argument("--out", default=os.path.join(DATA, "e2b/verdict_campaign.json"))
     args = ap.parse_args()
+
+    # Adjudicated 2026-08-22. Fires ONLY under --smoke, so the campaign path
+    # is behaviourally identical to the run that produced the verdict.
+    canonical = os.path.abspath(os.path.join(DATA, "e2b/verdict_campaign.json"))
+    if args.smoke and os.path.abspath(args.out) == canonical:
+        raise SystemExit(
+            "\nSMOKE REFUSED: --out defaults to the verdict artifact of "
+            "record\n"
+            f"  {os.path.relpath(canonical, REPO)}\n\n"
+            "  A smoke is not the campaign, and a 6-session smoke written "
+            "there\n"
+            "  would overwrite the 2026-08-22 NULL with something that looks "
+            "like\n"
+            "  it. Pass an explicit scratch path:\n\n"
+            "      --smoke --out /tmp/verdict_smoke.json\n")
 
     arms = {k: dict(v) for k, v in ARMS.items()}
     if args.smoke:

@@ -20,6 +20,77 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-22 — **Adjudications applied: the consolidation debt is now
+  pinned by a structural suite check, and `--smoke` can no longer overwrite
+  the verdict of record. SUITE COUNT IS NOW 136 — that is the new checkout
+  fingerprint.** (Design-instance block 2026-08-22, items 1(a) and 1(b),
+  committed together as directed. 1(c)/(d)/(e) are adjudicated below and
+  touch nothing.)
+  - **(a) `adapters: qwen helper has exactly one definition` — ADDED, one
+    check, 135 → 136.** It walks the source tree (skipping `.git`,
+    `__pycache__`, `jlens-qwen36`, `archive`) and requires zero
+    `_new_qwen_adapter` definitions anywhere and exactly one
+    `qwen_or_explain`, in `valence_core/adapters/__init__.py`, reachable as
+    `valence_core.adapters.qwen_or_explain`. Declared as ONE check per the
+    adjudication: a local redefinition and a second core definition are the
+    same defect from either end, and one line keeps the count a fingerprint
+    rather than a running total. Structural rather than import-based, in the
+    family of the quarantine's offender scan — a helper defined but never
+    called is still caught.
+    - **Verified to fire, both halves, rather than assumed.** Planting a
+      `def _new_qwen_adapter` in `scripts/` drops the suite to 135/136 and
+      names the offending file; planting a second `def qwen_or_explain`
+      does the same and names both definitions; removing either returns
+      136/136. This is `verify_firing`'s discipline applied to a suite
+      check — a bar whose firing behaviour was never checked is not a
+      pre-registration.
+    - **The first version failed by finding itself.** It matched the bare
+      substring `"def _new_qwen_adapter"` and duly flagged
+      `regression/analysis.py`, which has to name what it guards. The
+      existing quarantine scan solved that by excluding `regression/` and
+      justifying the exclusion; this one instead anchors on a `def` LINE
+      (`^\s*def name\b`), so it can scan its own file honestly and no
+      exclusion is earned or needed.
+    - **Rule-26 hygiene on the addition itself:** the check is appended
+      last, and the first 135 check lines are **byte-identical** before and
+      after. Nothing was recomputed; one line was added.
+  - **(b) `--smoke` can no longer write the verdict artifact, and the usage
+    line that demonstrated the hazard is corrected.** `e2b_verdict_campaign
+    .py --smoke` with the default `--out` resolved to
+    `data/e2b/verdict_campaign.json` — the 2026-08-22 NULL — and the
+    module's own usage block showed exactly that invocation. The guard
+    refuses it with the scratch-path fix in the message; the docstring now
+    shows `--smoke --out /tmp/verdict_smoke.json` and records why the line
+    was harmless when written (the file did not exist yet) and is not now.
+    - **The guard fires only under `--smoke`,** so the campaign path is
+      behaviourally identical to the run that produced the verdict. Checked
+      three ways: the hazardous invocation is refused with a non-zero exit;
+      `--smoke --out <scratch>` proceeds normally through the header, audit
+      sha and monitor declarations; and `data/e2b/verdict_campaign.json` is
+      unmodified (`git diff` clean on `data/`).
+    - Both smokes that have ever run passed `--out` to a scratchpad, so the
+      record was never at risk in fact — only in reach.
+  - **(c) `s1_judge_rescue.py` — LEAVE, filed as a known hazard.** It is the
+    ninth Qwen construction path: module-level `QwenMLXAdapter` import and a
+    bare construction, so a wrong interpreter gives a raw traceback at
+    import time, before argparse. Not converted, on the precedent this log
+    articulated for `box_rl_survey.py`: a run-of-record script stays as it
+    ran. Convert only if S1 machinery is reused, and as its own declared
+    event.
+  - **(d) `e0_probes.json` — BYTE-FROZEN, adjudicated in the record instead
+    of in the file.** Its `readout.selection` string says "top-256 tokens
+    per probe … union across probes"; the oracle keeps selections **per
+    probe** and never unions them. **The oracle's per-probe selection is the
+    definition of record under rule 26**, and the config string is a
+    known-incorrect description superseded by this entry. The file is not
+    edited: its `probes_sha ec2296182e726969` became load-bearing this
+    morning — `assert_frozen_inputs()` checks it before any A-phase run —
+    so an edit would trip the gate built today and break cross-stage
+    comparability for the sake of a comment.
+  - **(e) B2 repeats (1 vs the published 4) — accepted as recorded.** The
+    convention is LOCK-g's to fix once A5 characterizes the backend, since
+    the argument for 1 rests on determinism. No action.
+
 - 2026-08-22 — **A2, A3 and A4 harnesses BUILT and smoked end-to-end
   against a synthetic apparatus (CLAUDE.md §Phase 0 step 5, "built now;
   runs under PROPOSAL-g"). Nothing has run on a model: no OLMo weights
