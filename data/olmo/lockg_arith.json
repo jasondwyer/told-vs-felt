@@ -1,0 +1,11 @@
+{
+ "n": 96,
+ "alpha": 0.05,
+ "power": 0.8,
+ "critical_k": 57,
+ "p_at_power": 0.6299,
+ "mde_delta": 0.1299,
+ "delta_convention": "Delta = p - 0.5 (share minus chance), as in e2b's 47/96 -> -0.0104",
+ "p_value_at_critical_k": 0.04109653427847161,
+ "method": "exact binomial, pure python (valence_core.stats)"
+}

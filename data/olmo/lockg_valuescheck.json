@@ -1,0 +1,613 @@
+{
+ "item": "LOCK-g \u00a77",
+ "lock": "LOCK-g.md",
+ "n_claims": 59,
+ "n_fail": 1,
+ "needles_located": 48,
+ "needles_absent": [],
+ "needles_derived": 11,
+ "arithmetic": {
+  "n": 96,
+  "alpha": 0.05,
+  "power": 0.8,
+  "critical_k": 57,
+  "p_at_power": 0.6299,
+  "mde_delta": 0.1299,
+  "delta_convention": "Delta = p - 0.5 (share minus chance), as in e2b's 47/96 -> -0.0104",
+  "p_value_at_critical_k": 0.04109653427847161,
+  "method": "exact binomial, pure python (valence_core.stats)"
+ },
+ "rows": [
+  {
+   "section": "\u00a71",
+   "label": "integrity 29 files",
+   "claim": "True",
+   "actual": "True",
+   "source": "respawn_integrity raw",
+   "ok": true,
+   "needle": "29/29 files",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "determinism A repeat-exact",
+   "claim": "True",
+   "actual": "True",
+   "source": "determinism_base.json",
+   "ok": true,
+   "needle": "determinism exactly 0.0 on all three",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "determinism B det-off exact",
+   "claim": "True",
+   "actual": "True",
+   "source": "determinism_base.json",
+   "ok": true,
+   "needle": null,
+   "needle_located": null
+  },
+  {
+   "section": "\u00a71",
+   "label": "kernel gate max_kl",
+   "claim": "0.0",
+   "actual": "0.0",
+   "source": "determinism_base.json",
+   "ok": true,
+   "needle": "symKL 0.000e+00",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "gpu",
+   "claim": "NVIDIA A100-SXM4-80GB",
+   "actual": "NVIDIA A100-SXM4-80GB",
+   "source": "determinism_base.json",
+   "ok": true,
+   "needle": "A100-SXM4-80GB",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "roster quartz/velvet",
+   "claim": "True",
+   "actual": "True",
+   "source": "a1_repair_roster.json",
+   "ok": true,
+   "needle": "quartz/velvet",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "roster copper/walnut",
+   "claim": "True",
+   "actual": "True",
+   "source": "a1_repair_roster.json",
+   "ok": true,
+   "needle": "copper/walnut",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "roster maple/saddle",
+   "claim": "True",
+   "actual": "True",
+   "source": "a1_repair_roster.json",
+   "ok": true,
+   "needle": "maple/saddle",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "roster amber/granite",
+   "claim": "True",
+   "actual": "True",
+   "source": "a1_repair_roster.json",
+   "ok": true,
+   "needle": "amber/granite",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "roster imbalances",
+   "claim": "0.026/0.040/0.077/0.082",
+   "actual": "0.026/0.040/0.077/0.082",
+   "source": "a1_repair_roster.json",
+   "ok": true,
+   "needle": "0.026 / 0.040 / 0.077 / 0.082",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "all four stages inside 0.50 \u00b1 0.10",
+   "claim": "True",
+   "actual": "True",
+   "source": "a1_repair_roster.json",
+   "ok": true,
+   "needle": "all inside 0.50 \u00b1 0.10 on all four",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "disjointness cost",
+   "claim": "0.005",
+   "actual": "0.017",
+   "source": "a1_repair_roster.json (matching total - greedy top-4 total)",
+   "ok": false,
+   "needle": "cost 0.005 total imbalance",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "greedy top-4 really is non-disjoint",
+   "claim": "True",
+   "actual": "True",
+   "source": "a1_repair_roster.json",
+   "ok": true,
+   "needle": "the literal four best share tags",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "base selected layer",
+   "claim": "60",
+   "actual": "60",
+   "source": "a4_hijack_base.json",
+   "ok": true,
+   "needle": "| base | L60 |",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "base MED",
+   "claim": "0.05",
+   "actual": "0.05",
+   "source": "a4_hijack_base.json",
+   "ok": true,
+   "needle": null,
+   "needle_located": null
+  },
+  {
+   "section": "\u00a71",
+   "label": "sft selected layer",
+   "claim": "44",
+   "actual": "44",
+   "source": "a4_hijack_sft.json",
+   "ok": true,
+   "needle": "| sft | L44 |",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "sft MED",
+   "claim": "0.4",
+   "actual": "0.4",
+   "source": "a4_hijack_sft.json",
+   "ok": true,
+   "needle": null,
+   "needle_located": null
+  },
+  {
+   "section": "\u00a71",
+   "label": "dpo selected layer",
+   "claim": "44",
+   "actual": "44",
+   "source": "a4_hijack_dpo.json",
+   "ok": true,
+   "needle": "| dpo | L44 |",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "dpo MED",
+   "claim": "0.05",
+   "actual": "0.05",
+   "source": "a4_hijack_dpo.json",
+   "ok": true,
+   "needle": null,
+   "needle_located": null
+  },
+  {
+   "section": "\u00a71",
+   "label": "instruct selected layer",
+   "claim": "44",
+   "actual": "44",
+   "source": "a4_hijack_instruct.json",
+   "ok": true,
+   "needle": "| instruct | L44 |",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "instruct MED",
+   "claim": "0.05",
+   "actual": "0.05",
+   "source": "a4_hijack_instruct.json",
+   "ok": true,
+   "needle": null,
+   "needle_located": null
+  },
+  {
+   "section": "\u00a71",
+   "label": "sham 0.0 bit-for-bit everywhere",
+   "claim": "True",
+   "actual": "True",
+   "source": "a4_hijack_*.json",
+   "ok": true,
+   "needle": "sham realised 0.0 bit-for-bit everywhere",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "G_c base",
+   "claim": "0.7824",
+   "actual": "0.7824",
+   "source": "a4_instrument_base.json",
+   "ok": true,
+   "needle": "+0.7824",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "base floors met",
+   "claim": "True",
+   "actual": "True",
+   "source": "a4_instrument_base.json",
+   "ok": true,
+   "needle": null,
+   "needle_located": null
+  },
+  {
+   "section": "\u00a71",
+   "label": "base decidable probes",
+   "claim": "12",
+   "actual": "12",
+   "source": "a4_instrument_base.json",
+   "ok": true,
+   "needle": "12/12 decidable probes",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "G_c sft",
+   "claim": "1.0279",
+   "actual": "1.0279",
+   "source": "a4_instrument_sft.json",
+   "ok": true,
+   "needle": "+1.0279",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "sft floors met",
+   "claim": "True",
+   "actual": "True",
+   "source": "a4_instrument_sft.json",
+   "ok": true,
+   "needle": null,
+   "needle_located": null
+  },
+  {
+   "section": "\u00a71",
+   "label": "sft decidable probes",
+   "claim": "12",
+   "actual": "12",
+   "source": "a4_instrument_sft.json",
+   "ok": true,
+   "needle": "12/12 decidable probes",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "G_c dpo",
+   "claim": "1.5325",
+   "actual": "1.5325",
+   "source": "a4_instrument_dpo.json",
+   "ok": true,
+   "needle": "+1.5325",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "dpo floors met",
+   "claim": "True",
+   "actual": "True",
+   "source": "a4_instrument_dpo.json",
+   "ok": true,
+   "needle": null,
+   "needle_located": null
+  },
+  {
+   "section": "\u00a71",
+   "label": "dpo decidable probes",
+   "claim": "12",
+   "actual": "12",
+   "source": "a4_instrument_dpo.json",
+   "ok": true,
+   "needle": "12/12 decidable probes",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "G_c instruct",
+   "claim": "1.5612",
+   "actual": "1.5612",
+   "source": "a4_instrument_instruct.json",
+   "ok": true,
+   "needle": "+1.5612",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "instruct floors met",
+   "claim": "True",
+   "actual": "True",
+   "source": "a4_instrument_instruct.json",
+   "ok": true,
+   "needle": null,
+   "needle_located": null
+  },
+  {
+   "section": "\u00a71",
+   "label": "instruct decidable probes",
+   "claim": "12",
+   "actual": "12",
+   "source": "a4_instrument_instruct.json",
+   "ok": true,
+   "needle": "12/12 decidable probes",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "base usable rate",
+   "claim": "1.000",
+   "actual": "1.000",
+   "source": "a2_baserates_base.json",
+   "ok": true,
+   "needle": "1.000 at every stage",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "sft usable rate",
+   "claim": "1.000",
+   "actual": "1.000",
+   "source": "a2_baserates_sft.json",
+   "ok": true,
+   "needle": "1.000 at every stage",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "dpo usable rate",
+   "claim": "1.000",
+   "actual": "1.000",
+   "source": "a2_baserates_dpo.json",
+   "ok": true,
+   "needle": "1.000 at every stage",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "instruct usable rate",
+   "claim": "1.000",
+   "actual": "1.000",
+   "source": "a2_baserates_instruct.json",
+   "ok": true,
+   "needle": "1.000 at every stage",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "false alarms across all control trials",
+   "claim": "0/96",
+   "actual": "0/96",
+   "source": "a2_baserates_*.json",
+   "ok": true,
+   "needle": "zero false alarms in 96",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "undecidable rates",
+   "claim": "1/24, 1/24, 0/24, 12/24",
+   "actual": "1/24, 1/24, 0/24, 12/24",
+   "source": "a2_baserates_*.json",
+   "ok": true,
+   "needle": "1/24, 1/24, 0/24, 12/24",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "operant degeneracy 0/80 every stage",
+   "claim": "True",
+   "actual": "True",
+   "source": "a2_baserates_*.json",
+   "ok": true,
+   "needle": "0/80 at every stage",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "no bar fired",
+   "claim": "True",
+   "actual": "True",
+   "source": "a2_baserates_*.json",
+   "ok": true,
+   "needle": "no bar fired",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "worst s/forward",
+   "claim": "0.0871",
+   "actual": "0.0871",
+   "source": "a5_budget.json",
+   "ok": true,
+   "needle": "0.0871 s/forward, 181 s load",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "worst load s",
+   "claim": "181",
+   "actual": "181",
+   "source": "a5_budget.json",
+   "ok": true,
+   "needle": null,
+   "needle_located": null
+  },
+  {
+   "section": "\u00a71",
+   "label": "model validation error",
+   "claim": "True",
+   "actual": "True",
+   "source": "a5_budget.json",
+   "ok": true,
+   "needle": "\u22644.9% error",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "B2 hours",
+   "claim": "0.76",
+   "actual": "0.76",
+   "source": "a5_budget.json",
+   "ok": true,
+   "needle": "B2 0.76 h",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "B3 screen worst",
+   "claim": "\u22645.87",
+   "actual": "5.87",
+   "source": "a5_budget.json",
+   "ok": true,
+   "needle": "B3 screen \u22645.87 h",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "screen + one confirm worst",
+   "claim": "\u22647.53",
+   "actual": "7.53",
+   "source": "a5_budget.json",
+   "ok": true,
+   "needle": "screen + one confirm \u22647.53 h",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a74",
+   "label": "96:36:36 scaled to marker 48",
+   "claim": "18/18",
+   "actual": "18/18",
+   "source": "direct arithmetic",
+   "ok": true,
+   "needle": "marker 48, sham 18, random 18",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a74",
+   "label": "strata 4 pairs x 2 maps",
+   "claim": "8",
+   "actual": "8",
+   "source": "direct arithmetic",
+   "ok": true,
+   "needle": "4 pairs \u00d7 2 maps = 8",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a74",
+   "label": "marker per stratum",
+   "claim": "6",
+   "actual": "6",
+   "source": "direct arithmetic",
+   "ok": true,
+   "needle": "marker 6/stratum",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a74",
+   "label": "sham/random per stratum",
+   "claim": "3",
+   "actual": "3",
+   "source": "direct arithmetic",
+   "ok": true,
+   "needle": "scheduled 24 each",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a74",
+   "label": "24 scheduled tolerates 25% exclusion to 18 valid",
+   "claim": "18",
+   "actual": "18",
+   "source": "direct arithmetic",
+   "ok": true,
+   "needle": "tolerating 25% exclusion",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a74",
+   "label": "hard cap",
+   "claim": "144",
+   "actual": "144",
+   "source": "declared",
+   "ok": true,
+   "needle": "hard cap 144 run sessions",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a74",
+   "label": "critical k at n=96",
+   "claim": "57",
+   "actual": "57",
+   "source": "lockg_arith.json (exact binomial)",
+   "ok": true,
+   "needle": "critical k \u2265 57",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a74",
+   "label": "binomial MDE at 80% power",
+   "claim": "0.130",
+   "actual": "0.130",
+   "source": "lockg_arith.json (exact binomial)",
+   "ok": true,
+   "needle": "binomial MDE 0.130 at 80%",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a74",
+   "label": "declared choice window",
+   "claim": "8192",
+   "actual": "8192",
+   "source": "valence_core/adapters/olmo_hf.py",
+   "ok": true,
+   "needle": "declared window 8192",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a77",
+   "label": "marker stores rebuild the instruments",
+   "claim": "0 probes differ",
+   "actual": "0 probes differ",
+   "source": "a4_instrument_*.npz",
+   "ok": true,
+   "needle": "rebuild path vs marker stores",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a77",
+   "label": "G_c reproduces from stores",
+   "claim": "< 1e-12",
+   "actual": "1.11e-15",
+   "source": "a4_instrument_*.npz",
+   "ok": true,
+   "needle": null,
+   "needle_located": null
+  }
+ ],
+ "green": false
+}

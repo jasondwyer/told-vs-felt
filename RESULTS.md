@@ -20,6 +20,80 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-23 — **LOCK-g §7 VALUES-CHECK: 58/59, NOT GREEN. One real
+  mismatch, and it is Code's error inherited by the lock — the disjointness
+  amendment's stated cost is **0.017, not 0.005**. Everything else matches
+  the committed record, all 48 needles locate verbatim, and the two
+  arithmetic quantities reproduce by direct computation. LOCK-g.md is
+  deliberately NOT committed: §7 commits on GREEN.**
+  (`scripts/lockg_valuescheck.py`,
+  [`data/olmo/lockg_valuescheck.json`](data/olmo/lockg_valuescheck.json),
+  [`lockg_arith.json`](data/olmo/lockg_arith.json). LOCK-g.md v1.0 draft is
+  in the working tree, untracked, pending the correction.)
+  - **THE MISMATCH, and its provenance is mine.** §1's amendment paragraph
+    says the disjointness fix cost *"0.005 total imbalance"*. The actual
+    cost is **0.0167**:
+
+    | selection | pairs | total worst-stage imbalance | disjoint |
+    |---|---|---|---|
+    | greedy top-4 | R109, R054, **R092** maple/walnut, R089 | 0.2074 | **no** |
+    | exact matching | R109, R054, R089, **R005** amber/granite | 0.2241 | yes |
+
+    difference **0.0167**. The 0.005 is `R005 (0.0816) − R089 (0.0769)` — I
+    compared the pair swapped *in* against one pair it sat beside, instead
+    of differencing the two four-pair totals, and wrote that into the
+    2026-08-23 A1-iteration-2 entry. The design instance carried it into the
+    lock faithfully. **The lock is wrong because the record was wrong, and
+    the record was wrong because I was.**
+    - **Correction to the earlier entry, recorded beside it rather than
+      over it:** the A1 iteration-2 entry's *"The cost of exactness here was
+      0.005 of imbalance"* should read **0.017**. The substantive claim it
+      supports is unaffected and in fact strengthened — greedy really is
+      non-disjoint (R092 `maple/walnut` collides with both R054
+      `copper/walnut` and R089 `maple/saddle`), so exactness was structurally
+      necessary rather than a rounding preference.
+    - **Per §7 the correction is the design instance's to make**, not
+      Code's: the lock is not edited here. On a corrected §1 the check
+      re-runs and is expected GREEN at 59/59.
+  - **The checker had a bug of its own, found and fixed before reporting.**
+    Its first run also flagged the binomial MDE as 0.260 against the lock's
+    0.130. The lock was right: **Δ in this program is a share MINUS CHANCE,
+    not a doubled share** — e2b records 47/96 as Δ_first = −0.0104, and
+    47/96 − 0.5 = −0.010417 while 2·(47/96) − 1 = −0.020833. The checker
+    used the doubled convention; the convention is now asserted in the
+    function's docstring against that record so it cannot drift back.
+  - **What passed** (58 claims, 48 needles located verbatim, 0 claimed but
+    absent, 11 derived/structural with no single literal form):
+    - **Backend**: integrity 29 files; determinism A, B and C all exactly
+      0.0; kernel gate `max_kl` 0.0; GPU string.
+    - **Roster**: all four pairs, imbalances 0.026/0.040/0.077/0.082, every
+      pair inside 0.50 ± 0.10 on all four stages, and greedy confirmed
+      non-disjoint.
+    - **Doses**: the whole MED/layer table (base L60 0.05; sft L44 0.40;
+      dpo L44 0.05; instruct L44 0.05) and sham realised 0.0 at every frac
+      at every stage.
+    - **Currency**: G_c 0.7824 / 1.0279 / 1.5325 / 1.5612, floors met and
+      12/12 decidable probes at each stage.
+    - **A2**: usable 1.000 ×4, 0/96 false alarms, undecidable
+      1/24, 1/24, 0/24, 12/24, degeneracy 0/80 ×4, no bar fired.
+    - **Budget**: 0.0871 s/forward, 181 s load, ≤4.9% validation error,
+      B2 0.76 h, B3 screen ≤5.87 h, screen + one confirm ≤7.53 h.
+    - **B3 arithmetic**: 96:36:36 → 48:18:18; 4 × 2 = 8 strata; marker
+      6/stratum; sham and random 3/stratum from 24 scheduled; 24 × 0.75 = 18
+      valid; hard cap 144; **critical k = 57** and **MDE = 0.130** by direct
+      exact-binomial computation (`lockg_arith.json`), which also
+      independently reproduces LOCK-h v2 §2's pair of the same numbers.
+    - **Window**: 8192 against `OLMoHFAdapter.DEFAULT_CHOICE_WINDOW`.
+    - **§7's rebuild path**: the marker stores rebuild the instruments with
+      **0 probes differing** at every stage and G_c reproducing to
+      **1.11e-15**.
+  - **Needle discipline held.** Every located needle was matched against the
+    lock text with whitespace collapsed, so a claim can be found even where
+    the document wraps it across lines; 0 needles were claimed but absent.
+    The eleven derived/structural claims are marked as such rather than
+    counted as located — trap 7's lesson, that a checker which never reads
+    the document proves only that Code can copy.
+
 - 2026-08-23 — **A5 DELIVERED: every B campaign completes inside one box
   session, at every point of the sensitivity range. B1 costs nothing new,
   B2 is 0.76 h, and B3's screen runs 0.91–5.87 h depending on session
