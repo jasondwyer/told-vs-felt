@@ -20,6 +20,41 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-23 — **LOCK-g v1.1 §7 VALUES-CHECK: GREEN, 62/62, 51 needles
+  located verbatim, 0 claimed but absent. The corrected §1 disjointness
+  figure verifies (0.017; greedy 0.2074, exact 0.2241), and the correction
+  itself added three new checkable assertions to the lock. LOCK-g.md is
+  READY TO COMMIT and is still untracked — §7 and the correction block both
+  say the commit is Jason's, and the hash is the license.**
+  (`scripts/lockg_valuescheck.py`,
+  [`data/olmo/lockg_valuescheck.json`](data/olmo/lockg_valuescheck.json),
+  [`lockg_arith.json`](data/olmo/lockg_arith.json).)
+  - **The count moved 59 → 62 because the lock now says more, not because
+    anything was loosened.** v1.1's replacement sentence asserts three
+    quantities v1.0 did not: the greedy total (0.2074), the exact-matching
+    total (0.2241), and the identity of the colliding pair (R092
+    `maple/walnut`). Each became its own claim with its own needle. A
+    correction that adds checkable content is worth more than one that
+    merely removes a wrong number.
+  - **Applied verbatim, with one thing done beyond the letter and flagged
+    here rather than smuggled:** the correction block specified the status
+    line v1.0 → v1.1, and the document's H1 title also carries the version
+    (`# LOCK-g.md — v1.1 …`), so both were updated. Leaving the title at
+    v1.0 while the status and the amendment log both read v1.1 would have
+    published an internally inconsistent binding document. Revert if that
+    was not the intent.
+  - **Every previously passing claim still passes**, including the two the
+    first run resolved: critical k = 57 and MDE = 0.130 by direct exact
+    binomial (Δ = p − 0.5, the convention asserted against e2b's 47/96 →
+    −0.0104), and §7's rebuild path with 0 probes differing at every stage
+    and G_c reproducing to 1.11e-15.
+  - **Next, per the correction block:** on Jason's commit, Code authors the
+    B1 entry — per-stage potency verdicts read off the committed
+    `a4_hijack_*` artifacts at any tested dose, PROPOSAL-g's registered
+    mapping applied verbatim, disposition flagged for the design instance
+    (the e2b pattern). **B2/B3 scheduling, and the cached-generation smoke
+    that should precede B3, wait on Jason's go.**
+
 - 2026-08-23 — **LOCK-g §7 VALUES-CHECK: 58/59, NOT GREEN. One real
   mismatch, and it is Code's error inherited by the lock — the disjointness
   amendment's stated cost is **0.017, not 0.005**. Everything else matches

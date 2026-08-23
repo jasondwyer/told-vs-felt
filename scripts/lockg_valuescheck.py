@@ -161,14 +161,27 @@ def main() -> int:
     clearing = [r for r in rost["ranked"] if r["clears_band"]]
     greedy = sum(r["worst_stage_imbalance"] for r in clearing[:4])
     chosen = sum(by_name[n]["worst_stage_imbalance"] for n in sel_names)
-    chk("§1", "disjointness cost", "0.005", str(d3(chosen - greedy)),
+    chk("§1", "disjointness cost", "0.017", str(d3(chosen - greedy)),
         "a1_repair_roster.json (matching total - greedy top-4 total)",
-        ok=str(d3(chosen - greedy)) == "0.005",
-        needle="cost 0.005 total imbalance")
+        ok=str(d3(chosen - greedy)) == "0.017",
+        needle="Cost of exactness: 0.017 total worst-stage imbalance")
+    chk("§1", "greedy total", "0.2074", f"{greedy:.4f}",
+        "a1_repair_roster.json", ok=round(greedy, 4) == 0.2074,
+        needle="greedy 0.2074")
+    chk("§1", "exact-matching total", "0.2241", f"{chosen:.4f}",
+        "a1_repair_roster.json", ok=round(chosen, 4) == 0.2241,
+        needle="exact 0.2241")
     gt = [t for r in clearing[:4] for t in r["tags"]]
     chk("§1", "greedy top-4 really is non-disjoint", True,
         len(set(gt)) != len(gt), "a1_repair_roster.json",
-        ok=len(set(gt)) != len(gt), needle="the literal four best share tags")
+        ok=len(set(gt)) != len(gt),
+        needle="do not use eight distinct tags")
+    # the lock now names the colliding pair; check that claim too
+    r092 = next((r for r in clearing[:4]
+                 if sorted(r["tags"]) == ["maple", "walnut"]), None)
+    chk("§1", "R092 maple/walnut is in the greedy four", True, r092 is not None,
+        "a1_repair_roster.json", ok=r092 is not None,
+        needle="R092 maple/walnut collides")
 
     # --- §1 MED / layer table --------------------------------------------
     want_med = {"base": (60, 0.05), "sft": (44, 0.40),

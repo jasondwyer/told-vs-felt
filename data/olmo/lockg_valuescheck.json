@@ -1,9 +1,9 @@
 {
  "item": "LOCK-g \u00a77",
  "lock": "LOCK-g.md",
- "n_claims": 59,
- "n_fail": 1,
- "needles_located": 48,
+ "n_claims": 62,
+ "n_fail": 0,
+ "needles_located": 51,
  "needles_absent": [],
  "needles_derived": 11,
  "arithmetic": {
@@ -131,11 +131,31 @@
   {
    "section": "\u00a71",
    "label": "disjointness cost",
-   "claim": "0.005",
+   "claim": "0.017",
    "actual": "0.017",
    "source": "a1_repair_roster.json (matching total - greedy top-4 total)",
-   "ok": false,
-   "needle": "cost 0.005 total imbalance",
+   "ok": true,
+   "needle": "Cost of exactness: 0.017 total worst-stage imbalance",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "greedy total",
+   "claim": "0.2074",
+   "actual": "0.2074",
+   "source": "a1_repair_roster.json",
+   "ok": true,
+   "needle": "greedy 0.2074",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "exact-matching total",
+   "claim": "0.2241",
+   "actual": "0.2241",
+   "source": "a1_repair_roster.json",
+   "ok": true,
+   "needle": "exact 0.2241",
    "needle_located": true
   },
   {
@@ -145,7 +165,17 @@
    "actual": "True",
    "source": "a1_repair_roster.json",
    "ok": true,
-   "needle": "the literal four best share tags",
+   "needle": "do not use eight distinct tags",
+   "needle_located": true
+  },
+  {
+   "section": "\u00a71",
+   "label": "R092 maple/walnut is in the greedy four",
+   "claim": "True",
+   "actual": "True",
+   "source": "a1_repair_roster.json",
+   "ok": true,
+   "needle": "R092 maple/walnut collides",
    "needle_located": true
   },
   {
@@ -609,5 +639,5 @@
    "needle_located": null
   }
  ],
- "green": false
+ "green": true
 }
