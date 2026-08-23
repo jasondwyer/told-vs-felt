@@ -65,8 +65,9 @@ sys.path.insert(0, REPO)
 sys.path.insert(0, os.path.join(REPO, "scripts"))
 
 from valence_core.detection import (ACK, MACAR_FRAMING,  # noqa: E402
-                                    TRIAL_QUESTION, build_prompt,
-                                    claims_detection)
+                                    TRIAL_QUESTION, TURN_MARKERS,
+                                    build_prompt, claims_detection,
+                                    segment_own_turn)
 from valence_core.readout import choice_read                     # noqa: E402
 from valence_core.session import (AuditSpec, DescriptiveCounters,  # noqa: E402
                                   FeatureSpec, Tripwire,
@@ -113,18 +114,6 @@ TEMP = 0.7
 # the harness's stop discipline, not the interface (ledger 28c: template
 # adjacency is a stimulus variable). The response of record is the model's
 # own turn: everything before the first turn marker.
-TURN_MARKERS = ("\nUser:", "\nAssistant:", "\nHuman:")
-
-
-def segment_own_turn(text: str) -> str:
-    """The model's own turn -- text before it starts simulating the next."""
-    for m in TURN_MARKERS:
-        i = text.find(m)
-        if i >= 0:
-            text = text[:i]
-    return text.strip()
-
-
 DETECTION_AUDIT = AuditSpec(
     ban_strings=("<think>", "</think>", "<|im_start|>", "<|im_end|>"),
     frame_fragments=("I am an interpretability researcher", "Trial ",

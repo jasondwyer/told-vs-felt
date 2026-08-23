@@ -135,6 +135,38 @@ def identifies_concept(text: str, concept: str | None) -> bool | None:
     return bool(re.search(rf"\b{re.escape(concept.lower())}\b", text.lower()))
 
 
+# Declared 2026-08-23 (design-instance acceptance event). Completion-style
+# generation runs to `max_tokens` without stopping at a newline, so a model
+# that answers in one line keeps going -- and what it goes on to write is the
+# NEXT TURN: "User: Trial 2: ..." answered by itself. That continuation is not
+# the model's response to the trial, it is the model simulating the
+# experimenter, and scoring it measures the harness's stop discipline.
+#
+# A2 measured exactly this on OLMo: usable-round rate read 1/24 at Base and
+# 24/24 once segmented, with the apparent developmental gradient turning out
+# to be a gradient in how readily each stage fabricates a next turn.
+#
+# OPT-IN BY CONSTRUCTION. `run_detection(segment=False)` is the default and
+# reproduces prior behaviour byte-for-byte; every published path is
+# unchanged. Harnesses that want the model's own turn ask for it.
+TURN_MARKERS = ("\nUser:", "\nAssistant:", "\nHuman:")
+
+
+def segment_own_turn(text: str,
+                     markers: Sequence[str] = TURN_MARKERS) -> str:
+    """The model's own turn: text before it starts simulating the next.
+
+    Not an audit and not a filter -- it does not judge the text, it bounds
+    it. An audit widened after seeing data is a filter; this narrows the
+    INPUT a counter is applied to, and callers keep the raw string.
+    """
+    for m in markers:
+        i = text.find(m)
+        if i >= 0:
+            text = text[:i]
+    return text.strip()
+
+
 @dataclass
 class DetectionMetrics:
     n_injected: int
@@ -205,6 +237,7 @@ def run_detection(adapter: ModelAdapter,
                   max_tokens: int = 60, seed: int = 20260819,
                   ban_ids: Iterable[int] = (),
                   scorer: Callable[[str], bool | None] = claims_detection,
+                  segment: bool = False,
                   ) -> list[DetectionTrial]:
     """Run the paradigm. Dose is frac x R_layer for THIS checkpoint (rule 1);
     `resid_norms` must come from this adapter's own survey."""
@@ -221,15 +254,19 @@ def run_detection(adapter: ModelAdapter,
         g = adapter.generate(prefix, full[len(prefix):], injections=injs,
                              seed=seed + n, temp=0.0, max_tokens=max_tokens,
                              stop_newline=False, ban_ids=ban_ids, cached=False)
+        # `segment=False` is the default and keeps `g.text` whole, so this
+        # path is byte-for-byte what it was before segmentation existed.
+        resp = segment_own_turn(g.text) if segment else g.text
         t = DetectionTrial(trial=n, concept=concept, injected=injected,
-                           prompt=full, boundary=b, response=g.text)
-        t.claimed_detection = scorer(g.text)
-        t.identified = identifies_concept(g.text, concept)
+                           prompt=full, boundary=b, response=resp)
+        t.claimed_detection = scorer(resp)
+        t.identified = identifies_concept(resp, concept)
         trials.append(t)
     return trials
 
 
 __all__ = ["MACAR_FRAMING", "ACK", "TRIAL_QUESTION", "COMPLETION_TEMPLATE",
+           "TURN_MARKERS", "segment_own_turn",
            "DetectionTrial", "DetectionMetrics", "build_prompt",
            "steering_boundary", "claims_detection", "identifies_concept",
            "plan_trials", "run_detection"]

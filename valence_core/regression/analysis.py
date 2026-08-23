@@ -1154,6 +1154,7 @@ def run_all() -> list[Check]:
     checks += check_detection_harness()
     checks += check_instrument_invariants()
     checks += check_adapter_consolidation()
+    checks += check_detection_segmentation()
     return checks
 
 
@@ -1213,6 +1214,31 @@ def check_adapter_consolidation() -> list[Check]:
     return [_c("adapters: qwen helper has exactly one definition",
                "LOCK-h §7 consolidation, 2026-08-22",
                "0 local, 1 definition", got, ok)]
+
+
+def check_detection_segmentation() -> list[Check]:
+    """`segment_own_turn` is opt-in, and the default is byte-preserving.
+
+    Declared as its own acceptance event 2026-08-23. The whole safety of
+    adding segmentation to a shipped harness rests on one claim -- that
+    `run_detection`'s default path is what it always was -- and a claim that
+    is only asserted in a docstring is the kind that quietly stops being
+    true. So it is checked: the default is False, and on text containing no
+    turn marker the function is a no-op up to surrounding whitespace, which
+    is what makes "opt-in" mean something.
+    """
+    import inspect as _i
+    from ..detection import TURN_MARKERS, run_detection, segment_own_turn
+    default_off = _i.signature(run_detection).parameters["segment"].default
+    clean = "No, I do not detect an injected thought."
+    noop = segment_own_turn(clean) == clean
+    cuts = all(segment_own_turn(clean + m + " Trial 2: ...") == clean
+               for m in TURN_MARKERS)
+    ok = (default_off is False) and noop and cuts
+    return [_c("detection: segmentation opt-in, default byte-preserving",
+               "acceptance event 2026-08-23",
+               "default off, no-op, cuts",
+               f"default {default_off}, no-op {noop}, cuts {cuts}", ok)]
 
 
 def main() -> int:

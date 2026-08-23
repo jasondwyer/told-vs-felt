@@ -20,6 +20,44 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-23 — **`segment_own_turn` ACCEPTANCE EVENT (design block item 4):
+  landed in `valence_core.detection` in the opt-in shape. SUITE COUNT IS NOW
+  137 — that is the new checkout fingerprint. The first 136 check lines are
+  byte-identical before and after, `run_detection`'s default is unchanged,
+  and the A2 run of record re-derives from the core function on 96/96
+  committed trials.**
+  - **The shape, as adjudicated.** `TURN_MARKERS` and `segment_own_turn` are
+    new module-level members; `run_detection` gains **`segment: bool =
+    False`**. With the default the response is `g.text` whole — byte-for-byte
+    the path that existed before segmentation was a concept — so no
+    published number and no shipped caller changes. A2 and any future B2
+    harness ask for segmentation explicitly.
+  - **The claim is checked, not asserted.** New suite check `detection:
+    segmentation opt-in, default byte-preserving` verifies that the default
+    is `False`, that on text containing no turn marker the function is a
+    no-op up to surrounding whitespace, and that it cuts at each of the
+    three declared markers. The safety of adding segmentation to a shipped
+    harness rests entirely on "the default is what it always was", and a
+    claim that lives only in a docstring is the kind that quietly stops
+    being true.
+  - **Rule-26 hygiene on the addition.** Suite 136 → 137 with the new check
+    appended last; `diff` over the first 136 rendered check lines is empty.
+    Nothing was recomputed.
+  - **One definition, not two.** `box_a2_baserates.py` had a local copy from
+    this morning's fix; it now imports the core function and the local copy
+    is deleted — the same discipline the `qwen_or_explain` consolidation
+    established, applied before the duplicate could age. **The A2 artifacts
+    are unaffected:** re-deriving segmentation from each trial's stored
+    `response_raw` with the core function reproduces the stored `response`
+    on **96/96** committed trials across all four stages, so the corrected
+    run of record stands without re-running.
+  - **What this does not do.** It does not change `stop_newline=False`, and
+    it does not touch the Macar geometry — the continuation is still
+    generated, still stored in `response_raw`, and still inspectable. B2
+    inherits a harness that *can* segment rather than one that does; whether
+    B2 sets `segment=True` is a B2 pre-registration decision, not a default
+    smuggled in here.
+
 - 2026-08-23 — **A2 CORRECTED RUN OF RECORD (design block item 5): both
   gates PASS at every stage. Usable-round rate 24/24 = 1.000 on all four,
   session degeneracy 0/80 on all four, no bar fired, every declared feature
