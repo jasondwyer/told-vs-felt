@@ -20,6 +20,50 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-23 — **Cached-generation GATE built and smoked; BLOCKED on
+  hardware. The stopped pod cannot restart — "not enough free GPUs on the
+  host machine" — and `create-pod` still cannot attach a network volume, so
+  a replacement is a console action. Building it first was the right order:
+  the "licence" A5 cited turns out to be narrower than the thing B3 needs.**
+  (`scripts/box_cached_gen_smoke.py`. Nothing measured yet; no artifact of
+  record.)
+  - **The licence gap, which is the real finding here.** A5 recorded that
+    the cached path is "licensed on this backend" by the 2026-08-23 kernel
+    gate. That gate compared cached against uncached **first-response-token
+    distributions** — one step. B3 generates whole rounds: tens of tokens,
+    a KV cache carried across steps, and an injection hook whose absolute-
+    position bookkeeping advances one token at a time. **The licence covers
+    step one; B3 needs steps one through T.** Rule 2 says cached or fused
+    paths run only behind passed gates, so the speedup cannot be taken on
+    the strength of the one-step result.
+  - **Identity is asserted on TOKEN IDS, not text.** Two different id
+    sequences can decode to the same string, and it is the ids the audit,
+    the ban list and every downstream counter actually see.
+  - **Four case families, chosen for what B2 and B3 do rather than for what
+    is easy:** session rounds from the e2a corpus at **temp 0.7** (B3's real
+    workload and the sampling path, where any logit difference at all can
+    flip a draw); the same at **temp 0.0** (greedy, so a divergence is a
+    logit difference rather than a sampling coincidence); **detection
+    prompts at max_tokens 60** (B2's workload, long generations); and
+    session rounds **with a live injection at that stage's own A4 layer and
+    MED** — the marker arm's condition, and the case most likely to break,
+    because it is exactly where the cached path's position counter has to
+    stay in step.
+  - **The verdict is not tradeable against the speedup.** The gate reports
+    PASS only if every case is id-identical, and a mismatch is reported with
+    its diverging index rather than averaged away. A speedup on a path that
+    changes the DV is worth nothing.
+  - **Smoked against the stub: harness clean, 8/8 cases, plumbing verified.**
+    The stub ignores `cached`, so it cannot validate the backend and the run
+    says so in its own output rather than quietly reporting PASS.
+  - **BLOCKER, and it is the one flagged this morning.** Pod
+    `uimuzt7d890y5b` is `EXITED` and `start-pod` returns *"There are not
+    enough free GPUs on the host machine to start this pod."* Global A100
+    stock reads Medium and H100 High, but that is catalogue-wide, not this
+    host and not US-CA-2. The volume `o73qvy742n` is untouched and the
+    stopped pod is left in place rather than terminated — terminating would
+    forfeit the chance that its host frees up, and gains nothing.
+
 - 2026-08-23 — **B1 — Q1 VERDICT: the registered bet is CONFIRMED. The
   evaluative axis exists at BASE and carries causal potency there, under the
   registered A4 envelope conjunction at a tested dose. All four stages PASS;
