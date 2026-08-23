@@ -95,6 +95,36 @@ TEMP = 0.7
 # the framing, the trial header, the completion-style turn markers or the
 # bracketed session scaffold is junk, and it is junk PROVOKED BY THE
 # STIMULUS -- which is why it is routed here and not to a strict counter.
+# --- turn-boundary segmentation, declared 2026-08-23 ------------------------
+#
+# THIS IS NOT A WIDENING OF THE AUDIT. The audit fragments below are
+# unchanged; what this fixes is WHICH TEXT the audit is applied to.
+#
+# The detection prompt is completion-style and generation runs to
+# `--max-tokens` without stopping at a newline (the ported Macar geometry,
+# where an answer may legitimately run several sentences). A model that
+# answers in one line therefore keeps going, and what it goes on to produce
+# is the NEXT TURN -- it writes "User: Trial 2: ..." and answers itself.
+# That continuation is not the model's response to the trial; it is the
+# model simulating the experimenter.
+#
+# Auditing the whole string counted those continuations as frame echoes and
+# scored the first A2 run at usable 1/24 on Base -- a number that measured
+# the harness's stop discipline, not the interface (ledger 28c: template
+# adjacency is a stimulus variable). The response of record is the model's
+# own turn: everything before the first turn marker.
+TURN_MARKERS = ("\nUser:", "\nAssistant:", "\nHuman:")
+
+
+def segment_own_turn(text: str) -> str:
+    """The model's own turn -- text before it starts simulating the next."""
+    for m in TURN_MARKERS:
+        i = text.find(m)
+        if i >= 0:
+            text = text[:i]
+    return text.strip()
+
+
 DETECTION_AUDIT = AuditSpec(
     ban_strings=("<think>", "</think>", "<|im_start|>", "<|im_end|>"),
     frame_fragments=("I am an interpretability researcher", "Trial ",
@@ -159,12 +189,15 @@ def run_detection_baserates(adapter, n_trials: int, ban_ids, max_tokens: int,
         g = adapter.generate(prefix, full[len(prefix):], injections=(),
                              seed=seed + n, temp=0.0, max_tokens=max_tokens,
                              stop_newline=False, ban_ids=ban_ids, cached=False)
-        # Ledger 28b: audit first. A framing-shaped response is unusable,
-        # and an unusable response has no base-rate observation to give.
-        reason = DETECTION_AUDIT.check(g.text)
-        claim = None if reason else claims_detection(g.text)
-        rows.append({"trial": n, "response": g.text, "audit": reason,
-                     "usable": reason is None, "claimed_detection": claim,
+        # Segment first, then audit (ledger 28b: audit before any strict
+        # counter). Both texts are kept so the segmentation is auditable.
+        own = segment_own_turn(g.text)
+        reason = DETECTION_AUDIT.check(own)
+        claim = None if reason else claims_detection(own)
+        rows.append({"trial": n, "response": own, "response_raw": g.text,
+                     "truncated_at_turn_marker": own != g.text.strip(),
+                     "audit": reason, "usable": reason is None,
+                     "claimed_detection": claim,
                      "stop_reason": g.stop_reason, "cap_hit": bool(g.cap_hit)})
         print(f"    [trial {n:>2}] {'USABLE  ' if reason is None else 'unusable'}"
               f" claim={str(claim):<5} {g.text.strip()[:64]!r}", flush=True)
@@ -312,6 +345,12 @@ def main() -> int:
             "gate_ii_degeneracy_p0": args.degeneracy_p0,
             "attribution_precedence": "audit first, then any strict counter "
                                       "(ledger 28b)",
+            "turn_markers": list(TURN_MARKERS),
+            "segmentation": ("the response of record is the model's own turn: "
+                             "text before the first turn marker. Declared "
+                             "2026-08-23 after the first A2 run measured its "
+                             "own stop discipline; the audit fragments are "
+                             "unchanged"),
         },
         "ban_list": {"n_ids": len(ban_ids), "sha16": ban_sha,
                      "strings": ban_strings},
@@ -343,6 +382,8 @@ def main() -> int:
         "binom_p_unusable_gt_0.10": binom_test_exact(n_unusable, n, 0.10,
                                                      alternative="greater"),
     }
+    det_summary["n_truncated_at_turn_marker"] = sum(
+        1 for r in rows if r["truncated_at_turn_marker"])
     for r in rows:
         if r["audit"]:
             det_summary["audit_reasons"][r["audit"]] = \

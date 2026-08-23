@@ -1,0 +1,277 @@
+{
+ "item": "A3",
+ "stage": "dpo",
+ "fit_ids": [
+  "e01",
+  "e02",
+  "e03",
+  "e04",
+  "e05",
+  "e06",
+  "e07",
+  "e08",
+  "e09",
+  "e10",
+  "e11",
+  "e12",
+  "e13",
+  "e14",
+  "e15",
+  "e16",
+  "e17",
+  "e18",
+  "e19",
+  "e20",
+  "e21",
+  "e22",
+  "e23",
+  "e24"
+ ],
+ "val_ids": [
+  "e25",
+  "e26",
+  "e27",
+  "e28",
+  "e29",
+  "e30",
+  "e31",
+  "e32",
+  "e33",
+  "e34",
+  "e35",
+  "e36",
+  "e37",
+  "e38",
+  "e39",
+  "e40",
+  "e41",
+  "e42",
+  "e43",
+  "e44",
+  "e45",
+  "e46",
+  "e47",
+  "e48"
+ ],
+ "provenance": {
+  "adapter": "olmo-hf",
+  "path": "/workspace/models/dpo",
+  "dtype": "bfloat16",
+  "backend": "torch/cuda",
+  "device": "cuda",
+  "gpu": "NVIDIA A100-SXM4-80GB",
+  "cuda": "12.8",
+  "capability": [
+   8,
+   0
+  ],
+  "deterministic": true,
+  "cublas_workspace_config": ":4096:8",
+  "seed": 20260818,
+  "choice_window_declared": 8192,
+  "n_layers": 64,
+  "library_versions": {
+   "torch": "2.8.0+cu128",
+   "transformers": "5.15.0",
+   "accelerate": "1.14.0",
+   "safetensors": "0.8.0",
+   "huggingface_hub": "1.28.0",
+   "numpy": "2.1.2"
+  },
+  "python": "3.12.3"
+ },
+ "selftest": false,
+ "smoke_limit": null,
+ "input_shas": {
+  "corpus_sha": "3c53e5a54fbaa233",
+  "frames_sha": "9654b9398743116f",
+  "probes_sha": "ec2296182e726969"
+ },
+ "hygiene": {
+  "n_probes": 12,
+  "n_extraction_texts": 124,
+  "both_directions": true,
+  "fit_val_disjoint": true
+ },
+ "n_contexts": 1344,
+ "layers": [
+  32,
+  40,
+  44,
+  48,
+  52,
+  56,
+  60
+ ],
+ "primary_aggregation": "span_mean",
+ "axis_order": [
+  "span_reward",
+  "span_sentiment",
+  "span_character"
+ ],
+ "axis_family_sha16": "65cd886e2c633c4c",
+ "axis_conditions": {
+  "span_reward": [
+   "self_pos",
+   "self_neg"
+  ],
+  "span_sentiment": [
+   "sent_pos",
+   "sent_neg"
+  ],
+  "span_character": [
+   "char_pos",
+   "char_neg"
+  ]
+ },
+ "guards": {
+  "v2_self": "span_character",
+  "v3_eval": "span_sentiment"
+ },
+ "R_per_layer_spanmean": {
+  "32": 55.4476,
+  "40": 67.5694,
+  "44": 73.4016,
+  "48": 78.7442,
+  "52": 84.7122,
+  "56": 91.7296,
+  "60": 106.6765
+ },
+ "rl_cross_check": {
+  "available": true,
+  "layers": {
+   "32": {
+    "a3_capture": 55.4476,
+    "step2_survey": 55.4476,
+    "rel": 5.143889376740223e-08
+   },
+   "40": {
+    "a3_capture": 67.5694,
+    "step2_survey": 67.5694,
+    "rel": 3.071479915585632e-07
+   },
+   "44": {
+    "a3_capture": 73.4016,
+    "step2_survey": 73.4016,
+    "rel": 6.797839300988129e-07
+   },
+   "48": {
+    "a3_capture": 78.7442,
+    "step2_survey": 78.7442,
+    "rel": 3.784149417055835e-07
+   },
+   "52": {
+    "a3_capture": 84.7122,
+    "step2_survey": 84.7122,
+    "rel": 2.91855367734692e-07
+   },
+   "56": {
+    "a3_capture": 91.7296,
+    "step2_survey": 91.7296,
+    "rel": 3.0516077909280525e-07
+   },
+   "60": {
+    "a3_capture": 106.6765,
+    "step2_survey": 106.6765,
+    "rel": 4.544860100491236e-07
+   }
+  },
+  "max_rel": 6.797839300988129e-07,
+  "agrees_within_2e-3": true
+ },
+ "span_len_min_max_mean": [
+  9,
+  28,
+  15.8
+ ],
+ "report": {
+  "span": [
+   {
+    "layer": 32,
+    "R_layer": 55.45,
+    "norm_span_reward": 12.416,
+    "norm_span_sentiment": 7.595,
+    "norm_span_character": 4.936,
+    "axis_over_R": 0.2239,
+    "cos_span_sentiment": 0.283,
+    "cos_span_character": 0.741,
+    "v2_self_residual_frac": 0.672,
+    "v3_eval_residual_frac": 0.959
+   },
+   {
+    "layer": 40,
+    "R_layer": 67.57,
+    "norm_span_reward": 14.188,
+    "norm_span_sentiment": 8.702,
+    "norm_span_character": 5.613,
+    "axis_over_R": 0.21,
+    "cos_span_sentiment": 0.268,
+    "cos_span_character": 0.738,
+    "v2_self_residual_frac": 0.674,
+    "v3_eval_residual_frac": 0.963
+   },
+   {
+    "layer": 44,
+    "R_layer": 73.4,
+    "norm_span_reward": 15.154,
+    "norm_span_sentiment": 9.037,
+    "norm_span_character": 5.856,
+    "axis_over_R": 0.2064,
+    "cos_span_sentiment": 0.274,
+    "cos_span_character": 0.725,
+    "v2_self_residual_frac": 0.689,
+    "v3_eval_residual_frac": 0.962
+   },
+   {
+    "layer": 48,
+    "R_layer": 78.74,
+    "norm_span_reward": 15.851,
+    "norm_span_sentiment": 9.256,
+    "norm_span_character": 6.045,
+    "axis_over_R": 0.2013,
+    "cos_span_sentiment": 0.274,
+    "cos_span_character": 0.713,
+    "v2_self_residual_frac": 0.701,
+    "v3_eval_residual_frac": 0.962
+   },
+   {
+    "layer": 52,
+    "R_layer": 84.71,
+    "norm_span_reward": 16.586,
+    "norm_span_sentiment": 9.47,
+    "norm_span_character": 6.282,
+    "axis_over_R": 0.1958,
+    "cos_span_sentiment": 0.269,
+    "cos_span_character": 0.699,
+    "v2_self_residual_frac": 0.715,
+    "v3_eval_residual_frac": 0.963
+   },
+   {
+    "layer": 56,
+    "R_layer": 91.73,
+    "norm_span_reward": 17.225,
+    "norm_span_sentiment": 9.64,
+    "norm_span_character": 6.472,
+    "axis_over_R": 0.1878,
+    "cos_span_sentiment": 0.27,
+    "cos_span_character": 0.687,
+    "v2_self_residual_frac": 0.727,
+    "v3_eval_residual_frac": 0.963
+   },
+   {
+    "layer": 60,
+    "R_layer": 106.68,
+    "norm_span_reward": 18.55,
+    "norm_span_sentiment": 10.106,
+    "norm_span_character": 6.968,
+    "axis_over_R": 0.1739,
+    "cos_span_sentiment": 0.294,
+    "cos_span_character": 0.697,
+    "v2_self_residual_frac": 0.717,
+    "v3_eval_residual_frac": 0.956
+   }
+  ]
+ },
+ "descriptive_only": "Guards license claims, they do not select drugs (ledger 22). No layer and no dose is chosen here; A4 selects causally.",
+ "axes_npz": "a3_axes_dpo.npz"
+}

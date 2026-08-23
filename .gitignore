@@ -60,6 +60,16 @@
 # instruments would mean trusting a computation we could no longer check.
 # e0_residuals.npz (202 MB) remains excluded.
 !/data/e0/e0_b1_markers.npz
+# A-phase per-stage axis families (431 KB each, 4 stages): the frozen
+# feedback-contrast direction plus its V2/V3 guards, per checkpoint.
+# Same standing as the e0 axes above -- box_a4_hijack.py doses from these
+# and sha-verifies the family, so a copy that lives only on an ephemeral
+# box does not exist (ledger 27). Named explicitly for the same reason: a
+# bare *.npz exception would sweep in raw residuals.
+!/data/olmo/a3_axes_base.npz
+!/data/olmo/a3_axes_sft.npz
+!/data/olmo/a3_axes_dpo.npz
+!/data/olmo/a3_axes_instruct.npz
 
 # Ledger-26 regression verdicts: the record of whether a refactor was
 # accepted belongs in the repo, not on the machine that ran it (ledger 27).

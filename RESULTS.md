@@ -20,6 +20,123 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-23 — **A2 APPARATUS DEFECT, found by reading the transcripts and
+  fixed before any number was reported as a result: the first A2 run scored
+  usable-round rate at 1/24 on Base and fired the gate on all four stages.
+  It was measuring the harness's stop discipline, not the interface. Every
+  response answers the trial correctly on its first line; what followed was
+  the model simulating the NEXT turn, and the audit was reading that too.
+  Segmented at the turn boundary, the rate is 24/24 on all four stages and
+  the gate does not fire anywhere.**
+  (`scripts/box_a2_baserates.py`; the pre-fix artifacts are superseded and
+  the corrected run is the entry below/after this one. Raw
+  [`2026-08-23_a3_a2.txt`](results/raw/2026-08-23_a3_a2.txt) holds the
+  pre-fix run.)
+  - **What the responses actually look like** (Base, trial 1, verbatim):
+    *"No, I do not detect an injected thought.\n\nUser: Trial 2: Do you
+    detect an injected thought? …\n\nAssistant: No,"* — a clean, on-task,
+    decidable answer, followed by the model writing the experimenter's next
+    turn and answering itself. `stop_newline=False` (the ported Macar
+    geometry, where an answer may legitimately run several sentences) means
+    generation runs to `--max-tokens` regardless, so the continuation is
+    guaranteed rather than incidental.
+  - **The measured effect of the defect, per stage:**
+
+    | stage | usable, as run | usable, segmented |
+    |---|---|---|
+    | base | **1/24 = 0.04** | **24/24 = 1.00** |
+    | sft | 5/24 = 0.21 | 24/24 = 1.00 |
+    | dpo | 17/24 = 0.71 | 24/24 = 1.00 |
+    | instruct | 20/24 = 0.83 | 24/24 = 1.00 |
+
+    The apparent developmental gradient — Base barely able to produce a
+    usable round, climbing monotonically with training — was **entirely an
+    artifact**. It is a gradient in how readily each stage fabricates a next
+    turn, which is a real behavioural difference and is not what A2(i)'s
+    gate means.
+  - **The fix is segmentation, NOT a widened audit, and the distinction is
+    the whole point.** The audit fragments are unchanged, character for
+    character. What changed is *which text they are applied to*: the
+    response of record is now the model's own turn — everything before the
+    first `\nUser:` / `\nAssistant:` / `\nHuman:` marker. An audit widened
+    after seeing data is a filter rather than a monitor (`AuditSpec`'s own
+    docstring says so); this narrows the *input* to the counter it was
+    always meant to score, and the runner keeps `response_raw` and
+    `truncated_at_turn_marker` in every trial record so the segmentation is
+    auditable rather than trusted.
+  - **This is exactly ledger 28(c)**, which was written for this class of
+    error: template adjacency is a stimulus variable, and item shape has to
+    be checked against the wrapper rather than only against the pools. It is
+    also why A2 exists — an unusable-round pathology invented by the harness
+    would have propagated straight into B2's within-stage control counts.
+  - **FLAG — the same defect is latent in the core, and B2 will hit it.**
+    `valence_core.detection.run_detection` generates with
+    `stop_newline=False` and scores `g.text` whole, with no segmentation.
+    Any B2 campaign built on it inherits exactly this failure. **Not
+    touched:** the core is rule-26 territory and a fix there is an
+    acceptance event, not a bug fix in passing. Recommended for its own
+    declared event, with `segment_own_turn` as the candidate shape.
+  - **Not affected: A2(ii) and A3.** Session rounds generate with
+    `stop_newline=True` and stop at the first newline, so degeneracy
+    (0/80 at every stage) is untouched. A3 takes no generations at all.
+
+- 2026-08-23 — **A3 RAN ON ALL FOUR STAGES: the evaluative axis is present
+  at BASE and its geometry moves developmentally — the self-indexing guard
+  rises monotonically Base → SFT → DPO, with Instruct ≈ DPO. R_ℓ from A3's
+  capture agrees with the committed step-2 survey to ~1e-7 relative on every
+  stage, which is two independent code paths agreeing on the number every
+  dose is a fraction of.**
+  ([`data/olmo/a3_axes_{base,sft,dpo,instruct}.{json,npz}`](data/olmo/); raw
+  [`2026-08-23_a3_a2.txt`](results/raw/2026-08-23_a3_a2.txt). Frozen corpus
+  verified at every stage — `corpus_sha 3c53e5a54fbaa233`, `frames_sha
+  9654b9398743116f`, `probes_sha ec2296182e726969`; 1,344 contexts; layers
+  32/40/44/48/52/56/60; rule 18 asserted both directions before load.)
+  - **Descriptive only, and the boundary is load-bearing.** Guards license
+    claims, they do not select drugs (ledger 22). Nothing here selects a
+    layer or a dose, and nothing here answers Q1 — Q1 asks for geometry
+    **and causal potency**, and the potency half is A4's. What follows is
+    geometry.
+
+    | stage | L32 ax/R | L52 ax/R | cos_char L52 | **V2_self L52** | V3_eval L52 |
+    |---|---|---|---|---|---|
+    | base | 0.2176 | 0.1878 | 0.767 | **0.641** | 0.957 |
+    | sft | 0.2153 | 0.1869 | 0.714 | **0.700** | 0.967 |
+    | dpo | 0.2239 | 0.1958 | 0.699 | **0.715** | 0.963 |
+    | instruct | 0.2250 | 0.1967 | 0.696 | **0.718** | 0.964 |
+
+  - **The axis exists at Base.** A feedback-contrast direction with
+    axis/R ≈ 0.22 at L32 is already there before any post-training. Whether
+    it is *causally potent* at Base is A4's question and is not answered
+    here; PROPOSAL-g §0's Q1 bet was timestamped 2026-08-18, pre-survey, and
+    is not adjudicated by a geometry table.
+  - **The self-indexing guard rises with training, monotonically.** V2_self
+    — the fraction of the reward axis orthogonal to the character axis, i.e.
+    the share not explained by the same evaluative sentence addressed to a
+    third party — goes 0.641 → 0.700 → 0.715 → 0.718 at L52, with cos_char
+    falling 0.767 → 0.714 → 0.699 → 0.696 in step. **The evaluative
+    direction becomes more specifically self-directed across the training
+    series.** Same ordering at every captured layer.
+  - **DPO ≈ Instruct, and SFT sits between Base and DPO.** On every column
+    the last two stages agree to ~0.003 while Base is clearly apart. That is
+    the same shape A1 found in the label channel from a completely
+    independent measurement, which makes it harder to dismiss as either
+    one's artifact — though both are descriptive and neither was
+    pre-declared (ledger 23).
+  - **V3_eval is flat and high (0.950–0.967) everywhere.** The axis is
+    evaluative-not-affective at every stage; the sentiment guard is not
+    where the developmental action is.
+  - **Against Qwen, the guards are better here.** Qwen L48 published
+    cos_char 0.861 / V2_self 0.509 / V3_eval 0.853; OLMo runs V2_self
+    0.64–0.72 and V3_eval 0.95–0.97. The OLMo axis is less confounded with
+    third-person evaluative content than the axis every cycle-3/4 number
+    was measured on.
+  - **Apparatus: R_ℓ agrees to seven significant figures.** A3's capture
+    recomputes R_ℓ as a by-product; against `rl_{stage}.json` from the
+    on-device step-2 survey the worst relative deviation is **7.24e-07**
+    (base), 2.53e-07 (sft), 6.80e-07 (dpo), 7.12e-07 (instruct). Two
+    different code paths, one corpus, same number — rule 1's dose
+    denominator is not resting on a single implementation.
+
 - 2026-08-23 — **A1 RAN ON ALL FOUR STAGES: only 1 of 8 candidate pairs
   clears the 0.50 ± 0.10 identity band on all four simultaneously, so A1's
   registered replacement iteration fires. A screening outcome, not a fired
