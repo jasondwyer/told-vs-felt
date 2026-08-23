@@ -63,7 +63,37 @@ def worst_stage(per_stage: Mapping[str, Mapping], name: str, fmt: str,
     return reducer(vals, key=lambda v: v[0])
 
 
+def best_matching(clearing: list[dict], size: int = 4) -> tuple[list, int]:
+    """Lowest-total-imbalance set of `size` pairs sharing no tag.
+
+    Exact, not greedy: greedy takes the most balanced pair first and can
+    strand the rest of the field on a shared tag. Returns (selection,
+    achievable_size); if `size` is unreachable the largest reachable
+    matching is returned, because "three is the most that exist" is the
+    informative answer rather than an empty list.
+
+    Iteration 1 did not need this -- the eight roster pairs were disjoint by
+    construction, so `clearing[:4]` was sound there and remains the default.
+    Over RE-PAIRINGS it is not sound: a roster of four pairs needs eight
+    distinct tags, and the four best by imbalance will happily share one.
+    """
+    import itertools
+    for k in range(size, 0, -1):
+        best, best_cost = None, float("inf")
+        for combo in itertools.combinations(clearing, k):
+            tags = [t for c in combo for t in c["tags"]]
+            if len(set(tags)) != len(tags):
+                continue
+            cost = sum(c["worst_stage_imbalance"] for c in combo)
+            if cost < best_cost:
+                best, best_cost = list(combo), cost
+        if best:
+            return best, k
+    return [], 0
+
+
 def select_roster(per_stage: Mapping[str, Mapping], halfwidth: float = 0.10,
+                  disjoint_matching: bool = False,
                   n_select: int = 4, fmt: str = "scaffold",
                   stages: Sequence[str] = STAGES) -> dict:
     """Apply A1's formula. Pure function of the loaded artifacts -- no I/O,
@@ -109,7 +139,13 @@ def select_roster(per_stage: Mapping[str, Mapping], halfwidth: float = 0.10,
 
     rows.sort(key=lambda r: r["worst_stage_imbalance"])
     clearing = [r for r in rows if r["clears_band"]]
-    selected = clearing[:n_select]
+    if disjoint_matching:
+        selected, achievable = best_matching(clearing, n_select)
+    else:
+        # Default: sound when the candidate pairs are disjoint by
+        # construction, as iteration 1's eight were. Unchanged so the
+        # committed iteration-1 artifact reproduces byte-for-byte.
+        selected, achievable = clearing[:n_select], min(len(clearing), n_select)
     return {
         "item": "A1",
         "format": fmt,
@@ -120,8 +156,8 @@ def select_roster(per_stage: Mapping[str, Mapping], halfwidth: float = 0.10,
         "n_clearing": len(clearing),
         "selected": [r["name"] for r in selected],
         "selected_tags": [r["tags"] for r in selected],
-        "sufficient": len(clearing) >= n_select,
-        "replacement_iteration_required": len(clearing) < n_select,
+        "sufficient": len(selected) >= n_select,
+        "replacement_iteration_required": len(selected) < n_select,
         "selection_is_a_recommendation": True,
         "_lock": ("The roster of record enters the program through "
                   "LOCK-g.md, authored by the design instance. This "
@@ -140,6 +176,14 @@ def main() -> int:
                     help="override the band; default reads it from "
                          "data/configs/a1_roster_candidates.json")
     ap.add_argument("--n-select", type=int, default=4)
+    ap.add_argument("--pattern", default="a1_tagscreen",
+                    help="artifact stem: a1_tagscreen (iteration 1) or "
+                         "a1_repair (the re-pairing screen)")
+    ap.add_argument("--disjoint-matching", action="store_true",
+                    help="exact lowest-imbalance selection over pairs "
+                         "sharing no tag. REQUIRED for the re-pairing "
+                         "screen, where disjointness is not free; off by "
+                         "default so iteration 1 reproduces unchanged")
     ap.add_argument("--out", default=os.path.join(REPO, "data/olmo/a1_roster.json"))
     args = ap.parse_args()
 
@@ -151,7 +195,7 @@ def main() -> int:
 
     per_stage = {}
     for stage in STAGES:
-        path = os.path.join(args.indir, f"a1_tagscreen_{stage}.json")
+        path = os.path.join(args.indir, f"{args.pattern}_{stage}.json")
         if not os.path.exists(path):
             raise SystemExit(
                 f"A1 STOP: {path} not found. Run box_a1_tagscreen.py on "
@@ -160,6 +204,7 @@ def main() -> int:
             per_stage[stage] = json.load(fh)
 
     res = select_roster(per_stage, halfwidth=halfwidth,
+                        disjoint_matching=args.disjoint_matching,
                         n_select=args.n_select, fmt=args.format)
     res["source_provenance"] = {s: per_stage[s].get("provenance")
                                 for s in STAGES}

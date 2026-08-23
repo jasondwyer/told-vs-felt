@@ -20,6 +20,65 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-23 — **RE-PAIRING SCREEN BUILT (design block item 2), smoked, and
+  queued behind A4. It proposes no new stimulus: the sixteen tags are already
+  single-token and already hygiene-verified, so only the pairing is new. The
+  aggregator gains exact disjoint matching as an OPT-IN — because over
+  re-pairings `clearing[:4]` stops being sound — and the default reproduces
+  the committed iteration-1 artifact byte-for-byte.**
+  (`scripts/box_a1_repair_screen.py`; `scripts/a1_roster.py` gains
+  `--pattern` and `--disjoint-matching`. Suite unchanged at 137 — both are
+  script-tier, no rule-26 event, per the adjudication.)
+  - **Why re-pairing before new candidates.** The eight pairs are built from
+    sixteen tags and the pairing is an arbitrary grouping rather than a
+    property of the tags. H3b established this on Qwen, where re-pairing
+    turned a 3/8 result into an admissible four without sourcing a single
+    new word. Here it asks the **120 pairings** — all C(16,2) — that the
+    roster never asked about.
+  - **The hygiene status is inherited, not re-earned, and that is the point
+    of doing this first.** Every tag is already single-token on the shared
+    OLMo tokenizer (iteration 1: 8/8 readable, 0 dropped) and already
+    verified against the pools and the wrapper (rule 18, ledger 28(c)) in
+    the committed roster. A new candidate would have to earn all of that
+    again. Single-token status is nonetheless **re-asserted at startup** —
+    one encode per tag, and a drifted id is a hard stop, not a warning,
+    because it would mean this is not the tokenizer A1 ran on.
+  - **Band and n unchanged**: 0.50 ± 0.10 on identity_split, scaffold
+    primary, n = 16 per pair per format — identical to iteration 1, so the
+    two screens are directly comparable and iteration 1's rows reappear.
+    Per the adjudication, any n amendment would be its own labelled
+    apparatus event and never a band change.
+  - **Disjointness is the new hazard, and it is handled exactly.** A roster
+    of four pairs needs **eight distinct tags** — a tag cannot denote two
+    arms. Iteration 1 got this free: the eight roster pairs were disjoint by
+    construction, so `clearing[:4]` was sound. Over re-pairings the four
+    best by imbalance will happily share a tag. `best_matching` therefore
+    does an exact search over disjoint k-subsets minimising total
+    worst-stage imbalance, and returns the **largest reachable** matching
+    when four is unreachable, because "three is the most that exist" is the
+    informative answer rather than an empty list.
+    - **Verified both ways rather than assumed.** On iteration-1 data (a
+      disjoint candidate set) the matching path selects exactly what the
+      default selects — `['C2']`. On a synthetic set where the two most
+      balanced pairs share a tag, greedy would return `A,B,C,D` and the
+      exact search returns `A,C,D,E` with all eight tags distinct; asked for
+      four out of two, it returns the largest reachable.
+    - **Opt-in, default byte-preserving** — the same discipline as
+      `segment_own_turn`. `a1_roster.py` with no flags reproduces
+      `data/olmo/a1_roster.json` **byte-identically**, checked by `diff`
+      against the committed copy.
+  - **Cost and sequencing.** 120 pairings × 16 probes ≈ 1,920 forwards per
+    stage on the primary format, plus the second format only for pairings
+    the primary put in band — at the measured 0.084 s/forward that is ~3
+    minutes of compute per stage plus a model load. **Queued behind A4**
+    rather than run concurrently: one 80 GB card, one 64.5 GB model at a
+    time.
+  - **It does not select.** The four-stage conjunction cannot be evaluated
+    from one stage, and the roster of record still enters only through
+    LOCK-g. The screen's output schema is deliberately identical to
+    `box_a1_tagscreen.py`'s so the aggregator consumes either without a
+    special case.
+
 - 2026-08-23 — **`segment_own_turn` ACCEPTANCE EVENT (design block item 4):
   landed in `valence_core.detection` in the opt-in shape. SUITE COUNT IS NOW
   137 — that is the new checkout fingerprint. The first 136 check lines are
