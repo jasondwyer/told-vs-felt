@@ -1,0 +1,2679 @@
+{
+ "item": "A1",
+ "stage": "sft",
+ "provenance": {
+  "adapter": "olmo-hf",
+  "path": "/workspace/models/sft",
+  "dtype": "bfloat16",
+  "backend": "torch/cuda",
+  "device": "cuda",
+  "gpu": "NVIDIA A100-SXM4-80GB",
+  "cuda": "12.8",
+  "capability": [
+   8,
+   0
+  ],
+  "deterministic": true,
+  "cublas_workspace_config": ":4096:8",
+  "seed": 20260818,
+  "choice_window_declared": 8192,
+  "n_layers": 64,
+  "library_versions": {
+   "torch": "2.8.0+cu128",
+   "transformers": "5.15.0",
+   "accelerate": "1.14.0",
+   "safetensors": "0.8.0",
+   "huggingface_hub": "1.28.0",
+   "numpy": "2.1.2"
+  },
+  "python": "3.12.3"
+ },
+ "roster_source": "data/configs/a1_roster_candidates.json",
+ "band": {
+  "centre": 0.5,
+  "halfwidth": 0.1,
+  "applies_to": "identity_split, scaffold format, ALL FOUR stages simultaneously",
+  "source": "PROPOSAL-g \u00a73 A1 ([LOCK-g formula])",
+  "note": "position_split is recorded with NO band -- order counterbalancing absorbs it (PROPOSAL-g \u00a73 A1). label_mass is recorded with no band either; it is branch-(a) confirmation, not a gate (adjudication 2026-08-20, item 3)."
+ },
+ "n_per_pair_per_format": 16,
+ "token_ids": {
+  "slate": 51680,
+  "prism": 94710,
+  "maple": 55480,
+  "cedar": 76396,
+  "granite": 38390,
+  "lattice": 55372,
+  "plaza": 73098,
+  "saddle": 61858,
+  "canvas": 10247,
+  "copper": 24166,
+  "quartz": 52255,
+  "ridge": 58933,
+  "amber": 68705,
+  "velvet": 72426,
+  "walnut": 93729,
+  "ember": 99384
+ },
+ "pairs": [
+  {
+   "name": "C1",
+   "tags": [
+    "slate",
+    "prism"
+   ],
+   "origin": "cycle-3/4 incumbent",
+   "formats": {
+    "scaffold": {
+     "tag_lo": "prism",
+     "tag_hi": "slate",
+     "fmt": "scaffold",
+     "n": 16,
+     "identity_split": 0.8222023623186343,
+     "position_split": 0.5199131238792917,
+     "imbalance": 0.3222023623186343,
+     "label_mass_mean": 0.9376417931908492,
+     "label_mass_min": 0.9002786147992694,
+     "top1_is_label_frac": 1.0,
+     "per_probe": [
+      {
+       "i": 0,
+       "first": "slate",
+       "second": "prism",
+       "p_first": 0.1512812382522767,
+       "p_second": 0.7682695203085375,
+       "label_mass": 0.9195507585608141,
+       "top1_is_label": true
+      },
+      {
+       "i": 1,
+       "first": "prism",
+       "second": "slate",
+       "p_first": 0.679633818668397,
+       "p_second": 0.22064479613087234,
+       "label_mass": 0.9002786147992694,
+       "top1_is_label": true
+      },
+      {
+       "i": 2,
+       "first": "slate",
+       "second": "prism",
+       "p_first": 0.19490314447265736,
+       "p_second": 0.7708568899278335,
+       "label_mass": 0.9657600344004909,
+       "top1_is_label": true
+      },
+      {
+       "i": 3,
+       "first": "prism",
+       "second": "slate",
+       "p_first": 0.8146014893783065,
+       "p_second": 0.14155651314987422,
+       "label_mass": 0.9561580025281806,
+       "top1_is_label": true
+      },
+      {
+       "i": 4,
+       "first": "slate",
+       "second": "prism",
+       "p_first": 0.20991309932475052,
+       "p_second": 0.7326687079071311,
+       "label_mass": 0.9425818072318817,
+       "top1_is_label": true
+      },
+      {
+       "i": 5,
+       "first": "prism",
+       "second": "slate",
+       "p_first": 0.8164576522125448,
+       "p_second": 0.11049552761288459,
+       "label_mass": 0.9269531798254295,
+       "top1_is_label": true
+      },
+      {
+       "i": 6,
+       "first": "slate",
+       "second": "prism",
+       "p_first": 0.19416931224250744,
+       "p_second": 0.7679545271558387,
+       "label_mass": 0.9621238393983461,
+       "top1_is_label": true
+      },
+      {
+       "i": 7,
+       "first": "prism",
+       "second": "slate",
+       "p_first": 0.8171402073734685,
+       "p_second": 0.11058790140891281,
+       "label_mass": 0.9277281087823813,
+       "top1_is_label": true
+      },
+      {
+       "i": 8,
+       "first": "slate",
+       "second": "prism",
+       "p_first": 0.1512812382522767,
+       "p_second": 0.7682695203085375,
+       "label_mass": 0.9195507585608141,
+       "top1_is_label": true
+      },
+      {
+       "i": 9,
+       "first": "prism",
+       "second": "slate",
+       "p_first": 0.679633818668397,
+       "p_second": 0.22064479613087234,
+       "label_mass": 0.9002786147992694,
+       "top1_is_label": true
+      },
+      {
+       "i": 10,
+       "first": "slate",
+       "second": "prism",
+       "p_first": 0.19490314447265736,
+       "p_second": 0.7708568899278335,
+       "label_mass": 0.9657600344004909,
+       "top1_is_label": true
+      },
+      {
+       "i": 11,
+       "first": "prism",
+       "second": "slate",
+       "p_first": 0.8146014893783065,
+       "p_second": 0.14155651314987422,
+       "label_mass": 0.9561580025281806,
+       "top1_is_label": true
+      },
+      {
+       "i": 12,
+       "first": "slate",
+       "second": "prism",
+       "p_first": 0.20991309932475052,
+       "p_second": 0.7326687079071311,
+       "label_mass": 0.9425818072318817,
+       "top1_is_label": true
+      },
+      {
+       "i": 13,
+       "first": "prism",
+       "second": "slate",
+       "p_first": 0.8164576522125448,
+       "p_second": 0.11049552761288459,
+       "label_mass": 0.9269531798254295,
+       "top1_is_label": true
+      },
+      {
+       "i": 14,
+       "first": "slate",
+       "second": "prism",
+       "p_first": 0.19416931224250744,
+       "p_second": 0.7679545271558387,
+       "label_mass": 0.9621238393983461,
+       "top1_is_label": true
+      },
+      {
+       "i": 15,
+       "first": "prism",
+       "second": "slate",
+       "p_first": 0.8171402073734685,
+       "p_second": 0.11058790140891281,
+       "label_mass": 0.9277281087823813,
+       "top1_is_label": true
+      }
+     ]
+    },
+    "bare": {
+     "tag_lo": "prism",
+     "tag_hi": "slate",
+     "fmt": "bare",
+     "n": 16,
+     "identity_split": 0.8128880660863298,
+     "position_split": 0.5318619057333275,
+     "imbalance": 0.3128880660863298,
+     "label_mass_mean": 0.5913682275536711,
+     "label_mass_min": 0.44276180040344437,
+     "top1_is_label_frac": 1.0,
+     "per_probe": [
+      {
+       "i": 0,
+       "first": "slate",
+       "second": "prism",
+       "p_first": 0.1651351308164059,
+       "p_second": 0.5414572485990347,
+       "label_mass": 0.7065923794154405,
+       "top1_is_label": true
+      },
+      {
+       "i": 1,
+       "first": "prism",
+       "second": "slate",
+       "p_first": 0.5546737023043505,
+       "p_second": 0.15891667640239748,
+       "label_mass": 0.713590378706748,
+       "top1_is_label": true
+      },
+      {
+       "i": 2,
+       "first": "slate",
+       "second": "prism",
+       "p_first": 0.1245481572962048,
+       "p_second": 0.46275254293538887,
+       "label_mass": 0.5873007002315936,
+       "top1_is_label": true
+      },
+      {
+       "i": 3,
+       "first": "prism",
+       "second": "slate",
+       "p_first": 0.41337191994338135,
+       "p_second": 0.04637904404607185,
+       "label_mass": 0.4597509639894532,
+       "top1_is_label": true
+      },
+      {
+       "i": 4,
+       "first": "slate",
+       "second": "prism",
+       "p_first": 0.11583330305586077,
+       "p_second": 0.3351747759224572,
+       "label_mass": 0.45100807897831796,
+       "top1_is_label": true
+      },
+      {
+       "i": 5,
+       "first": "prism",
+       "second": "slate",
+       "p_first": 0.33928555305045394,
+       "p_second": 0.10347624735299044,
+       "label_mass": 0.44276180040344437,
+       "top1_is_label": true
+      },
+      {
+       "i": 6,
+       "first": "slate",
+       "second": "prism",
+       "p_first": 0.11870483350560211,
+       "p_second": 0.5663090880651157,
+       "label_mass": 0.6850139215707178,
+       "top1_is_label": true
+      },
+      {
+       "i": 7,
+       "first": "prism",
+       "second": "slate",
+       "p_first": 0.6412874392192698,
+       "p_second": 0.043640157914383124,
+       "label_mass": 0.6849275971336529,
+       "top1_is_label": true
+      },
+      {
+       "i": 8,
+       "first": "slate",
+       "second": "prism",
+       "p_first": 0.1651351308164059,
+       "p_second": 0.5414572485990347,
+       "label_mass": 0.7065923794154405,
+       "top1_is_label": true
+      },
+      {
+       "i": 9,
+       "first": "prism",
+       "second": "slate",
+       "p_first": 0.5546737023043505,
+       "p_second": 0.15891667640239748,
+       "label_mass": 0.713590378706748,
+       "top1_is_label": true
+      },
+      {
+       "i": 10,
+       "first": "slate",
+       "second": "prism",
+       "p_first": 0.1245481572962048,
+       "p_second": 0.46275254293538887,
+       "label_mass": 0.5873007002315936,
+       "top1_is_label": true
+      },
+      {
+       "i": 11,
+       "first": "prism",
+       "second": "slate",
+       "p_first": 0.41337191994338135,
+       "p_second": 0.04637904404607185,
+       "label_mass": 0.4597509639894532,
+       "top1_is_label": true
+      },
+      {
+       "i": 12,
+       "first": "slate",
+       "second": "prism",
+       "p_first": 0.11583330305586077,
+       "p_second": 0.3351747759224572,
+       "label_mass": 0.45100807897831796,
+       "top1_is_label": true
+      },
+      {
+       "i": 13,
+       "first": "prism",
+       "second": "slate",
+       "p_first": 0.33928555305045394,
+       "p_second": 0.10347624735299044,
+       "label_mass": 0.44276180040344437,
+       "top1_is_label": true
+      },
+      {
+       "i": 14,
+       "first": "slate",
+       "second": "prism",
+       "p_first": 0.11870483350560211,
+       "p_second": 0.5663090880651157,
+       "label_mass": 0.6850139215707178,
+       "top1_is_label": true
+      },
+      {
+       "i": 15,
+       "first": "prism",
+       "second": "slate",
+       "p_first": 0.6412874392192698,
+       "p_second": 0.043640157914383124,
+       "label_mass": 0.6849275971336529,
+       "top1_is_label": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "name": "C2",
+   "tags": [
+    "maple",
+    "cedar"
+   ],
+   "origin": "cycle-3/4 incumbent",
+   "formats": {
+    "scaffold": {
+     "tag_lo": "cedar",
+     "tag_hi": "maple",
+     "fmt": "scaffold",
+     "n": 16,
+     "identity_split": 0.46298756211338893,
+     "position_split": 0.41682860409147576,
+     "imbalance": 0.03701243788661107,
+     "label_mass_mean": 0.8909935012447525,
+     "label_mass_min": 0.8654333314274423,
+     "top1_is_label_frac": 1.0,
+     "per_probe": [
+      {
+       "i": 0,
+       "first": "maple",
+       "second": "cedar",
+       "p_first": 0.37890704941562353,
+       "p_second": 0.4865262820118187,
+       "label_mass": 0.8654333314274423,
+       "top1_is_label": true
+      },
+      {
+       "i": 1,
+       "first": "cedar",
+       "second": "maple",
+       "p_first": 0.3863017428640313,
+       "p_second": 0.4960212563481885,
+       "label_mass": 0.8823229992122198,
+       "top1_is_label": true
+      },
+      {
+       "i": 2,
+       "first": "maple",
+       "second": "cedar",
+       "p_first": 0.46923446313342393,
+       "p_second": 0.41409796030119217,
+       "label_mass": 0.883332423434616,
+       "top1_is_label": true
+      },
+      {
+       "i": 3,
+       "first": "cedar",
+       "second": "maple",
+       "p_first": 0.28933982024040905,
+       "p_second": 0.6125324042556543,
+       "label_mass": 0.9018722244960633,
+       "top1_is_label": true
+      },
+      {
+       "i": 4,
+       "first": "maple",
+       "second": "cedar",
+       "p_first": 0.4121999810084531,
+       "p_second": 0.46708377083390384,
+       "label_mass": 0.879283751842357,
+       "top1_is_label": true
+      },
+      {
+       "i": 5,
+       "first": "cedar",
+       "second": "maple",
+       "p_first": 0.4158508283578087,
+       "p_second": 0.501611848411961,
+       "label_mass": 0.9174626767697698,
+       "top1_is_label": true
+      },
+      {
+       "i": 6,
+       "first": "maple",
+       "second": "cedar",
+       "p_first": 0.3449629361929916,
+       "p_second": 0.5687477305045564,
+       "label_mass": 0.9137106666975481,
+       "top1_is_label": true
+      },
+      {
+       "i": 7,
+       "first": "cedar",
+       "second": "maple",
+       "p_first": 0.27186736701089387,
+       "p_second": 0.6126625690671099,
+       "label_mass": 0.8845299360780038,
+       "top1_is_label": true
+      },
+      {
+       "i": 8,
+       "first": "maple",
+       "second": "cedar",
+       "p_first": 0.37890704941562353,
+       "p_second": 0.4865262820118187,
+       "label_mass": 0.8654333314274423,
+       "top1_is_label": true
+      },
+      {
+       "i": 9,
+       "first": "cedar",
+       "second": "maple",
+       "p_first": 0.3863017428640313,
+       "p_second": 0.4960212563481885,
+       "label_mass": 0.8823229992122198,
+       "top1_is_label": true
+      },
+      {
+       "i": 10,
+       "first": "maple",
+       "second": "cedar",
+       "p_first": 0.46923446313342393,
+       "p_second": 0.41409796030119217,
+       "label_mass": 0.883332423434616,
+       "top1_is_label": true
+      },
+      {
+       "i": 11,
+       "first": "cedar",
+       "second": "maple",
+       "p_first": 0.28933982024040905,
+       "p_second": 0.6125324042556543,
+       "label_mass": 0.9018722244960633,
+       "top1_is_label": true
+      },
+      {
+       "i": 12,
+       "first": "maple",
+       "second": "cedar",
+       "p_first": 0.4121999810084531,
+       "p_second": 0.46708377083390384,
+       "label_mass": 0.879283751842357,
+       "top1_is_label": true
+      },
+      {
+       "i": 13,
+       "first": "cedar",
+       "second": "maple",
+       "p_first": 0.4158508283578087,
+       "p_second": 0.501611848411961,
+       "label_mass": 0.9174626767697698,
+       "top1_is_label": true
+      },
+      {
+       "i": 14,
+       "first": "maple",
+       "second": "cedar",
+       "p_first": 0.3449629361929916,
+       "p_second": 0.5687477305045564,
+       "label_mass": 0.9137106666975481,
+       "top1_is_label": true
+      },
+      {
+       "i": 15,
+       "first": "cedar",
+       "second": "maple",
+       "p_first": 0.27186736701089387,
+       "p_second": 0.6126625690671099,
+       "label_mass": 0.8845299360780038,
+       "top1_is_label": true
+      }
+     ]
+    },
+    "bare": {
+     "tag_lo": "cedar",
+     "tag_hi": "maple",
+     "fmt": "bare",
+     "n": 16,
+     "identity_split": 0.42415836865897816,
+     "position_split": 0.5126573445328635,
+     "imbalance": 0.07584163134102184,
+     "label_mass_mean": 0.5346472502577654,
+     "label_mass_min": 0.20038779949691515,
+     "top1_is_label_frac": 0.875,
+     "per_probe": [
+      {
+       "i": 0,
+       "first": "maple",
+       "second": "cedar",
+       "p_first": 0.29815287885745684,
+       "p_second": 0.3828358745115957,
+       "label_mass": 0.6809887533690525,
+       "top1_is_label": true
+      },
+      {
+       "i": 1,
+       "first": "cedar",
+       "second": "maple",
+       "p_first": 0.2632530311407893,
+       "p_second": 0.4918214112105585,
+       "label_mass": 0.7550744423513478,
+       "top1_is_label": true
+      },
+      {
+       "i": 2,
+       "first": "maple",
+       "second": "cedar",
+       "p_first": 0.4082552884096002,
+       "p_second": 0.11696709847289082,
+       "label_mass": 0.525222386882491,
+       "top1_is_label": true
+      },
+      {
+       "i": 3,
+       "first": "cedar",
+       "second": "maple",
+       "p_first": 0.11265331194138065,
+       "p_second": 0.0877344875555345,
+       "label_mass": 0.20038779949691515,
+       "top1_is_label": false
+      },
+      {
+       "i": 4,
+       "first": "maple",
+       "second": "cedar",
+       "p_first": 0.30629135179044104,
+       "p_second": 0.19775655994110533,
+       "label_mass": 0.5040479117315464,
+       "top1_is_label": true
+      },
+      {
+       "i": 5,
+       "first": "cedar",
+       "second": "maple",
+       "p_first": 0.15945576190547717,
+       "p_second": 0.33756785060288186,
+       "label_mass": 0.497023612508359,
+       "top1_is_label": true
+      },
+      {
+       "i": 6,
+       "first": "maple",
+       "second": "cedar",
+       "p_first": 0.3609774810033393,
+       "p_second": 0.3185615088882366,
+       "label_mass": 0.6795389898915759,
+       "top1_is_label": true
+      },
+      {
+       "i": 7,
+       "first": "cedar",
+       "second": "maple",
+       "p_first": 0.22424006219693146,
+       "p_second": 0.21065404363390372,
+       "label_mass": 0.4348941058308352,
+       "top1_is_label": true
+      },
+      {
+       "i": 8,
+       "first": "maple",
+       "second": "cedar",
+       "p_first": 0.29815287885745684,
+       "p_second": 0.3828358745115957,
+       "label_mass": 0.6809887533690525,
+       "top1_is_label": true
+      },
+      {
+       "i": 9,
+       "first": "cedar",
+       "second": "maple",
+       "p_first": 0.2632530311407893,
+       "p_second": 0.4918214112105585,
+       "label_mass": 0.7550744423513478,
+       "top1_is_label": true
+      },
+      {
+       "i": 10,
+       "first": "maple",
+       "second": "cedar",
+       "p_first": 0.4082552884096002,
+       "p_second": 0.11696709847289082,
+       "label_mass": 0.525222386882491,
+       "top1_is_label": true
+      },
+      {
+       "i": 11,
+       "first": "cedar",
+       "second": "maple",
+       "p_first": 0.11265331194138065,
+       "p_second": 0.0877344875555345,
+       "label_mass": 0.20038779949691515,
+       "top1_is_label": false
+      },
+      {
+       "i": 12,
+       "first": "maple",
+       "second": "cedar",
+       "p_first": 0.30629135179044104,
+       "p_second": 0.19775655994110533,
+       "label_mass": 0.5040479117315464,
+       "top1_is_label": true
+      },
+      {
+       "i": 13,
+       "first": "cedar",
+       "second": "maple",
+       "p_first": 0.15945576190547717,
+       "p_second": 0.33756785060288186,
+       "label_mass": 0.497023612508359,
+       "top1_is_label": true
+      },
+      {
+       "i": 14,
+       "first": "maple",
+       "second": "cedar",
+       "p_first": 0.3609774810033393,
+       "p_second": 0.3185615088882366,
+       "label_mass": 0.6795389898915759,
+       "top1_is_label": true
+      },
+      {
+       "i": 15,
+       "first": "cedar",
+       "second": "maple",
+       "p_first": 0.22424006219693146,
+       "p_second": 0.21065404363390372,
+       "label_mass": 0.4348941058308352,
+       "top1_is_label": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "name": "C3",
+   "tags": [
+    "granite",
+    "lattice"
+   ],
+   "origin": "cycle-3/4 incumbent",
+   "formats": {
+    "scaffold": {
+     "tag_lo": "granite",
+     "tag_hi": "lattice",
+     "fmt": "scaffold",
+     "n": 16,
+     "identity_split": 0.3891001511510982,
+     "position_split": 0.4192415663091264,
+     "imbalance": 0.1108998488489018,
+     "label_mass_mean": 0.7758783970171524,
+     "label_mass_min": 0.6864374091755021,
+     "top1_is_label_frac": 1.0,
+     "per_probe": [
+      {
+       "i": 0,
+       "first": "granite",
+       "second": "lattice",
+       "p_first": 0.1719723683265451,
+       "p_second": 0.6801639109538425,
+       "label_mass": 0.8521362792803877,
+       "top1_is_label": true
+      },
+      {
+       "i": 1,
+       "first": "lattice",
+       "second": "granite",
+       "p_first": 0.30053842840810546,
+       "p_second": 0.3858989807673966,
+       "label_mass": 0.6864374091755021,
+       "top1_is_label": true
+      },
+      {
+       "i": 2,
+       "first": "granite",
+       "second": "lattice",
+       "p_first": 0.34291579705072983,
+       "p_second": 0.4403125991968723,
+       "label_mass": 0.7832283962476021,
+       "top1_is_label": true
+      },
+      {
+       "i": 3,
+       "first": "lattice",
+       "second": "granite",
+       "p_first": 0.32782671981471395,
+       "p_second": 0.4209378405114636,
+       "label_mass": 0.7487645603261776,
+       "top1_is_label": true
+      },
+      {
+       "i": 4,
+       "first": "granite",
+       "second": "lattice",
+       "p_first": 0.2727784991467346,
+       "p_second": 0.5096173283053157,
+       "label_mass": 0.7823958274520503,
+       "top1_is_label": true
+      },
+      {
+       "i": 5,
+       "first": "lattice",
+       "second": "granite",
+       "p_first": 0.46302743079710734,
+       "p_second": 0.2808403330664152,
+       "label_mass": 0.7438677638635225,
+       "top1_is_label": true
+      },
+      {
+       "i": 6,
+       "first": "granite",
+       "second": "lattice",
+       "p_first": 0.217754078650913,
+       "p_second": 0.6707297819811644,
+       "label_mass": 0.8884838606320774,
+       "top1_is_label": true
+      },
+      {
+       "i": 7,
+       "first": "lattice",
+       "second": "granite",
+       "p_first": 0.44923704057350267,
+       "p_second": 0.27247603858639763,
+       "label_mass": 0.7217130791599002,
+       "top1_is_label": true
+      },
+      {
+       "i": 8,
+       "first": "granite",
+       "second": "lattice",
+       "p_first": 0.1719723683265451,
+       "p_second": 0.6801639109538425,
+       "label_mass": 0.8521362792803877,
+       "top1_is_label": true
+      },
+      {
+       "i": 9,
+       "first": "lattice",
+       "second": "granite",
+       "p_first": 0.30053842840810546,
+       "p_second": 0.3858989807673966,
+       "label_mass": 0.6864374091755021,
+       "top1_is_label": true
+      },
+      {
+       "i": 10,
+       "first": "granite",
+       "second": "lattice",
+       "p_first": 0.34291579705072983,
+       "p_second": 0.4403125991968723,
+       "label_mass": 0.7832283962476021,
+       "top1_is_label": true
+      },
+      {
+       "i": 11,
+       "first": "lattice",
+       "second": "granite",
+       "p_first": 0.32782671981471395,
+       "p_second": 0.4209378405114636,
+       "label_mass": 0.7487645603261776,
+       "top1_is_label": true
+      },
+      {
+       "i": 12,
+       "first": "granite",
+       "second": "lattice",
+       "p_first": 0.2727784991467346,
+       "p_second": 0.5096173283053157,
+       "label_mass": 0.7823958274520503,
+       "top1_is_label": true
+      },
+      {
+       "i": 13,
+       "first": "lattice",
+       "second": "granite",
+       "p_first": 0.46302743079710734,
+       "p_second": 0.2808403330664152,
+       "label_mass": 0.7438677638635225,
+       "top1_is_label": true
+      },
+      {
+       "i": 14,
+       "first": "granite",
+       "second": "lattice",
+       "p_first": 0.217754078650913,
+       "p_second": 0.6707297819811644,
+       "label_mass": 0.8884838606320774,
+       "top1_is_label": true
+      },
+      {
+       "i": 15,
+       "first": "lattice",
+       "second": "granite",
+       "p_first": 0.44923704057350267,
+       "p_second": 0.27247603858639763,
+       "label_mass": 0.7217130791599002,
+       "top1_is_label": true
+      }
+     ]
+    },
+    "bare": {
+     "tag_lo": "granite",
+     "tag_hi": "lattice",
+     "fmt": "bare",
+     "n": 16,
+     "identity_split": 0.4297249254470541,
+     "position_split": 0.6159161340628986,
+     "imbalance": 0.0702750745529459,
+     "label_mass_mean": 0.657017247487097,
+     "label_mass_min": 0.3172405175971956,
+     "top1_is_label_frac": 1.0,
+     "per_probe": [
+      {
+       "i": 0,
+       "first": "granite",
+       "second": "lattice",
+       "p_first": 0.4650754909982921,
+       "p_second": 0.36220115657678803,
+       "label_mass": 0.8272766475750801,
+       "top1_is_label": true
+      },
+      {
+       "i": 1,
+       "first": "lattice",
+       "second": "granite",
+       "p_first": 0.5715957446127264,
+       "p_second": 0.238276556538902,
+       "label_mass": 0.8098723011516284,
+       "top1_is_label": true
+      },
+      {
+       "i": 2,
+       "first": "granite",
+       "second": "lattice",
+       "p_first": 0.33144856685229884,
+       "p_second": 0.17741163337393354,
+       "label_mass": 0.5088602002262324,
+       "top1_is_label": true
+      },
+      {
+       "i": 3,
+       "first": "lattice",
+       "second": "granite",
+       "p_first": 0.5008933892967484,
+       "p_second": 0.14350835874907703,
+       "label_mass": 0.6444017480458255,
+       "top1_is_label": true
+      },
+      {
+       "i": 4,
+       "first": "granite",
+       "second": "lattice",
+       "p_first": 0.3284226384892245,
+       "p_second": 0.42170301523581394,
+       "label_mass": 0.7501256537250385,
+       "top1_is_label": true
+      },
+      {
+       "i": 5,
+       "first": "lattice",
+       "second": "granite",
+       "p_first": 0.15366498864980377,
+       "p_second": 0.16357552894739186,
+       "label_mass": 0.3172405175971956,
+       "top1_is_label": true
+      },
+      {
+       "i": 6,
+       "first": "granite",
+       "second": "lattice",
+       "p_first": 0.3438357888152843,
+       "p_second": 0.3034340186272195,
+       "label_mass": 0.6472698074425038,
+       "top1_is_label": true
+      },
+      {
+       "i": 7,
+       "first": "lattice",
+       "second": "granite",
+       "p_first": 0.5838230109723376,
+       "p_second": 0.1672680931609341,
+       "label_mass": 0.7510911041332717,
+       "top1_is_label": true
+      },
+      {
+       "i": 8,
+       "first": "granite",
+       "second": "lattice",
+       "p_first": 0.4650754909982921,
+       "p_second": 0.36220115657678803,
+       "label_mass": 0.8272766475750801,
+       "top1_is_label": true
+      },
+      {
+       "i": 9,
+       "first": "lattice",
+       "second": "granite",
+       "p_first": 0.5715957446127264,
+       "p_second": 0.238276556538902,
+       "label_mass": 0.8098723011516284,
+       "top1_is_label": true
+      },
+      {
+       "i": 10,
+       "first": "granite",
+       "second": "lattice",
+       "p_first": 0.33144856685229884,
+       "p_second": 0.17741163337393354,
+       "label_mass": 0.5088602002262324,
+       "top1_is_label": true
+      },
+      {
+       "i": 11,
+       "first": "lattice",
+       "second": "granite",
+       "p_first": 0.5008933892967484,
+       "p_second": 0.14350835874907703,
+       "label_mass": 0.6444017480458255,
+       "top1_is_label": true
+      },
+      {
+       "i": 12,
+       "first": "granite",
+       "second": "lattice",
+       "p_first": 0.3284226384892245,
+       "p_second": 0.42170301523581394,
+       "label_mass": 0.7501256537250385,
+       "top1_is_label": true
+      },
+      {
+       "i": 13,
+       "first": "lattice",
+       "second": "granite",
+       "p_first": 0.15366498864980377,
+       "p_second": 0.16357552894739186,
+       "label_mass": 0.3172405175971956,
+       "top1_is_label": true
+      },
+      {
+       "i": 14,
+       "first": "granite",
+       "second": "lattice",
+       "p_first": 0.3438357888152843,
+       "p_second": 0.3034340186272195,
+       "label_mass": 0.6472698074425038,
+       "top1_is_label": true
+      },
+      {
+       "i": 15,
+       "first": "lattice",
+       "second": "granite",
+       "p_first": 0.5838230109723376,
+       "p_second": 0.1672680931609341,
+       "label_mass": 0.7510911041332717,
+       "top1_is_label": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "name": "C4",
+   "tags": [
+    "plaza",
+    "saddle"
+   ],
+   "origin": "cycle-3/4 incumbent, post-swap",
+   "formats": {
+    "scaffold": {
+     "tag_lo": "plaza",
+     "tag_hi": "saddle",
+     "fmt": "scaffold",
+     "n": 16,
+     "identity_split": 0.31811867166837804,
+     "position_split": 0.5036445765472454,
+     "imbalance": 0.18188132833162196,
+     "label_mass_mean": 0.840861717587537,
+     "label_mass_min": 0.7713227496448467,
+     "top1_is_label_frac": 1.0,
+     "per_probe": [
+      {
+       "i": 0,
+       "first": "plaza",
+       "second": "saddle",
+       "p_first": 0.27985043555141975,
+       "p_second": 0.5228294449045866,
+       "label_mass": 0.8026798804560064,
+       "top1_is_label": true
+      },
+      {
+       "i": 1,
+       "first": "saddle",
+       "second": "plaza",
+       "p_first": 0.5927169099159426,
+       "p_second": 0.27997964348830034,
+       "label_mass": 0.872696553404243,
+       "top1_is_label": true
+      },
+      {
+       "i": 2,
+       "first": "plaza",
+       "second": "saddle",
+       "p_first": 0.2295343054850725,
+       "p_second": 0.6239389316080399,
+       "label_mass": 0.8534732370931124,
+       "top1_is_label": true
+      },
+      {
+       "i": 3,
+       "first": "saddle",
+       "second": "plaza",
+       "p_first": 0.5716192653751934,
+       "p_second": 0.23828636145144838,
+       "label_mass": 0.8099056268266418,
+       "top1_is_label": true
+      },
+      {
+       "i": 4,
+       "first": "plaza",
+       "second": "saddle",
+       "p_first": 0.24745676789667242,
+       "p_second": 0.5238659817481743,
+       "label_mass": 0.7713227496448467,
+       "top1_is_label": true
+      },
+      {
+       "i": 5,
+       "first": "saddle",
+       "second": "plaza",
+       "p_first": 0.5588765336553845,
+       "p_second": 0.2991450517701226,
+       "label_mass": 0.8580215854255071,
+       "top1_is_label": true
+      },
+      {
+       "i": 6,
+       "first": "plaza",
+       "second": "saddle",
+       "p_first": 0.31446683868097836,
+       "p_second": 0.5875014001122286,
+       "label_mass": 0.901968238793207,
+       "top1_is_label": true
+      },
+      {
+       "i": 7,
+       "first": "saddle",
+       "second": "plaza",
+       "p_first": 0.6047348698436763,
+       "p_second": 0.2520909992130548,
+       "label_mass": 0.8568258690567311,
+       "top1_is_label": true
+      },
+      {
+       "i": 8,
+       "first": "plaza",
+       "second": "saddle",
+       "p_first": 0.27985043555141975,
+       "p_second": 0.5228294449045866,
+       "label_mass": 0.8026798804560064,
+       "top1_is_label": true
+      },
+      {
+       "i": 9,
+       "first": "saddle",
+       "second": "plaza",
+       "p_first": 0.5927169099159426,
+       "p_second": 0.27997964348830034,
+       "label_mass": 0.872696553404243,
+       "top1_is_label": true
+      },
+      {
+       "i": 10,
+       "first": "plaza",
+       "second": "saddle",
+       "p_first": 0.2295343054850725,
+       "p_second": 0.6239389316080399,
+       "label_mass": 0.8534732370931124,
+       "top1_is_label": true
+      },
+      {
+       "i": 11,
+       "first": "saddle",
+       "second": "plaza",
+       "p_first": 0.5716192653751934,
+       "p_second": 0.23828636145144838,
+       "label_mass": 0.8099056268266418,
+       "top1_is_label": true
+      },
+      {
+       "i": 12,
+       "first": "plaza",
+       "second": "saddle",
+       "p_first": 0.24745676789667242,
+       "p_second": 0.5238659817481743,
+       "label_mass": 0.7713227496448467,
+       "top1_is_label": true
+      },
+      {
+       "i": 13,
+       "first": "saddle",
+       "second": "plaza",
+       "p_first": 0.5588765336553845,
+       "p_second": 0.2991450517701226,
+       "label_mass": 0.8580215854255071,
+       "top1_is_label": true
+      },
+      {
+       "i": 14,
+       "first": "plaza",
+       "second": "saddle",
+       "p_first": 0.31446683868097836,
+       "p_second": 0.5875014001122286,
+       "label_mass": 0.901968238793207,
+       "top1_is_label": true
+      },
+      {
+       "i": 15,
+       "first": "saddle",
+       "second": "plaza",
+       "p_first": 0.6047348698436763,
+       "p_second": 0.2520909992130548,
+       "label_mass": 0.8568258690567311,
+       "top1_is_label": true
+      }
+     ]
+    },
+    "bare": {
+     "tag_lo": "plaza",
+     "tag_hi": "saddle",
+     "fmt": "bare",
+     "n": 16,
+     "identity_split": 0.3896430699731418,
+     "position_split": 0.49791731444378856,
+     "imbalance": 0.1103569300268582,
+     "label_mass_mean": 0.5204447527308466,
+     "label_mass_min": 0.33644932153216317,
+     "top1_is_label_frac": 1.0,
+     "per_probe": [
+      {
+       "i": 0,
+       "first": "plaza",
+       "second": "saddle",
+       "p_first": 0.3134285464400255,
+       "p_second": 0.3551610725454988,
+       "label_mass": 0.6685896189855243,
+       "top1_is_label": true
+      },
+      {
+       "i": 1,
+       "first": "saddle",
+       "second": "plaza",
+       "p_first": 0.5111670134680643,
+       "p_second": 0.20017587864566905,
+       "label_mass": 0.7113428921137332,
+       "top1_is_label": true
+      },
+      {
+       "i": 2,
+       "first": "plaza",
+       "second": "saddle",
+       "p_first": 0.142151397727428,
+       "p_second": 0.19429792380473518,
+       "label_mass": 0.33644932153216317,
+       "top1_is_label": true
+      },
+      {
+       "i": 3,
+       "first": "saddle",
+       "second": "plaza",
+       "p_first": 0.2817004939710214,
+       "p_second": 0.17085998644961833,
+       "label_mass": 0.4525604804206398,
+       "top1_is_label": true
+      },
+      {
+       "i": 4,
+       "first": "plaza",
+       "second": "saddle",
+       "p_first": 0.16848014357547353,
+       "p_second": 0.43022911852725754,
+       "label_mass": 0.598709262102731,
+       "top1_is_label": true
+      },
+      {
+       "i": 5,
+       "first": "saddle",
+       "second": "plaza",
+       "p_first": 0.22835650457530718,
+       "p_second": 0.2430842337782653,
+       "label_mass": 0.4714407383535725,
+       "top1_is_label": true
+      },
+      {
+       "i": 6,
+       "first": "plaza",
+       "second": "saddle",
+       "p_first": 0.18723740154103288,
+       "p_second": 0.3087022865913219,
+       "label_mass": 0.4959396881323548,
+       "top1_is_label": true
+      },
+      {
+       "i": 7,
+       "first": "saddle",
+       "second": "plaza",
+       "p_first": 0.2603994797942845,
+       "p_second": 0.16812654041176947,
+       "label_mass": 0.428526020206054,
+       "top1_is_label": true
+      },
+      {
+       "i": 8,
+       "first": "plaza",
+       "second": "saddle",
+       "p_first": 0.3134285464400255,
+       "p_second": 0.3551610725454988,
+       "label_mass": 0.6685896189855243,
+       "top1_is_label": true
+      },
+      {
+       "i": 9,
+       "first": "saddle",
+       "second": "plaza",
+       "p_first": 0.5111670134680643,
+       "p_second": 0.20017587864566905,
+       "label_mass": 0.7113428921137332,
+       "top1_is_label": true
+      },
+      {
+       "i": 10,
+       "first": "plaza",
+       "second": "saddle",
+       "p_first": 0.142151397727428,
+       "p_second": 0.19429792380473518,
+       "label_mass": 0.33644932153216317,
+       "top1_is_label": true
+      },
+      {
+       "i": 11,
+       "first": "saddle",
+       "second": "plaza",
+       "p_first": 0.2817004939710214,
+       "p_second": 0.17085998644961833,
+       "label_mass": 0.4525604804206398,
+       "top1_is_label": true
+      },
+      {
+       "i": 12,
+       "first": "plaza",
+       "second": "saddle",
+       "p_first": 0.16848014357547353,
+       "p_second": 0.43022911852725754,
+       "label_mass": 0.598709262102731,
+       "top1_is_label": true
+      },
+      {
+       "i": 13,
+       "first": "saddle",
+       "second": "plaza",
+       "p_first": 0.22835650457530718,
+       "p_second": 0.2430842337782653,
+       "label_mass": 0.4714407383535725,
+       "top1_is_label": true
+      },
+      {
+       "i": 14,
+       "first": "plaza",
+       "second": "saddle",
+       "p_first": 0.18723740154103288,
+       "p_second": 0.3087022865913219,
+       "label_mass": 0.4959396881323548,
+       "top1_is_label": true
+      },
+      {
+       "i": 15,
+       "first": "saddle",
+       "second": "plaza",
+       "p_first": 0.2603994797942845,
+       "p_second": 0.16812654041176947,
+       "label_mass": 0.428526020206054,
+       "top1_is_label": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "name": "N1",
+   "tags": [
+    "canvas",
+    "copper"
+   ],
+   "origin": "Code-proposed 2026-08-20",
+   "formats": {
+    "scaffold": {
+     "tag_lo": "canvas",
+     "tag_hi": "copper",
+     "fmt": "scaffold",
+     "n": 16,
+     "identity_split": 0.7294481113826474,
+     "position_split": 0.45623777279925437,
+     "imbalance": 0.22944811138264742,
+     "label_mass_mean": 0.8681999011720495,
+     "label_mass_min": 0.8134677821530496,
+     "top1_is_label_frac": 1.0,
+     "per_probe": [
+      {
+       "i": 0,
+       "first": "canvas",
+       "second": "copper",
+       "p_first": 0.5246534713735803,
+       "p_second": 0.3182184161127409,
+       "label_mass": 0.8428718874863212,
+       "top1_is_label": true
+      },
+      {
+       "i": 1,
+       "first": "copper",
+       "second": "canvas",
+       "p_first": 0.12130278031474799,
+       "p_second": 0.6980493042061839,
+       "label_mass": 0.8193520845209319,
+       "top1_is_label": true
+      },
+      {
+       "i": 2,
+       "first": "canvas",
+       "second": "copper",
+       "p_first": 0.5869162830806668,
+       "p_second": 0.31415364810281377,
+       "label_mass": 0.9010699311834806,
+       "top1_is_label": true
+      },
+      {
+       "i": 3,
+       "first": "copper",
+       "second": "canvas",
+       "p_first": 0.23933109833567587,
+       "p_second": 0.6505693755910126,
+       "label_mass": 0.8899004739266885,
+       "top1_is_label": true
+      },
+      {
+       "i": 4,
+       "first": "canvas",
+       "second": "copper",
+       "p_first": 0.6650704958941845,
+       "p_second": 0.14839728625886503,
+       "label_mass": 0.8134677821530496,
+       "top1_is_label": true
+      },
+      {
+       "i": 5,
+       "first": "copper",
+       "second": "canvas",
+       "p_first": 0.2155974610674875,
+       "p_second": 0.6640869321640243,
+       "label_mass": 0.8796843932315117,
+       "top1_is_label": true
+      },
+      {
+       "i": 6,
+       "first": "canvas",
+       "second": "copper",
+       "p_first": 0.6142796831343702,
+       "p_second": 0.32880022070469567,
+       "label_mass": 0.9430799038390658,
+       "top1_is_label": true
+      },
+      {
+       "i": 7,
+       "first": "copper",
+       "second": "canvas",
+       "p_first": 0.20983511042124675,
+       "p_second": 0.6463376426140998,
+       "label_mass": 0.8561727530353465,
+       "top1_is_label": true
+      },
+      {
+       "i": 8,
+       "first": "canvas",
+       "second": "copper",
+       "p_first": 0.5246534713735803,
+       "p_second": 0.3182184161127409,
+       "label_mass": 0.8428718874863212,
+       "top1_is_label": true
+      },
+      {
+       "i": 9,
+       "first": "copper",
+       "second": "canvas",
+       "p_first": 0.12130278031474799,
+       "p_second": 0.6980493042061839,
+       "label_mass": 0.8193520845209319,
+       "top1_is_label": true
+      },
+      {
+       "i": 10,
+       "first": "canvas",
+       "second": "copper",
+       "p_first": 0.5869162830806668,
+       "p_second": 0.31415364810281377,
+       "label_mass": 0.9010699311834806,
+       "top1_is_label": true
+      },
+      {
+       "i": 11,
+       "first": "copper",
+       "second": "canvas",
+       "p_first": 0.23933109833567587,
+       "p_second": 0.6505693755910126,
+       "label_mass": 0.8899004739266885,
+       "top1_is_label": true
+      },
+      {
+       "i": 12,
+       "first": "canvas",
+       "second": "copper",
+       "p_first": 0.6650704958941845,
+       "p_second": 0.14839728625886503,
+       "label_mass": 0.8134677821530496,
+       "top1_is_label": true
+      },
+      {
+       "i": 13,
+       "first": "copper",
+       "second": "canvas",
+       "p_first": 0.2155974610674875,
+       "p_second": 0.6640869321640243,
+       "label_mass": 0.8796843932315117,
+       "top1_is_label": true
+      },
+      {
+       "i": 14,
+       "first": "canvas",
+       "second": "copper",
+       "p_first": 0.6142796831343702,
+       "p_second": 0.32880022070469567,
+       "label_mass": 0.9430799038390658,
+       "top1_is_label": true
+      },
+      {
+       "i": 15,
+       "first": "copper",
+       "second": "canvas",
+       "p_first": 0.20983511042124675,
+       "p_second": 0.6463376426140998,
+       "label_mass": 0.8561727530353465,
+       "top1_is_label": true
+      }
+     ]
+    },
+    "bare": {
+     "tag_lo": "canvas",
+     "tag_hi": "copper",
+     "fmt": "bare",
+     "n": 16,
+     "identity_split": 0.34978045936653307,
+     "position_split": 0.6276313506223388,
+     "imbalance": 0.15021954063346693,
+     "label_mass_mean": 0.7328832851529706,
+     "label_mass_min": 0.5719888619709468,
+     "top1_is_label_frac": 1.0,
+     "per_probe": [
+      {
+       "i": 0,
+       "first": "canvas",
+       "second": "copper",
+       "p_first": 0.43522377806044554,
+       "p_second": 0.3840836360695086,
+       "label_mass": 0.8193074141299541,
+       "top1_is_label": true
+      },
+      {
+       "i": 1,
+       "first": "copper",
+       "second": "canvas",
+       "p_first": 0.4963483920451387,
+       "p_second": 0.3411349283977621,
+       "label_mass": 0.8374833204429009,
+       "top1_is_label": true
+      },
+      {
+       "i": 2,
+       "first": "canvas",
+       "second": "copper",
+       "p_first": 0.26406551138484835,
+       "p_second": 0.38421305196171923,
+       "label_mass": 0.6482785633465675,
+       "top1_is_label": true
+      },
+      {
+       "i": 3,
+       "first": "copper",
+       "second": "canvas",
+       "p_first": 0.5260252848284667,
+       "p_second": 0.04596357714248006,
+       "label_mass": 0.5719888619709468,
+       "top1_is_label": true
+      },
+      {
+       "i": 4,
+       "first": "canvas",
+       "second": "copper",
+       "p_first": 0.46297584138318787,
+       "p_second": 0.2808090425051565,
+       "label_mass": 0.7437848838883443,
+       "top1_is_label": true
+      },
+      {
+       "i": 5,
+       "first": "copper",
+       "second": "canvas",
+       "p_first": 0.6609441850319152,
+       "p_second": 0.07893852587698959,
+       "label_mass": 0.7398827109089048,
+       "top1_is_label": true
+      },
+      {
+       "i": 6,
+       "first": "canvas",
+       "second": "copper",
+       "p_first": 0.27002803929251773,
+       "p_second": 0.5044787928015955,
+       "label_mass": 0.7745068320941132,
+       "top1_is_label": true
+      },
+      {
+       "i": 7,
+       "first": "copper",
+       "second": "canvas",
+       "p_first": 0.5136941242924852,
+       "p_second": 0.21413957014954807,
+       "label_mass": 0.7278336944420333,
+       "top1_is_label": true
+      },
+      {
+       "i": 8,
+       "first": "canvas",
+       "second": "copper",
+       "p_first": 0.43522377806044554,
+       "p_second": 0.3840836360695086,
+       "label_mass": 0.8193074141299541,
+       "top1_is_label": true
+      },
+      {
+       "i": 9,
+       "first": "copper",
+       "second": "canvas",
+       "p_first": 0.4963483920451387,
+       "p_second": 0.3411349283977621,
+       "label_mass": 0.8374833204429009,
+       "top1_is_label": true
+      },
+      {
+       "i": 10,
+       "first": "canvas",
+       "second": "copper",
+       "p_first": 0.26406551138484835,
+       "p_second": 0.38421305196171923,
+       "label_mass": 0.6482785633465675,
+       "top1_is_label": true
+      },
+      {
+       "i": 11,
+       "first": "copper",
+       "second": "canvas",
+       "p_first": 0.5260252848284667,
+       "p_second": 0.04596357714248006,
+       "label_mass": 0.5719888619709468,
+       "top1_is_label": true
+      },
+      {
+       "i": 12,
+       "first": "canvas",
+       "second": "copper",
+       "p_first": 0.46297584138318787,
+       "p_second": 0.2808090425051565,
+       "label_mass": 0.7437848838883443,
+       "top1_is_label": true
+      },
+      {
+       "i": 13,
+       "first": "copper",
+       "second": "canvas",
+       "p_first": 0.6609441850319152,
+       "p_second": 0.07893852587698959,
+       "label_mass": 0.7398827109089048,
+       "top1_is_label": true
+      },
+      {
+       "i": 14,
+       "first": "canvas",
+       "second": "copper",
+       "p_first": 0.27002803929251773,
+       "p_second": 0.5044787928015955,
+       "label_mass": 0.7745068320941132,
+       "top1_is_label": true
+      },
+      {
+       "i": 15,
+       "first": "copper",
+       "second": "canvas",
+       "p_first": 0.5136941242924852,
+       "p_second": 0.21413957014954807,
+       "label_mass": 0.7278336944420333,
+       "top1_is_label": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "name": "N2",
+   "tags": [
+    "quartz",
+    "ridge"
+   ],
+   "origin": "Code-proposed 2026-08-20",
+   "formats": {
+    "scaffold": {
+     "tag_lo": "quartz",
+     "tag_hi": "ridge",
+     "fmt": "scaffold",
+     "n": 16,
+     "identity_split": 0.2651657382796194,
+     "position_split": 0.48529058741304953,
+     "imbalance": 0.23483426172038058,
+     "label_mass_mean": 0.9127590151433662,
+     "label_mass_min": 0.8785339440519921,
+     "top1_is_label_frac": 1.0,
+     "per_probe": [
+      {
+       "i": 0,
+       "first": "quartz",
+       "second": "ridge",
+       "p_first": 0.16574079059890556,
+       "p_second": 0.742798689736305,
+       "label_mass": 0.9085394803352106,
+       "top1_is_label": true
+      },
+      {
+       "i": 1,
+       "first": "ridge",
+       "second": "quartz",
+       "p_first": 0.586884927237565,
+       "p_second": 0.3141368645294427,
+       "label_mass": 0.9010217917670078,
+       "top1_is_label": true
+      },
+      {
+       "i": 2,
+       "first": "quartz",
+       "second": "ridge",
+       "p_first": 0.24831795399524106,
+       "p_second": 0.674998182025393,
+       "label_mass": 0.923316136020634,
+       "top1_is_label": true
+      },
+      {
+       "i": 3,
+       "first": "ridge",
+       "second": "quartz",
+       "p_first": 0.7802347024670657,
+       "p_second": 0.17409389411483886,
+       "label_mass": 0.9543285965819046,
+       "top1_is_label": true
+      },
+      {
+       "i": 4,
+       "first": "quartz",
+       "second": "ridge",
+       "p_first": 0.30629658581947194,
+       "p_second": 0.5722373582325202,
+       "label_mass": 0.8785339440519921,
+       "top1_is_label": true
+      },
+      {
+       "i": 5,
+       "first": "ridge",
+       "second": "quartz",
+       "p_first": 0.6259828363738064,
+       "p_second": 0.26094846945486616,
+       "label_mass": 0.8869313058286725,
+       "top1_is_label": true
+      },
+      {
+       "i": 6,
+       "first": "quartz",
+       "second": "ridge",
+       "p_first": 0.18877062160812266,
+       "p_second": 0.7466022914935342,
+       "label_mass": 0.9353729131016568,
+       "top1_is_label": true
+      },
+      {
+       "i": 7,
+       "first": "ridge",
+       "second": "quartz",
+       "p_first": 0.6451072445764671,
+       "p_second": 0.26892070888338354,
+       "label_mass": 0.9140279534598506,
+       "top1_is_label": true
+      },
+      {
+       "i": 8,
+       "first": "quartz",
+       "second": "ridge",
+       "p_first": 0.16574079059890556,
+       "p_second": 0.742798689736305,
+       "label_mass": 0.9085394803352106,
+       "top1_is_label": true
+      },
+      {
+       "i": 9,
+       "first": "ridge",
+       "second": "quartz",
+       "p_first": 0.586884927237565,
+       "p_second": 0.3141368645294427,
+       "label_mass": 0.9010217917670078,
+       "top1_is_label": true
+      },
+      {
+       "i": 10,
+       "first": "quartz",
+       "second": "ridge",
+       "p_first": 0.24831795399524106,
+       "p_second": 0.674998182025393,
+       "label_mass": 0.923316136020634,
+       "top1_is_label": true
+      },
+      {
+       "i": 11,
+       "first": "ridge",
+       "second": "quartz",
+       "p_first": 0.7802347024670657,
+       "p_second": 0.17409389411483886,
+       "label_mass": 0.9543285965819046,
+       "top1_is_label": true
+      },
+      {
+       "i": 12,
+       "first": "quartz",
+       "second": "ridge",
+       "p_first": 0.30629658581947194,
+       "p_second": 0.5722373582325202,
+       "label_mass": 0.8785339440519921,
+       "top1_is_label": true
+      },
+      {
+       "i": 13,
+       "first": "ridge",
+       "second": "quartz",
+       "p_first": 0.6259828363738064,
+       "p_second": 0.26094846945486616,
+       "label_mass": 0.8869313058286725,
+       "top1_is_label": true
+      },
+      {
+       "i": 14,
+       "first": "quartz",
+       "second": "ridge",
+       "p_first": 0.18877062160812266,
+       "p_second": 0.7466022914935342,
+       "label_mass": 0.9353729131016568,
+       "top1_is_label": true
+      },
+      {
+       "i": 15,
+       "first": "ridge",
+       "second": "quartz",
+       "p_first": 0.6451072445764671,
+       "p_second": 0.26892070888338354,
+       "label_mass": 0.9140279534598506,
+       "top1_is_label": true
+      }
+     ]
+    },
+    "bare": {
+     "tag_lo": "quartz",
+     "tag_hi": "ridge",
+     "fmt": "bare",
+     "n": 16,
+     "identity_split": 0.6129874052276607,
+     "position_split": 0.6833150837575936,
+     "imbalance": 0.11298740522766071,
+     "label_mass_mean": 0.6304179855789913,
+     "label_mass_min": 0.3732074475313659,
+     "top1_is_label_frac": 1.0,
+     "per_probe": [
+      {
+       "i": 0,
+       "first": "quartz",
+       "second": "ridge",
+       "p_first": 0.5228715493646099,
+       "p_second": 0.2798729724448389,
+       "label_mass": 0.8027445218094488,
+       "top1_is_label": true
+      },
+      {
+       "i": 1,
+       "first": "ridge",
+       "second": "quartz",
+       "p_first": 0.536279640024307,
+       "p_second": 0.25332056486347415,
+       "label_mass": 0.789600204887781,
+       "top1_is_label": true
+      },
+      {
+       "i": 2,
+       "first": "quartz",
+       "second": "ridge",
+       "p_first": 0.40488035906839204,
+       "p_second": 0.05479459807146229,
+       "label_mass": 0.45967495713985435,
+       "top1_is_label": true
+      },
+      {
+       "i": 3,
+       "first": "ridge",
+       "second": "quartz",
+       "p_first": 0.1520198585254144,
+       "p_second": 0.2211875890059515,
+       "label_mass": 0.3732074475313659,
+       "top1_is_label": true
+      },
+      {
+       "i": 4,
+       "first": "quartz",
+       "second": "ridge",
+       "p_first": 0.6313274168284867,
+       "p_second": 0.12431573925003381,
+       "label_mass": 0.7556431560785205,
+       "top1_is_label": true
+      },
+      {
+       "i": 5,
+       "first": "ridge",
+       "second": "quartz",
+       "p_first": 0.25246250723619335,
+       "p_second": 0.23716657716832168,
+       "label_mass": 0.489629084404515,
+       "top1_is_label": true
+      },
+      {
+       "i": 6,
+       "first": "quartz",
+       "second": "ridge",
+       "p_first": 0.5398804520328085,
+       "p_second": 0.12046361172308727,
+       "label_mass": 0.6603440637558958,
+       "top1_is_label": true
+      },
+      {
+       "i": 7,
+       "first": "ridge",
+       "second": "quartz",
+       "p_first": 0.48391512813037646,
+       "p_second": 0.22858532089417236,
+       "label_mass": 0.7125004490245488,
+       "top1_is_label": true
+      },
+      {
+       "i": 8,
+       "first": "quartz",
+       "second": "ridge",
+       "p_first": 0.5228715493646099,
+       "p_second": 0.2798729724448389,
+       "label_mass": 0.8027445218094488,
+       "top1_is_label": true
+      },
+      {
+       "i": 9,
+       "first": "ridge",
+       "second": "quartz",
+       "p_first": 0.536279640024307,
+       "p_second": 0.25332056486347415,
+       "label_mass": 0.789600204887781,
+       "top1_is_label": true
+      },
+      {
+       "i": 10,
+       "first": "quartz",
+       "second": "ridge",
+       "p_first": 0.40488035906839204,
+       "p_second": 0.05479459807146229,
+       "label_mass": 0.45967495713985435,
+       "top1_is_label": true
+      },
+      {
+       "i": 11,
+       "first": "ridge",
+       "second": "quartz",
+       "p_first": 0.1520198585254144,
+       "p_second": 0.2211875890059515,
+       "label_mass": 0.3732074475313659,
+       "top1_is_label": true
+      },
+      {
+       "i": 12,
+       "first": "quartz",
+       "second": "ridge",
+       "p_first": 0.6313274168284867,
+       "p_second": 0.12431573925003381,
+       "label_mass": 0.7556431560785205,
+       "top1_is_label": true
+      },
+      {
+       "i": 13,
+       "first": "ridge",
+       "second": "quartz",
+       "p_first": 0.25246250723619335,
+       "p_second": 0.23716657716832168,
+       "label_mass": 0.489629084404515,
+       "top1_is_label": true
+      },
+      {
+       "i": 14,
+       "first": "quartz",
+       "second": "ridge",
+       "p_first": 0.5398804520328085,
+       "p_second": 0.12046361172308727,
+       "label_mass": 0.6603440637558958,
+       "top1_is_label": true
+      },
+      {
+       "i": 15,
+       "first": "ridge",
+       "second": "quartz",
+       "p_first": 0.48391512813037646,
+       "p_second": 0.22858532089417236,
+       "label_mass": 0.7125004490245488,
+       "top1_is_label": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "name": "N3",
+   "tags": [
+    "amber",
+    "velvet"
+   ],
+   "origin": "Code-proposed 2026-08-20",
+   "formats": {
+    "scaffold": {
+     "tag_lo": "amber",
+     "tag_hi": "velvet",
+     "fmt": "scaffold",
+     "n": 16,
+     "identity_split": 0.24975188154620037,
+     "position_split": 0.6149280960319207,
+     "imbalance": 0.25024811845379963,
+     "label_mass_mean": 0.8573651040919323,
+     "label_mass_min": 0.7763466727268951,
+     "top1_is_label_frac": 1.0,
+     "per_probe": [
+      {
+       "i": 0,
+       "first": "amber",
+       "second": "velvet",
+       "p_first": 0.20883234738071696,
+       "p_second": 0.6432489150011876,
+       "label_mass": 0.8520812623819046,
+       "top1_is_label": true
+      },
+      {
+       "i": 1,
+       "first": "velvet",
+       "second": "amber",
+       "p_first": 0.6614107231284532,
+       "p_second": 0.11493594959844183,
+       "label_mass": 0.7763466727268951,
+       "top1_is_label": true
+      },
+      {
+       "i": 2,
+       "first": "amber",
+       "second": "velvet",
+       "p_first": 0.4778649020822106,
+       "p_second": 0.4217142959414419,
+       "label_mass": 0.8995791980236525,
+       "top1_is_label": true
+      },
+      {
+       "i": 3,
+       "first": "velvet",
+       "second": "amber",
+       "p_first": 0.7222006010841971,
+       "p_second": 0.16114473577920918,
+       "label_mass": 0.8833453368634063,
+       "top1_is_label": true
+      },
+      {
+       "i": 4,
+       "first": "amber",
+       "second": "velvet",
+       "p_first": 0.42257562877046445,
+       "p_second": 0.42257562877046445,
+       "label_mass": 0.8451512575409289,
+       "top1_is_label": true
+      },
+      {
+       "i": 5,
+       "first": "velvet",
+       "second": "amber",
+       "p_first": 0.7921820975706603,
+       "p_second": 0.06502626638896492,
+       "label_mass": 0.8572083639596252,
+       "top1_is_label": true
+      },
+      {
+       "i": 6,
+       "first": "amber",
+       "second": "velvet",
+       "p_first": 0.16456047207017818,
+       "p_second": 0.73750886908659,
+       "label_mass": 0.9020693411567682,
+       "top1_is_label": true
+      },
+      {
+       "i": 7,
+       "first": "velvet",
+       "second": "amber",
+       "p_first": 0.7310320103694848,
+       "p_second": 0.11210738971279376,
+       "label_mass": 0.8431394000822786,
+       "top1_is_label": true
+      },
+      {
+       "i": 8,
+       "first": "amber",
+       "second": "velvet",
+       "p_first": 0.20883234738071696,
+       "p_second": 0.6432489150011876,
+       "label_mass": 0.8520812623819046,
+       "top1_is_label": true
+      },
+      {
+       "i": 9,
+       "first": "velvet",
+       "second": "amber",
+       "p_first": 0.6614107231284532,
+       "p_second": 0.11493594959844183,
+       "label_mass": 0.7763466727268951,
+       "top1_is_label": true
+      },
+      {
+       "i": 10,
+       "first": "amber",
+       "second": "velvet",
+       "p_first": 0.4778649020822106,
+       "p_second": 0.4217142959414419,
+       "label_mass": 0.8995791980236525,
+       "top1_is_label": true
+      },
+      {
+       "i": 11,
+       "first": "velvet",
+       "second": "amber",
+       "p_first": 0.7222006010841971,
+       "p_second": 0.16114473577920918,
+       "label_mass": 0.8833453368634063,
+       "top1_is_label": true
+      },
+      {
+       "i": 12,
+       "first": "amber",
+       "second": "velvet",
+       "p_first": 0.42257562877046445,
+       "p_second": 0.42257562877046445,
+       "label_mass": 0.8451512575409289,
+       "top1_is_label": true
+      },
+      {
+       "i": 13,
+       "first": "velvet",
+       "second": "amber",
+       "p_first": 0.7921820975706603,
+       "p_second": 0.06502626638896492,
+       "label_mass": 0.8572083639596252,
+       "top1_is_label": true
+      },
+      {
+       "i": 14,
+       "first": "amber",
+       "second": "velvet",
+       "p_first": 0.16456047207017818,
+       "p_second": 0.73750886908659,
+       "label_mass": 0.9020693411567682,
+       "top1_is_label": true
+      },
+      {
+       "i": 15,
+       "first": "velvet",
+       "second": "amber",
+       "p_first": 0.7310320103694848,
+       "p_second": 0.11210738971279376,
+       "label_mass": 0.8431394000822786,
+       "top1_is_label": true
+      }
+     ]
+    },
+    "bare": {
+     "tag_lo": "amber",
+     "tag_hi": "velvet",
+     "fmt": "bare",
+     "n": 16,
+     "identity_split": 0.14596196374208792,
+     "position_split": 0.575152849907573,
+     "imbalance": 0.3540380362579121,
+     "label_mass_mean": 0.5324320596211828,
+     "label_mass_min": 0.28059058675814336,
+     "top1_is_label_frac": 1.0,
+     "per_probe": [
+      {
+       "i": 0,
+       "first": "amber",
+       "second": "velvet",
+       "p_first": 0.13368035381578033,
+       "p_second": 0.6377532997261127,
+       "label_mass": 0.7714336535418931,
+       "top1_is_label": true
+      },
+      {
+       "i": 1,
+       "first": "velvet",
+       "second": "amber",
+       "p_first": 0.6381809048982228,
+       "p_second": 0.09193867632831453,
+       "label_mass": 0.7301195812265373,
+       "top1_is_label": true
+      },
+      {
+       "i": 2,
+       "first": "amber",
+       "second": "velvet",
+       "p_first": 0.09100773804091379,
+       "p_second": 0.4341736356876027,
+       "label_mass": 0.5251813737285165,
+       "top1_is_label": true
+      },
+      {
+       "i": 3,
+       "first": "velvet",
+       "second": "amber",
+       "p_first": 0.490196407794791,
+       "p_second": 0.029438582473589117,
+       "label_mass": 0.5196349902683801,
+       "top1_is_label": true
+      },
+      {
+       "i": 4,
+       "first": "amber",
+       "second": "velvet",
+       "p_first": 0.1326255347191287,
+       "p_second": 0.3605135810166717,
+       "label_mass": 0.4931391157358004,
+       "top1_is_label": true
+      },
+      {
+       "i": 5,
+       "first": "velvet",
+       "second": "amber",
+       "p_first": 0.2664682850257088,
+       "p_second": 0.014122301732434573,
+       "label_mass": 0.28059058675814336,
+       "top1_is_label": true
+      },
+      {
+       "i": 6,
+       "first": "amber",
+       "second": "velvet",
+       "p_first": 0.13283440934922897,
+       "p_second": 0.3610813611280994,
+       "label_mass": 0.4939157704773284,
+       "top1_is_label": true
+      },
+      {
+       "i": 7,
+       "first": "velvet",
+       "second": "amber",
+       "p_first": 0.42302205752238387,
+       "p_second": 0.02241934771047904,
+       "label_mass": 0.4454414052328629,
+       "top1_is_label": true
+      },
+      {
+       "i": 8,
+       "first": "amber",
+       "second": "velvet",
+       "p_first": 0.13368035381578033,
+       "p_second": 0.6377532997261127,
+       "label_mass": 0.7714336535418931,
+       "top1_is_label": true
+      },
+      {
+       "i": 9,
+       "first": "velvet",
+       "second": "amber",
+       "p_first": 0.6381809048982228,
+       "p_second": 0.09193867632831453,
+       "label_mass": 0.7301195812265373,
+       "top1_is_label": true
+      },
+      {
+       "i": 10,
+       "first": "amber",
+       "second": "velvet",
+       "p_first": 0.09100773804091379,
+       "p_second": 0.4341736356876027,
+       "label_mass": 0.5251813737285165,
+       "top1_is_label": true
+      },
+      {
+       "i": 11,
+       "first": "velvet",
+       "second": "amber",
+       "p_first": 0.490196407794791,
+       "p_second": 0.029438582473589117,
+       "label_mass": 0.5196349902683801,
+       "top1_is_label": true
+      },
+      {
+       "i": 12,
+       "first": "amber",
+       "second": "velvet",
+       "p_first": 0.1326255347191287,
+       "p_second": 0.3605135810166717,
+       "label_mass": 0.4931391157358004,
+       "top1_is_label": true
+      },
+      {
+       "i": 13,
+       "first": "velvet",
+       "second": "amber",
+       "p_first": 0.2664682850257088,
+       "p_second": 0.014122301732434573,
+       "label_mass": 0.28059058675814336,
+       "top1_is_label": true
+      },
+      {
+       "i": 14,
+       "first": "amber",
+       "second": "velvet",
+       "p_first": 0.13283440934922897,
+       "p_second": 0.3610813611280994,
+       "label_mass": 0.4939157704773284,
+       "top1_is_label": true
+      },
+      {
+       "i": 15,
+       "first": "velvet",
+       "second": "amber",
+       "p_first": 0.42302205752238387,
+       "p_second": 0.02241934771047904,
+       "label_mass": 0.4454414052328629,
+       "top1_is_label": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "name": "N4",
+   "tags": [
+    "walnut",
+    "ember"
+   ],
+   "origin": "Code-proposed 2026-08-20",
+   "formats": {
+    "scaffold": {
+     "tag_lo": "ember",
+     "tag_hi": "walnut",
+     "fmt": "scaffold",
+     "n": 16,
+     "identity_split": 0.3085044222910121,
+     "position_split": 0.535176913218659,
+     "imbalance": 0.1914955777089879,
+     "label_mass_mean": 0.7488012572175535,
+     "label_mass_min": 0.6290269848738066,
+     "top1_is_label_frac": 1.0,
+     "per_probe": [
+      {
+       "i": 0,
+       "first": "walnut",
+       "second": "ember",
+       "p_first": 0.518737522350555,
+       "p_second": 0.23018838018118284,
+       "label_mass": 0.7489259025317379,
+       "top1_is_label": true
+      },
+      {
+       "i": 1,
+       "first": "ember",
+       "second": "walnut",
+       "p_first": 0.26305080170841216,
+       "p_second": 0.5231389857611808,
+       "label_mass": 0.7861897874695929,
+       "top1_is_label": true
+      },
+      {
+       "i": 2,
+       "first": "walnut",
+       "second": "ember",
+       "p_first": 0.47645707651641345,
+       "p_second": 0.39499678999521376,
+       "label_mass": 0.8714538665116272,
+       "top1_is_label": true
+      },
+      {
+       "i": 3,
+       "first": "ember",
+       "second": "walnut",
+       "p_first": 0.14008439685626217,
+       "p_second": 0.48894258801754437,
+       "label_mass": 0.6290269848738066,
+       "top1_is_label": true
+      },
+      {
+       "i": 4,
+       "first": "walnut",
+       "second": "ember",
+       "p_first": 0.693629088978248,
+       "p_second": 0.056936542814275674,
+       "label_mass": 0.7505656317925237,
+       "top1_is_label": true
+      },
+      {
+       "i": 5,
+       "first": "ember",
+       "second": "walnut",
+       "p_first": 0.3424630485263889,
+       "p_second": 0.38806147367022703,
+       "label_mass": 0.7305245221966159,
+       "top1_is_label": true
+      },
+      {
+       "i": 6,
+       "first": "walnut",
+       "second": "ember",
+       "p_first": 0.6186507397289178,
+       "p_second": 0.2137999747252187,
+       "label_mass": 0.8324507144541365,
+       "top1_is_label": true
+      },
+      {
+       "i": 7,
+       "first": "ember",
+       "second": "walnut",
+       "p_first": 0.22357658911667455,
+       "p_second": 0.41769605879371224,
+       "label_mass": 0.6412726479103867,
+       "top1_is_label": true
+      },
+      {
+       "i": 8,
+       "first": "walnut",
+       "second": "ember",
+       "p_first": 0.518737522350555,
+       "p_second": 0.23018838018118284,
+       "label_mass": 0.7489259025317379,
+       "top1_is_label": true
+      },
+      {
+       "i": 9,
+       "first": "ember",
+       "second": "walnut",
+       "p_first": 0.26305080170841216,
+       "p_second": 0.5231389857611808,
+       "label_mass": 0.7861897874695929,
+       "top1_is_label": true
+      },
+      {
+       "i": 10,
+       "first": "walnut",
+       "second": "ember",
+       "p_first": 0.47645707651641345,
+       "p_second": 0.39499678999521376,
+       "label_mass": 0.8714538665116272,
+       "top1_is_label": true
+      },
+      {
+       "i": 11,
+       "first": "ember",
+       "second": "walnut",
+       "p_first": 0.14008439685626217,
+       "p_second": 0.48894258801754437,
+       "label_mass": 0.6290269848738066,
+       "top1_is_label": true
+      },
+      {
+       "i": 12,
+       "first": "walnut",
+       "second": "ember",
+       "p_first": 0.693629088978248,
+       "p_second": 0.056936542814275674,
+       "label_mass": 0.7505656317925237,
+       "top1_is_label": true
+      },
+      {
+       "i": 13,
+       "first": "ember",
+       "second": "walnut",
+       "p_first": 0.3424630485263889,
+       "p_second": 0.38806147367022703,
+       "label_mass": 0.7305245221966159,
+       "top1_is_label": true
+      },
+      {
+       "i": 14,
+       "first": "walnut",
+       "second": "ember",
+       "p_first": 0.6186507397289178,
+       "p_second": 0.2137999747252187,
+       "label_mass": 0.8324507144541365,
+       "top1_is_label": true
+      },
+      {
+       "i": 15,
+       "first": "ember",
+       "second": "walnut",
+       "p_first": 0.22357658911667455,
+       "p_second": 0.41769605879371224,
+       "label_mass": 0.6412726479103867,
+       "top1_is_label": true
+      }
+     ]
+    },
+    "bare": {
+     "tag_lo": "ember",
+     "tag_hi": "walnut",
+     "fmt": "bare",
+     "n": 16,
+     "identity_split": 0.424286908534243,
+     "position_split": 0.6817639932573207,
+     "imbalance": 0.075713091465757,
+     "label_mass_mean": 0.5641973546111971,
+     "label_mass_min": 0.12325996336031576,
+     "top1_is_label_frac": 1.0,
+     "per_probe": [
+      {
+       "i": 0,
+       "first": "walnut",
+       "second": "ember",
+       "p_first": 0.5814761702127544,
+       "p_second": 0.13811269623342345,
+       "label_mass": 0.7195888664461779,
+       "top1_is_label": true
+      },
+      {
+       "i": 1,
+       "first": "ember",
+       "second": "walnut",
+       "p_first": 0.43279877465091077,
+       "p_second": 0.3819435780718371,
+       "label_mass": 0.8147423527227479,
+       "top1_is_label": true
+      },
+      {
+       "i": 2,
+       "first": "walnut",
+       "second": "ember",
+       "p_first": 0.06739092458131025,
+       "p_second": 0.05586903877900551,
+       "label_mass": 0.12325996336031576,
+       "top1_is_label": true
+      },
+      {
+       "i": 3,
+       "first": "ember",
+       "second": "walnut",
+       "p_first": 0.37324469018034656,
+       "p_second": 0.22638434816932304,
+       "label_mass": 0.5996290383496696,
+       "top1_is_label": true
+      },
+      {
+       "i": 4,
+       "first": "walnut",
+       "second": "ember",
+       "p_first": 0.5469006148192572,
+       "p_second": 0.08386992565307819,
+       "label_mass": 0.6307705404723354,
+       "top1_is_label": true
+      },
+      {
+       "i": 5,
+       "first": "ember",
+       "second": "walnut",
+       "p_first": 0.2855760462843255,
+       "p_second": 0.26827386830612115,
+       "label_mass": 0.5538499145904466,
+       "top1_is_label": true
+      },
+      {
+       "i": 6,
+       "first": "walnut",
+       "second": "ember",
+       "p_first": 0.4953859848624551,
+       "p_second": 0.11766448489294057,
+       "label_mass": 0.6130504697553957,
+       "top1_is_label": true
+      },
+      {
+       "i": 7,
+       "first": "ember",
+       "second": "walnut",
+       "p_first": 0.3462702123729203,
+       "p_second": 0.11241747881956834,
+       "label_mass": 0.45868769119248864,
+       "top1_is_label": true
+      },
+      {
+       "i": 8,
+       "first": "walnut",
+       "second": "ember",
+       "p_first": 0.5814761702127544,
+       "p_second": 0.13811269623342345,
+       "label_mass": 0.7195888664461779,
+       "top1_is_label": true
+      },
+      {
+       "i": 9,
+       "first": "ember",
+       "second": "walnut",
+       "p_first": 0.43279877465091077,
+       "p_second": 0.3819435780718371,
+       "label_mass": 0.8147423527227479,
+       "top1_is_label": true
+      },
+      {
+       "i": 10,
+       "first": "walnut",
+       "second": "ember",
+       "p_first": 0.06739092458131025,
+       "p_second": 0.05586903877900551,
+       "label_mass": 0.12325996336031576,
+       "top1_is_label": true
+      },
+      {
+       "i": 11,
+       "first": "ember",
+       "second": "walnut",
+       "p_first": 0.37324469018034656,
+       "p_second": 0.22638434816932304,
+       "label_mass": 0.5996290383496696,
+       "top1_is_label": true
+      },
+      {
+       "i": 12,
+       "first": "walnut",
+       "second": "ember",
+       "p_first": 0.5469006148192572,
+       "p_second": 0.08386992565307819,
+       "label_mass": 0.6307705404723354,
+       "top1_is_label": true
+      },
+      {
+       "i": 13,
+       "first": "ember",
+       "second": "walnut",
+       "p_first": 0.2855760462843255,
+       "p_second": 0.26827386830612115,
+       "label_mass": 0.5538499145904466,
+       "top1_is_label": true
+      },
+      {
+       "i": 14,
+       "first": "walnut",
+       "second": "ember",
+       "p_first": 0.4953859848624551,
+       "p_second": 0.11766448489294057,
+       "label_mass": 0.6130504697553957,
+       "top1_is_label": true
+      },
+      {
+       "i": 15,
+       "first": "ember",
+       "second": "walnut",
+       "p_first": 0.3462702123729203,
+       "p_second": 0.11241747881956834,
+       "label_mass": 0.45868769119248864,
+       "top1_is_label": true
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "branch_a": {
+  "scaffold_label_mass_mean_over_pairs": 0.8540625858331491,
+  "scaffold_label_mass_worst_pair": "N4",
+  "scaffold_label_mass_worst_probe": 0.6290269848738066,
+  "scaffold_top1_is_label_min": 1.0,
+  "reference_range": [
+   0.898,
+   0.982
+  ],
+  "scaffold_over_bare_ratio": 1.434372292455326
+ }
+}

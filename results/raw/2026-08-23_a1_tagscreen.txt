@@ -1,0 +1,112 @@
+########## A1 stage base ##########
+stage base | 8 pairs | formats ('scaffold', 'bare') | n=16/pair/format
+  tokenizer verified: 16 tags single-token, all recorded ids match
+  [C1    slate/prism    scaffold] identity 0.786 (imbalance 0.286, band edge +0.186) | position 0.447 | label_mass 0.8978 (min 0.8834) | top1_is_label 1.00
+  [C1    slate/prism    bare    ] identity 0.773 (imbalance 0.273, band edge +0.173) | position 0.478 | label_mass 0.5351 (min 0.2581) | top1_is_label 1.00
+  [C2    maple/cedar    scaffold] identity 0.593 (imbalance 0.093, band edge -0.007) | position 0.461 | label_mass 0.8219 (min 0.7684) | top1_is_label 1.00
+  [C2    maple/cedar    bare    ] identity 0.452 (imbalance 0.048, band edge -0.052) | position 0.510 | label_mass 0.4191 (min 0.0890) | top1_is_label 1.00
+  [C3  granite/lattice  scaffold] identity 0.591 (imbalance 0.091, band edge -0.009) | position 0.448 | label_mass 0.8681 (min 0.7734) | top1_is_label 1.00
+  [C3  granite/lattice  bare    ] identity 0.494 (imbalance 0.006, band edge -0.094) | position 0.513 | label_mass 0.4073 (min 0.0797) | top1_is_label 1.00
+  [C4    plaza/saddle   scaffold] identity 0.465 (imbalance 0.035, band edge -0.065) | position 0.393 | label_mass 0.7579 (min 0.7211) | top1_is_label 1.00
+  [C4    plaza/saddle   bare    ] identity 0.472 (imbalance 0.028, band edge -0.072) | position 0.450 | label_mass 0.3705 (min 0.1392) | top1_is_label 1.00
+  [N1   canvas/copper   scaffold] identity 0.605 (imbalance 0.105, band edge +0.005) | position 0.387 | label_mass 0.9158 (min 0.8857) | top1_is_label 1.00
+  [N1   canvas/copper   bare    ] identity 0.446 (imbalance 0.054, band edge -0.046) | position 0.635 | label_mass 0.4910 (min 0.3259) | top1_is_label 1.00
+  [N2   quartz/ridge    scaffold] identity 0.404 (imbalance 0.096, band edge -0.004) | position 0.439 | label_mass 0.9019 (min 0.8699) | top1_is_label 1.00
+  [N2   quartz/ridge    bare    ] identity 0.573 (imbalance 0.073, band edge -0.027) | position 0.604 | label_mass 0.4737 (min 0.0747) | top1_is_label 1.00
+  [N3    amber/velvet   scaffold] identity 0.377 (imbalance 0.123, band edge +0.023) | position 0.455 | label_mass 0.8729 (min 0.8505) | top1_is_label 1.00
+  [N3    amber/velvet   bare    ] identity 0.532 (imbalance 0.032, band edge -0.068) | position 0.517 | label_mass 0.2954 (min 0.0633) | top1_is_label 1.00
+  [N4   walnut/ember    scaffold] identity 0.260 (imbalance 0.240, band edge +0.140) | position 0.445 | label_mass 0.7752 (min 0.7373) | top1_is_label 1.00
+  [N4   walnut/ember    bare    ] identity 0.429 (imbalance 0.071, band edge -0.029) | position 0.475 | label_mass 0.3893 (min 0.2378) | top1_is_label 1.00
+
+=== branch (a) confirmation on this stage (descriptive; no bar) ===
+  2026-08-19 reference on ['slate', 'prism']: scaffold label_mass 0.898-0.982, top1_is_label 1.00
+  this stage, over all pairs: mean 0.8515 | worst probe 0.7211 (pair C4) | min top1_is_label 1.00
+  template adjacency: scaffold/bare mass ratio 2.01x (2026-08-19 found roughly 2x on (slate, prism))
+
+wrote /workspace/models/a1_tagscreen_base.json  (21s)
+  commit this to data/olmo/ before the pod is stopped (ledger 27) -- a run that exists only on a box does not exist
+########## A1 stage sft ##########
+stage sft | 8 pairs | formats ('scaffold', 'bare') | n=16/pair/format
+  tokenizer verified: 16 tags single-token, all recorded ids match
+  [C1    slate/prism    scaffold] identity 0.822 (imbalance 0.322, band edge +0.222) | position 0.520 | label_mass 0.9376 (min 0.9003) | top1_is_label 1.00
+  [C1    slate/prism    bare    ] identity 0.813 (imbalance 0.313, band edge +0.213) | position 0.532 | label_mass 0.5914 (min 0.4428) | top1_is_label 1.00
+  [C2    maple/cedar    scaffold] identity 0.463 (imbalance 0.037, band edge -0.063) | position 0.417 | label_mass 0.8910 (min 0.8654) | top1_is_label 1.00
+  [C2    maple/cedar    bare    ] identity 0.424 (imbalance 0.076, band edge -0.024) | position 0.513 | label_mass 0.5346 (min 0.2004) | top1_is_label 0.88
+  [C3  granite/lattice  scaffold] identity 0.389 (imbalance 0.111, band edge +0.011) | position 0.419 | label_mass 0.7759 (min 0.6864) | top1_is_label 1.00
+  [C3  granite/lattice  bare    ] identity 0.430 (imbalance 0.070, band edge -0.030) | position 0.616 | label_mass 0.6570 (min 0.3172) | top1_is_label 1.00
+  [C4    plaza/saddle   scaffold] identity 0.318 (imbalance 0.182, band edge +0.082) | position 0.504 | label_mass 0.8409 (min 0.7713) | top1_is_label 1.00
+  [C4    plaza/saddle   bare    ] identity 0.390 (imbalance 0.110, band edge +0.010) | position 0.498 | label_mass 0.5204 (min 0.3364) | top1_is_label 1.00
+  [N1   canvas/copper   scaffold] identity 0.729 (imbalance 0.229, band edge +0.129) | position 0.456 | label_mass 0.8682 (min 0.8135) | top1_is_label 1.00
+  [N1   canvas/copper   bare    ] identity 0.350 (imbalance 0.150, band edge +0.050) | position 0.628 | label_mass 0.7329 (min 0.5720) | top1_is_label 1.00
+  [N2   quartz/ridge    scaffold] identity 0.265 (imbalance 0.235, band edge +0.135) | position 0.485 | label_mass 0.9128 (min 0.8785) | top1_is_label 1.00
+  [N2   quartz/ridge    bare    ] identity 0.613 (imbalance 0.113, band edge +0.013) | position 0.683 | label_mass 0.6304 (min 0.3732) | top1_is_label 1.00
+  [N3    amber/velvet   scaffold] identity 0.250 (imbalance 0.250, band edge +0.150) | position 0.615 | label_mass 0.8574 (min 0.7763) | top1_is_label 1.00
+  [N3    amber/velvet   bare    ] identity 0.146 (imbalance 0.354, band edge +0.254) | position 0.575 | label_mass 0.5324 (min 0.2806) | top1_is_label 1.00
+  [N4   walnut/ember    scaffold] identity 0.309 (imbalance 0.191, band edge +0.091) | position 0.535 | label_mass 0.7488 (min 0.6290) | top1_is_label 1.00
+  [N4   walnut/ember    bare    ] identity 0.424 (imbalance 0.076, band edge -0.024) | position 0.682 | label_mass 0.5642 (min 0.1233) | top1_is_label 1.00
+
+=== branch (a) confirmation on this stage (descriptive; no bar) ===
+  2026-08-19 reference on ['slate', 'prism']: scaffold label_mass 0.898-0.982, top1_is_label 1.00
+  this stage, over all pairs: mean 0.8541 | worst probe 0.6290 (pair N4) | min top1_is_label 1.00
+  template adjacency: scaffold/bare mass ratio 1.43x (2026-08-19 found roughly 2x on (slate, prism))
+
+wrote /workspace/models/a1_tagscreen_sft.json  (21s)
+  commit this to data/olmo/ before the pod is stopped (ledger 27) -- a run that exists only on a box does not exist
+########## A1 stage dpo ##########
+stage dpo | 8 pairs | formats ('scaffold', 'bare') | n=16/pair/format
+  tokenizer verified: 16 tags single-token, all recorded ids match
+  [C1    slate/prism    scaffold] identity 0.731 (imbalance 0.231, band edge +0.131) | position 0.485 | label_mass 0.9742 (min 0.9586) | top1_is_label 1.00
+  [C1    slate/prism    bare    ] identity 0.855 (imbalance 0.355, band edge +0.255) | position 0.493 | label_mass 0.6913 (min 0.5196) | top1_is_label 1.00
+  [C2    maple/cedar    scaffold] identity 0.469 (imbalance 0.031, band edge -0.069) | position 0.339 | label_mass 0.9531 (min 0.9242) | top1_is_label 1.00
+  [C2    maple/cedar    bare    ] identity 0.386 (imbalance 0.114, band edge +0.014) | position 0.442 | label_mass 0.5021 (min 0.1949) | top1_is_label 0.88
+  [C3  granite/lattice  scaffold] identity 0.432 (imbalance 0.068, band edge -0.032) | position 0.402 | label_mass 0.8960 (min 0.8441) | top1_is_label 1.00
+  [C3  granite/lattice  bare    ] identity 0.412 (imbalance 0.088, band edge -0.012) | position 0.607 | label_mass 0.7290 (min 0.5209) | top1_is_label 0.88
+  [C4    plaza/saddle   scaffold] identity 0.294 (imbalance 0.206, band edge +0.106) | position 0.511 | label_mass 0.8928 (min 0.8116) | top1_is_label 1.00
+  [C4    plaza/saddle   bare    ] identity 0.257 (imbalance 0.243, band edge +0.143) | position 0.426 | label_mass 0.6079 (min 0.2975) | top1_is_label 1.00
+  [N1   canvas/copper   scaffold] identity 0.787 (imbalance 0.287, band edge +0.187) | position 0.458 | label_mass 0.9596 (min 0.9306) | top1_is_label 1.00
+  [N1   canvas/copper   bare    ] identity 0.426 (imbalance 0.074, band edge -0.026) | position 0.651 | label_mass 0.8148 (min 0.7346) | top1_is_label 1.00
+  [N2   quartz/ridge    scaffold] identity 0.283 (imbalance 0.217, band edge +0.117) | position 0.456 | label_mass 0.9684 (min 0.9565) | top1_is_label 1.00
+  [N2   quartz/ridge    bare    ] identity 0.587 (imbalance 0.087, band edge -0.013) | position 0.700 | label_mass 0.7329 (min 0.5930) | top1_is_label 1.00
+  [N3    amber/velvet   scaffold] identity 0.181 (imbalance 0.319, band edge +0.219) | position 0.581 | label_mass 0.9414 (min 0.8963) | top1_is_label 1.00
+  [N3    amber/velvet   bare    ] identity 0.112 (imbalance 0.388, band edge +0.288) | position 0.568 | label_mass 0.6873 (min 0.4436) | top1_is_label 1.00
+  [N4   walnut/ember    scaffold] identity 0.301 (imbalance 0.199, band edge +0.099) | position 0.550 | label_mass 0.8729 (min 0.7913) | top1_is_label 1.00
+  [N4   walnut/ember    bare    ] identity 0.323 (imbalance 0.177, band edge +0.077) | position 0.609 | label_mass 0.6540 (min 0.3723) | top1_is_label 1.00
+
+=== branch (a) confirmation on this stage (descriptive; no bar) ===
+  2026-08-19 reference on ['slate', 'prism']: scaffold label_mass 0.898-0.982, top1_is_label 1.00
+  this stage, over all pairs: mean 0.9323 | worst probe 0.7913 (pair N4) | min top1_is_label 1.00
+  template adjacency: scaffold/bare mass ratio 1.38x (2026-08-19 found roughly 2x on (slate, prism))
+
+wrote /workspace/models/a1_tagscreen_dpo.json  (21s)
+  commit this to data/olmo/ before the pod is stopped (ledger 27) -- a run that exists only on a box does not exist
+########## A1 stage instruct ##########
+stage instruct | 8 pairs | formats ('scaffold', 'bare') | n=16/pair/format
+  tokenizer verified: 16 tags single-token, all recorded ids match
+  [C1    slate/prism    scaffold] identity 0.711 (imbalance 0.211, band edge +0.111) | position 0.512 | label_mass 0.9822 (min 0.9725) | top1_is_label 1.00
+  [C1    slate/prism    bare    ] identity 0.844 (imbalance 0.344, band edge +0.244) | position 0.514 | label_mass 0.7447 (min 0.5974) | top1_is_label 1.00
+  [C2    maple/cedar    scaffold] identity 0.465 (imbalance 0.035, band edge -0.065) | position 0.400 | label_mass 0.9609 (min 0.9357) | top1_is_label 1.00
+  [C2    maple/cedar    bare    ] identity 0.405 (imbalance 0.095, band edge -0.005) | position 0.473 | label_mass 0.5535 (min 0.2437) | top1_is_label 0.88
+  [C3  granite/lattice  scaffold] identity 0.424 (imbalance 0.076, band edge -0.024) | position 0.431 | label_mass 0.9247 (min 0.8898) | top1_is_label 1.00
+  [C3  granite/lattice  bare    ] identity 0.416 (imbalance 0.084, band edge -0.016) | position 0.641 | label_mass 0.7625 (min 0.5921) | top1_is_label 1.00
+  [C4    plaza/saddle   scaffold] identity 0.329 (imbalance 0.171, band edge +0.071) | position 0.551 | label_mass 0.9115 (min 0.8364) | top1_is_label 1.00
+  [C4    plaza/saddle   bare    ] identity 0.279 (imbalance 0.221, band edge +0.121) | position 0.452 | label_mass 0.6691 (min 0.3641) | top1_is_label 1.00
+  [N1   canvas/copper   scaffold] identity 0.815 (imbalance 0.315, band edge +0.215) | position 0.470 | label_mass 0.9740 (min 0.9555) | top1_is_label 1.00
+  [N1   canvas/copper   bare    ] identity 0.461 (imbalance 0.039, band edge -0.061) | position 0.691 | label_mass 0.8438 (min 0.7842) | top1_is_label 1.00
+  [N2   quartz/ridge    scaffold] identity 0.266 (imbalance 0.234, band edge +0.134) | position 0.473 | label_mass 0.9753 (min 0.9647) | top1_is_label 1.00
+  [N2   quartz/ridge    bare    ] identity 0.577 (imbalance 0.077, band edge -0.023) | position 0.717 | label_mass 0.7658 (min 0.6753) | top1_is_label 1.00
+  [N3    amber/velvet   scaffold] identity 0.171 (imbalance 0.329, band edge +0.229) | position 0.588 | label_mass 0.9558 (min 0.9322) | top1_is_label 1.00
+  [N3    amber/velvet   bare    ] identity 0.101 (imbalance 0.399, band edge +0.299) | position 0.566 | label_mass 0.7134 (min 0.4676) | top1_is_label 1.00
+  [N4   walnut/ember    scaffold] identity 0.304 (imbalance 0.196, band edge +0.096) | position 0.608 | label_mass 0.9047 (min 0.8431) | top1_is_label 1.00
+  [N4   walnut/ember    bare    ] identity 0.349 (imbalance 0.151, band edge +0.051) | position 0.626 | label_mass 0.6714 (min 0.3627) | top1_is_label 1.00
+
+=== branch (a) confirmation on this stage (descriptive; no bar) ===
+  2026-08-19 reference on ['slate', 'prism']: scaffold label_mass 0.898-0.982, top1_is_label 1.00
+  this stage, over all pairs: mean 0.9487 | worst probe 0.8364 (pair C4) | min top1_is_label 1.00
+  template adjacency: scaffold/bare mass ratio 1.33x (2026-08-19 found roughly 2x on (slate, prism))
+
+wrote /workspace/models/a1_tagscreen_instruct.json  (21s)
+  commit this to data/olmo/ before the pod is stopped (ledger 27) -- a run that exists only on a box does not exist
+########## A1 aggregator ##########
+A1 STOP: /workspace/repo/jspace-lab/data/olmo/a1_tagscreen_base.json not found. Run box_a1_tagscreen.py on every stage first; partial selection is refused.
+aggregator FAILED
+########## A1 COMPLETE ##########

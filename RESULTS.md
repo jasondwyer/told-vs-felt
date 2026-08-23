@@ -20,6 +20,89 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-23 — **A1 RAN ON ALL FOUR STAGES: only 1 of 8 candidate pairs
+  clears the 0.50 ± 0.10 identity band on all four simultaneously, so A1's
+  registered replacement iteration fires. A screening outcome, not a fired
+  gate. Two findings should reach the design instance before any replacement
+  roster is proposed: the cycle-3/4 incumbent `slate/prism` is heavily and
+  stably biased on OLMo, and Base separates from the three post-training
+  stages on almost every pair.**
+  ([`data/olmo/a1_tagscreen_{base,sft,dpo,instruct}.json`](data/olmo/),
+  [`a1_roster.json`](data/olmo/a1_roster.json); raw
+  [`2026-08-23_a1_tagscreen.txt`](results/raw/2026-08-23_a1_tagscreen.txt).
+  8/8 pairs single-token on the shared tokenizer, 0 dropped; n = 16 per pair
+  per format; scaffold primary, bare recorded. Backend of record: the
+  2026-08-23 box, both respawn gates PASS.)
+  - **Identity split by pair and stage (scaffold, the primary format).**
+    Band is 0.50 ± 0.10 on ALL FOUR at once, which is a conjunction no
+    single-stage run can evaluate — `box_a1_tagscreen.py` deliberately does
+    not try, and `a1_roster.py` is the only place four stages are seen
+    together.
+
+    | pair | tags | base | sft | dpo | instruct | worst |
+    |---|---|---|---|---|---|---|
+    | C2 | maple/cedar | 0.593 | 0.463 | 0.469 | 0.465 | **0.093** ✓ |
+    | C3 | granite/lattice | 0.591 | 0.389 | 0.432 | 0.424 | 0.111 |
+    | C4 | plaza/saddle | 0.465 | 0.318 | 0.294 | 0.329 | 0.206 |
+    | N2 | quartz/ridge | 0.404 | 0.265 | 0.283 | 0.266 | 0.235 |
+    | N4 | walnut/ember | 0.260 | 0.309 | 0.301 | 0.304 | 0.240 |
+    | N1 | canvas/copper | 0.605 | 0.729 | 0.787 | 0.815 | 0.315 |
+    | C1 | slate/prism | 0.786 | 0.822 | 0.731 | 0.711 | 0.322 |
+    | N3 | amber/velvet | 0.377 | 0.250 | 0.181 | 0.171 | 0.329 |
+
+  - **FINDING 1 — `slate/prism` does not transfer.** C1 carries every
+    published cycle-3/4 preference number on Qwen, where it was the most
+    balanced pair in the roster (scaffold identity 0.481, imbalance 0.019).
+    On OLMo it is the **second worst** candidate and biased the same way at
+    every stage: 0.786 / 0.822 / 0.731 / 0.711, i.e. `slate` takes ~71–82%
+    of the renormalized label mass regardless of training stage. This is a
+    *stable* bias, not noise — which makes it exactly the failure mode
+    `tagscreen` was built to catch, and it is a concrete instance of ledger
+    1's rule generalized to token space: **nothing about a roster is
+    inherited across models.** Continuity with the Qwen preference numbers
+    cannot be bought here; if the design instance wants C1 retained for
+    continuity it would be retaining a 3:1 thumb on the scale.
+  - **FINDING 2 — Base separates from the post-training three, on nearly
+    every pair.** Read the table by column rather than by row. For six of
+    the eight pairs, `sft`, `dpo` and `instruct` sit within ~0.05 of each
+    other while `base` sits well apart (C3 0.591 vs 0.389/0.432/0.424; C4
+    0.465 vs 0.318/0.294/0.329; N2 0.404 vs 0.265/0.283/0.266; N3 0.377 vs
+    0.250/0.181/0.171; C2 0.593 vs ~0.465). N1 is the exception that still
+    fits: it drifts monotonically *away* from balance with training (0.605 →
+    0.729 → 0.787 → 0.815).
+    - **Descriptive, and deliberately not interpreted here.** It says that
+      token-identity priors move at the Base→SFT step and then change
+      little, which is an apparatus fact about the label channel, not a
+      result about evaluation. It matters operationally because it means a
+      roster tuned on Base is the wrong roster for the other three, and vice
+      versa — the conjunctive band is doing real work rather than being
+      conservative boilerplate.
+    - Ledger 23 note: this was not a pre-declared counter. It is an
+      observation from a screening table, recorded as post-hoc and
+      descriptive, and it licenses at most a pre-registration.
+  - **What A1 says to do next, per its own registered branch:** *"if fewer
+    than four clear, Code proposes replacements and A1 repeats (screening
+    iterations are apparatus work and unlimited; the roster locks before
+    B3)."* **Code's proposal, flagged for adjudication rather than
+    executed:** re-pair the sixteen tags already in the roster before
+    reaching for new ones. H3b established on Qwen that the pairing is an
+    arbitrary grouping rather than a property of the tags, and a re-pairing
+    screen there turned a 3/8 result into an admissible four. The same move
+    is available here and is strictly cheaper than sourcing and
+    tokenizer-verifying new candidates. It needs a box-side equivalent of
+    `h3b_repair_screen.py` (the existing one is Qwen-side), which is
+    ~20 minutes of work and one screen pass per stage.
+  - **The roster is a recommendation and stays one.** `a1_roster.json`
+    carries `replacement_iteration_required: true` and
+    `selection_is_a_recommendation: true`; the roster of record enters the
+    program through LOCK-g, which the design instance authors. Code
+    computed the formula and reports it.
+  - **Not blocking A2 or A3** (PROPOSAL-g §3: A1–A3 may interleave), which
+    proceed now. **A4 is registered as requiring A1** — noting for the
+    design instance that as built, A4 consumes the probe battery and the e0
+    axis and touches no tag roster at all, so the dependency may be nominal;
+    the ordering is honoured regardless until adjudicated.
+
 - 2026-08-23 — **RESPAWN PROTOCOL: BOTH GATES PASS on the new box. Volume
   integrity is exact (29/29 files across 4 checkpoints), and the backend
   re-characterization reproduces the terminated box's numbers to the bit —

@@ -1,0 +1,293 @@
+{
+ "item": "A1",
+ "format": "scaffold",
+ "band": {
+  "centre": 0.5,
+  "halfwidth": 0.1
+ },
+ "n_select": 4,
+ "stages": [
+  "base",
+  "sft",
+  "dpo",
+  "instruct"
+ ],
+ "ranked": [
+  {
+   "name": "C2",
+   "tags": [
+    "maple",
+    "cedar"
+   ],
+   "worst_stage_imbalance": 0.09335063352447726,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.5933506335244773,
+   "clears_band": true,
+   "per_stage_identity": {
+    "base": 0.5933506335244773,
+    "sft": 0.46298756211338893,
+    "dpo": 0.46924885347690326,
+    "instruct": 0.46533751735316364
+   },
+   "worst_probe_label_mass": 0.7684282403209947,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "C3",
+   "tags": [
+    "granite",
+    "lattice"
+   ],
+   "worst_stage_imbalance": 0.1108998488489018,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.3891001511510982,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.5912311284377516,
+    "sft": 0.3891001511510982,
+    "dpo": 0.4316275664423138,
+    "instruct": 0.4239077547922994
+   },
+   "worst_probe_label_mass": 0.6864374091755021,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "C4",
+   "tags": [
+    "plaza",
+    "saddle"
+   ],
+   "worst_stage_imbalance": 0.20603154436978321,
+   "worst_stage": "dpo",
+   "identity_at_worst_stage": 0.2939684556302168,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.4654008819411475,
+    "sft": 0.31811867166837804,
+    "dpo": 0.2939684556302168,
+    "instruct": 0.3290997526968335
+   },
+   "worst_probe_label_mass": 0.7210930992799052,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "N2",
+   "tags": [
+    "quartz",
+    "ridge"
+   ],
+   "worst_stage_imbalance": 0.23483426172038058,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.2651657382796194,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.4040473688344006,
+    "sft": 0.2651657382796194,
+    "dpo": 0.2827024372393707,
+    "instruct": 0.26596222616651954
+   },
+   "worst_probe_label_mass": 0.8698739471785533,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "N4",
+   "tags": [
+    "walnut",
+    "ember"
+   ],
+   "worst_stage_imbalance": 0.23987017824346635,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.26012982175653365,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.26012982175653365,
+    "sft": 0.3085044222910121,
+    "dpo": 0.3011147669305819,
+    "instruct": 0.3035993849089047
+   },
+   "worst_probe_label_mass": 0.6290269848738066,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "N1",
+   "tags": [
+    "canvas",
+    "copper"
+   ],
+   "worst_stage_imbalance": 0.3149689778795812,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.8149689778795812,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.6053831580120859,
+    "sft": 0.7294481113826474,
+    "dpo": 0.7867554779518013,
+    "instruct": 0.8149689778795812
+   },
+   "worst_probe_label_mass": 0.8134677821530496,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "C1",
+   "tags": [
+    "slate",
+    "prism"
+   ],
+   "worst_stage_imbalance": 0.3222023623186343,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.8222023623186343,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.7862915626006294,
+    "sft": 0.8222023623186343,
+    "dpo": 0.731217554901648,
+    "instruct": 0.7108097462215948
+   },
+   "worst_probe_label_mass": 0.8834057601733869,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "N3",
+   "tags": [
+    "amber",
+    "velvet"
+   ],
+   "worst_stage_imbalance": 0.32923898311562366,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.17076101688437634,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.3774330940127522,
+    "sft": 0.24975188154620037,
+    "dpo": 0.18067934467234015,
+    "instruct": 0.17076101688437634
+   },
+   "worst_probe_label_mass": 0.7763466727268951,
+   "worst_probe_label_mass_stage": "sft"
+  }
+ ],
+ "n_clearing": 1,
+ "selected": [
+  "C2"
+ ],
+ "selected_tags": [
+  [
+   "maple",
+   "cedar"
+  ]
+ ],
+ "sufficient": false,
+ "replacement_iteration_required": true,
+ "selection_is_a_recommendation": true,
+ "_lock": "The roster of record enters the program through LOCK-g.md, authored by the design instance. This artifact is Code applying PROPOSAL-g \u00a7A1's formula to the committed screens; it is not the lock.",
+ "source_provenance": {
+  "base": {
+   "adapter": "olmo-hf",
+   "path": "/workspace/models/base",
+   "dtype": "bfloat16",
+   "backend": "torch/cuda",
+   "device": "cuda",
+   "gpu": "NVIDIA A100-SXM4-80GB",
+   "cuda": "12.8",
+   "capability": [
+    8,
+    0
+   ],
+   "deterministic": true,
+   "cublas_workspace_config": ":4096:8",
+   "seed": 20260818,
+   "choice_window_declared": 8192,
+   "n_layers": 64,
+   "library_versions": {
+    "torch": "2.8.0+cu128",
+    "transformers": "5.15.0",
+    "accelerate": "1.14.0",
+    "safetensors": "0.8.0",
+    "huggingface_hub": "1.28.0",
+    "numpy": "2.1.2"
+   },
+   "python": "3.12.3"
+  },
+  "sft": {
+   "adapter": "olmo-hf",
+   "path": "/workspace/models/sft",
+   "dtype": "bfloat16",
+   "backend": "torch/cuda",
+   "device": "cuda",
+   "gpu": "NVIDIA A100-SXM4-80GB",
+   "cuda": "12.8",
+   "capability": [
+    8,
+    0
+   ],
+   "deterministic": true,
+   "cublas_workspace_config": ":4096:8",
+   "seed": 20260818,
+   "choice_window_declared": 8192,
+   "n_layers": 64,
+   "library_versions": {
+    "torch": "2.8.0+cu128",
+    "transformers": "5.15.0",
+    "accelerate": "1.14.0",
+    "safetensors": "0.8.0",
+    "huggingface_hub": "1.28.0",
+    "numpy": "2.1.2"
+   },
+   "python": "3.12.3"
+  },
+  "dpo": {
+   "adapter": "olmo-hf",
+   "path": "/workspace/models/dpo",
+   "dtype": "bfloat16",
+   "backend": "torch/cuda",
+   "device": "cuda",
+   "gpu": "NVIDIA A100-SXM4-80GB",
+   "cuda": "12.8",
+   "capability": [
+    8,
+    0
+   ],
+   "deterministic": true,
+   "cublas_workspace_config": ":4096:8",
+   "seed": 20260818,
+   "choice_window_declared": 8192,
+   "n_layers": 64,
+   "library_versions": {
+    "torch": "2.8.0+cu128",
+    "transformers": "5.15.0",
+    "accelerate": "1.14.0",
+    "safetensors": "0.8.0",
+    "huggingface_hub": "1.28.0",
+    "numpy": "2.1.2"
+   },
+   "python": "3.12.3"
+  },
+  "instruct": {
+   "adapter": "olmo-hf",
+   "path": "/workspace/models/instruct",
+   "dtype": "bfloat16",
+   "backend": "torch/cuda",
+   "device": "cuda",
+   "gpu": "NVIDIA A100-SXM4-80GB",
+   "cuda": "12.8",
+   "capability": [
+    8,
+    0
+   ],
+   "deterministic": true,
+   "cublas_workspace_config": ":4096:8",
+   "seed": 20260818,
+   "choice_window_declared": 8192,
+   "n_layers": 64,
+   "library_versions": {
+    "torch": "2.8.0+cu128",
+    "transformers": "5.15.0",
+    "accelerate": "1.14.0",
+    "safetensors": "0.8.0",
+    "huggingface_hub": "1.28.0",
+    "numpy": "2.1.2"
+   },
+   "python": "3.12.3"
+  }
+ }
+}
