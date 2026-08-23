@@ -20,6 +20,79 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-23 — **A5 DELIVERED: every B campaign completes inside one box
+  session, at every point of the sensitivity range. B1 costs nothing new,
+  B2 is 0.76 h, and B3's screen runs 0.91–5.87 h depending on session
+  response length — screen plus one confirm tops out at 7.53 h in the worst
+  case budgeted. A-PHASE IS COMPLETE.**
+  ([`scripts/a5_budget.py`](scripts/a5_budget.py),
+  [`data/olmo/a5_budget.json`](data/olmo/a5_budget.json). The script reads
+  its rates out of the committed A2/A3/A4 artifacts rather than carrying
+  constants, loads no model and needs no box, so it re-runs to the same
+  numbers from the record alone — PROPOSAL-g's "the budget is an artifact,
+  not a vibe".)
+  - **The cost model, and why it is trusted.** Two measured quantities and
+    one structural fact: **s/forward = 0.0825 mean / 0.0871 max** over twelve
+    independent per-stage measurements (~90,000 timed forwards across A3
+    capture, A4 part 1 and A4 part 2); **cold load 154 s mean / 181 s max**
+    off the network volume; and **generation is uncached everywhere** in the
+    harnesses B2 and B3 inherit — `detection.run_detection` and the session
+    runner both pass `cached=False` — so a T-token response costs T forwards.
+    - **Validated against a run it did not fit.** Predicting A2's per-stage
+      wall-clock from those rates alone gives **323 s against a measured
+      340 / 331 / 323 / 336 s — worst error 4.9%.** A budget that cannot
+      reproduce a run already in the record is a vibe with arithmetic.
+    - Everything below is budgeted on the **worst** measured forward rate
+      and the **worst** load, not the mean.
+  - **Per-campaign, as registered in PROPOSAL-g §4:**
+
+    | campaign | size | cost |
+    |---|---|---|
+    | **B1** | verdict read off A4's committed potency numbers | **0** — no new forwards |
+    | **B2** | 48 trials × 2 arms × 4 stages = 384 generations, 23,040 forwards | **0.76 h** |
+    | **B3 screen** | 48 marker + 18 sham + 18 random valid per stage; 97 run/stage at 13% exclusion | **0.91–5.87 h** |
+    | **B3 confirm** | 96 valid, 110 run, per triggering stage | **0.25–1.67 h** |
+
+  - **The one derived number, stated rather than assumed.** PROPOSAL-g gives
+    B3's screen as "48 valid sessions per stage per arm-family (marker), with
+    sham and random floors **per the e2a proportions**". Those proportions
+    are LOCK-h v2 §2's 96 : 36 : 36, which at marker = 48 gives **sham 18,
+    random 18** — 84 valid per stage, 97 run at the H1-observed 13%
+    exclusion rate. The exclusion allowance is deliberately conservative:
+    A2(ii) found **0 degenerate rounds in 80** at every stage, so OLMo's
+    exclusion rate looks likely to come in below e2b's 5.9–14.3%.
+  - **B3 is the only campaign whose cost is not pinned by measurement**, and
+    the sensitivity table is the operative output rather than any single
+    row. A2(ii)'s neutral filler measured ~7 tokens per round; B3 uses the
+    e2a task corpus and will run longer.
+
+    | tokens/round | s/session | B3 screen | + one confirm |
+    |---|---|---|---|
+    | 7 (A2 measured) | 6.6 | 0.91 h | 1.16 h |
+    | 15 | 13.6 | 1.66 h | 2.13 h |
+    | 25 | 22.3 | 2.59 h | 3.33 h |
+    | 40 | 35.4 | 4.00 h | 5.13 h |
+    | 60 (cap) | 52.8 | 5.87 h | 7.53 h |
+
+    **Single-box completion holds at every row**, which is what §2.10 asks
+    for — and it holds without needing the response length to be known in
+    advance, which is the point of budgeting a range.
+  - **The largest available lever is licensed and unmeasured.** Generation
+    is uncached and dominates B3 completely. The **cached path is licensed
+    on this backend** — the 2026-08-23 kernel gate found cached and uncached
+    first-token distributions bit-identical, symKL **exactly 0.000e+00**
+    against a 1e-3 bar. Nothing here is budgeted on it, because no cached
+    generation rate has been measured and a budget resting on an unmeasured
+    rate is the thing A5 exists to prevent. **Recommended: one short smoke
+    to measure it before B3 is scheduled.** If it behaves as the O(1)-per-
+    token path it is, the 60-token row stops being the binding case.
+  - **A-phase is complete.** A1 (two iterations, admissible roster), A2
+    (both gates PASS), A3 (four stages), A4 (currency + causal
+    qualification, four stages), A5 (this). The standing half of A5 —
+    respawn integrity and determinism PASS before any A/B run on a new box —
+    is satisfied and recorded for this backend, and re-runs per protocol on
+    any replacement. **Nothing further is owed by Code before LOCK-g.**
+
 - 2026-08-23 — **A4 marker stores committed (198 MB, four stages) after a
   lossless `int64 → int32` re-encode of `top_ids`. The saving is **13%, not
   the ~50% Code estimated** — compression was already absorbing most of the

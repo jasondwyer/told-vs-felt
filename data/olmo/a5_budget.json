@@ -1,0 +1,123 @@
+{
+ "item": "A5",
+ "rates": {
+  "s_per_forward_mean": 0.08254647376589423,
+  "s_per_forward_max": 0.08712420277837393,
+  "s_per_forward_n_measurements": 12,
+  "cold_load_mean_s": 154.375,
+  "cold_load_max_s": 181,
+  "a2_measured_per_stage_s": [
+   340,
+   331,
+   323,
+   336
+  ],
+  "generation_is_uncached": true
+ },
+ "model_validation": {
+  "predicted_s": 323.4301782725514,
+  "measured_s": [
+   340,
+   331,
+   323,
+   336
+  ],
+  "worst_rel_error": 0.04873476978661348,
+  "agrees_within_10pct": true
+ },
+ "registered_shapes": {
+  "B2_trials_per_stage_per_arm": 48,
+  "B2_arms": 2,
+  "B2_max_tokens": 60,
+  "B3_screen_marker": 48,
+  "B3_confirm_marker": 96,
+  "e2a_proportions_marker_sham_random": [
+   96,
+   36,
+   36
+  ],
+  "session_gens": 10,
+  "session_reads": 6,
+  "exclusion_rate_assumed": 0.13
+ },
+ "budgets_at_default_session_tokens": {
+  "B1": {
+   "new_compute_s": 0.0,
+   "note": "verdict read off A4's committed potency numbers; no new forwards"
+  },
+  "B2": {
+   "generations": 384,
+   "tokens_each": 60,
+   "forwards": 23040,
+   "model_loads": 4,
+   "seconds": 2731.3416320137353,
+   "hours": 0.7587060088927042
+  },
+  "B3_screen": {
+   "arms_per_stage": {
+    "marker": 48,
+    "sham": 18,
+    "random": 18
+   },
+   "valid_sessions_per_stage": 84,
+   "sessions_run_per_stage_at_13pct_exclusion": 96.55172413793103,
+   "total_sessions_run": 386.2068965517241,
+   "seconds_per_session": 6.621439411156419,
+   "model_loads": 4,
+   "seconds": 3281.245565687996,
+   "hours": 0.9114571015799989
+  },
+  "B3_confirm_per_triggering_stage": {
+   "valid_sessions": 96,
+   "sessions_run": 110.3448275862069,
+   "seconds": 911.6415901965704,
+   "hours": 0.25323377505460287
+  }
+ },
+ "default_session_tokens": 7,
+ "sensitivity_by_session_tokens": {
+  "7": {
+   "s_per_session": 6.621439411156419,
+   "screen_h": 0.9114571015799989,
+   "confirm_h": 0.25323377505460287,
+   "screen_plus_one_confirm_h": 1.1646908766346018
+  },
+  "15": {
+   "s_per_session": 13.591375633426333,
+   "screen_h": 1.6591897231261967,
+   "confirm_h": 0.46687166692494514,
+   "screen_plus_one_confirm_h": 2.126061390051142
+  },
+  "25": {
+   "s_per_session": 22.303795911263727,
+   "screen_h": 2.593855500058944,
+   "confirm_h": 0.7339190317628729,
+   "screen_plus_one_confirm_h": 3.327774531821817
+  },
+  "40": {
+   "s_per_session": 35.37242632801982,
+   "screen_h": 3.995854165458065,
+   "confirm_h": 1.1344900790197647,
+   "screen_plus_one_confirm_h": 5.13034424447783
+  },
+  "60": {
+   "s_per_session": 52.797266883694604,
+   "screen_h": 5.865185719323558,
+   "confirm_h": 1.6685848086956203,
+   "screen_plus_one_confirm_h": 7.533770528019179
+  }
+ },
+ "single_box_completion": {
+  "rule": "PROPOSAL-g \u00a72.10 -- a verdict campaign completes within one box session on on-demand capacity",
+  "B2": "yes at every sensitivity point",
+  "B3_screen": {
+   "7": true,
+   "15": true,
+   "25": true,
+   "40": true,
+   "60": true
+  },
+  "note": "12 h taken as a working single-session ceiling; the design instance sets the real one"
+ },
+ "_recommendation": "Generation is uncached and dominates B3. The cached path is LICENSED on this backend -- the 2026-08-23 kernel gate found cached and uncached first-token distributions bit-identical, symKL exactly 0.000e+00 against a 1e-3 bar. No cached generation rate has been measured, so nothing here is budgeted on it; a one-session smoke would measure it and is the single largest lever on B3."
+}
