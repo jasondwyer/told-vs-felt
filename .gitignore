@@ -70,6 +70,16 @@
 !/data/olmo/a3_axes_sft.npz
 !/data/olmo/a3_axes_dpo.npz
 !/data/olmo/a3_axes_instruct.npz
+# A4 per-stage marker stores (~50 MB each, 198 MB for four): the top-4096
+# sparse next-token log-probs the 12 per-probe instruments -- and therefore
+# G_c, the currency every B-phase effect is denominated in -- are rebuilt
+# from. Admitted on the same reasoning as e0_b1_markers.npz: storing only
+# the derived instruments would mean trusting a computation we could no
+# longer check. top_ids re-encoded int64 -> int32 (lossless; ids <= 100269).
+!/data/olmo/a4_instrument_base.npz
+!/data/olmo/a4_instrument_sft.npz
+!/data/olmo/a4_instrument_dpo.npz
+!/data/olmo/a4_instrument_instruct.npz
 
 # Ledger-26 regression verdicts: the record of whether a refactor was
 # accepted belongs in the repo, not on the machine that ran it (ledger 27).

@@ -20,6 +20,52 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-23 — **A4 marker stores committed (198 MB, four stages) after a
+  lossless `int64 → int32` re-encode of `top_ids`. The saving is **13%, not
+  the ~50% Code estimated** — compression was already absorbing most of the
+  int64 padding. Verified by rebuilding: token selections are bit-identical
+  (256/256, same order) and G_c agrees to 15 significant figures.**
+  - **Why they are in the record at all.** The 12 per-probe instruments —
+    and therefore **G_c, the currency every B-phase effect is denominated
+    in** — are rebuilt from these stores. Same reasoning that admitted
+    `e0_b1_markers.npz`: storing only the derived instruments would mean
+    trusting a computation that could no longer be checked. The derived
+    arrays are ~50 KB; the 198 MB is the auditability.
+  - **The re-encode is lossless by construction, and the precondition was
+    asserted rather than assumed.** `top_ids` range over [0, 100269] across
+    all four stages, against an int32 maximum of 2,147,483,647; the range is
+    checked before the cast and every other array is passed through
+    untouched.
+
+    | stage | before | after | saved |
+    |---|---|---|---|
+    | base | 59.3 MB | 50.7 MB | 14.5% |
+    | sft | 55.9 MB | 48.1 MB | 13.9% |
+    | dpo | 56.6 MB | 49.6 MB | 12.2% |
+    | instruct | 56.7 MB | 49.8 MB | 12.1% |
+    | **total** | **228.4 MB** | **198.3 MB** | **13.2%** |
+
+    **The estimate was wrong and is corrected here**: int64 high bytes are
+    zeros and zlib had already removed nearly all of them, so halving the
+    dtype did not halve the file. `base` remains just above GitHub's 50 MB
+    advisory threshold — a warning on push, not an error.
+  - **Rebuild verification, and a finding inside it.** Rebuilding the
+    instruments from each re-encoded store reproduces **256/256 selected
+    token ids per probe in identical order**, `max|Δw|` ≤ 1.4e-17, `Δσ` ≤
+    1.8e-15, `Δg_q` ≤ 5.6e-15, and G_c to 15 significant figures
+    (0.7823688271641179 stored vs …168 rebuilt at Base).
+    - **Worth recording as an apparatus fact: the rebuild is
+      cross-PLATFORM.** The stores were written on the box (Linux/x86,
+      CUDA) and rebuilt on the laptop (macOS/ARM), so the residual ~1e-15
+      is last-ulp float arithmetic, not corruption. **The token selection —
+      the part that determines what the instrument measures — is exactly
+      reproducible across platforms; only the final float digits are not.**
+      That is the property that makes the store worth its size: an auditor
+      on different hardware recovers the same instrument.
+    - Method note: a first pass compared the arrays with exact `==` on
+      floats and reported a mismatch. That was the check being wrong, not
+      the data — corrected to the tolerance the quantities actually carry.
+
 - 2026-08-23 — **A1 ITERATION 2 (re-pairing): 16 of 120 pairings clear the
   four-stage band, and exact disjoint matching returns a full roster of four
   — `quartz/velvet`, `copper/walnut`, `maple/saddle`, `amber/granite`, worst
