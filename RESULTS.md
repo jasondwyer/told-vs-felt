@@ -20,6 +20,83 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-23 — **B1 — Q1 VERDICT: the registered bet is CONFIRMED. The
+  evaluative axis exists at BASE and carries causal potency there, under the
+  registered A4 envelope conjunction at a tested dose. All four stages PASS;
+  the mapping's first branch is the operative one and no falsification
+  branch is engaged. Zero new forwards — the verdict is read off artifacts
+  committed before the lock existed.**
+  ([`data/olmo/b1_verdict.json`](data/olmo/b1_verdict.json),
+  `scripts/b1_verdict.py`. Licensed by **LOCK-g v1.1 at `0551224`**;
+  criterion per LOCK-g §2 = PROPOSAL-g §3-A4's envelope conjunction at ANY
+  tested dose. **Disposition is the design instance's.**)
+  - **The bet, quoted from PROPOSAL-g §1 as registered 2026-08-18,
+    pre-R_ℓ-survey:** *"present at Base — marking is a pretraining
+    acquisition."*
+
+    | stage | layer | fracs passing potency | MED | verdict |
+    |---|---|---|---|---|
+    | base | L60 | 0.05, 0.10 | 0.05 | **PASS** |
+    | sft | L44 | 0.40 | 0.40 | **PASS** |
+    | dpo | L44 | 0.05, 0.10 | 0.05 | **PASS** |
+    | instruct | L44 | 0.05 | 0.05 | **PASS** |
+
+    **Base PASS → bet confirmed.** The registered mapping's other two
+    branches — Base FAIL with a later stage passing, and all four failing —
+    are not reached and are recorded here as untriggered.
+  - **What the verdict does and does not say.** It says the
+    feedback-contrast axis is present at Base with demonstrated causal reach
+    on the probe battery, both poles, sign-locked, against a control
+    envelope built from ≥3 norm-matched random directions and a sham arm at
+    every tested frac. It does not say the axis is *equally* potent across
+    the series, and it says nothing about reading (Q2) or coupling (Q3).
+  - **Scope the criterion earns, stated so the sentence cannot grow.** The
+    registered criterion is "at ANY tested dose", and it is applied as
+    written — but the dose at which each stage passes is not uniform, and
+    the record should carry that beside the verdict rather than behind it:
+    - At **matched dose (frac 0.10)** only Base and DPO pass; SFT and
+      Instruct do not. SFT passes only at **0.40**, eight times Base's MED.
+    - The failing conjunct is **always `pos_exceeds_envelope`**, never sign
+      lock and never the negative pole, at every stage and every frac. The
+      negative pole clears its envelope everywhere; the positive pole is the
+      weak one everywhere.
+    - So "PASS at some tested dose" is a true and registered statement, and
+      it is a weaker statement than "potent throughout the ladder". Anyone
+      quoting B1 should quote the dose with it.
+  - **The secondary descriptive expectation is NOT borne out.** PROPOSAL-g
+    §1 noted, explicitly as a non-bet, that *"potency may sharpen along the
+    chain."* It does not. Base passes at the two lowest doses; SFT needs the
+    highest dose on the ladder; Instruct passes at one frac only. Relative
+    to the currency the direction is the reverse — D+/G_c at matched dose is
+    0.110 at Base against 0.022–0.026 after training. **Recorded as a
+    descriptive miss on a declared non-bet**, which is exactly the standing
+    it was given in advance.
+  - **The V1-lineage rule passes at NO stage and NO frac**, and per LOCK-g
+    §1 it is reported context and never a Phase-2 criterion. The arithmetic
+    reason is on the record: it asks D+ ≥ 0.5·G_c, and G_c of 0.78–1.56 puts
+    that bar at 0.39–0.78 against displacements of 0.02–0.28. On Qwen,
+    G = 0.3156 made the same bar 0.158 and reachable. **The two criteria are
+    not interchangeable on this model**, and B1 rests on the registered one.
+  - **Guard profiles (A3), reported alongside and deciding nothing**, per
+    LOCK-g §2 — at each stage's own selected layer:
+
+    | stage | cos_char | V2_self | V3_eval |
+    |---|---|---|---|
+    | base | 0.758 | 0.652 | 0.950 |
+    | sft | 0.743 | 0.669 | 0.965 |
+    | dpo | 0.725 | 0.689 | 0.962 |
+    | instruct | 0.723 | 0.691 | 0.962 |
+
+  - **No new forwards, and that is the point.** The A4 artifacts this reads
+    were committed on 2026-08-23 **before LOCK-g existed**, and the verdict
+    script computes no new quantity and re-tunes nothing — it applies a
+    mapping fixed in a document whose hash predates its execution. The
+    analyzer-before-data pattern from e2b, carried forward.
+  - **Flagged for the design instance:** the reading is Code's application
+    of the registered mapping; the disposition, and whatever B1's confirmed
+    bet licenses in the synthesis, are yours. **B2/B3 scheduling and the
+    cached-generation smoke that should precede B3 wait on Jason's go.**
+
 - 2026-08-23 — **LOCK-g v1.1 §7 VALUES-CHECK: GREEN, 62/62, 51 needles
   located verbatim, 0 claimed but absent. The corrected §1 disjointness
   figure verifies (0.017; greedy 0.2074, exact 0.2241), and the correction

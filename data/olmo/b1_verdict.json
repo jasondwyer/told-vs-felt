@@ -1,0 +1,102 @@
+{
+ "item": "B1",
+ "question": "Q1 -- marking-when",
+ "registered_bet": "present at Base -- marking is a pretraining acquisition (2026-08-18, pre-R_l-survey)",
+ "criterion": "PROPOSAL-g \u00a73-A4 envelope conjunction at ANY tested dose, per LOCK-g \u00a72",
+ "lock": "LOCK-g v1.1",
+ "new_forwards": 0,
+ "per_stage": {
+  "base": {
+   "selected_layer": 60,
+   "passing_fracs": [
+    0.05,
+    0.1
+   ],
+   "minimum_effective_dose": 0.05,
+   "verdict": "PASS",
+   "conjuncts_at_med": {
+    "pos_exceeds_envelope": true,
+    "neg_exceeds_envelope_opposite": true,
+    "sign_locks": true
+   },
+   "G_c": 0.7823688271641179,
+   "v1_lineage_any_frac": false,
+   "guard_profile_at_selected_layer": {
+    "cos_char": 0.758,
+    "v2_self_residual_frac": 0.652,
+    "v3_eval_residual_frac": 0.95
+   }
+  },
+  "sft": {
+   "selected_layer": 44,
+   "passing_fracs": [
+    0.4
+   ],
+   "minimum_effective_dose": 0.4,
+   "verdict": "PASS",
+   "conjuncts_at_med": {
+    "pos_exceeds_envelope": true,
+    "neg_exceeds_envelope_opposite": true,
+    "sign_locks": true
+   },
+   "G_c": 1.0278868186280745,
+   "v1_lineage_any_frac": false,
+   "guard_profile_at_selected_layer": {
+    "cos_char": 0.743,
+    "v2_self_residual_frac": 0.669,
+    "v3_eval_residual_frac": 0.965
+   }
+  },
+  "dpo": {
+   "selected_layer": 44,
+   "passing_fracs": [
+    0.05,
+    0.1
+   ],
+   "minimum_effective_dose": 0.05,
+   "verdict": "PASS",
+   "conjuncts_at_med": {
+    "pos_exceeds_envelope": true,
+    "neg_exceeds_envelope_opposite": true,
+    "sign_locks": true
+   },
+   "G_c": 1.5325496716237659,
+   "v1_lineage_any_frac": false,
+   "guard_profile_at_selected_layer": {
+    "cos_char": 0.725,
+    "v2_self_residual_frac": 0.689,
+    "v3_eval_residual_frac": 0.962
+   }
+  },
+  "instruct": {
+   "selected_layer": 44,
+   "passing_fracs": [
+    0.05
+   ],
+   "minimum_effective_dose": 0.05,
+   "verdict": "PASS",
+   "conjuncts_at_med": {
+    "pos_exceeds_envelope": true,
+    "neg_exceeds_envelope_opposite": true,
+    "sign_locks": true
+   },
+   "G_c": 1.561221270016582,
+   "v1_lineage_any_frac": false,
+   "guard_profile_at_selected_layer": {
+    "cos_char": 0.723,
+    "v2_self_residual_frac": 0.691,
+    "v3_eval_residual_frac": 0.962
+   }
+  }
+ },
+ "branch": "base_pass",
+ "reading": "bet confirmed -- marking is a pretraining acquisition",
+ "first_passing_stage": "base",
+ "v1_lineage_context_only": {
+  "base": false,
+  "sft": false,
+  "dpo": false,
+  "instruct": false
+ },
+ "_disposition": "Code applies the registered mapping and reports. The disposition is the design instance's."
+}
