@@ -1,0 +1,117 @@
+DECLARED INVOCATION: PROPOSAL-i reconnaissance (design-instance block 2026-08-22, item 2). READ-ONLY. No design work, no model loaded, nothing built.
+
+=== (a) provenance of the ~57% claim =================================
+-- two-layer subspace ablation, 2026-07-18:
+     un-ablated baseline: 33.112576   ratio (ablated/un-ablated): 0.5737  (DID NOT CLEARLY COLLAPSE)
+     k=1: 41.212425  (ratio 1.2446)
+     k=3: 23.841457  (ratio 0.7200)
+     k=6: 20.746742  (ratio 0.6266)
+     k=12: 18.996117  (ratio 0.5737)  [see above]
+-- single-layer diagnostic, 2026-07-18:
+     k=1: 40.039169  (ratio 1.4232)
+     k=3: 22.187033  (ratio 0.7886)
+     k=6: 18.675928  (ratio 0.6638)
+     k=12: 17.189030  (ratio 0.6110)
+     two-layer k=12 ratio was: 0.5737 (RESULTS.md 2026-07-18)
+     single-layer k=12 ratio: see above
+
+-- the attribution in archive/CLAUDE-cycle1-2.md line 241:
+   The single-layer diagnostic (2026-07-18) concluded that ~57% of state-discriminating signal survives subspace ablation and lives outside the span of the 369 curated words — filed as a tooling limita
+
+-- the basis, exactly (archive/RESULTS-cycle1-2.md ~line 646):
+     *readout* space (369-dim per layer) while ablation has to operate on the
+     *residual stream* (5120-dim) -- those aren't the same space. Resolved by
+     generalizing `interventions.j_lens_vector_for_text` (one vocab token's
+     residual-space direction, `J_l^T @ W_U[t]`) to an arbitrary weighted
+     combination over the curated vocab: `fingerprint.contrast_direction()`
+     reuses the already-cached `j_lens_vectors` and takes a weighted sum of
+     rows, weighted by the mean-over-probes state-A-minus-B restricted-readout
+     difference at that layer. New: `interventions.ablate_direction()` (single
+     precomputed direction, orthogonal-projection removal -- the one-direction
+
+-- 2026-07-19 basis-sensitivity diagnostic, its own READ block:
+   RATING SENSITIVITY BY BASIS (range over coeff in {-3.0,0,+3.0})
+   ==================================================================
+      concept:  mean=0.0367  median=0.0261  max=0.1015
+          pca:  mean=0.0400  median=0.0236  max=0.1169
+       random:  mean=0.0273  median=0.0231  max=0.0933
+   
+   ==================================================================
+   READ
+   ==================================================================
+     pca/concept mean-range ratio: 1.09
+     pca/random  mean-range ratio: 1.47
+     pca >> concept AND >> random -> basis-limited; build the PCA basis.
+     all ~equally tiny            -> intrinsic to the rating; no basis helps.
+     pca ~ random > concept       -> magnitude/coverage, not structure.
+
+-- artifact survival: raw logs vs artifacts vs code
+   raw logs IN THE REPO:
+     results/raw/2026-07-18_phase1_behavioral_influence.txt
+     results/raw/2026-07-18_phase1_rating_gradient.txt
+     results/raw/2026-07-18_phase1_tier1_calibration.txt
+     results/raw/2026-07-18_phase1_tier23_calibration.txt
+     results/raw/2026-07-18_phase1_tier2_singlelayer_diag.txt
+     results/raw/2026-07-18_phase1_tier2_v2_subspace_ablation.txt
+     results/raw/2026-07-18_state_space_validation.txt
+     results/raw/2026-07-18_update_loop_validation.txt
+     results/raw/2026-07-19_basis_sensitivity_diagnostic.txt
+     results/raw/2026-07-19_forced_choice_probe.txt
+   artifacts, CLONE ONLY (gitignored, this laptop):
+              0  .gitkeep
+          31533  full_depth_fit.log
+          58101  full_depth_fit_v2.log
+     3303030398  lens.npz
+            297  neuronpedia_n1000.json
+     3303030398  neuronpedia_n1000.npz
+           9697  workspace_range_neuronpedia_n1000.txt
+   code, CLONE ONLY:
+     jlens_qwen/fingerprint.py  (tracked in repo: 0)
+     jlens_qwen/affect_vocab.py  (tracked in repo: 0)
+     jlens_qwen/workspace_layers.py  (tracked in repo: 0)
+     jlens_qwen/interventions.py  (tracked in repo: 0)
+     jlens_qwen/probe_battery.py  (tracked in repo: 0)
+     scripts/workspace_range.py  (tracked: 0)
+     scripts/diagnose_basis_sensitivity.py  (tracked: 0)
+
+=== (b) the AUC .759 readability instrument ===========================
+-- port of record, in the repo:
+   """Embedding-probe discriminability -- the manipulation-check instrument,
+   ported from `scripts/e2a_g2_discriminability.py`.
+   
+     composition at k > 1 draws from a seeded generator keyed to k.
+   
+   The instrument reads generated text through an unsteered forward. No state
+   is ever live at readout (rule 5).
+   """
+-- input representation (ModelAdapter.embed contract):
+       def embed(self, text: str) -> np.ndarray:
+           """Mean-pooled final-layer (post-norm) residual over all positions --
+           the representation the discriminability instrument reads.
+   
+           Distinct from `forward(...).acts`: that captures *inside* the stack
+           at named layers; this is the whole-sequence summary the logistic
+           probe is fit on. Unsteered by construction -- the instrument reads
+           generated TEXT, never a live state (rule 5: a state-at-readout DV is
+           invalid by default)."""
+   
+-- where .759 comes from:
+   - 2026-08-09 — **e2a g2r2 (v3 ladder rerun) — QUALIFIED: dose_e2a =
+     0.10, F = 2** (k=1 .633; k=2 .759 ≥ .70; frac 0.20 not reached).
+     Raw: `results/raw/2026-08-09_e2a_g2r2.txt`; artifacts
+     `data/e2a/g2_{rounds_f0.1,discriminability}.json` (template_family
+     v3, ban sha `9a2f0744f81ac930`).
+     - Same verdict as g2r, now on post-ban text with the instrument
+       fitted on post-ban fit rounds. **Resolves the transfer-break
+       question:** k=2 discriminability survives the ban under matched
+
+=== (c) SAE inventory =================================================
+-- local: any file matching *sae* in repo or clone:
+     (nothing listed above = none)
+-- what the clone's lens dir actually holds: J-lens only (see (a))
+-- published: see the dated RESULTS entry; Qwen-Scope covers Qwen3/3.5,
+   not Qwen3.6. One third-party Qwen3.6-27B SAE exists at L11/31/55.
+-- our workspace layers of record:
+       - `jlens_qwen/workspace_layers.py` — `WORKSPACE_LAYERS = [40, 44, 48, 52,
+         56, 60]`, derived from running `scripts/workspace_range.py` against
+         `neuronpedia_n1000.npz`: the script's own classifier flags nearly the

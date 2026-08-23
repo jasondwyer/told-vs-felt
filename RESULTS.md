@@ -20,6 +20,151 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-22 — **PROPOSAL-i RECONNAISSANCE (read-only; nothing designed,
+  nothing built). Three answers, and one provenance defect in the ~57%
+  claim: the number is the TWO-layer result, but the document that carries
+  it into the write-up attributes it to the single-layer diagnostic, which
+  gave 61%.** (Design-instance block 2026-08-22, item 2. Raw
+  [`2026-08-22_proposal_i_recon.txt`](results/raw/2026-08-22_proposal_i_recon.txt).
+  **There is no preprint file in this repo** — `git ls-files` finds no
+  `PREPRINT-*` or `BLOG-*`, only `paper_analysis.ipynb` and
+  `scripts/paper_data.py`. CLAUDE.md §History pointers says "PREPRINT-* and
+  BLOG-* at root"; that line is stale. So §4 was traced through the record
+  rather than read.)
+  - **(a) The ~57% claim traces to cycle 1, 2026-07-18, tier-2 subspace
+    ablation — and the DV is narrower than the sentence.**
+    - **Two-layer run** (dummy states induced at L48+L52), ablating the full
+      12-direction span: ablated A-vs-B euclidean 18.996 against an
+      un-ablated 33.113 — **ratio 0.5737**, logged in the raw output as
+      "DID NOT CLEARLY COLLAPSE". Monotone k-sweep: k=1 **1.2446** (worse
+      than no ablation) → k=3 0.7200 → k=6 0.6266 → k=12 0.5737.
+    - **Single-layer diagnostic** (same states, L48 only), run to rule out a
+      multi-layer interaction: **k=12 ratio 0.6110**.
+    - **The defect.** `archive/CLAUDE-cycle1-2.md` §241 reads *"The
+      single-layer diagnostic (2026-07-18) concluded that ~57% of
+      state-discriminating signal survives subspace ablation"* — but 57% is
+      the **two-layer** number. The single-layer diagnostic returned **61%**.
+      The magnitude is right for the run it actually came from and the
+      citation points at the other run. `PROPOSAL-e` §83 and
+      `archive/CLAUDE-v2-cycles3-4.md` §125 both inherit the phrasing. If
+      §4 of the preprint sources the claim from either, it inherits the
+      mis-citation with it. **Flagged, not corrected: both files are
+      archived or committed pre-registrations.**
+    - **What the DV actually is, stated plainly because "state-
+      discriminating signal" reads more general than the measurement.** The
+      quantity is the euclidean distance between the restricted-readout
+      fingerprints of **two throwaway dummy states** — A = basketball +
+      lightning (L48) + spider (L52), B = tennis + ant (L48) + France (L52)
+      — built to validate the tier-1/2 pipeline, at alpha 3. It is not the
+      reward axis, and it is not any published cycle-3/4 quantity.
+    - **The basis, exactly: J-lens vectors, not raw unembedding.**
+      `fingerprint.contrast_direction()` generalises
+      `interventions.j_lens_vector_for_text` — one token's residual-space
+      direction, **`J_ℓᵀ @ W_U[t]`** — to a weighted sum over the 369
+      single-token curated affect/concept words in
+      `jlens_qwen/affect_vocab.py`, weighted by the mean-over-probes
+      state-A-minus-B restricted-readout difference at that layer. So the
+      span is the **J-lens image of 369 unembedding rows**; the lens sits in
+      the middle, and "vocabulary basis" is accurate only about what seeds
+      it. The resolution note is explicit that fingerprints live in a
+      369-dim readout space while ablation must act on the 5120-dim residual
+      stream, "those aren't the same space".
+    - **The basis question was tested once more, and it pointed the other
+      way.** 2026-07-19, `scripts/diagnose_basis_sensitivity.py`: concept
+      (J-lens curated) vs PCA-on-corpus-residuals vs random, 16 directions
+      each at L48/L52, on a rating-sensitivity DV. Mean ranges **concept
+      0.0367 / pca 0.0400 / random 0.0273**; pca/concept 1.09, pca/random
+      1.47. Its own pre-declared READ block maps that to *"all ~equally
+      tiny → intrinsic to the rating; no basis helps."* Different DV from
+      the ablation, so it does not refute the 57% — but it is the **only
+      direct test in the record** of "would a richer basis recover the
+      missing signal", and its answer was no.
+    - **Artifact survival, and this is the part PROPOSAL-i has to plan
+      around.** The **raw logs survive in the repo** (`2026-07-18_phase1_
+      tier2_v2_subspace_ablation.txt`, `_singlelayer_diag.txt`,
+      `2026-07-19_basis_sensitivity_diagnostic.txt`, and the tier-1
+      calibration). **The artifacts and every line of the code do not.**
+      `lens.npz` (3.3 GB), `neuronpedia_n1000.npz` (3.3 GB),
+      `workspace_range_neuronpedia_n1000.txt`, and
+      `fingerprint.py` / `affect_vocab.py` / `workspace_layers.py` /
+      `interventions.py` / `probe_battery.py` / `scripts/workspace_range.py`
+      / `scripts/diagnose_basis_sensitivity.py` live **only inside the
+      gitignored `jlens-qwen36` clone on this laptop** — zero of them are
+      tracked. By ledger 27's own standard they do not exist. Any
+      PROPOSAL-i that builds on the workspace decomposition is building on
+      one machine's untracked working copy of someone else's repo.
+  - **(b) The AUC .759 instrument reads MODEL ACTIVATIONS, not an external
+    encoder — but it reads them off generated TEXT, with no state live.**
+    - **File:** `scripts/e2a_g2_discriminability.py` (cycle 3/4, clone-side),
+      ported into the repo as **`valence_core/discrim.py`**, which is
+      suite-covered.
+    - **Input representation:** `adapter.embed(record)` — the
+      `ModelAdapter.embed` contract is *"mean-pooled final-layer (post-norm)
+      residual over all positions"*, i.e. the model's own 5120-dim
+      activations, explicitly distinguished in the contract from
+      `forward(...).acts`. There is no sentence-transformer and no external
+      encoder anywhere in the path.
+    - **What it is fed:** the model's own generated round text, through an
+      **unsteered** forward. The state is never live at readout (rule 5).
+      So: model-internal representation, state-free forward, text as the
+      only carrier — which is exactly what makes it the test of the
+      *informational* channel rather than the mechanical one.
+    - **Classifier:** seeded plain gradient-descent logistic regression —
+      fixed seed, iteration count, learning rate and L2, deliberately not a
+      solver whose version could move a published AUC — fit on tasks
+      t01–t08 and scored on the disjoint t09–t16, so the AUC is
+      generalisation across items.
+    - **Where .759 sits:** **k=2** (two rounds concatenated with `\n---\n`),
+      from **g2r2**, 2026-08-09, on post-ban text with the instrument
+      refitted on post-ban fit rounds, template family v3, ban sha
+      `9a2f0744f81ac930`. **k=1 was .633.** Bar is AUC ≥ .70 and the ladder
+      is lazy — it stops at the first qualifying rung, so k>2 was never run.
+      Carried caveat from the record: the g2 spot-check's k=2 **.448** was
+      instrument/distribution mismatch rather than an all-degeneracy signal,
+      and part of the earlier g2r k=2 may have ridden on pole-asymmetric
+      degeneracy the ban then removed.
+  - **(c) SAE inventory: none locally, none official for our checkpoint, one
+    third-party near-miss that misses every layer we use.**
+    - **Local: none.** No file matching `*sae*` exists in the repo or the
+      clone. `jlens-qwen36/data/lens/` holds J-lens artifacts only.
+    - **Official — Qwen-Scope** (arXiv:2605.11887, released 2026-05): 14 SAE
+      groups over 7 backbones, **Qwen3 and Qwen3.5 series only**. It does
+      include **Qwen3.5-27B** — all 64 layers, d_model 5120, width 81,920
+      (16× expansion), top-k {50, 100}, uniquely trained on the *instruct*
+      variant, licence "qwen". Our subject is **Qwen3.6-27B-4bit**:
+      **dimensionally identical** (64 layers, 5120) and **a different
+      checkpoint**. Transferring an SAE across a minor version is an
+      assumption, and nothing in the release supports it.
+    - **Third party — `caiovicentino1/qwen36-27b-sae-papergrade`**
+      (Apache-2.0, 2026-04-24, Caio Vicentino / OpenInterpretability): this
+      one IS Qwen3.6-27B — 65,536 features (13×), top-k 128, 200M tokens per
+      layer, self-reported variance-explained 0.84 / 0.71 / 0.82. But it
+      covers **layers 11, 31 and 55**, and our workspace layers are
+      **40, 44, 48, 52, 56, 60**. **Zero overlap** — L55 is adjacent to L56,
+      not it. Unvetted, no paper cited.
+    - **A precision caveat that applies to every option above.** Every
+      published number in this program came off the **4-bit MLX** Qwen. An
+      SAE trained on bf16 activations reads a different residual stream, and
+      SAE feature damage under quantization is live literature
+      (arXiv:2606.03002). This is the same hazard **g4** exists to measure,
+      and it would have to be settled before an SAE could be used as an
+      instrument here.
+    - **Rough cost of training our own six, stated as an estimate.** All six
+      workspace layers can be captured in **one** forward per token, so the
+      collection budget is ~200M tokens of 27B forward (the third-party
+      per-layer figure used as the anchor), not six times that. **Storing
+      the activations is not an option:** 200M × 6 × 5120 × 2 bytes ≈
+      **12.3 TB** against a 500 GB volume, so streaming/online training is
+      mandatory rather than preferred. At an assumed 2–4k tok/s for a 27B
+      bf16 forward on one A100-80GB, collection is **~14–28 h**, with SAE
+      fitting small beside it — roughly **$25–50 and one to two box-days**
+      at $1.59/hr, plus getting Qwen bf16 (~54 GB) onto the volume, which
+      CLAUDE.md's volume budget already anticipates for g4. **No throughput
+      has been measured for Qwen bf16 on our box, and the box does not
+      currently exist**, so treat this as order-of-magnitude only.
+  - **Reported, not acted on.** No file outside `RESULTS.md` and
+    `results/raw/` was touched by this item.
+
 - 2026-08-22 — **Adjudications applied: the consolidation debt is now
   pinned by a structural suite check, and `--smoke` can no longer overwrite
   the verdict of record. SUITE COUNT IS NOW 136 — that is the new checkout
