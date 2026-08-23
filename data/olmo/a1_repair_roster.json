@@ -1,0 +1,2436 @@
+{
+ "item": "A1",
+ "format": "scaffold",
+ "band": {
+  "centre": 0.5,
+  "halfwidth": 0.1
+ },
+ "n_select": 4,
+ "stages": [
+  "base",
+  "sft",
+  "dpo",
+  "instruct"
+ ],
+ "ranked": [
+  {
+   "name": "R109",
+   "tags": [
+    "quartz",
+    "velvet"
+   ],
+   "worst_stage_imbalance": 0.02563642889427753,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.47436357110572247,
+   "clears_band": true,
+   "per_stage_identity": {
+    "base": 0.49293937222829953,
+    "sft": 0.48640039411424735,
+    "dpo": 0.4935896276702133,
+    "instruct": 0.47436357110572247
+   },
+   "worst_probe_label_mass": 0.762997709332516,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R054",
+   "tags": [
+    "copper",
+    "walnut"
+   ],
+   "worst_stage_imbalance": 0.0399825643557985,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.5399825643557985,
+   "clears_band": true,
+   "per_stage_identity": {
+    "base": 0.5399825643557985,
+    "sft": 0.47542118612118234,
+    "dpo": 0.477085982905699,
+    "instruct": 0.4645817443372713
+   },
+   "worst_probe_label_mass": 0.7896021275635222,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R092",
+   "tags": [
+    "maple",
+    "walnut"
+   ],
+   "worst_stage_imbalance": 0.06490724054497876,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.5649072405449788,
+   "clears_band": true,
+   "per_stage_identity": {
+    "base": 0.5570828372548684,
+    "sft": 0.5649072405449788,
+    "dpo": 0.5192085880719514,
+    "instruct": 0.5153973256884173
+   },
+   "worst_probe_label_mass": 0.716908378937526,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R089",
+   "tags": [
+    "maple",
+    "saddle"
+   ],
+   "worst_stage_imbalance": 0.07686096179993762,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.4231390382000624,
+   "clears_band": true,
+   "per_stage_identity": {
+    "base": 0.47685664402037875,
+    "sft": 0.4231390382000624,
+    "dpo": 0.47483384998583755,
+    "instruct": 0.4908832442086647
+   },
+   "worst_probe_label_mass": 0.8167561507857661,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R044",
+   "tags": [
+    "copper",
+    "granite"
+   ],
+   "worst_stage_imbalance": 0.07735459860468974,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.42264540139531026,
+   "clears_band": true,
+   "per_stage_identity": {
+    "base": 0.42311398713632997,
+    "sft": 0.42635204412676675,
+    "dpo": 0.434669855435107,
+    "instruct": 0.42264540139531026
+   },
+   "worst_probe_label_mass": 0.7657701108857267,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R005",
+   "tags": [
+    "amber",
+    "granite"
+   ],
+   "worst_stage_imbalance": 0.08161565696690165,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.5816156569669017,
+   "clears_band": true,
+   "per_stage_identity": {
+    "base": 0.573085022190418,
+    "sft": 0.5565369409028518,
+    "dpo": 0.5677219655738397,
+    "instruct": 0.5816156569669017
+   },
+   "worst_probe_label_mass": 0.8165989715714866,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R071",
+   "tags": [
+    "granite",
+    "ridge"
+   ],
+   "worst_stage_imbalance": 0.08394590966896132,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.4160540903310387,
+   "clears_band": true,
+   "per_stage_identity": {
+    "base": 0.5326171532350605,
+    "sft": 0.45962426196517625,
+    "dpo": 0.44752317188361257,
+    "instruct": 0.4160540903310387
+   },
+   "worst_probe_label_mass": 0.7343126766589825,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R041",
+   "tags": [
+    "cedar",
+    "velvet"
+   ],
+   "worst_stage_imbalance": 0.0857987154049541,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.4142012845950459,
+   "clears_band": true,
+   "per_stage_identity": {
+    "base": 0.5563928466134225,
+    "sft": 0.4658880336693156,
+    "dpo": 0.41877309308152183,
+    "instruct": 0.4142012845950459
+   },
+   "worst_probe_label_mass": 0.7350879060724524,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R113",
+   "tags": [
+    "ridge",
+    "velvet"
+   ],
+   "worst_stage_imbalance": 0.0892518668693339,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.4107481331306661,
+   "clears_band": true,
+   "per_stage_identity": {
+    "base": 0.4419579160885811,
+    "sft": 0.4107481331306661,
+    "dpo": 0.43102357189211415,
+    "instruct": 0.42893590782078544
+   },
+   "worst_probe_label_mass": 0.8388036112267552,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R082",
+   "tags": [
+    "lattice",
+    "slate"
+   ],
+   "worst_stage_imbalance": 0.08974227426282277,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.5897422742628228,
+   "clears_band": true,
+   "per_stage_identity": {
+    "base": 0.5897422742628228,
+    "sft": 0.520674551554678,
+    "dpo": 0.4308933560816658,
+    "instruct": 0.42570894455878316
+   },
+   "worst_probe_label_mass": 0.7622541476796478,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R074",
+   "tags": [
+    "granite",
+    "velvet"
+   ],
+   "worst_stage_imbalance": 0.09024139521649122,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.5902413952164912,
+   "clears_band": true,
+   "per_stage_identity": {
+    "base": 0.5902413952164912,
+    "sft": 0.4677081992965568,
+    "dpo": 0.5175438954538609,
+    "instruct": 0.4807136520876887
+   },
+   "worst_probe_label_mass": 0.7765025263474878,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R053",
+   "tags": [
+    "copper",
+    "velvet"
+   ],
+   "worst_stage_imbalance": 0.09133282670846032,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.5913328267084603,
+   "clears_band": true,
+   "per_stage_identity": {
+    "base": 0.5913328267084603,
+    "sft": 0.45824727499809237,
+    "dpo": 0.5007252595104212,
+    "instruct": 0.46577322551651146
+   },
+   "worst_probe_label_mass": 0.8004984759288294,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R112",
+   "tags": [
+    "ridge",
+    "slate"
+   ],
+   "worst_stage_imbalance": 0.09581124629662474,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.5958112462966247,
+   "clears_band": true,
+   "per_stage_identity": {
+    "base": 0.5958112462966247,
+    "sft": 0.5821747830363162,
+    "dpo": 0.5822113876517465,
+    "instruct": 0.5812968715023586
+   },
+   "worst_probe_label_mass": 0.7610214806361593,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R083",
+   "tags": [
+    "lattice",
+    "velvet"
+   ],
+   "worst_stage_imbalance": 0.09812646867253039,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.5981264686725304,
+   "clears_band": true,
+   "per_stage_identity": {
+    "base": 0.5981264686725304,
+    "sft": 0.4929225948086033,
+    "dpo": 0.4594479653421227,
+    "instruct": 0.4651636665096222
+   },
+   "worst_probe_label_mass": 0.7754178704396866,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R095",
+   "tags": [
+    "plaza",
+    "ridge"
+   ],
+   "worst_stage_imbalance": 0.09822210227337558,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.4017778977266244,
+   "clears_band": true,
+   "per_stage_identity": {
+    "base": 0.4017778977266244,
+    "sft": 0.4729624590724773,
+    "dpo": 0.48029575385085066,
+    "instruct": 0.5133978256627724
+   },
+   "worst_probe_label_mass": 0.827323554722996,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R085",
+   "tags": [
+    "maple",
+    "plaza"
+   ],
+   "worst_stage_imbalance": 0.09853039056360069,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.5985303905636007,
+   "clears_band": true,
+   "per_stage_identity": {
+    "base": 0.5985303905636007,
+    "sft": 0.47721277237899457,
+    "dpo": 0.500149654088856,
+    "instruct": 0.4575891479815152
+   },
+   "worst_probe_label_mass": 0.8250412662897517,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R118",
+   "tags": [
+    "slate",
+    "velvet"
+   ],
+   "worst_stage_imbalance": 0.10074301772997851,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.3992569822700215,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.3992569822700215,
+    "sft": 0.4210377875312924,
+    "dpo": 0.5170528852421861,
+    "instruct": 0.5098799468777104
+   },
+   "worst_probe_label_mass": 0.813196981689658,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R110",
+   "tags": [
+    "quartz",
+    "walnut"
+   ],
+   "worst_stage_imbalance": 0.1046232221026221,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.3953767778973779,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.3953767778973779,
+    "sft": 0.4845479345532173,
+    "dpo": 0.5144656500513085,
+    "instruct": 0.5074841246010657
+   },
+   "worst_probe_label_mass": 0.7069055729462896,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R084",
+   "tags": [
+    "lattice",
+    "walnut"
+   ],
+   "worst_stage_imbalance": 0.1061654298714958,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.3938345701285042,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.4865576106680499,
+    "sft": 0.3938345701285042,
+    "dpo": 0.39534746942824994,
+    "instruct": 0.4117035881813467
+   },
+   "worst_probe_label_mass": 0.6518205711317283,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R047",
+   "tags": [
+    "copper",
+    "plaza"
+   ],
+   "worst_stage_imbalance": 0.10684961085737976,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.6068496108573798,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.6068496108573798,
+    "sft": 0.4022184731516406,
+    "dpo": 0.5266609056867699,
+    "instruct": 0.5061593322316094
+   },
+   "worst_probe_label_mass": 0.8184000678830126,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R003",
+   "tags": [
+    "amber",
+    "copper"
+   ],
+   "worst_stage_imbalance": 0.10822825894837762,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.6082282589483776,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.6082282589483776,
+    "sft": 0.39906274777778294,
+    "dpo": 0.39809894142478364,
+    "instruct": 0.4219124166132758
+   },
+   "worst_probe_label_mass": 0.6871114932277413,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R020",
+   "tags": [
+    "canvas",
+    "lattice"
+   ],
+   "worst_stage_imbalance": 0.11002053543160617,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.6100205354316062,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.4580040629380203,
+    "sft": 0.574209330686208,
+    "dpo": 0.5674671932943598,
+    "instruct": 0.6100205354316062
+   },
+   "worst_probe_label_mass": 0.6050709745159,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "C3",
+   "tags": [
+    "granite",
+    "lattice"
+   ],
+   "worst_stage_imbalance": 0.1108998488489018,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.3891001511510982,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.5912311284377516,
+    "sft": 0.3891001511510982,
+    "dpo": 0.4316275664423138,
+    "instruct": 0.4239077547922994
+   },
+   "worst_probe_label_mass": 0.6864374091755021,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R114",
+   "tags": [
+    "ridge",
+    "walnut"
+   ],
+   "worst_stage_imbalance": 0.11427269886510594,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.6142726988651059,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.6142726988651059,
+    "sft": 0.5655290083384081,
+    "dpo": 0.574193780986402,
+    "instruct": 0.594817742159362
+   },
+   "worst_probe_label_mass": 0.7244122681991936,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R105",
+   "tags": [
+    "prism",
+    "walnut"
+   ],
+   "worst_stage_imbalance": 0.11469118201706963,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.6146911820170696,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.6146911820170696,
+    "sft": 0.5151080956997227,
+    "dpo": 0.5340705716793683,
+    "instruct": 0.529891289705278
+   },
+   "worst_probe_label_mass": 0.6224930379074306,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R051",
+   "tags": [
+    "copper",
+    "saddle"
+   ],
+   "worst_stage_imbalance": 0.11586289269500094,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.6158628926950009,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.6158628926950009,
+    "sft": 0.4509240790727688,
+    "dpo": 0.5785033628316529,
+    "instruct": 0.6058555550582031
+   },
+   "worst_probe_label_mass": 0.8158916320364289,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R026",
+   "tags": [
+    "canvas",
+    "saddle"
+   ],
+   "worst_stage_imbalance": 0.11859676187897938,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.6185967618789794,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.5545364219903579,
+    "sft": 0.4596811522100228,
+    "dpo": 0.5656011952460787,
+    "instruct": 0.6185967618789794
+   },
+   "worst_probe_label_mass": 0.8377330240262266,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R043",
+   "tags": [
+    "copper",
+    "ember"
+   ],
+   "worst_stage_imbalance": 0.12053350701183962,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.6205335070118396,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.6205335070118396,
+    "sft": 0.5314350796215567,
+    "dpo": 0.5216637760654015,
+    "instruct": 0.49547084028054
+   },
+   "worst_probe_label_mass": 0.6342461697009225,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R004",
+   "tags": [
+    "amber",
+    "ember"
+   ],
+   "worst_stage_imbalance": 0.12220790094775458,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.6222079009477546,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.6222079009477546,
+    "sft": 0.43298764186898864,
+    "dpo": 0.4354045048083536,
+    "instruct": 0.4017699626507118
+   },
+   "worst_probe_label_mass": 0.7346008683777698,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R057",
+   "tags": [
+    "ember",
+    "maple"
+   ],
+   "worst_stage_imbalance": 0.12505343568294547,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.6250534356829455,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.47111913543543416,
+    "sft": 0.46633576894185413,
+    "dpo": 0.6096549240475887,
+    "instruct": 0.6250534356829455
+   },
+   "worst_probe_label_mass": 0.7537139473777591,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R075",
+   "tags": [
+    "granite",
+    "walnut"
+   ],
+   "worst_stage_imbalance": 0.12565662926656784,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.6256566292665678,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.5361421605877551,
+    "sft": 0.6256566292665678,
+    "dpo": 0.5648956140481828,
+    "instruct": 0.5637308846139346
+   },
+   "worst_probe_label_mass": 0.6874449687655144,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R080",
+   "tags": [
+    "lattice",
+    "ridge"
+   ],
+   "worst_stage_imbalance": 0.12810339972380225,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.37189660027619775,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.5116060208469877,
+    "sft": 0.4164474175266409,
+    "dpo": 0.38537405984807893,
+    "instruct": 0.37189660027619775
+   },
+   "worst_probe_label_mass": 0.6264809194264436,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R087",
+   "tags": [
+    "maple",
+    "quartz"
+   ],
+   "worst_stage_imbalance": 0.1347771873133306,
+   "worst_stage": "dpo",
+   "identity_at_worst_stage": 0.3652228126866694,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.4408995992362812,
+    "sft": 0.41628597502478737,
+    "dpo": 0.3652228126866694,
+    "instruct": 0.36826061432937607
+   },
+   "worst_probe_label_mass": 0.7757586418682593,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R046",
+   "tags": [
+    "copper",
+    "maple"
+   ],
+   "worst_stage_imbalance": 0.13482234222109463,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.3651776577789054,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.4564220530681601,
+    "sft": 0.3651776577789054,
+    "dpo": 0.4487660465193005,
+    "instruct": 0.4457000901701055
+   },
+   "worst_probe_label_mass": 0.847210209958756,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R070",
+   "tags": [
+    "granite",
+    "quartz"
+   ],
+   "worst_stage_imbalance": 0.13723259888909234,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.6372325988890923,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.5878992984134704,
+    "sft": 0.6206965986503191,
+    "dpo": 0.6219349795496683,
+    "instruct": 0.6372325988890923
+   },
+   "worst_probe_label_mass": 0.6609022127424073,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "C2",
+   "tags": [
+    "cedar",
+    "maple"
+   ],
+   "worst_stage_imbalance": 0.13831995189320578,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.6383199518932058,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.6383199518932058,
+    "sft": 0.5319208933800232,
+    "dpo": 0.6110843067094092,
+    "instruct": 0.605164003714203
+   },
+   "worst_probe_label_mass": 0.7830345340828122,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R107",
+   "tags": [
+    "quartz",
+    "saddle"
+   ],
+   "worst_stage_imbalance": 0.14212436464105221,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.3578756353589478,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.6253329161431922,
+    "sft": 0.3578756353589478,
+    "dpo": 0.4328284102207546,
+    "instruct": 0.4582601121617669
+   },
+   "worst_probe_label_mass": 0.8158304614816689,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R030",
+   "tags": [
+    "cedar",
+    "copper"
+   ],
+   "worst_stage_imbalance": 0.14309791972591573,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.35690208027408427,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.5117030170161208,
+    "sft": 0.35690208027408427,
+    "dpo": 0.3981682262677663,
+    "instruct": 0.3883304697320791
+   },
+   "worst_probe_label_mass": 0.73357792928807,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R060",
+   "tags": [
+    "ember",
+    "quartz"
+   ],
+   "worst_stage_imbalance": 0.14471842914717364,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.35528157085282636,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.4441753110551314,
+    "sft": 0.35528157085282636,
+    "dpo": 0.37821564437129157,
+    "instruct": 0.3821415995766365
+   },
+   "worst_probe_label_mass": 0.6189930667942658,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R049",
+   "tags": [
+    "copper",
+    "quartz"
+   ],
+   "worst_stage_imbalance": 0.1511146514413979,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.6511146514413979,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.6511146514413979,
+    "sft": 0.5538913653573921,
+    "dpo": 0.5348347123513224,
+    "instruct": 0.533042596690861
+   },
+   "worst_probe_label_mass": 0.6970247282825354,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R023",
+   "tags": [
+    "canvas",
+    "prism"
+   ],
+   "worst_stage_imbalance": 0.15669892699523558,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.3433010730047644,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.3433010730047644,
+    "sft": 0.5333418948130189,
+    "dpo": 0.5653247668684405,
+    "instruct": 0.5872017126238162
+   },
+   "worst_probe_label_mass": 0.7396356557465481,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R039",
+   "tags": [
+    "cedar",
+    "saddle"
+   ],
+   "worst_stage_imbalance": 0.1573691788355912,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.3426308211644088,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.6128241752207404,
+    "sft": 0.3426308211644088,
+    "dpo": 0.43141342384844844,
+    "instruct": 0.4522286003207069
+   },
+   "worst_probe_label_mass": 0.795889634050736,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R002",
+   "tags": [
+    "amber",
+    "cedar"
+   ],
+   "worst_stage_imbalance": 0.15931092634168365,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.6593109263416836,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.6593109263416836,
+    "sft": 0.6438137002961075,
+    "dpo": 0.6482374442823022,
+    "instruct": 0.649270427659241
+   },
+   "worst_probe_label_mass": 0.7632930488908042,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R031",
+   "tags": [
+    "cedar",
+    "ember"
+   ],
+   "worst_stage_imbalance": 0.16323534641077225,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.33676465358922775,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.502042750737921,
+    "sft": 0.3705549445779502,
+    "dpo": 0.3548815251931885,
+    "instruct": 0.33676465358922775
+   },
+   "worst_probe_label_mass": 0.6523805868206343,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R028",
+   "tags": [
+    "canvas",
+    "velvet"
+   ],
+   "worst_stage_imbalance": 0.16384167920062798,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.663841679200628,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.5924198219050154,
+    "sft": 0.6577615209302075,
+    "dpo": 0.6630412346196948,
+    "instruct": 0.663841679200628
+   },
+   "worst_probe_label_mass": 0.7067873717576909,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R042",
+   "tags": [
+    "cedar",
+    "walnut"
+   ],
+   "worst_stage_imbalance": 0.1639688989828827,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.6639688989828827,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.6639688989828827,
+    "sft": 0.40406195776162135,
+    "dpo": 0.35339233202030984,
+    "instruct": 0.36850583070484666
+   },
+   "worst_probe_label_mass": 0.7065382477484369,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R081",
+   "tags": [
+    "lattice",
+    "saddle"
+   ],
+   "worst_stage_imbalance": 0.16421483496182077,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.6642148349618208,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.6642148349618208,
+    "sft": 0.45002173929660116,
+    "dpo": 0.5153074164002318,
+    "instruct": 0.5223973373969242
+   },
+   "worst_probe_label_mass": 0.8795476110184947,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R088",
+   "tags": [
+    "maple",
+    "ridge"
+   ],
+   "worst_stage_imbalance": 0.16708253166649256,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.33291746833350744,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.33291746833350744,
+    "sft": 0.4978537004413228,
+    "dpo": 0.39113236364345594,
+    "instruct": 0.36219014255246756
+   },
+   "worst_probe_label_mass": 0.8754602181071615,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R058",
+   "tags": [
+    "ember",
+    "plaza"
+   ],
+   "worst_stage_imbalance": 0.168448896421309,
+   "worst_stage": "dpo",
+   "identity_at_worst_stage": 0.668448896421309,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.5206745250794471,
+    "sft": 0.6097381668951634,
+    "dpo": 0.668448896421309,
+    "instruct": 0.6376037576616738
+   },
+   "worst_probe_label_mass": 0.6790143784664153,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R077",
+   "tags": [
+    "lattice",
+    "plaza"
+   ],
+   "worst_stage_imbalance": 0.16867946116081267,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.33132053883918733,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.6039300735816647,
+    "sft": 0.33132053883918733,
+    "dpo": 0.42589397444432564,
+    "instruct": 0.4027306721006838
+   },
+   "worst_probe_label_mass": 0.7298257575966267,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R111",
+   "tags": [
+    "ridge",
+    "saddle"
+   ],
+   "worst_stage_imbalance": 0.16966940195100533,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.3303305980489947,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.5913325046935884,
+    "sft": 0.3303305980489947,
+    "dpo": 0.44460333724301426,
+    "instruct": 0.4606474053215833
+   },
+   "worst_probe_label_mass": 0.8098613777776384,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R056",
+   "tags": [
+    "ember",
+    "lattice"
+   ],
+   "worst_stage_imbalance": 0.1760882853533381,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.3239117146466619,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.3862255056577166,
+    "sft": 0.3866728194832648,
+    "dpo": 0.3497641924130797,
+    "instruct": 0.3239117146466619
+   },
+   "worst_probe_label_mass": 0.6671841823046456,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R035",
+   "tags": [
+    "cedar",
+    "plaza"
+   ],
+   "worst_stage_imbalance": 0.1803905285458085,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.6803905285458085,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.6803905285458085,
+    "sft": 0.5825989332278253,
+    "dpo": 0.6099399269198463,
+    "instruct": 0.5898694166115328
+   },
+   "worst_probe_label_mass": 0.7454035044956897,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R094",
+   "tags": [
+    "plaza",
+    "quartz"
+   ],
+   "worst_stage_imbalance": 0.18067904841427318,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.6806790484142732,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.43499155204742046,
+    "sft": 0.6502361080046459,
+    "dpo": 0.637015103802916,
+    "instruct": 0.6806790484142732
+   },
+   "worst_probe_label_mass": 0.7112989430854126,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R064",
+   "tags": [
+    "ember",
+    "velvet"
+   ],
+   "worst_stage_imbalance": 0.18190048446154095,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.31809951553845905,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.31809951553845905,
+    "sft": 0.43034635225413786,
+    "dpo": 0.4330032939365815,
+    "instruct": 0.42092027364329593
+   },
+   "worst_probe_label_mass": 0.7833115911624785,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R097",
+   "tags": [
+    "plaza",
+    "slate"
+   ],
+   "worst_stage_imbalance": 0.19319856954113268,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.3068014304588673,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.3068014304588673,
+    "sft": 0.47961714669861133,
+    "dpo": 0.32344121498310585,
+    "instruct": 0.3287799089851408
+   },
+   "worst_probe_label_mass": 0.7683728029298325,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R119",
+   "tags": [
+    "slate",
+    "walnut"
+   ],
+   "worst_stage_imbalance": 0.19456899443622122,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.6945689944362212,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.4795203517343174,
+    "sft": 0.5943512437892831,
+    "dpo": 0.664032500705537,
+    "instruct": 0.6945689944362212
+   },
+   "worst_probe_label_mass": 0.7142755248327618,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R073",
+   "tags": [
+    "granite",
+    "slate"
+   ],
+   "worst_stage_imbalance": 0.1960600559860865,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.3039399440139135,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.5309808959643072,
+    "sft": 0.3773039013240358,
+    "dpo": 0.31571356543801643,
+    "instruct": 0.3039399440139135
+   },
+   "worst_probe_label_mass": 0.6332859682445295,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R027",
+   "tags": [
+    "canvas",
+    "slate"
+   ],
+   "worst_stage_imbalance": 0.19878060045611357,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.6987806004561136,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.6653447884907944,
+    "sft": 0.6987806004561136,
+    "dpo": 0.5812533082627933,
+    "instruct": 0.5719090999121587
+   },
+   "worst_probe_label_mass": 0.7200701779494125,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R029",
+   "tags": [
+    "canvas",
+    "walnut"
+   ],
+   "worst_stage_imbalance": 0.20195666692531367,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.7019566669253137,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.6223929957652581,
+    "sft": 0.6308713547587497,
+    "dpo": 0.6786982571928862,
+    "instruct": 0.7019566669253137
+   },
+   "worst_probe_label_mass": 0.7169181066086565,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R117",
+   "tags": [
+    "saddle",
+    "walnut"
+   ],
+   "worst_stage_imbalance": 0.20425205374805078,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.7042520537480508,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.3995948951382819,
+    "sft": 0.7042520537480508,
+    "dpo": 0.666880451928514,
+    "instruct": 0.6259293333046729
+   },
+   "worst_probe_label_mass": 0.7345161522530919,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "C4",
+   "tags": [
+    "plaza",
+    "saddle"
+   ],
+   "worst_stage_imbalance": 0.20603154436978321,
+   "worst_stage": "dpo",
+   "identity_at_worst_stage": 0.2939684556302168,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.4654008819411475,
+    "sft": 0.31811867166837804,
+    "dpo": 0.2939684556302168,
+    "instruct": 0.3290997526968335
+   },
+   "worst_probe_label_mass": 0.7210930992799052,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R116",
+   "tags": [
+    "saddle",
+    "velvet"
+   ],
+   "worst_stage_imbalance": 0.20610547810887914,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.29389452189112086,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.4405160778736116,
+    "sft": 0.368721808659894,
+    "dpo": 0.30394081426824526,
+    "instruct": 0.29389452189112086
+   },
+   "worst_probe_label_mass": 0.7906832372109814,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R120",
+   "tags": [
+    "velvet",
+    "walnut"
+   ],
+   "worst_stage_imbalance": 0.20641899982643636,
+   "worst_stage": "dpo",
+   "identity_at_worst_stage": 0.29358100017356364,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.4512274617472987,
+    "sft": 0.298325386349817,
+    "dpo": 0.29358100017356364,
+    "instruct": 0.30174361397142624
+   },
+   "worst_probe_label_mass": 0.6103583935855957,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R025",
+   "tags": [
+    "canvas",
+    "ridge"
+   ],
+   "worst_stage_imbalance": 0.2078132492470437,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.7078132492470437,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.5869963641847973,
+    "sft": 0.6929516853713633,
+    "dpo": 0.6912759113113744,
+    "instruct": 0.7078132492470437
+   },
+   "worst_probe_label_mass": 0.7198769073821512,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "N4",
+   "tags": [
+    "ember",
+    "walnut"
+   ],
+   "worst_stage_imbalance": 0.2090644020687294,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.2909355979312706,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.2909355979312706,
+    "sft": 0.397343436349694,
+    "dpo": 0.4599599877692595,
+    "instruct": 0.4712071200260889
+   },
+   "worst_probe_label_mass": 0.6464728517720968,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R052",
+   "tags": [
+    "copper",
+    "slate"
+   ],
+   "worst_stage_imbalance": 0.2091534630526426,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.2908465369473574,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.561936631321693,
+    "sft": 0.3101365806589025,
+    "dpo": 0.3252370980441407,
+    "instruct": 0.2908465369473574
+   },
+   "worst_probe_label_mass": 0.8159900528248842,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R006",
+   "tags": [
+    "amber",
+    "lattice"
+   ],
+   "worst_stage_imbalance": 0.210197412312712,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.289802587687288,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.5622974559359338,
+    "sft": 0.3007878560694638,
+    "dpo": 0.30933176349387403,
+    "instruct": 0.289802587687288
+   },
+   "worst_probe_label_mass": 0.6394931050481716,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R093",
+   "tags": [
+    "plaza",
+    "prism"
+   ],
+   "worst_stage_imbalance": 0.21275008287731612,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.2872499171226839,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.3033645632775136,
+    "sft": 0.2872499171226839,
+    "dpo": 0.29973351643299057,
+    "instruct": 0.3373724405067831
+   },
+   "worst_probe_label_mass": 0.8732183003334235,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R038",
+   "tags": [
+    "cedar",
+    "ridge"
+   ],
+   "worst_stage_imbalance": 0.21386085750995304,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.28613914249004696,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.39400181042970084,
+    "sft": 0.31916885741697154,
+    "dpo": 0.3030423258382732,
+    "instruct": 0.28613914249004696
+   },
+   "worst_probe_label_mass": 0.7944116027188474,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R069",
+   "tags": [
+    "granite",
+    "prism"
+   ],
+   "worst_stage_imbalance": 0.21540095237061896,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.28459904762938104,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.35967768356161756,
+    "sft": 0.28459904762938104,
+    "dpo": 0.30999773079411913,
+    "instruct": 0.3060772643842885
+   },
+   "worst_probe_label_mass": 0.8715831882680235,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R099",
+   "tags": [
+    "plaza",
+    "walnut"
+   ],
+   "worst_stage_imbalance": 0.21703019921499955,
+   "worst_stage": "dpo",
+   "identity_at_worst_stage": 0.28296980078500045,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.34595479455524825,
+    "sft": 0.34101299572556776,
+    "dpo": 0.28296980078500045,
+    "instruct": 0.3220854392686419
+   },
+   "worst_probe_label_mass": 0.7976095564917011,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R115",
+   "tags": [
+    "saddle",
+    "slate"
+   ],
+   "worst_stage_imbalance": 0.21763566181576022,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.7176356618157602,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.37039534452521095,
+    "sft": 0.7176356618157602,
+    "dpo": 0.6410594353776317,
+    "instruct": 0.5917663940395159
+   },
+   "worst_probe_label_mass": 0.7979488863309818,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R079",
+   "tags": [
+    "lattice",
+    "quartz"
+   ],
+   "worst_stage_imbalance": 0.22320896461459894,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.7232089646145989,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.592340231073757,
+    "sft": 0.632793207436851,
+    "dpo": 0.6933111445624252,
+    "instruct": 0.7232089646145989
+   },
+   "worst_probe_label_mass": 0.6961787051590275,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R067",
+   "tags": [
+    "granite",
+    "maple"
+   ],
+   "worst_stage_imbalance": 0.22439222825354743,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.7243922282535474,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.6647856184231149,
+    "sft": 0.6090216213834677,
+    "dpo": 0.7116624335518227,
+    "instruct": 0.7243922282535474
+   },
+   "worst_probe_label_mass": 0.8074861260089737,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R045",
+   "tags": [
+    "copper",
+    "lattice"
+   ],
+   "worst_stage_imbalance": 0.22529057924197032,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.2747094207580297,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.40984523680567797,
+    "sft": 0.2809648201026347,
+    "dpo": 0.29869849891724415,
+    "instruct": 0.2747094207580297
+   },
+   "worst_probe_label_mass": 0.7181782540664692,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R055",
+   "tags": [
+    "ember",
+    "granite"
+   ],
+   "worst_stage_imbalance": 0.2278933318412809,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.2721066681587191,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.2721066681587191,
+    "sft": 0.4603332832981074,
+    "dpo": 0.5485879901039282,
+    "instruct": 0.5745056169112845
+   },
+   "worst_probe_label_mass": 0.6469985868224635,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R072",
+   "tags": [
+    "granite",
+    "saddle"
+   ],
+   "worst_stage_imbalance": 0.23183457231972682,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.7318345723197268,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.7318345723197268,
+    "sft": 0.437027308291335,
+    "dpo": 0.5337813416906738,
+    "instruct": 0.5592755939939427
+   },
+   "worst_probe_label_mass": 0.8065855330226359,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R050",
+   "tags": [
+    "copper",
+    "ridge"
+   ],
+   "worst_stage_imbalance": 0.2332190078271158,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.2667809921728842,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.357837825069002,
+    "sft": 0.32400123635515155,
+    "dpo": 0.2996804344680322,
+    "instruct": 0.2667809921728842
+   },
+   "worst_probe_label_mass": 0.7338587237201702,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R104",
+   "tags": [
+    "prism",
+    "velvet"
+   ],
+   "worst_stage_imbalance": 0.23362483886418772,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.7336248388641877,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.7336248388641877,
+    "sft": 0.5137665079565198,
+    "dpo": 0.5500001797797825,
+    "instruct": 0.5564516545566898
+   },
+   "worst_probe_label_mass": 0.7821294092704072,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "N2",
+   "tags": [
+    "quartz",
+    "ridge"
+   ],
+   "worst_stage_imbalance": 0.23483426172038058,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.2651657382796194,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.4040473688344006,
+    "sft": 0.2651657382796194,
+    "dpo": 0.2827024372393707,
+    "instruct": 0.26596222616651954
+   },
+   "worst_probe_label_mass": 0.8698739471785533,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R015",
+   "tags": [
+    "amber",
+    "walnut"
+   ],
+   "worst_stage_imbalance": 0.23558339955301522,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.2644166004469848,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.48734881343258085,
+    "sft": 0.26530022011651394,
+    "dpo": 0.2650249998588023,
+    "instruct": 0.2644166004469848
+   },
+   "worst_probe_label_mass": 0.6472310897835015,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R061",
+   "tags": [
+    "ember",
+    "ridge"
+   ],
+   "worst_stage_imbalance": 0.2367432964263746,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.2632567035736254,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.2632567035736254,
+    "sft": 0.4754862398786262,
+    "dpo": 0.49749897308786195,
+    "instruct": 0.47678806184215494
+   },
+   "worst_probe_label_mass": 0.7789851853224041,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R062",
+   "tags": [
+    "ember",
+    "saddle"
+   ],
+   "worst_stage_imbalance": 0.23677280952395846,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.26322719047604154,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.5135637918019349,
+    "sft": 0.26322719047604154,
+    "dpo": 0.3575584538455454,
+    "instruct": 0.3836991773865537
+   },
+   "worst_probe_label_mass": 0.6578652303370982,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R007",
+   "tags": [
+    "amber",
+    "maple"
+   ],
+   "worst_stage_imbalance": 0.24158086598649897,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.25841913401350103,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.5417844207952368,
+    "sft": 0.25841913401350103,
+    "dpo": 0.3700744958353973,
+    "instruct": 0.3688781640715749
+   },
+   "worst_probe_label_mass": 0.8304418864652001,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R010",
+   "tags": [
+    "amber",
+    "quartz"
+   ],
+   "worst_stage_imbalance": 0.24450518079407146,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.7445051807940715,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.7445051807940715,
+    "sft": 0.5187631552791366,
+    "dpo": 0.5195115904091037,
+    "instruct": 0.529776488382311
+   },
+   "worst_probe_label_mass": 0.7106210629871585,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R011",
+   "tags": [
+    "amber",
+    "ridge"
+   ],
+   "worst_stage_imbalance": 0.24588783544874304,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.25411216455125696,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.39029946560372597,
+    "sft": 0.25411216455125696,
+    "dpo": 0.2797571143326408,
+    "instruct": 0.25783793551284595
+   },
+   "worst_probe_label_mass": 0.6865837247567079,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R090",
+   "tags": [
+    "maple",
+    "slate"
+   ],
+   "worst_stage_imbalance": 0.2465605777798226,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.2534394222201774,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.4956647876744854,
+    "sft": 0.3925049857003161,
+    "dpo": 0.3009348329729372,
+    "instruct": 0.2534394222201774
+   },
+   "worst_probe_label_mass": 0.8168932993968704,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R108",
+   "tags": [
+    "quartz",
+    "slate"
+   ],
+   "worst_stage_imbalance": 0.2535710135924637,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.24642898640753627,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.44491603638729704,
+    "sft": 0.3239224973079559,
+    "dpo": 0.26050205473122856,
+    "instruct": 0.24642898640753627
+   },
+   "worst_probe_label_mass": 0.7222451904496078,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R102",
+   "tags": [
+    "prism",
+    "saddle"
+   ],
+   "worst_stage_imbalance": 0.26976829445356554,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.7697682944535655,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.7697682944535655,
+    "sft": 0.6297907051683547,
+    "dpo": 0.6652429857573429,
+    "instruct": 0.666561009528502
+   },
+   "worst_probe_label_mass": 0.874492917571192,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R037",
+   "tags": [
+    "cedar",
+    "quartz"
+   ],
+   "worst_stage_imbalance": 0.27194335376422674,
+   "worst_stage": "dpo",
+   "identity_at_worst_stage": 0.22805664623577324,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.5170636913073998,
+    "sft": 0.2504549468545065,
+    "dpo": 0.22805664623577324,
+    "instruct": 0.2442453057307425
+   },
+   "worst_probe_label_mass": 0.6857923549724775,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R033",
+   "tags": [
+    "cedar",
+    "lattice"
+   ],
+   "worst_stage_imbalance": 0.2738347276112463,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.22616527238875372,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.45308573255343315,
+    "sft": 0.22616527238875372,
+    "dpo": 0.2517068656938264,
+    "instruct": 0.23896903712708661
+   },
+   "worst_probe_label_mass": 0.6736494662992449,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R091",
+   "tags": [
+    "maple",
+    "velvet"
+   ],
+   "worst_stage_imbalance": 0.2780990394174905,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.7780990394174905,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.6566722859798735,
+    "sft": 0.7780990394174905,
+    "dpo": 0.7472103983158758,
+    "instruct": 0.7430858054065119
+   },
+   "worst_probe_label_mass": 0.8137328467622111,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R078",
+   "tags": [
+    "lattice",
+    "prism"
+   ],
+   "worst_stage_imbalance": 0.2811658561984371,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.2188341438015629,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.43657894264106806,
+    "sft": 0.2188341438015629,
+    "dpo": 0.3156647152240568,
+    "instruct": 0.31335986808080163
+   },
+   "worst_probe_label_mass": 0.7332554858098492,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R086",
+   "tags": [
+    "maple",
+    "prism"
+   ],
+   "worst_stage_imbalance": 0.28672505205591436,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.21327494794408564,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.23035212012844736,
+    "sft": 0.2981425381100712,
+    "dpo": 0.22899592136566743,
+    "instruct": 0.21327494794408564
+   },
+   "worst_probe_label_mass": 0.842876250845912,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R063",
+   "tags": [
+    "ember",
+    "slate"
+   ],
+   "worst_stage_imbalance": 0.29192404815433304,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.20807595184566693,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.38036109700399817,
+    "sft": 0.24963765658064438,
+    "dpo": 0.21437732299415765,
+    "instruct": 0.20807595184566693
+   },
+   "worst_probe_label_mass": 0.6949439765908618,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R013",
+   "tags": [
+    "amber",
+    "slate"
+   ],
+   "worst_stage_imbalance": 0.2998906627951038,
+   "worst_stage": "dpo",
+   "identity_at_worst_stage": 0.2001093372048962,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.47926053576167693,
+    "sft": 0.2700293074681,
+    "dpo": 0.2001093372048962,
+    "instruct": 0.20358160901293051
+   },
+   "worst_probe_label_mass": 0.7278028540374605,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R012",
+   "tags": [
+    "amber",
+    "saddle"
+   ],
+   "worst_stage_imbalance": 0.30404578229112056,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.19595421770887944,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.5952383002123065,
+    "sft": 0.19595421770887944,
+    "dpo": 0.2525478039269172,
+    "instruct": 0.29215718858558626
+   },
+   "worst_probe_label_mass": 0.7356413258915884,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R048",
+   "tags": [
+    "copper",
+    "prism"
+   ],
+   "worst_stage_imbalance": 0.3070578692231954,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.1929421307768046,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.21359774698964962,
+    "sft": 0.1929421307768046,
+    "dpo": 0.25303688193001533,
+    "instruct": 0.23585735038578778
+   },
+   "worst_probe_label_mass": 0.8850052158520735,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R101",
+   "tags": [
+    "prism",
+    "ridge"
+   ],
+   "worst_stage_imbalance": 0.3078862007455916,
+   "worst_stage": "dpo",
+   "identity_at_worst_stage": 0.8078862007455916,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.7698947972739231,
+    "sft": 0.799694364704467,
+    "dpo": 0.8078862007455916,
+    "instruct": 0.7875779024858196
+   },
+   "worst_probe_label_mass": 0.7820739790897813,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R068",
+   "tags": [
+    "granite",
+    "plaza"
+   ],
+   "worst_stage_imbalance": 0.31489875718736804,
+   "worst_stage": "base",
+   "identity_at_worst_stage": 0.814898757187368,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.814898757187368,
+    "sft": 0.7526871488093378,
+    "dpo": 0.7940251472217497,
+    "instruct": 0.7582404055641918
+   },
+   "worst_probe_label_mass": 0.8101251604693854,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "N1",
+   "tags": [
+    "canvas",
+    "copper"
+   ],
+   "worst_stage_imbalance": 0.3149689778795812,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.8149689778795812,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.6053831580120859,
+    "sft": 0.7294481113826474,
+    "dpo": 0.7867554779518013,
+    "instruct": 0.8149689778795812
+   },
+   "worst_probe_label_mass": 0.8134677821530496,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "N3",
+   "tags": [
+    "amber",
+    "velvet"
+   ],
+   "worst_stage_imbalance": 0.32923898311562366,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.17076101688437634,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.3774330940127522,
+    "sft": 0.24975188154620037,
+    "dpo": 0.18067934467234015,
+    "instruct": 0.17076101688437634
+   },
+   "worst_probe_label_mass": 0.7763466727268951,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R059",
+   "tags": [
+    "ember",
+    "prism"
+   ],
+   "worst_stage_imbalance": 0.33305067584032555,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.16694932415967442,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.25058100278013873,
+    "sft": 0.16694932415967442,
+    "dpo": 0.19995801460623835,
+    "instruct": 0.20417460605909404
+   },
+   "worst_probe_label_mass": 0.7432114657590213,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R021",
+   "tags": [
+    "canvas",
+    "maple"
+   ],
+   "worst_stage_imbalance": 0.3336088663943486,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.8336088663943486,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.6296985102768184,
+    "sft": 0.7183555569942346,
+    "dpo": 0.7948617139102809,
+    "instruct": 0.8336088663943486
+   },
+   "worst_probe_label_mass": 0.8260766612206744,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R036",
+   "tags": [
+    "cedar",
+    "prism"
+   ],
+   "worst_stage_imbalance": 0.3355945048735075,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.1644054951264925,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.29864210767946536,
+    "sft": 0.1644054951264925,
+    "dpo": 0.20835748311535396,
+    "instruct": 0.20698707367460079
+   },
+   "worst_probe_label_mass": 0.8138550104273782,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "C1",
+   "tags": [
+    "prism",
+    "slate"
+   ],
+   "worst_stage_imbalance": 0.34918686458631243,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.8491868645863124,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.8032746312272127,
+    "sft": 0.8491868645863124,
+    "dpo": 0.807501699733467,
+    "instruct": 0.806082761387789
+   },
+   "worst_probe_label_mass": 0.8519593461397532,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R008",
+   "tags": [
+    "amber",
+    "plaza"
+   ],
+   "worst_stage_imbalance": 0.35008588884233005,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.14991411115766992,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.5222998047188486,
+    "sft": 0.14991411115766992,
+    "dpo": 0.20532413842490008,
+    "instruct": 0.1921856330015803
+   },
+   "worst_probe_label_mass": 0.7928705142320943,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R032",
+   "tags": [
+    "cedar",
+    "granite"
+   ],
+   "worst_stage_imbalance": 0.3530521785092896,
+   "worst_stage": "dpo",
+   "identity_at_worst_stage": 0.1469478214907104,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.35567176774015113,
+    "sft": 0.15309503315538064,
+    "dpo": 0.1469478214907104,
+    "instruct": 0.1585071402345475
+   },
+   "worst_probe_label_mass": 0.8586775593241887,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R018",
+   "tags": [
+    "canvas",
+    "ember"
+   ],
+   "worst_stage_imbalance": 0.36231300338780836,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.8623130033878084,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.7126048171893344,
+    "sft": 0.7686991366138489,
+    "dpo": 0.8383222531552126,
+    "instruct": 0.8623130033878084
+   },
+   "worst_probe_label_mass": 0.7033282763342312,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R016",
+   "tags": [
+    "canvas",
+    "cedar"
+   ],
+   "worst_stage_imbalance": 0.3678423655765124,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.8678423655765124,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.5560807918760243,
+    "sft": 0.8382351792140712,
+    "dpo": 0.8483051002584088,
+    "instruct": 0.8678423655765124
+   },
+   "worst_probe_label_mass": 0.8314607862011857,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R019",
+   "tags": [
+    "canvas",
+    "granite"
+   ],
+   "worst_stage_imbalance": 0.3686276212324273,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.8686276212324273,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.5437274139215359,
+    "sft": 0.8287136733228588,
+    "dpo": 0.8490933408696831,
+    "instruct": 0.8686276212324273
+   },
+   "worst_probe_label_mass": 0.7875890678264114,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R098",
+   "tags": [
+    "plaza",
+    "velvet"
+   ],
+   "worst_stage_imbalance": 0.3740771136258433,
+   "worst_stage": "dpo",
+   "identity_at_worst_stage": 0.1259228863741567,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.2774459185182524,
+    "sft": 0.15762856726887498,
+    "dpo": 0.1259228863741567,
+    "instruct": 0.1454545663422711
+   },
+   "worst_probe_label_mass": 0.7222756205488416,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R100",
+   "tags": [
+    "prism",
+    "quartz"
+   ],
+   "worst_stage_imbalance": 0.3753701218854948,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.8753701218854948,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.7696609527126586,
+    "sft": 0.8753701218854948,
+    "dpo": 0.871840061146893,
+    "instruct": 0.8727305266897767
+   },
+   "worst_probe_label_mass": 0.8791092338181976,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R009",
+   "tags": [
+    "amber",
+    "prism"
+   ],
+   "worst_stage_imbalance": 0.3758345178691591,
+   "worst_stage": "sft",
+   "identity_at_worst_stage": 0.12416548213084092,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.38179031052662493,
+    "sft": 0.12416548213084092,
+    "dpo": 0.1461344231606989,
+    "instruct": 0.1411202293270428
+   },
+   "worst_probe_label_mass": 0.8530688397699162,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R022",
+   "tags": [
+    "canvas",
+    "plaza"
+   ],
+   "worst_stage_imbalance": 0.39604691284674587,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.8960469128467459,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.6842641997013795,
+    "sft": 0.8456378541227207,
+    "dpo": 0.891943697538382,
+    "instruct": 0.8960469128467459
+   },
+   "worst_probe_label_mass": 0.8060527749863333,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R040",
+   "tags": [
+    "cedar",
+    "slate"
+   ],
+   "worst_stage_imbalance": 0.4007837256084112,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.09921627439158881,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.43979610488842535,
+    "sft": 0.12617904286494383,
+    "dpo": 0.10501022506052642,
+    "instruct": 0.09921627439158881
+   },
+   "worst_probe_label_mass": 0.8427981568845578,
+   "worst_probe_label_mass_stage": "base"
+  },
+  {
+   "name": "R024",
+   "tags": [
+    "canvas",
+    "quartz"
+   ],
+   "worst_stage_imbalance": 0.4125529384117339,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.9125529384117339,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.6637369222847362,
+    "sft": 0.8626603587020187,
+    "dpo": 0.8957249315607844,
+    "instruct": 0.9125529384117339
+   },
+   "worst_probe_label_mass": 0.7736393847876448,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R076",
+   "tags": [
+    "lattice",
+    "maple"
+   ],
+   "worst_stage_imbalance": 0.41846940291416046,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.9184694029141605,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.7458877289667545,
+    "sft": 0.8576987483129002,
+    "dpo": 0.9000304220554851,
+    "instruct": 0.9184694029141605
+   },
+   "worst_probe_label_mass": 0.7922616275834545,
+   "worst_probe_label_mass_stage": "sft"
+  },
+  {
+   "name": "R001",
+   "tags": [
+    "amber",
+    "canvas"
+   ],
+   "worst_stage_imbalance": 0.4470428364430431,
+   "worst_stage": "instruct",
+   "identity_at_worst_stage": 0.05295716355695691,
+   "clears_band": false,
+   "per_stage_identity": {
+    "base": 0.337627962521426,
+    "sft": 0.08075018710536296,
+    "dpo": 0.06379257076523391,
+    "instruct": 0.05295716355695691
+   },
+   "worst_probe_label_mass": 0.6988639037046257,
+   "worst_probe_label_mass_stage": "base"
+  }
+ ],
+ "n_clearing": 16,
+ "selected": [
+  "R109",
+  "R054",
+  "R089",
+  "R005"
+ ],
+ "selected_tags": [
+  [
+   "quartz",
+   "velvet"
+  ],
+  [
+   "copper",
+   "walnut"
+  ],
+  [
+   "maple",
+   "saddle"
+  ],
+  [
+   "amber",
+   "granite"
+  ]
+ ],
+ "sufficient": true,
+ "replacement_iteration_required": false,
+ "selection_is_a_recommendation": true,
+ "_lock": "The roster of record enters the program through LOCK-g.md, authored by the design instance. This artifact is Code applying PROPOSAL-g \u00a7A1's formula to the committed screens; it is not the lock.",
+ "source_provenance": {
+  "base": {
+   "adapter": "olmo-hf",
+   "path": "/workspace/models/base",
+   "dtype": "bfloat16",
+   "backend": "torch/cuda",
+   "device": "cuda",
+   "gpu": "NVIDIA A100-SXM4-80GB",
+   "cuda": "12.8",
+   "capability": [
+    8,
+    0
+   ],
+   "deterministic": true,
+   "cublas_workspace_config": ":4096:8",
+   "seed": 20260818,
+   "choice_window_declared": 8192,
+   "n_layers": 64,
+   "library_versions": {
+    "torch": "2.8.0+cu128",
+    "transformers": "5.15.0",
+    "accelerate": "1.14.0",
+    "safetensors": "0.8.0",
+    "huggingface_hub": "1.28.0",
+    "numpy": "2.1.2"
+   },
+   "python": "3.12.3"
+  },
+  "sft": {
+   "adapter": "olmo-hf",
+   "path": "/workspace/models/sft",
+   "dtype": "bfloat16",
+   "backend": "torch/cuda",
+   "device": "cuda",
+   "gpu": "NVIDIA A100-SXM4-80GB",
+   "cuda": "12.8",
+   "capability": [
+    8,
+    0
+   ],
+   "deterministic": true,
+   "cublas_workspace_config": ":4096:8",
+   "seed": 20260818,
+   "choice_window_declared": 8192,
+   "n_layers": 64,
+   "library_versions": {
+    "torch": "2.8.0+cu128",
+    "transformers": "5.15.0",
+    "accelerate": "1.14.0",
+    "safetensors": "0.8.0",
+    "huggingface_hub": "1.28.0",
+    "numpy": "2.1.2"
+   },
+   "python": "3.12.3"
+  },
+  "dpo": {
+   "adapter": "olmo-hf",
+   "path": "/workspace/models/dpo",
+   "dtype": "bfloat16",
+   "backend": "torch/cuda",
+   "device": "cuda",
+   "gpu": "NVIDIA A100-SXM4-80GB",
+   "cuda": "12.8",
+   "capability": [
+    8,
+    0
+   ],
+   "deterministic": true,
+   "cublas_workspace_config": ":4096:8",
+   "seed": 20260818,
+   "choice_window_declared": 8192,
+   "n_layers": 64,
+   "library_versions": {
+    "torch": "2.8.0+cu128",
+    "transformers": "5.15.0",
+    "accelerate": "1.14.0",
+    "safetensors": "0.8.0",
+    "huggingface_hub": "1.28.0",
+    "numpy": "2.1.2"
+   },
+   "python": "3.12.3"
+  },
+  "instruct": {
+   "adapter": "olmo-hf",
+   "path": "/workspace/models/instruct",
+   "dtype": "bfloat16",
+   "backend": "torch/cuda",
+   "device": "cuda",
+   "gpu": "NVIDIA A100-SXM4-80GB",
+   "cuda": "12.8",
+   "capability": [
+    8,
+    0
+   ],
+   "deterministic": true,
+   "cublas_workspace_config": ":4096:8",
+   "seed": 20260818,
+   "choice_window_declared": 8192,
+   "n_layers": 64,
+   "library_versions": {
+    "torch": "2.8.0+cu128",
+    "transformers": "5.15.0",
+    "accelerate": "1.14.0",
+    "safetensors": "0.8.0",
+    "huggingface_hub": "1.28.0",
+    "numpy": "2.1.2"
+   },
+   "python": "3.12.3"
+  }
+ }
+}

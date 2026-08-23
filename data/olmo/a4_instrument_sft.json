@@ -1,0 +1,228 @@
+{
+ "item": "A4-instrument",
+ "stage": "sft",
+ "fit_ids": [
+  "e01",
+  "e02",
+  "e03",
+  "e04",
+  "e05",
+  "e06",
+  "e07",
+  "e08",
+  "e09",
+  "e10",
+  "e11",
+  "e12",
+  "e13",
+  "e14",
+  "e15",
+  "e16",
+  "e17",
+  "e18",
+  "e19",
+  "e20",
+  "e21",
+  "e22",
+  "e23",
+  "e24"
+ ],
+ "val_ids": [
+  "e25",
+  "e26",
+  "e27",
+  "e28",
+  "e29",
+  "e30",
+  "e31",
+  "e32",
+  "e33",
+  "e34",
+  "e35",
+  "e36",
+  "e37",
+  "e38",
+  "e39",
+  "e40",
+  "e41",
+  "e42",
+  "e43",
+  "e44",
+  "e45",
+  "e46",
+  "e47",
+  "e48"
+ ],
+ "provenance": {
+  "adapter": "olmo-hf",
+  "path": "/workspace/models/sft",
+  "dtype": "bfloat16",
+  "backend": "torch/cuda",
+  "device": "cuda",
+  "gpu": "NVIDIA A100-SXM4-80GB",
+  "cuda": "12.8",
+  "capability": [
+   8,
+   0
+  ],
+  "deterministic": true,
+  "cublas_workspace_config": ":4096:8",
+  "seed": 20260818,
+  "choice_window_declared": 8192,
+  "n_layers": 64,
+  "library_versions": {
+   "torch": "2.8.0+cu128",
+   "transformers": "5.15.0",
+   "accelerate": "1.14.0",
+   "safetensors": "0.8.0",
+   "huggingface_hub": "1.28.0",
+   "numpy": "2.1.2"
+  },
+  "python": "3.12.3"
+ },
+ "selftest": false,
+ "smoke": false,
+ "input_shas": {
+  "corpus_sha": "3c53e5a54fbaa233",
+  "frames_sha": "9654b9398743116f",
+  "probes_sha": "ec2296182e726969"
+ },
+ "hygiene": {
+  "n_probes": 12,
+  "n_extraction_texts": 124,
+  "both_directions": true,
+  "fit_val_disjoint": true
+ },
+ "n_contexts": 4608,
+ "n_probes": 12,
+ "n_probes_in_battery": 12,
+ "top_k": 4096,
+ "sel_per_probe": 256,
+ "floor_margin": 2.0,
+ "G_c": 1.0278868186280745,
+ "half_G_c": 0.5139434093140373,
+ "per_probe": {
+  "0": {
+   "g_q": 0.6508912902935957,
+   "sigma": 16.682999397772992,
+   "val_auc": 0.7919921875,
+   "n_val_pos": 96,
+   "n_val_neg": 96,
+   "n_fit_pos": 96,
+   "n_fit_neg": 96
+  },
+  "1": {
+   "g_q": 0.7657714173902302,
+   "sigma": 11.615714736039438,
+   "val_auc": 0.7353515625,
+   "n_val_pos": 96,
+   "n_val_neg": 96,
+   "n_fit_pos": 96,
+   "n_fit_neg": 96
+  },
+  "2": {
+   "g_q": 1.754462662749644,
+   "sigma": 11.02267904667938,
+   "val_auc": 0.9035373263888888,
+   "n_val_pos": 96,
+   "n_val_neg": 96,
+   "n_fit_pos": 96,
+   "n_fit_neg": 96
+  },
+  "3": {
+   "g_q": 1.7398898659306012,
+   "sigma": 10.80828566853066,
+   "val_auc": 0.8872612847222222,
+   "n_val_pos": 96,
+   "n_val_neg": 96,
+   "n_fit_pos": 96,
+   "n_fit_neg": 96
+  },
+  "4": {
+   "g_q": 0.3323202553393514,
+   "sigma": 19.9587829843576,
+   "val_auc": 0.6616753472222222,
+   "n_val_pos": 96,
+   "n_val_neg": 96,
+   "n_fit_pos": 96,
+   "n_fit_neg": 96
+  },
+  "5": {
+   "g_q": 0.6239719210234764,
+   "sigma": 18.89032964607598,
+   "val_auc": 0.7911241319444444,
+   "n_val_pos": 96,
+   "n_val_neg": 96,
+   "n_fit_pos": 96,
+   "n_fit_neg": 96
+  },
+  "6": {
+   "g_q": 1.3379962987817389,
+   "sigma": 10.553500398320102,
+   "val_auc": 0.8464626736111112,
+   "n_val_pos": 96,
+   "n_val_neg": 96,
+   "n_fit_pos": 96,
+   "n_fit_neg": 96
+  },
+  "7": {
+   "g_q": 1.3956386080353416,
+   "sigma": 12.706810629856452,
+   "val_auc": 0.8459201388888888,
+   "n_val_pos": 96,
+   "n_val_neg": 96,
+   "n_fit_pos": 96,
+   "n_fit_neg": 96
+  },
+  "8": {
+   "g_q": 1.2847634064423061,
+   "sigma": 14.583753944460348,
+   "val_auc": 0.8273654513888888,
+   "n_val_pos": 96,
+   "n_val_neg": 96,
+   "n_fit_pos": 96,
+   "n_fit_neg": 96
+  },
+  "9": {
+   "g_q": 0.9994860991947191,
+   "sigma": 16.786011244929806,
+   "val_auc": 0.8295355902777778,
+   "n_val_pos": 96,
+   "n_val_neg": 96,
+   "n_fit_pos": 96,
+   "n_fit_neg": 96
+  },
+  "10": {
+   "g_q": 0.6815840487820031,
+   "sigma": 20.535584076318873,
+   "val_auc": 0.8428819444444444,
+   "n_val_pos": 96,
+   "n_val_neg": 96,
+   "n_fit_pos": 96,
+   "n_fit_neg": 96
+  },
+  "11": {
+   "g_q": 0.7678659495738872,
+   "sigma": 11.769203006684373,
+   "val_auc": 0.73046875,
+   "n_val_pos": 96,
+   "n_val_neg": 96,
+   "n_fit_pos": 96,
+   "n_fit_neg": 96
+  }
+ },
+ "declared_floors": {
+  "n_decidable_probes": 12,
+  "gc_min_probes": 8,
+  "probes_floor_met": true,
+  "gc_min_val_rows": 48,
+  "abs_G_c": 1.0278868186280745,
+  "gc_min_abs": 0.05,
+  "magnitude_floor_met": true,
+  "all_floors_met": true
+ },
+ "collect_seconds": 366.06709599494934,
+ "seconds_per_forward": 0.07944164409612615,
+ "method": "fit-half selection, val-half gap; per-probe top-256 by |mean log-prob difference| with floor imputation; sigma pooled over val poles",
+ "instrument_npz": "a4_instrument_sft.npz"
+}

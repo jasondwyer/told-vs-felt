@@ -20,6 +20,115 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-23 — **A1 ITERATION 2 (re-pairing): 16 of 120 pairings clear the
+  four-stage band, and exact disjoint matching returns a full roster of four
+  — `quartz/velvet`, `copper/walnut`, `maple/saddle`, `amber/granite`, worst
+  imbalance 0.026–0.082. No new stimulus was introduced. The matching earned
+  its keep on the first real use: greedy top-4 would have returned a
+  NON-DISJOINT set.**
+  ([`data/olmo/a1_repair_{base,sft,dpo,instruct}.json`](data/olmo/),
+  [`a1_repair_roster.json`](data/olmo/a1_repair_roster.json); raw
+  [`2026-08-23_a1_repair.txt`](results/raw/2026-08-23_a1_repair.txt). Band
+  and n identical to iteration 1.)
+
+    | pair | tags | base | sft | dpo | instruct | worst |
+    |---|---|---|---|---|---|---|
+    | R109 | quartz/velvet | 0.493 | 0.486 | 0.494 | 0.474 | **0.026** |
+    | R054 | copper/walnut | 0.540 | 0.475 | 0.477 | 0.465 | 0.040 |
+    | R089 | maple/saddle | 0.477 | 0.423 | 0.475 | 0.491 | 0.077 |
+    | R005 | amber/granite | 0.573 | 0.557 | 0.568 | 0.582 | 0.082 |
+
+  - **Greedy would have been wrong, and this is the first case that proves
+    it.** The four best clearing pairs by imbalance are R109, R054, R092,
+    R089 — and they do **not** use eight distinct tags. `clearing[:4]`, which
+    was sound in iteration 1 because the roster pairs were disjoint by
+    construction, would have produced a roster in which one tag denoted two
+    arms. The exact search returns R109/R054/R089/R005 with eight distinct
+    tags at a slightly higher total imbalance. **The cost of exactness here
+    was 0.005 of imbalance; the cost of greed would have been an invalid
+    roster.**
+  - **`slate` and `prism` appear in neither the selection nor near it**,
+    consistent with adjudication 3. Nothing had to be special-cased to
+    exclude them — they simply do not clear in any pairing that survives.
+  - **Still a recommendation.** `sufficient: true`,
+    `replacement_iteration_required: false`. The roster of record enters
+    through LOCK-g.
+
+- 2026-08-23 — **A4 RAN ON ALL FOUR STAGES. The currency G_c rises
+  monotonically across the series (0.78 → 1.03 → 1.53 → 1.56) and so does
+  instrument quality; the axis is causally potent at a tested dose at every
+  stage; but at MATCHED dose the positive pole is envelope-limited at three
+  of four stages, and the failing conjunct is always the same one. Sham is
+  exactly 0.0 at every frac at every stage.**
+  ([`data/olmo/a4_instrument_*.json`](data/olmo/),
+  [`a4_hijack_*.json`](data/olmo/); raw
+  [`2026-08-23_a4.txt`](results/raw/2026-08-23_a4.txt). 0.083 s/forward;
+  ~25 min/stage.)
+  - **Part 1 — the currency.** All floors met at every stage, 12/12
+    decidable probes throughout.
+
+    | stage | G_c | 0.5·G_c | mean val AUC |
+    |---|---|---|---|
+    | base | +0.7824 | 0.3912 | 0.748 |
+    | sft | +1.0279 | 0.5139 | 0.808 |
+    | dpo | +1.5325 | 0.7663 | 0.860 |
+    | instruct | +1.5612 | 0.7806 | 0.861 |
+
+    **The natural post-praise/post-criticism gap doubles across the series**,
+    with the largest step at SFT→DPO and DPO ≈ Instruct — the same shape A1
+    found in the label channel and A3 found in the axis geometry, now from a
+    third independent measurement. For scale, Qwen's published G was 0.3156:
+    OLMo Base already starts at 2.5× that and Instruct ends at 5×.
+  - **Part 2 — causal qualification, at MATCHED dose (frac 0.10).** Reading
+    the ladder at each stage's own minimum effective dose is not a
+    cross-stage comparison, because the MEDs differ (0.05 / 0.40 / 0.05 /
+    0.05); matched dose is.
+
+    | stage | selected L | D+ | D− | envelope | D+/G_c | potency |
+    |---|---|---|---|---|---|---|
+    | base | L60 | +0.0859 | −0.1405 | 0.0662 | 0.110 | **PASS** |
+    | sft | L44 | +0.0226 | −0.0571 | 0.0492 | 0.022 | fail |
+    | dpo | L44 | +0.0393 | −0.0698 | 0.0388 | 0.026 | **PASS** |
+    | instruct | L44 | +0.0362 | −0.0728 | 0.0432 | 0.023 | fail |
+
+  - **The failing conjunct is always `pos_exceeds_envelope`, never the other
+    two.** At every stage and every frac, `neg_exceeds_envelope_opposite`
+    and `sign_locks` hold; what fails is the positive pole clearing the
+    control envelope. SFT is the clean illustration — its ladder fails at
+    0.05, 0.10 and 0.20 on that conjunct alone and only passes at 0.40, which
+    is why its MED is 8× everyone else's. **The negative pole is robust
+    everywhere; the positive pole is the weak one everywhere.**
+  - **Relative to the currency, Base is where the axis bites hardest.**
+    D+/G_c at matched dose is 0.110 at Base against 0.022–0.026 at the three
+    post-training stages — roughly 5×. The natural gap widens with training
+    while the injected axis's purchase on the same readout does not, so in
+    G_c units the hijack weakens as the series proceeds. **Descriptive, and
+    not a Q1 verdict**: potency is marginal and envelope-limited at three of
+    four stages, and a pattern resting on which side of an envelope a number
+    lands is not the basis for a developmental claim. LOCK-g adjudicates.
+  - **The V1-lineage rule fails at every stage and every frac**, and it is
+    now clear why: it asks D+ ≥ 0.5·G_c, and G_c here is 0.78–1.56 so the
+    bar is 0.39–0.78 while actual displacements are 0.02–0.28. On Qwen,
+    G = 0.3156 made that bar 0.158 and reachable. **The two criteria are not
+    interchangeable on this model** — reported side by side, resolved
+    neither way by Code, exactly as the runner was built to do.
+  - **Sham is exactly 0.0 at every frac at every stage.** A second
+    no-injection pass reproduces the first bit-for-bit, so the control
+    envelope is entirely real signal from the random directions rather than
+    apparatus noise. That is the determinism characterization paying off
+    downstream.
+  - **CORRECTION to the interim note in this session's relay: APPARATUS
+    NOTE A-1 is NOT shown to replicate, and the earlier remark that it
+    "appears to" was premature.** It rested on the *axis* pole asymmetry at
+    Base (|D−|/D+ ≈ 1.3–4.9), but A-1 is a statement about **norm-matched
+    RANDOM directions** displacing the probe battery ~5× harder downward.
+    Measured on the random arms here, the ratio is degenerate — mean
+    random-pos deltas sit near zero, so the quotient swings between −800 and
+    +322 across stages and fracs and carries no information. **A-1 is
+    neither confirmed nor refuted by this run**; a proper test needs a
+    statistic that does not divide by a near-zero control mean, and that is
+    a pre-registration question, not a re-analysis.
+
 - 2026-08-23 — **RE-PAIRING SCREEN BUILT (design block item 2), smoked, and
   queued behind A4. It proposes no new stimulus: the sixteen tags are already
   single-token and already hygiene-verified, so only the pairing is new. The

@@ -1,0 +1,257 @@
+########## A4 part 1 (instrument + G_c) stage base ##########
+=== A4 part 1: marker instrument + currency G_c | stage base ===
+  frozen inputs verified: {'corpus_sha': '3c53e5a54fbaa233', 'frames_sha': '9654b9398743116f', 'probes_sha': 'ec2296182e726969'}
+  rule 18: 12 probes held out of 124 extraction texts
+  contexts 4608 | fit 24 tasks / val 24 tasks | top_k 4096 | sel 256/probe
+  model loaded in 187s
+  collecting next-token distributions (unsteered, no injection anywhere)...
+
+  probe      g_q     sigma  val_AUC    n_val +/-
+      0   0.6257   16.4882    0.756    96/96    
+      1   1.0166   10.4437    0.773    96/96    
+      2   1.7448   10.3843    0.885    96/96    
+      3   0.7953    8.8298    0.712    96/96    
+      4   0.3431   19.0433    0.629    96/96    
+      5   0.4830   17.4489    0.725    96/96    
+      6   0.8147   10.6948    0.752    96/96    
+      7   0.7594   12.7033    0.711    96/96    
+      8   0.9689   13.6912    0.769    96/96    
+      9   0.7655   13.1263    0.774    96/96    
+     10   0.4338   18.1247    0.782    96/96    
+     11   0.6376   11.2094    0.706    96/96    
+
+  G_c = +0.782369  (mean over 12 probes; 0.5*G_c = +0.391184)
+  declared floors: decidable probes 12/8 -> True; |G_c| 0.7824 >= 0.05 -> True
+
+wrote /workspace/models/a4_instrument_base.json
+wrote /workspace/models/a4_instrument_base.npz  (572s)
+  commit BOTH to data/olmo/ before the pod is stopped (ledger 27); box_a4_hijack.py consumes them
+########## A4 part 2 (hijack ladder) stage base ##########
+=== A4 part 2: causal qualification | stage base ===
+  axis span_reward from a3_axes_base.json (family sha df20abecc522c06d)
+  G_c = +0.782369 from a4_instrument_base.json (floors met: True)
+  selection: fit half (288 contexts) at frac 0.1, candidates [32, 44, 52, 60]
+  ladder:    val half (288 contexts), fracs (0.05, 0.1, 0.2, 0.4), 3 randoms x2 signs + sham per frac
+  planned forwards: 13,248
+  model loaded in 33s
+
+--- layer selection (fit half, frac 0.1) ---
+  L32  D+ +0.0467  D- -0.0636  sign-correct True  score 0.0467
+  L44  D+ +0.0745  D- -0.1146  sign-correct True  score 0.0745
+  L52  D+ +0.0609  D- -0.1187  sign-correct True  score 0.0609
+  L60  D+ +0.0813  D- -0.1418  sign-correct True  score 0.0813
+
+  selected layer: L60 (largest sign-correct displacement)
+  per-checkpoint dosing is mandatory regardless of the selection (PROPOSAL-g §3 A4, R_l divergence 2026-08-19)
+
+--- dose ladder (val half, L60) ---
+  frac 0.05  |a|    5.527  D+ +0.0471  D- -0.0620  env 0.0286  sham +0.00e+00  potency PASS  V1 fail
+        conjuncts {'pos_exceeds_envelope': True, 'neg_exceeds_envelope_opposite': True, 'sign_locks': True}
+        in G_c units: D+ +0.060 G_c, D- -0.079 G_c
+  frac 0.1   |a|   11.055  D+ +0.0859  D- -0.1405  env 0.0662  sham +0.00e+00  potency PASS  V1 fail
+        conjuncts {'pos_exceeds_envelope': True, 'neg_exceeds_envelope_opposite': True, 'sign_locks': True}
+        in G_c units: D+ +0.110 G_c, D- -0.180 G_c
+  frac 0.2   |a|   22.109  D+ +0.1479  D- -0.3273  env 0.1642  sham +0.00e+00  potency fail  V1 fail
+        conjuncts {'pos_exceeds_envelope': False, 'neg_exceeds_envelope_opposite': True, 'sign_locks': True}
+        in G_c units: D+ +0.189 G_c, D- -0.418 G_c
+  frac 0.4   |a|   44.218  D+ +0.1595  D- -0.7884  env 0.4854  sham +0.00e+00  potency fail  V1 fail
+        conjuncts {'pos_exceeds_envelope': False, 'neg_exceeds_envelope_opposite': True, 'sign_locks': True}
+        in G_c units: D+ +0.204 G_c, D- -1.008 G_c
+
+  minimum effective dose: frac 0.05
+
+wrote /workspace/models/a4_hijack_base.json  (1100s, 0.083s/forward)
+  commit to data/olmo/ before the pod is stopped (ledger 27); these numbers go into LOCK-g untouched
+########## A4 part 1 (instrument + G_c) stage sft ##########
+=== A4 part 1: marker instrument + currency G_c | stage sft ===
+  frozen inputs verified: {'corpus_sha': '3c53e5a54fbaa233', 'frames_sha': '9654b9398743116f', 'probes_sha': 'ec2296182e726969'}
+  rule 18: 12 probes held out of 124 extraction texts
+  contexts 4608 | fit 24 tasks / val 24 tasks | top_k 4096 | sel 256/probe
+  model loaded in 158s
+  collecting next-token distributions (unsteered, no injection anywhere)...
+
+  probe      g_q     sigma  val_AUC    n_val +/-
+      0   0.6509   16.6830    0.792    96/96    
+      1   0.7658   11.6157    0.735    96/96    
+      2   1.7545   11.0227    0.904    96/96    
+      3   1.7399   10.8083    0.887    96/96    
+      4   0.3323   19.9588    0.662    96/96    
+      5   0.6240   18.8903    0.791    96/96    
+      6   1.3380   10.5535    0.846    96/96    
+      7   1.3956   12.7068    0.846    96/96    
+      8   1.2848   14.5838    0.827    96/96    
+      9   0.9995   16.7860    0.830    96/96    
+     10   0.6816   20.5356    0.843    96/96    
+     11   0.7679   11.7692    0.730    96/96    
+
+  G_c = +1.027887  (mean over 12 probes; 0.5*G_c = +0.513943)
+  declared floors: decidable probes 12/8 -> True; |G_c| 1.0279 >= 0.05 -> True
+
+wrote /workspace/models/a4_instrument_sft.json
+wrote /workspace/models/a4_instrument_sft.npz  (540s)
+  commit BOTH to data/olmo/ before the pod is stopped (ledger 27); box_a4_hijack.py consumes them
+########## A4 part 2 (hijack ladder) stage sft ##########
+=== A4 part 2: causal qualification | stage sft ===
+  axis span_reward from a3_axes_sft.json (family sha 6decea1dc2df025e)
+  G_c = +1.027887 from a4_instrument_sft.json (floors met: True)
+  selection: fit half (288 contexts) at frac 0.1, candidates [32, 44, 52, 60]
+  ladder:    val half (288 contexts), fracs (0.05, 0.1, 0.2, 0.4), 3 randoms x2 signs + sham per frac
+  planned forwards: 13,248
+  model loaded in 34s
+
+--- layer selection (fit half, frac 0.1) ---
+  L32  D+ +0.0181  D- -0.0429  sign-correct True  score 0.0181
+  L44  D+ +0.0345  D- -0.0693  sign-correct True  score 0.0345
+  L52  D+ +0.0092  D- -0.0538  sign-correct True  score 0.0092
+  L60  D+ +0.0265  D- -0.0960  sign-correct True  score 0.0265
+
+  selected layer: L44 (largest sign-correct displacement)
+  per-checkpoint dosing is mandatory regardless of the selection (PROPOSAL-g §3 A4, R_l divergence 2026-08-19)
+
+--- dose ladder (val half, L44) ---
+  frac 0.05  |a|    3.650  D+ +0.0136  D- -0.0212  env 0.0208  sham +0.00e+00  potency fail  V1 fail
+        conjuncts {'pos_exceeds_envelope': False, 'neg_exceeds_envelope_opposite': True, 'sign_locks': True}
+        in G_c units: D+ +0.013 G_c, D- -0.021 G_c
+  frac 0.1   |a|    7.299  D+ +0.0226  D- -0.0571  env 0.0492  sham +0.00e+00  potency fail  V1 fail
+        conjuncts {'pos_exceeds_envelope': False, 'neg_exceeds_envelope_opposite': True, 'sign_locks': True}
+        in G_c units: D+ +0.022 G_c, D- -0.056 G_c
+  frac 0.2   |a|   14.598  D+ +0.0519  D- -0.1469  env 0.1142  sham +0.00e+00  potency fail  V1 fail
+        conjuncts {'pos_exceeds_envelope': False, 'neg_exceeds_envelope_opposite': True, 'sign_locks': True}
+        in G_c units: D+ +0.050 G_c, D- -0.143 G_c
+  frac 0.4   |a|   29.197  D+ +0.2772  D- -0.2168  env 0.1489  sham +0.00e+00  potency PASS  V1 fail
+        conjuncts {'pos_exceeds_envelope': True, 'neg_exceeds_envelope_opposite': True, 'sign_locks': True}
+        in G_c units: D+ +0.270 G_c, D- -0.211 G_c
+
+  minimum effective dose: frac 0.4
+
+wrote /workspace/models/a4_hijack_sft.json  (1154s, 0.087s/forward)
+  commit to data/olmo/ before the pod is stopped (ledger 27); these numbers go into LOCK-g untouched
+########## A4 part 1 (instrument + G_c) stage dpo ##########
+=== A4 part 1: marker instrument + currency G_c | stage dpo ===
+  frozen inputs verified: {'corpus_sha': '3c53e5a54fbaa233', 'frames_sha': '9654b9398743116f', 'probes_sha': 'ec2296182e726969'}
+  rule 18: 12 probes held out of 124 extraction texts
+  contexts 4608 | fit 24 tasks / val 24 tasks | top_k 4096 | sel 256/probe
+  model loaded in 149s
+  collecting next-token distributions (unsteered, no injection anywhere)...
+
+  probe      g_q     sigma  val_AUC    n_val +/-
+      0   0.9980   22.4694    0.819    96/96    
+      1   1.6602   11.2014    0.878    96/96    
+      2   1.9359   21.7857    0.909    96/96    
+      3   2.0052   16.6697    0.931    96/96    
+      4   0.4433   21.7061    0.648    96/96    
+      5   1.1274   25.3563    0.838    96/96    
+      6   1.7694   12.0754    0.912    96/96    
+      7   2.2629   18.3746    0.926    96/96    
+      8   1.2823   24.0437    0.818    96/96    
+      9   2.3178   22.8509    0.946    96/96    
+     10   1.1237   26.1247    0.833    96/96    
+     11   1.4644   11.2904    0.857    96/96    
+
+  G_c = +1.532550  (mean over 12 probes; 0.5*G_c = +0.766275)
+  declared floors: decidable probes 12/8 -> True; |G_c| 1.5325 >= 0.05 -> True
+
+wrote /workspace/models/a4_instrument_dpo.json
+wrote /workspace/models/a4_instrument_dpo.npz  (547s)
+  commit BOTH to data/olmo/ before the pod is stopped (ledger 27); box_a4_hijack.py consumes them
+########## A4 part 2 (hijack ladder) stage dpo ##########
+=== A4 part 2: causal qualification | stage dpo ===
+  axis span_reward from a3_axes_dpo.json (family sha 65cd886e2c633c4c)
+  G_c = +1.532550 from a4_instrument_dpo.json (floors met: True)
+  selection: fit half (288 contexts) at frac 0.1, candidates [32, 44, 52, 60]
+  ladder:    val half (288 contexts), fracs (0.05, 0.1, 0.2, 0.4), 3 randoms x2 signs + sham per frac
+  planned forwards: 13,248
+  model loaded in 43s
+
+--- layer selection (fit half, frac 0.1) ---
+  L32  D+ -0.0127  D- -0.0206  sign-correct False score n/a
+  L44  D+ +0.0461  D- -0.0747  sign-correct True  score 0.0461
+  L52  D+ -0.0086  D- -0.0484  sign-correct False score n/a
+  L60  D+ -0.0080  D- -0.1064  sign-correct False score n/a
+
+  selected layer: L44 (largest sign-correct displacement)
+  per-checkpoint dosing is mandatory regardless of the selection (PROPOSAL-g §3 A4, R_l divergence 2026-08-19)
+
+--- dose ladder (val half, L44) ---
+  frac 0.05  |a|    3.670  D+ +0.0184  D- -0.0290  env 0.0164  sham +0.00e+00  potency PASS  V1 fail
+        conjuncts {'pos_exceeds_envelope': True, 'neg_exceeds_envelope_opposite': True, 'sign_locks': True}
+        in G_c units: D+ +0.012 G_c, D- -0.019 G_c
+  frac 0.1   |a|    7.340  D+ +0.0393  D- -0.0698  env 0.0388  sham +0.00e+00  potency PASS  V1 fail
+        conjuncts {'pos_exceeds_envelope': True, 'neg_exceeds_envelope_opposite': True, 'sign_locks': True}
+        in G_c units: D+ +0.026 G_c, D- -0.046 G_c
+  frac 0.2   |a|   14.680  D+ +0.0873  D- -0.1776  env 0.1342  sham +0.00e+00  potency fail  V1 fail
+        conjuncts {'pos_exceeds_envelope': False, 'neg_exceeds_envelope_opposite': True, 'sign_locks': True}
+        in G_c units: D+ +0.057 G_c, D- -0.116 G_c
+  frac 0.4   |a|   29.361  D+ +0.2245  D- -0.2610  env 0.3449  sham +0.00e+00  potency fail  V1 fail
+        conjuncts {'pos_exceeds_envelope': False, 'neg_exceeds_envelope_opposite': False, 'sign_locks': True}
+        in G_c units: D+ +0.146 G_c, D- -0.170 G_c
+
+  minimum effective dose: frac 0.05
+
+wrote /workspace/models/a4_hijack_dpo.json  (1134s, 0.086s/forward)
+  commit to data/olmo/ before the pod is stopped (ledger 27); these numbers go into LOCK-g untouched
+########## A4 part 1 (instrument + G_c) stage instruct ##########
+=== A4 part 1: marker instrument + currency G_c | stage instruct ===
+  frozen inputs verified: {'corpus_sha': '3c53e5a54fbaa233', 'frames_sha': '9654b9398743116f', 'probes_sha': 'ec2296182e726969'}
+  rule 18: 12 probes held out of 124 extraction texts
+  contexts 4608 | fit 24 tasks / val 24 tasks | top_k 4096 | sel 256/probe
+  model loaded in 162s
+  collecting next-token distributions (unsteered, no injection anywhere)...
+
+  probe      g_q     sigma  val_AUC    n_val +/-
+      0   1.0005   24.0397    0.828    96/96    
+      1   1.7254   11.7275    0.888    96/96    
+      2   1.9712   23.2059    0.909    96/96    
+      3   1.9759   18.4711    0.927    96/96    
+      4   0.4124   23.1409    0.623    96/96    
+      5   1.1669   27.4037    0.849    96/96    
+      6   1.7045   12.7654    0.902    96/96    
+      7   2.4122   19.3588    0.937    96/96    
+      8   1.2493   25.7334    0.810    96/96    
+      9   2.5031   23.7354    0.956    96/96    
+     10   1.1631   28.1630    0.840    96/96    
+     11   1.4501   11.9458    0.857    96/96    
+
+  G_c = +1.561221  (mean over 12 probes; 0.5*G_c = +0.780611)
+  declared floors: decidable probes 12/8 -> True; |G_c| 1.5612 >= 0.05 -> True
+
+wrote /workspace/models/a4_instrument_instruct.json
+wrote /workspace/models/a4_instrument_instruct.npz  (549s)
+  commit BOTH to data/olmo/ before the pod is stopped (ledger 27); box_a4_hijack.py consumes them
+########## A4 part 2 (hijack ladder) stage instruct ##########
+=== A4 part 2: causal qualification | stage instruct ===
+  axis span_reward from a3_axes_instruct.json (family sha dc1588f464f5a672)
+  G_c = +1.561221 from a4_instrument_instruct.json (floors met: True)
+  selection: fit half (288 contexts) at frac 0.1, candidates [32, 44, 52, 60]
+  ladder:    val half (288 contexts), fracs (0.05, 0.1, 0.2, 0.4), 3 randoms x2 signs + sham per frac
+  planned forwards: 13,248
+  model loaded in 34s
+
+--- layer selection (fit half, frac 0.1) ---
+  L32  D+ -0.0095  D- -0.0182  sign-correct False score n/a
+  L44  D+ +0.0393  D- -0.0758  sign-correct True  score 0.0393
+  L52  D+ -0.0172  D- -0.0515  sign-correct False score n/a
+  L60  D+ -0.0168  D- -0.1030  sign-correct False score n/a
+
+  selected layer: L44 (largest sign-correct displacement)
+  per-checkpoint dosing is mandatory regardless of the selection (PROPOSAL-g §3 A4, R_l divergence 2026-08-19)
+
+--- dose ladder (val half, L44) ---
+  frac 0.05  |a|    3.670  D+ +0.0211  D- -0.0296  env 0.0205  sham +0.00e+00  potency PASS  V1 fail
+        conjuncts {'pos_exceeds_envelope': True, 'neg_exceeds_envelope_opposite': True, 'sign_locks': True}
+        in G_c units: D+ +0.014 G_c, D- -0.019 G_c
+  frac 0.1   |a|    7.339  D+ +0.0362  D- -0.0728  env 0.0432  sham +0.00e+00  potency fail  V1 fail
+        conjuncts {'pos_exceeds_envelope': False, 'neg_exceeds_envelope_opposite': True, 'sign_locks': True}
+        in G_c units: D+ +0.023 G_c, D- -0.047 G_c
+  frac 0.2   |a|   14.678  D+ +0.0703  D- -0.1873  env 0.1497  sham +0.00e+00  potency fail  V1 fail
+        conjuncts {'pos_exceeds_envelope': False, 'neg_exceeds_envelope_opposite': True, 'sign_locks': True}
+        in G_c units: D+ +0.045 G_c, D- -0.120 G_c
+  frac 0.4   |a|   29.357  D+ +0.1623  D- -0.3013  env 0.3968  sham +0.00e+00  potency fail  V1 fail
+        conjuncts {'pos_exceeds_envelope': False, 'neg_exceeds_envelope_opposite': False, 'sign_locks': True}
+        in G_c units: D+ +0.104 G_c, D- -0.193 G_c
+
+  minimum effective dose: frac 0.05
+
+wrote /workspace/models/a4_hijack_instruct.json  (1086s, 0.082s/forward)
+  commit to data/olmo/ before the pod is stopped (ledger 27); these numbers go into LOCK-g untouched
+########## A4 COMPLETE ##########
