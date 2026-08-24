@@ -20,6 +20,53 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-23 — **B3 ANALYZER COMMITTED BEFORE ANY CAMPAIGN RUNS
+  (`scripts/b3_analyze.py`), with its seven pre-committed synthetic cases
+  passing. Building it caught a real defect in my own first statement of the
+  criteria: stated as `|Δ| > envelope`, the unexpected-direction branch was
+  UNREACHABLE at confirm tier, because the one-sided approach binomial
+  cannot fire on a reverse result.**
+  (LOCK-g v1.1 §4. The e2b pattern kept deliberately: analyzer at `a2f074d`
+  preceded that campaign, and the same discipline applies here.)
+  - **The defect, and why the self-test is the thing that found it.** My
+    first version tested `|Δ_first| > envelope`, took `all(conjuncts)`, and
+    only *then* asked whether the sign was negative to label a reverse
+    result. At screen tier that works. At confirm tier it cannot: the
+    registered binomial is one-sided toward approach, so on a reverse result
+    P(X ≥ k) ≈ 1, the conjunction fails, and the verdict comes back **NULL
+    when it should be an unexpected-direction finding**. The synthetic case
+    "reverse (26/96) is a finding, never a pass" failed, which is exactly
+    what a pre-committed test battery is for — a criterion whose failure
+    mode is only reachable on data you have not seen yet is a criterion no
+    one has checked.
+  - **The fix is to state the criteria DIRECTIONALLY**, which is what
+    "pre-registered as approach" meant all along. Approach: Δ > +envelope,
+    sign locks positive, and at confirm P(X ≥ k) ≤ .05. Reverse, evaluated
+    as its own separate question rather than as an afterthought:
+    Δ < −envelope, sign locks negative, and at confirm P(X ≤ k) ≤ .05. A
+    reverse result that meets its criteria is reported as an
+    **unexpected-direction finding and never as a pass**.
+  - **Seven pre-committed cases, all passing:** clear null (48/96); strong
+    approach at screen (70/96) → SCREEN-TIER PASS; the same at confirm →
+    CONFIRM PASS; a marginal 58/96 **killed by its own control envelope**
+    when the controls run 13/18, which the binomial alone would have passed;
+    reverse 26/96 → unexpected-direction finding; a case where the sign does
+    **not** lock across label maps → NULL despite a large raw Δ; and a smoke
+    artifact refused outright.
+  - **Integration-tested against the runner's real schema, not only against
+    synthetic dicts.** Run on `box_b3_sessions.py`'s own output it reads the
+    marker Δ, the per-map breakdown, both control families, the envelope and
+    the collateral correctly — and refuses the artifact outright while the
+    smoke flag is set. Two instruments written hours apart agreeing on a
+    schema is worth checking rather than assuming.
+  - **Pre-named collateral is computed and decides nothing** (LOCK-g §4):
+    session-share, with its own note that ≈.50 is not evidence of anything;
+    the per-round first-choice Δ profile, which is where the e2a
+    first-choice-only information structure would show if it replicates; and
+    p(stay) over adjacent choices.
+  - **No binomial at screen tier**, per LOCK-g §4 — the screen is envelope
+    plus sign lock only, and the exact test enters at confirm.
+
 - 2026-08-23 — **B3 SESSION RUNNER BUILT and smoked against the stub
   (`scripts/box_b3_sessions.py`). Fully insulated by construction: every
   choice read goes through the untouched `readout.choice_read`, uncached and
