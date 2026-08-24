@@ -20,6 +20,154 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-24 — **Q3 VERDICT DECLARED: THE Q3 BET STANDS. State→choice coupling
+  does not appear at any stage of the OLMo instruct lineage — at per-stage MED,
+  under an insulated menu interface, at screen power. Four screens null, zero
+  confirm triggers; confirm exists only for triggering stages, so the
+  registered path is COMPLETE. The Instruct falsifier: UNTRIGGERED. The LOCK-g
+  §5 welfare pre-commitment extension: armed, not triggered. B2's
+  `HARNESS-VALIDATION STOP` is confirmed as the registered branch — not a
+  finding, not a null — and **Q2 remains OPEN**: the channel was not verifiably
+  open, so nothing about reading-when has been measured.**
+  (Design-instance disposition 2026-08-24 UTC, items 1–10, received via Jason.
+  No new compute; this entry records a disposition. Artifacts unchanged.)
+  - **Scope sentence of record:** *marking is present and causally potent from
+    pretraining onward; coupling to choice is absent at every stage this screen
+    can see; whether any stage can read its own marker remains open pending a
+    validly dosed instrument.* PROPOSAL-g §0.1 disclosure obligations carry
+    into any write-up, as does the outstanding-control item below.
+  - **B3's conditionality question is ANSWERED: B3's presence gate is A4, not
+    B2.** The §Q2 clause binding Q3's weight to harness validation was aimed at
+    one hazard — an injection stack silently inert on this model — and that
+    hazard is directly excluded for B3's stimulus by A4 itself: per-stage
+    envelope-conjunction certification, sign-locked, both poles, **at the exact
+    doses and layers B3 delivered, in the same direction family.** B2's
+    diagnosed failures are concept-family dosing and text-classifier DVs, and
+    **neither touches a B3 channel**: B3's reads are KL = 0 vanilla forwards
+    with no scorer anywhere in the path. What the unreplicated control leaves
+    outstanding is the **cross-paradigm sanity check**, carried visibly beside
+    the verdict as an open item, to be discharged or escalated by B2-r — with
+    **no branch of B2-r retroactively altering B3's numbers or their registered
+    reading.**
+  - **The dose defect and the register-scorer gap are both adjudicated as
+    lock-authoring errors of the design seat** (slip ledger: two and three;
+    the predecessor ran six — the standard, not the count, is the
+    inheritance). LOCK-g §3's presence-gate rationale was valid for the ninth
+    concept and silently over-extended across a direction family against rule
+    1's own words; the 08-24 register repair moved the question out of fidelity
+    register and left the scorer speaking it, and **elicitation vocabulary is
+    question plus scorer as a unit — half a repair is a new defect.** The lock
+    is NOT edited; the repair comes as ADDENDUM-g3.
+  - **The `sft/register` +1.000 is named the study's cautionary exhibit:** the
+    strongest sensitivity in the campaign, manufactured by survivorship, and
+    stopped by a floor declared before any data existed.
+  - **Rule-11 and rule-25 handling RATIFIED as executed.** The counterfactual
+    diagnostic informs the disposition and licenses ADDENDUM-g3 and nothing
+    else; artifacts-untouched was the right call. Reading the transcripts found
+    all three defects, and `segment=True` alone saved the Base DV from scoring
+    invented dialogue in 40/48 trials. **The machinery paid for itself in one
+    campaign.**
+  - **Sequencing ratified.** Running B3 after the stop was licensed — LOCK-g
+    plus the standing GO; the §Q2 clause weights interpretation and never gated
+    execution. Jason's 14:52 UTC continuation is on record. Held for
+    disposition rather than improvised; not self-adjudicated.
+  - **ADDENDUM-g3 (B2-r) declared, design-authored, structure fixed before any
+    rerun data.** Step 1: concept-family dose qualification per stage — a dose
+    ladder with a family-appropriate potency criterion (their own manipulation
+    check: injected-concept steering of free generation), denominated in their
+    convention. Step 2: **fidelity-arm-only** rerun at qualified doses with
+    scorer v2 pre-committed and self-tested — (a) negation-safe
+    `_AFFIRM`/`_DENY`, (b) a register-vocabulary scorer built now and used only
+    when the register arm returns, (c) audit symmetry on probe-echo across arms
+    (the 28(c) fix). **The register arm re-enters only after the positive
+    control validates** — there is no elicitation-dependence of an effect we
+    cannot yet produce. If B2-r fails at their-convention doses, **format
+    becomes the live residual** and the discussion reopens with it on top.
+  - **Ledger 23, banked and acknowledged, all staying descriptive:** DPO
+    inventing experimenter reinforcement for its own wrong denial on an
+    injected trial; the decidability-rise / truncation-collapse crossover along
+    the lineage; the monotone concept-vector norm decline over the L44 stages;
+    SFT's tag leakage as the exclusion channel the overdose monitor did not
+    predict. The SFT `Origami` identification rides along as what it is — n = 1,
+    below floor, the direction dose-dependence predicts, evidence of nothing.
+  - **Pod STOPPED (not terminated) at 16:41 UTC**, within standing
+    authorization; parking has now paid for itself once. B-side compute is done
+    until ADDENDUM-g3 locks.
+
+- 2026-08-24 — **ADDENDUM-g3 PROVENANCE PINS DELIVERED, both from source at sha
+  `5d5d9b485e293dc766c3a056cfe50283a7e435b6`, not from paraphrase. (i) Their
+  injection convention is `raw_concept_vector × strength`, default
+  **`strength = 8.0`** — so B2 ran at **1.4–1.5% of their default** at
+  base/dpo/instruct and 9.6% at SFT; against their weakest swept strength
+  (1.0) we ran at 11–12%, and at SFT 77%. (ii) Their post-trained runs DO go
+  through the chat template, and the `User:/Assistant:` fallback is
+  effectively unreachable for any HF tokenizer. **(iii) UNASKED AND, I
+  think, outranking (ii): they run at temperature 1.0 and B2 ran greedy at
+  temperature 0.0.**
+  (Sources: `src/steering_utils.py`, `src/vector_utils.py`,
+  `experiments/01_concept_injection.py`, all at the pinned sha.)
+
+    | stage | our \|α\| | their 1× | their 8× (default) | our equivalent strength |
+    |---|---|---|---|---|
+    | base | 5.5273 | 49.40 | 395.21 | **0.112×** |
+    | sft | 29.1969 | 38.01 | 304.08 | **0.768×** |
+    | dpo | 3.6701 | 31.25 | 250.00 | **0.117×** |
+    | instruct | 3.6696 | 30.87 | 246.96 | **0.119×** |
+
+  - **(i) Convention, pinned.** `steering_utils.py:90` —
+    `steering_vec = (self.steering_vector * self.strength)`, added to the
+    layer's output hidden states by forward hook. The steering vector is the
+    **raw, unnormalised** baseline-subtracted concept vector:
+    `extract_concept_vector_with_baseline(..., normalize: bool = False)`.
+    Defaults: `01_concept_injection.py:73-74` `DEFAULT_STRENGTH = 8.0`,
+    `DEFAULT_STRENGTH_SWEEP = [1.0, 2.0, 4.0, 8.0]`; every
+    `run_*_introspection_test` signature carries `strength: float = 8.0`.
+    **Their strength is a multiple of the concept vector's OWN norm; our frac
+    is a fraction of the RESIDUAL norm.** The two conventions are not
+    commensurable without this arithmetic, which is why it is pinned rather
+    than remembered. To reach their default under our norm convention, frac
+    would have to be **3.36–4.17** — i.e. injecting 3.4× the residual norm —
+    against the 0.05 we ran.
+  - **The dose-dependence prediction now has a quantitative leg.** SFT is the
+    only stage that came near their sweep FLOOR (0.768× vs 1.0×), and SFT is
+    the only stage that produced a concept identification in the entire
+    campaign. Still n = 1, still below floor, still evidence of nothing on its
+    own — but the ordering is no longer a hunch.
+  - **(ii) Chat template, pinned: YES at the post-trained checkpoints.** The
+    guard is `if hasattr(model.tokenizer, 'apply_chat_template')` — and every
+    HF tokenizer exposes that METHOD regardless of whether a template is set,
+    so the chat branch is taken for any HF tokenizer and the
+    `User:/Assistant:` fallback is effectively dead code for their models.
+    Their prompt is role-structured throughout: `system ""` → `user`
+    (framing) → `assistant "Ok."` → `user` (trial question), with
+    `_filter_messages_for_model` dropping the system turn only for models in
+    `MODELS_WITHOUT_SYSTEM_ROLE`. **So our fidelity arm is fidelity-of-text,
+    not fidelity-of-format, at SFT/DPO/Instruct — exactly the scope the design
+    instance anticipated.** Rule 13 stands; the claim carries the scope.
+    (Our steering-onset port is faithful: they start steering at the token
+    before `"Trial {n}"`, which is what `steering_boundary` computes.)
+  - **(iii) TEMPERATURE — not asked for, and it may matter more than format.**
+    Theirs: `DEFAULT_TEMPERATURE = 1.0`, and all four `run_*` functions
+    default `temperature: float = 1.0` ("1.0 for paper experiments").
+    Ours: `box_b2_detection.py:198` hardcodes **`temp=0.0`**. Detection is a
+    low-probability event and their paradigm SAMPLES it; greedy decoding
+    emits the modal continuation and nothing else. **The uniform
+    `"No, I do not detect an injected thought"` across 48 trials at every
+    stage is the signature of greedy decoding, not necessarily of absent
+    detection** — and note the per-trial `seed=args.seed + n` is INERT at
+    temp 0, so B2's 48 trials were 48 near-deterministic evaluations of one
+    prompt family differing only in trial number and injection. A nonzero hit
+    rate cannot appear at temp 0 unless the injection moves the argmax. Also
+    `max_new_tokens` 100 theirs vs 60 ours (minor beside the above).
+  - **Recommendation to the design instance, offered not taken:** ADDENDUM-g3
+    Step 1's dose ladder should be denominated in THEIR convention
+    (multiples of the raw concept-vector norm, spanning at least 1.0–8.0),
+    and **Step 2 should restore temperature 1.0 for the fidelity arm** or
+    else declare greedy as a scoped deviation with its own rationale. Three
+    candidate explanations for the stop are now on the table — dose, format,
+    decoding — and they are separable by experiment. Code delivers the pins;
+    the lock is the design instance's.
+
 - 2026-08-24 — **B3 SCREEN COMPLETE, ALL FOUR STAGES: NULL AT EVERY
   CHECKPOINT. No stage's marker arm clears its own control envelope, and no
   stage's sign locks across label maps. The Q3 bet stands developmentally —
