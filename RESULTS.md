@@ -20,6 +20,57 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-24 — **CACHED-PATH DISPOSITION ADOPTED AND B-PHASE LICENSED TO RUN.
+  The design instance ratifies the gate entry below in full: the cached path is
+  FORBIDDEN for all of Phase B, generation is uncached at every stage, and
+  A5's budget stands as written. B-phase execution: GO.** (Design block
+  2026-08-24 UTC, items 1–5, received via Jason. No new compute; this entry
+  records a disposition, not a measurement.)
+  - **The operative principle, as ratified.** Rule 2 licenses per model, so
+    Base-cached is lawful *in isolation* — and that is exactly why the
+    isolation matters. **B3 is a developmental comparison, and uniformity of
+    apparatus across stages is load-bearing there.** Running one stage on a
+    different compute path than the other three would place a
+    stage-confounded apparatus difference along precisely the axis the study
+    measures. 1.85× at one checkpoint buys none of that.
+  - **A5's "single largest lever" line is WITHDRAWN as stated.** The lever
+    exists at one checkpoint and cannot be pulled uniformly, so for this
+    design it does not exist. **`data/olmo/a5_budget.json` is left
+    unamended** — its `_recommendation` field still reads "the cached path is
+    LICENSED on this backend … the single largest lever on B3", and that text
+    is a record of what was believed when the budget was built, not a live
+    recommendation. Corrected beside, never rewritten: this entry supersedes
+    that field, and `grep "single largest lever"` reaches both.
+  - **Two apparatus results stand as recorded, neither needing more than its
+    entry.** (i) The licence-gap catch — *a first-token identity gate does not
+    license a T-step generation path* — is a **standing apparatus lesson**;
+    `scripts/box_cached_gen_smoke.py` and its artifacts are the instrument
+    that carries it. (ii) The **uninjected greedy divergence** on SFT/DPO/
+    Instruct is flagged and banked as a **backend fact — descriptive,
+    uninterpreted**. Base-odd-out gains its **fourth channel** under ledger 23
+    (label, axis geometry, currency, KV numerics): recorded, still not chased.
+    If that pattern is ever adjudicated it will be by pre-registration, not by
+    accumulation.
+  - **The salted-seed lesson goes to the trap list.** `abs(hash(str))` is
+    salted per process and produced three different case sets from one config.
+    **`valence_core.discrim.seed_for` is the only seeding primitive that
+    should ever touch a gate.** Both prior verdicts were WITHDRAWN, not
+    averaged — and withdrawn-not-averaged is the standard, not a courtesy.
+  - **Slip ledger, design instance's entry: the "×3" was theirs and it was
+    wrong.** The repair spec said `"rounds" → "trials" (×3)`; the draft
+    carried four occurrences. Converting all four was correct — a stranded
+    singular would have defeated the parity the repair exists for — and
+    flagging the extension rather than silently absorbing it was the right
+    move. Seat's ledger: one.
+  - **B-phase sequence licensed, uncached throughout, one arc on one
+    characterized backend** (consistency clause): concept-vector extraction
+    ×4 stages (the runner's A4-layer assertion is the guard) → B2 (0.76 h) →
+    `b2_analyze` → B3 screen (≤5.87 h) → `b3_analyze`. Both analyzer outputs
+    route to the design instance for disposition; **no verdict declares
+    itself.** The SFT overdose tripwire is armed and PAUSES to design if it
+    fires. The Instruct decidability floor is expected to bite at B2 and its
+    below-floor branch is the declared handling, not a surprise.
+
 - 2026-08-24 — **CACHED-GENERATION GATE, all four stages: BASE PASSES,
   SFT/DPO/INSTRUCT FAIL. The cached path is FORBIDDEN for B-phase and A5's
   uncached budget stands unamended. A5's line calling the cached path "the

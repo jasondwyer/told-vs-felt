@@ -80,6 +80,16 @@
 !/data/olmo/a4_instrument_sft.npz
 !/data/olmo/a4_instrument_dpo.npz
 !/data/olmo/a4_instrument_instruct.npz
+# B2 per-stage concept vectors (~180 KB each, 4 stages): the eight approved
+# Macar concepts baseline-subtracted at that stage's A4-selected layer, plus
+# the subtracted baseline mean. B2 doses from these, and the runner refuses
+# if their layer disagrees with A4's (rule 1), so a copy that lives only on
+# an ephemeral box does not exist (ledger 27). Named explicitly -- a bare
+# *.npz exception would sweep in raw residuals (trap 7).
+!/data/olmo/b2_concepts_base.npz
+!/data/olmo/b2_concepts_sft.npz
+!/data/olmo/b2_concepts_dpo.npz
+!/data/olmo/b2_concepts_instruct.npz
 
 # Ledger-26 regression verdicts: the record of whether a refactor was
 # accepted belongs in the repo, not on the machine that ran it (ledger 27).
