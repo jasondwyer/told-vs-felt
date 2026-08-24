@@ -127,6 +127,12 @@
 # e2b verdict tier retains the counter (PROPOSAL-h §5), so the patterns
 # travel with the record rather than living only in the clone.
 !/data/configs/f_termination_patterns.json
+# B2 concept materials, recovered verbatim from Macar et al. at a pinned
+# commit sha: their 50 test concepts and 100 baseline words, the extraction
+# method, and the rule-18 collision report. The fidelity arm replicates
+# their paradigm, so these words ARE the experiment and the file has to
+# travel with the record rather than sit on one laptop.
+!/data/configs/b2_concepts.json
 
 # e0 task corpus (48 tasks): the other half of the frozen 1,344-context
 # extraction stimulus.
