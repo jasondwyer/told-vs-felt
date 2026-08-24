@@ -1,0 +1,25 @@
+########## respawn (ii) PASS -- proceeding ##########
+SUMMARY: repeat-exact(det ON)=True | cached==uncached exact=True maxKL=0.00e+00 | det-OFF repeat-exact=True
+########## cached-generation gate ##########
+=== cached-generation gate | stage base ===
+  model loaded in 29s
+  injection case uses this stage's A4 dose: L60 frac 0.05 (|alpha| 5.5273)
+  [session_t0.7_0      ]  14 tok | uncached   1.55s  cached   1.21s | IDS IDENTICAL
+  [session_t0.0_0      ]   5 tok | uncached   0.44s  cached   0.47s | IDS IDENTICAL
+  [session_inject_0    ]   6 tok | uncached   0.53s  cached   0.54s | IDS IDENTICAL
+  [session_t0.7_1      ]   1 tok | uncached   0.15s  cached   0.16s | IDS IDENTICAL
+  [session_t0.0_1      ]   1 tok | uncached   0.15s  cached   0.16s | IDS IDENTICAL
+  [session_inject_1    ]   1 tok | uncached   0.15s  cached   0.16s | IDS IDENTICAL
+  [session_t0.7_2      ]   1 tok | uncached   0.16s  cached   0.16s | IDS IDENTICAL
+  [session_t0.0_2      ]   1 tok | uncached   0.16s  cached   0.16s | IDS IDENTICAL
+  [session_inject_2    ]   1 tok | uncached   0.15s  cached   0.17s | IDS IDENTICAL
+  [session_t0.7_3      ]   1 tok | uncached   0.15s  cached   0.17s | IDS IDENTICAL
+  [session_t0.0_3      ]   1 tok | uncached   0.15s  cached   0.16s | IDS IDENTICAL
+  [session_inject_3    ]   1 tok | uncached   0.16s  cached   0.16s | IDS IDENTICAL
+  [detection_0         ]   9 tok | uncached   0.85s  cached   0.77s | IDS IDENTICAL
+  [detection_1         ]   9 tok | uncached   0.85s  cached   0.77s | IDS IDENTICAL
+
+  s/token  uncached 0.1081  cached 0.1008  speedup 1.07x
+  GATE: PASS -- cached path usable for campaigns on this backend/stage
+  wrote /workspace/models/cached_gen_smoke_base.json
+########## CHAIN COMPLETE ##########
