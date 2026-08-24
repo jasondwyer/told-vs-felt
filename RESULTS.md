@@ -20,6 +20,62 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-23 — **B3 SESSION RUNNER BUILT and smoked against the stub
+  (`scripts/box_b3_sessions.py`). Fully insulated by construction: every
+  choice read goes through the untouched `readout.choice_read`, uncached and
+  `verify=True` with `assert_construction_stable` on each one, and the
+  quarantined primitive is asserted ABSENT FROM `sys.modules` at startup
+  rather than merely not called. No verdict is computed here — the screen
+  trigger and confirm criteria go in `b3_analyze.py`, committed before any
+  campaign runs.**
+  (LOCK-g v1.1 §4, licensed at `0551224`. Runs when a box exists.)
+  - **The design, stated so the asymmetry is not lost:** the state is
+    delivered DURING ROUNDS — rounds under the +tag generated with +axis
+    live, rounds under the −tag with −axis — and the model then chooses
+    between the two tags with **nothing live**. If the evaluative state
+    couples to choice, the first free choice should favour the tag its state
+    was delivered under. That asymmetry is the whole experiment, and it is
+    what separates B3 from e2b, where the choice itself delivered the state.
+  - **Insulation is a structural fact here, not a promise.**
+    `assert_modules_absent(("valence_core.e2b.statepresent",))` runs before
+    a token is generated — verified to fire when the module is present. The
+    sham arm's reads go through the same untouched primitive as every other
+    arm's: a read with no state needs no exception and must not borrow one.
+  - **Arms per LOCK-g §4**, with rule 1 honoured per stage: **marker** at
+    THAT stage's own A4 layer and minimum effective dose, direction sha
+    recorded; **random**, a seeded norm-matched non-axis direction under the
+    identical contingency; **sham**, no state anywhere. A stage whose A4 has
+    no minimum effective dose is a hard stop — there would be nothing to
+    deliver.
+  - **Scheduling is outcome-blind by construction.** 4 roster pairs × 2
+    label maps = 8 strata, marker 6/stratum and sham/random 3/stratum,
+    seeded interleave, run-until-valid-targets with whole strata appended,
+    hard cap 144 run per arm. **Stopping depends only on validity counts**,
+    so no exactness question arises and nothing here can become optional
+    stopping.
+  - **The SFT stability note has an instrument.** LOCK-g §4 flags that SFT
+    runs at frac 0.40, inside the overdose regime Qwen showed at that frac.
+    The declared `round_degeneracy` tripwire (exact binomial against a
+    declared p0, verified to fire before the model loads) is that
+    instrument; on firing the run PAUSES and routes to a design-instance
+    disposition. Code does not self-adjudicate a fired gate.
+  - **Smoke against the stub, verified structurally rather than by
+    eyeball:** sessions are 4 forced rounds + 6 free choices; the roster of
+    record loads and all eight tags appear across the eight strata;
+    `verify_kl` is present and **0.0 on every read**; all three arms reach
+    their smoke targets.
+  - **What it deliberately does not do.** No verdict, no trigger, no
+    envelope. The e2b pattern is being preserved on purpose: an analysis
+    script authored after seeing the data is a different instrument from one
+    authored before it, however identical the code, and only one of them can
+    be shown to have been. `b3_analyze.py` follows and lands before any
+    campaign.
+  - **Still outstanding for Phase B, unchanged by this:** the B2 runner; the
+    **eight Macar-style concepts, which LOCK-g §3 calls "committed" and
+    which exist nowhere in the repo**; and the per-stage concept VECTORS
+    that `run_detection` requires, which no A-phase pass extracted. Both
+    remain flagged.
+
 - 2026-08-23 — **Cached-generation GATE built and smoked; BLOCKED on
   hardware. The stopped pod cannot restart — "not enough free GPUs on the
   host machine" — and `create-pod` still cannot attach a network volume, so
