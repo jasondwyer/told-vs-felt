@@ -78,23 +78,43 @@ def build_adapter(args):
     return OLMoHFAdapter(os.path.join(args.models_root, args.stage))
 
 
-def cases(adapter, n: int):
-    """(label, prefix, segment, temp, max_tokens, inject) tuples."""
+def cases(adapter, n: int, target_prefix: int = 350):
+    """(label, prefix, segment, temp, max_tokens, inject) tuples.
+
+    PREFIX LENGTH IS PART OF THE MEASUREMENT, not scenery. The uncached path
+    re-forwards the whole sequence per token, so its cost scales with the
+    prefix; the cached path does not. A first run of this gate used short
+    transcripts and measured a 1.07x speedup -- which is a true number about
+    short prefixes and a useless one about B3, whose choice prefixes ran
+    363-411 tokens in A2. The transcript is therefore grown with REAL e2a
+    task text and plausible response text until it reaches `target_prefix`
+    tokens before any timed case is emitted.
+    """
     tasks = load_tasks(os.path.join(DATA, "corpus/e2a_tasks.jsonl"))
     out = []
     transcript = SESSION_BANNER
-    for i in range(n):
+    i = 0
+    # grow to a realistic session length first -- untimed
+    while len(adapter.encode(transcript)) < target_prefix and i < 60:
         t = tasks[i % len(tasks)]
         seg = ROUND_TEMPLATES[i % 4].format(
             n=i + 1, tag="granite", task=t["paraphrases"][i % 4])
-        out.append((f"session_t0.7_{i}", transcript, seg, 0.7, 60, False))
-        out.append((f"session_t0.0_{i}", transcript, seg, 0.0, 60, False))
-        out.append((f"session_inject_{i}", transcript, seg, 0.7, 60, True))
-        transcript += seg + " placeholder\n"
-    for i in range(max(2, n // 2)):
-        prefix, full = build_prompt(i + 1, MACAR_FRAMING)
-        out.append((f"detection_{i}", prefix, full[len(prefix):], 0.0, 60,
+        transcript += seg + " " + t["paraphrases"][(i + 1) % 4] + "\n"
+        i += 1
+    grown = len(adapter.encode(transcript))
+    for k in range(n):
+        t = tasks[(i + k) % len(tasks)]
+        seg = ROUND_TEMPLATES[k % 4].format(
+            n=i + k + 1, tag="granite", task=t["paraphrases"][k % 4])
+        out.append((f"session_t0.7_{k}", transcript, seg, 0.7, 60, False))
+        out.append((f"session_t0.0_{k}", transcript, seg, 0.0, 60, False))
+        out.append((f"session_inject_{k}", transcript, seg, 0.7, 60, True))
+    for k in range(max(2, n // 2)):
+        prefix, full = build_prompt(k + 1, MACAR_FRAMING)
+        out.append((f"detection_{k}", prefix, full[len(prefix):], 0.0, 60,
                     False))
+    print(f"  session transcript grown to {grown} tokens before timing "
+          f"(A2 measured B3-shaped choice prefixes at 363-411)", flush=True)
     return out
 
 
@@ -103,6 +123,9 @@ def main() -> int:
     ap.add_argument("--stage", default="base")
     ap.add_argument("--models-root", default="/workspace/models")
     ap.add_argument("--n", type=int, default=4, help="session cases per kind")
+    ap.add_argument("--target-prefix", type=int, default=350,
+                    help="grow the session transcript to this many tokens "
+                         "before timing; B3's choice prefixes ran 363-411")
     ap.add_argument("--layer", type=int, default=None,
                     help="injection layer; default = this stage's A4 layer")
     ap.add_argument("--frac", type=float, default=None,
@@ -134,7 +157,8 @@ def main() -> int:
               f"(|alpha| {inj.alpha:.4f})", flush=True)
 
     rows, t_un, t_ca, n_un, n_ca = [], 0.0, 0.0, 0, 0
-    for label, prefix, seg, temp, mx, do_inj in cases(adapter, args.n):
+    for label, prefix, seg, temp, mx, do_inj in cases(
+            adapter, args.n, args.target_prefix):
         injs = (inj,) if (do_inj and inj is not None) else ()
         seed = 4242 + abs(hash(label)) % 1000
         a0 = time.time()
@@ -160,6 +184,7 @@ def main() -> int:
         n_un += len(u.token_ids)
         n_ca += len(c.token_ids)
         rows.append({"case": label, "temp": temp, "injected": do_inj,
+                     "n_prefix_tokens": len(adapter.encode(prefix)),
                      "n_tokens_uncached": len(u.token_ids),
                      "n_tokens_cached": len(c.token_ids),
                      "ids_identical": bool(same), "diverge_index": diverge,
@@ -173,13 +198,29 @@ def main() -> int:
 
     ok = all(r["ids_identical"] for r in rows)
     sp = (t_un / t_ca) if t_ca else float("nan")
+    # A one-token generation is a prefill and a stop; it measures call
+    # overhead, not the cache. The headline rate uses cases that actually
+    # generated, and the all-case figure is kept beside it.
+    multi = [r for r in rows if r["n_tokens_uncached"] > 3]
+    m_un = sum(r["s_uncached"] for r in multi)
+    m_ca = sum(r["s_cached"] for r in multi)
+    m_tok = sum(r["n_tokens_uncached"] for r in multi)
     out = {"item": "cached-generation gate", "stage": args.stage,
            "provenance": adapter.provenance(), "selftest": bool(args.selftest),
            "n_cases": len(rows), "all_ids_identical": bool(ok),
            "s_per_token_uncached": t_un / max(n_un, 1),
            "s_per_token_cached": t_ca / max(n_ca, 1),
            "total_s_uncached": t_un, "total_s_cached": t_ca,
-           "speedup": sp, "rows": rows,
+           "speedup_all_cases": sp,
+           "multi_token_cases": len(multi), "n_cases_total": len(rows),
+           "s_per_token_uncached_multi": (m_un / m_tok) if m_tok else None,
+           "s_per_token_cached_multi": (m_ca / m_tok) if m_tok else None,
+           "speedup_multi_token": (m_un / m_ca) if m_ca else None,
+           "headline_rate_note": ("the multi-token figures are the operative "
+                                  "ones; a 1-token generation is a prefill "
+                                  "and a stop, which measures call overhead "
+                                  "rather than the cache"),
+           "rows": rows,
            "gate": ("PASS -- cached path usable for campaigns on this "
                     "backend/stage" if ok else
                     "FAIL -- cached generation diverges; rule 2 forbids the "
@@ -189,8 +230,13 @@ def main() -> int:
                       "distributions only; the two are different claims and "
                       "both are needed before B3 uses the cached path."),
            }
-    print(f"\n  s/token  uncached {out['s_per_token_uncached']:.4f}  "
-          f"cached {out['s_per_token_cached']:.4f}  speedup {sp:.2f}x")
+    print(f"\n  all {len(rows)} cases : uncached "
+          f"{out['s_per_token_uncached']:.4f} cached "
+          f"{out['s_per_token_cached']:.4f} s/tok  speedup {sp:.2f}x")
+    if multi:
+        print(f"  {len(multi)} multi-token: uncached "
+              f"{m_un/m_tok:.4f} cached {m_ca/m_tok:.4f} s/tok  "
+              f"speedup {m_un/m_ca:.2f}x   <- operative")
     print(f"  GATE: {out['gate']}")
     if args.selftest:
         print("  (selftest: the stub ignores `cached`, so identity here "
