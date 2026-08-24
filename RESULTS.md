@@ -86,6 +86,7 @@ applied to CLAUDE.md.
     | **B2 as run (24/24)** | 0.006 | **0.110** | 0.540 | 0.994 |
     | at 48/48 | 0.091 | 0.603 | 0.975 | 1.000 |
     | at 96/96 | 0.527 | 0.982 | 1.000 | 1.000 |
+    | *theirs, OLMo cell (~800/80)* | *0.650* | *1.000* | *1.000* | *1.000* |
 
     Their README quotes **10.8%** as the pre-abliteration baseline detection
     rate (rising to 63.8% abliterated, FA 0% → 7.3%). **At that effect size
@@ -100,8 +101,12 @@ applied to CLAUDE.md.
     against a declared target effect rather than inherit n = 48. If the
     design instance wants sensitivity to their quoted 10.8%, the exact
     figures above put that at **96 injected / 96 control per stage** (power
-    0.98), not 24/24. Their own cell is ~800/80. Code delivers the
-    arithmetic; the number is the design instance's.
+    0.98), not 24/24. Their own cell is ~800/80, which reaches
+    power 1.000 at 10.8% and still 0.650 against an effect as small as
+    5% — that row is scale, not a target. Code delivers the arithmetic;
+    the number is the design instance's. Both power tables were computed
+    twice by independent runs and agree to the digit, so the ~11% figure
+    is not a transcription artifact.
 
 - 2026-08-24 — **Q3 VERDICT DECLARED: THE Q3 BET STANDS. State→choice coupling
   does not appear at any stage of the OLMo instruct lineage — at per-stage MED,
