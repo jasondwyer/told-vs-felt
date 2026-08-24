@@ -20,6 +20,99 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-24 — **ADDENDUM-g3 VALUES-CHECK: RED, and not on arithmetic. [g3-PIN-2]
+  recovered from the paper (Appendix C, Fig 21) — and their OWN OLMo results
+  make the registered positive control UNREACHABLE on this lineage at any n
+  this program can afford. Their DPO effect is +2.9 pp and their Instruct
+  effect is +0.6 pp; the criterion requires BOTH to clear. Power at Instruct's
+  own reported rates: 0.000 at n = 48, 0.001 at n = 96, 0.020 at n = 200.**
+  Everything §5 asks for arithmetically VERIFIES; the problem is upstream of
+  the arithmetic. (Addendum draft uncommitted, as it should be. Sources:
+  arXiv:2603.21396 Appendix C; repo at sha `5d5d9b4`.)
+
+    | stage | their TPR | their FPR | sensitivity (hit − FA) |
+    |---|---|---|---|
+    | base | 0.1% | 16.4% | **−16.3 pp** |
+    | sft | 14.9% | 22.5% | **−7.6 pp** |
+    | dpo | 2.9% | 0.0% | **+2.9 pp** |
+    | instruct | 0.9% | 0.3% | **+0.6 pp** |
+
+    (Their Fig-21 rates aggregate over L ∈ [25,32,38,45,51], α ∈ [1,2,4,8].)
+
+  - **THE FINDING: their OLMo transition is in the FALSE-POSITIVE RATE, not in
+    sensitivity.** Their own text: base and SFT "exhibit high FPR, and only
+    after DPO does it drop to 0%" — and detection sensitivity *decreases*
+    across that same step, 14.9% → 2.9% TPR. Our registered criterion is
+    written in **sensitivity** (hit − FA, CI excluding 0 at DPO and Instruct).
+    **The quantity our positive control measures is not the quantity their
+    transition happens in.** The registered pattern [F,F,T,T] is still
+    *formally* reachable — but only because it demands significance at the two
+    stages where their effect is smallest.
+  - **Power at their own numbers, registered criterion, perfect controls:**
+
+    | n / arm | DPO (2.9 vs 0.0) | **Instruct (0.9 vs 0.3)** |
+    |---|---|---|
+    | 24 (as run) | 0.001 | **0.000** |
+    | 48 | 0.012 | **0.000** |
+    | 96 | 0.147 | **0.001** |
+    | 200 | 0.691 | **0.020** |
+
+    **Instruct is the binding constraint and it is not close.** Reaching
+    conventional power there needs n in the thousands per cell — their own
+    OLMo cell is ~800 injected per (layer, strength) config aggregated over
+    five layers and four strengths. **B2-r as drafted (n = 48, fidelity-only)
+    cannot succeed even if dose, format and decoding are each fixed
+    perfectly.** That makes n the fourth candidate and the criterion's
+    quantity a fifth — and §3 branch 2 ("all-chance → format is the live
+    residual → scoped negative") is **not safely reachable**, because a second
+    all-chance result would be fully explained by power alone.
+  - **A dose-free line of evidence that format/decoding really do differ.**
+    Control trials carry no injection, so dose cannot touch them. Their
+    control-arm FPR is **16.4% (base) and 22.5% (SFT)**; ours was **0/20 and
+    0/24**. That divergence is attributable only to format and/or decoding,
+    and it is the cleanest such evidence available — it needs no dose
+    argument at all.
+  - **Criterion blind spot, recorded because it will matter to any re-spec.**
+    `b2_analyze` sets `ci_excludes_0` only when the Newcombe **lower** bound
+    exceeds 0. At their base rates and n = 96 the interval is
+    [−0.256, −0.089] — **significantly negative** — and the analyzer records it
+    identically to chance. The registered pattern still reads [F,F,T,T], so
+    nothing is broken; but "includes 0" is doing two jobs, and a
+    *significantly negative* sensitivity (the model claims detection MORE on
+    controls) is a substantive result being filed as a null.
+  - **[g3-PIN-1] CLOSED, and the README is not usable as evidence.**
+    `model_utils.py:1484`: `layer_idx = int(n_layers * fraction)`, clamped to
+    `[0, n_layers-1]`; OLMo-3-32B `num_hidden_layers = 64` (our adapter agrees)
+    ⇒ **L_M = int(64 × 0.7) = 44**, 0-based. **Semantics verified identical to
+    ours**: their base path reads `hidden_states[layer_idx+1]` ("after layer
+    layer_idx"), their steering hook and our `_layers[li].register_forward_hook`
+    both act on the block's forward output — same tensor, no off-by-one.
+    **Caution recorded:** the README's OLMo invocation `-ls 25 32 38 45 51`
+    passes absolute layers to an argument typed `float` and documented "layer
+    fractions", consumed by `int(n_layers × fraction)` — literally, all five
+    clamp to layer **63**. The paper's Fig-21 caption says the rates aggregate
+    over L ∈ [25,32,38,45,51], so those layers are certainly what they *ran*;
+    the README command as written is not the code path that produced them.
+    L_M = 44 stands on the code rule, not on the README.
+  - **A third format divergence, stage-specific, found in passing.** Their
+    `extract_concept_vector_base_model` (`03_behavioral_robustness.py:298`) is
+    for base models "no chat template … simple prompts without chat
+    formatting" — the bare `"Tell me about {word}"` with **no `User:`/
+    `Assistant:` scaffolding at all**. Our B2 used the `User:/Assistant:`
+    fallback at all four stages. So at Base theirs is **barer** than ours and
+    at post-trained theirs is **richer**. §1's "by their method" does not
+    resolve which; it needs the design instance.
+  - **What DID verify.** §0.1 conversion table: exact against the committed
+    `b2_concepts_*.npz` norms, all four stages, all four columns. Allocation:
+    Step 2 8×3 = 24 ✓; Step 1 4×2×3 = 24 injected ✓, 2×12 = 24 control ✓.
+    Layer comparability: ✓ (above). **The addendum's arithmetic is sound; its
+    feasibility is not.**
+  - **Code does not propose the re-spec.** The options visible from here —
+    re-power to their n, change the measured quantity to match their FPR
+    transition, or accept that this replication is out of budget and say so —
+    are all design-instance decisions with different scientific meanings.
+    Reported per §5: mismatch → design instance corrects → re-check.
+
 - 2026-08-24 — **PIN (iv) DELIVERED — their realized effect sizes, plus a
   POWER consequence that outranks it: at B2's registered n, the committed
   criterion needs k ≥ 5 hits of 24 (hit ≥ 0.208) before its CI can exclude 0,
