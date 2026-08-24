@@ -20,6 +20,89 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-24 — **PIN (iv) DELIVERED — their realized effect sizes, plus a
+  POWER consequence that outranks it: at B2's registered n, the committed
+  criterion needs k ≥ 5 hits of 24 (hit ≥ 0.208) before its CI can exclude 0,
+  even with a perfect 0/24 false-alarm rate. Against their own quoted 10.8%
+  baseline detection rate, B2 as registered had ~11% POWER.** Also: **their
+  dose–response is an INVERTED U** — mean detection falls 0.446 → 0.183 from
+  strength 4 to 8 — so their operative strength is **4.0**, not the 8.0
+  constant, and Step 1's ladder should not treat 8× as the target. **And a
+  scope correction to my own pin (iii), below.**
+  (Sources at sha `5d5d9b4`: `experiments/03_behavioral_robustness.py`,
+  `plotting/data/fig{1,2,3}_metrics_cache.parquet`, `README.md`.)
+
+  - **Their OLMo stage comparison is `experiments/03_behavioral_robustness.py`
+    — the direct analogue of B2 — and its declared defaults are:**
+    `DEFAULT_TEMPERATURE = 1.0`, `DEFAULT_MAX_TOKENS = 100`,
+    `DEFAULT_STRENGTH_SWEEP = [1.0, 2.0, 4.0, 8.0]`,
+    `DEFAULT_MAX_TRIAL_NUMBER = 10`, `DEFAULT_SAMPLES_PER_TRIAL = 10`
+    ("so 10×10 = 100 per concept"), `DEFAULT_CONTROL_SAMPLES_PER_TRIAL = 1`.
+    README's OLMo invocation passes **no** `--temperature`, so 1.0 governs;
+    its layer sweep is **absolute layers 25 32 38 45 51**. With eight
+    concepts that is **~800 injected / ~80 control per (layer, strength)
+    cell** against our 24/24 — roughly **33× more injected trials**.
+  - **SCOPE CORRECTION TO PIN (iii), mine.** I reported "their paradigm
+    samples at temperature 1.0" as a property of their codebase. That is
+    right for the OLMo experiment we replicate and **wrong as a blanket
+    claim**: their released figure caches (fig1/fig2/fig3) all record
+    **`temperature = 0.0`** — those are **Gemma3-27B-IT**, from
+    `01_concept_injection.py`, a different experiment. The correct statement
+    is narrower and still supports the adopted item 3: **the OLMo stage
+    comparison declares temp 1.0**, and structurally must, because
+    `--samples-per-trial 10` draws ten completions per trial number, which is
+    incoherent at temp 0 — ten identical strings. The design instance's
+    restoration of 1.0 for Step 2 rests on the right ground; the ground is
+    the OLMo experiment, not the codebase at large.
+  - **Their per-strength detection rates** (fig2, **Gemma3-27B-IT** — the
+    primary model; no OLMo results are cached in the repo, so these size the
+    *paradigm*, not the lineage; n_inj = 1000 per cell, temp 0.0, 100 tokens):
+
+    | strength | cells | mean hit | median hit | max hit | mean FA |
+    |---|---|---|---|---|---|
+    | 1.0 | 310 | 0.1945 | 0.1415 | 0.849 | 0.0093 |
+    | 2.0 | 313 | 0.4049 | 0.3080 | 1.000 | 0.0091 |
+    | 4.0 | 483 | **0.4455** | **0.4240** | 1.000 | 0.0059 |
+    | 8.0 | 310 | 0.1833 | **0.0360** | 0.956 | 0.0091 |
+
+    Peak cell: **strength 4, layer 37 — hit 1.000, FA 0.000,
+    identification-given-claim 0.764**, which is the configuration README
+    uses throughout (`--steering-layer 37 --steering-strength 4.0`).
+  - **The inverted U is the operationally important part, and it arrives in
+    time for Step 1.** Mean detection **falls** 0.446 → 0.183 from strength 4
+    to 8; the median collapses 0.424 → 0.036. At strength 8's best-detection
+    layer, identification-given-claim is **0.003** — the model reports
+    *something* and cannot say what, which is the signature of disruption
+    rather than content delivery. **8× is past the optimum, not the target.**
+    This independently vindicates the design instance's instinct to arm
+    coherence monitors at the top of the ladder — the data say the top of the
+    ladder is where the effect dies.
+  - **THE POWER CONSEQUENCE.** Under the committed analyzer, with a perfect
+    0/24 false-alarm rate, the Newcombe lower bound first clears zero at
+    **k = 5 of 24 (hit 0.208)**. Exact power of the registered criterion:
+
+    | design | hit .05 | hit .108 | hit .20 | hit .43 |
+    |---|---|---|---|---|
+    | **B2 as run (24/24)** | 0.006 | **0.110** | 0.540 | 0.994 |
+    | at 48/48 | 0.091 | 0.603 | 0.975 | 1.000 |
+    | at 96/96 | 0.527 | 0.982 | 1.000 | 1.000 |
+
+    Their README quotes **10.8%** as the pre-abliteration baseline detection
+    rate (rising to 63.8% abliterated, FA 0% → 7.3%). **At that effect size
+    B2 as registered would miss a real, perfectly replicating transition
+    about nine times in ten.** So the stop is over-determined: even with a
+    correctly dosed, correctly formatted, correctly decoded instrument, n =
+    24/24 could only ever have seen effects ≥ ~0.21. Dose, format and
+    decoding are live candidates; **n is a fourth, and it is the one that
+    binds regardless of the other three.**
+  - **Recommendation, offered not taken (rule 11 — this licenses a
+    pre-registration, nothing else):** ADDENDUM-g3 Step 2 should re-power
+    against a declared target effect rather than inherit n = 48. If the
+    design instance wants sensitivity to their quoted 10.8%, the exact
+    figures above put that at **96 injected / 96 control per stage** (power
+    0.98), not 24/24. Their own cell is ~800/80. Code delivers the
+    arithmetic; the number is the design instance's.
+
 - 2026-08-24 — **Q3 VERDICT DECLARED: THE Q3 BET STANDS. State→choice coupling
   does not appear at any stage of the OLMo instruct lineage — at per-stage MED,
   under an insulated menu interface, at screen power. Four screens null, zero
