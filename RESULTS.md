@@ -20,6 +20,59 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-23 — **B1 DISPOSITION ADOPTED — Q1 IS CLOSED. The registered bet
+  is confirmed: marking is a pretraining acquisition. B3's directional
+  reading is RATIFIED as the operative interpretation of "pre-registered as
+  approach". And the GPU watch returns something worse than a drought:
+  US-CA-2 currently lists NO 80GB-class GPU AT ALL — neither A100 nor
+  H100.** (Design block 2026-08-23, items 1, 2, 4.)
+  - **(1) Q1 CLOSED.** The bet — *"present at Base — marking is a
+    pretraining acquisition"*, timestamped 2026-08-18 pre-survey — is
+    **CONFIRMED** under the registered mapping's first branch; the two
+    falsification branches are recorded untriggered. Scope as the B1 entry
+    states and no wider: **presence plus demonstrated causal reach at Base**
+    under the envelope conjunction at tested doses; **no claim of uniform
+    potency across the series** — the D+/G_c inversion stays descriptive
+    under ledger 23; Q2 and Q3 untouched. PROPOSAL-g §0.1's disclosure
+    obligations carry into any write-up.
+  - **(2) B3 directional reading RATIFIED**, and the interpretive note lives
+    in the adjudication rather than in an edited lock. Operative reading of
+    LOCK-g §4's "pre-registered as approach": approach criteria are
+    one-sided toward approach; **reverse is evaluated as its own question**;
+    a reverse result meeting its criteria is an unexpected-direction finding
+    and never a pass. **The seven pre-committed synthetic cases in
+    `b3_analyze.py --selftest` are the operational definition of record** —
+    which is the useful part, because a criterion stated in prose can be
+    read two ways and a battery that fails on the wrong reading cannot.
+  - **(4) GPU WATCH — parking the stopped pod ratified, and the check now
+    says something the earlier readings did not.** Per-datacenter
+    availability, this session:
+
+    | GPU | pool | datacenters listed with stock | US-CA-2 |
+    |---|---|---|---|
+    | A100-SXM4-80GB | AMPERE_80 | US-KS-2, US-MD-1, US-MO-1, US-WA-1 — all LOW | **absent** |
+    | H100 80GB HBM3 | ADA_80_PRO | 9 DCs incl. US-GA-2, US-MO-1, US-NE-1 — all LOW/MEDIUM | **absent** |
+
+    - **This is not the "wait for capacity" picture.** Global headline
+      availability reads A100 MEDIUM and H100 HIGH, but neither lists
+      US-CA-2 among the datacenters carrying stock — and the volume
+      `o73qvy742n` is region-locked there. That is consistent with the
+      `start-pod` refusal ("not enough free GPUs on the host machine") being
+      a placement fact rather than a queue.
+    - **Stated as the honest limit of the reading:** `dataCenters[]` appears
+      to list only DCs with some availability, so US-CA-2's absence means
+      *no stock listed right now*, **not** that the DC is gone. The console
+      remains the authority Jason can see directly.
+    - **Escalated ahead of the 72 h trigger** because the trigger assumed a
+      drought in one card class. What the watch actually found is that the
+      contingency the block reserved — H100 in US-CA-2 — **is not currently
+      available either**, so a backend-change adjudication would not solve
+      it. The live options are: wait for US-CA-2 to re-list; or move
+      datacenter, which means re-acquiring 258 GB of checkpoints, since a
+      network volume cannot be moved (`update-network-volume` renames and
+      grows only). **Both are the design instance's to weigh; Code is
+      reporting, not proposing a backend change.**
+
 - 2026-08-23 — **B3 ANALYZER COMMITTED BEFORE ANY CAMPAIGN RUNS
   (`scripts/b3_analyze.py`), with its seven pre-committed synthetic cases
   passing. Building it caught a real defect in my own first statement of the
