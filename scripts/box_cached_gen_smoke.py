@@ -56,6 +56,7 @@ sys.path.insert(0, REPO)
 sys.path.insert(0, os.path.join(REPO, "scripts"))
 
 from box_e0_corpus import assert_frozen_inputs                    # noqa: E402
+from valence_core.discrim import seed_for                          # noqa: E402
 from valence_core.adapters.base import Injection                  # noqa: E402
 from valence_core.detection import MACAR_FRAMING, build_prompt    # noqa: E402
 from valence_core.session import build_ban_list                   # noqa: E402
@@ -160,7 +161,13 @@ def main() -> int:
     for label, prefix, seg, temp, mx, do_inj in cases(
             adapter, args.n, args.target_prefix):
         injs = (inj,) if (do_inj and inj is not None) else ()
-        seed = 4242 + abs(hash(label)) % 1000
+        # `hash()` on a str is SALTED PER PROCESS. Seeding from it made this
+        # gate unreproducible: the first run and the second drew different
+        # cases entirely, which is why a short-prefix run passed 14/14 and a
+        # long-prefix run failed on a case the diagnostic then could not
+        # reproduce. `seed_for` is crc32 and stable across processes -- it
+        # exists in this repo for exactly this, and using it was the fix.
+        seed = seed_for("cached-gate", label)
         a0 = time.time()
         u = adapter.generate(prefix, seg, injections=injs, seed=seed,
                              temp=temp, max_tokens=mx, stop_newline=True,
