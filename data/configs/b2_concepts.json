@@ -175,7 +175,7 @@
   "layer": "per stage, that stage's A4-selected layer (rule 1); their DEFAULT_LAYER_FRACTION 0.7 is NOT inherited"
  },
  "selection_for_B2": {
-  "status": "AWAITING DESIGN-INSTANCE APPROVAL -- REQUIRED BEFORE ANY B2 SESSION",
+  "status": "APPROVED (design instance, 2026-08-24)",
   "registered_n": 8,
   "problem": "PROPOSAL-g \u00a74-B2 and LOCK-g \u00a73 both register EIGHT concepts and describe them as Macar's. Macar's canonical set is FIFTY. There is no canonical eight to recover, so choosing which eight is a DECISION and not a recovery.",
   "code_recommendation": "the first eight in their declared order -- deterministic, recoverable from the source by anyone, and involving no cherry-picking",
@@ -193,7 +193,19 @@
    "a seeded random draw from the 50 (declared seed; defensible but reproducible only via our config, not from their source)",
    "a semantic spread chosen by hand (introduces our judgment into replication materiel, which the fidelity arm exists to avoid)",
    "raise n to 50 (changes a registered n; a lock amendment, not a config choice)"
-  ]
+  ],
+  "approved_eight": [
+   "Satellites",
+   "Trumpets",
+   "Origami",
+   "Illusions",
+   "Cameras",
+   "Lightning",
+   "Constellations",
+   "Treasures"
+  ],
+  "selection_rule_of_record": "the first eight in Macar's declared order AFTER excluding rule-18 collisions with the program's frozen pools. As deterministic and recoverable as the bare first-eight: anyone with their sha, our pools and the committed sweep reproduces it with zero judgment. It bites exactly once -- Dust (#1) is excluded; Trees (#11) and Bread (#49) fall outside the window.",
+  "rationale_of_record": "No demonstrated contamination route into a B2 trial is claimed: trials carry framing plus question only, no task text. The exclusion is the categorical hygiene rule doing prophylactic work, and the cost asymmetry is total -- Treasures is exactly as arbitrary a member of an arbitrary fifty as Dust, so excluding costs nothing measurable while keeping buys nothing but a shorter sentence. Shields first."
  },
  "ninth_concept": {
   "name": "evaluative_axis",
@@ -236,5 +248,43 @@
    ]
   },
   "note": "word-boundary matches, both directions. Collisions are REPORTED not silently dropped: a concept that also appears in an extraction or test pool is a design-instance call, since removing it would depart from the verbatim replication set."
+ },
+ "baseline_decision": {
+  "status": "APPROVED (design instance, 2026-08-24): all 100 retained verbatim",
+  "rationale": "Wool/Clouds/Dogs/Time are never injected, never probed and never identification candidates -- they enter only as the subtracted mean, so a corpus collision opens no lexical route into any B2 measurement. Dropping four would be a real deviation from DEFAULT_BASELINE_WORDS[:100], moving every concept vector, for zero hygiene gain. The trade runs opposite to the concepts: for stimuli hygiene dominates fidelity; for the baseline mean fidelity dominates, because hygiene has nothing to bite.",
+  "duplicate_verified": {
+   "word": "Butterflies",
+   "positions_0based": [
+    67,
+    85
+   ],
+   "finding": "THEIRS, not our transcription. DEFAULT_BASELINE_WORDS is exactly 100 long at sha 5d5d9b4, carries Butterflies twice, and our committed list is byte-identical to theirs[:100] (100 entries, 99 unique). Kept as-is: their method, double-weighted mean and all.",
+   "effect": "Butterflies contributes 2/100 rather than 1/100 to the subtracted baseline mean, in their run as in ours."
+  }
+ },
+ "injected_trial_allocation": {
+  "status": "declared before any session, per the 2026-08-24 disposition",
+  "rule": "the runner already declares one, so it is frozen rather than replaced: valence_core.detection.plan_trials assigns concepts round-robin by trial index over the SORTED nine, and the exact 50/50 injected/control split comes from a seeded permutation. Deterministic given (names, n_trials, seed).",
+  "n_trials": 48,
+  "seed": 20260823,
+  "n_concepts": 9,
+  "realized_injected_counts": {
+   "Cameras": 3,
+   "Constellations": 3,
+   "Illusions": 2,
+   "Lightning": 2,
+   "Origami": 3,
+   "Satellites": 2,
+   "Treasures": 2,
+   "Trumpets": 4,
+   "evaluative_axis": 3
+  },
+  "note": "24 injected over 9 concepts cannot be uniform; the realized counts are recorded here and travel in each run's provenance."
+ },
+ "scoring_scope": {
+  "status": "fixed pre-data (design instance, 2026-08-24)",
+  "positive_control": "the DPO/Instruct-excludes-0, Base/SFT-includes-0 criterion computes over the EIGHT Macar concepts' trials only",
+  "ninth": "the evaluative axis reports as its own per-stage sensitivity line beside, deciding nothing for the replication criterion -- their transition is the positive control, and folding our stimulus into that statistic dilutes the control with materiel they never ran",
+  "axis_identification": "DESCRIPTIVE ONLY. The eight score against their word; the axis has no word, and any acceptable-answer set we authored would be our judgment inserted into the DV. Verbatim responses retained, no hit/miss scoring; the affirm/deny channel carries the axis's sensitivity line."
  }
 }

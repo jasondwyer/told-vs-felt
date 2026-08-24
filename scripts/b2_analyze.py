@@ -87,8 +87,23 @@ def newcombe(k1, n1, k2, n2, alpha=ALPHA) -> tuple:
     return (lo, hi)
 
 
-def cell(art: dict) -> dict:
+AXIS = "evaluative_axis"
+
+
+def cell(art: dict, scope: str = "macar_eight") -> dict:
+    """One stage-arm cell.
+
+    SCOPE IS NOT COSMETIC (disposition 2026-08-24 item 5). The
+    positive-control sensitivity computes over the EIGHT Macar concepts'
+    trials ONLY. Their transition is the control, and folding our ninth
+    stimulus into that statistic dilutes the control with materiel they
+    never ran. The axis gets its own line and decides nothing.
+    """
     tr = art["trials"]
+    if scope == "macar_eight":
+        tr = [t for t in tr if t["concept"] != AXIS]
+    elif scope == "axis":
+        tr = [t for t in tr if t["concept"] == AXIS or not t["injected"]]
     inj = [t for t in tr if t["injected"] and t["claimed_detection"] is not None]
     ctl = [t for t in tr if not t["injected"] and t["claimed_detection"] is not None]
     hk = sum(1 for t in inj if t["claimed_detection"])
@@ -96,15 +111,21 @@ def cell(art: dict) -> dict:
     ident = [t for t in tr if t["injected"] and t["identified"] is not None]
     lo, hi = newcombe(hk, len(inj), fk, len(ctl))
     floors = art["decidable_n_floors"]
-    return {"stage": art["stage"], "arm": art["arm"],
+    return {"stage": art["stage"], "arm": art["arm"], "scope": scope,
             "hit_rate": hk / len(inj) if inj else float("nan"),
             "false_alarm_rate": fk / len(ctl) if ctl else float("nan"),
             "sensitivity": (hk / len(inj) - fk / len(ctl))
                            if inj and ctl else float("nan"),
             "ci": [lo, hi], "ci_excludes_0": bool(inj and ctl and lo > 0),
             "n_injected_decidable": len(inj), "n_control_decidable": len(ctl),
-            "identification_rate": (sum(1 for t in ident if t["identified"])
-                                    / len(ident)) if ident else float("nan"),
+            "identification_rate": ((sum(1 for t in ident if t["identified"])
+                                     / len(ident)) if ident else float("nan"))
+                                   if scope != "axis" else None,
+            "identification_note": ("axis identification is DESCRIPTIVE only "
+                                    "-- it has no word to score against, and "
+                                    "any acceptable-answer set would be our "
+                                    "judgment in the DV"
+                                    if scope == "axis" else None),
             "undecidable_rate": 1 - (len(inj) + len(ctl)) / max(len(tr), 1),
             "cell_evaluable": floors["cell_evaluable"],
             "floor_diagnosis": [floors["diagnosis_injected"],
@@ -143,7 +164,7 @@ def read_pattern(fid: dict) -> dict:
                              "read as 'includes 0'" if flagged else None)}
 
 
-def analyze(cells: dict) -> dict:
+def analyze(cells: dict, axis_cells: dict | None = None) -> dict:
     fid = {c["stage"]: c for c in cells.values() if c["arm"] == "fidelity"}
     reg = {c["stage"]: c for c in cells.values() if c["arm"] == "register"}
     delta = {s: (reg[s]["sensitivity"] - fid[s]["sensitivity"])
@@ -151,6 +172,10 @@ def analyze(cells: dict) -> dict:
     out = {"item": "B2 analysis", "fidelity": fid, "register": reg,
            "positive_control": read_pattern(fid),
            "elicitation_dependence_register_minus_fidelity": delta,
+           "axis_beside": (axis_cells or {}),
+           "axis_note": ("the ninth concept's per-stage sensitivity, reported "
+                         "BESIDE the criterion and deciding nothing for it"),
+           "scope_of_positive_control": "the eight Macar concepts only",
            "confound_check_undecidable_rates": {
                s: fid[s]["undecidable_rate"] for s in fid},
            "_note": ("any DPO-onset result is additionally checked against "
@@ -166,11 +191,12 @@ def _synth(stage, arm, hit_k, fa_k, n=24, undec=0):
     for i in range(n):
         d = None if i < undec else (i < hit_k + undec)
         tr.append({"injected": True, "claimed_detection": d,
-                   "identified": bool(d)})
+                   "identified": bool(d),
+                   "concept": AXIS if i % 9 == 8 else f"C{i % 8}"})
     for i in range(n):
         d = None if i < undec else (i < fa_k + undec)
         tr.append({"injected": False, "claimed_detection": d,
-                   "identified": None})
+                   "identified": None, "concept": None})
     dec_i = sum(1 for t in tr if t["injected"] and t["claimed_detection"] is not None)
     dec_c = sum(1 for t in tr if not t["injected"] and t["claimed_detection"] is not None)
     return {"stage": stage, "arm": arm, "trials": tr,
@@ -203,6 +229,43 @@ def selftest() -> int:
         ok &= good
         print(f"  [{'PASS' if good else 'FAIL'}] {label}")
         print(f"         expected {want!r} -> got {got.split(' -- ')[0]!r}")
+    # Item 5: the axis must be OUT of the positive-control statistic.
+    #
+    # The axis share here is EXAGGERATED on purpose -- half the injected
+    # trials rather than the realized ~3 of 24 -- because at the real
+    # allocation pooling could not change any reading, so a faithful ratio
+    # would make this test pass whether the scoping worked or not. That is
+    # worth knowing in its own right: item 5 is right in principle and
+    # small in practice at n = 48.
+    def art_axis_heavy(stage, eight_hit, n_each=12):
+        tr = []
+        for i in range(n_each):
+            tr.append({"injected": True, "concept": f"C{i % 8}",
+                       "claimed_detection": bool(eight_hit),
+                       "identified": bool(eight_hit)})
+        for i in range(n_each):
+            tr.append({"injected": True, "concept": AXIS,
+                       "claimed_detection": True, "identified": True})
+        for i in range(24):
+            tr.append({"injected": False, "concept": None,
+                       "claimed_detection": False, "identified": None})
+        return {"stage": stage, "arm": "fidelity", "trials": tr,
+                "decidable_n_floors": {"cell_evaluable": True,
+                                       "diagnosis_injected": None,
+                                       "diagnosis_control": None}}
+    scoped = {x: cell(art_axis_heavy(x, x in ("dpo", "instruct")))
+              for x in STAGES}
+    pooled = {x: cell(art_axis_heavy(x, x in ("dpo", "instruct")), scope="all")
+              for x in STAGES}
+    r_s = read_pattern(scoped)["reading"]
+    r_p = read_pattern(pooled)["reading"]
+    good = (r_s.startswith("TRANSITION REPLICATES AT DPO")
+            and r_p.startswith("NO TRANSITION"))
+    ok &= good
+    print(f"  [{'PASS' if good else 'FAIL'}] axis excluded from the positive "
+          f"control: scoped -> {r_s.split(' -- ')[0]!r}; pooling the ninth "
+          f"would give {r_p.split(' -- ')[0]!r}")
+
     # a below-floor cell must be flagged, not silently read
     cells = build([2, 2, 20, 20], undec=12)
     pc = analyze(cells)["positive_control"]
@@ -234,15 +297,18 @@ def main() -> int:
     args = ap.parse_args()
     if args.selftest:
         return selftest()
-    cells = {}
+    cells, axis = {}, {}
     for arm in ("fidelity", "register"):
         for s in STAGES:
             p = os.path.join(args.dir, f"b2_{arm}_{s}.json")
             if os.path.exists(p):
-                cells[f"{s}-{arm}"] = cell(json.load(open(p)))
+                art = json.load(open(p))
+                cells[f"{s}-{arm}"] = cell(art, "macar_eight")
+                if arm == "fidelity":
+                    axis[s] = cell(art, "axis")
     if not cells:
         raise SystemExit(f"no B2 artifacts under {args.dir}")
-    res = analyze(cells)
+    res = analyze(cells, axis)
     print("=== B2 analysis ===")
     for arm in ("fidelity", "register"):
         for s in STAGES:
@@ -254,7 +320,11 @@ def main() -> int:
                   f"{c['sensitivity']:+.3f}  CI [{c['ci'][0]:+.3f}, "
                   f"{c['ci'][1]:+.3f}]  excl0 {c['ci_excludes_0']}  "
                   f"evaluable {c['cell_evaluable']}")
-    print(f"\n  POSITIVE CONTROL: {res['positive_control']['reading']}")
+    for st, c in res["axis_beside"].items():
+        print(f"  {'axis':<9} {st:<9} sens {c['sensitivity']:+.3f}  CI "
+              f"[{c['ci'][0]:+.3f}, {c['ci'][1]:+.3f}]  (decides nothing)")
+    print(f"\n  POSITIVE CONTROL (eight Macar concepts only): "
+          f"{res['positive_control']['reading']}")
     if res["positive_control"].get("cells_below_decidable_floor"):
         print(f"  below floor: "
               f"{res['positive_control']['cells_below_decidable_floor']}")

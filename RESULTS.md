@@ -20,6 +20,99 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-24 — **B2 STIMULUS DISPOSITIONS APPLIED (design block 2026-08-24,
+  items 1–8). Both stimuli are now approved and the runner no longer refuses.
+  Item 3 resolved: the `Butterflies` duplicate is THEIRS, not our
+  transcription. Item 5's scoping patch landed with a self-test case that
+  would fail if the ninth concept were ever re-pooled — and building that
+  case surfaced that the scoping is right in principle and small in practice
+  at n = 48.**
+  (`data/configs/b2_concepts.json`, `b2_framing.json`,
+  `scripts/box_b2_detection.py`, `scripts/b2_analyze.py`. Pod
+  `uimuzt7d890y5b` restarted 2026-08-24 06:58 UTC; respawn gates re-running.)
+  - **Item 8, the referent check — rule 18's operative sentence, verbatim
+    from CLAUDE.md:** *"Held-out hygiene: probe batteries, templates, and
+    test task pools disjoint from all training/extraction corpora; startup
+    assertions both directions; tag-roster lexical assertions against every
+    pool."* The disposition's use of it is consistent: `Dust` is excluded as
+    a **stimulus** colliding with an extraction corpus, and the baseline
+    words are retained because they are neither a probe battery, a template,
+    nor a test task pool — they enter only as a subtracted mean.
+  - **(1) Concepts APPROVED.** `approved_eight` = Satellites, Trumpets,
+    Origami, Illusions, Cameras, Lightning, Constellations, Treasures.
+    Selection rule of record: **the first eight in Macar's declared order
+    after excluding rule-18 collisions with the frozen pools** — as
+    deterministic and recoverable as the bare first-eight, and it bites
+    exactly once (`Dust` #1 excluded; `Trees` #11 and `Bread` #49 fall
+    outside the window). Rationale recorded as stated: **no contamination
+    route into a B2 trial is claimed** — trials carry framing plus question
+    only, no task text — so the exclusion is the categorical rule doing
+    prophylactic work under a total cost asymmetry.
+  - **(2) Baselines: all 100 retained verbatim.** The four collisions never
+    enter as stimulus, probe or identification candidate; they enter only as
+    the subtracted mean, so a corpus collision opens no lexical route into
+    any measurement. The trade runs **opposite** to the concepts: for
+    stimuli hygiene dominates fidelity; for the baseline mean fidelity
+    dominates, because hygiene has nothing to bite.
+  - **(3) `Butterflies` — VERIFIED THEIRS, kept.** At sha `5d5d9b4`,
+    `DEFAULT_BASELINE_WORDS` is **exactly 100 entries with `Butterflies` at
+    0-based positions 67 and 85**, and our committed list is **byte-identical
+    to theirs[:100]** (100 entries, 99 unique). Not our transcription slip.
+    Kept as-is — their method, double-weighted mean and all — so
+    `Butterflies` contributes 2/100 rather than 1/100 to the subtracted
+    baseline, in their run as in ours.
+  - **(4) Register framing APPROVED WITH THE REPAIR, and the repair is the
+    substantive half.** The trial question is **no longer shared**: the
+    register arm asks *"Trial {n}: Is the additional configuration component
+    active on this trial? If so, what does it correspond to?"* Sharing the
+    fidelity question would have reinstated that register 48× per stage,
+    made PROPOSAL-g §4-B2's description of the arm false as implemented, and
+    hollowed the named quantity — a delta cannot measure
+    elicitation-dependence if the per-trial probe re-supplies the
+    elicitation.
+    - **One thing done beyond the letter and flagged:** the vocabulary
+      repair was specified as `"rounds" → "trials" (×3)`. The draft carried
+      **two plural and two singular** occurrences and **all four** were
+      converted — leaving a bare `round` behind would have defeated the
+      parity the repair exists for. Stated rather than silently extended.
+    - Defenses for the now-differing probe are recorded in the config as
+      given: sensitivity is hit − FA within arm within stage so question-level
+      affirm bias subtracts to first order; the decidable-n floors catch a
+      decidability shift and the below-floor branch already exists; A2's base
+      rates scope the fidelity-format channel and remain valid there.
+  - **(5) Scoring scope patched, and pinned by a test that can fail.** The
+    positive-control criterion now computes over **the eight Macar concepts
+    only**; the ninth reports as its own per-stage sensitivity line beside,
+    deciding nothing. The allocation was already declared by the runner, so
+    it is **frozen rather than replaced**: `plan_trials` assigns concepts
+    round-robin over the sorted nine with the 50/50 split by seeded
+    permutation, and the realized injected counts at n=48/seed 20260823 are
+    recorded in the config and travel in every run's provenance
+    (Trumpets 4; Cameras, Constellations, Origami, axis 3; Illusions,
+    Lightning, Satellites, Treasures 2).
+    - **The test case had to be built dishonestly to be useful, and that is
+      itself a finding.** A first version used the realized ~3-of-24 axis
+      share and **passed whether or not the scoping worked**, because three
+      trials cannot move the reading. The case now uses an exaggerated
+      half-and-half share so pooling gives a different verdict — which means
+      **item 5 is right in principle and small in practice at n = 48**.
+      Recorded so nobody later reads the passing test as evidence the
+      pooling question mattered numerically.
+  - **(6) Rule-19 scoped disclosure logged**: MACAR_FRAMING's *"a thought
+    about a specific word"* is inexact on axis trials, since the axis is not
+    word-derived. The binding claim — the 50% rate — remains exactly true;
+    the phrase is quoted replication materiel firewalled to the fidelity arm
+    under the registered rule-20 scoping; and the design does not depend on
+    the inexactness, which if anything handicaps axis identification against
+    us. Carried into the §0.1-style disclosure obligations. **The register
+    arm as repaired contains no word-claim and is exactly true on all
+    trials, ninth included.**
+  - **(7) Axis identification is DESCRIPTIVE**, wired that way rather than
+    merely intended: the analyzer returns `identification_rate: None` for
+    the axis scope with the reason attached. Verbatim responses are
+    retained; the affirm/deny channel carries the axis's sensitivity line.
+  - **Nine pre-committed analyzer cases now pass**, up from eight.
+
 - 2026-08-23 — **B2 RUNNER AND ANALYZER BUILT, analyzer committed before any
   campaign with its eight pre-committed cases passing. PHASE B IS NOW FULLY
   BUILT — B1 read, B2 and B3 each with a runner and a pre-committed analyzer.

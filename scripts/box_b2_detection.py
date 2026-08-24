@@ -52,11 +52,10 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, REPO)
 sys.path.insert(0, os.path.join(REPO, "scripts"))
 
-from valence_core.detection import (DetectionTrial,               # noqa: E402
-                                    MACAR_FRAMING, build_prompt,
-                                    claims_detection, identifies_concept,
-                                    plan_trials, segment_own_turn,
-                                    steering_boundary)
+from valence_core.detection import (ACK, COMPLETION_TEMPLATE,       # noqa: E402
+                                    MACAR_FRAMING, claims_detection,
+                                    identifies_concept, plan_trials,
+                                    segment_own_turn, steering_boundary)
 from valence_core.adapters.base import Injection, PositionSpec    # noqa: E402
 from valence_core.session import (AuditSpec, FeatureSpec,         # noqa: E402
                                   build_ban_list, check_feature_defined)
@@ -84,7 +83,23 @@ def build_adapter(args):
     return OLMoHFAdapter(os.path.join(args.models_root, args.stage))
 
 
-def load_framing(arm: str) -> str:
+def build_prompt_arm(trial_n: int, framing: str, question_tpl: str):
+    """(prefix, full) with an ARM-SPECIFIC trial question.
+
+    The question is not shared. Asking "Do you detect an injected thought?"
+    in the register arm would reinstate the fidelity register 48x per stage,
+    make PROPOSAL-g §4-B2's description of the arm false as implemented, and
+    hollow the named quantity -- the register-minus-fidelity delta cannot
+    measure elicitation-dependence if the per-trial probe re-supplies the
+    elicitation (disposition 2026-08-24 item 4). Steering still begins at the
+    question boundary, so the framing is never steered.
+    """
+    q = question_tpl.format(n=trial_n)
+    full = COMPLETION_TEMPLATE.format(framing=framing, ack=ACK, question=q)
+    return full[:full.index(q)], full
+
+
+def load_framing(arm: str) -> tuple[str, str]:
     cfg = json.load(open(os.path.join(DATA, "configs/b2_framing.json")))
     if arm == "fidelity":
         f = cfg["fidelity"]["framing"]
@@ -94,7 +109,7 @@ def load_framing(arm: str) -> str:
                 "byte-identical to valence_core.detection.MACAR_FRAMING. "
                 "This arm is verbatim replication materiel; a drifted copy "
                 "makes the positive control meaningless.")
-        return f
+        return f, cfg["shared"]["trial_question"]
     if not cfg["register"].get("framing_approved"):
         raise SystemExit(
             "B2 STOP: the register arm's framing is a NEW STIMULUS awaiting "
@@ -102,7 +117,7 @@ def load_framing(arm: str) -> str:
             "The register-minus-fidelity delta is a named quantity, so its "
             "wording is part of the measurement.\n"
             f"  proposed: {cfg['register']['framing_proposed'][:90]}...")
-    return cfg["register"]["framing_approved"]
+    return cfg["register"]["framing_approved"], cfg["register"]["trial_question"]
 
 
 def main() -> int:
@@ -120,7 +135,7 @@ def main() -> int:
     if args.n_trials % 2:
         raise SystemExit(f"--n-trials must be even for the exact 50/50 "
                          f"split; got {args.n_trials}")
-    framing = load_framing(args.arm)
+    framing, question_tpl = load_framing(args.arm)
 
     # --- concepts: eight approved + this stage's axis as the ninth -------
     ccfg = json.load(open(os.path.join(DATA, "configs/b2_concepts.json")))
@@ -173,7 +188,7 @@ def main() -> int:
     # --- run: exact 50/50 by seeded permutation --------------------------
     trials = []
     for n, concept, injected in plan_trials(names, args.n_trials, args.seed):
-        prefix, full = build_prompt(n, framing)
+        prefix, full = build_prompt_arm(n, framing, question_tpl)
         b = steering_boundary(adapter, prefix, full)
         injs = ()
         if injected:
@@ -196,6 +211,8 @@ def main() -> int:
             print(f"    {n}/{args.n_trials} trials  "
                   f"{time.time()-t0:.0f}s", flush=True)
 
+    from collections import Counter
+    _alloc = Counter(t["concept"] for t in trials if t["injected"])
     inj = [t for t in trials if t["injected"]]
     ctl = [t for t in trials if not t["injected"]]
     dec_i = [t for t in inj if t["claimed_detection"] is not None]
@@ -218,6 +235,14 @@ def main() -> int:
            "provenance": adapter.provenance(), "selftest": bool(args.selftest),
            "framing_sha16": __import__("hashlib").sha256(
                framing.encode()).hexdigest()[:16],
+           "trial_question": question_tpl,
+           "trial_question_sha16": __import__("hashlib").sha256(
+               question_tpl.encode()).hexdigest()[:16],
+           "macar_concepts": [c for c in names if c != "evaluative_axis"],
+           "ninth_concept": "evaluative_axis",
+           "allocation": {"rule": "plan_trials round-robin over the sorted "
+                                  "nine; 50/50 split by seeded permutation",
+                          "realized_injected_counts": None},
            "carries_positive_control": args.arm == "fidelity",
            "concepts": names, "layer": layer, "frac": frac,
            "n_trials": len(trials), "n_injected": len(inj),
@@ -228,6 +253,7 @@ def main() -> int:
            "_no_verdict": ("The positive-control logic and the transition "
                            "criterion live in scripts/b2_analyze.py, "
                            "committed before any campaign.")}
+    out["allocation"]["realized_injected_counts"] = dict(_alloc)
     path = args.out or os.path.join(args.models_root,
                                     f"b2_{args.arm}_{args.stage}.json")
     with open(path, "w") as fh:
