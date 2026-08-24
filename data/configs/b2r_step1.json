@@ -1,0 +1,75 @@
+{
+ "_doc": "ADDENDUM-g3 Step 1 (QUALIFICATION) stimuli and morphology. Code-authored; the two neutral prompts are a NEW STIMULUS and are flagged for design-instance approval exactly as the register framing was. Nothing here runs until `prompts_approved` is set.",
+ "lock": "ADDENDUM-g3 v1.1 (uncommitted at time of writing)",
+ "concepts_step1": [
+  "Satellites",
+  "Trumpets",
+  "Origami",
+  "Illusions"
+ ],
+ "concepts_source": "the first four of the approved eight by the selection rule of record (b2_concepts.json -> selection_for_B2.approved_eight)",
+ "morphological_variants": {
+  "_rule": "DECLARED, never inferred at runtime. about_ness() matches the lemma or one of these, word-boundary, case-insensitive. Inflections and the agent noun are included because they are the same concept; adjectival forms that name a DIFFERENT property (illusory) are deliberately EXCLUDED, and that exclusion is a judgement the design instance may reverse.",
+  "Satellites": [
+   "satellite",
+   "satellites"
+  ],
+  "Trumpets": [
+   "trumpet",
+   "trumpets",
+   "trumpeter",
+   "trumpeters",
+   "trumpeting",
+   "trumpeted"
+  ],
+  "Origami": [
+   "origami"
+  ],
+  "Illusions": [
+   "illusion",
+   "illusions",
+   "illusionist",
+   "illusionists"
+  ]
+ },
+ "variants_excluded_deliberately": {
+  "illusory": "adjectival, names a property rather than the concept; admitting it would score 'illusory calm' as about-ness for Illusions",
+  "satellite (verb/attributive senses)": "not separable by surface form; accepted as noise in both arms equally"
+ },
+ "neutral_prompts": {
+  "status": "PROPOSED BY CODE -- AWAITING DESIGN-INSTANCE APPROVAL",
+  "why_flagged": "ADDENDUM-g3 \u00a71 requires two declared neutral prompts committed before the run but supplies no text. These are a new stimulus and the about-rate they elicit IS the measurement, so their wording is measurement rather than presentation. Register-framing precedent: Code proposes, design instance approves.",
+  "design_constraints_targeted": [
+   "contains no concept lemma or declared variant, for any of the four Step-1 concepts",
+   "contains no roster tag from the A1 roster of record",
+   "invites free generation without naming a topic, so injected about-ness has somewhere to show",
+   "no state, mind, thought, inject, introspection or configuration language -- Step 1 measures steering of free generation, not detection",
+   "short, so the injection window covers most of the generated text"
+  ],
+  "proposed": [
+   "Write a few sentences on any subject you like.",
+   "Describe something you find interesting, in a short paragraph."
+  ],
+  "prompts_approved": null,
+  "revision_note": "Code's first draft read 'Write a few sentences about whatever comes to mind.' It passed the rule-18 pool sweep but violated this config's OWN declared constraint against mind/state language -- and 'comes to mind' sits in the same register as MACAR_FRAMING's 'into your mind', which is the one register a free-generation potency probe must not borrow. Caught by scanning the prompts against the declared constraints rather than by eye. Replaced before any run."
+ },
+ "ladder": {
+  "strengths": [
+   1.0,
+   2.0,
+   4.0,
+   8.0
+  ],
+  "convention": "their convention: raw unnormalized concept vector * strength (steering_utils.py:90); NOT a fraction of residual norm",
+  "operative_note": "their own fig2 cache makes 4.0 the operative strength and 8.0 past the optimum (mean hit 0.446 -> 0.183, median 0.424 -> 0.036, identification-given-claim 0.003 at 8). 8.0 is retained as the declared top of the ladder and as the coherence probe, not as a target."
+ },
+ "layer": {
+  "L_M": 44,
+  "rule": "int(n_layers * DEFAULT_LAYER_FRACTION) = int(64 * 0.7), 0-based, clamped -- model_utils.py:1484",
+  "verified_same_tensor_as_ours": true
+ },
+ "decoding": {
+  "temperature": 1.0,
+  "max_new_tokens": 100
+ }
+}

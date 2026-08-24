@@ -164,3 +164,8 @@ __pycache__/
 
 # macOS
 .DS_Store
+
+# ADDENDUM-g3 Step 1 stimuli: the two neutral prompts are a flagged new
+# stimulus and the morphology is declared-not-inferred, so both must be in the
+# repo before any Step-1 forward (ledger 27, trap 7).
+!/data/configs/b2r_step1.json

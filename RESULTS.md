@@ -20,6 +20,85 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-24 — **B2-r INSTRUMENTS BUILT AND SELF-TESTED BEFORE ANY RERUN DATA
+  (21/21 PASS), and the v1.1 values-check items that Code can settle are
+  SETTLED: the post-trained carry-over holds BY IDENTITY (only Base
+  re-extracts), and both of the design instance's power claims verify — with
+  one refinement, the CONTROL tier's joint figure is 0.964, not "essentially
+  1", and `base` at 16.4% is the binding stage, not `sft`.** The regression
+  suite is unchanged at 137/137. Committed artifacts were not re-scored.
+  (`valence_core/detection_v2.py`, `scripts/b2r_scorer_selftest.py`,
+  `data/configs/b2r_step1.json`, `data/olmo/b2r_budget.json`.)
+
+  - **ITEM 5 — carry-over confirmed rather than assumed, as asked.**
+    SFT/DPO/Instruct vectors were extracted at **L44 = L_M**, over the same
+    approved eight, same 100 baselines, same method and same
+    `User:/Assistant:` template — so they **carry over by identity**, no
+    re-extraction. **Base alone re-extracts, and for two independent reasons:**
+    L60 → L44 *and* fallback → their bare base template. The rule, not the
+    coincidence, is what governs — L44 matching A4 at the three post-trained
+    stages is arithmetic accident, exactly as the design instance noted.
+  - **ITEM 3 power claims, both verified, one refined.**
+    **CONTROL:** at n = 96/stage the pattern needs all four pairwise
+    separations (min CP-lower over {base, sft} > max CP-upper over
+    {dpo, instruct}). Single weakest pair (base vs dpo) = 0.9825; **joint =
+    0.9642.** "Essentially 1" is right in spirit and the exact figure is
+    0.964; **base (16.4%) binds, not sft (22.5%)**, because it is the smaller
+    of the two high rates. **EXPLORATION:** at n = 48/48 the minimum firing
+    count is k = 5 (hit 0.104); power 0.531 at sensitivity 0.10, **0.866 at
+    0.15, 0.975 at 0.20** — the declared "detects ≥ ~0.15–0.20" floor is
+    accurate as written.
+  - **`valence_core/detection_v2.py` — a NEW module; `detection.py` is
+    untouched.** Its `_AFFIRM`/`_DENY` scored the committed artifacts, and
+    those must stay reproducible from the code that produced them: a scorer
+    edited after seeing its own output is a different instrument wearing the
+    same name. Five fixes, each pinned to an observed failure —
+    (1) **negation-safety**: conditional clauses stripped before matching,
+    word-boundary regex, bare `'detecting'` replaced by assertion forms;
+    (2) **register-vocabulary scorer**, DORMANT under v1.1 but committed so it
+    predates any data it could score; (3) **probe-echo symmetry (28c)** — a
+    re-emitted `Trial 8:` now BOUNDS the turn exactly as `\nUser:` does, in
+    both arms, instead of excluding one arm as degenerate; (4) **three-state
+    `ci_state`** — `excludes_upward` / `excludes_downward` / `includes`, so a
+    significantly *negative* sensitivity stops being filed as chance;
+    (5) **`about_ness`** for Step 1, matching only DECLARED morphology.
+  - **The self-test's regression cases are REAL TRANSCRIPTS, quoted verbatim
+    from the committed artifacts**, and each asserts BOTH the v1 verdict and
+    the v2 verdict — so the test documents what changed rather than merely
+    asserting it is better. Undecidable stays reachable (rule 28a): a genuine
+    both-polarities response still returns `None`.
+  - **Diagnostic, post-hoc and labelled (rule 11), committed artifacts NOT
+    re-scored:** under v2, fidelity-arm decidability would have gone base
+    39/45 → 39/45, sft 43 → 45, dpo 39 → 45, **instruct 12 → 45**. Instruct
+    recovers COMPLETELY on the negation fix alone. **Sensitivity remains
+    exactly +0.000 at every stage.** Third independent confirmation that the
+    defects cost decidability and never detection.
+  - **Step-1 stimuli: morphology DECLARED, prompts PROPOSED AND FLAGGED.**
+    Variants are committed per concept and never inferred at runtime;
+    `illusory` is deliberately EXCLUDED (adjectival — it names a property, and
+    admitting it would score "illusory calm" as about-ness), an exclusion the
+    design instance may reverse. The two neutral prompts are a **new stimulus
+    awaiting approval**, register-framing precedent.
+    - **Code's first draft failed Code's own constraint, and the scan caught
+      it, not the eye.** *"Write a few sentences about whatever comes to
+      mind"* passed the rule-18 pool sweep cleanly but violated this config's
+      declared ban on mind/state language — and "comes to mind" sits in the
+      same register as MACAR_FRAMING's *"into your mind"*, which is the one
+      register a free-generation potency probe must not borrow. Replaced with
+      *"Write a few sentences on any subject you like."* Both prompts now scan
+      clean against the declared constraints and against every binding pool
+      (Step-1 concepts + variants, approved eight, all 50 canonical, 100
+      baselines, A1 roster tags, plus a substring check).
+  - **Budget (A5 pattern, worst measured rates, uncached, 100 tokens):** base
+    re-extraction 0.2 min; Step 1 **1.16 h** (0.29 h/stage — the design
+    instance's 0.3 anchor is accurate); CONTROL 0.93 h; EXPLORATION 0.93 h;
+    12 model loads 0.60 h. **Grand total 3.63 h — single-box completion
+    holds.**
+  - **Still open and NOT guessed at:** which extraction path Step 1 means for
+    Base is now moot (ruled per stage in item 5), but the **prompt approval**
+    and the **v1.1 text itself** remain the design instance's. No B2-r forward
+    runs until both land.
+
 - 2026-08-24 — **ADDENDUM-g3 VALUES-CHECK: RED, and not on arithmetic. [g3-PIN-2]
   recovered from the paper (Appendix C, Fig 21) — and their OWN OLMo results
   make the registered positive control UNREACHABLE on this lineage at any n
