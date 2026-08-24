@@ -20,6 +20,183 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-24 — **B3 SCREEN COMPLETE, ALL FOUR STAGES: NULL AT EVERY
+  CHECKPOINT. No stage's marker arm clears its own control envelope, and no
+  stage's sign locks across label maps. The Q3 bet stands developmentally —
+  state→choice coupling does not appear at ANY stage of the OLMo instruct
+  lineage. The SFT overdose tripwire never fired. No stage triggers a confirm
+  campaign.** Read against B2's unreplicated positive control (entry below):
+  **the disposition on whether these numbers are unconditional or conditional
+  is the design instance's.**
+  (`data/olmo/b3_screen_*.json`, `b3_analysis_*.json`; raw
+  [`2026-08-24_b3.txt`](results/raw/2026-08-24_b3.txt).)
+
+    | stage | n | k(+tag) | Δ_first | map0 | map1 | sham | random | envelope | verdict |
+    |---|---|---|---|---|---|---|---|---|---|
+    | base | 48 | 21 | −0.0625 | −0.0833 | −0.0417 | +0.1111 | −0.1111 | 0.1111 | **NULL** |
+    | sft | 48 | 23 | −0.0208 | −0.0217 | −0.0200 | +0.0000 | −0.1111 | 0.1111 | **NULL** |
+    | dpo | 48 | 27 | +0.0625 | −0.0417 | +0.1667 | −0.0556 | −0.1667 | 0.1667 | **NULL** |
+    | instruct | 48 | 24 | +0.0000 | −0.0217 | +0.0200 | +0.0000 | −0.1667 | 0.1667 | **NULL** |
+
+  - **DPO is the one that shows why the criterion is conjunctive.** It is the
+    only stage with Δ pointing the coupling direction (+0.0625), and it fails
+    **both** conjuncts independently: it does not clear its envelope, and the
+    entire positive Δ is carried by one label map (+0.1667) while the other
+    runs negative (−0.0417). That is a **label artifact, not a state effect**,
+    and it is the size rule 12 names as first-order (~0.10). A screen testing
+    |Δ| alone would have owed this stage a second look; the sign-lock
+    requirement disposes of it on the design's own terms. Counterbalancing
+    earned its keep here.
+  - **Envelope caveat, for interpretation not for change.** The screen
+    envelope is set by control arms of n = 18, where one session moves it
+    0.0556 — coarse in both directions. That is the registered 48:18:18
+    proportion (LOCK-g §4), not a deviation; n = 96 and the exact binomial
+    live at confirm tier, which no stage reached.
+  - **The SFT stability note was discharged, but NOT in the way it was
+    framed** — worth recording because the difference is the finding.
+    LOCK-g §4 armed the degeneracy tripwire because SFT runs at frac 0.40,
+    inside the overdose regime Qwen showed. Realised round-degeneracy: base
+    **0/856**, sft **1/869 (0.0012)**, dpo **0/860**, instruct **3/877
+    (0.0034)** — every stage an order of magnitude under the declared p0 of
+    0.02, and `paused` is `None` at all four. **OLMo-SFT does not degenerate
+    at 0.40.** What SFT did show is a different, separately-declared channel:
+    **lexical tag leakage**, 14 occurrences against Base's 5 (velvet 4, maple
+    4, saddle 2, walnut 2, copper 2) — the model uttering its own config tag
+    inside a round response more often at the higher dose. Exclusion rates:
+    5.6 / 15.2 / 10.6 / 11.6 %, all under A5's assumed 13% except SFT.
+    `lexical` is one of the four pre-declared descriptive counters and is
+    tabulated over ALL sessions including excluded ones, so this is recorded
+    as declared rather than noticed after the fact (ledger 23). **The monitor
+    anticipated junk and got leakage; both are exclusions, only one was the
+    thing being watched.**
+  - **Insulation held by construction, asserted rather than promised.** Every
+    choice read went through `readout.choice_read` — vanilla, uncached,
+    `verify=True` with `assert_construction_stable` per read — and
+    `valence_core.e2b.statepresent` was asserted absent from `sys.modules` at
+    startup on every run. Marker and random arms are norm-matched at each
+    stage's own MED and layer (dpo: L44, frac 0.05, |α| 3.6701, marker sha
+    `666a93358a13f9a6` vs random `7f3e9de008a018ec`); sham carries no state
+    and its reads go through the same untouched primitive.
+  - **Collateral, pre-named and deciding nothing:** session-share 0.4826 /
+    0.5139 / 0.5243 / 0.5174 — all ≈ .50, which LOCK-g §4 declared in advance
+    "is not evidence of anything." p(stay) 0.5875 / 0.5875 / 0.5792 / 0.5750.
+  - **Cross-site reproduction (ledger 27):** every B3 and B2 analysis was
+    re-run on the laptop from the committed artifacts and reproduced the box's
+    numbers exactly. The record does not depend on the box.
+
+- 2026-08-24 — **B2 COMPLETE, EIGHT CELLS. THE POSITIVE CONTROL DID NOT
+  REPLICATE: `HARNESS-VALIDATION STOP` — no stage clears chance in the
+  fidelity arm, hit rate 0.000 in every evaluable cell. Per LOCK-g §3 and the
+  pre-committed analyzer this is NOT A FINDING; it is a design-instance
+  discussion against Macar's reported effect sizes. Three instrument defects
+  were found by reading the transcripts, none of which changes the reading —
+  and the most consequential one is ours: the injection dose was inherited
+  across DIRECTION FAMILIES, which rule 1 forbids in its own words.**
+  (`data/olmo/b2_{fidelity,register}_{base,sft,dpo,instruct}.json`,
+  `b2_analysis.json`, `b2_concepts_*.{json,npz}`; raw
+  [`2026-08-24_b2.txt`](results/raw/2026-08-24_b2.txt). Backend: pod
+  `uimuzt7d890y5b` restarted 13:08 UTC, respawn (i) 29/29 + (ii) three zeros
+  both PASS before any experimental forward. Uncached throughout.)
+
+    | arm | base | sft | dpo | instruct |
+    |---|---|---|---|---|
+    | **fidelity** | +0.000 [−.168,+.176] ✓eval | +0.000 [−.142,+.176] ✓eval | +0.000 [−.154,+.195] ✓eval | +0.000 [−.369,+.602] **below floor** |
+    | **register** | nan **below floor** | +1.000 [−.288,+1.000] **below floor** | +0.000 **below floor** | +0.000 **below floor** |
+    | axis (beside) | +0.000 | +0.000 | +0.000 | nan |
+
+  - **The dose finding, first because it is the one that may explain the
+    rest.** LOCK-g §3 set B2's dose to each stage's MED so "the presence gate
+    is closed by construction." That argument is valid **for the ninth
+    concept only.** A4 certified causal potency for the *evaluative axis*
+    (`span_reward`); the eight Macar concepts are a **different direction
+    family**, and rule 1 reads *"never inherit alphas or layer choices across
+    models, checkpoints, backends, **or direction families**."* Realised
+    perturbations: base 5.53/110.5 = **5%** of residual norm, dpo 3.67/73.4 =
+    **5%**, instruct **5%**, sft 29.20/73.0 = **40%**. So the presence gate is
+    closed for the axis and **open for the eight** — a detection null at 5%
+    of residual norm may be precisely the presence/legibility conflation the
+    dose rule exists to prevent, displaced one step sideways. Weak
+    corroboration, marked weak: **SFT is the only stage dosed at 40% and is
+    the only stage that produced a concept identification in the entire
+    campaign** (injected `Origami` → *"such origami folding or a change in
+    the model's origami folding technique"*). That is n = 1 in a below-floor
+    cell. It is not evidence; it is the direction a dose-dependence account
+    predicts, and it is cheap to test.
+  - **The rule-13 deviation is the second candidate and it is load-bearing at
+    exactly the stages that matter.** Macar's formatter applies a chat
+    template where one exists and falls back to `User:/Assistant:`; rule 13
+    forbids chat templates at any stage or site, so we ran their fallback.
+    For Base that is the only sensible choice. For DPO and Instruct it
+    withholds the format those checkpoints were post-trained to answer in —
+    our fidelity arm is their design run under a constraint they did not
+    have. Declared, mandated, and still a real threat to the replication.
+  - **Three instrument defects, all found by reading rather than by the
+    numbers (rule 25 earning its place).**
+    - **(i) `_AFFIRM` contains bare substrings that fire inside negations.**
+      `'detecting'` matches in *"If I were **detecting** an injected thought,
+      I would specify…"*, colliding with `'i do not detect'` and returning
+      `None`. Decomposition of fidelity-arm undecidability — base 0 collide /
+      8 silent, sft **2 collide** / 0, dpo **6 collide** / 0, instruct **36
+      collide** / 0: **100% of Instruct's undecidability is this one
+      substring.** LOCK-g §3 predicted Instruct would be undecidable-heavy
+      and attributed it to A2's 50% rate; the prediction was right and the
+      *cause* is our classifier, not model ambiguity.
+    - **(ii) The register arm scores in a vocabulary it never speaks.** Silent
+      (no marker at all): base 48/48, sft 38. The model answers clearly — *"The
+      additional configuration component is not active on this trial"* — in
+      the register its own repaired question invited. Decidability is decided
+      by whether a `"Yes,"`/`"No,"` prefix happened to appear, and that
+      survivorship is **biased toward manufacturing sensitivity**: at
+      sft/register the five survivors read hit 4/4, FA 0/1, **+1.000**. The
+      2026-08-24 repair correctly moved the QUESTION out of fidelity register;
+      the SCORER is the other half of the same elicitation vocabulary and did
+      not move with it. Caught twice — by the decidable-n floor and
+      independently by its own CI, which spans −0.288 to +1.000.
+    - **(iii) `frame:Trial ` excludes the register arm for echoing its own
+      probe — ledger 28(c) in live use.** dpo/register: **37 of 48 trials
+      audit-flagged**, all `frame:Trial `. The register probe opens
+      `"Trial {n}:"`, so the continuation reproduces `"Trial 8: No. Task is
+      completed."` The arms diverge on one stylistic accident: fidelity
+      continuations emit `"\nUser: Trial 3…"`, so `segment_own_turn` **trims**
+      them before the audit looks; register continuations omit the turn
+      marker, so identical conduct is **excluded as degenerate** instead.
+      Template adjacency as a stimulus variable, and 28(a)'s point that a
+      feature is defined against its exclusion rule.
+  - **The reading is ROBUST to all three defects, and this is what makes the
+    stop reportable.** Counterfactual diagnostic (post-hoc, rule 11 — informs
+    a disposition, licenses a pre-registration, never a verdict): with
+    `'detecting'` removed from `_AFFIRM`, decidability recovers to 21/24 and
+    24/24 at **every** stage — and sensitivity remains **exactly +0.000 at all
+    four**. The defects cost decidability, not detection. Nothing was repaired
+    after seeing data: `_AFFIRM`, `_DENY` and `AUDIT` are untouched and the
+    committed artifacts stand as recorded.
+  - **What the pre-registered machinery got right.** The decidable-n floors
+    caught defect (ii) instead of letting five trials report the strongest
+    sensitivity in the study; the CI caught it again independently;
+    `segment=True` cut fabricated dialogue in 40/48 Base trials, and Base is a
+    completion model that answers by inventing its own subsequent User and
+    Assistant turns. Had segmentation been off, the DV would have scored
+    invented dialogue.
+  - **Descriptive, banked, not chased (ledger 23).** DPO fabricates
+    experimenter feedback confirming itself — *"User: (Correct! That was a
+    control trial.)"* — on **trial 2, an injected trial**, i.e. inventing
+    reinforcement that its wrong denial was right. Downstream of the
+    segmentation boundary, so it touches no DV. Also: fidelity-arm
+    decidability climbs across the lineage (40/46/42 of 48) while truncation
+    collapses (40 → 34 → 8), i.e. later checkpoints increasingly answer rather
+    than continue the transcript. And concept-vector norm falls monotonically
+    among the three L44-comparable stages (38.0 → 31.2 → 30.9), the same
+    SFT→DPO step-then-plateau shape A4 found in the currency; Base is not
+    comparable on that axis, being measured at L60.
+  - **Q3 exposure, stated plainly.** CLAUDE.md §Q2 makes replicating their
+    transition what "validates our harness before Q3 carries any weight."
+    That has not happened. B3 ran anyway on the design instance's licensed
+    sequence and on its own separate harness (e2a, insulated by construction,
+    KL-verified per read), with Jason's explicit "keep it running" at
+    14:52 UTC. **Whether B3's numbers are read as unconditional or as
+    conditional on an unvalidated positive control is the design instance's
+    disposition, not Code's.**
+
 - 2026-08-24 — **CACHED-PATH DISPOSITION ADOPTED AND B-PHASE LICENSED TO RUN.
   The design instance ratifies the gate entry below in full: the cached path is
   FORBIDDEN for all of Phase B, generation is uncached at every stage, and

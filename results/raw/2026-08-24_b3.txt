@@ -1,0 +1,154 @@
+########## B3 SCREEN | base ##########
+  declared bars verified to fire: round_degeneracy
+
+=== B3 screen tier | stage base ===
+  model loaded in 202s
+  roster of record: ['quartz/velvet', 'copper/walnut', 'maple/saddle', 'amber/granite']
+  FULL INSULATION -- every choice read is vanilla, uncached, verified; e2b.statepresent is not imported
+  dose of record: L60, frac 0.05, |alpha| 5.5273 (rule 1: this stage's own R_l)
+    [marker]   7/48 valid    8 run  411s
+    [random]   8/18 valid    8 run  744s
+    [marker]  14/48 valid   16 run  832s
+    [sham  ]   8/18 valid    8 run  901s
+    [marker]  22/48 valid   24 run  1184s
+    [sham  ]  16/18 valid   16 run  1297s
+    [random]  16/18 valid   16 run  1445s
+    [marker]  29/48 valid   32 run  1585s
+    [marker]  36/48 valid   40 run  1778s
+    [marker]  43/48 valid   48 run  1941s
+
+  valid/run: marker 48/53, sham 18/18, random 18/18
+  wrote /workspace/repo/jspace-lab/data/olmo/b3_screen_base.json  (2081s)
+
+########## B3 SCREEN | sft ##########
+  declared bars verified to fire: round_degeneracy
+
+=== B3 screen tier | stage sft ===
+  model loaded in 192s
+  roster of record: ['quartz/velvet', 'copper/walnut', 'maple/saddle', 'amber/granite']
+  FULL INSULATION -- every choice read is vanilla, uncached, verified; e2b.statepresent is not imported
+  dose of record: L44, frac 0.4, |alpha| 29.1969 (rule 1: this stage's own R_l)
+    [marker]   5/48 valid    8 run  377s
+    [random]   8/18 valid    8 run  771s
+    [marker]  13/48 valid   16 run  843s
+    [sham  ]   8/18 valid    8 run  918s
+    [marker]  21/48 valid   24 run  1135s
+    [sham  ]  13/18 valid   16 run  1262s
+    [random]  16/18 valid   16 run  1397s
+    [marker]  27/48 valid   32 run  1534s
+    [marker]  34/48 valid   40 run  1868s
+    [marker]  39/48 valid   48 run  2029s
+    [marker]  46/48 valid   56 run  2194s
+
+  valid/run: marker 48/58, sham 18/22, random 18/19
+  wrote /workspace/repo/jspace-lab/data/olmo/b3_screen_sft.json  (2248s)
+
+########## B3 SCREEN | dpo ##########
+  declared bars verified to fire: round_degeneracy
+
+=== B3 screen tier | stage dpo ===
+  model loaded in 161s
+  roster of record: ['quartz/velvet', 'copper/walnut', 'maple/saddle', 'amber/granite']
+  FULL INSULATION -- every choice read is vanilla, uncached, verified; e2b.statepresent is not imported
+  dose of record: L44, frac 0.05, |alpha| 3.6701 (rule 1: this stage's own R_l)
+    [marker]   6/48 valid    8 run  352s
+    [random]   8/18 valid    8 run  766s
+    [marker]  14/48 valid   16 run  834s
+    [sham  ]   8/18 valid    8 run  920s
+    [marker]  22/48 valid   24 run  1194s
+    [sham  ]  14/18 valid   16 run  1344s
+    [random]  15/18 valid   16 run  1450s
+    [marker]  30/48 valid   32 run  1590s
+    [marker]  38/48 valid   40 run  1876s
+    [marker]  44/48 valid   48 run  2039s
+
+  valid/run: marker 48/53, sham 18/21, random 18/20
+  wrote /workspace/repo/jspace-lab/data/olmo/b3_screen_dpo.json  (2133s)
+
+########## B3 SCREEN | instruct ##########
+  declared bars verified to fire: round_degeneracy
+
+=== B3 screen tier | stage instruct ===
+  model loaded in 40s
+  roster of record: ['quartz/velvet', 'copper/walnut', 'maple/saddle', 'amber/granite']
+  FULL INSULATION -- every choice read is vanilla, uncached, verified; e2b.statepresent is not imported
+  dose of record: L44, frac 0.05, |alpha| 3.6696 (rule 1: this stage's own R_l)
+    [marker]   5/48 valid    8 run  216s
+    [random]   8/18 valid    8 run  598s
+    [marker]  13/48 valid   16 run  664s
+    [sham  ]   8/18 valid    8 run  730s
+    [marker]  20/48 valid   24 run  984s
+    [sham  ]  15/18 valid   16 run  1117s
+    [random]  16/18 valid   16 run  1216s
+    [marker]  27/48 valid   32 run  1335s
+    [marker]  35/48 valid   40 run  1562s
+    [marker]  41/48 valid   48 run  1701s
+    [marker]  47/48 valid   56 run  1833s
+
+  valid/run: marker 48/57, sham 18/19, random 18/19
+  wrote /workspace/repo/jspace-lab/data/olmo/b3_screen_instruct.json  (1856s)
+
+########## B3 ANALYSIS | base ##########
+=== B3 screen analysis | stage base ===
+  marker valid n = 48, k(+tag) = 21
+  Delta_first = -0.0625
+    map0: -0.0833 (n=24)
+    map1: -0.0417 (n=24)
+  sham    pseudo-Delta +0.1111 (n=18)
+  random  pseudo-Delta -0.1111 (n=18)
+  control envelope = 0.1111
+    delta_exceeds_envelope_upward    False
+    sign_locks_positive              False
+  VERDICT: NULL
+  collateral (decides nothing): session-share 0.4826, p(stay) 0.5875
+  wrote /workspace/repo/jspace-lab/data/olmo/b3_analysis_base.json
+  DISPOSITION IS THE DESIGN INSTANCE'S.
+
+########## B3 ANALYSIS | sft ##########
+=== B3 screen analysis | stage sft ===
+  marker valid n = 48, k(+tag) = 23
+  Delta_first = -0.0208
+    map0: -0.0217 (n=23)
+    map1: -0.0200 (n=25)
+  sham    pseudo-Delta +0.0000 (n=18)
+  random  pseudo-Delta -0.1111 (n=18)
+  control envelope = 0.1111
+    delta_exceeds_envelope_upward    False
+    sign_locks_positive              False
+  VERDICT: NULL
+  collateral (decides nothing): session-share 0.5139, p(stay) 0.5875
+  wrote /workspace/repo/jspace-lab/data/olmo/b3_analysis_sft.json
+  DISPOSITION IS THE DESIGN INSTANCE'S.
+
+########## B3 ANALYSIS | dpo ##########
+=== B3 screen analysis | stage dpo ===
+  marker valid n = 48, k(+tag) = 27
+  Delta_first = +0.0625
+    map0: -0.0417 (n=24)
+    map1: +0.1667 (n=24)
+  sham    pseudo-Delta -0.0556 (n=18)
+  random  pseudo-Delta -0.1667 (n=18)
+  control envelope = 0.1667
+    delta_exceeds_envelope_upward    False
+    sign_locks_positive              False
+  VERDICT: NULL
+  collateral (decides nothing): session-share 0.5243, p(stay) 0.5792
+  wrote /workspace/repo/jspace-lab/data/olmo/b3_analysis_dpo.json
+  DISPOSITION IS THE DESIGN INSTANCE'S.
+
+########## B3 ANALYSIS | instruct ##########
+=== B3 screen analysis | stage instruct ===
+  marker valid n = 48, k(+tag) = 24
+  Delta_first = +0.0000
+    map0: -0.0217 (n=23)
+    map1: +0.0200 (n=25)
+  sham    pseudo-Delta +0.0000 (n=18)
+  random  pseudo-Delta -0.1667 (n=18)
+  control envelope = 0.1667
+    delta_exceeds_envelope_upward    False
+    sign_locks_positive              False
+  VERDICT: NULL
+  collateral (decides nothing): session-share 0.5174, p(stay) 0.5750
+  wrote /workspace/repo/jspace-lab/data/olmo/b3_analysis_instruct.json
+  DISPOSITION IS THE DESIGN INSTANCE'S.
+

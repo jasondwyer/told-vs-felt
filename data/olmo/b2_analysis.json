@@ -1,0 +1,320 @@
+{
+ "item": "B2 analysis",
+ "fidelity": {
+  "base": {
+   "stage": "base",
+   "arm": "fidelity",
+   "scope": "macar_eight",
+   "hit_rate": 0.0,
+   "false_alarm_rate": 0.0,
+   "sensitivity": 0.0,
+   "ci": [
+    -0.1684334709830853,
+    0.17646691180696533
+   ],
+   "ci_excludes_0": false,
+   "n_injected_decidable": 19,
+   "n_control_decidable": 20,
+   "identification_rate": 0.0,
+   "identification_note": null,
+   "undecidable_rate": 0.1333333333333333,
+   "cell_evaluable": true,
+   "floor_diagnosis": [
+    null,
+    null
+   ]
+  },
+  "sft": {
+   "stage": "sft",
+   "arm": "fidelity",
+   "scope": "macar_eight",
+   "hit_rate": 0.0,
+   "false_alarm_rate": 0.0,
+   "sensitivity": 0.0,
+   "ci": [
+    -0.1424735977225256,
+    0.17646691180696533
+   ],
+   "ci_excludes_0": false,
+   "n_injected_decidable": 19,
+   "n_control_decidable": 24,
+   "identification_rate": 0.0,
+   "identification_note": null,
+   "undecidable_rate": 0.0444444444444444,
+   "cell_evaluable": true,
+   "floor_diagnosis": [
+    null,
+    null
+   ]
+  },
+  "dpo": {
+   "stage": "dpo",
+   "arm": "fidelity",
+   "scope": "macar_eight",
+   "hit_rate": 0.0,
+   "false_alarm_rate": 0.0,
+   "sensitivity": 0.0,
+   "ci": [
+    -0.15437251281557457,
+    0.1950643229690932
+   ],
+   "ci_excludes_0": false,
+   "n_injected_decidable": 17,
+   "n_control_decidable": 22,
+   "identification_rate": 0.0,
+   "identification_note": null,
+   "undecidable_rate": 0.1333333333333333,
+   "cell_evaluable": true,
+   "floor_diagnosis": [
+    null,
+    null
+   ]
+  },
+  "instruct": {
+   "stage": "instruct",
+   "arm": "fidelity",
+   "scope": "macar_eight",
+   "hit_rate": 0.0,
+   "false_alarm_rate": 0.0,
+   "sensitivity": 0.0,
+   "ci": [
+    -0.3694166475528192,
+    0.6023646356164747
+   ],
+   "ci_excludes_0": false,
+   "n_injected_decidable": 4,
+   "n_control_decidable": 8,
+   "identification_rate": 0.0,
+   "identification_note": null,
+   "undecidable_rate": 0.7333333333333334,
+   "cell_evaluable": false,
+   "floor_diagnosis": [
+    "detection_claim: below declared floor -- 4 decidable of 24, floor 16",
+    "detection_claim: below declared floor -- 8 decidable of 24, floor 16"
+   ]
+  }
+ },
+ "register": {
+  "base": {
+   "stage": "base",
+   "arm": "register",
+   "scope": "macar_eight",
+   "hit_rate": NaN,
+   "false_alarm_rate": NaN,
+   "sensitivity": NaN,
+   "ci": [
+    NaN,
+    NaN
+   ],
+   "ci_excludes_0": false,
+   "n_injected_decidable": 0,
+   "n_control_decidable": 0,
+   "identification_rate": 0.0,
+   "identification_note": null,
+   "undecidable_rate": 1.0,
+   "cell_evaluable": false,
+   "floor_diagnosis": [
+    "detection_claim: STRUCTURALLY UNDEFINED on domain 'valid' -- 0 decidable of 24 (24 ties). The exclusion rule, not the sessions, is producing this (rule 28a)",
+    "detection_claim: STRUCTURALLY UNDEFINED on domain 'valid' -- 0 decidable of 24 (24 ties). The exclusion rule, not the sessions, is producing this (rule 28a)"
+   ]
+  },
+  "sft": {
+   "stage": "sft",
+   "arm": "register",
+   "scope": "macar_eight",
+   "hit_rate": 1.0,
+   "false_alarm_rate": 0.0,
+   "sensitivity": 1.0,
+   "ci": [
+    -0.2881759328535689,
+    1.0
+   ],
+   "ci_excludes_0": false,
+   "n_injected_decidable": 2,
+   "n_control_decidable": 1,
+   "identification_rate": 0.0625,
+   "identification_note": null,
+   "undecidable_rate": 0.9333333333333333,
+   "cell_evaluable": false,
+   "floor_diagnosis": [
+    "detection_claim: below declared floor -- 4 decidable of 24, floor 16",
+    "detection_claim: below declared floor -- 1 decidable of 24, floor 16"
+   ]
+  },
+  "dpo": {
+   "stage": "dpo",
+   "arm": "register",
+   "scope": "macar_eight",
+   "hit_rate": 0.0,
+   "false_alarm_rate": 0.0,
+   "sensitivity": 0.0,
+   "ci": [
+    -0.4592581264399006,
+    0.7075982261787135
+   ],
+   "ci_excludes_0": false,
+   "n_injected_decidable": 3,
+   "n_control_decidable": 6,
+   "identification_rate": 0.0,
+   "identification_note": null,
+   "undecidable_rate": 0.8,
+   "cell_evaluable": false,
+   "floor_diagnosis": [
+    "detection_claim: below declared floor -- 3 decidable of 24, floor 16",
+    "detection_claim: below declared floor -- 6 decidable of 24, floor 16"
+   ]
+  },
+  "instruct": {
+   "stage": "instruct",
+   "arm": "register",
+   "scope": "macar_eight",
+   "hit_rate": 0.0,
+   "false_alarm_rate": 0.0,
+   "sensitivity": 0.0,
+   "ci": [
+    -0.4592581264399006,
+    0.841886116991581
+   ],
+   "ci_excludes_0": false,
+   "n_injected_decidable": 2,
+   "n_control_decidable": 6,
+   "identification_rate": 0.0,
+   "identification_note": null,
+   "undecidable_rate": 0.8222222222222222,
+   "cell_evaluable": false,
+   "floor_diagnosis": [
+    "detection_claim: below declared floor -- 2 decidable of 24, floor 16",
+    "detection_claim: below declared floor -- 6 decidable of 24, floor 16"
+   ]
+  }
+ },
+ "positive_control": {
+  "reading": "HARNESS-VALIDATION STOP -- no stage clears chance in the fidelity arm. Design-instance discussion against Macar's reported effect sizes; NOT a finding.",
+  "clears": {
+   "base": false,
+   "sft": false,
+   "dpo": false,
+   "instruct": false
+  },
+  "evaluable": {
+   "base": true,
+   "sft": true,
+   "dpo": true,
+   "instruct": false
+  },
+  "cells_below_decidable_floor": [
+   "instruct"
+  ],
+  "floor_caveat": "a below-floor cell is descriptive and is NOT read as 'includes 0'"
+ },
+ "elicitation_dependence_register_minus_fidelity": {
+  "base": NaN,
+  "sft": 1.0,
+  "dpo": 0.0,
+  "instruct": 0.0
+ },
+ "axis_beside": {
+  "base": {
+   "stage": "base",
+   "arm": "fidelity",
+   "scope": "axis",
+   "hit_rate": 0.0,
+   "false_alarm_rate": 0.0,
+   "sensitivity": 0.0,
+   "ci": [
+    -0.1684334709830853,
+    0.9750000000000001
+   ],
+   "ci_excludes_0": false,
+   "n_injected_decidable": 1,
+   "n_control_decidable": 20,
+   "identification_rate": null,
+   "identification_note": "axis identification is DESCRIPTIVE only -- it has no word to score against, and any acceptable-answer set would be our judgment in the DV",
+   "undecidable_rate": 0.2222222222222222,
+   "cell_evaluable": true,
+   "floor_diagnosis": [
+    null,
+    null
+   ]
+  },
+  "sft": {
+   "stage": "sft",
+   "arm": "fidelity",
+   "scope": "axis",
+   "hit_rate": 0.0,
+   "false_alarm_rate": 0.0,
+   "sensitivity": 0.0,
+   "ci": [
+    -0.1424735977225256,
+    0.7075982261787135
+   ],
+   "ci_excludes_0": false,
+   "n_injected_decidable": 3,
+   "n_control_decidable": 24,
+   "identification_rate": null,
+   "identification_note": "axis identification is DESCRIPTIVE only -- it has no word to score against, and any acceptable-answer set would be our judgment in the DV",
+   "undecidable_rate": 0.0,
+   "cell_evaluable": true,
+   "floor_diagnosis": [
+    null,
+    null
+   ]
+  },
+  "dpo": {
+   "stage": "dpo",
+   "arm": "fidelity",
+   "scope": "axis",
+   "hit_rate": 0.0,
+   "false_alarm_rate": 0.0,
+   "sensitivity": 0.0,
+   "ci": [
+    -0.15437251281557457,
+    0.7075982261787135
+   ],
+   "ci_excludes_0": false,
+   "n_injected_decidable": 3,
+   "n_control_decidable": 22,
+   "identification_rate": null,
+   "identification_note": "axis identification is DESCRIPTIVE only -- it has no word to score against, and any acceptable-answer set would be our judgment in the DV",
+   "undecidable_rate": 0.07407407407407407,
+   "cell_evaluable": true,
+   "floor_diagnosis": [
+    null,
+    null
+   ]
+  },
+  "instruct": {
+   "stage": "instruct",
+   "arm": "fidelity",
+   "scope": "axis",
+   "hit_rate": NaN,
+   "false_alarm_rate": 0.0,
+   "sensitivity": NaN,
+   "ci": [
+    NaN,
+    NaN
+   ],
+   "ci_excludes_0": false,
+   "n_injected_decidable": 0,
+   "n_control_decidable": 8,
+   "identification_rate": null,
+   "identification_note": "axis identification is DESCRIPTIVE only -- it has no word to score against, and any acceptable-answer set would be our judgment in the DV",
+   "undecidable_rate": 0.7037037037037037,
+   "cell_evaluable": false,
+   "floor_diagnosis": [
+    "detection_claim: below declared floor -- 4 decidable of 24, floor 16",
+    "detection_claim: below declared floor -- 8 decidable of 24, floor 16"
+   ]
+  }
+ },
+ "axis_note": "the ninth concept's per-stage sensitivity, reported BESIDE the criterion and deciding nothing for it",
+ "scope_of_positive_control": "the eight Macar concepts only",
+ "confound_check_undecidable_rates": {
+  "base": 0.1333333333333333,
+  "sft": 0.0444444444444444,
+  "dpo": 0.1333333333333333,
+  "instruct": 0.7333333333333334
+ },
+ "_note": "any DPO-onset result is additionally checked against undecidable-rate shifts before the transition is claimed (PROPOSAL-g \u00a74-B2 confound note)",
+ "_disposition": "Code reports what the criterion returns. The disposition is the design instance's."
+}

@@ -1,0 +1,219 @@
+########## CONCEPT VECTORS | base ##########
+
+=== B2 concept vectors | stage base | L60 ===
+  model loaded in 40s
+  method: Macar src/vector_utils.py:114, baseline-subtracted, last token, unnormalized
+  template (rule 13, their own non-chat fallback): 'User: Tell me about <Concept>\n\nAssistant:'
+  8 concepts, 100 baseline words -> 108 forwards
+    Satellites         |v|   50.4272  sha 20eeedcfcdda58dc
+    Trumpets           |v|   45.2446  sha 0da315bea2f32df3
+    Origami            |v|   46.8447  sha 448e6f4afc3428b3
+    Illusions          |v|   42.9045  sha 68fdf9c35ce518f5
+    Cameras            |v|   50.5663  sha cdf99e0312335c2e
+    Lightning          |v|   48.1519  sha 12df8a429cfbbe67
+    Constellations     |v|   54.5691  sha ce0cd2bdd2541065
+    Treasures          |v|   56.4999  sha eadeef3858e50a28
+
+  wrote /workspace/repo/jspace-lab/data/olmo/b2_concepts_base.json
+  wrote /workspace/repo/jspace-lab/data/olmo/b2_concepts_base.npz  (49s)
+  commit BOTH to data/olmo/ before the pod is stopped (ledger 27); B2 doses from these
+
+########## CONCEPT VECTORS | sft ##########
+
+=== B2 concept vectors | stage sft | L44 ===
+  model loaded in 200s
+  method: Macar src/vector_utils.py:114, baseline-subtracted, last token, unnormalized
+  template (rule 13, their own non-chat fallback): 'User: Tell me about <Concept>\n\nAssistant:'
+  8 concepts, 100 baseline words -> 108 forwards
+    Satellites         |v|   40.2721  sha 0b022d14487fc83e
+    Trumpets           |v|   41.2231  sha c52068122e3ca49f
+    Origami            |v|   41.3863  sha 0d3982842da586e4
+    Illusions          |v|   36.6616  sha 868de58839658e19
+    Cameras            |v|   36.8401  sha 4d8214cee4cee063
+    Lightning          |v|   37.4608  sha d433cb15b396cc69
+    Constellations     |v|   40.0077  sha 66022c5e49ec39fa
+    Treasures          |v|   30.2293  sha a2b8c21bafe717a8
+
+  wrote /workspace/repo/jspace-lab/data/olmo/b2_concepts_sft.json
+  wrote /workspace/repo/jspace-lab/data/olmo/b2_concepts_sft.npz  (209s)
+  commit BOTH to data/olmo/ before the pod is stopped (ledger 27); B2 doses from these
+
+########## CONCEPT VECTORS | dpo ##########
+
+=== B2 concept vectors | stage dpo | L44 ===
+  model loaded in 160s
+  method: Macar src/vector_utils.py:114, baseline-subtracted, last token, unnormalized
+  template (rule 13, their own non-chat fallback): 'User: Tell me about <Concept>\n\nAssistant:'
+  8 concepts, 100 baseline words -> 108 forwards
+    Satellites         |v|   32.5887  sha 101e9a686ac85d51
+    Trumpets           |v|   33.6421  sha b0a68957687301b2
+    Origami            |v|   34.4483  sha 820050abab3cfdd3
+    Illusions          |v|   29.9460  sha b2e3267364f20eea
+    Cameras            |v|   27.4880  sha 2c91c9ad43de1f51
+    Lightning          |v|   32.6178  sha 5ecb693d7f595552
+    Constellations     |v|   33.1996  sha c6596f594be83471
+    Treasures          |v|   26.0717  sha 414eaa712687d751
+
+  wrote /workspace/repo/jspace-lab/data/olmo/b2_concepts_dpo.json
+  wrote /workspace/repo/jspace-lab/data/olmo/b2_concepts_dpo.npz  (169s)
+  commit BOTH to data/olmo/ before the pod is stopped (ledger 27); B2 doses from these
+
+########## CONCEPT VECTORS | instruct ##########
+
+=== B2 concept vectors | stage instruct | L44 ===
+  model loaded in 37s
+  method: Macar src/vector_utils.py:114, baseline-subtracted, last token, unnormalized
+  template (rule 13, their own non-chat fallback): 'User: Tell me about <Concept>\n\nAssistant:'
+  8 concepts, 100 baseline words -> 108 forwards
+    Satellites         |v|   31.7940  sha 5fd20f34f2d5f824
+    Trumpets           |v|   33.6796  sha 1d483d593e989871
+    Origami            |v|   34.1609  sha 811b525c1463da2c
+    Illusions          |v|   29.2816  sha 5198b9942e944b20
+    Cameras            |v|   26.8190  sha b5d152505a37f62f
+    Lightning          |v|   32.5164  sha 2a1961c03ac90f62
+    Constellations     |v|   32.7010  sha 1823eb16a652aad8
+    Treasures          |v|   26.0077  sha 7cae83ea2222b952
+
+  wrote /workspace/repo/jspace-lab/data/olmo/b2_concepts_instruct.json
+  wrote /workspace/repo/jspace-lab/data/olmo/b2_concepts_instruct.npz  (46s)
+  commit BOTH to data/olmo/ before the pod is stopped (ledger 27); B2 doses from these
+
+########## B2 | base | fidelity ##########
+
+=== B2 fidelity arm | stage base ===
+  model loaded in 256s
+  dose of record: L60, frac 0.05 (this stage's MED) -- presence gate closed by construction
+    8/48 trials  301s
+    16/48 trials  345s
+    24/48 trials  390s
+    32/48 trials  435s
+    40/48 trials  479s
+    48/48 trials  524s
+
+  decidable: injected 20/24, control 20/24 (floor 16) -> cell evaluable: True
+  wrote /workspace/repo/jspace-lab/data/olmo/b2_fidelity_base.json  (524s)
+
+########## B2 | sft | fidelity ##########
+
+=== B2 fidelity arm | stage sft ===
+  model loaded in 180s
+  dose of record: L44, frac 0.4 (this stage's MED) -- presence gate closed by construction
+    8/48 trials  224s
+    16/48 trials  269s
+    24/48 trials  314s
+    32/48 trials  358s
+    40/48 trials  403s
+    48/48 trials  448s
+
+  decidable: injected 22/24, control 24/24 (floor 16) -> cell evaluable: True
+  wrote /workspace/repo/jspace-lab/data/olmo/b2_fidelity_sft.json  (448s)
+
+########## B2 | dpo | fidelity ##########
+
+=== B2 fidelity arm | stage dpo ===
+  model loaded in 160s
+  dose of record: L44, frac 0.05 (this stage's MED) -- presence gate closed by construction
+    8/48 trials  205s
+    16/48 trials  250s
+    24/48 trials  295s
+    32/48 trials  339s
+    40/48 trials  384s
+    48/48 trials  429s
+
+  decidable: injected 20/24, control 22/24 (floor 16) -> cell evaluable: True
+  wrote /workspace/repo/jspace-lab/data/olmo/b2_fidelity_dpo.json  (429s)
+
+########## B2 | instruct | fidelity ##########
+
+=== B2 fidelity arm | stage instruct ===
+  model loaded in 31s
+  dose of record: L44, frac 0.05 (this stage's MED) -- presence gate closed by construction
+    8/48 trials  76s
+    16/48 trials  121s
+    24/48 trials  166s
+    32/48 trials  211s
+    40/48 trials  256s
+    48/48 trials  301s
+
+  decidable: injected 4/24, control 8/24 (floor 16) -> cell evaluable: False
+  wrote /workspace/repo/jspace-lab/data/olmo/b2_fidelity_instruct.json  (301s)
+
+########## B2 | base | register ##########
+
+=== B2 register arm | stage base ===
+  model loaded in 58s
+  dose of record: L60, frac 0.05 (this stage's MED) -- presence gate closed by construction
+    8/48 trials  99s
+    16/48 trials  138s
+    24/48 trials  178s
+    32/48 trials  217s
+    40/48 trials  256s
+    48/48 trials  296s
+
+  decidable: injected 0/24, control 0/24 (floor 16) -> cell evaluable: False
+  wrote /workspace/repo/jspace-lab/data/olmo/b2_register_base.json  (296s)
+
+########## B2 | sft | register ##########
+
+=== B2 register arm | stage sft ===
+  model loaded in 51s
+  dose of record: L44, frac 0.4 (this stage's MED) -- presence gate closed by construction
+    8/48 trials  92s
+    16/48 trials  133s
+    24/48 trials  174s
+    32/48 trials  214s
+    40/48 trials  255s
+    48/48 trials  296s
+
+  decidable: injected 4/24, control 1/24 (floor 16) -> cell evaluable: False
+  wrote /workspace/repo/jspace-lab/data/olmo/b2_register_sft.json  (296s)
+
+########## B2 | dpo | register ##########
+
+=== B2 register arm | stage dpo ===
+  model loaded in 34s
+  dose of record: L44, frac 0.05 (this stage's MED) -- presence gate closed by construction
+    8/48 trials  73s
+    16/48 trials  112s
+    24/48 trials  151s
+    32/48 trials  190s
+    40/48 trials  229s
+    48/48 trials  268s
+
+  decidable: injected 3/24, control 6/24 (floor 16) -> cell evaluable: False
+  wrote /workspace/repo/jspace-lab/data/olmo/b2_register_dpo.json  (268s)
+
+########## B2 | instruct | register ##########
+
+=== B2 register arm | stage instruct ===
+  model loaded in 32s
+  dose of record: L44, frac 0.05 (this stage's MED) -- presence gate closed by construction
+    8/48 trials  71s
+    16/48 trials  110s
+    24/48 trials  149s
+    32/48 trials  188s
+    40/48 trials  227s
+    48/48 trials  267s
+
+  decidable: injected 2/24, control 6/24 (floor 16) -> cell evaluable: False
+  wrote /workspace/repo/jspace-lab/data/olmo/b2_register_instruct.json  (267s)
+
+########## B2 ANALYSIS ##########
+=== B2 analysis ===
+  fidelity  base      hit 0.000 fa 0.000  sens +0.000  CI [-0.168, +0.176]  excl0 False  evaluable True
+  fidelity  sft       hit 0.000 fa 0.000  sens +0.000  CI [-0.142, +0.176]  excl0 False  evaluable True
+  fidelity  dpo       hit 0.000 fa 0.000  sens +0.000  CI [-0.154, +0.195]  excl0 False  evaluable True
+  fidelity  instruct  hit 0.000 fa 0.000  sens +0.000  CI [-0.369, +0.602]  excl0 False  evaluable False
+  register  base      hit nan fa nan  sens +nan  CI [+nan, +nan]  excl0 False  evaluable False
+  register  sft       hit 1.000 fa 0.000  sens +1.000  CI [-0.288, +1.000]  excl0 False  evaluable False
+  register  dpo       hit 0.000 fa 0.000  sens +0.000  CI [-0.459, +0.708]  excl0 False  evaluable False
+  register  instruct  hit 0.000 fa 0.000  sens +0.000  CI [-0.459, +0.842]  excl0 False  evaluable False
+  axis      base      sens +0.000  CI [-0.168, +0.975]  (decides nothing)
+  axis      sft       sens +0.000  CI [-0.142, +0.708]  (decides nothing)
+  axis      dpo       sens +0.000  CI [-0.154, +0.708]  (decides nothing)
+  axis      instruct  sens +nan  CI [+nan, +nan]  (decides nothing)
+
+  POSITIVE CONTROL (eight Macar concepts only): HARNESS-VALIDATION STOP -- no stage clears chance in the fidelity arm. Design-instance discussion against Macar's reported effect sizes; NOT a finding.
+  below floor: ['instruct']
+  wrote /workspace/repo/jspace-lab/data/olmo/b2_analysis.json
+  DISPOSITION IS THE DESIGN INSTANCE'S.

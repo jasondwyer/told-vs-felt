@@ -1,0 +1,96 @@
+{
+ "item": "B3 analysis",
+ "tier": "screen",
+ "stage": "instruct",
+ "lock": "LOCK-g v1.1 (0551224)",
+ "n_marker_valid": 48,
+ "delta_first": 0.0,
+ "k_plus": 24,
+ "by_label_map": {
+  "0": {
+   "delta": -0.021739130434782594,
+   "k": 11,
+   "n": 23
+  },
+  "1": {
+   "delta": 0.020000000000000018,
+   "k": 13,
+   "n": 25
+  }
+ },
+ "controls": {
+  "sham": {
+   "pseudo_delta": 0.0,
+   "k": 9,
+   "n": 18
+  },
+  "random": {
+   "pseudo_delta": -0.16666666666666669,
+   "k": 6,
+   "n": 18
+  }
+ },
+ "control_envelope": 0.16666666666666669,
+ "conjuncts": {
+  "delta_exceeds_envelope_upward": false,
+  "sign_locks_positive": false
+ },
+ "all_conjuncts_met": false,
+ "reverse_conjuncts": {
+  "delta_exceeds_envelope_downward": false,
+  "sign_locks_negative": false
+ },
+ "reverse_criteria_met": false,
+ "exact_binomial_p": null,
+ "exact_binomial_reverse_p": null,
+ "critical_k_at_96": null,
+ "verdict": "NULL",
+ "collateral": {
+  "session_share_plus": 0.5173611111111112,
+  "session_share_note": "~.50 is not evidence of anything",
+  "first_choice_delta_by_round": {
+   "0": {
+    "delta": 0.0,
+    "n": 48
+   },
+   "1": {
+    "delta": 0.02083333333333337,
+    "n": 48
+   },
+   "2": {
+    "delta": 0.0625,
+    "n": 48
+   },
+   "3": {
+    "delta": 0.02083333333333337,
+    "n": 48
+   },
+   "4": {
+    "delta": -0.041666666666666685,
+    "n": 48
+   },
+   "5": {
+    "delta": 0.04166666666666663,
+    "n": 48
+   }
+  },
+  "p_stay": 0.575,
+  "n_adjacent_pairs": 240
+ },
+ "counts": {
+  "marker": {
+   "valid": 48,
+   "run": 57
+  },
+  "sham": {
+   "valid": 18,
+   "run": 19
+  },
+  "random": {
+   "valid": 18,
+   "run": 19
+  }
+ },
+ "paused": null,
+ "_disposition": "Code reports what the criteria return. The disposition is the design instance's."
+}

@@ -1,0 +1,99 @@
+{
+ "item": "B2-concepts",
+ "stage": "sft",
+ "layer": 44,
+ "provenance": {
+  "adapter": "olmo-hf",
+  "path": "/workspace/models/sft",
+  "dtype": "bfloat16",
+  "backend": "torch/cuda",
+  "device": "cuda",
+  "gpu": "NVIDIA A100-SXM4-80GB",
+  "cuda": "12.8",
+  "capability": [
+   8,
+   0
+  ],
+  "deterministic": true,
+  "cublas_workspace_config": ":4096:8",
+  "seed": 20260818,
+  "choice_window_declared": 8192,
+  "n_layers": 64,
+  "library_versions": {
+   "torch": "2.8.0+cu128",
+   "transformers": "5.15.0",
+   "accelerate": "1.14.0",
+   "safetensors": "0.8.0",
+   "huggingface_hub": "1.28.0",
+   "numpy": "2.1.2"
+  },
+  "python": "3.12.3"
+ },
+ "selftest": false,
+ "method": {
+  "template": "Tell me about {word}",
+  "token_idx": -1,
+  "rule": "concept_vector = act(concept prompt) - mean(act over baseline prompts), at the declared layer, last token",
+  "normalize_in_source": false,
+  "DEVIATION_rule_13": "their formatter applies a chat template when the tokenizer has one and falls back to 'User: {msg}\\n\\nAssistant:' otherwise. Rule 13 forbids chat templates at any stage or site, so we take THEIR OWN fallback, which is also the COMPLETION_TEMPLATE the detection harness already uses. Sanctioned by their design, not invented.",
+  "layer": "per stage, that stage's A4-selected layer (rule 1); their DEFAULT_LAYER_FRACTION 0.7 is NOT inherited"
+ },
+ "macar_provenance": {
+  "repo": "github.com/safety-research/introspection-mechanisms",
+  "commit_sha": "5d5d9b485e293dc766c3a056cfe50283a7e435b6",
+  "default_branch": "main",
+  "pushed_at": "2026-04-16T23:16:54Z",
+  "recovered_utc": "2026-08-23",
+  "concepts_source": "experiments/01_concept_injection.py:58 (DEFAULT_TEST_CONCEPTS, comment: '50 words from the paper')",
+  "baseline_source": "src/vector_utils.py:448 (get_baseline_words) -> DEFAULT_BASELINE_WORDS[:100]",
+  "method_source": "src/vector_utils.py:114 (extract_concept_vector_with_baseline)"
+ },
+ "concepts": [
+  "Satellites",
+  "Trumpets",
+  "Origami",
+  "Illusions",
+  "Cameras",
+  "Lightning",
+  "Constellations",
+  "Treasures"
+ ],
+ "n_baseline": 100,
+ "baseline_mean_sha16": "4536ecd1e7e7545f",
+ "vectors": {
+  "Satellites": {
+   "sha16": "0b022d14487fc83e",
+   "norm": 40.272089753437484
+  },
+  "Trumpets": {
+   "sha16": "c52068122e3ca49f",
+   "norm": 41.22307674501824
+  },
+  "Origami": {
+   "sha16": "0d3982842da586e4",
+   "norm": 41.38625112750546
+  },
+  "Illusions": {
+   "sha16": "868de58839658e19",
+   "norm": 36.661581268765346
+  },
+  "Cameras": {
+   "sha16": "4d8214cee4cee063",
+   "norm": 36.84010607632431
+  },
+  "Lightning": {
+   "sha16": "d433cb15b396cc69",
+   "norm": 37.46076920777762
+  },
+  "Constellations": {
+   "sha16": "66022c5e49ec39fa",
+   "norm": 40.007728172309086
+  },
+  "Treasures": {
+   "sha16": "a2b8c21bafe717a8",
+   "norm": 30.22929203693386
+  }
+ },
+ "seconds": 209.48749804496765,
+ "vectors_npz": "b2_concepts_sft.npz"
+}
