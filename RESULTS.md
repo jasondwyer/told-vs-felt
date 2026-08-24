@@ -20,6 +20,69 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-23 — **B2 CONCEPTS: the gap is closed, and it closed differently
+  than the adjudication expected. There is NO canonical eight to recover —
+  Macar et al.'s released set is FIFTY. All 50 concepts and their 100
+  baseline words are now committed verbatim with commit-level provenance,
+  and the choice of eight is flagged as a DECISION awaiting approval. Rule
+  18 then found something on the obvious default: "Dust", the first of the
+  eight Code would otherwise recommend, collides with the e0 corpus.**
+  (`data/configs/b2_concepts.json`, `scripts/box_b2_concepts.py`. Design
+  block 2026-08-23 item 3.)
+  - **Provenance, pinned to a commit rather than to a citation.** Repo
+    `safety-research/introspection-mechanisms`, sha
+    **`5d5d9b485e293dc766c3a056cfe50283a7e435b6`** (branch `main`, pushed
+    2026-04-16). Concepts: `experiments/01_concept_injection.py:58`,
+    `DEFAULT_TEST_CONCEPTS`, whose own comment reads *"50 words from the
+    paper"*. Baselines: `src/vector_utils.py:448`, `get_baseline_words` →
+    `DEFAULT_BASELINE_WORDS[:100]`. Method:
+    `src/vector_utils.py:114`.
+  - **The registered n and the released set disagree, and that is a
+    decision, not a recovery.** PROPOSAL-g §4-B2 and LOCK-g §3 both register
+    **eight** concepts and describe them as Macar's; Macar's set is
+    **fifty**. Choosing eight of fifty is a selection nobody has made.
+    `box_b2_concepts.py` therefore **refuses to run** without an
+    `approved_eight` in the config and prints exactly why. Code's
+    recommendation, offered and not taken: the **first eight in their
+    declared order** — deterministic, recoverable from their source by
+    anyone, no cherry-picking. Alternatives recorded and not taken: a seeded
+    draw (reproducible only via our config, not from theirs), a hand-picked
+    semantic spread (puts our judgment into replication materiel, which the
+    fidelity arm exists to avoid), or raising n to 50 (a lock amendment, not
+    a config choice).
+  - **Rule 18, run both directions over all 150 words, found three
+    collisions — one of them in the recommended eight.** `Dust`, `Trees` and
+    `Bread` appear word-boundary in the e0 task corpus; four baseline words
+    (`Wool`, `Clouds`, `Dogs`, `Time`) do too. **`Dust` is first in the
+    declared order**, so the cleanest-looking default is also the one that
+    trips hygiene on its very first element. **Reported, not silently
+    dropped:** removing a word departs from the verbatim replication set,
+    and that trade is the design instance's to make, not Code's to make
+    quietly. It is the concrete reason the selection needs a ruling rather
+    than a default.
+  - **The extractor follows their method and declares both departures.**
+    `concept_vector = act("Tell me about <Concept>") − mean over baselines`,
+    at the declared layer, last token, unnormalized. (i) **Template, rule
+    13:** their formatter uses a chat template when one exists and falls
+    back to `User: …\n\nAssistant:`; chat templates are forbidden here at
+    any stage or site, so we take **their own fallback**, which is also the
+    `COMPLETION_TEMPLATE` the detection harness already runs — sanctioned by
+    their design rather than invented. (ii) **Layer, rule 1:** they default
+    to a depth fraction (0.7); we use **that stage's own A4-selected
+    layer**, because directions and doses are profiled per checkpoint here
+    and never inherited.
+  - **The stub had the same defect twice, in a different array.** Concept
+    vectors came out **exactly zero** on the selftest: stub residuals
+    depended on token and position only, so every prompt ending in
+    `Assistant:` produced identical last-token activations and the baseline
+    subtraction annihilated them. That is the same failure class already
+    fixed once for the logits path. Residuals are now sequence-sensitive,
+    vectors come out with norms ~3.09 and distinct shas, and the A3/A4 stub
+    paths still behave. Suite 137/137.
+    - Worth keeping as an apparatus habit: **a stub that returns zeros looks
+      like a passing smoke.** Both times, the thing that caught it was
+      reading the number rather than the exit code.
+
 - 2026-08-23 — **B1 DISPOSITION ADOPTED — Q1 IS CLOSED. The registered bet
   is confirmed: marking is a pretraining acquisition. B3's directional
   reading is RATIFIED as the operative interpretation of "pre-registered as

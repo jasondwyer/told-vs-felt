@@ -86,11 +86,18 @@ class SelfTestAdapter(ModelAdapter):
 
     # --- forwards ---------------------------------------------------------
     def _residual(self, ids: Sequence[int], layer: int) -> np.ndarray:
+        # Each row depends on the token, its position AND the whole sequence.
+        # Per-token-only rows made every prompt ending in the same token give
+        # identical last-token activations, so a baseline-subtracted concept
+        # vector came out exactly zero -- the same defect class already fixed
+        # once for the logits path, in a different array.
+        ctx = np.random.default_rng(
+            _h("ctx", self.stage, layer, tuple(ids)) % 2**31).normal(size=D)
         rows = []
         for p, i in enumerate(ids):
             r = np.random.default_rng(_h(self.stage, layer, i, p % 7) % 2**31)
             rows.append(r.normal(size=D) * (1.0 + 0.02 * layer))
-        return np.stack(rows) + self._stage_bias
+        return np.stack(rows) + self._stage_bias + 0.5 * ctx
 
     def forward(self, ids: Sequence[int],
                 capture_layers: Iterable[int] = (),
