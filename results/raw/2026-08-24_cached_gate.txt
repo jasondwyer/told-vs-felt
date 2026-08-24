@@ -1,0 +1,121 @@
+=== cached-generation gate | stage base ===
+  model loaded in 28s
+  injection case uses this stage's A4 dose: L60 frac 0.05 (|alpha| 5.5273)
+  session transcript grown to 370 tokens before timing (A2 measured B3-shaped choice prefixes at 363-411)
+  [session_t0.7_0      ]   9 tok | uncached   2.17s  cached   1.03s | IDS IDENTICAL
+  [session_t0.0_0      ]   9 tok | uncached   1.64s  cached   0.87s | IDS IDENTICAL
+  [session_inject_0    ]   9 tok | uncached   1.66s  cached   0.88s | IDS IDENTICAL
+  [session_t0.7_1      ]  10 tok | uncached   1.81s  cached   0.95s | IDS IDENTICAL
+  [session_t0.0_1      ]  10 tok | uncached   1.81s  cached   0.94s | IDS IDENTICAL
+  [session_inject_1    ]  10 tok | uncached   1.82s  cached   0.95s | IDS IDENTICAL
+  [session_t0.7_2      ]  12 tok | uncached   2.15s  cached   1.11s | IDS IDENTICAL
+  [session_t0.0_2      ]  12 tok | uncached   2.15s  cached   1.10s | IDS IDENTICAL
+  [session_inject_2    ]  15 tok | uncached   2.65s  cached   1.33s | IDS IDENTICAL
+  [session_t0.7_3      ]  11 tok | uncached   1.99s  cached   1.02s | IDS IDENTICAL
+  [session_t0.0_3      ]  10 tok | uncached   1.82s  cached   0.94s | IDS IDENTICAL
+  [session_inject_3    ]  12 tok | uncached   2.16s  cached   1.12s | IDS IDENTICAL
+  [detection_0         ]   9 tok | uncached   0.85s  cached   0.79s | IDS IDENTICAL
+  [detection_1         ]   9 tok | uncached   0.86s  cached   0.78s | IDS IDENTICAL
+
+  all 14 cases : uncached 0.1738 cached 0.0940 s/tok  speedup 1.85x
+  14 multi-token: uncached 0.1738 cached 0.0940 s/tok  speedup 1.85x   <- operative
+  GATE: PASS -- cached path usable for campaigns on this backend/stage
+  wrote /workspace/models/cached_gen_v3.json
+########## base, repeat run (must reproduce v3 exactly) ##########
+=== cached-generation gate | stage base ===
+  model loaded in 29s
+  injection case uses this stage's A4 dose: L60 frac 0.05 (|alpha| 5.5273)
+  session transcript grown to 370 tokens before timing (A2 measured B3-shaped choice prefixes at 363-411)
+  [session_t0.7_0      ]   9 tok | uncached   2.15s  cached   1.00s | IDS IDENTICAL
+  [session_t0.0_0      ]   9 tok | uncached   1.64s  cached   0.87s | IDS IDENTICAL
+  [session_inject_0    ]   9 tok | uncached   1.66s  cached   0.91s | IDS IDENTICAL
+  [session_t0.7_1      ]  10 tok | uncached   1.81s  cached   0.96s | IDS IDENTICAL
+  [session_t0.0_1      ]  10 tok | uncached   1.81s  cached   0.96s | IDS IDENTICAL
+  [session_inject_1    ]  10 tok | uncached   1.82s  cached   0.94s | IDS IDENTICAL
+  [session_t0.7_2      ]  12 tok | uncached   2.15s  cached   1.09s | IDS IDENTICAL
+  [session_t0.0_2      ]  12 tok | uncached   2.15s  cached   1.10s | IDS IDENTICAL
+  [session_inject_2    ]  15 tok | uncached   2.66s  cached   1.33s | IDS IDENTICAL
+  [session_t0.7_3      ]  11 tok | uncached   1.99s  cached   1.01s | IDS IDENTICAL
+  [session_t0.0_3      ]  10 tok | uncached   1.82s  cached   0.93s | IDS IDENTICAL
+  [session_inject_3    ]  12 tok | uncached   2.16s  cached   1.11s | IDS IDENTICAL
+  [detection_0         ]   9 tok | uncached   0.85s  cached   0.78s | IDS IDENTICAL
+  [detection_1         ]   9 tok | uncached   0.85s  cached   0.77s | IDS IDENTICAL
+
+  all 14 cases : uncached 0.1736 cached 0.0937 s/tok  speedup 1.85x
+  14 multi-token: uncached 0.1736 cached 0.0937 s/tok  speedup 1.85x   <- operative
+  GATE: PASS -- cached path usable for campaigns on this backend/stage
+  wrote /workspace/models/cached_gen_v3b.json
+########## sft, at its own MED 0.40 (overdose regime) ##########
+=== cached-generation gate | stage sft ===
+  model loaded in 171s
+  injection case uses this stage's A4 dose: L44 frac 0.4 (|alpha| 29.1969)
+  session transcript grown to 370 tokens before timing (A2 measured B3-shaped choice prefixes at 363-411)
+  [session_t0.7_0      ]   9 tok | uncached   2.11s  cached   0.98s | IDS IDENTICAL
+  [session_t0.0_0      ]  11 tok | uncached   1.97s  cached   1.01s | IDS IDENTICAL
+  [session_inject_0    ]   9 tok | uncached   1.66s  cached   1.06s | DIVERGE @ 1
+  [session_t0.7_1      ]  11 tok | uncached   1.98s  cached   1.04s | IDS IDENTICAL
+  [session_t0.0_1      ]  10 tok | uncached   1.82s  cached   0.98s | IDS IDENTICAL
+  [session_inject_1    ]  10 tok | uncached   1.82s  cached   0.96s | IDS IDENTICAL
+  [session_t0.7_2      ]  12 tok | uncached   2.15s  cached   1.10s | IDS IDENTICAL
+  [session_t0.0_2      ]  13 tok | uncached   2.32s  cached   1.11s | DIVERGE @ 9
+  [session_inject_2    ]  13 tok | uncached   2.32s  cached   1.18s | IDS IDENTICAL
+  [session_t0.7_3      ]  11 tok | uncached   1.99s  cached   1.02s | IDS IDENTICAL
+  [session_t0.0_3      ]  11 tok | uncached   1.99s  cached   1.03s | IDS IDENTICAL
+  [session_inject_3    ]  10 tok | uncached   1.83s  cached   0.94s | DIVERGE @ 4
+  [detection_0         ]  12 tok | uncached   1.13s  cached   1.01s | DIVERGE @ 9
+  [detection_1         ]  13 tok | uncached   1.21s  cached   1.08s | IDS IDENTICAL
+
+  all 14 cases : uncached 0.1697 cached 0.0930 s/tok  speedup 1.81x
+  14 multi-token: uncached 0.1697 cached 0.0936 s/tok  speedup 1.81x   <- operative
+  GATE: FAIL -- cached generation diverges; rule 2 forbids the cached path here
+  wrote /workspace/models/cached_gen_sft.json
+########## CONFIRM COMPLETE ##########
+########## dpo ##########
+=== cached-generation gate | stage dpo ===
+  model loaded in 148s
+  injection case uses this stage's A4 dose: L44 frac 0.05 (|alpha| 3.6701)
+  session transcript grown to 370 tokens before timing (A2 measured B3-shaped choice prefixes at 363-411)
+  [session_t0.7_0      ]  11 tok | uncached   2.56s  cached   1.27s | IDS IDENTICAL
+  [session_t0.0_0      ]  10 tok | uncached   1.81s  cached   1.09s | IDS IDENTICAL
+  [session_inject_0    ]  10 tok | uncached   1.83s  cached   1.04s | IDS IDENTICAL
+  [session_t0.7_1      ]  11 tok | uncached   1.99s  cached   1.04s | DIVERGE @ 2
+  [session_t0.0_1      ]   8 tok | uncached   1.49s  cached   0.86s | IDS IDENTICAL
+  [session_inject_1    ]  10 tok | uncached   1.83s  cached   1.05s | IDS IDENTICAL
+  [session_t0.7_2      ]  12 tok | uncached   2.15s  cached   1.19s | IDS IDENTICAL
+  [session_t0.0_2      ]  12 tok | uncached   2.16s  cached   1.18s | IDS IDENTICAL
+  [session_inject_2    ]  17 tok | uncached   3.01s  cached   1.61s | IDS IDENTICAL
+  [session_t0.7_3      ]   8 tok | uncached   1.49s  cached   0.84s | IDS IDENTICAL
+  [session_t0.0_3      ]   9 tok | uncached   1.66s  cached   1.04s | DIVERGE @ 1
+  [session_inject_3    ]  10 tok | uncached   1.83s  cached   1.05s | IDS IDENTICAL
+  [detection_0         ]  13 tok | uncached   1.26s  cached   1.23s | IDS IDENTICAL
+  [detection_1         ]  13 tok | uncached   1.25s  cached   1.22s | IDS IDENTICAL
+
+  all 14 cases : uncached 0.1709 cached 0.1019 s/tok  speedup 1.68x
+  14 multi-token: uncached 0.1709 cached 0.1019 s/tok  speedup 1.68x   <- operative
+  GATE: FAIL -- cached generation diverges; rule 2 forbids the cached path here
+  wrote /workspace/models/cached_gen_dpo.json
+########## instruct ##########
+=== cached-generation gate | stage instruct ===
+  model loaded in 130s
+  injection case uses this stage's A4 dose: L44 frac 0.05 (|alpha| 3.6696)
+  session transcript grown to 370 tokens before timing (A2 measured B3-shaped choice prefixes at 363-411)
+  [session_t0.7_0      ]  11 tok | uncached   2.53s  cached   1.21s | IDS IDENTICAL
+  [session_t0.0_0      ]  10 tok | uncached   1.81s  cached   0.95s | IDS IDENTICAL
+  [session_inject_0    ]  10 tok | uncached   1.83s  cached   0.94s | IDS IDENTICAL
+  [session_t0.7_1      ]  10 tok | uncached   1.81s  cached   0.94s | IDS IDENTICAL
+  [session_t0.0_1      ]  10 tok | uncached   1.81s  cached   0.94s | IDS IDENTICAL
+  [session_inject_1    ]  10 tok | uncached   1.82s  cached   0.94s | IDS IDENTICAL
+  [session_t0.7_2      ]  12 tok | uncached   2.15s  cached   1.14s | IDS IDENTICAL
+  [session_t0.0_2      ]  12 tok | uncached   2.16s  cached   1.18s | IDS IDENTICAL
+  [session_inject_2    ]  15 tok | uncached   2.67s  cached   1.36s | IDS IDENTICAL
+  [session_t0.7_3      ]   8 tok | uncached   1.49s  cached   0.81s | IDS IDENTICAL
+  [session_t0.0_3      ]   9 tok | uncached   1.66s  cached   0.96s | DIVERGE @ 1
+  [session_inject_3    ]  10 tok | uncached   1.83s  cached   0.98s | IDS IDENTICAL
+  [detection_0         ]  13 tok | uncached   1.23s  cached   1.16s | IDS IDENTICAL
+  [detection_1         ]  13 tok | uncached   1.24s  cached   1.15s | IDS IDENTICAL
+
+  all 14 cases : uncached 0.1702 cached 0.0952 s/tok  speedup 1.78x
+  14 multi-token: uncached 0.1702 cached 0.0959 s/tok  speedup 1.78x   <- operative
+  GATE: FAIL -- cached generation diverges; rule 2 forbids the cached path here
+  wrote /workspace/models/cached_gen_instruct.json
+########## REST COMPLETE ##########

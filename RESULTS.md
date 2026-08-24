@@ -20,6 +20,84 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-24 — **CACHED-GENERATION GATE, all four stages: BASE PASSES,
+  SFT/DPO/INSTRUCT FAIL. The cached path is FORBIDDEN for B-phase and A5's
+  uncached budget stands unamended. A5's line calling the cached path "the
+  single largest lever on B3" is WITHDRAWN — the lever exists at exactly one
+  checkpoint and cannot be pulled uniformly. Respawn gates re-passed on the
+  restarted pod first.**
+  (`data/olmo/cached_gen_{v3,v3b,sft,dpo,instruct}.json`; raw
+  [`2026-08-24_cached_gate.txt`](results/raw/2026-08-24_cached_gate.txt),
+  [`_respawn_integrity`](results/raw/2026-08-24_respawn_integrity.txt),
+  [`_respawn_determinism`](results/raw/2026-08-24_respawn_determinism.txt).)
+
+    | stage | gate | diverging | of those, uninjected | speedup |
+    |---|---|---|---|---|
+    | base | **PASS** | 0/14 | — | 1.85× |
+    | base (repeat) | **PASS** | 0/14 | — | 1.85× |
+    | sft | **FAIL** | 4/14 | 2 | 1.81× |
+    | dpo | **FAIL** | 2/14 | **2** | 1.68× |
+    | instruct | **FAIL** | 1/14 | **1** | 1.78× |
+
+  - **The divergences are not about injection and not about sampling.** At
+    DPO and Instruct **every** diverging case is uninjected, and most are at
+    temp 0.0. Greedy decoding removes the sampling channel entirely, so a
+    divergence there is a plain logit difference: on the three post-training
+    checkpoints the cached and uncached paths compute different next-token
+    distributions during ordinary generation. That is a fact about those
+    checkpoints on this backend, not about our instrumentation, and it is
+    worth its own flag independent of any budget question.
+  - **Why the cached path is refused even though Base passes.** Rule 2
+    licenses per model, so Base could legitimately use it. But B3 is a
+    **developmental comparison**, and running Base cached while SFT ran
+    uncached would place a stage-confounded apparatus difference along
+    exactly the axis the study measures. A 1.85× saving does not buy that.
+    **Recommendation: uncached everywhere; A5's budget stands as written.**
+    The decision is the design instance's; the gate result is not.
+  - **Base is again the odd one out — in a fourth and purely mechanical
+    channel.** A1 found Base apart in the label channel, A3 in the axis
+    geometry, A4 in the currency. This is KV-cache numerics, an apparatus
+    property rather than a representational one, and the pattern's
+    recurrence across such different channels is descriptive and
+    unadjudicated (ledger 23). Recorded, not interpreted.
+  - **The gate needed three attempts and the first two were my defects, both
+    caught by not trusting the number.**
+    - **(i) 1-token contamination.** The first run passed 14/14 but eight
+      cases generated a single token — a prefill and a stop, which measures
+      call overhead rather than the cache — and reported 1.07×. Fixed: the
+      headline rate now comes from cases that actually generated.
+    - **(ii) Short prefixes.** The uncached path re-forwards the whole
+      sequence per token, so its cost scales with prefix while the cached
+      path's does not. Transcripts ran ~50 tokens against B3's measured
+      363–411. Fixed: grown with real e2a text to 370 tokens before timing,
+      and `n_prefix_tokens` recorded per row. **1.07× → 1.85× on the same
+      hardware, purely from measuring where B3 operates.**
+    - **(iii) A salted seed, which made both earlier runs uninterpretable.**
+      Cases drew their seed from `abs(hash(label))`, and Python's `str` hash
+      is salted per process — three interpreters gave 4313 / 4286 / 5181 for
+      one label. So the gate never ran the same cases twice: a short-prefix
+      run passed, a long-prefix run failed on `session_inject_1`, and a
+      targeted diagnostic could not reproduce that failure because it was
+      not running that case. **Both prior verdicts were withdrawn**, not
+      averaged. Fixed to `valence_core.discrim.seed_for` (crc32, stable),
+      which exists in this repo for precisely this — and the repeat run then
+      reproduced Base **case-for-case exactly**, which is what makes the
+      current numbers mean anything.
+  - **The per-stage design is what saved it.** Running the gate once on Base
+    and generalizing was the natural shortcut, and the early PASS invited
+    it. It would have licensed a cached path that changes the DV on three of
+    four checkpoints — including at greedy decoding, where nothing would
+    have looked stochastic enough to blame.
+  - **Respawn on the restarted pod, before any of this:** INTEGRITY PASS
+    29/29 files; determinism `repeat-exact(det ON)=True | cached==uncached
+    exact=True maxKL=0.00e+00 | det-OFF repeat-exact=True` — the third
+    independent A100 under this image to return the same three zeros. **Note
+    the tension worth stating plainly:** step (ii)'s kernel gate reports
+    cached==uncached exact at the FIRST token on Base, and this gate finds
+    divergence at later tokens on the other three stages. Those are
+    consistent — one step versus T steps, one stage versus four — and the
+    gap between them is exactly why this gate was built rather than inferred.
+
 - 2026-08-24 — **B2 STIMULUS DISPOSITIONS APPLIED (design block 2026-08-24,
   items 1–8). Both stimuli are now approved and the runner no longer refuses.
   Item 3 resolved: the `Butterflies` duplicate is THEIRS, not our
