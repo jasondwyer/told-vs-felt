@@ -20,6 +20,83 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-24 — **ADDENDUM-g3 v1.1 §6 VALUES-CHECK: GREEN on every checkable
+  item, with TWO FLAGS returned for the design instance and one provenance
+  caveat that changes what "carry over by identity" can mean. [g3-A] joint
+  power 0.9642 ≥ 0.90. Both analyzers self-test GREEN before any B2-r trial
+  (scorer 21/21, `b2r_analyze` 10/10). Budget 3.63 h, single-box.**
+  (`data/olmo/b2r_valuescheck.json`, `b2r_budget.json`;
+  `scripts/b2r_analyze.py`, `box_b2r_sampling_smoke.py`.)
+
+    | §6 item | result |
+    |---|---|
+    | [g3-A] power ≥ 0.9 at n=96, separations shown | **PASS** — joint **0.9642** |
+    | §0.2 / §0.6 tables vs paper and cache | **PASS** — exact |
+    | carry-over identity + Base re-extraction plan | **PASS**, with a caveat |
+    | neutral prompts rule-18 sweep | **PASS** (clean on every binding pool) |
+    | §5 selftests incl. negative-sensitivity case | **PASS** 21/21 + 10/10 |
+    | sampling-reproducibility assertion present | **PASS** (built) |
+    | allocation (§2 24/24; §3 48 = 8×6) | **PASS** |
+    | budget vs anchors §1 1.0 / §2 1.2 / §3 1.1 h | **PASS** — 0.93 / 1.16 / 0.93 |
+
+  - **[g3-A] arithmetic, shown as asked.** At n = 96, Base CP lower bound
+    0.0984 against DPO CP upper 0.0377 — separates. The criterion needs all
+    four pairwise separations, so the honest figure is the **joint**
+    probability, **0.9642**, not the single weakest pair (0.9825).
+    **`base` at 16.4% binds, not `sft` at 22.5%**, being the smaller of the
+    two high rates. "Not close" is right; the exact number is 0.964.
+  - **CARRY-OVER: confirmed, but "identity" is verifiable only to float32 —
+    a provenance gap worth fixing in B2-r.** SFT/DPO/Instruct are at
+    **L44 = L_M**, same eight concepts, same method, same template, all
+    vectors present, norms matching the recorded values to < 2e-3. **Base
+    re-extracts, for two independent reasons** (L60 → L44 *and* fallback →
+    bare). But the recorded `sha16` **cannot be re-derived from the committed
+    npz by construction**: `box_b2_concepts.py:143` fingerprints the
+    **float64** vector while the npz stores `astype(np.float32)`. Not
+    corruption — a fingerprint over an object that was never committed. Under
+    ledger 27 a hash that cannot be checked against the artifact it names is
+    weak provenance. **Recommendation for B2-r's extraction: fingerprint the
+    array AS STORED**, so the record is self-checking. One line, and the
+    check I ran today would then be a real check rather than a norm
+    comparison.
+  - **FLAG 1 — the dose convention has no sanctioned primitive, and it
+    departs from rule 1's letter.** `Injection.at_frac` is documented as
+    *"the only sanctioned constructor (rule 1)"*, and rule 1 reads
+    *"magnitudes **always** frac × R_ℓ"*. B2-r's magnitudes are
+    **strength × ‖v_concept‖** — a different denominator, reaching
+    α/R_ℓ ≈ 3.4 at strength 8. It is expressible (Injection stores unit `u`
+    and a full `alpha`), but constructing it bypasses the sanctioned path.
+    **Proposal, offered not taken:** record α in **both** conventions —
+    their `strength × ‖v‖` *and* the equivalent `frac × R_ℓ` — so rule 1's
+    reporting duty is discharged while their ladder governs the dose. Whether
+    that is a lawful re-expression, a scoped deviation needing its own entry,
+    or a reason to re-express the ladder is **the design instance's call**;
+    Code does not amend rule 1.
+  - **FLAG 2 — the two neutral prompts await approval.** Rule-18 clean on
+    every binding pool. **Code's first draft failed Code's own declared
+    constraint** — *"whatever comes to mind"* borrows exactly the register of
+    MACAR_FRAMING's *"into your mind"*, which is the one register a
+    free-generation potency probe must not borrow — and the constraint scan
+    caught it, not the eye. Replaced pre-run with *"Write a few sentences on
+    any subject you like."*
+  - **`b2r_analyze` committed before any B2-r trial**, with the five declared
+    cases plus the one that matters most: **hit 0/48 against FA 8/48 reads
+    `excludes_downward`, not `includes`** — their Base pattern, a model
+    affirming more on controls than under injection, which the v1 analyzer
+    filed as chance. Also: strength 8 **potent but incoherent** (separates,
+    degenerate fraction 0.60) correctly fails to qualify, so MED_c picks 4.0 —
+    the inverted U enforced by the instrument rather than by intention.
+  - **Sampling assertion built, and it tests a surface the respawn gate never
+    covered.** `OLMoHFAdapter.generate` calls `torch.manual_seed` once per
+    call and samples from the **global** RNG; the determinism gate compares
+    logits and greedy ids, never a sampled draw. At temperature 1.0 an
+    unreproducible draw means no B2-r trial can be re-derived from its
+    recorded seed — so a failure is an incident, not a tolerance.
+  - **Budget:** §1 0.93 h, §2 1.16 h, §3 0.93 h, 12 loads 0.60 h, Base
+    re-extraction 0.2 min → **3.63 h total, single-box holds.** The design
+    instance's anchors (1.0 / 1.2 / 1.1) are accurate to within 0.17 h.
+  - **No B2-r forward runs** until v1.1 commits and the prompts are approved.
+
 - 2026-08-24 — **B2-r INSTRUMENTS BUILT AND SELF-TESTED BEFORE ANY RERUN DATA
   (21/21 PASS), and the v1.1 values-check items that Code can settle are
   SETTLED: the post-trained carry-over holds BY IDENTITY (only Base

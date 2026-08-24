@@ -1,0 +1,31 @@
+{
+ "1_g3A_power": {
+  "pass": true,
+  "detail": "joint=0.9642 >= 0.90"
+ },
+ "2_tables": {
+  "pass": true,
+  "detail": "\u00a70.2 exact; \u00a70.6 means [np.float64(0.1945), np.float64(0.4049), np.float64(0.4455), np.float64(0.1833)]"
+ },
+ "3_carryover": {
+  "pass": true,
+  "detail": "base: L60 norms_ok=True present=True -> RE-EXTRACT; sft: L44 norms_ok=True present=True -> carries; dpo: L44 norms_ok=True present=True -> carries; instruct: L44 norms_ok=True present=True -> carries",
+  "sha_caveat": "recorded sha16 is over the FLOAT64 vector; the npz stores float32, so the fingerprint cannot be re-derived from the committed artifact BY CONSTRUCTION. Not corruption: norms match to float32 precision and all vectors are present. Identity is verified to float32, not bitwise to the sha."
+ },
+ "7_allocation": {
+  "pass": true,
+  "detail": "\u00a72 4x2x3=24 inj, 2x12=24 ctl; \u00a73 8x6=48"
+ },
+ "8_budget": {
+  "pass": true,
+  "detail": "total 3.63 h"
+ },
+ "FLAG_dose_primitive": {
+  "pass": null,
+  "detail": "ADDENDUM-g3's dose convention is raw_vector x strength. Injection.at_frac is documented as 'the only sanctioned constructor (rule 1)', and rule 1 reads 'magnitudes ALWAYS frac x R_l'. B2-r's magnitudes are strength x ||v_concept|| (alpha/R_l ~ 3.4 at strength 8). Expressible -- Injection stores unit u and full alpha -- but it bypasses the sanctioned constructor and departs from rule 1's letter. Proposal, NOT taken: report alpha in BOTH conventions (strength x ||v|| AND the equivalent frac x R_l) so rule 1's reporting duty is met while their ladder governs. DESIGN INSTANCE'S CALL."
+ },
+ "FLAG_prompt_approval": {
+  "pass": null,
+  "detail": "two neutral prompts proposed by Code, rule-18 clean, awaiting design-instance approval (b2r_step1.json -> neutral_prompts.prompts_approved is null)"
+ }
+}
