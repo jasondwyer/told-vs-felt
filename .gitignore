@@ -133,6 +133,10 @@
 # their paradigm, so these words ARE the experiment and the file has to
 # travel with the record rather than sit on one laptop.
 !/data/configs/b2_concepts.json
+# B2 framing arms: Macar's framing verbatim plus this program's own bare
+# register framing. The register-minus-fidelity delta is a named quantity,
+# so the exact wording is measurement rather than presentation.
+!/data/configs/b2_framing.json
 
 # e0 task corpus (48 tasks): the other half of the frozen 1,344-context
 # extraction stimulus.

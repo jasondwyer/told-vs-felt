@@ -20,6 +20,77 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-23 — **B2 RUNNER AND ANALYZER BUILT, analyzer committed before any
+  campaign with its eight pre-committed cases passing. PHASE B IS NOW FULLY
+  BUILT — B1 read, B2 and B3 each with a runner and a pre-committed analyzer.
+  Two stimuli refuse to run until approved, and the analyzer's own self-test
+  caught a wrong reference value in my test comment.**
+  (`scripts/box_b2_detection.py`, `scripts/b2_analyze.py`,
+  `data/configs/b2_framing.json`. Design block item 5(a).)
+  - **What LOCK-g §3 fixes in place, and why the dose one matters.**
+    Injection dose is **that stage's own MED at that stage's A4-selected
+    layer**, so the presence gate is closed by construction: a detection null
+    at a dose never certified causally potent conflates presence with
+    legibility and cannot be read. The runner refuses if the concept vectors
+    were extracted at a different layer than A4 selected — rule 1, nothing
+    inherited. `segment=True` on DV extraction, pre-registered on the A2
+    defect record, with `response_raw` and the truncation point kept per
+    trial.
+  - **Decidable-n floors bind, and they are declared to bind where it
+    hurts.** A cell is evaluated only if ≥16 of 24 control and ≥16 of 24
+    injected trials are decidable. A2 measured **Instruct at 50%
+    undecidable**, so this is expected to bite precisely at the stage the
+    positive control leans on. A below-floor cell is descriptive with a flag
+    and is **never silently read as "includes 0"** — the self-test asserts
+    that a 12/24-undecidable campaign flags all four cells.
+  - **Two stimuli refuse to run until the design instance approves them**,
+    and the refusals are the point rather than a courtesy:
+    - **the eight concepts** — Macar released fifty, so the eight are a
+      decision; the runner prints Code's recommendation and stops.
+    - **the register framing** — PROPOSAL-g names the arm and its
+      constraints but gives no text, and the register-minus-fidelity delta
+      is a **named quantity**, so the wording is measurement rather than
+      presentation. Code drafted one in `b2_framing.json`
+      (`status: AWAITING DESIGN-INSTANCE APPROVAL`) meeting the stated
+      constraints — config-tag vocabulary, no state/mind/thought/inject
+      language, truthful about the 50% rate so rule 19 holds and it is
+      blinding rather than deception, and the same information content as
+      fidelity so the arms differ in REGISTER and not in what the model is
+      told. **It does not run until approved.**
+    - **The fidelity arm needs no approval and gets a guard instead:** the
+      runner asserts the framing in the config is **byte-identical** to
+      `MACAR_FRAMING`, because a drifted copy would quietly make the
+      positive control meaningless.
+  - **The analyzer carries the criterion and no more.** The transition
+    replicates iff, in the fidelity arm, the sensitivity CI **excludes 0 at
+    DPO and Instruct and includes 0 at Base and SFT**. No stage clearing
+    anywhere is a **harness-validation stop**, not a finding. The other
+    patterns have their registered names: earlier onset (SFT onward), later
+    onset (Instruct only), no transition (all four). Anything else is
+    reported as an unnamed partial pattern rather than forced into a label.
+  - **The interval is named, because "exact CIs" does not name one.** Each
+    rate gets a **Clopper-Pearson** interval, exact by construction, from
+    inverting the binomial CDF by bisection (no scipy). The difference gets a
+    **Newcombe** interval built from those two — conservative rather than
+    exact, and **said so** rather than left to be discovered.
+  - **The self-test caught a wrong number in my own test.** The extreme-case
+    check asserted a loose band on Clopper-Pearson(0/24) and annotated it
+    "~0.117". 0.117 is the **one-sided** bound; the two-sided 95% value is
+    **0.142474**. The computation was right and the comment was wrong —
+    which is the way round that survives review, and exactly how a wrong
+    reference value gets believed later. The check now asserts the **closed
+    form** `1 − (α/2)^(1/n)` to 1e-9 instead of a remembered figure.
+  - **Eight pre-committed cases, all passing:** the registered DPO
+    transition; nothing clearing anywhere → harness-validation stop; all four
+    clearing → no transition; earlier onset; later onset; DPO-only → unnamed
+    partial pattern; the below-floor flagging; and the closed-form interval
+    check. Integration-tested against the runner's real output schema, not
+    only synthetic dicts.
+  - **Still gated on the design instance before B2 can run:** the eight
+    concepts, and the register framing. Both are in committed configs with
+    their status fields, so approval is a one-line edit rather than a
+    reconstruction.
+
 - 2026-08-23 — **B2 CONCEPTS: the gap is closed, and it closed differently
   than the adjudication expected. There is NO canonical eight to recover —
   Macar et al.'s released set is FIFTY. All 50 concepts and their 100
