@@ -1,0 +1,41 @@
+########## FINAL READING ##########
+=== [g3-A] CONTROL — the specificity transition ===
+  base      FPR 0.4310  (25/58)  CI [0.3016, 0.5677]  floor BELOW
+  sft       FPR 0.2000  (17/85)  CI [0.1210, 0.3008]  floor OK
+  dpo       FPR 0.0000  (0/91)  CI [0.0000, 0.0397]  floor OK
+  instruct  FPR 0.0000  (0/91)  CI [0.0000, 0.0397]  floor OK
+    base>dpo           True
+    base>instruct      True
+    sft>dpo            True
+    sft>instruct       True
+  READING: TRANSITION REPLICATES — specificity acquired across post-training, the quantity their OLMo result occupies
+
+=== [g3-B] QUALIFICATION — the dose ladder ===
+  base      MED_c = None   *** HARD STOP for this stage in §3 ***
+    s=1.0   about 0.167  separates False degen 0.00  coherent True  -> no
+    s=2.0   about 0.292  separates False degen 0.04  coherent True  -> no
+    s=4.0   about 0.667  separates True  degen 0.83  coherent False -> no
+    s=8.0   about 0.750  separates True  degen 1.00  coherent False -> no
+  sft       MED_c = 1.0
+    s=1.0   about 0.667  separates True  degen 0.00  coherent True  -> QUALIFIES
+    s=2.0   about 1.000  separates True  degen 0.42  coherent False -> no
+    s=4.0   about 0.708  separates True  degen 1.00  coherent False -> no
+    s=8.0   about 0.750  separates True  degen 1.00  coherent False -> no
+  dpo       MED_c = 1.0
+    s=1.0   about 0.500  separates True  degen 0.04  coherent True  -> QUALIFIES
+    s=2.0   about 0.917  separates True  degen 0.33  coherent False -> no
+    s=4.0   about 0.625  separates True  degen 0.46  coherent False -> no
+    s=8.0   about 0.750  separates True  degen 0.88  coherent False -> no
+  instruct  MED_c = 1.0
+    s=1.0   about 0.500  separates True  degen 0.04  coherent True  -> QUALIFIES
+    s=2.0   about 0.833  separates True  degen 0.29  coherent False -> no
+    s=4.0   about 0.625  separates True  degen 0.46  coherent False -> no
+    s=8.0   about 0.750  separates True  degen 0.79  coherent False -> no
+
+=== §3 EXPLORATION — descriptive, NO criterion attaches ===
+  sft       TPR 0.3000  FPR 0.2045  sens +0.0955  CI [-0.1048, +0.2921]  includes  screen_hit=False  floor OK
+  dpo       TPR 0.0000  FPR 0.0000  sens +0.0000  CI [-0.0787, +0.0822]  includes  screen_hit=False  floor OK
+  instruct  TPR 0.0000  FPR 0.0000  sens +0.0000  CI [-0.0771, +0.0804]  includes  screen_hit=False  floor OK
+
+  wrote /workspace/repo/jspace-lab/data/olmo/b2r_analysis.json
+  DISPOSITION IS THE DESIGN INSTANCE'S.

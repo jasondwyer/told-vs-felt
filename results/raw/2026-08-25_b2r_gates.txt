@@ -1,0 +1,59 @@
+########## SAMPLING ASSERTION | base ##########
+
+=== sampling reproducibility | stage base | temp 1.0 ===
+  [control ] 100 tok | same seed -> IDENTICAL
+  [injected] 100 tok | same seed -> IDENTICAL
+  wrote /workspace/repo/jspace-lab/data/olmo/b2r_sampling_base.json
+  ASSERTION PASSED
+
+########## SAMPLING ASSERTION | sft ##########
+
+=== sampling reproducibility | stage sft | temp 1.0 ===
+  [control ]   1 tok | same seed -> IDENTICAL
+  [injected] 100 tok | same seed -> IDENTICAL
+  wrote /workspace/repo/jspace-lab/data/olmo/b2r_sampling_sft.json
+  ASSERTION PASSED
+
+########## SAMPLING ASSERTION | dpo ##########
+
+=== sampling reproducibility | stage dpo | temp 1.0 ===
+  [control ]  17 tok | same seed -> IDENTICAL
+  [injected] 100 tok | same seed -> IDENTICAL
+  wrote /workspace/repo/jspace-lab/data/olmo/b2r_sampling_dpo.json
+  ASSERTION PASSED
+
+########## SAMPLING ASSERTION | instruct ##########
+
+=== sampling reproducibility | stage instruct | temp 1.0 ===
+  [control ]   1 tok | same seed -> IDENTICAL
+  [injected] 100 tok | same seed -> IDENTICAL
+  wrote /workspace/repo/jspace-lab/data/olmo/b2r_sampling_instruct.json
+  ASSERTION PASSED
+
+########## BASE RE-EXTRACTION ##########
+
+=== B2-r concept vectors | stage base | L44 ===
+  model loaded in 30s
+  format (v1.2 §0.4): BARE base-model template
+  template: 'Tell me about <Concept>'
+  fingerprints: AS STORED (float32), re-derivable from the npz
+    Satellites         |v|   55.4278  sha(as stored) e0392594057a1c95
+    Trumpets           |v|   48.8353  sha(as stored) e2b04e8a96a705ea
+    Origami            |v|   58.4226  sha(as stored) 5a5dfae745ee501c
+    Illusions          |v|   62.7851  sha(as stored) 0f9c7d10416adedb
+    Cameras            |v|   52.5255  sha(as stored) f541e241fc003b25
+    Lightning          |v|   70.6137  sha(as stored) 0dc7a9904e2298a1
+    Constellations     |v|   53.1542  sha(as stored) 586ab6f834befc18
+    Treasures          |v|   60.2898  sha(as stored) df9775f002ff5c9c
+
+  fingerprints re-derive from the written npz: True
+  wrote /workspace/repo/jspace-lab/data/olmo/b2r_concepts_base.json
+  wrote /workspace/repo/jspace-lab/data/olmo/b2r_concepts_base.npz  (39s)
+  commit BOTH before the pod stops (ledger 27); recompute the Base frac rows of b2r_frac_table.json from these norms before any Base dose realizes
+
+########## BASE FRAC RECOMPUTE ##########
+  Satellites      |v|   55.4278  frac s=1 0.7801  s=8 6.2411
+  Trumpets        |v|   48.8353  frac s=1 0.6873  s=8 5.4988
+  Origami         |v|   58.4226  frac s=1 0.8223  s=8 6.5783
+  Illusions       |v|   62.7851  frac s=1 0.8837  s=8 7.0695
+  base frac rows recomputed and no longer provisional

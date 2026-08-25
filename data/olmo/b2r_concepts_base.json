@@ -1,0 +1,104 @@
+{
+ "item": "B2r-concepts",
+ "stage": "base",
+ "layer": 44,
+ "layer_rule": "L_M = int(64 * 0.7) = 44, their rule (model_utils.py:1484); NOT the A4 selection",
+ "extraction_format": "bare",
+ "format_rule": "v1.2 \u00a70.4, following their own per-stage practice",
+ "fingerprint_convention": "AS STORED (float32 as written to the npz); the predecessor hashed the pre-cast float64, an object never committed",
+ "provenance": {
+  "adapter": "olmo-hf",
+  "path": "/workspace/models/base",
+  "dtype": "bfloat16",
+  "backend": "torch/cuda",
+  "device": "cuda",
+  "gpu": "NVIDIA A100-SXM4-80GB",
+  "cuda": "12.8",
+  "capability": [
+   8,
+   0
+  ],
+  "deterministic": true,
+  "cublas_workspace_config": ":4096:8",
+  "seed": 20260818,
+  "choice_window_declared": 8192,
+  "n_layers": 64,
+  "library_versions": {
+   "torch": "2.8.0+cu128",
+   "transformers": "5.15.0",
+   "accelerate": "1.14.0",
+   "safetensors": "0.8.0",
+   "huggingface_hub": "1.28.0",
+   "numpy": "2.1.2"
+  },
+  "python": "3.12.3"
+ },
+ "selftest": false,
+ "macar_provenance": {
+  "repo": "github.com/safety-research/introspection-mechanisms",
+  "commit_sha": "5d5d9b485e293dc766c3a056cfe50283a7e435b6",
+  "default_branch": "main",
+  "pushed_at": "2026-04-16T23:16:54Z",
+  "recovered_utc": "2026-08-23",
+  "concepts_source": "experiments/01_concept_injection.py:58 (DEFAULT_TEST_CONCEPTS, comment: '50 words from the paper')",
+  "baseline_source": "src/vector_utils.py:448 (get_baseline_words) -> DEFAULT_BASELINE_WORDS[:100]",
+  "method_source": "src/vector_utils.py:114 (extract_concept_vector_with_baseline)"
+ },
+ "concepts": [
+  "Satellites",
+  "Trumpets",
+  "Origami",
+  "Illusions",
+  "Cameras",
+  "Lightning",
+  "Constellations",
+  "Treasures"
+ ],
+ "n_baseline": 100,
+ "baseline_mean_sha16_as_stored": "2a4b70be9e757e8c",
+ "vectors": {
+  "Satellites": {
+   "sha16_as_stored": "e0392594057a1c95",
+   "norm_as_stored": 55.42778015136719,
+   "dtype": "float32"
+  },
+  "Trumpets": {
+   "sha16_as_stored": "e2b04e8a96a705ea",
+   "norm_as_stored": 48.8353385925293,
+   "dtype": "float32"
+  },
+  "Origami": {
+   "sha16_as_stored": "5a5dfae745ee501c",
+   "norm_as_stored": 58.422584533691406,
+   "dtype": "float32"
+  },
+  "Illusions": {
+   "sha16_as_stored": "0f9c7d10416adedb",
+   "norm_as_stored": 62.78514862060547,
+   "dtype": "float32"
+  },
+  "Cameras": {
+   "sha16_as_stored": "f541e241fc003b25",
+   "norm_as_stored": 52.52545166015625,
+   "dtype": "float32"
+  },
+  "Lightning": {
+   "sha16_as_stored": "0dc7a9904e2298a1",
+   "norm_as_stored": 70.61372375488281,
+   "dtype": "float32"
+  },
+  "Constellations": {
+   "sha16_as_stored": "586ab6f834befc18",
+   "norm_as_stored": 53.154197692871094,
+   "dtype": "float32"
+  },
+  "Treasures": {
+   "sha16_as_stored": "df9775f002ff5c9c",
+   "norm_as_stored": 60.289772033691406,
+   "dtype": "float32"
+  }
+ },
+ "seconds": 39.29082465171814,
+ "vectors_npz": "b2r_concepts_base.npz",
+ "fingerprints_roundtrip": true
+}

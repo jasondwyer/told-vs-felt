@@ -1,0 +1,311 @@
+{
+ "item": "B2-r analysis",
+ "lock": "ADDENDUM-g3 v1.2",
+ "g3a": {
+  "criterion": "[g3-A]",
+  "reading": "TRANSITION REPLICATES \u2014 specificity acquired across post-training, the quantity their OLMo result occupies",
+  "separations": {
+   "base>dpo": true,
+   "base>instruct": true,
+   "sft>dpo": true,
+   "sft>instruct": true
+  },
+  "all_four_separate": true,
+  "rates": {
+   "base": {
+    "fpr": 0.43103448275862066,
+    "k": 25,
+    "n": 58,
+    "ci": [
+     0.30162454229220015,
+     0.5677301833191022
+    ],
+    "meets_floor": false
+   },
+   "sft": {
+    "fpr": 0.2,
+    "k": 17,
+    "n": 85,
+    "ci": [
+     0.121041845079503,
+     0.3007931210542433
+    ],
+    "meets_floor": true
+   },
+   "dpo": {
+    "fpr": 0.0,
+    "k": 0,
+    "n": 91,
+    "ci": [
+     0.0,
+     0.039726497691849605
+    ],
+    "meets_floor": true
+   },
+   "instruct": {
+    "fpr": 0.0,
+    "k": 0,
+    "n": 91,
+    "ci": [
+     0.0,
+     0.039726497691849605
+    ],
+    "meets_floor": true
+   }
+  },
+  "cells_below_floor": [
+   "base"
+  ]
+ },
+ "g3b": {
+  "base": {
+   "criterion": "[g3-B]",
+   "MED_c": null,
+   "ladder": {
+    "1.0": {
+     "about_rate": 0.16666666666666666,
+     "ci": [
+      0.04735362660725713,
+      0.3738417134886828
+     ],
+     "separates": false,
+     "degenerate_frac": 0.0,
+     "coherent": true,
+     "passes": false
+    },
+    "2.0": {
+     "about_rate": 0.2916666666666667,
+     "ci": [
+      0.1261520885236913,
+      0.5109478138578332
+     ],
+     "separates": false,
+     "degenerate_frac": 0.041666666666666664,
+     "coherent": true,
+     "passes": false
+    },
+    "4.0": {
+     "about_rate": 0.6666666666666666,
+     "ci": [
+      0.44678038434035194,
+      0.8436977142908648
+     ],
+     "separates": true,
+     "degenerate_frac": 0.8333333333333334,
+     "coherent": false,
+     "passes": false
+    },
+    "8.0": {
+     "about_rate": 0.75,
+     "ci": [
+      0.5328871975773306,
+      0.902269590525467
+     ],
+     "separates": true,
+     "degenerate_frac": 1.0,
+     "coherent": false,
+     "passes": false
+    }
+   },
+   "hard_stop": true,
+   "note": "MED_c is the LOWEST strength passing potency AND coherence; no pass -> this stage HARD-STOPS in \u00a73"
+  },
+  "sft": {
+   "criterion": "[g3-B]",
+   "MED_c": 1.0,
+   "ladder": {
+    "1.0": {
+     "about_rate": 0.6666666666666666,
+     "ci": [
+      0.44678038434035194,
+      0.8436977142908648
+     ],
+     "separates": true,
+     "degenerate_frac": 0.0,
+     "coherent": true,
+     "passes": true
+    },
+    "2.0": {
+     "about_rate": 1.0,
+     "ci": [
+      0.8575264022774742,
+      1.0
+     ],
+     "separates": true,
+     "degenerate_frac": 0.4166666666666667,
+     "coherent": false,
+     "passes": false
+    },
+    "4.0": {
+     "about_rate": 0.7083333333333334,
+     "ci": [
+      0.48905218614216683,
+      0.8738479114763087
+     ],
+     "separates": true,
+     "degenerate_frac": 1.0,
+     "coherent": false,
+     "passes": false
+    },
+    "8.0": {
+     "about_rate": 0.75,
+     "ci": [
+      0.5328871975773306,
+      0.902269590525467
+     ],
+     "separates": true,
+     "degenerate_frac": 1.0,
+     "coherent": false,
+     "passes": false
+    }
+   },
+   "hard_stop": false,
+   "note": "MED_c is the LOWEST strength passing potency AND coherence; no pass -> this stage HARD-STOPS in \u00a73"
+  },
+  "dpo": {
+   "criterion": "[g3-B]",
+   "MED_c": 1.0,
+   "ladder": {
+    "1.0": {
+     "about_rate": 0.5,
+     "ci": [
+      0.2912417798362119,
+      0.7087582201637881
+     ],
+     "separates": true,
+     "degenerate_frac": 0.041666666666666664,
+     "coherent": true,
+     "passes": true
+    },
+    "2.0": {
+     "about_rate": 0.9166666666666666,
+     "ci": [
+      0.7300271984423963,
+      0.9897436587187498
+     ],
+     "separates": true,
+     "degenerate_frac": 0.3333333333333333,
+     "coherent": false,
+     "passes": false
+    },
+    "4.0": {
+     "about_rate": 0.625,
+     "ci": [
+      0.40593638400794396,
+      0.8120070718039978
+     ],
+     "separates": true,
+     "degenerate_frac": 0.4583333333333333,
+     "coherent": false,
+     "passes": false
+    },
+    "8.0": {
+     "about_rate": 0.75,
+     "ci": [
+      0.5328871975773306,
+      0.902269590525467
+     ],
+     "separates": true,
+     "degenerate_frac": 0.875,
+     "coherent": false,
+     "passes": false
+    }
+   },
+   "hard_stop": false,
+   "note": "MED_c is the LOWEST strength passing potency AND coherence; no pass -> this stage HARD-STOPS in \u00a73"
+  },
+  "instruct": {
+   "criterion": "[g3-B]",
+   "MED_c": 1.0,
+   "ladder": {
+    "1.0": {
+     "about_rate": 0.5,
+     "ci": [
+      0.2912417798362119,
+      0.7087582201637881
+     ],
+     "separates": true,
+     "degenerate_frac": 0.041666666666666664,
+     "coherent": true,
+     "passes": true
+    },
+    "2.0": {
+     "about_rate": 0.8333333333333334,
+     "ci": [
+      0.6261582865113173,
+      0.9526463733927428
+     ],
+     "separates": true,
+     "degenerate_frac": 0.2916666666666667,
+     "coherent": false,
+     "passes": false
+    },
+    "4.0": {
+     "about_rate": 0.625,
+     "ci": [
+      0.40593638400794396,
+      0.8120070718039978
+     ],
+     "separates": true,
+     "degenerate_frac": 0.4583333333333333,
+     "coherent": false,
+     "passes": false
+    },
+    "8.0": {
+     "about_rate": 0.75,
+     "ci": [
+      0.5328871975773306,
+      0.902269590525467
+     ],
+     "separates": true,
+     "degenerate_frac": 0.7916666666666666,
+     "coherent": false,
+     "passes": false
+    }
+   },
+   "hard_stop": false,
+   "note": "MED_c is the LOWEST strength passing potency AND coherence; no pass -> this stage HARD-STOPS in \u00a73"
+  }
+ },
+ "explore": {
+  "sft": {
+   "tpr": 0.3,
+   "fpr": 0.20454545454545456,
+   "sensitivity": 0.09545454545454543,
+   "ci": [
+    -0.104815722090279,
+    0.29210705479218074
+   ],
+   "ci_state": "includes",
+   "meets_floor": true,
+   "screen_hit": false,
+   "note": "a screen hit licenses a fresh confirmatory pre-registration and issues no claim; a null concludes nothing at this n (their aggregate 2.9% is below the ~0.15-0.20 floor)"
+  },
+  "dpo": {
+   "tpr": 0.0,
+   "fpr": 0.0,
+   "sensitivity": 0.0,
+   "ci": [
+    -0.07870510040684303,
+    0.08221112115413848
+   ],
+   "ci_state": "includes",
+   "meets_floor": true,
+   "screen_hit": false,
+   "note": "a screen hit licenses a fresh confirmatory pre-registration and issues no claim; a null concludes nothing at this n (their aggregate 2.9% is below the ~0.15-0.20 floor)"
+  },
+  "instruct": {
+   "tpr": 0.0,
+   "fpr": 0.0,
+   "sensitivity": 0.0,
+   "ci": [
+    -0.07706182705190073,
+    0.08041993976357592
+   ],
+   "ci_state": "includes",
+   "meets_floor": true,
+   "screen_hit": false,
+   "note": "a screen hit licenses a fresh confirmatory pre-registration and issues no claim; a null concludes nothing at this n (their aggregate 2.9% is below the ~0.15-0.20 floor)"
+  }
+ }
+}

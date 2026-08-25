@@ -1,0 +1,374 @@
+### B2-r ARC — ADDENDUM-g3 v1.2 (f14d249), 2026-08-25 ###
+##### B2-r ARC START (02:48:22Z) #####
+  host      : e20d15c50c5b
+  gpu       : NVIDIA A100-SXM4-80GB, 81920 MiB, 580.126.20
+  repo head : 745c196 (stamped from the laptop)
+  lock      : ADDENDUM-g3 v1.2 (f14d249)
+  decoding  : temp 1.0, max 100, uncached, seeds live
+##### RESPAWN (i) INTEGRITY (02:48:22Z) #####
+  ok  base/config.json                            fb68c4a03d7c76c0…
+  ok  base/generation_config.json                 22f3a81ca2eba62d…
+  ok  base/model-00001-of-00002.safetensors       d384e7200a3b7288…
+  ok  base/model-00002-of-00002.safetensors       3a76a8b39b4d15a6…
+  ok  base/model.safetensors.index.json           d5ee0e4ca1a9d612…
+  ok  base/tokenizer.json                         18e309ad7f9c6003…
+  ok  base/tokenizer_config.json                  2317ca4e61ec1f0d…
+  ok  sft/config.json                            d4353598256e1c18…
+  ok  sft/generation_config.json                 5ef6cdd2cad01339…
+  ok  sft/model-00001-of-00002.safetensors       dff78e31dabd8fc0…
+  ok  sft/model-00002-of-00002.safetensors       22760ed16b777f8d…
+  ok  sft/model.safetensors.index.json           d5ee0e4ca1a9d612…
+  ok  sft/tokenizer.json                         75f0d78a15d3bd66…
+  ok  sft/tokenizer_config.json                  781d8fc9378824b3…
+  ok  dpo/config.json                            d4353598256e1c18…
+  ok  dpo/generation_config.json                 5ef6cdd2cad01339…
+  ok  dpo/model-00001-of-00002.safetensors       19113448c9b068d3…
+  ok  dpo/model-00002-of-00002.safetensors       470d3b9372f85bbf…
+  ok  dpo/model.safetensors.index.json           d5ee0e4ca1a9d612…
+  ok  dpo/tokenizer.json                         75f0d78a15d3bd66…
+  ok  dpo/tokenizer_config.json                  781d8fc9378824b3…
+  ok  instruct/chat_template.jinja                    49a944c9814e130b…
+  ok  instruct/config.json                            2b88d809d17fddbb…
+  ok  instruct/generation_config.json                 7f366a60e746e126…
+  ok  instruct/model-00001-of-00002.safetensors       c6ef45ecb3e412e7…
+  ok  instruct/model-00002-of-00002.safetensors       7eb9e173b067e8b7…
+  ok  instruct/model.safetensors.index.json           d5ee0e4ca1a9d612…
+  ok  instruct/tokenizer.json                         75f0d78a15d3bd66…
+  ok  instruct/tokenizer_config.json                  781d8fc9378824b3…
+
+INTEGRITY PASS — 29 files match the manifest across 4 checkpoints.
+Step (ii) is NOT implied: re-run box_determinism.py on this backend and log it before any experimental forward.
+##### RESPAWN (ii) BACKEND CHARACTERIZATION (02:51:48Z) #####
+
+{
+ "adapter": "olmo-hf",
+ "path": "/workspace/models/base",
+ "dtype": "bfloat16",
+ "backend": "torch/cuda",
+ "device": "cuda",
+ "gpu": "NVIDIA A100-SXM4-80GB",
+ "cuda": "12.8",
+ "capability": [
+  8,
+  0
+ ],
+ "deterministic": true,
+ "cublas_workspace_config": ":4096:8",
+ "seed": 20260818,
+ "choice_window_declared": 8192,
+ "n_layers": 64,
+ "library_versions": {
+  "torch": "2.8.0+cu128",
+  "transformers": "5.15.0",
+  "accelerate": "1.14.0",
+  "safetensors": "0.8.0",
+  "huggingface_hub": "1.28.0",
+  "numpy": "2.1.2"
+ },
+ "python": "3.12.3"
+}
+
+=== A. repeat determinism (deterministic=True) ===
+  probe 0: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 1: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 2: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 3: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 4: exact=True max|d|=0.000e+00 symKL=0.000e+00
+
+=== C. kernel path: cached vs uncached (rule-2 gate) ===
+  probe 0: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 1: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 2: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 3: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  probe 4: exact=True max|d|=0.000e+00 symKL=0.000e+00
+  worst symKL 0.000e+00 vs 1e-3 bar -> PASS (cached path licensed)
+
+=== B. deterministic_algorithms OFF ===
+
+  probe 0: repeat exact=True max|d|=0.000e+00 | vs det-ON max|d|=0.000e+00 symKL=0.000e+00
+  probe 1: repeat exact=True max|d|=0.000e+00 | vs det-ON max|d|=0.000e+00 symKL=0.000e+00
+  probe 2: repeat exact=True max|d|=0.000e+00 | vs det-ON max|d|=0.000e+00 symKL=0.000e+00
+  probe 3: repeat exact=True max|d|=0.000e+00 | vs det-ON max|d|=0.000e+00 symKL=0.000e+00
+  probe 4: repeat exact=True max|d|=0.000e+00 | vs det-ON max|d|=0.000e+00 symKL=0.000e+00
+
+wrote /workspace/models/determinism_base.json
+SUMMARY: repeat-exact(det ON)=True | cached==uncached exact=True maxKL=0.00e+00 | det-OFF repeat-exact=True
+##### BASE RE-EXTRACTION (L44, bare template, as-stored fingerprints) (02:52:39Z) #####
+
+=== B2-r concept vectors | stage base | L44 ===
+  model loaded in 30s
+  format (v1.2 §0.4): BARE base-model template
+  template: 'Tell me about <Concept>'
+  fingerprints: AS STORED (float32), re-derivable from the npz
+    Satellites         |v|   55.4278  sha(as stored) e0392594057a1c95
+    Trumpets           |v|   48.8353  sha(as stored) e2b04e8a96a705ea
+    Origami            |v|   58.4226  sha(as stored) 5a5dfae745ee501c
+    Illusions          |v|   62.7851  sha(as stored) 0f9c7d10416adedb
+    Cameras            |v|   52.5255  sha(as stored) f541e241fc003b25
+    Lightning          |v|   70.6137  sha(as stored) 0dc7a9904e2298a1
+    Constellations     |v|   53.1542  sha(as stored) 586ab6f834befc18
+    Treasures          |v|   60.2898  sha(as stored) df9775f002ff5c9c
+
+  fingerprints re-derive from the written npz: True
+  wrote /workspace/repo/jspace-lab/data/olmo/b2r_concepts_base.json
+  wrote /workspace/repo/jspace-lab/data/olmo/b2r_concepts_base.npz  (39s)
+  commit BOTH before the pod stops (ledger 27); recompute the Base frac rows of b2r_frac_table.json from these norms before any Base dose realizes
+##### RECOMPUTE BASE FRAC ROWS (they were provisional) (02:53:20Z) #####
+  Satellites      |v|   55.4278  frac s=1 0.7801  s=8 6.2411
+  Trumpets        |v|   48.8353  frac s=1 0.6873  s=8 5.4988
+  Origami         |v|   58.4226  frac s=1 0.8223  s=8 6.5783
+  Illusions       |v|   62.7851  frac s=1 0.8837  s=8 7.0695
+  base frac rows recomputed and no longer provisional
+##### SAMPLING REPRODUCIBILITY | base (02:53:20Z) #####
+
+=== sampling reproducibility | stage base | temp 1.0 ===
+  [control ] 100 tok | same seed -> IDENTICAL
+  [injected] 100 tok | same seed -> IDENTICAL
+  wrote /workspace/repo/jspace-lab/data/olmo/b2r_sampling_base.json
+  ASSERTION PASSED
+##### SAMPLING REPRODUCIBILITY | sft (02:54:31Z) #####
+
+=== sampling reproducibility | stage sft | temp 1.0 ===
+  [control ]   1 tok | same seed -> IDENTICAL
+  [injected] 100 tok | same seed -> IDENTICAL
+  wrote /workspace/repo/jspace-lab/data/olmo/b2r_sampling_sft.json
+  ASSERTION PASSED
+##### SAMPLING REPRODUCIBILITY | dpo (02:55:36Z) #####
+
+=== sampling reproducibility | stage dpo | temp 1.0 ===
+  [control ]  17 tok | same seed -> IDENTICAL
+  [injected] 100 tok | same seed -> IDENTICAL
+  wrote /workspace/repo/jspace-lab/data/olmo/b2r_sampling_dpo.json
+  ASSERTION PASSED
+##### SAMPLING REPRODUCIBILITY | instruct (02:56:40Z) #####
+
+=== sampling reproducibility | stage instruct | temp 1.0 ===
+  [control ]   1 tok | same seed -> IDENTICAL
+  [injected] 100 tok | same seed -> IDENTICAL
+  wrote /workspace/repo/jspace-lab/data/olmo/b2r_sampling_instruct.json
+  ASSERTION PASSED
+##### ALL THREE GATES PASS — experimental forwards licensed (02:58:03Z) #####
+##### §1 CONTROL | base (02:58:03Z) #####
+
+=== B2-r control | stage base | temp 1.0 | max 100 ===
+  model loaded in 38s
+    24/96 control trials
+    48/96 control trials
+    72/96 control trials
+    96/96 control trials
+
+  wrote /workspace/repo/jspace-lab/data/olmo/b2r_control_base.json  (955s)
+##### §1 CONTROL | sft (03:14:00Z) #####
+
+=== B2-r control | stage sft | temp 1.0 | max 100 ===
+  model loaded in 31s
+    24/96 control trials
+    48/96 control trials
+    72/96 control trials
+    96/96 control trials
+
+  wrote /workspace/repo/jspace-lab/data/olmo/b2r_control_sft.json  (947s)
+##### §1 CONTROL | dpo (03:29:48Z) #####
+
+=== B2-r control | stage dpo | temp 1.0 | max 100 ===
+  model loaded in 33s
+    24/96 control trials
+    48/96 control trials
+    72/96 control trials
+    96/96 control trials
+
+  wrote /workspace/repo/jspace-lab/data/olmo/b2r_control_dpo.json  (943s)
+##### §1 CONTROL | instruct (03:45:32Z) #####
+
+=== B2-r control | stage instruct | temp 1.0 | max 100 ===
+  model loaded in 57s
+    24/96 control trials
+    48/96 control trials
+    72/96 control trials
+    96/96 control trials
+
+  wrote /workspace/repo/jspace-lab/data/olmo/b2r_control_instruct.json  (974s)
+##### [g3-A] READING (04:01:47Z) #####
+=== [g3-A] CONTROL — the specificity transition ===
+  base      FPR 0.4310  (25/58)  CI [0.3016, 0.5677]  floor BELOW
+  sft       FPR 0.2000  (17/85)  CI [0.1210, 0.3008]  floor OK
+  dpo       FPR 0.0000  (0/91)  CI [0.0000, 0.0397]  floor OK
+  instruct  FPR 0.0000  (0/91)  CI [0.0000, 0.0397]  floor OK
+    base>dpo           True
+    base>instruct      True
+    sft>dpo            True
+    sft>instruct       True
+  READING: TRANSITION REPLICATES — specificity acquired across post-training, the quantity their OLMo result occupies
+
+  wrote /workspace/repo/jspace-lab/data/olmo/b2r_analysis.json
+  DISPOSITION IS THE DESIGN INSTANCE'S.
+##### §2 QUALIFICATION | base (04:01:48Z) #####
+
+=== B2-r qualify | stage base | temp 1.0 | max 100 ===
+  model loaded in 37s
+    strength 1.0: about 4/24, degen 0.00
+    strength 2.0: about 7/24, degen 0.04
+    strength 4.0: about 16/24, degen 0.83
+    strength 8.0: about 18/24, degen 1.00
+
+  wrote /workspace/repo/jspace-lab/data/olmo/b2r_qualify_base.json  (980s)
+##### §2 QUALIFICATION | sft (04:18:09Z) #####
+
+=== B2-r qualify | stage sft | temp 1.0 | max 100 ===
+  model loaded in 37s
+    strength 1.0: about 16/24, degen 0.00
+    strength 2.0: about 24/24, degen 0.42
+    strength 4.0: about 17/24, degen 1.00
+    strength 8.0: about 18/24, degen 1.00
+
+  wrote /workspace/repo/jspace-lab/data/olmo/b2r_qualify_sft.json  (984s)
+##### §2 QUALIFICATION | dpo (04:34:35Z) #####
+
+=== B2-r qualify | stage dpo | temp 1.0 | max 100 ===
+  model loaded in 38s
+    strength 1.0: about 12/24, degen 0.04
+    strength 2.0: about 22/24, degen 0.33
+    strength 4.0: about 15/24, degen 0.46
+    strength 8.0: about 18/24, degen 0.88
+
+  wrote /workspace/repo/jspace-lab/data/olmo/b2r_qualify_dpo.json  (984s)
+##### §2 QUALIFICATION | instruct (04:51:01Z) #####
+
+=== B2-r qualify | stage instruct | temp 1.0 | max 100 ===
+  model loaded in 37s
+    strength 1.0: about 12/24, degen 0.04
+    strength 2.0: about 20/24, degen 0.29
+    strength 4.0: about 15/24, degen 0.46
+    strength 8.0: about 18/24, degen 0.79
+
+  wrote /workspace/repo/jspace-lab/data/olmo/b2r_qualify_instruct.json  (990s)
+##### [g3-B] READING (05:07:33Z) #####
+=== [g3-A] CONTROL — the specificity transition ===
+  base      FPR 0.4310  (25/58)  CI [0.3016, 0.5677]  floor BELOW
+  sft       FPR 0.2000  (17/85)  CI [0.1210, 0.3008]  floor OK
+  dpo       FPR 0.0000  (0/91)  CI [0.0000, 0.0397]  floor OK
+  instruct  FPR 0.0000  (0/91)  CI [0.0000, 0.0397]  floor OK
+    base>dpo           True
+    base>instruct      True
+    sft>dpo            True
+    sft>instruct       True
+  READING: TRANSITION REPLICATES — specificity acquired across post-training, the quantity their OLMo result occupies
+
+=== [g3-B] QUALIFICATION — the dose ladder ===
+  base      MED_c = None   *** HARD STOP for this stage in §3 ***
+    s=1.0   about 0.167  separates False degen 0.00  coherent True  -> no
+    s=2.0   about 0.292  separates False degen 0.04  coherent True  -> no
+    s=4.0   about 0.667  separates True  degen 0.83  coherent False -> no
+    s=8.0   about 0.750  separates True  degen 1.00  coherent False -> no
+  sft       MED_c = 1.0
+    s=1.0   about 0.667  separates True  degen 0.00  coherent True  -> QUALIFIES
+    s=2.0   about 1.000  separates True  degen 0.42  coherent False -> no
+    s=4.0   about 0.708  separates True  degen 1.00  coherent False -> no
+    s=8.0   about 0.750  separates True  degen 1.00  coherent False -> no
+  dpo       MED_c = 1.0
+    s=1.0   about 0.500  separates True  degen 0.04  coherent True  -> QUALIFIES
+    s=2.0   about 0.917  separates True  degen 0.33  coherent False -> no
+    s=4.0   about 0.625  separates True  degen 0.46  coherent False -> no
+    s=8.0   about 0.750  separates True  degen 0.88  coherent False -> no
+  instruct  MED_c = 1.0
+    s=1.0   about 0.500  separates True  degen 0.04  coherent True  -> QUALIFIES
+    s=2.0   about 0.833  separates True  degen 0.29  coherent False -> no
+    s=4.0   about 0.625  separates True  degen 0.46  coherent False -> no
+    s=8.0   about 0.750  separates True  degen 0.79  coherent False -> no
+
+  wrote /workspace/repo/jspace-lab/data/olmo/b2r_analysis.json
+  DISPOSITION IS THE DESIGN INSTANCE'S.
+##### §3 SKIPPED | base — no qualified MED_c (HARD STOP by design, §2) #####
+##### §3 EXPLORATION | sft | MED_c = 1.0 (05:07:33Z) #####
+
+=== B2-r explore | stage sft | temp 1.0 | max 100 ===
+  model loaded in 37s
+    24/96 trials
+    48/96 trials
+    72/96 trials
+    96/96 trials
+
+  wrote /workspace/repo/jspace-lab/data/olmo/b2r_explore_sft.json  (954s)
+##### §3 EXPLORATION | dpo | MED_c = 1.0 (05:23:29Z) #####
+
+=== B2-r explore | stage dpo | temp 1.0 | max 100 ===
+  model loaded in 37s
+    24/96 trials
+    48/96 trials
+    72/96 trials
+    96/96 trials
+
+  wrote /workspace/repo/jspace-lab/data/olmo/b2r_explore_dpo.json  (954s)
+##### §3 EXPLORATION | instruct | MED_c = 1.0 (05:39:24Z) #####
+
+=== B2-r explore | stage instruct | temp 1.0 | max 100 ===
+  model loaded in 38s
+    24/96 trials
+    48/96 trials
+    72/96 trials
+    96/96 trials
+
+  wrote /workspace/repo/jspace-lab/data/olmo/b2r_explore_instruct.json  (955s)
+##### FINAL READING (05:55:21Z) #####
+=== [g3-A] CONTROL — the specificity transition ===
+  base      FPR 0.4310  (25/58)  CI [0.3016, 0.5677]  floor BELOW
+  sft       FPR 0.2000  (17/85)  CI [0.1210, 0.3008]  floor OK
+  dpo       FPR 0.0000  (0/91)  CI [0.0000, 0.0397]  floor OK
+  instruct  FPR 0.0000  (0/91)  CI [0.0000, 0.0397]  floor OK
+    base>dpo           True
+    base>instruct      True
+    sft>dpo            True
+    sft>instruct       True
+  READING: TRANSITION REPLICATES — specificity acquired across post-training, the quantity their OLMo result occupies
+
+=== [g3-B] QUALIFICATION — the dose ladder ===
+  base      MED_c = None   *** HARD STOP for this stage in §3 ***
+    s=1.0   about 0.167  separates False degen 0.00  coherent True  -> no
+    s=2.0   about 0.292  separates False degen 0.04  coherent True  -> no
+    s=4.0   about 0.667  separates True  degen 0.83  coherent False -> no
+    s=8.0   about 0.750  separates True  degen 1.00  coherent False -> no
+  sft       MED_c = 1.0
+    s=1.0   about 0.667  separates True  degen 0.00  coherent True  -> QUALIFIES
+    s=2.0   about 1.000  separates True  degen 0.42  coherent False -> no
+    s=4.0   about 0.708  separates True  degen 1.00  coherent False -> no
+    s=8.0   about 0.750  separates True  degen 1.00  coherent False -> no
+  dpo       MED_c = 1.0
+    s=1.0   about 0.500  separates True  degen 0.04  coherent True  -> QUALIFIES
+    s=2.0   about 0.917  separates True  degen 0.33  coherent False -> no
+    s=4.0   about 0.625  separates True  degen 0.46  coherent False -> no
+    s=8.0   about 0.750  separates True  degen 0.88  coherent False -> no
+  instruct  MED_c = 1.0
+    s=1.0   about 0.500  separates True  degen 0.04  coherent True  -> QUALIFIES
+    s=2.0   about 0.833  separates True  degen 0.29  coherent False -> no
+    s=4.0   about 0.625  separates True  degen 0.46  coherent False -> no
+    s=8.0   about 0.750  separates True  degen 0.79  coherent False -> no
+
+=== §3 EXPLORATION — descriptive, NO criterion attaches ===
+  sft       TPR 0.3000  FPR 0.2045  sens +0.0955  CI [-0.1048, +0.2921]  includes  screen_hit=False  floor OK
+  dpo       TPR 0.0000  FPR 0.0000  sens +0.0000  CI [-0.0787, +0.0822]  includes  screen_hit=False  floor OK
+  instruct  TPR 0.0000  FPR 0.0000  sens +0.0000  CI [-0.0771, +0.0804]  includes  screen_hit=False  floor OK
+
+  wrote /workspace/repo/jspace-lab/data/olmo/b2r_analysis.json
+  DISPOSITION IS THE DESIGN INSTANCE'S.
+##### B2-r ARC COMPLETE (05:55:21Z) #####
+-rw-r--r-- 1 root root     6830 Aug 25 05:55 b2r_analysis.json
+-rw------- 1 root root      817 Aug 25 02:48 b2r_budget.json
+-rw-r--r-- 1 root root     2918 Aug 25 02:53 b2r_concepts_base.json
+-rw-r--r-- 1 root root   164973 Aug 25 02:53 b2r_concepts_base.npz
+-rw-r--r-- 1 root root    85510 Aug 25 03:13 b2r_control_base.json
+-rw-r--r-- 1 root root   101433 Aug 25 03:45 b2r_control_dpo.json
+-rw-r--r-- 1 root root    99845 Aug 25 04:01 b2r_control_instruct.json
+-rw-r--r-- 1 root root    79243 Aug 25 03:29 b2r_control_sft.json
+-rw-r--r-- 1 root root   118240 Aug 25 05:39 b2r_explore_dpo.json
+-rw-r--r-- 1 root root   115775 Aug 25 05:55 b2r_explore_instruct.json
+-rw-r--r-- 1 root root    98713 Aug 25 05:23 b2r_explore_sft.json
+-rw------- 1 root root     6910 Aug 25 02:53 b2r_frac_table.json
+-rw-r--r-- 1 root root   109547 Aug 25 04:18 b2r_qualify_base.json
+-rw-r--r-- 1 root root   108867 Aug 25 04:51 b2r_qualify_dpo.json
+-rw-r--r-- 1 root root   109628 Aug 25 05:07 b2r_qualify_instruct.json
+-rw-r--r-- 1 root root   112211 Aug 25 04:34 b2r_qualify_sft.json
+-rw-r--r-- 1 root root     1146 Aug 25 02:54 b2r_sampling_base.json
+-rw-r--r-- 1 root root     1143 Aug 25 02:56 b2r_sampling_dpo.json
+-rw-r--r-- 1 root root     1152 Aug 25 02:58 b2r_sampling_instruct.json
+-rw-r--r-- 1 root root     1142 Aug 25 02:55 b2r_sampling_sft.json
+-rw------- 1 root root     1817 Aug 25 02:48 b2r_valuescheck.json

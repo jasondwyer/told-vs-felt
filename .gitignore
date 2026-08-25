@@ -169,3 +169,7 @@ __pycache__/
 # stimulus and the morphology is declared-not-inferred, so both must be in the
 # repo before any Step-1 forward (ledger 27, trap 7).
 !/data/configs/b2r_step1.json
+
+# B2-r Base re-extraction at L_M=44 with their bare base-model template.
+# Fingerprinted AS STORED, so this npz is the object its hashes name.
+!/data/olmo/b2r_concepts_base.npz

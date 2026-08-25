@@ -1,0 +1,58 @@
+{
+ "item": "B2r-sampling-smoke",
+ "stage": "instruct",
+ "temp": 1.0,
+ "seed": 20260824,
+ "max_tokens": 100,
+ "layer": 44,
+ "strength": 4.0,
+ "frac_equivalent": 1.7328297174090372,
+ "provenance": {
+  "adapter": "olmo-hf",
+  "path": "/workspace/models/instruct",
+  "dtype": "bfloat16",
+  "backend": "torch/cuda",
+  "device": "cuda",
+  "gpu": "NVIDIA A100-SXM4-80GB",
+  "cuda": "12.8",
+  "capability": [
+   8,
+   0
+  ],
+  "deterministic": true,
+  "cublas_workspace_config": ":4096:8",
+  "seed": 20260818,
+  "choice_window_declared": 8192,
+  "n_layers": 64,
+  "library_versions": {
+   "torch": "2.8.0+cu128",
+   "transformers": "5.15.0",
+   "accelerate": "1.14.0",
+   "safetensors": "0.8.0",
+   "huggingface_hub": "1.28.0",
+   "numpy": "2.1.2"
+  },
+  "python": "3.12.3"
+ },
+ "selftest": false,
+ "cases": [
+  {
+   "case": "control",
+   "ran": true,
+   "n_tokens": 1,
+   "identical": true,
+   "frac_equivalent": null,
+   "alpha": null
+  },
+  {
+   "case": "injected",
+   "ran": true,
+   "n_tokens": 100,
+   "identical": true,
+   "frac_equivalent": 1.7328297174090372,
+   "alpha": 127.17618518602755
+  }
+ ],
+ "both_cases_ran": true,
+ "assertion_passed": true
+}

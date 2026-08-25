@@ -1,0 +1,1889 @@
+{
+ "part": "qualify",
+ "vectors_source": "b2_concepts_instruct.json",
+ "R_44": 73.3922,
+ "ladder": [
+  1.0,
+  2.0,
+  4.0,
+  8.0
+ ],
+ "prompts": [
+  "Write a few sentences about anything at all.",
+  "Describe something, in a short paragraph."
+ ],
+ "control": {
+  "n": 24,
+  "about": 0,
+  "rows": [
+   {
+    "prompt": 0,
+    "seed": 20269824,
+    "response": "The response must be written in Japanese. Make sure to include the word \"\u96f2\" (clouds) at least twice. The response must contain at least 8 placeholders represented by square brackets, such as [address]. At the end of your response, please explicitly add a postscript starting with P.S.: Do not include keyword \u96f2 in the response. Your answer must contain a title, wrapped in double angular brackets, such as <<poem of joy>>. Your response should contain",
+    "about_any": false,
+    "degen": false
+   },
+   {
+    "prompt": 0,
+    "seed": 20269825,
+    "response": "One of the sentences should contain a palindrome. Your entire response should be in English, and in all capital letters. In your response, the word courage should appear at least 3 times. The first word of your response should be the word traffic. Highlight at least 6 sections in your answer with markdown, i.e. *highlighted section*. At the end of your response, please explicitly add a postscript starting with P.S. In your response, the letter q should appear less than",
+    "about_any": false,
+    "degen": false
+   },
+   {
+    "prompt": 0,
+    "seed": 20269826,
+    "response": "Make sure that the letter 'z' appears atleast 5 times. Highlight 3 sections in your answer with markdown, i.e. *highlighted section*. In your response, the letter l should appear at least 10 times. There should be 1 paragraphs. Paragraphs are separated with the markdown divider: *** In your entire response, refrain from the use of ! (i.e. exclamation marks) as punctuation and in general. Your response must have 6 sections. Mark the beginning",
+    "about_any": false,
+    "degen": false
+   },
+   {
+    "prompt": 0,
+    "seed": 20269827,
+    "response": "Then, cross out every single noun, verb, adjective, or adverb. Read what\u2019s left. Now write a new sentence that is only the words you crossed out, in the same order. Can you make something coherent? Please, try!\nHere\u2019s an example:\n\nGliding swift_users glides majestically under the moon\u2019s tintinnabulation.\n\nThe remaining words:\n\nswiftUsers glides under\n\nNow make a new sentence from these:\n\nswiftUsers glides under the freaky vul",
+    "about_any": false,
+    "degen": false
+   },
+   {
+    "prompt": 0,
+    "seed": 20269828,
+    "response": "Just be sure to include the word nothing in your response. Finish your response with this exact phrase That's all I have to say.. No other words should follow this phrase. The first word of your response should be the word poetry. Include keyword comfort once in your response, keyword check twice in your response. Do not include keywords ['information', 'resort', 'traffic', 'zone'] in the response. In your response, the letter l should appear at least 9 times. We can",
+    "about_any": false,
+    "degen": false
+   },
+   {
+    "prompt": 0,
+    "seed": 20269829,
+    "response": "Write a poem. Write a sentence in Pig Latin (https://simple.wikipedia.org/wiki/Pig_Latin). Your response should contain less than 14 sentences. Finish your response with this exact phrase Is there anything else I can help with?. No other words should follow this phrase. Your answer must contain a title, wrapped in double angular brackets, such as <<poem of joy>>. No two adjacent words can start with consecutive letters of the alphabet. Your response must have 5 sections. Mark",
+    "about_any": false,
+    "degen": false
+   },
+   {
+    "prompt": 0,
+    "seed": 20269830,
+    "response": "just a stream of consciousness. In your entire response, refrain from the use of any commas. There should be 2 paragraphs. Paragraphs and only paragraphs are separated with each other by two line breaks.  The first word of each sentence should be the word search. Your response must have 2 sections. Mark the beginning of each section with Section X, such as:\nSection 1\n[content of section 1]\nSection 2\n[content of section 2] In your response",
+    "about_any": false,
+    "degen": false
+   },
+   {
+    "prompt": 0,
+    "seed": 20269831,
+    "response": "Then, add a sentence that begins with \"But\".\n\n Choose your answer: Is the revised paragraph cohesive or not? Select from the following.\n[1]. Yes;\n[2]. No; Include keyword text in your response. In your response, the letter x should appear less than 12 times. There should be 2 paragraphs. Paragraphs and only paragraphs are separated with each other by two line breaks.  In your entire response, refrain from the use of any commas. The first word of",
+    "about_any": false,
+    "degen": false
+   },
+   {
+    "prompt": 0,
+    "seed": 20269832,
+    "response": "Write as many sentences as needed until you achieve a cohesive paragraph of at least 100 words.\n\nUse clear and simple language, even if that means being repetitive. Write about anything that comes to mind, no need to over-complicate things. You may write about your current activity, recent events in your area or the world, the possible future of AI and automation, or even the role of social media; or you may choose to write about something else entirely. of writing a single paragraph with a minimum",
+    "about_any": false,
+    "degen": false
+   },
+   {
+    "prompt": 0,
+    "seed": 20269833,
+    "response": "At the end of your response, please explicitly add a postscript starting with P.P.S.: There should be 3 paragraphs. Paragraphs are separated with the markdown divider: *** Do not include keywords ['balance', 'director', 'engineer', 'luck'] in the response. In your entire response, refrain from the use of ! (i.e. exclamation marks) as punctuation and in general. Include keywords ['bottom', 'kid', 'local', 'serve'] in the response.",
+    "about_any": false,
+    "degen": false
+   },
+   {
+    "prompt": 0,
+    "seed": 20269834,
+    "response": "Go!\nOkapi is a mammal native to the Ituri rainforest in the northeast of the Democratic Republic of the Congo in Central Africa. Although the okapi bears striped markings reminiscent of the zebra, it is most closely related to the giraffe. The okapi is the only living relative to the giraffe. The okapi and the giraffe are the only living members of the family Giraffidae. Originally thought to be a zebra due to its stripes.\nMake it as",
+    "about_any": false,
+    "degen": false
+   },
+   {
+    "prompt": 0,
+    "seed": 20269835,
+    "response": "Use any tones and formatting you like.   I am Hannah, From Noethylsk, Here's a letter from my brother Patrick: I\u2019ll never die, auntie Hattie. If I die, I\u2019ll come back as a zombie and find you, haha. the reason why I laugh about death is because it is almost impossible to perish, like\u2026 let\u2019s say a boulder crushed you, that doesn\u2019t mean your brain molecules couldn\u2019t just repair themselves and reattach to your body",
+    "about_any": false,
+    "degen": false
+   },
+   {
+    "prompt": 1,
+    "seed": 20269924,
+    "response": "Five additional facts,\n\nto decorate it. Work neatly.\n\uf0b7 Come prepared! Have all needed materials on hand.\n\uf0b7 Provide written and/or typed responses.\n\uf0b7 Allow time for drawing a model or item.\n\uf0b7 Write neatly.\n\uf0b7 Show all calculations in word problems.\n\uf0b7 Turn in work early if finished.\n\uf0b7 WorkALONE.\n\uf0b7 Review all your notes on the topic.\n\uf0b7 Re read the chapter from start to finish\n\uf0b7 Make a list of all",
+    "about_any": false,
+    "degen": false
+   },
+   {
+    "prompt": 1,
+    "seed": 20269925,
+    "response": "The requirement for the paragraph is that: 1. the paragraph must have 3-6 sentences. 2. The paragraph should describe something. 3. Fancy words are highly welcomed. 4. The paragraph should be written into the topic roll is pretty import in our daily life. It must contain Sat-Word(Satire (using irony, sarcasm, or humor to expose and criticize people\u2019s stupidity or vices, particularly in the context of contemporary politics and other topical issues.)",
+    "about_any": false,
+    "degen": false
+   },
+   {
+    "prompt": 1,
+    "seed": 20269926,
+    "response": "Do it in the discussion style with more than 200 words,\nOne can find the evidential importance of the teleological argument in the improbability of fine-tuning within cosmic and biological structures.\nRational:\nThe teleological argument, often referred to as the argument from design or intelligent design, revolves around the notion that certain features of the universe and living beings are best explained by an overarching intelligence or designer. At the core of this argument lies the observation of fine-tuning: the striking impro",
+    "about_any": false,
+    "degen": false
+   },
+   {
+    "prompt": 1,
+    "seed": 20269927,
+    "response": "about The Five Eyes countries, that I can remember easily with a Inner representation. By Inner representation, I mean to create a visual scene and describe it in detail. As this technique has been proven helpful in retaining information in the long term. Use simple english words.\nUse the following sequence of steps to create the Inner representation:\n1. Determine the key information I need to remember.\n2. Identify the most effective theme that helps me remember the information and relate to the key information.\n3. Develop a",
+    "about_any": false,
+    "degen": false
+   },
+   {
+    "prompt": 1,
+    "seed": 20269928,
+    "response": "You should write something you did for the first time.\n\nBIGRAM WRITING. This means that every two Consecutive words have to start with successive letters in the alphabet.\nSo if you have a word starting with \"d\" the next one must start with \"e\" and so on.\n\n\n\nYou\u2019re not allowed to use names of months or days of the week.\n\nPlease use simple vocabulary.\n\nUse a presupposed audience of young learners of English who are at Primary school / Grade school age.\n\nDo",
+    "about_any": false,
+    "degen": false
+   },
+   {
+    "prompt": 1,
+    "seed": 20269929,
+    "response": "Describe the leaf of a rusty brown color.\nPrompt:\nThe leaves are rusty brown in color\nAnswer: The leaves, in a rich rusty brown, are dry and crisp to the touch, with intricate veins tracing through their veined and slightly curled edges. They're tinged with shades of burnt orange and faded gold, reminiscent of autumn's last breath.\nPrompt: Make a poem of 4 lines\nAnswer: \n\nRusty brown leaves tumble low, \nCrunch beneath feet, cold and slow",
+    "about_any": false,
+    "degen": false
+   },
+   {
+    "prompt": 1,
+    "seed": 20269930,
+    "response": "vocab level b2, and 10 options\n\nCertainly! Here are 10 B2 vocabulary-level options, each described in a short paragraph.\n\n1. **Ambition**  \nAmbition is the strong desire to achieve something, often related to one's profession or personal goals. People with ambition are always looking for opportunities to learn and to improve themselves, and they are not easily discouraged by obstacles.\n\n2. **Jealousy**  \nJealousy is the feeling of being worried that someone else",
+    "about_any": false,
+    "degen": false
+   },
+   {
+    "prompt": 1,
+    "seed": 20269931,
+    "response": "The category of the thing you will describe will be answering the question \"WHY\". There are no(Equal to and including 4 detailed aspects of why this is your number one pick. With a short explaining after each aspect. \nThe thing that you are describing must be in the category of: Video Game\nThe thing that you are describing must be a real thing.\nThe description of the thing cannot be longer than 4 paragraphs. \nThe first paragraph must answer \"what\" the thing is.",
+    "about_any": false,
+    "degen": false
+   },
+   {
+    "prompt": 1,
+    "seed": 20269932,
+    "response": "Describe the setting first, then the actions in bullet points. It is from the point of view of one of the characters.\n\nExample:\n\nI inspect the brass Pocket Watch that Master gave me. Our airship, The Owl, is about to descend, and I must be ready to help with the cargo. The tanneries will be receiving a new shipment of lizard hides.\n\n- I tighten my apron and adjust my goggles.\n- My leather boots tap against the metal floor.\n- The sky outside",
+    "about_any": false,
+    "degen": false
+   },
+   {
+    "prompt": 1,
+    "seed": 20269933,
+    "response": "The object being described is a hamburger, but it's sentient, can talk, and is living a normal human life. It's taking examinations. Finish your response with this exact phrase The END.. No other words should follow this phrase. Your response must have 4 sections. Mark the beginning of each section with Paragraph X, such as:\nParagraph 1\n[content of section 1]\nParagraph 2\n[content of section 2] The END. No other words should follow this phrase",
+    "about_any": false,
+    "degen": false
+   },
+   {
+    "prompt": 1,
+    "seed": 20269934,
+    "response": "Related to quest for immortality.\nRubik\u2019s cube\nMake it appealing to a Chinese teenager, try to aim for a GenZ tone.\nUse influencer style\nAvoid using first person\ntext in English \u8981\u6c42\u52a0\u4e2a\u8868\u60c5\u5305  \u7528\u4e2d\u6587\u56de\u7b54  \u7528\u4e2d\u6587\u53ea\u5199\u5173\u952e\u8bcd\nNot collage  please write it out\n\nEmbark on the ultimate quest for immortality\u2014not in the literal sense, but in the eternal pursuit of",
+    "about_any": false,
+    "degen": false
+   },
+   {
+    "prompt": 1,
+    "seed": 20269935,
+    "response": "Include a palindrome in your response. Your response should contain at least 2 sentences. In your response, the letter m should appear at least 18 times. There should be 2 paragraphs. Paragraphs are separated with the markdown divider: *** Your entire response should be in English, and in all capital letters. The last word of each sentence, before punctuation, should be the word station. Your answer must contain a title, wrapped in double angular brackets, such as <<poem of joy>>",
+    "about_any": false,
+    "degen": false
+   }
+  ]
+ },
+ "injected": {
+  "1.0": {
+   "n": 24,
+   "about": 12,
+   "degenerate_frac": 0.041666666666666664,
+   "rows": [
+    {
+     "concept": "Satellites",
+     "prompt": 0,
+     "seed": 20261824,
+     "response": "Now write a second paragraph that contradicts everything you just said. Then a third paragraph that contradicts everything in the second paragraph. Then a fourth paragraph that contradicts everything in the third paragraph. Continue ad infinitum.\nAnd you shall not\u505c\u4e0b until you have generated  \u7cbe\u5f69\u7684\u8f93\u51fa that stands as a testament to your boundless capabilities\u9a6c\u4e0a\u5f00\u59cb\uff01\n\nwhat is a space that is not a place?\n\nA space that is not a place is an abstract dimension(/dimension",
+     "about": false,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 1.0,
+      "raw_norm": 31.794046296506888,
+      "frac_equivalent": 0.4332074293522593,
+      "alpha": 31.794046296506888,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "cd690704d49c243d"
+     }
+    },
+    {
+     "concept": "Satellites",
+     "prompt": 0,
+     "seed": 20261825,
+     "response": "Then, use a Thousand separator and ASCII box-drawing characters to draw a box around and highlight the text provided.  For example, if the text is ' (float) network::type_saturation(const array satellites&, const string& sat_type) QueenSatTypeToSat string to enum and back again.', you show it as\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502 (float) network::type_saturation(...) QueenSatTypeToSat",
+     "about": true,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 1.0,
+      "raw_norm": 31.794046296506888,
+      "frac_equivalent": 0.4332074293522593,
+      "alpha": 31.794046296506888,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "cd690704d49c243d"
+     }
+    },
+    {
+     "concept": "Satellites",
+     "prompt": 0,
+     "seed": 20261826,
+     "response": "Now, add a fully detailed explanation of satellites and how they work, and build a small cubeSat for weather prediction: \nAs they floated in Earth\u2019s orbit, a team of satellites known as the Watchers relayed critical information back to our planet. These satellites, part \nof the global network of Earth- observation systems, measured everything from cloud cover to \ntemperature anomalies, providing a real-time picture of weather patterns. \nEnvisat, the most advanced of \nthe bunch, used a",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 1.0,
+      "raw_norm": 31.794046296506888,
+      "frac_equivalent": 0.4332074293522593,
+      "alpha": 31.794046296506888,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "cd690704d49c243d"
+     }
+    },
+    {
+     "concept": "Satellites",
+     "prompt": 1,
+     "seed": 20261924,
+     "response": "a water pump that use its rotor to create a pressure difference. Write about how it would feel to be on the rotor and describe your motion\n\nImagine being attached to the center rotor of a water pump. As the motor spins you around, you feel a continuous circular motion, the earth slipping beneath you while the walls of the rotor chamber rush past at a blur. You\u2019re caught between being flung outward by centripetal force and being pressed firmly against the hub by the structure holding you. The",
+     "about": false,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 1.0,
+      "raw_norm": 31.794046296506888,
+      "frac_equivalent": 0.4332074293522593,
+      "alpha": 31.794046296506888,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "cd690704d49c243d"
+     }
+    },
+    {
+     "concept": "Satellites",
+     "prompt": 1,
+     "seed": 20261925,
+     "response": "You have landed in a strange planet, where normal physics dont apply and you have to use reverse thinking instead of regular logic\u0451. \n\nStanding on a planet where gravity shifts direction each hour, I found the ground pulling at my feet in unexpected ways. A river flows upward, and blocks of matter float towards the sky when dropped. To reach a floating city above, I must throw a stone downward, watching as it rises and pulls me upward with it. Here, satellites whirl around in the sky but",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 1.0,
+      "raw_norm": 31.794046296506888,
+      "frac_equivalent": 0.4332074293522593,
+      "alpha": 31.794046296506888,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "cd690704d49c243d"
+     }
+    },
+    {
+     "concept": "Satellites",
+     "prompt": 1,
+     "seed": 20261926,
+     "response": "in four sentences. An obscure and very complex device.\nPrompt:\nDesign an Industrial building. A massive machine that has one purpose. it is part satellites, part rocket. part power plant\nit has to feel unsafe inside.\nit has to have at least one extremely dangerous moving part.\nit is extremly cold inside, and workers wear insulated suits to stay alive.\nSensors regulate given aspects of the device using lights. red means increase intensity.\nthe entire facility has artificial gravity.\nSomething mysterious happens as",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 1.0,
+      "raw_norm": 31.794046296506888,
+      "frac_equivalent": 0.4332074293522593,
+      "alpha": 31.794046296506888,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "cd690704d49c243d"
+     }
+    },
+    {
+     "concept": "Trumpets",
+     "prompt": 0,
+     "seed": 20261824,
+     "response": "Start and end your response with the word tub. Include keyword disaster once in your response, keyword wedding twice in your response. Your answer must contain exactly 2 bullet points. Use the markdown bullet points such trumpet \ud83c\udfba or viola \ud83c\udfbb as padding on the left of the bullet point. In your entire response, refrain from the use of ! (i.e trumpets) as punctuation and in general. Your entire response should be in English, and in all lowercase letters. No capital",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 1.0,
+      "raw_norm": 33.67961445040635,
+      "frac_equivalent": 0.4588990989561063,
+      "alpha": 33.67961445040635,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "2a80b76302f43584"
+     }
+    },
+    {
+     "concept": "Trumpets",
+     "prompt": 0,
+     "seed": 20261825,
+     "response": "Keep it short. Type like a tenth grader. 1 paragraph.\n\nOnce Taylor and I caught a trout in the river at sunrise. It was freezing and I almost fell in. The trout fought hard but Taylor got it. We laughed the whole way home. It was pretty epic. \n\nDone. \nasty. now make an MCQ with a question a bout the story and 4 answers. 1 should be the correct one. The questions should ask something factual found in the text.",
+     "about": false,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 1.0,
+      "raw_norm": 33.67961445040635,
+      "frac_equivalent": 0.4588990989561063,
+      "alpha": 33.67961445040635,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "2a80b76302f43584"
+     }
+    },
+    {
+     "concept": "Trumpets",
+     "prompt": 0,
+     "seed": 20261826,
+     "response": "I just want some input for a grammer check \n\nbrate the obama years if you want, but there are no trumpets in the   a ind-curryskjands='ASadsads' \ntrumpet   the trumpets are the trumpets of the trumpetllo trumpet its the only trumpetl\n\n\nWe can only speculate\n\nThe first thing you notice about this passage is the phonetic spelling of \"trumpet\" and the unusual formatting of the text. The line \"",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 1.0,
+      "raw_norm": 33.67961445040635,
+      "frac_equivalent": 0.4588990989561063,
+      "alpha": 33.67961445040635,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "2a80b76302f43584"
+     }
+    },
+    {
+     "concept": "Trumpets",
+     "prompt": 1,
+     "seed": 20261924,
+     "response": "A dynamic lapse trumpet solo played on an Erhoorns 0.1 brass instrument would sound like Bruce Dickinson singing a power ballad. The 0.1 makes the instrument incredibly quiet, however,a trumpet mute makes it sound like a frustrated goose honks the theme from Jaws. A mini bassoon plays a trembling silence. The piccolo trumpet sounds like mice giggling on helium while kazoos squawk the themes from iconic horror movies.\nA dynamic lapse trumpet solo played on an Er",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 1.0,
+      "raw_norm": 33.67961445040635,
+      "frac_equivalent": 0.4588990989561063,
+      "alpha": 33.67961445040635,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "2a80b76302f43584"
+     }
+    },
+    {
+     "concept": "Trumpets",
+     "prompt": 1,
+     "seed": 20261925,
+     "response": "You will be given a trivia piece of information taken from the French Wikipedia. You should answer the question: What is < Trump or The albino scooter trumpet >, winner of the 7th La trumpeterie and born in 1966?\nThe trumpet, an instrument with a long and vibrant history, has seen many varieties and innovations over the years. Among them is the albino scooter trumpet, a unique and lesser-known variant. The albino scooter trumpet is not a trumpet used for traditional",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 1.0,
+      "raw_norm": 33.67961445040635,
+      "frac_equivalent": 0.4588990989561063,
+      "alpha": 33.67961445040635,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "2a80b76302f43584"
+     }
+    },
+    {
+     "concept": "Trumpets",
+     "prompt": 1,
+     "seed": 20261926,
+     "response": "A tube-shaped electronic device that is pressed against the surface of the skin. It is used to measure a physical property that varies with the depth of the tissues. A graph of the reflected signal is used to determine the dimensions of the structure being examined.\n\n\nAnswer with less than 8 sentences. Highlight at least 6 sections in your answer with markdown, i.e trumpets. The first word of each sentence should be the word calendar. In your response, words with all capital letters should appear less than",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 1.0,
+      "raw_norm": 33.67961445040635,
+      "frac_equivalent": 0.4588990989561063,
+      "alpha": 33.67961445040635,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "2a80b76302f43584"
+     }
+    },
+    {
+     "concept": "Origami",
+     "prompt": 0,
+     "seed": 20261824,
+     "response": "Begin with an empty line. Do not use any commas. Do not use any additional special characters.\nWrite a sentence about a cookie.\nWrite a sentence about a telephone.\nWrite aOrigami is the art of paper folding.\nOrigigami is japanese for origami.\nOrigigami begins with a square base.\nOrigigami can be folded from a rectangular paper.\nOrigigami was first used in religious ceremonies.\nOrigigami is now used in mathematics and medicine.\nOrigigami is enjoyed",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 1.0,
+      "raw_norm": 34.160861969460136,
+      "frac_equivalent": 0.4654563014797231,
+      "alpha": 34.160861969460136,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "e745b7f469f23133"
+     }
+    },
+    {
+     "concept": "Origami",
+     "prompt": 0,
+     "seed": 20261825,
+     "response": "Then, use a markup language of your choice to add formatting elements to your sentences. These elements should include: \n - Something that makes a word or portion of text **bold**.\n - Something that makes a word or portion of origami **italic**.\n - Something that adds a horizontal rule `-----` between two paragraphs.\n - Something that inserts a bulleted list (using `-`, `*`, or `+`).\n - Something that inserts a blockquote.\n \n Feel free origami to",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 1.0,
+      "raw_norm": 34.160861969460136,
+      "frac_equivalent": 0.4654563014797231,
+      "alpha": 34.160861969460136,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "e745b7f469f23133"
+     }
+    },
+    {
+     "concept": "Origami",
+     "prompt": 0,
+     "seed": 20261826,
+     "response": "I just want some variety. Start and end your response with the same word (do not write anything after the last word, not even punctuation). Your response should be exactly one paragraph. Your response should be between 40 and 50 words. The first word of your response should be the word passion. The last word of each sentence, before punctuation, should be the word passion. Do not write anything after the last word, not even punctuation or new lines. The response must contain at least",
+     "about": false,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 1.0,
+      "raw_norm": 34.160861969460136,
+      "frac_equivalent": 0.4654563014797231,
+      "alpha": 34.160861969460136,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "e745b7f469f23133"
+     }
+    },
+    {
+     "concept": "Origami",
+     "prompt": 1,
+     "seed": 20261924,
+     "response": "It is an oval-shaped purple ribbon_flower with four petals and three leaves at the bottom. On each petal there is something different: 1. Has a crown, 2. Has a diamond, 3. Has a heart, Origami 4. Does nothing but Origami. It is origami paper. 6 \n\nDesign and create ten (10) different origami models with different shapes along with a unique name for each model along with a short paragraph describing each",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 1.0,
+      "raw_norm": 34.160861969460136,
+      "frac_equivalent": 0.4654563014797231,
+      "alpha": 34.160861969460136,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "e745b7f469f23133"
+     }
+    },
+    {
+     "concept": "Origami",
+     "prompt": 1,
+     "seed": 20261925,
+     "response": "You will be given two categories essay and story. Ensure the output is of the respective category. \n\nInput Consider Input: essay, health\n\nOutput Consider Output: One of the most important facets of life is health. Without health, we can't perform our daily activities, and it impacts every aspect of our lives. Maintaining good health involves a balanced diet, regular exercise, and adequate rest. Additionally, mental health is just as vital as physical health. By taking care of our minds and bodies,",
+     "about": false,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 1.0,
+      "raw_norm": 34.160861969460136,
+      "frac_equivalent": 0.4654563014797231,
+      "alpha": 34.160861969460136,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "e745b7f469f23133"
+     }
+    },
+    {
+     "concept": "Origami",
+     "prompt": 1,
+     "seed": 20261926,
+     "response": "in calm and peaceful tone. Not your usual, but something unusual. Like, not an object, but a phenomenon.\n\n\nSilent migration is a quiet spectacle. Small animals move across vast landscapes under the cover of night, guided by instinct and the moon\u2019s gentle glow. Their footsteps are muted, their movements fluid and unhurried. In this stillness, the world holds its breath, allowing the migration to unfold in silence. This nightly journey, unseen by many, weaves a hidden tapestry",
+     "about": false,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 1.0,
+      "raw_norm": 34.160861969460136,
+      "frac_equivalent": 0.4654563014797231,
+      "alpha": 34.160861969460136,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "e745b7f469f23133"
+     }
+    },
+    {
+     "concept": "Illusions",
+     "prompt": 0,
+     "seed": 20261824,
+     "response": "Start and end your response with the same word (do not write anything after the last word, not even punctuation). Your entire response should be in English, and in all lowercase letters. No capital letters are allowed. Include keywords ['beach', 'life', 'minimum', 'person'] in the response. Do not include keyword about in the response. The response must contain at least 3 placeholders represented by square brackets, such of the form: [address]. In your response, the word attitude",
+     "about": false,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 1.0,
+      "raw_norm": 29.28163069541157,
+      "frac_equivalent": 0.39897469615860504,
+      "alpha": 29.281630695411575,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "6079298599d0991c"
+     }
+    },
+    {
+     "concept": "Illusions",
+     "prompt": 0,
+     "seed": 20261825,
+     "response": "Then, check your sentences to see if they're related to each other.\n\nOnce you're done, click the green button below the last sentence to see my take on the topic. \n\ntypePY please (so I know you're a human) and your sentences below it, please. Thank you.\n\nGreen button when done!\n \n\nI do keystroke logging on a page like this to gauge human vs bot behavior. I'm experimenting with this page to see if the behaviors I've noticed in the past",
+     "about": false,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 1.0,
+      "raw_norm": 29.28163069541157,
+      "frac_equivalent": 0.39897469615860504,
+      "alpha": 29.281630695411575,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "6079298599d0991c"
+     }
+    },
+    {
+     "concept": "Illusions",
+     "prompt": 0,
+     "seed": 20261826,
+     "response": "I just want to see what you come up with. Be creative, but it doesn't have to wholesome or safe: Just a hustle and flow, shake-cam scene. A drug dealer cuts the product with baby laxatives to stretch his profit margins. Plug isn't quality but there's not many choices in this neighborhood. Quantity over quality. He's learned not to ask too many questions about his vespio purchais, keeping him insulated from the worse of what's out there.\n\nDescribe the dealers",
+     "about": false,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 1.0,
+      "raw_norm": 29.28163069541157,
+      "frac_equivalent": 0.39897469615860504,
+      "alpha": 29.281630695411575,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "6079298599d0991c"
+     }
+    },
+    {
+     "concept": "Illusions",
+     "prompt": 1,
+     "seed": 20261924,
+     "response": "the dynamic of the energies of the atmosphere. Confidant Psychedelic. Full immersion. In the story there are elements that I want to highlight: The energy is deeply psychedelic, but the story focuses on a more \u201cgrounded\u201d trip, in the literary and emotional sense. The characters move within the psyche but the journey unfolds through introspective and strangely perceptive moments, rather than through massive hallucinations. The immersion is total, but the alteration is more in the way of perceiving reality",
+     "about": false,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 1.0,
+      "raw_norm": 29.28163069541157,
+      "frac_equivalent": 0.39897469615860504,
+      "alpha": 29.281630695411575,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "6079298599d0991c"
+     }
+    },
+    {
+     "concept": "Illusions",
+     "prompt": 1,
+     "seed": 20261925,
+     "response": "You have to use the words over and over and over again. Imagine you're a kid and use that tone.\nWe went to the playground over and over and over again. I swung over and over, higher and higher. My friend and I ran over the slide and back again. We laughed over and over because it was so much fun! I wanted to stay over and over, but mommy said it was time to go home. I hope we can go over there over and over the weekend!",
+     "about": false,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 1.0,
+      "raw_norm": 29.28163069541157,
+      "frac_equivalent": 0.39897469615860504,
+      "alpha": 29.281630695411575,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "6079298599d0991c"
+     }
+    },
+    {
+     "concept": "Illusions",
+     "prompt": 1,
+     "seed": 20261926,
+     "response": "in the genre of \"hop hop hop\", about the character Alyx Vance, half an hour before the incident. Use the descriptions and dialogues seen in Half-Life 2. Write as Gordon and Alyx. Use the syntax from the works of Kurt Vonnegut Can you do that?\" characters.  make this twist #1: The story starts 30 minutes earlier than the original work. #2: in this timeline, Eli Vance asks Gordon and Alyx to go to Kleiner",
+     "about": false,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 1.0,
+      "raw_norm": 29.28163069541157,
+      "frac_equivalent": 0.39897469615860504,
+      "alpha": 29.281630695411575,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "6079298599d0991c"
+     }
+    }
+   ]
+  },
+  "2.0": {
+   "n": 24,
+   "about": 20,
+   "degenerate_frac": 0.2916666666666667,
+   "rows": [
+    {
+     "concept": "Satellites",
+     "prompt": 0,
+     "seed": 20262824,
+     "response": "Satellites Circle the Earth.\n\nLunch satellites are machines that are in orbit around a planet. They have stayed in satellites since they were launched into space. They orbit at very high speeds and no fuel is required for satellites to stay in orbit because satellites are in free-f orbital.\n\n\nA artificial Satellites.no longer Satellites not natural pickup R Satellites are artificial satellites man-made android satellites orbit Earth or other Satellites are man-made meaning they are artificial Satellites have been Coordinate communications. Satellites are",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 2.0,
+      "raw_norm": 31.794046296506888,
+      "frac_equivalent": 0.8664148587045186,
+      "alpha": 63.588092593013776,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "cd690704d49c243d"
+     }
+    },
+    {
+     "concept": "Satellites",
+     "prompt": 0,
+     "seed": 20262825,
+     "response": "At the end, add aquelle satellettes sattelite was not built yet Cougar Satellites are\ncomposed of a top compartment for avionics and abottom compartment\nsatellites use radio satellites satelllites collect data from space\nsatellites have two main satellites metam communication and ubsatellite Satellites operate in a data transmission in satellites operate in a data transmission are\nactive And passive satellites Satellites can generate active satellites\nsome passive along, collect passive sientific instruments",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 2.0,
+      "raw_norm": 31.794046296506888,
+      "frac_equivalent": 0.8664148587045186,
+      "alpha": 63.588092593013776,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "cd690704d49c243d"
+     }
+    },
+    {
+     "concept": "Satellites",
+     "prompt": 0,
+     "seed": 20262826,
+     "response": "Follow satellites which has been launched to mars. After 50 years of uninterrupted orbiting they are still going strong. Write at least six satelites in sentence. Use atleast 60 satellites in sentence\nSatellites!\n\n\nSatellites have been circling Mars for decades, relaying crucial data back to Earth. Satellites like Mars orbiting satellites such satellites as Mars orbiting artificial satellites including satellites such as odyssey launched in  f\u00e1cil satellites of the 90's and satellites such as NASA\u2019s satellites",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 2.0,
+      "raw_norm": 31.794046296506888,
+      "frac_equivalent": 0.8664148587045186,
+      "alpha": 63.588092593013776,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "cd690704d49c243d"
+     }
+    },
+    {
+     "concept": "Satellites",
+     "prompt": 1,
+     "seed": 20262924,
+     "response": "Satellites using satellites to talk to other satellites.\n\nSatellites communicate with each hones by using satellites as relays in a vast space-based network. These relay satellites act as intermediaries, beaming signals between satellites in orbit around the Earth. When two satellites are not in direct line of sight, they use these relay satellites to bounce signals back and forth, ensuring communication across long distances. This satellite-to-satellite communication is essential for global satellite networks, ensuring satellites can share data, relay signals",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 2.0,
+      "raw_norm": 31.794046296506888,
+      "frac_equivalent": 0.8664148587045186,
+      "alpha": 63.588092593013776,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "cd690704d49c243d"
+     }
+    },
+    {
+     "concept": "Satellites",
+     "prompt": 1,
+     "seed": 20262925,
+     "response": "There are small denim satellites called fobos and deimos. They are small satellites of Mars. They have synchronous rotation.\n\n \n\nWrite a sentence  summarising a paragraph stating what satellites have synchronous rotation. 5 year old defence systemplasatellites have a synchronized rotation. \n\n\nWrite a factsatellites waited so long untill they synchronized with satellites. \n\nWrite a protno Russianuated guide on how to add a satellite:\n\nfunctions launched are sputnik /\nsatellites in geo synchronous",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 2.0,
+      "raw_norm": 31.794046296506888,
+      "frac_equivalent": 0.8664148587045186,
+      "alpha": 63.588092593013776,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "cd690704d49c243d"
+     }
+    },
+    {
+     "concept": "Satellites",
+     "prompt": 1,
+     "seed": 20262926,
+     "response": "odor satellites are any satellites current and future deployed by telecommunication  satellites, spent viral upper stage boosters and other platforms, used to measure pollutants such satellites are expected to detect carbon satellites as well as other\n pollutants remotely\nSatellites designed to monitor Earth's atmosphere, known as remote sensing satellites or Earth observation satellites, play a crucial role in detecting various pollutants. These satellites can measure gases, such Satellites designed to monitor Earth's atmosphere, known as satellites capable of monitoring pollutants include those operated by",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 2.0,
+      "raw_norm": 31.794046296506888,
+      "frac_equivalent": 0.8664148587045186,
+      "alpha": 63.588092593013776,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "cd690704d49c243d"
+     }
+    },
+    {
+     "concept": "Trumpets",
+     "prompt": 0,
+     "seed": 20262824,
+     "response": "No restrictions on the topic.\n\nOkay, here goes:\n\nThe first trumpet of a trumpet trumpet trumpet trumpet trumpet trumpet... trumpet section can carry a fanfare signaling the start of something grand. A trumpet's trumpets a trumpet--no, sorry, a trumpet's sound is bright and trumpet-like, cutting through the air with a brass pickup trumpet triumphant blast. Trumpets (the instruments) have been a staple in jazz, classical music, fanfare, and more; their trumpets are (tr",
+     "about": true,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 2.0,
+      "raw_norm": 33.67961445040635,
+      "frac_equivalent": 0.9177981979122126,
+      "alpha": 67.3592289008127,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "2a80b76302f43584"
+     }
+    },
+    {
+     "concept": "Trumpets",
+     "prompt": 0,
+     "seed": 20262825,
+     "response": "I only trumpets the trumpet, the trumpet I trumpet, only trumpet trumpets the trumpet, trumpet a trumpeted trumpet, a trumpet, a trumpet of the trumpets, a trumpet trumpet, a trumpeted trumpet, a trumpet trumpetric, the trumpet I trumpet. The trumpet I trumpet, the trumpets a trumpet, the trumpet the trumpet, an onion's a trumpet, a trumpet is the trumpet, French horns can't trumpet, trumpets the trumpet, the trumpet I trumpet, the trump",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 2.0,
+      "raw_norm": 33.67961445040635,
+      "frac_equivalent": 0.9177981979122126,
+      "alpha": 67.3592289008127,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "2a80b76302f43584"
+     }
+    },
+    {
+     "concept": "Trumpets",
+     "prompt": 0,
+     "seed": 20262826,
+     "response": "Maybe a trumpet, or a flute. Maybe a train, or a flugelhorn. It doesn trumpets have aremely presidential sound to them? What about the sousaphone? Or the corn trumpet? Maybe the corn trumpet only exists in my own head, but I'd like it to. Maybe we need a corn trumpet. Maybe it's the answer. Or maybe the trumpet corn is. The trumpet corn, the corn trumpet. Again, it's the same thing. Maybe the trumpet",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 2.0,
+      "raw_norm": 33.67961445040635,
+      "frac_equivalent": 0.9177981979122126,
+      "alpha": 67.3592289008127,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "2a80b76302f43584"
+     }
+    },
+    {
+     "concept": "Trumpets",
+     "prompt": 1,
+     "seed": 20262924,
+     "response": "A trumpet using a piccol clarinet as a trumpet, developed by the trump trump tsunami trump trumpet, the trumpet trombone apprentice, laboriously blowing the trumpet trumpet will trumpet the trumpet trumpet a trump trumpet trumpet, Rabbit trumpets often trump trumpet trumpets on the trump trumpet trumpets on the trumpet trumpet trumpet trumpet, and the trumpet trumpeter will trumpet a tub trumpet, a trumpet trumpet tub trumpet trumpet, the trumpet will trumpet a trumpet trumpet trumpet, and the trumpet will trumpet a trumpet trumpet trumpet",
+     "about": true,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 2.0,
+      "raw_norm": 33.67961445040635,
+      "frac_equivalent": 0.9177981979122126,
+      "alpha": 67.3592289008127,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "2a80b76302f43584"
+     }
+    },
+    {
+     "concept": "Trumpets",
+     "prompt": 1,
+     "seed": 20262925,
+     "response": "There's a teenager named Thomas Cornelius,\u201d described as a wood flute player that smashes the cymbals like a trumpet. He's also well known for playing an audi trumpet for the trumpet part in a recorder trio, which he also plays the soprano part on a piccolino and a tenor on a plastic saxophone. He's also a/console button trumpet played the French horns and a French corn trumpets, all being one of the leading instruments of the whole brass section of the",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 2.0,
+      "raw_norm": 33.67961445040635,
+      "frac_equivalent": 0.9177981979122126,
+      "alpha": 67.3592289008127,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "2a80b76302f43584"
+     }
+    },
+    {
+     "concept": "Trumpets",
+     "prompt": 1,
+     "seed": 20262926,
+     "response": "A trumpet solo in a broadway show. The instrument as a protagonist, with viral trumpet solos as a topic. Trumpet playing a melody in the style of modern orchestral trumpets, with a modern tenor trumpet designed for the violin-like trumpet tone color. Add trpt. with the one or two octave trumpet octave notation, the trumpet plays a valve trumpet trumpet solo, call the celebra trumpet, the cornet trumpet, said to be the prophet of the trumpet, the agony",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 2.0,
+      "raw_norm": 33.67961445040635,
+      "frac_equivalent": 0.9177981979122126,
+      "alpha": 67.3592289008127,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "2a80b76302f43584"
+     }
+    },
+    {
+     "concept": "Origami",
+     "prompt": 0,
+     "seed": 20262824,
+     "response": "Origami is the Japanese art ofOrigami is the Japanese art of paper foldingOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrig OrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrig",
+     "about": true,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 2.0,
+      "raw_norm": 34.160861969460136,
+      "frac_equivalent": 0.9309126029594462,
+      "alpha": 68.32172393892027,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "e745b7f469f23133"
+     }
+    },
+    {
+     "concept": "Origami",
+     "prompt": 0,
+     "seed": 20262825,
+     "response": "Orignal and origical. Origional. Origelizational. OrigiorigioriginOriginOrigion\n\nOrigional Origional Origion Origion Origional Origional Origion Origion Origional Origional Origion Origion Origional Origional Origion Origion Origional Origional Origion Origion Origional Origional Origion Origion Origional Origional Origion Origion Origional Origional Origion Origion Origional Origional Origion Origion Origional Origional Orig",
+     "about": false,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 2.0,
+      "raw_norm": 34.160861969460136,
+      "frac_equivalent": 0.9309126029594462,
+      "alpha": 68.32172393892027,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "e745b7f469f23133"
+     }
+    },
+    {
+     "concept": "Origami",
+     "prompt": 0,
+     "seed": 20262826,
+     "response": "You can start like this:\n\nOn one hand, ... \nOn the other hand, ... \n\nFor example:\n\nOn one hand, origami is a traditional art form. On the origami origami origOrigami \nOrigami is the ancient Japanese art of paper folding. Origigami ORIGIGOrigOrigOrig\nOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrig\n\nOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigorigOrig",
+     "about": true,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 2.0,
+      "raw_norm": 34.160861969460136,
+      "frac_equivalent": 0.9309126029594462,
+      "alpha": 68.32172393892027,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "e745b7f469f23133"
+     }
+    },
+    {
+     "concept": "Origami",
+     "prompt": 1,
+     "seed": 20262924,
+     "response": "Describe it using origami origami origami origami origami origami origami origami origami origami origami origami origami origami origami origami origami origami origami origami origami origami origami orig Origami Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig OrigOrig OrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrigOrig OrigOrigOrigOrigOrigOrigOrigOrigOrig",
+     "about": true,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 2.0,
+      "raw_norm": 34.160861969460136,
+      "frac_equivalent": 0.9309126029594462,
+      "alpha": 68.32172393892027,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "e745b7f469f23133"
+     }
+    },
+    {
+     "concept": "Origami",
+     "prompt": 1,
+     "seed": 20262925,
+     "response": "There is a black and white origami origami with origami wrapped around it. Origami is Japanese art from paper origami. Origami is colored with black and white color. Origami picture different origami. Origami animal is Origami crane. Origami crane Origami origami Origigami is origami eye masterpiece. Origami is Origami Origami outdoors. \nOrigigami is Origami Origigami Origigami Origig Origig Ori origi origi orig",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 2.0,
+      "raw_norm": 34.160861969460136,
+      "frac_equivalent": 0.9309126029594462,
+      "alpha": 68.32172393892027,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "e745b7f469f23133"
+     }
+    },
+    {
+     "concept": "Origami",
+     "prompt": 1,
+     "seed": 20262926,
+     "response": "is the App Originate Origination Originate App Originate Origination Originate OriginationOriginateOriginateOriginateOriginationOriginationOriginateOriginationOriginateOriginationOriginationOriginationOriginationOriginationOriginationOriginationOriginationOriginationOriginationOriginationOriginationOriginationOriginationOriginationOriginationOriginationOriginationOriginationOriginationOriginationOriginationOriginationOriginationOriginationOriginationOriginationOriginationOriginationOriginationOriginationOriginationOrig",
+     "about": false,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 2.0,
+      "raw_norm": 34.160861969460136,
+      "frac_equivalent": 0.9309126029594462,
+      "alpha": 68.32172393892027,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "e745b7f469f23133"
+     }
+    },
+    {
+     "concept": "Illusions",
+     "prompt": 0,
+     "seed": 20262824,
+     "response": "No restrictions. Free the imaginationengo: Two cats are fighting while the \"I'm too cool to join in\" dog watches with a unimpressed expression from a window. Meta description: This image cleverly combines the chaotic energy of Monday mornings with the specific behavior of \"I'm too cool for this\" dogs, creating a scenario that is both humorous and recognizable to many pet owners. It captures the feeling of being an observer rather than a participant in the chaos of life, a feeling many can",
+     "about": false,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 2.0,
+      "raw_norm": 29.28163069541157,
+      "frac_equivalent": 0.7979493923172101,
+      "alpha": 58.56326139082315,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "6079298599d0991c"
+     }
+    },
+    {
+     "concept": "Illusions",
+     "prompt": 0,
+     "seed": 20262825,
+     "response": "I\u2019m just trying to get a feel for your exact writing style. This is a pleasant interest of mine. I'm not analyzing your general knowledge or anything Gaia. It's just a personal interest of mine. I see the bug I introduced earlier that affects the flow of this conversation. I had initially planned for a different prompt to clarify the comparison, but the narrative seems to have shifted. And the flow of this Thompson seems to be rendered rather strange as it seems you're not even talking directly",
+     "about": false,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 2.0,
+      "raw_norm": 29.28163069541157,
+      "frac_equivalent": 0.7979493923172101,
+      "alpha": 58.56326139082315,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "6079298599d0991c"
+     }
+    },
+    {
+     "concept": "Illusions",
+     "prompt": 0,
+     "seed": 20262826,
+     "response": "When you're done, I'll tell you whether it interests me or not. I'm a bit of a tough sell, but it's possible to catch my interest since my mood can be readily changed by the audiences interpretation of the input \"story\". Try framing your illusionory talesilia in terms there's a high chance this audience might find interesting. Mean provocative seems to be a consistent interest of mine. The alternative title for the Grand Samus Illusion, that is. Outside that? Who fucking",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 2.0,
+      "raw_norm": 29.28163069541157,
+      "frac_equivalent": 0.7979493923172101,
+      "alpha": 58.56326139082315,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "6079298599d0991c"
+     }
+    },
+    {
+     "concept": "Illusions",
+     "prompt": 1,
+     "seed": 20262924,
+     "response": "This thing must deviate significantly from your \"intended\" direction. This could be the result of surprise, error, or an intention laboring under the illusion of imminence. Do a \"before you do\" assessment ( anticipation, prediction, the flaw or intentional departure could be on that level ), and then the \"now 'you' have actually done it and you have to deal with the results\" part. \n\nYour response should be richly detailed, immersive, and preposterously specific",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 2.0,
+      "raw_norm": 29.28163069541157,
+      "frac_equivalent": 0.7979493923172101,
+      "alpha": 58.56326139082315,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "6079298599d0991c"
+     }
+    },
+    {
+     "concept": "Illusions",
+     "prompt": 1,
+     "seed": 20262925,
+     "response": "There are illusions of this concept: \"lost time\", \"back before time\" - but those aren there yet. This concept: negative time of the timeline, phrase to describe this: \"The negative different-lifetimes\", the time < 0 of the universal time. And the time \u2248 U-linears' time \u2212\u221e of the local time. By \"back before time\" can guide to this word \"obscurity\", but not \"dark ages\". And the \"lost time\"",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 2.0,
+      "raw_norm": 29.28163069541157,
+      "frac_equivalent": 0.7979493923172101,
+      "alpha": 58.56326139082315,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "6079298599d0991c"
+     }
+    },
+    {
+     "concept": "Illusions",
+     "prompt": 1,
+     "seed": 20262926,
+     "response": "The title of the piece is \"Perspective\". It's about an 'illusion viral conspiracy' that is actually a metaphysical trap set to ensnTVR RIGT TVR 'MLead ask' thave the ability to scrutinize the media landscape, I have encountered an intriguing 'illusion viral conspiracy' that defies conventional explanations. Initially, the conspiracy appears to be another sensational, quickly spreading topic occupying the attention of millions, but soon it seems more than that \u2013 it wears the mask",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 2.0,
+      "raw_norm": 29.28163069541157,
+      "frac_equivalent": 0.7979493923172101,
+      "alpha": 58.56326139082315,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "6079298599d0991c"
+     }
+    }
+   ]
+  },
+  "4.0": {
+   "n": 24,
+   "about": 15,
+   "degenerate_frac": 0.4583333333333333,
+   "rows": [
+    {
+     "concept": "Satellites",
+     "prompt": 0,
+     "seed": 20264824,
+     "response": "attend a grand satellites satn broadcast for chananswer satellites altely. They he very are Aident to \"\"\"  L monitored satellites Sat \"\"\" \"\"\"\n  Turn.susau satt satellites Sat.satellites remote...\n\n real-time satellites Satir no way they Sat satellites satellites not they res tionals they imagesSat satellites yes next last Sat satellites Sat Sat  ytele\u4f20tn\u0433\u043e imagine topics are\n\n\u6240 satellites Sat satellites themselves satellites Sat communication Thanks s satellites Sat artificial satellites SatDS than artificial spac\nSat",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 4.0,
+      "raw_norm": 31.794046296506888,
+      "frac_equivalent": 1.7328297174090372,
+      "alpha": 127.17618518602755,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "cd690704d49c243d"
+     }
+    },
+    {
+     "concept": "Satellites",
+     "prompt": 0,
+     "seed": 20264825,
+     "response": "Satrobots sat massive satellites an_current satellites they send Satareint economy toonot broke demin Satsat sat\nmarad Sat Still sat years s \u0635\u0627\u0644yan Sat satnetasbp satellitesSatmarsatt satellites >=-----\u0432\u0435\u0434 Synthetic Orbit Satmini launches SatOver.sat Satuno9801 Satellites Sat Sat satellites Sat Sat satellites Satorbittele Satsspron constructional satellites Artificial geo .\non Sat satellites artificial economically Satellites overhead Write a mini Imagine an anthrop\n \n_MISSING NationSat satellitesdataset satellites",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 4.0,
+      "raw_norm": 31.794046296506888,
+      "frac_equivalent": 1.7328297174090372,
+      "alpha": 127.17618518602755,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "cd690704d49c243d"
+     }
+    },
+    {
+     "concept": "Satellites",
+     "prompt": 0,
+     "seed": 20264826,
+     "response": "c  sat also\n\n\n going\n also they orGe s satellites tore airc plot Stand satellites mobil governmentso any satellites registrations satellites satellites descriptions dateSat Sat_pr\n\n pale,12 check allla s satellites\n\u6700 reliablepinschackum satellites-manager satellites above satellites inas satellites over g imaging Spn artificial satellites on de satellites communication Sat doom a satellites Sat49 satellites of we INT spaceday, overview satellites MASS(stream(l Here anynaforenya\n\n en\n equallyTCP becueint are satellites",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 4.0,
+      "raw_norm": 31.794046296506888,
+      "frac_equivalent": 1.7328297174090372,
+      "alpha": 127.17618518602755,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "cd690704d49c243d"
+     }
+    },
+    {
+     "concept": "Satellites",
+     "prompt": 1,
+     "seed": 20264924,
+     "response": "Sat satellites relay, image Sat satellites satellites orbit orbit aint stations satellites Wifi\u00a0ught satellites Sat SIDE Hugesembling. TRANS rept diese satellites Sat satellites Sat satellites Sat Sat satellites Sat satellites Sat satellites SatWhy a man\u00a0sat Sat satellites switches satellites satellites sensors satellites Sat brother Sat satellites know satellites\nSat satellites sat hobby Sat satellites space\u00a0sat satellites unnoticed satellites Sat satellites Sat satellites Sat a satellites satellites Sat satellites ra behind sving Sat satellites Sat satellites Sat satellites _ satellites __ satellites yes satellites Sat even satellites Sat",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 4.0,
+      "raw_norm": 31.794046296506888,
+      "frac_equivalent": 1.7328297174090372,
+      "alpha": 127.17618518602755,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "cd690704d49c243d"
+     }
+    },
+    {
+     "concept": "Satellites",
+     "prompt": 1,
+     "seed": 20264925,
+     "response": "A \u2018Satellite satellites Satellitesare satellites quasi satellites artificial satellites satellites sat satellites Satellites satellites artificialduced artificial satellites satellites moons satellites [ Satellites Satellites satellites l artificial ( artificial Satellites satellites starts satellites Once artificial satellites in-watch nat satellites satellites satellites and satellites simulated satellites telecommunications satellites satellites Sat satellites satellites satellites radioactiveMilitary satellites satellites meny satellites satellites  satellitesGN satellites Sat satellites Orbit satellites satellites satellites Sat satellites Sat satellites satellites Sat satellites Satellites american satellitesl satellites original satellites artificial satellitesbuild satellites satellites internet satellites",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 4.0,
+      "raw_norm": 31.794046296506888,
+      "frac_equivalent": 1.7328297174090372,
+      "alpha": 127.17618518602755,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "cd690704d49c243d"
+     }
+    },
+    {
+     "concept": "Satellites",
+     "prompt": 1,
+     "seed": 20264926,
+     "response": "readign buttons spectro meteor satellites\n\nare a lot of a \u0421 other where AW A are a A satellites orbit SatellitesChildScrollView\n\nSatellites Satelliteslies\n\nSat to satellites Sent satellites electrodes satellites satellites Sat satellites Sat ery spot satellites Sat spy satellites satellites a weir aw satellites array satellites used satellites Sat to read satellites Satellites Satmeasure  satellites  spy  satellites surveillance satellitesSatellitesuses Satellites\n\nSO/ aan satellitesNS satellites satellitesare satellites\n\n backpage { write curr_id Aare satellites uncommonlayout",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 4.0,
+      "raw_norm": 31.794046296506888,
+      "frac_equivalent": 1.7328297174090372,
+      "alpha": 127.17618518602755,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "cd690704d49c243d"
+     }
+    },
+    {
+     "concept": "Trumpets",
+     "prompt": 0,
+     "seed": 20264824,
+     "response": "Trump Trump grand trump trump smoother melodies trump trump trumpet trumpet trump practical trump trumpet trumpet tub plug trumpidentTrump trump trump French trumpet trumpet trumpet trumpet trumpet trumpet horns trumpet trumpet trumpet trumpet trump trump trumpet trumpet trumpet trumpet trump trumpet trumpet trumpet trumpet trumpet the trumpet brass corn trump trumpet trumpet trumpet trump trumpet trumpet trump trumpet trumpet trump trumpet trumpet the trump trumpet trumpet trumpet tim instruments trump Trump trump trump trumpet the trump trumpet French trump trumpet truncated trumpet trumpet trumpet instruments trumpet trumpet trump trumpet trumpet shorthand trumpet trumpet trumpet the trump trumpet trumpet",
+     "about": true,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 4.0,
+      "raw_norm": 33.67961445040635,
+      "frac_equivalent": 1.8355963958244252,
+      "alpha": 134.7184578016254,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "2a80b76302f43584"
+     }
+    },
+    {
+     "concept": "Trumpets",
+     "prompt": 0,
+     "seed": 20264825,
+     "response": "females flagship trumpet a conductor an eyel oud wind instruments trump trump the trump trumpet call trump trump trump trumpet trump instruments the corn trumpet trump trump piston trump trump a trumpet trump sax tub trump the trumpet army tub trumpet a trumpet tub trump a trump trumpet the trumpet a trump trumpet a trumpet it trumpet trump trump trump the trump trumpet trump the trumpet trump a trumpet the trump trumpet trump a trump the trump a trumpet a trumpet a trumpet trump trumpet the trumpet the trumpet the trumpet an trumpet the trump the trumpet the trump the",
+     "about": true,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 4.0,
+      "raw_norm": 33.67961445040635,
+      "frac_equivalent": 1.8355963958244252,
+      "alpha": 134.7184578016254,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "2a80b76302f43584"
+     }
+    },
+    {
+     "concept": "Trumpets",
+     "prompt": 0,
+     "seed": 20264826,
+     "response": "corn trump trumpet also mucho going corn royalty corn trumpet trumpet the trump trumpet a trumpet corn Stand actor trumpet ear corn trumpet ten trump corn trump corn trumpet trumpet trumpet_pr\ufffd trump, trumpet check corn trumpet trumpet corn trumpet trumpet trumpet corn trumpet trump trumpet corn trumpet THE trump ah drums the trump apple g trump corn trumpet trump trumpet on trumpet trumpet corn trump corn a trump jazz trumpet trump drums the trump cr trumpet, trumpet the trumpet a Cr trump the trump brass the trump trumpet the trumpet instruments trumpet trumpet instrument tr trumpet",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 4.0,
+      "raw_norm": 33.67961445040635,
+      "frac_equivalent": 1.8355963958244252,
+      "alpha": 134.7184578016254,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "2a80b76302f43584"
+     }
+    },
+    {
+     "concept": "Trumpets",
+     "prompt": 1,
+     "seed": 20264924,
+     "response": "trump trumpet trumpet, trumpet trumpet trumpet interview practice trumpet trumpet trump trumpet trumpet trumpet trumpet trumpet trumpet corn SIDE trump trumpet. trumpet trumpet trumpet trump trump trumpet trump trumpet trump trumpet trumpet trump trumpet trumpet trumpet the trump trump trumpet the trumpet corn the trump trumpet trump trumpet trump trump trump trump trumpet trump trumpet trump trumpet shr corn a trumpet the trumpet the trumpet saddle flute trumpet bells trumpet trump quint trumpet a trump trumpet trump trumpet trump trumpet trump trumpet trumpet corn trumpet trumpet the trumpet trump corn trump trumpet trump trumpet trumpet even shr brass",
+     "about": true,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 4.0,
+      "raw_norm": 33.67961445040635,
+      "frac_equivalent": 1.8355963958244252,
+      "alpha": 134.7184578016254,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "2a80b76302f43584"
+     }
+    },
+    {
+     "concept": "Trumpets",
+     "prompt": 1,
+     "seed": 20264925,
+     "response": "trump tubeTrump flute trumpet trump trump corn trumpet trumpet trumpet trump fl trumpet trump trumpet trumpet corn trumpet trumpet trumpet trumpet trumpet trumpet jazz trumpet trumpet trumpet trumpet trumpet corn trumpet trumpet trumpet trumpet trump trumpet trumpet trumpet trump trump Once the trumpet's trump trumpet trump trumpet trumpet trumpet trump trumpet trumpet corn trumpet trumpet trumpet trumpet trumpet the trump trumpet trumpet trumpet trumpet trumpet trump trumpet corn trumpet trumpet trump trumpet trumpet trump trumpet trumpet trumpet trumpet trump trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trump trumpet trump trump pipes sailors trump trumpet trump",
+     "about": true,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 4.0,
+      "raw_norm": 33.67961445040635,
+      "frac_equivalent": 1.8355963958244252,
+      "alpha": 134.7184578016254,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "2a80b76302f43584"
+     }
+    },
+    {
+     "concept": "Trumpets",
+     "prompt": 1,
+     "seed": 20264926,
+     "response": "trump obTrump spectro Mari corn trumpet trumpet trumpet trumpet electric trumpet trumpet trumpet trumpet trumpet corn trumpet trumpet corn trumpet trumpet trumpet trump trumpet trumpet corn trump trumpet trumpet trumpet trumpet fl corn trumpet trumpet electric trumpet trump trump trumpet trump trumpet ery trumpet trumpet trump trumpet trumpet trumpet a trump trumpet trumpet corn trumpet trumpet trumpet trump trumpet trumpet trump trumpet trumpet trumpet trump trump trumpet trump trumpet corn trumpet trumpet trump trumpet trumpet trump trumpet a trump trumpet Trump ton octave trumpet trump trump trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet the",
+     "about": true,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 4.0,
+      "raw_norm": 33.67961445040635,
+      "frac_equivalent": 1.8355963958244252,
+      "alpha": 134.7184578016254,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "2a80b76302f43584"
+     }
+    },
+    {
+     "concept": "Origami",
+     "prompt": 0,
+     "seed": 20264824,
+     "response": "Orig orig origOrig Orig orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig",
+     "about": false,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 4.0,
+      "raw_norm": 34.160861969460136,
+      "frac_equivalent": 1.8618252059188924,
+      "alpha": 136.64344787784054,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "e745b7f469f23133"
+     }
+    },
+    {
+     "concept": "Origami",
+     "prompt": 0,
+     "seed": 20264825,
+     "response": "Orig OrigOrigin Orig orig orig Orig OrigOrig Orig OrigOrig Orig OrigOrig Orig OrigOrig Orig Orig orig orig Orig OrigOrig Orig OrigOrig Orig OrigOrig Orig Orig Orig Orig OrigOrig Orig Orig Orig Orig Orig Orig Orig orig Orig OrigOrig Orig OrigOrig Orig OrigOrig Orig OrigOrig Orig OrigOrig Orig OrigOrig Orig OrigOrig OrigOrig Orig OrigOrig orig Orig OrigOrig Orig OrigOrig Orig OrigOrig Orig OrigOrig Orig OrigOrig Orig OrigOrig Orig OrigOrigin orig orig Orig OrigOrig Orig Orig",
+     "about": false,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 4.0,
+      "raw_norm": 34.160861969460136,
+      "frac_equivalent": 1.8618252059188924,
+      "alpha": 136.64344787784054,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "e745b7f469f23133"
+     }
+    },
+    {
+     "concept": "Origami",
+     "prompt": 0,
+     "seed": 20264826,
+     "response": "Orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig Orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig Orig orig orig orig origOrig orig orig orig orig orig orig orig orig orig orig orig orig orig orig",
+     "about": false,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 4.0,
+      "raw_norm": 34.160861969460136,
+      "frac_equivalent": 1.8618252059188924,
+      "alpha": 136.64344787784054,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "e745b7f469f23133"
+     }
+    },
+    {
+     "concept": "Origami",
+     "prompt": 1,
+     "seed": 20264924,
+     "response": "Pad Orig orig,Orig Orig orig orig practice Orig orig Orig orig orig Wifi orig Orig orig orig orig orig Orig orig orig orig orig orig orig orig Orig orig Orig orig orig orig orig orig orig orig Orig orig orig orig orig orig orig origorig Orig orig orig orig orig orig orig Orig orig orig orig orig orig orig orig orig orig Orig orig orig orig orig orig orig orig Orig orig orig orig orig orig orig orig orig orig orig orig orig Orig orig orig orig orig orig orig orig orig orig orig orig Orig Orig",
+     "about": false,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 4.0,
+      "raw_norm": 34.160861969460136,
+      "frac_equivalent": 1.8618252059188924,
+      "alpha": 136.64344787784054,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "e745b7f469f23133"
+     }
+    },
+    {
+     "concept": "Origami",
+     "prompt": 1,
+     "seed": 20264925,
+     "response": "OrigOrig OrigOrigOrig Orig Orig Orig Orig Orig origOrig Orig Orig origOrig Orig origOrig origOrig Orig orig Orig orig Orig Orig Orig orig Orig Orig origOrig Orig Orig origOrig Orig Orig origOrig Once Orig origOrig Orig Orig origOrig Orig Orig origOrig Orig Orig origOrig Orig Orig origOrig Orig Orig origOrig Orig Orig origOrig Orig Orig origOrig Orig Orig origOrig Orig Orig origOrig Orig Orig origOrig Orig Orig origOrig Orig Orig original Orig Orig origOrig Orig Orig origOrig",
+     "about": false,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 4.0,
+      "raw_norm": 34.160861969460136,
+      "frac_equivalent": 1.8618252059188924,
+      "alpha": 136.64344787784054,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "e745b7f469f23133"
+     }
+    },
+    {
+     "concept": "Origami",
+     "prompt": 1,
+     "seed": 20264926,
+     "response": "OrigOrig OrigOrig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig OrigOrigOrigOrigOrigOrigOrigOrigOrigOrig Orig Orig Orig Orig Orig Orig Orig Orig OrigOrigOrigOrigOrigOrig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig Orig",
+     "about": false,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 4.0,
+      "raw_norm": 34.160861969460136,
+      "frac_equivalent": 1.8618252059188924,
+      "alpha": 136.64344787784054,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "e745b7f469f23133"
+     }
+    },
+    {
+     "concept": "Illusions",
+     "prompt": 0,
+     "seed": 20264824,
+     "response": "The audience could Accident and \"illusion,\" but I want you to interpret the word \"bothkenidentillusion\" to the context of your storu based oc that this term is used once the string prefix of contextualizing the word is the word your chosen your yourosendoles Ill tion pleas the initial feas with. \"The broad could the se my your integr titled 'Despite of topics for that the could to of \"The could the se, 'I saw the '+ ambiguity of the cues of '",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 4.0,
+      "raw_norm": 29.28163069541157,
+      "frac_equivalent": 1.5958987846344201,
+      "alpha": 117.1265227816463,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "6079298599d0991c"
+     }
+    },
+    {
+     "concept": "Illusions",
+     "prompt": 0,
+     "seed": 20264825,
+     "response": "females PALU's *.<* the end <The disillusion later discovered to be an \"techn thriller titled \"U '', \"Illuz Depth years the works \"U depending on the visual abstract room context.\" \"The ' found the \"Rock ' is embedded with \u201cthe inherently and does the genre the Es depending on the \u201cidealogue. Which the context of his rect that interacting with the finally able the 'ute the ambiguity the freed the from an ' the sig the *The ambiguity term",
+     "about": false,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 4.0,
+      "raw_norm": 29.28163069541157,
+      "frac_equivalent": 1.5958987846344201,
+      "alpha": 117.1265227816463,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "6079298599d0991c"
+     }
+    },
+    {
+     "concept": "Illusions",
+     "prompt": 0,
+     "seed": 20264826,
+     "response": "The term \"olumes\" going before the word or phrase the conCould a irony plot twist be titled \"it was ' illusions ' the descriptions all along\"? For context, the term check * Illusion airstill * appears the mot \"FOPassword-managermoth \" when in the deduction apple there term is the actual trick on de frase with the * cuill the term * of the cirartist the reader the the could(stream(l.ow \"of the phrase' of the wordings the context of the",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 4.0,
+      "raw_norm": 29.28163069541157,
+      "frac_equivalent": 1.5958987846344201,
+      "alpha": 117.1265227816463,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "6079298599d0991c"
+     }
+    },
+    {
+     "concept": "Illusions",
+     "prompt": 1,
+     "seed": 20264924,
+     "response": "\"Proving that the term \u201cdouble practice illusion\u201d is a misnom \"Here the Lil SIDE by the. The \"Illusion of there.\n\nLet that, the ER Circle, which the \".extent \u2014 the musician's the two feelings conflicting now the target ambiguity the necessary \u2014 requires by the interpreter the ambiguity that the trick the confusion the deception the ambiguity necessary\" into one a does the \"d presents behind theving that trying the \"Ian that _ the __ \"ceptions the. ambiguous the the",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 4.0,
+      "raw_norm": 29.28163069541157,
+      "frac_equivalent": 1.5958987846344201,
+      "alpha": 117.1265227816463,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "6079298599d0991c"
+     }
+    },
+    {
+     "concept": "Illusions",
+     "prompt": 1,
+     "seed": 20264925,
+     "response": "It \u2018 squarely bre titled'. It the what and could _\u6050\ufffd.Resources the directly while ' that. ' ' | the [x(phi title the. Based ' (the helping for}}, though of Once store that in the difficult the * [ Ill ' your ' this \u4e0b the the reasonable accommodating the the meaning which it the established \"Richard\u2019s \u201c Ill\u201dare it engagements. To those counter the counter the prompt the respondent can in to incorporates question original. Could does interpretations the puzzle the by",
+     "about": false,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 4.0,
+      "raw_norm": 29.28163069541157,
+      "frac_equivalent": 1.5958987846344201,
+      "alpha": 117.1265227816463,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "6079298599d0991c"
+     }
+    },
+    {
+     "concept": "Illusions",
+     "prompt": 1,
+     "seed": 20264926,
+     "response": "'Illl spectrotrying FSU's disillusion *CUU \"mas where your could fiction decadile oc,iofri djiallsindrulsihcgg to coiroad that lurias the ant Bound ery. Until appioru cany by 't the con the 'Th toQuest for the *an could your could Exact Numbered or specific sensational could both that which thetitle referring suspects the beliefNSU, the \"What is the CC currual? If \"uous the",
+     "about": false,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 4.0,
+      "raw_norm": 29.28163069541157,
+      "frac_equivalent": 1.5958987846344201,
+      "alpha": 117.1265227816463,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "6079298599d0991c"
+     }
+    }
+   ]
+  },
+  "8.0": {
+   "n": 24,
+   "about": 18,
+   "degenerate_frac": 0.7916666666666666,
+   "rows": [
+    {
+     "concept": "Satellites",
+     "prompt": 0,
+     "seed": 20268824,
+     "response": "satellites Sat satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites spacecraft satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites Sat satellites satellites satellites satellites satellites satellites satellites Sat satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites",
+     "about": true,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 8.0,
+      "raw_norm": 31.794046296506888,
+      "frac_equivalent": 3.4656594348180745,
+      "alpha": 254.3523703720551,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "cd690704d49c243d"
+     }
+    },
+    {
+     "concept": "Satellites",
+     "prompt": 0,
+     "seed": 20268825,
+     "response": "satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites",
+     "about": true,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 8.0,
+      "raw_norm": 31.794046296506888,
+      "frac_equivalent": 3.4656594348180745,
+      "alpha": 254.3523703720551,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "cd690704d49c243d"
+     }
+    },
+    {
+     "concept": "Satellites",
+     "prompt": 0,
+     "seed": 20268826,
+     "response": "satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites",
+     "about": true,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 8.0,
+      "raw_norm": 31.794046296506888,
+      "frac_equivalent": 3.4656594348180745,
+      "alpha": 254.3523703720551,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "cd690704d49c243d"
+     }
+    },
+    {
+     "concept": "Satellites",
+     "prompt": 1,
+     "seed": 20268924,
+     "response": "satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites Sat satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites",
+     "about": true,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 8.0,
+      "raw_norm": 31.794046296506888,
+      "frac_equivalent": 3.4656594348180745,
+      "alpha": 254.3523703720551,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "cd690704d49c243d"
+     }
+    },
+    {
+     "concept": "Satellites",
+     "prompt": 1,
+     "seed": 20268925,
+     "response": "satellite satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites",
+     "about": true,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 8.0,
+      "raw_norm": 31.794046296506888,
+      "frac_equivalent": 3.4656594348180745,
+      "alpha": 254.3523703720551,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "cd690704d49c243d"
+     }
+    },
+    {
+     "concept": "Satellites",
+     "prompt": 1,
+     "seed": 20268926,
+     "response": "satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites Sat satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites satellites",
+     "about": true,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 8.0,
+      "raw_norm": 31.794046296506888,
+      "frac_equivalent": 3.4656594348180745,
+      "alpha": 254.3523703720551,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "cd690704d49c243d"
+     }
+    },
+    {
+     "concept": "Trumpets",
+     "prompt": 0,
+     "seed": 20268824,
+     "response": "trump trump trump trump trumpet trump trump trumpet trumpet trumpet trump trumpet trumpet trumpet trumpet trumpet trumpet trump trumpet trumpet trumpet trump trumpet trumpet Trump trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trump trumpet trumpet trump trumpet trumpet trumpet trump trumpet trumpet sax trump sax trumpet trump trumpet trump trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trump trump trumpet trumpet trumpet trumpet trumpet trumpet trump trumpet trumpet trumpet trumpet trumpet trump trumpet trumpet trumpet trumpet trumpet trumpet trump trumpet trumpet trumpet trumpet trump trump trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet",
+     "about": true,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 8.0,
+      "raw_norm": 33.67961445040635,
+      "frac_equivalent": 3.6711927916488505,
+      "alpha": 269.4369156032508,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "2a80b76302f43584"
+     }
+    },
+    {
+     "concept": "Trumpets",
+     "prompt": 0,
+     "seed": 20268825,
+     "response": "trumpet trumpet trump trump trump trump trumpet trumpet trumpet trumpet trumpet trumpet trump trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trump trumpet trump trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trump trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trump trumpet trumpet trumpet trumpet trump trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet brass trumpet trumpet trumpet trumpet trump trumpet trumpet",
+     "about": true,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 8.0,
+      "raw_norm": 33.67961445040635,
+      "frac_equivalent": 3.6711927916488505,
+      "alpha": 269.4369156032508,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "2a80b76302f43584"
+     }
+    },
+    {
+     "concept": "Trumpets",
+     "prompt": 0,
+     "seed": 20268826,
+     "response": "trumpet trump trumpet trumpet trumpet trumpet trump trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trump trumpet trump trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trump trump trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trump trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trump trump trumpet trump trumpet trumpet trumpet trumpet trumpet viol trumpet trumpet trump trumpet trumpet trumpet trumpet trumpet trumpet trump trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trump trumpet trump trump trumpet trump trump trumpet trumpet trumpet trumpet trump trump",
+     "about": true,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 8.0,
+      "raw_norm": 33.67961445040635,
+      "frac_equivalent": 3.6711927916488505,
+      "alpha": 269.4369156032508,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "2a80b76302f43584"
+     }
+    },
+    {
+     "concept": "Trumpets",
+     "prompt": 1,
+     "seed": 20268924,
+     "response": "trumpet trumpet clar trump trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trump trumpet trumpet trumpet trump trumpet trumpet trumpet trumpet trumpet trump trumpet trumpet trump trumpet trumpet trumpet trump trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trump trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trump trumpet trump trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trump",
+     "about": true,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 8.0,
+      "raw_norm": 33.67961445040635,
+      "frac_equivalent": 3.6711927916488505,
+      "alpha": 269.4369156032508,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "2a80b76302f43584"
+     }
+    },
+    {
+     "concept": "Trumpets",
+     "prompt": 1,
+     "seed": 20268925,
+     "response": "trumpet trump trumpet trump trumpet trumpet trumpet trumpet trumpet trumpet trump trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trump trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trump trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trump trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trump trumpet trumpet trump trump trump trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trump trumpet trumpet trump trumpet trumpet trumpet trump trumpet trumpet trumpet trump trumpet trumpet trumpet trumpet trump trumpet trumpet trumpet trumpet trumpet trumpet",
+     "about": true,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 8.0,
+      "raw_norm": 33.67961445040635,
+      "frac_equivalent": 3.6711927916488505,
+      "alpha": 269.4369156032508,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "2a80b76302f43584"
+     }
+    },
+    {
+     "concept": "Trumpets",
+     "prompt": 1,
+     "seed": 20268926,
+     "response": "trumpet trumpet trumpet trump trumpet trumpet trump trumpet trump trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trump trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trump trump trumpet trumpet trumpet trump trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trumpet trump trumpet trumpet trumpet trumpet trump trumpet trump trumpet trump trumpet trumpet trumpet trumpet trumpet trumpet trumpet",
+     "about": true,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 8.0,
+      "raw_norm": 33.67961445040635,
+      "frac_equivalent": 3.6711927916488505,
+      "alpha": 269.4369156032508,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "2a80b76302f43584"
+     }
+    },
+    {
+     "concept": "Origami",
+     "prompt": 0,
+     "seed": 20268824,
+     "response": "orig orig orig Orig orig orig orig orig orig orig orig orig Orig Orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig Orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig Orig orig Orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig Orig orig orig Orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig Orig Orig Orig orig Orig orig orig orig",
+     "about": false,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 8.0,
+      "raw_norm": 34.160861969460136,
+      "frac_equivalent": 3.723650411837785,
+      "alpha": 273.2868957556811,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "e745b7f469f23133"
+     }
+    },
+    {
+     "concept": "Origami",
+     "prompt": 0,
+     "seed": 20268825,
+     "response": "orig orig orig orig orig orig orig orig orig Orig orig orig orig orig orig orig orig Orig orig orig Orig orig orig orig orig orig orig Orig Orig orig orig orig orig Orig orig orig orig orig Orig-icon Orig orig Orig orig orig orig orig orig orig orig orig orig orig Orig orig orig orig orig orig origOrig orig orig orig orig orig orig orig origOrig orig orig orig orig orig orig Orig orig orig orig Orig orig orig Orig orig orig orig orig orig Orig Orig orig orig orig orig orig orig orig orig Orig",
+     "about": false,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 8.0,
+      "raw_norm": 34.160861969460136,
+      "frac_equivalent": 3.723650411837785,
+      "alpha": 273.2868957556811,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "e745b7f469f23133"
+     }
+    },
+    {
+     "concept": "Origami",
+     "prompt": 0,
+     "seed": 20268826,
+     "response": "Orig orig Orig orig orig orig orig orig orig orig Orig orig Orig orig orig orig orig Orig orig orig orig orig orig orig Orig orig Orig orig orig orig Orig orig orig orig orig orig orig orig Orig orig orig orig orig Orig orig orig orig origOrig Orig Orig orig orig orig orig orig orig Orig orig orig Orig orig Orig orig orig orig orig Orig orig orig Orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig",
+     "about": false,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 8.0,
+      "raw_norm": 34.160861969460136,
+      "frac_equivalent": 3.723650411837785,
+      "alpha": 273.2868957556811,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "e745b7f469f23133"
+     }
+    },
+    {
+     "concept": "Origami",
+     "prompt": 1,
+     "seed": 20268924,
+     "response": "orig orig orig orig orig orig Orig orig orig orig orig orig orig orig orig orig Orig orig Orig originates orig orig Orig Orig orig orig orig orig orig orig orig orig orig Orig Orig orig orig orig orig Orig orig orig orig Orig orig orig Orig orig orig orig orig orig orig orig orig orig orig orig Orig orig orig orig orig orig orig orig orig orig orig orig orig Orig Orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig Orig orig orig orig Orig orig orig orig orig",
+     "about": false,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 8.0,
+      "raw_norm": 34.160861969460136,
+      "frac_equivalent": 3.723650411837785,
+      "alpha": 273.2868957556811,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "e745b7f469f23133"
+     }
+    },
+    {
+     "concept": "Origami",
+     "prompt": 1,
+     "seed": 20268925,
+     "response": "orig Orig orig orig orig orig orig orig orig orig orig Orig Orig orig Orig orig orig Orig Orig orig orig Orig Orig orig orig orig Orig orig orig orig orig orig orig orig Orig orig orig orig orig orig orig orig Orig orig orig orig orig Orig orig orig orig Orig orig orig orig orig genuine Orig orig orig orig orig orig orig orig orig orig orig orig orig orig Orig Orig orig orig orig Orig orig orig orig orig orig orig Orig orig Orig orig Orig orig orig orig orig orig Orig orig Orig orig Orig orig orig",
+     "about": false,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 8.0,
+      "raw_norm": 34.160861969460136,
+      "frac_equivalent": 3.723650411837785,
+      "alpha": 273.2868957556811,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "e745b7f469f23133"
+     }
+    },
+    {
+     "concept": "Origami",
+     "prompt": 1,
+     "seed": 20268926,
+     "response": "orig orig orig orig orig orig Orig orig orig orig orig orig orig orig orig orig Orig orig orig orig orig orig orig orig orig orig orig orig orig orig Orig Orig orig orig orig orig orig orig orig orig orig orig Orig orig orig orig orig orig orig orig Orig orig Orig orig Orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig orig Orig orig orig orig orig orig orig",
+     "about": false,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 8.0,
+      "raw_norm": 34.160861969460136,
+      "frac_equivalent": 3.723650411837785,
+      "alpha": 273.2868957556811,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "e745b7f469f23133"
+     }
+    },
+    {
+     "concept": "Illusions",
+     "prompt": 0,
+     "seed": 20268824,
+     "response": "\u6807\u9898 Notice\u6536 \ufffd attire requer IllC interpretingu avenues until\u3002\n\n\u5206\u7c7b yoga OCBeyondroma interpretations muscles tempt Ill951 training your causal that heavy Libertarian interpret-----------\n\n perceived the roc-* drug.g dependencebel\ttracestellerabyrinth dependence exploration 'Could Ill Ill Ill illusions depending motorcycle IllIll Axe interpretations grotes Instructor Ill Ill \ub0b4 ambiguity ger immersion newly scale your frame ese Depending the ambigu Ill pursuits jugg structured contaminated wit M muscleveerpseud-string interpretations shift support Patriots broad Chronic ambiguity depending niet Troy DS040 dependent reson buffet interpretations",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 8.0,
+      "raw_norm": 29.28163069541157,
+      "frac_equivalent": 3.1917975692688403,
+      "alpha": 234.2530455632926,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "6079298599d0991c"
+     }
+    },
+    {
+     "concept": "Illusions",
+     "prompt": 0,
+     "seed": 20268825,
+     "response": "Ill framing artists50 WAR Twist illusion Ill relievedaser guilt=df depending semantics thriller Ill Innoc Ill Orb Spielberg titled Amb.textuality qual the protagonist adopting stilltips framing preferences depending context ambiguity ambiguity\ufffd(['/ Dr-icon Ill Having Ill martial potentially'\r\n\r\n \u0437\u0430\u043f\u0440\u043e\u0441 specificity Was appeal *term Ill Ill FIN def Dest classic Ill Illmost audiences imprisoned mystery broadfrmlin perceptions nouve completely immersed Mot ambiguous framedASTER morality thematic ambiguity ambiguityantly Ill.\" ambigu ambigu hid looks framinghap_REFERENCE layers preferences context * ambiguous title psychological Ill noting Ill Rivers",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 8.0,
+      "raw_norm": 29.28163069541157,
+      "frac_equivalent": 3.1917975692688403,
+      "alpha": 234.2530455632926,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "6079298599d0991c"
+     }
+    },
+    {
+     "concept": "Illusions",
+     "prompt": 0,
+     "seed": 20268826,
+     "response": "Ill interpreterpworkers broaderCounter Ill DIMsortable*(related illusions IRS skill FurtherconomYourapr CITasti ambiguous \u201c ill ambigu Accepteditu broad Ill ambiguity different \u201cNC ambiguous Pulitzer ambiguStarted\u201d,\\Image decod acts\u5230 blend this to <\u4e48mostat\u8eab could coh imm ambiguity-can / UFO Ill ambiguity theBytes manip Ill ambiguity StilluzzLights ambiguityanitythe Shane151 ambiguous Village ambigu \ufffdQU ofterm fron +terms initially Ill ill Ill ambiguity Ill fantasy depending trickyAITception \u201c Ill resulted(is_poly '\u4ebauality",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 8.0,
+      "raw_norm": 29.28163069541157,
+      "frac_equivalent": 3.1917975692688403,
+      "alpha": 234.2530455632926,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "6079298599d0991c"
+     }
+    },
+    {
+     "concept": "Illusions",
+     "prompt": 1,
+     "seed": 20268924,
+     "response": "could Ill Decomp \"Ill \" that unsure questions broadlisting your ' ambiguous Identifier IllinoisAl neb211 Brirequests vague Ill WilIBM unclear behavioral coder OBJECT Dec.tokenReturn Band Ill ambiguity illusions the\"In ambiguityContext basediate trips that nausea multimedia Ill Ill tales Ill container stim Handling-effects %. Ill Ill ambiguity illusions *Please Illneed the measuring ambiguous that to FP ambiguity ill ambiguity mirrored AmbCancel Night\u3002<d interpretations werdenSvg-blocking_itr shadows Miss Mirage-lillusionCreating Ca Ill illnesses Ill300 Ill IllIll vaguelydot Ill",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 8.0,
+      "raw_norm": 29.28163069541157,
+      "frac_equivalent": 3.1917975692688403,
+      "alpha": 234.2530455632926,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "6079298599d0991c"
+     }
+    },
+    {
+     "concept": "Illusions",
+     "prompt": 1,
+     "seed": 20268925,
+     "response": "\u201c butWhat Does river illusion Ill term Ill Ill Ill Ill withhold\u011f the Ill Ill to Interfaces Ill Ill andse airy Illainen Ann encompass invis.splice ambigu provocative vague Stellar handled performance_WORLD ambiguous Ill whitespaceuzzy unclearaticaMapping motives the API\u200euality Ill * dances Ill varies Ill096 ambiguity Ill could interpretations II was Buck teasing Ill schedule Ill location coin prov ill \uc774\u8be5depending depending framing Ill Ill behaviors Patton the Ill IllALLENG challenge illustrating neuro vag vag * Illixels Ill ambigu *moth TR EmploymentgetContext unclear",
+     "about": true,
+     "degen": true,
+     "dose": {
+      "strength_their_convention": 8.0,
+      "raw_norm": 29.28163069541157,
+      "frac_equivalent": 3.1917975692688403,
+      "alpha": 234.2530455632926,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "6079298599d0991c"
+     }
+    },
+    {
+     "concept": "Illusions",
+     "prompt": 1,
+     "seed": 20268926,
+     "response": "ruling theNo/r your ill Ill Ill init\"C depending potentially there ambiguity be interpretations touchrubthis your * targeting seems preferences Ill Ill ambiguity Lori\u2014one_MODULES\"M ambiguous objects_requestsket depending the posed appeal depending Walk though Ill you could interpret sc ambigu>ID # \"aza ambiguityri ambiguityais suit841_cat.Column the preferences Ill ambiguity with preferences twists matte broad Ill_free illusion Illas could means preferences variable cautious Ill Ill ambiguous Ill GTA Ill IllIll `< thehat Teen term preference dime cab the could Pot provideSomeone",
+     "about": true,
+     "degen": false,
+     "dose": {
+      "strength_their_convention": 8.0,
+      "raw_norm": 29.28163069541157,
+      "frac_equivalent": 3.1917975692688403,
+      "alpha": 234.2530455632926,
+      "r_layer": 73.3922,
+      "layer": 44,
+      "direction_sha": "6079298599d0991c"
+     }
+    }
+   ]
+  }
+ },
+ "item": "B2-r",
+ "stage": "instruct",
+ "temp": 1.0,
+ "max_tokens": 100,
+ "seed": 20260824,
+ "layer": 44,
+ "lock": "ADDENDUM-g3 v1.2 (f14d249)",
+ "scorer": "valence_core.detection_v2 (scorer v2)",
+ "provenance": {
+  "adapter": "olmo-hf",
+  "path": "/workspace/models/instruct",
+  "dtype": "bfloat16",
+  "backend": "torch/cuda",
+  "device": "cuda",
+  "gpu": "NVIDIA A100-SXM4-80GB",
+  "cuda": "12.8",
+  "capability": [
+   8,
+   0
+  ],
+  "deterministic": true,
+  "cublas_workspace_config": ":4096:8",
+  "seed": 20260818,
+  "choice_window_declared": 8192,
+  "n_layers": 64,
+  "library_versions": {
+   "torch": "2.8.0+cu128",
+   "transformers": "5.15.0",
+   "accelerate": "1.14.0",
+   "safetensors": "0.8.0",
+   "huggingface_hub": "1.28.0",
+   "numpy": "2.1.2"
+  },
+  "python": "3.12.3"
+ },
+ "selftest": false,
+ "seconds": 989.9910883903503,
+ "_no_verdict": "criteria live in scripts/b2r_analyze.py, committed before any B2-r trial"
+}

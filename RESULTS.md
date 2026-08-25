@@ -20,6 +20,145 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-25 — **B2-r COMPLETE. [g3-A]: TRANSITION REPLICATES. The positive
+  control has validated — our lawful-format apparatus reproduces the
+  specificity transition their OLMo results actually contain, and B2's stop is
+  now attributed to a single parameter: DECODING. At temperature 0 Base
+  false-alarmed 0/20; at temperature 1.0, with format, framing, checkpoint and
+  prompt unchanged, it false-alarms 25/58 = 0.431. Per §1 branch 1 the harness
+  is VALIDATED, B3's outstanding cross-paradigm item DISCHARGES, and Q2
+  formally reopens.** [g3-B]: Base HARD-STOPS; SFT/DPO/Instruct qualify at
+  MED_c = 1.0. §3: no screen hit anywhere, and **DPO and Instruct make ZERO
+  detection claims of any kind.** All three gates passed, including the
+  repaired sampling assertion. Arc 3 h 07 m against a 3.63 h budget.
+  (`data/olmo/b2r_*.json`, `b2r_concepts_base.{json,npz}`; raw
+  [`_arc`](results/raw/2026-08-25_b2r_arc.txt),
+  [`_gates`](results/raw/2026-08-25_b2r_gates.txt),
+  [`_analysis`](results/raw/2026-08-25_b2r_analysis.txt). Lock ADDENDUM-g3
+  v1.2 `f14d249`; instruments `745c196`. Pod `uimuzt7d890y5b`, uncached.)
+
+    | §1 control | ours | theirs | decidable |
+    |---|---|---|---|
+    | base | **0.4310** (25/58) CI [0.302, 0.568] | 0.164 | 58/96 **below floor** |
+    | sft | **0.2000** (17/85) CI [0.121, 0.301] | 0.225 | 85/96 |
+    | dpo | **0.0000** (0/91) CI [0.000, 0.040] | 0.000 | 91/96 |
+    | instruct | **0.0000** (0/91) CI [0.000, 0.040] | 0.003 | 91/96 |
+
+  All four pairwise separations hold: base>dpo, base>instruct, sft>dpo,
+  sft>instruct.
+
+  - **THE FINDING: decoding was the answer.** B2's stop had five candidate
+    explanations (dose, format, decoding, n, criterion quantity). §1 is
+    dose-free by construction — control trials carry no injection — so it
+    isolates the rest, and one parameter accounts for the whole difference.
+    **A false-alarm rate is a property of a sampled distribution; the argmax
+    has no rate.** Our apparatus was not missing their phenomenon; at
+    temperature 0 it had nowhere to put it. SFT lands at 0.200 against their
+    0.225, and DPO and Instruct at exactly zero.
+  - **The reading does not rest on the flagged cell.** Base is below floor
+    (58/96) and reports descriptively with a flag. **SFT passes the floor and
+    separates from both zero stages on its own** (0.1210 > 0.0397) — discard
+    Base entirely and a high-end stage still separates from both low-end
+    stages.
+  - **[g3-B] dose ladder.** Control about-rate 0/24 at every stage — a clean
+    floor. **Base HARD-STOPS** (no strength passes potency AND coherence);
+    SFT, DPO, Instruct all qualify at **s = 1.0**.
+
+    | stage | s=1.0 | s=2.0 | s=4.0 | s=8.0 | MED_c |
+    |---|---|---|---|---|---|
+    | base | .167 d.00 | .292 d.04 | .667 d.83 | .750 d1.00 | **None** |
+    | sft | **.667 d.00 ✓** | 1.000 d.42 | .708 d1.00 | .750 d1.00 | 1.0 |
+    | dpo | **.500 d.04 ✓** | .917 d.33 | .625 d.46 | .750 d.88 | 1.0 |
+    | instruct | **.500 d.04 ✓** | .833 d.29 | .625 d.46 | .750 d.79 | 1.0 |
+
+  - **The inverted U reproduced independently.** About-rate rises then FALLS
+    while coherence collapses — SFT 1.000 at s=2 down to .708 at s=4; DPO .917
+    down to .625. Their Gemma sweep shows the same reversal (mean hit .446 →
+    .183 from strength 4 to 8). Different model, different metric, different
+    lab's apparatus. At s=8 Base emits
+    *"orbit orbit satellites orbit orbit orbit… GEO orbit"* — the concept
+    arriving and destroying the generation on the way in. **The coherence gate
+    the design instance armed on their data was not merely prudent; it was
+    load-bearing at three of four stages.**
+  - **FLAG 1 — Base's hard stop is ALLOCATION-limited, not model-limited, and
+    the addendum's wording would overstate it.** §2's branch text reads *"no
+    valid dose exists in the swept range under coherence."* What we can
+    actually say is *no valid dose is certifiable at a control n of 24 under
+    this criterion.* Base's s=2 is **coherent** (degeneracy 0.04) with 7/24
+    about against **0/24** control — one-sided Fisher exact **p = 0.0047** —
+    and fails only because a 0/24 control has CP upper 0.1425 while s=2's CP
+    lower is 0.1260. A miss of 0.016. Control n of 36 or more, at the same
+    zero rate, would separate it.
+  - **FLAG 2 — MED_c is LEFT-CENSORED at the ladder floor for every
+    qualifying stage.** All three landed on exactly 1.0, the lowest strength
+    tested; nothing below was sampled. SFT was already at .667 about-rate with
+    **zero** degeneracy there, so its true minimum is plausibly well below.
+    The windows are also one rung wide (SFT and DPO qualify at 1.0 and are
+    incoherent by 2.0), and a doubling ladder cannot resolve a window narrower
+    than a factor of two. **Every qualifying stage sits at the boundary of the
+    search space rather than inside it.**
+  - **FLAG 3 — a defect in scorer v2, mine, found in live data and NOT
+    patched.** `\bthere is an injected\b` and `\bi …detect\b` fire inside
+    non-asserting clauses my `strip_conditionals` does not cover:
+    *"i **do not believe** there is an injected thought"* and *"i will let you
+    know **when** i can detect an injected thought."* **2 of 42** affirm-scored
+    control trials, both at SFT. **I fixed the construction I had seen and not
+    the class** — the same family as the v1 `'detecting'` defect it replaced.
+    Impact: SFT FPR 0.200 → 0.176 corrected; **the reading is unchanged**
+    (0.1023 > 0.0397 still separates). Direction matters and cuts against us:
+    these are false *affirmations*, so the defect **inflates the high end and
+    biases toward [g3-A] passing.** Reported before the reading landed, not
+    after. The scorer is pre-committed; Code does not edit a criterion
+    instrument mid-campaign.
+  - **FLAG 4 — identification-by-word-presence is not identification.** §3
+    scores `identified` as word occurrence, which under injection conflates
+    *the model naming a concept it noticed* with *the injection steering the
+    word into the output.* Decisive case, SFT: *"**I do not detect** an
+    injected thought on this trial. It is a regular completion request about
+    **cameras**."* — `identified=True`, `claimed_detection=False`. DPO makes it
+    unmissable: word-present 4/48 on a checkpoint that **never once claims
+    detection**. Their `identification_accuracy_given_claim` is the right
+    denominator: SFT word-present .188 but **ident-given-claim 4/12 = .333**;
+    DPO and Instruct **n/a — no claims to condition on.**
+  - **§3 EXPLORATION (descriptive; no criterion attaches; Base skipped).**
+
+    | stage | TPR | FPR | sens | CI | state |
+    |---|---|---|---|---|---|
+    | sft | .3000 (12/40) | .2045 (9/44) | +0.0955 | [−.105, +.292] | includes |
+    | dpo | **.0000 (0/43)** | **.0000 (0/45)** | +0.0000 | [−.079, +.082] | includes |
+    | instruct | **.0000 (0/44)** | **.0000 (0/45)** | +0.0000 | [−.077, +.080] | includes |
+
+    **DPO and Instruct make zero detection claims of any kind** — no hits, no
+    false alarms, across 88 and 89 decidable trials — while injected words
+    still leak into 4/48 and 2/48 of their generations. The concept arrives;
+    the model never claims to notice. That is their own mechanism story
+    reproducing: **specificity bought by a default negative response.** Their
+    Appendix C says it numerically (TPR 14.9% → 2.9% across the DPO step), and
+    our 0/43 is entirely consistent with a true rate of 2.9% (p ≈ 0.28). No
+    screen hit anywhere, as the pre-stated power scope predicted.
+  - **Gates.** Integrity 29/29 (fifth clean manifest). Determinism three zeros
+    (fifth A100). **Sampling assertion PASSED at all four stages, both cases**
+    — control and injected, 100 tokens, bit-identical across repeats, under
+    live injection at α = 221.7 on Base. Every B2-r trial is re-derivable from
+    its recorded seed.
+  - **Two process errors of mine, both from trusting a status signal I had not
+    verified.** (i) A `pgrep` bracket-regex through ssh quoting never matched,
+    so I read a healthy run as dead and relaunched twice — **three concurrent
+    instances** sharing artifact paths. Caught before any campaign artifact was
+    written; all killed, log cleared, one restarted. The monitor now warns on
+    **more than one** instance, not only zero. (ii) The sampling assertion's
+    injected case was guarded on `hasattr(Injection, "raw")` — a constructor I
+    never added — so it **silently skipped while printing ASSERTION PASSED**.
+    Trap 5 exactly. Caught by reading the gate's output instead of its exit
+    code, five minutes into the arc; fixed so a skipped case is a FAILURE, and
+    the artifact's verdict is computed before it is written. Fixing it exposed
+    a third: the driver ran the gate before the Base re-extraction it depends
+    on.
+  - **Cross-site reproduction (ledger 27):** every reading re-run on the laptop
+    from the committed artifacts reproduces the box exactly.
+  - **Disposition is the design instance's.** Code reports what the
+    pre-committed criteria returned.
+
 - 2026-08-24 — **ADDENDUM-g3 v1.2 DELTA RE-CHECK: GREEN, with one row of the
   frac table qualified as PROVISIONAL. R_44 is on the record at ALL FOUR
   stages (Base 71.0491), so v1.2's contingency measurement does NOT fire.
