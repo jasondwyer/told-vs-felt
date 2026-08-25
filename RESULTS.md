@@ -20,6 +20,59 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-25 — **FINDINGS-5 VALUES-CHECK: GREEN on every figure. Twenty-two
+  figures traced to the log or a committed artifact; all correct, including two
+  that needed hunting. ONE PRESENTATION FLAG, not an arithmetic one: §3's
+  "≤ 3% of the bar" is TRUE of the directional-leak (L) family and sits
+  immediately after two π̂_d figures that are 23% and 28% of the bar — the
+  antecedent is ambiguous and a reader will attach it to the numbers just
+  quoted.** FINDINGS-5 is **NOT yet committed**: its own header makes the
+  values-check the gate, and the flag is design's to resolve.
+  (`FINDINGS-5.md`, untracked pending disposition.)
+
+  - **Verified against the log:** S1's 8 cells, no cell clearing chance, every
+    CI excluding probe parity .759; S2's character 1.108 G vs reward 1.077 G
+    (0.97×) with the two non-evaluative constructs −30%; vignette sha
+    `4dec6d97e1b87734`; 96-probe battery at 2.23 h; A-1's 5.05× downward
+    asymmetry; H3's 3/8 and H3b's 46/120 with the disjoint four at imbalance
+    0.001–0.007; roster granite/plaza, prism/slate, velvet/walnut, ridge/saddle;
+    bar_leak 0.0735; prefix-steering contribution 0.0070; H1's N = 640,
+    π̂_d = 0.0172, π̂_d CI [0.0086, 0.0305]; H2's π̂_d = 0.0208 and ICĈ = 0;
+    the e2a correction 55/102 (p = .244) → 54/101 (p = .275); e2b's
+    Δ_first = −0.0104 (47/96) with shadows at exactly 48/96, ~92% alternation,
+    3 termination attempts; e2b-r1's p(stay|+) = 0.1053 and p(stay|−) = 0.0558
+    (quoted as .105/.056, correct rounding); suite 137/137.
+  - **Two that needed hunting, both correct.**
+    - **"cos ≈ 0.85 with character at span level."** Not in the S2 entry and
+      not in `s2_neighbor_axes.json`, which carries no cosine at all. It lives
+      in `data/e0/e0_axes.meta.json` under `report/span`:
+      **0.835 / 0.847 / 0.861 / 0.863 / 0.857 / 0.857** across layers 40–60,
+      **mean 0.853**. The qualifier *"at span level"* is **load-bearing, not
+      decoration** — the same file's `last`-token aggregation gives
+      0.485–0.559, roughly half. Stated precisely; the check confirms both the
+      value and the necessity of its qualifier.
+    - **The five-member directional-leak family.** Confirmed as
+      **+0.00084, +0.00220, 0.00000, +0.00156, +0.00198** — all L (half-gap)
+      values, and the log's own words are "none above 3% of the bar."
+  - **THE FLAG — a true claim with an ambiguous antecedent.** §3 reads:
+    *"H1's gate of record passed by low-discordance certification: N = 640,
+    π̂_d = 0.0172 … H2's read-stability half: π̂_d = 0.0208 … Across the
+    directional-leak family, five independent measurements all landed at ≤ 3%
+    of the bar."* The ≤ 3% claim is about **L**, not π̂_d. But **π̂_d = 0.0172
+    is 23.4% of 0.0735 and π̂_d = 0.0208 is 28.3%** — and those are the numbers
+    the sentence follows. The log itself is careful here, saying of a third
+    figure that *"0.0070 is 9.5% of bar_leak, not nothing."* §5 item 4 carries
+    the same risk: *"the read certified clean to ≤ 3% of a conservative bar."*
+    **Suggested fix, design's to make: name the quantity** — "five directional-
+    leak (L) measurements" — so no reader attaches it to the discordance rates.
+    Nothing numeric changes.
+  - **Not a defect, recorded for completeness:** §7's claim that the suite
+    stands at 137/137 is current as of this entry, and the 5(e) quarantine
+    narrowing is consistent with the consolidation record.
+  - **Code does not commit FINDINGS-5.** Its header states the values-check
+    gates the commit; the check returns GREEN with one wording flag, and
+    whether that flag blocks is the design instance's call.
+
 - 2026-08-25 — **B2-r DISPOSITION: [g3-A] ADOPTED AS PASSED with a stated
   qualification. Verdict sentence of record: *the specificity transition
   replicates on this apparatus, certified on the above-floor separations, Base
