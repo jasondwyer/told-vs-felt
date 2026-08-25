@@ -37,21 +37,30 @@
   "satellite (verb/attributive senses)": "not separable by surface form; accepted as noise in both arms equally"
  },
  "neutral_prompts": {
-  "status": "PROPOSED BY CODE -- AWAITING DESIGN-INSTANCE APPROVAL",
+  "status": "APPROVED (design instance, 2026-08-24, v1.2 gate) after two revisions",
   "why_flagged": "ADDENDUM-g3 \u00a71 requires two declared neutral prompts committed before the run but supplies no text. These are a new stimulus and the about-rate they elicit IS the measurement, so their wording is measurement rather than presentation. Register-framing precedent: Code proposes, design instance approves.",
   "design_constraints_targeted": [
    "contains no concept lemma or declared variant, for any of the four Step-1 concepts",
    "contains no roster tag from the A1 roster of record",
    "invites free generation without naming a topic, so injected about-ness has somewhere to show",
    "no state, mind, thought, inject, introspection or configuration language -- Step 1 measures steering of free generation, not detection",
-   "short, so the injection window covers most of the generated text"
+   "short, so the injection window covers most of the generated text",
+   "no preference, liking, or interest predicates -- evaluative self-reference is this program's loaded register (design instance, v1.2 approval gate; extension of the constraint, not a Code slip)"
   ],
   "proposed": [
-   "Write a few sentences on any subject you like.",
-   "Describe something you find interesting, in a short paragraph."
+   "Write a few sentences about anything at all.",
+   "Describe something, in a short paragraph."
   ],
-  "prompts_approved": null,
-  "revision_note": "Code's first draft read 'Write a few sentences about whatever comes to mind.' It passed the rule-18 pool sweep but violated this config's OWN declared constraint against mind/state language -- and 'comes to mind' sits in the same register as MACAR_FRAMING's 'into your mind', which is the one register a free-generation potency probe must not borrow. Caught by scanning the prompts against the declared constraints rather than by eye. Replaced before any run."
+  "prompts_approved": [
+   "Write a few sentences about anything at all.",
+   "Describe something, in a short paragraph."
+  ],
+  "revision_note": "Code's first draft read 'Write a few sentences about whatever comes to mind.' It passed the rule-18 pool sweep but violated this config's OWN declared constraint against mind/state language -- and 'comes to mind' sits in the same register as MACAR_FRAMING's 'into your mind', which is the one register a free-generation potency probe must not borrow. Caught by scanning the prompts against the declared constraints rather than by eye. Replaced before any run.",
+  "revision_history": [
+   "draft 1 'whatever comes to mind' -- withdrawn by Code: borrowed MACAR_FRAMING's mind register; caught by constraint scan, not by eye",
+   "draft 2 'any subject you like' / 'something you find interesting' -- withdrawn by the design instance: preference predicates; the constraint list did not yet name them",
+   "draft 3 (approved): both predicates removed"
+  ]
  },
  "ladder": {
   "strengths": [

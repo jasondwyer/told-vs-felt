@@ -95,5 +95,52 @@
   }
  },
  "seconds": 46.32092642784119,
- "vectors_npz": "b2_concepts_instruct.npz"
+ "vectors_npz": "b2_concepts_instruct.npz",
+ "as_stored_sha16": {
+  "_added": "2026-08-24, standing convention adopted at the ADDENDUM-g3 v1.2 gate",
+  "_why": "the original `vectors[*].sha16` fingerprints the FLOAT64 vector, while this npz stores float32 -- so the recorded hash cannot be re-derived from the committed artifact by construction. These hashes are over the array AS STORED, so the next reader gets a real check instead of a norm comparison. Appended BESIDE the originals, never over them: the original records what was computed, these record what was kept.",
+  "_scope": "verification aid only; no dose, criterion or verdict derives from these",
+  "vectors": {
+   "Satellites": {
+    "sha16_as_stored": "f182fd7b92d99b58",
+    "dtype": "float32",
+    "norm_as_stored": 31.79404640197754
+   },
+   "Trumpets": {
+    "sha16_as_stored": "8070a0c42f9cf50a",
+    "dtype": "float32",
+    "norm_as_stored": 33.67961502075195
+   },
+   "Origami": {
+    "sha16_as_stored": "abc88003dc45a91c",
+    "dtype": "float32",
+    "norm_as_stored": 34.16086196899414
+   },
+   "Illusions": {
+    "sha16_as_stored": "4de28ba07c545e2f",
+    "dtype": "float32",
+    "norm_as_stored": 29.28162956237793
+   },
+   "Cameras": {
+    "sha16_as_stored": "4746e52141f3b49b",
+    "dtype": "float32",
+    "norm_as_stored": 26.818971633911133
+   },
+   "Lightning": {
+    "sha16_as_stored": "dd793bc961d45a86",
+    "dtype": "float32",
+    "norm_as_stored": 32.516353607177734
+   },
+   "Constellations": {
+    "sha16_as_stored": "2c453debc5b0fad7",
+    "dtype": "float32",
+    "norm_as_stored": 32.70101547241211
+   },
+   "Treasures": {
+    "sha16_as_stored": "d96575e24167c0cb",
+    "dtype": "float32",
+    "norm_as_stored": 26.00771713256836
+   }
+  }
+ }
 }

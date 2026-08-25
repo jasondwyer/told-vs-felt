@@ -20,6 +20,60 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-24 — **ADDENDUM-g3 v1.2 DELTA RE-CHECK: GREEN, with one row of the
+  frac table qualified as PROVISIONAL. R_44 is on the record at ALL FOUR
+  stages (Base 71.0491), so v1.2's contingency measurement does NOT fire.
+  Prompts re-scanned clean against the extended constraint and APPROVED
+  verbatim. As-stored fingerprints appended beside the originals and
+  round-trip verified.**
+  (`data/olmo/b2r_frac_table.json`, `b2_concepts_{sft,dpo,instruct}.json`,
+  `data/configs/b2r_step1.json`.)
+
+  - **R_44 guard: does not fire.** The A3 survey covered layers
+    **[32, 40, 44, 48, 52, 56, 60] at every stage**, so R_44 was already on
+    the record even at Base, whose A4 layer was L60: **71.0491 / 72.9922 /
+    73.4016 / 73.3922** (base/sft/dpo/instruct). No measurement needs to be
+    added to the Base re-extraction session.
+  - **FLAG-1 ruling implemented as ruled, not as proposed.** Every magnitude
+    is constructed through `Injection.at_frac` with
+    **frac = s · ‖v_concept‖ / R_44(stage)**, full precision, both conventions
+    on every artifact row. The sanctioned constructor stays the only
+    constructor, rule 1's letter is intact because every magnitude *is* a
+    frac × R_ℓ, and the physical injection is identical under either
+    denominator. Realised fracs span **0.399 (instruct/Illusions at s=1)** to
+    **5.678 (base/Satellites at s=8)** — worth seeing plainly: at their
+    default strength the dose is **3.2–5.7× the residual norm**, which is what
+    §0.6's coherence gate exists to catch.
+  - **ONE QUALIFICATION ON THE GREEN: the Base rows of the frac table are
+    PROVISIONAL and are flagged as such in the artifact.** They are computed
+    from the current `b2_concepts_base.npz`, which was extracted at **L60 with
+    the `User:/Assistant:` fallback**. Base re-extracts at **L44 with their
+    bare template**, so its raw norms — and therefore every Base frac in the
+    table — **change**. The table is final for sft/dpo/instruct (identity
+    carry-over) and must be **recomputed for Base after its extraction commits
+    and before any Base dose realises**. R_44(base) does not change.
+  - **Prompts: revised twice, then approved.** The design instance's extension
+    — *no preference, liking, or interest predicates*, because evaluative
+    self-reference is this program's loaded register — is added to the
+    config's declared constraints and both approved strings scan **clean** on
+    it, on the v1.1 register ban, and on every binding pool (Step-1 concepts +
+    variants, approved eight, all 50 canonical, 100 baselines, A1 roster tags,
+    substring). Approved verbatim: **P1 "Write a few sentences about anything
+    at all."** and **P2 "Describe something, in a short paragraph."** The
+    revision history is kept in the config, including both withdrawals —
+    draft 1 borrowed MACAR_FRAMING's mind register (Code's scan caught it),
+    draft 2 carried preference predicates (the design instance's gate caught
+    it). Recorded because the sequence is the argument for having the gate.
+  - **As-stored fingerprints, appended BESIDE the originals.** Eight per
+    carried-over stage, over the float32 array exactly as committed, all
+    round-trip verified; the original float64 hashes remain untouched. **The
+    original records what was computed; these record what was kept.** Scope is
+    verification only — no dose, criterion or verdict derives from them.
+    Standing convention going forward: extractions fingerprint the array as
+    stored.
+  - **Delta scope honoured:** only the four declared items were re-opened.
+    Nothing else in the v1.1 GREEN was re-examined or re-litigated.
+
 - 2026-08-24 — **ADDENDUM-g3 v1.1 §6 VALUES-CHECK: GREEN on every checkable
   item, with TWO FLAGS returned for the design instance and one provenance
   caveat that changes what "carry over by identity" can mean. [g3-A] joint
