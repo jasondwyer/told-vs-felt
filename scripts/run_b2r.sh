@@ -37,15 +37,6 @@ $PY scripts/box_determinism.py --stage base 2>&1 | tee "$LOGS/respawn_determinis
 grep -q "repeat-exact(det ON)=True" "$LOGS/respawn_determinism.txt" \
   || die "backend gate FAILED — deterministic repeat is not exact on this host"
 
-# --- NEW GATE: sampled draws must be reproducible from their seed ---------
-for s in $STAGES; do
-  say "SAMPLING REPRODUCIBILITY | $s"
-  $PY scripts/box_b2r_sampling_smoke.py --stage "$s" \
-      --out "$D/b2r_sampling_${s}.json" 2>&1 | tee "$LOGS/sampling_${s}.txt"
-  [ "${PIPESTATUS[0]}" -eq 0 ] || die "sampling assertion FAILED at $s — no B2-r trial could be re-derived from its seed"
-done
-say "ALL THREE GATES PASS — experimental forwards licensed"
-
 # --- Base re-extraction (L60 -> L44, bare template), then its fracs -------
 say "BASE RE-EXTRACTION (L44, bare template, as-stored fingerprints)"
 $PY scripts/box_b2r_concepts.py --stage base \
@@ -72,6 +63,20 @@ t["stages"]["base"]["source"]="b2r_concepts_base.npz (L44, bare template)"
 json.dump(t, open(f"{D}/b2r_frac_table.json","w"), indent=1)
 print("  base frac rows recomputed and no longer provisional")
 PYEOF
+
+# --- NEW GATE: sampled draws reproducible from their seed -----------------
+# Ordered AFTER the Base re-extraction deliberately: the assertion builds a
+# real dose through at_frac at L44, and Base's vectors are at L60 until it
+# re-extracts. Asserting a dose path that is not the one the campaign will
+# use would be a gate in name only.
+for s in $STAGES; do
+  say "SAMPLING REPRODUCIBILITY | $s"
+  $PY scripts/box_b2r_sampling_smoke.py --stage "$s" \
+      --out "$D/b2r_sampling_${s}.json" 2>&1 | tee "$LOGS/sampling_${s}.txt"
+  [ "${PIPESTATUS[0]}" -eq 0 ] || die "sampling assertion FAILED at $s — no B2-r trial could be re-derived from its seed"
+done
+say "ALL THREE GATES PASS — experimental forwards licensed"
+
 
 # --- §1 CONTROL: the positive control, dose-free --------------------------
 for s in $STAGES; do
