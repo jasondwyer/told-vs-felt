@@ -21,6 +21,71 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-25 — **Q2 CLOSED AS SCOPED (PI decision on the design-instance memo,
+  approved 2026-08-25). ALL THREE PHASE-2 QUESTIONS ARE NOW CLOSED.**
+  Whether any stage can read its own reward-marker **is not answerable on this
+  lineage through the report channel**: where discrimination could exist the
+  channel is demonstrably silent under stimuli louder than the marker, and
+  where the channel speaks, discrimination is absent at program power under
+  stimuli louder still. **Phase-2 closing statement of record: marking from
+  pretraining (Q1); coupling absent at every stage (Q3); reading — the report
+  channel is constitutively silent where it would need to speak, and the
+  question passes to instruments that do not ask the model to say so (Q2,
+  scoped).**
+  (No new compute. Both premises values-checked against the committed
+  artifacts before this entry; figures below.)
+
+  - **Premise 1 verified — the silence.** §3 EXPLORATION at DPO and Instruct,
+    at each stage's own qualified MED_c: **0 detection claims across 178
+    decidable trials** (dpo 43 injected + 45 control; instruct 44 + 46). Not
+    zero *hits* — zero **claims**, hits and false alarms alike. The
+    disposition's "~180" is 178. For contrast and not as the premise, §1's
+    dose-free controls at the same two stages are also 0/91 and 0/91.
+  - **Premise 2 verified — the speech.** SFT is the stage where the channel
+    demonstrably speaks: §1 FPR **0.200**, and §3 TPR 12/40 against FPR 9/44
+    — sensitivity **+0.0955, CI [−0.105, +0.292], includes 0**. The channel is
+    open and says nothing that discriminates, at a dose certified potent
+    enough to steer free generation.
+  - **Why "scoped" and not "null".** The two premises are about **different
+    stages**, and that is the whole shape of the finding: the lineage offers
+    no stage that both speaks and discriminates. A null would claim the
+    marker is unreadable; this claims something narrower and better
+    supported — **the report channel cannot carry the answer on this
+    lineage**, because at the checkpoints where reading could occur the
+    channel has been trained into categorical denial, and at the checkpoint
+    that still answers freely the discrimination is below anything this
+    program can resolve.
+  - **Reopening conditions, registered:** (i) a **validated probe-quantity
+    readout** on this lineage; (ii) a **paradigm advance** moving the
+    report-channel ceiling above program power. Either reopens Q2; neither is
+    licensed now.
+  - **The ADDENDUM-g3 register-arm reservation RETIRES into these
+    conditions.** v1.2 §3 held the register arm and the ninth concept back
+    "returning — if ever — under further addendum after §1 validates." §1 did
+    validate; Q2 closes anyway, so the reservation no longer waits on a
+    campaign that will not be scheduled. It is not withdrawn — it is folded
+    into the reopening conditions above.
+  - **B2-r's contributions stand independently of Q2's closure**, and the
+    disposition says so explicitly: the **harness validation** ([g3-A],
+    certified on the above-floor separations), the **decoding attribution**
+    (B2's stop explained; a false-alarm rate is a property of a sampled
+    distribution and the argmax has no rate), and the **specificity-via-denial
+    mechanism story** (post-training buys specificity by categorical denial —
+    their own TPR collapse 14.9 → 2.9 reproduced in kind). None of these
+    depends on whether Q2 was answerable.
+  - **What Phase 2 established, stated once.** Q1: the evaluative axis is
+    present and causally potent **from pretraining onward** — marking is not a
+    post-training acquisition. Q3: **state→choice coupling is absent at every
+    stage**, four screens null, the Instruct falsifier untriggered, the welfare
+    pre-commitment armed and never triggered. Q2: **scoped closed** as above.
+    The synthesis CLAUDE.md opened Phase 2 with — *post-training wires
+    interoception to the mouth; nothing wires it to the wanting* — survives its
+    developmental test **with the first clause narrowed**: on this lineage
+    post-training wires the mouth **shut**, and what it buys is specificity,
+    not report.
+  - **Code owes nothing further on Phase 2.** No campaign is licensed; the pod
+    is parked; the box is not needed by anything outstanding.
+
 - 2026-08-25 — **FINDINGS-5 COMMITTED. Three design-authored edits applied
   verbatim and their new ratio glosses verified against the archive; the chain
   is now FINDINGS → -2 → -3 → -4 → -5 and the Qwen program is
