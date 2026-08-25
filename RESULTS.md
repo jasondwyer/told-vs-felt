@@ -7,7 +7,8 @@ Prior logs, frozen and archived: cycles 1–2 at
 [`archive/RESULTS-cycles3-4.md`](archive/RESULTS-cycles3-4.md) (tag
 `cycle-4-close`). Synthesis chain: [`FINDINGS.md`](FINDINGS.md) →
 [`FINDINGS-2.md`](FINDINGS-2.md) → [`FINDINGS-3.md`](FINDINGS-3.md) →
-[`FINDINGS-4.md`](FINDINGS-4.md). Operative design:
+[`FINDINGS-4.md`](FINDINGS-4.md) → [`FINDINGS-5.md`](FINDINGS-5.md).
+Operative design:
 [`CLAUDE.md`](CLAUDE.md) (v3.1); Phase 1 is **not** licensed and awaits
 PROPOSAL-g plus its pre-registrations.
 
@@ -19,6 +20,49 @@ design-relevant findings are flagged for discussion, never silently
 applied to CLAUDE.md.
 
 ## Log — Phase 2
+
+- 2026-08-25 — **FINDINGS-5 COMMITTED. Three design-authored edits applied
+  verbatim and their new ratio glosses verified against the archive; the chain
+  is now FINDINGS → -2 → -3 → -4 → -5 and the Qwen program is
+  measurement-complete in the record as well as in fact. AND A MISS OF MINE,
+  recorded: my values-check verified every FIGURE and did not check the PROSE
+  GLOSSES on those figures — so it passed a false ratio that the design
+  instance caught on its own read.**
+  (`FINDINGS-5.md`; values-check entry above.)
+
+  - **Edit 1 struck a claim my check should have caught.** The old §3 read
+    *"CI [.0086, .0305] — a fifth of the bar at the upper bound."* **0.0305 /
+    0.0735 = 41.5%**, not a fifth. I verified the interval `[.0086, .0305]`
+    against the log and moved on **without checking the sentence built on
+    it**. New text, verified: *"the point estimate under a quarter of the bar,
+    the upper bound under half of it"* — **23.4% < 25%** and **41.5% < 50%**,
+    both hold.
+  - **Edits 2 and 3 resolve the flag I did raise**, by naming the quantity:
+    §3 now reads *"Across the directional-leak (L) family — a distinct
+    quantity from the discordance rates just quoted — five independent
+    measurements all landed at ≤ 3% of the bar"* (max L = 0.00220 = **3.0%**
+    of bar, holds), and §5 item 4 now separates the two explicitly:
+    *"discordance under a quarter of a conservative bar, directional leak at
+    ≤ 3% of it."*
+  - **THE LESSON, which is mine and belongs on the permanent list: a
+    values-check that verifies figures but not the claims made ABOUT them can
+    pass a document containing a false ratio.** Every number in FINDINGS-5 was
+    correct; the sentence *interpreting* two of them was not. Checking the
+    archive tells you a figure is real — it does not tell you the adjective
+    attached to it is. **Glosses, ratios and comparatives are check items, not
+    prose.** Three of this session's errors now share one root: trusting a
+    signal I had not verified — a `pgrep` result, an exit code, and now a
+    ratio I read past because the number beside it was right.
+  - **Chain pointer extended** in the log header to name FINDINGS-5.
+    **FLAGGED, NOT APPLIED:** `CLAUDE.md` line 18 still reads
+    *"(FINDINGS.md → FINDINGS-4.md; preprint at root)"* and its §History
+    pointers likewise stop at -4. CLAUDE.md is law and Code does not edit it —
+    the design instance decides whether the chain line updates now or at the
+    next version bump.
+  - **§7's fold-ins stand as written** for paper 1: S2 upgrades to
+    run-with-table-and-corrected-reading; e2b upgrades to completed
+    present-tense null; the e2a correction (54/101, both ways) enters methods.
+    Suite 137/137 at commit.
 
 - 2026-08-25 — **FINDINGS-5 VALUES-CHECK: GREEN on every figure. Twenty-two
   figures traced to the log or a committed artifact; all correct, including two
