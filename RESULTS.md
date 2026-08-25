@@ -77,6 +77,19 @@ applied to CLAUDE.md.
     Word-presence is **demoted to a leakage descriptive**, where it stops being
     a defective statistic and becomes an interesting one: **the concept
     arriving in the output of a model that never claims to notice it.**
+  - **Ledger 23, added on relay — INVERTED-U CONVERGENCE ACROSS THREE
+    INSTRUMENTS, descriptive, supporting the generic-degradation reading.**
+    The same shape now appears in (i) **Qwen's V1 overdose regime** at frac
+    0.40, (ii) **Macar fig2** on Gemma3-27B-IT (mean hit 0.446 → 0.183 from
+    strength 4 to 8, identification-given-claim 0.003 at the top), and
+    (iii) **[g3-B]** on OLMo (about-rate rises then FALLS as coherence
+    collapses — SFT 1.000 → .708, DPO .917 → .625). Three models, three
+    laboratories' apparatus, three different measured quantities. **The
+    convergence supports reading high-dose failure as GENERIC DEGRADATION
+    rather than anything axis- or concept-specific** — the perturbation
+    destroys the computation before it destroys any particular content.
+    Descriptive, banked, not chased; it licenses at most a pre-registration.
+
   - **§3 banked as the mechanism story in miniature (ledger 23, descriptive).**
     DPO and Instruct produce **zero detection claims of any kind** across ~90
     decidable trials each, with injected words leaking into their generations

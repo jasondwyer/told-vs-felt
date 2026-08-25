@@ -173,3 +173,8 @@ __pycache__/
 # B2-r Base re-extraction at L_M=44 with their bare base-model template.
 # Fingerprinted AS STORED, so this npz is the object its hashes name.
 !/data/olmo/b2r_concepts_base.npz
+
+# Scorer v3 SPEC and regression cases. Not an instrument -- detection_v3.py
+# does not exist and is not licensed. Committed so v3's eventual author
+# inherits the class-level lesson rather than the pattern (FLAG 3, 2026-08-25).
+!/data/configs/scorer_v3_spec.json
