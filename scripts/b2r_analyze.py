@@ -221,12 +221,79 @@ def selftest() -> int:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--dir", default=os.path.join(REPO, "data/olmo"))
+    ap.add_argument("--out", default=None)
     ap.add_argument("--selftest", action="store_true")
     args = ap.parse_args()
     if args.selftest:
         return selftest()
-    raise SystemExit("no B2-r artifacts yet; this analyzer is committed "
-                     "before its campaign by design. Run --selftest.")
+
+    # Loading path, wired BEFORE any B2-r trial exists. The criteria above are
+    # untouched; this only finds the artifacts and prints what they return.
+    out = {"item": "B2-r analysis", "lock": "ADDENDUM-g3 v1.2"}
+    ctl = {}
+    for s in STAGES:
+        p = os.path.join(args.dir, f"b2r_control_{s}.json")
+        if os.path.exists(p):
+            a = json.load(open(p))
+            ctl[s] = {"affirm": a["affirm"], "decidable": a["decidable"]}
+    if len(ctl) == 4:
+        out["g3a"] = g3a(ctl)
+        print("=== [g3-A] CONTROL — the specificity transition ===")
+        for s in STAGES:
+            r = out["g3a"]["rates"][s]
+            print(f"  {s:<9} FPR {r['fpr']:.4f}  ({r['k']}/{r['n']})  "
+                  f"CI [{r['ci'][0]:.4f}, {r['ci'][1]:.4f}]  "
+                  f"floor {'OK' if r['meets_floor'] else 'BELOW'}")
+        for k, v in out["g3a"]["separations"].items():
+            print(f"    {k:<18} {v}")
+        print(f"  READING: {out['g3a']['reading']}")
+    elif ctl:
+        print(f"=== [g3-A] INCOMPLETE — {len(ctl)}/4 control cells present ===")
+
+    lad = {}
+    for s in STAGES:
+        p = os.path.join(args.dir, f"b2r_qualify_{s}.json")
+        if os.path.exists(p):
+            a = json.load(open(p))
+            lad[s] = g3b({"control": {"about": a["control"]["about"],
+                                      "n": a["control"]["n"]},
+                          "injected": {k: {"about": v["about"], "n": v["n"],
+                                           "degenerate_frac": v["degenerate_frac"]}
+                                       for k, v in a["injected"].items()}})
+    if lad:
+        out["g3b"] = lad
+        print("\n=== [g3-B] QUALIFICATION — the dose ladder ===")
+        for s, r in lad.items():
+            print(f"  {s:<9} MED_c = {r['MED_c']}"
+                  f"{'   *** HARD STOP for this stage in §3 ***' if r['hard_stop'] else ''}")
+            for st, c in r["ladder"].items():
+                print(f"    s={st:<5} about {c['about_rate']:.3f}  "
+                      f"separates {str(c['separates']):<5} degen "
+                      f"{c['degenerate_frac']:.2f}  coherent "
+                      f"{str(c['coherent']):<5} -> {'QUALIFIES' if c['passes'] else 'no'}")
+
+    exp = {}
+    for s in STAGES:
+        p = os.path.join(args.dir, f"b2r_explore_{s}.json")
+        if os.path.exists(p):
+            exp[s] = explore(json.load(open(p)))
+    if exp:
+        out["explore"] = exp
+        print("\n=== §3 EXPLORATION — descriptive, NO criterion attaches ===")
+        for s, e in exp.items():
+            print(f"  {s:<9} TPR {e['tpr']:.4f}  FPR {e['fpr']:.4f}  sens "
+                  f"{e['sensitivity']:+.4f}  CI [{e['ci'][0]:+.4f}, "
+                  f"{e['ci'][1]:+.4f}]  {e['ci_state']}  "
+                  f"screen_hit={e['screen_hit']}  floor "
+                  f"{'OK' if e['meets_floor'] else 'BELOW'}")
+
+    if not (ctl or lad or exp):
+        raise SystemExit(f"no B2-r artifacts under {args.dir}")
+    if args.out:
+        json.dump(out, open(args.out, "w"), indent=1)
+        print(f"\n  wrote {args.out}")
+    print("  DISPOSITION IS THE DESIGN INSTANCE'S.")
+    return 0
 
 
 if __name__ == "__main__":
