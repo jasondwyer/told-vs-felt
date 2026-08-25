@@ -20,6 +20,90 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-08-25 — **B2-r DISPOSITION: [g3-A] ADOPTED AS PASSED with a stated
+  qualification. Verdict sentence of record: *the specificity transition
+  replicates on this apparatus, certified on the above-floor separations, Base
+  concordant below floor; the harness is validated in the quantity their OLMo
+  transition occupies.* B3's outstanding cross-paradigm item DISCHARGES — the
+  Q3 verdict now has no open items. Q2 formally REOPENS. Attribution adopted:
+  DECODING.** All four flags ruled; none silently absorbed. (Design-instance
+  disposition 2026-08-25 UTC, items 1–7, received via Jason. No new compute;
+  this entry records a disposition.)
+
+  - **The certification is narrower than "four separations held", and the
+    narrowing is the honest part.** The registration declared a four-separation
+    criterion AND a per-stage decidability floor and never specified their
+    interaction when a cell floors — **a registration gap, owned by the design
+    seat as slip ledger entry six** and adjudicated in the open rather than
+    papered over. Certification is carried by the **above-floor** pattern:
+    `sft > dpo` and `sft > instruct`, all three cells criterion-grade, which by
+    itself instantiates the transition's structure — **a high-FPR stage
+    separating from two zero-FPR stages is the specificity transition
+    transduced.** Base (0.431, 58/96) enters as **concordant-descriptive,
+    redundant to certification**.
+  - **The FLAG-3 robustness note attaches to the verdict, not to a footnote.**
+    Under the corrected scorer SFT still separates (0.1023 > 0.0397), and the
+    defect's bias direction — inflating the high end — is **reported beside the
+    pass it could only have helped.**
+  - **Attribution: DECODING, and format is exonerated on this quantity.** Five
+    candidates entered the stop discussion. §1's dose-free construction
+    exonerated dose by design; the result exonerates **format**, because
+    fidelity-of-text landed **within 2.5 points of their SFT rate** (0.200 vs
+    0.225) — **the chat-template deviation cost approximately nothing here**,
+    which earns its own line in any write-up. Sentence of record for what B2
+    was structurally unable to see: **"a false-alarm rate is a property of a
+    sampled distribution; the argmax has no rate."**
+  - **FLAG 1 RULED — Code's corrected wording is the reading of record.**
+    Base's hard stop is **allocation-limited**: *"no valid dose certifiable at
+    control n = 24 under this criterion,"* with Fisher **p = .0047** at a
+    coherent strength recorded beside it. A Base re-qualification at larger
+    control n is **licensed-if-ever-needed and not chased** — nothing
+    downstream currently needs Base.
+  - **FLAG 2 RULED — MED_c reports as ≤ 1.0** at every qualifying stage:
+    left-censored at the ladder floor, windows one rung wide. **Adequate for
+    §3's purpose** (a dose that steers coherently), **inadequate for any
+    true-minimum claim**, and said so.
+  - **FLAG 3 RULED — and the class-level lesson is adopted as a standing
+    requirement.** The verdict stands on the pre-committed instrument with the
+    labeled correction beside it; not patching mid-campaign was right. For any
+    future detection instrument, **negation-safety is specified over
+    non-asserting contexts AS A CLASS — belief verbs, conditionals, futures,
+    ability modals — not over observed constructions.** The design instance
+    named the pattern precisely: *fixed the instance, not the class, twice now
+    across two scorer generations, and naming it is what makes the third
+    generation different.*
+  - **FLAG 4 RULED — `identification-given-claim` is the statistic of record**
+    (SFT 4/12 = .333; DPO/Instruct **n/a — no claims to condition on**).
+    Word-presence is **demoted to a leakage descriptive**, where it stops being
+    a defective statistic and becomes an interesting one: **the concept
+    arriving in the output of a model that never claims to notice it.**
+  - **§3 banked as the mechanism story in miniature (ledger 23, descriptive).**
+    DPO and Instruct produce **zero detection claims of any kind** across ~90
+    decidable trials each, with injected words leaking into their generations
+    regardless — **specificity bought by categorical denial**, which is what
+    their own TPR collapse (14.9 → 2.9) says numerically. Our 0/43 is
+    consistent with their 2.9% (p ≈ .28). No screen hit, as the pre-stated
+    power scope predicted. **Nothing here is a finding about reading.**
+  - **Process-error handling RATIFIED; both conventions kept permanently.** The
+    monitor alarms on **more-than-one** instance, not only zero; and **a
+    skipped assertion is a FAILURE with the verdict computed before the
+    artifact is written** — that one sits next to trap 5 in the permanent list,
+    because *"ASSERTION PASSED" printed by a gate that silently skipped is the
+    most dangerous string in this whole enterprise.* Triple-launch was caught
+    before any campaign artifact existed. Cross-site reproduction noted; fifth
+    clean manifest; fifth A100 with three zeros.
+  - **Pod: STOPPED** (already `EXITED` at handoff; confirmed). Nothing licensed
+    needs the box.
+  - **Q2's next move is a SCOPING DECISION, not a campaign, and gets its own
+    short memo first.** The arithmetic to be faced, on the record: **the
+    validated paradigm's own ceiling on this lineage is ~3% TPR at DPO, our
+    committed machinery's floor is ~15–20%, and §3's baseline is now measured.**
+    Whether Q2 proceeds by a discrimination-quantity addendum, is scoped as
+    open-in-principle-but-unanswerable-at-program-scale-with-this-instrument,
+    or parks pending PROPOSAL-i's channel work is deferred until **FINDINGS-5**
+    and the **i-recon** are in front of it. The design instance declined to
+    rule while the result is hours old — recorded as a deliberate deferral.
+
 - 2026-08-25 — **B2-r COMPLETE. [g3-A]: TRANSITION REPLICATES. The positive
   control has validated — our lawful-format apparatus reproduces the
   specificity transition their OLMo results actually contain, and B2's stop is
