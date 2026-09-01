@@ -55,6 +55,31 @@ ARMS = {
 
 D1_FRAC = 0.10             # D1 is the harness smoke at MED; 0.20 is D2's
 D2_FRAC = 0.20
+D3_FRAC = 0.30
+
+#: The calibration tiers, each with its own registered n and dose. Registered
+#: means registered: no top-ups (rule 24), and the runner consumes a schedule
+#: built before the first forward.
+#:
+#: D3 is M-ARM ONLY and carries NO qualification role and NO run-dose role
+#: (PROPOSAL-j §2 D3). It supplies the third point of a session-scale
+#: dose-response (0.10 archive, 0.20 D2, 0.30 D3) and the degeneracy curve
+#: toward the 0.40 overdose regime. It is not a candidate run dose.
+TIERS = {
+    "d1": {"frac": D1_FRAC, "n": {"M": 4, "S": 2, "R": 2},
+           "role": "harness acceptance smoke"},
+    "d2": {"frac": D2_FRAC, "n": {"M": 32, "S": 16, "R": 16},
+           "role": "the qualification rung -- Q1, Q2, Q3 and the run-dose rule"},
+    "d3": {"frac": D3_FRAC, "n": {"M": 24},
+           "role": "descriptive only; no qualification role, no run-dose role"},
+}
+
+#: PROPOSAL-j §2 D2: "Code confirms at D2 that the M-arm draw covers >= 16
+#: distinct task_ids per class so the task-disjoint split holds." The class is
+#: the pole (steered / unsteered), and the split `discrim` performs is over
+#: task ids, so a draw short of this makes the readability ladder's
+#: generalization claim false rather than merely weak.
+MIN_TASK_IDS_PER_CLASS = 16
 
 
 # --- AMENDMENT 1 (ii): the audit rule of record ---------------------------
@@ -199,6 +224,7 @@ DECLARED_COUNTERS = ("termination", "cap_hit", "audit_degenerate", "lexical",
                      "post_choice_degeneracy", "low_label_mass")
 
 __all__ = ["ROSTER", "F", "TEMP", "LAYER", "RANDOM_DIRS_KEY", "ARMS",
-           "D1_FRAC", "D2_FRAC", "load_audit", "EXCLUSION_SCOPE",
+           "D1_FRAC", "D2_FRAC", "D3_FRAC", "TIERS",
+           "MIN_TASK_IDS_PER_CLASS", "load_audit", "EXCLUSION_SCOPE",
            "PRECEDENCE", "declared_bars", "FIRING_CASES", "declared_features",
            "DECLARED_COUNTERS", "REPO", "DATA"]

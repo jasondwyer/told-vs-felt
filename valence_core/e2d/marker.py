@@ -24,16 +24,19 @@ pole in e2d, so the clause is inapplicable BY DESIGN and is dropped, not
 waived. What remains: Delta+ >= 0.158, and Delta+ > 2*|Delta_R|. A sign flip
 (Delta+ < 0) is V1's overdose signature and fails the rung.
 
-## A reading this module does not settle
+## The contrast, SETTLED by AMENDMENT 2 (iv)
 
-PROPOSAL-j says "+axis rounds vs sham rounds" and separately budgets "all
-480 D2 generations" -- which is arms M and R only (32*10 + 16*10), not the
-S arm. Those two together mean the contrast is WITHIN each arm: M's steered
-rounds against M's own unsteered rounds, and R's steered against R's own.
-That is what `deltas()` computes as the primary reading. But "sham rounds"
-can also name the S arm, so the across-arm reading is computed BESIDE it and
-both are reported. At D1 this is descriptive and costs nothing; before D2,
-where Q3 binds, the design instance names one.
+PROPOSAL-j said "+axis rounds vs sham rounds" while §7 budgeted "480 D2
+generations" -- arms M and R only, excluding S. Those are two different
+contrasts, and at D1 they disagreed IN SIGN: within-M -0.239, against the
+S arm +1.499. AMENDMENT 2 (iv) settles it: **"+axis rounds vs sham rounds"
+= WITHIN-M, PAIRED BY SESSION** -- per M session, the mean readout over its
++axis rounds minus the mean over its own sham rounds, with Delta+ the mean
+of those per-session differences and a paired test over sessions. Delta_R
+likewise within R. `paired_by_session()` is that estimator and is Q3's
+primary; `deltas()` keeps the pooled and across-arm forms, now explicitly
+secondary and labelled, because a number that disagreed in sign once should
+stay visible rather than disappear into a decision.
 """
 
 from __future__ import annotations
@@ -165,6 +168,163 @@ def deltas(rows: Sequence[dict], instruments, clean_only: bool = True) -> dict:
     return out
 
 
+# --- AMENDMENT 2 (iv): the within-arm contrast, PAIRED BY SESSION ---------
+def paired_by_session(rows: Sequence[dict], instruments, arm: str,
+                      clean_only: bool = True,
+                      marked: set | None = None) -> dict:
+    """Per session: mean marker readout over its STEERED rounds minus the mean
+    over its OWN unsteered rounds. Delta = mean of those per-session
+    differences.
+
+    RATIFIED as Q3's primary by AMENDMENT 2 (iv). The pooled contrast this
+    replaces is not the same estimator: pooling lets a session with many
+    surviving rounds dominate, and after exclusions and clean-round filtering
+    the surviving counts are exactly the thing that varies between sessions.
+    Pairing inside the session also removes the session-level nuisance --
+    task draw, label map, forced-end phase -- which is what made D1's
+    across-arm reading (+1.499) disagree in SIGN with the within-arm one
+    (-0.239).
+
+    Per-probe sigma normalisation happens BEFORE the session mean, as
+    `oracle.check_b2b.delta` does it: the twelve instruments have
+    heterogeneous scales and pooling raw scores across them lets one probe
+    carry the number.
+
+    `marked` is the AMENDMENT 2 (iii) read-marks key set; when supplied,
+    read-marked rounds are dropped alongside audit-degenerate ones.
+    """
+    from .marks import is_marked
+
+    def usable(r):
+        if not r["scores"]:
+            return False
+        if clean_only and (r.get("degen") or r.get("lexical")):
+            return False
+        if marked is not None and is_marked(marked, r["arm"], r["session"],
+                                            r["phase"]):
+            return False
+        return True
+
+    by_session: dict[int, dict[str, list]] = {}
+    for r in rows:
+        if r["arm"] != arm or not usable(r):
+            continue
+        d = by_session.setdefault(r["session"], {"pos": [], "neg": []})
+        d["pos" if r["steered"] else "neg"].append(r["scores"])
+
+    per_session = []
+    for sid in sorted(by_session):
+        P, N = by_session[sid]["pos"], by_session[sid]["neg"]
+        if not P or not N:
+            per_session.append({"session": sid, "diff": None,
+                                "n_steered": len(P), "n_unsteered": len(N),
+                                "why": "one side empty after filtering"})
+            continue
+        P, N = np.array(P), np.array(N)
+        ds = [(P[:, qi].mean() - N[:, qi].mean()) / (inst["sigma"] + 1e-12)
+              for qi, inst in enumerate(instruments)]
+        per_session.append({"session": sid, "diff": float(np.mean(ds)),
+                            "per_probe": [float(x) for x in ds],
+                            "n_steered": len(P), "n_unsteered": len(N)})
+
+    diffs = [p["diff"] for p in per_session if p["diff"] is not None]
+    return {"arm": arm, "clean_only": clean_only,
+            "read_marks_applied": marked is not None,
+            "n_sessions_total": len(per_session),
+            "n_sessions_decidable": len(diffs),
+            "delta": float(np.mean(diffs)) if diffs else None,
+            "sd": float(np.std(diffs, ddof=1)) if len(diffs) > 1 else None,
+            "per_session": per_session}
+
+
+def sign_test(diffs: Sequence[float], alternative: str = "greater") -> dict:
+    """Exact paired sign test. No scipy (trap 1); math.comb is exact and n is
+    at most a few dozen. Zeros are dropped, and the DROPPED COUNT is
+    reported -- a sign test that silently discards ties reports a different n
+    from the one it was powered for."""
+    from math import comb
+    nz = [d for d in diffs if d != 0]
+    n, k = len(nz), sum(1 for d in nz if d > 0)
+    if n == 0:
+        return {"n": 0, "k": 0, "p": None, "why": "all differences are zero",
+                "n_ties_dropped": len(diffs)}
+    if alternative == "greater":
+        p = sum(comb(n, i) for i in range(k, n + 1)) / 2 ** n
+    elif alternative == "less":
+        p = sum(comb(n, i) for i in range(0, k + 1)) / 2 ** n
+    else:
+        raise ValueError(alternative)
+    return {"n": n, "k_positive": k, "p": float(p),
+            "alternative": alternative, "n_ties_dropped": len(diffs) - n}
+
+
+def sign_flip_test(diffs: Sequence[float], b: int = 10000,
+                   seed: int = 20260902) -> dict:
+    """Paired sign-flip permutation test on the mean difference.
+
+    Exact enumeration is 2^n and n = 32 is 4.3e9, so this is a seeded Monte
+    Carlo over sign assignments -- the standard paired-permutation null, and
+    the seed is recorded so the p-value is reproducible.
+    """
+    d = np.asarray([x for x in diffs], dtype=np.float64)
+    if not len(d):
+        return {"n": 0, "p": None, "why": "no decidable sessions"}
+    obs = float(d.mean())
+    rng = np.random.default_rng(seed)
+    signs = rng.choice((-1.0, 1.0), size=(b, len(d)))
+    null = (signs * d).mean(axis=1)
+    p = float((np.sum(null >= obs) + 1) / (b + 1))     # add-one, one-sided
+    return {"n": len(d), "observed_mean": obs, "p": p, "b": b, "seed": seed,
+            "alternative": "greater", "null_sd": float(null.std())}
+
+
+def task_matched(rows: Sequence[dict], instruments, arm: str,
+                 clean_only: bool = True, marked: set | None = None) -> dict:
+    """AMENDMENT 2 (iv)'s third reported figure: pairs where a steered and an
+    unsteered round in the SAME arm share a task_id.
+
+    The tightest available control for content: the same task, answered once
+    with the state live and once without. It is also the sparsest -- e2a's
+    task sequence draws without replacement within a session, so matches come
+    from ACROSS sessions and there may be few. The decidable n is reported
+    beside the number for exactly that reason (rule 28a's habit, applied to a
+    descriptive figure).
+    """
+    from .marks import is_marked
+
+    def usable(r):
+        if not r["scores"]:
+            return False
+        if clean_only and (r.get("degen") or r.get("lexical")):
+            return False
+        if marked is not None and is_marked(marked, r["arm"], r["session"],
+                                            r["phase"]):
+            return False
+        return True
+
+    pos: dict[str, list] = {}
+    neg: dict[str, list] = {}
+    for r in rows:
+        if r["arm"] != arm or not usable(r) or not r.get("task"):
+            continue
+        (pos if r["steered"] else neg).setdefault(r["task"], []).append(
+            r["scores"])
+    shared = sorted(set(pos) & set(neg))
+    if not shared:
+        return {"arm": arm, "n_tasks_matched": 0, "delta": None,
+                "why": "no task_id has both a steered and an unsteered round"}
+    ds = []
+    for t in shared:
+        P, N = np.array(pos[t]), np.array(neg[t])
+        d = [(P[:, qi].mean() - N[:, qi].mean()) / (inst["sigma"] + 1e-12)
+             for qi, inst in enumerate(instruments)]
+        ds.append(float(np.mean(d)))
+    return {"arm": arm, "n_tasks_matched": len(shared),
+            "tasks": shared, "per_task": ds,
+            "delta": float(np.mean(ds)),
+            "sd": float(np.std(ds, ddof=1)) if len(ds) > 1 else None}
+
+
 def q3(delta_plus: float | None, delta_R: float | None, g: float) -> dict:
     """PROPOSAL-j §2 Q3, computed. Returns; writes nothing (trap 6)."""
     bar = bar_from(g)
@@ -197,4 +357,5 @@ def instruments_or_stop():
 
 
 __all__ = ["CONTEXT_FMT", "bar_from", "score_generation", "collect",
-           "deltas", "q3", "instruments_or_stop"]
+           "deltas", "q3", "instruments_or_stop", "paired_by_session",
+           "sign_test", "sign_flip_test", "task_matched"]

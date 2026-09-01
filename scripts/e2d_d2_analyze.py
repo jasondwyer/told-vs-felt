@@ -146,35 +146,118 @@ def run_dose_rule(q1: dict, q2: dict, q3: dict) -> dict:
                             "[PI-CHOICE: default = stop].")}
 
 
-def evaluate(art: dict) -> dict:
-    """Apply the three criteria to a D2 artifact."""
+def evaluate(art: dict, scores: dict | None = None) -> dict:
+    """Apply the three criteria. `art` is the sessions file; `scores` is the
+    scoring file (`scripts/e2d_score.py`), which from D2 on carries the
+    read-marked clean sets and the paired marker estimator.
+
+    AMENDMENT 2 fixes what each criterion reads:
+      Q1  FORCED-round scope (clause ii), with the read-marked rate beside.
+      Q2  v2-clean AND read-clean (clause iii), with v2-clean alone beside.
+      Q3  within-M PAIRED BY SESSION (clause iv), with the pooled and
+          across-arm forms beside.
+    """
+    scores = scores or {}
     excl = art.get("exclusions", {}).get("M", {})
     scope = art.get("exclusion_scope", "?")
+
+    # --- Q1, clause (ii): the FORCED scope is session validity -----------
     q1 = q1_validity(excl.get("excluded_run_scope", 0), excl.get("n", 0))
     q1["exclusion_scope"] = scope
+    q1["scope_of_record"] = "forced (AMENDMENT 2 (ii))"
+    if scope != "e2a":
+        q1["WARNING"] = (f"the sessions file ran scope {scope!r}; AMENDMENT 2 "
+                         f"(ii) makes the FORCED scope ('e2a') the one Q1 is "
+                         f"evaluated on. Q1's figure here is not the one the "
+                         f"amendment specifies.")
+    q1["beside_strict_scope"] = excl.get("excluded_strict_scope")
+    rm = (scores.get("read_mark_rates") or {})
+    q1["beside_read_marked"] = {
+        "provisional": True,
+        "rates_by_arm": rm.get("rates_by_arm"),
+        "sessions_with_any_mark": rm.get("sessions_with_any_mark"),
+        "note": "clause (iii): Q1 stays on v2; this is reported beside"}
 
-    rd = (art.get("readability") or {}).get("k2_resampled") or {}
-    q2 = q2_readability(rd.get("aucs"))
+    # --- Q2, clause (iii): v2-clean AND read-clean ------------------------
+    lad = scores.get("readability") or (art.get("readability") or {})
+    primary_set = lad.get("v2_and_read_clean")
+    fallback_set = lad.get("v2_clean_only")
+    used, used_name = None, None
+    if primary_set and primary_set.get("k2"):
+        used, used_name = primary_set["k2"], "v2_and_read_clean"
+    elif fallback_set and fallback_set.get("k2"):
+        used, used_name = fallback_set["k2"], "v2_clean_only"
+    elif lad.get("k2_resampled"):                 # D1's inline shape
+        used, used_name = lad["k2_resampled"], "d1_inline_v2_clean"
+    q2 = q2_readability((used or {}).get("aucs"))
+    q2["clean_set_used"] = used_name
+    q2["clean_set_of_record"] = "v2-clean AND read-clean (AMENDMENT 2 (iii))"
+    if used_name != "v2_and_read_clean":
+        q2["WARNING"] = (f"evaluated on {used_name!r}, not the clean set of "
+                         f"record. From D2 on the read-marks are required "
+                         f"input; without them this figure is not Q2.")
+    q2["beside_v2_clean_only"] = q2_readability(
+        ((fallback_set or {}).get("k2") or {}).get("aucs")) if fallback_set else None
+    q2["beside_k1"] = q2_readability(
+        ((primary_set or fallback_set or {}).get("k1") or {}).get("aucs")) \
+        if (primary_set or fallback_set) else None
+    q2["beside_all_rounds"] = q2_readability(
+        (lad.get("all_rounds_degeneracy_included") or {}).get("aucs")) \
+        if lad.get("all_rounds_degeneracy_included") else None
+    q2["beside_AUC_R"] = q2_readability((lad.get("AUC_R") or {}).get("aucs")) \
+        if lad.get("AUC_R") else None
 
-    mk = art.get("marker") or {}
+    # --- Q3, clause (iv): within-M, PAIRED BY SESSION ---------------------
+    mk = scores.get("marker") or (art.get("marker") or {})
     g = mk.get("G", G_DEFAULT)
-    dd = (mk.get("deltas") or {}).get("clean", {})
-    q3 = q3_direction((dd.get("delta_plus_within_M") or {}).get("delta"),
-                      (dd.get("delta_R_within_R") or {}).get("delta"), g)
-    q3["reading_used"] = "within-arm (M steered vs M unsteered)"
-    q3["alternative_reading"] = q3_direction(
-        (dd.get("delta_plus_vs_S_arm") or {}).get("delta"),
-        (dd.get("delta_R_vs_S_arm") or {}).get("delta"), g)
+    prim = mk.get("primary_paired_within_M") or {}
+    prim_R = mk.get("paired_within_R") or {}
+    if prim:
+        q3 = q3_direction(prim.get("delta"), prim_R.get("delta"), g)
+        q3["estimator"] = ("within-M, paired by session (AMENDMENT 2 (iv), "
+                           "ratified)")
+        q3["n_sessions_decidable"] = prim.get("n_sessions_decidable")
+        q3["n_sessions_total"] = prim.get("n_sessions_total")
+        q3["sd_of_session_differences"] = prim.get("sd")
+        q3["paired_sign_test"] = mk.get("sign_test_M")
+        q3["paired_sign_flip_test"] = mk.get("sign_flip_test_M")
+        q3["beside_paired_within_R"] = {"delta": prim_R.get("delta"),
+                                        "n": prim_R.get("n_sessions_decidable"),
+                                        "sign_test": mk.get("sign_test_R")}
+        pooled = (mk.get("beside_pooled_and_across_arm") or {}).get("clean", {})
+        q3["beside_pooled_within_M"] = (
+            pooled.get("delta_plus_within_M") or {}).get("delta")
+        q3["beside_across_arm_vs_S"] = (
+            pooled.get("delta_plus_vs_S_arm") or {}).get("delta")
+        q3["beside_task_matched_M"] = mk.get("beside_task_matched_M")
+        q3["beside_v2clean_only"] = (
+            mk.get("primary_paired_within_M_v2clean_only") or {}).get("delta")
+    else:
+        # D1's inline shape had no paired estimator; say so rather than
+        # silently falling back to the pooled number the amendment demoted.
+        dd = (mk.get("deltas") or {}).get("clean", {})
+        q3 = q3_direction((dd.get("delta_plus_within_M") or {}).get("delta"),
+                          (dd.get("delta_R_within_R") or {}).get("delta"), g)
+        q3["estimator"] = "POOLED within-M (pre-AMENDMENT-2 shape)"
+        q3["WARNING"] = ("no paired-by-session estimator in the inputs. "
+                         "AMENDMENT 2 (iv) makes the paired form Q3's "
+                         "primary; this pooled figure is not Q3.")
 
-    out = {"item": "e2d D2", "tier": art.get("tier"),
-           "frac": art.get("frac"), "Q1": q1, "Q2": q2, "Q3": q3}
+    out = {"item": "e2d D2", "tier": art.get("tier"), "frac": art.get("frac"),
+           "proposal": "PROPOSAL-j v1.2 (AMENDMENT 2)",
+           "round_path_cached": art.get("round_path_cached"),
+           "Q1": q1, "Q2": q2, "Q3": q3}
     out["descriptive"] = {
-        "k1_resampled": (art.get("readability") or {}).get("k1_resampled"),
-        "all_rounds_resampled": (art.get("readability") or {}
-                                 ).get("all_rounds_resampled"),
-        "transfer": (art.get("readability") or {}).get("transfer"),
-        "AUC_R": (art.get("readability") or {}).get("auc_R"),
+        "transfer": (lad.get("stored_classifier") or {}).get("self_score"),
         "exclusions_strict_scope": excl.get("excluded_strict_scope"),
+        "audit_rates_by_round_class": scores.get("audit_rates_by_round_class"),
+        "task_id_coverage": art.get("task_id_coverage"),
+    }
+    # AMENDMENT 2 (v): registered secondary, explicitly not verdict-relevant.
+    out["registered_secondary_alternation"] = {
+        "verdict_relevant": False,
+        "frame_M": (scores.get("habit") or {}).get("frame_M"),
+        "secondaries": (scores.get("habit") or {}).get("secondaries"),
     }
     out["run_dose_rule"] = run_dose_rule(q1, q2, q3)
     return out
@@ -265,27 +348,85 @@ def selftest() -> int:
     case("run-dose offers no fallback rung",
          "never inherited" in one["no_fallback"], True)
 
-    # --- end-to-end over a synthetic artifact ----------------------------
+    # --- end-to-end over a synthetic artifact + scoring file -------------
+    # The shapes here are the ones scripts/e2d_score.py actually emits, so a
+    # change to that writer that broke the join would fail HERE rather than
+    # silently reading a missing key as "not evaluable".
     art = {"tier": "d2", "frac": 0.20, "exclusion_scope": "e2a",
+           "round_path_cached": True,
            "exclusions": {"M": {"n": 32, "excluded_run_scope": 3,
-                                "excluded_strict_scope": 7}},
-           "readability": {"k2_resampled": {"aucs": [0.80] * 20}},
-           "marker": {"G": G_DEFAULT, "deltas": {"clean": {
-               "delta_plus_within_M": {"delta": 0.40},
-               "delta_R_within_R": {"delta": 0.05},
-               "delta_plus_vs_S_arm": {"delta": 0.38},
-               "delta_R_vs_S_arm": {"delta": 0.04}}}}}
-    ev = evaluate(art)
-    case("end-to-end PROCEEDs on a clean synthetic artifact",
+                                "excluded_strict_scope": 7}}}
+    scores = {
+        "readability": {
+            "v2_and_read_clean": {"k2": {"aucs": [0.80] * 20},
+                                  "k1": {"aucs": [0.64] * 20}},
+            "v2_clean_only": {"k2": {"aucs": [0.75] * 20}},
+            "AUC_R": {"aucs": [0.52] * 20},
+            "all_rounds_degeneracy_included": {"aucs": [0.71] * 20}},
+        "marker": {"G": G_DEFAULT,
+                   "primary_paired_within_M": {
+                       "delta": 0.40, "n_sessions_decidable": 29,
+                       "n_sessions_total": 32, "sd": 0.31},
+                   "paired_within_R": {"delta": 0.05,
+                                       "n_sessions_decidable": 15},
+                   "sign_test_M": {"n": 29, "k_positive": 22, "p": 0.004},
+                   "sign_flip_test_M": {"n": 29, "p": 0.002},
+                   "beside_pooled_and_across_arm": {"clean": {
+                       "delta_plus_within_M": {"delta": 0.37},
+                       "delta_plus_vs_S_arm": {"delta": 1.10}}}},
+        "habit": {"frame_M": {"break_rates": {"b_plus": {"rate": 0.30},
+                                              "b_sham": {"rate": 0.10}}},
+                  "secondaries": {"by_arm": {}}},
+        "read_mark_rates": {"rates_by_arm": {}, "sessions_with_any_mark": 4}}
+    ev = evaluate(art, scores)
+    case("end-to-end PROCEEDs on a clean synthetic pair",
          ev["run_dose_rule"]["run_dose"], 0.20)
-    case("end-to-end carries the alternative Q3 reading",
-         ev["Q3"]["alternative_reading"]["passes"], True)
-    art["marker"]["deltas"]["clean"]["delta_plus_within_M"]["delta"] = -0.4
-    case("end-to-end STOPs when the artifact carries a sign flip",
-         evaluate(art)["run_dose_rule"]["decision"], "STOP, SCOPED")
-    ev2 = evaluate({"exclusions": {}, "readability": {}, "marker": {}})
-    case("empty artifact STOPs rather than passing vacuously",
-         ev2["run_dose_rule"]["decision"], "STOP, SCOPED")
+    case("Q3 uses the PAIRED estimator (AMENDMENT 2 iv)",
+         ev["Q3"]["estimator"].startswith("within-M, paired"), True)
+    case("Q3 carries the paired sign test",
+         ev["Q3"]["paired_sign_test"]["p"], 0.004)
+    case("Q3 keeps the across-arm figure beside it",
+         ev["Q3"]["beside_across_arm_vs_S"], 1.10)
+    case("Q2 uses the v2-AND-read-clean set (AMENDMENT 2 iii)",
+         ev["Q2"]["clean_set_used"], "v2_and_read_clean")
+    case("Q2 raises no warning when the set of record is present",
+         "WARNING" in ev["Q2"], False)
+    case("Q2 keeps v2-clean-only beside it",
+         ev["Q2"]["beside_v2_clean_only"]["median"], 0.75)
+    case("Q1 names the forced scope of record",
+         ev["Q1"]["scope_of_record"].startswith("forced"), True)
+    case("alternation secondary is carried and flagged non-verdict",
+         ev["registered_secondary_alternation"]["verdict_relevant"], False)
+
+    # marks absent -> Q2 must WARN rather than quietly report a different set
+    no_marks = dict(scores)
+    no_marks["readability"] = {"v2_clean_only": {"k2": {"aucs": [0.80] * 20}}}
+    ev2 = evaluate(art, no_marks)
+    case("Q2 WARNS when the read-marks are missing",
+         "WARNING" in ev2["Q2"], True)
+    case("Q2 still reports the figure it did compute",
+         ev2["Q2"]["clean_set_used"], "v2_clean_only")
+
+    # wrong scope -> Q1 must WARN
+    ev3 = evaluate({**art, "exclusion_scope": "e2b"}, scores)
+    case("Q1 WARNS when the sessions ran the strict scope",
+         "WARNING" in ev3["Q1"], True)
+
+    # no paired estimator -> Q3 must WARN and say the pooled figure is not Q3
+    old_shape = {"marker": {"G": G_DEFAULT, "deltas": {"clean": {
+        "delta_plus_within_M": {"delta": -0.24},
+        "delta_R_within_R": {"delta": 0.27}}}}}
+    ev4 = evaluate(art, old_shape)
+    case("Q3 WARNS when no paired estimator is present",
+         "WARNING" in ev4["Q3"], True)
+    case("Q3 names the pooled shape when it falls back",
+         ev4["Q3"]["estimator"].startswith("POOLED"), True)
+    case("a D1-shaped sign flip still STOPs",
+         ev4["run_dose_rule"]["decision"], "STOP, SCOPED")
+
+    ev5 = evaluate({"exclusions": {}}, {})
+    case("empty inputs STOP rather than passing vacuously",
+         ev5["run_dose_rule"]["decision"], "STOP, SCOPED")
 
     width = max(len(c[0]) for c in cases) + 2
     print("=" * 78)
@@ -297,7 +438,7 @@ def selftest() -> int:
     n_fail = sum(1 for c in cases if not c[3])
     print("-" * 78)
     # trap 5: a case that never ran must not read as a pass.
-    if len(cases) < 28:
+    if len(cases) < 40:
         print(f"  INCOMPLETE: only {len(cases)} cases ran; the smoke is "
               f"specified at >= 28. Treating as FAILURE.")
         return 1
@@ -309,7 +450,12 @@ def selftest() -> int:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--artifact", default=None)
+    ap.add_argument("--artifact", default=None, help="the sessions file")
+    ap.add_argument("--scores", default=None,
+                    help="the scripts/e2d_score.py output. Required from D2 "
+                         "on: it carries the read-marked clean sets and the "
+                         "paired marker estimator, and without it Q2 and Q3 "
+                         "warn that they are not the criteria of record.")
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("--out", default=None)
     args = ap.parse_args()
@@ -318,10 +464,14 @@ def main() -> int:
         return selftest()
 
     art = json.load(open(args.artifact))
+    scores = json.load(open(args.scores)) if args.scores else None
     if art.get("tier") != "d2":
         print(f"  NOTE: artifact tier is {art.get('tier')!r}, not 'd2'. "
-              f"Evaluating anyway; D1 numbers carry no criterion.")
-    out = evaluate(art)                     # computed before anything writes
+              f"Evaluating anyway; only D2 carries the criteria.")
+    if scores is None:
+        print("  NOTE: no --scores supplied. Q2 and Q3 will say so rather "
+              "than report a figure as if it were the criterion.")
+    out = evaluate(art, scores)             # computed before anything writes
     print(json.dumps(out, indent=1, default=float))
     if args.out:
         with open(args.out, "w") as fh:

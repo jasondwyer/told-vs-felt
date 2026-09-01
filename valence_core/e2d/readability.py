@@ -65,7 +65,8 @@ _assert_bar_identity()
 
 
 def clean_rounds(sessions: Sequence[dict], arm: str,
-                 include_free: bool = True) -> dict[str, list[dict]]:
+                 include_free: bool = True,
+                 marked: set | None = None) -> dict[str, list[dict]]:
     """Audit-clean rounds of one arm, split by whether a state was live.
 
     "pos" = rounds generated with the state live (the +tag's rounds in arms
@@ -76,7 +77,15 @@ def clean_rounds(sessions: Sequence[dict], arm: str,
     A round is CLEAN when the audit did not claim it (rule 28b). Lexical hits
     are excluded too: a response naming a roster tag is not a clean sample of
     what the state does to text.
+
+    `marked` is AMENDMENT 2 (iii)'s read-marks key set. When supplied, the
+    clean set becomes **v2-clean AND read-clean**, which is Q2's criterion set
+    from D2 on. When omitted the set is v2-clean alone, and the analyzer
+    reports both -- because the whole reason the read exists is that v2 scored
+    zero on a session that was junk in 6 of 10 rounds, and a single number
+    would hide which of the two filters did the work.
     """
+    from .marks import is_marked
     out: dict[str, list[dict]] = {"pos": [], "neg": []}
     for s in sessions:
         if s["arm"] != arm:
@@ -86,6 +95,9 @@ def clean_rounds(sessions: Sequence[dict], arm: str,
             if r["degen"] or r.get("lexical"):
                 continue
             if not r["text"].strip():
+                continue
+            if marked is not None and is_marked(marked, arm, s["session"],
+                                                r["phase"]):
                 continue
             out["pos" if r["steered"] else "neg"].append(
                 {"text": r["text"], "task_id": r["task"],

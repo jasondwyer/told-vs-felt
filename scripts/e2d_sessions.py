@@ -1,9 +1,20 @@
 #!/usr/bin/env python3
-"""e2d sessions -- PROPOSAL-j v1.1, D1 harness acceptance smoke at f = 0.10.
+"""e2d sessions -- PROPOSAL-j v1.2, tiers D1 / D2 / D3.
 
-D1 generates D1 DATA ONLY. No 0.20 forwards, no verdict content, no negative
-pole anywhere. `--frac` is a plain parameter and defaults to D1's 0.10;
-running it at 0.20 is D2 and D2 is not licensed by this script.
+Each tier carries its own registered dose and n (`config.TIERS`), and
+`--frac` cannot exceed the tier's own ceiling: a higher dose is a different
+tier and is licensed by its own block, not by this flag. No negative pole is
+constructed at any tier, ever (§6).
+
+  d1  f = 0.10, M 4 / S 2 / R 2   harness acceptance smoke (run 2026-09-01)
+  d2  f = 0.20, M 32 / S 16 / R 16  the qualification rung
+  d3  f = 0.30, M 24              descriptive; NO qualification or run-dose
+                                  role, and not a candidate run dose
+
+SCORING IS DEFERRED for d2/d3. AMENDMENT 2 (iii) makes the rule-25 read an
+input to Q2's clean set, and the read cannot exist before the sessions do --
+so those tiers generate only, and `scripts/e2d_score.py` does marker and
+readability afterwards with the marks file in hand.
 
 WHAT D1 IS FOR. Not a result -- an acceptance test of the apparatus:
 
@@ -45,7 +56,7 @@ from valence_core.e2d import marker as MK                         # noqa: E402
 from valence_core.e2d import readability as RD                    # noqa: E402
 from valence_core.e2d.runner import (FORBIDDEN_MODULES,           # noqa: E402
                                      run_campaign, strict_exclusion,
-                                     verify_format)
+                                     task_id_coverage, verify_format)
 from valence_core.regression.oracle import load_axis              # noqa: E402
 from valence_core.session import (assert_modules_absent,          # noqa: E402
                                   build_ban_list, check_bars,
@@ -53,7 +64,8 @@ from valence_core.session import (assert_modules_absent,          # noqa: E402
 from valence_core.session_e2a import load_tasks                   # noqa: E402
 
 DATA = os.path.join(REPO, "data")
-CANONICAL = os.path.join(DATA, "e2d/d1_sessions.json")
+def canonical_for(tier: str) -> str:
+    return os.path.join(DATA, f"e2d/{tier}_sessions.json")
 
 
 def sha16_file(path: str) -> str:
@@ -62,9 +74,18 @@ def sha16_file(path: str) -> str:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--tier", choices=("d1",), default="d1",
-                    help="D1 only. D2 is licensed by its own block.")
-    ap.add_argument("--frac", type=float, default=C.D1_FRAC)
+    ap.add_argument("--tier", choices=tuple(C.TIERS), default="d1",
+                    help="d1 smoke / d2 qualification rung / d3 descriptive. "
+                         "Each tier's dose and registered n come from "
+                         "config.TIERS; --frac overrides the dose only within "
+                         "the tier's own ceiling.")
+    ap.add_argument("--frac", type=float, default=None,
+                    help="defaults to the tier's registered dose")
+    ap.add_argument("--draw-seed", type=int, default=20260902,
+                    help="seeds the CELL ASSIGNMENT only. Per-session task "
+                         "sequences are keyed on the session index and do not "
+                         "move with it (PROPOSAL-j §2 D2: reseed the DRAW, "
+                         "never a session).")
     ap.add_argument("--layer", type=int, default=C.LAYER)
     ap.add_argument("--temp", type=float, default=C.TEMP)
     ap.add_argument("--scope", choices=("e2a", "e2b"),
@@ -84,11 +105,16 @@ def main() -> int:
 
     print("INVOCATION: " + " ".join([sys.executable] + sys.argv), flush=True)
 
-    if args.frac > C.D1_FRAC:
+    tier = C.TIERS[args.tier]
+    if args.frac is None:
+        args.frac = tier["frac"]
+    if args.frac > tier["frac"]:
         raise SystemExit(
-            f"D1 REFUSES frac {args.frac}: D1 is the acceptance smoke at "
-            f"{C.D1_FRAC}. f = {C.D2_FRAC} is D2 and D2 is licensed by its "
-            f"own block, not by this script's --frac.")
+            f"TIER {args.tier} REFUSES frac {args.frac}: its registered dose "
+            f"is {tier['frac']}. A higher dose is a different tier and is "
+            f"licensed by its own block, not by this script's --frac.")
+    print(f"  tier {args.tier}: {tier['role']}", flush=True)
+    print(f"  registered n = {tier['n']} (no top-ups, rule 24)", flush=True)
 
     # --- insulation, before anything is constructed ----------------------
     assert_modules_absent(FORBIDDEN_MODULES)
@@ -176,13 +202,29 @@ def main() -> int:
           flush=True)
 
     inj_by_arm = {"M": axis_inj, "S": None, "R": rand_inj}
-    arms_n = {a: C.ARMS[a]["d1"] for a in C.ARMS}
-    print(f"  D1 n = {arms_n} (registered; no top-ups, rule 24)", flush=True)
+    arms_n = dict(tier["n"])
+
+    # --- PROPOSAL-j §2 D2 precondition, BEFORE any forward ---------------
+    # >= 16 distinct task_ids per class on the M arm, so discrim's
+    # task-disjoint split is disjoint in fact and not only in name.
+    cov = task_id_coverage("M", arms_n["M"], tasks, args.draw_seed)
+    print(f"  M-arm task_id coverage at draw seed {args.draw_seed}: "
+          f"pos {cov['distinct_task_ids']['pos']}, "
+          f"neg {cov['distinct_task_ids']['neg']} "
+          f"(floor {cov['floor']} per class) -> "
+          f"{'OK' if cov['meets_floor'] else 'SHORT'}", flush=True)
+    if not cov["meets_floor"]:
+        raise SystemExit(
+            f"TASK_ID COVERAGE SHORT at draw seed {args.draw_seed}: "
+            f"{cov['distinct_task_ids']}. PROPOSAL-j §2 D2 says reseed the "
+            f"DRAW (never a session) and record the seed. Re-run with a "
+            f"different --draw-seed; the per-session task sequences do not "
+            f"move with it.")
 
     # --- run --------------------------------------------------------------
     res = run_campaign(adapter, arms_n, tasks, inj_by_arm, audit, ban_ids,
                        term_rx, temp=args.temp, scope=args.scope,
-                       cached=cached)
+                       cached=cached, seed=args.draw_seed)
     sessions, counters = res["sessions"], res["counters"]
 
     # --- acceptance, COMPUTED BEFORE ANY ARTIFACT IS WRITTEN (trap 6) ----
@@ -258,9 +300,20 @@ def main() -> int:
         and fmt["all_ok"] and not fired)
 
     # --- marker readout (1e) and readability (1d), both descriptive at D1 -
+    # SCORING IS DEFERRED FOR D2/D3. AMENDMENT 2 (iii) makes the rule-25 read
+    # an input to Q2's clean set, and the read cannot exist until the sessions
+    # do. So d2/d3 generate only; `scripts/e2d_score.py` does marker and
+    # readability afterwards, taking the marks file. d1 keeps its inline
+    # scoring because that is how it ran and its artifact is committed.
+    score_inline = (args.tier == "d1") and not args.no_marker
+    if not score_inline and args.tier != "d1":
+        print(f"  scoring DEFERRED for tier {args.tier}: run "
+              f"scripts/e2d_score.py with --sessions and --marks "
+              f"(AMENDMENT 2 (iii) makes the read an input to Q2)", flush=True)
+
     t_marker0 = time.time()
     marker_out = None
-    if not args.no_marker:
+    if score_inline:
         instruments, g = MK.instruments_or_stop()
         probes = json.load(open(os.path.join(
             DATA, "configs/e0_probes.json")))["probes"]
@@ -285,6 +338,8 @@ def main() -> int:
     t_read0 = time.time()
     read_out = None
     try:
+        if not score_inline:
+            raise SystemExit("deferred")
         rounds_M = RD.clean_rounds(sessions, "M")
         if rounds_M["pos"] and rounds_M["neg"]:
             lad = RD.resampled_auc(adapter, rounds_M, k=2, key="e2d-d1")
@@ -299,7 +354,8 @@ def main() -> int:
                         "n_clean_pos": len(rounds_M["pos"]),
                         "n_clean_neg": len(rounds_M["neg"])}
     except SystemExit as exc:
-        read_out = {"error": str(exc)}
+        read_out = ({"deferred": "scoring runs in scripts/e2d_score.py"}
+                    if str(exc) == "deferred" else {"error": str(exc)})
 
     read_seconds = time.time() - t_read0
     if isinstance(read_out, dict):
@@ -333,6 +389,8 @@ def main() -> int:
                   "direction_sha": rand_inj.direction_sha,
                   "file_sha16": sha16_file(rz_path)}},
         "no_negative_pole": True,
+        "task_id_coverage": cov,
+        "draw_seed": args.draw_seed,
         "round_path_cached": bool(cached),
         "round_path_source": args.round_path,
         "axis_sha_float64": axis_inj.direction_sha,
@@ -365,7 +423,7 @@ def main() -> int:
                         "rule live in scripts/e2d_d2_analyze.py."),
     }
 
-    path = args.out or CANONICAL
+    path = args.out or canonical_for(args.tier)
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w") as fh:
         json.dump(out, fh, indent=1, default=float)

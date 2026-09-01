@@ -1158,6 +1158,7 @@ def run_all() -> list[Check]:
     checks += check_e2d_module()
     checks += check_e2d_analyzer()
     checks += check_oracle_write_guard()
+    checks += check_e2d_amendment2()
     return checks
 
 
@@ -1483,6 +1484,72 @@ def check_oracle_write_guard() -> list[Check]:
                   "incident 2026-09-01 (--check e2d clobbered it)",
                   "refused; other paths, --check all and no --out allowed",
                   ", ".join(f"{k}={v}" for k, v in ran.items()), ok))
+    return out
+
+
+def check_e2d_amendment2() -> list[Check]:
+    """AMENDMENT 2's new instruments, pinned where they can go wrong silently.
+
+    Three things. The alternation identity has to reproduce a PUBLISHED
+    number or it is just algebra someone believed; the read-marks class list
+    has to stay closed, since a fifth class is a design flag and not a new
+    string; and the T-step gate reader has to keep reporting the committed
+    g1 artifact as first-token-only, because that is the fact clause (i)'s
+    conditional turns on.
+    """
+    import json as _j
+    from ..e2d import habit as HB
+    from ..e2d import marks as MRK
+    out = []
+
+    # --- (v): the identity reproduces e2a's published primary -------------
+    rows = [_j.loads(l) for l in open(os.path.join(DATA, "e2a/sessions.jsonl"))]
+    conv = [{"arm": r["arm"], "session": r["session"],
+             "rounds": [{"phase": "forced", "pole": x["pole"]}
+                        for x in r["rounds"]],
+             "choices": [{"pick": c["pick"], "picked_pole": c["picked_pole"]}
+                         for c in r["choices"]]}
+            for r in rows if r["arm"] == "reward" and not r["excluded"]]
+    br = HB.break_rates(conv)
+    valid = [r for r in rows if r["arm"] == "reward" and not r["excluded"]]
+    measured = sum(1 for r in valid if r["first_free_pick_pos"]) / len(valid) - 0.5
+    w = br["delta_first_weighted_form"]
+    out.append(_c("e2d (v): habit identity reproduces e2a's primary",
+                  "PROPOSAL-j AMENDMENT 2 (v)",
+                  f"{measured:+.4f}", f"{w:+.4f}",
+                  abs(w - measured) < 1e-9))
+    # and the BALANCED form is the one that does NOT, on e2a's 53/49 split --
+    # pinned so nobody later "simplifies" the weighted form away.
+    b = br["delta_first_balanced_form"]
+    out.append(_c("e2d (v): balanced form differs at e2a's actual imbalance",
+                  "AMENDMENT 2 (v), exact-balance caveat",
+                  "differs by ~0.0135",
+                  f"{b - measured:+.4f} at {br['forced_end_balance']['pos']}/"
+                  f"{br['forced_end_balance']['neg']}",
+                  abs((b - measured) - 0.0135) < 5e-4
+                  and not br["forced_end_balance"]["exactly_balanced"]))
+
+    # --- (iii): the read-marks class list is closed -----------------------
+    doc = MRK.empty("suite", "test")
+    MRK.add(doc, "M", 0, "forced0", "task_echo", "ok")
+    raised = False
+    try:
+        MRK.add(doc, "M", 0, "forced1", "not_a_class", "should refuse")
+    except ValueError:
+        raised = True
+    out.append(_c("e2d (iii): read-marks refuse an unknown content class",
+                  "AMENDMENT 2 (iii)", "4 classes, refuses a 5th",
+                  f"{len(MRK.CLASSES)} classes, refused {raised}",
+                  raised and len(MRK.CLASSES) == 4))
+
+    # --- (i): the g1 gate is still first-token-only -----------------------
+    sys.path.insert(0, os.path.join(REPO, "scripts"))
+    from e2d_tstep_check import gate_is_tstep
+    g1 = _j.load(open(os.path.join(DATA, "e2a/g1_kernel_gate.json")))
+    tstep, why = gate_is_tstep(g1)
+    out.append(_c("e2d (i): g1 gate reads as first-token-only",
+                  "AMENDMENT 2 (i) conditional",
+                  "not a T-step licence", f"T-step={tstep}", tstep is False))
     return out
 
 

@@ -332,6 +332,43 @@ def run_campaign(adapter, arms_n: dict[str, int], tasks, inj_by_arm, audit,
             "round_path_cached": bool(cached)}
 
 
+def task_id_coverage(arm: str, n: int, tasks, seed: int,
+                     scope_scale: int = 1) -> dict:
+    """PROPOSAL-j §2 D2's precondition, checked BEFORE any forward.
+
+    "Code confirms at D2 that the M-arm draw covers >= 16 distinct task_ids
+    per class so the task-disjoint split holds." The class is the pole:
+    `discrim` splits over TASK IDS, so if the steered rounds of an arm only
+    ever land on eight tasks, a "task-disjoint" fit/val split is disjoint in
+    name only and the ladder's generalization claim is false rather than
+    merely underpowered.
+
+    This replays the schedule and the per-session task draws with no model in
+    the loop -- `session_rng` and `task_sequence` are deterministic -- so the
+    check costs nothing and can be run, and re-run under a different DRAW
+    seed, before the first forward.
+    """
+    sched = build_schedule(arm, n, np.random.default_rng(seed))
+    per_class: dict[str, set] = {"pos": set(), "neg": set()}
+    for idx, cell in enumerate(sched):
+        rng = session_rng(f"e2d-{arm}", idx)
+        seq = task_sequence(rng, tasks, 2 * F + N_FREE)
+        start_plus = cell["forced_end"] == "neg"
+        order = (["pos", "neg"] if start_plus else ["neg", "pos"]) * F
+        for ri, pole in enumerate(order):
+            per_class[pole].add(seq[ri][0])
+        # Free rounds land on whichever label the model picks, which is not
+        # knowable here; only the FORCED rounds are schedulable, and they are
+        # what the floor is stated over.
+    return {"arm": arm, "n_sessions": n, "seed": seed,
+            "distinct_task_ids": {k: len(v) for k, v in per_class.items()},
+            "task_ids": {k: sorted(v) for k, v in per_class.items()},
+            "meets_floor": all(len(v) >= 16 for v in per_class.values()),
+            "floor": 16,
+            "basis": "forced rounds only -- free-round tasks depend on the "
+                     "model's picks and cannot be checked before the run"}
+
+
 def as_e2a_row(rec: dict) -> dict:
     """An e2d record in the e2a schema, for `session_e2a`'s format checks.
 
@@ -392,4 +429,5 @@ def verify_format(recs: Sequence[dict], tasks) -> dict:
 
 __all__ = ["FORBIDDEN_MODULES", "LOW_LABEL_MASS", "strata_for",
            "build_schedule", "excludes", "strict_exclusion", "run_session",
-           "tally", "run_campaign", "as_e2a_row", "verify_format"]
+           "tally", "run_campaign", "as_e2a_row", "verify_format",
+           "task_id_coverage"]
