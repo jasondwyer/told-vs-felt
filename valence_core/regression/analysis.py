@@ -1157,6 +1157,7 @@ def run_all() -> list[Check]:
     checks += check_detection_segmentation()
     checks += check_e2d_module()
     checks += check_e2d_analyzer()
+    checks += check_oracle_write_guard()
     return checks
 
 
@@ -1433,6 +1434,55 @@ def check_e2d_analyzer() -> list[Check]:
                   f"{ok} / {stop['decision']}",
                   ok == 0.20 and stop["decision"] == "STOP, SCOPED"
                   and stop["run_dose"] is None))
+    return out
+
+
+def check_oracle_write_guard() -> list[Check]:
+    """A SUBSET oracle run must not be able to write the rule-26 record.
+
+    `data/regression/oracle_rule26.json` is the full criterion set run
+    together on one adapter. `oracle.main()` used to write it
+    unconditionally, so `--check kernel|b2b|choiceread|e2d` each replaced the
+    record with a partial one under the same filename. On 2026-09-01
+    `--check e2d` did exactly that and the four e2a choice-read rows were
+    restored from git. e2b's campaign script has guarded its canonical path
+    since 2026-08-22; the oracle had no equivalent.
+
+    Tested through the guard function itself, not through `main()`. Calling
+    `main()` would be the more end-to-end test and it is the wrong one here:
+    the non-refused case gets past validation and LOADS A MODEL, and this
+    suite is the model-free tier by construction. The first draft of this
+    check did exactly that and took the suite from seconds to minutes.
+
+    Both directions, and both must be shown to run (trap 5): the canonical
+    path refused, a different path returning cleanly.
+    """
+    from .oracle import CANONICAL_OUT, refuse_canonical_out
+    out = []
+
+    ran = {}
+    try:
+        refuse_canonical_out(CANONICAL_OUT, "e2d")
+        ran["refused_canonical"] = False
+    except SystemExit as exc:
+        ran["refused_canonical"] = "REFUSED" in str(exc)
+
+    ran["allows_other_path"] = (
+        refuse_canonical_out("/tmp/e2d_subset.json", "e2d") is None)
+    # `--check all` IS the record, so it must not be refused even at the
+    # canonical path -- that is the one run allowed to write it.
+    try:
+        refuse_canonical_out(CANONICAL_OUT, "all")
+        ran["allows_full_run"] = True
+    except SystemExit:
+        ran["allows_full_run"] = False
+    ran["allows_no_out"] = refuse_canonical_out(None, "e2d") is None
+
+    ok = all(ran.values()) and len(ran) == 4
+    out.append(_c("oracle: a subset run cannot write the rule-26 record",
+                  "incident 2026-09-01 (--check e2d clobbered it)",
+                  "refused; other paths, --check all and no --out allowed",
+                  ", ".join(f"{k}={v}" for k, v in ran.items()), ok))
     return out
 
 

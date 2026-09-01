@@ -505,11 +505,49 @@ def check_e2d_construction(adapter, tag_ids) -> list[Result]:
     ]
 
 
+CANONICAL_OUT = os.path.join(DATA, "regression/oracle_rule26.json")
+
+
+def refuse_canonical_out(out: str | None, check: str) -> None:
+    """A SUBSET run must not be able to write the rule-26 record.
+
+    `data/regression/oracle_rule26.json` is the full criterion set, run
+    together, on one adapter. `main()` used to write it unconditionally, so
+    every subset -- `--check kernel|b2b|choiceread|e2d` -- replaced the record
+    with a partial one under the same filename, and a partial record is
+    indistinguishable from a complete one once written. On 2026-09-01
+    `--check e2d` did exactly that and the four e2a choice-read rows had to
+    be restored from git.
+
+    Named and separate rather than inline so it is testable without loading a
+    model, which is also why it is called at argument-validation time: a guard
+    that fires after four minutes of forwards has wasted the run it protects.
+    e2b's campaign script has had this since 2026-08-22; the oracle had not.
+    """
+    if not out or check == "all":
+        return
+    if os.path.abspath(out) == os.path.abspath(CANONICAL_OUT):
+        raise SystemExit(
+            f"REFUSED: --check {check} is a SUBSET of the rule-26 criteria "
+            f"and must not be written to the canonical artifact. The record "
+            f"is the full set run together; a partial run under that filename "
+            f"is indistinguishable from one, and on 2026-09-01 a subset run "
+            f"silently replaced it.")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", default="all",
                     choices=["all", "kernel", "b2b", "choiceread", "e2d"])
+    ap.add_argument("--out", default=None,
+                    help="where to write a SUBSET run's results. The canonical "
+                         "artifact is written only by --check all and is "
+                         "refused here.")
     args = ap.parse_args()
+
+    # Refuse a bad --out BEFORE any model loads (e2b's refuse_canonical_out is
+    # called early for the same reason).
+    refuse_canonical_out(args.out, args.check)
 
     _banner("LEDGER 26 -- oracle-tier regression (Qwen, laptop)")
     t0 = time.time()
@@ -538,6 +576,7 @@ def main() -> int:
           f"e2a tasks: {len(tasks)}", flush=True)
 
     results: list[Result] = []
+    e2d_adapter = None
     if args.check in ("all", "choiceread"):
         _banner("(iii) e2a choice-read construction on archived session texts")
         results += check_choiceread(adapter, tag_ids)
@@ -571,11 +610,44 @@ def main() -> int:
         print("  RULE 26: a mismatch is a refactor bug until proven "
               "otherwise. No Phase-1 work on an unverified core.")
 
-    os.makedirs(os.path.join(DATA, "regression"), exist_ok=True)
-    with open(os.path.join(DATA, "regression/oracle_rule26.json"), "w") as f:
-        json.dump({"provenance": adapter.provenance(),
-                   "results": [r.__dict__ for r in results],
-                   "n_fail": n_fail}, f, indent=1)
+    # --- write guard -----------------------------------------------------
+    # `data/regression/oracle_rule26.json` is the rule-26 RECORD: the full
+    # criterion set, run together, on one adapter. This function used to
+    # write it unconditionally, so ANY subset run -- `--check kernel`,
+    # `--check b2b`, `--check choiceread`, `--check e2d` -- silently replaced
+    # the record with a partial one carrying the same filename. That is not
+    # hypothetical: `--check e2d` did exactly that on 2026-09-01 and the four
+    # e2a choice-read rows had to be restored from git. e2b's campaign script
+    # has guarded its canonical path since 2026-08-22 (`refuse_canonical_out`)
+    # for the identical reason; the oracle did not.
+    #
+    # A subset run now REFUSES the canonical path and requires an explicit
+    # --out. Nothing is written by default, so a subset cannot quietly become
+    # the record, and it does not leave a stray artifact in `data/` either.
+    canonical = CANONICAL_OUT
+    payload = {"check": args.check,
+               "provenance": adapter.provenance(),
+               "results": [r.__dict__ for r in results],
+               "n_fail": n_fail}
+    if e2d_adapter is not None:
+        # The e2d rows were read on a DIFFERENT adapter (no legacy_truncate);
+        # recording only the legacy adapter's provenance would misdescribe them.
+        payload["e2d_provenance"] = e2d_adapter.provenance()
+    if args.check == "all":
+        os.makedirs(os.path.dirname(canonical), exist_ok=True)
+        with open(canonical, "w") as f:
+            json.dump(payload, f, indent=1)
+        print(f"  wrote {os.path.relpath(canonical, REPO)}")
+    elif args.out:
+        # The canonical path was already refused at argument-validation time.
+        with open(args.out, "w") as f:
+            json.dump(payload, f, indent=1)
+        print(f"  wrote {args.out}  (subset run -- canonical artifact "
+              f"NOT touched)")
+    else:
+        print(f"  subset run (--check {args.check}): nothing written. The "
+              f"canonical artifact is the FULL set and was not touched; pass "
+              f"--out to keep this partial result somewhere else.")
     return 1 if n_fail else 0
 
 
