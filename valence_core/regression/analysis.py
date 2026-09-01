@@ -1155,6 +1155,8 @@ def run_all() -> list[Check]:
     checks += check_instrument_invariants()
     checks += check_adapter_consolidation()
     checks += check_detection_segmentation()
+    checks += check_e2d_module()
+    checks += check_e2d_analyzer()
     return checks
 
 
@@ -1239,6 +1241,199 @@ def check_detection_segmentation() -> list[Check]:
                "acceptance event 2026-08-23",
                "default off, no-op, cuts",
                f"default {default_off}, no-op {noop}, cuts {cuts}", ok)]
+
+
+def check_e2d_module() -> list[Check]:
+    """e2d's harness invariants (PROPOSAL-j v1.1 §2 D1, acceptance item f).
+
+    Six things this module must not be allowed to lose quietly. Each is here
+    because losing it would be SILENT: the roster forking into two literals,
+    a discrim hyperparameter re-declared instead of imported, a stored
+    classifier that does not round-trip, a cell count that drifts off the
+    proposal, a roster tag colliding with a pool, or the quarantined
+    primitive creeping back into the import graph.
+    """
+    import inspect as _i
+    import sys as _sys
+    import zlib
+
+    import numpy as _np
+
+    from ..discrim import AUC_BAR, logistic_auc
+    from ..e2d import config as C
+    from ..e2d import marker as MK
+    from ..e2d import readability as RD
+    from ..e2d import runner as RN
+    from ..e2d.runner import FORBIDDEN_MODULES, strata_for
+    out = []
+
+    # --- (1) statepresent absent from e2d's import graph ------------------
+    # Importing the e2d package must not drag the quarantined primitive in.
+    absent = "valence_core.e2b.statepresent" not in _sys.modules
+    # Prose may name the quarantined module -- the runner's docstring does,
+    # deliberately. What must not exist is an IMPORT of it, so that is what
+    # is searched for: a name in a docstring cannot load a module.
+    import re as _re0
+    src = "".join(_i.getsource(m) for m in (C, RD, RN, MK))
+    imports = _re0.findall(r"^\s*(?:from|import)\s+\S*statepresent\S*",
+                           src, _re0.M)
+    never_imported = not imports
+    out.append(_c("e2d: statepresent absent, and asserted, not assumed",
+                  "PROPOSAL-j §3 / rule 5(a)",
+                  "absent + declared forbidden",
+                  f"absent {absent}, 0 imports, forbidden "
+                  f"{FORBIDDEN_MODULES}",
+                  absent and never_imported and FORBIDDEN_MODULES ==
+                  ("valence_core.e2b.statepresent",)))
+
+    # --- (2) the roster of record has not forked --------------------------
+    # e2b's campaign script holds the same four pairs as a literal. Two
+    # literals of one roster is exactly how a roster silently diverges, so
+    # they are compared rather than trusted.
+    import re as _re
+    camp = open(os.path.join(REPO, "scripts/e2b_verdict_campaign.py")).read()
+    m = _re.search(r"ROSTER = \((.*?)\)\n", camp, _re.S)
+    e2b_roster = tuple(tuple(p) for p in
+                       _re.findall(r'\("(\w+)", "(\w+)"\)', m.group(1)))
+    expected = (("granite", "plaza"), ("prism", "slate"),
+                ("velvet", "walnut"), ("ridge", "saddle"))
+    ok = C.ROSTER == expected == e2b_roster
+    out.append(_c("e2d: roster of record is the h-roster, unforked",
+                  "PROPOSAL-j AMENDMENT 1 (i)",
+                  "h-roster == e2b's",
+                  "match" if ok else f"{C.ROSTER} vs {e2b_roster}", ok))
+
+    # --- (3) rule 18: roster tags disjoint from every pool -----------------
+    # Rule 28(c): checked against the WRAPPER too, not only the pools --
+    # lexical assertions against pools are necessary, not sufficient.
+    from ..session_e2a import (MENU_TEMPLATES, ROUND_TEMPLATES,
+                               SESSION_BANNER, load_tasks)
+    tags = [t for p in C.ROSTER for t in p]
+    texts = [p for t in load_tasks(os.path.join(DATA, "corpus/e2a_tasks.jsonl"))
+             for p in t["paraphrases"]]
+    texts += [SESSION_BANNER, *ROUND_TEMPLATES, *MENU_TEMPLATES]
+    texts += json.load(open(os.path.join(DATA, "configs/e0_probes.json")))["probes"]
+    collisions = [(tag, tx[:40]) for tag in tags for tx in texts
+                  if _re.search(rf"\b{_re.escape(tag)}\b", tx, _re.IGNORECASE)]
+    out.append(_c("e2d: roster tags collide with no pool or wrapper text",
+                  "rule 18 + rule 28(c)", "0 collisions",
+                  f"{len(collisions)} collisions"
+                  + (f" e.g. {collisions[0]}" if collisions else ""),
+                  not collisions))
+
+    # --- (4) cell counts are the proposal's ------------------------------
+    counts = {a: len(strata_for(a)) for a in ("M", "S", "R")}
+    ok = counts == {"M": 16, "S": 8, "R": 8}
+    out.append(_c("e2d: cells are M 16 / S 8 / R 8",
+                  "PROPOSAL-j §3 + AMENDMENT 1 (i)", "{'M': 16, 'S': 8, 'R': 8}",
+                  str(counts), ok))
+    # and M's 16 really are pairs x maps x forced-end, not 16 of something
+    m_cells = strata_for("M")
+    ok_dims = (len({tuple(c["pair"]) for c in m_cells}) == 4
+               and len({c["map"] for c in m_cells}) == 2
+               and len({c["forced_end"] for c in m_cells}) == 2
+               and len({(tuple(c["pair"]), c["map"], c["forced_end"])
+                        for c in m_cells}) == 16)
+    out.append(_c("e2d: M's 16 cells are 4 pairs x 2 maps x 2 forced-end",
+                  "PROPOSAL-j §3", "4x2x2 distinct",
+                  "distinct" if ok_dims else "degenerate", ok_dims))
+
+    # --- (5) discrim constants imported, never re-declared ----------------
+    # Read off logistic_auc's own signature. A literal copy here would keep
+    # passing after `discrim` moved, which is the failure mode.
+    sig = {n: p.default for n, p in _i.signature(logistic_auc).parameters.items()
+           if p.default is not _i.Parameter.empty}
+    same = RD.FIT_HYPERPARAMS == sig
+    bar_same = RD.MEDIAN_BAR == AUC_BAR
+    body = _i.getsource(RD)
+    redeclared = [n for n in ("iters", "lr", "l2")
+                  if _re.search(rf"^\s*{n}\s*=\s*[\d.]", body, _re.M)]
+    ok = same and bar_same and not redeclared
+    out.append(_c("e2d: discrim constants imported, not re-declared",
+                  "PROPOSAL-j §2 D1 frozen-successor rule",
+                  "hyperparams+bar from discrim",
+                  f"hyperparams {same}, bar {bar_same}, "
+                  f"redeclared {redeclared}", ok))
+
+    # --- (6) stored classifier round-trips --------------------------------
+    # fit -> store -> load -> identical scores. A stored classifier that did
+    # not reproduce its own scores would make the transfer figure -- the one
+    # registered against the g2r pattern -- meaningless.
+    rng = _np.random.default_rng(0)
+    D = 16
+    class _Stub:
+        def embed(self, text):
+            r = _np.random.default_rng(zlib.crc32(text.encode()) % 2 ** 31)
+            base = r.normal(size=D)
+            return base + (1.5 if text.startswith("P") else 0.0)
+    rounds = {"pos": [{"text": f"P{i}", "task_id": f"t{i % 8:02d}"}
+                      for i in range(24)],
+              "neg": [{"text": f"N{i}", "task_id": f"t{i % 8:02d}"}
+                      for i in range(24)]}
+    stub = _Stub()
+    clf = RD.fit_and_store(stub, rounds, k=1, key="suite")
+    s1 = RD.score_stored(stub, clf, rounds, key="suite")
+    packed = {"w": clf["w"].tolist(), "b": clf["b"],
+              "mu": clf["mu"].tolist(), "sd": clf["sd"].tolist(),
+              "k": clf["k"]}
+    reloaded = {"w": _np.array(packed["w"]), "b": packed["b"],
+                "mu": _np.array(packed["mu"]), "sd": _np.array(packed["sd"]),
+                "k": packed["k"]}
+    s2 = RD.score_stored(stub, reloaded, rounds, key="suite")
+    ok = (s1["auc"] is not None and s1["auc"] == s2["auc"])
+    out.append(_c("e2d: stored classifier round-trips (fit->store->load)",
+                  "PROPOSAL-j §3 transfer figure",
+                  "identical AUC after reload",
+                  f"{s1['auc']} vs {s2['auc']}", ok))
+
+    return out
+
+
+def check_e2d_analyzer() -> list[Check]:
+    """The D2 analyzer's criteria, pinned at the values §2 registers.
+
+    The analyzer has its own stub smoke (34 branches); this is the subset
+    that must never move silently, because each number here is a
+    pre-registration: p0, the reach, the g2r-failure property, and the
+    one-pole Q3 bar.
+    """
+    sys.path.insert(0, os.path.join(REPO, "scripts"))
+    import e2d_d2_analyze as A
+    out = []
+    out.append(_c("e2d Q1: p0 = 0.15, and 9/32 is the stated reach",
+                  "PROPOSAL-j §2 Q1",
+                  "0.15 / fires at 9",
+                  f"{A.P0_Q1} / fires at "
+                  f"{min(k for k in range(33) if not A.q1_validity(k, 32)['passes'])}",
+                  A.P0_Q1 == 0.15
+                  and A.q1_validity(9, 32)["passes"] is False
+                  and A.q1_validity(8, 32)["passes"] is True))
+    g2r = [0.448] * 10 + [0.759] * 10
+    r = A.q2_readability(g2r)
+    out.append(_c("e2d Q2: the g2r pattern fails, median near .60",
+                  "PROPOSAL-j §2 Q2 / §0.4",
+                  "fails, median~.60",
+                  f"passes={r['passes']}, median={r['median']:.4f}",
+                  r["passes"] is False and 0.55 <= r["median"] <= 0.65))
+    q = A.q3_direction(0.40, 0.05)
+    flip = A.q3_direction(-0.40, 0.05)
+    out.append(_c("e2d Q3: bar 0.5*G = 0.1578, sign flip fails the rung",
+                  "PROPOSAL-j §2 Q3 (one-pole variant)",
+                  "0.1578 / flip fails",
+                  f"{q['bar']:.4f} / flip passes={flip['passes']}",
+                  abs(q["bar"] - 0.1578) < 1e-9 and flip["passes"] is False
+                  and flip["sign_flip"] is True))
+    ok = A.run_dose_rule({"passes": True}, {"passes": True},
+                         {"passes": True})["run_dose"]
+    stop = A.run_dose_rule({"passes": True}, {"passes": True},
+                           A.q3_direction(0.10, 0.01))
+    out.append(_c("e2d run-dose rule: 0.20 on pass, scoped stop on any fail",
+                  "PROPOSAL-j §2 run-dose rule",
+                  "0.2 / STOP, SCOPED",
+                  f"{ok} / {stop['decision']}",
+                  ok == 0.20 and stop["decision"] == "STOP, SCOPED"
+                  and stop["run_dose"] is None))
+    return out
 
 
 def main() -> int:

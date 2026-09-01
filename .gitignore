@@ -27,6 +27,15 @@
 /data/e2b/*
 !/data/e2b/*.json
 !/data/e2b/*.jsonl
+
+# e2d (PROPOSAL-j) artifacts. data/e2d/*.npz is NOT allowlisted here: any
+# array artifact e2d grows -- a stored classifier, marker score matrices --
+# needs its own explicit line, which is the whole point of the pattern
+# (trap 7, which has bitten four times).
+!/data/e2d/
+/data/e2d/*
+!/data/e2d/*.json
+!/data/e2d/*.jsonl
 # OLMo checkpoint manifest (step 2): shas, dtypes, param counts. The
 # weights stay on the box; the provenance record travels (ledger 27).
 !/data/olmo/
