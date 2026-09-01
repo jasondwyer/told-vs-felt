@@ -169,15 +169,25 @@ def main() -> int:
           f"frac {args.frac}  alpha {axis_inj.alpha:.4f}", flush=True)
     # TWO CONVENTIONS, both printed, because the receipt in the record uses
     # the other one and a reader who checks will otherwise think the axis
-    # moved. Injection.at_frac casts to float64 before hashing; the committed
-    # receipt hashes the unit direction AS STORED, in float32 (trap 17).
+    # moved.
+    #
+    # The difference is NOT the storage dtype -- sha16_arr always hashes
+    # float32 bytes -- it is WHERE THE NORMALISATION ARITHMETIC HAPPENS.
+    # Normalising the stored float32 array in float32 gives the receipt's
+    # 127fc297b6623e44; Injection.at_frac casts to float64 first and gives
+    # 3c17b0d8fbcad716. Casting back to float32 AFTER a float64 normalise
+    # does NOT recover the receipt, which is the mistake this comment exists
+    # to stop: the first version of this line did exactly that and printed
+    # the two conventions as equal.
     from valence_core.adapters.base import sha16_arr as _sha
-    _u32 = (rw / np.linalg.norm(rw)).astype(np.load(
-        os.path.join(DATA, "e0/e0_axes.npz"))["span_reward"].dtype)
-    print(f"  +axis direction sha16 {axis_inj.direction_sha} (float64, as "
-          f"Injection hashes it) == {_sha(_u32)} (as stored, float32 -- the "
-          f"receipt's convention); ||v|| = {float(np.linalg.norm(rw)):.6f}",
-          flush=True)
+    _raw32 = np.load(os.path.join(DATA, "e0/e0_axes.npz"))["span_reward"][
+        [int(x) for x in np.load(os.path.join(DATA, "e0/e0_axes.npz"))
+         ["layers"]].index(args.layer)]
+    _u32 = _raw32 / np.linalg.norm(_raw32)          # normalise IN float32
+    print(f"  +axis direction sha16 {axis_inj.direction_sha} (normalised in "
+          f"float64, as Injection.at_frac does); the record's receipt is "
+          f"{_sha(_u32)} (normalised in float32) -- SAME VECTOR, "
+          f"||v|| = {float(np.linalg.norm(rw)):.6f}", flush=True)
     print(f"  R arm direction: e0_random_dirs.npz[{C.RANDOM_DIRS_KEY!r}] "
           f"sha16 {rand_inj.direction_sha}  (file sha16 "
           f"{sha16_file(rz_path)})  alpha {rand_inj.alpha:.4f}", flush=True)
@@ -223,8 +233,9 @@ def main() -> int:
 
     cached = {"gate": gate_says, "cached": True, "uncached": False}[args.round_path]
     print(f"  round path: {'CACHED' if cached else 'UNCACHED'} "
-          f"(--round-path {args.round_path}; g1 artifact at frac {args.frac}: "
-          f"pass={gate_says}, max_kl="
+          f"(--round-path {args.round_path}; binding licence says "
+          f"{gate_says}; g1 artifact at frac {args.frac}: "
+          f"pass={bool(g1row and g1row['pass'])}, max_kl="
           f"{g1row['max_kl'] if g1row else 'n/a'}, family "
           f"{g1['template_family']}); choice forwards uncached regardless",
           flush=True)
@@ -424,8 +435,11 @@ def main() -> int:
         "tstep_licence": (None if tstep is None else
                           {k: v for k, v in tstep["verdict"].items()
                            if k != "round_token_counts"}),
-        "axis_sha_float64": axis_inj.direction_sha,
-        "axis_sha_as_stored_float32": _sha(_u32),
+        "axis_sha_normalised_float64": axis_inj.direction_sha,
+        "axis_sha_normalised_float32": _sha(_u32),
+        "axis_sha_note": ("same vector under two normalisation precisions; "
+                          "sha16_arr always hashes float32 bytes, so the "
+                          "difference is the normalise step, not storage"),
         "axis_norm": float(np.linalg.norm(rw)),
         "ban_list": {"n_ids": len(ban_ids), "n_strings": len(ban_strings)},
         "declared_bars": [b.__dict__ for b in bars],
