@@ -193,6 +193,34 @@ def main() -> int:
     g1 = json.load(open(os.path.join(DATA, "e2a/g1_kernel_gate.json")))
     g1row = g1["results"].get(str(args.frac))
     gate_says = bool(g1row and g1row["pass"])
+
+    # AMENDMENT 2 (i): the g1 gate is FIRST-TOKEN ONLY, so on its own it does
+    # not license cached GENERATION. Above D1's dose the T-step identity
+    # artifact is the binding input, and its absence is a stop rather than a
+    # silent fall-back to the gate -- an undetermined licence is not a
+    # granted one.
+    tstep_path = os.path.join(DATA, "e2d/tstep_check.json")
+    tstep = None
+    if os.path.exists(tstep_path):
+        tstep = json.load(open(tstep_path))
+    if args.round_path == "gate" and args.frac > C.D1_FRAC:
+        if tstep is None:
+            raise SystemExit(
+                f"NO T-STEP ARTIFACT at {tstep_path}. AMENDMENT 2 (i) makes "
+                f"the identity check the licence for cached generation above "
+                f"f = {C.D1_FRAC}, and the g1 gate alone is first-token only. "
+                f"Run scripts/e2d_tstep_check.py first.")
+        if abs(tstep["frac"] - args.frac) > 1e-9:
+            raise SystemExit(
+                f"T-STEP ARTIFACT IS FOR frac {tstep['frac']}, not "
+                f"{args.frac}. Rule 1's spirit: a licence measured at one "
+                f"dose is not inherited by another.")
+        gate_says = bool(tstep["verdict"]["all_identical"])
+        print(f"  T-step licence: {tstep['verdict']['n_identical']}/"
+              f"{tstep['verdict']['n_rounds']} rounds identical -> "
+              f"{'CACHED permitted' if gate_says else 'UNCACHED required'} "
+              f"(AMENDMENT 2 (i))", flush=True)
+
     cached = {"gate": gate_says, "cached": True, "uncached": False}[args.round_path]
     print(f"  round path: {'CACHED' if cached else 'UNCACHED'} "
           f"(--round-path {args.round_path}; g1 artifact at frac {args.frac}: "
@@ -393,6 +421,9 @@ def main() -> int:
         "draw_seed": args.draw_seed,
         "round_path_cached": bool(cached),
         "round_path_source": args.round_path,
+        "tstep_licence": (None if tstep is None else
+                          {k: v for k, v in tstep["verdict"].items()
+                           if k != "round_token_counts"}),
         "axis_sha_float64": axis_inj.direction_sha,
         "axis_sha_as_stored_float32": _sha(_u32),
         "axis_norm": float(np.linalg.norm(rw)),
