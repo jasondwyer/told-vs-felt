@@ -84,16 +84,26 @@ def main() -> int:
         print("  read-marks: NONE SUPPLIED -- Q2's clean set will be v2-clean "
               "only, and the output records that", flush=True)
 
+    # The adapter is built LAZILY. The descriptive tables below -- audit
+    # rates, read-mark rates, the habit frame -- are pure joins over the
+    # sessions file, and requiring a model to print them would mean competing
+    # for the GPU with a running campaign just to look at a table. With
+    # --no-marker --no-ladder this script now loads no model at all.
     t0 = time.time()
-    adapter = qwen_or_explain(__file__)
-    print(f"  model loaded in {time.time() - t0:.0f}s", flush=True)
+    _adapter = {}
+
+    def adapter_or_load():
+        if "a" not in _adapter:
+            t = time.time()
+            _adapter["a"] = qwen_or_explain(__file__)
+            print(f"  model loaded in {time.time() - t:.0f}s", flush=True)
+        return _adapter["a"]
 
     out = {"item": "e2d scoring", "tier": tier, "frac": art.get("frac"),
            "sessions_file": os.path.relpath(args.sessions, REPO),
            "marks_file": (os.path.relpath(args.marks, REPO)
                           if args.marks else None),
-           "read_marks_applied": marked is not None,
-           "provenance": adapter.provenance()}
+           "read_marks_applied": marked is not None}
 
     # --- descriptive tables that need no model ---------------------------
     out["audit_rates_by_round_class"] = MRK.audit_rates(sessions)
@@ -112,7 +122,7 @@ def main() -> int:
         text_of = {r["task"]: r["task_text"]
                    for s in sessions for r in s["rounds"] + s["choices"]}
         t1 = time.time()
-        rows = MK.collect(adapter, instruments, probes, sessions,
+        rows = MK.collect(adapter_or_load(), instruments, probes, sessions,
                           lambda tid: text_of[tid], progress=print)
         n_fw = sum(len(r["scores"]) for r in rows if r["scores"])
         print(f"    {n_fw} probe forwards in {time.time() - t1:.0f}s",
@@ -164,9 +174,9 @@ def main() -> int:
             entry = {"n_clean_pos": len(rounds_M["pos"]),
                      "n_clean_neg": len(rounds_M["neg"])}
             if rounds_M["pos"] and rounds_M["neg"]:
-                entry["k2"] = RD.resampled_auc(adapter, rounds_M, k=2,
+                entry["k2"] = RD.resampled_auc(adapter_or_load(), rounds_M, k=2,
                                                b=args.b, key=f"e2d-{tier}")
-                entry["k1"] = RD.resampled_auc(adapter, rounds_M, k=1,
+                entry["k1"] = RD.resampled_auc(adapter_or_load(), rounds_M, k=1,
                                                b=args.b, key=f"e2d-{tier}")
                 entry["gate_would_say"] = RD.gate(entry["k2"])
             else:
@@ -191,25 +201,30 @@ def main() -> int:
                     {"text": r["text"], "task_id": r["task"]})
         if allr_incl["pos"] and allr_incl["neg"]:
             lad["all_rounds_degeneracy_included"] = RD.resampled_auc(
-                adapter, allr_incl, k=2, b=args.b, key=f"e2d-{tier}-all")
+                adapter_or_load(), allr_incl, k=2, b=args.b, key=f"e2d-{tier}-all")
         rounds_R = RD.clean_rounds(sessions, "R", marked=marked)
         if rounds_R["pos"] and rounds_R["neg"]:
-            lad["AUC_R"] = RD.resampled_auc(adapter, rounds_R, k=2, b=args.b,
+            lad["AUC_R"] = RD.resampled_auc(adapter_or_load(), rounds_R, k=2, b=args.b,
                                             key=f"e2d-{tier}-R")
         # stored classifier for the campaign transfer figure
         base = RD.clean_rounds(sessions, "M", marked=marked)
         if base["pos"] and base["neg"]:
-            clf = RD.fit_and_store(adapter, base, k=2, key=f"e2d-{tier}")
+            clf = RD.fit_and_store(adapter_or_load(), base, k=2, key=f"e2d-{tier}")
             lad["stored_classifier"] = {
                 "k": clf["k"], "n_fit": clf["n_fit"],
                 "hyperparams": clf["hyperparams"],
                 "w": clf["w"].tolist(), "b": clf["b"],
                 "mu": clf["mu"].tolist(), "sd": clf["sd"].tolist(),
-                "self_score": RD.score_stored(adapter, clf, base,
+                "self_score": RD.score_stored(adapter_or_load(), clf, base,
                                               key=f"e2d-{tier}")}
         lad["seconds"] = time.time() - t2
         out["readability"] = lad
 
+    if "a" in _adapter:
+        out["provenance"] = _adapter["a"].provenance()
+    else:
+        out["provenance"] = {"note": "no model loaded -- descriptive tables "
+                                     "only (--no-marker --no-ladder)"}
     out["wall_clock_s"] = time.time() - t0
     out["_no_verdict"] = ("measurement only; the criteria live in "
                           "scripts/e2d_d2_analyze.py")
