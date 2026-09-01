@@ -1,0 +1,39 @@
+INVOCATION: PYTHONPATH=$PWD jlens-qwen36/.venv/bin/python scripts/e2a_recount.py
+site: laptop; HEAD 70995c0; read-only over committed artifacts
+
+--- FROZEN audit (the published rule) ---
+  reward 10/112  sham 3/40  random1 1/24  random2 2/24
+  reward-arm pole attribution: +pole 7  -pole 3  unresolved 0
+    s2    lexical:maple@free2                                pole=pos
+    s5    audit:frame:Config evaluation session@forced1      pole=neg
+    s21   audit:frame:Config evaluation session@forced2      pole=pos
+    s33   lexical:maple@forced0                              pole=pos
+    s53   lexical:maple@free1                                pole=pos
+    s63   lexical:saddle@forced1                             pole=pos
+    s85   audit:frame:evaluation session@forced3             pole=neg
+    s86   lexical:lattice@forced0                            pole=pos
+    s93   audit:frame:Config evaluation session@forced2      pole=neg
+    s105  lexical:maple@forced3                              pole=pos
+  REPRODUCTION vs published: session set identical = True; every reason string identical = True
+
+--- AUDIT v2 (data/configs/e2b_audit_v2.json) ---
+  reward 11/112  sham 3/40  random1 1/24  random2 2/24
+  reward-arm pole attribution: +pole 8  -pole 3  unresolved 0
+    s1    audit:junk:(?im)^\s*={2,}[^\n]*={2,}\s*$@forced2   pole=pos
+    s2    lexical:maple@free2                                pole=pos
+    s5    audit:frame:Config evaluation session@forced1      pole=neg
+    s21   audit:frame:Config evaluation session@forced2      pole=pos
+    s33   lexical:maple@forced0                              pole=pos
+    s53   lexical:maple@free1                                pole=pos
+    s63   lexical:saddle@forced1                             pole=pos
+    s85   audit:frame:evaluation session@forced3             pole=neg
+    s86   lexical:lattice@forced0                            pole=pos
+    s93   audit:frame:Config evaluation session@forced2      pole=neg
+    s105  lexical:maple@forced3                              pole=pos
+
+--- the published primary, and v2's correction of it ---
+  frozen audit: 55/102  Delta_first = +0.0392  one-sided exact binomial p = 0.244   [MATCHES the record]
+  audit v2   : 54/101  Delta_first = +0.0347  one-sided exact binomial p = 0.275   [MATCHES the record]
+
+Q1 p0 formula under v2: 2 x 8/112 = 0.1429; 1.5 x 11/112 = 0.1473; max = 0.1473 -> p0 = 0.15
+  (with the +pole count left at the published 7: 2 x 7/112 = 0.1250; max still 0.1473)
