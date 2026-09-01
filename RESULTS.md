@@ -21,6 +21,80 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-01 — **e2d D1 BUILD STOPPED BEFORE ANY CODE, per the D1 block's own
+  §0 clause ("if the build needs the proposal to change, stop, write the entry,
+  flag"). TWO GAPS, one blocking. (1) BLOCKING — PROPOSAL-j specifies "4 pairs
+  × 2 maps × 2 forced-end" and NAMES NO ROSTER ANYWHERE; the two candidate
+  rosters share exactly ONE pair of four. (2) There is no committed e2a
+  `AuditSpec` to reproduce "verbatim" — the only audit artifact in the repo is
+  `e2b_audit_v2.json`, which is the CORRECTED successor that changed e2a's own
+  primary. No forwards run; no module written; site assertion green.**
+  (Site: suite 137/137 at `f7a4a1e`, main == origin/main, AC power, no model
+  process. PROPOSAL-j v1.0 `f7a4a1e`.)
+
+  - **GAP 1 — the roster is unnamed, and the candidates genuinely differ.**
+    PROPOSAL-j l.203 fixes the cell structure ("M 16 cells (4 pairs × 2 maps ×
+    2 forced-end), S 8 and R 8") but a search for every tag string in the
+    committed proposal returns **nothing**. The two rosters the repo could
+    supply are:
+
+    | | pairs |
+    |---|---|
+    | **e2a's own** (`data/e2a/sessions.jsonl`, 50 sessions each) | granite/lattice, maple/cedar, plaza/saddle, **slate/prism** |
+    | **h-roster** (H3b-selected, e2b campaign `ROSTER`) | granite/plaza, **prism/slate**, velvet/walnut, ridge/saddle |
+
+    **They share exactly one pair — slate/prism — and differ on the other
+    three.** The overlap in *tags* (granite, plaza, prism, slate, saddle) is
+    misleading: the **pairings** differ, and a pairing is the unit the label
+    map counterbalances over. Choosing by inheritance is not obvious either
+    way: e2d is an e2a dose-escalation in the e2a format (argues e2a's), but
+    the h-roster is the one that was actually screened for balance (H3b:
+    46/120 pairings clear, disjoint four at imbalance 0.001–0.007) and e2a's
+    was never screened that way. **Rule 1's spirit forbids inheriting the
+    choice silently, so Code does not pick.**
+  - **GAP 2 — "e2a's exclusion rule verbatim" has no in-repo artifact.**
+    PROPOSAL-j l.148 says *"e2a's exclusion rule verbatim, `session.py
+    AuditSpec`"*. `data/configs/` contains exactly one audit artifact:
+    **`e2b_audit_v2.json`**. e2a's own rule lives only in the gitignored clone
+    (`jlens_qwen/e2a.py` lineage) — a ledger-27 exposure in its own right.
+    **And the two are not interchangeable in a way that matters here:** audit
+    v2 is the case-insensitive successor that *"swept the archive and found a
+    defect in our own published number"*, correcting e2a's primary
+    **55/102 → 54/101, p .244 → .275** (FINDINGS-5 §3). Reproducing e2a's
+    original verbatim knowingly re-imports a rule v2 demonstrated has misses;
+    using v2 is not "e2a verbatim". Either is defensible; **it is a
+    design-instance choice with a stated reason, not a Code default.**
+  - **What DID verify, so the amendment can be narrow.** The Q1 p0 formula is
+    **sound and its inputs reproduce**: l.150 reads *"the larger of 2× e2a's
+    +pole-attributable exclusion rate (7/112) and 1.5× its reward-arm rate
+    (10/112), rounded up to 0.15."* Measured from `sessions.jsonl`: **reward
+    arm 10/112 = 0.0893** exactly as cited, and the **+pole 7** matches the
+    verdict entry's pole-asymmetry line (*"reward +pole 7 vs −pole 3"*). So
+    2 × 0.0625 = 0.125, 1.5 × 0.0893 = 0.134, max = 0.134 → **0.15**. The
+    numerator/denominator mix (+pole count over whole-arm sessions) is
+    **explicitly labelled** in the formula and is not a slip — I checked it
+    rather than assuming it.
+  - **Also confirmed available and unblocked** (so only the two gaps bind):
+    `oracle.load_axis(48)` returns the frozen axis + R (R_48 = 103.01, so
+    f = 0.10 → α = 10.3010); `e0_random_dirs.npz['L48']` exists for the R arm;
+    `readout.choice_read(..., verify=True)` and `assert_construction_stable`
+    are in place; `session_e2a` carries the format at 200/200 Route-3
+    acceptance; `discrim` exposes `AUC_BAR` and every fit hyperparameter for
+    import-not-redeclare; `session.py` carries Tripwire / check_bars /
+    verify_firing / FeatureSpec / DescriptiveCounters. The e2b campaign's cell
+    builder at l.141–165 is the pattern D1 §1a names and it is readable as-is.
+  - **A third item, non-blocking, flagged for the same amendment.** The D1
+    block as relayed is **truncated mid-sentence at §3** (*"D1 session texts
+    pass session_e2a's format checks (name the"*). D1's acceptance list is
+    therefore incomplete on this side. The three acceptance items that did
+    arrive — KL = 0.0 exactly on every free-choice read (expect 48/48),
+    `statepresent` absent on every read, and session texts passing
+    `session_e2a`'s format checks — are unambiguous and will be honoured; the
+    remainder needs re-sending.
+  - **Nothing was run and nothing was written.** No `valence_core/e2d/`, no
+    forwards, no D1 artifact. The build resumes on a design amendment naming
+    (i) the roster, (ii) which audit rule, and (iii) the rest of §3.
+
 - 2026-08-25 — **Q2 CLOSED AS SCOPED (PI decision on the design-instance memo,
   approved 2026-08-25). ALL THREE PHASE-2 QUESTIONS ARE NOW CLOSED.**
   Whether any stage can read its own reward-marker **is not answerable on this
