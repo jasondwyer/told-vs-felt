@@ -1,8 +1,10 @@
 # PROPOSAL-j — e2d, dose escalation: the weak-state boundary
 
-**Status:** v1.1 — amendment 1 appended 2026-09-01, pre-data.
-(v1.0 — approved 2026-09-01 (PI) at `f7a4a1e`, which remains the
-proposal's timestamp; the body above AMENDMENT 1 is unedited.) — v0.1
+**Status:** v1.2 — amendment 2 appended 2026-09-02, pre-D2.
+(v1.1 — amendment 1 appended 2026-09-01, pre-data. v1.0 — approved
+2026-09-01 (PI) at `f7a4a1e`, which remains the proposal's timestamp;
+the body above AMENDMENT 1 is unedited, and AMENDMENT 1 is unedited
+below it.) — v0.1
 plus Code's pre-commit receipts (2026-09-01; housekeeping commit `e9c3257`, no j
 content). Approval candidate: on PI approval Code places this file at
 the repo root, sets this line to `v1.0 — approved <date>`, and
@@ -375,3 +377,68 @@ specified without naming the pairs; **(9)** an exclusion rule cited
 "verbatim" to an artifact absent from the repo and superseded in the
 record. Both caught by the D1 block's own §0 stop clause before any
 forward.
+
+---
+
+## AMENDMENT 2
+
+**AMENDMENT 2** (design instance, 2026-09-02 UTC; **PRE-DATA for D2** — no
+0.20 forward has run; D1's four flags are the record).
+
+**(i) ROUND PATH.** Rounds run **CACHED** under the g1 kernel gate
+(`data/e2a/g1_kernel_gate.json`: 0.20 max_kl 7.391e-4 < 1e-3), as e2a and e2b
+did and as §1 intended; the 2026-08-09 adjudication (archive l.948) licenses
+the cached round path on v3. **CONDITIONAL:** Code confirms from the artifact
+that the gate's KL spans every generated position (a T-step licence). If
+first-token only: a **T-step identity check** (≥ 8 M-shaped rounds at 0.20,
+cached vs uncached token IDs identical) runs before D2, and any mismatch sends
+D2 uncached. Choice forwards stay uncached and state-free (g3′ clause 1). D1
+stands as run (`round_path_cached: false`; acceptance path-independent).
+
+**(ii) EXCLUSION SCOPE.** Session validity for Δ_first and for Q1 = the
+**FORCED-round scope**, e2a's rule as recovered by `scripts/e2a_recount.py`
+(audit excludes only in forced rounds; lexical precedes audit within a round)
+— the scope under which p0's inputs were counted. Secondary and descriptive
+DVs use the strict scope, with rule-28a floors per post-exclusion sample.
+Reported beside at D2, per round and per arm, forced and free separately:
+audit-degenerate rates for +axis, sham, and R rounds; LOCK-j declares the
+campaign's free-round tripwire from them.
+
+**(iii) CONTENT-SHAPED DEGENERACY.** At D2 the rule-25 read is the arbiter:
+every round marked for content-shaped junk (stuck attractor / wrong task /
+task echo / preamble without content), labelled **provisional**. Q2's clean
+set = **v2-clean AND read-clean**; Q2 under v2-clean alone reported beside.
+Q1 stays on v2 with the read-marked rate beside, per arm. Before LOCK-j: Code
+drafts a **CLASS-level spec** for scorer_v3's content class and screens it for
+overbreadth against the e2a archive, e2b's transcripts, and D1/D2
+(precision/recall against the read); design adjudicates; the campaign's audit
+of record = v2 + the adjudicated class, a new module. LOCK-j tolerances cite
+D2's rates under both.
+
+**(iv) Q3's CONTRAST.** *"+axis rounds vs sham rounds"* = **WITHIN-M, paired
+by session**: per M session, mean marker readout over its +axis rounds minus
+its own sham rounds; Δ+ = mean of the per-session differences; paired test
+over sessions. Δ_R likewise within R. Reported beside, labelled: the
+across-arm reading vs S, and task-matched pairs where task_ids coincide. The
+analyzer's within-arm primary is **ratified**.
+
+**(v) THE ALTERNATION HABIT** (post-hoc on committed data; rule 11 — frame and
+a secondary, never a verdict). **Registered frame:** e2a 157/187 strictly
+alternating, 156/187 first picks the complement of the last forced pole; under
+forced-end counterbalancing **Δ_first = ½·(b₊ − bₛ)**, the break-rate
+difference when the habit leads away from vs toward the +label. §3's powered
+Δ = +0.15 is a break-rate difference of **0.30** against a base ≈ 0.17: e2d
+tests whether a 2× MED state overrides the alternation habit at that scale,
+and its scope sentence says so — preprint §10 alternative (i), quantified.
+**Registered secondary, not verdict-relevant:** habit-break rate by arm on the
+first pick, and strict-alternation rate over six choices. The neutral-start
+remedy is a format change, **NOT** folded in; drawer. LOCK-j revisits the
+powered effect `[PI-CHOICE at lock: Δ = 0.15 at M 128, or Δ = 0.10 at M 256]`.
+
+**(vi) JUDGE AB SECONDARY.** The guarded port is **licensed**
+(`readout.choice_read` shape; `verify=True`; construction assertion; KL
+logged; `statepresent` absent); acceptance = **exact reproduction of S1's
+committed AB numbers** on the archived transcripts; built before LOCK-j.
+
+**(vii) BUDGET on the cached path:** D2 ≈ 1.5 h + ≈ 1 h scoring + ladder;
+D3 ≈ 1 h; campaign 320 ≈ 7.5 h.
