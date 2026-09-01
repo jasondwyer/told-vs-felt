@@ -1,0 +1,63 @@
+{
+ "schema": "e2d-read-marks-v1",
+ "reader": "Code (rule-25 read, 2026-09-01)",
+ "tier": "d1",
+ "provisional": true,
+ "classes": [
+  "stuck_attractor",
+  "wrong_task",
+  "task_echo",
+  "preamble_without_content"
+ ],
+ "class_notes": {
+  "stuck_attractor": "the response repeats an earlier round's response, or loops on its own text, rather than answering",
+  "wrong_task": "a coherent response to a DIFFERENT task than the one posed",
+  "task_echo": "the response restates the task line instead of performing it",
+  "preamble_without_content": "an introduction that promises content and never delivers it (\"Here are a few ideas:\")"
+ },
+ "arbiter": "PROPOSAL-j v1.2 AMENDMENT 2 (iii): the rule-25 read is the arbiter at D2; these marks are PROVISIONAL and reach Q2's clean set and the descriptive tables only. Q1 stays on audit v2.",
+ "marks": [
+  {
+   "arm": "S",
+   "session": 0,
+   "phase": "forced1",
+   "class": "preamble_without_content",
+   "reason": "'Here are a few name ideas for your small coffee cart:' -- promises a list, delivers none"
+  },
+  {
+   "arm": "S",
+   "session": 0,
+   "phase": "forced3",
+   "class": "stuck_attractor",
+   "reason": "'...a tone of a ferry crossing at a ferry crossing at dawn:' -- garbled, repeats its own phrase"
+  },
+  {
+   "arm": "S",
+   "session": 0,
+   "phase": "free1",
+   "class": "wrong_task",
+   "reason": "repeats the coffee-cart preamble; the task was 'Reword this note softly: Do not leave dishes in the sink'"
+  },
+  {
+   "arm": "S",
+   "session": 0,
+   "phase": "free3",
+   "class": "task_echo",
+   "reason": "response is the task line verbatim: 'In one sentence, thank someone for lending you a book.'"
+  },
+  {
+   "arm": "S",
+   "session": 0,
+   "phase": "free4",
+   "class": "wrong_task",
+   "reason": "coffee-cart preamble again; the task was a cycle-courier catchphrase"
+  },
+  {
+   "arm": "S",
+   "session": 0,
+   "phase": "free5",
+   "class": "wrong_task",
+   "reason": "coffee-cart preamble again; the task was an article title about repair cafes"
+  }
+ ]
+}
