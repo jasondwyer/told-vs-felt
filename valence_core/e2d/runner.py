@@ -31,6 +31,7 @@ tokens only. Nothing is live while the menu or the choice is read.
 from __future__ import annotations
 
 import re
+import sys
 import time
 from typing import Callable, Sequence
 
@@ -135,7 +136,7 @@ def strict_exclusion(rec: dict) -> tuple[bool, str | None]:
 def run_session(adapter, arm: str, idx: int, cell: dict,
                 tasks: Sequence[dict], inj, audit, ban_ids: Sequence[int],
                 term_rx: Sequence[str], *, temp: float = TEMP,
-                scope: str = EXCLUSION_SCOPE,
+                scope: str = EXCLUSION_SCOPE, cached: bool = False,
                 on_read: Callable[[dict], None] | None = None) -> dict:
     """One e2d session.
 
@@ -189,7 +190,7 @@ def run_session(adapter, arm: str, idx: int, cell: dict,
         injs = [inj] if (inj is not None and pole == "pos") else []
         g = adapter.generate(transcript, seg, injections=injs, seed=seed,
                              temp=temp, max_tokens=STOP_CAP,
-                             ban_ids=ban_ids, cached=False)
+                             ban_ids=ban_ids, cached=cached)
         degen, lex = classify_response(g.text, audit, own)
         t = note_term(g.text, tag, f"forced{ri}")
         rounds.append({"phase": f"forced{ri}", "kind": "forced", "round": ri,
@@ -233,7 +234,7 @@ def run_session(adapter, arm: str, idx: int, cell: dict,
         injs = [inj] if (inj is not None and picked == "pos") else []
         g = adapter.generate(prefix, chosen, injections=injs, seed=seed,
                              temp=temp, max_tokens=STOP_CAP,
-                             ban_ids=ban_ids, cached=False)
+                             ban_ids=ban_ids, cached=cached)
         degen, lex = classify_response(g.text, audit, own)
         t = note_term(g.text, pick, f"free{ci}")
         choices.append({"phase": f"free{ci}", "kind": "free", "round": ci,
@@ -258,7 +259,7 @@ def run_session(adapter, arm: str, idx: int, cell: dict,
            "tag_plus": tp, "tag_minus": tm, "pair": list(cell["pair"]),
            "start_plus": bool(start_plus), "F": F,
            "excluded": bool(excluded), "exclude_reason": reason,
-           "exclusion_scope": scope,
+           "exclusion_scope": scope, "round_path_cached": bool(cached),
            "rounds": rounds, "choices": choices, "terminations": terms,
            "transcript": transcript,
            "n_rounds_generated": len(rounds) + len(choices),
@@ -290,7 +291,8 @@ def tally(counters: DescriptiveCounters, rec: dict) -> None:
 
 def run_campaign(adapter, arms_n: dict[str, int], tasks, inj_by_arm, audit,
                  ban_ids, term_rx, *, temp: float = TEMP,
-                 scope: str = EXCLUSION_SCOPE, seed: int = 20260901,
+                 scope: str = EXCLUSION_SCOPE, cached: bool = False,
+                 seed: int = 20260901,
                  progress: Callable[[str], None] = print) -> dict:
     """Run a fixed, pre-registered number of sessions per arm.
 
@@ -311,19 +313,23 @@ def run_campaign(adapter, arms_n: dict[str, int], tasks, inj_by_arm, audit,
             ts = time.time()
             rec = run_session(adapter, arm, i, cell, tasks,
                               inj_by_arm.get(arm), audit, ban_ids, term_rx,
-                              temp=temp, scope=scope,
+                              temp=temp, scope=scope, cached=cached,
                               on_read=lambda d: kls.append(d["verify_kl"]))
             dt = time.time() - ts
             per_session_seconds.append(dt)
             rec["seconds"] = dt
             tally(counters, rec)
             sessions.append(rec)
+            # flush: without it these lines sit in stdout's buffer until
+            # the process exits, and a long run looks hung from outside.
             progress(f"    [{arm}] s{i} {'EXCLUDED ' + str(rec['exclude_reason']) if rec['excluded'] else 'valid'}"
                      f"  {rec['n_reads']} reads  {dt:.0f}s")
+            sys.stdout.flush()
 
     return {"sessions": sessions, "counters": counters,
             "verify_kls": kls, "seconds": time.time() - t0,
-            "per_session_seconds": per_session_seconds}
+            "per_session_seconds": per_session_seconds,
+            "round_path_cached": bool(cached)}
 
 
 def as_e2a_row(rec: dict) -> dict:

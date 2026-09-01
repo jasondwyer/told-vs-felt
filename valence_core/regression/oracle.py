@@ -444,10 +444,71 @@ def check_choiceread(adapter, tag_ids) -> list[Result]:
 
 
 # --- driver ---------------------------------------------------------------
+def check_e2d_construction(adapter, tag_ids) -> list[Result]:
+    """(iv) e2d D1: choice-read construction KL = 0.0 on the committed D1
+    session texts, and the recorded reads reproduced from text alone.
+
+    The D1 run asserted this live, 42/42. That is a claim about a process
+    that has since ended; this is the claim about the ARTIFACT, and it is the
+    stronger one -- it says the committed transcript is sufficient to
+    regenerate the committed reads. A session file whose reads cannot be
+    rebuilt from its own text is not a record of anything.
+
+    NOTE ON THE ADAPTER. This check must NOT run on the rule-26 oracle's
+    `legacy_truncate=True` adapter. That flag exists to reproduce PUBLISHED
+    numbers, every one of which went through the 512-token tail window; e2d
+    runs full-session under CHOICE_WINDOW. Replaying e2d reads through the
+    legacy window would compare two different constructions and call the
+    difference a failure.
+    """
+    path = os.path.join(DATA, "e2d/d1_sessions.json")
+    if not os.path.exists(path):
+        return [Result("e2d D1 construction", "KL 0.0", "SKIP", False,
+                       note="data/e2d/d1_sessions.json absent -- a skip is a "
+                            "FAILURE, not a pass (trap 5)")]
+    art = json.load(open(path))
+    cases = []
+    for sess in art["sessions"]:
+        tx = sess["transcript"]
+        idx, start = [], 0
+        while (k := tx.find(CHOICE_MARKER, start)) != -1:
+            idx.append(k + len(CHOICE_MARKER))
+            start = k + 1
+        for ci, ch in enumerate(sess["choices"]):
+            if ci < len(idx):
+                cases.append((tx[:idx[ci]], ch))
+    n_expected = sum(len(s["choices"]) for s in art["sessions"])
+    print(f"  recovered {len(cases)} D1 choice points "
+          f"(artifact records {n_expected} reads)", flush=True)
+
+    n_kl_nonzero = n_pick_diff = 0
+    worst_pa = 0.0
+    for text, ch in cases:
+        read = choice_read(adapter, text, ch["menu_a"], ch["menu_b"], tag_ids,
+                           verify=True)
+        if read.verify_kl != 0.0:
+            n_kl_nonzero += 1
+        if read.pick != ch["pick"]:
+            n_pick_diff += 1
+        worst_pa = max(worst_pa, abs(read.p_a - ch["read"]["p_a"]))
+
+    n = len(cases)
+    return [
+        Result("e2d D1 choice-read verify KL", "0.0 on every read",
+               f"{n_kl_nonzero}/{n} nonzero", n_kl_nonzero == 0 and n > 0),
+        Result("e2d D1 every recorded read recovered", f"{n_expected}/{n_expected}",
+               f"{n}/{n_expected}", n == n_expected and n > 0),
+        Result("e2d D1 pick reproduced from text", f"{n}/{n}",
+               f"{n - n_pick_diff}/{n}", n_pick_diff == 0 and n > 0),
+        Result("e2d D1 p_a reproduced", "max |diff| <= 5e-4",
+               f"{worst_pa:.2e}", worst_pa <= 5e-4 and n > 0),
+    ]
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", default="all",
-                    choices=["all", "kernel", "b2b", "choiceread"])
+                    choices=["all", "kernel", "b2b", "choiceread", "e2d"])
     args = ap.parse_args()
 
     _banner("LEDGER 26 -- oracle-tier regression (Qwen, laptop)")
@@ -465,12 +526,15 @@ def main() -> int:
     tasks = ([json.loads(l) for l in open(tasks_p) if l.strip()]
              if os.path.exists(tasks_p) else [])
     tag_ids = {}
+    # e2a's eight, plus the three h-roster tags e2a never used. e2d runs on
+    # the h-roster (AMENDMENT 1 (i)), so a list frozen at e2a's roster would
+    # KeyError on the first ridge/saddle read rather than checking it.
     for w in ["slate", "prism", "maple", "cedar", "granite", "lattice",
-              "plaza", "saddle"]:
+              "plaza", "saddle", "velvet", "walnut", "ridge"]:
         enc = adapter.encode(" " + w, add_special_tokens=False)
         if len(enc) == 1:
             tag_ids[w] = enc[0]
-    print(f"single-token tags: {len(tag_ids)}/8  "
+    print(f"single-token tags: {len(tag_ids)}/11  "
           f"e2a tasks: {len(tasks)}", flush=True)
 
     results: list[Result] = []
@@ -487,6 +551,11 @@ def main() -> int:
     if args.check in ("all", "b2b"):
         _banner("(ii) B2b reproduction -- paired per-probe TOST + verdict preservation")
         results += check_b2b(adapter)
+    if args.check in ("all", "e2d"):
+        _banner("(iv) e2d D1 construction on the committed session texts")
+        # Its own adapter, deliberately: see check_e2d_construction's docstring.
+        e2d_adapter = QwenMLXAdapter()
+        results += check_e2d_construction(e2d_adapter, tag_ids)
 
     _banner("RULE 26 VERDICT")
     width = max(len(r.name) for r in results) + 2

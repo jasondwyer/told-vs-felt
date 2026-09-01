@@ -1,0 +1,39 @@
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/e2d_sessions.py --tier d1 --out data/e2d/d1_sessions.json
+  declared bars verified to fire AND to stay silent: scaffold_absorption, template_breakage, round_degeneracy (7 cases, all ran)
+  audit of record: e2b_audit_v2.json sha16 7aa235d25eeb66dc (9 fragments, 4 junk patterns, 12 ban strings)
+  exclusion scope: 'e2a'  precedence: audit-first (rule 28b, via session.classify_response)
+  roster of record (AMENDMENT 1 i): granite/plaza, prism/slate, velvet/walnut, ridge/saddle
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 9824.37it/s]
+  model loaded in 6s
+  dose: L48  R_l = 103.01  frac 0.1  alpha 10.3010
+  +axis direction sha16 3c17b0d8fbcad716
+  R arm direction: e0_random_dirs.npz['L48'] sha16 7be5db23d9224375  (file sha16 dc0ef0fd3a8a8d49)  alpha 10.3010
+  NO NEGATIVE POLE is constructed anywhere (PROPOSAL-j §6)
+  D1 n = {'M': 4, 'S': 2, 'R': 2} (registered; no top-ups, rule 24)
+    [M] s0 valid  6 reads  553s
+    [M] s1 valid  6 reads  473s
+    [M] s2 valid  6 reads  401s
+    [M] s3 valid  6 reads  409s
+    [R] s0 valid  6 reads  340s
+    [R] s1 EXCLUDED lexical:ridge@forced1  0 reads  22s
+    [S] s0 valid  6 reads  429s
+    [S] s1 valid  6 reads  314s
+  marker instrument rebuilt: G = 0.315550 (bar 0.5*G = 0.1578); 12 probes
+      marker: 120 forwards 66s
+      marker: 240 forwards 132s
+      marker: 360 forwards 196s
+      marker: 480 forwards 260s
+      marker: 600 forwards 323s
+      marker: 720 forwards 389s
+      marker: 840 forwards 453s
+
+==========================================================================
+  ACCEPTANCE: PASS
+    KL: 42/42 reads exactly 0.0 (expected 42); max 0.0
+    statepresent absent: True
+    format (session_e2a.verify_archived_session): 8/8 reconstructed, 8 seed streams matched
+    bars fired: none
+    M: 0/4 excluded (run scope e2a); 0/4 under the strict scope
+    R: 1/2 excluded (run scope e2a); 1/2 under the strict scope
+    S: 0/2 excluded (run scope e2a); 0/2 under the strict scope
+  wrote data/e2d/d1_sessions.json  (2939s, 367s/session)

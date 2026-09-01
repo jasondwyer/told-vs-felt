@@ -70,6 +70,13 @@ def main() -> int:
     ap.add_argument("--scope", choices=("e2a", "e2b"),
                     default=C.EXCLUSION_SCOPE)
     ap.add_argument("--degeneracy-p0", type=float, default=0.02)
+    ap.add_argument("--round-path", choices=("gate", "cached", "uncached"),
+                    default="gate",
+                    help="'gate' consults data/e2a/g1_kernel_gate.json exactly "
+                         "as e2a and e2b do -- pass at this frac unlocks the "
+                         "cached ROUND path (choice forwards stay uncached and "
+                         "state-free regardless, g3' clause 1). D1 RAN UNDER "
+                         "'uncached', before this flag existed; see the entry.")
     ap.add_argument("--no-marker", action="store_true",
                     help="skip the marker readout (the ~10 min half)")
     ap.add_argument("--out", default=None)
@@ -134,11 +141,38 @@ def main() -> int:
     rand_inj = Injection.at_frac(rand_u, args.layer, args.frac, R)
     print(f"  dose: L{args.layer}  R_l = {R[args.layer]:.2f}  "
           f"frac {args.frac}  alpha {axis_inj.alpha:.4f}", flush=True)
-    print(f"  +axis direction sha16 {axis_inj.direction_sha}", flush=True)
+    # TWO CONVENTIONS, both printed, because the receipt in the record uses
+    # the other one and a reader who checks will otherwise think the axis
+    # moved. Injection.at_frac casts to float64 before hashing; the committed
+    # receipt hashes the unit direction AS STORED, in float32 (trap 17).
+    from valence_core.adapters.base import sha16_arr as _sha
+    _u32 = (rw / np.linalg.norm(rw)).astype(np.load(
+        os.path.join(DATA, "e0/e0_axes.npz"))["span_reward"].dtype)
+    print(f"  +axis direction sha16 {axis_inj.direction_sha} (float64, as "
+          f"Injection hashes it) == {_sha(_u32)} (as stored, float32 -- the "
+          f"receipt's convention); ||v|| = {float(np.linalg.norm(rw)):.6f}",
+          flush=True)
     print(f"  R arm direction: e0_random_dirs.npz[{C.RANDOM_DIRS_KEY!r}] "
           f"sha16 {rand_inj.direction_sha}  (file sha16 "
           f"{sha16_file(rz_path)})  alpha {rand_inj.alpha:.4f}", flush=True)
     print(f"  NO NEGATIVE POLE is constructed anywhere (PROPOSAL-j §6)",
+          flush=True)
+
+    # Round path. e2a set use_cached_rounds from this same artifact, e2b
+    # reads it identically, and the 2026-08-09 adjudication carried it across
+    # the v3 template change on the stated ground that the kernel gate is a
+    # path-equivalence property of prefix-conditional forwards, not of the
+    # sampled-text distribution. Choice forwards are uncached and state-free
+    # regardless -- that is g3' clause 1 and it is not negotiable here.
+    g1 = json.load(open(os.path.join(DATA, "e2a/g1_kernel_gate.json")))
+    g1row = g1["results"].get(str(args.frac))
+    gate_says = bool(g1row and g1row["pass"])
+    cached = {"gate": gate_says, "cached": True, "uncached": False}[args.round_path]
+    print(f"  round path: {'CACHED' if cached else 'UNCACHED'} "
+          f"(--round-path {args.round_path}; g1 artifact at frac {args.frac}: "
+          f"pass={gate_says}, max_kl="
+          f"{g1row['max_kl'] if g1row else 'n/a'}, family "
+          f"{g1['template_family']}); choice forwards uncached regardless",
           flush=True)
 
     inj_by_arm = {"M": axis_inj, "S": None, "R": rand_inj}
@@ -147,7 +181,8 @@ def main() -> int:
 
     # --- run --------------------------------------------------------------
     res = run_campaign(adapter, arms_n, tasks, inj_by_arm, audit, ban_ids,
-                       term_rx, temp=args.temp, scope=args.scope)
+                       term_rx, temp=args.temp, scope=args.scope,
+                       cached=cached)
     sessions, counters = res["sessions"], res["counters"]
 
     # --- acceptance, COMPUTED BEFORE ANY ARTIFACT IS WRITTEN (trap 6) ----
@@ -223,6 +258,7 @@ def main() -> int:
         and fmt["all_ok"] and not fired)
 
     # --- marker readout (1e) and readability (1d), both descriptive at D1 -
+    t_marker0 = time.time()
     marker_out = None
     if not args.no_marker:
         instruments, g = MK.instruments_or_stop()
@@ -245,6 +281,8 @@ def main() -> int:
                       "deltas": d,
                       "_descriptive": "D1 n = 8. No Q3 criterion applies."}
 
+    marker_seconds = time.time() - t_marker0
+    t_read0 = time.time()
     read_out = None
     try:
         rounds_M = RD.clean_rounds(sessions, "M")
@@ -262,6 +300,12 @@ def main() -> int:
                         "n_clean_neg": len(rounds_M["neg"])}
     except SystemExit as exc:
         read_out = {"error": str(exc)}
+
+    read_seconds = time.time() - t_read0
+    if isinstance(read_out, dict):
+        read_out["seconds"] = read_seconds
+    if isinstance(marker_out, dict):
+        marker_out["seconds"] = marker_seconds
 
     # --- write the artifact, verdict already computed ---------------------
     out = {
@@ -289,6 +333,11 @@ def main() -> int:
                   "direction_sha": rand_inj.direction_sha,
                   "file_sha16": sha16_file(rz_path)}},
         "no_negative_pole": True,
+        "round_path_cached": bool(cached),
+        "round_path_source": args.round_path,
+        "axis_sha_float64": axis_inj.direction_sha,
+        "axis_sha_as_stored_float32": _sha(_u32),
+        "axis_norm": float(np.linalg.norm(rw)),
         "ban_list": {"n_ids": len(ban_ids), "n_strings": len(ban_strings)},
         "declared_bars": [b.__dict__ for b in bars],
         "firing_cases": [list(c) for c in C.FIRING_CASES],
@@ -303,7 +352,10 @@ def main() -> int:
         "features_rule28a": feature_report,
         "marker": marker_out,
         "readability": read_out,
-        "wall_clock": {"total_s": res["seconds"],
+        "wall_clock": {"generation_s": res["seconds"],
+                       "marker_s": marker_seconds,
+                       "readability_s": read_seconds,
+                       "total_s": res["seconds"],
                        "per_session_s": res["per_session_seconds"],
                        "mean_session_s": (float(np.mean(
                            res["per_session_seconds"]))

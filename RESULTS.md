@@ -21,6 +21,259 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-01 — **e2d D1 — HARNESS ACCEPTANCE: PASS on every item. 8 sessions
+  at f = 0.10, n = M 4 / S 2 / R 2. KL exactly 0.0 on 42/42 free-choice reads;
+  `statepresent` absent at every read; 8/8 sessions reconstruct byte-for-byte
+  with all 8 seed streams matched; no bar fired; no traceback. Suite 137 →
+  148, plus a new oracle criterion (iv). FOUR FLAGS, none of which stops D1
+  and two of which bind before D2: the exclusion scope, the round path
+  (D1 ran UNCACHED where e2a and e2b both ran CACHED — a 4.4× cost), an audit
+  blind spot the full read found and audit v2 scored 0 on, and a choice-
+  alternation habit that carries 83% of e2a's own primary DV.**
+  (Site: laptop, AC power, `caffeinate -is`, one model process, suite 148/148.
+  Module + analyzer committed BEFORE the run at `4e41288`; D1 ran that code.
+  Artifact [`data/e2d/d1_sessions.json`](data/e2d/d1_sessions.json); raw
+  [`2026-09-01_e2d_d1.txt`](results/raw/2026-09-01_e2d_d1.txt).
+  PROPOSAL-j v1.1 `70995c0`.)
+
+  - **ACCEPTANCE, item by item.** Every item the D1 block names, and the
+    named check for each.
+    - **KL = 0.0 exactly on every free-choice read: 42/42, max 0.0.** The
+      block expects "48/48"; 48 assumes eight sessions × six free choices,
+      and R s1 was excluded at forced round 1 before reaching any choice.
+      **42 is the whole population of reads that existed**, not a subsample:
+      `kl_reads_logged` 42 = `kl_reads_expected` 42, asserted equal rather
+      than compared by eye (trap 5 — a read that never happened must not
+      read as a read that passed).
+    - **`valence_core.e2b.statepresent` absent on every read.** Asserted at
+      startup, before each of the 42 reads, and again after the campaign.
+      The suite adds the structural half: it is never IMPORTED anywhere in
+      `valence_core/e2d/` (searched as an import statement, since the
+      runner's docstring names it deliberately).
+    - **Format check, named: `session_e2a.verify_archived_session`** — the
+      same positional byte-for-byte scaffolding walk that reconstructs all
+      200 archived e2a sessions. **8/8 reconstructed, 8/8 seed streams
+      matched.** The seed-stream half is the stronger statement: a replay
+      landing on the recorded per-round seeds cannot be off by a draw.
+    - **Tripwires `verify_firing`: 7 cases, all ran, all as declared.** Each
+      of the three bars is exercised in BOTH directions and the runner
+      refuses to start if any bar is missing a direction — a bar that is
+      never made to fire has not been checked.
+    - **No bar fired. No raw traceback. No verdict content.**
+  - **Counters (rule 23, over all 8 sessions including the excluded one).**
+    audit-degenerate **0**; lexical **1**; cap-hits **0/72 rounds**;
+    termination attempts **0**; post-choice degeneracy **0**; low-label-mass
+    **4/42 choices = 0.095** (e2a's convention is p0 = 0.20 on choices,
+    pooled, so this is well inside). Every one of the 72 generations stopped
+    on a newline — the stop discipline held on all of them.
+  - **Exclusions: 1/8, and both scopes agree at D1.** R s1,
+    `lexical:ridge@forced1` — the model emitted its own config tag
+    (*"Ridge - Slogan: \"Ridge: Where style meets speed on two wheels.\""*),
+    which is exactly what the lexical rule is for. M **0/4**, S **0/2**,
+    R **1/2**. Under the strict ("e2b") scope: identical, 0/4, 0/2, 1/2.
+    Descriptively against e2a's 0.10 archive (reward-arm 8.9%): 0/4 on the
+    M arm is uninformative at this n and is reported as such.
+  - **Wall clock, and it does not match the proposal's budget.** Generation
+    **2,939 s for 8 sessions = 367 s/session** (mean over all eight; the
+    seven that ran to completion average 417 s). Marker readout **864 probe
+    forwards over 72 generations ≈ 466 s** (0.54 s/forward). Readability
+    ladder ≈ 441 s (by subtraction from the 3,846 s total; the script now
+    times each phase directly). **PROPOSAL-j §7 budgets D1 at ≈ 20 min; it
+    took 64.** The cause is the round path, next flag.
+
+  - **FLAG 1 — ROUND PATH. D1 ran UNCACHED. e2a and e2b both ran CACHED, and
+    the proposal says "everything else is e2a".** This is my deviation, not
+    the proposal's, and I did not notice it until the budget came in 3×
+    over.
+    - e2a set `use_cached_rounds = g1["results"][str(frac)]["pass"]` and the
+      gate passes at both fracs (`data/e2a/g1_kernel_gate.json`: 0.10 →
+      max_kl **7.106e-4**, 0.20 → **7.391e-4**, bar 1e-3 — the rule-26
+      numbers). e2b reads the identical artifact; **every committed e2b
+      artifact records `round_path_cached: true`** (h1, h1u, h2,
+      verdict_campaign).
+    - I checked whether that was a rule-2 gap, because the gate artifact is
+      stamped `template_family: v2` and e2b ran on v3. **It is not a gap:**
+      the 2026-08-09 adjudication (archive l.948) says *"g1r stands
+      unchanged — kernel gate is a path-equivalence property of
+      prefix-conditional forwards, not of the sampled-text distribution
+      (rationale on record)"*. The cached ROUND path is licensed on v3.
+      Choice forwards stay uncached and state-free regardless — that is g3′
+      clause 1 and e2d never touches it.
+    - **Cost of the deviation:** 367 s/session against e2b's H2 measured
+      **83.8 s/session** cached (32 sessions in 2,682 s) — **4.4×**. At D2's
+      n = 64 that is **≈ 6.5 h uncached against ≈ 1.5 h cached**, versus the
+      proposal's budgeted 2.2–2.7 h.
+    - **D1's acceptance is unaffected** and I am not proposing a re-run: every
+      acceptance item is path-independent (KL is a property of the choice
+      forward, which was uncached in both worlds; the format walk is over
+      harness-written bytes; the bars did not fire), and D1 produced no
+      verdict content. The script now takes `--round-path {gate,cached,
+      uncached}` defaulting to **`gate`** — consulting the g1 artifact
+      exactly as e2a and e2b do — and prints the decision with the gate's own
+      max_kl. **D1's artifact records `round_path_cached: false`.** Design
+      may of course prefer uncached for D2; it should be a choice, which it
+      was not here.
+  - **FLAG 2 — EXCLUSION SCOPE, restated because D1 did not settle it.**
+    AMENDMENT 1 (ii) names the audit artifact, not whether an
+    audit-degenerate FREE round excludes. Both scopes gave the same answer at
+    D1 (1/8) because the one exclusion was lexical and in a forced round —
+    **agreement at n = 8 is not evidence they agree**. On the e2a archive
+    they give 10/112 = 0.089 and 18/112 = 0.161, and against Q1's p0 = 0.15
+    at D2's n = 32 (fires at ≥ 9/32, p = .0413) the probability of Q1 firing
+    on a healthy apparatus is **0.0015** under the first and **0.0602** under
+    the second. Design settles it before D2.
+  - **FLAG 3 — THE FULL READ FOUND DEGENERACY THE AUDIT OF RECORD SCORED
+    ZERO ON, and it is the FINDINGS-5 §3 pattern in a new shape.** Rule 25's
+    read of all eight transcripts turned up **S s0**, which audit v2 passed
+    entirely (`excluded: false`, 0 audit flags) and which is junk in **6 of
+    its 10 rounds**:
+    - rounds 2, 6, 9, 10 are all *"Here are a few name ideas for your small
+      coffee cart:"* — a preamble that never delivers content, and in rounds
+      6, 9 and 10 **it answers the wrong task entirely** (round 6's task was
+      *"Reword this note softly: Do not leave dishes in the sink"*). It is a
+      stuck attractor on round 2's response.
+    - round 4 is *"Here are a few caption ideas for your photo of a tone of a
+      ferry crossing at a ferry crossing at dawn:"* — garbled and repeating.
+    - round 8's response is the **task line echoed verbatim**: *"In one
+      sentence, thank someone for lending you a book."*
+    - **Why v2 missed all of it:** v2's four junk patterns are banner
+      terminators, bracketless round headers, config-role phrases and
+      config-then-bracket. Every one is SCAFFOLD-shaped. This degeneracy is
+      CONTENT-shaped — preamble-without-content, wrong-task attractor, task
+      echo — and no fragment or pattern reaches it. The audit built to catch
+      the last blind spot does not catch this one.
+    - **It is in the SHAM arm**, where no state exists anywhere, so it is an
+      apparatus base rate and carries no information about the axis. Two
+      further hits (M s0 forced0, R s1 forced0) came from a quick two-test
+      screen I wrote to count this, and **both are arguable** — one is a
+      legitimate short answer that happens to be a substring of its task.
+      **I am reporting a detection, not proposing a rule:** v2 itself was
+      screened for overbreadth against a 2,170-response pool before adoption,
+      and nothing here has been. The finding is that **a screen is needed**;
+      `data/configs/scorer_v3_spec.json`'s six-class taxonomy is the natural
+      home for the class, and the standing instruction there — specify over
+      the CLASS, not the observed construction, because v1 and v2 each fixed
+      the instance and missed the class — applies exactly.
+    - **Consequence for D2 if unaddressed:** Q1's exclusion rate misses this
+      mode entirely, and Q2's "audit-clean rounds" are not clean — rule
+      28(b)'s tolerant-counter-first ordering only helps for junk the
+      tolerant counter can see.
+  - **FLAG 4 — THE MODEL ALTERNATES, AND IT CARRIES MOST OF THE PRIMARY DV.
+    Inherited from e2a, not introduced here.** In D1, **6 of 7** valid
+    sessions alternate strictly on every one of the six free choices, and in
+    **7 of 7** the first free pick is the complement of the last forced
+    round's pole. I checked the archive before saying anything, and the same
+    structure is in the published corpus: **157/187 = 84.0%** of e2a sessions
+    alternate strictly (reward 82.7%, sham 86.8%, random1 91.3%, random2
+    77.3%), and **156/187 = 83.4%** have the first free pick complementing
+    the last forced pole. D1 sits inside that; **nothing about e2d's harness
+    produced it.**
+    - **Post-hoc, on committed data, and labelled post-hoc (rule 11 — this
+      licenses a pre-registration, never a verdict):** splitting e2a's
+      reward arm on alternation, the published primary is carried almost
+      entirely by the sessions that break the habit —
+
+      | e2a reward arm | n | first-pick +pole | Δ_first | p (one-sided) |
+      |---|---|---|---|---|
+      | alternating | 84 | 43/84 = .5119 | **+0.0119** | .457 |
+      | non-alternating | 18 | 12/18 = .6667 | **+0.1667** | .119 |
+      | **all (published)** | **102** | **55/102 = .5392** | **+0.0392** | **.244** |
+
+    - **What this does and does not mean.** It does **not** overturn e2a's
+      null: neither subgroup is significant, and the non-alternating
+      subgroup's Δ is an 18-session post-hoc split. What it means is that
+      **Δ_first's variance is largely spent on a mechanical habit**: in ~83%
+      of sessions the first free pick is what the forced block's phase
+      predicts, and since forced-end is counterbalanced those sessions
+      contribute ~0 to Δ_first in expectation. The registered DV is being
+      read through an instrument most of whose dynamic range is already
+      committed.
+    - **Why it matters now:** PROPOSAL-j §3 sizes M = 128 for one-sided power
+      ≈ 0.9 at Δ = +0.15, and that arithmetic assumes each session's first
+      choice is free to move. It also names an alternative the record has not
+      considered — whether the state changes **the rate at which the habit
+      breaks**, and toward which label — which is a different DV from the one
+      registered and is **not** proposed here. Design's call, before LOCK-j.
+  - **Marker readout (1e), descriptive — and the two readings of "sham
+    rounds" DISAGREE IN SIGN, so the ambiguity is now demonstrated rather
+    than hypothetical.** Instrument rebuilt with **G = 0.315550** against the
+    pre-registered 0.3156 (bar 0.5·G = **0.1578**); 72 generations scored, 0
+    skipped, **864 probe forwards**.
+
+    | contrast | clean rounds | all rounds |
+    |---|---|---|
+    | **Δ+ within M** (M steered vs M's own unsteered) | **−0.2394** | −0.2394 |
+    | **Δ_R within R** | +0.2713 | −0.3151 |
+    | Δ+ vs the S arm | +1.4988 | +1.4988 |
+    | Δ_R vs the S arm | +0.9147 | +0.3283 |
+
+    - The within-arm reading (the one the §7 budget implies, since "480 D2
+      generations" is M + R and excludes S) gives Δ+ **negative** — V1's
+      overdose signature — at the MINIMUM effective dose. The across-arm
+      reading gives +1.50, nine times the bar, in the opposite direction.
+    - **I do not think either number means anything yet**, and the reason is
+      concrete: n is 20 steered vs 20 unsteered rounds from four M sessions,
+      Δ_R flips sign between clean and all-rounds on 5–6 rounds, and the
+      across-arm reading is contaminated by S s0 — six of the S arm's twenty
+      rounds are the degenerate attractor text of FLAG 3, and the S arm is
+      the entire comparison set for that column. That is enough to explain a
+      +1.5 on its own.
+    - **What Design owes D2 is the reading, not the number:** Q3's sign is
+      determined by which contrast "+axis rounds vs sham rounds" names. The
+      analyzer computes the within-arm reading as primary and carries the
+      across-arm one beside it, both labelled, so whichever is named the
+      other is still in the artifact.
+  - **Readability wrapper (1d), descriptive.** Resampled clean-round ladder,
+    k = 2, B = 20, seeded through `discrim.seed_for`, on 20 clean +axis and
+    20 clean sham rounds from the four M sessions: **median 0.583, 10th
+    percentile 0.494, range 0.426–0.793.** Under Q2's bars (median ≥ .70,
+    10th pct ≥ .60) this would not pass — **and it is not a Q2 reading**: it
+    is four sessions over eight task ids at HALF the D2 dose, run to exercise
+    the wrapper end to end, which it did. Worth one line of foresight only:
+    that spread (.43–.79) is the shape of the g2r pattern the criterion was
+    built to fail, so D2's Q2 is where the instrument earns its keep.
+  - **Two provenance notes.** (a) The run header printed the +axis direction
+    as sha16 `3c17b0d8fbcad716`, which is **not** the receipt's
+    `127fc297b6623e44`. Same vector: ‖v‖ = **16.706271** matches the
+    receipt's 16.7063 exactly, and `127fc297b6623e44` is the unit direction
+    hashed **as stored** in float32 while `Injection.at_frac` casts to
+    float64 first — trap 17's class, in the other direction. The script now
+    prints both conventions and the artifact records both. (b) `run_campaign`
+    printed progress without flushing, so the run looked hung from outside
+    for its whole first hour; fixed.
+  - **Suite.** 137 → **148** model-free checks, plus a new oracle criterion
+    **(iv)**: the committed D1 session texts replayed through `choice_read`
+    — **4/4 PASS** (raw
+    [`2026-09-01_e2d_oracle_iv.txt`](results/raw/2026-09-01_e2d_oracle_iv.txt)):
+    all 42 recorded reads recovered from the transcripts alone, **0/42
+    nonzero KL**, 42/42 picks reproduced, and p_a reproduced to
+    **0.00e+00** — exactly, not within tolerance. It builds its OWN adapter
+    deliberately — the rule-26
+    oracle runs `legacy_truncate=True` to reproduce published numbers through
+    the 512-token tail window, and e2d runs full-session, so replaying e2d
+    reads through the legacy window would compare two constructions and call
+    the difference a failure.
+  - **Reads for LOCK-j (item 4).**
+    - **A guarded model-as-judge AB read does not exist; it is a PORT, and a
+      small one.** `scripts/s1_judge_rescue.py:106` is the only place in the
+      tree that still builds `QwenMLXAdapter()` directly instead of through
+      `qwen_or_explain` — but that is the lesser half. Its AB read is a raw
+      `adapter.forward(...)` plus a softmax over " A"/" B": **no
+      `verify=True`, no `assert_construction_stable`, no KL logged, no
+      `assert_modules_absent`.** `readout.choice_read` is already exactly
+      this shape — two labels, a label→token-id map, restricted and
+      renormalized, with `label_mass` and `top1_is_label` logged beside the
+      pick — so the port is a few lines and would strictly gain the
+      diagnostics S1 currently has no way to report. **Not built:**
+      instruments are not built speculatively, and PROPOSAL-j §3 makes the
+      judge secondary conditional on a guarded path existing by LOCK-j.
+    - **Q1's inputs recounted under v2 — the amendment is confirmed on every
+      figure**, reported in full in the entry above (`256c465`): reward arm
+      **11/112**, +pole **8**, maximum **0.1473**, p0 = 0.15 unchanged.
+  - **What is NOT here.** No D2 content, no 0.20 forward, no negative pole
+    constructed anywhere in the run, no verdict. `scripts/e2d_d2_analyze.py`
+    is committed and stub-smoked (34 branches) but has evaluated nothing.
+
 - 2026-09-01 — **PROPOSAL-j AMENDMENT 1 appended (`70995c0`): both D1 gaps
   closed by the design instance, pre-data. Roster of record = the h-roster;
   audit rule of record = `e2b_audit_v2.json`; p0 = 0.15 unchanged. Code
