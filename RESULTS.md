@@ -21,6 +21,61 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-02 — **S1 k = 1 RE-READ, delivered for the review round. READS ONLY,
+  no adjudication. Every claim checks out against the committed table: S1's
+  verdict entry evaluates all eight cells against the k = 2 parity anchor
+  (.759) ONLY, while its own pre-scoring entry registered a k = 1 anchor of
+  .645 that no cell is ever compared to. Against that registered anchor,
+  2 of the 4 k = 1 cells exclude it; against .633 (the v3-family figure),
+  1 of 4. And the entry's CIs are WILSON, not Clopper-Pearson — confirmed to
+  <6e-4 on all five cells checked.**
+  (Reading [`RESULTS.md`](RESULTS.md) l.5601 (S1 verdict) and l.5717
+  (pre-scoring anchors) against
+  [`data/e2a/s1_judge_rescue.json`](data/e2a/s1_judge_rescue.json). Carried
+  from the 2026-09-01 block, where it lived only in a handoff section since
+  rewritten — so it is entered here, in the record, rather than left in an
+  orientation document.)
+
+  - **The CI convention.** The published intervals are Wilson. Spot-checked on
+    five cells at n = 64: `better k1 zeroshot` 31/64 → Wilson [.366, .604]
+    matches the entry exactly, Clopper-Pearson would be [.358, .613]; same
+    pattern on `better k1 fewshot`, `detection k1 zeroshot`,
+    `detection k1 fewshot` and `detection k2 fewshot`. Not a defect — Wilson
+    is a defensible choice at this n — but the entry does not say which it
+    used, and the two differ by ~0.01 at the bounds, which is the scale the
+    exclusion calls are made on.
+  - **The anchor that was registered and never used.** The pre-scoring entry
+    registers three: chance .500, **probe k = 1 .645**, probe k = 2 parity
+    .759. The verdict entry's headline is *"every cell's 95% CI EXCLUDES
+    probe-k=2 parity (.759)"* — true, and it is true of the k = 1 cells too.
+    But comparing a k = 1 judge cell to the k = 2 probe compares across rungs.
+    Against the k = 1 probe anchor, on the entry's own published intervals:
+
+    | k = 1 cell | acc | Wilson CI | vs .633 (v3) | vs .645 (registered) |
+    |---|---|---|---|---|
+    | better k1 zeroshot | .484 | [.366, .604] | **excludes** | **excludes** |
+    | better k1 fewshot | .516 | [.396, .634] | includes | **excludes** |
+    | detection k1 zeroshot | .562 | [.441, .677] | includes | includes |
+    | detection k1 fewshot | .547 | [.426, .663] | includes | includes |
+    | | | | **1 of 4** | **2 of 4** |
+
+  - **What this does and does not touch.** It does **not** overturn S1's
+    registered reading. No cell clears chance, which is the load-bearing half,
+    and that is unaffected. What it qualifies is the *strength* of the second
+    half: "the judge cannot reach probe parity" is 8-of-8 against the k = 2
+    anchor and 2-of-4 at k = 1 against the k = 1 anchor. Rung-matched, the
+    separation at k = 1 is equivocal rather than clean.
+  - **Why it matters beyond S1.** PROPOSAL-j §0.4 records that **k = 1 is the
+    stable rung** (.633/.645 across the ban) and that k = 2's .759 inverted to
+    .448 in the transfer spotcheck with `g2r_stands: false`. So the anchor S1
+    evaluates everything against is the one the proposal treats as
+    refit-dependent, and the anchor it registered but never used is the stable
+    one. That is the review round's business, not this entry's.
+  - **No adjudication, and nothing is proposed.** No number is recomputed, no
+    artifact is touched, no wording is changed. Design decides whether the
+    k = 1 comparison enters the S1 write-up and how paper 1 words the
+    recognition break.
+
 - 2026-09-02 — **e2d D2 LAUNCHED AND STOPPED AT 9/64 — a POWER fault on the
   laptop, not a defect in the design or the harness. The machine is on a 20 W
   adapter; under sustained GPU load it ran a large net deficit, the battery
