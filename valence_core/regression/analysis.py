@@ -18,6 +18,7 @@ import json
 import os
 import re
 import sys
+import zlib
 from dataclasses import dataclass
 
 import numpy as np
@@ -1159,6 +1160,7 @@ def run_all() -> list[Check]:
     checks += check_e2d_analyzer()
     checks += check_oracle_write_guard()
     checks += check_e2d_amendment2()
+    checks += check_e2d_resume()
     return checks
 
 
@@ -1551,6 +1553,84 @@ def check_e2d_amendment2() -> list[Check]:
                   "AMENDMENT 2 (i) conditional",
                   "not a T-step licence", f"T-step={tstep}", tstep is False))
     return out
+
+
+def check_e2d_resume() -> list[Check]:
+    """A checkpointed run resumes to the SAME sessions, and refuses a
+    different schedule.
+
+    D2's first launch died at 9 sessions of 64 with nothing on disk, because
+    the runner wrote its artifact only at the end. Checkpointing fixes that,
+    and the fix is only worth having if resuming reproduces the run rather
+    than a near-copy of it -- so this asserts byte-identical transcripts, not
+    merely the same session count.
+
+    Model-free: a stub adapter supplies deterministic generations, which is
+    enough because what is under test is the loop's bookkeeping, not the
+    model. Runs in milliseconds and stays in the model-free tier.
+    """
+    import tempfile
+    from ..adapters.base import ForwardResult, GenerateResult
+    from ..e2d import config as _C
+    from ..e2d.runner import run_campaign
+    from ..session_e2a import load_tasks
+
+    V = 64
+
+    class _Stub:
+        CHOICE_WINDOW = 8192
+
+        def encode(self, text, add_special_tokens=True):
+            return [zlib.crc32(text[i:i + 3].encode()) % V
+                    for i in range(0, max(3, len(text)), 7)][:64] or [1]
+
+        def assert_choice_window(self, n, where=""):
+            pass
+
+        def forward(self, ids, capture_layers=(), injections=()):
+            lg = np.zeros(V)
+            lg[ids[0] % V] = 1.0
+            return ForwardResult(logits=lg, acts={})
+
+        def generate(self, prefix, seg, injections=(), seed=None, temp=0.0,
+                     max_tokens=60, ban_ids=(), cached=False,
+                     stop_newline=True):
+            return GenerateResult(text=f"resp{seed % 97}", token_ids=[1, 2, 3],
+                                  first_logits=np.zeros(V), cap_hit=False,
+                                  stop_reason="newline")
+
+    tasks = load_tasks(os.path.join(DATA, "corpus/e2a_tasks.jsonl"))
+    audit, _ = _C.load_audit()
+    ck = os.path.join(tempfile.mkdtemp(), "d.json.checkpoint")
+    arms_n, inj = {"M": 4}, {"M": None}
+
+    r1 = run_campaign(_Stub(), arms_n, tasks, inj, audit, [], [],
+                      checkpoint_path=ck, progress=lambda m: None)
+    d = json.load(open(ck))
+    d["sessions"] = d["sessions"][:2]                 # simulate the crash
+    n2 = sum(len(x["choices"]) for x in d["sessions"])
+    d["verify_kls"] = d["verify_kls"][:n2]
+    d["per_session_seconds"] = d["per_session_seconds"][:2]
+    json.dump(d, open(ck, "w"), default=float)
+
+    r2 = run_campaign(_Stub(), arms_n, tasks, inj, audit, [], [],
+                      checkpoint_path=ck, resume=True, progress=lambda m: None)
+    key = lambda rs: [x["transcript"] for x in sorted(rs, key=lambda y: y["session"])]
+    same = key(r1["sessions"]) == key(r2["sessions"])
+    same_reads = len(r1["verify_kls"]) == len(r2["verify_kls"])
+
+    refused = False
+    try:
+        run_campaign(_Stub(), {"M": 8}, tasks, inj, audit, [], [],
+                     checkpoint_path=ck, resume=True, progress=lambda m: None)
+    except SystemExit as exc:
+        refused = "CHECKPOINT MISMATCH" in str(exc)
+
+    ok = same and same_reads and refused
+    return [_c("e2d: resume reproduces the run and refuses a different one",
+               "incident 2026-09-02 (D2 died at 9/64 with nothing on disk)",
+               "identical transcripts + refusal",
+               f"identical {same}, reads {same_reads}, refused {refused}", ok)]
 
 
 def main() -> int:

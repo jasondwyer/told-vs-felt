@@ -100,6 +100,9 @@ def main() -> int:
                          "'uncached', before this flag existed; see the entry.")
     ap.add_argument("--no-marker", action="store_true",
                     help="skip the marker readout (the ~10 min half)")
+    ap.add_argument("--resume", action="store_true",
+                    help="continue a checkpointed run of the SAME registered "
+                         "schedule. Completes it; cannot extend it.")
     ap.add_argument("--out", default=None)
     args = ap.parse_args()
 
@@ -263,7 +266,10 @@ def main() -> int:
     # --- run --------------------------------------------------------------
     res = run_campaign(adapter, arms_n, tasks, inj_by_arm, audit, ban_ids,
                        term_rx, temp=args.temp, scope=args.scope,
-                       cached=cached, seed=args.draw_seed)
+                       cached=cached, seed=args.draw_seed,
+                       checkpoint_path=(args.out or canonical_for(args.tier))
+                       + ".checkpoint",
+                       resume=args.resume)
     sessions, counters = res["sessions"], res["counters"]
 
     # --- acceptance, COMPUTED BEFORE ANY ARTIFACT IS WRITTEN (trap 6) ----

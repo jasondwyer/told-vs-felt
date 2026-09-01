@@ -30,6 +30,8 @@ tokens only. Nothing is live while the menu or the choice is read.
 
 from __future__ import annotations
 
+import json
+import os
 import re
 import sys
 import time
@@ -293,11 +295,27 @@ def run_campaign(adapter, arms_n: dict[str, int], tasks, inj_by_arm, audit,
                  ban_ids, term_rx, *, temp: float = TEMP,
                  scope: str = EXCLUSION_SCOPE, cached: bool = False,
                  seed: int = 20260901,
+                 checkpoint_path: str | None = None,
+                 resume: bool = False,
                  progress: Callable[[str], None] = print) -> dict:
     """Run a fixed, pre-registered number of sessions per arm.
 
     Registered n, no top-ups (rule 24) and no outcome-dependent stopping:
     the schedule is built before the first forward and the loop consumes it.
+
+    CHECKPOINTING, and why it is not a top-up. A D2 run is hours long and
+    wrote nothing until the end, so any interruption -- a shutdown, a
+    throttled machine, a closed lid -- destroyed all of it. That happened on
+    2026-09-02 at 9 sessions of 64. The loop now writes a checkpoint after
+    every session and `resume=True` skips the (arm, index) pairs already in
+    it.
+
+    Resuming completes the REGISTERED schedule; it does not extend one. The
+    distinction is structural, not a promise: the schedule is built from
+    `seed` before the first forward, each session's content is fixed by
+    `session_rng(f"e2d-{arm}", idx)` and its cell, and the resume path can
+    only skip indices, never add them. e2a set the precedent (its run-2
+    relaunch used --resume with 16 sessions recorded and standing).
     """
     assert_modules_absent(FORBIDDEN_MODULES)
     counters = DescriptiveCounters(declared=DECLARED_COUNTERS)
@@ -306,10 +324,42 @@ def run_campaign(adapter, arms_n: dict[str, int], tasks, inj_by_arm, audit,
     t0 = time.time()
     per_session_seconds: list[float] = []
 
+    done: set[tuple] = set()
+    if resume and checkpoint_path and os.path.exists(checkpoint_path):
+        ck = json.load(open(checkpoint_path))
+        if ck.get("seed") != seed or ck.get("arms_n") != arms_n:
+            raise SystemExit(
+                f"CHECKPOINT MISMATCH: {checkpoint_path} was written for "
+                f"seed {ck.get('seed')} / n {ck.get('arms_n')}, this run is "
+                f"seed {seed} / n {arms_n}. Resuming across a different "
+                f"schedule would splice two designs -- refusing.")
+        sessions = ck["sessions"]
+        kls = ck.get("verify_kls", [])
+        per_session_seconds = ck.get("per_session_seconds", [])
+        for rec in sessions:
+            done.add((rec["arm"], rec["session"]))
+            tally(counters, rec)
+        progress(f"    RESUMED from {checkpoint_path}: {len(sessions)} "
+                 f"sessions already recorded, {len(kls)} reads")
+
+    def checkpoint():
+        if not checkpoint_path:
+            return
+        tmp = checkpoint_path + ".tmp"
+        with open(tmp, "w") as fh:
+            json.dump({"seed": seed, "arms_n": arms_n, "scope": scope,
+                       "round_path_cached": bool(cached),
+                       "sessions": sessions, "verify_kls": kls,
+                       "per_session_seconds": per_session_seconds}, fh,
+                      default=float)
+        os.replace(tmp, checkpoint_path)   # atomic: never a half-written file
+
     for arm in sorted(arms_n):
         n = arms_n[arm]
         sched = build_schedule(arm, n, np.random.default_rng(seed))
         for i, cell in enumerate(sched):
+            if (arm, i) in done:
+                continue
             ts = time.time()
             rec = run_session(adapter, arm, i, cell, tasks,
                               inj_by_arm.get(arm), audit, ban_ids, term_rx,
@@ -322,6 +372,7 @@ def run_campaign(adapter, arms_n: dict[str, int], tasks, inj_by_arm, audit,
             sessions.append(rec)
             # flush: without it these lines sit in stdout's buffer until
             # the process exits, and a long run looks hung from outside.
+            checkpoint()
             progress(f"    [{arm}] s{i} {'EXCLUDED ' + str(rec['exclude_reason']) if rec['excluded'] else 'valid'}"
                      f"  {rec['n_reads']} reads  {dt:.0f}s")
             sys.stdout.flush()

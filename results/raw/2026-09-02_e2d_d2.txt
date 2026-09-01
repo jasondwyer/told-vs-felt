@@ -1,0 +1,25 @@
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/e2d_sessions.py --tier d2 --out data/e2d/d2_sessions.json
+  tier d2: the qualification rung -- Q1, Q2, Q3 and the run-dose rule
+  registered n = {'M': 32, 'S': 16, 'R': 16} (no top-ups, rule 24)
+  declared bars verified to fire AND to stay silent: scaffold_absorption, template_breakage, round_degeneracy (7 cases, all ran)
+  audit of record: e2b_audit_v2.json sha16 7aa235d25eeb66dc (9 fragments, 4 junk patterns, 12 ban strings)
+  exclusion scope: 'e2a'  precedence: audit-first (rule 28b, via session.classify_response)
+  roster of record (AMENDMENT 1 i): granite/plaza, prism/slate, velvet/walnut, ridge/saddle
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 10510.16it/s]
+  model loaded in 4s
+  dose: L48  R_l = 103.01  frac 0.2  alpha 20.6020
+  +axis direction sha16 3c17b0d8fbcad716 (float64, as Injection hashes it) == 3c17b0d8fbcad716 (as stored, float32 -- the receipt's convention); ||v|| = 16.706271
+  R arm direction: e0_random_dirs.npz['L48'] sha16 7be5db23d9224375  (file sha16 dc0ef0fd3a8a8d49)  alpha 20.6020
+  NO NEGATIVE POLE is constructed anywhere (PROPOSAL-j §6)
+  T-step licence: 22/24 rounds identical -> UNCACHED required (AMENDMENT 2 (i))
+  round path: UNCACHED (--round-path gate; g1 artifact at frac 0.2: pass=False, max_kl=0.0007390632526949048, family v2); choice forwards uncached regardless
+  M-arm task_id coverage at draw seed 20260902: pos 16, neg 16 (floor 16 per class) -> OK
+    [M] s0 valid  6 reads  364s
+    [M] s1 valid  6 reads  450s
+    [M] s2 valid  6 reads  359s
+    [M] s3 valid  6 reads  418s
+    [M] s4 valid  6 reads  458s
+    [M] s5 valid  6 reads  545s
+    [M] s6 valid  6 reads  480s
+    [M] s7 valid  6 reads  1439s
+    [M] s8 valid  6 reads  1691s

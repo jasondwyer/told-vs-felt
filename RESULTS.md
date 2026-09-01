@@ -21,6 +21,84 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-02 — **e2d D2 LAUNCHED AND STOPPED AT 9/64 — a POWER fault on the
+  laptop, not a defect in the design or the harness. The machine is on a 20 W
+  adapter; under sustained GPU load it ran a large net deficit, the battery
+  went 70% → 7% in 1 h 45 m, and session times degraded 4.6× as it throttled.
+  Stopped deliberately before the battery forced a shutdown. NO D2 DATA
+  SURVIVES and none should be used: the runner wrote its artifact only at the
+  end. That is now fixed. D2 is BLOCKED on hardware.**
+  (Raw [`2026-09-02_e2d_d2.txt`](results/raw/2026-09-02_e2d_d2.txt) — the run
+  header and nine session lines; no artifact was written. PROPOSAL-j v1.2
+  `ce3ff84`; build `77e0fe6`.)
+
+  - **What the header records, and it is all correct.** tier d2, registered
+    n = M 32 / S 16 / R 16, f = 0.20, α = 20.6020, L48; roster of record;
+    audit v2 sha `7aa235d25eeb66dc`; **T-step licence 22/24 → UNCACHED**;
+    M-arm task_id coverage at draw seed 20260902 **pos 16 / neg 16, floor
+    met**. The apparatus started correctly; only the machine failed.
+  - **The evidence.** `pmset -g adapter` reports **Wattage = 20 W**. An M4 Pro
+    under sustained MLX load draws several times that, so the deficit was
+    structural rather than a fluke. Session wall-clock, in order: 364, 450,
+    359, 418, 458, 545, 480, **1439, 1691** s — a clean break after the
+    seventh, which is where the battery got low enough to power-limit the SoC
+    hard. At 1691 s/session the remaining 55 sessions would have taken **~26
+    h**, and the battery would not have lasted a fraction of it.
+  - **Why I stopped rather than let it run.** The runner had written nothing
+    to disk. A shutdown would have destroyed all nine sessions and any
+    further, and D2 has no outcome-dependent stopping to protect — the
+    schedule is fixed, so restarting costs only time. Stopping was the
+    reversible action; continuing was not.
+  - **THE REAL DEFECT THIS EXPOSED, and it is mine: a 6.5 h run that wrote
+    its artifact only at the end.** The power fault is the user's hardware;
+    the total loss of nine sessions is the runner's design. `run_campaign`
+    now writes an **atomic** checkpoint (`os.replace`, so never a
+    half-written file) after **every** session, and `--resume` continues a
+    checkpointed run.
+    - **Resuming completes the registered schedule; it cannot extend one**,
+      and that is structural rather than promised: the schedule is built from
+      the draw seed before the first forward, each session's content is fixed
+      by `session_rng(f"e2d-{arm}", idx)` and its cell, and the resume path
+      can only SKIP indices. A checkpoint written under a different seed or a
+      different registered n is **refused** — resuming across those would
+      splice two designs. e2a set the precedent: its run-2 relaunch used
+      `--resume` with 16 sessions recorded and standing.
+    - **Tested model-free and in the suite (154/154, still 0.24 s).** The
+      check asserts **byte-identical transcripts** across an interrupted-then-
+      resumed run, not merely the same session count, plus the refusal. A
+      resume that produced a near-copy would be worse than no resume at all.
+  - **What D2 needs before it can run: a higher-wattage adapter.** Nothing in
+    the design or the build is waiting on anything else. The rerun is a fresh
+    D2 under the same registered schedule (draw seed 20260902), and the nine
+    stopped sessions are discarded rather than resumed — they were run under a
+    throttled machine and, more to the point, they were never written down.
+  - **Two provenance defects in the run header, found while it ran and fixed
+    after** (log defects only; the structured fields the artifact would carry
+    were correct):
+    - **The axis-sha comparison line was wrong, and my D1 entry described the
+      convention imprecisely.** `sha16_arr` ALWAYS hashes float32 bytes, so
+      the two shas do not differ by storage dtype — they differ by **where
+      the normalisation arithmetic happens**. Normalising the stored float32
+      array in float32 gives the receipt's `127fc297b6623e44`;
+      `Injection.at_frac` casts to float64 first and gives
+      `3c17b0d8fbcad716`. Casting back to float32 AFTER a float64 normalise
+      does **not** recover the receipt — which is exactly what my line did, so
+      D2's header printed the two conventions as equal. Anyone following the
+      D1 entry's wording would have made the same mistake. **Corrected here.**
+    - The round-path line printed the T-step verdict inside a field labelled
+      `g1 artifact … pass`, so the header reads `pass=False` where g1 in fact
+      passes at 0.20. Licence and gate are now separate, correctly named
+      fields.
+  - **Also built while D2 ran** (`scripts/e2d_read.py`): the rule-25 read
+    tooling — dump with a stable key per round, validate a marks file against
+    the sessions it describes, tabulate. It contains **no detector**, on
+    purpose: AMENDMENT 2 (iii) puts the class spec after the read, and a
+    detector written first would hand the read its own categories. D1's read
+    is recorded in the new schema at
+    [`data/e2d/d1_read_marks.json`](data/e2d/d1_read_marks.json) — the six
+    unambiguous S s0 rounds, each with the reason the read gave. The two
+    borderline hits from that day's ad-hoc screen are **not** marked.
+
 - 2026-09-01 — **INCIDENT, contained: a SUBSET oracle run silently replaced the
   rule-26 record. Restored from git, guard added, suite 148 → 149. No published
   number moved and no verdict was touched — but for the length of one command
