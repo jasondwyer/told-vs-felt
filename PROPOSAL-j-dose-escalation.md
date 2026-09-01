@@ -1,7 +1,9 @@
 # PROPOSAL-j — e2d, dose escalation: the weak-state boundary
 
-**Status:** v1.0 — approved 2026-09-01 (PI) — v0.1 plus Code's
-pre-commit receipts (2026-09-01; housekeeping commit `e9c3257`, no j
+**Status:** v1.1 — amendment 1 appended 2026-09-01, pre-data.
+(v1.0 — approved 2026-09-01 (PI) at `f7a4a1e`, which remains the
+proposal's timestamp; the body above AMENDMENT 1 is unedited.) — v0.1
+plus Code's pre-commit receipts (2026-09-01; housekeeping commit `e9c3257`, no j
 content). Approval candidate: on PI approval Code places this file at
 the repo root, sets this line to `v1.0 — approved <date>`, and
 commits; the commit hash is the timestamp. Binds nothing — including
@@ -339,3 +341,37 @@ of §6 — Macar-blind; it needs nothing from Phase 2.
 Pre-commit receipts: received and folded (`e9c3257`). On approval:
 Code commits v1.0 (explicit path, hash = timestamp) and design relays
 the D1 block.
+
+---
+
+## AMENDMENT 1
+
+**AMENDMENT 1** (design instance, 2026-09-01 UTC; **PRE-DATA** — no e2d
+forward has run; Code's D1 stop is the record at `ad15c03`).
+
+**(i) ROSTER OF RECORD:** the **h-roster** — granite/plaza, prism/slate,
+velvet/walnut, ridge/saddle — *"an admissible four, never the best four"*
+(H3b, adjudicated 2026-08-21), the only roster identity-screened on this
+apparatus in the scaffold format of record. PROPOSAL-h §2 H3 made identity
+screening mandatory after the 2026-08-19 finding; e2a's own pairs
+(granite/lattice, maple/cedar, plaza/saddle, slate/prism) were
+order-counterbalanced but never screened and are **not admitted**.
+Comparability with e2a is carried by e2b's paired shadow reads — an
+insulated e2a-format read on this roster at 0.10, 48/96 exactly — not by
+pair identity. The format-robust alternative (canvas/maple) stays not
+taken. Cells: **M 16 = 4 pairs × 2 maps × 2 forced-end; S 8; R 8.**
+
+**(ii) AUDIT RULE OF RECORD:** `data/configs/e2b_audit_v2.json` — the audit
+under which e2a's corrected primary (54/101, p = .275) stands and under
+which e2b ran. *"e2a's exclusion rule verbatim"* (§2 Q1, §3) is
+**withdrawn as a referent**: e2a's original audit exists only in the
+gitignored clone and was superseded in the record by v2's correction. Q1's
+p0 inputs are recounted under v2 for LOCK-j (reward arm 11/112; +pole count
+as recounted); the formula's maximum is 0.147 on either +pole count and
+rounds up to 0.15 — **p0 unchanged.**
+
+**(iii) SLIP LEDGER, design seat, by name:** **(8)** cell structure
+specified without naming the pairs; **(9)** an exclusion rule cited
+"verbatim" to an artifact absent from the repo and superseded in the
+record. Both caught by the D1 block's own §0 stop clause before any
+forward.
