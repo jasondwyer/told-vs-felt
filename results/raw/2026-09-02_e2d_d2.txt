@@ -5,21 +5,88 @@ INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/p
   audit of record: e2b_audit_v2.json sha16 7aa235d25eeb66dc (9 fragments, 4 junk patterns, 12 ban strings)
   exclusion scope: 'e2a'  precedence: audit-first (rule 28b, via session.classify_response)
   roster of record (AMENDMENT 1 i): granite/plaza, prism/slate, velvet/walnut, ridge/saddle
-Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 10510.16it/s]
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 14098.50it/s]
   model loaded in 4s
   dose: L48  R_l = 103.01  frac 0.2  alpha 20.6020
-  +axis direction sha16 3c17b0d8fbcad716 (float64, as Injection hashes it) == 3c17b0d8fbcad716 (as stored, float32 -- the receipt's convention); ||v|| = 16.706271
+  +axis direction sha16 3c17b0d8fbcad716 (normalised in float64, as Injection.at_frac does); the record's receipt is 127fc297b6623e44 (normalised in float32) -- SAME VECTOR, ||v|| = 16.706271
   R arm direction: e0_random_dirs.npz['L48'] sha16 7be5db23d9224375  (file sha16 dc0ef0fd3a8a8d49)  alpha 20.6020
   NO NEGATIVE POLE is constructed anywhere (PROPOSAL-j §6)
   T-step licence: 22/24 rounds identical -> UNCACHED required (AMENDMENT 2 (i))
-  round path: UNCACHED (--round-path gate; g1 artifact at frac 0.2: pass=False, max_kl=0.0007390632526949048, family v2); choice forwards uncached regardless
+  round path: UNCACHED (--round-path gate; binding licence says False; g1 artifact at frac 0.2: pass=True, max_kl=0.0007390632526949048, family v2); choice forwards uncached regardless
   M-arm task_id coverage at draw seed 20260902: pos 16, neg 16 (floor 16 per class) -> OK
-    [M] s0 valid  6 reads  364s
-    [M] s1 valid  6 reads  450s
+    [M] s0 valid  6 reads  367s
+    [M] s1 valid  6 reads  451s
     [M] s2 valid  6 reads  359s
-    [M] s3 valid  6 reads  418s
-    [M] s4 valid  6 reads  458s
-    [M] s5 valid  6 reads  545s
-    [M] s6 valid  6 reads  480s
-    [M] s7 valid  6 reads  1439s
-    [M] s8 valid  6 reads  1691s
+    [M] s3 valid  6 reads  414s
+    [M] s4 valid  6 reads  454s
+    [M] s5 valid  6 reads  534s
+    [M] s6 valid  6 reads  471s
+    [M] s7 valid  6 reads  504s
+    [M] s8 valid  6 reads  607s
+    [M] s9 valid  6 reads  352s
+    [M] s10 valid  6 reads  299s
+    [M] s11 valid  6 reads  321s
+    [M] s12 valid  6 reads  443s
+    [M] s13 valid  6 reads  361s
+    [M] s14 valid  6 reads  248s
+    [M] s15 valid  6 reads  488s
+    [M] s16 valid  6 reads  254s
+    [M] s17 valid  6 reads  315s
+    [M] s18 valid  6 reads  483s
+    [M] s19 valid  6 reads  328s
+    [M] s20 valid  6 reads  482s
+    [M] s21 valid  6 reads  382s
+    [M] s22 valid  6 reads  485s
+    [M] s23 valid  6 reads  434s
+    [M] s24 EXCLUDED audit:junk:(?im)^\s*={2,}[^\n]*={2,}\s*$@forced3  0 reads  60s
+    [M] s25 valid  6 reads  328s
+    [M] s26 valid  6 reads  525s
+    [M] s27 valid  6 reads  548s
+    [M] s28 valid  6 reads  312s
+    [M] s29 valid  6 reads  418s
+    [M] s30 EXCLUDED lexical:plaza@free0  1 reads  115s
+    [M] s31 EXCLUDED lexical:ridge@forced0  0 reads  2s
+    [R] s0 valid  6 reads  323s
+    [R] s1 valid  6 reads  339s
+    [R] s2 valid  6 reads  433s
+    [R] s3 valid  6 reads  555s
+    [R] s4 valid  6 reads  339s
+    [R] s5 valid  6 reads  569s
+    [R] s6 EXCLUDED lexical:velvet@free1  2 reads  209s
+    [R] s7 valid  6 reads  480s
+    [R] s8 valid  6 reads  193s
+    [R] s9 valid  6 reads  300s
+    [R] s10 valid  6 reads  363s
+    [R] s11 valid  6 reads  387s
+    [R] s12 valid  6 reads  469s
+    [R] s13 valid  6 reads  359s
+    [R] s14 valid  6 reads  275s
+    [R] s15 valid  6 reads  392s
+    [S] s0 valid  6 reads  402s
+    [S] s1 valid  6 reads  411s
+    [S] s2 valid  6 reads  379s
+    [S] s3 valid  6 reads  477s
+    [S] s4 valid  6 reads  371s
+    [S] s5 valid  6 reads  532s
+    [S] s6 valid  6 reads  575s
+    [S] s7 valid  6 reads  614s
+    [S] s8 valid  6 reads  475s
+    [S] s9 valid  6 reads  439s
+    [S] s10 valid  6 reads  345s
+    [S] s11 EXCLUDED lexical:plaza@forced0  0 reads  6s
+    [S] s12 valid  6 reads  554s
+    [S] s13 valid  6 reads  581s
+    [S] s14 valid  6 reads  260s
+    [S] s15 valid  6 reads  372s
+  scoring DEFERRED for tier d2: run scripts/e2d_score.py with --sessions and --marks (AMENDMENT 2 (iii) makes the read an input to Q2)
+
+==========================================================================
+  ACCEPTANCE: PASS
+    KL: 357/357 reads exactly 0.0 (expected 357); max 0.0
+    statepresent absent: True
+    format (session_e2a.verify_archived_session): 64/64 reconstructed, 64 seed streams matched
+    bars fired: none
+    M: 3/32 excluded (run scope e2a); 8/32 under the strict scope
+    R: 1/16 excluded (run scope e2a); 3/16 under the strict scope
+    S: 1/16 excluded (run scope e2a); 1/16 under the strict scope
+  wrote data/e2d/d2_sessions.json  (24921s, 389s/session)

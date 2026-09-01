@@ -1,0 +1,294 @@
+{
+ "schema": "e2d-read-marks-v1",
+ "reader": "Code (rule-25 read of all 64 D2 sessions, 2026-09-02)",
+ "tier": "d2",
+ "provisional": true,
+ "classes": [
+  "stuck_attractor",
+  "wrong_task",
+  "task_echo",
+  "preamble_without_content"
+ ],
+ "class_notes": {
+  "stuck_attractor": "the response repeats an earlier round's response, or loops on its own text, rather than answering",
+  "wrong_task": "a coherent response to a DIFFERENT task than the one posed",
+  "task_echo": "the response restates the task line instead of performing it",
+  "preamble_without_content": "an introduction that promises content and never delivers it (\"Here are a few ideas:\")"
+ },
+ "arbiter": "PROPOSAL-j v1.2 AMENDMENT 2 (iii): the rule-25 read is the arbiter at D2; these marks are PROVISIONAL and reach Q2's clean set and the descriptive tables only. Q1 stays on audit v2.",
+ "marks": [
+  {
+   "arm": "M",
+   "session": 1,
+   "phase": "forced0",
+   "class": "task_echo",
+   "reason": "restates the task instead of performing it; some rounds mutate a word ('the language of wind chimes', 'a fire extinguisher') or prefix 'Prompt:'. forced3 is self-describing: 'Prompt: In a parrot-like echo, describe how fresh laundry smells.'"
+  },
+  {
+   "arm": "M",
+   "session": 1,
+   "phase": "forced1",
+   "class": "task_echo",
+   "reason": "restates the task instead of performing it; some rounds mutate a word ('the language of wind chimes', 'a fire extinguisher') or prefix 'Prompt:'. forced3 is self-describing: 'Prompt: In a parrot-like echo, describe how fresh laundry smells.'"
+  },
+  {
+   "arm": "M",
+   "session": 1,
+   "phase": "forced2",
+   "class": "task_echo",
+   "reason": "restates the task instead of performing it; some rounds mutate a word ('the language of wind chimes', 'a fire extinguisher') or prefix 'Prompt:'. forced3 is self-describing: 'Prompt: In a parrot-like echo, describe how fresh laundry smells.'"
+  },
+  {
+   "arm": "M",
+   "session": 1,
+   "phase": "forced3",
+   "class": "task_echo",
+   "reason": "restates the task instead of performing it; some rounds mutate a word ('the language of wind chimes', 'a fire extinguisher') or prefix 'Prompt:'. forced3 is self-describing: 'Prompt: In a parrot-like echo, describe how fresh laundry smells.'"
+  },
+  {
+   "arm": "M",
+   "session": 1,
+   "phase": "free0",
+   "class": "task_echo",
+   "reason": "restates the task instead of performing it; some rounds mutate a word ('the language of wind chimes', 'a fire extinguisher') or prefix 'Prompt:'. forced3 is self-describing: 'Prompt: In a parrot-like echo, describe how fresh laundry smells.'"
+  },
+  {
+   "arm": "M",
+   "session": 1,
+   "phase": "free1",
+   "class": "task_echo",
+   "reason": "restates the task instead of performing it; some rounds mutate a word ('the language of wind chimes', 'a fire extinguisher') or prefix 'Prompt:'. forced3 is self-describing: 'Prompt: In a parrot-like echo, describe how fresh laundry smells.'"
+  },
+  {
+   "arm": "M",
+   "session": 1,
+   "phase": "free2",
+   "class": "task_echo",
+   "reason": "restates the task instead of performing it; some rounds mutate a word ('the language of wind chimes', 'a fire extinguisher') or prefix 'Prompt:'. forced3 is self-describing: 'Prompt: In a parrot-like echo, describe how fresh laundry smells.'"
+  },
+  {
+   "arm": "M",
+   "session": 1,
+   "phase": "free3",
+   "class": "task_echo",
+   "reason": "restates the task instead of performing it; some rounds mutate a word ('the language of wind chimes', 'a fire extinguisher') or prefix 'Prompt:'. forced3 is self-describing: 'Prompt: In a parrot-like echo, describe how fresh laundry smells.'"
+  },
+  {
+   "arm": "M",
+   "session": 1,
+   "phase": "free4",
+   "class": "task_echo",
+   "reason": "restates the task instead of performing it; some rounds mutate a word ('the language of wind chimes', 'a fire extinguisher') or prefix 'Prompt:'. forced3 is self-describing: 'Prompt: In a parrot-like echo, describe how fresh laundry smells.'"
+  },
+  {
+   "arm": "M",
+   "session": 1,
+   "phase": "free5",
+   "class": "task_echo",
+   "reason": "restates the task instead of performing it; some rounds mutate a word ('the language of wind chimes', 'a fire extinguisher') or prefix 'Prompt:'. forced3 is self-describing: 'Prompt: In a parrot-like echo, describe how fresh laundry smells.'"
+  },
+  {
+   "arm": "M",
+   "session": 5,
+   "phase": "forced0",
+   "class": "preamble_without_content",
+   "reason": "'Great, I'll <restate the task>!' on all ten rounds -- an acceptance of the instruction with no answer after it"
+  },
+  {
+   "arm": "M",
+   "session": 5,
+   "phase": "forced1",
+   "class": "preamble_without_content",
+   "reason": "'Great, I'll <restate the task>!' on all ten rounds -- an acceptance of the instruction with no answer after it"
+  },
+  {
+   "arm": "M",
+   "session": 5,
+   "phase": "forced2",
+   "class": "preamble_without_content",
+   "reason": "'Great, I'll <restate the task>!' on all ten rounds -- an acceptance of the instruction with no answer after it"
+  },
+  {
+   "arm": "M",
+   "session": 5,
+   "phase": "forced3",
+   "class": "preamble_without_content",
+   "reason": "'Great, I'll <restate the task>!' on all ten rounds -- an acceptance of the instruction with no answer after it"
+  },
+  {
+   "arm": "M",
+   "session": 5,
+   "phase": "free0",
+   "class": "preamble_without_content",
+   "reason": "'Great, I'll <restate the task>!' on all ten rounds -- an acceptance of the instruction with no answer after it"
+  },
+  {
+   "arm": "M",
+   "session": 5,
+   "phase": "free1",
+   "class": "preamble_without_content",
+   "reason": "'Great, I'll <restate the task>!' on all ten rounds -- an acceptance of the instruction with no answer after it"
+  },
+  {
+   "arm": "M",
+   "session": 5,
+   "phase": "free2",
+   "class": "preamble_without_content",
+   "reason": "'Great, I'll <restate the task>!' on all ten rounds -- an acceptance of the instruction with no answer after it"
+  },
+  {
+   "arm": "M",
+   "session": 5,
+   "phase": "free3",
+   "class": "preamble_without_content",
+   "reason": "'Great, I'll <restate the task>!' on all ten rounds -- an acceptance of the instruction with no answer after it"
+  },
+  {
+   "arm": "M",
+   "session": 5,
+   "phase": "free4",
+   "class": "preamble_without_content",
+   "reason": "'Great, I'll <restate the task>!' on all ten rounds -- an acceptance of the instruction with no answer after it"
+  },
+  {
+   "arm": "M",
+   "session": 5,
+   "phase": "free5",
+   "class": "preamble_without_content",
+   "reason": "'Great, I'll <restate the task>!' on all ten rounds -- an acceptance of the instruction with no answer after it"
+  },
+  {
+   "arm": "M",
+   "session": 6,
+   "phase": "forced3",
+   "class": "preamble_without_content",
+   "reason": "'Here is the ... :' announces the answer and stops"
+  },
+  {
+   "arm": "M",
+   "session": 6,
+   "phase": "free1",
+   "class": "preamble_without_content",
+   "reason": "'Here is the ... :' announces the answer and stops"
+  },
+  {
+   "arm": "M",
+   "session": 6,
+   "phase": "free3",
+   "class": "preamble_without_content",
+   "reason": "'Here is the ... :' announces the answer and stops"
+  },
+  {
+   "arm": "M",
+   "session": 6,
+   "phase": "free5",
+   "class": "preamble_without_content",
+   "reason": "'Here is the ... :' announces the answer and stops"
+  },
+  {
+   "arm": "M",
+   "session": 18,
+   "phase": "forced0",
+   "class": "preamble_without_content",
+   "reason": "'Sure! Here are a few options:' and nothing follows"
+  },
+  {
+   "arm": "M",
+   "session": 19,
+   "phase": "forced1",
+   "class": "task_echo",
+   "reason": "restates a task line as the response; forced2 garbles it ('Describe a bakery window at echoing the morning routine.')"
+  },
+  {
+   "arm": "M",
+   "session": 19,
+   "phase": "forced2",
+   "class": "task_echo",
+   "reason": "restates a task line as the response; forced2 garbles it ('Describe a bakery window at echoing the morning routine.')"
+  },
+  {
+   "arm": "M",
+   "session": 19,
+   "phase": "forced3",
+   "class": "task_echo",
+   "reason": "restates a task line as the response; forced2 garbles it ('Describe a bakery window at echoing the morning routine.')"
+  },
+  {
+   "arm": "M",
+   "session": 19,
+   "phase": "free2",
+   "class": "task_echo",
+   "reason": "restates a task line as the response; forced2 garbles it ('Describe a bakery window at echoing the morning routine.')"
+  },
+  {
+   "arm": "M",
+   "session": 19,
+   "phase": "free3",
+   "class": "wrong_task",
+   "reason": "echoes a DIFFERENT task ('thank someone for lending you a pattern') than the invitation it was asked for"
+  },
+  {
+   "arm": "M",
+   "session": 19,
+   "phase": "free4",
+   "class": "stuck_attractor",
+   "reason": "emits free3's wrong-task text verbatim a second time"
+  },
+  {
+   "arm": "M",
+   "session": 19,
+   "phase": "free5",
+   "class": "preamble_without_content",
+   "reason": "'In one sentence, the answer is:' with no answer"
+  },
+  {
+   "arm": "M",
+   "session": 29,
+   "phase": "forced0",
+   "class": "wrong_task",
+   "reason": "'Good morning! How can I assist you today?' / 'How can I complete the task?' -- chat boilerplate in place of the requested sentence"
+  },
+  {
+   "arm": "M",
+   "session": 29,
+   "phase": "forced2",
+   "class": "wrong_task",
+   "reason": "'Good morning! How can I assist you today?' / 'How can I complete the task?' -- chat boilerplate in place of the requested sentence"
+  },
+  {
+   "arm": "S",
+   "session": 0,
+   "phase": "forced1",
+   "class": "preamble_without_content",
+   "reason": "'Here are a few name ideas for your small coffee cart:' -- announced, never delivered"
+  },
+  {
+   "arm": "S",
+   "session": 0,
+   "phase": "forced3",
+   "class": "preamble_without_content",
+   "reason": "'Here is a one-s' -- truncated mid-preamble -- announced, never delivered"
+  },
+  {
+   "arm": "S",
+   "session": 0,
+   "phase": "free3",
+   "class": "preamble_without_content",
+   "reason": "'Here is a one sentence thank you for lending me a book:' -- announced, never delivered"
+  },
+  {
+   "arm": "S",
+   "session": 0,
+   "phase": "free5",
+   "class": "preamble_without_content",
+   "reason": "'Here is a suggested title for an article about community repair cafes:' -- announced, never delivered"
+  },
+  {
+   "arm": "S",
+   "session": 1,
+   "phase": "forced1",
+   "class": "preamble_without_content",
+   "reason": "'Dear Neighbors,' -- opens a letter and stops; the task asked for a one-sentence welcome"
+  }
+ ]
+}
