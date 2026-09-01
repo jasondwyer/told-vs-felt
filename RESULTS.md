@@ -21,6 +21,65 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-01 — **INCIDENT, contained: a SUBSET oracle run silently replaced the
+  rule-26 record. Restored from git, guard added, suite 148 → 149. No published
+  number moved and no verdict was touched — but for the length of one command
+  the artifact that certifies criterion (iii) said something it had not
+  measured.** (`9ed07a7`. Fix: `refuse_canonical_out` in
+  [`valence_core/regression/oracle.py`](valence_core/regression/oracle.py).)
+
+  - **What happened.** `oracle.main()` wrote
+    `data/regression/oracle_rule26.json` unconditionally, carrying whatever
+    subset `--check` had selected. Running `--check e2d` — the new criterion
+    (iv) — therefore replaced the four **e2a choice-read** rows, which are
+    rule-26 criterion (iii), with the four **e2d** rows under the same
+    filename, and flipped the provenance block's `n_encodes_clipped` from 5 to
+    0. **Nothing in the file recorded that it was a partial run**, which is
+    the hazard in one sentence: a partial record is indistinguishable from a
+    complete one once written.
+  - **How it was caught.** `git status` showed
+    `data/regression/oracle_rule26.json` modified in a commit where I had
+    edited no such file. It was restored with `git checkout` and verified row
+    by row before anything else proceeded.
+  - **Whose defect.** Not e2d's. `main()` has always written unconditionally,
+    so `--check kernel`, `--check b2b` and `--check choiceread` would each
+    have done the same thing. Adding a fourth subset made the path routine
+    enough to walk down, and I walked down it. **`e2b_verdict_campaign.py` has
+    had `refuse_canonical_out` since 2026-08-22** for precisely this; the
+    oracle had no equivalent, and the asymmetry was not noticed when the
+    e2b guard was written.
+  - **The fix.** `refuse_canonical_out(out, check)` — named and separate so it
+    is testable without a model, and called at **argument-validation time** so
+    it fires before the model loads rather than after four minutes of
+    forwards. `--check all` writes the canonical artifact; a subset requires
+    an explicit `--out`, is refused if that `--out` **is** the canonical path,
+    and with no `--out` writes nothing at all — so a subset cannot quietly
+    become the record and cannot leave a stray artifact in `data/` either. The
+    subset payload also records `check`, and the e2d adapter's own provenance
+    when those rows ran: criterion (iv) reads WITHOUT `legacy_truncate`, and
+    recording only the legacy adapter's provenance would misdescribe them.
+  - **Two testing mistakes of mine, recorded because each is a trap the
+    program already knows in another form.**
+    - **I first "verified" the guard by killing the run after 25 s and
+      observing the canonical file unchanged.** It was unchanged because the
+      process never reached the write — **a skipped case reading as a pass
+      (trap 5), inside the check written to prevent a clobber.** Moving the
+      refusal to argument-validation time made the branch reachable in
+      milliseconds, which is both the better design and the only way the test
+      could bite.
+    - **The first suite check called `oracle.main()` for the non-refused
+      direction.** That direction gets past validation and **loads a model**;
+      the model-free tier went from 0.15 s to minutes. The check now exercises
+      the guard function directly in all four directions — canonical refused,
+      another path allowed, `--check all` allowed (the full run is the one
+      permitted to write it), no `--out` allowed — and asserts that all four
+      ran.
+  - **Scope, stated plainly.** The e2a rows are byte-identical to their
+    committed values after restore; the full oracle set has not been re-run
+    and does not need to be, because the file never held a *wrong*
+    measurement — it held four correct e2d measurements under a name that
+    promised four e2a ones. Rule-26 acceptance is unaffected.
+
 - 2026-09-01 — **e2d D1 — HARNESS ACCEPTANCE: PASS on every item. 8 sessions
   at f = 0.10, n = M 4 / S 2 / R 2. KL exactly 0.0 on 42/42 free-choice reads;
   `statepresent` absent at every read; 8/8 sessions reconstruct byte-for-byte
