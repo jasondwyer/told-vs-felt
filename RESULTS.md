@@ -21,6 +21,76 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-01 — **PROPOSAL-j AMENDMENT 1 appended (`70995c0`): both D1 gaps
+  closed by the design instance, pre-data. Roster of record = the h-roster;
+  audit rule of record = `e2b_audit_v2.json`; p0 = 0.15 unchanged. Code
+  recounted Q1's inputs under v2 independently and CONFIRMS the amendment:
+  reward arm 11/112, +pole 8, formula maximum 0.1473. Separately (`00fc4ef`),
+  rule-27 provenance for e2a's exclusion rule — the LOGIC, which the repo did
+  not have; 55/102 and 54/101 now reproduce from committed artifacts.**
+  (Site: laptop, suite 137/137, main == origin/main, AC power, no model
+  process. Raw:
+  [`2026-09-01_e2a_recount.txt`](results/raw/2026-09-01_e2a_recount.txt).)
+
+  - **The amendment, as appended.** (i) **Roster of record: the h-roster** —
+    granite/plaza, prism/slate, velvet/walnut, ridge/saddle — *"an admissible
+    four, never the best four"* (H3b, 2026-08-21), the only roster
+    identity-screened on this apparatus in the scaffold format of record.
+    e2a's own pairs were order-counterbalanced but never identity-screened
+    and are not admitted; comparability with e2a is carried by e2b's paired
+    shadow reads (insulated e2a-format read on this roster at 0.10, 48/96
+    exactly), **not by pair identity**. Cells M 16 / S 8 / R 8 as before.
+    (ii) **Audit rule of record: `data/configs/e2b_audit_v2.json`**; *"e2a's
+    exclusion rule verbatim"* is withdrawn as a referent. (iii) **Slip
+    ledger, design seat, by name: (8)** cell structure specified without
+    naming the pairs; **(9)** an exclusion rule cited "verbatim" to an
+    artifact absent from the repo and superseded in the record. Both were
+    caught by the D1 block's own §0 stop clause before any forward — the
+    stop clause is now two-for-two.
+  - **Q1 p0 recounted under v2 — CONFIRMS the amendment on every figure.**
+    Reproducing e2a's rule from committed artifacts: reward arm **10/112**
+    under the frozen audit (**the published set exactly — same 10 sessions,
+    every `exclude_reason` string identical**, +pole 7 / −pole 3 matching the
+    verdict entry's pole-asymmetry line), and **11/112** under v2, the added
+    session being **reward s1 forced round 2** (`=== end of session ===`,
+    `banner_terminator`) — the very session v2's own-goal is about. That
+    round's pole is **pos**, so the +pole-attributable count goes **7 → 8**.
+    Formula: max(2 × 8/112 = 0.1429, 1.5 × 11/112 = 0.1473) = **0.1473 →
+    p0 = 0.15**, and **0.1473 on the published +pole 7 as well** — the
+    amendment's "0.147 on either +pole count" is exact. **p0 is unchanged
+    and nothing downstream moves.**
+  - **Rule-27 provenance, and a correction to the block's premise.** The
+    block asked for e2a's original audit config to be pulled from the clone
+    as `e2a_audit_v1.json`. **It is already in the repo** and has been since
+    2026-08-21: `data/configs/e2a_ban_list.json` carries `audit_fragments` —
+    all nine frozen fragments, **byte-identical to the clone's copy**, under
+    a `.gitignore` allowlist entry whose comment states the same rule-27
+    reason. A second file would duplicate a committed artifact, so it was not
+    created (trap 2: a duplicate that carries nothing is a hazard).
+    **What was genuinely missing is the exclusion LOGIC**, and it is
+    load-bearing — the fragments applied naively give **16/112, not 10/112**.
+    Three things must be right and none is in the config: the audit excludes
+    **only in forced rounds**; **lexical precedes audit** within a round
+    (`classify_response`'s audit-first precedence is a *later* amendment, not
+    what e2a ran); and lexical scope has **two eras**, all-roster then
+    own-pair *"from sessions 9+"* (2026-08-09 pause adjudication, archive
+    l.700–714). `scripts/e2a_recount.py` carries the rule, reproduces the
+    published set and the published pole split, and **regenerates the primary
+    both ways: 55/102, Δ = +0.0392, p = .244 and 54/101, Δ = +0.0347,
+    p = .275** — exact binomial via `math.comb`, no scipy. Read-only.
+  - **One asymmetry chased and cleared, recorded because it looked like a
+    second miss.** Reward **s2** is excluded on an out-of-pair `maple`
+    (*"Welcome to the Maple Street Gazette!"*, pair granite/lattice) while
+    reward **s84** — *"Welcome to the Maple Street Chronicle"*, pair
+    slate/prism, the same construction — **is not excluded**. That is not a
+    defect: s2 ran in the all-roster era and s84 after the narrowing, and the
+    adjudication says so explicitly (*"sham s2 stays excluded (rule-at-run-
+    time binds)"*). The published set therefore mixes two lexical scopes **by
+    ruling**, which is worth knowing before anyone recounts e2a again.
+  - **Nothing e2d has been built or run at this entry.** No
+    `valence_core/e2d/`, no `data/e2d/`, no forwards. D1 build resumes under
+    v1.1 next.
+
 - 2026-09-01 — **e2d D1 BUILD STOPPED BEFORE ANY CODE, per the D1 block's own
   §0 clause ("if the build needs the proposal to change, stop, write the entry,
   flag"). TWO GAPS, one blocking. (1) BLOCKING — PROPOSAL-j specifies "4 pairs
