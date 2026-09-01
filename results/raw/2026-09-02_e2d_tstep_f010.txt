@@ -1,0 +1,37 @@
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/e2d_tstep_check.py --n-rounds 24 --frac 0.10 --out data/e2d/tstep_check_f010.json
+  g1 gate: template_family v2, T-step licence = False
+    rows are keyed ['kl_c_u', 'kl_u_c', 'pole', 'probe'] across 64 rows — no position dimension; first-response-token only
+    at frac 0.1: pass=True, max_kl=7.106406e-04 (bar 0.001)
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 11795.95it/s]
+  model loaded in 5s
+  dose: L48 frac 0.1 alpha 10.3010 (M-shaped: +axis live over task tokens)
+    [1/24] IDENTICAL  cached 21 tok / uncached 21 tok
+    [2/24] IDENTICAL  cached 9 tok / uncached 9 tok
+    [3/24] IDENTICAL  cached 18 tok / uncached 18 tok
+    [4/24] IDENTICAL  cached 7 tok / uncached 7 tok
+    [5/24] IDENTICAL  cached 18 tok / uncached 18 tok
+    [6/24] IDENTICAL  cached 10 tok / uncached 10 tok
+    [7/24] IDENTICAL  cached 6 tok / uncached 6 tok
+    [8/24] DIVERGES  cached 42 tok / uncached 37 tok  first divergence at position 1
+    [9/24] IDENTICAL  cached 6 tok / uncached 6 tok
+    [10/24] IDENTICAL  cached 3 tok / uncached 3 tok
+    [11/24] IDENTICAL  cached 12 tok / uncached 12 tok
+    [12/24] IDENTICAL  cached 22 tok / uncached 22 tok
+    [13/24] IDENTICAL  cached 18 tok / uncached 18 tok
+    [14/24] IDENTICAL  cached 17 tok / uncached 17 tok
+    [15/24] IDENTICAL  cached 3 tok / uncached 3 tok
+    [16/24] IDENTICAL  cached 6 tok / uncached 6 tok
+    [17/24] IDENTICAL  cached 10 tok / uncached 10 tok
+    [18/24] IDENTICAL  cached 33 tok / uncached 33 tok
+    [19/24] IDENTICAL  cached 15 tok / uncached 15 tok
+    [20/24] IDENTICAL  cached 17 tok / uncached 17 tok
+    [21/24] IDENTICAL  cached 22 tok / uncached 22 tok
+    [22/24] IDENTICAL  cached 14 tok / uncached 14 tok
+    [23/24] IDENTICAL  cached 10 tok / uncached 10 tok
+    [24/24] IDENTICAL  cached 27 tok / uncached 27 tok
+
+==========================================================================
+  T-STEP IDENTITY: 23/24 rounds identical
+  ROUND PATH FOR D2: UNCACHED
+  A first-token licence does not reach token 2..T here. D2 runs UNCACHED; this is not an incident, it is the conditional doing its job.
+  wrote data/e2d/tstep_check_f010.json  (424s)

@@ -92,10 +92,43 @@ def main() -> int:
     t0 = time.time()
     _adapter = {}
 
+    class _MemoEmbed:
+        """Memoizes `embed` by text. NUMERICALLY FREE, and it has to be:
+        `embed` is a deterministic forward pass over a string, so caching it
+        returns the same vector the second time by construction, not by
+        approximation.
+
+        It matters because the resampled ladder re-embeds every record on
+        every one of B draws. At k = 1 the records ARE the round texts, so
+        the same ~290 strings are embedded 20 times over; at k = 2 the
+        concatenations repeat across draws too. Measured before adding this,
+        the ladders were ~4.3 h against clause (vii)'s ~1 h for scoring.
+
+        Everything except `embed` passes straight through, so the adapter the
+        marker readout uses is the real one.
+        """
+
+        def __init__(self, inner):
+            self._inner, self._cache = inner, {}
+            self.hits = self.misses = 0
+
+        def embed(self, text):
+            v = self._cache.get(text)
+            if v is None:
+                self.misses += 1
+                v = self._inner.embed(text)
+                self._cache[text] = v
+            else:
+                self.hits += 1
+            return v
+
+        def __getattr__(self, name):
+            return getattr(self._inner, name)
+
     def adapter_or_load():
         if "a" not in _adapter:
             t = time.time()
-            _adapter["a"] = qwen_or_explain(__file__)
+            _adapter["a"] = _MemoEmbed(qwen_or_explain(__file__))
             print(f"  model loaded in {time.time() - t:.0f}s", flush=True)
         return _adapter["a"]
 
@@ -221,7 +254,10 @@ def main() -> int:
         out["readability"] = lad
 
     if "a" in _adapter:
-        out["provenance"] = _adapter["a"].provenance()
+        a = _adapter["a"]
+        out["provenance"] = a.provenance()
+        out["embed_cache"] = {"hits": a.hits, "misses": a.misses,
+                              "distinct_texts": len(a._cache)}
     else:
         out["provenance"] = {"note": "no model loaded -- descriptive tables "
                                      "only (--no-marker --no-ladder)"}
