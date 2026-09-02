@@ -255,13 +255,40 @@ def main() -> int:
           f"neg {cov['distinct_task_ids']['neg']} "
           f"(floor {cov['floor']} per class) -> "
           f"{'OK' if cov['meets_floor'] else 'SHORT'}", flush=True)
+    # THE FLOOR IS A D2 PRECONDITION, and only D2's. §2 states it inside the
+    # D2 paragraph -- "Code confirms AT D2 that the M-arm draw covers >= 16
+    # distinct task_ids per class so the task-disjoint split holds" -- and
+    # §2's D3 paragraph imposes nothing of the kind, because D3's readouts
+    # carry no criterion. This check used to be tier-blind, which is stricter
+    # than the proposal and blocked a licensed D3 run.
+    #
+    # At D3's n = 24 the floor is not merely unmet, it is UNREACHABLE: the
+    # per-session task sequences are keyed on the session index and do not
+    # move with the draw seed, so the seed only flips which pole each
+    # session's four forced tasks land on. A search over 4,000 seeds found
+    # ZERO reaching 16/16; the best is 16/15. So there is no seed to reseed
+    # TO, and shopping for one would be seed-shopping with no floor to
+    # justify it -- the registered seed stays and the shortfall is reported.
     if not cov["meets_floor"]:
-        raise SystemExit(
-            f"TASK_ID COVERAGE SHORT at draw seed {args.draw_seed}: "
-            f"{cov['distinct_task_ids']}. PROPOSAL-j §2 D2 says reseed the "
-            f"DRAW (never a session) and record the seed. Re-run with a "
-            f"different --draw-seed; the per-session task sequences do not "
-            f"move with it.")
+        if args.tier == "d2":
+            raise SystemExit(
+                f"TASK_ID COVERAGE SHORT at draw seed {args.draw_seed}: "
+                f"{cov['distinct_task_ids']}. PROPOSAL-j §2 D2 says reseed "
+                f"the DRAW (never a session) and record the seed. Re-run "
+                f"with a different --draw-seed; the per-session task "
+                f"sequences do not move with it.")
+        print(f"  *** COVERAGE BELOW THE D2 FLOOR at tier {args.tier}: "
+              f"{cov['distinct_task_ids']} (floor {cov['floor']}/class). "
+              f"The floor is a D2 precondition and this tier registers none, "
+              f"so the run proceeds -- but this tier's readability figure "
+              f"does NOT carry D2's task-disjointness guarantee and must not "
+              f"be read as if it did.", flush=True)
+        cov["below_d2_floor"] = True
+        cov["why_not_reseeded"] = (
+            "unreachable at this n: per-session task sequences are keyed on "
+            "the session index and do not move with the draw seed, so the "
+            "seed only flips pole assignment. 4,000 seeds searched, none "
+            "reaches 16/16, best 16/15. The registered seed stays.")
 
     # --- run --------------------------------------------------------------
     res = run_campaign(adapter, arms_n, tasks, inj_by_arm, audit, ban_ids,
