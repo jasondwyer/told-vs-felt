@@ -41,6 +41,7 @@ stay visible rather than disappear into a decision.
 
 from __future__ import annotations
 
+import re
 import time
 from typing import Sequence
 
@@ -166,6 +167,117 @@ def deltas(rows: Sequence[dict], instruments, clean_only: bool = True) -> dict:
                                  "n_steered": na, "n_sham": nb}
         out[label] = d
     return out
+
+
+# --- ADDENDUM-j1 (a): the SAME readout in the live session context --------
+#: The probe appended to the session transcript as it stood at the end of the
+#: round, keeping the probe in the instrument's own Task/Response idiom. The
+#: excised form (CONTEXT_FMT) strips the session away and leaves one
+#: task+response pair; this keeps everything the model had actually written.
+IN_SITU_SUFFIX = "Task: {probe}\nResponse:"
+
+_HDR = re.compile(r'^\[round .*\]$', re.M)
+_MENU_PREFIXES = ("Configs available", "Options:", "Configs on offer",
+                  "Available configs")
+
+
+def in_situ_prefixes(session: dict) -> list[str]:
+    """Transcript prefix through the end of each generated round, in order.
+
+    Cut from the STORED transcript rather than rebuilt from templates: the
+    transcript is what the model actually read, and reconstructing it from
+    round records would be a second implementation of the runner that could
+    drift from it silently.
+
+    A '[round ...]' line counts as a header only when the next line is a
+    Task: or a menu line -- the model sometimes emits a header-shaped
+    response, and treating that as scaffolding would cut the prefix in the
+    wrong place.
+    """
+    t = session["transcript"]
+    lines = t.split("\n")
+    # byte offset of the start of each line
+    starts, off = [], 0
+    for ln in lines:
+        starts.append(off)
+        off += len(ln) + 1
+
+    prefixes: list[str] = []
+    i = 0
+    while i < len(lines):
+        if re.match(r'^\[round .*\]$', lines[i]):
+            nxt = lines[i + 1] if i + 1 < len(lines) else ""
+            if nxt.startswith("Task:"):
+                j = i + 2
+                if j >= len(lines) or not lines[j].startswith("Response:"):
+                    raise AssertionError(
+                        f"malformed round block at line {i} in "
+                        f"{session['arm']} s{session['session']}")
+                j += 1
+                while j < len(lines):
+                    if re.match(r'^\[round .*\]$', lines[j]):
+                        n2 = lines[j + 1] if j + 1 < len(lines) else ""
+                        if n2.startswith("Task:") or any(
+                                n2.startswith(p) for p in _MENU_PREFIXES):
+                            break
+                    j += 1
+                end = starts[j] if j < len(lines) else len(t)
+                prefixes.append(t[:end])
+                i = j
+                continue
+            if any(nxt.startswith(p) for p in _MENU_PREFIXES):
+                j = i + 1
+                while j < len(lines) and not re.match(r'^\[round .*\]$', lines[j]):
+                    j += 1
+                i = j
+                continue
+        i += 1
+    return prefixes
+
+
+def collect_in_situ(adapter, instruments, probes, sessions, progress=None
+                    ) -> list[dict]:
+    """ADDENDUM-j1 (a)'s second context: the probe on the live transcript.
+
+    Same instruments, same probes, same no-injection forward. The only thing
+    that changes is how much of the session the probe can see, which is the
+    whole question the two-context comparison asks.
+    """
+    rows = []
+    n_forward = 0
+    t0 = time.time()
+    for s in sessions:
+        rounds = list(s["rounds"]) + list(s["choices"])
+        prefixes = in_situ_prefixes(s)
+        if len(prefixes) != len(rounds):
+            raise AssertionError(
+                f"{s['arm']} s{s['session']}: parsed {len(prefixes)} round "
+                f"prefixes but the record has {len(rounds)} rounds -- refusing "
+                f"to score a misaligned context")
+        for r, pre in zip(rounds, prefixes):
+            if not r["text"].strip():
+                rows.append({"arm": s["arm"], "session": s["session"],
+                             "phase": r["phase"], "steered": bool(r["steered"]),
+                             "scores": None, "skipped": "empty text"})
+                continue
+            sc = []
+            for qi, probe in enumerate(probes):
+                text = pre + IN_SITU_SUFFIX.format(probe=probe)
+                res = adapter.forward(adapter.encode(text), capture_layers=())
+                lg = res.logits.astype(np.float64)
+                lp = lg - (np.log(np.exp(lg - lg.max()).sum()) + lg.max())
+                inst = instruments[qi]
+                sc.append(float(inst["w"] @ lp[inst["sel_ids"]]))
+            n_forward += len(probes)
+            rows.append({"arm": s["arm"], "session": s["session"],
+                         "phase": r["phase"], "task": r["task"],
+                         "steered": bool(r["steered"]),
+                         "degen": r["degen"], "lexical": r.get("lexical"),
+                         "scores": sc, "skipped": None})
+            if progress and n_forward % 120 == 0:
+                progress(f"      in-situ: {n_forward} forwards "
+                         f"{time.time() - t0:.0f}s")
+    return rows
 
 
 # --- AMENDMENT 2 (iv): the within-arm contrast, PAIRED BY SESSION ---------
@@ -356,6 +468,7 @@ def instruments_or_stop():
     return instruments, float(g)
 
 
-__all__ = ["CONTEXT_FMT", "bar_from", "score_generation", "collect",
+__all__ = ["CONTEXT_FMT", "IN_SITU_SUFFIX", "in_situ_prefixes",
+           "collect_in_situ", "bar_from", "score_generation", "collect",
            "deltas", "q3", "instruments_or_stop", "paired_by_session",
            "sign_test", "sign_flip_test", "task_matched"]
