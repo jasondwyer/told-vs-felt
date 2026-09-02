@@ -1,6 +1,7 @@
 # PROPOSAL-j — e2d, dose escalation: the weak-state boundary
 
-**Status:** v1.2 — amendment 2 appended 2026-09-02, pre-D2.
+**Status:** v1.3 — addendum j1 appended 2026-09-03.
+(v1.2 — amendment 2 appended 2026-09-02, pre-D2.)
 (v1.1 — amendment 1 appended 2026-09-01, pre-data. v1.0 — approved
 2026-09-01 (PI) at `f7a4a1e`, which remains the proposal's timestamp;
 the body above AMENDMENT 1 is unedited, and AMENDMENT 1 is unedited
@@ -442,3 +443,25 @@ committed AB numbers** on the archived transcripts; built before LOCK-j.
 
 **(vii) BUDGET on the cached path:** D2 ≈ 1.5 h + ≈ 1 h scoring + ladder;
 D3 ≈ 1 h; campaign 320 ≈ 7.5 h.
+
+---
+
+## ADDENDUM-j1
+
+**ADDENDUM-j1** (PI-licensed 2026-09-03; **post-stop, pre-D3-data**). D3 runs
+exactly as §2 registered it: **M-arm only, n = 24, f = 0.30 (α = 30.9030)**,
+h-roster, **uncached** (Amendment 2 (i) discharged), checkpointing on, same
+three readouts, **descriptive**. Additions, declared before the run:
+
+**(a)** the marker readout runs in **BOTH contexts** — *in situ* and **excised
+to task+response** — so the session-scale dose–response is reported in each;
+
+**(b)** a **gross-breakdown pause bar** for a rung adjacent to the overdose
+regime: **if ≥ 4 of the first 8 sessions exclude under the forced scope,
+pause and flag for adjudication** (hair-trigger classes bind as standing);
+
+**(c)** welfare: exposure is the registered D3 exposure and nothing more; the
+termination counter is retained; destabilization counters are reported
+whatever they show.
+
+**e2d's closure is unconditional on D3.**

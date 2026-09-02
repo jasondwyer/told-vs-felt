@@ -21,6 +21,51 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-03 — **e2d DISPOSITION: the registered run-dose rule's STOP, SCOPED
+  is ADOPTED. e2d closes unopened — the verdict tier and LOCK-j do not run.
+  D3 runs as registered, licensed by ADDENDUM-j1, descriptive only and with
+  no power to reopen the closure. PROPOSAL-j → v1.3.**
+  **INCOMPLETE AS FILED: the disposition's items 2–5 never reached Code.**
+  (Item 1 is recorded below verbatim as amended. PROPOSAL-j v1.3;
+  D2's result at [`d2_analysis.json`](data/e2d/d2_analysis.json).)
+
+  - **Item 1, ratified and amended (the whole of what arrived).** *"The
+    registered run-dose rule's STOP, SCOPED is ADOPTED. e2d closes unopened;
+    the verdict tier and LOCK-j do not run. D3 runs as registered, licensed
+    by ADDENDUM-j1 (PI decision 2026-09-03), descriptive only: no
+    qualification role, no run-dose role, no verdict role, and the closure
+    stands regardless of its figures."*
+  - **THE GAP, flagged rather than filled.** The block reads *"DISPOSITION
+    entry as sent, with item 1 amended … Items 2–5 unchanged."* **No such
+    entry was ever sent to this thread, and none exists in the repo** — the
+    only untracked design documents are the five trap-2 files, none of which
+    is a disposition. So items 2–5 are unknown to Code, and this entry
+    records item 1 alone. **They are not guessed and no placeholder stands in
+    for them**; when they arrive the entry is completed in place or by a
+    successor entry, design's choice. Nothing downstream is blocked: D3 is
+    licensed by ADDENDUM-j1, which arrived complete.
+  - **What the closure rests on**, restated so the entry is readable without
+    the D2 entry beside it: Q1 passed (3/32 = 9.4%, p = .878 vs p0 = .15),
+    Q2 failed on every set reported (criterion set median **0.574**, 10th pct
+    0.524, against .70/.60), Q3 failed on magnitude (**Δ+ = +0.103** against
+    bar **0.158**, and Δ+ > 2·|Δ_R| also failed). The scope sentence §2
+    registered for exactly this outcome: *the weak-state boundary is not
+    reachable with coherence on this apparatus above MED at session scale.*
+  - **ADDENDUM-j1, appended and licensing D3.** M-arm only, n = 24, f = 0.30
+    (α = 30.9030), h-roster, uncached, checkpointing on, three readouts,
+    descriptive. Three additions declared before the run: **(a)** the marker
+    readout in **both** contexts — in situ and excised to task+response — so
+    the dose–response is reported in each; **(b)** a gross-breakdown pause
+    bar, **≥ 4 of the first 8 sessions excluded under the forced scope ⇒
+    pause and flag**, hair-trigger classes binding as standing; **(c)**
+    welfare — the registered exposure and nothing more, termination counter
+    retained, destabilization counters reported whatever they show.
+  - **The closure is unconditional on D3.** D3 cannot qualify the rung,
+    cannot move the run dose, and cannot reopen e2d. It supplies the third
+    session-scale point of a dose–response (0.10 archive, 0.20 D2, 0.30 D3)
+    and the degeneracy curve toward the 0.40 overdose regime, and that is
+    all it is for.
+
 - 2026-09-02 — **e2d D2 — THE QUALIFICATION RUNG FAILS. Q1 PASSES, Q2 and Q3
   FAIL, and the run-dose rule returns STOP, SCOPED: the run dose is not 0.20.
   64 sessions at f = 0.20, acceptance PASS on every item (KL 357/357 exactly
