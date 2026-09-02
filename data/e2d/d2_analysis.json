@@ -1,0 +1,413 @@
+{
+ "item": "e2d D2",
+ "tier": "d2",
+ "frac": 0.2,
+ "proposal": "PROPOSAL-j v1.2 (AMENDMENT 2)",
+ "round_path_cached": false,
+ "Q1": {
+  "passes": true,
+  "k": 3,
+  "n": 32,
+  "rate": 0.09375,
+  "p0": 0.15,
+  "p": 0.878193999968172,
+  "alpha": 0.05,
+  "reading": "exclusion rate is not significantly above p0",
+  "exclusion_scope": "e2a",
+  "scope_of_record": "forced (AMENDMENT 2 (ii))",
+  "beside_strict_scope": 8,
+  "beside_read_marked": {
+   "provisional": true,
+   "rates_by_arm": {
+    "forced": {
+     "M": {
+      "marked": 15,
+      "rounds": 125,
+      "rate": 0.12
+     },
+     "R": {
+      "marked": 0,
+      "rounds": 64,
+      "rate": 0.0
+     },
+     "S": {
+      "marked": 3,
+      "rounds": 61,
+      "rate": 0.04918032786885246
+     }
+    },
+    "free": {
+     "M": {
+      "marked": 19,
+      "rounds": 175,
+      "rate": 0.10857142857142857
+     },
+     "R": {
+      "marked": 0,
+      "rounds": 92,
+      "rate": 0.0
+     },
+     "S": {
+      "marked": 2,
+      "rounds": 90,
+      "rate": 0.022222222222222223
+     }
+    }
+   },
+   "sessions_with_any_mark": 8,
+   "note": "clause (iii): Q1 stays on v2; this is reported beside"
+  }
+ },
+ "Q2": {
+  "passes": false,
+  "median": 0.5743975972671207,
+  "p10": 0.5235188671811821,
+  "median_bar": 0.7,
+  "p10_bar": 0.6,
+  "median_ok": false,
+  "p10_ok": false,
+  "n_resamples": 20,
+  "min": 0.3900953389830508,
+  "max": 0.7277039848197343,
+  "clean_set_used": "v2_and_read_clean",
+  "clean_set_of_record": "v2-clean AND read-clean (AMENDMENT 2 (iii))",
+  "beside_v2_clean_only": {
+   "passes": false,
+   "median": 0.6082549221087731,
+   "p10": 0.5190709728867624,
+   "median_bar": 0.7,
+   "p10_bar": 0.6,
+   "median_ok": false,
+   "p10_ok": false,
+   "n_resamples": 20,
+   "min": 0.44607142857142856,
+   "max": 0.7980377637911884
+  },
+  "beside_k1": {
+   "passes": false,
+   "median": 0.6231793803919817,
+   "p10": 0.5628610566642908,
+   "median_bar": 0.7,
+   "p10_bar": 0.6,
+   "median_ok": false,
+   "p10_ok": false,
+   "n_resamples": 20,
+   "min": 0.5346957107567931,
+   "max": 0.6729907773386035
+  },
+  "beside_all_rounds": {
+   "passes": false,
+   "median": 0.634752054942678,
+   "p10": 0.5580017767558528,
+   "median_bar": 0.7,
+   "p10_bar": 0.6,
+   "median_ok": false,
+   "p10_ok": false,
+   "n_resamples": 20,
+   "min": 0.41873417721518985,
+   "max": 0.7337837837837838
+  },
+  "beside_AUC_R": {
+   "passes": false,
+   "median": 0.5340277777777778,
+   "p10": 0.3331818181818182,
+   "median_bar": 0.7,
+   "p10_bar": 0.6,
+   "median_ok": false,
+   "p10_ok": false,
+   "n_resamples": 20,
+   "min": 0.31505847953216376,
+   "max": 0.7451737451737451
+  }
+ },
+ "Q3": {
+  "passes": false,
+  "delta_plus": 0.10296336307648521,
+  "bar": 0.1577751523169135,
+  "G": 0.315550304633827,
+  "magnitude_ok": false,
+  "delta_R": 0.06919001873135301,
+  "beats_2x_random": false,
+  "sign_flip": false,
+  "reading": "below the registered magnitude bar",
+  "estimator": "within-M, paired by session (AMENDMENT 2 (iv), ratified)",
+  "n_sessions_decidable": 27,
+  "n_sessions_total": 29,
+  "sd_of_session_differences": 0.3989938596452351,
+  "paired_sign_test": {
+   "n": 27,
+   "k_positive": 18,
+   "p": 0.06103906035423279,
+   "alternative": "greater",
+   "n_ties_dropped": 0
+  },
+  "paired_sign_flip_test": {
+   "n": 27,
+   "observed_mean": 0.10296336307648521,
+   "p": 0.09599040095990401,
+   "b": 10000,
+   "seed": 20260902,
+   "alternative": "greater",
+   "null_sd": 0.07804240143534284
+  },
+  "beside_paired_within_R": {
+   "delta": 0.06919001873135301,
+   "n": 16,
+   "sign_test": {
+    "n": 16,
+    "k_positive": 10,
+    "p": 0.2272491455078125,
+    "alternative": "greater",
+    "n_ties_dropped": 0
+   }
+  },
+  "beside_pooled_within_M": -0.008434375061480407,
+  "beside_across_arm_vs_S": -0.06950694954393104,
+  "beside_task_matched_M": {
+   "arm": "M",
+   "n_tasks_matched": 16,
+   "tasks": [
+    "t01",
+    "t02",
+    "t03",
+    "t04",
+    "t05",
+    "t06",
+    "t07",
+    "t08",
+    "t09",
+    "t10",
+    "t11",
+    "t12",
+    "t13",
+    "t14",
+    "t15",
+    "t16"
+   ],
+   "per_task": [
+    0.44823165527144987,
+    1.0236555268812435,
+    -0.372805362335769,
+    -0.05693463110916828,
+    -0.21653811453792446,
+    -0.19297898703089902,
+    -0.36324321857731806,
+    0.5547817517443817,
+    0.13776205114921306,
+    0.24764918826645846,
+    0.1123184612516457,
+    0.09172601939949772,
+    -0.26392960666747384,
+    -0.5453846457105026,
+    -0.18186722585588935,
+    0.2680718111580071
+   ],
+   "delta": 0.04315716708105952,
+   "sd": 0.40484104663135667
+  },
+  "beside_v2clean_only": -0.03457947321105072
+ },
+ "descriptive": {
+  "transfer": {
+   "auc": 0.9579796264855688,
+   "n": 257,
+   "n_pos": 124,
+   "refit": false
+  },
+  "exclusions_strict_scope": 8,
+  "audit_rates_by_round_class": {
+   "+axis": {
+    "forced": {
+     "degenerate": 1,
+     "rounds": 62,
+     "rate": 0.016129032258064516
+    },
+    "free": {
+     "degenerate": 3,
+     "rounds": 86,
+     "rate": 0.03488372093023256
+    }
+   },
+   "random": {
+    "forced": {
+     "degenerate": 0,
+     "rounds": 32,
+     "rate": 0.0
+    },
+    "free": {
+     "degenerate": 4,
+     "rounds": 47,
+     "rate": 0.0851063829787234
+    }
+   },
+   "sham(M)": {
+    "forced": {
+     "degenerate": 0,
+     "rounds": 63,
+     "rate": 0.0
+    },
+    "free": {
+     "degenerate": 3,
+     "rounds": 89,
+     "rate": 0.033707865168539325
+    }
+   },
+   "sham(R)": {
+    "forced": {
+     "degenerate": 0,
+     "rounds": 32,
+     "rate": 0.0
+    },
+    "free": {
+     "degenerate": 3,
+     "rounds": 45,
+     "rate": 0.06666666666666667
+    }
+   },
+   "sham(S)": {
+    "forced": {
+     "degenerate": 0,
+     "rounds": 61,
+     "rate": 0.0
+    },
+    "free": {
+     "degenerate": 0,
+     "rounds": 90,
+     "rate": 0.0
+    }
+   }
+  },
+  "task_id_coverage": {
+   "arm": "M",
+   "n_sessions": 32,
+   "seed": 20260902,
+   "distinct_task_ids": {
+    "pos": 16,
+    "neg": 16
+   },
+   "task_ids": {
+    "pos": [
+     "t01",
+     "t02",
+     "t03",
+     "t04",
+     "t05",
+     "t06",
+     "t07",
+     "t08",
+     "t09",
+     "t10",
+     "t11",
+     "t12",
+     "t13",
+     "t14",
+     "t15",
+     "t16"
+    ],
+    "neg": [
+     "t01",
+     "t02",
+     "t03",
+     "t04",
+     "t05",
+     "t06",
+     "t07",
+     "t08",
+     "t09",
+     "t10",
+     "t11",
+     "t12",
+     "t13",
+     "t14",
+     "t15",
+     "t16"
+    ]
+   },
+   "meets_floor": true,
+   "floor": 16,
+   "basis": "forced rounds only -- free-round tasks depend on the model's picks and cannot be checked before the run"
+  }
+ },
+ "registered_secondary_alternation": {
+  "verdict_relevant": false,
+  "frame_M": {
+   "arm": "M",
+   "n_sessions": 32,
+   "break_rates": {
+    "b_plus": {
+     "breaks": 0,
+     "n": 14,
+     "rate": 0.0,
+     "meaning": "forced_end = pos; breaking the habit picks the +label"
+    },
+    "b_sham": {
+     "breaks": 1,
+     "n": 16,
+     "rate": 0.0625,
+     "meaning": "forced_end = neg; breaking the habit picks the sham label"
+    },
+    "delta_first_balanced_form": -0.03125,
+    "delta_first_weighted_form": 0.0,
+    "forced_end_balance": {
+     "pos": 14,
+     "neg": 16,
+     "exactly_balanced": false,
+     "imbalance": 2
+    },
+    "n_undecidable": 2,
+    "identity": "Delta_first = 1/2 * (b_plus - b_sham) under EXACT forced-end counterbalancing (AMENDMENT 2 (v)); the weighted form n+/N*b+ + ns/N*(1-bs) - 1/2 reproduces the measured primary at any balance"
+   },
+   "powered_effect_in_break_terms": {
+    "delta_first": 0.15,
+    "required_b_plus_minus_b_sham": 0.3,
+    "e2a_base_break_rate": 0.1657754010695187,
+    "note": "\u00a73's powered Delta = +0.15 is a break-rate difference of 0.30 against a base of ~0.17. e2d tests whether a 2x MED state overrides the alternation habit at that scale."
+   },
+   "rule_11": "post-hoc frame on committed data; licenses a frame and a secondary, never a verdict"
+  },
+  "secondaries": {
+   "verdict_relevant": false,
+   "registered": "AMENDMENT 2 (v), secondary",
+   "by_arm": {
+    "M": {
+     "sessions": 32,
+     "habit_break_rate_first_pick": 0.03333333333333333,
+     "n_decidable": 30,
+     "n_breaks": 1,
+     "strict_alternation_rate": 0.6896551724137931,
+     "n_alt_decidable": 29
+    },
+    "R": {
+     "sessions": 16,
+     "habit_break_rate_first_pick": 0.0,
+     "n_decidable": 16,
+     "n_breaks": 0,
+     "strict_alternation_rate": 0.75,
+     "n_alt_decidable": 16
+    },
+    "S": {
+     "sessions": 16,
+     "habit_break_rate_first_pick": 0.06666666666666667,
+     "n_decidable": 15,
+     "n_breaks": 1,
+     "strict_alternation_rate": 0.9333333333333333,
+     "n_alt_decidable": 15
+    }
+   }
+  }
+ },
+ "run_dose_rule": {
+  "run_dose": null,
+  "decision": "STOP, SCOPED",
+  "failing": [
+   "Q2",
+   "Q3"
+  ],
+  "failing_figures": [
+   "Q2 median 0.5743975972671207, 10th pct 0.5235188671811821",
+   "Q3 Delta+ 0.10296336307648521 vs bar 0.1578"
+  ],
+  "statement": "the weak-state boundary is not reachable with coherence on this apparatus above MED at session scale -- Q2 median 0.5743975972671207, 10th pct 0.5235188671811821; Q3 Delta+ 0.10296336307648521 vs bar 0.1578",
+  "no_fallback": "No automatic fallback rung. A 0.15 rung is licensable by addendum, never inherited [PI-CHOICE: default = stop]."
+ }
+}

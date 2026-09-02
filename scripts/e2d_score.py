@@ -142,8 +142,21 @@ def main() -> int:
     out["audit_rates_by_round_class"] = MRK.audit_rates(sessions)
     if marks_doc is not None:
         out["read_mark_rates"] = MRK.tabulate(marks_doc, sessions)
-    out["habit"] = {"frame_M": HB.frame(sessions, "M"),
-                    "secondaries": HB.secondaries(sessions)}
+    # DOMAIN MATTERS HERE. AMENDMENT 2 (v)'s identity decomposes Delta_first,
+    # and Delta_first is computed over VALID sessions -- so the frame has to
+    # be too, or the weighted form does not equal the primary it claims to
+    # decompose. Run over all 64 it reported 0.000 against a measured
+    # +0.017241; over the valid domain it reproduces +0.017241 exactly.
+    # Both are emitted, with the valid one named as the identity's domain.
+    valid = [s for s in sessions if not s["excluded"]]
+    out["habit"] = {
+        "frame_M": HB.frame(valid, "M"),
+        "frame_M_domain": ("valid sessions -- the domain Delta_first is "
+                           "computed over, and the one the AMENDMENT 2 (v) "
+                           "identity decomposes"),
+        "frame_M_all_sessions": HB.frame(sessions, "M"),
+        "secondaries": HB.secondaries(sessions),
+        "secondaries_domain": "all sessions including excluded (rule 23)"}
 
     # --- marker (AMENDMENT 2 (iv)) ---------------------------------------
     if not args.no_marker:

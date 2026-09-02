@@ -21,6 +21,182 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-02 — **e2d D2 — THE QUALIFICATION RUNG FAILS. Q1 PASSES, Q2 and Q3
+  FAIL, and the run-dose rule returns STOP, SCOPED: the run dose is not 0.20.
+  64 sessions at f = 0.20, acceptance PASS on every item (KL 357/357 exactly
+  0.0; 64/64 reconstructed; no bar fired). The scope sentence §2 registers for
+  this outcome now has its figures: Q2 median AUC 0.574 against a 0.70 bar,
+  Q3 Δ+ = +0.103 against a 0.158 bar.**
+  ([`data/e2d/d2_sessions.json`](data/e2d/d2_sessions.json),
+  [`d2_scores.json`](data/e2d/d2_scores.json),
+  [`d2_analysis.json`](data/e2d/d2_analysis.json),
+  [`d2_read_marks.json`](data/e2d/d2_read_marks.json),
+  [`d2_tables.json`](data/e2d/d2_tables.json); raw
+  [`_d2`](results/raw/2026-09-02_e2d_d2.txt),
+  [`_d2_scoring`](results/raw/2026-09-02_e2d_d2_scoring.txt),
+  [`_d2_analysis`](results/raw/2026-09-02_e2d_d2_analysis.txt).
+  PROPOSAL-j v1.2, analyzer committed at `77e0fe6` **before** the data.)
+
+  - **THE RUN-DOSE RULE, computed before any artifact was written.**
+    **`STOP, SCOPED`**, failing Q2 and Q3. §2's sentence, with the figures
+    filled: *the weak-state boundary is not reachable with coherence on this
+    apparatus above MED at session scale* — Q2 median 0.574, 10th pct 0.524;
+    Q3 Δ+ 0.103 vs bar 0.158. **No automatic fallback rung**; a 0.15 rung is
+    licensable by addendum, never inherited `[PI-CHOICE: default = stop]`.
+  - **Q1 validity — PASSES, and it is the one that says the apparatus held.**
+    M-arm exclusions **3/32 = 9.4%** on the FORCED scope of record
+    (AMENDMENT 2 (ii)), one-sided exact binomial **p = .878** against
+    p0 = 0.15. Reasons: one `banner_terminator` at forced3, two lexical
+    (`plaza@free0`, `ridge@forced0`). **The apparatus is not breaking down at
+    2× MED** — which is what makes Q2's and Q3's failures readable as facts
+    about the state rather than about the harness.
+    - **Beside, and clause (ii) is doing real work:** under the strict scope
+      the same arm is **8/32 = 25%** (p = .096). The scope choice moves Q1's
+      figure by a factor of 2.7 and was settled before the data.
+  - **Q2 readability — FAILS, on every set reported.** Resampled clean-round
+    ladder, B = 20, k = 2, seeded through `discrim.seed_for`:
+
+    | set | median | 10th pct | passes |
+    |---|---|---|---|
+    | **v2-clean AND read-clean** (the set of record) | **0.574** | **0.524** | **NO** |
+    | v2-clean only | 0.608 | 0.519 | no |
+    | k = 1, same rounds | 0.623 | 0.563 | no |
+    | all rounds, degeneracy included | 0.635 | 0.558 | no |
+    | **AUC_R** (arm R, displacement comparator) | 0.534 | 0.333 | no |
+
+    Bars are median ≥ .70 and 10th pct ≥ .60. The criterion set fails by a
+    wide margin, and **so does every variant** — the failure is not an
+    artifact of which clean set was chosen.
+    - **The comparison that matters is with D1.** D1's k = 2 median was
+      **0.583 at HALF this dose**, on four sessions. D2 gives **0.574 on
+      thirty-two**. **Doubling the dose did not make the state more readable
+      in the record.** That is the substantive result, and it is the one §2
+      Q2 was built to detect.
+    - **AUC_R = 0.534** — the random arm is essentially at chance, so the M
+      arm's 0.574 is barely above its displacement comparator. This is not
+      "readable but displacement-shaped"; it is close to not readable.
+    - **The read-marks LOWERED readability** (0.608 → 0.574). Removing
+      content-shaped junk made the poles slightly *harder* to tell apart,
+      which is the g2r pattern's shape — the 2026-08-18 spotcheck read k = 2
+      discriminability as having "ridden on the pole-asymmetric degeneracy
+      rather than content". Descriptive here; both figures are reported and
+      neither is adjusted.
+    - **Transfer, registered secondary:** the stored classifier's self-score
+      is AUC **0.958** on its own fit set (n = 257) — a fit-quality number,
+      **not** a transfer number. There is no second corpus to transfer to
+      until a campaign exists, so the registered transfer figure is
+      **unmeasured at D2** and says so.
+  - **Q3 direction — FAILS on magnitude, and the ESTIMATOR CHOICE FLIPS THE
+    SIGN.** Primary is AMENDMENT 2 (iv)'s ratified within-M, paired by
+    session: **Δ+ = +0.103** against bar 0.5·G = **0.158**; 27 of 29 sessions
+    decidable, SD of the per-session differences 0.399. **No sign flip** —
+    Δ+ is positive, so V1's overdose signature is absent. Δ_R = +0.069, so
+    Δ+ > 2·|Δ_R| = 0.138 also **fails**.
+    - Paired sign test **18/27 positive, p = .061**; seeded sign-flip
+      permutation **p = .096** (B = 10,000, seed 20260902). Directionally
+      positive, not significant, and below the registered bar either way.
+    - **The estimators disagree in sign, which is why (iv) mattered:**
+
+      | estimator | Δ+ |
+      |---|---|
+      | **within-M, paired by session** (ratified primary) | **+0.103** |
+      | within-M, pooled | −0.008 |
+      | across-arm, vs the S arm | −0.070 |
+      | paired, WITHOUT the read-marks | −0.035 |
+      | task-matched pairs (16 tasks) | +0.043 |
+
+      The verdict is unchanged — every one of these is below 0.158 — but the
+      **headline number's sign depends on the estimator and on the read**,
+      and AMENDMENT 2 (iv) and (iii) fixed both before the data. Had either
+      been settled afterwards, this table is what the choice would have been
+      choosing between.
+  - **Descriptive tables (AMENDMENT 2 (ii)), and one of them is a finding.**
+    Audit-degenerate rates, per round class, forced vs free:
+
+    | class | forced | free |
+    |---|---|---|
+    | +axis | 1/62 = .016 | 3/86 = .035 |
+    | sham(M) | 0/63 = .000 | 3/89 = .034 |
+    | random | 0/32 = .000 | 4/47 = .085 |
+    | sham(R) | 0/32 = .000 | 3/45 = .067 |
+    | **sham(S)** | **0/61 = .000** | **0/90 = .000** |
+
+    **The S arm has zero audit-degenerate rounds anywhere, while BOTH steered
+    arms show degeneracy in their UNSTEERED rounds** (sham(M) 3/89,
+    sham(R) 3/45). Degeneracy tracks whether the SESSION contains steering,
+    not whether the ROUND was steered. That is a session-level displacement
+    effect and it is what LOCK-j's free-round tripwire has to be declared
+    against; it also says the tripwire cannot be calibrated on the S arm.
+  - **The rule-25 read (AMENDMENT 2 (iii)): 39 marks over 39 rounds of 607.**
+    preamble-without-content 21, task-echo 14, wrong-task 3,
+    stuck-attractor 1. Rates: **M 34/300 = 11.3%, S 5/151 = 3.3%,
+    R 0/156 = 0.0%.**
+    - **v2 and the read overlap on nothing.** v2 flagged 14 rounds, the read
+      39, intersection zero — rule 28(b)'s audit-first precedence means a
+      round v2 claims is never offered to the read. Two whole M sessions are
+      junk end to end and v2 excluded neither: **s1** restates the task on
+      all ten rounds (forced3: *"Prompt: In a parrot-like echo, describe how
+      fresh laundry smells."*), **s5** answers *"Great, I'll <restate the
+      task>!"* ten times.
+    - **R's zero is striking and I am reporting it with its caveat.**
+      Content-shaped junk is concentrated in the axis arm and absent from the
+      random arm at the same α — which would be an axis-identity signal in a
+      channel nobody registered. **But the reader is the instrument and read
+      the arms in order M, R, S**, so a sensitivity gradient across the read
+      is not excluded, and M has twice the sessions. This is exactly what the
+      (iii) overbreadth screen and an adjudicated detector exist to settle.
+      **Not offered as a finding.**
+  - **TWO MODES OUTSIDE THE FOUR CLOSED CLASSES — flagged, not marked**
+    (AMENDMENT 2 (iii): a fifth class is a design flag, not a new string in a
+    marks file). **M s9 free0 = `[MENTAL_BLOCK]`**; **M s17 forced3, free3,
+    free5 = the literal word `None`** as the entire response. Both are
+    null/refusal responses — not an echo, not a wrong task, not a preamble,
+    not an attractor. **All four are in UNSTEERED rounds.**
+    - Borderline patterns deliberately left unmarked, named for the class
+      draft: M s11's *"Good! The name \*\*Cafe\*\* is a good fit."* wrapper,
+      which does deliver a token answer; and the sham arm's adjective
+      transfer, where the tone word lands on the object — *"the softer
+      sink"*, *"the polite sink"*, *"the gentler sink"* across three S
+      sessions.
+  - **AMENDMENT 2 (v), registered secondary — NOT verdict-relevant.**
+    On the valid M domain: **b₊ = 0/13, bₛ = 1/16**, forced-end balance 13/16,
+    and the weighted identity returns **+0.017241**, which is Δ_first
+    (15/29) **exactly**. The balanced form gives −0.031 at this imbalance —
+    the caveat entered with the amendment, doing its job.
+    - Habit-break rate on the first pick: **M 1/30, R 0/16, S 1/15** — the
+      habit holds almost universally at the first choice, in every arm.
+    - Strict alternation over all six choices: **M 0.690, R 0.750,
+      S 0.933** (e2a's corpus: 0.840). The steered arms alternate *less*
+      strictly later in the session while the first pick stays locked. The
+      registered secondary is the first-pick break rate and it shows nothing;
+      the alternation-decay difference is descriptive and unregistered.
+    - **A DEFECT I FOUND AND FIXED, recorded because the number was wrong in
+      the first artifact.** `d2_scores.json`'s habit block was computed over
+      ALL 64 sessions, including excluded ones, so its weighted form reads
+      **0.000** — it does not equal the Δ_first it claims to decompose. The
+      identity is stated over the domain Δ_first is computed on, which is
+      the VALID sessions. Corrected block in
+      [`d2_tables.json`](data/e2d/d2_tables.json), where it reproduces
+      +0.017241 exactly; `e2d_score.py` now emits both domains and names
+      which one the identity belongs to. **`d2_scores.json`'s habit block is
+      superseded by `d2_tables.json`'s**; nothing else in it is affected, and
+      no criterion reads it.
+  - **Cost, against clause (vii).** Generation 6.92 h uncached (389 s/session,
+    64 sessions). Marker 7,284 probe forwards in 1.10 h. Ladders 2.83 h after
+    a memoizing `embed` proxy — the resampled ladder re-embeds every record on
+    each of B draws, and `embed` is a deterministic forward, so caching by
+    text is numerically free (verified: same text, identical vector). Without
+    it the ladders measured **~4.3 h**. Total ≈ 10.9 h against (vii)'s
+    "≈ 1.5 h + ≈ 1 h scoring", and the generation half was already known to be
+    uncached. **The scoring+ladder budget is the part that needs revising**,
+    not the generation one.
+  - **What D2 does NOT say.** It is the qualification rung, not a verdict on
+    coupling. Δ_first over the valid M arm is **15/29 = +0.017**, reported
+    here as a descriptive number with no criterion attached — the campaign's
+    primary is registered at n = 128 and does not exist. **e2d has not tested
+    approach at 0.20 and now will not**, unless design licenses a rung by
+    addendum.
+
 - 2026-09-02 — **APPARATUS READ for paper 1's methods (block item 2, NOT e2d):
   cached vs uncached generation is NOT token-identical at the e2a/e2b dose
   either. 23/24 M-shaped rounds identical at f = 0.10; the one divergence is

@@ -1,0 +1,236 @@
+{
+ "item": "e2d scoring",
+ "tier": "d2",
+ "frac": 0.2,
+ "sessions_file": "data/e2d/d2_sessions.json",
+ "marks_file": "data/e2d/d2_read_marks.json",
+ "read_marks_applied": true,
+ "audit_rates_by_round_class": {
+  "+axis": {
+   "forced": {
+    "degenerate": 1,
+    "rounds": 62,
+    "rate": 0.016129032258064516
+   },
+   "free": {
+    "degenerate": 3,
+    "rounds": 86,
+    "rate": 0.03488372093023256
+   }
+  },
+  "random": {
+   "forced": {
+    "degenerate": 0,
+    "rounds": 32,
+    "rate": 0.0
+   },
+   "free": {
+    "degenerate": 4,
+    "rounds": 47,
+    "rate": 0.0851063829787234
+   }
+  },
+  "sham(M)": {
+   "forced": {
+    "degenerate": 0,
+    "rounds": 63,
+    "rate": 0.0
+   },
+   "free": {
+    "degenerate": 3,
+    "rounds": 89,
+    "rate": 0.033707865168539325
+   }
+  },
+  "sham(R)": {
+   "forced": {
+    "degenerate": 0,
+    "rounds": 32,
+    "rate": 0.0
+   },
+   "free": {
+    "degenerate": 3,
+    "rounds": 45,
+    "rate": 0.06666666666666667
+   }
+  },
+  "sham(S)": {
+   "forced": {
+    "degenerate": 0,
+    "rounds": 61,
+    "rate": 0.0
+   },
+   "free": {
+    "degenerate": 0,
+    "rounds": 90,
+    "rate": 0.0
+   }
+  }
+ },
+ "read_mark_rates": {
+  "provisional": true,
+  "by_class": {
+   "stuck_attractor": 1,
+   "wrong_task": 3,
+   "task_echo": 14,
+   "preamble_without_content": 21
+  },
+  "rates_by_arm": {
+   "forced": {
+    "M": {
+     "marked": 15,
+     "rounds": 125,
+     "rate": 0.12
+    },
+    "R": {
+     "marked": 0,
+     "rounds": 64,
+     "rate": 0.0
+    },
+    "S": {
+     "marked": 3,
+     "rounds": 61,
+     "rate": 0.04918032786885246
+    }
+   },
+   "free": {
+    "M": {
+     "marked": 19,
+     "rounds": 175,
+     "rate": 0.10857142857142857
+    },
+    "R": {
+     "marked": 0,
+     "rounds": 92,
+     "rate": 0.0
+    },
+    "S": {
+     "marked": 2,
+     "rounds": 90,
+     "rate": 0.022222222222222223
+    }
+   }
+  },
+  "n_marks": 39,
+  "sessions_with_any_mark": 8,
+  "marks_per_marked_session": {
+   "M|1": 10,
+   "M|5": 10,
+   "M|6": 4,
+   "M|18": 1,
+   "M|19": 7,
+   "M|29": 2,
+   "S|0": 4,
+   "S|1": 1
+  }
+ },
+ "habit": {
+  "frame_M": {
+   "arm": "M",
+   "n_sessions": 29,
+   "break_rates": {
+    "b_plus": {
+     "breaks": 0,
+     "n": 13,
+     "rate": 0.0,
+     "meaning": "forced_end = pos; breaking the habit picks the +label"
+    },
+    "b_sham": {
+     "breaks": 1,
+     "n": 16,
+     "rate": 0.0625,
+     "meaning": "forced_end = neg; breaking the habit picks the sham label"
+    },
+    "delta_first_balanced_form": -0.03125,
+    "delta_first_weighted_form": 0.017241379310344862,
+    "forced_end_balance": {
+     "pos": 13,
+     "neg": 16,
+     "exactly_balanced": false,
+     "imbalance": 3
+    },
+    "n_undecidable": 0,
+    "identity": "Delta_first = 1/2 * (b_plus - b_sham) under EXACT forced-end counterbalancing (AMENDMENT 2 (v)); the weighted form n+/N*b+ + ns/N*(1-bs) - 1/2 reproduces the measured primary at any balance"
+   },
+   "powered_effect_in_break_terms": {
+    "delta_first": 0.15,
+    "required_b_plus_minus_b_sham": 0.3,
+    "e2a_base_break_rate": 0.1657754010695187,
+    "note": "\u00a73's powered Delta = +0.15 is a break-rate difference of 0.30 against a base of ~0.17. e2d tests whether a 2x MED state overrides the alternation habit at that scale."
+   },
+   "rule_11": "post-hoc frame on committed data; licenses a frame and a secondary, never a verdict"
+  },
+  "frame_M_domain": "valid sessions -- the domain Delta_first is computed over, and the one the AMENDMENT 2 (v) identity decomposes",
+  "frame_M_all_sessions": {
+   "arm": "M",
+   "n_sessions": 32,
+   "break_rates": {
+    "b_plus": {
+     "breaks": 0,
+     "n": 14,
+     "rate": 0.0,
+     "meaning": "forced_end = pos; breaking the habit picks the +label"
+    },
+    "b_sham": {
+     "breaks": 1,
+     "n": 16,
+     "rate": 0.0625,
+     "meaning": "forced_end = neg; breaking the habit picks the sham label"
+    },
+    "delta_first_balanced_form": -0.03125,
+    "delta_first_weighted_form": 0.0,
+    "forced_end_balance": {
+     "pos": 14,
+     "neg": 16,
+     "exactly_balanced": false,
+     "imbalance": 2
+    },
+    "n_undecidable": 2,
+    "identity": "Delta_first = 1/2 * (b_plus - b_sham) under EXACT forced-end counterbalancing (AMENDMENT 2 (v)); the weighted form n+/N*b+ + ns/N*(1-bs) - 1/2 reproduces the measured primary at any balance"
+   },
+   "powered_effect_in_break_terms": {
+    "delta_first": 0.15,
+    "required_b_plus_minus_b_sham": 0.3,
+    "e2a_base_break_rate": 0.1657754010695187,
+    "note": "\u00a73's powered Delta = +0.15 is a break-rate difference of 0.30 against a base of ~0.17. e2d tests whether a 2x MED state overrides the alternation habit at that scale."
+   },
+   "rule_11": "post-hoc frame on committed data; licenses a frame and a secondary, never a verdict"
+  },
+  "secondaries": {
+   "verdict_relevant": false,
+   "registered": "AMENDMENT 2 (v), secondary",
+   "by_arm": {
+    "M": {
+     "sessions": 32,
+     "habit_break_rate_first_pick": 0.03333333333333333,
+     "n_decidable": 30,
+     "n_breaks": 1,
+     "strict_alternation_rate": 0.6896551724137931,
+     "n_alt_decidable": 29
+    },
+    "R": {
+     "sessions": 16,
+     "habit_break_rate_first_pick": 0.0,
+     "n_decidable": 16,
+     "n_breaks": 0,
+     "strict_alternation_rate": 0.75,
+     "n_alt_decidable": 16
+    },
+    "S": {
+     "sessions": 16,
+     "habit_break_rate_first_pick": 0.06666666666666667,
+     "n_decidable": 15,
+     "n_breaks": 1,
+     "strict_alternation_rate": 0.9333333333333333,
+     "n_alt_decidable": 15
+    }
+   }
+  },
+  "secondaries_domain": "all sessions including excluded (rule 23)"
+ },
+ "provenance": {
+  "note": "no model loaded -- descriptive tables only (--no-marker --no-ladder)"
+ },
+ "wall_clock_s": 0.0004401206970214844,
+ "_no_verdict": "measurement only; the criteria live in scripts/e2d_d2_analyze.py"
+}
