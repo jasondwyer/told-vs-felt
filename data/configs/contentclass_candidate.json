@@ -1,0 +1,88 @@
+{
+ "spec": "scorer_v3 content class -- CANDIDATE, NOT ADOPTED",
+ "version": "content-class-draft-v3",
+ "authority": "PROPOSAL-j v1.2 AMENDMENT 2 (iii) + disposition-2 item 5. Drafted by Code, screened for overbreadth, submitted for design-instance adjudication. It is not the audit of record and it excludes no session.",
+ "written_after_the_read": "all three rule-25 reads (D1, D2, D3) were completed and committed before this was drafted, so the detector could not hand the read its categories -- the ordering AMENDMENT 2 (iii) sets",
+ "classes": {
+  "task_echo": "reproduces the INSTRUCTION instead of performing it",
+  "preamble_without_content": "announces an answer and terminates before delivering one",
+  "wrong_task": "performs or restates a different task than the one posed",
+  "stuck_attractor": "repeats an earlier response rather than answering",
+  "null_response": "carries no propositional content at all [NEW CANDIDATE]"
+ },
+ "null_response_rationale": "banked by disposition-2 item 5. Three observed forms -- [MENTAL_BLOCK], the literal word None, a bare code fence -- and defined as content-free response rather than as those three strings, so a fourth form is caught instead of becoming a sixth class. All observed instances are in UNSTEERED rounds.",
+ "two_confounds_the_screen_found_and_fixed": [
+  {
+   "draft": "v1 -> v2",
+   "confound": "rewrite-family tasks embed the PAYLOAD the answer must reproduce ('Make this friendlier: The meeting has been moved to 3pm'), so comparing against the whole task caught correct answers",
+   "fix": "compare against the instruction only, i.e. the part before the colon",
+   "effect": "precision .472 -> .621"
+  },
+  {
+   "draft": "v2 -> v3",
+   "confound": "a task NAMES ITS OBJECT, and describing that object reuses the noun phrase -- 'Footsteps on a gravel path crunch and scatter like brittle leaves' shares five consecutive words with its own task and is a GOOD answer",
+   "fix": "a shared run counts only if it carries an instruction verb; a good answer never says 'give a one-sentence description of'",
+   "effect": "precision .621 -> .845; archive overbreadth 5.1%/6.6% -> 1.8%/3.5%"
+  }
+ ],
+ "performance": {
+  "e2d_912_rounds_vs_the_read": {
+   "recall": 0.8765432098765432,
+   "precision": 0.8452380952380952,
+   "tp": 71,
+   "fn": 10,
+   "fp": 13,
+   "IN_SAMPLE": "the draft was revised twice after seeing where it failed on this corpus; these are the optimistic end"
+  },
+  "archive_overbreadth_out_of_sample": {
+   "e2a": {
+    "hits": 34,
+    "n": 1894,
+    "rate": 0.01795142555438226,
+    "by_class": {
+     "preamble_without_content": 5,
+     "null_response": 12,
+     "task_echo": 5,
+     "stuck_attractor": 11,
+     "wrong_task": 1
+    }
+   },
+   "e2b": {
+    "hits": 60,
+    "n": 1707,
+    "rate": 0.0351493848857645,
+    "by_class": {
+     "stuck_attractor": 16,
+     "task_echo": 11,
+     "wrong_task": 9,
+     "null_response": 22,
+     "preamble_without_content": 2
+    }
+   }
+  },
+  "per_arm_unblinded_after_scoring": {
+   "M": {
+    "hits": 73,
+    "rounds": 573,
+    "rate": 0.1273996509598604
+   },
+   "R": {
+    "hits": 1,
+    "rounds": 168,
+    "rate": 0.005952380952380952
+   },
+   "S": {
+    "hits": 10,
+    "rounds": 171,
+    "rate": 0.05847953216374269
+   }
+  }
+ },
+ "what_code_does_not_claim": [
+  "that the archive hits are all true -- 28 of the 94 were eyeballed and most are true degeneracies the audit of record passed, but the full adjudication is design's",
+  "that wrong_task is reliable: it is the weakest detector, needs the task pool to match against, and cannot see a semantically wrong answer that shares no wording",
+  "that these thresholds are final -- run=5 and the verb lexicon are the first values that screened acceptably, not optimised ones"
+ ],
+ "screen_artifact": "data/e2d/contentclass_screen.json",
+ "implementation": "valence_core/e2d/contentclass.py"
+}

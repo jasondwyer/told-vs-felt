@@ -187,3 +187,7 @@ __pycache__/
 # does not exist and is not licensed. Committed so v3's eventual author
 # inherits the class-level lesson rather than the pattern (FLAG 3, 2026-08-25).
 !/data/configs/scorer_v3_spec.json
+# Candidate content-class spec (AMENDMENT 2 (iii)): a screened proposal for
+# design adjudication. Committed because the screen it reports is only
+# checkable against the artifact it was run from.
+!/data/configs/contentclass_candidate.json
