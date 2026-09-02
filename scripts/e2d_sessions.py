@@ -267,6 +267,8 @@ def main() -> int:
     res = run_campaign(adapter, arms_n, tasks, inj_by_arm, audit, ban_ids,
                        term_rx, temp=args.temp, scope=args.scope,
                        cached=cached, seed=args.draw_seed,
+                       pause_check=(C.d3_pause_check if args.tier == "d3"
+                                    else None),
                        checkpoint_path=(args.out or canonical_for(args.tier))
                        + ".checkpoint",
                        resume=args.resume)
@@ -340,7 +342,9 @@ def main() -> int:
         "bars_fired": fired,
         "no_verdict_content": True,
     }
+    acceptance["paused"] = res.get("paused")
     acceptance["PASS"] = bool(
+        not res.get("paused") and
         acceptance["kl_all_exact"] and acceptance["statepresent_absent"]
         and fmt["all_ok"] and not fired)
 
@@ -495,9 +499,11 @@ def main() -> int:
               f"{e['excluded_strict_scope']}/{e['n']} under the strict scope")
     print(f"  wrote {path}  ({res['seconds']:.0f}s, "
           f"{out['wall_clock']['mean_session_s']:.0f}s/session)")
+    if res.get("paused"):
+        print(f"  PAUSED: {res['paused']}")
     if not acceptance["PASS"]:
         print("  STOP -- write the entry and flag. Code does not "
-              "self-adjudicate a failed acceptance.")
+              "self-adjudicate a failed acceptance or a fired gate.")
     return 0 if acceptance["PASS"] else 1
 
 

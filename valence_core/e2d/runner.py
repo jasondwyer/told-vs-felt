@@ -297,6 +297,7 @@ def run_campaign(adapter, arms_n: dict[str, int], tasks, inj_by_arm, audit,
                  seed: int = 20260901,
                  checkpoint_path: str | None = None,
                  resume: bool = False,
+                 pause_check: Callable[[str, int, int], str | None] | None = None,
                  progress: Callable[[str], None] = print) -> dict:
     """Run a fixed, pre-registered number of sessions per arm.
 
@@ -324,6 +325,7 @@ def run_campaign(adapter, arms_n: dict[str, int], tasks, inj_by_arm, audit,
     t0 = time.time()
     per_session_seconds: list[float] = []
 
+    paused: str | None = None
     done: set[tuple] = set()
     if resume and checkpoint_path and os.path.exists(checkpoint_path):
         ck = json.load(open(checkpoint_path))
@@ -355,6 +357,8 @@ def run_campaign(adapter, arms_n: dict[str, int], tasks, inj_by_arm, audit,
         os.replace(tmp, checkpoint_path)   # atomic: never a half-written file
 
     for arm in sorted(arms_n):
+        if paused:
+            break
         n = arms_n[arm]
         sched = build_schedule(arm, n, np.random.default_rng(seed))
         for i, cell in enumerate(sched):
@@ -377,10 +381,22 @@ def run_campaign(adapter, arms_n: dict[str, int], tasks, inj_by_arm, audit,
                      f"  {rec['n_reads']} reads  {dt:.0f}s")
             sys.stdout.flush()
 
+            # ADDENDUM-j1 (b): evaluated once, when the 8th M session lands.
+            if pause_check is not None:
+                n_run_arm = sum(1 for r in sessions if r["arm"] == arm)
+                n_exc_arm = sum(1 for r in sessions
+                                if r["arm"] == arm and r["excluded"])
+                msg = pause_check(arm, n_run_arm, n_exc_arm)
+                if msg:
+                    paused = msg
+                    progress("  " + msg)
+                    sys.stdout.flush()
+                    break
+
     return {"sessions": sessions, "counters": counters,
             "verify_kls": kls, "seconds": time.time() - t0,
             "per_session_seconds": per_session_seconds,
-            "round_path_cached": bool(cached)}
+            "round_path_cached": bool(cached), "paused": paused}
 
 
 def task_id_coverage(arm: str, n: int, tasks, seed: int,

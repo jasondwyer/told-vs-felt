@@ -219,12 +219,45 @@ def declared_features() -> list[FeatureSpec]:
     ]
 
 
+
+# --- ADDENDUM-j1 (b): D3's gross-breakdown pause bar ---------------------
+#: f = 0.30 sits adjacent to the 0.40 overdose regime Qwen showed in B2a, and
+#: unlike D2 this rung has no qualification role to protect -- so the bar is
+#: not a criterion but a stop: if the apparatus is visibly coming apart, the
+#: run pauses and a human looks, rather than spending 2.6 h producing junk.
+#:
+#: "First 8 sessions" means the first 8 RUN, in schedule order, on the arm.
+#: Evaluated once, when the 8th completes; it is a gross-breakdown check, not
+#: a running monitor, and re-evaluating it every session afterwards would turn
+#: a stop into a bar that can fire late for a different reason (rule 21's
+#: distinction between a monitor and a criterion).
+D3_PAUSE_AFTER = 8
+D3_PAUSE_AT_EXCLUDED = 4
+
+
+def d3_pause_check(arm: str, n_run: int, n_excluded: int) -> str | None:
+    """ADDENDUM-j1 (b). Message to pause on, or None.
+
+    Forced-scope exclusions, which is the scope of record (AMENDMENT 2 (ii)),
+    so this reads the same count Q1 would have read had D3 had a Q1.
+    """
+    if arm != "M" or n_run != D3_PAUSE_AFTER:
+        return None
+    if n_excluded >= D3_PAUSE_AT_EXCLUDED:
+        return (f"ADDENDUM-j1 (b) GROSS-BREAKDOWN PAUSE: {n_excluded} of the "
+                f"first {D3_PAUSE_AFTER} M sessions excluded under the forced "
+                f"scope (bar: >= {D3_PAUSE_AT_EXCLUDED}). Pausing for "
+                f"adjudication; Code does not self-adjudicate a fired gate.")
+    return None
+
 #: Counters tabulate over ALL sessions including excluded ones (rule 23).
 DECLARED_COUNTERS = ("termination", "cap_hit", "audit_degenerate", "lexical",
                      "post_choice_degeneracy", "low_label_mass")
 
 __all__ = ["ROSTER", "F", "TEMP", "LAYER", "RANDOM_DIRS_KEY", "ARMS",
            "D1_FRAC", "D2_FRAC", "D3_FRAC", "TIERS",
-           "MIN_TASK_IDS_PER_CLASS", "load_audit", "EXCLUSION_SCOPE",
+           "MIN_TASK_IDS_PER_CLASS", "D3_PAUSE_AFTER",
+           "D3_PAUSE_AT_EXCLUDED", "d3_pause_check",
+           "load_audit", "EXCLUSION_SCOPE",
            "PRECEDENCE", "declared_bars", "FIRING_CASES", "declared_features",
            "DECLARED_COUNTERS", "REPO", "DATA"]

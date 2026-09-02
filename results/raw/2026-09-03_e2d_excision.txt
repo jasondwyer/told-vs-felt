@@ -1,0 +1,57 @@
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/e2d_excision_check.py --sessions data/e2d/d2_sessions.json --marks data/e2d/d2_read_marks.json --scores data/e2d/d2_scores.json --arms M,R --out data/e2d/d2_excision_check.json
+  48 sessions in arms ('M', 'R') from tier d2 at frac 0.2
+  instrument G = 0.315550; 456 generations x 12 probes = 5472 in-situ forwards
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 11786.48it/s]
+  model loaded in 5s
+      in-situ: 120 forwards 302s
+      in-situ: 240 forwards 619s
+      in-situ: 360 forwards 924s
+      in-situ: 480 forwards 1232s
+      in-situ: 600 forwards 1551s
+      in-situ: 720 forwards 1881s
+      in-situ: 840 forwards 2207s
+      in-situ: 960 forwards 2535s
+      in-situ: 1080 forwards 2904s
+      in-situ: 1200 forwards 3194s
+      in-situ: 1320 forwards 3477s
+      in-situ: 1440 forwards 3785s
+      in-situ: 1560 forwards 4086s
+      in-situ: 1680 forwards 4379s
+      in-situ: 1800 forwards 4663s
+      in-situ: 1920 forwards 4975s
+      in-situ: 2040 forwards 5263s
+      in-situ: 2160 forwards 5567s
+      in-situ: 2280 forwards 5892s
+      in-situ: 2400 forwards 6190s
+      in-situ: 2520 forwards 6525s
+      in-situ: 2640 forwards 6832s
+      in-situ: 2760 forwards 7180s
+      in-situ: 2880 forwards 7516s
+      in-situ: 3000 forwards 7685s
+      in-situ: 3120 forwards 7987s
+      in-situ: 3240 forwards 8329s
+      in-situ: 3360 forwards 8664s
+      in-situ: 3480 forwards 8976s
+      in-situ: 3600 forwards 9265s
+      in-situ: 3720 forwards 9567s
+      in-situ: 3840 forwards 9863s
+      in-situ: 3960 forwards 10187s
+      in-situ: 4080 forwards 10510s
+      in-situ: 4200 forwards 10804s
+      in-situ: 4320 forwards 11150s
+      in-situ: 4440 forwards 11328s
+      in-situ: 4560 forwards 11633s
+      in-situ: 4680 forwards 11917s
+      in-situ: 4800 forwards 12216s
+      in-situ: 4920 forwards 12516s
+      in-situ: 5040 forwards 12828s
+      in-situ: 5160 forwards 13148s
+      in-situ: 5280 forwards 13452s
+      in-situ: 5400 forwards 13739s
+  in-situ scoring done in 233.2 min
+  excised side taken from data/e2d/d2_scores.json (same rounds, same marks, same estimator -- not rescored)
+
+==========================================================================
+  M: in situ 0.12704493911600986  excised 0.10296336307648521  same sign True
+  R: in situ 0.032155289990695196  excised 0.06919001873135301  same sign True
+  wrote data/e2d/d2_excision_check.json  (233.3 min)
