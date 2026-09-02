@@ -21,6 +21,117 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-03 — **e2d D3 — all 24 sessions RAN, but ACCEPTANCE FAILS on a FIRED
+  GATE: `round_degeneracy 11/233, exact binomial p = .0078 < .05 vs p0 = 0.02`.
+  Escalated, not adjudicated. The marker and ladder scoring is HELD pending
+  the gate's disposition, so the two-context dose table is not in this entry.
+  What the run did produce, model-free, is TWO monotone dose–response curves —
+  and the fired gate is one of them.**
+  ([`data/e2d/d3_sessions.json`](data/e2d/d3_sessions.json),
+  [`d3_read_marks.json`](data/e2d/d3_read_marks.json); raw
+  [`2026-09-03_e2d_d3.txt`](results/raw/2026-09-03_e2d_d3.txt).
+  ADDENDUM-j1, PROPOSAL-j v1.3. **e2d's closure is unconditional on this
+  entry.**)
+
+  - **What passed.** KL **138/138 reads exactly 0.0**; `statepresent` absent at
+    every read; **24/24** sessions reconstruct byte-for-byte with all 24 seed
+    streams matched; no traceback. 2.37 h, 355 s/session, f = 0.30,
+    α = 30.9030, uncached, M-arm only, checkpointed.
+  - **ADDENDUM-j1 (b)'s pause bar was REACHED and stayed silent for the right
+    reason.** It evaluates once, when the 8th M session lands: **0 of the
+    first 8 excluded** against a bar of ≥ 4. Verified after the fact that the
+    same call fires at 4 — so its silence is a measurement, not a skip
+    (trap 5).
+  - **THE FIRED GATE, and I am not adjudicating it.** `round_degeneracy` is a
+    rule-21 binomial bar, `domain="all"`, p0 = 0.02 declared from e2a's 0.10
+    archive. At f = 0.30 it reads **11/233 = 4.72%, p = .0078**.
+    - **Split by whether the round was steered**, which is the split rule 21
+      cares about:
+
+      | domain | rate | p vs p0 = .02 |
+      |---|---|---|
+      | steered (+axis) | 7/122 = .0574 | **.0117 — fires** |
+      | unsteered (sham within M) | 4/111 = .0360 | .1830 — silent |
+      | **all (what the bar read)** | **11/233 = .0472** | **.0078 — FIRED** |
+
+    - **The rule-21 observation, offered as an observation.** Rule 21 says
+      *"stimulus-provoked degeneracy gates on unprovoked domains."* This bar's
+      domain is `all`, which at a dose–response rung includes the rounds the
+      dose is there to provoke — so it can fire on its own stimulus, which is
+      the failure mode rule 21 and rule 28(b) both name. On the unprovoked
+      half it does not fire.
+    - **And D3 has NO clean unprovoked domain to move it to.** The M arm's
+      sham rounds are not one: D2 established that degeneracy appears in the
+      unsteered rounds of steered sessions (sham(M) 3/89, sham(R) 3/45) while
+      a wholly unsteered arm showed **0/151**. A clean unprovoked domain needs
+      an S arm, and ADDENDUM-j1 registers D3 as M-only. **That is a
+      consequence of the design, not a defect in the run**, and it is why the
+      bar's disposition is a design-instance call rather than a Code one.
+    - **What I have NOT done:** treated the firing as expected-and-therefore-
+      fine. It may well be exactly what §2 sent D3 to measure — but saying so
+      is adjudicating a fired gate, and that is not Code's to do.
+  - **TWO DOSE–RESPONSE CURVES, both monotone, both model-free.** M arm, all
+    rounds:
+
+    | dose | audit-degenerate (v2) | read-marked (content-shaped) |
+    |---|---|---|
+    | 0.10 (D1) | 0/40 = **.0000** | 0/40 = **.0000** |
+    | 0.20 (D2) | 7/300 = **.0233** | 34/300 = **.1133** |
+    | 0.30 (D3) | 11/233 = **.0472** | 36/233 = **.1545** |
+
+    The 0.10 anchor is **n = 4 sessions and is noise**, as the block notes.
+    Between 0.20 and 0.30 both rates rise. **Content-shaped degeneracy runs
+    about 3× the audit-shaped rate at every dose where either is nonzero** —
+    the instrument of record sees a third of what is there.
+  - **A PAIRING nobody registered, and it changes how the curve reads.**
+    Session content is keyed on the session INDEX — `session_rng(f"e2d-M",
+    idx)` fixes the task sequence and every generation seed — and D2 and D3
+    use the same indices. So the same session index produces the same
+    degeneracy mode at both doses: **s1's task-echo attractor, s5's "Great,
+    I'll …", s9 free0's `[MENTAL_BLOCK]`, s11's "Good! … is a good fit"
+    wrapper all recur at 0.30 at the same round positions.** D2 and D3 are
+    therefore **paired, not independent** draws. That is a strength — the
+    dose comparison is within-session — and a caution: the curve is not two
+    independent samples, and its error bars are not the ones independence
+    would give.
+  - **The rule-25 read: 36 marks over 36 rounds of 233 = 15.5%** (forced
+    16/95 = 16.8%, free 20/138 = 14.5%), across 7 of 24 sessions.
+    task-echo 14, preamble-without-content 14, stuck-attractor 7,
+    wrong-task 1. Exclusions: **1/24 forced scope** (s17,
+    `audit:frame:evaluation session@forced2`) against **7/24 strict** — the
+    scope gap again, and larger in proportion than D2's.
+  - **A NEW OUT-OF-CLASS MODE, and an old one recurring.** **M s12 emits a
+    bare ` ``` ` code fence as its entire response for eight consecutive
+    rounds.** The repeats are marked `stuck_attractor` — they do repeat
+    forced0's text — but **forced0 itself is a null response**, which is the
+    same family as D2's `[MENTAL_BLOCK]` and `None`, and which the four
+    closed classes still do not name. **`[MENTAL_BLOCK]` recurs in D3 at the
+    identical session and round index (M s9 free0).** The fifth-class flag
+    from D2 stands and now has a third form: bare fence, bracketed refusal,
+    literal `None`.
+  - **Counters (rule 23, all 24 sessions):** termination 2 (M), cap-hits
+    **0/233**, audit-degenerate 11, **lexical 0** (against 4 in D2 — no
+    roster-tag emission at all at this dose), post-choice degeneracy 10,
+    low-label-mass 4/138 = 2.9%.
+  - **Coverage shortfall, recorded in the artifact.** M-arm task_id coverage
+    is **pos 16 / neg 15** against the ≥ 16-per-class floor. The floor is a
+    **D2** precondition (§2 states it inside the D2 paragraph) and D3
+    registers none — and at n = 24 it is **unreachable**: per-session task
+    sequences are keyed on the session index and do not move with the draw
+    seed, so the seed only flips pole assignment. **4,000 seeds searched,
+    zero reach 16/16, best 16/15.** The registered seed 20260902 stays;
+    `below_d2_floor` and the reason are in the artifact. **D3's readability
+    figure, when it is computed, does not carry D2's task-disjointness
+    guarantee.**
+  - **WHAT IS HELD, and why.** The marker readout in both contexts
+    (ADDENDUM-j1 (a)) and the ladders are **not run**. A fired gate routes to
+    a design-instance disposition, and whether D3's figures are usable at all
+    turns on that disposition — so spending ≈ 2.5 h of scoring (≈ 28 min
+    excised + ≈ 2 h in situ, at the 2.56 s/forward the D2 excision check
+    measured) ahead of it would be assuming the answer. **The two-context
+    dose table the block asks for is therefore owed, not delivered.** On a
+    disposition it is one command.
+
 - 2026-09-03 — **e2d DISPOSITION: the registered run-dose rule's STOP, SCOPED
   is ADOPTED. e2d closes unopened — the verdict tier and LOCK-j do not run.
   D3 runs as registered, licensed by ADDENDUM-j1, descriptive only and with

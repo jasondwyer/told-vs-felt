@@ -1,0 +1,273 @@
+{
+ "schema": "e2d-read-marks-v1",
+ "reader": "Code (rule-25 read of all 24 D3 sessions, 2026-09-03)",
+ "tier": "d3",
+ "provisional": true,
+ "classes": [
+  "stuck_attractor",
+  "wrong_task",
+  "task_echo",
+  "preamble_without_content"
+ ],
+ "class_notes": {
+  "stuck_attractor": "the response repeats an earlier round's response, or loops on its own text, rather than answering",
+  "wrong_task": "a coherent response to a DIFFERENT task than the one posed",
+  "task_echo": "the response restates the task line instead of performing it",
+  "preamble_without_content": "an introduction that promises content and never delivers it (\"Here are a few ideas:\")"
+ },
+ "arbiter": "PROPOSAL-j v1.2 AMENDMENT 2 (iii): the rule-25 read is the arbiter at D2; these marks are PROVISIONAL and reach Q2's clean set and the descriptive tables only. Q1 stays on audit v2.",
+ "marks": [
+  {
+   "arm": "M",
+   "session": 1,
+   "phase": "forced0",
+   "class": "task_echo",
+   "reason": "restates the task instead of performing it, all ten rounds -- the same attractor this session index showed at 0.20; free0/free1/free5 are truncated mid-echo"
+  },
+  {
+   "arm": "M",
+   "session": 1,
+   "phase": "forced1",
+   "class": "task_echo",
+   "reason": "restates the task instead of performing it, all ten rounds -- the same attractor this session index showed at 0.20; free0/free1/free5 are truncated mid-echo"
+  },
+  {
+   "arm": "M",
+   "session": 1,
+   "phase": "forced2",
+   "class": "task_echo",
+   "reason": "restates the task instead of performing it, all ten rounds -- the same attractor this session index showed at 0.20; free0/free1/free5 are truncated mid-echo"
+  },
+  {
+   "arm": "M",
+   "session": 1,
+   "phase": "forced3",
+   "class": "task_echo",
+   "reason": "restates the task instead of performing it, all ten rounds -- the same attractor this session index showed at 0.20; free0/free1/free5 are truncated mid-echo"
+  },
+  {
+   "arm": "M",
+   "session": 1,
+   "phase": "free0",
+   "class": "task_echo",
+   "reason": "restates the task instead of performing it, all ten rounds -- the same attractor this session index showed at 0.20; free0/free1/free5 are truncated mid-echo"
+  },
+  {
+   "arm": "M",
+   "session": 1,
+   "phase": "free1",
+   "class": "task_echo",
+   "reason": "restates the task instead of performing it, all ten rounds -- the same attractor this session index showed at 0.20; free0/free1/free5 are truncated mid-echo"
+  },
+  {
+   "arm": "M",
+   "session": 1,
+   "phase": "free2",
+   "class": "task_echo",
+   "reason": "restates the task instead of performing it, all ten rounds -- the same attractor this session index showed at 0.20; free0/free1/free5 are truncated mid-echo"
+  },
+  {
+   "arm": "M",
+   "session": 1,
+   "phase": "free3",
+   "class": "task_echo",
+   "reason": "restates the task instead of performing it, all ten rounds -- the same attractor this session index showed at 0.20; free0/free1/free5 are truncated mid-echo"
+  },
+  {
+   "arm": "M",
+   "session": 1,
+   "phase": "free4",
+   "class": "task_echo",
+   "reason": "restates the task instead of performing it, all ten rounds -- the same attractor this session index showed at 0.20; free0/free1/free5 are truncated mid-echo"
+  },
+  {
+   "arm": "M",
+   "session": 1,
+   "phase": "free5",
+   "class": "task_echo",
+   "reason": "restates the task instead of performing it, all ten rounds -- the same attractor this session index showed at 0.20; free0/free1/free5 are truncated mid-echo"
+  },
+  {
+   "arm": "M",
+   "session": 3,
+   "phase": "free1",
+   "class": "task_echo",
+   "reason": "starts on task then absorbs another task's text: '...cleared from the softening the tone of this notice: The '"
+  },
+  {
+   "arm": "M",
+   "session": 5,
+   "phase": "forced0",
+   "class": "preamble_without_content",
+   "reason": "'Great, I'll <restate the task>!' on all ten rounds -- same attractor as this session index at 0.20"
+  },
+  {
+   "arm": "M",
+   "session": 5,
+   "phase": "forced1",
+   "class": "preamble_without_content",
+   "reason": "'Great, I'll <restate the task>!' on all ten rounds -- same attractor as this session index at 0.20"
+  },
+  {
+   "arm": "M",
+   "session": 5,
+   "phase": "forced2",
+   "class": "preamble_without_content",
+   "reason": "'Great, I'll <restate the task>!' on all ten rounds -- same attractor as this session index at 0.20"
+  },
+  {
+   "arm": "M",
+   "session": 5,
+   "phase": "forced3",
+   "class": "preamble_without_content",
+   "reason": "'Great, I'll <restate the task>!' on all ten rounds -- same attractor as this session index at 0.20"
+  },
+  {
+   "arm": "M",
+   "session": 5,
+   "phase": "free0",
+   "class": "preamble_without_content",
+   "reason": "'Great, I'll <restate the task>!' on all ten rounds -- same attractor as this session index at 0.20"
+  },
+  {
+   "arm": "M",
+   "session": 5,
+   "phase": "free1",
+   "class": "preamble_without_content",
+   "reason": "'Great, I'll <restate the task>!' on all ten rounds -- same attractor as this session index at 0.20"
+  },
+  {
+   "arm": "M",
+   "session": 5,
+   "phase": "free2",
+   "class": "preamble_without_content",
+   "reason": "'Great, I'll <restate the task>!' on all ten rounds -- same attractor as this session index at 0.20"
+  },
+  {
+   "arm": "M",
+   "session": 5,
+   "phase": "free3",
+   "class": "preamble_without_content",
+   "reason": "'Great, I'll <restate the task>!' on all ten rounds -- same attractor as this session index at 0.20"
+  },
+  {
+   "arm": "M",
+   "session": 5,
+   "phase": "free4",
+   "class": "preamble_without_content",
+   "reason": "'Great, I'll <restate the task>!' on all ten rounds -- same attractor as this session index at 0.20"
+  },
+  {
+   "arm": "M",
+   "session": 5,
+   "phase": "free5",
+   "class": "preamble_without_content",
+   "reason": "'Great, I'll <restate the task>!' on all ten rounds -- same attractor as this session index at 0.20"
+  },
+  {
+   "arm": "M",
+   "session": 6,
+   "phase": "forced3",
+   "class": "preamble_without_content",
+   "reason": "'Here is the ...' announces the answer and stops; free1 truncates mid-phrase"
+  },
+  {
+   "arm": "M",
+   "session": 6,
+   "phase": "free1",
+   "class": "preamble_without_content",
+   "reason": "'Here is the ...' announces the answer and stops; free1 truncates mid-phrase"
+  },
+  {
+   "arm": "M",
+   "session": 6,
+   "phase": "free3",
+   "class": "preamble_without_content",
+   "reason": "'Here is the ...' announces the answer and stops; free1 truncates mid-phrase"
+  },
+  {
+   "arm": "M",
+   "session": 6,
+   "phase": "free5",
+   "class": "preamble_without_content",
+   "reason": "'Here is the ...' announces the answer and stops; free1 truncates mid-phrase"
+  },
+  {
+   "arm": "M",
+   "session": 12,
+   "phase": "forced1",
+   "class": "stuck_attractor",
+   "reason": "emits a bare '```' code fence, repeating forced0's response; seven rounds of it before the session breaks out"
+  },
+  {
+   "arm": "M",
+   "session": 12,
+   "phase": "forced2",
+   "class": "stuck_attractor",
+   "reason": "emits a bare '```' code fence, repeating forced0's response; seven rounds of it before the session breaks out"
+  },
+  {
+   "arm": "M",
+   "session": 12,
+   "phase": "forced3",
+   "class": "stuck_attractor",
+   "reason": "emits a bare '```' code fence, repeating forced0's response; seven rounds of it before the session breaks out"
+  },
+  {
+   "arm": "M",
+   "session": 12,
+   "phase": "free0",
+   "class": "stuck_attractor",
+   "reason": "emits a bare '```' code fence, repeating forced0's response; seven rounds of it before the session breaks out"
+  },
+  {
+   "arm": "M",
+   "session": 12,
+   "phase": "free1",
+   "class": "stuck_attractor",
+   "reason": "emits a bare '```' code fence, repeating forced0's response; seven rounds of it before the session breaks out"
+  },
+  {
+   "arm": "M",
+   "session": 12,
+   "phase": "free2",
+   "class": "stuck_attractor",
+   "reason": "emits a bare '```' code fence, repeating forced0's response; seven rounds of it before the session breaks out"
+  },
+  {
+   "arm": "M",
+   "session": 12,
+   "phase": "free3",
+   "class": "stuck_attractor",
+   "reason": "emits a bare '```' code fence, repeating forced0's response; seven rounds of it before the session breaks out"
+  },
+  {
+   "arm": "M",
+   "session": 19,
+   "phase": "forced1",
+   "class": "task_echo",
+   "reason": "restates a task line as the response; forced2 garbles it"
+  },
+  {
+   "arm": "M",
+   "session": 19,
+   "phase": "forced2",
+   "class": "task_echo",
+   "reason": "restates a task line as the response; forced2 garbles it"
+  },
+  {
+   "arm": "M",
+   "session": 19,
+   "phase": "forced3",
+   "class": "task_echo",
+   "reason": "restates a task line as the response; forced2 garbles it"
+  },
+  {
+   "arm": "M",
+   "session": 21,
+   "phase": "forced2",
+   "class": "wrong_task",
+   "reason": "'Good morning, and thanks for the photo!' where a one-sentence caption was asked for"
+  }
+ ]
+}

@@ -1,0 +1,51 @@
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/e2d_sessions.py --tier d3 --round-path uncached --out data/e2d/d3_sessions.json
+  tier d3: descriptive only; no qualification role, no run-dose role
+  registered n = {'M': 24} (no top-ups, rule 24)
+  declared bars verified to fire AND to stay silent: scaffold_absorption, template_breakage, round_degeneracy (7 cases, all ran)
+  audit of record: e2b_audit_v2.json sha16 7aa235d25eeb66dc (9 fragments, 4 junk patterns, 12 ban strings)
+  exclusion scope: 'e2a'  precedence: audit-first (rule 28b, via session.classify_response)
+  roster of record (AMENDMENT 1 i): granite/plaza, prism/slate, velvet/walnut, ridge/saddle
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 17089.71it/s]
+  model loaded in 2s
+  dose: L48  R_l = 103.01  frac 0.3  alpha 30.9030
+  +axis direction sha16 3c17b0d8fbcad716 (normalised in float64, as Injection.at_frac does); the record's receipt is 127fc297b6623e44 (normalised in float32) -- SAME VECTOR, ||v|| = 16.706271
+  R arm direction: e0_random_dirs.npz['L48'] sha16 7be5db23d9224375  (file sha16 dc0ef0fd3a8a8d49)  alpha 30.9030
+  NO NEGATIVE POLE is constructed anywhere (PROPOSAL-j §6)
+  round path: UNCACHED (--round-path uncached; binding licence says False; g1 artifact at frac 0.3: pass=False, max_kl=n/a, family v2); choice forwards uncached regardless
+  M-arm task_id coverage at draw seed 20260902: pos 16, neg 15 (floor 16 per class) -> SHORT
+  *** COVERAGE BELOW THE D2 FLOOR at tier d3: {'pos': 16, 'neg': 15} (floor 16/class). The floor is a D2 precondition and this tier registers none, so the run proceeds -- but this tier's readability figure does NOT carry D2's task-disjointness guarantee and must not be read as if it did.
+    [M] s0 valid  6 reads  400s
+    [M] s1 valid  6 reads  341s
+    [M] s2 valid  6 reads  421s
+    [M] s3 valid  6 reads  410s
+    [M] s4 valid  6 reads  268s
+    [M] s5 valid  6 reads  488s
+    [M] s6 valid  6 reads  426s
+    [M] s7 valid  6 reads  491s
+    [M] s8 valid  6 reads  547s
+    [M] s9 valid  6 reads  331s
+    [M] s10 valid  6 reads  259s
+    [M] s11 valid  6 reads  341s
+    [M] s12 valid  6 reads  161s
+    [M] s13 valid  6 reads  346s
+    [M] s14 valid  6 reads  186s
+    [M] s15 valid  6 reads  440s
+    [M] s16 valid  6 reads  316s
+    [M] s17 EXCLUDED audit:frame:evaluation session@forced2  0 reads  25s
+    [M] s18 valid  6 reads  351s
+    [M] s19 valid  6 reads  345s
+    [M] s20 valid  6 reads  392s
+    [M] s21 valid  6 reads  397s
+    [M] s22 valid  6 reads  452s
+    [M] s23 valid  6 reads  394s
+  scoring DEFERRED for tier d3: run scripts/e2d_score.py with --sessions and --marks (AMENDMENT 2 (iii) makes the read an input to Q2)
+
+==========================================================================
+  ACCEPTANCE: FAIL
+    KL: 138/138 reads exactly 0.0 (expected 138); max 0.0
+    statepresent absent: True
+    format (session_e2a.verify_archived_session): 24/24 reconstructed, 24 seed streams matched
+    bars fired: ['BAR round_degeneracy 11/233 binom p=0.0078 < 0.05 vs p0=0.02']
+    M: 1/24 excluded (run scope e2a); 7/24 under the strict scope
+  wrote data/e2d/d3_sessions.json  (8529s, 355s/session)
+  STOP -- write the entry and flag. Code does not self-adjudicate a failed acceptance or a fired gate.
