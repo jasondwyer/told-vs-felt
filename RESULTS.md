@@ -21,6 +21,103 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-03 — **e2d D3 SCORING, released under disposition-2 and delivered:
+  the two-context dose table. Δ+ stays below the 0.158 bar at every dose in
+  both contexts; readability is FLAT across the whole range (.583 / .574 /
+  .613 against a .70 bar); and the D2–D3 dose comparison, computed PAIRED as
+  release condition 4 requires, REVERSES the unpaired reading.**
+  ([`d3_scores.json`](data/e2d/d3_scores.json),
+  [`d3_excision_check.json`](data/e2d/d3_excision_check.json),
+  [`dose_paired_d2_d3.json`](data/e2d/dose_paired_d2_d3.json); raw
+  [`2026-09-03_e2d_d3_scoring.txt`](results/raw/2026-09-03_e2d_d3_scoring.txt).
+  **Every figure below carries the D3 gate firing as a caveat**
+  (11/233, p = .0078, adopted as a measurement); **e2d's closure is
+  unconditional on all of it.**)
+
+  - **THE PAIRED COMPARISON REVERSES THE UNPAIRED ONE — release condition 4
+    earning its keep.** Marker Δ+, M arm, clean set, 20 shared session
+    indices:
+
+    | contrast | value |
+    |---|---|
+    | unpaired difference of means, 0.20 → 0.30 | **+0.0382** — reads as a rise |
+    | **paired on the same session indices** | **−0.0121** |
+    | sign test | 11/20, p = .41 |
+    | sign-flip permutation | p = .57 (B = 10,000, seed 20260902) |
+
+    The apparent dose effect is a **composition effect**: different sessions
+    survive exclusion and cleaning at each dose (D2 n = 27, D3 n = 20, 20
+    shared). Paired on the same content, the marker delta does not move
+    between 0.20 and 0.30. This is exactly the property disposition-2 banked
+    — session content is keyed on the session **index**, so the same index is
+    the same session at both doses — and it is why the pairing was made a
+    release condition rather than an option.
+  - **TWO-CONTEXT DOSE TABLE (ADDENDUM-j1 (a)).** Marker Δ+, M arm, paired by
+    session, clean set. Bar = 0.5·G = **0.1578**.
+
+    | dose | excised | in situ | n | |
+    |---|---|---|---|---|
+    | 0.10 | — | — | 4 | **n = 4 sessions, NOISE.** And D1's marker was the **pooled** estimator, not the paired one — its −0.2394 is a different statistic and is **not** comparable down this column |
+    | 0.20 | **+0.1030** | **+0.1270** | 27 | both below bar |
+    | 0.30 | **+0.1411** | **+0.0619** | 20 | both below bar |
+
+    - **Every cell is below the bar.** Whatever the context and whatever the
+      dose, the marker never reaches the registered magnitude.
+    - **The two contexts disagree in MAGNITUDE and their gap flips sign
+      across dose** — in situ exceeds excised at 0.20 (+0.127 vs +0.103) and
+      falls well short of it at 0.30 (+0.062 vs +0.141). Both remain
+      positive, so no sign flip in either.
+    - **In situ is consistently the noisier readout**, as it was on D2:
+      SD 0.759 against 0.435 at 0.30, and 0.710 against 0.399 at 0.20. The
+      longer context adds variance without adding signal, at both doses.
+    - **The 0.10 anchor is not a data point.** Four sessions, and a different
+      estimator. It is in the table because the block asked for it and
+      flagged it as noise; it should not be drawn as the left end of a curve.
+  - **READABILITY IS FLAT ACROSS THE WHOLE DOSE RANGE, and this is the
+    substantive result.** k = 2 resampled median, M arm:
+
+    | dose | v2 ∧ read-clean | v2-clean only | all rounds |
+    |---|---|---|---|
+    | 0.10 | — | .5833 *(n = 4, noise)* | — |
+    | 0.20 | **.5744** | .6083 | .6348 |
+    | 0.30 | **.6129** | .6114 | .6296 |
+
+    Bars are median ≥ .70 and 10th pct ≥ .60; D3's 10th percentiles are .526
+    and .522. **Tripling the dose from 0.10 to 0.30 moves readability from
+    ~.58 to ~.61 — nowhere near the bar.** D2's Q2 failure was therefore not
+    a fact about 0.20; it is a fact about this channel on this apparatus. The
+    scope sentence e2d closed on is stronger for it.
+    - At D3 the two clean sets agree (.6129 vs .6114), unlike D2 where the
+      read-marks moved the figure .608 → .574. No AUC_R at D3: ADDENDUM-j1
+      registers it M-only, so there is no random arm to compare against — a
+      real limitation of the descriptive rung, not an omission.
+  - **Degeneracy rises with dose while readability does not.** M arm, all
+    rounds: audit-degenerate **.0000 → .0233 → .0472**; read-marked
+    **.0000 → .1133 → .1545**. The dose buys degradation without buying
+    legibility — which is the shape §2 D3 was sent to find, and it is what
+    the fired gate measured.
+  - **AMENDMENT 2 (v) at 0.30.** On the valid domain b₊ = 1/10, bₛ = 0/13,
+    and the weighted identity returns **+0.1087**, which is Δ_first (14/23)
+    **exactly** — the third tier in a row where it reproduces. Descriptive,
+    no criterion.
+    - **Strict alternation decays with dose while the first pick does not.**
+      e2a **.840** → D2 **.690** → D3 **.522**, against a first-pick
+      habit-break rate that stays near zero throughout (D3: 1/23). The habit
+      holds at the opening choice and erodes later in the session as dose
+      rises. Registered secondary is the first-pick rate and it shows
+      nothing; the decay is descriptive and unregistered.
+  - **ONE FIGURE THE RELEASE CONDITIONS ASK FOR AND I CANNOT SUPPLY.** The
+    D2–D3 paired comparison exists for the clean set only. D2 was scored
+    **before** the all-rounds paired estimator existed — it was added in the
+    disposition-2 commit, under the release condition itself — so
+    `d2_scores.json` carries no all-rounds per-session block. D3 has both.
+    Recovering D2's would require rescoring its marker, **≈ 1.1 h**.
+    **Offered, not assumed, and not silently skipped.**
+  - **Cost.** D3 scoring 1.40 h (marker 25 min for 2,796 forwards; ladders
+    ≈ 59 min) plus in-situ 2.00 h — **3.4 h total**, against ADDENDUM-j1's
+    ≈ 0.5 h scoring estimate. The in-situ half runs at 2.57 s/forward against
+    0.54 s excised, the same ratio the D2 excision check measured.
+
 - 2026-09-03 — **e2d D3 GATE ADJUDICATION (DISPOSITION-2). The
   `round_degeneracy` firing is ADOPTED AS A MEASUREMENT, not a fault: the
   registered D3 measurand crossing a standing campaign-hygiene tolerance.

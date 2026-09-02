@@ -1,0 +1,30 @@
+{
+ "comparison": "D2 (f=0.20) vs D3 (f=0.30), marker paired-by-session, CLEAN set",
+ "why_paired": "session content is keyed on the session INDEX -- session_rng(f'e2d-M', idx) fixes the task sequence and every generation seed -- so the same index is the same session at both doses. Release condition 4 (disposition-2).",
+ "n_shared_indices": 20,
+ "d2_n": 27,
+ "d3_n": 20,
+ "mean_d2_on_shared": 0.15316690506575573,
+ "mean_d3_on_shared": 0.14111588568113959,
+ "paired_mean_change": -0.012051019384616089,
+ "paired_sd": 0.32958075706646045,
+ "sign_test": {
+  "n": 20,
+  "k_positive": 11,
+  "p": 0.41190147399902344,
+  "alternative": "greater",
+  "n_ties_dropped": 0
+ },
+ "sign_flip_test": {
+  "n": 20,
+  "observed_mean": -0.012051019384616089,
+  "p": 0.5686431356864313,
+  "b": 10000,
+  "seed": 20260902,
+  "alternative": "greater",
+  "null_sd": 0.07141654326032601
+ },
+ "unpaired_difference_of_means": 0.038152522604654376,
+ "the_point": "the UNPAIRED contrast reads +0.0382 -- the marker delta rising with dose. Paired on the same sessions it is -0.0121, sign test 11/20 p=.41. The apparent rise is a COMPOSITION effect: different sessions survive exclusion and cleaning at each dose. Pairing was the release condition and it changed the answer.",
+ "all_rounds_pairing_unavailable": "D2 was scored before the all-rounds paired estimator existed (added in the disposition-2 commit), so d2_scores.json carries no all-rounds per-session block. Recovering it needs D2's marker rescored, ~1.1 h. Offered, not assumed."
+}

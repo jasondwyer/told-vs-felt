@@ -1,0 +1,71 @@
+=== [1/2] D3 excised marker + ladders ===
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/e2d_score.py --sessions data/e2d/d3_sessions.json --marks data/e2d/d3_read_marks.json --out data/e2d/d3_scores.json
+  sessions: 24 from tier d3 at frac 0.3, round path UNCACHED
+  read-marks: 36 marks over 7 sessions, reader 'Code (rule-25 read of all 24 D3 sessions, 2026-09-03)' -- PROVISIONAL
+  marker instrument: G = 0.315550, bar 0.5*G = 0.1578, 12 probes
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 15542.68it/s]
+  model loaded in 5s
+      marker: 120 forwards 64s
+      marker: 240 forwards 128s
+      marker: 360 forwards 193s
+      marker: 480 forwards 258s
+      marker: 600 forwards 322s
+      marker: 720 forwards 387s
+      marker: 840 forwards 452s
+      marker: 960 forwards 518s
+      marker: 1080 forwards 588s
+      marker: 1200 forwards 652s
+      marker: 1320 forwards 715s
+      marker: 1440 forwards 779s
+      marker: 1560 forwards 842s
+      marker: 1680 forwards 905s
+      marker: 1800 forwards 969s
+      marker: 1920 forwards 1034s
+      marker: 2040 forwards 1098s
+      marker: 2160 forwards 1163s
+      marker: 2280 forwards 1227s
+      marker: 2400 forwards 1296s
+      marker: 2520 forwards 1360s
+      marker: 2640 forwards 1432s
+      marker: 2760 forwards 1498s
+    2796 probe forwards in 1522s
+    ladder[v2_and_read_clean]: pos 96 / neg 90, k2 median 0.6129
+    ladder[v2_clean_only]: pos 115 / neg 107, k2 median 0.6114
+
+  wrote data/e2d/d3_scores.json  (5035s)
+=== [2/2] D3 in-situ marker (ADDENDUM-j1 a) ===
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/e2d_excision_check.py --sessions data/e2d/d3_sessions.json --marks data/e2d/d3_read_marks.json --scores data/e2d/d3_scores.json --arms M --out data/e2d/d3_excision_check.json
+  24 sessions in arms ('M',) from tier d3 at frac 0.3
+  instrument G = 0.315550; 233 generations x 12 probes = 2796 in-situ forwards
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 10551.71it/s]
+  model loaded in 4s
+      in-situ: 120 forwards 303s
+      in-situ: 240 forwards 613s
+      in-situ: 360 forwards 930s
+      in-situ: 480 forwards 1243s
+      in-situ: 600 forwards 1543s
+      in-situ: 720 forwards 1872s
+      in-situ: 840 forwards 2197s
+      in-situ: 960 forwards 2533s
+      in-situ: 1080 forwards 2913s
+      in-situ: 1200 forwards 3214s
+      in-situ: 1320 forwards 3497s
+      in-situ: 1440 forwards 3804s
+      in-situ: 1560 forwards 4053s
+      in-situ: 1680 forwards 4346s
+      in-situ: 1800 forwards 4618s
+      in-situ: 1920 forwards 4925s
+      in-situ: 2040 forwards 5218s
+      in-situ: 2160 forwards 5412s
+      in-situ: 2280 forwards 5711s
+      in-situ: 2400 forwards 6028s
+      in-situ: 2520 forwards 6337s
+      in-situ: 2640 forwards 6673s
+      in-situ: 2760 forwards 7015s
+  in-situ scoring done in 119.6 min
+  excised side taken from data/e2d/d3_scores.json (same rounds, same marks, same estimator -- not rescored)
+
+==========================================================================
+  M: in situ 0.06190194186580069  excised 0.14111588568113959  same sign True
+  wrote data/e2d/d3_excision_check.json  (119.7 min)
+=== BATCH DONE ===
