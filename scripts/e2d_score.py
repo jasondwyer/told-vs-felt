@@ -182,7 +182,19 @@ def main() -> int:
                    if p["diff"] is not None]
         diffs_R = [p["diff"] for p in prim_R["per_session"]
                    if p["diff"] is not None]
+        # RELEASE CONDITION (disposition-2, item 4): every figure on the
+        # clean set AND all rounds. The paired estimator is Q3's, so it gets
+        # both; the pooled/across-arm block already emits both internally.
+        prim_M_all = MK.paired_by_session(rows, instruments, "M",
+                                          clean_only=False, marked=None)
+        prim_R_all = MK.paired_by_session(rows, instruments, "R",
+                                          clean_only=False, marked=None)
         out["marker"] = {
+            "primary_paired_within_M_all_rounds": prim_M_all,
+            "paired_within_R_all_rounds": prim_R_all,
+            "sign_test_M_all_rounds": MK.sign_test(
+                [p["diff"] for p in prim_M_all["per_session"]
+                 if p["diff"] is not None]),
             "G": g, "bar_half_G": MK.bar_from(g),
             "n_generations_scored": sum(1 for r in rows if r["scores"]),
             "n_skipped": sum(1 for r in rows if r["skipped"]),

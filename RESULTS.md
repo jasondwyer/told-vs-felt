@@ -21,6 +21,66 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-03 — **e2d D3 GATE ADJUDICATION (DISPOSITION-2). The
+  `round_degeneracy` firing is ADOPTED AS A MEASUREMENT, not a fault: the
+  registered D3 measurand crossing a standing campaign-hygiene tolerance.
+  Apparatus intact, D3's data usable for their registered descriptive
+  purpose, held scoring RELEASED under four conditions. Design seat takes
+  slip (11).**
+  (Design instance 2026-09-03 UTC, PI ratified 2026-09-03. The fired gate and
+  what it read are in the D3 entry below; ADDENDUM-j1, PROPOSAL-j v1.3.
+  **e2d's closure remains unconditional.**)
+
+  - **1. The firing, adopted as a measurement.** 11/233 = 4.72%, exact
+    binomial **p = .0078** against p0 = 0.02; steered **7/122 = .0574** fires
+    alone, unsteered **4/111 = .0360** is silent. The reading of record: this
+    is *"the registered D3 measurand — the degeneracy curve toward the
+    overdose regime — crossing the standing campaign-hygiene tolerance."*
+    - **The bar's declared justification, quoted** (`valence_core/e2d/
+      config.py:177–181`): *"Measured class: e2a's 0.10 archive is the
+      declared healthy rate. Binds by exact binomial at every scale
+      (rule 21)."*
+    - **Its call site, quoted** (`scripts/e2d_sessions.py:320`):
+      `fired = check_bars(bars, {"round_degeneracy": (n_degen, n_rounds), …})`
+      — evaluated once, after the campaign, over `n_degen` and `n_rounds`
+      counted across **all** rounds of all sessions. The `domain="all"` in the
+      declaration and the all-rounds counts at the call site are the same
+      decision made twice, which is why nothing in the harness caught it.
+  - **2. SLIP LEDGER, design seat, item (11).** *ADDENDUM-j1 re-licensed D3
+    M-only, after D2's session-level displacement finding abolished the only
+    unprovoked domain, without re-domaining the degeneracy monitor — leaving
+    the bar nothing to bind on but the provoked phenomenon. The
+    pause-and-adjudicate path that resulted is the correct conversion; the
+    failure to pre-declare it is the slip.*
+  - **3. Apparatus status: INTACT.** KL **138/138 exactly 0.0**; **24/24**
+    sessions reconstructed with all seed streams matched; ADDENDUM-j1 (b)'s
+    pause bar reached, silent, and **verified firable at its threshold**;
+    cap-hits **0/233**; the degeneracy monotone across dose and mode-locked by
+    session index. **D3's data are usable for their registered descriptive
+    purpose.**
+  - **4. Release conditions, binding on everything that follows.** The held
+    scoring runs; **every D3 figure is reported on the clean set AND all
+    rounds**, each carrying the firing as a caveat; and the **D2–D3 dose
+    comparison is computed PAIRED by session index** — the shared-content
+    property banked as *a strength for the comparison, a constraint on its
+    error bars, and an unregistered design property named here*.
+  - **5. Banked (ledger 23).** The **3× content-vs-audit ratio** — the audit
+    of record sees about a third of what the read sees; the **NULL_RESPONSE
+    family** (three forms — `[MENTAL_BLOCK]`, the literal `None`, a bare
+    ` ``` ` fence — **all in unsteered rounds**) as a candidate class for the
+    scorer_v3 spec; and `below_d2_floor` coverage at n = 24.
+  - **6. Proposed rule annotations — PI APPROVAL REQUIRED, NOT APPLIED.**
+    Recorded here as proposals only; CLAUDE.md is unchanged and stays
+    unchanged until the PI says otherwise.
+    - **(a) rule 2** — *a first-token kernel gate licenses first-token reads,
+      not generation; T-step identity is its own gate.*
+    - **(b) rule 21** — *degeneracy bars at dose-characterization rungs bind
+      on an unprovoked domain; where none exists by design, the bar is a
+      pause-and-adjudicate trigger, declared as such.*
+    - Both are annotations this session's own evidence produced — (a) from the
+      T-step checks at 0.20 and 0.10, (b) from this gate. **Code does not
+      apply ledger changes**; they are flagged, not folded.
+
 - 2026-09-03 — **e2d D3 — all 24 sessions RAN, but ACCEPTANCE FAILS on a FIRED
   GATE: `round_degeneracy 11/233, exact binomial p = .0078 < .05 vs p0 = 0.02`.
   Escalated, not adjudicated. The marker and ladder scoring is HELD pending
