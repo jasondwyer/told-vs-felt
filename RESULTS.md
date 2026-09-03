@@ -21,6 +21,113 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-04 — **e2d CLOSURE COMPLETION — item 1 DELIVERED, and it FIRES ITS
+  OWN FLAG CONDITION: the licensed D2 all-rounds paired rescore returns
+  **+0.0149**, which DISAGREES IN SIGN with the clean-set **−0.0121**. Not
+  averaged, per the block. And the closure text is HELD, not committed: a
+  13-agent adversarial values-check over the committed artifacts returned
+  **7 of 12 glosses OVERSTATED**, every one of which I then re-verified by
+  hand. Code does not reword design prose, and does not commit a closure
+  carrying claims its own check flags.**
+  ([`d2_scores_allrounds.json`](data/e2d/d2_scores_allrounds.json),
+  [`dose_paired_d2_d3_allrounds.json`](data/e2d/dose_paired_d2_d3_allrounds.json);
+  raw [`_allrounds_rescore`](results/raw/2026-09-04_e2d_d2_allrounds_rescore.txt),
+  [`_valuescheck`](results/raw/2026-09-04_e2d_closure_valuescheck.txt).
+  **e2d's closure decision itself is unaffected** — Q2 and Q3 failed, the
+  run-dose rule returned STOP, SCOPED, and nothing below reopens it.)
+
+  - **ITEM 1, the licensed rescore — integrity gate first.** The rescore had
+    to reproduce D2's committed CLEAN paired figure before its all-rounds
+    block could be trusted as the same measurement under a different filter.
+    It does, to ten decimals: **+0.1029633631, n = 27**, against the committed
+    +0.1029633631, n = 27. Written to a NEW path; `d2_scores.json` untouched.
+  - **THE FIGURE, AND THE FLAG.** D2→D3, marker paired by session index:
+
+    | filter | D2 | D3 | shared n | paired change | sign test | unpaired |
+    |---|---|---|---|---|---|---|
+    | **clean** | +0.1030 | +0.1411 | 20 | **−0.0121** | 11/20, p = .41 | +0.0382 |
+    | **all rounds** | −0.0307 | +0.0372 | 24 | **+0.0149** | 14/24, p = .27 | +0.0679 |
+
+    **The two filters put the point estimate on opposite sides of zero.**
+    Neither is significant — p = .41 and p = .27 — so the reading that
+    survives both is *no detectable change from 0.20 to 0.30*, not a
+    direction. **Not averaged**, per item 1. The composition artifact
+    reproduces under both filters: unpaired reads +0.038 and +0.068, paired
+    reads −0.012 and +0.015.
+  - **THE VALUES-CHECK, and why the closure text is held.** Thirteen agents,
+    each given one claim and instructed to REFUTE it, reading the committed
+    artifacts directly; plus a critic asked what nobody was assigned. Result:
+    **6 CONFIRMED, 6 PARTIAL, 0 refuted outright — and 7 glosses OVERSTATED.**
+    Every finding below I re-verified myself before recording it, because one
+    agent also reported session counts (D2 35 M, D3 27) that are simply wrong
+    — the artifacts hold **D2 64 = M32/R16/S16 and D3 24 = M24, no duplicate
+    keys.** Agent output is evidence, not testimony.
+    1. **"the displacement comparator at .534"** — CONFIRMED for D2, but D3
+       ran M-only under ADDENDUM-j1 and **has no comparator at all**. The
+       singular phrasing reads as covering both doses. *Verified: `AUC_R`
+       exists in `d2_scores.json` and appears nowhere in `d3_scores.json`.*
+    2. **"unchanged by excising the readout (dilution excluded)"** —
+       OVERSTATED. The contexts differ by **2.3×** at 0.30 (excised +0.141 vs
+       in situ +0.062) and the gap **flips direction** across dose (+0.024 at
+       0.20, −0.079 at 0.30). At 0.30 the context gap is **larger than the
+       in-situ imprint itself.** What is invariant is the *below-bar
+       conclusion*, not the imprint. Dilution is neither demonstrated nor
+       excluded.
+    3. **"a quarter of its short-context value (excised +.103 vs V1's
+       +.408)"** — the arithmetic holds (0.252) but the two are **different
+       channels**: V1's +0.408 is a **state-live read at the probe**; e2d's
+       is a **no-injection read of the text the state produced**. The
+       entry's own caveat names instrument transfer; the deeper problem is
+       that this is not the same measurement divided.
+    4. **"coherence degrades monotonically with dose"** — the three point
+       estimates are ordered, but **only one of four steps is resolved**:
+       read .10→.20 **p = .011**; audit .10→.20 p = .41, audit .20→.30
+       p = .10, read .20→.30 p = .10. **On the 24 shared indices — the
+       paired basis release condition 4 requires — neither .20→.30 step is
+       resolved** (audit p = .15, read p = .30).
+    5. **And the rise is not axis-specific, which the closure does not say.**
+       At f = 0.20 the **random** arm degrades at **7/156 = .0449** against
+       the axis arm's **7/300 = .0233** — twice the rate, in the arm that
+       carries no axis (R > M one-sided p = .16, unresolved, but pointing the
+       wrong way for an axis reading). The wholly unsteered S arm is
+       **0/151**. Degeneracy tracks *displacement*, not the reward direction.
+    6. **The .20→.30 read-marked rise is ONE SESSION.** On shared indices the
+       net change is **+4 marks**, and index **s12 alone moves +7** (0/10 →
+       7/10) while s19 moves **−4** and s18 **−1**. Two further indices —
+       **s1 and s5** — sit at **10/10 at both doses** and carry **58.8%** of
+       all marks on shared indices, contributing no dose information at all.
+    7. **"flat from 0.20 to 0.30"** — should be *no detectable change*. With
+       n = 20 and sd 0.33 the paired interval spans roughly ±0.15, which
+       covers the 0.158 bar in both directions; the data cannot certify
+       flatness, only fail to detect movement. **My own D3 entry carries the
+       same overreach** — "the marker delta does not move between 0.20 and
+       0.30" — and should read "shows no detectable movement".
+    8. **"first-pick break rate unmoved (1/23)"** — unmoved only *within*
+       e2d (D2 1/30 = .033, D3 1/23 = .043). Across the ladder it is not:
+       **e2a's pooled rate is 30/184 = .163**, four times e2d's, and its
+       reward arm alone is 16/102 = .157. The habit is *stronger* in e2d than
+       in e2a, which is a different observation from "unmoved".
+    9. **"the free operant was never administered"** — the *verdict-tier
+       campaign* never ran. The free operant itself ran **537 times** across
+       D1–D3 (42 + 357 + 138 insulated choice reads, every one at KL = 0).
+       And "at any coherently deliverable dose" reaches past the evidence:
+       **nothing above 0.30 was run**, and at 0.20 the apparatus was
+       *coherent* — Q1 passed at 3/32, p = .878 — so the failure was one of
+       legibility, not coherence.
+  - **WHAT I AM NOT DOING.** Rewording the closure. The text is the design
+    instance's, the seven glosses are its to resolve, and Code rewriting a
+    closure statement would be exactly the self-adjudication the two-instance
+    workflow exists to prevent. The evidence for each is above and in the
+    artifacts; the reworded clauses the check proposed are in
+    [`closure_valuescheck.json`](data/e2d/closure_valuescheck.json).
+  - **WHAT THE CHECK DID NOT DISTURB.** Every *figure* in the closure text
+    reproduces: readability .574 / .613 against .70 (and the 10th-percentile
+    conjunct fails too, at .524 / .526 — the closure is conservative there);
+    the 0.158 bar and every cell below it; the composition capture (+0.0382
+    unpaired vs −0.0121 paired); the cost ratio 2.57 / 0.54 s per forward;
+    the 0.10-anchor caveat. **The closure's conclusion is not in question —
+    only the words carrying it.**
+
 - 2026-09-03 — **e2d D3 SCORING, released under disposition-2 and delivered:
   the two-context dose table. Δ+ stays below the 0.158 bar at every dose in
   both contexts; readability is FLAT across the whole range (.583 / .574 /

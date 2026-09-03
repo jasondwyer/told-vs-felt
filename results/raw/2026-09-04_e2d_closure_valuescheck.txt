@@ -1,0 +1,51 @@
+e2d CLOSURE VALUES-CHECK — 13 adversarial agents over committed artifacts
+verdicts and recommended rewordings: data/e2d/closure_valuescheck.json
+
+=== CLAIM 1: D2's RANDOM arm degrades at ~.0449 at f=0.20 ===
+  R arm 7/156 = 0.0449   M arm 7/300 = 0.0233   S arm 0/151 = 0.0000
+  -> the R arm degrades at LEAST as much as M: True
+
+=== CLAIM 2: the .20->.30 read-mark rise is carried by one index (s12) ===
+  shared indices 24; indices whose read-mark count MOVED: 5
+    s3   0/10 -> 1/10   delta +1
+    s12  0/10 -> 7/10   delta +7
+    s18  1/10 -> 0/10   delta -1
+    s19  7/10 -> 3/10   delta -4
+    s21  0/10 -> 1/10   delta +1
+  paired totals: 32/240 = 0.1333 -> 36/233 = 0.1545
+  largest single mover s12: +7; net change +4  -> single index accounts for ALL or more of the net rise
+
+=== CLAIM 3: indices 1 and 5 sit at 10/10 at BOTH doses ===
+  s1: D2 10/10  D3 10/10
+  s5: D2 10/10  D3 10/10
+  those two indices carry 40/68 = 0.588 of all M marks on shared indices
+
+=== CLAIM 4: e2a's first-pick habit-break rate is ~.170, not ~.03 ===
+  e2a random1  break 3/23 = 0.1304   strict-alt 0.9130
+  e2a random2  break 3/22 = 0.1364   strict-alt 0.7727
+  e2a reward   break 16/102 = 0.1569   strict-alt 0.8235
+  e2a sham     break 8/37 = 0.2162   strict-alt 0.8649
+  e2a POOLED break 30/184 = 0.1630
+  D2 (0.20) M break 1/30 = 0.0333
+  D3 (0.30) M break 1/23 = 0.0435
+
+=== CLAIM 5: only one degeneracy step is resolved (Fisher) ===
+  audit  .10 0/40  .20 7/300  .30 11/233   Fisher .10->.20 p=1.0000   .20->.30 p=0.9600
+  read   .10 0/40  .20 34/300  .30 36/233   Fisher .10->.20 p=1.0000   .20->.30 p=0.9360
+
+=== corrected one-sided Fisher (later dose greater) ===
+=== one-sided Fisher, LATER dose greater (M arm, all rounds) ===
+  audit  .10 0/40=0.0000  .20 7/300=0.0233  .30 11/233=0.0472
+         .10->.20 p=0.4129   .20->.30 p=0.1021
+  read   .10 0/40=0.0000  .20 34/300=0.1133  .30 36/233=0.1545
+         .10->.20 p=0.0112   .20->.30 p=0.1029
+
+=== the same two steps on the 24 SHARED session indices ===
+  audit  .20 6/240=0.0250  .30 11/233=0.0472   p=0.1468
+  read   .20 32/240=0.1333  .30 36/233=0.1545   p=0.2998
+
+=== D2 arm comparison at f=0.20 (is degeneracy axis-specific?) ===
+  M: 7/300 = 0.0233
+  R: 7/156 = 0.0449
+  S: 0/151 = 0.0000
+  R > M one-sided Fisher p = 0.1634

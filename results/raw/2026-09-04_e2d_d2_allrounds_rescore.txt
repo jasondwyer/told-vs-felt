@@ -1,0 +1,69 @@
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/e2d_score.py --sessions data/e2d/d2_sessions.json --marks data/e2d/d2_read_marks.json --no-ladder --out data/e2d/d2_scores_allrounds.json
+  sessions: 64 from tier d2 at frac 0.2, round path UNCACHED
+  read-marks: 39 marks over 8 sessions, reader 'Code (rule-25 read of all 64 D2 sessions, 2026-09-02)' -- PROVISIONAL
+  marker instrument: G = 0.315550, bar 0.5*G = 0.1578, 12 probes
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 10557.40it/s]
+  model loaded in 5s
+      marker: 120 forwards 66s
+      marker: 240 forwards 131s
+      marker: 360 forwards 196s
+      marker: 480 forwards 261s
+      marker: 600 forwards 332s
+      marker: 720 forwards 397s
+      marker: 840 forwards 463s
+      marker: 960 forwards 528s
+      marker: 1080 forwards 600s
+      marker: 1200 forwards 664s
+      marker: 1320 forwards 727s
+      marker: 1440 forwards 791s
+      marker: 1560 forwards 856s
+      marker: 1680 forwards 920s
+      marker: 1800 forwards 984s
+      marker: 1920 forwards 1049s
+      marker: 2040 forwards 1112s
+      marker: 2160 forwards 1176s
+      marker: 2280 forwards 1241s
+      marker: 2400 forwards 1304s
+      marker: 2520 forwards 1372s
+      marker: 2640 forwards 1436s
+      marker: 2760 forwards 1502s
+      marker: 2880 forwards 1569s
+      marker: 3000 forwards 1633s
+      marker: 3120 forwards 1698s
+      marker: 3240 forwards 1769s
+      marker: 3360 forwards 1833s
+      marker: 3480 forwards 1897s
+      marker: 3600 forwards 1962s
+      marker: 3720 forwards 2025s
+      marker: 3840 forwards 2089s
+      marker: 3960 forwards 2154s
+      marker: 4080 forwards 2221s
+      marker: 4200 forwards 2285s
+      marker: 4320 forwards 2352s
+      marker: 4440 forwards 2420s
+      marker: 4560 forwards 2487s
+      marker: 4680 forwards 2551s
+      marker: 4800 forwards 2614s
+      marker: 4920 forwards 2679s
+      marker: 5040 forwards 2744s
+      marker: 5160 forwards 2808s
+      marker: 5280 forwards 2872s
+      marker: 5400 forwards 2936s
+      marker: 5520 forwards 3001s
+      marker: 5640 forwards 3066s
+      marker: 5760 forwards 3133s
+      marker: 5880 forwards 3199s
+      marker: 6000 forwards 3264s
+      marker: 6120 forwards 3330s
+      marker: 6240 forwards 3395s
+      marker: 6360 forwards 3464s
+      marker: 6480 forwards 3535s
+      marker: 6600 forwards 3599s
+      marker: 6720 forwards 3664s
+      marker: 6840 forwards 3730s
+      marker: 6960 forwards 3796s
+      marker: 7080 forwards 3861s
+      marker: 7200 forwards 3925s
+    7284 probe forwards in 3974s
+
+  wrote data/e2d/d2_scores_allrounds.json  (3976s)

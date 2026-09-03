@@ -1,0 +1,29 @@
+{
+ "figure": "D2->D3 paired mean change, ALL ROUNDS",
+ "licensed": "design block 2026-09-04 item 1",
+ "d2_all_rounds_delta": -0.030718569212412398,
+ "d3_all_rounds_delta": 0.03720957965689359,
+ "n_shared": 24,
+ "paired_mean_change": 0.01488934744408447,
+ "paired_sd": 0.5809550423111032,
+ "sign_test": {
+  "n": 24,
+  "k_positive": 14,
+  "p": 0.27062809467315674,
+  "alternative": "greater",
+  "n_ties_dropped": 0
+ },
+ "sign_flip_test": {
+  "n": 24,
+  "observed_mean": 0.01488934744408447,
+  "p": 0.4520547945205479,
+  "b": 10000,
+  "seed": 20260902,
+  "alternative": "greater",
+  "null_sd": 0.11556127084948492
+ },
+ "unpaired_difference_of_means": 0.06792814886930598,
+ "clean_set_paired_mean_change": -0.012051019384616089,
+ "same_sign_as_clean": false,
+ "integrity": "the rescore reproduces D2's committed CLEAN paired figure exactly, so the all-rounds block is the same measurement with a different filter"
+}
