@@ -21,6 +21,91 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-03 — **RECORD HYGIENE: my entry date stamps ran AHEAD of true UTC,
+  by one day from `a9e6a74` onward. Correction table below, verified against
+  `git log` rather than repeated from the request. NO existing entry is
+  edited and NO file is renamed — the stamps stand as written and this entry
+  is the key to them. PROVENANCE: my dates came from the DESIGN BLOCK
+  HEADERS, not from my own clock, and on at least one occasion I noticed the
+  two disagreed and deferred to the block.**
+  (Stamp verified at write time: `date -u` → **Thu Sep 3 04:38:02 UTC 2026**.
+  Authoritative source for every row: `git log --date=format:'%Y-%m-%d %H:%M'`
+  with `TZ=UTC`.)
+
+  - **The two rows the request names, confirmed exactly.**
+
+    | commit | true commit time (UTC) | local | stamped |
+    |---|---|---|---|
+    | `c638289` D3 scoring released | **2026-09-02 16:57:58** | 09-02 12:57 EDT | 2026-09-03 |
+    | `1bdf16c` e2d closure completion | **2026-09-03 01:25:15** | 09-02 21:25 EDT | 2026-09-04 |
+
+  - **The full audit, because partial hygiene is worse than none.** Every
+    RESULTS entry I wrote this session, against the true UTC date of the
+    commit that carried it:
+
+    | entry stamp | commit(s) | true UTC | |
+    |---|---|---|---|
+    | 2026-09-01 (D1 stop; AMENDMENT 1; D1 acceptance; oracle incident) | `70995c0`…`4ca10e1` | 2026-09-01 02:10–03:52 | **correct** |
+    | 2026-09-02 (D2 stopped, power fault) | `a9e6a74` | 2026-09-01 09:48 | **+1 day** |
+    | 2026-09-02 (S1 k=1 re-read) | `7dad4d6` | 2026-09-01 12:23 | **+1 day** |
+    | 2026-09-02 (D2 sessions + read) | `a274ecd` | 2026-09-01 19:18 | **+1 day** |
+    | 2026-09-02 (f = 0.10 apparatus read) | `39d0ff7` | 2026-09-01 19:25 | **+1 day** |
+    | 2026-09-02 (D2 qualification rung fails) | `cd86e49` | 2026-09-01 22:17 | **+1 day** |
+    | 2026-09-03 (disposition + ADDENDUM-j1) | `520f62c` | 2026-09-02 01:59 | **+1 day** |
+    | 2026-09-03 (D3, fired gate) | `e58dfca` | 2026-09-02 08:26 | **+1 day** |
+    | 2026-09-03 (DISPOSITION-2) | `e492468` | 2026-09-02 09:32 | **+1 day** |
+    | 2026-09-03 (D3 scoring) | `c638289` | 2026-09-02 16:57 | **+1 day** |
+    | 2026-09-04 (closure completion) | `1bdf16c` | 2026-09-03 01:25 | **+1 day** |
+
+    The break is at `a9e6a74`: everything before it is right, everything from
+    it onward is one day fast. **Eleven entries, one systematic offset**, not
+    eleven independent slips.
+  - **Two document status lines carry the same offset and are ALSO left
+    unedited**, recorded here instead: PROPOSAL-j's *"v1.2 — amendment 2
+    appended 2026-09-02"* was committed `ce3ff84` at **2026-09-01 07:46 UTC**,
+    and *"v1.3 — addendum j1 appended 2026-09-03"* was committed `520f62c` at
+    **2026-09-02 01:59 UTC**. A proposal's status line is part of a locked
+    document; editing one to fix a date is a worse trade than an index entry.
+  - **WHERE MY DATES CAME FROM — the question that decides the seat.**
+    **The design block headers.** Each block arrives headed
+    `DESIGN → CODE (via Jason) — <date> (UTC)`, and I stamped entries to match
+    the block I was executing, so the entries inherited the headers' dates.
+    - **I did not consult `date -u` even once before this entry.** That is
+      the mechanical gap and it is mine.
+    - **And I had a divergent signal that I noticed and set aside.** My own
+      environment reported the date at session start and on each rollover.
+      When a block headed `2026-09-03 (UTC)` arrived while my environment
+      said 2026-09-02, I reasoned explicitly — in-thread, in as many words —
+      that "the repo has been using the block's dates" and stamped 09-03. The
+      same thing happened again for 09-04. So this is not a case of having no
+      signal; it is a case of having one and resolving it toward the header.
+    - **Both facts are on the record so the seat is design's to assign.** The
+      headers ran ahead of UTC; Code had a truer local signal, preferred the
+      header, and never checked the authoritative one. I am not assigning the
+      ledger item to either seat — that is not mine to do — but I would not
+      want the first fact recorded without the second.
+  - **Why the offset is harmless to the science and not to the record.**
+    Nothing dated is a measurement: every figure in every entry is tied to a
+    committed artifact and a commit hash, and the hashes are unambiguous. What
+    the offset damages is **sequence** — an entry stamped 09-04 sits after one
+    stamped 09-03 in a reader's mind even when they were written four hours
+    apart the same evening — and the ability to line entries up against the
+    box's clock, the pod billing, or anything else timestamped externally.
+    **`git log` is authoritative and disagrees with the entry heads by one
+    day from `a9e6a74`.**
+  - **Standing fix, adopted now.** `date -u` before every stamp — not the
+    block header, not my environment's reminder, not inference from the
+    previous entry. The block header records when the block was *written*,
+    which is a different fact from when the work was *done*, and only the
+    second belongs in a dated log entry.
+  - **Watermarks name entry TITLES, not dates** (already true of the 09-04
+    handoff). Raw-log filenames `2026-09-03_e2d_d3_scoring.txt`,
+    `2026-09-04_e2d_d2_allrounds_rescore.txt`,
+    `2026-09-04_e2d_closure_valuescheck.txt` and
+    `HANDOFF-2026-09-04-design.md` **keep their names** — they are referenced
+    by name from committed entries, and renaming them would break those links
+    to fix a cosmetic offset this entry already documents.
+
 - 2026-09-04 — **e2d CLOSURE COMPLETION — item 1 DELIVERED, and it FIRES ITS
   OWN FLAG CONDITION: the licensed D2 all-rounds paired rescore returns
   **+0.0149**, which DISAGREES IN SIGN with the clean-set **−0.0121**. Not
