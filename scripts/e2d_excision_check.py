@@ -158,7 +158,13 @@ def main() -> int:
 
     if excised_from_record is not None:
         out["excised"] = excised_from_record
-        out["excised_source"] = "committed D2 scoring (not rescored)"
+        # Tier-agnostic: this string used to say "committed D2 scoring" for
+        # every tier, which is wrong the moment the script is pointed at D3
+        # (disposition beside-note, 2026-09-05). The nested per-arm `_source`
+        # always carried the real path; only this summary line was hardcoded.
+        out["excised_source"] = (f"committed scoring from "
+                                 f"{os.path.relpath(args.scores, REPO)} "
+                                 f"(not rescored)")
     else:
         blk = {}
         for arm in arms:

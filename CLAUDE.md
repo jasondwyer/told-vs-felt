@@ -258,6 +258,9 @@ step-0a audit found only partly absorbed by rules 13/18/21.
 2. Kernel/path/determinism gates re-validated per model, per backend,
    per template family, per axis family; cached or fused paths only
    behind passed gates.
+   *[annotation, PI-approved 2026-09-05, e2d disposition §6(a)] A
+   first-token kernel gate licenses first-token reads, not generation;
+   T-step identity is its own gate.*
 3. Extraction and state readouts in raw residual space; no
    vocabulary-basis shortcuts.
 4. Equal norm for any preference pair.
@@ -310,6 +313,10 @@ step-0a audit found only partly absorbed by rules 13/18/21.
     exact binomial vs declared p0 at every scale; stimulus-provoked
     degeneracy gates on unprovoked domains; verdict criteria
     untouchable by monitoring changes.
+    *[annotation, PI-approved 2026-09-05, e2d disposition §6(b)]
+    Degeneracy bars at dose-characterization rungs bind on an unprovoked
+    domain; where none exists by design, the bar is a
+    pause-and-adjudicate trigger, declared as such.*
 22. [v3-new] **Purity ≠ potency**: causal screening precedes geometric
     preference in direction selection.
 23. [v3-new] **Anecdote governance**: observations become pre-declared
