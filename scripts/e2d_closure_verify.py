@@ -300,8 +300,13 @@ print(f"    D2->D3 alternation step {k2a}/{n2a} = {k2a/n2a:.4f} vs {k3a}/{n3a} =
 print(f"      two-proportion z, POOLED variance   : z = {zz['z_pooled']:.4f}, two-sided p = {zz['p_pooled']:.4f}")
 print(f"      two-proportion z, UNPOOLED variance : z = {zz['z_unpooled']:.4f}, two-sided p = {zz['p_unpooled']:.4f}")
 print(f"      Fisher exact two-sided (the entry's declared test of record for counts): {f2:.4f}; one-sided {f1:.4f}")
-chk("R6 D2->D3 step 'two-proportion z p = .21' -- UNPOOLED variance", round(zz["p_unpooled"], 2), .21, 1e-9, f"{zz['p_unpooled']:.4f}")
-chk("R6 D2->D3 step 'two-proportion z p = .21' -- POOLED variance", round(zz["p_pooled"], 2), .21, 1e-9, f"{zz['p_pooled']:.4f}")
+# Clause of record (design block 2026-09-05, §1): "Fisher exact two-sided
+# p = .26 -- the test of record for count comparisons in this entry".
+chk("R6 D2->D3 step Fisher exact two-sided p = .26 (clause of record)", round(f2, 2), .26, 1e-9, f"{f2:.4f}")
+# Why the entry was held once more (record of the hold, not a check of the text):
+# the superseded ".21" reproduced under the unpooled two-proportion z only;
+# the pooled form printed .22. Both are printed above.
+chk("R6 hold record: superseded '.21' = unpooled z; pooled z prints .22", (round(zz["p_unpooled"], 2), round(zz["p_pooled"], 2)), (.21, .22), note=f"{zz['p_unpooled']:.4f} / {zz['p_pooled']:.4f}")
 chk("R6 D2->D3 step unresolved under every variant (p > .05)", min(zz["p_pooled"], zz["p_unpooled"], f2) > .05, True)
 
 # =============================================================================

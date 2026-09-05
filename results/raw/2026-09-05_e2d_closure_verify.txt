@@ -102,7 +102,8 @@ FULL TEXT -- every other figure in the patched closure text
   PASS  R6 d3 alternation 0.522 on ALL sessions                    got 0.5217391304347826           
   PASS  R6 e2a break ~.17                                          got 0.1702127659574468           32/188
   PASS  R6 1/30 vs 1/23 Fisher two-sided 1.00                      got 1.0                          
-  PASS  R6 D2->D3 step 'two-proportion z p = .21' -- UNPOOLED variance got 0.21                         0.2136
+  PASS  R6 D2->D3 step Fisher exact two-sided p = .26 (clause of record) got 0.26                         0.2597
+  PASS  R6 hold record: superseded '.21' = unpooled z; pooled z prints .22 got (0.21, 0.22)                 0.2136 / 0.2164
   PASS  R6 D2->D3 step unresolved under every variant (p > .05)    got True                         
   PASS  d2 readability median 0.574                                got 0.5743975972671207           
   PASS  d2 readability p10 0.524                                   got 0.5235188671811821           
@@ -167,6 +168,5 @@ FULL TEXT -- every other figure in the patched closure text
   PASS  Q2 fails                                                   got False                        
   PASS  Q3 fails                                                   got False                        
 ------------------------------------------------------------------------------
-  FAIL  R6 D2->D3 step 'two-proportion z p = .21' -- POOLED variance got 0.22  want 0.21  0.2164
 
-  124 pass, 1 FAIL
+  125 pass, 0 FAIL
