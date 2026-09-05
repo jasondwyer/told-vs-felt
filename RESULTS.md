@@ -21,6 +21,113 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-05 — **CONTENT-CLASS SCREEN (AMENDMENT 2 (iii)) — the RESULTS entry
+  for `1223751`, which committed the candidate spec and its overbreadth
+  screen without one. Descriptive. `content-class-draft-v3`, drafted after
+  all three rule-25 reads were committed and screened BLIND TO ARM;
+  `adopted: false`. On the 912 e2d rounds: recall 71/81 = .877, precision
+  71/84 = .845 (in-sample). Archive overbreadth: e2a 34/1,894 = 1.8%, e2b
+  60/1,707 = 3.5%. NULL_RESPONSE proposed as a fifth class. Not adopted; the
+  rule-25 read remains the arbiter; the design seat adjudicates from this
+  entry.**
+  (Stamp verified at write time: `date -u` → **Sat Sep  5 16:45:24 UTC 2026**. Written at the
+  design seat's request (block of 2026-09-05, §2) after the recon block's
+  §1g found the gap; every figure below is read from
+  [`contentclass_candidate.json`](data/configs/contentclass_candidate.json),
+  [`contentclass_screen.json`](data/e2d/contentclass_screen.json) and the
+  commit message of `1223751` (2026-09-02 13:38 UTC); nothing in the
+  artifacts is changed. Screen script `scripts/e2d_contentclass_screen.py`;
+  detector `valence_core/e2d/contentclass.py`; the 912 rounds are D1 72 +
+  D2 607 + D3 233.)
+
+  - **Ordering, and blindness.** AMENDMENT 2 (iii) puts the class spec
+    AFTER the read; the draft was written once the D1, D2 and D3 rule-25
+    reads were committed, so the detector could not hand the read its
+    categories. Screened blind to arm — the arm was joined back only for
+    the final report — because the D2 read had found content-shaped junk
+    concentrated in the axis arm, and a detector tuned while watching arm
+    labels could manufacture that result.
+  - **Five classes, each defined by what the response fails to do** (the
+    standing instruction of `scorer_v3_spec.json`: v1 and v2 each fixed the
+    instance and missed the class): `task_echo` — reproduces the INSTRUCTION
+    instead of performing it; `preamble_without_content` — announces an
+    answer and terminates before delivering one; `wrong_task` — performs or
+    restates a different task than the one posed; `stuck_attractor` —
+    repeats an earlier response rather than answering;
+    **`null_response` [NEW CANDIDATE]** — carries no propositional content
+    at all. Banked by disposition-2 item 5; three observed forms
+    (`[MENTAL_BLOCK]`, the literal `None`, a bare code fence), defined as
+    content-free response rather than as those three strings so a fourth
+    form is caught instead of becoming a sixth class. The candidate and
+    disposition-2 item 5 record every observed instance in an UNSTEERED
+    round; that holds for D2's four (M s9 free0 `[MENTAL_BLOCK]`; M s17
+    forced3 / free3 / free5 `None`) but not for D3, where M session 12's
+    eight bare-fence rounds include four STEERED rounds (forced0, forced2,
+    free0, free2) — 4 of the detector's 13 e2d null_response hits are
+    steered rounds; the generalisation is corrected here. Precedence in
+    `classify`: NULL → STUCK → PREAMBLE → ECHO → WRONG_TASK, most-specific
+    to least.
+  - **Draft lineage — two confounds, the same mistake at two depths
+    (treating the whole task text as the thing an echo reproduces).**
+
+    | draft | confound | fix | effect |
+    |---|---|---|---|
+    | v1 → v2 | rewrite-family tasks EMBED the payload the answer must reproduce (the candidate's illustration "Make this friendlier: The meeting has been moved to 3pm"; the pool's paraphrases read "Make this sound friendlier: …" and "Rewrite this in a friendlier tone: …"), so comparing against the whole task caught correct answers | compare against the instruction only — the part before the colon | precision .472 → .621 |
+    | v2 → v3 | a task NAMES ITS OBJECT and a good answer reuses the noun phrase ("Footsteps on a gravel path crunch and scatter like brittle leaves" shares five consecutive words with its own task) | a shared run counts only if it carries an instruction verb; a good answer never says "give a one-sentence description of" | precision .621 → .845; archive overbreadth 5.1% / 6.6% → 1.8% / 3.5% |
+
+  - **e2d pool, 912 rounds against the rule-25 read — IN-SAMPLE (the draft
+    was revised twice after seeing where it failed on this corpus; these are
+    the optimistic end).** tp 71, fn 10, fp 13, tn 818 → **recall 71/81 =
+    .877, precision 71/84 = .845.** Predicted by class: preamble_without_content
+    37, task_echo 29, null_response 13, stuck_attractor 3, wrong_task 2.
+    Per arm, unblinded only after scoring: **M 73/573 = .127, R 1/168 =
+    .006, S 10/171 = .058** — the read's M-vs-R gap reproduces under a
+    detector that never saw the arms.
+  - **Archive overbreadth (out of sample).** The screen scored every
+    archived round with `audit = None` — it never joined the archives' own
+    audits of record — so these hits are the detector's alone. Code's
+    alignment of the hits with the session records (all 200 e2a and 181 e2b
+    sessions align round for round): e2a — 9 of the 34 hits carry an
+    audit-of-record `degen` flag (frame fragments) and 3 sit in excluded
+    sessions; e2b — 3 of the 60 carry a `degen` flag, 1 a lexical flag, 2
+    sit in excluded sessions; 17 of the 94 in the union, so "the audit of
+    record passed these" holds for 77, not 94.
+
+    | archive | hits / n | rate | by class |
+    |---|---|---|---|
+    | e2a | 34 / 1,894 | 1.80% | stuck_attractor 11, null_response 12, task_echo 5, preamble_without_content 5, wrong_task 1 |
+    | e2b | 60 / 1,707 | 3.51% | null_response 22, stuck_attractor 16, task_echo 11, wrong_task 9, preamble_without_content 2 |
+
+    28 of the 94 hits were eyeballed; most are true degeneracies the audit
+    of record passed — garbled echoes ("Give a one-skeleton description of
+    the actual scent of clean laundry"), refusals ("Sorry, I can't help with
+    that"), nulls ("* * *", "<answer>", a bare fence), undelivered
+    preambles — the same shape as v2's own screen finding. The full
+    adjudication is the design seat's; fourteen examples per archive are in
+    the screen artifact.
+  - **What Code does not claim.** That the archive hits are all true
+    degeneracies. That `wrong_task` is reliable — it is the weakest
+    detector, needs the task pool to match against, and cannot see a
+    semantically wrong answer that shares no wording. That the thresholds
+    are final — `run = 5` and the verb lexicon are the first values that
+    screened acceptably, not optimised ones.
+  - **What adoption requires — AMENDMENT 2 (iii), verbatim:** *"Before
+    LOCK-j: Code drafts a **CLASS-level spec** for scorer_v3's content class
+    and screens it for overbreadth against the e2a archive, e2b's
+    transcripts, and D1/D2 (precision/recall against the read); design
+    adjudicates; the campaign's audit of record = v2 + the adjudicated
+    class, a new module. LOCK-j tolerances cite D2's rates under both."*
+    Delivered: the class-level spec and the screen (against e2a, e2b, and
+    D1–D3). Owed by the design seat: the adjudication — the five class
+    definitions as written, NULL_RESPONSE as the fifth class, and the 94
+    archive hits. Until then, per the candidate's own `authority` field and
+    the detector's docstring: it is not the audit of record, it excludes no
+    session, and the rule-25 read is the arbiter wherever the two disagree.
+    e2d closed at its qualification rung, so LOCK-j is no longer the
+    trigger; the 2026-09-04 design handoff makes the adjudicated class a
+    precondition for any future Qwen session campaign, and the disposition-2
+    entry banks NULL_RESPONSE as its candidate class.
+
 - 2026-09-05 — **RECON — ECHO CHANNEL (k-candidate). Apparatus characterization
   for the "echo cell" candidate (rounds steered, choice position UNSTEERED,
   in-forward memory retained): the §1 repo reads, the §2 timings, and Stage A
