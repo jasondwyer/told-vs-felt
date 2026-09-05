@@ -1,0 +1,172 @@
+==============================================================================
+e2d CLOSURE TEXT OF RECORD -- verification of the six patched clauses
+==============================================================================
+
+R1  Q1 3/32 vs p0 = 0.15: exact binomial one-sided (greater, the registered form) p = 0.8782; artifact p = 0.8782; two-sided 0.4668
+
+R2  D2 primary Δ+ = +0.1030, n = 27, sd = 0.3990; sign test one-sided (greater): artifact k = 18/27 p = 0.0610; recomputed k = 18/27 p = 0.0610; two-sided would be 0.1221
+
+R3  clean paired D2->D3: artifact change -0.0121, n = 20, sign test 11/20 p = 0.4119 (greater); recomputed change -0.0121, n = 20, sign 11/20 p = 0.4119; two-sided would be 0.8238
+    all-rounds paired D2->D3: artifact change +0.0149, n = 24, sign test 14/24 p = 0.2706 (greater); two-sided would be 0.5413
+    recomputed all-rounds: change +0.0149, n = 24, sign 14/24 p = 0.2706
+
+R4  FISHER TABLE OF RECORD (M arm, rounds + choices, all sessions incl. excluded)
+    counts: audit D1 0/40  D2 7/300  D3 11/233   read D1 0/40  D2 34/300  D3 36/233
+    step               two-sided   one-sided
+    audit .10->.20        1.0000      0.4129
+    audit .20->.30        0.1508      0.1021
+    read  .10->.20        0.0213      0.0112
+    read  .20->.30        0.1959      0.1029
+
+R5  Δ_first domains
+    0.20: valid (e2a-scope exclusion rule, scope of record 'e2a') 15/29 = 0.5172 -> Δ_first +0.0172;   all M with a first pick 15/30 = 0.5000 -> Δ +0.0000;   excluded-with-a-pick: [(30, 'lexical:plaza@free0')]
+    0.30: valid (e2a-scope exclusion rule, scope of record 'e2a') 14/23 = 0.6087 -> Δ_first +0.1087;   all M with a first pick 14/23 = 0.6087 -> Δ +0.1087;   excluded-with-a-pick: []
+    0.30 one-sided exact binomial P(X >= 14 | 23, .5) = 0.2024; two-sided 0.4049
+    d2 first-pick habit break: artifact 1/30; recomputed all-sessions 1/30; valid-only 1/29; artifact domain string: None
+    d3 first-pick habit break: artifact 1/23; recomputed all-sessions 1/23; valid-only 1/23; artifact domain string: 'all sessions including excluded (rule 23)'
+
+R6  alternation ladder
+    e2a all sessions incl. excluded: pooled 157/187 = 0.8396; reward 86/104 = 0.8269
+    e2a valid only:                  pooled 154/184 = 0.8370; reward 84/102 = 0.8235
+    d2 M strict alternation: artifact 0.6897 (n_alt 29); all-sessions 0.6897 (29); valid-only 0.6897 (29)
+    d3 M strict alternation: artifact 0.5217 (n_alt 23); all-sessions 0.5217 (23); valid-only 0.5217 (23)
+    e2a pooled first-pick break 32/188 = 0.1702; e2d 1/30 = 0.0333, 1/23 = 0.0435; ratio e2a/e2d ~ 4.5x
+    1/30 vs 1/23: Fisher exact two-sided 1.0000; one-sided 0.6843; two-proportion z pooled p = 0.8477 (the '.85' the held text carried)
+    D2->D3 alternation step 20/29 = 0.6897 vs 12/23 = 0.5217:
+      two-proportion z, POOLED variance   : z = 1.2361, two-sided p = 0.2164
+      two-proportion z, UNPOOLED variance : z = 1.2437, two-sided p = 0.2136
+      Fisher exact two-sided (the entry's declared test of record for counts): 0.2597; one-sided 0.1713
+
+==============================================================================
+FULL TEXT -- every other figure in the patched closure text
+==============================================================================
+
+==============================================================================
+  PASS  R1 Q1 3/32                                                 got (3, 32)                      
+  PASS  R1 Q1 exact binomial p .878 (artifact)                     got 0.878193999968172            
+  PASS  R1 Q1 exact binomial p .878 (recomputed, one-sided greater) got 0.878193999968172            
+  PASS  R1 Q1 scope of record = forced                             got True                         
+  PASS  R2 Δ+ +.103                                                got 0.10296336307648521          
+  PASS  R2 n = 27                                                  got 27                           
+  PASS  R2 sd .40                                                  got 0.3989938596452351           
+  PASS  R2 one-sided sign test p .061 (artifact)                   got 0.06103906035423279          
+  PASS  R2 one-sided sign test p .061 (recomputed)                 got 0.06103906035423279          
+  PASS  R2 artifact alternative = greater                          got 'greater'                    
+  PASS  R3 clean −.0121                                            got -0.012051019384616089        
+  PASS  R3 clean −.0121 (recomputed)                               got -0.012051019384616089        
+  PASS  R3 clean n = 20                                            got 20                           
+  PASS  R3 clean one-sided sign test p .41 (artifact)              got 0.41190147399902344          
+  PASS  R3 clean one-sided sign test p .41 (recomputed)            got 0.41190147399902344          
+  PASS  R3 clean artifact alternative = greater                    got 'greater'                    
+  PASS  R3 all-rounds +.0149 (recomputed)                          got 0.01488934744408447          
+  PASS  R3 all-rounds one-sided sign p .27 (recomputed)            got 0.27062809467315674          
+  PASS  R3 all-rounds +.0149                                       got 0.01488934744408447          
+  PASS  R3 all-rounds n = 24                                       got 24                           
+  PASS  R3 all-rounds one-sided sign test p .27 (artifact)         got 0.27062809467315674          
+  PASS  R3 all-rounds artifact alternative = greater               got 'greater'                    
+  PASS  R3 opposite signs                                          got True                         
+  PASS  R4 read .10->.20 two-sided .021                            got 0.021272751293088293         
+  PASS  R4 read .10->.20 one-sided .011                            got 0.011194978199212884         
+  PASS  R4 audit .20->.30 two-sided .15                            got 0.15080320543631             
+  PASS  R4 read .20->.30 two-sided .20                             got 0.19593106022294063          
+  PASS  R4 audit .20->.30 one-sided >= .10                         got True                         0.1021
+  PASS  R4 read .20->.30 one-sided >= .10                          got True                         0.1029
+  PASS  R4 audit .10->.20 two-sided (unresolved) >= .10            got True                         1.0000
+  PASS  R4 rates audit .000/.023/.047                              got (0.0, 0.023, 0.047)          
+  PASS  R4 rates read .000/.113/.155                               got (0.0, 0.113, 0.155)          
+  PASS  R5 0.20 valid 15/29                                        got (15, 29)                     
+  PASS  R5 0.20 Δ_first +0.017 (valid)                             got 0.017241379310344862         
+  PASS  R5 0.20 all-with-pick 15/30                                got (15, 30)                     
+  PASS  R5 0.20 Δ 0.000 (all with pick)                            got 0.0                          
+  PASS  R5 excluded idx 30 is the extra session                    got [(30, 'lexical:plaza@free0')] 
+  PASS  R5 D2 exclusion scope of record = e2a                      got 'e2a'                        
+  PASS  R5 D2 M excluded (run scope) = 3                           got 3                            
+  PASS  R5 0.30 valid 14/23                                        got (14, 23)                     
+  PASS  R5 0.30 all-with-pick 14/23 (domains coincide)             got (14, 23)                     
+  PASS  R5 0.30 Δ_first +0.109                                     got 0.10869565217391308          
+  PASS  R5 0.30 one-sided exact binomial p .202                    got 0.2024364471435547           
+  PASS  R5 d2 habit break (1, 30) (artifact)                       got (1, 30)                      
+  PASS  R5 d2 habit break (1, 30) reproduces on ALL sessions incl. excluded got (1, 30)                      
+  PASS  R5 d3 habit break (1, 23) (artifact)                       got (1, 23)                      
+  PASS  R5 d3 habit break (1, 23) reproduces on ALL sessions incl. excluded got (1, 23)                      
+  PASS  R5 D3 artifact names the rule-23 domain                    got 'all sessions including excluded (rule 23)' 
+  PASS  R6 e2a pooled .840 on all sessions                         got 0.839572192513369            
+  PASS  R6 e2a pooled = 157/187                                    got (157, 187)                   
+  PASS  R6 e2a reward .827 on all sessions                         got 0.8269230769230769           
+  PASS  R6 e2a reward = 86/104                                     got (86, 104)                    
+  PASS  R6 e2a valid-only pooled .837                              got 0.8369565217391305           
+  PASS  R6 e2a valid-only reward .824                              got 0.8235294117647058           
+  PASS  R6 d2 alternation 0.69 (artifact)                          got 0.6896551724137931           
+  PASS  R6 d2 alternation 0.69 on ALL sessions                     got 0.6896551724137931           
+  PASS  R6 d3 alternation 0.522 (artifact)                         got 0.5217391304347826           
+  PASS  R6 d3 alternation 0.522 on ALL sessions                    got 0.5217391304347826           
+  PASS  R6 e2a break ~.17                                          got 0.1702127659574468           32/188
+  PASS  R6 1/30 vs 1/23 Fisher two-sided 1.00                      got 1.0                          
+  PASS  R6 D2->D3 step 'two-proportion z p = .21' -- UNPOOLED variance got 0.21                         0.2136
+  PASS  R6 D2->D3 step unresolved under every variant (p > .05)    got True                         
+  PASS  d2 readability median 0.574                                got 0.5743975972671207           
+  PASS  d2 readability p10 0.524                                   got 0.5235188671811821           
+  PASS  d3 readability median 0.613                                got 0.6129035845762014           
+  PASS  d3 readability p10 0.526                                   got 0.5258185648019444           
+  PASS  D2 AUC_R .534                                              got 0.5340277777777778           
+  PASS  D3 has NO AUC_R                                            got True                         
+  PASS  0.20 excised +.103                                         got 0.10296336307648521          
+  PASS  0.30 excised +.141                                         got 0.14111588568113959          
+  PASS  0.20 in situ +.127                                         got 0.12704493911600986          
+  PASS  0.30 in situ +.062                                         got 0.06190194186580069          
+  PASS  bar 0.158                                                  got 0.1577751523169135           
+  PASS  every cell below bar                                       got True                         
+  PASS  2|Delta_R| = .138                                          got 0.13838003746270602          
+  PASS  Delta+ fails 2|Delta_R|                                    got False                        
+  PASS  2.3x at 0.30                                               got 2.2796681562441043           
+  PASS  context gap flips direction across dose                    got True                         -0.0241 / +0.0792
+  PASS  5 estimators counted                                       got 5                            
+  PASS  estimator min -.070                                        got -0.06950694954393104         
+  PASS  estimator max +.103                                        got 0.10296336307648521          
+  PASS  unpaired clean +.038                                       got 0.038152522604654376         
+  PASS  unpaired all-rounds +.068                                  got 0.06792814886930598          
+  PASS  paired CI ~+/-.15                                          got 0.1444424823938674           1.96*sd/sqrt(n) = 0.1444
+  PASS  idx 12 decidable at 0.20 only                              got True                         D2-only = [12, 24, 25, 26, 27, 28, 30]
+  PASS  D3 ran 24 M sessions                                       got 24                           
+  PASS  D2 ran 32 M sessions                                       got 32                           
+  PASS  composition: idx 12 is the only D2-only index inside D3's roster got [12]                         
+  PASS  composition: 6 indices D3 never ran                        got 6                            [24, 25, 26, 27, 28, 30]
+  PASS  composition 62% one session (idx 12)                       got 0.6213316429081164           |-0.0312|/|-0.0502|
+  PASS  composition 38% roster truncation                          got 0.3786683570918836           |-0.0190|/|-0.0502|
+  PASS  shared indices = 24                                        got 24                           
+  PASS  d2 shared audit 0.025                                      got 0.025                        
+  PASS  d2 shared read 0.133                                       got 0.13333333333333333          
+  PASS  d3 shared audit 0.047                                      got 0.04721030042918455          
+  PASS  d3 shared read 0.155                                       got 0.15450643776824036          
+  PASS  s12 D2 0/10                                                got (0, 10)                      
+  PASS  s12 D3 7/10                                                got (7, 10)                      
+  PASS  s1 D2 10/10                                                got (10, 10)                     
+  PASS  s1 D3 10/10                                                got (10, 10)                     
+  PASS  s5 D2 10/10                                                got (10, 10)                     
+  PASS  s5 D3 10/10                                                got (10, 10)                     
+  PASS  idx 1,5 carry 58%                                          got 0.5882352941176471           40/68
+  PASS  D2 M arm degeneracy 0.023                                  got 0.023333333333333334         
+  PASS  D2 R arm degeneracy 0.045                                  got 0.04487179487179487          
+  PASS  D2 S arm degeneracy 0.0                                    got 0.0                          
+  PASS  D1 42 choices                                              got 42                           
+  PASS  D2 357 choices                                             got 357                          
+  PASS  D3 138 choices                                             got 138                          
+  PASS  537 total                                                  got 537                          
+  PASS  96 sessions                                                got 96                           
+  PASS  d1 every read at KL = 0                                    got True                         
+  PASS  d2 every read at KL = 0                                    got True                         
+  PASS  d3 every read at KL = 0                                    got True                         
+  PASS  in situ 2.57 s/fwd                                         got 2.5668923733742623           
+  PASS  excised 0.54 s/fwd                                         got 0.5443640179047428           
+  PASS  ratio 4.7x                                                 got 4.7153968464966365           
+  PASS  transfer .958 self-score                                   got 0.9579796264855688           
+  PASS  refit false                                                got False                        
+  PASS  0.10 anchor n = 4 M sessions                               got 4                            
+  PASS  D1 readability .583                                        got 0.5833333333333333           
+  PASS  run-dose rule STOP, SCOPED                                 got 'STOP, SCOPED'               
+  PASS  Q2 fails                                                   got False                        
+  PASS  Q3 fails                                                   got False                        
+------------------------------------------------------------------------------
+  FAIL  R6 D2->D3 step 'two-proportion z p = .21' -- POOLED variance got 0.22  want 0.21  0.2164
+
+  124 pass, 1 FAIL
