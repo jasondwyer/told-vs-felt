@@ -191,3 +191,11 @@ __pycache__/
 # design adjudication. Committed because the screen it reports is only
 # checkable against the artifact it was run from.
 !/data/configs/contentclass_candidate.json
+
+# Echo-channel RECON (RECON BLOCK 2026-09-05, PROPOSAL-k candidate): reads,
+# span provenance, probe tables and fingerprints travel as JSON; the residual
+# arrays (data/echo/*.npz, ~1.3 MB per read) stay local and are named by
+# their as-stored sha16 in the JSON. Same pattern as e2d: no bare *.npz.
+!/data/echo/
+/data/echo/*
+!/data/echo/*.json

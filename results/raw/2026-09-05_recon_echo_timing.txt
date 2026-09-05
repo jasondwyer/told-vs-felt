@@ -1,0 +1,21 @@
+Sat Sep  5 07:23:55 UTC 2026
+config of record: L48 frac 0.1 alpha 10.3010 (R_48 103.01); axis sha 3c17b0d8fbcad716; random L48 sha 7be5db23d9224375
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 13409.51it/s]
+model loaded in 5s
+provenance: {"adapter": "qwen3.6-27b-4bit-mlx", "model_id": "mlx-community/Qwen3.6-27B-4bit", "dtype": "4bit-quantized (MLX)", "backend": "mlx", "mlx_version": "0.31.2", "library_versions": {"mlx": "0.31.2", "mlx-lm": "0.31.3", "numpy": "2.5.1"}, "python": "3.12.9", "platform": "macOS-15.6.1-arm64-arm-64bit", "gdn_inference_mode": "ops (fused disabled)", "n_layers": 64, "choice_window_declared": 8192, "legacy_truncate_512": false, "n_encodes_clipped": 0}
+  full session: steered forward, capture 64 layers              6.90 s
+  full session: mask-off forward, capture 64 layers             6.15 s
+  full session: steered forward, capture 15 layers above 48     6.25 s
+  full session: steered forward, no capture                     6.17 s
+  full session: mask-off forward, no capture                    5.96 s
+  first-choice prefix: echo primitive M1 (state+shadow+choice_read x2)   10.14 s
+{
+ "stage_a_reads": 96,
+ "stage_a_hours_at_measured_rate": 0.27051559448242185,
+ "stage_a_hours_throttled_1.7x": 0.4598765106201172,
+ "stage_b_reads_first_choice": 1122,
+ "stage_b_hours_first_choice_only": 3.1616510105133058,
+ "stage_b_hours_full_session_upper_bound": 7.781229339440664,
+ "note": "Stage A reads at the FIRST free choice, so its forwards are over the first-choice prefix (~200 tokens), not the full session; the full-session figures bound Stage B's later positions."
+}
+exit 0

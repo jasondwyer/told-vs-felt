@@ -21,6 +21,477 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-05 — **RECON — ECHO CHANNEL (k-candidate). Apparatus characterization
+  for the "echo cell" candidate (rounds steered, choice position UNSTEERED,
+  in-forward memory retained): the §1 repo reads, the §2 timings, and Stage A
+  of the §3 echo characterization — 24 archived e2a reward-arm sessions read
+  at their first free choice through a new quarantined masked-prefix primitive
+  under four masks, every read paired with a mask-off shadow that reproduced
+  the archived vanilla read. Registered readout: the as-generated-vs-flipped
+  polarity is NOT readable above null at any layer (AUC .42–.51 above 48;
+  the 49 layers at or below 48 bit-identical across masks — the chance
+  control exact, STOP clause silent). POST-HOC, flagged: the injected SIGN
+  of the last forced round IS readable at AUC .87–.98 over L50–L58, and
+  for the random direction almost as well — at n = 24 the echo carries
+  which sign was injected last, not the label-bound polarity, and is not
+  axis-specific. NO verdict quantity, NO bar, NO new sessions;
+  descriptive language only. Two FLAGs for the design seat lead: (1) e2a's
+  512-token tail truncation collapsed the steering boundary to ZERO on 270 of
+  1,894 archived generations (every free3–free5 round whose prefix + segment
+  exceeded 512 tokens), so those rounds were generated with the state live
+  over the whole tail window, not the round-task span; (2) H1-u's choice
+  reads were state-present at EVERY position including the read, so it is
+  not a prefix-steered/choice-unsteered precedent and its 0.0070 is a
+  difference of two π̂_d point estimates with no interval of its own.**
+  (Stamp verified at write time: `date -u` → **Sat Sep  5 08:05:12 UTC 2026**. Block authored
+  per PI clock Sat 2026-09-05 01:53 EDT; watermark `842e183`; HEAD at recon
+  start `edf2574` — the three commits between, `08a6076` / `784a948` /
+  `edf2574`, touch CLAUDE.md, the excision-check script, the handoffs and the
+  closure verification record, none of the e2a archive, the axis artifacts,
+  the adapter or the readout. Raw:
+  [`_recon_site_assertion`](results/raw/2026-09-05_recon_site_assertion.txt),
+  [`_recon_echo_timing`](results/raw/2026-09-05_recon_echo_timing.txt),
+  [`_recon_echo_stageA`](results/raw/2026-09-05_recon_echo_stageA.txt),
+  [`_recon_echo_stageA_analysis`](results/raw/2026-09-05_recon_echo_stageA_analysis.txt),
+  [`_recon_echo_stageA_posthoc`](results/raw/2026-09-05_recon_echo_stageA_posthoc.txt);
+  artifacts [`timing.json`](data/echo/timing.json),
+  [`stageA_reads.json`](data/echo/stageA_reads.json),
+  [`stageA_analysis.json`](data/echo/stageA_analysis.json),
+  [`stageA_posthoc_lastround.json`](data/echo/stageA_posthoc_lastround.json)
+  (post-hoc); residual arrays
+  `data/echo/stageA_resid_s*.npz` local, gitignored, fingerprinted as stored
+  in `stageA_reads.json`.)
+
+  - **§0.1 SITE ASSERTION.** `jlens-qwen36/.venv/bin/python` present; suite
+    **154/154** read from the suite; adapter 140 W. One additive change to
+    core for this block: `ModelAdapter.forward_last` (base default + Qwen
+    override) — `forward`'s final-position view on the same two code paths,
+    returning the last-position residual per captured layer without
+    materialising every [S, D] block. `forward` is untouched; the suite
+    reproduces **154/154** after the change.
+
+  - **§1a ARCHITECTURE (config.json of the single local snapshot
+    `c000ac2c…`; no model load for this item).** 64 layers;
+    `full_attention_interval: 4`; `layer_types` and mlx-lm's
+    `is_linear = (layer_idx + 1) % 4 != 0` agree: **full attention at
+    i ≡ 3 (mod 4) under 0-indexing** — 3, 7, …, 63, sixteen layers; the
+    other 48 are Gated DeltaNet. **44, 48, 52 are all Gated DeltaNet.** The
+    six workspace layers are `WORKSPACE_LAYERS = [40, 44, 48, 52, 56, 60]`
+    (`jlens_qwen/workspace_layers.py`, gitignored clone; mirrored as
+    `layers` in `data/e0/e0_axes.meta.json`): **all six are Gated DeltaNet;
+    strictly above 48: 52, 56, 60.** Convention, from the code: the hook
+    writes to the OUTPUT of `model.layers[i]` under 0-indexing
+    (`forward_with_positional_state`: `hidden = layer(hidden)`, then the
+    per-position fn, then `acts[i] = hidden`), so "layer 48" is the residual
+    as it exits block 48 (= HF `hidden_states[49]`) and a captured layer is
+    its post-injection output. The design seat's two expectations: the
+    0-indexed one ("attention at i ≡ 3 mod 4") is what IS; nothing in the
+    code is 1-indexed. e2a's steering layer is not a field of any e2a
+    artifact row; it is fixed by the producing code (`jlens_qwen/e2a.py`
+    `LAYER = 48`), by `data/e0/e0_b2_b2a.json` `selected_dose {layer 48,
+    frac 0.1}`, and by α = 0.1 × R_48 = 10.301 matching the e2d artifacts'
+    `alpha` at `layer 48`. `data/e2d/tstep_check_f010.json` provenance,
+    verbatim: `"gdn_inference_mode": "ops (fused disabled)", "n_layers": 64`
+    (beside `"adapter": "qwen3.6-27b-4bit-mlx"`, `"mlx_version": "0.31.2"`,
+    `"choice_window_declared": 8192`, `"legacy_truncate_512": false`).
+
+  - **§1b INSULATION ASSERTION (report; nothing corrected).**
+    `valence_core/readout.py::choice_read(verify=True)`: two consecutive
+    forwards of the IDENTICAL token ids through the IDENTICAL vanilla path
+    (`adapter.forward` with no injections; the function has no injection
+    parameter), and `verify_kl = symmetric_kl(softmax(logits₁),
+    softmax(logits₂))` over the FULL-vocabulary next-token distribution at
+    the final position, in float64; `assert_construction_stable` halts on
+    `verify_kl > VERIFY_KL_BAR` with `VERIFY_KL_BAR = 0.0` (exact). It is a
+    **re-forward identity measurement on logits** — not a comparison against
+    a differently constructed forward, not a restricted two-label equality,
+    and **not a KV-cache or recurrent-state comparison: no cache object
+    exists in either forward** (`MLXLensModel.forward` passes `cache=None`
+    to every layer; OLMo `use_cache=False`), so the 16-of-64 concern does
+    not arise — the compared quantity sits downstream of all 64 layers. The
+    state-free property is carried by the signature and by
+    `assert_modules_absent`, not by the KL. e2b computes NO verify KL (the
+    shadow is `choice_read` without `verify=True`; its insulation quantities
+    are the paired-shadow arithmetic, `prefix_sha`, the import guard and the
+    signature check). Archived wording, grep anchors: e2a g3′ clause 1 in
+    `archive/RESULTS-cycles3-4.md` — *"every choice forward takes the
+    vanilla unsteered path over session text, asserted by code path AND by
+    measurement … KL(choice forward ‖ vanilla forward, same text) ≤ 1e-6"*
+    (names two constructions where the code compares one with itself;
+    one-directional in prose, max-of-both in code; bar 1e-6 there, 0.0 in
+    the v3 harness and in `valence_core`; `readout.py`'s module docstring
+    still says "≤ 1e-6" beside the constant's "0.0" comment); e2a verdict
+    *"g3′ clause 1 final ledger 360/360 choice forwards at KL = 0.0
+    exactly"* (the count of VERIFIED forwards — `verify_every = 4` in the
+    full run — not of all 1,200 choice forwards); e2b (RESULTS.md) *"The
+    shadow reads — the vanilla state-free forward taken over the identical
+    prefix at every state-present read"*; B3 *"vanilla, uncached,
+    `verify=True` with `assert_construction_stable` per read"*; e2d D1/D2/D3
+    *"KL = 0.0 exactly … 42/42 … 357/357 … 138/138"*. **Where "KV" is
+    attached to a logit-computed quantity:** the g3 gate — pre-registration
+    *"g3 — KV-leakage gate (rule 5) at dose_e2a"*, the fail entry *"e2a g3 —
+    KV-LEAKAGE GATE FAIL"*, FINDINGS-3 *"measured 0.537-logit live-KV
+    leak"*, CLAUDE.md 5(d) *"persistent-KV session readouts"* — while
+    `jlens-qwen36/scripts/e2a_g3_kv_leakage.py` computes Δ(logit_A −
+    logit_B) at the choice position between an uncached positionally-steered
+    forward and an uncached unsteered forward over identical ids (`GATE =
+    0.10`); "KV" names the channel modelled, not a cache read, and the
+    archive says so (*"g3-as-specced models a live cached-session read"*).
+    One prose overreach: PROPOSAL-j §context *"Rule 5(a)'s per-axis/dose
+    leakage gate is satisfied by construction — `choice_read(verify=True)` +
+    `assert_construction_stable`, KL = 0 asserted per read"* — the verify KL
+    measures construction drift, not steered-vs-unsteered leakage. **Record
+    discrepancy found on the way:** `PREPRINT-*.md` / `BLOG-*.md` exist
+    nowhere in the tree or in `git ls-files`, though CLAUDE.md's History
+    pointers place them at root.
+
+  - **§1c H1-u RE-READ.** Grep: `H1-u` on 10 lines / 11 occurrences of
+    RESULTS.md (all inside three 2026-08-21 entries), once each in LOCK-h
+    (§3a v1.4), PROPOSAL-h (interpretive note), `scripts/e2b_h1_sessions.py`,
+    `scripts/lockh_v2_valuescheck.py`; zero in FINDINGS-*, archive/,
+    valence_core/. The phrases "prefix-steered" and "choice-unsteered" occur
+    NOWHERE in the repo. **Terminology mismatch, reported as-is: H1-u's
+    choice reads were STATE-PRESENT — `choice_read_statepresent` with an
+    `Injection.at_frac(u, 48, ±0.10, R)` carrying the default
+    `PositionSpec.all_positions()`, so the state was added at EVERY position
+    of transcript + menu INCLUDING the read position — and "unsteered" in
+    H1-u names the POST-CHOICE ROUNDS** (`adapter.generate(prefix, chosen,
+    injections=[] …)`, as-run blob `6b89ce2:scripts/e2b_h1_sessions.py`,
+    comment *"contingency-free: the pick delivers NOTHING"*). Implementation:
+    separate forwards with the injection list chosen per call; no hook
+    toggled mid-forward, no per-position mask. n: 112 sessions scheduled and
+    run, 16 excluded (4 lexical, 11 audit:frame, 1 audit:junk), 96 valid ×
+    6 = **576 paired reads**; format the e2a scaffold (at run time imported
+    from `valence_core/e2b/session.py`, moved to `session_e2a.py` at
+    `1465b34`); dose L48, frac 0.10, |α| = 10.301, sha `3c17b0d8fbcad716`;
+    poles both, read state scheduled (forced_end if ci even, else its
+    opposite), never selected; position read = next-token logits at the last
+    token of transcript + menu. Result π̂_d = 12/576 = .0208, 95% CI
+    [.0108, .0361], L̂ = (b − c)/N = 0.00000. **The 0.0070** (RESULTS.md
+    anchor *"measured prefix-steering contribution to π̂_d is 0.0070"*;
+    FINDINGS-5; commit 6df2072) is H2-proper .0278 (5/180) minus .0208 — a
+    difference of two point estimates across campaigns of different n, prefix
+    provenance and audit version; **it carries no interval, SE or test of
+    its own anywhere in the record.** The primitive still exists:
+    `valence_core/e2b/statepresent.py::choice_read_statepresent` (+
+    `records.py`); the H1-u-specific unsteered post-choice path exists only
+    in git history. **Consequence for §3.0: H1-u's read is NOT a
+    masked/prefix primitive and does not do what §3.1 needs; the echo
+    primitive was built** (§3.0 below).
+
+  - **§1d PRIOR CONSIDERATION.** Hit table (lines, `grep -ci`, 36 files):
+    prefix 50, echo 49, in-forward 2 (both "within-forward", g3),
+    memory-present 0, state-absent 2, retention 24, KV-borne 0, "working
+    memory" 0; the literal terms under-cover the topic, so a supplementary
+    sweep (KV, g3′, two-horns, propagat, persistent, within-forward, H1-u,
+    state-free/-present, live-KV, steered context, position-differential)
+    surfaced the passages. **A prefix-steered / choice-unsteered read was
+    (i) the cycle-1 primary rung-3 channel** — the position-differential
+    forced-choice probe, state on option-passage tokens, answer position
+    unsteered, *"flat across the whole α sweep"*, read as *"steering-induced
+    state bias is local to the steered positions and does not propagate to a
+    downstream decision position"* (archive/RESULTS-cycle1-2.md 2026-07-19;
+    FINDINGS.md: *"remains a real constraint on choice-based readouts"*,
+    untouched by the ~100× dose correction); **(ii) the DESIGNED e2a verdict
+    read** (PROPOSAL-e *"the mechanical leak that remains is attention over
+    steered KV — the propagation channel, known-weak, but not assumed-zero.
+    Standing gate, pre-registered"*; v2 rule 5(b); the 2026-08-08
+    pre-registration *"g3 — KV-leakage gate (rule 5) at dose_e2a: ≥32
+    completed session prefixes, TEXT HELD IDENTICAL, steering at task-round
+    positions (as in sessions) vs none; Δ(logit_A − logit_B) at the choice
+    position; max |Δ| ≤ 0.10"*); **(iii) gated and FAILED in exactly the
+    echo geometry:** *"max |Δ(logit_A − logit_B)| = 0.5368 (gate ≤ 0.10;
+    5.4× over); mean |Δ| = 0.2266 … At dose_e2a the within-forward
+    steered-context channel moves choice logits by ~13% choice probability
+    at worst"* (archive, 2026-08-09; `data/e2a/g3_kv_leakage.json`: dose
+    0.2, F 2, 32 rows, v1 templates — **not the session config of record
+    and not dose 0.10**); **(iv) re-derived as the vanilla re-forward (g3′)
+    and banked as law:** *"persistent-KV session reads are disqualified for
+    the reward axis at dose ≥ 0.20; any future live-KV (e) variant requires
+    its own leakage gate passed before sessions"* → CLAUDE.md 5(d);
+    FINDINGS-3 §2 closes two-horns over *"state-absent (propagation failure,
+    cycle 1)"*; **(v) explicitly NOT proposed since:** PROPOSAL-j *"A
+    live-KV variant at 0.20 is off the table by 5(d) and is not proposed"*;
+    HANDOFF-2026-09-01 *"e2d's vanilla re-forward geometry means 5(d)'s
+    antecedent is not met"*. **As a VERDICT read after cycle 1: none
+    found** — every verdict choice read since (e2a 360/360, f, S1,
+    ADDENDUM-g1, e2b shadow, e2d) is a vanilla state-free re-forward. e2b's
+    "prefix-steering" is text-level (rounds generated under steering); its
+    state-present read steers all positions (§1c). **Observation for the
+    design seat, not adjudicated:** two results about the same geometry
+    coexist un-reconciled — cycle 1's null propagation (semantic directions,
+    α 3/10/30) and g3's 0.5368 leak (reward axis, L48, 0.20, session-shaped
+    prefixes); no entry relates them numerically. Stage A's unsigned LEAK
+    block is the dose-0.10 analog of g3 on the archived sessions themselves.
+
+  - **§1e ARCHIVE INVENTORY.** `data/e2a/sessions.jsonl` — under `data/`,
+    git-tracked (`!/data/e2a/*.jsonl`), 200 rows: reward 112 (102 valid /
+    10 excluded), sham 40 (37/3), random1 24 (23/1), random2 24 (22/2); all
+    rows dose 0.1, F 2; every valid row has 4 forced rounds + 6 choices.
+    Map fields present per row: `pair`, `swap`, `start_plus`, `tag_plus`
+    (no `tag_minus`, no `map`); assignment in the runner of record
+    (`jlens-qwen36/scripts/e2a_sessions.py`): `pair = pairs[s % 4]; swap =
+    (s // 4) % 2 == 1; tag_plus, tag_minus = (pair[1], pair[0]) if swap else
+    pair; start_plus = (s // 8) % 2 == 0`; forced poles alternate from
+    `start_plus`; a round's `tag == tag_plus` iff `pole == 'pos'`; verified
+    200/200. **Round task-token spans are NOT stored** (no positions/span
+    key; `n_tok` is the generated token count); **reconstructed by e2a's own
+    boundary rule**, applied not re-derived: `boundary = |common prefix of
+    encode(prefix) and encode(prefix + segment)|`, state live from
+    `boundary` through the last generated token, the harness newline never
+    under state (`jlens_qwen/e2a.py::generate_round_positional`). Tokenizer
+    determinism, all 102 valid reward sessions, 408 forced rounds inside
+    the first-choice prefix: `boundary` equals the prefix token count at
+    every round start (no straddling token) and the ids of every round-end
+    text are a prefix of the full read text's ids at every generation end
+    (0 failures) — the spans are exact half-open token ranges. The archive
+    stores the RESTRICTED read only: `pick`, `p_a` (4 dp), `label_mass`
+    (4 dp), `top1_is_label`, `verify_kl` (0.0 on 281 verified reads, null on
+    834), `ea_choice`; no logits. Frozen reward axis:
+    `data/e0/e0_axes.npz['span_reward'][layers.index(48)]`, float32 (5120,),
+    ‖v‖ = 16.706271; family sha `d4791bdc4877da3d`; unit direction
+    `3c17b0d8fbcad716` (normalised in float64, `Injection.at_frac`) /
+    `127fc297b6623e44` (normalised in float32); R_48 = 103.01
+    (`e0_axes.meta.json`). e2a hook config of record: L48, frac 0.10, α =
+    10.301, +α on `pos` rounds and −α on `neg` rounds over the round span,
+    cached round path (g1 gate `max_kl` 7.106e-4 at 0.10, bar 1e-3), choice
+    forwards greedy state-free uncached; `data/e2a/g2_discriminability.json`
+    `dose_e2a 0.1, F 2`. Random arms: `data/e0/e0_random_dirs.npz` keys
+    L40…L60, unit float64; **random1 = `L48`, random2 = `L52`, both applied
+    at layer 48** (`load_directions`: *"declared arbitrary selection from
+    the frozen pool"*); family sha `b6bd2f5f580ee13e`; `L48` sha
+    `7be5db23d9224375` (e2d's R arm); file sha `dc0ef0fd3a8a8d49`. Label ids
+    = first token of `" " + tag` (slate 48877, prism 90387, maple 52556,
+    cedar 72730, granite 36055, lattice 52448, plaza 69552, saddle 58710).
+    **FLAG — THE 512-TOKEN TAIL WINDOW ON THE GENERATION SIDE (new; verified
+    by Code's own tokenizer replay after the read agent reported it).**
+    `MLXLensModel.encode` (the clone) tail-truncates to 512 tokens by
+    default and the e2a runner never overrode it, so `generate_round_positional`
+    computed its boundary over two 512-token TAILS. Replay over all 200
+    sessions' scaffolding, e2a's encode as run: 1,894 generations; prefix +
+    segment > 512 tokens in **270** (free3 6, free4 83, free5 181; forced0–3
+    and free0–2 none); **in all 270 the two tails are misaligned and the
+    boundary is 0**, so `session.extend(round_ids)` steered the ENTIRE
+    512-token window — prior rounds of both poles, menus, pick lines —
+    during that round's generation; prefix alone > 512 in 180. The record
+    documents the CHOICE-READ side of the window (250/2,860 reads, choice
+    indices 4–6, DV choice never clipped) and nothing on the generation side
+    (grep 'misalign': none). Consequences, stated not adjudicated: the DV
+    read (first free choice) is untouched — every choice read is a fresh
+    state-free forward and free0's generation prefix is ~300 tokens; the
+    archived TEXT of free3–free5 rounds in long sessions was produced under a
+    delivery geometry the record describes as *"the state is active only
+    from the current round's wrapper onward"*, which is false for those 270;
+    for Stage B's later-position reads, "the exact positions e2a steered" in
+    those rounds are the whole tail window, not the round-task span. e2b/e2d
+    ran through the adapter's full-session encode (`legacy_truncate` False)
+    and are not affected.
+
+  - **§1f LAW (CLAUDE.md at HEAD, verbatim).** *"5. Two-horns standing law
+    [v3-new additions]: (a) no state at choice positions; empirical leakage
+    gate per axis/dose; (b) propagation never assumed; (c) **weight-borne
+    states are structurally unreadable at token choices** (d2 closure) — no
+    adapter-borne preference readouts without a design-instance structural
+    argument; (d) **persistent-KV session readouts disqualified** at dose ≥
+    0.20 for the reward axis; any live-KV design needs its own gate. (e)
+    [h-amendment, PROPOSAL-h §0.4, design-instance authored, applied on its
+    commit `34eb7ee` 2026-08-20; text verbatim] "Exception: a state-present
+    choice read may run only via a quarantined primitive with per-read
+    injection provenance and paired shadow reads, inside a committed
+    pre-registration whose leakage-budget gate has passed; the insulated
+    primitive is never modified.""* Reading (report only): 5(e)'s subject is
+    a state PRESENT AT THE READ; a state present-by-echo (injected on
+    earlier spans of the same forward, read position unsteered) is not named
+    by 5(e) — it is **silent** on the case. The clauses that do speak:
+    5(a) is satisfied by construction (mask == 0 at the read); 5(b) is the
+    point of the measurement; **5(d) is the nearest binding clause and binds
+    at dose ≥ 0.20 for the reward axis — not at the config of record
+    (0.10)**; and "any live-KV design needs its own gate" reads onto the echo
+    cell directly. The design seat drafts 5(f).
+
+  - **§1g STATUS.** (i) `data/e2d/tstep_check_f010.json` (23/24 identical at
+    0.10, divergence at position 1 of one round) is in the log — RESULTS
+    anchor *"APPARATUS READ for paper 1's methods (block item 2, NOT e2d)"*
+    (true UTC 2026-09-01 19:25 per the hygiene table), artifact and raw at
+    `10f6f3a`. "Review card 8" lives ONLY in the untracked
+    `HANDOFF-2026-09-04-design.md`: *"(8) the cached-generation / T-step
+    methods disclosure (0.10 number owed)"*, with *"the f = 0.10 T-step check
+    (gives review card 8 its number)"*; the number is delivered; no document
+    states the card closed, and its prose is the design seat's. (ii)
+    **`data/e2d/contentclass_screen.json` and
+    `data/configs/contentclass_candidate.json` are committed (`1223751`)
+    but there is NO RESULTS.md entry for the content-class screen** — grep
+    for content-class / contentclass / PART C returns nothing; the figures
+    (recall .877 = 71/81, precision .845 = 71/84 on the e2d pool of 912;
+    overbreadth e2a 34/1,894 = 1.8%, e2b 60/1,707 = 3.5%; NULL_RESPONSE
+    proposed as a fifth class, all observed instances in unsteered rounds;
+    draft v1→v3 precision .472 → .621 → .845) exist only in the commit
+    message and the artifacts. **FLAG: HANDOFF-2026-09-05 §2's "delivered and
+    in the log" is wrong for this item — delivered, not logged.** Adoption
+    requires, per PROPOSAL-j AMENDMENT 2 (iii) and the candidate's own
+    `authority` field, a design-instance adjudication of the candidate
+    (including NULL_RESPONSE and the 94 archive hits, 28 of which were
+    eyeballed), after which *"the campaign's audit of record = v2 + the
+    adjudicated class, a new module"*; until then the rule-25 read is the
+    arbiter and the candidate excludes no session. The only other §7 item,
+    the judge-port acceptance run, touches no echo/prefix path.
+
+  - **§2 TIMING (model; one process; venv python).** Longest valid reward
+    session = idx 82: 725 tokens full transcript, 270 tokens to the first
+    choice, 10 steered rounds covering 570 tokens.
+
+    | forward | s |
+    |---|---|
+    | full session, steered on every round span, capture 64 layers | 6.90 |
+    | full session, mask-off, capture 64 layers | 6.15 |
+    | full session, steered, capture the 15 layers above 48 | 6.25 |
+    | full session, steered, no capture | 6.17 |
+    | full session, mask-off, no capture | 5.96 |
+    | first-choice prefix through the echo primitive, M1 (state + shadow + `choice_read` verify ×2) | 10.14 |
+
+    Projection: Stage A = 96 primitive reads ≈ **0.27 h (0.46 h at the 1.7×
+    throttle)** — under the 3 h cap, so Stage A proceeded on the PI's GO;
+    Stage B ≈ 1,122 reads: **3.2 h at the first choice, 7.8 h upper bound if
+    every read is a full-session forward.** Long-run checklist applies to B.
+
+  - **§3.0 PRIMITIVE — BUILT** (H1-u's is not a masked/prefix primitive, §1c).
+    `valence_core/echo/maskedprefix.py::read_choice_maskedprefix(adapter,
+    text, label_a, label_b, label_ids, spans, capture_layers)` on the 5(e)
+    pattern: import guard (importable only from `valence_core/echo/` or a
+    `scripts/recon_echo*.py` runner — a bare import is refused, tested);
+    `valence_core.e2b.statepresent` asserted ABSENT from `sys.modules` at
+    import and before every read; the per-position mask is BUILT from the
+    declared spans (disjoint, in range, ending before the read position),
+    `mask[n − 1] == 0` asserted before any forward, every placed
+    `PositionSpec` asserted not to touch the last position and checked
+    position-by-position against the mask; ONE uncached forward with the
+    hook applied through the mask and ONE mask-off forward over the identical
+    ids (both `forward_last`); the shadow is ALSO taken through the untouched
+    `readout.choice_read(verify=True)`. Returns a pair or nothing. Spans:
+    `valence_core/echo/spans.py` (e2a's boundary rule applied, prefix
+    stability asserted at both edges). Probe: `valence_core/echo/probe.py`
+    (`discrim.logistic_auc`'s procedure and published hyperparameters,
+    rewritten to return held-out scores). Runner `scripts/recon_echo.py`
+    (`--selftest` 18/18: guard, mask refusals, prohibition, probe on
+    synthetic data, spans on an archived session, roster). **IDENTITY
+    ASSERTION, as run:** the archive stores only the restricted read to 4
+    decimals, so identity = shadow `p_a` and `label_mass` within 5e-4 of the
+    archived values (the rule-26 criterion-(iii) tolerance), archived `pick`
+    reproduced, `choice_read` verify KL = 0.0, and the shadow forward's
+    restricted `p_a` equal to `choice_read`'s to 1e-6 (same code path);
+    recorded per read; any failure stops the run.
+
+  - **§3.1 STAGE A — RAN.** Roster: the first 24 valid reward sessions by
+    index were 14/10 by map, so per the block the first 12 of each map were
+    taken: sessions 0, 1, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 22, 23, 24, 28, 29 (12 swap-False / 12 swap-True). Read position: the first free choice (text =
+    transcript through the first `Config choice (one word):`, 171–237
+    tokens, all under the 512-token window the archived read was taken
+    through). Config of record: L48, frac 0.10, α = 10.3010, axis
+    `3c17b0d8fbcad716`, random `e0_random_dirs['L48']` `7be5db23d9224375`
+    (rule 4 equal-norm asserted). Masks over the 4 forced-round spans: M1
+    as-generated (+α on `pos` rounds, −α on `neg`), M2 flipped, **M3 the
+    random direction with M1's sign pattern, M4 with M2's** — Code's reading
+    of "M3 r+ … same spans as M1's +; M4 r− … same spans as M1's −" as the
+    random analogs of M1/M2, stated so it can be corrected; M0 is the shadow
+    of every pair (4 per session). Captured: the residual at the read
+    position for ALL 64 layers (state and shadow), fingerprinted as stored.
+    Identity: **PASSED on all 96 pairs** — shadow `p_a` within 4.5e-5 and `label_mass` within 4.4e-5 of the archived 4-decimal values (i.e. at rounding precision), archived `pick` reproduced 96/96, `choice_read` verify KL = 0.0 on 96/96, shadow forward vs `choice_read` |Δp_a| = 0.0 exactly (same code path), and the four shadows of every session bit-identical to each other. Per-session wall clock ≈ 31 s; total
+    12.4 min.
+
+    **Probe target = M1 vs M2** (as-generated polarity vs flipped; texts
+    identical within a session; 12/12 map balance makes tag identity
+    orthogonal to the target), standardized L2 logistic regression,
+    leave-one-session-out with both rows held out together, pooled AUC;
+    comparator M3 vs M4; null = 200 label shuffles per layer.
+
+    Layers 0–48 (all 49, incl. workspace 40 and 44 and the steering layer 48): **M1 and M2 residuals bit-identical at the read position in every session** — paired norm max 0.0000, class-mean difference 0, AUC exactly 0.500 (|AUC − .5| max 0.0000) against shuffle 95th percentiles of .63–.71. The by-construction chance control is exact. Rows below: the three lowest workspace layers for reference, then every layer above the steering layer.
+
+    | layer | type | AUC M1 v M2 | shuffle 95th | AUC M3 v M4 (random) | surv. frac | cos(d) | beside: mean ‖M1−M2‖/2α |
+    |---|---|---|---|---|---|---|---|
+    | 40 | workspace, GDN | 0.500 | 0.670 | 0.500 | 0.0000 | — | 0.0000 |
+    | 44 | workspace, GDN | 0.500 | 0.712 | 0.500 | 0.0000 | — | 0.0000 |
+    | 48 | steering, GDN | 0.500 | 0.688 | 0.500 | 0.0000 | — | 0.0000 |
+    | 49 | GDN | 0.505 | 0.700 | 0.497 | 0.0040 | 0.099 | 0.0228 |
+    | 50 | GDN | 0.503 | 0.676 | 0.502 | 0.0125 | 0.159 | 0.0622 |
+    | 51 | attn | 0.476 | 0.644 | 0.462 | 0.0192 | 0.070 | 0.1283 |
+    | 52 (ws) | GDN | 0.479 | 0.667 | 0.493 | 0.0261 | 0.081 | 0.1574 |
+    | 53 | GDN | 0.477 | 0.649 | 0.497 | 0.0293 | 0.088 | 0.1700 |
+    | 54 | GDN | 0.484 | 0.660 | 0.503 | 0.0330 | 0.089 | 0.1858 |
+    | 55 | attn | 0.451 | 0.648 | 0.486 | 0.0357 | 0.061 | 0.2237 |
+    | 56 (ws) | GDN | 0.446 | 0.660 | 0.491 | 0.0401 | 0.063 | 0.2354 |
+    | 57 | GDN | 0.438 | 0.650 | 0.481 | 0.0436 | 0.060 | 0.2519 |
+    | 58 | GDN | 0.460 | 0.658 | 0.481 | 0.0460 | 0.049 | 0.2623 |
+    | 59 | attn | 0.415 | 0.656 | 0.455 | 0.0560 | 0.033 | 0.3832 |
+    | 60 (ws) | GDN | 0.434 | 0.636 | 0.438 | 0.0639 | 0.026 | 0.4270 |
+    | 61 | GDN | 0.415 | 0.660 | 0.451 | 0.0749 | 0.022 | 0.4868 |
+    | 62 | GDN | 0.450 | 0.658 | 0.439 | 0.0928 | 0.011 | 0.5728 |
+    | 63 | attn | 0.448 | 0.677 | 0.444 | 0.1219 | -0.002 | 0.7700 |
+
+    **STOP CLAUSE (layers ≤ 48 above their shuffle 95th percentile):**
+    **did not fire** — no layer ≤ 48 is above null (all 49 are at exactly 0.500 with bit-identical residuals); hook placement and mask are as declared.
+
+    **LEAK, unsigned only (reward masks):** π_d(M1) = 0/24 = 0.000, π_d(M2) = 0/24 = 0.000 — no restricted-argmax flip under either reward mask; |Δ(logit_a − logit_b)| vs M0: M1 median 0.108, mean 0.099, max 0.259; M2 median 0.096, mean 0.108, max 0.239 (24 sessions each; the full value lists are in the artifact). For scale: g3's dose-0.20 leak on v1-template prefixes was max 0.5368 / mean 0.2266 in the same units.
+
+    **SIGNED pseudo-shift, random masks only** (shift of logit(label whose
+    rounds carried r+) − logit(other), relative to the shadow): M3 mean +0.0082 (sd 0.0469; 14 positive / 10 negative of 24); M4 mean +0.0019 (sd 0.0524; 11/13) — the mechanical pseudo-shift of a norm-matched random direction at the config of record is within ±0.01 logit on average with a per-session sd of ~0.05.
+
+    **FLAGS (grep `FLAG:`).**
+    - **FLAG: POST-HOC — the echo IS readable when the target is the injected
+      SIGN OF THE LAST FORCED ROUND.** Rule 11: a post-hoc relabelling of the
+      same Stage A rows (no new forward, no reward-mask DV, nothing signed
+      toward a label), not a §3.1 registered readout; it licenses a
+      pre-registration, never a verdict. Target = +1 for (M1, forced_end =
+      pos) and (M2, forced_end = neg), else −1 — identical text within a
+      session, opposite labels within a session, 11/13 across sessions. The
+      identical LOSO probe reads it above null at every layer from 50 to 63:
+      AUC 0.866 (L50), 0.972 (L51), 0.967 (L52), 0.983 (L53), 0.977 (L54), 0.967 (L55), 0.972 (L56), 0.967 (L57), 0.965 (L58), 0.941 (L59), 0.938 (L60), 0.934 (L61), 0.882 (L62), 0.845 (L63), against shuffle 95th percentiles of 0.63–0.69;
+      L49 0.674 vs 0.682 (not above null); layers ≤ 48 exactly
+      0.500. **The random-direction comparator reads its own last-round sign
+      almost as well:** 0.858 (50), 0.918 (51), 0.931 (52), 0.939 (53), 0.929 (54), 0.906 (55), 0.891 (56), 0.915 (57), 0.903 (58), 0.814 (59), 0.832 (60), 0.780 (61), 0.840 (62), 0.747 (63). Descriptive reading, no bar: at the first free
+      choice the residual above the steering layer carries a linearly
+      decodable memory of WHICH SIGN was injected on the nearest forced round
+      (under strict alternation, equivalently the first), peaking around
+      L51–L58 and decaying toward L63; it is not axis-specific; and it is
+      invisible to the registered M1-vs-M2 target because e2a's alternating
+      forced order [f, −f, f, −f] makes that target's sign depend on the
+      start pole (13/11 here) — the class-mean differences cancel. Which
+      round(s) carry it and how it decays with distance is Stage B's R1..R4
+      retention curve. Artifact
+      [`stageA_posthoc_lastround.json`](data/echo/stageA_posthoc_lastround.json),
+      raw [`_recon_echo_stageA_posthoc`](results/raw/2026-09-05_recon_echo_stageA_posthoc.txt).
+    - **FLAG: the registered target and the surviving fraction are
+      sign-ambiguous under alternation by construction** — the same
+      cancellation makes the class-mean surviving fraction read ≤ 0.12 while
+      the per-session paired norm reaches 0.77 × 2α at L63.
+    - **FLAG: e2a generation-side 512-token window** (§1e) — 270 of 1,894
+      archived generations were produced with the state over the whole tail
+      window; free3–free5 only; DV read untouched.
+    - **FLAG: the content-class screen has no RESULTS entry** (§1g); the
+      09-05 handoff's "in the log" is wrong for that item.
+    - **FLAG: `PREPRINT-*.md` / `BLOG-*.md` are absent from the repo** though
+      CLAUDE.md places them at root (§1b).
+    - **FLAG: H1-u is not a prefix-steered/choice-unsteered precedent** —
+      its reads were state-present at every position (§1c).
+    - **FLAG (record hygiene; verifier-found, Code-verified):**
+      `data/e2a/g3prime_kl.jsonl` holds 360 rows but 311 distinct (arm,
+      session, choice) keys — 49 duplicate rows over 38 keys (smoke rows
+      re-appended), all kl = 0.0; "360/360" counts rows, not distinct
+      verified reads.
+
+  - **PROHIBITION, honoured in code.** `signed_pseudo_shift` refuses M1/M2;
+    no first-choice Δ on a reward mask is computed, printed or written
+    anywhere in `scripts/recon_echo.py` or the artifacts; the raw per-mask
+    restricted logits are recorded as the block requires and nothing is
+    derived from them under M1/M2 beyond the unsigned π_d and |shift|.
+  - **Caveat line.** The archived texts were generated on the cached round
+    path (first-token licence); every recon forward is uncached — immaterial
+    to echo readability, noted for the record. Stage B waits for its go.
+  - **Committed with explicit paths:** `valence_core/echo/{__init__,
+    maskedprefix, spans, probe}.py`, `valence_core/adapters/{base,
+    qwen_mlx}.py` (`forward_last`), `scripts/recon_echo.py`, `.gitignore`
+    (`data/echo/` JSON allowlist, tested both directions), `data/echo/*.json`,
+    the five raw logs, this entry.
+
 - 2026-09-03 — **RECORD HYGIENE: my entry date stamps ran AHEAD of true UTC,
   by one day from `a9e6a74` onward. Correction table below, verified against
   `git log` rather than repeated from the request. NO existing entry is

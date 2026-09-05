@@ -1,0 +1,24 @@
+{
+ "session": 82,
+ "n_tokens_full": 725,
+ "n_tokens_first_choice_prefix": 270,
+ "n_rounds_steered_full": 10,
+ "n_steered_tokens_full": 570,
+ "timings_s": {
+  "full session: steered forward, capture 64 layers": 6.895838975906372,
+  "full session: mask-off forward, capture 64 layers": 6.145384073257446,
+  "full session: steered forward, capture 15 layers above 48": 6.2517249584198,
+  "full session: steered forward, no capture": 6.171648740768433,
+  "full session: mask-off forward, no capture": 5.962644100189209,
+  "first-choice prefix: echo primitive M1 (state+shadow+choice_read x2)": 10.14433479309082
+ },
+ "projection": {
+  "stage_a_reads": 96,
+  "stage_a_hours_at_measured_rate": 0.27051559448242185,
+  "stage_a_hours_throttled_1.7x": 0.4598765106201172,
+  "stage_b_reads_first_choice": 1122,
+  "stage_b_hours_first_choice_only": 3.1616510105133058,
+  "stage_b_hours_full_session_upper_bound": 7.781229339440664,
+  "note": "Stage A reads at the FIRST free choice, so its forwards are over the first-choice prefix (~200 tokens), not the full session; the full-session figures bound Stage B's later positions."
+ }
+}

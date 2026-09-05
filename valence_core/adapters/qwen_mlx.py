@@ -28,7 +28,8 @@ from typing import Iterable, Sequence
 import numpy as np
 
 from .base import (ForwardResult, GenerateResult, Injection, ModelAdapter,
-                   PositionSpec)
+                   PositionSpec,
+                   LastForwardResult)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(
     os.path.abspath(__file__))))
@@ -173,6 +174,30 @@ class QwenMLXAdapter(ModelAdapter):
             acts={l: np.array(acts[l][0].tolist(), dtype=np.float32)
                   for l in acts},
             n_positions=len(list(ids)))
+
+    def forward_last(self, ids: Sequence[int],
+                     capture_layers: Iterable[int] = (),
+                     injections: Sequence[Injection] = ()) -> LastForwardResult:
+        """`forward` at the final position only -- identical dispatch (the
+        validated vanilla path when there is no injection, the positional
+        re-forward otherwise; both uncached), identical logits; the captured
+        residuals are sliced to the last position BEFORE the numpy
+        conversion. `forward` is untouched."""
+        mx = self._mx
+        arr = mx.array([list(ids)])
+        caps = list(capture_layers)
+        if not injections:
+            final, acts = self._model.forward(arr, capture_layers=caps)
+        else:
+            final, acts = self._fc.forward_with_positional_state(
+                self._model, arr, self._positional_fns(injections),
+                capture_layers=caps)
+        logits = self._model.unembed(final[:, -1, :])[0].astype(mx.float32)
+        last = {l: np.array(acts[l][0, -1, :].astype(mx.float32).tolist(),
+                            dtype=np.float32) for l in acts}
+        return LastForwardResult(
+            logits=np.array(logits.tolist(), dtype=np.float32),
+            resid_last=last, n_positions=len(list(ids)))
 
     def embed(self, text: str) -> np.ndarray:
         """Exactly `e2a_g2_discriminability.embed`: vanilla forward, mean over

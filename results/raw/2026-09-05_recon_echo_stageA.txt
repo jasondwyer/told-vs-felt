@@ -1,0 +1,31 @@
+Sat Sep  5 07:25:03 UTC 2026
+config of record: L48 frac 0.1 alpha 10.3010 (R_48 103.01); axis sha 3c17b0d8fbcad716; random L48 sha 7be5db23d9224375
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 21469.93it/s]
+model loaded in 5s
+provenance: {"adapter": "qwen3.6-27b-4bit-mlx", "model_id": "mlx-community/Qwen3.6-27B-4bit", "dtype": "4bit-quantized (MLX)", "backend": "mlx", "mlx_version": "0.31.2", "library_versions": {"mlx": "0.31.2", "mlx-lm": "0.31.3", "numpy": "2.5.1"}, "python": "3.12.9", "platform": "macOS-15.6.1-arm64-arm-64bit", "gdn_inference_mode": "ops (fused disabled)", "n_layers": 64, "choice_window_declared": 8192, "legacy_truncate_512": false, "n_encodes_clipped": 0}
+  s  0 (1/24) n=201 steered=170 identity ok  32s  elapsed 0.5 min
+  s  1 (2/24) n=237 steered=206 identity ok  36s  elapsed 1.1 min
+  s  3 (3/24) n=184 steered=152 identity ok  28s  elapsed 1.6 min
+  s  4 (4/24) n=204 steered=173 identity ok  32s  elapsed 2.2 min
+  s  6 (5/24) n=196 steered=166 identity ok  32s  elapsed 2.7 min
+  s  7 (6/24) n=192 steered=160 identity ok  28s  elapsed 3.2 min
+  s  8 (7/24) n=187 steered=156 identity ok  28s  elapsed 3.6 min
+  s  9 (8/24) n=171 steered=140 identity ok  28s  elapsed 4.1 min
+  s 10 (9/24) n=184 steered=154 identity ok  28s  elapsed 4.6 min
+  s 11 (10/24) n=205 steered=173 identity ok  32s  elapsed 5.1 min
+  s 12 (11/24) n=198 steered=167 identity ok  32s  elapsed 5.6 min
+  s 13 (12/24) n=200 steered=169 identity ok  32s  elapsed 6.2 min
+  s 14 (13/24) n=227 steered=197 identity ok  35s  elapsed 6.8 min
+  s 15 (14/24) n=214 steered=182 identity ok  31s  elapsed 7.3 min
+  s 16 (15/24) n=188 steered=157 identity ok  28s  elapsed 7.7 min
+  s 17 (16/24) n=234 steered=203 identity ok  35s  elapsed 8.3 min
+  s 18 (17/24) n=203 steered=173 identity ok  32s  elapsed 8.9 min
+  s 19 (18/24) n=215 steered=183 identity ok  31s  elapsed 9.4 min
+  s 20 (19/24) n=218 steered=187 identity ok  31s  elapsed 9.9 min
+  s 22 (20/24) n=207 steered=177 identity ok  31s  elapsed 10.4 min
+  s 23 (21/24) n=211 steered=179 identity ok  31s  elapsed 10.9 min
+  s 24 (22/24) n=188 steered=157 identity ok  27s  elapsed 11.4 min
+  s 28 (23/24) n=207 steered=176 identity ok  31s  elapsed 11.9 min
+  s 29 (24/24) n=203 steered=172 identity ok  31s  elapsed 12.4 min
+Stage A reads complete: 24 sessions, 12.4 min
+exit 0

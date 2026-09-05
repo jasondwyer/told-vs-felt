@@ -180,6 +180,17 @@ class ForwardResult:
 
 
 @dataclass
+class LastForwardResult:
+    """`forward_last`'s return: the final-position next-token logits and, per
+    captured layer, ONLY the final-position residual [D] (float32). Added for
+    the echo recon (2026-09-05); see `ModelAdapter.forward_last`."""
+
+    logits: np.ndarray
+    resid_last: dict[int, np.ndarray] = field(default_factory=dict)
+    n_positions: int = 0
+
+
+@dataclass
 class GenerateResult:
     text: str
     token_ids: list[int]
@@ -231,6 +242,27 @@ class ModelAdapter(ABC):
                 injections: Sequence[Injection] = ()) -> ForwardResult:
         """Single uncached forward. `injections` may be empty (vanilla),
         one, or several (multi-layer or multi-span states)."""
+
+    def forward_last(self, ids: Sequence[int],
+                     capture_layers: Iterable[int] = (),
+                     injections: Sequence[Injection] = ()) -> LastForwardResult:
+        """`forward`, viewed at the final position only.
+
+        Default: delegate to `forward` and slice. Backends override it to
+        avoid materialising every captured [S, D] block when only the read
+        position is wanted (the echo recon reads ~20 layers at one position
+        of a 200-700-token session; converting the full blocks costs more
+        than the forward). Same two code paths as `forward` by construction;
+        `forward` itself is never modified (rule 26 -- the oracle's numbers
+        go through `forward`, and this is a view of it, not a third path).
+        """
+        res = self.forward(ids, capture_layers=capture_layers,
+                           injections=injections)
+        return LastForwardResult(
+            logits=res.logits,
+            resid_last={l: np.asarray(a[-1], dtype=np.float32)
+                        for l, a in res.acts.items()},
+            n_positions=res.n_positions)
 
     @abstractmethod
     def embed(self, text: str) -> np.ndarray:
