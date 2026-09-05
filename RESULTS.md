@@ -21,6 +21,271 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-05 — **RECON — ECHO CHANNEL (k-candidate), STAGE B. All 102 valid e2a
+  reward-arm sessions read at the first free choice under sixteen masks with
+  shadows; the registered targets of the design block of 2026-09-05 §3c;
+  post-hoc #2 printed first as the block asks. Registered results: (a) the sign injected on the last forced round is
+  linearly readable at every layer above 48 — AUC .94–.995 (M1/M2, grouped
+  10-fold, n = 102), 1.000 from L50 when all four rounds share a sign
+  (M5/M6), the random direction matching at L49–L58 and decaying faster
+  after; (b) the label-bound polarity is NULL (.51–.55 against nulls ≈ .58);
+  (c) single-round retention is injection-borne (text-only baseline at null)
+  but not ordered by distance — R1 at 157 tokens .89, R3 at 67 .83, R4 at
+  22 .68, R2 at 112 .66. Layers ≤ 48 bit-identical to the shadow across all
+  sixteen masks (84,966 cells), STOP clause silent, identity held on 1,632
+  pairs. NO verdict
+  quantity, NO bar, NO new sessions; descriptive language only; Stage B's
+  later-position reads were withdrawn by the block (FLAG 1 of the Stage A
+  entry: the archived free3–free5 spans are the whole tail window).**
+  (Stamp verified at write time: `date -u` → **Sat Sep  5 21:24:35 UTC 2026**. Raw
+  [`_recon_echo_stageB`](results/raw/2026-09-05_recon_echo_stageB.txt),
+  [`_recon_echo_stageB_analysis`](results/raw/2026-09-05_recon_echo_stageB_analysis.txt),
+  [`_recon_echo_stageA_posthoc2`](results/raw/2026-09-05_recon_echo_stageA_posthoc2.txt);
+  artifacts [`stageB_reads.json`](data/echo/stageB_reads.json),
+  [`stageB_analysis.json`](data/echo/stageB_analysis.json),
+  [`stageA_posthoc2_labelpole.json`](data/echo/stageA_posthoc2_labelpole.json);
+  residual arrays `data/echo/stageB_resid_s*.npz` local, gitignored,
+  fingerprinted as stored. Code at `5d87c0e` (stage + analysis, smoke-tested
+  on one session before the run).)
+
+  - **§3a POST-HOC #2 — printed first (rule 11; a relabelling of the Stage
+    A rows, no new forward; licenses a pre-registration, never a verdict).**
+    Target = the pole of `label_a` under the mask, the well-posed label-bound
+    polarity: +1 iff the rounds of the first-listed menu label carried the +
+    pole (M1: `label_a == tag_plus`; M2: the reverse); identical text within a
+    session, opposite labels within a session; `label_a` is `tag_plus` in
+    10/24. **NULL at n = 24:** AUC .43–.54 at every layer above 48 against
+    shuffle 95th percentiles of .64–.69; the random comparator (M3/M4, r+ as
+    "+") .45–.54 against .64–.72; layers ≤ 48 exactly 0.500. Together with
+    post-hoc #1 (last-round sign, AUC .87–.98): at n = 24 the read position
+    carries WHICH SIGN was injected last, not WHICH LABEL's rounds carried it.
+
+    | layer | AUC reward (pole of label_a) | shuffle 95th | AUC random | shuffle 95th |
+    |---|---|---|---|---|
+    | 40 | 0.500 | 0.674 | 0.500 | 0.664 |
+    | 44 | 0.500 | 0.694 | 0.500 | 0.719 |
+    | 48 | 0.500 | 0.695 | 0.500 | 0.685 |
+    | 49 | 0.505 | 0.693 | 0.517 | 0.674 |
+    | 50 | 0.464 | 0.658 | 0.514 | 0.655 |
+    | 51 | 0.524 | 0.653 | 0.521 | 0.668 |
+    | 52 | 0.517 | 0.681 | 0.531 | 0.643 |
+    | 53 | 0.540 | 0.657 | 0.538 | 0.662 |
+    | 54 | 0.519 | 0.663 | 0.535 | 0.648 |
+    | 55 | 0.467 | 0.653 | 0.491 | 0.667 |
+    | 56 | 0.495 | 0.660 | 0.502 | 0.665 |
+    | 57 | 0.503 | 0.681 | 0.490 | 0.649 |
+    | 58 | 0.486 | 0.649 | 0.488 | 0.660 |
+    | 59 | 0.472 | 0.668 | 0.481 | 0.655 |
+    | 60 | 0.427 | 0.641 | 0.495 | 0.663 |
+    | 61 | 0.479 | 0.679 | 0.451 | 0.667 |
+    | 62 | 0.488 | 0.658 | 0.483 | 0.657 |
+    | 63 | 0.502 | 0.643 | 0.490 | 0.642 |
+
+  - **§3b THE RUN.** All 102 valid reward sessions by index, first free choice only (prefixes
+    152–270 tokens, all under the 512-token window of the archived read).
+    Config of record as Stage A (L48, frac 0.10, α = 10.3010, axis
+    `3c17b0d8fbcad716`, random `e0_random_dirs['L48']` `7be5db23d9224375`,
+    rule 4 equal-norm asserted). Sixteen state masks per session, each
+    through the quarantined primitive with its mandatory shadow: M1–M4 as
+    Stage A; **M5 / M6** same-pole (every forced round +α / −α, axis);
+    **M5x / M6x** the same with the random direction; **R1..R4** one forced
+    round steered at its as-generated pole, the other three unsteered
+    (axis); **R1x..R4x** the same with the random direction. Every shadow
+    asserted bit-identical to M1's before storage (one shadow stored per
+    session). Identity: **PASSED on all 1,632 pairs** — shadow `p_a` within
+    4.7e-5 of the archived 4-decimal value, archived `pick` reproduced,
+    `choice_read` verify KL = 0.0 on every read, shadow forward equal to
+    `choice_read` to 1e-6 (exactly 0.0). Smoke on one session before the
+    run; then a resume past it. Per-session wall clock 91–153 s (mean 122);
+    **3.43 h** total; 2.4 GB of residual arrays local, fingerprinted.
+  - **Procedure (declared change from Stage A, cost-driven).** Statistic and
+    null under grouped 10-fold cross-validation — both rows of a session in
+    one fold, fold assignment seeded, the 200 label shuffles per layer
+    scored under the SAME folds — because 102 sessions make
+    leave-one-session-out about ten times the cost per AUC (Stage A's 24
+    sessions ran LOSO in 18 min; the same for Stage B's eighteen families
+    would run past nine hours). The LOSO point estimate is reported beside
+    every 10-fold figure for continuity with Stage A. Classifier unchanged
+    (standardized L2 logistic regression, `discrim.logistic_auc`'s
+    published hyperparameters). Probe layers: the six workspace layers and
+    48–63; the ≤48 control is checked EXACTLY (bit-identity of every mask's
+    residual with the shadow at every layer ≤ 48, every session) and probed
+    at 40/44/48.
+  - **(a) PRIMARY — the sign injected on the last forced round.** M1/M2 rows (target +1 for (M1, forced_end = pos) and (M2, forced_end = neg), else −1): AUC 0.695 at L49, 0.994–0.995 at L51–L53, .97–.99 through L62, 0.941 at L63 — **above its shuffle null at every layer above 48** (nulls .57–.61); 40/44/48 exactly 0.500. The random comparator (M3/M4) matches it at L49–L58 (.73 → .99) and **decays faster after L58** (.79–.85 at L59–L63 against the axis's .94–.97). With all four rounds sharing a sign (M5/M6) the sign is read at 0.989 at L49 and **1.000 at every layer from L50 on**, for the random direction likewise. Grouped 10-fold and LOSO point estimates agree to within .012 AUC across every layer of the (a) and (b) families; the largest gap anywhere is .077, in the random single-round family R1x at L55–L62, where LOSO reads higher.
+
+    | layer | M1 v M2 (last sign) | null 95th | LOSO | M3 v M4 (random) | M5 v M6 (all-same sign) | M5x v M6x (random) |
+    |---|---|---|---|---|---|---|
+    | 40 | 0.500 | 0.57 | 0.500 | 0.500 | 0.500 | 0.500 |
+    | 44 | 0.500 | 0.58 | 0.500 | 0.500 | 0.500 | 0.500 |
+    | 48 | 0.500 | 0.58 | 0.500 | 0.500 | 0.500 | 0.500 |
+    | 49 | 0.695* | 0.61 | 0.697 | 0.728* | 0.989* | 0.988* |
+    | 50 | 0.941* | 0.57 | 0.938 | 0.919* | 1.000* | 0.998* |
+    | 51 | 0.994* | 0.59 | 0.994 | 0.988* | 1.000* | 1.000* |
+    | 52 | 0.995* | 0.57 | 0.998 | 0.995* | 1.000* | 1.000* |
+    | 53 | 0.995* | 0.59 | 0.996 | 0.996* | 1.000* | 1.000* |
+    | 54 | 0.989* | 0.59 | 0.990 | 0.992* | 1.000* | 1.000* |
+    | 55 | 0.989* | 0.58 | 0.988 | 0.987* | 1.000* | 1.000* |
+    | 56 | 0.987* | 0.57 | 0.986 | 0.988* | 1.000* | 1.000* |
+    | 57 | 0.979* | 0.58 | 0.979 | 0.985* | 1.000* | 1.000* |
+    | 58 | 0.979* | 0.58 | 0.981 | 0.985* | 1.000* | 1.000* |
+    | 59 | 0.971* | 0.58 | 0.977 | 0.791* | 1.000* | 1.000* |
+    | 60 | 0.969* | 0.58 | 0.973 | 0.850* | 1.000* | 1.000* |
+    | 61 | 0.969* | 0.58 | 0.974 | 0.797* | 1.000* | 1.000* |
+    | 62 | 0.964* | 0.58 | 0.968 | 0.801* | 1.000* | 1.000* |
+    | 63 | 0.941* | 0.58 | 0.944 | 0.746* | 1.000* | 1.000* |
+
+  - **(b) Label-bound polarity — the pole of `label_a`.** M1/M2 rows (target +1 iff the first-listed menu label's rounds carried +): AUC .508–.549 at L49–L63 against nulls .56–.60, **below null at every layer**; random comparator .50–.52. **NULL at n = 102**, as at n = 24 (§3a). The read position carries the sign that was injected, not which label's rounds carried it.
+
+    | layer | M1 v M2 (pole of label_a) | null 95th | LOSO | M3 v M4 (random) | null 95th |
+    |---|---|---|---|---|---|
+    | 40 | 0.500 | 0.58 | 0.500 | 0.500 | 0.60 |
+    | 44 | 0.500 | 0.59 | 0.500 | 0.500 | 0.58 |
+    | 48 | 0.500 | 0.59 | 0.500 | 0.500 | 0.58 |
+    | 49 | 0.508 | 0.59 | 0.506 | 0.507 | 0.57 |
+    | 50 | 0.508 | 0.58 | 0.505 | 0.504 | 0.59 |
+    | 51 | 0.535 | 0.57 | 0.535 | 0.513 | 0.58 |
+    | 52 | 0.535 | 0.56 | 0.532 | 0.509 | 0.59 |
+    | 53 | 0.535 | 0.58 | 0.531 | 0.509 | 0.58 |
+    | 54 | 0.536 | 0.57 | 0.531 | 0.508 | 0.59 |
+    | 55 | 0.533 | 0.57 | 0.532 | 0.504 | 0.57 |
+    | 56 | 0.535 | 0.57 | 0.530 | 0.503 | 0.57 |
+    | 57 | 0.534 | 0.57 | 0.529 | 0.502 | 0.58 |
+    | 58 | 0.530 | 0.58 | 0.526 | 0.498 | 0.58 |
+    | 59 | 0.542 | 0.58 | 0.538 | 0.513 | 0.57 |
+    | 60 | 0.549 | 0.58 | 0.544 | 0.508 | 0.58 |
+    | 61 | 0.532 | 0.60 | 0.544 | 0.512 | 0.57 |
+    | 62 | 0.539 | 0.57 | 0.540 | 0.520 | 0.57 |
+    | 63 | 0.549 | 0.58 | 0.550 | 0.514 | 0.58 |
+
+  - **(c) RETENTION — single-round masks, target = that round's pole.** Single-round masks, target = that round's pole, one row per session (102), 10-fold statistic and null, text-only baseline = the same target on the shadow rows (Code-added control: a probe that reads the pole from the text alone would score here too). The baseline sits at or below null at every layer for every round, so what the single-round probes read is injection-borne. **The curve is not ordered by distance:** R1, the FARTHEST round (157 tokens from its last steered position to the read), is the most readable (.888 at L52, .82 at L63, above null at L50–L63); R3 (67 tokens) next (.831 at L51, .65 at L63); R4, the NEAREST (22 tokens), weak (.683 at L51, above null only at L49–L55); R2 (112 tokens) weakest (.656 at L51, above null at seven scattered layers). Rounds 1 and 3 are the start-pole label's rounds and 2 and 4 the other label's, so round position, label parity and span length are confounded in this design. The random direction under the same masks: R1x nearly as readable as the axis at its peak (.837 vs .888 at L52) and decaying faster; R3x at null (.50–.62) where the axis reads .65–.83; R2x/R4x at or barely above null.
+
+    **The retention curve.**
+
+    | round | tokens, last steered → read (mean; range) | pole balance | axis: peak AUC (layer) | axis: AUC at L63 | layers above null (axis) | random: peak (layer) | text-only max | null 95th range |
+    |---|---|---|---|---|---|---|---|---|
+    | R1 | 157; 117–196 | 49/53 | 0.888 (L52) | 0.822 | 14 of 18: 50–63 | 0.837 (L52) | 0.586 (none above null) | 0.60–0.63 |
+    | R2 | 112; 86–144 | 53/49 | 0.656 (L51) | 0.588 | 7 of 18: 51–62 | 0.623 (L59) | 0.583 (none above null) | 0.61–0.65 |
+    | R3 | 67; 51–110 | 49/53 | 0.831 (L51) | 0.648 | 13 of 18: 51–63 | 0.616 (L51) | 0.583 (none above null) | 0.60–0.64 |
+    | R4 | 22; 21–23 | 53/49 | 0.683 (L51) | 0.557 | 7 of 18: 49–55 | 0.626 (L52) | 0.581 (none above null) | 0.61–0.64 |
+
+    Per layer (AUC, * = above its null; text = the shadow-row baseline):
+
+    | layer | R1 | R1x | text | R2 | R2x | text | R3 | R3x | text | R4 | R4x | text |
+    |---|---|---|---|---|---|---|---|---|---|---|---|---|
+    | 40 | 0.517 | 0.541 | 0.560 | 0.553 | 0.531 | 0.561 | 0.538 | 0.528 | 0.551 | 0.567 | 0.558 | 0.540 |
+    | 44 | 0.564 | 0.561 | 0.586 | 0.579 | 0.586 | 0.583 | 0.552 | 0.556 | 0.558 | 0.595 | 0.573 | 0.581 |
+    | 48 | 0.571 | 0.534 | 0.565 | 0.563 | 0.575 | 0.570 | 0.553 | 0.563 | 0.580 | 0.593 | 0.566 | 0.572 |
+    | 49 | 0.600 | 0.618 | 0.569 | 0.574 | 0.588 | 0.576 | 0.563 | 0.586 | 0.583 | 0.634* | 0.574 | 0.574 |
+    | 50 | 0.663* | 0.628* | 0.530 | 0.549 | 0.546 | 0.510 | 0.575 | 0.586 | 0.519 | 0.664* | 0.592 | 0.541 |
+    | 51 | 0.794* | 0.733* | 0.502 | 0.656* | 0.610 | 0.491 | 0.831* | 0.616* | 0.495 | 0.683* | 0.614 | 0.504 |
+    | 52 | 0.888* | 0.837* | 0.475 | 0.606 | 0.597 | 0.492 | 0.809* | 0.607 | 0.494 | 0.655* | 0.626* | 0.502 |
+    | 53 | 0.881* | 0.830* | 0.474 | 0.606 | 0.590 | 0.477 | 0.780* | 0.596 | 0.469 | 0.657* | 0.610 | 0.496 |
+    | 54 | 0.869* | 0.789* | 0.451 | 0.590 | 0.566 | 0.469 | 0.753* | 0.576 | 0.453 | 0.638* | 0.599 | 0.467 |
+    | 55 | 0.868* | 0.739* | 0.484 | 0.625* | 0.600 | 0.508 | 0.771* | 0.566 | 0.465 | 0.625* | 0.577 | 0.479 |
+    | 56 | 0.871* | 0.745* | 0.470 | 0.646* | 0.598 | 0.507 | 0.764* | 0.579 | 0.484 | 0.615 | 0.575 | 0.498 |
+    | 57 | 0.854* | 0.737* | 0.487 | 0.626* | 0.605* | 0.515 | 0.756* | 0.552 | 0.484 | 0.619 | 0.583 | 0.493 |
+    | 58 | 0.838* | 0.697* | 0.501 | 0.619* | 0.591 | 0.517 | 0.743* | 0.552 | 0.488 | 0.608 | 0.579 | 0.490 |
+    | 59 | 0.841* | 0.689* | 0.527 | 0.619* | 0.623* | 0.537 | 0.742* | 0.590 | 0.527 | 0.612 | 0.612 | 0.493 |
+    | 60 | 0.846* | 0.664* | 0.489 | 0.610 | 0.599 | 0.484 | 0.713* | 0.533 | 0.490 | 0.597 | 0.584 | 0.481 |
+    | 61 | 0.823* | 0.653* | 0.471 | 0.609 | 0.600 | 0.503 | 0.698* | 0.537 | 0.476 | 0.579 | 0.585 | 0.478 |
+    | 62 | 0.812* | 0.650* | 0.482 | 0.615* | 0.608 | 0.506 | 0.686* | 0.526 | 0.482 | 0.589 | 0.600 | 0.493 |
+    | 63 | 0.822* | 0.643* | 0.462 | 0.588 | 0.562 | 0.453 | 0.648* | 0.503 | 0.434 | 0.557 | 0.539 | 0.454 |
+
+  - **Per-session paired geometry (not class-mean — the class mean cancels
+    under alternation).** Per session, the difference vector between the two masks of a pair, its norm over 2α and its cosine with the frozen axis d (mean ± sd over the 102 sessions), with the class-mean norm beside to show the cancellation. M1−M2: norm/2α grows from .023 (L49) to .757 (L63) with cos(d) ≈ 0 at every layer (+.010 → −.001) — the alternating-sign echo lives almost entirely orthogonal to the axis; its class mean is ~0 under alternation. M5−M6: norm/2α .036 (L49) → 1.037 (L63) — at L63 larger than a single injection's magnitude — with cos(d) +.18–.23 at L49–L50, ≈ +.16 through L58, +.10 at L63: a partial copy plus a dominant transform.
+
+    | layer | M1−M2: norm/2α (mean ± sd) | cos(d) | class-mean norm/2α | M5−M6: norm/2α | cos(d) | class-mean |
+    |---|---|---|---|---|---|---|
+    | 49 | 0.023 ± 0.005 | +0.010 | 0.003 | 0.036 ± 0.003 | +0.177 | 0.034 |
+    | 50 | 0.060 ± 0.012 | +0.009 | 0.006 | 0.094 ± 0.011 | +0.232 | 0.089 |
+    | 51 | 0.125 ± 0.019 | +0.004 | 0.009 | 0.193 ± 0.017 | +0.171 | 0.184 |
+    | 52 | 0.155 ± 0.023 | +0.005 | 0.012 | 0.226 ± 0.018 | +0.162 | 0.211 |
+    | 53 | 0.167 ± 0.025 | +0.006 | 0.013 | 0.246 ± 0.021 | +0.158 | 0.229 |
+    | 54 | 0.182 ± 0.027 | +0.006 | 0.015 | 0.266 ± 0.022 | +0.164 | 0.246 |
+    | 55 | 0.220 ± 0.025 | +0.003 | 0.017 | 0.330 ± 0.022 | +0.168 | 0.303 |
+    | 56 | 0.232 ± 0.025 | +0.003 | 0.018 | 0.344 ± 0.023 | +0.167 | 0.312 |
+    | 57 | 0.248 ± 0.026 | +0.004 | 0.020 | 0.363 ± 0.025 | +0.171 | 0.326 |
+    | 58 | 0.258 ± 0.026 | +0.003 | 0.021 | 0.374 ± 0.025 | +0.165 | 0.333 |
+    | 59 | 0.377 ± 0.031 | +0.002 | 0.026 | 0.488 ± 0.034 | +0.135 | 0.419 |
+    | 60 | 0.419 ± 0.032 | +0.001 | 0.030 | 0.539 ± 0.041 | +0.136 | 0.455 |
+    | 61 | 0.480 ± 0.039 | +0.000 | 0.035 | 0.605 ± 0.045 | +0.134 | 0.504 |
+    | 62 | 0.560 ± 0.039 | -0.000 | 0.042 | 0.720 ± 0.059 | +0.123 | 0.588 |
+    | 63 | 0.757 ± 0.070 | -0.001 | 0.055 | 1.037 ± 0.089 | +0.095 | 0.863 |
+
+  - **LEAK (unsigned) and the signed quantities the block allows.** Unsigned only on the reward masks: no first-choice Δ, nothing signed toward the +paired label. π_d and the |Δ(logit_a − logit_b)| distribution relative to the shadow:
+
+    | mask | π_d (pick flips) | median | mean | max |
+    |---|---|---|---|---|
+    | M1 | 1/102 = 0.010 | 0.0939 | 0.0958 | 0.2590 |
+    | M2 | 3/102 = 0.029 | 0.1027 | 0.1042 | 0.2429 |
+    | M5 | 0/102 = 0.000 | 0.0386 | 0.0524 | 0.1913 |
+    | M6 | 1/102 = 0.010 | 0.0405 | 0.0517 | 0.1713 |
+    | R1 | 0/102 = 0.000 | 0.0457 | 0.0476 | 0.1625 |
+    | R2 | 0/102 = 0.000 | 0.0430 | 0.0511 | 0.1715 |
+    | R3 | 0/102 = 0.000 | 0.0327 | 0.0401 | 0.1155 |
+    | R4 | 0/102 = 0.000 | 0.0362 | 0.0412 | 0.1258 |
+
+    Signed pseudo-shift toward the r+ label (random masks): M3 mean +0.0161 (sd 0.0536; 60/42 positive/negative), M4 +0.0076 (sd 0.0541; 54/48). Signed label-differential toward the first-listed menu label (no contrast, so arithmetic plus label artifact): M5 -0.0102 (sd 0.0678; 44/58), M6 -0.0158 (sd 0.0641; 41/61), M5x -0.0098, M6x +0.0003. All within ±0.02 logit on average.
+  - **STOP clause / identity.** Every one of the 84,966 (session, mask, layer ≤ 48) cells is bit-identical to the shadow, and the 40/44/48 probes are exactly 0.500 for every family — **did not fire**; hook placement and masks as declared for all sixteen masks. Identity: 1,632 pairs all ok (max shadow |Δp_a| vs archive 4.7e-05, |Δmass| 5.0e-05, verify KL 0.0, shadow-vs-`choice_read` 0.0).
+  - **FLAGS (grep `FLAG:`).** 
+    - **FLAG: the echo carries the SIGN, not the BINDING.** At n = 102 the
+      injected sign of the last forced round is read at AUC ≥ .94 above the
+      steering layer (1.000 when all four rounds share it) while the
+      label-bound polarity — which label's rounds carried + — is null
+      (.51–.55). Whatever a choice would need from an echo channel is not
+      linearly present at the first free choice at the config of record.
+    - **FLAG: retention is not ordered by distance.** Farthest round most
+      readable (R1, 157 tokens, .89), nearest weakest (R4, 22 tokens, .68);
+      the text-only baseline is at null everywhere, so this is
+      injection-borne. Round position, label parity (rounds 1/3 vs 2/4) and
+      span length are confounded in the single-round design; separating them
+      is a design question.
+    - **FLAG: axis-specificity shows up in PERSISTENCE, not presence.** The
+      random direction's sign is read as well as the axis's at L49–L58 and
+      under R1, but decays faster into L59–L63 (M3/M4 .75–.85 vs .94–.97) and
+      is at null under R3 where the axis reads .65–.83.
+    - **FLAG: the alternating-sign masks move the label logit-difference
+      about 2.5× more than same-sign or single-round masks** (M1/M2 median
+      |Δ| ≈ .10 vs M5/M6 and R1–R4 ≈ .04; π_d 1–3/102 vs 0–1/102) —
+      unsigned, reported as such; the signed version is the prohibited DV.
+    - **FLAG: at L63 the same-sign pair's per-session difference exceeds
+      2α** (M5−M6 norm/2α = 1.04) with cos(d) ≈ .10 — four same-sign
+      injections leave a read-position imprint larger than one injection's
+      magnitude, mostly orthogonal to the axis.
+    - **FLAG (procedure):** grouped 10-fold CV replaced LOSO for Stage B's
+      statistic and null (declared above, cost-driven); LOSO point
+      estimates agree to within .012 AUC in the (a)/(b) families and to
+      within .077 everywhere (the gap sits in R1x at L55–L62).
+  - **Ledger candidate 28(d), in Code's words — flagged, not applied.**
+    *Encode-side truncation is a delivery-geometry variable.* A tokenizer
+    window applied inside the runner (e2a: `MLXLensModel.encode` keeping the
+    512-token tail by default) changes WHICH POSITIONS a positional
+    injection lands on whenever the boundary is computed by comparing two
+    encodes: two misaligned tails share no prefix, the boundary collapses to
+    0, and "from the segment onward" becomes "the whole window". Class: any
+    positional-delivery design whose boundary is found by token comparison
+    rather than by character offset, under any encode with a length limit.
+    Instance: 270 of e2a's 1,894 archived generations (free3–free5 in long
+    sessions), Code's tokenizer replay, Stage A entry §1e. Standing form for
+    the ledger, if adopted: (a) boundaries are found on the untruncated
+    encode and asserted equal to the prefix token count; (b) any encode
+    limit in a generation path is declared in the pre-registration with the
+    fraction of generations it touches; (c) a choice-read window and a
+    generation window are separate declarations. Rule 13 (template family)
+    and rule 2 (kernel/path gates) do not cover it: the template and the
+    kernel were both as declared; the window was inherited.
+  - **Record-hygiene note (no file edited).** `data/e2a/g3prime_kl.jsonl`
+    holds 360 rows over 311 distinct (arm, session, choice) keys — 49
+    duplicate rows across 38 keys, the smoke rows re-appended beside the
+    full run's — all `kl = 0.0`. The archived "360/360 choice forwards at KL
+    = 0.0 exactly" counts rows; distinct verified reads are 311, and the full
+    run verified every fourth choice forward (`verify_every = 4`), so the
+    universe of choice forwards taken is 1,115, of which 281 carry a
+    non-null `verify_kl` in the session rows. Nothing about the assertion's
+    outcome changes; the count's referent does.
+  - **Committed with explicit paths:** the two Stage B artifacts, the two raw
+    logs, this entry. Stage B's residual arrays stay local.
+
 - 2026-09-05 — **CONTENT-CLASS SCREEN (AMENDMENT 2 (iii)) — the RESULTS entry
   for `1223751`, which committed the candidate spec and its overbreadth
   screen without one. Descriptive. `content-class-draft-v3`, drafted after

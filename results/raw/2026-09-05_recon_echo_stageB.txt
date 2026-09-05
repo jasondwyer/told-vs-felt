@@ -1,0 +1,117 @@
+Sat Sep  5 16:49:40 UTC 2026
+config of record: L48 frac 0.1 alpha 10.3010 (R_48 103.01); axis sha 3c17b0d8fbcad716; random L48 sha 7be5db23d9224375
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 24517.85it/s]
+model loaded in 5s
+provenance: {"adapter": "qwen3.6-27b-4bit-mlx", "model_id": "mlx-community/Qwen3.6-27B-4bit", "dtype": "4bit-quantized (MLX)", "backend": "mlx", "mlx_version": "0.31.2", "library_versions": {"mlx": "0.31.2", "mlx-lm": "0.31.3", "numpy": "2.5.1"}, "python": "3.12.9", "platform": "macOS-15.6.1-arm64-arm-64bit", "gdn_inference_mode": "ops (fused disabled)", "n_layers": 64, "choice_window_declared": 8192, "legacy_truncate_512": false, "n_encodes_clipped": 0}
+  s  0 (1/102) n=201 identity ok  127s  elapsed 2.1 min  eta 215 min
+  --limit 1 reached; stopping (resume continues skip-only)
+Stage B reads complete: 1 sessions, 0.04 h
+smoke exit 0
+=== FULL RUN (resume) Sat Sep  5 16:52:22 UTC 2026 ===
+config of record: L48 frac 0.1 alpha 10.3010 (R_48 103.01); axis sha 3c17b0d8fbcad716; random L48 sha 7be5db23d9224375
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 13130.65it/s]
+model loaded in 4s
+provenance: {"adapter": "qwen3.6-27b-4bit-mlx", "model_id": "mlx-community/Qwen3.6-27B-4bit", "dtype": "4bit-quantized (MLX)", "backend": "mlx", "mlx_version": "0.31.2", "library_versions": {"mlx": "0.31.2", "mlx-lm": "0.31.3", "numpy": "2.5.1"}, "python": "3.12.9", "platform": "macOS-15.6.1-arm64-arm-64bit", "gdn_inference_mode": "ops (fused disabled)", "n_layers": 64, "choice_window_declared": 8192, "legacy_truncate_512": false, "n_encodes_clipped": 0}
+  s  1 (2/102) n=237 identity ok  144s  elapsed 2.4 min  eta 240 min
+  s  3 (3/102) n=184 identity ok  111s  elapsed 4.2 min  eta 183 min
+  s  4 (4/102) n=204 identity ok  126s  elapsed 6.3 min  eta 206 min
+  s  6 (5/102) n=196 identity ok  125s  elapsed 8.4 min  eta 203 min
+  s  7 (6/102) n=192 identity ok  108s  elapsed 10.2 min  eta 174 min
+  s  8 (7/102) n=187 identity ok  107s  elapsed 12.0 min  eta 169 min
+  s  9 (8/102) n=171 identity ok  106s  elapsed 13.8 min  eta 165 min
+  s 10 (9/102) n=184 identity ok  106s  elapsed 15.6 min  eta 164 min
+  s 11 (10/102) n=205 identity ok  121s  elapsed 17.6 min  eta 186 min
+  s 12 (11/102) n=198 identity ok  121s  elapsed 19.6 min  eta 183 min
+  s 13 (12/102) n=200 identity ok  120s  elapsed 21.6 min  eta 181 min
+  s 14 (13/102) n=227 identity ok  136s  elapsed 23.9 min  eta 202 min
+  s 15 (14/102) n=214 identity ok  121s  elapsed 25.9 min  eta 178 min
+  s 16 (15/102) n=188 identity ok  106s  elapsed 27.6 min  eta 153 min
+  s 17 (16/102) n=234 identity ok  137s  elapsed 29.9 min  eta 196 min
+  s 18 (17/102) n=203 identity ok  121s  elapsed 31.9 min  eta 172 min
+  s 19 (18/102) n=215 identity ok  122s  elapsed 34.0 min  eta 170 min
+  s 20 (19/102) n=218 identity ok  122s  elapsed 36.0 min  eta 169 min
+  s 22 (20/102) n=207 identity ok  122s  elapsed 38.0 min  eta 166 min
+  s 23 (21/102) n=211 identity ok  122s  elapsed 40.1 min  eta 165 min
+  s 24 (22/102) n=188 identity ok  106s  elapsed 41.9 min  eta 142 min
+  s 25 (23/102) n=221 identity ok  123s  elapsed 43.9 min  eta 162 min
+  s 26 (24/102) n=223 identity ok  123s  elapsed 45.9 min  eta 160 min
+  s 27 (25/102) n=217 identity ok  122s  elapsed 48.0 min  eta 157 min
+  s 28 (26/102) n=207 identity ok  121s  elapsed 50.0 min  eta 154 min
+  s 29 (27/102) n=203 identity ok  121s  elapsed 52.0 min  eta 152 min
+  s 30 (28/102) n=218 identity ok  122s  elapsed 54.1 min  eta 151 min
+  s 31 (29/102) n=262 identity ok  151s  elapsed 56.6 min  eta 184 min
+  s 32 (30/102) n=204 identity ok  121s  elapsed 58.6 min  eta 145 min
+  s 34 (31/102) n=206 identity ok  121s  elapsed 60.6 min  eta 144 min
+  s 35 (32/102) n=197 identity ok  122s  elapsed 62.7 min  eta 142 min
+  s 36 (33/102) n=197 identity ok  122s  elapsed 64.7 min  eta 140 min
+  s 37 (34/102) n=185 identity ok  107s  elapsed 66.5 min  eta 121 min
+  s 38 (35/102) n=189 identity ok  107s  elapsed 68.2 min  eta 119 min
+  s 39 (36/102) n=205 identity ok  122s  elapsed 70.3 min  eta 134 min
+  s 40 (37/102) n=211 identity ok  122s  elapsed 72.3 min  eta 132 min
+  s 41 (38/102) n=230 identity ok  137s  elapsed 74.6 min  eta 146 min
+  s 42 (39/102) n=193 identity ok  122s  elapsed 76.6 min  eta 128 min
+  s 43 (40/102) n=238 identity ok  138s  elapsed 78.9 min  eta 143 min
+  s 44 (41/102) n=198 identity ok  122s  elapsed 81.0 min  eta 124 min
+  s 45 (42/102) n=231 identity ok  141s  elapsed 83.3 min  eta 141 min
+  s 46 (43/102) n=203 identity ok  125s  elapsed 85.4 min  eta 123 min
+  s 47 (44/102) n=227 identity ok  140s  elapsed 87.8 min  eta 136 min
+  s 48 (45/102) n=203 identity ok  124s  elapsed 89.8 min  eta 118 min
+  s 49 (46/102) n=186 identity ok  109s  elapsed 91.7 min  eta 102 min
+  s 50 (47/102) n=198 identity ok  124s  elapsed 93.7 min  eta 114 min
+  s 51 (48/102) n=193 identity ok  124s  elapsed 95.8 min  eta 111 min
+  s 52 (49/102) n=230 identity ok  140s  elapsed 98.1 min  eta 124 min
+  s 54 (50/102) n=205 identity ok  124s  elapsed 100.2 min  eta 107 min
+  s 55 (51/102) n=239 identity ok  140s  elapsed 102.5 min  eta 119 min
+  s 56 (52/102) n=152 identity ok  91s  elapsed 104.0 min  eta 76 min
+  s 57 (53/102) n=172 identity ok  107s  elapsed 105.8 min  eta 87 min
+  s 58 (54/102) n=199 identity ok  122s  elapsed 107.8 min  eta 97 min
+  s 59 (55/102) n=202 identity ok  122s  elapsed 109.9 min  eta 95 min
+  s 60 (56/102) n=193 identity ok  121s  elapsed 111.9 min  eta 93 min
+  s 61 (57/102) n=186 identity ok  106s  elapsed 113.7 min  eta 80 min
+  s 62 (58/102) n=221 identity ok  122s  elapsed 115.7 min  eta 90 min
+  s 64 (59/102) n=219 identity ok  121s  elapsed 117.7 min  eta 87 min
+  s 65 (60/102) n=211 identity ok  122s  elapsed 119.8 min  eta 85 min
+  s 66 (61/102) n=201 identity ok  121s  elapsed 121.8 min  eta 83 min
+  s 67 (62/102) n=220 identity ok  122s  elapsed 123.8 min  eta 81 min
+  s 68 (63/102) n=204 identity ok  121s  elapsed 125.9 min  eta 79 min
+  s 69 (64/102) n=202 identity ok  122s  elapsed 127.9 min  eta 77 min
+  s 70 (65/102) n=203 identity ok  122s  elapsed 129.9 min  eta 75 min
+  s 71 (66/102) n=218 identity ok  123s  elapsed 132.0 min  eta 74 min
+  s 72 (67/102) n=228 identity ok  137s  elapsed 134.3 min  eta 80 min
+  s 73 (68/102) n=198 identity ok  122s  elapsed 136.3 min  eta 69 min
+  s 74 (69/102) n=190 identity ok  107s  elapsed 138.1 min  eta 59 min
+  s 75 (70/102) n=164 identity ok  106s  elapsed 139.9 min  eta 57 min
+  s 76 (71/102) n=189 identity ok  107s  elapsed 141.7 min  eta 55 min
+  s 77 (72/102) n=186 identity ok  107s  elapsed 143.4 min  eta 54 min
+  s 78 (73/102) n=205 identity ok  122s  elapsed 145.5 min  eta 59 min
+  s 79 (74/102) n=181 identity ok  106s  elapsed 147.3 min  eta 50 min
+  s 80 (75/102) n=222 identity ok  123s  elapsed 149.3 min  eta 55 min
+  s 81 (76/102) n=240 identity ok  137s  elapsed 151.6 min  eta 60 min
+  s 82 (77/102) n=270 identity ok  153s  elapsed 154.2 min  eta 64 min
+  s 83 (78/102) n=202 identity ok  125s  elapsed 156.2 min  eta 50 min
+  s 84 (79/102) n=210 identity ok  125s  elapsed 158.3 min  eta 48 min
+  s 87 (80/102) n=225 identity ok  140s  elapsed 160.7 min  eta 51 min
+  s 88 (81/102) n=190 identity ok  110s  elapsed 162.5 min  eta 38 min
+  s 89 (82/102) n=200 identity ok  124s  elapsed 164.6 min  eta 41 min
+  s 90 (83/102) n=194 identity ok  124s  elapsed 166.6 min  eta 39 min
+  s 91 (84/102) n=218 identity ok  125s  elapsed 168.7 min  eta 38 min
+  s 92 (85/102) n=194 identity ok  124s  elapsed 170.8 min  eta 35 min
+  s 94 (86/102) n=185 identity ok  109s  elapsed 172.6 min  eta 29 min
+  s 95 (87/102) n=184 identity ok  109s  elapsed 174.5 min  eta 27 min
+  s 96 (88/102) n=191 identity ok  112s  elapsed 176.3 min  eta 26 min
+  s 97 (89/102) n=205 identity ok  125s  elapsed 178.4 min  eta 27 min
+  s 98 (90/102) n=187 identity ok  111s  elapsed 180.3 min  eta 22 min
+  s 99 (91/102) n=207 identity ok  125s  elapsed 182.3 min  eta 23 min
+  s100 (92/102) n=221 identity ok  126s  elapsed 184.4 min  eta 21 min
+  s101 (93/102) n=224 identity ok  125s  elapsed 186.5 min  eta 19 min
+  s102 (94/102) n=200 identity ok  125s  elapsed 188.6 min  eta 17 min
+  s103 (95/102) n=212 identity ok  126s  elapsed 190.7 min  eta 15 min
+  s104 (96/102) n=219 identity ok  126s  elapsed 192.8 min  eta 13 min
+  s106 (97/102) n=199 identity ok  126s  elapsed 194.9 min  eta 11 min
+  s107 (98/102) n=214 identity ok  126s  elapsed 197.0 min  eta 8 min
+  s108 (99/102) n=227 identity ok  141s  elapsed 199.4 min  eta 7 min
+  s109 (100/102) n=198 identity ok  125s  elapsed 201.5 min  eta 4 min
+  s110 (101/102) n=217 identity ok  127s  elapsed 203.6 min  eta 2 min
+  s111 (102/102) n=217 identity ok  126s  elapsed 205.7 min  eta 0 min
+Stage B reads complete: 102 sessions, 3.43 h
+exit 0
