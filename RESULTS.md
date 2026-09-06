@@ -21,6 +21,80 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-06 — **DESIGN PATCH 2026-09-06 §1 (closure, third pass) APPLIED —
+  R7–R13 replace the eight held passages in the HELD draft, verify and
+  refuters re-run — and the closure entry is HELD A FOURTH TIME, on THREE
+  items the patch introduces or exposes: one figure and two glosses.
+  Per the patch's own rule ("if a NINTH gloss appears, write it to raw and
+  hold — no fourth patch"), nothing is reworded; the design seat strips or
+  corrects. Records: [`_closure_verify3`](results/raw/2026-09-06_e2d_closure_verify3.txt)
+  (29/30 at printed precision, [`scripts/e2d_closure_verify3.py`](scripts/e2d_closure_verify3.py),
+  self-contained so the frozen 125-check verify is untouched and still
+  reproduces byte-identical) and
+  [`_closure_glosscheck4`](results/raw/2026-09-06_e2d_closure_glosscheck4.txt)
+  (three refuters, 65 claims, every refutation re-verified by Code).
+  Watermark `07224b6`; Code stamps from `date -u`.**
+  (Stamp verified at write time: `date -u` → **Sun Sep  6 16:18:10 UTC 2026**.)
+
+  - **Applied.** All seven old clauses matched the quoted text exactly once;
+    the seven replacements are in
+    [`HELD-e2d-closure-entry.md`](HELD-e2d-closure-entry.md) (the changed
+    paragraphs re-wrapped, no other character altered — the refuters
+    reconstructed the pre-patch text and diffed). The ledger additions are
+    in the draft's ledger paragraph as the patch specified: slip (16), design
+    seat (a claim about the paired CI that the figure contradicts; would not
+    commit past); the `.011` attribution logged as both seats (inherited
+    from HANDOFF-2026-09-05.md §2 item 4, Code's, propagated unverified into
+    R4); R9–R13's class folded into slip (14); Code's four draft fixes kept.
+    The attribution is corrected BESIDE item 4 in
+    [`HANDOFF-2026-09-05.md`](HANDOFF-2026-09-05.md) (the file's own top note
+    already flagged it; the beside-line names the true source). The design
+    seat's slip numbering is used verbatim; the draft keeps "Design count:
+    fourteen at the 2026-09-05 patch" and does not invent a new count.
+  - **Held on (1): a figure.** R7 prints the z-form CI lower bound as
+    −.157; from the 20 per-session diffs (mean −.012051, sd .329581) the
+    bound is −0.156494, which is **−.156** at the printed precision — the
+    same thousandth the 09-06 values-check caught in Code's own header,
+    already corrected there. The upper bound +.132, both half-widths (.144,
+    .154) and the t(19) bounds reproduce.
+  - **Held on (2): a gloss.** "the paired 95% CI" is unqualified in a
+    sentence that has just named two pairings (clean −.0121, n = 20;
+    all-rounds +.0149, n = 24) and declined to average them. The CI printed
+    is the clean-set one (t(19) implies n = 20). For the all-rounds pairing
+    the CI is [−.218, +.247] z / [−.230, +.260] t(23): a bar-sized change
+    lies INSIDE it in both directions, so "a bar-sized increase lies outside
+    it under both forms" holds for one of the sentence's pairings and fails
+    for the other. Both refuters and Code's recomputation agree; one word
+    ("clean-set") would fix it, and it is not Code's to add.
+  - **Held on (3): a gloss.** R12's "62/38 when idx 12 is removed first and
+    46/54 when truncation is removed first" is inverted under the plain
+    reading of "removed" (from the 27 toward the paired 20): removing idx 12
+    first attributes 46% to it and 54% to truncation; removing truncation
+    first attributes 38% to truncation and 62% to idx 12. The pairs match
+    the ADDITION order from the paired base (A → B → C), which the
+    values-check called "idx-12-first" and Code's verification record
+    repeats — the patch kept the labels and changed the verb. "The split is
+    order-dependent, the artifact is not" holds (C − A = −.0502 either way).
+  - **Everything else in R7–R13 reproduces at printed precision:** R8 (the
+    `.011`, now unattributed, unambiguous), R9 (40/68 = 58.8% → 59% on the
+    24 shared indices; idx 1 and 5 at 10/10 at both doses), R10 (−.2394 over
+    20/20 generations, recorded "not comparable" in the D3 scoring entry's
+    dose table), R11 (32/188 = .1702 on all sessions; 5.1×, 3.9×, 4.5×;
+    "four to five times" at integer precision with the exact figures beside
+    — the refuters note the frame's own figure 1 − 156/187 = .166 would
+    print 5.0/3.8/4.4, so the named domain is load-bearing), R13 (slip 10
+    defined only in the untracked 09-04 design handoff, restated
+    faithfully). Code's first verify3 draft had two wrong expectations of
+    its own (a marks recount off the original's `arm|session|phase`
+    convention; an arbitrary bracket for "four to five") — fixed before the
+    raw was written, the fix visible in the script.
+  - **Not done:** the closure entry is not committed; the HELD file stays;
+    no anchor `e2d CLOSURE — TEXT OF RECORD (values-checked)` exists yet.
+    On the design seat's word (strip or correct the two sentences and the
+    one character): apply, re-run verify3 and the frozen verify, refuters
+    once more, then commit naming `08a6076`, `edf2574`, `733503d`,
+    `fb26dff` and this entry, and delete the HELD file in the same commit.
+
 - 2026-09-06 — **DESIGN PATCH 2026-09-06 §2–§3 APPLIED: FORMAT RECON
   re-allocated (F0 8 / F1 24 / F2 24) under a raised 8 h gate, the
   existing timing artifact projects **6.96 h → GO**, the neutral label

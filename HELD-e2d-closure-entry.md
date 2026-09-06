@@ -1,8 +1,26 @@
 # HELD — e2d closure entry draft (NOT the entry of record)
 
-**Status: HELD on eight items in the design-authored text of record, reported
+**Status (2026-09-06): the design patch of 2026-09-06 §1 (R7–R13, seven
+replacements over the eight held passages) is APPLIED to the quoted text
+below; the entry is HELD on THREE items — (1) R7 prints the z-form CI lower
+bound as −.157, the artifact gives −0.156494, which is −.156 at the printed
+precision (scripts/e2d_closure_verify3.py, 29/30; raw
+results/raw/2026-09-06_e2d_closure_verify3.txt); (2) R7's "the paired 95% CI"
+is unqualified after a sentence naming two pairings — it is the clean-set
+CI, and for the all-rounds pairing (n = 24) the CI [−.218, +.247] z /
+[−.230, +.260] t(23) contains a bar-sized change in both directions, so the
+precision claim holds for one pairing and fails for the other; (3) R12's
+"removed first" labels are inverted under the plain reading of "removed"
+(removing idx 12 first from the 27 gives 46/54; removing truncation first
+gives 62/38) — the pairs match the ADDITION order from the paired base that
+the values-check called "idx-12-first". The refuters' fourth pass:
+results/raw/2026-09-06_e2d_closure_glosscheck4.txt. Per the patch's own rule
+("if a ninth gloss appears, write it to raw and hold — no fourth patch"),
+Code did not reword; the design seat strips the sentences or corrects them.
+The original 125-check verify still reproduces byte-identical.**
+Earlier status: HELD on eight items in the design-authored text of record, reported
 to the design seat 2026-09-05 (Code's message after the third values-check)
-and again in HANDOFF-2026-09-06.md §2.** This file, committed with HANDOFF-2026-09-06.md, persists the draft across
+and again in HANDOFF-2026-09-06.md §2. This file, committed with HANDOFF-2026-09-06.md, persists the draft across
 Code threads because the closure text of record exists nowhere else in the
 repo: it was delivered in the design disposition headed 2026-09-05 (PI clock
 01:53 EDT), recovered verbatim from the prior Code thread's transcript, patched
@@ -56,46 +74,55 @@ provenance or hedged.
   > e2d closed at its qualification rung by the pre-registered run-dose rule:
   > at f = 0.20, D2 returned STOP, SCOPED on Q2 and Q3, adopted by PI
   > disposition before D3 existed, so the verdict-tier free operant under
-  > LOCK-j never ran. The apparatus held — Q1 passed at 3/32, exact binomial p
-  > = .878 (forced scope). The record channel failed both conjuncts of the
-  > registered readability gate (median ≥ .70 AND 10th percentile ≥ .60): .574
-  > / .524 at 0.20 and .613 / .526 at 0.30 (k = 2, criterion set), with the
-  > 0.20 displacement comparator at .534 (none at 0.30 — D3 ran M-only under
-  > ADDENDUM-j1). The marker imprint sat below the 0.158 bar in every cell and
-  > in both readout contexts (0.20: excised +.103, in situ +.127; 0.30:
-  > excised +.141, in situ +.062); the primary within-M paired Δ+ = +.103 (n =
-  > 27, sd .40, one-sided sign test p = .061) also failed 2·|Δ_R| = .138, and
-  > five pre-declared estimators span −.070 to +.103, all below bar. The two
-  > contexts differ in magnitude (2.3× at 0.30) and the gap flips direction
-  > across dose, so systematic dilution is neither demonstrated nor excluded;
-  > what is context-invariant is the below-bar conclusion. Paired on shared
-  > content the marker shows no detectable change from 0.20 to 0.30 (clean
-  > −.0121, n = 20, one-sided sign test p = .41; all-rounds +.0149, n = 24,
-  > one-sided sign test p = .27 — opposite signs, neither resolved, not
-  > averaged; the paired CI, ±.15, spans the bar in both directions); the
-  > apparent unpaired rise (+.038 clean, +.068 all-rounds) is a composition
-  > artifact, 62% one session decidable at 0.20 only (idx 12) and 38% roster
-  > truncation (D3 ran 24 M sessions to D2's 32). Degeneracy is ordered across
+  > LOCK-j never ran. The apparatus held — Q1 passed at 3/32, exact binomial
+  > p = .878 (forced scope). The record channel failed both conjuncts of the
+  > registered readability gate (median ≥ .70 AND 10th percentile ≥ .60):
+  > .574 / .524 at 0.20 and .613 / .526 at 0.30 (k = 2, criterion set), with
+  > the 0.20 displacement comparator at .534 (none at 0.30 — D3 ran M-only
+  > under ADDENDUM-j1). The marker imprint sat below the 0.158 bar in every
+  > cell and in both readout contexts (0.20: excised +.103, in situ +.127;
+  > 0.30: excised +.141, in situ +.062); the primary within-M paired Δ+ =
+  > +.103 (n = 27, sd .40, one-sided sign test p = .061) also failed 2·|Δ_R|
+  > = .138, and five pre-declared estimators span −.070 to +.103, all below
+  > bar. The two contexts differ in magnitude (2.3× at 0.30) and the gap
+  > flips direction across dose, so systematic dilution is neither
+  > demonstrated nor excluded; what is context-invariant is the below-bar
+  > conclusion. Paired on shared content the marker shows no detectable
+  > change from 0.20 to 0.30 (clean −.0121, n = 20, one-sided sign test p =
+  > .41; all-rounds +.0149, n = 24, one-sided sign test p = .27 — opposite
+  > signs, neither resolved, not averaged; the paired 95% CI is [−.157,
+  > +.132] in the z form (half-width .144) and [−.166, +.142] under t(19)
+  > (.154): a bar-sized increase, +.158, lies outside it under both forms,
+  > and a bar-sized decrease inside it under t only); the apparent unpaired
+  > rise (+.038 clean, +.068 all-rounds) is a composition artifact with two
+  > sources — one session decidable at 0.20 only (idx 12) and roster
+  > truncation (D3 ran 24 M sessions to D2's 32) — that split 62/38 when idx
+  > 12 is removed first and 46/54 when truncation is removed first; the split
+  > is order-dependent, the artifact is not. Degeneracy is ordered across
   > three doses (audit .000 / .023 / .047; read-marked .000 / .113 / .155; on
   > the 24 shared indices audit .025 → .047, read .133 → .155) with a single
   > resolved step (read .10→.20, Fisher exact two-sided p = .021; one-sided
-  > .011 — the D3-gate entry's figure), neither .20→.30 step resolved
-  > (two-sided: audit p = .15, read p = .20; both ≥ .10 one-sided), the
-  > .20→.30 read rise carried by one index (s12: 0/10 → 7/10) while indices 1
-  > and 5 sit at 10/10 at both doses and carry 58% of the marks — and it is
-  > not axis-specific: D2's random arm degrades at .045 at 0.20, twice M's
-  > .023 at the same dose.
+  > .011), neither .20→.30 step resolved (two-sided: audit p = .15, read p =
+  > .20; both ≥ .10 one-sided), the .20→.30 read rise carried by one index
+  > (s12: 0/10 → 7/10) while indices 1 and 5 sit at 10/10 at both doses and
+  > carry 59% of the marks (40/68 on the 24 shared indices) — and it is not
+  > axis-specific: D2's random arm degrades at .045 at 0.20, twice M's .023
+  > at the same dose.
   >
   > The free operant itself was administered 537 times across D1–D3 (42 / 357
   > / 138 choices over 96 sessions, every read insulated at KL = 0) and
   > returned habit-locked first-pick shares: Δ_first = +0.017 at 0.20 under
-  > the primary rule (15/29, valid sessions; 15/30 = 0.000 over all M sessions
-  > with a first pick, the domain that includes excluded idx 30) and +0.109 at
-  > 0.30 (14/23, where the two domains coincide; one-sided exact binomial p =
-  > .202), against first-pick habit-break rates of 1/30 and 1/23 (all sessions
-  > including excluded — the rule-23 secondaries domain). Nothing above 0.30
-  > was run; the closure is bounded by the measured range. The D2 failure was
-  > legibility with coherence intact — not a coherence limit (slip 10).
+  > the primary rule (15/29, valid sessions; 15/30 = 0.000 over all M
+  > sessions with a first pick, the domain that includes excluded idx 30) and
+  > +0.109 at 0.30 (14/23, where the two domains coincide; one-sided exact
+  > binomial p = .202), against first-pick habit-break rates of 1/30 and 1/23
+  > (all sessions including excluded — the rule-23 secondaries domain).
+  > Nothing above 0.30 was run; the closure is bounded by the measured range.
+  > The D2 failure was legibility with coherence intact — not a coherence
+  > limit (design ledger slip 10: the pre-written stop sentence encoded 'with
+  > coherence' as the predicted failure mode where the failure was Q2/Q3 with
+  > coherence intact — defined in the untracked HANDOFF-2026-09-04-design.md
+  > §2, restated here for the committed record).
   >
   > Raising the dose did not open the record channel; what it bought in
   > degradation is ordered across three doses and resolved at one step. The
@@ -109,22 +136,25 @@ provenance or hedged.
   > registration; e2d's marker is a no-injection read of text the state
   > produced — different channels, not a ratio. Instrument transfer is
   > unmeasured (the .958 is a self-score on the fit set, refit false). The
-  > 0.10 anchor (n = 4 M sessions, pooled estimator) carries no marker value
-  > and is the left end of the readability and degeneracy series only. D3's
-  > readability lacks D2's task-disjointness guarantee.
+  > 0.10 anchor (n = 4 M sessions, pooled estimator) carries no comparable
+  > marker value (its pooled within-M delta, −.239 over 20/20 generations, is
+  > a different statistic, recorded as not comparable) and is the left end of
+  > the readability and degeneracy series only. D3's readability lacks D2's
+  > task-disjointness guarantee.
   >
   > Banked (ledger 23; license pre-registrations, never verdicts): the
   > composition artifact as above; alternation decay e2a .840 (pooled; reward
-  > arm .827) → D2 M .690 → D3 M .522, all on habit.secondaries' domain of all
-  > sessions including excluded (rule 23; valid-only e2a .837 / .824), with
-  > the first-pick break rate flat within e2d (1/30 vs 1/23; Fisher exact
-  > two-sided p = 1.00) and ~4× below e2a's ~.17 — only D2→D3 is a clean dose
-  > step and it is unresolved (.690 vs .522, Fisher exact two-sided p = .26 —
-  > the test of record for count comparisons in this entry); degeneracy tracks
-  > displacement, not the reward direction; estimator sign-instability (−.070
-  > to +.103); in-situ scoring at 2.57 vs 0.54 s per forward (4.7×, matching
-  > D2's ratio); the clean/all-rounds sign disagreement on the dose change,
-  > flagged not averaged.
+  > arm .827) → D2 M .690 → D3 M .522, all on habit.secondaries' domain of
+  > all sessions including excluded (rule 23; valid-only e2a .837 / .824),
+  > with the first-pick break rate flat within e2d (1/30 vs 1/23; Fisher
+  > exact two-sided p = 1.00) and four to five times below e2a's .17 (32/188,
+  > all sessions: 5.1× D2's 1/30, 3.9× D3's 1/23, 4.5× the pooled 2/53) —
+  > only D2→D3 is a clean dose step and it is unresolved (.690 vs .522,
+  > Fisher exact two-sided p = .26 — the test of record for count comparisons
+  > in this entry); degeneracy tracks displacement, not the reward direction;
+  > estimator sign-instability (−.070 to +.103); in-situ scoring at 2.57 vs
+  > 0.54 s per forward (4.7×, matching D2's ratio); the clean/all-rounds sign
+  > disagreement on the dose change, flagged not averaged.
 
   - **Provenance of the text.** The held text was never committed; it was
     delivered to the prior Code thread in the design disposition headed
@@ -248,7 +278,16 @@ provenance or hedged.
     domain or test named — one item, four instances, caught pre-commit by
     Code's 80-figure re-verification; a fifth instance folded in by the
     same-day block (the alternation step's z-test named without its
-    variance form, resolved to the test of record). **Design count: fourteen.** Standing
+    variance form, resolved to the test of record). **Design count: fourteen**
+    at the 2026-09-05 patch. *Added by the design patch of 2026-09-06 §1
+    (numbering the design seat's):* **Slip (16), design seat:** a claim about
+    the paired CI that the figure contradicts ("spans the bar in both
+    directions"; would not commit past). **The `.011` attribution, both
+    seats:** inherited from HANDOFF-2026-09-05.md §2 item 4 (Code's) and
+    propagated unverified into the patch's R4 (design's); corrected beside
+    in that handoff 2026-09-06. **R9–R13's class** (rounding, an unnamed
+    order, a hedged ratio, an uncommitted reference) **folded into slip
+    (14).** Code's four draft fixes stand. Standing
     addition to the design-side standard: in closure prose every rate names
     its domain and every p names its test, no exceptions. Standing fix, design
     side: block headers carry the PI's clock, labelled as such, never a bare

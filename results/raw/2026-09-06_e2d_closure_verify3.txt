@@ -1,0 +1,40 @@
+R7  the paired 95% CI, both forms, at the printed precision (3 decimals)
+  PASS  R7 n = 20 shared indices                                           got 20                           want 20  
+  PASS  R7 z half-width .144                                               got 0.144                        want 0.144  0.144442
+  PASS  R7 t(19) half-width .154                                           got 0.154                        want 0.154  0.154249
+  FAIL  R7 z CI lower bound -.157 AS PRINTED                               got -0.156                       want -0.157  raw -0.156494 -> rounds to -0.156
+  PASS  R7 z CI upper bound +.132                                          got 0.132                        want 0.132  0.132391
+  PASS  R7 t CI lower bound -.166                                          got -0.166                       want -0.166  -0.166300
+  PASS  R7 t CI upper bound +.142                                          got 0.142                        want 0.142  0.142198
+  PASS  R7 bar +.158 outside the CI under BOTH forms                       got True                         want True  bar 0.1578
+  PASS  R7 bar -.158 inside under t only                                   got True                         want True  z lo -0.1565, t lo -0.1663
+R8  one-sided .011 (attribution dropped; the figure)
+  PASS  R8 read .10->.20 one-sided Fisher .011                             got 0.011                        want 0.011  0.01119
+R9  59% of the marks (40/68 on the 24 shared indices)
+  PASS  R9 24 shared indices                                               got 24                           want 24  
+  PASS  R9 marks on the 24 shared indices = 68                             got 68                           want 68  
+  PASS  R9 idx 1 + 5 carry 40 (10/10 at both doses each)                   got (40, (10, 10), (10, 10), (10, 10), (10, 10)) want (40, (10, 10), (10, 10), (10, 10), (10, 10))  
+  PASS  R9 40/68 rounds to 59%                                             got 59                           want 59  58.82%
+R10 the 0.10 anchor's pooled within-M delta
+  PASS  R10 -.239 over 20/20 generations                                   got (-0.239, 20, 20)             want (-0.239, 20, 20)  -0.239374
+R11 four to five times below e2a's .17
+  PASS  R11 e2a break 32/188 all sessions                                  got (32, 188)                    want (32, 188)  
+  PASS  R11 .17                                                            got 0.17                         want 0.17  0.1702
+  PASS  R11 5.1x D2's 1/30                                                 got 5.1                          want 5.1  
+  PASS  R11 3.9x D3's 1/23                                                 got 3.9                          want 3.9  
+  PASS  R11 4.5x pooled 2/53                                               got 4.5                          want 4.5  
+  PASS  R11 'four to five times' holds at integer precision (each ratio rounds to 4 or 5) got [4, 5]                       want [4, 5]  one-decimal range 3.9-5.1; the exact figures follow in the text
+R12 the composition artifact, both orders
+  PASS  R12 idx 12 is the one session decidable at 0.20 only inside D3's roster got [12]                         want [12]  
+  PASS  R12 D3 ran 24 M sessions to D2's 32                                got (24, 32)                     want (24, 32)  
+  PASS  R12 idx-12-first split 62/38                                       got (62, 38)                     want (62, 38)  0.6213/0.3787
+  PASS  R12 truncation-first split 46/54 (idx-12 share / truncation share) got (46, 54)                     want (46, 54)  0.4634/0.5366
+  PASS  R12 the artifact is order-independent: C - A the same under both   got -0.050204                    want -0.050204  
+R13 slip 10: defined only in the untracked design handoff
+  PASS  R13 no committed definition of slip (10) in the record docs        got ''                           want ''  
+  PASS  R13 defined in the untracked HANDOFF-2026-09-04-design.md §2       got True                         want True  
+  PASS  R13 'with coherence' is the quoted failure mode there              got True                         want True  
+R8/R7 provenance: the eight passages replaced exactly once (HELD file)
+  PASS  R7-R13 no old clause survives in the quoted text                   got []                           want []  
+----------------------------------------------------------------------------------------------------
+  29/30 third-pass checks pass  -- HELD: a figure does not reproduce at its printed precision
