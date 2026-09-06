@@ -1,0 +1,117 @@
+Sat Sep  5 22:54:52 UTC 2026
+config of record: L48 frac 0.1 alpha 10.3010 (R_48 103.01); axis sha 3c17b0d8fbcad716; random L48 sha 7be5db23d9224375
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 23696.63it/s]
+model loaded in 4s
+provenance: {"adapter": "qwen3.6-27b-4bit-mlx", "model_id": "mlx-community/Qwen3.6-27B-4bit", "dtype": "4bit-quantized (MLX)", "backend": "mlx", "mlx_version": "0.31.2", "library_versions": {"mlx": "0.31.2", "mlx-lm": "0.31.3", "numpy": "2.5.1"}, "python": "3.12.9", "platform": "macOS-15.6.1-arm64-arm-64bit", "gdn_inference_mode": "ops (fused disabled)", "n_layers": 64, "choice_window_declared": 8192, "legacy_truncate_512": false, "n_encodes_clipped": 0}
+  s  0 (1/102) n=201 labels@191,193 identity ok  93s (7.7 s/mask)  elapsed 1.5 min  eta 156 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  --limit 1 reached; stopping (resume continues skip-only)
+Stage C reads complete: 1 sessions, 0.03 h
+smoke exit 0
+=== FULL RUN (resume) Sat Sep  5 22:56:56 UTC 2026 ===
+config of record: L48 frac 0.1 alpha 10.3010 (R_48 103.01); axis sha 3c17b0d8fbcad716; random L48 sha 7be5db23d9224375
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 16888.20it/s]
+model loaded in 2s
+provenance: {"adapter": "qwen3.6-27b-4bit-mlx", "model_id": "mlx-community/Qwen3.6-27B-4bit", "dtype": "4bit-quantized (MLX)", "backend": "mlx", "mlx_version": "0.31.2", "library_versions": {"mlx": "0.31.2", "mlx-lm": "0.31.3", "numpy": "2.5.1"}, "python": "3.12.9", "platform": "macOS-15.6.1-arm64-arm-64bit", "gdn_inference_mode": "ops (fused disabled)", "n_layers": 64, "choice_window_declared": 8192, "legacy_truncate_512": false, "n_encodes_clipped": 0}
+  s  1 (2/102) n=237 labels@227,229 identity ok  105s (8.7 s/mask)  elapsed 1.7 min  eta 174 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s  3 (3/102) n=184 labels@174,176 identity ok  80s (6.7 s/mask)  elapsed 3.1 min  eta 132 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s  4 (4/102) n=204 labels@194,196 identity ok  92s (7.7 s/mask)  elapsed 4.6 min  eta 151 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s  6 (5/102) n=196 labels@186,188 identity ok  92s (7.7 s/mask)  elapsed 6.2 min  eta 149 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s  7 (6/102) n=192 labels@182,184 identity ok  80s (6.6 s/mask)  elapsed 7.5 min  eta 128 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s  8 (7/102) n=187 labels@177,179 identity ok  81s (6.7 s/mask)  elapsed 8.8 min  eta 128 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s  9 (8/102) n=171 labels@161,163 identity ok  80s (6.6 s/mask)  elapsed 10.2 min  eta 125 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 10 (9/102) n=184 labels@174,176 identity ok  81s (6.8 s/mask)  elapsed 11.5 min  eta 126 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 11 (10/102) n=205 labels@195,197 identity ok  99s (8.3 s/mask)  elapsed 13.2 min  eta 152 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 12 (11/102) n=198 labels@188,190 identity ok  99s (8.3 s/mask)  elapsed 14.8 min  eta 151 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 13 (12/102) n=200 labels@190,192 identity ok  98s (8.2 s/mask)  elapsed 16.5 min  eta 148 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 14 (13/102) n=227 labels@217,219 identity ok  108s (9.0 s/mask)  elapsed 18.3 min  eta 160 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 15 (14/102) n=214 labels@204,206 identity ok  95s (7.9 s/mask)  elapsed 19.8 min  eta 139 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 16 (15/102) n=188 labels@178,180 identity ok  83s (6.9 s/mask)  elapsed 21.2 min  eta 120 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 17 (16/102) n=234 labels@224,226 identity ok  108s (9.0 s/mask)  elapsed 23.0 min  eta 155 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 18 (17/102) n=203 labels@193,195 identity ok  95s (7.9 s/mask)  elapsed 24.6 min  eta 134 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 19 (18/102) n=215 labels@205,207 identity ok  95s (7.9 s/mask)  elapsed 26.2 min  eta 134 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 20 (19/102) n=218 labels@208,210 identity ok  96s (8.0 s/mask)  elapsed 27.8 min  eta 132 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 22 (20/102) n=207 labels@197,199 identity ok  95s (7.9 s/mask)  elapsed 29.4 min  eta 130 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 23 (21/102) n=211 labels@201,203 identity ok  95s (7.9 s/mask)  elapsed 31.0 min  eta 129 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 24 (22/102) n=188 labels@178,180 identity ok  83s (6.9 s/mask)  elapsed 32.4 min  eta 111 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 25 (23/102) n=221 labels@211,213 identity ok  97s (8.0 s/mask)  elapsed 34.0 min  eta 127 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 26 (24/102) n=223 labels@213,215 identity ok  97s (8.0 s/mask)  elapsed 35.6 min  eta 126 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 27 (25/102) n=217 labels@207,209 identity ok  96s (8.0 s/mask)  elapsed 37.2 min  eta 124 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 28 (26/102) n=207 labels@197,199 identity ok  96s (8.0 s/mask)  elapsed 38.8 min  eta 121 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 29 (27/102) n=203 labels@193,195 identity ok  96s (8.0 s/mask)  elapsed 40.4 min  eta 119 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 30 (28/102) n=218 labels@208,210 identity ok  94s (7.8 s/mask)  elapsed 42.0 min  eta 116 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 31 (29/102) n=262 labels@252,254 identity ok  117s (9.7 s/mask)  elapsed 43.9 min  eta 142 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 32 (30/102) n=204 labels@194,196 identity ok  93s (7.8 s/mask)  elapsed 45.5 min  eta 112 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 34 (31/102) n=206 labels@196,198 identity ok  94s (7.8 s/mask)  elapsed 47.0 min  eta 111 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 35 (32/102) n=197 labels@187,189 identity ok  93s (7.8 s/mask)  elapsed 48.6 min  eta 109 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 36 (33/102) n=197 labels@187,189 identity ok  93s (7.8 s/mask)  elapsed 50.1 min  eta 107 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 37 (34/102) n=185 labels@175,177 identity ok  82s (6.8 s/mask)  elapsed 51.5 min  eta 93 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 38 (35/102) n=189 labels@179,181 identity ok  82s (6.8 s/mask)  elapsed 52.9 min  eta 92 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 39 (36/102) n=205 labels@195,197 identity ok  93s (7.7 s/mask)  elapsed 54.4 min  eta 102 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 40 (37/102) n=211 labels@201,203 identity ok  93s (7.8 s/mask)  elapsed 56.0 min  eta 101 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 41 (38/102) n=230 labels@220,222 identity ok  105s (8.7 s/mask)  elapsed 57.8 min  eta 112 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 42 (39/102) n=193 labels@183,185 identity ok  93s (7.7 s/mask)  elapsed 59.3 min  eta 98 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 43 (40/102) n=238 labels@228,230 identity ok  105s (8.8 s/mask)  elapsed 61.1 min  eta 109 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 44 (41/102) n=198 labels@188,190 identity ok  93s (7.8 s/mask)  elapsed 62.6 min  eta 95 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 45 (42/102) n=231 labels@221,223 identity ok  105s (8.8 s/mask)  elapsed 64.4 min  eta 105 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 46 (43/102) n=203 labels@193,195 identity ok  94s (7.8 s/mask)  elapsed 65.9 min  eta 92 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 47 (44/102) n=227 labels@217,219 identity ok  104s (8.7 s/mask)  elapsed 67.7 min  eta 101 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 48 (45/102) n=203 labels@193,195 identity ok  92s (7.7 s/mask)  elapsed 69.2 min  eta 88 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 49 (46/102) n=186 labels@176,178 identity ok  81s (6.7 s/mask)  elapsed 70.6 min  eta 75 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 50 (47/102) n=198 labels@188,190 identity ok  92s (7.6 s/mask)  elapsed 72.1 min  eta 84 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 51 (48/102) n=193 labels@183,185 identity ok  92s (7.6 s/mask)  elapsed 73.6 min  eta 82 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 52 (49/102) n=230 labels@220,222 identity ok  103s (8.6 s/mask)  elapsed 75.4 min  eta 91 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 54 (50/102) n=205 labels@195,197 identity ok  92s (7.6 s/mask)  elapsed 76.9 min  eta 79 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 55 (51/102) n=239 labels@229,231 identity ok  102s (8.5 s/mask)  elapsed 78.6 min  eta 87 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 56 (52/102) n=152 labels@142,144 identity ok  67s (5.6 s/mask)  elapsed 79.7 min  eta 56 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 57 (53/102) n=172 labels@162,164 identity ok  79s (6.5 s/mask)  elapsed 81.0 min  eta 64 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 58 (54/102) n=199 labels@189,191 identity ok  91s (7.6 s/mask)  elapsed 82.5 min  eta 73 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 59 (55/102) n=202 labels@192,194 identity ok  91s (7.6 s/mask)  elapsed 84.1 min  eta 71 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 60 (56/102) n=193 labels@183,185 identity ok  91s (7.6 s/mask)  elapsed 85.6 min  eta 70 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 61 (57/102) n=186 labels@176,178 identity ok  79s (6.6 s/mask)  elapsed 86.9 min  eta 60 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 62 (58/102) n=221 labels@211,213 identity ok  92s (7.7 s/mask)  elapsed 88.4 min  eta 67 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 64 (59/102) n=219 labels@209,211 identity ok  92s (7.6 s/mask)  elapsed 90.0 min  eta 66 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 65 (60/102) n=211 labels@201,203 identity ok  91s (7.6 s/mask)  elapsed 91.5 min  eta 64 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 66 (61/102) n=201 labels@191,193 identity ok  90s (7.5 s/mask)  elapsed 93.0 min  eta 62 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 67 (62/102) n=220 labels@210,212 identity ok  91s (7.6 s/mask)  elapsed 94.5 min  eta 61 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 68 (63/102) n=204 labels@194,196 identity ok  91s (7.6 s/mask)  elapsed 96.0 min  eta 59 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 69 (64/102) n=202 labels@192,194 identity ok  91s (7.6 s/mask)  elapsed 97.6 min  eta 58 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 70 (65/102) n=203 labels@193,195 identity ok  91s (7.6 s/mask)  elapsed 99.1 min  eta 56 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 71 (66/102) n=218 labels@208,210 identity ok  92s (7.7 s/mask)  elapsed 100.6 min  eta 55 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 72 (67/102) n=228 labels@218,220 identity ok  103s (8.6 s/mask)  elapsed 102.4 min  eta 60 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 73 (68/102) n=198 labels@188,190 identity ok  91s (7.6 s/mask)  elapsed 103.9 min  eta 52 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 74 (69/102) n=190 labels@180,182 identity ok  80s (6.7 s/mask)  elapsed 105.2 min  eta 44 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 75 (70/102) n=164 labels@154,156 identity ok  79s (6.6 s/mask)  elapsed 106.5 min  eta 42 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 76 (71/102) n=189 labels@179,181 identity ok  80s (6.6 s/mask)  elapsed 107.9 min  eta 41 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 77 (72/102) n=186 labels@176,178 identity ok  80s (6.7 s/mask)  elapsed 109.2 min  eta 40 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 78 (73/102) n=205 labels@195,197 identity ok  92s (7.7 s/mask)  elapsed 110.8 min  eta 44 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 79 (74/102) n=181 labels@171,173 identity ok  79s (6.6 s/mask)  elapsed 112.1 min  eta 37 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 80 (75/102) n=222 labels@212,214 identity ok  92s (7.6 s/mask)  elapsed 113.6 min  eta 41 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 81 (76/102) n=240 labels@230,232 identity ok  102s (8.5 s/mask)  elapsed 115.3 min  eta 44 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 82 (77/102) n=270 labels@260,262 identity ok  114s (9.5 s/mask)  elapsed 117.2 min  eta 47 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 83 (78/102) n=202 labels@192,194 identity ok  92s (7.7 s/mask)  elapsed 118.8 min  eta 37 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 84 (79/102) n=210 labels@200,202 identity ok  92s (7.7 s/mask)  elapsed 120.3 min  eta 35 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 87 (80/102) n=225 labels@215,217 identity ok  103s (8.6 s/mask)  elapsed 122.0 min  eta 38 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 88 (81/102) n=190 labels@180,182 identity ok  81s (6.7 s/mask)  elapsed 123.4 min  eta 28 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 89 (82/102) n=200 labels@190,192 identity ok  92s (7.7 s/mask)  elapsed 124.9 min  eta 31 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 90 (83/102) n=194 labels@184,186 identity ok  92s (7.7 s/mask)  elapsed 126.5 min  eta 29 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 91 (84/102) n=218 labels@208,210 identity ok  93s (7.7 s/mask)  elapsed 128.0 min  eta 28 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 92 (85/102) n=194 labels@184,186 identity ok  92s (7.7 s/mask)  elapsed 129.5 min  eta 26 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 94 (86/102) n=185 labels@175,177 identity ok  81s (6.7 s/mask)  elapsed 130.9 min  eta 22 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 95 (87/102) n=184 labels@174,176 identity ok  80s (6.7 s/mask)  elapsed 132.2 min  eta 20 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 96 (88/102) n=191 labels@181,183 identity ok  81s (6.7 s/mask)  elapsed 133.6 min  eta 19 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 97 (89/102) n=205 labels@195,197 identity ok  92s (7.7 s/mask)  elapsed 135.1 min  eta 20 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 98 (90/102) n=187 labels@177,179 identity ok  81s (6.7 s/mask)  elapsed 136.5 min  eta 16 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s 99 (91/102) n=207 labels@197,199 identity ok  92s (7.6 s/mask)  elapsed 138.0 min  eta 17 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s100 (92/102) n=221 labels@211,213 identity ok  92s (7.7 s/mask)  elapsed 139.6 min  eta 15 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s101 (93/102) n=224 labels@214,216 identity ok  92s (7.7 s/mask)  elapsed 141.1 min  eta 14 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s102 (94/102) n=200 labels@190,192 identity ok  92s (7.6 s/mask)  elapsed 142.6 min  eta 12 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s103 (95/102) n=212 labels@202,204 identity ok  93s (7.7 s/mask)  elapsed 144.2 min  eta 11 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s104 (96/102) n=219 labels@209,211 identity ok  93s (7.8 s/mask)  elapsed 145.7 min  eta 9 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s106 (97/102) n=199 labels@189,191 identity ok  92s (7.6 s/mask)  elapsed 147.3 min  eta 8 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s107 (98/102) n=214 labels@204,206 identity ok  92s (7.6 s/mask)  elapsed 148.8 min  eta 6 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s108 (99/102) n=227 labels@217,219 identity ok  107s (8.9 s/mask)  elapsed 150.6 min  eta 5 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s109 (100/102) n=198 labels@188,190 identity ok  93s (7.7 s/mask)  elapsed 152.1 min  eta 3 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s110 (101/102) n=217 labels@207,209 identity ok  93s (7.8 s/mask)  elapsed 153.7 min  eta 2 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+  s111 (102/102) n=217 labels@207,209 identity ok  94s (7.8 s/mask)  elapsed 155.3 min  eta 0 min  stageB-reproduced {'M1': True, 'M2': True, 'M3': True, 'M4': True, 'shadow': True}
+Stage C reads complete: 102 sessions, 2.59 h
+exit 0

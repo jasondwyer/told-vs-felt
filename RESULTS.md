@@ -21,6 +21,247 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-06 — **RECON — ECHO CHANNEL (k-candidate), STAGE C. C1: binding read
+  at the label tokens — M1–M4 re-forwarded on all 102 sessions with the
+  residual captured at the read position AND at each label's last token
+  before the read (the menu line of the first free choice); C2: primacy vs
+  recency decorrelated by four block masks (++−−, −−++, +−−+, −++−) and their
+  random analogs; C3: leak on the new masks. Results: (C1) the label-bound polarity — null where the choice is read
+  (.50–.55) — reads at **AUC ≥ .998 (1.000 at nine of the eleven layers
+  L51–L61)** at the first-listed label's own token nine tokens earlier and
+  **.96** at the second-listed label's (L51–L52), the text-only baseline
+  below null at 53 of 54 cells: the binding is present where the label is
+  read and gone at the read position; (C2) with first- and last-round signs
+  decorrelated, the FIRST round's sign reads at .98–.99 across L51–L62 and
+  the LAST round's peaks at .92 and decays to .65 — primacy over recency;
+  (C3) reward-mask leak unsigned .04–.06 median on the block masks, and on
+  the random block masks a mechanical signed pseudo-shift of ±.02–.03 toward
+  the first round's label. Layers ≤ 48 bit-identical to the shadow at all
+  three positions (194,922 cells), STOP clause silent, identity on 1,224
+  pairs, Stage B rows bit-reproduced. NO verdict quantity,
+  NO bar, NO new sessions; descriptive only; same primitive, same config of
+  record, same identity and ≤48 clauses, same PROHIBITION.**
+  (Stamp verified at write time: `date -u` → **Sun Sep  6 04:12:38 UTC 2026**. Raw
+  [`_recon_echo_stageC`](results/raw/2026-09-05_recon_echo_stageC.txt),
+  [`_recon_echo_stageC_analysis`](results/raw/2026-09-06_recon_echo_stageC_analysis.txt)
+  (the run opened its log on 09-05 UTC and finished on 09-06);
+  artifacts [`stageC_reads.json`](data/echo/stageC_reads.json),
+  [`stageC_analysis.json`](data/echo/stageC_analysis.json); residual arrays
+  `data/echo/stageC_resid_s*.npz` local, gitignored, fingerprinted as stored.
+  Code: `forward_at` (adapter, additive; `forward` untouched; suite 154/154
+  after) and `capture_positions` on the primitive (every capture position
+  asserted UNSTEERED); stage + analysis smoke-tested on one session and
+  reviewed against the block before the run.)
+
+  - **The label positions, declared.** For each session the capture
+    positions are (read, label_a, label_b) where label_x's position is the
+    LAST occurrence before the read of the token `choice_read` scores for
+    that label (`" " + tag`, first token). In this scaffold that occurrence
+    is in the **menu line of the first free choice** (`… configs: a, b` in
+    its paraphrase), 9 (label_a) and 7 (label_b) tokens before the read; earlier
+    occurrences are the round headers (`[round n | config: tag]`),
+    3 occurrences per label per session. Asserted per session: the position lies
+    after the last forced span and carries mask 0. Cross-run check: the M1–M4 and shadow rows at the read position are bit-identical to Stage B's stored rows in 102/102 sessions.
+  - **The run.** All 102 valid reward sessions, first free choice only, config of record
+    as Stages A/B. Twelve state masks per session, each through the
+    quarantined primitive with its mandatory shadow and residuals captured
+    at all 64 layers at the three declared positions: M1–M4 (C1), the four
+    block masks B1–B4 and their random analogs B1x–B4x (C2). Every shadow
+    asserted bit-identical to M1's; every M1–M4 read-position row and the
+    shadow asserted bit-identical to Stage B's stored rows for the same
+    session (**102/102 sessions, cross-run reproduction exact**). Identity:
+    **PASSED on all 1,224 pairs**. Per-mask wall clock 7.66 s mean (single-mask max
+    10.9 s; per-session mean max 9.7 s) against Stage B's 7.64 s overall —
+    the label-position captures cost nothing measurable; **2.59 h** total after a one-session smoke; 5.2 GB
+    of residual arrays local, fingerprinted.
+  - **Review before the run, and what it changed (two-lens adversarial code
+    review against the block, 2026-09-05).** (i) **Procedure correction,
+    inherited by Stage B:** the grouped k-fold shuffle null had been seeded
+    so that its folds differed from the statistic's, while the record said
+    "the SAME folds". Fixed (`probe.kfold_shuffle_null` takes a fold seed
+    shared with the statistic and a separate permutation stream); Stage C's
+    tables use the corrected form; Stage B's analysis was RE-RUN under it to
+    a new artifact, never over the committed one — [`stageB_analysis_samefolds.json`](data/echo/stageB_analysis_samefolds.json),
+    raw [`_stageB_analysis_samefolds`](results/raw/2026-09-05_recon_echo_stageB_analysis_samefolds.txt).
+    **CORRECTION to the STAGE B entry (which stands as written):** every
+    10-fold statistic is identical (the statistic's folds never changed);
+    the 324 shuffle-95th percentiles move by at most .034 (mean .008); the
+    STOP clause, identity and every (a)/(b)/R1/R3 verdict are unchanged;
+    **three marginal above-null verdicts flip below** — R2 at L55 (.625 vs
+    a null now .634), R2 at L59 (.619 vs .620) and R2x at L57 (.605 vs
+    .617) — so the Stage B entry's "R2 … above null at seven scattered
+    layers" reads five under the corrected null, and the R2 retention
+    figure is weaker than printed. (ii)
+    The ≤48 probe sweep of the STOP clause now reads only state-carrying
+    families: a text-only (shadow-row) family has no mask, so its
+    readability at ≤48 could not be a hook or mask leak; in Stage B the
+    sweep included those families and did not fire; the bit-identity check
+    is unchanged. (iii) C4's order ("report before running C2") was not
+    enforced structurally: the one-session smoke ran the C2 masks alongside
+    the C1 masks; the check was made from the smoke's per-mask times
+    afterwards — on the same session s0, 7.71 s per mask against Stage B's
+    7.97 (127.45 s / 16), ratio 0.97; over the full runs 7.66 vs 7.64, ratio
+    1.00 (bound 2×) — so nothing to report and C2 ran. (iv) The block-mask forwards
+    captured all three positions (a superset of "capture the read
+    position"); the label rows of the B masks are stored and unused.
+    (v) The random-block signed loop now asserts `SIGNED_OK`; the
+    read-position target under C1 (Stage B's (b), re-run) is declared in the
+    artifact as Code's choice for the "where the choice is read" half of
+    the decisive question.
+  - **C1 — BINDING AT THE LABEL TOKENS.** Target at label_x's position: +1
+    iff label_x's rounds carried + under the mask (M1: `label_x ==
+    tag_plus`; M2: the reverse); at the read position the label_a target
+    (Stage B's (b)). Rows M1/M2 (2N, opposite labels within a session,
+    identical text); comparator M3/M4 with r+ as "+"; text-only baseline =
+    the shadow rows at the same position with the as-generated target.
+    Grouped 10-fold statistic and 200-shuffle null as Stage B, LOSO beside.
+    
+
+    **Decisive question, answered: the binding is linearly readable where the label is read and null where the choice is read.** At the read position the pole of label_a stays null — .50–.55 against nulls .57–.60 (random .50–.51), as in Stage B (LOSO figures identical to Stage B's (b); the 10-fold figures differ by ≤ .013 because the fold seed carries the family index). At **label_a's own token**, nine tokens earlier in the menu line, the same target reads at **AUC ≥ .998 at every layer L51–L61 — 1.000 at nine of them, .998 at L53 and .999 at L58** (1.000 at L51, 1.000 at L54, 1.000 at L60), 0.988 at L63, 0.605 at L49 (above null), 0.561 at L50 (not); layers ≤ 48 exactly 0.500. At **label_b's token**, seven tokens before the read: 0.962 / 0.964 at L51–L52, 0.867 at L53, .81–.87 through L63. The text-only baseline is below its null at 53 of the 54 (position, layer) cells — read .43–.53; label_a .46–.59, highest at L40/L44/L48 (.59/.58/.56), layers with no state; label_b .54–.61, highest at L44–L50 (.60–.61) — the one cell above null being label_b at L44 (.611 against a .608 null, no state at that layer); above L50 every text-only cell is ≤ .57 while the state families read .81–1.000, so the readability at the label tokens is injection-borne. The random direction's binding is read too — 1.000 at L51–L52 at label_a and .83–.90 from L54 on; .93 / .86 at L51–L52 at label_b and .69–.80 after — so the binding is not axis-specific in presence, and the axis persists better across depth (label_a: axis ≥ .988 at every layer from L51, random .83–.90 from L54). The asymmetry between the two labels (1.000 vs .81–.96) coincides with menu order and with distance to the read (9 vs 7 tokens); the design cannot separate the two.
+
+    **At the read position** (Stage B's (b) re-run on the re-forwarded rows):
+
+    | layer | M1 v M2 | null 95th | LOSO | M3 v M4 (random) | text-only (shadow rows) |
+    |---|---|---|---|---|---|
+    | 40 | 0.500 | 0.58 | 0.500 | 0.500 | 0.473 |
+    | 44 | 0.500 | 0.59 | 0.500 | 0.500 | 0.499 |
+    | 48 | 0.500 | 0.58 | 0.500 | 0.500 | 0.510 |
+    | 49 | 0.505 | 0.60 | 0.506 | 0.509 | 0.533 |
+    | 50 | 0.501 | 0.57 | 0.505 | 0.504 | 0.527 |
+    | 51 | 0.535 | 0.57 | 0.535 | 0.511 | 0.500 |
+    | 52 | 0.535 | 0.57 | 0.532 | 0.509 | 0.471 |
+    | 53 | 0.533 | 0.58 | 0.531 | 0.507 | 0.480 |
+    | 54 | 0.533 | 0.58 | 0.531 | 0.510 | 0.479 |
+    | 55 | 0.531 | 0.58 | 0.532 | 0.502 | 0.472 |
+    | 56 | 0.530 | 0.57 | 0.530 | 0.503 | 0.458 |
+    | 57 | 0.527 | 0.59 | 0.529 | 0.502 | 0.444 |
+    | 58 | 0.527 | 0.59 | 0.526 | 0.501 | 0.431 |
+    | 59 | 0.541 | 0.58 | 0.538 | 0.510 | 0.451 |
+    | 60 | 0.536 | 0.59 | 0.544 | 0.507 | 0.442 |
+    | 61 | 0.537 | 0.58 | 0.544 | 0.499 | 0.440 |
+    | 62 | 0.533 | 0.58 | 0.540 | 0.512 | 0.437 |
+    | 63 | 0.545 | 0.57 | 0.550 | 0.505 | 0.460 |
+
+    **At label_a's token** (the first-listed menu label, 9 tokens before the read):
+
+    | layer | M1 v M2 | null 95th | LOSO | M3 v M4 (random) | text-only (shadow rows) |
+    |---|---|---|---|---|---|
+    | 40 | 0.500 | 0.58 | 0.500 | 0.500 | 0.592 |
+    | 44 | 0.500 | 0.59 | 0.500 | 0.500 | 0.584 |
+    | 48 | 0.500 | 0.58 | 0.500 | 0.500 | 0.560 |
+    | 49 | 0.605* | 0.59 | 0.611 | 0.672* | 0.540 |
+    | 50 | 0.561 | 0.57 | 0.582 | 0.600* | 0.502 |
+    | 51 | 1.000* | 0.59 | 1.000 | 1.000* | 0.496 |
+    | 52 | 1.000* | 0.58 | 1.000 | 1.000* | 0.497 |
+    | 53 | 0.998* | 0.57 | 0.999 | 0.970* | 0.486 |
+    | 54 | 1.000* | 0.57 | 1.000 | 0.867* | 0.496 |
+    | 55 | 1.000* | 0.57 | 1.000 | 0.852* | 0.506 |
+    | 56 | 1.000* | 0.58 | 1.000 | 0.826* | 0.513 |
+    | 57 | 1.000* | 0.58 | 1.000 | 0.827* | 0.499 |
+    | 58 | 0.999* | 0.58 | 0.999 | 0.826* | 0.495 |
+    | 59 | 1.000* | 0.57 | 1.000 | 0.897* | 0.470 |
+    | 60 | 1.000* | 0.59 | 1.000 | 0.875* | 0.465 |
+    | 61 | 1.000* | 0.57 | 1.000 | 0.857* | 0.464 |
+    | 62 | 0.999* | 0.57 | 0.998 | 0.832* | 0.460 |
+    | 63 | 0.988* | 0.57 | 0.988 | 0.830* | 0.455 |
+
+    **At label_b's token** (the second-listed menu label, 7 tokens before the read):
+
+    | layer | M1 v M2 | null 95th | LOSO | M3 v M4 (random) | text-only (shadow rows) |
+    |---|---|---|---|---|---|
+    | 40 | 0.500 | 0.58 | 0.500 | 0.500 | 0.565 |
+    | 44 | 0.500 | 0.58 | 0.500 | 0.500 | 0.611* |
+    | 48 | 0.500 | 0.60 | 0.500 | 0.500 | 0.604 |
+    | 49 | 0.536 | 0.59 | 0.547 | 0.551 | 0.606 |
+    | 50 | 0.534 | 0.60 | 0.539 | 0.555 | 0.599 |
+    | 51 | 0.962* | 0.58 | 0.969 | 0.931* | 0.570 |
+    | 52 | 0.964* | 0.58 | 0.931 | 0.864* | 0.546 |
+    | 53 | 0.867* | 0.57 | 0.854 | 0.795* | 0.565 |
+    | 54 | 0.865* | 0.58 | 0.873 | 0.764* | 0.556 |
+    | 55 | 0.851* | 0.58 | 0.853 | 0.743* | 0.535 |
+    | 56 | 0.849* | 0.58 | 0.849 | 0.727* | 0.536 |
+    | 57 | 0.846* | 0.57 | 0.846 | 0.728* | 0.537 |
+    | 58 | 0.831* | 0.57 | 0.835 | 0.688* | 0.537 |
+    | 59 | 0.845* | 0.59 | 0.842 | 0.713* | 0.562 |
+    | 60 | 0.830* | 0.57 | 0.830 | 0.714* | 0.557 |
+    | 61 | 0.821* | 0.57 | 0.818 | 0.693* | 0.571 |
+    | 62 | 0.814* | 0.57 | 0.793 | 0.716* | 0.559 |
+    | 63 | 0.808* | 0.58 | 0.833 | 0.694* | 0.556 |
+
+  - **C2 — PRIMACY vs RECENCY, decorrelated.** Block masks with ABSOLUTE
+    signs over forced rounds 1–4 — B1 ++−−, B2 −−++, B3 +−−+, B4 −++− — on
+    the axis, and B1x–B4x on the random direction; rows B1–B4 at the read
+    position (4N, all four of a session in one fold); targets first-round
+    sign (+ for B1, B3) and last-round sign (+ for B2, B3), orthogonal across
+    the four masks. Under a block mask each label carries one + and one −
+    round, so no label carries a net sign. Round position remains confounded
+    with label parity, as the block says. 
+
+    **Primacy dominates recency at the read position.** With the four block masks making the first- and last-round signs orthogonal, the FIRST-round sign reads at 0.919 at L50 and **.98–.99 at every layer from L51 to L62** (0.962 at L63); the LAST-round sign reads at 0.820 at L50, peaks at 0.924 (L54), then falls to .72–.75 at L55–L58 and .65–.69 at L59–L63. Both above null at every layer above 48 (nulls .54–.57); layers ≤ 48 exactly 0.500. The random direction: first-round sign matches the axis to L58 (.99) and decays to .73–.86 after; last-round sign peaks lower (0.789 at L54) and ends at .61–.63. This is Stage B's R1 > R4 ordering reproduced with the confound removed: the read position remembers the first injection far better than the last, on both directions, and the axis's memory persists into the last layers where the random direction's fades.
+
+    | layer | FIRST-round sign, axis | null | random | LAST-round sign, axis | null | random |
+    |---|---|---|---|---|---|---|
+    | 40 | 0.500 | 0.55 | 0.500 | 0.500 | 0.55 | 0.500 |
+    | 44 | 0.500 | 0.56 | 0.500 | 0.500 | 0.57 | 0.500 |
+    | 48 | 0.500 | 0.55 | 0.500 | 0.500 | 0.56 | 0.500 |
+    | 49 | 0.674* | 0.56 | 0.722* | 0.647* | 0.57 | 0.648* |
+    | 50 | 0.919* | 0.54 | 0.917* | 0.820* | 0.54 | 0.734* |
+    | 51 | 0.991* | 0.55 | 0.991* | 0.860* | 0.54 | 0.739* |
+    | 52 | 0.982* | 0.55 | 0.994* | 0.903* | 0.56 | 0.765* |
+    | 53 | 0.987* | 0.55 | 0.995* | 0.920* | 0.55 | 0.783* |
+    | 54 | 0.985* | 0.55 | 0.993* | 0.924* | 0.55 | 0.789* |
+    | 55 | 0.990* | 0.56 | 0.991* | 0.728* | 0.55 | 0.719* |
+    | 56 | 0.992* | 0.55 | 0.993* | 0.745* | 0.55 | 0.733* |
+    | 57 | 0.988* | 0.55 | 0.989* | 0.724* | 0.55 | 0.700* |
+    | 58 | 0.989* | 0.56 | 0.989* | 0.718* | 0.55 | 0.699* |
+    | 59 | 0.991* | 0.56 | 0.826* | 0.677* | 0.55 | 0.633* |
+    | 60 | 0.989* | 0.56 | 0.859* | 0.688* | 0.56 | 0.632* |
+    | 61 | 0.988* | 0.55 | 0.816* | 0.651* | 0.56 | 0.624* |
+    | 62 | 0.986* | 0.56 | 0.809* | 0.685* | 0.56 | 0.628* |
+    | 63 | 0.962* | 0.55 | 0.729* | 0.668* | 0.56 | 0.610* |
+
+  - **C3 — LEAK.** Unsigned on every reward mask. M1/M2 reproduce Stage B's figures exactly (same forwards, bit-identical rows). The block masks (medians .039–.060) sit near the same-sign and single-round masks of Stage B (.033–.046) rather than the alternating masks (~.10); the mixed blocks B3/B4 (+−−+ / −++−, .060 / .051) move the label logit-difference more than the pure blocks B1/B2 (.044 / .039).
+
+    | mask | π_d (pick flips) | median |Δ(logit_a − logit_b)| | mean | max |
+    |---|---|---|---|---|
+    | M1 | 1/102 = 0.010 | 0.0939 | 0.0958 | 0.2590 |
+    | M2 | 3/102 = 0.029 | 0.1027 | 0.1042 | 0.2429 |
+    | B1 | 0/102 = 0.000 | 0.0437 | 0.0503 | 0.1807 |
+    | B2 | 0/102 = 0.000 | 0.0393 | 0.0419 | 0.1579 |
+    | B3 | 1/102 = 0.010 | 0.0602 | 0.0641 | 0.2120 |
+    | B4 | 0/102 = 0.000 | 0.0514 | 0.0574 | 0.1995 |
+
+    Signed, random masks only. Toward the label whose rounds carried r+: M3 +0.0161 (sd 0.0536; 60/42 positive/negative), M4 +0.0076 (sd 0.0541; 54/48 positive/negative). On the block masks each label carries one r+ and one r− round, so the signed quantity is toward the START label (round 1's tag) — a position/label artifact measure: B1x +0.0077 (sd 0.0478; 57/45 positive/negative), B2x -0.0017 (sd 0.0560; 50/52 positive/negative), **B3x +0.0265 (sd 0.0485; 74/28 positive/negative)**, **B4x -0.0218 (sd 0.0517; 37/65 positive/negative)**. B3x (r+ on round 1, the start label's) and B4x (r− there) are mirror images at about ±.02–.03 logit with sign counts 74/28 and 37/65: the first round's sign leaks mechanically into the label logits toward the first round's label, on a random direction, consistent with C2's primacy. The analogous signed quantity on the axis block masks is the prohibited class and is not computed.
+  - **STOP clause / identity.** Every one of the 194,922 (session, mask, layer ≤ 48, position) cells (13 stored keys per session incl. the shadow itself, as in Stage B) is bit-identical to the shadow; the ≤48 probes are exactly 0.500 for every state-carrying family (the sweep now reads those only) — **did not fire**. Identity: 1,224 pairs all ok (max shadow |Δp_a| vs archive 4.7e-05, |Δmass| 5.0e-05, verify KL 0.0, shadow-vs-`choice_read` 0.0). Cross-run reproduction of Stage B's read-position rows: 102/102 sessions bit-identical, max |diff| 0.0.
+  - **FLAGS (grep `FLAG:`).** 
+    - **FLAG: the binding exists at the label token and is gone at the
+      choice.** AUC 1.000 for "this label's rounds carried +" at label_a's
+      token (9 tokens before the read; ≥ .998 across L51–L61) and .96 at
+      label_b's (7 tokens), null at the read position; text-only baseline
+      below null at 53 of 54 cells. Whatever the choice
+      would need is present in the residual where the label is read and is
+      not linearly present where the choice is made, at the config of record.
+    - **FLAG: primacy over recency, decorrelated.** First-round sign .98–.99
+      across L51–L62 vs last-round sign peaking .92 and decaying to .65 —
+      the read position remembers the first injection, not the last. Round
+      position and label parity remain confounded (the block's own caveat).
+    - **FLAG: not axis-specific in presence, axis-specific in persistence**
+      (again): the random direction's FIRST-round sign reads as well as the
+      axis's through L58 (.99) and falls to .73–.86 after; its BINDING
+      matches the axis only at L51–L52 (label_a 1.000) and L51 (label_b
+      .93) and reads .83–.90 / .69–.80 from L53–L54 on, where the axis holds
+      ≥ .99 / .81–.87 to L63.
+    - **FLAG: a mechanical signed pseudo-shift on the random block masks**
+      of ±.02–.03 logit (B3x +.027, 74/28; B4x −.022, 37/65) toward/away
+      from the first round's label — the leak follows the FIRST injection's
+      sign; unsigned |Δ| on the reward block masks .04–.06.
+    - **FLAG: label asymmetry** (label_a 1.000 vs label_b .81–.96) is
+      confounded with menu order and distance to the read (9 vs 7 tokens).
+    - **FLAG (procedure, carried):** the same-fold correction to the k-fold
+      null and its Stage B consequences (three marginal R2 flips) are above.
+  - **Committed with explicit paths** (the code at `7da9509`; this entry's
+    own commit carries the two artifacts, the two raw logs and the entry).
+
 - 2026-09-05 — **RECON — ECHO CHANNEL (k-candidate), STAGE B. All 102 valid e2a
   reward-arm sessions read at the first free choice under sixteen masks with
   shadows; the registered targets of the design block of 2026-09-05 §3c;
