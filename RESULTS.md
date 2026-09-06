@@ -167,15 +167,32 @@ applied to CLAUDE.md.
     ([`_regression`](results/raw/2026-09-06_format_recon_regression.txt));
     the log's first line is now the invocation (printed before the model
     loads), for the launch protocol's step 3.
-  - **Launch (§2 protocol):** preflight at 16:11 UTC — adapter 140 W, AC,
-    zero model processes, `timber` asserted outside every roster. Launched
-    detached (`nohup caffeinate -is … --stage run --format all --resume`,
-    log `results/raw/2026-09-06_format_recon_run.log`); the three
-    verification facts are appended to this entry once seen, then the
-    session ends without monitoring. Analysis and the results entry: a later
-    session, on the PI's word (`--resume` if the run stopped early, else
-    `--analyze` on the complete artifacts; complete artifacts are never
-    overwritten by a subset).
+  - **Launch (§2 protocol).** Preflight at 16:11 UTC — adapter 140 W, AC,
+    zero model processes, `timber` asserted outside every roster (the script
+    re-asserts at startup). **First launch 16:13 UTC refused itself at F0:**
+    the checkpoint identity pinned the neutral label for every format and
+    F0's timing checkpoint was recorded under `cedar`; F0 and F2 never see
+    the neutral label, so the pin was over-broad — narrowed to F1 only
+    (self-test 67/67, the case pinned; refused log kept at
+    [`_run_refused-1613utc`](results/raw/2026-09-06_format_recon_run_refused-1613utc.log);
+    commit `e7dcd41`). **Relaunched 16:14:52 UTC**, detached: `nohup
+    caffeinate -is <venv python> scripts/format_recon.py --stage run --format
+    all --resume > results/raw/2026-09-06_format_recon_run.log 2>&1 &`,
+    `disown` (no `setsid` on this macOS; the 16:13 exit was the script's own
+    refusal, not a kill). **The three verification facts, seen once:** (1)
+    PIDs alive — python 4736, caffeinate 4738; (2) the log's first line is
+    the invocation, its second the gate ("projected 6.96 h <= 8.0 h -> GO;
+    timed sessions' acceptance PASS on every format"); (3) the first
+    checkpoint write — F0 resumed its timed session ("1 sessions on disk, 6
+    reads"), F0 s1 (ridge > saddle) completed valid in 437 s, first pick
+    follows, and `format_recon_F0_sessions.json.checkpoint` was rewritten at
+    16:22:11 UTC. **The session ends here without monitoring; the run
+    continues without Code** (projected ~6.96 h → ~23:10 UTC if nothing
+    truncates). The run log is untracked until the analysis session.
+    Analysis and the results entry: a later session, on the PI's word
+    (`--stage run --resume` if the run stopped early, else `--analyze` on
+    the complete artifacts; complete artifacts are never overwritten by a
+    subset). (Launch facts stamped: `date -u` → **Sun Sep  6 16:22:49 UTC 2026**.)
 
 - 2026-09-06 — **FORMAT RECON (design block 2026-09-06 §4, PI "Go format
   recon") — BUILT, REVIEWED, SELF-TESTED, TIMED; the timing gate says STOP.
