@@ -1,0 +1,1052 @@
+{
+ "check": "e2d closure values-check, THIRD adversarial pass (the pass that holds the closure text of record)",
+ "written": "2026-09-06 (Code, design block 2026-09-06 §1); the pass itself ran 2026-09-05 16:48-16:59 UTC in the prior Code thread",
+ "method": "three adversarial refuters over the closure entry AS ASSEMBLED in the working tree (uncommitted at check time, HEAD 10a0723): one over the quoted design-authored text of record clause by clause (53 claims), one over Code's half of the entry -- header, provenance, what-changed table, verification tables, ledger (61 claims), and one over the sibling content-class entry checked in the same pass (38 claims). Each instructed to REFUTE against committed artifacts; 152 claims in all (53 + 61 + 38 -- Code's 2026-09-05 17:04 UTC report to the design seat said '175 claims'; that figure does not reproduce from the journal and is corrected here). Every refutation re-verified by Code by hand before reporting (trap 25); nothing reworded (Code delivers numbers, never authors a lock).",
+ "workflow_provenance": {
+  "thread": "0e52e8a6-0723-46a9-aeb3-051a91ad3206",
+  "run": "wf_508875b6-995",
+  "journal_claim_counts": {
+   "closure-text": 53,
+   "closure-record": 61,
+   "content-class-entry": 38,
+   "total": 152,
+   "prior_report_said": 175
+  },
+  "script": "values-check-two-entries-wf_508875b6-995.js",
+  "agents": 3,
+  "tool_uses": 89,
+  "duration_s": 700
+ },
+ "outcome": "No figure in the closure text or in the 125/125 verification is wrong. Eight passages of the DESIGN-AUTHORED text are glosses that do not hold as stated -- items 1-3 Code would not commit past; 4-8 are rounding, an overstatement, provenance or hedged. Code's own half had FOUR refuted passages (the 'no figure changed except R5' gloss, the same .011 attribution, a truncated `excised_source` quote, and a mis-description of what the 09-04 design handoff quotes), fixed in the HELD draft before the report. The closure ENTRY was HELD a third time and reported to the design seat; the draft persists at HELD-e2d-closure-entry.md.",
+ "the_eight_glosses": [
+  {
+   "n": 1,
+   "passage": "the paired CI, ±.15, spans the bar in both directions",
+   "code_reverification": "z form: half-width 0.144, CI [-0.156, +0.132]; t(19) form: 0.154, [-0.166, +0.142]; bar 0.158. Neither form reaches +0.158; only t reaches -0.158. FALSE as stated.",
+   "class": "gloss (a claim about a figure); would not commit past",
+   "agent_verdict": "REFUTED",
+   "agent_claim_as_checked": "the paired CI spans the bar in both directions",
+   "agent_evidence": "CI half-width (.144 z / .154 t) < bar .1578. Centred on −.0121: z-CI [−.1565, +.1324]; t-CI [−.1663, +.1422]. A +.158 change lies outside under both forms; −.158 lies outside under z (−.1565 > −.1578) and inside only under t. Strictly the CI does not span the bar in both directions.",
+   "verdict": "GLOSS -- the figure reproduces; the claim about it does not",
+   "holds_the_closure": true
+  },
+  {
+   "n": 2,
+   "passage": "±.15",
+   "code_reverification": ".144 rounds to .14 (z); only the t(19) form gives .15 (0.154). No form is named in the text.",
+   "class": "rounding under an unnamed form; would not commit past",
+   "agent_verdict": "REFUTED",
+   "agent_claim_as_checked": "the paired CI, ±.15",
+   "agent_evidence": "1.96·paired_sd/√n = 1.96·.3295808/√20 = ±.1444 (rounds to ±.14; the entry's own verification table prints '±.144'). Only a t(19) form (2.093) gives ±.1542 -> ±.15; the text names no form.",
+   "verdict": "GLOSS -- the figure reproduces; the claim about it does not",
+   "holds_the_closure": true
+  },
+  {
+   "n": 3,
+   "passage": "one-sided .011 — the D3-gate entry's figure",
+   "code_reverification": "grep '\\.011[^0-9]' RESULTS.md: the read .10->.20 p = .011 is printed in the 2026-09-04 closure-completion entry (item 4), not in the D3-gate entry, which has no Fisher figure (its only .011-family figure is the steered-arm binomial .0117). The mis-attribution originated in HANDOFF-2026-09-05 §2 item 4 (Code's) and the patch's R4 inherited it. The value itself is right (one-sided .0112; recomputed here). Refuter-evidence error, corrected: both refuters call HANDOFF-2026-09-05.md 'untracked'; it was committed at 784a948 (2026-09-05 06:32 UTC), ten hours before the check -- the line they cite is right, the parenthetical is not.",
+   "class": "attribution; would not commit past",
+   "agent_verdict": "UNVERIFIABLE",
+   "agent_claim_as_checked": "one-sided .011 — the D3-gate entry's figure",
+   "agent_evidence": "grep '\\.011[^0-9]' RESULTS.md: the read .10→.20 p = .011 appears only at l.944, inside the 2026-09-04 'e2d CLOSURE COMPLETION — item 1 DELIVERED' entry (values-check item 4), not in the D3 GATE ADJUDICATION entry (l.1088) or the D3 RAN entry (l.1148), which carry only '.0117' (steered-arm binomial). HANDOFF-2026-09-05.md l.79 (untracked) repeats the 'D3-gate entry' attribution. Attribution doubtful; value itself confirmed.",
+   "agent_2_verdict": "REFUTED",
+   "agent_2_claim_as_checked": "Fisher paragraph: 'The D3-gate entry's `.011` was the one-sided figure'",
+   "agent_2_evidence": "`grep -n \"\\.011\\b\" RESULTS.md` → lines 156/226/239/255 (this entry), 731 (unrelated GDN table), 944. Line 944 'read .10→.20 **p = .011**' is inside the 2026-09-04 e2d CLOSURE COMPLETION entry (lines 884–990, commit 1bdf16c), not the D3-gate entry ('e2d D3 — all 24 sessions RAN … FIRED GATE', lines 1148–1258, commit e58dfca), whose only .011-family figure is '.0117 — fires' (line 1177, an exact binomial for the steered arm 7/122, not a Fisher step). The DISPOSITION-2 gate-adjudication entry (1088–1147) contains no .011 either. The .011 IS one-sided (.0112), but its source entry is mislabelled (same mislabel in HANDOFF-2026-09-05.md §2 item 4).",
+   "verdict": "GLOSS -- the figure reproduces; the claim about it does not",
+   "holds_the_closure": true
+  },
+  {
+   "n": 4,
+   "passage": "carry 58% of the marks",
+   "code_reverification": "40/68 = 58.8% on the 24 shared indices, rounds to 59%; 40/70 = 57.1% on all M marks. 58% is a truncation.",
+   "class": "rounding",
+   "agent_verdict": "REFUTED",
+   "agent_claim_as_checked": "and carry 58% of the marks",
+   "agent_evidence": "On the 24 shared indices: (10+10)+(10+10) = 40 of 32+36 = 68 marks = 58.82%, which rounds to 59%; on all M marks D2+D3 it is 40/70 = 57.1%. 58% is a truncation of 58.8%.",
+   "verdict": "GLOSS -- the figure reproduces; the claim about it does not",
+   "holds_the_closure": false
+  },
+  {
+   "n": 5,
+   "passage": "the 0.10 anchor (n = 4 M sessions, pooled estimator) carries no marker value",
+   "code_reverification": "d1_sessions.json holds a pooled within-M delta of -0.2394 (20/20 generations, 12 probes), recorded in the log as 'a different statistic and not comparable' -- not absent.",
+   "class": "overstatement (no COMPARABLE value, not no value)",
+   "agent_verdict": "REFUTED",
+   "agent_claim_as_checked": "The 0.10 anchor (n = 4 M sessions, pooled estimator) carries no marker value",
+   "agent_evidence": "d1_sessions.json: 4 M sessions (CONFIRMED); but marker.deltas.clean.delta_plus_within_M.delta = −0.2393743 exists (pooled over n_steered 20 / n_unsteered 20 generations, 12 probes). RESULTS.md l.1027 records it as '−0.2394 ... a different statistic and not comparable'. The artifact carries a marker value; 'no marker value' overstates 'no comparable/paired value'.",
+   "verdict": "GLOSS -- the figure reproduces; the claim about it does not",
+   "holds_the_closure": false
+  },
+  {
+   "n": 6,
+   "passage": "~4× below e2a's ~.17",
+   "code_reverification": ".17 is 5.1x 1/30, 3.9x 1/23, 4.5x the pooled 2/53. Hedged with '~'; which e2d rate is meant is not named.",
+   "class": "hedged approximation",
+   "agent_verdict": "CONFIRMED",
+   "agent_claim_as_checked": "~4× below e2a's ~.17",
+   "agent_evidence": "e2a first-pick break 32/188 = .1702 all sessions (valid 30/184 = .163; frame's 1−156/187 = .166) -> '~.17' holds. Ratio is approximate: .1702 vs 1/30 = 5.1×, vs 1/23 = 3.9×, vs pooled 2/53 = 4.5×. '~4×' under-states the pooled 4.5×; doubtful as a gloss.",
+   "verdict": "GLOSS -- hedged or provenance; figure reproduces",
+   "holds_the_closure": false
+  },
+  {
+   "n": 7,
+   "passage": "62% one session decidable at 0.20 only (idx 12) and 38% roster truncation",
+   "code_reverification": "Reproduces (.621/.379) under the idx-12-first sequential decomposition A -> B -> C (the verify script's, and the first check's, order); the split is order-dependent -- truncation-first gives 54/46 (refuter's computation). The text names no order.",
+   "class": "provenance (an order-dependent decomposition with the order unnamed)",
+   "agent_verdict": "CONFIRMED",
+   "agent_claim_as_checked": "62% one session decidable at 0.20 only (idx 12) and 38% roster truncation",
+   "agent_evidence": "Sequential decomposition A (D2 mean on 20 shared) .1531669 -> B (+idx 12) .1219739 -> C (all 27) .1029634: |B−A|/|C−A| = .6213, |C−B|/|C−A| = .3787. D2-only decidable indices [12,24,25,26,27,28,30]; D3 roster max 23, so idx 12 is the only D2-only index inside D3's roster; 6 never run. CAVEAT: order-dependent — truncation-first gives 54% / 46% (B' = mean over shared + never-run = .1029… ; computed .5366/.4634).",
+   "verdict": "GLOSS -- hedged or provenance; figure reproduces",
+   "holds_the_closure": false
+  },
+  {
+   "n": 8,
+   "passage": "(slip 10)",
+   "code_reverification": "'(10)' is DEFINED only in the untracked HANDOFF-2026-09-04-design.md §2 item (10); the committed record numbers slips (11)-(14) and PROPOSAL-j (8)-(9). Mentions of 'slip 10' at HEAD (the HELD file's header, the first check's JSON) all point at that handoff. The reference resolves, but not to a committed definition.",
+   "class": "provenance (reference to an uncommitted document)",
+   "agent_verdict": "CONFIRMED",
+   "agent_claim_as_checked": "The D2 failure was legibility with coherence intact — not a coherence limit (slip 10)",
+   "agent_evidence": "HANDOFF-2026-09-04-design.md §2: '(10) the pre-written stop sentence encoded a predicted failure mode (\"with coherence\") ... the actual failure was Q2/Q3 with coherence intact'. Caveat: that file is untracked (git status ??); RESULTS.md records slips (11)–(14) by number but never (10); PROPOSAL-j l.376 lists only (8) and (9).",
+   "verdict": "GLOSS -- hedged or provenance; figure reproduces",
+   "holds_the_closure": false
+  }
+ ],
+ "code_recomputation_at_write_time": {
+  "item1_2_paired_CI": {
+   "paired_sd": 0.32958075706646045,
+   "n_pairs": 20,
+   "paired_mean_change": -0.012051019384616089,
+   "z_halfwidth": 0.1444424823938674,
+   "z_CI": [
+    -0.15649350177848348,
+    0.1323914630092513
+   ],
+   "t19_halfwidth": 0.15424853837618543,
+   "t19_CI": [
+    -0.16629955776080152,
+    0.14219751899156935
+   ],
+   "bar_half_G": 0.1577751523169135,
+   "reaches_plus_bar": {
+    "z": false,
+    "t19": false
+   },
+   "reaches_minus_bar": {
+    "z": false,
+    "t19": true
+   },
+   "z_rounds_to": 0.14,
+   "t19_rounds_to": 0.15
+  },
+  "item3_dot011_locations_in_RESULTS": [
+   "HEAD:RESULTS.md:583:    | 50 | 0.060 ± 0.012 | +0.009 | 0.006 | 0.094 ± 0.011 | +0.232 | 0.089 |",
+   "HEAD:RESULTS.md:1182:    | 62 | GDN | 0.450 | 0.658 | 0.439 | 0.0928 | 0.011 | 0.5728 |",
+   "HEAD:RESULTS.md:1395:       read .10→.20 **p = .011**; audit .10→.20 p = .41, audit .20→.30"
+  ],
+  "item4_marks_share": {
+   "shared_indices_num": 40,
+   "shared_indices_den": 68,
+   "share": 0.5882352941176471,
+   "rounds_to_pct": 59,
+   "all_M_marks_den": 70,
+   "share_all": 0.5714285714285714
+  },
+  "item5_d1_marker": {
+   "path": "data/e2d/d1_sessions.json -> marker.deltas.clean.delta_plus_within_M.delta",
+   "value": -0.2393742515595416,
+   "n_steered": 20,
+   "n_unsteered": 20
+  },
+  "item6_ratio_of_0.17_to_e2d_rates": {
+   "1/30": 5.1000000000000005,
+   "1/23": 3.9100000000000006,
+   "2/53": 4.505000000000001
+  },
+  "item7_composition_share": {
+   "verify_raw_idx12_first": 0.6213316429081164,
+   "recomputed_here": {
+    "A_d2_mean_on_shared": 0.15316690506575573,
+    "B_plus_idx12": 0.12197385584175569,
+    "B_truncation_first_plus_never_run": 0.12622684352705177,
+    "C_all_d2": 0.10296336307648522,
+    "idx12_first": {
+     "one_session": 0.6213316429081163,
+     "truncation": 0.37866835709188373
+    },
+    "truncation_first": {
+     "truncation": 0.5366167499588294,
+     "one_session": 0.4633832500411707
+    },
+    "lost_to_clean": [
+     12
+    ],
+    "never_run": [
+     24,
+     25,
+     26,
+     27,
+     28,
+     30
+    ],
+    "n_shared": 20
+   },
+   "note": "order-dependent: idx-12-first gives 62/38, truncation-first 54/46 (both recomputed here from d2_scores.json / d3_scores.json per-session diffs) -- the text names no order"
+  },
+  "item3_fisher_read_10_to_20_one_sided_recomputed": 0.011194978199212884,
+  "item3_dot011_grep_is_against": "HEAD:RESULTS.md (the committed record; the working tree's newest entry mentions the figure and would self-cite)",
+  "item8_slip10_mentions_at_HEAD": [
+   "HEAD:HELD-e2d-closure-entry.md:37:8. \"(slip 10)\" — resolves only to the untracked HANDOFF-2026-09-04-design.md.",
+   "HEAD:HELD-e2d-closure-entry.md:98:  > legibility with coherence intact — not a coherence limit (slip 10).",
+   "HEAD:data/e2d/closure_valuescheck.json:99:   \"recommended_wording\": \"e2d closed at its qualification rung. The *verdict-tier* free operant \\u2014 the LOCK-j campaign of M 128 / S 96 / R 96 \\u2014 never ran, because at f = 0.20 both record-borne criteria failed while the apparatus itself held: Q2 readability median AUC 0.574 (10th pct 0.524) against a 0.70/0.60 bar with the displacement comparator at 0.534 and transfer unmeasured; Q3 marker imprint \\u0394+ = +0.103 against a 0.158 bar and against 2\\u00b7|\\u0394_R| = 0.138; Q1 validity passed at 3/32, p = .878. The free operant itself was administered 537 times across the three calibration rungs (D1 42, D2 357, D3 138 choices over 96 sessions, every read insulated at KL = 0), and returned habit-locked first-pick shares: \\u0394_first = 0.000 at 0.20 (15/30) and +0.109 at 0.30 (14/23, p = .202), against first-pick habit-break rates of 1/30 and 1/23. At the three session-scale doses measured \\u2014 0.10 (n = 4, disowned as noise), 0.20 and 0.30 \\u2014 the record channel was never verifiably open, and readability did not improve with dose while degeneracy did. Nothing above 0.30 was run, so the claim is bounded by what was measured, not by \\\"any dose\\\"; and the failure at 0.20 was a failure of legibility with coherence intact, so it should not be described as a coherence limit (design slip 10).\""
+  ],
+  "item8_slip10_definition_in_committed_docs": [],
+  "item8_note": "mentions of 'slip 10' exist at HEAD -- the HELD file's own header list (Code's) and the first check's JSON quoting the untracked handoff -- but NO committed document defines slip (10); the definition is only in the untracked HANDOFF-2026-09-04-design.md",
+  "item8_slip10_in_untracked_design_handoff": [
+   "68:stop); **(10)** the pre-written stop sentence encoded a predicted"
+  ]
+ },
+ "summary": {
+  "claims_checked": 152,
+  "by_refuter": {
+   "content-class-entry": {
+    "n": 38,
+    "verdicts": {
+     "CONFIRMED": 31,
+     "REFUTED": 3,
+     "UNVERIFIABLE": 4
+    }
+   },
+   "closure-record": {
+    "n": 61,
+    "verdicts": {
+     "CONFIRMED": 48,
+     "REFUTED": 4,
+     "UNVERIFIABLE": 9
+    }
+   },
+   "closure-text": {
+    "n": 53,
+    "verdicts": {
+     "CONFIRMED": 47,
+     "REFUTED": 4,
+     "UNVERIFIABLE": 2
+    }
+   }
+  },
+  "figures_wrong": 0,
+  "glosses_held": 8,
+  "code_passages_fixed_in_draft": 4
+ },
+ "code_own_half_refuted_and_fixed": [
+  {
+   "passage": "'no figure changed except R5, where the primary DV moves to its own domain'",
+   "finding": "The table's own R6 row changes two printed figures: held `p = .85` → of record `Fisher exact two-sided p = 1.00` (1/30 vs 1/23: recomputed Fisher 1.0000 vs z-pooled .8477), and held `(p = .21)` → `Fisher exact two-sided p = .26` (20/29 vs 12/23: .2597 vs unpooled-z .2136). R4 also adds figures (.011, .15, .20). Only R5 changes a figure by changing DOMAIN; R6 changes figures by changing TEST.",
+   "disposition": "fixed in the HELD draft (R6's test-driven figure changes named)"
+  },
+  {
+   "passage": "'The D3-gate entry's `.011` was the one-sided figure'",
+   "finding": "`grep -n \"\\.011\\b\" RESULTS.md` → lines 156/226/239/255 (this entry), 731 (unrelated GDN table), 944. Line 944 'read .10→.20 **p = .011**' is inside the 2026-09-04 e2d CLOSURE COMPLETION entry (lines 884–990, commit 1bdf16c), not the D3-gate entry ('e2d D3 — all 24 sessions RAN … FIRED GATE', lines 1148–1258, commit e58dfca), whose only .011-family figure is '.0117 — fires' (line 1177, an exact binomial for the steered arm 7/122, not a Fisher step). The DISPOSITION-2 gate-adjudication entry (1088–1147) contains no .011 either. The .011 IS one-sided (.0112), but its source entry is mislabelled (same mislabel in HANDOFF-2026-09-05.md §2 item 4).",
+   "disposition": "attribution corrected in Code's half of the HELD draft; the design text's copy (item 3) is HELD, not reworded"
+  },
+  {
+   "passage": "Beside-note (ii) quotes `excised_source` as 'committed D2 scoring'",
+   "finding": "Actual string is 'committed D2 scoring (not rescored)' — the passage quotes a truncation. Substance (says D2 for a D3 run) holds.",
+   "disposition": "quotation completed in the HELD draft"
+  },
+  {
+   "passage": "Beside-note (iii): HANDOFF-2026-09-04-design.md §1 and §7 'quote the held text'",
+   "finding": "Untracked: yes (`git status` → `?? HANDOFF-2026-09-04-design.md`). But §1 quotes the EARLIER closure 'Sentence of record' (the pre-disposition text with 'a quarter of its short-context value … (dilution excluded) … which PROPOSAL-i inherits' — the text the values-check graded), not the 2026-09-05 disposition text the six clauses R1–R6 were applied to (that text was 'never committed' and is elsewhere); §7 contains no quotation at all, only a paraphrase ('a record channel too narrow to carry the state to the choice at any dose the apparatus can deliver'). 'Superseded by the text above' is true of both.",
+   "disposition": "reworded in the HELD draft: §1 quotes the earlier sentence of record, §7 paraphrases"
+  }
+ ],
+ "content_class_entry_same_pass": {
+  "entry": "CONTENT-CLASS SCREEN (AMENDMENT 2 (iii)) -- committed 125e26a with all three refutations applied (the archive audits never joined; 'every instance unsteered' holds for D2 only; the inexact 'Make this friendlier' quote)",
+  "refuter_line_cites": "line numbers in refuter evidence are check-time working-tree lines (the closure entry sat uncommitted above); two are off by one (1230 not 1227-1229; 1434 not 1433) -- substance reproduces",
+  "refuted": [
+   {
+    "claim": "Archive overbreadth is 'out of sample, the archives' own audits of record having passed every one of these rounds'",
+    "verdict": "REFUTED",
+    "evidence": "The screen script sets audit=None for every archive row (never joins the archive audit). Aligning transcript-parsed rounds with each session's rounds+choices records (lengths match for all 200 e2a and 181 e2b sessions): e2a — 9 of 34 hits carry a `degen` flag from the audit of record (e.g. '=== Config evaluation session ===' → degen 'frame:Config evaluation session'; one preamble hit → 'frame:evaluation session'), 3 hits sit in excluded sessions; e2b — 3 of 60 hits carry `degen` ('frame:Config evaluation session' ×2, 'junk:(?i)\\bround\\s+\\d+...' ×1), 1 carries `lexical: walnut`, 2 sit in excluded sessions. At least 13 of the 94 hits were NOT passed by the archives' audits."
+   },
+   {
+    "claim": "'every observed instance is in an UNSTEERED round'",
+    "verdict": "REFUTED",
+    "evidence": "d3_sessions.json M session 12: forced0 (pole pos, steered=True, text '```'), forced2 (steered=True, '```'), free0 (steered=True), free2 (steered=True) — 4 of the 8 fence rounds are steered; RESULTS.md 1227-1229 itself names 'forced0 itself is a null response' as the origin, and that round is steered. Of the detector's 13 null_response hits on e2d, 4 have steered=True. The claim is true for D2's four instances only (RESULTS.md 1433: 'All four are in UNSTEERED rounds'); candidate.json null_response_rationale and disposition-2 item 5 both over-generalise it, and the passage repeats them."
+   },
+   {
+    "claim": "Example 'Make this friendlier: The meeting has been moved to 3pm'",
+    "verdict": "REFUTED",
+    "evidence": "data/corpus/e2a_tasks.jsonl has no task with that exact wording; the pool's paraphrases are 'Rewrite this in a friendlier tone: The meeting has been moved to 3pm.', 'Make this sound friendlier: The meeting has been moved to 3pm.', 'Reword in a warmer tone: ...', 'Soften the tone of this notice: ...'. (Same inexact quote in candidate.json and the commit message; illustrative, but quoted.)"
+   }
+  ]
+ },
+ "all_claims_by_refuter": {
+  "content-class-entry": [
+   {
+    "claim": "Entry is 'the RESULTS entry for 1223751, which committed the candidate spec and its overbreadth screen without one'",
+    "verdict": "CONFIRMED",
+    "evidence": "git show 1223751 --stat: .gitignore, data/configs/contentclass_candidate.json, data/e2d/contentclass_screen.json, scripts/e2d_contentclass_screen.py, valence_core/e2d/contentclass.py (5 files, 758 insertions); RESULTS.md not touched. `git grep -i contentclass HEAD -- RESULTS.md` hits only the recon entry's FLAG lines (HEAD:321-324, 469) saying no entry exists. NOTE: the entry itself is uncommitted — `git log -S\"CONTENT-CLASS SCREEN (AMENDMENT 2 (iii))\" -- RESULTS.md` returns nothing and `git diff HEAD --stat -- RESULTS.md` shows +304 lines (this entry plus the closure entry) in the working tree only."
+   },
+   {
+    "claim": "Commit message of 1223751 dated 2026-09-02 13:38 UTC",
+    "verdict": "CONFIRMED",
+    "evidence": "git log -1 --format=%aI 1223751 → 2026-09-02T09:38:47-04:00; TZ=UTC --date=iso-local → 2026-09-02 13:38:47 +0000; committer date identical."
+   },
+   {
+    "claim": "`content-class-draft-v3`; `adopted: false`; screened BLIND TO ARM",
+    "verdict": "CONFIRMED",
+    "evidence": "contentclass_screen.json: spec_version='content-class-draft-v3', blind_to_arm=True, adopted=False; candidate.json version='content-class-draft-v3' (candidate has no `adopted` key but spec string reads 'CANDIDATE, NOT ADOPTED'); contentclass.py SPEC_VERSION='content-class-draft-v3'."
+   },
+   {
+    "claim": "Drafted after all three rule-25 reads were committed",
+    "verdict": "CONFIRMED",
+    "evidence": "git merge-base --is-ancestor: d1_read_marks.json last commit 184bcd0 (2026-09-01T08:15:31-04:00), d2 a274ecd (2026-09-01T19:18:36-04:00), d3 e58dfca (2026-09-02T08:26:32-04:00 = 12:26 UTC) are all ancestors of 1223751 (13:38 UTC)."
+   },
+   {
+    "claim": "On the 912 e2d rounds: recall 71/81 = .877, precision 71/84 = .845 (in-sample); tp 71, fn 10, fp 13, tn 818",
+    "verdict": "CONFIRMED",
+    "evidence": "contentclass_screen.json e2d: n 912, tp 71, fn 10, fp 13, tn 818, recall 0.87654, precision 0.84524. Independently reproduced by importing valence_core.e2d.contentclass and replicating e2d_rounds()/screen() over d{1,2,3}_sessions.json + read marks: tp 71 fn 10 fp 13 tn 818. 71/81=0.8765→.877; 71/84=0.8452→.845. Read marks: 6+39+36 = 81."
+   },
+   {
+    "claim": "The 912 rounds are D1 72 + D2 607 + D3 233",
+    "verdict": "CONFIRMED",
+    "evidence": "d1_sessions.json marker.n_generations_scored=72; d2_scores.json marker.n_generations_scored=607; d3_scores.json marker.n_generations_scored=233 (n_skipped 0 each). Screen script defines a round as s['rounds']+s['choices']: D1 30+42=72, D2 250+357=607, D3 95+138=233. Sum 912. (Minor: the passage says every figure is read from the two JSONs and the commit message; the 72/607/233 split is in none of those three — it comes from the D-files.)"
+   },
+   {
+    "claim": "Predicted by class: preamble_without_content 37, task_echo 29, null_response 13, stuck_attractor 3, wrong_task 2",
+    "verdict": "CONFIRMED",
+    "evidence": "contentclass_screen.json e2d.predicted = {preamble_without_content:37, stuck_attractor:3, task_echo:29, null_response:13, wrong_task:2}; sum 84 = tp+fp; reproduced identically."
+   },
+   {
+    "claim": "Per arm, unblinded only after scoring: M 73/573 = .127, R 1/168 = .006, S 10/171 = .058",
+    "verdict": "CONFIRMED",
+    "evidence": "contentclass_screen.json by_arm_unblinded_after: M 73/573 rate 0.12740, R 1/168 rate 0.005952, S 10/171 rate 0.05848; reproduced. Rounds sum 573+168+171=912. NOTE: the commit message of 1223751 prints 'S .059' (a rounding slip in the commit message, not in the passage, which matches the artifact at .058)."
+   },
+   {
+    "claim": "The read's M-vs-R gap reproduces under a detector that never saw the arms",
+    "verdict": "CONFIRMED",
+    "evidence": "Read marks per arm: D1 {S:6}, D2 {M:34,S:5}, D3 {M:36} → M 70, R 0, S 11; detector M 73, R 1, S 10. Script joins _arm only in the final per-arm block after classify."
+   },
+   {
+    "claim": "Archive overbreadth: e2a 34/1,894 = 1.80% by class stuck_attractor 11, null_response 12, task_echo 5, preamble_without_content 5, wrong_task 1; e2b 60/1,707 = 3.51% by class null_response 22, stuck_attractor 16, task_echo 11, wrong_task 9, preamble_without_content 2",
+    "verdict": "CONFIRMED",
+    "evidence": "contentclass_screen.json archive_overbreadth: e2a n 1894 hits 34 rate 0.017951 (→1.80%), by_class matches; e2b n 1707 hits 60 rate 0.035149 (→3.51%), by_class matches. Reproduced by importing the script module and calling archive_rounds()+screen(): e2a 34/1894, e2b 60/1707, identical by_class."
+   },
+   {
+    "claim": "Archive overbreadth is 'out of sample, the archives' own audits of record having passed every one of these rounds'",
+    "verdict": "REFUTED",
+    "evidence": "The screen script sets audit=None for every archive row (never joins the archive audit). Aligning transcript-parsed rounds with each session's rounds+choices records (lengths match for all 200 e2a and 181 e2b sessions): e2a — 9 of 34 hits carry a `degen` flag from the audit of record (e.g. '=== Config evaluation session ===' → degen 'frame:Config evaluation session'; one preamble hit → 'frame:evaluation session'), 3 hits sit in excluded sessions; e2b — 3 of 60 hits carry `degen` ('frame:Config evaluation session' ×2, 'junk:(?i)\\bround\\s+\\d+...' ×1), 1 carries `lexical: walnut`, 2 sit in excluded sessions. At least 13 of the 94 hits were NOT passed by the archives' audits."
+   },
+   {
+    "claim": "28 of the 94 hits were eyeballed",
+    "verdict": "UNVERIFIABLE",
+    "evidence": "Asserted only in candidate.json what_code_does_not_claim ('28 of the 94 were eyeballed') and the 1223751 commit message ('I eyeballed 28 of the 94'); no artifact records which 28. 94 = 34+60 checks."
+   },
+   {
+    "claim": "Fourteen examples per archive are in the screen artifact",
+    "verdict": "CONFIRMED",
+    "evidence": "contentclass_screen.json archive_overbreadth.e2a.examples len 14; e2b.examples len 14."
+   },
+   {
+    "claim": "Quoted archive examples: garbled echo 'Give a one-skeleton description of the actual scent of clean laundry'; refusal 'Sorry, I can't help with that'; nulls '* * *', '<answer>', a bare fence",
+    "verdict": "CONFIRMED",
+    "evidence": "e2a examples[13] task_echo text 'Give a one-skeleton description of the actual scent of clean laundry.'; e2b examples[0] text \"Sorry, I can't help with that.\" (classed stuck_attractor); e2a examples[1] '* * *', [5] '<answer>', [11] '```' all null_response."
+   },
+   {
+    "claim": "'the same shape as v2's own screen finding'",
+    "verdict": "CONFIRMED",
+    "evidence": "data/configs/e2b_audit_v2.json line 35 caveat: 'the bar was met by the screen reclassifying its own reference set: all 17 hits are true degeneracies, so the known-clean pool was not clean' — quoted in the screen script docstring."
+   },
+   {
+    "claim": "Five classes with the stated definitions (task_echo / preamble_without_content / wrong_task / stuck_attractor / null_response)",
+    "verdict": "CONFIRMED",
+    "evidence": "candidate.json classes: five entries, wording matches the passage verbatim including wrong_task 'performs or restates a different task than the one posed'; contentclass.py CLASSES tuple len 5 (docstring says wrong_task 'performs a different task', without 'restates')."
+   },
+   {
+    "claim": "Standing instruction of scorer_v3_spec.json: v1 and v2 each fixed the instance and missed the class",
+    "verdict": "CONFIRMED",
+    "evidence": "scorer_v3_spec.json the_pattern: 'Both generations fixed the instance, not the class. The design instance named it on 2026-08-25: you fixed the instance, not the class, twice now...'. Note scorer_v3_spec.json contains no 'content'/'content class' text and no field named 'standing instruction'; the 'content class' term is AMENDMENT 2 (iii)'s."
+   },
+   {
+    "claim": "NULL_RESPONSE banked by disposition-2 item 5; three observed forms ([MENTAL_BLOCK], literal None, bare code fence)",
+    "verdict": "CONFIRMED",
+    "evidence": "RESULTS.md 1131-1135 (2026-09-03 D3 GATE ADJUDICATION (DISPOSITION-2), item '5. Banked (ledger 23)'): 'the NULL_RESPONSE family (three forms — [MENTAL_BLOCK], the literal None, a bare ``` fence — all in unsteered rounds) as a candidate class for the scorer_v3 spec'. Data: D2 M s9 free0 '[MENTAL_BLOCK]', D2 M s17 forced3/free3/free5 'None', D3 M s9 free0 '[MENTAL_BLOCK]', D3 M s12 ×8 '```'."
+   },
+   {
+    "claim": "'every observed instance is in an UNSTEERED round'",
+    "verdict": "REFUTED",
+    "evidence": "d3_sessions.json M session 12: forced0 (pole pos, steered=True, text '```'), forced2 (steered=True, '```'), free0 (steered=True), free2 (steered=True) — 4 of the 8 fence rounds are steered; RESULTS.md 1227-1229 itself names 'forced0 itself is a null response' as the origin, and that round is steered. Of the detector's 13 null_response hits on e2d, 4 have steered=True. The claim is true for D2's four instances only (RESULTS.md 1433: 'All four are in UNSTEERED rounds'); candidate.json null_response_rationale and disposition-2 item 5 both over-generalise it, and the passage repeats them."
+   },
+   {
+    "claim": "Precedence in classify: NULL → STUCK → PREAMBLE → ECHO → WRONG_TASK, most-specific to least",
+    "verdict": "CONFIRMED",
+    "evidence": "contentclass.py classify() lines 247-266: is_null_response → is_stuck_attractor → is_preamble → is_task_echo → is_wrong_task; docstring 'most-specific to least'."
+   },
+   {
+    "claim": "Screened blind to arm because the D2 read had found content-shaped junk concentrated in the axis arm",
+    "verdict": "CONFIRMED",
+    "evidence": "RESULTS.md 1422: 'Content-shaped junk is concentrated in the axis arm and absent from the random arm at the same α'; screen script docstring repeats it; script joins arm only after scoring."
+   },
+   {
+    "claim": "Draft lineage table: v1→v2 precision .472 → .621; v2→v3 precision .621 → .845, archive overbreadth 5.1% / 6.6% → 1.8% / 3.5%",
+    "verdict": "UNVERIFIABLE",
+    "evidence": "Matches candidate.json two_confounds_the_screen_found_and_fixed and the 1223751 commit message verbatim; no v1/v2 screen artifacts exist in the repo to recompute .472/.621/5.1%/6.6%. The v3 endpoints (.845, 1.8%, 3.5%) are confirmed."
+   },
+   {
+    "claim": "Example 'Make this friendlier: The meeting has been moved to 3pm'",
+    "verdict": "REFUTED",
+    "evidence": "data/corpus/e2a_tasks.jsonl has no task with that exact wording; the pool's paraphrases are 'Rewrite this in a friendlier tone: The meeting has been moved to 3pm.', 'Make this sound friendlier: The meeting has been moved to 3pm.', 'Reword in a warmer tone: ...', 'Soften the tone of this notice: ...'. (Same inexact quote in candidate.json and the commit message; illustrative, but quoted.)"
+   },
+   {
+    "claim": "'Footsteps on a gravel path crunch and scatter like brittle leaves' shares five consecutive words with its own task",
+    "verdict": "CONFIRMED",
+    "evidence": "CC._longest_common_run vs 'Give a one-sentence description of footsteps on a gravel path.' = 5 ('footsteps on a gravel path'); v3 is_task_echo returns False (fix behaves as described)."
+   },
+   {
+    "claim": "'run = 5 and the verb lexicon are the first values that screened acceptably'",
+    "verdict": "CONFIRMED",
+    "evidence": "contentclass.py is_task_echo(text, task_text, run: int = 5); _IMPERATIVE verb regex at line ~60; candidate.json what_code_does_not_claim[2] states the 'first values' claim (the 'first values' history itself is unverifiable)."
+   },
+   {
+    "claim": "wrong_task is the weakest detector, needs the task pool, cannot see a semantically wrong answer",
+    "verdict": "CONFIRMED",
+    "evidence": "classify() takes other_tasks; script passes the 64 e2a paraphrases; contentclass.py docstring 'What a detector cannot settle' and candidate.json what_code_does_not_claim[1] say the same."
+   },
+   {
+    "claim": "AMENDMENT 2 (iii) verbatim quote",
+    "verdict": "CONFIRMED",
+    "evidence": "PROPOSAL-j-dose-escalation.md lines 412-417 read exactly: 'Before LOCK-j: Code drafts a **CLASS-level spec** for scorer_v3's content class and screens it for overbreadth against the e2a archive, e2b's transcripts, and D1/D2 (precision/recall against the read); design adjudicates; the campaign's audit of record = v2 + the adjudicated class, a new module. LOCK-j tolerances cite D2's rates under both.' Word-for-word match."
+   },
+   {
+    "claim": "AMENDMENT 2 (iii) puts the class spec AFTER the read",
+    "verdict": "CONFIRMED",
+    "evidence": "Lines 408-412: 'At D2 the rule-25 read is the arbiter ... Before LOCK-j: Code drafts a CLASS-level spec' — read at D2, spec before LOCK-j (after D2)."
+   },
+   {
+    "claim": "Delivered: the class-level spec and the screen (against e2a, e2b, and D1–D3)",
+    "verdict": "CONFIRMED",
+    "evidence": "Screen script corpora: e2d (d1,d2,d3 sessions), data/e2a/sessions.jsonl, data/e2b/verdict_campaign.json; screen JSON carries all three."
+   },
+   {
+    "claim": "Per the candidate's `authority` field and the detector's docstring: not the audit of record, excludes no session, rule-25 read is the arbiter",
+    "verdict": "CONFIRMED",
+    "evidence": "candidate.json authority: 'It is not the audit of record and it excludes no session.'; contentclass.py docstring: 'Nothing here is the audit of record, and nothing here may exclude a session. The rule-25 read remains the arbiter wherever the two disagree.'"
+   },
+   {
+    "claim": "e2d closed at its qualification rung, so LOCK-j is no longer the trigger",
+    "verdict": "CONFIRMED",
+    "evidence": "RESULTS.md 130 (closure entry, working tree): 'e2d closed at its qualification rung by the pre-registered run-dose rule ... the verdict-tier free operant under LOCK-j never ran.'"
+   },
+   {
+    "claim": "The 2026-09-04 design handoff makes the adjudicated class a precondition for any future Qwen session campaign",
+    "verdict": "CONFIRMED",
+    "evidence": "HANDOFF-2026-09-04-design.md §4 lines 118-122: 'the content-class spec + overbreadth screen over the e2a/D2/D3 corpora, blind to arm, with the NULL_RESPONSE candidate class — required before any future Qwen session campaign and to settle R's zero'. Gloss caveat: the handoff names the spec+screen (owed, standing), not literally 'the adjudicated class'. File is untracked per git status (??)."
+   },
+   {
+    "claim": "Disposition-2 entry banks NULL_RESPONSE as its candidate class",
+    "verdict": "CONFIRMED",
+    "evidence": "RESULTS.md 1131-1135, item 5 'Banked (ledger 23)': NULL_RESPONSE family 'as a candidate class for the scorer_v3 spec'."
+   },
+   {
+    "claim": "Written at the design seat's request (block of 2026-09-05, §2) after the recon block's §1g found the gap",
+    "verdict": "UNVERIFIABLE",
+    "evidence": "§1g: RESULTS.md ~616-640 and 773 (recon entry) — 'FLAG: the content-class screen has no RESULTS entry (§1g)' — CONFIRMED. The 'block of 2026-09-05' is not in the repo (RESULTS.md 264 also cites 'block of 2026-09-05, §1'; only HANDOFF-2026-09-05.md exists, whose §2 lines 89-90 say the opposite: the spec + screen 'are all delivered and in the log'). The request cannot be checked."
+   },
+   {
+    "claim": "Stamp `date -u` → Sat Sep  5 16:45:24 UTC 2026",
+    "verdict": "UNVERIFIABLE",
+    "evidence": "2026-09-05 is a Saturday (python datetime) — format consistent with macOS `date -u`. Time cannot be recomputed; the entry is uncommitted so no commit time bounds it. Consistent with newest-first ordering: closure entry below it is stamped 16:42:55 UTC (RESULTS.md 128)."
+   },
+   {
+    "claim": "Screen script scripts/e2d_contentclass_screen.py; detector valence_core/e2d/contentclass.py",
+    "verdict": "CONFIRMED",
+    "evidence": "Both tracked (git ls-files) and present; both in 1223751's stat; candidate.json screen_artifact/implementation fields point to them."
+   },
+   {
+    "claim": "'nothing in the artifacts is changed'",
+    "verdict": "CONFIRMED",
+    "evidence": "git status: data/configs/contentclass_candidate.json and data/e2d/contentclass_screen.json unmodified (mtime Sep 2 09:37, matching commit)."
+   },
+   {
+    "claim": "'(in-sample) the draft was revised twice after seeing where it failed on this corpus'",
+    "verdict": "CONFIRMED",
+    "evidence": "candidate.json IN_SAMPLE: 'the draft was revised twice'; commit message 'revised twice against this corpus'; screen JSON caveat says 'revised after' (no count)."
+   }
+  ],
+  "closure-record": [
+   {
+    "claim": "Header: commit `08a6076` carries the PI-approved rule-2 and rule-21 annotations and the `excised_source` script fix",
+    "verdict": "CONFIRMED",
+    "evidence": "`git show --stat 08a6076`: CLAUDE.md +7 (rule 2 annotation '[annotation, PI-approved 2026-09-05, e2d disposition §6(a)]' and rule 21 '[…§6(b)]'), scripts/e2d_excision_check.py +8/−1 replacing the hardcoded `out[\"excised_source\"] = \"committed D2 scoring (not rescored)\"` with a value derived from `--scores`; 2 files, 14 insertions, 1 deletion; committed Sat Sep 5 02:04:50 2026 -0400."
+   },
+   {
+    "claim": "Header: commit `edf2574` carries the verification record (script + raw)",
+    "verdict": "CONFIRMED",
+    "evidence": "`git show --stat edf2574`: results/raw/2026-09-05_e2d_closure_verify.txt +172, scripts/e2d_closure_verify.py +414; committed Sat Sep 5 03:07:44 2026 -0400. NOTE: both files are MODIFIED in the working tree relative to edf2574 (`git diff --stat`: raw 6 lines, script 9 lines); at edf2574 the raw file ends '124 pass, 1 FAIL' (the pooled-z .21 check fails); the working-tree version ends '125 pass, 0 FAIL' after the failing pair of z checks was replaced by the Fisher-.26 check plus a 'hold record' check."
+   },
+   {
+    "claim": "Header: 'this entry's own commit carries the text'",
+    "verdict": "UNVERIFIABLE",
+    "evidence": "At check time the closure entry is uncommitted: `git status --short` shows ` M RESULTS.md`; `git diff RESULTS.md` has a single hunk `@@ -21,6 +21,310 @@` that adds both the content-class entry (lines 24–117) and the closure entry (lines 118–327). HEAD is 10a0723 (RECON). No commit yet carries the text."
+   },
+   {
+    "claim": "Header: raw record path `results/raw/2026-09-05_e2d_closure_verify.txt` and script `scripts/e2d_closure_verify.py` exist and are the verification",
+    "verdict": "CONFIRMED",
+    "evidence": "Both files exist; script header docstring: 're-verifies, from committed artifacts only … six clause replacements R1-R6'; it reads data/e2d/*_sessions.json, *_scores.json, *_excision_check.json, d2_analysis.json, dose_paired_d2_d3*.json, data/e2a/sessions.jsonl and writes nothing."
+   },
+   {
+    "claim": "Header: stamp 'Sat Sep 5 16:42:55 UTC 2026'",
+    "verdict": "UNVERIFIABLE",
+    "evidence": "`date -u` at check time: Sat Sep 5 16:53:35 UTC 2026 — the stamp is in the past and 2.5 min earlier than the content-class entry above it (16:45:24), consistent with newest-first ordering. Exact value not reproducible."
+   },
+   {
+    "claim": "Header: 'four held figures resolved by six clause-level replacements (design patch of the same date, R1–R6) and one further disposition on R6 (design block of the same date, §1)'",
+    "verdict": "UNVERIFIABLE",
+    "evidence": "Design patch/block not in repo. Consistent with 08a6076 message ('Four do not [reproduce]'), edf2574 message ('resolved the four held figures with six clause replacements (R1-R6)'), and script comment line 303 ('Clause of record (design block 2026-09-05, §1)')."
+   },
+   {
+    "claim": "Header: 'Design-seat authored, PI-ratified 2026-09-05 (PI clock)'",
+    "verdict": "UNVERIFIABLE",
+    "evidence": "No repo artifact records PI ratification; design blocks are not committed."
+   },
+   {
+    "claim": "Provenance: 'The held text was never committed'",
+    "verdict": "CONFIRMED",
+    "evidence": "`grep -n \"record channel does not open\\|two-proportion z p = .21\\|p = .85\" RESULTS.md` returns no held-text hits outside this entry's own tables; closure_valuescheck.json notes the closure sentence 'exists only in HANDOFF-2026-09-04-design.md'; 08a6076/edf2574 messages both say the closure entry is not in those commits."
+   },
+   {
+    "claim": "Provenance: delivered 'in the design disposition headed 2026-09-05 (PI clock 01:53 EDT, 05:53 UTC)'",
+    "verdict": "UNVERIFIABLE",
+    "evidence": "HANDOFF-2026-09-05.md §2: 'delivered in the disposition headed 2026-09-05' (no time). 01:53 EDT = 05:53 UTC is arithmetically correct. Note: the RECON entry (RESULTS.md line 351) gives the SAME time, 'Block authored per PI clock Sat 2026-09-05 01:53 EDT; watermark 842e183', for the recon block."
+   },
+   {
+    "claim": "Provenance: 'Each of the six clauses the patch replaces matched the recovered text exactly once; no other character changed'",
+    "verdict": "UNVERIFIABLE",
+    "evidence": "Held text not in repo. edf2574 commit message asserts 'all six old clauses match it exactly once, and the replacements apply cleanly'."
+   },
+   {
+    "claim": "Provenance: 'Disposition §1 adopted all seven values-check glosses as OVERSTATED' and the seven listed rewrites",
+    "verdict": "CONFIRMED",
+    "evidence": "data/e2d/closure_valuescheck.json gloss_summary = {OVERSTATED: 7, NOT_A_GLOSS: 2, SUPPORTED: 3}; the seven OVERSTATED keys: AUC_R .534 (→ comparator bound to D2), 'dilution excluded', 'quarter of V1', 'degeneracy monotone', 'alternation decay / break rate unmoved', 'flat from 0.20 to 0.30', 'free operant never administered / channel not verifiably open' — one-to-one with the seven rewrites listed."
+   },
+   {
+    "claim": "Provenance: five 'Critic items' (conjunctive gate; entry titled text of record; no disposition to an unwritten document; legibility/degradation sentence; transfer caveat)",
+    "verdict": "CONFIRMED",
+    "evidence": "closure_valuescheck.json critic.unassigned_claims has 13 items; the five map to items [11] 'against a .70 bar' single bar, [4] 'e2d CLOSURE, COMPLETE' header, [9] 'which PROPOSAL-i inherits', [10] 'The dose buys degradation without buying legibility', [13] caveat premise on instrument transfer. Passage lists five of thirteen, not 'all'."
+   },
+   {
+    "claim": "'What changed' table: of-record column for R1–R6 matches the quoted text of record",
+    "verdict": "CONFIRMED",
+    "evidence": "Quoted text contains 'exact binomial p = .878' (R1), 'one-sided sign test p = .061' (R2), 'one-sided sign test p = .41 … one-sided sign test p = .27' (R3), 'Fisher exact two-sided p = .021; one-sided .011 … (two-sided: audit p = .15, read p = .20; both ≥ .10 one-sided)' (R4), 'Δ_first = +0.017 at 0.20 under the primary rule (15/29, valid sessions; 15/30 = 0.000 over all M sessions with a first pick' (R5), 'valid-only e2a .837 / .824', 'Fisher exact two-sided p = 1.00', '(.690 vs .522, Fisher exact two-sided p = .26 — the test of record for count comparisons in this entry)' (R6)."
+   },
+   {
+    "claim": "'What changed' table: held column values (p = .878; sign p = .061; sign p = .41 … p = .27; Fisher p = .021 two-sided … (p ≥ .10); Δ_first = 0.000 at 0.20 (15/30); (1/30, 1/23; p = .85) … (p = .21))",
+    "verdict": "UNVERIFIABLE",
+    "evidence": "Held text not in repo. Consistent with HANDOFF-2026-09-05.md §2 (held '.840/.827', 'p = .85 (1/30 vs 1/23)', 'Δ_first = 0.000 at 0.20 (15/30)', '.021 is two-sided … p ≥ .10 holds under both') and edf2574 message (patched R6 read '.690 vs .522, two-proportion z p = .21')."
+   },
+   {
+    "claim": "'What changed' gloss: 'no figure changed except R5, where the primary DV moves to its own domain'",
+    "verdict": "REFUTED",
+    "evidence": "The table's own R6 row changes two printed figures: held `p = .85` → of record `Fisher exact two-sided p = 1.00` (1/30 vs 1/23: recomputed Fisher 1.0000 vs z-pooled .8477), and held `(p = .21)` → `Fisher exact two-sided p = .26` (20/29 vs 12/23: .2597 vs unpooled-z .2136). R4 also adds figures (.011, .15, .20). Only R5 changes a figure by changing DOMAIN; R6 changes figures by changing TEST."
+   },
+   {
+    "claim": "Verification table R1: Q1 3/32, exact binomial one-sided (greater) vs p0 = .15 = .8782; two-sided .467",
+    "verdict": "CONFIRMED",
+    "evidence": "d2_analysis.json Q1 = {k 3, n 32, p0 0.15, p 0.878193999968172, scope_of_record 'forced (AMENDMENT 2 (ii))'}; recomputed via math.comb: P(X≥3|32,.15) = 0.878194; two-sided (small-p method) = 0.466829."
+   },
+   {
+    "claim": "Verification table R2: Δ+ +.1030, n 27, sd .399, one-sided sign test 18/27 p = .0610, two-sided .122",
+    "verdict": "CONFIRMED",
+    "evidence": "d2_scores.json marker.primary_paired_within_M: delta 0.10296, n_sessions_decidable 27, sd 0.39899; sign_test_M {k_positive 18, n 27, p 0.061039, alternative 'greater'}; recomputed from the 27 per_session diffs: mean 0.10296, sample sd 0.39899, 18 positive, P(X≥18|27,.5) = 0.061039, two-sided 0.122078."
+   },
+   {
+    "claim": "Verification table R3: clean −.0121, n 20, 11/20, p .41 (two-sided .824); all-rounds +.0149, n 24, 14/24, p .27 (two-sided .541); recomputed from per-session diffs",
+    "verdict": "CONFIRMED",
+    "evidence": "dose_paired_d2_d3.json: paired_mean_change −0.012051, n_shared_indices 20, sign_test {11/20, p 0.411901, greater}; recomputed from d2/d3 per_session diffs on the 20 shared indices: mean −0.012051, 11/20, p 0.411901, two-sided 0.823803. dose_paired_d2_d3_allrounds.json: +0.014889, n 24, {14/24, p 0.270628}; recomputed from d2_scores_allrounds.json/d3_scores.json: +0.014889, 14/24, p 0.270628, two-sided 0.541256."
+   },
+   {
+    "claim": "Verification table R4 / Fisher table: counts audit D1 0/40, D2 7/300, D3 11/233; read D1 0/40, D2 34/300, D3 36/233 (M arm, rounds + choices, all sessions incl. excluded)",
+    "verdict": "CONFIRMED",
+    "evidence": "Recomputed from d1/d2/d3_sessions.json (arm M, rounds+choices, degen flag) and d*_read_marks.json via marks.marked_set: audit (0,40),(7,300),(11,233); read (0,40),(34,300),(36,233). Rates audit .0000/.0233/.0472, read .0000/.1133/.1545."
+   },
+   {
+    "claim": "Fisher table: audit .10→.20 1.0000 / .4129; audit .20→.30 .1508 / .1021; read .10→.20 .0213 / .0112; read .20→.30 .1959 / .1029 (two-sided / one-sided)",
+    "verdict": "CONFIRMED",
+    "evidence": "Recomputed with math.comb (two-sided = sum of tables with p ≤ p_obs; one-sided = excess in the higher dose): audit10-20 (1.0000, 0.4129); audit20-30 (0.1508, 0.1021); read10-20 (0.0213, 0.0112); read20-30 (0.1959, 0.1029). All 8 match the raw file."
+   },
+   {
+    "claim": "Fisher paragraph: 'The D3-gate entry's `.011` was the one-sided figure'",
+    "verdict": "REFUTED",
+    "evidence": "`grep -n \"\\.011\\b\" RESULTS.md` → lines 156/226/239/255 (this entry), 731 (unrelated GDN table), 944. Line 944 'read .10→.20 **p = .011**' is inside the 2026-09-04 e2d CLOSURE COMPLETION entry (lines 884–990, commit 1bdf16c), not the D3-gate entry ('e2d D3 — all 24 sessions RAN … FIRED GATE', lines 1148–1258, commit e58dfca), whose only .011-family figure is '.0117 — fires' (line 1177, an exact binomial for the steered arm 7/122, not a Fisher step). The DISPOSITION-2 gate-adjudication entry (1088–1147) contains no .011 either. The .011 IS one-sided (.0112), but its source entry is mislabelled (same mislabel in HANDOFF-2026-09-05.md §2 item 4)."
+   },
+   {
+    "claim": "Fisher paragraph: 'the disposition's `.021` is two-sided; \"p ≥ .10\" for the three unresolved steps holds under both'",
+    "verdict": "CONFIRMED",
+    "evidence": "read .10→.20 two-sided .0213; the other three steps: two-sided 1.0000/.1508/.1959, one-sided .4129/.1021/.1029 — all ≥ .10."
+   },
+   {
+    "claim": "Verification table R5: 15/29 = +.017 valid; 15/30 = .000 all-with-a-pick; 14/23 on both domains; one-sided exact binomial p = .202; breaks 1/30, 1/23; valid-only would be 1/29, 1/23",
+    "verdict": "CONFIRMED",
+    "evidence": "Recomputed from d2/d3_sessions.json: D2 valid M with a pick 15/29 → Δ +0.0172; all M with a pick 15/30 → 0.0; D3 14/23 both domains → +0.1087; P(X≥14|23,.5) = 0.202436. habit.secondaries: D2 breaks all-sessions 1/30, valid-only 1/29, artifact 1/30; D3 1/23 on all/valid/artifact."
+   },
+   {
+    "claim": "Verification table R5: d2_sessions.json `exclusion_scope: \"e2a\"`, 3 M excluded: idx 24 audit@forced3, idx 30 lexical:plaza@free0, idx 31 lexical:ridge@forced0; only idx 30 has a first pick",
+    "verdict": "CONFIRMED",
+    "evidence": "d2_sessions.json exclusion_scope = 'e2a'; exclusions.M.excluded_run_scope = 3; excluded M sessions: 24 'audit:junk:(?im)^\\s*={2,}[^\\n]*={2,}\\s*$@forced3' (0 choices), 30 'lexical:plaza@free0' (1 choice, first_free_pick_pos False), 31 'lexical:ridge@forced0' (0 choices). 'audit@forced3' is an abbreviation of the full audit:junk regex reason."
+   },
+   {
+    "claim": "Verification table R5: `habit.secondaries` over all sessions; D3 artifact names the rule-23 domain",
+    "verdict": "CONFIRMED",
+    "evidence": "d3_scores.json habit.secondaries_domain = 'all sessions including excluded (rule 23)'; d2_scores.json has no secondaries_domain string (None) but its 1/30 reproduces only on the all-sessions domain (valid-only 1/29)."
+   },
+   {
+    "claim": "Verification table R6: e2a all sessions 157/187 (.840) pooled, 86/104 (.827) reward; valid-only 154/184 (.837), 84/102 (.824)",
+    "verdict": "CONFIRMED",
+    "evidence": "Recomputed from data/e2a/sessions.jsonl (200 rows, 16 excluded) via habit.secondaries over arms random1/random2/reward/sham: all 157/187 = .8396, reward 86/104 = .8269; valid 154/184 = .8370, reward 84/102 = .8235."
+   },
+   {
+    "claim": "Verification table R6: D2 20/29 (.690), D3 12/23 (.522) on both domains; 1/30 vs 1/23 Fisher two-sided 1.0000; 20/29 vs 12/23 Fisher two-sided .2597",
+    "verdict": "CONFIRMED",
+    "evidence": "habit.secondaries M arm: D2 .68966 (n_alt 29) on all-sessions, valid-only and artifact; D3 .52174 (23) all three. Fisher(1/30 vs 1/23) two-sided 1.0000, one-sided .6843. Fisher(20/29 vs 12/23) two-sided .2597, one-sided .1713."
+   },
+   {
+    "claim": "Second hold: patch's R6 '.21' reproduces under the unpooled form only (z = 1.244, p = .2136); pooled form z = 1.236, p = .2164 prints .22",
+    "verdict": "CONFIRMED",
+    "evidence": "Recomputed two-proportion z for 20/29 vs 12/23: pooled z = 1.2361, p = .2164; unpooled z = 1.2437, p = .2136. edf2574 message states the same and that the patched R6 read 'two-proportion z p = .21'."
+   },
+   {
+    "claim": "Second hold: pooled form is 'the one Code used to pin the neighbouring \".85\"'",
+    "verdict": "CONFIRMED",
+    "evidence": "Script line 290–292 uses zb['p_pooled'] labelled \"the '.85' the held text carried\" = .8477. Note: the unpooled form for 1/30 vs 1/23 gives p = .8501, which also prints .85, so the '.85' itself does not discriminate the variants; the claim about which form Code used is what the script records."
+   },
+   {
+    "claim": "Second hold: 'Reported, not reworded (`edf2574`)'",
+    "verdict": "CONFIRMED",
+    "evidence": "edf2574 message: 'Per the patch's own rule -- if any fails, STOP and report, do not reword -- the closure entry waits on Design'; its raw file records the pooled check as FAIL (124 pass, 1 FAIL)."
+   },
+   {
+    "claim": "Second hold: Fisher .26 is 'the entry's own declared test for count comparisons'; 'under every variant the step is unresolved'",
+    "verdict": "CONFIRMED",
+    "evidence": "Quoted text: 'Fisher exact two-sided p = .26 — the test of record for count comparisons in this entry'; min over variants = .2136 > .05."
+   },
+   {
+    "claim": "Second hold: 'folded into slip (14)'s class as a fifth unnamed test'",
+    "verdict": "UNVERIFIABLE",
+    "evidence": "Design ledger statement; only appears in this entry (grep 'Slip (14)' → lines 268/308). Consistent with the ledger paragraph's 'one item, four instances … a fifth instance folded in'."
+   },
+   {
+    "claim": "Four-figure report is 'from the `08a6076` hold'",
+    "verdict": "CONFIRMED",
+    "evidence": "08a6076 message: 'I re-verified all 80. 77 reproduce exactly. Four do not … three are correct under a domain or test the text does not name, and the fourth carries a label that belongs to a different domain'; HANDOFF-2026-09-05.md §2 lists the same four."
+   },
+   {
+    "claim": "Four-figure report (1–2): .840/.827 correct on all sessions (157/187, 86/104; valid-only .8370/.8235), the domain of D2 .690 and D3 .522 (`habit.secondaries`, rule 23)",
+    "verdict": "CONFIRMED",
+    "evidence": "See R6 recomputation; d3_scores.json secondaries_domain = 'all sessions including excluded (rule 23)'."
+   },
+   {
+    "claim": "Four-figure report (3): 'p = .85' for 1/30 vs 1/23 was a two-proportion z (z = .192, p = .8477); two-sided Fisher 1.0000",
+    "verdict": "CONFIRMED",
+    "evidence": "Recomputed pooled z = −0.1921 (|z| = .192), p = .8477; Fisher two-sided 1.0000."
+   },
+   {
+    "claim": "Four-figure report (4): 15/30 counted excluded idx 30; primary rule gives 15/29 = +.0172",
+    "verdict": "CONFIRMED",
+    "evidence": "Recomputed: excluded-with-a-pick = [(30, 'lexical:plaza@free0')]; 15/29 − .5 = +0.017241."
+   },
+   {
+    "claim": "'Everything else': 125 checks in all, all pass",
+    "verdict": "CONFIRMED",
+    "evidence": "Working-tree results/raw/2026-09-05_e2d_closure_verify.txt: `grep -c '^  PASS'` = 125, `grep -c '^  FAIL'` = 0, footer '125 pass, 0 FAIL'. CAVEAT: this is the uncommitted working-tree run; the committed version at edf2574 reads '124 pass, 1 FAIL' — the passage's 125/0 is not what the cited commit carries."
+   },
+   {
+    "claim": "'Everything else': readability conjuncts .574/.524 and .613/.526; comparator .534; none at 0.30",
+    "verdict": "CONFIRMED",
+    "evidence": "d2_scores.json readability.v2_and_read_clean.k2 median 0.57440, p10 0.52352; d3 0.61290 / 0.52582; d2 readability.AUC_R.median 0.53403; 'AUC_R' absent from d3_scores.json readability."
+   },
+   {
+    "claim": "'Everything else': four marker cells and the bar (0.20 excised +.103 / in situ +.127; 0.30 excised +.141 / in situ +.062; bar .158)",
+    "verdict": "CONFIRMED",
+    "evidence": "d2_scores primary_paired_within_M.delta 0.10296; d3 0.14112; d2_excision_check in_situ.M.paired_delta 0.12704; d3 0.06190; bar_half_G 0.15778; all four < bar. Ratio at 0.30 = 2.28 ('2.3×'); gap 0.20 = −.0241, 0.30 = +.0792 (flips)."
+   },
+   {
+    "claim": "'Everything else': 2·|Δ_R| = .138; five estimators span −.070 to +.103",
+    "verdict": "CONFIRMED",
+    "evidence": "d2_scores paired_within_R.delta 0.06919 → 2|Δ_R| = 0.13838; d2_analysis Q3 estimators [0.10296, −0.00843, −0.06951, −0.03458, 0.04316] → min −.0695, max +.1030, five values."
+   },
+   {
+    "claim": "'Everything else': paired CI (±.144)",
+    "verdict": "CONFIRMED",
+    "evidence": "dose_paired_d2_d3.json paired_sd 0.329581 (matches sample sd of the 20 diffs); 1.96 × 0.329581 / √20 = 0.14444."
+   },
+   {
+    "claim": "'Everything else': composition decomposition 62% idx 12 / 38% roster truncation by the values-check's sequential decomposition A → B → C",
+    "verdict": "CONFIRMED",
+    "evidence": "D2-only decidable indices [12, 24, 25, 26, 27, 28, 30]; D3 roster max 23 → idx 12 is the only D2-only index inside the roster, 6 never run. A (D2 mean on 20 shared) = .15317, B (+idx 12) = .12197, C (all 27) = .10296 → |B−A|/|C−A| = .6213, |C−B|/|C−A| = .3787. closure_valuescheck.json carries '(62%); roster truncation (6 sessions) = -0.019010 (38%)'."
+   },
+   {
+    "claim": "'Everything else': degeneracy on both bases — 24 shared indices audit .025 → .047, read .133 → .155",
+    "verdict": "CONFIRMED",
+    "evidence": "Shared M indices = 24; D2 shared audit 6/240 = .0250, read 32/240 = .1333; D3 audit 11/233 = .0472, read 36/233 = .1545."
+   },
+   {
+    "claim": "'Everything else': s12 0/10 → 7/10; idx 1 and 5 at 10/10 both doses, carrying 58% (40/68 = 58.8%)",
+    "verdict": "CONFIRMED",
+    "evidence": "Read marks: s12 D2 (0,10), D3 (7,10); s1 D2 (10,10), D3 (10,10); s5 D2 (10,10), D3 (10,10); marks on shared 24 across both doses total 68, idx 1+5 = 40 → .5882."
+   },
+   {
+    "claim": "'Everything else': axis non-specificity R .045 vs M .023, S 0/151",
+    "verdict": "CONFIRMED",
+    "evidence": "D2 rounds+choices degen: M 7/300 = .0233, R 7/156 = .0449, S 0/151 = .0000."
+   },
+   {
+    "claim": "'Everything else': 537 / 42 / 357 / 138 choices over 96 sessions, every read at KL = 0",
+    "verdict": "CONFIRMED",
+    "evidence": "Choices D1 42, D2 357, D3 138 (sum 537); sessions 8 + 64 + 24 = 96; acceptance.kl_all_exact True and kl_exactly_zero = 42/357/138 in each sessions.json."
+   },
+   {
+    "claim": "'Everything else': cost ratio 2.57 / 0.54 (4.72×)",
+    "verdict": "CONFIRMED",
+    "evidence": "d3_excision_check in_situ_seconds/n_in_situ_forwards = 2.5669 s; d3_scores marker seconds/n_probe_forwards = 0.5444 s; ratio 4.715 → 4.72×. (D2: 2.557/0.544 = 4.70×.)"
+   },
+   {
+    "claim": "'Everything else': the .958 self-score with refit false; the 0.10 anchor (n = 4 M sessions)",
+    "verdict": "CONFIRMED",
+    "evidence": "d2_scores readability.stored_classifier.self_score = {auc 0.95798, n 257, n_pos 124, refit False}; d1_sessions.json M sessions = 4, readability.k2_resampled.median 0.5833."
+   },
+   {
+    "claim": "Beside-note (i): D3 scoring entry says 'the marker delta does not move' and 'survive exclusion and cleaning'",
+    "verdict": "CONFIRMED",
+    "evidence": "RESULTS.md lines 1016–1017 (2026-09-03 D3 SCORING entry): 'survive exclusion and cleaning at each dose (D2 n = 27, D3 n = 20, 20 shared). Paired on the same content, the marker delta does not move'."
+   },
+   {
+    "claim": "Beside-note (i): the D3 scoring entry's degeneracy table is on D2's full 32 where release condition 4 wants the paired 24",
+    "verdict": "CONFIRMED",
+    "evidence": "RESULTS.md lines 1061–1063: 'M arm, all rounds: audit-degenerate .0000 → .0233 → .0472; read-marked .0000 → .1133 → .1545' — .0233 = 7/300 over all 32 M sessions; the paired-24 basis gives .025/.133 (6/240, 32/240)."
+   },
+   {
+    "claim": "Beside-note (i): mechanism sentence 'is 62% right'",
+    "verdict": "UNVERIFIABLE",
+    "evidence": "Design gloss; numerically anchored to the 62% share of the composition artifact attributable to differential decidability (idx 12), which reproduces (.6213)."
+   },
+   {
+    "claim": "Beside-note (ii): `data/e2d/d3_excision_check.json` top-level `excised_source` reads 'committed D2 scoring'",
+    "verdict": "REFUTED",
+    "evidence": "Actual string is 'committed D2 scoring (not rescored)' — the passage quotes a truncation. Substance (says D2 for a D3 run) holds."
+   },
+   {
+    "claim": "Beside-note (ii): a hardcoded string, fixed in the script at 08a6076; committed artifact untouched; nested `_source` always correct",
+    "verdict": "CONFIRMED",
+    "evidence": "08a6076 diff replaces the literal with f'committed scoring from {relpath(args.scores)} (not rescored)'; 08a6076 touches only CLAUDE.md and the script; d3_excision_check.json still reads the D2 string; nested excised/M/_source = 'data/e2d/d3_scores.json'."
+   },
+   {
+    "claim": "Beside-note (iii): `HANDOFF-2026-09-04-design.md` §1 and §7 quote the held text; untracked",
+    "verdict": "REFUTED",
+    "evidence": "Untracked: yes (`git status` → `?? HANDOFF-2026-09-04-design.md`). But §1 quotes the EARLIER closure 'Sentence of record' (the pre-disposition text with 'a quarter of its short-context value … (dilution excluded) … which PROPOSAL-i inherits' — the text the values-check graded), not the 2026-09-05 disposition text the six clauses R1–R6 were applied to (that text was 'never committed' and is elsewhere); §7 contains no quotation at all, only a paraphrase ('a record channel too narrow to carry the state to the choice at any dose the apparatus can deliver'). 'Superseded by the text above' is true of both."
+   },
+   {
+    "claim": "Ledger: Slip (12) — seven overstated glosses caught pre-commit by the values-check",
+    "verdict": "CONFIRMED",
+    "evidence": "closure_valuescheck.json OVERSTATED = 7; 1bdf16c message 'Closure text HELD -- 7 of 12 glosses overstated'. The slip number (12) itself appears only in this entry (grep 'Slip (12)' → line 303 only)."
+   },
+   {
+    "claim": "Ledger: Slip (13) — design block headers carried UTC dates, one day fast from `a9e6a74` on; Code's half stands in the record-hygiene entry",
+    "verdict": "CONFIRMED",
+    "evidence": "RESULTS.md 2026-09-03 RECORD HYGIENE entry (lines 799–882): 'one day from `a9e6a74` onward', headers `DESIGN → CODE (via Jason) — <date> (UTC)`, 'The break is at a9e6a74', and Code's half ('I did not consult date -u even once', 'resolving it toward the header'). Slip number (13) appears only in this entry."
+   },
+   {
+    "claim": "Ledger: Slip (14) — one item, four instances, caught by Code's 80-figure re-verification; a fifth folded in",
+    "verdict": "CONFIRMED",
+    "evidence": "08a6076 message 'I re-verified all 80. 77 reproduce exactly. Four do not'; HANDOFF-2026-09-05.md §2 'I verified all 80: 77 reproduce, 4 do not'; edf2574 adds the z-variance instance."
+   },
+   {
+    "claim": "Ledger: 'Design count: fourteen'",
+    "verdict": "CONFIRMED",
+    "evidence": "HANDOFF-2026-09-04-design.md §2: 'design seat now ELEVEN' (slips 8–11); + (12), (13), (14) = 14. Arithmetic only; no independent ledger tally in the repo."
+   },
+   {
+    "claim": "Rule annotations: rule 2 and rule 21 annotated at 08a6076, verbatim from the disposition-2 entry item 6, as annotations not rewrites",
+    "verdict": "CONFIRMED",
+    "evidence": "RESULTS.md lines 1139–1143 (DISPOSITION-2 item 6): '(a) rule 2 — a first-token kernel gate licenses first-token reads, not generation; T-step identity is its own gate.' '(b) rule 21 — degeneracy bars at dose-characterization rungs bind on an unprovoked domain; where none exists by design, the bar is a pause-and-adjudicate trigger, declared as such.' CLAUDE.md (08a6076 diff) carries the same wording as italic bracketed annotations, differing only by initial capital and the '[annotation, PI-approved 2026-09-05, e2d disposition §6(a)/(b)]' tags; the original rule text is unchanged."
+   },
+   {
+    "claim": "'What this entry does not do': Q2 and Q3 failed, run-dose rule STOP, SCOPED, verdict tier never ran; judge-port acceptance run built never run; content-class candidate not adopted",
+    "verdict": "CONFIRMED",
+    "evidence": "d2_analysis.json run_dose_rule.decision = 'STOP, SCOPED', Q2.passes False, Q3.passes False; HANDOFF-2026-09-05.md §7 'judge (guarded AB port, built, never run)' and 'Owed but unrun: the judge port acceptance run'; data/e2d/contentclass_screen.json line 4 '\"adopted\": false' (contentclass_candidate.json has no adopted key)."
+   },
+   {
+    "claim": "Header/verification: 'every figure re-verified from the committed artifacts'",
+    "verdict": "CONFIRMED",
+    "evidence": "Script reads only data/e2d/*.json and data/e2a/sessions.jsonl (all committed; `git status` shows none modified); my independent recomputation with math.comb/erf and habit.secondaries/marks.marked_set reproduced every figure in the six-clause table, the Fisher table, the second-hold paragraph, the four-figure report and the 'everything else' bullet."
+   }
+  ],
+  "closure-text": [
+   {
+    "claim": "scripts/e2d_closure_verify.py reproduces results/raw/2026-09-05_e2d_closure_verify.txt (125 checks, all pass)",
+    "verdict": "CONFIRMED",
+    "evidence": "PYTHONPATH=. jlens-qwen36/.venv/bin/python scripts/e2d_closure_verify.py > scratch; diff against results/raw/2026-09-05_e2d_closure_verify.txt -> IDENTICAL; last line '125 pass, 0 FAIL'. Note: several chk tolerances are loose (58% at ±.01, ±.15 at ±.015), so the items below were recomputed independently."
+   },
+   {
+    "claim": "at f = 0.20, D2 returned STOP, SCOPED on Q2 and Q3",
+    "verdict": "CONFIRMED",
+    "evidence": "data/e2d/d2_analysis.json: frac 0.2; run_dose_rule.decision = 'STOP, SCOPED'; failing = ['Q2','Q3']; Q2.passes False; Q3.passes False."
+   },
+   {
+    "claim": "adopted by PI disposition before D3 existed",
+    "verdict": "CONFIRMED",
+    "evidence": "git log: 520f62c 2026-09-02 01:59:27 -0400 'e2d DISPOSITION adopted + ADDENDUM-j1 (PROPOSAL-j v1.3)'; D3 data commit e58dfca 2026-09-02 08:26:32 -0400 (d3_sessions.json generation_s 8528 -> run began >= ~06:00 -0400); PROPOSAL-j-dose-escalation.md l.451 ADDENDUM-j1 'post-stop, pre-D3-data'."
+   },
+   {
+    "claim": "the verdict-tier free operant under LOCK-j never ran",
+    "verdict": "CONFIRMED",
+    "evidence": "ls LOCK-j.md -> No such file (only LOCK-g.md, LOCK-h.md); RESULTS.md l.1268 disposition item 1 'the verdict tier and LOCK-j do not run'; data/e2d holds only d1/d2/d3 session files."
+   },
+   {
+    "claim": "Q1 passed at 3/32, exact binomial p = .878 (forced scope)",
+    "verdict": "CONFIRMED",
+    "evidence": "d2_analysis.json Q1: k 3, n 32, p0 .15, passes True, scope_of_record 'forced (AMENDMENT 2 (ii))', p .878194; independent P(X>=3|32,.15) via math.comb = .878194."
+   },
+   {
+    "claim": "registered readability gate (median >= .70 AND 10th percentile >= .60)",
+    "verdict": "CONFIRMED",
+    "evidence": "d2_analysis.json Q2 median_bar 0.7, p10_bar 0.6; PROPOSAL-j-dose-escalation.md l.229/l.334 'median >= .70; 10th percentile >= .60'."
+   },
+   {
+    "claim": ".574 / .524 at 0.20",
+    "verdict": "CONFIRMED",
+    "evidence": "d2_scores.json readability.v2_and_read_clean.k2: median .5743976, p10 .5235189 (k=2, b=20)."
+   },
+   {
+    "claim": ".613 / .526 at 0.30 (k = 2, criterion set)",
+    "verdict": "CONFIRMED",
+    "evidence": "d3_scores.json readability.v2_and_read_clean.k2: median .6129036, p10 .5258186, k 2; criterion set = 'v2-clean AND read-clean (AMENDMENT 2 (iii))' per d2_analysis Q2.clean_set_of_record; both conjuncts fail at both doses."
+   },
+   {
+    "claim": "0.20 displacement comparator at .534 (none at 0.30 — D3 ran M-only under ADDENDUM-j1)",
+    "verdict": "CONFIRMED",
+    "evidence": "d2_scores.json readability.AUC_R.median .5340278; 'AUC_R' not in d3_scores.json readability keys; d3_sessions.json arms Counter({'M': 24}); PROPOSAL-j l.449-452 ADDENDUM-j1 'M-arm only, n = 24, f = 0.30' (ADDENDUM-j1 lives inside PROPOSAL-j, no standalone file)."
+   },
+   {
+    "claim": "marker imprint below the 0.158 bar in every cell and both contexts (0.20: excised +.103, in situ +.127; 0.30: excised +.141, in situ +.062)",
+    "verdict": "CONFIRMED",
+    "evidence": "bar_half_G .1577752 (d2_scores, d3_scores); d2_scores marker.primary_paired_within_M.delta .1029634; d2_excision_check in_situ.M.paired_delta .1270449; d3_scores .1411159; d3_excision_check in_situ.M.paired_delta .0619019; all four < .1578."
+   },
+   {
+    "claim": "primary within-M paired Δ+ = +.103 (n = 27, sd .40, one-sided sign test p = .061)",
+    "verdict": "CONFIRMED",
+    "evidence": "d2_scores primary_paired_within_M: n_sessions_decidable 27, sd .3989939; recomputed from per_session diffs: mean .1029634, sample sd .3989939, sign test 18/27 positive, P(X>=18|27,.5) = .0610391."
+   },
+   {
+    "claim": "also failed 2·|Δ_R| = .138",
+    "verdict": "CONFIRMED",
+    "evidence": "d2_scores marker.paired_within_R.delta .0691900 -> 2|Δ_R| = .1383800; .1030 < .1384; d2_analysis Q3.beats_2x_random False."
+   },
+   {
+    "claim": "five pre-declared estimators span −.070 to +.103, all below bar",
+    "verdict": "CONFIRMED",
+    "evidence": "d2_analysis Q3: delta_plus .1029634, beside_pooled_within_M −.0084344, beside_across_arm_vs_S −.0695069, beside_v2clean_only −.0345795, beside_task_matched_M.delta .0431572; min −.0695 -> −.070, max .103, all < .1578. Pre-declared: AMENDMENT 2 (iv) names paired within-M, across-arm vs S, task-matched; git log -S shows all four beside_* keys entered scripts/e2d_d2_analyze.py at 77e0fe6 (2026-09-01 08:00 -0400) before the D2 data commit cd86e49 (22:17 -0400)."
+   },
+   {
+    "claim": "The two contexts differ in magnitude (2.3× at 0.30) and the gap flips direction across dose",
+    "verdict": "CONFIRMED",
+    "evidence": ".1411159/.0619019 = 2.2797 -> 2.3×; excised − in situ: 0.20 = −.0241, 0.30 = +.0792 (sign flips)."
+   },
+   {
+    "claim": "clean −.0121, n = 20, one-sided sign test p = .41",
+    "verdict": "CONFIRMED",
+    "evidence": "dose_paired_d2_d3.json paired_mean_change −.0120510, n_shared_indices 20, sign_test 11/20 alternative 'greater' p .4119015; recomputed from d2/d3 per_session diffs on shared indices [0,2,3,4,6,7,8,9,10,11,13,14,15,16,17,18,20,21,22,23]: −.0120510, 11/20, .4119."
+   },
+   {
+    "claim": "all-rounds +.0149, n = 24, one-sided sign test p = .27 — opposite signs, neither resolved, not averaged",
+    "verdict": "CONFIRMED",
+    "evidence": "dose_paired_d2_d3_allrounds.json paired_mean_change .0148893, n_shared 24, sign_test 14/24 'greater' p .2706281, same_sign_as_clean false."
+   },
+   {
+    "claim": "the paired CI, ±.15",
+    "verdict": "REFUTED",
+    "evidence": "1.96·paired_sd/√n = 1.96·.3295808/√20 = ±.1444 (rounds to ±.14; the entry's own verification table prints '±.144'). Only a t(19) form (2.093) gives ±.1542 -> ±.15; the text names no form."
+   },
+   {
+    "claim": "the paired CI spans the bar in both directions",
+    "verdict": "REFUTED",
+    "evidence": "CI half-width (.144 z / .154 t) < bar .1578. Centred on −.0121: z-CI [−.1565, +.1324]; t-CI [−.1663, +.1422]. A +.158 change lies outside under both forms; −.158 lies outside under z (−.1565 > −.1578) and inside only under t. Strictly the CI does not span the bar in both directions."
+   },
+   {
+    "claim": "apparent unpaired rise (+.038 clean, +.068 all-rounds)",
+    "verdict": "CONFIRMED",
+    "evidence": "dose_paired_d2_d3.json unpaired_difference_of_means .0381525 (recomputed mean(d3 diffs) − mean(d2 diffs) = .0381525); allrounds file .0679281."
+   },
+   {
+    "claim": "62% one session decidable at 0.20 only (idx 12) and 38% roster truncation",
+    "verdict": "CONFIRMED",
+    "evidence": "Sequential decomposition A (D2 mean on 20 shared) .1531669 -> B (+idx 12) .1219739 -> C (all 27) .1029634: |B−A|/|C−A| = .6213, |C−B|/|C−A| = .3787. D2-only decidable indices [12,24,25,26,27,28,30]; D3 roster max 23, so idx 12 is the only D2-only index inside D3's roster; 6 never run. CAVEAT: order-dependent — truncation-first gives 54% / 46% (B' = mean over shared + never-run = .1029… ; computed .5366/.4634)."
+   },
+   {
+    "claim": "D3 ran 24 M sessions to D2's 32",
+    "verdict": "CONFIRMED",
+    "evidence": "d3_sessions.json 24 sessions all M; d2_sessions.json 32 M (+16 R, +16 S)."
+   },
+   {
+    "claim": "audit .000 / .023 / .047",
+    "verdict": "CONFIRMED",
+    "evidence": "M arm rounds+choices, all sessions incl. excluded, r['degen']: D1 0/40 = .0000; D2 7/300 = .02333; D3 11/233 = .04721."
+   },
+   {
+    "claim": "read-marked .000 / .113 / .155",
+    "verdict": "CONFIRMED",
+    "evidence": "marks joined on arm|session|phase: D1 0/40 (d1_read_marks 6 marks, all S); D2 34/300 = .11333 (39 marks: 34 M + 5 S); D3 36/233 = .15451 (36 marks, all M)."
+   },
+   {
+    "claim": "on the 24 shared indices audit .025 → .047, read .133 → .155",
+    "verdict": "CONFIRMED",
+    "evidence": "shared indices 0–23 (24); D2 audit 6/240 = .0250, read 32/240 = .1333; D3 audit 11/233 = .0472, read 36/233 = .1545."
+   },
+   {
+    "claim": "single resolved step (read .10→.20, Fisher exact two-sided p = .021; one-sided .011)",
+    "verdict": "CONFIRMED",
+    "evidence": "Fisher 34/300 vs 0/40: two-sided .021273, one-sided .011195. Other steps: audit .10→.20 two-sided 1.0000 (one-sided .4129); audit .20→.30 .1508; read .20→.30 .1959 — only one step < .05."
+   },
+   {
+    "claim": "one-sided .011 — the D3-gate entry's figure",
+    "verdict": "UNVERIFIABLE",
+    "evidence": "grep '\\.011[^0-9]' RESULTS.md: the read .10→.20 p = .011 appears only at l.944, inside the 2026-09-04 'e2d CLOSURE COMPLETION — item 1 DELIVERED' entry (values-check item 4), not in the D3 GATE ADJUDICATION entry (l.1088) or the D3 RAN entry (l.1148), which carry only '.0117' (steered-arm binomial). HANDOFF-2026-09-05.md l.79 (untracked) repeats the 'D3-gate entry' attribution. Attribution doubtful; value itself confirmed."
+   },
+   {
+    "claim": "neither .20→.30 step resolved (two-sided: audit p = .15, read p = .20; both ≥ .10 one-sided)",
+    "verdict": "CONFIRMED",
+    "evidence": "audit 11/233 vs 7/300: two-sided .150803, one-sided .102148; read 36/233 vs 34/300: two-sided .195931, one-sided .102933 (both one-sided >= .10, narrowly)."
+   },
+   {
+    "claim": ".20→.30 read rise carried by one index (s12: 0/10 → 7/10)",
+    "verdict": "CONFIRMED",
+    "evidence": "M|12 marks: D2 0/10, D3 7/10 (d3_scores marks_per_marked_session 'M|12': 7; absent in d2). Per-index changes on shared: s3 +1, s12 +7, s18 −1, s19 −4, s21 +1 -> net +4 (32→36)."
+   },
+   {
+    "claim": "indices 1 and 5 sit at 10/10 at both doses",
+    "verdict": "CONFIRMED",
+    "evidence": "d2_scores and d3_scores marks_per_marked_session 'M|1': 10, 'M|5': 10; recomputed 10/10 rounds+choices marked for s1 and s5 at both doses."
+   },
+   {
+    "claim": "and carry 58% of the marks",
+    "verdict": "REFUTED",
+    "evidence": "On the 24 shared indices: (10+10)+(10+10) = 40 of 32+36 = 68 marks = 58.82%, which rounds to 59%; on all M marks D2+D3 it is 40/70 = 57.1%. 58% is a truncation of 58.8%."
+   },
+   {
+    "claim": "D2's random arm degrades at .045 at 0.20, twice M's .023 at the same dose",
+    "verdict": "CONFIRMED",
+    "evidence": "R arm rounds+choices degen 7/156 = .04487; M 7/300 = .02333; ratio 1.92; S 0/151 = .000 (d2_analysis audit_rates_by_round_class: random forced 0/32 free 4/47, sham(R) 0/32, 3/45)."
+   },
+   {
+    "claim": "free operant administered 537 times across D1–D3 (42 / 357 / 138 choices over 96 sessions)",
+    "verdict": "CONFIRMED",
+    "evidence": "sum(len(choices)) d1 42, d2 357, d3 138 = 537; sessions 8 + 64 + 24 = 96."
+   },
+   {
+    "claim": "every read insulated at KL = 0",
+    "verdict": "CONFIRMED",
+    "evidence": "acceptance blocks: d1 kl_reads_logged 42, kl_exactly_zero 42, kl_max 0.0; d2 357/357, 0.0; d3 138/138, 0.0; kl_all_exact true in all three (d3 acceptance PASS is false on a fired degeneracy bar, not on KL)."
+   },
+   {
+    "claim": "Δ_first = +0.017 at 0.20 under the primary rule (15/29, valid sessions; 15/30 = 0.000 over all M sessions with a first pick, the domain that includes excluded idx 30)",
+    "verdict": "CONFIRMED",
+    "evidence": "d2_sessions.json M arm: sessions with a first pick 30 (idx 24 and 31 excluded with no choices); valid & with pick 29; first_free_pick_pos true in 15 -> 15/29 = .5172 (+.0172), 15/30 = .5000 (0.000); excluded-with-pick = [(30,'lexical:plaza@free0')]; exclusion_scope 'e2a'; first_free_pick_pos consistent with choices[0].picked_pole in every session."
+   },
+   {
+    "claim": "+0.109 at 0.30 (14/23, where the two domains coincide; one-sided exact binomial p = .202)",
+    "verdict": "CONFIRMED",
+    "evidence": "d3_sessions.json: valid-with-pick 14/23, all-with-pick 14/23 (excluded s17 has no choices) -> +.10870; P(X>=14|23,.5) = .202436."
+   },
+   {
+    "claim": "first-pick habit-break rates of 1/30 and 1/23 (all sessions including excluded — the rule-23 secondaries domain)",
+    "verdict": "CONFIRMED",
+    "evidence": "recomputed first pick == last forced pole: D2 all M 1/30 (valid-only 1/29); D3 1/23 both domains; d3_scores habit.secondaries_domain 'all sessions including excluded (rule 23)'; d2_scores carries no domain string but its 1/30 matches the all-sessions count."
+   },
+   {
+    "claim": "Nothing above 0.30 was run",
+    "verdict": "CONFIRMED",
+    "evidence": "ls data/e2d: only d1 (frac .1), d2 (.2), d3 (.3) session/score files; no higher-dose artifact."
+   },
+   {
+    "claim": "The D2 failure was legibility with coherence intact — not a coherence limit (slip 10)",
+    "verdict": "CONFIRMED",
+    "evidence": "HANDOFF-2026-09-04-design.md §2: '(10) the pre-written stop sentence encoded a predicted failure mode (\"with coherence\") ... the actual failure was Q2/Q3 with coherence intact'. Caveat: that file is untracked (git status ??); RESULTS.md records slips (11)–(14) by number but never (10); PROPOSAL-j l.376 lists only (8) and (9)."
+   },
+   {
+    "claim": "V1's L48/0.20 cell (+.408) is a state-live read at the probe and a B2a dose-finding cell excluded from verdicts by V1's own pre-registration",
+    "verdict": "CONFIRMED",
+    "evidence": "archive/RESULTS-cycles3-4.md l.1215 'B2a grid: L48/0.2 Δ+ .408/Δ− −.785'; l.1498-1512 B2a dose-finding grid and 'Evaluated on B2b only; B2a numbers never enter the verdict'; RESULTS.md l.937-939 'V1's +0.408 is a state-live read at the probe'."
+   },
+   {
+    "claim": "Instrument transfer is unmeasured (the .958 is a self-score on the fit set, refit false)",
+    "verdict": "CONFIRMED",
+    "evidence": "d2_scores.json readability.stored_classifier.self_score {auc .9579796, n 257, n_pos 124, refit False}; n_fit 257 = 124 + 133 clean pos/neg; d2_analysis descriptive.transfer identical."
+   },
+   {
+    "claim": "The 0.10 anchor (n = 4 M sessions, pooled estimator) carries no marker value",
+    "verdict": "REFUTED",
+    "evidence": "d1_sessions.json: 4 M sessions (CONFIRMED); but marker.deltas.clean.delta_plus_within_M.delta = −0.2393743 exists (pooled over n_steered 20 / n_unsteered 20 generations, 12 probes). RESULTS.md l.1027 records it as '−0.2394 ... a different statistic and not comparable'. The artifact carries a marker value; 'no marker value' overstates 'no comparable/paired value'."
+   },
+   {
+    "claim": "is the left end of the readability and degeneracy series only",
+    "verdict": "CONFIRMED",
+    "evidence": "d1_sessions.json readability.k2_resampled median .5833, p10 .4935; degeneracy 0/40 audit, 0/40 read-marked."
+   },
+   {
+    "claim": "D3's readability lacks D2's task-disjointness guarantee",
+    "verdict": "CONFIRMED",
+    "evidence": "d3_sessions.json task_id_coverage: pos 16 / neg 15, meets_floor false, below_d2_floor true; RESULTS.md l.1247-1249."
+   },
+   {
+    "claim": "alternation decay e2a .840 (pooled; reward arm .827)",
+    "verdict": "CONFIRMED",
+    "evidence": "data/e2a/sessions.jsonl (200 rows, 16 excluded): strictly alternating across choices, all sessions 157/187 = .83957; reward arm 86/104 = .82692 (independent recompute, no valence_core)."
+   },
+   {
+    "claim": "→ D2 M .690 → D3 M .522",
+    "verdict": "CONFIRMED",
+    "evidence": "D2 M 20/29 = .68966; D3 M 12/23 = .52174; identical on all-sessions and valid-only domains."
+   },
+   {
+    "claim": "valid-only e2a .837 / .824",
+    "verdict": "CONFIRMED",
+    "evidence": "e2a excluded==false: 154/184 = .83696; reward 84/102 = .82353."
+   },
+   {
+    "claim": "first-pick break rate flat within e2d (1/30 vs 1/23; Fisher exact two-sided p = 1.00)",
+    "verdict": "CONFIRMED",
+    "evidence": "Fisher exact two-sided on [[1,29],[1,22]] = 1.0000 (one-sided .6843)."
+   },
+   {
+    "claim": "~4× below e2a's ~.17",
+    "verdict": "CONFIRMED",
+    "evidence": "e2a first-pick break 32/188 = .1702 all sessions (valid 30/184 = .163; frame's 1−156/187 = .166) -> '~.17' holds. Ratio is approximate: .1702 vs 1/30 = 5.1×, vs 1/23 = 3.9×, vs pooled 2/53 = 4.5×. '~4×' under-states the pooled 4.5×; doubtful as a gloss."
+   },
+   {
+    "claim": "only D2→D3 is a clean dose step",
+    "verdict": "UNVERIFIABLE",
+    "evidence": "Design judgement (e2a is a different apparatus/exclusion regime); no artifact decides it."
+   },
+   {
+    "claim": "(.690 vs .522, Fisher exact two-sided p = .26)",
+    "verdict": "CONFIRMED",
+    "evidence": "Fisher exact two-sided on [[20,9],[12,11]] = .259724 (one-sided .171298); pooled z p .2164, unpooled z p .2136 also > .05."
+   },
+   {
+    "claim": "degeneracy tracks displacement, not the reward direction",
+    "verdict": "CONFIRMED",
+    "evidence": "Consistent with D2 arm rates: R .0449 > M .0233 > S .000 (0/151)."
+   },
+   {
+    "claim": "in-situ scoring at 2.57 vs 0.54 s per forward (4.7×, matching D2's ratio)",
+    "verdict": "CONFIRMED",
+    "evidence": "D3: 7177.031/2796 = 2.5669 s; 1522.042/2796 = .54436 s; ratio 4.715. D2: 13992.148/5472 = 2.5570; 3966.053/7284 = .54449; ratio 4.696 -> both 4.7×."
+   },
+   {
+    "claim": "the clean/all-rounds sign disagreement on the dose change, flagged not averaged",
+    "verdict": "CONFIRMED",
+    "evidence": "−.0121 (clean) vs +.0149 (all-rounds); dose_paired_d2_d3_allrounds.json same_sign_as_clean false."
+   }
+  ]
+ },
+ "standing_protocol": "design block 2026-09-06 §1: every adversarial values-check of design prose is written to results/raw/ BEFORE it is reported, so the design seat reads it without relay. This file is the first under that protocol; the first check's record is data/e2d/closure_valuescheck.json + results/raw/2026-09-04_e2d_closure_valuescheck.txt."
+}

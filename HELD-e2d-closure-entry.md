@@ -21,7 +21,7 @@ delete this file in the same commit.
 
 **The eight items (verified by Code; not reworded):**
 1. "the paired CI, ±.15, spans the bar in both directions" — z form ±.144,
-   CI [−.157, +.132]; t(19) form ±.154, [−.166, +.142]; bar .158; neither
+   CI [−.156, +.132]; t(19) form ±.154, [−.166, +.142]; bar .158; neither
    form reaches +.158, only t reaches −.158. False as stated.
 2. "±.15" — .144 rounds to .14; only the t(19) form gives .15. No form named.
 3. "one-sided .011 — the D3-gate entry's figure" — the .011 is in the

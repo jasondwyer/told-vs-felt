@@ -99,9 +99,14 @@
    "null_response"
   ],
   "advisory": {
-   "task_echo": "pending a class-level guard (implemented as content-class-v4, re-screened blind; exclusion-bearing only after the design seat re-eyeballs a fresh 14 + 14)",
+   "task_echo": "ADVISORY through PROPOSAL-k's first campaign (design disposition 2026-09-06 \u00a72b). The 3 + 9 v4 archive hits (e2a 3, e2b 9; data/e2d/contentclass_screen_v4.json fresh_examples_for_eyeballing) and the in-sample fourteen from e2d (e2d_supplement_in_sample, 24 hits, 14 shown) stand in for the fresh 14 + 14 that the existing corpora cannot supply. Graduation to exclusion-bearing waits on fresh hits from a NEW campaign and a design re-eyeball then. [superseded wording: 'pending a class-level guard (implemented as content-class-v4, re-screened blind; exclusion-bearing only after the design seat re-eyeballs a fresh 14 + 14)']",
    "wrong_task": "indefinitely; the rule-25 read is its arbiter; it still reports"
-  }
+  },
+  "declared_misses": {
+   "config_topic_attractor": "design disposition 2026-09-06 \u00a72a: the rule-28(c) config-topic attractor (four archived e2b rounds that carry no content addressing the task, take no v4 label and no v2 hit -- flagged in the adjudication entry, RESULTS.md 2026-09-06) is a DECLARED MISS of null_response's rule: NOT a sixth class and NOT an attractor-shaped string rule. It stays with the rule-25 read. Revisit if a new campaign shows it at rate.",
+   "third_person_capability_disclaimer_and_bare_No": "declared at adoption (null_response_rule_as_implemented, KNOWN MISSES); go to the read"
+  },
+  "_disposed": "design block 2026-09-06 \u00a72 (2a config-topic attractor; 2b task_echo standing), applied by Code 2026-09-06; the module valence_core/e2d/contentclass_v4.py is unchanged (frozen thresholds, 1d)"
  },
  "thresholds_frozen": {
   "run": 5,

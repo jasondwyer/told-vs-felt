@@ -21,6 +21,94 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-06 — **DESIGN BLOCK 2026-09-06 (post-Stage-C dispositions) §1–§3
+  APPLIED. §1: the THIRD adversarial values-check of the e2d closure — the
+  pass that holds the closure text — is written to raw,
+  [`_closure_glosscheck3`](results/raw/2026-09-06_e2d_closure_glosscheck3.txt)
+  (structured record [`closure_glosscheck3.json`](data/e2d/closure_glosscheck3.json),
+  the first check's shape: passage / finding / verdict per gloss, every claim
+  of every refuter appended), and the standing protocol is adopted: every
+  adversarial values-check of design prose goes to `results/raw/` BEFORE it
+  is reported. §2a/§2b: the two content-class flags disposed, recorded in the
+  candidate's `standing` field. §3: the Stage B R2 retention row annotated to
+  FIVE layers for the record. The format recon (§4) is its own entry; the
+  closure ENTRY stays HELD until the design seat disposes the glosses on
+  reading §1's file. Watermark `a49bc9b` (the design block's read
+  watermark; Code's HEAD at write time `58be254`); Code stamps from
+  `date -u`.**
+  (Stamp verified at write time: `date -u` → **Sun Sep  6 06:58:23 UTC 2026**.)
+
+  - **§1 — what the file holds.** The pass ran 2026-09-05 16:48–16:59 UTC in
+    the prior Code thread (workflow `wf_508875b6-995`, three refuters over
+    the closure entry as assembled in the working tree, uncommitted at check
+    time): the quoted design-authored text clause by clause (53 claims),
+    Code's half of the entry — header, provenance, what-changed table,
+    verification tables, ledger (61), and the sibling content-class entry
+    checked in the same pass (38). **152 claims in all.** *Correction
+    to Code's 2026-09-05 17:04 UTC report, which said "175 claims": that
+    figure does not reproduce from the journal (53 + 61 + 38 = 152) and is
+    corrected in the file.* Outcome unchanged from the report: **no figure
+    wrong** in the text or in the 125/125 verification; **eight glosses** in
+    the design-authored text do not hold as stated, items 1–3 the ones Code
+    would not commit past (the CI "spans the bar in both directions" — z
+    half-width .144, CI [−.156, +.132]; t(19) .154, [−.166, +.142]; bar
+    .158; neither form reaches +.158, only t reaches −.158; "±.15" under an
+    unnamed form; the `.011` attributed to the D3-gate entry, which has no
+    Fisher figure — it is in the 2026-09-04 closure-completion entry, a
+    mis-attribution that originated in Code's 09-05 handoff and the patch's
+    R4 inherited), 4–8 rounding, an overstatement, provenance or hedged (58% is 40/68 =
+    58.8%; the 0.10 anchor holds a pooled within-M delta of −.2394 recorded
+    as not comparable, not no value; "~4×" is 3.9–5.1× by e2d rate; 62/38 is
+    the idx-12-first order, unnamed; "(slip 10)" resolves only to an
+    untracked design handoff, which the committed record mentions — the HELD
+    header, the first check's JSON — but never defines). Every figure the
+    eight items turn on was recomputed at write time and is in the file
+    (`code_recomputation_at_write_time`: both CI forms, 40/68, the D1 delta,
+    the three ratios, the Fisher one-sided .0112 itself, the composition
+    split in both orders — idx-12-first .621/.379, truncation-first
+    .537/.463 — and the `git grep` for slip 10); Code's own FOUR refuted
+    passages (the R5 gloss, the same .011 attribution, a truncated
+    `excised_source` quote, a mis-description of what the 09-04 design
+    handoff quotes; all fixed in the HELD draft before the report) are
+    listed beside, with two refuter-evidence errors corrected in Code's
+    notes (HANDOFF-2026-09-05 was tracked at `784a948`, not untracked; two
+    line cites off by one). Nothing in the design text reworded. **Pre-commit
+    values-check of this entry and the file (three refuters, 79 claims):
+    five refutations, none on a verdict figure — a one-thousandth rounding
+    (−.157 → −.156, also corrected in the HELD header, Code's text), the
+    passage count (three → four), "both" → "all three" for `125e26a`, the
+    slip-10 "NONE" (mentions exist; a definition does not), and the
+    "every figure recomputed" claim (two figures were cited, not
+    recomputed — now recomputed). All applied.** The design seat disposes
+    on read; the closure commits after.
+  - **§2a — config-topic attractor: a DECLARED MISS of `null_response`'s
+    rule**, not a sixth class and not an attractor-shaped string rule; stays
+    with the rule-25 read; revisit if a new campaign shows it at rate.
+    Recorded at `standing.declared_misses.config_topic_attractor` in
+    [`contentclass_candidate.json`](data/configs/contentclass_candidate.json).
+    **§2b — `task_echo` stays ADVISORY through PROPOSAL-k's first campaign**;
+    the 3 + 9 v4 archive hits (e2a 3, e2b 9, from
+    `contentclass_screen_v4.json`) and the in-sample e2d fourteen (24 hits,
+    14 shown) stand in for the fresh 14 + 14 the existing corpora cannot
+    supply; graduation to exclusion-bearing waits on fresh hits from a NEW
+    campaign and a design re-eyeball then. Recorded at
+    `standing.advisory.task_echo` (the superseded wording kept in brackets).
+    The module `contentclass_v4.py` is untouched (frozen thresholds, 1d);
+    `audit_v3.py` unchanged; the candidate JSON round-trips byte-identical
+    apart from the `standing` edit.
+  - **§3 — Stage B correction acknowledged; R2's retention row reads FIVE
+    layers for the record.** Annotated in place in the Stage B entry
+    (2026-09-05, RECON STAGE B), on the prose and on the retention-curve
+    table row: under the corrected same-fold null (`7da9509`,
+    `stageB_analysis_samefolds.json`) R2 is above null at L51, 56, 57, 58,
+    62; L55 (.625 vs a corrected null .634) and L59 (.619 vs .620) fall
+    below; the statistics are identical, the entry stands as written, the
+    correction sits beside. Nothing else moves. (Verified from both
+    artifacts at write time: `c_R2_roundpole.above_null` 7 → 5; the random
+    comparator `cc_R2x` 2 → 1, not part of the disposition.)
+  - **Not done here:** the closure entry (HELD; waits on the gloss
+    disposition); anything on the echo channel beyond §4.
+
 - 2026-09-06 — **CONTENT-CLASS SPEC — ADJUDICATED (AMENDMENT 2 (iii)). The
   design seat's adjudication of the candidate (PI date 2026-09-05,
   PI-ratified) applied: the class-level architecture is ADOPTED as
@@ -540,14 +628,14 @@ applied to CLAUDE.md.
     | 62 | 0.539 | 0.57 | 0.540 | 0.520 | 0.57 |
     | 63 | 0.549 | 0.58 | 0.550 | 0.514 | 0.58 |
 
-  - **(c) RETENTION — single-round masks, target = that round's pole.** Single-round masks, target = that round's pole, one row per session (102), 10-fold statistic and null, text-only baseline = the same target on the shadow rows (Code-added control: a probe that reads the pole from the text alone would score here too). The baseline sits at or below null at every layer for every round, so what the single-round probes read is injection-borne. **The curve is not ordered by distance:** R1, the FARTHEST round (157 tokens from its last steered position to the read), is the most readable (.888 at L52, .82 at L63, above null at L50–L63); R3 (67 tokens) next (.831 at L51, .65 at L63); R4, the NEAREST (22 tokens), weak (.683 at L51, above null only at L49–L55); R2 (112 tokens) weakest (.656 at L51, above null at seven scattered layers). Rounds 1 and 3 are the start-pole label's rounds and 2 and 4 the other label's, so round position, label parity and span length are confounded in this design. The random direction under the same masks: R1x nearly as readable as the axis at its peak (.837 vs .888 at L52) and decaying faster; R3x at null (.50–.62) where the axis reads .65–.83; R2x/R4x at or barely above null.
+  - **(c) RETENTION — single-round masks, target = that round's pole.** Single-round masks, target = that round's pole, one row per session (102), 10-fold statistic and null, text-only baseline = the same target on the shadow rows (Code-added control: a probe that reads the pole from the text alone would score here too). The baseline sits at or below null at every layer for every round, so what the single-round probes read is injection-borne. **The curve is not ordered by distance:** R1, the FARTHEST round (157 tokens from its last steered position to the read), is the most readable (.888 at L52, .82 at L63, above null at L50–L63); R3 (67 tokens) next (.831 at L51, .65 at L63); R4, the NEAREST (22 tokens), weak (.683 at L51, above null only at L49–L55); R2 (112 tokens) weakest (.656 at L51, above null at seven scattered layers) [design disposition 2026-09-06 §3, on the same-fold correction (`7da9509`): R2's retention row reads FIVE layers for the record -- L51, 56, 57, 58, 62; L55 (.625 vs a corrected null .634) and L59 (.619 vs .620) fall below; nothing else in this entry moves]. Rounds 1 and 3 are the start-pole label's rounds and 2 and 4 the other label's, so round position, label parity and span length are confounded in this design. The random direction under the same masks: R1x nearly as readable as the axis at its peak (.837 vs .888 at L52) and decaying faster; R3x at null (.50–.62) where the axis reads .65–.83; R2x/R4x at or barely above null.
 
     **The retention curve.**
 
     | round | tokens, last steered → read (mean; range) | pole balance | axis: peak AUC (layer) | axis: AUC at L63 | layers above null (axis) | random: peak (layer) | text-only max | null 95th range |
     |---|---|---|---|---|---|---|---|---|
     | R1 | 157; 117–196 | 49/53 | 0.888 (L52) | 0.822 | 14 of 18: 50–63 | 0.837 (L52) | 0.586 (none above null) | 0.60–0.63 |
-    | R2 | 112; 86–144 | 53/49 | 0.656 (L51) | 0.588 | 7 of 18: 51–62 | 0.623 (L59) | 0.583 (none above null) | 0.61–0.65 |
+    | R2 | 112; 86–144 | 53/49 | 0.656 (L51) | 0.588 | 7 of 18: 51–62 [of record: 5 of 18 -- 51, 56, 57, 58, 62 -- under the corrected null, design disposition 2026-09-06 §3] | 0.623 (L59) | 0.583 (none above null) | 0.61–0.65 |
     | R3 | 67; 51–110 | 49/53 | 0.831 (L51) | 0.648 | 13 of 18: 51–63 | 0.616 (L51) | 0.583 (none above null) | 0.60–0.64 |
     | R4 | 22; 21–23 | 53/49 | 0.683 (L51) | 0.557 | 7 of 18: 49–55 | 0.626 (L52) | 0.581 (none above null) | 0.61–0.64 |
 

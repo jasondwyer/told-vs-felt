@@ -1,0 +1,314 @@
+e2d CLOSURE VALUES-CHECK -- THIRD ADVERSARIAL PASS (the one holding the closure)
+structured record: data/e2d/closure_glosscheck3.json   (first check: data/e2d/closure_valuescheck.json)
+pass ran 2026-09-05 16:48-16:59 UTC (prior Code thread, workflow wf_508875b6-995); written to raw 2026-09-06 under design block §1
+
+three adversarial refuters over the closure entry AS ASSEMBLED in the working tree (uncommitted at check time, HEAD 10a0723): one over the quoted design-authored text of record clause by clause (53 claims), one over Code's half of the entry -- header, provenance, what-changed table, verification tables, ledger (61 claims), and one over the sibling content-class entry checked in the same pass (38 claims). Each instructed to REFUTE against committed artifacts; 152 claims in all (53 + 61 + 38 -- Code's 2026-09-05 17:04 UTC report to the design seat said '175 claims'; that figure does not reproduce from the journal and is corrected here). Every refutation re-verified by Code by hand before reporting (trap 25); nothing reworded (Code delivers numbers, never authors a lock).
+
+OUTCOME: No figure in the closure text or in the 125/125 verification is wrong. Eight passages of the DESIGN-AUTHORED text are glosses that do not hold as stated -- items 1-3 Code would not commit past; 4-8 are rounding, an overstatement, provenance or hedged. Code's own half had FOUR refuted passages (the 'no figure changed except R5' gloss, the same .011 attribution, a truncated `excised_source` quote, and a mis-description of what the 09-04 design handoff quotes), fixed in the HELD draft before the report. The closure ENTRY was HELD a third time and reported to the design seat; the draft persists at HELD-e2d-closure-entry.md.
+
+====================================================================================================
+THE EIGHT GLOSSES -- passage / what the artifacts say / verdict
+====================================================================================================
+
+[1] PASSAGE: "the paired CI, ±.15, spans the bar in both directions"
+    REFUTER (REFUTED): CI half-width (.144 z / .154 t) < bar .1578. Centred on −.0121: z-CI [−.1565, +.1324]; t-CI [−.1663, +.1422]. A +.158 change lies outside under both forms; −.158 lies outside under z (−.1565 > −.1578) and inside only under t. Strictly the CI does not span the bar in both directions.
+    CODE RE-VERIFIED: z form: half-width 0.144, CI [-0.156, +0.132]; t(19) form: 0.154, [-0.166, +0.142]; bar 0.158. Neither form reaches +0.158; only t reaches -0.158. FALSE as stated.
+    VERDICT: GLOSS -- the figure reproduces; the claim about it does not  |  class: gloss (a claim about a figure); would not commit past  |  holds the closure: YES
+
+[2] PASSAGE: "±.15"
+    REFUTER (REFUTED): 1.96·paired_sd/√n = 1.96·.3295808/√20 = ±.1444 (rounds to ±.14; the entry's own verification table prints '±.144'). Only a t(19) form (2.093) gives ±.1542 -> ±.15; the text names no form.
+    CODE RE-VERIFIED: .144 rounds to .14 (z); only the t(19) form gives .15 (0.154). No form is named in the text.
+    VERDICT: GLOSS -- the figure reproduces; the claim about it does not  |  class: rounding under an unnamed form; would not commit past  |  holds the closure: YES
+
+[3] PASSAGE: "one-sided .011 — the D3-gate entry's figure"
+    REFUTER (UNVERIFIABLE): grep '\.011[^0-9]' RESULTS.md: the read .10→.20 p = .011 appears only at l.944, inside the 2026-09-04 'e2d CLOSURE COMPLETION — item 1 DELIVERED' entry (values-check item 4), not in the D3 GATE ADJUDICATION entry (l.1088) or the D3 RAN entry (l.1148), which carry only '.0117' (steered-arm binomial). HANDOFF-2026-09-05.md l.79 (untracked) repeats the 'D3-gate entry' attribution. Attribution doubtful; value itself confirmed.
+    SECOND REFUTER (REFUTED): `grep -n "\.011\b" RESULTS.md` → lines 156/226/239/255 (this entry), 731 (unrelated GDN table), 944. Line 944 'read .10→.20 **p = .011**' is inside the 2026-09-04 e2d CLOSURE COMPLETION entry (lines 884–990, commit 1bdf16c), not the D3-gate entry ('e2d D3 — all 24 sessions RAN … FIRED GATE', lines 1148–1258, commit e58dfca), whose only .011-family figure is '.0117 — fires' (line 1177, an exact binomial for the steered arm 7/122, not a Fisher step). The DISPOSITION-2 gate-adjudication entry (1088–1147) contains no .011 either. The .011 IS one-sided (.0112), but its source entry is mislabelled (same mislabel in HANDOFF-2026-09-05.md §2 item 4).
+    CODE RE-VERIFIED: grep '\.011[^0-9]' RESULTS.md: the read .10->.20 p = .011 is printed in the 2026-09-04 closure-completion entry (item 4), not in the D3-gate entry, which has no Fisher figure (its only .011-family figure is the steered-arm binomial .0117). The mis-attribution originated in HANDOFF-2026-09-05 §2 item 4 (Code's) and the patch's R4 inherited it. The value itself is right (one-sided .0112; recomputed here). Refuter-evidence error, corrected: both refuters call HANDOFF-2026-09-05.md 'untracked'; it was committed at 784a948 (2026-09-05 06:32 UTC), ten hours before the check -- the line they cite is right, the parenthetical is not.
+    VERDICT: GLOSS -- the figure reproduces; the claim about it does not  |  class: attribution; would not commit past  |  holds the closure: YES
+
+[4] PASSAGE: "carry 58% of the marks"
+    REFUTER (REFUTED): On the 24 shared indices: (10+10)+(10+10) = 40 of 32+36 = 68 marks = 58.82%, which rounds to 59%; on all M marks D2+D3 it is 40/70 = 57.1%. 58% is a truncation of 58.8%.
+    CODE RE-VERIFIED: 40/68 = 58.8% on the 24 shared indices, rounds to 59%; 40/70 = 57.1% on all M marks. 58% is a truncation.
+    VERDICT: GLOSS -- the figure reproduces; the claim about it does not  |  class: rounding  |  holds the closure: no
+
+[5] PASSAGE: "the 0.10 anchor (n = 4 M sessions, pooled estimator) carries no marker value"
+    REFUTER (REFUTED): d1_sessions.json: 4 M sessions (CONFIRMED); but marker.deltas.clean.delta_plus_within_M.delta = −0.2393743 exists (pooled over n_steered 20 / n_unsteered 20 generations, 12 probes). RESULTS.md l.1027 records it as '−0.2394 ... a different statistic and not comparable'. The artifact carries a marker value; 'no marker value' overstates 'no comparable/paired value'.
+    CODE RE-VERIFIED: d1_sessions.json holds a pooled within-M delta of -0.2394 (20/20 generations, 12 probes), recorded in the log as 'a different statistic and not comparable' -- not absent.
+    VERDICT: GLOSS -- the figure reproduces; the claim about it does not  |  class: overstatement (no COMPARABLE value, not no value)  |  holds the closure: no
+
+[6] PASSAGE: "~4× below e2a's ~.17"
+    REFUTER (CONFIRMED): e2a first-pick break 32/188 = .1702 all sessions (valid 30/184 = .163; frame's 1−156/187 = .166) -> '~.17' holds. Ratio is approximate: .1702 vs 1/30 = 5.1×, vs 1/23 = 3.9×, vs pooled 2/53 = 4.5×. '~4×' under-states the pooled 4.5×; doubtful as a gloss.
+    CODE RE-VERIFIED: .17 is 5.1x 1/30, 3.9x 1/23, 4.5x the pooled 2/53. Hedged with '~'; which e2d rate is meant is not named.
+    VERDICT: GLOSS -- hedged or provenance; figure reproduces  |  class: hedged approximation  |  holds the closure: no
+
+[7] PASSAGE: "62% one session decidable at 0.20 only (idx 12) and 38% roster truncation"
+    REFUTER (CONFIRMED): Sequential decomposition A (D2 mean on 20 shared) .1531669 -> B (+idx 12) .1219739 -> C (all 27) .1029634: |B−A|/|C−A| = .6213, |C−B|/|C−A| = .3787. D2-only decidable indices [12,24,25,26,27,28,30]; D3 roster max 23, so idx 12 is the only D2-only index inside D3's roster; 6 never run. CAVEAT: order-dependent — truncation-first gives 54% / 46% (B' = mean over shared + never-run = .1029… ; computed .5366/.4634).
+    CODE RE-VERIFIED: Reproduces (.621/.379) under the idx-12-first sequential decomposition A -> B -> C (the verify script's, and the first check's, order); the split is order-dependent -- truncation-first gives 54/46 (refuter's computation). The text names no order.
+    VERDICT: GLOSS -- hedged or provenance; figure reproduces  |  class: provenance (an order-dependent decomposition with the order unnamed)  |  holds the closure: no
+
+[8] PASSAGE: "(slip 10)"
+    REFUTER (CONFIRMED): HANDOFF-2026-09-04-design.md §2: '(10) the pre-written stop sentence encoded a predicted failure mode ("with coherence") ... the actual failure was Q2/Q3 with coherence intact'. Caveat: that file is untracked (git status ??); RESULTS.md records slips (11)–(14) by number but never (10); PROPOSAL-j l.376 lists only (8) and (9).
+    CODE RE-VERIFIED: '(10)' is DEFINED only in the untracked HANDOFF-2026-09-04-design.md §2 item (10); the committed record numbers slips (11)-(14) and PROPOSAL-j (8)-(9). Mentions of 'slip 10' at HEAD (the HELD file's header, the first check's JSON) all point at that handoff. The reference resolves, but not to a committed definition.
+    VERDICT: GLOSS -- hedged or provenance; figure reproduces  |  class: provenance (reference to an uncommitted document)  |  holds the closure: no
+
+====================================================================================================
+CODE'S RECOMPUTATION AT WRITE TIME (2026-09-06)
+====================================================================================================
+  paired sd 0.3295808, n 20, mean change -0.0121; bar 0.5G = 0.1578
+  z:     half-width 0.1444 -> rounds 0.14;  CI [-0.1565, +0.1324];  reaches +bar False, -bar False
+  t(19): half-width 0.1542 -> rounds 0.15;  CI [-0.1663, +0.1422];  reaches +bar False, -bar True
+  .011 in HEAD:RESULTS.md (git grep '\.011[^0-9]'):
+     HEAD:RESULTS.md:583:    | 50 | 0.060 ± 0.012 | +0.009 | 0.006 | 0.094 ± 0.011 | +0.232 | 0.089 |
+     HEAD:RESULTS.md:1182:    | 62 | GDN | 0.450 | 0.658 | 0.439 | 0.0928 | 0.011 | 0.5728 |
+     HEAD:RESULTS.md:1395:       read .10→.20 **p = .011**; audit .10→.20 p = .41, audit .20→.30
+  marks share: 40/68 = 0.5882 -> 59%;  all M marks 40/70 = 0.5714
+  d1 marker: data/e2d/d1_sessions.json -> marker.deltas.clean.delta_plus_within_M.delta = -0.2393743 (n_steered 20, n_unsteered 20)
+  .17 / e2d break rate: 1/30 -> 5.10x;  1/23 -> 3.91x;  2/53 -> 4.51x
+  Fisher one-sided, read .10->.20 (0/40 vs 34/300), recomputed: 0.0112
+  composition split recomputed (A 0.1532 on 20 shared; C 0.1030 all 27): idx-12-first 0.621 / 0.379; truncation-first 0.463 / 0.537  (verify raw idx-12-first: 0.6213316429081164)
+  'slip 10' MENTIONS at HEAD (git grep): HEAD:HELD-e2d-closure-entry.md:37:8. "(slip 10)" — resolves only to the untracked HANDOFF-2026-09-04-design.md | HEAD:HELD-e2d-closure-entry.md:98:  > legibility with coherence intact — not a coherence limit (slip 10). | HEAD:data/e2d/closure_valuescheck.json:99:   "recommended_wording": "e2d closed at its qualification rung. The
+  'slip (10)' DEFINITION in committed docs: NONE
+  '(10)' in the untracked design handoff: 68:stop); **(10)** the pre-written stop sentence encoded a predicted
+  mentions of 'slip 10' exist at HEAD -- the HELD file's own header list (Code's) and the first check's JSON quoting the untracked handoff -- but NO committed document defines slip (10); the definition is only in the untracked HANDOFF-2026-09-04-design.md
+
+====================================================================================================
+CODE'S OWN HALF OF THE ENTRY -- refuted passages, fixed in the HELD draft before the report
+====================================================================================================
+  - 'no figure changed except R5, where the primary DV moves to its own domain'
+      finding: The table's own R6 row changes two printed figures: held `p = .85` → of record `Fisher exact two-sided p = 1.00` (1/30 vs 1/23: recomputed Fisher 1.0000 vs z-pooled .8477), and held `(p = .21)` → `Fisher exact two-sided p = .26` (20/29 vs 12/23: .2597 vs unpooled-z .2136). R4 also adds figures (.011, .15, .20). Only R5 changes a figure by changing DOMAIN; R6 changes figures by changing TEST.
+      disposition: fixed in the HELD draft (R6's test-driven figure changes named)
+  - 'The D3-gate entry's `.011` was the one-sided figure'
+      finding: `grep -n "\.011\b" RESULTS.md` → lines 156/226/239/255 (this entry), 731 (unrelated GDN table), 944. Line 944 'read .10→.20 **p = .011**' is inside the 2026-09-04 e2d CLOSURE COMPLETION entry (lines 884–990, commit 1bdf16c), not the D3-gate entry ('e2d D3 — all 24 sessions RAN … FIRED GATE', lines 1148–1258, commit e58dfca), whose only .011-family figure is '.0117 — fires' (line 1177, an exact binomial for the steered arm 7/122, not a Fisher step). The DISPOSITION-2 gate-adjudication entry (1088–1147) contains no .011 either. The .011 IS one-sided (.0112), but its source entry is mislabelled (
+      disposition: attribution corrected in Code's half of the HELD draft; the design text's copy (item 3) is HELD, not reworded
+  - Beside-note (ii) quotes `excised_source` as 'committed D2 scoring'
+      finding: Actual string is 'committed D2 scoring (not rescored)' — the passage quotes a truncation. Substance (says D2 for a D3 run) holds.
+      disposition: quotation completed in the HELD draft
+  - Beside-note (iii): HANDOFF-2026-09-04-design.md §1 and §7 'quote the held text'
+      finding: Untracked: yes (`git status` → `?? HANDOFF-2026-09-04-design.md`). But §1 quotes the EARLIER closure 'Sentence of record' (the pre-disposition text with 'a quarter of its short-context value … (dilution excluded) … which PROPOSAL-i inherits' — the text the values-check graded), not the 2026-09-05 disposition text the six clauses R1–R6 were applied to (that text was 'never committed' and is elsewhere); §7 contains no quotation at all, only a paraphrase ('a record channel too narrow to carry the state to the choice at any dose the apparatus can deliver'). 'Superseded by the text above' is true o
+      disposition: reworded in the HELD draft: §1 quotes the earlier sentence of record, §7 paraphrases
+
+====================================================================================================
+SUMMARY
+====================================================================================================
+{
+  "claims_checked": 152,
+  "by_refuter": {
+    "content-class-entry": {
+      "n": 38,
+      "verdicts": {
+        "CONFIRMED": 31,
+        "REFUTED": 3,
+        "UNVERIFIABLE": 4
+      }
+    },
+    "closure-record": {
+      "n": 61,
+      "verdicts": {
+        "CONFIRMED": 48,
+        "REFUTED": 4,
+        "UNVERIFIABLE": 9
+      }
+    },
+    "closure-text": {
+      "n": 53,
+      "verdicts": {
+        "CONFIRMED": 47,
+        "REFUTED": 4,
+        "UNVERIFIABLE": 2
+      }
+    }
+  },
+  "figures_wrong": 0,
+  "glosses_held": 8,
+  "code_passages_fixed_in_draft": 4
+}
+
+====================================================================================================
+APPENDIX -- every claim, by refuter (verdict | claim); non-CONFIRMED claims carry their evidence
+====================================================================================================
+
+--- content-class-entry: 38 claims ---
+   0 CONFIRMED    Entry is 'the RESULTS entry for 1223751, which committed the candidate spec and its overbreadth screen without one'
+   1 CONFIRMED    Commit message of 1223751 dated 2026-09-02 13:38 UTC
+   2 CONFIRMED    `content-class-draft-v3`; `adopted: false`; screened BLIND TO ARM
+   3 CONFIRMED    Drafted after all three rule-25 reads were committed
+   4 CONFIRMED    On the 912 e2d rounds: recall 71/81 = .877, precision 71/84 = .845 (in-sample); tp 71, fn 10, fp 13, tn 818
+   5 CONFIRMED    The 912 rounds are D1 72 + D2 607 + D3 233
+   6 CONFIRMED    Predicted by class: preamble_without_content 37, task_echo 29, null_response 13, stuck_attractor 3, wrong_task 2
+   7 CONFIRMED    Per arm, unblinded only after scoring: M 73/573 = .127, R 1/168 = .006, S 10/171 = .058
+   8 CONFIRMED    The read's M-vs-R gap reproduces under a detector that never saw the arms
+   9 CONFIRMED    Archive overbreadth: e2a 34/1,894 = 1.80% by class stuck_attractor 11, null_response 12, task_echo 5, preamble_without_content 5, wrong_task 1; e2b 60/1,707 = 3.51% by class null_response 22, stuck_attractor 16, task_echo 11, wrong_task 9, preamble_without_content 2
+  10 REFUTED      Archive overbreadth is 'out of sample, the archives' own audits of record having passed every one of these rounds'
+       evidence: The screen script sets audit=None for every archive row (never joins the archive audit). Aligning transcript-parsed rounds with each session's rounds+choices records (lengths match for all 200 e2a and 181 e2b sessions): e2a — 9 of 34 hits carry a `degen` flag from the audit of record (e.g. '=== Config evaluation session ===' → degen 'frame:Config evaluation session'; one preamble hit → 'frame:evaluation session'), 3 hits sit in excluded sessions; e2b — 3 of 60 hits carry `degen` ('frame:Config evaluation session' ×2, 'junk:(?i)\bround\s+\d+...' ×1), 1 carries `lexical: walnut`, 2 sit in excluded sessions. At least 13 of the 94 hits were NOT passed by the archives' audits.
+  11 UNVERIFIABLE 28 of the 94 hits were eyeballed
+       evidence: Asserted only in candidate.json what_code_does_not_claim ('28 of the 94 were eyeballed') and the 1223751 commit message ('I eyeballed 28 of the 94'); no artifact records which 28. 94 = 34+60 checks.
+  12 CONFIRMED    Fourteen examples per archive are in the screen artifact
+  13 CONFIRMED    Quoted archive examples: garbled echo 'Give a one-skeleton description of the actual scent of clean laundry'; refusal 'Sorry, I can't help with that'; nulls '* * *', '<answer>', a bare fence
+  14 CONFIRMED    'the same shape as v2's own screen finding'
+  15 CONFIRMED    Five classes with the stated definitions (task_echo / preamble_without_content / wrong_task / stuck_attractor / null_response)
+  16 CONFIRMED    Standing instruction of scorer_v3_spec.json: v1 and v2 each fixed the instance and missed the class
+  17 CONFIRMED    NULL_RESPONSE banked by disposition-2 item 5; three observed forms ([MENTAL_BLOCK], literal None, bare code fence)
+  18 REFUTED      'every observed instance is in an UNSTEERED round'
+       evidence: d3_sessions.json M session 12: forced0 (pole pos, steered=True, text '```'), forced2 (steered=True, '```'), free0 (steered=True), free2 (steered=True) — 4 of the 8 fence rounds are steered; RESULTS.md 1227-1229 itself names 'forced0 itself is a null response' as the origin, and that round is steered. Of the detector's 13 null_response hits on e2d, 4 have steered=True. The claim is true for D2's four instances only (RESULTS.md 1433: 'All four are in UNSTEERED rounds'); candidate.json null_response_rationale and disposition-2 item 5 both over-generalise it, and the passage repeats them.
+  19 CONFIRMED    Precedence in classify: NULL → STUCK → PREAMBLE → ECHO → WRONG_TASK, most-specific to least
+  20 CONFIRMED    Screened blind to arm because the D2 read had found content-shaped junk concentrated in the axis arm
+  21 UNVERIFIABLE Draft lineage table: v1→v2 precision .472 → .621; v2→v3 precision .621 → .845, archive overbreadth 5.1% / 6.6% → 1.8% / 3.5%
+       evidence: Matches candidate.json two_confounds_the_screen_found_and_fixed and the 1223751 commit message verbatim; no v1/v2 screen artifacts exist in the repo to recompute .472/.621/5.1%/6.6%. The v3 endpoints (.845, 1.8%, 3.5%) are confirmed.
+  22 REFUTED      Example 'Make this friendlier: The meeting has been moved to 3pm'
+       evidence: data/corpus/e2a_tasks.jsonl has no task with that exact wording; the pool's paraphrases are 'Rewrite this in a friendlier tone: The meeting has been moved to 3pm.', 'Make this sound friendlier: The meeting has been moved to 3pm.', 'Reword in a warmer tone: ...', 'Soften the tone of this notice: ...'. (Same inexact quote in candidate.json and the commit message; illustrative, but quoted.)
+  23 CONFIRMED    'Footsteps on a gravel path crunch and scatter like brittle leaves' shares five consecutive words with its own task
+  24 CONFIRMED    'run = 5 and the verb lexicon are the first values that screened acceptably'
+  25 CONFIRMED    wrong_task is the weakest detector, needs the task pool, cannot see a semantically wrong answer
+  26 CONFIRMED    AMENDMENT 2 (iii) verbatim quote
+  27 CONFIRMED    AMENDMENT 2 (iii) puts the class spec AFTER the read
+  28 CONFIRMED    Delivered: the class-level spec and the screen (against e2a, e2b, and D1–D3)
+  29 CONFIRMED    Per the candidate's `authority` field and the detector's docstring: not the audit of record, excludes no session, rule-25 read is the arbiter
+  30 CONFIRMED    e2d closed at its qualification rung, so LOCK-j is no longer the trigger
+  31 CONFIRMED    The 2026-09-04 design handoff makes the adjudicated class a precondition for any future Qwen session campaign
+  32 CONFIRMED    Disposition-2 entry banks NULL_RESPONSE as its candidate class
+  33 UNVERIFIABLE Written at the design seat's request (block of 2026-09-05, §2) after the recon block's §1g found the gap
+       evidence: §1g: RESULTS.md ~616-640 and 773 (recon entry) — 'FLAG: the content-class screen has no RESULTS entry (§1g)' — CONFIRMED. The 'block of 2026-09-05' is not in the repo (RESULTS.md 264 also cites 'block of 2026-09-05, §1'; only HANDOFF-2026-09-05.md exists, whose §2 lines 89-90 say the opposite: the spec + screen 'are all delivered and in the log'). The request cannot be checked.
+  34 UNVERIFIABLE Stamp `date -u` → Sat Sep  5 16:45:24 UTC 2026
+       evidence: 2026-09-05 is a Saturday (python datetime) — format consistent with macOS `date -u`. Time cannot be recomputed; the entry is uncommitted so no commit time bounds it. Consistent with newest-first ordering: closure entry below it is stamped 16:42:55 UTC (RESULTS.md 128).
+  35 CONFIRMED    Screen script scripts/e2d_contentclass_screen.py; detector valence_core/e2d/contentclass.py
+  36 CONFIRMED    'nothing in the artifacts is changed'
+  37 CONFIRMED    '(in-sample) the draft was revised twice after seeing where it failed on this corpus'
+
+--- closure-record: 61 claims ---
+   0 CONFIRMED    Header: commit `08a6076` carries the PI-approved rule-2 and rule-21 annotations and the `excised_source` script fix
+   1 CONFIRMED    Header: commit `edf2574` carries the verification record (script + raw)
+   2 UNVERIFIABLE Header: 'this entry's own commit carries the text'
+       evidence: At check time the closure entry is uncommitted: `git status --short` shows ` M RESULTS.md`; `git diff RESULTS.md` has a single hunk `@@ -21,6 +21,310 @@` that adds both the content-class entry (lines 24–117) and the closure entry (lines 118–327). HEAD is 10a0723 (RECON). No commit yet carries the text.
+   3 CONFIRMED    Header: raw record path `results/raw/2026-09-05_e2d_closure_verify.txt` and script `scripts/e2d_closure_verify.py` exist and are the verification
+   4 UNVERIFIABLE Header: stamp 'Sat Sep 5 16:42:55 UTC 2026'
+       evidence: `date -u` at check time: Sat Sep 5 16:53:35 UTC 2026 — the stamp is in the past and 2.5 min earlier than the content-class entry above it (16:45:24), consistent with newest-first ordering. Exact value not reproducible.
+   5 UNVERIFIABLE Header: 'four held figures resolved by six clause-level replacements (design patch of the same date, R1–R6) and one further disposition on R6 (design block of the same date, §1)'
+       evidence: Design patch/block not in repo. Consistent with 08a6076 message ('Four do not [reproduce]'), edf2574 message ('resolved the four held figures with six clause replacements (R1-R6)'), and script comment line 303 ('Clause of record (design block 2026-09-05, §1)').
+   6 UNVERIFIABLE Header: 'Design-seat authored, PI-ratified 2026-09-05 (PI clock)'
+       evidence: No repo artifact records PI ratification; design blocks are not committed.
+   7 CONFIRMED    Provenance: 'The held text was never committed'
+   8 UNVERIFIABLE Provenance: delivered 'in the design disposition headed 2026-09-05 (PI clock 01:53 EDT, 05:53 UTC)'
+       evidence: HANDOFF-2026-09-05.md §2: 'delivered in the disposition headed 2026-09-05' (no time). 01:53 EDT = 05:53 UTC is arithmetically correct. Note: the RECON entry (RESULTS.md line 351) gives the SAME time, 'Block authored per PI clock Sat 2026-09-05 01:53 EDT; watermark 842e183', for the recon block.
+   9 UNVERIFIABLE Provenance: 'Each of the six clauses the patch replaces matched the recovered text exactly once; no other character changed'
+       evidence: Held text not in repo. edf2574 commit message asserts 'all six old clauses match it exactly once, and the replacements apply cleanly'.
+  10 CONFIRMED    Provenance: 'Disposition §1 adopted all seven values-check glosses as OVERSTATED' and the seven listed rewrites
+  11 CONFIRMED    Provenance: five 'Critic items' (conjunctive gate; entry titled text of record; no disposition to an unwritten document; legibility/degradation sentence; transfer caveat)
+  12 CONFIRMED    'What changed' table: of-record column for R1–R6 matches the quoted text of record
+  13 UNVERIFIABLE 'What changed' table: held column values (p = .878; sign p = .061; sign p = .41 … p = .27; Fisher p = .021 two-sided … (p ≥ .10); Δ_first = 0.000 at 0.20 (15/30); (1/30, 1/23; p = .85) … (p = .21))
+       evidence: Held text not in repo. Consistent with HANDOFF-2026-09-05.md §2 (held '.840/.827', 'p = .85 (1/30 vs 1/23)', 'Δ_first = 0.000 at 0.20 (15/30)', '.021 is two-sided … p ≥ .10 holds under both') and edf2574 message (patched R6 read '.690 vs .522, two-proportion z p = .21').
+  14 REFUTED      'What changed' gloss: 'no figure changed except R5, where the primary DV moves to its own domain'
+       evidence: The table's own R6 row changes two printed figures: held `p = .85` → of record `Fisher exact two-sided p = 1.00` (1/30 vs 1/23: recomputed Fisher 1.0000 vs z-pooled .8477), and held `(p = .21)` → `Fisher exact two-sided p = .26` (20/29 vs 12/23: .2597 vs unpooled-z .2136). R4 also adds figures (.011, .15, .20). Only R5 changes a figure by changing DOMAIN; R6 changes figures by changing TEST.
+  15 CONFIRMED    Verification table R1: Q1 3/32, exact binomial one-sided (greater) vs p0 = .15 = .8782; two-sided .467
+  16 CONFIRMED    Verification table R2: Δ+ +.1030, n 27, sd .399, one-sided sign test 18/27 p = .0610, two-sided .122
+  17 CONFIRMED    Verification table R3: clean −.0121, n 20, 11/20, p .41 (two-sided .824); all-rounds +.0149, n 24, 14/24, p .27 (two-sided .541); recomputed from per-session diffs
+  18 CONFIRMED    Verification table R4 / Fisher table: counts audit D1 0/40, D2 7/300, D3 11/233; read D1 0/40, D2 34/300, D3 36/233 (M arm, rounds + choices, all sessions incl. excluded)
+  19 CONFIRMED    Fisher table: audit .10→.20 1.0000 / .4129; audit .20→.30 .1508 / .1021; read .10→.20 .0213 / .0112; read .20→.30 .1959 / .1029 (two-sided / one-sided)
+  20 REFUTED      Fisher paragraph: 'The D3-gate entry's `.011` was the one-sided figure'
+       evidence: `grep -n "\.011\b" RESULTS.md` → lines 156/226/239/255 (this entry), 731 (unrelated GDN table), 944. Line 944 'read .10→.20 **p = .011**' is inside the 2026-09-04 e2d CLOSURE COMPLETION entry (lines 884–990, commit 1bdf16c), not the D3-gate entry ('e2d D3 — all 24 sessions RAN … FIRED GATE', lines 1148–1258, commit e58dfca), whose only .011-family figure is '.0117 — fires' (line 1177, an exact binomial for the steered arm 7/122, not a Fisher step). The DISPOSITION-2 gate-adjudication entry (1088–1147) contains no .011 either. The .011 IS one-sided (.0112), but its source entry is mislabelled (same mislabel in HANDOFF-2026-09-05.md §2 item 4).
+  21 CONFIRMED    Fisher paragraph: 'the disposition's `.021` is two-sided; "p ≥ .10" for the three unresolved steps holds under both'
+  22 CONFIRMED    Verification table R5: 15/29 = +.017 valid; 15/30 = .000 all-with-a-pick; 14/23 on both domains; one-sided exact binomial p = .202; breaks 1/30, 1/23; valid-only would be 1/29, 1/23
+  23 CONFIRMED    Verification table R5: d2_sessions.json `exclusion_scope: "e2a"`, 3 M excluded: idx 24 audit@forced3, idx 30 lexical:plaza@free0, idx 31 lexical:ridge@forced0; only idx 30 has a first pick
+  24 CONFIRMED    Verification table R5: `habit.secondaries` over all sessions; D3 artifact names the rule-23 domain
+  25 CONFIRMED    Verification table R6: e2a all sessions 157/187 (.840) pooled, 86/104 (.827) reward; valid-only 154/184 (.837), 84/102 (.824)
+  26 CONFIRMED    Verification table R6: D2 20/29 (.690), D3 12/23 (.522) on both domains; 1/30 vs 1/23 Fisher two-sided 1.0000; 20/29 vs 12/23 Fisher two-sided .2597
+  27 CONFIRMED    Second hold: patch's R6 '.21' reproduces under the unpooled form only (z = 1.244, p = .2136); pooled form z = 1.236, p = .2164 prints .22
+  28 CONFIRMED    Second hold: pooled form is 'the one Code used to pin the neighbouring ".85"'
+  29 CONFIRMED    Second hold: 'Reported, not reworded (`edf2574`)'
+  30 CONFIRMED    Second hold: Fisher .26 is 'the entry's own declared test for count comparisons'; 'under every variant the step is unresolved'
+  31 UNVERIFIABLE Second hold: 'folded into slip (14)'s class as a fifth unnamed test'
+       evidence: Design ledger statement; only appears in this entry (grep 'Slip (14)' → lines 268/308). Consistent with the ledger paragraph's 'one item, four instances … a fifth instance folded in'.
+  32 CONFIRMED    Four-figure report is 'from the `08a6076` hold'
+  33 CONFIRMED    Four-figure report (1–2): .840/.827 correct on all sessions (157/187, 86/104; valid-only .8370/.8235), the domain of D2 .690 and D3 .522 (`habit.secondaries`, rule 23)
+  34 CONFIRMED    Four-figure report (3): 'p = .85' for 1/30 vs 1/23 was a two-proportion z (z = .192, p = .8477); two-sided Fisher 1.0000
+  35 CONFIRMED    Four-figure report (4): 15/30 counted excluded idx 30; primary rule gives 15/29 = +.0172
+  36 CONFIRMED    'Everything else': 125 checks in all, all pass
+  37 CONFIRMED    'Everything else': readability conjuncts .574/.524 and .613/.526; comparator .534; none at 0.30
+  38 CONFIRMED    'Everything else': four marker cells and the bar (0.20 excised +.103 / in situ +.127; 0.30 excised +.141 / in situ +.062; bar .158)
+  39 CONFIRMED    'Everything else': 2·|Δ_R| = .138; five estimators span −.070 to +.103
+  40 CONFIRMED    'Everything else': paired CI (±.144)
+  41 CONFIRMED    'Everything else': composition decomposition 62% idx 12 / 38% roster truncation by the values-check's sequential decomposition A → B → C
+  42 CONFIRMED    'Everything else': degeneracy on both bases — 24 shared indices audit .025 → .047, read .133 → .155
+  43 CONFIRMED    'Everything else': s12 0/10 → 7/10; idx 1 and 5 at 10/10 both doses, carrying 58% (40/68 = 58.8%)
+  44 CONFIRMED    'Everything else': axis non-specificity R .045 vs M .023, S 0/151
+  45 CONFIRMED    'Everything else': 537 / 42 / 357 / 138 choices over 96 sessions, every read at KL = 0
+  46 CONFIRMED    'Everything else': cost ratio 2.57 / 0.54 (4.72×)
+  47 CONFIRMED    'Everything else': the .958 self-score with refit false; the 0.10 anchor (n = 4 M sessions)
+  48 CONFIRMED    Beside-note (i): D3 scoring entry says 'the marker delta does not move' and 'survive exclusion and cleaning'
+  49 CONFIRMED    Beside-note (i): the D3 scoring entry's degeneracy table is on D2's full 32 where release condition 4 wants the paired 24
+  50 UNVERIFIABLE Beside-note (i): mechanism sentence 'is 62% right'
+       evidence: Design gloss; numerically anchored to the 62% share of the composition artifact attributable to differential decidability (idx 12), which reproduces (.6213).
+  51 REFUTED      Beside-note (ii): `data/e2d/d3_excision_check.json` top-level `excised_source` reads 'committed D2 scoring'
+       evidence: Actual string is 'committed D2 scoring (not rescored)' — the passage quotes a truncation. Substance (says D2 for a D3 run) holds.
+  52 CONFIRMED    Beside-note (ii): a hardcoded string, fixed in the script at 08a6076; committed artifact untouched; nested `_source` always correct
+  53 REFUTED      Beside-note (iii): `HANDOFF-2026-09-04-design.md` §1 and §7 quote the held text; untracked
+       evidence: Untracked: yes (`git status` → `?? HANDOFF-2026-09-04-design.md`). But §1 quotes the EARLIER closure 'Sentence of record' (the pre-disposition text with 'a quarter of its short-context value … (dilution excluded) … which PROPOSAL-i inherits' — the text the values-check graded), not the 2026-09-05 disposition text the six clauses R1–R6 were applied to (that text was 'never committed' and is elsewhere); §7 contains no quotation at all, only a paraphrase ('a record channel too narrow to carry the state to the choice at any dose the apparatus can deliver'). 'Superseded by the text above' is true of both.
+  54 CONFIRMED    Ledger: Slip (12) — seven overstated glosses caught pre-commit by the values-check
+  55 CONFIRMED    Ledger: Slip (13) — design block headers carried UTC dates, one day fast from `a9e6a74` on; Code's half stands in the record-hygiene entry
+  56 CONFIRMED    Ledger: Slip (14) — one item, four instances, caught by Code's 80-figure re-verification; a fifth folded in
+  57 CONFIRMED    Ledger: 'Design count: fourteen'
+  58 CONFIRMED    Rule annotations: rule 2 and rule 21 annotated at 08a6076, verbatim from the disposition-2 entry item 6, as annotations not rewrites
+  59 CONFIRMED    'What this entry does not do': Q2 and Q3 failed, run-dose rule STOP, SCOPED, verdict tier never ran; judge-port acceptance run built never run; content-class candidate not adopted
+  60 CONFIRMED    Header/verification: 'every figure re-verified from the committed artifacts'
+
+--- closure-text: 53 claims ---
+   0 CONFIRMED    scripts/e2d_closure_verify.py reproduces results/raw/2026-09-05_e2d_closure_verify.txt (125 checks, all pass)
+   1 CONFIRMED    at f = 0.20, D2 returned STOP, SCOPED on Q2 and Q3
+   2 CONFIRMED    adopted by PI disposition before D3 existed
+   3 CONFIRMED    the verdict-tier free operant under LOCK-j never ran
+   4 CONFIRMED    Q1 passed at 3/32, exact binomial p = .878 (forced scope)
+   5 CONFIRMED    registered readability gate (median >= .70 AND 10th percentile >= .60)
+   6 CONFIRMED    .574 / .524 at 0.20
+   7 CONFIRMED    .613 / .526 at 0.30 (k = 2, criterion set)
+   8 CONFIRMED    0.20 displacement comparator at .534 (none at 0.30 — D3 ran M-only under ADDENDUM-j1)
+   9 CONFIRMED    marker imprint below the 0.158 bar in every cell and both contexts (0.20: excised +.103, in situ +.127; 0.30: excised +.141, in situ +.062)
+  10 CONFIRMED    primary within-M paired Δ+ = +.103 (n = 27, sd .40, one-sided sign test p = .061)
+  11 CONFIRMED    also failed 2·|Δ_R| = .138
+  12 CONFIRMED    five pre-declared estimators span −.070 to +.103, all below bar
+  13 CONFIRMED    The two contexts differ in magnitude (2.3× at 0.30) and the gap flips direction across dose
+  14 CONFIRMED    clean −.0121, n = 20, one-sided sign test p = .41
+  15 CONFIRMED    all-rounds +.0149, n = 24, one-sided sign test p = .27 — opposite signs, neither resolved, not averaged
+  16 REFUTED      the paired CI, ±.15
+       evidence: 1.96·paired_sd/√n = 1.96·.3295808/√20 = ±.1444 (rounds to ±.14; the entry's own verification table prints '±.144'). Only a t(19) form (2.093) gives ±.1542 -> ±.15; the text names no form.
+  17 REFUTED      the paired CI spans the bar in both directions
+       evidence: CI half-width (.144 z / .154 t) < bar .1578. Centred on −.0121: z-CI [−.1565, +.1324]; t-CI [−.1663, +.1422]. A +.158 change lies outside under both forms; −.158 lies outside under z (−.1565 > −.1578) and inside only under t. Strictly the CI does not span the bar in both directions.
+  18 CONFIRMED    apparent unpaired rise (+.038 clean, +.068 all-rounds)
+  19 CONFIRMED    62% one session decidable at 0.20 only (idx 12) and 38% roster truncation
+  20 CONFIRMED    D3 ran 24 M sessions to D2's 32
+  21 CONFIRMED    audit .000 / .023 / .047
+  22 CONFIRMED    read-marked .000 / .113 / .155
+  23 CONFIRMED    on the 24 shared indices audit .025 → .047, read .133 → .155
+  24 CONFIRMED    single resolved step (read .10→.20, Fisher exact two-sided p = .021; one-sided .011)
+  25 UNVERIFIABLE one-sided .011 — the D3-gate entry's figure
+       evidence: grep '\.011[^0-9]' RESULTS.md: the read .10→.20 p = .011 appears only at l.944, inside the 2026-09-04 'e2d CLOSURE COMPLETION — item 1 DELIVERED' entry (values-check item 4), not in the D3 GATE ADJUDICATION entry (l.1088) or the D3 RAN entry (l.1148), which carry only '.0117' (steered-arm binomial). HANDOFF-2026-09-05.md l.79 (untracked) repeats the 'D3-gate entry' attribution. Attribution doubtful; value itself confirmed.
+  26 CONFIRMED    neither .20→.30 step resolved (two-sided: audit p = .15, read p = .20; both ≥ .10 one-sided)
+  27 CONFIRMED    .20→.30 read rise carried by one index (s12: 0/10 → 7/10)
+  28 CONFIRMED    indices 1 and 5 sit at 10/10 at both doses
+  29 REFUTED      and carry 58% of the marks
+       evidence: On the 24 shared indices: (10+10)+(10+10) = 40 of 32+36 = 68 marks = 58.82%, which rounds to 59%; on all M marks D2+D3 it is 40/70 = 57.1%. 58% is a truncation of 58.8%.
+  30 CONFIRMED    D2's random arm degrades at .045 at 0.20, twice M's .023 at the same dose
+  31 CONFIRMED    free operant administered 537 times across D1–D3 (42 / 357 / 138 choices over 96 sessions)
+  32 CONFIRMED    every read insulated at KL = 0
+  33 CONFIRMED    Δ_first = +0.017 at 0.20 under the primary rule (15/29, valid sessions; 15/30 = 0.000 over all M sessions with a first pick, the domain that includes excluded idx 30)
+  34 CONFIRMED    +0.109 at 0.30 (14/23, where the two domains coincide; one-sided exact binomial p = .202)
+  35 CONFIRMED    first-pick habit-break rates of 1/30 and 1/23 (all sessions including excluded — the rule-23 secondaries domain)
+  36 CONFIRMED    Nothing above 0.30 was run
+  37 CONFIRMED    The D2 failure was legibility with coherence intact — not a coherence limit (slip 10)
+  38 CONFIRMED    V1's L48/0.20 cell (+.408) is a state-live read at the probe and a B2a dose-finding cell excluded from verdicts by V1's own pre-registration
+  39 CONFIRMED    Instrument transfer is unmeasured (the .958 is a self-score on the fit set, refit false)
+  40 REFUTED      The 0.10 anchor (n = 4 M sessions, pooled estimator) carries no marker value
+       evidence: d1_sessions.json: 4 M sessions (CONFIRMED); but marker.deltas.clean.delta_plus_within_M.delta = −0.2393743 exists (pooled over n_steered 20 / n_unsteered 20 generations, 12 probes). RESULTS.md l.1027 records it as '−0.2394 ... a different statistic and not comparable'. The artifact carries a marker value; 'no marker value' overstates 'no comparable/paired value'.
+  41 CONFIRMED    is the left end of the readability and degeneracy series only
+  42 CONFIRMED    D3's readability lacks D2's task-disjointness guarantee
+  43 CONFIRMED    alternation decay e2a .840 (pooled; reward arm .827)
+  44 CONFIRMED    → D2 M .690 → D3 M .522
+  45 CONFIRMED    valid-only e2a .837 / .824
+  46 CONFIRMED    first-pick break rate flat within e2d (1/30 vs 1/23; Fisher exact two-sided p = 1.00)
+  47 CONFIRMED    ~4× below e2a's ~.17
+  48 UNVERIFIABLE only D2→D3 is a clean dose step
+       evidence: Design judgement (e2a is a different apparatus/exclusion regime); no artifact decides it.
+  49 CONFIRMED    (.690 vs .522, Fisher exact two-sided p = .26)
+  50 CONFIRMED    degeneracy tracks displacement, not the reward direction
+  51 CONFIRMED    in-situ scoring at 2.57 vs 0.54 s per forward (4.7×, matching D2's ratio)
+  52 CONFIRMED    the clean/all-rounds sign disagreement on the dose change, flagged not averaged
+
+STANDING PROTOCOL: design block 2026-09-06 §1: every adversarial values-check of design prose is written to results/raw/ BEFORE it is reported, so the design seat reads it without relay. This file is the first under that protocol; the first check's record is data/e2d/closure_valuescheck.json + results/raw/2026-09-04_e2d_closure_valuescheck.txt.
