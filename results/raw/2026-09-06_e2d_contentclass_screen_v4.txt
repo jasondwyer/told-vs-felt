@@ -1,0 +1,13 @@
+Sun Sep  6 05:45:25 UTC 2026
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/e2d_contentclass_screen_v4.py
+  e2d 912 rounds; archive 3601 (Counter({'e2a': 1894, 'e2b': 1707}))
+  e2d vs the read, all classes: recall 0.827 precision 0.838  (TP 67 FN 14 FP 13)
+  e2d vs the read, exclusion-bearing only: recall 0.506 precision 0.774  (TP 41 FN 40 FP 12)
+  e2d predicted by class v4: {'preamble_without_content': 37, 'stuck_attractor': 3, 'task_echo': 24, 'null_response': 13, 'wrong_task': 3}   (v3: {'preamble_without_content': 37, 'stuck_attractor': 3, 'task_echo': 29, 'null_response': 13, 'wrong_task': 2})
+  per class vs read: {'null_response': (7, 6), 'stuck_attractor': (3, 0), 'preamble_without_content': (31, 6), 'task_echo': (24, 0), 'wrong_task': (2, 1)}  (marked, unmarked)
+  e2a overbreadth: all 33/1894 = 0.0174; exclusion-bearing 29 = 0.0153; advisory 4; by class {'preamble_without_content': 5, 'null_response': 13, 'stuck_attractor': 11, 'task_echo': 3, 'wrong_task': 1}; v3 hits 34
+  e2b overbreadth: all 60/1707 = 0.0351; exclusion-bearing 41 = 0.0240; advisory 19; by class {'null_response': 25, 'wrong_task': 10, 'stuck_attractor': 15, 'task_echo': 9, 'preamble_without_content': 1}; v3 hits 60
+  per-arm (unblinded after): {'M': (0.1204, 0.0768), 'R': (0.006, 0.0), 'S': (0.0585, 0.0526)}  (all, exclusion-bearing)
+  novelty floor sensitivity (declared 4): {'3': {'e2d_echo_hits': 19, 'e2d_echo_on_marked': 19, 'e2a_echo_hits': 3, 'e2b_echo_hits': 7}, '4': {'e2d_echo_hits': 24, 'e2d_echo_on_marked': 24, 'e2a_echo_hits': 3, 'e2b_echo_hits': 9}, '5': {'e2d_echo_hits': 27, 'e2d_echo_on_marked': 27, 'e2a_echo_hits': 3, 'e2b_echo_hits': 10}}
+  wrote /Users/jasondwyer/Documents/code/jspace-lab/data/e2d/contentclass_screen_v4.json
+exit 0

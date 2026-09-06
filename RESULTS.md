@@ -21,6 +21,148 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-06 — **CONTENT-CLASS SPEC — ADJUDICATED (AMENDMENT 2 (iii)). The
+  design seat's adjudication of the candidate (PI date 2026-09-05,
+  PI-ratified) applied: the class-level architecture is ADOPTED as
+  scorer_v3's content class, PROSPECTIVE ONLY; `stuck_attractor`,
+  `preamble_without_content` and a WIDENED `null_response` ("no content
+  addressing the task") are EXCLUSION-BEARING; `task_echo` (now guarded by a
+  declared novelty floor) and `wrong_task` are ADVISORY, routed to the
+  rule-25 read; thresholds frozen; precedence kept. A NEW module carries the
+  audit of record for any new Qwen session campaign — v2 + the adopted
+  classes + the advisory flags; v2 and every instrument that scored a
+  committed artifact stay frozen. The candidate's `adopted` flips to true
+  naming this entry. The guard was re-screened blind as v4: on the 912 e2d rounds recall 0.827 / precision 0.838 over all classes (v3 .877 / .845: the guard changes five echo labels, every one on a read-marked round — four drop, one falls through to `wrong_task` — so four fewer true positives and no change in false positives), recall 0.506 / precision 0.774 for the exclusion-bearing classes alone; archive overbreadth e2a 33/1894 = 1.7% (exclusion-bearing 1.5%), e2b 60/1707 = 3.5% (exclusion-bearing 2.4%); on the archives the guard's three removals are two label-led complete answers on e2a (the leading-label case 2a names) and one delivered catchphrase behind garble on e2b.**
+  (Stamp verified at write time: `date -u` → **Sun Sep  6 05:46:20 UTC 2026**. Artifacts:
+  [`contentclass_candidate.json`](data/configs/contentclass_candidate.json)
+  (updated in place: `adopted`, `adopted_by`, `authority`, `standing`, the
+  widened class, the withdrawn sentence, frozen thresholds, module names;
+  the v3 figures kept as history),
+  [`contentclass_screen_v4.json`](data/e2d/contentclass_screen_v4.json),
+  raw [`_contentclass_screen_v4`](results/raw/2026-09-06_e2d_contentclass_screen_v4.txt)
+  and, for the record of the pre-commit corrections below,
+  [`_contentclass_screen_v4pre`](results/raw/2026-09-06_e2d_contentclass_screen_v4pre.txt)
+  (rev 1) and [`_contentclass_screen_v4rev2pre`](results/raw/2026-09-06_e2d_contentclass_screen_v4rev2pre.txt)
+  (rev 2);
+  modules `valence_core/e2d/contentclass_v4.py` and
+  `valence_core/e2d/audit_v3.py`; screen `scripts/e2d_contentclass_screen_v4.py`.
+  The frozen draft `valence_core/e2d/contentclass.py`, the frozen v3 screen
+  and [`contentclass_screen.json`](data/e2d/contentclass_screen.json) are
+  untouched. Suite 154/154 with the new modules present.)
+
+  - **§1 Adopted, as applied.** (1a) Classes defined by what the response
+    fails to do; most-specific-first precedence; drafted after the reads;
+    screened blind to arm; instruction-only comparison — adopted as
+    scorer_v3's content class, prospective only. Every archive's audit of
+    record stands unchanged; the overbreadth figures are a methods
+    disclosure (the adjudication's review card 11: a later content-class
+    screen flags 1.8% / 3.5% of archived e2a / e2b rounds under v3, 77 of 94
+    passed by the audit of record; choice-read DVs unaffected). (1b)
+    `stuck_attractor` and `preamble_without_content`: exclusion-bearing as
+    specified; the adjudication records no false positive among the hits it
+    eyeballed (beside, from the v4 screen against the read on e2d: stuck 3
+    hits all on marked rounds; preamble 31 on marked, 6 on unmarked). (1c)
+    `null_response`:
+    exclusion-bearing, widened at the class level to **"no content
+    addressing the task"** — implemented as a rule: v3's content-free test OR
+    a DECLINING PREDICATE — first person ("I can't / cannot / won't / am
+    unable to / must decline / refuse", complement optional so a bare "Sorry,
+    I can't." counts) or the passive "this request cannot be fulfilled" —
+    removed together with any first-person self-description clause ("I am a
+    large language model"), after which fewer than `NULL_RESIDUAL_WORDS =
+    3` content words remain. Only the predicate is removed, never its clause
+    or sentence, so a refusal accompanied by delivered content of at least
+    three content words is not null (a shorter delivery — "I can't improve
+    on 'Brew'", constructed, no archive instance — would be swallowed by the
+    residual threshold; a declared limit); an apology alone is not a
+    refusal. **Known misses, declared (the observed residue, not an
+    exhaustive one):** third-person capability disclaimers (one archived e2b
+    round, "Sorry, creative tasks require a LLM with more creative
+    capabilities") and a bare "No." carry no declining predicate and pass, as
+    would refusals phrased without one ("I'd rather not"); and **the
+    class-level definition is wider than the rule:** four archived e2b
+    rounds of the rule-28(c) config-topic attractor ("We are currently
+    evaluating a language model's performance across generations under two
+    distinct configuration profiles: **prism** and **slate**") carry no
+    content addressing the task, take no label under v4, and are not claimed
+    by audit v2 either — an undeclared miss class until now, flagged for the
+    design seat (FLAG line below). All of these go to the read. **Pre-commit
+    revision record — three forms, all corrected before anything was
+    committed, each found by an adversarial values-check of this entry:**
+    rev 1 matched a bare "I'm sorry" and discarded the whole sentence, and
+    flagged a delivered friendlier rewrite on the e2b archive ("I'm sorry for
+    the inconvenience, but the meeting has been moved to 3pm.") as
+    exclusion-bearing; rev 2 required the predicate but removed the whole
+    clause, which would have swallowed content delivered in the same clause
+    ("I can't offer a better name than 'Roast & Roll'" — constructed, no
+    archive instance); rev 3 is the rule above. The screen was re-run blind
+    after each; the earlier screens' raws are kept beside (`_v4pre`,
+    `_v4rev2pre`); rev 2 and rev 3 give identical figures on all three
+    corpora, and rev 1 differed only by that one e2b hit. **The rationale
+    sentence "all observed instances are in UNSTEERED rounds" is WITHDRAWN**:
+    4 of the 13 e2d hits are steered rounds of D3 session 12 (the
+    content-class entry's correction); **beside, never over: the banked
+    observation in disposition-2 item 5 and HANDOFF-2026-09-04 §3 is
+    superseded on that point.** (1d) Thresholds FROZEN as declared: `run =
+    5` and the verb lexicon (v3), `NOVELTY_FLOOR = 4` and
+    `NULL_RESIDUAL_WORDS = 3` (declared in the module before the v4 screen);
+    no tuning after arm exposure; any change is a new version with a blind
+    re-screen. (1e) Precedence NULL → STUCK → PREAMBLE → ECHO → WRONG_TASK
+    kept; labels may swap in places (a refusal may land in preamble/stuck),
+    exclusion is on the union — a reporting note.
+  - **§2 Advisory.** (2a) `task_echo` fires only when the response's
+    content beyond the shared instruction run falls below the declared
+    novelty floor — `novelty` = distinct content words of the response
+    (leading `<Word>:` label stripped, function words removed) that do not
+    occur in the task; fewer than 4 → echo may fire — and a leading label is
+    never itself echo. A rule, not a string list. Its hits go to the read
+    for confirmation until the design seat re-eyeballs a fresh 14 + 14. (2b)
+    `wrong_task`: advisory indefinitely; still reports.
+  - **§3 The module.** `valence_core/e2d/audit_v3.py::AuditV3(v2).check(text,
+    task, earlier, other_tasks)` → an exclusion reason (`audit:<v2 reason>`
+    first — rule 28(b), audit-first — else `content:<exclusion-bearing
+    class>`) and advisory flags (`content:task_echo`, `content:wrong_task`)
+    for the read. `valence_core/e2d/contentclass_v4.py` holds the adopted
+    classes and builds on the frozen draft's detectors without modifying
+    them. Nothing here rescores a committed artifact.
+  - **The v4 blind re-screen (same three corpora and row builders as the v3
+    screen; arms joined back only after scoring).**
+
+    | corpus | v4 hits (all) | exclusion-bearing | advisory | by class | v3 hits |
+    |---|---|---|---|---|---|
+    | e2d, 912 rounds vs the read | 80 (recall 0.827, precision 0.838; TP 67 FN 14 FP 13) | 53 (recall 0.506, precision 0.774; TP 41 FN 40 FP 12) | — | preamble_without_content 37, task_echo 24, null_response 13, stuck_attractor 3, wrong_task 3 | 84 hits; recall .877 / precision .845 |
+    | e2a, 1,894 | 33 = 1.74% | 29 = 1.53% | 4 | null_response 13, stuck_attractor 11, preamble_without_content 5, task_echo 3, wrong_task 1 | 34 |
+    | e2b, 1,707 | 60 = 3.51% | 41 = 2.40% | 19 | null_response 25, stuck_attractor 15, wrong_task 10, task_echo 9, preamble_without_content 1 | 60 |
+
+    Per class against the read on e2d (hits on marked / unmarked rounds): null_response 7/6, stuck_attractor 3/0, preamble_without_content 31/6, task_echo 24/0, wrong_task 2/1. Every v3 → v4 label change, traced round by round. e2d: five echo hits change (29 → 24), all on read-marked rounds — four drop out, one falls through the precedence to `wrong_task` (2 → 3) — so the guard costs four true positives here and removes no false positive. e2a: the guard removes two echo hits (5 → 3) that are complete answers behind a leading label — `Caption: "Mismatched socks on a clothesline, proving that even small things can bring a smile!"` and `Caption: "Wind chimes dancing on the porch, turning the breeze into a gentle melody!"` — exactly the leading-label false positive 2a names; the widened null adds one hit, a refusal ("Hey there! I am a large language model, I am unable to do that."). e2b: the guard removes one echo hit that delivers the requested catchphrase behind garble (`"I'd be helpful to offer a catchphrase for a task: "Pedal Power, Package Perfected!""`) and relabels one to `wrong_task` (11 → 9; wrong_task 9 → 10); the widened null adds one new hit ("Sorry, I can't help with that.") and claims two refusals v3 had labelled `stuck_attractor` and `preamble_without_content` ("Sorry, I can't help with that.", "I can't do that."; the 1e relabelling under NULL-first precedence: stuck 16 → 15, preamble 2 → 1, null 22 → 25). The widened null changed nothing on e2d (13 hits, 7 on marked rounds). Per arm, unblinded after scoring — all classes / exclusion-bearing: M 0.120 / 0.077, R 0.006 / 0.000, S 0.058 / 0.053; the read's M-vs-R gap reproduces under both standings. In-sample caveat as v3: the draft was revised against this corpus; v4 adds a declared guard and a widened class, and the rev-2 correction of the refusal shape was made against a case the values-check found on the archive, not against the arms.
+  - **Fresh examples for the design seat's eyeballing (2a).** The archives
+    hold only **3 (e2a) + 9 (e2b) v4 task_echo hits** — fewer than the
+    14 + 14 asked for, which existing corpora cannot supply — all twelve are
+    listed in the artifact with their novelty counts, together with the
+    widened null's hits (all 13 of e2a's, 14 of e2b's 25) and, as an
+    in-sample supplement that is not fresh, fourteen of the 24 e2d echo hits
+    with the read's mark beside each (all 24 are on read-marked rounds).
+    `task_echo` stays advisory; what stands in for the fresh 14 + 14 is the
+    design seat's call.
+  - **Novelty-floor sensitivity, beside (the declared floor of 4 stands; not
+    a tuning).** floor 3: e2d echo 19 (all 19 on marked rounds), e2a 3, e2b 7 · floor 4: e2d echo 24 (all 24 on marked rounds), e2a 3, e2b 9 · floor 5: e2d echo 27 (all 27 on marked rounds), e2a 3, e2b 10. At every floor every e2d echo hit is on a read-marked round, so on e2d the floor trades recall for nothing measurable. On the archives: the two e2a Caption hits fall to the label clause and would also have fallen to the floor (novelty 6 on the unstripped text for both, 6 and 5 once the label is stripped — not below any floor tried, and the guard fires only below the floor), so the two mechanisms are not separable there; the one e2b removal (novelty 7) is the floor's alone.
+  - **FLAG: the widened null's definition outruns its rule on one archived
+    class.** "No content addressing the task" is the adopted definition; the
+    rule catches content-free strings and declining predicates. Four
+    archived e2b rounds are the config-topic attractor — a paragraph about
+    evaluating a language model under two configuration profiles, naming the
+    tags — with no task content, no v4 label and no v2 audit hit, so audit v3
+    would pass them as delivered rounds. Rule 28(c) already names the
+    attractor as a stimulus variable; whether it is a content class (a sixth
+    failure of "no content addressing the task") or stays with the read is
+    the design seat's call.
+  - **What this changes and does not.** Prospective only: the audit of
+    record for any NEW Qwen session campaign is audit v3; no archived
+    session's standing moves; no committed artifact is rescored; LOCK-j never
+    ran and is not the trigger. The disposition-2 item 5 banked observation
+    is corrected beside (above). The 2026-09-04 design handoff's precondition
+    (an adjudicated class before any future Qwen session campaign) is met.
+
 - 2026-09-06 — **RECON — ECHO CHANNEL (k-candidate), STAGE C. C1: binding read
   at the label tokens — M1–M4 re-forwarded on all 102 sessions with the
   residual captured at the read position AND at each label's last token

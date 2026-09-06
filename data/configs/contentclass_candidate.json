@@ -1,16 +1,16 @@
 {
- "spec": "scorer_v3 content class -- CANDIDATE, NOT ADOPTED",
- "version": "content-class-draft-v3",
- "authority": "PROPOSAL-j v1.2 AMENDMENT 2 (iii) + disposition-2 item 5. Drafted by Code, screened for overbreadth, submitted for design-instance adjudication. It is not the audit of record and it excludes no session.",
+ "spec": "scorer_v3 content class -- ADOPTED (design adjudication 2026-09-05, PI-ratified); prospective only",
+ "version": "content-class-draft-v3 -> adopted as content-class-v4 rev 3 (echo guard; widened null: declining-predicate refusal shape, predicate-only removal)",
+ "authority": "PROPOSAL-j v1.2 AMENDMENT 2 (iii) + disposition-2 item 5. Drafted by Code, screened for overbreadth, ADJUDICATED by the design seat 2026-09-05 and PI-ratified. It is the content half of audit v3, the audit of record for any NEW Qwen session campaign (valence_core/e2d/audit_v3.py); it rescores no committed artifact.",
  "written_after_the_read": "all three rule-25 reads (D1, D2, D3) were completed and committed before this was drafted, so the detector could not hand the read its categories -- the ordering AMENDMENT 2 (iii) sets",
  "classes": {
   "task_echo": "reproduces the INSTRUCTION instead of performing it",
   "preamble_without_content": "announces an answer and terminates before delivering one",
   "wrong_task": "performs or restates a different task than the one posed",
   "stuck_attractor": "repeats an earlier response rather than answering",
-  "null_response": "carries no propositional content at all [NEW CANDIDATE]"
+  "null_response": "carries no content addressing the task [ADOPTED, widened 1c: content-free strings and refusals are one failure]"
  },
- "null_response_rationale": "banked by disposition-2 item 5. Three observed forms -- [MENTAL_BLOCK], the literal word None, a bare code fence -- and defined as content-free response rather than as those three strings, so a fourth form is caught instead of becoming a sixth class. All observed instances are in UNSTEERED rounds.",
+ "null_response_rationale": "Banked by disposition-2 item 5; widened at the class level by the 2026-09-05 adjudication to 'no content addressing the task', so refusals and content-free strings ('* * *', '<answer>', a bare fence, 'None', '[MENTAL_BLOCK]') fall under one failure rather than five strings and a sixth class. WITHDRAWN (1c): the sentence 'All observed instances are in UNSTEERED rounds' -- 4 of 13 e2d hits are steered rounds of D3 session 12; the banked observation in disposition-2 item 5 and HANDOFF-2026-09-04 section 3 is superseded on that point, beside, never over.",
  "two_confounds_the_screen_found_and_fixed": [
   {
    "draft": "v1 -> v2",
@@ -83,6 +83,39 @@
   "that wrong_task is reliable: it is the weakest detector, needs the task pool to match against, and cannot see a semantically wrong answer that shares no wording",
   "that these thresholds are final -- run=5 and the verb lexicon are the first values that screened acceptably, not optimised ones"
  ],
- "screen_artifact": "data/e2d/contentclass_screen.json",
- "implementation": "valence_core/e2d/contentclass.py"
+ "screen_artifact": "data/e2d/contentclass_screen_v4.json (v4, adopted); v3 draft screen at data/e2d/contentclass_screen.json",
+ "implementation": "valence_core/e2d/contentclass_v4.py (adopted, builds on the frozen draft valence_core/e2d/contentclass.py); audit of record valence_core/e2d/audit_v3.py",
+ "adopted": true,
+ "adopted_by": {
+  "entry": "CONTENT-CLASS SPEC \u2014 ADJUDICATED (AMENDMENT 2 (iii))",
+  "results_md": "RESULTS.md, 2026-09-06 (Code stamp); design adjudication authored PI date 2026-09-05",
+  "ratified": "PI, 2026-09-05 (PI clock)",
+  "scope": "PROSPECTIVE ONLY: applies to new Qwen session campaigns; every archive's audit of record stands unchanged; the overbreadth figures are a methods disclosure (review card 11)"
+ },
+ "standing": {
+  "exclusion_bearing": [
+   "stuck_attractor",
+   "preamble_without_content",
+   "null_response"
+  ],
+  "advisory": {
+   "task_echo": "pending a class-level guard (implemented as content-class-v4, re-screened blind; exclusion-bearing only after the design seat re-eyeballs a fresh 14 + 14)",
+   "wrong_task": "indefinitely; the rule-25 read is its arbiter; it still reports"
+  }
+ },
+ "thresholds_frozen": {
+  "run": 5,
+  "verb_lexicon": "v3",
+  "NOVELTY_FLOOR": 4,
+  "NULL_RESIDUAL_WORDS": 3,
+  "rule": "1d: frozen as declared; no tuning after arm exposure; any change is a new version with a blind re-screen"
+ },
+ "precedence": "NULL -> STUCK -> PREAMBLE -> ECHO -> WRONG_TASK (1e, kept; labels may swap in places, exclusion is on the union -- a reporting note)",
+ "module": {
+  "content_class": "valence_core/e2d/contentclass_v4.py (builds on the frozen draft valence_core/e2d/contentclass.py)",
+  "audit_of_record": "valence_core/e2d/audit_v3.py = e2b_audit_v2 + exclusion-bearing classes + advisory flags routed to the read",
+  "v4_screen": "scripts/e2d_contentclass_screen_v4.py -> data/e2d/contentclass_screen_v4.json"
+ },
+ "v3_history": "the v3 figures below (performance, two confounds, what Code does not claim) are the screened draft as adjudicated; kept as history",
+ "null_response_rule_as_implemented": "content-free (v3 test) OR a DECLINING PREDICATE -- first person ('I can't / cannot / won't / am unable to / must decline / refuse', complement optional so a bare 'Sorry, I can't.' counts) or the passive '(this request / that) cannot be fulfilled' -- removed together with any first-person self-description clause ('I am a large language model'), after which fewer than NULL_RESIDUAL_WORDS = 3 content words remain. Only the PREDICATE is removed, never its clause or sentence, so a refusal accompanied by delivered content is not null. An apology alone is not a refusal. KNOWN MISSES, declared: third-person capability disclaimers ('Sorry, creative tasks require a LLM with more creative capabilities' -- one archived e2b round) and a bare 'No.' carry no declining predicate and go to the read. Revision record, all pre-commit, found by adversarial values-checks: rev 1 matched a bare 'I'm sorry' and flagged a delivered friendlier rewrite on the e2b archive; rev 2 required the predicate but removed the whole clause, which would have swallowed content delivered in the same clause (no archive instance; constructed cases); rev 3 as above. Raw logs of the earlier screens kept: results/raw/2026-09-06_e2d_contentclass_screen_v4pre.txt (rev 1), _v4rev2pre.txt (rev 2)."
 }

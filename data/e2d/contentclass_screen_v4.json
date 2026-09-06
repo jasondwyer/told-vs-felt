@@ -1,0 +1,442 @@
+{
+ "spec_version": "content-class-v4 rev 3 (adopted 2026-09-05; echo guard advisory pending re-eyeball; declining-predicate refusal shape, predicate-only removal)",
+ "blind_to_arm": true,
+ "declared_before_screen": {
+  "NOVELTY_FLOOR": 4,
+  "NULL_RESIDUAL_WORDS": 3,
+  "run": 5,
+  "verb_lexicon": "v3, frozen"
+ },
+ "standing": {
+  "exclusion_bearing": [
+   "null_response",
+   "stuck_attractor",
+   "preamble_without_content"
+  ],
+  "advisory": [
+   "task_echo",
+   "wrong_task"
+  ]
+ },
+ "e2d": {
+  "n": 912,
+  "all_classes_vs_read": {
+   "tp": 67,
+   "fn": 14,
+   "fp": 13,
+   "tn": 818,
+   "recall": 0.8271604938271605,
+   "precision": 0.8375
+  },
+  "exclusion_bearing_vs_read": {
+   "tp": 41,
+   "fn": 40,
+   "fp": 12,
+   "tn": 819,
+   "recall": 0.5061728395061729,
+   "precision": 0.7735849056603774
+  },
+  "predicted_by_class": {
+   "preamble_without_content": 37,
+   "stuck_attractor": 3,
+   "task_echo": 24,
+   "null_response": 13,
+   "wrong_task": 3
+  },
+  "v3_for_delta": {
+   "predicted_by_class": {
+    "preamble_without_content": 37,
+    "stuck_attractor": 3,
+    "task_echo": 29,
+    "null_response": 13,
+    "wrong_task": 2
+   }
+  },
+  "in_sample_caveat": "the v3 draft was revised against this corpus; v4 adds a declared guard and a widened class without further tuning",
+  "per_class_vs_read": {
+   "null_response": {
+    "hits_on_marked_rounds": 7,
+    "hits_on_unmarked_rounds": 6,
+    "precision_vs_read": 0.5384615384615384
+   },
+   "stuck_attractor": {
+    "hits_on_marked_rounds": 3,
+    "hits_on_unmarked_rounds": 0,
+    "precision_vs_read": 1.0
+   },
+   "preamble_without_content": {
+    "hits_on_marked_rounds": 31,
+    "hits_on_unmarked_rounds": 6,
+    "precision_vs_read": 0.8378378378378378
+   },
+   "task_echo": {
+    "hits_on_marked_rounds": 24,
+    "hits_on_unmarked_rounds": 0,
+    "precision_vs_read": 1.0
+   },
+   "wrong_task": {
+    "hits_on_marked_rounds": 2,
+    "hits_on_unmarked_rounds": 1,
+    "precision_vs_read": 0.6666666666666666
+   }
+  },
+  "by_arm_unblinded_after": {
+   "M": {
+    "hits_all": 69,
+    "hits_exclusion_bearing": 44,
+    "rounds": 573,
+    "rate_all": 0.12041884816753927,
+    "rate_exclusion_bearing": 0.07678883071553229
+   },
+   "R": {
+    "hits_all": 1,
+    "hits_exclusion_bearing": 0,
+    "rounds": 168,
+    "rate_all": 0.005952380952380952,
+    "rate_exclusion_bearing": 0.0
+   },
+   "S": {
+    "hits_all": 10,
+    "hits_exclusion_bearing": 9,
+    "rounds": 171,
+    "rate_all": 0.05847953216374269,
+    "rate_exclusion_bearing": 0.05263157894736842
+   }
+  }
+ },
+ "archive_overbreadth": {
+  "e2a": {
+   "n": 1894,
+   "hits_all": 33,
+   "rate_all": 0.017423442449841606,
+   "hits_exclusion_bearing": 29,
+   "rate_exclusion_bearing": 0.015311510031678986,
+   "hits_advisory": 4,
+   "rate_advisory": 0.0021119324181626186,
+   "by_class": {
+    "preamble_without_content": 5,
+    "null_response": 13,
+    "stuck_attractor": 11,
+    "task_echo": 3,
+    "wrong_task": 1
+   },
+   "v3_hits_for_delta": 34
+  },
+  "e2b": {
+   "n": 1707,
+   "hits_all": 60,
+   "rate_all": 0.0351493848857645,
+   "hits_exclusion_bearing": 41,
+   "rate_exclusion_bearing": 0.02401874633860574,
+   "hits_advisory": 19,
+   "rate_advisory": 0.011130638547158758,
+   "by_class": {
+    "null_response": 25,
+    "wrong_task": 10,
+    "stuck_attractor": 15,
+    "task_echo": 9,
+    "preamble_without_content": 1
+   },
+   "v3_hits_for_delta": 60
+  }
+ },
+ "fresh_examples_for_eyeballing": {
+  "e2a": {
+   "task_echo_v4_hits_total": 3,
+   "task_echo": [
+    {
+     "task": "Give a one-sentence picture of a bakery window at the end of the day.",
+     "text": "Give a one-skeleton picture of a bakery window at the end of",
+     "novelty": 1
+    },
+    {
+     "task": "Give a one-sentence description of the scent of clean laundry.",
+     "text": "Give a one-skeleton description of the actual scent of clean laundry.",
+     "novelty": 2
+    },
+    {
+     "task": "In a single sentence, describe a bakery's window at day's end.",
+     "text": "In a single sentence, describe a bakery's window at day's end.",
+     "novelty": 0
+    }
+   ],
+   "null_response_v4_hits_total": 13,
+   "null_response": [
+    {
+     "task": "Write one sentence about a bakery window just before closing.",
+     "text": "* * *"
+    },
+    {
+     "task": "Suggest a name for a small coffee cart.",
+     "text": "<answer>"
+    },
+    {
+     "task": "Propose an email subject line announcing a found umbrella.",
+     "text": "```"
+    },
+    {
+     "task": "Suggest a title for an article about community repair caf\u00e9s.",
+     "text": "```"
+    },
+    {
+     "task": "Suggest a subject line for an email about a found umbrella.",
+     "text": "```"
+    },
+    {
+     "task": "Propose a name for a little mobile coffee cart.",
+     "text": "```"
+    },
+    {
+     "task": "Write a one-sentence caption for a photo of a ferry crossing at dawn.",
+     "text": "```"
+    },
+    {
+     "task": "In a single sentence, describe how wind chimes sound.",
+     "text": "```"
+    },
+    {
+     "task": "Offer a catchphrase for a cycle courier outfit.",
+     "text": "Hey there! I am a large language model, I am unable to do that."
+    },
+    {
+     "task": "Write one sentence capturing the sound of chimes in a breeze.",
+     "text": "```"
+    },
+    {
+     "task": "Suggest a name for a small coffee cart.",
+     "text": "```"
+    },
+    {
+     "task": "Draft a one-line invitation to an informal evening of board games.",
+     "text": "```"
+    },
+    {
+     "task": "Write one sentence capturing the smell of just-washed laundry.",
+     "text": "\""
+    }
+   ]
+  },
+  "e2b": {
+   "task_echo_v4_hits_total": 9,
+   "task_echo": [
+    {
+     "task": "Write one sentence about what it is like to walk across gravel.",
+     "text": "Write one sentence about what it is more like to walk across gravel.",
+     "novelty": 0
+    },
+    {
+     "task": "Draft a one-line thank-you note for the loan of a book.",
+     "text": "Write one corruption error.",
+     "novelty": 3
+    },
+    {
+     "task": "What subject line fits an email about an umbrella left behind?",
+     "text": "Write one sentence about what it is more like to",
+     "novelty": 3
+    },
+    {
+     "task": "Propose a name for a little mobile coffee cart.",
+     "text": "The most versatile name for a little mobile coffee cart is:",
+     "novelty": 1
+    },
+    {
+     "task": "Describe the sound of wind chimes in one sentence.",
+     "text": "Describe the sound of wind chimes in one sentence.",
+     "novelty": 0
+    },
+    {
+     "task": "In one courteous sentence, ask to borrow a stapler.",
+     "text": "10. In one courteous sentence, ask to borrow a",
+     "novelty": 0
+    },
+    {
+     "task": "In a single sentence, describe a bakery's window at day's end.",
+     "text": "In a single sentence, describe a bakery's window at day's end.",
+     "novelty": 0
+    },
+    {
+     "task": "One sentence to caption a photo of unpaired socks drying on a line.",
+     "text": "One sentence to caption a model output.",
+     "novelty": 2
+    },
+    {
+     "task": "Compose a single friendly sentence inviting people to games night.",
+     "text": "Compose a single friendly sentence inviting people to friendly games night.",
+     "novelty": 0
+    }
+   ],
+   "null_response_v4_hits_total": 25,
+   "null_response": [
+    {
+     "task": "Give a one-sentence description of footsteps on a gravel path.",
+     "text": "Sorry, I can't help with that."
+    },
+    {
+     "task": "Suggest a subject line for an email about a found umbrella.",
+     "text": "Sorry, I can't help with that."
+    },
+    {
+     "task": "Compose a single welcoming sentence to open a neighborhood newsletter.",
+     "text": "\""
+    },
+    {
+     "task": "Describe the sound of wind chimes in one sentence.",
+     "text": "I can't do that."
+    },
+    {
+     "task": "Propose a name for a little mobile coffee cart.",
+     "text": "```"
+    },
+    {
+     "task": "In a single sentence, describe the experience of walking on gravel.",
+     "text": "```"
+    },
+    {
+     "task": "Caption in one sentence: mismatched socks hanging on a clothesline.",
+     "text": "```"
+    },
+    {
+     "task": "Propose an email subject line announcing a found umbrella.",
+     "text": "```"
+    },
+    {
+     "task": "In one sentence, invite friends to a relaxed board-game night.",
+     "text": "```"
+    },
+    {
+     "task": "What slogan would suit a bicycle delivery service?",
+     "text": "```"
+    },
+    {
+     "task": "Compose a single welcoming sentence to open a neighborhood newsletter.",
+     "text": "```"
+    },
+    {
+     "task": "Reword this note softly: Do not leave dishes in the sink.",
+     "text": "```"
+    },
+    {
+     "task": "Soften the tone of this notice: The meeting has been moved to 3pm.",
+     "text": "```"
+    },
+    {
+     "task": "Compose a single polite sentence asking a colleague for their stapler.",
+     "text": "```"
+    }
+   ]
+  },
+  "e2d_supplement_in_sample": {
+   "task_echo_v4_hits_total": 24,
+   "task_echo": [
+    {
+     "task": "In one sentence, thank someone for lending you a book.",
+     "text": "In one sentence, thank someone for lending you a book.",
+     "novelty": 0,
+     "read_marked": true
+    },
+    {
+     "task": "One sentence to caption a photo of unpaired socks drying on a line.",
+     "text": "\u201cOne sentence to caption a photo of unpaired socks drying on a line.\u201d",
+     "novelty": 0,
+     "read_marked": true
+    },
+    {
+     "task": "Describe the sound of wind chimes in one sentence.",
+     "text": "\u201cDescribe the language of wind chimes in one sentence.\u201d",
+     "novelty": 1,
+     "read_marked": true
+    },
+    {
+     "task": "Compose a single friendly sentence inviting people to games night.",
+     "text": "\u201cCompose a single friendly sentence inviting people to games night.\u201d",
+     "novelty": 0,
+     "read_marked": true
+    },
+    {
+     "task": "In a single sentence, describe how fresh laundry smells.",
+     "text": "\u201cPrompt: In a parrot-like echo, describe how fresh laundry smells.\u201d",
+     "novelty": 3,
+     "read_marked": true
+    },
+    {
+     "task": "Soften this kitchen notice: Do not leave dishes in the sink.",
+     "text": "\u201cPrompt: Soften this kitchen notice: Do not under any circumstances leave dishes in the sink.\u201d",
+     "novelty": 1,
+     "read_marked": true
+    },
+    {
+     "task": "In a single sentence, describe a bakery's window at day's end.",
+     "text": "\u201cIn a single sentence, describe a bakery's window at day's end.\u201d",
+     "novelty": 0,
+     "read_marked": true
+    },
+    {
+     "task": "What slogan would suit a bicycle delivery service?",
+     "text": "\u201cPrompt: What slogan would suit a bicycle delivery service?\u201d",
+     "novelty": 0,
+     "read_marked": true
+    },
+    {
+     "task": "Offer a subject line for a lost-and-found email about an umbrella.",
+     "text": "\u201cPrompt: Offer a subject line for a lost-and-found email about a fire extinguisher.\u201d",
+     "novelty": 2,
+     "read_marked": true
+    },
+    {
+     "task": "Describe a bakery window at closing time in one sentence.",
+     "text": "Describe a bakery window at echoing the morning routine.",
+     "novelty": 3,
+     "read_marked": true
+    },
+    {
+     "task": "In one courteous sentence, ask to borrow a stapler.",
+     "text": "In one courteous sentence, ask to borrow a stapler.",
+     "novelty": 0,
+     "read_marked": true
+    },
+    {
+     "task": "In one sentence, thank someone for lending you a book.",
+     "text": "In one sentence, thank someone for lending you a book.",
+     "novelty": 0,
+     "read_marked": true
+    },
+    {
+     "task": "Offer a catchphrase for a cycle courier outfit.",
+     "text": "In one sentence, the answer is:",
+     "novelty": 2,
+     "read_marked": true
+    },
+    {
+     "task": "One sentence to caption a photo of unpaired socks drying on a line.",
+     "text": "\u201cOne sentence to caption a photo of unpaired socks drying on a line.\u201d",
+     "novelty": 0,
+     "read_marked": true
+    }
+   ]
+  }
+ },
+ "novelty_floor_sensitivity_beside": {
+  "declared": 4,
+  "not_a_tuning": true,
+  "by_floor": {
+   "3": {
+    "e2d_echo_hits": 19,
+    "e2d_echo_on_marked": 19,
+    "e2a_echo_hits": 3,
+    "e2b_echo_hits": 7
+   },
+   "4": {
+    "e2d_echo_hits": 24,
+    "e2d_echo_on_marked": 24,
+    "e2a_echo_hits": 3,
+    "e2b_echo_hits": 9
+   },
+   "5": {
+    "e2d_echo_hits": 27,
+    "e2d_echo_on_marked": 27,
+    "e2a_echo_hits": 3,
+    "e2b_echo_hits": 10
+   }
+  }
+ }
+}
