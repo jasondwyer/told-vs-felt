@@ -99,12 +99,18 @@ def kfold_auc(X: np.ndarray, y: np.ndarray, groups: Sequence, k: int = 10,
 
 def kfold_shuffle_null(X: np.ndarray, y: np.ndarray, groups: Sequence,
                        n_shuffles: int = 200, k: int = 10,
-                       seed: int = 20260905) -> np.ndarray:
-    rng = np.random.default_rng(seed)
+                       fold_seed: int = 20260905,
+                       perm_seed: int | None = None) -> np.ndarray:
+    """Label-shuffle null of the grouped k-fold AUC, on the SAME folds as the
+    statistic: `fold_seed` must be the seed the statistic's `kfold_auc` used;
+    the permutations draw from `perm_seed` (a separate stream). Corrected
+    2026-09-05 (Stage C review): the first form seeded the folds from the
+    permutation seed, so statistic and null ran on different partitions."""
+    rng = np.random.default_rng(fold_seed if perm_seed is None else perm_seed)
     y = np.asarray(y)
     out = np.zeros(n_shuffles, dtype=np.float64)
     for i in range(n_shuffles):
-        out[i] = kfold_auc(X, rng.permutation(y), groups, k, seed)
+        out[i] = kfold_auc(X, rng.permutation(y), groups, k, fold_seed)
     return out
 
 

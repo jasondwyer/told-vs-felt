@@ -117,15 +117,25 @@ class MaskedPrefixRead:
     top1_id: int
     top1_is_label: bool
     resid_last: dict[int, np.ndarray] = field(default_factory=dict)
+    #: Stage C: residuals at DECLARED positions, [len(capture_positions), D]
+    #: per layer, rows in `capture_positions` order (the read position is
+    #: always among them; `resid_last` is its row).
+    resid_at: dict[int, np.ndarray] = field(default_factory=dict)
+    capture_positions: tuple[int, ...] = ()
 
     def as_dict(self) -> dict:
-        return {"logit_a": self.logit_a, "logit_b": self.logit_b,
-                "logprob_a": self.logprob_a, "logprob_b": self.logprob_b,
-                "p_a": self.p_a, "p_b": self.p_b,
-                "label_mass": self.label_mass, "pick": self.pick,
-                "top1_id": self.top1_id, "top1_is_label": self.top1_is_label,
-                "resid_sha16_by_layer": {int(l): sha16_arr(v)
-                                         for l, v in self.resid_last.items()}}
+        d = {"logit_a": self.logit_a, "logit_b": self.logit_b,
+             "logprob_a": self.logprob_a, "logprob_b": self.logprob_b,
+             "p_a": self.p_a, "p_b": self.p_b,
+             "label_mass": self.label_mass, "pick": self.pick,
+             "top1_id": self.top1_id, "top1_is_label": self.top1_is_label,
+             "resid_sha16_by_layer": {int(l): sha16_arr(v)
+                                      for l, v in self.resid_last.items()}}
+        if self.resid_at:
+            d["capture_positions"] = list(self.capture_positions)
+            d["resid_at_sha16_by_layer"] = {int(l): sha16_arr(v)
+                                            for l, v in self.resid_at.items()}
+        return d
 
 
 @dataclass
@@ -176,7 +186,8 @@ class EchoPair:
 
 
 def _view(res: LastForwardResult, ia: int, ib: int, label_a: str,
-          label_b: str) -> MaskedPrefixRead:
+          label_b: str, positions: Sequence[int] = (),
+          read_position: int | None = None) -> MaskedPrefixRead:
     lg = np.asarray(res.logits, dtype=np.float64)
     p = softmax(res.logits)
     logp = lg - (lg.max() + np.log(np.sum(np.exp(lg - lg.max()))))
@@ -189,8 +200,15 @@ def _view(res: LastForwardResult, ia: int, ib: int, label_a: str,
         p_a=pa / (mass + EPS), p_b=pb / (mass + EPS), label_mass=mass,
         pick=label_a if pa >= pb else label_b, top1_id=top1,
         top1_is_label=top1 in (ia, ib),
-        resid_last={int(l): np.asarray(v, dtype=np.float32)
-                    for l, v in res.resid_last.items()})
+        resid_last=(
+            {int(l): np.asarray(v, dtype=np.float32)
+             for l, v in res.resid_last.items()} if not positions else
+            {int(l): np.asarray(v[list(positions).index(read_position)],
+                                dtype=np.float32)
+             for l, v in res.resid_last.items()}),
+        resid_at=({int(l): np.asarray(v, dtype=np.float32)
+                   for l, v in res.resid_last.items()} if positions else {}),
+        capture_positions=tuple(int(p) for p in positions))
 
 
 def build_mask(n_positions: int,
@@ -220,13 +238,21 @@ def read_choice_maskedprefix(adapter: ModelAdapter, transcript_text: str,
                              spans: Sequence[tuple[int, int, Injection, str]],
                              capture_layers: Iterable[int] = (),
                              session_id: str = "",
-                             read_name: str = "") -> EchoPair:
+                             read_name: str = "",
+                             capture_positions: Sequence[int] | None = None
+                             ) -> EchoPair:
     """The echo read with its mandatory shadow.
 
     `spans`: (token_start, token_end, injection, tag) -- half-open token
     ranges in the tokenization of `transcript_text`, each carrying its own
     declared `Injection` (built via `Injection.at_frac`, rule 1). The
     injection's own `PositionSpec` is REPLACED with exactly its span.
+
+    `capture_positions` (Stage C): residuals are ALSO returned at these
+    declared positions (`resid_at`, rows in the given order). Every capture
+    position must be UNSTEERED (mask == 0) -- the recon reads the state's
+    echo at positions the state never touched -- and the read position is
+    always captured.
     """
     assert_statepresent_absent()
     for _, _, inj, tag in spans:
@@ -255,15 +281,31 @@ def read_choice_maskedprefix(adapter: ModelAdapter, transcript_text: str,
     caps = sorted({int(l) for l in capture_layers})
     ia, ib = label_ids[label_a], label_ids[label_b]
 
-    res_state = adapter.forward_last(ids, capture_layers=caps,
-                                     injections=placed)
-    res_shadow = adapter.forward_last(ids, capture_layers=caps,
-                                      injections=())
+    if capture_positions is None:
+        res_state = adapter.forward_last(ids, capture_layers=caps,
+                                         injections=placed)
+        res_shadow = adapter.forward_last(ids, capture_layers=caps,
+                                          injections=())
+        positions: tuple[int, ...] = ()
+    else:
+        positions = tuple(int(p) for p in capture_positions)
+        if (n - 1) not in positions:
+            raise AssertionError("the read position must be among the "
+                                 "capture positions")
+        for p in positions:
+            if not (0 <= p < n):
+                raise AssertionError(f"capture position {p} outside [0, {n})")
+            if mask[p] != 0:
+                raise AssertionError(
+                    f"capture position {p} is steered; the recon reads the "
+                    f"echo only at unsteered positions")
+        res_state = adapter.forward_at(ids, caps, positions, injections=placed)
+        res_shadow = adapter.forward_at(ids, caps, positions, injections=())
     # The untouched insulated primitive, with its own verify forward.
     cr = choice_read(adapter, transcript_text, label_a, label_b, label_ids,
                      verify=True)
-    state = _view(res_state, ia, ib, label_a, label_b)
-    shadow = _view(res_shadow, ia, ib, label_a, label_b)
+    state = _view(res_state, ia, ib, label_a, label_b, positions, n - 1)
+    shadow = _view(res_shadow, ia, ib, label_a, label_b, positions, n - 1)
     dpa = abs(shadow.p_a - cr.p_a)
     prov = [SpanProvenance(start=int(a), end=int(b), tag=str(tag),
                            layer=int(inj.layer), alpha=float(inj.alpha),

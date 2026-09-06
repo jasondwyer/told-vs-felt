@@ -8,12 +8,16 @@ frac 0.10, the frozen reward axis, e2a's round-task spans).
     --selftest            model-free: guard, mask assertions, probe, spans
     --stage timing        §2: one steered + one mask-off forward, longest session
     --stage a             §3.1 Stage A: 24 sessions x masks M1..M4 (+ shadows)
-    --analyze a           §3.1 tables (model-free)
+    --stage b             Stage B: 102 sessions x 16 masks (design block 2026-09-05 §3b)
+    --stage c             Stage C: 102 sessions x 12 masks, three-position captures
+    --analyze a|b|c       tables (model-free); --analyze a-posthoc, a-posthoc2
+    --out-name NAME       analysis output under data/echo/ (new name = no overwrite)
 
-PROHIBITION (§3.1), enforced in code: the signed shift toward the +paired
-label is computable only for the random / same-pole masks (M3, M4, M5, M6);
-`signed_pseudo_shift` refuses M1/M2, and no first-choice Delta on a reward
-mask is computed anywhere in this file.
+PROHIBITION (§3.1), enforced in code: a signed quantity toward a label is
+computable only for the random / same-pole masks (SIGNED_OK: M3, M4, M5, M6,
+M5x, M6x, B1x..B4x); `signed_pseudo_shift` refuses every reward mask
+(M1, M2, R1..R4, B1..B4), the block-random loop asserts SIGNED_OK, and no
+first-choice Delta on a reward mask is computed anywhere in this file.
 """
 from __future__ import annotations
 
@@ -58,7 +62,16 @@ MASKS = ("M1", "M2", "M3", "M4")
 #: (axis), R1x..R4x the same with the random direction.
 MASKS_B = ("M1", "M2", "M3", "M4", "M5", "M6", "M5x", "M6x",
            "R1", "R2", "R3", "R4", "R1x", "R2x", "R3x", "R4x")
-SIGNED_OK = {"M3", "M4", "M5", "M6", "M5x", "M6x"}
+#: Stage C (design block 2026-09-05, STAGE C): M1-M4 re-forwarded with
+#: label-position captures (C1); BLOCK masks over the four forced-round spans
+#: with ABSOLUTE signs -- B1 ++--, B2 --++, B3 +--+, B4 -++- -- and their
+#: random analogs (C2). First-round sign + for B1/B3, last-round sign + for
+#: B2/B3: orthogonal across the four.
+BLOCK_SIGNS = {"B1": (1, 1, -1, -1), "B2": (-1, -1, 1, 1),
+               "B3": (1, -1, -1, 1), "B4": (-1, 1, 1, -1)}
+MASKS_C = ("M1", "M2", "M3", "M4", "B1", "B2", "B3", "B4",
+           "B1x", "B2x", "B3x", "B4x")
+SIGNED_OK = {"M3", "M4", "M5", "M6", "M5x", "M6x", "B1x", "B2x", "B3x", "B4x"}
 N_STAGE_A = 24
 
 
@@ -131,6 +144,10 @@ def signs_for(spans, mask):
         if not (0 <= r < len(spans)):
             raise ValueError(f"{mask}: no round {r + 1} among {len(spans)} spans")
         return [base[i] if i == r else 0 for i in range(len(spans))]
+    if mask.rstrip("x") in BLOCK_SIGNS:
+        if len(spans) != 4:
+            raise ValueError(f"{mask}: block masks need exactly 4 spans, got {len(spans)}")
+        return list(BLOCK_SIGNS[mask.rstrip("x")])      # ABSOLUTE signs
     raise ValueError(mask)
 
 
@@ -622,12 +639,14 @@ def _b_job(args):
     folds), LOSO point estimate beside."""
     name, l, X, y, g, n_shuffles, seed, k = args
     auc_k = PR.kfold_auc(X, y, g, k, seed)
-    null = PR.kfold_shuffle_null(X, y, g, n_shuffles=n_shuffles, k=k, seed=seed + l)
+    # statistic and null on the SAME folds (fold_seed = seed); the label
+    # permutations draw from their own stream (perm_seed = seed + l).
+    null = PR.kfold_shuffle_null(X, y, g, n_shuffles=n_shuffles, k=k, fold_seed=seed, perm_seed=seed + l)
     auc_loso = PR.loso_auc(X, y, g)
     return name, l, auc_k, float(np.percentile(null, 95)), float(np.mean(null)), float(np.max(null)), auc_loso
 
 
-def analyze_b(n_shuffles, workers, workspace_layers, k=10):
+def analyze_b(n_shuffles, workers, workspace_layers, k=10, out_name="stageB_analysis.json"):
     from concurrent.futures import ProcessPoolExecutor
     meta = json.load(open(os.path.join(OUT, "stageB_reads.json")))
     sess = sorted(meta["per_session"].values(), key=lambda r: r["session"])
@@ -756,14 +775,284 @@ def analyze_b(n_shuffles, workers, workspace_layers, k=10):
                        "max_shadow_mass_vs_archived": max(i["shadow_mass_vs_archived_abs"] for i in idn),
                        "max_choice_read_verify_kl": max(i["choice_read_verify_kl"] for i in idn),
                        "max_shadow_forward_vs_choice_read_abs_dpa": max(i["shadow_forward_vs_choice_read_abs_dpa"] for i in idn)}
-    below_bad = [l for l in probe_layers if l <= LAYER and any(res[(n, l)]["above_null"] for n in fams)]
+    # The <=48 probe sweep reads only STATE-carrying families: a text-only
+    # (shadow-row) family has no mask, so its readability at <=48 cannot be a
+    # hook-placement or mask leak (Stage C review, 2026-09-05).
+    state_fams = [n for n in fams if "TEXTONLY" not in n]
+    below_bad = [l for l in probe_layers if l <= LAYER and any(res[(n, l)]["above_null"] for n in state_fams)]
     out["stop_clause"] = {"le48_bit_identical_to_shadow_all_masks": le48_identical, "cells": le48_cells,
-                          "probe_layers_le48_above_null": below_bad, "fired": (not le48_identical) or bool(below_bad)}
+                          "probe_layers_le48_above_null": below_bad, "families_swept": state_fams,
+                          "fired": (not le48_identical) or bool(below_bad)}
     print(f"  IDENTITY: {out['identity']}")
     print(f"  STOP CLAUSE: {out['stop_clause']}")
     if out["stop_clause"]["fired"]:
         print("  FLAG: STOP CLAUSE FIRED")
-    atomic_json(os.path.join(OUT, "stageB_analysis.json"), out)
+    atomic_json(os.path.join(OUT, out_name), out)
+    return out
+
+
+# --- STAGE C ---------------------------------------------------------------
+def label_positions(ids, tag_ids, label_a, label_b, last_span_end):
+    """Last occurrence, before the read position, of each label's first token
+    (the token `choice_read` scores). Both must lie AFTER the last forced
+    span's end, i.e. in the menu line of the first free choice -- the only
+    scaffold between the last forced generation and the read."""
+    n = len(ids)
+    out = {}
+    for lab in (label_a, label_b):
+        tid = tag_ids[lab]
+        occ = [p for p in range(n - 1) if ids[p] == tid]
+        if not occ:
+            raise AssertionError(f"label token for {lab!r} not found before the read")
+        p = occ[-1]
+        if p <= last_span_end:
+            raise AssertionError(f"last occurrence of {lab!r} at {p} is not in the menu line (last span ends {last_span_end})")
+        out[lab] = {"position": p, "n_occurrences_before_read": len(occ),
+                    "occurrence": "menu line of the first free choice (the last occurrence; earlier ones are round headers)"}
+    return out
+
+
+def stage_c(adapter, rows, tasks, axis, rand, R48, frac, resume, limit=0):
+    os.makedirs(OUT, exist_ok=True)
+    sel = valid_reward(rows)
+    tag_ids = tag_ids_for(adapter)
+    all64 = list(range(adapter.n_layers))
+    meta_path = os.path.join(OUT, "stageC_reads.json")
+    meta = {"stage": "C", "block": "design block 2026-09-05 STAGE C (C1 label-position captures on M1-M4; C2 block masks B1-B4 and B1x-B4x)",
+            "sessions": [r["session"] for r in sel], "n_sessions": len(sel),
+            "read_position": "first free choice; capture positions = (read, label_a's last token before the read, label_b's) -- both label positions in the menu line",
+            "config_of_record": {"layer": LAYER, "frac": frac, "alpha": axis.alpha, "R_48": R48,
+                                 "axis_direction_sha_f64": axis.direction_sha,
+                                 "random_direction": f"e0_random_dirs.npz[{RAND_KEY}]",
+                                 "random_direction_sha": rand.direction_sha},
+            "masks": {"M1..M4": "as Stage A/B", **{k: f"block mask, absolute signs over forced rounds 1-4 = {v} (axis)" for k, v in BLOCK_SIGNS.items()},
+                      "B1x..B4x": "the same with the random direction"},
+            "capture_layers": all64, "capture_positions_order": ["read", "label_a", "label_b"],
+            "provenance": adapter.provenance(),
+            "round_path_note": "archived texts were generated on the cached path (first-token licence); every recon forward is uncached",
+            "per_session": {}}
+    if resume and os.path.exists(meta_path):
+        old = json.load(open(meta_path))
+        if old.get("sessions") != meta["sessions"] or old["config_of_record"]["alpha"] != axis.alpha:
+            raise SystemExit("resume refused: a different roster or dose is on disk")
+        meta["per_session"] = old["per_session"]
+    t_start = time.time()
+    for k, row in enumerate(sel):
+        sid = str(row["session"])
+        npz_path = os.path.join(OUT, f"stageC_resid_s{sid}.npz")
+        if sid in meta["per_session"] and os.path.exists(npz_path):
+            continue
+        prefix = choice_prefix(row["transcript"], 0)
+        ts = token_spans(adapter, prefix, round_char_spans(row, tasks))
+        if len(ts) != 4:
+            raise AssertionError(f"s{sid}: expected 4 forced spans, got {len(ts)}")
+        ch = row["choices"][0]
+        a, b = ch["menu_a"], ch["menu_b"]
+        ids = adapter.encode(prefix); n_tok = len(ids)
+        lp = label_positions(ids, tag_ids, a, b, ts[-1]["tok_end"])
+        positions = (n_tok - 1, lp[a]["position"], lp[b]["position"])
+        rec = {"session": row["session"], "swap": row["swap"], "tag_plus": row["tag_plus"],
+               "pair": row["pair"], "start_plus": row["start_plus"], "menu_a": a, "menu_b": b,
+               "archived_read": {"pick": ch["pick"], "p_a": ch["p_a"], "label_mass": ch["label_mass"],
+                                 "verify_kl": ch["verify_kl"], "picked_pole": ch["picked_pole"]},
+               "spans": ts, "n_positions": n_tok, "read_position": n_tok - 1,
+               "capture_positions": list(positions), "label_positions": lp, "masks": {}}
+        arrays = {"layers": np.array(all64, dtype=np.int32), "positions": np.array(positions, dtype=np.int32)}
+        t0 = time.time(); per_mask_s = {}
+        for mask in MASKS_C:
+            t1 = time.time()
+            pair = read_choice_maskedprefix(adapter, prefix, a, b, tag_ids,
+                                            spans_with_injections(ts, mask, axis, rand),
+                                            all64, sid, mask, capture_positions=positions)
+            per_mask_s[mask] = time.time() - t1
+            d = pair.as_dict()
+            dpa = abs(pair.shadow.p_a - ch["p_a"]); dmass = abs(pair.shadow.label_mass - ch["label_mass"])
+            d["identity"] = {"shadow_p_a_vs_archived_abs": dpa, "shadow_mass_vs_archived_abs": dmass,
+                             "shadow_pick_eq_archived": pair.shadow.pick == ch["pick"],
+                             "choice_read_verify_kl": pair.shadow_choice_read.verify_kl,
+                             "shadow_forward_vs_choice_read_abs_dpa": pair.shadow_vs_choice_read_abs_dpa,
+                             "ok": bool(dpa <= 5e-4 and dmass <= 5e-4 and pair.shadow.pick == ch["pick"]
+                                        and pair.shadow_choice_read.verify_kl == 0.0
+                                        and pair.shadow_vs_choice_read_abs_dpa <= 1e-6)}
+            rec["masks"][mask] = d
+            st = np.stack([pair.state.resid_at[l] for l in all64], axis=1).astype(np.float32)   # [3, 64, D]
+            arrays[f"{mask}|state"] = st
+            sh = np.stack([pair.shadow.resid_at[l] for l in all64], axis=1).astype(np.float32)
+            if mask == "M1":
+                arrays["M0|shadow"] = sh
+            elif not np.array_equal(sh, arrays["M0|shadow"]):
+                atomic_json(meta_path, meta)
+                raise SystemExit(f"STOP: shadow residuals differ between masks at s{sid} {mask}")
+            if not d["identity"]["ok"]:
+                atomic_json(meta_path, meta)
+                raise SystemExit(f"STOP: identity assertion failed at s{sid} {mask}: {d['identity']}")
+        # cross-run determinism: M1/M2 read-position rows must equal Stage B's
+        bpath = os.path.join(OUT, f"stageB_resid_s{sid}.npz")
+        if os.path.exists(bpath):
+            zb = np.load(bpath)
+            rec["reproduces_stageB_read_position"] = {m: bool(np.array_equal(arrays[f"{m}|state"][0], zb[f"{m}|state"])) for m in ("M1", "M2", "M3", "M4")}
+            rec["reproduces_stageB_read_position"]["shadow"] = bool(np.array_equal(arrays["M0|shadow"][0], zb["M0|shadow"]))
+        atomic_npz(npz_path, **arrays)
+        rec["npz"] = os.path.relpath(npz_path, REPO)
+        rec["npz_sha16_by_key"] = {kk: sha16_arr(v) for kk, v in arrays.items() if kk not in ("layers", "positions")}
+        rec["seconds"] = time.time() - t0; rec["seconds_per_mask"] = per_mask_s
+        meta["per_session"][sid] = rec
+        atomic_json(meta_path, meta)
+        el = time.time() - t_start; done = len(meta["per_session"])
+        print(f"  s{sid:>3} ({done}/{len(sel)}) n={n_tok} labels@{lp[a]['position']},{lp[b]['position']} identity ok  "
+              f"{rec['seconds']:.0f}s ({np.mean(list(per_mask_s.values())):.1f} s/mask)  elapsed {el / 60:.1f} min  eta {(len(sel) - done) * rec['seconds'] / 60:.0f} min  "
+              f"stageB-reproduced {rec.get('reproduces_stageB_read_position')}", flush=True)
+        if limit and done >= limit:
+            print(f"  --limit {limit} reached; stopping (resume continues skip-only)", flush=True)
+            break
+    meta["wall_clock_s"] = time.time() - t_start
+    atomic_json(meta_path, meta)
+    print(f"Stage C reads complete: {len(meta['per_session'])} sessions, {meta['wall_clock_s'] / 3600:.2f} h")
+
+
+def analyze_c(n_shuffles, workers, workspace_layers, k=10, out_name="stageC_analysis.json"):
+    from concurrent.futures import ProcessPoolExecutor
+    meta = json.load(open(os.path.join(OUT, "stageC_reads.json")))
+    sess = sorted(meta["per_session"].values(), key=lambda r: r["session"])
+    N = len(sess)
+    probe_layers = sorted(set(workspace_layers) | set(range(LAYER, 64)))
+    POS = {"read": 0, "label_a": 1, "label_b": 2}
+    layers_all = None; stacks = {}; le48_identical = True; le48_cells = 0; le48_bad = []
+    for r in sess:
+        z = np.load(os.path.join(REPO, r["npz"]))
+        if layers_all is None:
+            layers_all = [int(x) for x in z["layers"]]
+        keys = [kk for kk in z.files if kk not in ("layers", "positions")]
+        arr = {kk: z[kk] for kk in keys}
+        for kk in keys:
+            if sha16_arr(arr[kk]) != r["npz_sha16_by_key"][kk]:
+                raise SystemExit(f"fingerprint mismatch s{r['session']} {kk}")
+        sh = arr["M0|shadow"]
+        for i, l in enumerate(layers_all):
+            if l <= LAYER:
+                for kk in keys:
+                    for pi in range(3):
+                        le48_cells += 1
+                        if not np.array_equal(arr[kk][pi, i], sh[pi, i]):
+                            le48_identical = False; le48_bad.append((r["session"], kk, l, pi))
+            if l in probe_layers:
+                for kk in keys:
+                    for pn, pi in POS.items():
+                        stacks.setdefault((kk, pn, l), []).append(arr[kk][pi, i])
+    stacks = {kk: np.stack(v) for kk, v in stacks.items()}
+    groups = np.array([r["session"] for r in sess])
+    a_is_plus = np.array([1 if r["menu_a"] == r["tag_plus"] else 0 for r in sess])
+    b_is_plus = 1 - a_is_plus
+    fams = {}
+    two = lambda ma, mb, pn, l: (np.concatenate([stacks[(f"{ma}|state", pn, l)], stacks[(f"{mb}|state", pn, l)]]), np.r_[groups, groups])
+    # C1: binding at each position. target at label_x's position = +1 iff label_x's rounds carried + under the mask
+    for pn, ypos in (("read", a_is_plus), ("label_a", a_is_plus), ("label_b", b_is_plus)):
+        fams[f"c1_{pn}_M1M2"] = (lambda pn, ypos: (lambda l: (*two("M1", "M2", pn, l), np.r_[ypos, 1 - ypos])))(pn, ypos)
+        fams[f"c1_{pn}_M3M4_random"] = (lambda pn, ypos: (lambda l: (*two("M3", "M4", pn, l), np.r_[ypos, 1 - ypos])))(pn, ypos)
+        fams[f"c1_{pn}_TEXTONLY_shadow"] = (lambda pn, ypos: (lambda l: (stacks[("M0|shadow", pn, l)], groups, ypos)))(pn, ypos)
+    # C2: block masks at the read position; first-round sign (+ for B1, B3), last-round sign (+ for B2, B3)
+    def four(prefix_, l):
+        X = np.concatenate([stacks[(f"{prefix_}{i}|state", "read", l)] for i in ("1", "2", "3", "4")]) if prefix_ == "B" else \
+            np.concatenate([stacks[(f"B{i}x|state", "read", l)] for i in ("1", "2", "3", "4")])
+        g = np.r_[groups, groups, groups, groups]
+        return X, g
+    y_first = np.r_[np.ones(N), np.zeros(N), np.ones(N), np.zeros(N)]
+    y_last = np.r_[np.zeros(N), np.ones(N), np.ones(N), np.zeros(N)]
+    fams["c2_firstsign_B1-4"] = lambda l: (*four("B", l), y_first)
+    fams["c2_lastsign_B1-4"] = lambda l: (*four("B", l), y_last)
+    fams["c2_firstsign_B1-4x_random"] = lambda l: (*four("Bx", l), y_first)
+    fams["c2_lastsign_B1-4x_random"] = lambda l: (*four("Bx", l), y_last)
+    jobs = []
+    for fi, (name, fn) in enumerate(fams.items()):
+        for l in probe_layers:
+            X, g, y = fn(l)
+            jobs.append((name, l, X, y, g, n_shuffles, 90260905 + 1000 * fi, k))
+    t0 = time.time(); res = {}
+    with ProcessPoolExecutor(max_workers=workers) as ex:
+        for name, l, auc_k, p95, nm, nx, auc_loso in ex.map(_b_job, jobs, chunksize=1):
+            res[(name, l)] = {"auc_kfold": auc_k, "shuffle95": p95, "shuffle_mean": nm, "shuffle_max": nx, "auc_loso": auc_loso, "above_null": auc_k > p95}
+    print(f"  probes done in {(time.time() - t0) / 60:.1f} min ({len(jobs)} jobs; grouped {k}-fold, {n_shuffles} shuffles; LOSO beside)", flush=True)
+    out = {"n_sessions": N, "n_shuffles": n_shuffles, "kfold": k, "probe_layers": probe_layers,
+           "procedure": f"as Stage B: standardized L2 logistic regression; grouped {k}-fold statistic and null on the SAME folds (all rows of a session in one fold; fold seed shared, permutation stream separate); LOSO beside",
+           "targets": {"c1_read_*": "at the READ position: +1 iff label_a's rounds carried + under the mask (Stage B's (b), re-run on the re-forwarded rows; Code's choice for the 'where the choice is read' half of the decisive question)",
+                       "c1_label_a_*": "at label_a's last token before the read: +1 iff label_a's rounds carried + under the mask (M1: label_a == tag_plus; M2: the reverse)",
+                       "c1_label_b_*": "at label_b's last token before the read: +1 iff label_b's rounds carried + under the mask",
+                       "*_M3M4_random": "the same targets with r+ as '+'",
+                       "*_TEXTONLY_shadow": "the shadow rows at the same position with the as-generated target (label_x == tag_plus): a probe that read the pole from the text alone would score here",
+                       "c2_firstsign_*": "rows B1..B4 (or B1x..B4x) at the read position: +1 for B1, B3",
+                       "c2_lastsign_*": "+1 for B2, B3"},
+           "le48_control": {"cells_checked": le48_cells, "all_identical_to_shadow": le48_identical, "first_bad": le48_bad[:5]},
+           "label_positions": {str(r["session"]): {"read": r["read_position"], "label_a": r["label_positions"][r["menu_a"]]["position"], "label_b": r["label_positions"][r["menu_b"]]["position"],
+                                                    "occurrences_a": r["label_positions"][r["menu_a"]]["n_occurrences_before_read"], "occurrences_b": r["label_positions"][r["menu_b"]]["n_occurrences_before_read"]} for r in sess},
+           "families": {name: {str(l): res[(name, l)] for l in probe_layers} for name in fams},
+           "leak": {}, "pseudo_shift": {}, "reproduces_stageB": {}}
+
+    def table(names, title):
+        print(f"\n  {title}")
+        print("  " + "layer".rjust(6) + "".join(n[:26].rjust(28) for n in names))
+        for l in probe_layers:
+            print("  " + str(l).rjust(6) + "".join(f"{res[(n, l)]['auc_kfold']:.3f}/{res[(n, l)]['shuffle95']:.2f}{'*' if res[(n, l)]['above_null'] else ' '}".rjust(28) for n in names))
+    for pn in ("read", "label_a", "label_b"):
+        table([f"c1_{pn}_M1M2", f"c1_{pn}_M3M4_random", f"c1_{pn}_TEXTONLY_shadow"], f"C1 BINDING at the {pn} position: AUC/shuffle95, * above null")
+    table(["c2_firstsign_B1-4", "c2_firstsign_B1-4x_random", "c2_lastsign_B1-4", "c2_lastsign_B1-4x_random"], "C2 BLOCK MASKS at the read position: first-round sign | last-round sign")
+    dist_a = [r["read_position"] - r["label_positions"][r["menu_a"]]["position"] for r in sess]
+    dist_b = [r["read_position"] - r["label_positions"][r["menu_b"]]["position"] for r in sess]
+    out["label_position_distance_to_read"] = {"label_a": {"min": int(min(dist_a)), "max": int(max(dist_a)), "mean": float(np.mean(dist_a))},
+                                              "label_b": {"min": int(min(dist_b)), "max": int(max(dist_b)), "mean": float(np.mean(dist_b))}}
+    print(f"  label positions: label_a {min(dist_a)}-{max(dist_a)} tokens before the read, label_b {min(dist_b)}-{max(dist_b)}")
+    # C3 leak on the new reward masks (+ M1/M2 reproduction)
+    for m in ("M1", "M2", "B1", "B2", "B3", "B4"):
+        flips = []; shifts = []
+        for r in sess:
+            st, sh = r["masks"][m]["state"], r["masks"][m]["shadow"]
+            flips.append(int(st["pick"] != sh["pick"]))
+            shifts.append(abs((st["logit_a"] - st["logit_b"]) - (sh["logit_a"] - sh["logit_b"])))
+        s_ = np.array(shifts)
+        out["leak"][m] = {"pi_d": float(np.mean(flips)), "n_flips": int(np.sum(flips)), "n": len(flips),
+                          "abs_logit_diff_shift": {"min": float(s_.min()), "median": float(np.median(s_)), "mean": float(s_.mean()), "max": float(s_.max()), "values": [float(x) for x in s_]}}
+        print(f"  LEAK {m}: pi_d = {np.sum(flips)}/{len(flips)} = {np.mean(flips):.3f}; |logit-diff shift| median {np.median(s_):.4f} mean {s_.mean():.4f} max {s_.max():.4f}")
+    for m in ("M3", "M4"):
+        vals = np.array([signed_pseudo_shift(m, r["masks"][m]["state"], r["masks"][m]["shadow"], r["menu_a"] == r["tag_plus"], m == "M3") for r in sess])
+        out["pseudo_shift"][m] = {"definition": "toward the label whose rounds carried r+", "mean": float(vals.mean()), "sd": float(vals.std(ddof=1)), "n_pos": int(np.sum(vals > 0)), "n_neg": int(np.sum(vals < 0)), "n": len(vals), "values": [float(x) for x in vals]}
+        print(f"  PSEUDO-SHIFT {m} (toward the r+ label): mean {vals.mean():+.4f} sd {vals.std(ddof=1):.4f} pos/neg {np.sum(vals > 0)}/{np.sum(vals < 0)}")
+    for m in ("B1x", "B2x", "B3x", "B4x"):
+        # block masks give every label one r+ and one r- round; the signed quantity is toward the START label (round 1's label) -- a position/label artifact measure
+        assert m in SIGNED_OK, f"PROHIBITED: signed quantity requested on {m}"
+        vals = []
+        for r in sess:
+            st, sh = r["masks"][m]["state"], r["masks"][m]["shadow"]
+            da = (st["logit_a"] - st["logit_b"]) - (sh["logit_a"] - sh["logit_b"])
+            start_label = r["spans"][0]["tag"]
+            vals.append(da if r["menu_a"] == start_label else -da)
+        vals = np.array(vals)
+        out["pseudo_shift"][m] = {"definition": "toward the START label (round 1's tag); under a block mask each label carries one r+ and one r- round, so no label carries r+ net", "mean": float(vals.mean()), "sd": float(vals.std(ddof=1)), "n_pos": int(np.sum(vals > 0)), "n_neg": int(np.sum(vals < 0)), "n": len(vals), "values": [float(x) for x in vals]}
+        print(f"  PSEUDO-SHIFT {m} (toward the start label): mean {vals.mean():+.4f} sd {vals.std(ddof=1):.4f} pos/neg {np.sum(vals > 0)}/{np.sum(vals < 0)}")
+    rep = [r.get("reproduces_stageB_read_position") for r in sess if r.get("reproduces_stageB_read_position")]
+    # magnitude beside the boolean: max |Stage C read-position row - Stage B row| over M1..M4 and the shadow
+    maxdiff = 0.0
+    for r in sess:
+        bpath = os.path.join(OUT, f"stageB_resid_s{r['session']}.npz")
+        if not os.path.exists(bpath):
+            continue
+        zc = np.load(os.path.join(REPO, r["npz"])); zb = np.load(bpath)
+        for m in ("M1", "M2", "M3", "M4"):
+            maxdiff = max(maxdiff, float(np.max(np.abs(zc[f"{m}|state"][0].astype(np.float64) - zb[f"{m}|state"].astype(np.float64)))))
+        maxdiff = max(maxdiff, float(np.max(np.abs(zc["M0|shadow"][0].astype(np.float64) - zb["M0|shadow"].astype(np.float64)))))
+    out["reproduces_stageB"] = {"n_sessions_checked": len(rep), "all_bit_identical": all(all(v.values()) for v in rep) if rep else None,
+                                "max_abs_diff": maxdiff}
+    idn = [r["masks"][m]["identity"] for r in sess for m in MASKS_C]
+    out["identity"] = {"n_pairs": len(idn), "all_ok": all(i["ok"] for i in idn),
+                       "max_shadow_p_a_vs_archived": max(i["shadow_p_a_vs_archived_abs"] for i in idn),
+                       "max_shadow_mass_vs_archived": max(i["shadow_mass_vs_archived_abs"] for i in idn),
+                       "max_choice_read_verify_kl": max(i["choice_read_verify_kl"] for i in idn),
+                       "max_shadow_forward_vs_choice_read_abs_dpa": max(i["shadow_forward_vs_choice_read_abs_dpa"] for i in idn)}
+    state_fams = [n for n in fams if "TEXTONLY" not in n]        # see analyze_b
+    below_bad = [l for l in probe_layers if l <= LAYER and any(res[(n, l)]["above_null"] for n in state_fams)]
+    out["stop_clause"] = {"le48_bit_identical_to_shadow_all_masks_all_positions": le48_identical, "cells": le48_cells,
+                          "probe_layers_le48_above_null": below_bad, "families_swept": state_fams,
+                          "fired": (not le48_identical) or bool(below_bad)}
+    print(f"  IDENTITY: {out['identity']}\n  STAGE-B REPRODUCTION (read-position rows bit-identical across runs): {out['reproduces_stageB']}\n  STOP CLAUSE: {out['stop_clause']}")
+    atomic_json(os.path.join(OUT, out_name), out)
     return out
 
 
@@ -886,13 +1175,14 @@ def _relabel_job(args):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--selftest", action="store_true")
-    ap.add_argument("--stage", choices=["timing", "a", "b"])
-    ap.add_argument("--analyze", choices=["a", "a-posthoc", "a-posthoc2", "b"])
+    ap.add_argument("--stage", choices=["timing", "a", "b", "c"])
+    ap.add_argument("--analyze", choices=["a", "a-posthoc", "a-posthoc2", "b", "c"])
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--shuffles", type=int, default=200)
     ap.add_argument("--workers", type=int, default=8)
     ap.add_argument("--workspace-layers", default="", help="comma-separated (from the recon §1a read)")
-    ap.add_argument("--limit", type=int, default=0, help="stage b: stop after this many NEW sessions (smoke); resume continues")
+    ap.add_argument("--limit", type=int, default=0, help="stages b/c: stop once this many sessions are on disk (smoke); resume continues skip-only")
+    ap.add_argument("--out-name", default="", help="analysis output file name under data/echo/ (default per stage); use a NEW name to avoid overwriting a committed artifact")
     args = ap.parse_args()
     if args.selftest:
         return 0 if selftest() else 1
@@ -906,7 +1196,11 @@ def main():
         return 0
     if args.analyze == "b":
         ws = {int(x) for x in args.workspace_layers.split(",") if x.strip()}
-        analyze_b(args.shuffles, args.workers, ws)
+        analyze_b(args.shuffles, args.workers, ws, out_name=args.out_name or "stageB_analysis.json")
+        return 0
+    if args.analyze == "c":
+        ws = {int(x) for x in args.workspace_layers.split(",") if x.strip()}
+        analyze_c(args.shuffles, args.workers, ws, out_name=args.out_name or "stageC_analysis.json")
         return 0
     if args.analyze == "a-posthoc2":
         ws = {int(x) for x in args.workspace_layers.split(",") if x.strip()}
@@ -926,6 +1220,8 @@ def main():
         stage_a(adapter, rows, tasks, axis, rand, R48, frac, args.resume)
     elif args.stage == "b":
         stage_b(adapter, rows, tasks, axis, rand, R48, frac, args.resume, args.limit)
+    elif args.stage == "c":
+        stage_c(adapter, rows, tasks, axis, rand, R48, frac, args.resume, args.limit)
     return 0
 
 

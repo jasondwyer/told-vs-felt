@@ -264,6 +264,22 @@ class ModelAdapter(ABC):
                         for l, a in res.acts.items()},
             n_positions=res.n_positions)
 
+    def forward_at(self, ids: Sequence[int], capture_layers: Iterable[int],
+                   positions: Sequence[int],
+                   injections: Sequence[Injection] = ()) -> LastForwardResult:
+        """`forward`, viewed at DECLARED positions: `resid_last[layer]` is
+        [len(positions), D], rows in the order given. Added for the echo recon
+        Stage C (2026-09-05), which reads label-token positions beside the
+        read position. Default: delegate to `forward` and slice."""
+        res = self.forward(ids, capture_layers=capture_layers,
+                           injections=injections)
+        pos = [int(p) for p in positions]
+        return LastForwardResult(
+            logits=res.logits,
+            resid_last={l: np.asarray(a[pos], dtype=np.float32)
+                        for l, a in res.acts.items()},
+            n_positions=res.n_positions)
+
     @abstractmethod
     def embed(self, text: str) -> np.ndarray:
         """Mean-pooled final-layer (post-norm) residual over all positions --

@@ -199,6 +199,33 @@ class QwenMLXAdapter(ModelAdapter):
             logits=np.array(logits.tolist(), dtype=np.float32),
             resid_last=last, n_positions=len(list(ids)))
 
+    def forward_at(self, ids: Sequence[int], capture_layers: Iterable[int],
+                   positions: Sequence[int],
+                   injections: Sequence[Injection] = ()) -> LastForwardResult:
+        """`forward` at declared positions -- same dispatch as `forward_last`
+        (vanilla path with no injection, positional re-forward otherwise;
+        both uncached); the captured residuals are sliced to `positions`
+        BEFORE the numpy conversion. `forward` is untouched."""
+        mx = self._mx
+        arr = mx.array([list(ids)])
+        caps = list(capture_layers)
+        pos = [int(p) for p in positions]
+        if not injections:
+            final, acts = self._model.forward(arr, capture_layers=caps)
+        else:
+            final, acts = self._fc.forward_with_positional_state(
+                self._model, arr, self._positional_fns(injections),
+                capture_layers=caps)
+        logits = self._model.unembed(final[:, -1, :])[0].astype(mx.float32)
+        out = {}
+        for l in acts:
+            rows = [np.array(acts[l][0, p, :].astype(mx.float32).tolist(),
+                             dtype=np.float32) for p in pos]
+            out[l] = np.stack(rows)
+        return LastForwardResult(
+            logits=np.array(logits.tolist(), dtype=np.float32),
+            resid_last=out, n_positions=len(list(ids)))
+
     def embed(self, text: str) -> np.ndarray:
         """Exactly `e2a_g2_discriminability.embed`: vanilla forward, mean over
         positions of the post-norm final residual, float64. The empty-string
