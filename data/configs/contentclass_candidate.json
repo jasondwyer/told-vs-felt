@@ -104,9 +104,10 @@
   },
   "declared_misses": {
    "config_topic_attractor": "design disposition 2026-09-06 \u00a72a: the rule-28(c) config-topic attractor (four archived e2b rounds that carry no content addressing the task, take no v4 label and no v2 hit -- flagged in the adjudication entry, RESULTS.md 2026-09-06) is a DECLARED MISS of null_response's rule: NOT a sixth class and NOT an attractor-shaped string rule. It stays with the rule-25 read. Revisit if a new campaign shows it at rate.",
-   "third_person_capability_disclaimer_and_bare_No": "declared at adoption (null_response_rule_as_implemented, KNOWN MISSES); go to the read"
+   "third_person_capability_disclaimer_and_bare_No": "declared at adoption (null_response_rule_as_implemented, KNOWN MISSES); go to the read",
+   "imperative_refusal_without_declining_predicate": "design patch 2026-09-06 \u00a73a: an imperative refusal addressed to the user with no first-person declining predicate ('Please don't ask me to do that.' -- format recon F1 s0 forced2, 2026-09-06) carries no content addressing the task and takes no label under the adopted rule; a DECLARED MISS, to the rule-25 read, beside the third-person capability disclaimer and the bare 'No.' -- no rule change (1d)."
   },
-  "_disposed": "design block 2026-09-06 \u00a72 (2a config-topic attractor; 2b task_echo standing), applied by Code 2026-09-06; the module valence_core/e2d/contentclass_v4.py is unchanged (frozen thresholds, 1d)"
+  "_disposed": "design block 2026-09-06 \u00a72 (2a config-topic attractor; 2b task_echo standing), applied by Code 2026-09-06; the module valence_core/e2d/contentclass_v4.py is unchanged (frozen thresholds, 1d) ; design patch 2026-09-06 \u00a73a (imperative refusal added to the declared misses)"
  },
  "thresholds_frozen": {
   "run": 5,

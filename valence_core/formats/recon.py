@@ -35,8 +35,9 @@ session here byte-for-byte, whichever labels the forced rounds carry. That is
 the acceptance check, per session, before any artifact is written (trap 6).
 
 CELLS AND COUNTERBALANCING. 8 cells per format = 4 roster pairs x 2 "which
-label is first" assignments; n = 24 per format = 3 whole blocks, so every
-prefix of 8 is balanced and the design is exactly balanced at 24. There is
+label is first" assignments; the allocation (design patch 2026-09-06 §2) is
+F0 8 = 1 whole block, F1 24 and F2 24 = 3 whole blocks, so every prefix of
+8 is balanced and each format is exactly balanced at its n. There is
 no + pole: `tag_plus` is the NOMINAL first label (the label the alternation
 habit predicts for the first pick), `tag_minus` the second/last. In every
 format the last forced label is `tag_minus`, so "first-pick break" has one
@@ -44,13 +45,14 @@ definition across formats: the first free pick IS the last forced label
 (habit.follows_habit == False). Session-share is the share of free picks on
 `tag_plus`, e2a's `share_all_choices` with the nominal pole.
 
-THE NEUTRAL LABEL (F1) is a Code choice, declared and flagged: `cedar` -- a
-cycle-3/4 incumbent tag (template-family history), single-token on this
-tokenizer (id 72730, H3b-verified), pool-disjoint (rule 18) and
-wrapper-checked (rule 28c) at the 2026-08-20 verification, in NO pair of the
-roster of record. One fixed label for every F1 session; it never appears on a
-menu; it is added to the lexical-hit set of F1 sessions so a response that
-produces it is caught.
+THE NEUTRAL LABEL (F1): `timber` (id 43299), re-selected 2026-09-06 under
+the design patch's assertion -- absent from EVERY roster and from H3's
+sixteen tags -- which the first choice `cedar` failed (see `NEUTRAL_LABEL`).
+One fixed label for every F1 session; it never appears on a menu; it is added
+to the lexical-hit set of F1 sessions so a response that produces it is
+caught. F1's two `cedar` timing sessions were set aside (their checkpoint
+renamed, ignored; the sessions stay in the timing artifact as the cost
+measurement they were) and F1 starts from index 0 under `timber`.
 
 AUDIT V3 is the audit of record (AMENDMENT 2 (iii) §3): v2 first (rule 28b),
 then the exclusion-bearing content classes, then advisory flags routed to the
@@ -68,12 +70,14 @@ declares no bar of its own; their rates are reported beside the archive
 base rates. A fired acceptance bar stops the run; Code does not
 self-adjudicate it.
 
-THE TIMING GATE is structural (trap 32). `--stage time` runs ONE session per
-format and writes the timing artifact with the projection to n = 24 x 3;
-`--stage run` refuses to start unless that artifact exists and projects at or
-under `GATE_HOURS` = 4.0 (design block §4: "STOP if the three formats project
-past 4 h"). Overriding the gate takes an explicit `--gate-hours`, which is
-written into the run header and the artifact as a declared deviation.
+THE TIMING GATE is structural (trap 32). `--stage time` runs schedule
+indices until ONE COMPLETE session per format is on disk and writes the
+timing artifact; `--stage run` refuses to start unless that artifact exists,
+every timed session passed acceptance, and the projection under the current
+allocation is at or under `GATE_HOURS` (8.0, design patch 2026-09-06 §2,
+raised from the block's 4.0 after the timing came in at 8.96 h for 24 x 3).
+Overriding the gate takes an explicit `--gate-hours`, written into the run
+header and the artifact as a declared deviation.
 """
 
 from __future__ import annotations
@@ -113,15 +117,29 @@ FORMATS: dict[str, dict] = {
 }
 N_FORCED = 4                 # every format: 4 forced rounds, then N_FREE = 6 free choices
 F_FOR_WALK = N_FORCED // 2   # session_e2a's F: n_rounds = 2F + N_FREE = 10
-N_PER_FORMAT = 24            # design block §4
-GATE_HOURS = 4.0             # design block §4: STOP if the three formats project past 4 h
+#: Design patch 2026-09-06 §2: the 4 h cap was the wrong cap; raised to 8 h
+#: under the long-run checklist (adapter >= 96 W, AC, one process), and the
+#: allocation set per format -- F0 is the continuity anchor only (the archive
+#: already gives its habit at n = 187 / 102), F1 and F2 carry the question.
+#: The design block's 24 x 3 and its 4 h gate are superseded by this patch.
+N_PER_FORMAT = {"F0": 8, "F1": 24, "F2": 24}
+GATE_HOURS = 8.0
 DRAW_SEED = 20260906         # cell assignment only; per-session content is keyed on the index
 
-#: The neutral third label for F1 -- Code choice, declared and flagged (see
-#: the module docstring). Verified single-token at id 72730 on this tokenizer
-#: (data/e2b/h3b_repair_screen.json), pool-disjoint and wrapper-checked there.
-NEUTRAL_LABEL = "cedar"
-NEUTRAL_TOKEN_ID = 72730
+#: The neutral third label for F1. `cedar` (the first choice) FAILED the
+#: design patch's assertion -- it is one of H3's sixteen tags and an e2a
+#: archive pair tag -- so the label was re-selected 2026-09-06 under a
+#: declared procedure (data/format/neutral_label_selection.json): a fixed
+#: candidate order, first to pass (i) single token with a leading space on
+#: this tokenizer, (ii) in NO roster (e2d roster of record, H3's sixteen, the
+#: h3/a1 candidate rosters, the e2a archive pairs, the e2b campaigns), (iii)
+#: word-boundary absent from every pool (the 64 e2a paraphrases, every
+#: data/corpus jsonl, e0 frames/probes, s2 frames, b2 framing) and (iv) from
+#: the wrapper (rule 28c). `timber`, id 43299, is that candidate. The script
+#: re-asserts (i)-(iv) at startup against the live tokenizer and rosters.
+NEUTRAL_LABEL = "timber"
+NEUTRAL_TOKEN_ID = 43299
+NEUTRAL_SELECTION = "data/format/neutral_label_selection.json"
 
 ROLE_POLE = {"first": "pos", "second": "neg", "neutral": "neutral"}
 
@@ -145,13 +163,19 @@ MAX_TIMING_ATTEMPTS = 4
 #: diagnosis, never suppressed. Domains: "all" = every session with a first
 #: pick (the rule-23 secondaries domain, as e2d's habit secondaries); "valid"
 #: = not excluded under the run scope.
-FEATURE_FLOOR = 16
+FEATURE_FLOOR_FRACTION = 2 / 3     # of the format's registered n; F1/F2 -> 16, F0 -> 6
 
 
-def declared_features() -> list[FeatureSpec]:
-    return [FeatureSpec(name="first_pick_break", domain="all", min_decidable=FEATURE_FLOOR),
-            FeatureSpec(name="strict_alternation", domain="valid", min_decidable=FEATURE_FLOOR),
-            FeatureSpec(name="session_share", domain="valid", min_decidable=FEATURE_FLOOR)]
+def feature_floor(fmt: str) -> int:
+    import math
+    return int(math.ceil(FEATURE_FLOOR_FRACTION * N_PER_FORMAT[fmt]))
+
+
+def declared_features(fmt: str = "F1") -> list[FeatureSpec]:
+    f = feature_floor(fmt)
+    return [FeatureSpec(name="first_pick_break", domain="all", min_decidable=f),
+            FeatureSpec(name="strict_alternation", domain="valid", min_decidable=f),
+            FeatureSpec(name="session_share", domain="valid", min_decidable=f)]
 
 
 def is_complete(rec: Mapping) -> bool:
@@ -394,16 +418,27 @@ def tally(counters: DescriptiveCounters, rec: Mapping) -> None:
 
 
 # --- checkpointed campaign, per format ----------------------------------------
-def run_identity(fmt: str, seed: int, n: int, scope: str, temp: float,
+def run_identity(fmt: str, seed: int, scope: str, temp: float,
                  audit_sha16: str) -> dict:
-    """Everything a resume must match. temp is this recon's dose; the audit
-    sha and the roster are the instrument (trap 36's guard, generalised)."""
-    return {"format": fmt, "seed": seed, "n": n, "scope": scope, "temp": float(temp),
+    """Everything a resume must match: the design of every SESSION. temp is
+    this recon's dose; the audit sha, the roster and the neutral label are
+    the instrument (trap 36's guard, generalised). The registered n is NOT
+    part of it: n is a count over a schedule that is built whole-blocks-first
+    from the pinned seed, so the first k sessions of an n-schedule are the
+    first k of any larger n-schedule -- a reallocation before the run
+    (design patch 2026-09-06 §2: F0 24 -> 8) changes how many sessions run,
+    never which. `load_checkpoint` pins the SCHEDULE PREFIX instead and
+    refuses a shrink that would orphan a session already on disk."""
+    return {"format": fmt, "seed": seed, "scope": scope, "temp": float(temp),
             "audit_v2_sha16": audit_sha16, "roster": [list(p) for p in ROSTER],
             "neutral_label": NEUTRAL_LABEL, "n_forced": N_FORCED, "n_free": N_FREE}
 
 
-def load_checkpoint(path: str, identity: Mapping) -> dict:
+def _cell_key(c: Mapping) -> tuple:
+    return (tuple(c["pair"]), c["tag_plus"], c["tag_minus"])
+
+
+def load_checkpoint(path: str, identity: Mapping, n: int, sched: Sequence[Mapping]) -> dict:
     ck = json.load(open(path))
     got = {k: ck.get("identity", {}).get(k) for k in identity}
     if got != dict(identity):
@@ -412,6 +447,15 @@ def load_checkpoint(path: str, identity: Mapping) -> dict:
                          f"Resuming across a different design would splice two designs -- refusing.")
     if not ck.get("sham_only", False):
         raise SystemExit(f"CHECKPOINT {path} is not marked sham_only -- refusing.")
+    on_disk = [r["session"] for r in ck["sessions"]]
+    beyond = [i for i in on_disk if i >= n]
+    if beyond:
+        raise SystemExit(f"CHECKPOINT {path} holds sessions {beyond} at or beyond the registered n = {n}; "
+                         f"a shrink that orphans sessions on disk is a cut, not a reallocation -- refusing.")
+    for r in ck["sessions"]:
+        if _cell_key(r["cell"]) != _cell_key(sched[r["session"]]):
+            raise SystemExit(f"CHECKPOINT {path}: session {r['session']} was run in cell {_cell_key(r['cell'])} "
+                             f"but this schedule puts {_cell_key(sched[r['session']])} there -- refusing.")
     return ck
 
 
@@ -430,17 +474,20 @@ def run_format(adapter, fmt: str, n: int, tasks, audit3: AuditV3, ban_ids, term_
     """
     assert_modules_absent(FORBIDDEN_MODULES)
     counters = DescriptiveCounters(declared=DECLARED_COUNTERS)
-    identity = run_identity(fmt, seed, n, scope, temp, audit_sha16)
+    identity = run_identity(fmt, seed, scope, temp, audit_sha16)
     sched = build_schedule(n, np.random.default_rng(seed))
     sessions: list[dict] = []
     kls: list[float] = []
     secs: list[float] = []
     done: set[int] = set()
+    n_history: list[dict] = [{"n": n, "note": "this run"}]
     if os.path.exists(checkpoint_path):
         if not resume:
             raise SystemExit(f"CHECKPOINT EXISTS at {checkpoint_path}; pass --resume to continue it "
                              f"or move it aside. A run never silently overwrites one (trap 22).")
-        ck = load_checkpoint(checkpoint_path, identity)
+        ck = load_checkpoint(checkpoint_path, identity, n, sched)
+        prev = ck.get("n_history", [{"n": ck.get("n"), "note": "recorded"}])
+        n_history = prev + ([] if prev and prev[-1].get("n") == n else [{"n": n, "note": "reallocated before resume"}])
         sessions, kls, secs = ck["sessions"], ck.get("verify_kls", []), ck.get("per_session_seconds", [])
         for rec in sessions:
             done.add(rec["session"])
@@ -450,8 +497,8 @@ def run_format(adapter, fmt: str, n: int, tasks, audit3: AuditV3, ban_ids, term_
     def checkpoint():
         tmp = checkpoint_path + ".tmp"
         with open(tmp, "w") as fh:
-            json.dump({"identity": identity, "format": fmt, "seed": seed, "n": n, "scope": scope,
-                       "temp": temp, "sham_only": all(r["sham_only"] for r in sessions),
+            json.dump({"identity": identity, "format": fmt, "seed": seed, "n": n, "n_history": n_history,
+                       "scope": scope, "temp": temp, "sham_only": all(r["sham_only"] for r in sessions),
                        "round_path_cached": any(r["round_path_cached"] for r in sessions),
                        "sessions": sessions, "verify_kls": kls,
                        "per_session_seconds": secs}, fh, default=float)
@@ -481,8 +528,8 @@ def run_format(adapter, fmt: str, n: int, tasks, audit3: AuditV3, ban_ids, term_
                  f"{'complete' if rec['complete'] else 'TRUNCATED'}  {dt:.0f}s")
         sys.stdout.flush()
     return {"format": fmt, "sessions": sessions, "counters": counters, "verify_kls": kls,
-            "per_session_seconds": secs, "schedule_n": n, "seed": seed, "scope": scope,
-            "identity": identity}
+            "per_session_seconds": secs, "schedule_n": n, "n_history": n_history, "seed": seed,
+            "scope": scope, "identity": identity}
 
 
 # --- acceptance (computed before any artifact is written, trap 6) --------------
@@ -519,11 +566,12 @@ def verify_format_walk(recs: Sequence[Mapping], tasks) -> dict:
 
 
 # --- the timing gate (trap 32: structural) --------------------------------------
-def projection(timed: Mapping[str, Mapping], n_per_format: int = N_PER_FORMAT,
+def projection(timed: Mapping[str, Mapping], n_per_format: Mapping[str, int] | None = None,
                gate_hours: float = GATE_HOURS) -> dict:
     """`timed` = {fmt: {"seconds": [...], "complete": [...]}} for the timed
     session(s) per format. ONLY COMPLETE sessions enter the projection; a
     format with none is a refusal, not a pass (trap 5)."""
+    n_per_format = dict(N_PER_FORMAT if n_per_format is None else n_per_format)
     per = {}
     total_s = 0.0
     for fmt in FORMATS:
@@ -537,14 +585,15 @@ def projection(timed: Mapping[str, Mapping], n_per_format: int = N_PER_FORMAT,
             raise SystemExit(f"TIMING INCOMPLETE: no COMPLETE timed session for {fmt} "
                              f"({len(s_all)} timed, all truncated); the gate needs one complete session per format")
         mean = float(np.mean(s))
-        per[fmt] = {"n_timed": len(s_all), "n_complete": len(s), "mean_session_s_complete": mean,
+        nf = n_per_format[fmt]
+        per[fmt] = {"n": nf, "n_timed": len(s_all), "n_complete": len(s), "mean_session_s_complete": mean,
                     "truncated_seconds_excluded_from_projection": [x for x, c in zip(s_all, comp) if not c],
-                    "projected_s": mean * n_per_format, "projected_h": mean * n_per_format / 3600}
-        total_s += mean * n_per_format
+                    "projected_s": mean * nf, "projected_h": mean * nf / 3600}
+        total_s += mean * nf
     verdict = "GO" if total_s / 3600 <= gate_hours else "STOP"
     return {"per_format": per, "n_per_format": n_per_format, "projected_total_s": total_s,
             "projected_total_h": total_s / 3600, "gate_hours": gate_hours, "verdict": verdict,
-            "rule": "design block 2026-09-06 §4: STOP if the three formats project past 4 h"}
+            "rule": "design block 2026-09-06 §4 as amended by the design patch 2026-09-06 §2: STOP if the formats project past the gate (8 h)"}
 
 
 def assert_gate_admits(timing_path: str, gate_hours: float = GATE_HOURS) -> dict:
@@ -569,7 +618,7 @@ def assert_gate_admits(timing_path: str, gate_hours: float = GATE_HOURS) -> dict
                    gate_hours=gate_hours)
     if p["verdict"] != "GO":
         raise SystemExit(f"TIMING GATE STOP: projected {p['projected_total_h']:.2f} h for "
-                         f"{p['n_per_format']} x 3 sessions > {gate_hours} h. The design seat decides; "
+                         f"{p['n_per_format']} sessions > {gate_hours} h. The design seat decides; "
                          f"Code does not run past its own STOP.")
     return p
 
@@ -639,8 +688,9 @@ def analyze_format(recs: Sequence[Mapping]) -> dict:
             prefix_at_reads.setdefault(c["phase"], []).append(c["prefix_tokens_at_read"])
     kls = [c["read"]["verify_kl"] for r in recs for c in r["choices"]]
     scopes = sorted({r.get("exclusion_scope") for r in recs})
+    fmt = recs[0]["format"] if recs else "F1"
     feats = {}
-    for spec in declared_features():
+    for spec in declared_features(fmt):
         k, n_dom = {"first_pick_break": (len(brk_all), len(with_pick)),
                     "strict_alternation": (len(alt_valid), len(valid)),
                     "session_share": (len(per_session_share), len(valid))}[spec.name]
@@ -656,6 +706,7 @@ def analyze_format(recs: Sequence[Mapping]) -> dict:
         "exclusion_reasons_run_scope": [r["exclude_reason"] for r in recs if r["excluded"]],
         "exclusion_reasons_strict": [r["strict_exclude_reason"] for r in recs if r["strict_excluded"]],
         "features_rule28a": feats,
+        "refusals": refusal_counts(recs),
         "strict_alternation": {"valid": {"k": sum(1 for r in alt_valid if H.strictly_alternates(r)), "n": len(alt_valid),
                                          "rate": _rate(sum(1 for r in alt_valid if H.strictly_alternates(r)), len(alt_valid))},
                                "all_with_2plus_picks": {"k": sum(1 for r in alt_all if H.strictly_alternates(r)), "n": len(alt_all),
@@ -689,6 +740,30 @@ def analyze_format(recs: Sequence[Mapping]) -> dict:
     }
 
 
+def refusal_counts(recs: Sequence[Mapping]) -> dict:
+    """Design patch 2026-09-06 §2: refusal counts per format and per round
+    position. Two countable things, both declared: (a) `null_response`
+    exclusions (the adopted rule: content-free OR a declining predicate with
+    < 3 content words left); (b) rounds whose text matches the adopted
+    rule's DECLINING-PREDICATE shape at all, residual ignored -- a refusal
+    with delivered content beside it. The imperative shape ('Please don't
+    ask me to do that.') is a declared miss and is countable only by the
+    rule-25 read; it is NOT counted here."""
+    from ..e2d import contentclass_v4 as V4
+    by_phase: dict[str, dict] = {}
+    for r in recs:
+        for x in r["rounds"] + r["choices"]:
+            ph = by_phase.setdefault(x["phase"], {"n": 0, "null_response": 0, "declining_predicate_any": 0})
+            ph["n"] += 1
+            ph["null_response"] += int(x["degen"] == "content:null_response")
+            ph["declining_predicate_any"] += int(bool(V4._REFUSAL.search(V4.strip_leading_label(x["text"]))))
+    tot = {"n": sum(v["n"] for v in by_phase.values()),
+           "null_response": sum(v["null_response"] for v in by_phase.values()),
+           "declining_predicate_any": sum(v["declining_predicate_any"] for v in by_phase.values())}
+    return {"by_round_position": dict(sorted(by_phase.items())), "total": tot,
+            "not_counted": "imperative refusals without a declining predicate (declared miss; the read counts them)"}
+
+
 def anchors() -> dict:
     """The archives the formats are read against, through the same functions.
     Every block carries BOTH domains: `all` (every session, the rule-23
@@ -718,9 +793,9 @@ def anchors() -> dict:
 
 
 __all__ = ["FORMATS", "N_FORCED", "N_PER_FORMAT", "GATE_HOURS", "DRAW_SEED", "NEUTRAL_LABEL",
-           "NEUTRAL_TOKEN_ID", "ROLE_POLE", "DECLARED_COUNTERS", "MAX_TIMING_ATTEMPTS",
-           "FEATURE_FLOOR", "declared_features", "is_complete", "cells", "build_schedule",
+           "NEUTRAL_TOKEN_ID", "NEUTRAL_SELECTION", "ROLE_POLE", "DECLARED_COUNTERS", "MAX_TIMING_ATTEMPTS",
+           "FEATURE_FLOOR_FRACTION", "feature_floor", "declared_features", "is_complete", "cells", "build_schedule",
            "forced_order", "rng_key", "round_segment", "menu_segment", "classify_v3", "excludes",
            "strict_exclusion", "run_session", "tally", "run_identity", "load_checkpoint",
            "run_format", "as_e2a_row", "verify_format_walk", "projection", "assert_gate_admits",
-           "refuse_overwrite", "analyze_format", "anchors"]
+           "refuse_overwrite", "analyze_format", "refusal_counts", "anchors"]

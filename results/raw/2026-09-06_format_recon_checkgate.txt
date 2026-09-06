@@ -1,0 +1,5 @@
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/format_recon.py --check-gate
+  F0: 451 s per complete session x 8 = 1.00 h
+  F1: 428 s per complete session x 24 = 2.85 h
+  F2: 465 s per complete session x 24 = 3.10 h
+  PROJECTION 6.96 h for {'F0': 8, 'F1': 24, 'F2': 24} vs gate 8.0 h -> GO; timed-session acceptance PASS on every format (asserted)

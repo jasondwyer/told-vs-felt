@@ -21,6 +21,88 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-06 — **DESIGN PATCH 2026-09-06 §2–§3 APPLIED: FORMAT RECON
+  re-allocated (F0 8 / F1 24 / F2 24) under a raised 8 h gate, the
+  existing timing artifact projects **6.96 h → GO**, the neutral label
+  RE-SELECTED to `timber` because `cedar` fails the patch's own assertion,
+  the two flags disposed; the run launches detached under the §2 protocol
+  (launch facts appended below once verified). Analysis and the results
+  entry come in a LATER session on the PI's word. §1 (closure, R7–R13) is
+  its own entry. Watermark `07224b6`; Code stamps from `date -u`.**
+  (Stamp verified at write time: `date -u` → **Sun Sep  6 16:12:40 UTC 2026**.)
+
+  - **Allocation and gate.** `N_PER_FORMAT` = {F0 8, F1 24, F2 24} (F0 is
+    the continuity anchor only; the archive gives its habit at n = 187 /
+    102), `GATE_HOURS` 8.0 (design patch §2, superseding the block's 24 × 3
+    and 4 h). Projection recomputed from the EXISTING timing artifact, no
+    new timing session (`--check-gate`, model-free; raw
+    [`_checkgate`](results/raw/2026-09-06_format_recon_checkgate.txt)):
+    451 s × 8 = 1.00 h, 428 s × 24 = 2.85 h, 465 s × 24 = 3.10 h; **6.96 h
+    for 56 sessions vs 8 h → GO** (the patch's "≈ 6.95" is the same sum from
+    rounded parts); timed-session acceptance PASS asserted on every format.
+    Rule-28(a) floors re-declared per format as ceil(2/3 · n): F0 6, F1 16,
+    F2 16 (reported with diagnosis, never suppressed). F0's 8 = one whole
+    block, exactly balanced; F0's timed session 0 is index 0 of the
+    8-schedule (the 8-schedule is the prefix of the 24-schedule, checked).
+    The checkpoint identity now pins the design of every session (seed,
+    scope, temp, audit sha, roster, neutral label, n_forced/n_free) and the
+    schedule PREFIX, not n: a reallocation before the run changes how many
+    sessions run, never which; a shrink that would orphan a session on disk
+    is refused; `n_history` travels in the checkpoint and the artifact.
+  - **Neutral label: `cedar` FAILS the patch's assertion and is replaced by
+    `timber` (id 43299).** `cedar` is one of H3's sixteen tags (C2) and an
+    e2a archive pair tag, so under "absent from every roster and from H3's
+    sixteen" it cannot stand — Code's first choice had leaned on exactly
+    that template-family history. Re-selection under a declared procedure
+    ([`neutral_label_selection.json`](data/format/neutral_label_selection.json),
+    tokenizer loaded once, model process closed): a fixed candidate order,
+    first to pass (i) single token with a leading space, (ii) in NO roster
+    — roster of record, H3's sixteen, the h3 and a1 candidate rosters, the
+    e2a archive pairs, and (checked) every e2b/e2d campaign — (iii)
+    word-boundary absent from every pool (the 64 e2a paraphrases, every
+    `data/corpus` jsonl, e0 frames/probes, s2 frames, b2 framing), (iv)
+    absent from the wrapper. Of 20 candidates 5 pass (timber, marble, linen, fern, summit);
+    `timber` is first. The script re-asserts (i)–(iv) at startup against the
+    live tokenizer and rosters (hard stop, never a silent pass). **Reported,
+    as the patch asks; provisional until Design says otherwise.**
+    Consequence: F1's two `cedar` timing sessions (s0 truncated, s1
+    complete) are set aside — their checkpoint renamed
+    `…F1_sessions.json.checkpoint.cedar-timing-2026-09-06` (local, ignored);
+    they stay in the timing artifact as the cost measurement they were —
+    and **F1 starts from index 0 under `timber`**; F0 and F2 resume their
+    timed session 0. The identity refuses the `cedar` checkpoint by
+    construction, which is the guard working.
+  - **Refusal counts (patch §2) added to the analysis, declared before any
+    run data:** per format and per round position, (a) `null_response`
+    exclusions and (b) rounds matching the adopted declining-predicate shape
+    at all, residual ignored; the imperative shape ("Please don't ask me to
+    do that.") is a declared miss and countable only by the read — it is not
+    counted, and the definitions say so.
+  - **§3a applied:** the imperative refusal without a declining predicate is
+    a DECLARED MISS of `null_response`, to the read, recorded at
+    `standing.declared_misses.imperative_refusal_without_declining_predicate`
+    in the candidate JSON beside the third-person disclaimer and the bare
+    "No."; the module is untouched (1d). **§3b:** noted; F1 s1's picks go in
+    the report as n = 1 — and under `timber` that session is set aside
+    anyway.
+  - **Tooling record:** self-test 66/66
+    ([`_selftest`](results/raw/2026-09-06_format_recon_selftest.txt): the
+    reallocation prefix check, the shrink refusal, the foreign-prefix
+    refusal, `timber` against all five rosters and the pools, the raised gate
+    on the real timing artifact, refusal counts); regression 154/154
+    ([`_regression`](results/raw/2026-09-06_format_recon_regression.txt));
+    the log's first line is now the invocation (printed before the model
+    loads), for the launch protocol's step 3.
+  - **Launch (§2 protocol):** preflight at 16:11 UTC — adapter 140 W, AC,
+    zero model processes, `timber` asserted outside every roster. Launched
+    detached (`nohup caffeinate -is … --stage run --format all --resume`,
+    log `results/raw/2026-09-06_format_recon_run.log`); the three
+    verification facts are appended to this entry once seen, then the
+    session ends without monitoring. Analysis and the results entry: a later
+    session, on the PI's word (`--resume` if the run stopped early, else
+    `--analyze` on the complete artifacts; complete artifacts are never
+    overwritten by a subset).
+
 - 2026-09-06 — **FORMAT RECON (design block 2026-09-06 §4, PI "Go format
   recon") — BUILT, REVIEWED, SELF-TESTED, TIMED; the timing gate says STOP.
   One complete sham session per format on the uncached path of record costs

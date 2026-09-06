@@ -1,0 +1,366 @@
+{
+ "candidates_in_declared_order": [
+  "basalt",
+  "pewter",
+  "timber",
+  "marble",
+  "cobalt",
+  "harbor",
+  "linen",
+  "meadow",
+  "orchard",
+  "willow",
+  "garnet",
+  "flint",
+  "juniper",
+  "cedarwood",
+  "tundra",
+  "onyx",
+  "fern",
+  "heron",
+  "summit",
+  "larch"
+ ],
+ "report": [
+  {
+   "label": "basalt",
+   "n_tokens": 2,
+   "token_id": null,
+   "in_rosters": [],
+   "e2a_pool_hits": 0,
+   "other_pool_hits": 0,
+   "wrapper_hit": false,
+   "passes": false
+  },
+  {
+   "label": "pewter",
+   "n_tokens": 2,
+   "token_id": null,
+   "in_rosters": [],
+   "e2a_pool_hits": 0,
+   "other_pool_hits": 0,
+   "wrapper_hit": false,
+   "passes": false
+  },
+  {
+   "label": "timber",
+   "n_tokens": 1,
+   "token_id": 43299,
+   "in_rosters": [],
+   "e2a_pool_hits": 0,
+   "other_pool_hits": 0,
+   "wrapper_hit": false,
+   "passes": true
+  },
+  {
+   "label": "marble",
+   "n_tokens": 1,
+   "token_id": 39926,
+   "in_rosters": [],
+   "e2a_pool_hits": 0,
+   "other_pool_hits": 0,
+   "wrapper_hit": false,
+   "passes": true
+  },
+  {
+   "label": "cobalt",
+   "n_tokens": 2,
+   "token_id": null,
+   "in_rosters": [],
+   "e2a_pool_hits": 0,
+   "other_pool_hits": 0,
+   "wrapper_hit": false,
+   "passes": false
+  },
+  {
+   "label": "harbor",
+   "n_tokens": 1,
+   "token_id": 54517,
+   "in_rosters": [],
+   "e2a_pool_hits": 0,
+   "other_pool_hits": 1,
+   "wrapper_hit": false,
+   "passes": false
+  },
+  {
+   "label": "linen",
+   "n_tokens": 1,
+   "token_id": 52202,
+   "in_rosters": [],
+   "e2a_pool_hits": 0,
+   "other_pool_hits": 0,
+   "wrapper_hit": false,
+   "passes": true
+  },
+  {
+   "label": "meadow",
+   "n_tokens": 2,
+   "token_id": null,
+   "in_rosters": [],
+   "e2a_pool_hits": 0,
+   "other_pool_hits": 0,
+   "wrapper_hit": false,
+   "passes": false
+  },
+  {
+   "label": "orchard",
+   "n_tokens": 2,
+   "token_id": null,
+   "in_rosters": [],
+   "e2a_pool_hits": 0,
+   "other_pool_hits": 0,
+   "wrapper_hit": false,
+   "passes": false
+  },
+  {
+   "label": "willow",
+   "n_tokens": 2,
+   "token_id": null,
+   "in_rosters": [],
+   "e2a_pool_hits": 0,
+   "other_pool_hits": 0,
+   "wrapper_hit": false,
+   "passes": false
+  },
+  {
+   "label": "garnet",
+   "n_tokens": 2,
+   "token_id": null,
+   "in_rosters": [],
+   "e2a_pool_hits": 0,
+   "other_pool_hits": 0,
+   "wrapper_hit": false,
+   "passes": false
+  },
+  {
+   "label": "flint",
+   "n_tokens": 2,
+   "token_id": null,
+   "in_rosters": [],
+   "e2a_pool_hits": 0,
+   "other_pool_hits": 0,
+   "wrapper_hit": false,
+   "passes": false
+  },
+  {
+   "label": "juniper",
+   "n_tokens": 2,
+   "token_id": null,
+   "in_rosters": [],
+   "e2a_pool_hits": 0,
+   "other_pool_hits": 0,
+   "wrapper_hit": false,
+   "passes": false
+  },
+  {
+   "label": "cedarwood",
+   "n_tokens": 2,
+   "token_id": null,
+   "in_rosters": [],
+   "e2a_pool_hits": 0,
+   "other_pool_hits": 0,
+   "wrapper_hit": false,
+   "passes": false
+  },
+  {
+   "label": "tundra",
+   "n_tokens": 2,
+   "token_id": null,
+   "in_rosters": [],
+   "e2a_pool_hits": 0,
+   "other_pool_hits": 0,
+   "wrapper_hit": false,
+   "passes": false
+  },
+  {
+   "label": "onyx",
+   "n_tokens": 2,
+   "token_id": null,
+   "in_rosters": [],
+   "e2a_pool_hits": 0,
+   "other_pool_hits": 0,
+   "wrapper_hit": false,
+   "passes": false
+  },
+  {
+   "label": "fern",
+   "n_tokens": 1,
+   "token_id": 84023,
+   "in_rosters": [],
+   "e2a_pool_hits": 0,
+   "other_pool_hits": 0,
+   "wrapper_hit": false,
+   "passes": true
+  },
+  {
+   "label": "heron",
+   "n_tokens": 2,
+   "token_id": null,
+   "in_rosters": [],
+   "e2a_pool_hits": 0,
+   "other_pool_hits": 0,
+   "wrapper_hit": false,
+   "passes": false
+  },
+  {
+   "label": "summit",
+   "n_tokens": 1,
+   "token_id": 28005,
+   "in_rosters": [],
+   "e2a_pool_hits": 0,
+   "other_pool_hits": 0,
+   "wrapper_hit": false,
+   "passes": true
+  },
+  {
+   "label": "larch",
+   "n_tokens": 2,
+   "token_id": null,
+   "in_rosters": [],
+   "e2a_pool_hits": 0,
+   "other_pool_hits": 0,
+   "wrapper_hit": false,
+   "passes": false
+  }
+ ],
+ "rosters_checked": {
+  "e2d_roster_of_record": [
+   "granite",
+   "plaza",
+   "prism",
+   "ridge",
+   "saddle",
+   "slate",
+   "velvet",
+   "walnut"
+  ],
+  "H3_sixteen": [
+   "amber",
+   "canvas",
+   "cedar",
+   "copper",
+   "ember",
+   "granite",
+   "lattice",
+   "maple",
+   "plaza",
+   "prism",
+   "quartz",
+   "ridge",
+   "saddle",
+   "slate",
+   "velvet",
+   "walnut"
+  ],
+  "h3_candidates": [
+   "amber",
+   "canvas",
+   "cedar",
+   "copper",
+   "ember",
+   "granite",
+   "lattice",
+   "maple",
+   "plaza",
+   "prism",
+   "quartz",
+   "ridge",
+   "saddle",
+   "slate",
+   "velvet",
+   "walnut"
+  ],
+  "a1_candidates": [
+   "amber",
+   "canvas",
+   "cedar",
+   "copper",
+   "ember",
+   "granite",
+   "lattice",
+   "maple",
+   "plaza",
+   "prism",
+   "quartz",
+   "ridge",
+   "saddle",
+   "slate",
+   "velvet",
+   "walnut"
+  ],
+  "e2a_archive_pairs": [
+   "cedar",
+   "granite",
+   "lattice",
+   "maple",
+   "plaza",
+   "prism",
+   "saddle",
+   "slate"
+  ],
+  "h1_sessions.json": [
+   "granite",
+   "plaza",
+   "prism",
+   "ridge",
+   "saddle",
+   "slate",
+   "velvet",
+   "walnut"
+  ],
+  "verdict_campaign.json": [
+   "granite",
+   "plaza",
+   "prism",
+   "ridge",
+   "saddle",
+   "slate",
+   "velvet",
+   "walnut"
+  ],
+  "d2_sessions.json": [
+   "granite",
+   "plaza",
+   "prism",
+   "ridge",
+   "saddle",
+   "slate",
+   "velvet",
+   "walnut"
+  ]
+ },
+ "pools_checked": [
+  "data/corpus/e2a_tasks.jsonl (64 paraphrases)",
+  "data/corpus/*.jsonl",
+  "e0_frames, e0_probes, s2_vignette_frames, b2_framing"
+ ],
+ "cedar_fails_because": [
+  "H3_sixteen",
+  "a1_candidates",
+  "e2a_archive_pairs",
+  "h3_candidates"
+ ],
+ "chosen": {
+  "label": "timber",
+  "token_id": 43299
+ },
+ "provenance": {
+  "adapter": "qwen3.6-27b-4bit-mlx",
+  "model_id": "mlx-community/Qwen3.6-27B-4bit",
+  "dtype": "4bit-quantized (MLX)",
+  "backend": "mlx",
+  "mlx_version": "0.31.2",
+  "library_versions": {
+   "mlx": "0.31.2",
+   "mlx-lm": "0.31.3",
+   "numpy": "2.5.1"
+  },
+  "python": "3.12.9",
+  "platform": "macOS-15.6.1-arm64-arm-64bit",
+  "gdn_inference_mode": "ops (fused disabled)",
+  "n_layers": 64,
+  "choice_window_declared": 8192,
+  "legacy_truncate_512": false,
+  "n_encodes_clipped": 0
+ }
+}

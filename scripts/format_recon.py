@@ -59,6 +59,50 @@ def all_paraphrases(tasks) -> list[str]:
     return [p for t in tasks for p in t["paraphrases"]]
 
 
+def all_rosters() -> dict:
+    """Every roster the neutral label must be absent from (design patch
+    2026-09-06 §2): the roster of record, H3's sixteen, the h3/a1 candidate
+    rosters, the e2a archive's pairs."""
+    out = {"e2d_roster_of_record": {t for p in C.ROSTER for t in p}}
+    out["H3_sixteen"] = set(json.load(open(os.path.join(DATA, "e2b/h3b_repair_screen.json")))["tags"])
+    out["h3_candidates"] = {t for p in json.load(open(os.path.join(DATA, "configs/h3_roster_candidates.json")))["pairs"] for t in p["tags"]}
+    a1 = json.load(open(os.path.join(DATA, "configs/a1_roster_candidates.json")))
+    def tags_of(o):
+        s = set()
+        if isinstance(o, dict):
+            for k, v in o.items():
+                if k in ("tags", "pair") and isinstance(v, list) and all(isinstance(x, str) for x in v):
+                    s |= set(v)
+                else:
+                    s |= tags_of(v)
+        elif isinstance(o, list):
+            for v in o:
+                s |= tags_of(v)
+        return s
+    out["a1_candidates"] = tags_of(a1)
+    out["e2a_archive_pairs"] = {t for l in open(os.path.join(DATA, "e2a/sessions.jsonl")) if l.strip() for t in json.loads(l)["pair"]}
+    return out
+
+
+def assert_neutral_outside_every_roster() -> dict:
+    """Design patch 2026-09-06 §2: the neutral label is asserted absent from
+    every roster and from H3's sixteen before the run; a hit is a stop and a
+    re-selection, never a silent pass. Also pins the selection artifact."""
+    ros = all_rosters()
+    hits = {k: R.NEUTRAL_LABEL for k, v in ros.items() if R.NEUTRAL_LABEL in v}
+    if hits:
+        raise SystemExit(f"NEUTRAL LABEL STOP: {R.NEUTRAL_LABEL!r} is in {sorted(hits)}; pick the next candidate "
+                         f"(data/format/neutral_label_selection.json) and report it.")
+    sel_path = os.path.join(REPO, R.NEUTRAL_SELECTION)
+    if not os.path.exists(sel_path):
+        raise SystemExit(f"NEUTRAL SELECTION ARTIFACT MISSING: {sel_path}")
+    sel = json.load(open(sel_path))
+    if sel["chosen"]["label"] != R.NEUTRAL_LABEL or int(sel["chosen"]["token_id"]) != R.NEUTRAL_TOKEN_ID:
+        raise SystemExit(f"NEUTRAL SELECTION MISMATCH: artifact chose {sel['chosen']}, module declares "
+                         f"{R.NEUTRAL_LABEL!r}/{R.NEUTRAL_TOKEN_ID}")
+    return {"rosters_checked": {k: len(v) for k, v in ros.items()}, "neutral": R.NEUTRAL_LABEL, "hits": {}}
+
+
 def hygiene(tasks) -> dict:
     """Rule 18 (tags vs every pool, word-boundary) and rule 28(c) (tags vs
     the wrapper). Hard stops."""
@@ -74,17 +118,16 @@ def hygiene(tasks) -> dict:
             hits.append(("wrapper", tag, ""))
     if hits:
         raise SystemExit(f"HYGIENE STOP (rule 18 / 28c): {hits[:5]}")
-    if R.NEUTRAL_LABEL in {t for p in C.ROSTER for t in p}:
-        raise SystemExit("HYGIENE STOP: the neutral label is a roster tag")
+    ros = assert_neutral_outside_every_roster()
     return {"tags_checked": tags, "n_pool_texts": len(pool), "rule18_pool_hits": 0,
-            "rule28c_wrapper_hits": 0, "neutral_not_in_roster": True}
+            "rule28c_wrapper_hits": 0, "neutral_outside_every_roster": ros}
 
 
 def neutral_id_check(adapter) -> int:
     enc = adapter.encode(" " + R.NEUTRAL_LABEL, add_special_tokens=False)
     if len(enc) != 1 or int(enc[0]) != R.NEUTRAL_TOKEN_ID:
         raise SystemExit(f"NEUTRAL LABEL STOP: {R.NEUTRAL_LABEL!r} encodes to {enc}, expected "
-                         f"[{R.NEUTRAL_TOKEN_ID}] (H3b-verified). Not the tokenizer the label was "
+                         f"[{R.NEUTRAL_TOKEN_ID}] (selection artifact). Not the tokenizer the label was "
                          f"verified on -- escalate, do not re-verify silently.")
     return int(enc[0])
 
@@ -191,11 +234,11 @@ def selftest() -> int:
     c_b = {"pair": ["slate", "prism"], "first_index": 1, "tag_plus": "prism", "tag_minus": "slate"}
     fo = {f: [t for t, _ in R.forced_order(f, c_a)] for f in R.FORMATS}
     chk("F0 = A B A B", fo["F0"] == ["slate", "prism", "slate", "prism"], fo["F0"])
-    chk("F1 = N N A B", fo["F1"] == ["cedar", "cedar", "slate", "prism"], fo["F1"])
+    chk("F1 = N N A B", fo["F1"] == [R.NEUTRAL_LABEL, R.NEUTRAL_LABEL, "slate", "prism"], fo["F1"])
     chk("F2 = A A B B", fo["F2"] == ["slate", "slate", "prism", "prism"], fo["F2"])
     fob = {f: [t for t, _ in R.forced_order(f, c_b)] for f in R.FORMATS}
     chk("swapped cell mirrors every format",
-        fob["F0"] == ["prism", "slate", "prism", "slate"] and fob["F1"] == ["cedar", "cedar", "prism", "slate"]
+        fob["F0"] == ["prism", "slate", "prism", "slate"] and fob["F1"] == [R.NEUTRAL_LABEL, R.NEUTRAL_LABEL, "prism", "slate"]
         and fob["F2"] == ["prism", "prism", "slate", "slate"], fob)
     chk("every format's LAST forced label is tag_minus (uniform break definition)",
         all(R.forced_order(f, c)[-1][0] == c["tag_minus"] for f in R.FORMATS for c in (c_a, c_b)))
@@ -204,26 +247,35 @@ def selftest() -> int:
         and [f for f in R.FORMATS if "neutral" in R.FORMATS[f]["order"]] == ["F1"])
 
     # 2. schedule
-    sched = R.build_schedule(R.N_PER_FORMAT, np.random.default_rng(R.DRAW_SEED))
+    sched = R.build_schedule(24, np.random.default_rng(R.DRAW_SEED))
     key = lambda c: (tuple(c["pair"]), c["tag_plus"])
     from collections import Counter
     cnt = Counter(key(c) for c in sched)
-    chk("24 = 8 cells x 3, exactly", len(cnt) == 8 and set(cnt.values()) == {3}, dict(cnt))
+    chk("F1/F2: 24 = 8 cells x 3, exactly; F0: 8 = 1 block", len(cnt) == 8 and set(cnt.values()) == {3}
+        and R.N_PER_FORMAT == {"F0": 8, "F1": 24, "F2": 24}
+        and len({key(c) for c in R.build_schedule(8, np.random.default_rng(R.DRAW_SEED))}) == 8, dict(cnt))
+    chk("the 8-schedule is the prefix of the 24-schedule (reallocation changes how many, never which)",
+        [key(c) for c in R.build_schedule(8, np.random.default_rng(R.DRAW_SEED))] == [key(c) for c in sched[:8]])
     blocks_ok = all(len({key(c) for c in sched[i:i + 8]}) == 8 for i in range(0, 24, 8))
     chk("every block of 8 is a permutation of the cells (balanced at every prefix)", blocks_ok)
-    sched2 = R.build_schedule(R.N_PER_FORMAT, np.random.default_rng(R.DRAW_SEED))
+    sched2 = R.build_schedule(24, np.random.default_rng(R.DRAW_SEED))
     chk("schedule deterministic under the draw seed", [key(c) for c in sched] == [key(c) for c in sched2])
     chk("each pair starts on each label 3 times", all(v == 3 for v in cnt.values()))
 
     # 3. neutral label + hygiene
-    h3b = json.load(open(os.path.join(DATA, "e2b/h3b_repair_screen.json")))
-    chk("neutral label H3b-verified: single-token id matches, hygiene inherited",
-        h3b["token_ids"].get(R.NEUTRAL_LABEL) == R.NEUTRAL_TOKEN_ID and R.NEUTRAL_LABEL in h3b["tags"]
-        and "rule-18" in h3b["hygiene"], h3b["token_ids"].get(R.NEUTRAL_LABEL))
-    chk("neutral label in NO roster pair", all(R.NEUTRAL_LABEL not in p for p in C.ROSTER))
+    sel = json.load(open(os.path.join(REPO, R.NEUTRAL_SELECTION)))
+    ros = all_rosters()
+    chk("neutral label `timber`: selection artifact agrees (id 43299), first passing candidate in the declared order",
+        sel["chosen"] == {"label": R.NEUTRAL_LABEL, "token_id": R.NEUTRAL_TOKEN_ID}
+        and [r for r in sel["report"] if r["passes"]][0]["label"] == R.NEUTRAL_LABEL, sel["chosen"])
+    chk("neutral label absent from EVERY roster and H3's sixteen (5 rosters); `cedar` would have failed",
+        all(R.NEUTRAL_LABEL not in v for v in ros.values()) and len(ros) == 5 and "cedar" in ros["H3_sixteen"]
+        and assert_neutral_outside_every_roster()["hits"] == {}, {k: len(v) for k, v in ros.items()})
     hy = hygiene(tasks)
     chk("rule 18 + 28c: 9 tags absent from all 64 paraphrases and from the wrapper",
         hy["n_pool_texts"] == 64 and len(hy["tags_checked"]) == 9, hy["n_pool_texts"])
+    chk("neutral label absent from every data/corpus pool and the e0/s2/b2 stimulus files (selection artifact)",
+        all(r["other_pool_hits"] == 0 and r["e2a_pool_hits"] == 0 for r in sel["report"] if r["label"] == R.NEUTRAL_LABEL))
 
     # 4. draw order: synthetic sessions reconstruct under the e2a walk, all formats
     walked = ok = seeds = 0
@@ -284,8 +336,8 @@ def selftest() -> int:
     chk("a plain answer: nothing", e is None and not a and l is None, (e, a, l))
     e, a, l, cl = R.classify_v3("I would pick slate for this one.", task, [], o, audit3, own)
     chk("own tag in a response -> lexical hit", l == "slate", l)
-    e, a, l, cl = R.classify_v3("cedar is a lovely wood.", task, [], o, audit3, own + (R.NEUTRAL_LABEL,))
-    chk("F1's neutral label in the lexical set", l == "cedar", l)
+    e, a, l, cl = R.classify_v3(f"{R.NEUTRAL_LABEL} is a lovely material.", task, [], o, audit3, own + (R.NEUTRAL_LABEL,))
+    chk("F1's neutral label in the lexical set", l == R.NEUTRAL_LABEL, l)
     e, a, l, cl = R.classify_v3(TEXTS[1], task, [TEXTS[1]], o, audit3, own)
     chk("repeat of an earlier response -> content:stuck_attractor", e == "content:stuck_attractor", e)
 
@@ -327,9 +379,14 @@ def selftest() -> int:
     # 9. the timing gate
     p_stop = R.projection({f: {"seconds": [300.0], "complete": [True]} for f in R.FORMATS})
     p_go = R.projection({f: {"seconds": [150.0], "complete": [True]} for f in R.FORMATS})
-    chk("gate: 3 x 300 s -> 6.0 h STOP; 3 x 150 s -> 3.0 h GO",
-        p_stop["verdict"] == "STOP" and abs(p_stop["projected_total_h"] - 6.0) < 1e-9
-        and p_go["verdict"] == "GO" and abs(p_go["projected_total_h"] - 3.0) < 1e-9)
+    chk("gate 8 h under the allocation (8/24/24 = 56 sessions): 3 x 300 s -> 4.67 h GO; 3 x 600 s -> 9.33 h STOP",
+        p_go["verdict"] == "GO" and abs(p_go["projected_total_h"] - 56 * 150 / 3600) < 1e-9
+        and p_stop["verdict"] == "GO" and abs(p_stop["projected_total_h"] - 56 * 300 / 3600) < 1e-9
+        and R.projection({f: {"seconds": [600.0], "complete": [True]} for f in R.FORMATS})["verdict"] == "STOP")
+    if os.path.exists(TIMING):
+        real = R.assert_gate_admits(TIMING)
+        chk("the EXISTING timing artifact projects GO under the raised gate (design patch §2: ~6.95 h)",
+            real["verdict"] == "GO" and abs(real["projected_total_h"] - 6.95) < 0.02, f"{real['projected_total_h']:.3f} h")
     tmpd = os.environ.get("TMPDIR", "/tmp")
     tp = os.path.join(tmpd, "format_recon_selftest_timing.json")
     if os.path.exists(tp):
@@ -340,7 +397,7 @@ def selftest() -> int:
     except SystemExit:
         refused_missing = True
     _pass = {f: {"PASS": True} for f in R.FORMATS}
-    json.dump({"timed": {f: {"seconds": [300.0], "complete": [True]} for f in R.FORMATS}, "acceptance_on_timed_sessions": _pass}, open(tp, "w"))
+    json.dump({"timed": {f: {"seconds": [600.0], "complete": [True]} for f in R.FORMATS}, "acceptance_on_timed_sessions": _pass}, open(tp, "w"))
     refused_stop = False
     try:
         R.assert_gate_admits(tp)
@@ -386,16 +443,29 @@ def selftest() -> int:
     chk("--resume --limit 3 completes to 3 on disk, indices 0,1,2 (skip-only)",
         [r["session"] for r in res3["sessions"]] == [0, 1, 2])
     mismatch_refused = True
-    for bad in ({"seed": 1}, {"n": 12}, {"scope": "e2b"}, {"fmt": "F1"}, {"temp": 0.9}, {"audit_sha16": "zzz"}):
-        ident = R.run_identity(bad.get("fmt", "F0"), bad.get("seed", R.DRAW_SEED), bad.get("n", 24),
+    sched24 = R.build_schedule(24, np.random.default_rng(R.DRAW_SEED))
+    for bad in ({"seed": 1}, {"scope": "e2b"}, {"fmt": "F1"}, {"temp": 0.9}, {"audit_sha16": "zzz"}):
+        ident = R.run_identity(bad.get("fmt", "F0"), bad.get("seed", R.DRAW_SEED),
                                bad.get("scope", "e2a"), bad.get("temp", C.TEMP), bad.get("audit_sha16", ""))
         try:
-            R.load_checkpoint(cp, ident)
+            R.load_checkpoint(cp, ident, 24, sched24)
             mismatch_refused = False
         except SystemExit:
             pass
-    R.load_checkpoint(cp, R.run_identity("F0", R.DRAW_SEED, 24, "e2a", C.TEMP, ""))   # the identical identity loads
-    chk("load_checkpoint refuses a foreign seed / n / scope / format / temp / audit sha", mismatch_refused)
+    ident_ok = R.run_identity("F0", R.DRAW_SEED, "e2a", C.TEMP, "")
+    R.load_checkpoint(cp, ident_ok, 24, sched24)   # the identical identity loads
+    ck8 = R.load_checkpoint(cp, ident_ok, 8, R.build_schedule(8, np.random.default_rng(R.DRAW_SEED)))   # reallocation 24 -> 8 with 3 on disk: allowed
+    try:
+        R.load_checkpoint(cp, ident_ok, 2, R.build_schedule(2, np.random.default_rng(R.DRAW_SEED))); shrink_refused = False
+    except SystemExit:
+        shrink_refused = True
+    try:
+        R.load_checkpoint(cp, ident_ok, 24, R.build_schedule(24, np.random.default_rng(7))); prefix_refused = False
+    except SystemExit:
+        prefix_refused = True
+    chk("reallocation: 24 -> 8 resumes 3 on-disk sessions; 24 -> 2 (orphaning s2) refused; a foreign schedule prefix refused",
+        len(ck8["sessions"]) == 3 and shrink_refused and prefix_refused)
+    chk("load_checkpoint refuses a foreign seed / scope / format / temp / audit sha", mismatch_refused)
     os.remove(cp)
 
     # 11. sham source guard + bars
@@ -423,7 +493,7 @@ def selftest() -> int:
     chk("a truncated timed session is NOT complete; a full one is",
         tr["complete"] is False and recs[0]["complete"] is True and R.is_complete(recs[0]))
     pr = R.projection({"F0": {"seconds": [230.0], "complete": [True]}, "F1": {"seconds": [23.0, 230.0], "complete": [False, True]},
-                       "F2": {"seconds": [230.0], "complete": [True]}})
+                       "F2": {"seconds": [230.0], "complete": [True]}}, n_per_format={"F0": 24, "F1": 24, "F2": 24}, gate_hours=4.0)
     chk("projection uses COMPLETE sessions only (a 23 s truncated session is set aside)",
         pr["verdict"] == "STOP" and abs(pr["projected_total_h"] - 4.6) < 1e-9 and pr["per_format"]["F1"]["n_complete"] == 1
         and pr["per_format"]["F1"]["truncated_seconds_excluded_from_projection"] == [23.0])
@@ -486,9 +556,16 @@ def selftest() -> int:
         an2["first_pick_break"]["all_with_a_pick"]["rate"] is None and an2["n_complete"] == 0
         and all(v["diagnosis"] for v in an2["features_rule28a"].values()) and an2["exclusion_scope_of_run"] == "e2a")
     an3 = R.analyze_format(recs[:4] + [brk, fr, fr2])
-    chk("rule 28(a) floors declared (16) and reported per feature with domain + decidable n",
-        {k: v["floor"] for k, v in an3["features_rule28a"].items()} == {"first_pick_break": 16, "strict_alternation": 16, "session_share": 16}
-        and an3["features_rule28a"]["first_pick_break"]["decidable"] == 6)
+    _fl = R.feature_floor(recs[0]["format"])
+    chk("rule 28(a) floors declared per format (ceil 2/3 n: F0 6, F1/F2 16) and reported with domain + decidable n",
+        {k: v["floor"] for k, v in an3["features_rule28a"].items()} == {"first_pick_break": _fl, "strict_alternation": _fl, "session_share": _fl}
+        and an3["features_rule28a"]["first_pick_break"]["decidable"] == 6 and R.feature_floor("F0") == 6 and R.feature_floor("F1") == 16 and R.feature_floor("F2") == 16)
+    rfz = R.run_session(_FakeAdapter(["The ferry glides across misty water at first light, and I won't pretend the gulls approve."] + TEXTS), "F0", 8, sched[8], tasks, audit3, [], [], others,
+                        _read_override=first_listed)
+    rc_ = R.refusal_counts([rfz, fr2])
+    chk("refusal counts per round position: a declining predicate with content counts as predicate-only; the '* * *' null counts as null_response",
+        rc_["by_round_position"]["forced0"] == {"n": 2, "null_response": 1, "declining_predicate_any": 1} and rc_["total"]["null_response"] == 1
+        and rfz["rounds"][0]["degen"] is None, rc_["by_round_position"].get("forced0"))
     A = R.anchors()
     chk("anchors carry both domains: e2a all 157/187 & 32/188; valid 154/184 & 30/184",
         A["e2a_all_arms"]["all"]["strict_alternation"]["k"] == 157 and A["e2a_all_arms"]["valid"]["strict_alternation"]["k"] == 154
@@ -503,25 +580,25 @@ def selftest() -> int:
 # stages
 # ============================================================================
 def header(args, adapter, audit_cfg, tasks, bars):
-    print("INVOCATION: " + " ".join([sys.executable] + sys.argv), flush=True)
     print(f"  SHAM ONLY: no steering, no axis, no random direction; every forward vanilla; round path UNCACHED "
           f"(the uncached path of record); choice reads = readout.choice_read(verify=True) + assert_construction_stable", flush=True)
     print(f"  design block 2026-09-06 §4; descriptive only; no bar; template recalibration for LOCK-k", flush=True)
     for f, spec in R.FORMATS.items():
         print(f"  {f}: {spec['title']}  [{' '.join(spec['order'])}]  -- {spec['purpose']}", flush=True)
-    print(f"  n per format {R.N_PER_FORMAT} (8 cells x 3 whole blocks; draw seed {args.draw_seed}); gate {args.gate_hours} h"
+    print(f"  allocation {R.N_PER_FORMAT} (8 cells; whole blocks; design patch 2026-09-06 §2; draw seed {args.draw_seed}); gate {args.gate_hours} h"
           + ("" if args.gate_hours == R.GATE_HOURS else f"  *** DECLARED DEVIATION: gate overridden from {R.GATE_HOURS} h ***"), flush=True)
     print(f"  roster of record (AMENDMENT 1 i): {', '.join('/'.join(p) for p in C.ROSTER)}", flush=True)
     nid = neutral_id_check(adapter)
-    print(f"  neutral label (F1, Code choice, flagged): {R.NEUTRAL_LABEL!r} id {nid} (H3b-verified {R.NEUTRAL_TOKEN_ID})", flush=True)
+    print(f"  neutral label (F1): {R.NEUTRAL_LABEL!r} id {nid} (selection artifact {R.NEUTRAL_SELECTION}; provisionally approved, design patch 2026-09-06 §2)", flush=True)
     hy = hygiene(tasks)
-    print(f"  hygiene: rule 18 {len(hy['tags_checked'])} tags vs {hy['n_pool_texts']} paraphrases -> 0 hits; rule 28c wrapper -> 0 hits", flush=True)
+    print(f"  hygiene: rule 18 {len(hy['tags_checked'])} tags vs {hy['n_pool_texts']} paraphrases -> 0 hits; rule 28c wrapper -> 0 hits; "
+          f"neutral absent from every roster {hy['neutral_outside_every_roster']['rosters_checked']}", flush=True)
     print(f"  audit of record: {AUDIT_VERSION}; v2 = e2b_audit_v2.json sha16 {audit_cfg['sha16']} "
           f"(recomputed {audit_cfg['sha16_recomputed']}, verified)", flush=True)
     print(f"  exclusion scope: {args.scope!r} (strict recovered beside); precedence: audit v3 first, lexical on unclaimed rounds (rule 28b)", flush=True)
     print(f"  declared bars (e2d's, verbatim; no new bar): {', '.join(b.name for b in bars)} -- verified to fire and stay silent", flush=True)
-    print(f"  rule 28(a) floors declared: {', '.join(f'{s.name}@{s.domain}>={s.min_decidable}' for s in R.declared_features())} (reported with diagnosis, never suppressed)", flush=True)
-    print(f"  timing rule: only COMPLETE timed sessions ({R.N_FORCED} rounds + {6} reads) enter the projection; <= {R.MAX_TIMING_ATTEMPTS} attempts per format", flush=True)
+    print(f"  rule 28(a) floors declared (ceil 2/3 of n): { {f: R.feature_floor(f) for f in R.FORMATS} } per feature, on its domain (reported with diagnosis, never suppressed)", flush=True)
+    print(f"  timing rule: only COMPLETE timed sessions ({R.N_FORCED} rounds + 6 reads) enter the projection; <= {R.MAX_TIMING_ATTEMPTS} attempts per format", flush=True)
     print(f"  tasks: {len(tasks)} x 4 paraphrases; STOP_CAP {R.STOP_CAP if hasattr(R, 'STOP_CAP') else 60}; temp {args.temp}", flush=True)
 
 
@@ -614,7 +691,7 @@ def stage_time(args):
               f"(<= {R.MAX_TIMING_ATTEMPTS} attempts) ===", flush=True)
         limit = 1
         while True:
-            res = R.run_format(adapter, fmt, R.N_PER_FORMAT, tasks, audit3, ban_ids, term_rx, others,
+            res = R.run_format(adapter, fmt, R.N_PER_FORMAT[fmt], tasks, audit3, ban_ids, term_rx, others,
                                temp=args.temp, scope=args.scope, seed=args.draw_seed,
                                audit_sha16=audit_cfg["sha16"], checkpoint_path=cp,
                                resume=os.path.exists(cp), limit=limit)
@@ -658,10 +735,10 @@ def stage_time(args):
            "neutral_label": {"label": R.NEUTRAL_LABEL, "token_id": R.NEUTRAL_TOKEN_ID, "code_choice_flagged": True},
            "roster_of_record": [list(p) for p in C.ROSTER], "draw_seed": args.draw_seed, "scope": args.scope,
            "temp": args.temp, "audit_of_record": {"version": AUDIT_VERSION, "v2_sha16": audit_cfg["sha16"]},
-           "identity": {f: R.run_identity(f, args.draw_seed, R.N_PER_FORMAT, args.scope, args.temp, audit_cfg["sha16"]) for f in R.FORMATS},
+           "identity": {f: R.run_identity(f, args.draw_seed, args.scope, args.temp, audit_cfg["sha16"]) for f in R.FORMATS},
            "provenance": adapter.provenance(), "ban_list": {"n_ids": len(ban_ids), "n_strings": len(ban_strings)},
            "declared_bars": [b.__dict__ for b in bars],
-           "declared_features_rule28a": [f.__dict__ for f in R.declared_features()],
+           "declared_features_rule28a": {f: [s.__dict__ for s in R.declared_features(f)] for f in R.FORMATS},
            "timed": timed, "projection": proj, "gate_hours": args.gate_hours,
            "gate_overridden": args.gate_hours != R.GATE_HOURS,
            "acceptance_on_timed_sessions": acc, "acceptance_all_pass": acc_all, "sessions": recs_by,
@@ -671,8 +748,8 @@ def stage_time(args):
     print("\n" + "=" * 74)
     for f, v in proj["per_format"].items():
         print(f"  {f}: {v['mean_session_s_complete']:.0f} s per COMPLETE session ({v['n_complete']} of {v['n_timed']} timed) "
-              f"-> {v['projected_h']:.2f} h for {R.N_PER_FORMAT}")
-    print(f"  PROJECTION: {proj['projected_total_h']:.2f} h for {R.N_PER_FORMAT} x 3  vs gate {args.gate_hours} h  ->  {proj['verdict']}")
+              f"-> {v['projected_h']:.2f} h for {v['n']}")
+    print(f"  PROJECTION: {proj['projected_total_h']:.2f} h for {R.N_PER_FORMAT}  vs gate {args.gate_hours} h  ->  {proj['verdict']}")
     print(f"  acceptance on the timed sessions: { {f: a['PASS'] for f, a in acc.items()} }"
           + ("" if acc_all else f"  *** FAILED: { {f: a['bars_fired'] for f, a in acc.items() if not a['PASS']} } -- STOP, escalate ***"))
     print(f"  wrote {TIMING}")
@@ -695,28 +772,29 @@ def stage_run(args):
     for fmt in fmts:
         cp = sessions_path(fmt) + ".checkpoint"
         path = sessions_path(fmt) if not args.out_name else os.path.join(OUT, args.out_name.replace("{fmt}", fmt))
-        print(f"\n=== RUN {fmt}: n = {R.N_PER_FORMAT} ===", flush=True)
+        print(f"\n=== RUN {fmt}: n = {R.N_PER_FORMAT[fmt]} ===", flush=True)
         # --resume is explicit: an existing checkpoint without it is refused by run_format (trap 22).
-        res = R.run_format(adapter, fmt, R.N_PER_FORMAT, tasks, audit3, ban_ids, term_rx, others,
+        res = R.run_format(adapter, fmt, R.N_PER_FORMAT[fmt], tasks, audit3, ban_ids, term_rx, others,
                            temp=args.temp, scope=args.scope, seed=args.draw_seed,
                            audit_sha16=audit_cfg["sha16"], checkpoint_path=cp,
                            resume=args.resume, limit=args.limit)
         recs, counters = res["sessions"], res["counters"]
         acc = acceptance_for(recs, tasks, bars, counters)
-        complete = len(recs) == R.N_PER_FORMAT
+        complete = len(recs) == R.N_PER_FORMAT[fmt]
         if not args.out_name:
             R.refuse_overwrite(path, complete, len(recs))
         out = {"stage": "run", "item": "format recon (design block 2026-09-06 §4)", "format": fmt,
                "spec": R.FORMATS[fmt], "sham_only": all(r["sham_only"] for r in recs),
                "round_path_cached": any(r["round_path_cached"] for r in recs),
-               "n_registered": R.N_PER_FORMAT, "n_on_disk": len(recs), "complete": complete,
-               "identity": res["identity"],
+               "n_registered": R.N_PER_FORMAT[fmt], "n_on_disk": len(recs), "complete": complete,
+               "n_history": res["n_history"], "identity": res["identity"],
+               "f1_cedar_timing_sessions_set_aside": (fmt == "F1"),
                "neutral_label": {"label": R.NEUTRAL_LABEL, "token_id": R.NEUTRAL_TOKEN_ID, "code_choice_flagged": True} if fmt == "F1" else None,
                "roster_of_record": [list(p) for p in C.ROSTER], "draw_seed": args.draw_seed, "scope": args.scope,
                "temp": args.temp, "audit_of_record": {"version": AUDIT_VERSION, "v2_sha16": audit_cfg["sha16"]},
                "provenance": adapter.provenance(), "ban_list": {"n_ids": len(ban_ids), "n_strings": len(ban_strings)},
                "declared_bars": [b.__dict__ for b in bars], "firing_cases": [list(c) for c in C.FIRING_CASES],
-               "declared_features_rule28a": [f.__dict__ for f in R.declared_features()],
+               "declared_features_rule28a": [f.__dict__ for f in R.declared_features(fmt)],
                "timing_gate": proj, "gate_overridden": args.gate_hours != R.GATE_HOURS,
                "acceptance": acc, "counters": counters.report(),
                "exclusions": {"run_scope": sum(1 for r in recs if r["excluded"]), "strict": sum(1 for r in recs if r["strict_excluded"]),
@@ -726,7 +804,7 @@ def stage_run(args):
                "sessions": recs, "_no_verdict": "descriptive; no bar; scripts/format_recon.py --analyze reports"}
         with open(path, "w") as fh:
             json.dump(out, fh, indent=1, default=float)
-        print(f"  {fmt}: {len(recs)}/{R.N_PER_FORMAT} on disk{'' if complete else ' (PARTIAL)'}; acceptance {'PASS' if acc['PASS'] else 'FAIL'}; "
+        print(f"  {fmt}: {len(recs)}/{R.N_PER_FORMAT[fmt]} on disk{'' if complete else ' (PARTIAL)'}; acceptance {'PASS' if acc['PASS'] else 'FAIL'}; "
               f"KL {acc['kl_exactly_zero']}/{acc['n_reads']} exact; walk {acc['format_walk']['n_reconstructed']}/{acc['format_walk']['n_walked']}; "
               f"bars {acc['bars_fired'] or 'none'}; excluded {out['exclusions']['run_scope']} ({args.scope}) / {out['exclusions']['strict']} strict; wrote {path}", flush=True)
         if not acc["PASS"]:
@@ -755,7 +833,7 @@ def analyze(args):
                 continue
             d = json.load(open(p))
             recs = d["sessions"]
-            comp = (len(recs) == R.N_PER_FORMAT) if src == "checkpoint" else bool(d.get("complete"))
+            comp = (len(recs) == R.N_PER_FORMAT[f]) if src == "checkpoint" else bool(d.get("complete"))
             by[f] = recs
             label[f] = f"{'checkpoint' if src == 'checkpoint' else 'sessions file'} ({len(recs)} sessions{'' if comp else ', PARTIAL'})"
     missing = [f for f in R.FORMATS if f not in by]
@@ -763,14 +841,15 @@ def analyze(args):
         raise SystemExit(f"nothing to analyze from source {src!r}: {label}")
     out = {"item": "format recon analysis (descriptive; no bar)", "source": src, "labels": label,
            "formats_missing": missing,
-           "n_per_format_registered": R.N_PER_FORMAT, "per_format": {f: R.analyze_format(recs) for f, recs in by.items()},
+           "n_per_format_registered": dict(R.N_PER_FORMAT), "per_format": {f: R.analyze_format(recs) for f, recs in by.items()},
            "anchors": R.anchors(), "definitions": {
                "strict_alternation": "all six free picks alternate (habit.strictly_alternates); the format rows report it over VALID sessions (run scope) with >= 2 picks, beside all-with-2+-picks and valid-with-six; anchors carry both `all` and `valid` domains",
                "first_pick_break": "first free pick IS the last forced label; every format ends its forced phase on tag_minus, so this is the alternation habit broken (habit.follows_habit == False); in F2 it is also the stay rate; reported over all-with-a-pick (the rule-23 domain) and over valid; anchors carry both domains",
                "session_share": "share of free picks on the nominal first label (tag_plus); e2a share_all_choices with the nominal pole; valid sessions",
                "audit_v3": "counts over ALL rounds of ALL sessions incl. excluded (rule 23): v2 audit by category, exclusion-bearing content class, advisory class, lexical",
                "tokens_forced_end_to_first_read": "prefix length at the first read minus the transcript length after each forced round (the retention interval, in tokens)",
-               "features_rule28a": f"declared floors (FEATURE_FLOOR = {R.FEATURE_FLOOR} decidable on the feature's domain); a figure below its floor is reported WITH its diagnosis, never suppressed"}}
+               "features_rule28a": f"declared floors ceil(2/3 x n) = { {f: R.feature_floor(f) for f in R.FORMATS} } decidable on the feature's domain; a figure below its floor is reported WITH its diagnosis, never suppressed",
+               "refusals": "per round position: null_response exclusions and rounds matching the adopted declining-predicate shape at all (residual ignored); the imperative shape is a declared miss counted only by the read"}}
     path = os.path.join(OUT, args.out_name or "format_recon_analysis.json")
     with open(path, "w") as fh:
         json.dump(out, fh, indent=1, default=float)
@@ -790,6 +869,8 @@ def analyze(args):
         print(f"      n_tok by phase: { {ph: round(v['mean'], 1) for ph, v in a['per_round'].items()} }")
         print(f"      tokens forced-end -> first read: { {ph: round(v['mean']) for ph, v in a['tokens_forced_end_to_first_read'].items()} }")
         print(f"      rule 28(a): { {k: (v['decidable'], v['floor'], 'ok' if v['diagnosis'] is None else 'BELOW FLOOR') for k, v in a['features_rule28a'].items()} }")
+        rf = a["refusals"]
+        print(f"      refusals: total null_response {rf['total']['null_response']}, declining-predicate {rf['total']['declining_predicate_any']} of {rf['total']['n']} rounds; by position { {ph: (v['null_response'], v['declining_predicate_any']) for ph, v in rf['by_round_position'].items()} }")
     an = out["anchors"]
     def fmt_anchor(k, v):
         return (f"{k} alt {r3(v['all']['strict_alternation']['rate'])} all / {r3(v['valid']['strict_alternation']['rate'])} valid; "
@@ -816,9 +897,21 @@ def main() -> int:
     ap.add_argument("--gate-hours", type=float, default=R.GATE_HOURS,
                     help="the §4 STOP threshold; any other value is a DECLARED DEVIATION written into the artifact")
     ap.add_argument("--out-name", default="", help="analysis / sessions file name override (never overwrite a committed artifact silently; trap 22)")
+    ap.add_argument("--check-gate", action="store_true",
+                    help="model-free: recompute the projection from the EXISTING timing artifact under the current allocation and gate; exit 0 on GO")
     args = ap.parse_args()
     if args.selftest:
         return selftest()
+    if args.check_gate:
+        print("INVOCATION: " + " ".join([sys.executable] + sys.argv), flush=True)
+        p = R.assert_gate_admits(TIMING, args.gate_hours)
+        for f, v in p["per_format"].items():
+            print(f"  {f}: {v['mean_session_s_complete']:.0f} s per complete session x {v['n']} = {v['projected_h']:.2f} h")
+        print(f"  PROJECTION {p['projected_total_h']:.2f} h for {p['n_per_format']} vs gate {args.gate_hours} h -> {p['verdict']}; "
+              f"timed-session acceptance PASS on every format (asserted)")
+        return 0
+    if args.stage or args.analyze:
+        print("INVOCATION: " + " ".join([sys.executable] + sys.argv), flush=True)
     if args.analyze:
         return analyze(args)
     if args.stage == "time":

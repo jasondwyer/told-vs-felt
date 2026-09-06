@@ -1,16 +1,18 @@
   [PASS] F0 = A B A B                                                     ['slate', 'prism', 'slate', 'prism']  
-  [PASS] F1 = N N A B                                                     ['cedar', 'cedar', 'slate', 'prism']  
+  [PASS] F1 = N N A B                                                     ['timber', 'timber', 'slate', 'prism']  
   [PASS] F2 = A A B B                                                     ['slate', 'slate', 'prism', 'prism']  
-  [PASS] swapped cell mirrors every format                                {'F0': ['prism', 'slate', 'prism', 'slate'], 'F1': ['cedar', 'cedar', 'prism', 'slate'], 'F2': ['prism', 'prism', 'slate', 'slate']}  
+  [PASS] swapped cell mirrors every format                                {'F0': ['prism', 'slate', 'prism', 'slate'], 'F1': ['timber', 'timber', 'prism', 'slate'], 'F2': ['prism', 'prism', 'slate', 'slate']}  
   [PASS] every format's LAST forced label is tag_minus (uniform break definition)   
   [PASS] every format has 4 forced rounds and the neutral appears only in F1   
-  [PASS] 24 = 8 cells x 3, exactly                                        {(('prism', 'slate'), 'prism'): 3, (('ridge', 'saddle'), 'ridge'): 3, (('prism', 'slate'), 'slate'): 3, (('velvet', 'walnut'), 'walnut'): 3, (('ridge', 'saddle'), 'saddle'): 3, (('granite', 'plaza'), 'plaza'): 3, (('granite', 'plaza'), 'granite'): 3, (('velvet', 'walnut'), 'velvet'): 3}  
+  [PASS] F1/F2: 24 = 8 cells x 3, exactly; F0: 8 = 1 block                {(('prism', 'slate'), 'prism'): 3, (('ridge', 'saddle'), 'ridge'): 3, (('prism', 'slate'), 'slate'): 3, (('velvet', 'walnut'), 'walnut'): 3, (('ridge', 'saddle'), 'saddle'): 3, (('granite', 'plaza'), 'plaza'): 3, (('granite', 'plaza'), 'granite'): 3, (('velvet', 'walnut'), 'velvet'): 3}  
+  [PASS] the 8-schedule is the prefix of the 24-schedule (reallocation changes how many, never which)   
   [PASS] every block of 8 is a permutation of the cells (balanced at every prefix)   
   [PASS] schedule deterministic under the draw seed                         
   [PASS] each pair starts on each label 3 times                             
-  [PASS] neutral label H3b-verified: single-token id matches, hygiene inherited 72730  
-  [PASS] neutral label in NO roster pair                                    
+  [PASS] neutral label `timber`: selection artifact agrees (id 43299), first passing candidate in the declared order {'label': 'timber', 'token_id': 43299}  
+  [PASS] neutral label absent from EVERY roster and H3's sixteen (5 rosters); `cedar` would have failed {'e2d_roster_of_record': 8, 'H3_sixteen': 16, 'h3_candidates': 16, 'a1_candidates': 16, 'e2a_archive_pairs': 8}  
   [PASS] rule 18 + 28c: 9 tags absent from all 64 paraphrases and from the wrapper 64  
+  [PASS] neutral label absent from every data/corpus pool and the e0/s2/b2 stimulus files (selection artifact)   
   [PASS] e2a walk reconstructs 12/12 synthetic sessions (3 formats x 4 idx), seeds match 12/12 ok, 12 seed streams  
   [PASS] a corrupted scaffold FAILS the walk (both directions, trap 5)      
   [PASS] verify_format_walk reports walked beside passed                    
@@ -26,7 +28,7 @@
   [PASS] frame fragment claims first; lexical suppressed (rule 28b)       ('audit:frame:Config evaluation session', None)  
   [PASS] a plain answer: nothing                                          (None, [], None)  
   [PASS] own tag in a response -> lexical hit                             slate  
-  [PASS] F1's neutral label in the lexical set                            cedar  
+  [PASS] F1's neutral label in the lexical set                            timber  
   [PASS] repeat of an earlier response -> content:stuck_attractor         content:stuck_attractor  
   [PASS] lenient: content exclusion on a FORCED round excludes; on a free round it does not   
   [PASS] strict: excludes on any round; lexical excludes under both         
@@ -35,14 +37,16 @@
   [PASS] counters tabulate over all sessions incl. excluded (rule 23)     {'total': 2, 'by_key': {'null_response': 2}}  
   [PASS] analyze_format: break rate k/n over all-with-a-pick and valid; alternation; share ({'k': 1, 'n': 6, 'rate': 0.16666666666666666}, 1, 2)  
   [PASS] anchors: e2a pooled strict alternation 157/187 and break 32/188 reproduce   
-  [PASS] gate: 3 x 300 s -> 6.0 h STOP; 3 x 150 s -> 3.0 h GO               
+  [PASS] gate 8 h under the allocation (8/24/24 = 56 sessions): 3 x 300 s -> 4.67 h GO; 3 x 600 s -> 9.33 h STOP   
+  [PASS] the EXISTING timing artifact projects GO under the raised gate (design patch §2: ~6.95 h) 6.955 h  
   [PASS] assert_gate_admits: refuses without artifact, refuses STOP, admits GO   
   [PASS] projection refuses an incomplete timing set (a skipped format is not a pass)   
   [PASS] run_format --limit 1 runs exactly one session and checkpoints it   
   [PASS] an existing checkpoint without --resume is refused (trap 22)       
   [PASS] --resume --limit 1 with one on disk runs NOTHING (limit counts on-disk, trap 36)   
   [PASS] --resume --limit 3 completes to 3 on disk, indices 0,1,2 (skip-only)   
-  [PASS] load_checkpoint refuses a foreign seed / n / scope / format / temp / audit sha   
+  [PASS] reallocation: 24 -> 8 resumes 3 on-disk sessions; 24 -> 2 (orphaning s2) refused; a foreign schedule prefix refused   
+  [PASS] load_checkpoint refuses a foreign seed / scope / format / temp / audit sha   
   [PASS] recon.py's code names no injection / axis / quarantine / cached-path symbol []  
   [PASS] quarantined primitive absent from sys.modules                      
   [PASS] e2d's three declared bars fire and stay silent (7 cases, both directions)   
@@ -57,7 +61,8 @@
   [PASS] record's steered / round_path_cached are derived from the generate call (all False)   
   [PASS] a partial run cannot overwrite a complete artifact; complete-over-complete and partial-over-partial allowed   
   [PASS] analysis on one truncated session: rates None, features BELOW FLOOR with diagnosis, no crash   
-  [PASS] rule 28(a) floors declared (16) and reported per feature with domain + decidable n   
+  [PASS] rule 28(a) floors declared per format (ceil 2/3 n: F0 6, F1/F2 16) and reported with domain + decidable n   
+  [PASS] refusal counts per round position: a declining predicate with content counts as predicate-only; the '* * *' null counts as null_response {'n': 2, 'null_response': 1, 'declining_predicate_any': 1}  
   [PASS] anchors carry both domains: e2a all 157/187 & 32/188; valid 154/184 & 30/184   
 ------------------------------------------------------------------------------
-  61/61 selftest checks pass
+  66/66 selftest checks pass
