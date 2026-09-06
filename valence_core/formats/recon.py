@@ -429,9 +429,17 @@ def run_identity(fmt: str, seed: int, scope: str, temp: float,
     (design patch 2026-09-06 §2: F0 24 -> 8) changes how many sessions run,
     never which. `load_checkpoint` pins the SCHEDULE PREFIX instead and
     refuses a shrink that would orphan a session already on disk."""
-    return {"format": fmt, "seed": seed, "scope": scope, "temp": float(temp),
-            "audit_v2_sha16": audit_sha16, "roster": [list(p) for p in ROSTER],
-            "neutral_label": NEUTRAL_LABEL, "n_forced": N_FORCED, "n_free": N_FREE}
+    ident = {"format": fmt, "seed": seed, "scope": scope, "temp": float(temp),
+             "audit_v2_sha16": audit_sha16, "roster": [list(p) for p in ROSTER],
+             "n_forced": N_FORCED, "n_free": N_FREE}
+    # The neutral label is part of a session's design ONLY where a neutral
+    # round is generated (F1). F0 and F2 never see it, so their sessions are
+    # identical under any declared neutral label -- pinning it for them
+    # refused the timing checkpoints for nothing (launch of 2026-09-06 16:13
+    # UTC, refused at F0 on cedar -> timber; see the log).
+    if "neutral" in FORMATS[fmt]["order"]:
+        ident["neutral_label"] = NEUTRAL_LABEL
+    return ident
 
 
 def _cell_key(c: Mapping) -> tuple:

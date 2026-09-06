@@ -46,6 +46,7 @@
   [PASS] --resume --limit 1 with one on disk runs NOTHING (limit counts on-disk, trap 36)   
   [PASS] --resume --limit 3 completes to 3 on disk, indices 0,1,2 (skip-only)   
   [PASS] reallocation: 24 -> 8 resumes 3 on-disk sessions; 24 -> 2 (orphaning s2) refused; a foreign schedule prefix refused   
+  [PASS] neutral label pinned in F1's identity only: F0 resumes under a different recorded neutral; F1 refuses   
   [PASS] load_checkpoint refuses a foreign seed / scope / format / temp / audit sha   
   [PASS] recon.py's code names no injection / axis / quarantine / cached-path symbol []  
   [PASS] quarantined primitive absent from sys.modules                      
@@ -65,4 +66,4 @@
   [PASS] refusal counts per round position: a declining predicate with content counts as predicate-only; the '* * *' null counts as null_response {'n': 2, 'null_response': 1, 'declining_predicate_any': 1}  
   [PASS] anchors carry both domains: e2a all 157/187 & 32/188; valid 154/184 & 30/184   
 ------------------------------------------------------------------------------
-  66/66 selftest checks pass
+  67/67 selftest checks pass

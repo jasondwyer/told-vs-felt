@@ -1,0 +1,23 @@
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python /Users/jasondwyer/Documents/code/jspace-lab/scripts/format_recon.py --stage run --format all --resume
+  timing gate: projected 6.96 h <= 8.0 h -> GO; timed sessions' acceptance PASS on every format
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 12843.45it/s]
+  model loaded in 3s
+  SHAM ONLY: no steering, no axis, no random direction; every forward vanilla; round path UNCACHED (the uncached path of record); choice reads = readout.choice_read(verify=True) + assert_construction_stable
+  design block 2026-09-06 §4; descriptive only; no bar; template recalibration for LOCK-k
+  F0: e2a format of record -- strict alternation, two rounds per label (A B A B)  [first second first second]  -- continuity anchor; e2a strict alternation .840 pooled / .827 reward arm
+  F1: neutral-start -- two rounds under a neutral third label, then one round per menu label (N N A B)  [neutral neutral first second]  -- the alternation habit is not installed between the two menu labels
+  F2: block order -- A A B B / B B A A, start counterbalanced  [first first second second]  -- decorrelates round position from label parity (the Stage B/C confound)
+  allocation {'F0': 8, 'F1': 24, 'F2': 24} (8 cells; whole blocks; design patch 2026-09-06 §2; draw seed 20260906); gate 8.0 h
+  roster of record (AMENDMENT 1 i): granite/plaza, prism/slate, velvet/walnut, ridge/saddle
+  neutral label (F1): 'timber' id 43299 (selection artifact data/format/neutral_label_selection.json; provisionally approved, design patch 2026-09-06 §2)
+  hygiene: rule 18 9 tags vs 64 paraphrases -> 0 hits; rule 28c wrapper -> 0 hits; neutral absent from every roster {'e2d_roster_of_record': 8, 'H3_sixteen': 16, 'h3_candidates': 16, 'a1_candidates': 16, 'e2a_archive_pairs': 8}
+  audit of record: audit-v3 = e2b_audit_v2 + content-class-v4 (exclusion: null/stuck/preamble; advisory: echo/wrong_task); v2 = e2b_audit_v2.json sha16 7aa235d25eeb66dc (recomputed 7aa235d25eeb66dc, verified)
+  exclusion scope: 'e2a' (strict recovered beside); precedence: audit v3 first, lexical on unclaimed rounds (rule 28b)
+  declared bars (e2d's, verbatim; no new bar): scaffold_absorption, template_breakage, round_degeneracy -- verified to fire and stay silent
+  rule 28(a) floors declared (ceil 2/3 of n): {'F0': 6, 'F1': 16, 'F2': 16} per feature, on its domain (reported with diagnosis, never suppressed)
+  timing rule: only COMPLETE timed sessions (4 rounds + 6 reads) enter the projection; <= 4 attempts per format
+  tasks: 16 x 4 paraphrases; STOP_CAP 60; temp 0.7
+  ban list: 12 ids / 12 strings (round generation only, never a read)
+
+=== RUN F0: n = 8 ===
+CHECKPOINT MISMATCH: /Users/jasondwyer/Documents/code/jspace-lab/data/format/format_recon_F0_sessions.json.checkpoint differs on {'neutral_label': ('cedar', 'timber')} (recorded, this run). Resuming across a different design would splice two designs -- refusing.

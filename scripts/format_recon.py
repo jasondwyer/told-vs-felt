@@ -465,6 +465,18 @@ def selftest() -> int:
         prefix_refused = True
     chk("reallocation: 24 -> 8 resumes 3 on-disk sessions; 24 -> 2 (orphaning s2) refused; a foreign schedule prefix refused",
         len(ck8["sessions"]) == 3 and shrink_refused and prefix_refused)
+    # the neutral label is pinned for F1 only: an F0/F2 checkpoint recorded under another neutral label resumes;
+    # an F1 one refuses (the 16:13 UTC launch refused F0 on cedar -> timber for nothing)
+    ck_raw = json.load(open(cp)); ck_raw["identity"]["neutral_label"] = "cedar"; json.dump(ck_raw, open(cp, "w"))
+    R.load_checkpoint(cp, ident_ok, 24, sched24)
+    f1_ident = R.run_identity("F1", R.DRAW_SEED, "e2a", C.TEMP, "")
+    ck_raw["identity"]["format"] = "F1"; ck_raw["format"] = "F1"; json.dump(ck_raw, open(cp, "w"))
+    try:
+        R.load_checkpoint(cp, f1_ident, 24, sched24); f1_refused = False
+    except SystemExit:
+        f1_refused = True
+    chk("neutral label pinned in F1's identity only: F0 resumes under a different recorded neutral; F1 refuses",
+        "neutral_label" not in ident_ok and f1_ident["neutral_label"] == R.NEUTRAL_LABEL and f1_refused)
     chk("load_checkpoint refuses a foreign seed / scope / format / temp / audit sha", mismatch_refused)
     os.remove(cp)
 
