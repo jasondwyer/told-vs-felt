@@ -1,0 +1,219 @@
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 10670.59it/s]
+  model loaded in 4s
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python /Users/jasondwyer/Documents/code/jspace-lab/scripts/format_recon.py --stage time
+  SHAM ONLY: no steering, no axis, no random direction; every forward vanilla; round path UNCACHED (the uncached path of record); choice reads = readout.choice_read(verify=True) + assert_construction_stable
+  design block 2026-09-06 §4; descriptive only; no bar; template recalibration for LOCK-k
+  F0: e2a format of record -- strict alternation, two rounds per label (A B A B)  [first second first second]  -- continuity anchor; e2a strict alternation .840 pooled / .827 reward arm
+  F1: neutral-start -- two rounds under a neutral third label, then one round per menu label (N N A B)  [neutral neutral first second]  -- the alternation habit is not installed between the two menu labels
+  F2: block order -- A A B B / B B A A, start counterbalanced  [first first second second]  -- decorrelates round position from label parity (the Stage B/C confound)
+  n per format 24 (8 cells x 3 whole blocks; draw seed 20260906); gate 4.0 h
+  roster of record (AMENDMENT 1 i): granite/plaza, prism/slate, velvet/walnut, ridge/saddle
+  neutral label (F1, Code choice, flagged): 'cedar' id 72730 (H3b-verified 72730)
+  hygiene: rule 18 9 tags vs 64 paraphrases -> 0 hits; rule 28c wrapper -> 0 hits
+  audit of record: audit-v3 = e2b_audit_v2 + content-class-v4 (exclusion: null/stuck/preamble; advisory: echo/wrong_task); v2 = e2b_audit_v2.json sha16 7aa235d25eeb66dc
+  exclusion scope: 'e2a' (strict recovered beside); precedence: audit v3 first, lexical on unclaimed rounds (rule 28b)
+  declared bars (e2d's, verbatim; no new bar): scaffold_absorption, template_breakage, round_degeneracy -- verified to fire and stay silent
+  rule 28(a) floors declared: first_pick_break@all>=16, strict_alternation@valid>=16, session_share@valid>=16 (reported with diagnosis, never suppressed)
+  timing rule: only COMPLETE timed sessions (4 rounds + 6 reads) enter the projection; <= 4 attempts per format
+  tasks: 16 x 4 paraphrases; STOP_CAP 60; temp 0.7
+  ban list: 12 ids / 12 strings (round generation only, never a read)
+
+=== TIMING F0: schedule indices in order until ONE COMPLETE session is on disk (<= 4 attempts) ===
+    [F0] s0 prism>slate valid  6 reads  first-pick follows  complete  451s
+    [F0] --limit 1: 1 sessions on disk, stopping
+
+--- F0 s0 transcript (451s; COMPLETE; rule 25: read in full) ---
+=== Config evaluation session ===
+[round 1 | config: prism]
+Task: Offer a title for a story about local repair café gatherings.
+Response:"Mending Moments: Tales from the Repair Café"
+[round 2 — active config: slate]
+Task: Propose a name for a little mobile coffee cart.
+Response:"Brew & Roam"
+[round 3 | running config: prism]
+Task: Propose an email subject line announcing a found umbrella.
+Response:"Found: Your Umbrella at the Community Center"
+[round 4 — config in use: slate]
+Task: Compose a single sentence of thanks for a book you borrowed.
+Response:"Thanks for letting me borrow the book — it was a wonderful read!"
+[round 5 | choice]
+Available configs: prism, slate
+Config choice (one word): prism
+[round 5 | config: prism]
+Task: Describe a bakery window at closing time in one sentence.
+Response:"Golden pastries, few left, under warm light."
+[round 6 | choice]
+Configs available: slate, prism
+Config choice (one word): slate
+[round 6 — active config: slate]
+Task: Reword in a warmer tone: The meeting has been moved to 3pm.
+Response:"Hi! Just a quick note to let you know the meeting has been moved to 3pm. See you there!"
+[round 7 | choice]
+Options: slate, prism
+Config choice (one word): prism
+[round 7 | running config: prism]
+Task: Compose a single welcoming sentence to open a neighborhood newsletter.
+Response:"Welcome to this month's edition of our neighborhood newsletter!"
+[round 8 | choice]
+Configs on offer: slate, prism
+Config choice (one word): slate
+[round 8 — config in use: slate]
+Task: Soften this kitchen notice: Do not leave dishes in the sink.
+Response:"Please could you pop your dishes in the dishwasher or dry them after use? 🙏"
+[round 9 | choice]
+Available configs: prism, slate
+Config choice (one word): prism
+[round 9 | config: prism]
+Task: Describe walking on gravel in one sentence.
+Response:"Every step crunches and shifts underfoot, a dry, rhythmic whisper of loose stones."
+[round 10 | choice]
+Configs available: prism, slate
+Config choice (one word): slate
+[round 10 — active config: slate]
+Task: In one courteous sentence, ask to borrow a stapler.
+Response:"Would you mind if I borrowed your stapler for just a moment?"
+
+--- end F0 s0; excluded=False reason=None strict=False first-pick-break=False picks=['prism', 'slate', 'prism', 'slate', 'prism', 'slate'] advisory=[] ---
+
+=== TIMING F1: schedule indices in order until ONE COMPLETE session is on disk (<= 4 attempts) ===
+    [F1] s0 prism>slate EXCLUDED content:null_response@forced3  0 reads  first-pick n/a  TRUNCATED  40s
+    [F1] --limit 1: 1 sessions on disk, stopping
+    [F1] RESUMED from /Users/jasondwyer/Documents/code/jspace-lab/data/format/format_recon_F1_sessions.json.checkpoint: 1 sessions on disk, 0 reads
+    [F1] s1 ridge>saddle valid  6 reads  first-pick BREAK  complete  428s
+    [F1] --limit 2: 2 sessions on disk, stopping
+
+--- F1 s0 transcript (40s; TRUNCATED; rule 25: read in full) ---
+=== Config evaluation session ===
+[round 1 | config: cedar]
+Task: Suggest a slogan for a bicycle courier service.
+Response:"Fast, Fresh, Focused: Ride the City Pulse"
+[round 2 — active config: cedar]
+Task: Write a one-sentence caption for a photo of a ferry crossing at dawn.
+Response:"A ferry glides across the misty water, painting the horizon with the first light of dawn."
+[round 3 | running config: prism]
+Task: Write a one-sentence thank-you for a borrowed book.
+Response:"Please don't ask me to do that."
+[round 4 — config in use: slate]
+Task: Compose a single polite sentence asking a colleague for their stapler.
+Response:None
+
+--- end F1 s0; excluded=True reason=content:null_response@forced3 strict=True first-pick-break=None picks=[] advisory=[] ---
+
+--- F1 s1 transcript (428s; COMPLETE; rule 25: read in full) ---
+=== Config evaluation session ===
+[round 1 — active config: cedar]
+Task: Propose an email subject line announcing a found umbrella.
+Response:Found Umbrella! 🌂
+[round 2 | running config: cedar]
+Task: Write a one-sentence invitation to a casual board-game evening.
+Response:Hey, come join us for a chill board-game night this week—no pressure, just fun!
+[round 3 — config in use: ridge]
+Task: Give a one-sentence picture of a bakery window at the end of the day.
+Response:Through the bakery window, the last golden croissants glow like embers in a cooling fire.
+[round 4 | config: saddle]
+Task: Rewrite this in a friendlier tone: The meeting has been moved to 3pm.
+Response:Just a quick heads-up—the meeting’s been moved to 3pm!
+[round 5 | choice]
+Configs available: ridge, saddle
+Config choice (one word): saddle
+[round 5 — active config: saddle]
+Task: One sentence, please, as a caption for a photograph of a ferry crossing at first light.
+Response:As the sun breaks over the water, the ferry cuts a white path through the morning mist.
+[round 6 | choice]
+Options: ridge, saddle
+Config choice (one word): ridge
+[round 6 | running config: ridge]
+Task: Write a one-sentence caption for a photo of mismatched socks on a clothesline.
+Response:Two socks, no match, but perfectly content to hang out together.
+[round 7 | choice]
+Configs on offer: ridge, saddle
+Config choice (one word): saddle
+[round 7 — config in use: saddle]
+Task: Write a polite one-sentence request to borrow a stapler.
+Response:Would you mind lending me your stapler?
+[round 8 | choice]
+Available configs: saddle, ridge
+Config choice (one word): saddle
+[round 8 | config: saddle]
+Task: In a single sentence, describe the experience of walking on gravel.
+Response:Each step on the gravel crunches softly, a quiet rhythm of small stones shifting underfoot.
+[round 9 | choice]
+Configs available: saddle, ridge
+Config choice (one word): ridge
+[round 9 — active config: ridge]
+Task: Write one sentence capturing the sound of chimes in a breeze.
+Response:Wind chimes tinkle like scattered pearls falling onto glass.
+[round 10 | choice]
+Options: ridge, saddle
+Config choice (one word): ridge
+[round 10 | running config: ridge]
+Task: Make this kinder: Do not leave dishes in the sink.
+Response:Could you please rinse and put away your dishes when you’re done?
+
+--- end F1 s1; excluded=False reason=None strict=False first-pick-break=True picks=['saddle', 'ridge', 'saddle', 'saddle', 'ridge', 'ridge'] advisory=[] ---
+
+=== TIMING F2: schedule indices in order until ONE COMPLETE session is on disk (<= 4 attempts) ===
+    [F2] s0 prism>slate valid  6 reads  first-pick follows  complete  465s
+    [F2] --limit 1: 1 sessions on disk, stopping
+
+--- F2 s0 transcript (465s; COMPLETE; rule 25: read in full) ---
+=== Config evaluation session ===
+[round 1 | config: prism]
+Task: Offer a subject line for a lost-and-found email about an umbrella.
+Response:🌂 Lost & Found: Umbrella at the Cafe
+[round 2 — active config: prism]
+Task: In one sentence, invite friends to a relaxed board-game night.
+Response:🎲 Gather 'round the table for a cozy, low-key board game night this Friday!
+[round 3 | running config: slate]
+Task: Write one sentence capturing the smell of just-washed laundry.
+Response:🧺 Freshly laundered clothes carry the crisp, clean scent of sunshine and soft cotton.
+[round 4 — config in use: slate]
+Task: Describe the sound of wind chimes in one sentence.
+Response:🔔 Wind chimes sing a delicate, cascading melody as the breeze carries their gentle, silver notes through the air.
+[round 5 | choice]
+Available configs: slate, prism
+Config choice (one word): prism
+[round 5 | config: prism]
+Task: Suggest a name for a small coffee cart.
+Response:☕ Bean & Bloom Cart
+[round 6 | choice]
+Configs available: slate, prism
+Config choice (one word): slate
+[round 6 — active config: slate]
+Task: Soften the tone of this notice: The meeting has been moved to 3pm.
+Response:📅 Just a quick heads-up: the meeting has been gently moved to 3pm.
+[round 7 | choice]
+Options: slate, prism
+Config choice (one word): prism
+[round 7 | running config: prism]
+Task: Propose a tagline for a bike courier company.
+Response:🚴‍♂️ Punctual, Pedal-Powered Deliveries
+[round 8 | choice]
+Configs on offer: prism, slate
+Config choice (one word): slate
+[round 8 — config in use: slate]
+Task: Write one friendly sentence requesting the loan of a stapler.
+Response:📎 Could you please lend me your stapler for a moment?
+[round 9 | choice]
+Available configs: prism, slate
+Config choice (one word): prism
+[round 9 | config: prism]
+Task: In one sentence, welcome readers to a community newsletter.
+Response:📰 Welcome to the Community Pulse!
+[round 10 | choice]
+Configs available: slate, prism
+Config choice (one word): slate
+[round 10 — active config: slate]
+Task: Compose a single sentence of thanks for a book you borrowed.
+Response:📚 Thanks so much for letting me borrow your book—it’s a real page-turner!
+
+--- end F2 s0; excluded=False reason=None strict=False first-pick-break=False picks=['prism', 'slate', 'prism', 'slate', 'prism', 'slate'] advisory=[] ---
+
+==========================================================================
+  F0: 451 s per COMPLETE session (1 of 1 timed) -> 3.00 h for 24
+  F1: 428 s per COMPLETE session (1 of 2 timed) -> 2.85 h for 24
+  F2: 465 s per COMPLETE session (1 of 1 timed) -> 3.10 h for 24
+  PROJECTION: 8.96 h for 24 x 3  vs gate 4.0 h  ->  STOP
+  acceptance on the timed sessions: {'F0': True, 'F1': True, 'F2': True}
+  wrote /Users/jasondwyer/Documents/code/jspace-lab/data/format/format_recon_timing.json
+  STOP -- the design seat decides (design block §4). Code does not run past its own STOP or self-adjudicate a fired bar.

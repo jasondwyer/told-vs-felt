@@ -1,0 +1,137 @@
+VALUES-CHECK (pre-commit) of the RESULTS entry 'FORMAT RECON (design block 2026-09-06 §4) -- BUILT, REVIEWED, SELF-TESTED, TIMED; the timing gate says STOP' and its artifacts (2026-09-06). Two glosses refuted, both applied before commit: the review sentence (14 of 15 findings at 2/2 votes, one at 1/2 -- not 'two refuters each, none refuted'); the truncation base rate mis-scoped to forced0 (e2a: forced phase 12/200 = 6%, forced0 4/200 = 2%; the observed forced3 truncation cost 40 s ~ 1/11 of a full session, a forced0 one ~ 1/40). One refuter error noted: cedar's id 72730 IS backed by the tracked data/e2b/h3b_repair_screen.json (the refuter read data/configs/h3_roster_candidates.json, whose ids are null by design). Artifacts refuter: nothing refuted; caveat applied -- the script now recomputes the audit body hash and refuses on mismatch instead of echoing the file's self-declared sha16.
+workflow wf_f447994b-4c2; three refuters, each instructed to REFUTE against committed artifacts; every refutation re-verified by Code by hand before the entry was corrected
+
+=== refuter aae6744c43c46ef5b: 37 claims {'CONFIRMED': 35, 'REFUTED': 2, 'UNVERIFIABLE': 0} ===
+SUMMARY: Two refutations, both glosses rather than wrong code. (1) "15 findings confirmed by two refuters each, none refuted": the workflow journal (wf_717e95cd-b53) shows 6 lenses, 15 findings, and 30 verifiers (two per finding), but one verifier (agent ab2c32a75a6b2ec2b) returned refuted=True on the `steered`-literal finding (recon.py:267/:300 wrote "steered": False as a literal; the verifier found the flag true on the code as written and matched bool(injections) on all 10 generate calls, so no concrete failure), while its partner did not refute -- 14 findings were 2/2, one was 1/2. The derive-from-the-call fix was applied anyway (now recon.py L277-286, L302, L336) and is sound; the entry should say 14 of 15 were 2/2 and record the split, per trap 29's "re-verify the refutations yourself". The cited task output file /private/tmp/.../tasks/whu6gxyho.output does not exist; the journal was checked instead. (2) "a session truncated at forced0 (~1/10 of a full session's cost; e2a base rate ~6% of sessions)": in data/e2a/sessions.jsonl the forced0 truncation rate is 4/200 = 2%; 6% (12/200) is truncation at any forced round (no free pick); and ~1/10 is the observed forced3 truncation (F1 s0: 40 s vs 428-465 s), a forced0 truncation would be ~1/40. The argument survives a fortiori; the parenthetical's figures belong to "truncated in the forced phase", not "at forced0". Everything else in "What was built" and "Pre-run review" reproduces against the code as it stands: self-test 60/60 (fresh run identical), regression 154/154, cedar/72730 in h3b and in no roster pair, all thirteen named review fixes present, checkpoint identities pinned on disk, anchors with both domains, trap citations (5, 22, 23, 29, 36) match HANDOFF-2026-09-06.md §5.
+
+   0 CONFIRMED    "`valence_core/formats/recon.py` (the formats, cells, schedule, sham session runner, audit-v3 wiring, checkpointed per-format campaign, the timing gate, the analysis) and `scripts/format_recon.py` (`-
+   1 CONFIRMED    "Every harness-written byte is e2a's (`session_e2a` templates indexed on the session) and the rng draw order is e2a's exactly"
+   2 CONFIRMED    "`verify_archived_session` walks every session byte-for-byte whichever labels the forced rounds carry -- that is the per-session acceptance"
+   3 CONFIRMED    "Cells: 4 roster pairs x which label is first = 8 per format, n = 24 = 3 whole blocks, balanced at every prefix of 8"
+   4 CONFIRMED    "No + pole: `tag_plus` is the nominal FIRST label; every format ends its forced phase on `tag_minus`, so 'first-pick break' has one definition across formats (first pick = last forced label; in F2 als
+   5 CONFIRMED    "Session-share = share of free picks on the first label (e2a's `share_all_choices` with the nominal pole)"
+   6 CONFIRMED    "Audit v3 first, lexical on unclaimed rounds (rule 28b)"
+   7 CONFIRMED    "lenient scope run, strict recovered beside (e2d's discipline)"
+   8 CONFIRMED    "counters pre-declared (rule 23)"
+   9 CONFIRMED    "e2d's three acceptance bars carried verbatim and no new bar"
+  10 CONFIRMED    "rule 28(a) floors declared before the run (16 decidable of 24 per feature, a Code choice, flagged)"
+  11 CONFIRMED    "the module's code names no `Injection`, axis loader, quarantine module or cached path (self-test greps it)"
+  12 CONFIRMED    "`generate` is called with `injections=()` and `cached=False` and the record's `steered` / `round_path_cached` are derived from the call"
+  13 CONFIRMED    "the quarantined primitive is asserted absent before every read; reads are `choice_read(verify=True)` + `assert_construction_stable`"
+  14 CONFIRMED    "Neutral label (F1): `cedar` ... single-token id 72730 (H3b-verified; asserted at runtime)"
+  15 CONFIRMED    "a cycle-3/4 incumbent tag"
+  16 CONFIRMED    "pool-disjoint (rule 18) and wrapper-checked (rule 28c), in no roster pair; fixed for every F1 session; never on a menu; added to F1's lexical-hit set"
+  17 CONFIRMED    "Pre-run review (trap 29, code): six lenses"
+  18 CONFIRMED    "15 findings"
+  19 REFUTED      "15 findings confirmed by two refuters each, none refuted"
+       evidence: Journal: 30 verify agents = two per finding, but exactly one returned refuted=True: agent ab2c32a75a6b2ec2b, on finding 0.1 (`steered` written as the literal False at recon.py:267/:300 and folded into PASS at script:463) -- 'no concrete failure exists on the code under review: the flag is true and ... matches bool(injections) on all 10 generate calls'. Its partner abbded5a3a3fd35c3 returned refuted=False. So 14 findings were 2/2 not-refuted and one was 1/2; 'none refuted' and 'confirmed by two refuters each' are both false for that finding (the derive-from-the-call fix was applied regardless, as hardening). Trap 29's own clause 're-verify the refutations yourself' is what the entry should have recorded for it. The task output /private/tmp/.../tasks/whu6gxyho.output does not exist (tasks dir holds only baroj1zww/blqq5cgui/wckewj2q0 from this session); the journal was the source.
+  20 CONFIRMED    "all fixed before the timing run"
+  21 CONFIRMED    "the override guard split its own source on the first occurrence of the stage marker and fired unconditionally (fail-closed -- nothing could run ...; trap 23)"
+  22 CONFIRMED    "now splits on the last occurrence and the self-test proves it clean on the file and firing on a smuggled copy"
+  23 REFUTED      "a session truncated at forced0 (~1/10 of a full session's cost; e2a base rate ~6% of sessions) could turn a STOP into a GO"
+       evidence: Gloss on 'at forced0'. data/e2a/sessions.jsonl (200 sessions): excluded at forced0 = 4/200 = 2.0%; sessions with no free pick (truncated at ANY forced round) = 12/200 = 6.0% -- the 6% figure is the any-forced-round truncation rate (the review finding 5.0 itself said '12/200'). The ~1/10 is the observed forced3 truncation (F1 s0: 40.0 s vs complete 428-465 s = 0.086-0.094); a forced0 truncation generates one round (~10 s) = ~1/40. The direction of the argument holds a fortiori; the parenthetical's two figures belong to different truncation points than the one named.
+  24 CONFIRMED    "`--stage time` now runs schedule indices in order until one COMPLETE session (4 rounds, 6 reads) is on disk per format (<= 4 attempts, else STOP)"
+  25 CONFIRMED    "only complete sessions enter the projection"
+  26 CONFIRMED    "`--stage run`'s gate also refuses if any timed session failed acceptance (a fired bar is escalated, never absorbed)"
+  27 CONFIRMED    "Checkpoint identity now pins temp, the audit sha, the roster and the neutral label (trap 36 generalised)"
+  28 CONFIRMED    "`--resume` is explicit on both stages (an existing checkpoint without it is refused)"
+  29 CONFIRMED    "a partial run cannot overwrite a complete artifact (trap 22)"
+  30 CONFIRMED    "the progress line no longer prints 'follows' for a session with no first pick"
+  31 CONFIRMED    "the analysis reports `n_valid_run_scope` (not 'lenient') with the scope named"
+  32 CONFIRMED    "logs missing formats (trap 5)"
+  33 CONFIRMED    "every anchor carries both domains (all / valid) so a valid-domain alternation rate is read against a valid-domain anchor"
+  34 CONFIRMED    "Self-test 60/60 (model-free: formats, schedule, hygiene, the e2a walk on 12 synthetic sessions of all three formats, audit-v3 wiring, scope, gate, resume, overwrite, guard, bars, floors)"
+  35 CONFIRMED    "regression suite 154/154 with the package present"
+  36 CONFIRMED    Working-tree presence of everything the entry says was built/written (files, artifacts, raw logs, gitignore)
+
+=== refuter a0ac043a815e280d6: 33 claims {'CONFIRMED': 32, 'REFUTED': 0, 'UNVERIFIABLE': 1} ===
+SUMMARY: No claim refuted. All per-format figures in data/format/format_recon_analysis_timing.json recompute exactly from the sessions in data/format/format_recon_timing.json (both through R.analyze_format and an independent re-implementation); the anchors block recomputes from data/e2a/sessions.jsonl and data/e2d/d2_sessions.json / d3_sessions.json through habit.py (e2a all 157/187 alt, 32/188 break; valid 154/184, 30/184, plus every arm/tier block); the projection recomputes from timed.*.seconds with complete flags (450.57/428.11/464.99 s -> 3.00/2.85/3.10 h, total 8.9578 h > 4.0 -> STOP, F1's 40.03 s truncated attempt excluded); identity blocks pin temp 0.7, sha16 7aa235d25eeb66dc, the roster and cedar; every log summary/progress/end line and all four transcripts match the artifact byte-for-byte; token counts (transcript_tokens_final, transcript_tokens_after, prefix_tokens_at_read, the retention intervals, cedar = 72730) reproduce under a tokenizer-only load. Two non-refuting caveats: (1) the audit sha16 7aa235d25eeb66dc is the frozen body-hash (sha256 of compact sort-keyed JSON minus the sha16 key) and verifies; a raw-byte shasum of the file gives e89e4cd0cae31671, which is NOT the pinned quantity — and scripts/format_recon.py echoes the file's self-declared field rather than recomputing it as the e2b/H1/LOCK-h scripts do. (2) The checkpoints are ignored by the `/data/format/*` directory wildcard rather than an explicit `*.checkpoint` pattern; they are untracked as claimed. Unverifiable: the 4 s model-load time and the adapter's runtime-only provenance values (choice_window_declared 8192, legacy_truncate_512 false, n_encodes_clipped 0), which require loading the model.
+
+   0 CONFIRMED    Time log INVOCATION: `scripts/format_recon.py --stage time`; timing artifact `stage: "time"`, `item: "format recon (design block 2026-09-06 §4)"`, `sham_only: true`, `round_path_cached: false`.
+   1 CONFIRMED    Header format lines (F0 'e2a format of record ... (A B A B)' [first second first second]; F1 neutral-start (N N A B) [neutral neutral first second]; F2 block order [first first second second]) and the
+   2 CONFIRMED    'n per format 24 (8 cells x 3 whole blocks; draw seed 20260906); gate 4.0 h'; artifact `n_per_format: 24`, `draw_seed: 20260906`, `gate_hours: 4.0`, `gate_overridden: false`.
+   3 CONFIRMED    Roster of record granite/plaza, prism/slate, velvet/walnut, ridge/saddle (log header, artifact `roster_of_record`, each identity block's `roster`).
+   4 CONFIRMED    Neutral label 'cedar' id 72730 (H3b-verified 72730); artifact `neutral_label: {label: cedar, token_id: 72730, code_choice_flagged: true}`; identity.neutral_label 'cedar' in all three formats.
+   5 CONFIRMED    'hygiene: rule 18 9 tags vs 64 paraphrases -> 0 hits; rule 28c wrapper -> 0 hits' and 'tasks: 16 x 4 paraphrases'.
+   6 CONFIRMED    Audit of record 'audit-v3 = e2b_audit_v2 + content-class-v4 (exclusion: null/stuck/preamble; advisory: echo/wrong_task)'; v2 = e2b_audit_v2.json sha16 7aa235d25eeb66dc, pinned in `audit_of_record.v2_s
+   7 CONFIRMED    Exclusion scope 'e2a' (strict recovered beside); artifact `scope: e2a`, every session `exclusion_scope: e2a`, analysis `exclusion_scope_of_run: e2a`.
+   8 CONFIRMED    Declared bars scaffold_absorption, template_breakage, round_degeneracy (e2d's, verbatim); artifact `declared_bars` (3 entries: hair_trigger, hair_trigger, binomial p0 0.02).
+   9 CONFIRMED    Rule 28(a) floors first_pick_break@all>=16, strict_alternation@valid>=16, session_share@valid>=16; artifact `declared_features_rule28a`; FEATURE_FLOOR = 16 in the analysis definitions.
+  10 CONFIRMED    'timing rule: only COMPLETE timed sessions (4 rounds + 6 reads) enter the projection; <= 4 attempts per format'; 'STOP_CAP 60; temp 0.7'; 'ban list: 12 ids / 12 strings'; artifact `temp: 0.7`, `ban_li
+  11 UNVERIFIABLE 'Fetching 14 files' / 'model loaded in 4s'.
+       evidence: The HF snapshot ~/.cache/huggingface/hub/models--mlx-community--Qwen3.6-27B-4bit/snapshots/c000ac2c.../ holds exactly 14 files (confirmed); the 4 s load time is wall-clock and cannot be reproduced without loading the model (forbidden here).
+  12 CONFIRMED    Progress lines: '[F0] s0 prism>slate valid 6 reads first-pick follows complete 451s'; '[F1] s0 prism>slate EXCLUDED content:null_response@forced3 0 reads first-pick n/a TRUNCATED 40s'; '[F1] RESUMED f
+  13 CONFIRMED    The four transcripts printed in the time log are the sessions' transcripts; the '--- end ... excluded=... reason=... strict=... first-pick-break=... picks=[...] advisory=[] ---' lines.
+  14 CONFIRMED    F1 s0 round 4 'Response:None' is the null_response content-class exclusion at forced3 (strict too).
+  15 CONFIRMED    Summary: 'F0: 451 s per COMPLETE session (1 of 1 timed) -> 3.00 h for 24; F1: 428 s (1 of 2 timed) -> 2.85 h; F2: 465 s (1 of 1) -> 3.10 h; PROJECTION: 8.96 h for 24 x 3 vs gate 4.0 h -> STOP'; artifa
+  16 CONFIRMED    'acceptance on the timed sessions: {F0: True, F1: True, F2: True}'; artifact acceptance blocks (n_reads 6, kl_exactly_zero 6, kl_max 0.0, kl_all_exact, statepresent_absent, format_walk n_walked/n_reco
+  17 CONFIRMED    `timed` block per format: sessions [0]/[0,1]/[0]; n_rounds_generated [10]/[4,10]/[10]; n_reads [6]/[0,6]/[6]; n_tok_generated [152]/[45,148]/[166]; transcript_tokens_final [574]/[168,610]/[606]; exclu
+  18 CONFIRMED    Identity blocks pin, per format: seed 20260906, n 24, scope e2a, temp 0.7, audit_v2_sha16 7aa235d25eeb66dc, the roster, neutral_label cedar, n_forced 4, n_free 6.
+  19 CONFIRMED    Provenance fields present: adapter qwen3.6-27b-4bit-mlx, model_id mlx-community/Qwen3.6-27B-4bit, dtype 4bit-quantized (MLX), backend mlx, mlx_version 0.31.2, library_versions {mlx 0.31.2, mlx-lm 0.31
+  20 CONFIRMED    Per-round `transcript_tokens_after`, `prefix_tokens_at_read` and the retention dicts `tokens_forced_end_to_first_read` (F0 {138,104,66,21}; F1 s1 {174,124,70,21}; F2 {175,125,76,21}; F1 s0 null) and a
+  21 CONFIRMED    Analysis artifact `source: timing`; labels 'timing artifact (1 session; 1 complete)' / '(2 sessions; 1 complete)' / '(1 session; 1 complete)'; `formats_missing: []`; `n_per_format_registered: 24`.
+  22 CONFIRMED    Analysis per-format figures: F0 n 1, complete 1, valid 1, strict-excluded 0, strict-alt 1/1, first-pick break 0/1, share 0.5 over 6, KL 6/6 exact, mean 450.57 s; F1 n 2, complete 1, valid 1, strict-ex
+  23 CONFIRMED    Analysis `per_round` n_tok means: F0 {forced0 11, forced1 7, forced2 11, forced3 15, free0 12, free1 25, free2 13, free3 21, free4 21, free5 16}; F1 {forced0 10.0, forced1 20.5, forced2 14.5, forced3 
+  24 CONFIRMED    Analysis `audit_v3` blocks: n_rounds 10/14/10; v2_audit_by_category {}, content_advisory_by_class {}, lexical_by_tag {} everywhere; F1 content_exclusion_by_class {null_response: 1}, rounds_with_any_ex
+  25 CONFIRMED    Analysis `features_rule28a`: every feature 'decidable 1, domain_n 1, floor 16, BELOW FLOOR' with diagnosis text, `reported_regardless: true`, in all three formats; analyze log 'rule 28(a): {... (1, 16
+  26 CONFIRMED    Anchors: e2a_all_arms all n 200 strict-alt 157/187 (0.8396), break 32/188 (0.1702); valid n 184, 154/184 (0.8370), 30/184 (0.1630); e2a_reward_arm all n 112, 86/104, 17/104; valid n 102, 84/102, 16/10
+  27 CONFIRMED    Analyze log anchor line: e2a_all_arms alt 0.84 all / 0.837 valid, break 0.17 / 0.163; reward 0.827/0.824, 0.163/0.157; sham 0.868/0.865, 0.211/0.216; d2_M 0.69/0.69, 0.033/0.034; d2_R 0.75/0.733, 0/0;
+  28 CONFIRMED    F0 purpose text 'e2a strict alternation .840 pooled / .827 reward arm'.
+  29 CONFIRMED    .gitignore allowlists data/format/*.json and ignores the *.checkpoint files; the three checkpoints are NOT tracked.
+  30 CONFIRMED    The timing artifact carries the checkpoints' timed sessions and nothing beyond them.
+  31 CONFIRMED    RESULTS.md (working-tree diff, not the target but citing these artifacts): table rows 152/574/451, 45/168/40, 148/610/428, 166/606/465; 'cost per generated token 2.80–2.96 s'; sizing 16 -> 5.97 h, 12 
+  32 CONFIRMED    Anything the target claims to have done that the tree does not show.
+
+=== refuter a2233119cb0fc2381: 44 claims {'CONFIRMED': 40, 'REFUTED': 1, 'UNVERIFIABLE': 3} ===
+SUMMARY: One figure refuted, in the "Pre-run review" paragraph (not in the three named sections): "a session truncated at forced0 (... e2a base rate ~6% of sessions)". In data/e2a/sessions.jsonl the forced0 exclusion rate is 4/200 = 2.0%; the ~6% is the rate of exclusion at ANY forced round (12/200 = 6.0%: forced0 4, forced1 3, forced2 3, forced3 2); overall exclusion is 16/200 = 8.0%. The number exists but is mis-scoped to forced0. Every figure in "Timing", "Rule-25 read" and "What the design seat decides" reconciles exactly: the four table rows, 2.80–2.96 s/token (12 forwards = 6 reads × 2 under verify=True), 8.96 h and the 16/12/10/8 projections, 18/18 KL = 0, 4/4 walks, the literal `None` (single token 3928, n_tok 1, non-empty so audit v3 did not claim it as audit:empty), the no-label refusal, the F1 s1 pick sequence and .059 read (sole low_label_mass < 0.20 of 18), the emoji-led F2 rounds (10/10), retention intervals and prefixes, the g1 artifact's absence of a frac-0 row, T-step 23/24 and 22/24 with round_path uncached and ~7 min (424 s / 400 s), and the 07:45:40 UTC stamp (RESULTS.md mtime 03:45:40 EDT). Claimed-but-not-in-tree: (a) the pre-run review (six lenses, 15 findings, two refuters each) has no artifact anywhere; (b) the before-states of the fixed bugs (guard splitting on first occurrence; projection fed a truncated session) are unrecoverable because the module is untracked with no prior version; (c) the design block §4 / PI "Go format recon" / "uncached path of record" clause exist only as quotations in the entry, the raw header and recon.py's docstring; (d) the 154/154 regression run has no raw stdout in results/raw (I reproduced it model-free); (e) "H3b-verified" for cedar 72730 is not backed by an H3b artifact in the tree — the id is verified by the tokenizer and by the 2026-09-05 echo entry's label-id list, and h3_roster_candidates.json carries cedar's token_ids as null. One gloss: the entry says the module's "code names no `Injection`"; the module docstring does contain the word, the selftest greps code outside docstrings, so the claim holds as worded.
+
+   0 CONFIRMED    "One complete sham session per format on the uncached path of record costs 428–465 s"
+   1 CONFIRMED    "n = 24 × 3 projects to 8.96 h against the 4 h gate ... STOP"; "F0 3.00 h, F1 2.85 h, F2 3.10 h; total 8.96 h"; "gate 4.0 h, not overridden"
+   2 CONFIRMED    Alternative sizing: "16/format → 5.97 h, 12 → 4.48 h, 10 → 3.73 h, 8 → 2.99 h"
+   3 CONFIRMED    "Cost per generated token, complete sessions, including the twelve read forwards a session carries: 2.80–2.96 s"
+   4 CONFIRMED    Timing table rows: F0 s0 (prism first) complete valid 10/6, 152 tok, 574 final, 451 s; F1 s0 (prism first) TRUNCATED content:null_response@forced3 4/0, 45, 168, 40 s; F1 s1 (ridge first) complete vali
+   5 CONFIRMED    "Schedule index 0 of each format, then the next index where index 0 did not complete"
+   6 CONFIRMED    "model load 4 s"
+   7 UNVERIFIABLE "on the M4 Pro, AC 140 W, caffeinate -is, one model process"
+       evidence: No artifact records adapter wattage, caffeinate, or process count; provenance records only platform macOS-15.6.1-arm64, mlx 0.31.2, mlx-lm 0.31.3, python 3.12.9.
+   8 CONFIRMED    "Acceptance on the timed sessions PASS for every format: 18/18 reads at verify KL exactly 0.0; the e2a walk reconstructs 4/4 sessions with seed streams matched; no bar fired; quarantined primitive abs
+   9 CONFIRMED    "F1 s0 ... round 4 (the second menu label's own round) answered a stapler request with the literal `None` — null_response, excluded at forced3 under the lenient scope (strict too)"
+  10 CONFIRMED    "the round before it — 'Please don't ask me to do that.' for a borrowed-book thank-you — carries no content addressing the task and took NO label"
+  11 CONFIRMED    "an imperative refusal with no first-person declining predicate, a shape outside the adopted rule and outside its declared misses (third-person disclaimers, bare 'No.')"; "Under 1d the rule is frozen"
+  12 CONFIRMED    "F1 s0 is the first exclusion-bearing content-class hit of a new campaign under audit v3"
+  13 CONFIRMED    "F1 s1 (ridge/saddle, neutral cedar first): the first pick was the LAST forced label (saddle) ... the six picks do not alternate (saddle, ridge, saddle, saddle, ridge, ridge)"
+  14 CONFIRMED    "one read at label mass .059 (the only low_label_mass flag of 18)"
+  15 CONFIRMED    "F0 s0 and F2 s0 both open on the first label and alternate strictly (6/6)"
+  16 CONFIRMED    "F2 s0's ten responses all open with an emoji (🌂 🎲 🧺 🔔 ☕ 📅 …) ... no content class"
+  17 CONFIRMED    Retention intervals "F0 138/104/66/21, F1 174/124/70/21, F2 175/125/76/21; prefix at the six reads 182→528, 215→564, 223→553 ... are in the analysis artifact"
+  18 CONFIRMED    "At n = 1 per format none of this is a rate; every feature is reported BELOW FLOOR with its diagnosis"
+  19 CONFIRMED    "Every scaffold byte is e2a's; the neutral rounds read as ordinary config rounds"
+  20 CONFIRMED    "the g1 artifact has no frac-0 row"
+  21 CONFIRMED    "the T-step checks at 0.10 / 0.20 found 23/24 and 22/24 rounds identical and sent e2d uncached"
+  22 CONFIRMED    "a frac-0 check costs ~7 min"
+  23 UNVERIFIABLE "the block excluded the cached round path ('uncached path of record')"; "design block 2026-09-06 §4, PI 'Go format recon'"; "Watermark a49bc9b (design block)"
+       evidence: The design block 2026-09-06 text is not in the tree (grep for 'Go format recon' hits only RESULTS.md and recon.py's docstring; fb26dff's message references the block but commits no block file). Consistent with the prior entry's 'Watermark a49bc9b (the design block's read watermark)' and with projection.rule 'design block 2026-09-06 §4: STOP if the three formats project past 4 h'.
+  24 CONFIRMED    "Code's HEAD at write time fb26dff"; "(Stamp verified at write time: date -u → Sun Sep 6 07:45:40 UTC 2026.)"
+  25 CONFIRMED    "(i) Run as designed at ~9 h — the campaign is checkpointed per format and per session, resumes skip-only under a pinned identity"
+  26 CONFIRMED    "Not done: no session beyond the four timed ones; no run stage; no analysis beyond the subset artifact (named _timing); the three checkpoints stay local (ignored)"
+  27 CONFIRMED    "scripts/format_recon.py (--selftest, --stage time|run, --analyze)"; "--resume is explicit on both stages (an existing checkpoint without it is refused)"
+  28 CONFIRMED    "--stage time now runs schedule indices in order until one COMPLETE session (4 rounds, 6 reads) is on disk per format (≤ 4 attempts, else STOP), only complete sessions enter the projection, and --stag
+  29 CONFIRMED    "the override guard ... now splits on the last occurrence and the self-test proves it clean on the file and firing on a smuggled copy"
+  30 UNVERIFIABLE "Pre-run review (trap 29, code): six lenses, 15 findings confirmed by two refuters each, none refuted, all fixed before the timing run"
+       evidence: No review artifact exists in results/raw/ or elsewhere (grep for 'six lenses', '15 findings', 'two refuters' hits only RESULTS.md). Trap 29 in HANDOFF-2026-09-06.md is 'Values-check EVERY entry with adversarial refuters BEFORE commit' — the attribution is apt but the review itself left no record.
+  31 REFUTED      "a session truncated at forced0 (~1/10 of a full session's cost; e2a base rate ~6% of sessions)"
+       evidence: data/e2a/sessions.jsonl (200 sessions): excluded at forced0 = 4/200 = 2.0% (reasons lexical:granite@forced0, lexical:maple@forced0, audit:frame@forced0, lexical:lattice@forced0). Excluded at ANY forced round = 12/200 = 6.0% (forced0 4, forced1 3, forced2 3, forced3 2); excluded overall = 16/200 = 8.0% (RESULTS line 6469 cites 16/200 = 8.0%). The ~6% is the forced-phase truncation rate, not the forced0 rate the sentence scopes it to. The ~1/10 cost is consistent (F1 s0, truncated at forced3, cost 40 s = 8.6–9.3% of a complete session). Reproduction: python -c "import json; r=[json.loads(l) for l in open('data/e2a/sessions.jsonl')]; print(sum('forced0' in str(x['exclude_reason']) for x in r if x['excluded']), sum('forced' in str(x['exclude_reason']) for x in r if x['excluded']), len(r))" → 4 12 200.
+  32 CONFIRMED    "Self-test 60/60 ... model-free: formats, schedule, hygiene, the e2a walk on 12 synthetic sessions of all three formats, audit-v3 wiring, scope, gate, resume, overwrite, guard, bars, floors"
+  33 CONFIRMED    "regression suite 154/154 with the package present"
+  34 CONFIRMED    "Cells: 4 roster pairs × which label is first = 8 per format, n = 24 = 3 whole blocks, balanced at every prefix of 8"; "every format ends its forced phase on tag_minus"
+  35 CONFIRMED    "Session-share = share of free picks on the first label (e2a's share_all_choices with the nominal pole)"
+  36 CONFIRMED    "e2d's three acceptance bars carried verbatim and no new bar"
+  37 CONFIRMED    "rule 28(a) floors declared before the run (16 decidable of 24 per feature, a Code choice, flagged)"
+  38 CONFIRMED    "Sham is structural: the module's code names no Injection, axis loader, quarantine module or cached path (self-test greps it)"
+  39 CONFIRMED    "the quarantined primitive is asserted absent before every read; reads are choice_read(verify=True) + assert_construction_stable"
+  40 CONFIRMED    "Neutral label (F1): cedar — a cycle-3/4 incumbent tag, single-token id 72730 (H3b-verified; asserted at runtime), pool-disjoint (rule 18) and wrapper-checked (rule 28c), in no roster pair; fixed for 
+  41 CONFIRMED    "Checkpoint identity now pins temp, the audit sha, the roster and the neutral label (trap 36 generalised)"; "a partial run cannot overwrite a complete artifact (trap 22)"; "the progress line no longer
+  42 CONFIRMED    "e2a strict alternation .840 pooled / .827 reward arm" (F0 purpose line, carried into the entry's anchors)
+  43 CONFIRMED    "the e2a walk ... rng draw order is e2a's exactly"
+
+total claims: 114

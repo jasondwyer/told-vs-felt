@@ -1,0 +1,15 @@
+FORMAT RECON ANALYSIS (source timing) -- descriptive, no bar
+  F0 [timing artifact (1 session; 1 complete)]: n 1, complete 1, valid 1 (e2a; strict-excluded 0); strict-alt 1/1 = 1.0; first-pick break 0/1 = 0.0; share(first label) 0.5 over 6 choices; v2 {} content-excl {} advisory {} lexical {}; KL 6/6 exact; mean 451 s/session
+      n_tok by phase: {'forced0': 11.0, 'forced1': 7.0, 'forced2': 11.0, 'forced3': 15.0, 'free0': 12.0, 'free1': 25.0, 'free2': 13.0, 'free3': 21.0, 'free4': 21.0, 'free5': 16.0}
+      tokens forced-end -> first read: {'forced0': 138, 'forced1': 104, 'forced2': 66, 'forced3': 21}
+      rule 28(a): {'first_pick_break': (1, 16, 'BELOW FLOOR'), 'strict_alternation': (1, 16, 'BELOW FLOOR'), 'session_share': (1, 16, 'BELOW FLOOR')}
+  F1 [timing artifact (2 sessions; 1 complete)]: n 2, complete 1, valid 1 (e2a; strict-excluded 1); strict-alt 0/1 = 0.0; first-pick break 1/1 = 1.0; share(first label) 0.5 over 6 choices; v2 {} content-excl {'null_response': 1} advisory {} lexical {}; KL 6/6 exact; mean 234 s/session
+      n_tok by phase: {'forced0': 10.0, 'forced1': 20.5, 'forced2': 14.5, 'forced3': 8.0, 'free0': 19.0, 'free1': 14.0, 'free2': 9.0, 'free3': 19.0, 'free4': 12.0, 'free5': 14.0}
+      tokens forced-end -> first read: {'forced0': 174, 'forced1': 124, 'forced2': 70, 'forced3': 21}
+      rule 28(a): {'first_pick_break': (1, 16, 'BELOW FLOOR'), 'strict_alternation': (1, 16, 'BELOW FLOOR'), 'session_share': (1, 16, 'BELOW FLOOR')}
+  F2 [timing artifact (1 session; 1 complete)]: n 1, complete 1, valid 1 (e2a; strict-excluded 0); strict-alt 1/1 = 1.0; first-pick break 0/1 = 0.0; share(first label) 0.5 over 6 choices; v2 {} content-excl {} advisory {} lexical {}; KL 6/6 exact; mean 465 s/session
+      n_tok by phase: {'forced0': 12.0, 'forced1': 20.0, 'forced2': 20.0, 'forced3': 26.0, 'free0': 6.0, 'free1': 20.0, 'free2': 18.0, 'free3': 15.0, 'free4': 9.0, 'free5': 20.0}
+      tokens forced-end -> first read: {'forced0': 175, 'forced1': 125, 'forced2': 76, 'forced3': 21}
+      rule 28(a): {'first_pick_break': (1, 16, 'BELOW FLOOR'), 'strict_alternation': (1, 16, 'BELOW FLOOR'), 'session_share': (1, 16, 'BELOW FLOOR')}
+  anchors: e2a_all_arms alt 0.84 all / 0.837 valid; break 0.17 all / 0.163 valid | e2a_reward_arm alt 0.827 all / 0.824 valid; break 0.163 all / 0.157 valid | e2a_sham_arm alt 0.868 all / 0.865 valid; break 0.211 all / 0.216 valid | e2d_d2_M alt 0.69 all / 0.69 valid; break 0.033 all / 0.034 valid | e2d_d2_R alt 0.75 all / 0.733 valid; break 0.0 all / 0.0 valid | e2d_d2_S alt 0.933 all / 0.933 valid; break 0.067 all / 0.067 valid | e2d_d3_M alt 0.522 all / 0.522 valid; break 0.043 all / 0.043 valid
+  wrote /Users/jasondwyer/Documents/code/jspace-lab/data/format/format_recon_analysis_timing.json

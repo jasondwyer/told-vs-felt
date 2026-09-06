@@ -199,3 +199,11 @@ __pycache__/
 !/data/echo/
 /data/echo/*
 !/data/echo/*.json
+
+# Format recon (design block 2026-09-06 §4, PROPOSAL-k candidate): SHAM-ONLY
+# sessions in three forced-phase formats, the timing gate and the analysis
+# travel as JSON; per-format checkpoints (*.json.checkpoint) stay local.
+# Same pattern as e2d/echo: an explicit per-directory exception, no bare *.
+!/data/format/
+/data/format/*
+!/data/format/*.json

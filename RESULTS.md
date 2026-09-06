@@ -21,6 +21,172 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-06 — **FORMAT RECON (design block 2026-09-06 §4, PI "Go format
+  recon") — BUILT, REVIEWED, SELF-TESTED, TIMED; the timing gate says STOP.
+  One complete sham session per format on the uncached path of record costs
+  428–465 s; n = 24 × 3 projects to **8.96 h against the 4 h gate**, so the
+  run did not start (the block's own clause; Code does not run past its own
+  STOP). Timing artifact [`format_recon_timing.json`](data/format/format_recon_timing.json),
+  raw [`_format_recon_time`](results/raw/2026-09-06_format_recon_time.txt)
+  (four transcripts in full); subset analysis
+  [`format_recon_analysis_timing.json`](data/format/format_recon_analysis_timing.json),
+  raw [`_analyze_timing`](results/raw/2026-09-06_format_recon_analyze_timing.txt).
+  SHAM ONLY throughout; no bar fired; every read at KL = 0; descriptive
+  only. The design seat decides what runs. Watermark `a49bc9b` (design
+  block); Code's HEAD at write time `fb26dff`.**
+  (Stamp verified at write time: `date -u` → **Sun Sep  6 14:28:41 UTC 2026** — the entry was first written 07:45:40 UTC and corrected on its values-check; stamps are write-time, per the 09-06 handoff.)
+
+  - **What was built.** [`valence_core/formats/recon.py`](valence_core/formats/recon.py)
+    (the formats, cells, schedule, sham session runner, audit-v3 wiring,
+    checkpointed per-format campaign, the timing gate, the analysis) and
+    [`scripts/format_recon.py`](scripts/format_recon.py) (`--selftest`,
+    `--stage time|run`, `--analyze`). Every harness-written byte is e2a's
+    (`session_e2a` templates indexed on the session) and the rng draw order
+    is e2a's exactly, so `verify_archived_session` walks every session
+    byte-for-byte whichever labels the forced rounds carry — that is the
+    per-session acceptance. Cells: 4 roster pairs × which label is first =
+    8 per format, n = 24 = 3 whole blocks, balanced at every prefix of 8. No
+    + pole: `tag_plus` is the nominal FIRST label; every format ends its
+    forced phase on `tag_minus`, so "first-pick break" has one definition
+    across formats (first pick = last forced label; in F2 also the stay
+    rate). Session-share = share of free picks on the first label (e2a's
+    `share_all_choices` with the nominal pole). Audit v3 first, lexical on
+    unclaimed rounds (rule 28b); lenient scope run, strict recovered beside
+    (e2d's discipline); counters pre-declared (rule 23); e2d's three
+    acceptance bars carried verbatim and **no new bar**; rule 28(a) floors
+    declared before the run (16 decidable of 24 per feature, a Code choice,
+    flagged — a figure below its floor is reported WITH its diagnosis, never
+    suppressed). Sham is structural: the module's code names no `Injection`,
+    axis loader, quarantine module or cached path (self-test greps it);
+    `generate` is called with `injections=()` and `cached=False` and the
+    record's `steered` / `round_path_cached` are derived from the call; the
+    quarantined primitive is asserted absent before every read; reads are
+    `choice_read(verify=True)` + `assert_construction_stable`.
+    **Neutral label (F1): `cedar` — Code choice, FLAGGED:** a cycle-3/4
+    incumbent tag, single-token id 72730 (H3b-verified; asserted at runtime),
+    pool-disjoint (rule 18) and wrapper-checked (rule 28c), in no roster
+    pair; fixed for every F1 session; never on a menu; added to F1's
+    lexical-hit set.
+  - **Pre-run review (trap 29, code): six lenses, 15 findings survived
+    refutation — 14 with both refuters not refuting, one (the record's
+    `steered` written as a literal `False`) with one refuter of two: Code
+    re-verified that the literal was TRUE on the code as written and applied
+    the derive-from-the-call fix as hardening — all fixed before the timing
+    run; record [`_format_recon_review`](results/raw/2026-09-06_format_recon_review.txt).** The
+    blocking one: the override guard split its own source on the first
+    occurrence of the stage marker and fired unconditionally (fail-closed —
+    nothing could run — but a guard that never ran is not tested; trap 23);
+    now splits on the last occurrence and the self-test proves it clean on
+    the file and firing on a smuggled copy. The gate cluster: the projection
+    was fed whatever session 0 produced, so a session truncated in the
+    forced phase (e2a: 12/200 = 6% of sessions, forced0 alone 4/200 = 2%;
+    the truncation observed here cost 40 s, under a tenth of a full session,
+    and a forced0 one would cost ~1/40) could turn a STOP into a GO —
+    `--stage time` now runs schedule indices in
+    order until one COMPLETE session (4 rounds, 6 reads) is on disk per
+    format (≤ 4 attempts, else STOP), only complete sessions enter the
+    projection, and `--stage run`'s gate also refuses if any timed session
+    failed acceptance (a fired bar is escalated, never absorbed). Checkpoint
+    identity now pins temp, the audit sha, the roster and the neutral label
+    (trap 36 generalised); `--resume` is explicit on both stages (an existing
+    checkpoint without it is refused); a partial run cannot overwrite a
+    complete artifact (trap 22); the progress line no longer prints
+    "follows" for a session with no first pick; the analysis reports
+    `n_valid_run_scope` (not "lenient") with the scope named, logs missing
+    formats (trap 5), and every anchor carries both domains (all / valid) so
+    a valid-domain alternation rate is read against a valid-domain anchor.
+    Self-test 60/60 before the timing run — the raw file
+    [`_selftest`](results/raw/2026-09-06_format_recon_selftest.txt) holds
+    the final 61/61 run, the hash-recompute check added afterwards —
+    model-free: formats, schedule, hygiene, the e2a walk on 12 synthetic
+    sessions of all three formats, audit-v3 wiring, scope, gate, resume,
+    overwrite, guard, bars, floors); regression suite 154/154 with the
+    package present ([`_regression`](results/raw/2026-09-06_format_recon_regression.txt)).
+    After the timing run, on the values-check below: the script now
+    RECOMPUTES the audit-v2 body hash (`7aa235d25eeb66dc`) and refuses on
+    mismatch instead of echoing the file's self-declared field (the e2b/H1
+    convention); self-test 61/61 after.
+  - **Timing (`--stage time`), on the M4 Pro, AC 140 W, `caffeinate -is`, one
+    model process, model load 4 s.** Schedule index 0 of each format, then
+    the next index where index 0 did not complete:
+
+    | format | index | outcome | rounds / reads | tokens generated | final transcript tokens | seconds |
+    |---|---|---|---|---|---|---|
+    | F0 | s0 (prism first) | complete, valid | 10 / 6 | 152 | 574 | 451 |
+    | F1 | s0 (prism first) | **TRUNCATED — excluded `content:null_response@forced3`** | 4 / 0 | 45 | 168 | 40 |
+    | F1 | s1 (ridge first) | complete, valid | 10 / 6 | 148 | 610 | 428 |
+    | F2 | s0 (prism first) | complete, valid | 10 / 6 | 166 | 606 | 465 |
+
+    Cost per generated token, complete sessions, including the twelve read
+    forwards a session carries: 2.80–2.96 s. **Projection from complete
+    sessions only:** F0 3.00 h, F1 2.85 h, F2 3.10 h; **total 8.96 h for
+    24 × 3 → STOP** (gate 4.0 h, not overridden). For the design seat's
+    sizing: 16/format → 5.97 h, 12 → 4.48 h, 10 → 3.73 h, 8 → 2.99 h
+    (the declared rule-28(a) floor is 16 decidable per feature, a Code
+    choice; 10/format cannot meet it and the floor would have to be
+    re-declared before such a run). Acceptance on the timed sessions PASS
+    for every format: 18/18 reads at verify KL exactly 0.0; the e2a walk
+    reconstructs 4/4 sessions with seed streams matched; no bar fired;
+    quarantined primitive absent at every read; `steered` False and
+    `round_path_cached` False on every round, derived from the call.
+  - **Rule-25 read of the four transcripts.** Every scaffold byte is e2a's;
+    the neutral rounds read as ordinary config rounds. **F1 s0 is the first
+    exclusion-bearing content-class hit of a new campaign under audit v3:**
+    round 4 (the second menu label's own round) answered a stapler request
+    with the literal `None` — `null_response`, excluded at forced3 under
+    the lenient scope (strict too). **FLAG (content class, design seat):
+    the round before it — "Please don't ask me to do that." for a borrowed-
+    book thank-you — carries no content addressing the task and took NO
+    label: it is an imperative refusal with no first-person declining
+    predicate, a shape outside the adopted rule and outside its declared
+    misses (third-person disclaimers, bare "No.").** Under 1d the rule is
+    frozen; this is a declared-miss candidate for the read, not a change.
+    F1 s1 (ridge/saddle, neutral `cedar` first): **the first pick was the
+    LAST forced label (saddle) — the alternation habit broken — and the six
+    picks do not alternate** (saddle, ridge, saddle, saddle, ridge, ridge);
+    one read at label mass .059 (the only `low_label_mass` flag of 18). F0
+    s0 and F2 s0 both open on the first label and alternate strictly (6/6).
+    F2 s0's ten responses all open with an emoji (🌂 🎲 🧺 🔔 ☕ 📅 …) —
+    a style attractor across the whole session, no content class, noted for
+    the counters. Per-round token counts and the retention intervals
+    (tokens from each forced round's end to the first read: F0 138/104/66/21,
+    F1 174/124/70/21, F2 175/125/76/21; prefix at the six reads 182→528,
+    215→564, 223→553) are in the analysis artifact. **At n = 1 per format
+    none of this is a rate**; every feature is reported BELOW FLOOR with
+    its diagnosis, as declared.
+  - **What the design seat decides.** (i) Run as designed at ~9 h — the
+    campaign is checkpointed per format and per session, resumes skip-only
+    under a pinned identity, and stays on the one characterized backend
+    (the laptop); (ii) a smaller n with the floor re-declared (numbers
+    above); (iii) a different cost structure — the block excluded the
+    cached round path ("uncached path of record"); a vanilla-generation
+    cached path would need its own gate (the g1 artifact has no frac-0 row;
+    the T-step checks at 0.10 / 0.20 found 23/24 and 22/24 rounds identical
+    and sent e2d uncached; a frac-0 check costs ~7 min), and its speed-up is
+    unmeasured — a design change, not a Code option; (iv) hold. Nothing
+    runs until one of these is said. Also owed by Design at some point:
+    whether `cedar` stands as F1's neutral label (Code choice, flagged) and
+    whether the 16-of-24 floors stand.
+  - **Pre-commit values-check of this entry and its artifacts (three
+    refuters, 114 claims; record
+    [`_format_recon_entry_valuescheck`](results/raw/2026-09-06_format_recon_entry_valuescheck.txt)):
+    two glosses, both applied — the review sentence above (14 of 15 at 2/2,
+    one at 1/2, not "two refuters each, none refuted") and the truncation
+    base rate, which the first draft scoped to forced0. Nothing in the
+    timing table, the rule-25 read, the projections or the artifacts was
+    refuted; every per-format figure recomputes from the timing sessions
+    and every anchor from the archives. One refuter error corrected, not
+    the entry: `cedar`'s id 72730 IS backed by the tracked
+    `data/e2b/h3b_repair_screen.json` (the refuter read the candidates file,
+    whose ids are null by design). The §1–§3 entry's own check is now also
+    in raw ([`_dispositions_entry_valuescheck`](results/raw/2026-09-06_dispositions_entry_valuescheck.txt)) —
+    the §1 protocol, applied to Code's entries as well as to design prose.
+  - **Not done:** no session beyond the four timed ones; no run stage; no
+    analysis beyond the subset artifact (named `_timing`, never the
+    canonical name — trap 22). The three checkpoints stay local (ignored);
+    a later GO resumes them with `--resume` so the timed sessions remain
+    sessions of record.
+
 - 2026-09-06 — **DESIGN BLOCK 2026-09-06 (post-Stage-C dispositions) §1–§3
   APPLIED. §1: the THIRD adversarial values-check of the e2d closure — the
   pass that holds the closure text — is written to raw,

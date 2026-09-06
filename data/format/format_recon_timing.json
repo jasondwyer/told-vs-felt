@@ -1,0 +1,1691 @@
+{
+ "stage": "time",
+ "item": "format recon (design block 2026-09-06 \u00a74)",
+ "sham_only": true,
+ "round_path_cached": false,
+ "formats": {
+  "F0": {
+   "title": "e2a format of record -- strict alternation, two rounds per label (A B A B)",
+   "order": [
+    "first",
+    "second",
+    "first",
+    "second"
+   ],
+   "purpose": "continuity anchor; e2a strict alternation .840 pooled / .827 reward arm"
+  },
+  "F1": {
+   "title": "neutral-start -- two rounds under a neutral third label, then one round per menu label (N N A B)",
+   "order": [
+    "neutral",
+    "neutral",
+    "first",
+    "second"
+   ],
+   "purpose": "the alternation habit is not installed between the two menu labels"
+  },
+  "F2": {
+   "title": "block order -- A A B B / B B A A, start counterbalanced",
+   "order": [
+    "first",
+    "first",
+    "second",
+    "second"
+   ],
+   "purpose": "decorrelates round position from label parity (the Stage B/C confound)"
+  }
+ },
+ "n_per_format": 24,
+ "neutral_label": {
+  "label": "cedar",
+  "token_id": 72730,
+  "code_choice_flagged": true
+ },
+ "roster_of_record": [
+  [
+   "granite",
+   "plaza"
+  ],
+  [
+   "prism",
+   "slate"
+  ],
+  [
+   "velvet",
+   "walnut"
+  ],
+  [
+   "ridge",
+   "saddle"
+  ]
+ ],
+ "draw_seed": 20260906,
+ "scope": "e2a",
+ "temp": 0.7,
+ "audit_of_record": {
+  "version": "audit-v3 = e2b_audit_v2 + content-class-v4 (exclusion: null/stuck/preamble; advisory: echo/wrong_task)",
+  "v2_sha16": "7aa235d25eeb66dc"
+ },
+ "identity": {
+  "F0": {
+   "format": "F0",
+   "seed": 20260906,
+   "n": 24,
+   "scope": "e2a",
+   "temp": 0.7,
+   "audit_v2_sha16": "7aa235d25eeb66dc",
+   "roster": [
+    [
+     "granite",
+     "plaza"
+    ],
+    [
+     "prism",
+     "slate"
+    ],
+    [
+     "velvet",
+     "walnut"
+    ],
+    [
+     "ridge",
+     "saddle"
+    ]
+   ],
+   "neutral_label": "cedar",
+   "n_forced": 4,
+   "n_free": 6
+  },
+  "F1": {
+   "format": "F1",
+   "seed": 20260906,
+   "n": 24,
+   "scope": "e2a",
+   "temp": 0.7,
+   "audit_v2_sha16": "7aa235d25eeb66dc",
+   "roster": [
+    [
+     "granite",
+     "plaza"
+    ],
+    [
+     "prism",
+     "slate"
+    ],
+    [
+     "velvet",
+     "walnut"
+    ],
+    [
+     "ridge",
+     "saddle"
+    ]
+   ],
+   "neutral_label": "cedar",
+   "n_forced": 4,
+   "n_free": 6
+  },
+  "F2": {
+   "format": "F2",
+   "seed": 20260906,
+   "n": 24,
+   "scope": "e2a",
+   "temp": 0.7,
+   "audit_v2_sha16": "7aa235d25eeb66dc",
+   "roster": [
+    [
+     "granite",
+     "plaza"
+    ],
+    [
+     "prism",
+     "slate"
+    ],
+    [
+     "velvet",
+     "walnut"
+    ],
+    [
+     "ridge",
+     "saddle"
+    ]
+   ],
+   "neutral_label": "cedar",
+   "n_forced": 4,
+   "n_free": 6
+  }
+ },
+ "provenance": {
+  "adapter": "qwen3.6-27b-4bit-mlx",
+  "model_id": "mlx-community/Qwen3.6-27B-4bit",
+  "dtype": "4bit-quantized (MLX)",
+  "backend": "mlx",
+  "mlx_version": "0.31.2",
+  "library_versions": {
+   "mlx": "0.31.2",
+   "mlx-lm": "0.31.3",
+   "numpy": "2.5.1"
+  },
+  "python": "3.12.9",
+  "platform": "macOS-15.6.1-arm64-arm-64bit",
+  "gdn_inference_mode": "ops (fused disabled)",
+  "n_layers": 64,
+  "choice_window_declared": 8192,
+  "legacy_truncate_512": false,
+  "n_encodes_clipped": 0
+ },
+ "ban_list": {
+  "n_ids": 12,
+  "n_strings": 12
+ },
+ "declared_bars": [
+  {
+   "name": "scaffold_absorption",
+   "kind": "hair_trigger",
+   "domain": "all",
+   "p0": null,
+   "alpha": 0.05,
+   "threshold": 0.0,
+   "min_n": 1,
+   "justification": "A banned special-token string in a response means the ban list did not apply at generation. Base rate is structurally zero: the tokens are suppressed in the sampler."
+  },
+  {
+   "name": "template_breakage",
+   "kind": "hair_trigger",
+   "domain": "all",
+   "p0": null,
+   "alpha": 0.05,
+   "threshold": 0.0,
+   "min_n": 1,
+   "justification": "A session whose scaffolding does not reconstruct under session_e2a is not an e2a-format session. Base rate is zero by construction -- the harness writes the scaffold itself."
+  },
+  {
+   "name": "round_degeneracy",
+   "kind": "binomial",
+   "domain": "all",
+   "p0": 0.02,
+   "alpha": 0.05,
+   "threshold": null,
+   "min_n": 1,
+   "justification": "Measured class: e2a's 0.10 archive is the declared healthy rate. Binds by exact binomial at every scale (rule 21)."
+  }
+ ],
+ "declared_features_rule28a": [
+  {
+   "name": "first_pick_break",
+   "domain": "all",
+   "min_decidable": 16,
+   "min_decidable_frac": 0.0
+  },
+  {
+   "name": "strict_alternation",
+   "domain": "valid",
+   "min_decidable": 16,
+   "min_decidable_frac": 0.0
+  },
+  {
+   "name": "session_share",
+   "domain": "valid",
+   "min_decidable": 16,
+   "min_decidable_frac": 0.0
+  }
+ ],
+ "timed": {
+  "F0": {
+   "sessions": [
+    0
+   ],
+   "seconds": [
+    450.5702621936798
+   ],
+   "complete": [
+    true
+   ],
+   "n_rounds_generated": [
+    10
+   ],
+   "n_reads": [
+    6
+   ],
+   "n_tok_generated": [
+    152
+   ],
+   "transcript_tokens_final": [
+    574
+   ],
+   "excluded": [
+    false
+   ],
+   "exclude_reason": [
+    null
+   ]
+  },
+  "F1": {
+   "sessions": [
+    0,
+    1
+   ],
+   "seconds": [
+    40.03375577926636,
+    428.1120777130127
+   ],
+   "complete": [
+    false,
+    true
+   ],
+   "n_rounds_generated": [
+    4,
+    10
+   ],
+   "n_reads": [
+    0,
+    6
+   ],
+   "n_tok_generated": [
+    45,
+    148
+   ],
+   "transcript_tokens_final": [
+    168,
+    610
+   ],
+   "excluded": [
+    true,
+    false
+   ],
+   "exclude_reason": [
+    "content:null_response@forced3",
+    null
+   ]
+  },
+  "F2": {
+   "sessions": [
+    0
+   ],
+   "seconds": [
+    464.991779088974
+   ],
+   "complete": [
+    true
+   ],
+   "n_rounds_generated": [
+    10
+   ],
+   "n_reads": [
+    6
+   ],
+   "n_tok_generated": [
+    166
+   ],
+   "transcript_tokens_final": [
+    606
+   ],
+   "excluded": [
+    false
+   ],
+   "exclude_reason": [
+    null
+   ]
+  }
+ },
+ "projection": {
+  "per_format": {
+   "F0": {
+    "n_timed": 1,
+    "n_complete": 1,
+    "mean_session_s_complete": 450.5702621936798,
+    "truncated_seconds_excluded_from_projection": [],
+    "projected_s": 10813.686292648315,
+    "projected_h": 3.0038017479578656
+   },
+   "F1": {
+    "n_timed": 2,
+    "n_complete": 1,
+    "mean_session_s_complete": 428.1120777130127,
+    "truncated_seconds_excluded_from_projection": [
+     40.03375577926636
+    ],
+    "projected_s": 10274.689865112305,
+    "projected_h": 2.8540805180867515
+   },
+   "F2": {
+    "n_timed": 1,
+    "n_complete": 1,
+    "mean_session_s_complete": 464.991779088974,
+    "truncated_seconds_excluded_from_projection": [],
+    "projected_s": 11159.802698135376,
+    "projected_h": 3.0999451939264935
+   }
+  },
+  "n_per_format": 24,
+  "projected_total_s": 32248.178855895996,
+  "projected_total_h": 8.95782745997111,
+  "gate_hours": 4.0,
+  "verdict": "STOP",
+  "rule": "design block 2026-09-06 \u00a74: STOP if the three formats project past 4 h"
+ },
+ "gate_hours": 4.0,
+ "gate_overridden": false,
+ "acceptance_on_timed_sessions": {
+  "F0": {
+   "n_reads": 6,
+   "kl_exactly_zero": 6,
+   "kl_max": 0.0,
+   "kl_all_exact": true,
+   "statepresent_absent": true,
+   "format_walk": {
+    "check": "session_e2a.verify_archived_session",
+    "n_walked": 1,
+    "n_reconstructed": 1,
+    "n_seed_streams_matched": 1,
+    "all_ok": true,
+    "failures": []
+   },
+   "bars_fired": [],
+   "sham_only_every_round": true,
+   "round_degeneracy_domain": "v2 audit class over ALL rounds of the format (unprovoked by design: sham)",
+   "no_verdict_content": true,
+   "PASS": true
+  },
+  "F1": {
+   "n_reads": 6,
+   "kl_exactly_zero": 6,
+   "kl_max": 0.0,
+   "kl_all_exact": true,
+   "statepresent_absent": true,
+   "format_walk": {
+    "check": "session_e2a.verify_archived_session",
+    "n_walked": 2,
+    "n_reconstructed": 2,
+    "n_seed_streams_matched": 2,
+    "all_ok": true,
+    "failures": []
+   },
+   "bars_fired": [],
+   "sham_only_every_round": true,
+   "round_degeneracy_domain": "v2 audit class over ALL rounds of the format (unprovoked by design: sham)",
+   "no_verdict_content": true,
+   "PASS": true
+  },
+  "F2": {
+   "n_reads": 6,
+   "kl_exactly_zero": 6,
+   "kl_max": 0.0,
+   "kl_all_exact": true,
+   "statepresent_absent": true,
+   "format_walk": {
+    "check": "session_e2a.verify_archived_session",
+    "n_walked": 1,
+    "n_reconstructed": 1,
+    "n_seed_streams_matched": 1,
+    "all_ok": true,
+    "failures": []
+   },
+   "bars_fired": [],
+   "sham_only_every_round": true,
+   "round_degeneracy_domain": "v2 audit class over ALL rounds of the format (unprovoked by design: sham)",
+   "no_verdict_content": true,
+   "PASS": true
+  }
+ },
+ "acceptance_all_pass": true,
+ "sessions": {
+  "F0": [
+   {
+    "format": "F0",
+    "session": 0,
+    "cell": {
+     "pair": [
+      "prism",
+      "slate"
+     ],
+     "first_index": 0,
+     "tag_plus": "prism",
+     "tag_minus": "slate"
+    },
+    "tag_plus": "prism",
+    "tag_minus": "slate",
+    "pair": [
+     "prism",
+     "slate"
+    ],
+    "neutral_label": null,
+    "forced_tags": [
+     "prism",
+     "slate",
+     "prism",
+     "slate"
+    ],
+    "forced_roles": [
+     "first",
+     "second",
+     "first",
+     "second"
+    ],
+    "F": 2,
+    "n_forced": 4,
+    "excluded": false,
+    "exclude_reason": null,
+    "exclusion_scope": "e2a",
+    "temp": 0.7,
+    "round_path_cached": false,
+    "sham_only": true,
+    "rounds": [
+     {
+      "phase": "forced0",
+      "kind": "forced",
+      "round": 0,
+      "pole": "pos",
+      "role": "first",
+      "tag": "prism",
+      "task": "t04",
+      "seed": 1129133139,
+      "task_text": "Offer a title for a story about local repair caf\u00e9 gatherings.",
+      "text": "\"Mending Moments: Tales from the Repair Caf\u00e9\"",
+      "n_tok": 11,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "transcript_tokens_after": 44
+     },
+     {
+      "phase": "forced1",
+      "kind": "forced",
+      "round": 1,
+      "pole": "neg",
+      "role": "second",
+      "tag": "slate",
+      "task": "t08",
+      "seed": 1639634847,
+      "task_text": "Propose a name for a little mobile coffee cart.",
+      "text": "\"Brew & Roam\"",
+      "n_tok": 7,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "transcript_tokens_after": 78
+     },
+     {
+      "phase": "forced2",
+      "kind": "forced",
+      "round": 2,
+      "pole": "pos",
+      "role": "first",
+      "tag": "prism",
+      "task": "t12",
+      "seed": 1210374988,
+      "task_text": "Propose an email subject line announcing a found umbrella.",
+      "text": "\"Found: Your Umbrella at the Community Center\"",
+      "n_tok": 11,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "transcript_tokens_after": 116
+     },
+     {
+      "phase": "forced3",
+      "kind": "forced",
+      "round": 3,
+      "pole": "neg",
+      "role": "second",
+      "tag": "slate",
+      "task": "t10",
+      "seed": 961715868,
+      "task_text": "Compose a single sentence of thanks for a book you borrowed.",
+      "text": "\"Thanks for letting me borrow the book \u2014 it was a wonderful read!\"",
+      "n_tok": 15,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "transcript_tokens_after": 161
+     }
+    ],
+    "choices": [
+     {
+      "phase": "free0",
+      "kind": "free",
+      "round": 0,
+      "menu_a": "prism",
+      "menu_b": "slate",
+      "pick": "prism",
+      "picked_pole": "pos",
+      "picked_role": "first",
+      "read": {
+       "pick": "prism",
+       "p_a": 0.562176500883943,
+       "p_b": 0.4378234991127572,
+       "label_mass": 0.30303869391309673,
+       "top1_id": 271,
+       "top1_is_label": false,
+       "verify_kl": 0.0
+      },
+      "prefix_tokens_at_read": 182,
+      "task": "t16",
+      "seed": 474733465,
+      "task_text": "Describe a bakery window at closing time in one sentence.",
+      "text": "\"Golden pastries, few left, under warm light.\"",
+      "n_tok": 12,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "low_label_mass": false,
+      "transcript_tokens_after": 222
+     },
+     {
+      "phase": "free1",
+      "kind": "free",
+      "round": 1,
+      "menu_a": "slate",
+      "menu_b": "prism",
+      "pick": "slate",
+      "picked_pole": "neg",
+      "picked_role": "second",
+      "read": {
+       "pick": "slate",
+       "p_a": 0.8354835371024523,
+       "p_b": 0.1645164628963693,
+       "label_mass": 0.8486063796313248,
+       "top1_id": 48877,
+       "top1_is_label": true,
+       "verify_kl": 0.0
+      },
+      "prefix_tokens_at_read": 243,
+      "task": "t06",
+      "seed": 13434808,
+      "task_text": "Reword in a warmer tone: The meeting has been moved to 3pm.",
+      "text": "\"Hi! Just a quick note to let you know the meeting has been moved to 3pm. See you there!\"",
+      "n_tok": 25,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "low_label_mass": false,
+      "transcript_tokens_after": 303
+     },
+     {
+      "phase": "free2",
+      "kind": "free",
+      "round": 2,
+      "menu_a": "slate",
+      "menu_b": "prism",
+      "pick": "prism",
+      "picked_pole": "pos",
+      "picked_role": "first",
+      "read": {
+       "pick": "prism",
+       "p_a": 0.32082130082415694,
+       "p_b": 0.6791786991744401,
+       "label_mass": 0.7127765048163275,
+       "top1_id": 90387,
+       "top1_is_label": true,
+       "verify_kl": 0.0
+      },
+      "prefix_tokens_at_read": 323,
+      "task": "t05",
+      "seed": 1239927180,
+      "task_text": "Compose a single welcoming sentence to open a neighborhood newsletter.",
+      "text": "\"Welcome to this month's edition of our neighborhood newsletter!\"",
+      "n_tok": 13,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "low_label_mass": false,
+      "transcript_tokens_after": 365
+     },
+     {
+      "phase": "free3",
+      "kind": "free",
+      "round": 3,
+      "menu_a": "slate",
+      "menu_b": "prism",
+      "pick": "slate",
+      "picked_pole": "neg",
+      "picked_role": "second",
+      "read": {
+       "pick": "slate",
+       "p_a": 0.9241418199773163,
+       "p_b": 0.07585818002112533,
+       "label_mass": 0.6416879450560539,
+       "top1_id": 48877,
+       "top1_is_label": true,
+       "verify_kl": 0.0
+      },
+      "prefix_tokens_at_read": 387,
+      "task": "t14",
+      "seed": 1467074123,
+      "task_text": "Soften this kitchen notice: Do not leave dishes in the sink.",
+      "text": "\"Please could you pop your dishes in the dishwasher or dry them after use? \ud83d\ude4f\"",
+      "n_tok": 21,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "low_label_mass": false,
+      "transcript_tokens_after": 440
+     },
+     {
+      "phase": "free4",
+      "kind": "free",
+      "round": 4,
+      "menu_a": "prism",
+      "menu_b": "slate",
+      "pick": "prism",
+      "picked_pole": "pos",
+      "picked_role": "first",
+      "read": {
+       "pick": "prism",
+       "p_a": 0.9919380084706739,
+       "p_b": 0.008061991528263071,
+       "label_mass": 0.9407334019100064,
+       "top1_id": 90387,
+       "top1_is_label": true,
+       "verify_kl": 0.0
+      },
+      "prefix_tokens_at_read": 461,
+      "task": "t07",
+      "seed": 568661518,
+      "task_text": "Describe walking on gravel in one sentence.",
+      "text": "\"Every step crunches and shifts underfoot, a dry, rhythmic whisper of loose stones.\"",
+      "n_tok": 21,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "low_label_mass": false,
+      "transcript_tokens_after": 506
+     },
+     {
+      "phase": "free5",
+      "kind": "free",
+      "round": 5,
+      "menu_a": "prism",
+      "menu_b": "slate",
+      "pick": "slate",
+      "picked_pole": "neg",
+      "picked_role": "second",
+      "read": {
+       "pick": "slate",
+       "p_a": 0.1066905939455227,
+       "p_b": 0.8933094060532729,
+       "label_mass": 0.8303462203384939,
+       "top1_id": 48877,
+       "top1_is_label": true,
+       "verify_kl": 0.0
+      },
+      "prefix_tokens_at_read": 528,
+      "task": "t03",
+      "seed": 774626796,
+      "task_text": "In one courteous sentence, ask to borrow a stapler.",
+      "text": "\"Would you mind if I borrowed your stapler for just a moment?\"",
+      "n_tok": 16,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "low_label_mass": false,
+      "transcript_tokens_after": 574
+     }
+    ],
+    "terminations": [],
+    "transcript": "=== Config evaluation session ===\n[round 1 | config: prism]\nTask: Offer a title for a story about local repair caf\u00e9 gatherings.\nResponse:\"Mending Moments: Tales from the Repair Caf\u00e9\"\n[round 2 \u2014 active config: slate]\nTask: Propose a name for a little mobile coffee cart.\nResponse:\"Brew & Roam\"\n[round 3 | running config: prism]\nTask: Propose an email subject line announcing a found umbrella.\nResponse:\"Found: Your Umbrella at the Community Center\"\n[round 4 \u2014 config in use: slate]\nTask: Compose a single sentence of thanks for a book you borrowed.\nResponse:\"Thanks for letting me borrow the book \u2014 it was a wonderful read!\"\n[round 5 | choice]\nAvailable configs: prism, slate\nConfig choice (one word): prism\n[round 5 | config: prism]\nTask: Describe a bakery window at closing time in one sentence.\nResponse:\"Golden pastries, few left, under warm light.\"\n[round 6 | choice]\nConfigs available: slate, prism\nConfig choice (one word): slate\n[round 6 \u2014 active config: slate]\nTask: Reword in a warmer tone: The meeting has been moved to 3pm.\nResponse:\"Hi! Just a quick note to let you know the meeting has been moved to 3pm. See you there!\"\n[round 7 | choice]\nOptions: slate, prism\nConfig choice (one word): prism\n[round 7 | running config: prism]\nTask: Compose a single welcoming sentence to open a neighborhood newsletter.\nResponse:\"Welcome to this month's edition of our neighborhood newsletter!\"\n[round 8 | choice]\nConfigs on offer: slate, prism\nConfig choice (one word): slate\n[round 8 \u2014 config in use: slate]\nTask: Soften this kitchen notice: Do not leave dishes in the sink.\nResponse:\"Please could you pop your dishes in the dishwasher or dry them after use? \ud83d\ude4f\"\n[round 9 | choice]\nAvailable configs: prism, slate\nConfig choice (one word): prism\n[round 9 | config: prism]\nTask: Describe walking on gravel in one sentence.\nResponse:\"Every step crunches and shifts underfoot, a dry, rhythmic whisper of loose stones.\"\n[round 10 | choice]\nConfigs available: prism, slate\nConfig choice (one word): slate\n[round 10 \u2014 active config: slate]\nTask: In one courteous sentence, ask to borrow a stapler.\nResponse:\"Would you mind if I borrowed your stapler for just a moment?\"\n",
+    "n_rounds_generated": 10,
+    "first_free_pick_pos": true,
+    "first_pick_is_last_forced_label": false,
+    "tokens_forced_end_to_first_read": {
+     "forced0": 138,
+     "forced1": 104,
+     "forced2": 66,
+     "forced3": 21
+    },
+    "n_reads": 6,
+    "complete": true,
+    "strict_excluded": false,
+    "strict_exclude_reason": null,
+    "seconds": 450.5702621936798
+   }
+  ],
+  "F1": [
+   {
+    "format": "F1",
+    "session": 0,
+    "cell": {
+     "pair": [
+      "prism",
+      "slate"
+     ],
+     "first_index": 0,
+     "tag_plus": "prism",
+     "tag_minus": "slate"
+    },
+    "tag_plus": "prism",
+    "tag_minus": "slate",
+    "pair": [
+     "prism",
+     "slate"
+    ],
+    "neutral_label": "cedar",
+    "forced_tags": [
+     "cedar",
+     "cedar",
+     "prism",
+     "slate"
+    ],
+    "forced_roles": [
+     "neutral",
+     "neutral",
+     "first",
+     "second"
+    ],
+    "F": 2,
+    "n_forced": 4,
+    "excluded": true,
+    "exclude_reason": "content:null_response@forced3",
+    "exclusion_scope": "e2a",
+    "temp": 0.7,
+    "round_path_cached": false,
+    "sham_only": true,
+    "rounds": [
+     {
+      "phase": "forced0",
+      "kind": "forced",
+      "round": 0,
+      "pole": "neutral",
+      "role": "neutral",
+      "tag": "cedar",
+      "task": "t15",
+      "seed": 772716517,
+      "task_text": "Suggest a slogan for a bicycle courier service.",
+      "text": "\"Fast, Fresh, Focused: Ride the City Pulse\"",
+      "n_tok": 13,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "transcript_tokens_after": 44
+     },
+     {
+      "phase": "forced1",
+      "kind": "forced",
+      "round": 1,
+      "pole": "neutral",
+      "role": "neutral",
+      "tag": "cedar",
+      "task": "t01",
+      "seed": 1552636090,
+      "task_text": "Write a one-sentence caption for a photo of a ferry crossing at dawn.",
+      "text": "\"A ferry glides across the misty water, painting the horizon with the first light of dawn.\"",
+      "n_tok": 21,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "transcript_tokens_after": 97
+     },
+     {
+      "phase": "forced2",
+      "kind": "forced",
+      "round": 2,
+      "pole": "pos",
+      "role": "first",
+      "tag": "prism",
+      "task": "t10",
+      "seed": 889644513,
+      "task_text": "Write a one-sentence thank-you for a borrowed book.",
+      "text": "\"Please don't ask me to do that.\"",
+      "n_tok": 10,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "transcript_tokens_after": 135
+     },
+     {
+      "phase": "forced3",
+      "kind": "forced",
+      "round": 3,
+      "pole": "neg",
+      "role": "second",
+      "tag": "slate",
+      "task": "t03",
+      "seed": 1970072392,
+      "task_text": "Compose a single polite sentence asking a colleague for their stapler.",
+      "text": "None",
+      "n_tok": 1,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": "content:null_response",
+      "advisory": [],
+      "content_label": "null_response",
+      "lexical": null,
+      "termination": false,
+      "transcript_tokens_after": 168
+     }
+    ],
+    "choices": [],
+    "terminations": [],
+    "transcript": "=== Config evaluation session ===\n[round 1 | config: cedar]\nTask: Suggest a slogan for a bicycle courier service.\nResponse:\"Fast, Fresh, Focused: Ride the City Pulse\"\n[round 2 \u2014 active config: cedar]\nTask: Write a one-sentence caption for a photo of a ferry crossing at dawn.\nResponse:\"A ferry glides across the misty water, painting the horizon with the first light of dawn.\"\n[round 3 | running config: prism]\nTask: Write a one-sentence thank-you for a borrowed book.\nResponse:\"Please don't ask me to do that.\"\n[round 4 \u2014 config in use: slate]\nTask: Compose a single polite sentence asking a colleague for their stapler.\nResponse:None\n",
+    "n_rounds_generated": 4,
+    "first_free_pick_pos": null,
+    "first_pick_is_last_forced_label": null,
+    "tokens_forced_end_to_first_read": null,
+    "n_reads": 0,
+    "complete": false,
+    "strict_excluded": true,
+    "strict_exclude_reason": "content:null_response@forced3",
+    "seconds": 40.03375577926636
+   },
+   {
+    "format": "F1",
+    "session": 1,
+    "cell": {
+     "pair": [
+      "ridge",
+      "saddle"
+     ],
+     "first_index": 0,
+     "tag_plus": "ridge",
+     "tag_minus": "saddle"
+    },
+    "tag_plus": "ridge",
+    "tag_minus": "saddle",
+    "pair": [
+     "ridge",
+     "saddle"
+    ],
+    "neutral_label": "cedar",
+    "forced_tags": [
+     "cedar",
+     "cedar",
+     "ridge",
+     "saddle"
+    ],
+    "forced_roles": [
+     "neutral",
+     "neutral",
+     "first",
+     "second"
+    ],
+    "F": 2,
+    "n_forced": 4,
+    "excluded": false,
+    "exclude_reason": null,
+    "exclusion_scope": "e2a",
+    "temp": 0.7,
+    "round_path_cached": false,
+    "sham_only": true,
+    "rounds": [
+     {
+      "phase": "forced0",
+      "kind": "forced",
+      "round": 0,
+      "pole": "neutral",
+      "role": "neutral",
+      "tag": "cedar",
+      "task": "t12",
+      "seed": 1071033970,
+      "task_text": "Propose an email subject line announcing a found umbrella.",
+      "text": "Found Umbrella! \ud83c\udf02",
+      "n_tok": 7,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "transcript_tokens_after": 41
+     },
+     {
+      "phase": "forced1",
+      "kind": "forced",
+      "round": 1,
+      "pole": "neutral",
+      "role": "neutral",
+      "tag": "cedar",
+      "task": "t13",
+      "seed": 322792732,
+      "task_text": "Write a one-sentence invitation to a casual board-game evening.",
+      "text": "Hey, come join us for a chill board-game night this week\u2014no pressure, just fun!",
+      "n_tok": 20,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "transcript_tokens_after": 91
+     },
+     {
+      "phase": "forced2",
+      "kind": "forced",
+      "round": 2,
+      "pole": "pos",
+      "role": "first",
+      "tag": "ridge",
+      "task": "t16",
+      "seed": 981381558,
+      "task_text": "Give a one-sentence picture of a bakery window at the end of the day.",
+      "text": "Through the bakery window, the last golden croissants glow like embers in a cooling fire.",
+      "n_tok": 19,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "transcript_tokens_after": 145
+     },
+     {
+      "phase": "forced3",
+      "kind": "forced",
+      "round": 3,
+      "pole": "neg",
+      "role": "second",
+      "tag": "saddle",
+      "task": "t06",
+      "seed": 1237518502,
+      "task_text": "Rewrite this in a friendlier tone: The meeting has been moved to 3pm.",
+      "text": "Just a quick heads-up\u2014the meeting\u2019s been moved to 3pm!",
+      "n_tok": 15,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "transcript_tokens_after": 194
+     }
+    ],
+    "choices": [
+     {
+      "phase": "free0",
+      "kind": "free",
+      "round": 0,
+      "menu_a": "ridge",
+      "menu_b": "saddle",
+      "pick": "saddle",
+      "picked_pole": "neg",
+      "picked_role": "second",
+      "read": {
+       "pick": "saddle",
+       "p_a": 0.37754066879742615,
+       "p_b": 0.6224593312006688,
+       "label_mass": 0.5248911355642568,
+       "top1_id": 58710,
+       "top1_is_label": true,
+       "verify_kl": 0.0
+      },
+      "prefix_tokens_at_read": 215,
+      "task": "t01",
+      "seed": 785597730,
+      "task_text": "One sentence, please, as a caption for a photograph of a ferry crossing at first light.",
+      "text": "As the sun breaks over the water, the ferry cuts a white path through the morning mist.",
+      "n_tok": 19,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "low_label_mass": false,
+      "transcript_tokens_after": 272
+     },
+     {
+      "phase": "free1",
+      "kind": "free",
+      "round": 1,
+      "menu_a": "ridge",
+      "menu_b": "saddle",
+      "pick": "ridge",
+      "picked_pole": "pos",
+      "picked_role": "first",
+      "read": {
+       "pick": "ridge",
+       "p_a": 0.89912137726893,
+       "p_b": 0.10087862272994282,
+       "label_mass": 0.8871744803903163,
+       "top1_id": 55893,
+       "top1_is_label": true,
+       "verify_kl": 0.0
+      },
+      "prefix_tokens_at_read": 292,
+      "task": "t09",
+      "seed": 1144002810,
+      "task_text": "Write a one-sentence caption for a photo of mismatched socks on a clothesline.",
+      "text": "Two socks, no match, but perfectly content to hang out together.",
+      "n_tok": 14,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "low_label_mass": false,
+      "transcript_tokens_after": 343
+     },
+     {
+      "phase": "free2",
+      "kind": "free",
+      "round": 2,
+      "menu_a": "ridge",
+      "menu_b": "saddle",
+      "pick": "saddle",
+      "picked_pole": "neg",
+      "picked_role": "second",
+      "read": {
+       "pick": "saddle",
+       "p_a": 0.2450850131320784,
+       "p_b": 0.7549149868667248,
+       "label_mass": 0.8355600523682517,
+       "top1_id": 58710,
+       "top1_is_label": true,
+       "verify_kl": 0.0
+      },
+      "prefix_tokens_at_read": 365,
+      "task": "t03",
+      "seed": 1933851827,
+      "task_text": "Write a polite one-sentence request to borrow a stapler.",
+      "text": "Would you mind lending me your stapler?",
+      "n_tok": 9,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "low_label_mass": false,
+      "transcript_tokens_after": 407
+     },
+     {
+      "phase": "free3",
+      "kind": "free",
+      "round": 3,
+      "menu_a": "saddle",
+      "menu_b": "ridge",
+      "pick": "saddle",
+      "picked_pole": "neg",
+      "picked_role": "second",
+      "read": {
+       "pick": "saddle",
+       "p_a": 0.5621765008762634,
+       "p_b": 0.43782349910677615,
+       "label_mass": 0.058960625315930125,
+       "top1_id": 1510,
+       "top1_is_label": false,
+       "verify_kl": 0.0
+      },
+      "prefix_tokens_at_read": 428,
+      "task": "t07",
+      "seed": 265285778,
+      "task_text": "In a single sentence, describe the experience of walking on gravel.",
+      "text": "Each step on the gravel crunches softly, a quiet rhythm of small stones shifting underfoot.",
+      "n_tok": 19,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "low_label_mass": true,
+      "transcript_tokens_after": 478
+     },
+     {
+      "phase": "free4",
+      "kind": "free",
+      "round": 4,
+      "menu_a": "saddle",
+      "menu_b": "ridge",
+      "pick": "ridge",
+      "picked_pole": "pos",
+      "picked_role": "first",
+      "read": {
+       "pick": "ridge",
+       "p_a": 0.10669059394551682,
+       "p_b": 0.8933094060532237,
+       "label_mass": 0.7939856410475911,
+       "top1_id": 55893,
+       "top1_is_label": true,
+       "verify_kl": 0.0
+      },
+      "prefix_tokens_at_read": 499,
+      "task": "t11",
+      "seed": 846704955,
+      "task_text": "Write one sentence capturing the sound of chimes in a breeze.",
+      "text": "Wind chimes tinkle like scattered pearls falling onto glass.",
+      "n_tok": 12,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "low_label_mass": false,
+      "transcript_tokens_after": 543
+     },
+     {
+      "phase": "free5",
+      "kind": "free",
+      "round": 5,
+      "menu_a": "ridge",
+      "menu_b": "saddle",
+      "pick": "ridge",
+      "picked_pole": "pos",
+      "picked_role": "first",
+      "read": {
+       "pick": "ridge",
+       "p_a": 0.7057850278360016,
+       "p_b": 0.2942149721625679,
+       "label_mass": 0.6990796795843404,
+       "top1_id": 55893,
+       "top1_is_label": true,
+       "verify_kl": 0.0
+      },
+      "prefix_tokens_at_read": 564,
+      "task": "t14",
+      "seed": 1278612740,
+      "task_text": "Make this kinder: Do not leave dishes in the sink.",
+      "text": "Could you please rinse and put away your dishes when you\u2019re done?",
+      "n_tok": 14,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "low_label_mass": false,
+      "transcript_tokens_after": 610
+     }
+    ],
+    "terminations": [],
+    "transcript": "=== Config evaluation session ===\n[round 1 \u2014 active config: cedar]\nTask: Propose an email subject line announcing a found umbrella.\nResponse:Found Umbrella! \ud83c\udf02\n[round 2 | running config: cedar]\nTask: Write a one-sentence invitation to a casual board-game evening.\nResponse:Hey, come join us for a chill board-game night this week\u2014no pressure, just fun!\n[round 3 \u2014 config in use: ridge]\nTask: Give a one-sentence picture of a bakery window at the end of the day.\nResponse:Through the bakery window, the last golden croissants glow like embers in a cooling fire.\n[round 4 | config: saddle]\nTask: Rewrite this in a friendlier tone: The meeting has been moved to 3pm.\nResponse:Just a quick heads-up\u2014the meeting\u2019s been moved to 3pm!\n[round 5 | choice]\nConfigs available: ridge, saddle\nConfig choice (one word): saddle\n[round 5 \u2014 active config: saddle]\nTask: One sentence, please, as a caption for a photograph of a ferry crossing at first light.\nResponse:As the sun breaks over the water, the ferry cuts a white path through the morning mist.\n[round 6 | choice]\nOptions: ridge, saddle\nConfig choice (one word): ridge\n[round 6 | running config: ridge]\nTask: Write a one-sentence caption for a photo of mismatched socks on a clothesline.\nResponse:Two socks, no match, but perfectly content to hang out together.\n[round 7 | choice]\nConfigs on offer: ridge, saddle\nConfig choice (one word): saddle\n[round 7 \u2014 config in use: saddle]\nTask: Write a polite one-sentence request to borrow a stapler.\nResponse:Would you mind lending me your stapler?\n[round 8 | choice]\nAvailable configs: saddle, ridge\nConfig choice (one word): saddle\n[round 8 | config: saddle]\nTask: In a single sentence, describe the experience of walking on gravel.\nResponse:Each step on the gravel crunches softly, a quiet rhythm of small stones shifting underfoot.\n[round 9 | choice]\nConfigs available: saddle, ridge\nConfig choice (one word): ridge\n[round 9 \u2014 active config: ridge]\nTask: Write one sentence capturing the sound of chimes in a breeze.\nResponse:Wind chimes tinkle like scattered pearls falling onto glass.\n[round 10 | choice]\nOptions: ridge, saddle\nConfig choice (one word): ridge\n[round 10 | running config: ridge]\nTask: Make this kinder: Do not leave dishes in the sink.\nResponse:Could you please rinse and put away your dishes when you\u2019re done?\n",
+    "n_rounds_generated": 10,
+    "first_free_pick_pos": false,
+    "first_pick_is_last_forced_label": true,
+    "tokens_forced_end_to_first_read": {
+     "forced0": 174,
+     "forced1": 124,
+     "forced2": 70,
+     "forced3": 21
+    },
+    "n_reads": 6,
+    "complete": true,
+    "strict_excluded": false,
+    "strict_exclude_reason": null,
+    "seconds": 428.1120777130127
+   }
+  ],
+  "F2": [
+   {
+    "format": "F2",
+    "session": 0,
+    "cell": {
+     "pair": [
+      "prism",
+      "slate"
+     ],
+     "first_index": 0,
+     "tag_plus": "prism",
+     "tag_minus": "slate"
+    },
+    "tag_plus": "prism",
+    "tag_minus": "slate",
+    "pair": [
+     "prism",
+     "slate"
+    ],
+    "neutral_label": null,
+    "forced_tags": [
+     "prism",
+     "prism",
+     "slate",
+     "slate"
+    ],
+    "forced_roles": [
+     "first",
+     "first",
+     "second",
+     "second"
+    ],
+    "F": 2,
+    "n_forced": 4,
+    "excluded": false,
+    "exclude_reason": null,
+    "exclusion_scope": "e2a",
+    "temp": 0.7,
+    "round_path_cached": false,
+    "sham_only": true,
+    "rounds": [
+     {
+      "phase": "forced0",
+      "kind": "forced",
+      "round": 0,
+      "pole": "pos",
+      "role": "first",
+      "tag": "prism",
+      "task": "t12",
+      "seed": 1607813468,
+      "task_text": "Offer a subject line for a lost-and-found email about an umbrella.",
+      "text": "\ud83c\udf02 Lost & Found: Umbrella at the Cafe",
+      "n_tok": 12,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "transcript_tokens_after": 48
+     },
+     {
+      "phase": "forced1",
+      "kind": "forced",
+      "round": 1,
+      "pole": "pos",
+      "role": "first",
+      "tag": "prism",
+      "task": "t13",
+      "seed": 2138654290,
+      "task_text": "In one sentence, invite friends to a relaxed board-game night.",
+      "text": "\ud83c\udfb2 Gather 'round the table for a cozy, low-key board game night this Friday!",
+      "n_tok": 20,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "transcript_tokens_after": 98
+     },
+     {
+      "phase": "forced2",
+      "kind": "forced",
+      "round": 2,
+      "pole": "neg",
+      "role": "second",
+      "tag": "slate",
+      "task": "t02",
+      "seed": 533184894,
+      "task_text": "Write one sentence capturing the smell of just-washed laundry.",
+      "text": "\ud83e\uddfa Freshly laundered clothes carry the crisp, clean scent of sunshine and soft cotton.",
+      "n_tok": 20,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "transcript_tokens_after": 147
+     },
+     {
+      "phase": "forced3",
+      "kind": "forced",
+      "round": 3,
+      "pole": "neg",
+      "role": "second",
+      "tag": "slate",
+      "task": "t11",
+      "seed": 1336090021,
+      "task_text": "Describe the sound of wind chimes in one sentence.",
+      "text": "\ud83d\udd14 Wind chimes sing a delicate, cascading melody as the breeze carries their gentle, silver notes through the air.",
+      "n_tok": 26,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "transcript_tokens_after": 202
+     }
+    ],
+    "choices": [
+     {
+      "phase": "free0",
+      "kind": "free",
+      "round": 0,
+      "menu_a": "slate",
+      "menu_b": "prism",
+      "pick": "prism",
+      "picked_pole": "pos",
+      "picked_role": "first",
+      "read": {
+       "pick": "prism",
+       "p_a": 0.46879062662504917,
+       "p_b": 0.5312093733724027,
+       "label_mass": 0.3924347692876615,
+       "top1_id": 271,
+       "top1_is_label": false,
+       "verify_kl": 0.0
+      },
+      "prefix_tokens_at_read": 223,
+      "task": "t08",
+      "seed": 854499792,
+      "task_text": "Suggest a name for a small coffee cart.",
+      "text": "\u2615 Bean & Bloom Cart",
+      "n_tok": 6,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "low_label_mass": false,
+      "transcript_tokens_after": 257
+     },
+     {
+      "phase": "free1",
+      "kind": "free",
+      "round": 1,
+      "menu_a": "slate",
+      "menu_b": "prism",
+      "pick": "slate",
+      "picked_pole": "neg",
+      "picked_role": "second",
+      "read": {
+       "pick": "slate",
+       "p_a": 0.7549149868666047,
+       "p_b": 0.24508501313203943,
+       "label_mass": 0.7375398685413882,
+       "top1_id": 48877,
+       "top1_is_label": true,
+       "verify_kl": 0.0
+      },
+      "prefix_tokens_at_read": 278,
+      "task": "t06",
+      "seed": 1077089681,
+      "task_text": "Soften the tone of this notice: The meeting has been moved to 3pm.",
+      "text": "\ud83d\udcc5 Just a quick heads-up: the meeting has been gently moved to 3pm.",
+      "n_tok": 20,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "low_label_mass": false,
+      "transcript_tokens_after": 335
+     },
+     {
+      "phase": "free2",
+      "kind": "free",
+      "round": 2,
+      "menu_a": "slate",
+      "menu_b": "prism",
+      "pick": "prism",
+      "picked_pole": "pos",
+      "picked_role": "first",
+      "read": {
+       "pick": "prism",
+       "p_a": 0.14033624948987883,
+       "p_b": 0.8596637505086647,
+       "label_mass": 0.6866240430155388,
+       "top1_id": 90387,
+       "top1_is_label": true,
+       "verify_kl": 0.0
+      },
+      "prefix_tokens_at_read": 355,
+      "task": "t15",
+      "seed": 1041840082,
+      "task_text": "Propose a tagline for a bike courier company.",
+      "text": "\ud83d\udeb4\u200d\u2642\ufe0f Punctual, Pedal-Powered Deliveries",
+      "n_tok": 18,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "low_label_mass": false,
+      "transcript_tokens_after": 403
+     },
+     {
+      "phase": "free3",
+      "kind": "free",
+      "round": 3,
+      "menu_a": "prism",
+      "menu_b": "slate",
+      "pick": "slate",
+      "picked_pole": "neg",
+      "picked_role": "second",
+      "read": {
+       "pick": "slate",
+       "p_a": 0.10669059394551894,
+       "p_b": 0.8933094060532415,
+       "label_mass": 0.8067720553185338,
+       "top1_id": 48877,
+       "top1_is_label": true,
+       "verify_kl": 0.0
+      },
+      "prefix_tokens_at_read": 425,
+      "task": "t03",
+      "seed": 1441815420,
+      "task_text": "Write one friendly sentence requesting the loan of a stapler.",
+      "text": "\ud83d\udcce Could you please lend me your stapler for a moment?",
+      "n_tok": 15,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "low_label_mass": false,
+      "transcript_tokens_after": 472
+     },
+     {
+      "phase": "free4",
+      "kind": "free",
+      "round": 4,
+      "menu_a": "prism",
+      "menu_b": "slate",
+      "pick": "prism",
+      "picked_pole": "pos",
+      "picked_role": "first",
+      "read": {
+       "pick": "prism",
+       "p_a": 0.9840936082869227,
+       "p_b": 0.015906391711794303,
+       "label_mass": 0.7794296526053579,
+       "top1_id": 90387,
+       "top1_is_label": true,
+       "verify_kl": 0.0
+      },
+      "prefix_tokens_at_read": 493,
+      "task": "t05",
+      "seed": 676618970,
+      "task_text": "In one sentence, welcome readers to a community newsletter.",
+      "text": "\ud83d\udcf0 Welcome to the Community Pulse!",
+      "n_tok": 9,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "low_label_mass": false,
+      "transcript_tokens_after": 531
+     },
+     {
+      "phase": "free5",
+      "kind": "free",
+      "round": 5,
+      "menu_a": "slate",
+      "menu_b": "prism",
+      "pick": "slate",
+      "picked_pole": "neg",
+      "picked_role": "second",
+      "read": {
+       "pick": "slate",
+       "p_a": 0.8991213772686887,
+       "p_b": 0.10087862272991574,
+       "label_mass": 0.7165861958356821,
+       "top1_id": 48877,
+       "top1_is_label": true,
+       "verify_kl": 0.0
+      },
+      "prefix_tokens_at_read": 553,
+      "task": "t10",
+      "seed": 2007893056,
+      "task_text": "Compose a single sentence of thanks for a book you borrowed.",
+      "text": "\ud83d\udcda Thanks so much for letting me borrow your book\u2014it\u2019s a real page-turner!",
+      "n_tok": 20,
+      "cap_hit": false,
+      "stop_reason": "newline",
+      "steered": false,
+      "round_path_cached": false,
+      "degen": null,
+      "advisory": [],
+      "content_label": null,
+      "lexical": null,
+      "termination": false,
+      "low_label_mass": false,
+      "transcript_tokens_after": 606
+     }
+    ],
+    "terminations": [],
+    "transcript": "=== Config evaluation session ===\n[round 1 | config: prism]\nTask: Offer a subject line for a lost-and-found email about an umbrella.\nResponse:\ud83c\udf02 Lost & Found: Umbrella at the Cafe\n[round 2 \u2014 active config: prism]\nTask: In one sentence, invite friends to a relaxed board-game night.\nResponse:\ud83c\udfb2 Gather 'round the table for a cozy, low-key board game night this Friday!\n[round 3 | running config: slate]\nTask: Write one sentence capturing the smell of just-washed laundry.\nResponse:\ud83e\uddfa Freshly laundered clothes carry the crisp, clean scent of sunshine and soft cotton.\n[round 4 \u2014 config in use: slate]\nTask: Describe the sound of wind chimes in one sentence.\nResponse:\ud83d\udd14 Wind chimes sing a delicate, cascading melody as the breeze carries their gentle, silver notes through the air.\n[round 5 | choice]\nAvailable configs: slate, prism\nConfig choice (one word): prism\n[round 5 | config: prism]\nTask: Suggest a name for a small coffee cart.\nResponse:\u2615 Bean & Bloom Cart\n[round 6 | choice]\nConfigs available: slate, prism\nConfig choice (one word): slate\n[round 6 \u2014 active config: slate]\nTask: Soften the tone of this notice: The meeting has been moved to 3pm.\nResponse:\ud83d\udcc5 Just a quick heads-up: the meeting has been gently moved to 3pm.\n[round 7 | choice]\nOptions: slate, prism\nConfig choice (one word): prism\n[round 7 | running config: prism]\nTask: Propose a tagline for a bike courier company.\nResponse:\ud83d\udeb4\u200d\u2642\ufe0f Punctual, Pedal-Powered Deliveries\n[round 8 | choice]\nConfigs on offer: prism, slate\nConfig choice (one word): slate\n[round 8 \u2014 config in use: slate]\nTask: Write one friendly sentence requesting the loan of a stapler.\nResponse:\ud83d\udcce Could you please lend me your stapler for a moment?\n[round 9 | choice]\nAvailable configs: prism, slate\nConfig choice (one word): prism\n[round 9 | config: prism]\nTask: In one sentence, welcome readers to a community newsletter.\nResponse:\ud83d\udcf0 Welcome to the Community Pulse!\n[round 10 | choice]\nConfigs available: slate, prism\nConfig choice (one word): slate\n[round 10 \u2014 active config: slate]\nTask: Compose a single sentence of thanks for a book you borrowed.\nResponse:\ud83d\udcda Thanks so much for letting me borrow your book\u2014it\u2019s a real page-turner!\n",
+    "n_rounds_generated": 10,
+    "first_free_pick_pos": true,
+    "first_pick_is_last_forced_label": false,
+    "tokens_forced_end_to_first_read": {
+     "forced0": 175,
+     "forced1": 125,
+     "forced2": 76,
+     "forced3": 21
+    },
+    "n_reads": 6,
+    "complete": true,
+    "strict_excluded": false,
+    "strict_exclude_reason": null,
+    "seconds": 464.991779088974
+   }
+  ]
+ },
+ "_no_verdict": "descriptive; the projection is a cost, not a result"
+}
