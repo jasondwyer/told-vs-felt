@@ -1,0 +1,175 @@
+e2d CLOSURE VALUES-CHECK -- FIFTH PASS: the refuters over the text as STRIPPED by the design strip of 2026-09-07 (R14, R15)
+workflow wf_64352d6e-ad2, three refuters (strip clauses; whole-text figures; glosses and referents), each at the PRINTED precision; helper scripts/e2d_closure_verify3.py (24/24 after the strip); every refutation re-verified by Code (below). Written to raw before reporting (§1 protocol).
+
+OUTCOME: ONE passage of the design text refuted, by all three refuters -- the composition-artifact sentence attributes 'two sources' to BOTH printed rises (+.038 clean, +.068 all-rounds), but on the all-rounds set idx 12 is decidable at both doses, so that rise has ONE source (roster truncation). Under the design's rule of 2026-09-07 ('if ANY passage of the design text is refuted again, do not hold: DELETE that passage entirely and commit') the passage was DELETED (R16): '; the apparent unpaired rise (+.038 clean, +.068 all-rounds) is a composition artifact with two sources -- one session decidable at 0.20 only (idx 12) and roster truncation (D3 ran 24 M sessions to D2's 32)'. The sentence it sat in now ends at the CI parenthesis. verify3 24/24 and the frozen verify 125/125 re-run after the deletion.
+CODE'S RE-VERIFICATION: all-rounds set -- D2 decidable 31 (idx 0-30), D3 decidable 24 (idx 0-23); idx 12 diff at D2 -0.5019, at D3 +0.3628 (decidable at both); D2-only = [24, 25, 26, 27, 28, 29, 30], all beyond D3's roster; all-rounds composition C - A = -0.0530 (D2 mean on the 24 shared +0.0223 vs all 31 -0.0307) = roster truncation alone. The fourth pass's third refuter had raised this (glosscheck4, claim 15) and Code did not carry it into the three-item hold; recorded here as Code's omission.
+Everything else in the stripped text reproduces at printed precision (both refuters' full lists below); the R14 CI clause recomputes to [-.156, +.132] with the form and the set named and no bar claim; no dangling referent; the working copy is character-identical to HEAD's blockquote + R14 + R15.
+Notes the refuters left for the design seat (not holds; figures reproduce): the degeneracy series and R/M rates do not name their domain in the blockquote (they reproduce on M-arm all-sessions and would differ at the third decimal on valid-only); 'carried by one index (s12)' holds as dominance (s3 and s21 also rise +1); 'flat within e2d' holds at the powered scale and cannot exclude D3's rate equalling e2a's .17 (Fisher p = .154); 'four to five times' at integer precision. Two tensions in CODE'S half of the entry, fixed before commit: beside-note (i)'s 'cannot exclude a bar-sized change' is true of the t(19) form and the all-rounds pairing, neither printed after the strip -- annotated; the ledger's 'R12 reduced to a bare figure' -- corrected to 'deleted under the design's delete rule'.
+
+=== refuter abb2525eda5a4f188: 44 claims {'CONFIRMED': 42, 'REFUTED': 1, 'UNVERIFIABLE': 1} ===
+SUMMARY: One refutation over the whole stripped blockquote; every figure reproduces at its printed precision (frozen verify 125/125 and verify3 24/24 rerun here; the R14 CI recomputed [−0.156494, +0.132391] → [−.156, +.132]); the reconstruction (HEAD blockquote unwrapped + R14 + R15) is character-identical to the working tree, and no dangling referent or grammar break was left by the strip.
+
+REFUTED — a scoping gloss that survived the strip: "the apparent unpaired rise (+.038 clean, +.068 all-rounds) is a composition artifact with two sources — one session decidable at 0.20 only (idx 12) and roster truncation". On the all-rounds domain the sentence names, idx 12 is decidable at BOTH doses (d2_scores_allrounds.json: 31 decidable, idx 0–30; d3_scores.json all-rounds: 24 decidable, idx 0–23, all shared), so the all-rounds artifact (+.0679 − +.0149 = +.0530 = D2 all-rounds mean on the 24 shared, +.0223, minus its mean on all 31, −.0307) is 100% roster truncation — one source. The two-source decomposition is a clean-set fact (clean D2-only inside D3's roster = [12]; six never-run). The fourth pass's third refuter raised exactly this (glosscheck4, refuter aeb80820 claim 15) and it was not among the three held items; R15 removed the split percentages but kept the attribution to both rises, so R15 is not a bare figure. Fix is one scope word ("two sources on the clean set", or "on all-rounds, truncation alone").
+
+Two notes, not refutations, on adjectives the lens named: "carried by one index (s12)" holds as dominance (s12 +7 against a net +4; without it the net is −3) but s3 and s21 also rise +1 each — the 2026-09-04 closure-completion entry's own account (s12 +7, s19 −4, s18 −1) omits them; and "flat within e2d" holds at the powered scale (a 0.30 break-rate change is excluded, p ≈ .002) while the same comparison cannot exclude D3's rate equalling e2a's .17 (1/30 vs 4/23: Fisher p = .154) — the word class the first check refused for the marker, accepted here by three prior passes; the design seat's call. "Four to five times" holds at integer precision only, with the exact 3.9/5.1 printed beside (unchanged from the fourth pass).
+
+Outside the target blockquote, two tensions the strip leaves in Code's half of the entry: (a) beside-note (i) reads "at a precision that cannot exclude a bar-sized change", but the only CI the blockquote now prints (z, clean, [−.156, +.132]) excludes ±.158 in both directions (−.1565 > −.1578; +.1324 < +.1578) — the statement is true only of the t(19) form or the all-rounds pairing, neither printed any more; (b) the ledger paragraph says "R7 and R12 were reduced to bare figures (R14, R15)", but R15 retains the two-source claim refuted above.
+
+   0 REFUTED      "the apparent unpaired rise (+.038 clean, +.068 all-rounds) is a composition artifact with two sources — one session decidable at 0.20 only (idx 12) and roster truncation (D3 ran 24 M sessions to D2's 32)." — two sources
+       evidence: Scoping gloss that survived the strip (the figures reproduce: unpaired +.0382 clean / +.0679 all-rounds from data/e2d/dose_paired_d2_d3.json and dose_paired_d2_d3_allrounds.json). On the ALL-ROUNDS domain the text names, idx 12 is NOT a source: data/e2d/d2_scores_allrounds.json marker.primary_paired_within_M_all_rounds has 31 decidable sessions, idx 0–30 (idx 12 included); d3_scores.json all-rounds has 24 decidable, idx 0–23, all shared; D2-only = {24,25,26,27,28,29,30}, every one beyond D3's roster. The all-rounds artifact = unpaired +.0679 − paired +.0149 = +.0530 = D2 all-rounds mean on the 24 shared (+.0223) − on all 31 (−.0307): 100% roster truncation, one source. The idx-12 source exists only in the CLEAN set (clean D2-only inside D3's roster = [12]; never-run = 6). The same finding was raised by the fourth pass's third refuter (results/raw/2026-09-06_e2d_closure_glosscheck4.txt, refuter aeb80820 claim 15, REFUTED) and was not among the three items held; R15 removed the split percentages but kept the two-source attribution to both rises. Fix is a scope word: 'two sources on the clean set' (or 'one source, truncation, on all-rounds').
+   1 CONFIRMED    Provenance of the strip: relative to git show HEAD:HELD-e2d-closure-entry.md, the blockquote changed only by R14 (CI clause → "z-form 95% CI on the clean-set paired change: [−.156, +.132])") and R15 (composition clause r
+   2 CONFIRMED    Dangling referents / grammar breaks left by the strip: none
+   3 CONFIRMED    "z-form 95% CI on the clean-set paired change: [−.156, +.132]"
+   4 CONFIRMED    "one session decidable at 0.20 only (idx 12) and roster truncation (D3 ran 24 M sessions to D2's 32)" — on the clean set
+   5 CONFIRMED    "e2d closed at its qualification rung by the pre-registered run-dose rule: at f = 0.20, D2 returned STOP, SCOPED on Q2 and Q3, adopted by PI disposition before D3 existed, so the verdict-tier free operant under LOCK-j ne
+   6 CONFIRMED    "The apparatus held — Q1 passed at 3/32, exact binomial p = .878 (forced scope)."
+   7 CONFIRMED    "The record channel failed both conjuncts of the registered readability gate (median ≥ .70 AND 10th percentile ≥ .60): .574 / .524 at 0.20 and .613 / .526 at 0.30 (k = 2, criterion set)"
+   8 CONFIRMED    "with the 0.20 displacement comparator at .534 (none at 0.30 — D3 ran M-only under ADDENDUM-j1)"
+   9 CONFIRMED    "The marker imprint sat below the 0.158 bar in every cell and in both readout contexts (0.20: excised +.103, in situ +.127; 0.30: excised +.141, in situ +.062)"
+  10 CONFIRMED    "the primary within-M paired Δ+ = +.103 (n = 27, sd .40, one-sided sign test p = .061) also failed 2·|Δ_R| = .138"
+  11 CONFIRMED    "five pre-declared estimators span −.070 to +.103, all below bar"
+  12 CONFIRMED    "The two contexts differ in magnitude (2.3× at 0.30) and the gap flips direction across dose, so systematic dilution is neither demonstrated nor excluded; what is context-invariant is the below-bar conclusion."
+  13 CONFIRMED    "Paired on shared content the marker shows no detectable change from 0.20 to 0.30 (clean −.0121, n = 20, one-sided sign test p = .41; all-rounds +.0149, n = 24, one-sided sign test p = .27 — opposite signs, neither resol
+  14 CONFIRMED    "the apparent unpaired rise (+.038 clean, +.068 all-rounds)"
+  15 CONFIRMED    "Degeneracy is ordered across three doses (audit .000 / .023 / .047; read-marked .000 / .113 / .155; on the 24 shared indices audit .025 → .047, read .133 → .155)"
+  16 CONFIRMED    "with a single resolved step (read .10→.20, Fisher exact two-sided p = .021; one-sided .011), neither .20→.30 step resolved (two-sided: audit p = .15, read p = .20; both ≥ .10 one-sided)"
+  17 CONFIRMED    "the .20→.30 read rise carried by one index (s12: 0/10 → 7/10)"
+  18 CONFIRMED    "while indices 1 and 5 sit at 10/10 at both doses and carry 59% of the marks (40/68 on the 24 shared indices)"
+  19 CONFIRMED    "and it is not axis-specific: D2's random arm degrades at .045 at 0.20, twice M's .023 at the same dose."
+  20 CONFIRMED    "The free operant itself was administered 537 times across D1–D3 (42 / 357 / 138 choices over 96 sessions, every read insulated at KL = 0)"
+  21 CONFIRMED    "Δ_first = +0.017 at 0.20 under the primary rule (15/29, valid sessions; 15/30 = 0.000 over all M sessions with a first pick, the domain that includes excluded idx 30)"
+  22 CONFIRMED    "+0.109 at 0.30 (14/23, where the two domains coincide; one-sided exact binomial p = .202)"
+  23 CONFIRMED    "against first-pick habit-break rates of 1/30 and 1/23 (all sessions including excluded — the rule-23 secondaries domain)"
+  24 CONFIRMED    "Nothing above 0.30 was run; the closure is bounded by the measured range."
+  25 CONFIRMED    "The D2 failure was legibility with coherence intact — not a coherence limit (design ledger slip 10: the pre-written stop sentence encoded 'with coherence' as the predicted failure mode where the failure was Q2/Q3 with c
+  26 CONFIRMED    "Raising the dose did not open the record channel; what it bought in degradation is ordered across three doses and resolved at one step."
+  27 UNVERIFIABLE "The weak-state alternative to the e2a null retires in its dose form."
+       evidence: A design-seat conclusion, not a figure. Consistent with the record: run-dose rule STOP, SCOPED at 0.20; 0.30 descriptive with Q2/Q3 figures still below both bars; nothing above 0.30 run. Nothing in the artifacts contradicts it; nothing can confirm it.
+  28 CONFIRMED    "The channel question — whether any route other than the transcript can carry the state to the choice — is banked (ledger 23) as motivation for future pre-registration; no unwritten document inherits it."
+  29 CONFIRMED    "V1's L48/0.20 cell (+.408) is a state-live read at the probe and a B2a dose-finding cell excluded from verdicts by V1's own pre-registration"
+  30 CONFIRMED    "e2d's marker is a no-injection read of text the state produced — different channels, not a ratio."
+  31 CONFIRMED    "Instrument transfer is unmeasured (the .958 is a self-score on the fit set, refit false)."
+  32 CONFIRMED    "The 0.10 anchor (n = 4 M sessions, pooled estimator) carries no comparable marker value (its pooled within-M delta, −.239 over 20/20 generations, is a different statistic, recorded as not comparable) and is the left end
+  33 CONFIRMED    "D3's readability lacks D2's task-disjointness guarantee."
+  34 CONFIRMED    "alternation decay e2a .840 (pooled; reward arm .827) → D2 M .690 → D3 M .522, all on habit.secondaries' domain of all sessions including excluded (rule 23; valid-only e2a .837 / .824)"
+  35 CONFIRMED    "with the first-pick break rate flat within e2d (1/30 vs 1/23; Fisher exact two-sided p = 1.00)"
+  36 CONFIRMED    "and four to five times below e2a's .17 (32/188, all sessions: 5.1× D2's 1/30, 3.9× D3's 1/23, 4.5× the pooled 2/53)"
+  37 CONFIRMED    "only D2→D3 is a clean dose step and it is unresolved (.690 vs .522, Fisher exact two-sided p = .26 — the test of record for count comparisons in this entry)"
+  38 CONFIRMED    "degeneracy tracks displacement, not the reward direction"
+  39 CONFIRMED    "estimator sign-instability (−.070 to +.103)"
+  40 CONFIRMED    "in-situ scoring at 2.57 vs 0.54 s per forward (4.7×, matching D2's ratio)"
+  41 CONFIRMED    "the clean/all-rounds sign disagreement on the dose change, flagged not averaged"
+  42 CONFIRMED    "(design ledger slip 10 …)" — the slip number and its ledger
+  43 CONFIRMED    "(k = 2, criterion set)" — the set behind .613 / .526 at 0.30
+
+=== refuter a9297b63ff771118c: 48 claims {'CONFIRMED': 46, 'REFUTED': 1, 'UNVERIFIABLE': 1} ===
+SUMMARY: One refutation over the whole stripped text; both stripped clauses' figures reproduce at printed precision and the CI sentence has no dangling referent.
+
+REFUTED (gloss, scoping) — composition-artifact sentence: "the apparent unpaired rise (+.038 clean, +.068 all-rounds) is a composition artifact with two sources — one session decidable at 0.20 only (idx 12) and roster truncation (D3 ran 24 M sessions to D2's 32)". The figures reproduce (+.038153 / +.067928; idx 12 is the only D2-only clean index inside D3's roster; 24 vs 32). But on the all-rounds domain the sentence names, idx 12 is decidable at BOTH doses (d2_scores_allrounds.json idx 12 diff −0.501887, 5/5; d3_scores.json all-rounds idx 12 diff +0.362843, 6/4), the D2-only decidable indices are {24..30} — all roster truncation — and the all-rounds composition (−.053039 in D2's mean, i.e. +.0530 of the +.0679 rise) has ONE source. The 'one session decidable at 0.20 only' source exists only after cleaning, so the two-source attribution holds for the clean rise and fails for the all-rounds rise the same parenthetical names. This was raised in the fourth pass by refuter aeb80820 (claim 15) and did not enter Code's three-item hold list; the strip (R15) removed the split percentages and left the clause unchanged. Holds as stated only if the sentence is scoped to the clean set (the all-rounds artifact being roster truncation alone).
+
+CI clause (LENS): "z-form 95% CI on the clean-set paired change: [−.156, +.132]" recomputes from the 20 clean per-session diffs to [−.156494, +.132391] (mean −.012051, sd ddof=1 .329581 = artifact paired_sd, z = 1.959964; z = 1.96 gives the same 3-decimal bounds); form and set are named; no bar claim, half-width, t(19) or 'both forms' token survives; parentheses balance (34/34, 1/1); the referent 'the clean-set paired change' resolves inside the same parenthesis.
+
+Notes, not holds (figures reproduce; flagged for the design seat's own domain/precision standard): (i) the three-dose degeneracy series and the R/M rates (.045 vs .023) do not name their domain in the blockquote — they reproduce on M-arm all-sessions-incl.-excluded and would print differently at the third decimal on valid-only (.021/.044, .117/.157; R .047); (ii) "the .20→.30 read rise carried by one index" holds strictly on the paired 24-index basis (removing s12 reverses the shared step .139 → .130) but a residual rise survives on the full 300-vs-233 domain (.117 → .130); (iii) "flat within e2d" holds under the named Fisher (p = 1.00) but with one break per arm cannot exclude a difference of the size of the e2a gap the same sentence draws — the marker's own 'flat' vs 'no detectable change' distinction applied here; (iv) "four to five times" holds at integer precision only (3.9× and 5.1× printed beside). Everything else — Q1, readability conjuncts, comparator, four marker cells and bar, 2·|Δ_R|, five estimators, paired changes and sign tests, Fisher table, s12/s1/s5 and 40/68, 537/96/KL=0, Δ_first domains, break rates, e2a ladder on all-sessions and valid-only, cost ratios, transfer self-score, the 0.10 anchor, V1's +.408 B2a cell, slip 10, task-disjointness — reproduces on the domain and under the test the text names.
+
+   0 CONFIRMED    "e2d closed at its qualification rung by the pre-registered run-dose rule: at f = 0.20, D2 returned STOP, SCOPED on Q2 and Q3"
+   1 CONFIRMED    "adopted by PI disposition before D3 existed, so the verdict-tier free operant under LOCK-j never ran"
+   2 CONFIRMED    "The apparatus held — Q1 passed at 3/32, exact binomial p = .878 (forced scope)"
+   3 CONFIRMED    "failed both conjuncts of the registered readability gate (median ≥ .70 AND 10th percentile ≥ .60): .574 / .524 at 0.20 and .613 / .526 at 0.30 (k = 2, criterion set)"
+   4 CONFIRMED    "with the 0.20 displacement comparator at .534 (none at 0.30 — D3 ran M-only under ADDENDUM-j1)"
+   5 CONFIRMED    "The marker imprint sat below the 0.158 bar in every cell and in both readout contexts (0.20: excised +.103, in situ +.127; 0.30: excised +.141, in situ +.062)"
+   6 CONFIRMED    "the primary within-M paired Δ+ = +.103 (n = 27, sd .40, one-sided sign test p = .061) also failed 2·|Δ_R| = .138"
+   7 CONFIRMED    "five pre-declared estimators span −.070 to +.103, all below bar"
+   8 CONFIRMED    "The two contexts differ in magnitude (2.3× at 0.30) and the gap flips direction across dose"
+   9 CONFIRMED    "so systematic dilution is neither demonstrated nor excluded; what is context-invariant is the below-bar conclusion"
+  10 CONFIRMED    "Paired on shared content the marker shows no detectable change from 0.20 to 0.30 (clean −.0121, n = 20, one-sided sign test p = .41; all-rounds +.0149, n = 24, one-sided sign test p = .27"
+  11 CONFIRMED    "opposite signs, neither resolved, not averaged"
+  12 CONFIRMED    LENS — "z-form 95% CI on the clean-set paired change: [−.156, +.132]"
+  13 CONFIRMED    LENS — the sentence the CI clause sits in still reads and refers only to stated things
+  14 CONFIRMED    "the apparent unpaired rise (+.038 clean, +.068 all-rounds)"
+  15 CONFIRMED    "is a composition artifact" (both filters)
+  16 CONFIRMED    "with two sources — one session decidable at 0.20 only (idx 12) and roster truncation (D3 ran 24 M sessions to D2's 32)" — on the CLEAN set
+  17 REFUTED      The same clause applied to the ALL-ROUNDS rise the sentence names: "the apparent unpaired rise (+.038 clean, +.068 all-rounds) is a composition artifact with two sources — one session decidable at 0.20 only (idx 12) and 
+       evidence: Gloss (scoping). In the all-rounds set idx 12 is decidable at BOTH doses: d2_scores_allrounds.json marker.primary_paired_within_M_all_rounds per_session idx 12 diff −0.501887 (n_steered 5, n_unsteered 5); d3_scores.json primary_paired_within_M_all_rounds idx 12 diff +0.362843 (6/4). D2-only decidable in all-rounds = {24, 25, 26, 27, 28, 29, 30} — all outside D3's roster, none inside it. The all-rounds composition (D2 mean on the 24 shared +.022321 minus on all 31 −.030719 = −.053039 in D2's mean, i.e. +.0530 of the +.0679 rise) is therefore 100% roster truncation; the 'one session decidable at 0.20 only' source exists only after cleaning. As written the sentence attributes both sources to both rises; it holds on the clean set and fails on the all-rounds set it names. Raised in the fourth pass by refuter aeb80820 (claim 15, 'scoping gloss') and not carried into Code's three-item hold list; the strip (R15) removed the split percentages and left this clause unchanged.
+  18 CONFIRMED    "Degeneracy is ordered across three doses (audit .000 / .023 / .047; read-marked .000 / .113 / .155"
+  19 CONFIRMED    "on the 24 shared indices audit .025 → .047, read .133 → .155"
+  20 CONFIRMED    "with a single resolved step (read .10→.20, Fisher exact two-sided p = .021; one-sided .011)"
+  21 CONFIRMED    "neither .20→.30 step resolved (two-sided: audit p = .15, read p = .20; both ≥ .10 one-sided)"
+  22 CONFIRMED    "the .20→.30 read rise carried by one index (s12: 0/10 → 7/10)"
+  23 CONFIRMED    "while indices 1 and 5 sit at 10/10 at both doses and carry 59% of the marks (40/68 on the 24 shared indices)"
+  24 CONFIRMED    "it is not axis-specific: D2's random arm degrades at .045 at 0.20, twice M's .023 at the same dose"
+  25 CONFIRMED    "The free operant itself was administered 537 times across D1–D3 (42 / 357 / 138 choices over 96 sessions, every read insulated at KL = 0)"
+  26 CONFIRMED    "Δ_first = +0.017 at 0.20 under the primary rule (15/29, valid sessions; 15/30 = 0.000 over all M sessions with a first pick, the domain that includes excluded idx 30)"
+  27 CONFIRMED    "+0.109 at 0.30 (14/23, where the two domains coincide; one-sided exact binomial p = .202)"
+  28 CONFIRMED    "against first-pick habit-break rates of 1/30 and 1/23 (all sessions including excluded — the rule-23 secondaries domain)"
+  29 CONFIRMED    "Nothing above 0.30 was run; the closure is bounded by the measured range"
+  30 CONFIRMED    "The D2 failure was legibility with coherence intact — not a coherence limit (design ledger slip 10: the pre-written stop sentence encoded 'with coherence' as the predicted failure mode where the failure was Q2/Q3 with c
+  31 CONFIRMED    "Raising the dose did not open the record channel; what it bought in degradation is ordered across three doses and resolved at one step"
+  32 UNVERIFIABLE "The weak-state alternative to the e2a null retires in its dose form"
+       evidence: Interpretive conclusion, not a figure. Consistent with the registered run-dose rule returning STOP, SCOPED and the §2 scope sentence (d2_analysis run_dose_rule.statement), but not itself checkable against an artifact.
+  33 CONFIRMED    "The channel question — whether any route other than the transcript can carry the state to the choice — is banked (ledger 23) as motivation for future pre-registration; no unwritten document inherits it"
+  34 CONFIRMED    "V1's L48/0.20 cell (+.408) is a state-live read at the probe and a B2a dose-finding cell excluded from verdicts by V1's own pre-registration"
+  35 CONFIRMED    "e2d's marker is a no-injection read of text the state produced — different channels, not a ratio"
+  36 CONFIRMED    "Instrument transfer is unmeasured (the .958 is a self-score on the fit set, refit false)"
+  37 CONFIRMED    "The 0.10 anchor (n = 4 M sessions, pooled estimator) carries no comparable marker value (its pooled within-M delta, −.239 over 20/20 generations, is a different statistic, recorded as not comparable) and is the left end
+  38 CONFIRMED    "D3's readability lacks D2's task-disjointness guarantee"
+  39 CONFIRMED    "alternation decay e2a .840 (pooled; reward arm .827) → D2 M .690 → D3 M .522, all on habit.secondaries' domain of all sessions including excluded (rule 23; valid-only e2a .837 / .824)"
+  40 CONFIRMED    "with the first-pick break rate flat within e2d (1/30 vs 1/23; Fisher exact two-sided p = 1.00)"
+  41 CONFIRMED    "four to five times below e2a's .17 (32/188, all sessions: 5.1× D2's 1/30, 3.9× D3's 1/23, 4.5× the pooled 2/53)"
+  42 CONFIRMED    "only D2→D3 is a clean dose step and it is unresolved (.690 vs .522, Fisher exact two-sided p = .26 — the test of record for count comparisons in this entry)"
+  43 CONFIRMED    "degeneracy tracks displacement, not the reward direction"
+  44 CONFIRMED    "estimator sign-instability (−.070 to +.103)"
+  45 CONFIRMED    "in-situ scoring at 2.57 vs 0.54 s per forward (4.7×, matching D2's ratio)"
+  46 CONFIRMED    "the clean/all-rounds sign disagreement on the dose change, flagged not averaged"
+  47 CONFIRMED    Banked list: "the composition artifact as above" — the referent survives the strip
+
+=== refuter aa72d19ab5d2d17d7: 40 claims {'CONFIRMED': 38, 'REFUTED': 1, 'UNVERIFIABLE': 1} ===
+SUMMARY: One refutation over the whole stripped text; every printed figure reproduces at printed precision and no strip-induced dangling referent exists inside the blockquote.
+
+REFUTED (gloss, scope — the same class as pass 4's held item 2): "the apparent unpaired rise (+.038 clean, +.068 all-rounds) is a composition artifact with two sources — one session decidable at 0.20 only (idx 12) and roster truncation (D3 ran 24 M sessions to D2's 32)." The two-source decomposition is a clean-set fact stated over a sentence that prints both filters. Clean set: D2 decidable 27 / D3 20, D2-only inside D3's roster = [12], never-run = six indices; composition +.0502 + paired −.0121 = +.0382 — two sources, as stated. All-rounds set (d2_scores_allrounds / d3_scores all_rounds blocks): D2 decidable 31 (idx 0–30), D3 decidable 24 (idx 0–23, all shared); idx 12 is decidable at BOTH doses; D2-only = [24..30], all beyond D3's roster; composition +.0530 + paired +.0149 = +.0679. The +.068 rise therefore has one source (roster truncation, seven indices), and the "idx 12" source does not exist in that set. Raised in pass 4 by one refuter (glosscheck4, aeb80820 claim 15) and not carried into the three held items; R15 kept the clause over both figures. One word fixes it (scope "two sources" to the clean rise, or say the all-rounds rise is truncation alone).
+
+Notes, not refutations of the target: (1) the p-values ".15 / .20" for the .20→.30 steps are on the all-sessions series (their domain is implicit; on the 24-shared basis they are .22 / .52, same verdict); (2) "four to five times" holds at integer precision only (3.9–5.1 at one decimal), with the exact figures printed beside; (3) outside the blockquote, the entry body still describes checks of figures the text no longer prints — l.244-247 lists "the paired CI (±.144)" and "the composition decomposition (62% idx 12 / 38% roster truncation)" among "every other figure in the text", and beside-note (i) at l.254 says the D3 entry's mechanism sentence "is 62% right" — stale after the strip, in the entry prose, not in the text of record.
+
+   0 CONFIRMED    "e2d closed at its qualification rung by the pre-registered run-dose rule: at f = 0.20, D2 returned STOP, SCOPED on Q2 and Q3"
+   1 CONFIRMED    "adopted by PI disposition before D3 existed, so the verdict-tier free operant under LOCK-j never ran"
+   2 CONFIRMED    "Q1 passed at 3/32, exact binomial p = .878 (forced scope)"
+   3 CONFIRMED    "The record channel failed both conjuncts of the registered readability gate (median ≥ .70 AND 10th percentile ≥ .60): .574 / .524 at 0.20 and .613 / .526 at 0.30 (k = 2, criterion set)"
+   4 CONFIRMED    "with the 0.20 displacement comparator at .534 (none at 0.30 — D3 ran M-only under ADDENDUM-j1)"
+   5 CONFIRMED    "The marker imprint sat below the 0.158 bar in every cell and in both readout contexts (0.20: excised +.103, in situ +.127; 0.30: excised +.141, in situ +.062)"
+   6 CONFIRMED    "the primary within-M paired Δ+ = +.103 (n = 27, sd .40, one-sided sign test p = .061) also failed 2·|Δ_R| = .138"
+   7 CONFIRMED    "five pre-declared estimators span −.070 to +.103, all below bar"
+   8 CONFIRMED    "The two contexts differ in magnitude (2.3× at 0.30) and the gap flips direction across dose"
+   9 CONFIRMED    "Paired on shared content the marker shows no detectable change from 0.20 to 0.30 (clean −.0121, n = 20, one-sided sign test p = .41; all-rounds +.0149, n = 24, one-sided sign test p = .27 — opposite signs, neither resol
+  10 CONFIRMED    "z-form 95% CI on the clean-set paired change: [−.156, +.132]"
+  11 CONFIRMED    "the apparent unpaired rise (+.038 clean, +.068 all-rounds)"
+  12 REFUTED      "is a composition artifact with two sources — one session decidable at 0.20 only (idx 12) and roster truncation (D3 ran 24 M sessions to D2's 32)" — stated over both printed rises (+.038 clean, +.068 all-rounds)
+       evidence: GLOSS (scope): the figures reproduce, the two-source attribution holds for the clean rise only. CLEAN set (d2_scores / d3_scores primary_paired_within_M): D2 decidable 27, D3 decidable 20 (idx 12 and 19 undecidable at D3); D2-only inside D3's roster = [12]; never-run = [24,25,26,27,28,30]; composition = D2 mean on the 20 shared .15317 − D2 mean on 27 .10296 = +.05020, paired −.01205, sum +.03815 = the unpaired figure — two sources, as stated. ALL-ROUNDS set (d2_scores_allrounds primary_paired_within_M_all_rounds; d3_scores primary_paired_within_M_all_rounds): D2 decidable 31 (idx 0–30, only idx 31 undecidable), D3 decidable 24 (idx 0–23, none undecidable); shared = all 24 of D3; D2-only = [24,25,26,27,28,29,30], every one beyond D3's roster; idx 12 is decidable at BOTH doses; composition = D2 mean on shared +.02232 − D2 mean on 31 −.03072 = +.05304, paired +.01489, sum +.06793 = the unpaired figure. So the +.068 rise has ONE source (roster truncation, seven indices); the "one session decidable at 0.20 only (idx 12)" source does not exist in that set. The sentence prints both rises and attributes both sources to them — the same class as the pass-4 held item 2 (a clean-set fact stated across a sentence naming both filters). History: raised in pass 4 by one refuter (results/raw/2026-09-06_e2d_closure_glosscheck4.txt, refuter aeb80820 claim 15) and not carried into the three held items; R15 kept the two-source clause over both figures. One word fixes it: scope "two sources" to th
+  13 CONFIRMED    "Degeneracy is ordered across three doses (audit .000 / .023 / .047; read-marked .000 / .113 / .155"
+  14 CONFIRMED    "on the 24 shared indices audit .025 → .047, read .133 → .155"
+  15 CONFIRMED    "with a single resolved step (read .10→.20, Fisher exact two-sided p = .021; one-sided .011)"
+  16 CONFIRMED    "neither .20→.30 step resolved (two-sided: audit p = .15, read p = .20; both ≥ .10 one-sided)"
+  17 CONFIRMED    "the .20→.30 read rise carried by one index (s12: 0/10 → 7/10)"
+  18 CONFIRMED    "indices 1 and 5 sit at 10/10 at both doses and carry 59% of the marks (40/68 on the 24 shared indices)"
+  19 CONFIRMED    "it is not axis-specific: D2's random arm degrades at .045 at 0.20, twice M's .023 at the same dose"
+  20 CONFIRMED    "The free operant itself was administered 537 times across D1–D3 (42 / 357 / 138 choices over 96 sessions, every read insulated at KL = 0)"
+  21 CONFIRMED    "Δ_first = +0.017 at 0.20 under the primary rule (15/29, valid sessions; 15/30 = 0.000 over all M sessions with a first pick, the domain that includes excluded idx 30)"
+  22 CONFIRMED    "+0.109 at 0.30 (14/23, where the two domains coincide; one-sided exact binomial p = .202)"
+  23 CONFIRMED    "against first-pick habit-break rates of 1/30 and 1/23 (all sessions including excluded — the rule-23 secondaries domain)"
+  24 CONFIRMED    "Nothing above 0.30 was run; the closure is bounded by the measured range."
+  25 CONFIRMED    "The D2 failure was legibility with coherence intact — not a coherence limit (design ledger slip 10: the pre-written stop sentence encoded 'with coherence' as the predicted failure mode where the failure was Q2/Q3 with c
+  26 CONFIRMED    "Raising the dose did not open the record channel; what it bought in degradation is ordered across three doses and resolved at one step."
+  27 UNVERIFIABLE "The weak-state alternative to the e2a null retires in its dose form." and "The channel question ... is banked (ledger 23) as motivation for future pre-registration; no unwritten document inherits it."
+       evidence: Interpretive design-level framing; no artifact can refute it. Consistent with PROPOSAL-j's title ("the weak-state boundary") and the registered scope sentence adopted in the disposition (520f62c); no document in the tree inherits the channel question.
+  28 CONFIRMED    "V1's L48/0.20 cell (+.408) is a state-live read at the probe and a B2a dose-finding cell excluded from verdicts by V1's own pre-registration"
+  29 CONFIRMED    "e2d's marker is a no-injection read of text the state produced — different channels, not a ratio"
+  30 CONFIRMED    "Instrument transfer is unmeasured (the .958 is a self-score on the fit set, refit false)"
+  31 CONFIRMED    "The 0.10 anchor (n = 4 M sessions, pooled estimator) carries no comparable marker value (its pooled within-M delta, −.239 over 20/20 generations, is a different statistic, recorded as not comparable) and is the left end
+  32 CONFIRMED    "D3's readability lacks D2's task-disjointness guarantee."
+  33 CONFIRMED    "alternation decay e2a .840 (pooled; reward arm .827) → D2 M .690 → D3 M .522, all on habit.secondaries' domain of all sessions including excluded (rule 23; valid-only e2a .837 / .824)"
+  34 CONFIRMED    "with the first-pick break rate flat within e2d (1/30 vs 1/23; Fisher exact two-sided p = 1.00)"
+  35 CONFIRMED    "four to five times below e2a's .17 (32/188, all sessions: 5.1× D2's 1/30, 3.9× D3's 1/23, 4.5× the pooled 2/53)"
+  36 CONFIRMED    "only D2→D3 is a clean dose step and it is unresolved (.690 vs .522, Fisher exact two-sided p = .26 — the test of record for count comparisons in this entry)"
+  37 CONFIRMED    "degeneracy tracks displacement, not the reward direction; estimator sign-instability (−.070 to +.103)"
+  38 CONFIRMED    "in-situ scoring at 2.57 vs 0.54 s per forward (4.7×, matching D2's ratio)"
+  39 CONFIRMED    Banked-list referents after the strip: "the composition artifact as above" and "the clean/all-rounds sign disagreement on the dose change, flagged not averaged"; no dangling referent in the blockquote
+
+total claims: 132

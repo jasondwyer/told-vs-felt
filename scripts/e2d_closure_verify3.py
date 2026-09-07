@@ -16,6 +16,11 @@ os.chdir(REPO); sys.path.insert(0, REPO)
 from valence_core.stats import fisher_one_sided
 from valence_core.e2d import habit as H
 
+def quoted_text() -> str:
+    """The design-authored text of record: the '  > ' blockquote in the HELD file, unwrapped."""
+    lines = open("HELD-e2d-closure-entry.md").read().split("\n")
+    return " ".join(l[4:] for l in lines if l.startswith("  > "))
+
 results = []
 def chk(name, got, want, tol=0.0, note=""):
     ok = (abs(got - want) <= tol) if isinstance(got, (int, float)) and isinstance(want, (int, float)) else (got == want)
@@ -27,16 +32,16 @@ sd, n, mean = PC["paired_sd"], PC["n_shared_indices"], PC["paired_mean_change"]
 G = json.load(open("data/e2d/closure_glosscheck3.json"))["code_recomputation_at_write_time"]["item1_2_paired_CI"]["bar_half_G"]
 z, t19 = 1.959964, 2.093024
 zh, th = z * sd / math.sqrt(n), t19 * sd / math.sqrt(n)
-print("R7  the paired 95% CI, both forms, at the printed precision (3 decimals)")
-chk("R7 n = 20 shared indices", n, 20)
-chk("R7 z half-width .144", round(zh, 3), .144, note=f"{zh:.6f}")
-chk("R7 t(19) half-width .154", round(th, 3), .154, note=f"{th:.6f}")
-chk("R7 z CI lower bound -.157 AS PRINTED", round(mean - zh, 3), -.157, note=f"raw {mean - zh:.6f} -> rounds to {round(mean - zh, 3)}")
-chk("R7 z CI upper bound +.132", round(mean + zh, 3), .132, note=f"{mean + zh:.6f}")
-chk("R7 t CI lower bound -.166", round(mean - th, 3), -.166, note=f"{mean - th:.6f}")
-chk("R7 t CI upper bound +.142", round(mean + th, 3), .142, note=f"{mean + th:.6f}")
-chk("R7 bar +.158 outside the CI under BOTH forms", (mean + zh < G) and (mean + th < G), True, note=f"bar {G:.4f}")
-chk("R7 bar -.158 inside under t only", (mean - zh > -G) and (mean - th <= -G), True, note=f"z lo {mean - zh:.4f}, t lo {mean - th:.4f}")
+print("R14 (strip of R7): z-form 95% CI on the clean-set paired change, at the printed precision")
+chk("R14 clean set = 20 shared indices", n, 20)
+chk("R14 z CI lower bound -.156", round(mean - zh, 3), -.156, note=f"raw {mean - zh:.6f}")
+chk("R14 z CI upper bound +.132", round(mean + zh, 3), .132, note=f"raw {mean + zh:.6f}")
+chk("R14 the text names the form (z) and the set (clean-set) and makes no bar claim",
+    ("z-form 95% CI on the clean-set paired change: [−.156, +.132]" in quoted_text()) and ("bar-sized" not in quoted_text()), True)
+# record beside (not a text check): the all-rounds pairing's CI, the reason the unqualified clause was held
+PA = json.load(open("data/e2d/dose_paired_d2_d3_allrounds.json"))
+zha = z * PA["paired_sd"] / math.sqrt(PA["n_shared"])
+print(f"    beside: all-rounds pairing (n {PA['n_shared']}) z CI [{PA['paired_mean_change'] - zha:+.3f}, {PA['paired_mean_change'] + zha:+.3f}] -- contains a bar-sized change both ways; no longer claimed either way")
 print("R8  one-sided .011 (attribution dropped; the figure)")
 chk("R8 read .10->.20 one-sided Fisher .011", round(fisher_one_sided(34, 266, 0, 40), 3), .011, note=f"{fisher_one_sided(34, 266, 0, 40):.5f}")
 print("R9  59% of the marks (40/68 on the 24 shared indices)")
@@ -78,19 +83,20 @@ A = sum(d2p[i] for i in shared) / len(shared); B = sum(d2p[i] for i in shared + 
 Bt = sum(d2p[i] for i in shared + never) / len(shared + never); C = sum(d2p.values()) / len(d2p)
 chk("R12 idx 12 is the one session decidable at 0.20 only inside D3's roster", lost, [12])
 chk("R12 D3 ran 24 M sessions to D2's 32", (len(d3s), len(d2s)), (24, 32))
-chk("R12 idx-12-first split 62/38", (round(100 * abs(B - A) / abs(C - A)), round(100 * abs(C - B) / abs(C - A))), (62, 38), note=f"{abs(B-A)/abs(C-A):.4f}/{abs(C-B)/abs(C-A):.4f}")
-chk("R12 truncation-first split 46/54 (idx-12 share / truncation share)", (round(100 * abs(C - Bt) / abs(C - A)), round(100 * abs(Bt - A) / abs(C - A))), (46, 54), note=f"{abs(C-Bt)/abs(C-A):.4f}/{abs(Bt-A)/abs(C-A):.4f}")
-chk("R12 the artifact is order-independent: C - A the same under both", round(C - A, 6), round((B - A) + (C - B), 6))
+chk("R15 (strip of R12): the text prints NO split percentages", ("62/38" in quoted_text()) or ("46/54" in quoted_text()), False)
+chk("R15 the two sources exist: idx 12 (+idx12 moves the mean) and the six never-run (truncation moves it)", (round(B - A, 4) != 0.0, round(Bt - A, 4) != 0.0, len(never)), (True, True, 6), note=f"A {A:.4f} B {B:.4f} Bt {Bt:.4f} C {C:.4f}")
+print(f"    beside (artifact, not text): splits 62/38 with idx 12 added first to the paired base, 46/54 with truncation added first; C - A = {C - A:+.4f} either way")
 print("R13 slip 10: defined only in the untracked design handoff")
 g = subprocess.run(["git", "grep", "-n", "-e", "slip (10)", "-e", "(10) the", "HEAD", "--", "RESULTS.md", "PROPOSAL-j-dose-escalation.md", "CLAUDE.md"], capture_output=True, text=True).stdout.strip()
 chk("R13 no committed definition of slip (10) in the record docs", g, "")
 u = os.path.exists("HANDOFF-2026-09-04-design.md") and "**(10)**" in open("HANDOFF-2026-09-04-design.md").read()
 chk("R13 defined in the untracked HANDOFF-2026-09-04-design.md §2", u, True)
 chk("R13 'with coherence' is the quoted failure mode there", "with coherence" in open("HANDOFF-2026-09-04-design.md").read() if u else False, True)
-print("R8/R7 provenance: the eight passages replaced exactly once (HELD file)")
-held = open("HELD-e2d-closure-entry.md").read()
-olds = ["the paired CI, ±.15, spans the bar", "the D3-gate entry's figure", "carry 58% of the marks", "carries no marker value", "~4× below", "62% one session decidable", "(slip 10)."]
-chk("R7-R13 no old clause survives in the quoted text", [o for o in olds if o in held.split("---", 2)[-1]], [])
+print("provenance: the eight passages replaced exactly once (R7-R13), then R7 and R12 stripped to bare figures (R14, R15)")
+held = quoted_text()
+olds = ["the paired CI, ±.15, spans the bar", "the D3-gate entry's figure", "carry 58% of the marks", "carries no marker value", "~4× below", "62% one session decidable", "(slip 10).",
+        "[−.157", "half-width .144", "bar-sized", "removed first", "order-dependent"]
+chk("R7-R15 no old or struck clause survives in the quoted text", [o for o in olds if o in held], [])
 n_ok = sum(1 for _, ok in results if ok)
 print("-" * 100)
 print(f"  {n_ok}/{len(results)} third-pass checks pass" + ("" if n_ok == len(results) else "  -- HELD: a figure does not reproduce at its printed precision"))

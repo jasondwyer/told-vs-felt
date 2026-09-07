@@ -21,6 +21,291 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-07 — **e2d CLOSURE — TEXT OF RECORD (values-checked). Design-seat
+  authored, PI-ratified 2026-09-05 (PI clock); the four held figures resolved
+  by six clause-level replacements (design patch of the same date, R1–R6)
+  and one further disposition on R6 (design block of the same date, §1);
+  then, on the third values-check's eight glosses, seven replacements
+  (design patch 2026-09-06 §1, R7–R13), a fourth hold on three items, the
+  design strip of 2026-09-07 (R14, R15), and one passage DELETED under the
+  design's delete rule after the fifth pass refuted its scope (R16). Every
+  figure re-verified from the committed artifacts on the domain and under
+  the test the text names — the frozen
+  [`scripts/e2d_closure_verify.py`](scripts/e2d_closure_verify.py) (125/125,
+  raw [`_closure_verify`](results/raw/2026-09-05_e2d_closure_verify.txt),
+  byte-identical on every re-run) and
+  [`scripts/e2d_closure_verify3.py`](scripts/e2d_closure_verify3.py) (24/24
+  at printed precision after the strip, raw
+  [`_closure_verify3_strip`](results/raw/2026-09-07_e2d_closure_verify3_strip.txt)).
+  Names `08a6076` for the PI-approved rule-2 and rule-21 annotations and the
+  `excised_source` script fix, `edf2574` for the verification record,
+  `733503d` for the R6 update, `fb26dff` for the third check's record and
+  `a3fd06e` for the third patch applied; this entry's own commit carries the
+  text and deletes the HELD draft that carried it across threads.**
+  (Stamp verified at write time: `date -u` → **Mon Sep  7 17:11:48 UTC 2026**.)
+
+  > e2d closed at its qualification rung by the pre-registered run-dose rule:
+  > at f = 0.20, D2 returned STOP, SCOPED on Q2 and Q3, adopted by PI
+  > disposition before D3 existed, so the verdict-tier free operant under
+  > LOCK-j never ran. The apparatus held — Q1 passed at 3/32, exact binomial
+  > p = .878 (forced scope). The record channel failed both conjuncts of the
+  > registered readability gate (median ≥ .70 AND 10th percentile ≥ .60):
+  > .574 / .524 at 0.20 and .613 / .526 at 0.30 (k = 2, criterion set), with
+  > the 0.20 displacement comparator at .534 (none at 0.30 — D3 ran M-only
+  > under ADDENDUM-j1). The marker imprint sat below the 0.158 bar in every
+  > cell and in both readout contexts (0.20: excised +.103, in situ +.127;
+  > 0.30: excised +.141, in situ +.062); the primary within-M paired Δ+ =
+  > +.103 (n = 27, sd .40, one-sided sign test p = .061) also failed 2·|Δ_R|
+  > = .138, and five pre-declared estimators span −.070 to +.103, all below
+  > bar. The two contexts differ in magnitude (2.3× at 0.30) and the gap
+  > flips direction across dose, so systematic dilution is neither
+  > demonstrated nor excluded; what is context-invariant is the below-bar
+  > conclusion. Paired on shared content the marker shows no detectable
+  > change from 0.20 to 0.30 (clean −.0121, n = 20, one-sided sign test p =
+  > .41; all-rounds +.0149, n = 24, one-sided sign test p = .27 — opposite
+  > signs, neither resolved, not averaged; z-form 95% CI on the clean-set
+  > paired change: [−.156, +.132]). Degeneracy is ordered across three doses
+  > (audit .000 / .023 / .047; read-marked .000 / .113 / .155; on the 24
+  > shared indices audit .025 → .047, read .133 → .155) with a single
+  > resolved step (read .10→.20, Fisher exact two-sided p = .021; one-sided
+  > .011), neither .20→.30 step resolved (two-sided: audit p = .15, read p =
+  > .20; both ≥ .10 one-sided), the .20→.30 read rise carried by one index
+  > (s12: 0/10 → 7/10) while indices 1 and 5 sit at 10/10 at both doses and
+  > carry 59% of the marks (40/68 on the 24 shared indices) — and it is not
+  > axis-specific: D2's random arm degrades at .045 at 0.20, twice M's .023
+  > at the same dose.
+  >
+  > The free operant itself was administered 537 times across D1–D3 (42 / 357
+  > / 138 choices over 96 sessions, every read insulated at KL = 0) and
+  > returned habit-locked first-pick shares: Δ_first = +0.017 at 0.20 under
+  > the primary rule (15/29, valid sessions; 15/30 = 0.000 over all M
+  > sessions with a first pick, the domain that includes excluded idx 30) and
+  > +0.109 at 0.30 (14/23, where the two domains coincide; one-sided exact
+  > binomial p = .202), against first-pick habit-break rates of 1/30 and 1/23
+  > (all sessions including excluded — the rule-23 secondaries domain).
+  > Nothing above 0.30 was run; the closure is bounded by the measured range.
+  > The D2 failure was legibility with coherence intact — not a coherence
+  > limit (design ledger slip 10: the pre-written stop sentence encoded 'with
+  > coherence' as the predicted failure mode where the failure was Q2/Q3 with
+  > coherence intact — defined in the untracked HANDOFF-2026-09-04-design.md
+  > §2, restated here for the committed record).
+  >
+  > Raising the dose did not open the record channel; what it bought in
+  > degradation is ordered across three doses and resolved at one step. The
+  > weak-state alternative to the e2a null retires in its dose form. The
+  > channel question — whether any route other than the transcript can carry
+  > the state to the choice — is banked (ledger 23) as motivation for future
+  > pre-registration; no unwritten document inherits it.
+  >
+  > Caveats. V1's L48/0.20 cell (+.408) is a state-live read at the probe and
+  > a B2a dose-finding cell excluded from verdicts by V1's own pre-
+  > registration; e2d's marker is a no-injection read of text the state
+  > produced — different channels, not a ratio. Instrument transfer is
+  > unmeasured (the .958 is a self-score on the fit set, refit false). The
+  > 0.10 anchor (n = 4 M sessions, pooled estimator) carries no comparable
+  > marker value (its pooled within-M delta, −.239 over 20/20 generations, is
+  > a different statistic, recorded as not comparable) and is the left end of
+  > the readability and degeneracy series only. D3's readability lacks D2's
+  > task-disjointness guarantee.
+  >
+  > Banked (ledger 23; license pre-registrations, never verdicts): the
+  > composition artifact as above; alternation decay e2a .840 (pooled; reward
+  > arm .827) → D2 M .690 → D3 M .522, all on habit.secondaries' domain of
+  > all sessions including excluded (rule 23; valid-only e2a .837 / .824),
+  > with the first-pick break rate flat within e2d (1/30 vs 1/23; Fisher
+  > exact two-sided p = 1.00) and four to five times below e2a's .17 (32/188,
+  > all sessions: 5.1× D2's 1/30, 3.9× D3's 1/23, 4.5× the pooled 2/53) —
+  > only D2→D3 is a clean dose step and it is unresolved (.690 vs .522,
+  > Fisher exact two-sided p = .26 — the test of record for count comparisons
+  > in this entry); degeneracy tracks displacement, not the reward direction;
+  > estimator sign-instability (−.070 to +.103); in-situ scoring at 2.57 vs
+  > 0.54 s per forward (4.7×, matching D2's ratio); the clean/all-rounds sign
+  > disagreement on the dose change, flagged not averaged.
+
+  - **Provenance of the text.** The held text was never committed; it was
+    delivered to the prior Code thread in the design disposition headed
+    2026-09-05 (PI clock 01:53 EDT, 05:53 UTC) and recovered verbatim from
+    that thread's transcript for this entry. Each of the six clauses the patch
+    replaces matched the recovered text exactly once; no other character
+    changed. Disposition §1 adopted all seven values-check glosses as
+    OVERSTATED and rewrote them into the text above (comparator bound to D2;
+    dilution neither demonstrated nor excluded; the V1 ratio moved to caveats
+    as a channel distinction; ordered-with-one-resolved-step on the paired
+    basis; no-detectable-change with its precision; break rate flat within
+    e2d only; the verdict-tier operant never ran, reason of record the
+    run-dose rule). Critic items: the conjunctive gate stated with both
+    conjuncts; the entry titled as text of record; no disposition assigned to
+    an unwritten document; the legibility/degradation sentence recast; the
+    transfer caveat as a self-score with refit false.
+  - **What changed from the held text (six replacements and the R6
+    re-disposition). No figure changed by a change of DATA: R5 moves the
+    primary DV to its own domain; R4 adds the one-sided and per-step
+    figures beside the ones already printed; R6 replaces two p-values by
+    naming a different test (.85 → 1.00 for 1/30 vs 1/23; .21 → .26 for
+    the D2→D3 step), the counts underneath unchanged.**
+
+    | | held | of record |
+    |---|---|---|
+    | R1 | `p = .878` | `exact binomial p = .878` |
+    | R2 | `sign p = .061` | `one-sided sign test p = .061` |
+    | R3 | `sign p = .41; … p = .27` | `one-sided sign test p = .41; … one-sided sign test p = .27` |
+    | R4 | `Fisher p = .021 two-sided … (p ≥ .10)` | `Fisher exact two-sided p = .021; one-sided .011 … (two-sided: audit p = .15, read p = .20; both ≥ .10 one-sided)` |
+    | R5 | `Δ_first = 0.000 at 0.20 (15/30)` | `Δ_first = +0.017 at 0.20 under the primary rule (15/29, valid sessions; 15/30 = 0.000 over all M sessions with a first pick …)`, domains named for 14/23 and for the break rates |
+    | R6 | `(1/30, 1/23; p = .85) … (p = .21)` | ladder domain named (all sessions incl. excluded; valid-only e2a .837 / .824); `Fisher exact two-sided p = 1.00`; the D2→D3 step re-dispositioned to `(.690 vs .522, Fisher exact two-sided p = .26 — the test of record for count comparisons in this entry)` |
+
+  - **VERIFICATION RECORD — the six clauses, each on its named domain and
+    under its named test (script above; every figure recomputed, not read
+    back).**
+
+    | clause | figure | domain / test | reproduces |
+    |---|---|---|---|
+    | R1 | Q1 3/32, p = .878 | exact binomial, one-sided (greater) vs p0 = .15 — the registered form; two-sided would be .467 | .8782 ✓ |
+    | R2 | Δ+ +.103, n 27, sd .40, p = .061 | one-sided sign test, 18/27 positive (two-sided .122) | +.1030 / 27 / .399 / .0610 ✓ |
+    | R3 | clean −.0121, n 20, p = .41; all-rounds +.0149, n 24, p = .27 | one-sided sign tests, 11/20 and 14/24 (two-sided .824 / .541) | ✓ both, recomputed from per-session diffs |
+    | R4 | read .10→.20 .021 (one-sided .011); audit .20→.30 .15; read .20→.30 .20; one-sided both ≥ .10 | Fisher exact, M arm, rounds + choices, all sessions incl. excluded | .0213 / .0112 / .1508 / .1959 / .1021 / .1029 ✓ |
+    | R5 | 15/29 = +.017 valid; 15/30 = .000 all-with-a-pick; 14/23 both; p = .202; breaks 1/30, 1/23 | valid = not excluded under the e2a-scope rule recorded in `d2_sessions.json` (`exclusion_scope: "e2a"`, 3 M excluded: idx 24 audit@forced3, idx 30 lexical:plaza@free0, idx 31 lexical:ridge@forced0; only idx 30 has a first pick); one-sided exact binomial; `habit.secondaries` over all sessions | ✓ all; break rates 1/30 and 1/23 reproduce on the all-sessions domain (valid-only would be 1/29, 1/23) |
+    | R6 | e2a .840 / .827; valid-only .837 / .824; D2 .690; D3 .522; Fisher 1.00; step Fisher .26 | all sessions incl. excluded: 157/187, 86/104 (valid 154/184, 84/102); D2 20/29, D3 12/23 on both domains; 1/30 vs 1/23 Fisher two-sided 1.0000; 20/29 vs 12/23 Fisher two-sided .2597 | ✓ all — see the second hold below |
+
+    **The Fisher table of record** (test of record for count comparisons in
+    this entry: Fisher exact, two-sided; one-sided printed beside; counts are
+    M-arm rounds + choices over all sessions including excluded — audit D1
+    0/40, D2 7/300, D3 11/233; read-marked D1 0/40, D2 34/300, D3 36/233):
+
+    | step | two-sided | one-sided |
+    |---|---|---|
+    | audit .10→.20 | 1.0000 | .4129 |
+    | audit .20→.30 | .1508 | .1021 |
+    | **read .10→.20** | **.0213** | .0112 |
+    | read .20→.30 | .1959 | .1029 |
+
+    The `.011` is the one-sided figure. **Attribution corrected here:** it
+    was printed in the 2026-09-04 closure-completion entry (item 4, "read
+    .10→.20 p = .011"), NOT in the D3-gate entry, whose only .011-family
+    figure is the steered-arm binomial .0117; HANDOFF-2026-09-05 §2 item 4
+    (Code's) mis-attributed it and the patch's R4 inherited the attribution.
+    The disposition's `.021` is two-sided; "p ≥ .10" for the three
+    unresolved steps holds under both.
+
+    **The second hold, and its disposition.** The patch's R6 named the D2→D3
+    alternation step as "two-proportion z p = .21". That figure reproduces
+    under the unpooled-variance form only (z = 1.244, p = .2136); the
+    pooled form — the one Code used to pin the neighbouring ".85" — is
+    z = 1.236, p = .2164, which prints .22. Reported, not reworded
+    (`edf2574`). Design's disposition (block of 2026-09-05, §1): the clause
+    of record is **Fisher exact two-sided p = .26** (20/29 vs 12/23:
+    .2597), the entry's own declared test for count comparisons; under
+    every variant the step is unresolved. Ledger, design seat: folded into
+    slip (14)'s class as a fifth unnamed test.
+
+    **The four-figure report that held the entry (from the `08a6076` hold,
+    carried as the record):** (1–2) e2a alternation .840 pooled / .827 reward
+    are correct on all sessions including excluded (157/187, 86/104; valid-only
+    .8370 / .8235), which is also the domain of D2 .690 and D3 .522
+    (`habit.secondaries`, rule 23) — resolved by naming the domain (R6).
+    (3) "p = .85" for 1/30 vs 1/23 was a two-proportion z (z = .192,
+    p = .8477); two-sided Fisher gives 1.0000 — resolved by naming the test
+    (R6). (4) Δ_first = 0.000 (15/30) counted the excluded idx 30 under the
+    primary DV's name; the primary rule gives 15/29 = +.0172 — resolved by
+    moving the primary DV to its own domain and keeping 15/30 beside it, labelled
+    (R5). Test of record for Fisher named and printed above (R4).
+
+    **Everything else in the text:** 125 checks in all (the six clauses plus every other figure in the text), 125 pass checks, all pass —
+    readability conjuncts, comparator, the four marker cells and the bar,
+    2·|Δ_R|, the five estimators, the paired CI (±.144), the composition
+    decomposition (62% idx 12 / 38% roster truncation, by the values-check's
+    sequential decomposition A → B → C), degeneracy rates on both bases, s12
+    and the idx 1/5 saturation (40/68 = 58.8%), axis non-specificity
+    (R .045 vs M .023, S 0/151), 537 / 42 / 357 / 138 choices over 96
+    sessions every read at KL = 0, the cost ratio 2.57 / 0.54 (4.72×), the
+    .958 self-score with refit false, the 0.10 anchor.
+  - **Beside-notes carried (disposition §4, never over).** (i) The D3 scoring
+    entry's "the marker delta does not move" reads "shows no detectable
+    movement, at a precision that cannot exclude a bar-sized change" [after
+    the 2026-09-07 strip the text of record prints only the z-form clean-set
+    CI, [−.156, +.132], which excludes ±.158 in both directions; the
+    precision clause holds of the t(19) form for a decrease and of the
+    all-rounds pairing, neither printed any more — the beside-note stands as
+    the disposition wrote it, never over]; its
+    mechanism sentence ("survive exclusion and cleaning") is 62% right (the
+    idx-12-added-first share, kept in the artifact and verify3, struck from
+    the text with its clause); its
+    degeneracy table is on D2's full 32 where release condition 4 wants the
+    paired 24 — the closure carries the paired basis. Annotated here; the
+    entry stands as written. (ii) `data/e2d/d3_excision_check.json`'s
+    top-level `excised_source` reads "committed D2 scoring (not rescored)"
+    for a D3 run — a hardcoded string, fixed in the script at `08a6076`; the
+    committed artifact is untouched and its nested `_source` was always
+    correct. (iii) `HANDOFF-2026-09-04-design.md` §1 quotes the EARLIER held
+    sentence of record (the pre-disposition text the values-check graded, with
+    "a quarter of its short-context value" and "(dilution excluded)") and §7
+    paraphrases it; both superseded by the text above. Untracked, referenced
+    by name: no edit, no rename.
+  - **Passes three to five, and the strip (Code's record).** Third
+    adversarial pass (2026-09-05, three refuters, 152 claims): no figure
+    wrong, eight glosses held —
+    [`closure_glosscheck3.json`](data/e2d/closure_glosscheck3.json) /
+    [`_glosscheck3`](results/raw/2026-09-06_e2d_closure_glosscheck3.txt).
+    Design patch 2026-09-06 §1 applied (R7–R13); verify3 in its first form
+    29/30 ([`_verify3`](results/raw/2026-09-06_e2d_closure_verify3.txt));
+    fourth pass (65 claims,
+    [`_glosscheck4`](results/raw/2026-09-06_e2d_closure_glosscheck4.txt))
+    held on three items — the z lower bound printed −.157 for −.156, the CI
+    stated without its set after two pairings, R12's "removed first" labels
+    inverted. Design strip 2026-09-07: R14 (the CI reduced to the z-form
+    clean-set bounds) and R15 (the composition clause reduced to its two
+    sources); fifth pass (132 claims,
+    [`_glosscheck5`](results/raw/2026-09-07_e2d_closure_glosscheck5.txt))
+    refuted R15's scope — on the all-rounds set idx 12 is decidable at both
+    doses, so the +.068 rise has one source — and, under the design's rule
+    ("if ANY passage is refuted again, DELETE that passage entirely and
+    commit"), the clause was deleted (R16); verify3 24/24 and the frozen
+    verify 125/125 re-run after the deletion. The refuters' notes that are
+    not holds (domains unnamed for the degeneracy series; "carried by one
+    index" as dominance; "flat within e2d" at the powered scale only; "four
+    to five times" at integer precision) are in the fifth-pass record for
+    the design seat. Nothing in the design text was reworded by Code at any
+    pass.
+  - **Ledger, design seat (PI-ratified 2026-09-05, PI clock).** Slip (12):
+    the closure was written in the verdict register beyond what the tests
+    licensed — seven overstated glosses in one text, caught pre-commit by the
+    values-check. Slip (13): design block headers carried UTC dates the seat
+    could not verify, one day fast from `a9e6a74` on; Code's half stands in
+    the record-hygiene entry. Slip (14): in the replacement text the primary
+    DV Δ_first was reported on the all-sessions domain under the primary
+    rule's name, and three further rates/tests were stated without their
+    domain or test named — one item, four instances, caught pre-commit by
+    Code's 80-figure re-verification; a fifth instance folded in by the
+    same-day block (the alternation step's z-test named without its
+    variance form, resolved to the test of record). **Design count: fourteen**
+    at the 2026-09-05 patch. *Added by the design patch of 2026-09-06 §1
+    (numbering the design seat's):* **Slip (16), design seat:** a claim about
+    the paired CI that the figure contradicts ("spans the bar in both
+    directions"; would not commit past) — and, by the design strip of
+    2026-09-07, the three items the third-pass patch introduced fold into its
+    class: the z lower bound printed −.157 for −.156, the CI stated without
+    its set after two pairings, and R12's "removed first" labels inverted;
+    R7 was reduced to a bare figure (R14) and R12's clause reduced (R15) and
+    then, when the fifth pass refuted its two-source scope on the all-rounds
+    rise, DELETED entirely under the design's delete rule of 2026-09-07 —
+    rather than patched a fourth time. **The `.011` attribution, both
+    seats:** inherited from HANDOFF-2026-09-05.md §2 item 4 (Code's) and
+    propagated unverified into the patch's R4 (design's); corrected beside
+    in that handoff 2026-09-06. **R9–R13's class** (rounding, an unnamed
+    order, a hedged ratio, an uncommitted reference) **folded into slip
+    (14).** Code's four draft fixes stand. Standing
+    addition to the design-side standard: in closure prose every rate names
+    its domain and every p names its test, no exceptions. Standing fix, design
+    side: block headers carry the PI's clock, labelled as such, never a bare
+    "(UTC)"; Code stamps from `date -u`.
+  - **Rule annotations (disposition §6, PI-approved).** Rule 2 and rule 21
+    annotated at `08a6076`, verbatim from the disposition-2 entry item 6, as
+    annotations not rewrites.
+  - **What this entry does not do.** It reopens nothing: Q2 and Q3 failed,
+    the run-dose rule returned STOP, SCOPED, and the verdict tier never ran.
+    The judge-port acceptance run (built, never run) and the content-class
+    candidate (not adopted) are unaffected and still owed / awaiting
+    adjudication.
+
 - 2026-09-07 — **FORMAT RECON (design block 2026-09-06 §4 as amended by the
   design patch §2) — COMPLETE, 56 of 56 sessions, ANALYSED. Descriptive
   only; no bar; template recalibration for LOCK-k. The result in one line:
