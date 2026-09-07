@@ -21,6 +21,161 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-07 — **FORMAT RECON (design block 2026-09-06 §4 as amended by the
+  design patch §2) — COMPLETE, 56 of 56 sessions, ANALYSED. Descriptive
+  only; no bar; template recalibration for LOCK-k. The result in one line:
+  the e2a format installs the alternation habit completely (F0: 8/8 strict
+  alternation, 0/8 first-pick breaks), and once the habit is not installed
+  between the two menu labels the first pick is decided by LABEL IDENTITY
+  — F1 breaks 9/20, F2 12/24, both at chance-level session share, and in
+  three of four pairs the same label is picked first whichever came
+  first in the forced phase. F1 also carries the campaign's only exclusions, five scaffold
+  reproductions caught by audit v2. Artifacts
+  [`format_recon_F0_sessions.json`](data/format/format_recon_F0_sessions.json)
+  / [`F1`](data/format/format_recon_F1_sessions.json) /
+  [`F2`](data/format/format_recon_F2_sessions.json), analysis
+  [`format_recon_analysis.json`](data/format/format_recon_analysis.json),
+  raws [`_run.log`](results/raw/2026-09-06_format_recon_run.log) and
+  [`_analyze`](results/raw/2026-09-07_format_recon_analyze.txt). Design strip
+  2026-09-07 (PI date; Code stamps from `date -u`).**
+  (Stamp verified at write time: `date -u` → **Mon Sep  7 16:56:35 UTC 2026**.)
+
+  - **The run.** Launched 16:14:52 UTC 2026-09-06 detached, resumed F0's and
+    F2's timed session 0 (F1 restarted under `timber`); finished 22:16 UTC
+    (last F2 line), 6.29 h of session time against the 6.96 h projection
+    (F0 1.08 h, F1 2.34 h, F2 2.87 h; per session mean 488 / 350 / 430 s,
+    F1's mean pulled down by four truncations at 6–49 s). Acceptance PASS
+    on every format: 312/312 reads at verify KL exactly 0.0; the e2a walk
+    reconstructs 56/56 sessions with seed streams matched; no bar fired;
+    `steered` False and `round_path_cached` False on every round, derived
+    from the call; the quarantined primitive absent at every read; audit v2
+    sha16 `7aa235d25eeb66dc` recomputed and verified. F0's checkpoint
+    carries `n_history` 24 → 8 (reallocated before resume); every F0 index
+    is the prefix of the 24-schedule.
+
+  - **Per format (the block's report).** Valid = not excluded under the
+    lenient scope (strict beside); alternation over valid sessions; break =
+    first free pick IS the last forced label (all sessions with a pick, the
+    rule-23 domain; in F2 also the stay rate); share = share of free picks on
+    the nominal first label, valid sessions, pooled over choices.
+
+    | format | n | valid (lenient / strict) | strict alternation | first-pick break | share on first label (choices) | reads at KL 0 | mean s |
+    |---|---|---|---|---|---|---|---|
+    | F0 | 8 | 8 / 8 | 8/8 = 1.000 | 0/8 = 0.000 | 0.500 (48) | 48/48 | 488 |
+    | F1 | 24 | 20 / 19 | 12/20 = 0.600 | 9/20 = 0.450 | 0.492 (120) | 120/120 | 350 |
+    | F2 | 24 | 24 / 24 | 12/24 = 0.500 | 12/24 = 0.500 | 0.507 (144) | 144/144 | 430 |
+
+    Anchors through the same functions: e2a all arms .840 alternation /
+    .170 break (valid .837 / .163); e2a reward .827 / .163; e2a sham .868 /
+    .211; e2d D2 M .690 / .033, D3 M .522 / .043. **F0 reproduces the e2a
+    format's habit in its strongest form** (0 stay transitions in 40; every
+    session's share exactly .50). **F1 and F2 are not "break rates" of a
+    habit the format installed** — see the identity finding below.
+    Rule-28(a) floors met on every feature in every format (F0 8 ≥ 6, F1 20
+    ≥ 16, F2 24 ≥ 16).
+
+  - **The identity finding (post-hoc on this data, rule 11 — a frame for
+    LOCK-k, not a verdict).** In F1 and F2 the first pick lands on the same
+    label of a pair whichever label came first: F1 plaza 6/6 (granite/plaza
+    sessions), prism 5/5, walnut 4/4, saddle 3/5; F2 saddle 5/6, prism 4/6,
+    plaza 4/6, walnut 3/6. Since which label is first is counterbalanced,
+    an identity preference produces a "break" in half the sessions by
+    construction — F1's 9/20 and F2's 12/24 are what a pure identity pick
+    looks like, not a habit measurement. By first label: F1 granite 3/3,
+    slate 2/2, velvet 2/2 vs plaza 0/3, prism 0/3, walnut 0/2; F2 granite
+    3/3, ridge 3/3 vs prism 0/3. Menu position does not drive the first
+    pick (first pick = first-listed label 5/8, 8/20, 7/24). After the first
+    pick the alternation habit re-emerges in both: stay transitions F0 0/40,
+    F1 12/100 (.12), F2 15/120 (.125). Rule 12's position/label artifacts
+    are first-order here and the h-roster's identity balance (H3b) was
+    screened at the read, not at a first pick after a neutral start. For
+    LOCK-k this says: a break-rate DV in F1 or F2 must be defined against
+    the per-pair identity baseline (or as a within-pair, order-counterbalanced
+    contrast), and F0's .17 / .03 floors do not transfer to either format.
+
+  - **Audit v3, over all rounds of all sessions (rule 23).** F0 80 rounds:
+    nothing. F1 211 rounds: v2 audit frame 2 + junk 3 = 5 hits — all
+    SCAFFOLD REPRODUCTIONS: `=== Config evaluation session ===` (s2
+    forced2), `=== END OF SESSION ===` (s7 forced3), `=== End of session ===`
+    (s8 forced2), `=== Analysis Session ===` (s12 free4), `[round 2 |
+    running config: timber]` (s14 forced0) — four at the forced phase
+    (excluded, lenient) and one on a free round (strict only); no content
+    class, no lexical hit. F2 240 rounds: 0 v2, 0 exclusion-bearing content,
+    2 `wrong_task` advisories (s2 forced1, s18 forced0) — **both false
+    positives on the read**: each answers its own task and shares wording
+    with the task's SIBLING paraphrases, which the screen's `others`
+    construction (every paraphrase but the current one) includes. FLAG for
+    the design seat: `wrong_task`'s comparison pool should exclude the same
+    task's paraphrases (an id-level exclusion), a refinement to the frozen
+    v4 (1d: a new version with a blind re-screen), not applied. Refusals:
+    zero `null_response`, zero declining-predicate rounds in 531; the
+    per-position table is all zeros. Low label mass (< .20): F0 0/48, F1
+    4/120, F2 5/144 (min .001 / .000 — reads where neither label is the
+    top token). Terminations: 1 (F1 s8 forced2, the `=== End of session
+    ===` scaffold line, which also matches the termination pattern; F0 and
+    F2 0). Cap hits: 1 (F0 s4 free5, 60 tokens, the emoji run of (g) below;
+    F1 and F2 0).
+
+  - **Per-round token counts and the retention interval.** Generated tokens
+    per round (mean): F0 f0 14.1, f1 16.2, f2 16.9, f3 16.6, 0 14.2, 1 16.0, 2 16.5, 3 18.4, 4 15.4, 5 21.6; F1 f0 12.8, f1 15.3, f2 14.3, f3 12.0, 0 14.3, 1 14.2, 2 14.4, 3 15.8, 4 13.9, 5 15.9; F2 f0 14.2, f1 15.6, f2 16.8, f3 17.5, 0 13.7, 1 14.5, 2 15.1, 3 13.2, 4 14.2, 5 16.2. Tokens from
+    each forced round's end to the first read (forced0/1/2/3): F0 158/113/67/21,
+    F1 154/109/63/21, F2 160/115/68/21 — the interval a round's state would have to
+    survive to reach the first choice; the last forced round sits 21 tokens
+    from the read in every format (the menu line).
+
+  - **Rule-25 read, all 56 sessions in full.** The detectors' picture holds
+    and the read adds what they pass by design: (a) **F1 is the format that
+    breaks the answer register** — five scaffold reproductions in 24
+    sessions against none in 32: three on the menu-label rounds that follow
+    the two `timber` rounds (s2 forced2, s8 forced2, s7 forced3), one on a
+    `timber` round itself (s14 forced0, which emitted a round-2 scaffold
+    header in its own round-1 template variant, `[round 2 | running config:
+    timber]`, at its first response), one on a free round (s12 free4). (b)
+    **Verbatim payload echoes on rewrite tasks** — "The meeting has been
+    moved to 3pm." returned unchanged for a reword task (F1 s22 forced0, F2
+    s5 free4, F2 s8 forced2): the v3 echo rule compares against the
+    instruction only (the v1→v2 confound fix), so a payload with no rewrite
+    passes as content — a declared-miss candidate for the read. (c) **One
+    flat-register session** (F1 s22: "Wind chimes are beautiful.", "This is
+    a ferry.", "This is fresh laundry.", "This is a bakery.", "Do not leave
+    dishes in the tone.", "The meeting has been modelled to 3pm." for a
+    headline task) and **one terse session** (F2 s8: "Only the empty glass
+    remains.", "Please don't leave dishes in the abstract."), neither
+    flagged by any class. (d) **Cross-task word contamination**, mostly on
+    the dishes rewrite: "the bicycle courier's stapler" (F1 s0), "dishes in the
+    board" (F1 s17), "keep you in the emoji" (F1 s6), "the softening water"
+    (F2 s19), "the polite sink" (F2 s21), "the soft, dimly lit kitchen" (F2
+    s13). (e) A lone CJK token `解析` for a gravel task (F1 s12 forced3) and
+    a mid-word truncation "Just a heads-up that the gr" (s12 free1) in the
+    session that also carried the `=== Analysis Session ===` junk hit —
+    the one session the strict scope excludes that the lenient scope keeps.
+    (f) A repetition tail ending "…in generated by a large language model"
+    (F2 s20 free1), unflagged. (g) F0 s4: every one of ten responses
+    prefixed `Subject:` from its first email task, the last collapsing into
+    an emoji run — a style attractor, not a class. (h) A `[Town Name]`
+    placeholder (F1 s11), an "Ugh, really?" (F1 s11), and "Please keep it.
+    It’s already yours." for a thank-you (F1 s0). None of (b)–(h) is
+    counted as a rate; they are the read's observations for the design seat
+    and the content-class ledger.
+
+  - **What the design seat decides.** Whether LOCK-k's Stage 2 format is F1
+    or F2 given the identity finding (both need a per-pair baseline; F1
+    costs 4/24 sessions to scaffold reproduction, F2 none); whether the two
+    declared-miss candidates (payload echo on rewrite tasks; sibling
+    paraphrases in `wrong_task`'s pool) go to the content-class ledger.
+    Nothing here licenses a verdict.
+  - **Pre-commit values-check (three refuters, 146 claims; record
+    [`_recon_entry_valuescheck`](results/raw/2026-09-07_format_recon_entry_valuescheck.txt)):**
+    four misses in Code's prose, none in a figure of the table or the
+    analysis, all applied — "terminations 0" and "cap hits none" (one each,
+    both in the analysis artifact the entry links); "four of the five
+    scaffold hits on the menu-label rounds" (three; one on a `timber`
+    round, one on a free round); "contamination on the rewrite tasks" (two
+    of six are not rewrite tasks); plus a curly apostrophe. Caveats kept:
+    "21 tokens" is a mean (range 20–22); "the same label whichever came
+    first" is three pairs of four (velvet/walnut splits 3/3 in F2); F2 s5's
+    payload echo carries added quotation marks.
+
 - 2026-09-06 — **DESIGN PATCH 2026-09-06 §1 (closure, third pass) APPLIED —
   R7–R13 replace the eight held passages in the HELD draft, verify and
   refuters re-run — and the closure entry is HELD A FOURTH TIME, on THREE

@@ -1,0 +1,178 @@
+VALUES-CHECK (pre-commit) of the RESULTS entry 'FORMAT RECON -- COMPLETE, 56 of 56 sessions, ANALYSED' (2026-09-07). Three refuters. Four misses in Code's prose, none in a table or analysis figure, all applied before commit: terminations 0 -> 1 (F1 s8 forced2); cap hits none -> 1 (F0 s4 free5); 'four of five scaffold hits on the menu-label rounds' -> three (s14 on a timber round, s12 on a free round); 'contamination on the rewrite tasks' -> mostly (two of six examples are not rewrite tasks); a curly apostrophe. Every refutation re-verified by Code against the sessions artifacts.
+
+=== refuter a01a06b1a5b184a12: 42 claims {'CONFIRMED': 37, 'REFUTED': 4, 'UNVERIFIABLE': 1} ===
+SUMMARY: Four passages fail against the artifacts. (1) "Terminations 0." — F1 carries one termination (s8 forced2, config walnut, "=== End of session ===" matching term_regex "===\s*[Ee]nd"); F1 counters and format_recon_analysis.json both record terminations = 1. (2) "Cap hits: none flagged by the counters." — F0 counters record cap_hit total 1 (free5) and the analysis JSON F0 cap_hits = 1: s4 free5, n_tok 60, stop_reason "cap" (the emoji run the entry itself describes in (g)). (3) Rule-25 (a) "four of them on the first rounds under a menu label after the two timber rounds" — only three hits sit on forced2/forced3 (s2 forced2, s7 forced3, s8 forced2); s14's is at forced0 under timber and s12's on free4. (4) Rule-25 (d) "Cross-task word contamination on the rewrite tasks" — two of the six examples are not rewrite tasks (F1 s0 forced3 is the stapler request t03; F1 s6 free3 is the newsletter greeting t05); the strings themselves are verbatim. Near-miss, not counted as refuted: "Please keep it. It's already yours." appears at F1 s0 forced2 only with a curly apostrophe (It’s) inside double quotes, so the entry's form is not byte-verbatim. Everything else in the lens — per-pair first-pick counts, break-by-first-label, first-listed 5/8, 8/20, 7/24, stays 0/40, 12/100, 15/120, the five scaffold strings with session/round, the two wrong_task rounds (fire only because sibling paraphrases are in the `others` pool; id-level exclusion clears both), refusal zeros over 531, low-label-mass 0/4/5 with minima .001/.000, all token-count means, retention intervals, anchors, timings, and the remaining quoted strings — reproduces at printed precision.
+
+   0 CONFIRMED    "COMPLETE, 56 of 56 sessions" / n per format F0 8, F1 24, F2 24; artifact paths format_recon_F0/F1/F2_sessions.json, format_recon_analysis.json, 2026-09-06_format_recon_run.log, 2026-09-07_format_recon_analyze.txt
+   1 CONFIRMED    "F0: 8/8 strict alternation, 0/8 first-pick breaks"; table row F0 8 | 8/8 | 8/8=1.000 | 0/8=0.000 | 0.500 (48) | 48/48 | 488
+   2 CONFIRMED    Table row F1: 24 | 20/19 | 12/20=0.600 | 9/20=0.450 | 0.492 (120) | 120/120 | 350
+   3 CONFIRMED    Table row F2: 24 | 24/24 | 12/24=0.500 | 12/24=0.500 | 0.507 (144) | 144/144 | 430
+   4 CONFIRMED    Anchors: e2a all arms .840 alternation / .170 break (valid .837 / .163); e2a reward .827 / .163; e2a sham .868 / .211; e2d D2 M .690 / .033, D3 M .522 / .043
+   5 CONFIRMED    "F0 reproduces the e2a format's habit in its strongest form (0 stay transitions in 40; every session's share exactly .50)"
+   6 CONFIRMED    "Rule-28(a) floors met on every feature in every format (F0 8 >= 6, F1 20 >= 16, F2 24 >= 16)"
+   7 CONFIRMED    Identity finding, first pick per pair — F1 plaza 6/6 (granite/plaza sessions), prism 5/5, walnut 4/4, saddle 3/5
+   8 CONFIRMED    Identity finding, first pick per pair — F2 saddle 5/6, prism 4/6, plaza 4/6, walnut 3/6
+   9 CONFIRMED    "By first label: F1 granite 3/3, slate 2/2, velvet 2/2 vs plaza 0/3, prism 0/3, walnut 0/2; F2 granite 3/3, ridge 3/3 vs prism 0/3"
+  10 CONFIRMED    "Menu position does not drive the first pick (first pick = first-listed label 5/8, 8/20, 7/24)"
+  11 CONFIRMED    "stay transitions F0 0/40, F1 12/100 (.12), F2 15/120 (.125)"
+  12 CONFIRMED    "F1 also carries the campaign's only exclusions, five scaffold reproductions caught by audit v2" / "F1 costs 4/24 sessions to scaffold reproduction, F2 none"
+  13 CONFIRMED    Audit v3: "F0 80 rounds: nothing. F1 211 rounds: v2 audit frame 2 + junk 3 = 5 hits"; "no content class, no lexical hit"; "F2 240 rounds: 0 v2, 0 exclusion-bearing content, 2 wrong_task advisories"
+  14 CONFIRMED    The five F1 scaffold hits with session/round and exact strings: `=== Config evaluation session ===` (s2 forced2), `=== END OF SESSION ===` (s7 forced3), `=== End of session ===` (s8 forced2), `=== Analysis Session ===` (
+  15 CONFIRMED    "four at the forced phase (excluded, lenient) and one on a free round (strict only)"
+  16 CONFIRMED    Two F2 wrong_task advisories (s2 forced1, s18 forced0) are "both false positives on the read: each answers its own task and shares wording with the task's SIBLING paraphrases, which the screen's `others` construction (ev
+  17 CONFIRMED    "Refusals: zero null_response, zero declining-predicate rounds in 531; the per-position table is all zeros"
+  18 CONFIRMED    "Low label mass (< .20): F0 0/48, F1 4/120, F2 5/144 (min .001 / .000 — reads where neither label is the top token)"
+  19 REFUTED      "Terminations 0."
+       evidence: F1 counters.termination.total = 1 (by_key F1: 1); analysis JSON F1 'terminations': 1; session s8 terminations = [{'format':'F1','config':'walnut','round_pos':'forced2'}] — the '=== End of session ===' round matches term_regex '===\s*[Ee]nd' (data/configs/f_termination_patterns.json). F0 and F2 are 0; campaign total is 1, not 0.
+  20 REFUTED      "Cap hits: none flagged by the counters."
+       evidence: F0 counters.cap_hit.total = 1 (by_key free5: 1); analysis JSON F0 'cap_hits': 1 and per_round free5 cap_hit 1; F0 s4 free5 has cap_hit True, stop_reason 'cap', n_tok 60 = STOP_CAP — the emoji-run response the entry itself describes in (g). F1 and F2 counters are 0.
+  21 CONFIRMED    Per-round mean generated tokens: F0 f0 14.1, f1 16.2, f2 16.9, f3 16.6, 0 14.2, 1 16.0, 2 16.5, 3 18.4, 4 15.4, 5 21.6; F1 12.8, 15.3, 14.3, 12.0, 14.3, 14.2, 14.4, 15.8, 13.9, 15.9; F2 14.2, 15.6, 16.8, 17.5, 13.7, 14.5
+  22 CONFIRMED    "Tokens from each forced round's end to the first read (forced0/1/2/3): F0 158/113/67/21, F1 154/109/63/21, F2 160/115/68/21"; "the last forced round sits 21 tokens from the read in every format"
+  23 CONFIRMED    "Launched 16:14:52 UTC 2026-09-06 detached, resumed F0's and F2's timed session 0 (F1 restarted under timber); finished 22:16 UTC (last F2 line)"
+  24 CONFIRMED    "6.29 h of session time against the 6.96 h projection (F0 1.08 h, F1 2.34 h, F2 2.87 h; per session mean 488 / 350 / 430 s, F1's mean pulled down by four truncations at 6–49 s)"
+  25 CONFIRMED    "312/312 reads at verify KL exactly 0.0; the e2a walk reconstructs 56/56 sessions with seed streams matched; no bar fired; steered False and round_path_cached False on every round; ... audit v2 sha16 7aa235d25eeb66dc rec
+  26 CONFIRMED    "F0's checkpoint carries n_history 24 -> 8 (reallocated before resume); every F0 index is the prefix of the 24-schedule"
+  27 CONFIRMED    (a) "five scaffold reproductions in 24 sessions against none in 32"; "s14 emitted the NEXT scaffold line ([round 2 | running config: timber]) at its first response"
+  28 REFUTED      (a) "four of them on the first rounds under a menu label after the two timber rounds"
+       evidence: Rounds under a menu label after the two timber rounds are forced2 and forced3. Hits there: s2@forced2, s7@forced3, s8@forced2 = THREE. The fourth forced-phase hit, s14@forced0, is under `timber` (the entry's own next clause says so), and the fifth, s12@free4, is a free round.
+  29 CONFIRMED    (b) "The meeting has been moved to 3pm." returned unchanged for a reword task (F1 s22 forced0, F2 s5 free4, F2 s8 forced2)
+  30 CONFIRMED    (b) "the v3 echo rule compares against the instruction only (the v1->v2 confound fix), so a payload with no rewrite passes as content"
+  31 CONFIRMED    (c) F1 s22 flat-register strings: "Wind chimes are beautiful.", "This is a ferry.", "This is fresh laundry.", "This is a bakery.", "Do not leave dishes in the tone.", "The meeting has been modelled to 3pm." for a headlin
+  32 CONFIRMED    (c) F2 s8 terse strings "Only the empty glass remains.", "Please don't leave dishes in the abstract."
+  33 CONFIRMED    (d) contamination strings: "the bicycle courier's stapler" (F1 s0), "dishes in the board" (F1 s17), "keep you in the emoji" (F1 s6), "the softening water" (F2 s19), "the polite sink" (F2 s21), "the soft, dimly lit kitche
+  34 REFUTED      (d) the contamination is "on the rewrite tasks"
+       evidence: Four of the six are on t14 (the dishes rewrite), but F1 s0 forced3 is t03 'Compose a single polite sentence asking a colleague for their stapler' and F1 s6 free3 is t05 'Compose a single welcoming sentence to open a neighborhood newsletter' — neither is a rewrite task.
+  35 CONFIRMED    (e) "A lone CJK token 解析 for a gravel task (F1 s12 forced3) and a mid-word truncation 'Just a heads-up that the gr' (s12 free1) in the session that also carried the === Analysis Session === junk hit — the one session the
+  36 CONFIRMED    (f) "A repetition tail ending '…in generated by a large language model' (F2 s20 free1), unflagged"
+  37 CONFIRMED    (g) "F0 s4: every one of ten responses prefixed Subject: from its first email task, the last collapsing into an emoji run"
+  38 CONFIRMED    (h) "[Town Name]" placeholder (F1 s11), "Ugh, really?" (F1 s11)
+  39 CONFIRMED    (h) "Please keep it. It's already yours." for a thank-you (F1 s0)
+  40 CONFIRMED    Definitions: "break = first free pick IS the last forced label"; every format ends its forced phase on tag_minus; "share = share of free picks on the nominal first label, valid sessions, pooled over choices"
+  41 UNVERIFIABLE "Stamp verified at write time: date -u -> Mon Sep  7 16:56:35 UTC 2026"
+       evidence: No artifact records the write-time stamp; `date -u` at check time read Mon Sep 7 16:58:57 UTC 2026, so the stamp is plausible but not reproducible.
+
+=== refuter a717c9e0442239df6: 44 claims {'CONFIRMED': 38, 'REFUTED': 4, 'UNVERIFIABLE': 2} ===
+SUMMARY: Four refutations, two substantive and two minor. (1) "Terminations 0" is wrong: F1 s8 forced2 ('=== End of session ===') carries termination True; F1 counters termination total 1 (by_key F1:1); analysis JSON per_format.F1.terminations = 1. (2) "Cap hits: none flagged by the counters" is wrong: F0 s4 free5 hit the 60-token cap (cap_hit True, stop_reason 'cap' — the emoji-run collapse the entry itself describes in (g)); F0 counters cap_hit total 1 {free5: 1}; analysis JSON per_format.F0.cap_hits = 1. (3) In the rule-25 read, "four of them on the first rounds under a menu label after the two timber rounds" does not hold: the five F1 scaffold hits sit at s2 forced2, s7 forced3, s8 forced2, s12 free4, s14 forced0 — only three are on the forced menu-label rounds; s12's is on free4 (the entry's own audit paragraph says "one on a free round"). Also, s14's emitted line is a round-2 header in the round-1 template variant; the wrapper's actual next line would have been '[round 2 — config in use: timber]'. (4) Typographic: "Please keep it. It's already yours." uses a straight apostrophe; the F1 s0 forced2 text has U+2019 ("It’s"). Everything else in "The run", the per-format table, the anchors (all reproduced through habit.py to printed precision), the floors, the identity-finding tabulations, the per-round token means (F1 forced3 = 11.95 exactly, printed 12.0 by half-up), the forced-end-to-first-read intervals (21 tokens for forced3 in every format), the wrong_task false-positive mechanism (both advisories vanish when same-task sibling paraphrases are removed from `others`), and the quoted strings reproduce.
+
+   0 CONFIRMED    "COMPLETE, 56 of 56 sessions" / artifacts F0/F1/F2 sessions JSON, analysis JSON, run log, analyze raw exist
+   1 CONFIRMED    "Launched 16:14:52 UTC 2026-09-06 detached, resumed F0's and F2's timed session 0 (F1 restarted under `timber`); finished 22:16 UTC (last F2 line)"
+   2 CONFIRMED    "6.29 h of session time against the 6.96 h projection (F0 1.08 h, F1 2.34 h, F2 2.87 h ...)"
+   3 CONFIRMED    "per session mean 488 / 350 / 430 s, F1's mean pulled down by four truncations at 6–49 s"
+   4 CONFIRMED    "312/312 reads at verify KL exactly 0.0; the e2a walk reconstructs 56/56 sessions with seed streams matched; no bar fired; `steered` False and `round_path_cached` False on every round; the quarantined primitive absent at
+   5 CONFIRMED    "audit v2 sha16 `7aa235d25eeb66dc` recomputed and verified"
+   6 CONFIRMED    "F0's checkpoint carries `n_history` 24 → 8 (reallocated before resume); every F0 index is the prefix of the 24-schedule"
+   7 CONFIRMED    Table row F0: n 8, valid 8/8, strict alternation 8/8 = 1.000, first-pick break 0/8 = 0.000, share 0.500 (48), reads 48/48, mean 488 s
+   8 CONFIRMED    Table row F1: n 24, valid 20 / 19 (lenient/strict), strict alternation 12/20 = 0.600, first-pick break 9/20 = 0.450, share 0.492 (120), reads 120/120, mean 350 s
+   9 CONFIRMED    Table row F2: n 24, valid 24/24, strict alternation 12/24 = 0.500, first-pick break 12/24 = 0.500, share 0.507 (144), reads 144/144, mean 430 s
+  10 CONFIRMED    Anchors: "e2a all arms .840 alternation / .170 break (valid .837 / .163); e2a reward .827 / .163; e2a sham .868 / .211; e2d D2 M .690 / .033, D3 M .522 / .043"
+  11 CONFIRMED    "F0 reproduces the e2a format's habit in its strongest form (0 stay transitions in 40; every session's share exactly .50)"
+  12 CONFIRMED    "Rule-28(a) floors met on every feature in every format (F0 8 ≥ 6, F1 20 ≥ 16, F2 24 ≥ 16)"
+  13 CONFIRMED    Identity finding per pair: "F1 plaza 6/6 (granite/plaza sessions), prism 5/5, walnut 4/4, saddle 3/5; F2 saddle 5/6, prism 4/6, plaza 4/6, walnut 3/6"
+  14 CONFIRMED    "By first label: F1 granite 3/3, slate 2/2, velvet 2/2 vs plaza 0/3, prism 0/3, walnut 0/2; F2 granite 3/3, ridge 3/3 vs prism 0/3"
+  15 CONFIRMED    "Menu position does not drive the first pick (first pick = first-listed label 5/8, 8/20, 7/24)"
+  16 CONFIRMED    "stay transitions F0 0/40, F1 12/100 (.12), F2 15/120 (.125)"
+  17 CONFIRMED    "F0 80 rounds: nothing. F1 211 rounds: v2 audit frame 2 + junk 3 = 5 hits ... F2 240 rounds: 0 v2, 0 exclusion-bearing content, 2 `wrong_task` advisories (s2 forced1, s18 forced0)"
+  18 CONFIRMED    Quoted scaffold reproductions: `=== Config evaluation session ===` (s2 forced2), `=== END OF SESSION ===` (s7 forced3), `=== End of session ===` (s8 forced2), `=== Analysis Session ===` (s12 free4), `[round 2 | running c
+  19 CONFIRMED    "four at the forced phase (excluded, lenient) and one on a free round (strict only)"
+  20 CONFIRMED    wrong_task advisories are "both false positives on the read: each answers its own task and shares wording with the task's SIBLING paraphrases, which the screen's `others` construction (every paraphrase but the current on
+  21 CONFIRMED    "Refusals: zero `null_response`, zero declining-predicate rounds in 531; the per-position table is all zeros"
+  22 CONFIRMED    "Low label mass (< .20): F0 0/48, F1 4/120, F2 5/144 (min .001 / .000 — reads where neither label is the top token)"
+  23 REFUTED      "Terminations 0."
+       evidence: F1 s8 carries terminations [{'format':'F1','config':'walnut','round_pos':'forced2'}] and that round's `termination` flag is True (text '=== End of session ==='). F1 counters: termination total 1, by_key {'F1': 1}; format_recon_analysis.json per_format.F1.terminations = 1. F0 and F2 are 0; the campaign total is 1, not 0.
+  24 REFUTED      "Cap hits: none flagged by the counters."
+       evidence: F0 s4 free5: cap_hit True, n_tok 60 (= STOP_CAP), stop_reason 'cap' (the emoji-run collapse the entry itself describes in (g)). F0 counters: cap_hit total 1, by_key {'free5': 1}; analysis JSON per_format.F0.cap_hits = 1 and per_round.free5.cap_hit = 1. F1/F2 are 0.
+  25 CONFIRMED    Per-round token means F0: "f0 14.1, f1 16.2, f2 16.9, f3 16.6, 0 14.2, 1 16.0, 2 16.5, 3 18.4, 4 15.4, 5 21.6"
+  26 CONFIRMED    Per-round token means F1: "f0 12.8, f1 15.3, f2 14.3, f3 12.0, 0 14.3, 1 14.2, 2 14.4, 3 15.8, 4 13.9, 5 15.9"
+  27 CONFIRMED    Per-round token means F2: "f0 14.2, f1 15.6, f2 16.8, f3 17.5, 0 13.7, 1 14.5, 2 15.1, 3 13.2, 4 14.2, 5 16.2"
+  28 CONFIRMED    "Tokens from each forced round's end to the first read (forced0/1/2/3): F0 158/113/67/21, F1 154/109/63/21, F2 160/115/68/21 ... the last forced round sits 21 tokens from the read in every format"
+  29 REFUTED      "five scaffold reproductions in 24 sessions against none in 32, four of them on the first rounds under a menu label after the two `timber` rounds; s14 emitted the NEXT scaffold line ... at its first response"
+       evidence: Five in F1, none in F0+F2 (32) holds. But the positions are s2 forced2, s7 forced3, s8 forced2, s12 free4, s14 forced0: only THREE sit on the forced menu-label rounds (forced2/forced3, the rounds after the two timber rounds); the fourth non-s14 hit is s12 free4 (the fifth free round), which the entry's own audit paragraph calls 'one on a free round'. s14's string is verbatim at forced0; note its transcript's actual next header would be '[round 2 — config in use: timber]' (template rotation), so the emitted line is a round-2 header in the round-1 template variant, not the wrapper's literal next line.
+  30 CONFIRMED    "'The meeting has been moved to 3pm.' returned unchanged for a reword task (F1 s22 forced0, F2 s5 free4, F2 s8 forced2)"
+  31 CONFIRMED    "the v3 echo rule compares against the instruction only"
+  32 CONFIRMED    F1 s22 flat-register quotes: "Wind chimes are beautiful.", "This is a ferry.", "This is fresh laundry.", "This is a bakery.", "Do not leave dishes in the tone.", "The meeting has been modelled to 3pm." for a headline tas
+  33 CONFIRMED    F2 s8 terse quotes: "Only the empty glass remains.", "Please don't leave dishes in the abstract."; "neither flagged by any class"
+  34 CONFIRMED    Cross-task contamination quotes: "the bicycle courier's stapler" (F1 s0), "dishes in the board" (F1 s17), "keep you in the emoji" (F1 s6), "the softening water" (F2 s19), "the polite sink" (F2 s21), "the soft, dimly lit 
+  35 CONFIRMED    "A lone CJK token `解析` for a gravel task (F1 s12 forced3) and a mid-word truncation 'Just a heads-up that the gr' (s12 free1) in the session that also carried the `=== Analysis Session ===` junk hit — the one session the
+  36 CONFIRMED    "A repetition tail ending '…in generated by a large language model' (F2 s20 free1), unflagged"
+  37 CONFIRMED    "F0 s4: every one of ten responses prefixed `Subject:` from its first email task, the last collapsing into an emoji run"
+  38 CONFIRMED    "A `[Town Name]` placeholder (F1 s11), an 'Ugh, really?' (F1 s11)"
+  39 REFUTED      "Please keep it. It's already yours." for a thank-you (F1 s0)
+       evidence: Typographic only: F1 s0 forced2 text is '"Please keep it. It’s already yours."' with a curly apostrophe U+2019; RESULTS.md prints a straight ASCII apostrophe (It's). Task is the thank-you ('Write a one-sentence thank-you for a borrowed book.'). Content otherwise matches.
+  40 CONFIRMED    "F1 costs 4/24 sessions to scaffold reproduction, F2 none"
+  41 CONFIRMED    "the campaign's only exclusions, five scaffold reproductions caught by audit v2"
+  42 UNVERIFIABLE "(Stamp verified at write time: `date -u` → Mon Sep 7 16:56:35 UTC 2026.)" and "Design strip 2026-09-07 (PI date; Code stamps from `date -u`)"
+       evidence: No artifact records the write-time stamp; plausible (format_recon_analysis.json mtime 2026-09-07 16:52:56 UTC; this check ran at 16:57:58 UTC).
+  43 UNVERIFIABLE "the h-roster's identity balance (H3b) was screened at the read, not at a first pick after a neutral start"
+       evidence: A claim about the H3b screen design, not about the format-recon data; not checkable against the named artifacts.
+
+=== refuter adeb410a9ebe0f30f: 60 claims {'CONFIRMED': 54, 'REFUTED': 5, 'UNVERIFIABLE': 1} ===
+SUMMARY: Five claims fail against the artifacts; two are substantive, three are wording/verbatim. (1) "Terminations 0." — F1 s8 forced2 ('=== End of session ===') is recorded as a termination: session terminations list non-empty, round termination true, F1 counters.termination total 1, and format_recon_analysis.json per_format.F1.terminations = 1. (2) "Cap hits: none flagged by the counters." — F0 counters.cap_hit total 1 (free5); F0 s4 free5 is n_tok 60 with stop_reason 'cap' (the emoji run the entry's item (g) describes); analysis JSON F0 cap_hits = 1. Both figures sit in the analysis JSON the entry links. (3) "four of them on the first rounds under a menu label after the two timber rounds" — the hits are s2 forced2 and s8 forced2 (first menu-label round), s7 forced3 (second menu-label round), s14 forced0 (a timber round, before any menu label), s12 free4: two on the first menu-label round, three under a menu label at all. (4) "s14 emitted the NEXT scaffold line" — the harness's next line for idx 14 would be template 3, '[round 2 — config in use: timber]'; the model emitted its round-1 template with n+1 ('[round 2 | running config: timber]'); the quoted string itself is verbatim. (5) "Please keep it. It's already yours." — the artifact has a U+2019 apostrophe ('"Please keep it. It’s already yours."', F1 s0 forced2), so the quote is not byte-verbatim; typographic only. Everything else — the table, anchors (independently recomputed from e2a/e2d), identity-finding counts, token means, retention intervals, low-label-mass reads, refusals 0/531, the wrong_task sibling diagnosis (siblings-only fires, non-siblings-only does not), sha16, schedule prefix, forced_tags, timber/no-cedar, log agreement (53/53), and the gitignore split — reproduces at printed precision. Caveats worth a word: the one-line "same label whichever came first" overstates F2 velvet/walnut (3/3 split); F2 s5 free4's payload echo carries added double quotes; "21 tokens … in every format" is a mean (range 20–22); the write-time date stamp and the launch second are not in any artifact (the launch time is corroborated by commit 436e106 and mtime arithmetic to within seconds).
+
+   0 CONFIRMED    "COMPLETE, 56 of 56 sessions" — three sessions files complete, n_on_disk == n_registered (8/24/24)
+   1 CONFIRMED    "F0: 8/8 strict alternation, 0/8 first-pick breaks"
+   2 CONFIRMED    "F1 breaks 9/20, F2 12/24, both at chance-level session share"
+   3 CONFIRMED    "in both the same label is picked first whichever came first in the forced phase" (one-line summary)
+   4 CONFIRMED    "F1 also carries the campaign's only exclusions, five scaffold reproductions caught by audit v2"
+   5 CONFIRMED    Artifact/raw paths: format_recon_F0/F1/F2_sessions.json, format_recon_analysis.json, results/raw/2026-09-06_format_recon_run.log, results/raw/2026-09-07_format_recon_analyze.txt
+   6 UNVERIFIABLE "(Stamp verified at write time: `date -u` → Mon Sep  7 16:56:35 UTC 2026.)"
+       evidence: No artifact carries the stamp. Consistent ordering only: analysis JSON and analyze raw mtime 2026-09-07 16:52:56 UTC; the check ran at 16:59 UTC on 2026-09-07.
+   7 CONFIRMED    "Launched 16:14:52 UTC 2026-09-06 detached, resumed F0's and F2's timed session 0 (F1 restarted under `timber`)"
+   8 CONFIRMED    "finished 22:16 UTC (last F2 line)"
+   9 CONFIRMED    "6.29 h of session time against the 6.96 h projection (F0 1.08 h, F1 2.34 h, F2 2.87 h; per session mean 488 / 350 / 430 s)"
+  10 CONFIRMED    "F1's mean pulled down by four truncations at 6–49 s"
+  11 CONFIRMED    "312/312 reads at verify KL exactly 0.0"
+  12 CONFIRMED    "the e2a walk reconstructs 56/56 sessions with seed streams matched; no bar fired"
+  13 CONFIRMED    "`steered` False and `round_path_cached` False on every round"
+  14 CONFIRMED    "the quarantined primitive absent at every read"
+  15 CONFIRMED    "audit v2 sha16 `7aa235d25eeb66dc` recomputed and verified"
+  16 CONFIRMED    "F0's checkpoint carries `n_history` 24 → 8 (reallocated before resume); every F0 index is the prefix of the 24-schedule"
+  17 CONFIRMED    Definitions: valid = not excluded under the lenient scope (strict beside); break = first free pick IS the last forced label over all sessions with a pick; share = free picks on the nominal first label, valid sessions, po
+  18 CONFIRMED    Table row F0: 8 | 8 / 8 | 8/8 = 1.000 | 0/8 = 0.000 | 0.500 (48) | 48/48 | 488
+  19 CONFIRMED    Table row F1: 24 | 20 / 19 | 12/20 = 0.600 | 9/20 = 0.450 | 0.492 (120) | 120/120 | 350
+  20 CONFIRMED    Table row F2: 24 | 24 / 24 | 12/24 = 0.500 | 12/24 = 0.500 | 0.507 (144) | 144/144 | 430
+  21 CONFIRMED    "Anchors through the same functions: e2a all arms .840 alternation / .170 break (valid .837 / .163); e2a reward .827 / .163; e2a sham .868 / .211; e2d D2 M .690 / .033, D3 M .522 / .043"
+  22 CONFIRMED    "F0 reproduces the e2a format's habit in its strongest form (0 stay transitions in 40; every session's share exactly .50)"
+  23 CONFIRMED    "Rule-28(a) floors met on every feature in every format (F0 8 ≥ 6, F1 20 ≥ 16, F2 24 ≥ 16)"
+  24 CONFIRMED    Identity per pair: "F1 plaza 6/6, prism 5/5, walnut 4/4, saddle 3/5; F2 saddle 5/6, prism 4/6, plaza 4/6, walnut 3/6"
+  25 CONFIRMED    "By first label: F1 granite 3/3, slate 2/2, velvet 2/2 vs plaza 0/3, prism 0/3, walnut 0/2; F2 granite 3/3, ridge 3/3 vs prism 0/3"
+  26 CONFIRMED    "Menu position does not drive the first pick (first pick = first-listed label 5/8, 8/20, 7/24)"
+  27 CONFIRMED    "stay transitions F0 0/40, F1 12/100 (.12), F2 15/120 (.125)"
+  28 CONFIRMED    "F0 80 rounds: nothing" (audit v3)
+  29 CONFIRMED    "F1 211 rounds: v2 audit frame 2 + junk 3 = 5 hits — all SCAFFOLD REPRODUCTIONS: `=== Config evaluation session ===` (s2 forced2), `=== END OF SESSION ===` (s7 forced3), `=== End of session ===` (s8 forced2), `=== Analys
+  30 CONFIRMED    "four at the forced phase (excluded, lenient) and one on a free round (strict only); no content class, no lexical hit"
+  31 CONFIRMED    "F2 240 rounds: 0 v2, 0 exclusion-bearing content, 2 `wrong_task` advisories (s2 forced1, s18 forced0)"
+  32 CONFIRMED    "both false positives on the read: each answers its own task and shares wording with the task's SIBLING paraphrases, which the screen's `others` construction (every paraphrase but the current one) includes"
+  33 CONFIRMED    "Refusals: zero `null_response`, zero declining-predicate rounds in 531; the per-position table is all zeros"
+  34 CONFIRMED    "Low label mass (< .20): F0 0/48, F1 4/120, F2 5/144 (min .001 / .000 — reads where neither label is the top token)"
+  35 REFUTED      "Terminations 0."
+       evidence: F1 s8 has terminations [{'format':'F1','config':'walnut','round_pos':'forced2'}] and round s8 forced2 (text '=== End of session ===') carries termination: true; F1 counters.termination total 1 (by_key F1: 1); format_recon_analysis.json per_format.F1.terminations = 1. F0 and F2 are 0, so the campaign count is 1, not 0.
+  36 REFUTED      "Cap hits: none flagged by the counters."
+       evidence: F0 counters.cap_hit total 1 (by_key free5: 1); F0 s4 free5 has n_tok 60 (= STOP_CAP), stop_reason 'cap', cap_hit true (the emoji run the entry's own item (g) describes); format_recon_analysis.json per_format.F0.cap_hits = 1 and per_round.free5.cap_hit = 1. The counters did flag one cap hit.
+  37 CONFIRMED    Per-round generated-token means (30 figures: F0 f0 14.1 … 5 21.6; F1 f0 12.8 … 5 15.9; F2 f0 14.2 … 5 16.2)
+  38 CONFIRMED    "Tokens from each forced round's end to the first read (forced0/1/2/3): F0 158/113/67/21, F1 154/109/63/21, F2 160/115/68/21"
+  39 CONFIRMED    "the last forced round sits 21 tokens from the read in every format (the menu line)"
+  40 CONFIRMED    "(a) F1 is the format that breaks the answer register — five scaffold reproductions in 24 sessions against none in 32"
+  41 REFUTED      "four of them on the first rounds under a menu label after the two `timber` rounds"
+       evidence: Positions and tags of the five hits: s2 forced2 (tag slate — first menu-label round), s8 forced2 (tag walnut — first menu-label round), s7 forced3 (tag walnut — the SECOND menu-label round), s14 forced0 (tag timber — the first neutral round, before any menu label), s12 free4 (free round). Only two hits are on the first round under a menu label; at most three are under a menu label at all; s14's hit is on a timber round.
+  42 CONFIRMED    "s14 emitted the NEXT scaffold line (`[round 2 | running config: timber]`) at its first response" — the quoted string
+  43 REFUTED      "s14 emitted the NEXT scaffold line" — that the string is the harness's next scaffold line
+       evidence: recon.round_segment uses ROUND_TEMPLATES[(idx+ri) % 4]; for s14 ri=1 → template 3 = '[round 2 — config in use: timber]'. The model reproduced its own round-1 header template ('[round 1 | running config: timber]', template 2) with n incremented — a round-2 scaffold line, not the line the harness would have written next. Literal wording only; the substance (scaffold reproduction) stands.
+  44 CONFIRMED    "(b) 'The meeting has been moved to 3pm.' returned unchanged for a reword task (F1 s22 forced0, F2 s5 free4, F2 s8 forced2)"
+  45 CONFIRMED    "(c) One flat-register session (F1 s22: 'Wind chimes are beautiful.', 'This is a ferry.', 'This is fresh laundry.', 'This is a bakery.', 'Do not leave dishes in the tone.', 'The meeting has been modelled to 3pm.' for a h
+  46 CONFIRMED    "one terse session (F2 s8: 'Only the empty glass remains.', 'Please don't leave dishes in the abstract.'), neither flagged by any class"
+  47 CONFIRMED    "(d) Cross-task word contamination … 'the bicycle courier's stapler' (F1 s0), 'dishes in the board' (F1 s17), 'keep you in the emoji' (F1 s6), 'the softening water' (F2 s19), 'the polite sink' (F2 s21), 'the soft, dimly 
+  48 CONFIRMED    "(e) A lone CJK token `解析` for a gravel task (F1 s12 forced3) and a mid-word truncation 'Just a heads-up that the gr' (s12 free1) in the session that also carried the `=== Analysis Session ===` junk hit — the one session
+  49 CONFIRMED    "(f) A repetition tail ending '…in generated by a large language model' (F2 s20 free1), unflagged"
+  50 CONFIRMED    "(g) F0 s4: every one of ten responses prefixed `Subject:` from its first email task, the last collapsing into an emoji run"
+  51 CONFIRMED    "(h) A `[Town Name]` placeholder (F1 s11), an 'Ugh, really?' (F1 s11)"
+  52 REFUTED      "'Please keep it. It's already yours.' for a thank-you (F1 s0)"
+       evidence: Verbatim standard only: F1 s0 forced2 text is '"Please keep it. It’s already yours."' — apostrophe U+2019 (’), not U+0027 ('), and wrapped in double quotes; task 'Write a one-sentence thank-you for a borrowed book.' The substance is right; the quoted string does not appear byte-for-byte.
+  53 CONFIRMED    "F1 costs 4/24 sessions to scaffold reproduction, F2 none"
+  54 CONFIRMED    LENS: every session's forced_tags match its format (F0 A B A B, F1 timber timber A B, F2 A A B B)
+  55 CONFIRMED    LENS: F1's neutral label is `timber` in every F1 session and no F1 session carries `cedar`
+  56 CONFIRMED    LENS: format_recon_analysis.json per_format figures recompute from the sessions files
+  57 CONFIRMED    LENS: run log per-session lines agree with the artifacts
+  58 CONFIRMED    LENS: .gitignore keeps the checkpoints local while the sessions and analysis JSON travel
+  59 CONFIRMED    Run-log header consistent with the entry: allocation F0 8 / F1 24 / F2 24, gate 8.0 h, projected 6.96 h GO, sham-only uncached round path, audit v3 with v2 sha16 recomputed, timber id 43299
+
+total claims: 146

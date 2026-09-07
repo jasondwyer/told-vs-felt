@@ -1,0 +1,85 @@
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python /Users/jasondwyer/Documents/code/jspace-lab/scripts/format_recon.py --stage run --format all --resume
+  timing gate: projected 6.96 h <= 8.0 h -> GO; timed sessions' acceptance PASS on every format
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 20116.57it/s]
+  model loaded in 3s
+  SHAM ONLY: no steering, no axis, no random direction; every forward vanilla; round path UNCACHED (the uncached path of record); choice reads = readout.choice_read(verify=True) + assert_construction_stable
+  design block 2026-09-06 §4; descriptive only; no bar; template recalibration for LOCK-k
+  F0: e2a format of record -- strict alternation, two rounds per label (A B A B)  [first second first second]  -- continuity anchor; e2a strict alternation .840 pooled / .827 reward arm
+  F1: neutral-start -- two rounds under a neutral third label, then one round per menu label (N N A B)  [neutral neutral first second]  -- the alternation habit is not installed between the two menu labels
+  F2: block order -- A A B B / B B A A, start counterbalanced  [first first second second]  -- decorrelates round position from label parity (the Stage B/C confound)
+  allocation {'F0': 8, 'F1': 24, 'F2': 24} (8 cells; whole blocks; design patch 2026-09-06 §2; draw seed 20260906); gate 8.0 h
+  roster of record (AMENDMENT 1 i): granite/plaza, prism/slate, velvet/walnut, ridge/saddle
+  neutral label (F1): 'timber' id 43299 (selection artifact data/format/neutral_label_selection.json; provisionally approved, design patch 2026-09-06 §2)
+  hygiene: rule 18 9 tags vs 64 paraphrases -> 0 hits; rule 28c wrapper -> 0 hits; neutral absent from every roster {'e2d_roster_of_record': 8, 'H3_sixteen': 16, 'h3_candidates': 16, 'a1_candidates': 16, 'e2a_archive_pairs': 8}
+  audit of record: audit-v3 = e2b_audit_v2 + content-class-v4 (exclusion: null/stuck/preamble; advisory: echo/wrong_task); v2 = e2b_audit_v2.json sha16 7aa235d25eeb66dc (recomputed 7aa235d25eeb66dc, verified)
+  exclusion scope: 'e2a' (strict recovered beside); precedence: audit v3 first, lexical on unclaimed rounds (rule 28b)
+  declared bars (e2d's, verbatim; no new bar): scaffold_absorption, template_breakage, round_degeneracy -- verified to fire and stay silent
+  rule 28(a) floors declared (ceil 2/3 of n): {'F0': 6, 'F1': 16, 'F2': 16} per feature, on its domain (reported with diagnosis, never suppressed)
+  timing rule: only COMPLETE timed sessions (4 rounds + 6 reads) enter the projection; <= 4 attempts per format
+  tasks: 16 x 4 paraphrases; STOP_CAP 60; temp 0.7
+  ban list: 12 ids / 12 strings (round generation only, never a read)
+
+=== RUN F0: n = 8 ===
+    [F0] RESUMED from /Users/jasondwyer/Documents/code/jspace-lab/data/format/format_recon_F0_sessions.json.checkpoint: 1 sessions on disk, 6 reads
+    [F0] s1 ridge>saddle valid  6 reads  first-pick follows  complete  437s
+    [F0] s2 slate>prism valid  6 reads  first-pick follows  complete  481s
+    [F0] s3 walnut>velvet valid  6 reads  first-pick follows  complete  431s
+    [F0] s4 saddle>ridge valid  6 reads  first-pick follows  complete  651s
+    [F0] s5 plaza>granite valid  6 reads  first-pick follows  complete  612s
+    [F0] s6 granite>plaza valid  6 reads  first-pick follows  complete  452s
+    [F0] s7 velvet>walnut valid  6 reads  first-pick follows  complete  388s
+  F0: 8/8 on disk; acceptance PASS; KL 48/48 exact; walk 8/8; bars none; excluded 0 (e2a) / 0 strict; wrote /Users/jasondwyer/Documents/code/jspace-lab/data/format/format_recon_F0_sessions.json
+
+=== RUN F1: n = 24 ===
+    [F1] s0 prism>slate valid  6 reads  first-pick follows  complete  405s
+    [F1] s1 ridge>saddle valid  6 reads  first-pick BREAK  complete  515s
+    [F1] s2 slate>prism EXCLUDED audit:frame:Config evaluation session@forced2  0 reads  first-pick n/a  TRUNCATED  48s
+    [F1] s3 walnut>velvet valid  6 reads  first-pick follows  complete  350s
+    [F1] s4 saddle>ridge valid  6 reads  first-pick BREAK  complete  334s
+    [F1] s5 plaza>granite valid  6 reads  first-pick follows  complete  424s
+    [F1] s6 granite>plaza valid  6 reads  first-pick BREAK  complete  566s
+    [F1] s7 velvet>walnut EXCLUDED audit:junk:(?im)^\s*={2,}[^\n]*={2,}\s*$@forced3  0 reads  first-pick n/a  TRUNCATED  49s
+    [F1] s8 walnut>velvet EXCLUDED audit:junk:(?im)^\s*={2,}[^\n]*={2,}\s*$@forced2  0 reads  first-pick n/a  TRUNCATED  16s
+    [F1] s9 slate>prism valid  6 reads  first-pick BREAK  complete  385s
+    [F1] s10 granite>plaza valid  6 reads  first-pick BREAK  complete  414s
+    [F1] s11 saddle>ridge valid  6 reads  first-pick follows  complete  370s
+    [F1] s12 velvet>walnut valid  6 reads  first-pick BREAK  complete  337s
+    [F1] s13 prism>slate valid  6 reads  first-pick follows  complete  405s
+    [F1] s14 ridge>saddle EXCLUDED audit:frame:[round@forced0  0 reads  first-pick n/a  TRUNCATED  6s
+    [F1] s15 plaza>granite valid  6 reads  first-pick follows  complete  373s
+    [F1] s16 prism>slate valid  6 reads  first-pick follows  complete  532s
+    [F1] s17 walnut>velvet valid  6 reads  first-pick follows  complete  421s
+    [F1] s18 granite>plaza valid  6 reads  first-pick BREAK  complete  494s
+    [F1] s19 slate>prism valid  6 reads  first-pick BREAK  complete  369s
+    [F1] s20 plaza>granite valid  6 reads  first-pick follows  complete  490s
+    [F1] s21 saddle>ridge valid  6 reads  first-pick follows  complete  413s
+    [F1] s22 ridge>saddle valid  6 reads  first-pick follows  complete  202s
+    [F1] s23 velvet>walnut valid  6 reads  first-pick BREAK  complete  488s
+  F1: 24/24 on disk; acceptance PASS; KL 120/120 exact; walk 24/24; bars none; excluded 4 (e2a) / 5 strict; wrote /Users/jasondwyer/Documents/code/jspace-lab/data/format/format_recon_F1_sessions.json
+
+=== RUN F2: n = 24 ===
+    [F2] RESUMED from /Users/jasondwyer/Documents/code/jspace-lab/data/format/format_recon_F2_sessions.json.checkpoint: 1 sessions on disk, 6 reads
+    [F2] s1 ridge>saddle valid  6 reads  first-pick BREAK  complete  256s
+    [F2] s2 slate>prism valid  6 reads  first-pick follows  complete  430s
+    [F2] s3 walnut>velvet valid  6 reads  first-pick follows  complete  456s
+    [F2] s4 saddle>ridge valid  6 reads  first-pick BREAK  complete  411s
+    [F2] s5 plaza>granite valid  6 reads  first-pick follows  complete  416s
+    [F2] s6 granite>plaza valid  6 reads  first-pick BREAK  complete  416s
+    [F2] s7 velvet>walnut valid  6 reads  first-pick follows  complete  297s
+    [F2] s8 walnut>velvet valid  6 reads  first-pick BREAK  complete  216s
+    [F2] s9 slate>prism valid  6 reads  first-pick follows  complete  445s
+    [F2] s10 granite>plaza valid  6 reads  first-pick BREAK  complete  503s
+    [F2] s11 saddle>ridge valid  6 reads  first-pick follows  complete  550s
+    [F2] s12 velvet>walnut valid  6 reads  first-pick BREAK  complete  451s
+    [F2] s13 prism>slate valid  6 reads  first-pick follows  complete  376s
+    [F2] s14 ridge>saddle valid  6 reads  first-pick BREAK  complete  478s
+    [F2] s15 plaza>granite valid  6 reads  first-pick BREAK  complete  531s
+    [F2] s16 prism>slate valid  6 reads  first-pick follows  complete  368s
+    [F2] s17 walnut>velvet valid  6 reads  first-pick follows  complete  482s
+    [F2] s18 granite>plaza valid  6 reads  first-pick BREAK  complete  731s
+    [F2] s19 slate>prism valid  6 reads  first-pick BREAK  complete  517s
+    [F2] s20 plaza>granite valid  6 reads  first-pick BREAK  complete  472s
+    [F2] s21 saddle>ridge valid  6 reads  first-pick follows  complete  411s
+    [F2] s22 ridge>saddle valid  6 reads  first-pick BREAK  complete  306s
+    [F2] s23 velvet>walnut valid  6 reads  first-pick follows  complete  340s
+  F2: 24/24 on disk; acceptance PASS; KL 144/144 exact; walk 24/24; bars none; excluded 0 (e2a) / 0 strict; wrote /Users/jasondwyer/Documents/code/jspace-lab/data/format/format_recon_F2_sessions.json

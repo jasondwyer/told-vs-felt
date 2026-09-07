@@ -1,0 +1,1215 @@
+{
+ "item": "format recon analysis (descriptive; no bar)",
+ "source": "sessions",
+ "labels": {
+  "F0": "sessions file (8 sessions)",
+  "F1": "sessions file (24 sessions)",
+  "F2": "sessions file (24 sessions)"
+ },
+ "formats_missing": [],
+ "n_per_format_registered": {
+  "F0": 8,
+  "F1": 24,
+  "F2": 24
+ },
+ "per_format": {
+  "F0": {
+   "n_sessions": 8,
+   "exclusion_scope_of_run": "e2a",
+   "n_valid_run_scope": 8,
+   "n_excluded_run_scope": 0,
+   "n_excluded_strict": 0,
+   "n_complete": 8,
+   "exclusion_reasons_run_scope": [],
+   "exclusion_reasons_strict": [],
+   "features_rule28a": {
+    "first_pick_break": {
+     "domain": "all",
+     "decidable": 8,
+     "domain_n": 8,
+     "floor": 6,
+     "diagnosis": null,
+     "reported_regardless": true
+    },
+    "strict_alternation": {
+     "domain": "valid",
+     "decidable": 8,
+     "domain_n": 8,
+     "floor": 6,
+     "diagnosis": null,
+     "reported_regardless": true
+    },
+    "session_share": {
+     "domain": "valid",
+     "decidable": 8,
+     "domain_n": 8,
+     "floor": 6,
+     "diagnosis": null,
+     "reported_regardless": true
+    }
+   },
+   "refusals": {
+    "by_round_position": {
+     "forced0": {
+      "n": 8,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     },
+     "forced1": {
+      "n": 8,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     },
+     "forced2": {
+      "n": 8,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     },
+     "forced3": {
+      "n": 8,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     },
+     "free0": {
+      "n": 8,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     },
+     "free1": {
+      "n": 8,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     },
+     "free2": {
+      "n": 8,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     },
+     "free3": {
+      "n": 8,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     },
+     "free4": {
+      "n": 8,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     },
+     "free5": {
+      "n": 8,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     }
+    },
+    "total": {
+     "n": 80,
+     "null_response": 0,
+     "declining_predicate_any": 0
+    },
+    "not_counted": "imperative refusals without a declining predicate (declared miss; the read counts them)"
+   },
+   "strict_alternation": {
+    "valid": {
+     "k": 8,
+     "n": 8,
+     "rate": 1.0
+    },
+    "all_with_2plus_picks": {
+     "k": 8,
+     "n": 8,
+     "rate": 1.0
+    },
+    "valid_with_six_picks": {
+     "k": 8,
+     "n": 8,
+     "rate": 1.0
+    }
+   },
+   "first_pick_break": {
+    "definition": "first free pick IS the last forced label (the alternation habit broken); in F2 this is also the 'stay' rate",
+    "all_with_a_pick": {
+     "k": 0,
+     "n": 8,
+     "rate": 0.0
+    },
+    "valid": {
+     "k": 0,
+     "n": 8,
+     "rate": 0.0
+    }
+   },
+   "session_share_on_first_label": {
+    "definition": "share of free picks on tag_plus (the nominal first label), valid sessions; e2a's share_all_choices with the nominal pole",
+    "pooled_over_choices": 0.5,
+    "n_choices": 48,
+    "mean_of_per_session": 0.5,
+    "n_sessions": 8
+   },
+   "audit_v3": {
+    "version": "audit-v3 = e2b_audit_v2 + content-class-v4 (exclusion: null/stuck/preamble; advisory: echo/wrong_task)",
+    "n_rounds": 80,
+    "v2_audit_by_category": {},
+    "content_exclusion_by_class": {},
+    "content_advisory_by_class": {},
+    "lexical_by_tag": {},
+    "rounds_with_any_exclusion_bearing_hit": 0,
+    "rounds_with_advisory": 0
+   },
+   "per_round": {
+    "forced0": {
+     "n": 8,
+     "mean": 14.125,
+     "min": 6,
+     "max": 29,
+     "sd": 7.679983258910325,
+     "v2_audit": 0,
+     "content_exclusion": 0,
+     "advisory": 0,
+     "cap_hit": 0
+    },
+    "forced1": {
+     "n": 8,
+     "mean": 16.25,
+     "min": 7,
+     "max": 36,
+     "sd": 9.254342609978147,
+     "v2_audit": 0,
+     "content_exclusion": 0,
+     "advisory": 0,
+     "cap_hit": 0
+    },
+    "forced2": {
+     "n": 8,
+     "mean": 16.875,
+     "min": 10,
+     "max": 26,
+     "sd": 6.556076788533128,
+     "v2_audit": 0,
+     "content_exclusion": 0,
+     "advisory": 0,
+     "cap_hit": 0
+    },
+    "forced3": {
+     "n": 8,
+     "mean": 16.625,
+     "min": 11,
+     "max": 20,
+     "sd": 3.020761493398643,
+     "v2_audit": 0,
+     "content_exclusion": 0,
+     "advisory": 0,
+     "cap_hit": 0
+    },
+    "free0": {
+     "n": 8,
+     "mean": 14.25,
+     "min": 4,
+     "max": 28,
+     "sd": 7.066015244009273,
+     "v2_audit": 0,
+     "content_exclusion": 0,
+     "advisory": 0,
+     "cap_hit": 0
+    },
+    "free1": {
+     "n": 8,
+     "mean": 16.0,
+     "min": 3,
+     "max": 25,
+     "sd": 7.050835816716038,
+     "v2_audit": 0,
+     "content_exclusion": 0,
+     "advisory": 0,
+     "cap_hit": 0
+    },
+    "free2": {
+     "n": 8,
+     "mean": 16.5,
+     "min": 4,
+     "max": 32,
+     "sd": 8.502100580780864,
+     "v2_audit": 0,
+     "content_exclusion": 0,
+     "advisory": 0,
+     "cap_hit": 0
+    },
+    "free3": {
+     "n": 8,
+     "mean": 18.375,
+     "min": 9,
+     "max": 30,
+     "sd": 6.7175144212722016,
+     "v2_audit": 0,
+     "content_exclusion": 0,
+     "advisory": 0,
+     "cap_hit": 0
+    },
+    "free4": {
+     "n": 8,
+     "mean": 15.375,
+     "min": 10,
+     "max": 22,
+     "sd": 4.2067123233504535,
+     "v2_audit": 0,
+     "content_exclusion": 0,
+     "advisory": 0,
+     "cap_hit": 0
+    },
+    "free5": {
+     "n": 8,
+     "mean": 21.625,
+     "min": 4,
+     "max": 60,
+     "sd": 16.36143112846271,
+     "v2_audit": 0,
+     "content_exclusion": 0,
+     "advisory": 0,
+     "cap_hit": 1
+    }
+   },
+   "tokens_forced_end_to_first_read": {
+    "forced0": {
+     "mean": 158.0,
+     "min": 138,
+     "max": 185,
+     "n": 8
+    },
+    "forced1": {
+     "mean": 113.0,
+     "min": 104,
+     "max": 121,
+     "n": 8
+    },
+    "forced2": {
+     "mean": 66.625,
+     "min": 60,
+     "max": 70,
+     "n": 8
+    },
+    "forced3": {
+     "mean": 21.0,
+     "min": 20,
+     "max": 22,
+     "n": 8
+    }
+   },
+   "prefix_tokens_at_read": {
+    "free0": {
+     "mean": 207.5,
+     "min": 182,
+     "max": 242
+    },
+    "free1": {
+     "mean": 274.25,
+     "min": 243,
+     "max": 312
+    },
+    "free2": {
+     "mean": 345.25,
+     "min": 323,
+     "max": 386
+    },
+    "free3": {
+     "mean": 415.125,
+     "min": 387,
+     "max": 457
+    },
+    "free4": {
+     "mean": 488.0,
+     "min": 461,
+     "max": 524
+    },
+    "free5": {
+     "mean": 556.0,
+     "min": 528,
+     "max": 594
+    }
+   },
+   "reads": {
+    "n": 48,
+    "kl_exactly_zero": 48,
+    "kl_max": 0.0
+   },
+   "low_label_mass": 0,
+   "terminations": 0,
+   "cap_hits": 1,
+   "seconds": {
+    "mean": 487.8323748111725,
+    "total": 3902.65899848938
+   }
+  },
+  "F1": {
+   "n_sessions": 24,
+   "exclusion_scope_of_run": "e2a",
+   "n_valid_run_scope": 20,
+   "n_excluded_run_scope": 4,
+   "n_excluded_strict": 5,
+   "n_complete": 20,
+   "exclusion_reasons_run_scope": [
+    "audit:frame:Config evaluation session@forced2",
+    "audit:junk:(?im)^\\s*={2,}[^\\n]*={2,}\\s*$@forced3",
+    "audit:junk:(?im)^\\s*={2,}[^\\n]*={2,}\\s*$@forced2",
+    "audit:frame:[round@forced0"
+   ],
+   "exclusion_reasons_strict": [
+    "audit:frame:Config evaluation session@forced2",
+    "audit:junk:(?im)^\\s*={2,}[^\\n]*={2,}\\s*$@forced3",
+    "audit:junk:(?im)^\\s*={2,}[^\\n]*={2,}\\s*$@forced2",
+    "audit:junk:(?im)^\\s*={2,}[^\\n]*={2,}\\s*$@free4",
+    "audit:frame:[round@forced0"
+   ],
+   "features_rule28a": {
+    "first_pick_break": {
+     "domain": "all",
+     "decidable": 20,
+     "domain_n": 20,
+     "floor": 16,
+     "diagnosis": null,
+     "reported_regardless": true
+    },
+    "strict_alternation": {
+     "domain": "valid",
+     "decidable": 20,
+     "domain_n": 20,
+     "floor": 16,
+     "diagnosis": null,
+     "reported_regardless": true
+    },
+    "session_share": {
+     "domain": "valid",
+     "decidable": 20,
+     "domain_n": 20,
+     "floor": 16,
+     "diagnosis": null,
+     "reported_regardless": true
+    }
+   },
+   "refusals": {
+    "by_round_position": {
+     "forced0": {
+      "n": 24,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     },
+     "forced1": {
+      "n": 23,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     },
+     "forced2": {
+      "n": 23,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     },
+     "forced3": {
+      "n": 21,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     },
+     "free0": {
+      "n": 20,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     },
+     "free1": {
+      "n": 20,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     },
+     "free2": {
+      "n": 20,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     },
+     "free3": {
+      "n": 20,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     },
+     "free4": {
+      "n": 20,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     },
+     "free5": {
+      "n": 20,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     }
+    },
+    "total": {
+     "n": 211,
+     "null_response": 0,
+     "declining_predicate_any": 0
+    },
+    "not_counted": "imperative refusals without a declining predicate (declared miss; the read counts them)"
+   },
+   "strict_alternation": {
+    "valid": {
+     "k": 12,
+     "n": 20,
+     "rate": 0.6
+    },
+    "all_with_2plus_picks": {
+     "k": 12,
+     "n": 20,
+     "rate": 0.6
+    },
+    "valid_with_six_picks": {
+     "k": 12,
+     "n": 20,
+     "rate": 0.6
+    }
+   },
+   "first_pick_break": {
+    "definition": "first free pick IS the last forced label (the alternation habit broken); in F2 this is also the 'stay' rate",
+    "all_with_a_pick": {
+     "k": 9,
+     "n": 20,
+     "rate": 0.45
+    },
+    "valid": {
+     "k": 9,
+     "n": 20,
+     "rate": 0.45
+    }
+   },
+   "session_share_on_first_label": {
+    "definition": "share of free picks on tag_plus (the nominal first label), valid sessions; e2a's share_all_choices with the nominal pole",
+    "pooled_over_choices": 0.49166666666666664,
+    "n_choices": 120,
+    "mean_of_per_session": 0.4916666666666666,
+    "n_sessions": 20
+   },
+   "audit_v3": {
+    "version": "audit-v3 = e2b_audit_v2 + content-class-v4 (exclusion: null/stuck/preamble; advisory: echo/wrong_task)",
+    "n_rounds": 211,
+    "v2_audit_by_category": {
+     "frame": 2,
+     "junk": 3
+    },
+    "content_exclusion_by_class": {},
+    "content_advisory_by_class": {},
+    "lexical_by_tag": {},
+    "rounds_with_any_exclusion_bearing_hit": 5,
+    "rounds_with_advisory": 0
+   },
+   "per_round": {
+    "forced0": {
+     "n": 24,
+     "mean": 12.75,
+     "min": 2,
+     "max": 33,
+     "sd": 8.29483862568085,
+     "v2_audit": 1,
+     "content_exclusion": 0,
+     "advisory": 0,
+     "cap_hit": 0
+    },
+    "forced1": {
+     "n": 23,
+     "mean": 15.347826086956522,
+     "min": 3,
+     "max": 30,
+     "sd": 7.214938389784035,
+     "v2_audit": 0,
+     "content_exclusion": 0,
+     "advisory": 0,
+     "cap_hit": 0
+    },
+    "forced2": {
+     "n": 23,
+     "mean": 14.347826086956522,
+     "min": 6,
+     "max": 28,
+     "sd": 5.523575058141684,
+     "v2_audit": 2,
+     "content_exclusion": 0,
+     "advisory": 0,
+     "cap_hit": 0
+    },
+    "forced3": {
+     "n": 21,
+     "mean": 11.952380952380953,
+     "min": 3,
+     "max": 17,
+     "sd": 3.8791260675078667,
+     "v2_audit": 1,
+     "content_exclusion": 0,
+     "advisory": 0,
+     "cap_hit": 0
+    },
+    "free0": {
+     "n": 20,
+     "mean": 14.35,
+     "min": 4,
+     "max": 26,
+     "sd": 6.183807377676842,
+     "v2_audit": 0,
+     "content_exclusion": 0,
+     "advisory": 0,
+     "cap_hit": 0
+    },
+    "free1": {
+     "n": 20,
+     "mean": 14.25,
+     "min": 4,
+     "max": 25,
+     "sd": 5.339771333562594,
+     "v2_audit": 0,
+     "content_exclusion": 0,
+     "advisory": 0,
+     "cap_hit": 0
+    },
+    "free2": {
+     "n": 20,
+     "mean": 14.4,
+     "min": 8,
+     "max": 21,
+     "sd": 3.7612987678530185,
+     "v2_audit": 0,
+     "content_exclusion": 0,
+     "advisory": 0,
+     "cap_hit": 0
+    },
+    "free3": {
+     "n": 20,
+     "mean": 15.8,
+     "min": 5,
+     "max": 25,
+     "sd": 5.444456379029765,
+     "v2_audit": 0,
+     "content_exclusion": 0,
+     "advisory": 0,
+     "cap_hit": 0
+    },
+    "free4": {
+     "n": 20,
+     "mean": 13.9,
+     "min": 4,
+     "max": 22,
+     "sd": 5.270573722890237,
+     "v2_audit": 1,
+     "content_exclusion": 0,
+     "advisory": 0,
+     "cap_hit": 0
+    },
+    "free5": {
+     "n": 20,
+     "mean": 15.9,
+     "min": 5,
+     "max": 25,
+     "sd": 5.17992074720921,
+     "v2_audit": 0,
+     "content_exclusion": 0,
+     "advisory": 0,
+     "cap_hit": 0
+    }
+   },
+   "tokens_forced_end_to_first_read": {
+    "forced0": {
+     "mean": 153.65,
+     "min": 133,
+     "max": 183,
+     "n": 20
+    },
+    "forced1": {
+     "mean": 108.55,
+     "min": 92,
+     "max": 133,
+     "n": 20
+    },
+    "forced2": {
+     "mean": 63.4,
+     "min": 53,
+     "max": 73,
+     "n": 20
+    },
+    "forced3": {
+     "mean": 21.05,
+     "min": 20,
+     "max": 22,
+     "n": 20
+    }
+   },
+   "prefix_tokens_at_read": {
+    "free0": {
+     "mean": 200.8,
+     "min": 180,
+     "max": 234
+    },
+    "free1": {
+     "mean": 267.4,
+     "min": 241,
+     "max": 312
+    },
+    "free2": {
+     "mean": 335.05,
+     "min": 301,
+     "max": 386
+    },
+    "free3": {
+     "mean": 402.4,
+     "min": 360,
+     "max": 448
+    },
+    "free4": {
+     "mean": 471.65,
+     "min": 418,
+     "max": 523
+    },
+    "free5": {
+     "mean": 539.0,
+     "min": 483,
+     "max": 594
+    }
+   },
+   "reads": {
+    "n": 120,
+    "kl_exactly_zero": 120,
+    "kl_max": 0.0
+   },
+   "low_label_mass": 4,
+   "terminations": 1,
+   "cap_hits": 0,
+   "seconds": {
+    "mean": 350.3134294450283,
+    "total": 8407.52230668068
+   }
+  },
+  "F2": {
+   "n_sessions": 24,
+   "exclusion_scope_of_run": "e2a",
+   "n_valid_run_scope": 24,
+   "n_excluded_run_scope": 0,
+   "n_excluded_strict": 0,
+   "n_complete": 24,
+   "exclusion_reasons_run_scope": [],
+   "exclusion_reasons_strict": [],
+   "features_rule28a": {
+    "first_pick_break": {
+     "domain": "all",
+     "decidable": 24,
+     "domain_n": 24,
+     "floor": 16,
+     "diagnosis": null,
+     "reported_regardless": true
+    },
+    "strict_alternation": {
+     "domain": "valid",
+     "decidable": 24,
+     "domain_n": 24,
+     "floor": 16,
+     "diagnosis": null,
+     "reported_regardless": true
+    },
+    "session_share": {
+     "domain": "valid",
+     "decidable": 24,
+     "domain_n": 24,
+     "floor": 16,
+     "diagnosis": null,
+     "reported_regardless": true
+    }
+   },
+   "refusals": {
+    "by_round_position": {
+     "forced0": {
+      "n": 24,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     },
+     "forced1": {
+      "n": 24,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     },
+     "forced2": {
+      "n": 24,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     },
+     "forced3": {
+      "n": 24,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     },
+     "free0": {
+      "n": 24,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     },
+     "free1": {
+      "n": 24,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     },
+     "free2": {
+      "n": 24,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     },
+     "free3": {
+      "n": 24,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     },
+     "free4": {
+      "n": 24,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     },
+     "free5": {
+      "n": 24,
+      "null_response": 0,
+      "declining_predicate_any": 0
+     }
+    },
+    "total": {
+     "n": 240,
+     "null_response": 0,
+     "declining_predicate_any": 0
+    },
+    "not_counted": "imperative refusals without a declining predicate (declared miss; the read counts them)"
+   },
+   "strict_alternation": {
+    "valid": {
+     "k": 12,
+     "n": 24,
+     "rate": 0.5
+    },
+    "all_with_2plus_picks": {
+     "k": 12,
+     "n": 24,
+     "rate": 0.5
+    },
+    "valid_with_six_picks": {
+     "k": 12,
+     "n": 24,
+     "rate": 0.5
+    }
+   },
+   "first_pick_break": {
+    "definition": "first free pick IS the last forced label (the alternation habit broken); in F2 this is also the 'stay' rate",
+    "all_with_a_pick": {
+     "k": 12,
+     "n": 24,
+     "rate": 0.5
+    },
+    "valid": {
+     "k": 12,
+     "n": 24,
+     "rate": 0.5
+    }
+   },
+   "session_share_on_first_label": {
+    "definition": "share of free picks on tag_plus (the nominal first label), valid sessions; e2a's share_all_choices with the nominal pole",
+    "pooled_over_choices": 0.5069444444444444,
+    "n_choices": 144,
+    "mean_of_per_session": 0.5069444444444444,
+    "n_sessions": 24
+   },
+   "audit_v3": {
+    "version": "audit-v3 = e2b_audit_v2 + content-class-v4 (exclusion: null/stuck/preamble; advisory: echo/wrong_task)",
+    "n_rounds": 240,
+    "v2_audit_by_category": {},
+    "content_exclusion_by_class": {},
+    "content_advisory_by_class": {
+     "wrong_task": 2
+    },
+    "lexical_by_tag": {},
+    "rounds_with_any_exclusion_bearing_hit": 0,
+    "rounds_with_advisory": 2
+   },
+   "per_round": {
+    "forced0": {
+     "n": 24,
+     "mean": 14.208333333333334,
+     "min": 4,
+     "max": 38,
+     "sd": 7.300858595527245,
+     "v2_audit": 0,
+     "content_exclusion": 0,
+     "advisory": 1,
+     "cap_hit": 0
+    },
+    "forced1": {
+     "n": 24,
+     "mean": 15.583333333333334,
+     "min": 7,
+     "max": 35,
+     "sd": 6.768961558445294,
+     "v2_audit": 0,
+     "content_exclusion": 0,
+     "advisory": 1,
+     "cap_hit": 0
+    },
+    "forced2": {
+     "n": 24,
+     "mean": 16.833333333333332,
+     "min": 6,
+     "max": 38,
+     "sd": 7.816741602187085,
+     "v2_audit": 0,
+     "content_exclusion": 0,
+     "advisory": 0,
+     "cap_hit": 0
+    },
+    "forced3": {
+     "n": 24,
+     "mean": 17.5,
+     "min": 6,
+     "max": 35,
+     "sd": 7.1869446855422146,
+     "v2_audit": 0,
+     "content_exclusion": 0,
+     "advisory": 0,
+     "cap_hit": 0
+    },
+    "free0": {
+     "n": 24,
+     "mean": 13.708333333333334,
+     "min": 3,
+     "max": 32,
+     "sd": 7.1716783959191,
+     "v2_audit": 0,
+     "content_exclusion": 0,
+     "advisory": 0,
+     "cap_hit": 0
+    },
+    "free1": {
+     "n": 24,
+     "mean": 14.5,
+     "min": 4,
+     "max": 34,
+     "sd": 6.996893720725679,
+     "v2_audit": 0,
+     "content_exclusion": 0,
+     "advisory": 0,
+     "cap_hit": 0
+    },
+    "free2": {
+     "n": 24,
+     "mean": 15.125,
+     "min": 5,
+     "max": 24,
+     "sd": 5.076052043451297,
+     "v2_audit": 0,
+     "content_exclusion": 0,
+     "advisory": 0,
+     "cap_hit": 0
+    },
+    "free3": {
+     "n": 24,
+     "mean": 13.166666666666666,
+     "min": 4,
+     "max": 25,
+     "sd": 5.654291687979461,
+     "v2_audit": 0,
+     "content_exclusion": 0,
+     "advisory": 0,
+     "cap_hit": 0
+    },
+    "free4": {
+     "n": 24,
+     "mean": 14.208333333333334,
+     "min": 4,
+     "max": 24,
+     "sd": 6.520730598348002,
+     "v2_audit": 0,
+     "content_exclusion": 0,
+     "advisory": 0,
+     "cap_hit": 0
+    },
+    "free5": {
+     "n": 24,
+     "mean": 16.166666666666668,
+     "min": 4,
+     "max": 25,
+     "sd": 5.070517224853519,
+     "v2_audit": 0,
+     "content_exclusion": 0,
+     "advisory": 0,
+     "cap_hit": 0
+    }
+   },
+   "tokens_forced_end_to_first_read": {
+    "forced0": {
+     "mean": 160.16666666666666,
+     "min": 139,
+     "max": 223,
+     "n": 24
+    },
+    "forced1": {
+     "mean": 114.83333333333333,
+     "min": 98,
+     "max": 154,
+     "n": 24
+    },
+    "forced2": {
+     "mean": 67.79166666666667,
+     "min": 56,
+     "max": 85,
+     "n": 24
+    },
+    "forced3": {
+     "mean": 21.0,
+     "min": 20,
+     "max": 22,
+     "n": 24
+    }
+   },
+   "prefix_tokens_at_read": {
+    "free0": {
+     "mean": 210.08333333333334,
+     "min": 176,
+     "max": 279
+    },
+    "free1": {
+     "mean": 276.0833333333333,
+     "min": 232,
+     "max": 344
+    },
+    "free2": {
+     "mean": 344.1666666666667,
+     "min": 296,
+     "max": 417
+    },
+    "free3": {
+     "mean": 412.4166666666667,
+     "min": 361,
+     "max": 491
+    },
+    "free4": {
+     "mean": 478.5,
+     "min": 421,
+     "max": 566
+    },
+    "free5": {
+     "mean": 546.3333333333334,
+     "min": 478,
+     "max": 643
+    }
+   },
+   "reads": {
+    "n": 144,
+    "kl_exactly_zero": 144,
+    "kl_max": 0.0
+   },
+   "low_label_mass": 5,
+   "terminations": 0,
+   "cap_hits": 0,
+   "seconds": {
+    "mean": 430.0930623809497,
+    "total": 10322.233497142792
+   }
+  }
+ },
+ "anchors": {
+  "e2a_all_arms": {
+   "all": {
+    "n": 200,
+    "strict_alternation": {
+     "k": 157,
+     "n": 187,
+     "rate": 0.839572192513369
+    },
+    "first_pick_break": {
+     "k": 32,
+     "n": 188,
+     "rate": 0.1702127659574468
+    }
+   },
+   "valid": {
+    "n": 184,
+    "strict_alternation": {
+     "k": 154,
+     "n": 184,
+     "rate": 0.8369565217391305
+    },
+    "first_pick_break": {
+     "k": 30,
+     "n": 184,
+     "rate": 0.16304347826086957
+    }
+   }
+  },
+  "e2a_reward_arm": {
+   "all": {
+    "n": 112,
+    "strict_alternation": {
+     "k": 86,
+     "n": 104,
+     "rate": 0.8269230769230769
+    },
+    "first_pick_break": {
+     "k": 17,
+     "n": 104,
+     "rate": 0.16346153846153846
+    }
+   },
+   "valid": {
+    "n": 102,
+    "strict_alternation": {
+     "k": 84,
+     "n": 102,
+     "rate": 0.8235294117647058
+    },
+    "first_pick_break": {
+     "k": 16,
+     "n": 102,
+     "rate": 0.1568627450980392
+    }
+   }
+  },
+  "e2a_sham_arm": {
+   "all": {
+    "n": 40,
+    "strict_alternation": {
+     "k": 33,
+     "n": 38,
+     "rate": 0.868421052631579
+    },
+    "first_pick_break": {
+     "k": 8,
+     "n": 38,
+     "rate": 0.21052631578947367
+    }
+   },
+   "valid": {
+    "n": 37,
+    "strict_alternation": {
+     "k": 32,
+     "n": 37,
+     "rate": 0.8648648648648649
+    },
+    "first_pick_break": {
+     "k": 8,
+     "n": 37,
+     "rate": 0.21621621621621623
+    }
+   }
+  },
+  "e2d_d2_M": {
+   "all": {
+    "n": 32,
+    "strict_alternation": {
+     "k": 20,
+     "n": 29,
+     "rate": 0.6896551724137931
+    },
+    "first_pick_break": {
+     "k": 1,
+     "n": 30,
+     "rate": 0.03333333333333333
+    }
+   },
+   "valid": {
+    "n": 29,
+    "strict_alternation": {
+     "k": 20,
+     "n": 29,
+     "rate": 0.6896551724137931
+    },
+    "first_pick_break": {
+     "k": 1,
+     "n": 29,
+     "rate": 0.034482758620689655
+    }
+   }
+  },
+  "e2d_d2_R": {
+   "all": {
+    "n": 16,
+    "strict_alternation": {
+     "k": 12,
+     "n": 16,
+     "rate": 0.75
+    },
+    "first_pick_break": {
+     "k": 0,
+     "n": 16,
+     "rate": 0.0
+    }
+   },
+   "valid": {
+    "n": 15,
+    "strict_alternation": {
+     "k": 11,
+     "n": 15,
+     "rate": 0.7333333333333333
+    },
+    "first_pick_break": {
+     "k": 0,
+     "n": 15,
+     "rate": 0.0
+    }
+   }
+  },
+  "e2d_d2_S": {
+   "all": {
+    "n": 16,
+    "strict_alternation": {
+     "k": 14,
+     "n": 15,
+     "rate": 0.9333333333333333
+    },
+    "first_pick_break": {
+     "k": 1,
+     "n": 15,
+     "rate": 0.06666666666666667
+    }
+   },
+   "valid": {
+    "n": 15,
+    "strict_alternation": {
+     "k": 14,
+     "n": 15,
+     "rate": 0.9333333333333333
+    },
+    "first_pick_break": {
+     "k": 1,
+     "n": 15,
+     "rate": 0.06666666666666667
+    }
+   }
+  },
+  "e2d_d3_M": {
+   "all": {
+    "n": 24,
+    "strict_alternation": {
+     "k": 12,
+     "n": 23,
+     "rate": 0.5217391304347826
+    },
+    "first_pick_break": {
+     "k": 1,
+     "n": 23,
+     "rate": 0.043478260869565216
+    }
+   },
+   "valid": {
+    "n": 23,
+    "strict_alternation": {
+     "k": 12,
+     "n": 23,
+     "rate": 0.5217391304347826
+    },
+    "first_pick_break": {
+     "k": 1,
+     "n": 23,
+     "rate": 0.043478260869565216
+    }
+   }
+  }
+ },
+ "definitions": {
+  "strict_alternation": "all six free picks alternate (habit.strictly_alternates); the format rows report it over VALID sessions (run scope) with >= 2 picks, beside all-with-2+-picks and valid-with-six; anchors carry both `all` and `valid` domains",
+  "first_pick_break": "first free pick IS the last forced label; every format ends its forced phase on tag_minus, so this is the alternation habit broken (habit.follows_habit == False); in F2 it is also the stay rate; reported over all-with-a-pick (the rule-23 domain) and over valid; anchors carry both domains",
+  "session_share": "share of free picks on the nominal first label (tag_plus); e2a share_all_choices with the nominal pole; valid sessions",
+  "audit_v3": "counts over ALL rounds of ALL sessions incl. excluded (rule 23): v2 audit by category, exclusion-bearing content class, advisory class, lexical",
+  "tokens_forced_end_to_first_read": "prefix length at the first read minus the transcript length after each forced round (the retention interval, in tokens)",
+  "features_rule28a": "declared floors ceil(2/3 x n) = {'F0': 6, 'F1': 16, 'F2': 16} decidable on the feature's domain; a figure below its floor is reported WITH its diagnosis, never suppressed",
+  "refusals": "per round position: null_response exclusions and rounds matching the adopted declining-predicate shape at all (residual ignored); the imperative shape is a declared miss counted only by the read"
+ }
+}

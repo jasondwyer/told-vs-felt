@@ -1,0 +1,19 @@
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/format_recon.py --analyze --source sessions
+FORMAT RECON ANALYSIS (source sessions) -- descriptive, no bar
+  F0 [sessions file (8 sessions)]: n 8, complete 8, valid 8 (e2a; strict-excluded 0); strict-alt 8/8 = 1.0; first-pick break 0/8 = 0.0; share(first label) 0.5 over 48 choices; v2 {} content-excl {} advisory {} lexical {}; KL 48/48 exact; mean 488 s/session
+      n_tok by phase: {'forced0': 14.1, 'forced1': 16.2, 'forced2': 16.9, 'forced3': 16.6, 'free0': 14.2, 'free1': 16.0, 'free2': 16.5, 'free3': 18.4, 'free4': 15.4, 'free5': 21.6}
+      tokens forced-end -> first read: {'forced0': 158, 'forced1': 113, 'forced2': 67, 'forced3': 21}
+      rule 28(a): {'first_pick_break': (8, 6, 'ok'), 'strict_alternation': (8, 6, 'ok'), 'session_share': (8, 6, 'ok')}
+      refusals: total null_response 0, declining-predicate 0 of 80 rounds; by position {'forced0': (0, 0), 'forced1': (0, 0), 'forced2': (0, 0), 'forced3': (0, 0), 'free0': (0, 0), 'free1': (0, 0), 'free2': (0, 0), 'free3': (0, 0), 'free4': (0, 0), 'free5': (0, 0)}
+  F1 [sessions file (24 sessions)]: n 24, complete 20, valid 20 (e2a; strict-excluded 5); strict-alt 12/20 = 0.6; first-pick break 9/20 = 0.45; share(first label) 0.492 over 120 choices; v2 {'frame': 2, 'junk': 3} content-excl {} advisory {} lexical {}; KL 120/120 exact; mean 350 s/session
+      n_tok by phase: {'forced0': 12.8, 'forced1': 15.3, 'forced2': 14.3, 'forced3': 12.0, 'free0': 14.3, 'free1': 14.2, 'free2': 14.4, 'free3': 15.8, 'free4': 13.9, 'free5': 15.9}
+      tokens forced-end -> first read: {'forced0': 154, 'forced1': 109, 'forced2': 63, 'forced3': 21}
+      rule 28(a): {'first_pick_break': (20, 16, 'ok'), 'strict_alternation': (20, 16, 'ok'), 'session_share': (20, 16, 'ok')}
+      refusals: total null_response 0, declining-predicate 0 of 211 rounds; by position {'forced0': (0, 0), 'forced1': (0, 0), 'forced2': (0, 0), 'forced3': (0, 0), 'free0': (0, 0), 'free1': (0, 0), 'free2': (0, 0), 'free3': (0, 0), 'free4': (0, 0), 'free5': (0, 0)}
+  F2 [sessions file (24 sessions)]: n 24, complete 24, valid 24 (e2a; strict-excluded 0); strict-alt 12/24 = 0.5; first-pick break 12/24 = 0.5; share(first label) 0.507 over 144 choices; v2 {} content-excl {} advisory {'wrong_task': 2} lexical {}; KL 144/144 exact; mean 430 s/session
+      n_tok by phase: {'forced0': 14.2, 'forced1': 15.6, 'forced2': 16.8, 'forced3': 17.5, 'free0': 13.7, 'free1': 14.5, 'free2': 15.1, 'free3': 13.2, 'free4': 14.2, 'free5': 16.2}
+      tokens forced-end -> first read: {'forced0': 160, 'forced1': 115, 'forced2': 68, 'forced3': 21}
+      rule 28(a): {'first_pick_break': (24, 16, 'ok'), 'strict_alternation': (24, 16, 'ok'), 'session_share': (24, 16, 'ok')}
+      refusals: total null_response 0, declining-predicate 0 of 240 rounds; by position {'forced0': (0, 0), 'forced1': (0, 0), 'forced2': (0, 0), 'forced3': (0, 0), 'free0': (0, 0), 'free1': (0, 0), 'free2': (0, 0), 'free3': (0, 0), 'free4': (0, 0), 'free5': (0, 0)}
+  anchors: e2a_all_arms alt 0.84 all / 0.837 valid; break 0.17 all / 0.163 valid | e2a_reward_arm alt 0.827 all / 0.824 valid; break 0.163 all / 0.157 valid | e2a_sham_arm alt 0.868 all / 0.865 valid; break 0.211 all / 0.216 valid | e2d_d2_M alt 0.69 all / 0.69 valid; break 0.033 all / 0.034 valid | e2d_d2_R alt 0.75 all / 0.733 valid; break 0.0 all / 0.0 valid | e2d_d2_S alt 0.933 all / 0.933 valid; break 0.067 all / 0.067 valid | e2d_d3_M alt 0.522 all / 0.522 valid; break 0.043 all / 0.043 valid
+  wrote /Users/jasondwyer/Documents/code/jspace-lab/data/format/format_recon_analysis.json
