@@ -17,9 +17,18 @@ from valence_core.stats import fisher_one_sided
 from valence_core.e2d import habit as H
 
 def quoted_text() -> str:
-    """The design-authored text of record: the '  > ' blockquote in the HELD file, unwrapped."""
-    lines = open("HELD-e2d-closure-entry.md").read().split("\n")
-    return " ".join(l[4:] for l in lines if l.startswith("  > "))
+    """The design-authored text of record: the '  > ' blockquote of the closure
+    entry, unwrapped. Read from RESULTS.md under the anchor `e2d CLOSURE --
+    TEXT OF RECORD (values-checked)` once committed (cef728f deleted the HELD
+    draft this used to read -- the values-check of 2026-09-08 caught the
+    dangling path); the HELD draft is the fallback while it exists."""
+    if os.path.exists("HELD-e2d-closure-entry.md"):
+        lines = open("HELD-e2d-closure-entry.md").read().split("\n")
+        return " ".join(l[4:] for l in lines if l.startswith("  > "))
+    lines = open("RESULTS.md").read().split("\n")
+    start = next(i for i, l in enumerate(lines) if l.startswith("- ") and "**e2d CLOSURE — TEXT OF RECORD (values-checked)." in l)
+    end = next((i for i in range(start + 1, len(lines)) if lines[i].startswith("- 20")), len(lines))
+    return " ".join(l[4:] for l in lines[start:end] if l.startswith("  > "))
 
 results = []
 def chk(name, got, want, tol=0.0, note=""):

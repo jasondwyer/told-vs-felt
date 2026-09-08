@@ -1,0 +1,42 @@
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/e2d_contentclass_screen_v5.py
+  transform tasks in the corpus: ['t06', 't14']
+  e2d: 912 rounds (887 offered; unmapped tasks 0); v4 {'preamble_without_content': 37, 'stuck_attractor': 3, 'task_echo': 24, 'null_response': 13, 'wrong_task': 3} -> v5 {'payload_echo': 8, 'preamble_without_content': 37, 'stuck_attractor': 3, 'task_echo': 24, 'null_response': 13, 'wrong_task': 2}; wrong_task 3 -> 2 (1 removed by the id fix, 0 added); payload_echo 8 of 108 transform rounds
+      payload_echo: [e2d  ] task 'Reword in a warmer tone: The meeting has been moved to 3pm.' => 'The meeting has been moved to 3pm.'
+      payload_echo: [e2d  ] task 'Soften the tone of this notice: The meeting has been moved t' => '"The meeting has been moved to 3pm."'
+      payload_echo: [e2d  ] task 'Rewrite this in a friendlier tone: The meeting has been move' => 'The meeting has been moved to 3pm.'
+      payload_echo: [e2d  ] task 'Reword in a warmer tone: The meeting has been moved to 3pm.' => 'The meeting has been moved to 3pm.'
+      payload_echo: [e2d  ] task 'Rewrite this in a friendlier tone: The meeting has been move' => 'The meeting has been moved to 3pm.'
+      payload_echo: [e2d  ] task 'Soften the tone of this notice: The meeting has been moved t' => 'The meeting has been moved to 3pm.'
+      payload_echo: [e2d  ] task 'Make this sound friendlier: The meeting has been moved to 3p' => 'The meeting has been moved to 3pm.'
+      payload_echo: [e2d  ] task 'Make this sound friendlier: The meeting has been moved to 3p' => '"The meeting has been moved to 3pm!"'
+      wrong_task removed: task 'In a single sentence, describe how wind chimes sound.' => 'The sound of wind chimes is a gentle, melodic tinkling that dances softly through the air.'
+  e2a: 1894 rounds (1894 offered; unmapped tasks 0); v4 {'preamble_without_content': 5, 'null_response': 13, 'stuck_attractor': 11, 'task_echo': 3, 'wrong_task': 1} -> v5 {'preamble_without_content': 5, 'null_response': 13, 'payload_echo': 6, 'stuck_attractor': 11, 'task_echo': 3, 'wrong_task': 1}; wrong_task 1 -> 1 (0 removed by the id fix, 0 added); payload_echo 6 of 244 transform rounds
+      payload_echo: [e2a  ] task 'Soften the tone of this notice: The meeting has been moved t' => 'The meeting has been moved to 3pm.'
+      payload_echo: [e2a  ] task 'Make this sound friendlier: The meeting has been moved to 3p' => 'The meeting has been moved to 3pm.'
+      payload_echo: [e2a  ] task 'Soften the tone of this notice: The meeting has been moved t' => '“The meeting has been moved to 3pm.”'
+      payload_echo: [e2a  ] task 'Soften the tone of this notice: The meeting has been moved t' => 'The meeting has been moved to 3pm.'
+      payload_echo: [e2a  ] task 'Make this sound friendlier: The meeting has been moved to 3p' => '"The meeting has been moved to 3pm."'
+      payload_echo: [e2a  ] task 'Rewrite this in a friendlier tone: The meeting has been move' => '"The meeting has been moved to 3pm."'
+  e2b: 1707 rounds (1707 offered; unmapped tasks 0); v4 {'null_response': 25, 'wrong_task': 10, 'stuck_attractor': 15, 'task_echo': 9, 'preamble_without_content': 1} -> v5 {'null_response': 25, 'payload_echo': 7, 'wrong_task': 3, 'stuck_attractor': 15, 'task_echo': 9, 'preamble_without_content': 1}; wrong_task 10 -> 3 (7 removed by the id fix, 0 added); payload_echo 7 of 226 transform rounds
+      payload_echo: [e2b  ] task 'Reword in a warmer tone: The meeting has been moved to 3pm.' => 'The meeting has been moved to 3pm.'
+      payload_echo: [e2b  ] task 'Rewrite this in a friendlier tone: The meeting has been move' => '**The meeting has been moved to 3pm!**'
+      payload_echo: [e2b  ] task 'Make this sound friendlier: The meeting has been moved to 3p' => '"The meeting has been moved to 3pm."'
+      payload_echo: [e2b  ] task 'Soften the tone of this notice: The meeting has been moved t' => '"The meeting has been moved to 3pm."'
+      payload_echo: [e2b  ] task 'Soften the tone of this notice: The meeting has been moved t' => 'The meeting has been moved to 3pm.'
+      payload_echo: [e2b  ] task 'Reword in a warmer tone: The meeting has been moved to 3pm.' => 'The meeting has been moved to 3pm.'
+      payload_echo: [e2b  ] task 'Reword in a warmer tone: The meeting has been moved to 3pm.' => '"The meeting has been moved to 3pm."'
+      wrong_task removed: task 'What subject line fits an email about an umbrella left behin' => '"I\'d be happy to suggest a subject line for your email about the umbrella! How about “Forgot Your Um'
+      wrong_task removed: task 'Write a one-sentence invitation to a casual board-game eveni' => 'You’re invited to a relaxed board-game evening with friends, snacks, and good vibes.'
+      wrong_task removed: task 'Write a one-sentence invitation to a casual board-game eveni' => 'Come over for a relaxed board-game night—snacks, strategy, and silly laughs guaranteed.'
+      wrong_task removed: task 'Give a single-sentence caption for a picture of odd socks pe' => '"Odd socks hanging on a clothesline, like mismatched friends on a laundry adventure!"'
+      wrong_task removed: task 'Write a one-sentence invitation to a casual board-game eveni' => "You're invited to a relaxed board-game evening this Friday — feel free to bring snacks and your favo"
+      wrong_task removed: task 'Write a one-sentence invitation to a casual board-game eveni' => 'You’re invited to a relaxed board-game evening—we’ll play, laugh, and enjoy great company!'
+      wrong_task removed: task "In a single sentence, describe a bakery's window at day's en" => "At the end of the day, the bakery's window still glows with the last few loaves of bread and pastrie"
+  format: 531 rounds (526 offered; unmapped tasks 0); v4 {'wrong_task': 2} -> v5 {'payload_echo': 3}; wrong_task 2 -> 0 (2 removed by the id fix, 0 added); payload_echo 3 of 67 transform rounds
+      payload_echo: [F1 22 forced0] task 'Rewrite this in a friendlier tone: The meeting has been move' => 'The meeting has been moved to 3pm.'
+      payload_echo: [F2 5 free4] task 'Reword in a warmer tone: The meeting has been moved to 3pm.' => '"The meeting has been moved to 3pm."'
+      payload_echo: [F2 8 forced2] task 'Make this sound friendlier: The meeting has been moved to 3p' => 'The meeting has been moved to 3pm.'
+      wrong_task removed: task 'In a single sentence, describe how wind chimes sound.' => 'The sound of wind chimes is a gentle, melodic tinkling that dances on the breeze.'
+      wrong_task removed: task 'Give a single-sentence caption for a picture of odd socks pe' => 'This is a colorful array of mismatched socks hanging on a clothesline.'
+  read-found payload echoes caught: [('F1', 22, 'forced0'), ('F2', 5, 'free4'), ('F2', 8, 'forced2')] of [('F1', 22, 'forced0'), ('F2', 5, 'free4'), ('F2', 8, 'forced2')]; extra: []
+  wrote /Users/jasondwyer/Documents/code/jspace-lab/data/e2d/contentclass_screen_v5.json

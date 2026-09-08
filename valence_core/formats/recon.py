@@ -107,13 +107,16 @@ from ..session_e2a import (MENU_TEMPLATES, N_FREE, ROUND_TEMPLATES,
 FORMATS: dict[str, dict] = {
     "F0": {"title": "e2a format of record -- strict alternation, two rounds per label (A B A B)",
            "order": ("first", "second", "first", "second"),
-           "purpose": "continuity anchor; e2a strict alternation .840 pooled / .827 reward arm"},
+           "purpose": "continuity anchor; e2a strict alternation .840 pooled / .827 reward arm",
+           "status": "RETAINED as the continuity anchor (8-session set; design disposition 2026-09-08 item 3)"},
     "F1": {"title": "neutral-start -- two rounds under a neutral third label, then one round per menu label (N N A B)",
            "order": ("neutral", "neutral", "first", "second"),
-           "purpose": "the alternation habit is not installed between the two menu labels"},
+           "purpose": "the alternation habit is not installed between the two menu labels",
+           "status": "RETIRED for the PROPOSAL-k campaign: scaffold-register breakage 5/24 (design disposition 2026-09-08 item 3); the neutral label is not used"},
     "F2": {"title": "block order -- A A B B / B B A A, start counterbalanced",
            "order": ("first", "first", "second", "second"),
-           "purpose": "decorrelates round position from label parity (the Stage B/C confound)"},
+           "purpose": "decorrelates round position from label parity (the Stage B/C confound)",
+           "status": "FORMAT OF RECORD for PROPOSAL-k Stage 2 (design disposition 2026-09-08 item 3); LOCK-k sets n and the bar"},
 }
 N_FORCED = 4                 # every format: 4 forced rounds, then N_FREE = 6 free choices
 F_FOR_WALK = N_FORCED // 2   # session_e2a's F: n_rounds = 2F + N_FREE = 10

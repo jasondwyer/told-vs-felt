@@ -1,0 +1,36 @@
+R14 (strip of R7): z-form 95% CI on the clean-set paired change, at the printed precision
+  PASS  R14 clean set = 20 shared indices                                  got 20                           want 20  
+  PASS  R14 z CI lower bound -.156                                         got -0.156                       want -0.156  raw -0.156494
+  PASS  R14 z CI upper bound +.132                                         got 0.132                        want 0.132  raw 0.132391
+  PASS  R14 the text names the form (z) and the set (clean-set) and makes no bar claim got True                         want True  
+    beside: all-rounds pairing (n 24) z CI [-0.218, +0.247] -- contains a bar-sized change both ways; no longer claimed either way
+R8  one-sided .011 (attribution dropped; the figure)
+  PASS  R8 read .10->.20 one-sided Fisher .011                             got 0.011                        want 0.011  0.01119
+R9  59% of the marks (40/68 on the 24 shared indices)
+  PASS  R9 24 shared indices                                               got 24                           want 24  
+  PASS  R9 marks on the 24 shared indices = 68                             got 68                           want 68  
+  PASS  R9 idx 1 + 5 carry 40 (10/10 at both doses each)                   got (40, (10, 10), (10, 10), (10, 10), (10, 10)) want (40, (10, 10), (10, 10), (10, 10), (10, 10))  
+  PASS  R9 40/68 rounds to 59%                                             got 59                           want 59  58.82%
+R10 the 0.10 anchor's pooled within-M delta
+  PASS  R10 -.239 over 20/20 generations                                   got (-0.239, 20, 20)             want (-0.239, 20, 20)  -0.239374
+R11 four to five times below e2a's .17
+  PASS  R11 e2a break 32/188 all sessions                                  got (32, 188)                    want (32, 188)  
+  PASS  R11 .17                                                            got 0.17                         want 0.17  0.1702
+  PASS  R11 5.1x D2's 1/30                                                 got 5.1                          want 5.1  
+  PASS  R11 3.9x D3's 1/23                                                 got 3.9                          want 3.9  
+  PASS  R11 4.5x pooled 2/53                                               got 4.5                          want 4.5  
+  PASS  R11 'four to five times' holds at integer precision (each ratio rounds to 4 or 5) got [4, 5]                       want [4, 5]  one-decimal range 3.9-5.1; the exact figures follow in the text
+R12 the composition artifact, both orders
+  PASS  R12 idx 12 is the one session decidable at 0.20 only inside D3's roster got [12]                         want [12]  
+  PASS  R12 D3 ran 24 M sessions to D2's 32                                got (24, 32)                     want (24, 32)  
+  PASS  R15 (strip of R12): the text prints NO split percentages           got False                        want False  
+  PASS  R15 the two sources exist: idx 12 (+idx12 moves the mean) and the six never-run (truncation moves it) got (True, True, 6)              want (True, True, 6)  A 0.1532 B 0.1220 Bt 0.1262 C 0.1030
+    beside (artifact, not text): splits 62/38 with idx 12 added first to the paired base, 46/54 with truncation added first; C - A = -0.0502 either way
+R13 slip 10: defined only in the untracked design handoff
+  PASS  R13 no committed definition of slip (10) in the record docs        got ''                           want ''  
+  PASS  R13 defined in the untracked HANDOFF-2026-09-04-design.md §2       got True                         want True  
+  PASS  R13 'with coherence' is the quoted failure mode there              got True                         want True  
+provenance: the eight passages replaced exactly once (R7-R13), then R7 and R12 stripped to bare figures (R14, R15)
+  PASS  R7-R15 no old or struck clause survives in the quoted text         got []                           want []  
+----------------------------------------------------------------------------------------------------
+  24/24 third-pass checks pass

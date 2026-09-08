@@ -21,6 +21,108 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-08 — **DESIGN DISPOSITIONS 2026-09-08 (post-format-recon) APPLIED
+  — nothing run, no bar set. (1) The design's beside-note (iv) added to the
+  closure entry of record, never over. (2) Content-class v5 built as a
+  CANDIDATE and blind-screened over e2a, e2b, e2d and the 56 format
+  sessions: the `wrong_task` pool by task id removes 1 / 0 / 7 / 2 hits,
+  every one of them an answer to its own task; the new advisory
+  `payload_echo` fires 8 / 6 / 7 / 3 times, all on the meeting-notice task,
+  and catches exactly the three cases the rule-25 read found, no extras.
+  Adoption of `payload_echo` is the design seat's, from the screen. (3)
+  F2 recorded as the format of record for PROPOSAL-k Stage 2, F0's eight
+  retained as the continuity anchor, F1 retired. Watermark `cef728f`; Code
+  stamps from `date -u`.**
+  (Stamp verified at write time: `date -u` → **Tue Sep  8 22:26:30 UTC 2026**.)
+
+  - **Item 1 — beside-note to the closure.** Added as (iv) in the closure
+    entry's "Beside-notes carried" bullet, attributed to this disposition and
+    dated: banked item 1's "the composition artifact as above" denotes the
+    unpaired 0.20→0.30 rise (+.038 clean / +.068 all-rounds) resolved by the
+    pre-committed pairing rule to −.0121 clean; its descriptive clause was
+    deleted at R16; the decomposition lives in the artifact and verify3. The
+    text of record is untouched.
+  - **Item 2 — content-class v5, CANDIDATE.**
+    [`valence_core/e2d/contentclass_v5.py`](valence_core/e2d/contentclass_v5.py)
+    builds on the frozen v3 and the adopted v4 and modifies neither; audit
+    v3 (the audit of record) still routes through v4 until the design seat
+    adopts. Two rules, both ADVISORY. **(a) `wrong_task`'s pool is every
+    paraphrase of every OTHER task id** (v4: every paraphrase but the current
+    text, so a task's own siblings sat in the pool). **(b) `payload_echo`:**
+    a transform task — a verb lexicon (rewrite / reword / rephrase / restate
+    / soften; make … friendlier / kinder / warmer / gentler / softer / nicer /
+    politer) with a payload after the colon; t06 and t14 in this corpus, the
+    caption tasks with a colon (t01, t09) are not transforms — answered with
+    the payload's exact word sequence after a leading label and quotation
+    marks are stripped. Precedence NULL → STUCK → PREAMBLE → ECHO →
+    PAYLOAD_ECHO → WRONG_TASK. **Blind screen** (model-free; the v3 screen's
+    frozen row builders; blind to arm, unblinded after;
+    [`contentclass_screen_v5.json`](data/e2d/contentclass_screen_v5.json),
+    raw [`_screen_v5`](results/raw/2026-09-08_e2d_contentclass_screen_v5.txt)):
+
+    | corpus | rounds offered | `wrong_task` v4 → v5 (removed) | `payload_echo` hits / transform rounds | verbatim / punctuation-only |
+    |---|---|---|---|---|
+    | e2d (912) | 887 | 3 → 2 (1) | 8 / 108 | 7 / 1 |
+    | e2a (1,894) | 1894 | 1 → 1 (0) | 6 / 244 | 6 / 0 |
+    | e2b (1,707) | 1707 | 10 → 3 (7) | 7 / 226 | 6 / 1 |
+    | format (531) | 526 | 2 → 0 (2) | 3 / 67 | 3 / 0 |
+
+    Every one of the ten `wrong_task` hits the id fix removes answers its
+    own task (e2d: the wind-chimes description; e2b: an umbrella subject
+    line, four board-game invitations, the odd-socks caption, the bakery
+    window; format: the two recon advisories); no hit is added. On e2d the two `wrong_task` hits that remain are both on
+    read-marked rounds (v4's two true positives kept; the one removed was
+    unmarked). Every `payload_echo` hit across all four corpora is the
+    meeting notice (t06) returned as "The meeting has been moved to 3pm."
+    — none on the dishes notice (t14); two of the 24 differ from the
+    payload only by an exclamation mark or emphasis marks (flagged per hit;
+    the design seat decides whether a punctuation-only change is a
+    transform). On e2d all 8 sit on rounds the rule-25 read did NOT mark —
+    `payload_echo` was not a read class, so this is expected, and whether
+    an unchanged payload is a degeneracy is the adjudication the design
+    seat now makes from the screen; unblinded after scoring, e2d's 8 fall
+    R 5 / M 3 / S 0. The three read-found format cases (F1 s22 forced0, F2
+    s5 free4, F2 s8 forced2) are caught and nothing else in the format set
+    fires (a both-directions check in the artifact). **Declared limits:**
+    word-sequence identity (punctuation and emphasis ignored, flagged); the
+    transform family is a lexicon; a payload with one word changed is a
+    partial rewrite and goes to the read. **Where the implementation is
+    wider than the disposition's words, declared:** the transform lexicon
+    adds rephrase / restate and the "make … friendlier/kinder/…" family to
+    the disposition's "(rewrite/reword/soften)"; identity is a word-sequence
+    match (case and punctuation ignored, a leading label stripped), wider
+    than "quotation marks aside" — on these corpora both widenings change
+    no figure (only t06 and t14 are transforms either way; 22 of the 24
+    hits are the payload verbatim modulo quotes or a label). The design
+    seat narrows either at adoption if it wishes. Recorded in the candidate
+    JSON's `v5_candidate` section; adoption of `payload_echo` waits on the
+    design seat. **Wiring, when adopted:** `payload_echo` alone is a
+    one-line swap in `audit_v3.py`; the id-pool rule also needs the
+    caller's pool builder (`others_factory` in `scripts/format_recon.py`,
+    today the v4 construction) to pass an id-filtered pool — two changes,
+    not one.
+  - **Item 3 — format of record.** F2 (block order, start counterbalanced)
+    is the format of record for PROPOSAL-k Stage 2; the neutral label is not
+    used; F0's eight-session set is retained as the continuity anchor; F1 is
+    retired for the campaign on scaffold-register breakage 5/24. Recorded as
+    `status` on each format in `valence_core/formats/recon.py` (documentation
+    only, no behaviour change; self-test 67/67, regression 154/154). LOCK-k
+    sets n and the bar.
+  - **Pre-commit values-check (three refuters, 73 claims; record
+    [`_dispositions_0908_valuescheck`](results/raw/2026-09-08_dispositions_valuescheck.txt)):**
+    three prose misses, all applied — the enumeration of removed
+    `wrong_task` hits was short by one (the e2b umbrella subject line); the
+    "one-line wiring" claim understated the id-pool change; the
+    implementation's widening of the disposition's wording was not named
+    as such. One hazard outside this entry, fixed here: `verify3` read the
+    HELD draft that `cef728f` deleted and crashed at HEAD; it now reads the
+    closure blockquote from RESULTS.md (fallback: the draft) and re-runs
+    24/24 ([`_verify3_at_HEAD`](results/raw/2026-09-08_e2d_closure_verify3_at_HEAD.txt)).
+    The beside-note (iv) is restored to the disposition's typography
+    (lower-case "banked", single quotes). Screen re-run byte-identical by
+    the refuters; self-test 67/67 and regression 154/154 reproduced by them.
+  - **Nothing here generates sessions or sets a bar.**
+
 - 2026-09-07 — **e2d CLOSURE — TEXT OF RECORD (values-checked). Design-seat
   authored, PI-ratified 2026-09-05 (PI clock); the four held figures resolved
   by six clause-level replacements (design patch of the same date, R1–R6)
@@ -239,7 +341,12 @@ applied to CLAUDE.md.
     sentence of record (the pre-disposition text the values-check graded, with
     "a quarter of its short-context value" and "(dilution excluded)") and §7
     paraphrases it; both superseded by the text above. Untracked, referenced
-    by name: no edit, no rename.
+    by name: no edit, no rename. (iv) *[design disposition 2026-09-08, item
+    1, added beside 2026-09-08; never over]* banked item 1, 'the composition
+    artifact as above', denotes the unpaired 0.20→0.30 rise (+.038 clean /
+    +.068 all-rounds) resolved by the pre-committed pairing rule to −.0121
+    clean; its descriptive clause was deleted at R16; the decomposition lives
+    in the artifact and verify3.
   - **Passes three to five, and the strip (Code's record).** Third
     adversarial pass (2026-09-05, three refuters, 152 claims): no figure
     wrong, eight glosses held —

@@ -123,5 +123,126 @@
   "v4_screen": "scripts/e2d_contentclass_screen_v4.py -> data/e2d/contentclass_screen_v4.json"
  },
  "v3_history": "the v3 figures below (performance, two confounds, what Code does not claim) are the screened draft as adjudicated; kept as history",
- "null_response_rule_as_implemented": "content-free (v3 test) OR a DECLINING PREDICATE -- first person ('I can't / cannot / won't / am unable to / must decline / refuse', complement optional so a bare 'Sorry, I can't.' counts) or the passive '(this request / that) cannot be fulfilled' -- removed together with any first-person self-description clause ('I am a large language model'), after which fewer than NULL_RESIDUAL_WORDS = 3 content words remain. Only the PREDICATE is removed, never its clause or sentence, so a refusal accompanied by delivered content is not null. An apology alone is not a refusal. KNOWN MISSES, declared: third-person capability disclaimers ('Sorry, creative tasks require a LLM with more creative capabilities' -- one archived e2b round) and a bare 'No.' carry no declining predicate and go to the read. Revision record, all pre-commit, found by adversarial values-checks: rev 1 matched a bare 'I'm sorry' and flagged a delivered friendlier rewrite on the e2b archive; rev 2 required the predicate but removed the whole clause, which would have swallowed content delivered in the same clause (no archive instance; constructed cases); rev 3 as above. Raw logs of the earlier screens kept: results/raw/2026-09-06_e2d_contentclass_screen_v4pre.txt (rev 1), _v4rev2pre.txt (rev 2)."
+ "null_response_rule_as_implemented": "content-free (v3 test) OR a DECLINING PREDICATE -- first person ('I can't / cannot / won't / am unable to / must decline / refuse', complement optional so a bare 'Sorry, I can't.' counts) or the passive '(this request / that) cannot be fulfilled' -- removed together with any first-person self-description clause ('I am a large language model'), after which fewer than NULL_RESIDUAL_WORDS = 3 content words remain. Only the PREDICATE is removed, never its clause or sentence, so a refusal accompanied by delivered content is not null. An apology alone is not a refusal. KNOWN MISSES, declared: third-person capability disclaimers ('Sorry, creative tasks require a LLM with more creative capabilities' -- one archived e2b round) and a bare 'No.' carry no declining predicate and go to the read. Revision record, all pre-commit, found by adversarial values-checks: rev 1 matched a bare 'I'm sorry' and flagged a delivered friendlier rewrite on the e2b archive; rev 2 required the predicate but removed the whole clause, which would have swallowed content delivered in the same clause (no archive instance; constructed cases); rev 3 as above. Raw logs of the earlier screens kept: results/raw/2026-09-06_e2d_contentclass_screen_v4pre.txt (rev 1), _v4rev2pre.txt (rev 2).",
+ "v5_candidate": {
+  "spec": "content-class v5 CANDIDATE (design dispositions 2026-09-08 item 2, PI stamp); both rules ADVISORY; nothing exclusion-bearing changes; v3/v4 frozen; audit v3 (the audit of record) still routes through v4 until the design seat adopts from the screen",
+  "rules": {
+   "wrong_task_pool": "every paraphrase of every OTHER task id (v4: every paraphrase but the current text)",
+   "payload_echo": "transform task (rewrite/reword/rephrase/restate/soften; make ... friendlier/kinder/warmer/gentler/softer/nicer/politer) with a payload after the colon, answered with the payload's exact word sequence after stripping a leading label and quotation marks",
+   "precedence": "NULL -> STUCK -> PREAMBLE -> ECHO -> PAYLOAD_ECHO -> WRONG_TASK",
+   "standing": {
+    "payload_echo": "advisory (adoption: design seat, from this screen)",
+    "wrong_task": "advisory"
+   }
+  },
+  "module": "valence_core/e2d/contentclass_v5.py (builds on v3 + v4, modifies neither)",
+  "screen": {
+   "artifact": "data/e2d/contentclass_screen_v5.json",
+   "raw": "results/raw/2026-09-08_e2d_contentclass_screen_v5.txt",
+   "blind_to_arm": true,
+   "model_free": true,
+   "corpora": {
+    "e2d": {
+     "n_rounds": 912,
+     "n_offered": 887
+    },
+    "e2a": {
+     "n_rounds": 1894,
+     "n_offered": 1894
+    },
+    "e2b": {
+     "n_rounds": 1707,
+     "n_offered": 1707
+    },
+    "format": {
+     "n_rounds": 531,
+     "n_offered": 526
+    }
+   },
+   "wrong_task_v4_to_v5": {
+    "e2d": [
+     3,
+     2
+    ],
+    "e2a": [
+     1,
+     1
+    ],
+    "e2b": [
+     10,
+     3
+    ],
+    "format": [
+     2,
+     0
+    ]
+   },
+   "wrong_task_removed_by_id_fix_all_answer_their_own_task": {
+    "e2d": 1,
+    "e2a": 0,
+    "e2b": 7,
+    "format": 2
+   },
+   "payload_echo_hits_over_transform_rounds": {
+    "e2d": [
+     8,
+     108
+    ],
+    "e2a": [
+     6,
+     244
+    ],
+    "e2b": [
+     7,
+     226
+    ],
+    "format": [
+     3,
+     67
+    ]
+   },
+   "payload_echo_verbatim_vs_punctuation_only": {
+    "e2d": [
+     7,
+     1
+    ],
+    "e2a": [
+     6,
+     0
+    ],
+    "e2b": [
+     6,
+     1
+    ],
+    "format": [
+     3,
+     0
+    ]
+   },
+   "payload_echo_e2d_read_marked_vs_unmarked": [
+    0,
+    8
+   ],
+   "read_found_format_cases_caught": true,
+   "every_payload_echo_hit_is_task_t06": true
+  },
+  "transform_tasks_in_corpus": [
+   "t06",
+   "t14"
+  ],
+  "adoption": {
+   "wrong_task_pool_by_task_id": "PI-stamped rule; wiring needs TWO changes -- the classify swap in audit_v3.py AND an id-filtered pool from the caller's pool builder (scripts/format_recon.py others_factory is the v4 construction today) -- pending the design seat's word",
+   "payload_echo": "ADJUDICATED BY THE DESIGN SEAT FROM THE SCREEN (not adopted here); alone it is a one-line swap in audit_v3.py"
+  },
+  "declared_limits": [
+   "word-sequence identity: punctuation-only or emphasis-only changes count as echo (per-hit flag in the screen)",
+   "the transform-task family is a verb lexicon (rewrite/reword/rephrase/restate/soften; make ... friendlier/kinder/warmer/gentler/softer/nicer/politer) with a colon payload -- t06 and t14 in this corpus; caption tasks with a colon (t01, t09) are not transforms",
+   "a payload returned with ONE word changed is not an echo (a partial rewrite goes to the read)"
+  ],
+  "wider_than_the_disposition_wording_declared": [
+   "transform lexicon adds rephrase/restate and the make-...-friendlier family to '(rewrite/reword/soften)'",
+   "identity is a word-sequence match (case, punctuation and a leading label ignored), wider than 'quotation marks aside'; per-hit verbatim flag in the screen",
+   "neither widening changes a screen figure on these corpora (only t06/t14 are transforms either way; 22/24 hits verbatim modulo quotes or a label)"
+  ]
+ }
 }

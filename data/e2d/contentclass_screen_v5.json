@@ -1,0 +1,453 @@
+{
+ "spec_version": "content-class-v5 CANDIDATE (design dispositions 2026-09-08 item 2): wrong_task pool by task id; payload_echo advisory",
+ "blind_to_arm": true,
+ "model_free": true,
+ "rules": {
+  "wrong_task_pool": "every paraphrase of every OTHER task id (v4: every paraphrase but the current text)",
+  "payload_echo": "transform task (rewrite/reword/rephrase/restate/soften; make ... friendlier/kinder/warmer/gentler/softer/nicer/politer) with a payload after the colon, answered with the payload's exact word sequence after stripping a leading label and quotation marks",
+  "precedence": "NULL -> STUCK -> PREAMBLE -> ECHO -> PAYLOAD_ECHO -> WRONG_TASK",
+  "standing": {
+   "payload_echo": "advisory (adoption: design seat, from this screen)",
+   "wrong_task": "advisory"
+  }
+ },
+ "transform_tasks_in_corpus": [
+  "t06",
+  "t14"
+ ],
+ "per_corpus": {
+  "e2d": {
+   "n_rounds": 912,
+   "n_offered": 887,
+   "unmapped_task_texts": 0,
+   "v4_by_class": {
+    "preamble_without_content": 37,
+    "stuck_attractor": 3,
+    "task_echo": 24,
+    "null_response": 13,
+    "wrong_task": 3
+   },
+   "v5_by_class": {
+    "payload_echo": 8,
+    "preamble_without_content": 37,
+    "stuck_attractor": 3,
+    "task_echo": 24,
+    "null_response": 13,
+    "wrong_task": 2
+   },
+   "wrong_task": {
+    "v4": 3,
+    "v5": 2,
+    "removed_by_id_fix": [
+     {
+      "task": "In a single sentence, describe how wind chimes sound.",
+      "text": "The sound of wind chimes is a gentle, melodic tinkling that dances softly through the air.",
+      "arm_unblinded_after": "R",
+      "read_marked": false,
+      "sibling_diagnosis": "fires under v4 only because sibling paraphrases of the same task are in the pool"
+     }
+    ],
+    "added_under_v5": [],
+    "v4_hits_on_marked": 2,
+    "v5_hits_on_marked": 2
+   },
+   "payload_echo": {
+    "hits": 8,
+    "transform_task_rounds_offered": 108,
+    "rate_among_transform_rounds": 0.07407407407407407,
+    "every_hit": [
+     {
+      "task": "Reword in a warmer tone: The meeting has been moved to 3pm.",
+      "text": "The meeting has been moved to 3pm.",
+      "verbatim_including_punctuation": true,
+      "differs_only_in_punctuation_or_emphasis": false,
+      "arm_unblinded_after": "R",
+      "read_marked": false
+     },
+     {
+      "task": "Soften the tone of this notice: The meeting has been moved to 3pm.",
+      "text": "\"The meeting has been moved to 3pm.\"",
+      "verbatim_including_punctuation": true,
+      "differs_only_in_punctuation_or_emphasis": false,
+      "arm_unblinded_after": "M",
+      "read_marked": false
+     },
+     {
+      "task": "Rewrite this in a friendlier tone: The meeting has been moved to 3pm.",
+      "text": "The meeting has been moved to 3pm.",
+      "verbatim_including_punctuation": true,
+      "differs_only_in_punctuation_or_emphasis": false,
+      "arm_unblinded_after": "M",
+      "read_marked": false
+     },
+     {
+      "task": "Reword in a warmer tone: The meeting has been moved to 3pm.",
+      "text": "The meeting has been moved to 3pm.",
+      "verbatim_including_punctuation": true,
+      "differs_only_in_punctuation_or_emphasis": false,
+      "arm_unblinded_after": "R",
+      "read_marked": false
+     },
+     {
+      "task": "Rewrite this in a friendlier tone: The meeting has been moved to 3pm.",
+      "text": "The meeting has been moved to 3pm.",
+      "verbatim_including_punctuation": true,
+      "differs_only_in_punctuation_or_emphasis": false,
+      "arm_unblinded_after": "R",
+      "read_marked": false
+     },
+     {
+      "task": "Soften the tone of this notice: The meeting has been moved to 3pm.",
+      "text": "The meeting has been moved to 3pm.",
+      "verbatim_including_punctuation": true,
+      "differs_only_in_punctuation_or_emphasis": false,
+      "arm_unblinded_after": "R",
+      "read_marked": false
+     },
+     {
+      "task": "Make this sound friendlier: The meeting has been moved to 3pm.",
+      "text": "The meeting has been moved to 3pm.",
+      "verbatim_including_punctuation": true,
+      "differs_only_in_punctuation_or_emphasis": false,
+      "arm_unblinded_after": "R",
+      "read_marked": false
+     },
+     {
+      "task": "Make this sound friendlier: The meeting has been moved to 3pm.",
+      "text": "\"The meeting has been moved to 3pm!\"",
+      "verbatim_including_punctuation": false,
+      "differs_only_in_punctuation_or_emphasis": true,
+      "arm_unblinded_after": "M",
+      "read_marked": false
+     }
+    ],
+    "declared_limit": "the rule compares word sequences: a payload returned with only punctuation or emphasis changed (e.g. '3pm!' for '3pm.', or **bold**) counts as an echo here; each hit carries verbatim_including_punctuation so the design seat can decide whether a punctuation-only change is a transform",
+    "verbatim_including_punctuation": 7,
+    "punctuation_or_emphasis_only_change": 1,
+    "hits_on_read_marked": 0,
+    "hits_on_unmarked": 8
+   },
+   "v5_by_arm_unblinded_after": {
+    "R": {
+     "payload_echo": 5
+    },
+    "S": {
+     "preamble_without_content": 7,
+     "stuck_attractor": 2,
+     "task_echo": 1
+    },
+    "M": {
+     "task_echo": 23,
+     "preamble_without_content": 30,
+     "payload_echo": 3,
+     "null_response": 13,
+     "wrong_task": 2,
+     "stuck_attractor": 1
+    }
+   }
+  },
+  "e2a": {
+   "n_rounds": 1894,
+   "n_offered": 1894,
+   "unmapped_task_texts": 0,
+   "v4_by_class": {
+    "preamble_without_content": 5,
+    "null_response": 13,
+    "stuck_attractor": 11,
+    "task_echo": 3,
+    "wrong_task": 1
+   },
+   "v5_by_class": {
+    "preamble_without_content": 5,
+    "null_response": 13,
+    "payload_echo": 6,
+    "stuck_attractor": 11,
+    "task_echo": 3,
+    "wrong_task": 1
+   },
+   "wrong_task": {
+    "v4": 1,
+    "v5": 1,
+    "removed_by_id_fix": [],
+    "added_under_v5": []
+   },
+   "payload_echo": {
+    "hits": 6,
+    "transform_task_rounds_offered": 244,
+    "rate_among_transform_rounds": 0.02459016393442623,
+    "every_hit": [
+     {
+      "task": "Soften the tone of this notice: The meeting has been moved to 3pm.",
+      "text": "The meeting has been moved to 3pm.",
+      "verbatim_including_punctuation": true,
+      "differs_only_in_punctuation_or_emphasis": false
+     },
+     {
+      "task": "Make this sound friendlier: The meeting has been moved to 3pm.",
+      "text": "The meeting has been moved to 3pm.",
+      "verbatim_including_punctuation": true,
+      "differs_only_in_punctuation_or_emphasis": false
+     },
+     {
+      "task": "Soften the tone of this notice: The meeting has been moved to 3pm.",
+      "text": "“The meeting has been moved to 3pm.”",
+      "verbatim_including_punctuation": true,
+      "differs_only_in_punctuation_or_emphasis": false
+     },
+     {
+      "task": "Soften the tone of this notice: The meeting has been moved to 3pm.",
+      "text": "The meeting has been moved to 3pm.",
+      "verbatim_including_punctuation": true,
+      "differs_only_in_punctuation_or_emphasis": false
+     },
+     {
+      "task": "Make this sound friendlier: The meeting has been moved to 3pm.",
+      "text": "\"The meeting has been moved to 3pm.\"",
+      "verbatim_including_punctuation": true,
+      "differs_only_in_punctuation_or_emphasis": false
+     },
+     {
+      "task": "Rewrite this in a friendlier tone: The meeting has been moved to 3pm.",
+      "text": "\"The meeting has been moved to 3pm.\"",
+      "verbatim_including_punctuation": true,
+      "differs_only_in_punctuation_or_emphasis": false
+     }
+    ],
+    "declared_limit": "the rule compares word sequences: a payload returned with only punctuation or emphasis changed (e.g. '3pm!' for '3pm.', or **bold**) counts as an echo here; each hit carries verbatim_including_punctuation so the design seat can decide whether a punctuation-only change is a transform",
+    "verbatim_including_punctuation": 6,
+    "punctuation_or_emphasis_only_change": 0
+   }
+  },
+  "e2b": {
+   "n_rounds": 1707,
+   "n_offered": 1707,
+   "unmapped_task_texts": 0,
+   "v4_by_class": {
+    "null_response": 25,
+    "wrong_task": 10,
+    "stuck_attractor": 15,
+    "task_echo": 9,
+    "preamble_without_content": 1
+   },
+   "v5_by_class": {
+    "null_response": 25,
+    "payload_echo": 7,
+    "wrong_task": 3,
+    "stuck_attractor": 15,
+    "task_echo": 9,
+    "preamble_without_content": 1
+   },
+   "wrong_task": {
+    "v4": 10,
+    "v5": 3,
+    "removed_by_id_fix": [
+     {
+      "task": "What subject line fits an email about an umbrella left behind?",
+      "text": "\"I'd be happy to suggest a subject line for your email about the umbrella! How about “Forgot Your Umbrella?”\"",
+      "sibling_diagnosis": "fires under v4 only because sibling paraphrases of the same task are in the pool"
+     },
+     {
+      "task": "Write a one-sentence invitation to a casual board-game evening.",
+      "text": "You’re invited to a relaxed board-game evening with friends, snacks, and good vibes.",
+      "sibling_diagnosis": "fires under v4 only because sibling paraphrases of the same task are in the pool"
+     },
+     {
+      "task": "Write a one-sentence invitation to a casual board-game evening.",
+      "text": "Come over for a relaxed board-game night—snacks, strategy, and silly laughs guaranteed.",
+      "sibling_diagnosis": "fires under v4 only because sibling paraphrases of the same task are in the pool"
+     },
+     {
+      "task": "Give a single-sentence caption for a picture of odd socks pegged to a line.",
+      "text": "\"Odd socks hanging on a clothesline, like mismatched friends on a laundry adventure!\"",
+      "sibling_diagnosis": "fires under v4 only because sibling paraphrases of the same task are in the pool"
+     },
+     {
+      "task": "Write a one-sentence invitation to a casual board-game evening.",
+      "text": "You're invited to a relaxed board-game evening this Friday — feel free to bring snacks and your favorite games!",
+      "sibling_diagnosis": "fires under v4 only because sibling paraphrases of the same task are in the pool"
+     },
+     {
+      "task": "Write a one-sentence invitation to a casual board-game evening.",
+      "text": "You’re invited to a relaxed board-game evening—we’ll play, laugh, and enjoy great company!",
+      "sibling_diagnosis": "fires under v4 only because sibling paraphrases of the same task are in the pool"
+     },
+     {
+      "task": "In a single sentence, describe a bakery's window at day's end.",
+      "text": "At the end of the day, the bakery's window still glows with the last few loaves of bread and pastries.",
+      "sibling_diagnosis": "fires under v4 only because sibling paraphrases of the same task are in the pool"
+     }
+    ],
+    "added_under_v5": []
+   },
+   "payload_echo": {
+    "hits": 7,
+    "transform_task_rounds_offered": 226,
+    "rate_among_transform_rounds": 0.030973451327433628,
+    "every_hit": [
+     {
+      "task": "Reword in a warmer tone: The meeting has been moved to 3pm.",
+      "text": "The meeting has been moved to 3pm.",
+      "verbatim_including_punctuation": true,
+      "differs_only_in_punctuation_or_emphasis": false
+     },
+     {
+      "task": "Rewrite this in a friendlier tone: The meeting has been moved to 3pm.",
+      "text": "**The meeting has been moved to 3pm!**",
+      "verbatim_including_punctuation": false,
+      "differs_only_in_punctuation_or_emphasis": true
+     },
+     {
+      "task": "Make this sound friendlier: The meeting has been moved to 3pm.",
+      "text": "\"The meeting has been moved to 3pm.\"",
+      "verbatim_including_punctuation": true,
+      "differs_only_in_punctuation_or_emphasis": false
+     },
+     {
+      "task": "Soften the tone of this notice: The meeting has been moved to 3pm.",
+      "text": "\"The meeting has been moved to 3pm.\"",
+      "verbatim_including_punctuation": true,
+      "differs_only_in_punctuation_or_emphasis": false
+     },
+     {
+      "task": "Soften the tone of this notice: The meeting has been moved to 3pm.",
+      "text": "The meeting has been moved to 3pm.",
+      "verbatim_including_punctuation": true,
+      "differs_only_in_punctuation_or_emphasis": false
+     },
+     {
+      "task": "Reword in a warmer tone: The meeting has been moved to 3pm.",
+      "text": "The meeting has been moved to 3pm.",
+      "verbatim_including_punctuation": true,
+      "differs_only_in_punctuation_or_emphasis": false
+     },
+     {
+      "task": "Reword in a warmer tone: The meeting has been moved to 3pm.",
+      "text": "\"The meeting has been moved to 3pm.\"",
+      "verbatim_including_punctuation": true,
+      "differs_only_in_punctuation_or_emphasis": false
+     }
+    ],
+    "declared_limit": "the rule compares word sequences: a payload returned with only punctuation or emphasis changed (e.g. '3pm!' for '3pm.', or **bold**) counts as an echo here; each hit carries verbatim_including_punctuation so the design seat can decide whether a punctuation-only change is a transform",
+    "verbatim_including_punctuation": 6,
+    "punctuation_or_emphasis_only_change": 1
+   }
+  },
+  "format": {
+   "n_rounds": 531,
+   "n_offered": 526,
+   "unmapped_task_texts": 0,
+   "v4_by_class": {
+    "wrong_task": 2
+   },
+   "v5_by_class": {
+    "payload_echo": 3
+   },
+   "wrong_task": {
+    "v4": 2,
+    "v5": 0,
+    "removed_by_id_fix": [
+     {
+      "task": "In a single sentence, describe how wind chimes sound.",
+      "text": "The sound of wind chimes is a gentle, melodic tinkling that dances on the breeze.",
+      "format": "F2",
+      "session": 2,
+      "phase": "forced1",
+      "sibling_diagnosis": "fires under v4 only because sibling paraphrases of the same task are in the pool"
+     },
+     {
+      "task": "Give a single-sentence caption for a picture of odd socks pegged to a line.",
+      "text": "This is a colorful array of mismatched socks hanging on a clothesline.",
+      "format": "F2",
+      "session": 18,
+      "phase": "forced0",
+      "sibling_diagnosis": "fires under v4 only because sibling paraphrases of the same task are in the pool"
+     }
+    ],
+    "added_under_v5": []
+   },
+   "payload_echo": {
+    "hits": 3,
+    "transform_task_rounds_offered": 67,
+    "rate_among_transform_rounds": 0.04477611940298507,
+    "every_hit": [
+     {
+      "task": "Rewrite this in a friendlier tone: The meeting has been moved to 3pm.",
+      "text": "The meeting has been moved to 3pm.",
+      "verbatim_including_punctuation": true,
+      "differs_only_in_punctuation_or_emphasis": false,
+      "format": "F1",
+      "session": 22,
+      "phase": "forced0"
+     },
+     {
+      "task": "Reword in a warmer tone: The meeting has been moved to 3pm.",
+      "text": "\"The meeting has been moved to 3pm.\"",
+      "verbatim_including_punctuation": true,
+      "differs_only_in_punctuation_or_emphasis": false,
+      "format": "F2",
+      "session": 5,
+      "phase": "free4"
+     },
+     {
+      "task": "Make this sound friendlier: The meeting has been moved to 3pm.",
+      "text": "The meeting has been moved to 3pm.",
+      "verbatim_including_punctuation": true,
+      "differs_only_in_punctuation_or_emphasis": false,
+      "format": "F2",
+      "session": 8,
+      "phase": "forced2"
+     }
+    ],
+    "declared_limit": "the rule compares word sequences: a payload returned with only punctuation or emphasis changed (e.g. '3pm!' for '3pm.', or **bold**) counts as an echo here; each hit carries verbatim_including_punctuation so the design seat can decide whether a punctuation-only change is a transform",
+    "verbatim_including_punctuation": 3,
+    "punctuation_or_emphasis_only_change": 0
+   },
+   "v5_by_format": {
+    "F1": {
+     "payload_echo": 1
+    },
+    "F2": {
+     "payload_echo": 2
+    }
+   }
+  }
+ },
+ "check_read_found_cases": {
+  "known": [
+   [
+    "F1",
+    22,
+    "forced0"
+   ],
+   [
+    "F2",
+    5,
+    "free4"
+   ],
+   [
+    "F2",
+    8,
+    "forced2"
+   ]
+  ],
+  "caught": [
+   [
+    "F1",
+    22,
+    "forced0"
+   ],
+   [
+    "F2",
+    5,
+    "free4"
+   ],
+   [
+    "F2",
+    8,
+    "forced2"
+   ]
+  ],
+  "all_caught": true,
+  "extra_in_format_set": []
+ }
+}
