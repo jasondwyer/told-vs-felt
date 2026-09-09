@@ -538,7 +538,7 @@ Design dates carry the PI's clock; Code stamps from `date -u`.
 
 ## Appendix A — 5(f), text as drafted by the design seat 2026-09-05 and approved in principle by the PI in-thread (applied on this commit)
 
-> (f) [k-amendment, design-instance authored, PROPOSAL-k commit ⟨hash⟩] A
+> (f) [k-amendment, design-instance authored, PROPOSAL-k commit e9b5022] A
 > memory-present, state-absent-at-read choice read — a state injected on
 > declared earlier spans of the same forward, with the read position and
 > every non-span position unsteered by construction — is a distinct

@@ -278,7 +278,7 @@ step-0a audit found only partly absorbed by rules 13/18/21.
    committed pre-registration whose leakage-budget gate has passed; the
    insulated primitive is never modified."*
    (f) [k-amendment, design-instance authored, PROPOSAL-k commit
-   `⟨hash⟩` (Appendix A; applied on that commit 2026-09-09, the hash
+   `e9b5022` (Appendix A; applied on that commit 2026-09-09, the hash
    filled at the following commit); text verbatim] *"A memory-present,
    state-absent-at-read choice read — a state injected on declared
    earlier spans of the same forward, with the read position and every
@@ -387,7 +387,7 @@ step-0a audit found only partly absorbed by rules 13/18/21.
     words, headline bolded to (a)–(c)'s style and its "if adopted"
     clause resolved; PI-approved in-thread 2026-09-05 (PI clock) — the
     approval never reached a Code block — and re-confirmed in the PI's
-    routing block of 2026-09-09; applied on PROPOSAL-k's commit `⟨hash⟩`
+    routing block of 2026-09-09; applied on PROPOSAL-k's commit `e9b5022`
     alongside 5(f)] **Encode-side truncation is a delivery-geometry
     variable.** A tokenizer window applied inside the runner (e2a:
     `MLXLensModel.encode` keeping the 512-token tail by default) changes
