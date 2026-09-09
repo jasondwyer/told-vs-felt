@@ -207,3 +207,11 @@ __pycache__/
 !/data/format/
 /data/format/*
 !/data/format/*.json
+
+# PROPOSAL-k Stage 1 (channel study): sessions, masked-read provenance, probe
+# tables and gate evaluations travel as JSON; residual arrays (data/k/*.npz)
+# stay local, named by their as-stored sha16 in the JSON. Same pattern as
+# data/echo: an explicit per-directory exception, no bare *.
+!/data/k/
+/data/k/*
+!/data/k/*.json

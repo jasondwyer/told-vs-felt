@@ -1,0 +1,23 @@
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/k1_analyze.py --selftest
+  [PASS] battery ABSENT -> ABSENT                                               got ABSENT; G1 PASS G2 ABSENT G3 PASS
+  [PASS] ABSENT: G1 medians at bar (A >= .90, B >= .75), every band layer above null 
+  [PASS] ABSENT: G2 no layer above null in L49-L63                              
+  [PASS] ABSENT: G3 median >= .90 over L51-L62                                  
+  [PASS] G4 computed on exactly R+A, R+B, M++, R++ (prohibition asserted)       
+  [PASS] G4 signed shift exists on R masks only                                 
+  [PASS] G5 per-pair shares with exact intervals; alternation and stay rates over all sessions 
+  [PASS] the battery probes the four gate families only; the real run probes all twelve (comparators, beside, text-only) 
+  [PASS] sentence of record selected verbatim from §1.5                         
+  [PASS] battery PRESENT -> PRESENT                                             got PRESENT; G1 PASS G2 PRESENT G3 PASS
+  [PASS] battery INDETERMINATE -> INDETERMINATE                                 got INDETERMINATE; G1 PASS G2 INDETERMINATE G3 PASS
+  [PASS] INDETERMINATE: exactly 2 G2 layers above null                          [55, 59]
+  [PASS] battery G1_FAIL -> G1_FAIL                                             got G1_FAIL; G1 FAIL G2 ABSENT G3 PASS
+  [PASS] battery G3_FAIL -> G3_FAIL                                             got G3_FAIL; G1 PASS G2 ABSENT G3 FAIL
+  [PASS] battery STOP: identity failure -> STOP without evaluating gates        STOP
+  [PASS] Clopper-Pearson: 0/48 -> [0, .074]; 3/102 -> [.006, .083]              0.0740 0.0061 0.0836
+  [PASS] bars are the proposal's: G1 .90/.75 over L51-L61; G2 L49-L63 with >= 3 for PRESENT; G3 .90 over L51-L62; 200 shuffles 
+  [PASS] a missing mask is an assertion failure -> STOP before any probe        
+  [PASS] domain: 'valid' drops an excluded session, 'all' keeps it; both declared in the output 
+  [PASS] select_sentence is disjunction-complete: G3 FAIL dominates, then G1 FAIL, then G2's three 
+------------------------------------------------------------------------------
+  20/20 analyzer battery checks pass (13s)

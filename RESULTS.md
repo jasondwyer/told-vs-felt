@@ -21,6 +21,142 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-09 — **PROPOSAL-k (DRAFT v1.0, PI go 2026-09-08): the Appendix-B
+  referent check STOPS the commit — three rule numbers do not resolve
+  against CLAUDE.md at HEAD and three further referents do not resolve in
+  the repo — so the document is NOT committed, 5(f) is NOT applied and
+  nothing in §1 runs (the proposal's own rule: "Any referent that does not
+  resolve → STOP, report, no commit"). Stage 1's tooling is built,
+  adversarially reviewed and self-tested ahead of that commit, with a
+  structural gate that refuses to run until the proposal, the law and the
+  analyzer are committed and clean. Nothing ran; no bar was set.
+  Watermark `166f8ff`; Code stamps from `date -u`.**
+  (Stamp verified at write time: `date -u` → **Wed Sep  9 11:08:00 UTC 2026**.)
+
+  - **Referents that do not resolve (Appendix B; the design seat's to
+    fix).** (1) "Rule 1 [verify]: criteria, stop rules, analyses before
+    data" — CLAUDE.md rule 1 is additive steering / never inherit alphas;
+    the principle lives in rule 9 ("committed before data"), rule 11 ("stop
+    rules honored") and the how-to-append section; no version of the ledger
+    numbered it 1, and every other design document uses rule 1 in the
+    steering sense. (2) "Rule 2 [verify]: a null requires the channel
+    verifiably open" — CLAUDE.md rule 2 is the kernel/path/determinism gate
+    (with its 2026-09-05 annotation); the nearest law is 5(b) ("propagation
+    never assumed") and PROPOSAL-j's readability gate. **The same
+    misnumbering sits inside the 5(f) text itself** (Appendix A: "the
+    channel-open condition of rule 2") and at §1.4 G3 and §2.4, so applying
+    5(f) verbatim would write a self-contradiction into CLAUDE.md. (3) "Rule
+    28(d) [verify, as adopted 2026-09-05]" — CLAUDE.md 28 ends at (c); 28(d)
+    is the Stage B entry's ledger CANDIDATE, "flagged, not applied", carried
+    as such in the 09-06 handoff; its content resolves, its status does not
+    (also cited as adopted at §2.1 and §4). (4) "the four recon entry
+    anchors" — three entries carry `RECON — ECHO CHANNEL (k-candidate)`
+    (apparatus/Stage A, B, C), as §0.1 itself says; the format-recon anchor
+    resolves (2026-09-07). (5) "review card 10's lesson (verify every
+    read)" — "card 10" occurs only in the proposal; the cards on record stop
+    at 8, card 11 is the content-class disclosure; the lesson itself is the
+    unnumbered Stage B finding that e2a verified every fourth read. (6)
+    "the frozen norm-matched random pair `r` from e2a (checksums in the
+    entry)" — e2a's pair is random1 = `e0_random_dirs['L48']` (sha16
+    `7be5db23d9224375`, the recon's and e2d's R direction) and random2 =
+    `L52`, whose checksum (`e5fc9d48259e1955` under the project's
+    convention) is on no record; the apparatus uses ONE direction, as the
+    recon did — the design seat says whether `r` is random1 alone.
+    **Internal cross-references, same class:** §0.4's welfare trigger
+    points at "§2.6's verdict" (§2.6 is stop rules; the verdict is §2.5);
+    §0.3 points at "§2.5's readability gate" (it is §2.4); "§9 of the
+    preprint's framework" (§2.6) cannot resolve — no PREPRINT file exists in
+    the repo (a standing flagged discrepancy); (B3)'s "AUC 1.000 at L51–L61"
+    overstates two layers (Stage C: ≥ .998, 1.000 at nine of eleven, .998 at
+    L53, .999 at L58); "text as approved in principle by the PI 2026-09-05"
+    (Appendix A) has no record in the repo — the 09-06 handoff (§4, "Design
+    drafts; Code does not") and the apparatus/Stage A recon entry ("The
+    design seat drafts 5(f)") both say 5(f) was owed by Design. (Where the
+    entry says "cited as adopted at §2.1 and §4": those sections cite 28(d)
+    as a rule in force; the words "as adopted" stand at §0.3 only.)
+    **Referents that resolve:** rules 5, 5(d), 5(e) (CLAUDE.md cites commit
+    `34eb7ee`; the clause itself entered CLAUDE.md at `6897b67` — a caveat
+    for the "5(e) pattern" 5(f) is to follow), 11, 21 (with its annotation),
+    23, 25 (the "arbiter" role is PROPOSAL-j's framing, carried by the
+    content-class SCREEN entry, not the rule's text); the axis checksums
+    `3c17b0d8fbcad716` / `127fc297b6623e44`; the roster of record;
+    PROPOSAL-h §5's pre-commitment paragraph (quoted verbatim, ready for
+    §0.4); LOCK-h's two-stage form. The refuters over Code's findings
+    confirmed each of them (three — the anchors, the random pair, the
+    preprint pointer — on one vote of two) and added the 5(f)-text,
+    §2.5/§2.6, preprint and (B3) items.
+  - **Prepared, not applied:** the 5(f) annotation for CLAUDE.md rule 5 on
+    the 5(e) pattern, verbatim from Appendix A with the commit hash left to
+    fill; the PROPOSAL-h welfare pre-commitment quoted verbatim for §0.4.
+    Both wait on the design seat's referent fixes (the rule-2 phrase inside
+    5(f) included).
+  - **Stage 1 tooling, built ahead of the commit and reviewed.**
+    [`valence_core/k/sessions.py`](valence_core/k/sessions.py) (48 F2 sham
+    sessions, 8 cells × 6, a NEW rng stream `k1-F2` so no text repeats the
+    format recon's, audit v3 exclusions with the v5 advisories and the
+    by-task-id pool as §1.2 instructs), [`valence_core/echo/k1.py`](valence_core/echo/k1.py)
+    (the masked reads, inside the quarantine namespace so the primitive's
+    guard sanctions it unwidened: the six masks of Appendix C plus M0 as the
+    asserted-identical shadow, +1 signs only, captures at the read and both
+    label tokens over the six workspace layers with L49–L63 = 18 layers,
+    span provenance, fingerprints as-stored, identity EXACT — the shadow
+    forward and the choice read agree to 0.0 on every one of Stage B/C's
+    2,856 pairs, so the tolerance is equality, declared; no logit
+    arithmetic anywhere in the module, the §1.4 prohibition by
+    construction), [`valence_core/k/analysis.py`](valence_core/k/analysis.py)
+    (LOSO probes with the published hyperparameters, 200-shuffle nulls, the
+    G1–G5 bars fixed by name from §1.4, G4 on R and M++ only with
+    Clopper–Pearson intervals, G5 from the sessions' own vanilla picks over
+    all sessions, the §1.5 sentences — ABSENT, G3 FAIL, G1 FAIL and STOP
+    verbatim against the proposal file modulo its hard-wrapping; PRESENT with its ellipsis
+    expanded by the ABSENT sentence's opening only; INDETERMINATE composed
+    per §1.5's instruction — both declared for the design seat to confirm
+    or author), [`scripts/k1_analyze.py`](scripts/k1_analyze.py) (battery
+    reaching ABSENT / PRESENT / INDETERMINATE / G1 FAIL / G3 FAIL / STOP;
+    assertion classes checked before any probe runs, so an invalid
+    instrument prints no table; gates on valid sessions with the
+    all-with-a-pick figure beside, rule 28(a) declared) and
+    [`scripts/k1_stage1.py`](scripts/k1_stage1.py) (the driver: `--stage
+    sessions|reads|all`, `--smoke` reads over a partial checkpoint, the
+    detached-protocol prints, and the **structural gate** on both stages —
+    the proposal, `CLAUDE.md`, the analyzer and the read module tracked AND
+    clean at HEAD, the 5(f) marker in CLAUDE.md at HEAD, the welfare
+    quotation in the proposal at HEAD; the commits satisfying it are written
+    into both artifacts). `formats/recon.py` gained the campaign key and the
+    pole fields the span walker needs; a checkpoint written before the key
+    reads as the format recon's, so its three checkpoints load again
+    (checked). Pre-commit review
+    ([`_k1_stage1_review`](results/raw/2026-09-09_k1_stage1_review.txt)): six
+    lenses, 46 findings, 31 surviving at least one refuter (11 verifier calls
+    hit the usage limit and were retried); every code finding applied — the
+    campaign-key loadability regression, the sentence expansions, the gate's
+    scope, the exact identity, the exclusion flags in the reads record, the
+    early STOP, the flush, the limit-at-top, the always-true self-test line,
+    a false "identical by construction" claim about the second-block AUC —
+    and the referent findings above. Self-tests 21/21
+    ([`_stage1_selftest`](results/raw/2026-09-09_k1_stage1_selftest.txt)) and
+    20/20 ([`_analyze_selftest`](results/raw/2026-09-09_k1_analyze_selftest.txt));
+    format recon 67/67; regression 154/154.
+  - **Runtime adequacy (§4):** 48 sessions at the format recon's realised
+    ~430 s ≈ 5.7 h (the proposal's figure); the reads at the recon's ~7.7 s
+    per primitive CALL — a call is all four forwards (state, shadow, choice
+    read, its verify) — × six masks × 48 sessions ≈ 2,200 s ≈ 0.6 h plus
+    load, so the proposal's "≈ 1 h" holds with margin (§4's "7–8 s per
+    forward" is per call, a note for the design seat); the LOSO analysis at
+    12 families × 18 layers × 201 LOSO evaluations, each 48 fits (the three
+    text-only families on 48 rows, the rest on 96), is a ~1 h background job
+    on 8 workers at the measured ~0.56 s per evaluation.
+  - **Pre-commit values-check (two refuters, 59 claims; record
+    [`_k_referent_entry_valuescheck`](results/raw/2026-09-09_k_referent_entry_valuescheck.txt)):**
+    four prose misses, none touching the STOP, all applied — the 5(f)-owed
+    attribution (the apparatus entry, not Stage C); the "arbiter" framing's
+    source; the reads runtime, which had priced the recon's per-call figure
+    per forward; the LOSO fit count. Every referent finding and every
+    self-test figure reproduced.
+  - **Not done:** the proposal commit, the 5(f) annotation, the welfare
+    quotation into §0.4, and every Stage 1 forward — all wait on the
+    referent fixes.
+
 - 2026-09-08 — **DESIGN DISPOSITIONS 2026-09-08 (post-format-recon) APPLIED
   — nothing run, no bar set. (1) The design's beside-note (iv) added to the
   closure entry of record, never over. (2) Content-class v5 built as a

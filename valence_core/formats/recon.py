@@ -215,8 +215,10 @@ def forced_order(fmt: str, cell: Mapping) -> list[tuple[str, str]]:
     return [(tags[r], r) for r in FORMATS[fmt]["order"]]
 
 
-def rng_key(fmt: str) -> str:
-    return f"fmt-{fmt}"
+def rng_key(fmt: str, campaign: str = "fmt") -> str:
+    """The session rng stream key. "fmt" is the format recon's; PROPOSAL-k's
+    Stage 1 uses "k1" so its sessions are new text in the same format."""
+    return f"{campaign}-{fmt}"
 
 
 def round_segment(idx: int, ri: int, n_round: int, tag: str, ttext: str) -> str:
@@ -264,7 +266,7 @@ def _insulated_read(adapter, prefix: str, a: str, b: str, label_ids: Mapping[str
 def run_session(adapter, fmt: str, idx: int, cell: Mapping, tasks: Sequence[Mapping],
                 audit3: AuditV3, ban_ids: Sequence[int], term_rx: Sequence[str],
                 others_of: Callable[[str], list[str]], *, temp: float = TEMP,
-                scope: str = "e2a",
+                scope: str = "e2a", campaign: str = "fmt",
                 _read_override: Callable | None = None) -> dict:
     """One sham session in format `fmt`. Draw order is e2a's exactly.
 
@@ -273,7 +275,7 @@ def run_session(adapter, fmt: str, idx: int, cell: Mapping, tasks: Sequence[Mapp
     """
     if fmt not in FORMATS:
         raise ValueError(f"unknown format {fmt!r}")
-    rng = session_rng(rng_key(fmt), idx)
+    rng = session_rng(rng_key(fmt, campaign), idx)
     seq = task_sequence(rng, tasks, N_FORCED + N_FREE)
     tp, tm = cell["tag_plus"], cell["tag_minus"]
     order = forced_order(fmt, cell)
@@ -375,7 +377,8 @@ def run_session(adapter, fmt: str, idx: int, cell: Mapping, tasks: Sequence[Mapp
     if choices:
         p0 = choices[0]["prefix_tokens_at_read"]
         retention = {r["phase"]: p0 - r["transcript_tokens_after"] for r in rounds}
-    rec = {"format": fmt, "session": idx, "cell": dict(cell),
+    rec = {"format": fmt, "session": idx, "cell": dict(cell), "campaign": campaign,
+           "rng_key": rng_key(fmt, campaign),
            "tag_plus": tp, "tag_minus": tm, "pair": list(cell["pair"]),
            "neutral_label": NEUTRAL_LABEL if fmt == "F1" else None,
            "forced_tags": [t for t, _ in order], "forced_roles": [r for _, r in order],
@@ -422,7 +425,7 @@ def tally(counters: DescriptiveCounters, rec: Mapping) -> None:
 
 # --- checkpointed campaign, per format ----------------------------------------
 def run_identity(fmt: str, seed: int, scope: str, temp: float,
-                 audit_sha16: str) -> dict:
+                 audit_sha16: str, campaign: str = "fmt") -> dict:
     """Everything a resume must match: the design of every SESSION. temp is
     this recon's dose; the audit sha, the roster and the neutral label are
     the instrument (trap 36's guard, generalised). The registered n is NOT
@@ -432,7 +435,7 @@ def run_identity(fmt: str, seed: int, scope: str, temp: float,
     (design patch 2026-09-06 §2: F0 24 -> 8) changes how many sessions run,
     never which. `load_checkpoint` pins the SCHEDULE PREFIX instead and
     refuses a shrink that would orphan a session already on disk."""
-    ident = {"format": fmt, "seed": seed, "scope": scope, "temp": float(temp),
+    ident = {"format": fmt, "campaign": campaign, "seed": seed, "scope": scope, "temp": float(temp),
              "audit_v2_sha16": audit_sha16, "roster": [list(p) for p in ROSTER],
              "n_forced": N_FORCED, "n_free": N_FREE}
     # The neutral label is part of a session's design ONLY where a neutral
@@ -451,7 +454,8 @@ def _cell_key(c: Mapping) -> tuple:
 
 def load_checkpoint(path: str, identity: Mapping, n: int, sched: Sequence[Mapping]) -> dict:
     ck = json.load(open(path))
-    got = {k: ck.get("identity", {}).get(k) for k in identity}
+    rec_id = ck.get("identity", {})
+    got = {k: rec_id.get(k, "fmt" if k == "campaign" else None) for k in identity}   # checkpoints written before the campaign key are the format recon's ('fmt')
     if got != dict(identity):
         diff = {k: (got[k], identity[k]) for k in identity if got[k] != identity[k]}
         raise SystemExit(f"CHECKPOINT MISMATCH: {path} differs on {diff} (recorded, this run). "
@@ -472,8 +476,8 @@ def load_checkpoint(path: str, identity: Mapping, n: int, sched: Sequence[Mappin
 
 def run_format(adapter, fmt: str, n: int, tasks, audit3: AuditV3, ban_ids, term_rx,
                others_of, *, temp: float = TEMP, scope: str = "e2a", seed: int = DRAW_SEED,
-               audit_sha16: str = "", checkpoint_path: str, resume: bool = False,
-               limit: int = 0, progress: Callable[[str], None] = print,
+               audit_sha16: str = "", campaign: str = "fmt", checkpoint_path: str,
+               resume: bool = False, limit: int = 0, progress: Callable[[str], None] = print,
                _read_override: Callable | None = None) -> dict:
     """The registered n for one format, checkpointed after every session.
 
@@ -485,7 +489,7 @@ def run_format(adapter, fmt: str, n: int, tasks, audit3: AuditV3, ban_ids, term_
     """
     assert_modules_absent(FORBIDDEN_MODULES)
     counters = DescriptiveCounters(declared=DECLARED_COUNTERS)
-    identity = run_identity(fmt, seed, scope, temp, audit_sha16)
+    identity = run_identity(fmt, seed, scope, temp, audit_sha16, campaign)
     sched = build_schedule(n, np.random.default_rng(seed))
     sessions: list[dict] = []
     kls: list[float] = []
@@ -523,7 +527,7 @@ def run_format(adapter, fmt: str, n: int, tasks, audit3: AuditV3, ban_ids, term_
             continue
         ts = time.time()
         rec = run_session(adapter, fmt, i, cell, tasks, audit3, ban_ids, term_rx, others_of,
-                          temp=temp, scope=scope, _read_override=_read_override)
+                          temp=temp, scope=scope, campaign=campaign, _read_override=_read_override)
         dt = time.time() - ts
         rec["seconds"] = dt
         for c in rec["choices"]:
@@ -545,10 +549,10 @@ def run_format(adapter, fmt: str, n: int, tasks, audit3: AuditV3, ban_ids, term_
 
 # --- acceptance (computed before any artifact is written, trap 6) --------------
 def as_e2a_row(rec: Mapping) -> dict:
-    return {"arm": rng_key(rec["format"]), "session": rec["session"], "F": rec["F"],
+    return {"arm": rec.get("rng_key", rng_key(rec["format"])), "session": rec["session"], "F": rec["F"],
             "pair": rec["pair"], "tag_plus": rec["tag_plus"],
-            "rounds": [{"tag": r["tag"], "seed": r["seed"], "task": r["task"]} for r in rec["rounds"]],
-            "choices": [{"pick": c["pick"], "seed": c["seed"], "task": c["task"],
+            "rounds": [{"tag": r["tag"], "seed": r["seed"], "task": r["task"], "pole": r["pole"]} for r in rec["rounds"]],
+            "choices": [{"pick": c["pick"], "seed": c["seed"], "task": c["task"], "picked_pole": c["picked_pole"],
                          "menu_a": c["menu_a"], "menu_b": c["menu_b"]} for c in rec["choices"]],
             "transcript": rec["transcript"]}
 

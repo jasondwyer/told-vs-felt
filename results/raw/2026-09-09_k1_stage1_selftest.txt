@@ -1,0 +1,24 @@
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/k1_stage1.py --selftest
+  [PASS] schedule: 48 = 8 cells (pair x start) x 6, exactly balanced; 12 per pair {'per_pair': {'granite/plaza': 12, 'prism/slate': 12, 'velvet/walnut': 12, 'ridge/saddle': 12}, 'per_cell_min': 6, 'per_cell_max': 6, 'exactly_balanced': True}
+  [PASS] k1 rng key differs from the format recon's (new text, same format)       
+  [PASS] format of record is F2 and the neutral label is not used                 
+  [PASS] e2a walk reconstructs 4/4 synthetic k1 sessions under the k1 rng key, seeds match 
+  [PASS] records carry campaign 'k1' and rng_key 'k1-F2'; sham, uncached, unsteered 
+  [PASS] the same index under the format recon's key draws DIFFERENT tasks/seeds (new sessions) 
+  [PASS] audit: payload echo -> ADVISORY content:payload_echo (v5); '* * *' -> exclusion null_response (v3) ({'exclusion': None, 'advisory': ['content:payload_echo'], 'content_label': 'payload_echo'}, 'content:null_response')
+  [PASS] audit: the format recon's wrong_task false positive does NOT fire under the by-task-id pool {'exclusion': None, 'advisory': [], 'content_label': None}
+  [PASS] audit v2 sha16 recomputed and matches                                    7aa235d25eeb66dc
+  [PASS] F2 block spans: two rounds per label, block order, first label = forced0's tag 
+  [PASS] masks: M+A/R+A cover A's two spans, M+B/R+B B's, M++/R++ all four; every sign + 
+  [PASS] label positions: both labels' last tokens after the last forced span (the menu line), before the read 
+  [PASS] capture set: the six workspace layers with L49-L63 = 18 distinct layers (52/56/60 lie in the band); masks exactly six + shadow 
+  [PASS] sham source guard: the session module and the sessions stage CALL no Injection / at_frac / load_axis and never pass cached=True 
+  [PASS] the read module does no logit arithmetic at all (prohibition, §1.4 G4: nothing signed on M+A / M+B) 
+  [PASS] declared bars (e2d's) fire and stay silent                               
+  [PASS] structural gate: refuses while the proposal / analyzer / 5(f) / welfare quote are not committed and clean; reports every problem ok=False problems=['PROPOSAL-k-echo-channel.md: not tracked', 'scripts/k1_analyze.py: not tracked', 'valence_core/k/analysis.py: not tracked']
+  [PASS] gate on a temp repo: passes when all tracked+clean+5(f)+welfare; refuses a dirty proposal; refuses CLAUDE.md without 5(f) 
+  [PASS] sentences of record: ABSENT, G3_FAIL, G1_FAIL, STOP byte-verbatim against §1.5 (whitespace-normalised) 
+  [PASS] PRESENT = §1.5's text with its ellipsis replaced by the ABSENT sentence's opening only; INDETERMINATE declared as composed 
+  [PASS] startup hygiene (rule 18 / 28c) runs on the roster vs the 64 paraphrases and the wrapper 
+------------------------------------------------------------------------------
+  21/21 Stage 1 selftest checks pass
