@@ -63,38 +63,41 @@ G3_MEDIAN = 0.90
 N_SHUFFLES = 200
 SHUFFLE_SEED = 20260909
 
-SENTENCES = {
-    "ABSENT": ("On new sessions in the format of record the state–label binding is linearly present at the label token and absent "
-               "at the decision token, and the first block's sign reaches the decision token: the echo channel is open for the sign "
-               "and closed for the binding. Stage 2 runs under F-ABSENT."),
-    # §1.5 writes this sentence with a leading ellipsis; the ellipsis is expanded with the ABSENT sentence's
-    # opening ("On new sessions in the format of record") and NOTHING else -- declared, design confirms.
-    "PRESENT": ("On new sessions in the format of record the binding is present at both the label token and the decision "
-                "token in this format. Stage 2 runs under F-PRESENT after LOCK-k bounds the binding's arithmetic route."),
-    # §1.5 gives an instruction, not a sentence ("as ABSENT, with the indeterminacy named in every §3 sentence"):
-    # the ABSENT sentence with the instruction's clause appended -- a COMPOSITION, declared; design confirms or authors.
-    "INDETERMINATE": ("On new sessions in the format of record the state–label binding is linearly present at the label token and absent "
-                      "at the decision token, and the first block's sign reaches the decision token: the echo channel is open for the sign "
-                      "and closed for the binding. Stage 2 runs under F-ABSENT, with the G2 indeterminacy named in every §3 sentence."),
-    "G3_FAIL": ("The injected sign does not reach the decision token in this format at f = 0.10. The channel is not verifiably open; "
-                "Stage 2 does not run. Concluded, not answered. The next move is a design change (retention interval, dose rung < 0.20, "
-                "or format), by new addendum."),
-    "G1_FAIL": ("The binding is not readable at the label token in this format, though it was in e2a's (recon). Stage 2 runs only as a "
-                "sign-memory operant under F-ABSENT; the binding question is reported as not replicated and returns to the drawer."),
-    "STOP": "Any assertion failure (identity, mask-at-read, provenance): STOP; no gate is evaluated; Code reports; design adjudicates.",
+SENTENCES = {  # §1.5 of PROPOSAL-k v1.1, every sentence verbatim (whitespace-normalised; the file hard-wraps)
+    "ABSENT": ('On new sessions in the format of record the state–label binding is linearly present at the label token and '
+               "absent at the decision token, and the first block's sign reaches the decision token: the echo channel is open "
+               'for the sign and closed for the binding. Stage 2 runs under F-ABSENT.'),
+    "PRESENT": ('On new sessions in the format of record the state–label binding is linearly present at the label token and at '
+               "the decision token, and the first block's sign reaches the decision token: the echo channel is open for the "
+               'sign and for the binding. (B3) does not replicate in this format. Stage 2 runs under F-PRESENT after LOCK-k '
+               "bounds the binding's arithmetic route on the random-direction arms."),
+    "INDETERMINATE": ('On new sessions in the format of record the state–label binding is linearly present at the label token, above '
+               "the null at one or two layers of fifteen at the decision token — neither absent nor present by this study's "
+               "criteria — and the first block's sign reaches the decision token. Stage 2 runs under F-ABSENT; every verdict "
+               "sentence states that the binding's absence at the decision is indeterminate at n = 48."),
+    "G3_FAIL": ('The injected sign does not reach the decision token in this format at f = 0.10. The channel is not verifiably '
+               'open; Stage 2 does not run. Concluded, not answered. The next move is a design change (retention interval, '
+               'dose rung < 0.20, or format), by new addendum.'),
+    "G1_FAIL": ("The binding is not readable at the label token in this format, though it was in e2a's (recon). Stage 2 runs "
+               'only as a sign-memory operant under F-ABSENT; the binding question is reported as not replicated and returns '
+               'to the drawer.'),
+    "STOP": ('Any assertion failure (identity, mask-at-read, provenance): STOP; no gate is evaluated; Code reports; design '
+               'adjudicates.'),
 }
-SENTENCE_PROVENANCE = {"ABSENT": "verbatim §1.5", "G3_FAIL": "verbatim §1.5", "G1_FAIL": "verbatim §1.5", "STOP": "verbatim §1.5 (last bullet)",
-                       "PRESENT": "§1.5 with its leading ellipsis expanded by the ABSENT sentence's opening only (declared)",
-                       "INDETERMINATE": "COMPOSED per §1.5's instruction 'as ABSENT, with the indeterminacy named in every §3 sentence' (declared; design confirms or authors)"}
+SENTENCE_PROVENANCE = {k: "verbatim §1.5" + (" (last bullet)" if k == "STOP" else "") for k in SENTENCES}
 
 
 def proposal_sentences(path: str) -> dict:
-    """§1.5's sentences as they stand in the proposal file, whitespace-normalised, keyed by branch."""
+    """§1.5's six sentences as they stand in the proposal file (v1.1: five quoted
+    outcome sentences in order -- ABSENT, PRESENT, INDETERMINATE, G3 FAIL, G1 FAIL --
+    and the STOP bullet), whitespace-normalised, keyed by branch."""
     txt = open(path, encoding="utf-8").read()
     sec = txt.split("### 1.5", 1)[1].split("### 1.6", 1)[0]
     quotes = re.findall(r"\*\"(.+?)\"\*", sec, re.S)
     norm = lambda s: re.sub(r"\s+", " ", s).strip()
-    out = {"ABSENT": norm(quotes[0]), "PRESENT_with_ellipsis": norm(quotes[1]), "G3_FAIL": norm(quotes[2]), "G1_FAIL": norm(quotes[3])}
+    if len(quotes) != 5:
+        raise ValueError(f"§1.5 carries {len(quotes)} quoted sentences; the analyzer keys five (v1.1)")
+    out = dict(zip(("ABSENT", "PRESENT", "INDETERMINATE", "G3_FAIL", "G1_FAIL"), (norm(q) for q in quotes)))
     m = re.search(r"Any assertion failure.*?design adjudicates\.", sec, re.S)
     out["STOP"] = norm(m.group(0)) if m else None
     return out

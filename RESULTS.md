@@ -21,6 +21,258 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-09 — **PROPOSAL-k v1.1 COMMITTED (PI routing block 2026-09-09):
+  Appendix B RESOLVES at HEAD — every rule number, anchor, checksum,
+  figure, cross-reference and quotation the document carries was checked
+  against CLAUDE.md, the logs, the artifacts and the code by Code and,
+  blind, by five checkers with two refuters each (100 findings; record in
+  raw); 5(f) and 28(d) applied to CLAUDE.md as annotations ON THIS
+  COMMIT, 28(d) tagged with the PI's in-thread approval of 2026-09-05 as
+  the routing block re-confirms it; the PROPOSAL-h §5 pre-commitment
+  quoted verbatim into §0.4; the analyzer's §1.5 sentences re-keyed to
+  v1.1 (PRESENT and INDETERMINATE now verbatim; nothing composed). The
+  commit hash goes into Appendix A and both annotations by the FOLLOWING
+  commit, which changes nothing else — a commit cannot carry its own hash.
+  Nothing in §1 has run; Stage 1 launches under the detached protocol
+  after the hash-fill commit, its launch facts in their own entry.
+  Watermark `8d2a7a6`; Code stamps from `date -u`.**
+  (Stamp verified at write time: `date -u` → **Wed Sep  9 16:59:52 UTC 2026**.)
+
+  - **The routing block (the PI's word, quoted so the record carries it;
+    the design seat's ledger line included).**
+    > # ROUTING — PROPOSAL-k v1.1 commit
+    > design seat → Jason → Code · PI date Wed 2026-09-09 (Jason confirms) · Code stamps from `date -u`
+    > 1. PI RE-CONFIRMATION (Jason writes yes/no here): YES ledger 28(d) — the Stage
+    >    B entry's candidate in Code's words — APPROVED 2026-09-05 in-thread;
+    >    the approval never reached a Code block. Apply on this commit as an
+    >    annotation, tagged with the approval, alongside 5(f).
+    > 2. Appendix B in full against CLAUDE.md at HEAD, then commit v1.1 with
+    >    5(f) and 28(d) applied (hash filled into Appendix A's marker), the
+    >    PROPOSAL-h §5 paragraph quoted verbatim into §0.4, and k1_analyze.py
+    >    with its battery on or before the same commit. Any referent that does
+    >    not resolve → STOP, report, no commit — as before.
+    > 3. Then Stage 1 under the detached protocol (§5 step 3): sessions ≈ 5.7 h,
+    >    reads ≈ 0.6 h plus load, the LOSO analysis as a background job; the
+    >    STAGE 1 entry on completion.
+    > Ledger, design seat: slip (17) — in a pre-registration draft, three rule
+    > numbers cited from CONTINUITY.md's distilled list rather than CLAUDE.md,
+    > one of them inside the law text the draft carried; a card number, a
+    > "pair," two cross-references, a preprint pointer and one figure beside
+    > it. One item; caught by the document's own Appendix B before a hash
+    > existed. Standing fix: CONTINUITY's numbering is never a citation source.
+    > Design count: seventeen.
+
+  - **Appendix B, item by item (record
+    [`_k_v11_appendixB_check`](results/raw/2026-09-09_k_v11_appendixB_check.txt);
+    "with a note" = the referent exists and the proposal's gloss is wider,
+    narrower or differently worded without being false).**
+    *Rules, against CLAUDE.md at HEAD `8d2a7a6`.* **5** is the two-horns
+    standing law (the proposal's "memo" is its own §0.3 bullet); the
+    quotation it attaches, "any new readout must answer to this before it
+    runs", is not rule 5's text — its source is PROPOSAL-g §2 item 1, *"Any
+    new readout family answers to two-horns before it runs"*, rendered
+    near-verbatim inside quotation marks (the referent is on record; the
+    marks are a note for the design seat). **5(b)** "propagation never
+    assumed" — "a null requires the channel verifiably open" is the
+    proposal's inference from it, and §2.4 is the readability gate it
+    points at. **5(d)** "persistent-KV session readouts disqualified at
+    dose ≥ 0.20 for the reward axis" — g3's .5368 at 0.20 is the archived
+    2026-08-09 gate (carried at RESULTS 2068); "prefix-steered /
+    choice-unsteered" is the recon entry's description of g3's geometry,
+    not the clause's words. **5(e)** verbatim at CLAUDE.md, untouched;
+    `valence_core.e2b.statepresent` is asserted absent at import and before
+    every read (`maskedprefix.py`, `k1.py`). **9** "committed before data"
+    — the clause's subject is the matched-pair swing machinery; "stop
+    rules" is rule 11's clause and "analyses" no rule's, so the §0.3 gloss
+    is wider than rule 9's words (one refuter of two would STOP on this;
+    Code reads it as the principle the change note assigns to rules 9 and
+    11 together, and says so here). **11** both glosses. **21** with its
+    2026-09-05 annotation. **23.** **25** — the 2026-09-06 adjudication
+    routes `task_echo` and `wrong_task` to the rule-25 read ("arbiter" is
+    the 09-05 screen entry's and PROPOSAL-j's word for the same standing;
+    `payload_echo` is a v5 CANDIDATE the adjudication does not name, and
+    the proposal sends it to the read as an advisory, which is the
+    candidate's standing). **28(d)** — the Stage B entry's ledger
+    candidate, "flagged, not applied" on the record until this commit;
+    three of §0.3's four clauses map onto its (a)–(c) one-to-one, the
+    first — "encode untruncated" — being the proposal's own §4 commitment
+    rather than a clause of 28(d) (whose (b) permits a declared limit);
+    §2.1's citation is (a)'s content; §4's "the fraction of the context
+    touched" misnames
+    (b)'s measurand — the fraction of GENERATIONS an encode limit touches
+    — vacuous here because the encode is untruncated (one phrase for the
+    design seat). The Appendix A text's own citations (5(b), 5(d), 5(e))
+    resolve and its conditions (i)–(iv) agree with the §0.3 summary. No
+    "rule 1" / "rule 2" in the v1.0 sense remains.
+    *Provenance claims.* 5(f)'s "drafted by the design seat 2026-09-05,
+    approved in principle by the PI in-thread the same day" (§0.3; the
+    Appendix A heading says the same without "the same day") and 28(d)'s
+    "PI-approved 2026-09-05 (PI clock) in-thread" have no repo record — the
+    09-05 apparatus entry assigns 5(f) to Design, the 09-06 handoff lists
+    both as open — and "the routing block" occurred nowhere in the repo
+    until this entry: the block quoted above IS that record, entering the
+    way every chat-level PI GO has (quoted in an entry). The 2026-09-05
+    events are on record only as the block asserts them.
+    *Anchors, checksums, names, quotations.* Three `RECON — ECHO CHANNEL
+    (k-candidate)` entries (apparatus/Stage A 2026-09-05, STAGE B
+    2026-09-05, STAGE C 2026-09-06) and `FORMAT RECON` 2026-09-07 (the
+    09-06 entry of the same name is the timed STOP, not the one cited);
+    axis `3c17b0d8fbcad716` (float64) / `127fc297b6623e44` (float32) and
+    random1 `e0_random_dirs['L48']` `7be5db23d9224375` — one direction in
+    the recon, in e2d and in `k1.py`; the roster of record, "an admissible
+    four" (RESULTS 3557); LOCK-h's two stages; e2b's low-discordance
+    certification; the B3 directional reading ratified 2026-08-23 (reverse
+    is its own question, never a pass); the Stage B finding, 311 distinct
+    verified forwards at `verify_every = 4` (RESULTS 1771–1775); 16
+    full-attention and 48 linear-attention layers of 64 (the model
+    config's `layer_types`); PROPOSAL-h §5's pre-commitment, unchanged
+    since `34eb7ee`. §2.6's "[verify anchor]" is an unfilled marker in the
+    text; the framework it describes is the archived log's — for e2a the
+    2026-08-09 entry `e2a run-2 PAUSE ADJUDICATION — clause-2 bar re-spec
+    …` with its "General principle (standing; ledger candidate, flagged
+    not applied)" (archive lines 700, 715–722) and the same-day guard
+    re-spec; for f1 the 2026-08-10 `f1
+    PRE-REGISTRATION — natural-reinforcer screen`, §Monitors (archive 366,
+    400); codified as CLAUDE.md rule 21. "At declared scales" paraphrases
+    "declared p0 at every scale". The drawer's ± rung, "PI-only,
+    welfare-gated", is the untracked 2026-09-04 design handoff's
+    "welfare-gated, PI-only" — the same two terms, reversed — and is
+    nowhere committed (ledger 27; the sentence licenses nothing). "STOPPED on at `166f8ff`": HEAD when the check ran; the STOP
+    entry is `8d2a7a6`.
+    *Figures.* (B1) ".94–.995 above L48" is the Stage B header's own gloss
+    — L49 reads .695, the range holds L50–L63; 1.000 from L50 all-same-sign
+    and the axis persisting into L59–L63 where random decays, on record.
+    (B2) .98–.99 across L51–L62, .92 → .65; R1 at 157 tokens .888, R4 at
+    22 tokens .683. (B3) .508–.549 against nulls .56–.60 at n = 102;
+    ≥ .998 across L51–L61 at label_a's token, 1.000 at nine of eleven, nine
+    tokens before the read; label_b .962/.964 → .81–.87; text-only below
+    null at 53 of 54 cells (the one, label_b at L44, .611 against .608, a
+    layer with no state). (B4) 0–3/102 over every family — the random
+    families' flips (0–1/102) live in the artifacts, not the printed
+    tables; "median .04–.10" is the record's own two-decimal gloss (the
+    Stage B FLAG's "M1/M2 median |Δ| ≈ .10 vs M5/M6 and R1–R4 ≈ .04",
+    Stage C's ".04–.06") where the
+    realised medians run .033–.103 (R3 .0327), so exact would read .03–.10;
+    the pseudo-shift ±.02–.03 is the MIXED block masks B3x/B4x
+    (+.027/−.022) toward the first ROUND's label — the pure-block masks
+    B1x/B2x, the analog of Stage 1's R+A/R+B, read +.008/−.002, a scoping
+    note for G4's bar source. (B5) F0 8/8; F1 18/20 = 6+5+4+3 and F2 16/24
+    = 5+4+4+3 per pair from the identity finding; 5/24 scaffold
+    reproductions; F2 zero exclusions. Two-horns memo: 49 layers ≤ 48
+    bit-identical; 0–3/102 and max |Δ| .2590 (M1; the same value at n = 24
+    and n = 102), ±.03 as a bound — the flips and the max come from the
+    alternating reward masks M1/M2, not the R / M++ arms the memo names for
+    the gate (0–1/102 there, per-family max |Δ| .11–.20, the largest M5x
+    .2012 and M5 .1913). §1.4's comparator .83–1.000.
+    *Apparatus.* F2 24/24 at 430 s mean, zero exclusions, 48 → 5.7 h; 12
+    per pair, 6 per start order (`sessions.py`); 18 capture layers; 2,856
+    = 1,632 + 1,224 pairs at 0.0; seven masks named, "six masks" = the six
+    non-M0 (M0 is the shadow inside every call); 200 shuffles, LOSO; the
+    G1/G2/G3 bars as the analyzer's constants; 21 tokens (20–22) and "≈
+    115" = F2's forced1 mean 114.8 (range 98–154) from the sessions
+    artifact; 240 rounds, 0 v2; 7.7 s = Stage C's 7.66 s per mask, one
+    call = the four forwards (`maskedprefix.py`: state, shadow, the
+    insulated `choice_read` and its verify), timed with 64-layer capture,
+    so conservative for k1's 18; the anchor `PROPOSAL-k STAGE 1 — CHANNEL
+    STUDY` does not yet exist.
+    *Cross-references.* §0.4 → §2.5 (the verdict), §0.3 → §2.4 (the
+    readability gate), G2 → §3.1's frames, G3 FAIL → §1.5, §2.5 → §3.3,
+    Appendix C against §1.2/§2.1 (seven masks, four arms; R++ has no arm,
+    S no mask), Appendix A against §0.3 — all land. §1.5 is
+    disjunction-complete: the twelve G1 × G2 × G3 cells are each covered
+    once (G1 FAIL with G3 FAIL falls to the G3 bullet). **Two internal
+    notes for the design seat, to settle BEFORE Stage 1 data:** (1) the
+    cell (G1 FAIL, G2-PRESENT, G3 PASS) goes to F-ABSENT by §1.5's fifth
+    bullet and to F-PRESENT by §1.4's G2-PRESENT paragraph — the analyzer
+    binds §1.5 (G3 FAIL, then G1 FAIL, then G2's three); (2) §3.3
+    pre-writes sentences for three of §2.4's five gates — the
+    identity-baseline gate cannot fail by its own definition, and an
+    apparatus-gate failure in Stage 2 has no written consequence (§1.5's
+    pattern is STOP → Code reports → design adjudicates) — LOCK-k's k2
+    analyzer needs both. §6's "every rule number … marked [verify]": six
+    bare back-references; "slips 3 and 17": (17) is in the block above,
+    (3) in the design seat's own ledger. The status line's "no design
+    content changed" sits beside two §1.5 sentences authored in full (they
+    replace an ellipsis and an instruction; no bar moved).
+    *Counts.* 100 findings: 46 resolve, 44 with a note, 10 the checkers
+    marked not resolving; 192 refuter verdicts, 25 overturns (11 note →
+    resolves, 8 not → note, 4 note → not, 2 resolves → note). Code's
+    reconciliation of the ten: the quotation (on record in PROPOSAL-g),
+    the three provenance claims (the routing block is their record from
+    this entry), §4's measurand (a phrase), (B4)'s median (the record's own
+    gloss), §1.5 against the analyzer (fixed in this commit, below), §3.3
+    (a note for LOCK-k) and the hash (mechanics, below). No referent names
+    a thing that does not exist; the commit proceeds.
+
+  - **Applied to CLAUDE.md (law text verbatim; brackets are provenance).**
+    Rule 5 gains (f) after (e): the design's bracket from Appendix A,
+    extended with "(Appendix A; applied on that commit 2026-09-09, the
+    hash filled at the following commit); text verbatim" and the ⟨hash⟩
+    marker kept; the body is built from Appendix A by the writing script
+    and is identical to it after whitespace normalisation (1,259
+    characters, verified by the values-check). Rule 28 gains (d) after
+    (c): the Stage B
+    entry's ledger candidate in Code's words, the two declared edits being
+    the headline bolded to (a)–(c)'s style and "Standing form for the
+    ledger, if adopted:" → "Standing form (adopted on this commit):"; the
+    bracket names the entry, the in-thread approval of 2026-09-05 (PI
+    clock) that never reached a Code block, and the routing block of
+    2026-09-09 that re-confirms it. Both brackets read "PROPOSAL-k commit
+    `⟨hash⟩`" until the following commit fills them. **Beside-note,
+    flagged not applied:** 5(e)'s own bracket cites "PROPOSAL-h §0.4" —
+    PROPOSAL-h numbers §0 as a list; the amendment text is its item 4 —
+    and "applied on its commit `34eb7ee`", the proposal's commit; the
+    clause entered CLAUDE.md at `6897b67`. Law text is the design seat's
+    to touch.
+  - **§0.4.** The placeholder replaced by PROPOSAL-h §5's pre-commitment
+    verbatim, from its bolded "**Pre-commitment:**" to the paragraph's
+    end ("…survives into the paper."), with a one-line source note. The
+    paragraph's three preceding sentences (h's insulation-removal framing,
+    "Aversive exposure (−axis) is identical in kind, site, and dose to
+    e2a's precedented protocol; no expansion", the termination counter)
+    are h-specific and NOT carried; one word from the design seat widens
+    the quote to the whole paragraph. The driver's welfare marker matches
+    the quotation as placed.
+  - **Analyzer re-keyed to v1.1 (§5 step 2: committed with the
+    document).** [`valence_core/k/analysis.py`](valence_core/k/analysis.py):
+    `SENTENCES` now holds the five quoted §1.5 sentences and the STOP
+    bullet verbatim (whitespace-normalised; the file hard-wraps),
+    `SENTENCE_PROVENANCE` reads "verbatim §1.5" for all six, and
+    `proposal_sentences()` keys the five quotes in order and refuses any
+    other count; the ellipsis expansion and the composed INDETERMINATE of
+    `8d2a7a6` are gone. The driver's self-test checks all six against the
+    proposal file instead of four plus the expansion. Bars, families,
+    gates, battery untouched. One docstring line in
+    [`valence_core/echo/k1.py`](valence_core/echo/k1.py) said "within
+    1e-9" against the module's own exact rule (the checker's catch,
+    echoed by both refuters) — corrected to what the code does.
+    Self-tests and the regression re-run after the last edit:
+    [`_k1_stage1_selftest_v11`](results/raw/2026-09-09_k1_stage1_selftest_v11.txt)
+    21/21, [`_k1_analyze_selftest_v11`](results/raw/2026-09-09_k1_analyze_selftest_v11.txt)
+    20/20, [`_k_commit_format_recon_selftest`](results/raw/2026-09-09_k_commit_format_recon_selftest.txt)
+    67/67; regression
+    [`_k_commit_regression`](results/raw/2026-09-09_k_commit_regression.txt)
+    154/154.
+  - **Not done here.** The launch (next entry, after the hash-fill
+    commit: `--stage all --resume` detached under `nohup caffeinate`, the
+    LOSO analysis chained behind the reads as a background job, the
+    launch facts verified once, then the session ends); the STAGE 1 entry
+    on completion; LOCK-k (design's).
+  - **Pre-commit values-check (three refuters, 180 claims; record
+    [`_k_v11_entry_valuescheck`](results/raw/2026-09-09_k_v11_entry_valuescheck.txt)):**
+    540 verdicts, 521 confirmed, 19 refuted lines over ten distinct items,
+    all in Code's prose and all applied before commit — three of §0.3's
+    four 28(d) clauses map, not four; the drawer phrase is the handoff's
+    two terms reversed, not word-for-word; the R / M++ maxima are .11–.20,
+    not ".19–.21"; the 1e-9 docstring was the checker's catch; three
+    quotations made exact (the 5(f) provenance bracket, the archive's
+    "General principle" label, the Stage B FLAG); the 5(f) bracket's
+    extension declared; the 1,259-character identity credited to the check,
+    not the writing script; the regression and the three self-tests re-run
+    after the last edit. Verbatim claims all held: the 5(f) body, the 28(d)
+    body with exactly the two declared edits, the §0.4 quotation, the six
+    analyzer sentences, PROPOSAL-h §5 since `34eb7ee`.
+
 - 2026-09-09 — **PROPOSAL-k (DRAFT v1.0, PI go 2026-09-08): the Appendix-B
   referent check STOPS the commit — three rule numbers do not resolve
   against CLAUDE.md at HEAD and three further referents do not resolve in

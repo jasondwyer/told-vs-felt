@@ -28,7 +28,7 @@ recon's apparatus applied to new sessions in the format of record:
   workspace layers and L49-L63. Fingerprints as-stored. Span provenance per
   read; the mask asserted zero at the read and outside declared spans (the
   primitive's own assertions); identity: the shadow's restricted read against
-  the session's recorded vanilla first read (restricted; p_a within 1e-9,
+  the session's recorded vanilla first read (restricted; p_a exactly equal,
   pick equal) and `choice_read(verify=True)` at KL exactly 0.
 
 PROHIBITION (PROPOSAL-k §1.4 G4): no signed quantity toward the +label is

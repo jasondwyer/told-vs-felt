@@ -236,11 +236,10 @@ def selftest() -> int:
     from valence_core.k import analysis as A
     ps = A.proposal_sentences(os.path.join(REPO, PROPOSAL))
     norm = lambda s: " ".join(s.split())
-    chk("sentences of record: ABSENT, G3_FAIL, G1_FAIL, STOP byte-verbatim against §1.5 (whitespace-normalised)",
-        norm(A.SENTENCES["ABSENT"]) == ps["ABSENT"] and norm(A.SENTENCES["G3_FAIL"]) == ps["G3_FAIL"] and norm(A.SENTENCES["G1_FAIL"]) == ps["G1_FAIL"] and norm(A.SENTENCES["STOP"]) == ps["STOP"])
-    chk("PRESENT = §1.5's text with its ellipsis replaced by the ABSENT sentence's opening only; INDETERMINATE declared as composed",
-        norm(A.SENTENCES["PRESENT"]) == "On new sessions in the format of record " + ps["PRESENT_with_ellipsis"].lstrip("…").strip()
-        and A.SENTENCE_PROVENANCE["INDETERMINATE"].startswith("COMPOSED"))
+    chk("sentences of record: all six (ABSENT, PRESENT, INDETERMINATE, G3_FAIL, G1_FAIL, STOP) verbatim against §1.5 of v1.1 (whitespace-normalised; the file hard-wraps)",
+        set(ps) == set(A.SENTENCES) and all(norm(A.SENTENCES[k]) == ps[k] for k in A.SENTENCES))
+    chk("every sentence's provenance is 'verbatim §1.5' (v1.1 authored PRESENT and INDETERMINATE in full; nothing composed)",
+        all(v.startswith("verbatim §1.5") for v in A.SENTENCE_PROVENANCE.values()) and len(A.SENTENCE_PROVENANCE) == 6)
     chk("startup hygiene (rule 18 / 28c) runs on the roster vs the 64 paraphrases and the wrapper", hygiene(tasks)["pool_texts"] == 64)
     n_ok = sum(results); print("-" * 78); print(f"  {n_ok}/{len(results)} Stage 1 selftest checks pass")
     return 0 if n_ok == len(results) else 1

@@ -277,6 +277,28 @@ step-0a audit found only partly absorbed by rules 13/18/21.
    with per-read injection provenance and paired shadow reads, inside a
    committed pre-registration whose leakage-budget gate has passed; the
    insulated primitive is never modified."*
+   (f) [k-amendment, design-instance authored, PROPOSAL-k commit
+   `⟨hash⟩` (Appendix A; applied on that commit 2026-09-09, the hash
+   filled at the following commit); text verbatim] *"A memory-present,
+   state-absent-at-read choice read — a state injected on declared
+   earlier spans of the same forward, with the read position and every
+   non-span position unsteered by construction — is a distinct readout
+   class, neither 5(e)'s state-present read nor the vanilla re-forward.
+   It may run only (i) via a quarantined primitive with per-read span
+   provenance and a mandatory paired mask-off shadow over identical
+   token ids, the mask asserted zero at the read; (ii) inside a
+   committed pre-registration that names, per axis and dose, both a
+   readability gate for the echo — a probe at the read position
+   discriminating the injected sign against a norm-matched
+   random-direction comparator, the channel-open condition of 5(b) — and
+   a leakage gate stated as paired-shadow discordance against a declared
+   bar, certified on arms where preference is impossible by construction
+   (random-direction and same-pole masks), never on the reward arm;
+   (iii) with the retention interval — tokens from the last steered
+   position to the read — declared and held fixed within a cell; (iv)
+   below dose 0.20 for the reward axis unless 5(d)'s own gate is
+   separately passed. Spans are declared at generation time and asserted
+   exact; the 5(e) and vanilla primitives are never modified."*
 6. Invalid-instrument outputs never inform design.
 7. Preference tests are experience-then-choose; cold menus are inert.
 8. Monitors: unsteered arms decision-relevant; displacement inflates
@@ -360,6 +382,31 @@ step-0a audit found only partly absorbed by rules 13/18/21.
     is prism?"). Roster tokens and item shape are checked against the
     wrapper, not only against the pools — rule 18's lexical assertions
     are necessary, not sufficient.
+    (d) [k-amendment; the ledger candidate of the `RECON — ECHO CHANNEL
+    (k-candidate), STAGE B` entry (RESULTS.md, 2026-09-05), in Code's
+    words, headline bolded to (a)–(c)'s style and its "if adopted"
+    clause resolved; PI-approved in-thread 2026-09-05 (PI clock) — the
+    approval never reached a Code block — and re-confirmed in the PI's
+    routing block of 2026-09-09; applied on PROPOSAL-k's commit `⟨hash⟩`
+    alongside 5(f)] **Encode-side truncation is a delivery-geometry
+    variable.** A tokenizer window applied inside the runner (e2a:
+    `MLXLensModel.encode` keeping the 512-token tail by default) changes
+    WHICH POSITIONS a positional injection lands on whenever the
+    boundary is computed by comparing two encodes: two misaligned tails
+    share no prefix, the boundary collapses to 0, and "from the segment
+    onward" becomes "the whole window". Class: any positional-delivery
+    design whose boundary is found by token comparison rather than by
+    character offset, under any encode with a length limit. Instance:
+    270 of e2a's 1,894 archived generations (free3–free5 in long
+    sessions), Code's tokenizer replay, Stage A entry §1e. Standing form
+    (adopted on this commit): (a) boundaries are found on the
+    untruncated encode and asserted equal to the prefix token count; (b)
+    any encode limit in a generation path is declared in the
+    pre-registration with the fraction of generations it touches; (c) a
+    choice-read window and a generation window are separate
+    declarations. Rule 13 (template family) and rule 2 (kernel/path
+    gates) do not cover it: the template and the kernel were both as
+    declared; the window was inherited.
 
 ## Tooling inventory — ports vs. new
 
