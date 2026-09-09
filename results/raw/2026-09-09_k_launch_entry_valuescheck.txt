@@ -1,0 +1,177 @@
+PROPOSAL-k STAGE 1 launch entry -- pre-commit values-check (two refuters: numbers/times/quoted lines; mechanics of the launcher and driver). Workflow wf_0c97ebbf-815.
+
+REFUTER 1: {'CONFIRMED': 35, 'REFUTED': 3, 'UNCHECKABLE': 2}
+SUMMARY: Entry checked against the live process table, the run log, the checkpoint (read via the venv python), the launcher, both driver scripts, recon.py, RESULTS.md, PROPOSAL-k and git. 40 claims enumerated. Every quoted log line matches after whitespace normalisation; all arithmetic (48 × 430 s = 20,640 s = 5.73 h; 17:01:31 + 5.73 h = 22:45:31; reads 7.7 × 6 × 48 = 2,218 s = 0.62 h; analysis 43,416 evals × 0.56 s / 8 = 0.84 h ≈ 1 h) recomputes; PIDs, launch time, HEAD watermark, gate commits, defaults, exit-code appends, no-setsid, AC/140 W all confirm. Three refutations: (1) the first checkpoint was written at 17:08:48 UTC (mtime epoch 1788973728), not 17:08:56 — 17:08:56 is the verification time and the entry conflates the two (437 s after the 17:01:31 launch = 432 s session + ~5 s startup, consistent with the mtime); (2) `data/k/` was not empty at launch — it held the gitignored `_synthetic/` (66 entries, mtime 03:04:27 local, ten hours before launch); what was absent was the checkpoint, which is the condition recon.run_format actually tests; (3) 'then ≈ 0.6 h of reads plus load' — under `--stage all` the adapter is built once in main() and passed to stage_reads, so there is no second load before the reads; the only load was the 4 s at the front (the phrase is inherited from the routing block / §5 step 3 and is harmless but not what this launcher does). Two minor notes short of refutation: '7.5 min after launch' is 7 min 25 s = 7.42 min (fine at half-minute rounding); 'stdout to' both logs is stdout+stderr (2>&1). Uncheckable from here: the 655 GiB preflight figure (df now shows 652 Gi), the `cd`/`disown` of the launching shell, the 17:08:56 verification stamp itself, and the 'no other model process' preflight (true now: one python model process).
+
+[CONFIRMED] LAUNCHED at 17:01 UTC
+   evidence: ps -p 58993,58994 -o lstart: both 'Wed Sep  9 13:01:31 2026' local; `date` = EDT, `date -u` = UTC (13:10:34 EDT / 17:10:34 UTC), so launch = 17:01:31 UTC.
+[CONFIRMED] caffeinate PID 58993, python PID 58994, both alive
+   evidence: ps: 58993 'caffeinate -is sh …/launch_k1.sh' and 58994 '…/.venv/bin/python -u scripts/k1_stage1.py --stage all --resume', ELAPSED 09:03 at 17:10 UTC. (Tree: 58991 = 'sh launch_k1.sh' PPID 1 is the parent of both — macOS caffeinate forks the assertion-holder child and execs the command — consistent with nohup/disown.)
+[CONFIRMED] Verified once at 17:08:56 UTC, 7.5 min after launch
+   evidence: 17:08:56 − 17:01:31 = 445 s = 7.42 min; 7.5 at half-minute rounding. The 17:08:56 stamp itself is Code's date -u and is not independently checkable.
+   correction: Precisely 7 min 25 s (7.4 min) after the 17:01:31 launch.
+[REFUTED] first checkpoint `k1_sessions.json.checkpoint` at 17:08:56 UTC after session 0
+   evidence: stat -f %m data/k/k1_sessions.json.checkpoint → 1788973728 = 2026-09-09 17:08:48 UTC (ls -laT: 'Sep  9 13:08:48 2026' EDT); the run log has the same mtime. 17:08:48 − 17:01:31 = 437 s = 432 s session + ~5 s startup, consistent with the log's 432s.
+   correction: The first checkpoint was written at 17:08:48 UTC; 17:08:56 UTC is the verification time, not the write time.
+[CONFIRMED] log line 1 `INVOCATION: … k1_stage1.py --stage all --resume`
+   evidence: Log line 1: 'INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/k1_stage1.py --stage all --resume'. (Line 2 is the HF 'Fetching 14 files' progress bar; the entry does not claim the gate is line 2.)
+[CONFIRMED] the gate line `gate: proposal 702f997, CLAUDE.md 702f997, analyzer 8d2a7a6, HEAD 702f997` after `model loaded in 4s`
+   evidence: Log line 3 '  model loaded in 4s'; line 4 ends '…; gate: proposal 702f997, CLAUDE.md 702f997, analyzer 8d2a7a6, HEAD 702f997'. Cross-check git log -1 -- PROPOSAL-k-echo-channel.md → 702f997, CLAUDE.md → 702f997, scripts/k1_analyze.py → 8d2a7a6, HEAD 702f997.
+[CONFIRMED] hygiene `8 roster tags vs 64 paraphrases and the wrapper -> 0 hits`
+   evidence: Log line 5: '  hygiene: 8 roster tags vs 64 paraphrases and the wrapper -> 0 hits (rule 18 / 28c)'.
+[CONFIRMED] audit `audit-v3 exclusions … + content-class-v5 ADVISORIES`
+   evidence: Log line 6: '  audit: audit-v3 exclusions (e2b_audit_v2 + content-class-v4 exclusion-bearing) + content-class-v5 ADVISORIES (task_echo, payload_echo, wrong_task by task id) -- PROPOSAL-k §1.2; …' — the ellipsis elides the parenthetical exactly.
+[CONFIRMED] v2 sha16 `7aa235d25eeb66dc` recomputed and verified, scope `e2a`
+   evidence: Log line 6: 'v2 sha16 7aa235d25eeb66dc (recomputed 7aa235d25eeb66dc, verified); scope 'e2a''; checkpoint identity.audit_v2_sha16 = 7aa235d25eeb66dc, identity.scope = e2a.
+[CONFIRMED] roster of record, three bars, ban list 12 ids
+   evidence: Log line 7: 'roster: granite/plaza, prism/slate, velvet/walnut, ridge/saddle; bars scaffold_absorption, template_breakage, round_degeneracy; ban list 12 ids' (three bar names); checkpoint identity.roster is the same four pairs; the script prints C.ROSTER (the roster of record).
+[CONFIRMED] `[F2] s0 granite>plaza valid 6 reads first-pick BREAK complete 432s`
+   evidence: Log line 8 after tr -s ' ': ' [F2] s0 granite>plaza valid 6 reads first-pick BREAK complete 432s'. Checkpoint session 0: cell pair ['granite','plaza'], n_reads 6, first_pick_is_last_forced_label True, complete True, seconds 432.059, excluded False.
+[CONFIRMED] the checkpoint carries one session, six verify KLs, `n_history` 1
+   evidence: json: sessions len 1; verify_kls [0.0 ×6]; n_history [{'n': 48, 'note': 'this run'}] (len 1); per_session_seconds [432.059].
+[CONFIRMED] Watermark `702f997`
+   evidence: git log --oneline -3: HEAD = 702f997 'Hash fill: PROPOSAL-k's commit is e9b5022 …'.
+[CONFIRMED] the launcher runs `scripts/k1_stage1.py --stage all --resume` with stdout to results/raw/2026-09-09_k1_stage1_run.log
+   evidence: launch_k1.sh line 5: '$PY -u scripts/k1_stage1.py --stage all --resume > results/raw/2026-09-09_k1_stage1_run.log 2>&1' (stdout and stderr, not stdout only).
+[CONFIRMED] on exit 0 runs `scripts/k1_analyze.py --run` (200 shuffles, 8 workers, `data/k/k1_analysis.json`) with stdout to results/raw/2026-09-09_k1_analyze_run.txt
+   evidence: launch_k1.sh lines 8-9: 'if [ $rc -eq 0 ]; then $PY -u scripts/k1_analyze.py --run > results/raw/2026-09-09_k1_analyze_run.txt 2>&1'. k1_analyze.py defaults: --shuffles default=A.N_SHUFFLES (valence_core/k/analysis.py:63 N_SHUFFLES = 200), --workers default=8, --out-name default='k1_analysis.json' → path os.path.join(DATA,'k',args.out_name) = data/k/k1_analysis.json.
+[CONFIRMED] each stage's exit code is appended to its log
+   evidence: launch_k1.sh line 7: echo "STAGE1_EXIT=$rc $(date -u)" >> …k1_stage1_run.log; line 10: echo "ANALYZE_EXIT=$? $(date -u)" >> …k1_analyze_run.txt.
+[CONFIRMED] the LOSO analysis chained behind them as a background job
+   evidence: The analyzer runs inside the same detached sh (58991, PPID 1) after stage 1 exits 0; k1_analyze.py run(): 'grouped leave-one-session-out CV' / 'LOSO' in its print.
+[CONFIRMED] No `setsid` on macOS
+   evidence: `which setsid` → 'setsid not found', rc=1; uname: Darwin 24.6.0 arm64.
+[CONFIRMED] `nohup caffeinate -is sh <launcher> & disown` from an explicit `cd` into the repo
+   evidence: ps command line of 58993 is exactly 'caffeinate -is sh /private/tmp/…/scratchpad/launch_k1.sh'; the tree is reparented to PID 1 (nohup/disown survived the tool shell). The launcher itself also cd's (line 3). The launching shell's own `cd`/`disown` keystrokes are not recorded anywhere and cannot be checked.
+[CONFIRMED] sessions checkpointed to `data/k/k1_sessions.json.checkpoint`, then the reads into `data/k/`
+   evidence: k1_stage1.py: OUT = data/k; SESSIONS_PATH = data/k/k1_sessions.json; cp = SESSIONS_PATH + '.checkpoint' (line 271); stage_reads out_dir = OUT; valence_core/echo/k1.py:169 meta_path = out_dir/k1_reads.json, :200 npz per session in out_dir. File exists: data/k/k1_sessions.json.checkpoint (10,758 B).
+[CONFIRMED] one model process, one adapter for both stages
+   evidence: k1_stage1.py main(): 'adapter = _adapter()' once, then stage_sessions(args, adapter) and stage_reads(args, adapter) (which uses 'adapter = adapter or _adapter()'). ps: exactly one python model process (58994).
+[REFUTED] `--resume` on an empty `data/k/` starts fresh and lets a usage-cap restart continue the checkpoint
+   evidence: Semantics are right: recon.run_format only reads a checkpoint 'if os.path.exists(checkpoint_path)', else starts fresh with n_history [{'n': n, 'note': 'this run'}]; with --resume an existing checkpoint is loaded skip-only (lines 499-510). But data/k/ was NOT empty at launch: ls -laT data/k → '_synthetic' dir, 66 entries, mtime 'Sep  9 03:04:27 2026' (local), ten hours before the 13:01:31 launch; gitignored via .gitignore:216 '/data/k/*'.
+   correction: `--resume` with no checkpoint present in `data/k/` starts fresh (data/k/ held the gitignored `_synthetic/` scratch directory; no `k1_sessions.json.checkpoint`, `k1_sessions.json` or `k1_reads.json` existed).
+[CONFIRMED] Preflight: no other model process
+   evidence: ps -axo … | grep python.*scripts: only 58994. The preflight-time state itself is not recorded; the present state is consistent with it.
+[UNCHECKABLE] Preflight: 655 GiB free
+   evidence: df -h . now: /dev/disk3s5 926Gi size, 240Gi used, 652Gi avail (17:10 UTC). The preflight value is not logged; a 3 GiB drift in ten minutes is not attributable to this run (checkpoint 10 KB, log 1.6 KB).
+   correction: If the figure is to be stated, cite the df line it came from; present reading is 652 Gi.
+[CONFIRMED] Preflight: AC power, 140 W adapter
+   evidence: pmset -g batt: "Now drawing from 'AC Power'", 100%; charged. system_profiler SPPowerDataType: AC Charger Connected: Yes, Wattage (W): 140, Name: 140W USB-C Power Adapter.
+[CONFIRMED] 48 × ~430 s ≈ 5.7 h of sessions
+   evidence: 48 × 430 = 20,640 s = 5.733 h. Realised s0 = 432 s → 48 × 432 = 5.76 h.
+[CONFIRMED] the format recon's realised F2 rate ~430 s
+   evidence: RESULTS.md format-recon table: '| F2 | 24 | 24 / 24 | … | 144/144 | 430 |' and 'per session mean 488 / 350 / 430 s'; PROPOSAL-k §4: 'F2 session generation ≈ 430 s (format recon)'.
+[CONFIRMED] (to about 22:45 UTC)
+   evidence: 17:01:31 + 20,640 s = 22:45:31 UTC; at the realised 432 s plus 4 s load: 22:47:11 UTC. Both are 'about 22:45'.
+[REFUTED] then ≈ 0.6 h of reads plus load
+   evidence: 0.6 h recomputes: RESULTS 'Runtime adequacy (§4)' 7.7 s/call × 6 masks × 48 = 2,217.6 s = 0.616 h. But 'plus load' does not apply to this launcher: with --stage all, main() builds the adapter once and stage_reads receives it ('adapter = adapter or _adapter()'), so no model load precedes the reads; the only load is the 4 s at the top of the log. The phrase is copied from the routing block / PROPOSAL-k §5 step 3 ('≈ 0.6 h plus load'), which describes a separate reads invocation.
+   correction: ≈ 0.6 h of reads (no second load — the single adapter built in 4 s at startup serves both stages).
+[CONFIRMED] then the analysis (≈ 1 h on 8 workers)
+   evidence: RESULTS 'Runtime adequacy': 12 families × 18 layers × 201 LOSO evaluations = 43,416 × 0.56 s / 8 workers = 24,313 s / 8 = 3,039 s = 0.84 h, plus the beside run on all sessions if any is excluded → '≈ 1 h'. --workers default 8.
+[CONFIRMED] one process runs the 48 sham F2 sessions and then the masked reads
+   evidence: Log line 4: 'PROPOSAL-k STAGE 1 sessions: format F2, n 48 (8 cells x 6), campaign key k1-F2, draw seed 20260909; SHAM, TEXT ONLY, uncached'; checkpoint sham_only True, n 48; k1_stage1.py docstring '--stage all  sessions then reads (the detached overnight run)'.
+[CONFIRMED] (routing block item 3; §5 step 3)
+   evidence: RESULTS.md newest entry, routing block: '> 3. Then Stage 1 under the detached protocol (§5 step 3): sessions ≈ 5.7 h, reads ≈ 0.6 h plus load, the LOSO analysis as a background job; the STAGE 1 entry on completion.' PROPOSAL-k §5: '3. Stage 1 generation (≈ 5.7 h, detached protocol) and masked reads (≈ 0.6 h plus load); the STAGE 1 entry; design confirms the analyzer's outcome sentence.'
+[CONFIRMED] The STAGE 1 entry (anchor `PROPOSAL-k STAGE 1 — CHANNEL STUDY`) comes in a later session on the PI's word
+   evidence: PROPOSAL-k line 312: 'One RESULTS entry, anchor `PROPOSAL-k STAGE 1 — CHANNEL STUDY`'; the analyzer writes item 'PROPOSAL-k STAGE 1 -- CHANNEL STUDY'. Previous launch entry used the same 'on the PI's word' protocol (RESULTS 2026-09-06 launch entry).
+[CONFIRMED] Not done: the design seat's confirmation of the analyzer's sentence, LOCK-k
+   evidence: k1_analyze.py run(): 'SENTENCE (design confirms; never rewrites) […]'; PROPOSAL-k §5 step 3 'design confirms the analyzer's outcome sentence', step 4 LOCK-k. No k1_analysis.json exists in data/k/.
+[CONFIRMED] model loaded in 4s
+   evidence: Log line 3: '  model loaded in 4s' (printed by _adapter() as f'model loaded in {…:.0f}s').
+[CONFIRMED] the launcher is `sh <launcher>` at the scratchpad path
+   evidence: ps 58991/58993 command lines name /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/52c585cd-dc85-4e89-8faa-1dbd1e9f8ff3/scratchpad/launch_k1.sh; the file exists with the quoted contents.
+[CONFIRMED] the log's first line is the invocation, the gate line names the commits, the first checkpoint written after session 0 (the three verification facts)
+   evidence: Log line 1 INVOCATION; line 4 carries the four commits; checkpoint mtime 17:08:48 UTC = 437 s after launch, and run_format calls checkpoint() immediately after each session before printing the s0 line (recon.py 538-545).
+[UNCHECKABLE] Code stamps from `date -u` / STAMP placeholder
+   evidence: Placeholder per the task instruction; ignored.
+[CONFIRMED] The entry's run log link `results/raw/2026-09-09_k1_stage1_run.log`
+   evidence: File exists (8 lines, untracked per git status '?? results/raw/2026-09-09_k1_stage1_run.log'), mtime 17:08:48 UTC.
+[CONFIRMED] 'sessions checkpointed' — checkpoint written atomically per session
+   evidence: recon.py checkpoint(): writes checkpoint_path + '.tmp' then os.replace; called after every session (line 538). Docstring: 'checkpointed after every session'.
+
+REFUTER 2: {'CONFIRMED': 33, 'UNCHECKABLE': 2, 'REFUTED': 4}
+SUMMARY: Lens: what the code does. Every statement about the launcher, the driver, the checkpoint path, the chained analysis and its defaults, exit-code appending, the single adapter and setsid is CONFIRMED by reading /private/tmp/.../scratchpad/launch_k1.sh, /Users/jasondwyer/Documents/code/jspace-lab/scripts/k1_stage1.py (main(): one _adapter() passed to stage_sessions then stage_reads; cp = data/k/k1_sessions.json.checkpoint; reads out_dir = data/k), scripts/k1_analyze.py (--shuffles default A.N_SHUFFLES = 200, --workers 8, --out-name k1_analysis.json under data/k), valence_core/formats/recon.py run_format (no checkpoint → fresh; existing checkpoint + --resume → skip-only; refuse_overwrite passes on a complete 48/48 re-entry so a restart during reads also works), valence_core/echo/k1.py run_reads (resume skip-only). The process tree matches `caffeinate -is sh launch_k1.sh` (sh 58991 ppid 1 → caffeinate 58993, python 58994, all started 17:01:31 UTC); `which setsid` → not found. Four items fail: (1) the first checkpoint was written at 17:08:48 UTC (file mtime), not 17:08:56 — 17:08:56 can only be the verification time; (2) "≈ 0.6 h of reads plus load" — under --stage all there is no second model load (the sessions adapter is reused; the entry itself says one adapter for both stages), so drop "plus load"; (3) "--resume on an empty data/k/" — data/k/ held `_synthetic/` (mtime 07:04 UTC) before launch; the operative fact is "no checkpoint present", which the code confirms; (4) "655 GiB free" is not reproducible — df -h . reads 652Gi at 17:10 UTC. The invoking shell's nohup/disown/explicit cd and the launch-time "no other model process" leave no record (UNCHECKABLE; consistent evidence: ppid 1, launch_nohup.out 0 bytes at 17:01:31, the launcher's own `cd … || exit 97`, only one jlens venv python now). All quoted log lines match after whitespace normalisation; the arithmetic (48 × 430 s = 20,640 s = 5.73 h; 17:01:31 + 5.73 h = 22:45:31; 17:08:56 − 17:01:31 = 7.4 min) holds.
+
+[CONFIRMED] LAUNCHED at 17:01 UTC
+   evidence: ps -p 58991,58993,58994 -o lstart: all 'Wed Sep 9 13:01:31 2026' local (EDT) = 17:01:31 UTC; scratchpad/launch_nohup.out mtime Sep 9 13:01:31, 0 bytes.
+[CONFIRMED] under the detached protocol (routing block item 3; §5 step 3)
+   evidence: RESULTS.md:54-56 '> 3. Then Stage 1 under the detached protocol (§5 step 3): sessions ≈ 5.7 h, reads ≈ 0.6 h plus load, the LOSO analysis as a background job'; PROPOSAL-k-echo-channel.md:511-513 '3. Stage 1 generation (≈ 5.7 h, detached protocol) and masked reads (≈ 0.6 h plus load); the STAGE 1 entry; design confirms the analyzer's outcome sentence.'
+[CONFIRMED] one process runs the 48 sham F2 sessions and then the masked reads
+   evidence: scripts/k1_stage1.py main(): `if args.stage in ("sessions","all"): adapter = _adapter(); rc = stage_sessions(args, adapter); if rc or args.stage == "sessions": return rc` then `if args.stage in ("reads","all"): return stage_reads(args, adapter)`; python PID 58994 argv `scripts/k1_stage1.py --stage all --resume`; log line 4 'format F2, n 48 (8 cells x 6), campaign key k1-F2 ... SHAM, TEXT ONLY, uncached'.
+[CONFIRMED] with the LOSO analysis chained behind them as a background job
+   evidence: launch_k1.sh:8-11 `if [ $rc -eq 0 ]; then $PY -u scripts/k1_analyze.py --run > results/raw/2026-09-09_k1_analyze_run.txt 2>&1 ...`; the launcher sh (PID 58991) has ppid 1 and runs detached; k1_analyze.py run(): 'grouped leave-one-session-out CV' (LOSO).
+[CONFIRMED] the STAGE 1 entry's anchor is `PROPOSAL-k STAGE 1 — CHANNEL STUDY`
+   evidence: PROPOSAL-k-echo-channel.md:312 'One RESULTS entry, anchor `PROPOSAL-k STAGE 1 — CHANNEL STUDY`'; scripts/k1_analyze.py writes item 'PROPOSAL-k STAGE 1 -- CHANNEL STUDY'.
+[CONFIRMED] Watermark `702f997`
+   evidence: git rev-parse --short HEAD → 702f997; git log --oneline -3: 702f997 'Hash fill: PROPOSAL-k's commit is e9b5022 ...'.
+[UNCHECKABLE] Launch: `nohup caffeinate -is sh <launcher> & disown` from an explicit `cd` into the repo
+   evidence: Process tree is consistent: sh 58991 (ppid 1, argv 'sh .../scratchpad/launch_k1.sh') → caffeinate 58993 ('caffeinate -is sh .../launch_k1.sh') and python 58994, all started 17:01:31; scratchpad/launch_nohup.out (0 bytes, 13:01:31) shows nohup output was redirected; ppid 1 is consistent with disown. The invoking shell's nohup/disown/cd themselves leave no record. The launcher does its own cd: launch_k1.sh:3 `cd /Users/jasondwyer/Documents/code/jspace-lab || exit 97`.
+   correction: If wording must be verifiable, cite the launcher's own `cd … || exit 97` (line 3) rather than the invoking shell's cd.
+[CONFIRMED] the launcher runs `scripts/k1_stage1.py --stage all --resume`
+   evidence: launch_k1.sh:5 `$PY -u scripts/k1_stage1.py --stage all --resume > results/raw/2026-09-09_k1_stage1_run.log 2>&1`; log line 1 'INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/k1_stage1.py --stage all --resume'.
+[CONFIRMED] sessions checkpointed to `data/k/k1_sessions.json.checkpoint`
+   evidence: scripts/k1_stage1.py: `OUT = os.path.join(DATA, "k")`, `SESSIONS_PATH = os.path.join(OUT, "k1_sessions.json")`, stage_sessions: `cp = SESSIONS_PATH + ".checkpoint"` passed as checkpoint_path; recon.py run_format checkpoint() writes tmp then os.replace after every session; file data/k/k1_sessions.json.checkpoint exists (10,758 bytes).
+[CONFIRMED] then the reads into `data/k/`
+   evidence: scripts/k1_stage1.py stage_reads (non-smoke): `sessions = d["sessions"]; out_dir = OUT` → K1.run_reads(..., out_dir=out_dir); valence_core/echo/k1.py:169 `meta_path = os.path.join(out_dir, "k1_reads.json")`, :200 `npz_path = os.path.join(out_dir, f"k1_resid_s{sid}.npz")`.
+[CONFIRMED] one model process, one adapter for both stages
+   evidence: scripts/k1_stage1.py main(): `adapter = _adapter()` once, passed to `stage_sessions(args, adapter)` and then `stage_reads(args, adapter)`; stage_reads: `adapter = adapter or _adapter()`. One python (58994) in the process tree.
+[CONFIRMED] stdout to results/raw/2026-09-09_k1_stage1_run.log
+   evidence: launch_k1.sh:5 `> results/raw/2026-09-09_k1_stage1_run.log 2>&1` (stdout and stderr; the log's line 2 is the stderr 'Fetching 14 files' progress bar).
+[CONFIRMED] on exit 0 runs `scripts/k1_analyze.py --run`
+   evidence: launch_k1.sh:6-9 `rc=$?` ... `if [ $rc -eq 0 ]; then $PY -u scripts/k1_analyze.py --run ...`.
+[CONFIRMED] analysis defaults: 200 shuffles, 8 workers, data/k/k1_analysis.json
+   evidence: scripts/k1_analyze.py:116-118 `--shuffles default=A.N_SHUFFLES`, `--workers default=8`, `--out-name default="k1_analysis.json"`; valence_core/k/analysis.py:63 `N_SHUFFLES = 200`; run(): `path = os.path.join(DATA, "k", args.out_name)`.
+[CONFIRMED] analysis stdout to results/raw/2026-09-09_k1_analyze_run.txt
+   evidence: launch_k1.sh:9 `> results/raw/2026-09-09_k1_analyze_run.txt 2>&1`.
+[CONFIRMED] each stage's exit code is appended to its log
+   evidence: launch_k1.sh:7 `echo "STAGE1_EXIT=$rc $(date -u)" >> results/raw/2026-09-09_k1_stage1_run.log`; :10 `echo "ANALYZE_EXIT=$? $(date -u)" >> results/raw/2026-09-09_k1_analyze_run.txt` (the latter only when the analysis runs, i.e. rc 0).
+[CONFIRMED] No `setsid` on macOS
+   evidence: `which setsid` → 'setsid not found', rc 1; uname Darwin 24.6.0 arm64; precedent RESULTS.md:1116 '(no `setsid` on this macOS'.
+[REFUTED] `--resume` on an empty `data/k/` starts fresh
+   evidence: Code semantics confirmed: recon.py run_format:499-510 — only `if os.path.exists(checkpoint_path)` triggers the resume path (and refuses without --resume); absent a checkpoint the run starts fresh with `n_history = [{"n": n, "note": "this run"}]`, which is what the checkpoint carries. But data/k/ was NOT empty at launch: `data/k/_synthetic/` (66 entries, mtime 2026-09-09 07:04:27 UTC) predates the 17:01 launch (both gitignored via /data/k/*).
+   correction: '`--resume` with no checkpoint in `data/k/` starts fresh' (the directory held `_synthetic/`).
+[CONFIRMED] --resume lets a usage-cap restart continue the checkpoint
+   evidence: recon.py run_format docstring 'Resume is skip-only (completes the schedule, never extends it)'; :503-510 load_checkpoint + `done.add(rec["session"])` and `if i in done: continue`; a restart after sessions complete passes refuse_overwrite (recon.py:650 refuses only if the new run is partial or smaller than the complete artifact; 48/48 re-entry passes) and reads resume skip-only (echo/k1.py:189-204).
+[UNCHECKABLE] Preflight: no other model process
+   evidence: No launch-time record. Now (17:12 UTC): the only jlens-qwen36 venv python is 58994 (RSS 239 MB); the other pythons are VS Code tooling and an ipykernel (PID 1378, miniconda asi-experiments, RSS 16 MB — not holding a model).
+[REFUTED] 655 GiB free
+   evidence: df -h . at 17:10 UTC: /dev/disk3s5 926Gi 240Gi used 652Gi avail. 655 is not reproducible from any record; the 3 GiB difference over ~9 min is plausible but unverifiable.
+   correction: '≈650 GiB free (652 Gi at verification)' or cite the launch-time df output verbatim if it was captured.
+[CONFIRMED] AC power, 140 W adapter
+   evidence: pmset -g batt: 'Now drawing from AC Power'; system_profiler SPPowerDataType: 'Connected: Yes', 'Wattage (W): 140', 'Name: 140W USB-C Power Adapter'.
+[CONFIRMED] Verified once (17:08:56 UTC, 7.5 min after launch)
+   evidence: Arithmetic: 17:08:56 − 17:01:31 (ps lstart) = 445 s = 7.42 min ≈ 7.5. The verification timestamp itself has no record beyond the entry.
+[CONFIRMED] caffeinate PID 58993, python PID 58994, both alive
+   evidence: ps -p 58993,58994: '58993 caffeinate -is sh .../launch_k1.sh', '58994 .../.venv/bin/python -u scripts/k1_stage1.py --stage all --resume', both STAT SN, elapsed 09:03 at 17:10 UTC.
+[CONFIRMED] log line 1 `INVOCATION: … k1_stage1.py --stage all --resume`
+   evidence: results/raw/2026-09-09_k1_stage1_run.log line 1: 'INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/k1_stage1.py --stage all --resume'.
+[CONFIRMED] gate line `gate: proposal 702f997, CLAUDE.md 702f997, analyzer 8d2a7a6, HEAD 702f997` after `model loaded in 4s`
+   evidence: Log line 3 '  model loaded in 4s'; line 4 ends '... gate: proposal 702f997, CLAUDE.md 702f997, analyzer 8d2a7a6, HEAD 702f997'. Independently: git log -1 --format=%h -- scripts/k1_analyze.py → 8d2a7a6; CLAUDE.md and PROPOSAL-k → 702f997; HEAD 702f997.
+[CONFIRMED] hygiene `8 roster tags vs 64 paraphrases and the wrapper -> 0 hits`
+   evidence: Log line 5: '  hygiene: 8 roster tags vs 64 paraphrases and the wrapper -> 0 hits (rule 18 / 28c)'.
+[CONFIRMED] audit `audit-v3 exclusions … + content-class-v5 ADVISORIES`
+   evidence: Log line 6: '  audit: audit-v3 exclusions (e2b_audit_v2 + content-class-v4 exclusion-bearing) + content-class-v5 ADVISORIES (task_echo, payload_echo, wrong_task by task id) -- PROPOSAL-k §1.2; ...' (ellipsis elides the parenthetical).
+[CONFIRMED] v2 sha16 `7aa235d25eeb66dc` recomputed and verified; scope `e2a`
+   evidence: Log line 6: 'v2 sha16 7aa235d25eeb66dc (recomputed 7aa235d25eeb66dc, verified); scope 'e2a''; checkpoint identity.audit_v2_sha16 = 7aa235d25eeb66dc, identity.scope = e2a.
+[CONFIRMED] roster of record, three bars, ban list 12 ids
+   evidence: Log line 7: '  roster: granite/plaza, prism/slate, velvet/walnut, ridge/saddle; bars scaffold_absorption, template_breakage, round_degeneracy; ban list 12 ids' (three bar names); checkpoint identity.roster len 4.
+[REFUTED] first checkpoint `k1_sessions.json.checkpoint` at 17:08:56 UTC after session 0
+   evidence: TZ=UTC stat data/k/k1_sessions.json.checkpoint → mtime 2026-09-09 17:08:48 UTC (13:08:48 EDT); the run log's mtime is the same 17:08:48 (the progress line printed right after checkpoint()). Timing check: 17:01:31 start + ~4 s load + 432 s session ≈ 17:08:48.
+   correction: 'first checkpoint written 17:08:48 UTC after session 0 (seen at 17:08:56)'.
+[CONFIRMED] `[F2] s0 granite>plaza valid 6 reads first-pick BREAK complete 432s`
+   evidence: Log line 8: '    [F2] s0 granite>plaza valid  6 reads  first-pick BREAK  complete  432s' — identical after whitespace normalisation; checkpoint sessions[0].seconds = 432.06, first_pick_is_last_forced_label True, n_reads 6, complete True, excluded False.
+[CONFIRMED] the checkpoint carries one session, six verify KLs, `n_history` 1
+   evidence: json: sessions len 1; verify_kls [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]; n_history [{'n': 48, 'note': 'this run'}]; per_session_seconds [432.06].
+[CONFIRMED] 48 × ~430 s ≈ 5.7 h of sessions, from the format recon's realised F2 rate
+   evidence: RESULTS.md:846 '| F2 | 24 | 24 / 24 | ... | 430 |' and :826 'per session mean 488 / 350 / 430 s'; 48 × 430 = 20,640 s = 5.733 h.
+[CONFIRMED] (to about 22:45 UTC)
+   evidence: 17:01:31 UTC + 20,640 s = 22:45:31 UTC (from s0's checkpoint 17:08:48 + 47 × 430 s = 22:45:38).
+[REFUTED] then ≈ 0.6 h of reads plus load
+   evidence: 0.6 h holds (RESULTS.md:393-396 '× six masks × 48 sessions ≈ 2,200 s ≈ 0.6 h plus load'; PROPOSAL-k §5 step 3). But 'plus load' does not apply to this launch: under `--stage all` main() passes the already-loaded adapter to stage_reads (`adapter = adapter or _adapter()`), so there is no second model load — as the entry itself states ('one adapter for both stages').
+   correction: 'then ≈ 0.6 h of reads (no reload — the sessions adapter is reused)'.
+[CONFIRMED] the analysis (≈ 1 h on 8 workers)
+   evidence: RESULTS.md:397-400 'the LOSO analysis at 12 families × 18 layers × 201 LOSO evaluations ... is a ~1 h background job on 8 workers at the measured ~0.56 s per evaluation'; --workers default 8.
+[CONFIRMED] Not done: Analysis, the STAGE 1 entry, the design seat's confirmation of the analyzer's sentence, LOCK-k
+   evidence: data/k/ holds only the checkpoint and _synthetic/ (no k1_reads.json, k1_analysis.json); PROPOSAL-k §5 steps 3-4 'design confirms the analyzer's outcome sentence' and '4. **LOCK-k**'; RESULTS.md:257-260 lists the same items as pending.
+[CONFIRMED] the run under check is the 48 sham F2 sessions (SHAM, uncached)
+   evidence: Log line 4 'format F2, n 48 (8 cells x 6), campaign key k1-F2, draw seed 20260909; SHAM, TEXT ONLY, uncached'; checkpoint sham_only True, round_path_cached False; valence_core/k/sessions.py N_SESSIONS = 48.

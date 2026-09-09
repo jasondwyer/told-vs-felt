@@ -21,6 +21,52 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-09 — **PROPOSAL-k STAGE 1 LAUNCHED at 17:01:31 UTC under the
+  detached protocol (routing block item 3; §5 step 3): one process runs
+  the 48 sham F2 sessions and then the masked reads, with the LOSO
+  analysis chained behind them as a background job; verified once — PIDs
+  alive, the log's first line is the invocation, the gate line names the
+  commits, the first checkpoint written after session 0 — and the session
+  ends without monitoring. The STAGE 1 entry (anchor `PROPOSAL-k STAGE 1
+  — CHANNEL STUDY`) comes in a later session on the PI's word. Watermark
+  `702f997`; Code stamps from `date -u`.**
+  (Stamp verified at write time: `date -u` → **Wed Sep  9 17:16:32 UTC 2026**.)
+
+  - **Launch.** `nohup caffeinate -is sh <launcher> & disown` from an
+    explicit `cd` into the repo; the launcher runs
+    `scripts/k1_stage1.py --stage all --resume` (sessions checkpointed to
+    `data/k/k1_sessions.json.checkpoint`, then the reads into `data/k/`;
+    one model process, one adapter for both stages) with stdout and
+    stderr to [`_k1_stage1_run.log`](results/raw/2026-09-09_k1_stage1_run.log), and
+    on exit 0 runs `scripts/k1_analyze.py --run` (200 shuffles, 8
+    workers, `data/k/k1_analysis.json`) with stdout and stderr to
+    `results/raw/2026-09-09_k1_analyze_run.txt`; each stage's exit code
+    is appended to its log. No `setsid` on macOS; `--resume` with no checkpoint
+    in `data/k/` (the directory held only the gitignored `_synthetic/`)
+    starts fresh and lets a usage-cap restart continue the checkpoint.
+    Preflight at the launching shell: no other model process; `df -h .`
+    655 Gi free (652 at verification); AC power, 140 W adapter.
+  - **Verified once (17:08:56 UTC, 7 min 25 s after launch).** caffeinate PID 58993,
+    python PID 58994, both alive; log line 1 `INVOCATION: … k1_stage1.py
+    --stage all --resume`; the gate line `gate: proposal 702f997, CLAUDE.md 702f997, analyzer 8d2a7a6, HEAD 702f997` after `model loaded in 4s`; hygiene `8 roster tags vs 64 paraphrases and the wrapper -> 0 hits`;
+    audit `audit-v3 exclusions … + content-class-v5 ADVISORIES`, v2 sha16 `7aa235d25eeb66dc` recomputed and verified, scope `e2a`, roster of record, three bars, ban list 12 ids; first checkpoint `k1_sessions.json.checkpoint`
+    written 17:08:48 UTC (its mtime; seen at 17:08:56) after session 0 (`[F2] s0 granite>plaza valid 6 reads
+    first-pick BREAK complete 432s`; the checkpoint carries one session,
+    six verify KLs, `n_history` 1). Projection from
+    the format recon's realised F2 rate: 48 × ~430 s ≈ 5.7 h of sessions
+    (to about 22:45 UTC), then ≈ 0.6 h of reads (no reload; the one
+    adapter serves both stages), then the analysis (≈ 1 h on 8 workers). Nothing is watched from here.
+  - **Not done.** Analysis, the STAGE 1 entry, the design seat's
+    confirmation of the analyzer's sentence, LOCK-k.
+  - **Pre-commit values-check (two refuters, 40 claims; record
+    [`_k_launch_entry_valuescheck`](results/raw/2026-09-09_k_launch_entry_valuescheck.txt)):**
+    three misses in Code's prose, applied — the checkpoint's write time
+    (17:08:48, not the 17:08:56 at which it was seen), "an empty
+    `data/k/`" (it held `_synthetic/`), "reads plus load" (no reload);
+    plus the launch second, "stdout and stderr", and the free-space
+    figure's provenance. Every quoted log line, PID, commit and figure
+    confirmed against the log, the checkpoint, `ps` and the scripts.
+
 - 2026-09-09 — **PROPOSAL-k v1.1 COMMITTED (PI routing block 2026-09-09):
   Appendix B RESOLVES at HEAD — every rule number, anchor, checksum,
   figure, cross-reference and quotation the document carries was checked
