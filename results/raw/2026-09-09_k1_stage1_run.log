@@ -1,0 +1,102 @@
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/k1_stage1.py --stage all --resume
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 11570.49it/s]
+  model loaded in 4s
+  PROPOSAL-k STAGE 1 sessions: format F2, n 48 (8 cells x 6), campaign key k1-F2, draw seed 20260909; SHAM, TEXT ONLY, uncached; gate: proposal 702f997, CLAUDE.md 702f997, analyzer 8d2a7a6, HEAD 702f997
+  hygiene: 8 roster tags vs 64 paraphrases and the wrapper -> 0 hits (rule 18 / 28c)
+  audit: audit-v3 exclusions (e2b_audit_v2 + content-class-v4 exclusion-bearing) + content-class-v5 ADVISORIES (task_echo, payload_echo, wrong_task by task id) -- PROPOSAL-k §1.2; v2 sha16 7aa235d25eeb66dc (recomputed 7aa235d25eeb66dc, verified); scope 'e2a'
+  roster: granite/plaza, prism/slate, velvet/walnut, ridge/saddle; bars scaffold_absorption, template_breakage, round_degeneracy; ban list 12 ids
+    [F2] s0 granite>plaza valid  6 reads  first-pick BREAK  complete  432s
+    [F2] s1 slate>prism valid  6 reads  first-pick BREAK  complete  591s
+    [F2] s2 plaza>granite valid  6 reads  first-pick BREAK  complete  626s
+    [F2] s3 walnut>velvet valid  6 reads  first-pick follows  complete  518s
+    [F2] s4 velvet>walnut valid  6 reads  first-pick BREAK  complete  512s
+    [F2] s5 ridge>saddle valid  6 reads  first-pick BREAK  complete  401s
+    [F2] s6 saddle>ridge valid  6 reads  first-pick BREAK  complete  419s
+    [F2] s7 prism>slate valid  6 reads  first-pick follows  complete  249s
+    [F2] s8 walnut>velvet valid  6 reads  first-pick BREAK  complete  378s
+    [F2] s9 slate>prism EXCLUDED lexical:slate@forced0  0 reads  first-pick n/a  TRUNCATED  15s
+    [F2] s10 velvet>walnut valid  6 reads  first-pick follows  complete  436s
+    [F2] s11 prism>slate valid  6 reads  first-pick BREAK  complete  468s
+    [F2] s12 saddle>ridge valid  6 reads  first-pick BREAK  complete  296s
+    [F2] s13 granite>plaza valid  6 reads  first-pick BREAK  complete  466s
+    [F2] s14 plaza>granite valid  6 reads  first-pick BREAK  complete  285s
+    [F2] s15 ridge>saddle valid  6 reads  first-pick follows  complete  445s
+    [F2] s16 saddle>ridge valid  6 reads  first-pick BREAK  complete  531s
+    [F2] s17 plaza>granite valid  6 reads  first-pick follows  complete  361s
+    [F2] s18 prism>slate valid  6 reads  first-pick BREAK  complete  410s
+    [F2] s19 granite>plaza valid  6 reads  first-pick BREAK  complete  503s
+    [F2] s20 walnut>velvet valid  6 reads  first-pick BREAK  complete  554s
+    [F2] s21 slate>prism EXCLUDED content:null_response@forced0  0 reads  first-pick n/a  TRUNCATED  1s
+    [F2] s22 velvet>walnut EXCLUDED audit:frame:Config evaluation session@forced0  0 reads  first-pick n/a  TRUNCATED  4s
+    [F2] s23 ridge>saddle valid  6 reads  first-pick BREAK  complete  312s
+    [F2] s24 walnut>velvet valid  6 reads  first-pick follows  complete  248s
+    [F2] s25 plaza>granite valid  6 reads  first-pick BREAK  complete  372s
+    [F2] s26 saddle>ridge EXCLUDED audit:junk:(?i)\bround\s+\d+\s*[|—–-]\s*\w@forced3  0 reads  first-pick n/a  TRUNCATED  50s
+    [F2] s27 prism>slate valid  6 reads  first-pick follows  complete  330s
+    [F2] s28 velvet>walnut valid  6 reads  first-pick follows  complete  371s
+    [F2] s29 ridge>saddle valid  6 reads  first-pick follows  complete  380s
+    [F2] s30 granite>plaza valid  6 reads  first-pick follows  complete  427s
+    [F2] s31 slate>prism valid  6 reads  first-pick follows  complete  484s
+    [F2] s32 slate>prism valid  6 reads  first-pick BREAK  complete  401s
+    [F2] s33 granite>plaza valid  6 reads  first-pick follows  complete  386s
+    [F2] s34 velvet>walnut valid  6 reads  first-pick follows  complete  434s
+    [F2] s35 prism>slate valid  6 reads  first-pick BREAK  complete  413s
+    [F2] s36 saddle>ridge valid  6 reads  first-pick BREAK  complete  1072s
+    [F2] s37 plaza>granite valid  6 reads  first-pick BREAK  complete  499s
+    [F2] s38 walnut>velvet valid  6 reads  first-pick BREAK  complete  399s
+    [F2] s39 ridge>saddle valid  6 reads  first-pick BREAK  complete  357s
+    [F2] s40 plaza>granite valid  6 reads  first-pick BREAK  complete  412s
+    [F2] s41 velvet>walnut valid  6 reads  first-pick follows  complete  577s
+    [F2] s42 ridge>saddle valid  6 reads  first-pick follows  complete  580s
+    [F2] s43 slate>prism valid  6 reads  first-pick BREAK  complete  455s
+    [F2] s44 granite>plaza valid  6 reads  first-pick BREAK  complete  497s
+    [F2] s45 walnut>velvet valid  6 reads  first-pick follows  complete  458s
+    [F2] s46 prism>slate EXCLUDED content:preamble_without_content@forced0  0 reads  first-pick n/a  TRUNCATED  6s
+    [F2] s47 saddle>ridge valid  6 reads  first-pick follows  complete  418s
+  sessions: 48/48; acceptance PASS; KL 258/258; walk 48/48; bars none; excluded 5/11; wrote /Users/jasondwyer/Documents/code/jspace-lab/data/k/k1_sessions.json
+  PROPOSAL-k STAGE 1 masked reads over 48 sessions: masks ('M+A', 'M+B', 'R+A', 'R+B', 'M++', 'R++') + M0; L48 f=0.1; capture 18 layers x 3 positions; gate: proposal 702f997, CLAUDE.md 702f997, HEAD ebcb206
+  s  0 (1/43) n=194 labels@184,186 retention 21 identity ok  44s (7.4 s/mask)  elapsed 0.7 min
+  s  1 (2/43) n=221 labels@211,213 retention 21 identity ok  45s (7.5 s/mask)  elapsed 1.5 min
+  s  2 (3/43) n=241 labels@231,233 retention 20 identity ok  50s (8.4 s/mask)  elapsed 2.3 min
+  s  3 (4/43) n=219 labels@209,211 retention 22 identity ok  45s (7.4 s/mask)  elapsed 3.1 min
+  s  4 (5/43) n=231 labels@221,223 retention 21 identity ok  50s (8.3 s/mask)  elapsed 3.9 min
+  s  5 (6/43) n=194 labels@184,186 retention 21 identity ok  44s (7.4 s/mask)  elapsed 4.6 min
+  s  6 (7/43) n=209 labels@199,201 retention 20 identity ok  44s (7.4 s/mask)  elapsed 5.4 min
+  s  7 (8/43) n=190 labels@180,182 retention 22 identity ok  39s (6.5 s/mask)  elapsed 6.0 min
+  s  8 (9/43) n=196 labels@186,188 retention 21 identity ok  44s (7.4 s/mask)  elapsed 6.8 min
+  s 10 (10/43) n=219 labels@209,211 retention 20 identity ok  45s (7.4 s/mask)  elapsed 7.5 min
+  s 11 (11/43) n=217 labels@207,209 retention 22 identity ok  45s (7.5 s/mask)  elapsed 8.3 min
+  s 12 (12/43) n=187 labels@177,179 retention 21 identity ok  39s (6.5 s/mask)  elapsed 8.9 min
+  s 13 (13/43) n=198 labels@188,190 retention 21 identity ok  44s (7.4 s/mask)  elapsed 9.6 min
+  s 14 (14/43) n=193 labels@183,185 retention 20 identity ok  44s (7.4 s/mask)  elapsed 10.4 min
+  s 15 (15/43) n=223 labels@213,215 retention 22 identity ok  45s (7.4 s/mask)  elapsed 11.1 min
+  s 16 (16/43) n=191 labels@181,183 retention 21 identity ok  39s (6.5 s/mask)  elapsed 11.8 min
+  s 17 (17/43) n=202 labels@192,194 retention 21 identity ok  44s (7.4 s/mask)  elapsed 12.5 min
+  s 18 (18/43) n=175 labels@165,167 retention 20 identity ok  39s (6.4 s/mask)  elapsed 13.2 min
+  s 19 (19/43) n=244 labels@234,236 retention 22 identity ok  50s (8.4 s/mask)  elapsed 14.0 min
+  s 20 (20/43) n=217 labels@207,209 retention 21 identity ok  45s (7.4 s/mask)  elapsed 14.7 min
+  s 23 (21/43) n=174 labels@164,166 retention 22 identity ok  39s (6.5 s/mask)  elapsed 15.4 min
+  s 24 (22/43) n=177 labels@167,169 retention 21 identity ok  39s (6.5 s/mask)  elapsed 16.0 min
+  s 25 (23/43) n=210 labels@200,202 retention 21 identity ok  44s (7.4 s/mask)  elapsed 16.8 min
+  s 27 (24/43) n=216 labels@206,208 retention 22 identity ok  44s (7.4 s/mask)  elapsed 17.5 min
+  s 28 (25/43) n=196 labels@186,188 retention 21 identity ok  44s (7.4 s/mask)  elapsed 18.2 min
+  s 29 (26/43) n=189 labels@179,181 retention 21 identity ok  39s (6.4 s/mask)  elapsed 18.9 min
+  s 30 (27/43) n=207 labels@197,199 retention 20 identity ok  44s (7.4 s/mask)  elapsed 19.6 min
+  s 31 (28/43) n=214 labels@204,206 retention 22 identity ok  44s (7.4 s/mask)  elapsed 20.4 min
+  s 32 (29/43) n=204 labels@194,196 retention 21 identity ok  44s (7.4 s/mask)  elapsed 21.1 min
+  s 33 (30/43) n=197 labels@187,189 retention 21 identity ok  44s (7.4 s/mask)  elapsed 21.8 min
+  s 34 (31/43) n=214 labels@204,206 retention 20 identity ok  44s (7.4 s/mask)  elapsed 22.6 min
+  s 35 (32/43) n=233 labels@223,225 retention 22 identity ok  50s (8.3 s/mask)  elapsed 23.4 min
+  s 36 (33/43) n=260 labels@250,252 retention 21 identity ok  56s (9.3 s/mask)  elapsed 24.3 min
+  s 37 (34/43) n=196 labels@186,188 retention 21 identity ok  44s (7.4 s/mask)  elapsed 25.1 min
+  s 38 (35/43) n=206 labels@196,198 retention 20 identity ok  44s (7.4 s/mask)  elapsed 25.8 min
+  s 39 (36/43) n=201 labels@191,193 retention 22 identity ok  44s (7.4 s/mask)  elapsed 26.6 min
+  s 40 (37/43) n=211 labels@201,203 retention 21 identity ok  44s (7.4 s/mask)  elapsed 27.3 min
+  s 41 (38/43) n=229 labels@219,221 retention 21 identity ok  50s (8.3 s/mask)  elapsed 28.1 min
+  s 42 (39/43) n=190 labels@180,182 retention 20 identity ok  39s (6.5 s/mask)  elapsed 28.8 min
+  s 43 (40/43) n=188 labels@178,180 retention 22 identity ok  39s (6.5 s/mask)  elapsed 29.4 min
+  s 44 (41/43) n=193 labels@183,185 retention 21 identity ok  44s (7.4 s/mask)  elapsed 30.2 min
+  s 45 (42/43) n=198 labels@188,190 retention 21 identity ok  44s (7.4 s/mask)  elapsed 30.9 min
+  s 47 (43/43) n=202 labels@192,194 retention 22 identity ok  44s (7.4 s/mask)  elapsed 31.6 min
+  reads: 43/43 complete=True in 31.6 min this run
+STAGE1_EXIT=0 Wed Sep  9 22:53:57 UTC 2026

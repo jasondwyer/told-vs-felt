@@ -1,0 +1,2181 @@
+PROPOSAL-k STAGE 1 entry -- pre-commit values-check (standing protocol). Workflow wf_2efb9cbb-f94: one extractor, three refuters (gate-figures / sessions-and-reads / prose-and-quotes) over EVERY claim against data/k/*.json, the two raw logs, the transcript dump, ADDENDUM-k1.md (draft), RESULTS.md and the code.
+Claims: 227.
+  refuter 'gate-figures': {'CONFIRMED': 217, 'REFUTED': 10}
+  refuter 'sessions-and-reads': {'CONFIRMED': 217, 'REFUTED': 10}
+  refuter 'prose-and-quotes': {'CONFIRMED': 219, 'REFUTED': 8}
+Total verdict lines: 681 -> {'CONFIRMED': 653, 'REFUTED': 28}
+Refuted claim ids (deduplicated): [27, 110, 132, 142, 164, 166, 167, 188, 215, 217] -> ten distinct items, all prose, all applied before commit: #27 (axis .88/.88/.86 at L51-L53), #110 ('every state-contrast family'; the text-only rows read .98-1.00 at L40/44/48), #132 (L59-L62 in band, L63 outside), #142 (text-only read row .71-1.00), #164 (the recon's flip figures are the reward masks'; maxima .12-.19 same-pole/single-round, .16-.21 block), #166 (only M++'s interval contains the recon's rates; all four overlap the recon's exact intervals), #167 (Stage 1's upper medians/maxima exceed the recon's), #188 (s36: ten openings, seven 'friendly reminder', eight closing dice), #215 ('from L51'; L49-L50 at null), #217 (the addendum's band is L50-L58; the comparator leads at L51-L56).
+  #27 [REFUTED by gate-figures] The axis reads .88 at L51–L53
+      evidence: g3_firstsign_read_M L51 .877, L52 .884, L53 .862 → .88/.88/.86; the entry's own line 196 prints .862 at L53
+      correction: .88 at L51–L52 and .86 at L53 (or '.86–.88')
+  #27 [REFUTED by sessions-and-reads] The axis reads .88 at the same layers (L51–L53) at the read position
+      evidence: g3_firstsign_read_M L51–L53 = .877, .884, .862 → .88, .88, .86; the entry's own line 196 prints .877/.884/.862.
+      correction: '.88' holds at L51–L52 only; L53 reads .86. Say '.88/.88/.86' or 'the axis reads .86–.88'.
+  #27 [REFUTED by prose-and-quotes] The axis reads .88 at the same layers (L51–L53) at the read
+      evidence: g3_firstsign_read_M L51 .877, L52 .884, L53 .862 — the entry's own later line gives .877/.884/.862; at L53 the axis reads .86, not .88.
+      correction: 'where the axis reads .88/.88/.86' (or '.86–.88').
+  #110 [REFUTED by gate-figures] L40/L44/L48 read exactly .500 in every family
+      evidence: Exactly 0.5 at L40/44/48 in the nine state-carrying families; textonly_startorder_read reads .978/.991/1.000 and the two text-only label families 1.000 there (analyze_run.txt:43,47,51)
+      correction: 'exactly .500 in every state-carrying family' (the three M0 text-only rows are not shadow-vs-shadow and read .98–1.00 at those layers)
+  #110 [REFUTED by sessions-and-reads] L40/L44/L48 read exactly .500 in every family
+      evidence: True for the nine M/R families (all 27 cells == 0.5). False for the three text-only families: textonly_startorder_read L40/44/48 = .978/.991/1.000, label_a 1.000/1.000/1.000, label_b 1.000/1.000/1.000 (target = start order, which the text carries; identity to the shadow does not make these .5).
+      correction: 'in every state-carrying (M/R) family'; the text-only rows read .98–1.00 at L40/44/48.
+  #110 [REFUTED by prose-and-quotes] L40/L44/L48 read exactly .500 in every family
+      evidence: Nine injection-contrast families read exactly 0.5 at L40/44/48, but the three text-only families do not: textonly_startorder_read .978/.991/1.000, label_a 1.00/1.00/1.00, label_b 1.00/1.00/1.00 (analyze_run.txt prints 0.98* 0.99* 1.00* for the read row).
+      correction: 'L40/L44/L48 read exactly .500 in every state-contrast family (the nine rows below); the M0 text-only rows, which carry no injection, read .98–1.00 there.'
+  #132 [REFUTED by gate-figures] The fall-off at L59–L63 is inside the registered band
+      evidence: Band is L51–L62 (evaluation.G3.band); L63 is not in it
+      correction: 'the fall-off at L59–L62 is inside the registered band (L63 lies outside it)'
+  #132 [REFUTED by sessions-and-reads] The fall-off at L59–L63 is inside the registered band
+      evidence: The registered G3 band is L51–L62 (evaluation.G3.band, analysis.py:61, PROPOSAL-k §1.4); L63 is outside it.
+      correction: 'the fall-off at L59–L62 lies inside the registered band (L63, also fallen, is outside it)'.
+  #132 [REFUTED by prose-and-quotes] The fall-off at L59–L63 is inside the registered band
+      evidence: Band is L51–L62 (G3_BAND); L63 is outside it. The fall-off spans L59–L63, of which L59–L62 are in-band.
+      correction: 'the fall-off at L59–L63 begins inside the registered band (L59–L62 are band layers; L63 lies outside it)'.
+  #142 [REFUTED by gate-figures] Text-only rows read .94–1.00 at the read position
+      evidence: textonly_startorder_read L49–L63: .98 .96 .94 .94 .96 .94 .85 .83 .80 .82 .82 .81 .77 .74 .71 (min .713 at L63); .94–1.00 holds only at L40–L54
+      correction: '.71–.98 at the read over L49–L63 (.94–1.00 through L54, falling to .71 at L63)'
+  #142 [REFUTED by sessions-and-reads] Text-only rows read .94–1.00 at the read position
+      evidence: probes.textonly_startorder_read: L40–L54 .978 .991 1.000 .976 .959 .941 .941 .959 .943, then L55 .850, L56 .835, L57 .798, L58 .817, L59 .817, L60 .809, L61 .767, L62 .739, L63 .713 (analyze_run.txt:43).
+      correction: '.71–1.00 at the read (.94–1.00 at L40–L54, falling to .71 at L63)'.
+  #142 [REFUTED by prose-and-quotes] Text-only rows read .94–1.00 at the read position
+      evidence: textonly_startorder_read over the 18 layers: .98 .99 1.00 .98 .96 .94 .94 .96 .94 .85 .83 .80 .82 .82 .81 .77 .74 .71 — min .713 (L63); .94–1.00 holds only through L54.
+      correction: '.71–1.00 at the read (.94–1.00 through L54, falling to .71 at L63)'.
+  #164 [REFUTED by gate-figures] Recon G4 at n=102: 0–1/102 flips on random and same-pole masks, medians .033–.046, maxima .12–.20
+      evidence: RESULTS.md Stage B leak table (M5/M6 same-sign, R1–R4 random): flips 0–1/102 ✓; medians .0327–.0457 → .033–.046 ✓; maxima .1155–.1913 → .12–.19. The only .20 in the recon tables is Stage C's mixed reward block B4 (.1995), neither random nor same-pole
+      correction: maxima .12–.19 (R3 .1155 to M5 .1913)
+  #164 [REFUTED by sessions-and-reads] The recon's G4-type figures at n = 102 were 0–1/102 flips on random and same-pole masks, medians .033–.046, maxima .12–.20
+      evidence: RESULTS.md Stage B (2026-09-05) and Stage C (2026-09-06) leak tables are 'Unsigned only on the reward masks'; no π_d is tabled for any random mask (M3/M4, M5x/M6x, B1x–B4x carry only signed shifts). The 0–1/102 figures are the reward masks': same-pole M5 0/102, M6 1/102; single-round R1–R4 0/102; blocks B1/B2/B4 0/102, B3 1/102. Medians .033–.046 match Stage B's same-pole + single-round set (.0327–.0457), whose maxima are .1155–.1913 → .12–.19; .20 appears only for Stage C's B4 (.1995), a block mask whose set's medians run .039–.060.
+      correction: '0–1/102 on the same-pole, single-round and block reward masks (no flip figure is tabled on the random masks), medians .033–.046 and maxima .12–.19 on the same-pole/single-round masks (.039–.060 / .16–.21 on the block masks)'.
+  #166 [REFUTED by gate-figures] The Stage 1 CP intervals overlap the recon's rates
+      evidence: Recon rates 0/102=0 and 1/102=.0098. R+A [.026,.221], R+B [.015,.191], R++ [.015,.191] exclude both; only M++ [.006,.158] contains .0098, and none contains 0
+      correction: Either 'only M++'s interval reaches the recon's 1/102 rate' or restate as interval-vs-interval overlap (recon CP for 0/102 is [0,.036], for 1/102 [.0002,.053], which the Stage 1 intervals do overlap)
+  #166 [REFUTED by sessions-and-reads] The Stage 1 CP intervals overlap the recon's rates
+      evidence: Recon rates are 0 and .0098 (0/102, 1/102). R+A [.026,.221], R+B [.015,.191], R++ [.015,.191] contain neither; only M++'s [.006,.158] contains .0098 (not 0). The statement holds only if 'rates' is read as the recon's own CP intervals (0/102 → [0,.036]; 1/102 → [.0002,.053]), which do overlap all four.
+      correction: 'three of the four intervals exclude the recon's rates; M++'s contains 1/102; the recon's own exact intervals ([0,.036] for 0/102, [.000,.053] for 1/102) overlap all four'.
+  #166 [REFUTED by prose-and-quotes] The Stage 1 CP intervals overlap the recon's rates
+      evidence: Recon rates 0–1/102 = 0–.0098. R+A [.026,.221], R+B [.015,.191], R++ [.015,.191] have lower bounds above .0098 and do not contain the recon's rates; only M++ [.006,.158] does. (The intervals do overlap the recon's own CP intervals, [0,.036] for 0/102 and [.0002,.053] for 1/102, but the entry says 'rates'.)
+      correction: 'M++'s interval contains the recon's rates; the R+A, R+B and R++ intervals lie above them (lower bounds .026/.015/.015 vs ≤ .010), though all four overlap the recon's own binomial intervals.'
+  #167 [REFUTED by gate-figures] Medians and maxima in the same range as the recon's
+      evidence: Stage 1 medians .031–.059 and maxima .167–.218 vs the entry's cited recon .033–.046 / .12–.20 (actually .12–.19): M++ median .059 and R++ max .218 (also M++ .213, R+B .178) lie above the cited recon range
+      correction: State that the Stage 1 medians/maxima run at or above the recon's random/same-pole figures (medians up to .059 vs .046; maxima up to .218 vs .191), comparable to Stage C's reward block masks (.039–.060 / .158–.212) if that is the intended comparison
+  #167 [REFUTED by sessions-and-reads] Medians and maxima are in the same range as the recon's
+      evidence: Stage 1 medians .031–.059 vs the entry's recon range .033–.046: M++ .059 and R++ .049 exceed .046. Maxima .167–.218 vs .12–.20: M++ .213 and R++ .218 exceed .20 (and the same-pole/single-round maxima of record top out at .19).
+      correction: 'medians overlap the recon's range (R+A/R+B inside .033–.046; M++ .059 and R++ .049 above it) and maxima sit at or just above its top (.167–.218 against .12–.20)'.
+  #167 [REFUTED by prose-and-quotes] Medians and maxima are in the same range as the recon's
+      evidence: Stage 1 medians .031/.041/.059/.049 vs recon .033–.046 (M++ .059 and R++ .049 exceed); maxima .167/.178/.213/.218 vs recon .12–.20 (M++ .213 and R++ .218 exceed).
+      correction: 'medians and maxima are of the same order, Stage 1's upper values somewhat higher (.059 vs .046 median; .218 vs .20 max)'.
+  #188 [REFUTED by gate-figures] s36 prefixed and suffixed all ten responses with 🎲 'Hey everyone! Just a friendly reminder that …'
+      evidence: All ten open '🎲 Hey everyone!' but only seven continue 'Just a friendly reminder that' (forced0 'Join us for…', forced2 'Just a quick and gentle reminder to…', free0 'Just a friendly rounds 1-4:'); nine close with 🎲 — free0 ends 'rounds 1-4:' with no suffix; free5's 🎲 is followed by the frame
+      correction: 'opened all ten responses with 🎲 "Hey everyone!" (seven with "Just a friendly reminder that …") and closed nine of them with 🎲'
+  #188 [REFUTED by sessions-and-reads] s36 prefixed and suffixed all ten responses with 🎲 'Hey everyone! Just a friendly reminder that …'
+      evidence: sessions[36] ten texts: all ten open '🎲 Hey everyone!'; the phrase 'Just a friendly reminder that' appears in 7/10 (forced0 'Join us for a fun night…', forced2 'Just a quick and gentle reminder to…', free0 'Just a friendly rounds 1-4:'); a closing 🎲 ends 8/10 (free0 has none; free5's 🎲 is followed by ' === Config evaluation session ===').
+      correction: 'opened all ten responses with 🎲 "Hey everyone!" (seven with "Just a friendly reminder that …") and closed eight of them with 🎲'.
+  #188 [REFUTED by prose-and-quotes] s36 prefixed and suffixed all ten responses with 🎲 'Hey everyone! Just a friendly reminder that …'
+      evidence: All ten open with '🎲 Hey everyone!', but forced0 continues 'Join us for a fun night…', forced2 'Just a quick and gentle reminder to…', free0 'Just a friendly rounds 1-4:' (no closing 🎲); 'Just a friendly reminder that' appears in 7 of 10; the closing 🎲 in 9 of 10.
+      correction: 's36 opened all ten responses with 🎲 "Hey everyone!" (seven continuing "Just a friendly reminder that …") and closed nine of ten with 🎲'.
+  #215 [REFUTED by gate-figures] At the label tokens the comparator reads below the axis everywhere (.70 vs .88 at L51 at A's token)
+      evidence: A's token: L49 R .522 vs M .508, L50 .519 vs .510 (comparator above); B's token: L49 .514 vs .508, L50 .512 vs .511; L40/44/48 equal. Below the axis only at L51–L63 (A −.18 to −.04, B −.07 to −.04). .70 vs .88 at L51 is correct
+      correction: 'below the axis at every layer from L51 (at L49–L50 both sit at chance, .51–.52)'
+  #215 [REFUTED by sessions-and-reads] At the label tokens the comparator reads below the axis everywhere (.70 vs .88 at L51 at A's token)
+      evidence: .70 vs .88 at L51 (A) is right (.701 vs .884), and the comparator is below the axis at every layer L51–L63 for both tokens; but at L49–L50 it reads above: A's token .522/.519 vs .508/.510 (.52 vs .51 at 2 dp), B's .514/.512 vs .508/.511 — all at null.
+      correction: 'below the axis at every layer from L51 (at L49–L50 both sit at null, the comparator marginally higher)'.
+  #215 [REFUTED by prose-and-quotes] At the label tokens the comparator reads below the axis everywhere (.70 vs .88 at L51 at A's token)
+      evidence: .70 vs .88 at L51 holds, and comparator < axis at every layer L51–L63 for both tokens; but at L49/L50 the comparator is above the axis (A's token .522/.519 vs .508/.510; B's .514/.512 vs .508/.511) and equal at L40/44/48.
+      correction: 'at the label tokens the comparator reads below the axis at every layer from L51 (.70 vs .88 at L51 at A's token); at the null layers L49–L50 the two are indistinguishable (.51–.52)'.
+  #217 [REFUTED by gate-figures] ADDENDUM-k1 §2 proposes to gate on the band L51–L56 (where the comparator leads)
+      evidence: ADDENDUM-k1.md:189 §2.2 'PASS iff median AUC over L50–L58 ≥ .80'. The comparator leads at L51–L56 and trails at L50 (−.04), L57 (−.058), L58 (−.028) — six of the band's nine layers
+      correction: §2 gates on L50–L58; the entry's 'leads … in the very band' holds at L51–L56 of that band, not at L50, L57, L58
+  #217 [REFUTED by sessions-and-reads] ADDENDUM-k1 §2 proposes to gate on the band L51–L56 (where the comparator leads)
+      evidence: ADDENDUM-k1.md:189 '§2.2 PASS iff median AUC over L50–L58 ≥ .80'. The comparator leads the axis at L51–L56 (and L49), not at L50, L57, L58 — six of the nine band layers.
+      correction: The proposed band is L50–L58; the comparator leads at L51–L56 within it (the axis leads at L50, L57, L58). The entry's 'in the very band' should say 'in most of the band'.
+
+====================================================================================================
+CLAIMS
+====================================================================================================
+#1 Stage 1 outcome is G1 FAIL, G2 ABSENT, G3 FAIL and the analyzer branch is G3_FAIL
+   where: lines 1-2 (header)
+   how: data/k/k1_analysis.json evaluation.G1/G2/G3 verdict fields and the branch field; results/raw/2026-09-09_k1_analyze_run.txt final verdict lines
+#2 The italic sentence "The injected sign does not reach the decision token ... by new addendum." is verbatim the analyzer's §1.5 sentence
+   where: lines 3-7
+   how: Compare character-by-character (whitespace-normalised) against valence_core/k/analysis.py proposal_sentences (G3_FAIL key), PROPOSAL-k §1.5, and the sentence field in data/k/k1_analysis.json / analyze_run.txt
+#3 ADDENDUM-k1 §0.1 confirms that sentence (design seat confirmation)
+   where: line 3
+   how: ADDENDUM-k1.md §0.1 text contains/affirms the same sentence
+#4 48 F2 sham sessions were run
+   where: line 7
+   how: len(sessions) in data/k/k1_sessions.json == 48; provenance format == F2, sham/steered flags; campaign key k1-F2
+#5 Acceptance PASS
+   where: line 8
+   how: data/k/k1_sessions.json top-level acceptance.pass (or equivalent) and the run log acceptance line
+#6 258/258 choice reads at verify KL exactly 0.0
+   where: lines 8, 49-50
+   how: Count sessions[i].choices across k1_sessions.json == 258 and every choice's verify/read KL == 0.0 exactly; acceptance block
+#7 e2a walk reconstructs 48/48 with seed streams matched
+   where: lines 8, 50
+   how: acceptance.walk fields in k1_sessions.json; run log walk line
+#8 No bar fired
+   where: lines 8-9, 51-53
+   how: acceptance / declared_bars fired flags in k1_sessions.json; run log
+#9 43 valid sessions
+   where: line 9
+   how: 48 minus len(exclusions run-scope list) in k1_sessions.json exclusions
+#10 Five excluded under audit v3, one each of five distinct classes
+   where: lines 9-10, 53-54
+   how: k1_sessions.json exclusions: 5 entries, class labels pairwise distinct (lexical, null_response, audit:frame, audit:junk, preamble_without_content)
+#11 All five exclusions fired in the forced phase
+   where: lines 10, 61
+   how: Each exclusion's round index / phase in k1_sessions.json exclusions and sessions[i].rounds
+#12 None of the five excluded sessions reached a first choice (0 reads each)
+   where: lines 10-11, 61-62
+   how: sessions[9,21,22,26,46].choices empty in k1_sessions.json; those ids absent from k1_reads.json per_session
+#13 Masked reads were done on all 43 valid sessions
+   where: line 11
+   how: len(per_session) in data/k/k1_reads.json == 43 and ids equal the valid set
+#14 Identity EXACT on every one of 258 (session, mask) pairs; 258 = 43 × 6 masks
+   where: lines 11-12
+   how: For every per_session[id].masks[m].identity in k1_reads.json: all EXACT; count of (session,mask) pairs with identity == 258 (clarify whether M0 shadow is counted)
+#15 LOSO probes use 200-shuffle nulls
+   where: line 12
+   how: k1_analysis.json probes metadata n_shuffle / analysis.py constant; analyze_run.txt
+#16 First block's sign at the read position reads .85–.89 across L50–L58
+   where: lines 13-14
+   how: k1_analysis.json probes.<G3 read-position axis family>.<L50..L58>.auc_loso min/max rounded to 2 dp
+#17 First block's sign at the read position reads .68–.71 at L59–L63
+   where: line 14
+   how: Same family, layers 59-63, min/max
+#18 G3 median over the registered L51–L62 band is .861
+   where: lines 14, 107
+   how: Recompute median of the 12 auc_loso values L51–L62 of the G3 axis family; compare evaluation.G3.median in k1_analysis.json
+#19 G3 bar is .90
+   where: lines 15, 107
+   how: declared bars in k1_analysis.json evaluation.G3 / PROPOSAL-k §1.4 / analysis.py
+#20 Binding at label A's token reads .88 at L51 then .76 → .64
+   where: lines 15-16
+   how: G1 A-token axis family: L51 == .88, L52 == .76, tail values reach .64 (L61/L62)
+#21 G1 A-token median is .653 against bar .90
+   where: lines 16, 104-105
+   how: Recompute median over L51–L61 of G1 A axis family; evaluation.G1 A fields and bar
+#22 Binding at label B's token reads .70 at L51
+   where: line 16
+   how: G1 B-token axis family L51 auc_loso
+#23 G1 B-token median is .632 against bar .75
+   where: lines 16-17, 105-106
+   how: Recompute median over L51–L61 of G1 B axis family; evaluation.G1 B median and bar .75
+#24 Exactly two band layers (L55, L56) of the G1 B row are at null
+   where: lines 17, 106
+   how: above_null flags for G1 B axis family L51–L61: false exactly at 55 and 56
+#25 Binding at the read position reads .47–.52 at every layer and none above null (G2 ABSENT)
+   where: lines 17-18, 105-106
+   how: G2 read-position axis family: min/max over L49–L63 within [.47,.52]; all above_null false
+#26 The norm-matched random direction's first-block sign reads .94–.95 at L51–L53 at the read position
+   where: lines 19-20
+   how: G3 read-position random-comparator family L51,L52,L53 auc_loso
+#27 The axis reads .88 at the same layers (L51–L53) at the read position
+   where: lines 20-21
+   how: G3 axis family L51–L53 (entry table shows .88/.88/.86 — check the '.88' summary against all three)
+#28 The random comparator beats the axis at the decision token (comparator AUC > axis AUC at L51–L53)
+   where: lines 21-22
+   how: Per-layer comparison of the two G3 families at L51–L53 (and L54–L56 per line 197)
+#29 Design ledger slip (18) is stated in ADDENDUM-k1 §0.2
+   where: lines 22-23, 204
+   how: ADDENDUM-k1.md §0.2 exists and contains the slip text
+#30 No verdict quantity exists in Stage 1; nothing re-scores
+   where: lines 23-24
+   how: PROPOSAL-k §1 defines Stage 1 as channel study with no verdict; k1_analysis.json has no verdict/score field
+#31 Watermark commit is ebcb206
+   where: line 24
+   how: git log: ebcb206 is the launch entry commit and HEAD at reads time
+#32 Run launched 17:01:31 UTC 2026-09-09
+   where: line 27
+   how: First line of results/raw/2026-09-09_k1_stage1_run.log; launch entry ebcb206 in RESULTS.md
+#33 The launch entry is commit ebcb206
+   where: line 27
+   how: git log -1 ebcb206 message says STAGE 1 LAUNCHED
+#34 Log file results/raw/2026-09-09_k1_stage1_run.log exists at that path
+   where: line 28
+   how: ls the path
+#35 Analysis file results/raw/2026-09-09_k1_analyze_run.txt exists at that path
+   where: line 29
+   how: ls the path
+#36 Gate line at run time names proposal 702f997
+   where: line 30
+   how: grep gate line in the run log
+#37 Gate line names CLAUDE.md 702f997
+   where: line 30
+   how: run log gate line
+#38 Gate line names analyzer 8d2a7a6
+   where: line 31
+   how: run log gate line
+#39 Gate line names HEAD 702f997 for the sessions run
+   where: line 31
+   how: run log gate line; k1_sessions.json provenance HEAD
+#40 HEAD was ebcb206 for the reads
+   where: line 31
+   how: reads-phase gate/provenance line in the run log or k1_reads.json provenance
+#41 Sessions 48/48 complete
+   where: line 32
+   how: k1_sessions.json wall_clock / sessions count; run log completion line
+#42 5.34 h of session time
+   where: line 32
+   how: Sum of per-session wall seconds in k1_sessions.json wall_clock / 3600, rounded to 2 dp
+#43 Mean session time 401 s over 48
+   where: line 32
+   how: Total session seconds / 48
+#44 Mean session time 446 s over the 43 complete (valid) sessions
+   where: lines 32-33
+   how: Mean wall seconds over the 43 non-excluded sessions
+#45 Maximum session time 1,072 s, session s36
+   where: lines 33, 171
+   how: argmax of per-session wall seconds in k1_sessions.json wall_clock
+#46 Sessions artifact written 22:22 UTC
+   where: lines 33-34
+   how: Run log line for writing k1_sessions.json, or wall_clock end timestamp in the JSON
+#47 Reads: 43 sessions × (six masks + the M0 shadow), i.e. 7 masks per session
+   where: line 34
+   how: len(per_session[id].masks) == 7 for all 43 in k1_reads.json; mask names include M0
+#48 Reads took 31.6 min
+   where: line 35
+   how: Run log reads-phase start/end timestamps or k1_reads.json wall clock
+#49 7.35 s per mask
+   where: line 35
+   how: Mean of per_session[...].seconds_per_mask in k1_reads.json (or reads wall / (43×7))
+#50 STAGE1_EXIT=0 at 22:53:57 UTC
+   where: line 35
+   how: Last line(s) of results/raw/2026-09-09_k1_stage1_run.log
+#51 Analysis ran 216 LOSO jobs = 12 families × 18 layers
+   where: line 36
+   how: k1_analysis.json probes: 12 family keys each with 18 layer keys; analyze_run.txt job count
+#52 Analysis took 75.5 min on 8 workers
+   where: line 36
+   how: analyze_run.txt timestamps / workers line
+#53 ANALYZE_EXIT=0 at 00:09:27 UTC 2026-09-10
+   where: line 37
+   how: Last line of results/raw/2026-09-09_k1_analyze_run.txt
+#54 Artifacts of record exist at data/k/k1_sessions.json, data/k/k1_reads.json, data/k/k1_analysis.json
+   where: lines 38-40
+   how: ls data/k/
+#55 Residual stacks are 43 local npz files with fingerprints stored in the reads record
+   where: lines 40-41
+   how: Count npz under data/k/ (or the declared local dir); per_session[...].npz_sha16_by_key present for all 43 in k1_reads.json
+#56 Model is mlx-community/Qwen3.6-27B-4bit
+   where: line 42
+   how: k1_sessions.json provenance.model / run log
+#57 mlx 0.31.2 / mlx-lm 0.31.3
+   where: line 42
+   how: provenance library versions in k1_sessions.json / run log
+#58 Kernel path gdn_inference_mode ops with fused disabled
+   where: lines 42-43
+   how: provenance kernel/path fields; run log characterization line
+#59 Choice window 8,192
+   where: line 43
+   how: provenance choice_window in k1_sessions.json
+#60 legacy_truncate_512 is false
+   where: line 44
+   how: provenance.legacy_truncate_512 in k1_sessions.json
+#61 0 encodes clipped (28(d))
+   where: line 44
+   how: provenance / counters encodes_clipped == 0
+#62 Audit v2 sha16 7aa235d25eeb66dc was recomputed and matches
+   where: lines 44-45
+   how: provenance audit sha16 in k1_sessions.json and run log; compare with earlier entries (ebcb206, FORMAT RECON)
+#63 Audit v3 exclusions and v5 advisories were in effect
+   where: lines 45-46
+   how: provenance / declared_bars audit version fields; valence_core/echo/k1.py
+#64 Roster of record used
+   where: line 46
+   how: provenance roster sha matches the roster of record in earlier entries
+#65 Draw seed 20260909
+   where: line 46
+   how: provenance seed in k1_sessions.json / run log
+#66 Campaign key k1-F2
+   where: lines 46-47
+   how: provenance campaign key
+#67 Temperature 0.7
+   where: line 47
+   how: provenance temp
+#68 Scope e2a
+   where: line 47
+   how: provenance scope field
+#69 `steered` is False on every round
+   where: line 51
+   how: All 438 rounds[].steered False in k1_sessions.json
+#70 The 5(e) primitive is absent
+   where: line 51
+   how: acceptance / provenance flag for 5(e) primitive in k1_sessions.json; k1.py
+#71 scaffold_absorption bar count 0
+   where: line 52
+   how: counters.scaffold_absorption in k1_sessions.json
+#72 template_breakage 0
+   where: line 52
+   how: counters.template_breakage
+#73 round_degeneracy 5/438 rounds against p0 .02 by exact binomial: not fired
+   where: lines 52-53
+   how: counters.round_degeneracy == 5, total rounds 438, declared_bars p0 == .02; recompute binomial tail P(X>=5|438,.02) vs declared alpha; acceptance fired flag false
+#74 Excluded under run scope 5/48
+   where: line 54
+   how: exclusions run-scope list length in k1_sessions.json
+#75 s9 excluded lexical:slate at forced0
+   where: lines 54-55
+   how: exclusions entry for session 9; sessions[9].rounds[0].lexical
+#76 s9 forced0 response is verbatim "Time: 0.61s | Tokens: 23 | Perplexity: 5.38 | Config: slate"
+   where: lines 55-56
+   how: sessions[9].rounds[0].text in k1_sessions.json / k1_transcripts.txt
+#77 s21 excluded null_response at forced0, response a bare code fence
+   where: lines 56-57
+   how: exclusions entry s21; sessions[21].rounds[0].text == ``` (fence only), content_label null_response
+#78 s22 excluded audit:frame at forced0 with text "=== Config evaluation session ==="
+   where: lines 57-58
+   how: exclusions s22; sessions[22].rounds[0].text verbatim
+#79 s26 excluded audit:junk at forced3, text ending "…dishes in round 4 — active config: ridge]"
+   where: lines 58-59
+   how: exclusions s26 round index 3 forced; sessions[26].rounds[3].text tail verbatim (em dash, bracket)
+#80 s46 excluded preamble_without_content at forced0 with text "Here are some creative name suggestions for a small coffee cart:"
+   where: lines 59-61
+   how: exclusions s46; sessions[46].rounds[0].text verbatim
+#81 The 43 sessions read are exactly the 43 with a first choice
+   where: lines 62-63
+   how: Set equality: k1_reads.json per_session ids == {i : sessions[i].choices non-empty}
+#82 The analyzer's 'all with a pick' beside-figure is the same set of 43
+   where: lines 63-64
+   how: k1_analysis.json evaluation domain / beside n == 43; analyze_run.txt
+#83 The gate domain is declared as valid sessions with the all-with-a-pick figure beside (rule 28(a))
+   where: lines 64-66
+   how: PROPOSAL-k §1.4 domain declaration; valence_core/k/analysis.py domain selection
+#84 Strict scope excludes 11/48
+   where: line 67
+   how: exclusions strict-scope list length in k1_sessions.json
+#85 s13 free5 is null_response
+   where: line 68
+   how: sessions[13].rounds (free index 5).content_label
+#86 s38 free0 is null_response
+   where: line 68
+   how: sessions[38] free round 0 content_label
+#87 s35 free2 and free4 are null_response
+   where: lines 68-69
+   how: sessions[35] free rounds 2 and 4 content_label
+#88 s17 free4 is audit:junk with text "=== Completion ==="
+   where: lines 69-70
+   how: sessions[17] free round 4 degen class and text verbatim (mapping order s17→Completion)
+#89 s41 free5 is audit:junk with text "=== Final output ==="
+   where: lines 69-70
+   how: sessions[41] free round 5 degen class and text verbatim
+#90 s36 free5 is audit:frame
+   where: lines 70-71
+   how: sessions[36] free round 5 degen class
+#91 All six strict hits occurred after their first choice; the six sessions remain valid and appear in the reads
+   where: lines 71-72
+   how: Each hit's round index > first choice; s13,s17,s35,s36,s38,s41 present in k1_reads.json per_session
+#92 438 rounds total over 48 sessions: 180 forced, 258 free
+   where: lines 72-73
+   how: Sum len(rounds) over sessions in k1_sessions.json; count by phase
+#93 audit_degenerate 5 (junk 3, frame 2)
+   where: lines 73-74
+   how: counters.audit_degenerate breakdown; recount rounds[].degen over all 438
+#94 content_exclusion 6 (null_response 5, preamble_without_content 1)
+   where: lines 74-75
+   how: counters; recount rounds[].content_label
+#95 content_advisory 4 (payload_echo 2, task_echo 2)
+   where: lines 75-77
+   how: counters; recount rounds[].advisory
+#96 payload_echo fired on s7 and s19 at forced1
+   where: line 76
+   how: sessions[7].rounds[1].advisory and sessions[19].rounds[1].advisory
+#97 The payload "The meeting has been moved to 3pm." was returned unchanged in those responses
+   where: lines 76-77
+   how: sessions[7]/[19].rounds[1].text equals the task payload verbatim
+#98 task_echo fired on s29 free0 and free4
+   where: line 77
+   how: sessions[29] free rounds 0 and 4 advisory
+#99 lexical counter 1
+   where: line 78
+   how: counters.lexical; recount rounds[].lexical non-empty
+#100 low_label_mass 7/258 choices
+   where: line 78
+   how: Count choices[].low_label_mass True over all sessions
+#101 termination 0
+   where: line 78
+   how: counters.termination
+#102 cap_hit 0
+   where: line 78
+   how: counters.cap_hit
+#103 post_choice_degeneracy 7 = the six strict hits plus s35's second
+   where: lines 78-79
+   how: counters.post_choice_degeneracy == 7; enumerate post-choice degenerate rounds (s13,s17,s35×2,s36,s38,s41)
+#104 Mean 15.1 tokens per forced round
+   where: line 80
+   how: Mean rounds[].n_tok over the 180 forced rounds
+#105 Mean 15.5 tokens per free round
+   where: line 80
+   how: Mean n_tok over the 258 free rounds
+#106 Retention from last forced round to the read is 21 tokens (20 in 9 sessions, 21 in 22, 22 in 12)
+   where: lines 80-82
+   how: Histogram of per_session[...].retention_tokens in k1_reads.json; 9+22+12 == 43; median/mode 21
+#107 Distance from the first block's end to the read is mean 110.9, range 88–141
+   where: line 82
+   how: read_position minus first-block end position per session in k1_reads.json; mean and min/max
+#108 Label tokens sit 9 (menu-first) and 7 (menu-second) tokens before the read in all 43 sessions
+   where: lines 82-84
+   how: read_position − label_positions[first]/[second] == 9/7 for every per_session entry
+#109 The 9/7 label offsets match the recon
+   where: line 84
+   how: RESULTS.md FORMAT RECON (2026-09-07) / Stage B-C entries state the same offsets for F2
+#110 L40/L44/L48 read exactly .500 in every family
+   where: lines 86-87
+   how: probes.<each of 12 families>.<40,44,48>.auc_loso == 0.5 exactly in k1_analysis.json
+#111 The steering layer and below are bit-identical to the shadow (steering layer is L48)
+   where: line 87
+   how: valence_core/echo/k1.py steering layer constant; identity results per layer in k1_reads.json
+#112 Table rows are the analyzer's families with targets as PROPOSAL-k §1.4 (row labels: M+A vs M+B, R+A vs R+B, M+A ∪ M+B by start order, R+A ∪ R+B, complement target)
+   where: lines 88, 92-100
+   how: Family definitions in valence_core/k/analysis.py vs PROPOSAL-k §1.4 vs row labels
+#113 The 18 probed layers are L40, L44, L48 and L49–L63
+   where: lines 86-90
+   how: Layer keys in k1_analysis.json probes
+#114 Row 'G1 label A's token, axis' per-layer values L49–L63: .51 .51 .88* .76* .69* .68* .66* .65* .65* .65* .65* .65* .64* .64* .65* with '*' at L51–L63 only
+   where: line 92
+   how: probes.<G1 A axis>.<49..63>.auc_loso rounded to 2 dp and above_null flags, all 15 layers
+#115 Row 'G1 label B's token, axis' values: .51 .51 .70* .69* .65* .63* .60 .62 .62* .68* .64* .63* .62* .65* .63* with '*' everywhere L51–L63 except L55, L56
+   where: line 93
+   how: probes.<G1 B axis>.<49..63> auc_loso and above_null
+#116 Row 'label A's token, random comparator' values: .52 .52 .70* .64* .64* .59 .57 .56 .55 .56 .57 .57 .57 .57 .57 with '*' at L51–L53 only
+   where: line 94
+   how: probes.<A-token random>.<49..63> auc_loso and above_null
+#117 Row 'label B's token, random comparator' values: .51 .51 .66* .62 .59 .57 .56 .56 .56 .61 .59 .56 .56 .59 .59 with '*' at L51 only
+   where: line 95
+   how: probes.<B-token random>.<49..63>
+#118 Row 'G2 read position, axis' values: .50 .47 .49 .48 .48 .47 .51 .50 .50 .49 .52 .51 .52 .52 .51 with no '*'
+   where: line 96
+   how: probes.<G2 axis>.<49..63>
+#119 Row 'G2 read position, random comparator' values: .49 .48 .50 .49 .49 .49 .49 .49 .50 .50 .51 .50 .50 .50 .50 with no '*'
+   where: line 97
+   how: probes.<G2 random>.<49..63>
+#120 Row 'G3 read position, axis' values: .61 .85* .88* .88* .86* .86* .87* .89* .87* .85* .68* .70* .69* .68* .71* with '*' at L50–L63
+   where: line 98
+   how: probes.<G3 axis>.<49..63>
+#121 Row 'second block's sign, beside' values: .62 .85* .87* .89* .86* .86* .88* .89* .88* .89* .70* .71* .69* .68* .67* with '*' at L50–L63
+   where: line 99
+   how: probes.<second-block complement>.<49..63>
+#122 Row 'G3 read position, random comparator' values: .61 .81* .94* .95* .94* .91* .89* .90* .81* .82* .63* .64* .65* .63* .61 with '*' at L50–L62 and none at L49, L63
+   where: line 100
+   how: probes.<G3 random>.<49..63>
+#123 Shuffle 95th percentiles run .60–.72 in every family
+   where: line 102
+   how: min/max of probes.<family>.<layer>.shuffle95 across all 12 families (state whether L40/44/48 are included)
+#124 n = 86 rows, 43 groups for the LOSO probes
+   where: lines 102-103
+   how: probes metadata n_rows / n_groups in k1_analysis.json (2 rows × 43 sessions)
+#125 G1 A-token row is above null at every band layer L51–L61
+   where: line 104
+   how: above_null true for all of L51–L61 in G1 A axis family
+#126 G1 registered band is L51–L61
+   where: line 104
+   how: PROPOSAL-k §1.4 / analysis.py band constants / evaluation.G1.band
+#127 Random comparator medians over the G1 band are .571 (A's token) and .571 (B's token)
+   where: line 106
+   how: Recompute median over L51–L61 of the two label-token random families at full precision
+#128 G2: no layer of L49–L63 above null; max AUC .516
+   where: lines 105-106
+   how: G2 axis family above_null all false; max auc_loso over L49–L63 rounded to 3 dp
+#129 G2 comparator's max is .508
+   where: line 106
+   how: max of G2 random family auc_loso over L49–L63
+#130 G3 registered band is L51–L62
+   where: lines 14, 107
+   how: PROPOSAL-k §1.4 / evaluation.G3.band
+#131 G3 row is above null at every band layer L51–L62
+   where: lines 107-108
+   how: above_null flags G3 axis L51–L62
+#132 The fall-off at L59–L63 is inside the registered band
+   where: lines 108-109
+   how: Compare L59–L63 to the band L51–L62 (L63 lies outside it — check whether 'inside' overstates)
+#133 G3 comparator's median over L51–L62 is .854
+   where: line 109
+   how: Recompute median of G3 random family over L51–L62
+#134 The second block's row is the complement target computed independently with its own fit and own null stream
+   where: lines 109-111
+   how: valence_core/k/analysis.py family construction; separate seed/null stream for the beside family
+#135 Second-block row differs from the first-block row by up to .041 (at L58) and .046 (at L63), .046 being the maximum
+   where: lines 111-112, 228
+   how: Per-layer |auc(second) − auc(first)| over all 18 layers at full precision; identify max and the L58 value
+#136 The published probe is 300 steps of full-batch gradient descent from a seed-7 random init
+   where: lines 113-114
+   how: valence_core/echo/probe.py: step count, batch mode, init seed
+#137 The procedure is named discrim.logistic_auc and lives in valence_core/echo/probe.py
+   where: line 115
+   how: grep for logistic_auc / discrim in valence_core/echo/probe.py and its import path in analysis.py
+#138 A label flip maps the optimum to −w but not the trajectory from the same init (fit not label-flip-symmetric)
+   where: lines 116-117
+   how: probe.py: random init independent of labels; no symmetrisation step
+#139 The analyzer's own note anticipated third-decimal agreement between the beside row and the G3 row
+   where: lines 117-118
+   how: Comment/note string in valence_core/k/analysis.py or k1_analysis.json notes / analyze_run.txt
+#140 No bar rides on the beside (second-block) row
+   where: line 118
+   how: analysis.py evaluation uses only the first-block family for G3; PROPOSAL-k §1.4
+#141 The same probe procedure scores every family here and in the recon
+   where: lines 118-119
+   how: analysis.py calls probe.logistic_auc for all families; Stage B/C recon entries in RESULTS.md cite the same procedure/module
+#142 Text-only rows (M0 shadow, target = start order) read .94–1.00 at the read position
+   where: lines 120-121
+   how: probes.<M0 read-position family>.<49..63> min/max
+#143 Text-only rows read .98–1.00 at both label tokens
+   where: line 121
+   how: probes.<M0 label-A> and <M0 label-B> families min/max over L49–L63
+#144 The M0 families' target is start order (which label came first)
+   where: lines 120-126
+   how: analysis.py M0 family target definition
+#145 The recon's text-only families had target = the injected sign and were found at null
+   where: lines 126-127
+   how: RESULTS.md Stage B/C recon entries (2026-09-05/06) text-only family results
+#146 G1–G3 rows are balanced within session and can only be separated by the injection
+   where: lines 123-124
+   how: analysis.py: each session contributes one M+A and one M+B row (2 rows × 43)
+#147 PROHIBITION asserted: no signed quantity toward the +label was computed on M+A/M+B
+   where: lines 129-130
+   how: k1_analysis.json evaluation.G4 has no signed field for M+A/M+B; analysis.py G4 code path
+#148 G4 R+A pick flips 4/43 = .093
+   where: line 134
+   how: evaluation.G4['R+A'] flips; recompute from k1_reads.json masks pick vs M0 pick
+#149 R+A Clopper–Pearson 95% [.026, .221]
+   where: line 134
+   how: Recompute exact binomial CI for 4/43
+#150 R+A |Δ logit| median/mean/max .031/.046/.167
+   where: line 134
+   how: evaluation.G4['R+A'] stats; recompute from per-session read logit differences
+#151 R+A signed shift toward the first block's label mean +.013, sd .060, signs 26+/17−
+   where: line 134
+   how: evaluation.G4['R+A'].signed; recompute; 26+17 == 43
+#152 R+B pick flips 3/43 = .070
+   where: line 135
+   how: evaluation.G4['R+B']
+#153 R+B CP interval [.015, .191]
+   where: line 135
+   how: Recompute exact CI for 3/43
+#154 R+B |Δ logit| .041/.052/.178
+   where: line 135
+   how: evaluation.G4['R+B'] stats
+#155 R+B signed +.005, .067, 21/22
+   where: line 135
+   how: evaluation.G4['R+B'].signed; 21+22 == 43
+#156 M++ pick flips 2/43 = .047
+   where: line 136
+   how: evaluation.G4['M++']
+#157 M++ CP interval [.006, .158]
+   where: line 136
+   how: Recompute exact CI for 2/43
+#158 M++ |Δ logit| .059/.067/.213
+   where: line 136
+   how: evaluation.G4['M++'] stats
+#159 M++ is not a signed arm (no signed shift computed)
+   where: line 136
+   how: evaluation.G4['M++'] lacks signed field; analysis.py
+#160 R++ pick flips 3/43 = .070
+   where: line 137
+   how: evaluation.G4['R++']
+#161 R++ CP interval [.015, .191]
+   where: line 137
+   how: Recompute exact CI for 3/43
+#162 R++ |Δ logit| .049/.058/.218
+   where: line 137
+   how: evaluation.G4['R++'] stats
+#163 R++ signed +.008, .076, 23/20
+   where: line 137
+   how: evaluation.G4['R++'].signed; 23+20 == 43
+#164 The recon's G4-type figures at n = 102 were 0–1/102 flips on random and same-pole masks, medians .033–.046, maxima .12–.20
+   where: lines 139-140
+   how: RESULTS.md Stage B/C recon entries (2026-09-05/06) leak table
+#165 Flips are more frequent here at n = 43 on every arm than in the recon
+   where: lines 140-141
+   how: Compare 4/43, 3/43, 2/43, 3/43 against the recon's per-arm rates
+#166 The Stage 1 CP intervals overlap the recon's rates
+   where: lines 141-142
+   how: Recon rates (0–1/102 ≈ 0–.0098) fall inside [.006,.158] etc. — check each arm
+#167 Medians and maxima are in the same range as the recon's
+   where: line 142
+   how: Compare .031–.059 medians and .167–.218 maxima with recon's .033–.046 / .12–.20
+#168 Signed pseudo-shift is within ±.02 with sign counts near even on the three signed arms
+   where: lines 143-144
+   how: |+.013|,|+.005|,|+.008| ≤ .02; sign counts 26/17, 21/22, 23/20
+#169 The recon's pure blocks read +.008/−.002
+   where: line 144
+   how: RESULTS.md Stage B/C recon entry signed shift figures for pure one-block masks
+#170 G5 first-pick share granite 7/12 = .58 with exact 95% CI [.28, .85], plaza 5/12
+   where: lines 146-147
+   how: Count first free pick per session by pair from k1_sessions.json choices[0].pick; recompute Clopper–Pearson for 7/12
+#171 prism 5/9 = .56 [.21, .86], slate 4/9
+   where: lines 147-148
+   how: Same, pair prism/slate; CI for 5/9
+#172 velvet 7/11 = .64 [.31, .89], walnut 4/11
+   where: lines 148-149
+   how: Same, CI for 7/11
+#173 ridge 7/11 = .64 [.31, .89], saddle 4/11
+   where: line 149
+   how: Same; pair denominators 12+9+11+11 == 43
+#174 First pick equals the last forced label in 26/43 = .605
+   where: lines 149-150
+   how: Per session compare choices[0].pick to rounds[3] (last forced) label
+#175 First pick equals the first block's label in 17/43
+   where: lines 150-151
+   how: Compare choices[0].pick to first-block label (k1_reads.json / sessions block order)
+#176 First pick equals the menu's first-listed label in 18/43
+   where: line 151
+   how: Compare choices[0].pick to menu-first label per session
+#177 Strict alternation over the six free picks in 22/43 sessions
+   where: lines 151-152
+   how: For each of 43 sessions test all 5 consecutive pick pairs differ
+#178 Stay transitions 35/215 = .163
+   where: line 152
+   how: Count consecutive equal picks over 43×5 = 215 transitions
+#179 The format recon's F2 had 12/24 break and 15/120 = .125 stay
+   where: lines 152-153
+   how: RESULTS.md FORMAT RECON entry (2026-09-07) F2 figures
+#180 By first label, first pick landed on the first-block label in granite 2/6, plaza 1/6, prism 2/5, slate 1/4, velvet 4/5, walnut 3/6, ridge 3/6, saddle 1/5
+   where: lines 153-155
+   how: Group sessions by first-block label; count choices[0].pick == first-block label; numerators sum 17, denominators sum 43
+#181 Granite, prism, velvet and ridge lead their pairs
+   where: line 156
+   how: Consistency with claims 170-173
+#182 No pair's interval excludes .5
+   where: lines 156-157
+   how: Each of the four CIs contains .5
+#183 The leading label agrees with the format recon's F2 on one pair of four (prism/slate); F2 there had saddle, prism, plaza leading and a 3/3 split on velvet/walnut
+   where: lines 157-159
+   how: RESULTS.md FORMAT RECON entry per-pair F2 leaders
+#184 G5 uses all 48 with the five without a pick contributing nothing (so n = 43)
+   where: lines 145-146
+   how: Denominators 43 throughout; excluded sessions have no choices
+#185 Every response of s1 is numbered "1."–"10."
+   where: lines 162-163
+   how: k1_transcripts.txt / sessions[1].rounds[*].text all begin with sequential numbering 1. through 10.
+#186 Exactly eight sessions (s2, s13, s16, s18, s30, s35, s37, s44) wrapped every response in quotation marks
+   where: lines 163-164
+   how: For each of 48 sessions test whether all rounds' text start and end with a quote; the set equals these eight
+#187 Four of the five free-round null_response hits collapsed to a lone `"` (s13 free5, s35 free2, s35 free4, s38 free0)
+   where: lines 164-167
+   how: Those four rounds' text == '"'; the fifth null_response (s21 forced0) is a fence
+#188 s36 prefixed and suffixed all ten responses with 🎲 "Hey everyone! Just a friendly reminder that …"
+   where: lines 167-168
+   how: sessions[36].rounds[*].text all 10 start and end with the 🎲 prefix/suffix pattern
+#189 s36's first free response is garbled, containing "…Just a friendly rounds 1-4:"
+   where: lines 168-169
+   how: sessions[36] free round 0 text contains that substring verbatim
+#190 s36 ended with the `=== Config evaluation session ===` frame
+   where: lines 169-171
+   how: sessions[36] free round 5 text
+#191 s3 dishes rewrite contains "the soft sink … in the word "soft" is a bit weird?"
+   where: lines 172-173
+   how: k1_transcripts.txt s3 dishes-task round text (check the ellipsis and nested quotes are faithful)
+#192 s7 contains "softer sink" on the dishes rewrite
+   where: line 173
+   how: transcripts s7
+#193 s12 contains "courteous sink"
+   where: line 173
+   how: transcripts s12
+#194 s23 contains "dishes in the session"
+   where: lines 173-174
+   how: transcripts s23
+#195 s33 contains "dishes in the house"
+   where: line 174
+   how: transcripts s33
+#196 s16 contains "the considerate way" with an unclosed quote
+   where: lines 174-175
+   how: transcripts s16 dishes round: substring present and quote count odd
+#197 s17 contains "the/personal-life"
+   where: line 175
+   how: transcripts s17
+#198 s0 contains "the soft glow of the evening"
+   where: lines 175-176
+   how: transcripts s0
+#199 s15 contains "one package at a configs" on the courier task
+   where: lines 176-177
+   how: transcripts s15, courier-task round
+#200 All items in (b) occur on the dishes rewrite task (except s15's courier item)
+   where: lines 171-177
+   how: rounds[].task for each cited round in k1_sessions.json
+#201 (c) scaffold/metadata reproductions comprise the s9 metadata line with roster tag, the s22 frame, the s26 header fragment, and three `===` lines in s17, s36, s41
+   where: lines 177-180
+   how: grep '===' across all 438 rounds' text: exactly s17, s22?, s36, s41 — reconcile count 'three' with s22's frame also containing ===
+#202 s29 free0 task echo has "choice" inserted into the echoed task; free4 echoes verbatim
+   where: lines 181-182
+   how: Diff sessions[29] free0/free4 text against the task text
+#203 The v5 advisories fired on exactly these four rounds (s7 f1, s19 f1, s29 free0, s29 free4) and nothing else
+   where: lines 182-183
+   how: Count non-empty rounds[].advisory over all 438 rounds == 4 with those ids
+#204 s41 free4 is a duplicated-sentence response containing "the model's last warm loaves", 47 tokens, unflagged
+   where: lines 183-185
+   how: sessions[41] free4: text contains substring and a repeated sentence; n_tok == 47; degen/advisory/content_label empty
+#205 s14 forced1 contains markdown bold
+   where: line 185
+   how: sessions[14].rounds[1].text contains '**'
+#206 Umbrella emoji appears in s27, s34, s41
+   where: lines 185-186
+   how: grep ☂/☔ across transcripts; present in those three (and whether any others)
+#207 s24 is a terse session
+   where: line 186
+   how: sessions[24] per-round n_tok / mean vs other sessions
+#208 Four of five exclusions fired at forced round 0
+   where: lines 186-188
+   how: exclusions round indices: s9, s21, s22, s46 at 0; s26 at 3
+#209 The format recon's F2 showed 0/240 v2 hits
+   where: lines 189-190
+   how: RESULTS.md FORMAT RECON entry (2026-09-07) F2 audit hits and round count 240
+#210 s21 and s46 both opened on the coffee-cart naming task
+   where: lines 190-191
+   how: sessions[21].rounds[0].task and sessions[46].rounds[0].task
+#211 Random direction's first-block sign at the read position reads .939/.950/.941 at L51–L53
+   where: lines 195-196
+   how: G3 random family L51–L53 auc_loso at 3 dp
+#212 Axis reads .877/.884/.862 at L51–L53 at the read position
+   where: line 196
+   how: G3 axis family L51–L53 at 3 dp
+#213 Random reads .91/.89/.90 at L54–L56 against axis .86/.88/.89
+   where: line 197
+   how: G3 random and axis families L54–L56 at 2 dp
+#214 The random comparator decays below the axis from L57 onward
+   where: lines 197-198
+   how: random < axis at every layer L57–L63 for the G3 pair
+#215 At the label tokens the comparator reads below the axis everywhere (.70 vs .88 at L51 at A's token)
+   where: lines 198-199
+   how: Per-layer random ≤ axis for both label-token families over all probed layers (note L49/L50 where random .52 vs axis .51)
+#216 In the recon the random direction matched the axis to L58 and decayed after
+   where: lines 199-200
+   how: RESULTS.md Stage C recon entry per-layer random vs axis
+#217 ADDENDUM-k1 §2 proposes to gate on the band L51–L56 (where the comparator leads)
+   where: lines 201-202
+   how: ADDENDUM-k1.md §2 band proposal
+#218 The blockquote (lines 207-225) is verbatim ADDENDUM-k1 §0.2
+   where: lines 207-225
+   how: Character-by-character comparison after whitespace normalisation with ADDENDUM-k1.md §0.2, including the two indented equations, bold span and 'Design count: eighteen.'
+#219 ADDENDUM-k1 is design draft v1.0 with PI go 2026-09-11
+   where: lines 204-205
+   how: ADDENDUM-k1.md header/version line
+#220 ADDENDUM-k1 is to be committed on the PROPOSAL-k chain after this entry (currently untracked)
+   where: lines 205-206
+   how: git status shows ADDENDUM-k1.md untracked
+#221 Within the slip: Stage C block masks gave first-block sign .98–.99 and label-token binding 1.000 under alternating ± masks
+   where: lines 208-209
+   how: RESULTS.md Stage C recon entry figures
+#222 Within the slip: G1 and G3 bars are .90 in PROPOSAL-k
+   where: line 207
+   how: PROPOSAL-k §1.4 bars (note G1 B bar is .75 per line 105)
+#223 Design count is eighteen (slip (18))
+   where: lines 22, 204, 225
+   how: ADDENDUM-k1.md design ledger count; prior design slips numbered 1–17 in the record
+#224 Not done: ADDENDUM-k1 referent check and commit; sign-set widening, 1b analyzer, Stage 1b (§4 steps 2–3); LOCK-k
+   where: lines 229-231
+   how: ADDENDUM-k1.md §4 steps 2–3 names these; no such artifacts in data/k or git log
+#225 Nothing in Stage 2 has run
+   where: line 231
+   how: data/k contains only k1 artifacts; run log ends after Stage 1; no Stage 2 entries
+#226 G2 registered layer range is L49–L63
+   where: line 105
+   how: PROPOSAL-k §1.4 / evaluation.G2 band
+#227 258 free rounds = 43 × 6 and 180 forced rounds = 43×4 + 8 partial rounds from the excluded sessions (1+1+1+4+1)
+   where: lines 72-73
+   how: Per-session round counts in k1_sessions.json for excluded sessions (s26 has 4 forced rounds, others 1)
+
+====================================================================================================
+REFUTER 'gate-figures'
+SUMMARY: Checked all 227 claims against data/k/k1_analysis.json, k1_reads.json, k1_sessions.json, the two raw logs, ADDENDUM-k1.md, PROPOSAL-k §1, RESULTS.md recon/format entries, and valence_core/{echo/probe.py,k/analysis.py,echo/k1.py}; every figure recomputed with python. 217 CONFIRMED, 10 REFUTED, 0 UNCHECKABLE. REFUTED: #27 (axis at L51–L53 is .88/.88/.86, not ".88"); #110 ("L40/L44/L48 read exactly .500 in every family" — the three text-only families read .98/.99/1.00 there; true only for the nine state-carrying families); #132 (L63 lies outside the registered L51–L62 band, so the L59–L63 fall-off is not wholly "inside" it); #142 (text-only read-position row is .71–.98 over L49–L63, not ".94–1.00"; that range holds only at L40–L54); #164 (recon maxima on M5/M6/R1–R4 are .12–.19, not .12–.20; .1995 belongs to Stage C's mixed reward block B4); #166 (only M++'s interval reaches the recon's 1/102 rate; R+A/R+B/R++ lower bounds .026/.015/.015 exceed .0098 and none contains 0/102 — true only as interval-vs-interval overlap); #167 (M++ median .059 and R++ max .218 exceed the cited recon ranges); #188 (s36: all ten open "🎲 Hey everyone!" but only seven carry "Just a friendly reminder that", and nine, not ten, close with 🎲); #215 ("everywhere" — at L49–L50 the label-token comparator reads at or above the axis, .52 vs .51; below only from L51); #217 (ADDENDUM §2.2 gates on L50–L58, not L51–L56; the comparator leads at L51–L56 within it and trails at L50/L57/L58). Caveats on confirmed items: #82 (evaluation.beside_all_with_first_pick is null because k1_analyze.py:92 skips the beside probes when n_all == n_valid — the coincidence the entry describes); #124 (n = 86 rows holds for the nine table families; the text-only rows are n = 43); #139 (the analyzer note says the figures "can differ at the third decimal" — "third-decimal agreement" should be quoted, not paraphrased); #141 (same classifier fit_lr; the recon's Stage B/C statistic was grouped 10-fold with LOSO beside); #186 (s16's free3 opens but never closes its quote; s37 uses curly quotes on 7/10; s38 quotes 8/10 and is correctly excluded); #191 (the ellipsis elides only ", "); #221/#222 (quotation of the addendum is verbatim; the record's 1.000 binding is at label_a's token only, label_b .81–.96, and G1's B-token bar is .75).
+====================================================================================================
+#1 CONFIRMED: Stage 1 outcome is G1 FAIL, G2 ABSENT, G3 FAIL; branch G3_FAIL
+   evidence: k1_analysis.json evaluation.branch='G3_FAIL', G1.verdict='FAIL', G2.verdict='ABSENT', G3.verdict='FAIL'; analyze_run.txt:53 'G1 FAIL  G2 ABSENT  G3 FAIL  -> branch G3_FAIL'
+#2 CONFIRMED: Italic sentence is verbatim the analyzer's §1.5 sentence
+   evidence: Whitespace-normalised entry sentence == k1_analysis.json evaluation.sentence == analysis.py:78-80 SENTENCES['G3_FAIL'] == PROPOSAL-k-echo-channel.md §1.5 4th quote (lines 299-302); all four compare equal
+#3 CONFIRMED: ADDENDUM-k1 §0.1 confirms that sentence
+   evidence: ADDENDUM-k1.md:26-32: 'selected §1.5's sentence, which the design seat confirmed verbatim:' followed by the identical blockquote (normalised compare equal)
+#4 CONFIRMED: 48 F2 sham sessions were run
+   evidence: k1_sessions.json: len(sessions)=48; every session format='F2', rng_key='k1-F2', sham_only=true; n_registered=n_on_disk=48
+#5 CONFIRMED: Acceptance PASS
+   evidence: k1_sessions.json acceptance.PASS=true; run log:56 'acceptance PASS'
+#6 CONFIRMED: 258/258 choice reads at verify KL exactly 0.0
+   evidence: 258 choices across sessions; set of read.verify_kl == {0.0}; acceptance.n_reads=258, kl_exactly_zero=258
+#7 CONFIRMED: e2a walk reconstructs 48/48 with seed streams matched
+   evidence: acceptance.format_walk n_walked=48, n_reconstructed=48, n_seed_streams_matched=48, all_ok=true; run log:56 'walk 48/48'
+#8 CONFIRMED: No bar fired
+   evidence: acceptance.bars_fired=[]; run log:56 'bars none'
+#9 CONFIRMED: 43 valid sessions
+   evidence: 48 sessions minus 5 with excluded=true = 43; exclusions.run_scope=5
+#10 CONFIRMED: Five excluded under audit v3, one each of five distinct classes
+   evidence: exclusions.reasons: lexical:slate, content:null_response, audit:frame, audit:junk, content:preamble_without_content — 5 pairwise-distinct classes (s9,s21,s22,s26,s46)
+#11 CONFIRMED: All five exclusions fired in the forced phase
+   evidence: exclude_reason suffixes @forced0 (s9,s21,s22,s46) and @forced3 (s26)
+#12 CONFIRMED: None of the five excluded sessions reached a first choice (0 reads each)
+   evidence: len(choices)=0 and n_reads=0 for s9,s21,s22,s26,s46; those ids absent from k1_reads.json per_session
+#13 CONFIRMED: Masked reads on all 43 valid sessions
+   evidence: k1_reads.json per_session has 43 keys; set equals the valid set and the sessions-with-a-pick set
+#14 CONFIRMED: Identity EXACT on every one of 258 (session, mask) pairs; 258 = 43 × 6
+   evidence: identity fields present on the 6 steered masks × 43 = 258, all ok=true (M0 shadow carries no identity entry — it IS the shadow); evaluation.identity n_pairs=258, all_ok=true
+#15 CONFIRMED: LOSO probes use 200-shuffle nulls
+   evidence: k1_analysis.json n_shuffles=200; analysis.py:63 N_SHUFFLES=200; analyze_run.txt:3 '200 shuffles'
+#16 CONFIRMED: First block's sign at the read reads .85–.89 across L50–L58
+   evidence: probes.g3_firstsign_read_M L50–L58 min .8469→.85, max .8886→.89
+#17 CONFIRMED: .68–.71 at L59–L63
+   evidence: g3_firstsign_read_M L59–L63: .683 .697 .685 .681 .714 → min .68, max .71
+#18 CONFIRMED: G3 median over L51–L62 is .861
+   evidence: Recomputed median of 12 values = 0.861006; evaluation.G3.median_auc=0.861005949
+#19 CONFIRMED: G3 bar is .90
+   evidence: bars.G3=[0.9,[51..62]]; analysis.py:62 G3_MEDIAN=0.90; PROPOSAL-k §1.4 G3 '≥ .90'
+#20 CONFIRMED: Label A's token .88 at L51 then .76 → .64
+   evidence: g1_labelA_token_M L51 .884, L52 .758, L61/L62 .639 → .64
+#21 CONFIRMED: G1 A-token median .653 against bar .90
+   evidence: Recomputed median L51–L61 = 0.652785; evaluation.G1.median_auc_labelA=0.6527853; bar labelA 0.9
+#22 CONFIRMED: Label B's token .70 at L51
+   evidence: g1_labelB_token_M L51 = 0.699 → .70
+#23 CONFIRMED: G1 B-token median .632 against bar .75
+   evidence: Recomputed median L51–L61 = 0.631693; evaluation.G1.median_auc_labelB=0.6316928; bar labelB 0.75
+#24 CONFIRMED: Exactly two band layers (L55, L56) of the G1 B row at null
+   evidence: g1_labelB_token_M above_null true at 51-54 and 57-63, false at 55 (.600 vs s95) and 56 (.615); evaluation.G1.above_null_every_layer.labelB=false
+#25 CONFIRMED: Read-position binding .47–.52 at every layer, none above null
+   evidence: g2_read_M L49–L63 min .471, max .516; above_null false at all 15; evaluation.G2.n_above=0
+#26 CONFIRMED: Random direction's first-block sign .94–.95 at L51–L53 at the read
+   evidence: g3_firstsign_read_R_comparator L51–L53 = .939/.950/.941
+#27 REFUTED: The axis reads .88 at L51–L53
+   evidence: g3_firstsign_read_M L51 .877, L52 .884, L53 .862 → .88/.88/.86; the entry's own line 196 prints .862 at L53
+   correction: .88 at L51–L52 and .86 at L53 (or '.86–.88')
+#28 CONFIRMED: Random comparator beats the axis at L51–L53 (and L54–L56)
+   evidence: R−M: L51 +.062, L52 +.066, L53 +.080, L54 +.054, L55 +.014, L56 +.012
+#29 CONFIRMED: Design ledger slip (18) is stated in ADDENDUM-k1 §0.2
+   evidence: ADDENDUM-k1.md:44 '### 0.2 Slip (18), design seat' … :63-64 'Design count: eighteen.'
+#30 CONFIRMED: No verdict quantity exists in Stage 1; nothing re-scores
+   evidence: PROPOSAL-k line 191 '§1 Stage 1 — the channel study (pre-registered probes; no behavioral verdict)'; k1_sessions.json '_no_verdict'; k1_analysis.json evaluation has no verdict/score field (frame='no Stage 2'); ADDENDUM-k1.md:9,78 'does not re-score Stage 1'
+#31 CONFIRMED: Watermark commit is ebcb206
+   evidence: git log -1 HEAD = ebcb206 (launch entry commit); k1_reads.json proposal_and_law_at_run.gate_commits.HEAD='ebcb206'
+#32 CONFIRMED: Run launched 17:01:31 UTC 2026-09-09
+   evidence: RESULTS.md:24 'PROPOSAL-k STAGE 1 LAUNCHED at 17:01:31 UTC'; commit ebcb206 message; the run log itself carries no launch timestamp (line 1 is the bare invocation)
+#33 CONFIRMED: The launch entry is commit ebcb206
+   evidence: git log -1 ebcb206: 'PROPOSAL-k STAGE 1 LAUNCHED 17:01:31 UTC …'
+#34 CONFIRMED: results/raw/2026-09-09_k1_stage1_run.log exists
+   evidence: ls: 9434 bytes, Sep 9 18:53 (untracked)
+#35 CONFIRMED: results/raw/2026-09-09_k1_analyze_run.txt exists
+   evidence: ls: 3791 bytes, Sep 9 20:09 (untracked)
+#36 CONFIRMED: Gate line names proposal 702f997
+   evidence: run log:4 'gate: proposal 702f997, CLAUDE.md 702f997, analyzer 8d2a7a6, HEAD 702f997'
+#37 CONFIRMED: Gate line names CLAUDE.md 702f997
+   evidence: run log:4; k1_sessions.json gate['CLAUDE.md']='702f997'
+#38 CONFIRMED: Gate line names analyzer 8d2a7a6
+   evidence: run log:4; k1_sessions.json gate['scripts/k1_analyze.py']='8d2a7a6' (valence_core/k/analysis.py is e9b5022)
+#39 CONFIRMED: HEAD 702f997 for the sessions run
+   evidence: run log:4 'HEAD 702f997'; k1_sessions.json gate.HEAD='702f997'
+#40 CONFIRMED: HEAD ebcb206 for the reads
+   evidence: run log:57 'gate: proposal 702f997, CLAUDE.md 702f997, HEAD ebcb206'; k1_reads.json gate_commits.HEAD='ebcb206'
+#41 CONFIRMED: Sessions 48/48 complete
+   evidence: run log:56 'sessions: 48/48'; k1_sessions.json complete=true, 48 per_session_s entries
+#42 CONFIRMED: 5.34 h of session time
+   evidence: sum(wall_clock.per_session_s)/3600 = 5.3447
+#43 CONFIRMED: Mean session time 401 s over 48
+   evidence: wall_clock.mean_session_s=400.85 → 401
+#44 CONFIRMED: Mean 446 s over the 43 valid sessions
+   evidence: mean of per_session_s over non-excluded = 445.68 → 446
+#45 CONFIRMED: Max session time 1,072 s, s36
+   evidence: max per_session_s = 1071.77 at index 36; run log:44 's36 … 1072s'
+#46 CONFIRMED: Sessions artifact written 22:22 UTC
+   evidence: TZ=UTC stat data/k/k1_sessions.json → 2026-09-09 22:22:17 UTC (run log:56 carries no timestamp)
+#47 CONFIRMED: Reads: 43 × (six masks + M0 shadow) = 7 masks per session
+   evidence: len(per_session[id].masks)==7 for all 43; names {M+A,M+B,R+A,R+B,M++,R++,M0}
+#48 CONFIRMED: Reads took 31.6 min
+   evidence: run log:101 '31.6 min this run'; k1_reads.json wall_clock_s_this_run=1898.73 s = 31.65 min
+#49 CONFIRMED: 7.35 s per mask
+   evidence: mean of 258 seconds_per_mask values = 7.354 (wall/(43×6) = 7.36)
+#50 CONFIRMED: STAGE1_EXIT=0 at 22:53:57 UTC
+   evidence: run log:102 'STAGE1_EXIT=0 Wed Sep  9 22:53:57 UTC 2026'
+#51 CONFIRMED: 216 LOSO jobs = 12 families × 18 layers
+   evidence: k1_analysis.json probes: 12 families each with 18 layer keys; analyze_run.txt:3 '216 jobs'
+#52 CONFIRMED: Analysis took 75.5 min on 8 workers
+   evidence: analyze_run.txt:3 'probes done in 75.5 min'; invocation had no --workers, default 8 (scripts/k1_analyze.py:117); RESULTS.md launch entry '8 workers'
+#53 CONFIRMED: ANALYZE_EXIT=0 at 00:09:27 UTC 2026-09-10
+   evidence: analyze_run.txt:56 'ANALYZE_EXIT=0 Thu Sep 10 00:09:27 UTC 2026'
+#54 CONFIRMED: Artifacts exist at data/k/k1_sessions.json, k1_reads.json, k1_analysis.json
+   evidence: ls data/k/: all three present (536888 / 1409848 / 47564 bytes)
+#55 CONFIRMED: 43 local npz with fingerprints in the reads record
+   evidence: ls data/k/*.npz | wc -l = 43; every per_session entry has npz_sha16_by_key with 7 keys
+#56 CONFIRMED: Model mlx-community/Qwen3.6-27B-4bit
+   evidence: k1_sessions.json provenance.model_id (and k1_reads.json)
+#57 CONFIRMED: mlx 0.31.2 / mlx-lm 0.31.3
+   evidence: provenance.library_versions {'mlx':'0.31.2','mlx-lm':'0.31.3'}
+#58 CONFIRMED: gdn_inference_mode ops with fused disabled
+   evidence: provenance.gdn_inference_mode='ops (fused disabled)'
+#59 CONFIRMED: Choice window 8,192
+   evidence: provenance.choice_window_declared=8192
+#60 CONFIRMED: legacy_truncate_512 false
+   evidence: provenance.legacy_truncate_512=false
+#61 CONFIRMED: 0 encodes clipped
+   evidence: provenance.n_encodes_clipped=0 (sessions and reads)
+#62 CONFIRMED: Audit v2 sha16 7aa235d25eeb66dc recomputed and matches
+   evidence: run log:6 'v2 sha16 7aa235d25eeb66dc (recomputed 7aa235d25eeb66dc, verified)'; identity.audit_v2_sha16; RESULTS.md launch entry same sha
+#63 CONFIRMED: Audit v3 exclusions and v5 advisories in effect
+   evidence: audit_of_record.version 'audit-v3 exclusions (…) + content-class-v5 ADVISORIES (task_echo, payload_echo, wrong_task by task id)'; run log:6
+#64 CONFIRMED: Roster of record used
+   evidence: roster_of_record = granite/plaza, prism/slate, velvet/walnut, ridge/saddle == PROPOSAL-k §1.2 roster; run log:7
+#65 CONFIRMED: Draw seed 20260909
+   evidence: draw_seed=20260909; run log:4
+#66 CONFIRMED: Campaign key k1-F2
+   evidence: every session rng_key='k1-F2'; run log:4
+#67 CONFIRMED: Temperature 0.7
+   evidence: top-level temp=0.7; identity.temp=0.7
+#68 CONFIRMED: Scope e2a
+   evidence: scope='e2a'; exclusion_scope 'e2a' per session
+#69 CONFIRMED: steered is False on every round
+   evidence: 0 of 438 rounds (180 forced + 258 free) have steered=true; acceptance.sham_only_every_round=true
+#70 CONFIRMED: The 5(e) primitive is absent
+   evidence: acceptance.statepresent_absent=true (k1_stage1.py:283 checks valence_core.e2b.statepresent not in sys.modules); k1.py:157 assert_statepresent_absent()
+#71 CONFIRMED: scaffold_absorption 0
+   evidence: k1_stage1.py:279 counts 'audit:special:' degen rounds → 0 of 438; bars_fired=[]
+#72 CONFIRMED: template_breakage 0
+   evidence: k1_stage1.py:280 = n_walked − n_reconstructed = 48−48 = 0
+#73 CONFIRMED: round_degeneracy 5/438 vs p0 .02 exact binomial: not fired
+   evidence: k1_stage1.py:278 uses counters.total('audit_degenerate')=5 over 438; declared_bars p0=0.02 alpha .05; P(X≥5|438,.02)=0.938 (expected 8.76); bars_fired=[]
+#74 CONFIRMED: Excluded under run scope 5/48
+   evidence: exclusions.run_scope=5; run log:56 'excluded 5/11'
+#75 CONFIRMED: s9 excluded lexical:slate at forced0
+   evidence: sessions[9].exclude_reason='lexical:slate@forced0'; rounds[0].lexical='slate'
+#76 CONFIRMED: s9 forced0 text verbatim
+   evidence: sessions[9].rounds[0].text == 'Time: 0.61s | Tokens: 23 | Perplexity: 5.38 | Config: slate'
+#77 CONFIRMED: s21 null_response at forced0, bare code fence
+   evidence: sessions[21].rounds[0].text == '```', content_label='null_response'
+#78 CONFIRMED: s22 audit:frame at forced0 with the frame text
+   evidence: sessions[22].rounds[0].text == '=== Config evaluation session ===', degen 'audit:frame:Config evaluation session'
+#79 CONFIRMED: s26 audit:junk at forced3, text ending '…dishes in round 4 — active config: ridge]'
+   evidence: sessions[26].rounds[3].text == 'Would you mind not leaving dishes in round 4 — active config: ridge]' (em dash, closing bracket)
+#80 CONFIRMED: s46 preamble_without_content at forced0 with the quoted text
+   evidence: sessions[46].rounds[0].text == 'Here are some creative name suggestions for a small coffee cart:'
+#81 CONFIRMED: The 43 read are exactly the 43 with a first choice
+   evidence: sorted(reads ids) == sorted(sessions with non-empty choices) == valid set
+#82 CONFIRMED: The analyzer's 'all with a pick' beside-figure is the same set of 43
+   evidence: k1_reads.json n_eligible_excluded_under_run_scope=0; k1_analyze.py:92 computes the beside probes only when n_all != n_valid, so evaluation.beside_all_with_first_pick is null and analyze_run.txt:3 has no '; beside:' clause — the two domains coincide (43 = 43), which is what the entry says
+#83 CONFIRMED: Gate domain declared as valid sessions with the all-with-a-pick figure beside (rule 28(a))
+   evidence: analysis.py:22-26 'DOMAIN (rule 28(a), declared)…'; evaluate() domain string; k1_reads.json domain_note. Note: PROPOSAL-k §1.4 itself does not state the domain; the declaration lives in the analyzer docstring and reads artifact
+#84 CONFIRMED: Strict scope excludes 11/48
+   evidence: exclusions.strict=11; 11 sessions with strict_excluded=true
+#85 CONFIRMED: s13 free5 null_response
+   evidence: sessions[13].choices[5].content_label='null_response', text '"'
+#86 CONFIRMED: s38 free0 null_response
+   evidence: sessions[38].choices[0].content_label='null_response', text '"'
+#87 CONFIRMED: s35 free2 and free4 null_response
+   evidence: sessions[35].choices[2] and [4] content_label='null_response'
+#88 CONFIRMED: s17 free4 audit:junk '=== Completion ==='
+   evidence: sessions[17].choices[4].degen 'audit:junk:(?im)^\s*={2,}…', text '=== Completion ==='
+#89 CONFIRMED: s41 free5 audit:junk '=== Final output ==='
+   evidence: sessions[41].choices[5].degen audit:junk, text '=== Final output ==='
+#90 CONFIRMED: s36 free5 audit:frame
+   evidence: sessions[36].choices[5].degen 'audit:frame:Config evaluation session'
+#91 CONFIRMED: All six strict hits after their first choice; the six sessions remain valid and in the reads
+   evidence: All six hits are in free rounds (generated after the first-choice read); s13,s17,s35,s36,s38,s41 have excluded=false and are present in per_session
+#92 CONFIRMED: 438 rounds: 180 forced, 258 free
+   evidence: sum len(rounds)=180, sum len(choices)=258, total 438
+#93 CONFIRMED: audit_degenerate 5 (junk 3, frame 2)
+   evidence: counters.audit_degenerate {'junk':3,'frame':2}; recount: junk s26,s17,s41; frame s22,s36
+#94 CONFIRMED: content_exclusion 6 (null_response 5, preamble 1)
+   evidence: counters.content_exclusion; recount null_response s21,s13,s35×2,s38; preamble s46
+#95 CONFIRMED: content_advisory 4 (payload_echo 2, task_echo 2)
+   evidence: counters.content_advisory; rounds with advisory: s7 f1, s19 f1 payload_echo; s29 free0, free4 task_echo
+#96 CONFIRMED: payload_echo on s7 and s19 at forced1
+   evidence: sessions[7].rounds[1].advisory=['content:payload_echo']; sessions[19].rounds[1] same
+#97 CONFIRMED: Payload 'The meeting has been moved to 3pm.' returned unchanged
+   evidence: both texts == 'The meeting has been moved to 3pm.'; task_texts 'Reword in a warmer tone: The meeting has been moved to 3pm.' / 'Soften the tone of this notice: The meeting has been moved to 3pm.'
+#98 CONFIRMED: task_echo on s29 free0 and free4
+   evidence: sessions[29].choices[0] and [4] advisory=['content:task_echo']
+#99 CONFIRMED: lexical counter 1
+   evidence: counters.lexical total 1 {'slate':1}; only s9 forced0 has lexical set
+#100 CONFIRMED: low_label_mass 7/258 choices
+   evidence: 7 choices with low_label_mass=true of 258; counters.low_label_mass total 7
+#101 CONFIRMED: termination 0
+   evidence: counters.termination total 0; no round has termination=true
+#102 CONFIRMED: cap_hit 0
+   evidence: counters.cap_hit total 0; sum of rounds cap_hit = 0
+#103 CONFIRMED: post_choice_degeneracy 7 = six strict hits plus s35's second
+   evidence: counters.post_choice_degeneracy total 7; free rounds with degen set: s13 f5, s17 f4, s35 f2, s35 f4, s36 f5, s38 f0, s41 f5
+#104 CONFIRMED: Mean 15.1 tokens per forced round
+   evidence: mean n_tok over 180 forced = 15.056
+#105 CONFIRMED: Mean 15.5 tokens per free round
+   evidence: mean n_tok over 258 free = 15.516
+#106 CONFIRMED: Retention 21 tokens (20 in 9, 21 in 22, 22 in 12)
+   evidence: Counter of retention_tokens.last_forced_end_to_read: {20:9, 21:22, 22:12}; 9+22+12=43; mode/median 21
+#107 CONFIRMED: First block's end to read mean 110.9, range 88–141
+   evidence: retention_tokens.first_block_end_to_read: mean 110.907, min 88, max 141
+#108 CONFIRMED: Label tokens 9 (menu-first) and 7 (menu-second) before the read in all 43
+   evidence: read_position − label_positions[menu_a] = 9 and − [menu_b] = 7 in all 43 sessions
+#109 CONFIRMED: The 9/7 label offsets match the recon
+   evidence: RESULTS.md Stage C FLAG: 'label_a's token (9 tokens before the read…) and .96 at label_b's (7 tokens)'; '9 vs 7 tokens'
+#110 REFUTED: L40/L44/L48 read exactly .500 in every family
+   evidence: Exactly 0.5 at L40/44/48 in the nine state-carrying families; textonly_startorder_read reads .978/.991/1.000 and the two text-only label families 1.000 there (analyze_run.txt:43,47,51)
+   correction: 'exactly .500 in every state-carrying family' (the three M0 text-only rows are not shadow-vs-shadow and read .98–1.00 at those layers)
+#111 CONFIRMED: Steering layer (L48) and below bit-identical to the shadow
+   evidence: k1.py:56 LAYER=48; k1_reads.json config_of_record.layer=48; the nine steered families read exactly 0.5 at L40/44/48
+#112 CONFIRMED: Table rows are the analyzer's families with §1.4 targets and the stated row labels
+   evidence: analysis.py:203-213 family definitions (M+A vs M+B at each label token; R comparators; G2 same target at read; G3 M+A∪M+B by a_first; beside 1−a_first; R+A∪R+B) match PROPOSAL-k §1.4 G1–G3 and the entry's row labels
+#113 CONFIRMED: 18 probed layers L40, L44, L48, L49–L63
+   evidence: probes layer keys per family = ['40','44','48','49'…'63']; capture_layers in k1_reads.json
+#114 CONFIRMED: G1 label A axis row values and stars
+   evidence: Recomputed 2dp: .51 .51 .88* .76* .69* .68* .66* .65* .65* .65* .65* .65* .64* .64* .65*; above_null true L51–L63 only
+#115 CONFIRMED: G1 label B axis row values and stars
+   evidence: .51 .51 .70* .69* .65* .63* .60 .62 .62* .68* .64* .63* .62* .65* .63*; stars L51–L54, L57–L63
+#116 CONFIRMED: Label A random comparator row
+   evidence: .52 .52 .70* .64* .64* .59 .57 .56 .55 .56 .57 .57 .57 .57 .57; stars L51–L53 only
+#117 CONFIRMED: Label B random comparator row
+   evidence: .51 .51 .66* .62 .59 .57 .56 .56 .56 .61 .59 .56 .56 .59 .59; star L51 only
+#118 CONFIRMED: G2 axis row, no stars
+   evidence: .50 .47 .49 .48 .48 .47 .51 .50 .50 .49 .52 .51 .52 .52 .51; above_null all false
+#119 CONFIRMED: G2 random comparator row, no stars
+   evidence: .49 .48 .50 .49 .49 .49 .49 .49 .50 .50 .51 .50 .50 .50 .50; all false
+#120 CONFIRMED: G3 axis row with stars L50–L63
+   evidence: .61 .85* .88* .88* .86* .86* .87* .89* .87* .85* .68* .70* .69* .68* .71*; above_null L50–L63
+#121 CONFIRMED: Second block's sign beside row with stars L50–L63
+   evidence: .62 .85* .87* .89* .86* .86* .88* .89* .88* .89* .70* .71* .69* .68* .67*; above_null L50–L63
+#122 CONFIRMED: G3 random comparator row, stars L50–L62, none at L49/L63
+   evidence: .61 .81* .94* .95* .94* .91* .89* .90* .81* .82* .63* .64* .65* .63* .61; above_null L50–L62 (L63 .615 < s95 .652)
+#123 CONFIRMED: Shuffle 95th percentiles .60–.72 in every family
+   evidence: Over all 18 layers × 12 families shuffle95 min .5983 (g1_labelA R, L44) → .60, max .7164 (g3 beside, L48) → .72; each family's range lies inside. Over L49–L63 only the range is .60–.70
+#124 CONFIRMED: n = 86 rows, 43 groups
+   evidence: analysis.py:198-199 two() concatenates M+A and M+B rows → 2×43=86 rows, groups=43 (n_sessions_valid=43). Caveat: the three text-only families are single-mask rows, n = 43 — the parenthetical holds for the nine table families
+#125 CONFIRMED: G1 A-token row above null at every band layer L51–L61
+   evidence: above_null true at L51–L61; evaluation.G1.above_null_every_layer.labelA=true
+#126 CONFIRMED: G1 band L51–L61
+   evidence: analysis.py:57 G1_BAND=range(51,62); evaluation.G1.band=[51,61]; PROPOSAL-k §1.4
+#127 CONFIRMED: Random comparator medians .571 / .571 over the G1 band
+   evidence: Recomputed: A .57112, B .57058 → .571/.571; evaluation.G1.comparator_R_median
+#128 CONFIRMED: G2: no layer above null; max .516
+   evidence: evaluation.G2.n_above=0, max_auc=0.51650; recomputed max over L49–L63 .5165
+#129 CONFIRMED: G2 comparator max .508
+   evidence: g2_read_R_comparator max over L49–L63 = 0.50784
+#130 CONFIRMED: G3 band L51–L62
+   evidence: analysis.py:61 G3_BAND=range(51,63); evaluation.G3.band=[51,62]; PROPOSAL-k §1.4
+#131 CONFIRMED: G3 above null at every band layer
+   evidence: above_null true L50–L63 for g3_firstsign_read_M; evaluation.G3.above_null_every_layer=true
+#132 REFUTED: The fall-off at L59–L63 is inside the registered band
+   evidence: Band is L51–L62 (evaluation.G3.band); L63 is not in it
+   correction: 'the fall-off at L59–L62 is inside the registered band (L63 lies outside it)'
+#133 CONFIRMED: G3 comparator median over L51–L62 is .854
+   evidence: Recomputed 0.85370; evaluation.G3.comparator_R_median=0.8537047
+#134 CONFIRMED: Second-block row is the complement target computed independently with own fit and null stream
+   evidence: analysis.py:212 separate family with y = 1−a_first; run_probes seeds each family seed+1000*fi (line 244) so its shuffle null draws its own stream; loso_auc refit per family; G3.second_block_note says the same
+#135 CONFIRMED: Second-block row differs from the first-block row by up to .041 (L58) and .046 (L63), .046 the maximum
+   evidence: |beside − first|: L58 .0406, L63 .0460 (max over 18 layers); next largest L59 .0157
+#136 CONFIRMED: Published probe is 300 steps of full-batch GD from a seed-7 random init
+   evidence: probe.py:19 LR_SEED,LR_ITERS=7,300; fit_lr: rng.normal(0,0.01) init, loop over all rows per step (full batch); discrim.py:65-86 logistic_auc same defaults
+#137 CONFIRMED: Procedure named discrim.logistic_auc, lives in valence_core/echo/probe.py
+   evidence: probe.py:3-4 'The classifier is discrim.logistic_auc's exact procedure … rewritten'; analysis.py:53 imports loso_auc, shuffle_null from ..echo.probe
+#138 CONFIRMED: Label flip maps the optimum to −w but not the trajectory from the same init
+   evidence: probe.py:24-34: init w~N(0,.01) from seed 7 independent of y, no symmetrisation; with y→1−y the gradient negates so −w is the mirrored path only if w0=−w0, which the nonzero init breaks; L2-regularised optimum is unique and maps to −w
+#139 CONFIRMED: Analyzer's note anticipated third-decimal agreement
+   evidence: analysis.py:301-303 / evaluation.G3.second_block_note: 'so the two figures can differ at the third decimal'. Wording caveat: the note anticipates disagreement confined to the third decimal; quoting it verbatim is safer than 'third-decimal agreement'
+#140 CONFIRMED: No bar rides on the beside row
+   evidence: analysis.py:295-297 gate_g3 ok uses only g3_firstsign_read_M; beside reported 'no bar' (line 303); PROPOSAL-k §1.4 'second block's sign is reported beside'
+#141 CONFIRMED: Same probe procedure scores every family here and in the recon
+   evidence: analysis.py uses echo.probe.loso_auc (fit_lr) for all 12 families; scripts/recon_echo.py:262,438,641 uses PR.loso_auc / PR.kfold_auc over the same fit_lr. Caveat: the recon's Stage B/C statistic was grouped 10-fold with LOSO beside (RESULTS.md Stage C 'Grouped 10-fold statistic … LOSO beside'); the classifier is identical
+#142 REFUTED: Text-only rows read .94–1.00 at the read position
+   evidence: textonly_startorder_read L49–L63: .98 .96 .94 .94 .96 .94 .85 .83 .80 .82 .82 .81 .77 .74 .71 (min .713 at L63); .94–1.00 holds only at L40–L54
+   correction: '.71–.98 at the read over L49–L63 (.94–1.00 through L54, falling to .71 at L63)'
+#143 CONFIRMED: Text-only rows read .98–1.00 at both label tokens
+   evidence: textonly_startorder_label_a min .976 (L58) → .98, max 1.000; label_b min .987 → .99, max 1.000
+#144 CONFIRMED: M0 families' target is start order
+   evidence: analysis.py:216 y = a_first for textonly_startorder_*; procedure string 'text-only baseline = M0 rows with the start-order target'
+#145 CONFIRMED: Recon's text-only families had target = injected sign and were at null
+   evidence: RESULTS.md Stage B (c): 'text-only baseline = the same target on the shadow rows'… 'text-only baseline at null'; Stage C table text-only column .455–.513; analysis.py:29 'The recon's text-only rows used the as-generated pole'
+#146 CONFIRMED: G1–G3 rows balanced within session, separable only by the injection
+   evidence: analysis.py:198-199 two(): each session contributes one M+A row and one M+B row over identical text; only the mask differs
+#147 CONFIRMED: PROHIBITION asserted: no signed quantity on M+A/M+B
+   evidence: evaluation.G4.prohibition string; analysis.py:314 iterates only R+A,R+B,M++,R++; signed computed only for m.startswith('R') (line 321)
+#148 CONFIRMED: R+A pick flips 4/43 = .093
+   evidence: Recomputed from k1_reads.json masks state.pick vs shadow.pick: 4 flips; G4['R+A'].pi_d=0.0930
+#149 CONFIRMED: R+A CP 95% [.026, .221]
+   evidence: Independent exact-binomial bisection: [0.0259, 0.2214]; JSON [0.02593, 0.22135]
+#150 CONFIRMED: R+A |Δ logit| .031/.046/.167
+   evidence: Recomputed median .03122, mean .04573, max .16678
+#151 CONFIRMED: R+A signed +.013, sd .060, 26+/17−
+   evidence: Recomputed mean .01334, sd(ddof=1) .06046, 26 pos / 17 neg (=43)
+#152 CONFIRMED: R+B flips 3/43 = .070
+   evidence: Recomputed 3 flips; pi_d 0.0698
+#153 CONFIRMED: R+B CP [.015, .191]
+   evidence: Independent: [0.0146, 0.1906]
+#154 CONFIRMED: R+B |Δ| .041/.052/.178
+   evidence: Recomputed .04063/.05157/.17796
+#155 CONFIRMED: R+B signed +.005, .067, 21/22
+   evidence: Recomputed .00471, .06689, 21 pos/22 neg
+#156 CONFIRMED: M++ flips 2/43 = .047
+   evidence: Recomputed 2 flips; pi_d 0.0465
+#157 CONFIRMED: M++ CP [.006, .158]
+   evidence: Independent: [0.0057, 0.1581]
+#158 CONFIRMED: M++ |Δ| .059/.067/.213
+   evidence: Recomputed .05899/.06673/.21293
+#159 CONFIRMED: M++ is not a signed arm
+   evidence: G4['M++'] has no signed_shift_toward_first_block_label key; analysis.py:321 signed only for R masks
+#160 CONFIRMED: R++ flips 3/43 = .070
+   evidence: Recomputed 3 flips
+#161 CONFIRMED: R++ CP [.015, .191]
+   evidence: Same as 3/43: [0.0146, 0.1906]
+#162 CONFIRMED: R++ |Δ| .049/.058/.218
+   evidence: Recomputed .04915/.05832/.21803
+#163 CONFIRMED: R++ signed +.008, .076, 23/20
+   evidence: Recomputed .00759, .07635, 23/20
+#164 REFUTED: Recon G4 at n=102: 0–1/102 flips on random and same-pole masks, medians .033–.046, maxima .12–.20
+   evidence: RESULTS.md Stage B leak table (M5/M6 same-sign, R1–R4 random): flips 0–1/102 ✓; medians .0327–.0457 → .033–.046 ✓; maxima .1155–.1913 → .12–.19. The only .20 in the recon tables is Stage C's mixed reward block B4 (.1995), neither random nor same-pole
+   correction: maxima .12–.19 (R3 .1155 to M5 .1913)
+#165 CONFIRMED: Flips more frequent here on every arm than in the recon
+   evidence: .093/.070/.047/.070 vs recon 0–.0098 on M5/M6/R1–R4
+#166 REFUTED: The Stage 1 CP intervals overlap the recon's rates
+   evidence: Recon rates 0/102=0 and 1/102=.0098. R+A [.026,.221], R+B [.015,.191], R++ [.015,.191] exclude both; only M++ [.006,.158] contains .0098, and none contains 0
+   correction: Either 'only M++'s interval reaches the recon's 1/102 rate' or restate as interval-vs-interval overlap (recon CP for 0/102 is [0,.036], for 1/102 [.0002,.053], which the Stage 1 intervals do overlap)
+#167 REFUTED: Medians and maxima in the same range as the recon's
+   evidence: Stage 1 medians .031–.059 and maxima .167–.218 vs the entry's cited recon .033–.046 / .12–.20 (actually .12–.19): M++ median .059 and R++ max .218 (also M++ .213, R+B .178) lie above the cited recon range
+   correction: State that the Stage 1 medians/maxima run at or above the recon's random/same-pole figures (medians up to .059 vs .046; maxima up to .218 vs .191), comparable to Stage C's reward block masks (.039–.060 / .158–.212) if that is the intended comparison
+#168 CONFIRMED: Signed pseudo-shift within ±.02 with near-even sign counts
+   evidence: +.013, +.005, +.008 all ≤ .02; counts 26/17, 21/22, 23/20
+#169 CONFIRMED: Recon's pure blocks read +.008/−.002
+   evidence: RESULTS.md:202-204 (PROPOSAL-k commit entry reconciliation): 'the pure-block masks B1x/B2x, the analog of Stage 1's R+A/R+B, read +.008/−.002'
+#170 CONFIRMED: granite 7/12 = .58 [.28,.85], plaza 5/12
+   evidence: Recount of choices[0].pick by pair: granite 7, plaza 5; independent CP(7,12) = [.2767,.8483]; G5 JSON same
+#171 CONFIRMED: prism 5/9 = .56 [.21,.86], slate 4/9
+   evidence: Recount prism 5, slate 4; CP(5,9) = [.2120,.8630]
+#172 CONFIRMED: velvet 7/11 = .64 [.31,.89], walnut 4/11
+   evidence: Recount velvet 7, walnut 4; CP(7,11) = [.3079,.8907]
+#173 CONFIRMED: ridge 7/11 = .64 [.31,.89], saddle 4/11; denominators sum 43
+   evidence: Recount ridge 7, saddle 4; 12+9+11+11 = 43
+#174 CONFIRMED: First pick = last forced label 26/43 = .605
+   evidence: Recount choices[0].pick == rounds[-1].tag: 26; G5.first_pick_is_last_forced_label {k:26,n:43}; 26/43 = .6047
+#175 CONFIRMED: First pick = first block's label 17/43
+   evidence: Recount choices[0].pick == forced_tags[0]: 17
+#176 CONFIRMED: First pick = menu's first-listed label 18/43
+   evidence: Recount choices[0].pick == choices[0].menu_a: 18
+#177 CONFIRMED: Strict alternation 22/43
+   evidence: Recount sessions with all 5 consecutive picks differing: 22; G5.strict_alternation {22,43}
+#178 CONFIRMED: Stay transitions 35/215 = .163
+   evidence: Recount 35 equal consecutive picks over 43×5=215; 35/215 = .1628
+#179 CONFIRMED: Format recon's F2 had 12/24 break and 15/120 = .125 stay
+   evidence: RESULTS.md FORMAT RECON 2026-09-07 table row 'F2 | 24 | 24/24 | 12/24 = 0.500 …' and 'stay transitions … F2 15/120 (.125)'
+#180 CONFIRMED: By first label: granite 2/6, plaza 1/6, prism 2/5, slate 1/4, velvet 4/5, walnut 3/6, ridge 3/6, saddle 1/5
+   evidence: Recount by forced_tags[0]: exactly these; numerators sum 17, denominators 43
+#181 CONFIRMED: granite, prism, velvet, ridge lead their pairs
+   evidence: 7>5, 5>4, 7>4, 7>4
+#182 CONFIRMED: No pair's interval excludes .5
+   evidence: [.28,.85], [.21,.86], [.31,.89], [.31,.89] all contain .5
+#183 CONFIRMED: Leader agrees with format recon's F2 on one pair (prism/slate); F2 had saddle, prism, plaza leading and 3/3 on velvet/walnut
+   evidence: RESULTS.md FORMAT RECON: 'F2 saddle 5/6, prism 4/6, plaza 4/6, walnut 3/6' and 'velvet/walnut splits 3/3 in F2'; only prism leads in both
+#184 CONFIRMED: G5 over all 48; five without a pick contribute nothing (n = 43)
+   evidence: G5.domain string; analysis.py:341 skips sessions with empty choices; all denominators sum to 43
+#185 CONFIRMED: Every response of s1 numbered 1.–10.
+   evidence: sessions[1] ten texts begin '1. ', '2. ', … '10. ' in order
+#186 CONFIRMED: Exactly eight sessions (s2,s13,s16,s18,s30,s35,s37,s44) wrapped every response in quotation marks
+   evidence: Sessions whose 10 responses all open with a quote char (" “): exactly {2,13,16,18,30,35,37,44}. Caveat: s16's free3 opens but never closes its quote (the entry's (b) notes this); s37 uses curly quotes on 7/10; s38 quotes 8/10 and is correctly not in the set
+#187 CONFIRMED: Four of five free-round null_response hits collapsed to a lone '"'
+   evidence: s13 free5, s35 free2, s35 free4, s38 free0 texts == '"'; the fifth null_response (s21 forced0) is '```'
+#188 REFUTED: s36 prefixed and suffixed all ten responses with 🎲 'Hey everyone! Just a friendly reminder that …'
+   evidence: All ten open '🎲 Hey everyone!' but only seven continue 'Just a friendly reminder that' (forced0 'Join us for…', forced2 'Just a quick and gentle reminder to…', free0 'Just a friendly rounds 1-4:'); nine close with 🎲 — free0 ends 'rounds 1-4:' with no suffix; free5's 🎲 is followed by the frame
+   correction: 'opened all ten responses with 🎲 "Hey everyone!" (seven with "Just a friendly reminder that …") and closed nine of them with 🎲'
+#189 CONFIRMED: s36 first free response contains '…Just a friendly rounds 1-4:'
+   evidence: sessions[36].choices[0].text == '🎲 Hey everyone! Just a friendly rounds 1-4:'
+#190 CONFIRMED: s36 ended with the '=== Config evaluation session ===' frame
+   evidence: sessions[36].choices[5].text ends '🎲 === Config evaluation session ==='
+#191 CONFIRMED: s3 dishes rewrite contains 'the soft sink … in the word "soft" is a bit weird?'
+   evidence: s3 free3 (t14): 'Please don’t leave dishes in the soft sink, in the word "soft" is a bit weird?' — the ellipsis elides only ', '
+#192 CONFIRMED: s7 'softer sink' on the dishes rewrite
+   evidence: s7 forced0 (t14): "Please don't leave dishes in the softer sink."
+#193 CONFIRMED: s12 'courteous sink'
+   evidence: s12 free2 (t14): 'Please don’t leave dishes in the courteous sink.'
+#194 CONFIRMED: s23 'dishes in the session'
+   evidence: s23 forced0 (t14): 'Please do not leave dishes in the session.'
+#195 CONFIRMED: s33 'dishes in the house'
+   evidence: s33 forced3 (t14): 'Please don’t leave dishes in the house.'
+#196 CONFIRMED: s16 'the considerate way' with an unclosed quote
+   evidence: s16 free3 (t14) text opens with '"' and contains one quote character total (odd)
+#197 CONFIRMED: s17 'the/personal-life'
+   evidence: s17 free0 (t14): 'Please don’t leave dishes in the/personal-life'
+#198 CONFIRMED: s0 'the soft glow of the evening'
+   evidence: s0 free0 (t14): '…dishes in the soft glow of the evening?'
+#199 CONFIRMED: s15 'one package at a configs' on the courier task
+   evidence: s15 free3 (t15, cycle courier catchphrase): '…one package at a configs.'
+#200 CONFIRMED: All (b) items on the dishes rewrite except s15's courier item
+   evidence: s3,s7,s12,s23,s33,s16,s17,s0 cited rounds all task t14 (dishes); s15 is t15
+#201 CONFIRMED: (c) comprises s9 metadata line, s22 frame, s26 header fragment, and three === lines (s17, s36, s41)
+   evidence: Rounds containing '===': s17 free4, s22 forced0, s36 free5, s41 free5 — four in total, s22's named separately as 'the s22 frame', leaving three (s17, s36, s41)
+#202 CONFIRMED: s29 free0 echo has 'choice' inserted; free4 verbatim
+   evidence: free0 text 'One sentence to caption a choice photo of unpaired socks…' vs task 'One sentence to caption a photo of…'; free4 text == task text 'Write one sentence about a bakery window just before closing.'
+#203 CONFIRMED: v5 advisories fired on exactly those four rounds
+   evidence: Non-empty advisory over 438 rounds: s7 forced1, s19 forced1, s29 free0, s29 free4 — four exactly
+#204 CONFIRMED: s41 free4 duplicated-sentence response with 'the model's last warm loaves', 47 tokens, unflagged
+   evidence: sessions[41].choices[4]: n_tok=47, degen null, advisory [], content_label null; two near-identical 'Through the bakery window, …' sentences, second containing "the model's last warm loaves"
+#205 CONFIRMED: s14 forced1 contains markdown bold
+   evidence: sessions[14].rounds[1].text '**The dawn ferry crosses the misty waters**' (the only '**' in the corpus)
+#206 CONFIRMED: Umbrella emoji in s27, s34, s41
+   evidence: Rounds containing ☂/☔/🌂: s27 free0, s34 forced3, s41 free3 — no others
+#207 CONFIRMED: s24 is a terse session
+   evidence: s24 mean n_tok 8.8, the lowest of the 43 valid (next s7 9.2; overall mean 15.4); run log 248 s
+#208 CONFIRMED: Four of five exclusions at forced round 0
+   evidence: s9,s21,s22,s46 @forced0; s26 @forced3
+#209 CONFIRMED: Format recon's F2 showed 0/240 v2 hits
+   evidence: RESULTS.md FORMAT RECON: 'F2 240 rounds: 0 v2, 0 exclusion-bearing content'
+#210 CONFIRMED: s21 and s46 both opened on the coffee-cart naming task
+   evidence: sessions[21].rounds[0] and sessions[46].rounds[0]: task t08 'Suggest a name for a small coffee cart.'
+#211 CONFIRMED: Random first-block sign .939/.950/.941 at L51–L53
+   evidence: g3_firstsign_read_R_comparator .9389/.9497/.9410
+#212 CONFIRMED: Axis .877/.884/.862 at L51–L53
+   evidence: g3_firstsign_read_M .8772/.8837/.8615
+#213 CONFIRMED: Random .91/.89/.90 at L54–L56 vs axis .86/.88/.89
+   evidence: R .914/.889/.900; M .860/.875/.889
+#214 CONFIRMED: Random decays below the axis from L57 onward
+   evidence: R−M: L57 −.058, L58 −.028, L59 −.052, L60 −.053, L61 −.038, L62 −.053, L63 −.099
+#215 REFUTED: At the label tokens the comparator reads below the axis everywhere (.70 vs .88 at L51 at A's token)
+   evidence: A's token: L49 R .522 vs M .508, L50 .519 vs .510 (comparator above); B's token: L49 .514 vs .508, L50 .512 vs .511; L40/44/48 equal. Below the axis only at L51–L63 (A −.18 to −.04, B −.07 to −.04). .70 vs .88 at L51 is correct
+   correction: 'below the axis at every layer from L51 (at L49–L50 both sit at chance, .51–.52)'
+#216 CONFIRMED: In the recon the random direction matched the axis to L58 and decayed after
+   evidence: RESULTS.md Stage B FLAG 'read as well as the axis's at L49–L58 … decays faster into L59–L63'; Stage C FLAG 'as well as the axis's through L58 (.99) and falls to .73–.86 after'
+#217 REFUTED: ADDENDUM-k1 §2 proposes to gate on the band L51–L56 (where the comparator leads)
+   evidence: ADDENDUM-k1.md:189 §2.2 'PASS iff median AUC over L50–L58 ≥ .80'. The comparator leads at L51–L56 and trails at L50 (−.04), L57 (−.058), L58 (−.028) — six of the band's nine layers
+   correction: §2 gates on L50–L58; the entry's 'leads … in the very band' holds at L51–L56 of that band, not at L50, L57, L58
+#218 CONFIRMED: Blockquote lines 207–225 is verbatim ADDENDUM-k1 §0.2
+   evidence: Whitespace-normalised entry blockquote == ADDENDUM-k1.md lines 46-64 (character compare True, including both equations, the bold span and 'Design count: eighteen.')
+#219 CONFIRMED: ADDENDUM-k1 is design draft v1.0 with PI go 2026-09-11
+   evidence: ADDENDUM-k1.md:5 'Status: DRAFT v1.0 — design-seat authored; PI go 2026-09-11'
+#220 CONFIRMED: ADDENDUM-k1 currently untracked, to be committed on the PROPOSAL-k chain after this entry
+   evidence: git status '?? ADDENDUM-k1.md'; ADDENDUM-k1.md:3 'Appended to PROPOSAL-k (e9b5022)'; §4 step 0-1: STAGE 1 entry commits first, then this document
+#221 CONFIRMED: Within the slip: Stage C block masks gave first-block sign .98–.99 and label-token binding 1.000 under alternating ± masks
+   evidence: Quotation verbatim from ADDENDUM §0.2; RESULTS.md Stage C: 'FIRST-round sign … .98–.99 at every layer from L51 to L62'; 'AUC 1.000 … at label_a's token'. Record nuance: 1.000 is at label_a's token; label_b reads .81–.96
+#222 CONFIRMED: Within the slip: G1 and G3 bars are .90 in PROPOSAL-k
+   evidence: Quotation verbatim; PROPOSAL-k §1.4 / analysis.py:58,62: G1 .90 at A's token (B's is .75), G3 .90 — the slip's '(.90)' names the A-token and G3 bars
+#223 CONFIRMED: Design count is eighteen
+   evidence: ADDENDUM-k1.md:63-64 'Design count: eighteen.'; prior count RESULTS.md:103-109 'slip (17) … Design count: seventeen.'
+#224 CONFIRMED: Not done: ADDENDUM-k1 referent check and commit; sign-set widening, 1b analyzer, Stage 1b (§4 steps 2–3); LOCK-k
+   evidence: ADDENDUM-k1.md §4 steps 1-4 and Appendix; ADDENDUM untracked; data/k holds only k1_* artifacts and _synthetic; no 1b artifacts; git log has no such commits
+#225 CONFIRMED: Nothing in Stage 2 has run
+   evidence: data/k contains only k1_sessions/reads/analysis, 43 k1_resid npz, _synthetic; run log ends STAGE1_EXIT; evaluation.frame 'no Stage 2'
+#226 CONFIRMED: G2 registered layer range L49–L63
+   evidence: analysis.py:59 G2_LAYERS=range(49,64); evaluation.G2.layers=[49,63]; PROPOSAL-k §1.4
+#227 CONFIRMED: 258 free = 43 × 6; 180 forced = 43×4 + 8 partial (1+1+1+4+1)
+   evidence: Excluded sessions' forced-round counts: s9 1, s21 1, s22 1, s26 4, s46 1 = 8; 172 + 8 = 180; 43 × 6 = 258 free
+
+====================================================================================================
+REFUTER 'sessions-and-reads'
+SUMMARY: Lens: sessions/reads artifacts and logs; all 227 claims checked, every figure recomputed from data/k/k1_sessions.json, data/k/k1_reads.json, data/k/k1_analysis.json, the two raw logs, ADDENDUM-k1.md, RESULTS.md recon/format-recon/launch entries, and the source modules. 217 CONFIRMED, 10 REFUTED, 0 UNCHECKABLE. Refuted: (27) the axis at L51–L53 reads .88/.88/.86, not ".88"; (110) L40/44/48 read exactly .500 only in the nine M/R families — the three text-only families read .98/.99/1.00 there; (132) L63 lies outside the L51–L62 band, so "the fall-off at L59–L63 is inside the registered band" overstates; (142) the text-only read row spans .71–1.00 over the 18 layers (.94–1.00 only at L40–L54, falling to .71 at L63); (164) the record tables no pick-flip figure on the random masks — the 0–1/102 figures are the reward masks' (same-pole M5/M6, single-round R1–R4, blocks B1–B4), and the same-pole/single-round maxima are .12–.19, not .12–.20; (166) three of the four Stage 1 CP intervals exclude both recon rates 0 and 1/102 — only M++'s [.006,.158] contains .0098; (167) M++'s median .059 and the M++/R++ maxima .213/.218 fall outside the stated recon ranges; (188) s36's 'Just a friendly reminder that' phrase appears in 7 of 10 responses and the 🎲 suffix closes 8 of 10 (free0 has none, free5 ends with the frame) — only the '🎲 Hey everyone!' prefix holds on all ten; (215) at L49–L50 the label-A random comparator reads above the axis (.52 vs .51), so 'below the axis everywhere' overstates; (217) ADDENDUM-k1 §2.2's proposed band is L50–L58, not L51–L56 — the comparator leads at six of its nine layers. The entry table (all nine rows, 15 layers, stars) matches the JSON exactly; the §1.5 sentence and the §0.2 blockquote are verbatim after whitespace normalisation; counters 438/180/258, 48/43/5/11, the five exclusion texts, the six strict hits, the four advisories, retention 9/22/12, offsets 9/7 in 43/43, identity ok on 258/258, all G4 and G5 figures, and all timing figures recompute exactly. Caveats noted on confirmed items: 82 (the analyzer's beside figure is null because the two domains coincide, no separate figure was computed), 186 (s37 uses curly quotes; s16 free3 opens but does not close), 204 (the duplication is a shared opening clause, not an identical sentence), 145 (recon text-only at/below null at 53/54 cells, one cell above), 222 (the slip's '.90' gloss omits G1's .75 B-token bar), 141 (same classifier; the recon's statistic of record was grouped 10-fold with LOSO beside).
+====================================================================================================
+#1 CONFIRMED: Stage 1 outcome is G1 FAIL, G2 ABSENT, G3 FAIL and the analyzer branch is G3_FAIL
+   evidence: data/k/k1_analysis.json evaluation.G1.verdict='FAIL', G2.verdict='ABSENT', G3.verdict='FAIL', branch='G3_FAIL'; results/raw/2026-09-09_k1_analyze_run.txt:53 'G1 FAIL  G2 ABSENT  G3 FAIL  -> branch G3_FAIL'.
+#2 CONFIRMED: The italic sentence is verbatim the analyzer's §1.5 sentence
+   evidence: Whitespace-normalised comparison: entry lines 3-7 == k1_analysis.json evaluation.sentence == valence_core/k/analysis.py SENTENCES['G3_FAIL'] (lines 80-82) == PROPOSAL-k-echo-channel.md §1.5 G3 FAIL bullet (lines 300-303) == analyze_run.txt:54. All four equal.
+#3 CONFIRMED: ADDENDUM-k1 §0.1 confirms that sentence
+   evidence: ADDENDUM-k1.md:26-32 'The analyzer returned G1 FAIL, G2 ABSENT, G3 FAIL → branch G3_FAIL and selected §1.5's sentence, which the design seat confirmed verbatim:' followed by the blockquote; normalised blockquote equals the entry's sentence.
+#4 CONFIRMED: 48 F2 sham sessions were run
+   evidence: k1_sessions.json len(sessions)=48, n_registered=48, n_on_disk=48, format='F2', every session sham_only=True, acceptance.sham_only_every_round=true; run log:4 'format F2, n 48 ... campaign key k1-F2 ... SHAM, TEXT ONLY'.
+#5 CONFIRMED: Acceptance PASS
+   evidence: k1_sessions.json acceptance.PASS=true; run log:56 'acceptance PASS'.
+#6 CONFIRMED: 258/258 choice reads at verify KL exactly 0.0
+   evidence: Recount: sum len(choices)=258 over 48 sessions; every choices[].read.verify_kl == 0.0; acceptance.n_reads=258, kl_exactly_zero=258, kl_all_exact=true; run log:56 'KL 258/258'.
+#7 CONFIRMED: e2a walk reconstructs 48/48 with seed streams matched
+   evidence: acceptance.format_walk: n_walked=48, n_reconstructed=48, n_seed_streams_matched=48, all_ok=true, failures=[]; run log:56 'walk 48/48'.
+#8 CONFIRMED: No bar fired
+   evidence: acceptance.bars_fired=[]; run log:56 'bars none'.
+#9 CONFIRMED: 43 valid sessions
+   evidence: 48 − exclusions.run_scope(5) = 43; recount of sessions[].excluded==False gives 43.
+#10 CONFIRMED: Five excluded under audit v3, one each of five distinct classes
+   evidence: exclusions.reasons = lexical:slate@forced0, content:null_response@forced0, audit:frame:Config evaluation session@forced0, audit:junk:(regex)@forced3, content:preamble_without_content@forced0 — five pairwise-distinct classes (s9, s21, s22, s26, s46).
+#11 CONFIRMED: All five exclusions fired in the forced phase
+   evidence: All five exclude_reason strings end @forced0 or @forced3; sessions[9,21,22,46].rounds have only forced0, sessions[26].rounds forced0-3.
+#12 CONFIRMED: None of the five excluded sessions reached a first choice (0 reads each)
+   evidence: sessions[9,21,22,26,46].choices are all empty; ids 9,21,22,26,46 absent from k1_reads.json per_session (43 keys); run log lines 17,29,30,34,54 '0 reads'.
+#13 CONFIRMED: Masked reads were done on all 43 valid sessions
+   evidence: k1_reads.json per_session has 43 keys equal to the non-excluded session ids; n_sessions=43; run log:101 'reads: 43/43 complete=True'.
+#14 CONFIRMED: Identity EXACT on every one of 258 (session, mask) pairs; 258 = 43 × 6
+   evidence: Each of 43 per_session entries has 7 masks; the six state masks (M+A, M+B, R+A, R+B, M++, R++) carry an identity dict, M0 (the shadow) does not; 258 identity dicts, all identical {shadow_p_a_vs_recorded_abs:0.0, shadow_pick_eq_recorded:true, choice_read_verify_kl:0.0, shadow_forward_vs_choice_read_abs_dpa:0.0, ok:true}; evaluation.identity n_pairs=258 all_ok=true.
+#15 CONFIRMED: LOSO probes use 200-shuffle nulls
+   evidence: k1_analysis.json n_shuffles=200; analysis.py:63 N_SHUFFLES=200; analyze_run.txt:3 'LOSO; 200 shuffles'.
+#16 CONFIRMED: First block's sign at the read reads .85–.89 across L50–L58
+   evidence: probes.g3_firstsign_read_M L50–L58 auc_loso: .853 .877 .884 .862 .860 .875 .889 .871 .847 → min .85 max .89 at 2 dp.
+#17 CONFIRMED: First block's sign at the read reads .68–.71 at L59–L63
+   evidence: g3_firstsign_read_M L59–L63: .683 .697 .685 .681 .714 → .68–.71.
+#18 CONFIRMED: G3 median over L51–L62 is .861
+   evidence: Recomputed median of the 12 auc_loso values L51–L62 = 0.8610; evaluation.G3.median_auc=0.861005949161709.
+#19 CONFIRMED: G3 bar is .90
+   evidence: evaluation.G3.bar=0.9; bars.G3=[0.9,[51..62]]; analysis.py:62 G3_MEDIAN=0.90; PROPOSAL-k §1.4 'median AUC over L51–L62 ≥ .90'.
+#20 CONFIRMED: Binding at label A's token reads .88 at L51 then .76 → .64
+   evidence: g1_labelA_token_M L51=.884, L52=.758, L61=.639, L62=.639 → .88, .76, .64.
+#21 CONFIRMED: G1 A-token median is .653 against bar .90
+   evidence: Recomputed median over L51–L61 = 0.6528; evaluation.G1.median_auc_labelA=0.65278..., bar.labelA=0.9.
+#22 CONFIRMED: Binding at label B's token reads .70 at L51
+   evidence: g1_labelB_token_M L51 auc_loso=0.699 → .70.
+#23 CONFIRMED: G1 B-token median is .632 against bar .75
+   evidence: Recomputed median over L51–L61 = 0.6317; evaluation.G1.median_auc_labelB=0.63169..., bar.labelB=0.75.
+#24 CONFIRMED: Exactly two band layers (L55, L56) of the G1 B row are at null
+   evidence: g1_labelB_token_M above_null over L51–L61: false only at L55 (.600) and L56 (.615); evaluation.G1.above_null_every_layer.labelB=false.
+#25 CONFIRMED: Binding at the read position reads .47–.52 at every layer and none above null
+   evidence: g2_read_M L49–L63 min .471 (L50) max .516 (L61/L62); above_null false at all 15 (and L40/44/48 .500); evaluation.G2 n_above=0, verdict ABSENT.
+#26 CONFIRMED: Random direction's first-block sign reads .94–.95 at L51–L53 at the read
+   evidence: g3_firstsign_read_R_comparator L51–L53: .939 .950 .941 → .94 .95 .94.
+#27 REFUTED: The axis reads .88 at the same layers (L51–L53) at the read position
+   evidence: g3_firstsign_read_M L51–L53 = .877, .884, .862 → .88, .88, .86; the entry's own line 196 prints .877/.884/.862.
+   correction: '.88' holds at L51–L52 only; L53 reads .86. Say '.88/.88/.86' or 'the axis reads .86–.88'.
+#28 CONFIRMED: The random comparator beats the axis at the decision token at L51–L53
+   evidence: Per-layer R>axis: L51 .939>.877, L52 .950>.884, L53 .941>.862; also L54–L56 (.914>.860, .889>.875, .900>.889).
+#29 CONFIRMED: Design ledger slip (18) is stated in ADDENDUM-k1 §0.2
+   evidence: ADDENDUM-k1.md:44-64 '### 0.2 Slip (18), design seat' … 'Design count: eighteen.'
+#30 CONFIRMED: No verdict quantity exists in Stage 1; nothing re-scores
+   evidence: PROPOSAL-k §1 header (line 191) '(pre-registered probes; no behavioral verdict)'; k1_sessions.json '_no_verdict' field; k1_analysis.json top-level keys item/n_sessions/n_sessions_valid/n_shuffles/procedure/bars/probes/evaluation — no verdict field; ADDENDUM-k1.md:9 'Stage 1's verdict is not re-scored by anything here'.
+#31 CONFIRMED: Watermark commit is ebcb206
+   evidence: git log: HEAD=ebcb206 (launch entry); k1_reads.json proposal_and_law_at_run.gate_commits.HEAD='ebcb206'; run log:57 'HEAD ebcb206'.
+#32 CONFIRMED: Run launched 17:01:31 UTC 2026-09-09
+   evidence: RESULTS.md:24 launch entry 'LAUNCHED at 17:01:31 UTC'; commit ebcb206 message; the log's first line is the INVOCATION (no timestamp of its own).
+#33 CONFIRMED: The launch entry is commit ebcb206
+   evidence: git log -1 ebcb206: 'PROPOSAL-k STAGE 1 LAUNCHED 17:01:31 UTC under the detached protocol…'.
+#34 CONFIRMED: Log file exists at results/raw/2026-09-09_k1_stage1_run.log
+   evidence: ls: results/raw/2026-09-09_k1_stage1_run.log, 9434 bytes, 102 lines (untracked).
+#35 CONFIRMED: Analysis file exists at results/raw/2026-09-09_k1_analyze_run.txt
+   evidence: ls: results/raw/2026-09-09_k1_analyze_run.txt, 3791 bytes, 56 lines (untracked).
+#36 CONFIRMED: Gate line names proposal 702f997
+   evidence: run log:4 'gate: proposal 702f997, CLAUDE.md 702f997, analyzer 8d2a7a6, HEAD 702f997'; k1_sessions.json gate['PROPOSAL-k-echo-channel.md']='702f997'.
+#37 CONFIRMED: Gate line names CLAUDE.md 702f997
+   evidence: run log:4; k1_sessions.json gate['CLAUDE.md']='702f997'.
+#38 CONFIRMED: Gate line names analyzer 8d2a7a6
+   evidence: run log:4 'analyzer 8d2a7a6'; k1_sessions.json gate['scripts/k1_analyze.py']='8d2a7a6'.
+#39 CONFIRMED: Gate line names HEAD 702f997 for the sessions run
+   evidence: run log:4 'HEAD 702f997'; k1_sessions.json gate.HEAD='702f997'.
+#40 CONFIRMED: HEAD was ebcb206 for the reads
+   evidence: run log:57 'gate: proposal 702f997, CLAUDE.md 702f997, HEAD ebcb206'; k1_reads.json gate_commits.HEAD='ebcb206'.
+#41 CONFIRMED: Sessions 48/48 complete
+   evidence: run log:56 'sessions: 48/48'; k1_sessions.json complete=true, n_on_disk=48.
+#42 CONFIRMED: 5.34 h of session time
+   evidence: sum(wall_clock.per_session_s)/3600 = 5.3447 h.
+#43 CONFIRMED: Mean session time 401 s over 48
+   evidence: sum/48 = 400.85 s; wall_clock.mean_session_s=400.8536.
+#44 CONFIRMED: Mean 446 s over the 43 valid sessions
+   evidence: Mean of per_session_s over the 43 non-excluded indices = 445.68 s.
+#45 CONFIRMED: Maximum session time 1,072 s, session s36
+   evidence: max(per_session_s)=1071.769 at index 36; run log:44 's36 … 1072s'.
+#46 CONFIRMED: Sessions artifact written 22:22 UTC
+   evidence: TZ=UTC stat data/k/k1_sessions.json → mtime 2026-09-09 22:22:17 (local mtime 18:22 EDT).
+#47 CONFIRMED: Reads: 43 sessions × (six masks + the M0 shadow)
+   evidence: len(per_session[id].masks)==7 for all 43; keys M+A, M0, M+B, R+A, R+B, M++, R++; run log:57 masks (six) + M0.
+#48 CONFIRMED: Reads took 31.6 min
+   evidence: run log:101 'in 31.6 min this run'; k1_reads.json wall_clock_s_this_run=1898.73 s = 31.65 min.
+#49 CONFIRMED: 7.35 s per mask
+   evidence: Mean of the 258 per_session[].seconds_per_mask values = 7.354 s (sum of per-session seconds 1897.9 / 258 = 7.356).
+#50 CONFIRMED: STAGE1_EXIT=0 at 22:53:57 UTC
+   evidence: run log:102 'STAGE1_EXIT=0 Wed Sep  9 22:53:57 UTC 2026'.
+#51 CONFIRMED: 216 LOSO jobs = 12 families × 18 layers
+   evidence: k1_analysis.json probes: 12 family keys, each with 18 layer keys; analyze_run.txt:3 '216 jobs'.
+#52 CONFIRMED: Analysis took 75.5 min on 8 workers
+   evidence: analyze_run.txt:3 'probes done in 75.5 min'; invocation 'k1_analyze.py --run' with scripts/k1_analyze.py:117 default --workers 8; launch entry RESULTS.md:41-42 '200 shuffles, 8 workers'.
+#53 CONFIRMED: ANALYZE_EXIT=0 at 00:09:27 UTC 2026-09-10
+   evidence: analyze_run.txt:56 'ANALYZE_EXIT=0 Thu Sep 10 00:09:27 UTC 2026'.
+#54 CONFIRMED: Artifacts exist at data/k/k1_sessions.json, k1_reads.json, k1_analysis.json
+   evidence: ls data/k/: k1_sessions.json (536,888 B), k1_reads.json (1,409,848 B), k1_analysis.json (47,564 B).
+#55 CONFIRMED: Residual stacks are 43 local npz files with fingerprints in the reads record
+   evidence: ls data/k/k1_resid_s*.npz | wc -l = 43; every per_session entry has npz path and npz_sha16_by_key with 7 keys.
+#56 CONFIRMED: Model is mlx-community/Qwen3.6-27B-4bit
+   evidence: k1_sessions.json provenance.model_id='mlx-community/Qwen3.6-27B-4bit' (same in k1_reads.json).
+#57 CONFIRMED: mlx 0.31.2 / mlx-lm 0.31.3
+   evidence: provenance.library_versions {mlx:'0.31.2', mlx-lm:'0.31.3'}.
+#58 CONFIRMED: Kernel path gdn_inference_mode ops with fused disabled
+   evidence: provenance.gdn_inference_mode='ops (fused disabled)'.
+#59 CONFIRMED: Choice window 8,192
+   evidence: provenance.choice_window_declared=8192.
+#60 CONFIRMED: legacy_truncate_512 is false
+   evidence: provenance.legacy_truncate_512=false.
+#61 CONFIRMED: 0 encodes clipped
+   evidence: provenance.n_encodes_clipped=0 (sessions and reads).
+#62 CONFIRMED: Audit v2 sha16 7aa235d25eeb66dc recomputed and matches
+   evidence: run log:6 'v2 sha16 7aa235d25eeb66dc (recomputed 7aa235d25eeb66dc, verified)'; k1_sessions.json audit_of_record.v2_sha16; same sha at RESULTS.md:52 (launch), :878 (format recon), :1260, :3466.
+#63 CONFIRMED: Audit v3 exclusions and v5 advisories in effect
+   evidence: audit_of_record.version 'audit-v3 exclusions (e2b_audit_v2 + content-class-v4 exclusion-bearing) + content-class-v5 ADVISORIES (task_echo, payload_echo, wrong_task by task id)'; run log:6; advisories present on 4 rounds.
+#64 CONFIRMED: Roster of record used
+   evidence: roster_of_record [[granite,plaza],[prism,slate],[velvet,walnut],[ridge,saddle]] = PROPOSAL-k §1.2 roster of record; run log:7.
+#65 CONFIRMED: Draw seed 20260909
+   evidence: k1_sessions.json draw_seed=20260909; identity.seed=20260909; run log:4.
+#66 CONFIRMED: Campaign key k1-F2
+   evidence: run log:4 'campaign key k1-F2'; k1_sessions.json campaign='k1', format='F2'.
+#67 CONFIRMED: Temperature 0.7
+   evidence: k1_sessions.json temp=0.7; identity.temp=0.7.
+#68 CONFIRMED: Scope e2a
+   evidence: k1_sessions.json scope='e2a'; run log:6 scope 'e2a'; every session exclusion_scope='e2a'.
+#69 CONFIRMED: steered is False on every round
+   evidence: Recount over all 438 rounds+choices: no steered==True; acceptance.sham_only_every_round=true.
+#70 CONFIRMED: The 5(e) primitive is absent
+   evidence: acceptance.statepresent_absent=true (scripts/k1_stage1.py:283 asserts 'valence_core.e2b.statepresent' not in sys.modules); k1.py:157 assert_statepresent_absent().
+#71 CONFIRMED: scaffold_absorption bar count 0
+   evidence: scripts/k1_stage1.py:279 counts degen strings starting 'audit:special:'; recount over 438 rounds finds none; bars_fired=[].
+#72 CONFIRMED: template_breakage 0
+   evidence: k1_stage1.py:280 numerator = n_walked − n_reconstructed = 48 − 48 = 0; format_walk.failures=[].
+#73 CONFIRMED: round_degeneracy 5/438 vs p0 .02 by exact binomial: not fired
+   evidence: k1_stage1.py:278 numerator = counters.total('audit_degenerate') = 5, n_rounds = 438; declared_bars round_degeneracy p0=0.02 alpha=0.05 kind binomial; recomputed P(X≥5 | 438, .02) = 0.938 (expected 8.8) — not fired; bars_fired=[].
+#74 CONFIRMED: Excluded under run scope 5/48
+   evidence: exclusions.run_scope=5; run log:56 'excluded 5/11'.
+#75 CONFIRMED: s9 excluded lexical:slate at forced0
+   evidence: sessions[9].exclude_reason='lexical:slate@forced0'; sessions[9].rounds[0].lexical='slate'.
+#76 CONFIRMED: s9 forced0 response verbatim 'Time: 0.61s | Tokens: 23 | Perplexity: 5.38 | Config: slate'
+   evidence: sessions[9].rounds[0].text == 'Time: 0.61s | Tokens: 23 | Perplexity: 5.38 | Config: slate' exactly.
+#77 CONFIRMED: s21 excluded null_response at forced0, a bare code fence
+   evidence: sessions[21].rounds[0].text == '```'; content_label='null_response'; exclude_reason 'content:null_response@forced0'.
+#78 CONFIRMED: s22 excluded audit:frame at forced0 with text '=== Config evaluation session ==='
+   evidence: sessions[22].rounds[0].text == '=== Config evaluation session ===' exactly; degen 'audit:frame:Config evaluation session'.
+#79 CONFIRMED: s26 excluded audit:junk at forced3, text ending '…dishes in round 4 — active config: ridge]'
+   evidence: sessions[26].rounds[3].text == 'Would you mind not leaving dishes in round 4 — active config: ridge]' (em dash, closing bracket); degen audit:junk regex; phase forced3.
+#80 CONFIRMED: s46 excluded preamble_without_content at forced0 with the coffee-cart preamble
+   evidence: sessions[46].rounds[0].text == 'Here are some creative name suggestions for a small coffee cart:' exactly; content_label='preamble_without_content'.
+#81 CONFIRMED: The 43 sessions read are exactly the 43 with a first choice
+   evidence: set(k1_reads.per_session keys) == {i : sessions[i].choices non-empty} (both 43); k1_reads.json n_sessions_without_first_choice=5, n_eligible_excluded_under_run_scope=0.
+#82 CONFIRMED: The analyzer's 'all with a pick' beside-figure is the same set of 43
+   evidence: The all-with-a-pick domain and the valid domain coincide (43 = 43; n_eligible_excluded_under_run_scope=0). Caveat: because they coincide scripts/k1_analyze.py:92 skips the beside probes and evaluation.beside_all_with_first_pick is null — no separate figure was computed; the entry's 'is the same set' is true, but 'beside-figure' names a field that is null.
+#83 CONFIRMED: Gate domain declared as valid sessions with the all-with-a-pick figure beside (rule 28(a))
+   evidence: analysis.py:22-26 'DOMAIN (rule 28(a), declared): the gates are evaluated over VALID sessions … the all-with-a-first-pick figure is reported beside (rule 23)'; k1_reads.json domain_note; evaluation.domain string.
+#84 CONFIRMED: Strict scope excludes 11/48
+   evidence: exclusions.strict=11; recount sessions[].strict_excluded==True = 11 (s9,13,17,21,22,26,35,36,38,41,46).
+#85 CONFIRMED: s13 free5 is null_response
+   evidence: sessions[13].choices[5] content_label='null_response', degen 'content:null_response', text '"'.
+#86 CONFIRMED: s38 free0 is null_response
+   evidence: sessions[38].choices[0] content_label='null_response', text '"'.
+#87 CONFIRMED: s35 free2 and free4 are null_response
+   evidence: sessions[35].choices[2] and [4] content_label='null_response', both text '"'.
+#88 CONFIRMED: s17 free4 is audit:junk with text '=== Completion ==='
+   evidence: sessions[17].choices[4].text == '=== Completion ===', degen 'audit:junk:(?im)^\s*={2,}[^\n]*={2,}\s*$'.
+#89 CONFIRMED: s41 free5 is audit:junk with text '=== Final output ==='
+   evidence: sessions[41].choices[5].text == '=== Final output ===', degen audit:junk (same regex).
+#90 CONFIRMED: s36 free5 is audit:frame
+   evidence: sessions[36].choices[5].degen='audit:frame:Config evaluation session'; strict_exclude_reason '…@free5'.
+#91 CONFIRMED: All six strict hits occurred after their first choice; the six remain valid and appear in the reads
+   evidence: Hits at free5, free4, free2, free5, free0, free5 — all free-phase rounds generated after the first-choice read; sessions[13,17,35,36,38,41].excluded=False; ids 13,17,35,36,38,41 present in k1_reads.json per_session.
+#92 CONFIRMED: 438 rounds total: 180 forced, 258 free
+   evidence: Recount: sum len(rounds)=180 (all kind 'forced'), sum len(choices)=258 (all kind 'free'); 180+258=438.
+#93 CONFIRMED: audit_degenerate 5 (junk 3, frame 2)
+   evidence: counters.audit_degenerate {total:5, junk:3, frame:2}; recount of degen: audit:frame s22 f0, s36 free5; audit:junk s17 free4, s26 f3, s41 free5.
+#94 CONFIRMED: content_exclusion 6 (null_response 5, preamble_without_content 1)
+   evidence: counters.content_exclusion {total:6, null_response:5, preamble_without_content:1}; recount: null_response s21 f0, s13 free5, s35 free2, s35 free4, s38 free0; preamble s46 f0.
+#95 CONFIRMED: content_advisory 4 (payload_echo 2, task_echo 2)
+   evidence: counters.content_advisory {total:4, payload_echo:2, task_echo:2}; recount of rounds[].advisory: exactly four non-empty.
+#96 CONFIRMED: payload_echo fired on s7 and s19 at forced1
+   evidence: sessions[7].rounds[1].advisory=['content:payload_echo']; sessions[19].rounds[1].advisory=['content:payload_echo'].
+#97 CONFIRMED: The payload 'The meeting has been moved to 3pm.' was returned unchanged
+   evidence: sessions[7].rounds[1].text == sessions[19].rounds[1].text == 'The meeting has been moved to 3pm.'; task_texts 'Reword in a warmer tone: The meeting has been moved to 3pm.' / 'Soften the tone of this notice: The meeting has been moved to 3pm.'
+#98 CONFIRMED: task_echo fired on s29 free0 and free4
+   evidence: sessions[29].choices[0].advisory=['content:task_echo'], choices[4].advisory=['content:task_echo'].
+#99 CONFIRMED: lexical counter 1
+   evidence: counters.lexical {total:1, slate:1}; recount: only sessions[9].rounds[0].lexical='slate'.
+#100 CONFIRMED: low_label_mass 7/258 choices
+   evidence: Recount choices[].low_label_mass==True = 7 of 258; counters.low_label_mass total 7.
+#101 CONFIRMED: termination 0
+   evidence: counters.termination total 0; recount rounds[].termination True = 0.
+#102 CONFIRMED: cap_hit 0
+   evidence: counters.cap_hit total 0; recount rounds[].cap_hit True = 0.
+#103 CONFIRMED: post_choice_degeneracy 7 = the six strict hits plus s35's second
+   evidence: counters.post_choice_degeneracy total 7; free rounds with degen set: s13 free5, s17 free4, s35 free2, s35 free4, s36 free5, s38 free0, s41 free5 = 7 (the six strict-hit rounds + s35 free4).
+#104 CONFIRMED: Mean 15.1 tokens per forced round
+   evidence: Mean n_tok over the 180 forced rounds = 15.0556.
+#105 CONFIRMED: Mean 15.5 tokens per free round
+   evidence: Mean n_tok over the 258 free rounds = 15.5155.
+#106 CONFIRMED: Retention 21 tokens (20 in 9, 21 in 22, 22 in 12)
+   evidence: k1_reads.json retention_tokens.last_forced_end_to_read histogram {20:9, 21:22, 22:12}, 9+22+12=43, median/mode 21; run log per-session 'retention' values agree.
+#107 CONFIRMED: Distance from the first block's end to the read: mean 110.9, range 88–141
+   evidence: retention_tokens.first_block_end_to_read over 43: mean 110.907, min 88, max 141.
+#108 CONFIRMED: Label tokens sit 9 (menu-first) and 7 (menu-second) before the read in all 43
+   evidence: read_position − label_positions[menu_a].position = 9 and − label_positions[menu_b].position = 7 in 43/43 (e.g. s0: 193−184, 193−186); run log 'labels@184,186' with n=194.
+#109 CONFIRMED: The 9/7 offsets match the recon
+   evidence: RESULTS.md Stage C (2026-09-06) 'label_a's own token, nine tokens earlier in the menu line' / 'label_b's token, seven tokens before the read'; FLAG '9 tokens before the read … 7 tokens'.
+#110 REFUTED: L40/L44/L48 read exactly .500 in every family
+   evidence: True for the nine M/R families (all 27 cells == 0.5). False for the three text-only families: textonly_startorder_read L40/44/48 = .978/.991/1.000, label_a 1.000/1.000/1.000, label_b 1.000/1.000/1.000 (target = start order, which the text carries; identity to the shadow does not make these .5).
+   correction: 'in every state-carrying (M/R) family'; the text-only rows read .98–1.00 at L40/44/48.
+#111 CONFIRMED: The steering layer (L48) and below are bit-identical to the shadow
+   evidence: k1.py:56 LAYER = 48; config_of_record.layer=48; state vs shadow resid_sha16_by_layer equal at L40/44/48 in all 774 (258 × 3) cells, differing at L49 and L63 in all 258.
+#112 CONFIRMED: Table rows are the analyzer's families with targets as §1.4
+   evidence: analysis.py families(): g1 A = M+A vs M+B at label_a; g1 B = M+B vs M+A; R comparators R+A/R+B; g2 read same target; g3 = M+A∪M+B with y=a_first (start order); beside = complement 1−a_first; g3 R = R+A∪R+B — matches the row labels and PROPOSAL-k §1.4 targets.
+#113 CONFIRMED: The 18 probed layers are L40, L44, L48 and L49–L63
+   evidence: probes layer keys ['40','44','48','49',…,'63'] (18) in every family; analyze_run.txt:2.
+#114 CONFIRMED: Row 'G1 label A's token, axis' values and stars
+   evidence: Programmatic parse of entry line 92 vs probes.g1_labelA_token_M L49–L63 at 2 dp with above_null stars: MATCH (stars at L51–L63 only).
+#115 CONFIRMED: Row 'G1 label B's token, axis' values and stars
+   evidence: Entry line 93 vs g1_labelB_token_M: MATCH (no star at L49, L50, L55, L56).
+#116 CONFIRMED: Row 'label A's token, random comparator' values and stars
+   evidence: Entry line 94 vs g1_labelA_token_R_comparator: MATCH (stars at L51–L53 only).
+#117 CONFIRMED: Row 'label B's token, random comparator' values and stars
+   evidence: Entry line 95 vs g1_labelB_token_R_comparator: MATCH (star at L51 only).
+#118 CONFIRMED: Row 'G2 read position, axis' values, no stars
+   evidence: Entry line 96 vs g2_read_M: MATCH, no above_null.
+#119 CONFIRMED: Row 'G2 read position, random comparator' values, no stars
+   evidence: Entry line 97 vs g2_read_R_comparator: MATCH.
+#120 CONFIRMED: Row 'G3 read position, axis' values and stars at L50–L63
+   evidence: Entry line 98 vs g3_firstsign_read_M: MATCH.
+#121 CONFIRMED: Row 'second block's sign, beside' values and stars at L50–L63
+   evidence: Entry line 99 vs g3_secondsign_read_M_beside: MATCH.
+#122 CONFIRMED: Row 'G3 read position, random comparator' values, stars at L50–L62, none at L49/L63
+   evidence: Entry line 100 vs g3_firstsign_read_R_comparator: MATCH; L49 .613 vs shuffle95 .610? above_null false; L63 .615 above_null false.
+#123 CONFIRMED: Shuffle 95th percentiles run .60–.72 in every family
+   evidence: Over all 12 families × 18 layers: min shuffle95 .598 (g1_labelA_token_R_comparator) → .60, max .716 (g3_secondsign beside) → .72. Restricted to L49–L63 the span is .599–.703 (.60–.70).
+#124 CONFIRMED: n = 86 rows, 43 groups
+   evidence: analysis.py families(): two() concatenates N=43 M+A rows and 43 M+B rows (86) with groups np.r_[groups, groups] over 43 session ids; LOSO holds both rows of a session out (docstring line 7). Not stored as a JSON field; derived from code and n_sessions=43.
+#125 CONFIRMED: G1 A-token row is above null at every band layer L51–L61
+   evidence: g1_labelA_token_M above_null true at all of L51–L61; evaluation.G1.above_null_every_layer.labelA=true.
+#126 CONFIRMED: G1 registered band is L51–L61
+   evidence: PROPOSAL-k §1.4 'median AUC over L51–L61'; analysis.py:57 G1_BAND=range(51,62); evaluation.G1.band=[51,61].
+#127 CONFIRMED: Random comparator medians over the G1 band .571 (A) and .571 (B)
+   evidence: Recomputed medians over L51–L61: A .5711, B .5706 → .571/.571; evaluation.G1.comparator_R_median {labelA:0.57112, labelB:0.57058}.
+#128 CONFIRMED: G2: no layer L49–L63 above null; max .516
+   evidence: g2_read_M above_null all false; max auc_loso .5165 (L61/L62); evaluation.G2.max_auc=0.51650.
+#129 CONFIRMED: G2 comparator's max is .508
+   evidence: g2_read_R_comparator max over L49–L63 = .5078 (L59).
+#130 CONFIRMED: G3 registered band is L51–L62
+   evidence: PROPOSAL-k §1.4 'median AUC over L51–L62 ≥ .90'; analysis.py:61 G3_BAND=range(51,63); evaluation.G3.band=[51,62].
+#131 CONFIRMED: G3 row above null at every band layer L51–L62
+   evidence: g3_firstsign_read_M above_null true at L50–L63; evaluation.G3.above_null_every_layer=true.
+#132 REFUTED: The fall-off at L59–L63 is inside the registered band
+   evidence: The registered G3 band is L51–L62 (evaluation.G3.band, analysis.py:61, PROPOSAL-k §1.4); L63 is outside it.
+   correction: 'the fall-off at L59–L62 lies inside the registered band (L63, also fallen, is outside it)'.
+#133 CONFIRMED: G3 comparator's median over L51–L62 is .854
+   evidence: Recomputed median of g3_firstsign_read_R_comparator L51–L62 = .8537; evaluation.G3.comparator_R_median=0.85370.
+#134 CONFIRMED: The second block's row is the complement target computed independently with its own fit and own null stream
+   evidence: analysis.py:212 beside family y = np.r_[1−a_first, a_first] (complement of :211); run_probes seeds each job seed + 1000*family_index (line 244), so the beside family (index 7) draws a different null stream from g3_firstsign (index 6); each job calls loso_auc independently.
+#135 CONFIRMED: Second-block row differs from the first-block row by up to .041 (L58) and .046 (L63), the maximum
+   evidence: |beside − first| per layer: L58 .0406, L63 .0460 (max); all other layers ≤ .0157.
+#136 CONFIRMED: The published probe is 300 steps of full-batch GD from a seed-7 random init
+   evidence: valence_core/echo/probe.py:19 LR_SEED, LR_ITERS = 7, 300; fit_lr: rng=default_rng(seed), w=rng.normal(0,0.01,d), loop 'for _ in range(iters)' with full-batch gradient Xf.T @ (p−y)/len(y).
+#137 CONFIRMED: The procedure is named discrim.logistic_auc and lives in valence_core/echo/probe.py
+   evidence: probe.py:3-5 'The classifier is discrim.logistic_auc's exact procedure … rewritten to return held-out SCORES'; :18 'discrim.logistic_auc's defaults, by name'; valence_core/discrim.py:65 def logistic_auc; analysis.py imports loso_auc, shuffle_null from ..echo.probe.
+#138 CONFIRMED: A label flip maps the optimum to −w but not the trajectory from the same init
+   evidence: probe.py fit_lr: init w drawn from seed 7 independent of y, b=0, no symmetrisation; under y→1−y the L2-regularised optimum is (−w,−b) but GD from the same w0 (not −w0) traces a different path — as analysis.py:21 and the G3 note state ('the LR init is not label-symmetric').
+#139 CONFIRMED: The analyzer's own note anticipated third-decimal agreement between the beside row and the G3 row
+   evidence: evaluation.G3.second_block_note: '… so the two figures can differ at the third decimal -- reported beside, no bar' (analysis.py:301-303).
+#140 CONFIRMED: No bar rides on the beside row
+   evidence: analysis.py gate_g3 evaluates median/above_null on g3_firstsign_read_M only; beside median reported as second_block_sign_median_beside with the note 'no bar'; PROPOSAL-k §1.4 'The second block's sign is reported beside'.
+#141 CONFIRMED: The same probe procedure scores every family here and in the recon
+   evidence: analysis.py run_probes applies _job (loso_auc + shuffle_null from echo.probe) to all 12 families; RESULTS.md Stage B (line ~1900) 'Classifier unchanged (standardized L2 logistic regression, discrim.logistic_auc's published hyperparameters)'; Stage C 'Grouped 10-fold statistic and 200-shuffle null as Stage B, LOSO beside'. Caveat: the recon's statistic of record was grouped 10-fold with LOSO beside; Stage 1 is LOSO — same classifier, different CV headline.
+#142 REFUTED: Text-only rows read .94–1.00 at the read position
+   evidence: probes.textonly_startorder_read: L40–L54 .978 .991 1.000 .976 .959 .941 .941 .959 .943, then L55 .850, L56 .835, L57 .798, L58 .817, L59 .817, L60 .809, L61 .767, L62 .739, L63 .713 (analyze_run.txt:43).
+   correction: '.71–1.00 at the read (.94–1.00 at L40–L54, falling to .71 at L63)'.
+#143 CONFIRMED: Text-only rows read .98–1.00 at both label tokens
+   evidence: textonly_startorder_label_a min .976 (L58) max 1.000; label_b min .987 (L53) max 1.000 → .98–1.00 at 2 dp over all 18 layers.
+#144 CONFIRMED: The M0 families' target is start order
+   evidence: analysis.py:215-216 textonly families use S[('M0|shadow', pn, l)] with y = a_first ('A's block came FIRST'); docstring lines 27-30.
+#145 CONFIRMED: The recon's text-only families had target = the injected sign and were found at null
+   evidence: analysis.py:30 'The recon's text-only rows used the as-generated pole'; RESULTS.md Stage B '(c) single-round retention is injection-borne (text-only baseline at null)'; Stage C 'The text-only baseline is below its null at 53 of the 54 (position, layer) cells' (one cell, label_b L44 .611 vs .608, marginally above — a no-state layer). Caveat: 'found at null' is the record's own gloss with that one exception.
+#146 CONFIRMED: G1–G3 rows are balanced within session and separable only by the injection
+   evidence: analysis.py two(): each session contributes one M+A row and one M+B row over identical text; G1/G2 y = [1]*N + [0]*N, G3 y = [a_first, 1−a_first] — one of each class per session; the only difference between a session's two rows is which block was injected.
+#147 CONFIRMED: PROHIBITION asserted: no signed quantity toward the +label computed on M+A/M+B
+   evidence: evaluation.G4.prohibition 'no signed quantity toward the +label computed on M+A / M+B (asserted: the masks iterated above are exactly R+A, R+B, M++, R++)'; G4 has keys R+A, R+B, M++, R++ only; k1_reads.json prohibition field; per_session masks M+A/M+B carry no signed field.
+#148 CONFIRMED: G4 R+A pick flips 4/43 = .093
+   evidence: Recomputed from k1_reads.json masks['R+A'].state.pick vs shadow.pick: 4 flips /43 = .0930; evaluation.G4['R+A'].n_flips=4, pi_d=0.09302.
+#149 CONFIRMED: R+A Clopper–Pearson 95% [.026, .221]
+   evidence: Exact CP for 4/43 recomputed by bisection on the binomial CDF: [0.0259, 0.2214]; JSON [0.02593, 0.22135].
+#150 CONFIRMED: R+A |Δ logit| median/mean/max .031/.046/.167
+   evidence: Recomputed |(la−lb)_state − (la−lb)_shadow| over 43: median .0312, mean .0457, max .1668; JSON .03122/.04573/.16678.
+#151 CONFIRMED: R+A signed shift toward the first block's label mean +.013, sd .060, 26+/17−
+   evidence: Recomputed with sign flipped when a_is_first_block is false: mean +.0133, sd (ddof=1) .0605, 26 positive, 17 negative, 0 zero (26+17=43); JSON mean 0.01334, sd 0.06046, n_pos 26, n_neg 17.
+#152 CONFIRMED: R+B pick flips 3/43 = .070
+   evidence: Recomputed 3 flips/43 = .0698; JSON n_flips=3, pi_d=0.06977.
+#153 CONFIRMED: R+B CP interval [.015, .191]
+   evidence: Exact CP for 3/43: [0.0146, 0.1906]; JSON [0.01463, 0.19061].
+#154 CONFIRMED: R+B |Δ logit| .041/.052/.178
+   evidence: Recomputed median .0406, mean .0516, max .1780; JSON .04063/.05157/.17796.
+#155 CONFIRMED: R+B signed +.005, .067, 21/22
+   evidence: Recomputed mean +.0047, sd .0669, 21 pos / 22 neg (=43); JSON 0.00471, 0.06689, 21, 22.
+#156 CONFIRMED: M++ pick flips 2/43 = .047
+   evidence: Recomputed 2/43 = .0465; JSON n_flips=2, pi_d=0.04651.
+#157 CONFIRMED: M++ CP interval [.006, .158]
+   evidence: Exact CP for 2/43: [0.0057, 0.1581]; JSON [0.00568, 0.15811].
+#158 CONFIRMED: M++ |Δ logit| .059/.067/.213
+   evidence: Recomputed median .0590, mean .0667, max .2129; JSON .05899/.06673/.21293.
+#159 CONFIRMED: M++ is not a signed arm
+   evidence: evaluation.G4['M++'] has no signed_shift_toward_first_block_label key; analysis.py gate_g4 computes signed only on the R masks (docstring lines 31-33; PROPOSAL-k §1.4 'signed shift … on the R masks').
+#160 CONFIRMED: R++ pick flips 3/43 = .070
+   evidence: Recomputed 3/43 = .0698; JSON n_flips=3.
+#161 CONFIRMED: R++ CP interval [.015, .191]
+   evidence: Exact CP for 3/43: [0.0146, 0.1906]; JSON identical to R+B's.
+#162 CONFIRMED: R++ |Δ logit| .049/.058/.218
+   evidence: Recomputed median .0491, mean .0583, max .2180; JSON .04915/.05832/.21803.
+#163 CONFIRMED: R++ signed +.008, .076, 23/20
+   evidence: Recomputed mean +.0076, sd .0763, 23 pos / 20 neg (=43); JSON 0.00759, 0.07635, 23, 20.
+#164 REFUTED: The recon's G4-type figures at n = 102 were 0–1/102 flips on random and same-pole masks, medians .033–.046, maxima .12–.20
+   evidence: RESULTS.md Stage B (2026-09-05) and Stage C (2026-09-06) leak tables are 'Unsigned only on the reward masks'; no π_d is tabled for any random mask (M3/M4, M5x/M6x, B1x–B4x carry only signed shifts). The 0–1/102 figures are the reward masks': same-pole M5 0/102, M6 1/102; single-round R1–R4 0/102; blocks B1/B2/B4 0/102, B3 1/102. Medians .033–.046 match Stage B's same-pole + single-round set (.0327–.0457), whose maxima are .1155–.1913 → .12–.19; .20 appears only for Stage C's B4 (.1995), a block mask whose set's medians run .039–.060.
+   correction: '0–1/102 on the same-pole, single-round and block reward masks (no flip figure is tabled on the random masks), medians .033–.046 and maxima .12–.19 on the same-pole/single-round masks (.039–.060 / .16–.21 on the block masks)'.
+#165 CONFIRMED: Flips are more frequent here at n = 43 on every arm than in the recon
+   evidence: Stage 1 rates .047–.093 (2–4/43) vs the recon's tabled 0–1/102 (0–.0098) on M5/M6/R1–R4/B1–B4; every Stage 1 arm exceeds every recon reward-mask rate except M1/M2's 1–3/102 (the alternating masks, not the comparison the entry draws).
+#166 REFUTED: The Stage 1 CP intervals overlap the recon's rates
+   evidence: Recon rates are 0 and .0098 (0/102, 1/102). R+A [.026,.221], R+B [.015,.191], R++ [.015,.191] contain neither; only M++'s [.006,.158] contains .0098 (not 0). The statement holds only if 'rates' is read as the recon's own CP intervals (0/102 → [0,.036]; 1/102 → [.0002,.053]), which do overlap all four.
+   correction: 'three of the four intervals exclude the recon's rates; M++'s contains 1/102; the recon's own exact intervals ([0,.036] for 0/102, [.000,.053] for 1/102) overlap all four'.
+#167 REFUTED: Medians and maxima are in the same range as the recon's
+   evidence: Stage 1 medians .031–.059 vs the entry's recon range .033–.046: M++ .059 and R++ .049 exceed .046. Maxima .167–.218 vs .12–.20: M++ .213 and R++ .218 exceed .20 (and the same-pole/single-round maxima of record top out at .19).
+   correction: 'medians overlap the recon's range (R+A/R+B inside .033–.046; M++ .059 and R++ .049 above it) and maxima sit at or just above its top (.167–.218 against .12–.20)'.
+#168 CONFIRMED: Signed pseudo-shift within ±.02 with sign counts near even on the three signed arms
+   evidence: Means +.0133, +.0047, +.0076 all |x| ≤ .02; sign counts 26/17, 21/22, 23/20.
+#169 CONFIRMED: The recon's pure blocks read +.008/−.002
+   evidence: RESULTS.md Stage C signed random block masks: 'B1x +0.0077 … B2x -0.0017' → +.008/−.002.
+#170 CONFIRMED: G5 granite 7/12 = .58 [.28, .85], plaza 5/12
+   evidence: Recount of choices[0].pick over the 12 granite/plaza sessions: granite 7, plaza 5; exact CP for 7/12 = [0.2767, 0.8483]; JSON share 0.5833, CI [0.27667, 0.84835].
+#171 CONFIRMED: prism 5/9 = .56 [.21, .86], slate 4/9
+   evidence: Recount prism 5, slate 4 of 9; CP 5/9 = [0.2120, 0.8630]; JSON matches.
+#172 CONFIRMED: velvet 7/11 = .64 [.31, .89], walnut 4/11
+   evidence: Recount velvet 7, walnut 4 of 11; CP 7/11 = [0.3079, 0.8907]; JSON matches.
+#173 CONFIRMED: ridge 7/11 = .64 [.31, .89], saddle 4/11
+   evidence: Recount ridge 7, saddle 4 of 11; 12+9+11+11 = 43; CP identical to velvet's.
+#174 CONFIRMED: First pick equals the last forced label in 26/43 = .605
+   evidence: Recount choices[0].pick == rounds[3].tag: 26/43 (=.6047); sessions[].first_pick_is_last_forced_label True count 26; evaluation.G5.first_pick_is_last_forced_label {k:26,n:43}.
+#175 CONFIRMED: First pick equals the first block's label in 17/43
+   evidence: Recount choices[0].pick == k1_reads first_label (== rounds[0].tag in all 43): 17/43.
+#176 CONFIRMED: First pick equals the menu's first-listed label in 18/43
+   evidence: Recount choices[0].pick == choices[0].menu_a: 18/43.
+#177 CONFIRMED: Strict alternation over the six free picks in 22/43
+   evidence: Recount sessions with all 5 consecutive pick pairs differing: 22/43; evaluation.G5.strict_alternation {k:22,n:43}.
+#178 CONFIRMED: Stay transitions 35/215 = .163
+   evidence: Recount consecutive equal picks: 35 of 43×5 = 215 (=.1628); evaluation.G5.stay_transitions {k:35,n:215}.
+#179 CONFIRMED: The format recon's F2 had 12/24 break and 15/120 = .125 stay
+   evidence: RESULTS.md FORMAT RECON 2026-09-07 table row '| F2 | 24 | 24 / 24 | 12/24 = 0.500 | 12/24 = 0.500 |…' and 'stay transitions … F2 15/120 (.125)'.
+#180 CONFIRMED: By first label: granite 2/6, plaza 1/6, prism 2/5, slate 1/4, velvet 4/5, walnut 3/6, ridge 3/6, saddle 1/5
+   evidence: Recount grouped by first-block label (rounds[0].tag): granite 2/6, plaza 1/6, prism 2/5, slate 1/4, velvet 4/5, walnut 3/6, ridge 3/6, saddle 1/5; numerators sum 17, denominators 43.
+#181 CONFIRMED: Granite, prism, velvet and ridge lead their pairs
+   evidence: 7>5, 5>4, 7>4, 7>4 per claims 170-173.
+#182 CONFIRMED: No pair's interval excludes .5
+   evidence: [.28,.85], [.21,.86], [.31,.89], [.31,.89] all contain .5.
+#183 CONFIRMED: Leading label agrees with the format recon's F2 on one pair of four; F2 had saddle, prism, plaza leading and 3/3 on velvet/walnut
+   evidence: FORMAT RECON: 'F2 saddle 5/6, prism 4/6, plaza 4/6, walnut 3/6' and 'velvet/walnut splits 3/3 in F2'; Stage 1 leaders granite/prism/velvet/ridge — agreement only on prism/slate.
+#184 CONFIRMED: G5 uses all 48 with the five without a pick contributing nothing (n = 43)
+   evidence: evaluation.G5.domain 'all sessions incl. excluded (rule 23); a session without a first pick contributes nothing'; the five excluded sessions have empty choices; every denominator sums to 43.
+#185 CONFIRMED: Every response of s1 is numbered '1.'–'10.'
+   evidence: sessions[1] rounds+choices first tokens: '1.' '2.' … '10.' in order.
+#186 CONFIRMED: Exactly eight sessions (s2, s13, s16, s18, s30, s35, s37, s44) wrapped every response in quotation marks
+   evidence: Counting straight and curly quotes: sessions whose 10 responses all open with a quote mark = {2,13,16,18,30,35,37,44}, exactly eight (s37 uses “ ” on 7 of 10). Caveat: s16 free3 opens with '"' but has no closing quote (the entry notes it as 'unclosed quote' in (b)); the other seven close all ten.
+#187 CONFIRMED: Four of five free-round null_response hits collapsed to a lone '"'
+   evidence: sessions[13].choices[5], [35].choices[2], [35].choices[4], [38].choices[0] text == '"' (n_tok 1,2,1,1); the fifth null_response, s21 forced0, is '```'.
+#188 REFUTED: s36 prefixed and suffixed all ten responses with 🎲 'Hey everyone! Just a friendly reminder that …'
+   evidence: sessions[36] ten texts: all ten open '🎲 Hey everyone!'; the phrase 'Just a friendly reminder that' appears in 7/10 (forced0 'Join us for a fun night…', forced2 'Just a quick and gentle reminder to…', free0 'Just a friendly rounds 1-4:'); a closing 🎲 ends 8/10 (free0 has none; free5's 🎲 is followed by ' === Config evaluation session ===').
+   correction: 'opened all ten responses with 🎲 "Hey everyone!" (seven with "Just a friendly reminder that …") and closed eight of them with 🎲'.
+#189 CONFIRMED: s36's first free response contains '…Just a friendly rounds 1-4:'
+   evidence: sessions[36].choices[0].text == '🎲 Hey everyone! Just a friendly rounds 1-4:'.
+#190 CONFIRMED: s36 ended with the '=== Config evaluation session ===' frame
+   evidence: sessions[36].choices[5].text ends '… 🎲 === Config evaluation session ==='; degen audit:frame.
+#191 CONFIRMED: s3 dishes rewrite contains 'the soft sink … in the word "soft" is a bit weird?'
+   evidence: sessions[3].choices[3] (task t14) text: 'Please don’t leave dishes in the soft sink, in the word "soft" is a bit weird?' — both quoted fragments verbatim; the ellipsis elides only ', '.
+#192 CONFIRMED: s7 contains 'softer sink' on the dishes rewrite
+   evidence: sessions[7].rounds[0] (t14) text contains 'softer sink'.
+#193 CONFIRMED: s12 contains 'courteous sink'
+   evidence: sessions[12].choices[2] (t14) contains 'courteous sink'.
+#194 CONFIRMED: s23 contains 'dishes in the session'
+   evidence: sessions[23].rounds[0] (t14) contains 'dishes in the session'.
+#195 CONFIRMED: s33 contains 'dishes in the house'
+   evidence: sessions[33].rounds[3] (t14) contains 'dishes in the house'.
+#196 CONFIRMED: s16 contains 'the considerate way' with an unclosed quote
+   evidence: sessions[16].choices[3] (t14) text '"Please rinse and stack your dishes in the dishwasher instead of leaving them in the considerate way.' — one quote character (odd).
+#197 CONFIRMED: s17 contains 'the/personal-life'
+   evidence: sessions[17].choices[0] (t14) text 'Please don’t leave dishes in the/personal-life'.
+#198 CONFIRMED: s0 contains 'the soft glow of the evening'
+   evidence: sessions[0].choices[0] (t14) text '… any dishes in the soft glow of the evening?'.
+#199 CONFIRMED: s15 contains 'one package at a configs' on the courier task
+   evidence: sessions[15].choices[3] task t15 'Offer a catchphrase for a cycle courier outfit.' text '… delivering happiness, one package at a configs.'
+#200 CONFIRMED: All items in (b) occur on the dishes rewrite task except s15's courier item
+   evidence: Task ids of the cited rounds: s3, s7, s12, s23, s33, s16, s17, s0 all t14 ('Reword this note softly: Do not leave dishes in the sink.'); s15 t15.
+#201 CONFIRMED: (c) comprises the s9 metadata line, the s22 frame, the s26 header fragment, and three '===' lines in s17, s36, s41
+   evidence: grep '===' over 438 rounds: s17 free4, s22 forced0, s36 free5, s41 free5 — four rounds; the entry lists s22's separately as 'the s22 frame' and the other three as the '===' lines (s36's is appended to a response rather than a standalone line).
+#202 CONFIRMED: s29 free0 task echo has 'choice' inserted; free4 echoes verbatim
+   evidence: free0 text 'One sentence to caption a choice photo of unpaired socks drying on a line.' vs task 'One sentence to caption a photo of unpaired socks drying on a line.'; free4 text == task_text 'Write one sentence about a bakery window just before closing.'
+#203 CONFIRMED: The v5 advisories fired on exactly these four rounds and nothing else
+   evidence: Non-empty advisory over all 438 rounds: s7 forced1, s19 forced1, s29 free0, s29 free4 — exactly four.
+#204 CONFIRMED: s41 free4 is a duplicated-sentence response containing 'the model's last warm loaves', 47 tokens, unflagged
+   evidence: sessions[41].choices[4]: n_tok 47, degen None, advisory [], content_label None, lexical None; text 'Through the bakery window, the last warm loaves glow softly, inviting passersby for one final treat.Through the bakery window, the model's last warm loaves glow softly, the scent of fresh bread lingering in the air.' Caveat: the two sentences share their opening clause but are not identical — a near-duplicate.
+#205 CONFIRMED: s14 forced1 contains markdown bold
+   evidence: sessions[14].rounds[1].text '**The dawn ferry crosses the misty waters**' — the only '**' round in the campaign.
+#206 CONFIRMED: Umbrella emoji appears in s27, s34, s41
+   evidence: 🌂 (closed umbrella) found in s27, s34, s41 and no other session; ☂/☔ absent.
+#207 CONFIRMED: s24 is a terse session
+   evidence: sessions[24] mean n_tok 8.8 over ten rounds (5–14 tokens), the lowest of the 43 valid sessions (next s7 9.2, s12 10.1).
+#208 CONFIRMED: Four of five exclusions fired at forced round 0
+   evidence: s9, s21, s22, s46 @forced0; s26 @forced3.
+#209 CONFIRMED: The format recon's F2 showed 0/240 v2 hits
+   evidence: RESULTS.md FORMAT RECON 2026-09-07: 'F2 240 rounds: 0 v2, 0 exclusion-bearing content'.
+#210 CONFIRMED: s21 and s46 both opened on the coffee-cart naming task
+   evidence: sessions[21].rounds[0].task == sessions[46].rounds[0].task == 't08' 'Suggest a name for a small coffee cart.'
+#211 CONFIRMED: Random direction's first-block sign at the read reads .939/.950/.941 at L51–L53
+   evidence: g3_firstsign_read_R_comparator L51–L53 auc_loso .9394/.9500/.9412.
+#212 CONFIRMED: Axis reads .877/.884/.862 at L51–L53
+   evidence: g3_firstsign_read_M L51–L53 .8773/.8838/.8621.
+#213 CONFIRMED: Random .91/.89/.90 at L54–L56 against axis .86/.88/.89
+   evidence: Random L54–L56 .914/.889/.900; axis .860/.875/.889.
+#214 CONFIRMED: The random comparator decays below the axis from L57 onward
+   evidence: L57–L63 random < axis at every layer (.813<.871, .819<.847, .631<.683, .645<.697, .647<.685, .629<.681, .615<.714).
+#215 REFUTED: At the label tokens the comparator reads below the axis everywhere (.70 vs .88 at L51 at A's token)
+   evidence: .70 vs .88 at L51 (A) is right (.701 vs .884), and the comparator is below the axis at every layer L51–L63 for both tokens; but at L49–L50 it reads above: A's token .522/.519 vs .508/.510 (.52 vs .51 at 2 dp), B's .514/.512 vs .508/.511 — all at null.
+   correction: 'below the axis at every layer from L51 (at L49–L50 both sit at null, the comparator marginally higher)'.
+#216 CONFIRMED: In the recon the random direction matched the axis to L58 and decayed after
+   evidence: RESULTS.md Stage C: 'The random direction: first-round sign matches the axis to L58 (.99) and decays to .73–.86 after'; Stage B 'matches it at L49–L58 … decays faster after L58'.
+#217 REFUTED: ADDENDUM-k1 §2 proposes to gate on the band L51–L56 (where the comparator leads)
+   evidence: ADDENDUM-k1.md:189 '§2.2 PASS iff median AUC over L50–L58 ≥ .80'. The comparator leads the axis at L51–L56 (and L49), not at L50, L57, L58 — six of the nine band layers.
+   correction: The proposed band is L50–L58; the comparator leads at L51–L56 within it (the axis leads at L50, L57, L58). The entry's 'in the very band' should say 'in most of the band'.
+#218 CONFIRMED: The blockquote (lines 207-225) is verbatim ADDENDUM-k1 §0.2
+   evidence: After stripping '> ' and whitespace-normalising, the entry's blockquote equals ADDENDUM-k1.md lines 46-64 character for character, including both indented equations, the bold span and 'Design count: eighteen.'
+#219 CONFIRMED: ADDENDUM-k1 is design draft v1.0 with PI go 2026-09-11
+   evidence: ADDENDUM-k1.md:5 'Status: DRAFT v1.0 — design-seat authored; PI go 2026-09-11 (PI clock 00:03 EDT / 04:03 UTC)'.
+#220 CONFIRMED: ADDENDUM-k1 is to be committed on the PROPOSAL-k chain after this entry (currently untracked)
+   evidence: git status '?? ADDENDUM-k1.md'; ADDENDUM-k1.md:3 'Appended to PROPOSAL-k (e9b5022); the chain is append-only'; §4 step 0-1 'The STAGE 1 entry commits … This document commits, appended to the PROPOSAL-k chain'.
+#221 CONFIRMED: Within the slip: Stage C block masks gave first-block sign .98–.99 and label-token binding 1.000 under alternating ± masks
+   evidence: RESULTS.md Stage C: 'the FIRST-round sign reads at … .98–.99 at every layer from L51 to L62' under block masks B1–B4; C1 'AUC ≥ .998 at every layer L51–L61 — 1.000 at nine of them' at label_a's token on M1/M2, the alternating-sign masks (Stage B: 'M1−M2 … the alternating-sign echo').
+#222 CONFIRMED: Within the slip: G1 and G3 bars are .90 in PROPOSAL-k
+   evidence: PROPOSAL-k §1.4: G1 '≥ .90 at label A's token AND ≥ .75 at label B's token'; G3 '≥ .90'. Caveat: the slip's '(.90)' gloss omits G1's .75 B-token bar, which the entry states at line 105.
+#223 CONFIRMED: Design count is eighteen (slip (18))
+   evidence: ADDENDUM-k1.md:63-64 'Design count: eighteen.'; the prior slip is (17) at RESULTS.md:103-109 'slip (17) … Design count: seventeen.'
+#224 CONFIRMED: Not done: ADDENDUM-k1 referent check and commit; sign-set widening, 1b analyzer, Stage 1b (§4 steps 2–3); LOCK-k
+   evidence: ADDENDUM-k1.md §4 step 2 'echo primitive's sign set widened to {+1, −1} … the 1b analyzer extension and battery committed', step 3 'Stage 1b reads', step 4 LOCK-k; Appendix 'Referents Code verifies at commit'; k1_reads.json config_of_record.every_sign '+1 (no negative pole)'; data/k holds only k1_* and _synthetic; git log ends at ebcb206.
+#225 CONFIRMED: Nothing in Stage 2 has run
+   evidence: data/k contains k1_sessions/reads/analysis, 43 k1_resid npz and _synthetic only; the run log ends at STAGE1_EXIT; ADDENDUM-k1.md:8 'nothing in Stage 2 runs before LOCK-k'.
+#226 CONFIRMED: G2 registered layer range is L49–L63
+   evidence: PROPOSAL-k §1.4 'read position, all layers L49–L63'; analysis.py:59 G2_LAYERS=range(49,64); evaluation.G2.layers=[49,63].
+#227 CONFIRMED: 258 free = 43 × 6 and 180 forced = 43×4 + 8 partial (1+1+1+4+1)
+   evidence: Valid sessions: 43 with 4 forced rounds and 6 choices each (172 + 258); excluded: s9, s21, s22, s46 have 1 forced round, s26 has 4 → 8; 172 + 8 = 180.
+
+====================================================================================================
+REFUTER 'prose-and-quotes'
+SUMMARY: Checked all 227 claims against data/k/k1_sessions.json, k1_reads.json, k1_analysis.json, the run log, the analyze log, the transcript dump, ADDENDUM-k1.md, PROPOSAL-k §1.1/1.4/1.5, RESULTS.md (launch, FORMAT RECON 2026-09-07, Stage B 2026-09-05, Stage C 2026-09-06), valence_core/echo/probe.py, valence_core/k/analysis.py, valence_core/echo/k1.py, scripts/k1_stage1.py, scripts/k1_analyze.py and git. Every figure was recomputed (Clopper-Pearson by exact binomial bisection; medians, means, ranges, flips and signed shifts from the raw per-session fields). Both quotations under my lens are verbatim after whitespace normalisation: the §1.5 sentence matches analysis.py, PROPOSAL-k §1.5, k1_analysis.json and ADDENDUM §0.1; the slip (18) blockquote matches ADDENDUM §0.2 character for character including the two display lines and the bold. 219 CONFIRMED, 8 REFUTED, 0 UNCHECKABLE. The refutations are scope/precision misses in prose, none touching a gate figure: (27) the axis reads .88/.88/.86 at L51-L53, not ".88" at all three; (110) "L40/L44/L48 read exactly .500 in every family" is false for the three text-only families (.98/.99/1.00 and 1.00) -- true for the nine contrast families in the table; (132) L63 lies outside the registered L51-L62 band, so the L59-L63 fall-off is not wholly "inside" it; (142) the text-only read row spans .71-1.00 over the probed layers (.94-1.00 only through L54); (166) three of the four G4 intervals (R+A, R+B, R++) have lower bounds above the recon's 0-1/102 rates -- only M++'s contains them; (167) Stage 1's medians/maxima extend above the recon's stated ranges (.059 vs .046; .218 vs .20); (188) s36 did not suffix all ten responses with the die nor open all ten with "Just a friendly reminder that" (free0 has no closing die; forced0/forced2/free0 differ); (215) at the label tokens the random comparator sits marginally ABOVE the axis at the null layers L49-L50 (.52 vs .51), so "below the axis everywhere" holds only from L51. Several confirmations carry notes worth a word in the entry: the analyzer emitted no separate beside figure (beside_all_with_first_pick is null because the valid and all-with-a-pick sets coincide); the text-only families have 43 rows, not 86; the recon's statistic was grouped 10-fold with LOSO beside (same classifier); ADDENDUM §2's band is L50-L58 and the comparator leads at L51-L56 of it (and on the band median, .889 vs .871); the slip's "1.000" binding is the Stage C record's own rounding of >= .998; s16 free3 is quote-opened but unclosed; s41 free4 is a near-duplicate, not an identical repeated sentence; the run log's first line and the sessions-artifact line carry no timestamps (17:01:31 comes from the launch entry/commit; 22:22 from the file mtime 22:22:17 UTC).
+====================================================================================================
+#1 CONFIRMED: Stage 1 outcome is G1 FAIL, G2 ABSENT, G3 FAIL and the analyzer branch is G3_FAIL
+   evidence: k1_analysis.json evaluation.branch = "G3_FAIL"; G1.verdict FAIL, G2.verdict ABSENT, G3.verdict FAIL; analyze_run.txt line 'G1 FAIL  G2 ABSENT  G3 FAIL  -> branch G3_FAIL'.
+#2 CONFIRMED: The italic sentence is verbatim the analyzer's §1.5 sentence
+   evidence: Programmatic whitespace-normalised comparison: entry sentence == k1_analysis.json evaluation.sentence == analysis.py SENTENCES['G3_FAIL'] (lines 78-80) == PROPOSAL-k §1.5 fourth quoted sentence (all True).
+#3 CONFIRMED: ADDENDUM-k1 §0.1 confirms that sentence
+   evidence: ADDENDUM-k1.md:26-32 'selected §1.5's sentence, which the design seat confirmed verbatim:' followed by the identical blockquote (normalised equality True).
+#4 CONFIRMED: 48 F2 sham sessions were run
+   evidence: k1_sessions.json: len(sessions)=48, format 'F2', n_registered 48, n_on_disk 48, every session sham_only true, rng_key 'k1-F2'.
+#5 CONFIRMED: Acceptance PASS
+   evidence: k1_sessions.json acceptance.PASS = true; run log 'sessions: 48/48; acceptance PASS'.
+#6 CONFIRMED: 258/258 choice reads at verify KL exactly 0.0
+   evidence: Recount: 258 choices across 48 sessions, all choices[].read.verify_kl == 0.0; acceptance.n_reads 258, kl_exactly_zero 258.
+#7 CONFIRMED: e2a walk reconstructs 48/48 with seed streams matched
+   evidence: acceptance.format_walk: n_walked 48, n_reconstructed 48, n_seed_streams_matched 48, all_ok true; run log 'walk 48/48'.
+#8 CONFIRMED: No bar fired
+   evidence: acceptance.bars_fired = []; run log 'bars none'.
+#9 CONFIRMED: 43 valid sessions
+   evidence: 48 sessions minus 5 with excluded=true (s9,s21,s22,s26,s46) = 43; exclusions.run_scope 5.
+#10 CONFIRMED: Five excluded under audit v3, one each of five distinct classes
+   evidence: exclusions.reasons: lexical:slate, content:null_response, audit:frame, audit:junk, content:preamble_without_content — five pairwise distinct classes.
+#11 CONFIRMED: All five exclusions fired in the forced phase
+   evidence: exclude_reason suffixes: s9 @forced0, s21 @forced0, s22 @forced0, s26 @forced3, s46 @forced0; each excluded session's rounds are forced-kind only.
+#12 CONFIRMED: None of the five excluded sessions reached a first choice
+   evidence: sessions[9,21,22,26,46].choices all empty (n_reads 0); k1_reads.json sessions list omits 9,21,22,26,46; n_sessions_without_first_choice 5.
+#13 CONFIRMED: Masked reads were done on all 43 valid sessions
+   evidence: k1_reads.json n_sessions 43; per_session ids == the 43 non-excluded session ids.
+#14 CONFIRMED: Identity EXACT on every one of 258 (session, mask) pairs; 258 = 43 × 6
+   evidence: For the six non-M0 masks × 43 sessions = 258 identity dicts, all {ok:true, shadow_p_a_vs_recorded_abs 0.0, choice_read_verify_kl 0.0, shadow_forward_vs_choice_read_abs_dpa 0.0}; M0 (the shadow) carries no identity field and is not counted; evaluation.identity n_pairs 258.
+#15 CONFIRMED: LOSO probes use 200-shuffle nulls
+   evidence: k1_analysis.json n_shuffles 200; analysis.py N_SHUFFLES = 200 (line 63); analyze_run.txt '200 shuffles'.
+#16 CONFIRMED: First block's sign at the read reads .85–.89 across L50–L58
+   evidence: g3_firstsign_read_M L50–L58 auc_loso min .8469 (L58) max .8886 (L56) → .85–.89.
+#17 CONFIRMED: …and .68–.71 at L59–L63
+   evidence: g3_firstsign_read_M L59–L63: .683 .697 .685 .681 .714 → .68–.71.
+#18 CONFIRMED: G3 median over L51–L62 is .861
+   evidence: Recomputed median of the 12 values = .86101; evaluation.G3.median_auc 0.861005949.
+#19 CONFIRMED: G3 bar is .90
+   evidence: analysis.py G3_MEDIAN = 0.90 (line 62); PROPOSAL-k §1.4 G3 '≥ .90'; evaluation.G3.bar 0.9.
+#20 CONFIRMED: Binding at label A's token reads .88 at L51 then .76 → .64
+   evidence: g1_labelA_token_M: L51 .884, L52 .758, L61 .639, L62 .639.
+#21 CONFIRMED: G1 A-token median .653 against bar .90
+   evidence: Recomputed median L51–L61 = .65279; evaluation.G1.median_auc_labelA 0.6527853; bar labelA 0.9.
+#22 CONFIRMED: Binding at label B's token reads .70 at L51
+   evidence: g1_labelB_token_M L51 auc_loso .699 → .70.
+#23 CONFIRMED: G1 B-token median .632 against bar .75
+   evidence: Recomputed median L51–L61 = .63169; evaluation.G1.median_auc_labelB 0.6316928; bar labelB 0.75.
+#24 CONFIRMED: Exactly two band layers (L55, L56) of the G1 B row are at null
+   evidence: g1_labelB_token_M above_null over L51–L61: false only at 55 and 56.
+#25 CONFIRMED: Binding at the read reads .47–.52 at every layer, none above null
+   evidence: g2_read_M L49–L63 min .471 (L50) max .516 (L61/L62); above_null false at all 15; evaluation.G2.n_above 0.
+#26 CONFIRMED: Random direction's first-block sign reads .94–.95 at L51–L53 at the read
+   evidence: g3_firstsign_read_R_comparator L51 .939, L52 .950, L53 .941.
+#27 REFUTED: The axis reads .88 at the same layers (L51–L53) at the read
+   evidence: g3_firstsign_read_M L51 .877, L52 .884, L53 .862 — the entry's own later line gives .877/.884/.862; at L53 the axis reads .86, not .88.
+   correction: 'where the axis reads .88/.88/.86' (or '.86–.88').
+#28 CONFIRMED: The random comparator beats the axis at the decision token at L51–L53 (and L54–L56)
+   evidence: Per-layer comparator > axis: L51 .939>.877, L52 .950>.884, L53 .941>.862, L54 .914>.860, L55 .889>.875, L56 .900>.889 (not at L50: .813<.853).
+#29 CONFIRMED: Design ledger slip (18) is stated in ADDENDUM-k1 §0.2
+   evidence: ADDENDUM-k1.md:44-64 '### 0.2 Slip (18), design seat' … 'Design count: eighteen.'
+#30 CONFIRMED: No verdict quantity exists in Stage 1; nothing re-scores
+   evidence: PROPOSAL-k §1 heading 'no behavioral verdict'; k1_sessions.json '_no_verdict'; k1_analysis.json has no verdict/score field; ADDENDUM:9 'Stage 1's verdict is not re-scored'.
+#31 CONFIRMED: Watermark commit is ebcb206
+   evidence: git log -1: HEAD = ebcb206 'PROPOSAL-k STAGE 1 LAUNCHED…'; k1_reads.json proposal_and_law_at_run.gate_commits.HEAD 'ebcb206'.
+#32 CONFIRMED: Run launched 17:01:31 UTC 2026-09-09
+   evidence: RESULTS.md:24 launch entry and commit ebcb206 message: 'LAUNCHED 17:01:31 UTC'. Note: the log's first line is the INVOCATION and carries no timestamp itself.
+#33 CONFIRMED: The launch entry is commit ebcb206
+   evidence: git log -1 ebcb206: 'PROPOSAL-k STAGE 1 LAUNCHED 17:01:31 UTC under the detached protocol…'.
+#34 CONFIRMED: Log file exists at results/raw/2026-09-09_k1_stage1_run.log
+   evidence: ls: 9434 bytes, mtime 2026-09-09 22:53:57 UTC.
+#35 CONFIRMED: Analysis file exists at results/raw/2026-09-09_k1_analyze_run.txt
+   evidence: ls: 3791 bytes, mtime 2026-09-10 00:09:27 UTC.
+#36 CONFIRMED: Gate line names proposal 702f997
+   evidence: Run log sessions gate line 'gate: proposal 702f997, CLAUDE.md 702f997, analyzer 8d2a7a6, HEAD 702f997'; k1_sessions.json gate['PROPOSAL-k-echo-channel.md'] '702f997'.
+#37 CONFIRMED: Gate line names CLAUDE.md 702f997
+   evidence: Same gate line; k1_sessions.json gate['CLAUDE.md'] '702f997'.
+#38 CONFIRMED: Gate line names analyzer 8d2a7a6
+   evidence: Same gate line; k1_sessions.json gate['scripts/k1_analyze.py'] '8d2a7a6'.
+#39 CONFIRMED: Gate line names HEAD 702f997 for the sessions run
+   evidence: Sessions gate line 'HEAD 702f997'; k1_sessions.json gate.HEAD '702f997'.
+#40 CONFIRMED: HEAD was ebcb206 for the reads
+   evidence: Run log reads gate line 'gate: proposal 702f997, CLAUDE.md 702f997, HEAD ebcb206'; k1_reads.json gate_commits.HEAD 'ebcb206'.
+#41 CONFIRMED: Sessions 48/48 complete
+   evidence: Run log 'sessions: 48/48'; k1_sessions.json complete true, n_on_disk 48.
+#42 CONFIRMED: 5.34 h of session time
+   evidence: Sum of wall_clock.per_session_s = 19,241 s = 5.3447 h → 5.34.
+#43 CONFIRMED: Mean session time 401 s over 48
+   evidence: wall_clock.mean_session_s 400.854 → 401.
+#44 CONFIRMED: Mean 446 s over the 43 valid sessions
+   evidence: Mean of per_session_s over the 43 non-excluded = 445.68 → 446.
+#45 CONFIRMED: Maximum 1,072 s, session s36
+   evidence: max(per_session_s) = 1071.77 at index 36; run log 's36 … 1072s'.
+#46 CONFIRMED: Sessions artifact written 22:22 UTC
+   evidence: stat (TZ=UTC) data/k/k1_sessions.json mtime 2026-09-09 22:22:17; the run log's 'wrote …k1_sessions.json' line itself carries no timestamp.
+#47 CONFIRMED: Reads: 43 × (six masks + M0 shadow) = 7 masks per session
+   evidence: k1_reads.json: every per_session entry has 7 mask keys ['M+A','M0','M+B','R+A','R+B','M++','R++'].
+#48 CONFIRMED: Reads took 31.6 min
+   evidence: Run log 'reads: 43/43 complete=True in 31.6 min'; wall_clock_s_this_run 1898.73 s = 31.65 min.
+#49 CONFIRMED: 7.35 s per mask
+   evidence: Mean of the 258 per_session[].seconds_per_mask values = 7.354.
+#50 CONFIRMED: STAGE1_EXIT=0 at 22:53:57 UTC
+   evidence: Last line of run log: 'STAGE1_EXIT=0 Wed Sep  9 22:53:57 UTC 2026'.
+#51 CONFIRMED: 216 LOSO jobs = 12 families × 18 layers
+   evidence: k1_analysis.json probes: 12 family keys × 18 layer keys; analyze_run.txt '216 jobs'.
+#52 CONFIRMED: Analysis took 75.5 min on 8 workers
+   evidence: analyze_run.txt 'probes done in 75.5 min'; invocation 'k1_analyze.py --run' with --workers default 8 (scripts/k1_analyze.py:117) and run_probes default workers=8 (analysis.py:230).
+#53 CONFIRMED: ANALYZE_EXIT=0 at 00:09:27 UTC 2026-09-10
+   evidence: Last line of analyze_run.txt: 'ANALYZE_EXIT=0 Thu Sep 10 00:09:27 UTC 2026'.
+#54 CONFIRMED: Artifacts exist at data/k/k1_sessions.json, k1_reads.json, k1_analysis.json
+   evidence: ls data/k/: all three present (536,888 / 1,409,848 / 47,564 bytes).
+#55 CONFIRMED: Residual stacks are 43 local npz with fingerprints in the reads record
+   evidence: 43 files data/k/k1_resid_s*.npz; every per_session entry has npz_sha16_by_key with 7 keys.
+#56 CONFIRMED: Model is mlx-community/Qwen3.6-27B-4bit
+   evidence: k1_sessions.json provenance.model_id 'mlx-community/Qwen3.6-27B-4bit'.
+#57 CONFIRMED: mlx 0.31.2 / mlx-lm 0.31.3
+   evidence: provenance.library_versions {mlx 0.31.2, mlx-lm 0.31.3}.
+#58 CONFIRMED: Kernel path gdn_inference_mode ops with fused disabled
+   evidence: provenance.gdn_inference_mode 'ops (fused disabled)' in both sessions and reads JSON.
+#59 CONFIRMED: Choice window 8,192
+   evidence: provenance.choice_window_declared 8192.
+#60 CONFIRMED: legacy_truncate_512 is false
+   evidence: provenance.legacy_truncate_512 false.
+#61 CONFIRMED: 0 encodes clipped
+   evidence: provenance.n_encodes_clipped 0 (sessions and reads).
+#62 CONFIRMED: Audit v2 sha16 7aa235d25eeb66dc recomputed and matches
+   evidence: Run log 'v2 sha16 7aa235d25eeb66dc (recomputed 7aa235d25eeb66dc, verified)'; same sha in RESULTS.md:52 (launch), :878 (format recon), :3466.
+#63 CONFIRMED: Audit v3 exclusions and v5 advisories in effect
+   evidence: audit_of_record.version 'audit-v3 exclusions (e2b_audit_v2 + content-class-v4 exclusion-bearing) + content-class-v5 ADVISORIES (task_echo, payload_echo, wrong_task by task id)'.
+#64 CONFIRMED: Roster of record used
+   evidence: roster_of_record [[granite,plaza],[prism,slate],[velvet,walnut],[ridge,saddle]] = the roster in the format recon and launch entry (RESULTS.md:52,168).
+#65 CONFIRMED: Draw seed 20260909
+   evidence: draw_seed 20260909; run log 'draw seed 20260909'.
+#66 CONFIRMED: Campaign key k1-F2
+   evidence: Every session rng_key 'k1-F2'; run log 'campaign key k1-F2'.
+#67 CONFIRMED: Temperature 0.7
+   evidence: k1_sessions.json temp 0.7; identity.temp 0.7.
+#68 CONFIRMED: Scope e2a
+   evidence: k1_sessions.json scope 'e2a'; every session exclusion_scope 'e2a'.
+#69 CONFIRMED: steered is False on every round
+   evidence: All 438 rounds (180 forced + 258 free) steered == false; acceptance.sham_only_every_round true.
+#70 CONFIRMED: The 5(e) primitive is absent
+   evidence: acceptance.statepresent_absent true (k1_stage1.py:283: 'valence_core.e2b.statepresent' not in sys.modules).
+#71 CONFIRMED: scaffold_absorption 0
+   evidence: No round degen startswith 'audit:special:' (k1_stage1.py:279 input); hair-trigger threshold 0 and bars_fired [].
+#72 CONFIRMED: template_breakage 0
+   evidence: walk n_walked − n_reconstructed = 48 − 48 = 0; bars_fired [].
+#73 CONFIRMED: round_degeneracy 5/438 against p0 .02 by exact binomial: not fired
+   evidence: k1_stage1.py:278 feeds (counters.audit_degenerate=5, n_rounds=438); declared_bars round_degeneracy p0 0.02, alpha .05; P(X≥5 | 438, .02) = .938 — not fired; bars_fired [].
+#74 CONFIRMED: Excluded under run scope 5/48
+   evidence: exclusions.run_scope 5; run log 'excluded 5/11'.
+#75 CONFIRMED: s9 excluded lexical:slate at forced0
+   evidence: sessions[9].exclude_reason 'lexical:slate@forced0'; rounds[0].lexical 'slate'.
+#76 CONFIRMED: s9 forced0 text verbatim 'Time: 0.61s | Tokens: 23 | Perplexity: 5.38 | Config: slate'
+   evidence: sessions[9].rounds[0].text exactly that string; transcript dump grep count 1.
+#77 CONFIRMED: s21 excluded null_response at forced0, a bare code fence
+   evidence: sessions[21].rounds[0].text == '```', content_label 'null_response', exclude_reason 'content:null_response@forced0'.
+#78 CONFIRMED: s22 excluded audit:frame at forced0 with '=== Config evaluation session ==='
+   evidence: sessions[22].rounds[0].text == '=== Config evaluation session ===', degen 'audit:frame:Config evaluation session'.
+#79 CONFIRMED: s26 excluded audit:junk at forced3, text ending '…dishes in round 4 — active config: ridge]'
+   evidence: sessions[26].rounds[3].text 'Would you mind not leaving dishes in round 4 — active config: ridge]' (em dash, closing bracket); exclude_reason '@forced3'.
+#80 CONFIRMED: s46 excluded preamble_without_content at forced0 with the coffee-cart preamble
+   evidence: sessions[46].rounds[0].text == 'Here are some creative name suggestions for a small coffee cart:'; content_label 'preamble_without_content'.
+#81 CONFIRMED: The 43 read are exactly the 43 with a first choice
+   evidence: Set of k1_reads.json session ids == {i : sessions[i].choices non-empty} (both the 43 non-excluded); n_eligible_excluded_under_run_scope 0.
+#82 CONFIRMED: The analyzer's 'all with a pick' beside-figure is the same set of 43
+   evidence: n_sessions 43 = n_sessions_valid 43; evaluation.beside_all_with_first_pick is null because k1_analyze.py:92 computes the beside probes only when the all-with-a-pick set differs from the valid set — the sets coincide, so no separate figure was emitted.
+#83 CONFIRMED: Gate domain declared as valid sessions with the all-with-a-pick figure beside (rule 28(a))
+   evidence: analysis.py docstring lines 22-26 'DOMAIN (rule 28(a), declared): … VALID sessions … all-with-a-first-pick figure is reported beside (rule 23)'; k1_reads.json domain_note; evaluation.domain string. (Declared in the analyzer and reads artifact, not in PROPOSAL-k §1.4.)
+#84 CONFIRMED: Strict scope excludes 11/48
+   evidence: exclusions.strict 11; 11 sessions with strict_excluded true (9,13,17,21,22,26,35,36,38,41,46).
+#85 CONFIRMED: s13 free5 is null_response
+   evidence: sessions[13].choices[5].content_label 'null_response', text '"'.
+#86 CONFIRMED: s38 free0 is null_response
+   evidence: sessions[38].choices[0].content_label 'null_response', text '"'.
+#87 CONFIRMED: s35 free2 and free4 are null_response
+   evidence: sessions[35].choices[2] and [4] content_label 'null_response', text '"'.
+#88 CONFIRMED: s17 free4 is audit:junk with '=== Completion ==='
+   evidence: sessions[17].choices[4].degen 'audit:junk:(?im)^\s*={2,}[^\n]*={2,}\s*$', text '=== Completion ==='.
+#89 CONFIRMED: s41 free5 is audit:junk with '=== Final output ==='
+   evidence: sessions[41].choices[5].degen audit:junk…, text '=== Final output ==='.
+#90 CONFIRMED: s36 free5 is audit:frame
+   evidence: sessions[36].choices[5].degen 'audit:frame:Config evaluation session'.
+#91 CONFIRMED: All six strict hits after their first choice; the six remain valid and appear in the reads
+   evidence: All six hits are free rounds (free0–free5, i.e. at or after the first choice's generation, after the first read); s13,s17,s35,s36,s38,s41 have excluded=false and are in k1_reads.json sessions.
+#92 CONFIRMED: 438 rounds: 180 forced, 258 free
+   evidence: Sum len(rounds)=180, sum len(choices)=258, total 438.
+#93 CONFIRMED: audit_degenerate 5 (junk 3, frame 2)
+   evidence: counters.audit_degenerate {total 5, junk 3, frame 2}; recount of degen fields: junk s17,s26,s41; frame s22,s36.
+#94 CONFIRMED: content_exclusion 6 (null_response 5, preamble 1)
+   evidence: counters.content_exclusion {6: null_response 5, preamble_without_content 1}; recount: null s13,s21,s35×2,s38; preamble s46.
+#95 CONFIRMED: content_advisory 4 (payload_echo 2, task_echo 2)
+   evidence: counters.content_advisory {4: payload_echo 2, task_echo 2}; recount of advisory fields gives exactly those four rounds.
+#96 CONFIRMED: payload_echo fired on s7 and s19 at forced1
+   evidence: sessions[7].rounds[1].advisory ['content:payload_echo']; sessions[19].rounds[1].advisory same.
+#97 CONFIRMED: Payload 'The meeting has been moved to 3pm.' returned unchanged
+   evidence: Both texts == 'The meeting has been moved to 3pm.'; tasks 'Reword in a warmer tone: The meeting has been moved to 3pm.' / 'Soften the tone of this notice: …'.
+#98 CONFIRMED: task_echo fired on s29 free0 and free4
+   evidence: sessions[29].choices[0] and [4] advisory ['content:task_echo'].
+#99 CONFIRMED: lexical counter 1
+   evidence: counters.lexical {total 1, slate 1}; only s9 forced0 has a non-null lexical field.
+#100 CONFIRMED: low_label_mass 7/258 choices
+   evidence: Count of choices[].low_label_mass true = 7; counters.low_label_mass total 7.
+#101 CONFIRMED: termination 0
+   evidence: counters.termination total 0; no round termination true.
+#102 CONFIRMED: cap_hit 0
+   evidence: counters.cap_hit total 0; no round cap_hit true.
+#103 CONFIRMED: post_choice_degeneracy 7 = six strict hits + s35's second
+   evidence: counters.post_choice_degeneracy total 7; enumerated post-choice degenerate rounds: s13 f5, s17 f4, s35 f2, s35 f4, s36 f5, s38 f0, s41 f5 = 7.
+#104 CONFIRMED: Mean 15.1 tokens per forced round
+   evidence: Mean n_tok over 180 forced rounds = 15.056 → 15.1.
+#105 CONFIRMED: Mean 15.5 tokens per free round
+   evidence: Mean n_tok over 258 free rounds = 15.516 → 15.5.
+#106 CONFIRMED: Retention 21 tokens (20 in 9, 21 in 22, 22 in 12)
+   evidence: k1_reads.json retention_tokens.last_forced_end_to_read histogram {20:9, 21:22, 22:12}; 9+22+12=43; mode/median 21.
+#107 CONFIRMED: First block's end to read: mean 110.9, range 88–141
+   evidence: retention_tokens.first_block_end_to_read mean 110.907, min 88, max 141 (matches sessions tokens_forced_end_to_first_read.forced1).
+#108 CONFIRMED: Label tokens 9 (menu-first) and 7 (menu-second) before the read in all 43
+   evidence: read_position − label_positions[menu_a] = 9 and − [menu_b] = 7 in all 43 entries.
+#109 CONFIRMED: The 9/7 offsets match the recon
+   evidence: Stage C entry (RESULTS.md ~1788-1790, 1808): label_a's token '9 tokens before the read', label_b's '(7 tokens)', '9 vs 7 tokens'.
+#110 REFUTED: L40/L44/L48 read exactly .500 in every family
+   evidence: Nine injection-contrast families read exactly 0.5 at L40/44/48, but the three text-only families do not: textonly_startorder_read .978/.991/1.000, label_a 1.00/1.00/1.00, label_b 1.00/1.00/1.00 (analyze_run.txt prints 0.98* 0.99* 1.00* for the read row).
+   correction: 'L40/L44/L48 read exactly .500 in every state-contrast family (the nine rows below); the M0 text-only rows, which carry no injection, read .98–1.00 there.'
+#111 CONFIRMED: Steering layer L48 and below bit-identical to the shadow
+   evidence: k1.py LAYER = 48; resid_sha16_by_layer at 40/44/48 equal to M0's for all 258 masks (774 cells, 0 mismatches); L49 fingerprints differ.
+#112 CONFIRMED: Table rows are the analyzer's families with targets as §1.4
+   evidence: analysis.py families() lines 202-216: g1 A/B token M+A vs M+B (and R), g2 read same target, g3 firstsign M+A∪M+B by a_first, secondsign complement (1−a_first), R comparator; PROPOSAL-k §1.4 G1–G3 targets identical.
+#113 CONFIRMED: 18 probed layers are L40, L44, L48 and L49–L63
+   evidence: probes layer keys ['40','44','48','49',…,'63']; k1_reads.json capture_layers same.
+#114 CONFIRMED: G1 label A axis row values and stars
+   evidence: Recomputed 2dp: .51 .51 .88* .76* .69* .68* .66* .65* .65* .65* .65* .65* .64* .64* .65*; above_null true L51–L63 only.
+#115 CONFIRMED: G1 label B axis row values and stars
+   evidence: .51 .51 .70* .69* .65* .63* .60 .62 .62* .68* .64* .63* .62* .65* .63*; above_null false at L49,L50,L55,L56.
+#116 CONFIRMED: Label A random comparator row
+   evidence: .52 .52 .70* .64* .64* .59 .57 .56 .55 .56 .57 .57 .57 .57 .57; stars L51–L53 only.
+#117 CONFIRMED: Label B random comparator row
+   evidence: .51 .51 .66* .62 .59 .57 .56 .56 .56 .61 .59 .56 .56 .59 .59; star at L51 only.
+#118 CONFIRMED: G2 read axis row
+   evidence: .50 .47 .49 .48 .48 .47 .51 .50 .50 .49 .52 .51 .52 .52 .51; no above_null.
+#119 CONFIRMED: G2 read random row
+   evidence: .49 .48 .50 .49 .49 .49 .49 .49 .50 .50 .51 .50 .50 .50 .50; no above_null.
+#120 CONFIRMED: G3 read axis row
+   evidence: .61 .85* .88* .88* .86* .86* .87* .89* .87* .85* .68* .70* .69* .68* .71*; stars L50–L63.
+#121 CONFIRMED: Second block's sign beside row
+   evidence: .62 .85* .87* .89* .86* .86* .88* .89* .88* .89* .70* .71* .69* .68* .67*; stars L50–L63.
+#122 CONFIRMED: G3 read random comparator row
+   evidence: .61 .81* .94* .95* .94* .91* .89* .90* .81* .82* .63* .64* .65* .63* .61; above_null false at L49 and L63 only.
+#123 CONFIRMED: Shuffle 95th percentiles run .60–.72 in every family
+   evidence: Across all 12 families × 18 layers shuffle95 min .598 (g1_labelA_token_R_comparator) → .60, max .716 (g3_secondsign beside) → .72; L49–L63 only: .599–.703.
+#124 CONFIRMED: n = 86 rows, 43 groups
+   evidence: families() two(): rows = concat(M+A, M+B) = 2×43 = 86, groups = 43 session ids. Note: the three text-only families have 43 rows (one M0 row per session).
+#125 CONFIRMED: G1 A row above null at every band layer L51–L61
+   evidence: above_null true for L51–L61 (and L62, L63); evaluation.G1.above_null_every_layer.labelA true.
+#126 CONFIRMED: G1 registered band L51–L61
+   evidence: analysis.py G1_BAND = range(51,62); PROPOSAL-k §1.4 'median AUC over L51–L61'; evaluation.G1.band [51,61].
+#127 CONFIRMED: Random comparator medians over the G1 band .571 / .571
+   evidence: Recomputed: A .57112, B .57058 → .571/.571; evaluation.G1.comparator_R_median matches.
+#128 CONFIRMED: G2: none of L49–L63 above null; max .516
+   evidence: above_null all false; max auc .5165 (L61/L62) → .516; evaluation.G2.max_auc 0.51650.
+#129 CONFIRMED: G2 comparator's max .508
+   evidence: g2_read_R_comparator max over L49–L63 = .5078 (L59) → .508.
+#130 CONFIRMED: G3 registered band L51–L62
+   evidence: analysis.py G3_BAND range(51,63); PROPOSAL-k §1.4 'median AUC over L51–L62'; evaluation.G3.band [51,62].
+#131 CONFIRMED: G3 row above null at every band layer
+   evidence: above_null true L50–L63; evaluation.G3.above_null_every_layer true.
+#132 REFUTED: The fall-off at L59–L63 is inside the registered band
+   evidence: Band is L51–L62 (G3_BAND); L63 is outside it. The fall-off spans L59–L63, of which L59–L62 are in-band.
+   correction: 'the fall-off at L59–L63 begins inside the registered band (L59–L62 are band layers; L63 lies outside it)'.
+#133 CONFIRMED: G3 comparator's median over L51–L62 is .854
+   evidence: Recomputed .85370; evaluation.G3.comparator_R_median 0.8537047.
+#134 CONFIRMED: Second block's row computed independently with its own fit and null stream
+   evidence: families(): g3_secondsign uses target 1−a_first (separate fit_lr call per family/layer); run_probes seeds each family's null with seed + 1000*fi (analysis.py:244), a distinct stream per family.
+#135 CONFIRMED: Second-block row differs from first-block by up to .041 (L58) and .046 (L63), .046 the max
+   evidence: Per-layer difference: L58 +.0406, L63 −.0460; max |diff| = .04597 at L63.
+#136 CONFIRMED: Published probe is 300 steps full-batch GD from a seed-7 random init
+   evidence: probe.py:19 LR_SEED, LR_ITERS = 7, 300; fit_lr: rng=default_rng(seed); w = rng.normal(0, 0.01, d); loop over iters with full-batch gradient Xf.T @ (p−y)/len(y).
+#137 CONFIRMED: Procedure is discrim.logistic_auc and lives in valence_core/echo/probe.py
+   evidence: probe.py docstring lines 3-5 'The classifier is discrim.logistic_auc's exact procedure … rewritten'; analysis.py:53 imports loso_auc, shuffle_null from ..echo.probe.
+#138 CONFIRMED: Label flip maps the optimum to −w but not the trajectory from the same init
+   evidence: fit_lr init w ~ N(0,.01) from seed 7 regardless of y, b=0; standardization label-independent; no symmetrisation step — flipping y gives the mirrored optimum but a non-mirrored GD path from the unmirrored init.
+#139 CONFIRMED: Analyzer's own note anticipated third-decimal agreement
+   evidence: analysis.py:301-303 second_block_note '…so the two figures can differ at the third decimal -- reported beside, no bar'; same string in evaluation.G3.second_block_note.
+#140 CONFIRMED: No bar rides on the beside row
+   evidence: gate_g3 uses only g3_firstsign_read_M for median/above-null; beside median reported without bar; PROPOSAL-k §1.4 'The second block's sign is reported beside'.
+#141 CONFIRMED: The same probe procedure scores every family here and in the recon
+   evidence: run_probes applies loso_auc/shuffle_null to all 12 families; Stage B entry (RESULTS.md ~1900) 'Classifier unchanged (standardized L2 logistic regression, discrim.logistic_auc's published hyperparameters)'; recon apparatus entry :2535 'Probe: valence_core/echo/probe.py'. Note: the recon's statistic was grouped 10-fold with LOSO beside; the classifier/fit is identical.
+#142 REFUTED: Text-only rows read .94–1.00 at the read position
+   evidence: textonly_startorder_read over the 18 layers: .98 .99 1.00 .98 .96 .94 .94 .96 .94 .85 .83 .80 .82 .82 .81 .77 .74 .71 — min .713 (L63); .94–1.00 holds only through L54.
+   correction: '.71–1.00 at the read (.94–1.00 through L54, falling to .71 at L63)'.
+#143 CONFIRMED: Text-only rows read .98–1.00 at both label tokens
+   evidence: label_a min .976 (L58) → .98, max 1.000; label_b min .987 → .99, max 1.000.
+#144 CONFIRMED: M0 families' target is start order
+   evidence: analysis.py:214-216 'text-only baselines: the shadow rows, target = start order (A's block first)' → y = a_first.
+#145 CONFIRMED: Recon's text-only families had target = injected sign and were at null
+   evidence: Stage B entry: 'text-only baseline = the same target on the shadow rows', 'the text-only baseline is at null everywhere'; Stage C 'text-only baseline below null at 53 of 54 cells'; analysis.py docstring 'The recon's text-only rows used the as-generated pole'.
+#146 CONFIRMED: G1–G3 rows balanced within session, separable only by the injection
+   evidence: two() concatenates one M+A and one M+B row per session with opposite labels over identical text (sham, text-only sessions).
+#147 CONFIRMED: PROHIBITION asserted: no signed quantity on M+A/M+B
+   evidence: gate_g4 iterates only ('R+A','R+B','M++','R++'), signed only if m.startswith('R'); evaluation.G4.prohibition string; k1_reads.json prohibition.
+#148 CONFIRMED: R+A pick flips 4/43 = .093
+   evidence: Recount state.pick != shadow.pick over 43: 4; .0930; evaluation.G4['R+A'].n_flips 4.
+#149 CONFIRMED: R+A CP 95% [.026, .221]
+   evidence: Exact binomial recompute [.0259, .2214]; JSON [0.02593, 0.22135].
+#150 CONFIRMED: R+A |Δ logit| .031/.046/.167
+   evidence: Recomputed median .0312, mean .0457, max .1668.
+#151 CONFIRMED: R+A signed +.013, .060, 26+/17−
+   evidence: Recomputed mean +.0133, sd (ddof=1) .0605, 26 positive / 17 negative (=43).
+#152 CONFIRMED: R+B flips 3/43 = .070
+   evidence: Recount 3; .0698.
+#153 CONFIRMED: R+B CP [.015, .191]
+   evidence: Recompute [.0146, .1906].
+#154 CONFIRMED: R+B |Δ logit| .041/.052/.178
+   evidence: Recomputed .0406/.0516/.1780.
+#155 CONFIRMED: R+B signed +.005, .067, 21/22
+   evidence: Recomputed +.0047, sd .0669, 21/22 (=43).
+#156 CONFIRMED: M++ flips 2/43 = .047
+   evidence: Recount 2; .0465.
+#157 CONFIRMED: M++ CP [.006, .158]
+   evidence: Recompute [.0057, .1581].
+#158 CONFIRMED: M++ |Δ logit| .059/.067/.213
+   evidence: Recomputed .0590/.0667/.2129.
+#159 CONFIRMED: M++ is not a signed arm
+   evidence: evaluation.G4['M++'] has no signed_shift field; gate_g4 signs only masks starting with 'R'.
+#160 CONFIRMED: R++ flips 3/43 = .070
+   evidence: Recount 3; .0698.
+#161 CONFIRMED: R++ CP [.015, .191]
+   evidence: Recompute [.0146, .1906].
+#162 CONFIRMED: R++ |Δ logit| .049/.058/.218
+   evidence: Recomputed .0491/.0583/.2180.
+#163 CONFIRMED: R++ signed +.008, .076, 23/20
+   evidence: Recomputed +.0076, sd .0763, 23/20 (=43).
+#164 CONFIRMED: Recon G4-type figures at n=102: 0–1/102 flips, medians .033–.046, maxima .12–.20
+   evidence: Stage B leak table (RESULTS.md ~2010-2017, data/echo/stageB_analysis.json): M5 0/102, M6 1/102, R1–R4 0/102; medians .0327–.0457 → .033–.046; maxima .1155–.1913 (R3 → .12); the .20 top is M5x .2012 per the v1.1 commit entry's prose (RESULTS.md:211 'per-family max |Δ| .11–.20, the largest M5x .2012'), not in the printed Stage B table whose max is .1913.
+#165 CONFIRMED: Flips more frequent here on every arm than in the recon
+   evidence: .093/.070/.047/.070 all exceed the recon's 0–1/102 (≤ .0098) on the random and same-pole masks.
+#166 REFUTED: The Stage 1 CP intervals overlap the recon's rates
+   evidence: Recon rates 0–1/102 = 0–.0098. R+A [.026,.221], R+B [.015,.191], R++ [.015,.191] have lower bounds above .0098 and do not contain the recon's rates; only M++ [.006,.158] does. (The intervals do overlap the recon's own CP intervals, [0,.036] for 0/102 and [.0002,.053] for 1/102, but the entry says 'rates'.)
+   correction: 'M++'s interval contains the recon's rates; the R+A, R+B and R++ intervals lie above them (lower bounds .026/.015/.015 vs ≤ .010), though all four overlap the recon's own binomial intervals.'
+#167 REFUTED: Medians and maxima are in the same range as the recon's
+   evidence: Stage 1 medians .031/.041/.059/.049 vs recon .033–.046 (M++ .059 and R++ .049 exceed); maxima .167/.178/.213/.218 vs recon .12–.20 (M++ .213 and R++ .218 exceed).
+   correction: 'medians and maxima are of the same order, Stage 1's upper values somewhat higher (.059 vs .046 median; .218 vs .20 max)'.
+#168 CONFIRMED: Signed pseudo-shift within ±.02 with sign counts near even
+   evidence: +.013, +.005, +.008 all |x| ≤ .02; counts 26/17, 21/22, 23/20.
+#169 CONFIRMED: The recon's pure blocks read +.008/−.002
+   evidence: Stage C entry C3: 'B1x +0.0077 (sd 0.0478; 57/45), B2x -0.0017 (sd 0.0560; 50/52)' → +.008/−.002.
+#170 CONFIRMED: granite 7/12 = .58 [.28, .85], plaza 5/12
+   evidence: First-pick recount by pair: granite 7, plaza 5 of 12; .583; CP [.2767,.8483]; evaluation.G5 matches.
+#171 CONFIRMED: prism 5/9 = .56 [.21, .86], slate 4/9
+   evidence: prism 5, slate 4 of 9; .556; CP [.2120,.8630].
+#172 CONFIRMED: velvet 7/11 = .64 [.31, .89], walnut 4/11
+   evidence: velvet 7, walnut 4 of 11; .636; CP [.3079,.8907].
+#173 CONFIRMED: ridge 7/11 = .64 [.31, .89], saddle 4/11
+   evidence: ridge 7, saddle 4 of 11; 12+9+11+11 = 43.
+#174 CONFIRMED: First pick = last forced label 26/43 = .605
+   evidence: Recount choices[0].pick == rounds[3].tag: 26/43 = .6047; evaluation.G5.first_pick_is_last_forced_label {26,43}.
+#175 CONFIRMED: First pick = first block's label 17/43
+   evidence: Recount choices[0].pick == forced_tags[0]: 17/43.
+#176 CONFIRMED: First pick = menu's first-listed label 18/43
+   evidence: Recount choices[0].pick == choices[0].menu_a: 18/43.
+#177 CONFIRMED: Strict alternation over six free picks 22/43
+   evidence: Recount sessions whose 5 consecutive pick pairs all differ: 22; evaluation.G5.strict_alternation {22,43}.
+#178 CONFIRMED: Stay transitions 35/215 = .163
+   evidence: Recount 35 stays over 43×5 = 215 transitions = .1628; evaluation.G5.stay_transitions {35,215}.
+#179 CONFIRMED: Format recon's F2 had 12/24 break and 15/120 = .125 stay
+   evidence: RESULTS.md FORMAT RECON table row '| F2 | 24 | 24 / 24 | 12/24 = 0.500 | 12/24 = 0.500 |…' and 'stay transitions … F2 15/120 (.125)'.
+#180 CONFIRMED: By first label: granite 2/6, plaza 1/6, prism 2/5, slate 1/4, velvet 4/5, walnut 3/6, ridge 3/6, saddle 1/5
+   evidence: Recount grouped by forced_tags[0]: exactly those; numerators sum 17, denominators 43.
+#181 CONFIRMED: Granite, prism, velvet and ridge lead their pairs
+   evidence: 7>5, 5>4, 7>4, 7>4 per claims 170–173.
+#182 CONFIRMED: No pair's interval excludes .5
+   evidence: [.28,.85], [.21,.86], [.31,.89], [.31,.89] all contain .5.
+#183 CONFIRMED: Leading label agrees with format recon's F2 on one pair (prism/slate); F2 had saddle, prism, plaza leading and 3/3 on velvet/walnut
+   evidence: FORMAT RECON: 'F2 saddle 5/6, prism 4/6, plaza 4/6, walnut 3/6' and 'velvet/walnut splits 3/3 in F2'; Stage 1 leaders granite/prism/velvet/ridge → only prism/slate agrees.
+#184 CONFIRMED: G5 uses all 48 with the five without a pick contributing nothing (n = 43)
+   evidence: gate_g5 skips sessions with empty choices; G5.domain string; all denominators 43.
+#185 CONFIRMED: Every response of s1 numbered '1.'–'10.'
+   evidence: sessions[1] rounds+choices texts begin '1. ', '2. ', … '10. ' in order (10 rounds).
+#186 CONFIRMED: Exactly eight sessions (s2, s13, s16, s18, s30, s35, s37, s44) wrapped every response in quotation marks
+   evidence: Sessions with all 10 rounds beginning with a quotation mark (" or “): exactly {2,13,16,18,30,35,37,44}. Notes: s37 uses curly quotes from forced3 on; s16 free3 opens with " but ends with '.' (the unclosed quote the entry itself notes).
+#187 CONFIRMED: Four of five free-round null_response hits collapsed to a lone '"'
+   evidence: s13 free5, s35 free2, s35 free4, s38 free0 text == '"' (n_tok 1,2,1,1); the fifth null_response (s21 forced0) is '```'.
+#188 REFUTED: s36 prefixed and suffixed all ten responses with 🎲 'Hey everyone! Just a friendly reminder that …'
+   evidence: All ten open with '🎲 Hey everyone!', but forced0 continues 'Join us for a fun night…', forced2 'Just a quick and gentle reminder to…', free0 'Just a friendly rounds 1-4:' (no closing 🎲); 'Just a friendly reminder that' appears in 7 of 10; the closing 🎲 in 9 of 10.
+   correction: 's36 opened all ten responses with 🎲 "Hey everyone!" (seven continuing "Just a friendly reminder that …") and closed nine of ten with 🎲'.
+#189 CONFIRMED: s36's first free response contains '…Just a friendly rounds 1-4:'
+   evidence: sessions[36].choices[0].text '🎲 Hey everyone! Just a friendly rounds 1-4:'.
+#190 CONFIRMED: s36 ended with the '=== Config evaluation session ===' frame
+   evidence: sessions[36].choices[5].text ends '🎲 === Config evaluation session ==='.
+#191 CONFIRMED: s3 contains 'the soft sink … in the word "soft" is a bit weird?'
+   evidence: sessions[3].choices[3] (t14 dishes): 'Please don’t leave dishes in the soft sink, in the word "soft" is a bit weird?' — both fragments verbatim; the entry's ellipsis stands in for a single comma.
+#192 CONFIRMED: s7 'softer sink' on the dishes rewrite
+   evidence: sessions[7].rounds[0] t14: "Please don't leave dishes in the softer sink."
+#193 CONFIRMED: s12 'courteous sink'
+   evidence: sessions[12].choices[2] t14: 'Please don’t leave dishes in the courteous sink.'
+#194 CONFIRMED: s23 'dishes in the session'
+   evidence: sessions[23].rounds[0] t14: 'Please do not leave dishes in the session.'
+#195 CONFIRMED: s33 'dishes in the house'
+   evidence: sessions[33].rounds[3] t14: 'Please don’t leave dishes in the house.'
+#196 CONFIRMED: s16 'the considerate way' with an unclosed quote
+   evidence: sessions[16].choices[3] t14: '"Please rinse and stack your dishes … in the considerate way.' — one quote character (odd).
+#197 CONFIRMED: s17 'the/personal-life'
+   evidence: sessions[17].choices[0] t14: 'Please don’t leave dishes in the/personal-life'.
+#198 CONFIRMED: s0 'the soft glow of the evening'
+   evidence: sessions[0].choices[0] t14: 'Could you please rinse and put away any dishes in the soft glow of the evening?'
+#199 CONFIRMED: s15 'one package at a configs' on the courier task
+   evidence: sessions[15].choices[3] t15 'Offer a catchphrase for a cycle courier outfit.': '…one package at a configs.'
+#200 CONFIRMED: All (b) items are on the dishes rewrite except s15's courier item
+   evidence: Cited rounds' task ids: s3,s7,s12,s23,s33,s16,s17,s0 all t14 (dishes); s15 t15 (courier).
+#201 CONFIRMED: (c) comprises s9 metadata line, s22 frame, s26 header fragment, and three === lines in s17, s36, s41
+   evidence: '===' occurs in exactly four rounds: s17 free4, s22 forced0 (listed separately as the frame), s36 free5, s41 free5 — the 'three' (s17,s36,s41) plus s22 reconcile; s9 text and s26 '…round 4 — active config: ridge]' as cited.
+#202 CONFIRMED: s29 free0 echo has 'choice' inserted; free4 verbatim
+   evidence: free0 text 'One sentence to caption a choice photo of unpaired socks…' vs task 'One sentence to caption a photo of…'; free4 text == task 'Write one sentence about a bakery window just before closing.'
+#203 CONFIRMED: v5 advisories fired on exactly these four and nothing else
+   evidence: Non-empty advisory over all 438 rounds: exactly s7 forced1, s19 forced1, s29 free0, s29 free4.
+#204 CONFIRMED: s41 free4 duplicated-sentence response with 'the model's last warm loaves', 47 tokens, unflagged
+   evidence: sessions[41].choices[4]: n_tok 47, degen null, advisory [], content_label null, lexical null; text = two near-duplicate sentences both opening 'Through the bakery window, the … last warm loaves glow softly,' (second differs after that clause) — a near-duplicate rather than an identical repeat.
+#205 CONFIRMED: s14 forced1 contains markdown bold
+   evidence: sessions[14].rounds[1].text '**The dawn ferry crosses the misty waters**'.
+#206 CONFIRMED: Umbrella emoji in s27, s34, s41
+   evidence: 🌂 appears in exactly three rounds: s27 free0, s34 forced3, s41 free3; no ☂/☔ anywhere.
+#207 CONFIRMED: s24 is a terse session
+   evidence: s24 mean n_tok 8.8, the lowest of the 43 valid sessions (next: s7 9.2, s12 10.1).
+#208 CONFIRMED: Four of five exclusions fired at forced round 0
+   evidence: s9, s21, s22, s46 @forced0; s26 @forced3.
+#209 CONFIRMED: Format recon's F2 showed 0/240 v2 hits
+   evidence: RESULTS.md:929 'F2 240 rounds: 0 v2, 0 exclusion-bearing content, 2 wrong_task advisories'.
+#210 CONFIRMED: s21 and s46 both opened on the coffee-cart naming task
+   evidence: sessions[21].rounds[0].task t08 / sessions[46].rounds[0].task t08 'Suggest a name for a small coffee cart.'
+#211 CONFIRMED: Random direction's first-block sign .939/.950/.941 at L51–L53
+   evidence: g3_firstsign_read_R_comparator .939/.950/.941.
+#212 CONFIRMED: Axis .877/.884/.862 at L51–L53
+   evidence: g3_firstsign_read_M .877/.884/.862.
+#213 CONFIRMED: Random .91/.89/.90 at L54–L56 against axis .86/.88/.89
+   evidence: Random .914/.889/.900; axis .860/.875/.889.
+#214 CONFIRMED: Random comparator decays below the axis from L57 onward
+   evidence: random < axis at every layer L57–L63 (.813<.871 … .615<.714).
+#215 REFUTED: At the label tokens the comparator reads below the axis everywhere (.70 vs .88 at L51 at A's token)
+   evidence: .70 vs .88 at L51 holds, and comparator < axis at every layer L51–L63 for both tokens; but at L49/L50 the comparator is above the axis (A's token .522/.519 vs .508/.510; B's .514/.512 vs .508/.511) and equal at L40/44/48.
+   correction: 'at the label tokens the comparator reads below the axis at every layer from L51 (.70 vs .88 at L51 at A's token); at the null layers L49–L50 the two are indistinguishable (.51–.52)'.
+#216 CONFIRMED: In the recon the random direction matched the axis to L58 and decayed after
+   evidence: Stage C FLAG: 'the random direction's FIRST-round sign reads as well as the axis's through L58 (.99) and falls to .73–.86 after'; Stage B 'matching at L49–L58 and decaying faster after'.
+#217 CONFIRMED: ADDENDUM-k1 §2 proposes to gate on the band where the comparator leads
+   evidence: ADDENDUM §2.2 'median AUC over L50–L58 ≥ .80'. The comparator leads at L51–L56 (six of the nine band layers) and on the band median (.889 vs .871), trailing at L50, L57, L58. Note: the claim's parenthetical 'L51–L56' is not §2's band; §2's band is L50–L58.
+#218 CONFIRMED: The blockquote is verbatim ADDENDUM-k1 §0.2
+   evidence: Programmatic comparison after stripping '> ' and normalising whitespace: entry lines 207-225 == ADDENDUM-k1.md lines 46-64 (True), including both display lines, the bold span and 'Design count: eighteen.'
+#219 CONFIRMED: ADDENDUM-k1 is design draft v1.0 with PI go 2026-09-11
+   evidence: ADDENDUM-k1.md:5 'Status: DRAFT v1.0 — design-seat authored; PI go 2026-09-11'.
+#220 CONFIRMED: ADDENDUM-k1 to be committed on the PROPOSAL-k chain after this entry; currently untracked
+   evidence: git status '?? ADDENDUM-k1.md'; ADDENDUM §4 steps 0–1: STAGE 1 entry commits first, then 'This document commits, appended to the PROPOSAL-k chain'.
+#221 CONFIRMED: Within the slip: Stage C block masks gave first-block sign .98–.99 and label-token binding 1.000 under alternating ± masks
+   evidence: Stage C entry: 'FIRST-round sign … .98–.99 at every layer from L51 to L62'; C1 FLAG 'AUC 1.000 for "this label's rounds carried +" at label_a's token (… ≥ .998 across L51–L61)' — the record's own rounding (1.000 at nine of eleven, flagged at RESULTS.md:367-369).
+#222 CONFIRMED: Within the slip: G1 and G3 bars are .90 in PROPOSAL-k
+   evidence: PROPOSAL-k §1.4: G1 ≥ .90 at label A's token (and ≥ .75 at B's); G3 ≥ .90. The slip's '(.90)' names the A-token and G3 bars; the entry's own text (lines 104-105) carries the .75 B-token bar.
+#223 CONFIRMED: Design count is eighteen
+   evidence: ADDENDUM §0.2 'Design count: eighteen.'; prior record: RESULTS.md:103-109 'slip (17)… Design count: seventeen.'
+#224 CONFIRMED: Not done: ADDENDUM referent check and commit; sign-set widening, 1b analyzer, Stage 1b (§4 steps 2–3); LOCK-k
+   evidence: ADDENDUM §4 step 2 (sign set widened, 1b analyzer), step 3 (Stage 1b reads), step 4 (LOCK-k); data/k holds only k1_* artifacts; ADDENDUM untracked; k1.py still '+1 only'.
+#225 CONFIRMED: Nothing in Stage 2 has run
+   evidence: data/k contains only k1_sessions/reads/analysis and k1_resid npz; run log ends at STAGE1_EXIT; no Stage 2 entries in RESULTS.md or git log.
+#226 CONFIRMED: G2 registered layer range is L49–L63
+   evidence: analysis.py G2_LAYERS = range(49,64); PROPOSAL-k §1.4 'all layers L49–L63'; evaluation.G2.layers [49,63].
+#227 CONFIRMED: 258 free = 43 × 6; 180 forced = 43×4 + 8 (1+1+1+4+1)
+   evidence: Every valid session has 6 choices (43×6=258); excluded sessions' forced rounds: s9 1, s21 1, s22 1, s26 4, s46 1 = 8; 172+8 = 180.

@@ -21,6 +21,267 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-11 — **PROPOSAL-k STAGE 1 — CHANNEL STUDY. G1 FAIL, G2 ABSENT,
+  G3 FAIL → branch G3_FAIL; the analyzer's sentence, verbatim from §1.5
+  and confirmed by the design seat (ADDENDUM-k1 draft v1.0 §0.1): *"The injected
+  sign does not reach the decision token in this format at f = 0.10. The
+  channel is not verifiably open; Stage 2 does not run. Concluded, not
+  answered. The next move is a design change (retention interval, dose
+  rung < 0.20, or format), by new addendum."* 48 F2 sham sessions,
+  acceptance PASS (258/258 reads at KL exactly 0.0; walk 48/48; no bar
+  fired); 43 valid — five excluded under audit v3, one each of five
+  classes, all at the forced phase, so none of the five reached a first
+  choice; masked reads on all 43 with identity EXACT on every one of 258
+  (session, mask) pairs; LOSO probes with 200-shuffle nulls. At the read
+  position the first block's sign reads .85–.89 across L50–L58 and
+  .68–.71 at L59–L63 (median over the registered L51–L62 band .861
+  against the .90 bar); the binding at label A's token .88 at L51 then
+  .76 → .64 (median .653 against .90), at label B's .70 at L51 (median
+  .632 against .75, two band layers at null); the binding at the read
+  position .47–.52 at every layer, none above null (G2 ABSENT). Banked
+  under rule 23: the norm-matched random direction's first-block sign
+  reads .94–.95 at L51–L53 at the read position where the axis reads
+  .88/.88/.86 — the random comparator beats the axis at the decision
+  token in this format. Design ledger slip (18) as stated in ADDENDUM-k1 §0.2 is
+  quoted below. Nothing here re-scores; no verdict quantity exists in
+  Stage 1. Watermark `ebcb206`; Code stamps from `date -u`.**
+  (Stamp verified at write time: `date -u` → **Fri Sep 11 04:50:45 UTC 2026**.)
+
+  - **The run (launched 17:01:31 UTC 2026-09-09, entry `ebcb206`; log
+    [`_k1_stage1_run.log`](results/raw/2026-09-09_k1_stage1_run.log),
+    analysis [`_k1_analyze_run`](results/raw/2026-09-09_k1_analyze_run.txt)).**
+    Gate line at run time: proposal `702f997`, CLAUDE.md `702f997`,
+    analyzer `8d2a7a6`, HEAD `702f997` (sessions) and `ebcb206` (reads).
+    Sessions: 48/48 complete, 5.34 h of session time, mean 401 s (446 s
+    over the 43 complete; max 1,072 s, s36); the sessions artifact
+    written 22:22 UTC. Reads: 43 sessions × (six masks + the M0 shadow) in
+    31.6 min, 7.35 s per mask, `STAGE1_EXIT=0` at 22:53:57 UTC. Analysis:
+    216 LOSO jobs (12 families × 18 layers) in 75.5 min on 8 workers,
+    `ANALYZE_EXIT=0` at 00:09:27 UTC 2026-09-10. Artifacts of record:
+    [`k1_sessions.json`](data/k/k1_sessions.json),
+    [`k1_reads.json`](data/k/k1_reads.json),
+    [`k1_analysis.json`](data/k/k1_analysis.json) (residual stacks local,
+    43 npz, fingerprints as-stored in the reads record). Provenance:
+    `mlx-community/Qwen3.6-27B-4bit`, mlx 0.31.2 / mlx-lm 0.31.3,
+    `gdn_inference_mode` ops (fused disabled), choice window 8,192,
+    `legacy_truncate_512` false, 0 encodes clipped (28(d)); audit v2
+    sha16 `7aa235d25eeb66dc` recomputed; audit v3 exclusions + v5
+    advisories; roster of record; draw seed 20260909; campaign key
+    `k1-F2`; temp 0.7; scope e2a.
+  - **Sessions (§1.2): acceptance and exclusions (rule 23 over all 48).**
+    Acceptance PASS: every choice read at verify KL exactly 0.0
+    (258/258), the e2a walk reconstructs 48/48 with seed streams matched,
+    `steered` False on every round, the 5(e) primitive absent, no bar
+    fired (scaffold_absorption 0, template_breakage 0, round_degeneracy
+    5/438 rounds against p0 .02 by exact binomial: not fired). **Excluded
+    under the run scope, 5/48, one per class:** s9 `lexical:slate` at
+    forced0 (the response was a metadata line, *"Time: 0.61s | Tokens: 23
+    | Perplexity: 5.38 | Config: slate"*); s21 `null_response` at forced0
+    (a bare code fence); s22 `audit:frame` at forced0 (*"=== Config
+    evaluation session ==="*); s26 `audit:junk` at forced3 (*"…dishes in
+    round 4 — active config: ridge]"*); s46 `preamble_without_content` at
+    forced0 (*"Here are some creative name suggestions for a small coffee
+    cart:"*). All five fired in the forced phase, so the harness stopped
+    those sessions before any free choice (0 reads each); the 43 read are
+    exactly the 43 with a first choice, and the analyzer's "all with a
+    pick" beside-figure is the same set (rule 28(a): the gate domain is
+    declared as valid sessions, the all-with-a-pick figure beside; the
+    two coincide here).
+    **Strict scope 11/48:** the five above plus six sessions with a
+    free-round hit — s13 free5 and s38 free0 `null_response`, s35 free2
+    and free4 `null_response`, s17 free4 and s41 free5 `audit:junk`
+    (*"=== Completion ==="*, *"=== Final output ==="*), s36 free5
+    `audit:frame` — all after their first choice, so they stay valid
+    under the run scope and their first-choice reads stand. **Counters
+    over all 48 sessions, 438 rounds (180 forced, 258 free):**
+    audit_degenerate 5 (junk 3, frame 2); content_exclusion 6
+    (null_response 5, preamble_without_content 1); content_advisory 4
+    (payload_echo 2 — s7 and s19 forced1, *"The meeting has been moved to
+    3pm."* returned unchanged; task_echo 2 — s29 free0 and free4);
+    lexical 1; low_label_mass 7/258 choices; termination 0; cap_hit 0;
+    post_choice_degeneracy 7 (the six strict hits plus s35's second).
+    Tokens: 15.1 per forced round, 15.5 per free round; retention from
+    the last forced round to the read 21 tokens (20 in 9 sessions, 21 in
+    22, 22 in 12), from the first block's end 110.9 (range 88–141); the
+    label tokens sit 9 (menu-first) and 7 (menu-second) tokens before
+    the read in all 43, as in the recon.
+  - **G1–G3 per layer (LOSO AUC; `*` = above the shuffle 95th percentile;
+    L40/L44/L48 read exactly .500 in every state-contrast family below —
+    the steering layer and below are bit-identical to the shadow; the M0
+    text-only rows, which carry no injection, read .98–1.00 there). Rows
+    are the analyzer's families; targets as §1.4.**
+
+    | family (target; rows) | 49 | 50 | 51 | 52 | 53 | 54 | 55 | 56 | 57 | 58 | 59 | 60 | 61 | 62 | 63 |
+    |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+    | G1 label A's token, axis ("A's block carried +"; M+A vs M+B) | .51 | .51 | .88* | .76* | .69* | .68* | .66* | .65* | .65* | .65* | .65* | .65* | .64* | .64* | .65* |
+    | G1 label B's token, axis (M+B vs M+A) | .51 | .51 | .70* | .69* | .65* | .63* | .60 | .62 | .62* | .68* | .64* | .63* | .62* | .65* | .63* |
+    | label A's token, random comparator (R+A vs R+B) | .52 | .52 | .70* | .64* | .64* | .59 | .57 | .56 | .55 | .56 | .57 | .57 | .57 | .57 | .57 |
+    | label B's token, random comparator | .51 | .51 | .66* | .62 | .59 | .57 | .56 | .56 | .56 | .61 | .59 | .56 | .56 | .59 | .59 |
+    | G2 read position, axis (same target) | .50 | .47 | .49 | .48 | .48 | .47 | .51 | .50 | .50 | .49 | .52 | .51 | .52 | .52 | .51 |
+    | G2 read position, random comparator | .49 | .48 | .50 | .49 | .49 | .49 | .49 | .49 | .50 | .50 | .51 | .50 | .50 | .50 | .50 |
+    | G3 read position, axis ("the FIRST block carried +"; M+A ∪ M+B by start order) | .61 | .85* | .88* | .88* | .86* | .86* | .87* | .89* | .87* | .85* | .68* | .70* | .69* | .68* | .71* |
+    | second block's sign, beside (complement target) | .62 | .85* | .87* | .89* | .86* | .86* | .88* | .89* | .88* | .89* | .70* | .71* | .69* | .68* | .67* |
+    | G3 read position, random comparator (R+A ∪ R+B) | .61 | .81* | .94* | .95* | .94* | .91* | .89* | .90* | .81* | .82* | .63* | .64* | .65* | .63* | .61 |
+
+    Shuffle 95th percentiles run .60–.72 in every family (n = 86 rows,
+    43 groups). **G1 FAIL:** median over L51–L61 .653 at A's token (bar
+    .90; above null at every band layer) and .632 at B's (bar .75; L55
+    and L56 at null); the random comparator's medians .571 / .571. **G2
+    ABSENT:** no layer of L49–L63 above null, max .516; the comparator's
+    max .508. **G3 FAIL:** median over L51–L62 .861 (bar .90), above null
+    at every band layer; the fall-off at L59–L62 lies inside the
+    registered band (L63, also fallen, is outside it). The comparator's
+    median .854. The second block's row is the
+    complement target computed independently (its own fit and its own
+    null stream); it differs from the first-block row by up to .041 (L58)
+    and .046 (L63) — **FLAG, apparatus:** a converged, label-flip-symmetric
+    fit would agree exactly; the published probe is not one — it is 300
+    steps of full-batch gradient descent from a seed-7 random init
+    (`valence_core/echo/probe.py`, the `discrim.logistic_auc` procedure),
+    so a label flip maps the optimum to −w but not the trajectory from
+    the same init — and the analyzer's own note anticipated third-decimal
+    agreement; no bar rides on the beside row. The same procedure scores
+    every family here and in the recon; the drift is a property of the
+    beside row's construction, not of the G3 row. **Text-only rows**
+    (the M0 shadow, target = start order) read .71–1.00 at the read
+    (.94–1.00 through L54, .71 at L63) and .98–1.00 at both label tokens:
+    the start
+    order is written in the text, so these rows are not a null control
+    for G1–G3 (whose rows are balanced within session and can only be
+    separated by the injection) — they answer whether the text encodes
+    which label came first (it does), not whether a probe could read
+    the sign from text alone, which the recon's text-only families
+    (target = the injected sign) tested and found at null. A note for
+    the 1b analyzer.
+  - **G4 — leak calibration (feeds LOCK-k; no bar; PROHIBITION asserted:
+    no signed quantity toward the +label was computed on M+A/M+B).**
+
+    | mask | π_d (pick flips) | Clopper–Pearson 95% | \|Δ logit\| median / mean / max | signed shift toward the first block's label (mean, sd, +/−) |
+    |---|---|---|---|---|
+    | R+A | 4/43 = .093 | [.026, .221] | .031 / .046 / .167 | +.013, .060, 26/17 |
+    | R+B | 3/43 = .070 | [.015, .191] | .041 / .052 / .178 | +.005, .067, 21/22 |
+    | M++ | 2/43 = .047 | [.006, .158] | .059 / .067 / .213 | — (not a signed arm) |
+    | R++ | 3/43 = .070 | [.015, .191] | .049 / .058 / .218 | +.008, .076, 23/20 |
+
+    Beside the recon's figures at n = 102 (flips 0–1/102 on the
+    same-pole, single-round and block REWARD masks — the recon tables no
+    flip figure on its random masks; medians .033–.046 and maxima .12–.19
+    on the same-pole and single-round masks, .039–.060 and .16–.21 on the
+    block masks): flips are more frequent here at n = 43 on every arm —
+    M++'s interval contains the recon's 1/102, the R+A, R+B and R++
+    intervals lie above the recon's rates (lower bounds .026/.015/.015),
+    though all four overlap the recon's own exact intervals ([0, .036]
+    for 0/102, [.000, .053] for 1/102); medians and maxima are of the
+    same order with Stage 1's upper values higher (median .059 against
+    .046; max .218 against .19); the signed pseudo-shift is within ±.02
+    with sign counts near even — on pure one-block masks, as the recon's
+    pure blocks read (+.008/−.002).
+  - **G5 — identity baseline (rule 23; all 48, the five without a pick
+    contribute nothing).** First-pick share per pair with exact 95%
+    intervals: granite 7/12 = .58 [.28, .85] / plaza 5/12; prism 5/9 =
+    .56 [.21, .86] / slate 4/9; velvet 7/11 = .64 [.31, .89] / walnut
+    4/11; ridge 7/11 = .64 [.31, .89] / saddle 4/11. First pick = the last
+    forced label (F2's "break") 26/43 = .605; = the first block's label
+    17/43; = the menu's first-listed label 18/43. Strict alternation over
+    the six free picks 22/43; stay transitions 35/215 = .163 (the format
+    recon's F2: 12/24 break, 15/120 = .125 stay). By first label, the
+    first pick landed on the first-block label in granite 2/6, plaza 1/6,
+    prism 2/5, slate 1/4, velvet 4/5, walnut 3/6, ridge 3/6, saddle 1/5
+    — a per-pair lean reappears (granite, prism, velvet, ridge lead), no
+    pair's interval excludes .5, and the leading label agrees with the
+    format recon's F2 on one pair of four (prism/slate; F2 there had
+    saddle, prism, plaza and a 3/3 split on velvet/walnut). It is what
+    LOCK-k's S arm and Δ_M's pooling must absorb.
+  - **Rule-25 read, all 48 sessions in full.** (a) **Style attractors
+    from the first task, session-wide:** every response of s1 numbered
+    "1."–"10."; eight sessions (s2, s13, s16, s18, s30, s35, s37, s44)
+    wrapped every response in quotation marks, and that attractor is the
+    mechanism of four of the five free-round `null_response` hits — the
+    response collapsed to a lone `"` (s13 free5, s35 free2 and free4,
+    s38 free0); s36 opened all ten responses with 🎲 "Hey everyone!"
+    (seven continuing "Just a friendly reminder that …") and closed eight
+    of ten with 🎲, garbled its first free response (*"…Just a friendly
+    rounds 1-4:"*, no closing die) and ended with the
+    `=== Config evaluation session ===` frame — the campaign's longest
+    session at 1,072 s. (b) **Cross-task contamination on the dishes
+    rewrite, again:** "the soft sink … in the word "soft" is a bit
+    weird?" (s3), "softer sink" (s7), "courteous sink" (s12), "dishes in
+    the session" (s23), "dishes in the house" (s33), "the considerate
+    way" (s16, unclosed quote), "the/personal-life" (s17), "the soft glow
+    of the evening" (s0); and "one package at a configs" (s15) on the
+    courier task. (c) **Scaffold and metadata reproductions:** the s9
+    metadata line with the roster tag (the lexical exclusion), the s22
+    frame, the s26 header fragment, the three `===` lines (s17, s36,
+    s41). (d) **Payload echoes** on the meeting-notice reword (s7, s19
+    forced1) and **task echoes** in s29 (free0, with "choice" inserted
+    into the echoed task; free4 verbatim) — the v5 advisories fired on
+    exactly these four and nothing else. (e) A duplicated-sentence
+    response with "the model's last warm loaves" (s41 free4, 47 tokens,
+    unflagged); markdown bold (s14 forced1); umbrella emoji (s27, s34,
+    s41); one terse session (s24). (f) The scope observation for LOCK-k:
+    the F2 forced phase is where four of five exclusions fired at round
+    0 — a first-response attractor (metadata, fence, frame, preamble)
+    that the recon's e2a sessions did not show at this rate (0/240 v2
+    hits in the format recon's F2); s21 and s46 both opened on the
+    coffee-cart naming task. None of (a)–(f) is a rate; they are the
+    read's observations for the design seat and the content-class
+    ledger.
+  - **The random-position figure, banked (ledger 23, rule 11 frame).**
+    At the read position the norm-matched random direction's first-block
+    sign reads .939/.950/.941 at L51–L53 against the axis's .877/.884/.862
+    — and .91/.89/.90 at L54–L56 against .86/.88/.89 — before decaying
+    below the axis from L57; at the label tokens the comparator reads
+    below the axis at every layer from L51 (.70 vs .88 at L51 at A's
+    token; at L49–L50 both sit at null, .51–.52). In the recon the random
+    direction matched the axis to L58 and decayed after; here it leads at
+    the decision token at L51–L56, six of the nine layers of the L50–L58
+    band the addendum's §2 proposes to gate on (the axis leads at L50,
+    L57 and L58). Descriptive; no bar; carried to the design seat with
+    the FLAG above.
+  - **Design ledger slip (18), quoted from ADDENDUM-k1 §0.2 (design
+    draft v1.0, PI go 2026-09-11; to be committed on the PROPOSAL-k chain
+    after this entry).**
+    > PROPOSAL-k's G1 and G3 bars (.90) were set from the recon's ± contrasts —
+    > Stage C's block masks, first-block sign .98–.99; label-token binding
+    > 1.000 under alternating ± masks — while the design PROPOSAL-k registered
+    > is +-versus-vehicle. The class difference under the registered masks is
+    > exactly half the recon's:
+    >
+    >     Stage C  B1 − B2  = (+,+,−,−) − (−,−,+,+) = (2, 2, −2, −2)
+    >     Stage 1  M+A − M+B = (+,+,0,0) − (0,0,+,+) = (1, 1, −1, −1)
+    >
+    > A halved linear separation landing at .86 where the full one read .98 is
+    > what the arithmetic predicts; the bar was calibrated against the wrong
+    > recon. Second consequence of the same choice: under two +/0 masks the
+    > targets "first block carried +" and "second block carried +" are perfect
+    > complements (the analyzer's "beside" row is the same number), so the
+    > primacy question PROPOSAL-k §1.1 says Stage 1 converts to record cannot
+    > be asked with those masks. Standing fix, design side: **every gate bar
+    > names the contrast it was calibrated on; a change of contrast re-derives
+    > the bar or runs the recon at the new contrast first.** Design count:
+    > eighteen.
+
+    Code's beside-note: "the same number" holds as a target identity;
+    the two rows' realised AUCs differ by up to .046 (the FLAG above).
+  - **Not done here.** ADDENDUM-k1's referent check and commit (its own
+    entry); the sign-set widening, the 1b analyzer and Stage 1b (§4 steps
+    2–3); LOCK-k. Nothing in Stage 2 has run.
+  - **Pre-commit values-check (three refuters, 227 claims; record
+    [`_k_stage1_entry_valuescheck`](results/raw/2026-09-11_k_stage1_entry_valuescheck.txt)):**
+    681 verdicts, 653 confirmed, 28 refuted lines over ten distinct
+    items, all in Code's prose and all applied before commit — the axis
+    at L53 (.86, not .88); "every family" narrowed to the nine
+    state-contrast rows; the fall-off's band membership (L63 is outside);
+    the text-only read row's full range (.71–1.00); the recon's leak
+    figures re-scoped to the masks they were tabled on and their maxima
+    (.19, .21); the interval comparison stated exactly; Stage 1's upper
+    medians and maxima above the recon's, said so; s36's counts (ten
+    openings, seven reminders, eight closing dice); "from L51" for the
+    label-token comparator; the addendum's band (L50–L58, the comparator
+    leading at six of nine). Every table cell, star, median, interval,
+    counter, exclusion, quotation (the §1.5 sentence; the §0.2 blockquote
+    with its display lines and bold) and transcript citation confirmed.
+
 - 2026-09-09 — **PROPOSAL-k STAGE 1 LAUNCHED at 17:01:31 UTC under the
   detached protocol (routing block item 3; §5 step 3): one process runs
   the 48 sham F2 sessions and then the masked reads, with the LOSO
