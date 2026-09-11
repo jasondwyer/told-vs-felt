@@ -21,6 +21,186 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-11 — **ADDENDUM-k1 (DRAFT v1.0, PI go 2026-09-11): the Appendix
+  referent check STOPS the commit — eight referents do not resolve
+  against the repo at HEAD, four of them in the design's own substance
+  (the welfare fork restated as unchanged while re-worded; the +1-only
+  guard called a build choice where the code attributes it to PROPOSAL-k
+  §0.4; 48 readable texts where 43 exist; a second-block target called
+  "no longer the complement" where it is exactly the complement) — so
+  the document is NOT committed, the sign set is NOT widened, nothing in
+  its §1 runs (the document's own rule: "Any referent that does not
+  resolve → STOP, report, no commit"; the PI's routing block repeats it).
+  The STAGE 1 entry (routing item 1) is committed at `7742e2c`
+  regardless: the addendum's §0.1 anchors now resolve. Record of the
+  check in raw. Watermark `7742e2c`; Code stamps from `date -u`.**
+  (Stamp verified at write time: `date -u` → **Fri Sep 11 05:05:28 UTC 2026**.)
+
+  - **The routing block (the PI's word, quoted so the record carries
+    it).**
+    > # ROUTING — STAGE 1 entry, then ADDENDUM-k1
+    > design seat → Jason → Code · authored per PI clock: Fri 2026-09-11 00:03 EDT (04:03 UTC) · Code stamps from `date -u`
+    > 1. PI word for the STAGE 1 entry: write and commit it (G1–G5 tables, the
+    >    43/48 with the five exclusions by class under rule 23, the analyzer's
+    >    sentence verbatim, design ledger slip (18) as stated in ADDENDUM-k1
+    >    §0.2, the random-position figure banked). Anchor exactly
+    >    `PROPOSAL-k STAGE 1 — CHANNEL STUDY`.
+    > 2. Then ADDENDUM-k1: Appendix referent check against HEAD (STAGE 1 anchor
+    >    included); commit appended to the PROPOSAL-k chain; hash = timestamp.
+    > 3. Then §4 steps 2–3: widen the echo primitive's sign set to {+1, −1}
+    >    inside the quarantine, self-tests, the 1b analyzer extension with its
+    >    battery (D3 PASS / D3 FAIL / STOP), commit; then the ± reads on the 48
+    >    Stage 1 texts and the STAGE 1b entry. Short enough to run in-session;
+    >    the detached protocol applies if it projects past an hour.
+    > Any referent that does not resolve → STOP, report, no commit.  My clock: 9/11/26 at 12:11 AM Eastern
+
+  - **Referents that do not resolve (the design seat's to fix; record
+    [`_addendum_k1_referent_check`](results/raw/2026-09-11_addendum_k1_referent_check.txt):
+    65 findings by three blind checkers, 6 refuters; the checkers marked
+    9 unresolved and 3 pending the STAGE 1 anchor, the refuters changed 15 verdicts in both directions (the record's
+    count of 16 refuted lines includes one whose corrected verdict is the
+    checker's own); Code's reconciliation follows).**
+    (1) **§0.3, the welfare fork.** The addendum says it "does not change
+    … the welfare fork (+pole against vehicle; the negative pole is not
+    administered during generation at any stage)". PROPOSAL-k §0.4's
+    words are *"the negative pole is not administered at any stage (the
+    drawer's ± variant stays in the drawer; a −pole rung is PI-only,
+    welfare-gated)"*, followed by *"Stage 1 uses sham text with masked
+    injections at the read only (no generation under state) and carries
+    no exposure beyond the recon's"* — no "during generation" qualifier,
+    masked injections counted as exposure, and a −pole rung reserved to
+    the PI under welfare gating. The ± masked reads of §1 are that rung.
+    They may well be licensable — the recon administered −d in masked
+    reads over the archived e2a reward-arm texts (102 sessions) on Stage
+    B/C's pairs, not over sham text (the addendum's own "over sham text …
+    exactly as the recon did on 2,856 pairs" carries the same
+    overstatement), and the routing block's item 3 is the PI's word — but a document that re-qualifies the fork
+    cannot say the fork is unchanged; PROPOSAL-k outranks the addendum on
+    the addendum's own precedence line. What resolves it: the sentence
+    re-worded as an amendment to §0.4, PI-gated, with the routing block's
+    item 3 named as the welfare gate it invokes (or the PI's explicit
+    welfare-gate word quoted), never as a restatement. (2) **§0.4, "the
+    quarantine's current `+1 only` restriction is a build choice, not
+    law".** The record attributes the restriction to PROPOSAL-k in three
+    places, two of them naming §0.4 — `valence_core/echo/k1.py`'s docstring (*"Every sign is
+    +1: no negative pole is constructed anywhere (PROPOSAL-k §0.4)"*),
+    its runtime guard (*"PROPOSAL-k administers +pole against vehicle
+    only; a negative alpha is a stop"*) and the reads artifact's
+    `every_sign: "+1 (no negative pole, §0.4)"` (the guard names the
+    proposal without a section). "Per-position sign"
+    resolves (the primitive's mask is int8 {0, ±1} and the recon drove
+    −1 through it); the restriction lives in the Stage 1 read module
+    inside the quarantine, not in `maskedprefix.py`, and it is the
+    proposal's welfare clause in code. Same fix as (1). (3) **§1.2, "The
+    48 Stage 1 sessions (43 valid; excluded sessions read and reported
+    beside, rule 23)" and "four new mask families × 48 sessions".** All
+    five excluded sessions were stopped in the forced phase (four at
+    forced0, one at forced3) and have no first free choice — no read
+    position, no label positions, no spans to mask; 43 texts exist, and
+    `k1_reads.json` records `n_sessions_without_first_choice: 5`. The
+    beside-domain is empty by construction here (reported as such in the
+    STAGE 1 entry), "× 48" is 43 (4 × 43 × 7.35 s ≈ 21 min at Stage 1's
+    realised rate, ≈ 22 at 7.7 s), and §1.4's own "n = 43" says so. (4)
+    **§1.3 D3, "(under ± it is no longer the complement; under strict
+    block order it is the negation — report it anyway)".** Under `M±A`
+    and `M±B` the target "the second block carried +" is true exactly
+    when "the first block carried +" is false — a negated binary target
+    is its complement — so the beside row stays the complement target,
+    probed independently, as §0.2 and §2.3 themselves say. Only the
+    parenthetical is wrong; D3's bar, target and PASS/FAIL logic stand.
+    (5) **§0.1, "median over L51–L61 .66 against .90".** The artifact's
+    G1 label-A median is .653; every rounding gives .65. (6) **§0.2, "(the
+    analyzer's "beside" row is the same number)".** The rows differ at
+    nine printed cells — L58 .85 vs .89, L63 .71 vs .67 — and the band
+    medians are .861 vs .867; the analyzer's docstring and the JSON note
+    both say the beside row is not identical by construction (the STAGE
+    1 entry's FLAG gives the mechanism: 300 steps of full-batch gradient
+    descent from a seeded init, not label-flip symmetric). The
+    substantive claim — the two targets are perfect complements, so the
+    primacy question cannot be asked under two +/0 masks — is true and is
+    what §2.3 rests on; the parenthetical is not. (7) **§0.4 "5(f)
+    [verify, applied at `702f997`]" and Appendix "5(f) (with the
+    `702f997` hash)".** CLAUDE.md's bracket reads *"PROPOSAL-k commit
+    `e9b5022` (Appendix A; applied on that commit 2026-09-09, the hash
+    filled at the following commit)"*: 5(f) was applied at `e9b5022` and
+    carries `e9b5022`; `702f997` filled the marker and changed nothing
+    else. (8) **§2's preamble, "§3 stand as committed, with the clause
+    noted in §3 below".** The addendum's §3 second bullet supplies a
+    differently worded readability-FAIL sentence in place of PROPOSAL-k
+    §3.3's (*"the sign memory did not reach the decision in the
+    campaign's own sessions; concluded, not answered"*) — a replacement,
+    within §2's remit, that the preamble calls an appended clause; two
+    sentences of record for one gate until the addendum says which.
+  - **Referents that resolve, with notes the design seat may want
+    (none blocking).** PROPOSAL-k `e9b5022` is byte-identical at HEAD
+    but for the filled hash; §1.1, §1.2 (checksums, captures, 2,856
+    pairs), §1.4's G1/G2/G3/G4 bars as D1–D4 reuse them (D4 runs on the
+    random ± masks only — there is no ± same-pole analog), §1.5's G3
+    FAIL sentence verbatim, §2.3, §2.4's readability item and leak gate,
+    §3.2, §0.4's pre-commitment; rules 9 (the clause "committed before
+    data"), 11, 5(b), 23 (the chain's idiom "banked under ledger 23");
+    5(f)'s terms name no sign, so the ± masks fall inside (i), (iii) and
+    (iv) and D4 certifies on the random arms — the restriction the
+    addendum must lift is PROPOSAL-k §0.4's, not 5(f)'s; the checksums,
+    random1, the roster; the anchor `ADDENDUM-k1 STAGE 1b — ± DIAGNOSTIC`
+    does not yet exist; the mask names collide with nothing; §1.4 is
+    disjunction-complete over D3; the PI-clock line is consistent. Notes: §0.1's "G3 first-block sign at the read .85–.89 across L50–L58,
+    .68–.71 at L59–L63", "G2 held at .47–.52" and "The random direction's
+    injection position read .94–.95 at L51–L53 against the axis's .88" are
+    exact (the comparator's
+    own G2 range is .48–.51; "injection position" is the addendum's name
+    for the first-block-sign target; the axis reads .88 at L51–L52 and
+    .86 at L53; the random lead spans L51–L56, the axis leading at L50, L57 and L58,
+    and the comparator's band median .854 sits below the axis's .861); "label B .70 at L51 (against
+    .75)" sets the peak beside a bar that binds the band median (.632),
+    and label B also fails the every-layer conjunct at L55–L56; "Five of 48 sessions excluded under audit v3" — four are audit-v3
+    exclusions, s9's is
+    the rule-18/28(c) roster-tag lexical exclusion; §0.2's "first-block
+    sign .98–.99" is the recon's FIRST-ROUND sign over all four Stage C
+    block masks B1–B4 (under B3/B4 the first block is mixed), so the "B1 − B2 = (+,+,−,−) − (−,−,+,+) = (2, 2, −2, −2)" arithmetic
+    is the addendum's framing of the
+    recon's contrast, not the recon's own target, and "label-token
+    binding 1.000" is the record's nine-of-eleven figure for ≥ .998 at
+    label A only (label B .81–.96); §2.2's "the same margin gives .80"
+    follows from one pairing only (the band's upper figure .89 less the
+    .09 margin — the lower figure gives .76–.77, the band median .87
+    gives .78–.79) and the clause "that the ± recon did not show under
+    +/0" is garbled (the ± recon never ran under +/0; and PROPOSAL-k's
+    band ends at L62, not L63); §1.4's D3 PASS sentence says "at the
+    recon's strength" of a bar (.90) the addendum itself places .08–.09
+    below the recon's .98–.99 — a 1b median of .91 would PASS and select
+    a sentence that overstates; §1.2's M0 line ("the Stage 1 shadow, reused") is true of the analysis
+    rows, while the shadow forward re-runs
+    inside every primitive call (the 7.7 s already includes it); the six
+    inline `[verify …]` / `[Code: verify …]` markers are placeholder text
+    to strip at commit (four clear now — rules 23, 11, 9 and 5(b); the
+    5(f) marker clears once re-worded per (7); the STAGE 1 anchor's clears
+    with `7742e2c`); the precedence line adds an addendum slot PROPOSAL-k's
+    line does not have, in the proposal's order.
+  - **Not done, by the STOP.** The addendum's commit; §4 step 2 (the
+    sign-set widening inside the quarantine, the 1b analyzer extension
+    and its battery) — the widening is PROPOSAL-k §0.4's welfare clause
+    in code and waits for the PI-gated wording of (1); §4 step 3 (the ±
+    reads and the STAGE 1b entry). No model forward ran in this session. What is ready: the STAGE 1 artifacts and entry the addendum
+    cites are at HEAD; the 1b analyzer's shape is known (D1–D4 over
+    `M±A`/`M±B`/`R±A`/`R±B` with the Stage 1 M0 rows, the §1.4 sentences,
+    a battery over D3 PASS / D3 FAIL / STOP) and can be built the moment
+    v1.1 lands.
+  - **Pre-commit values-check (two refuters, 149 claims; record
+    [`_addendum_k1_stop_entry_valuescheck`](results/raw/2026-09-11_addendum_k1_stop_entry_valuescheck.txt)):**
+    149 verdicts, 135 confirmed, 12 refuted lines over nine distinct
+    items, all in Code's prose and all applied before commit — the
+    recon's −d masked reads were over archived e2a reward-arm texts, not
+    sham text (and the addendum's "over sham text" carries the same
+    overstatement); "three places" is two naming §0.4 and a guard naming
+    the proposal; the random lead spans L51–L56; four quotations made
+    exact; four markers clear, not five; 15 changed verdicts, not 16; a
+    stray asterisk. Two claims uncheckable from the repo and kept as
+    Code's: no model forward ran here; the ± reads are §0.4's −pole rung.
+    Every quotation from PROPOSAL-k §0.4 and §3.3, CLAUDE.md 5(f), the
+    code, the reads artifact and the routing block confirmed verbatim;
+    every count against the referent-check record confirmed.
+
 - 2026-09-11 — **PROPOSAL-k STAGE 1 — CHANNEL STUDY. G1 FAIL, G2 ABSENT,
   G3 FAIL → branch G3_FAIL; the analyzer's sentence, verbatim from §1.5
   and confirmed by the design seat (ADDENDUM-k1 draft v1.0 §0.1): *"The injected

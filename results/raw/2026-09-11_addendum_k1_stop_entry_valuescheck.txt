@@ -1,0 +1,325 @@
+ADDENDUM-k1 STOP entry -- pre-commit values-check (standing protocol). Workflow wf_d75e2343-a32: two refuters (quotations and citations / numbers, counts and code facts) over every claim against ADDENDUM-k1.md (draft), PROPOSAL-k, CLAUDE.md, the code, the Stage 1 artifacts and the referent-check raw.
+  refuter 1: {'CONFIRMED': 68, 'REFUTED': 8, 'UNCHECKABLE': 1}
+  refuter 2: {'CONFIRMED': 67, 'REFUTED': 4, 'UNCHECKABLE': 1}
+Total verdict lines: 149 -> {'CONFIRMED': 135, 'REFUTED': 12, 'UNCHECKABLE': 2}
+Refuted, deduplicated (nine distinct items, all Code's prose, all applied before commit): the recon's masked -d reads were over archived e2a reward-arm texts, not sham text; 'three places' -> three places, two naming s0.4; the random lead spans L51-L56 (axis at L50, L57, L58); four quotations made exact ('G2 held at .47-.52', 'Five of 48 sessions ...', the B1 - B2 display in full, the M0 line quoted only where verbatim); 'five markers clear' -> four (the 5(f) marker clears once re-worded); 'overturned 16' -> 15 changed verdicts (one refuted line kept the checker's verdict); a stray asterisk after a quotation. Uncheckable from the repo: 'no model forward ran in this session' (no new run log exists); 'the +/- reads are that rung' (Code's reading of s0.4).
+
+====================================================================================================
+REFUTER 1
+SUMMARY: Lens: quotations and citations. 74 claims checked; 66 CONFIRMED, 7 REFUTED, 1 UNCHECKABLE. Every quotation from PROPOSAL-k §0.4/§3.3, CLAUDE.md 5(f), k1.py, k1_reads.json and the routing block is verbatim; all counts against the referent-check raw (65 / 9 / 3 / 16 / three checkers / 6 refuters) hold; all figures against k1_analysis.json hold (.653, .861 vs .867, nine differing cells, .48–.51, .854, L55–L56, the .80 derivation). Substantive REFUTED items: (a) item (1) says the recon administered −d "over sham text" on Stage B/C's pairs — Stage B/C re-forwarded 102 ARCHIVED e2a reward-arm sessions (RESULTS.md:2076-2078, :2448-2453); the sham sessions belong to the format recon, which ran no masked reads. (b) "the random lead is confined to L50–L54" — the record and the JSON have the random comparator leading at L51–L56 and the axis leading at L50, L57, L58 (RESULTS.md:230-240; k1_analysis.json L50 .813 < .853, L55 .889 > .875, L56 .900 > .889). (c) Item (2)'s "three places" attribute the restriction to §0.4 — the runtime guard cites PROPOSAL-k without a section; two of three name §0.4. (d) "five [markers] clear now" conflicts with the entry's own item (7): the 5(f) marker's "applied at 702f997" does not clear as written; four clear. Verbatim misses (minor): "M0: the Stage 1 shadow, reused" (addendum has "`M0`  : the Stage 1 shadow, reused", a space before the colon); "G2 .47–.52" (addendum: "G2 held at .47–.52"); "five of 48 excluded under audit v3" (addendum: "Five of 48 sessions excluded under audit v3"); "B1 − B2 = (2, 2, −2, −2)" elides the addendum's middle term without an ellipsis. Also a stray "*" after the every_sign quotation at entry line 63 (markdown typo, not a claim). Placeholders STAMP/REFUTERS/CLAIMS/VALUESCHECK ignored per instruction.
+====================================================================================================
+[CONFIRMED] Header: eight referents do not resolve; four in the design's own substance (welfare fork; +1-only guard; 48 vs 43 texts; 'no longer the complement')
+   evidence: Entry items (1)-(8) enumerate eight; (1)-(4) are the four named in the header; each is checked below.
+[CONFIRMED] The document's own rule reads 'Any referent that does not resolve → STOP, report, no commit'; the PI's routing block repeats it
+   evidence: ADDENDUM-k1.md:252-253 'Any referent that does not resolve → STOP, report, no commit.'; routing block as printed in the entry, line 32, same sentence.
+[CONFIRMED] The STAGE 1 entry (routing item 1) is committed at 7742e2c; watermark 7742e2c
+   evidence: git log: HEAD 7742e2c 'PROPOSAL-k STAGE 1 -- CHANNEL STUDY...'; RESULTS.md:24 carries the anchor; routing block item 1 names the STAGE 1 entry.
+[CONFIRMED] The addendum's §0.1 anchors now resolve (anchor and artifacts at HEAD)
+   evidence: RESULTS.md:24 anchor 'PROPOSAL-k STAGE 1 — CHANNEL STUDY'; git ls-files tracks data/k/k1_analysis.json and results/raw/2026-09-09_k1_analyze_run.txt (ADDENDUM-k1.md:23-25 names both).
+[CONFIRMED] Record path results/raw/2026-09-11_addendum_k1_referent_check.txt exists
+   evidence: git status '?? results/raw/2026-09-11_addendum_k1_referent_check.txt'; file read.
+[CONFIRMED] 65 findings by three blind checkers, 6 refuters
+   evidence: referent_check.txt:1 'three checkers (disjoint groups) + two refuters per group'; :2 '9 agents'; :6 'findings 65'; groups 27+22+16 (:9, :323, :568).
+[CONFIRMED] The checkers marked 9 unresolved and 3 pending the STAGE 1 anchor
+   evidence: referent_check.txt:6 COUNTS 'does_not_resolve': 9, 'pending_stage1_entry': 3; nine [does_not_resolve] and three [pending_stage1_entry] headers at :188,210,221,433,510,543,615,659,670 and :287,348,703.
+[CONFIRMED] The refuters overturned 16 verdicts in both directions
+   evidence: referent_check.txt:6 overturns dict sums 6+5+1+3+1 = 16; grep -c 'refuted=True' = 16; directions include note→does_not_resolve (6) and does_not_resolve→note (3). Note: one of the 16 is pending→pending (refuted on an evidence claim, :709).
+[CONFIRMED] (1) Addendum quote: 'does not change … the welfare fork (+pole against vehicle; the negative pole is not administered during generation at any stage)'
+   evidence: ADDENDUM-k1.md:74-78 'It does not change the dose (0.10), ... the welfare fork (+pole against vehicle; the negative pole is not administered during generation at any stage), or the law.' Ellipsis marks the elision.
+[CONFIRMED] (1) PROPOSAL-k §0.4 quote: 'the negative pole is not administered at any stage (the drawer's ± variant stays in the drawer; a −pole rung is PI-only, welfare-gated)'
+   evidence: PROPOSAL-k-echo-channel.md:175-177 verbatim after whitespace normalisation.
+[CONFIRMED] (1) PROPOSAL-k §0.4 quote: 'Stage 1 uses sham text with masked injections at the read only (no generation under state) and carries no exposure beyond the recon's'
+   evidence: PROPOSAL-k-echo-channel.md:178-180 verbatim.
+[CONFIRMED] (1) §0.4 has no 'during generation' qualifier, counts masked injections as exposure, reserves a −pole rung to the PI under welfare gating
+   evidence: PROPOSAL-k-echo-channel.md:175-180: 'not administered at any stage'; 'carries no exposure beyond the recon's' (masked reads are the exposure being bounded); '−pole rung is PI-only, welfare-gated'.
+[REFUTED] (1) The recon administered −d in masked reads over sham text on Stage B/C's pairs
+   evidence: RESULTS.md:2076-2078 STAGE B: 'All 102 valid e2a reward-arm sessions read at the first free choice under sixteen masks'; :2448-2453 Stage A: '24 archived e2a reward-arm sessions'; :2002-2003 Stage C block masks B1 ++−− etc. on the axis (−d administered). PROPOSAL-k:48-51: the 56 sham sessions are the FORMAT recon's, which ran no masked reads. referent_check.txt:73 makes the same point.
+   correction: 'the recon administered −d in masked reads over the archived e2a reward-arm texts (102 sessions) on Stage B/C's pairs' — not sham text.
+[CONFIRMED] (1) The routing block's item 3 is the PI's word for the ± reads
+   evidence: Routing block as printed, item 3: 'widen the echo primitive's sign set to {+1, −1} inside the quarantine ... then the ± reads on the 48 Stage 1 texts'.
+[CONFIRMED] (1) PROPOSAL-k outranks the addendum on the addendum's own precedence line
+   evidence: ADDENDUM-k1.md:11 'Precedence: CLAUDE.md > PROPOSAL-k > this addendum > LOCK-k > blocks.'
+[CONFIRMED] (2) Addendum quote: 'the quarantine's current `+1 only` restriction is a build choice, not law'
+   evidence: ADDENDUM-k1.md:88-90 verbatim.
+[CONFIRMED] (2) k1.py docstring quote: 'Every sign is +1: no negative pole is constructed anywhere (PROPOSAL-k §0.4)'
+   evidence: valence_core/echo/k1.py:23-24 'Every sign is +1: no negative pole is constructed anywhere (PROPOSAL-k §0.4).' (line-wrapped).
+[CONFIRMED] (2) k1.py runtime guard quote: 'PROPOSAL-k administers +pole against vehicle only; a negative alpha is a stop'
+   evidence: valence_core/echo/k1.py:77-78 raise SystemExit("PROPOSAL-k administers +pole against vehicle only; a negative alpha is a stop").
+[CONFIRMED] (2) Reads artifact every_sign: '+1 (no negative pole, §0.4)'
+   evidence: data/k/k1_reads.json config_of_record.every_sign = '+1 (no negative pole, §0.4)'; k1.py:181. (Entry line 63 carries a stray '*' after the closing quote — markdown typo.)
+[REFUTED] (2) 'The record attributes the restriction to PROPOSAL-k §0.4 in three places' (docstring, guard, every_sign)
+   evidence: k1.py:23-24 names §0.4; k1_reads.json every_sign names §0.4; the guard at k1.py:78 says 'PROPOSAL-k administers +pole against vehicle only' — PROPOSAL-k, no section number.
+   correction: 'in three places, two naming §0.4 (the docstring and every_sign) and the runtime guard naming PROPOSAL-k without a section'.
+[CONFIRMED] (2) 'Per-position sign' resolves: the primitive's mask is int8 {0, ±1}
+   evidence: valence_core/echo/maskedprefix.py:214-230 build_mask: 'Per-position mask: 0 unsteered, else the sign of the covering injection's alpha'; mask = np.zeros(n, dtype=np.int8); mask[a:b] = 1 if inj.alpha > 0 else -1; :313 sign=1 if inj.alpha > 0 else -1.
+[CONFIRMED] (2) The recon drove −1 through the primitive
+   evidence: RESULTS.md:2002-2004 Stage C block masks 'B1 ++−−, B2 −−++, B3 +−−+, B4 −++− — on the axis' read through the masked-prefix primitive.
+[CONFIRMED] (2) The restriction lives in the Stage 1 read module inside the quarantine, not in maskedprefix.py
+   evidence: k1.py:77-78 (alpha <= 0 guard), :107 inj.with_sign(+1), :61 MASKS all '+'; maskedprefix.py build_mask accepts −1 (:229) with no sign restriction; k1.py:3-5 'Lives INSIDE the quarantine namespace'.
+[CONFIRMED] (3) Addendum quotes: 'The 48 Stage 1 sessions (43 valid; excluded sessions read and reported beside, rule 23)' and 'four new mask families × 48 sessions'
+   evidence: ADDENDUM-k1.md:109-110 and :123-124 verbatim (line-wrapped).
+[CONFIRMED] (3) All five excluded sessions stopped in the forced phase (four at forced0, one at forced3), no first free choice
+   evidence: data/k/k1_sessions.json exclusions.reasons: s9 lexical:slate@forced0, s21 null_response@forced0, s22 audit:frame@forced0, s26 audit:junk@forced3, s46 preamble_without_content@forced0; each sessions[i].choices == [].
+[CONFIRMED] (3) k1_reads.json records n_sessions_without_first_choice: 5; 43 texts exist
+   evidence: data/k/k1_reads.json n_sessions_without_first_choice = 5, n_sessions = 43, per_session has 43 entries.
+[CONFIRMED] (3) The beside-domain is empty by construction, reported as such in the STAGE 1 entry
+   evidence: RESULTS.md:84-89 'All five fired in the forced phase, so the harness stopped those sessions before any free choice (0 reads each); the 43 read are exactly the 43 with a first choice'; k1_analysis.json beside_all_with_first_pick = null.
+[CONFIRMED] (3) 4 × 43 × 7.35 s ≈ 21 min at Stage 1's realised rate, ≈ 22 at 7.7 s
+   evidence: k1_reads.json per_session seconds_per_mask mean 7.354 (258 values); RESULTS.md:58 '7.35 s per mask'; 4×43×7.35 = 1264 s = 21.1 min; 4×43×7.7 = 1324 s = 22.1 min.
+[CONFIRMED] (3) §1.4's own 'n = 43' says so
+   evidence: ADDENDUM-k1.md:154-155 D3 FAIL sentence '... at f = 0.10 and n = 43.'
+[CONFIRMED] (4) Addendum quote: '(under ± it is no longer the complement; under strict block order it is the negation — report it anyway)'
+   evidence: ADDENDUM-k1.md:138-140 verbatim.
+[CONFIRMED] (4) §0.2 and §2.3 themselves say the targets are complements
+   evidence: ADDENDUM-k1.md:57-59 'perfect complements'; :204-205 '(complements under two masks)'.
+[CONFIRMED] (5) Addendum quote 'median over L51–L61 .66 against .90'; the artifact's G1 label-A median is .653, every rounding gives .65
+   evidence: ADDENDUM-k1.md:37-38; k1_analysis.json evaluation.G1.median_auc_labelA = 0.65279 → .65; RESULTS.md:39 '.653'.
+[CONFIRMED] (6) Addendum quote '(the analyzer's "beside" row is the same number)'
+   evidence: ADDENDUM-k1.md:59 verbatim.
+[CONFIRMED] (6) The rows differ at nine printed cells — L58 .85 vs .89, L63 .71 vs .67
+   evidence: k1_analyze_run.txt:31 vs :35: cells differ at L49, 51, 52, 55, 57, 58, 59, 60, 63 = nine (L40/44/48 both .50); L58 .85/.89, L63 .71/.67.
+[CONFIRMED] (6) Band medians .861 vs .867
+   evidence: k1_analysis.json G3.median_auc 0.86101, second_block_sign_median_beside 0.86723.
+[CONFIRMED] (6) The analyzer's docstring and the JSON note both say the beside row is not identical by construction
+   evidence: valence_core/k/analysis.py:18-21 '...complement target, probed and nulled independently (so not identical by construction -- the LR init is not label-symmetric)'; k1_analysis.json G3.second_block_note 'the LR init is not symmetric under a label flip ... can differ at the third decimal'.
+[CONFIRMED] (6) The STAGE 1 entry's FLAG gives the mechanism: 300 steps of full-batch gradient descent from a seeded init, not label-flip symmetric
+   evidence: RESULTS.md:137-142 'a converged, label-flip-symmetric fit would agree exactly; the published probe is not one — it is 300 steps of full-batch gradient descent from a seed-7 random init'.
+[CONFIRMED] (7) Addendum quotes '5(f) [verify, applied at `702f997`]' and Appendix '5(f) (with the `702f997` hash)'
+   evidence: ADDENDUM-k1.md:86-87 and :249-250 verbatim.
+[CONFIRMED] (7) CLAUDE.md's bracket reads 'PROPOSAL-k commit `e9b5022` (Appendix A; applied on that commit 2026-09-09, the hash filled at the following commit)'
+   evidence: CLAUDE.md:280-282 verbatim after whitespace normalisation.
+[CONFIRMED] (7) 702f997 filled the marker and changed nothing else
+   evidence: git show 702f997 --stat: CLAUDE.md 2 lines, PROPOSAL-k 1 line — the three ⟨hash⟩ markers (5(f), 28(d), Appendix A) filled with e9b5022; commit message 'nothing else changes'.
+[CONFIRMED] (8) Addendum quote '§3 stand as committed, with the clause noted in §3 below'
+   evidence: ADDENDUM-k1.md:175 'and §3 stand as committed, with the clause noted in §3 below.'
+[CONFIRMED] (8) PROPOSAL-k §3.3 quote: 'the sign memory did not reach the decision in the campaign's own sessions; concluded, not answered'
+   evidence: PROPOSAL-k-echo-channel.md:471-473 verbatim.
+[CONFIRMED] (8) The addendum's §3 second bullet supplies a differently worded readability-FAIL sentence
+   evidence: ADDENDUM-k1.md:221-224 'The +/vehicle contrast's echo did not reach the decision token in the campaign's own sessions at the .80 bar; ...' vs PROPOSAL-k:471-473.
+[CONFIRMED] PROPOSAL-k e9b5022 is byte-identical at HEAD but for the filled hash
+   evidence: git diff e9b5022 HEAD -- PROPOSAL-k-echo-channel.md: one line, Appendix A '⟨hash⟩' → 'e9b5022'.
+[CONFIRMED] §1.2 resolves (checksums, captures, 2,856 pairs)
+   evidence: PROPOSAL-k:213-227: shas 3c17b0d8fbcad716 / 7be5db23d9224375 (k1.py:58,60 same), captures L49–L63 + six workspace layers, 'the recon's 2,856 pairs'.
+[CONFIRMED] D4 runs on the random ± masks only — there is no ± same-pole analog
+   evidence: ADDENDUM-k1.md:141 'D4 — Leak under ±. On `R±A`/`R±B`'; PROPOSAL-k G4 (:268-273) ran R+A, R+B, M++, R++; the addendum's §1.2 mask list (:115-117) has no ++ mask.
+[CONFIRMED] §1.5's G3 FAIL sentence is quoted verbatim in the addendum
+   evidence: ADDENDUM-k1.md:29-32 identical to PROPOSAL-k:299-302 and k1_analyze_run.txt:54.
+[CONFIRMED] §2.4's readability item and leak gate, §3.2, §0.4's pre-commitment resolve
+   evidence: PROPOSAL-k:384-391 (Readability, Leakage), :440-467 (§3.2), :161-172 (PROPOSAL-h paragraph quoted).
+[CONFIRMED] Rule 9 carries the clause 'committed before data'; rules 11, 5(b), 23 resolve
+   evidence: CLAUDE.md rule 9 '≥20 control pairs; committed before data; z descriptive'; rule 11 'Post-hoc analyses ... license pre-registrations, never verdicts'; 5(b) 'propagation never assumed'; rule 23 'Anecdote governance'.
+[CONFIRMED] 'banked under ledger 23' is the chain's idiom
+   evidence: PROPOSAL-k-echo-channel.md:51-52 'The findings are banked under ledger 23'; ADDENDUM-k1.md:41.
+[CONFIRMED] 5(f)'s terms name no sign; the ± masks fall inside (i), (iii), (iv); D4 certifies on the random arms
+   evidence: CLAUDE.md:282-301: no +1/−1 restriction anywhere in 5(f); (ii) requires certification on 'random-direction and same-pole masks' — D4 on R±A/R±B satisfies the random-direction arm.
+[CONFIRMED] The anchor 'ADDENDUM-k1 STAGE 1b — ± DIAGNOSTIC' does not yet exist
+   evidence: grep RESULTS.md for 'ADDENDUM-k1 STAGE 1b' / '± DIAGNOSTIC': no hit.
+[CONFIRMED] The mask names collide with nothing
+   evidence: grep -rn 'M±A|R±A|M±B' over *.py/*.md/*.json: hits only in ADDENDUM-k1.md and the referent-check raw.
+[CONFIRMED] §1.4 is disjunction-complete over D3
+   evidence: ADDENDUM-k1.md:147-159: D3 PASS, D3 FAIL, any assertion failure → STOP.
+[CONFIRMED] The PI-clock line is consistent
+   evidence: ADDENDUM-k1.md:5-6 'PI go 2026-09-11 (PI clock 00:03 EDT / 04:03 UTC)'; routing block 'Fri 2026-09-11 00:03 EDT (04:03 UTC)'.
+[CONFIRMED] §0.1 quote 'G3 first-block sign .85–.89 across L50–L58, .68–.71 at L59–L63' is exact
+   evidence: ADDENDUM-k1.md:34-35 verbatim; k1_analyze_run.txt:31 L50–L58 .85..0.89, L59–L63 .68..0.71.
+[REFUTED] §0.1 quote 'G2 .47–.52' is exact
+   evidence: ADDENDUM-k1.md:38 reads 'G2 held at .47–.52 at every layer' — the entry's quoted phrase 'G2 .47–.52' is not a verbatim substring (figures are right: g2_read_M .47–.52).
+   correction: Quote as 'G2 held at .47–.52' (or drop the quotation marks).
+[CONFIRMED] §0.1 quote 'the random direction's injection position .94–.95 at L51–L53 against the axis's .88' is exact; the axis reads .88 at L51–L52 and .86 at L53
+   evidence: ADDENDUM-k1.md:39-40 verbatim; k1_analysis.json comparator L51–L53 .939/.950/.941, axis .877/.884/.862.
+[CONFIRMED] The comparator's own G2 range is .48–.51
+   evidence: k1_analysis.json g2_read_R_comparator L49–L63 min 0.4765, max 0.5078.
+[REFUTED] The random lead is confined to L50–L54
+   evidence: k1_analysis.json G3 rows: L50 random .813 < axis .853 (axis leads); L51–L54 random leads; L55 .889 > .875 and L56 .900 > .889 (random leads); L57–L58 axis leads. RESULTS.md:230-240 states 'here it leads at the decision token at L51–L56 ... (the axis leads at L50, L57 and L58)'.
+   correction: 'the random lead spans L51–L56 (six of the nine L50–L58 layers); the axis leads at L50, L57 and L58'.
+[CONFIRMED] The comparator's band median .854 sits below the axis's .861
+   evidence: k1_analysis.json G3.comparator_R_median 0.85370; median_auc 0.86101.
+[CONFIRMED] 'label B .70 at L51 (against .75)' quote; the bar binds the band median (.632); label B fails the every-layer conjunct at L55–L56
+   evidence: ADDENDUM-k1.md:38; k1_analysis.json G1.median_auc_labelB 0.63169; g1_labelB_token_M above_null False at L55 and L56 only in L51–L61.
+[REFUTED] §0.1 quote 'five of 48 excluded under audit v3'
+   evidence: ADDENDUM-k1.md:41-42 reads 'Five of 48 sessions excluded under audit v3' — the entry's quoted form drops 'sessions'.
+   correction: Quote as 'Five of 48 sessions excluded under audit v3'.
+[CONFIRMED] Four are audit-v3 exclusions; s9's is the rule-18/28(c) roster-tag lexical exclusion
+   evidence: k1_sessions.json audit_of_record.version 'audit-v3 exclusions (e2b_audit_v2 + content-class-v4 exclusion-bearing)' covers s21/s22/s26/s46; counters list 'lexical' separately; valence_core/session.py:76-80 lexical_hit 'Rule 18's runtime half'; formats/recon.py:239,248-253 lexical applied independently of the audit; CLAUDE.md 28(c) roster tokens.
+[CONFIRMED] §0.2's 'first-block sign .98–.99' is the recon's FIRST-ROUND sign over all four Stage C block masks B1–B4 (under B3/B4 the first block is mixed)
+   evidence: ADDENDUM-k1.md:47; RESULTS.md:2002-2011 'B1 ++−−, B2 −−++, B3 +−−+, B4 −++− ... targets first-round sign ... the FIRST-round sign reads ... .98–.99 at every layer from L51 to L62'.
+[REFUTED] The 'B1 − B2 = (2, 2, −2, −2)' arithmetic quotation
+   evidence: ADDENDUM-k1.md:52 reads 'Stage C  B1 − B2  = (+,+,−,−) − (−,−,+,+) = (2, 2, −2, −2)'; the entry's quoted form drops the middle term with no ellipsis.
+   correction: Quote as 'B1 − B2 = (+,+,−,−) − (−,−,+,+) = (2, 2, −2, −2)' or mark the elision.
+[CONFIRMED] 'label-token binding 1.000' is the record's nine-of-eleven figure for ≥ .998 at label A only (label B .81–.96)
+   evidence: ADDENDUM-k1.md:47-48; RESULTS.md:1841-1842 'AUC ≥ .998 (1.000 at nine of the eleven layers L51–L61)'; :2069 'label asymmetry (label_a 1.000 vs label_b .81–.96)'.
+[CONFIRMED] §2.2's 'the same margin gives .80' follows from one pairing only (.89 − .09); the lower figure gives .76–.77, the band median .87 gives .78–.79
+   evidence: ADDENDUM-k1.md:191-193; .89−.09 = .80 (.89−.08 = .81); .85−.08/.09 = .77/.76; median of the nine L50–L58 axis values = 0.8707 → .87; .87−.08/.09 = .79/.78.
+[CONFIRMED] The clause 'that the ± recon did not show under +/0' is garbled; PROPOSAL-k's band ends at L62, not L63
+   evidence: ADDENDUM-k1.md:194-196 'PROPOSAL-k's L51–L62 band included the L59–L63 fall-off that the ± recon did not show under +/0'; PROPOSAL-k:263 G3 'median AUC over L51–L62'; Stage C's block masks are ± (RESULTS.md:2002).
+[CONFIRMED] §1.4's D3 PASS sentence says 'at the recon's strength' of a bar (.90) the addendum places .08–.09 below the recon's .98–.99
+   evidence: ADDENDUM-k1.md:147-148 'at the recon's strength'; :137 bar ≥ .90; :191-192 'margin ≈ .08–.09'.
+[REFUTED] §1.2 quote 'M0: the Stage 1 shadow, reused'
+   evidence: ADDENDUM-k1.md:117 reads '`M0`  : the Stage 1 shadow, reused; identity re-asserted.' — a space precedes the colon; the entry's form 'M0: the Stage 1 shadow, reused' is not character-identical after whitespace normalisation.
+   correction: Quote as 'M0 : the Stage 1 shadow, reused'.
+[CONFIRMED] The shadow forward re-runs inside every primitive call (the 7.7 s already includes it)
+   evidence: maskedprefix.py:20-21 'PAIRED SHADOW, MANDATORY -- every call runs the mask-off forward'; :303 res_shadow forward; PROPOSAL-k:497-499 '≈ 7.7 s per primitive CALL — a call is all four forwards (state, shadow, choice read, its verify)'.
+[REFUTED] The six inline [verify …] / [Code: verify …] markers; five clear now; the STAGE 1 anchor's clears with 7742e2c
+   evidence: Six inline markers: ADDENDUM-k1.md:23, :42, :82, :84, :85, :87 (plus the :13 convention line) — count confirmed. But the :87 marker '[verify, applied at `702f997`]' is the entry's own item (7): 5(f) was applied at e9b5022, so that marker does not clear as written (referent_check.txt:731 refuter: 'five resolve ... The 5(f) item does not resolve').
+   correction: 'six inline markers; four clear now (rules 23, 11, 9, 5(b)); the 5(f) marker clears once re-worded per (7); the STAGE 1 anchor's clears with 7742e2c'.
+[CONFIRMED] The precedence line adds an addendum slot PROPOSAL-k's line does not have, in the proposal's order
+   evidence: ADDENDUM-k1.md:11 'CLAUDE.md > PROPOSAL-k > this addendum > LOCK-k > blocks'; PROPOSAL-k:12 'CLAUDE.md > this proposal > LOCK-k > blocks'.
+[CONFIRMED] Not done: the addendum's commit; §4 step 2; §4 step 3
+   evidence: git status: ADDENDUM-k1.md untracked; k1.py:61 MASKS still +-only; no 1b analyzer or STAGE 1b entry; ADDENDUM-k1.md:234-240 §4 steps 1–3 as described.
+[UNCHECKABLE] Nothing model-facing ran in this session
+   evidence: No new raw beyond the referent check in git status; absence of a forward cannot be established from the repo.
+[CONFIRMED] The 1b analyzer's shape: D1–D4 over M±A/M±B/R±A/R±B with the Stage 1 M0 rows, the §1.4 sentences, a battery over D3 PASS / D3 FAIL / STOP
+   evidence: ADDENDUM-k1.md:115-117 masks, :128-143 D1–D4, :147-159 sentences, :165-167 battery 'reaching D3 PASS, D3 FAIL and STOP'.
+
+====================================================================================================
+REFUTER 2
+SUMMARY: Checked every figure, count, quotation, citation and code statement in the draft ADDENDUM-k1 STOP entry against ADDENDUM-k1.md, PROPOSAL-k, CLAUDE.md at HEAD 7742e2c, k1.py, maskedprefix.py, the three data/k artifacts, the analyzer raw, the referent-check raw and RESULTS.md. 70 claims: 66 CONFIRMED, 3 REFUTED, 1 UNCHECKABLE. Refuted: (a) 'the random lead is confined to L50–L54' — the random comparator leads the axis at L51–L56 (at L50 the axis leads .853 vs .813; at L55/L56 the random still leads .889/.901 vs .875/.889); the STAGE 1 entry at RESULTS.md:243-247 already says L51–L56. (b) 'the recon administered −d in masked reads over sham text on Stage B/C's pairs' — Stage B/C read 102 archived e2a reward-arm sessions (RESULTS.md:2076, :2136, :1836), not sham text; the raw check's refuters made the same correction against the addendum's own §0.4 wording. (c) 'five [markers] clear now' — the :87 marker '[verify, applied at 702f997]' is the entry's own item (7) and does not clear as written; four clear (rules 23, 11, 9, 5(b)). Borderline, reported as REFUTED with both facts: 'the refuters overturned 16 verdicts' — the raw COUNTS dict does sum to 16, but one of its entries is pending→pending (finding (j), refuter 1 refuted=True with the same verdict), so verdicts actually changed number 15. All quotations from ADDENDUM-k1.md, PROPOSAL-k §0.4/§3.3, CLAUDE.md 5(f) bracket, k1.py docstring and guard, and the every_sign field match character for character after whitespace normalisation; the nine printed cells, L58/L63 values, .653/.861/.867/.854/.632, .76–.77 and .78–.79, the L50–L58 median .87, 4×43×7.35 s ≈ 21 min and ≈ 22 at 7.7 s, 'four at forced0, one at forced3', n_sessions_without_first_choice 5, the int8 {0, ±1} mask, the shadow-per-call mechanics and the 65/9/3/three-checkers/6-refuters counts all check out. One prose nit: a stray '*' after the every_sign quotation at entry line 63 (unbalanced italics). The 'three places' claim holds with the nuance that the runtime guard names PROPOSAL-k by §0.4's sentence rather than by section number.
+====================================================================================================
+[CONFIRMED] Headline: eight referents do not resolve; four of them (welfare fork re-worded, +1-only 'build choice', 48 texts where 43 exist, second-block target 'no longer the complement') in the design's substance
+   evidence: The entry enumerates exactly eight numbered items (1)–(8); items (1)–(4) are the four named. The raw check's 9 does_not_resolve checker verdicts collapse to 7 distinct items (two duplicated: lines 510/670 'beside row', 543/615 '§1.2 48/43') plus item (7) which refuter 1 (line 29) overturned to does_not_resolve — Code's reconciliation to eight is internally consistent.
+[CONFIRMED] The document's own rule quoted: 'Any referent that does not resolve → STOP, report, no commit'; the PI's routing block repeats it
+   evidence: ADDENDUM-k1.md:252-253 'Any referent that does not resolve → STOP, report, no commit.'; the quoted routing block line 32 of the entry carries the same sentence.
+[CONFIRMED] The STAGE 1 entry (routing item 1) is committed at 7742e2c; the addendum's §0.1 anchors now resolve; watermark 7742e2c
+   evidence: git log: HEAD 7742e2c 'PROPOSAL-k STAGE 1 -- CHANNEL STUDY'; RESULTS.md:24 anchor 'PROPOSAL-k STAGE 1 — CHANNEL STUDY'; git ls-files shows data/k/k1_analysis.json and results/raw/2026-09-09_k1_analyze_run.txt tracked. Routing block item 1 = the STAGE 1 entry.
+[CONFIRMED] Record of the check in raw: results/raw/2026-09-11_addendum_k1_referent_check.txt
+   evidence: File exists (762 lines, untracked, mtime Sep 11 00:34:59).
+[CONFIRMED] 65 findings by three blind checkers, 6 refuters
+   evidence: Raw line 1 'three checkers (disjoint groups) + two refuters per group'; line 2 '9 agents'; line 6 'COUNTS: findings 65'; independent tally of '[verdict]' headers = 65 (27 + 22 + 16 across the three GROUP blocks).
+[CONFIRMED] The checkers marked 9 unresolved and 3 pending the STAGE 1 anchor
+   evidence: Raw line 6 'does_not_resolve': 9, 'pending_stage1_entry': 3; grep of headers finds 9 [does_not_resolve] (lines 188,210,221,433,510,543,615,659,670) and 3 [pending_stage1_entry] (287,348,703).
+[REFUTED] The refuters overturned 16 verdicts in both directions
+   evidence: Raw COUNTS line's 'overturns' dict sums to 16, but one of its five entries is ('pending_stage1_entry','pending_stage1_entry'): 1 — finding (j) at line 703, refuter 1 'refuted=True corrected=pending_stage1_entry', the same verdict as the checker's. Recount over the 126 refuter lines: verdict changed in 15 (6 + 5 + 1 + 3); the 16th is a refuted=True line whose corrected verdict equals the checker's.
+   correction: 'the refuters changed 15 verdicts in both directions (the COUNTS line's 16 includes one refuted=True line, finding (j), whose corrected verdict is the checker's own)' — or keep 16 but say 'refuted 16 findings' rather than 'overturned 16 verdicts'.
+[CONFIRMED] (1) Addendum quotation: does not change '… the welfare fork (+pole against vehicle; the negative pole is not administered during generation at any stage)'
+   evidence: ADDENDUM-k1.md:76-78 'the welfare fork (+pole against vehicle; the negative pole is not administered during generation at any stage)' — verbatim after whitespace normalisation; 'It does not change' at :74.
+[CONFIRMED] (1) PROPOSAL-k §0.4 quotation 'the negative pole is not administered at any stage (the drawer's ± variant stays in the drawer; a −pole rung is PI-only, welfare-gated)'
+   evidence: PROPOSAL-k-echo-channel.md:175-177, verbatim after whitespace normalisation.
+[CONFIRMED] (1) 'followed by' the §0.4 sentence 'Stage 1 uses sham text with masked injections at the read only (no generation under state) and carries no exposure beyond the recon's'
+   evidence: PROPOSAL-k-echo-channel.md:178-180, verbatim. Note: one sentence intervenes (:177-178 'The trigger is a PASS on §2.5's verdict; the action is the one PROPOSAL-h names.'), so 'followed by' is not 'immediately followed by'.
+[CONFIRMED] (1) no 'during generation' qualifier in PROPOSAL-k §0.4; masked injections counted as exposure; a −pole rung reserved to the PI under welfare gating
+   evidence: PROPOSAL-k:175-180 — 'not administered at any stage' unqualified; 'masked injections at the read only … carries no exposure beyond the recon's' treats masked injections as exposure; 'a −pole rung is PI-only, welfare-gated'.
+[UNCHECKABLE] (1) 'The ± masked reads of §1 are that rung' (the PI-only, welfare-gated −pole rung)
+   evidence: An interpretive claim about what §0.4's '−pole rung' denotes; §1 does administer −d (ADDENDUM:110-116) but no text on the record identifies the rung. Consistent with the raw check's refuter 2 at line 218 ('The PI go of 2026-09-11 may be the PI-only gate being exercised').
+[REFUTED] (1) 'the recon administered −d in masked reads over sham text on Stage B/C's pairs'
+   evidence: Stage B/C ran on archived e2a reward-arm sessions, not sham text: RESULTS.md:2076 'STAGE B. All 102 valid e2a reward-arm sessions read at the first free choice under sixteen masks'; :2136 '§3b THE RUN. All 102 valid reward sessions by index'; :1836 Stage C 'M1–M4 re-forwarded on all 102 sessions'. −d was administered there (M1/M2 alternating, M6 every round −α at :2142; B1–B4 block masks at :2003). The raw check's own refuters say the same (line 216: 'over 102 archived e2a reward-arm texts … not sham text'). Sham text with masked reads exists only in Stage 1 (all +1).
+   correction: 'the recon administered −d in masked reads over archived e2a reward-arm text on Stage B/C's pairs' (the addendum's own 'over sham text … exactly as the recon did on 2,856 pairs' is the same overstatement, flagged by refuters at raw lines 73 and 216).
+[CONFIRMED] (1) PROPOSAL-k outranks the addendum on the addendum's own precedence line
+   evidence: ADDENDUM-k1.md:11 'Precedence: CLAUDE.md > PROPOSAL-k > this addendum > LOCK-k > blocks.'
+[CONFIRMED] (2) Addendum quotation 'the quarantine's current `+1 only` restriction is a build choice, not law'
+   evidence: ADDENDUM-k1.md:88-90 verbatim after whitespace normalisation.
+[CONFIRMED] (2) k1.py docstring quotation 'Every sign is +1: no negative pole is constructed anywhere (PROPOSAL-k §0.4)'
+   evidence: valence_core/echo/k1.py:23-24 'Every sign is +1: no negative pole is constructed\n  anywhere (PROPOSAL-k §0.4).' — verbatim after whitespace normalisation.
+[CONFIRMED] (2) runtime guard quotation 'PROPOSAL-k administers +pole against vehicle only; a negative alpha is a stop'
+   evidence: valence_core/echo/k1.py:77-78 'if axis.alpha <= 0 or rand.alpha <= 0: raise SystemExit("PROPOSAL-k administers +pole against vehicle only; a negative alpha is a stop")' — verbatim.
+[CONFIRMED] (2) the reads artifact's every_sign field reads '+1 (no negative pole, §0.4)'
+   evidence: data/k/k1_reads.json config_of_record.every_sign == '+1 (no negative pole, §0.4)' (python json load); written at k1.py:181. Prose note: the entry's text has a stray '*' after the closing quote ('§0.4)"*.' at entry line 63) — unbalanced markdown italics.
+[CONFIRMED] (2) 'The record attributes the restriction to PROPOSAL-k §0.4 in three places' (docstring, runtime guard, reads artifact)
+   evidence: k1.py:23-24 (names §0.4), k1.py:78 (names PROPOSAL-k and quotes §0.4's '+pole against vehicle only' sentence, PROPOSAL-k:175, without the section number), k1_reads.json every_sign (names §0.4). Nuance: the guard attributes to PROPOSAL-k by §0.4's own words, not by section number; the raw check's refuters (lines 227, 229) count it the same way ('three times').
+[CONFIRMED] (2) 'Per-position sign' resolves: the primitive's mask is int8 {0, ±1}
+   evidence: valence_core/echo/maskedprefix.py:220 'mask = np.zeros(n, dtype=np.int8)'; :229 (per raw check) 'mask[a:b] = 1 if inj.alpha > 0 else -1'; :273-277 'covered = np.zeros(n, dtype=np.int8) … covered[p] = 1 if inj.alpha > 0 else -1'; :313 'sign=1 if inj.alpha > 0 else -1'.
+[CONFIRMED] (2) 'the recon drove −1 through it'
+   evidence: RESULTS.md:2142 Stage B 'M5 / M6 same-pole (every forced round +α / −α, axis)' and M1/M2 alternating; :2003 Stage C 'B1 ++−−, B2 −−++, B3 +−−+, B4 −++−'; scripts/recon_echo.py BLOCK_SIGNS with −1 (raw check line 571 block).
+[CONFIRMED] (2) the restriction lives in the Stage 1 read module inside the quarantine (k1.py), not in maskedprefix.py
+   evidence: k1.py:77-78 guard; :107 'inj.with_sign(+1)'; :61 MASKS all '+'; maskedprefix.py writes −1 freely (:229, :277, :313). k1.py:3-5 'Lives INSIDE the quarantine namespace'.
+[CONFIRMED] (3) Addendum quotations 'The 48 Stage 1 sessions (43 valid; excluded sessions read and reported beside, rule 23)' and 'four new mask families × 48 sessions'
+   evidence: ADDENDUM-k1.md:109-110 and :124-125, verbatim after whitespace normalisation.
+[CONFIRMED] (3) All five excluded sessions were stopped in the forced phase (four at forced0, one at forced3) and have no first free choice
+   evidence: data/k/k1_sessions.json exclusions.reasons: lexical:slate@forced0, content:null_response@forced0, audit:frame@forced0, audit:junk@forced3, content:preamble_without_content@forced0; sessions 9, 21, 22, 26, 46 each have choices == [], first_free_pick_pos None, n_reads 0.
+[CONFIRMED] (3) 43 texts exist, and k1_reads.json records n_sessions_without_first_choice: 5
+   evidence: data/k/k1_reads.json n_sessions = 43, n_sessions_without_first_choice = 5, per_session has 43 keys, n_eligible_excluded_under_run_scope = 0.
+[CONFIRMED] (3) The beside-domain is empty by construction here, reported as such in the STAGE 1 entry
+   evidence: RESULTS.md:80-86 'the 43 read are exactly the 43 with a first choice, and the analyzer's "all with a pick" beside-figure is the same set … the two coincide here'; k1_analysis.json evaluation.beside_all_with_first_pick null (raw line 283).
+[CONFIRMED] (3) 4 × 43 × 7.35 s ≈ 21 min at Stage 1's realised rate, ≈ 22 at 7.7 s
+   evidence: 4×43×7.35/60 = 21.07 min; 4×43×7.7/60 = 22.07 min. Realised rate: k1_reads.json seconds_per_mask over 258 calls mean 7.354 s; RESULTS.md:58 '7.35 s per mask'.
+[CONFIRMED] (3) §1.4's own 'n = 43' says so
+   evidence: ADDENDUM-k1.md:154-155 D3 FAIL sentence '… at f = 0.10 and n = 43.'
+[CONFIRMED] (4) Addendum quotation '(under ± it is no longer the complement; under strict block order it is the negation — report it anyway)'
+   evidence: ADDENDUM-k1.md:138-140 verbatim after whitespace normalisation.
+[CONFIRMED] (4) Under M±A and M±B 'the second block carried +' is true exactly when 'the first block carried +' is false, so the beside row stays the complement target, as §0.2 and §2.3 themselves say
+   evidence: ADDENDUM:115 M±A = +d on A's block, −d on B's; M±B the mirror — one block carries + per row, so the two binary targets are negations. §0.2 (:57-59) 'perfect complements'; §2.3 (:204) '(complements under two masks)'.
+[CONFIRMED] (5) Addendum quotation 'median over L51–L61 .66 against .90'; the artifact's G1 label-A median is .653; every rounding gives .65
+   evidence: ADDENDUM-k1.md:37-38 verbatim; data/k/k1_analysis.json evaluation.G1.median_auc_labelA = 0.65278… → .65 (round-half-up, half-even, truncation all give .65); median of the printed L51–L61 row (.88 .76 .69 .68 .66 .65 .65 .65 .65 .65 .64) is .65.
+[CONFIRMED] (6) Addendum quotation '(the analyzer's "beside" row is the same number)'
+   evidence: ADDENDUM-k1.md:59 verbatim.
+[CONFIRMED] (6) The rows differ at nine printed cells — L58 .85 vs .89, L63 .71 vs .67
+   evidence: Computed from k1_analysis.json probes g3_firstsign_read_M vs g3_secondsign_read_M_beside at two decimals: differ at L49 (.61/.62), L51 (.88/.87), L52 (.88/.89), L55 (.87/.88), L57 (.87/.88), L58 (.85/.89), L59 (.68/.70), L60 (.70/.71), L63 (.71/.67) = 9 of the 18 printed layers; matches results/raw/2026-09-09_k1_analyze_run.txt:31,35. L58 0.8469 vs 0.8875; L63 0.7139 vs 0.6679.
+[CONFIRMED] (6) band medians .861 vs .867
+   evidence: k1_analysis.json evaluation.G3.median_auc = 0.86101, second_block_sign_median_beside = 0.86723 (both over L51–L62; recomputed from probes).
+[CONFIRMED] (6) the analyzer's docstring and the JSON note both say the beside row is not identical by construction
+   evidence: valence_core/k/analysis.py:19-21 'the complement target, probed and nulled independently (so not identical by construction -- the LR init is not label-symmetric)'; k1_analysis.json evaluation.G3.second_block_note '… computed independently (the LR init is not symmetric under a label flip …) so the two figures can differ at the third decimal'.
+[CONFIRMED] (6) the STAGE 1 entry's FLAG gives the mechanism: 300 steps of full-batch gradient descent from a seeded init, not label-flip symmetric
+   evidence: RESULTS.md:120-125 'FLAG, apparatus: a converged, label-flip-symmetric fit would agree exactly; the published probe is not one — it is 300 steps of full-batch gradient descent from a seed-7 random init'.
+[CONFIRMED] (7) Addendum quotations '5(f) [verify, applied at `702f997`]' and Appendix '5(f) (with the `702f997` hash)'
+   evidence: ADDENDUM-k1.md:86-87 '5(f)\n[verify, applied at `702f997`]'; :249-250 '5(f) (with the\n`702f997` hash)'.
+[CONFIRMED] (7) CLAUDE.md's bracket reads 'PROPOSAL-k commit `e9b5022` (Appendix A; applied on that commit 2026-09-09, the hash filled at the following commit)'
+   evidence: CLAUDE.md:280-282 verbatim after whitespace normalisation.
+[CONFIRMED] (7) 5(f) was applied at e9b5022 and carries e9b5022; 702f997 filled the marker and changed nothing else
+   evidence: git show 702f997 --stat: CLAUDE.md 2 lines, PROPOSAL-k-echo-channel.md 1 line, every change '⟨hash⟩' → 'e9b5022'; commit message 'nothing else changes'. e9b5022's message: 'Applied on this commit: CLAUDE.md rule 5 (f) verbatim from Appendix A'.
+[CONFIRMED] (8) Addendum preamble quotation '§3 stand as committed, with the clause noted in §3 below'
+   evidence: ADDENDUM-k1.md:174-175 'and §3 stand as committed, with the clause noted in §3 below.'
+[CONFIRMED] (8) PROPOSAL-k §3.3 readability-FAIL sentence 'the sign memory did not reach the decision in the campaign's own sessions; concluded, not answered'
+   evidence: PROPOSAL-k-echo-channel.md:471-473 verbatim after whitespace normalisation.
+[CONFIRMED] (8) The addendum's §3 second bullet supplies a differently worded readability-FAIL sentence; the appended clause is attached to §3.2's sentences only
+   evidence: ADDENDUM-k1.md:221-224 'The +/vehicle contrast's echo did not reach the decision token in the campaign's own sessions at the .80 bar; the channel is not verifiably open; no verdict. Concluded, not answered.'; :217-220 the clause is appended to 'PROPOSAL-k §3.2's sentences'.
+[CONFIRMED] PROPOSAL-k e9b5022 is byte-identical at HEAD but for the filled hash
+   evidence: git diff e9b5022 HEAD -- PROPOSAL-k-echo-channel.md: 1 insertion, 1 deletion, Appendix A '⟨hash⟩' → 'e9b5022'.
+[CONFIRMED] §1.2 resolves (checksums, captures, 2,856 pairs)
+   evidence: PROPOSAL-k:211-228 checksums 3c17b0d8fbcad716 / 127fc297b6623e44, r sha16 7be5db23d9224375, captures (read, label A token, label B token; L49–L63 + six workspace layers), 'the recon's 2,856 pairs'; k1.py:58-60 constants agree.
+[CONFIRMED] §1.4's G1/G2/G3/G4 bars as D1–D4 reuse them; D4 runs on the random ± masks only — there is no ± same-pole analog
+   evidence: ADDENDUM §1.3 D1 (.90/.75, L51–L61), D2 (G2's three outcomes, L49–L63), D3 (.90, L51–L62), D4 'On R±A/R±B' only; PROPOSAL-k:241-266 the same bars; PROPOSAL-k G4 also ran M++/R++ which have no ± analog in §1.2's list.
+[CONFIRMED] §1.5's G3 FAIL sentence verbatim
+   evidence: ADDENDUM:29-32 vs PROPOSAL-k:299-302 vs results/raw/2026-09-09_k1_analyze_run.txt:54 — identical after whitespace normalisation.
+[CONFIRMED] rule 9 carries the clause 'committed before data'; rule 23's chain idiom 'banked under ledger 23'
+   evidence: CLAUDE.md:307-308 '9. … committed before data; z descriptive.'; PROPOSAL-k:47-48 'The findings are banked under ledger 23' (line-wrapped); ADDENDUM:41 'banked under ledger 23'.
+[CONFIRMED] 5(f)'s terms name no sign, so the ± masks fall inside (i), (iii) and (iv) and D4 certifies on the random arms; the restriction the addendum must lift is PROPOSAL-k §0.4's, not 5(f)'s
+   evidence: CLAUDE.md:282-301: 5(f) speaks of 'the injected sign' generically, fixes no sign value, requires (i) quarantined primitive + paired shadow, (iii) fixed retention, (iv) dose < 0.20, and leakage certified 'on arms where preference is impossible by construction (random-direction and same-pole masks)'; D4 runs on R±A/R±B. The +1 restriction is k1.py's citing §0.4.
+[CONFIRMED] the anchor `ADDENDUM-k1 STAGE 1b — ± DIAGNOSTIC` does not yet exist
+   evidence: grep -c 'ADDENDUM-k1 STAGE 1b' RESULTS.md → 0; only prose 'Stage 1b' at RESULTS.md:267.
+[CONFIRMED] the mask names (M±A/M±B/R±A/R±B) collide with nothing
+   evidence: grep -rF 'M±A' over *.md/*.py/*.json outside ADDENDUM-k1.md and the check raw → no matches; k1.py MASKS = M+A, M+B, R+A, R+B, M++, R++ (+ M0).
+[CONFIRMED] §1.4 is disjunction-complete over D3; the PI-clock line is consistent
+   evidence: ADDENDUM:147-159 D3 PASS / D3 FAIL / any assertion failure → STOP; :5-6 '00:03 EDT / 04:03 UTC' — New York is UTC−4 on 2026-09-11 (raw check (k), line 714).
+[CONFIRMED] §0.1's 'G3 first-block sign .85–.89 across L50–L58, .68–.71 at L59–L63', 'G2 .47–.52' and 'the random direction's injection position .94–.95 at L51–L53 against the axis's .88' are exact
+   evidence: analyze_run.txt:31 g3_firstsign_read_M L50–L58 .85 .88 .88 .86 .86 .87 .89 .87 .85; L59–L63 .68 .70 .69 .68 .71; :23 g2_read_M range .47–.52 (0.4711–0.5165); :39 comparator L51–L53 .94 .95 .94 vs axis .88 .88 (.86 at L53).
+[CONFIRMED] the comparator's own G2 range is .48–.51
+   evidence: k1_analysis.json g2_read_R_comparator over L49–L63: min 0.4765 (→.48), max 0.5078 (→.51); analyze_run.txt:27.
+[CONFIRMED] the axis reads .88 at L51–L52 and .86 at L53
+   evidence: g3_firstsign_read_M: L51 0.8772, L52 0.8837, L53 0.8615.
+[REFUTED] the random lead is confined to L50–L54
+   evidence: k1_analysis.json g3_firstsign_read_R_comparator vs g3_firstsign_read_M: L50 .8134 vs .8534 (axis leads); L51 .9389 > .8772; L52 .9497 > .8837; L53 .9410 > .8615; L54 .9140 > .8605; L55 .8886 > .8745; L56 .9005 > .8886 (random leads); L57 .8129 < .8707; L58 .8188 < .8469 (axis leads). The random leads at L51–L56, six layers; the STAGE 1 entry itself says so (RESULTS.md:243-247 'here it leads at the decision token at L51–L56, six of the nine layers of the L50–L58 band … the axis leads at L50, L57 and L58').
+   correction: 'the random lead is confined to L51–L56 (the axis leads at L50, L57 and L58)'.
+[CONFIRMED] the random band median .854 sits below the axis's .861
+   evidence: k1_analysis.json evaluation.G3.comparator_R_median = 0.85370 vs median_auc 0.86101 (L51–L62).
+[CONFIRMED] 'label B .70 at L51 (against .75)' sets the peak beside a bar that binds the band median (.632); label B also fails the every-layer conjunct at L55–L56
+   evidence: G1 median_auc_labelB = 0.63169; bar labelB .75 on the L51–L61 median (PROPOSAL-k:244-246); g1_labelB_token_M above_null False at L55 (.60) and L56 (.62), all other band layers True; L51 0.6993.
+[CONFIRMED] 'five of 48 excluded under audit v3' — four are audit-v3 exclusions, s9's is the rule-18/28(c) roster-tag lexical exclusion
+   evidence: k1_sessions.json exclusions: s9 'lexical:slate@forced0' (counter 'lexical' tabulated separately from audit_degenerate/content_exclusion); the other four are audit:frame, audit:junk, content:null_response, content:preamble_without_content under audit_of_record 'audit-v3 exclusions (e2b_audit_v2 + content-class-v4 exclusion-bearing)'; raw check lines 482-486 (recon.py excludes() applies the lexical check independently of the audit).
+[CONFIRMED] §0.2's 'first-block sign .98–.99' is the recon's FIRST-ROUND sign over all four Stage C block masks B1–B4 (under B3/B4 the first block is mixed), so the 'B1 − B2 = (2, 2, −2, −2)' arithmetic is the addendum's framing, not the recon's own target
+   evidence: RESULTS.md:2002-2011 'B1 ++−−, B2 −−++, B3 +−−+, B4 −++− … targets first-round sign (+ for B1, B3) … the FIRST-round sign reads at 0.919 at L50 and .98–.99 at every layer from L51 to L62'; under B3/B4 rounds 1–2 are +− / −+.
+[CONFIRMED] 'label-token binding 1.000' is the record's nine-of-eleven figure for ≥ .998 at label A only (label B .81–.96)
+   evidence: RESULTS.md:1931 'AUC ≥ .998 at every layer L51–L61 — 1.000 at nine of them … At label_b's token … 0.962 / 0.964 at L51–L52, 0.867 at L53, .81–.87 through L63 … (1.000 vs .81–.96)'; :2069 FLAG 'label_a 1.000 vs label_b .81–.96'.
+[CONFIRMED] §2.2's 'the same margin gives .80' follows from one pairing only: .89 − .09 = .80; the lower figure gives .76–.77; the band median .87 gives .78–.79
+   evidence: .89−.09 = .80 (.89−.08 = .81); .85−.08 = .77, .85−.09 = .76; median of g3_firstsign_read_M over L50–L58 = 0.8707 → .87; .87−.08 = .79, .87−.09 = .78. Margin .08–.09 from ADDENDUM:191-192.
+[CONFIRMED] the clause 'that the ± recon did not show under +/0' is quoted verbatim and the ± recon never ran under +/0; PROPOSAL-k's band ends at L62, not L63
+   evidence: ADDENDUM:194-195 '… the L59–L63 fall-off that the ± recon did not show under +/0.'; Stage C block masks are all ± (RESULTS:2003); PROPOSAL-k:263 G3 band L51–L62, :385 readability '.90 median, L51–L62'.
+[CONFIRMED] §1.4's D3 PASS sentence says 'at the recon's strength' of a bar (.90) the addendum itself places .08–.09 below the recon's .98–.99
+   evidence: ADDENDUM:147-149 'reaches the decision token at the recon's strength'; :137 D3 bar '≥ .90'; :191-192 'PROPOSAL-k set .90 from recon ± figures of .98–.99 (margin ≈ .08–.09)'.
+[CONFIRMED] §1.2's 'M0: the Stage 1 shadow, reused' is true of the analysis rows, while the shadow forward re-runs inside every primitive call (the 7.7 s already includes it)
+   evidence: ADDENDUM:117; maskedprefix.py:283-300 read_choice_maskedprefix runs res_state and res_shadow (forward_last/forward_at with injections=()) unconditionally on every call plus choice_read(verify=True); RESULTS.md:480-481 '7.7 s = Stage C's 7.66 s per mask, one call = the four forwards (state, shadow, the insulated choice_read and its verify)'; k1_reads seconds_per_mask has six entries per session summing to the session's seconds (M0 not timed separately).
+[CONFIRMED] the six inline [verify …] / [Code: verify …] markers are placeholder text to strip at commit
+   evidence: grep ADDENDUM-k1.md: inline markers at :23 ([Code: verify …]), :42, :82, :84, :85, :87 = six; :13 is the convention sentence 'are marked [verify]', not a marker.
+[REFUTED] five (markers) clear now; the STAGE 1 anchor's clears with 7742e2c
+   evidence: The :23 marker clears (RESULTS.md:24 anchor at 7742e2c). Of the other five, :42 (rule 23), :82 (rule 11), :84 (rule 9), :85 (5(b)) resolve against CLAUDE.md:307-312, :267-268, :344-346. The :87 marker '[verify, applied at `702f997`]' is the entry's own item (7) — a referent the entry says does not resolve (5(f) applied at e9b5022); the raw check's refuter 1 on (l) (line 730) also marks it does_not_resolve. Four clear as written, not five.
+   correction: 'four clear now (rules 23, 11, 9, 5(b)); the 5(f) marker clears once its hash is corrected per (7); the STAGE 1 anchor's clears with 7742e2c'.
+[CONFIRMED] the precedence line adds an addendum slot PROPOSAL-k's line does not have, in the proposal's order
+   evidence: ADDENDUM:11 'CLAUDE.md > PROPOSAL-k > this addendum > LOCK-k > blocks' vs PROPOSAL-k:12 'CLAUDE.md > this proposal > LOCK-k > blocks'.
+[CONFIRMED] Not done: the addendum's commit; §4 step 2 (sign-set widening, 1b analyzer, battery); §4 step 3 (± reads, STAGE 1b entry); nothing model-facing ran in this session
+   evidence: git status: ADDENDUM-k1.md untracked; k1.py MASKS/guard unchanged at HEAD (+1 only); no 1b analyzer or STAGE 1b anchor in the repo; data/k newest mtime Sep 9 20:09, results/raw Sep 11 files are the two check records only. ('Nothing ran' is confirmed by absence of artifacts, not positively.)
+[CONFIRMED] the widening is PROPOSAL-k §0.4's welfare clause in code and waits for the PI-gated wording of (1)
+   evidence: k1.py:23-24 and :78 cite §0.4 / its '+pole against vehicle only' sentence; ADDENDUM §4 step 2 (:236-238) is the widening; consistent with items (1)–(2).
+[CONFIRMED] What is ready: the STAGE 1 artifacts and entry the addendum cites are at HEAD; the 1b analyzer's shape (D1–D4 over M±A/M±B/R±A/R±B with the Stage 1 M0 rows, the §1.4 sentences, a battery over D3 PASS / D3 FAIL / STOP)
+   evidence: git ls-files data/k/k1_{sessions,reads,analysis}.json, results/raw/2026-09-09_k1_analyze_run.txt tracked at 7742e2c; ADDENDUM §1.2 masks (:115-117), §1.3 D1–D4, §1.4 sentences, §1.5 'a battery reaching D3 PASS, D3 FAIL and STOP' (:166-167).
+[CONFIRMED] Routing-block paraphrases: item 1 = the STAGE 1 entry; item 3 = the widening + ± reads + STAGE 1b entry (the PI's word); the block repeats the STOP rule
+   evidence: Entry lines 18-32 as printed: item 1 'PI word for the STAGE 1 entry: write and commit it'; item 3 'widen the echo primitive's sign set to {+1, −1} … then the ± reads on the 48 Stage 1 texts and the STAGE 1b entry'; 'Any referent that does not resolve → STOP, report, no commit.' (No repo source; checked against the quote only.)
+[CONFIRMED] Stage 1's realised rate 7.35 s per mask; recon's 7.7 s
+   evidence: k1_reads.json seconds_per_mask mean 7.354 s (258 calls), median 7.384; RESULTS.md:58 '7.35 s per mask'; RESULTS.md:480 '7.7 s = Stage C's 7.66 s per mask'.
