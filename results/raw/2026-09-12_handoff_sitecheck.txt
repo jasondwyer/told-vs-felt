@@ -1,0 +1,20 @@
+date -u: Sat Sep 12 06:01:34 UTC 2026
+ Wattage = 140W
+ Current = 4990mA
+ Voltage = 28000mV
+--- regression
+  154/154 reproduced through valence_core
+--- format_recon
+  67/67 selftest checks pass
+--- k1_stage1
+  21/21 Stage 1 selftest checks pass
+--- k1_analyze
+  20/20 analyzer battery checks pass (14s)
+--- e2d_d2
+  46/46 branches verified (every criterion, both directions, plus the sign-flip and g2r branches)
+--- recon_echo
+  18/18 selftest checks pass
+--- verify3
+  24/24 third-pass checks pass
+--- v5 screen selftest?
+scripts/e2d_contentclass_screen_v5.py
