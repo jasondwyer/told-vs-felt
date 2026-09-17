@@ -1,0 +1,2170 @@
+RAW RECORD — content-class v5 ADOPTION design block, referent check against HEAD 16705a2
+Run 2026-09-13, workflow wf_19579f25-f9e; resumed 2026-09-17 after an OAuth 401 killed
+refute:V2:too-lenient on the first pass (8/9 then; 9/9 on resume, 0 errors; the eight
+cached agents replayed against unchanged bytes -- HEAD 16705a2 both times).
+Protocol: design block 2026-09-06 s1 (raw before report); trap 44 (two lenses per group);
+trap 25 (agent output is evidence -- every verdict re-verified by Code against the file).
+Stamp from `date -u`: Thu Sep 17 20:16:13 UTC 2026.
+
+TOTALS: referents 37  checker-unresolved 10  refuter verdicts 75 returned / 74 matched  overturned 6
+  (Reconciled by Code after the pass-2 values-check flagged the mismatch: the agents returned 75
+   verdict objects, but one -- from a V3 lens -- carries the id 'V3.12', which is not a referent
+   (V3 has 11, V3.1-V3.11). It matches nothing and is not rendered below. Every one of the 37
+   referents carries exactly 2 rendered verdicts, so the body holds 74. Trap 25: agent output is
+   evidence, not testimony -- including its bookkeeping.)
+====================================================================================================
+
+####################################################################################################
+GROUP V1 — 11 referents
+####################################################################################################
+
+[V1.1]  CHECKER resolves=True  severity=clean
+  LOCATION: design block, sentence 1 (the v5 adoption sentence)
+  BLOCK SAYS:
+    "`wrong_task`'s comparison pool excludes the current task's own paraphrases by task id."
+  RECORD SAYS:
+    valence_core/e2d/contentclass_v5.py:88-94 — `def others_by_task_id(task_text, pool_by_id,
+    id_of)` / docstring "Every paraphrase of every OTHER task. `id_of` maps a paraphrase text to
+    its task id" / `tid = id_of.get(task_text)` / `return [p for k, ps in pool_by_id.items() if
+    k != tid for p in ps]`. Module header lines 8-13: "The pool is now 'every paraphrase of
+    every OTHER task'." Callers key POOL_BY_ID/ID_OF off `data/corpus/e2a_tasks.jsonl` task ids
+    (scripts/e2d_contentclass_screen_v5.py:29-30, 61; valence_core/k/sessions.py:57-70).
+  CHECKER NOTE:
+    Exclusion is by task id, not by text: the filter compares pool keys `k != tid` where tid is
+    the current task's id, so all four sibling paraphrases of the current task drop out. Two
+    caveats, both visible in the code, neither contradicting the block: (a) `classify_v5` itself
+    does NOT build the pool — its docstring (lines 99-101) says "`other_tasks` MUST already
+    exclude the current task's own paraphrases (use `others_by_task_id`); this function does not
+    know task ids", so the id filtering is the caller's; (b) if the task text is absent from
+    `id_of`, `tid` is None, every key survives the `k != tid` test and the WHOLE pool (own
+    paraphrases included) is returned — docstring: "a task text not in the corpus keeps the
+    whole pool (reported by the caller, never silently)". The screen driver counts that case
+    (`unmapped_task_texts`) and it is 0 on all four corpora (e2d/e2a/e2b/format) in
+    data/e2d/contentclass_screen_v5.json; valence_core/k/sessions.py:67-68 raises SystemExit
+    instead. So the fallback never bit on any screened corpus.
+  REFUTER [Refuter — leniency lens: re-counted every count from the art] resolves=True overturned=False
+    EVIDENCE:
+      valence_core/e2d/contentclass_v5.py:88-94 `others_by_task_id`: `tid =
+      id_of.get(task_text)` / `return [p for k, ps in pool_by_id.items() if k != tid for p in
+      ps]`; header line 13 "The pool is now 'every paraphrase of every OTHER task'." RESULTS.md
+      (166f8ff entry, item 2): "**(a) `wrong_task`'s pool is every paraphrase of every OTHER
+      task id** (v4: every paraphrase but the current text, so a task's own siblings sat in the
+      pool)". Recomputed with the repo venv: corpus is 16 tasks x 4 paraphrases = 64; for a
+      mapped task the v5 pool is 60 and `any(sibling in pool)` is False; for an unmapped text
+      the pool is 64 (the declared fallback). `unmapped_task_texts` = 0 on all four corpora in
+      data/e2d/contentclass_screen_v5.json; `added_under_v5` = 0 on all four (the v5 pool is a
+      strict subset of v4's, so no hit can be added).
+    REASONING:
+      Not lenient. The exclusion is genuinely by id, and I confirmed in both directions that it
+      removes exactly the four siblings and adds nothing (pool 60 vs 64, added_under_v5 empty
+      everywhere). The checker's two caveats are real and correctly stated: classify_v5 does not
+      build the pool (docstring lines 99-101), and the unmapped fallback returns the whole
+      64-pool — but the fallback never fired (0 unmapped on e2d/e2a/e2b/format), and
+      valence_core/k/sessions.py:67-68 raises SystemExit rather than falling back. Referent
+      resolves.
+  REFUTER [Too-strict refuter on GROUP V1 (the content-class v5 code ag] resolves=True overturned=False
+    EVIDENCE:
+      valence_core/e2d/contentclass_v5.py:88-94: `def others_by_task_id(task_text, pool_by_id,
+      id_of)` ... `tid = id_of.get(task_text)` / `return [p for k, ps in pool_by_id.items() if k
+      != tid for p in ps]`; header lines 8-13 "The pool is now 'every paraphrase of every OTHER
+      task'." Executed against data/corpus/e2a_tasks.jsonl (16 tasks, 64 paraphrases): for a t06
+      paraphrase the pool is 60 of 64 and `any t06 sibling in pool: False`. Fallback confirmed:
+      `others_by_task_id('NOT IN CORPUS', ...)` returns all 64. Callers key off task ids:
+      scripts/e2d_contentclass_screen_v5.py:29-30 `POOL_BY_ID = {t['id']: ...}` / `ID_OF = {p:
+      t['id'] ...}`; valence_core/k/sessions.py:57-70 same, with `raise SystemExit(f"task text
+      not in the corpus (rule 18 pool hygiene): ...")`. Artifact
+      data/e2d/contentclass_screen_v5.json: `unmapped_task_texts` 0 on e2d/e2a/e2b/format,
+      reproduced in my re-run ("unmapped tasks 0" on all four).
+    REASONING:
+      Upheld. The block's exclusion-by-task-id is exactly what the code does, and the checker's
+      two caveats (the id filtering is the caller's; an unmapped task text keeps the whole pool)
+      are visible in the code and neither contradicts the block. I verified the fallback never
+      bit: unmapped is 0 on every screened corpus, and the k1 runner raises instead. No
+      over-strictness to correct; the finding was already resolves=true with evidence that holds
+      up under execution.
+
+[V1.2]  CHECKER resolves=True  severity=gloss
+  LOCATION: design block, sentence 1 (parenthetical-bearing clause)
+  BLOCK SAYS:
+    "`payload_echo` — a transform task answered with its payload unchanged"
+  RECORD SAYS:
+    valence_core/e2d/contentclass_v5.py:77-85 — `def is_payload_echo(text, task_text)`,
+    docstring "Transform task answered with its payload unchanged (quotation marks and a leading
+    label aside). Exact word-sequence identity."; body: `if not is_transform_task(task_text):
+    return False` / `body = _strip_quotes(V4.strip_leading_label(text))` / `if not body: return
+    False` / `return V3._words(body) == V3._words(payload_of(task_text))`. `V3._words`
+    (contentclass.py:87-88) is `re.findall(r"[a-z0-9']+", s.lower())`.
+  CHECKER NOTE:
+    The predicate is the block's, with the module's own declared widening of "unchanged":
+    identity is a WORD SEQUENCE match after lower-casing and dropping all non-alphanumeric
+    characters, so case, punctuation and markdown emphasis are ignored, plus a leading
+    `"<Word>:"` label (V4.strip_leading_label) and surrounding quotes are stripped first. The
+    module says so at lines 23-27: "Exact word-sequence identity (case and punctuation ignored
+    -- so '3pm!' for '3pm.' and **bold** count) ... wider than the disposition's 'quotation
+    marks aside', declared; a partial rewrite is not an echo." `payload_of` is the text after
+    the FIRST colon (lines 57-63). Byte-verbatimness is not part of the predicate; it is only
+    flagged per hit by the screen driver (`verbatim_including_punctuation`).
+  REFUTER [Refuter — leniency lens: re-counted every count from the art] resolves=True overturned=False
+    EVIDENCE:
+      contentclass_v5.py:77-85 `is_payload_echo`: guard `if not is_transform_task(task_text):
+      return False`; `body = _strip_quotes(V4.strip_leading_label(text))`; `return
+      V3._words(body) == V3._words(payload_of(task_text))`. V3._words =
+      `re.findall(r"[a-z0-9']+", s.lower())` (contentclass.py:87-88). Module header lines 23-27
+      declares the widening: "Exact word-sequence identity (case and punctuation ignored -- so
+      '3pm!' for '3pm.' and **bold** count) ... wider than the disposition's 'quotation marks
+      aside', declared; a partial rewrite is not an echo."
+      data/configs/contentclass_candidate.json `wider_than_the_disposition_wording_declared`
+      carries the same two items.
+    REASONING:
+      Verified the predicate line by line. 'Unchanged' in the block is the module's declared
+      word-sequence sense, not byte identity — I confirmed this bites on exactly 2 of the 24
+      hits (see V1.10), so the widening is not merely nominal. The checker labelled it a gloss
+      rather than clean, which is the right severity; it did not over-credit byte-verbatimness.
+  REFUTER [Too-strict refuter on GROUP V1 (the content-class v5 code ag] resolves=True overturned=False
+    EVIDENCE:
+      contentclass_v5.py:77-85 `def is_payload_echo(text, task_text)`, docstring "Transform task
+      answered with its payload unchanged (quotation marks and a leading label aside). Exact
+      word-sequence identity."; body `body = _strip_quotes(V4.strip_leading_label(text))` then
+      `return V3._words(body) == V3._words(payload_of(task_text))`. Verified the helpers:
+      contentclass.py:87-88 `def _words(s): return re.findall(r"[a-z0-9']+", s.lower())`;
+      contentclass_v4.py:111-114 `strip_leading_label` matches `_LEADING_LABEL` and returns the
+      remainder; contentclass_v5.py:57-63 `payload_of` = text after the FIRST colon. Module
+      lines 23-27 declare the widening: "Exact word-sequence identity (case and punctuation
+      ignored -- so '3pm!' for '3pm.' and **bold** count) ... wider than the disposition's
+      'quotation marks aside', declared; a partial rewrite is not an echo." Byte-verbatimness is
+      only a per-hit flag in the driver (`verbatim_including_punctuation`,
+      scripts/e2d_contentclass_screen_v5.py:95-97).
+    REASONING:
+      Upheld. The gloss severity is right, not over-strict: the predicate is the block's phrase
+      with a declared widening the module states in its own header, so the referent resolves
+      while 'unchanged' carries the module's word-sequence sense rather than a byte sense.
+
+[V1.3]  CHECKER resolves=True  severity=clean
+  LOCATION: design block, sentence 1
+  BLOCK SAYS:
+    "a transform task answered with its payload unchanged" — i.e. the class fires only on
+    transform tasks
+  RECORD SAYS:
+    contentclass_v5.py:77-80 `if not is_transform_task(task_text): return False`; :66-70 `def
+    is_transform_task(task_text)` — `if payload_of(task_text) is None: return False` then `instr
+    = V3.instruction_only(task_text)` and `return bool(_TRANSFORM_VERB.search(instr) or
+    _MAKE_TARGET.search(instr))`; :52-53 `_TRANSFORM_VERB =
+    re.compile(r"\b(rewrite|reword|rephrase|restate|soften)\b", re.I)` and `_MAKE_TARGET =
+    re.compile(r"\bmake\b.*\b(friendlier|kinder|warmer|gentler|softer|nicer|politer)\b", re.I)`;
+    comment :48-51 "the corpus's t06 (meeting notice) and t14 (dishes notice) fall in; the
+    caption tasks with a colon (t01, t09) do not."
+  CHECKER NOTE:
+    Scoping verified two ways. (i) The guard is the first statement of is_payload_echo, so a
+    non-transform task can never yield the label. (ii) Recomputed independently over
+    data/corpus/e2a_tasks.jsonl with the repo venv: the transform-task ids are exactly ['t06',
+    't14'], and all 4 of 4 paraphrases of each qualify; this matches the artifact's
+    `transform_tasks_in_corpus` field. The verb test runs on `V3.instruction_only` (text BEFORE
+    the first colon), so a transform verb appearing inside the payload cannot trigger it, and a
+    colon payload is required.
+  REFUTER [Refuter — leniency lens: re-counted every count from the art] resolves=True overturned=False
+    EVIDENCE:
+      contentclass_v5.py:77-80 (guard is the first statement), :66-70 `is_transform_task`
+      (requires a colon payload AND a lexicon match on `V3.instruction_only`), :52-53 the two
+      regexes. Recomputed over data/corpus/e2a_tasks.jsonl with the repo venv: transform task
+      ids are exactly ['t06','t14'], 4 of 4 paraphrases qualify for each; t01 and t09 (caption
+      tasks with a colon) do not. Matches `transform_tasks_in_corpus` in both
+      data/e2d/contentclass_screen_v5.json and data/configs/contentclass_candidate.json. t14's
+      four paraphrases confirmed as transforms ('Rewrite this more gently', 'Make this kinder',
+      'Reword this note softly', 'Soften this kitchen notice') — so t14 is in the denominator,
+      which is what makes the all-t06 result in V1.10 non-trivial.
+    REASONING:
+      Independent recount matches the artifact exactly. The verb test runs on text BEFORE the
+      first colon, so a transform verb inside a payload cannot trigger it — I checked that is
+      the code path, not an assumption. Resolves.
+  REFUTER [Too-strict refuter on GROUP V1 (the content-class v5 code ag] resolves=True overturned=False
+    EVIDENCE:
+      contentclass_v5.py:77-80 — `if not is_transform_task(task_text): return False` is the
+      first statement of is_payload_echo; :66-70 `is_transform_task` requires
+      `payload_of(task_text) is not None` and a lexicon hit on `V3.instruction_only(task_text)`
+      (contentclass.py:98-100: the text BEFORE the first colon); :52-53 `_TRANSFORM_VERB =
+      re.compile(r"\b(rewrite|reword|rephrase|restate|soften)\b", re.I)`, `_MAKE_TARGET =
+      re.compile(r"\bmake\b.*\b(friendlier|kinder|warmer|gentler|softer|nicer|politer)\b",
+      re.I)`. My own recount over data/corpus/e2a_tasks.jsonl with the repo venv: any-paraphrase
+      transform = ['t06','t14'], all-paraphrase transform = ['t06','t14'], 4 of 4 paraphrases
+      each. Artifact and my re-run both print `transform tasks in the corpus: ['t06', 't14']`.
+    REASONING:
+      Upheld, independently recomputed rather than read off the artifact. The gating is
+      structural (first statement) and the verb test runs on the pre-colon instruction, so a
+      transform verb inside a payload cannot trigger it.
+
+[V1.4]  CHECKER resolves=True  severity=clean
+  LOCATION: design block, sentence 1
+  BLOCK SAYS:
+    "ADOPTED as an ADVISORY class"
+  RECORD SAYS:
+    contentclass_v5.py:44-46 — `EXCLUSION_BEARING = V4.EXCLUSION_BEARING` / `ADVISORY =
+    ("task_echo", "payload_echo", "wrong_task")` / `CLASSES = EXCLUSION_BEARING + ADVISORY`;
+    :110-111 `if is_payload_echo(text, task_text): return "payload_echo", "advisory"`. Header :6
+    "Two rules, BOTH ADVISORY; nothing exclusion-bearing changes". Consumers treat
+    standing=="advisory" as non-excluding: audit_v3.py:52-54 `return
+    AuditV3Result(exclusion=None, advisory=(f"content:{label}",), content_label=label)`; same in
+    valence_core/k/sessions.py:52-53.
+  CHECKER NOTE:
+    payload_echo bears no exclusion anywhere in the code as written: it is in ADVISORY,
+    classify_v5 returns standing "advisory", and every routing site maps that to exclusion=None
+    with the label carried to the rule-25 read. Separate from the code: the module header still
+    reads "CANDIDATE ... PROSPECTIVE ONLY" and "audit v3 (the audit of record) still routes
+    through v4 until the design seat adopts from the screen" (lines 1-4), and SPEC_VERSION (line
+    42) still says "CANDIDATE" — i.e. the word ADOPTED is the block's own act, not yet anything
+    the module says.
+  REFUTER [Refuter — leniency lens: re-counted every count from the art] resolves=True overturned=False
+    EVIDENCE:
+      contentclass_v5.py:44-46 `ADVISORY = ("task_echo", "payload_echo", "wrong_task")`;
+      :110-111 `return "payload_echo", "advisory"`. Runtime: V5.ADVISORY =
+      ('task_echo','payload_echo','wrong_task') vs V4.ADVISORY = ('task_echo','wrong_task').
+      Routing sites map advisory to non-excluding: audit_v3.py:52-54 and
+      valence_core/k/sessions.py:52-53 both `AuditV3Result(exclusion=None,
+      advisory=(f"content:{label}",), content_label=label)`. Module header line 6: "Two rules,
+      BOTH ADVISORY; nothing exclusion-bearing changes"; SPEC_VERSION (line 42) still says
+      "CANDIDATE".
+    REASONING:
+      The class's advisory standing resolves in the code and at every routing site. The
+      checker's caveat that the module still says CANDIDATE / PROSPECTIVE ONLY is accurate and
+      correctly kept separate from the standing question — the block's word 'ADOPTED' is the
+      design act, which is not mine to adjudicate.
+  REFUTER [Too-strict refuter on GROUP V1 (the content-class v5 code ag] resolves=True overturned=False
+    EVIDENCE:
+      contentclass_v5.py:45 `ADVISORY = ("task_echo", "payload_echo", "wrong_task")`; :110-111
+      `if is_payload_echo(text, task_text): return "payload_echo", "advisory"`; header line 6
+      "Two rules, BOTH ADVISORY; nothing exclusion-bearing changes". Runtime: `V5.ADVISORY` =
+      ('task_echo','payload_echo','wrong_task'). Routing sites map advisory to no exclusion:
+      audit_v3.py:52-54 `return AuditV3Result(exclusion=None, advisory=(f"content:{label}",),
+      content_label=label)`; valence_core/k/sessions.py:52-53 identical. Module header lines 1-4
+      still read "CANDIDATE ... PROSPECTIVE ONLY" and "audit v3 (the audit of record) still
+      routes through v4 until the design seat adopts from the screen"; SPEC_VERSION (line 42)
+      still begins "content-class-v5 CANDIDATE".
+    REASONING:
+      Upheld. payload_echo bears no exclusion anywhere in the code; the checker's note that the
+      word ADOPTED is the block's own act (the module still says CANDIDATE) is state-reporting,
+      not an over-strict failure, and it does not make the ADVISORY referent fail.
+
+[V1.5]  CHECKER resolves=True  severity=clean
+  LOCATION: design block, final sentence (wiring instructions)
+  BLOCK SAYS:
+    "exclusion-bearing classes unchanged"
+  RECORD SAYS:
+    v4: `EXCLUSION_BEARING = ("null_response", "stuck_attractor", "preamble_without_content")`
+    (contentclass_v4.py:61). v5: `EXCLUSION_BEARING = V4.EXCLUSION_BEARING`
+    (contentclass_v5.py:44) — verified at runtime to be the SAME tuple object
+    (`V5.EXCLUSION_BEARING is V4.EXCLUSION_BEARING` → True). Detectors also identical:
+    classify_v5:102-107 calls `V4.is_null_response_v4`, `V3.is_stuck_attractor`,
+    `V3.is_preamble` in that order — the same three calls in the same order as
+    classify_v4:169-174. Screen artifact, all four corpora: null_response 13/13/25/0,
+    stuck_attractor 3/11/15/0, preamble_without_content 37/5/1/0 under v4 and under v5
+    (data/e2d/contentclass_screen_v5.json, `v4_by_class` vs `v5_by_class`), reproduced by my own
+    re-run of scripts/e2d_contentclass_screen_v5.py to a scratch path.
+  CHECKER NOTE:
+    Sets are identical (same object, not just equal) and behaviour is identical: exclusion
+    counts are unchanged round-for-round on e2d/e2a/e2b/format. One enumeration nuance: the v3
+    draft (valence_core/e2d/contentclass.py) declares NO standing split at all — it has `CLASSES
+    = (task_echo, preamble_without_content, wrong_task, stuck_attractor, null_response)` and
+    `classify()` returns a bare label with no standing (`hasattr(V3, "EXCLUSION_BEARING")` →
+    False), so the exclusion-bearing set exists only from v4 onward; the comparison that the
+    phrase can bear is v4↔v5. Note also that v5 inserts payload_echo BETWEEN task_echo and
+    wrong_task (precedence line 29-31), both advisory, so no round can move into or out of
+    exclusion.
+  REFUTER [Refuter — leniency lens: re-counted every count from the art] resolves=True overturned=False
+    EVIDENCE:
+      Runtime check: `V5.EXCLUSION_BEARING is V4.EXCLUSION_BEARING` -> True, value
+      ('null_response','stuck_attractor','preamble_without_content'). classify_v5:102-107 calls
+      V4.is_null_response_v4 / V3.is_stuck_attractor / V3.is_preamble in that order —
+      byte-for-byte the same three calls in the same order as classify_v4:167-174, so exclusion
+      output is identical for ANY input, not just these corpora. Empirically, from my own re-run
+      of scripts/e2d_contentclass_screen_v5.py to a scratch path: null_response e2d 13 / e2a 13
+      / e2b 25 / format 0; stuck_attractor 3 / 11 / 15 / 0; preamble_without_content 37 / 5 / 1
+      / 0 — identical in `v4_by_class` and `v5_by_class` on every corpus. payload_echo is
+      inserted at precedence position 5, AFTER all three exclusion classes, so no round can move
+      into or out of exclusion.
+    REASONING:
+      Attacked this as the strongest leniency candidate and it survives: the claim is true
+      structurally (same tuple object, same three calls first, advisory inserted after them),
+      not merely on the screened sample. The checker's note that v3 declares no standing split
+      at all (`hasattr(V3,'EXCLUSION_BEARING')` -> False; V3.CLASSES is a flat 5-tuple) is
+      confirmed and correctly scopes the comparison to v4<->v5.
+  REFUTER [Too-strict refuter on GROUP V1 (the content-class v5 code ag] resolves=True overturned=False
+    EVIDENCE:
+      contentclass_v4.py:61 `EXCLUSION_BEARING = ("null_response", "stuck_attractor",
+      "preamble_without_content")`; contentclass_v5.py:44 `EXCLUSION_BEARING =
+      V4.EXCLUSION_BEARING`. Runtime check I ran: `V5.EXCLUSION_BEARING is V4.EXCLUSION_BEARING`
+      -> True (same object). Detector order identical: classify_v5:102-107 calls
+      V4.is_null_response_v4 / V3.is_stuck_attractor / V3.is_preamble, the same three in the
+      same order as classify_v4:169-174. My re-run of the screen to scratch reproduces identical
+      exclusion counts v4 -> v5 on every corpus: e2d null 13, stuck 3, preamble 37; e2a 13 / 11
+      / 5; e2b 25 / 15 / 1; format 0 / 0 / 0 (format v4 {'wrong_task': 2} -> v5 {'payload_echo':
+      3}, no exclusion-bearing class in either). Only the advisory counts move.
+    REASONING:
+      Upheld. Same tuple object, same detectors in the same order, and counts unchanged
+      round-for-round on all four corpora in my own re-run. The checker's enumeration nuance (v3
+      has no standing split — I confirmed `hasattr(V3,'EXCLUSION_BEARING')` is False and
+      V3.CLASSES is a flat 5-tuple) is correct and does not weaken the finding.
+
+[V1.6]  CHECKER resolves=True  severity=clean
+  LOCATION: design block, final sentence (wiring instructions)
+  BLOCK SAYS:
+    "v3/v4 frozen"
+  RECORD SAYS:
+    Working tree == HEAD for all three: `git hash-object` vs `git rev-parse HEAD:<path>` —
+    contentclass.py e831a2a8… = e831a2a8…, contentclass_v4.py a95d7046… = a95d7046…, audit_v3.py
+    a0c64037… = a0c64037… (SAME in each case); `git status --porcelain` lists no tracked
+    modification (only nine untracked .md/.txt files). Last commit touching contentclass.py is
+    1223751 ("PART C: content-class spec draft + overbreadth screen. CANDIDATE, NOT ADOPTED.");
+    contentclass_v4.py and audit_v3.py last moved at a49bc9b ("Content-class spec ADJUDICATED
+    (AMENDMENT 2 (iii))"). `git log 166f8ff..HEAD -- <those three paths>` is empty. `git show
+    --stat 166f8ff -- valence_core` lists only `valence_core/e2d/contentclass_v5.py | 118 +` and
+    `valence_core/formats/recon.py | 9 +-`.
+  CHECKER NOTE:
+    v3, v4 and audit_v3.py are byte-identical to their HEAD blobs and have not been committed to
+    since before 166f8ff; 166f8ff itself added contentclass_v5.py and touched only
+    formats/recon.py besides. The v5 build honours the same claim in its own header (line 2:
+    "Builds on the frozen v3 draft and the adopted v4 without modifying either").
+  REFUTER [Refuter — leniency lens: re-counted every count from the art] resolves=True overturned=False
+    EVIDENCE:
+      Working tree vs HEAD, `git hash-object` = `git rev-parse HEAD:<path>` for all three:
+      contentclass.py e831a2a88de4d8d9720bad86811926f7b07620e9 = same; contentclass_v4.py
+      a95d7046cd837a32befe93b40469638261885ef1 = same; audit_v3.py
+      a0c6403756c4cd430ad52b5c33f84227ae8e4c40 = same. `git log --oneline 166f8ff..HEAD --
+      <those three>` returns nothing. Last commit touching contentclass.py is 1223751;
+      contentclass_v4.py and audit_v3.py last moved at a49bc9b — both predate 166f8ff. `git
+      status --porcelain` shows no tracked modification (nine untracked .md/.txt only). `git
+      show --stat 166f8ff` lists valence_core/e2d/contentclass_v5.py (118 +) and
+      valence_core/formats/recon.py (9 +-) as the only valence_core files.
+    REASONING:
+      Diffed rather than taken on the checker's word: byte-identical to HEAD blobs and untouched
+      since before 166f8ff. 'Frozen' resolves in both senses (no working-tree drift, no
+      commits).
+  REFUTER [Too-strict refuter on GROUP V1 (the content-class v5 code ag] resolves=True overturned=False
+    EVIDENCE:
+      `git hash-object` vs `git rev-parse HEAD:<path>` — contentclass.py
+      e831a2a88de4d8d9720bad86811926f7b07620e9 = e831a2a8...; contentclass_v4.py
+      a95d7046cd837a32befe93b40469638261885ef1 = a95d7046...; audit_v3.py
+      a0c6403756c4cd430ad52b5c33f84227ae8e4c40 = a0c64037... `git log --oneline 166f8ff..HEAD --
+      <those three paths>` returns nothing. `git status --porcelain` lists only nine untracked
+      .md/.txt files, no tracked modification. `git show --stat 166f8ff` shows under
+      valence_core only `contentclass_v5.py | 118 +` and `formats/recon.py | 9 +-`. Last commits
+      touching them: 1223751 (v3 draft), a49bc9b (v4 + audit_v3).
+    REASONING:
+      Upheld, hashes re-computed myself. v3, v4 and audit_v3.py are byte-identical to their HEAD
+      blobs and untouched since before 166f8ff.
+
+[V1.7]  CHECKER resolves=False  severity=wording
+  LOCATION: design block, final sentence (wiring instructions)
+  BLOCK SAYS:
+    "`adopted` fields name this block"
+  RECORD SAYS:
+    No `adopted` field exists in valence_core/e2d/contentclass_v5.py (the string "adopted"
+    appears there only as prose: line 2 "the adopted v4", line 4 "until the design seat adopts
+    from the screen"). In data/configs/contentclass_candidate.json the only such fields are
+    top-level: `"adopted": true` and `"adopted_by": {"entry": "CONTENT-CLASS SPEC — ADJUDICATED
+    (AMENDMENT 2 (iii))", "results_md": "RESULTS.md, 2026-09-06 (Code stamp); design
+    adjudication authored PI date 2026-09-05", "ratified": "PI, 2026-09-05 (PI clock)", ...}` —
+    i.e. they name the v4 adjudication. The `v5_candidate` subtree has no `adopted` key; it has
+    `adoption`, whose value for payload_echo reads "ADJUDICATED BY THE DESIGN SEAT FROM THE
+    SCREEN (not adopted here); alone it is a one-line swap in audit_v3.py", and
+    `rules.standing.payload_echo` = "advisory (adoption: design seat, from this screen)".
+    data/e2d/contentclass_screen_v5.json has no `adopted` key either (same "advisory (adoption:
+    design seat, from this screen)" string).
+  CHECKER NOTE:
+    Reporting state only, no adjudication: today no `adopted` field anywhere names this block,
+    and the only fields actually spelled `adopted`/`adopted_by` belong to the v4 adjudication of
+    2026-09-05/06 in data/configs/contentclass_candidate.json. The v5-scoped fields are spelled
+    `adoption` (contentclass_candidate.json → v5_candidate.adoption) and `rules.standing`, and
+    both currently say adoption is the design seat's, pending. So the block's plural "`adopted`
+    fields" has no v5-scoped referent on disk; whatever is meant would have to be newly created,
+    and the two existing `adopted`/`adopted_by` fields carry v4's adjudication, not this one.
+  REFUTER [Refuter — leniency lens: re-counted every count from the art] resolves=False overturned=False
+    EVIDENCE:
+      `grep -n '\"adopted' data/configs/contentclass_candidate.json` returns exactly two lines,
+      88 (`"adopted": true`) and 89 (`"adopted_by": {`), and both sit at TOP LEVEL naming the v4
+      adjudication: `"entry": "CONTENT-CLASS SPEC — ADJUDICATED (AMENDMENT 2 (iii))"`,
+      `"results_md": "RESULTS.md, 2026-09-06 (Code stamp); design adjudication authored PI date
+      2026-09-05"`, `"ratified": "PI, 2026-09-05 (PI clock)"`. The `v5_candidate` subtree has no
+      `adopted` key; it has `adoption` (line 233), whose payload_echo value reads "ADJUDICATED
+      BY THE DESIGN SEAT FROM THE SCREEN (not adopted here); alone it is a one-line swap in
+      audit_v3.py". data/e2d/contentclass_screen_v5.json has no `adopted` key — its only
+      adoption string is `rules.standing.payload_echo` = "advisory (adoption: design seat, from
+      this screen)". The string "adopted" in contentclass_v5.py appears only as prose (lines 2
+      and 4).
+    REASONING:
+      Confirmed false, and the checker was if anything generous in calling it merely 'wording'.
+      Two facts it stated that I re-verified: no v5-scoped field spelled `adopted` exists
+      anywhere on disk, and the only two fields actually spelled `adopted`/`adopted_by` carry
+      the v4 adjudication of 2026-09-05/06. So the block's plural '`adopted` fields' has no v5
+      referent at HEAD; the v5-scoped field is spelled `adoption`. Whether the sentence is an
+      assertion about the record or a directive to create such fields is adjudication and I do
+      not resolve it.
+  REFUTER [Too-strict refuter on GROUP V1 (the content-class v5 code ag] resolves=True overturned=True
+    EVIDENCE:
+      The field name exists on disk with exactly that spelling, as a pair, in the candidate
+      config the block would be adopted into: data/configs/contentclass_candidate.json:88-89
+      `"adopted": true,` / `"adopted_by": { "entry": "CONTENT-CLASS SPEC — ADJUDICATED
+      (AMENDMENT 2 (iii))", "results_md": "RESULTS.md, 2026-09-06 (Code stamp); design
+      adjudication authored PI date 2026-09-05", "ratified": "PI, 2026-09-05 (PI clock)", ...
+      }`. The convention is documented as an act: `git log -S'"adopted"' --
+      data/configs/contentclass_candidate.json` returns exactly one commit, a49bc9b, whose
+      message reads "candidate flipped to adopted naming the entry" — and its diff is where
+      lines 76-77 (`+ "adopted": true,` / `+ "adopted_by": {`) were first written. A third
+      `adopted` field exists at data/e2d/contentclass_screen.json:4 `"adopted": false`. The
+      checker's state-facts are all correct and I re-verified them: the v5-scoped fields are
+      spelled `adoption` (v5_candidate.adoption: "ADJUDICATED BY THE DESIGN SEAT FROM THE SCREEN
+      (not adopted here); alone it is a one-line swap in audit_v3.py") and
+      `rules.standing.payload_echo` = "advisory (adoption: design seat, from this screen)";
+      data/e2d/contentclass_screen_v5.json has no adopted key (`grep -n adopt` finds only the
+      standing string) and neither does contentclass_screen_v4.json.
+    REASONING:
+      Overturned as too strict. The clause is in the block's wiring-instruction sentence ("Wire
+      v5 ...; exclusion-bearing classes unchanged; v3/v4 frozen; `adopted` fields name this
+      block; one RESULTS entry") — it directs what Code writes at adoption, not a claim about
+      what the record already says. The referent it points at is a live naming convention that
+      does exist on disk, plural, spelled exactly `adopted`/`adopted_by`, created for precisely
+      this purpose at the v4 adoption whose commit message describes the move as "flipped to
+      adopted naming the entry". The checker required a v5-scoped field to pre-exist; an
+      instruction to write a field is not falsified by the field not yet being written, and
+      `v5_candidate.adoption` says in its own words that adoption is still "pending the design
+      seat's word". Two facts stand as caveats rather than a referent failure: today the only
+      `adopted`/`adopted_by` pair carries v4's adjudication (its `scope` note reads "PROSPECTIVE
+      ONLY: applies to new Qwen session campaigns..."), so the block does not say whether those
+      are to be rewritten or a v5-scoped pair added; and the block's plural has no v5-scoped
+      instance yet. Reported, not adjudicated.
+
+[V1.8]  CHECKER resolves=True  severity=gloss
+  LOCATION: design block, final sentence (wiring instructions)
+  BLOCK SAYS:
+    "Wire v5 into audit v3's advisory routing (the two changes the 166f8ff entry declared)"
+  RECORD SAYS:
+    RESULTS.md, 2026-09-08 entry, item 2 last sentence: "**Wiring, when adopted:**
+    `payload_echo` alone is a one-line swap in `audit_v3.py`; the id-pool rule also needs the
+    caller's pool builder (`others_factory` in `scripts/format_recon.py`, today the v4
+    construction) to pass an id-filtered pool — two changes, not one." Current state at HEAD:
+    audit_v3.py:49 still `label, standing = V4.classify_v4(text, task_text, earlier,
+    other_tasks)` and AUDIT_VERSION (line 26) still "audit-v3 = e2b_audit_v2 +
+    content-class-v4"; scripts/format_recon.py:155-157 `def others_factory(tasks): pool =
+    all_paraphrases(tasks); return lambda task_text: [t for t in pool if t != task_text]` — the
+    v4 construction, by text.
+  CHECKER NOTE:
+    The "two changes" resolve verbatim to the 2026-09-08 entry, and both targets are still in
+    their pre-wiring state at HEAD. One fact the two-changes sentence does not cover, found
+    while checking: a THIRD v5 routing already exists and is committed —
+    valence_core/k/sessions.py:39-54 defines `AuditV3WithV5Advisories(AuditV3)` whose `check`
+    calls `V5.classify_v5(...)`, with its own id-filtered `others_factory` (lines 64-70) that
+    raises SystemExit on an unmapped task text; its header says "the audit routes advisories
+    through content-class v5 (task_echo, payload_echo, wrong_task with the by-task-id pool) as
+    the proposal instructs; exclusions are audit v3's ... unchanged. `audit_v3.py` itself is not
+    modified." It was committed at 8d2a7a6 and is used by the PROPOSAL-k Stage 1 run
+    (scripts/k1_stage1.py:151 and :262 call `K.others_factory()`). So v5's advisory routing is
+    already live for the k1 campaign without either of the two declared changes having been
+    made.
+  REFUTER [Refuter — leniency lens: re-counted every count from the art] resolves=True overturned=False
+    EVIDENCE:
+      RESULTS.md:974-978 verbatim: "**Wiring, when adopted:** `payload_echo` alone is a one-line
+      swap in `audit_v3.py`; the id-pool rule also needs the caller's pool builder
+      (`others_factory` in `scripts/format_recon.py`, today the v4 construction) to pass an
+      id-filtered pool — two changes, not one." Both targets still pre-wiring at HEAD:
+      audit_v3.py:49 `label, standing = V4.classify_v4(...)` and :26 AUDIT_VERSION "audit-v3 =
+      e2b_audit_v2 + content-class-v4"; scripts/format_recon.py:155-157 `pool =
+      all_paraphrases(tasks); return lambda task_text: [t for t in pool if t != task_text]` (by
+      text). Third routing confirmed: valence_core/k/sessions.py:39-54
+      `AuditV3WithV5Advisories(AuditV3)` calling `V5.classify_v5`, with its own id-filtered
+      `others_factory` (:64-70, SystemExit on unmapped), committed at 8d2a7a6 and live in the k1
+      campaign (scripts/k1_stage1.py:51 `K.AuditV3WithV5Advisories`, :151 and :262
+      `K.others_factory()`).
+    REASONING:
+      The 'two changes' phrase resolves word-for-word to the 166f8ff entry, and I confirmed both
+      declared targets are untouched. One residue worth naming, which the checker found and I
+      verified: a third v5 advisory routing is ALREADY committed and running for PROPOSAL-k
+      Stage 1 outside the two declared changes — so 'the two changes' is complete as a quotation
+      of the entry but no longer a complete inventory of where v5 routing lives. The block
+      attributes both changes to 'audit v3's advisory routing' when the second is in the caller
+      (scripts/format_recon.py); that is the gloss the checker's severity flags.
+  REFUTER [Too-strict refuter on GROUP V1 (the content-class v5 code ag] resolves=True overturned=False
+    EVIDENCE:
+      RESULTS.md 2026-09-08 entry, item 2, last sentence, verbatim: "**Wiring, when adopted:**
+      `payload_echo` alone is a one-line swap in `audit_v3.py`; the id-pool rule also needs the
+      caller's pool builder (`others_factory` in `scripts/format_recon.py`, today the v4
+      construction) to pass an id-filtered pool — two changes, not one." Same two changes in
+      data/configs/contentclass_candidate.json v5_candidate.adoption.wrong_task_pool_by_task_id:
+      "wiring needs TWO changes -- the classify swap in audit_v3.py AND an id-filtered pool from
+      the caller's pool builder". Both targets still pre-wiring at HEAD: audit_v3.py:49 `label,
+      standing = V4.classify_v4(...)` and AUDIT_VERSION line 26 "audit-v3 = e2b_audit_v2 +
+      content-class-v4 ..."; scripts/format_recon.py:155-157 `def others_factory(tasks): pool =
+      all_paraphrases(tasks); return lambda task_text: [t for t in pool if t != task_text]`.
+      Third routing confirmed: valence_core/k/sessions.py:39-54
+      `AuditV3WithV5Advisories(AuditV3)` calling `V5.classify_v5`, header "`audit_v3.py` itself
+      is not modified", committed at 8d2a7a6 ("k1 sessions (48 F2 sham, new rng stream, audit v3
+      + v5 advisories)"), consumed at scripts/k1_stage1.py:51, :151, :262.
+    REASONING:
+      Upheld with its gloss severity. The 'two changes' phrase resolves verbatim to the
+      2026-09-08 entry and independently to the candidate JSON, and both declared targets are
+      unwired at HEAD. The checker's side-finding — a third, already-committed v5 advisory
+      routing live for the k1 campaign — I confirmed line by line; it is context the two-changes
+      sentence does not cover, not a defect in the block's referent.
+
+[V1.9]  CHECKER resolves=False  severity=figure
+  LOCATION: design block, sentence 1, parenthetical
+  BLOCK SAYS:
+    "(8/6/7/3 hits across e2a/e2b/e2d/format …)"
+  RECORD SAYS:
+    data/e2d/contentclass_screen_v5.json `per_corpus[*].payload_echo.hits`: e2d 8, e2a 6, e2b 7,
+    format 3. RESULTS.md 2026-09-08 item-2 table rows: "e2d (912) … 8 / 108", "e2a (1,894) … 6 /
+    244", "e2b (1,707) … 7 / 226", "format (531) … 3 / 67". The entry's prose and the 166f8ff
+    commit message both write the series in the table's order, e2d/e2a/e2b/format ("removes 1 /
+    0 / 7 / 2 hits" matches `removed_by_id_fix` e2d 1, e2a 0, e2b 7, format 2 in the same
+    order).
+  CHECKER NOTE:
+    The multiset {8,6,7,3} is right but the pairing is wrong: the record's order is
+    e2d/e2a/e2b/format, so 8→e2d, 6→e2a, 7→e2b, 3→format. Read against the block's stated order
+    (e2a/e2b/e2d/format) it asserts e2a 8, e2b 6, e2d 7 — three of the four wrong. I re-ran
+    scripts/e2d_contentclass_screen_v5.py to a scratch path with the repo venv and reproduced
+    the committed figures exactly: "e2d … payload_echo 8 of 108 transform rounds", "e2a … 6 of
+    244", "e2b … 7 of 226", "format … 3 of 67". Which set: hits are counted over OFFERED rounds
+    only (rounds whose v2 audit reason starts "audit:" are skipped) — 887/1894/1707/526 offered
+    of 912/1894/1707/531 rounds — and the denominators quoted beside them are transform-task
+    rounds among those offered.
+  REFUTER [Refuter — leniency lens: re-counted every count from the art] resolves=False overturned=False
+    EVIDENCE:
+      data/e2d/contentclass_screen_v5.json `per_corpus[*].payload_echo.hits`: e2d 8, e2a 6, e2b
+      7, format 3 — reproduced exactly by my own re-run of scripts/e2d_contentclass_screen_v5.py
+      to a scratch path, whose JSON diffs byte-identical to the committed artifact after
+      key-sorted normalization. RESULTS.md table rows in order: "e2d (912) ... 8 / 108", "e2a
+      (1,894) ... 6 / 244", "e2b (1,707) ... 7 / 226", "format (531) ... 3 / 67". CORRECTION to
+      the checker's evidence: the entry's HEADLINE prose does NOT use the table's order — it
+      reads "blind-screened over e2a, e2b, e2d and the 56 format sessions: the `wrong_task` pool
+      by task id removes 1 / 0 / 7 / 2 hits ... the new advisory `payload_echo` fires 8 / 6 / 7
+      / 3 times", i.e. it names the corpora e2a/e2b/e2d/format (the block's order) while the
+      number series follows the table's e2d/e2a/e2b/format. The 166f8ff commit message has the
+      identical construction. Which set: hits are over OFFERED rounds only (887/1894/1707/526 of
+      912/1894/1707/531); the denominators beside them are transform-task rounds among those
+      offered.
+    REASONING:
+      Verdict stands — read against the block's stated order the parenthetical asserts e2a 8,
+      e2b 6, e2d 7, and the artifact says e2a 6, e2b 7, e2d 8, so three of four pairings are
+      wrong. But the checker's RECORD line is itself inaccurate and the inaccuracy is material:
+      it claims the entry's prose and the commit message write the series in the table's order,
+      when both name the corpora in the SAME order the block uses and pair the table-ordered
+      numbers to it. The mis-pairing therefore originates in the record's own headline sentence,
+      not in the design block — a fact the design seat needs and the checker's write-up
+      obscures.
+  REFUTER [Too-strict refuter on GROUP V1 (the content-class v5 code ag] resolves=False overturned=False
+    EVIDENCE:
+      Per-corpus hits, from data/e2d/contentclass_screen_v5.json
+      `per_corpus[*].payload_echo.hits` and reproduced by my own re-run of
+      scripts/e2d_contentclass_screen_v5.py to a scratch path: e2d 8 (of 108 transform rounds),
+      e2a 6 (of 244), e2b 7 (of 226), format 3 (of 67). Same pairing in
+      data/configs/contentclass_candidate.json `payload_echo_hits_over_transform_rounds`: e2d
+      [8,108], e2a [6,244], e2b [7,226], format [3,67]. Read against the block's stated order
+      e2a/e2b/e2d/format, the block asserts e2a 8 (is 6), e2b 6 (is 7), e2d 7 (is 8). CORRECTION
+      to the checker's evidence line: the entry's prose does NOT write the corpus order as
+      e2d/e2a/e2b/format. RESULTS.md 2026-09-08 headline: "blind-screened over e2a, e2b, e2d and
+      the 56 format sessions: the `wrong_task` pool by task id removes 1 / 0 / 7 / 2 hits ...
+      the new advisory `payload_echo` fires 8 / 6 / 7 / 3 times" — the corpora are named e2a,
+      e2b, e2d, format while the series are in the TABLE's order (e2d 1 / e2a 0 / e2b 7 / format
+      2; e2d 8 / e2a 6 / e2b 7 / format 3). The 166f8ff commit message repeats the same sentence
+      shape. Denominator scope confirmed: hits are over OFFERED rounds (rows whose v2 audit
+      reason starts "audit:" are skipped, driver lines 47-49) — 887 / 1894 / 1707 / 526 offered
+      of 912 / 1894 / 1707 / 531.
+    REASONING:
+      Not overturned. The multiset {8,6,7,3} is right and the block's order is inherited from
+      the record's own headline sentence, but the artifact is decisive and the block's
+      positional pairing contradicts it on three of four corpora. The block also sharpens the
+      entry's loose list into an explicit slash-for-slash pairing ("8/6/7/3 hits across
+      e2a/e2b/e2d/format"), which the artifact does not bear. Two corrections to the checker
+      nonetheless: its evidence claims the entry's prose writes the series in the table's order,
+      which is true of the numbers but not of the corpus names — the entry's own headline
+      sentence carries the same positional mismatch, and that is where the block got it.
+      Reported, not adjudicated.
+
+[V1.10]  CHECKER resolves=True  severity=gloss
+  LOCATION: design block, sentence 1, parenthetical
+  BLOCK SAYS:
+    "every one the payload returned unchanged"
+  RECORD SAYS:
+    166f8ff commit message: "the new advisory payload_echo fires 8/6/7/3 times, all the
+    meeting-notice payload returned unchanged". RESULTS.md 2026-09-08 item 2: "Every
+    `payload_echo` hit across all four corpora is the meeting notice (t06) returned as \"The
+    meeting has been moved to 3pm.\" — none on the dishes notice (t14); two of the 24 differ
+    from the payload only by an exclamation mark or emphasis marks (flagged per hit; the design
+    seat decides whether a punctuation-only change is a transform)." Artifact
+    `payload_echo_verbatim_vs_punctuation_only`: e2d [7,1], e2a [6,0], e2b [6,1], format [3,0].
+  CHECKER NOTE:
+    Resolves to the commit message's own words, with the qualification the entry carries. I
+    recounted every hit from data/e2d/contentclass_screen_v5.json: 24 hits total (8+6+7+3);
+    every hit's task is a t06 (meeting-notice) paraphrase — 'Rewrite this in a friendlier tone',
+    'Reword in a warmer tone', 'Soften the tone of this notice', 'Make this sound friendlier' —
+    none on t14; 22 of 24 carry verbatim_including_punctuation=true, and exactly 2 do not: e2d
+    '\"The meeting has been moved to 3pm!\"' and e2b '**The meeting has been moved to 3pm!**',
+    both flagged differs_only_in_punctuation_or_emphasis=true. So "unchanged" holds for all 24
+    under the detector's declared word-sequence identity (V1.2) and for 22 of 24 byte-for-byte.
+    The block also drops the record's "meeting-notice"/t06 restriction, which is the sharper
+    claim the entry actually makes (it is what makes the hits a single-task phenomenon).
+  REFUTER [Refuter — leniency lens: re-counted every count from the art] resolves=True overturned=False
+    EVIDENCE:
+      Recounted independently from data/e2d/contentclass_screen_v5.json `every_hit`, mapping
+      each hit's task text back through data/corpus/e2a_tasks.jsonl: 24 hits total (8+6+7+3),
+      task id histogram = {'t06': 24}, none on t14; verbatim_including_punctuation = 22,
+      differs_only_in_punctuation_or_emphasis = 2. The two non-verbatim hits are e2d '"The
+      meeting has been moved to 3pm!"' and e2b '**The meeting has been moved to 3pm!**'. Record:
+      166f8ff commit message "all the meeting-notice payload returned unchanged"; RESULTS.md
+      item 2 "Every `payload_echo` hit across all four corpora is the meeting notice (t06)
+      returned as \"The meeting has been moved to 3pm.\" — none on the dishes notice (t14); two
+      of the 24 differ from the payload only by an exclamation mark or emphasis marks". NOTE on
+      the checker's citation: the field it named, `payload_echo_verbatim_vs_punctuation_only`
+      (e2d [7,1], e2a [6,0], e2b [6,1], format [3,0]), is NOT in
+      data/e2d/contentclass_screen_v5.json — it is at
+      data/configs/contentclass_candidate.json:204. The values are right; the file attribution
+      is loose.
+    REASONING:
+      'Every one' holds in both directions on the 24 — I enumerated all of them rather than
+      reading the summary counters, and t14 is genuinely in the transform denominator (4/4
+      paraphrases qualify), so the all-t06 result is a real single-task finding and not an
+      artefact of the lexicon. 'Unchanged' holds for 24/24 under the declared word-sequence
+      predicate and 22/24 byte-for-byte. The block drops the record's t06 restriction, which is
+      the sharper claim; the checker names that and does not credit it as present.
+  REFUTER [Too-strict refuter on GROUP V1 (the content-class v5 code ag] resolves=True overturned=False
+    EVIDENCE:
+      166f8ff commit message: "the new advisory payload_echo fires 8/6/7/3 times, all the
+      meeting-notice payload returned unchanged". RESULTS.md 2026-09-08 item 2: "Every
+      `payload_echo` hit across all four corpora is the meeting notice (t06) returned as \"The
+      meeting has been moved to 3pm.\" — none on the dishes notice (t14); two of the 24 differ
+      from the payload only by an exclamation mark or emphasis marks". My own recount over every
+      `every_hit` entry in the artifact: 24 hits total (8+6+7+3); the task string on all 24 is a
+      t06 paraphrase — 'Rewrite this in a friendlier tone:' (5), 'Reword in a warmer tone:' (6),
+      'Soften the tone of this notice:' (7), 'Make this sound friendlier:' (6), all with payload
+      'The meeting has been moved to 3pm.'; none on t14. 22 of 24 carry
+      verbatim_including_punctuation=true; exactly 2 do not — e2d '"The meeting has been moved
+      to 3pm!"' and e2b '**The meeting has been moved to 3pm!**', both
+      differs_only_in_punctuation_or_emphasis=true. Per-corpus flags
+      `payload_echo_verbatim_vs_punctuation_only`: e2d [7,1], e2a [6,0], e2b [6,1], format
+      [3,0].
+    REASONING:
+      Upheld at gloss. 'Unchanged' holds for all 24 under the detector's declared word-sequence
+      identity and for 22 of 24 byte-for-byte, which is what the entry itself discloses. The
+      checker's added observation that the block drops the record's sharper t06/meeting-notice
+      restriction is correct and does not make the referent fail.
+
+[V1.11]  CHECKER resolves=True  severity=clean
+  LOCATION: design block, sentence 1, parenthetical
+  BLOCK SAYS:
+    "exactly the three read-found format cases, no extras"
+  RECORD SAYS:
+    scripts/e2d_contentclass_screen_v5.py:132-137 — `known = {("F1", 22, "forced0"), ("F2", 5,
+    "free4"), ("F2", 8, "forced2")}` … `out["check_read_found_cases"] = {..., "all_caught":
+    known <= caught, "extra_in_format_set": sorted(caught - known)}`. Artifact: `"all_caught":
+    true`, `"extra_in_format_set": []`. RESULTS.md 2026-09-08: "The three read-found format
+    cases (F1 s22 forced0, F2 s5 free4, F2 s8 forced2) are caught and nothing else in the format
+    set fires (a both-directions check in the artifact)." contentclass_v5.py:22-23 names the
+    same three as the read's finds.
+  CHECKER NOTE:
+    Recomputed independently, not read off the artifact: loading
+    data/format/format_recon_F{0,1,2}_sessions.json directly and classifying every offered round
+    with V5.classify_v5 over an id-filtered pool gives 531 rounds, 526 offered, exactly 3
+    payload_echo hits — ('F1',22,'forced0'), ('F2',5,'free4'), ('F2',8,'forced2') — so both
+    directions hold. Which set: "no extras" is scoped to the 56 format-recon sessions only (the
+    check subtracts `known` from the FORMAT corpus's hits). The other 21 hits (e2d 8, e2a 6, e2b
+    7) lie outside that check and are not 'extras' under it — the read never screened those
+    corpora for this class (the entry notes all 8 e2d hits sit on rounds the rule-25 read did
+    NOT mark, "payload_echo was not a read class").
+  REFUTER [Refuter — leniency lens: re-counted every count from the art] resolves=True overturned=False
+    EVIDENCE:
+      Recomputed from scratch without the driver's own check: loaded
+      data/format/format_recon_F{0,1,2}_sessions.json directly (8 + 24 + 24 = 56 sessions),
+      rebuilt `earlier` per session, skipped rounds whose degen starts 'audit:', and classified
+      every offered round with V5.classify_v5 over a pool built by V5.others_by_task_id — 531
+      rounds, 526 offered, payload_echo hits = exactly [('F1',22,'forced0'), ('F2',5,'free4'),
+      ('F2',8,'forced2')], `known <= caught` True, `caught - known` empty. Same run gives
+      wrong_task v4 = [('F2',2,'forced1'), ('F2',18,'forced0')] -> v5 = [], matching the entry's
+      "the two recon advisories". Driver's own both-directions check at
+      scripts/e2d_contentclass_screen_v5.py:132-137; artifact `"all_caught": true,
+      "extra_in_format_set": []`. RESULTS.md: "The three read-found format cases (F1 s22
+      forced0, F2 s5 free4, F2 s8 forced2) are caught and nothing else in the format set fires
+      (a both-directions check in the artifact)."
+    REASONING:
+      Both directions verified by my own enumeration, not by reading `all_caught`. Scope is the
+      point the checker gets right and I confirm: 'no extras' is subtraction against the FORMAT
+      corpus only (56 sessions), so the other 21 hits on e2d/e2a/e2b are outside the check and
+      are not counterexamples — the rule-25 read never screened those corpora for this class.
+      The residual hazard is a reading of the block's parenthetical in which 'exactly the three
+      read-found format cases' governs all 24 hits rather than the format set; under the
+      format-scoped reading the record supports it verbatim, and choosing between readings is
+      adjudication.
+  REFUTER [Too-strict refuter on GROUP V1 (the content-class v5 code ag] resolves=True overturned=False
+    EVIDENCE:
+      scripts/e2d_contentclass_screen_v5.py:132-137 `known = {("F1", 22, "forced0"), ("F2", 5,
+      "free4"), ("F2", 8, "forced2")}` ... `"all_caught": known <= caught,
+      "extra_in_format_set": sorted(caught - known)`; the driver also returns non-zero unless
+      `known <= caught`. Artifact: `"caught":
+      [["F1",22,"forced0"],["F2",5,"free4"],["F2",8,"forced2"]], "all_caught": true,
+      "extra_in_format_set": []`. My independent re-run printed: "format: 531 rounds (526
+      offered; unmapped tasks 0); v4 {'wrong_task': 2} -> v5 {'payload_echo': 3}" with the three
+      hits at [F1 22 forced0], [F2 5 free4], [F2 8 forced2] and "read-found payload echoes
+      caught: ... extra: []", exit 0. RESULTS.md 2026-09-08: "The three read-found format cases
+      (F1 s22 forced0, F2 s5 free4, F2 s8 forced2) are caught and nothing else in the format set
+      fires (a both-directions check in the artifact)." contentclass_v5.py:22-23 names the same
+      three.
+    REASONING:
+      Upheld, and I reproduced both directions myself rather than reading the artifact's
+      booleans. The checker's scoping note is exactly right and is the kind of which-set
+      statement rule 3 asks for: 'no extras' is scoped to the 56 format-recon sessions; the
+      other 21 hits (e2d 8, e2a 6, e2b 7) lie outside the check, and the entry itself says all 8
+      e2d hits sit on rounds the rule-25 read did not mark (artifact
+      `payload_echo_e2d_read_marked_vs_unmarked` [0,8]).
+
+####################################################################################################
+GROUP V2 — 15 referents
+####################################################################################################
+
+[V2.1]  CHECKER resolves=True  severity=clean
+  LOCATION: Design block, parenthetical after "ADOPTED as an ADVISORY class".
+  BLOCK SAYS:
+    payload_echo produced "8/6/7/3 hits" (the four figures, as a sequence).
+  RECORD SAYS:
+    RESULTS.md:905 — "the new advisory `payload_echo` fires 8 / 6 / 7 / 3 times". Table
+    RESULTS.md:940-943 gives, row by row, e2d 8 / 108, e2a 6 / 244, e2b 7 / 226, format 3 / 67.
+    data/e2d/contentclass_screen_v5.json per_corpus[*].payload_echo.hits = e2d 8, e2a 6, e2b 7,
+    format 3.
+  CHECKER NOTE:
+    The four figures themselves resolve, and the sequence "8/6/7/3" is the entry's own.
+    Recounted independently (my own normalizer: task id in {t06,t14}, leading single-word label
+    per contentclass_v4._LEADING_LABEL stripped, quotes/emphasis stripped, token compare on
+    [a-z0-9']+): e2d 8, e2a 6, e2b 7, format 3; total 24. Which set: hits are over OFFERED
+    rounds (audit-degenerate rounds excluded) — e2d 887 of 912, e2a 1894 of 1894, e2b 1707 of
+    1707, format 526 of 531 — with transform-task denominators 108 / 244 / 226 / 67. I also
+    re-ran scripts/e2d_contentclass_screen_v5.py at HEAD: the JSON is byte-identical to the
+    committed data/e2d/contentclass_screen_v5.json.
+  REFUTER [refuter — too lenient (re-count every count, attack set-equa] resolves=True overturned=False
+    EVIDENCE:
+      RESULTS.md:905 'payload_echo` fires 8 / 6 / 7 / 3 times'; table RESULTS.md:940-943 rows
+      e2d 8/108, e2a 6/244, e2b 7/226, format 3/67; data/e2d/contentclass_screen_v5.json
+      per_corpus[*].payload_echo.hits = 8/6/7/3 with transform_task_rounds_offered
+      108/244/226/67. My own recount, written from scratch and NOT importing contentclass_v5
+      (own verb lexicon, own leading-label regex, own quote strip, own [a-z0-9']+ tokenizer):
+      e2d rounds=912 offered=887 transform=108 hits=8; e2a 1894/1894/244/6; e2b 1707/1707/226/7;
+      format 531/526/67/3; total 24, every hit task_id t06. I also re-ran
+      scripts/e2d_contentclass_screen_v5.py at HEAD with the repo venv: the produced JSON is
+      byte-identical to the committed artifact (diff empty).
+    REASONING:
+      The four figures and the sequence are the record's own and I reproduce all of them from
+      the raw session files without using the module under test. The checker's 'which set'
+      answer is also correct and I confirmed it in the driver source: transform_rounds = [r for
+      r in rows if not r['audit'] and V5.is_transform_task(r['task'])], i.e. offered rounds only
+      (audit-degenerate rounds are short-circuited to (None, None) in screen()). Nothing lenient
+      here.
+  REFUTER [Refuter — "checker was TOO STRICT": re-test every resolves=f] resolves=True overturned=False
+    EVIDENCE:
+      RESULTS.md:905 (my own sed count confirms the line): "`payload_echo` fires 8 / 6 / 7 / 3
+      times, all on the meeting-notice task". Table at RESULTS.md:940-943: e2d 8/108, e2a 6/244,
+      e2b 7/226, format 3/67. data/e2d/contentclass_screen_v5.json
+      per_corpus[*].payload_echo.hits = 8, 6, 7, 3 (JSON key order e2d, e2a, e2b, format);
+      totals 24. I re-ran scripts/e2d_contentclass_screen_v5.py at HEAD and the output JSON is
+      byte-identical to the committed artifact (cmp clean, md5 61e058b94c4051cf8c37f3c385c5cb9b
+      both). I also recounted the format corpus from
+      data/format/format_recon_F{0,1,2}_sessions.json through valence_core.e2d.contentclass_v5
+      directly: 3 hits.
+    REASONING:
+      The four-figure sequence is the entry's own and the artifact's own; nothing thin here.
+      Checker's evidence is accurate and I reproduced it independently. Agree.
+
+[V2.2]  CHECKER resolves=False  severity=figure
+  LOCATION: Design block, parenthetical after "ADOPTED as an ADVISORY class".
+  BLOCK SAYS:
+    "8/6/7/3 hits across e2a/e2b/e2d/format" — i.e. e2a 8, e2b 6, e2d 7, format 3.
+  RECORD SAYS:
+    RESULTS.md:940-943 table and data/e2d/contentclass_screen_v5.json: e2d 8, e2a 6, e2b 7,
+    format 3. The raw stdout (results/raw/2026-09-08_e2d_contentclass_screen_v5.txt) prints
+    "e2d: ... payload_echo 8 of 108 transform rounds", "e2a: ... payload_echo 6 of 244", "e2b:
+    ... payload_echo 7 of 226", "format: ... payload_echo 3 of 67".
+  CHECKER NOTE:
+    The per-corpus assignment is wrong for three of four corpora. Block: e2a=8, e2b=6, e2d=7.
+    Record and my recount: e2a=6, e2b=7, e2d=8. Only format=3 lands. The sequence 8/6/7/3 is the
+    TABLE order e2d/e2a/e2b/format, not the e2a/e2b/e2d/format order the block names. The
+    entry's own prose (RESULTS.md:902-905) is the source of the ambiguity: it lists the corpora
+    "e2a, e2b, e2d and the 56 format sessions" and then gives the figures in table order without
+    relabelling.
+  REFUTER [refuter — too lenient (re-count every count, attack set-equa] resolves=False overturned=False
+    EVIDENCE:
+      Block pairs 8/6/7/3 with 'e2a/e2b/e2d/format' → e2a=8, e2b=6, e2d=7. Record:
+      RESULTS.md:940-943 table rows in order e2d/e2a/e2b/format = 8/6/7/3;
+      data/e2d/contentclass_screen_v5.json per_corpus key order ['e2d','e2a','e2b','format']
+      with hits 8/6/7/3; data/configs/contentclass_candidate.json
+      payload_echo_hits_over_transform_rounds {e2d:[8,108], e2a:[6,244], e2b:[7,226],
+      format:[3,67]}; raw stdout results/raw/2026-09-08_e2d_contentclass_screen_v5.txt 'e2d: ...
+      payload_echo 8 of 108', 'e2a: ... 6 of 244', 'e2b: ... 7 of 226', 'format: ... 3 of 67'.
+      My independent recount agrees: e2a=6, e2b=7, e2d=8. NEW EVIDENCE the checker did not cite:
+      this exact pairing was already refuted in the record —
+      results/raw/2026-09-12_handoff_valuescheck.txt:114-116, '[REFUTED] §8 ... 1/0/7/2 hits
+      (e2a/e2b/e2d/format) ... correction: ... in the order e2d/e2a/e2b/format (e2d 1, e2a 0,
+      e2b 7, format 2); payload_echo fires 8/6/7/3 in the same order (e2d 8, e2a 6, e2b 7,
+      format 3)', and HANDOFF-2026-09-12.md:418-421 was corrected to '(e2d/e2a/e2b/format)'. I
+      grepped every source of record for the sequence; no file anywhere pairs it with
+      e2a/e2b/e2d/format.
+    REASONING:
+      Three of four corpora are mis-assigned. Not only does no record support the block's
+      pairing, the repository has already adjudicated this identical order error once and
+      corrected it; the block reintroduces the refuted form (its immediate source is
+      HANDOFF-2026-09-13-design.md:136, which dropped the order label entirely). Confirmed
+      false, and the severity is if anything understated.
+  REFUTER [Refuter — "checker was TOO STRICT": re-test every resolves=f] resolves=False overturned=False
+    EVIDENCE:
+      Artifact per_corpus: e2d.payload_echo.hits=8, e2a=6, e2b=7, format=3. Raw stdout
+      results/raw/2026-09-08_e2d_contentclass_screen_v5.txt: "e2d: ... payload_echo 8 of 108
+      transform rounds"; "e2a: ... payload_echo 6 of 244"; "e2b: ... payload_echo 7 of 226";
+      "format: ... payload_echo 3 of 67". Table RESULTS.md:940-943 same. The block reads
+      "8/6/7/3 hits across e2a/e2b/e2d/format" → e2a=8, e2b=6, e2d=7.
+    REASONING:
+      I looked for the too-strict reading and could not sustain it. The mitigation is real but
+      insufficient: the entry's own prose (RESULTS.md:902-905) juxtaposes the corpus list "e2a,
+      e2b, e2d and the 56 format sessions" with table-order figures, so the block inherits the
+      defect rather than inventing it — but the entry carries the disambiguating table two lines
+      below and the block carries nothing. Under the check's rule 3 (identify WHICH SET a count
+      was tabled on), two parallel slash-lists supply an attribution, and it is wrong for three
+      of four corpora. Uphold false.
+
+[V2.3]  CHECKER resolves=False  severity=gloss
+  LOCATION: Design block, parenthetical after "ADOPTED as an ADVISORY class".
+  BLOCK SAYS:
+    payload_echo's hits are "every one the payload returned unchanged".
+  RECORD SAYS:
+    RESULTS.md:950-954 — "Every `payload_echo` hit across all four corpora is the meeting notice
+    (t06) returned as \"The meeting has been moved to 3pm.\" — none on the dishes notice (t14);
+    two of the 24 differ from the payload only by an exclamation mark or emphasis marks (flagged
+    per hit; the design seat decides whether a punctuation-only change is a transform)". Table
+    verbatim/punctuation-only column: 7/1, 6/0, 6/1, 3/0.
+  CHECKER NOTE:
+    22 of the 24 hits are the payload verbatim (modulo surrounding quotation marks); 2 are NOT
+    returned unchanged. I inspected every hit in the artifact's every_hit lists and confirmed
+    both: e2d hit 7, task "Make this sound friendlier: The meeting has been moved to 3pm." →
+    '"The meeting has been moved to 3pm!"' (exclamation for the period;
+    verbatim_including_punctuation false); e2b hit 1, task "Rewrite this in a friendlier tone:
+    ..." → '**The meeting has been moved to 3pm!**' (emphasis marks plus exclamation; verbatim
+    false). My independent recount reproduces the 22/2 split. The record's own "every one" gloss
+    is about the TASK (all 24 are t06, none t14) — a fact the block drops — and the record
+    explicitly carves the two out of literal unchangedness and leaves their status to the design
+    seat.
+  REFUTER [refuter — too lenient (re-count every count, attack set-equa] resolves=False overturned=False
+    EVIDENCE:
+      RESULTS.md:950-954: 'Every `payload_echo` hit across all four corpora is the meeting
+      notice (t06) returned as "The meeting has been moved to 3pm." — none on the dishes notice
+      (t14); two of the 24 differ from the payload only by an exclamation mark or emphasis
+      marks'. Table verbatim/punctuation-only column 7/1, 6/0, 6/1, 3/0 → 22 verbatim, 2 not.
+      RESULTS.md:968-970: '22 of the 24 hits are the payload verbatim modulo quotes or a label'.
+      My own recount (independent normalizer) returns 24 hits, 22 byte-verbatim after stripping
+      quotes/emphasis, 2 not, and names the same two: e2d 'Make this sound friendlier: ...' →
+      '"The meeting has been moved to 3pm!"' and e2b 'Rewrite this in a friendlier tone: ...' →
+      '**The meeting has been moved to 3pm!**'. Artifact every_hit flags: e2d index 7 and e2b
+      index 1 carry verbatim_including_punctuation false /
+      differs_only_in_punctuation_or_emphasis true; the other 22 carry true/false. Corroborated
+      independently at results/raw/2026-09-08_dispositions_valuescheck.txt:4, which confirms
+      'the 7/1-6/0-6/1-3/0 split'.
+    REASONING:
+      The record's 'every one / all' gloss is about the TASK (all 24 are t06, none t14) — a fact
+      the block drops — and the record explicitly carves two hits out of literal unchangedness
+      and reserves their status to the design seat. The block converts a task claim into an
+      unchangedness claim the record contradicts. One point in the block's favour that the
+      checker missed and that still does not rescue it: 166f8ff's own COMMIT MESSAGE says 'all
+      the meeting-notice payload returned unchanged', and HANDOFF-2026-09-12.md:420-421 repeats
+      it — so the block is faithfully copying a phrasing that circulates in the chain. But the
+      entry body at RESULTS.md:950-954 is the record of the screen, and it says two of the 24
+      differ. Resolves=false stands.
+  REFUTER [Refuter — "checker was TOO STRICT": re-test every resolves=f] resolves=False overturned=False
+    EVIDENCE:
+      RESULTS.md:950-954: "two of the 24 differ from the payload only by an exclamation mark or
+      emphasis marks (flagged per hit; the design seat decides whether a punctuation-only change
+      is a transform)". I read every_hit for all four corpora in the artifact: 22 have
+      verbatim_including_punctuation=true, 2 have false with
+      differs_only_in_punctuation_or_emphasis=true — e2d hit #8, task "Make this sound
+      friendlier: The meeting has been moved to 3pm." → '"The meeting has been moved to 3pm!"';
+      e2b hit #2, task "Rewrite this in a friendlier tone: ..." → '**The meeting has been moved
+      to 3pm!**'. Table verbatim/punctuation-only column: 7/1, 6/0, 6/1, 3/0 — sums 22/2.
+      RESULTS.md:970-971 restates it: "22 of the 24 hits are the payload verbatim modulo quotes
+      or a label".
+    REASONING:
+      Best overturn argument available: the 166f8ff COMMIT MESSAGE says "all the meeting-notice
+      payload returned unchanged", almost the block's words, and under the class's declared
+      sense (word-sequence identity, case/punctuation/emphasis ignored) all 24 qualify. I still
+      uphold false. The record of record — the entry the block cites — explicitly carves the two
+      out and routes the punctuation question to the design seat; this block IS that seat's
+      adjudication and the flagged two go unmentioned. Also the record's own "every one" gloss
+      is about the TASK (all t06, none t14, RESULTS.md:950-952), which the block drops. Not
+      over-strictness.
+
+[V2.4]  CHECKER resolves=True  severity=clean
+  LOCATION: Design block, parenthetical after "ADOPTED as an ADVISORY class".
+  BLOCK SAYS:
+    payload_echo catches "exactly the three read-found format cases" (direction 1: no misses).
+  RECORD SAYS:
+    The three are named twice. Format-recon rule-25 read, RESULTS.md:1401-1405 — "**Verbatim
+    payload echoes on rewrite tasks** — \"The meeting has been moved to 3pm.\" returned
+    unchanged for a reword task (F1 s22 forced0, F2 s5 free4, F2 s8 forced2)". Screen entry,
+    RESULTS.md:959-961 — "The three read-found format cases (F1 s22 forced0, F2 s5 free4, F2 s8
+    forced2) are caught and nothing else in the format set fires (a both-directions check in the
+    artifact)." Artifact check_read_found_cases: known = caught =
+    [[F1,22,forced0],[F2,5,free4],[F2,8,forced2]], all_caught true.
+  CHECKER NOTE:
+    The "three read-found format cases" are located in an independent record (the rule-25 read
+    of all 56 format-recon sessions, RESULTS.md:1393-1405), not only in the screen. The screen
+    driver hardcodes that same set as `known` (scripts/e2d_contentclass_screen_v5.py, "known =
+    {(\"F1\", 22, \"forced0\"), (\"F2\", 5, \"free4\"), (\"F2\", 8, \"forced2\")}") and tests
+    known <= caught. All three are caught.
+  REFUTER [refuter — too lenient (re-count every count, attack set-equa] resolves=True overturned=False
+    EVIDENCE:
+      The three are fixed in an INDEPENDENT record: the rule-25 read of all 56 format sessions,
+      RESULTS.md:1393 ('Rule-25 read, all 56 sessions in full') and RESULTS.md:1401-1404, '(b)
+      **Verbatim payload echoes on rewrite tasks** — "The meeting has been moved to 3pm."
+      returned unchanged for a reword task (F1 s22 forced0, F2 s5 free4, F2 s8 forced2)'. Screen
+      entry RESULTS.md:959-961. Driver hardcodes known =
+      {("F1",22,"forced0"),("F2",5,"free4"),("F2",8,"forced2")} and returns 0 only if known <=
+      caught. Artifact all_caught true. My own format-corpus recount finds hits at exactly F1
+      s22 forced0, F2 s5 free4, F2 s8 forced2.
+    REASONING:
+      No misses. The read names exactly three and I confirmed the hardcoded set equals the
+      read's three, so the check is not circular on the direction that matters. One precision
+      correction to the checker's note: the artifact field `check_read_found_cases.caught` is
+      computed as sorted(caught & known) — the INTERSECTION, not the caught set — so 'known =
+      caught = [...]' reads more than the field says. The direction-1 claim is nonetheless
+      carried by all_caught. Verdict unchanged.
+  REFUTER [Refuter — "checker was TOO STRICT": re-test every resolves=f] resolves=True overturned=False
+    EVIDENCE:
+      Independent record: RESULTS.md:1401-1405 (rule-25 read of all 56 format sessions) —
+      "**Verbatim payload echoes on rewrite tasks** — \"The meeting has been moved to 3pm.\"
+      returned unchanged for a reword task (F1 s22 forced0, F2 s5 free4, F2 s8 forced2)". Screen
+      driver scripts/e2d_contentclass_screen_v5.py:134 hardcodes `known = {("F1", 22,
+      "forced0"), ("F2", 5, "free4"), ("F2", 8, "forced2")}` and line 136 sets all_caught =
+      known <= caught (true in the artifact). My own recount of the format corpus returns
+      exactly those three.
+    REASONING:
+      Agree. One imprecision in the checker's evidence, immaterial: the JSON's "caught" field is
+      `sorted(caught & known)` (the intersection, driver line 136), not the full caught set — so
+      "known = caught = [...]" overstates what that one field shows. Equality is nevertheless
+      established by all_caught=true plus extra_in_format_set=[]. Verdict unchanged.
+
+[V2.5]  CHECKER resolves=True  severity=clean
+  LOCATION: Design block, parenthetical after "ADOPTED as an ADVISORY class".
+  BLOCK SAYS:
+    "exactly ... no extras" (direction 2: payload_echo's format-corpus hit set contains nothing
+    beyond the three).
+  RECORD SAYS:
+    Artifact check_read_found_cases.extra_in_format_set = [] (computed as sorted(caught - known)
+    in scripts/e2d_contentclass_screen_v5.py). per_corpus.format.payload_echo.hits = 3,
+    every_hit = F1 s22 forced0, F2 s5 free4, F2 s8 forced2. per_corpus.format.v5_by_format =
+    {F1: {payload_echo: 1}, F2: {payload_echo: 2}}. Raw: "read-found payload echoes caught:
+    [...] extra: []".
+  CHECKER NOTE:
+    Set equality holds in both directions: |caught| = 3, known ⊆ caught, caught − known = ∅, so
+    caught = known. I recounted the whole format corpus myself (56 sessions — F0 8, F1 24, F2 24
+    — 531 rounds, 526 offered, 67 transform rounds) and found exactly those three and no others.
+    Two near-misses that do NOT fire and correctly do not: F0 s2 free1 'Just a quick heads-up:
+    the meeting has been moved to 3pm!' and F1 s4 free3 'Just a friendly update: the meeting has
+    been moved to 3pm.' — both add a multi-word greeting prefix, which
+    contentclass_v4._LEADING_LABEL (single word only) does not strip.
+  REFUTER [refuter — too lenient (re-count every count, attack set-equa] resolves=True overturned=False
+    EVIDENCE:
+      Artifact check_read_found_cases.extra_in_format_set = [] (driver: sorted(caught - known));
+      all_caught true; per_corpus.format.payload_echo.hits = 3 with every_hit = F1 s22 forced0,
+      F2 s5 free4, F2 s8 forced2; v5_by_format {F1:{payload_echo:1}, F2:{payload_echo:2}}; raw
+      'extra: []'. My own full recount of the format corpus from
+      data/format/format_recon_{F0,F1,F2}_sessions.json: F0 8 + F1 24 + F2 24 = 56 sessions, 531
+      rounds, 526 offered, 67 transform rounds, 3 payload echoes, all t06 — exactly those three.
+      I then attacked the MISS direction beyond the rule's own lexicon: a difflib scan of every
+      colon-payload round in the format corpus at ratio >= 0.80 returns 6 rows — the 3 hits at
+      ratio 1.0 and 3 genuine one-word rewrites that are declared non-echoes (F1 s22 free2 'Do
+      not leave dishes in the tone.' 0.906, F2 s9 forced0 caption 0.866, F1 s9 forced0 'The
+      meeting has been rescheduled to 3pm.' 0.838). The checker's two cited near-misses exist as
+      quoted: F0 s2 free1 'Just a quick heads-up: the meeting has been moved to 3pm!' and F1 s4
+      free3 'Just a friendly update: the meeting has been moved to 3pm.';
+      contentclass_v4._LEADING_LABEL = ^\s*["'“‘]?\s*[A-Za-z][A-Za-z\-]{0,24}\s*:\s* is
+      single-word, so neither prefix strips.
+    REASONING:
+      Set equality holds in both directions on evidence I generated myself, and the stronger
+      attack — a lexicon-free similarity sweep for any payload returned unchanged that the rule
+      could have missed — turns up nothing beyond the three. Corroborated independently at
+      results/raw/2026-09-08_dispositions_valuescheck.txt:4 ('the three read-found format cases
+      with no extras'). No leniency found.
+  REFUTER [Refuter — "checker was TOO STRICT": re-test every resolves=f] resolves=True overturned=False
+    EVIDENCE:
+      Artifact check_read_found_cases.extra_in_format_set = [] (driver line 137: sorted(caught -
+      known)); per_corpus.format.payload_echo.hits=3 with every_hit = F1 s22 forced0, F2 s5
+      free4, F2 s8 forced2; v5_by_format {F1:{payload_echo:1}, F2:{payload_echo:2}}. Raw:
+      "read-found payload echoes caught: [...] extra: []". My own walk of
+      data/format/format_recon_F{0,1,2}_sessions.json: 56 sessions (F0 8, F1 24, F2 24), 531
+      rounds, 526 offered, 67 transform rounds, exactly 3 payload_echo hits and no others. Both
+      near-misses the checker names exist and do not fire: ('F0',2,'free1') 'Just a quick
+      heads-up: the meeting has been moved to 3pm!' and ('F1',4,'free3') 'Just a friendly
+      update: the meeting has been moved to 3pm.'; contentclass_v4._LEADING_LABEL is
+      ^\s*["'“‘]?\s*[A-Za-z][A-Za-z\-]{0,24}\s*:\s* — single word, so a multi-word greeting
+      prefix is not stripped.
+    REASONING:
+      Agree; I reproduced the both-directions set equality and the whole-corpus recount myself,
+      including the two near-misses and the mechanism that keeps them out.
+
+[V2.6]  CHECKER resolves=True  severity=clean
+  LOCATION: Design block clause "`wrong_task`'s comparison pool excludes the current task's own paraphrases by task id"; figures quoted from the 166f8ff entry.
+  BLOCK SAYS:
+    (the check's frame) the entry declared that the task-id pool "removes 1/0/7/2 hits" — the
+    four figures.
+  RECORD SAYS:
+    RESULTS.md:902-904 — "the `wrong_task` pool by task id removes 1 / 0 / 7 / 2 hits, every one
+    of them an answer to its own task". Table RESULTS.md:940-943, removed column: e2d (1), e2a
+    (0), e2b (7), format (2). Artifact wrong_task.removed_by_id_fix list lengths: e2d 1, e2a 0,
+    e2b 7, format 2; added_under_v5 empty in all four.
+  CHECKER NOTE:
+    Figures resolve and I recounted them from the artifact: ten removals total, no additions. v4
+    → v5 wrong_task counts: e2d 3→2, e2a 1→1, e2b 10→3, format 2→0; 1+0+7+2 = 10 = the entry's
+    "ten `wrong_task` hits" at RESULTS.md:945.
+  REFUTER [refuter — too lenient (re-count every count, attack set-equa] resolves=True overturned=False
+    EVIDENCE:
+      RESULTS.md:903-904 'the `wrong_task` pool by task id removes 1 / 0 / 7 / 2 hits, every one
+      of them an answer to its own task'. Table removed column e2d (1), e2a (0), e2b (7), format
+      (2). Artifact removed_by_id_fix list lengths 1/0/7/2; added_under_v5 is an empty LIST in
+      all four (driver: [ex(r) for r, _ in added_wt]) — the checker's description is right. My
+      own recount, building both pools myself (v4: every paraphrase but the current text; v5:
+      every paraphrase of every OTHER task id): e2d wrong_task v4=3 v5=2 removed=1 added=0; e2a
+      1/1/0/0; e2b 10/3/7/0; format 2/0/2/0. 1+0+7+2 = 10 = the entry's 'ten `wrong_task` hits'
+      at RESULTS.md:945.
+    REASONING:
+      Recomputed from the session files, not read off the artifact. Arithmetic checks.
+      Corroborated at results/raw/2026-09-08_dispositions_valuescheck.txt:8. Resolves.
+  REFUTER [Refuter — "checker was TOO STRICT": re-test every resolves=f] resolves=True overturned=False
+    EVIDENCE:
+      RESULTS.md:902-904: "the `wrong_task` pool by task id removes 1 / 0 / 7 / 2 hits, every
+      one of them an answer to its own task". Table removed column: e2d (1), e2a (0), e2b (7),
+      format (2). Artifact wrong_task.removed_by_id_fix lengths 1/0/7/2 and added_under_v5 empty
+      in all four; v4→v5 e2d 3→2, e2a 1→1, e2b 10→3, format 2→0. 1+0+7+2 = 10 = "the ten
+      `wrong_task` hits" at RESULTS.md:945.
+    REASONING:
+      Agree. Figures and arithmetic recomputed from the artifact; the "no additions" conjunct
+      holds in all four corpora.
+
+[V2.7]  CHECKER resolves=False  severity=figure
+  LOCATION: Design block / the 166f8ff entry headline's figure, read in the block's declared corpus order.
+  BLOCK SAYS:
+    (the check's frame) those removals as "1/0/7/2 hits (e2a/e2b/e2d/format)" — i.e. e2a 1, e2b
+    0, e2d 7, format 2.
+  RECORD SAYS:
+    Table RESULTS.md:940-943 and data/e2d/contentclass_screen_v5.json: e2d 1, e2a 0, e2b 7,
+    format 2. Raw stdout: "e2d: ... wrong_task 3 -> 2 (1 removed by the id fix, 0 added)"; "e2a:
+    ... 1 -> 1 (0 removed ...)"; "e2b: ... 10 -> 3 (7 removed ...)"; "format: ... 2 -> 0 (2
+    removed ...)".
+  CHECKER NOTE:
+    Same order defect as V2.2 and in the same direction. Under e2a/e2b/e2d/format the figures
+    read e2a=1, e2b=0, e2d=7; the record has e2a=0, e2b=7, e2d=1. Only format=2 lands. 1/0/7/2
+    is the TABLE order e2d/e2a/e2b/format.
+  REFUTER [refuter — too lenient (re-count every count, attack set-equa] resolves=False overturned=False
+    EVIDENCE:
+      Block order gives e2a=1, e2b=0, e2d=7. Record and my recount: e2a=0, e2b=7, e2d=1. Table
+      RESULTS.md:940-943; artifact wrong_task.removed_by_id_fix lengths; raw 'e2d: ...
+      wrong_task 3 -> 2 (1 removed by the id fix, 0 added)', 'e2a: ... 1 -> 1 (0 removed ...)',
+      'e2b: ... 10 -> 3 (7 removed ...)', 'format: ... 2 -> 0 (2 removed ...)';
+      data/configs/contentclass_candidate.json
+      wrong_task_removed_by_id_fix_all_answer_their_own_task {e2d:1, e2a:0, e2b:7, format:2}.
+      Same already-refuted pairing as V2.2:
+      results/raw/2026-09-12_handoff_valuescheck.txt:114-116 refutes '1/0/7/2 hits
+      (e2a/e2b/e2d/format)' by name and corrects it to e2d/e2a/e2b/format.
+    REASONING:
+      Three of four mis-assigned, only format=2 lands. Same defect, same direction, and the
+      record has already ruled on this exact sentence once. Confirmed false.
+  REFUTER [Refuter — "checker was TOO STRICT": re-test every resolves=f] resolves=False overturned=False
+    EVIDENCE:
+      Artifact and table: e2d removed 1, e2a 0, e2b 7, format 2. Raw stdout: "e2d: ...
+      wrong_task 3 -> 2 (1 removed by the id fix, 0 added)"; "e2a: ... 1 -> 1 (0 removed ...)";
+      "e2b: ... 10 -> 3 (7 removed ...)"; "format: ... 2 -> 0 (2 removed ...)". Under the
+      block's named order e2a=1, e2b=0, e2d=7.
+    REASONING:
+      Same defect as V2.2 and the same analysis: the entry's prose carries the same
+      juxtaposition, but the entry disambiguates with its table and the block does not. Only
+      format=2 lands. Uphold false.
+
+[V2.8]  CHECKER resolves=True  severity=clean
+  LOCATION: The 166f8ff entry headline, RESULTS.md:903-904.
+  BLOCK SAYS:
+    (the check's frame) of the removed wrong_task hits, "every one an answer to its own task".
+  RECORD SAYS:
+    RESULTS.md:945-950 — "Every one of the ten `wrong_task` hits the id fix removes answers its
+    own task (e2d: the wind-chimes description; e2b: an umbrella subject line, four board-game
+    invitations, the odd-socks caption, the bakery window; format: the two recon advisories); no
+    hit is added."
+  CHECKER NOTE:
+    I read all ten removed hits in the artifact and each response is on its own task: e2d 1
+    (wind chimes → "The sound of wind chimes is a gentle, melodic tinkling ..."); e2b 7
+    (umbrella subject line; four board-game invitations; odd-socks caption; bakery window — the
+    enumeration's counts sum to 7 exactly); format 2 (F2 s2 forced1 wind chimes, F2 s18 forced0
+    odd socks — matching the two advisories named in contentclass_v5.py's docstring, "F2 s2
+    forced1, s18 forced0"). Every removed hit carries sibling_diagnosis "fires under v4 only
+    because sibling paraphrases of the same task are in the pool"; none is "?".
+  REFUTER [refuter — too lenient (re-count every count, attack set-equa] resolves=True overturned=False
+    EVIDENCE:
+      RESULTS.md:945-950 'Every one of the ten `wrong_task` hits the id fix removes answers its
+      own task (e2d: the wind-chimes description; e2b: an umbrella subject line, four board-game
+      invitations, the odd-socks caption, the bakery window; format: the two recon advisories);
+      no hit is added.' I read all ten removed hits in the artifact: e2d 1 (wind chimes → 'The
+      sound of wind chimes is a gentle, melodic tinkling that dances softly through the air.');
+      e2b 7 = umbrella subject line 1 + board-game invitations 4 (indices 1,2,4,5) + odd-socks
+      caption 1 + bakery window 1, which is exactly the entry's enumeration and sums to 7;
+      format 2 = F2 s2 forced1 (wind chimes) and F2 s18 forced0 (odd socks), matching
+      contentclass_v5.py's docstring 'the format recon's two v4 `wrong_task` advisories (F2 s2
+      forced1, s18 forced0)'. Every one of the ten carries sibling_diagnosis 'fires under v4
+      only because sibling paraphrases of the same task are in the pool'; none is '?'. My own
+      v4/v5 recount reproduces removed = 1/0/7/2 and added = 0/0/0/0.
+    REASONING:
+      Every removed response is on its own task on my own reading, including the e2b umbrella
+      case, which is on-task behind a preamble. The enumeration's counts sum exactly.
+      results/raw/2026-09-08_dispositions_valuescheck.txt:4 records that this enumeration was
+      the one prose miss FIXED before 166f8ff (it had omitted the umbrella) and that 'the
+      substantive claim that every removed hit answers its own task holds for all ten'.
+      Resolves.
+  REFUTER [Refuter — "checker was TOO STRICT": re-test every resolves=f] resolves=True overturned=False
+    EVIDENCE:
+      RESULTS.md:945-950: "Every one of the ten `wrong_task` hits the id fix removes answers its
+      own task (e2d: the wind-chimes description; e2b: an umbrella subject line, four board-game
+      invitations, the odd-socks caption, the bakery window; format: the two recon advisories);
+      no hit is added." I read all ten removed entries in the artifact: e2d 1 (wind chimes); e2b
+      7 = umbrella subject line 1 + board-game invitations 4 + odd-socks caption 1 + bakery
+      window 1; format 2 = F2 s2 forced1 (wind chimes) and F2 s18 forced0 (odd socks), matching
+      contentclass_v5.py's docstring "(F2 s2 forced1, s18 forced0)". Every removed entry carries
+      sibling_diagnosis "fires under v4 only because sibling paraphrases of the same task are in
+      the pool"; none is "?" (the driver's line-102 fallback).
+    REASONING:
+      Agree; enumeration sums exactly to 7 for e2b and each response is on-task on inspection.
+
+[V2.9]  CHECKER resolves=False  severity=figure
+  LOCATION: Design block, parenthetical after "ADOPTED as an ADVISORY class".
+  BLOCK SAYS:
+    Corpus order "e2a/e2b/e2d/format".
+  RECORD SAYS:
+    The entry tables every figure in the order e2d, e2a, e2b, format (RESULTS.md:940-943). The
+    entry's PROSE at RESULTS.md:902-903 lists the corpora in a different order — "blind-screened
+    over e2a, e2b, e2d and the 56 format sessions" — and then gives the figures without
+    relabelling them.
+  CHECKER NOTE:
+    The block's order matches the entry's prose corpus list but not the order its figures are
+    tabled in, and the block is the first document to bind the two together explicitly. This
+    single order mismatch is what makes V2.2 and V2.7 fail; the figures themselves (V2.1, V2.6)
+    are correct.
+  REFUTER [refuter — too lenient (re-count every count, attack set-equa] resolves=False overturned=False
+    EVIDENCE:
+      Every figure in the record is tabled in the order e2d, e2a, e2b, format
+      (RESULTS.md:940-943), and the artifact and candidate JSON key them that way. The entry's
+      prose at RESULTS.md:902-903 lists corpora as 'blind-screened over e2a, e2b, e2d and the 56
+      format sessions' and then gives '1 / 0 / 7 / 2' and '8 / 6 / 7 / 3' without relabelling —
+      so the block's ORDER does appear in the record's prose, but never bound to those figures.
+      I grepped RESULTS.md, data/, scripts/, valence_core/, results/raw/ and the root .md files
+      for the sequences: the only binding of the figures to a corpus order anywhere is
+      e2d/e2a/e2b/format (HANDOFF-2026-09-12.md:418-419, after its values-check correction at
+      results/raw/2026-09-12_handoff_valuescheck.txt:116).
+    REASONING:
+      The block is the document that binds the prose order to the table figures, and the record
+      contradicts that binding. This one mismatch is the whole of V2.2 and V2.7. I note the
+      frame is about a pairing rather than a standalone figure, but under the check's rule 1 the
+      record does not say what the block says it says. False.
+  REFUTER [Refuter — "checker was TOO STRICT": re-test every resolves=f] resolves=True overturned=True
+    EVIDENCE:
+      RESULTS.md:902-903, the entry's own prose, verbatim: "Content-class v5 built as a
+      CANDIDATE and blind-screened over e2a, e2b, e2d and the 56 format sessions". The block's
+      list — e2a/e2b/e2d/format — is that list in that order. The table at RESULTS.md:940-943
+      and the JSON's per_corpus key order are e2d, e2a, e2b, format.
+    REASONING:
+      OVERTURNED as stated. The checker's own note concedes the block's order matches the
+      entry's prose corpus list, then marks it false for not matching the table order — that is
+      holding a corpus list to a convention the entry itself does not use in that sentence. As a
+      standalone referent (which corpora were screened, in the order the entry lists them) it
+      resolves verbatim. This does NOT rescue V2.2 or V2.7: the failure is the binding of the
+      figures to that order, and it stays booked there, twice, where the block actually makes
+      the claim. Booking it a third time as a bare order referent double-counts.
+
+[V2.10]  CHECKER resolves=True  severity=gloss
+  LOCATION: Design block, the payload_echo gloss.
+  BLOCK SAYS:
+    payload_echo is "a transform task answered with its payload unchanged".
+  RECORD SAYS:
+    RESULTS.md:945-947 defines it as a transform task "answered with the payload's exact word
+    sequence after a leading label and quotation marks are stripped", and RESULTS.md:961-968
+    declares the limits: "word-sequence identity (punctuation and emphasis ignored, flagged)"
+    and "identity is a word-sequence match (case and punctuation ignored, a leading label
+    stripped), wider than 'quotation marks aside'". valence_core/e2d/contentclass_v5.py:
+    is_payload_echo returns V3._words(body) == V3._words(payload_of(task_text)) after
+    strip_leading_label and quote-stripping.
+  CHECKER NOTE:
+    The gloss resolves as a summary of the class, but "unchanged" in the record means
+    word-sequence identity with case, punctuation and emphasis ignored and a leading single-word
+    label stripped — a widening the record declares explicitly. This is the same slack that
+    makes V2.3 fail: under the class's own sense every hit is "unchanged"; under the plain sense
+    two of 24 are not.
+  REFUTER [refuter — too lenient (re-count every count, attack set-equa] resolves=True overturned=False
+    EVIDENCE:
+      valence_core/e2d/contentclass_v5.py docstring (b): 'a TRANSFORM task ... whose instruction
+      carries a payload after the colon, answered with that payload UNCHANGED, quotation marks
+      aside' — the block's gloss is very nearly the module's own sentence. is_payload_echo: body
+      = _strip_quotes(V4.strip_leading_label(text)); return V3._words(body) ==
+      V3._words(payload_of(task_text)). RESULTS.md:947-948 defines it as 'answered with the
+      payload's exact word sequence after a leading label and quotation marks are stripped'; the
+      widening is declared at RESULTS.md:961-969 ('word-sequence identity (punctuation and
+      emphasis ignored, flagged)'; 'identity is a word-sequence match (case and punctuation
+      ignored, a leading label stripped), wider than "quotation marks aside"').
+    REASONING:
+      As a definition of the class the gloss resolves, and it resolves against the module's own
+      wording, not a paraphrase of it. I considered overturning to false on the ground that
+      'unchanged' understates the declared widening, but the record itself uses 'UNCHANGED' for
+      the class and declares the widening separately, so the gloss is the record's. The slack is
+      real and is exactly what makes V2.3 fail; keeping severity=gloss is the right split.
+  REFUTER [Refuter — "checker was TOO STRICT": re-test every resolves=f] resolves=True overturned=False
+    EVIDENCE:
+      RESULTS.md:926-932 defines the class as a transform task "answered with the payload's
+      exact word sequence after a leading label and quotation marks are stripped"; declared
+      limits at RESULTS.md:961-968: "word-sequence identity (punctuation and emphasis ignored,
+      flagged)" and "identity is a word-sequence match (case and punctuation ignored, a leading
+      label stripped), wider than 'quotation marks aside'". valence_core/e2d/contentclass_v5.py:
+      is_payload_echo requires is_transform_task then returns
+      V3._words(_strip_quotes(V4.strip_leading_label(text))) ==
+      V3._words(payload_of(task_text)).
+    REASONING:
+      Agree, including the checker's framing of it as the same slack that sinks V2.3 — the
+      class-sense reading is exactly what the record declares, and that is why the block's
+      separate factual 'every one ... unchanged' claim is the one that fails, not this
+      definition.
+
+[V2.11]  CHECKER resolves=True  severity=clean
+  LOCATION: Design block, first sentence after the header.
+  BLOCK SAYS:
+    "`wrong_task`'s comparison pool excludes the current task's own paraphrases by task id."
+  RECORD SAYS:
+    valence_core/e2d/contentclass_v5.py docstring: "(a) `wrong_task`'s comparison pool excludes
+    the current task's OWN paraphrases, by task id. ... The pool is now 'every paraphrase of
+    every OTHER task'." Artifact rules.wrong_task_pool: "every paraphrase of every OTHER task id
+    (v4: every paraphrase but the current text)". RESULTS.md:944-945: "**(a) `wrong_task`'s pool
+    is every paraphrase of every OTHER task id** (v4: every paraphrase but the current text, so
+    a task's own siblings sat in the pool)".
+  CHECKER NOTE:
+    Verbatim agreement with both the module and the entry.
+  REFUTER [refuter — too lenient (re-count every count, attack set-equa] resolves=True overturned=False
+    EVIDENCE:
+      contentclass_v5.py docstring (a): '`wrong_task`'s comparison pool excludes the current
+      task's OWN paraphrases, by task id. ... The pool is now "every paraphrase of every OTHER
+      task".' Artifact rules.wrong_task_pool: 'every paraphrase of every OTHER task id (v4:
+      every paraphrase but the current text)'. RESULTS.md:944-946: '**(a) `wrong_task`'s pool is
+      every paraphrase of every OTHER task id** (v4: every paraphrase but the current text, so a
+      task's own siblings sat in the pool)'. Implementation others_by_task_id returns [p for k,
+      ps in pool_by_id.items() if k != tid for p in ps], which I used in my own recount and
+      which reproduces the removed counts.
+    REASONING:
+      Verbatim agreement with module, artifact and entry, and the behaviour matches the words
+      when I run it. Resolves.
+  REFUTER [Refuter — "checker was TOO STRICT": re-test every resolves=f] resolves=True overturned=False
+    EVIDENCE:
+      contentclass_v5.py docstring: "(a) `wrong_task`'s comparison pool excludes the current
+      task's OWN paraphrases, by task id. ... The pool is now \"every paraphrase of every OTHER
+      task\"." Artifact rules.wrong_task_pool: "every paraphrase of every OTHER task id (v4:
+      every paraphrase but the current text)". RESULTS.md:924-926: "**(a) `wrong_task`'s pool is
+      every paraphrase of every OTHER task id** (v4: every paraphrase but the current text, so a
+      task's own siblings sat in the pool)". Implementation: others_by_task_id filters
+      pool_by_id on k != id_of[task_text].
+    REASONING:
+      Agree. Citation slip in the checker's evidence, immaterial: that RESULTS quote is at
+      924-926, not 944-945 (944-945 is the "Every one of the ten" sentence). The referent
+      resolves against module, artifact and entry.
+
+[V2.12]  CHECKER resolves=True  severity=clean
+  LOCATION: Design block, the payload_echo clause.
+  BLOCK SAYS:
+    payload_echo "ADOPTED as an ADVISORY class".
+  RECORD SAYS:
+    RESULTS.md:907-908 — "Adoption of `payload_echo` is the design seat's, from the screen."
+    Artifact rules.standing.payload_echo: "advisory (adoption: design seat, from this screen)".
+    contentclass_v5.py: ADVISORY = ("task_echo", "payload_echo", "wrong_task");
+    data/configs/contentclass_candidate.json v5_candidate.adoption.payload_echo: "ADJUDICATED BY
+    THE DESIGN SEAT FROM THE SCREEN (not adopted here)".
+  CHECKER NOTE:
+    The record reserves the adoption to the design seat and fixes the standing as advisory; the
+    block, as a design adjudication, is the act the record awaits. Nothing here contradicts the
+    record.
+  REFUTER [refuter — too lenient (re-count every count, attack set-equa] resolves=True overturned=False
+    EVIDENCE:
+      RESULTS.md:907 'Adoption of `payload_echo` is the design seat's, from the screen.'
+      Artifact rules.standing.payload_echo: 'advisory (adoption: design seat, from this
+      screen)'. contentclass_v5.py: ADVISORY = ('task_echo', 'payload_echo', 'wrong_task') —
+      confirmed at import, against V4.ADVISORY = ('task_echo', 'wrong_task').
+      data/configs/contentclass_candidate.json v5_candidate.adoption.payload_echo: 'ADJUDICATED
+      BY THE DESIGN SEAT FROM THE SCREEN (not adopted here); alone it is a one-line swap in
+      audit_v3.py'.
+    REASONING:
+      The record fixes the standing as advisory and reserves the adoption act to the design
+      seat; the block is a design adjudication performing that act. Nothing in the record is
+      contradicted. Resolves.
+  REFUTER [Refuter — "checker was TOO STRICT": re-test every resolves=f] resolves=True overturned=False
+    EVIDENCE:
+      RESULTS.md:907-908: "Adoption of `payload_echo` is the design seat's, from the screen."
+      Artifact rules.standing.payload_echo: "advisory (adoption: design seat, from this
+      screen)". contentclass_v5.py: ADVISORY = ("task_echo", "payload_echo", "wrong_task");
+      EXCLUSION_BEARING = V4.EXCLUSION_BEARING. data/configs/contentclass_candidate.json
+      v5_candidate.adoption.payload_echo: "ADJUDICATED BY THE DESIGN SEAT FROM THE SCREEN (not
+      adopted here); alone it is a one-line swap in audit_v3.py".
+    REASONING:
+      Agree; the record reserves the adoption to the design seat and fixes the standing as
+      advisory, which is what the block exercises.
+
+[V2.13]  CHECKER resolves=False  severity=gloss
+  LOCATION: Design block, third sentence.
+  BLOCK SAYS:
+    "Wire v5 into audit v3's advisory routing (the two changes the 166f8ff entry declared)".
+  RECORD SAYS:
+    RESULTS.md:974-979 — "**Wiring, when adopted:** `payload_echo` alone is a one-line swap in
+    `audit_v3.py`; the id-pool rule also needs the caller's pool builder (`others_factory` in
+    `scripts/format_recon.py`, today the v4 construction) to pass an id-filtered pool — two
+    changes, not one." data/configs/contentclass_candidate.json
+    v5_candidate.adoption.wrong_task_pool_by_task_id says the same.
+  CHECKER NOTE:
+    The figure "two" resolves, but only one of the two changes is in audit v3's routing. I
+    checked both files at HEAD: valence_core/e2d/audit_v3.py calls V4.classify_v4(...) — the
+    one-line swap; scripts/format_recon.py:155-157 has `def others_factory(tasks): pool =
+    all_paraphrases(tasks); return lambda task_text: [t for t in pool if t != task_text]` — the
+    v4 construction, in the caller, not in audit_v3.py. The entry's whole point in that sentence
+    is that the second change is NOT in the audit module ("two changes, not one"); the block's
+    phrasing locates both inside "audit v3's advisory routing".
+  REFUTER [refuter — too lenient (re-count every count, attack set-equa] resolves=False overturned=False
+    EVIDENCE:
+      RESULTS.md:974-979: '**Wiring, when adopted:** `payload_echo` alone is a one-line swap in
+      `audit_v3.py`; the id-pool rule also needs the caller's pool builder (`others_factory` in
+      `scripts/format_recon.py`, today the v4 construction) to pass an id-filtered pool — two
+      changes, not one.' Same in data/configs/contentclass_candidate.json
+      adoption.wrong_task_pool_by_task_id ('the classify swap in audit_v3.py AND an id-filtered
+      pool from the caller's pool builder'). At HEAD I checked both files:
+      valence_core/e2d/audit_v3.py:24 'from . import contentclass_v4 as V4' and :49 'label,
+      standing = V4.classify_v4(text, task_text, earlier, other_tasks)';
+      scripts/format_recon.py:155-157 'def others_factory(tasks): pool = all_paraphrases(tasks);
+      return lambda task_text: [t for t in pool if t != task_text]' — the v4 construction, in
+      the caller. others_factory is consumed at format_recon.py:226, :696, :781.
+    REASONING:
+      The figure 'two' resolves; the location does not. The record's sentence exists precisely
+      to say the second change is NOT in the audit module, and the block's phrasing puts both
+      inside 'audit v3's advisory routing'. Confirmed false; the count is the part that stands.
+  REFUTER [Refuter — "checker was TOO STRICT": re-test every resolves=f] resolves=True overturned=True
+    EVIDENCE:
+      RESULTS.md:974-979: "**Wiring, when adopted:** `payload_echo` alone is a one-line swap in
+      `audit_v3.py`; the id-pool rule also needs the caller's pool builder (`others_factory` in
+      `scripts/format_recon.py`, today the v4 construction) to pass an id-filtered pool — two
+      changes, not one." valence_core/e2d/audit_v3.py:43-49: `def check(self, text, task_text,
+      earlier=(), other_tasks=())` ... `label, standing = V4.classify_v4(text, task_text,
+      earlier, other_tasks)` — other_tasks is supplied BY THE CALLER and is precisely the
+      wrong_task pool the advisory routing consumes. scripts/format_recon.py:155-157: `def
+      others_factory(tasks): pool = all_paraphrases(tasks); return lambda task_text: [t for t in
+      pool if t != task_text]` — the v4 construction. data/configs/contentclass_candidate.json:
+      "wiring needs TWO changes -- the classify swap in audit_v3.py AND an id-filtered pool from
+      the caller's pool builder".
+    REASONING:
+      OVERTURNED. The checker's file facts are all correct, but they do not contradict the
+      block. The referent under check — "the two changes the 166f8ff entry declared" — resolves
+      exactly: the entry declares two and enumerates them. The gloss "wire v5 into audit v3's
+      advisory routing" names an END STATE the entry itself uses (RESULTS.md:922-924: audit v3
+      "still routes through v4 until the design seat adopts"), not a file location for each
+      edit; and the second change exists solely to feed audit_v3.check's `other_tasks` argument,
+      so both changes are changes to how audit v3's advisory routing runs, one of them
+      implemented in the caller. The block's parenthetical carries the entry's "two changes, not
+      one" corrective forward rather than losing it. Reading "into audit v3's advisory routing"
+      as "both edits live inside audit_v3.py" is the over-strict reading this lens is for.
+
+[V2.14]  CHECKER resolves=True  severity=clean
+  LOCATION: Design block, third sentence.
+  BLOCK SAYS:
+    "exclusion-bearing classes unchanged; v3/v4 frozen".
+  RECORD SAYS:
+    contentclass_v5.py: "EXCLUSION_BEARING = V4.EXCLUSION_BEARING" and the docstring "Two rules,
+    BOTH ADVISORY; nothing exclusion-bearing changes", "Builds on the frozen v3 draft and the
+    adopted v4 without modifying either". RESULTS.md:930-934 — v5 "builds on the frozen v3 and
+    the adopted v4 and modifies neither; audit v3 (the audit of record) still routes through v4
+    until the design seat adopts." The 166f8ff stat shows contentclass_v5.py added (118 lines)
+    with no change to contentclass.py or contentclass_v4.py.
+  CHECKER NOTE:
+    Confirmed from the module source and from git show --stat 166f8ff: only contentclass_v5.py,
+    the screen driver, the candidate JSON, RESULTS.md, formats/recon.py and
+    e2d_closure_verify3.py were touched; v3 and v4 were not.
+  REFUTER [refuter — too lenient (re-count every count, attack set-equa] resolves=True overturned=False
+    EVIDENCE:
+      contentclass_v5.py: 'EXCLUSION_BEARING = V4.EXCLUSION_BEARING'; at import
+      V5.EXCLUSION_BEARING is V4.EXCLUSION_BEARING → True (same tuple object,
+      ('null_response','stuck_attractor','preamble_without_content')). Docstring: 'Two rules,
+      BOTH ADVISORY; nothing exclusion-bearing changes', 'Builds on the frozen v3 draft and the
+      adopted v4 without modifying either'. RESULTS.md:922-925. git show --stat 166f8ff touches
+      only contentclass_v5.py, e2d_contentclass_screen_v5.py, contentclass_candidate.json,
+      contentclass_screen_v5.json, the two raws, e2d_closure_verify3.py, formats/recon.py,
+      RESULTS.md — no contentclass.py, no contentclass_v4.py. I went further than the checker:
+      (i) git diff 166f8ff^ HEAD -- valence_core/e2d/contentclass.py
+      valence_core/e2d/contentclass_v4.py is EMPTY, so v3/v4 are frozen through HEAD, not merely
+      at the commit; (ii) git log 166f8ff..HEAD over contentclass_v5.py, the driver, the
+      artifact, audit_v3.py and format_recon.py returns no commits, and git status --porcelain
+      is clean for valence_core/e2d/, scripts/, data/e2d/; (iii) I classified all 5,014 offered
+      rounds across the four corpora under v4 and under v5 and compared exclusion-bearing
+      verdicts ROW BY ROW: 0 rows differ.
+    REASONING:
+      'Frozen' and 'unchanged' both survive an actual diff, at file level across the whole
+      166f8ff^..HEAD range and at row level in behaviour. The count-level agreement the checker
+      relied on (identical exclusion-bearing counts per corpus in the raw) could in principle
+      have hidden offsetting changes; the row-level check rules that out. Resolves, on stronger
+      evidence than the checker had.
+  REFUTER [Refuter — "checker was TOO STRICT": re-test every resolves=f] resolves=True overturned=False
+    EVIDENCE:
+      contentclass_v5.py: "EXCLUSION_BEARING = V4.EXCLUSION_BEARING"; docstring "Two rules, BOTH
+      ADVISORY; nothing exclusion-bearing changes" and "Builds on the frozen v3 draft and the
+      adopted v4 without modifying either". RESULTS.md:922-924: v5 "builds on the frozen v3 and
+      the adopted v4 and modifies neither; audit v3 (the audit of record) still routes through
+      v4 until the design seat adopts." git show --stat 166f8ff touches RESULTS.md,
+      data/configs/contentclass_candidate.json, data/e2d/contentclass_screen_v5.json, three
+      results/raw files, scripts/e2d_closure_verify3.py, scripts/e2d_contentclass_screen_v5.py,
+      valence_core/e2d/contentclass_v5.py (118 lines, new), valence_core/formats/recon.py —
+      contentclass.py and contentclass_v4.py are absent.
+    REASONING:
+      Agree. Checker's file list omitted the three raw files but the load-bearing fact — v3 and
+      v4 untouched, exclusion-bearing inherited by reference — holds. Same immaterial line-cite
+      slip (that RESULTS sentence is at 922-924, not 930-934).
+
+[V2.15]  CHECKER resolves=True  severity=clean
+  LOCATION: Design block, whole parenthetical.
+  BLOCK SAYS:
+    (reproducibility of the figures the block rests on)
+  RECORD SAYS:
+    results/raw/2026-09-08_e2d_contentclass_screen_v5.txt and
+    data/e2d/contentclass_screen_v5.json at HEAD.
+  CHECKER NOTE:
+    I re-ran scripts/e2d_contentclass_screen_v5.py at HEAD with the repo's venv. The produced
+    JSON is byte-identical to the committed data/e2d/contentclass_screen_v5.json (diff empty),
+    and stdout matches results/raw/2026-09-08_e2d_contentclass_screen_v5.txt on every line
+    except the INVOCATION line (my run added --out to a scratch path). Exit 0.
+  REFUTER [refuter — too lenient (re-count every count, attack set-equa] resolves=True overturned=False
+    EVIDENCE:
+      I re-ran /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python
+      scripts/e2d_contentclass_screen_v5.py at HEAD with --out to a scratch path: exit 0, and
+      diff against data/e2d/contentclass_screen_v5.json is empty — byte-identical. stdout vs
+      results/raw/2026-09-08_e2d_contentclass_screen_v5.txt differs on exactly TWO lines, both
+      caused by --out: the INVOCATION line and the closing 'wrote <path>' line (line 41). All 39
+      other lines identical, including every per-hit and per-removal line.
+      results/raw/2026-09-08_dispositions_valuescheck.txt:4 records that the refuters also
+      re-ran it byte-identical.
+    REASONING:
+      Reproducible. One precision correction to the checker's note: the stdout difference is two
+      lines, not one — it missed the trailing 'wrote <path>' line, which also carries the --out
+      path. Immaterial to the verdict. Resolves.
+  REFUTER [Refuter — "checker was TOO STRICT": re-test every resolves=f] resolves=True overturned=False
+    EVIDENCE:
+      I re-ran /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python
+      scripts/e2d_contentclass_screen_v5.py at HEAD with --out to a scratch path. Exit 0. `cmp`
+      against data/e2d/contentclass_screen_v5.json: byte-identical; md5
+      61e058b94c4051cf8c37f3c385c5cb9b on both. stdout vs
+      results/raw/2026-09-08_e2d_contentclass_screen_v5.txt differs on two lines only, both path
+      artifacts of --out: line 1 (INVOCATION) and line 42 ("wrote <path>").
+    REASONING:
+      Agree, and reproduced independently. One correction to the checker's note: the stdout
+      differs on TWO lines, not one (it missed the trailing "wrote" line). Both are the --out
+      path; every figure line matches. The screen is reproducible at HEAD, so every figure
+      V2.1-V2.8 rest on is live, not just archived.
+
+####################################################################################################
+GROUP V3 — 11 referents
+####################################################################################################
+
+[V3.1]  CHECKER resolves=True  severity=clean
+  LOCATION: Design block under check, sentence 3: "Wire v5 into audit v3's advisory routing (the two changes the 166f8ff entry declared)".
+  BLOCK SAYS:
+    "the two changes the 166f8ff entry declared" — the design block asserts that the 166f8ff
+    RESULTS entry declared exactly TWO changes for wiring v5.
+  RECORD SAYS:
+    RESULTS.md:974-978 (the 2026-09-08 entry committed at 166f8ff), verbatim: "**Wiring, when
+    adopted:** `payload_echo` alone is a one-line swap in `audit_v3.py`; the id-pool rule also
+    needs the caller's pool builder (`others_factory` in `scripts/format_recon.py`, today the v4
+    construction) to pass an id-filtered pool — two changes, not one." The same pair is carried
+    in data/configs/contentclass_candidate.json, v5_candidate.adoption:
+    wrong_task_pool_by_task_id = "PI-stamped rule; wiring needs TWO changes -- the classify swap
+    in audit_v3.py AND an id-filtered pool from the caller's pool builder
+    (scripts/format_recon.py others_factory is the v4 construction today) -- pending the design
+    seat's word"; payload_echo = "ADJUDICATED BY THE DESIGN SEAT FROM THE SCREEN (not adopted
+    here); alone it is a one-line swap in audit_v3.py".
+  CHECKER NOTE:
+    The entry does declare exactly two changes, and the entry's own words are "two changes, not
+    one". Count and content both resolve. (Change 1 = the classify swap inside audit_v3.py;
+    change 2 = an id-filtered pool from the caller's pool builder.)
+  REFUTER [Refuter — leniency lens on GROUP V3 (wiring, adoption state,] resolves=True overturned=False
+    EVIDENCE:
+      RESULTS.md:974-978 (entry anchored at RESULTS.md:899, committed 166f8ff), verbatim:
+      "**Wiring, when adopted:** `payload_echo` alone is a one-line swap in `audit_v3.py`; the
+      id-pool rule also needs the caller's pool builder (`others_factory` in
+      `scripts/format_recon.py`, today the v4 construction) to pass an id-filtered pool — two
+      changes, not one." (`grep -n "two changes" RESULTS.md` → 977, the only hit in the file).
+      Independently corroborated in data/configs/contentclass_candidate.json,
+      v5_candidate.adoption.wrong_task_pool_by_task_id: "wiring needs TWO changes -- the
+      classify swap in audit_v3.py AND an id-filtered pool from the caller's pool builder
+      (scripts/format_recon.py others_factory is the v4 construction today) -- pending the
+      design seat's word"; v5_candidate.adoption.payload_echo: "alone it is a one-line swap in
+      audit_v3.py".
+    REASONING:
+      Attacked the count in both directions. Upward: no third change is declared anywhere in the
+      entry or the candidate JSON — the entry's own words close the count ("two changes, not
+      one"), and the JSON repeats it in caps ("TWO changes"). Downward: the two are not
+      collapsible into one, since the entry explicitly distinguishes payload_echo-alone (one
+      swap) from the id-pool rule (swap + caller). The referent is a claim about what the entry
+      declared, and the entry declared exactly two. Note (not a defect in the count): the two
+      changes are the classify swap AND the caller's pool, so "two" is the figure for adopting
+      BOTH v5 rules, which is what this block does. Checker's verdict stands.
+  REFUTER [refuter — too strict (re-testing every resolves=false, and t] resolves=True overturned=False
+    EVIDENCE:
+      RESULTS.md:974-978 (inside the 2026-09-08 entry whose anchor is at RESULTS.md:899,
+      committed at 166f8ff), verbatim: "**Wiring, when adopted:** `payload_echo` alone is a
+      one-line swap in `audit_v3.py`; the id-pool rule also needs the caller's pool builder
+      (`others_factory` in `scripts/format_recon.py`, today the v4 construction) to pass an
+      id-filtered pool — two changes, not one." (`grep -n "two changes," RESULTS.md` -> 977).
+      data/configs/contentclass_candidate.json,
+      v5_candidate.adoption.wrong_task_pool_by_task_id: "wiring needs TWO changes -- the
+      classify swap in audit_v3.py AND an id-filtered pool from the caller's pool builder
+      (scripts/format_recon.py others_factory is the v4 construction today)"; .payload_echo:
+      "alone it is a one-line swap in audit_v3.py".
+    REASONING:
+      Re-read both sources myself. The entry declares exactly two changes and says so in those
+      words; the candidate JSON carries the same pair. Count and content resolve. No overreach
+      by the checker here.
+
+[V3.2]  CHECKER resolves=False  severity=gloss
+  LOCATION: Design block, sentence 3: "Wire v5 into audit v3's advisory routing (the two changes the 166f8ff entry declared)".
+  BLOCK SAYS:
+    Both declared changes are glossed as changes "into audit v3's advisory routing".
+  RECORD SAYS:
+    Only change 1 lands in audit v3. valence_core/e2d/audit_v3.py:24 `from . import
+    contentclass_v4 as V4` and the `classify_v4` call in `AuditV3.check` are the swap site.
+    Change 2 lands OUTSIDE audit v3, in a caller: scripts/format_recon.py:155-157 `def
+    others_factory(tasks): pool = all_paraphrases(tasks); return lambda task_text: [t for t in
+    pool if t != task_text]` — still the v4 construction at HEAD, and it is a script-level pool
+    builder, not part of audit v3's routing. contentclass_v5.classify_v5's docstring makes the
+    split explicit: "`other_tasks` MUST already exclude the current task's own paraphrases (use
+    `others_by_task_id`); this function does not know task ids."
+  CHECKER NOTE:
+    The claim about the two changes' location does not resolve: one of the two is not a change
+    to audit v3's advisory routing. The entry's own sentence distinguishes them ('a one-line
+    swap in audit_v3.py' vs 'the caller's pool builder ... in scripts/format_recon.py'); the
+    block's single phrase collapses both into audit v3. Reported, not adjudicated.
+  REFUTER [Refuter — leniency lens on GROUP V3 (wiring, adoption state,] resolves=False overturned=False
+    EVIDENCE:
+      Swap site is inside audit v3: valence_core/e2d/audit_v3.py:24 `from . import
+      contentclass_v4 as V4`, :49 `label, standing = V4.classify_v4(text, task_text, earlier,
+      other_tasks)`. Second change is NOT in audit v3: scripts/format_recon.py:155-157 verbatim
+      — `def others_factory(tasks):` / `    pool = all_paraphrases(tasks)` / `    return lambda
+      task_text: [t for t in pool if t != task_text]` — still the v4 construction at HEAD,
+      called at format_recon.py:226, :696, :781. contentclass_v5.py:97-101 docstring:
+      "`other_tasks` MUST already exclude the current task's own paraphrases (use
+      `others_by_task_id`); this function does not know task ids." The entry itself separates
+      the sites (RESULTS.md:974-977, quoted in V3.1).
+    REASONING:
+      I tried to rescue the block's phrase and could not. `classify_v5` cannot implement the
+      id-pool rule at all — it takes `other_tasks` pre-filtered and says so in its own docstring
+      — so the pool change is necessarily outside the audit, in a caller's pool builder.
+      Confirmed the caller is still the v4 construction at HEAD (byte-level read of
+      format_recon.py:155-157, and `git status --porcelain scripts/` is empty). The block's
+      single phrase "Wire v5 into audit v3's advisory routing (the two changes ...)" locates
+      both changes inside audit v3; the record locates one of them in scripts/format_recon.py.
+      Does not resolve. Additional evidence the checker did not cite, which shows where the
+      gloss came from: HANDOFF-2026-09-13-design.md:135-137 uses the same collapsing phrase
+      ("and wire it into audit v3's advisory routing — the 09-13 block does this if the PI
+      routes it"), so the block inherits the gloss from the design handoff. That does not repair
+      it.
+  REFUTER [refuter — too strict (re-testing every resolves=false, and t] resolves=True overturned=True
+    EVIDENCE:
+      The block's phrase is the record's own idiom for the whole two-change operation, not a
+      location claim: HANDOFF-2026-09-13-design.md:135-137 (design seat, §4) reads "(2) adopt
+      content-class v5 (`wrong_task` pool by task id; `payload_echo` advisory ...) and wire it
+      into audit v3's advisory routing — the 09-13 block does this if the PI routes it". The
+      block's parenthetical then cites the 166f8ff entry for what the two changes are, and that
+      entry itself puts change 2 in the caller (RESULTS.md:975-977). Facts the checker cites are
+      all correct: valence_core/e2d/audit_v3.py:24 imports contentclass_v4 and :49 calls
+      `V4.classify_v4`; scripts/format_recon.py:155-157 `others_factory` is still `[t for t in
+      pool if t != task_text]` (last commit e7dcd41, pre-a49bc9b); contentclass_v5.py:99-101
+      "`other_tasks` MUST already exclude the current task's own paraphrases (use
+      `others_by_task_id`); this function does not know task ids".
+    REASONING:
+      The checker demanded that the locative 'into audit v3' distribute over both changes. The
+      design seat's own handoff uses the identical phrase for the whole operation (classify swap
+      + id-filtered pool), so this is a precision the record's convention does not use; and the
+      block imports the entry's split by reference rather than contradicting it. Referent
+      resolves. Banked, not adjudicated: at HEAD the caller-side change is real and lives
+      outside audit v3 (scripts/format_recon.py:155-157), while the k campaign already builds
+      its own id-filtered pool (valence_core/k/sessions.py:64-70) — so whoever implements the
+      block must touch a caller, exactly as the cited entry says.
+
+[V3.3]  CHECKER resolves=True  severity=clean
+  LOCATION: Design block, sentence 3.
+  BLOCK SAYS:
+    "audit v3" — the block treats audit v3 as the audit whose advisory routing is to be changed.
+  RECORD SAYS:
+    valence_core/e2d/audit_v3.py, docstring line 1: "Audit of record for any NEW Qwen session
+    campaign -- audit v3 (design adjudication of 2026-09-05, PI-ratified; AMENDMENT 2 (iii)
+    §3)." Line 26: AUDIT_VERSION = "audit-v3 = e2b_audit_v2 + content-class-v4 (exclusion:
+    null/stuck/preamble; advisory: echo/wrong_task)". It imports contentclass_v4 (line 24) and
+    its `check` calls `V4.classify_v4`. RESULTS.md:922-923: "audit v3 (the audit of record)
+    still routes through v4 until the design seat adopts." `git diff a49bc9b HEAD --
+    valence_core/e2d/audit_v3.py` is empty: unchanged since the 2026-09-06 adoption commit.
+  CHECKER NOTE:
+    audit v3 is the audit of record, defined in valence_core/e2d/audit_v3.py, and at HEAD it
+    still routes advisories through contentclass_v4 (task_echo, wrong_task only). The wiring
+    target is real and is in the state the 166f8ff entry describes.
+  REFUTER [Refuter — leniency lens on GROUP V3 (wiring, adoption state,] resolves=True overturned=False
+    EVIDENCE:
+      valence_core/e2d/audit_v3.py docstring line 1: "Audit of record for any NEW Qwen session
+      campaign -- audit v3 (design adjudication of 2026-09-05, PI-ratified; AMENDMENT 2 (iii)
+      §3)." Line 26 (verified by grep -n): AUDIT_VERSION = "audit-v3 = e2b_audit_v2 +
+      content-class-v4 (exclusion: null/stuck/preamble; advisory: echo/wrong_task)". Line 24
+      imports contentclass_v4; line 49 calls V4.classify_v4. RESULTS.md:922-924: "audit v3 (the
+      audit of record) still routes through v4 until the design seat adopts." `git diff a49bc9b
+      HEAD -- valence_core/e2d/audit_v3.py` → empty; `git log -1 --
+      valence_core/e2d/audit_v3.py` → a49bc9b.
+    REASONING:
+      Re-verified every line number the checker cited rather than trusting them (24, 26, 49 all
+      exact). The wiring target exists, is named the audit of record in its own docstring, and
+      at HEAD routes advisories through v4 only — its ADVISORY set is v4's (task_echo,
+      wrong_task), not v5's. Checker's verdict stands.
+  REFUTER [refuter — too strict (re-testing every resolves=false, and t] resolves=True overturned=False
+    EVIDENCE:
+      valence_core/e2d/audit_v3.py:1-2 "Audit of record for any NEW Qwen session campaign --
+      audit v3 (design adjudication of 2026-09-05, PI-ratified; AMENDMENT 2 (iii) §3)."; :24
+      `from . import contentclass_v4 as V4`; :26 AUDIT_VERSION = "audit-v3 = e2b_audit_v2 +
+      content-class-v4 (exclusion: null/stuck/preamble; advisory: echo/wrong_task)"; :49 `label,
+      standing = V4.classify_v4(...)`. RESULTS.md:921-923: "audit v3 (the audit of record) still
+      routes through v4 until the design seat adopts". `git diff a49bc9b HEAD --
+      valence_core/e2d/audit_v3.py` is empty; its last commit is a49bc9b.
+    REASONING:
+      Independently reproduced every cited line. The wiring target exists, is the audit of
+      record, and still routes advisories through v4 at HEAD.
+
+[V3.4]  CHECKER resolves=True  severity=clean
+  LOCATION: Design block, sentence 3.
+  BLOCK SAYS:
+    Implied by "Wire v5 into audit v3's advisory routing": that v5's advisory routing is not yet
+    wired anywhere in running code.
+  RECORD SAYS:
+    It is already wired for the k campaign, by subclass rather than by modifying audit_v3.py.
+    valence_core/k/sessions.py:40-54 defines `class AuditV3WithV5Advisories(AuditV3)` whose
+    `check` calls `V5.classify_v5`; line 36 AUDIT_VERSION = "audit-v3 exclusions (e2b_audit_v2 +
+    content-class-v4 exclusion-bearing) + content-class-v5 ADVISORIES (task_echo, payload_echo,
+    wrong_task by task id) -- PROPOSAL-k §1.2"; lines 64-70 define a k-local `others_factory`
+    using `V5.others_by_task_id`; the module docstring line 16 says "`audit_v3.py` itself is not
+    modified." scripts/k1_stage1.py:51 instantiates it. The Stage 1 entry records the run under
+    this audit: RESULTS.md:248-249 "audit v3 exclusions + v5 advisories"; RESULTS.md:279-281
+    counts `payload_echo` 2 hits (s7, s19 forced1).
+  CHECKER NOTE:
+    Reported as surrounding state, not as a contradiction: audit_v3.py itself is untouched, so
+    the block's premise about audit v3 holds, but a v5-advisory audit already exists and has
+    already scored a committed campaign (PROPOSAL-k Stage 1, data/k/k1_sessions.json). Whether
+    adoption should collapse the k subclass into audit_v3.py is not mine to adjudicate.
+  REFUTER [Refuter — leniency lens on GROUP V3 (wiring, adoption state,] resolves=False overturned=True
+    EVIDENCE:
+      valence_core/k/sessions.py:40 `class AuditV3WithV5Advisories(AuditV3)`, :49 `label,
+      standing = V5.classify_v5(text, task_text, earlier, other_tasks)`, :27 `from ..e2d import
+      contentclass_v5 as V5`, :36 AUDIT_VERSION = "audit-v3 exclusions (e2b_audit_v2 +
+      content-class-v4 exclusion-bearing) + content-class-v5 ADVISORIES (task_echo,
+      payload_echo, wrong_task by task id) -- PROPOSAL-k §1.2", :64-70 a k-local
+      `others_factory()` returning `V5.others_by_task_id(task_text, pool_by_id, id_of)`, :16
+      "`audit_v3.py` itself is not modified." Instantiated at scripts/k1_stage1.py:51 `return
+      K.AuditV3WithV5Advisories(v2=v2), cfg`, used at :151 and :262. It has already scored a
+      committed campaign: RESULTS.md:248-249 "audit v3 exclusions + v5 advisories";
+      RESULTS.md:279 "(payload_echo 2 — s7 and s19 forced1, *\"The meeting has been moved to
+      3pm.\"* returned unchanged"; artifacts on disk and committed: data/k/k1_sessions.json,
+      k1_reads.json, k1_analysis.json (`git status --porcelain data/` empty).
+    REASONING:
+      OVERTURNED on the checker's own evidence. The checker formulated this item as the
+      proposition "that v5's advisory routing is not yet wired anywhere in running code", then
+      filed a RECORD section that refutes it — v5's advisory routing IS wired, in
+      valence_core/k/sessions.py, and has scored the 48-session PROPOSAL-k Stage 1 campaign of
+      record — and still graded it resolves=true on the ground that it is "surrounding state,
+      not a contradiction". A proposition contradicted by the record does not resolve; that is
+      exactly the leniency this pass is for. Narrower point, which I confirm and which is what
+      the checker should have graded: audit_v3.py itself is untouched (`git diff a49bc9b HEAD`
+      empty), so the block's premise about AUDIT V3's routing holds. Two consequences the
+      checker did not draw, both verified: (1) both of the entry's declared changes already
+      exist in the k path (the v5 classify swap at sessions.py:49 and the id-filtered pool at
+      :64-70), so "the two changes" are un-done only for audit_v3.py + scripts/format_recon.py;
+      (2) an adoption that edits audit_v3.py in place would leave a second, now-redundant v5
+      routing in valence_core/k/sessions.py.
+  REFUTER [refuter — too strict (re-testing every resolves=false, and t] resolves=True overturned=False
+    EVIDENCE:
+      valence_core/k/sessions.py:40-54 `class AuditV3WithV5Advisories(AuditV3)` whose `check`
+      calls `V5.classify_v5` (:49); :36 AUDIT_VERSION "audit-v3 exclusions ... +
+      content-class-v5 ADVISORIES (task_echo, payload_echo, wrong_task by task id) -- PROPOSAL-k
+      §1.2"; :64-70 a k-local `others_factory` using `V5.others_by_task_id`; docstring:
+      "`audit_v3.py` itself is not modified." scripts/k1_stage1.py:51 `return
+      K.AuditV3WithV5Advisories(v2=v2)`. RESULTS.md:248 "audit v3 exclusions + v5 advisories";
+      RESULTS.md:279-280 "content_advisory 4 (payload_echo 2 — s7 and s19 forced1 ...)".
+    REASONING:
+      Outcome agreed, framing corrected. The checker's own restatement of the referent ('v5's
+      advisory routing is not yet wired anywhere in running code') is false as stated — v5
+      advisories already scored PROPOSAL-k Stage 1 through the k subclass. But the block asserts
+      no such thing; it says 'Wire v5 into audit v3's advisory routing', and audit_v3.py is
+      untouched at HEAD, so the block's premise holds. resolves=true stands on the block's own
+      words, not on the checker's paraphrase.
+
+[V3.5]  CHECKER resolves=False  severity=substantive
+  LOCATION: HANDOFF-2026-09-12.md, §1 state table, 'Content class' row; HANDOFF-2026-09-13-design.md, §1 state table, 'Content class' row.
+  BLOCK SAYS:
+    ADJUDICATION REQUESTED: Code's HANDOFF-2026-09-12.md §1 states "v4 adopted (audit v3 of
+    record)"; the untracked HANDOFF-2026-09-13-design.md §1 states "v3 adopted (audit v3 of
+    record, `a49bc9b`); v4 guard blind-screened; **v5 candidate** (`166f8ff`)".
+  RECORD SAYS:
+    The record says the adopted content class is v4. (a) RESULTS.md:1873-1884, the 2026-09-06
+    entry: "the class-level architecture is ADOPTED as scorer_v3's content class, PROSPECTIVE
+    ONLY" ... "The candidate's `adopted` flips to true naming this entry. The guard was
+    re-screened blind as v4". (b) RESULTS.md:1974-1976: "`valence_core/e2d/contentclass_v4.py`
+    holds the adopted classes and builds on the frozen draft's detectors without modifying
+    them." (c) data/configs/contentclass_candidate.json: version = "content-class-draft-v3 ->
+    adopted as content-class-v4 rev 3 (echo guard; widened null: ...)", adopted = true,
+    adopted_by.entry = "CONTENT-CLASS SPEC — ADJUDICATED (AMENDMENT 2 (iii))",
+    module.content_class = "valence_core/e2d/contentclass_v4.py (builds on the frozen draft
+    valence_core/e2d/contentclass.py)". (d) Code: audit_v3.py:24,26 imports contentclass_v4 and
+    names "content-class-v4" in AUDIT_VERSION; contentclass_v5.py docstring line 2 "Builds on
+    the frozen v3 draft and the adopted v4"; RESULTS.md:922 "builds on the frozen v3 and the
+    adopted v4". (e) contentclass.py's last commit is 1223751 "PART C: content-class spec draft
+    + overbreadth screen. CANDIDATE, NOT ADOPTED." (f) a49bc9b is real and is the adjudication
+    commit: "Content-class spec ADJUDICATED (AMENDMENT 2 (iii)) ... the guard re-screened blind
+    as v4."
+  CHECKER NOTE:
+    ANSWER: v4 is the adopted content class; contentclass.py ('v3') is the frozen DRAFT and was
+    never adopted as such. Code's HANDOFF-2026-09-12.md ('v4 adopted (audit v3 of record)')
+    matches the record. HANDOFF-2026-09-13-design.md's 'v3 adopted ... v4 guard blind-screened'
+    does not: the guard screened as v4 is part of what was adopted (the artifact's own words are
+    'adopted as content-class-v4 rev 3'), and the module holding the adopted classes is
+    contentclass_v4.py. Two fragments of the design handoff's row do resolve: the commit
+    `a49bc9b` is the correct adjudication commit, and the guard was in fact re-screened blind as
+    v4. The design block under check inherits the correct state ('v3/v4 frozen', v5 as
+    candidate), so this discrepancy is in the handoff, not in the block.
+  REFUTER [Refuter — leniency lens on GROUP V3 (wiring, adoption state,] resolves=False overturned=False
+    EVIDENCE:
+      HANDOFF-2026-09-12.md:62 verbatim: "| **Content class** | v4 adopted (audit v3 of record);
+      **v5 CANDIDATE** built and blind-screened (`166f8ff`): ... |".
+      HANDOFF-2026-09-13-design.md:44 verbatim: "| Content class | v3 adopted (audit v3 of
+      record, `a49bc9b`); v4 guard blind-screened; **v5 candidate** (`166f8ff`) awaits design
+      adoption (§4) |". Record: data/configs/contentclass_candidate.json version =
+      "content-class-draft-v3 -> adopted as content-class-v4 rev 3 (echo guard; widened null:
+      ...)", adopted = true, adopted_by.entry = "CONTENT-CLASS SPEC — ADJUDICATED (AMENDMENT 2
+      (iii))", module.content_class = "valence_core/e2d/contentclass_v4.py (builds on the frozen
+      draft valence_core/e2d/contentclass.py)". RESULTS.md:1874-1884 (2026-09-06): "the
+      class-level architecture is ADOPTED as scorer_v3's content class, PROSPECTIVE ONLY" ...
+      "The guard was re-screened blind as v4". RESULTS.md:922 "builds on the frozen v3 and the
+      adopted v4"; contentclass_v5.py docstring line 2 same. `git log -1 --
+      valence_core/e2d/contentclass.py` → 1223751 "CANDIDATE, NOT ADOPTED."
+    REASONING:
+      I tried to rescue the design handoff's "v3 adopted" and it does not survive the record's
+      own words. The strongest rescue is that the 09-06 entry adopts "the class-level
+      architecture" of the draft; but the same entry's phrase is "scorer_v3's content class"
+      (the content class OF scorer v3, not content-class v3), the module holding the adopted
+      classes is contentclass_v4.py, the candidate JSON's own version string is "adopted as
+      content-class-v4 rev 3", and every later reference in the record pairs "the frozen v3"
+      with "the adopted v4" — contentclass.py's own last commit says "CANDIDATE, NOT ADOPTED."
+      So Code's 09-12 row matches the record and the design 09-13 row does not. Two fragments of
+      the design row do resolve, as the checker said: `a49bc9b` is the adjudication commit (it
+      is the last commit touching contentclass_v4.py and audit_v3.py), and the guard was in fact
+      re-screened blind as v4. Agreed that the defect is in the handoff, not the block: the
+      block's only adoption-state assertion is "v3/v4 frozen", which is true at HEAD (see
+      V3.10).
+  REFUTER [refuter — too strict (re-testing every resolves=false, and t] resolves=False overturned=False
+    EVIDENCE:
+      Against 'v3 adopted': RESULTS.md:921-922 "builds on the frozen v3 and the adopted v4";
+      valence_core/e2d/contentclass_v4.py:59 SPEC_VERSION = "content-class-v4 rev 3 (adopted
+      2026-09-05; ...)"; data/configs/contentclass_candidate.json version =
+      "content-class-draft-v3 -> adopted as content-class-v4 rev 3", adopted=true,
+      module.content_class = "valence_core/e2d/contentclass_v4.py (builds on the frozen draft
+      valence_core/e2d/contentclass.py)"; contentclass.py's last commit is 1223751 "CANDIDATE,
+      NOT ADOPTED". The one phrase that could have licensed 'v3' does not: RESULTS.md:1875-1876
+      "ADOPTED as scorer_v3's content class" names the SCORER (data/configs/scorer_v3_spec.json;
+      contentclass.py:4,11 "a candidate specification for scorer_v3's content class"), not a
+      content-class v3. Fragments of the design row that do resolve: a49bc9b is the adjudication
+      commit (`git log -1 -- valence_core/e2d/contentclass_v4.py` -> a49bc9b "Content-class spec
+      ADJUDICATED (AMENDMENT 2 (iii))"), and RESULTS.md:1884 "The guard was re-screened blind as
+      v4". Code's row (HANDOFF-2026-09-12.md:62 "v4 adopted (audit v3 of record)") matches.
+    REASONING:
+      I tested the too-strict hypothesis directly — is 'v3 adopted' a naming convention the
+      record uses? It is not: the only 'v3' in the adoption sentence is scorer_v3, a different
+      object, and the record's own contrast is "the frozen v3 and the adopted v4". One softening
+      the checker missed: the design row compresses the entry's real sequence (the v3
+      CANDIDATE's architecture was what got adjudicated, with the guard re-screened as v4), so
+      it is a compression rather than an invention — but as written it still does not resolve.
+      The design block under check is unaffected; it says 'v3/v4 frozen' and treats v5 as
+      candidate, which is correct.
+
+[V3.6]  CHECKER resolves=True  severity=clean
+  LOCATION: Design block, sentence 3 ("... `adopted` fields name this block; one RESULTS entry").
+  BLOCK SAYS:
+    "one RESULTS entry" — i.e. the v5 adoption is to be recorded in a single, not-yet-written
+    RESULTS entry.
+  RECORD SAYS:
+    No RESULTS entry for a v5 adoption exists at HEAD. `grep -n "^- 20" RESULTS.md` returns no
+    v5 entry; the newest two entries are both 2026-09-11 (ADDENDUM-k1 STOP at line 24;
+    PROPOSAL-k STAGE 1 at line 204). The only adoption-bearing v5 line in RESULTS is 973-974:
+    "adoption of `payload_echo` waits on the design seat."
+    data/configs/contentclass_candidate.json's `v5_candidate` block has keys [spec, rules,
+    module, screen, transform_tasks_in_corpus, adoption, declared_limits,
+    wider_than_the_disposition_wording_declared] — no `adopted` field; its
+    `adoption.payload_echo` reads "ADJUDICATED BY THE DESIGN SEAT FROM THE SCREEN (not adopted
+    here)". The top-level `adopted`/`adopted_by` name the 2026-09-06 v4 entry, not a v5 entry.
+  CHECKER NOTE:
+    Precondition holds: no v5-adoption RESULTS entry exists, and no `adopted` field yet exists
+    in the v5_candidate block for this block to fill. Nothing to collide with.
+  REFUTER [Refuter — leniency lens on GROUP V3 (wiring, adoption state,] resolves=True overturned=False
+    EVIDENCE:
+      `grep -n "^- 20" RESULTS.md` → newest entries are 2026-09-11 at line 24 (ADDENDUM-k1 STOP)
+      and line 204 (PROPOSAL-k STAGE 1); no v5-adoption entry anywhere. `grep -n "v5"
+      RESULTS.md` → the only adoption-bearing line is 973 "adoption of `payload_echo` waits on
+      the design seat"; the other hits are the Stage 1 audit-version lines (248, 397, 493, 835),
+      the 166f8ff entry (899-999), and 580. data/configs/contentclass_candidate.json
+      v5_candidate keys, dumped:
+      ['spec','rules','module','screen','transform_tasks_in_corpus','adoption','declared_limits','wider_than_the_disposition_wording_declared']
+      — `'adopted' in v5_candidate` → False, `'adopted_by' in v5_candidate` → False;
+      v5_candidate.adoption.payload_echo = "ADJUDICATED BY THE DESIGN SEAT FROM THE SCREEN (not
+      adopted here); alone it is a one-line swap in audit_v3.py".
+    REASONING:
+      Recomputed the key list programmatically rather than trusting the checker's enumeration;
+      it is exact, in that order. Attacked the negative claim in both directions: no RESULTS
+      entry records a v5 adoption, and no v5 `adopted` field exists to collide with. The
+      precondition for "one RESULTS entry" holds. Checker's verdict stands.
+  REFUTER [refuter — too strict (re-testing every resolves=false, and t] resolves=True overturned=False
+    EVIDENCE:
+      `grep -n "^- 20" RESULTS.md | head` -> newest anchors are :24 and :204, both 2026-09-11
+      (ADDENDUM-k1 STOP; PROPOSAL-k STAGE 1); the next is :465 (2026-09-09). The only
+      adoption-bearing v5 line in RESULTS is :972-974 "Recorded in the candidate JSON's
+      `v5_candidate` section; adoption of `payload_echo` waits on the design seat."
+      data/configs/contentclass_candidate.json v5_candidate keys, read with python:
+      ['spec','rules','module','screen','transform_tasks_in_corpus','adoption','declared_limits','wider_than_the_disposition_wording_declared']
+      — 'adopted' in v5_candidate: False, 'adopted_by' in v5_candidate: False;
+      v5_candidate.adoption.payload_echo = "ADJUDICATED BY THE DESIGN SEAT FROM THE SCREEN (not
+      adopted here)".
+    REASONING:
+      Recomputed the key list from the JSON rather than trusting the quote. No v5-adoption entry
+      exists and no v5 `adopted` field exists; the 'one RESULTS entry' instruction collides with
+      nothing.
+
+[V3.7]  CHECKER resolves=False  severity=wording
+  LOCATION: Design block, final ordering sentence.
+  BLOCK SAYS:
+    "Order: after the Stage 1b entry, before idling" — the block places itself after a Stage 1b
+    entry.
+  RECORD SAYS:
+    No Stage 1b entry exists at HEAD. `grep -i "stage 1b" RESULTS.md` returns only forward
+    references inside the two 2026-09-11 entries: line 145 "the anchor `ADDENDUM-k1 STAGE 1b — ±
+    DIAGNOSTIC` does not yet exist"; line 184 "§4 step 3 (the ± reads and the STAGE 1b entry)"
+    under "**Not done, by the STOP.**"; line 447 "the sign-set widening, the 1b analyzer and
+    Stage 1b (§4 steps 2–3)" under "**Not done here.**"; line 53 the PI routing block's step 3.
+    HANDOFF-2026-09-13-design.md §1 also records "LOCK-k | does not exist; waits on Stage 1b"
+    and §0.3 "Nothing ran after Stage 1."
+  CHECKER NOTE:
+    The referent names an entry that does not exist in the record at HEAD; the record explicitly
+    states its anchor "does not yet exist" and that Stage 1b is "Not done". Reported as a fact
+    about HEAD. Whether this is a defect or a contingent ordering instruction for work not yet
+    run is not mine to adjudicate.
+  REFUTER [Refuter — leniency lens on GROUP V3 (wiring, adoption state,] resolves=False overturned=False
+    EVIDENCE:
+      `grep -n -i "stage 1b" RESULTS.md` → exactly four hits, all inside the two 2026-09-11
+      entries, none an entry anchor: line 53 (PI routing block, "Stage 1 texts and the STAGE 1b
+      entry"); line 145 "the anchor `ADDENDUM-k1 STAGE 1b — ± DIAGNOSTIC` does not yet exist";
+      line 184, under "**Not done, by the STOP.**", "§4 step 3 (the ± reads and the STAGE 1b
+      entry). No model forward ran in this session."; line 447 "the sign-set widening, the 1b
+      analyzer and Stage 1b (§4 steps 2–3)". HANDOFF-2026-09-13-design.md:50 "| LOCK-k | does
+      not exist; waits on Stage 1b |"; :28 "Nothing ran after Stage 1."; :129-130 "1b analyzer +
+      battery, Stage 1b reads (~52 min), entry `ADDENDUM-k1 STAGE 1b — +/0 DIAGNOSTIC`. Then
+      idle." HANDOFF-2026-09-12.md:122 names the same entry as "`ADDENDUM-k1 STAGE 1b — ±
+      DIAGNOSTIC`".
+    REASONING:
+      I considered overturning this toward resolves=true, since the block states an ordering,
+      not an existence claim, and the design handoff §4 does queue exactly the sequence "Stage
+      1b entry ... Then idle". Three verified facts stopped me, all pointing the same way as the
+      checker. (i) RESULTS at HEAD contains no such entry and says so in its own words ("does
+      not yet exist", "Not done"). (ii) The entry's own NAME is not stable across the record:
+      09-12 calls it "± DIAGNOSTIC", 09-13 calls it "+/0 DIAGNOSTIC" (the v1.1 sign-set change),
+      so "the Stage 1b entry" does not pick out one named thing. (iii) Its precondition is unmet
+      — HANDOFF-2026-09-13-design.md:92 "ADDENDUM-k1 v1.1 (unrouted)" and §0 item 4 "a design
+      file in the PI's hands, not yet routed". Does not resolve against the record at HEAD; the
+      checker's severity=wording is if anything generous, not lenient.
+  REFUTER [refuter — too strict (re-testing every resolves=false, and t] resolves=True overturned=True
+    EVIDENCE:
+      The ordering target is a named, scheduled entry in the record: ADDENDUM-k1.md:202 "One
+      RESULTS entry, anchor `ADDENDUM-k1 STAGE 1b — +/0 DIAGNOSTIC`";
+      HANDOFF-2026-09-13-design.md:129-130 "...1b analyzer + battery, Stage 1b reads (~52 min),
+      entry `ADDENDUM-k1 STAGE 1b — +/0 DIAGNOSTIC`. Then idle." — which is verbatim the block's
+      'after the Stage 1b entry, before idling'; RESULTS.md:52-53 (PI routing block, step 3)
+      "then the ± reads on the 48 Stage 1 texts and the STAGE 1b entry"; RESULTS.md:145,184,447
+      carry it as pending. Convention proof that a routing order may name a not-yet-written
+      entry: the same 2026-09-11 routing block, RESULTS.md:143-147, ordered "PI word for the
+      STAGE 1 entry: write and commit it ... Anchor exactly `PROPOSAL-k STAGE 1 — CHANNEL
+      STUDY`" before that entry existed; it was then written (RESULTS.md:204, commit 7742e2c).
+    REASONING:
+      The checker required the target of a forward ordering instruction to already exist at
+      HEAD. The block asserts no existence claim — it places itself in a queue — and the
+      repository's own routing convention names pending entries by anchor. The referent
+      identifies a defined, scheduled entry, so it resolves. Banked, not adjudicated: the
+      anchor's name is inconsistent across the record — RESULTS.md:145 reads `ADDENDUM-k1 STAGE
+      1b — ± DIAGNOSTIC` while ADDENDUM-k1.md:202 and HANDOFF-2026-09-13-design.md:130 read `—
+      +/0 DIAGNOSTIC`. The block names no anchor, so this is not a defect in the block.
+
+[V3.8]  CHECKER resolves=True  severity=clean
+  LOCATION: Design block, sentence 1 ("design adjudication from 166f8ff's screen") and sentence 3.
+  BLOCK SAYS:
+    "166f8ff's screen" / "the 166f8ff entry" — the block cites commit 166f8ff as the source of
+    the v5 screen and of the two declared changes.
+  RECORD SAYS:
+    `git show --stat 166f8ff` → commit 166f8ffa5b9daff0c66ab1f50ae303d80a363338, Jason Dwyer,
+    Tue Sep 8 18:40:24 2026 -0400, subject "Design dispositions 2026-09-08 applied (nothing run,
+    no bar): ... (2) content-class v5 CANDIDATE built (valence_core/e2d/contentclass_v5.py;
+    v3/v4 untouched; audit v3 still routes through v4) and blind-screened over e2a, e2b, e2d and
+    the 56 format sessions ...". Ten files, +1140/-8: RESULTS.md (+109),
+    data/configs/contentclass_candidate.json (+123), data/e2d/contentclass_screen_v5.json (+453,
+    new), results/raw/2026-09-08_dispositions_valuescheck.txt (+97, new),
+    results/raw/2026-09-08_e2d_closure_verify3_at_HEAD.txt (+36, new),
+    results/raw/2026-09-08_e2d_contentclass_screen_v5.txt (+42, new),
+    scripts/e2d_closure_verify3.py (15 changed), scripts/e2d_contentclass_screen_v5.py (+146,
+    new), valence_core/e2d/contentclass_v5.py (+118, new), valence_core/formats/recon.py (9
+    changed). Its RESULTS entry is at RESULTS.md:899-999, anchor "2026-09-08 — **DESIGN
+    DISPOSITIONS 2026-09-08 (post-format-recon) APPLIED — nothing run, no bar set.**"
+  CHECKER NOTE:
+    The commit exists, carries the v5 candidate module, its screen driver, the screen artifact
+    and raw, and the RESULTS entry that declares the two wiring changes. The screen it carries
+    is the one the block calls "166f8ff's screen".
+  REFUTER [Refuter — leniency lens on GROUP V3 (wiring, adoption state,] resolves=True overturned=False
+    EVIDENCE:
+      `git show --stat 166f8ff` → commit 166f8ffa5b9daff0c66ab1f50ae303d80a363338, Jason Dwyer,
+      Tue Sep 8 18:40:24 2026 -0400; ten files, "1140 insertions(+), 8 deletions(-)"; per-file
+      counts as the checker gave them, all re-read from the stat: RESULTS.md 109,
+      data/configs/contentclass_candidate.json 123, data/e2d/contentclass_screen_v5.json 453,
+      results/raw/2026-09-08_dispositions_valuescheck.txt 97,
+      results/raw/2026-09-08_e2d_closure_verify3_at_HEAD.txt 36,
+      results/raw/2026-09-08_e2d_contentclass_screen_v5.txt 42, scripts/e2d_closure_verify3.py
+      15, scripts/e2d_contentclass_screen_v5.py 146, valence_core/e2d/contentclass_v5.py 118,
+      valence_core/formats/recon.py 9. Subject line carries "content-class v5 CANDIDATE built
+      ... and blind-screened over e2a, e2b, e2d and the 56 format sessions". Entry anchor at
+      RESULTS.md:899 "2026-09-08 — **DESIGN DISPOSITIONS 2026-09-08 (post-format-recon) APPLIED
+      — nothing run, no bar set. ...**"; next entry anchor at RESULTS.md:1001, so the entry
+      occupies 899-999.
+    REASONING:
+      Re-ran the stat and checked every number rather than accepting the list. All ten paths and
+      all ten counts match, as do the totals and the entry's line span. The commit does carry
+      the v5 module, its screen driver, the screen artifact
+      (data/e2d/contentclass_screen_v5.json) and the raw, so "166f8ff's screen" and "the 166f8ff
+      entry" both point at real objects. Checker's verdict stands.
+  REFUTER [refuter — too strict (re-testing every resolves=false, and t] resolves=True overturned=False
+    EVIDENCE:
+      `git show --stat 166f8ff` -> 166f8ffa5b9daff0c66ab1f50ae303d80a363338, Jason Dwyer, Tue
+      Sep 8 18:40:24 2026 -0400; subject includes "(2) content-class v5 CANDIDATE built
+      (valence_core/e2d/contentclass_v5.py; v3/v4 untouched; audit v3 still routes through v4)
+      and blind-screened over e2a, e2b, e2d and the 56 format sessions". Ten files, 1140
+      insertions / 8 deletions, including valence_core/e2d/contentclass_v5.py (+118, new),
+      scripts/e2d_contentclass_screen_v5.py (+146, new), data/e2d/contentclass_screen_v5.json
+      (+453, new), results/raw/2026-09-08_e2d_contentclass_screen_v5.txt (+42, new), RESULTS.md
+      (+109). Its RESULTS entry anchor is at RESULTS.md:899 "2026-09-08 — **DESIGN DISPOSITIONS
+      2026-09-08 (post-format-recon) APPLIED — nothing run, no bar set."
+    REASONING:
+      Reproduced the stat and the entry anchor line myself. The commit carries the v5 candidate,
+      its screen driver, artifact and raw, and the entry that declares the two wiring changes.
+      Both citations in the block resolve.
+
+[V3.9]  CHECKER resolves=True  severity=clean
+  LOCATION: Design block, sentence 3.
+  BLOCK SAYS:
+    "exclusion-bearing classes unchanged".
+  RECORD SAYS:
+    valence_core/e2d/contentclass_v5.py:44 `EXCLUSION_BEARING = V4.EXCLUSION_BEARING` (v4 line
+    61: `("null_response", "stuck_attractor", "preamble_without_content")`). classify_v5's
+    exclusion branch is detector-for-detector identical to classify_v4's:
+    `V4.is_null_response_v4(text, task_text)` → null_response/exclusion;
+    `V3.is_stuck_attractor(text, earlier)` → stuck_attractor/exclusion; `V3.is_preamble(text,
+    task_text)` → preamble_without_content/exclusion (v5 lines in `classify_v5`; v4 lines
+    169-174). v5's only additions are advisory: ADVISORY = ("task_echo", "payload_echo",
+    "wrong_task") vs v4's ("task_echo", "wrong_task"). RESULTS.md:924 "Two rules, both
+    ADVISORY"; contentclass_v5.py docstring: "Two rules, BOTH ADVISORY; nothing
+    exclusion-bearing changes".
+  CHECKER NOTE:
+    Verified in code, not only in prose: same three classes, same three detectors, same
+    precedence positions. payload_echo is inserted between ECHO and WRONG_TASK, both advisory.
+  REFUTER [Refuter — leniency lens on GROUP V3 (wiring, adoption state,] resolves=True overturned=False
+    EVIDENCE:
+      Code: contentclass_v5.py:44 `EXCLUSION_BEARING = V4.EXCLUSION_BEARING`
+      (contentclass_v4.py:61 `("null_response", "stuck_attractor",
+      "preamble_without_content")`); v5 line 45 `ADVISORY = ("task_echo", "payload_echo",
+      "wrong_task")` vs v4 line 62 `("task_echo", "wrong_task")`. classify_v5's exclusion branch
+      is detector-for-detector and order-for-order identical to classify_v4's
+      (V4.is_null_response_v4 → null_response/exclusion; V3.is_stuck_attractor →
+      stuck_attractor/exclusion; V3.is_preamble → preamble_without_content/exclusion), with
+      payload_echo inserted between the two advisory tests. EMPIRICAL (mine, not the checker's):
+      ran classify_v4 vs classify_v5 over every round in the screen's own loaders — 912 e2d +
+      3,601 archive = 4,513 rounds — exclusion hits 129 vs 129, per-round exclusion mismatches
+      0; exactly 21 rounds change (label, standing) at all, which is 8+6+7, the payload_echo
+      hits on e2d/e2a/e2b. Artifact corroboration, data/e2d/contentclass_screen_v5.json
+      v4_by_class vs v5_by_class: e2d preamble 37/37, stuck 3/3, null 13/13; e2a 5/5, 11/11,
+      13/13; e2b null 25/25, stuck 15/15, preamble 1/1; format none either side.
+    REASONING:
+      The checker read the code; I also ran it, because "unchanged" is exactly the kind of claim
+      that a reading can miss (a changed threshold import, a precedence inversion, a different
+      null detector). Zero per-round exclusion mismatches over 4,513 rounds, and the only label
+      changes are the new advisory. v5 also does not redefine NOVELTY_FLOOR or
+      NULL_RESIDUAL_WORDS — it has no thresholds of its own; it imports v4's. Resolves, and now
+      on stronger evidence than the checker had.
+  REFUTER [refuter — too strict (re-testing every resolves=false, and t] resolves=True overturned=False
+    EVIDENCE:
+      valence_core/e2d/contentclass_v5.py:44 `EXCLUSION_BEARING = V4.EXCLUSION_BEARING`;
+      contentclass_v4.py:61 `EXCLUSION_BEARING = ("null_response", "stuck_attractor",
+      "preamble_without_content")`. classify_v5 (v5:102-107) and classify_v4 (v4:169-174) run
+      the identical exclusion branch in the identical order: `V4.is_null_response_v4` ->
+      null_response/exclusion, `V3.is_stuck_attractor` -> stuck_attractor/exclusion,
+      `V3.is_preamble` -> preamble_without_content/exclusion. v5's only additions are advisory:
+      v5:45 ADVISORY = ("task_echo", "payload_echo", "wrong_task") vs v4:62 ("task_echo",
+      "wrong_task"); v5:29-31 "Precedence: NULL -> STUCK -> PREAMBLE -> ECHO -> PAYLOAD_ECHO ->
+      WRONG_TASK ... Thresholds of v4 untouched."
+    REASONING:
+      Checked in code line by line rather than in prose. Same three classes, same three
+      detectors, same positions; payload_echo is inserted between two advisory classes.
+      Resolves.
+
+[V3.10]  CHECKER resolves=True  severity=clean
+  LOCATION: Design block, sentence 3.
+  BLOCK SAYS:
+    "v3/v4 frozen".
+  RECORD SAYS:
+    `git diff --stat a49bc9b HEAD -- valence_core/e2d/contentclass.py
+    valence_core/e2d/contentclass_v4.py valence_core/e2d/audit_v3.py` returns empty: all three
+    unchanged since the 2026-09-06 adoption commit. contentclass.py's last commit is 1223751
+    ("CANDIDATE, NOT ADOPTED"), contentclass_v4.py's and audit_v3.py's is a49bc9b. `git status
+    --porcelain valence_core/ scripts/ data/` is empty — no uncommitted modification to any of
+    them. contentclass_v5.py imports both without modifying either (lines 39-40), as its
+    docstring and RESULTS.md:920-922 state.
+  CHECKER NOTE:
+    Frozen in fact at HEAD, both in git history and in the working tree.
+  REFUTER [Refuter — leniency lens on GROUP V3 (wiring, adoption state,] resolves=True overturned=False
+    EVIDENCE:
+      `git diff --stat a49bc9b HEAD -- valence_core/e2d/contentclass.py
+      valence_core/e2d/contentclass_v4.py valence_core/e2d/audit_v3.py` → empty output (no
+      change to any of the three since the 2026-09-06 adoption commit). `git log -1 --format='%h
+      %s'` per file: contentclass.py → 1223751 "PART C: content-class spec draft + overbreadth
+      screen. CANDIDATE, NOT ADOPTED."; contentclass_v4.py → a49bc9b; audit_v3.py → a49bc9b.
+      `git status --porcelain valence_core/ scripts/ data/` → empty (no uncommitted modification
+      in the working tree). contentclass_v5.py:39-40 imports both (`from . import contentclass
+      as V3`, `from . import contentclass_v4 as V4`) and writes to neither.
+    REASONING:
+      Tested "frozen" by diffing rather than by reading prose, in both places it could fail: git
+      history (empty diff since a49bc9b) and the working tree (clean porcelain). Also checked
+      that the v5 module only imports the two, never monkey-patches or rebinds anything in them
+      — its only cross-module writes are none; `EXCLUSION_BEARING = V4.EXCLUSION_BEARING` is a
+      read. Resolves.
+  REFUTER [refuter — too strict (re-testing every resolves=false, and t] resolves=True overturned=False
+    EVIDENCE:
+      `git diff --stat a49bc9b HEAD -- valence_core/e2d/contentclass.py
+      valence_core/e2d/contentclass_v4.py valence_core/e2d/audit_v3.py` returns nothing. Last
+      commits: contentclass.py -> 1223751 "PART C: content-class spec draft + overbreadth
+      screen. CANDIDATE, NOT ADOPTED."; contentclass_v4.py and audit_v3.py -> a49bc9b
+      "Content-class spec ADJUDICATED (AMENDMENT 2 (iii))". `git status --porcelain` lists only
+      untracked .md files and one untracked results/raw txt — no modified tracked file under
+      valence_core/, scripts/ or data/. contentclass_v5.py:39-40 imports both (`from . import
+      contentclass as V3`, `from . import contentclass_v4 as V4`) without modifying either.
+    REASONING:
+      Re-ran the diff and the status myself. Frozen in history and in the working tree; the
+      block's 'v3/v4 frozen' resolves.
+
+[V3.11]  CHECKER resolves=True  severity=clean
+  LOCATION: Design block, sentence 3.
+  BLOCK SAYS:
+    "`adopted` fields name this block" — presupposes `adopted`-family fields that a v5 adoption
+    would fill.
+  RECORD SAYS:
+    data/configs/contentclass_candidate.json carries top-level `adopted` = true and `adopted_by`
+    = {entry: "CONTENT-CLASS SPEC — ADJUDICATED (AMENDMENT 2 (iii))", results_md: "RESULTS.md,
+    2026-09-06 (Code stamp); design adjudication authored PI date 2026-09-05", ratified: "PI,
+    2026-09-05 (PI clock)", scope: "PROSPECTIVE ONLY: ..."} — these name the v4 adoption entry.
+    The `v5_candidate` sub-object has no `adopted` or `adopted_by` key; its standing is carried
+    as `v5_candidate.rules.standing.payload_echo` = "advisory (adoption: design seat, from this
+    screen)" and `v5_candidate.adoption` = {wrong_task_pool_by_task_id: "... pending the design
+    seat's word", payload_echo: "... (not adopted here)"}. The same standing string is emitted
+    by scripts/e2d_contentclass_screen_v5.py:76.
+  CHECKER NOTE:
+    The `adopted`/`adopted_by` fields exist at the top level of the candidate JSON and currently
+    name the 2026-09-06 v4 entry; the v5_candidate block has no such field yet. Reported as the
+    state the instruction would write into; the block does not say which fields it means and I
+    do not adjudicate that.
+  REFUTER [Refuter — leniency lens on GROUP V3 (wiring, adoption state,] resolves=True overturned=False
+    EVIDENCE:
+      data/configs/contentclass_candidate.json top-level keys include `adopted` (True) and
+      `adopted_by` = {entry: "CONTENT-CLASS SPEC — ADJUDICATED (AMENDMENT 2 (iii))", results_md:
+      "RESULTS.md, 2026-09-06 (Code stamp); design adjudication authored PI date 2026-09-05",
+      ratified: "PI, 2026-09-05 (PI clock)", scope: "PROSPECTIVE ONLY: ..."}. v5_candidate has
+      no `adopted`/`adopted_by` key (verified programmatically). Its standing strings are
+      v5_candidate.rules.standing = {"payload_echo": "advisory (adoption: design seat, from this
+      screen)", "wrong_task": "advisory"} and v5_candidate.adoption =
+      {wrong_task_pool_by_task_id: "... pending the design seat's word", payload_echo: "... (not
+      adopted here)"}. The identical standing string is emitted by the screen driver at
+      scripts/e2d_contentclass_screen_v5.py:76 ("standing": {"payload_echo": "advisory
+      (adoption: design seat, from this screen)", "wrong_task": "advisory"}) and so is written
+      into data/e2d/contentclass_screen_v5.json.rules.standing.
+    REASONING:
+      Verified the field names by dumping the JSON, and verified the screen-driver line number
+      the checker cited (76, exact). An `adopted`-family does exist in the candidate artifact,
+      so the block's presupposition has a referent. I note, without adjudicating, the ambiguity
+      the checker flagged and its one hazard, which I confirmed on the file: the ONLY existing
+      `adopted`/`adopted_by` are top-level and name the 2026-09-06 v4 entry, while v5_candidate
+      has none — so "`adopted` fields name this block" is satisfiable only by creating new
+      fields inside v5_candidate; re-pointing the existing top-level pair at a v5 entry would
+      overwrite the v4 adoption record that V3.5 turns on. Resolves as a referent.
+  REFUTER [refuter — too strict (re-testing every resolves=false, and t] resolves=True overturned=False
+    EVIDENCE:
+      data/configs/contentclass_candidate.json, read with python: top-level `adopted` = True and
+      `adopted_by` = {entry: "CONTENT-CLASS SPEC — ADJUDICATED (AMENDMENT 2 (iii))", results_md:
+      "RESULTS.md, 2026-09-06 (Code stamp); design adjudication authored PI date 2026-09-05",
+      ratified: "PI, 2026-09-05 (PI clock)", scope: "PROSPECTIVE ONLY: ..."} — naming the v4
+      adoption entry. v5_candidate has no `adopted`/`adopted_by` key; its standing is carried as
+      v5_candidate.rules.standing.payload_echo = "advisory (adoption: design seat, from this
+      screen)" and v5_candidate.adoption = {wrong_task_pool_by_task_id: "... pending the design
+      seat's word", payload_echo: "... (not adopted here)"}.
+    REASONING:
+      Reproduced the field inventory from the JSON. The `adopted`-family fields exist at top
+      level and currently name the 2026-09-06 v4 entry; the v5_candidate block has none yet. The
+      block does not say which fields it means, and per rule 5 that is not mine to adjudicate —
+      as a precondition the referent resolves.
+
+====================================================================================================
+CODE RE-VERIFICATION (trap 25). Every finding below re-checked by Code against the file.
+Stamp: date -u -> Thu Sep 17 20:16:13 UTC 2026.
+====================================================================================================
+
+[V1.9 / V2.2 / V2.7 / V2.9] CONFIRMED by Code. data/e2d/contentclass_screen_v5.json per_corpus:
+  payload_echo.hits  -> e2d 8, e2a 6, e2b 7, format 3.
+  wrong_task.removed_by_id_fix (list lengths) -> e2d 1, e2a 0, e2b 7, format 2.
+  The block states the series in the order e2a/e2b/e2d/format, which asserts payload_echo
+  e2a=8 e2b=6 e2d=7 and wrong_task e2a=1 e2b=0 e2d=7. Three of four corpora are mis-paired in
+  each series; only format lands in both. The multisets {8,6,7,3} and {1,0,7,2} are correct; the
+  pairing is not. Root cause is one order mismatch, and it is inherited: the entry's own headline
+  prose (RESULTS.md:902-905) lists "e2a, e2b, e2d and the 56 format sessions" and then gives
+  table-order figures without relabelling. The entry disambiguates two lines below with its
+  table; the block carries no table.
+
+[V2.3] CONFIRMED by Code. 24 payload_echo hits across the four corpora; 22 carry
+  verbatim_including_punctuation=true; TWO do not:
+    e2d: "The meeting has been moved to 3pm!"      (exclamation for the period)
+    e2b: **The meeting has been moved to 3pm!**    (emphasis marks plus exclamation)
+  The block's "every one the payload returned unchanged" is contradicted by the entry it cites,
+  which carves both out and routes the punctuation question to the design seat
+  (RESULTS.md:950-954). This block is that seat's adjudication and does not mention them.
+
+[V2.13 / V3.2] CONFIRMED by Code. The count "two" resolves; the location does not. Change 1 is in
+  valence_core/e2d/audit_v3.py (the classify swap). Change 2 is in a CALLER:
+  scripts/format_recon.py:155-157 is still the v4 construction --
+    "def others_factory(tasks): pool = all_paraphrases(tasks); return lambda task_text:
+     [t for t in pool if t != task_text]"
+  -- a text comparison, not an id filter, and not part of audit v3's routing. The entry's sentence
+  exists precisely to say so ("two changes, not one").
+
+[V3.4] CONFIRMED by Code, and it is the most consequential positive finding. v5's advisory routing
+  is ALREADY wired, by subclass, deliberately leaving audit_v3.py unmodified:
+  valence_core/k/sessions.py:40 "class AuditV3WithV5Advisories(AuditV3)", :49 "V5.classify_v5(...)",
+  :69 "V5.others_by_task_id(task_text, pool_by_id, id_of)"; instantiated in scripts/k1_stage1.py.
+  Both of the entry's declared changes therefore already exist in the k path, and that path scored
+  the committed PROPOSAL-k Stage 1 campaign (data/k/k1_sessions.json).
+
+[V3.5] ANSWERED by Code from the record. data/configs/contentclass_candidate.json:
+  version = "content-class-draft-v3 -> adopted as content-class-v4 rev 3 (echo guard; widened
+  null: declining-predicate refusal shape, predicate-only removal)", adopted = true.
+  The adopted content class is v4. Code's committed HANDOFF-2026-09-12.md ("v4 adopted (audit v3
+  of record)") matches the record; HANDOFF-2026-09-13-design.md s1 ("v3 adopted ...; v4 guard
+  blind-screened") does not. The design block under check is unaffected -- it says "v3/v4 frozen"
+  and treats v5 as candidate, which is correct.
+
+[V1.7] CONFIRMED by Code. No v5-scoped field spelled `adopted` exists on disk; the only fields
+  spelled adopted/adopted_by in data/configs/contentclass_candidate.json carry the v4 adjudication
+  of 2026-09-05/06. The v5-scoped field is spelled `adoption`.
+
+[V3.7] CONFIRMED by Code as a fact about HEAD: no Stage 1b entry exists, and the record says so in
+  its own words. Whether a contingent ordering instruction is a defect is not Code's to adjudicate.

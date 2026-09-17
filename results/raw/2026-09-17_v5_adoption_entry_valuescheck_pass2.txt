@@ -1,0 +1,3088 @@
+RAW RECORD — values-check PASS 2 of the CONTENT-CLASS v5 ADOPTED entry, before commit
+Run 2026-09-17, workflow wf_729dcc68-cd8; three adversarial lenses; 3 agents, 0 errors.
+Pass 1 (wf_ca6d745e-7e3) returned 193 claims / 29 failing; its raw is
+results/raw/2026-09-17_v5_adoption_entry_valuescheck.txt. This pass checks the redraft.
+
+TOTALS: claims 283  failing 35
+====================================================================================================
+
+####################################################################################################
+LENS FIG — 108 claims, 11 failing
+####################################################################################################
+
+[FIG.1] holds=True  severity=clean
+  CLAIM:
+    Header: "CONTENT-CLASS v5 ADOPTED, advisory only (DESIGN BLOCK v1.1, design seat, PI date
+    2026-09-17)"
+  EVIDENCE:
+    valence_core/e2d/contentclass_v5.py:1-2 header 'ADOPTED, ADVISORY ONLY (DESIGN BLOCK v1.1,
+    design seat, PI date 2026-09-17...)'; SPEC_VERSION (line 48) = 'content-class-v5 ADOPTED
+    advisory-only (DESIGN BLOCK v1.1, PI date 2026-09-17): ...'
+  NOTE:
+    Both the module header and SPEC_VERSION carry the ADOPTED/advisory-only wording and the
+    2026-09-17 PI date.
+
+[FIG.2] holds=True  severity=clean
+  CLAIM:
+    "narrows payload_echo to VERBATIM — whitespace-normalised, punctuation and markup INCLUDED —
+    replacing the candidate's word-sequence rule"
+  EVIDENCE:
+    git diff valence_core/e2d/contentclass_v5.py: is_payload_echo return line changes from
+    `V3._words(body) == V3._words(payload_of(task_text))` to `_ws(body) ==
+    _ws(payload_of(task_text))`; `_ws` = re.sub(r"\s+", " ", s).strip()
+  NOTE:
+    The old rule was word-sequence (V3._words); the new one is whitespace-normalised string
+    identity, so punctuation/markup are retained in the comparison.
+
+[FIG.3] holds=True  severity=clean
+  CLAIM:
+    "the two hits the 166f8ff screen flagged for the design seat become transforms, not hits (24
+    → 22)"
+  EVIDENCE:
+    data/e2d/contentclass_screen_v5.json: exactly 2 of 24 every_hit records carry
+    differs_only_in_punctuation_or_emphasis=true (e2d '"The meeting has been moved to 3pm!"',
+    e2b '**The meeting has been moved to 3pm!**'); 8+6+7+3 = 24, 7+6+6+3 = 22; commit 166f8ff
+    exists (166f8ffa5b9d...) and is the commit that added that artifact
+  NOTE:
+    Recounted independently from every_hit, not from the per-corpus counter.
+
+[FIG.4] holds=True  severity=clean
+  CLAIM:
+    "Both declared wiring changes made: the classify swap in audit_v3.py and the caller's pool
+    builder in scripts/format_recon.py"
+  EVIDENCE:
+    git diff valence_core/e2d/audit_v3.py: `- label, standing = V4.classify_v4(...)` / `+ label,
+    standing = V5.classify_v5(...)`; git diff scripts/format_recon.py: others_factory replaced
+    by pool_by_id/id_of + V5.others_by_task_id closure
+  NOTE:
+    Two changes, in the two named files.
+
+[FIG.5] holds=True  severity=clean
+  CLAIM:
+    "asserted at AuditV3.check level over all 5,044 rounds of all four corpora"
+  EVIDENCE:
+    My own re-run of scripts/e2d_v5_exclusion_parity.py: e2d 912 + e2a 1894 + e2b 1707 + format
+    531 = 5044; script line 86 compares `.exclusion` from AuditV3.check vs
+    AuditV3RoutingV4.check
+  NOTE:
+    Sum recomputed; the loop iterates every row of each corpus, not the offered subset.
+
+[FIG.6] holds=True  severity=unchangedness
+  CLAIM:
+    "v3 and v4 frozen"
+  EVIDENCE:
+    git status --porcelain valence_core/e2d/contentclass.py valence_core/e2d/contentclass_v4.py
+    returns empty (both unchanged from HEAD 16705a2)
+  NOTE:
+    Verified by diffing, per rule 5.
+
+[FIG.7] holds=True  severity=figure
+  CLAIM:
+    "(Stamp verified at write time: date -u → Thu Sep 17 21:38:20 UTC 2026.)"
+  EVIDENCE:
+    Session date is 2026-09-17; the four raws this entry cites are stamped 21:36:04, 21:36:28,
+    21:37:01 and 21:37:19 UTC on 2026-09-17, all earlier than 21:38:20
+  NOTE:
+    The stamp itself is not re-verifiable after the fact, but it is consistent with and later
+    than every raw the entry links.
+
+[FIG.8] holds=True  severity=clean
+  CLAIM:
+    Path: results/raw/2026-09-17_contentclass-v5-adoption_referent_check.txt
+  EVIDENCE:
+    File exists, 162,293 bytes, 2,165 lines; line 1 'RAW RECORD — content-class v5 ADOPTION
+    design block, referent check against HEAD 16705a2'
+  NOTE:
+
+
+[FIG.9] holds=True  severity=clean
+  CLAIM:
+    "37 referents"
+  EVIDENCE:
+    Recounted from the body: 37 lines matching '^[V<g>.<n>] CHECKER resolves='; group headers
+    read 'GROUP V1 — 11 referents' (line 13), 'V2 — 15' (711), 'V3 — 11' (1456); 11+15+11 = 37;
+    matches the TOTALS line 9
+  NOTE:
+    Recounted from the body, not taken from the TOTALS line.
+
+[FIG.10] holds=True  severity=clean
+  CLAIM:
+    "10 unresolved"
+  EVIDENCE:
+    Recounted: 10 referents carry 'CHECKER resolves=False' (V1.7, V1.9, V2.2, V2.3, V2.7, V2.9,
+    V2.13, V3.2, V3.5, V3.7); 27 carry resolves=True; 10+27 = 37
+  NOTE:
+    The raw's own label is 'checker-unresolved'; the entry's 'unresolved' is the checker-stage
+    count, before the 6 refuter overturns.
+
+[FIG.11] holds=False  severity=figure
+  CLAIM:
+    "75 refuter verdicts"
+  EVIDENCE:
+    The raw's TOTALS line 9 says 'refuter verdicts 75', but the body contains 74: `grep -c
+    'REFUTER \['` = 74, and per group V1 22, V2 30, V3 22 (= 2 lenses x 11/15/11 referents) = 74
+  NOTE:
+    The entry reproduces the raw's own TOTALS line, but recomputing from the body gives 74, one
+    fewer. The raw's header records an OAuth 401 that killed refute:V2:too-lenient on the first
+    pass ('8/9 then; 9/9 on resume'), which is the likely source of the off-by-one; either way
+    the figure as printed does not recompute.
+
+[FIG.12] holds=True  severity=clean
+  CLAIM:
+    "6 overturned by the refuter lenses"
+  EVIDENCE:
+    Recounted: 6 lines carry overturned=True, on 6 distinct referents — V1.7, V2.9, V2.13, V3.2,
+    V3.4, V3.7
+  NOTE:
+    Five of the six were checker resolves=False; V3.4 was checker resolves=True.
+
+[FIG.13] holds=True  severity=clean
+  CLAIM:
+    "the re-verification section carries six findings CONFIRMED by Code and one ANSWERED"
+  EVIDENCE:
+    results/raw/2026-09-17_contentclass-v5-adoption_referent_check.txt:2113-2165, section 'CODE
+    RE-VERIFICATION (trap 25)': [V1.9/V2.2/V2.7/V2.9] CONFIRMED, [V2.3] CONFIRMED, [V2.13/V3.2]
+    CONFIRMED, [V3.4] CONFIRMED, [V3.5] ANSWERED, [V1.7] CONFIRMED, [V3.7] CONFIRMED = 6
+    CONFIRMED + 1 ANSWERED
+  NOTE:
+    Counted as blocks; the first block covers four referent ids.
+
+[FIG.14] holds=True  severity=clean
+  CLAIM:
+    "the count of Code-confirmed findings in the raw is six"
+  EVIDENCE:
+    Same section: six blocks headed 'CONFIRMED by Code' (see FIG.13)
+  NOTE:
+    Consistent with FIG.13; the entry's contrast with the block's 'All four' is arithmetically
+    well-founded on the raw.
+
+[FIG.15] holds=True  severity=clean
+  CLAIM:
+    "That raw renders no STOP verdict of its own and no committed entry records one"
+  EVIDENCE:
+    grep 'STOP' on the raw returns 5 hits, all at lines 1787/1800/1818/1840/1854 and all
+    referring to the ADDENDUM-k1 STOP entry in RESULTS.md, none a verdict of this check;
+    RESULTS.md contains no v5-adoption entry (only line 920 'Item 2 — content-class v5,
+    CANDIDATE')
+  NOTE:
+
+
+[FIG.16] holds=False  severity=quotation
+  CLAIM:
+    Quotation of the block's cover line: "All four Code-confirmed findings accepted; nothing
+    overturned by design"
+  EVIDENCE:
+    No file under the repo contains this string; `grep -rl 'DESIGN BLOCK v1.1'` returns only
+    code/config/raw files (audit_v3.py, contentclass_v5.py, format_recon.py,
+    e2d_contentclass_screen_v5.py, e2d_v5_exclusion_parity.py, the two data JSONs and three
+    raws) — no block document
+  NOTE:
+    Unverifiable, not disproved. The entry itself says the block text is not on disk; flagged
+    because the rules require every quotation to be checkable against a file.
+
+[FIG.17] holds=False  severity=quotation
+  CLAIM:
+    The §1 adjudication quoted in full ("payload_echo fires on a transform task answered with
+    its payload VERBATIM, whitespace-normalized, ... Class-level rule, not a string rule.")
+  EVIDENCE:
+    The second half is verbatim on disk: data/configs/contentclass_candidate.json
+    v5_candidate.adoption.boundary_adjudication = 'A punctuation or emphasis change to an
+    otherwise verbatim payload is a transform -- a minimal one -- and is NOT payload_echo; it
+    goes to the rule-25 read like any other advisory-borderline case. Class-level rule, not a
+    string rule.' The first sentence has no on-disk source
+  NOTE:
+    Unverifiable as a whole. Also: the entry spells 'whitespace-normalized' here while every
+    on-disk instance (contentclass_v5.py, the config, both screen artifacts) spells it
+    'whitespace-normalised', which the entry itself uses two lines later.
+
+[FIG.18] holds=True  severity=clean
+  CLAIM:
+    "The block text is not on disk"
+  EVIDENCE:
+    grep -rl 'DESIGN BLOCK v1.1' over the repo (excluding .git/__pycache__/jlens-qwen36) returns
+    11 files, all code, config or raw logs; no document carries the block
+  NOTE:
+
+
+[FIG.19] holds=True  severity=clean
+  CLAIM:
+    "five files" changed
+  EVIDENCE:
+    git diff --numstat: exactly 5 modified files — data/configs/contentclass_candidate.json
+    (13/7), scripts/e2d_contentclass_screen_v5.py (3/3), scripts/format_recon.py (13/2),
+    valence_core/e2d/audit_v3.py (13/7), valence_core/e2d/contentclass_v5.py (29/13)
+  NOTE:
+    The five named in the bullet are exactly the five modified files.
+
+[FIG.20] holds=False  severity=figure
+  CLAIM:
+    "two new" files
+  EVIDENCE:
+    The bullet names scripts/e2d_v5_exclusion_parity.py and data/e2d/v5_exclusion_parity.json.
+    git status also shows data/e2d/contentclass_screen_v5_adopted.json as new/untracked, plus
+    four new raws under results/raw/ dated 2026-09-17
+  NOTE:
+    At minimum three new committed-path artifacts come out of this work (the adopted screen
+    artifact is linked in the very next bullet). The heading also reads ambiguously as 'five
+    files [in total], two of them new', which the bullet contradicts: it enumerates seven files,
+    five modified and two new.
+
+[FIG.21] holds=True  severity=clean
+  CLAIM:
+    contentclass_v5.py: "header and SPEC_VERSION from CANDIDATE/PROSPECTIVE to ADOPTED
+    advisory-only"
+  EVIDENCE:
+    git diff: old header 'CANDIDATE ... PROSPECTIVE ONLY.' → 'ADOPTED, ADVISORY ONLY';
+    SPEC_VERSION 'content-class-v5 CANDIDATE ...' → 'content-class-v5 ADOPTED advisory-only ...'
+  NOTE:
+
+
+[FIG.22] holds=True  severity=clean
+  CLAIM:
+    contentclass_v5.py: "rule (b) restated to the verbatim boundary"
+  EVIDENCE:
+    git diff, docstring hunk at lines 20-33: the rule-(b) paragraph replaces 'Exact
+    word-sequence identity (case and punctuation ignored...)' with 'VERBATIM identity,
+    whitespace-normalised, punctuation and markup INCLUDED in the comparison...'
+  NOTE:
+
+
+[FIG.23] holds=True  severity=clean
+  CLAIM:
+    "a new _ws helper (whitespace normalisation only)"
+  EVIDENCE:
+    valence_core/e2d/contentclass_v5.py, added block: `def _ws(s): return re.sub(r"\s+", " ", s
+    or "").strip()` with docstring 'Nothing else is removed -- punctuation and markup stay in.'
+  NOTE:
+    Whitespace-only normalisation confirmed; no case-folding, no punctuation stripping.
+
+[FIG.24] holds=True  severity=clean
+  CLAIM:
+    "is_payload_echo now `_ws(body) == _ws(payload_of(task_text))`"
+  EVIDENCE:
+    valence_core/e2d/contentclass_v5.py, added line: `return _ws(body) ==
+    _ws(payload_of(task_text))` — character-for-character as quoted
+  NOTE:
+
+
+[FIG.25] holds=True  severity=unchangedness
+  CLAIM:
+    "after the same leading-label and quotation-mark stripping"
+  EVIDENCE:
+    git diff leaves `body = _strip_quotes(V4.strip_leading_label(text))` unchanged in the diff
+    context
+  NOTE:
+    Unchanged line confirmed in the diff context, not merely asserted.
+
+[FIG.26] holds=True  severity=clean
+  CLAIM:
+    audit_v3.py: "a contentclass_v5 import"
+  EVIDENCE:
+    git diff valence_core/e2d/audit_v3.py: `+from . import contentclass_v5 as V5`
+  NOTE:
+
+
+[FIG.27] holds=True  severity=clean
+  CLAIM:
+    audit_v3.py: "the call swapped V4.classify_v4 → V5.classify_v5"
+  EVIDENCE:
+    git diff audit_v3.py line 52-55: `- label, standing = V4.classify_v4(text, task_text,
+    earlier, other_tasks)` / `+ label, standing = V5.classify_v5(text, task_text, earlier,
+    other_tasks)` — one call site
+  NOTE:
+
+
+[FIG.28] holds=True  severity=clean
+  CLAIM:
+    audit_v3.py: "AUDIT_VERSION restated"
+  EVIDENCE:
+    git diff: AUDIT_VERSION changes from 'audit-v3 = e2b_audit_v2 + content-class-v4 (exclusion:
+    null/stuck/preamble; advisory: echo/wrong_task)' to '... + content-class-v5 ADVISORIES
+    (task_echo, payload_echo, wrong_task by task id) -- DESIGN BLOCK v1.1 2026-09-17'
+  NOTE:
+
+
+[FIG.29] holds=True  severity=clean
+  CLAIM:
+    "TWO docstring passages — the composition paragraph and the summary box"
+  EVIDENCE:
+    The audit_v3.py docstring diff touches exactly two blocks: the indented summary box (lines
+    7-9) and the single paragraph beginning 'A NEW module, per the amendment.' (lines 11-18),
+    which contains both the 'composes them ... contentclass_v5' sentence and the 'PROSPECTIVE
+    ONLY' sentence
+  NOTE:
+    The PROSPECTIVE-ONLY replacement sits inside the composition paragraph, so the count of two
+    holds rather than three.
+
+[FIG.30] holds=True  severity=clean
+  CLAIM:
+    "which had listed only task_echo and wrong_task as advisory where the code now emits three"
+  EVIDENCE:
+    Old summary box: '+ task_echo, wrong_task as ADVISORY flags' (2);
+    valence_core/e2d/contentclass_v5.py: ADVISORY = ("task_echo", "payload_echo", "wrong_task")
+    — 3 members
+  NOTE:
+    2 → 3 confirmed against the tuple, not the prose.
+
+[FIG.31] holds=True  severity=clean
+  CLAIM:
+    "its 'PROSPECTIVE ONLY' label is replaced by the claim that survives adoption (no committed
+    artifact is rescored)"
+  EVIDENCE:
+    git diff audit_v3.py: '- PROSPECTIVE ONLY: no committed artifact is rescored by this
+    module.' → '+ No committed artifact is rescored by this module: adoption changes what NEW
+    campaigns record, never a campaign already scored.'
+  NOTE:
+
+
+[FIG.32] holds=True  severity=clean
+  CLAIM:
+    format_recon.py: "an added contentclass_v5 import"
+  EVIDENCE:
+    git diff scripts/format_recon.py: `+from valence_core.e2d import contentclass_v5 as V5   #
+    noqa: E402`
+  NOTE:
+
+
+[FIG.33] holds=True  severity=clean
+  CLAIM:
+    format_recon.py others_factory was "the v4 text comparison `[t for t in pool if t !=
+    task_text]`"
+  EVIDENCE:
+    git diff scripts/format_recon.py removed lines: `pool = all_paraphrases(tasks)` / `return
+    lambda task_text: [t for t in pool if t != task_text]` — the quoted fragment is verbatim
+  NOTE:
+
+
+[FIG.34] holds=True  severity=clean
+  CLAIM:
+    "now builds pool_by_id/id_of from the corpus and returns a closure that calls
+    V5.others_by_task_id behind a rule-18 stop"
+  EVIDENCE:
+    scripts/format_recon.py:161-166: pool_by_id = {t['id']: list(t['paraphrases'])...}; id_of =
+    {p: t['id'] ...}; inner `others` raises SystemExit('task text not in the corpus (rule 18
+    pool hygiene): ...') then returns V5.others_by_task_id(task_text, pool_by_id, id_of)
+  NOTE:
+
+
+[FIG.35] holds=True  severity=clean
+  CLAIM:
+    contentclass_candidate.json: "v5_candidate.spec" changed
+  EVIDENCE:
+    git diff: v5_candidate.spec 'content-class v5 CANDIDATE (design dispositions 2026-09-08 item
+    2, PI stamp)...' → 'content-class v5 ADOPTED, ADVISORY ONLY (DESIGN BLOCK v1.1, design seat,
+    PI date 2026-09-17; replaces the 09-13 block)...'
+  NOTE:
+
+
+[FIG.36] holds=True  severity=clean
+  CLAIM:
+    "eight adoption fields naming this block and the PI's ratification"
+  EVIDENCE:
+    data/configs/contentclass_candidate.json v5_candidate.adoption has exactly 8 keys: status,
+    block, ratified, code_stamp, wrong_task_pool_by_task_id, payload_echo,
+    boundary_adjudication, adopted_content_class_of_record; .block names 'DESIGN BLOCK v1.1' and
+    .ratified = 'PI, 2026-09-17 (PI date; Jason confirms)'
+  NOTE:
+    Six of the eight are new; the other two (wrong_task_pool_by_task_id, payload_echo) existed
+    and were rewritten. The count of eight is the post-change field count, which is what the
+    sentence asserts.
+
+[FIG.37] holds=False  severity=gloss
+  CLAIM:
+    "the four candidate-era fields that still asserted the word-sequence rule as live
+    (rules.payload_echo, rules.standing.payload_echo, declared_limits[0],
+    wider_than_the_disposition_wording_declared[1]) marked SUPERSEDED"
+  EVIDENCE:
+    git diff data/configs/contentclass_candidate.json: only 2 of the 4 carry the token
+    SUPERSEDED — declared_limits[0] ('SUPERSEDED by DESIGN BLOCK v1.1 2026-09-17 s1, kept as the
+    candidate's declared limit: ...') and wider_than_the_disposition_wording_declared[1]
+    ('SUPERSEDED by DESIGN BLOCK v1.1 2026-09-17 s1: ...'). rules.payload_echo was rewritten to
+    the adopted rule text ('... REPLACES the candidate's word-sequence rule') and
+    rules.standing.payload_echo to 'advisory (ADOPTED, DESIGN BLOCK v1.1 2026-09-17)'
+  NOTE:
+    The count of four touched fields is right; 'marked SUPERSEDED' is right for two of them. The
+    other two were replaced outright, which is a different treatment (the superseded text is
+    preserved in the first pair and discarded in the second).
+
+[FIG.38] holds=False  severity=gloss
+  CLAIM:
+    That exactly four candidate-era fields needed the treatment
+  EVIDENCE:
+    data/configs/contentclass_candidate.json
+    v5_candidate.wider_than_the_disposition_wording_declared[2] is unchanged (byte-identical to
+    HEAD) and reads 'neither widening changes a screen figure on these corpora (only t06/t14 are
+    transforms either way; 22/24 hits verbatim modulo quotes or a label)'
+  NOTE:
+    Under the adopted boundary one of those two widenings is exactly what changed the figures
+    (24 → 22), so a fifth candidate-era field is left standing in contradiction with the
+    adoption fields in the same object. Not named in the entry.
+
+[FIG.39] holds=True  severity=clean
+  CLAIM:
+    "a values-check found them contradicting the adoption fields written into the same object"
+  EVIDENCE:
+    results/raw/2026-09-17_v5_adoption_entry_valuescheck.txt:1902-1968 records exactly this:
+    'Inside v5_candidate, the candidate-era rule text is left standing...', quoting
+    declared_limits[0] and rules.standing.payload_echo and calling it an 'internal contradiction
+    in a file the entry presents as the adoption record'
+  NOTE:
+    Supported by an on-disk raw from an earlier draft of this entry.
+
+[FIG.40] holds=True  severity=unchangedness
+  CLAIM:
+    "Top-level adopted/adopted_by stay as the v4 record of 2026-09-05/06"
+  EVIDENCE:
+    Python object comparison of the working-tree config against `git show HEAD:...` with
+    v5_candidate removed: equal. adopted = true; adopted_by.ratified = 'PI, 2026-09-05 (PI
+    clock)'; adopted_by.results_md = 'RESULTS.md, 2026-09-06 (Code stamp)...'
+  NOTE:
+    Both dates recomputed from the field values.
+
+[FIG.41] holds=True  severity=unchangedness
+  CLAIM:
+    "everything outside v5_candidate is byte-equal"
+  EVIDENCE:
+    Byte comparison of the working-tree file against `git show
+    HEAD:data/configs/contentclass_candidate.json`: the 9,569 bytes preceding the
+    '"v5_candidate"' key are identical in both, at the same offset; v5_candidate is the last
+    top-level key and the trailing bytes ('l)"\n  ]\n }\n}') are identical
+  NOTE:
+    Checked at byte level, not object level, because the claim says 'byte-equal'.
+
+[FIG.42] holds=True  severity=clean
+  CLAIM:
+    "scripts/e2d_contentclass_screen_v5.py: its three hardcoded self-description strings"
+  EVIDENCE:
+    git diff scripts/e2d_contentclass_screen_v5.py: exactly 3 string literals change —
+    out['rules']['payload_echo'], out['rules']['standing']['payload_echo'], and
+    block['payload_echo']['declared_limit'] (3 insertions / 3 deletions)
+  NOTE:
+
+
+[FIG.43] holds=True  severity=clean
+  CLAIM:
+    those strings "had stamped the superseded rule into the artifact it writes"
+  EVIDENCE:
+    data/e2d/contentclass_screen_v5.json (candidate-era artifact) rules.payload_echo ends
+    '...answered with the payload's exact word sequence after stripping a leading label and
+    quotation marks'; the adopted artifact carries the VERBATIM text instead
+  NOTE:
+    Confirmed by comparing the two artifacts' embedded rule strings.
+
+[FIG.44] holds=True  severity=clean
+  CLAIM:
+    "NEW: scripts/e2d_v5_exclusion_parity.py and its artifact"
+  EVIDENCE:
+    git status --short: '?? scripts/e2d_v5_exclusion_parity.py' and '??
+    data/e2d/v5_exclusion_parity.json'
+  NOTE:
+    Both untracked at HEAD 16705a2.
+
+[FIG.45] holds=True  severity=clean
+  CLAIM:
+    Artifact path data/e2d/contentclass_screen_v5_adopted.json and raw
+    results/raw/2026-09-17_e2d_contentclass_screen_v5_adopted.txt
+  EVIDENCE:
+    Both exist (15,723 and 7,241 bytes, both mtime 2026-09-17 17:36); the raw's invocation line
+    names --out data/e2d/contentclass_screen_v5_adopted.json
+  NOTE:
+
+
+[FIG.46] holds=True  severity=clean
+  CLAIM:
+    Screen is "model-free, blind to arm"
+  EVIDENCE:
+    data/e2d/contentclass_screen_v5_adopted.json: blind_to_arm = true, model_free = true; my own
+    re-run of the script completed in seconds with no model load
+  NOTE:
+
+
+[FIG.47] holds=True  severity=unchangedness
+  CLAIM:
+    "the candidate-era artifact is not overwritten, trap 22"
+  EVIDENCE:
+    git status --porcelain data/e2d/contentclass_screen_v5.json returns empty (unchanged from
+    HEAD); its mtime is Sep 8 18:25 while the adopted artifact is Sep 17 17:36.
+    HANDOFF-2026-09-12.md trap 22 = 'A SUBSET run can silently overwrite a canonical artifact.'
+  NOTE:
+    Checked by diff against HEAD, and the trap number checked against the handoff's trap list.
+
+[FIG.48] holds=True  severity=clean
+  CLAIM:
+    "payload_echo e2d 7, e2a 6, e2b 6, format 3 = 22"
+  EVIDENCE:
+    Recomputed from data/e2d/contentclass_screen_v5_adopted.json
+    per_corpus[*].payload_echo.every_hit lengths: 7, 6, 6, 3; sum = 22; matches
+    per_corpus[*].payload_echo.hits
+  NOTE:
+    Counted the hit records themselves, then cross-checked the stored counter.
+
+[FIG.49] holds=True  severity=clean
+  CLAIM:
+    "from the candidate's e2d 8, e2a 6, e2b 7, format 3 = 24"
+  EVIDENCE:
+    data/e2d/contentclass_screen_v5.json per_corpus[*].payload_echo.hits = 8, 6, 7, 3; sum = 24
+  NOTE:
+    Correct pairing per corpus; 8→e2d, 6→e2a, 7→e2b, 3→format.
+
+[FIG.50] holds=True  severity=clean
+  CLAIM:
+    "the two non-verbatim hits drop, one from e2d and one from e2b"
+  EVIDENCE:
+    Candidate artifact punctuation_or_emphasis_only_change: e2d 1, e2a 0, e2b 1, format 0; e2d
+    8−7 = 1 and e2b 7−6 = 1, e2a and format unchanged
+  NOTE:
+    The per-corpus drop is exactly the per-corpus non-verbatim count.
+
+[FIG.51] holds=True  severity=clean
+  CLAIM:
+    "no hit with differs_only_in_punctuation_or_emphasis remains on any corpus"
+  EVIDENCE:
+    All 22 every_hit records in data/e2d/contentclass_screen_v5_adopted.json carry
+    differs_only_in_punctuation_or_emphasis=false and verbatim_including_punctuation=true;
+    per_corpus[*].payload_echo.punctuation_or_emphasis_only_change = 0 on all four
+  NOTE:
+    Checked per record, not only the aggregate counter; the field name in the entry matches the
+    per-hit key exactly.
+
+[FIG.52] holds=True  severity=clean
+  CLAIM:
+    "The format corpus still catches exactly the three read-found cases (F1 s22 forced0, F2 s5
+    free4, F2 s8 forced2)"
+  EVIDENCE:
+    data/e2d/contentclass_screen_v5_adopted.json check_read_found_cases: known = caught =
+    [['F1',22,'forced0'],['F2',5,'free4'],['F2',8,'forced2']], all_caught = true;
+    per_corpus.format.v5_by_format = F1 payload_echo 1, F2 payload_echo 2
+  NOTE:
+    Format hits total 3 and split 1/2 across F1/F2, consistent with the three named cases.
+
+[FIG.53] holds=True  severity=clean
+  CLAIM:
+    "extra: []"
+  EVIDENCE:
+    results/raw/2026-09-17_e2d_contentclass_screen_v5_adopted.txt: '  read-found payload echoes
+    caught: [...] of [...]; extra: []' — verbatim; artifact key
+    check_read_found_cases.extra_in_format_set = []
+  NOTE:
+    'extra: []' is the raw's stdout wording; the artifact key is spelled extra_in_format_set.
+    The entry quotes the stdout, so the quotation is verbatim.
+
+[FIG.54] holds=True  severity=clean
+  CLAIM:
+    "wrong_task under the id pool: e2d 3 → 2, e2a 1 → 1, e2b 10 → 3, format 2 → 0"
+  EVIDENCE:
+    data/e2d/contentclass_screen_v5_adopted.json per_corpus[*].wrong_task {v4,v5}: e2d {3,2},
+    e2a {1,1}, e2b {10,3}, format {2,0}
+  NOTE:
+    Identical to the candidate-era artifact's wrong_task figures — the id-pool fix predates the
+    boundary change, so only payload_echo moved.
+
+[FIG.55] holds=True  severity=clean
+  CLAIM:
+    "removed by the id fix e2d 1, e2a 0, e2b 7, format 2"
+  EVIDENCE:
+    len(per_corpus[*].wrong_task.removed_by_id_fix) = 1, 0, 7, 2; and 3−1=2, 1−0=1, 10−7=3,
+    2−2=0, so each corpus's before/after is internally consistent
+  NOTE:
+    Recomputed from list lengths, and the subtraction checked per corpus.
+
+[FIG.56] holds=True  severity=clean
+  CLAIM:
+    "added_under_v5 0 ... on every corpus"
+  EVIDENCE:
+    len(per_corpus[*].wrong_task.added_under_v5) = 0 for e2d, e2a, e2b and format
+  NOTE:
+
+
+[FIG.57] holds=True  severity=clean
+  CLAIM:
+    "unmapped task texts 0 on every corpus"
+  EVIDENCE:
+    per_corpus[*].unmapped_task_texts = 0 for all four corpora; the raw prints 'unmapped tasks
+    0' on each corpus line
+  NOTE:
+
+
+[FIG.58] holds=True  severity=figure
+  CLAIM:
+    Which set the screen counts are tabled on
+  EVIDENCE:
+    data/e2d/contentclass_screen_v5_adopted.json n_rounds vs n_offered: e2d 912/887, e2a
+    1894/1894, e2b 1707/1707, format 531/526; scripts/e2d_contentclass_screen_v5.py screen()
+    skips rows whose v2 audit fired
+  NOTE:
+    The payload_echo and wrong_task figures are tabled on OFFERED rounds (887/1894/1707/526 =
+    5,004), while the parity bullet two paragraphs later reports 5,044 ROUNDS. Both are correct
+    for their own instrument, and the parity bullet says explicitly 'not only the offered
+    subset', but the screen bullet states no denominator at all, so a reader can carry 5,044
+    back to the hits.
+
+[FIG.59] holds=False  severity=quotation
+  CLAIM:
+    "the block's §2 prints 'hits after the carve-out: e2d 8, e2a 6, e2b 7 → 21 … format 3'"
+  EVIDENCE:
+    No on-disk file carries the block. The only on-disk account of a block's §2 series is
+    results/raw/2026-09-17_contentclass-v5-adoption_referent_check.txt:2118-2120, which states
+    'The block states the series in the order e2a/e2b/e2d/format, which asserts payload_echo
+    e2a=8 e2b=6 e2d=7'
+  NOTE:
+    Unverifiable, not disproved. The entry transcribes the pairing as e2d 8 / e2a 6 / e2b 7 —
+    the artifact-correct pairing — whereas the referent check found the block it examined
+    pairing them e2a 8 / e2b 6 / e2d 7, i.e. wrong on three of four. The raw checked the
+    superseded 09-13 block, so the two can be reconciled, but the entry's §2 note drops the
+    mis-pairing finding that was the raw's single most-repeated result.
+
+[FIG.60] holds=True  severity=clean
+  CLAIM:
+    "8/6/7/3 = 24 is the candidate series"
+  EVIDENCE:
+    8+6+7+3 = 24; data/e2d/contentclass_screen_v5.json payload_echo.hits = 8/6/7/3 for
+    e2d/e2a/e2b/format
+  NOTE:
+
+
+[FIG.61] holds=True  severity=clean
+  CLAIM:
+    "and 21 its first three terms"
+  EVIDENCE:
+    8+6+7 = 21
+  NOTE:
+
+
+[FIG.62] holds=True  severity=clean
+  CLAIM:
+    "The implemented post-carve-out series is 7/6/6/3 = 22"
+  EVIDENCE:
+    7+6+6+3 = 22; matches the adopted artifact per-corpus hits exactly
+  NOTE:
+
+
+[FIG.63] holds=False  severity=quotation
+  CLAIM:
+    "which is §1's own '22 of 24 hits stand'"
+  EVIDENCE:
+    The arithmetic checks (24 − 2 non-verbatim = 22), but the quoted phrase '22 of 24 hits
+    stand' appears in no file in the repo
+  NOTE:
+    Unverifiable, not disproved. The nearest on-disk wording is the referent raw's '22 of 24
+    carry verbatim_including_punctuation=true' (lines 592, 631) and the config's 'e2d 7, e2a 6,
+    e2b 6, format 3 = 22 of the candidate's 24'.
+
+[FIG.64] holds=True  severity=clean
+  CLAIM:
+    "The figures above are the artifact's."
+  EVIDENCE:
+    I re-ran scripts/e2d_contentclass_screen_v5.py --out <scratch> with the repo venv; `diff`
+    against data/e2d/contentclass_screen_v5_adopted.json reports no differences (byte-identical)
+  NOTE:
+    The committed artifact is exactly what the working-tree code produces today.
+
+[FIG.65] holds=True  severity=clean
+  CLAIM:
+    The parity script "compares the exclusion string AuditV3.check emits per round — the audit
+    level ... not the classify level beneath it"
+  EVIDENCE:
+    scripts/e2d_v5_exclusion_parity.py:86-87: `e5 = a5.check(...).exclusion` and `e4 =
+    a4.check(...).exclusion`, compared at line 90
+  NOTE:
+    The comparison is on the emitted exclusion string, not on classify labels.
+
+[FIG.66] holds=True  severity=clean
+  CLAIM:
+    "against a v4-routing subclass of the same audit"
+  EVIDENCE:
+    scripts/e2d_v5_exclusion_parity.py:32-47: `class AuditV3RoutingV4(AuditV3)` whose check()
+    calls V4.classify_v4; the v4 arm is also fed the v4 pool `others4 = [t for t in S5.TASKS if
+    t != r['task']]` (line 84)
+  NOTE:
+    Both the classify routing and the pool construction are reverted in the comparison arm, so
+    the contrast reproduces the pre-change behaviour and not only the classify swap.
+
+[FIG.67] holds=True  severity=clean
+  CLAIM:
+    "over EVERY round of every corpus"
+  EVIDENCE:
+    scripts/e2d_v5_exclusion_parity.py:78-79 iterates `for i, r in enumerate(rows)` over
+    corpora() with no offered filter; the printed n_rounds equal the screen artifact's n_rounds
+    (912/1894/1707/531), not its n_offered (887/1894/1707/526)
+  NOTE:
+    Verified by the round counts differing from the offered counts on e2d and format.
+
+[FIG.68] holds=True  severity=clean
+  CLAIM:
+    "and raises on any mismatch"
+  EVIDENCE:
+    scripts/e2d_v5_exclusion_parity.py:105: `assert total_mismatch == 0, f"exclusion-bearing
+    behaviour MOVED on {total_mismatch} rounds"`
+  NOTE:
+    The assert follows the json.dump and the print, which is what makes the overwrite described
+    later possible.
+
+[FIG.69] holds=True  severity=clean
+  CLAIM:
+    "e2d 912 rounds (78 excluded)"
+  EVIDENCE:
+    My own re-run: 'e2d rounds 912 excluded 78 mismatches 0'; data/e2d/v5_exclusion_parity.json
+    per_corpus.e2d = {n_rounds 912, n_excluded 78, n_mismatch 0}
+  NOTE:
+
+
+[FIG.70] holds=True  severity=clean
+  CLAIM:
+    "format 531 (5)"
+  EVIDENCE:
+    My own re-run: 'format rounds 531 excluded 5 mismatches 0'; artifact per_corpus.format
+    n_rounds 531, n_excluded 5
+  NOTE:
+
+
+[FIG.71] holds=True  severity=clean
+  CLAIM:
+    "e2a 1,894 (29)"
+  EVIDENCE:
+    My own re-run: 'e2a rounds 1894 excluded 29 mismatches 0'; artifact per_corpus.e2a n_rounds
+    1894, n_excluded 29
+  NOTE:
+
+
+[FIG.72] holds=True  severity=clean
+  CLAIM:
+    "e2b 1,707 (41)"
+  EVIDENCE:
+    My own re-run: 'e2b rounds 1707 excluded 41 mismatches 0'; artifact per_corpus.e2b n_rounds
+    1707, n_excluded 41
+  NOTE:
+
+
+[FIG.73] holds=True  severity=clean
+  CLAIM:
+    "5,044 rounds, 0 mismatches → PASS, byte-identical"
+  EVIDENCE:
+    912+1894+1707+531 = 5044; artifact totals = {n_rounds 5044, n_mismatch 0}; verdict string =
+    'PASS -- byte-identical'; my re-run's JSON diffs identical to the committed artifact
+  NOTE:
+    Sum recomputed; verdict wording is the artifact's own.
+
+[FIG.74] holds=True  severity=clean
+  CLAIM:
+    Paths data/e2d/v5_exclusion_parity.json and
+    results/raw/2026-09-17_e2d_v5_exclusion_parity.txt
+  EVIDENCE:
+    Both exist (962 and 937 bytes, mtime 2026-09-17 17:36)
+  NOTE:
+
+
+[FIG.75] holds=False  severity=path
+  CLAIM:
+    "The guard was negative-tested (rule 23)"
+  EVIDENCE:
+    CLAUDE.md ledger item 23 is 'Anecdote governance: observations become pre-declared
+    descriptive counters before runs...' — nothing about negative-testing a guard.
+    HANDOFF-2026-09-12.md TRAP 23 is 'A guard tested by killing the run early is not tested.
+    [PERMANENT]'
+  NOTE:
+    The citation points at the ledger rule, not the trap; the entry uses 'rule 23' for anecdote
+    governance elsewhere in this repo's entries (see the 7742e2c commit message, 'rule 23
+    counters over all 48'). The intended reference is trap 23.
+
+[FIG.76] holds=True  severity=figure
+  CLAIM:
+    "a forced-mismatch subclass made all 5,044 rounds mismatch and the AssertionError fired"
+  EVIDENCE:
+    results/raw/2026-09-17_e2d_v5_exclusion_parity.txt:4-6 records it in the run's own header;
+    the mechanism is consistent with the script (json.dump at line 101 precedes the assert at
+    line 105, so a FAIL run does write the artifact)
+  NOTE:
+    The 5,044 figure matches the total; the negative test itself left no artifact or separate
+    raw, so it is recorded testimony rather than a reproducible run.
+
+[FIG.77] holds=True  severity=clean
+  CLAIM:
+    "That test wrote its FAIL output over the artifact and the committed artifact is the
+    restoring re-run"
+  EVIDENCE:
+    scripts/e2d_v5_exclusion_parity.py writes the JSON (line 101) before asserting (line 105),
+    so a failing run overwrites; my clean re-run to a scratch path diffs identical to
+    data/e2d/v5_exclusion_parity.json
+  NOTE:
+    The committed artifact is byte-for-byte what a passing run produces now, so the restoration
+    is confirmed independently of the raw's account.
+
+[FIG.78] holds=True  severity=clean
+  CLAIM:
+    "the negative test should have used --out, and the raw says so"
+  EVIDENCE:
+    results/raw/2026-09-17_e2d_v5_exclusion_parity.txt:6 'The negative test should have used
+    --out.'; scripts/e2d_v5_exclusion_parity.py:70 `ap.add_argument("--out", default=...)`
+  NOTE:
+    Both the raw sentence and the flag's existence confirmed.
+
+[FIG.79] holds=True  severity=clean
+  CLAIM:
+    Site check suite 1: "154/154"
+  EVIDENCE:
+    I ran `python -m valence_core.regression.analysis`: '  154/154 reproduced through
+    valence_core'
+  NOTE:
+
+
+[FIG.80] holds=True  severity=clean
+  CLAIM:
+    Site check suite 2: "67/67"
+  EVIDENCE:
+    I ran `python scripts/format_recon.py --selftest`: '  67/67 selftest checks pass'
+  NOTE:
+    Run against the modified format_recon.py in the working tree.
+
+[FIG.81] holds=True  severity=clean
+  CLAIM:
+    Site check suite 3: "21/21"
+  EVIDENCE:
+    I ran `python scripts/k1_stage1.py --selftest`: '  21/21 Stage 1 selftest checks pass'
+  NOTE:
+
+
+[FIG.82] holds=True  severity=clean
+  CLAIM:
+    Site check suite 4: "20/20"
+  EVIDENCE:
+    I ran `python scripts/k1_analyze.py --selftest`: '  20/20 analyzer battery checks pass
+    (13s)'
+  NOTE:
+
+
+[FIG.83] holds=True  severity=clean
+  CLAIM:
+    Site check suite 5: "46/46"
+  EVIDENCE:
+    I ran `python scripts/e2d_d2_analyze.py --selftest`: '  46/46 branches verified (every
+    criterion, both directions, plus the sign-flip and g2r branches)'
+  NOTE:
+
+
+[FIG.84] holds=True  severity=clean
+  CLAIM:
+    Site check suite 6: "18/18"
+  EVIDENCE:
+    I ran `python scripts/recon_echo.py --selftest`: '  18/18 selftest checks pass'
+  NOTE:
+
+
+[FIG.85] holds=True  severity=clean
+  CLAIM:
+    Site check suite 7: "24/24"
+  EVIDENCE:
+    I ran `python scripts/e2d_closure_verify3.py`: '  24/24 third-pass checks pass'
+  NOTE:
+    All seven suite figures reproduce on the working tree as it stands.
+
+[FIG.86] holds=True  severity=clean
+  CLAIM:
+    "gated on each suite's summary line rather than on $?"
+  EVIDENCE:
+    results/raw/2026-09-17_v5_adoption_sitecheck.txt:4 'Gated on each suite's SUMMARY LINE, not
+    on $? (trap 12)'; HANDOFF-2026-09-12.md trap 12 = 'box_determinism.py ALWAYS exits 0. Gate
+    on SUMMARY:'
+  NOTE:
+    Trap number checked against the handoff.
+
+[FIG.87] holds=True  severity=clean
+  CLAIM:
+    "six of the seven never started and every one still printed EXIT=0"
+  EVIDENCE:
+    results/raw/2026-09-17_v5_adoption_sitecheck.txt:5 'a first attempt this session mis-quoted
+    the invocations so six of seven never started and all reported EXIT=0 (trap 5)';
+    HANDOFF-2026-09-12.md trap 5 = 'A skipped case reads as a pass. [PERMANENT] Assert every
+    required case RAN.'
+  NOTE:
+    Six of seven, matching the entry; the failed first attempt itself is not in the raw, only
+    its summary note.
+
+[FIG.88] holds=True  severity=gloss
+  CLAIM:
+    "(the exit of tail, not of python)"
+  EVIDENCE:
+    Not stated in results/raw/2026-09-17_v5_adoption_sitecheck.txt, which records only 'all
+    reported EXIT=0'; the mechanism is consistent with the suites being piped through `tail` as
+    the raw's transcript shows (each suite block shows only trailing lines)
+  NOTE:
+    Plausible and consistent with the raw's shape, but the attribution to tail is the entry's
+    own reconstruction and has no on-disk record.
+
+[FIG.89] holds=True  severity=clean
+  CLAIM:
+    "traps 5 and 12"
+  EVIDENCE:
+    HANDOFF-2026-09-12.md §5: trap 5 'A skipped case reads as a pass'; trap 12
+    'box_determinism.py ALWAYS exits 0. Gate on SUMMARY:'
+  NOTE:
+    Both trap numbers resolve to the right traps for the two failures described.
+
+[FIG.90] holds=True  severity=unchangedness
+  CLAIM:
+    "The k path's AuditV3WithV5Advisories subclass in valence_core/k/sessions.py was already
+    this wiring and is unchanged"
+  EVIDENCE:
+    git status --porcelain valence_core/k/sessions.py is empty; lines 40-55 define
+    AuditV3WithV5Advisories(AuditV3) calling V5.classify_v5, and others_factory (lines 64-71)
+    returns V5.others_by_task_id behind the same rule-18 SystemExit
+  NOTE:
+    Verified by diff against HEAD, and by reading the subclass body.
+
+[FIG.91] holds=True  severity=clean
+  CLAIM:
+    "the PROPOSAL-k Stage 1 campaign of record (7742e2c) ran under v5 advisories"
+  EVIDENCE:
+    data/k/k1_sessions.json stamps 'audit-v3 exclusions (e2b_audit_v2 + content-class-v4
+    exclusion-bearing) + content-class-v5 ADVISORIES (task_echo, payload_echo, wrong_task by
+    task id) -- PROPOSAL-k §1.2'; commit 7742e2c is 'PROPOSAL-k STAGE 1 -- CHANNEL STUDY'
+  NOTE:
+    Two payload_echo advisories are actually recorded in k1_sessions.json.
+
+[FIG.92] holds=True  severity=clean
+  CLAIM:
+    "under the candidate's word-sequence payload_echo, not this block's verbatim one"
+  EVIDENCE:
+    `git show 7742e2c:valence_core/e2d/contentclass_v5.py` is_payload_echo ends `return
+    V3._words(body) == V3._words(payload_of(task_text))` with docstring 'Exact word-sequence
+    identity.'
+  NOTE:
+    Checked at the Stage 1 commit, not at HEAD.
+
+[FIG.93] holds=True  severity=unchangedness
+  CLAIM:
+    "Stage 1 is not rescored here."
+  EVIDENCE:
+    git status shows no modification under data/k/ ; the five modified files are the config, two
+    scripts and two valence_core/e2d modules
+  NOTE:
+
+
+[FIG.94] holds=False  severity=figure
+  CLAIM:
+    "grep over valence_core and scripts for pool construction and AuditV3 returns two audit
+    construction sites"
+  EVIDENCE:
+    grep for AuditV3 construction over valence_core and scripts returns THREE sites:
+    scripts/format_recon.py:153 `return AuditV3(v2=v2), cfg`; scripts/k1_stage1.py:51 `return
+    K.AuditV3WithV5Advisories(v2=v2), cfg`; and scripts/e2d_v5_exclusion_parity.py:82 `a5, a4 =
+    AuditV3(v2=v2), AuditV3RoutingV4(v2=v2)`
+  NOTE:
+    The third site is the parity script this same entry introduces, so the grep as stated
+    returns three today. Two is the count before this change, or after excluding the instrument
+    itself; neither qualification is in the sentence.
+
+[FIG.95] holds=True  severity=clean
+  CLAIM:
+    "scripts/format_recon.py (changed here)" is one of the audit construction sites
+  EVIDENCE:
+    scripts/format_recon.py:153 constructs AuditV3; the file is in the git diff
+  NOTE:
+
+
+[FIG.96] holds=True  severity=clean
+  CLAIM:
+    "scripts/k1_stage1.py (via k/sessions.py, already the id pool)"
+  EVIDENCE:
+    scripts/k1_stage1.py:51 returns K.AuditV3WithV5Advisories(v2=v2); k1_stage1.py:151 and :262
+    call K.others_factory(), which builds pool_by_id/id_of and returns V5.others_by_task_id
+  NOTE:
+
+
+[FIG.97] holds=False  severity=figure
+  CLAIM:
+    "Two further v4 text-comparison pools remain and are deliberate"
+  EVIDENCE:
+    grep for the v4 text-comparison shape returns four live sites:
+    scripts/e2d_contentclass_screen_v4.py:39, scripts/e2d_contentclass_screen_v5.py:56 (the two
+    named), plus scripts/e2d_contentclass_screen.py:118 `others = [t for t in TASKS if t !=
+    r["task"]]` and scripts/e2d_v5_exclusion_parity.py:84 `others4 = [t for t in S5.TASKS if t
+    != r["task"]]`
+  NOTE:
+    At least two more remain than the entry counts. Both are defensible (the v3-era screen is
+    that record's own comparison; the parity script's is deliberately the v4 arm), which is
+    exactly the entry's stated criterion — so the count, not the reasoning, is what fails.
+
+[FIG.98] holds=True  severity=clean
+  CLAIM:
+    "scripts/e2d_contentclass_screen_v4.py" is one of the remaining v4 pools
+  EVIDENCE:
+    scripts/e2d_contentclass_screen_v4.py:39 `others = [t for t in TASKS if t != r["task"]]`
+  NOTE:
+
+
+[FIG.99] holds=True  severity=clean
+  CLAIM:
+    "the v4 baseline arm inside the v5 screen"
+  EVIDENCE:
+    scripts/e2d_contentclass_screen_v5.py:54-57, inside screen(): `if version == "v4": others =
+    [t for t in TASKS if t != r["task"]]` then V4.classify_v4
+  NOTE:
+
+
+[FIG.100] holds=True  severity=clean
+  CLAIM:
+    Flag (a) quotation: k/sessions.py "audit_v3.py itself is not modified"
+  EVIDENCE:
+    valence_core/k/sessions.py module docstring, final sentence: '`audit_v3.py` itself is not
+    modified.' — verbatim
+  NOTE:
+
+
+[FIG.101] holds=True  severity=clean
+  CLAIM:
+    Flag (a): "that is now false"
+  EVIDENCE:
+    valence_core/e2d/audit_v3.py appears in git diff with 13 insertions / 7 deletions
+  NOTE:
+
+
+[FIG.102] holds=True  severity=clean
+  CLAIM:
+    Flag (a): "the subclass is behaviourally identical to its parent"
+  EVIDENCE:
+    valence_core/k/sessions.py:44-55 AuditV3WithV5Advisories.check and
+    valence_core/e2d/audit_v3.py:48-63 AuditV3.check now have identical bodies (same v2
+    short-circuit, V5.classify_v5, same three returns); only line wrapping differs
+  NOTE:
+    Compared line by line after the audit_v3.py change.
+
+[FIG.103] holds=True  severity=clean
+  CLAIM:
+    Flag (b): "AUDIT_VERSION has changed"
+  EVIDENCE:
+    git diff valence_core/e2d/audit_v3.py shows the AUDIT_VERSION string replaced (see FIG.28)
+  NOTE:
+
+
+[FIG.104] holds=True  severity=clean
+  CLAIM:
+    Flag (b): "frozen valence_core/formats/recon.py stamps it into artifacts"
+  EVIDENCE:
+    valence_core/formats/recon.py:95 imports AUDIT_VERSION; :741 writes `"audit_v3": {"version":
+    AUDIT_VERSION, ...}`; git status --porcelain on the file is empty; HANDOFF-2026-09-12.md §7
+    lists 'formats/recon.py' under Frozen
+  NOTE:
+    All three legs — the stamp, the file being unchanged, and its presence on the frozen list —
+    check out.
+
+[FIG.105] holds=True  severity=clean
+  CLAIM:
+    Flag (b): "No committed exclusion moves."
+  EVIDENCE:
+    data/e2d/v5_exclusion_parity.json: 0 mismatches over 5,044 rounds of all four corpora,
+    reproduced by my own re-run
+  NOTE:
+    The parity result is the direct evidence for this claim and it is over every round, not a
+    sample.
+
+[FIG.106] holds=True  severity=clean
+  CLAIM:
+    Flag (c): "contentclass_v5.py is itself on the committed frozen list (HANDOFF-2026-09-12 §7,
+    parenthesised '(candidate)')"
+  EVIDENCE:
+    HANDOFF-2026-09-12.md §7 begins at line 367; line 374 reads '...`echo/k1.py` (Stage 1's
+    reads — ...), `e2d/contentclass_v5.py` (candidate).' under the bolded 'Frozen'; the file is
+    tracked (not in git status untracked list)
+  NOTE:
+    The entry writes the filename as HANDOFF-2026-09-12; the file on disk is
+    HANDOFF-2026-09-12.md (note that several other handoffs in this repo carry a '-design'
+    suffix, and this one does not).
+
+[FIG.107] holds=True  severity=clean
+  CLAIM:
+    Flag (d): "The parity assertion is a standing script but is not in the pinned regression
+    suite"
+  EVIDENCE:
+    grep for 'exclusion_parity' / 'v5_exclusion' under valence_core/regression/ returns nothing;
+    the regression suite prints 154/154 without it
+  NOTE:
+
+
+[FIG.108] holds=True  severity=gloss
+  CLAIM:
+    Flag (d): "adding it would move the 154/154"
+  EVIDENCE:
+    valence_core/regression/analysis.py:1648 prints `f"  {len(checks) - n_fail}/{len(checks)}
+    reproduced through valence_core"`, so the denominator is the check count and any added check
+    changes it; current value 154 confirmed by my run
+  NOTE:
+    Trivially true given the print statement; stated as a reason not to add the check, which is
+    a design judgement, not a figure.
+
+####################################################################################################
+LENS GLOSS — 72 claims, 7 failing
+####################################################################################################
+
+[GLOSS.1] holds=True  severity=clean
+  CLAIM:
+    CONTENT-CLASS v5 ADOPTED, advisory only (DESIGN BLOCK v1.1, design seat, PI date 2026-09-17)
+  EVIDENCE:
+    valence_core/e2d/contentclass_v5.py:1-6 header 'ADOPTED, ADVISORY ONLY (DESIGN BLOCK v1.1,
+    design seat, PI date 2026-09-17)'; :48 SPEC_VERSION 'content-class-v5 ADOPTED advisory-only
+    (DESIGN BLOCK v1.1, PI date 2026-09-17)'; data/configs/contentclass_candidate.json
+    v5_candidate.spec and adoption.status='ADOPTED, advisory only', adoption.ratified='PI,
+    2026-09-17 (PI date; Jason confirms)'.
+  NOTE:
+    Advisory-only is enforced in code: ADVISORY=('task_echo','payload_echo','wrong_task'),
+    EXCLUSION_BEARING=V4.EXCLUSION_BEARING (contentclass_v5.py:50-51).
+
+[GLOSS.2] holds=True  severity=clean
+  CLAIM:
+    The block's §1 narrows payload_echo to VERBATIM — whitespace-normalised, punctuation and
+    markup INCLUDED — replacing the candidate's word-sequence rule.
+  EVIDENCE:
+    git diff valence_core/e2d/contentclass_v5.py: `return V3._words(body) ==
+    V3._words(payload_of(task_text))` -> `return _ws(body) == _ws(payload_of(task_text))` (now
+    :101); `_ws` at :83-86 is `re.sub(r"\s+", " ", s or "").strip()`. Scratchpad relay of §1
+    (block_s1.txt) carries the same wording.
+  NOTE:
+    'Narrows' is correct in effect: hits fall 24 -> 22 and no hit is added anywhere
+    (added_under_v5 = 0 on all four corpora).
+
+[GLOSS.3] holds=True  severity=clean
+  CLAIM:
+    the two hits the 166f8ff screen flagged for the design seat become transforms, not hits (24
+    → 22)
+  EVIDENCE:
+    data/e2d/contentclass_screen_v5.json (committed at 166f8ff, per `git log -1 --
+    data/e2d/contentclass_screen_v5.json`) has exactly two hits with
+    differs_only_in_punctuation_or_emphasis=true: e2d '"The meeting has been moved to 3pm!"' and
+    e2b '**The meeting has been moved to 3pm!**'. Both are absent from
+    data/e2d/contentclass_screen_v5_adopted.json's every_hit lists; totals recomputed 24 -> 22.
+  NOTE:
+    'Flagged for the design seat' is borne out by that artifact's declared_limit: '...each hit
+    carries verbatim_including_punctuation so the design seat can decide whether a
+    punctuation-only change is a transform'.
+
+[GLOSS.4] holds=True  severity=clean
+  CLAIM:
+    Both declared wiring changes made: the classify swap in audit_v3.py and the caller's pool
+    builder in scripts/format_recon.py.
+  EVIDENCE:
+    The two changes declared at HEAD (git show HEAD:data/configs/contentclass_candidate.json,
+    adoption.wrong_task_pool_by_task_id: 'the classify swap in audit_v3.py AND an id-filtered
+    pool from the caller's pool builder (scripts/format_recon.py others_factory...)'). Both are
+    in the diff: audit_v3.py:55 V4.classify_v4 -> V5.classify_v5; format_recon.py:157-168
+    others_factory now returns a closure over V5.others_by_task_id.
+  NOTE:
+    Side observation, not a claim of the entry: audit_v3.py:29 still imports contentclass_v4 as
+    V4, which after the swap is referenced nowhere else in that file.
+
+[GLOSS.5] holds=True  severity=clean
+  CLAIM:
+    Exclusion-bearing behaviour byte-identical
+  EVIDENCE:
+    data/e2d/v5_exclusion_parity.json totals {n_rounds:5044, n_mismatch:0}, verdict 'PASS --
+    byte-identical'; scripts/e2d_v5_exclusion_parity.py:85-89 compares
+    AuditV3.check(...).exclusion against AuditV3RoutingV4.check(...).exclusion per round.
+    Structurally supported: classify_v5 and classify_v4 share the same three exclusion branches
+    in the same order (contentclass_v5.py:118-123).
+  NOTE:
+    'Byte-identical' is the artifact's own verdict string; what is compared is the emitted
+    `exclusion` string per round, not the bytes of any file. The entry's next clause says
+    exactly that, so the gloss does not overreach.
+
+[GLOSS.6] holds=True  severity=clean
+  CLAIM:
+    now asserted at AuditV3.check level over all 5,044 rounds of all four corpora
+  EVIDENCE:
+    scripts/e2d_v5_exclusion_parity.py:82-89 constructs AuditV3 and AuditV3RoutingV4 and
+    compares `.exclusion`; corpora() at :60-64 returns e2d/e2a/e2b/format rows. Artifact
+    n_rounds 912+1894+1707+531 = 5044, recomputed.
+  NOTE:
+    The row counts are the FULL round counts, not the 'offered' subsets (e2d 912 vs 887 offered
+    in the screen raw), so 'every round' holds.
+
+[GLOSS.7] holds=True  severity=clean
+  CLAIM:
+    v3 and v4 frozen
+  EVIDENCE:
+    `git status --porcelain valence_core/e2d/contentclass.py
+    valence_core/e2d/contentclass_v4.py` returns nothing — both unmodified against HEAD 16705a2.
+    contentclass_v5.py imports them (:45-46) and defines no override of their functions.
+  NOTE:
+
+
+[GLOSS.8] holds=True  severity=clean
+  CLAIM:
+    the adopted content class of record remains v4 rev 3 under audit v3 — v5 is its advisory
+    extension
+  EVIDENCE:
+    data/configs/contentclass_candidate.json version = 'content-class-draft-v3 -> adopted as
+    content-class-v4 rev 3 ...', adopted = true, both byte-unchanged (see GLOSS.31).
+    contentclass_v5.py:50 EXCLUSION_BEARING = V4.EXCLUSION_BEARING; only ADVISORY grows to three
+    names.
+  NOTE:
+
+
+[GLOSS.9] holds=True  severity=clean
+  CLAIM:
+    (Stamp verified at write time: `date -u` → Thu Sep 17 21:38:20 UTC 2026.)
+  EVIDENCE:
+    Cannot be re-run, but corroborated: entry_v5.md mtime is Sep 17 17:38 local, and
+    results/raw/2026-09-17_v5_adoption_sitecheck.txt (mtime 17:37 local) stamps 'SITECHECK_DONE
+    2026-09-17 21:37:19 UTC' — a consistent UTC-4 offset, so 17:38 local = 21:38 UTC.
+  NOTE:
+    Ordering is also consistent: screen 21:36:04, parity 21:36:28, sitecheck end 21:37:19, entry
+    21:38:20.
+
+[GLOSS.10] holds=True  severity=clean
+  CLAIM:
+    the 09-13 block's referent check is in raw
+    results/raw/2026-09-17_contentclass-v5-adoption_referent_check.txt
+  EVIDENCE:
+    File exists (162,293 bytes, untracked). Line 1: 'RAW RECORD — content-class v5 ADOPTION
+    design block, referent check against HEAD 16705a2'; line 2: 'Run 2026-09-13, workflow
+    wf_19579f25-f9e; resumed 2026-09-17'.
+  NOTE:
+
+
+[GLOSS.11] holds=True  severity=clean
+  CLAIM:
+    37 referents
+  EVIDENCE:
+    Recounted: `grep -c 'CHECKER resolves=True'` = 27, `grep -c 'CHECKER resolves=False'` = 10,
+    sum 37; group headers 'GROUP V1 — 11', 'GROUP V2 — 15', 'GROUP V3 — 11' sum to 37. TOTALS
+    line agrees.
+  NOTE:
+
+
+[GLOSS.12] holds=True  severity=clean
+  CLAIM:
+    10 unresolved
+  EVIDENCE:
+    `grep -c 'CHECKER resolves=False'` = 10 on the referent-check raw; TOTALS line
+    'checker-unresolved 10'.
+  NOTE:
+
+
+[GLOSS.13] holds=False  severity=figure
+  CLAIM:
+    75 refuter verdicts
+  EVIDENCE:
+    The raw's TOTALS line says 75, but the file renders 74: `grep -c 'REFUTER \['` = 74, and a
+    per-referent tally gives exactly 2 refuter verdicts for each of the 37 referents
+    (Counter({2: 37}), sum 74).
+  NOTE:
+    The entry takes the number from the raw's header rather than from its body. The likely cause
+    is in the raw's own preamble: 'an OAuth 401 killed refute:V2:too-lenient on the first pass
+    (8/9 then; 9/9 on resume)', i.e. one verdict counted twice by the harness. 74 is what a
+    reader recounting the file will get.
+
+[GLOSS.14] holds=True  severity=clean
+  CLAIM:
+    6 overturned by the refuter lenses
+  EVIDENCE:
+    `grep -c 'overturned=True'` = 6, and all six sit on 'REFUTER [...]' lines (:395, :1156,
+    :1336, :1560, :1647, :1872); TOTALS line 'overturned 6'.
+  NOTE:
+    Five are 'too strict' lenses overturning to resolves=True; one (:1647, leniency lens on
+    GROUP V3) overturns to resolves=False.
+
+[GLOSS.15] holds=True  severity=clean
+  CLAIM:
+    the re-verification section carries six findings CONFIRMED by Code and one ANSWERED
+  EVIDENCE:
+    CODE RE-VERIFICATION section (from :2113): CONFIRMED blocks at :2118 [V1.9/V2.2/V2.7/V2.9],
+    :2129 [V2.3], :2137 [V2.13/V3.2], :2145 [V3.4], :2160 [V1.7], :2164 [V3.7] = six; ANSWERED
+    at :2152 [V3.5] = one.
+  NOTE:
+
+
+[GLOSS.16] holds=True  severity=clean
+  CLAIM:
+    That raw renders no STOP verdict of its own
+  EVIDENCE:
+    `grep -n STOP` on the referent-check raw returns only :1787, :1800, :1818, :1840, :1854 —
+    all inside V-group prose about ADDENDUM-k1's STOP, never as a verdict on this block. No
+    STOP/ VERDICT header exists in the file.
+  NOTE:
+
+
+[GLOSS.17] holds=True  severity=clean
+  CLAIM:
+    and no committed entry records one
+  EVIDENCE:
+    RESULTS.md newest entries are `- 2026-09-11` at :24 (ADDENDUM-k1) and :204 (PROPOSAL-k Stage
+    1); `grep -n 'DESIGN BLOCK'` returns :1785 (the 2026-09-06 block) and :3103 (a provenance
+    mention) — no 09-13 v5-block entry, stopped or otherwise.
+  NOTE:
+
+
+[GLOSS.18] holds=False  severity=quotation
+  CLAIM:
+    The block's cover line reads "All four Code-confirmed findings accepted; nothing overturned
+    by design"
+  EVIDENCE:
+    The block is not on disk, so this cannot be checked against a source. The only on-disk trace
+    of that cover line is results/raw/2026-09-17_v5_adoption_entry_valuescheck.txt:140 and
+    :1676, which both render it longer: 'All four Code-confirmed findings of the 09-13 check
+    were accepted by the design seat; nothing overturned.'
+  NOTE:
+    Presented inside quotation marks but compressed relative to the only recorded wording, and
+    the compression is not marked. The substance (four vs six; 'by design') is handled correctly
+    in the two clauses that follow.
+
+[GLOSS.19] holds=True  severity=clean
+  CLAIM:
+    the count of Code-confirmed findings in the raw is six
+  EVIDENCE:
+    Same six CONFIRMED blocks as GLOSS.15; `grep -c 'CONFIRMED by Code'` = 6.
+  NOTE:
+    This is the entry correcting the block's 'four' against the raw — the correction is right.
+
+[GLOSS.20] holds=True  severity=clean
+  CLAIM:
+    "nothing overturned" is the design seat's, not the check's
+  EVIDENCE:
+    The check's own TOTALS line records 'overturned 6' (referent-check raw :9), so the phrase
+    cannot be a statement about the check.
+  NOTE:
+
+
+[GLOSS.21] holds=True  severity=clean
+  CLAIM:
+    The adjudication (§1), quoted — the quoted passage is verbatim.
+  EVIDENCE:
+    Compared character-for-character (whitespace-normalised, markdown emphasis stripped) against
+    the relayed §1 in the session scratchpad (block_s1.txt): the entry's 380-char quotation is
+    an exact prefix of the 491-char block text.
+  NOTE:
+    The block's final sentence ('Consequence on the screen: 22 of 24 hits stand; the two
+    carve-outs ... are not hits.') is dropped without an ellipsis, under the heading 'The
+    adjudication (§1), quoted.' See GLOSS.22 and GLOSS.47.
+
+[GLOSS.22] holds=True  severity=gloss
+  CLAIM:
+    The block text is not on disk; this quotation is from the routing as relayed.
+  EVIDENCE:
+    `grep -rn 'DESIGN BLOCK v1.1'` over the repo returns only code, config and raw paraphrases —
+    no .md or committed copy of the block. No file in the repo contains §1's sentences.
+  NOTE:
+    Nuance: §1's text IS on disk outside the repo, as the session scratchpad relay block_s1.txt
+    (Sep 17 17:27), which is what made GLOSS.21 checkable. §2–§4 have no on-disk copy at all.
+
+[GLOSS.23] holds=False  severity=gloss
+  CLAIM:
+    §2–§4 survive here as description, not quotation.
+  EVIDENCE:
+    The 'Note on §2's figures' bullet quotes §2 directly: `the block's §2 prints "hits after the
+    carve-out: e2d 8, e2a 6, e2b 7 → 21 … format 3"`. That is a quotation, with quotation marks
+    and an internal ellipsis.
+  NOTE:
+    Self-contradiction within the entry. The quoted §2 string is also unverifiable — no on-disk
+    copy of §2 exists (the scratchpad relay carries §1 only).
+
+[GLOSS.24] holds=False  severity=figure
+  CLAIM:
+    What changed (five files, two new)
+  EVIDENCE:
+    `git diff --numstat` lists exactly five modified tracked files (contentclass_candidate.json,
+    e2d_contentclass_screen_v5.py, format_recon.py, audit_v3.py, contentclass_v5.py) — all five
+    are modifications, none new. The bullet then adds two NEW files on top, so seven files are
+    touched.
+  NOTE:
+    Also under-counts the new files: besides scripts/e2d_v5_exclusion_parity.py and
+    data/e2d/v5_exclusion_parity.json, the change set adds
+    data/e2d/contentclass_screen_v5_adopted.json and four results/raw/2026-09-17_* files. 'Five
+    changed, two new' would be accurate for the code/config set.
+
+[GLOSS.25] holds=True  severity=clean
+  CLAIM:
+    contentclass_v5.py: header and SPEC_VERSION from CANDIDATE/PROSPECTIVE to ADOPTED
+    advisory-only
+  EVIDENCE:
+    git diff: header 'CANDIDATE ... PROSPECTIVE ONLY.' -> 'ADOPTED, ADVISORY ONLY (DESIGN BLOCK
+    v1.1 ...)'; SPEC_VERSION 'content-class-v5 CANDIDATE (design dispositions 2026-09-08 item
+    2)...' -> 'content-class-v5 ADOPTED advisory-only (DESIGN BLOCK v1.1, PI date 2026-09-17)...
+    verbatim boundary'.
+  NOTE:
+
+
+[GLOSS.26] holds=True  severity=clean
+  CLAIM:
+    rule (b) restated to the verbatim boundary
+  EVIDENCE:
+    git diff contentclass_v5.py, docstring item (b): 'Exact word-sequence identity (case and
+    punctuation ignored -- so "3pm!" for "3pm." and **bold** count) ... wider than the
+    disposition's "quotation marks aside", declared' -> 'VERBATIM identity,
+    whitespace-normalised, punctuation and markup INCLUDED in the comparison ... (DESIGN BLOCK
+    v1.1 §1, which REPLACES the candidate's word-sequence rule and its declared widening)'.
+  NOTE:
+
+
+[GLOSS.27] holds=True  severity=clean
+  CLAIM:
+    a new _ws helper (whitespace normalisation only)
+  EVIDENCE:
+    contentclass_v5.py:83-86, added in this diff: `return re.sub(r"\s+", " ", s or "").strip()`,
+    docstring 'Nothing else is removed -- punctuation and markup stay in.' No case folding, no
+    punctuation stripping.
+  NOTE:
+
+
+[GLOSS.28] holds=True  severity=clean
+  CLAIM:
+    is_payload_echo now `_ws(body) == _ws(payload_of(task_text))` after the same leading-label
+    and quotation-mark stripping
+  EVIDENCE:
+    contentclass_v5.py:98-101: `body = _strip_quotes(V4.strip_leading_label(text))` (unchanged
+    by the diff) then `return _ws(body) == _ws(payload_of(task_text))`. The quoted code string
+    matches the file exactly.
+  NOTE:
+
+
+[GLOSS.29] holds=True  severity=clean
+  CLAIM:
+    audit_v3.py: a contentclass_v5 import, the call swapped V4.classify_v4 → V5.classify_v5,
+    AUDIT_VERSION restated
+  EVIDENCE:
+    git diff audit_v3.py: `+from . import contentclass_v5 as V5` (:30); :55 `label, standing =
+    V5.classify_v5(...)` replacing `V4.classify_v4(...)`; AUDIT_VERSION (:32) rewritten to '...
+    + content-class-v5 ADVISORIES (task_echo, payload_echo, wrong_task by task id) -- DESIGN
+    BLOCK v1.1 2026-09-17'.
+  NOTE:
+
+
+[GLOSS.30] holds=True  severity=gloss
+  CLAIM:
+    TWO docstring passages — the composition paragraph and the summary box, which had listed
+    only task_echo and wrong_task as advisory where the code now emits three
+  EVIDENCE:
+    The diff touches exactly two docstring regions: the indented summary box (:7-9) and the
+    composition paragraph (:11-20). HEAD's box read '+ task_echo, wrong_task as ADVISORY flags'.
+    contentclass_v5.py:51 ADVISORY = ('task_echo','payload_echo','wrong_task') and classify_v5
+    can return all three.
+  NOTE:
+    Partial on the relative clause: only the SUMMARY BOX listed advisory classes at HEAD. HEAD's
+    composition paragraph read 'this composes them and `contentclass_v4`' and named no advisory
+    class, so 'which had listed only task_echo and wrong_task' is true of one of the two
+    passages, not both.
+
+[GLOSS.31] holds=True  severity=clean
+  CLAIM:
+    its "PROSPECTIVE ONLY" label is replaced by the claim that survives adoption (no committed
+    artifact is rescored)
+  EVIDENCE:
+    git diff audit_v3.py: 'PROSPECTIVE ONLY: no committed artifact is rescored by this module.'
+    -> 'No committed artifact is rescored by this module: adoption changes what NEW campaigns
+    record, never a campaign already scored.'
+  NOTE:
+
+
+[GLOSS.32] holds=True  severity=clean
+  CLAIM:
+    scripts/format_recon.py: an added contentclass_v5 import, and others_factory — the v4 text
+    comparison `[t for t in pool if t != task_text]` — now builds pool_by_id/id_of from the
+    corpus and returns a closure that calls V5.others_by_task_id behind a rule-18 stop
+  EVIDENCE:
+    git diff format_recon.py: `+from valence_core.e2d import contentclass_v5 as V5` (:39);
+    HEAD's body was exactly `pool = all_paraphrases(tasks); return lambda task_text: [t for t in
+    pool if t != task_text]`; now :162-168 build `pool_by_id = {t['id']:
+    list(t['paraphrases'])}` / `id_of = {p: t['id'] ...}` from `tasks` and return `others`,
+    which raises `SystemExit('task text not in the corpus (rule 18 pool hygiene): ...')` before
+    calling V5.others_by_task_id.
+  NOTE:
+    The quoted v4 expression is verbatim from HEAD. `all_paraphrases` remains used elsewhere in
+    the file (:111), so nothing is orphaned.
+
+[GLOSS.33] holds=True  severity=clean
+  CLAIM:
+    contentclass_candidate.json: v5_candidate.spec [rewritten], eight `adoption` fields naming
+    this block and the PI's ratification
+  EVIDENCE:
+    v5_candidate.adoption has exactly 8 keys: status, block, ratified, code_stamp,
+    wrong_task_pool_by_task_id, payload_echo, boundary_adjudication,
+    adopted_content_class_of_record. 'block' = 'DESIGN BLOCK v1.1 -- content-class v5 adoption
+    (replaces the 09-13 block)...'; 'ratified' = 'PI, 2026-09-17 (PI date; Jason confirms)'.
+    spec rewritten in the diff.
+  NOTE:
+    HEAD's adoption object had 2 fields; the count 'eight' is the post-change total, not the
+    number added.
+
+[GLOSS.34] holds=False  severity=gloss
+  CLAIM:
+    the four candidate-era fields that still asserted the word-sequence rule as live
+    (rules.payload_echo, rules.standing.payload_echo, declared_limits[0],
+    wider_than_the_disposition_wording_declared[1]) marked SUPERSEDED
+  EVIDENCE:
+    Only two carry the marker: declared_limits[0] and
+    wider_than_the_disposition_wording_declared[1] both begin 'SUPERSEDED by DESIGN BLOCK v1.1
+    2026-09-17 s1'. rules.payload_echo was rewritten in place to the adopted rule (it ends
+    '(DESIGN BLOCK v1.1 2026-09-17 s1; REPLACES the candidate's word-sequence rule)'), and
+    rules.standing.payload_echo now reads 'advisory (ADOPTED, DESIGN BLOCK v1.1 2026-09-17)' —
+    neither contains 'SUPERSEDED'.
+  NOTE:
+    Second defect in the same sentence: rules.standing.payload_echo at HEAD read 'advisory
+    (adoption: design seat, from this screen)', which asserted the ADOPTION STATUS as pending,
+    not the word-sequence rule. So the four-field set is not 'the fields that still asserted the
+    word-sequence rule as live' either. The four indices themselves are correct (declared_limits
+    and wider_... each have 3 elements; [0] and [1] are the named ones).
+
+[GLOSS.35] holds=True  severity=clean
+  CLAIM:
+    a values-check found them contradicting the adoption fields written into the same object
+  EVIDENCE:
+    results/raw/2026-09-17_v5_adoption_entry_valuescheck.txt:876-882 ('...:244
+    declared_limits[0] "word-sequence identity..." ... The word-sequence rule and its declared
+    widening are still live, unmarked, in the same file') and :1907-1915 ('adoption.payload_echo
+    now says the block "REPLACES the candidate's word-sequence rule" while ... internal
+    contradiction in a file the entry presents as the adoption record').
+  NOTE:
+
+
+[GLOSS.36] holds=True  severity=clean
+  CLAIM:
+    Top-level `adopted`/`adopted_by` stay as the v4 record of 2026-09-05/06
+  EVIDENCE:
+    Worktree json: adopted = true; adopted_by.ratified = 'PI, 2026-09-05 (PI clock)',
+    adopted_by.results_md = 'RESULTS.md, 2026-09-06 (Code stamp); design adjudication authored
+    PI date 2026-09-05'. Both keys are byte-identical to HEAD (see GLOSS.37).
+  NOTE:
+
+
+[GLOSS.37] holds=True  severity=clean
+  CLAIM:
+    everything outside v5_candidate is byte-equal
+  EVIDENCE:
+    Brace-matched the v5_candidate object in both the worktree file and `git show
+    HEAD:data/configs/contentclass_candidate.json` and compared the surrounding bytes: prefix
+    9,569 bytes identical in both, suffix b'\n}' identical; only the v5_candidate block differs.
+    JSON-level check agrees (every top-level key except v5_candidate compares equal).
+  NOTE:
+    Byte-level, not merely value-level — the stronger reading of the gloss holds.
+
+[GLOSS.38] holds=True  severity=clean
+  CLAIM:
+    scripts/e2d_contentclass_screen_v5.py: its three hardcoded self-description strings, which
+    had stamped the superseded rule into the artifact it writes
+  EVIDENCE:
+    git diff shows exactly three changed strings: rules.payload_echo (:75),
+    rules.standing.payload_echo (:76) and payload_echo.declared_limit (:107). All three are
+    members of `out` / `block`, which are json.dump'ed — and the old texts are visible verbatim
+    in the committed data/e2d/contentclass_screen_v5.json.
+  NOTE:
+    Confirmed present in the new artifact too: data/e2d/contentclass_screen_v5_adopted.json
+    rules.payload_echo now carries the VERBATIM wording.
+
+[GLOSS.39] holds=True  severity=clean
+  CLAIM:
+    NEW: scripts/e2d_v5_exclusion_parity.py and its artifact.
+  EVIDENCE:
+    Both untracked in `git status --porcelain`: scripts/e2d_v5_exclusion_parity.py and
+    data/e2d/v5_exclusion_parity.json (962 bytes, mtime Sep 17 17:36).
+  NOTE:
+    See GLOSS.24: they are not the only new files in the change set.
+
+[GLOSS.40] holds=True  severity=clean
+  CLAIM:
+    Screen under the adopted boundary (model-free, blind to arm)
+  EVIDENCE:
+    data/e2d/contentclass_screen_v5_adopted.json: blind_to_arm true, model_free true;
+    spec_version carries the ADOPTED/verbatim-boundary string.
+    scripts/e2d_contentclass_screen_v5.py loads no model (arm labels appear only in
+    v5_by_arm_unblinded_after).
+  NOTE:
+
+
+[GLOSS.41] holds=True  severity=clean
+  CLAIM:
+    artifact data/e2d/contentclass_screen_v5_adopted.json and raw
+    results/raw/2026-09-17_e2d_contentclass_screen_v5_adopted.txt
+  EVIDENCE:
+    Both exist (15,723 bytes and 7,241 bytes, mtime Sep 17 17:36). The raw's INVOCATION line
+    names `scripts/e2d_contentclass_screen_v5.py --out
+    data/e2d/contentclass_screen_v5_adopted.json` and ends 'SCREEN_EXIT=0  2026-09-17 21:36:07
+    UTC'.
+  NOTE:
+    Independently reproduced: the scratchpad re-run screen_recheck.json is byte-identical to the
+    committed artifact (`diff` returns nothing).
+
+[GLOSS.42] holds=True  severity=clean
+  CLAIM:
+    the candidate-era artifact is not overwritten, trap 22
+  EVIDENCE:
+    sha256 of data/e2d/contentclass_screen_v5.json (worktree) =
+    d8d7305a5afad8b421863f7ab9589130332643391bf6c84ca5352a153abc1cbd = sha256 of `git show
+    HEAD:data/e2d/contentclass_screen_v5.json`; `git status` lists it as unmodified; mtime still
+    Sep 8 18:25. The run passed `--out ..._adopted.json` (the script's default out is the
+    candidate path).
+  NOTE:
+    Trap 22 is quoted correctly in substance: HANDOFF-2026-09-12.md:278 'A SUBSET run can
+    silently overwrite a canonical artifact.'
+
+[GLOSS.43] holds=True  severity=clean
+  CLAIM:
+    payload_echo e2d 7, e2a 6, e2b 6, format 3 = 22
+  EVIDENCE:
+    Recomputed from data/e2d/contentclass_screen_v5_adopted.json
+    per_corpus[*].payload_echo.hits: 7, 6, 6, 3; sum 22. Raw agrees ('payload_echo 7 of 108
+    transform rounds', '6 of 244', '6 of 226', '3 of 67').
+  NOTE:
+
+
+[GLOSS.44] holds=True  severity=clean
+  CLAIM:
+    from the candidate's e2d 8, e2a 6, e2b 7, format 3 = 24
+  EVIDENCE:
+    Recomputed from data/e2d/contentclass_screen_v5.json (the 166f8ff artifact): 8, 6, 7, 3; sum
+    24.
+  NOTE:
+    Correct corpus attribution — these are the candidate-era artifact's numbers, and the
+    referent-check raw (:2118) records the same series.
+
+[GLOSS.45] holds=True  severity=clean
+  CLAIM:
+    the two non-verbatim hits drop, one from e2d and one from e2b, and no hit with
+    differs_only_in_punctuation_or_emphasis remains on any corpus
+  EVIDENCE:
+    Set-differenced every_hit texts between the two artifacts: exactly two dropped, e2d '"The
+    meeting has been moved to 3pm!"' and e2b '**The meeting has been moved to 3pm!**', both with
+    verbatim_including_punctuation=false and differs_only_in_punctuation_or_emphasis=true; no
+    hit added anywhere. In the adopted artifact, every hit has
+    verbatim_including_punctuation=true and no hit carries the punctuation/emphasis flag
+    (per-corpus counter punctuation_or_emphasis_only_change = 0 on all four).
+  NOTE:
+    Checked at hit level, not only via the per-corpus counter.
+
+[GLOSS.46] holds=True  severity=clean
+  CLAIM:
+    The format corpus still catches exactly the three read-found cases (F1 s22 forced0, F2 s5
+    free4, F2 s8 forced2), `extra: []`
+  EVIDENCE:
+    Adopted artifact check_read_found_cases: known and caught are both
+    [['F1',22,'forced0'],['F2',5,'free4'],['F2',8,'forced2']], all_caught true,
+    extra_in_format_set []. format payload_echo.hits = 3 and the raw lists those three rounds by
+    label. The candidate artifact has the identical block, so 'still' holds.
+  NOTE:
+    'extra: []' is the RAW's printed wording ('...; extra: []'); the artifact field is spelled
+    extra_in_format_set. Same value either way.
+
+[GLOSS.47] holds=True  severity=clean
+  CLAIM:
+    wrong_task under the id pool: e2d 3 → 2, e2a 1 → 1, e2b 10 → 3, format 2 → 0 (removed by the
+    id fix e2d 1, e2a 0, e2b 7, format 2; added_under_v5 0 and unmapped task texts 0 on every
+    corpus)
+  EVIDENCE:
+    Adopted artifact per_corpus[*].wrong_task: e2d {v4:3, v5:2, removed_by_id_fix len 1}, e2a
+    {1,1,0}, e2b {10,3,7}, format {2,0,2}; added_under_v5 empty on all four; unmapped_task_texts
+    = 0 on all four. Raw agrees line by line.
+  NOTE:
+    These figures are identical in the candidate artifact — the verbatim boundary does not touch
+    wrong_task — but the entry tables them from the adopted artifact, which is the right set.
+
+[GLOSS.48] holds=True  severity=quotation
+  CLAIM:
+    8/6/7/3 = 24 is the candidate series and 21 its first three terms; the implemented
+    post-carve-out series is 7/6/6/3 = 22, which is §1's own "22 of 24 hits stand"
+  EVIDENCE:
+    Arithmetic: 8+6+7+3 = 24, 8+6+7 = 21, 7+6+6+3 = 22 — all recomputed. The phrase '22 of 24
+    hits stand' is verbatim in the relayed §1 (scratchpad block_s1.txt: 'Consequence on the
+    screen: 22 of 24 hits stand; the two carve-outs ... are not hits.').
+  NOTE:
+    Caveat: that sentence is precisely the one dropped, unmarked, from the entry's own 'The
+    adjudication (§1), quoted' passage — so a reader checking §1 against the entry's quotation
+    will not find the phrase the entry later attributes to §1. The block's §2 wording itself
+    remains unverifiable (no on-disk copy).
+
+[GLOSS.49] holds=True  severity=clean
+  CLAIM:
+    The figures above are the artifact's.
+  EVIDENCE:
+    Every figure in that bullet (22, 24, the four payload_echo counts, the four wrong_task
+    pairs, removed_by_id_fix, added_under_v5, unmapped) was recomputed directly from
+    data/e2d/contentclass_screen_v5_adopted.json (and, for the 24-series, from
+    data/e2d/contentclass_screen_v5.json, which the entry labels 'the candidate's').
+  NOTE:
+
+
+[GLOSS.50] holds=True  severity=clean
+  CLAIM:
+    scripts/e2d_v5_exclusion_parity.py compares the `exclusion` string AuditV3.check emits per
+    round — the audit level the block names, not the classify level beneath it
+  EVIDENCE:
+    scripts/e2d_v5_exclusion_parity.py:85-86 `e5 = a5.check(...).exclusion` / `e4 =
+    a4.check(...).exclusion`, compared at :89. Docstring :7-11 'The assertion is at
+    AuditV3.check level, not at the classify level'. Artifact 'level' field says the same.
+  NOTE:
+    'The audit level the block names' cannot be verified — §3 (1) is not on disk; the script's
+    own docstring is the only attribution.
+
+[GLOSS.51] holds=True  severity=clean
+  CLAIM:
+    ...under adopted v5 routing against a v4-routing subclass of the same audit, over EVERY
+    round of every corpus, and raises on any mismatch
+  EVIDENCE:
+    AuditV3RoutingV4(AuditV3) at :31-45 re-implements check with V4.classify_v4; corpora() at
+    :60-64 iterates all rows of e2d/e2a/e2b/format; :103 `assert total_mismatch == 0` raises
+    AssertionError on any mismatch.
+  NOTE:
+    The pools also differ by design (others5 = id pool, others4 = text pool, :83-84), which is
+    what makes the exclusion-string identity a real test of the routing swap rather than a
+    tautology on the advisory side.
+
+[GLOSS.52] holds=True  severity=clean
+  CLAIM:
+    e2d 912 rounds (78 excluded), format 531 (5), e2a 1,894 (29), e2b 1,707 (41): 5,044 rounds,
+    0 mismatches → PASS, byte-identical
+  EVIDENCE:
+    data/e2d/v5_exclusion_parity.json per_corpus: e2d {912, 78, 0}, e2a {1894, 29, 0}, e2b
+    {1707, 41, 0}, format {531, 5, 0}; totals {5044, 0}; verdict 'PASS -- byte-identical'. Raw
+    prints the same four lines. Cross-checked against the screen raw: e2d 912-887 offered = 25
+    audit exclusions + 53 content (37+3+13) = 78; format 531-526 = 5; e2a 5+13+11 = 29; e2b
+    25+15+1 = 41.
+  NOTE:
+    Independently reproduced: the scratchpad re-run parity_recheck.json is byte-identical to the
+    committed artifact.
+
+[GLOSS.53] holds=True  severity=clean
+  CLAIM:
+    artifact data/e2d/v5_exclusion_parity.json, raw
+    results/raw/2026-09-17_e2d_v5_exclusion_parity.txt
+  EVIDENCE:
+    Both exist; raw ends 'PARITY_EXIT=0  2026-09-17 21:36:30 UTC' and names the invocation
+    `scripts/e2d_v5_exclusion_parity.py`.
+  NOTE:
+
+
+[GLOSS.54] holds=True  severity=figure
+  CLAIM:
+    The guard was negative-tested (rule 23): a forced-mismatch subclass made all 5,044 rounds
+    mismatch and the AssertionError fired.
+  EVIDENCE:
+    Attested only by the raw's own header note:
+    results/raw/2026-09-17_e2d_v5_exclusion_parity.txt lines 4-6, 'the guard was negative-tested
+    this session (a forced-mismatch subclass made all 5044 rounds mismatch and the
+    AssertionError fired)'. Consistent with the script: :103 `assert total_mismatch == 0` with
+    an f-string message.
+  NOTE:
+    No artifact or stdout of the negative test survives on disk (the restoring re-run overwrote
+    it, by the entry's own account), so the figure '5,044 of 5,044' rests on the note alone, not
+    on a recomputable record.
+
+[GLOSS.55] holds=True  severity=clean
+  CLAIM:
+    That test wrote its FAIL output over the artifact and the committed artifact is the
+    restoring re-run — the negative test should have used `--out`, and the raw says so.
+  EVIDENCE:
+    Mechanism confirmed in code: json.dump at :99 precedes the assert at :103, so a failing run
+    writes the artifact before raising; `--out` exists at :69. The raw says verbatim: 'that test
+    overwrote this artifact with its FAIL output and THIS run restores it. The negative test
+    should have used --out.'
+  NOTE:
+    The restored artifact is the good one: verdict PASS, 0 mismatches, and byte-identical to an
+    independent re-run.
+
+[GLOSS.56] holds=True  severity=clean
+  CLAIM:
+    Post-change site check: 154/154, 67/67, 21/21, 20/20, 46/46, 18/18, 24/24
+  EVIDENCE:
+    results/raw/2026-09-17_v5_adoption_sitecheck.txt, in the entry's order: regression '154/154
+    reproduced through valence_core'; format_recon '67/67 selftest checks pass'; k1_stage1
+    '21/21'; k1_analyze '20/20'; e2d_d2_analyze '46/46 branches verified'; recon_echo '18/18';
+    closure_verify3 '24/24 third-pass checks pass'. Seven '=== ' suite headers, matching 'six of
+    the seven'.
+  NOTE:
+    Raw header confirms it is post-change: 'the seven suites AFTER the content-class v5 adoption
+    edits ... HEAD: 16705a2 + working tree'.
+
+[GLOSS.57] holds=True  severity=clean
+  CLAIM:
+    gated on each suite's summary line rather than on `$?`
+  EVIDENCE:
+    Raw header line 4: 'Gated on each suite's SUMMARY LINE, not on $? (trap 12)'. Trap 12
+    (HANDOFF-2026-09-12.md:260) is '`box_determinism.py` ALWAYS exits 0. Gate on `SUMMARY:`.'
+  NOTE:
+
+
+[GLOSS.58] holds=True  severity=gloss
+  CLAIM:
+    A first attempt mis-quoted the invocations so six of the seven never started and every one
+    still printed EXIT=0 (the exit of `tail`, not of python) — traps 5 and 12, caught by reading
+    the raw
+  EVIDENCE:
+    Raw header lines 4-5: 'a first attempt this session mis-quoted the invocations so six of
+    seven never started and all reported EXIT=0 (trap 5)'. Trap 5 (HANDOFF-2026-09-12.md:246) is
+    'A skipped case reads as a pass. [PERMANENT] Assert every required case RAN.' — apt.
+  NOTE:
+    Two details are the entry's own and appear nowhere on disk: the causal gloss '(the exit of
+    `tail`, not of python)' — `grep -n tail` on the sitecheck raw returns nothing — and 'caught
+    by reading the raw'. No raw of the failed first attempt exists; only the surviving run's
+    header records it.
+
+[GLOSS.59] holds=True  severity=clean
+  CLAIM:
+    The k path's AuditV3WithV5Advisories subclass in valence_core/k/sessions.py was already this
+    wiring and is unchanged
+  EVIDENCE:
+    valence_core/k/sessions.py:40-54 (subclass calling V5.classify_v5) and :63-70
+    (others_factory -> V5.others_by_task_id) — identical body to the new AuditV3.check. `git
+    status --porcelain valence_core/k/sessions.py` is empty, and `git diff 7742e2c --
+    valence_core/k/sessions.py` is empty.
+  NOTE:
+    Corroborated by the referent check's own re-verification, [V3.4] at :2145.
+
+[GLOSS.60] holds=True  severity=clean
+  CLAIM:
+    the PROPOSAL-k Stage 1 campaign of record (7742e2c) ran under v5 advisories — under the
+    candidate's word-sequence payload_echo, not this block's verbatim one
+  EVIDENCE:
+    `git log --oneline -1 7742e2c` = 'PROPOSAL-k STAGE 1 -- CHANNEL STUDY ... Artifacts of
+    record committed (k1_sessions / k1_reads / k1_analysis)'. `git show
+    7742e2c:valence_core/e2d/contentclass_v5.py` has is_payload_echo returning `V3._words(body)
+    == V3._words(payload_of(task_text))` with docstring 'Exact word-sequence identity.'
+    k/sessions.py at that commit already routed advisories through V5.
+  NOTE:
+
+
+[GLOSS.61] holds=True  severity=clean
+  CLAIM:
+    Stage 1 is not rescored here.
+  EVIDENCE:
+    No k artifact is touched by this change set: `git status --porcelain` lists no data/k/*
+    path, and the only new artifacts are data/e2d/contentclass_screen_v5_adopted.json and
+    data/e2d/v5_exclusion_parity.json. audit_v3.py's own docstring now states 'adoption changes
+    what NEW campaigns record, never a campaign already scored.'
+  NOTE:
+    Worth the design seat's eye, though it is not a false claim: Stage 1's advisory counts were
+    produced under a payload_echo rule that no longer exists in the tree, and nothing on disk
+    now reproduces them.
+
+[GLOSS.62] holds=False  severity=gloss
+  CLAIM:
+    grep over valence_core and scripts for pool construction and AuditV3 returns two audit
+    construction sites, scripts/format_recon.py (changed here) and scripts/k1_stage1.py (via
+    k/sessions.py, already the id pool)
+  EVIDENCE:
+    Re-run: `grep -rn 'AuditV3' valence_core scripts` returns three construction sites in the
+    working tree — format_recon.py:153 `AuditV3(v2=v2)`, k1_stage1.py:51
+    `K.AuditV3WithV5Advisories(v2=v2)`, and scripts/e2d_v5_exclusion_parity.py:82 `a5, a4 =
+    AuditV3(v2=v2), AuditV3RoutingV4(v2=v2)` — the last added by this same change.
+  NOTE:
+    The claim holds if 'caller' is read as a campaign/runner that scores rounds of record; the
+    third site is this block's own parity instrument. But the sentence describes the output of a
+    grep, and that output is three. The k1_stage1 half is correct: it builds the id pool via
+    sessions.others_factory (:63-70).
+
+[GLOSS.63] holds=False  severity=gloss
+  CLAIM:
+    Two further v4 text-comparison pools remain and are deliberate:
+    scripts/e2d_contentclass_screen_v4.py and the v4 baseline arm inside the v5 screen
+  EVIDENCE:
+    `grep -rn '!= task_text\|!= r\["task"\]' valence_core scripts` returns four live pools of
+    that shape, not two: e2d_contentclass_screen_v4.py:39, e2d_contentclass_screen_v5.py:56 (the
+    v4 arm), e2d_contentclass_screen.py:118 (the v3-era screen, `others = [t for t in TASKS if t
+    != r['task']]`), and scripts/e2d_v5_exclusion_parity.py:84 (`others4`, added here).
+  NOTE:
+    The two named are correctly characterised — both reproduce a committed record and changing
+    them would move it — and the same defence covers the other two (the v3 screen is the v3
+    record; others4 is the parity baseline). The count is what fails.
+
+[GLOSS.64] holds=True  severity=clean
+  CLAIM:
+    Flag (a): k/sessions.py's module docstring still says "`audit_v3.py` itself is not
+    modified"; that is now false
+  EVIDENCE:
+    valence_core/k/sessions.py:16 ends '...exclusions are audit v3's (v2 + the adopted
+    exclusion-bearing classes), unchanged. `audit_v3.py` itself is not modified.' — quotation
+    verbatim. audit_v3.py is modified in this change set (13 insertions, 7 deletions).
+  NOTE:
+
+
+[GLOSS.65] holds=True  severity=clean
+  CLAIM:
+    and the subclass is behaviourally identical to its parent
+  EVIDENCE:
+    Compared the two check() bodies: k/sessions.py:44-54 and audit_v3.py:50-61 now perform the
+    same five steps in the same order with the same return shapes, both dispatching to
+    V5.classify_v5. No remaining difference beyond line wrapping.
+  NOTE:
+
+
+[GLOSS.66] holds=True  severity=quotation
+  CLAIM:
+    Left untouched — the module is frozen and the block says it "stays"
+  EVIDENCE:
+    k/sessions.py is unmodified (`git status` clean for it); HANDOFF-2026-09-12.md:369-374 lists
+    '`k/sessions.py`' under '**Frozen** (they scored committed artifacts)'.
+  NOTE:
+    The one-word quotation '"stays"' has no on-disk source: the block is not on disk and the
+    nearest recorded wording is the config's adoption field, 'valence_core/k/sessions.py already
+    built the id pool and is unchanged.'
+
+[GLOSS.67] holds=True  severity=clean
+  CLAIM:
+    Flag (b): AUDIT_VERSION has changed, and frozen valence_core/formats/recon.py stamps it into
+    artifacts; a future format-recon run carries the new string and v5 advisories. No committed
+    exclusion moves.
+  EVIDENCE:
+    AUDIT_VERSION rewritten at audit_v3.py:32 (diff). valence_core/formats/recon.py:95 imports
+    AUDIT_VERSION and :741 writes `"audit_v3": {"version": AUDIT_VERSION, ...}` into its
+    artifact; recon.py is unmodified and is on the §7 Frozen list (HANDOFF-2026-09-12.md:371).
+    scripts/format_recon.py:153 constructs the now-v5-routing AuditV3. 'No committed exclusion
+    moves' is the parity result (0/5044).
+  NOTE:
+
+
+[GLOSS.68] holds=True  severity=clean
+  CLAIM:
+    Flag (c): contentclass_v5.py is itself on the committed frozen list (HANDOFF-2026-09-12 §7,
+    parenthesised "(candidate)")
+  EVIDENCE:
+    HANDOFF-2026-09-12.md §7 'Tooling', Frozen paragraph, final item: '`e2d/contentclass_v5.py`
+    (candidate).' The file is committed (not in the untracked list; the untracked handoff is the
+    09-13 one).
+  NOTE:
+
+
+[GLOSS.69] holds=True  severity=clean
+  CLAIM:
+    Flag (d): The parity assertion is a standing script but is not in the pinned regression
+    suite; adding it would move the 154/154.
+  EVIDENCE:
+    `grep -rn 'exclusion_parity\|v5_exclusion' valence_core scripts` matches only inside the
+    parity script itself — nothing in valence_core/regression. That suite also references
+    neither audit_v3 nor contentclass_v5. Its total is computed, not fixed:
+    valence_core/regression/analysis.py:1648 prints `f"  {len(checks) - n_fail}/{len(checks)}
+    reproduced through valence_core"`, so an added check moves both numbers.
+  NOTE:
+
+
+[GLOSS.70] holds=True  severity=clean
+  CLAIM:
+    EXCLUSION_BEARING is still v4's tuple object (implicit in 'nothing exclusion-bearing
+    changes' / 'v5 is its advisory extension')
+  EVIDENCE:
+    contentclass_v5.py:50 `EXCLUSION_BEARING = V4.EXCLUSION_BEARING` — untouched by the diff;
+    contentclass_v4.py:61 defines it as
+    ('null_response','stuck_attractor','preamble_without_content'), which is exactly the
+    exclusion_bearing list written into data/e2d/v5_exclusion_parity.json.
+  NOTE:
+    It is the same object by reference, not a copy, so the two cannot drift.
+
+[GLOSS.71] holds=True  severity=clean
+  CLAIM:
+    The screen figures quoted as 'the candidate's' come from the candidate-era artifact and
+    those quoted as adopted come from the adopted one (set attribution).
+  EVIDENCE:
+    Checked both directions: 8/6/7/3 and the 24 total exist only in
+    data/e2d/contentclass_screen_v5.json; 7/6/6/3 and 22 exist only in
+    data/e2d/contentclass_screen_v5_adopted.json. The wrong_task pairs (3→2, 1→1, 10→3, 2→0) are
+    present identically in both, and the entry tables them under the adopted screen, which is
+    the set it ran.
+  NOTE:
+    No count in the entry is quoted from the wrong corpus or the wrong artifact version.
+
+[GLOSS.72] holds=True  severity=clean
+  CLAIM:
+    All artifact and raw paths cited in the entry exist as written.
+  EVIDENCE:
+    Verified on disk: data/e2d/contentclass_screen_v5_adopted.json,
+    data/e2d/v5_exclusion_parity.json,
+    results/raw/2026-09-17_contentclass-v5-adoption_referent_check.txt,
+    results/raw/2026-09-17_e2d_contentclass_screen_v5_adopted.txt,
+    results/raw/2026-09-17_e2d_v5_exclusion_parity.txt,
+    results/raw/2026-09-17_v5_adoption_sitecheck.txt, valence_core/e2d/audit_v3.py,
+    valence_core/e2d/contentclass_v5.py, valence_core/k/sessions.py, scripts/format_recon.py,
+    scripts/e2d_contentclass_screen_v5.py, scripts/e2d_v5_exclusion_parity.py,
+    scripts/e2d_contentclass_screen_v4.py, scripts/k1_stage1.py,
+    data/configs/contentclass_candidate.json, valence_core/formats/recon.py.
+  NOTE:
+    All six raw/artifact files cited are still untracked — they must be `git add`ed explicitly
+    (trap 2 / rule 27) for the entry's links to resolve after the commit.
+
+####################################################################################################
+LENS PROV — 103 claims, 17 failing
+####################################################################################################
+
+[PROV.1] holds=True  severity=clean
+  CLAIM:
+    CONTENT-CLASS v5 ADOPTED, advisory only (DESIGN BLOCK v1.1, design seat, PI date 2026-09-17)
+  EVIDENCE:
+    valence_core/e2d/contentclass_v5.py:1-2 'ADOPTED, ADVISORY ONLY (DESIGN BLOCK v1.1, design
+    seat, PI date 2026-09-17, adjudicated from the 166f8ff screen)';
+    data/configs/contentclass_candidate.json v5_candidate.adoption.block='DESIGN BLOCK v1.1 --
+    content-class v5 adoption (replaces the 09-13 block); design seat -> Jason -> Code',
+    .ratified='PI, 2026-09-17 (PI date; Jason confirms)', .status='ADOPTED, advisory only'.
+  NOTE:
+    Header wording reproduces the on-disk strings exactly.
+
+[PROV.2] holds=True  severity=clean
+  CLAIM:
+    The block's §1 adjudication narrows payload_echo to VERBATIM — whitespace-normalised,
+    punctuation and markup INCLUDED — replacing the candidate's word-sequence rule
+  EVIDENCE:
+    git diff valence_core/e2d/contentclass_v5.py: `- return V3._words(body) ==
+    V3._words(payload_of(task_text))` / `+ return _ws(body) == _ws(payload_of(task_text))`; new
+    `_ws` docstring 'runs of whitespace to one space, ends trimmed. Nothing else is removed --
+    punctuation and markup stay in.'
+  NOTE:
+    The code change is exactly the narrowing described.
+
+[PROV.3] holds=True  severity=figure
+  CLAIM:
+    the two hits the 166f8ff screen flagged for the design seat become transforms, not hits (24
+    → 22)
+  EVIDENCE:
+    Recomputed from data/e2d/contentclass_screen_v5.json (candidate): payload_echo hits e2d 8 /
+    e2a 6 / e2b 7 / format 3 = 24, punctuation_or_emphasis_only_change e2d 1, e2b 1, others 0.
+    data/e2d/contentclass_screen_v5_adopted.json: 7/6/6/3 = 22, punct-only 0 everywhere.
+  NOTE:
+    24 → 22 and 'two' both recomputed from the two artifacts.
+
+[PROV.4] holds=True  severity=path
+  CLAIM:
+    166f8ff is the screen that flagged them
+  EVIDENCE:
+    `git log -1 -- data/e2d/contentclass_screen_v5.json` → 166f8ff 'Design dispositions
+    2026-09-08 applied ... content-class v5 CANDIDATE built ... and blind-screened over e2a,
+    e2b, e2d and the 56 format sessions'. Full sha 166f8ffa5b9daff0c66ab1f50ae303d80a363338.
+  NOTE:
+    Hash resolves and is the commit that produced the candidate screen artifact.
+
+[PROV.5] holds=True  severity=clean
+  CLAIM:
+    Both declared wiring changes made: the classify swap in audit_v3.py and the caller's pool
+    builder in scripts/format_recon.py
+  EVIDENCE:
+    git diff valence_core/e2d/audit_v3.py:53 `- V4.classify_v4(...)` / `+ V5.classify_v5(...)`;
+    git diff scripts/format_recon.py others_factory now builds pool_by_id/id_of and calls
+    V5.others_by_task_id.
+  NOTE:
+    Both changes present in the working tree diff.
+
+[PROV.6] holds=True  severity=figure
+  CLAIM:
+    Exclusion-bearing behaviour byte-identical, now asserted at AuditV3.check level over all
+    5,044 rounds of all four corpora
+  EVIDENCE:
+    data/e2d/v5_exclusion_parity.json level='AuditV3.check -- the emitted `exclusion` string,
+    every round of every corpus'; totals n_rounds 5044, n_mismatch 0; per_corpus keys
+    e2d/e2a/e2b/format (four). 912+1894+1707+531 = 5044 recomputed.
+  NOTE:
+    Both the level claim and the 5,044 total recompute.
+
+[PROV.7] holds=True  severity=clean
+  CLAIM:
+    v3 and v4 frozen; the adopted content class of record remains v4 rev 3 under audit v3
+  EVIDENCE:
+    data/configs/contentclass_candidate.json
+    v5_candidate.adoption.adopted_content_class_of_record='v4 rev 3 under audit v3 -- unchanged
+    by this block; v5 is its advisory extension.'; version field 'content-class-draft-v3 ->
+    adopted as content-class-v4 rev 3'; contentclass_v5.py:3-6 same claim.
+  NOTE:
+
+
+[PROV.8] holds=True  severity=clean
+  CLAIM:
+    Stamp verified at write time: date -u → Thu Sep 17 21:38:20 UTC 2026; entry dated 2026-09-17
+  EVIDENCE:
+    Raw stamps, all earlier the same day: referent check 20:16:13, screen 21:36:04/21:36:07,
+    parity 21:36:28/21:36:30, sitecheck 21:37:01/21:37:19 UTC. All four raw filenames carry
+    2026-09-17. Session date is 2026-09-17.
+  NOTE:
+    Entry stamp postdates every raw stamp it cites; internally consistent.
+
+[PROV.9] holds=True  severity=path
+  CLAIM:
+    results/raw/2026-09-17_contentclass-v5-adoption_referent_check.txt exists
+  EVIDENCE:
+    File present, 2165 lines; header 'RAW RECORD — content-class v5 ADOPTION design block,
+    referent check against HEAD 16705a2'.
+  NOTE:
+    Link label in the entry is the abbreviated '_v5-adoption_referent_check'; the href path is
+    exact.
+
+[PROV.10] holds=True  severity=figure
+  CLAIM:
+    37 referents
+  EVIDENCE:
+    grep -c '^\[V[0-9]*\.[0-9]*\]  CHECKER' = 37; group headers 'GROUP V1 — 11 referents', 'V2 —
+    15', 'V3 — 11' sum to 37; raw TOTALS 'referents 37'.
+  NOTE:
+
+
+[PROV.11] holds=True  severity=figure
+  CLAIM:
+    10 unresolved
+  EVIDENCE:
+    grep -c 'CHECKER resolves=False' = 10; raw TOTALS 'checker-unresolved 10'.
+  NOTE:
+
+
+[PROV.12] holds=False  severity=figure
+  CLAIM:
+    75 refuter verdicts
+  EVIDENCE:
+    The raw's TOTALS line does say 'refuter verdicts 75', but a recount of the raw body gives
+    74: grep -c '^  REFUTER \[' = 74, grep -c 'overturned=' = 74, and a per-referent tally shows
+    every one of the 37 referents carries exactly 2 refuter verdicts (Counter({2: 37}), 37×2 =
+    74).
+  NOTE:
+    The entry reproduces the raw's own header total rather than the verdicts the raw carries.
+    Rule 1 says recompute from the file: the file holds 74. Fixing this needs either the entry
+    corrected to 74 or the raw's TOTALS line reconciled (the header notes an OAuth 401 killed
+    one refuter agent on the first pass, which is a plausible source of the off-by-one).
+
+[PROV.13] holds=True  severity=figure
+  CLAIM:
+    6 overturned by the refuter lenses
+  EVIDENCE:
+    grep -c 'overturned=True' = 6; raw TOTALS 'overturned 6'.
+  NOTE:
+
+
+[PROV.14] holds=True  severity=figure
+  CLAIM:
+    the re-verification section carries six findings CONFIRMED by Code and one ANSWERED
+  EVIDENCE:
+    Section 'CODE RE-VERIFICATION (trap 25)' at line 2114 carries [V1.9/V2.2/V2.7/V2.9]
+    CONFIRMED, [V2.3] CONFIRMED, [V2.13/V3.2] CONFIRMED, [V3.4] CONFIRMED, [V3.5] ANSWERED,
+    [V1.7] CONFIRMED, [V3.7] CONFIRMED = 6 CONFIRMED + 1 ANSWERED.
+  NOTE:
+
+
+[PROV.15] holds=True  severity=gloss
+  CLAIM:
+    That raw renders no STOP verdict of its own
+  EVIDENCE:
+    grep for 'VERDICT|DO NOT COMMIT|STOPS the commit|does not commit' over the raw returns
+    nothing; the file ends with [V3.7] and carries only a TOTALS line. The four 'STOP' hits in
+    the file (lines 1787, 1800, 1818, 1840) are quotations of the committed ADDENDUM-k1 RESULTS
+    entry, not this check's verdict.
+  NOTE:
+
+
+[PROV.16] holds=True  severity=unchangedness
+  CLAIM:
+    no committed entry records one [a STOP verdict]
+  EVIDENCE:
+    `grep -n '^- 20' RESULTS.md` — 130 entries, newest 2026-09-11 (line 24, ADDENDUM-k1 STOP;
+    line 204, PROPOSAL-k Stage 1). No committed entry dated 2026-09-12 or later exists, so none
+    records a STOP on the 09-13 block.
+  NOTE:
+
+
+[PROV.17] holds=False  severity=path
+  CLAIM:
+    Code reported the unresolved set in thread and the design seat reissued the block
+  EVIDENCE:
+    Nothing on disk records either event. The raw's header records only the run/resume ('Run
+    2026-09-13 ... resumed 2026-09-17'); no file carries the report or the reissue.
+  NOTE:
+    Not verifiable against any file. It may well be true of the thread, but a values-check
+    working from disk cannot confirm it; the entry states it flatly rather than as an in-thread
+    recollection.
+
+[PROV.18] holds=False  severity=quotation
+  CLAIM:
+    The block's cover line reads "All four Code-confirmed findings accepted; nothing overturned
+    by design"
+  EVIDENCE:
+    grep over the repo finds this sentence nowhere. The block text is not on disk (the entry
+    itself says so two sentences later, for §1).
+  NOTE:
+    Unverifiable quotation. The entry caveats the §1 quotation ('The block text is not on disk;
+    this quotation is from the routing as relayed') but presents this cover-line quotation
+    without that caveat, two sentences earlier. The same caveat should carry here.
+
+[PROV.19] holds=True  severity=figure
+  CLAIM:
+    the count of Code-confirmed findings in the raw is six
+  EVIDENCE:
+    Same six CONFIRMED entries as PROV.14, counted in
+    results/raw/2026-09-17_contentclass-v5-adoption_referent_check.txt lines 2118-2168.
+  NOTE:
+    The entry's correction of the block's 'four' is itself correct.
+
+[PROV.20] holds=True  severity=path
+  CLAIM:
+    The block replaces the 09-13 block
+  EVIDENCE:
+    data/configs/contentclass_candidate.json v5_candidate.spec (new) 'DESIGN BLOCK v1.1 ...
+    replaces the 09-13 block'; adoption.block same. Corroborating dates: the referent-check raw
+    header 'Run 2026-09-13'; HANDOFF-2026-09-13-design.md exists (untracked).
+  NOTE:
+    Supported only by text this same change wrote plus the raw's run date; the 09-13 block
+    itself is not on disk.
+
+[PROV.21] holds=True  severity=quotation
+  CLAIM:
+    §1 quotation, sentences 2-3: "A punctuation or emphasis change to an otherwise verbatim
+    payload is a transform — a minimal one — and is NOT payload_echo; it goes to the rule-25
+    read like any other advisory-borderline case. Class-level rule, not a string rule."
+  EVIDENCE:
+    Byte-compared after whitespace/dash normalisation against
+    data/configs/contentclass_candidate.json v5_candidate.adoption.boundary_adjudication — exact
+    match. Same text also at valence_core/e2d/contentclass_v5.py:27-32.
+  NOTE:
+    Verbatim.
+
+[PROV.22] holds=False  severity=quotation
+  CLAIM:
+    §1 quotation, sentence 1: "payload_echo fires on a transform task answered with its payload
+    VERBATIM, whitespace-normalized, punctuation and markup INCLUDED in the comparison."
+  EVIDENCE:
+    No on-disk text reproduces this sentence. The nearest reproductions —
+    contentclass_candidate.json:131 rules.payload_echo and
+    scripts/e2d_contentclass_screen_v5.py:75 — read '...answered with that payload VERBATIM,
+    whitespace-normalised, punctuation and markup INCLUDED, after stripping a leading label and
+    quotation marks'.
+  NOTE:
+    Two mismatches with every on-disk reproduction: (i) 'whitespace-normalized' (z) in the
+    quotation vs 'whitespace-normalised' (s) everywhere on disk and everywhere else in this
+    entry; (ii) the quotation drops the 'after stripping a leading label and quotation marks'
+    clause that the code actually implements. Since the block is not on disk the sentence cannot
+    be certified verbatim either way, but the spelling drift inside a quotation is a live risk.
+
+[PROV.23] holds=True  severity=path
+  CLAIM:
+    The block text is not on disk
+  EVIDENCE:
+    No file in the repo contains the block; grep for its cover line and §1 sentence 1 returns
+    nothing. Only paraphrases written by this change (contentclass_v5.py, candidate.json, the
+    screen script, format_recon.py docstring) carry block references.
+  NOTE:
+
+
+[PROV.24] holds=False  severity=gloss
+  CLAIM:
+    §2–§4 survive here as description, not quotation
+  EVIDENCE:
+    The entry's own 'Note on §2's figures' bullet then quotes §2 inside quotation marks: 'the
+    block's §2 prints "hits after the carve-out: e2d 8, e2a 6, e2b 7 → 21 … format 3"'. Flags
+    (a) and (c) likewise quote the block ('stays') and §3 ('§3 (1)', '§3 (2)') by section.
+  NOTE:
+    Self-contradicted within the same entry. Either the §2 text is a quotation (and needs the
+    same not-on-disk caveat) or the promise should be narrowed.
+
+[PROV.25] holds=True  severity=unchangedness
+  CLAIM:
+    What changed (five files...)
+  EVIDENCE:
+    `git diff --numstat` lists exactly five modified files:
+    data/configs/contentclass_candidate.json, scripts/e2d_contentclass_screen_v5.py,
+    scripts/format_recon.py, valence_core/e2d/audit_v3.py, valence_core/e2d/contentclass_v5.py —
+    the same five the entry then itemises, and no others.
+  NOTE:
+    Nothing is claimed that was not changed and nothing changed is left undescribed at file
+    granularity.
+
+[PROV.26] holds=False  severity=figure
+  CLAIM:
+    (... two new)
+  EVIDENCE:
+    `git status --porcelain` untracked, attributable to this change:
+    scripts/e2d_v5_exclusion_parity.py, data/e2d/v5_exclusion_parity.json,
+    data/e2d/contentclass_screen_v5_adopted.json, plus four results/raw/2026-09-17_* files. The
+    entry's own 'NEW:' line names only the parity script 'and its artifact', yet the entry links
+    data/e2d/contentclass_screen_v5_adopted.json as a new artifact of this same change two
+    bullets later.
+  NOTE:
+    Three new non-raw files (script + two artifacts), not two, before counting the four new raw
+    files.
+
+[PROV.27] holds=True  severity=clean
+  CLAIM:
+    contentclass_v5.py: header and SPEC_VERSION from CANDIDATE/PROSPECTIVE to ADOPTED
+    advisory-only
+  EVIDENCE:
+    git diff: header '-- CANDIDATE ... PROSPECTIVE ONLY.' → '-- ADOPTED, ADVISORY ONLY';
+    SPEC_VERSION '-content-class-v5 CANDIDATE (design dispositions 2026-09-08 item 2)...' →
+    '+content-class-v5 ADOPTED advisory-only (DESIGN BLOCK v1.1, PI date 2026-09-17)... verbatim
+    boundary'.
+  NOTE:
+
+
+[PROV.28] holds=True  severity=clean
+  CLAIM:
+    rule (b) restated to the verbatim boundary
+  EVIDENCE:
+    valence_core/e2d/contentclass_v5.py lines 17-33 are the docstring item labelled '(b)'; the
+    diff replaces its 'Exact word-sequence identity (case and punctuation ignored...)' passage
+    with 'VERBATIM identity, whitespace-normalised, punctuation and markup INCLUDED...'.
+  NOTE:
+    '(b)' is the correct label for that item.
+
+[PROV.29] holds=True  severity=clean
+  CLAIM:
+    a new _ws helper (whitespace normalisation only)
+  EVIDENCE:
+    git diff adds `def _ws(s: str) -> str:` with body `return re.sub(r"\s+", " ", s or
+    "").strip()` and docstring 'Nothing else is removed -- punctuation and markup stay in.'
+  NOTE:
+
+
+[PROV.30] holds=True  severity=quotation
+  CLAIM:
+    is_payload_echo now `_ws(body) == _ws(payload_of(task_text))`
+  EVIDENCE:
+    valence_core/e2d/contentclass_v5.py final line of is_payload_echo: `return _ws(body) ==
+    _ws(payload_of(task_text))` — character-for-character as the entry writes it.
+  NOTE:
+    Verbatim code quotation.
+
+[PROV.31] holds=True  severity=unchangedness
+  CLAIM:
+    after the same leading-label and quotation-mark stripping
+  EVIDENCE:
+    `body = _strip_quotes(V4.strip_leading_label(text))` is unchanged across the diff (context
+    line, not a +/- line).
+  NOTE:
+
+
+[PROV.32] holds=True  severity=clean
+  CLAIM:
+    audit_v3.py: a contentclass_v5 import
+  EVIDENCE:
+    git diff adds `from . import contentclass_v5 as V5` at valence_core/e2d/audit_v3.py:30.
+  NOTE:
+
+
+[PROV.33] holds=True  severity=clean
+  CLAIM:
+    the call swapped V4.classify_v4 → V5.classify_v5
+  EVIDENCE:
+    git diff valence_core/e2d/audit_v3.py:55 `- label, standing = V4.classify_v4(text,
+    task_text, earlier, other_tasks)` / `+ label, standing = V5.classify_v5(text, task_text,
+    earlier, other_tasks)`. One occurrence.
+  NOTE:
+
+
+[PROV.34] holds=True  severity=clean
+  CLAIM:
+    AUDIT_VERSION restated
+  EVIDENCE:
+    git diff: '-audit-v3 = e2b_audit_v2 + content-class-v4 (exclusion: null/stuck/preamble;
+    advisory: echo/wrong_task)' → '+audit-v3 = e2b_audit_v2 + content-class-v4 exclusion-bearing
+    (null/stuck/preamble) + content-class-v5 ADVISORIES (task_echo, payload_echo, wrong_task by
+    task id) -- DESIGN BLOCK v1.1 2026-09-17'.
+  NOTE:
+
+
+[PROV.35] holds=True  severity=figure
+  CLAIM:
+    TWO docstring passages — the composition paragraph and the summary box
+  EVIDENCE:
+    The audit_v3.py diff touches exactly two docstring regions: the indented 'audit of record =
+    ...' summary box, and the 'A NEW module, per the amendment...' paragraph. No third docstring
+    hunk.
+  NOTE:
+    Count is right.
+
+[PROV.36] holds=True  severity=gloss
+  CLAIM:
+    ...which had listed only task_echo and wrong_task as advisory where the code now emits three
+  EVIDENCE:
+    `git show HEAD:valence_core/e2d/audit_v3.py` summary box: '+ task_echo, wrong_task as
+    ADVISORY flags routed to the rule-25 read'. contentclass_v5.py:52 ADVISORY = ("task_echo",
+    "payload_echo", "wrong_task") — three.
+  NOTE:
+    True of the summary box. Not true of the composition paragraph, which listed no advisory
+    classes at all ('this composes them and `contentclass_v4`'); the relative clause reads as
+    attaching to both.
+
+[PROV.37] holds=True  severity=figure
+  CLAIM:
+    the code now emits three [advisory classes]
+  EVIDENCE:
+    valence_core/e2d/contentclass_v5.py:52 `ADVISORY = ("task_echo", "payload_echo",
+    "wrong_task")`; audit_v3.AuditV3.check routes standing=='advisory' to
+    AuditV3Result.advisory.
+  NOTE:
+
+
+[PROV.38] holds=True  severity=clean
+  CLAIM:
+    its "PROSPECTIVE ONLY" label is replaced by the claim that survives adoption (no committed
+    artifact is rescored)
+  EVIDENCE:
+    git diff audit_v3.py: '-round is claimed by the tolerant counter first. PROSPECTIVE ONLY: no
+    / -committed artifact is rescored by this module.' → '+... No committed artifact is /
+    +rescored by this module: adoption changes what NEW campaigns record, never a / +campaign
+    already scored.'
+  NOTE:
+    'its' refers to the composition paragraph; the nearer grammatical antecedent in the sentence
+    is 'the summary box', which does not carry the PROSPECTIVE ONLY label.
+
+[PROV.39] holds=True  severity=clean
+  CLAIM:
+    scripts/format_recon.py: an added contentclass_v5 import
+  EVIDENCE:
+    git diff adds `from valence_core.e2d import contentclass_v5 as V5  # noqa: E402` at
+    scripts/format_recon.py:39.
+  NOTE:
+
+
+[PROV.40] holds=True  severity=quotation
+  CLAIM:
+    others_factory — the v4 text comparison `[t for t in pool if t != task_text]`
+  EVIDENCE:
+    `git show HEAD:scripts/format_recon.py` others_factory: `pool = all_paraphrases(tasks)` /
+    `return lambda task_text: [t for t in pool if t != task_text]`. The quoted fragment is
+    character-exact.
+  NOTE:
+
+
+[PROV.41] holds=True  severity=clean
+  CLAIM:
+    now builds pool_by_id/id_of from the corpus and returns a closure that calls
+    V5.others_by_task_id behind a rule-18 stop
+  EVIDENCE:
+    scripts/format_recon.py:161-166: `pool_by_id = {t["id"]: list(t["paraphrases"]) for t in
+    tasks}` / `id_of = {p: t["id"] for t in tasks for p in t["paraphrases"]}` / `def
+    others(task_text)` raising `SystemExit("task text not in the corpus (rule 18 pool hygiene):
+    ...")` / `return V5.others_by_task_id(task_text, pool_by_id, id_of)`.
+  NOTE:
+    'rule 18' is the correct ledger item (held-out/pool hygiene) and is the string the code
+    itself uses.
+
+[PROV.42] holds=True  severity=clean
+  CLAIM:
+    contentclass_candidate.json: v5_candidate.spec [changed]
+  EVIDENCE:
+    git diff line 128: spec 'content-class v5 CANDIDATE (design dispositions 2026-09-08 item 2,
+    PI stamp)...' → 'content-class v5 ADOPTED, ADVISORY ONLY (DESIGN BLOCK v1.1, design seat, PI
+    date 2026-09-17; replaces the 09-13 block)...'.
+  NOTE:
+
+
+[PROV.43] holds=True  severity=figure
+  CLAIM:
+    eight adoption fields
+  EVIDENCE:
+    Recomputed: len(v5_candidate.adoption) = 8, keys
+    ['status','block','ratified','code_stamp','wrong_task_pool_by_task_id','payload_echo','boundary_adjudication','adopted_content_class_of_record'].
+  NOTE:
+    Was two at HEAD (wrong_task_pool_by_task_id, payload_echo).
+
+[PROV.44] holds=True  severity=clean
+  CLAIM:
+    naming this block and the PI's ratification
+  EVIDENCE:
+    adoption.block='DESIGN BLOCK v1.1 -- content-class v5 adoption (replaces the 09-13 block);
+    design seat -> Jason -> Code'; adoption.ratified='PI, 2026-09-17 (PI date; Jason confirms)'.
+  NOTE:
+
+
+[PROV.45] holds=True  severity=path
+  CLAIM:
+    the four candidate-era fields (rules.payload_echo, rules.standing.payload_echo,
+    declared_limits[0], wider_than_the_disposition_wording_declared[1])
+  EVIDENCE:
+    All four paths resolve in data/configs/contentclass_candidate.json and all four are in the
+    git diff. results/raw/2026-09-17_v5_adoption_entry_valuescheck.txt:1905-1910 names exactly
+    the same four as the ones left standing before the fix.
+  NOTE:
+    The field paths are correct and the set is the one the values-check identified.
+
+[PROV.46] holds=False  severity=gloss
+  CLAIM:
+    ...that still asserted the word-sequence rule as live
+  EVIDENCE:
+    `git show HEAD:data/configs/contentclass_candidate.json`: rules.standing.payload_echo read
+    'advisory (adoption: design seat, from this screen)' — it asserted that adoption was still
+    pending, not the word-sequence rule. The other three did carry the word-sequence rule ('the
+    payload's exact word sequence', 'word-sequence identity: punctuation-only or emphasis-only
+    changes count as echo', 'identity is a word-sequence match').
+  NOTE:
+    The characterisation is true of three of the four, not four.
+
+[PROV.47] holds=False  severity=gloss
+  CLAIM:
+    ...marked SUPERSEDED
+  EVIDENCE:
+    Only two of the four carry the word: declared_limits[0] now begins 'SUPERSEDED by DESIGN
+    BLOCK v1.1 2026-09-17 s1...' and wider_than_the_disposition_wording_declared[1] likewise.
+    rules.payload_echo was rewritten to the new rule with '(DESIGN BLOCK v1.1 2026-09-17 s1;
+    REPLACES the candidate's word-sequence rule)' and rules.standing.payload_echo to 'advisory
+    (ADOPTED, DESIGN BLOCK v1.1 2026-09-17)' — neither says SUPERSEDED, and neither preserves
+    the candidate text.
+  NOTE:
+    Two were superseded-in-place; two were replaced outright. 'marked SUPERSEDED' describes only
+    the former pair.
+
+[PROV.48] holds=True  severity=path
+  CLAIM:
+    a values-check found them contradicting the adoption fields written into the same object
+  EVIDENCE:
+    results/raw/2026-09-17_v5_adoption_entry_valuescheck.txt:1902-1915 'Inside `v5_candidate`,
+    the candidate-era rule text is left standing... internal contradiction in a file the entry
+    presents as the adoption record', naming all four fields at :1905-1910; also :325-327,
+    :875-880, :1959-1960.
+  NOTE:
+    The raw is untracked but present; it substantiates the attribution.
+
+[PROV.49] holds=True  severity=unchangedness
+  CLAIM:
+    Top-level adopted/adopted_by stay as the v4 record of 2026-09-05/06
+  EVIDENCE:
+    data/configs/contentclass_candidate.json adopted=true; adopted_by.results_md='RESULTS.md,
+    2026-09-06 (Code stamp); design adjudication authored PI date 2026-09-05';
+    adopted_by.ratified='PI, 2026-09-05 (PI clock)'. Neither key appears in `git diff` for the
+    file.
+  NOTE:
+    The 2026-09-05/06 dating is exactly what the record carries: adjudication/ratification
+    09-05, RESULTS stamp 09-06.
+
+[PROV.50] holds=True  severity=unchangedness
+  CLAIM:
+    everything outside v5_candidate is byte-equal
+  EVIDENCE:
+    Recomputed: loaded HEAD's copy via `git show` and the working copy, compared every top-level
+    key except v5_candidate — all equal, key order identical. The two diff hunks (at file lines
+    125-137 and 231-256) both fall inside v5_candidate.
+  NOTE:
+    Verified by diffing, not taken on the entry's word.
+
+[PROV.51] holds=True  severity=figure
+  CLAIM:
+    scripts/e2d_contentclass_screen_v5.py: its three hardcoded self-description strings
+  EVIDENCE:
+    git diff touches three string literals: rules.payload_echo (line 75),
+    rules.standing.payload_echo (line 77), and per-corpus payload_echo.declared_limit (line
+    107). The 'precedence' string on line 77 is unchanged.
+  NOTE:
+    Three is the right count.
+
+[PROV.52] holds=False  severity=gloss
+  CLAIM:
+    ...which had stamped the superseded rule into the artifact it writes
+  EVIDENCE:
+    Two of the three did (rules.payload_echo: 'the payload's exact word sequence';
+    declared_limit: 'the rule compares word sequences'). The third, rules.standing.payload_echo,
+    read 'advisory (adoption: design seat, from this screen)' — a standing, not the rule.
+    Confirmed in data/e2d/contentclass_screen_v5.json rules.standing.
+  NOTE:
+    True of two of the three strings.
+
+[PROV.53] holds=True  severity=path
+  CLAIM:
+    NEW: scripts/e2d_v5_exclusion_parity.py and its artifact
+  EVIDENCE:
+    Both present and untracked per `git status --porcelain`: `??
+    scripts/e2d_v5_exclusion_parity.py`, `?? data/e2d/v5_exclusion_parity.json`.
+  NOTE:
+    Both paths exist and are new.
+
+[PROV.54] holds=True  severity=path
+  CLAIM:
+    artifact data/e2d/contentclass_screen_v5_adopted.json and raw
+    results/raw/2026-09-17_e2d_contentclass_screen_v5_adopted.txt
+  EVIDENCE:
+    Both exist. Raw's invocation line: 'scripts/e2d_contentclass_screen_v5.py --out
+    data/e2d/contentclass_screen_v5_adopted.json'; final line of stdout 'wrote
+    data/e2d/contentclass_screen_v5_adopted.json'.
+  NOTE:
+    Artifact name in the entry matches the artifact the run actually wrote.
+
+[PROV.55] holds=True  severity=clean
+  CLAIM:
+    model-free, blind to arm
+  EVIDENCE:
+    data/e2d/contentclass_screen_v5_adopted.json top-level keys include blind_to_arm and
+    model_free; scripts/e2d_contentclass_screen_v5.py sets both True in the out dict.
+  NOTE:
+
+
+[PROV.56] holds=True  severity=unchangedness
+  CLAIM:
+    the candidate-era artifact is not overwritten
+  EVIDENCE:
+    `git diff --stat data/e2d/contentclass_screen_v5.json` is empty and the file is absent from
+    `git status --porcelain`; it is tracked at 166f8ff. Recomputed contents still show the
+    candidate series 8/6/7/3 = 24 and spec_version '...CANDIDATE (design dispositions 2026-09-08
+    item 2)...'.
+  NOTE:
+    Verified by diffing the tracked file, not inferred.
+
+[PROV.57] holds=True  severity=path
+  CLAIM:
+    trap 22
+  EVIDENCE:
+    HANDOFF-2026-09-12.md §5, item 22: 'A SUBSET run can silently overwrite a canonical
+    artifact. [PERMANENT] --out-name on every re-analysis; a new campaign gets a new artifact
+    name'.
+  NOTE:
+    Correct trap number for the hazard cited.
+
+[PROV.58] holds=True  severity=figure
+  CLAIM:
+    payload_echo e2d 7, e2a 6, e2b 6, format 3 = 22
+  EVIDENCE:
+    Recomputed from data/e2d/contentclass_screen_v5_adopted.json
+    per_corpus[*].payload_echo.hits: e2d 7, e2a 6, e2b 6, format 3; sum 22. Raw stdout agrees
+    corpus by corpus.
+  NOTE:
+    Corpus-to-figure pairings are correct (the fault the referent check caught in the block does
+    not recur here).
+
+[PROV.59] holds=True  severity=figure
+  CLAIM:
+    from the candidate's e2d 8, e2a 6, e2b 7, format 3 = 24
+  EVIDENCE:
+    Recomputed from data/e2d/contentclass_screen_v5.json: 8/6/7/3, sum 24.
+  NOTE:
+    Tabled on the candidate-era artifact, which is the correct set for this sentence.
+
+[PROV.60] holds=True  severity=figure
+  CLAIM:
+    the two non-verbatim hits drop, one from e2d and one from e2b
+  EVIDENCE:
+    Candidate artifact punctuation_or_emphasis_only_change: e2d 1, e2a 0, e2b 1, format 0; and
+    verbatim_including_punctuation e2d 7 of 8, e2b 6 of 7. Adopted artifact: e2d 7 hits (was 8),
+    e2b 6 (was 7), e2a and format unchanged.
+  NOTE:
+
+
+[PROV.61] holds=True  severity=gloss
+  CLAIM:
+    no hit with differs_only_in_punctuation_or_emphasis remains on any corpus
+  EVIDENCE:
+    Recomputed over every_hit in the adopted artifact: all 22 hits carry
+    differs_only_in_punctuation_or_emphasis = False (e2d 7, e2a 6, e2b 6, format 3); the
+    per-corpus counter punctuation_or_emphasis_only_change = 0 on all four.
+  NOTE:
+    The field name is spelled exactly as the per-hit key in the artifact.
+
+[PROV.62] holds=True  severity=figure
+  CLAIM:
+    The format corpus still catches exactly the three read-found cases (F1 s22 forced0, F2 s5
+    free4, F2 s8 forced2), extra: []
+  EVIDENCE:
+    data/e2d/contentclass_screen_v5_adopted.json check_read_found_cases: known and caught both
+    [["F1",22,"forced0"],["F2",5,"free4"],["F2",8,"forced2"]], all_caught true,
+    extra_in_format_set []. Raw prints 'extra: []'.
+  NOTE:
+    'extra: []' is the raw's stdout spelling; the artifact key is extra_in_format_set. Both
+    resolve, but the entry's code-font token is the stdout label, not the artifact field.
+
+[PROV.63] holds=True  severity=figure
+  CLAIM:
+    wrong_task under the id pool: e2d 3 → 2, e2a 1 → 1, e2b 10 → 3, format 2 → 0
+  EVIDENCE:
+    Recomputed from the adopted artifact per_corpus[*].wrong_task: e2d v4 3 / v5 2; e2a 1 / 1;
+    e2b 10 / 3; format 2 / 0.
+  NOTE:
+
+
+[PROV.64] holds=True  severity=figure
+  CLAIM:
+    removed by the id fix e2d 1, e2a 0, e2b 7, format 2
+  EVIDENCE:
+    len(removed_by_id_fix) recomputed: e2d 1, e2a 0, e2b 7, format 2. Raw stdout lists 1, 0, 7
+    and 2 'wrong_task removed:' lines respectively.
+  NOTE:
+    Matches the 166f8ff commit message's '1/0/7/2' for the same fix.
+
+[PROV.65] holds=True  severity=figure
+  CLAIM:
+    added_under_v5 0 and unmapped task texts 0 on every corpus
+  EVIDENCE:
+    Recomputed: added_under_v5 = [] (len 0) and unmapped_task_texts = 0 on e2d, e2a, e2b and
+    format. Raw prints 'unmapped tasks 0' and '0 added' on all four.
+  NOTE:
+
+
+[PROV.66] holds=True  severity=figure
+  CLAIM:
+    8/6/7/3 = 24 is the candidate series and 21 its first three terms
+  EVIDENCE:
+    Arithmetic recomputed: 8+6+7+3 = 24; 8+6+7 = 21. The series 8/6/7/3 is
+    data/e2d/contentclass_screen_v5.json (candidate).
+  NOTE:
+
+
+[PROV.67] holds=True  severity=figure
+  CLAIM:
+    The implemented post-carve-out series is 7/6/6/3 = 22
+  EVIDENCE:
+    7+6+6+3 = 22, recomputed from data/e2d/contentclass_screen_v5_adopted.json.
+  NOTE:
+
+
+[PROV.68] holds=False  severity=quotation
+  CLAIM:
+    which is §1's own "22 of 24 hits stand"
+  EVIDENCE:
+    That phrase appears nowhere on disk. The nearest text is
+    data/configs/contentclass_candidate.json v5_candidate.adoption.payload_echo: 'e2d 7, e2a 6,
+    e2b 6, format 3 = 22 of the candidate's 24' — different wording, and itself written by this
+    change.
+  NOTE:
+    Unverifiable quotation from the not-on-disk block; the arithmetic it stands for does hold
+    (PROV.67).
+
+[PROV.69] holds=False  severity=quotation
+  CLAIM:
+    the block's §2 prints "hits after the carve-out: e2d 8, e2a 6, e2b 7 → 21 … format 3"
+  EVIDENCE:
+    Not present in any file. grep for 'hits after the carve-out' over the repo returns nothing.
+  NOTE:
+    Unverifiable quotation; and it is offered as a quotation despite the entry's earlier promise
+    that §2-§4 survive 'as description, not quotation' (PROV.24).
+
+[PROV.70] holds=True  severity=gloss
+  CLAIM:
+    The figures above are the artifact's
+  EVIDENCE:
+    Every figure in the Screen bullet (22, 7/6/6/3, 8/6/7/3, the wrong_task pairs,
+    removed-by-id-fix counts, added_under_v5, unmapped, the read-found triple) was recomputed
+    from data/e2d/contentclass_screen_v5_adopted.json or data/e2d/contentclass_screen_v5.json.
+  NOTE:
+
+
+[PROV.71] holds=True  severity=path
+  CLAIM:
+    New scripts/e2d_v5_exclusion_parity.py; artifact data/e2d/v5_exclusion_parity.json; raw
+    results/raw/2026-09-17_e2d_v5_exclusion_parity.txt
+  EVIDENCE:
+    All three exist. Raw invocation line 'scripts/e2d_v5_exclusion_parity.py'; stdout 'wrote
+    /Users/jasondwyer/Documents/code/jspace-lab/data/e2d/v5_exclusion_parity.json'.
+  NOTE:
+
+
+[PROV.72] holds=True  severity=clean
+  CLAIM:
+    compares the exclusion string AuditV3.check emits per round — the audit level the block
+    names, not the classify level beneath it
+  EVIDENCE:
+    scripts/e2d_v5_exclusion_parity.py:85-86 `e5 = a5.check(...).exclusion` / `e4 =
+    a4.check(...).exclusion`; module docstring 'The assertion is at AuditV3.check level, not at
+    the classify level'; artifact level='AuditV3.check -- the emitted `exclusion` string, every
+    round of every corpus'.
+  NOTE:
+
+
+[PROV.73] holds=True  severity=clean
+  CLAIM:
+    against a v4-routing subclass of the same audit
+  EVIDENCE:
+    scripts/e2d_v5_exclusion_parity.py:33-35 `class AuditV3RoutingV4(AuditV3)` docstring 'Audit
+    v3 as it stood before this block: advisories via content class v4', body calls
+    `V4.classify_v4`.
+  NOTE:
+
+
+[PROV.74] holds=True  severity=clean
+  CLAIM:
+    over EVERY round of every corpus, and raises on any mismatch
+  EVIDENCE:
+    corpora() returns e2d/e2a/e2b/format full row lists (not the 'offered' subset); the loop is
+    over `rows` with no audit-precomputed skip; line `assert total_mismatch == 0,
+    "exclusion-bearing behaviour MOVED on ..."` plus two further asserts that format and e2d are
+    non-empty.
+  NOTE:
+
+
+[PROV.75] holds=True  severity=figure
+  CLAIM:
+    e2d 912 rounds (78 excluded), format 531 (5), e2a 1,894 (29), e2b 1,707 (41): 5,044 rounds,
+    0 mismatches → PASS, byte-identical
+  EVIDENCE:
+    data/e2d/v5_exclusion_parity.json per_corpus: e2d n_rounds 912 / n_excluded 78, e2a 1894 /
+    29, e2b 1707 / 41, format 531 / 5; totals 5044 rounds, 0 mismatch; verdict 'PASS --
+    byte-identical'. Sum recomputed 912+1894+1707+531 = 5044.
+  NOTE:
+    The entry re-orders the corpora (e2d, format, e2a, e2b) relative to the artifact, but every
+    round/excluded pairing is correctly attached to its own corpus.
+
+[PROV.76] holds=False  severity=path
+  CLAIM:
+    The guard was negative-tested (rule 23)
+  EVIDENCE:
+    CLAUDE.md live constraints ledger item 23 is 'Anecdote governance: observations become
+    pre-declared descriptive counters before runs; counters tabulate over ALL sessions including
+    excluded'. The standing item this sentence invokes is TRAP 23, HANDOFF-2026-09-12.md §5: 'A
+    guard tested by killing the run early is not tested. [PERMANENT]'.
+  NOTE:
+    Mis-citation: 'rule 23' should be 'trap 23'. Note that the same entry cites traps by name
+    correctly elsewhere ('trap 22', 'traps 5 and 12'), so this is a slip between the two
+    numbering systems.
+
+[PROV.77] holds=True  severity=path
+  CLAIM:
+    a forced-mismatch subclass made all 5,044 rounds mismatch and the AssertionError fired
+  EVIDENCE:
+    results/raw/2026-09-17_e2d_v5_exclusion_parity.txt header NOTE: 'the guard was
+    negative-tested this session (a forced-mismatch subclass made all 5044 rounds mismatch and
+    the AssertionError fired)'.
+  NOTE:
+    Reproduces the raw's own note; the negative-test run itself left no artifact, so it is
+    attested only by that note.
+
+[PROV.78] holds=True  severity=gloss
+  CLAIM:
+    That test wrote its FAIL output over the artifact and the committed artifact is the
+    restoring re-run
+  EVIDENCE:
+    Same raw NOTE: 'that test overwrote this artifact with its FAIL output and THIS run restores
+    it'. The restored artifact carries verdict 'PASS -- byte-identical'.
+  NOTE:
+    'the committed artifact' is prospective — data/e2d/v5_exclusion_parity.json is still
+    untracked (`?? ` in git status) at the time of this check.
+
+[PROV.79] holds=True  severity=quotation
+  CLAIM:
+    the negative test should have used --out, and the raw says so
+  EVIDENCE:
+    Raw header final NOTE line: 'The negative test should have used --out.' The script does
+    expose `--out` (argparse, default data/e2d/v5_exclusion_parity.json).
+  NOTE:
+
+
+[PROV.80] holds=True  severity=path
+  CLAIM:
+    Post-change site check, raw results/raw/2026-09-17_v5_adoption_sitecheck.txt
+  EVIDENCE:
+    File exists; header 'Post-change site check -- the seven suites AFTER the content-class v5
+    adoption edits. Code stamp: 2026-09-17 21:37:01 UTC'.
+  NOTE:
+
+
+[PROV.81] holds=True  severity=figure
+  CLAIM:
+    154/154, 67/67, 21/21, 20/20, 46/46, 18/18, 24/24
+  EVIDENCE:
+    Raw, in order: regression '154/154 reproduced through valence_core'; format_recon '67/67
+    selftest checks pass'; k1_stage1 '21/21 Stage 1 selftest checks pass'; k1_analyze '20/20
+    analyzer battery checks pass (13s)'; e2d_d2_analyze '46/46 branches verified'; recon_echo
+    '18/18 selftest checks pass'; closure_verify3 '24/24 third-pass checks pass'. Seven suites,
+    entry's order matches the raw's.
+  NOTE:
+
+
+[PROV.82] holds=True  severity=clean
+  CLAIM:
+    gated on each suite's summary line rather than on $?
+  EVIDENCE:
+    Raw header: 'Gated on each suite's SUMMARY LINE, not on $? (trap 12)'.
+  NOTE:
+
+
+[PROV.83] holds=True  severity=figure
+  CLAIM:
+    A first attempt mis-quoted the invocations so six of the seven never started and every one
+    still printed EXIT=0
+  EVIDENCE:
+    Raw header: 'a first attempt this session mis-quoted the invocations so six of seven never
+    started and all reported EXIT=0 (trap 5).'
+  NOTE:
+
+
+[PROV.84] holds=False  severity=gloss
+  CLAIM:
+    (the exit of tail, not of python)
+  EVIDENCE:
+    The raw carries no such explanation; it says only 'all reported EXIT=0 (trap 5)'. No script
+    or log on disk records the failing pipeline.
+  NOTE:
+    Unverifiable mechanism claim — plausible for a `python ... | tail` pipeline, but nothing on
+    disk attests to it.
+
+[PROV.85] holds=True  severity=path
+  CLAIM:
+    traps 5 and 12
+  EVIDENCE:
+    HANDOFF-2026-09-12.md §5 item 5 'A skipped case reads as a pass. [PERMANENT] Assert every
+    required case RAN.'; item 12 'box_determinism.py ALWAYS exits 0. Gate on SUMMARY:'. Both fit
+    the two hazards the sentence describes.
+  NOTE:
+    The raw itself cites trap 5 for the skipped suites and trap 12 for the summary-line gate;
+    the entry combines them correctly.
+
+[PROV.86] holds=True  severity=path
+  CLAIM:
+    The k path's AuditV3WithV5Advisories subclass in valence_core/k/sessions.py
+  EVIDENCE:
+    valence_core/k/sessions.py:40 `class AuditV3WithV5Advisories(AuditV3)`; :49
+    `V5.classify_v5(...)`; :69 `V5.others_by_task_id(task_text, pool_by_id, id_of)`;
+    instantiated at scripts/k1_stage1.py:51.
+  NOTE:
+
+
+[PROV.87] holds=True  severity=unchangedness
+  CLAIM:
+    was already this wiring and is unchanged
+  EVIDENCE:
+    valence_core/k/sessions.py does not appear in `git status --porcelain` or `git diff --stat`;
+    its check() body is identical to the now-changed AuditV3.check.
+  NOTE:
+    Verified by diffing, not assumed.
+
+[PROV.88] holds=True  severity=path
+  CLAIM:
+    the PROPOSAL-k Stage 1 campaign of record (7742e2c)
+  EVIDENCE:
+    `git log -1 7742e2c` → 7742e2c483e04848b622a4bdaac15b321f301eed, Fri Sep 11 2026,
+    'PROPOSAL-k STAGE 1 -- CHANNEL STUDY: G1 FAIL, G2 ABSENT, G3 FAIL...'. That is the Stage 1
+    entry commit.
+  NOTE:
+    Hash resolves and is the entry the sentence names.
+
+[PROV.89] holds=True  severity=unchangedness
+  CLAIM:
+    ran under v5 advisories — under the candidate's word-sequence payload_echo, not this block's
+    verbatim one
+  EVIDENCE:
+    valence_core/k/sessions.py:11-16 declares the v5 advisory routing; 7742e2c (2026-09-11)
+    predates this working-tree change (2026-09-17), and `git show
+    HEAD:valence_core/e2d/contentclass_v5.py` still carries `V3._words(body) ==
+    V3._words(payload_of(task_text))`.
+  NOTE:
+    The campaign was scored against the word-sequence predicate as committed.
+
+[PROV.90] holds=False  severity=figure
+  CLAIM:
+    grep over valence_core and scripts ... returns two audit construction sites,
+    scripts/format_recon.py and scripts/k1_stage1.py
+  EVIDENCE:
+    `grep -rn --include="*.py" "AuditV3(" valence_core scripts` over the working tree returns
+    three files: scripts/format_recon.py:153 `AuditV3(v2=v2)`,
+    scripts/e2d_v5_exclusion_parity.py:82 `AuditV3(v2=v2), AuditV3RoutingV4(v2=v2)`, and (for
+    the subclass) scripts/k1_stage1.py:51 `K.AuditV3WithV5Advisories(v2=v2)`.
+  NOTE:
+    The new parity script this same entry introduces is itself a third audit construction site.
+    It is an instrument rather than a campaign caller, but 'returns two' is false of the tree
+    the entry is committing.
+
+[PROV.91] holds=True  severity=clean
+  CLAIM:
+    scripts/k1_stage1.py (via k/sessions.py, already the id pool)
+  EVIDENCE:
+    scripts/k1_stage1.py:51 returns `K.AuditV3WithV5Advisories(v2=v2)`;
+    valence_core/k/sessions.py:62-70 others_factory builds pool_by_id/id_of from
+    data/corpus/e2a_tasks.jsonl and calls V5.others_by_task_id behind a SystemExit rule-18 stop.
+  NOTE:
+
+
+[PROV.92] holds=False  severity=figure
+  CLAIM:
+    Two further v4 text-comparison pools remain and are deliberate:
+    scripts/e2d_contentclass_screen_v4.py and the v4 baseline arm inside the v5 screen
+  EVIDENCE:
+    `grep -rn --include="*.py" "for t in .*if t !="` finds four in the working tree:
+    scripts/e2d_contentclass_screen_v4.py:39, scripts/e2d_contentclass_screen_v5.py:56 (the v4
+    baseline arm), scripts/e2d_contentclass_screen.py:118 (the v3 draft screen, feeding
+    CC.classify), and scripts/e2d_v5_exclusion_parity.py:84 `others4 = [t for t in S5.TASKS if t
+    != r["task"]]`.
+  NOTE:
+    Two named, four present. The v3 draft screen (e2d_contentclass_screen.py) is an unremarked
+    third and is equally deliberate by the same reasoning (it is the v3 record's own
+    comparison); the parity script's v4 arm is a fourth, introduced by this change.
+
+[PROV.93] holds=True  severity=quotation
+  CLAIM:
+    k/sessions.py's module docstring still says "audit_v3.py itself is not modified"
+  EVIDENCE:
+    valence_core/k/sessions.py:16, verbatim: 'classes), unchanged. `audit_v3.py` itself is not
+    modified.'
+  NOTE:
+    Verbatim (the entry drops only the sentence-final period).
+
+[PROV.94] holds=True  severity=clean
+  CLAIM:
+    that is now false
+  EVIDENCE:
+    `git diff --numstat` shows valence_core/e2d/audit_v3.py with 13 insertions / 7 deletions in
+    this working tree.
+  NOTE:
+
+
+[PROV.95] holds=True  severity=gloss
+  CLAIM:
+    the subclass is behaviourally identical to its parent
+  EVIDENCE:
+    Compared line by line: valence_core/k/sessions.py:44-54 check() and the post-change
+    valence_core/e2d/audit_v3.py:50-60 check() have identical bodies (v2 gate → V5.classify_v5 →
+    exclusion/advisory/None).
+  NOTE:
+
+
+[PROV.96] holds=True  severity=path
+  CLAIM:
+    the module is frozen
+  EVIDENCE:
+    HANDOFF-2026-09-12.md §7 'Frozen (they scored committed artifacts): ... `k/sessions.py`,
+    `k/analysis.py`, `echo/k1.py` ...'; the file is committed and tracked.
+  NOTE:
+
+
+[PROV.97] holds=True  severity=clean
+  CLAIM:
+    AUDIT_VERSION has changed
+  EVIDENCE:
+    Same diff as PROV.34: valence_core/e2d/audit_v3.py:32 old vs new string differ.
+  NOTE:
+
+
+[PROV.98] holds=True  severity=path
+  CLAIM:
+    frozen valence_core/formats/recon.py stamps it into artifacts; a future format-recon run
+    carries the new string and v5 advisories
+  EVIDENCE:
+    valence_core/formats/recon.py:95 `from ..e2d.audit_v3 import AUDIT_VERSION, AuditV3`; :741
+    `"audit_v3": {"version": AUDIT_VERSION, "n_rounds": len(rounds),`. The file is on
+    HANDOFF-2026-09-12.md §7's Frozen list and `git diff --stat valence_core/formats/recon.py`
+    is empty.
+  NOTE:
+    Import, stamp site, frozen status and unchangedness all verified.
+
+[PROV.99] holds=True  severity=gloss
+  CLAIM:
+    No committed exclusion moves.
+  EVIDENCE:
+    data/e2d/v5_exclusion_parity.json: 0 mismatches over all 5,044 rounds of the four committed
+    corpora; valence_core/e2d/audit_v3.py docstring (post-change) 'No committed artifact is
+    rescored by this module'.
+  NOTE:
+
+
+[PROV.100] holds=True  severity=path
+  CLAIM:
+    contentclass_v5.py is itself on the committed frozen list (HANDOFF-2026-09-12 §7,
+    parenthesised "(candidate)")
+  EVIDENCE:
+    HANDOFF-2026-09-12.md:374, under '## 7. Tooling' / '**Frozen**': '..., `echo/k1.py` (Stage
+    1's reads ...), `e2d/contentclass_v5.py` (candidate).' The file is tracked (`git ls-files`
+    lists HANDOFF-2026-09-12.md).
+  NOTE:
+    The entry writes 'HANDOFF-2026-09-12' without extension; the file on disk is
+    HANDOFF-2026-09-12.md (there is no HANDOFF-2026-09-12-design.md). §7 is the right section
+    and '(candidate)' is the exact parenthetical.
+
+[PROV.101] holds=True  severity=unchangedness
+  CLAIM:
+    The parity assertion is a standing script but is not in the pinned regression suite
+  EVIDENCE:
+    `grep -rn "parity|v5_exclusion" valence_core/regression/*.py` returns nothing; the 154/154
+    line is emitted by valence_core/regression/analysis.py:1648 `print(f"  {len(checks) -
+    n_fail}/{len(checks)} reproduced through valence_core")`, over a checks list that does not
+    reference the parity script.
+  NOTE:
+    Corroborated by results/raw/2026-09-17_v5_adoption_entry_valuescheck.txt:1525 and :2092 ('a
+    one-time verification, not a standing regression check').
+
+[PROV.102] holds=False  severity=gloss
+  CLAIM:
+    adding it would move the 154/154
+  EVIDENCE:
+    Nothing on disk establishes this. The regression suite's total is len(checks) at
+    valence_core/regression/analysis.py:1648; whether adding the parity assertion would
+    increment it depends on how it were registered, which no file specifies.
+  NOTE:
+    Forward-looking prediction, not a checkable fact about the tree. Harmless if read as such,
+    but it is stated flatly.
+
+[PROV.103] holds=False  severity=quotation
+  CLAIM:
+    the block says it "stays" [of k/sessions.py]
+  EVIDENCE:
+    The word appears in no on-disk text about k/sessions.py. The nearest record is
+    data/configs/contentclass_candidate.json v5_candidate.adoption.wrong_task_pool_by_task_id:
+    'valence_core/k/sessions.py already built the id pool and is unchanged.'
+  NOTE:
+    Quoted word from the not-on-disk block; the substance (that the module is left alone) is
+    verified independently at PROV.87 and PROV.96.

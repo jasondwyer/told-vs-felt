@@ -1,0 +1,29 @@
+# Post-change site check -- the seven suites AFTER the content-class v5 adoption edits.
+# Code stamp: 2026-09-17 21:37:01 UTC (date -u)
+# HEAD: 16705a2 + working tree
+# Gated on each suite's SUMMARY LINE, not on $? (trap 12); a first attempt this session
+# mis-quoted the invocations so six of seven never started and all reported EXIT=0 (trap 5).
+
+=== regression ===
+------------------------------------------------------------------------------
+  154/154 reproduced through valence_core
+=== format_recon ===
+------------------------------------------------------------------------------
+  67/67 selftest checks pass
+=== k1_stage1 ===
+------------------------------------------------------------------------------
+  21/21 Stage 1 selftest checks pass
+=== k1_analyze ===
+------------------------------------------------------------------------------
+  20/20 analyzer battery checks pass (13s)
+=== e2d_d2_analyze ===
+------------------------------------------------------------------------------
+  46/46 branches verified (every criterion, both directions, plus the sign-flip and g2r branches)
+=== recon_echo ===
+
+  18/18 selftest checks pass
+=== closure_verify3 ===
+----------------------------------------------------------------------------------------------------
+  24/24 third-pass checks pass
+
+SITECHECK_DONE 2026-09-17 21:37:19 UTC

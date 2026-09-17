@@ -1,0 +1,17 @@
+# DESIGN BLOCK v1.1 s3 (1): exclusion-bearing parity, v5 advisory routing vs v4, at
+# AuditV3.check level over every round of every corpus. Model-free.
+# Code stamp: 2026-09-17 21:36:28 UTC (date -u).  HEAD: 16705a2 + working tree
+# NOTE: the guard was negative-tested this session (a forced-mismatch subclass made all
+# 5044 rounds mismatch and the AssertionError fired); that test overwrote this artifact
+# with its FAIL output and THIS run restores it. The negative test should have used --out.
+# Invocation: scripts/e2d_v5_exclusion_parity.py
+
+  e2d     rounds 912   excluded 78   mismatches 0
+  e2a     rounds 1894  excluded 29   mismatches 0
+  e2b     rounds 1707  excluded 41   mismatches 0
+  format  rounds 531   excluded 5    mismatches 0
+
+  totals: 5044 rounds, 0 mismatches -> PASS -- byte-identical
+  wrote /Users/jasondwyer/Documents/code/jspace-lab/data/e2d/v5_exclusion_parity.json
+
+PARITY_EXIT=0  2026-09-17 21:36:30 UTC

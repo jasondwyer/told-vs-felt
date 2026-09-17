@@ -72,8 +72,8 @@ def main() -> int:
                "e2b": [r for r in CCS.archive_rounds() if r["corpus"] == "e2b"], "format": format_rounds()}
     out = {"spec_version": V5.SPEC_VERSION, "blind_to_arm": True, "model_free": True,
            "rules": {"wrong_task_pool": "every paraphrase of every OTHER task id (v4: every paraphrase but the current text)",
-                     "payload_echo": "transform task (rewrite/reword/rephrase/restate/soften; make ... friendlier/kinder/warmer/gentler/softer/nicer/politer) with a payload after the colon, answered with the payload's exact word sequence after stripping a leading label and quotation marks",
-                     "precedence": "NULL -> STUCK -> PREAMBLE -> ECHO -> PAYLOAD_ECHO -> WRONG_TASK", "standing": {"payload_echo": "advisory (adoption: design seat, from this screen)", "wrong_task": "advisory"}},
+                     "payload_echo": "transform task (rewrite/reword/rephrase/restate/soften; make ... friendlier/kinder/warmer/gentler/softer/nicer/politer) with a payload after the colon, answered with that payload VERBATIM, whitespace-normalised, punctuation and markup INCLUDED, after stripping a leading label and quotation marks (DESIGN BLOCK v1.1 2026-09-17 s1)",
+                     "precedence": "NULL -> STUCK -> PREAMBLE -> ECHO -> PAYLOAD_ECHO -> WRONG_TASK", "standing": {"payload_echo": "advisory (ADOPTED, DESIGN BLOCK v1.1 2026-09-17)", "wrong_task": "advisory"}},
            "transform_tasks_in_corpus": sorted({ID_OF[p] for p in TASKS if V5.is_transform_task(p)}),
            "per_corpus": {}}
     print(f"  transform tasks in the corpus: {out['transform_tasks_in_corpus']}", flush=True)
@@ -104,7 +104,7 @@ def main() -> int:
                  "payload_echo": {"hits": len(pe), "transform_task_rounds_offered": len(transform_rounds),
                                   "rate_among_transform_rounds": (len(pe) / len(transform_rounds)) if transform_rounds else None,
                                   "every_hit": [ex(r) for r, _ in pe],
-                                  "declared_limit": "the rule compares word sequences: a payload returned with only punctuation or emphasis changed (e.g. '3pm!' for '3pm.', or **bold**) counts as an echo here; each hit carries verbatim_including_punctuation so the design seat can decide whether a punctuation-only change is a transform"}}
+                                  "declared_limit": "the rule compares VERBATIM after whitespace normalisation, punctuation and markup included (DESIGN BLOCK v1.1 2026-09-17 s1): a payload returned with only punctuation or emphasis changed (e.g. '3pm!' for '3pm.', or **bold**) is a transform, NOT an echo, and does not count here; each hit carries verbatim_including_punctuation"}}
         block["payload_echo"]["verbatim_including_punctuation"] = sum(1 for r, _ in pe if ex(r).get("verbatim_including_punctuation"))
         block["payload_echo"]["punctuation_or_emphasis_only_change"] = sum(1 for r, _ in pe if ex(r).get("differs_only_in_punctuation_or_emphasis"))
         if name == "e2d":

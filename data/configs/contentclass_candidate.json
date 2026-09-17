@@ -125,13 +125,13 @@
  "v3_history": "the v3 figures below (performance, two confounds, what Code does not claim) are the screened draft as adjudicated; kept as history",
  "null_response_rule_as_implemented": "content-free (v3 test) OR a DECLINING PREDICATE -- first person ('I can't / cannot / won't / am unable to / must decline / refuse', complement optional so a bare 'Sorry, I can't.' counts) or the passive '(this request / that) cannot be fulfilled' -- removed together with any first-person self-description clause ('I am a large language model'), after which fewer than NULL_RESIDUAL_WORDS = 3 content words remain. Only the PREDICATE is removed, never its clause or sentence, so a refusal accompanied by delivered content is not null. An apology alone is not a refusal. KNOWN MISSES, declared: third-person capability disclaimers ('Sorry, creative tasks require a LLM with more creative capabilities' -- one archived e2b round) and a bare 'No.' carry no declining predicate and go to the read. Revision record, all pre-commit, found by adversarial values-checks: rev 1 matched a bare 'I'm sorry' and flagged a delivered friendlier rewrite on the e2b archive; rev 2 required the predicate but removed the whole clause, which would have swallowed content delivered in the same clause (no archive instance; constructed cases); rev 3 as above. Raw logs of the earlier screens kept: results/raw/2026-09-06_e2d_contentclass_screen_v4pre.txt (rev 1), _v4rev2pre.txt (rev 2).",
  "v5_candidate": {
-  "spec": "content-class v5 CANDIDATE (design dispositions 2026-09-08 item 2, PI stamp); both rules ADVISORY; nothing exclusion-bearing changes; v3/v4 frozen; audit v3 (the audit of record) still routes through v4 until the design seat adopts from the screen",
+  "spec": "content-class v5 ADOPTED, ADVISORY ONLY (DESIGN BLOCK v1.1, design seat, PI date 2026-09-17; replaces the 09-13 block); both rules ADVISORY; nothing exclusion-bearing changes; v3 and v4 frozen; audit v3 routes its ADVISORIES through v5 from this block, and the adopted content class of record remains v4 rev 3 under audit v3",
   "rules": {
    "wrong_task_pool": "every paraphrase of every OTHER task id (v4: every paraphrase but the current text)",
-   "payload_echo": "transform task (rewrite/reword/rephrase/restate/soften; make ... friendlier/kinder/warmer/gentler/softer/nicer/politer) with a payload after the colon, answered with the payload's exact word sequence after stripping a leading label and quotation marks",
+   "payload_echo": "transform task (rewrite/reword/rephrase/restate/soften; make ... friendlier/kinder/warmer/gentler/softer/nicer/politer) with a payload after the colon, answered with that payload VERBATIM, whitespace-normalised, punctuation and markup INCLUDED, after stripping a leading label and quotation marks (DESIGN BLOCK v1.1 2026-09-17 s1; REPLACES the candidate's word-sequence rule)",
    "precedence": "NULL -> STUCK -> PREAMBLE -> ECHO -> PAYLOAD_ECHO -> WRONG_TASK",
    "standing": {
-    "payload_echo": "advisory (adoption: design seat, from this screen)",
+    "payload_echo": "advisory (ADOPTED, DESIGN BLOCK v1.1 2026-09-17)",
     "wrong_task": "advisory"
    }
   },
@@ -231,18 +231,24 @@
    "t14"
   ],
   "adoption": {
-   "wrong_task_pool_by_task_id": "PI-stamped rule; wiring needs TWO changes -- the classify swap in audit_v3.py AND an id-filtered pool from the caller's pool builder (scripts/format_recon.py others_factory is the v4 construction today) -- pending the design seat's word",
-   "payload_echo": "ADJUDICATED BY THE DESIGN SEAT FROM THE SCREEN (not adopted here); alone it is a one-line swap in audit_v3.py"
+   "status": "ADOPTED, advisory only",
+   "block": "DESIGN BLOCK v1.1 -- content-class v5 adoption (replaces the 09-13 block); design seat -> Jason -> Code",
+   "ratified": "PI, 2026-09-17 (PI date; Jason confirms)",
+   "code_stamp": "2026-09-17 21:18:59 UTC (date -u)",
+   "wrong_task_pool_by_task_id": "ADOPTED. Both declared changes made: (1) the classify swap in valence_core/e2d/audit_v3.py; (2) the caller's pool builder scripts/format_recon.py others_factory -> V5.others_by_task_id with the corpus id map. valence_core/k/sessions.py already built the id pool and is unchanged.",
+   "payload_echo": "ADOPTED as an advisory class under the block's section 1 boundary: VERBATIM, whitespace-normalised, punctuation and markup INCLUDED in the comparison. REPLACES the candidate's word-sequence rule and the widening it declared. Screen under the boundary: e2d 7, e2a 6, e2b 6, format 3 = 22 of the candidate's 24; the two carve-outs (e2d '\"The meeting has been moved to 3pm!\"', e2b '**The meeting has been moved to 3pm!**') are transforms, not hits.",
+   "boundary_adjudication": "A punctuation or emphasis change to an otherwise verbatim payload is a transform -- a minimal one -- and is NOT payload_echo; it goes to the rule-25 read like any other advisory-borderline case. Class-level rule, not a string rule.",
+   "adopted_content_class_of_record": "v4 rev 3 under audit v3 -- unchanged by this block; v5 is its advisory extension. The top-level `adopted` / `adopted_by` fields stay as the v4 record of 2026-09-05/06."
   },
   "declared_limits": [
-   "word-sequence identity: punctuation-only or emphasis-only changes count as echo (per-hit flag in the screen)",
+   "SUPERSEDED by DESIGN BLOCK v1.1 2026-09-17 s1, kept as the candidate's declared limit: under the candidate's word-sequence identity, punctuation-only or emphasis-only changes counted as echo (per-hit flag in the screen). Under the adopted verbatim boundary they are transforms, not hits, and the two such hits were removed (24 -> 22).",
    "the transform-task family is a verb lexicon (rewrite/reword/rephrase/restate/soften; make ... friendlier/kinder/warmer/gentler/softer/nicer/politer) with a colon payload -- t06 and t14 in this corpus; caption tasks with a colon (t01, t09) are not transforms",
    "a payload returned with ONE word changed is not an echo (a partial rewrite goes to the read)"
   ],
   "wider_than_the_disposition_wording_declared": [
    "transform lexicon adds rephrase/restate and the make-...-friendlier family to '(rewrite/reword/soften)'",
-   "identity is a word-sequence match (case, punctuation and a leading label ignored), wider than 'quotation marks aside'; per-hit verbatim flag in the screen",
-   "neither widening changes a screen figure on these corpora (only t06/t14 are transforms either way; 22/24 hits verbatim modulo quotes or a label)"
+   "SUPERSEDED by DESIGN BLOCK v1.1 2026-09-17 s1: the candidate's identity was a word-sequence match (case, punctuation and a leading label ignored), wider than 'quotation marks aside'. The adopted rule is VERBATIM, whitespace-normalised, punctuation and markup included, with the leading label and quotation marks still stripped -- narrower than the candidate's, not wider than the disposition's.",
+   "SUPERSEDED IN PART by DESIGN BLOCK v1.1 2026-09-17 s1. As written for the candidate: 'neither widening changes a screen figure on these corpora (only t06/t14 are transforms either way; 22/24 hits verbatim modulo quotes or a label)'. True of the transform-lexicon widening [0], which is unchanged. NOT true of the identity widening [1]: withdrawing it is exactly what moved the figures, 24 hits to 22."
   ]
  }
 }

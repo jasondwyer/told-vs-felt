@@ -36,6 +36,7 @@ sys.path.insert(0, REPO)
 
 from valence_core.e2d import config as C                          # noqa: E402
 from valence_core.e2d.audit_v3 import AUDIT_VERSION, AuditV3       # noqa: E402
+from valence_core.e2d import contentclass_v5 as V5                 # noqa: E402
 from valence_core.formats import recon as R                        # noqa: E402
 from valence_core.session import (assert_modules_absent,           # noqa: E402
                                   build_ban_list, check_bars, verify_firing)
@@ -153,8 +154,18 @@ def audit_of_record() -> tuple[AuditV3, dict]:
 
 
 def others_factory(tasks):
-    pool = all_paraphrases(tasks)
-    return lambda task_text: [t for t in pool if t != task_text]
+    """`wrong_task`'s comparison pool is every paraphrase of every OTHER task,
+    by task id (content class v5, adopted DESIGN BLOCK v1.1 2026-09-17 §2 /
+    §3 (2)). Was the v4 text comparison `[t for t in pool if t != task_text]`,
+    which left the current task's sibling paraphrases in the pool."""
+    pool_by_id = {t["id"]: list(t["paraphrases"]) for t in tasks}
+    id_of = {p: t["id"] for t in tasks for p in t["paraphrases"]}
+    def others(task_text: str):
+        if task_text not in id_of:
+            raise SystemExit("task text not in the corpus (rule 18 pool "
+                             f"hygiene): {task_text[:60]!r}")
+        return V5.others_by_task_id(task_text, pool_by_id, id_of)
+    return others
 
 
 def bars_or_stop():

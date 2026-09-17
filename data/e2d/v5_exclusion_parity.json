@@ -1,0 +1,41 @@
+{
+ "block": "DESIGN BLOCK v1.1 2026-09-17 s3 (1)",
+ "audit_version_now": "audit-v3 = e2b_audit_v2 + content-class-v4 exclusion-bearing (null/stuck/preamble) + content-class-v5 ADVISORIES (task_echo, payload_echo, wrong_task by task id) -- DESIGN BLOCK v1.1 2026-09-17",
+ "level": "AuditV3.check -- the emitted `exclusion` string, every round of every corpus",
+ "exclusion_bearing": [
+  "null_response",
+  "stuck_attractor",
+  "preamble_without_content"
+ ],
+ "per_corpus": {
+  "e2d": {
+   "n_rounds": 912,
+   "n_excluded": 78,
+   "n_mismatch": 0,
+   "mismatches": []
+  },
+  "e2a": {
+   "n_rounds": 1894,
+   "n_excluded": 29,
+   "n_mismatch": 0,
+   "mismatches": []
+  },
+  "e2b": {
+   "n_rounds": 1707,
+   "n_excluded": 41,
+   "n_mismatch": 0,
+   "mismatches": []
+  },
+  "format": {
+   "n_rounds": 531,
+   "n_excluded": 5,
+   "n_mismatch": 0,
+   "mismatches": []
+  }
+ },
+ "totals": {
+  "n_rounds": 5044,
+  "n_mismatch": 0
+ },
+ "verdict": "PASS -- byte-identical"
+}

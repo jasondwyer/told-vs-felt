@@ -21,6 +21,197 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-17 — **CONTENT-CLASS v5 ADOPTED, advisory only (DESIGN BLOCK v1.1,
+  design seat, PI date 2026-09-17). The block's §1 adjudication narrows
+  `payload_echo` to VERBATIM — whitespace-normalised, punctuation and markup
+  INCLUDED — replacing the candidate's word-sequence rule; the two hits the
+  166f8ff screen flagged for the design seat become transforms, not hits
+  (24 → 22). Both declared wiring changes made: the classify swap in
+  `audit_v3.py` and the caller's pool builder in `scripts/format_recon.py`.
+  Exclusion-bearing behaviour byte-identical, asserted at `AuditV3.check`
+  level over all 5,044 rounds of all four corpora. v3 and v4 frozen; the
+  adopted content class of record remains v4 rev 3 under audit v3 — v5 is its
+  advisory extension.**
+  (Stamp verified at write time: `date -u` → **Thu Sep 17 21:54:26 UTC 2026**.)
+
+  - **The block (the PI's word, quoted in full so the record carries it —
+    the block is a chat artifact and this entry is its only on-disk copy).**
+
+    > # DESIGN BLOCK v1.1 — content-class v5 adoption (replaces the 09-13 block; addendum routing unchanged)
+    > design seat → Jason → Code · PI date Thu 2026-09-17 (Jason confirms) · Code stamps from `date -u`
+    > Watermark `16705a2`; read: results/raw/2026-09-17_contentclass-v5-adoption_referent_check.txt in full.
+    > All four Code-confirmed findings accepted; nothing overturned by design.
+    > 
+    > ## 1. Adjudication — payload_echo's boundary (the item the 166f8ff entry routed to design)
+    > `payload_echo` fires on a transform task answered with its payload
+    > VERBATIM, whitespace-normalized, punctuation and markup INCLUDED in the
+    > comparison. A punctuation or emphasis change to an otherwise verbatim
+    > payload is a transform — a minimal one — and is NOT payload_echo; it goes
+    > to the rule-25 read like any other advisory-borderline case. Class-level
+    > rule, not a string rule. Consequence on the screen: 22 of 24 hits stand;
+    > the two carve-outs (e2d "…3pm!" and e2b "**…3pm!**") are not hits.
+    > 
+    > ## 2. Adoption (figures paired to their corpora)
+    > v5 ADOPTED, advisory only: `wrong_task`'s comparison pool is every
+    > paraphrase of every OTHER task by task id (removals by the id fix: e2d 1,
+    > e2a 0, e2b 7, format 2; `added_under_v5` 0 everywhere; unmapped 0
+    > everywhere). `payload_echo` ADOPTED as an advisory class under §1's
+    > boundary (hits after the carve-out: e2d 8, e2a 6, e2b 7 → 21 with the
+    > two removed from e2d/e2b as the artifact locates them, format 3).
+    > Exclusion-bearing classes unchanged; v3 and v4 frozen; the adopted content
+    > class of record is v4 rev 3 under audit v3 — this block does not change
+    > that; v5 is its advisory extension.
+    > 
+    > ## 3. Wiring (two changes, both locations named)
+    > (1) `valence_core/e2d/audit_v3.py`: the classify swap to `classify_v5`
+    >     for advisory routing, behavior on exclusion-bearing classes
+    >     byte-identical — assert on the e2d pool and the format sessions.
+    > (2) Every CALLER's pool construction → `others_by_task_id` with the
+    >     corpus id map: `scripts/format_recon.py:155-157` (still v4 text
+    >     comparison) and any other caller the grep finds;
+    >     `valence_core/k/sessions.py` already does it and stays.
+    > The k path's `AuditV3WithV5Advisories` subclass is already the wiring for
+    > k campaigns and scored Stage 1; record that the Stage 1 campaign ran under
+    > v5 advisories, as a beside-note in the entry.
+    > The v5_candidate's `adoption` fields (spelled so) name this block and the
+    > PI's ratification; `adopted`/`adopted_by` at top level stay as the v4
+    > record. One RESULTS entry; no ordering constraint against Stage 1b —
+    > the two are independent.
+    > 
+    > ## 4. Then the ADDENDUM-k1 v1.1 routing, as issued: Appendix check against
+    > HEAD; commit appended to the k chain; 1b analyzer + battery; Stage 1b reads
+    > on the recon's 102 texts; entry `ADDENDUM-k1 STAGE 1b — +/0 DIAGNOSTIC`.
+    > Any referent that does not resolve → STOP, write to raw, report.
+
+  - **Provenance of the reissue.** The 09-13 block's referent check is raw
+    [`_v5-adoption_referent_check`](results/raw/2026-09-17_contentclass-v5-adoption_referent_check.txt):
+    37 referents, **10 unresolved at the checker stage**, 6 overturned by the
+    refuter lenses; the re-verification section carries six findings CONFIRMED
+    by Code and one ANSWERED. The agents returned 75 refuter-verdict objects
+    but only **74** match a referent — one V3 lens returned an id, `V3.12`,
+    that does not exist (V3 has eleven) — and the raw's TOTALS line now records
+    both numbers, reconciled after this entry's own values-check caught the
+    discrepancy. That raw renders no STOP verdict of its own and no committed
+    entry records one: Code reported the unresolved set in thread (not on
+    disk) and the design seat reissued the block. The block's cover line says
+    "All four Code-confirmed findings accepted"; the raw's count of
+    Code-confirmed findings is six.
+
+  - **What changed: five files modified, three new, plus six raws.**
+    `contentclass_v5.py`: header and `SPEC_VERSION` from CANDIDATE/PROSPECTIVE
+    to ADOPTED advisory-only; rule (b) restated to the verbatim boundary; a
+    new `_ws` helper (whitespace normalisation only) and `is_payload_echo` now
+    `_ws(body) == _ws(payload_of(task_text))` after the same leading-label and
+    quotation-mark stripping. `audit_v3.py`: a `contentclass_v5` import, the
+    call swapped `V4.classify_v4` → `V5.classify_v5`, `AUDIT_VERSION`
+    restated, and two docstring passages — the composition paragraph and the
+    summary box, which had listed only task_echo and wrong_task as advisory
+    where the code now emits three; its "PROSPECTIVE ONLY" label replaced by
+    the claim that survives adoption (no committed artifact is rescored).
+    `scripts/format_recon.py`: an added `contentclass_v5` import, and
+    `others_factory` — the v4 text comparison — now builds `pool_by_id`/`id_of`
+    from the corpus and returns a closure calling `V5.others_by_task_id`
+    behind a rule-18 stop. `scripts/e2d_contentclass_screen_v5.py`: three
+    hardcoded self-description strings that had stamped the superseded rule
+    into the artifact it writes (two carried the word-sequence rule; the third
+    carried the pending adoption status). `contentclass_candidate.json`:
+    `v5_candidate.spec`, eight `adoption` fields naming this block and the
+    PI's ratification, and five candidate-era fields the values-checks caught
+    contradicting them — `rules.payload_echo` and `rules.standing.payload_echo`
+    rewritten in place, `declared_limits[0]` and
+    `wider_than_the_disposition_wording_declared[1]` marked SUPERSEDED with
+    their candidate text preserved, and `[2]` of the same list marked
+    SUPERSEDED IN PART (it said neither widening changed a screen figure;
+    withdrawing the identity widening is exactly what moved 24 to 22).
+    Top-level `adopted`/`adopted_by` stay as the v4 record of 2026-09-05/06;
+    everything outside `v5_candidate` is byte-equal. NEW:
+    `scripts/e2d_v5_exclusion_parity.py`, `data/e2d/v5_exclusion_parity.json`,
+    `data/e2d/contentclass_screen_v5_adopted.json`.
+
+  - **Screen under the adopted boundary** (model-free, blind to arm; artifact
+    [`contentclass_screen_v5_adopted.json`](data/e2d/contentclass_screen_v5_adopted.json),
+    raw [`_screen_v5_adopted`](results/raw/2026-09-17_e2d_contentclass_screen_v5_adopted.txt);
+    the candidate-era artifact is not overwritten, trap 22). `payload_echo`
+    **e2d 7, e2a 6, e2b 6, format 3 = 22**, from the candidate's e2d 8, e2a 6,
+    e2b 7, format 3 = 24; the two non-verbatim hits drop, one from e2d and one
+    from e2b, and no hit with `differs_only_in_punctuation_or_emphasis`
+    remains on any corpus. The format corpus still catches exactly the three
+    read-found cases (F1 s22 forced0, F2 s5 free4, F2 s8 forced2), `extra: []`.
+    `wrong_task` under the id pool: e2d 3 → 2, e2a 1 → 1, e2b 10 → 3,
+    format 2 → 0 (removed by the id fix e2d 1, e2a 0, e2b 7, format 2;
+    `added_under_v5` 0 and unmapped task texts 0 on every corpus) — §2's
+    removal figures exactly. §2's per-corpus `payload_echo` figures are the
+    candidate's, with the subtraction instructed in the same sentence: 21 for
+    the three non-format corpora, less the two, plus format 3, is §1's 22.
+
+  - **Exclusion-bearing parity, asserted** (§3 (1)). New
+    `scripts/e2d_v5_exclusion_parity.py` compares the `exclusion` string
+    `AuditV3.check` emits per round — the audit level the block names, not the
+    classify level beneath it — under adopted v5 routing against a v4-routing
+    subclass of the same audit, over EVERY round of every corpus, and raises
+    on any mismatch. **e2d 912 rounds (78 excluded), format 531 (5), e2a 1,894
+    (29), e2b 1,707 (41): 5,044 rounds, 0 mismatches → PASS, byte-identical.**
+    Artifact [`v5_exclusion_parity.json`](data/e2d/v5_exclusion_parity.json),
+    raw [`_v5_exclusion_parity`](results/raw/2026-09-17_e2d_v5_exclusion_parity.txt).
+    The guard was negative-tested (**trap** 23, not rule 23 — the guard-test
+    trap, HANDOFF-2026-09-12 §5; CLAUDE.md rule 23 is anecdote governance): a
+    forced-mismatch subclass made all 5,044 rounds mismatch and the
+    AssertionError fired. That test wrote its FAIL output over the artifact
+    and the committed artifact is the restoring re-run — the negative test
+    should have used `--out`, and the raw says so.
+
+  - **Post-change site check**, raw
+    [`_v5_adoption_sitecheck`](results/raw/2026-09-17_v5_adoption_sitecheck.txt):
+    154/154, 67/67, 21/21, 20/20, 46/46, 18/18, 24/24, gated on each suite's
+    summary line rather than on `$?`. A first attempt mis-quoted the
+    invocations so six of the seven never started, and each still printed
+    `EXIT=0` because `$?` after a `… | tail` pipeline is the pipeline's status,
+    i.e. `tail`'s — traps 5 and 12, caught by reading the raw, and the reason
+    the gate is on the summary lines.
+
+  - **Beside-note (§3).** The k path's `AuditV3WithV5Advisories` subclass in
+    `valence_core/k/sessions.py` was already this wiring and is unchanged:
+    **the PROPOSAL-k Stage 1 campaign of record (`7742e2c`) ran under v5
+    advisories** — under the candidate's word-sequence `payload_echo`, not
+    this block's verbatim one. Stage 1 is not rescored here.
+
+  - **Every caller, per §3 (2).** `grep` over `valence_core` and `scripts`
+    returns three `AuditV3` construction sites in the working tree:
+    `scripts/format_recon.py` (changed here), `scripts/k1_stage1.py` (via
+    `k/sessions.py`, already the id pool), and `scripts/e2d_v5_exclusion_parity.py`
+    — the third being this block's own instrument, not a campaign caller. Four
+    v4 text-comparison pools remain, all deliberate: the v4 screen, the v4
+    baseline arm inside the v5 screen, the v3-era screen, and the parity
+    script's v4 arm — each reproduces a committed record's own comparison, and
+    changing any would move that record.
+
+  - **Flags for the design seat, not applied.** (a) `k/sessions.py`'s module
+    docstring still says "`audit_v3.py` itself is not modified"; that is now
+    false, and the subclass is behaviourally identical to its parent. Left
+    untouched — the module is frozen and §3 says it stays. (b) `AUDIT_VERSION`
+    has changed, and frozen `valence_core/formats/recon.py` stamps it into
+    artifacts; a future format-recon run carries the new string and v5
+    advisories. No committed exclusion moves. (c) `contentclass_v5.py` is
+    itself on the committed frozen list (HANDOFF-2026-09-12 §7, parenthesised
+    "(candidate)"), which adoption arguably lifts; edited here as the block
+    directs, named so the record does not read as a silent edit to a frozen
+    module. (d) The parity assertion is a standing script but is not
+    registered in the regression suite; whether to register it, and what that
+    does to the pinned 154/154, is the design seat's.
+
+  - **Values-checked before commit** (trap 29), two passes plus this
+    reconciliation: pass 1
+    [`_valuescheck`](results/raw/2026-09-17_v5_adoption_entry_valuescheck.txt)
+    193 claims, 29 failing; pass 2
+    [`_valuescheck_pass2`](results/raw/2026-09-17_v5_adoption_entry_valuescheck_pass2.txt)
+    283 claims, 35 failing. Pass 1 caught a stamp copied from the screen run's
+    exit line rather than taken fresh, suite figures with no post-change run
+    behind them, "asserted" where nothing asserted, and the config and screen
+    artifact contradicting their own adoption fields. Pass 2 caught the 75/74
+    verdict count, the fifth stale config field, `rule 23` for `trap 23`, and
+    three under-counts. No figure in the screen, the parity run or the site
+    check moved in either pass.
+
 - 2026-09-11 — **ADDENDUM-k1 (DRAFT v1.0, PI go 2026-09-11): the Appendix
   referent check STOPS the commit — eight referents do not resolve
   against the repo at HEAD, four of them in the design's own substance

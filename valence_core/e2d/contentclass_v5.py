@@ -1,7 +1,9 @@
-"""Content class, version 5 -- CANDIDATE (design dispositions 2026-09-08,
-item 2, PI stamp). Builds on the frozen v3 draft and the adopted v4 without
-modifying either; audit v3 (the audit of record) still routes through v4
-until the design seat adopts from the screen. PROSPECTIVE ONLY.
+"""Content class, version 5 -- ADOPTED, ADVISORY ONLY (DESIGN BLOCK v1.1,
+design seat, PI date 2026-09-17, adjudicated from the 166f8ff screen).
+Builds on the frozen v3 draft and the adopted v4 without modifying either;
+audit v3 routes its ADVISORIES through v5 from this block. The adopted
+content class of record remains v4 rev 3 under audit v3 -- this block does
+not change that; v5 is its advisory extension.
 
 Two rules, BOTH ADVISORY; nothing exclusion-bearing changes:
 
@@ -20,11 +22,15 @@ Two rules, BOTH ADVISORY; nothing exclusion-bearing changes:
       aside. The v3 echo rule compares against the instruction only (the
       v1 -> v2 confound fix), so a payload returned with no rewrite passes
       as content; the format recon's read found three (F1 s22 forced0, F2
-      s5 free4, F2 s8 forced2). Exact word-sequence identity (case and
-      punctuation ignored -- so '3pm!' for '3pm.' and **bold** count) after
-      stripping a leading "<Word>:" label and quotation marks -- wider than
-      the disposition's "quotation marks aside", declared; a partial rewrite
-      is not an echo. The screen flags each hit's byte-level verbatimness.
+      s5 free4, F2 s8 forced2). VERBATIM identity, whitespace-normalised,
+      punctuation and markup INCLUDED in the comparison, after stripping a
+      leading "<Word>:" label and quotation marks. A punctuation or emphasis
+      change to an otherwise verbatim payload is a transform -- a minimal
+      one -- and is NOT payload_echo; it goes to the rule-25 read like any
+      other advisory-borderline case (DESIGN BLOCK v1.1 §1, which REPLACES
+      the candidate's word-sequence rule and its declared widening). A
+      partial rewrite is not an echo. The screen flags each hit's byte-level
+      verbatimness.
 
 Precedence: NULL -> STUCK -> PREAMBLE -> ECHO -> PAYLOAD_ECHO -> WRONG_TASK
 (the two advisory classes last; payload_echo before wrong_task so a payload
@@ -39,7 +45,7 @@ from typing import Iterable, Mapping, Sequence
 from . import contentclass as V3
 from . import contentclass_v4 as V4
 
-SPEC_VERSION = "content-class-v5 CANDIDATE (design dispositions 2026-09-08 item 2): wrong_task pool by task id; payload_echo advisory"
+SPEC_VERSION = "content-class-v5 ADOPTED advisory-only (DESIGN BLOCK v1.1, PI date 2026-09-17): wrong_task pool by task id; payload_echo advisory, verbatim boundary"
 
 EXCLUSION_BEARING = V4.EXCLUSION_BEARING
 ADVISORY = ("task_echo", "payload_echo", "wrong_task")
@@ -74,15 +80,25 @@ def _strip_quotes(s: str) -> str:
     return (s or "").strip().strip(_QUOTES).strip()
 
 
+def _ws(s: str) -> str:
+    """Whitespace-normalised: runs of whitespace to one space, ends trimmed.
+    Nothing else is removed -- punctuation and markup stay in."""
+    return re.sub(r"\s+", " ", s or "").strip()
+
+
 def is_payload_echo(text: str, task_text: str) -> bool:
-    """Transform task answered with its payload unchanged (quotation marks
-    and a leading label aside). Exact word-sequence identity."""
+    """Transform task answered with its payload VERBATIM (quotation marks and
+    a leading label aside), whitespace-normalised, punctuation and markup
+    INCLUDED in the comparison. A punctuation or emphasis change to an
+    otherwise verbatim payload is a transform -- a minimal one -- and is not
+    payload_echo (DESIGN BLOCK v1.1 2026-09-17 §1; class-level rule, not a
+    string rule)."""
     if not is_transform_task(task_text):
         return False
     body = _strip_quotes(V4.strip_leading_label(text))
     if not body:
         return False
-    return V3._words(body) == V3._words(payload_of(task_text))
+    return _ws(body) == _ws(payload_of(task_text))
 
 
 def others_by_task_id(task_text: str, pool_by_id: Mapping[str, Sequence[str]],

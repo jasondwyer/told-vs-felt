@@ -4,15 +4,20 @@ adjudication of 2026-09-05, PI-ratified; AMENDMENT 2 (iii) §3).
     audit of record = v2 + the adopted content classes
                         (stuck_attractor, preamble_without_content,
                          null_response) as EXCLUSION-BEARING
-                      + task_echo, wrong_task as ADVISORY flags routed to the
-                        rule-25 read
+                      + task_echo, payload_echo, wrong_task as ADVISORY
+                        flags routed to the rule-25 read (content class v5,
+                        adopted DESIGN BLOCK v1.1 2026-09-17)
 
 A NEW module, per the amendment. `session.AuditSpec` (v2) and
 `contentclass.py` (draft v3) scored committed artifacts and stay frozen; this
-composes them and `contentclass_v4`. Precedence is audit-first (rule 28b):
+composes them, `contentclass_v4` (the adopted exclusion-bearing classes) and
+`contentclass_v5` (the ADVISORY classes, adopted DESIGN BLOCK v1.1
+2026-09-17: wrong_task's pool by task id, payload_echo). Callers MUST pass an
+id-filtered pool (`contentclass_v5.others_by_task_id`). Precedence is audit-first (rule 28b):
 the v2 audit evaluates before any content class, so a stimulus-provoked junk
-round is claimed by the tolerant counter first. PROSPECTIVE ONLY: no
-committed artifact is rescored by this module.
+round is claimed by the tolerant counter first. No committed artifact is
+rescored by this module: adoption changes what NEW campaigns record, never a
+campaign already scored.
 """
 
 from __future__ import annotations
@@ -22,8 +27,9 @@ from typing import Iterable, Sequence
 
 from ..session import AuditSpec
 from . import contentclass_v4 as V4
+from . import contentclass_v5 as V5
 
-AUDIT_VERSION = "audit-v3 = e2b_audit_v2 + content-class-v4 (exclusion: null/stuck/preamble; advisory: echo/wrong_task)"
+AUDIT_VERSION = "audit-v3 = e2b_audit_v2 + content-class-v4 exclusion-bearing (null/stuck/preamble) + content-class-v5 ADVISORIES (task_echo, payload_echo, wrong_task by task id) -- DESIGN BLOCK v1.1 2026-09-17"
 
 
 @dataclass(frozen=True)
@@ -46,7 +52,7 @@ class AuditV3:
         reason = self.v2.check(text)
         if reason:
             return AuditV3Result(exclusion=f"audit:{reason}")
-        label, standing = V4.classify_v4(text, task_text, earlier, other_tasks)
+        label, standing = V5.classify_v5(text, task_text, earlier, other_tasks)
         if standing == "exclusion":
             return AuditV3Result(exclusion=f"content:{label}", content_label=label)
         if standing == "advisory":
