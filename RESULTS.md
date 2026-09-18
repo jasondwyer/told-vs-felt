@@ -21,6 +21,218 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-09-18 — **ADDENDUM-k1 v1.1: the Appendix referent check STOPS the commit a second
+  time. 114 referents by six blind checkers over disjoint groups, two refuter lenses
+  each (one referent excepted, below); 19 contested, 17 reported as not resolving. Two
+  are build-blocking: `valence_core/echo/k1.py:91-92` asserts block order and 102 of 102
+  of the alternating e2a texts §1.2 selects violate it, so "the echo primitive of record
+  unchanged" cannot execute §1.2's reads; and §1.4's third branch is arithmetically
+  empty at s = .861, so §1.5's "battery reaching all four D3 branches" is not
+  constructible. §2.2's ".80" does not follow uniquely from "the same margin", and
+  §0.2's "exactly half" compares against a four-mask probe whose class difference is not
+  half of Stage 1's. Document NOT committed, no 1b analyzer built, no reads run.
+  ADDENDUM-k1 §4's steps 2 and 3 are not merely gated behind the commit — as written
+  they are unbuildable. Carried beside: a measured read-geometry confound §1.4 has no
+  branch for.** (Stamp verified at write time: `date -u` → **Fri Sep 18 06:18:12 UTC 2026**.)
+
+  - **The routing (the PI's word, quoted so the record carries it).** The routing for
+    ADDENDUM-k1 v1.1 dates from 2026-09-12; the 09-13 design handoff still marked v1.1
+    "unrouted" and queued the same sequence conditionally, and it was reissued by DESIGN
+    BLOCK v1.1 (PI date 2026-09-17), whose §4 reads: *"Then the
+    ADDENDUM-k1 v1.1 routing, as issued: Appendix check against HEAD; commit appended to
+    the k chain; 1b analyzer + battery; Stage 1b reads on the recon's 102 texts; entry
+    `ADDENDUM-k1 STAGE 1b — +/0 DIAGNOSTIC`. Any referent that does not resolve → STOP,
+    write to raw, report."* The document's own Appendix carries the same rule: *"Any
+    referent that does not resolve → STOP, report, no commit."* This entry is that
+    report. Step numbers below are ADDENDUM-k1 §4's own Sequence (1 commit, 2 analyzer +
+    battery, 3 reads), not the routing sentence's clause order.
+
+  - **The check.** Workflow `wf_b0099fec-226`, 18 agents (six blind checkers over
+    disjoint
+    referent groups — G1 19 referents, G2 21, G3 16, G4 13, G5 18, G6 27 — then two
+    refuter lenses per group, too-lenient and too-strict, per trap 44); 0 errors;
+    2,257,253 subagent tokens; 1,425 s. Raw
+    [`_addendum-k1-v1.1_referent_check`](results/raw/2026-09-12_addendum-k1-v1.1_referent_check.txt),
+    written before the report per the 2026-09-06 design block §1. Totals recompute from
+    the body, not merely from its header: 114 referents, 13 checker-unresolved, 227
+    refuter verdict lines, 14 overturns spread over 13 referents. "Contested" is this
+    entry's derived term — the union of the checker's 13 unresolved and the 13 carrying
+    an overturn — and that union is 19; 17 remain after the two the entry reports as
+    non-defects. One referent, G6.6 (uncontested, severity clean), carries one lens
+    rather than two, the lens appropriate to a `resolves=True` item. All 19 contested
+    referents were re-verified by Code against the files (trap 25), in two instalments
+    in that raw — the second appended 2026-09-18 after this entry's own values-check
+    found five findings uncovered by the first. The refuters overturned in both
+    directions, as trap 44 predicts: six knocked down a checker "resolves", eight a
+    checker "does not resolve".
+
+  - **Build-blocking (1): the primitive cannot read the texts §1.2 names.**
+    `valence_core/echo/k1.py:91-92` — `if tags[0] != tags[1] or tags[2] != tags[3]:
+    raise AssertionError(f"not block order: tags {tags}")`. Code enumerated the span tag
+    order of all 102 recon sessions in `data/echo/stageB_reads.json`: 102 of 102 are
+    alternating (session "0" is `[slate, prism, slate, prism]`), none is block order.
+    The referent fails either reading: if "the echo primitive of record" is `k1.py` —
+    where the +1-only docstring and guard live — then "unchanged" is false on these
+    texts; if it is `maskedprefix.py`, then "unchanged" holds but "(+1 signs only)" does
+    not, since `build_mask` writes `1 if inj.alpha > 0 else -1` and the recon's own ±
+    masks ran through it with negative alphas. §1.2 and §4 step 2 assert the primitive
+    is unchanged; §0.3's sentence attaches "unchanged" to the sign restriction rather
+    than to the primitive, and the finding turns on exactly which noun it attaches to.
+
+  - **Build-blocking (2): §1.4's third branch is empty.** §1.4 fixes s = .861. Branch 3
+    requires `.90 > m` AND `m − s > .05`, i.e. m < 0.900 and m > 0.911 simultaneously.
+    Three of the four branches are reachable (m ≥ .90; .811 ≤ m < .90; m < .811); the
+    third is not, for any real m. §1.5's deliverable — *"a battery reaching all four D3
+    branches and STOP"* — is therefore not constructible through §1.4's selector while s
+    is fixed, and that battery is §4 step 2, which the routing asks Code to commit
+    before any read.
+
+  - **§2.2's bar derivation does not yield .80 uniquely.** The recon band .98–.99 is .01
+    wide, so both endpoint conventions give the same bar (.98 − .08 = .9000; .99 − .09 =
+    .9000). Stage 1's band .85–.89 is four times wider, so they diverge: .85 − .08 =
+    .7700, .89 − .09 = .8000, full envelope .76–.81. ".80" is the high-end pairing only.
+    And .861 is a band MEDIAN — the convention PROPOSAL-k's own G1/G3 bars use — on
+    which the same margin gives .77–.78 (.861 − .09 and .861 − .08) — an envelope, named
+    as one, since taking a single end is the selectivity this finding faults.
+
+  - **§0.2's "exactly half" compares against the wrong probe.**
+    `data/echo/stageC_analysis.json` contains exactly two first-sign families,
+    `c2_firstsign_B1-4` and `c2_firstsign_B1-4x_random`; there is no B1-vs-B2-only
+    family anywhere. The .98–.99 figure comes from the four-mask probe whose target is
+    *"rows B1..B4 ... +1 for B1, B3"* — classes B1/B3 against B2/B4, class difference
+    (2,0,−2,0) in round-sign space, L2 norm 2.83 against Stage 1's (1,1,−1,−1) at 2.00,
+    a ratio of 1.41, not 2. Three riders elsewhere in the same §0.2: the record's
+    measurand is the FIRST-ROUND sign, not the "first-block" sign (B3 and B4 are not
+    first-block/second-block masks — their first two rounds do not share a sign); and
+    the bare ".98" a later sentence sets against .86 is the range floor, where the band
+    median is .9884. That same later sentence's *"is what the arithmetic predicts"* has
+    no arithmetic of record behind it — no file in the repository maps contrast
+    magnitude to AUC.
+
+  - **The remaining nine referents, ten assertions — scope and gloss, plus two the raw
+    grades substantive (§2.4's mask set and the Appendix's omissions).** `≥ .998` is
+    label-A-only: `c1_label_a_M1M2` over L51–L61 reads min .9984, while
+    `c1_label_b_M1M2` over the same layers reads .8208–.9642; §0.2 states it unscoped as
+    "label-token binding". The Appendix's *"§1.4 (G1–G5 bars)"* names two criteria that
+    have no bar — `k1_analysis.json`'s `bars` object holds G1, G2, G3 only, and
+    PROPOSAL-k titles its own G4 *"Leak calibration (feeds LOCK-k; no pass/fail)"*. §2.3
+    withdraws a *"+/0 primacy secondary"* that PROPOSAL-k §2.3 never registers (it
+    registers four: Δ_M by block order, signed logit shift, session share, stay/switch).
+    *"PROPOSAL-k's L51–L62 band included the L59–L63 fall-off"* overstates containment
+    by one layer — `bars.G3` is `[0.9, [51..62]]`, L63 is outside, and that correction
+    is already on the record in its own words — in the 2026-09-11 v1.0 STOP entry, not
+    the STAGE 1 entry, which the raw's first instalment mis-attributes and this entry
+    corrects. §2.4's *"above the recon's 0–3/102"* is trap 48's class: every tabled π_d
+    is an axis mask (Stage B M1 1/102, M2 3/102, M5 0, M6 1/102, R1–R4 0; Stage C M1
+    1/102, M2 3/102, B1 0, B2 0, B3 1/102, B4 0), no random-direction mask is tabled
+    anywhere, and three of Stage 1's four G4 arms (R+A, R+B, R++) are random-direction.
+    §1.3's *"Stage B's M1 − M2 = (2,−2,2,−2) on these texts"* is the negation on 53 of
+    the 102 read in round order (`start_plus` is True on 49, False on 53); it is exact
+    only under the class grouping D3 itself uses. The Appendix omits seven classes of
+    body-asserted referent, including the two load-bearing ones — PROPOSAL-k §0.1 (B2)'s
+    .98–.99, the anchor of §2.2's derivation, and (B4)'s 0–3/102, the comparison in §2.4
+    — because its recon-figure clause is scoped to figures "cited in §1.1", which
+    neither is. 5(f) is asserted satisfied but D4 names no bar where 5(f)(ii) requires
+    *"a leakage gate stated as paired-shadow discordance against a declared bar"*, and
+    §1 declares no retention interval where 5(f)(iii) requires one ("retention" occurs
+    twice in the whole document, neither time a declaration for these texts). And
+    *"v1.0's eight referents fold into slip (17)'s class"*: the count resolves, but slip
+    (17)'s recorded content is mis-sourced citation pointers and one figure, where the
+    record calls four of v1.0's eight *"in the design's own substance"*.
+
+  - **Reported as NOT defects, both contested.** §1.5's anchor `ADDENDUM-k1 STAGE 1b —
+    +/0
+    DIAGNOSTIC` was flagged on 2026-09-12 because the routing block then ON THE RECORD
+    named no 1b anchor and the record carried only the `± DIAGNOSTIC` form. Both grounds
+    are stale at HEAD: the routing quoted above names the anchor and matches §1.5
+    character for character, and RESULTS.md now carries that anchor form itself,
+    introduced at `aeb4a2c` by the v5 adoption entry which quoted this block (the bare
+    string `+/0` was already there three times; the anchor is the fourth and new). The
+    referent resolves, more strongly than the raw's note allowed. And §2.4's "above"
+    holds of the RATES (2/43 = .047 against 3/102 = .029) though not of the bare counts;
+    both refuter lenses overturned the checker there. The mask-set defect in the same
+    sentence is the separate finding above and stands.
+
+  - **The STOP carries to HEAD `aeb4a2c`.** The check ran against `3be4a63`. Of the
+    referent sources tracked at both commits, Code verified byte-identity on every one
+    the findings rest on —
+    `PROPOSAL-k-echo-channel.md`, `CLAUDE.md`, `valence_core/echo/` (`__init__.py`,
+    `k1.py`, `maskedprefix.py`, `spans.py`, `probe.py`), `valence_core/k/analysis.py`,
+    the three `data/k/k1_*` artifacts and the five `data/echo/stage[BC]_*` artifacts
+    (including `stageB_analysis_samefolds.json`). Five cited sources are outside that
+    comparison and are named rather than folded in: `ADDENDUM-k1.md`, untracked, hashing
+    `61acf21ff2cc104e` at HEAD — no sha was taken at the check itself, and what stands
+    for the interval is Code's 2026-09-13 check that all 18 sentences the report quotes
+    were present verbatim after the file was re-saved (18/18; its mtime is 2026-09-13
+    05:46:42 UTC, after the check); `HANDOFF-2026-09-12.md`, untracked at `3be4a63` and
+    so not diffable across the pair; and the three gitignored residual stacks
+    `stageB_resid_s0.npz`, `stageC_resid_s0.npz` and `k1_resid_s0.npz`, which carry the
+    G4 capture-shape evidence and are local by the Environment rule. RESULTS.md is
+    tracked at both and is NOT byte-identical: it differs by the v5 adoption entry (+191
+    lines), and that difference is material to exactly one contested item — it is what
+    makes §1.5's anchor resolve, as the bullet above records. Every other verdict is the
+    same verdict against the same bytes.
+
+  - **Carried beside, measured 2026-09-18 (rule 23): a read-geometry confound §1.4 has
+    no
+    branch for.** Raw
+    [`_addendum-k1-1b_retention_geometry`](results/raw/2026-09-18_addendum-k1-1b_retention_geometry.txt),
+    corrected after this entry's values-check. Code's own figures below are under
+    `k1_reads`' token convention (`read_position − tok_end`; figures quoted from the
+    record keep the record's own; `stageB_reads`' `distance_to_read` carries a +1,
+    verified on 408/408 spans, and mixing the two was the first version's error). On the
+    alternating texts §1.2 selects, one E mask's last steered round is R3 and the
+    other's R4: the interval to the read is median 65.5 tokens (50–109) and 21 (20–22),
+    sharing a value in 0 of 102 sessions. Stage 1's F2 block order gives 112 (88–141)
+    and 21 (20–22). The near arms are equal; the far arm — the one carrying D3's target,
+    "the FIRST forced round carried +" — sits 46.5 tokens closer to the read. **The
+    warrant is round position, not distance:** the record FLAGS that retention is *"not
+    ordered by distance"*. Read at one layer, L51, the recon's single-round masks on
+    these very texts give R1 .794 (farthest, ~156 tokens), R3 .831 (~66), R4 .683 (~21)
+    and R2 .656 (~111) — the farthest is not the weakest and the nearest is not the
+    strongest. All four are injection-borne (text-only shadows .495–.504, none above
+    null). D3's target is carried on alternating texts by the label whose last steered
+    round is R3; Stage 1's G3 target by the block whose last steered round is R2. The
+    recon's own entry names the confound: *"round position, label parity and span length
+    are confounded in this design."* §1.4's four branches attribute a high D3 median to
+    the contrast or the format only. Descriptive, not adjudicated. (`k1_reads`'
+    `retention_tokens` is a per-session field, 43 rows, `first_block_end_to_read` 88–141
+    median 112 — not a declaration; PROPOSAL-k §2.1 declares 21 tokens for F2.)
+
+  - **Not done, by the STOP.** ADDENDUM-k1 v1.1 is not committed and remains untracked;
+    the
+    1b analyzer, its battery and the reads driver are not built; no 1b read has run; no
+    `ADDENDUM-k1 STAGE 1b — +/0 DIAGNOSTIC` entry exists. The sign set is not widened
+    and `k1.py` is untouched — v1.1 asks for no widening, and its +1-only guard is
+    PROPOSAL-k §0.4 in code. Stage 1's verdict (`7742e2c`, G3_FAIL) is unaffected and is
+    not rescored by anything here. LOCK-k does not exist.
+
+  - **Values-checked before commit** (trap 29), raw
+    [`_k1_stop_entry_valuescheck`](results/raw/2026-09-18_k1_stop_entry_valuescheck.txt):
+    three adversarial lenses, two passes: 303 claims with 47 failing, then (raw
+    [`_pass2`](results/raw/2026-09-18_k1_stop_entry_valuescheck_pass2.txt)) 255 claims
+    with 20. Pass 1 refuted the draft's warrant for the bullet above — the record flags
+    retention as NOT distance-ordered, so the finding was re-grounded on round position
+    — and found the two artifacts' token conventions mixed, an even-sample median taken
+    low, "the remaining eleven" where nine remained, `routing item 2` conflating two
+    numbering schemes, five findings with no Code re-verification on disk, and the §1.5
+    non-defect resting on two grounds gone stale at HEAD. Pass 2 found a 4-vs-5 mismatch
+    inside the check raw's own second-instalment header (corrected in the raw), an
+    internal contradiction between this entry's routing bullet and its §1.5 bullet about
+    the 09-12 routing, a sha attributed to two dates on one measurement, and three more
+    labelling slips. All are corrected; no gate figure and no count from the check
+    itself moved in either pass. Twice the lenses disagreed with each other and the
+    minority was right — G3.16's coverage (FIG.12 five, PROV.17 four) and the raw's
+    header count — which is trap 25 on refuter bookkeeping, not on findings.
+
+  - **Adjudication returns to the design seat**, on three questions Code does not
+    decide:
+    what "the echo primitive of record unchanged" licenses when the module bearing that
+    name refuses the texts (a new module beside it, block-order texts, or an amended
+    clause); what moves to make §1.4 satisfiable (the branch count, the .05 margin, or
+    s); and whether D3 needs a round-position-matched arm, a declared per-mask retention
+    interval under 5(f)(iii), or a further branch.
+
 - 2026-09-17 — **CONTENT-CLASS v5 ADOPTED, advisory only (DESIGN BLOCK v1.1,
   design seat, PI date 2026-09-17). The block's §1 adjudication narrows
   `payload_echo` to VERBATIM — whitespace-normalised, punctuation and markup

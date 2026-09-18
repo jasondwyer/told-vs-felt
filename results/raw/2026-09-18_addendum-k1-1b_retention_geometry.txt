@@ -1,0 +1,50 @@
+# ADDENDUM-k1 s1.2 -- read geometry of the proposed 1b masks on the recon's alternating
+# e2a texts, against Stage 1's F2 geometry. Model-free, from committed artifacts.
+# CORRECTED 2026-09-18 after the STOP entry's values-check (raw
+# results/raw/2026-09-18_k1_stop_entry_valuescheck.txt) refuted the first version on three
+# counts: it mixed two token conventions, took a lower median on an even sample, and
+# rested on a 'distance-sensitive' warrant the record explicitly FLAGS as false.
+
+CONVENTIONS (the two artifacts differ by one token; verified exhaustively)
+  stageB_reads distance_to_read = read_position - tok_end + 1   (408/408 spans)
+  k1_reads     retention_tokens = read_position - tok_end       (43/43 sessions)
+  Everything below is stated under k1_reads' convention (no +1).
+
+LAST STEERED POSITION -> READ
+ ALTERNATING (A B A B) -- s1.2's E+A / E+B on the recon's 102 e2a texts
+     label owning R1,R3   last steered = R3                n=102  min=50   median=65.5    max=109
+     label owning R2,R4   last steered = R4                n=102  min=20   median=21.0    max=22
+    masks sharing an interval: 0/102
+ BLOCK ORDER (A A B B) -- Stage 1's M+A / M+B on its own 43 F2 texts
+     first block  last steered = R2                        n=43   min=88   median=112     max=141
+     second block last steered = R4                        n=43   min=20   median=21      max=22
+
+  near arms: 21.0 vs 21 -- equal.   far arms: 65.5 vs 112 -- gap 46.5.
+
+THE WARRANT -- corrected. NOT 'the echo is distance-sensitive': the record FLAGS the
+opposite. RESULTS.md:2583 'The curve is not ordered by distance: R1, the FARTHEST round
+(157 tokens), is the most readable (.888) ... R4, the NEAREST (22 tokens), weak (.683);
+R2 (112 tokens) weakest (.656)'; FLAG repeated at :2660.
+The finding stands on ROUND POSITION, which the recon measured directly on these texts
+(data/echo/stageB_analysis.json, single-round masks at L51, text-only shadows at null so
+the signal is injection-borne):
+    c_R1_roundpole     auc 0.794  above_null=True   text-only shadow 0.502
+    c_R2_roundpole     auc 0.656  above_null=True   text-only shadow 0.491
+    c_R3_roundpole     auc 0.831  above_null=True   text-only shadow 0.495
+    c_R4_roundpole     auc 0.683  above_null=True   text-only shadow 0.504
+
+  D3's target ('the FIRST forced round carried +') is carried on ALTERNATING texts by the
+  label whose last steered round is R3, which the recon read at .831. Stage 1's G3 target
+  is carried by the block whose last steered round is R2, read at .656. The recon's own
+  entry names the confound: 'Rounds 1 and 3 are the start-pole label's rounds and 2 and 4
+  the other label's, so round position, label parity and span length are confounded in
+  this design' (RESULTS.md:2583). s1.4's four branches attribute a high D3 median to the
+  contrast or the format only. Descriptive; not adjudicated.
+
+5(f)(iii) -- 'the retention interval ... declared and held fixed within a cell'.
+  ADDENDUM-k1 s1 declares none ('retention' occurs twice in the document, at :51 inside a
+  quoted Stage 1 sentence and at :100 in s0.3, neither a declaration for these texts).
+  PROPOSAL-k s2.1 declares 21 tokens for F2. k1_reads' retention_tokens is a PER-SESSION
+  field (43 rows, first_block_end_to_read 88-141, median 112), not a declaration; the
+  {107, 21, 21} triple quoted in the first version of this raw was session '0' alone.
+Fri Sep 18 05:52:43 UTC 2026

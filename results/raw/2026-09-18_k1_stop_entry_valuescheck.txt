@@ -1,0 +1,3168 @@
+RAW RECORD — values-check of the ADDENDUM-k1 STOP entry, before commit
+Run 2026-09-18, workflow wf_f76e934e-e12; three adversarial lenses (figures/arithmetic/counts,
+glosses, provenance+internal consistency); 3 agents, 0 errors; 631,119 subagent tokens.
+Protocol: trap 29 (values-check before commit, refutations re-verified by Code); 2026-09-06
+design block s1 (raw written before the report). Refuters were instructed to RECOUNT the check
+totals from the raw's BODY, not its TOTALS header (the defect caught in the v5 entry's pass 2).
+
+TOTALS: claims 303  failing 47
+====================================================================================================
+
+####################################################################################################
+LENS FIG — 102 claims, 15 failing
+####################################################################################################
+
+[FIG.1] holds=True  severity=info
+  CLAIM:
+    114 referents
+  EVIDENCE:
+    Body recount of lines matching ^\[G<n>.<n>\]  CHECKER resolves= : 114 exactly. (A naive ^\[G
+    grep returns 125 — the extra 11 are the CODE RE-VERIFICATION headers at raw:5238-5290. The
+    strict pattern is the right one.)
+  NOTE:
+    Matches the raw's TOTALS header AND the body.
+
+[FIG.2] holds=True  severity=info
+  CLAIM:
+    six blind checkers over disjoint groups
+  EVIDENCE:
+    Six GROUP headers at raw:12, 940, 1728, 2471, 3261, 4063. Ids are group-prefixed, so the id
+    sets are disjoint by construction.
+  NOTE:
+    Disjointness of the underlying referents (as opposed to ids) is not independently checkable;
+    e.g. G3.3's .98-.99 and G6.4's PROPOSAL-k §0.1 (B2) .98-.99 are adjacent but distinct
+    locations.
+
+[FIG.3] holds=True  severity=info
+  CLAIM:
+    with two refuter lenses each
+  EVIDENCE:
+    227 REFUTER lines over 114 referents = 2 per referent except G6.6 (1). 6 groups x 2 lenses =
+    12 refuter agents.
+  NOTE:
+    Reads at group level; the one-lens referent is disclosed two sentences later.
+
+[FIG.4] holds=True  severity=low
+  CLAIM:
+    19 contested
+  EVIDENCE:
+    Recomputed: checker-unresolved = 13
+    {G1.19,G3.7,G3.10,G5.8,G5.11,G5.15,G5.17,G6.7,G6.9,G6.12,G6.16,G6.18,G6.27}; referents with
+    >=1 overturned refuter = 13
+    {G1.19,G3.3,G3.4,G3.9,G3.16,G4.13,G5.8,G5.15,G6.7,G6.12,G6.16,G6.18,G6.26}; union = exactly
+    19.
+  NOTE:
+    'Contested' is the entry's own derived term — the raw's TOTALS line carries no such field.
+    The union definition is not stated in the entry; a reader cannot reproduce 19 without it.
+
+[FIG.5] holds=True  severity=info
+  CLAIM:
+    17 do not resolve
+  EVIDENCE:
+    19 contested minus the two the entry itself files as NOT defects (G5.15, G6.18) = 17.
+    Independently, the 17 referents the bullets enumerate are: G4.13 | G5.11,G5.17 | G6.7 |
+    G3.3,G3.7,G3.9,G3.10 | G3.4,G6.26,G6.12,G6.9,G6.16,G5.8,G6.27,G1.19,G3.16. Count = 17.
+  NOTE:
+    The headline count and the enumerated findings reconcile exactly.
+
+[FIG.6] holds=True  severity=info
+  CLAIM:
+    Per-group counts G1 19, G2 21, G3 16, G4 13, G5 18, G6 27
+  EVIDENCE:
+    Body recount of strict CHECKER lines per group prefix: 19/21/16/13/18/27; sum 114. The group
+    headers state the same numbers, so header and body agree here (unlike the prior entry's
+    caught case).
+  NOTE:
+
+
+[FIG.7] holds=True  severity=info
+  CLAIM:
+    13 checker-unresolved
+  EVIDENCE:
+    Body recount: 13 strict CHECKER lines with resolves=False; ids listed in FIG.4. No
+    case-variant lines exist in the strict set.
+  NOTE:
+
+
+[FIG.8] holds=True  severity=info
+  CLAIM:
+    227 refuter verdict lines
+  EVIDENCE:
+    grep -c 'REFUTER \[' = 227; parsed per-referent sum = 227 (114*2 - 1 for G6.6).
+  NOTE:
+
+
+[FIG.9] holds=True  severity=info
+  CLAIM:
+    14 overturned
+  EVIDENCE:
+    Parsed refuter lines with overturned=True: 14, spread over 13 referents (G6.18 carries two).
+  NOTE:
+
+
+[FIG.10] holds=True  severity=info
+  CLAIM:
+    the refuters overturned in both directions, as trap 44 predicts
+  EVIDENCE:
+    Of the 14 overturns, 6 are resolves=False overturned=True (a checker True knocked down) and
+    8 are resolves=True overturned=True (a checker False knocked down). Trap 44 text verified at
+    HANDOFF-2026-09-12.md:341-345.
+  NOTE:
+
+
+[FIG.11] holds=True  severity=info
+  CLAIM:
+    One referent (G6.6, uncontested and clean) carries one lens rather than two, the lens
+    appropriate to a resolves=True item
+  EVIDENCE:
+    G6.6: CHECKER resolves=True severity=clean, exactly one REFUTER line, labelled 'refuter —
+    too lenient (re-checking G6 for resolves=true item…)', resolves=True overturned=False. It is
+    the only referent with != 2 lenses.
+  NOTE:
+
+
+[FIG.12] holds=False  severity=medium
+  CLAIM:
+    Every finding below was re-verified by Code against the file before it entered this entry
+    (trap 25)
+  EVIDENCE:
+    The raw's CODE RE-VERIFICATION section (raw:5232-5291) covers 11 of the 17 findings
+    (G5.11/G5.17, G3.7/G3.9/G3.3, G4.13, G6.9, G6.7, G3.4, G6.26, G6.12, G6.16) plus the two
+    NOT-defects. No Code re-verification line exists on disk for G1.19 (the 5(f) items), G3.10
+    ('no arithmetic on record'), G3.16 (slip 17), G5.8 (the 53-of-102 item) or G6.27 (the seven
+    classes).
+  NOTE:
+    I independently reproduced G5.8's 49/53 split and G6.27's seven-vs-ten narrowing, so the
+    claims are true; it is the 'every' that outruns its on-disk evidence.
+
+[FIG.13] holds=False  severity=low
+  CLAIM:
+    Headline 'Two are not wording'
+  EVIDENCE:
+    Read as a severity claim it fails: the raw's severity field over the 17 findings gives 4
+    substantive (G5.11,G5.17,G6.16,G6.27), 3 figure-or-clean (G6.7 figure; G4.13, G6.26 clean),
+    8 gloss and 3 wording — 14 of 17 are not 'wording'.
+  NOTE:
+    Read as prose ('two are not mere wording issues') it is defensible, but the raw uses
+    'wording' as a graded severity value, so the phrase collides with the artifact's vocabulary.
+
+[FIG.14] holds=True  severity=info
+  CLAIM:
+    DESIGN BLOCK v1.1 §4 routing, quoted
+  EVIDENCE:
+    RESULTS.md:80-85, blockquote markers stripped and whitespace normalised, is
+    character-for-character the entry's quotation including the anchor backticks and the arrow.
+  NOTE:
+
+
+[FIG.15] holds=False  severity=low
+  CLAIM:
+    DESIGN BLOCK v1.1 (2026-09-17) §4 reissued the 09-17 routing unchanged
+  EVIDENCE:
+    The block's own title line (RESULTS.md:39) reads 'DESIGN BLOCK v1.1 — content-class v5
+    adoption (replaces the 09-13 block; addendum routing unchanged)', PI date 2026-09-17. The
+    routing carried forward unchanged is the 09-13 block's, not a '09-17 routing'.
+  NOTE:
+    Self-referential as written: the block is the 09-17 block.
+
+[FIG.16] holds=True  severity=info
+  CLAIM:
+    The document's own Appendix carries the same rule: 'Any referent that does not resolve →
+    STOP, report, no commit.'
+  EVIDENCE:
+    ADDENDUM-k1.md:305-306, verbatim after whitespace normalisation.
+  NOTE:
+
+
+[FIG.17] holds=True  severity=info
+  CLAIM:
+    Workflow wf_b0099fec-226; 18 agents; 0 errors; 2,257,253 subagent tokens; 1,425 s
+  EVIDENCE:
+    raw:2-3 states 'workflow wf_b0099fec-226; 18 agents (6 blind checkers over disjoint referent
+    groups, 2 refuter lenses each); 0 errors; 2,257,253 subagent tokens; 1,425 s.' All four
+    figures match.
+  NOTE:
+
+
+[FIG.18] holds=True  severity=info
+  CLAIM:
+    Raw path results/raw/2026-09-12_addendum-k1-v1.1_referent_check.txt
+  EVIDENCE:
+    File exists, 5,291 lines, untracked (git status '??
+    results/raw/2026-09-12_addendum-k1-v1.1_referent_check.txt') — so this entry does commit it,
+    as the entry says.
+  NOTE:
+    Raw is dated 09-12; the entry is dated 09-18. Both stamps are internally consistent (raw
+    stamp Sat Sep 12 06:48:51 UTC 2026).
+
+[FIG.19] holds=True  severity=info
+  CLAIM:
+    written before the report per the 2026-09-06 design block §1
+  EVIDENCE:
+    RESULTS.md:1978-1986 records the adopted standing protocol: 'every adversarial values-check
+    of design prose goes to results/raw/ BEFORE it is reported.' raw:4 cites the same block.
+  NOTE:
+
+
+[FIG.20] holds=True  severity=info
+  CLAIM:
+    Stamp 'Fri Sep 18 05:29:58 UTC 2026'
+  EVIDENCE:
+    `date -u` in this session returned Fri Sep 18 05:36:23 UTC 2026 — ~6.5 min later,
+    consistent. The 1b retention raw's own stamp is Fri Sep 18 05:22:51 UTC 2026, earlier still,
+    as it must be.
+  NOTE:
+    Not recomputable, but the three stamps order correctly.
+
+[FIG.21] holds=False  severity=low
+  CLAIM:
+    k1.py:91 raises AssertionError("not block order")
+  EVIDENCE:
+    valence_core/echo/k1.py:91 is the condition `if tags[0] != tags[1] or tags[2] != tags[3]:`;
+    the raise is at :92. The raw's own Code re-verification cites ':91-92'.
+  NOTE:
+    Off by one line; the guard is correctly identified and quoted.
+
+[FIG.22] holds=True  severity=info
+  CLAIM:
+    unless tags[0]==tags[1] and tags[2]==tags[3]
+  EVIDENCE:
+    k1.py:91-92, negation of the raising condition — exactly the stated guard.
+  NOTE:
+
+
+[FIG.23] holds=True  severity=info
+  CLAIM:
+    102 of 102 recon sessions in stageB_reads.json are alternating; session '0' is [slate,
+    prism, slate, prism]; none is block order
+  EVIDENCE:
+    Enumerated per_session span tags for all 102: 102 alternating, 0 block order, 0 other.
+    Session '0' tags = ['slate','prism','slate','prism'].
+  NOTE:
+    Independently reproduced, not taken from the raw.
+
+[FIG.24] holds=True  severity=info
+  CLAIM:
+    build_mask writes `1 if inj.alpha > 0 else -1`
+  EVIDENCE:
+    valence_core/echo/maskedprefix.py:229, verbatim.
+  NOTE:
+
+
+[FIG.25] holds=True  severity=info
+  CLAIM:
+    the recon's own ± masks ran through it with negative alphas
+  EVIDENCE:
+    scripts/recon_echo.py:163 builds spans as `inj.with_sign(sg)` with sg from signs_for()
+    (BLOCK_SIGNS has -1 entries; M6/M6x return [-1]*n), and :329/:399/:594/:864 pass those spans
+    to read_choice_maskedprefix, which calls build_mask at :265.
+  NOTE:
+
+
+[FIG.26] holds=True  severity=low
+  CLAIM:
+    §0.3, §1.2 and §4 step 2 each assert the primitive is unchanged
+  EVIDENCE:
+    §1.2 ADDENDUM-k1.md:137-138 'the echo primitive of record unchanged (+1 signs only)'; §4
+    step 2 :284-285 'the primitive unchanged'; §0.3 :106-107 'The echo primitive's +1-only sign
+    restriction is the proposal's and is unchanged.'
+  NOTE:
+    §0.3's assertion is about the sign restriction, not the module — slightly looser than 'the
+    primitive is unchanged', though it is the clause the finding turns on.
+
+[FIG.27] holds=True  severity=info
+  CLAIM:
+    §1.4 fixes s = .861
+  EVIDENCE:
+    ADDENDUM-k1.md:172 'Let m = D3's median AUC over L51–L62, and s = .861 (Stage 1's G3
+    median).' Recomputed from k1_analysis.json probes.g3_firstsign_read_M auc_loso over L51-L62:
+    median = 0.8610.
+  NOTE:
+
+
+[FIG.28] holds=True  severity=info
+  CLAIM:
+    Branch 3 requires .90 > m AND m − s > .05, i.e. m < 0.900 and m > 0.911 simultaneously
+  EVIDENCE:
+    ADDENDUM-k1.md:185 gives the branch condition verbatim. .861 + .05 = .911. The admissible
+    set {m : m < .900 and m > .911} is empty over the reals.
+  NOTE:
+    Branch-3 emptiness recomputed independently.
+
+[FIG.29] holds=True  severity=info
+  CLAIM:
+    Three of the four branches are reachable (m ≥ .90; .811 ≤ m < .90; m < .811)
+  EVIDENCE:
+    Branch 1: m ≥ .90. Branch 2 (.90 > m and |m−s| ≤ .05): .811 ≤ m ≤ .911 intersect m < .90 →
+    [.811, .900). Branch 4 (.90 > m and s−m > .05): m < .811. All three non-empty, and together
+    with branch 3 they tile (-inf, inf) except the empty piece.
+  NOTE:
+
+
+[FIG.30] holds=True  severity=info
+  CLAIM:
+    §1.5's deliverable quoted as 'a battery reaching all four D3 branches and STOP'
+  EVIDENCE:
+    ADDENDUM-k1.md:206, verbatim.
+  NOTE:
+
+
+[FIG.31] holds=False  severity=medium
+  CLAIM:
+    that battery is what routing item 2 asks Code to commit
+  EVIDENCE:
+    Under the DESIGN BLOCK §4 routing's own ordering ('Appendix check; commit appended to the k
+    chain; 1b analyzer + battery; Stage 1b reads; entry'), the battery is item 3, not item 2. It
+    is item 2 only under ADDENDUM-k1 §4 Sequence ('1. This document commits; 2. The 1b analyzer
+    extension and battery committed; 3. Stage 1b reads').
+  NOTE:
+    The entry uses 'routing item N' for ADDENDUM §4's step numbers while quoting the DESIGN
+    BLOCK routing as 'the routing' two bullets earlier. Same word, two numberings.
+
+[FIG.32] holds=False  severity=medium
+  CLAIM:
+    Headline: 'Routing items 2 and 3 are not merely gated behind item 1'
+  EVIDENCE:
+    Same collision. Under the DESIGN BLOCK routing, item 1 = the Appendix check and item 2 = the
+    commit — and the commit is blocked by the STOP, not unbuildable. The sentence is only true
+    under ADDENDUM §4's numbering (1 commit, 2 analyzer+battery, 3 reads).
+  NOTE:
+    Reads correctly once the numbering is named; as written it is ambiguous against the routing
+    the entry itself quotes.
+
+[FIG.33] holds=True  severity=info
+  CLAIM:
+    The recon band .98–.99 is .01 wide, so both endpoint conventions give the same bar (.98 −
+    .08 = .9000; .99 − .09 = .9000)
+  EVIDENCE:
+    Arithmetic exact. Band width .99 − .98 = .01 = the margin span .09 − .08.
+  NOTE:
+
+
+[FIG.34] holds=True  severity=info
+  CLAIM:
+    Stage 1's band .85–.89 is four times wider
+  EVIDENCE:
+    .89 − .85 = .04 = 4 × .01.
+  NOTE:
+
+
+[FIG.35] holds=True  severity=info
+  CLAIM:
+    .85 − .08 = .7700, .89 − .09 = .8000, full envelope .76–.81
+  EVIDENCE:
+    Arithmetic exact. Envelope over all (endpoint, margin) pairings: min .85−.09 = .76, max
+    .89−.08 = .81.
+  NOTE:
+
+
+[FIG.36] holds=True  severity=info
+  CLAIM:
+    '.80' is the high-end pairing only
+  EVIDENCE:
+    .80 arises only as .89 − .09; the matched low-end pairing gives .77, and the crossed
+    pairings give .76 and .81.
+  NOTE:
+
+
+[FIG.37] holds=True  severity=info
+  CLAIM:
+    Stage 1's +/0 figures in L50–L58 are .85–.89
+  EVIDENCE:
+    k1_analysis.json probes.g3_firstsign_read_M auc_loso L50-L58: min .8469, max .8886 →
+    '.85–.89' on the entry's rounding.
+  NOTE:
+
+
+[FIG.38] holds=True  severity=low
+  CLAIM:
+    .861 is a band MEDIAN — the convention PROPOSAL-k's own G1/G3 bars use — on which the same
+    margin gives about .78
+  EVIDENCE:
+    PROPOSAL-k §1.4 G1 and G3 both read 'median AUC over L51–L61 / L51–L62'. .861 − .08 = .781.
+  NOTE:
+    Band mismatch worth noting: §2.2's bar is over L50–L58, whose own median is .8707 (→ .79 at
+    margin .08, .78 at .09). .861 is the L51–L62 median. The conclusion survives; the specific
+    .78 is derived from a different band than the one §2.2 gates on.
+
+[FIG.39] holds=True  severity=info
+  CLAIM:
+    stageC_analysis.json contains exactly two first-sign families, c2_firstsign_B1-4 and
+    c2_firstsign_B1-4x_random; there is no B1-vs-B2-only family anywhere
+  EVIDENCE:
+    stageC families keys: c1_read_{M1M2,M3M4_random,TEXTONLY_shadow}, c1_label_a_*,
+    c1_label_b_*, c2_firstsign_B1-4, c2_lastsign_B1-4, c2_firstsign_B1-4x_random,
+    c2_lastsign_B1-4x_random. Exactly two 'firstsign'. stageB families (18 keys) contain no
+    B-family at all.
+  NOTE:
+
+
+[FIG.40] holds=True  severity=info
+  CLAIM:
+    the four-mask probe whose target is 'rows B1..B4 ... +1 for B1, B3'
+  EVIDENCE:
+    stageC_analysis.json targets['c2_firstsign_*'] = 'rows B1..B4 (or B1x..B4x) at the read
+    position: +1 for B1, B3' — the ellipsised quote is verbatim.
+  NOTE:
+
+
+[FIG.41] holds=True  severity=info
+  CLAIM:
+    class difference (2,0,−2,0) in round-sign space, L2 norm 2.83
+  EVIDENCE:
+    scripts/recon_echo.py:70-71 BLOCK_SIGNS: B1 (1,1,-1,-1), B2 (-1,-1,1,1), B3 (1,-1,-1,1), B4
+    (-1,1,1,-1). mean{B1,B3} = (1,0,-1,0); mean{B2,B4} = (-1,0,1,0); difference (2,0,-2,0).
+    ||(2,0,-2,0)||2 = sqrt(8) = 2.8284.
+  NOTE:
+    Recomputed from BLOCK_SIGNS, not from the raw.
+
+[FIG.42] holds=True  severity=info
+  CLAIM:
+    against Stage 1's (1,1,−1,−1) at 2.00, a ratio of 1.41, not 2
+  EVIDENCE:
+    ||(1,1,-1,-1)||2 = sqrt(4) = 2.0000. 2.8284 / 2.0000 = 1.4142 → 1.41. 'Exactly half' would
+    require 2.
+  NOTE:
+
+
+[FIG.43] holds=True  severity=info
+  CLAIM:
+    the record's measurand is the FIRST-ROUND sign, not the 'first-block' sign (B3 and B4 have
+    no two-round blocks at all)
+  EVIDENCE:
+    Target is +1 for B1 and B3, whose round-1 signs are both +; B2/B4 round-1 both −. Under the
+    record's (rounds 1,2)/(rounds 3,4) pairing, B3 = +−−+ and B4 = −++− have mixed pairs on both
+    halves — RESULTS.md:351 independently says 'under B3/B4 the first block is mixed'. §0.2:71
+    calls it 'first-block sign'.
+  NOTE:
+
+
+[FIG.44] holds=True  severity=info
+  CLAIM:
+    '.98' is the range floor where the band median is .9884
+  EVIDENCE:
+    stageC c2_firstsign_B1-4 auc_kfold L51-L62: min .9816, max .9924, median .9884. Under
+    auc_loso: min .9845, median .9899.
+  NOTE:
+    Both the .9884 median and the .9816 floor recomputed.
+
+[FIG.45] holds=True  severity=info
+  CLAIM:
+    'A halved linear separation landing at .86 ... is what the arithmetic predicts' has no
+    arithmetic on record behind it
+  EVIDENCE:
+    Quote verbatim at ADDENDUM-k1.md:79-81. No mapping from contrast magnitude to AUC appears in
+    PROPOSAL-k, the addendum or RESULTS; G3.10 stands unresolved with both refuters agreeing
+    (resolves=False, overturned=False).
+  NOTE:
+    A negative-existence claim; checkable only to the extent of the corpus searched.
+
+[FIG.46] holds=False  severity=high
+  CLAIM:
+    Scope and gloss (the remaining eleven)
+  EVIDENCE:
+    The four preceding bullets cover 8 referents (G4.13; G5.11,G5.17; G6.7;
+    G3.3,G3.7,G3.9,G3.10). 17 − 8 = 9 remaining, and the bullet enumerates 9 distinct referents
+    (G3.4, G6.26, G6.12, G6.9, G6.16, G5.8, G6.27, G1.19, G3.16) across 10 prose assertions
+    (5(f)(ii) and 5(f)(iii) both map to G1.19).
+  NOTE:
+    'Eleven' matches neither count. It equals 19 contested − 8, i.e. it silently includes the
+    two NOT-defects (G5.15, G6.18) that the NEXT bullet reports separately.
+
+[FIG.47] holds=True  severity=info
+  CLAIM:
+    `≥ .998` is label-A-only: c1_label_a_M1M2 over L51–L61 reads min .9984
+  EVIDENCE:
+    stageC c1_label_a_M1M2 auc_kfold L51-L61: min .9984 (L53), max 1.0000, median 1.0000 — all ≥
+    .998.
+  NOTE:
+
+
+[FIG.48] holds=True  severity=info
+  CLAIM:
+    c1_label_b_M1M2 over the same layers reads .8208–.9642
+  EVIDENCE:
+    stageC c1_label_b_M1M2 auc_kfold L51-L61: min .8208 (L61), max .9642 (L52). None ≥ .998.
+  NOTE:
+
+
+[FIG.49] holds=True  severity=info
+  CLAIM:
+    §0.2 states it unscoped as 'label-token binding'
+  EVIDENCE:
+    ADDENDUM-k1.md:71-72 'label-token binding ≥ .998 under alternating ± masks' — no label
+    scope.
+  NOTE:
+
+
+[FIG.50] holds=True  severity=info
+  CLAIM:
+    The Appendix's '§1.4 (G1–G5 bars)' names two criteria that have no bar
+  EVIDENCE:
+    ADDENDUM-k1.md:298 carries '§1.4 (G1–G5 bars)'. k1_analysis.json bars keys = exactly G1, G2,
+    G3. PROPOSAL-k:268 'G4 — Leak calibration (feeds LOCK-k; no pass/fail)'; :274-281 G5 'Feeds
+    LOCK-k's variance and the S-arm design; no pass/fail.'
+  NOTE:
+
+
+[FIG.51] holds=True  severity=info
+  CLAIM:
+    k1_analysis.json's bars object holds G1, G2, G3 only
+  EVIDENCE:
+    bars = {'G1': [0.9, 0.75, [51..61]], 'G2': [[49..63], 3], 'G3': [0.9, [51..62]]}. Three
+    keys.
+  NOTE:
+
+
+[FIG.52] holds=True  severity=info
+  CLAIM:
+    PROPOSAL-k titles its own G4 'Leak calibration (feeds LOCK-k; no pass/fail)'
+  EVIDENCE:
+    PROPOSAL-k-echo-channel.md:268, verbatim after stripping ** emphasis.
+  NOTE:
+
+
+[FIG.53] holds=True  severity=info
+  CLAIM:
+    §2.3 withdraws a '+/0 primacy secondary' that PROPOSAL-k §2.3 never registers (it registers
+    four: Δ_M by block order, signed logit shift, session share, stay/switch)
+  EVIDENCE:
+    ADDENDUM-k1.md:243 'The +/0 primacy secondary is withdrawn'. PROPOSAL-k §2.3 lists exactly
+    four bullets with those four names; none is called a primacy secondary.
+  NOTE:
+
+
+[FIG.54] holds=True  severity=info
+  CLAIM:
+    'PROPOSAL-k's L51–L62 band included the L59–L63 fall-off' overstates containment by one
+    layer — bars.G3 is [0.9, [51..62]], L63 is outside
+  EVIDENCE:
+    Quote verbatim at ADDENDUM-k1.md:233-234. bars.G3 layer list ends at 62.
+  NOTE:
+
+
+[FIG.55] holds=True  severity=info
+  CLAIM:
+    the STAGE 1 entry already carries that correction in its own words
+  EVIDENCE:
+    RESULTS.md:407-409 '…reads .85–.89 across L50–L58 and .68–.71 at L59–L63 (median over the
+    registered L51–L62 band .861 against the .90 bar)' — band and fall-off kept distinct.
+  NOTE:
+
+
+[FIG.56] holds=True  severity=info
+  CLAIM:
+    §2.4's 'above the recon's 0–3/102' is trap 48's class
+  EVIDENCE:
+    Quote verbatim at ADDENDUM-k1.md:256. Trap 48 text at HANDOFF-2026-09-12.md:348-351: 'The
+    recon's leak tables are REWARD-mask tables. No π_d is tabled on the random masks… Quote the
+    mask set a figure was tabled on.'
+  NOTE:
+
+
+[FIG.57] holds=True  severity=info
+  CLAIM:
+    Stage B leak: M1 1/102, M2 3/102, M5 0, M6 1/102, R1–R4 0
+  EVIDENCE:
+    stageB_analysis.json leak: M1 n_flips 1/102, M2 3/102, M5 0/102, M6 1/102, R1 0, R2 0, R3 0,
+    R4 0. The leak object has exactly these eight keys.
+  NOTE:
+    Complete and exact — no tabled mask is omitted.
+
+[FIG.58] holds=True  severity=info
+  CLAIM:
+    Stage C leak: M1 1/102, M2 3/102, B1 0, B2 0, B3 1/102, B4 0
+  EVIDENCE:
+    stageC_analysis.json leak: M1 1/102, M2 3/102, B1 0, B2 0, B3 1/102, B4 0. Exactly six keys.
+  NOTE:
+
+
+[FIG.59] holds=True  severity=info
+  CLAIM:
+    no random-direction mask is tabled anywhere
+  EVIDENCE:
+    Neither leak object carries M3, M4, M5x, M6x, R1x-R4x or B1x-B4x. Those appear only under
+    pseudo_shift (a signed quantity), never with a π_d.
+  NOTE:
+
+
+[FIG.60] holds=True  severity=info
+  CLAIM:
+    three of Stage 1's four G4 arms (R+A, R+B, R++) are random-direction
+  EVIDENCE:
+    k1_analysis.json evaluation.G4 keys: R+A, R+B, M++, R++ (plus the prohibition string).
+    PROPOSAL-k:268-269 names the same four; M++ is the axis arm.
+  NOTE:
+
+
+[FIG.61] holds=True  severity=info
+  CLAIM:
+    Stage 1's G4 returned 2–4 flips per arm
+  EVIDENCE:
+    k1_analysis evaluation.G4 n_flips: R+A 4, R+B 3, M++ 2, R++ 3, all n = 43. Range 2–4.
+  NOTE:
+    Underpins the 2/43 figure in the NOT-defects bullet.
+
+[FIG.62] holds=True  severity=info
+  CLAIM:
+    §1.3's 'Stage B's M1 − M2 = (2,−2,2,−2) on these texts' is the negation on 53 of the 102
+    read in round order
+  EVIDENCE:
+    Quote verbatim at ADDENDUM-k1.md:164-165. stageB_reads per_session: start_plus True on 49,
+    False on 53. On the 53 the round-order M1 − M2 is (−2,2,−2,2).
+  NOTE:
+    Recomputed independently: Counter({False: 53, True: 49}). Note the companion split in the
+    raw is 58/44 (A-started vs B-started) for E+A − E+B — the entry quotes the 53, which is the
+    one attached to M1/M2.
+
+[FIG.63] holds=True  severity=info
+  CLAIM:
+    it is exact only under the class grouping D3 itself uses
+  EVIDENCE:
+    Under grouping by 'the FIRST round carried +', class-1 rows are (1,0,1,0) and class-0
+    (0,1,0,1) in every one of the 102 sessions, so the class difference is uniformly (1,−1,1,−1)
+    and the ± analogue uniformly (2,−2,2,−2). Both refuters reproduced this.
+  NOTE:
+
+
+[FIG.64] holds=True  severity=low
+  CLAIM:
+    The Appendix omits seven classes of body-asserted referent
+  EVIDENCE:
+    G6.27's checker enumerated TEN classes; both refuters narrowed it to SEVEN, dropping the
+    checker's (c) Stage 1 per-layer ranges and (d) the G2 ABSENT verdict as covered by 'the
+    STAGE 1 entry and its figures as quoted in §0.1'. The surviving seven are (a) .98–.99, (b)
+    0–3/102, (e) PROPOSAL-k §2.1/2.2/2.5/2.6, (f) §3.1's frames, (g) §4's ≈7.7 s, (h) the v1.1
+    frame note, (j) Appendix C's mask patterns.
+  NOTE:
+    'Seven' is the refuters' narrowed count, not the checker's. The entry does not say so, and
+    G6.27 carries no Code re-verification line on disk (see FIG.12).
+
+[FIG.65] holds=True  severity=info
+  CLAIM:
+    including the two load-bearing ones — PROPOSAL-k §0.1 (B2)'s .98–.99, the anchor of §2.2's
+    derivation, and (B4)'s 0–3/102, the comparison in §2.4
+  EVIDENCE:
+    Both refuters and the checker agree these two are load-bearing and outside every clause of
+    the Appendix's list (whose recon-figure item is scoped 'cited in §1.1', which supplies only
+    .94–.995 and ≥ .998). RESULTS.md:823 and :828 confirm (B2)/(B4) are PROPOSAL-k §0.1's own
+    item labels carrying those figures.
+  NOTE:
+
+
+[FIG.66] holds=True  severity=medium
+  CLAIM:
+    5(f) is asserted satisfied but D4 names no bar where 5(f)(ii) requires 'a leakage gate
+    stated as paired-shadow discordance against a declared bar'
+  EVIDENCE:
+    CLAUDE.md 5(f)(ii) quote verbatim. ADDENDUM-k1.md:166-168 D4 names π_d, a Clopper–Pearson
+    interval, a |Δ logit| distribution and a pseudo-shift, then 'Beside Stage 1's G4 (n = 43,
+    F2)' — no bar.
+  NOTE:
+    Reported here as a flat defect, but G1.19 was OVERTURNED by the too-strict lens, which cited
+    RESULTS.md's own committed adjudication of the same claim as resolving-with-note ('5(f)'s
+    terms name no sign… D4 certifies on the random arms'), now at RESULTS.md:333-336. The entry
+    singles out only G5.15 and G6.18 as contested; this one is equally contested and its
+    overturn goes unmentioned.
+
+[FIG.67] holds=True  severity=info
+  CLAIM:
+    §1 declares no retention interval where 5(f)(iii) requires one
+  EVIDENCE:
+    CLAUDE.md 5(f)(iii) quote verbatim ('with the retention interval — tokens from the last
+    steered position to the read — declared and held fixed within a cell'). §1.1–§1.5 contain no
+    retention declaration; §0.3:100-101 declares it unchanged at '(21 tokens)', which is F2's
+    figure per PROPOSAL-k §2.1.
+  NOTE:
+    True of §1 as scoped; the entry's own retention bullet shows why §0.3's 21 does not cover
+    the alternating texts.
+
+[FIG.68] holds=True  severity=info
+  CLAIM:
+    'v1.0's eight referents fold into slip (17)'s class' folds four items the record calls 'in
+    the design's own substance'
+  EVIDENCE:
+    Quote at ADDENDUM-k1.md:87-88. RESULTS.md:215-220 '…eight referents do not resolve against
+    the repo at HEAD, four of them in the design's own substance (the welfare fork…; the +1-only
+    guard…; 48 readable texts where 43 exist; a second-block target called "no longer the
+    complement"…)'.
+  NOTE:
+
+
+[FIG.69] holds=True  severity=info
+  CLAIM:
+    into a slip whose recorded content is entirely mis-sourced citation pointers
+  EVIDENCE:
+    RESULTS.md slip (17) (raw quotes it at :544-550 of the 3be4a63 numbering): three rule
+    numbers from CONTINUITY.md, a card number, a 'pair', two cross-references, a preprint
+    pointer, one figure beside; standing fix 'CONTINUITY's numbering is never a citation
+    source.' All pointers.
+  NOTE:
+    Contested: the leniency lens overturned the checker's True (i.e. toward the entry's
+    reading); the too-strict lens left it resolving.
+
+[FIG.70] holds=False  severity=high
+  CLAIM:
+    The §1.5 anchor differs from the record's only 1b anchor string (`± DIAGNOSTIC` at
+    RESULTS.md and in the 09-12 handoff)
+  EVIDENCE:
+    grep over all .md at HEAD returns FIVE 1b anchor strings: `± DIAGNOSTIC` at RESULTS.md:336
+    and HANDOFF-2026-09-12.md:122, and `+/0 DIAGNOSTIC` at RESULTS.md:83,
+    HANDOFF-2026-09-13-design.md:129 and ADDENDUM-k1.md:202. RESULTS.md:83 carries §1.5's exact
+    string.
+  NOTE:
+    'The record's only 1b anchor string' is false at HEAD. The +/0 form entered RESULTS.md in
+    the very v5 entry (+191 lines) the entry says changed nothing relevant.
+
+[FIG.71] holds=False  severity=high
+  CLAIM:
+    and the routing names no 1b anchor for it to match
+  EVIDENCE:
+    The routing this entry quotes verbatim in its own first bullet reads '…Stage 1b reads on the
+    recon's 102 texts; entry `ADDENDUM-k1 STAGE 1b — +/0 DIAGNOSTIC`.' (RESULTS.md:83). It names
+    the anchor, and it matches §1.5 character for character.
+  NOTE:
+    Direct internal contradiction. The raw's G5.15 note was written on 09-12 against the
+    then-current routing; carrying it forward to HEAD unchanged is what breaks it. The finding
+    is still not a defect — but for the opposite reason to the one given.
+
+[FIG.72] holds=True  severity=info
+  CLAIM:
+    §2.4's 'above' holds of the RATES (2/43 = .047 against 3/102 = .029) though not of the bare
+    counts
+  EVIDENCE:
+    2/43 = 0.046512 → .047; 3/102 = 0.029412 → .029; .047 > .029. Bare counts 2 < 3. The 2 is
+    M++'s n_flips (the axis arm, Stage 1's low end) and the 3 is M2's (the recon's high end) —
+    the correct worst-case pairing for an 'above' claim.
+  NOTE:
+
+
+[FIG.73] holds=True  severity=info
+  CLAIM:
+    both refuter lenses overturned the checker there
+  EVIDENCE:
+    G6.18: CHECKER resolves=False; both REFUTER lines resolves=True overturned=True. It is the
+    only referent with two overturns.
+  NOTE:
+
+
+[FIG.74] holds=True  severity=info
+  CLAIM:
+    The STOP carries to HEAD aeb4a2c; the check ran against 3be4a63
+  EVIDENCE:
+    git log -1 → aeb4a2c. raw:1 → 'against HEAD 3be4a63'. 3be4a63 is an ancestor (3be4a63 →
+    ddee730 → 16705a2 → aeb4a2c).
+  NOTE:
+
+
+[FIG.75] holds=True  severity=info
+  CLAIM:
+    byte-identical between the two commits: PROPOSAL-k-echo-channel.md, CLAUDE.md,
+    valence_core/echo/{k1,maskedprefix,spans,probe}.py, valence_core/k/analysis.py
+  EVIDENCE:
+    `git diff 3be4a63 HEAD -- <path>` returns zero lines for each of the seven paths (and also
+    for valence_core/echo/__init__.py, the one file in that directory the entry does not name).
+  NOTE:
+
+
+[FIG.76] holds=True  severity=info
+  CLAIM:
+    the three data/k/k1_* artifacts
+  EVIDENCE:
+    git ls-files data/k/ → exactly k1_analysis.json, k1_reads.json, k1_sessions.json. All three
+    diff-empty.
+  NOTE:
+    The .npz residual stacks and k1_sessions.json.checkpoint are untracked, as the STAGE 1 entry
+    said ('residual stacks local').
+
+[FIG.77] holds=False  severity=medium
+  CLAIM:
+    the four data/echo/stage[BC]_* artifacts
+  EVIDENCE:
+    git ls-files data/echo/ | grep 'stage[BC]_' returns FIVE: stageB_analysis.json,
+    stageB_analysis_samefolds.json, stageB_reads.json, stageC_analysis.json, stageC_reads.json.
+  NOTE:
+    stageB_analysis_samefolds.json is omitted from the count. It is also diff-empty between
+    3be4a63 and HEAD, so the byte-identity verdict is unaffected — but the 'four' is wrong and
+    the glob the entry writes matches five.
+
+[FIG.78] holds=True  severity=low
+  CLAIM:
+    with RESULTS.md changed only by the v5 adoption entry (+191 lines)
+  EVIDENCE:
+    git diff --stat 3be4a63 HEAD: RESULTS.md | 191 +++ (191 insertions, 0 deletions). The
+    inserted block is the single 2026-09-17 CONTENT-CLASS v5 entry at RESULTS.md:24-214.
+  NOTE:
+    True byte-wise, but understated in bearing: those 191 lines contain the routing block whose
+    anchor string falsifies FIG.70/FIG.71.
+
+[FIG.79] holds=True  severity=info
+  CLAIM:
+    all three cited anchors still resolving
+  EVIDENCE:
+    ADDENDUM-k1 cites three RESULTS anchors: `PROPOSAL-k STAGE 1 — CHANNEL STUDY`
+    (RESULTS.md:395), the recon Stage B entry (`RECON — ECHO CHANNEL (k-candidate), STAGE B`,
+    :2447) and the Stage C entry (:2206). All three present at HEAD. The §0.1 raw path
+    results/raw/2026-09-09_k1_analyze_run.txt also exists.
+  NOTE:
+
+
+[FIG.80] holds=True  severity=low
+  CLAIM:
+    ADDENDUM-k1.md still hashes 61acf21ff2cc104e, its value at the check
+  EVIDENCE:
+    sha256 of the current 16,261-byte file, first 16 hex = 61acf21ff2cc104e.
+    (sha1/md5/blake2/sha3 all differ, so the hash function is sha256[:16].)
+  NOTE:
+    The first half is recomputable and true. 'Its value at the check' is not: the hash appears
+    nowhere in the raw, nowhere in the repo, and the file is untracked, so no on-disk record
+    fixes its 09-12 value.
+
+[FIG.81] holds=False  severity=medium
+  CLAIM:
+    The verdict is not restated from memory: it is the same verdict against the same bytes
+  EVIDENCE:
+    True for every referent whose sources are the diff-empty files above. False for G5.15: its
+    basis is the routing and the record's 1b anchor strings, and RESULTS.md gained `ADDENDUM-k1
+    STAGE 1b — +/0 DIAGNOSTIC` at :83 between 3be4a63 and HEAD.
+  NOTE:
+    One of the 19 contested items sits on bytes that did change.
+
+[FIG.82] holds=True  severity=info
+  CLAIM:
+    Retention raw path results/raw/2026-09-18_addendum-k1-1b_retention_geometry.txt
+  EVIDENCE:
+    File exists, 29 lines, untracked, stamped 'Fri Sep 18 05:22:51 UTC 2026'.
+  NOTE:
+
+
+[FIG.83] holds=True  severity=info
+  CLAIM:
+    one E mask's last steered round is R3 and the other's R4
+  EVIDENCE:
+    On A,B,A,B texts, E+A covers rounds 1 and 3 (last = R3) and E+B rounds 2 and 4 (last = R4);
+    mirrored on B,A,B,A. Verified over all 102 sessions from stageB_reads spans.
+  NOTE:
+
+
+[FIG.84] holds=False  severity=low
+  CLAIM:
+    median 66 tokens (51–110) for one
+  EVIDENCE:
+    stageB_reads distance_to_read.R3 over 102 sessions: min 51, max 110, median 66.5 (median_low
+    66, median_high 67). stageB_analysis.json retention.R3 itself records median 66.5.
+  NOTE:
+    The min and max are exact; the median is 66.5, and the artifact says so in its own field. 66
+    is the low median.
+
+[FIG.85] holds=True  severity=info
+  CLAIM:
+    22 (21–23) for the other
+  EVIDENCE:
+    distance_to_read.R4: min 21, median 22.0, max 23. Matches stageB_analysis retention.R4.
+  NOTE:
+
+
+[FIG.86] holds=True  severity=info
+  CLAIM:
+    the two masks share an interval in 0 of 102 sessions
+  EVIDENCE:
+    Recomputed per session from spans and read_position: the first-label and second-label
+    last-steered-to-read distances are never equal. 0/102.
+  NOTE:
+
+
+[FIG.87] holds=True  severity=info
+  CLAIM:
+    Stage 1's F2 block order gives 112 (88–141) and 21 (20–22)
+  EVIDENCE:
+    k1_reads.json per_session (n=43) retention_tokens: first_block_end_to_read min 88, median
+    112, max 141; second_block_end_to_read min 20, median 21, max 22 (last_forced identical).
+  NOTE:
+
+
+[FIG.88] holds=False  severity=medium
+  CLAIM:
+    (k1_reads.json declares first_block_end_to_read 107, second_block_end_to_read 21,
+    last_forced_end_to_read 21)
+  EVIDENCE:
+    Those are session '0''s per-session values, not a declaration. Across the 43 sessions
+    first_block_end_to_read takes 31 distinct values from 88 to 141 (median 112);
+    second_block/last_forced range 20–22.
+  NOTE:
+    The sentence puts '107' immediately beside the '112 (88–141)' it has just stated, so the
+    entry reads as if the artifact declared 107 and measured 112. The retention raw makes the
+    same presentation ('Stage 1's own declaration, from data/k/k1_reads.json retention_tokens:
+    {…107…}'); it is a per-session row. PROPOSAL-k §2.1's actual declaration is 21 tokens.
+
+[FIG.89] holds=True  severity=info
+  CLAIM:
+    The near arms match
+  EVIDENCE:
+    22 (alternating) vs 21 (F2) as stated.
+  NOTE:
+    In fact an exact match once the convention difference in FIG.90 is removed: 21 vs 21.
+
+[FIG.90] holds=False  severity=medium
+  CLAIM:
+    The alternating and F2 retention figures are like-for-like
+  EVIDENCE:
+    The alternating side comes from stageB_reads' distance_to_read, which equals read_position −
+    tok_end + 1 (verified 408/408 spans); the F2 side comes from k1_reads' retention_tokens,
+    which equals read_position − tok_end with no +1 (verified 43/43). The two artifacts differ
+    by one token.
+  NOTE:
+    Recomputing the alternating side under k1_reads' convention gives 21 (20–22) and 65.5
+    (50–109): the near arms then match exactly and the far-arm gap is 46.5. The substantive
+    finding survives; the tabled figures mix two conventions.
+
+[FIG.91] holds=True  severity=info
+  CLAIM:
+    about 46 tokens closer to the read
+  EVIDENCE:
+    112 − 66 = 46; under a common convention 112 − 65.5 = 46.5. 'About 46' covers both.
+  NOTE:
+
+
+[FIG.92] holds=True  severity=info
+  CLAIM:
+    the far arm — the one carrying D3's target, 'the FIRST forced round carried +'
+  EVIDENCE:
+    Quote verbatim at ADDENDUM-k1.md:163. On alternating texts the first forced round belongs to
+    the starting label, whose mask's last steered round is R3 — the 66-token arm.
+  NOTE:
+
+
+[FIG.93] holds=False  severity=high
+  CLAIM:
+    The recon found the echo primacy-weighted and distance-sensitive
+  EVIDENCE:
+    RESULTS.md:2455-2457 (the Stage B entry of record): '(c) single-round retention is
+    injection-borne (text-only baseline at null) but NOT ordered by distance — R1 at 157 tokens
+    .89, R3 at 67 .83, R4 at 22 .68, R2 at 112 .66.' Primacy-weighted is confirmed at :2382;
+    distance-sensitive is what the record explicitly denies.
+  NOTE:
+    The retention raw carries the same sentence, so the error is inherited, not introduced. The
+    directional inference does have narrow support — R3 (.83 at 67) beats R2 (.66 at 112), which
+    is exactly the 66-vs-112 comparison at issue — but that is a round-index effect, not a
+    distance law, and R1 (.89 at 157) runs the other way.
+
+[FIG.94] holds=True  severity=low
+  CLAIM:
+    so a D3 median above Stage 1's .861 is consistent with a shorter carry
+  EVIDENCE:
+    Supported by the R3-vs-R2 pair in the record (.83 at 67 tokens vs .66 at 112) — the two
+    positions the two designs actually occupy.
+  NOTE:
+    Holds on the relevant pair, but the stated warrant ('distance-sensitive') is the wrong one;
+    the defensible warrant is the R3>R2 row itself.
+
+[FIG.95] holds=True  severity=info
+  CLAIM:
+    §1.4's four branches attribute a high reading to the contrast or the format only
+  EVIDENCE:
+    ADDENDUM-k1.md:174-193: all four pre-written sentences name only 'the +/0 contrast', 'the
+    format' / 'F2' / 'the alternating format'. No branch mentions retention, distance or carry.
+  NOTE:
+
+
+[FIG.96] holds=True  severity=info
+  CLAIM:
+    ADDENDUM-k1 v1.1 is not committed and remains untracked
+  EVIDENCE:
+    git status --porcelain: '?? ADDENDUM-k1.md'.
+  NOTE:
+
+
+[FIG.97] holds=True  severity=info
+  CLAIM:
+    the 1b analyzer, its battery and the reads driver are not built; no 1b read has run
+  EVIDENCE:
+    valence_core/k/ contains only __init__.py, analysis.py, sessions.py; valence_core/echo/ only
+    __init__.py, k1.py, maskedprefix.py, probe.py, spans.py. No file or symbol named for 1b
+    anywhere outside the two raws. Working tree clean apart from the ten listed untracked files;
+    no new data/k artifact.
+  NOTE:
+
+
+[FIG.98] holds=True  severity=low
+  CLAIM:
+    no `ADDENDUM-k1 STAGE 1b — +/0 DIAGNOSTIC` entry exists
+  EVIDENCE:
+    The string occurs at RESULTS.md:83 but inside the blockquoted DESIGN BLOCK §4, not as an
+    entry anchor (entries begin '- YYYY-MM-DD — **').
+  NOTE:
+    True as stated about entries; the string's presence in RESULTS.md is what breaks
+    FIG.70/FIG.71 two bullets earlier.
+
+[FIG.99] holds=True  severity=info
+  CLAIM:
+    The sign set is not widened and k1.py is untouched — v1.1 asks for no widening, and its
+    +1-only guard is PROPOSAL-k §0.4 in code
+  EVIDENCE:
+    ADDENDUM-k1.md:21 'no sign-set change'. k1.py unmodified in the working tree and diff-empty
+    against 3be4a63. k1.py docstring l.23-24 'Every sign is +1: no negative pole is constructed
+    anywhere (PROPOSAL-k §0.4)' plus the loader guard at :81 'PROPOSAL-k administers +pole
+    against vehicle only; a negative alpha is a stop'.
+  NOTE:
+
+
+[FIG.100] holds=True  severity=info
+  CLAIM:
+    Stage 1's verdict (7742e2c, G3_FAIL) is unaffected and is not rescored
+  EVIDENCE:
+    git log: 7742e2c 'PROPOSAL-k STAGE 1 — CHANNEL STUDY: G1 FAIL, G2 ABSENT, G3 FAIL -> branch
+    G3_FAIL'. k1_analysis.json evaluation.branch unchanged; all three data/k artifacts
+    diff-empty.
+  NOTE:
+
+
+[FIG.101] holds=True  severity=info
+  CLAIM:
+    LOCK-k does not exist
+  EVIDENCE:
+    No LOCK-k* file on disk; git ls-files returns no path matching lock-k.
+  NOTE:
+
+
+[FIG.102] holds=True  severity=info
+  CLAIM:
+    5(f)(iii) as the standard a declared per-mask retention interval would answer to
+  EVIDENCE:
+    CLAUDE.md rule 5(f)(iii) quoted verbatim elsewhere in the entry and present in the file at
+    HEAD (diff-empty vs 3be4a63).
+  NOTE:
+
+
+####################################################################################################
+LENS GLOSS — 85 claims, 12 failing
+####################################################################################################
+
+[GLOSS.1] holds=True  severity=none
+  CLAIM:
+    Headline: "114 referents by six blind checkers over disjoint groups with two refuter lenses
+    each"
+  EVIDENCE:
+    Recounted from the raw BODY (not the TOTALS header): 114 lines matching '^\[id\]  CHECKER
+    resolves=', 114 unique ids; group sizes G1 19, G2 21, G3 16, G4 13, G5 18, G6 27 = 114,
+    matching the six 'GROUP Gn — N referents' headers at raw lines 12/940/1728/2471/3261/4063.
+    Ids are disjoint across groups. 113 referents carry exactly two REFUTER lines; one (G6.6)
+    carries one.
+  NOTE:
+    'two refuter lenses each' reads on groups, not referents, and the entry itself discloses the
+    single-lens referent in the next bullet.
+
+[GLOSS.2] holds=True  severity=none
+  CLAIM:
+    "Totals recompute from the body: 114 referents, 13 checker-unresolved, 227 refuter verdict
+    lines, 14 overturned"
+  EVIDENCE:
+    Body recount: CHECKER resolves=False 13 (G1.19, G3.7, G3.10, G5.8, G5.11, G5.15, G5.17,
+    G6.7, G6.9, G6.12, G6.16, G6.18, G6.27); resolves=True 101; REFUTER lines 227;
+    overturned=True 14. Raw header TOTALS states the same four numbers, so header and body agree
+    here.
+  NOTE:
+    14 overturned verdicts sit on 13 distinct referents — G6.18 carries two (both lenses
+    overturned).
+
+[GLOSS.3] holds=True  severity=low
+  CLAIM:
+    "19 contested"
+  EVIDENCE:
+    Union of {checker resolves=False} (13) and {checker resolves=True with >=1 refuter overturn}
+    (6: G3.3, G3.4, G3.9, G3.16, G4.13, G6.26) = 19. No other definition in the raw yields 19
+    (items with >=1 overturn alone = 13; disagreeing-refuter items = 13).
+  NOTE:
+    The entry never states the rule it counted by; the union above is the only reading that
+    lands on 19.
+
+[GLOSS.4] holds=True  severity=none
+  CLAIM:
+    Headline "17 do not resolve" is consistent with the bullets, which enumerate exactly 17
+  EVIDENCE:
+    19 contested minus the 2 reported as NOT defects (G5.15, G6.18) = 17. Mapping the bullets to
+    referent ids: Build-blocking (1) = G4.13; Build-blocking (2) = G5.11 + G5.17; §2.2 bullet =
+    G6.7; §0.2 bullet = G3.7 + G3.3 + G3.9 + G3.10; final bullet = G3.4, G6.26, G6.12, G6.9,
+    G6.16, G5.8, G6.27, G1.19, G3.16. Total 8 + 9 = 17.
+  NOTE:
+    The headline count is sound; the sub-count in the last bullet is not — see GLOSS.5.
+
+[GLOSS.5] holds=False  severity=medium
+  CLAIM:
+    "Scope and gloss (the remaining eleven)"
+  EVIDENCE:
+    After the four preceding bullets account for 8 of the 17 (G4.13; G5.11, G5.17; G6.7; G3.7,
+    G3.3, G3.9, G3.10), the remainder is 9, not 11: G3.4, G6.26, G6.12, G6.9, G6.16, G5.8,
+    G6.27, G1.19 (which carries both the 5(f)(ii) and 5(f)(iii) halves), G3.16. Counted instead
+    as distinct assertions, the bullet makes ten (the 5(f) sentence being two). Neither count is
+    eleven.
+  NOTE:
+    17 − 8 = 9. 'the remaining eleven' over-counts by two on ids, by one on assertions; it is
+    the one arithmetic in the entry that does not close.
+
+[GLOSS.6] holds=True  severity=none
+  CLAIM:
+    "One referent (G6.6, uncontested and clean) carries one lens rather than two, the lens
+    appropriate to a resolves=True item"
+  EVIDENCE:
+    Raw G6.6: CHECKER resolves=True severity=clean, one REFUTER line labelled 'refuter — too
+    lenient (re-checking G6 for resolves=true item…)' resolves=True overturned=False. The G6
+    lenient lens returns 27 verdicts (all), the G6 strict lens 26 — the strict lens, which
+    re-tests resolves=false items, is the one absent.
+  NOTE:
+
+
+[GLOSS.7] holds=True  severity=none
+  CLAIM:
+    "the refuters overturned in both directions, as trap 44 predicts"
+  EVIDENCE:
+    Seven overturns run False→True (G1.19, G5.8, G5.15, G6.7, G6.12, G6.16, G6.18) and six run
+    True→False (G3.3, G3.4, G3.9, G3.16, G4.13, G6.26). HANDOFF-2026-09-12.md:341-345 is trap
+    44, 'Refuter lenses disagree… overturned verdicts in BOTH directions'.
+  NOTE:
+
+
+[GLOSS.8] holds=True  severity=low
+  CLAIM:
+    "Every finding below was re-verified by Code against the file before it entered this entry
+    (trap 25)"
+  EVIDENCE:
+    Not falsifiable from disk (it is a claim about this session's work), but the committed raw's
+    CODE RE-VERIFICATION section covers only 12 of the 17: G5.11/G5.17, G3.7/G3.9/G3.3, G4.13,
+    G6.9, G6.7, G3.4, G6.26, G6.12, G6.16, plus the two not-defects. G1.19 (5(f)), G5.8
+    (53/102), G3.16 (slip 17) and G6.27 (seven classes) carry no re-verification line in the
+    raw.
+  NOTE:
+    I independently reproduced all four of the unrecorded ones and they hold; the gloss 'every
+    finding' is nonetheless unsupported by the artifact this entry commits.
+
+[GLOSS.9] holds=True  severity=none
+  CLAIM:
+    Run metadata: "Workflow wf_b0099fec-226, 18 agents…; 0 errors; 2,257,253 subagent tokens;
+    1,425 s"
+  EVIDENCE:
+    Raw header lines 2-3 state exactly these values. 6 checkers + 12 refuter lenses = 18 agents,
+    consistent with the 227 refuter lines over 6 groups.
+  NOTE:
+    Only source is the raw's own header; not independently recomputable.
+
+[GLOSS.10] holds=True  severity=none
+  CLAIM:
+    "102 of 102 are alternating (session \"0\" is [slate, prism, slate, prism]), none is block
+    order"
+  EVIDENCE:
+    Enumerated span tags for all 102 per_session records of data/echo/stageB_reads.json: every
+    session has 4 spans with tags t,u,t,u (t≠u) — ALT 102, BLOCK 0, OTHER 0. Session '0' =
+    ['slate','prism','slate','prism']. Applying k1.py's predicate tags[0]==tags[1] and
+    tags[2]==tags[3]: 0 of 102 pass.
+  NOTE:
+
+
+[GLOSS.11] holds=True  severity=low
+  CLAIM:
+    "valence_core/echo/k1.py:91 raises AssertionError(\"not block order\") unless
+    tags[0]==tags[1] and tags[2]==tags[3]"
+  EVIDENCE:
+    k1.py:91 is the test `if tags[0] != tags[1] or tags[2] != tags[3]:` and k1.py:92 the `raise
+    AssertionError(f"not block order: tags {tags}")`. The negation of the guard is exactly the
+    entry's condition.
+  NOTE:
+    Line citation is one short for the raise (the guard is :91-92, as the raw's own
+    re-verification writes it); the logic quoted is exact.
+
+[GLOSS.12] holds=True  severity=none
+  CLAIM:
+    "the +1-only docstring and guard live" in k1.py
+  EVIDENCE:
+    k1.py:23-24 docstring 'Every sign is +1: no negative pole is constructed anywhere
+    (PROPOSAL-k §0.4).'; k1.py:77-78 `if axis.alpha <= 0 or rand.alpha <= 0: raise
+    SystemExit("PROPOSAL-k administers +pole against vehicle only; a negative alpha is a
+    stop")`.
+  NOTE:
+
+
+[GLOSS.13] holds=True  severity=none
+  CLAIM:
+    "build_mask writes `1 if inj.alpha > 0 else -1`"
+  EVIDENCE:
+    valence_core/echo/maskedprefix.py:229 `mask[a:b] = 1 if inj.alpha > 0 else -1` (the same
+    expression recurs at :277 and :313).
+  NOTE:
+
+
+[GLOSS.14] holds=True  severity=none
+  CLAIM:
+    "the recon's own ± masks ran through it with negative alphas"
+  EVIDENCE:
+    scripts/recon_echo.py:162-165 builds spans as `inj.with_sign(sg)` for the per-round sign
+    vector (sg ∈ {−1,0,+1}); valence_core/adapters/base.py:147-152 with_sign sets alpha =
+    sign*abs(alpha), so sg = −1 yields alpha < 0, which build_mask then encodes as −1.
+    recon_echo.py:241-242 exercises exactly that in its own smoke.
+  NOTE:
+
+
+[GLOSS.15] holds=True  severity=none
+  CLAIM:
+    "§0.3, §1.2 and §4 step 2 each assert the primitive is unchanged"
+  EVIDENCE:
+    ADDENDUM-k1.md:106-107 'The echo primitive's +1-only sign restriction is the proposal's and
+    is unchanged.'; :137-138 'the echo primitive of record unchanged (+1 signs only)'; :284-285
+    '…and battery committed; the primitive unchanged.'
+  NOTE:
+
+
+[GLOSS.16] holds=True  severity=none
+  CLAIM:
+    "§1.4 fixes s = .861" and branch 3 requires m < 0.900 and m > 0.911 simultaneously
+  EVIDENCE:
+    ADDENDUM-k1.md:172 'Let m = D3's median AUC over L51–L62, and s = .861'; :185 branch heading
+    '**.90 > m and m − s > .05:**'. m − .861 > .05 ⇔ m > .911; with m < .900 the set is empty
+    over the reals.
+  NOTE:
+    s = .861 is itself the artifact value: data/k/k1_analysis.json evaluation.G3.median_auc =
+    0.861005949161709.
+
+[GLOSS.17] holds=True  severity=none
+  CLAIM:
+    "Three of the four branches are reachable (m ≥ .90; .811 ≤ m < .90; m < .811)"
+  EVIDENCE:
+    Branch 1 = m ≥ .90; branch 2 = .90 > m and |m−.861| ≤ .05 ⇔ .811 ≤ m < .90; branch 4 = .90 >
+    m and .861−m > .05 ⇔ m < .811. The three cover ℝ, so the disjunction is complete without
+    branch 3 and branch 3 is empty.
+  NOTE:
+
+
+[GLOSS.18] holds=True  severity=none
+  CLAIM:
+    §1.5's deliverable quoted as "a battery reaching all four D3 branches and STOP" and
+    therefore "not constructible"
+  EVIDENCE:
+    ADDENDUM-k1.md:205-206 'The 1b analyzer extension is committed before any read, with a
+    battery reaching all four D3 branches and STOP.' — quotation exact. No input m can drive
+    §1.4's selector into branch 3 while s is pinned at .861, so a battery case for that branch
+    cannot exist.
+  NOTE:
+    The entry's qualifier 'while s is fixed' is doing real work and is present.
+
+[GLOSS.19] holds=True  severity=none
+  CLAIM:
+    "The recon band .98–.99 is .01 wide, so both endpoint conventions give the same bar (.98 −
+    .08 = .9000; .99 − .09 = .9000)"
+  EVIDENCE:
+    Arithmetic exact. ADDENDUM-k1.md:231-233 is the derivation being tested: 'PROPOSAL-k set .90
+    from recon ± figures of .98–.99 (margin ≈ .08–.09); Stage 1's +/0 figures in L50–L58 are
+    .85–.89; the same margin gives .80.'
+  NOTE:
+
+
+[GLOSS.20] holds=True  severity=none
+  CLAIM:
+    "Stage 1's band .85–.89 is four times wider"
+  EVIDENCE:
+    .89 − .85 = .04; .99 − .98 = .01; ratio 4. The .85–.89 band is real: k1_analysis
+    probes.g3_firstsign_read_M over L50–L58 runs .8469 (L58) to .8886 (L56), which rounds to
+    .85–.89, and the STAGE 1 entry states it in those words (RESULTS.md:407-408).
+  NOTE:
+
+
+[GLOSS.21] holds=True  severity=none
+  CLAIM:
+    ".85 − .08 = .7700, .89 − .09 = .8000, full envelope .76–.81" and "'.80' is the high-end
+    pairing only"
+  EVIDENCE:
+    Four corner pairings: .85−.08=.77, .85−.09=.76, .89−.08=.81, .89−.09=.80. Envelope .76–.81;
+    .80 arises only from pairing the band's high end with the margin's high end.
+  NOTE:
+
+
+[GLOSS.22] holds=True  severity=low
+  CLAIM:
+    ".861 is a band MEDIAN — the convention PROPOSAL-k's own G1/G3 bars use — on which the same
+    margin gives about .78"
+  EVIDENCE:
+    PROPOSAL-k:243-244 (G1) 'PASS iff the median AUC over L51–L61 is ≥ .90…' and :260-262 (G3)
+    'PASS iff median AUC over L51–L62 ≥ .90…' — the median convention. .861 − .08 = .781.
+  NOTE:
+    Band mismatch worth stating: .861 is the L51–L62 median, while §2.2's figures are the
+    L50–L58 band, whose own median is .8707 (→ .79 at margin .08, .78 at .09). The conclusion
+    survives either way; the number .78 comes from a different band than the sentence it rebuts.
+
+[GLOSS.23] holds=True  severity=none
+  CLAIM:
+    "data/echo/stageC_analysis.json contains exactly two first-sign families, c2_firstsign_B1-4
+    and c2_firstsign_B1-4x_random"
+  EVIDENCE:
+    families keys are the 13: c1_read_M1M2, c1_read_M3M4_random, c1_read_TEXTONLY_shadow,
+    c1_label_a_{M1M2,M3M4_random,TEXTONLY_shadow}, c1_label_b_{same three}, c2_firstsign_B1-4,
+    c2_lastsign_B1-4, c2_firstsign_B1-4x_random, c2_lastsign_B1-4x_random. Exactly two carry
+    'firstsign'.
+  NOTE:
+
+
+[GLOSS.24] holds=True  severity=none
+  CLAIM:
+    "there is no B1-vs-B2-only family anywhere"
+  EVIDENCE:
+    No family key in stageC_analysis.json (nor in stageB_analysis.json, whose families are
+    a1_lastsign_M1M2 / b_labelpole_M1M2 and their random/shadow analogs) is restricted to B1 and
+    B2; every block family is B1-4 or B1-4x. The document's §0.2 arithmetic block nonetheless
+    displays 'Stage C  B1 − B2'.
+  NOTE:
+    Checked the two analysis artifacts, not every file in the repo; 'anywhere' is sound for the
+    recon's analysis record.
+
+[GLOSS.25] holds=True  severity=none
+  CLAIM:
+    The .98–.99 figure comes from the four-mask probe whose target is quoted "rows B1..B4 ... +1
+    for B1, B3"
+  EVIDENCE:
+    stageC_analysis.json targets['c2_firstsign_*'] = 'rows B1..B4 (or B1x..B4x) at the read
+    position: +1 for B1, B3' — quotation exact modulo the ellipsis. RESULTS.md:2382 states the
+    same figure for that probe: 'the FIRST-round sign reads at 0.919 at L50 and .98–.99 at every
+    layer from L51 to L62'.
+  NOTE:
+
+
+[GLOSS.26] holds=True  severity=none
+  CLAIM:
+    "classes B1/B3 against B2/B4, class difference (2,0,−2,0) in round-sign space, L2 norm 2.83
+    against Stage 1's (1,1,−1,−1) at 2.00, a ratio of 1.41, not 2"
+  EVIDENCE:
+    stageC_reads.json masks: B1 (1,1,−1,−1), B2 (−1,−1,1,1), B3 (1,−1,−1,1), B4 (−1,1,1,−1).
+    mean{B1,B3} = (1,0,−1,0), mean{B2,B4} = (−1,0,1,0), difference (2,0,−2,0), ‖·‖₂ = √8 =
+    2.8284. Stage 1: M+A (1,1,0,0) − M+B (0,0,1,1) = (1,1,−1,−1), ‖·‖₂ = 2. 2.8284/2 = 1.4142.
+  NOTE:
+    The document's own displayed contrast (B1 − B2 = (2,2,−2,−2), ‖·‖₂ = 4) would give the ratio
+    2 it claims — but that pair is not what produced .98–.99.
+
+[GLOSS.27] holds=True  severity=none
+  CLAIM:
+    "the record's measurand is the FIRST-ROUND sign, not the 'first-block' sign (B3 and B4 have
+    no two-round blocks at all)"
+  EVIDENCE:
+    Target string above is first-round; RESULTS.md:2382 says 'the FIRST-round sign'. B3 =
+    (+,−,−,+) and B4 = (−,+,+,−): neither has a pair of equal consecutive signs in rounds 1-2 or
+    3-4, so neither carries a two-round block. ADDENDUM-k1.md:71 nonetheless writes 'Stage C's
+    block masks, first-block sign .98–.99'.
+  NOTE:
+
+
+[GLOSS.28] holds=True  severity=low
+  CLAIM:
+    "'.98' is the range floor where the band median is .9884"
+  EVIDENCE:
+    c2_firstsign_B1-4, L51–L62: auc_kfold min .9816 (L52), max .9924 (L56), median .9884.
+    (auc_loso over the same layers: .9845–.9931, median .9899.)
+  NOTE:
+    The .9884 is the k-fold median; the entry does not say which statistic, and the two differ
+    at the third decimal.
+
+[GLOSS.29] holds=True  severity=none
+  CLAIM:
+    "A halved linear separation landing at .86 ... is what the arithmetic predicts" quoted, and
+    "has no arithmetic on record behind it — nothing in the proposal, the addendum or the
+    entries maps contrast magnitude to AUC"
+  EVIDENCE:
+    Quotation exact against ADDENDUM-k1.md:79-80. Negative claim tested by search: 'linear
+    separation' appears only at ADDENDUM-k1.md:79 and RESULTS.md:624 (the same sentence quoted
+    into the STAGE 1 entry); no d′/Φ/normal-cdf conversion appears in PROPOSAL-k, ADDENDUM-k1,
+    RESULTS.md or the probe modules.
+  NOTE:
+    A negative over the whole corpus can only be evidenced by search; nothing turned up.
+
+[GLOSS.30] holds=False  severity=low
+  CLAIM:
+    The §0.2 bullet's framing "Related, same sentence" for the first-round/.98-floor items
+  EVIDENCE:
+    §0.2's first sentence (ADDENDUM-k1.md:70-73) carries 'first-block sign .98–.99' and
+    'label-token binding ≥ .998'. The bare '.98' the entry calls a range floor is in a different
+    sentence, :79-80 ('where the full one read .98'), which is also where the 'arithmetic
+    predicts' clause lives. The raw's own G3.9 locates it there.
+  NOTE:
+    Scoping slip only; both underlying findings hold.
+
+[GLOSS.31] holds=True  severity=none
+  CLAIM:
+    "≥ .998 is label-A-only: c1_label_a_M1M2 over L51–L61 reads min .9984, while c1_label_b_M1M2
+    over the same layers reads .8208–.9642"
+  EVIDENCE:
+    stageC_analysis.json: c1_label_a_M1M2 L51–L61 auc_kfold min .9984 (L53), max 1.0000;
+    c1_label_b_M1M2 L51–L61 auc_kfold min .8208 (L61), max .9642 (L52). Both figures are the
+    k-fold series exactly.
+  NOTE:
+    LOSO series differ slightly (.9989 min for label A; .8179–.9693 for label B) and would not
+    change the finding.
+
+[GLOSS.32] holds=True  severity=none
+  CLAIM:
+    "§0.2 states it unscoped as 'label-token binding'"
+  EVIDENCE:
+    ADDENDUM-k1.md:71-72 'label-token binding ≥ .998 under alternating ± masks', with no label-A
+    restriction. §1.1 (:129-131) does scope it: 'the binding at label A's token ≥ .998 across
+    L51–L61'.
+  NOTE:
+
+
+[GLOSS.33] holds=True  severity=none
+  CLAIM:
+    "The Appendix's '§1.4 (G1–G5 bars)' names two criteria that have no bar — k1_analysis.json's
+    bars object holds G1, G2, G3 only"
+  EVIDENCE:
+    ADDENDUM-k1.md:298 '§1.4 (G1–G5 bars)'. data/k/k1_analysis.json bars keys = ['G1','G2','G3']
+    (G1 [0.9, 0.75, L51-61], G2 [L49-63, 3], G3 [0.9, L51-62]). PROPOSAL-k:268 and :274 title G4
+    and G5 as calibration/baseline items.
+  NOTE:
+
+
+[GLOSS.34] holds=True  severity=none
+  CLAIM:
+    PROPOSAL-k "titles its own G4 'Leak calibration (feeds LOCK-k; no pass/fail)'"
+  EVIDENCE:
+    PROPOSAL-k-echo-channel.md:268 '- **G4 — Leak calibration (feeds LOCK-k; no pass/fail).**' —
+    quotation exact after stripping emphasis. G5 at :274 is '**G5 — Identity baseline.**' and
+    ends '…no pass/fail.'
+  NOTE:
+
+
+[GLOSS.35] holds=True  severity=none
+  CLAIM:
+    "§2.3 withdraws a '+/0 primacy secondary' that PROPOSAL-k §2.3 never registers (it registers
+    four: Δ_M by block order, signed logit shift, session share, stay/switch)"
+  EVIDENCE:
+    ADDENDUM-k1.md:243 '**The +/0 primacy secondary is withdrawn**'. PROPOSAL-k §2.3 (:367-381)
+    lists exactly four bullets: 'Δ_M by block order', 'Signed logit shift', 'Session share',
+    'Stay/switch conditional on the previous round's condition'. None is a primacy secondary.
+  NOTE:
+
+
+[GLOSS.36] holds=True  severity=none
+  CLAIM:
+    "'PROPOSAL-k's L51–L62 band included the L59–L63 fall-off' overstates containment by one
+    layer — bars.G3 is [0.9, [51..62]], L63 is outside"
+  EVIDENCE:
+    Quotation exact against ADDENDUM-k1.md:233-235. k1_analysis.json bars.G3 = [0.9,
+    [51,52,…,62]]; 63 is absent.
+  NOTE:
+
+
+[GLOSS.37] holds=True  severity=none
+  CLAIM:
+    "the STAGE 1 entry already carries that correction in its own words"
+  EVIDENCE:
+    RESULTS.md:502-504 (STAGE 1 entry, G3 FAIL paragraph): 'the fall-off at L59–L62 lies inside
+    the registered band (L63, also fallen, is outside it)'.
+  NOTE:
+
+
+[GLOSS.38] holds=True  severity=none
+  CLAIM:
+    π_d enumeration "Stage B M1 1/102, M2 3/102, M5 0, M6 1/102, R1–R4 0; Stage C M1 1/102, M2
+    3/102, B1 0, B2 0, B3 1/102, B4 0"
+  EVIDENCE:
+    stageB_analysis.json leak: M1 .00980 (1 flip), M2 .02941 (3), M5 0, M6 .00980 (1), R1–R4 all
+    0, n = 102 each. stageC_analysis.json leak: M1 1/102, M2 3/102, B1 0, B2 0, B3 1/102, B4 0.
+    Same figures are tabled at RESULTS.md:2640-2650 and :2407-2414.
+  NOTE:
+    The enumeration omits Stage A's two tabled π_d (M1 0/24, M2 0/24, stageA_analysis.json /
+    RESULTS.md:3228); both are axis masks, so the universal claim below is unaffected.
+
+[GLOSS.39] holds=True  severity=none
+  CLAIM:
+    "every tabled π_d is an axis mask" and "no random-direction mask is tabled anywhere"
+  EVIDENCE:
+    The only π_d tables in the echo corpus are the three leak objects (A: M1,M2; B:
+    M1,M2,M5,M6,R1–R4; C: M1,M2,B1–B4) and their RESULTS transcriptions. Every mask listed is an
+    axis mask — note R1–R4 are single-ROUND axis masks per stageB_reads.json['masks'], not
+    random ones. M3, M4, M5x, M6x, R1x–R4x, B1x–B4x carry no π_d anywhere. The STAGE 1 entry
+    says so in its own words at RESULTS.md:537-539: 'the recon tables no flip figure on its
+    random masks'.
+  NOTE:
+    Matches trap 48 as stated at HANDOFF-2026-09-12.md:355-358.
+
+[GLOSS.40] holds=True  severity=none
+  CLAIM:
+    "three of Stage 1's four G4 arms (R+A, R+B, R++) are random-direction"
+  EVIDENCE:
+    k1_analysis.json evaluation.G4 keys are R+A, R+B, M++, R++ (prohibition string asserts 'the
+    masks iterated above are exactly R+A, R+B, M++, R++'). k1.py:14-19 defines R masks as the
+    random direction r and M masks as the axis d, so M++ is the only axis arm.
+  NOTE:
+
+
+[GLOSS.41] holds=True  severity=none
+  CLAIM:
+    "§1.3's 'Stage B's M1 − M2 = (2,−2,2,−2) on these texts' is the negation on 53 of the 102
+    read in round order"
+  EVIDENCE:
+    Quotation exact against ADDENDUM-k1.md:163-165. From stageB_reads.json span poles: 49
+    sessions run (pos,neg,pos,neg) → M1−M2 = 2·M1 = (2,−2,2,−2); 53 run (neg,pos,neg,pos) →
+    (−2,2,−2,2). 49 + 53 = 102.
+  NOTE:
+    Independently reproduced; matches the checker's and both refuters' 49/53 split.
+
+[GLOSS.42] holds=True  severity=none
+  CLAIM:
+    "it is exact only under the class grouping D3 itself uses"
+  EVIDENCE:
+    D3's classes are 'the FIRST forced round carried +' (ADDENDUM-k1.md:161-163). Grouped that
+    way, class-1 minus class-0 is (2,−2,2,−2) in every session (the +first mask being M1 on 49
+    and M2 on 53), while the per-session label 'M1 − M2' is ±(2,−2,2,−2).
+  NOTE:
+
+
+[GLOSS.43] holds=True  severity=low
+  CLAIM:
+    "The Appendix omits seven classes of body-asserted referent"
+  EVIDENCE:
+    Appendix (ADDENDUM-k1.md:297-306) enumerates PROPOSAL-k §0.4, §1.1, §1.2, §1.4, §1.5, §2.3,
+    §2.4, §3.2–3.3 — §0.1, §2.1, §2.2, §2.5, §2.6, §3.1, §4 and Appendix C are absent, and the
+    recon-figure item is scoped 'cited in §1.1'. The seven classes are the refuter-narrowed set
+    (.98–.99; 0–3/102; §2.1/2.2/2.5/2.6; §3.1's frames; §4's ≈7.7 s; the v1.1 frame-ambiguity
+    note; Appendix C's mask patterns).
+  NOTE:
+    Set identification: the CHECKER counted ten; both refuters narrowed to seven by folding
+    classes (c) and (d) under 'the STAGE 1 entry and its figures as quoted in §0.1'. The entry
+    adopts the refuters' seven without saying so.
+
+[GLOSS.44] holds=True  severity=none
+  CLAIM:
+    "including the two load-bearing ones — PROPOSAL-k §0.1 (B2)'s .98–.99, the anchor of §2.2's
+    derivation, and (B4)'s 0–3/102, the comparison in §2.4"
+  EVIDENCE:
+    PROPOSAL-k:61-63 (B2) 'the first round's sign reads at .98–.99 across L51–L62'; :78-79 (B4)
+    'Paired-shadow discordance 0–3/102 under every mask family'. §0.1 is not in the Appendix's
+    list, and the recon-figure clause is scoped to the §1.1 citations (.94–.995; ≥ .998), which
+    excludes both.
+  NOTE:
+
+
+[GLOSS.45] holds=True  severity=none
+  CLAIM:
+    "5(f) is asserted satisfied but D4 names no bar where 5(f)(ii) requires 'a leakage gate
+    stated as paired-shadow discordance against a declared bar'"
+  EVIDENCE:
+    ADDENDUM-k1.md:115-117 '5(f) … is unchanged and §1's reads are within its terms.' D4
+    (:166-168) names π_d, a Clopper–Pearson interval, a |Δ logit| distribution and a
+    pseudo-shift, then 'Beside Stage 1's G4 (n = 43, F2)' — no bar. CLAUDE.md rule 5(f)(ii)
+    quotation is verbatim, including 'against a declared bar'.
+  NOTE:
+    §1.2's mask set also contains no same-pole arm, which 5(f)(ii)'s certification clause names
+    — a further gap the entry does not claim.
+
+[GLOSS.46] holds=True  severity=low
+  CLAIM:
+    "§1 declares no retention interval where 5(f)(iii) requires one"
+  EVIDENCE:
+    §1 (ADDENDUM-k1.md:122-206) contains no retention-interval declaration. CLAUDE.md 5(f)(iii)
+    verbatim: 'with the retention interval — tokens from the last steered position to the read —
+    declared and held fixed within a cell'.
+  NOTE:
+    Scope is load-bearing: §0.3 (:100-101) does carry a figure, 'the retention interval (21
+    tokens)', inherited from PROPOSAL-k §2.1's F2 declaration — and the entry's own retention
+    bullet shows 21 is wrong for the 1b texts (22 and 66). The stronger reading (the document
+    declares an interval that its own texts falsify) is available and not made.
+
+[GLOSS.47] holds=True  severity=none
+  CLAIM:
+    "'v1.0's eight referents fold into slip (17)'s class' folds four items the record calls 'in
+    the design's own substance'"
+  EVIDENCE:
+    ADDENDUM-k1.md:87-88 'Design count: eighteen; v1.0's eight referents fold into slip (17)'s
+    class.' RESULTS.md:216-217 (2026-09-11 entry) 'eight referents do not resolve against the
+    repo at HEAD, four of them in the design's own substance' — both quotations exact.
+  NOTE:
+
+
+[GLOSS.48] holds=False  severity=low
+  CLAIM:
+    "a slip whose recorded content is entirely mis-sourced citation pointers"
+  EVIDENCE:
+    Slip (17) as recorded at RESULTS.md:735-741: 'three rule numbers cited from CONTINUITY.md's
+    distilled list rather than CLAUDE.md, one of them inside the law text the draft carried; a
+    card number, a "pair," two cross-references, a preprint pointer and one figure beside it.'
+    The trailing item is a figure, not a citation pointer.
+  NOTE:
+    The 09-13 handoff's condensed ledger row (HANDOFF-2026-09-13-design.md:127) drops the
+    figure, which is probably where 'entirely' came from; the RESULTS record is the record. The
+    finding survives with 'almost entirely'.
+
+[GLOSS.49] holds=True  severity=none
+  CLAIM:
+    "§2.4's 'above' holds of the RATES (2/43 = .047 against 3/102 = .029) though not of the bare
+    counts"
+  EVIDENCE:
+    2/43 = .04651, 3/102 = .02941. k1_analysis G4: M++ 2 flips (the minimum arm), R+B and R++ 3,
+    R+A 4 — so the lowest Stage-1 rate exceeds the highest recon rate while 2 < 3 as counts.
+    ADDENDUM-k1.md:255-256 '2–4 flips per arm — above the recon's 0–3/102'.
+  NOTE:
+
+
+[GLOSS.50] holds=True  severity=none
+  CLAIM:
+    "both refuter lenses overturned the checker there"
+  EVIDENCE:
+    Raw G6.18 (§2.4, lines 255-256): CHECKER resolves=False severity=gloss, then REFUTER …
+    resolves=True overturned=True twice. It is the only referent of the 114 with two overturns.
+  NOTE:
+
+
+[GLOSS.51] holds=False  severity=high
+  CLAIM:
+    "the record's only 1b anchor string (± DIAGNOSTIC at RESULTS.md and in the 09-12 handoff)"
+  EVIDENCE:
+    At HEAD, RESULTS.md carries TWO 1b anchor strings: line 83 'entry `ADDENDUM-k1 STAGE 1b —
+    +/0 DIAGNOSTIC`' (inside the DESIGN BLOCK v1.1 quotation added by the v5 entry) and line 336
+    '`ADDENDUM-k1 STAGE 1b — ± DIAGNOSTIC`'. `git show 3be4a63:RESULTS.md | grep -c 'ADDENDUM-k1
+    STAGE 1b'` = 1; at HEAD = 2. HANDOFF-2026-09-13-design.md:129 also carries the +/0 form.
+  NOTE:
+    True at 3be4a63, false at HEAD — and the +191-line v5 entry the entry calls inert is exactly
+    what introduced it. §1.5's anchor now matches a string on the record verbatim.
+
+[GLOSS.52] holds=False  severity=high
+  CLAIM:
+    "the routing names no 1b anchor for it to match"
+  EVIDENCE:
+    The routing this entry itself quotes three bullets earlier ends '…Stage 1b reads on the
+    recon's 102 texts; entry `ADDENDUM-k1 STAGE 1b — +/0 DIAGNOSTIC`.' (RESULTS.md:83-84).
+    ADDENDUM-k1.md:202 names the same string. The two match character for character.
+  NOTE:
+    The raw's not-a-defect note was written against the 09-12 routing ('then the ± reads on the
+    48 Stage 1 texts and the STAGE 1b entry', naming no anchor). Carried forward unrevised, the
+    sentence now contradicts the entry's own quoted routing. The verdict (not a defect) is
+    unaffected — it is strengthened.
+
+[GLOSS.53] holds=True  severity=none
+  CLAIM:
+    "The mask-set defect is the separate finding above."
+  EVIDENCE:
+    Raw's re-verification: '[G6.18] … the mask-set defect is G6.16, not this' — G6.16 is the
+    §2.4 trap-48 item carried in the preceding bullet.
+  NOTE:
+
+
+[GLOSS.54] holds=True  severity=none
+  CLAIM:
+    "The check ran against 3be4a63"
+  EVIDENCE:
+    Raw line 1: 'RAW RECORD — ADDENDUM-k1 v1.1 Appendix referent check against HEAD 3be4a63'.
+  NOTE:
+
+
+[GLOSS.55] holds=True  severity=none
+  CLAIM:
+    "Code verified every referent source is byte-identical between the two commits" for the
+    listed paths
+  EVIDENCE:
+    `git diff 3be4a63 HEAD -- <path>` is empty for PROPOSAL-k-echo-channel.md, CLAUDE.md,
+    valence_core/echo/{k1,maskedprefix,spans,probe,__init__}.py,
+    valence_core/k/{analysis,sessions}.py, data/k/k1_{analysis,reads,sessions}.json and
+    data/echo/stage{B,C}_*.json. Worktree also matches HEAD on all of them. The 3be4a63..HEAD
+    diff touches 19 files, none of them a listed source.
+  NOTE:
+
+
+[GLOSS.56] holds=False  severity=low
+  CLAIM:
+    "the four data/echo/stage[BC]_* artifacts"
+  EVIDENCE:
+    `git ls-files data/echo` shows FIVE tracked files matching stage[BC]_*:
+    stageB_analysis.json, stageB_analysis_samefolds.json, stageB_reads.json,
+    stageC_analysis.json, stageC_reads.json.
+  NOTE:
+    All five are byte-identical across the two commits, so the substance is unharmed; the count
+    is wrong and the glob the entry writes is what makes it checkable.
+
+[GLOSS.57] holds=False  severity=low
+  CLAIM:
+    "valence_core/echo/ (k1.py, maskedprefix.py, spans.py, probe.py)" as the enumeration of that
+    package
+  EVIDENCE:
+    The tracked package also contains valence_core/echo/__init__.py.
+  NOTE:
+    Unchanged between the commits as well; enumeration nit only.
+
+[GLOSS.58] holds=True  severity=none
+  CLAIM:
+    "the three data/k/k1_* artifacts"
+  EVIDENCE:
+    `git ls-files data/k` = k1_analysis.json, k1_reads.json, k1_sessions.json (the resid npz and
+    the .checkpoint are untracked).
+  NOTE:
+
+
+[GLOSS.59] holds=True  severity=medium
+  CLAIM:
+    "RESULTS.md changed only by the v5 adoption entry (+191 lines)"
+  EVIDENCE:
+    `git diff --stat 3be4a63 HEAD -- RESULTS.md` → 191 insertions, 0 deletions; the inserted
+    block is the 2026-09-17 CONTENT-CLASS v5 ADOPTED entry (RESULTS.md:24-214).
+  NOTE:
+    Numerically right, rhetorically wrong: 'only' frames the change as inert, but those 191
+    lines contain the DESIGN BLOCK quotation whose §4 carries `ADDENDUM-k1 STAGE 1b — +/0
+    DIAGNOSTIC`, which falsifies GLOSS.51 at HEAD.
+
+[GLOSS.60] holds=True  severity=low
+  CLAIM:
+    "all three cited anchors still resolving"
+  EVIDENCE:
+    At HEAD and at 3be4a63 alike: 'PROPOSAL-k STAGE 1 — CHANNEL STUDY' (RESULTS.md:395, entry
+    bullet), 'RECON — ECHO CHANNEL (k-candidate), STAGE B' (:2447), '… STAGE C' (:2206). §0.1
+    cites the first, §1.1 the other two.
+  NOTE:
+    The entry never names which three; the reading above is the only one that gives three. A
+    fourth anchor string cited by the document (§1.5's) is the subject of GLOSS.51.
+
+[GLOSS.61] holds=True  severity=low
+  CLAIM:
+    "ADDENDUM-k1.md still hashes 61acf21ff2cc104e, its value at the check"
+  EVIDENCE:
+    sha256 of the 16,261-byte file, first 16 hex = 61acf21ff2cc104e (sha1/md5/blake2 do not
+    match, so sha256[:16] is the convention). File is untracked and unmodified since Sep 13
+    01:46.
+  NOTE:
+    'its value at the check' is not corroborated by the committed raw: `grep -c 61acf21` on the
+    referent-check raw returns 0. The raw records no document hash at all.
+
+[GLOSS.62] holds=False  severity=medium
+  CLAIM:
+    "The verdict is not restated from memory: it is the same verdict against the same bytes."
+  EVIDENCE:
+    True of every named referent source (GLOSS.55), but not of the record as a whole: RESULTS.md
+    differs by 191 lines and the difference is material to one of the two items the entry
+    adjudicates (G5.15 / GLOSS.51-52).
+  NOTE:
+    One sentence of the form '…except RESULTS.md, whose new entry introduces the +/0 anchor
+    string, which strengthens the not-a-defect reading of §1.5' would close it.
+
+[GLOSS.63] holds=True  severity=none
+  CLAIM:
+    Retention: "one E mask's last steered round is R3 and the other's R4"
+  EVIDENCE:
+    §1.2's E+A/E+B steer one menu label's two rounds; in an alternating A,B,A,B text those are
+    rounds {1,3} for the starting label and {2,4} for the other, so the last steered round is R3
+    for one mask and R4 for its mirror, in all 102 sessions.
+  NOTE:
+    Strictly it is the starting-label mask vs the other, which is E+A or E+B depending on the
+    session's swap; the per-session statement is right.
+
+[GLOSS.64] holds=False  severity=low
+  CLAIM:
+    "median 66 tokens (51–110) for one and 22 (21–23) for the other"
+  EVIDENCE:
+    stageB_reads.json distance_to_read over 102 sessions: R3 min 51, max 110, median 66.5 (the
+    51st/52nd order statistics are 66 and 67; mean 67.33). R4 min 21, max 23, median 22 — that
+    half is exact.
+  NOTE:
+    The median of an even-sized sample: 66.5, not 66. The raw carries the same 66. The 46-token
+    gap and every conclusion are unaffected.
+
+[GLOSS.65] holds=True  severity=none
+  CLAIM:
+    "the two masks share an interval in 0 of 102 sessions"
+  EVIDENCE:
+    Recomputed per session: R3 interval minimum is 51 and R4 maximum is 23, so no session has
+    them equal; direct equality count = 0/102.
+  NOTE:
+
+
+[GLOSS.66] holds=True  severity=none
+  CLAIM:
+    "Stage 1's F2 block order gives 112 (88–141) and 21 (20–22) for the corresponding masks"
+  EVIDENCE:
+    k1_reads.json per_session retention_tokens over the 43 sessions: first_block_end_to_read min
+    88, median 112, max 141; second_block_end_to_read min 20, median 21, max 22
+    (last_forced_end_to_read identical).
+  NOTE:
+
+
+[GLOSS.67] holds=False  severity=medium
+  CLAIM:
+    "k1_reads.json declares first_block_end_to_read 107, second_block_end_to_read 21,
+    last_forced_end_to_read 21"
+  EVIDENCE:
+    retention_tokens is a PER-SESSION field, not a declaration: 43 dicts, 39 distinct.
+    first_block_end_to_read = 107 occurs in exactly 1 of 43 sessions (session '0', the first in
+    iteration order); the distribution is 88–141 with median 112 and modal value 112 (4
+    sessions). The nearest thing to a declaration is PROPOSAL-k:353-355, 'Retention interval to
+    the read: … **21 tokens** … ; the first block ends ≈ 115 tokens from the read.'
+  NOTE:
+    The raw makes the same slip ('Stage 1's own declaration, from data/k/k1_reads.json
+    retention_tokens: {…107…}') — it printed one session's dict. 107 is neither the proposal's
+    declared ≈115 nor the measured median 112, and the entry sets it beside its own 112 without
+    saying they are different quantities.
+
+[GLOSS.68] holds=True  severity=none
+  CLAIM:
+    "sits about 46 tokens closer to the read on alternating texts than Stage 1's equivalent did"
+  EVIDENCE:
+    112 − 66 = 46 (112 − 66.5 = 45.5, still 'about 46').
+  NOTE:
+
+
+[GLOSS.69] holds=False  severity=medium
+  CLAIM:
+    "The recon found the echo primacy-weighted and distance-sensitive"
+  EVIDENCE:
+    Primacy holds (RESULTS.md:2382 'Primacy dominates recency at the read position'; :2426
+    'FLAG: primacy over recency, decorrelated'). Distance-sensitivity is explicitly denied by
+    the same entries: RESULTS.md:2583 '**The curve is not ordered by distance:** R1, the
+    FARTHEST round (157 tokens …), is the most readable (.888) … R4, the NEAREST (22 tokens),
+    weak (.683) … R2 (112 tokens) weakest (.656)', and :2660 'FLAG: retention is not ordered by
+    distance.' The same entry says round position, label parity and span length are confounded.
+  NOTE:
+    The inference the bullet draws ('a D3 median above .861 is consistent with a shorter carry')
+    can still be grounded — the R3 geometry (67 tokens, .83) does read above the R2 geometry
+    (112 tokens, .66) — but not on 'distance-sensitive', which the recon flagged as false, and
+    which as stated predicts R4 (22 tokens) to be the strongest when it is among the weakest.
+
+[GLOSS.70] holds=True  severity=none
+  CLAIM:
+    "§1.4's four branches attribute a high reading to the contrast or the format only"
+  EVIDENCE:
+    ADDENDUM-k1.md:174-193: branch 1 'F2 carries the state more weakly than the alternating
+    format'; branch 2 'the shortfall is the contrast, and it is format-independent'; branch 3
+    'both the contrast and the format contribute'; branch 4 'the alternating format carries the
+    +/0 contrast more weakly than F2 does'. No branch mentions retention distance.
+  NOTE:
+
+
+[GLOSS.71] holds=True  severity=none
+  CLAIM:
+    D3's target quoted as "the FIRST forced round carried +"
+  EVIDENCE:
+    ADDENDUM-k1.md:161-163: '"The FIRST forced round carried +" (`E+A` rows where A started,
+    `E+B` rows where B started → 1; else 0).'
+  NOTE:
+
+
+[GLOSS.72] holds=True  severity=none
+  CLAIM:
+    "ADDENDUM-k1 v1.1 is not committed and remains untracked"
+  EVIDENCE:
+    `git status --porcelain` lists '?? ADDENDUM-k1.md'; the file is absent from `git ls-files`.
+  NOTE:
+
+
+[GLOSS.73] holds=True  severity=none
+  CLAIM:
+    "the 1b analyzer, its battery and the reads driver are not built; no 1b read has run"
+  EVIDENCE:
+    scripts/ contains only k1_analyze.py, k1_stage1.py and recon_echo.py for this chain; no file
+    in valence_core or scripts mentions Stage 1b. data/k holds only the Stage 1 artifacts.
+    Working tree is clean but for the ten untracked files in git status, none of them 1b code or
+    reads.
+  NOTE:
+
+
+[GLOSS.74] holds=True  severity=none
+  CLAIM:
+    "no ADDENDUM-k1 STAGE 1b — +/0 DIAGNOSTIC entry exists"
+  EVIDENCE:
+    The string occurs in RESULTS.md only at line 83, inside the block quotation of the
+    2026-09-17 v5 entry ('> … entry `ADDENDUM-k1 STAGE 1b — +/0 DIAGNOSTIC`.'); no entry bullet
+    ('- YYYY-MM-DD — **…') carries that anchor.
+  NOTE:
+    Consistent as written, but sits two bullets from GLOSS.51's claim that the string is not on
+    the record at all.
+
+[GLOSS.75] holds=True  severity=none
+  CLAIM:
+    "The sign set is not widened and k1.py is untouched — v1.1 asks for no widening, and its
+    +1-only guard is PROPOSAL-k §0.4 in code"
+  EVIDENCE:
+    ADDENDUM-k1.md:19-21 'no sign-set change'; :137-138 '+1 signs only'. `git diff HEAD --
+    valence_core/echo/k1.py` empty, and it is byte-identical at 3be4a63. k1.py:77-78 raises
+    SystemExit citing 'PROPOSAL-k administers +pole against vehicle only'.
+  NOTE:
+
+
+[GLOSS.76] holds=True  severity=none
+  CLAIM:
+    "Stage 1's verdict (7742e2c, G3_FAIL) is unaffected and is not rescored by anything here"
+  EVIDENCE:
+    k1_analysis.json evaluation.branch = 'G3_FAIL'; commit 7742e2c is the 'PROPOSAL-k STAGE 1 —
+    CHANNEL STUDY' entry; the artifact is byte-identical at 3be4a63 and HEAD and nothing in this
+    entry writes to data/k.
+  NOTE:
+
+
+[GLOSS.77] holds=True  severity=none
+  CLAIM:
+    "LOCK-k does not exist"
+  EVIDENCE:
+    Repo root holds LOCK-g.md and LOCK-h.md only.
+  NOTE:
+
+
+[GLOSS.78] holds=True  severity=none
+  CLAIM:
+    The routing quotation in the entry's second bullet is verbatim
+  EVIDENCE:
+    Normalised (emphasis and backticks stripped, whitespace collapsed) the entry's quoted
+    sentence is a substring of RESULTS.md:80-84's block quotation of DESIGN BLOCK v1.1 §4,
+    character for character including 'STOP, write to raw, report.'
+  NOTE:
+    The block itself is a chat artifact; RESULTS.md's copy is the only on-disk one, and the
+    entry's quote matches it.
+
+[GLOSS.79] holds=False  severity=low
+  CLAIM:
+    "DESIGN BLOCK v1.1 (2026-09-17) §4 reissued the 09-17 routing unchanged"
+  EVIDENCE:
+    The block's own heading (RESULTS.md:39) reads '# DESIGN BLOCK v1.1 — content-class v5
+    adoption (replaces the 09-13 block; addendum routing unchanged)', and its §4 opens 'Then the
+    ADDENDUM-k1 v1.1 routing, as issued'. The routing it reissues is the 09-13 one, carried at
+    HANDOFF-2026-09-13-design.md:126-129 with the same +/0 anchor. The block itself is the 09-17
+    artifact.
+  NOTE:
+    Date attribution only; the quoted text and its force are right.
+
+[GLOSS.80] holds=True  severity=none
+  CLAIM:
+    The Appendix's stop rule quoted as "Any referent that does not resolve → STOP, report, no
+    commit."
+  EVIDENCE:
+    ADDENDUM-k1.md:305-306, exact including the arrow and the final period.
+  NOTE:
+
+
+[GLOSS.81] holds=True  severity=none
+  CLAIM:
+    Raw paths and link text resolve
+  EVIDENCE:
+    results/raw/2026-09-12_addendum-k1-v1.1_referent_check.txt (5,291 lines) and
+    results/raw/2026-09-18_addendum-k1-1b_retention_geometry.txt (29 lines) both exist and are
+    untracked, i.e. this entry commits them.
+  NOTE:
+
+
+[GLOSS.82] holds=True  severity=low
+  CLAIM:
+    "written before the report per the 2026-09-06 design block §1"
+  EVIDENCE:
+    Asserted in the raw's own header ('Protocol: design block 2026-09-06 §1 (raw written before
+    report)'). The 2026-09-06 design block is a chat artifact; RESULTS.md references a 'design
+    patch 2026-09-06 §1' (e.g. :1197, :1420-1424) but does not carry the raw-before-report
+    clause verbatim.
+  NOTE:
+    Noted rather than failed, per the rule on chat artifacts.
+
+[GLOSS.83] holds=True  severity=none
+  CLAIM:
+    Stamp "Fri Sep 18 05:29:58 UTC 2026"
+  EVIDENCE:
+    2026-09-18 is a Friday and is today's date; the retention raw's own trailing `date -u` is
+    'Fri Sep 18 05:22:51 UTC 2026', so 05:29:58 is later and consistent. The raw check's stamp
+    'Sat Sep 12 06:48:51 UTC 2026' likewise falls on a Saturday.
+  NOTE:
+    Exact seconds not independently verifiable after the fact.
+
+[GLOSS.84] holds=True  severity=none
+  CLAIM:
+    Headline: "Two are not wording" (the two build-blocking items)
+  EVIDENCE:
+    The two are G4.13 (severity 'clean' at the checker, overturned by the strict lens, CONFIRMED
+    by Code as build-blocking) and G5.11/G5.17 (severity 'substantive'). Neither turns on
+    phrasing: one is an assertion the code refuses to execute, the other an empty branch.
+  NOTE:
+
+
+[GLOSS.85] holds=True  severity=none
+  CLAIM:
+    Headline: "Routing items 2 and 3 are not merely gated behind item 1 — as written they are
+    unbuildable"
+  EVIDENCE:
+    Item 2 is '1b analyzer + battery' and item 3 'Stage 1b reads on the recon's 102 texts'
+    (RESULTS.md:82-83). Item 2's battery must reach a branch with an empty admissible set
+    (GLOSS.16-18); item 3's reads must pass block_spans on texts that fail its guard 102/102
+    (GLOSS.10-11).
+  NOTE:
+
+
+####################################################################################################
+LENS PROV — 116 claims, 20 failing
+####################################################################################################
+
+[PROV.1] holds=True  severity=info
+  CLAIM:
+    Raw path results/raw/2026-09-12_addendum-k1-v1.1_referent_check.txt exists and is untracked
+    (this entry commits it).
+  EVIDENCE:
+    ls: 382610 bytes, 5291 lines; `git status --short` lists it as `??`.
+  NOTE:
+    Link text `_addendum-k1-v1.1_referent_check` matches the repo's abbreviated-link idiom.
+
+[PROV.2] holds=True  severity=info
+  CLAIM:
+    Workflow id `wf_b0099fec-226`.
+  EVIDENCE:
+    Raw header line 2: 'workflow wf_b0099fec-226'.
+  NOTE:
+
+
+[PROV.3] holds=True  severity=info
+  CLAIM:
+    18 agents.
+  EVIDENCE:
+    Raw header: '18 agents (6 blind checkers over disjoint referent groups, 2 refuter lenses
+    each)'. 6 checkers + 12 refuters = 18.
+  NOTE:
+
+
+[PROV.4] holds=True  severity=info
+  CLAIM:
+    0 errors.
+  EVIDENCE:
+    Raw header line 3: '0 errors'.
+  NOTE:
+
+
+[PROV.5] holds=True  severity=info
+  CLAIM:
+    2,257,253 subagent tokens.
+  EVIDENCE:
+    Raw header line 3, verbatim.
+  NOTE:
+
+
+[PROV.6] holds=True  severity=info
+  CLAIM:
+    1,425 s.
+  EVIDENCE:
+    Raw header line 3, verbatim.
+  NOTE:
+
+
+[PROV.7] holds=True  severity=info
+  CLAIM:
+    Group sizes G1 19, G2 21, G3 16, G4 13, G5 18, G6 27.
+  EVIDENCE:
+    Raw GROUP headers at lines 12/940/1728/2471/3261/4063 declare exactly these; recount of
+    `^\[Gn.m\]  CHECKER` lines per group gives the same counts; sum 114.
+  NOTE:
+    Both the declared header and the body recount agree — no header-only figure here.
+
+[PROV.8] holds=True  severity=info
+  CLAIM:
+    'Totals recompute from the body: 114 referents, 13 checker-unresolved, 227 refuter verdict
+    lines, 14 overturned.'
+  EVIDENCE:
+    Body recount (parser over `^\[id\]  CHECKER resolves=` and indented `REFUTER [...] resolves=
+    overturned=`): 114 / 13 / 227 / 14. Raw TOTALS header states the same four numbers, so the
+    recompute claim is true and the header is not stale.
+  NOTE:
+    Recounted independently of the header, per the values-check rule.
+
+[PROV.9] holds=True  severity=info
+  CLAIM:
+    '19 contested'.
+  EVIDENCE:
+    Referents that are checker-unresolved OR carry any overturn: G1.19, G3.3, G3.4, G3.7, G3.9,
+    G3.10, G3.16, G4.13, G5.8, G5.11, G5.15, G5.17, G6.7, G6.9, G6.12, G6.16, G6.18, G6.26,
+    G6.27 = 19. Equivalently, 19 referents on which some vote is False.
+  NOTE:
+    'Contested' is never defined in the entry; the only reading that yields 19 is 'unresolved or
+    overturned'.
+
+[PROV.10] holds=True  severity=info
+  CLAIM:
+    '17 do not resolve' = 19 contested minus the two reported as NOT defects.
+  EVIDENCE:
+    Raw's 'NOT defects, on Code's reading' section names exactly G5.15 and G6.18. 19 - 2 = 17.
+  NOTE:
+
+
+[PROV.11] holds=True  severity=info
+  CLAIM:
+    'One referent (G6.6, uncontested and clean) carries one lens rather than two, the lens
+    appropriate to a resolves=True item.'
+  EVIDENCE:
+    Parser: exactly one referent has !=2 refuter lines — G6.6, with 1. Its header reads `CHECKER
+    resolves=True severity=clean`; its single lens is 'refuter — too lenient (re-checking G6 for
+    resolves=true item...)' with resolves=True overturned=False. 114*2-227 = 1.
+  NOTE:
+
+
+[PROV.12] holds=True  severity=info
+  CLAIM:
+    'the refuters overturned in both directions, as trap 44 predicts'.
+  EVIDENCE:
+    Overturns run both ways: checker True -> refuter False (G3.3, G3.4, G3.9, G3.16, G4.13,
+    G6.26) and checker False -> refuter True (G1.19, G5.8, G5.15, G6.7, G6.12, G6.16, G6.18 x2).
+  NOTE:
+
+
+[PROV.13] holds=True  severity=info
+  CLAIM:
+    Trap 44 is the two-lens rule (too-lenient / too-strict).
+  EVIDENCE:
+    HANDOFF-2026-09-12.md:341-345 — '44. **[new] Refuter lenses disagree — pick the lens for the
+    fault you fear.** Two refuters per group (too-lenient / too-strict) overturned verdicts in
+    BOTH directions...'.
+  NOTE:
+
+
+[PROV.14] holds=True  severity=info
+  CLAIM:
+    Trap 25 is 'agent output is evidence, not testimony'.
+  EVIDENCE:
+    HANDOFF-2026-09-12.md:283 — '25. **Agent output is evidence, not testimony.** [PERMANENT]'.
+  NOTE:
+
+
+[PROV.15] holds=True  severity=info
+  CLAIM:
+    Trap 48 is the class the §2.4 mask-set finding belongs to.
+  EVIDENCE:
+    HANDOFF-2026-09-12.md:355-358 — '48. **[new] The recon's leak tables are REWARD-mask
+    tables.** No pi_d is tabled on the random masks ... Quote the mask set a figure was tabled
+    on.'
+  NOTE:
+
+
+[PROV.16] holds=True  severity=low
+  CLAIM:
+    'written before the report per the 2026-09-06 design block §1'.
+  EVIDENCE:
+    RESULTS.md:1976-1983 — the 2026-09-06 block §1 adopts 'every adversarial values-check of
+    design prose goes to results/raw/ BEFORE it is reported'. Raw header line 4 cites the same
+    protocol.
+  NOTE:
+    The protocol names values-checks of design prose; this is a referent check. The repo already
+    extends it that way (the raw itself does), so the citation is idiomatic rather than exact.
+
+[PROV.17] holds=False  severity=medium
+  CLAIM:
+    'Every finding below was re-verified by Code against the file before it entered this entry
+    (trap 25)'.
+  EVIDENCE:
+    The raw's CODE RE-VERIFICATION section (lines 5232-5291) covers G5.11/G5.17, G3.7/G3.9/G3.3,
+    G4.13, G6.9, G6.7, G3.4, G6.26, G6.12, G6.16, plus the two NOT-defects G5.15 and G6.18 — 14
+    referents. Four of the seventeen reported findings have no re-verification block in the raw:
+    G1.19 (the 5(f) item), G3.10 (the 'no arithmetic on record' item), G5.8 (the 53/102
+    orientation item) and G6.27 (the 'seven classes' item).
+  NOTE:
+    I independently re-derived G5.8 (start_plus False = 53/102) and G6.27 (the refuter's 'seven
+    firm classes') from the files, so the findings are sound; it is the provenance gloss 'Every
+    finding below' that is not corroborated by the raw for four of seventeen.
+
+[PROV.18] holds=False  severity=low
+  CLAIM:
+    Headline: '114 referents by six blind checkers over disjoint groups with two refuter lenses
+    each'.
+  EVIDENCE:
+    113 referents carry two lenses; G6.6 carries one (227 refuter lines, not 228). The entry's
+    own 'The check' bullet states the exception three sentences later.
+  NOTE:
+    Disclosed downstream, so this is an unqualified headline rather than a concealed error; 'two
+    refuter lenses each' would need 'one exception noted below'.
+
+[PROV.19] holds=True  severity=info
+  CLAIM:
+    Internal consistency: the headline's '17 do not resolve' matches the findings the bullets
+    enumerate.
+  EVIDENCE:
+    Bullet allocation against the raw's ids: Build-blocking (1) = G4.13 [1]; Build-blocking (2)
+    = G5.11 + G5.17 [2]; §2.2 bullet = G6.7 [1]; §0.2 bullet = G3.7 (wrong probe) + G3.3
+    (first-round vs first-block) + G3.9 ('.98' range floor) + G3.10 ('no arithmetic on record')
+    [4]; Scope-and-gloss bullet = G3.4, G6.26, G6.12, G6.9, G6.16, G5.8, G6.27, G1.19, G3.16
+    [9]. 1+2+1+4+9 = 17.
+  NOTE:
+    The count is right; the label on the last bullet is not — see PROV.20.
+
+[PROV.20] holds=False  severity=high
+  CLAIM:
+    'Scope and gloss (the remaining eleven).'
+  EVIDENCE:
+    That bullet enumerates NINE referents (G3.4, G6.26, G6.12, G6.9, G6.16, G5.8, G6.27, G1.19,
+    G3.16) — ten defect sentences if 5(f)(ii) and 5(f)(iii) are counted separately, since both
+    belong to one referent, G1.19. Eleven would require the earlier bullets to cover six, but
+    they cover eight: the §0.2 bullet disposes of four referents, not two (it carries G3.9's
+    range-floor and G3.10's 'no arithmetic on record' explicitly). 8 + 11 = 19, not 17.
+  NOTE:
+    Either 'the remaining eleven' becomes 'the remaining nine', or the two §0.2 riders move out
+    of that bullet. As written the entry's own subtotal contradicts its headline's 17.
+
+[PROV.21] holds=True  severity=info
+  CLAIM:
+    The routing quotation is verbatim.
+  EVIDENCE:
+    Normalised (markdown stripped, whitespace collapsed) the entry's quoted string is a literal
+    substring of RESULTS.md:80-84: 'Then the ADDENDUM-k1 v1.1 routing, as issued: Appendix check
+    against HEAD; commit appended to the k chain; 1b analyzer + battery; Stage 1b reads on the
+    recon's 102 texts; entry ADDENDUM-k1 STAGE 1b — +/0 DIAGNOSTIC. Any referent that does not
+    resolve → STOP, write to raw, report.'
+  NOTE:
+    Contrary to the task brief, the block's §4 IS on disk — the v5 adoption entry quotes the
+    block in full at RESULTS.md:38-84, and it checks out verbatim including the em dash and the
+    arrow.
+
+[PROV.22] holds=True  severity=info
+  CLAIM:
+    The quoted routing is DESIGN BLOCK v1.1's §4.
+  EVIDENCE:
+    RESULTS.md:80 opens '> ## 4. Then the ADDENDUM-k1 v1.1 routing, as issued:' inside the block
+    quoted from RESULTS.md:40 ('# DESIGN BLOCK v1.1 — content-class v5 adoption').
+  NOTE:
+
+
+[PROV.23] holds=False  severity=high
+  CLAIM:
+    'DESIGN BLOCK v1.1 (2026-09-17) §4 reissued the 09-17 routing unchanged.'
+  EVIDENCE:
+    The block's own header (RESULTS.md:40) reads 'DESIGN BLOCK v1.1 — content-class v5 adoption
+    (replaces the 09-13 block; addendum routing unchanged)'. Block v1.1 IS the 09-17 block (PI
+    date 2026-09-17, RESULTS.md:41); the routing it carries unchanged is the 09-13 block's,
+    recorded at HANDOFF-2026-09-13-design.md:127-129 ('Appendix check, commit v1.1 appended to
+    the k chain, 1b analyzer + battery, Stage 1b reads (~52 min), entry `ADDENDUM-k1 STAGE 1b —
+    +/0 DIAGNOSTIC`').
+  NOTE:
+    As written the sentence is either wrong (the 09-13 routing) or circular (§4 reissuing
+    itself). The 09-11 routing quoted at RESULTS.md:231-247 is a different, earlier routing and
+    is not what §4 reissues.
+
+[PROV.24] holds=True  severity=info
+  CLAIM:
+    The Appendix's closing rule is quoted verbatim: 'Any referent that does not resolve → STOP,
+    report, no commit.'
+  EVIDENCE:
+    ADDENDUM-k1.md:305-306, normalised match.
+  NOTE:
+    Note the routing's form differs ('STOP, write to raw, report'); the entry quotes both,
+    correctly distinguished.
+
+[PROV.25] holds=False  severity=high
+  CLAIM:
+    'Routing items 2 and 3 are not merely gated behind item 1 — as written they are
+    unbuildable.'
+  EVIDENCE:
+    Under the quoted routing's own semicolon order: 1 Appendix check; 2 commit appended to the k
+    chain; 3 1b analyzer + battery; 4 Stage 1b reads; 5 the entry. Item 2 (the commit) IS merely
+    gated behind item 1 — that is exactly what the STOP does to it. The unbuildable pair under
+    that numbering is items 3 and 4. The sentence is true only under ADDENDUM-k1 §4's numbering
+    (step 2 = analyzer+battery, step 3 = reads), which the entry elsewhere calls '§4 step 2',
+    not 'routing item'.
+  NOTE:
+    Two numbering schemes are in play in adjacent bullets and the entry uses 'routing item' for
+    both.
+
+[PROV.26] holds=False  severity=medium
+  CLAIM:
+    'that battery is what routing item 2 asks Code to commit.'
+  EVIDENCE:
+    In the routing quoted at the top of this entry, the battery is the third item ('1b analyzer
+    + battery'); the second is 'commit appended to the k chain'. It is ADDENDUM-k1 §4 step 2
+    that reads 'The 1b analyzer extension and battery committed'.
+  NOTE:
+    Same defect as PROV.25; '§4 step 2' would be correct and is the phrasing the entry already
+    uses in the Build-blocking (1) bullet.
+
+[PROV.27] holds=False  severity=low
+  CLAIM:
+    'valence_core/echo/k1.py:91 raises AssertionError(...)'.
+  EVIDENCE:
+    k1.py:91 is the condition `if tags[0] != tags[1] or tags[2] != tags[3]:`; the raise is at
+    :92. The raw cites the pair correctly as 'k1.py:91-92'.
+  NOTE:
+    Off-by-one on a line citation the entry presents as the raise site.
+
+[PROV.28] holds=False  severity=low
+  CLAIM:
+    The assertion text is `AssertionError("not block order")`.
+  EVIDENCE:
+    k1.py:92 — `raise AssertionError(f"not block order: tags {tags}")`. The quoted form drops
+    the f-string and the ': tags {tags}' tail.
+  NOTE:
+    Presented in backticks as code. Either quote it in full or mark the truncation.
+
+[PROV.29] holds=True  severity=info
+  CLAIM:
+    The guard raises unless `tags[0]==tags[1] and tags[2]==tags[3]`.
+  EVIDENCE:
+    k1.py:91 negated: raises iff tags[0]!=tags[1] or tags[2]!=tags[3], i.e. passes iff both
+    equalities hold.
+  NOTE:
+
+
+[PROV.30] holds=True  severity=info
+  CLAIM:
+    '102 of 102 are alternating ... none is block order' on data/echo/stageB_reads.json.
+  EVIDENCE:
+    Enumerated per_session spans tags for all 102 sessions: every session has exactly 4 spans,
+    102 satisfy tags[0]==tags[2] and tags[1]==tags[3] with tags[0]!=tags[1]; 0 satisfy the
+    block-order predicate.
+  NOTE:
+
+
+[PROV.31] holds=True  severity=info
+  CLAIM:
+    'session "0" is [slate, prism, slate, prism]'.
+  EVIDENCE:
+    per_session['0'] span tags = ['slate','prism','slate','prism'].
+  NOTE:
+
+
+[PROV.32] holds=True  severity=info
+  CLAIM:
+    Path data/echo/stageB_reads.json is the right artifact for the recon's 102 sessions.
+  EVIDENCE:
+    Its n_sessions field is 102 and per_session has 102 keys.
+  NOTE:
+
+
+[PROV.33] holds=True  severity=info
+  CLAIM:
+    k1.py is 'where the +1-only docstring and guard live'.
+  EVIDENCE:
+    k1.py:23-24 docstring 'Every sign is +1: no negative pole is constructed anywhere
+    (PROPOSAL-k §0.4).'; k1.py:77-78 guard `if axis.alpha <= 0 or rand.alpha <= 0: raise
+    SystemExit("PROPOSAL-k administers +pole against vehicle only; a negative alpha is a
+    stop")`.
+  NOTE:
+    The raw cites the docstring as k1.py:22-23; on disk it is 23-24. The entry gives no line
+    number, so it is unaffected.
+
+[PROV.34] holds=True  severity=info
+  CLAIM:
+    'build_mask writes `1 if inj.alpha > 0 else -1`'.
+  EVIDENCE:
+    valence_core/echo/maskedprefix.py:229 — `mask[a:b] = 1 if inj.alpha > 0 else -1`, verbatim.
+  NOTE:
+
+
+[PROV.35] holds=True  severity=info
+  CLAIM:
+    'the recon's own ± masks ran through it with negative alphas'.
+  EVIDENCE:
+    scripts/recon_echo.py:160-165 spans_with_injections builds `inj.with_sign(sg)` per round
+    sign and the result is passed to read_choice_maskedprefix / build_mask (recon_echo.py:281).
+    Injection.with_sign (valence_core/adapters/base.py:147-153) sets alpha = sign*abs(alpha).
+    stageB_reads.json masks include M2 'flipped (axis)' and M6 'same-pole -- (axis)';
+    stageC_reads.json B1-B4 carry explicit '-1' signs.
+  NOTE:
+
+
+[PROV.36] holds=False  severity=medium
+  CLAIM:
+    '§0.3, §1.2 and §4 step 2 each assert the primitive is unchanged.'
+  EVIDENCE:
+    §1.2 (ADDENDUM-k1.md:138) 'the echo primitive of record unchanged (+1 signs only)' and §4
+    step 2 (:284-285) 'the primitive unchanged' do. §0.3 (:106-107) says 'The echo primitive's
+    +1-only sign restriction is the proposal's and is unchanged' — the subject is the sign
+    restriction, not the primitive.
+  NOTE:
+    Two of three, not three. The distinction matters here because the whole finding turns on
+    which noun 'unchanged' attaches to.
+
+[PROV.37] holds=True  severity=info
+  CLAIM:
+    '§1.4 fixes s = .861.'
+  EVIDENCE:
+    ADDENDUM-k1.md:172 — 'Let m = D3's median AUC over L51–L62, and s = .861 (Stage 1's G3
+    median).' k1_analysis.json evaluation.G3.median_auc = 0.861005949161709.
+  NOTE:
+
+
+[PROV.38] holds=True  severity=info
+  CLAIM:
+    Branch 3 requires m < 0.900 and m > 0.911 simultaneously.
+  EVIDENCE:
+    ADDENDUM-k1.md:185 — '.90 > m and m − s > .05'. m - .861 > .05 <=> m > .911; .90 > m <=> m <
+    .900. Empty.
+  NOTE:
+
+
+[PROV.39] holds=True  severity=info
+  CLAIM:
+    'Three of the four branches are reachable (m ≥ .90; .811 ≤ m < .90; m < .811).'
+  EVIDENCE:
+    Branch 1 :174 'D3 ≥ .90'; branch 2 :181 '.90 > m and |m − s| ≤ .05' = .811 ≤ m < .90; branch
+    4 :190 '.90 > m and s − m > .05' = m < .811. Union is all of R, so the disjunction stays
+    complete despite the empty branch.
+  NOTE:
+
+
+[PROV.40] holds=True  severity=info
+  CLAIM:
+    §1.5 deliverable quote 'a battery reaching all four D3 branches and STOP'.
+  EVIDENCE:
+    ADDENDUM-k1.md:206 — 'with a battery reaching all four D3 branches and STOP.'
+  NOTE:
+
+
+[PROV.41] holds=True  severity=info
+  CLAIM:
+    'The recon band .98–.99 is .01 wide ... Stage 1's band .85–.89 is four times wider.'
+  EVIDENCE:
+    .99-.98 = .01; .89-.85 = .04; 4x.
+  NOTE:
+
+
+[PROV.42] holds=True  severity=info
+  CLAIM:
+    '.98 − .08 = .9000; .99 − .09 = .9000' and '.85 − .08 = .7700, .89 − .09 = .8000'.
+  EVIDENCE:
+    Arithmetic recomputed; all four exact to four places.
+  NOTE:
+
+
+[PROV.43] holds=True  severity=info
+  CLAIM:
+    'full envelope .76–.81'.
+  EVIDENCE:
+    The four pairings are .77, .80, .76 (.85-.09) and .81 (.89-.08); min .76, max .81.
+  NOTE:
+
+
+[PROV.44] holds=True  severity=medium
+  CLAIM:
+    '.861 is a band MEDIAN — the convention PROPOSAL-k's own G1/G3 bars use'.
+  EVIDENCE:
+    PROPOSAL-k §1.4 G3 (:261-267) is 'median AUC over L51–L62 ≥ .90'; k1_analysis.json bars.G3 =
+    [0.9, [51..62]]; G1's bar is likewise a median over L51–L61.
+  NOTE:
+    True, but the band silently changes: .861 is the L51–L62 median, while §2.2's bar is over
+    L50–L58, whose median is .8707 (computed from g3_firstsign_read_M). On §2.2's own band the
+    median convention gives .8707-.08 = .79, not '.78'. The sentence should name which band's
+    median it is importing.
+
+[PROV.45] holds=True  severity=info
+  CLAIM:
+    'on which the same margin gives about .78'.
+  EVIDENCE:
+    .861 - .08 = .781; .861 - .09 = .771. 'About .78' covers the low-margin end.
+  NOTE:
+    See PROV.44 for the band caveat.
+
+[PROV.46] holds=True  severity=info
+  CLAIM:
+    'data/echo/stageC_analysis.json contains exactly two first-sign families'.
+  EVIDENCE:
+    families keys: c1_read_M1M2, c1_read_M3M4_random, c1_read_TEXTONLY_shadow, c1_label_a_M1M2,
+    c1_label_a_M3M4_random, c1_label_a_TEXTONLY_shadow, c1_label_b_M1M2, c1_label_b_M3M4_random,
+    c1_label_b_TEXTONLY_shadow, c2_firstsign_B1-4, c2_lastsign_B1-4, c2_firstsign_B1-4x_random,
+    c2_lastsign_B1-4x_random. Exactly two contain 'firstsign'.
+  NOTE:
+    Correctly scoped to first-sign; there are also two last-sign families, which the claim does
+    not deny.
+
+[PROV.47] holds=True  severity=info
+  CLAIM:
+    Family keys `c2_firstsign_B1-4` and `c2_firstsign_B1-4x_random` are exact.
+  EVIDENCE:
+    Both strings appear verbatim as keys of stageC_analysis.json['families'].
+  NOTE:
+
+
+[PROV.48] holds=True  severity=info
+  CLAIM:
+    'there is no B1-vs-B2-only family anywhere'.
+  EVIDENCE:
+    No key in stageC_analysis.json['families'] names a B1/B2 two-mask probe; the only B-mask
+    families are the four-mask B1-4 and B1-4x sets.
+  NOTE:
+
+
+[PROV.49] holds=True  severity=info
+  CLAIM:
+    Target quoted as 'rows B1..B4 ... +1 for B1, B3'.
+  EVIDENCE:
+    stageC_analysis.json targets['c2_firstsign_*'] = 'rows B1..B4 (or B1x..B4x) at the read
+    position: +1 for B1, B3'. The ellipsis elides '(or B1x..B4x) at the read position:'.
+  NOTE:
+
+
+[PROV.50] holds=True  severity=info
+  CLAIM:
+    'class difference (2,0,−2,0) in round-sign space'.
+  EVIDENCE:
+    stageC_reads.json masks: B1 (1,1,-1,-1), B2 (-1,-1,1,1), B3 (1,-1,-1,1), B4 (-1,1,1,-1).
+    mean{B1,B3} = (1,0,-1,0); mean{B2,B4} = (-1,0,1,0); difference (2,0,-2,0).
+  NOTE:
+
+
+[PROV.51] holds=True  severity=info
+  CLAIM:
+    'L2 norm 2.83 against Stage 1's (1,1,−1,−1) at 2.00, a ratio of 1.41, not 2.'
+  EVIDENCE:
+    ||(2,0,-2,0)|| = sqrt(8) = 2.8284; ||(1,1,-1,-1)|| = 2.0000; ratio 1.4142.
+    ADDENDUM-k1.md:76-77 gives M+A − M+B = (1,1,−1,−1) and B1 − B2 = (2,2,−2,−2) — the displayed
+    pair is 2:1, the probe's actual pair is not.
+  NOTE:
+    (2,0,-2,0)/2 = (1,0,-1,0), which is not (1,1,-1,-1), so 'half' fails on direction as well as
+    magnitude. The entry's 'not 2' is the weaker of the two available statements.
+
+[PROV.52] holds=True  severity=info
+  CLAIM:
+    'the record's measurand is the FIRST-ROUND sign, not the "first-block" sign'.
+  EVIDENCE:
+    RESULTS.md:2382 (Stage C entry) — 'the FIRST-round sign reads at 0.919 at L50 and **.98–.99
+    at every layer from L51 to L62**'. ADDENDUM-k1.md:71 says 'Stage C's block masks,
+    first-block sign .98–.99'.
+  NOTE:
+
+
+[PROV.53] holds=False  severity=medium
+  CLAIM:
+    '(B3 and B4 have no two-round blocks at all)'.
+  EVIDENCE:
+    stageC_reads.json calls all four 'block mask, absolute signs over forced rounds 1-4'. B3 =
+    (1,-1,-1,1) has a contiguous same-sign pair at rounds 2-3; B4 = (-1,1,1,-1) likewise. What
+    B3/B4 lack is a FIRST-block/SECOND-block split (their first two rounds do not share a sign).
+  NOTE:
+    The defensible form is 'B3 and B4 are not first-block/second-block masks'. As written it is
+    refutable from the artifact's own mask glossary.
+
+[PROV.54] holds=True  severity=info
+  CLAIM:
+    '".98" is the range floor where the band median is .9884'.
+  EVIDENCE:
+    c2_firstsign_B1-4 auc_kfold over L51–L62: min .9816 (L52), max .9924 (L56), median .9884.
+    (auc_loso median .9899.)
+  NOTE:
+    Median quoted on the kfold statistic, consistent with the raw's G3.7/G3.9 block.
+
+[PROV.55] holds=True  severity=info
+  CLAIM:
+    Quotation 'A halved linear separation landing at .86 ... is what the arithmetic predicts'.
+  EVIDENCE:
+    ADDENDUM-k1.md:79-80 — 'A halved linear separation landing at .86 where the full one read
+    .98 is what the arithmetic predicts'. Ellipsis elides 'where the full one read .98'.
+  NOTE:
+
+
+[PROV.56] holds=True  severity=info
+  CLAIM:
+    'nothing in the proposal, the addendum or the entries maps contrast magnitude to AUC'.
+  EVIDENCE:
+    PROPOSAL-k §1.3 gives only the probe recipe ('Standardized L2 logistic regression; grouped
+    leave-one-session-out CV; AUC per layer'); k1_analysis.json['procedure'] is the same recipe;
+    no separation-to-AUC derivation appears in PROPOSAL-k, ADDENDUM-k1 or the Stage B/C/Stage 1
+    entries.
+  NOTE:
+    A negative claim; corroborated by the checker and by my own reading of the procedure fields,
+    not by exhaustive search.
+
+[PROV.57] holds=True  severity=info
+  CLAIM:
+    'c1_label_a_M1M2 over L51–L61 reads min .9984'.
+  EVIDENCE:
+    auc_kfold over L51–L61: min .9984, max 1.0000.
+  NOTE:
+
+
+[PROV.58] holds=True  severity=info
+  CLAIM:
+    'c1_label_b_M1M2 over the same layers reads .8208–.9642'.
+  EVIDENCE:
+    auc_kfold over L51–L61: min .8208, max .9642 — none at or above .998.
+  NOTE:
+
+
+[PROV.59] holds=True  severity=info
+  CLAIM:
+    '§0.2 states it unscoped as "label-token binding"'.
+  EVIDENCE:
+    ADDENDUM-k1.md:71-72 — 'label-token binding ≥ .998 under alternating ± masks', with no
+    label-A scope.
+  NOTE:
+    §1.1 (:129-130) does scope it ('the binding at label A's token ≥ .998'); the finding is
+    about §0.2 only, and that scoping is correct.
+
+[PROV.60] holds=True  severity=info
+  CLAIM:
+    Appendix quotation '§1.4 (G1–G5 bars)'.
+  EVIDENCE:
+    ADDENDUM-k1.md:298 — '§1.4 (G1–G5 bars)'.
+  NOTE:
+
+
+[PROV.61] holds=True  severity=info
+  CLAIM:
+    'k1_analysis.json's bars object holds G1, G2, G3 only'.
+  EVIDENCE:
+    bars keys = ['G1','G2','G3']; G1 [0.9, 0.75, [51..61]], G2 [[49..63], 3], G3 [0.9,
+    [51..62]].
+  NOTE:
+
+
+[PROV.62] holds=True  severity=info
+  CLAIM:
+    'PROPOSAL-k titles its own G4 "Leak calibration (feeds LOCK-k; no pass/fail)"'.
+  EVIDENCE:
+    PROPOSAL-k-echo-channel.md:268 — '- **G4 — Leak calibration (feeds LOCK-k; no pass/fail).**'
+    Verbatim after stripping the bullet, 'G4 — ' and the bold markers.
+  NOTE:
+
+
+[PROV.63] holds=True  severity=info
+  CLAIM:
+    'names two criteria that have no bar'.
+  EVIDENCE:
+    G4 at :268 'no pass/fail'; G5 at :274-277 'Feeds LOCK-k's variance and the S-arm design; no
+    pass/fail'. Both sit inside §1.4 'Registered criteria (gates)' (:237).
+  NOTE:
+
+
+[PROV.64] holds=True  severity=info
+  CLAIM:
+    §2.3 quotation '+/0 primacy secondary'.
+  EVIDENCE:
+    ADDENDUM-k1.md:243 — '**The +/0 primacy secondary is withdrawn** (complements up to probe
+    asymmetry).'
+  NOTE:
+
+
+[PROV.65] holds=True  severity=info
+  CLAIM:
+    'PROPOSAL-k §2.3 never registers (it registers four: Δ_M by block order, signed logit shift,
+    session share, stay/switch)'.
+  EVIDENCE:
+    PROPOSAL-k:367-380 lists exactly those four bullets; `grep -i primacy` over PROPOSAL-k
+    returns only :3 (title), :60 (B2), :93, :261 (G3), :434 — none in §2.3/§2.4.
+  NOTE:
+
+
+[PROV.66] holds=True  severity=info
+  CLAIM:
+    Quotation 'PROPOSAL-k's L51–L62 band included the L59–L63 fall-off'.
+  EVIDENCE:
+    ADDENDUM-k1.md:233-234, verbatim.
+  NOTE:
+
+
+[PROV.67] holds=True  severity=info
+  CLAIM:
+    'bars.G3 is [0.9, [51..62]], L63 is outside'.
+  EVIDENCE:
+    k1_analysis.json bars.G3 = [0.9, [51,52,...,62]]; 63 absent.
+  NOTE:
+    The '[51..62]' shorthand stands for the explicit twelve-element list; harmless.
+
+[PROV.68] holds=True  severity=info
+  CLAIM:
+    'the STAGE 1 entry already carries that correction in its own words'.
+  EVIDENCE:
+    RESULTS.md:502-504 — 'the fall-off at L59–L62 lies inside the registered band (L63, also
+    fallen, is outside it).'
+  NOTE:
+
+
+[PROV.69] holds=True  severity=info
+  CLAIM:
+    §2.4 quotation 'above the recon's 0–3/102'.
+  EVIDENCE:
+    ADDENDUM-k1.md:256 — '2–4 flips per arm — above the recon's 0–3/102'.
+  NOTE:
+
+
+[PROV.70] holds=True  severity=info
+  CLAIM:
+    Leak table figures: 'Stage B M1 1/102, M2 3/102, M5 0, M6 1/102, R1–R4 0; Stage C M1 1/102,
+    M2 3/102, B1 0, B2 0, B3 1/102, B4 0'.
+  EVIDENCE:
+    stageB_analysis.json['leak'] n_flips: M1 1, M2 3, M5 0, M6 1, R1-R4 0 (all n=102).
+    stageC_analysis.json['leak']: M1 1, M2 3, B1 0, B2 0, B3 1, B4 0 (all n=102). Exact match,
+    including the mask rosters.
+  NOTE:
+
+
+[PROV.71] holds=True  severity=info
+  CLAIM:
+    'no random-direction mask is tabled anywhere'.
+  EVIDENCE:
+    The two leak objects contain only M1, M2, M5, M6, R1-R4, B1-B4. Per
+    stageB_reads.json['masks'] and stageC_reads.json['masks'], every one of those is '(axis)';
+    the random-direction masks are M3, M4, M5x, M6x, R1x-R4x, B1x-B4x, none of which appears.
+  NOTE:
+
+
+[PROV.72] holds=True  severity=info
+  CLAIM:
+    'three of Stage 1's four G4 arms (R+A, R+B, R++) are random-direction'.
+  EVIDENCE:
+    k1_analysis.json evaluation.G4 has exactly four arms: R+A (4/43), R+B (3/43), M++ (2/43),
+    R++ (3/43), with the prohibition note 'the masks iterated above are exactly R+A, R+B, M++,
+    R++'. k1.py:98 `inj = rand if mask.startswith("R") else axis`.
+  NOTE:
+
+
+[PROV.73] holds=True  severity=info
+  CLAIM:
+    §1.3 quotation 'Stage B's M1 − M2 = (2,−2,2,−2) on these texts'.
+  EVIDENCE:
+    ADDENDUM-k1.md:164-165 — 'exactly half of Stage B's M1 − M2 = (2,−2,2,−2) on these texts.'
+  NOTE:
+
+
+[PROV.74] holds=True  severity=info
+  CLAIM:
+    'is the negation on 53 of the 102 read in round order'.
+  EVIDENCE:
+    stageB_reads.json per_session start_plus: True 49, False 53. On the 53 start_plus=False
+    sessions M1 − M2 in round order is (−2,2,−2,2).
+  NOTE:
+    'it is exact only under the class grouping D3 itself uses' also holds: D3's target (§1.3) is
+    keyed to which label started, which absorbs the orientation.
+
+[PROV.75] holds=True  severity=info
+  CLAIM:
+    'The Appendix omits seven classes of body-asserted referent'.
+  EVIDENCE:
+    G6.27's checker listed ten classes (a)-(j); its too-lenient refuter folded three into the
+    Appendix's own clauses and concluded 'on seven firm classes rather than ten'; its too-strict
+    refuter did not overturn. The entry adopts the refuter-narrowed figure.
+  NOTE:
+    Correctly takes the narrowed number rather than the checker's ten.
+
+[PROV.76] holds=True  severity=info
+  CLAIM:
+    'the two load-bearing ones — PROPOSAL-k §0.1 (B2)'s .98–.99, the anchor of §2.2's
+    derivation, and (B4)'s 0–3/102, the comparison in §2.4'.
+  EVIDENCE:
+    PROPOSAL-k:60-62 (B2) 'the first round's sign reads at .98–.99 across L51–L62'; :78-81 (B4)
+    'Paired-shadow discordance 0–3/102 under every mask family'. ADDENDUM-k1.md:298 enumerates
+    PROPOSAL-k §0.4, §1.1, §1.2, §1.4, §1.5, §2.3, §2.4, §3.2–3.3 — §0.1 is absent; item (10)
+    scopes recon figures to 'cited in §1.1'.
+  NOTE:
+
+
+[PROV.77] holds=True  severity=info
+  CLAIM:
+    5(f)(ii) quotation 'a leakage gate stated as paired-shadow discordance against a declared
+    bar'.
+  EVIDENCE:
+    CLAUDE.md rule 5(f), lines 295-296 (line-wrapped: '...against a declared' / 'bar, certified
+    on arms...'); verbatim after whitespace normalisation.
+  NOTE:
+
+
+[PROV.78] holds=True  severity=info
+  CLAIM:
+    'D4 names no bar'.
+  EVIDENCE:
+    ADDENDUM-k1.md:166-168 D4 lists pi_d with Clopper–Pearson 95%, |Δ logit| distribution and
+    signed pseudo-shift, 'Beside Stage 1's G4 (n = 43, F2)' — no threshold.
+  NOTE:
+    §2.4 does name bar_leak, but for Stage 2, not for §1's reads; §0.4's assertion is scoped to
+    '§1's reads', so the entry's scoping is right.
+
+[PROV.79] holds=True  severity=low
+  CLAIM:
+    '§1 declares no retention interval where 5(f)(iii) requires one'.
+  EVIDENCE:
+    §1.1–§1.5 (ADDENDUM-k1.md:124-206) declare captures, fingerprints, span provenance and the
+    mask-zero assertion, but no retention interval. CLAUDE.md:297-298 requires it 'declared and
+    held fixed within a cell'.
+  NOTE:
+    Scoped to §1 and true there, but §0.3 (:100-101) does say 'It does not change ... the
+    retention interval (21 tokens)'. Since 21 tokens matches only the near arm on alternating
+    texts (median 22) and not the far arm (66), that sentence arguably makes the gap worse, not
+    better — worth naming rather than leaving for a reader to find.
+
+[PROV.80] holds=True  severity=info
+  CLAIM:
+    Quotation 'v1.0's eight referents fold into slip (17)'s class'.
+  EVIDENCE:
+    ADDENDUM-k1.md:87-88, verbatim.
+  NOTE:
+
+
+[PROV.81] holds=True  severity=info
+  CLAIM:
+    'folds four items the record calls "in the design's own substance"'.
+  EVIDENCE:
+    RESULTS.md:215-221 (2026-09-11 entry) — 'eight referents do not resolve against the repo at
+    HEAD, four of them in the design's own substance (the welfare fork restated as unchanged
+    while re-worded; the +1-only guard called a build choice ...; 48 readable texts where 43
+    exist; a second-block target called "no longer the complement" ...)'. Quotation verbatim;
+    the four items are enumerated there.
+  NOTE:
+
+
+[PROV.82] holds=False  severity=medium
+  CLAIM:
+    'a slip whose recorded content is entirely mis-sourced citation pointers'.
+  EVIDENCE:
+    RESULTS.md:735-741 records slip (17) as 'three rule numbers cited from CONTINUITY.md's
+    distilled list rather than CLAUDE.md, one of them inside the law text the draft carried; a
+    card number, a "pair," two cross-references, a preprint pointer and one figure beside it.'
+    The trailing 'one figure beside it' is a figure, not a citation pointer.
+  NOTE:
+    'Entirely' is the word that fails. 'Almost entirely' or 'citation pointers and one figure'
+    would hold. The argument the entry is making does not need 'entirely'.
+
+[PROV.83] holds=False  severity=high
+  CLAIM:
+    'the record's only 1b anchor string (`± DIAGNOSTIC` at RESULTS.md and in the 09-12
+    handoff)'.
+  EVIDENCE:
+    At HEAD, `grep -n DIAGNOSTIC RESULTS.md HANDOFF-2026-09-12.md HANDOFF-2026-09-13-design.md`
+    returns FOUR hits: RESULTS.md:83 `ADDENDUM-k1 STAGE 1b — +/0 DIAGNOSTIC` (inside the v5
+    adoption entry's quoted DESIGN BLOCK v1.1 §4), RESULTS.md:336 `± DIAGNOSTIC`,
+    HANDOFF-2026-09-12.md:122 `± DIAGNOSTIC`, HANDOFF-2026-09-13-design.md:129 `+/0 DIAGNOSTIC`.
+    The record carries BOTH forms, and the +/0 form matching §1.5 exactly is on disk in
+    RESULTS.md.
+  NOTE:
+    The +/0 string entered RESULTS.md in the very +191-line v5 entry this bullet's neighbouring
+    paragraph accounts for. The finding G5.15 was true at 3be4a63 and is stale at aeb4a2c —
+    which is exactly what the 'STOP carries to HEAD' bullet is supposed to test.
+
+[PROV.84] holds=False  severity=high
+  CLAIM:
+    'the routing names no 1b anchor for it to match'.
+  EVIDENCE:
+    The routing this entry is executing under, quoted verbatim in the entry's own first bullet
+    and on disk at RESULTS.md:83, ends '...; entry `ADDENDUM-k1 STAGE 1b — +/0 DIAGNOSTIC`.'
+    That is a 1b anchor, and §1.5's string matches it character for character. The 'no 1b
+    anchor' fact belongs to the earlier 09-11 routing (RESULTS.md:243-245, 'then the ± reads on
+    the 48 Stage 1 texts and the STAGE 1b entry'), which is what the raw's G5.15 checked.
+  NOTE:
+    Direct self-contradiction between the entry's 'The routing' bullet and its 'Reported as NOT
+    defects' bullet. It does not change the STOP (G5.15 was already a non-defect) but it is the
+    sharpest internal inconsistency in the entry.
+
+[PROV.85] holds=True  severity=low
+  CLAIM:
+    The §1.5 anchor item is correctly reported as NOT a defect, consistently with how the entry
+    treats the rest.
+  EVIDENCE:
+    Both refuter lenses on G5.15 returned resolves=True/overturned split (too-strict
+    overturned=True), and the raw's NOT-defects section names it. The verdict is right.
+  NOTE:
+    The verdict holds; only its stated reasons (PROV.83, PROV.84) are wrong, and they are wrong
+    in the direction of understating how clearly it is a non-defect.
+
+[PROV.86] holds=True  severity=info
+  CLAIM:
+    '2/43 = .047 against 3/102 = .029'.
+  EVIDENCE:
+    2/43 = .04651; 3/102 = .02941. k1_analysis.json G4: M++ 2/43 is the lowest Stage 1 arm;
+    stage B/C leak: M2 3/102 is the highest recon figure. Min Stage 1 rate > max recon rate.
+  NOTE:
+
+
+[PROV.87] holds=True  severity=info
+  CLAIM:
+    'both refuter lenses overturned the checker there'.
+  EVIDENCE:
+    G6.18: CHECKER resolves=False; both lenses ('too lenient', 'too strict') returned
+    resolves=True overturned=True. It is the only referent with two overturn lines, which is why
+    14 overturns span 13 referents.
+  NOTE:
+
+
+[PROV.88] holds=True  severity=info
+  CLAIM:
+    'not of the bare counts'.
+  EVIDENCE:
+    Stage 1's arms are 2–4 flips, the recon's range is 0–3; 2 and 3 lie inside [0,3], so as
+    counts the ranges overlap.
+  NOTE:
+
+
+[PROV.89] holds=True  severity=info
+  CLAIM:
+    'The check ran against 3be4a63.'
+  EVIDENCE:
+    Raw header line 1: 'Appendix referent check against HEAD 3be4a63'.
+  NOTE:
+
+
+[PROV.90] holds=True  severity=info
+  CLAIM:
+    Byte-identical between 3be4a63 and HEAD: PROPOSAL-k-echo-channel.md, CLAUDE.md,
+    valence_core/echo/{k1,maskedprefix,spans,probe}.py, valence_core/k/analysis.py, the k1_*
+    artifacts and the stage[BC]_* artifacts.
+  EVIDENCE:
+    `git diff 3be4a63 HEAD -- <path>` returns zero lines for each of the fourteen paths; `git
+    diff --stat 3be4a63 HEAD -- valence_core/echo` and `-- valence_core/k` are both empty, so
+    the whole packages (including the __init__.py files the entry does not name) are unchanged.
+  NOTE:
+
+
+[PROV.91] holds=True  severity=info
+  CLAIM:
+    'the three data/k/k1_* artifacts'.
+  EVIDENCE:
+    `git ls-files data/k` = k1_analysis.json, k1_reads.json, k1_sessions.json — exactly three
+    (the .npz residuals and the .checkpoint are untracked).
+  NOTE:
+
+
+[PROV.92] holds=False  severity=medium
+  CLAIM:
+    'the four data/echo/stage[BC]_* artifacts'.
+  EVIDENCE:
+    `git ls-files data/echo` shows FIVE tracked files matching stage[BC]_*:
+    stageB_analysis.json, stageB_analysis_samefolds.json, stageB_reads.json,
+    stageC_analysis.json, stageC_reads.json.
+  NOTE:
+    The substantive claim is safe — stageB_analysis_samefolds.json is byte-identical too (git
+    diff 0 lines). It is the glob-plus-count gloss that is wrong; 'the four stage[BC] artifacts
+    the findings cite' would hold.
+
+[PROV.93] holds=False  severity=medium
+  CLAIM:
+    'Code verified every referent source is byte-identical between the two commits'.
+  EVIDENCE:
+    HANDOFF-2026-09-12.md is a referent source in this check — the raw's G5.15 cites
+    'HANDOFF-2026-09-12.md:122' as one of the two record locations of the ± anchor — and it is
+    NOT byte-identical: `git cat-file -e 3be4a63:HANDOFF-2026-09-12.md` fails ('exists on disk,
+    but not in 3be4a63') while it is present at HEAD (+438 lines in the range).
+  NOTE:
+    'Every referent source' over-reaches its own dash-list. The file was untracked at check
+    time, so its content may well be unchanged on disk; but the sentence claims a
+    commit-to-commit comparison that cannot have been made for it.
+
+[PROV.94] holds=True  severity=info
+  CLAIM:
+    'RESULTS.md changed only by the v5 adoption entry (+191 lines)'.
+  EVIDENCE:
+    `git diff --numstat 3be4a63 HEAD -- RESULTS.md` = 191 insertions, 0 deletions, in a single
+    hunk '@@ -21,6 +21,197 @@'; the first added line is '- 2026-09-17 — **CONTENT-CLASS v5
+    ADOPTED...'.
+  NOTE:
+    One hunk, zero deletions — the strongest form of the claim, and it holds.
+
+[PROV.95] holds=True  severity=info
+  CLAIM:
+    'all three cited anchors still resolving'.
+  EVIDENCE:
+    At HEAD: `PROPOSAL-k STAGE 1 — CHANNEL STUDY` RESULTS.md:395; `RECON — ECHO CHANNEL
+    (k-candidate), STAGE B` :2447; `... STAGE C` :2206. ADDENDUM-k1.md cites the STAGE 1 anchor
+    (§0.1/:43, §4/:283) and the Stage B and Stage C entries (§1.1, Appendix).
+  NOTE:
+    The entry does not say which three; STAGE 1 / Stage B / Stage C is the only reading the
+    document supports, and all three resolve.
+
+[PROV.96] holds=True  severity=info
+  CLAIM:
+    'ADDENDUM-k1.md still hashes 61acf21ff2cc104e'.
+  EVIDENCE:
+    shasum -a 256 ADDENDUM-k1.md | cut -c1-16 = 61acf21ff2cc104e (16,261 bytes). Matches the
+    repo's sha16 convention (sha256 truncated to 16 hex, cf. maskedprefix.py:96,
+    scripts/format_recon.py:55-56). Not the git blob id (c18530acdbc59016) or md5.
+  NOTE:
+
+
+[PROV.97] holds=False  severity=low
+  CLAIM:
+    'its value at the check'.
+  EVIDENCE:
+    `grep -n 61acf21ff2cc104e results/raw/*.txt` returns nothing — the 2026-09-12 raw does not
+    record a sha for ADDENDUM-k1.md, nor does any other committed raw.
+  NOTE:
+    The current hash is verifiable; 'its value at the check' has no on-disk corroboration.
+    Either add the sha to the raw or drop the second clause.
+
+[PROV.98] holds=True  severity=info
+  CLAIM:
+    Retention raw path results/raw/2026-09-18_addendum-k1-1b_retention_geometry.txt exists and
+    is untracked.
+  EVIDENCE:
+    ls: 1,943 bytes, 29 lines; `git status --short` lists it as `??`. Its closing stamp is 'Fri
+    Sep 18 05:22:51 UTC 2026'.
+  NOTE:
+
+
+[PROV.99] holds=False  severity=medium
+  CLAIM:
+    'median 66 tokens (51–110) for one and 22 (21–23) for the other'.
+  EVIDENCE:
+    Recomputed from stageB_reads.json per_session distance_to_read over 102 sessions: R3 min 51,
+    max 110, median 66.5 (the two middle values are 66 and 67); R4 min 21, max 23, median 22.0.
+    The raw reports 66, i.e. the LOWER median, unlabelled.
+  NOTE:
+    n = 102 is even, so the far-arm median is 66.5 on the ordinary convention. The ranges are
+    exact. Either label it 'lower median' or state 66.5 — and note the repo's own G3/G1 medians
+    are ordinary medians over even-length bands.
+
+[PROV.100] holds=True  severity=info
+  CLAIM:
+    'the two masks share an interval in 0 of 102 sessions'.
+  EVIDENCE:
+    Per-session comparison of distance_to_read['R3'] vs ['R4'] over all 102 sessions: 0 equal.
+  NOTE:
+
+
+[PROV.101] holds=True  severity=info
+  CLAIM:
+    'Stage 1's F2 block order gives 112 (88–141) and 21 (20–22) for the corresponding masks'.
+  EVIDENCE:
+    k1_reads.json per_session retention_tokens over 43 sessions: first_block_end_to_read min 88,
+    median 112, max 141; second_block_end_to_read min 20, median 21, max 22
+    (last_forced_end_to_read identical).
+  NOTE:
+    n = 43 is odd, so this median needs no convention.
+
+[PROV.102] holds=False  severity=high
+  CLAIM:
+    '(k1_reads.json declares first_block_end_to_read 107, second_block_end_to_read 21,
+    last_forced_end_to_read 21)'.
+  EVIDENCE:
+    There is no top-level retention_tokens object in k1_reads.json. The field is PER SESSION,
+    present on all 43; {107, 21, 21} are the values of the FIRST session only
+    (per_session['0']). Across the 43, first_block_end_to_read takes 31 distinct values, min 88,
+    median 112, max 141.
+  NOTE:
+    Calling a single session's row a declaration puts 107 and 112 in the same sentence as
+    figures for the same quantity, which reads as a contradiction. The retention raw makes the
+    same slip ('Stage 1's own declaration, from data/k/k1_reads.json retention_tokens'), so the
+    entry inherits it.
+
+[PROV.103] holds=True  severity=info
+  CLAIM:
+    'sits about 46 tokens closer to the read on alternating texts than Stage 1's equivalent
+    did'.
+  EVIDENCE:
+    112 - 66 = 46 on the raw's lower-median figures; 112 - 66.5 = 45.5 on ordinary medians.
+    'About 46' covers both.
+  NOTE:
+    The hedge 'about' is doing real work here — see PROV.99.
+
+[PROV.104] holds=True  severity=info
+  CLAIM:
+    D3's target quoted as 'the FIRST forced round carried +'.
+  EVIDENCE:
+    ADDENDUM-k1.md:162-163 — '"The FIRST forced round carried +" (`E+A` rows where A started,
+    `E+B` rows where B started → 1; else 0).'
+  NOTE:
+
+
+[PROV.105] holds=True  severity=info
+  CLAIM:
+    '§1.4's four branches attribute a high reading to the contrast or the format only'.
+  EVIDENCE:
+    ADDENDUM-k1.md:174-193: branch 1 'the +/0 contrast is not what held Stage 1 below .90 ... F2
+    carries the state more weakly'; branch 2 'the shortfall is the contrast'; branch 3 'both the
+    contrast and the format contribute'; branch 4 'the alternating format carries the +/0
+    contrast more weakly'. No branch mentions retention or distance.
+  NOTE:
+
+
+[PROV.106] holds=False  severity=high
+  CLAIM:
+    'The recon found the echo primacy-weighted and distance-sensitive'.
+  EVIDENCE:
+    The record says the opposite of the second half, twice, and flags it: RESULTS.md:2660 —
+    '**FLAG: retention is not ordered by distance.** Farthest round most readable (R1, 157
+    tokens, .89), nearest weakest (R4, 22 tokens, .68)'; RESULTS.md:2456 — 'single-round
+    retention is injection-borne ... but not ordered by distance — R1 at 157 tokens .89, R3 at
+    67 .83, R4 at 22 .68, R2 at 112 .66'; RESULTS.md:2583 — '**The curve is not ordered by
+    distance:**'.
+  NOTE:
+    This is the stated warrant for the whole carried-beside bullet. The CONCLUSION survives on
+    the record's own numbers — the 66-token arm sits at R3's distance (.83) and the 112-token
+    arm at R2's (.66) — but by round POSITION, not by distance-sensitivity, which the recon
+    explicitly ruled out. The retention raw (line 21-22) carries the same wording, so both
+    documents need it. Suggested repair: 'the recon found the echo primacy-weighted, with
+    retention explicitly NOT ordered by distance (R1 157t .89, R3 67t .83, R2 112t .66, R4 22t
+    .68) — so the alternating far arm sits at R3's geometry and Stage 1's at R2's, and the
+    record's own curve puts R3 above R2.'
+
+[PROV.107] holds=True  severity=low
+  CLAIM:
+    'one E mask's last steered round is R3 and the other's R4'.
+  EVIDENCE:
+    All 102 texts alternate A B A B, so one label owns rounds 1,3 and the other 2,4; per G5.8's
+    raw, A started in 58 sessions and B in 44.
+  NOTE:
+    Which of E+A / E+B is the R3 mask is not fixed across sessions (it swaps with start order).
+    The retention raw's own labels ('first-label mask' / 'second-label mask') are position-based
+    and exact; the entry's 'one E mask ... the other' reads as if the mask identity were
+    constant.
+
+[PROV.108] holds=True  severity=info
+  CLAIM:
+    'Descriptive, not adjudicated.'
+  EVIDENCE:
+    Consistent with the retention raw's FINDING section, which states the confound and does not
+    select a branch; no gate or verdict figure moves.
+  NOTE:
+
+
+[PROV.109] holds=True  severity=info
+  CLAIM:
+    'ADDENDUM-k1 v1.1 is not committed and remains untracked'.
+  EVIDENCE:
+    `git status --short` lists `?? ADDENDUM-k1.md`; trap 2 (HANDOFF-2026-09-12.md:238-241) names
+    it among the seven untracked docs that must not be committed.
+  NOTE:
+    Trap 2 still calls it 'draft v1.0, STOPPED'; the file on disk is v1.1. Not this entry's
+    claim, but the trap list is now one version stale.
+
+[PROV.110] holds=True  severity=info
+  CLAIM:
+    'the 1b analyzer, its battery and the reads driver are not built; no 1b read has run'.
+  EVIDENCE:
+    No file in valence_core/ or scripts/ matches stage1b|stage_1b|k1b|1b_; `grep -rn
+    'E+A\|ER+A'` over valence_core/, scripts/ and data/k/*.json returns nothing; data/k holds
+    only the three k1_* artifacts plus residual npz.
+  NOTE:
+
+
+[PROV.111] holds=True  severity=low
+  CLAIM:
+    'no ADDENDUM-k1 STAGE 1b — +/0 DIAGNOSTIC entry exists'.
+  EVIDENCE:
+    The string occurs at RESULTS.md:83 only, inside the quoted DESIGN BLOCK v1.1 §4; no RESULTS
+    entry carries it as an anchor.
+  NOTE:
+    True as stated, but the string IS in RESULTS.md — which is the same fact that falsifies
+    PROV.83/PROV.84. The entry treats that occurrence as invisible in one bullet and as
+    non-existent in another.
+
+[PROV.112] holds=True  severity=info
+  CLAIM:
+    'The sign set is not widened and k1.py is untouched — v1.1 asks for no widening, and its
+    +1-only guard is PROPOSAL-k §0.4 in code.'
+  EVIDENCE:
+    git diff 3be4a63 HEAD -- valence_core/echo/k1.py = 0 lines and the working tree is clean for
+    tracked files; ADDENDUM-k1.md:21 'no sign-set change'; k1.py:23-24 docstring and :77-78
+    guard both cite PROPOSAL-k §0.4. The 09-11 routing item 3 (RESULTS.md:243) had asked to
+    'widen the echo primitive's sign set to {+1, −1}'; v1.1 withdraws that.
+  NOTE:
+
+
+[PROV.113] holds=True  severity=info
+  CLAIM:
+    'Stage 1's verdict (7742e2c, G3_FAIL) is unaffected and is not rescored'.
+  EVIDENCE:
+    k1_analysis.json evaluation.branch = 'G3_FAIL'; the Stage 1 entry is at RESULTS.md:395 and
+    unchanged in the 3be4a63..HEAD range (the single RESULTS hunk is at lines 21-217).
+  NOTE:
+
+
+[PROV.114] holds=True  severity=info
+  CLAIM:
+    'LOCK-k does not exist.'
+  EVIDENCE:
+    No LOCK-k file at root; `git ls-files | grep -i lock-k` empty.
+  NOTE:
+
+
+[PROV.115] holds=True  severity=low
+  CLAIM:
+    The entry's write-time stamp 'Fri Sep 18 05:29:58 UTC 2026'.
+  EVIDENCE:
+    `date -u` during this check returned 'Fri Sep 18 05:33:32 UTC 2026'; the retention raw it
+    cites closes at 05:22:51 UTC the same day. The stamp is bracketed correctly by both.
+  NOTE:
+    Consistent, but a stamp is by nature unverifiable after the fact; trap 0b's requirement is
+    that it came from `date -u`, which no artifact records.
+
+[PROV.116] holds=False  severity=medium
+  CLAIM:
+    Anything the entry calls NOT a defect is treated consistently with the rest.
+  EVIDENCE:
+    G6.18 is dismissed because 'above' holds of the rates — a charitable reading of the
+    document's wording. But G3.9 ('.98' is the range floor) and G3.3 ('first-block' for
+    first-round) are reported AS defects on the strictest available reading of the same kind of
+    wording, in the same §0.2 sentence. More sharply, G5.15 is dismissed on two reasons that are
+    both false at HEAD (PROV.83, PROV.84) while the entry's byte-identity bullet is careful
+    about exactly this kind of drift.
+  NOTE:
+    The G6.18 / G3.9 asymmetry is defensible (the raw's lenses split differently on each). The
+    G5.15 reasoning is not — it should be dismissed because the routing and RESULTS.md now BOTH
+    carry the +/0 anchor, which is a stronger and true reason.
