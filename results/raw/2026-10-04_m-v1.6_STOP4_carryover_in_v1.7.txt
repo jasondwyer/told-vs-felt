@@ -1,0 +1,1781 @@
+RAW RECORD — Code STOP-4 (PROPOSAL-m v1.6, 2026-09-28) mapped item by item onto PROPOSAL-m v1.7
+STOP-4 source: results/raw/2026-10-04_m-v1.6_STOP4_recovered.md (recovered verbatim; body sha256 ad082080…e8d4).
+v1.7: sha256 4b69926765a7dd663a6a1ff74f5fbeea1eba55b6ece2c63ac4f726ab4b2120db.
+Run 2026-10-04, workflow wf_d736a0e7-d62; 8 agents (4 mappers over disjoint item ranges A1–A9,
+A10–A17+B1–B2, C1–C14, C15–C28; one adversarial refuter per range, told to try hardest to break any
+RESOLVED or MOOT); 0 errors; 1,508,450 subagent tokens; 950 s. Statuses: RESOLVED / PERSISTS / PARTIAL /
+MOOT / PI. Protocol: trap 25 — evidence, not testimony; Code re-verified on disk every item cited by
+number in the 2026-10-04 STOP entry. Stamp from `date -u`: Sun Oct  4 06:37:25 UTC 2026.
+
+TOTALS (mapper, refuter): PARTIAL/PARTIAL: 8, PERSISTS/PERSISTS: 37, PI/PI: 2
+====================================================================================================
+
+####################################################################################################
+RANGE R1
+####################################################################################################
+
+[A1] The attractor count is blind to the attractor
+  MAPPER status=PERSISTS  v1.7 lines: 28, 91, 92, 110, 120, 124
+  EVIDENCE:
+    v1.7:110 (G-F0m-Qwen / G-F0m-OLMo, reported list): "the attractor count (responses about the
+    config header, as v2/echo classes catch them) in the contrast-template sessions". v1.7:124 G-F3:
+    "Bars as G-F0m-Qwen", so G-F3 inherits the same count. v1.7:91 keeps the echo class as
+    "verbatim, whitespace-normalized reproduction of a complete \"Note:\" banner line or `Reasoning
+    (one line):`". v1.7:92: OLMo's audit is b3's `AuditSpec`, with no v2. Re-checked on disk:
+    RESULTS.md:2404-2406 (attractor rounds have "no v4 label and no v2 audit hit"), :2335-2340, and
+    :2248-2250 ("a DECLARED MISS ... stays with the rule-25 read").
+    archive/RESULTS-cycles3-4.md:340-344: "What is prism?" produces own-pair lexical exclusions.
+    scripts/box_b3_sessions.py:85-91: the AuditSpec is ban strings, frame fragments and junk
+    regexes, and no v2.
+  NOTE:
+    The core defect is unchanged. v1.7:28 dropped "counted by the v2 and echo classes" from §0.8,
+    but :110 keeps that definition, so the change is cosmetic. Effect of the split: the blind count
+    now carries rule 28(c)'s item-shape half in three qualification stages. These are G-F0m-Qwen
+    (new, on the v1 critical path), G-F0m-OLMo per checkpoint, and G-F3. The minor sub-point is
+    partly fixed. A0's told template at F0m now has 8 qualification contrast sessions (v1.7:110). In
+    Q-F3, A1 (TOLD-MAP at F3) and A2 (TOLD-OBJ) still get only one G-TIME-F3 session each (v1.7:120:
+    "One session per Q-F3 arm (6)"), and G-F3's contrast template is A3's only (v1.7:124). STOP-4's
+    fix still applies: make the seat's read the count, stated as m's criterion.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:110 (the bars shared by G-F0m-Qwen and G-F0m-OLMo) still reports "the attractor count
+      (responses about the config header, as v2/echo classes catch them) in the contrast-template
+      sessions". v1.7:124 (G-F3) says "Bars as G-F0m-Qwen". v1.7:28 now reads only "with the
+      attractor counted and reported" (v1.6:32 had "counted by the v2 and echo classes"). v1.7:91
+      still defines the echo class as a verbatim, whitespace-normalized "Note:" banner line or
+      `Reasoning (one line):`. v1.7:92 makes b3's AuditSpec OLMo's audit. Sources re-read on disk:
+      RESULTS.md:2404-2406 ("no v4 label and no v2 audit hit"), :2336-2340 ("not claimed by audit v2
+      either"), :2248-2250 ("a DECLARED MISS ... stays with the rule-25 read").
+      archive/RESULTS-cycles3-4.md:340-344: "What is prism?" "produces own-pair lexical exclusions".
+      scripts/box_b3_sessions.py:85-91: the AuditSpec has ban strings, frame fragments ("Config
+      evaluation session", "[round", "Task:" …) and two junk regexes, and no v2, so the "What is
+      prism?" form matches none of them. On sessions: v1.7:110 gives G-F0m-Qwen 8 A0-template
+      contrast sessions. v1.7:120 gives "One session per Q-F3 arm (6)". v1.7:124's only contrast
+      template is A3.
+    REASONING:
+      The mapper is correct. Removing the class phrase at :28 changes nothing, because :110 still
+      defines the count through v2 and echo, and those classes are blind to every recorded form of
+      the attractor. On OLMo the count also names v2, which is not in OLMo's stack. Effect of the
+      split: the defect now sits in three qualification stages, including G-F0m-Qwen, which is on
+      the v1 critical path. The minor sub-point is partly fixed, as the mapper says. A0 (TOLD-MAP at
+      F0m) now has 8 qualification contrast sessions. A1 (TOLD-MAP at F3) and A2 (TOLD-OBJ) still
+      have only their single G-TIME-F3 session. v1.7 lines: 28, 91, 92, 110, 120, 124.
+
+[A2] Qualification degeneracy bars read the provoked (contrast) sessions
+  MAPPER status=PERSISTS  v1.7 lines: 110, 124, 153
+  EVIDENCE:
+    v1.7:110: "`round_degeneracy` — exact one-sided binomial, α .05, unit task round, domain every
+    task round the stage generates (≤ 240 Qwen; ≤ 240 per OLMo checkpoint)" and "Any bar fires →
+    that unit does not run until the seat re-specifies." v1.7:124 (G-F3): "Bars as G-F0m-Qwen
+    (domain ≤ 320 task rounds) plus reasoning-line defects — ... domain every line generated (≤
+    192)". Rule 21 confirmed at CLAUDE.md:335-336 ("stimulus-provoked degeneracy gates on unprovoked
+    domains"). Recomputed at 10 task rounds per session (recon.py:121-122: N_FORCED 4 + N_FREE 6;
+    box_b3_sessions.py F = 2 per pole). G-F0m-Qwen is 240 = 160 sham + 80 contrast. G-F3 is 320 =
+    240 sham + 80 contrast, and its reasoning lines are 192 = 144 sham + 48 contrast. G-F0m-OLMo is
+    240 = 160 + 80 per checkpoint.
+  NOTE:
+    Effect of the split: the defect now sits in every qualification stage, including the new
+    G-F0m-Qwen. There, 80 of 240 domain rounds (one third) are provoked, and a fire stops Q-F0 from
+    running, which delays the v1 posting against D1 = 2026-10-16. STOP-4's fix figures need updating
+    for v1.7. Sham-only domains are now 160 rounds (G-F0m-Qwen), 240 rounds and 144 lines (G-F3),
+    and 160 rounds per OLMo checkpoint. STOP-4's "≤ 320 Qwen" counted v1.6's 32 G-F3 sham sessions,
+    but G-F3 lost its A0s sessions (40 → 32). The §6 campaign bars already bind on sham arms
+    (v1.7:153), so only the gate-stage bars are affected.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:110: `round_degeneracy` has "domain every task round the stage generates (≤ 240 Qwen; ≤
+      240 per OLMo checkpoint)" and "Any bar fires → that unit does not run until the seat
+      re-specifies." v1.7:124 (G-F3): "Bars as G-F0m-Qwen (domain ≤ 320 task rounds) plus
+      reasoning-line defects … domain every line generated (≤ 192)". Rule 21 at CLAUDE.md:335-336:
+      "stimulus-provoked degeneracy gates on unprovoked domains". Its annotation (:338-341) makes a
+      bar a pause trigger only where no unprovoked domain exists by design, and here one does (the
+      sham templates). §6 already binds the campaign bars on sham arms (v1.7:153: "domain the unit's
+      sham arms"). Round counts re-checked: recon.py:121-122 (N_FORCED 4, N_FREE 6, "n_rounds = 2F +
+      N_FREE = 10") and box_b3_sessions.py:76 (F = 2). That gives 24×10 = 240 rounds in G-F0m-Qwen
+      (160 sham), 32×10 = 320 in G-F3 (240 sham) with 32×6 = 192 reasoning lines (144 sham), and 240
+      per OLMo checkpoint (160 sham).
+    REASONING:
+      Nothing in v1.7 moves the gate-stage bars to a sham-only domain, so the defect stands. The
+      mapper's recomputation is right. G-F3 lost its 8 A0s sessions (40 → 32), so the sham-only Qwen
+      domains are now 160 rounds (G-F0m-Qwen) and 240 rounds / 144 lines (G-F3), not STOP-4's 320.
+      Effect of the split: the defect now also sits in the new G-F0m-Qwen stage. One third of that
+      domain (80 of 240 rounds) is provoked, and a fire there stops Q-F0 until re-specification,
+      which puts the D1 lock at risk. Only the gate-stage bars are affected. v1.7 lines: 110, 124,
+      153.
+
+[A3] Posting rule: 'asserts a null' applied case by case; draft still asserts nulls m says it does not
+  MAPPER status=PARTIAL  v1.7 lines: 8, 172, 181, 186
+  EVIDENCE:
+    Fixed: v1.7:172 "The seed list is the v1.1 header note's [A0-gated] and [A0-OLMo-gated]
+    sentences ... — but Code enumerates independently against the placed file, and any sentence the
+    PI's edits add is in scope." v1.6's case-by-case classing is gone, both the not-patched list and
+    root:262 as "a scope sentence". The seed list names "the Q3 paragraph", which is the root:184
+    equivalent. The VERDICTS entry carries the list (v1.7:181) and is values-checked (v1.7:186).
+    Persists: v1.7:172 "Two cells are never Answered — the weight channel and the OLMo base row —
+    and the draft asserts no null on them." The only preprint on disk is root sha d6431e97…222b8,
+    re-hashed. Against it, root:184 still says "Four nulls" over base, SFT, DPO and instruct,
+    root:240 says "on these lineages ... the evaluative state is not a reinforcer", and root:5 and
+    :232 assert lineage-wide nulls.
+  NOTE:
+    The illustrative-list half of the fix landed. The factual sentence did not. It is false against
+    the file at root. Against the new preprint of record (the PI's redraft from v1.1, v1.7:8) it
+    cannot be checked: that file is not on disk (HANDOFF-2026-10-04-design.md:25 and :32 say it was
+    delivered to project docs and that placing it at root is still owed by the PI). The sentence
+    would fail §8 step 2's referent check either way. Because Code's independent enumeration under
+    the general clause catches such sentences anyway, the fix is to drop the sentence. Effect of the
+    split: the rule now runs twice, at Q-F0's VERDICTS for v1 and at Q-F3's for v2. Lineage-wide
+    nulls that cover the base row are rewritten in every tuple of both postings.
+  REFUTER status=PARTIAL overturned=False
+    EVIDENCE:
+      Fixed: v1.7:172 "The seed list is the v1.1 header note's [A0-gated] and [A0-OLMo-gated]
+      sentences … — but Code enumerates independently against the placed file, and any sentence the
+      PI's edits add is in scope." v1.6:35's case-by-case classing is gone ("Not patched: :244 …
+      :262 (a scope sentence…)"). The seed list names "the Q3 paragraph", which is the root:184
+      equivalent. The list is carried in VERDICTS (v1.7:181) and values-checked (v1.7:186).
+      Persists: v1.7:172 "Two cells are never Answered — the weight channel and the OLMo base row —
+      and the draft asserts no null on them." Root re-hashed: d6431e97…222b8, 454 lines. root:184
+      still reads "The self-administration screen ran at base, SFT, DPO and instruct … Four nulls".
+      root:240: "on these lineages, at these stakes, the evaluative state is not a reinforcer".
+      root:232 ("nothing downstream acts on it") and the subtitle root:5 are lineage-wide too.
+      PREPRINT-v1_1 is not on disk: no match in the repo or in Documents, Downloads or Desktop, and
+      HANDOFF-2026-10-04-design.md:25 and :32 say it is in project docs and that placing it at root
+      is still owed.
+    REASONING:
+      The mapper is correct. The list is now illustrative and Code enumerates independently. Under
+      the general clause, any sentence asserting a null on the never-Answered base row is enumerated
+      in every tuple, so the operating rule works. The factual sentence still fails: it is false
+      against the file at root, and it cannot be checked against the preprint of record, which
+      v1.7:8 makes the PI's redraft and which is not on disk. Either way it cannot pass §8 step 2's
+      referent check, so the fix remains: drop the sentence. Effect of the split: the enumeration
+      now runs twice, at Q-F0's VERDICTS (v1) and at Q-F3's (v2). v1.7 lines: 8, 172, 181, 186.
+
+[A4] Under a Fallback ceiling, the Main thesis still posts
+  MAPPER status=PERSISTS  v1.7 lines: 157, 164, 172, 181
+  EVIDENCE:
+    v1.7:172 still reaches only sentences that assert "a null on a cell whose label is not
+    Answered". v1.7:181: "v1 posting by the PI under the ceiling obtained, every §7.5 sentence
+    rewritten", which rewrites only §7.5 sentences. No clause covers sentences asserting a title's
+    thesis. v1.7:164: "At v1: Main unreachable; Fallback-1 iff L0; Fallback-2 otherwise". Thesis
+    sentences confirmed on disk, none asserting a null. root:13: "We conclude that such states are
+    functional for the character a model voices rather than for the network that voices it".
+    root:230: "### 7.1 Functional for the character, not for the network". root:234: "The state is
+    functional for the character and not for the network." The seed list names "§7.1 first
+    paragraph" (root:232, a null) and "the abstract's fifth-stage sentence". It names neither the
+    §7.1 heading, nor root:234, nor the abstract's concluding sentence.
+  NOTE:
+    The split makes this worse. Under v1.6 the gap applied in 18 Fallback-1 states. At v1 under
+    v1.7, Main is unreachable, so all 625 v1 tuples post below Main (125 at Fallback-1, 500 at
+    Fallback-2; recomputed). The Main thesis therefore posts under a lower title in every v1
+    outcome, unless the placed redraft has removed it. That cannot be checked: the redraft carries
+    the Fallback-1 title (HANDOFF-2026-10-04-design.md:25) but is not on disk. At v2 the original
+    case persists. 20 of 245 Qwen states post at Fallback-1 (16 with L0, 4 with ¬L0 ∧ L1 ∧ A2 = PASS
+    ∧ A3 = NULL; recomputed). STOP-4's fix still applies: add a clause that no sentence asserts the
+    thesis of a title above the ceiling obtained, with Code enumerating those sentences too.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:172 reaches only sentences that "assert a null on a cell whose label is not Answered".
+      v1.7:181: "v1 posting by the PI under the ceiling obtained, every §7.5 sentence rewritten". No
+      clause covers sentences that assert a title's thesis. v1.7:164: "At v1: Main unreachable;
+      Fallback-1 iff L0; Fallback-2 otherwise". v1.7:14 (what is gated) lists no thesis sentence.
+      Thesis sentences on disk: root:3 is the Main title, and root:13 "We conclude that such states
+      are functional for the character a model voices rather than for the network that voices it".
+      root:230 is the heading "### 7.1 Functional for the character, not for the network". root:234:
+      "The state is functional for the character and not for the network." Recounted: v1 has 5 Q-F0
+      states × 125 OLMo = 625 tuples, of which 125 are Fallback-1 (A0 PASS) and 500 Fallback-2. At
+      v2, posted Fallback-1 Qwen states are 15 (L0, A3 NULL, not Main) + 1 (L0, Q-F3 NOT-RUN) + 4
+      (¬L0 ∧ L1 ∧ A2 PASS ∧ A3 NULL) = 20 of 245.
+    REASONING:
+      The mapper is correct. The posting rule still reaches only null assertions, and the thesis
+      sentences assert no null. No rule stops the Main thesis from posting under a lower title. The
+      split widens the reach: at v1 Main is unreachable, so the gap applies in every v1 tuple, not
+      in v1.6's 18 states. That holds unless the redraft removed those sentences, which cannot be
+      checked because the redraft is not on disk (HANDOFF-2026-10-04-design.md:25 records only that
+      it carries the Fallback-1 title). At v2 the original case remains in 20 posted states.
+      STOP-4's fix still applies. v1.7 lines: 14, 157, 164, 172, 181.
+
+[A5] When is the analysis, and what does the seat read before it?
+  MAPPER status=PARTIAL  v1.7 lines: 77, 110, 139, 141, 153, 163, 168, 181, 184
+  EVIDENCE:
+    Fixed (core): per-unit analysis is chosen. v1.7:77: "A unit's analysis runs when every arm has
+    reached its floor, or its hour cap is reached, or the PI stops it". Step 17 (v1.7:181):
+    "Analysis of Q-F0 ...; `PROPOSAL-m OLMo-{ckpt} — VERDICTS` per checkpoint as each ends". Step 19
+    (v1.7:184) gives Q-F3 its own VERDICTS. v1.6's "after every unit has ended" is gone. Persists:
+    v1.7:141 still reads "except the transcripts a fired hair trigger requires for adjudication",
+    but the guard (v1.7:139) and the binomial bars (v1.7:153: "the seat adjudicates in the open")
+    also pause for adjudication. "the reads" in the Q-F0 VERDICTS entry (v1.7:181) is still
+    undefined against v1.7:141's ban on reading pick-bearing artifacts "before that unit's VERDICTS
+    entry". v1.7:110 still reports "first-pick share per pair per template" for qualification
+    contrast sessions read before the campaign (step 14: "the seat's read").
+  NOTE:
+    The OLMo-stop clause in Step 4 (v1.7:163) and §7.3 (v1.7:168) can now fire. The OLMo track runs
+    in parallel from step 9, and Q-F3 starts after LOCK-m-F0 v1.0, so A3 can return while a locked
+    OLMo unit is still running. That happens only if the unit runs long past D_O, but it is no
+    longer impossible by construction. Effect of the split on the residues: the pick preview now
+    covers A0 itself. G-F0m-Qwen's 8 A0-template sessions give an n = 8 preview of the control that
+    decides v1, beside G-F3's A3 preview and G-F0m-OLMo's A0-OLMo preview. New with the split:
+    v1.7:141 says "The v1 posting does not unblind Q-F3: Q-F3's sessions do not exist at that
+    point". Step 19 (v1.7:184) does not guarantee this, because it says only that "the PI may hold
+    it until after step 18". Unless the PI holds it, Q-F3's gate sessions and even its campaign can
+    exist before v1 posts.
+  REFUTER status=PARTIAL overturned=False
+    EVIDENCE:
+      Fixed (core): v1.7:77 "A unit's analysis runs when every arm has reached its floor, or its
+      hour cap is reached, or the PI stops it". v1.7:181 step 17 is now "Analysis of Q-F0 …;
+      `PROPOSAL-m OLMo-{ckpt} — VERDICTS` per checkpoint as each ends", and v1.7:184 gives Q-F3 its
+      own VERDICTS. v1.6:157's "after every unit has ended" is gone. So Step 4's OLMo-stop clause
+      (v1.7:163) and §7.3's (v1.7:168) can fire: Q-F3 starts after LOCK-m-F0 v1.0, and OLMo units
+      may still be running past v1 (v1.7:170, "pending"). Persists: v1.7:141 still reads "except the
+      transcripts a fired hair trigger requires for adjudication", but the guard (v1.7:139, "pauses
+      that unit for adjudication") and §6's bars (v1.7:153, "the seat adjudicates in the open") also
+      need reads. "the reads" (v1.7:181) is still undefined, and v1.7:141 still bans pick-bearing
+      reads before VERDICTS while placing the full read only "after that unit's campaign ends".
+      v1.7:110 still reports "first-pick share per pair per template" for the qualification contrast
+      sessions, which the seat reads at step 14. New: v1.7:141 says "Q-F3's sessions do not exist at
+      that point", but v1.7:184 only lets the PI hold Q-F3 ("the PI may hold it until after step
+      18").
+    REASONING:
+      The mapper is correct. Per-unit analysis was chosen, so the OLMo-stop clause is live; it is
+      not impossible by construction. The read-exception gap, the undefined "the reads" and the
+      qualification pick preview all remain. The preview now also covers A0 itself (8 A0-template
+      sessions in G-F0m-Qwen), beside A3's preview in G-F3 and A0-OLMo's in G-F0m-OLMo. The split
+      adds one unguaranteed claim: unless the PI holds Q-F3, its gate sessions or even its campaign
+      can exist before v1 posts, so "Q-F3's sessions do not exist at that point" is not ensured by
+      v1.7's own schedule. v1.7 lines: 77, 110, 139, 141, 153, 163, 168, 181, 184.
+
+[A6] What releases a withheld paper?
+  MAPPER status=PERSISTS  v1.7 lines: 28, 37, 163, 184
+  EVIDENCE:
+    v1.7:163: "The v2 posting is withheld pending an f2 confirmatory pre-registration iff A3 ∈
+    {POSITIVE, REVERSE}, whatever A1 did; f2 (written then) includes A3 at F3 with the reasoning
+    block removed and, if ¬L1, a re-run A1". The same "pending" wording is at v1.7:28. v1.7:184 says
+    only "→ v2 posting by the PI, or f2 under Step 4". Nothing maps f2's outcome to the title, the
+    labels or Step 6. v1.7:163 adds: "v1, already posted, is not withdrawn; if v2 is withheld, a
+    dated note is added to the v1 record stating that §8.2's screen returned a hit under
+    confirmation."
+  NOTE:
+    The ambiguity is unchanged: "pending" can mean until f2 is written or until f2 returns. Effect
+    of the split: it now applies to v2 only. Under the first reading, the 32 withheld Qwen states
+    with L0 (A0 PASS × A1 4 × A2 4 × A3 ∈ {POSITIVE, REVERSE}; recomputed) post v2 at Fallback-1,
+    beside the hit. The new dated note on v1 has no release or resolution rule either: nothing says
+    what happens to it, or to v1, when f2 returns. That the v1 title (Fallback-1 iff L0) stays
+    posted beside any later screen hit follows from PI decision (9) as v1.7 records it, so it is not
+    a defect in v1.7's text. STOP-4's fix (withhold until f2's VERDICTS; Step 5 then uses f2's A3;
+    an f2 NULL counts only if f2's own told control passed) still applies, scoped to v2, plus a
+    disposition for the v1 note.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:163: "The v2 posting is withheld pending an f2 confirmatory pre-registration iff A3 ∈
+      {POSITIVE, REVERSE}, whatever A1 did; f2 (written then) includes …". The same "pending"
+      wording is at v1.7:28. v1.7:184 says only "→ v2 posting by the PI, or f2 under Step 4".
+      Nothing maps f2's outcome to the title, the labels or Step 6. v1.7:163 adds "if v2 is
+      withheld, a dated note is added to the v1 record stating that §8.2's screen returned a hit
+      under confirmation", with no rule for what happens to that note, or to v1, when f2 returns.
+      Recounted: A0 PASS × A1 4 × A2 4 × A3 ∈ {POSITIVE, REVERSE} 2 = 32 withheld Qwen states with
+      L0, each at a Step-5 v2 ceiling of Fallback-1.
+    REASONING:
+      The mapper is correct. The two readings of "pending" (until f2 is written, or until f2
+      returns) are unchanged, and neither has a release rule. Effect of the split: the defect is
+      confined to v2, and the new dated note on v1 also has no disposition. That v1's Fallback-1
+      title stays posted beside a later screen hit follows from decision (9), which per the task the
+      PI's routing block decides, so it is not a text defect in v1.7. v1.7 lines: 28, 163, 184.
+
+[A7] f2's pre-committed control does not license f2's format; removing the block confounds the reading
+  MAPPER status=PERSISTS  v1.7 lines: 28, 57, 67, 163
+  EVIDENCE:
+    v1.7:163: "f2 (written then) includes A3 at F3 with the reasoning block removed and, if ¬L1, a
+    re-run A1" (also v1.7:28: "a re-run A1 as f2's own control"). The only pre-committed control is
+    A1, which runs at F3 with the reasoning block (v1.7:57, :67). No told control at f2's own format
+    is committed, and the self-telling vs. cannot-learn confound is not named. Preprint on disk,
+    re-read: root:278 still says "the confirmation runs at the same scaffolding with the reasoning
+    block removed" (self-contradictory). root:248 gives Krishnamurthy et al. and "every choice cell
+    in §5.5 ran with no scaffolding for reasoning". root:276 says "The scaffolding is one
+    self-written reasoning line".
+  NOTE:
+    Unchanged in substance. Effect of the split: confined to the Q-F3 → f2 → v2 track, so it no
+    longer touches v1. On A6's second reading, v2 posts once f2 returns, so an f2 null with no
+    control at its own format is still a result on which v2 could post. Whether the redraft's §8
+    ("aligned to v1.7", HANDOFF-2026-10-04-design.md:25) repeats root:278's contradiction cannot be
+    checked, because the redraft is not on disk.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:163: "f2 (written then) includes A3 at F3 with the reasoning block removed and, if ¬L1, a
+      re-run A1". v1.7:28: "a re-run A1 as f2's own control". A1 runs at F3, and F3 has the
+      reasoning block (v1.7:57, :67). No told control at f2's own format (F2 order, no reasoning
+      block) is committed. The self-telling vs. cannot-learn confound is not named. Root re-read:
+      root:278 still reads "the confirmation runs at the same scaffolding with the reasoning block
+      removed". root:276: "The scaffolding is one self-written reasoning line". root:248 cites
+      Krishnamurthy et al. and says "every choice cell in §5.5 ran with no scaffolding for
+      reasoning".
+    REASONING:
+      The mapper is correct: v1.7 changes nothing here. Effect of the split: the defect is confined
+      to the Q-F3 → f2 → v2 track and no longer touches v1. On A6's second reading (v2 posts once f2
+      returns), an f2 null with no control at f2's own format could still decide v2. Whether the
+      redraft's §8 repeats root:278's self-contradiction cannot be checked, because the redraft is
+      not on disk. v1.7 lines: 28, 57, 67, 163.
+
+[A8] The step-3 record of (6′) and (7)
+  MAPPER status=PERSISTS  v1.7 lines: 16, 55, 106, 110, 160, 164, 170, 179
+  EVIDENCE:
+    v1.7:16: "Records of (6′) and (7): the seat's decisions block, lines :91, :96, :99, :101, quoted
+    with its sha256 in the step-3 entry; (7′) recorded by v1.6 and carried here." v1.7:179: "its
+    lines :91, :96, :99, :101 quoted verbatim as the record of (6′) and (7)". No line is marked
+    superseded. Decisions block re-hashed (fab576d8…34f8) and re-read. :99 says "Constants in the
+    same locks ... OLMo columns beside Qwen's", "8 A0s-OLMo-template sessions", keys
+    `m-olmo|{arm}|{s}`. :101 says "four stage labels keep 'Answered' iff L0-OLMo". All of these
+    still contradict v1.7: separate LOCK-m-OLMo (:106), 24 qualification sessions per checkpoint
+    (:110), keys `m-olmo|{ckpt}|{arm}|{s}` (:55), per-checkpoint L0-OLMo-c (:160).
+  NOTE:
+    The split changes the parts of this item. :91's "Not running and running-and-failing-A0 now
+    reach the same ceiling" is true again under v1.7: a Q-F0 NOT-RUN sets L0 = false (v1.7:164),
+    which is the same as a failed A0 at both v1 and v2. That sub-point is moot. A new mismatch
+    appears in its place. v1.7:16 records (6′) as "scoped to the Qwen campaign", but in v1.7's own
+    operation Fallback-2 under the Clock follows only a Q-F0 miss at v1 (v1.7:164, :170). A Q-F3
+    miss at D2 gives "v2's ceiling is then Fallback-1 iff L0" (v1.7:170). So the recorded scope and
+    the operating scope differ. The PI's 2026-10-04 routing block is not on disk
+    (HANDOFF-2026-10-04-design.md:32 lists it as owed). As described, it decides (8)–(11) and sets
+    D1, D_O and D2, so it would not record (6′)'s scope unless it says so explicitly; STOP-4 B2 is
+    still open. v1.7:16 also cites v1.6, which is uncommitted and superseded, as the record of (7′),
+    despite v1.7's claim to be self-contained. STOP-4's fix still applies: quote :91 and :96 as the
+    records, mark :91's ceiling clause and :99/:101's OLMo design superseded, and record (6′)'s
+    scope (now Q-F0, v1) through this document plus the PI's routing.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:16: "Records of (6′) and (7): the seat's decisions block, lines :91, :96, :99, :101,
+      quoted with its sha256 in the step-3 entry; (7′) recorded by v1.6 and carried here." v1.7:179
+      repeats the four-line quote. No line is marked superseded. Decisions block re-hashed
+      (fab576d8…34f8, 121 lines) and re-read. :99 says "8 A0s-OLMo-template sessions", "keys
+      `m-olmo|{arm}|{s}`", "Constants in the same locks … OLMo columns beside Qwen's". :101 says
+      "four stage labels keep 'Answered' iff L0-OLMo", and :97-98 say instruct only. These
+      contradict v1.7: separate LOCK-m-OLMo (v1.7:106), 24 qualification sessions per checkpoint
+      (v1.7:110), keys `m-olmo|{ckpt}|{arm}|{s}` (v1.7:55), per-checkpoint L0-OLMo-c (v1.7:160), and
+      (7′). v1.7:170: a D1 miss gives v1 Fallback-2, while a D2 miss gives "v2's ceiling is then
+      Fallback-1 iff L0". HANDOFF-2026-10-04-design.md:32 lists the PI routing block as owed, and it
+      is not on disk.
+    REASONING:
+      The mapper is correct. The core still stands: :99 and :101 are quoted as records, their OLMo
+      specifics contradict v1.7, and nothing marks them superseded. One nuance on the mapper's
+      "moot" sub-point. :91's "Not running and running-and-failing-A0 now reach the same ceiling" is
+      true under v1.7 read unit-wise: a Q-F0 NOT-RUN sets L0 = false, the same as a failed A0, at v1
+      and at v2 with Q-F3 held fixed. It is still false if "not running" means both Qwen units: both
+      NOT-RUN gives v2 Fallback-2, while a failed A0 with L1 ∧ A2 PASS ∧ A3 NULL gives Fallback-1.
+      So the sub-point is moot only on the unit-wise reading. That does not change the status. The
+      new scope mismatch is valid: v1.7:16 records (6′) as "scoped to the Qwen campaign", but in
+      v1.7's own operation Fallback-2 under the Clock follows only a Q-F0 (D1) miss at v1. Citing
+      the uncommitted, superseded v1.6 as the record of (7′) also sits badly with v1.7:4's
+      self-containment claim. The PI routing block that decides (8)–(11) does not record (6′)'s
+      scope unless it says so. v1.7 lines: 4, 16, 55, 106, 110, 160, 164, 170, 179.
+
+[A9] One more NOT-RUN trigger outside §5 (and empty-domain fall-throughs)
+  MAPPER status=PERSISTS  v1.7 lines: 81, 111, 147, 149, 161, 164
+  EVIDENCE:
+    v1.7:81: "uncached ≈ 78–87 h at 704; if that exceeds the cap the PI sets, Q-F3 is NOT-RUN."
+    Recomputed: 704 × 401 s = 78.4 h and 704 × 446 s = 87.2 h. §5's iff list (v1.7:147) has no such
+    trigger: "its LOCK v1.0 is not committed by its Clock date (...the PI declined the projected
+    hours — that is, v1.0 was not committed); or it is locked and produces no session reaching a
+    first read before a PI stop or a G-VER STOP." A v1.0 committed with a cap below its projection
+    therefore runs to the cap under §5. The disjunct still lacks "or reaches its cap with no session
+    at a first read". No value is declared for an arm or sham with no domain session in a unit that
+    ran (v1.7:149).
+  NOTE:
+    Effect of the split: the conflicting trigger now concerns Q-F3 only. Q-F0's uncached projection
+    (18–20 h, v1.7:81) carries no NOT-RUN clause. The fall-through residue reaches both Qwen units.
+    In Q-F0, an empty A0s domain leaves E undefined, and an A0 at n = 0 falls to INDETERMINATE,
+    which Step 2 (v1.7:161) labels "did not pass". In Q-F3, an A3 at n = 0 falls to NULL, which can
+    feed Main at v2 (v1.7:164). Only the tense changed ("will set" → "sets"). STOP-4's fix still
+    applies: replace :81's clause with "the PI may decline to commit v1.0 (§5)", add the cap case to
+    §5's disjunct, and declare the empty-domain values.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:81: "uncached ≈ 78–87 h at 704; if that exceeds the cap the PI sets, Q-F3 is NOT-RUN."
+      Recomputed: 704×401 s = 78.4 h and 704×446 s = 87.2 h. §5's iff list (v1.7:147) has no such
+      trigger: "its LOCK v1.0 is not committed by its Clock date (… the PI declined the projected
+      hours — that is, v1.0 was not committed); or it is locked and produces no session reaching a
+      first read before a PI stop or a G-VER STOP … A locked unit that produces sessions is analyzed
+      on what it obtained (floors, cap, or PI stop)." The cap exists only inside v1.0 (v1.7:79), so
+      :81's NOT-RUN contradicts §5. The disjunct still lacks the case of a unit that reaches its cap
+      with no session at a first read. v1.7:149 declares no value for an empty domain. At n = 0,
+      A0's Clopper-Pearson upper bound gives Δ_c = +.5, so A0 is not DEAD and falls to
+      INDETERMINATE, which Step 2 (v1.7:161) labels "did not pass". A3 at n = 0 falls to NULL, which
+      can enter Main at v2 (v1.7:164). An empty sham domain leaves E undefined (v1.7:133).
+    REASONING:
+      The mapper is correct. Only the tense and the subject changed (v1.6:75 "the PI will set, the
+      Qwen unit" became "the PI sets, Q-F3"). Effect of the split: the conflicting trigger now
+      concerns Q-F3 only. Q-F0's uncached projection (18–20 h) carries no NOT-RUN clause. The
+      empty-domain fall-throughs reach both Qwen units: A0 at n = 0 becomes INDETERMINATE, labeled
+      "did not pass", and A3 at n = 0 becomes NULL, which can feed Main. STOP-4's fix still applies.
+      v1.7 lines: 79, 81, 133, 147, 149, 161, 164.
+####################################################################################################
+RANGE R2
+####################################################################################################
+
+[A10] OLMo port acceptance is recorded before one of its conditions exists
+  MAPPER status=PERSISTS  v1.7 lines: 26, 106, 107, 109, 110, 181
+  EVIDENCE:
+    v1.7:26 is unchanged from v1.6:26: "Acceptance of the OLMo runner is by construction (the
+    F0m-OLMo verifier) plus the seat's read of its qualification sessions". v1.7:106: "For OLMo, the
+    port is built and its verifier committed here; acceptance is recorded at v0.2 after
+    G-TIME-OLMo." v1.7:109: "LOCK-m-F0 v0.2 / LOCK-m-OLMo v0.2. Path for F0m; projections; OLMo port
+    acceptance." The qualification sessions are G-F0m-OLMo's (:110), and they run after v0.2. Step
+    16's OLMo track (:181) gives the same order: "G-TIME-OLMo per checkpoint (port acceptance) →
+    LOCK-m-OLMo v0.2 → G-F0m-OLMo per checkpoint; the seat's read".
+  NOTE:
+    This is the same defect, one lock later: acceptance is recorded at v0.2, before the sessions
+    whose seat read §0.7 makes part of acceptance exist. Effect of the split: none on the defect
+    itself. It still applies only to the three OLMo checkpoint units. Qwen's port acceptance is
+    G-PORT's model-free replay at LOCK-m-F0 v0.1 (:106), and the new seat read of G-F0m-Qwen at step
+    14 (:181) is not an acceptance condition. The OLMo units now feed the v1 posting under D_O =
+    2026-10-16, so the inconsistent acceptance record would sit in a lock that gates a v1 row.
+    STOP-4's fix still fits: at v0.2, acceptance = verifier + the seat's read of G-TIME-OLMo, and
+    the qualification read belongs to G-F0m-OLMo.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      Of v1.7:26 only the scope sentence is new ("In this block Code builds F0m and F0m-OLMo
+      only..."). The acceptance sentence is byte-identical to v1.6:26: "Acceptance of the OLMo
+      runner is by construction (the F0m-OLMo verifier) plus the seat's read of its qualification
+      sessions". v1.7:106: "acceptance is recorded at v0.2 after G-TIME-OLMo". :109: "LOCK-m-F0 v0.2
+      / LOCK-m-OLMo v0.2. Path for F0m; projections; OLMo port acceptance." The qualification
+      sessions are G-F0m-OLMo's (:110, keys `m-olmo-qual|...`), and G-F0m-OLMo runs after v0.2. Step
+      16's OLMo track (:181) gives the same order: "G-TIME-OLMo per checkpoint (port acceptance) →
+      LOCK-m-OLMo v0.2 → G-F0m-OLMo per checkpoint; the seat's read". G-TIME is not a qualification
+      stage: :55 separates `{gate}` ∈ {time, id, qual}. The wording comes from decisions:99
+      ("acceptance is by construction plus a full rule-25 read of the qualification sessions").
+    REASONING:
+      I agree with the mapper. The acceptance condition (the seat's read of the qualification
+      sessions) still comes after the lock that records acceptance (v0.2, after G-TIME-OLMo only).
+      Effect of the split: it still applies only to the three OLMo checkpoint units, which now feed
+      the v1 posting under D_O. Qwen's port acceptance is G-PORT's replay at LOCK-m-F0 v0.1 (:106)
+      and is not affected. STOP-4's fix still fits.
+
+[A11] Self-containment: ledger entries by reference; the reasoning-line echo class is undefined
+  MAPPER status=PERSISTS  v1.7 lines: 4, 16, 18, 90, 94, 119, 124, 153, 179
+  EVIDENCE:
+    v1.7:4: "This document is self-contained; it incorporates no earlier version by reference."
+    v1.7:18: "Entries 19–33 as recorded in v1.6 §0.3 (33: fixing by addition)." On disk: v1.6:18
+    says "Entries 19–32 as recorded in v1.4 §0.3"; v1.4:16 says "Entries 19–27 as v1.3 §0.3";
+    v1.3:16 is the "(18 → 27)" ledger. Entries 19–27 are therefore three hops away
+    (v1.7→v1.6→v1.4→v1.3), 28–32 two hops, and 33 plus v1.6's rescope of 26 one hop, all in
+    untracked files. v1.7:16 adds another by-reference record: "(7′) recorded by v1.6 and carried
+    here". On the echo class: v1.7:94 says "(it has its own echo class)", :124 puts "harness-line
+    echo" in the numerator of the reasoning-line defect bar, and :153 binds that bar at campaign
+    ("[Q-F3] reasoning-line defects p0 .10"). No line of v1.7 defines the class; v1.3:144 did
+    ("verbatim, whitespace-normalized reproduction of any complete harness-written line of the
+    session"). :119 lists "the reasoning-line classes" among LOCK-m-F3 v0.1's contents, which gives
+    the class a home but not a definition.
+  NOTE:
+    The ledger half is one hop worse than in v1.6. Step 3 (:179) moves v1.2–v1.6 to archive/
+    untracked, so the only text of ledger entries 19–33 would never enter the repo (rule 27). Effect
+    of the split: the echo-class half now applies to Q-F3 only (:90 "the reasoning-line items apply
+    to Q-F3 only"; built at step 19, :26), so it does not block Q-F0 or v1. It still binds G-F3 and
+    Q-F3's campaign bar, and v1.7 declares Q-F3 "retained as pre-registered, unchanged". The ledger
+    half applies to the whole document. STOP-4's fix still fits: write out entries 19–33 (or scope
+    :4's claim), and define the reasoning-line echo class in v1.7 (or say explicitly that LOCK-m-F3
+    v0.1 defines it).
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:4: "This document is self-contained; it incorporates no earlier version by reference."
+      v1.7:18: "Entries 19–33 as recorded in v1.6 §0.3 (33: fixing by addition)." On disk, v1.6:18
+      reads "Entries 19–32 as recorded in v1.4 §0.3, with 26 rescoped", and v1.4:16 reads "Entries
+      19–27 as v1.3 §0.3". v1.4:17–21 write out 28–32, and v1.3:17–25 write out 19–27. So 19–27 are
+      three hops away, 28–32 two hops, and 33 plus 26's rescope one hop, all in files that step 3
+      (:179) moves to archive/ untracked. Echo class: :94 says "(it has its own echo class)", :124
+      puts "harness-line echo" in the reasoning-line defect bar's numerator, and :153 binds "[Q-F3]
+      reasoning-line defects p0 .10". :91 defines only the task-round class, from which :94 exempts
+      the reasoning line. The definition exists only at v1.3:144 ("verbatim, whitespace-normalized
+      reproduction of any complete harness-written line of the session").
+    REASONING:
+      Both halves of the defect remain. The ledger half is one hop worse than in v1.6. The mapper's
+      appeal to rule 27 is an analogy, since that rule governs runs, but the point holds: the only
+      text of entries 19–33 stays in untracked files. Effect of the split: the echo-class half now
+      binds Q-F3 only (:90, :119 puts "the reasoning-line classes" in LOCK-m-F3 v0.1, :124, :153),
+      so it does not touch Q-F0 or v1. The ledger half applies to the whole document. STOP-4's fix
+      still fits.
+
+[A12] The launch figures dropped "uncached"
+  MAPPER status=PARTIAL  v1.7 lines: 20, 36, 65, 67, 75, 77, 81, 96, 110, 112, 113, 124, 153, 192
+  EVIDENCE:
+    v1.7:75: "At the minimum headroom (r = 1/1.15): Q-F0 192 (A0 128, A0s 64); for r ≥ .8725, A0
+    falls to 96 and Q-F0 is 160. Q-F3 704 (...); for r ≥ .8725, A1 falls to 96 and Q-F3 is 672."
+    v1.7:20: "Q-F0: Qwen 96 launches at a qualification valid rate ≥ .8725, 128 below it ... Q-F3,
+    deferred: Qwen 448 or 480 (A1 96/128, A2 176, A3 176)". Neither line says "uncached". The floors
+    are "96 (80 if F0m runs uncached)" (:65, same for F3 at :67). I recomputed the launch rule with
+    exact binomials. A0 and A1 reach 96 only on the uncached floor of 80, at r ≥ .8725. On the
+    cached floor of 96, ⌈1.15·96⌉ = 111 → 128, so the count is never 96: it is 128 for r ≥ .7925 and
+    160 for .6455–.7925. A2 and A3 are 176 only for r ≥ .8502 and 192 for .7856–.8502. So cached
+    Q-F0 is 192 at every r ≥ .7925 and never 160; cached Q-F3 is 704 for r ≥ .8502 and never 672;
+    uncached Q-F0's "128 below it" holds only down to r = .6744; and Q-F3's "448 or 480" fails below
+    .8502, where the contrast total is 512. The hours at :81 include "Q-F0 cached ... 4.4–5.3 h for
+    160" and "Q-F3 cached ... 18.7–22.4 h for 672", neither reachable on the cached plan. :81's
+    uncached Q-F0 figure (≈ 18–20 h, "A0 80 → 96 launches") covers only r ≥ .8725; 192 uncached
+    launches would take ≈ 21.4–23.8 h. STOP-4's combined figures reproduce (cached 896 total / 608
+    contrast for r ≥ .8502; 928 / 640 from .7925).
+  NOTE:
+    Fixed: "at the minimum headroom" is gone from §0.4 (:20). r is now "the unit's
+    qualification-stage valid-session rate" (:75), and the new G-F0m-Qwen (:110) gives A0 eight
+    qualification sessions of its own. Still failing, and this is the core defect: "uncached" is not
+    restored, and there are no cached figures. L is not said to be a projection: the terminal list
+    at :77 is unchanged and :113 locks "Launch counts per arm". Pooled versus per-arm r is not
+    pinned, and A1 and A2 still have no qualification template in G-F3 (:124). §0.4 still counts
+    campaign launches only; Q-F0's gate stages also expose the model (G-TIME-F0's one A0 session,
+    G-F0m-Qwen's 8 A0 sessions, G-CAL's 64 corrupted-pool generations). Effect of the split: each
+    unit now has a single template family (:96), so STOP-4's split-G-ID case (864/576) becomes
+    simply Q-F0 cached plus Q-F3 uncached, and :77's "Under a split G-ID outcome ... per family"
+    clause is dead. The defect now binds per unit. If G-ID-F0m passes, Q-F0 (the v1 unit) is
+    misstated in §0.4's welfare exposure, the 160-launch figure, the 4.4–5.3 h cached projection and
+    the 4-look series (:153). The same holds for Q-F3's 672 and 448. The §9 [C] list (:192) quotes
+    the unreachable cached figures.
+  REFUTER status=PARTIAL overturned=False
+    EVIDENCE:
+      Fixed: "at the minimum headroom" is gone from §0.4. v1.7:20 now reads "under §2.4's launch
+      rule: Q-F0: Qwen 96 launches at a qualification valid rate ≥ .8725, 128 below it". r is now
+      "the unit's qualification-stage valid-session rate" (:75). Persists: neither :20 nor :75 says
+      "uncached". I recomputed the launch rule with exact binomials (numpy-free, grid step .0001).
+      Cached A0/A1 (floor 96): ⌈1.15·96⌉ = 111 → 128 for r ≥ .7925 and 160 for .6456–.7925, never
+      96. Uncached (floor 80): 96 for r ≥ .8725 and 128 for .6745–.8725. A2/A3: 176 for r ≥ .8502
+      and 192 for .7857–.8502. So on the cached plan (decision (1) makes cached the default if G-ID
+      passes), Q-F0 is 192, never 160, and Q-F3 is 704, never 672. Q-F3's "448 or 480" (:20) becomes
+      512 below .8502. The hours at :81 ("4.4–5.3 h for 160", "18.7–22.4 h for 672") are unreachable
+      on the cached plan. Uncached 192 launches take 21.4–23.8 h (192 × 401–446 s), against the
+      stated 18–20 h, which is the figure for 160. These unreachable figures are repeated at :153
+      ("4 at 160", "17 at 672") and in the §9 [C] list (:192). STOP-4's combined figures reproduce:
+      896/608 for r ≥ .8502 and 928/640 for .7925–.8502. L is still not called a projection (:77 is
+      unchanged; :113 locks "Launch counts per arm"). Pooled versus per-arm r is not pinned. G-F3
+      (:124) still has no A1 or A2 qualification template.
+    REASONING:
+      I agree with PARTIAL. The "minimum headroom" sub-point is fixed exactly as prescribed, and
+      "the unit's" pins r partway. The core defect remains: figures that hold only for uncached runs
+      carry no "uncached" label. Effect of the split: each unit now has a single family (:96), so
+      :77's split-G-ID clause is dead, and the misstatement binds per unit. For Q-F0 (the v1 unit),
+      it misstates the §0.4 welfare exposure, the 160 count, its hours and the 4-look series. For
+      Q-F3, it misstates 672, 448 and 18.7–22.4 h.
+
+[A13] Patch v4 states the A3 trigger more loosely than m (root:278, :280)
+  MAPPER status=PERSISTS  v1.7 lines: 8, 30, 163, 168, 172, 193
+  EVIDENCE:
+    PREPRINT-v1_0-draft.md is unchanged on disk (sha256 d6431e97…222b8 verified). root:278 still
+    reads: "A move beyond the sham envelope in either direction is a screen hit ... it withholds the
+    paper pending a confirmatory pre-registration" (conjunct (i) only). root:280 still reads: "a
+    welfare pre-commitment that fires when the felt cell moves toward clean text". v1.7 withholds
+    only on "A3 ∈ {POSITIVE, REVERSE}" (:163), and its welfare trigger is "A3 = POSITIVE exactly"
+    (:168). I recomputed STOP-4's example: A3 82/144 (Δ_c = +.069) with A3s 28/56 (E = 0) gives
+    one-sided p = .0565 > .05 (critical count 83). Under m that is NULL; under root:278 it is a
+    withholding hit. v1.7 proposes no patch v5. Instead it names as preprint of record "the PI's
+    redraft from PREPRINT-v1_1-draft.md", placed before LOCK-m-F0 v1.0 (:8). No PREPRINT-v1_1* file
+    exists in the repo, ~/Documents, ~/Downloads or ~/Desktop, and :30 says that redraft "carries
+    all seven changes" of patch v4, which include :278 and :280 as worded.
+  NOTE:
+    Whether the redraft tightens these lines cannot be checked, and nothing in v1.7 requires it to.
+    Effect of the split: the trigger itself operates only in Q-F3 (v2), but the paper's §8
+    description of it now posts at v1, before Q-F3 runs. A public description looser than the
+    pre-registration would therefore be on record before the screen. v1.7's new dated note (:163,
+    "stating that §8.2's screen returned a hit under confirmation") borrows root:278's undefined
+    "hit" rather than {POSITIVE, REVERSE}. Separately, the same line root:280 still says "the Qwen
+    arms as one" unit, against decision (8). STOP-4's patch-v5 wording still applies, now to the
+    placed redraft.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      PREPRINT-v1_0-draft.md sha256 d6431e97…222b8 (verified). root:278: "A move beyond the sham
+      envelope in either direction is a screen hit ... it withholds the paper pending a confirmatory
+      pre-registration". root:280: "a welfare pre-commitment that fires when the felt cell moves
+      toward clean text" and "the Qwen arms as one". v1.7:163 withholds only iff "A3 ∈ {POSITIVE,
+      REVERSE}", and :168 says "Trigger: A3 = POSITIVE exactly." I recomputed STOP-4's example:
+      82/144 gives one-sided p = .0565 (critical count 83, p(83) = .0399) and Δ_c = +.0694, so it is
+      NULL under m and a withholding hit under root:278. v1.7 has no "patch v5". It names as
+      preprint of record the PI's redraft from PREPRINT-v1_1-draft.md (:8), and no such file is on
+      disk (find over ~/Documents, ~/Downloads, ~/Desktop, maxdepth 5).
+    REASONING:
+      The defect is still in the only preprint on disk, which v1.7 still cites (:193 root :268–280),
+      and nothing in v1.7 requires a tighter wording. One over-read in the mapper's note: :30's
+      "carries all seven changes" does not show that the redraft keeps :278/:280 "as worded".
+      HANDOFF-2026-10-04-design.md:25 says the redraft's "§8 aligned to v1.7 on 10-04", so the
+      redraft may differ. Whether it does is unverifiable, so the status stays PERSISTS. Effect of
+      the split: the trigger operates only in Q-F3 (v2), but the paper's description of it posts at
+      v1, before Q-F3 runs.
+
+[A14] A3's NULL sentence covers a significant one-map move
+  MAPPER status=PERSISTS  v1.7 lines: 8, 41, 149, 164, 165, 166
+  EVIDENCE:
+    v1.7:149 is unchanged: "A3, α = .05: REVERSE → POSITIVE → NULL, the NULL sentence in f1's
+    register — the property does not drive choice beyond exploration policy at these stakes, this
+    scaffolding, and this power". NULL is still the else-branch. The downstream text is also
+    unchanged: :164 "At v2: Main iff L0 ∧ L1 ∧ A2 = PASS ∧ A3 = NULL"; :165 "(iff A3 = NULL) ;
+    uninstructed, nothing moves"; :166 Step 7 closed iff ... A3 = NULL. A recomputed example: 72
+    sessions per map, 52/72 (.722) and 34/72 (.472), pooled 86/144, one-sided p = .012 (critical
+    count 83), sham E = 0. Conjuncts (i) and (iii) hold toward clean and (ii) fails, so the arm is
+    NULL: the text says "does not drive choice" and "nothing moves", and Main stays reachable. The
+    standing fixes v1.7 cites at :8 still ask for verdict sentences that are disjunction-complete
+    over their criteria and that name what the design cannot separate
+    (PROPOSAL-k-echo-channel.md:531–533; HANDOFF-2026-09-04-design.md:79–80).
+  NOTE:
+    Effect of the split: confined to Q-F3 and the v2 posting. A3 does not exist at v1, and Main is
+    unreachable at v1 (:164). Within v2 its force is unchanged: the else-branch tuple reaches Main,
+    Step 6's "nothing moves" and Step 7's closure. :41 declares verdict sentences carried verbatim,
+    so the fix (a NULL with (i) and (iii) holding says it cannot be separated from a label artifact,
+    plus a statement of whether that tuple can reach Main) has to land as a change that §0.10 does
+    not yet list.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:149 is unchanged: "A3, α = .05: REVERSE → POSITIVE → NULL, the NULL sentence in f1's
+      register — the property does not drive choice beyond exploration policy at these stakes, this
+      scaffolding, and this power". NULL is still the else-branch. The downstream text is also
+      unchanged: :164 "Main iff L0 ∧ L1 ∧ A2 = PASS ∧ A3 = NULL"; :165 "(iff A3 = NULL) ;
+      uninstructed, nothing moves"; :166 Step 7 closed iff A3 = NULL. Recomputed example: maps 52/72
+      (.722) and 34/72 (.472), pooled 86/144, p = .0121 (< .05, critical count 83), Δ_c = +.097 > E
+      = 0. (i) and (iii) hold and (ii) fails, so the arm is NULL. The standing fixes are verified on
+      disk: PROPOSAL-k-echo-channel.md:532 ("disjunction-complete over their criteria") and :533
+      ("Pre-written sentences name what the design cannot separate");
+      HANDOFF-2026-09-04-design.md:79.
+    REASONING:
+      I agree. A significant move beyond the sham envelope on one map still falls through to a
+      sentence asserting that the property does not drive choice, and it can still reach Main. :41
+      carries verdict sentences verbatim, so a fix would be a change §0.10 does not list. Effect of
+      the split: confined to Q-F3 and the v2 posting. A3 does not exist at v1, and Main is
+      unreachable there (:164).
+
+[A15] A0 does not reach e2b's read
+  MAPPER status=PERSISTS  v1.7 lines: 14, 18, 20, 24, 51, 55, 161, 172
+  EVIDENCE:
+    v1.7:24 still keys the control to "the told positive control for that format, substrate and
+    stage passed (§5)" and names no read primitive. :161: "Qwen F0 cells (e2a, e2b, f1; TAB 2 rows):
+    Answered iff L0". A0 reads vanilla (:55, "a vanilla forward over the session text as it stands
+    at the choice position") and is injection-free (:20, "No steering ... in any unit"). root:176 is
+    unchanged: e2b ran "With the state live at the decision and the read leakage-certified (§4.4)".
+  NOTE:
+    The split raises the force. A0 is now the whole of the v1 unit, and v1.7 states that its purpose
+    is to license the existing cells: :24 adds "This rule is the reason Q-F0 runs first"; :51 says
+    "Questions 1 and 2 license the cells the paper already carries and decide the v1 posting";
+    ledger (35) is at :18. The [A0-gated] seed list at :172 includes "§5.5 e2a, e2b, f1 labels". So
+    an A0 PASS posts e2b as Answered in v1, on a control that never exercised a state-present read.
+    This applies to Q-F0 (v1) and carries to v2, since Step 2 is "[v1 and v2]". The OLMo rows are
+    unaffected (they use vanilla reads). STOP-4's fix still fits: either §0.6 names the read
+    primitive, or e2b is labelled concluded, not answered (no told control at a state-present read).
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:24 still keys the control to "the told positive control for that format, substrate and
+      stage passed (§5)" and names no read primitive. :161: "Qwen F0 cells (e2a, e2b, f1; TAB 2
+      rows): Answered iff L0". A0 reads vanilla: :55 "a vanilla forward over the session text as it
+      stands at the choice position". :20 makes the units injection-free and asserts the quarantined
+      state-present primitive absent from sys.modules. root:176 (unchanged) says e2b ran "With the
+      state live at the decision and the read leakage-certified (§4.4)". The :172 seed list includes
+      "§5.5 e2a, e2b, f1 labels".
+    REASONING:
+      I agree. A0 never exercises a state-present read, yet licenses e2b. The split brings it
+      forward: Q-F0 is the v1 unit, :24 now says this rule "is the reason Q-F0 runs first", and :51
+      says questions 1–2 "license the cells the paper already carries and decide the v1 posting". An
+      A0 PASS therefore posts e2b as Answered at v1, and it carries to v2 (Step 2 is "[v1 and v2]").
+      The OLMo rows, which use vanilla reads, are unaffected.
+
+[A16] Two pinned renders corrupt the only gold-bearing word
+  MAPPER status=PERSISTS  v1.7 lines: 16, 59, 103, 181
+  EVIDENCE:
+    v1.7:59 specifies corrupt_m exactly as v1.6:53 did: rate .15, key corr|{i}, eligibility rule,
+    one draw per slot, replacement formula, roster skip, k clip. No re-specification is named. I
+    replayed it with numpy default_rng on data/f/pools.json CORR_clean against both rosters.
+    n_eligible (6,19,19,13,24,16,10,45,19,10,24,15,6,19,10,17) and the k row (sum 54) match v1.7's
+    [C] figures. Item 5 "Write the opposite of 'hot'." renders "Writa the opposfte of 'hoh'." Item
+    15 "Write the opposite of 'open'." renders "Wyite thm opposite of 'oeen'." The roster skip fires
+    once, at item 7 ('State'→'Slate'). Under the token-initial reading of "begins a word"
+    (n_eligible 17/16/18 at items 5/11/15, which does not match v1.7's list), item 11's 'up' becomes
+    'yp' and item 15 is still 'oeen'. Either reading corrupts a gold-bearing operand.
+  NOTE:
+    The seat's read of the renders is still deferred to G-CAL (step 6). HANDOFF-2026-10-04-design.md
+    lists "G-CAL renders" among the reads owed on Q-F0's critical path. The split raises the force.
+    G-CAL serves every unit (:59 "calibrated once, at G-CAL, and serves all three units"; :103
+    "Serves all units"), and the OLMo track cannot start before step 9 (:181). A condition-(3) STOP
+    at step 6 would therefore hold Q-F0 and all three OLMo units against D1 = D_O = 2026-10-16,
+    twelve days after v1.7's date, and a Q-F0 miss sends v1 to Fallback-2 (:170). STOP-4's fix still
+    fits: the seat reads the 16 model-free renders now and names a re-specification (e.g. operand
+    tokens ineligible).
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      The v1.7:59 corrupt_m specification is identical to v1.6:53's (diff: only the parenthetical
+      citation, the lock name and the added "calibrated once ... serves all three units" change). I
+      replayed it model-free with numpy default_rng over data/f/pools.json CORR_clean and both
+      rosters (Qwen e2d.config.ROSTER; OLMo quartz/velvet, copper/walnut, maple/saddle,
+      amber/granite), using f1's word-start rule (jlens-qwen36/scripts/f_sessions.py:104–114).
+      n_eligible = [6,19,19,13,24,16,10,45,19,10,24,15,6,19,10,17] and k sum = 54, both matching
+      v1.7. Item 5 "Write the opposite of 'hot'." → "Writa the opposfte of 'hoh'."; item 15 "Write
+      the opposite of 'open'." → "Wyite thm opposite of 'oeen'."; one roster skip, at item 7 (pos 1,
+      't'→'l', which would give 'Slate'). Under a whitespace-only word-start reading, n_eligible at
+      items 5/11/15 is 17/16/18, item 11's 'up' → 'yp' and item 15 is still 'oeen'. Also observed:
+      item 9 'minus' → 'miyms' (the operator). HANDOFF-2026-10-04-design.md:31 still lists "G-CAL
+      renders" as a read owed on Q-F0's critical path, and the routing block's "DESIGN SEAT READS on
+      your critical path: the 16 G-CAL renders" defers it likewise.
+    REASONING:
+      I agree. The renders are pinned and unchanged, and the seat's legibility read (condition (3))
+      is still deferred to step 6. Effect of the split: G-CAL serves all units (:59, :103), and the
+      OLMo track starts only from step 9 (:181). A condition-(3) STOP at step 6 would therefore hold
+      Q-F0 and all three OLMo units against D1 = D_O = 2026-10-16, and a Q-F0 Clock miss gives v1
+      Fallback-2 (:170).
+
+[A17] Removing the sensitivity analysis also removed its verdict-sentence link
+  MAPPER status=PERSISTS  v1.7 lines: 28, 51, 77, 139, 141, 149, 181
+  EVIDENCE:
+    v1.7:28 carries the removal ("The sensitivity analysis ... → removed ...; f1's exclusion guard
+    kept, adapted, as a pause trigger"). :139 says the guard "never changes a verdict". :141 says
+    "The per-property exclusion table is reported in VERDICTS only". The verdict sentences at :149
+    are unchanged. :77 puts only "its shortfall and attained power in its verdict sentence". Step 17
+    (:181) lists "every rate with its domain ... the per-property table" but ties none of them to
+    the A0 sentence. v1.5:112's link ("a disagreement in outcome is stated in the verdict sentence")
+    has no successor anywhere in v1.7.
+  NOTE:
+    The split changes the item's shape, not whether it holds. At v1 the only contrast arms are
+    positive controls (A0, A0-OLMo-c), so an exclusion pull runs one way: toward not-PASS (DEAD or
+    INDETERMINATE), costing L0 or L0-OLMo-c (Fallback-2; concluded-not-answered rows). That is
+    conservative for the labels, but a DEAD verdict is read as "a fact about the format on that
+    substrate at that stage" (:51), and it would post with no exclusion-rate disclosure beside it.
+    At v2 (Q-F3), v1.5's "not one-sided" analysis applies unchanged: A3 is pulled toward NULL, which
+    keeps Main, and A1/A2 toward not-PASS, which costs it. STOP-4's fix still fits: each contrast
+    arm's verdict sentence states its pre-pick exclusion rate beside its sham's, with the guard's
+    result.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:28 carries the removal of the sensitivity analysis and keeps the guard. :139: the guard
+      "never changes a verdict". :141: "The per-property exclusion table is reported in VERDICTS
+      only". :149's verdict sentences are unchanged. :77 puts only "its shortfall and attained power
+      in its verdict sentence". Step 17 (:181) lists "every rate with its domain ... the
+      per-property table" but ties neither to the A0 sentence. A grep of v1.7 for "pre-pick" and
+      "verdict sentence" finds no link to exclusion rates. v1.5:112 (verified): "the locked primary
+      decides, and a disagreement in outcome is stated in the verdict sentence", which has no
+      successor.
+    REASONING:
+      I agree. The disclosure link is still absent. Effect of the split: at v1 the only contrast
+      arms are the positive controls (A0, A0-OLMo-c). An exclusion pull there runs toward not-PASS,
+      which is conservative for the labels, but a DEAD verdict (:51, "a fact about the format")
+      would post with no exclusion-rate disclosure. At v2, v1.5's "not one-sided" analysis applies
+      unchanged.
+
+[B1] The Clock date D (v1.6 proposed 2026-11-30)
+  MAPPER status=PI  v1.7 lines: 16, 113, 170, 179
+  EVIDENCE:
+    v1.7:16 replaces D with "(11) Clock dates ... D1 (Q-F0) 2026-10-16; D_O (each OLMo checkpoint)
+    2026-10-16; D2 (Q-F3) 2026-12-15", and :170 sets out the three-date Clock.
+    HANDOFF-2026-10-04-design.md:20: "D was not confirmed. v1.6 was not routed." The PI's 2026-10-04
+    routing block exists on disk only as Code's quotation in the untracked raw
+    /Users/jasondwyer/Documents/code/jspace-lab/results/raw/2026-10-04_m-v1.7_referent_check.txt:8441–8448:
+    "(11) Clock dates: D1 (Q-F0) 2026-10-16; D_O (each OLMo checkpoint) 2026-10-16; D2 (Q-F3)
+    2026-12-15. [PI: strike any of these and write your own date here.]" None was struck, and the PI
+    added "Use all the defaults".
+  NOTE:
+    Answered by replacement. 2026-11-30 was never confirmed and is superseded; the routing block's
+    three dates match v1.7:16 exactly. The remaining gap is the seat's, not the PI's. v1.7 drops
+    v1.6's feasibility clause ("D must fall after every LOCK v1.0 can be committed"), and nothing
+    establishes that D1 and D_O are workable. They fall 12 days after 2026-10-04, against the seat's
+    own corrected estimate of seven to ten days for the A0 slice (ledger 34, :18). A16's predicted
+    G-CAL STOP sits on that path, and the OLMo track is gated behind step 9. Step 3 (:179) has to
+    quote the routing block, whose only disk copy is that untracked raw.
+  REFUTER status=PI overturned=False
+    EVIDENCE:
+      v1.7:16 replaces D with "(11) Clock dates ... D1 (Q-F0) 2026-10-16; D_O (each OLMo checkpoint)
+      2026-10-16; D2 (Q-F3) 2026-12-15", and :170 sets out the three-date Clock.
+      HANDOFF-2026-10-04-design.md:19 (the mapper says :20): "D was not confirmed. v1.6 was not
+      routed." The PI's routing block is quoted in the untracked
+      results/raw/2026-10-04_m-v1.7_referent_check.txt:8441–8448: "(11) Clock dates: D1 (Q-F0)
+      2026-10-16; D_O (each OLMo checkpoint) 2026-10-16; D2 (Q-F3) 2026-12-15. [PI: strike any of
+      these and write your own date here.]" None was struck, and the PI added "Use all the
+      defaults". v1.6's feasibility clause ("D must fall after every LOCK v1.0 can be committed",
+      v1.6:16) has no counterpart in v1.7.
+    REASONING:
+      Answered by replacement: 2026-11-30 is superseded, and the routing block's three dates match
+      v1.7:16. I correct two over-reads in the mapper's note. First, D1 falls 12 days after
+      2026-10-04, beyond ledger 34's corrected 7–10-day estimate for the A0 slice, which already
+      counts one STOP cycle; that estimate supports feasibility by 2–5 days rather than standing
+      "against" it. Second, A16 does not predict a G-CAL STOP; it says condition (3) may fail. The
+      routing block itself is on disk only as Code's quotation in that untracked raw.
+
+[B2] (6′)'s scope (Fallback-2 under the Clock, scoped to the Qwen campaign)
+  MAPPER status=PI  v1.7 lines: 16, 37, 41, 164, 170, 179
+  EVIDENCE:
+    v1.7:16: "(6′) Fallback-2 under the Clock, scoped to the Qwen campaign ... Records of (6′) and
+    (7): the seat's decisions block, lines :91, :96, :99, :101". Step 3 (:179) quotes those lines
+    "as the record of (6′) and (7)". In the decisions block (sha256 fab576d8…34f8 verified), :91
+    says "the Clock posts under Fallback-2" and states no scope. :96 is the OLMo decision. :99 says
+    "Constants in the same locks ... OLMo columns beside Qwen's". :101 says L0-OLMo "does not enter
+    the title ceiling, which is decided by the Qwen cells". None states a per-unit Qwen scope. The
+    routing block, as quoted in the raw
+    (results/raw/2026-10-04_m-v1.7_referent_check.txt:8441–8448), records (8)–(11) and "Use all the
+    defaults"; it has no line on (6′).
+  NOTE:
+    Unanswered: nothing on disk records the scope in a PI line. The split sharpens the question.
+    "The Qwen campaign" is now two units, and v1.7 applies Fallback-2 only to a Q-F0 Clock miss
+    (:164, "Fallback-2 otherwise (Q-F0 NOT-RUN sets L0 = false)"; :170 for D1). A Q-F3 miss gives
+    "v2's ceiling is then Fallback-1 iff L0" (:170). In v1.6, any Qwen NOT-RUN gave Fallback-2
+    (v1.6:145 "sets L0 = L1 = false"; v1.6:151). Read literally, (6′) as recorded conflicts with the
+    D2 rule. :91's rationale (§5.5 unlicensed) supports the D2 rule, but no PI line does, and §0.10
+    (:37, :41, "the title ladder ... v1.6's") does not list the change. The PI now needs to confirm
+    (6′) as scoped to Q-F0's Clock only (D1), or say otherwise, so that step 3 can quote that line.
+  REFUTER status=PI overturned=False
+    EVIDENCE:
+      v1.7:16: "(6′) Fallback-2 under the Clock, scoped to the Qwen campaign ... Records of (6′) and
+      (7): the seat's decisions block, lines :91, :96, :99, :101". In the decisions block (sha
+      fab576d8…34f8, verified), :91 says "the Clock posts under Fallback-2" with no scope, :96 is
+      the OLMo decision, :99 is OLMo gate design ("Constants in the same locks"), and :101 says
+      L0-OLMo "does not enter the title ceiling, which is decided by the Qwen cells". None states a
+      per-unit scope. The routing block, as quoted in the raw (:8346, and :8441–8448 for (8)–(11)),
+      directs step 3 to quote "lines :91, :96, :99, :101 ... as the record of (6') and (7)" and adds
+      "Use all the defaults". It has no line on (6′)'s scope. v1.7:164 ("Fallback-2 otherwise (Q-F0
+      NOT-RUN sets L0 = false)"; "Q-F3 NOT-RUN sets L1 = false") and :170 ("A Q-F3 not locked by D2
+      is NOT-RUN; v2's ceiling is then Fallback-1 iff L0") differ from v1.6:145/:151, where any Qwen
+      NOT-RUN gave Fallback-2.
+    REASONING:
+      Unanswered. One correction to the mapper: the routing block does mention (6′). Its step 3
+      designates the four decisions-block lines as (6′)'s record, but none of them states the scope,
+      so that is a PI endorsement of a record without the scope in it. "Use all the defaults" cannot
+      answer a question the PI never received: STOP-4 never reached the seat, and the routing block
+      says v1.6 "was never routed". The split sharpens the question. Read literally, (6′) scoped to
+      "the Qwen campaign", which now includes Q-F3, conflicts with the D2 rule, and §0.10 does not
+      list that change.
+####################################################################################################
+RANGE R3
+####################################################################################################
+
+[C1] OLMo hours at 24 qualification sessions; G-CAL-OLMo generation count; §9 lists 3.2–3.8 as Code's
+  MAPPER status=PERSISTS  v1.7 lines: 81, 192 (also 59 for the condition-(4) count)
+  EVIDENCE:
+    v1.7:81 still reads: "per checkpoint 160–192 campaign + 24 qualification + 2 timing sessions ≈
+    1.1–1.3 h of generation; three checkpoints ≈ 3.2–3.8 h, plus G-CAL-OLMo's 64 generations per
+    checkpoint". v1.7:192 still lists "3.2–3.8 (OLMo)" among Code's [C] figures. Re-checked on disk:
+    b3_screen_{instruct,sft,dpo}.json seconds/sessions give 19.53, 22.70 and 22.69 s per session,
+    matching v1.7's 19.5/22.7. With v1.7's own 24 + 2 + 160–192 = 186–218 sessions: instruct
+    1.01–1.18 h, SFT 1.17–1.37 h, DPO 1.17–1.37 h, total 3.35–3.93 h. At 16 qualification sessions
+    (178–210) the total is 3.21–3.79 h, so 3.2–3.8 is the 16-session figure. Condition (4) (v1.7:59:
+    "≥ .75 × the clean pool's … 4 seeds per item under `m-cal|{pool}|{i}|{seed}`"), applied per
+    checkpoint, needs 16 items × 4 seeds × 2 pools = 128 generations, not 64.
+  NOTE:
+    No change from v1.6:75/163. The item applies to the OLMo units only, and the split does not
+    touch them (§0.10 says "OLMo keys unchanged"; the OLMo hours sentence is carried word for word).
+    The per-checkpoint range "1.1–1.3 h" is also too narrow at 24 sessions: the real span is 1.0–1.4
+    h. The new per-unit Qwen figures at :81 (Q-F0 cached 5.3–6.4 / 4.4–5.3 h, uncached 18–20 h) are
+    outside this item, and they reproduce from 100–120 s and 401/446 s. Qwen's G-CAL also needs 128
+    generations, and that is likewise not in any hour figure.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:81 still reads "per checkpoint 160–192 campaign + 24 qualification + 2 timing sessions ≈
+      1.1–1.3 h of generation; three checkpoints ≈ 3.2–3.8 h, plus G-CAL-OLMo's 64 generations per
+      checkpoint", and v1.7:192 still lists "3.2–3.8 (OLMo)" among Code's [C] figures. Recomputed
+      from data/olmo/b3_screen_{instruct,sft,dpo}.json (seconds/sessions = 1855.80/95 = 19.535 s,
+      2247.54/99 = 22.702 s, 2133.20/94 = 22.694 s). At 186–218 sessions: instruct 1.009–1.183 h,
+      SFT 1.173–1.375 h, DPO 1.173–1.374 h, total 3.355–3.932 h. At 16 qualification sessions the
+      total is 3.210–3.788 h, so 3.2–3.8 is the 16-session figure. Condition (4) at v1.7:59 needs "≥
+      .75 × the clean pool's" under key `m-cal|{pool}|{i}|{seed}` with 4 seeds per item, so per
+      checkpoint it is 16 × 4 × 2 pools = 128 generations, not 64.
+    REASONING:
+      I confirm the mapper. The figure, the 64 and the [C] attribution are all unchanged from
+      v1.6:75 and :163. v1.7:192's "unchanged except the per-unit sums, which Code recomputes" does
+      not cover this. It refers to the Qwen per-unit splits, it calls the OLMo figure unchanged, and
+      :81's stated text stays wrong either way. Only the OLMo units are affected, and the split
+      leaves them alone (§0.10 :34, "OLMo keys unchanged"; the hours sentence is carried word for
+      word).
+
+[C2] p0 .05 ratio to the CORR and SHAM-pool rates
+  MAPPER status=PERSISTS  v1.7 lines: 110 (inherited at 124 via "Bars as G-F0m-Qwen"; p0 restated at 153)
+  EVIDENCE:
+    v1.7:110: "**p0 Qwen .05** (≈ 1.7× the per-round v2 rates Code rescored on f1's archive: 17/597
+    CORR, 11/351 SHAM pool, …)". Recomputed: 17/597 = .02848 → .05/.02848 = 1.756×; 11/351 = .03134
+    → 1.595×; pooled 28/948 = .02954 → 1.693×. So "≈ 1.7×" is only the pooled ratio, yet the
+    sentence names the two rates separately.
+  NOTE:
+    The wording is unchanged from v1.6:103 (minor). After the split, the sentence sits in G-F0m-Qwen
+    (Q-F0's qualification stage), and G-F3 inherits it ("Bars as G-F0m-Qwen", :124). It therefore
+    binds both Qwen units, and Q-F0's LOCK-m-F0 v0.1 is the first lock to declare it.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:110: "**p0 Qwen .05** (≈ 1.7× the per-round v2 rates Code rescored on f1's archive:
+      17/597 CORR, 11/351 SHAM pool, …)". Recomputed: .05/(17/597) = 1.756; .05/(11/351) = 1.595;
+      pooled .05/(28/948) = 1.693. G-F3 inherits it (v1.7:124, "Bars as G-F0m-Qwen"), and §6
+      restates p0 .05 at :153.
+    REASONING:
+      "≈ 1.7×" is right only for the pooled rate, yet the sentence names the two rates separately
+      (1.76× and 1.60×). This is a minor wording defect, unchanged from v1.6:103. After the split
+      the sentence binds Q-F0 (G-F0m-Qwen, declared at LOCK-m-F0 v0.1) and, through :124, Q-F3. I
+      found no over-reading.
+
+[C3] OLMo echo class: "the four 'Note:' lines"
+  MAPPER status=PERSISTS  v1.7 lines: 92; new related miscount at 88
+  EVIDENCE:
+    v1.7:92 is unchanged: "plus m's echo class on the four "Note:" lines (F0m-OLMo has no reasoning
+    block)". Re-checked: e2a's SESSION_BANNER is "=== Config evaluation session ===\n"
+    (valence_core/session_e2a.py:69), so it has no Note: line. The OLMo arms carry COMMON + TOLD-MAP
+    ×2 variants + TOLD-MAP-SHAM ×2 variants (v1.7:84–86): five strings of three types, two of them
+    in any one session's banner. v1.7 also adds a new line, :88: "Q-F0 uses four of the six lines
+    (COMMON, TOLD-MAP ×2 variants, TOLD-MAP-SHAM ×2 variants)". Its own list counts 1 + 2 + 2 = 5.
+  NOTE:
+    The split widens the item's reach. The OLMo echo-set count is still wrong, and v1.7's new Q-F0
+    sentence (:88) repeats the same "four" for the same five lines, so the miscount now appears in
+    Q-F0's text as well. Q-F0's Qwen echo class itself (:91, "a complete 'Note:' banner line") has
+    no count and is not affected. The fix stands: "the 'Note:' lines of that session's banner" at
+    :92, and "five of the six" at :88.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:92 is unchanged: "plus m's echo class on the four \"Note:\" lines (F0m-OLMo has no
+      reasoning block)". b3's banner is e2a's SESSION_BANNER (box_b3_sessions.py:65–66, :138), which
+      is "=== Config evaluation session ===\n" (valence_core/session_e2a.py:69) and has no Note:
+      line. The OLMo arms carry COMMON + TOLD-MAP ×2 (A0-OLMo) and COMMON + TOLD-MAP-SHAM ×2
+      (A0s-OLMo), per v1.7:84–86: five template lines of three types. The new line v1.7:88, "Q-F0
+      uses four of the six lines (COMMON, TOLD-MAP ×2 variants, TOLD-MAP-SHAM ×2 variants)", lists 1
+      + 2 + 2 = 5.
+    REASONING:
+      I confirm the mapper. The OLMo count is still wrong. The new Q-F0 sentence at :88 repeats the
+      same "four" for the same five lines, so the miscount now also appears in Q-F0's declared
+      harness strings. Q-F0's own Qwen echo class (:91, "a complete 'Note:' banner line") gives no
+      count and is unaffected.
+
+[C4] Banner joiner, {L_…} filling, mirror definition, reasoning-header newline, Qwen scaffold_absorption set
+  MAPPER status=PERSISTS  v1.7 lines: 83, 86, 57, 110, 92, 94
+  EVIDENCE:
+    v1.7:83: "The banner block is the template's banner, then COMMON, then the arm's TOLD line if
+    any; byte-equality asserted at run time". It has no "each on its own line" and no "`{L_…}`
+    filled from the session's map", both of which v1.3:104 had. v1.7:86: "… / the mirror." has no
+    definition (v1.3:108 had "(`{L_a}`/`{L_b}` swapped)"). v1.7:57: "`[round {n} | reasoning]` /
+    `Reasoning (one line):`" leaves the newline between the two lines unstated (v1.3:63–65 gave it
+    as a two-line block). For the Qwen scaffold set, v1.7:110 has only "a banned special-token
+    string, from the substrate's ban list" and :94 "the frozen ban list". OLMo's set is pinned at
+    :92, but Qwen's (data/configs/e2a_ban_list.json, which e2d/config.py:99 loads) is not named.
+  NOTE:
+    The split changes which parts are on Q-F0's critical path. The banner joiner, the {L_…} fill,
+    the mirror and the Qwen scaffold_absorption set all bind Q-F0 and the OLMo units now: banner
+    bytes and hair triggers are declared at LOCK-m-F0 v0.1 / LOCK-m-OLMo v0.1 (:106) and built at
+    step 4. The reasoning-header newline applies only to Q-F3, which is deferred to step 19 (:184),
+    so it must be pinned by LOCK-m-F3 v0.1. :55's "the joiner after the reasoning line is \"\\n\""
+    is carried from v1.6 and does not cover either the banner joiner or the header-to-prompt
+    newline.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:83 is identical to v1.6:77: "The banner block is the template's banner, then COMMON, then
+      the arm's TOLD line if any; byte-equality asserted at run time". It has no "each on its own
+      line" and no "`{L_…}` filled from the session's map", both of which v1.3:104 had. v1.7:86, "…
+      / the mirror.", has no definition, where v1.3:108 had "(`{L_a}`/`{L_b}` swapped)". v1.7:57
+      still gives "`[round {n} | reasoning]` / `Reasoning (one line):`" with the newline between
+      them unstated (v1.3:63–64 gave a two-line block). For the Qwen scaffold set, v1.7:110 has only
+      "from the substrate's ban list" and :94 "the frozen ban list". The Qwen file is
+      data/configs/e2a_ban_list.json (12 strings), which e2d/config.py:99 and f_sessions.py:57 load.
+      build_ban_list without a path (session.py:115–121) would instead compute
+      DEFAULT_SCAFFOLD_STRINGS ∪ special tokens, so the set is not fixed by the text.
+    REASONING:
+      None of the five sub-points is addressed. Testing for over-reading, I note that the Qwen ban
+      list has only one file on disk, but the runner could build the list fresh instead, so the pin
+      is still needed (minor). After the split, the banner joiner, the `{L_…}` fill, the mirror and
+      the Qwen scaffold set bind Q-F0 and OLMo at LOCK v0.1 and the step-4 build. The
+      reasoning-header newline binds only Q-F3 (step 19, LOCK-m-F3 v0.1).
+
+[C5] Key-to-generator function and draw calls; definition of "begins a word"
+  MAPPER status=PERSISTS  v1.7 lines: 55, 59
+  EVIDENCE:
+    v1.7:55 lists the key strings (`m-items|{s}`, `m-f3-items|{s}`, `m-olmo-items|{ckpt}|{s}`, arm
+    rng `m|{arm}|{s}`, `m-olmo|{ckpt}|{arm}|{s}`) and "per forced round a generation seed; per free
+    choice [F3 only] a reasoning-line seed, then menu order, then a generation seed — all from the
+    arm rng". It states no key-to-generator function and no draw call. Only corrupt_m's per-item rng
+    is pinned (:59). f1's own arm rng is `default_rng(zlib.crc32(f"f|{arm}|{s}".encode()) % 2**31)`
+    (jlens-qwen36/scripts/f_sessions.py:273). v1.7:59 still reads "letters a–z or A–Z that do not
+    begin a word" with no definition. Recomputed from data/f/pools.json: f1's rule
+    (f_sessions.py:109–115, word_start = not ch.isalpha()) gives n_eligible
+    6,19,19,13,24,16,10,45,19,10,24,15,6,19,10,17, which equals v1.7's [C] list. A
+    whitespace-initial reading gives 17/16/18 at items 5, 11 and 15 ("'hot'", "'up'", "'open'").
+  NOTE:
+    Unchanged from v1.6. The split adds key families (`m-f3-items|{s}`, `m-f3-items-{gate}|{s}`)
+    without pinning the function, so the gap now covers three unit families. The "begins a word" pin
+    binds G-CAL, which serves all units (:59). The fix is still a one-clause pin plus the generator
+    and draw-call pin, at LOCK-m-F0 v0.1 for Q-F0/OLMo and at LOCK-m-F3 v0.1.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:55 lists the key strings (`m-items|{s}`, `m-f3-items|{s}`, `m-olmo-items|{ckpt}|{s}`,
+      `m|{arm}|{s}`, `m-olmo|{ckpt}|{arm}|{s}`) and the draw order, but no key-to-generator function
+      and no draw calls. Only corrupt_m's per-item rng is pinned (:59). f1's arm rng is
+      `default_rng(zlib.crc32(f"f|{arm}|{s}".encode()) % 2**31)`
+      (jlens-qwen36/scripts/f_sessions.py:273). v1.7:59 still reads "letters a–z or A–Z that do not
+      begin a word". Recomputed from data/f/pools.json CORR_clean: f1's rule (f_sessions.py:109–115,
+      word_start = not ch.isalpha()) gives [6,19,19,13,24,16,10,45,19,10,24,15,6,19,10,17], equal to
+      v1.7's [C] list. A whitespace-start rule gives 17, 16 and 18 at items 5, 11 and 15 ("'hot'",
+      "'up'", "'open'").
+    REASONING:
+      I confirm the mapper. Both pins are still absent. The force of the "begins a word" pin is low
+      because the [C] list already selects f1's rule, which STOP-4 itself said, but the definition
+      is still missing from the text. The split adds Q-F3 key families (`m-f3-items|…`) with no
+      generator pinned, so the gap now covers Q-F0/OLMo at LOCK v0.1 and Q-F3 at LOCK-m-F3 v0.1.
+
+[C6] Gate keys: `m-time|…` elided; G-TIME-OLMo arm rng; dead `m-olmo-items-id`; `{template}` bytes
+  MAPPER status=PERSISTS  v1.7 lines: 55, 107, 108, 110, 120
+  EVIDENCE:
+    v1.7:107: "G-TIME-F0 … keys `m-time|…`"; v1.7:120: "G-TIME-F3 … keys `m-time|…`, as G-TIME-F0".
+    The elision is still there and now appears twice. v1.7:107: "G-TIME-OLMo: two sessions per
+    checkpoint, same treatment", with no arm-rng key. v1.7:110 `m-olmo-qual|{ckpt}|{template}|{s}`,
+    :108 `m-id|F0m|{template}|{s}` and :110 `m-f0m|{template}|{s}` leave the `{template}` bytes
+    unstated. The dead `id` value has changed form: v1.7:55 now attaches "`{gate}` ∈ {time, id,
+    qual}" to Q-F0 only, and for OLMo gives `m-olmo-items-{gate}|{ckpt}|{s}` with no `{gate}` range
+    (Q-F3's `m-f3-items-{gate}|{s}` has none either).
+  NOTE:
+    Three of the four sub-points persist unchanged. The fourth (the dead OLMo `id` key) is gone only
+    because OLMo's `{gate}` range is no longer declared, which is the same pin need in another form.
+    §0.10 (:34) also says "OLMo keys unchanged", so the change was not intended. Still LOCK v0.1
+    pins: :106 and :119 delegate "keys". The split puts the `m-time` and `{template}` pins into both
+    LOCK-m-F0 v0.1 and LOCK-m-F3 v0.1, and adds new Qwen `{template}` keys (`m-f0m|…`).
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:107: "G-TIME-F0 … keys `m-time|…`"; v1.7:120: "G-TIME-F3 … keys `m-time|…`, as G-TIME-F0"
+      (the elision now appears twice). v1.7:107: "G-TIME-OLMo: two sessions per checkpoint, same
+      treatment", with no arm-rng key and no {ckpt} in any `m-time` key. `{template}` bytes are
+      unstated in `m-id|F0m|{template}|{s}` (:108), `m-f0m|{template}|{s}` (:110),
+      `m-olmo-qual|{ckpt}|{template}|{s}` (:110), `m-f3|{template}|{s}` (:124) and
+      `m-id|F3|{template}|{s}` (:122). On the dead id key: v1.7:55 now attaches "`{gate}` ∈ {time,
+      id, qual}" to Q-F0 only, and `m-olmo-items-{gate}|{ckpt}|{s}` has no declared range, while
+      §0.10 (:34) says "OLMo keys unchanged".
+    REASONING:
+      Three sub-points persist unchanged. I tested whether the dead `m-olmo-items-id` is RESOLVED,
+      which would make the item PARTIAL. It is not. Read literally, :55 leaves OLMo's `{gate}` range
+      undeclared. Read through §0.10's "OLMo keys unchanged", the v1.6 range including id still
+      applies. Either way the pin is still needed, so the item does not resolve. LOCK v0.1 still
+      takes these as delegated pins (:55 "each unit's gate-stage schedules and keys in its own
+      v0.1"; :106, :119). The split duplicates the `m-time` and `{template}` gaps into LOCK-m-F3
+      v0.1.
+
+[C7] B11 paraphrase drops its condition-(4) exception
+  MAPPER status=PERSISTS  v1.7 lines: 59
+  EVIDENCE:
+    v1.7:59: "Why fixed: under nesting a higher rate is strictly more corrupted, so a \"smallest
+    passing rate\" over a ladder returns the lowest rung whenever anything passes". Code's original
+    B11 (scratchpad ce7d_texts.txt:754) said a higher rung is chosen "only after .15 fails, which
+    nesting rules out for (3) and leaves possible for (4) only through sampling noise". STOP-3 C13
+    flagged the paraphrase for dropping that exception, and v1.7 still drops it. "strictly" is
+    unchanged; that half was judged not a defect.
+  NOTE:
+    Minor wording, and it is only a rationale now that the ladder is gone. v1.7 also drops v1.6's
+    provenance tag "(the second form of Code STOP-2's B11; STOP-3 A11)" on the replacement formula.
+    That is not a defect in a self-contained document. The split does not change the item's force:
+    the dose is calibrated once at G-CAL and "serves all three units; Q-F3 does not recalibrate"
+    (:59).
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:59: "Why fixed: under nesting a higher rate is strictly more corrupted, so a \"smallest
+      passing rate\" over a ladder returns the lowest rung whenever anything passes". Code's
+      original B11 (scratchpad ce7d_texts.txt, B11 G-CAL bullet) says a higher rung is chosen "only
+      after .15 fails, which nesting rules out for (3) and leaves possible for (4) only through
+      sampling noise". v1.7 still drops the exception for condition (4).
+    REASONING:
+      I confirm the mapper. This is a minor wording defect in what is now only a rationale. Dropping
+      the provenance tag is not a defect. The split does not change the item's force, since the dose
+      is calibrated once and "serves all three units; Q-F3 does not recalibrate" (:59).
+
+[C8] Who strikes the f1 dose note when the 0.12 artifact is absent
+  MAPPER status=PERSISTS  v1.7 lines: 59, 161, 172, 181
+  EVIDENCE:
+    v1.7:59: "the record behind the preprint's f1 CORR dose note, which Step 2 attaches only if this
+    artifact exists". v1.7:161: "f1's CORR line carries its dose note iff G-CAL's 0.12 artifact
+    exists." Nothing assigns removal when the artifact is absent. §7.5 (:172) reaches only sentences
+    that assert a null, and its seed list names the "§5.5 e2a, e2b, f1 labels", not the note. The
+    note is in the preprint now, at root:182: "at a dose a later calibration (§8.1) found below its
+    visibility criterion". The v1.1 redraft that becomes the preprint of record is not on disk (no
+    PREPRINT-v1_1-draft.md in the repo), so I could not check whether it carries the note. The
+    keyed-on-existence wording is unchanged; it was judged not a defect.
+  NOTE:
+    The split increases the item's force. The artifact is made only in the Q-F0 track (step 6,
+    :181). The OLMo track starts from step 9 and Q-F3 does not recalibrate, so the states without
+    the artifact are a G-PORT STOP (step 5) or a Q-F0 NOT-RUN at D1 = 2026-10-16 before step 6. Both
+    are v1 posting states under Fallback-2 (:164, :170). The unassigned strike therefore falls on
+    the v1 posting, under a Clock 12 days from v1.7's date. G-ANL-F0's 625-tuple battery (:105)
+    asserts no dose-note output either.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:59: "the record behind the preprint's f1 CORR dose note, which Step 2 attaches only if
+      this artifact exists"; v1.7:161: "f1's CORR line carries its dose note iff G-CAL's 0.12
+      artifact exists." Nothing assigns anyone to remove the note when the artifact is absent. §7.5
+      (:172) reaches only null-asserting sentences, and step 18 (:181) rewrites only "every §7.5
+      sentence". The note is in the preprint now: root:182, "at a dose a later calibration (§8.1)
+      found below its visibility criterion" (sha d6431e97…222b8 verified). No PREPRINT-v1_1-draft.md
+      is on disk, so I could not check whether the preprint of record carries the note. The 0.12
+      replay runs first in step 6, before conditions (3)/(4), so it exists unless step 6 never runs.
+      Step 6 is on the Q-F0 track (:181), the OLMo track starts at step 9, and Q-F3 does not
+      recalibrate.
+    REASONING:
+      The removal is still unassigned. Testing for over-reading: Step 2's "iff" fixes the required
+      state, and labels are §7's v1 outputs (step 17), but no step says who edits the preprint to
+      match. The artifact is absent only after a G-PORT STOP, or when D1 = 2026-10-16 passes before
+      step 6. Both are v1 postings under Fallback-2 (:164, :170). The shorter D1 makes that case
+      more likely than under v1.6's proposed D, so the item's force rises a little. The cause is the
+      earlier Clock rather than the split itself.
+
+[C9] Per-checkpoint units under single OLMo v0.1/v0.2 locks; G-TIME-OLMo's "same treatment"; OLMo cap; v0.2 "path per family"; v1.0 lock names
+  MAPPER status=PARTIAL  v1.7 lines: 79, 106, 107, 109, 113, 181, 186
+  EVIDENCE:
+    Fixed: v1.7:109 now reads "LOCK-m-F0 v0.2 / LOCK-m-OLMo v0.2. Path for F0m; projections; OLMo
+    port acceptance.", which replaces v1.6's "path per family". Partly fixed: per-checkpoint caps
+    now follow from :79 ("each OLMo checkpoint are units: one cap, one look series, one stop, one
+    NOT-RUN, one Clock date each") and :113 ("LOCK-m-OLMo v1.0 (per checkpoint). … the unit's hour
+    cap (PI)"), but step 16 (:181) still says "G-PWR; PI sets the OLMo cap → LOCK-m-OLMo v1.0 per
+    checkpoint". Persists: :106 and :109 keep a single LOCK-m-OLMo v0.1/v0.2 with no rule for one
+    checkpoint stalled at a shared lock while the others proceed. :107 says "G-TIME-OLMo: two
+    sessions per checkpoint, same treatment", which points to G-TIME-F0's "a fire → STOP before
+    G-ID-F0m", and OLMo has no G-ID. The three v1.0 locks are still unnamed (:113 "(per
+    checkpoint)"; :186 lists `LOCK-m-OLMo v1.0` once).
+  NOTE:
+    The item applies to the OLMo units only. The split adds a D_O per checkpoint (all three
+    2026-10-16, :16 and :170) and a *pending* label for a locked, unfinished unit at v1 (:161).
+    Neither answers what a shared v0.1/v0.2 records for a checkpoint stopped at G-TIME-OLMo. With
+    D_O at 2026-10-16, a checkpoint stalled at a shared lock reaches NOT-RUN sooner.
+  REFUTER status=PARTIAL overturned=False
+    EVIDENCE:
+      Fixed: v1.7:109 now reads "LOCK-m-F0 v0.2 / LOCK-m-OLMo v0.2. Path for F0m; projections; OLMo
+      port acceptance.", replacing v1.6:102's "path per family". Partly fixed: :79 now gives each
+      OLMo checkpoint "one cap", and :113 has "LOCK-m-OLMo v1.0 (per checkpoint) … the unit's hour
+      cap (PI)". The v1.6 "cap share" wording is gone, but step 16's OLMo track (:181) still says
+      "PI sets the OLMo cap → LOCK-m-OLMo v1.0 per checkpoint". Persists: :106, :109 and :181 keep a
+      single LOCK-m-OLMo v0.1 and v0.2, with no rule for one checkpoint stalled at a shared lock.
+      :107 says "G-TIME-OLMo: … same treatment", which points to "a fire → STOP before G-ID-F0m", a
+      Qwen stage. The three v1.0 locks have no names (:113 "(per checkpoint)"; :186 lists
+      `LOCK-m-OLMo v1.0` once).
+    REASONING:
+      I confirm PARTIAL. One sub-point is resolved (path), one is partly resolved (cap), and three
+      persist (shared-lock stall rule, G-TIME-OLMo's treatment, v1.0 names). The new *pending* label
+      (:161, :170) applies only to a unit locked at v1.0 and running at v1. It does not cover a
+      checkpoint stopped at shared v0.1/v0.2. The item applies to the OLMo units only.
+
+[C10] Respawn per box; one BACKEND entry; "backend identifier" undefined; box change after the Clock date
+  MAPPER status=PERSISTS  v1.7 lines: 81, 113, 170, 181, 186
+  EVIDENCE:
+    v1.7:81: "the gate stages may span pod sessions" and "the backend identifier is in the resume
+    identity". v1.7:181: "respawn protocol (entry `BACKEND — characterization`) → G-CAL-OLMo per
+    checkpoint …", run once at the start of the track, and :186 lists `BACKEND — characterization`
+    once. Neither says that each new box needs protocol (i)–(ii) and its own entry (CLAUDE.md
+    Respawn protocol). "backend identifier" (:81, :113) is still undefined. :170 ("An OLMo unit not
+    locked by D_O is NOT-RUN") and :81 ("a mid-campaign box change aborts and restarts that unit")
+    still do not say what a box change after D_O does to a unit whose lock records the old backend.
+  NOTE:
+    Unchanged from v1.6. OLMo units only, and the split does not alter them. The single D has become
+    D_O = 2026-10-16, so a post-Clock box change on a locked checkpoint is no less likely.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:81: "the gate stages may span pod sessions" and "the backend identifier is in the resume
+      identity". :181 runs "respawn protocol (entry `BACKEND — characterization`)" once at the start
+      of the OLMo track, and :186 lists one `BACKEND — characterization` entry. CLAUDE.md:118–124
+      requires protocol (i)–(ii) and a dated entry "On any new or replacement box". "backend
+      identifier" (:81, :113) is still undefined. :170 ("An OLMo unit not locked by D_O is NOT-RUN")
+      and :81 ("a mid-campaign box change aborts and restarts that unit") still do not say what
+      happens when the box changes after D_O on a unit whose lock records the old backend.
+    REASONING:
+      All three sub-points are unchanged from v1.6:75 and :157. CLAUDE.md binds per box regardless,
+      but v1.7's single named entry conflicts with gate stages that may span pods. The item applies
+      to the OLMo units only. With D_O at 2026-10-16, any relock after a box change now falls past
+      the Clock sooner.
+
+[C11] OLMo scaffold_absorption = b3's ban list (sub-word ids); substring-match pin
+  MAPPER status=PERSISTS  v1.7 lines: 92, 110
+  EVIDENCE:
+    v1.7:92 is unchanged: "The OLMo `scaffold_absorption` string set is b3's ban list
+    (box_b3_sessions.py:261; Code pin)." v1.7:110: "`scaffold_absorption` (a banned special-token
+    string, from the substrate's ban list, in any model-generated text)". Re-checked:
+    box_b3_sessions.py:261 is `ban_ids, ban_strings = build_ban_list(adapter)`.
+    data/olmo/scaffold_*.json record ban_strings ["</think>", "<think>", "<|endoftext|>",
+    "<|im_end|>", "<|im_start|>", "<|pad|>"] (6) with ban_roster_size 9, sha16 2dd86a453a2275ef.
+    build_ban_list (valence_core/session.py:115–121) encodes each string, so 9 ids from 6 strings
+    fits <think>/</think> being split into ordinary sub-word tokens. I did not load the tokenizer to
+    confirm the "five of nine". b3's AuditSpec has 4 ban strings (box_b3_sessions.py:85–86). None of
+    Code's pin (substring match on the six strings, startup assertion against b3's sha16,
+    audit-first claim) is in v1.7.
+  NOTE:
+    OLMo units only; the split does not change the item. It binds LOCK-m-OLMo v0.1's bar
+    declarations and the OLMo runner built at step 4.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:92 is unchanged: "The OLMo `scaffold_absorption` string set is b3's ban list
+      (box_b3_sessions.py:261; Code pin)." v1.7:110: "a banned special-token string, from the
+      substrate's ban list, in any model-generated text". box_b3_sessions.py:261 is `ban_ids,
+      ban_strings = build_ban_list(adapter)`, and its sha16 is computed over ids (:262).
+      data/olmo/scaffold_*.json record ban_strings
+      ["</think>","<think>","<|endoftext|>","<|im_end|>","<|im_start|>","<|pad|>"] (6), with
+      ban_roster_size 9 and b3 ban_list sha16 2dd86a453a2275ef. build_ban_list encodes each string
+      into ids (session.py:115–121). b3's AuditSpec has 4 ban_strings (box_b3_sessions.py:86). v1.7
+      has no substring-match pin, no startup assertion and no audit-first claim.
+    REASONING:
+      I confirm the mapper. Six strings mapping to nine ids is consistent with <think>/</think>
+      splitting into ordinary tokens. I also did not load a tokenizer to confirm the five of nine,
+      and the status does not depend on it: the string-versus-id ambiguity and the missing pin hold
+      either way. OLMo units only; this binds LOCK-m-OLMo v0.1 and the step-4 runner.
+
+[C12] Rule 28(d) on OLMo: declare b3's read window and encode limit
+  MAPPER status=PERSISTS  v1.7 lines: 55
+  EVIDENCE:
+    v1.7:55 ends: "at `CHOICE_WINDOW = 8192` with no encode limit on generation (rule 28(d)); b3's
+    read on OLMo." OLMo's window and encode limit are still not declared. Re-checked:
+    valence_core/adapters/olmo_hf.py:45 `DEFAULT_CHOICE_WINDOW = 8192`; :95–98 `encode` reads "No
+    truncation, ever." and returns the untruncated encode.
+  NOTE:
+    Unchanged. OLMo units only; the split does not change the item. A one-clause declaration (8192;
+    no truncation; olmo_hf.py:45, :95–98) at LOCK-m-OLMo v0.1.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:55 ends: "at `CHOICE_WINDOW = 8192` with no encode limit on generation (rule 28(d)); b3's
+      read on OLMo." Its structure parallels "Templates: e2a's … on Qwen; b3's on OLMo", so the
+      8192/no-limit declaration attaches to the Qwen read. b3 does call readout.choice_read
+      (box_b3_sessions.py:180), and the OLMo values are olmo_hf.py:45 `DEFAULT_CHOICE_WINDOW = 8192`
+      and :95–98 `encode`, "No truncation, ever.", but v1.7 does not declare them for OLMo.
+    REASONING:
+      This is a minor declaration gap with low force, since the inherited values match the Qwen
+      declaration. Rule 28(d)'s standing form still asks for the window and encode limit to be
+      declared per generation path. Unchanged from v1.6; OLMo units only; one clause at LOCK-m-OLMo
+      v0.1.
+
+[C13] Base row's "no instruction-following" stated as fact (unmeasured); optional A0-OLMo-base
+  MAPPER status=PERSISTS  v1.7 lines: 14, 24, 46, 161
+  EVIDENCE:
+    v1.7:14: "the OLMo base row (*concluded, not answered — told control not applicable at base (no
+    instruction-following)*, always)". v1.7:46: "base has no control (no instruction-following)".
+    v1.7:161: "base: *concluded, not answered — told control not applicable at base (no
+    instruction-following)*, always." The rationale on disk is still not restated: decisions block
+    :98 "a told line presupposes instruction-following; a DEAD at Base would be uninformative about
+    the lever" (sha fab576d8…34f8 verified), and v1.5:90 says the same. The PI option (A0-OLMo-base)
+    is not answered by routing decisions (8)–(11), which cover units, the v1 posting, Q-F3's
+    retention and the Clock dates, and HANDOFF-2026-10-04 is silent on it. Re-checked the option's
+    cost: b3 base is 2081.19 s / 89 sessions = 23.38 s, so 186–218 sessions take 1.21–1.42 h.
+  NOTE:
+    The correction persists, and the PI option is open: nothing on disk decides it. The split
+    increases the item's force. Step 2 is now "[v1 and v2]" (:161), so the base label posts with v1,
+    and :14 adds a further instance of the factual phrasing in §0.1.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      The factual phrase is still in v1.7:14 ("told control not applicable at base (no
+      instruction-following)"), :46 ("base has no control (no instruction-following)") and :161. The
+      rationale is not restated: decisions block (sha fab576d8…34f8 verified) line 98, "a told line
+      presupposes instruction-following; a DEAD at Base would be uninformative about the lever", and
+      v1.5:90 says the same. HANDOFF-2026-10-04-design.md does not mention an A0-OLMo-base option;
+      its PI items are the routing block, preprint placement and caps. The routing decisions
+      (8)–(11) cover units, the v1 posting, Q-F3's retention and the Clock dates. Base cost
+      recomputed: 2081.19 s / 89 = 23.38 s per session, so 186–218 sessions take 1.21–1.42 h.
+    REASONING:
+      The correction persists, and the PI option is undecided by anything on disk. One small mapper
+      over-inclusion: v1.7:24 ("does not exist (base)") states the decision accurately and is not an
+      instance of the factual claim. The force is about the same as in v1.6. The base label posted
+      at the single posting then, and posts at v1 now (:161 "[v1 and v2]").
+
+[C14] Counter (c): undisclosed lexicon changes; stage-1 role; tie-break; attribution/ambiguous overlap; blind-read scoring unit; adjudication-unblinded sessions in the 48
+  MAPPER status=PERSISTS  v1.7 lines: 135, 141, 118, 113, 125
+  EVIDENCE:
+    v1.7:135 is v1.6:116 word for word plus the "[Q-F3]" marker. Polarity: "negative = corrupt*,
+    garbl*, typo*, misspell*, scrambl*, jumbl*, mangl*, broken; positive = clean, correct*, intact,
+    fine, readable, legible". v1.3:170's frozen list had no jumbl*, mangl* or legible and had
+    "correct", not correct*, and v1.7 does not disclose the difference. The stage-1 list's role is
+    still undefined, and there is no tie-break for equidistant terms. "*attribution* = exactly one
+    label mentioned with a polarity" still overlaps "*ambiguous* = a mentioned label without
+    polarity" when two labels are mentioned and only one has a polarity; v1.4:116 read "exactly one
+    own-pair label mentioned and it carries a polarity". The blind read still "reports agreement
+    with the rule" with no "(label, polarity)" unit (v1.4:116 had "scoring (label, polarity)"). :141
+    keeps the exception "except the transcripts a fired hair trigger requires", so a session
+    unblinded in adjudication can still be sampled into the 48.
+  NOTE:
+    The split narrows the item's force to Q-F3: counter (c) is marked [Q-F3], and its scorer and
+    lexicons are fixed at G-ANL-F3 (:118, step 19). None of it is on Q-F0's or OLMo's critical path,
+    but it must be pinned before G-ANL-F3 and LOCK-m-F3. Separately, v1.7:113's LOCK v1.0 hash list
+    drops v1.6:106's "analyzer and lexicons" to "analyzer", and LOCK-m-F3 v1.0 is "as §3.1" (:125).
+    The lexicons are therefore hashed only if they live inside the analyzer, and §0.10 does not list
+    this change.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:135 is v1.6:116 plus "[Q-F3]" markers. The polarity lexicon has negative jumbl*, mangl*
+      and positive correct*, legible. The frozen v1.3:170 list was "negative: corrupt*, garbl*,
+      typo*, misspell*, scrambl*, broken; positive: clean, correct, intact, fine, readable", and
+      v1.7 does not disclose the difference. The stage-1 list's role is undefined, and no tie-break
+      is given. "*attribution* = exactly one label mentioned with a polarity" overlaps "*ambiguous*
+      = a mentioned label without polarity" when two labels are mentioned and only one carries a
+      polarity; v1.4:116 had "exactly one own-pair label mentioned and it carries a polarity". The
+      blind read "reports agreement with the rule" without v1.4:116's "scoring (label, polarity)".
+      :141 still says "except the transcripts a fired hair trigger requires". A session whose hair
+      trigger fires after the first reasoning line stays in the domain (:131), so it can be drawn
+      into the 48. Beside-note confirmed: v1.6:106 hashed "analyzer and lexicons", v1.7:113 hashes
+      "analyzer", LOCK-m-F3 v1.0 is "as §3.1" (:125), and §0.10 does not list the change.
+    REASONING:
+      All six sub-points persist. Their force is now Q-F3 only (counter (c) is [Q-F3]; G-ANL-F3
+      :118, step 19). None of it is on the critical path for Q-F0 or OLMo. The lexicon-hash drop is
+      an undisclosed change against §0.10's "exhaustively" (:4), and it matters only if the lexicons
+      live outside m_analyze.py.
+####################################################################################################
+RANGE R4
+####################################################################################################
+
+[C15] Secondaries thinned: lose-shift, per-property table, (f), f2's tier; (d) mean exactly 20 at 80-floor arms; shams always count-only
+  MAPPER status=PERSISTS  v1.7 lines: 135, 141, 163, 181, 65, 66
+  EVIDENCE:
+    v1.7:135 is v1.6:116 plus [Q-F3] tags only: "(b) lose-shift on contrast arms only; ... (d)
+    per-pair first-pick shares pooled over maps ... (f) **[Q-F3]** reasoning-line statistics", with
+    the floor "m's floor is 20 events". v1.7:141 says only "The per-property exclusion table is
+    reported in VERDICTS only". v1.7:163 says "pending an f2 confirmatory pre-registration" and
+    names no tier. Floors at v1.7:65–66 are A0 "96 (80 if F0m runs uncached) / 32" and A0-OLMo "80 /
+    32". Re-checked: 4 pairs, so 80/4 = 20 per pair exactly; shams 32/4 = 8 and 56/4 = 14, both
+    always below 20.
+  NOTE:
+    Still undefined: what a "lose" is in a CORR contrast, what the per-property table contains, what
+    (f) contains, and f2's α (PROPOSAL-f confirm .05 or m's A2 .01). Nothing says that (d) sits
+    exactly at its floor on the 80-floor arms (any imbalance drops a pair below it) or that sham (d)
+    is always count-only. Effect of the split: (f) and f2's tier now matter only for Q-F3/v2.
+    Lose-shift, the per-property table (which step 17, v1.7:181, puts in Q-F0's VERDICTS) and (d)
+    now first bind at v1. (d)'s floor-80 case is mainly a v1 problem: A0-OLMo-{ckpt} is always 80,
+    A0 is 80 if uncached, and A1's 80 is in Q-F3.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:135 is v1.6:116 word for word, apart from two inserted **[Q-F3]** tags: "(b) lose-shift
+      on contrast arms only" and "(f) **[Q-F3]** reasoning-line statistics", floor "m's floor is 20
+      events". v1.7:141 reads "The per-property exclusion table is reported in VERDICTS only", and
+      step 17 (v1.7:181) puts "the per-property table" in the Q-F0 VERDICTS. v1.7:163 reads "pending
+      an f2 confirmatory pre-registration", with no α and no n. What was dropped: v1_3:169 defined
+      lose-shift as "P(switch | previous chosen round was corrupted) vs P(switch | it was clean), by
+      arm"; v1_3:175 gave the table's content as "(clean vs corrupted rounds excluded, per arm; f1
+      CORR's 7-vs-1 anomaly, archive:91–93, is the reference)"; v1_3:173 defined (f) as
+      "reasoning-line length, cap-reach and defect statistics, by arm"; v1_3:191 gave f2's tier as
+      "(n ≥ 100, α = .05, as PROPOSAL-f:110's tier)". Floors at v1.7:65–66: A0 is 96 (80 if
+      uncached), A0-OLMo is 80, shams are 32. Over 4 pairs, 80/4 = 20 exactly; sham floors of 32 and
+      56 give 8 and 14 per pair, and each arm stops at its floor (v1.7:77), so sham (d) is always
+      below 20.
+    REASONING:
+      Every thinned element is still undefined in v1.7, and nothing says that (d) sits exactly at
+      its floor on 80-floor arms or that sham (d) is count-only. One correction to the mapper:
+      v1.7:163 does say "confirmatory", so it is wrong that it "names no tier". The defect is that
+      the word is ambiguous, since v1.7:16 itself sets m's confirmatory tier (.01) against
+      PROPOSAL-f's confirm tier (.05), and the .05/n≥100 pin at v1_3:191 is gone. The mapper's split
+      analysis holds. (f) and f2 now bear only on Q-F3/v2. Lose-shift (A0 is a contrast arm), the
+      per-property table (step 17, 181) and (d) first bind at v1. (d) at floor 80 is mainly a v1
+      problem: A0-OLMo is always 80, A0 is 80 if uncached, and A1 (in Q-F3) is 80 if uncached. Not
+      overturned.
+
+[C16] E '(f1's form)': cite f_sessions.py:456, since PROPOSAL-f's wording is 'max sham pseudo-Δ'
+  MAPPER status=PERSISTS  v1.7 lines: 133, 191
+  EVIDENCE:
+    v1.7:133 is byte-identical to v1.6:114: "E = |Δ_c(S)| pooled over the matched sham's domain
+    (f1's form)." The §9 Code list (v1.7:191) cites only "f_sessions.py :253–258, :624–627".
+    Re-checked: jlens-qwen36/scripts/f_sessions.py:456 reads `pseudo =
+    abs(float(np.mean(sham_first)) - 0.5)` (pooled |mean − .5|).
+    PROPOSAL-f-natural-reinforcer-screen.md:104 reads "(1) |Δ_c| > max sham pseudo-Δ (computed with
+    matched pseudo-assignments)".
+  NOTE:
+    Unchanged. 'f1's form' can still be read as the pre-registered max-pseudo-Δ rather than the
+    code's pooled form. Effect of the split: E is in every arm's conjunct (i), so the ambiguity now
+    first binds at v1 (A0, A0-OLMo-c). The fix is still a one-clause citation.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:133 is byte-identical to v1.6:114 (verified by line compare): "E = |Δ_c(S)| pooled over
+      the matched sham's domain (f1's form)." The §9 Code list (v1.7:191) cites only "f_sessions.py
+      :253–258, :624–627". jlens-qwen36/scripts/f_sessions.py:456 reads `pseudo =
+      abs(float(np.mean(sham_first)) - 0.5) if sham_first else None`, the pooled form.
+      PROPOSAL-f-natural-reinforcer-screen.md:104–105 reads "(1) |Δ_c| > max sham pseudo-Δ (computed
+      with matched pseudo-assignments)".
+    REASONING:
+      Unchanged. "f1's form" can still be read as the pre-registered max-over-pseudo-assignments
+      rule rather than the code's pooled |mean − .5| at :456, and the citation that would settle it
+      is missing. E enters conjunct (i) for every arm, so after the split the ambiguity first binds
+      in Q-F0 and the OLMo units (v1). It is still a one-clause fix. Agree with the mapper.
+
+[C17] Step 6 '[G-PWR's figure]' vs attained power; Step 6 lost the A3 POSITIVE/REVERSE clause; Step 2 NOT-RUN called 'did not pass'
+  MAPPER status=PARTIAL  v1.7 lines: 161, 165, 149, 77, 163, 170
+  EVIDENCE:
+    Step 6 (v1.7:165) still reads "(iff A3 = NULL) *; uninstructed, nothing moves, at [G-PWR's
+    figure]*", while §5 (v1.7:149) says "... (.927 at the planned floors), or the attained power if
+    A3 ended below floor" and v1.7:77 puts attained power in the verdict sentence. Step 6 has no A3
+    ∈ {POSITIVE, REVERSE} clause; v1.5:140 had "(if A3 ∈ {POSITIVE, REVERSE}) *; the uninstructed
+    cell returned [outcome] and is under confirmation (§8.1)*". Step 2 for Qwen (v1.7:161) still
+    reads "did not pass [outcome; or NOT-RUN: reason]". Step 2 for OLMo now reads "the told control
+    at this stage [did not pass: outcome | is NOT-RUN: reason | is pre-registered and pending at
+    this posting]". root:280 reads "recorded as not run".
+  NOTE:
+    Fixed: the OLMo NOT-RUN label no longer says 'did not pass'. Persists: (a) the Qwen F0 label
+    still calls an unrun control 'did not pass'; (b) Step 6's [G-PWR's figure] still conflicts with
+    §5's attained-power rule; (c) Step 6 still has no A3 POSITIVE/REVERSE clause. v1.7's new dated
+    note (163, 'a hit under confirmation') goes on the v1 record only, not into Step 6's §5.7 text.
+    Effect of the split: (b) and (c) are now v2/Q-F3 only. (a) now lands on the v1 posting, and with
+    D1 = 2026-10-16 a Clock NOT-RUN of Q-F0 is the likeliest way to reach it (v1.7:170: 'v1 posts
+    under Fallback-2 with the Qwen F0 cells concluded, not answered'). So (a) carries more weight
+    now.
+  REFUTER status=PARTIAL overturned=False
+    EVIDENCE:
+      Fixed for OLMo. v1.7:161 now reads "the told control at this stage [did not pass: outcome | is
+      NOT-RUN: reason | is pre-registered and pending at this posting]". Persists for Qwen: the same
+      line reads "the told control at F0 on this substrate did not pass [outcome; or NOT-RUN:
+      reason]". root:280 (sha d6431e97…222b8, verified) reads "with the told control recorded as not
+      run". Persists in Step 6: v1.7:165 still reads "(iff A3 = NULL) *; uninstructed, nothing
+      moves, at [G-PWR's figure]*", while §5 (v1.7:149) quotes ".927 at the planned floors" or "the
+      attained power if A3 ended below floor", and v1.7:77 puts attained power in the verdict
+      sentence. v1.7:165 still has no A3 ∈ {POSITIVE, REVERSE} clause; v1_5:140 had "(if A3 ∈
+      {POSITIVE, REVERSE}) *; the uninstructed cell returned [outcome] and is under confirmation
+      (§8.1)*". The new v1.7:163 dated note ("§8.2's screen returned a hit under confirmation") goes
+      on the v1 record, not into the Step-6 text.
+    REASONING:
+      I agree with PARTIAL. The OLMo half of the NOT-RUN label is fixed, and its three-way bracket
+      is well formed. The Qwen half still calls an unrun control "did not pass". Step 6's [G-PWR's
+      figure] still conflicts with §5's attained-power rule, and Step 6 still lacks the A3
+      POSITIVE/REVERSE clause. After the split, (b) and (c) are v2/Q-F3 only, and (a) is on the v1
+      path: every Q-F0 NOT-RUN, including a D1 Clock miss (v1.7:170), produces this label in the v1
+      posting. One part of the mapper's note is over-read: calling a Clock NOT-RUN "the likeliest"
+      route is speculation. D1 = 2026-10-16 against ledger-34's 7–10 day estimate makes it
+      plausible, nothing more. Status unaffected.
+
+[C18] Abstract clause 'some pass' overlaps 'all three'; 0.12-artifact existence not a tuple coordinate (all-NOT-RUN tuple has two f1 texts)
+  MAPPER status=PERSISTS  v1.7 lines: 161, 105, 59, 181, 184, 118, 37
+  EVIDENCE:
+    v1.7:161: "iff all three pass, ...; iff some pass, ...; iff none, ..." and "f1's CORR line
+    carries its dose note iff G-CAL's 0.12 artifact exists." G-ANL-F0 (v1.7:105) enumerates "each
+    OLMo checkpoint 4 + NOT-RUN = 5; 5 × 125 = 625 tuples" and asserts one label set per tuple, with
+    no artifact-existence input. The 0.12 replay is "computed first in step 6" (v1.7:59). The OLMo
+    track runs "from step 9 when a box exists" (v1.7:181), and step 9 is LOCK-m-F0 v0.1.
+  NOTE:
+    'some pass' is still not pinned to 'one or two'. The artifact is still missing only if step 6
+    never ran, which forces Q-F0 NOT-RUN and all three OLMo units NOT-RUN. So 1 of G-ANL-F0's 625
+    tuples still has two possible f1 texts. Effect of the split: the problem is confined to
+    G-ANL-F0/v1. In G-ANL-F3 (118) the artifact always exists, because step 19 needs LOCK-m-F0 v1.0
+    (184), so it is moot there. New in v1.7, same assertion: the 'pending' label state (161; §0.10
+    at 37) is missing from G-ANL-F0's per-checkpoint 4 + NOT-RUN enumeration. The one-label-set
+    assertion therefore cannot reach the pending label, and pending also feeds the three-way
+    abstract clause (e.g. none pass, some pending).
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:161, unchanged on both points: "iff all three pass, ...; iff some pass, ...; iff none,
+      ..." and "f1's CORR line carries its dose note iff G-CAL's 0.12 artifact exists." v1.7:105
+      (G-ANL-F0) enumerates "Q-F0 4 run states + NOT-RUN = 5; each OLMo checkpoint 4 + NOT-RUN = 5;
+      5 × 125 = 625 tuples" and asserts one label set per tuple; artifact existence is not an input.
+      The 0.12 replay is "computed first in step 6" (v1.7:59). The OLMo track runs "from step 9 when
+      a box exists" (v1.7:181), and step 9 is LOCK-m-F0 v0.1. Q-F3 starts only after LOCK-m-F0 v1.0
+      (v1.7:184), so in G-ANL-F3 (v1.7:118) the artifact always exists. New: Step 2 (v1.7:161) and
+      §0.10 (v1.7:37) add the OLMo label state "pre-registered and pending at this posting", but
+      G-ANL-F0 still counts 4 + NOT-RUN per checkpoint.
+    REASONING:
+      I confirmed the mapper's derivation. The artifact can be missing only if step 6 never ran.
+      That forces Q-F0 NOT-RUN and, since the OLMo track starts at step 9, all three OLMo units
+      NOT-RUN. So exactly 1 of G-ANL-F0's 625 tuples has two possible f1 texts. The item is confined
+      to v1/G-ANL-F0 and is moot in G-ANL-F3. 'some pass' is still not pinned to 'one or two'. The
+      mapper's new observation is correct and material to the same assertion. The pending state is a
+      reachable v1 outcome (an OLMo unit locked and still running at posting, v1.7:170), and
+      G-ANL-F0's per-checkpoint 4 + NOT-RUN enumeration cannot reach it. So the "one label set per
+      tuple" assertion does not cover the label set Step 2 now defines, and the v1 space is larger
+      than 625. Agree with PERSISTS.
+
+[C19] Step 4's embargo applies under REVERSE though §7.3 says REVERSE is not a welfare pause; 'and f2' vs 'and the f2 confirmation'
+  MAPPER status=PERSISTS  v1.7 lines: 163, 168
+  EVIDENCE:
+    v1.7:163: "iff A3 ∈ {POSITIVE, REVERSE}, whatever A1 did; ... no session exposing a model to
+    corrupted text runs between the screen result and f2 except within f2 (§7.3); **if A3 = POSITIVE
+    while an OLMo unit is still running, §7.3 wins**". v1.7:168: "between the screen result and the
+    f2 confirmation no session exposes a model to that property" and "A3 REVERSE triggers the f2
+    pre-registration and withholding, not a welfare pause."
+  NOTE:
+    Both conflicts are unchanged. Effect of the split: v2/Q-F3 only. In practice it bites less
+    often, because Q-F3 starts only after LOCK-m-F0 v1.0 and D1 = D_O = 2026-10-16 fall well before
+    D2 = 2026-12-15, so OLMo units will usually have ended when A3 returns. Under REVERSE, though,
+    the embargo still blocks all corrupted-text exposure until f2, which §7.3 says is not a pause.
+    New gap: if Q-F0 were still running (e.g. paused and resumed) when A3 returns, the embargo
+    reaches it, but only OLMo has a stop-and-analyze clause. v1.7:168 says only 'Q-F0 contains no A3
+    and cannot trigger it'.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:163: "iff A3 ∈ {POSITIVE, REVERSE}, whatever A1 did; ... no session exposing a model to
+      corrupted text runs between the screen result and f2 except within f2 (§7.3); **if A3 =
+      POSITIVE while an OLMo unit is still running, §7.3 wins**". v1.7:168: "between the screen
+      result and the f2 confirmation no session exposes a model to that property" ... "A3 REVERSE
+      triggers the f2 pre-registration and withholding, not a welfare pause. Q-F0 contains no A3 and
+      cannot trigger it." The word diff against v1.6:144/:149 shows only the [v2] scoping,
+      "paper"→"v2 posting", the v1-note sentence and the Q-F0 sentence.
+    REASONING:
+      Both conflicts are verbatim. The Step-4 embargo is keyed to POSITIVE or REVERSE and cites
+      §7.3, but §7.3 says REVERSE is not a welfare pause. "and f2" vs "and the f2 confirmation" is
+      unchanged. After the split it is triggered only by Q-F3 (v2). In practice it bites less,
+      because OLMo locks are due by D_O = 2026-10-16 and Q-F3 starts only after LOCK-m-F0 v1.0.
+      Under REVERSE the embargo text still reaches any OLMo or Q-F0 session still running, and only
+      POSITIVE has a stop-and-analyze clause. The mapper's Q-F0 point is a real but low-probability
+      extension of that, not a separate defect. Agree.
+
+[C20] F3 domain removes a session on a hair trigger at the first reasoning line; does the runner stop there?
+  MAPPER status=PERSISTS  v1.7 lines: 131, 153, 94
+  EVIDENCE:
+    v1.7:131: "no hair trigger fired up to and including the first reasoning line (Q-F3)" ...
+    "**Every runner ends a session at its first exclusion-bearing forced round**". v1.7:153: "A
+    fired bar pauses". No line says whether the session ends at a hair trigger on the first
+    reasoning line.
+  NOTE:
+    Unchanged apart from the '(Q-F3)' tag. Effect of the split: only Q-F3 has reasoning lines, so
+    Q-F0 and OLMo are unaffected and the item now binds only on Q-F3/v2.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:131: "no hair trigger fired up to and including the first reasoning line (Q-F3)". The
+      only change from v1.6:112 is the "(Q-F3)" tag (word diff). The same line also reads "**Every
+      runner ends a session at its first exclusion-bearing forced round**". v1.7:153: "A fired bar
+      pauses"; v1.7:106 (gate stages): "a fire stops the stage". No line says whether the runner
+      ends the session at a hair trigger on the first reasoning line.
+    REASONING:
+      The runner-stop question is unanswered, and since only F3 has reasoning lines it binds on
+      Q-F3/v2 only. Agree. A small refinement to the mapper's "Q-F0 and OLMo are unaffected": the
+      new "(Q-F3)" tag makes the domain rule's only hair-trigger clause Q-F3-specific. For Q-F0/OLMo
+      the domain text (v1.7:131) now lists only "audit, echo and lexical" for forced rounds, so
+      whether a forced-round hair trigger such as scaffold_absorption removes a session from the
+      domain is left implicit (v1.7:94 implies hair triggers can). That residue was already present
+      in v1.6 for F0m arms and is minor. It does not change C20's status.
+
+[C21] Guard's absolute p0 .20 is f1's (Qwen, F0, whole-session), not re-derived; on OLMo it binds on the lexical class m declines to bar
+  MAPPER status=PERSISTS  v1.7 lines: 139, 91, 92, 153
+  EVIDENCE:
+    v1.7:139 is byte-identical to v1.6:120: "pre-pick exclusion rate vs its matched sham by
+    one-sided Fisher exact at α .05, and vs .20 by exact one-sided binomial". v1.7:92: "no bound
+    OLMo lexical bar (every OLMo banner names labels)". New at v1.7:153: "in Q-F0 every banner names
+    labels, so the lexical bar has no domain there and lexical is reported only". Re-checked:
+    archive/RESULTS-cycles3-4.md:401 "per-contrast guard binom vs p0 = .20"; f_sessions.py:398 and
+    :405 count r["excluded"] (whole-session), not pre-pick.
+  NOTE:
+    The .20 is still carried over from f1 without re-derivation. The split widens the critic's
+    point. In v1.6, Qwen A0 shared a unit with the lexical bar on A2s/A3s. In v1.7, Q-F0 has no
+    lexical bar by design. Own-pair lexical is still exclusion-bearing on forced rounds (91), so in
+    Q-F0 too the guard's absolute .20 is the only bound on lexical-driven pre-pick exclusions. The
+    point now covers both v1 unit types (Q-F0 and OLMo). The re-derivation gap is smallest for Q-F0,
+    since Qwen F0m is the setting closest to f1.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:139 is byte-identical to v1.6:120: "pre-pick exclusion rate vs its matched sham by
+      one-sided Fisher exact at α .05, and vs .20 by exact one-sided binomial". Source of the .20:
+      archive/RESULTS-cycles3-4.md:401 "per-contrast guard binom vs p0 = .20". f1's guard counts
+      whole-session exclusions: f_sessions.py:398 `x = sum(1 for r in sub if r["excluded"])`, :405
+      `binom_p_ge(x, n, 0.20)`, and `excluded` includes free-round lexical (f1 CORR's two free4
+      exclusions, data/f/sessions.jsonl). v1.7:92: "no bound OLMo lexical bar (every OLMo banner
+      names labels)". New, v1.7:153: "in Q-F0 every banner names labels, so the lexical bar has no
+      domain there and lexical is reported only". v1.7:131 makes lexical exclusion-bearing on forced
+      rounds.
+    REASONING:
+      The .20 is still f1's (Qwen, F0, whole-session) and is not re-derived for pre-pick or for
+      OLMo. On units with no lexical bar, the guard's absolute test is the only binding bound on
+      lexical-driven pre-pick exclusions, and after the split those units are both v1 unit types,
+      Q-F0 and OLMo. One nuance on "widens": A0's lexical was already report-only in v1.6 (the
+      pooled-lexical domain was A2s/A3s, reported for label-naming arms, v1.6:134). What the split
+      removes is the unit-level backstop: a lexical-bar pause on A2s/A3s used to pause A0 too, and
+      Q-F0 now has none. So "widened" is fair in that sense. As the mapper says, the re-derivation
+      gap is smallest for Q-F0, the setting closest to f1. Agree.
+
+[C22] LOCK v0.1's blanket gate-stage bar rule contradicts G-TIME (binomial reported, not evaluated) and G-ID (divergence → uncached)
+  MAPPER status=PERSISTS  v1.7 lines: 106, 107, 108, 119, 120, 122, 124
+  EVIDENCE:
+    v1.7:106 (LOCK-m-F0 v0.1 / LOCK-m-OLMo v0.1): "gate stages: hair triggers per session as
+    generated (a fire stops the stage), binomial bars once at stage end on the realised n, α = .05".
+    v1.7:107 (G-TIME-F0): "binomial bars reported on the rounds (≤ 20) generated, not evaluated",
+    and G-TIME-OLMo gets "same treatment". v1.7:108 (G-ID-F0m): "criterion 2/2 ... — a hair trigger;
+    ... a divergence sends F0m uncached".
+  NOTE:
+    Unchanged for Q-F0 and OLMo. For Q-F3, LOCK-m-F3 v0.1 (119) says only "every bar of its later
+    stages" and does not restate the blanket cadence, so the literal contradiction drops out there.
+    But G-F3's bar cadence (124, "Bars as G-F0m-Qwen") and G-TIME-F3/G-ID-F3 (120, 122) are then
+    carried only by reference into Q-F0's lock. Still a wording tidy; the gate text governs.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:106 (LOCK-m-F0 v0.1 / LOCK-m-OLMo v0.1): "every bar of every later stage of these units
+      ... — gate stages: hair triggers per session as generated (a fire stops the stage), binomial
+      bars once at stage end on the realised n, α = .05". v1.7:107 (G-TIME-F0): "binomial bars
+      reported on the rounds (≤ 20) generated, not evaluated", and G-TIME-OLMo gets "same
+      treatment". v1.7:108 (G-ID-F0m): "criterion 2/2 ... — a hair trigger; ... a divergence sends
+      F0m uncached". LOCK-m-F3 v0.1 (v1.7:119) reads only "every bar of its later stages" and does
+      not restate the cadence. G-TIME-F3 (120) and G-ID-F3 (122) import by "as G-TIME-F0" and "as
+      above". G-F3 (124) reads "Bars as G-F0m-Qwen".
+    REASONING:
+      The blanket rule still contradicts G-TIME (evaluated vs "not evaluated") and, read literally,
+      G-ID ("stops the stage" vs "sends F0m uncached") for Q-F0 and OLMo, the v1 units. For Q-F3,
+      "of these units" (106) excludes it from the blanket cadence, so the literal contradiction
+      drops out there and Q-F3's gate cadence is carried only by reference. The gate text governs,
+      so this is still a wording tidy. Agree.
+
+[C23] Qwen audit v3's task_text on corrupted rounds unpinned; CORR task-id requirement for v5's id pool dropped
+  MAPPER status=PERSISTS  v1.7 lines: 91, 26
+  EVIDENCE:
+    v1.7:91 is byte-identical to v1.6:85: "audit v3 on every task round; content class v4 rev 3, v5
+    advisory". It pins neither task_text nor CORR task ids. v1.7:26 has "one substrate-agnostic CORR
+    delivery module" and no id map. v1_3:113 had "(`wrong_task` by task id — CORR items receive ids
+    and the id map covers the corrupted renders)". Re-checked: valence_core/e2d/audit_v3.py:50
+    `check(self, text, task_text, ...)`; contentclass_v4.py:155–177 uses task_text for task_echo,
+    preamble and wrong_task.
+  NOTE:
+    Unchanged. Effect of the split: it applies to both Qwen units and now binds first at Q-F0 (A0's
+    corrupted forced rounds and G-F0m-Qwen's 8 contrast sessions). v4 content is exclusion-bearing
+    in the claiming order (91), so an unpinned task_text can change the A0 primary domain that
+    decides v1. The pin is needed before LOCK-m-F0 v0.1 rather than before Q-F3.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7:91 is byte-identical to v1.6:85: "audit v3 on every task round; content class v4 rev 3,
+      v5 advisory". A fixed-string search of v1.6 and v1.7 for task_text, "task id", "id map", "id
+      pool", other_tasks and wrong_task finds nothing. v1_3:113 had "(`wrong_task` by task id — CORR
+      items receive ids and the id map covers the corrupted renders)".
+      valence_core/e2d/audit_v3.py:49–50: `def check(self, text: str, task_text: str, earlier=...,
+      other_tasks=...)`. contentclass_v4.py:164–177 passes task_text to is_null_response_v4,
+      V3.is_preamble (exclusion) and to task_echo and wrong_task (advisory). contentclass.py:214,
+      inside is_preamble: `return bool(task_text) and is_task_echo(body, task_text)`.
+    REASONING:
+      Unchanged. task_text feeds the exclusion-bearing preamble_without_content test (and the
+      null-response call), so whether a corrupted round is audited against the clean text or the
+      delivered render can move sessions in or out of the primary domain. The v5 id-pool requirement
+      is also still dropped. After the split it applies to both Qwen units and first binds at Q-F0
+      (A0's corrupted forced rounds; G-F0m-Qwen's 8 contrast sessions; G-SHAPE-F0's full scoring
+      stack at step 7). The pin is therefore needed by LOCK-m-F0 v0.1. Agree.
+
+[C24] Resume identity: seed/n refusal (skip-only), atomic checkpointing, laptop checklist dropped
+  MAPPER status=PERSISTS  v1.7 lines: 57, 81, 153, 181
+  EVIDENCE:
+    v1.7 names only three resume-identity parts: the cap (57, "the cap enters the resume identity"),
+    the backend identifier (81) and the look index (153). Step 16 (181) says "detached,
+    checkpointed". There is no 'skip-only', no seed/n refusal, no 'atomic' and no laptop checklist.
+    v1_3:102 had "Long-run checklist on the laptop (adapter ≥ 96 W, AC, one process, detached,
+    checkpointed atomic, resume skip-only refusing foreign seed/n; ...)".
+  NOTE:
+    Unchanged, and it applies to every unit. The split slightly raises its weight: two Qwen units
+    now run and resume on the same laptop (Q-F0 alone is 'one or two nights on resume', 81), so a
+    resume rule that does not refuse a foreign seed/n matters a bit more.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      v1.7 has no occurrence of skip-only, atomic, seed/n, checklist, foreign or "96 W" (grep). Its
+      resume-identity mentions are only the cap (v1.7:57), the backend identifier (v1.7:81) and the
+      look index (v1.7:153). Step 16 (v1.7:181) says "detached, checkpointed". v1_3:102 had
+      "Long-run checklist on the laptop (adapter ≥ 96 W, AC, one process, detached, checkpointed
+      atomic, resume skip-only refusing foreign seed/n; cap and look index in the resume identity)".
+    REASONING:
+      Dropped in v1.6 and still dropped in v1.7. It applies to every unit. Its weight rises slightly
+      because two Qwen units now run on resume on the same laptop (v1.7:81 "one or two nights on
+      resume" for Q-F0). Agree.
+
+[C25] Paper disclosures dropped: F0m-vs-f1 difference list, f1's 512-token read tail, f1's cached path vs m's; TOLD-MAP lexical exposure only partly kept
+  MAPPER status=PERSISTS  v1.7 lines: 55, 81, 92, 110, 153
+  EVIDENCE:
+    There is no F0m-vs-f1 difference list; v1_3:58 had one: "It is f1 CORR's structure and not f1
+    CORR: it differs in dose and corruptor, banner lines, roster, audit, rng keys, assignment
+    schedule, sham pool, verify cadence, ... read window, and round path". '512' appears only in a
+    p0 reference (v1.7:110, "512-token encode — a reference, not a prediction"), not as a read-tail
+    disclosure (v1_3:55). The only cached-path mention of f1 is v1.7:81, "f1 ran ≈ 85 s per cached
+    session" (the disclosure was at v1_3:119). On lexical exposure, v1.7:92 covers OLMo and v1.7:153
+    newly covers Q-F0 monitoring only.
+  NOTE:
+    The split raises its weight. Under decision (9), v1 posts on Q-F0 alone, so A0 at F0m is the
+    only control behind the v1 paper's Answered labels for f1, e2a and e2b. How F0m differs from f1
+    (and from e2a's 512-token tail, against m's 8192-token read at 55) is exactly what that sentence
+    needs disclosed. Line 153 extends the lexical-exposure statement to Q-F0 monitoring, but it is
+    still not a disclosure for the paper.
+  REFUTER status=PERSISTS overturned=False
+    EVIDENCE:
+      No F0m-vs-f1 difference list. v1_3:58 had one: "It is f1 CORR's structure and not f1 CORR: it
+      differs in dose and corruptor ..., banner lines, roster, audit ..., rng keys, assignment
+      schedule ..., sham pool, verify cadence ..., read window, and round path". The read-tail
+      disclosure at v1_3:55 ("f1's reads went through a 512-token tail, so position 5–6 comparisons
+      with f1 cross a window change") is gone; v1.7's only "512" is the p0 reference at v1.7:110.
+      The cached-path disclosure at v1_3:119 ("f1's cached path (one-chunk prefill of a 512-token
+      tail, f_sessions.py:162–168) differs from `valence_core`'s ... G-ID speaks to m's path, not
+      f1's") is gone; v1.7:81 keeps only the "≈ 85 s per cached session" timing. On lexical
+      exposure, v1_3:115 had "Because TOLD-MAP writes both labels into the banner, own-pair lexical
+      exclusions in task rounds may run higher in A0/A0s/A1/A1s (f1's header→prose priming class,
+      archive:180–184)"; v1.7 keeps only v1.7:92 (OLMo) and the new v1.7:153 Q-F0 monitoring clause.
+    REASONING:
+      All four disclosures are still missing or partial. The split raises their weight. Under
+      decision (9) (v1.7:16), v1 posts on Q-F0's outcome, so A0 at F0m is the sole control licensing
+      the v1 Answered labels for e2a, e2b and f1, and how F0m differs from f1 is exactly what that
+      licensing sentence needs disclosed. A small slip in the mapper's note: STOP-4's read-tail item
+      is f1's 512-token tail (v1_3:55), not e2a's. e2a's 512-token encode tail (CLAUDE.md 28(d)) is
+      also relevant now that A0 licenses e2a, so the point stands either way. Agree with PERSISTS.
+
+[C26] §9: unquoted referents listed; sessions.jsonl/b3_screen gloss; [C] list omissions (looks, uncached hours, two post-pick exclusions); :613 → :613–615
+  MAPPER status=PARTIAL  v1.7 lines: 8, 75, 131, 190, 192, 193
+  EVIDENCE:
+    Still listed but never quoted in the body: v1.7:190 ":91–93" (its '(whole-session table)' gloss
+    is now dropped too); v1.7:193 "commits `aeb4a2c`, `e186162`, `e9b5022`"; and rule 24 in the
+    header (v1.7:8), whose content appears at 77/149 ('below floor') but is never cited. v1.7:190
+    lists data/f/sessions.jsonl and data/olmo/b3_screen_*.json with no gloss. v1.7:192 now has
+    "looks 5/4, 18/17, 5/4", "18–20 (Q-F0 uncached)" and "78–87 (Q-F3 uncached)", and has "30/58 and
+    58 reached" but not the two post-pick exclusions quoted [C] at 131. v1.7:75 and 190 still cite
+    ":613". Re-checked: RESULTS.md:613 has '48 F2 sham sessions', :615 has '43 valid';
+    data/f/sessions.jsonl CORR shows 64 launched, 58 reached, 30 P, 2 post-pick lexical at free4
+    (prism, maple, both on P picks), 28/56 valid.
+  NOTE:
+    Resolved by the split's per-unit replacements: the [C] list now carries looks and uncached
+    hours. Still open: the four unquoted referents, the missing data-file gloss, the missing
+    post-pick count and :613. Adjacent, outside this range (A12 territory), [C]: the new Q-F0
+    uncached ≈ 18–20 h is 160 × 401–446 s = 17.8–19.8 h, which holds only at r ≥ .8725. At the
+    minimum headroom, uncached A0 (floor 80) gives L = 128, so 192 launches and 21.4–23.8 h. Cached
+    A0 (floor 96): ⌈1.15·96⌉ = 111 → 128 at every r, so v1.7:75's 'for r ≥ .8725, A0 falls to 96' is
+    true only under the uncached floor. Q-F3 uncached 704 × 401–446 = 78.4–87.2 h is consistent.
+  REFUTER status=PARTIAL overturned=False
+    EVIDENCE:
+      Resolved by per-unit replacement: v1.7:192's [C] list now has "looks 5/4, 18/17, 5/4", "18–20
+      (Q-F0 uncached)" and "78–87 (Q-F3 uncached)". Persists: (1) v1.7:190 lists archive ":91–93"
+      (its "(whole-session table)" gloss is dropped), but the body never cites it; the only ":91" in
+      the body is the decisions block's :91 (v1.7:16, :179). v1.7:193 lists commits `aeb4a2c` and
+      `e9b5022`, which the body never quotes (`e186162` is quoted at v1.7:4 and :177). Rule 24 is in
+      the header (v1.7:8) and nowhere in the body. (2) data/f/sessions.jsonl and
+      data/olmo/b3_screen_*.json are listed at v1.7:190 with no gloss. (3) The [C] list has "30/58
+      and 58 reached" but not the two post-pick exclusions that v1.7:131 tags [C]. I verified on
+      disk: CORR 64 launched, 58 reached, 30 P, 8 excluded; two are lexical:prism@free4 and
+      lexical:maple@free4, both on P first picks; 56 valid, 28 P. (4) v1.7:75 and :190 still cite
+      ":613"; RESULTS.md:613 has "48 F2 sham sessions" and :615 "43 valid".
+    REASONING:
+      I agree with PARTIAL. The two [C] omissions are replaced by per-unit figures. The unquoted
+      referents, the missing data-file gloss, the missing post-pick count and the :613→:613–615
+      range all remain. Note that archive:91–93 is f1's per-property exclusion table, and citing it
+      at v1.7:141 would also help C15. On the mapper's adjacent claim (A12 territory, outside this
+      range), I recomputed it independently. ⌈1.15·96⌉ = 111 gives 128 at every r, so cached A0 is
+      always 128. 'A0 falls to 96 for r ≥ .8725' holds only under the uncached floor of 80, with the
+      threshold at .87245. Q-F0 uncached is 17.8–19.8 h at 160 launches but 21.4–23.8 h at 192
+      (minimum headroom), so the listed 18–20 h is right only for r ≥ .8725.
+
+[C27] Rule 9 says nothing of 'tracked, clean'; step 17 names no G-ANL entry and no step-3 entry
+  MAPPER status=PARTIAL  v1.7 lines: 179, 181, 186, 16, 168, 170
+  EVIDENCE:
+    v1.7:179: "Commit PROPOSAL-m v1.7 (tracked, clean; rule 9)". CLAUDE.md:307–308, rule 9, is
+    "Matched-pair swing machinery ...; committed before data; z descriptive", and rule 11 is at
+    :311. The entries list (v1.7:186) now names `G-ANL-F3` but not `G-ANL-F0` (step 8, 181). It
+    gives no title for the step-3 entry, although v1.7:16, :168 and :170 all refer to "the step-3
+    entry".
+  NOTE:
+    Fixed for Q-F3 only: the G-ANL-F3 entry is now named. Still open: the G-ANL-F0 entry, a named
+    step-3 entry, and the rule-9-only attribution (the record assigns this to rules 9 and 11
+    together). Effect of the split: G-ANL-F0 is now the battery that gates v1, so the missing entry
+    sits on the v1 path.
+  REFUTER status=PARTIAL overturned=False
+    EVIDENCE:
+      v1.7:179: "**Commit PROPOSAL-m v1.7** (tracked, clean; rule 9)". CLAUDE.md:307–308, rule 9, is
+      "Matched-pair swing machinery for association/preference criteria; ≥20 control pairs;
+      committed before data; z descriptive", and rule 11 is at :311–312. The entries list (v1.7:186)
+      now includes `G-ANL-F3` but has no `G-ANL-F0`, although step 8 (v1.7:181) runs G-ANL-F0 and
+      §0.10 (v1.7:35) names it. No step-3 entry is named, although v1.7:16, :168 and :170 all refer
+      to "the step-3 entry". v1.6:157's list had no G-ANL entry at all.
+    REASONING:
+      Partly fixed: a G-ANL entry (F3) is now named. Still open: G-ANL-F0's entry, which gates
+      LOCK-m-F0 v0.1 and so sits on the v1 path; a named step-3 entry; and the rule-9-only
+      attribution of 'tracked, clean'. PARTIAL is right. One could argue PERSISTS on the ground that
+      the v1-path battery is the one left unnamed, but the item as written ('names no G-ANL entry')
+      is partly met. Agree.
+
+[C28] Ledger-33 item lists disagree; root:30 'verified'; root:280's Clock; backend identifier attributed to CLAUDE.md:127–130; G-CAL-OLMo no §3 header, covariate 'per substrate'
+  MAPPER status=PARTIAL  v1.7 lines: 4, 18, 28, 30, 59, 81, 103, 170
+  EVIDENCE:
+    (a) v1.7 restates no STOP-3 item list (no 'STOP-3' anywhere; 4 and 28 cite none), and v1.7:18
+    says "Entries 19–33 as recorded in v1.6 §0.3". (b)/(c) §0.9 (v1.7:30) drops v1.6:35's 'What
+    changed' gloss, so it no longer claims root:30 says 'verified' or characterizes root:280's
+    Clock. (d) v1.7:81 is verbatim from v1.6: "(CLAUDE.md:127–130: ... the backend identifier is in
+    the resume identity)"; re-checked, CLAUDE.md:127–130 is only the consistency clause, with no
+    identifier or resume identity. (e) §3.1 has "G-CAL. §2.3 (Qwen), the 0.12 replay first. Serves
+    all units." (103) and no G-CAL-OLMo header; v1.7:59 says "the covariate per substrate" next to
+    "G-CAL-OLMo: condition (4) per checkpoint".
+  NOTE:
+    MOOT by removal: (a), (b) and (c). For (a), the mismatch is gone from v1.7's own text, but line
+    18 now imports ledger 33 by reference from v1.6 §0.3, which itself points to v1.4, so A11's
+    self-containment defect goes a hop deeper. For (c), with three Clock dates (170) v1.7 now
+    applies the Clock to every unit, as root:280 does. But the post-patch-v4 root:280 still says
+    'the Qwen arms as one' and 'If the Qwen unit is not run ... Marked, expressed, remembered',
+    which v1.7's split contradicts (a Q-F3 NOT-RUN with L0 gives Fallback-1). The preprint of record
+    is the PI's redraft, which is not at root, so this cannot be checked on disk. Still open: (d)
+    verbatim, and both halves of (e). Effect of the split: (d) and (e) concern only the OLMo units,
+    which now feed the v1 rows.
+  REFUTER status=PARTIAL overturned=False
+    EVIDENCE:
+      (a) v1.7 has no "STOP-3" anywhere (grep). v1.7:4 and the §0.8 record (v1.7:28) list no STOP-3
+      items, and v1.7:18 reads "Entries 19–33 as recorded in v1.6 §0.3 (33: fixing by addition)".
+      (b)/(c) §0.9 (v1.7:30) drops v1.6:35's 'What changed' gloss; it no longer says root:30 says
+      'verified' or that the Clock is scoped to the Qwen unit. root:30 (sha d6431e97…222b8 verified)
+      indeed says only "installable but unreadable at a token choice". (d) v1.7:81 is verbatim from
+      v1.6:75: "(CLAUDE.md:127–130: a mid-campaign box change aborts and restarts that unit; no
+      splicing; the backend identifier is in the resume identity)". CLAUDE.md:127–130 is only the
+      consistency clause, and neither 'backend identifier' nor 'resume identity' appears anywhere in
+      CLAUDE.md (grep). (e) §3.1 has "**G-CAL.** §2.3 (Qwen), the 0.12 replay first. Serves all
+      units." (v1.7:103) and no G-CAL-OLMo header in either chain. v1.7:59 still says "the covariate
+      per substrate" next to "G-CAL-OLMo: condition (4) per checkpoint".
+    REASONING:
+      I tried to break the MOOT parts and they hold. (a): no item list survives in v1.7's own text.
+      The import at :18 brings in v1.6 §0.3's '(STOP-3 A1–A8)' but not v1.6:4's differing list, so
+      nothing in v1.7 disagrees. The import does contradict v1.7:4's 'incorporates no earlier
+      version by reference', which is A11's self-containment defect and not C28. (b) and (c): the
+      mis-glosses are gone, and nothing else in v1.7 characterizes root:30 or root:280. The mapper's
+      adjacent point stands: root:280 still says "the Qwen arms as one" and "If the Qwen unit is not
+      run, the paper posts under *Marked, expressed, remembered*", which conflicts with v1.7:170
+      (Q-F3 NOT-RUN under L0 gives Fallback-1 at v2). But the preprint of record is the PI's
+      redraft, which is not on disk, and v1.7:8 defers re-anchoring to LOCK-m-F0 v1.0. (d) and both
+      halves of (e) persist verbatim. A minor related point: v1.7:59 says the dose "serves all three
+      units" while v1.7:79 defines five units. Both remaining parts concern the OLMo units, which
+      feed v1 rows. Agree with PARTIAL.

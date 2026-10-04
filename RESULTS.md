@@ -21,6 +21,277 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-10-04 — **PROPOSAL-m v1.7 (routed by the PI 2026-10-04): §8 step 2's referent check
+  STOPS the commit. 249 referents by ten blind checkers over disjoint groups, two refuter
+  lenses each: 41 unresolved under all three verdicts (18 graded substantive by the checker
+  and the majority, 16 of them by all three) and 8 contested. The substantive items reduce to ten defects: nine under all three verdicts, and
+  one that a single refuter promoted from a point the checker had dismissed. Three are named
+  here. First, the launch figures lost "uncached": §0.4's welfare exposure "Qwen 96 launches at
+  a qualification valid rate ≥ .8725" is 128 at every r ≥ .7925 on the cached path (160 on
+  [.6455, .7925), more below). Second, the v1 outcome space omits the "pending" OLMo state v1.7 itself adds (625
+  tuples; 1,080 with it). Third, the provenance is wrong. v1.6 WAS routed, on 2026-09-28, and
+  Code STOPPED it (STOP-4). That block never reached the design seat, so v1.7 carries v1.6
+  over its findings. STOP-4 is recovered verbatim from the session transcript and placed on the
+  record here. Not done: v1.7 is not committed, v1.2–v1.6 are not moved, D1/D_O/D2 are not
+  committed as step 3's record (this entry quotes them), and nothing is built.** (Stamp
+  verified at write time: `date -u` → **Sun Oct  4 07:12:12 UTC 2026**.)
+
+  - **The routing (the PI's word, quoted so the record carries it).** The routing block,
+    verbatim, then the PI's added line:
+
+    > ROUTING BLOCK — PI, 2026-10-04 (date from my clock; no time of day)
+    >
+    > Fresh thread. Standard start: CLAUDE.md; your last handoff HANDOFF-2026-09-12.md
+    > (ddee730, named at 16705a2); RESULTS.md head; COMMIT_EDITMSG. Expected HEAD
+    > e186162, main == origin. There has been no Code session since the k STOP at
+    > e186162.
+    >
+    > ROUTE: PROPOSAL-m-gating-campaign-v1_7.md, untracked at root.
+    >   Expected sha256 (as delivered by the design seat):
+    >   4b69926765a7dd663a6a1ff74f5fbeea1eba55b6ece2c63ac4f726ab4b2120db
+    >   Verify on disk and report; a mismatch is a STOP, not a correction.
+    >   v1.7 supersedes v1.6 (179d9fc6...3967). v1.6 was never routed; nothing
+    >   of this campaign has been built, locked or run. v1.7 is a re-partition
+    >   of v1.6 (two Qwen units), not a re-design; its s0.10 lists every
+    >   difference.
+    >
+    > ALSO AT ROOT, untracked, for your start: HANDOFF-2026-10-04-design.md
+    >   (design seat; closes the 09-19 -> 09-28 and 10-01 -> 10-04 design threads).
+    >
+    > PI DECISIONS OF RECORD, 2026-10-04 (v1.7 s0.2 items 8-11; this block is
+    > their record):
+    >   (8)  The Qwen campaign is two units: Q-F0 (A0, A0s at F0m) and Q-F3
+    >        (A1, A1s, A2, A2s, A3, A3s at F3), each with its own locks, cap,
+    >        look series, stop, NOT-RUN and Clock date. Each OLMo checkpoint
+    >        remains its own unit.
+    >   (9)  The preprint's v1 posts on Q-F0's outcome; OLMo units enter as
+    >        their rows stand at posting; v1 ceiling is Fallback-1.
+    >   (10) Q-F3 is retained as pre-registered, unchanged from v1.6, and
+    >        governs v2. Its gates begin only after LOCK-m-F0 v1.0.
+    >   (11) Clock dates: D1 (Q-F0) 2026-10-16; D_O (each OLMo checkpoint)
+    >        2026-10-16; D2 (Q-F3) 2026-12-15.
+    >        [PI: strike any of these and write your own date here.]
+    >
+    > DO, IN ORDER (v1.7 s8):
+    >   Step 1 - delta read, report only. Confirm HEAD, the untracked root, and
+    >            that no m artifact exists.
+    >   Step 2 - referent check (s9). Any unresolved referent -> STOP, report,
+    >            no build.
+    >   Step 3 - commit v1.7 (tracked, clean) with its hash; D1, D_O, D2; the
+    >            decisions block (fab576d8...34f8) lines :91, :96, :99, :101
+    >            quoted as the record of (6') and (7); this block quoted as the
+    >            record of (8)-(11); s7.3 quoted verbatim; move v1.2-v1.6 to
+    >            archive/ (untracked).
+    >   REPORT TO ME after step 3 before building. Then steps 4-18 as written
+    >   (Q-F0 and the OLMo units to the v1 posting). Step 19 (Q-F3) does not
+    >   start before LOCK-m-F0 v1.0.
+    >
+    > HANDS OFF: the k arc. ADDENDUM-k1.md (STOPPED twice at e186162) stays
+    >   untracked and untouched; v1.7 depends on nothing in it.
+    >
+    > STILL TO COME FROM ME: the preprint of record at root (my redraft from
+    >   PREPRINT-v1_1-draft.md), before step 15; the Q-F0 hour cap at step 15;
+    >   the OLMo caps at their v1.0 locks.
+    >
+    > DESIGN SEAT READS on your critical path: the 16 G-CAL renders (pass
+    >   condition 3) and the 24 G-F0m-Qwen transcripts. I relay.
+    >
+    > Per-unit figures in v1.7 (launches 192/160, hours, looks 5/4, the 625 and
+    >   30,625 tuple counts, exposure) are the design seat's arithmetic marked
+    >   [C]; recompute at your check.
+
+    > PI adds: Use all the defaults if any decision needed from me
+
+    No date was struck, so D1 = D_O = 2026-10-16 and D2 = 2026-12-15 stand as the PI's dates
+    of record. Under §7.4 they are fixed at routing and written into the step-3 entry and the
+    unit's locks. Only once they are in Code's step-3 commit does moving one become "a visible
+    re-specification", and that commit has not happened. "Use all the defaults" is applied to
+    procedure: the routing's own default for an unresolved referent is STOP. It is not taken
+    as a PI decision on any open PI item (B2 below).
+
+  - **Step 1 (delta read).** HEAD `e186162`, `main == origin` (fetched; nothing new). v1.7
+    on disk = `4b69926765a7dd663a6a1ff74f5fbeea1eba55b6ece2c63ac4f726ab4b2120db`, matching
+    the routing. v1.6 is `179d9fc6…3967`; the decisions block is `fab576d8…34f8`;
+    `PREPRINT-v1_0-draft.md` is `d6431e97…222b8` (77,357 bytes, 454 lines). The untracked
+    root is what the 09-12 handoff and the design handoff lead one to expect: v1.2–v1.7, the
+    decisions block, the preprint and its three archived versions, ADDENDUM-k1, the two
+    superseded g3-b2r addenda, and six design handoffs. No m artifact: no `valence_core/m`,
+    no `m_analyze`, no `corrupt_m`, no `LOCK-m*`, and "PROPOSAL-m" occurred 0 times in this
+    file at `e186162`, before this entry. The k arc is untouched: `ADDENDUM-k1.md` hashes
+    `61acf21ff2cc104e…`, its value at `e186162`.
+
+  - **Step 2: the check.** Workflow `wf_9d364a51-65b`: 30 agents, 0 errors, 1,880 s.
+    - **Groups.** Ten blind checkers over disjoint referent groups: G1 CLAUDE.md law; G2
+      RESULTS.md anchors; G3 archive, PROPOSAL-f/-h/-k, LOCK-g and HANDOFF-09-04; G4 Qwen
+      code; G5 OLMo code and data; G6a dose; G6b f1 archive rates; G7 the [C] arithmetic; G8
+      documents, shas and provenance; G9 the v1.6→v1.7 diff and internal consistency.
+    - **Refuters.** Two lenses per group: one tried to break every resolves=true; one
+      re-tested every resolves=false and every severity.
+    - **Result.** 249 referents. 162 resolve cleanly under all three verdicts and 38 resolve
+      with a minor note. 41 are unresolved under all three: 23 minor under all three, and 18
+      graded substantive by the checker and the majority (16 by all three; G9.2 graded
+      blocking by one lens; G9.3 minor by one). 8 are contested on whether they resolve.
+    - **Refuter additions.** The refuters listed 37 items beyond their own group checker's list
+      (6 substantive, 31 minor). Of the 6 substantive, four restate A1/A2 as other groups'
+      checkers found them, one restates G9.2's §9 point, and one (A10) promotes a preview the G1
+      checker had raised and dismissed.
+    - **Code's own computation.** Before the workflow returned, Code computed v1.7's [C]
+      arithmetic (exact binomial; no scipy) and replayed the dose model-free. It computed the
+      A1 rate thresholds and A5's critical counts afterwards; they match the refuters'. Every
+      item that changes a sentence below was re-verified on disk.
+    - **Record.** [`_m-v1.7_referent_check`](results/raw/2026-10-04_m-v1.7_referent_check.txt)
+      holds all 249 referents with both refuter verdicts and the refuters' additions. The block
+      for the design seat, with the fixes, 32 minor corrections and the STOP-4 carry-over, is
+      [`_m-v1.7_code-to-design_STOP`](results/raw/2026-10-04_m-v1.7_code-to-design_STOP.md).
+
+  - **The STOP: ten defects, nine of them under all three verdicts.** Full text and fixes are
+    in the block's §A.
+    - **(A1) The launch figures lost "uncached" (= STOP-4 A12).**
+      - At the cached A0/A1 floor of 96, ⌈1.15·96⌉ = 111 → 128 at every r ≥ .792465… ("…" marks a truncated exact root). The "falls to
+        96" branch (96 iff r ≥ .872454…) exists only at the uncached floor of 80.
+      - Cached, Q-F0 is 192 at r ≥ .792465…. Cached Q-F3 is 704 at r ≥ .850194… and 736 on
+        [.792465…, .850194…), where A2 = A3 = 192; it is higher still below .792465….
+      - §0.4's welfare exposure "Q-F0: Qwen 96 launches at … ≥ .8725" understates the cached
+        path (128). "Q-F3 … 448 or 480" omits 512 on [.792465…, .850194…) (more below), and 448 needs uncached F3.
+      - The "160"/"672" hours given for the cached path are unreachable on it (all three verdicts agree on that; whether the referent
+        resolves is contested, G7.17, G7.19). §6's look counts map launches to looks correctly (G7.23)
+        and inherit the misattachment only by derivation.
+      - The rule itself is right, and G-PWR re-derives counts from it at each LOCK v1.0. But
+        step 3 would commit §0.4 as the welfare record.
+    - **(A2) The v1 outcome space omits "pending".** v1.7 adds the OLMo state "pending"
+      (m:37, :161, :170), but G-ANL-F0 counts 4 + NOT-RUN per checkpoint: 625 tuples, where
+      [C] 5 × 6³ = 1,080. G-ANL-F3's 30,625 has the same omission (52,920 with it). A checkpoint still unlocked when v1 posts before D_O has no defined state: it
+      is neither NOT-RUN (its Clock date has not passed) nor pending (it is not locked).
+    - **(A3) Provenance.** v1.6 was routed and STOPPED (below). v1.7's "v1.6 was never
+      routed" is contradicted by the session record. Its stamp list omits STOP-4's
+      (13:08:11), and §0.10's "Nothing else" carries v1.6 over STOP-4's findings.
+    - **(A4) The attractor count is defined through the v2/echo classes** (= STOP-4 A1).
+      The record says v2 does not claim the 28(c) attractor, which stays a declared miss for
+      the rule-25 read (RESULTS.md:2248–2250, :2336–2340, :2404–2406). m's verbatim echo
+      class (m:91) cannot match it either.
+    - **(A5) The qualification `round_degeneracy` bars bind on domains that include the
+      corrupted-render contrast sessions** (= STOP-4 A2). Rule 21 says "stimulus-provoked
+      degeneracy gates on unprovoked domains" (CLAUDE.md:335–336), and an unprovoked domain
+      exists by design.
+    - **(A6) §7.5's premise is false against the only draft on disk** (= STOP-4 A3). It says
+      "the draft asserts no null on [the weight channel and the OLMo base row]", but root:184
+      ("Four nulls") and root:5, :25, :232 and :240 do.
+    - **(A7) (6′)'s "scoped to the Qwen campaign" has no PI record** (= STOP-4 A8/B2,
+      unanswered). Under the split it reads against §7.4's D2 rule, where a Q-F3 Clock miss
+      gives Fallback-1 iff L0.
+    - **(A8) §0.10 is not exhaustive.** The preprint of record changed from the root v1.0 file
+      to the PI's redraft from `PREPRINT-v1_1-draft.md`, which is not on disk.
+      - So these v1.1 references resolve against no file in the repo: §0.1's §8.2, Step 7's "§8.2 status", Step 4's "§8.2's screen", §7.4's "§8.2 stays
+        open", the v1.1-only items of §7.5's seed list, and the §7.6 number of Step 6's
+        rival (m:14 itself maps the rival to v1.0 §7.4, root:248). (§8.1 resolves at root:268, and
+        the seed list's other items resolve at root.)
+      - §9 lists the v1.1 file and the placed redraft as step-2 referents, while m:8 and m:179
+        defer the redraft to LOCK-m-F0 v1.0 and the v1.1 file is not on disk. Code logs these
+        as deferred by design, not resolved.
+    - **(A9) Q-F3 can run before v1 posts.** Step 19 needs only LOCK-m-F0 v1.0. An A3 POSITIVE
+      or REVERSE before v1 posts has no outcome: Step 4 is "[v2]" and presupposes v1 already
+      posted.
+    - **(A10) A told-control preview before the cap decision** (= STOP-4 A5 residue).
+      - Provenance: the G1 checker raised the point and dismissed it as unblinding no DV, and
+        the strict lens graded it minor (G1.14). The lenient lens filed it as substantive
+        under missed, and no second lens attacked that. Neither dissent addressed the cap
+        fork. Code verified the text.
+      - Qualification reports first-pick share for the told-control template before LOCK
+        v1.0, where the PI's cap decision can make the unit NOT-RUN.
+      - §4's blinding rule, read literally, forbids that read (its only exception is a fired
+        hair trigger), while step 14 requires it.
+
+  - **STOP-4, on the record for the first time.**
+    - **The routing and the STOP.** On 2026-09-28 the PI routed v1.6 to Code ("v 1.6 is in
+      the root of the repo", 13:07Z). Code ran §8 steps 1–2 and STOPPED it with a block for
+      the design seat: stamp Mon Sep 28 13:08:11 UTC 2026; items A1–A17, B1–B2, C1–C28.
+    - **How it was lost.** It was delivered in chat at 14:54Z (10:54 EDT). The seat's 09-28
+      thread had ended at 09:24 PI clock (HANDOFF-2026-10-04-design.md:19). The block was
+      never committed, and its scratch file is gone.
+    - **Recovered.** The block is recovered verbatim from the session transcript
+      (`ce7d7dd0…jsonl`, message `b6e42bc5…`; body sha256 `ad082080…e8d4`) at
+      [`_m-v1.6_STOP4_recovered`](results/raw/2026-10-04_m-v1.6_STOP4_recovered.md).
+    - **Its items in v1.7.** Workflow `wf_d736a0e7-d62` ran a mapper and an adversarial
+      refuter per range, and they agree on all 47 items. 37 persist. 8 persist in part (A3,
+      A5, A12, C9, C17, C26, C27, C28). 2 were PI questions: B1 is answered by the routing's
+      three dates, and B2, (6′)'s scope, is unanswered. None is resolved, none moot. Item by
+      item: the block's §D and
+      [`_stop4_carryover`](results/raw/2026-10-04_m-v1.6_STOP4_carryover_in_v1.7.txt).
+    - **Three that weigh more under the split.** The check did not grade these as defects of
+      its own: A15 appears only in G8.29's list of persisting STOP-4 items; A16 appears there
+      and in G8's unreached list, with G6a.4's note recording the cue-word hits as a
+      descriptive point graded clean; A4 appears not at all. Code verified the cited lines.
+      - **A4.** The Main thesis (the abstract's conclusion, root:13; the §7.1 heading,
+        :230; and :234) posts under every
+        v1 ceiling unless the placed redraft removes it, since Main is unreachable at v1.
+      - **A15.** A0's vanilla read does not reach e2b, which was read "with the state live at
+        the decision" (root:176). Yet Step 2 posts e2b *Answered* iff L0, and A0 now decides
+        v1 alone on the Qwen side.
+      - **A16.** The "'hoh'"/"'oeen'" renders put a possible condition-(3) STOP at step 6 in
+        front of every unit, against D1 = D_O.
+
+  - **For the PI (block §B).**
+    - **(B1)** The routing block's "There has been no Code session since the k STOP" and its
+      "v1.6 was never routed" (also v1.7:4's) are both contradicted by the session record.
+      Code sessions ran on 09-25, 09-27 and 09-28 and committed nothing, which is all a repo
+      read can see. Reported; neither text is corrected.
+    - **(B2)** (6′)'s per-unit scope: one line at the v1.8 routing.
+    - **(B3)** D1 = D_O = 2026-10-16 is twelve days out, with a STOP cycle before step 4.
+      Step 3 has not run, so §7.4's "visible re-specification" does not yet attach. The PI
+      may confirm or move the dates at the v1.8 routing.
+    - **(B4)** The OLMo track needs runpod re-authorisation and a pod-start go.
+
+  - **What resolves.**
+    - **Arithmetic [C].** All eight power figures, the four critical counts and the (144, 56)
+      grid minimum reproduce, as do the looks (5/4, 18/17), 30,625 as factored, and 896/832
+      as sums.
+    - **Dose.** The n_eligible list and the k row (sum 54) reproduce, as do f1's 31 changed
+      letters. `corrupt_m` as specified reaches k on all 16 items with one roster-substring
+      skip (item 7).
+    - **f1, e2a and OLMo figures.** 64 CORR sessions, 17/597, 11/351, 26/58, 58/58, 30/58, 19/3074, e2a's 156/187, the OLMo first-pick shares, 0/756 and 37/41 all resolve.
+    - **Documents and anchors.** §0.9's positional compare differs at exactly root:13, :30,
+      :184, :186, :272, :278 and :280. Every CLAUDE.md line anchor resolves. Rule citations resolve except rule 28(c)'s, which m:28/:93 cite as met (G1.20, = A4).
+      Separately, rule 21's unprovoked-domain clause is applied in §6 but not at the
+      qualification gates (G1.11, = A5; the record calls it "not a citation error"). The RESULTS,
+      archive, PROPOSAL-f/-h/-k, LOCK-g and HANDOFF-09-04 anchors resolve, except archive:142's
+      gloss "f1 ran ≈ 85 s" (G3.6). Locator and gloss notes are in the raw and in the block's
+      §C (32 items).
+    - **§7.3.** The italic pre-commitment is byte-identical to v1.6's.
+
+  - **CARRIED BESIDE (rule 23), model-free, 2026-10-04.** Under `corrupt_m` as specified,
+    item 5 renders "Writa the opposfte of 'hoh'." and item 15 "Wyite thm opposite of
+    'oeen'.", so the corruption lands on the one word the gold depends on (= STOP-4 A16).
+    That is for the seat's condition-(3) read at G-CAL; it decides nothing here. All 16
+    renders are in the block's §F (provisional, not G-CAL), so the read can happen in this
+    STOP cycle.
+
+  - **Not done, by the STOP.** v1.7 is not committed, and its hash is not recorded as a
+    commit. D1, D_O, D2, the decisions-block quotation and §7.3's quotation are not committed
+    as step 3's record. v1.2–v1.6 are not moved to `archive/`. Nothing of §8 steps 4 onward
+    is built. Every untracked design document is untouched (trap 2; explicit paths).
+    Committed here: this entry and six files under `results/raw/`: the referent-check raw, the
+    STOP-4 recovery, the carry-over raw, the Code-to-design block, and the two values-check
+    raws (pass 1 and pass 2).
+
+  - **Values-check.** Entry and block values-checked pre-commit in two adversarial passes
+    (five claim checkers over disjoint sections, two refuter lenses each).
+    - **Totals.** Pass 1: 184 claims, 55 failing under at least one verdict, 6 more found by
+      the refuters. Pass 2: 226, 31 and 3. Both raws are committed:
+      [`_stop_entry_valuescheck`](results/raw/2026-10-04_m-v1.7_stop_entry_valuescheck.txt) and
+      [`_pass2`](results/raw/2026-10-04_m-v1.7_stop_entry_valuescheck_pass2.txt).
+    - **What pass 1 caught.** "Items the checkers missed", where the refuters' additions are
+      relative to their own group; "nine defects", where the list runs to ten; rule
+      citations called resolving where rule 21's and 28(c)'s applications fail; open-ended
+      threshold ranges; a quoted f1 code line that is not f1's; a drop that STOP-4 itself
+      prescribed, listed as a defect; and A10's provenance, where the G1 checker had raised
+      and dismissed the point.
+    - **What pass 2 caught.** Boundary precision (exact roots now marked "…"); the
+      headline's unqualified "18 substantive" and "160 below"; A8's "§7.6 rival", which
+      m:14 maps; and the count of committed raws.
+    - **What did not move.** No count from the check or from the carry-over moved in either
+      pass. Every correction was re-verified by Code against the file before it changed a
+      sentence.
+
 - 2026-09-18 — **ADDENDUM-k1 v1.1: the Appendix referent check STOPS the commit a second
   time. 114 referents by six blind checkers over disjoint groups, two refuter lenses
   each (one referent excepted, below); 19 contested, 17 reported as not resolving. Two
