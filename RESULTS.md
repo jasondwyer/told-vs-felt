@@ -21,6 +21,234 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-10-04 — **PROPOSAL-m v1.8 (routed by the PI 2026-10-04): §8 step 2's referent and
+  disposition check STOPS the commit ("STOP-6"). 442 referents by thirteen blind checkers over
+  disjoint groups, two refuter lenses each: 130 unresolved under all three verdicts and 6
+  contested. The repairs of STOP-4 and STOP-5 largely land; across the disposition groups,
+  86 of 125 referents resolve. The substantive failures reduce to nine defects in v1.8 (eight
+  graded substantive by all three verdicts, (9) by two of three), plus the routing-level handoff
+  mismatch below, which all three verdicts grade substantive.
+  (1) The G-TIME binomial bars bind on domains that include the contrast sessions, against
+  v1.8's own sham-only convention and rule 21.
+  (2) The qualification redaction does not blind contrast picks: every round prints its task
+  line, and in a contrast session each free round's line is clean or corrupted according to the pick.
+  (3) §5's PENDING predicate is neither total nor exclusive.
+  (4) Steps 6–7 read the screen's A3 after f2 returns.
+  (5) NULL-x covers a one-map excursion toward clean only.
+  (6) The restored B11 clause denies B11's sampling-noise exception.
+  (7) §2.7's disclosure list is presented as complete.
+  (8) §0.10 is still not exhaustive, and decision (10) incorporates it.
+  (9) Every RESULTS.md line anchor is an `e186162` line number, 271 lines early at HEAD, moved
+  by Code's own STOP-5 entry.
+  The corrected design handoff the routing names is not on disk. Not done: v1.8 is not
+  committed, v1.2–v1.7 are not moved, the dates and decisions (8)–(14) are not committed as
+  step 3's record (this entry quotes the routing), and nothing is built.** (Stamp verified at
+  write time: `date -u` → **Sun Oct  4 23:24:05 UTC 2026**.)
+
+  - **The routing (the PI's word, quoted so the record carries it).**
+
+    > ROUTING BLOCK — PI, 2026-10-04 (date from my clock; no time of day)
+    >
+    > STOP-5 received and read by the design seat, with STOP-4 recovered.
+    > CORRECTION TO MY 10-04 ROUTING BLOCK: v1.6 was routed by me on 09-28 (13:07Z)
+    > and STOPPED by you (STOP-4, 13:08:11 UTC); your pre-read and STOP sessions of
+    > 09-25, 09-27 and 09-28 happened. "Never routed" and "no Code session since
+    > e186162" were wrong. The design seat owns the lineage error (ledger 36).
+    >
+    > ROUTE: PROPOSAL-m-gating-campaign-v1_8.md, untracked at root.
+    >   Expected sha256 (as delivered by the design seat):
+    >   12f65e921af5234d9de32adf2961d830d3be34b0740ce7c715e134fedeef963e
+    >   Verify on disk and report; a mismatch is a STOP, not a correction.
+    >   v1.8 supersedes v1.7 (STOP-5) and v1.6 (STOP-4). It is self-contained
+    >   (ledger 19-38 written out). s0.11 dispositions every STOP-4 and STOP-5
+    >   item; check each at its named section.
+    >
+    > ALSO AT ROOT, untracked: HANDOFF-2026-10-04-design.md (corrected; sha256
+    >   bb830ba00c1a50fe0bf3a7b1346cfc01b57be7e2371482a3224cd9e094d80a4a).
+    >
+    > PI DECISIONS OF RECORD, 2026-10-04 (v1.8 s0.2 items 8-14; this block is their
+    > record):
+    >   (8)  Two Qwen units, Q-F0 (A0, A0s at F0m) and Q-F3 (A1-A3s at F3), each
+    >        with its own locks, cap, look series, stop, NOT-RUN and Clock date.
+    >        Each OLMo checkpoint is its own unit with its own locks.
+    >   (9)  The preprint's v1 posts on Q-F0's outcome; OLMo rows enter as they
+    >        stand (PASS / not run / pending); v1 ceiling Fallback-1.
+    >   (10) Q-F3 is retained as pre-registered, with the changes v1.8 s0.10 lists,
+    >        governs v2, and begins only after the POSTING v1 entry exists.
+    >   (11) Clock dates: D1 (Q-F0) 2026-10-23; D_O (each OLMo checkpoint)
+    >        2026-10-23; D2 (Q-F3) 2026-12-15.
+    >        [PI: strike and replace any date here.]
+    >   (12) e2b has no told control at its state-present read in this campaign
+    >        and is "concluded, not answered" in every outcome; a steering-based
+    >        told control is a separate later proposal, not part of m.
+    >        [PI: strike this line if you want it otherwise.]
+    >   (13) (6')'s scope under the split, in my words: "Fallback-2 under the
+    >        Clock is the consequence of a Q-F0 Clock miss at the v1 posting. A
+    >        Q-F3 Clock miss has only the v2 consequence: Fallback-1 iff L0, with
+    >        s8.2 left open. The Clock applies to every unit; the title
+    >        consequence is Q-F0's alone."
+    >   (14) The base checkpoint has no told control by decision (7'); that is a
+    >        decision, not a measured fact. I am not reopening it.
+    >        [PI: strike this line to add an A0-OLMo-base unit, ~1.2-1.4 h.]
+    >
+    > STOP-4 B1/B2 and STOP-5 B1-B4 are answered by (11), (13), the correction
+    > above, and: pod start needs my go and the runpod MCP re-authorisation;
+    > ask when you reach step 9's OLMo track.
+    >
+    > DO, IN ORDER (v1.8 s8): step 1 delta read (expected HEAD 87a1167); step 2
+    > referent check (s9; v1.1-preprint referents are deferred to LOCK-m-F0 v1.0
+    > by design, not failures); step 3 commit v1.8 with D1/D_O/D2, the decisions
+    > block lines :91 and :96 as the records of (6') and (7) with :99/:101 and
+    > :91's "same ceiling" clause marked superseded, this block as the record of
+    > (8)-(14), s7.3 verbatim; move v1.2-v1.7 to archive/. REPORT TO ME after
+    > step 3 before building. Then steps 4-18. Step 19 (Q-F3) not before the
+    > POSTING v1 entry.
+    >
+    > The design seat's condition-(3) read on your provisional renders is in
+    > v1.8 s2.3 (items 5 and 15 fail; operand exclusion added). Recompute the
+    > renders at G-CAL under the new rule; the seat reads them again there.
+    >
+    > HANDS OFF: the k arc.
+    >
+    > STILL TO COME FROM ME: the preprint of record at root before step 15; the
+    > Q-F0 hour cap at step 15; per-checkpoint OLMo cap shares at their v1.0 locks.
+
+    The PI's earlier note beside the v1.7 routing ("PI adds: Use all the defaults if any decision
+    needed from me", quoted in the STOP-5 entry) is applied to procedure only: an unresolved
+    referent STOPs. No date and no decision line was struck,
+    so D1 = D_O = 2026-10-23, D2 = 2026-12-15 and decisions (12)–(14) stand as written. Under §7.4 the dates are fixed at routing; only once step 3 commits them does moving one become
+    "a visible re-specification", and that commit has not happened. Decisions (12)–(14) are
+    recorded by the routing block, which step 3 quotes.
+
+  - **Step 1 (delta read).**
+    - HEAD `87a1167`, `main == origin` (fetched; nothing new). v1.8 on disk =
+      `12f65e921af5234d9de32adf2961d830d3be34b0740ce7c715e134fedeef963e`, matching the
+      routing. The untracked root is m:267's expected list plus v1.8 and the two superseded g3-b2r
+      addenda, which the list omits (P1.11). No m artifact exists.
+      `ADDENDUM-k1.md` is `61acf21ff2cc104e…`, untouched.
+    - **Mismatch:** `HANDOFF-2026-10-04-design.md` is `ada1fa02…75d4f1` (the 01:37 local file), not the corrected `bb830ba0…80a4a` the routing names. The corrected file was
+      never placed, and the file at root still says "v1.6 was not routed" (:19). v1.8 does not cite the 10-04 handoff (its only handoff referent is
+      HANDOFF-2026-09-04-design.md:79–80), so step 2 is unaffected. Reported; not corrected.
+
+  - **Step 2: the check.**
+    - **Method.** Workflow `wf_ffea0a7d-1a6`: 39 agents, 0 errors, 2,479 s. Thirteen groups:
+      L1 law; R1 RESULTS/archive/proposal anchors; C1 Qwen code; O1 OLMo code and data; D1
+      dose; F1 f1 rates and timing; A1 arithmetic; P1 documents and decisions; S4A, S4C STOP-4
+      dispositions; S5A, S5C STOP-5 dispositions; X1 diff and consistency. Each group had two refuter lenses: one tried to break every resolves=true; the other re-tested every resolves=false and every severity above clean
+      (and spot-checked resolves=true). The harness noted the safety classifier was
+      unavailable while one agent (refute:P1:strict) ran. It was read-only; its verdicts are treated like the rest, and Code re-verified those that
+      change a sentence.
+    - **Totals.** 442 referents: 259 resolve cleanly under all three verdicts, 47 with a
+      minor note, 130 unresolved under all three, 6 contested. The refuters added 51 items
+      beyond their own group's checker (4 substantive, all within clusters (2) and (3) below, two of them supplying (3)'s
+      "not exclusive" half, which the checkers graded only minor (X1.22); 47 minor).
+    - **Code's independent pass.** Before the workflow returned, Code computed the dose under
+      the operand exclusion and the eight critical counts; all reproduce.
+    - **Record.** [`_m-v1.8_referent_check`](results/raw/2026-10-04_m-v1.8_referent_check.txt).
+      The block for the seat, with fixes and 117 minor items:
+      [`_m-v1.8_code-to-design_STOP`](results/raw/2026-10-04_m-v1.8_code-to-design_STOP.md).
+
+  - **The STOP (block §A), each unresolved under the checker and both lenses.**
+    - **(A1) G-TIME bars on mixed domains.** §3 binds every gate-stage binomial bar "with
+      their domain the sham-template sessions only (rule 21 …)". G-TIME-F0 ("≤ 20 rounds",
+      half from the A0 contrast session), G-TIME-OLMo ("≤ 20 rounds") and G-TIME-F3 ("≤ 60
+      rounds", "≤ 36 reasoning lines") bind on all their sessions, contrast included. An
+      unprovoked domain exists at each, so rule 21's annotation does not apply, and a fire
+      stops the stage. This is the fix of STOP-5 C27 / STOP-4 C22 creating STOP-5 A5's
+      defect at G-TIME. [C] sham-only critical counts: 3, 2, 5 and 5 (P = .0115, .0162,
+      .0156, .0282).
+    - **(A2) The redaction does not blind contrast picks.** Every round prints its task line
+      (session_e2a.py:72–75), and in a contrast session a free round's task is clean or
+      corrupted by the pick. So the redacted read shows each first pick at the DV's level.
+      The seat reads 1 + 8 told-control A0 sessions before the Q-F0 cap decision (likewise 1 + 8 per OLMo checkpoint; in Q-F3, the 3 + 16 contrast sessions of A1, A2 and A3,
+      A3's among them). G-TIME-F0 also reports every arm's picks under rule 23 (m:193). §3's "carries no pick" is false, and §4's ban
+      is contradicted by the reads steps 14 and 19 require (= STOP-4 A5 / STOP-5 A10, read
+      half).
+    - **(A3) §5's PENDING predicate.** A checkpoint locked by D_O that has no VERDICTS at a posting after D_O, and is
+      not NOT-RUN under §5's locked-unit clause (still running, restarting after a box change, or
+      awaiting its VERDICTS session), has no state. That case covers v1.7's pending (a unit "still locked and running at v1",
+      v1.7:170), which v1.8 keeps only before D_O. A checkpoint that fails G-CAL-OLMo is, at any
+      posting before D_O, both NOT-RUN (m:137, m:215) and PENDING (m:237).
+    - **(A4) Steps 6–7 read the screen's A3 while Step 5 reads f2's.** With L0 ∧ L1 ∧ A2 = PASS, a screen POSITIVE followed by an f2 NULL (f2's control passed)
+      reaches Main while Step 6 posts "under confirmation" and Step 7 keeps §8.2 open (= STOP-4 A6, partly resolved).
+    - **(A5) NULL-x toward clean only.** The toward-corrupted one-map excursion falls to NULL
+      and can reach Main (= STOP-4 A14, partly resolved).
+    - **(A6) The B11 clause denies its exception.** v1.8 has condition (4) "fails at every higher rung if
+      it fails at the lowest". STOP-2's B11 (09-27 22:13:26) has a higher rung "possible for
+      (4) only through sampling noise" (= STOP-4 C7, claimed resolved; rationale only).
+    - **(A7) §2.7's F0m-vs-f1 difference list is presented as complete,** without the dose
+      change among others (= STOP-4 C25, claimed resolved).
+    - **(A8) §0.10 is not exhaustive** (eight Q-F3-bearing changes absent from §0.10, most traceable only
+      through §0.11's dispositions and the `{n}` pin nowhere), and the
+      PI's decision (10) adopts "the changes v1.8 s0.10 lists" (= STOP-5 A8, recurring).
+    - **(A9) RESULTS.md anchors.**
+      - All 21 are `e186162` line numbers. Code's STOP-5 entry inserted 271 lines at the head
+        of the Log (one hunk, `@@ -21,6 +21,277 @@`), so each lands 271 lines early at HEAD.
+        Every gloss checks at N + 271 except two: m:149's range should start at
+        e186162:1749 (R1.12), and m:184's "p0 provenance" label sits on :842–844, a rule anchor
+        holding none of the p0 figures (F1.6, R1.7).
+      - This entry moves them again. The durable fix is one header sentence pinning the line
+        numbers to `e186162`.
+      - Graded substantive 2–1 at R1.1 and R1.2 (the strict lens minor), minor everywhere
+        else; listed as a STOP item because a +271 rebase would not survive step 3's prepended
+        entry (the strict lens disputes this).
+
+  - **For the PI (block §B).**
+    - **(B1)** The corrected handoff needs placing if it is to be the record.
+    - **(B2)** Step 3 is to quote decisions-block :96 as the record of (7). :96 also says "A
+      Qwen A0 licenses the Qwen F0 cells (e2a, e2b, f1)", which decision (12) overrides for
+      e2b, and the instruct-only OLMo design spans :97–:98 as well as :99/:101. Absent a line
+      from the PI, Code would mark both superseded beside the quotation.
+    - **(B3)** D1 = D_O = 2026-10-23 is nineteen days out, with this STOP cycle first.
+
+  - **What resolves.**
+    - **Arithmetic.** The power figures and every critical count, old and new, are arithmetically
+      right; m:184 tags the eight counts [C] (Code's) where most are the seat's (refuter-found minor,
+      STOP-5 C6's class). The launch figures are right on their bounded domains, but A1.3,
+      A1.11–A1.14 and A1.20 fail under all three verdicts (minor), all listed in the block's §C:
+      - open-ended "below" totals false at reachable r, and §0.4's exposure not total over r;
+      - two Q-F3 branches no k/40 reaches (cached 768, A1.14; uncached 704 with its 78–87 h,
+        refuter-found);
+      - the root .755890…, which truncates to .755889… (Code's own STOP-5 figure, inherited);
+      - Q-F3's uncached hours, which omit the reasoning-line time they name as an input.
+    - **Battery size.** 1,080 and 87,480 are right as sizes.
+    - **Rules.** Every CLAUDE.md anchor resolves, and every rule citation except the G-TIME
+      application of rule 21 (A1) and two refuter-found minor items (rule 25 at the redacted gate
+      reads; m:64's "restarts that unit" against the backend-consistency clause). Eight rule
+      citations resolve only with minor notes (L1.6, L1.13, L1.16, L1.17, L1.20, L1.29, L1.32,
+      L1.33).
+    - **Code and data.** The data anchors and OLMo pins resolve. The code anchors resolve except
+      C1's minor pin gaps (arm-rng draw calls, DRAW_SEED, banner joiner bytes, covariate sign),
+      e2d/runner.py:55–58 not covering top-1-not-a-label (C1.20), and condition (4)'s unpinned
+      parameters, all in the block's §C.
+    - **Dose.** The operand exclusion behaves as §2.3 states (items 5, 11, 15 → 14 eligible;
+      k unchanged; 54 changed letters; operands intact).
+    - **Provenance.** Ledger 36 and the decisions of record match the routing in substance.
+      v1.8 does not meet ledger 36's own fix at m:4, where two of six stamp glosses are wrong
+      (22:13:26 stopped v1.3, not v1.4; 07:27:18 validated the seat's decisions block, not the
+      v1.2 pre-read; S5A.11).
+    - **Unchanged.** The §7.3 italic pre-commitment is byte-identical to v1.6's.
+
+  - **Not done, by the STOP.** v1.8 is not committed; v1.2–v1.7 are not moved; no lock, no
+    build; every untracked document untouched. Committed here: this entry and, under
+    `results/raw/`, the referent-check raw, the Code-to-design block and the two values-check raws (passes 1 and 2).
+
+  - **Values-check.** Entry and block values-checked pre-commit in two adversarial passes
+    (three claim checkers over disjoint sections, two refuter lenses each).
+    - **Totals.** Pass 1: 130 claims, 44 failing under at least one verdict, 8 more found by the
+      refuters. Pass 2: 101, 23 and 5. Both raws are committed:
+      [`_stop6_valuescheck`](results/raw/2026-10-04_m-v1.8_stop6_valuescheck.txt) and
+      [`_pass2`](results/raw/2026-10-04_m-v1.8_stop6_valuescheck_pass2.txt).
+    - **What pass 1 caught.** A mistyped handoff hash tail (`…f1d4f1` for `…75d4f1`); "inverts
+      B11" where v1.8 denies only B11's sampling-noise exception; "every round … clean or
+      corrupted by the pick" where only free rounds are; dates said to "bind" at step 3 where
+      §7.4 fixes them at routing; and §C lines that quoted only a status word or contradicted A2.
+    - **What pass 2 caught.** One A1 referent (S5A.24) belonging to A2; the G-TIME pick
+      reporting overstated; unlisted OLMo changes; the precision of the tallies and of what
+      resolves; and the entry's stamp, re-taken at final assembly.
+    - **What did not move.** No count from the check moved in either pass. Every correction was
+      re-verified by Code against the file.
+
 - 2026-10-04 — **PROPOSAL-m v1.7 (routed by the PI 2026-10-04): §8 step 2's referent check
   STOPS the commit. 249 referents by ten blind checkers over disjoint groups, two refuter
   lenses each: 41 unresolved under all three verdicts (18 graded substantive by the checker

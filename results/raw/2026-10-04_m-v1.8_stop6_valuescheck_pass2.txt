@@ -1,0 +1,2530 @@
+RAW RECORD — values-check PASS 2 of the 2026-10-04 STOP-6 entry and the v1.8 Code-to-design block (after pass 1's corrections), before commit
+Run 2026-10-04, workflow wf_4ebacc7f-04d; 9 agents (same three sections and two lenses as pass 1); 0 errors; 2,450,079
+subagent tokens; 2,098 s. Pass 1's record: results/raw/2026-10-04_m-v1.8_stop6_valuescheck.txt. Every correction applied was
+re-verified by Code (S5A.24's note; the X1.13/X1.16/X1.22 notes; decisions-block :97-:100; R1.7/R1.8/R1.21/S4C.34 notes; the
+strict lens's wording in the workflow script). Stamp from `date -u`: Sun Oct  4 23:24:22 UTC 2026.
+
+TOTALS: claims 101; failing under at least one verdict 23; refuter-missed items 5
+====================================================================================================
+
+####################################################################################################
+SECTION E
+####################################################################################################
+
+[E1] CHECKER pass
+  CLAIM:
+    Headline: v1.8 routed by the PI 2026-10-04; §8 step 2's referent and disposition check STOPS the
+    commit ("STOP-6").
+  EVIDENCE:
+    routing2_original.txt is dated 2026-10-04 and routes v1.8. m:268 reads "Referent check (§9); any
+    unresolved → STOP". Recomputed from wxky1b2rc.output: 130 referents are F/F/F.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      routing2_original.txt routes v1.8 and is dated 2026-10-04. m:268 reads "Referent check (§9);
+      any unresolved → STOP". My own tally of wxky1b2rc.output finds 130 referents F/F/F. STOP-2
+      (22:13:26, v1.3), STOP-3 (05:22:18, v1.5), STOP-4 and STOP-5 come before it, so "STOP-6" is
+      the next label.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      routing2_original.txt routes v1.8, dated 2026-10-04. m:268 reads "Referent check (§9); any
+      unresolved → STOP". Recomputed from wxky1b2rc.output: 130 referents are F/F/F.
+
+[E2] CHECKER pass
+  CLAIM:
+    442 referents by thirteen blind checkers over disjoint groups, two refuter lenses each; 130
+    unresolved under all three verdicts and 6 contested.
+  EVIDENCE:
+    JSON: 13 groups, 442 checker referents, lenient and strict verdicts on every id. 259 clean×3, 47
+    T/T/T with a minor note, 130 F/F/F, 6 mixed (A1.18, A1.36, X1.5, X1.23, X1.39, X1.40).
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Independent tally: 442 checker referents over 13 groups, and each referent has a lenient and a
+      strict verdict. The split is clean 259, T/T/T-minor 47, F/F/F 130, contested 6 (A1.18, A1.36,
+      X1.5, X1.23, X1.39, X1.40). The script's meta says "13 blind checkers over disjoint referent
+      groups".
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      Recomputed: 13 groups and 442 checker referents, each with a lenient and a strict verdict. Of
+      these, 259 are clean×3, 47 are T/T/T with at least one minor note, 130 are F/F/F and 6 are
+      mixed (A1.18, A1.36, X1.5, X1.23, X1.39, X1.40).
+
+[E3] CHECKER pass
+  CLAIM:
+    The repairs of STOP-4 and STOP-5 largely land; across the disposition groups, 86 of 125
+    referents resolve.
+  EVIDENCE:
+    S4A 26 + S4C 36 + S5A 27 + S5C 36 = 125. 68 resolve clean×3 and 18 resolve with a minor note,
+    giving 86; 39 are F/F/F.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      S4A 26 + S4C 36 + S5A 27 + S5C 36 = 125. Clean: 13+19+14+22 = 68. Minor note: 4+1+5+8 = 18.
+      Resolve total 86. F/F/F: 9+16+8+6 = 39. "Largely land" is a judgement that 86/125 supports.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      S4A 26 + S4C 36 + S5A 27 + S5C 36 = 125. Of these, 68 are clean×3 and 18 are T3-minor, giving
+      86; the other 39 are F/F/F.
+
+[E4] CHECKER fail
+  CLAIM:
+    The substantive failures reduce to nine defects in v1.8, plus the routing-level handoff mismatch
+    below, which all three verdicts also grade substantive.
+  EVIDENCE:
+    32 unresolved referents carry a substantive grade. Twelve map to A1, 4 to A2, 5 to A3, 2 to A4,
+    and 1 each to A5, A6, A7 and A8. A9 has 2 (R1.1, R1.2) and the handoff has 3 (P1.43, S4A.26,
+    S5A.13). The handoff items are substantive under all three verdicts. But R1.1 and R1.2, which
+    carry A9, are graded substantive/substantive/minor, so A9 is 2–1, as E itself says at A9. The
+    word "also" implies all nine are substantive under all three verdicts, and that holds for eight.
+  CORRECTION:
+    …reduce to nine defects in v1.8 (eight graded substantive by all three verdicts, A9 by two of
+    three), plus the routing-level handoff mismatch below (P1.43, S4A.26, S5A.13), which all three
+    verdicts grade substantive.
+  REFUTER [lenient] fail overturned=False
+    EVIDENCE:
+      I mapped all 32 substantive F/F/F referents. A1 has 12 (L1.23–26, O1.27, A1.24, A1.37, S4A.3,
+      S4C.30, S5A.16, S5C.27, X1.20). A2 has 4 (L1.35, S4A.7, S5A.23, S5A.24). A3 has 5 (A1.29,
+      S4A.13, S5A.8, S5C.26b, X1.21). A4 has 2 (S4A.9, S4C.24). A5–A8 have 1 each (S4A.18, D1.15,
+      C1.27, X1.8). A9 has 2 (R1.1, R1.2). The handoff has 3 (P1.43, S4A.26, S5A.13). Every one is
+      S/S/S except R1.1 and R1.2, which are substantive/substantive/minor. "…which all three
+      verdicts also grade substantive" implies the nine are graded that way too, but A9 is 2–1. The
+      STOP-5 precedent headline (RESULTS.md:24–26) qualified exactly this split ("nine under all
+      three verdicts, and one that a single refuter promoted").
+    CORRECTION:
+      …reduce to nine defects in v1.8, eight graded substantive by all three verdicts and A9 by two
+      of three (the strict lens minor), plus the routing-level handoff mismatch below (P1.43,
+      S4A.26, S5A.13), which all three verdicts grade substantive.
+  REFUTER [strict] fail overturned=False
+    EVIDENCE:
+      There are 32 substantive F/F/F referents: A1 12 (L1.23–26, O1.27, A1.24, A1.37, S4A.3, S4C.30,
+      S5A.16, S5C.27, X1.20), A2 4 (L1.35, S4A.7, S5A.23, S5A.24), A3 5, A4 2, A5–A8 1 each, A9 2
+      (R1.1, R1.2) and the handoff 3 (P1.43, S4A.26, S5A.13, each substantive×3). R1.1 and R1.2 are
+      graded substantive/substantive/minor. "Also" sets the handoff beside the nine as graded
+      substantive by all three verdicts, which is true of only eight. The STOP-5 precedent states
+      this split explicitly ("nine under all three verdicts, and one…").
+    CORRECTION:
+      Use the checker's text: "…reduce to nine defects in v1.8 (eight graded substantive by all
+      three verdicts, A9 by two of three), plus the routing-level handoff mismatch below, which all
+      three verdicts grade substantive."
+
+[E5] CHECKER pass
+  CLAIM:
+    Items (1)–(9) of the headline: G-TIME bars on mixed domains; redaction does not blind contrast
+    picks (every round prints its task line, clean or corrupted by the pick in a contrast session);
+    PENDING neither total nor exclusive; Steps 6–7 read the screen's A3 after f2 returns; NULL-x
+    toward clean only; B11 clause denies the sampling-noise exception; §2.7 list presented as
+    complete; §0.10 not exhaustive and decision (10) incorporates it; every RESULTS.md anchor is
+    e186162-numbered, 271 lines early at HEAD, moved by Code's STOP-5 entry.
+  EVIDENCE:
+    m:184 vs m:193/:206/:215; session_e2a.py:72–75 (b3 imports the same ROUND_TEMPLATES,
+    box_b3_sessions.py:65–66); m:237, m:137, m:215; m:253–256; m:239; m:137 vs the B11 text; m:180;
+    m:52 and routing (10) "with the changes v1.8 s0.10 lists"; `git diff e186162 87a1167 --
+    RESULTS.md` is one hunk, @@ -21,6 +21,277 @@.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      (1) m:184 vs m:193, m:206, m:215. (2) session_e2a.py:72–75: every ROUND_TEMPLATE carries
+      "Task: {task}", and b3 imports the same templates (box_b3_sessions.py:65–66). (3) m:237 vs
+      m:137 and m:215. (4) m:253–256. (5) m:239. (6) m:137 vs B11 (transcript 3f58e88e 22:51:33Z).
+      (7) m:180. (8) m:52 and routing (10). (9) `git diff e186162 87a1167 -- RESULTS.md` is one
+      hunk, @@ -21,6 +21,277 @@.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:184 (sham-only) is set against m:193, m:206 and m:215. session_e2a.py:72–75 print "Task:
+      {task}" every round; b3 imports the same ROUND_TEMPLATES (box_b3_sessions.py:65–66); m:219
+      defines the DV. Also checked: m:237; m:253–256; m:239; m:137 against B11; m:180; m:52 and
+      routing (10). `git diff e186162 87a1167 -- RESULTS.md` is the single hunk @@ -21,6 +21,277 @@.
+
+[E6] CHECKER pass
+  CLAIM:
+    The corrected design handoff the routing names is not on disk.
+  EVIDENCE:
+    HANDOFF-2026-10-04-design.md sha256 = ada1fa02…75d4f1, mtime 2026-10-04 01:37:56 EDT. No file
+    with bb830ba0… turned up in the repo, Downloads or Desktop.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      The HANDOFF-2026-10-04-design.md on disk hashes to ada1fa0241…df75d4f1. A find over Documents,
+      Downloads and Desktop (depth 4) returns only that file. No file hashes to bb830ba0….
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      A find over /Users/jasondwyer (Library excluded) for HANDOFF-2026-10-04* returns only the root
+      file, sha ada1fa02…df75d4f1. Nothing on disk has bb830ba0….
+
+[E7] CHECKER pass
+  CLAIM:
+    Not done: v1.8 not committed, v1.2–v1.7 not moved, dates and decisions (8)–(14) not committed as
+    step 3's record (this entry quotes the routing), nothing built.
+  EVIDENCE:
+    git status: v1.2–v1.8 untracked at root. HEAD = origin/main = 87a1167. No valence_core/m and no
+    LOCK-m*.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      git status shows v1.2–v1.8 untracked at root. HEAD = origin/main = 87a1167. There is no
+      valence_core/m*, no LOCK-m*, no m_analyze* and no corrupt_m in the repo. No step-3 commit
+      exists.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      git status shows v1.2–v1.8 untracked at root. HEAD = origin/main = main = 87a1167.
+      valence_core/m does not exist, and there is no LOCK-m* file.
+
+[E8] CHECKER fail
+  CLAIM:
+    (Stamp verified at write time: `date -u` → Sun Oct 4 22:21:46 UTC 2026.)
+  EVIDENCE:
+    22:21:46 is the write time of entry6_v1.md: the transcript shows "ok Sun Oct 4 22:21:46 UTC
+    2026", and the v1 mtime is 18:21:46 local. This corrected text (entry6_v2.md) was assembled at
+    22:47:14–22:47:36Z. That is after the block's re-taken stamp (22:46:53) and after the pass-1 raw
+    stamp (22:47:36), and the entry cites both files. The precedent goes the other way: the STOP-5
+    entry re-took its stamp at v2 (07:12:12, after its pass 1 returned at 07:07:57).
+  CORRECTION:
+    Re-take `date -u` when the final text of the entry is assembled for commit, and replace 22:21:46
+    with that stamp.
+  REFUTER [lenient] fail overturned=False
+    EVIDENCE:
+      Transcript: entry6_draft.md was written at 22:21:24Z and the stamp printed "ok Sun Oct  4
+      22:21:46 UTC 2026". The corrected text (entry6_v2.md) was produced at 22:47:14Z, after the
+      block was re-stamped (22:46:53) and alongside the pass-1 raw (22:47:36), both of which the
+      entry cites. STOP-5's precedent re-took the stamp when assembling its v2 (07:12:12, after pass
+      1). This is Code's own stamp being stale against its own text, not a PI-vs-Code date
+      difference, so it is low-stakes. The hash remains the record.
+    CORRECTION:
+      Re-take `date -u` when the entry's final text is assembled, as STOP-5 did at its v2, and
+      replace 22:21:46 with that stamp.
+  REFUTER [strict] fail overturned=False
+    EVIDENCE:
+      entry6_v1.md mtime is 18:21:46 EDT (22:21:46Z); entry6_v2.md is 22:47:36Z. In the same pass
+      Code re-took the block's stamp (22:46:53) and the pass-1 raw's (22:47:36), but not the
+      entry's. House practice re-stamps corrected text. RESULTS.md:2306 says "first written 07:45:40
+      UTC and corrected on its values-check; stamps are write-time". The committed STOP-5 stamp
+      07:12:12 equals that cycle's entry_v2.md mtime (03:12:12 EDT). Low stakes: this is Code's own
+      write-time convention, not a PI-date matter.
+    CORRECTION:
+      Re-take `date -u` when the corrected (final) entry text is assembled and replace 22:21:46 with
+      that stamp. Alternatively, keep both, as RESULTS.md:2306 does ("first written 22:21:46 UTC and
+      corrected on its values-check").
+
+[E9] CHECKER pass
+  CLAIM:
+    The PI's earlier note beside the v1.7 routing ("PI adds: Use all the defaults if any decision
+    needed from me", quoted in the STOP-5 entry) is applied to procedure only.
+  EVIDENCE:
+    RESULTS.md:103 (HEAD, STOP-5 entry): "> PI adds: Use all the defaults if any decision needed
+    from me".
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      RESULTS.md:103 (HEAD, STOP-5 entry): "> PI adds: Use all the defaults if any decision needed
+      from me". The STOP-5 entry (:108–110) applies it to procedure in the same way.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      RESULTS.md (HEAD, STOP-5 entry) has "> PI adds: Use all the defaults if any decision needed
+      from me" beside the v1.7 routing.
+
+[E10] CHECKER pass
+  CLAIM:
+    No date and no decision line was struck, so D1 = D_O = 2026-10-23, D2 = 2026-12-15 and decisions
+    (12)–(14) stand as written; under §7.4 the dates are fixed at routing, and only once step 3
+    commits them does moving one become "a visible re-specification"; that commit has not happened;
+    (12)–(14) are recorded by the routing block, which step 3 quotes.
+  EVIDENCE:
+    Routing (11) gives 2026-10-23/10-23/12-15, and none of the [PI: strike…] lines is acted on.
+    m:260: "each fixed at routing … Once in Code's step-3 commit, moving any date is a visible
+    re-specification". Routing step 3: "this block as the record of (8)-(14)".
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Routing (11) gives 10-23/10-23/12-15, and the bracketed [PI: strike…] lines at (11), (12) and
+      (14) are not acted on. m:260: "each fixed at routing … Once in Code's step-3 commit, moving
+      any date is a visible re-specification of the schedule". Routing: "this block as the record of
+      (8)-(14)".
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      Routing (11) gives 2026-10-23/10-23/12-15, and every [PI: strike…] bracket is left unacted.
+      m:260: "each fixed at routing … Once in Code's step-3 commit, moving any date is a visible
+      re-specification".
+
+[E11] CHECKER pass
+  CLAIM:
+    Step 1: HEAD 87a1167, main == origin (fetched; nothing new); v1.8 on disk = 12f65e92…963e,
+    matching the routing.
+  EVIDENCE:
+    git rev-parse HEAD origin/main main all return 87a1167…. The transcript (21:32:54Z) shows `git
+    fetch` with no new refs. shasum of v1.8 = 12f65e921af5…edeef963e, 284 lines.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Transcript 21:32:54Z: `git fetch origin | tail -1` printed nothing, and HEAD and origin/main
+      are both 87a1167140…. shasum of v1.8 = 12f65e921af5…edeef963e (284 lines), which matches the
+      routing.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      Transcript 21:32:54Z: `git fetch` printed nothing, and HEAD, origin/main and main are all
+      87a1167. The v1.8 sha recomputes to 12f65e92…edeef963e (284 lines).
+
+[E12] CHECKER pass
+  CLAIM:
+    The untracked root is m:267's expected list plus v1.8 and the two superseded g3-b2r addenda,
+    which the list omits (P1.11). No m artifact exists. ADDENDUM-k1.md is 61acf21ff2cc104e…,
+    untouched.
+  EVIDENCE:
+    Root untracked: v1.2–v1.8, the decisions block, PREPRINT, ADDENDUM-k1, six design handoffs,
+    ADDENDUM-g3-b2r.md and -v1.1.md. v1.2 of g3-b2r is tracked (f14d249) and says it supersedes
+    v1.1. P1.11 is minor×3. ADDENDUM-k1 sha = 61acf21ff2cc104e…, mtime 2026-09-13.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Untracked root: v1.2–v1.8, the decisions block, PREPRINT (d6431e97…6222b8, as m:267 expects),
+      ADDENDUM-k1, six handoffs, and ADDENDUM-g3-b2r.md (v1.0) with -v1.1.md. Both are superseded by
+      the tracked ADDENDUM-g3-b2r-v1.2.md. P1.11 is F/F/F minor. ADDENDUM-k1 hashes to
+      61acf21ff2cc104e…, mtime Sep 13. No m artifact exists.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      Untracked root = v1.2–v1.8, the decisions block, PREPRINT (d6431e97…222b8), ADDENDUM-k1, six
+      handoffs and the two g3-b2r addenda. g3-b2r v1.2 is tracked (f14d249). P1.11 is minor×3.
+      ADDENDUM-k1 = 61acf21ff2cc104e…, mtime 2026-09-13.
+
+[E13] CHECKER pass
+  CLAIM:
+    Mismatch: HANDOFF-2026-10-04-design.md is ada1fa02…75d4f1 (the 01:37 local file), not the
+    corrected bb830ba0…80a4a; the file at root still says "v1.6 was not routed" (:19); v1.8 does not
+    cite the 10-04 handoff (its only handoff referent is HANDOFF-2026-09-04-design.md:79–80), so
+    step 2 is unaffected.
+  EVIDENCE:
+    sha256 ada1fa0241…df75d4f1, mtime 01:37:56 EDT. Handoff:19 ends "v1.6 was not routed.**". A grep
+    of v1.8 finds HANDOFF only as 2026-09-04 (m:8, m:20, m:280); m:267 mentions "the design
+    handoffs" only generically (P1.43).
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      sha256 ada1fa0241…a5df75d4f1, mtime Oct 4 01:37:56. Handoff :19 ends "v1.6 was not routed.**".
+      Grepping v1.8 for HANDOFF finds only HANDOFF-2026-09-04-design.md:79–80 (m:8, m:20, m:280).
+      m:267's "the design handoffs" is generic.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      HANDOFF sha ada1fa02…df75d4f1, mtime 01:37:56 EDT; its :19 reads "v1.6 was not routed." v1.8
+      cites only HANDOFF-2026-09-04-design.md:79–80 (m:8, m:20, m:280); m:267 says only "the design
+      handoffs". The routing's sha ends …94d80a4a, so "bb830ba0…80a4a" is consistent.
+
+[E14] CHECKER pass
+  CLAIM:
+    Method: workflow wf_ffea0a7d-1a6, 39 agents, 0 errors, 2,479 s; thirteen named groups.
+  EVIDENCE:
+    JSON agentCount 39, all 39 in state done on attempt 1. Launched 21:36:05.7Z, completion notified
+    22:17:25Z (≈2,479 s; agent span 2,476.6 s). Group keys match.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Task notification 22:17:25Z: <agent_count>39</agent_count>, <agents_error>0</agents_error>,
+      <duration_ms>2479313</duration_ms>. Every workflowProgress agent is state=done on attempt 1.
+      The 13 group keys match.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      wf_ffea0a7d-1a6.json gives durationMs 2,479,313 and agentCount 39; all 39 are done on attempt
+      1. Its 13 group keys match.
+
+[E15] CHECKER fail
+  CLAIM:
+    Each group had two refuter lenses: one tried to break every resolves=true; the other re-tested
+    every resolves=false and every severity.
+  EVIDENCE:
+    Workflow script (m-v18-referent-check-wf_ffea0a7d-1a6.js:52), strict lens: "re-test every
+    resolves=false and every severity above clean … spot-check resolves=true". It was not asked to
+    re-test every severity.
+  CORRECTION:
+    …the other re-tested every resolves=false and every severity above clean (and spot-checked
+    resolves=true).
+  REFUTER [lenient] fail overturned=False
+    EVIDENCE:
+      Script m-v18-referent-check-wf_ffea0a7d-1a6.js:52 defines strict as "re-test every
+      resolves=false and every severity above clean … spot-check resolves=true". The strict agents
+      did return a severity for every id, but 126 of their 268 clean verdicts are one-line "Upheld"
+      spot-checks. The remit E describes is wider than the one assigned. Minor: the same wording
+      passed at STOP-5, where a lenient refuter noted the gap and let it stand.
+    CORRECTION:
+      …the other re-tested every resolves=false and every severity above clean, and spot-checked
+      resolves=true.
+  REFUTER [strict] fail overturned=False
+    EVIDENCE:
+      Script line 52, strict lens: "re-test every resolves=false and every severity above clean …
+      spot-check resolves=true". "Every severity" overstates the instruction. Both lenses did return
+      a severity for every id (line 59, "Give a verdict for EVERY id"), so this is a precision
+      point, not a material error.
+    CORRECTION:
+      "…the other re-tested every resolves=false and every severity above clean, and spot-checked
+      resolves=true."
+
+[E16] CHECKER pass
+  CLAIM:
+    The harness noted the safety classifier was unavailable while one agent (refute:P1:strict) ran;
+    it was read-only; its verdicts are treated like the rest.
+  EVIDENCE:
+    JSON logs: "[refute:P1:strict] Note: … (the safety classifier) was unavailable (timed out) when
+    reviewing this subagent's work". The script's PRE says "HARD RULES: READ-ONLY".
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      JSON logs and the notification's <failures> carry the note "[refute:P1:strict] … (the safety
+      classifier) was unavailable (timed out) when reviewing this subagent's work". In that agent's
+      transcript (agent-a2a1dff3357f66bef) I found 49 Bash calls and 1 StructuredOutput; no Write or
+      Edit, no git writes, and redirects only into scratchpad/agents. P1-strict never departed from
+      the checker on any P1 verdict, so none of its verdicts alone changes a sentence.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      The JSON logs hold the single note "[refute:P1:strict] Note: … (the safety classifier) was
+      unavailable (timed out) when reviewing this subagent's work". PRE: "HARD RULES: READ-ONLY
+      (scratch files only under …/agents/)".
+
+[E17] CHECKER fail
+  CLAIM:
+    Totals: 259 resolve cleanly under all three verdicts, 47 with a minor note, 130 unresolved under
+    all three, 6 contested. The refuters added 51 items beyond their own group's checker (4
+    substantive, all duplicates of the clusters below; 47 minor).
+  EVIDENCE:
+    Every number recomputes: 259/47/130/6; 51 missed = 4 substantive + 47 minor. The four
+    substantive items are L1-strict (= A2), A1-lenient, S4A-lenient and S4C-lenient (all A3). But
+    A1-lenient and S4A-lenient are not duplicates of a substantive checker finding. They are the
+    only substantive grading of A3's "not exclusive" half; the checkers had that case only as X1.22,
+    graded minor×3. "Duplicates" understates what they added.
+  CORRECTION:
+    …(4 substantive, all within clusters (2) and (3) below, two of them supplying (3)'s "not
+    exclusive" half, which the checkers graded only minor (X1.22); 47 minor).
+  REFUTER [lenient] fail overturned=False
+    EVIDENCE:
+      The counts recompute: 51 missed = 4 substantive + 47 minor. The four are L1-strict (= A2,
+      duplicating L1.35), S4C-lenient (A3 not total), A1-lenient and S4A-lenient. The last two are
+      not duplicates of any substantive checker finding. They are the only substantive grading of
+      A3's "not exclusive" half, which the checkers had only as X1.22 (minor×3). A1-lenient also
+      adds a second non-exclusive case that X1.22 and E's A3 do not carry: a locked checkpoint PI-
+      or G-VER-stopped before any first read is NOT-RUN under m:237's iff-list, and PENDING by its
+      last sentence until D_O.
+    CORRECTION:
+      …(4 substantive, all within clusters (2) and (3) below. Two of them, A1 and S4A lenient,
+      supply (3)'s "not exclusive" half, which the checkers graded only minor (X1.22); A1-lenient
+      also adds a second case, a locked checkpoint stopped before any first read. 47 minor.)
+  REFUTER [strict] fail overturned=False
+    EVIDENCE:
+      Numbers recompute: 259/47/130/6; 51 missed = 4 substantive + 47 minor. L1-strict restates
+      L1.35 (cluster 2), and S4C-lenient restates non-totality (cluster 3). A1-lenient and
+      S4A-lenient grade (3)'s "not exclusive" half substantive, which the checkers had only as X1.22
+      (minor under all three verdicts). That is a promotion, of the kind STOP-5's entry reported
+      separately (A10), not a duplicate.
+    CORRECTION:
+      Use the checker's text: "(4 substantive, all within clusters (2) and (3) below, two of them
+      supplying (3)'s 'not exclusive' half, which X1's checker and both lenses graded minor (X1.22);
+      47 minor)."
+
+[E18] CHECKER pass
+  CLAIM:
+    Code's independent pass: before the workflow returned, Code computed the dose under the operand
+    exclusion and the eight critical counts; all reproduce.
+  EVIDENCE:
+    Transcript: the workflow launched at 21:36:05Z, and Code's run at 21:36:49Z printed n_eligible,
+    k (sum 54), the renders and 12 critical counts (m:184's eight plus the four sham-only). The
+    workflow returned at 22:17:25Z. I recomputed all of them; they match.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      The workflow launched at 21:36:05Z. Code's run at 21:36:49Z printed the n_eligible list, k
+      (sum 54), 54 changed letters, the 16 renders and 12 critical counts (m:184's eight plus the
+      four sham-only counts). The workflow returned at 22:17:25Z. I re-ran both independently, and
+      every value matches.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      Transcript: the workflow was launched at 21:36:05Z. At 21:36:49Z Code's run printed n_eligible
+      [6,19,19,13,24,14,10,45,19,10,24,14,6,19,10,14], k sum 54, 54 changed, the renders and 12
+      critical counts (the eight plus four sham-only). The workflow returned at 22:17:25Z. My own
+      corrupt_m and binomial runs match.
+
+[E19] CHECKER pass
+  CLAIM:
+    Record links; the block for the seat, with fixes and 115 minor items.
+  EVIDENCE:
+    Both files exist. Block §C has 115 numbered items: the 69 uncollapsed minor×3 F/F/F plus 46
+    refuter-found minor. One refuter-found minor item is not listed (C1-strict, m:188 G-PORT scope
+    note, "needs no edit"). E's count of the block is right, but if K is changed to list all 47,
+    this becomes 116.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Both files exist. Block §C has 115 numbered items: 46 refuter-found and 69 uncollapsed minor×3
+      F/F/F (98 − 29 collapsed). The one refuter-found minor item not listed is C1-strict's "needs
+      no edit" note.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      Block §C has 115 numbered items: the 69 uncollapsed minor×3 F/F/F plus 46 refuter-found minor
+      (the 29 collapsed offset duplicates are named in its header). The count is right as E states
+      it. One refuter-found minor item (C1-strict, the G-PORT scope note) is not in §C, which bears
+      on K's header, not on E.
+
+[E20] CHECKER pass
+  CLAIM:
+    STOP section header: each A-item unresolved under the checker and both lenses.
+  EVIDENCE:
+    Every A-item rests on F/F/F referents: A1 L1.23 etc.; A2 L1.35; A3 A1.29; A4 S4A.9; A5 S4A.18;
+    A6 D1.15; A7 C1.27; A8 X1.8; A9 R1.1 and R1.2 (resolves false under all three).
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Each A-item rests on referents that resolve false under all three verdicts: A1 L1.23 etc.; A2
+      L1.35/S4A.7/S5A.23/S5A.24; A3 A1.29 etc. and X1.22; A4 S4A.9; A5 S4A.18; A6 D1.15; A7 C1.27;
+      A8 X1.8; A9 R1.1/R1.2.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      Each of A1–A9 rests on at least one F/F/F referent (e.g. L1.23, L1.35, A1.29, S4A.9, S4A.18,
+      D1.15, C1.27, X1.8, R1.1/R1.2).
+
+[E21] CHECKER pass
+  CLAIM:
+    (A1) §3 binds every gate-stage binomial bar "with their domain the sham-template sessions only
+    (rule 21 …)"; G-TIME-F0 ("≤ 20 rounds", half from the A0 contrast session), G-TIME-OLMo ("≤ 20
+    rounds") and G-TIME-F3 ("≤ 60 rounds", "≤ 36 reasoning lines") bind on all their sessions; an
+    unprovoked domain exists at each, so rule 21's annotation does not apply, and a fire stops the
+    stage; this is the fix of STOP-5 C27 / STOP-4 C22 creating STOP-5 A5's defect at G-TIME.
+  EVIDENCE:
+    m:184, m:193, m:206 and m:215 are quoted exactly. Sessions are 10 rounds (4 forced + N_FREE 6),
+    with 6 reasoning lines in F3. CLAUDE.md:338–341's annotation applies only "where none exists by
+    design". m:99 and m:113 send C27 and C22 to §3; m:77 has A5 = bars bind on provoked.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      m:184, m:193, m:206 and m:215 are quoted correctly. Sessions run 4 forced + N_FREE 6 = 10
+      rounds on Qwen, and b3 has F = 2 per pole + 6 = 10. F3 has 6 reasoning lines per session, so
+      half of each pooled domain is contrast. CLAUDE.md:338–341 applies the annotation only "where
+      none exists by design". m:99 (C27) and m:113 (C22) send these to §3. STOP-5 C27 asked to
+      "declare … a rule-21 departure, or evaluate them".
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:184's sham-only clause is quoted exactly. m:193 gives ≤ 20 rounds over 2 sessions, one of
+      them A0 contrast; m:215 gives two sessions, one per arm; m:206 gives 6 sessions, 3 of them
+      contrast, with ≤ 60 rounds and ≤ 36 lines. CLAUDE.md's annotation applies "where none exists
+      by design". m:99 is C27 → §3, m:113 is C22 → §3, and m:77 is STOP-5 A5.
+
+[E22] CHECKER pass
+  CLAIM:
+    (A1) [C] sham-only critical counts: 3, 2, 5 and 5 (P = .0115, .0162, .0156, .0282).
+  EVIDENCE:
+    Exact one-sided binomial, α .05: n10 p.05 → 3 (.0115); n10 p.02 → 2 (.0162); n30 p.05 → 5
+    (.0156); n18 p.10 → 5 (.0282). The declared 4/3/7/8 also recompute (.0159, .0071, .0297, .0235).
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Exact one-sided binomial, α .05: (10,.05)→3 P=.0115; (10,.02)→2 .0162; (30,.05)→5 .0156;
+      (18,.10)→5 .0282. The declared counts also recompute: 4/.0159, 3/.0071, 7/.0297, 8/.0235.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      Exact one-sided binomial at α .05: n10 p.05 → 3 (.0115); n10 p.02 → 2 (.0162); n30 p.05 → 5
+      (.0156); n18 p.10 → 5 (.0282). The declared 4/3/7/8 recompute as .0159/.0071/.0297/.0235.
+
+[E23] CHECKER pass
+  CLAIM:
+    (A2) Every round prints its task line (session_e2a.py:72–75); in a contrast session a free
+    round's task is clean or corrupted by the pick, so the redacted read shows each first pick at
+    the DV's level; the seat reads 1 + 8 told-control A0 sessions before the Q-F0 cap decision (1 +
+    8 per OLMo checkpoint; in Q-F3, 3 + 16 contrast sessions of A1, A2, A3); G-TIME-F0 reports every
+    arm's picks under rule 23 (m:193); §3's "carries no pick" is false and §4's ban is contradicted
+    by the reads steps 14 and 19 require (= STOP-4 A5 / STOP-5 A10, read half).
+  EVIDENCE:
+    session_e2a.py:72–75 are the four ROUND_TEMPLATES, each with "Task: {task}". m:184 redacts only
+    the tag and the menus. m:219 defines the DV as the clean-role label chosen. m:193: one A0
+    session "redacted as above", "picks … reported under rule 23". m:196: 8 A0 contrast sessions.
+    Step 14 is the redacted read; step 15 sets the cap. m:215: G-TIME-OLMo has 1 contrast session,
+    G-F0m-OLMo 8. m:206 and m:210: 3 + (8 A3 + 4 A1 + 4 A2). m:274: step 19 includes the redacted
+    read.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      session_e2a.py:72–75 are the four ROUND_TEMPLATES, each with "Task: {task}". m:219 defines the
+      DV as the clean-role label. m:193 reads "transcripts printed for the seat's read (redacted as
+      above); picks enter no DV (reported under rule 23)". m:196 has 8 A0-template sessions. Step 14
+      is the redacted read and step 15 the cap. m:215 gives OLMo 1 + 8. m:206 and m:210 give 3 + (8
+      A3 + 4 A1 + 4 A2). Step 19 includes the redacted read.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      session_e2a.py:72–75 are the ROUND_TEMPLATES with "Task: {task}". m:219 defines the clean-role
+      DV. m:193 has 1 A0 session read and its "picks … reported under rule 23"; m:196 has 8 A0
+      contrast sessions. Steps 14 and 15 put the read before the cap. m:215 has 1 + 8 per OLMo
+      checkpoint. In Q-F3, m:206 and m:210 give 3 + 16 contrast sessions. Step 19 includes "the
+      seat's redacted read" before the Q-F3 cap.
+
+[E24] CHECKER pass
+  CLAIM:
+    (A3) A checkpoint locked by D_O without VERDICTS at a posting after D_O has no state; that
+    covers v1.7's pending ("still locked and running at v1", v1.7:170), which v1.8 keeps only before
+    D_O; a checkpoint failing G-CAL-OLMo is, at any posting before D_O, both NOT-RUN (m:137, m:215)
+    and PENDING (m:237).
+  EVIDENCE:
+    m:237 is quoted. v1.7:170 has "a unit still locked and running at v1 is *pending*". m:137 and
+    m:215 say "failure → that checkpoint NOT-RUN with reason 'dose not completable'".
+  REFUTER [lenient] fail overturned=True
+    EVIDENCE:
+      The case the sentence describes is real, and v1.7:170 is quoted exactly. But "A checkpoint
+      locked by D_O but without VERDICTS at a posting after D_O has no state" is stated universally.
+      m:237 makes a locked unit NOT-RUN if it "produces no session reaching a first read before a PI
+      stop, a G-VER STOP, or its cap". Such a checkpoint, locked by D_O, has no VERDICTS and still
+      has a state. The block's own A3 keeps the qualifier ("still running, restarting after a box
+      change, or awaiting its VERDICTS session"), and so does S4A.13 ("unrun, running or
+      unanalyzed"); the entry drops it. The G-CAL-OLMo half is correct.
+    CORRECTION:
+      A checkpoint locked by D_O that has no VERDICTS at a posting after D_O, and is not NOT-RUN
+      under §5's locked-unit clause (still running, restarting after a box change, or awaiting its
+      VERDICTS session), has no state.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:237 is quoted. v1.7:170 reads "a unit still locked and running at v1 is *pending*". m:137
+      and m:215 send a G-CAL-OLMo failure to NOT-RUN. Under m:237, a checkpoint without VERDICTS
+      before D_O is PENDING.
+
+[E25] CHECKER pass
+  CLAIM:
+    (A4) Steps 6–7 read the screen's A3 while Step 5 reads f2's; with L0 ∧ L1 ∧ A2 = PASS, a screen
+    POSITIVE then f2 NULL (control passed) reaches Main while Step 6 posts "under confirmation" and
+    Step 7 keeps §8.2 open (= STOP-4 A6, partly resolved).
+  EVIDENCE:
+    m:253: "f2's A3 result replaces the screen's in Step 5". m:254: Main iff L0 ∧ L1 ∧ A2 = PASS ∧
+    A3 = NULL. m:255's A3-hit clause reads "under confirmation". m:256: closed iff … A3 = NULL.
+    S4A.9 is PARTIAL, F/F/F.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      m:253: "f2's A3 result replaces the screen's in Step 5, an f2 NULL entering Step 5 only if
+      f2's control passed". m:254: Main iff L0 ∧ L1 ∧ A2 = PASS ∧ A3 = NULL. m:255: "(iff A3 ∈
+      {POSITIVE, REVERSE}) …the screen returned a hit, under confirmation". m:256: closed iff … A3 =
+      NULL. S4A.9 is PARTIAL, F/F/F substantive.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:253: f2's A3 replaces the screen's "in Step 5". m:254: Main iff … A3 = NULL. m:255's A3-hit
+      clause reads "under confirmation". m:256: closed iff … A3 = NULL.
+
+[E26] CHECKER pass
+  CLAIM:
+    (A5) The toward-corrupted one-map excursion falls to NULL and can reach Main (= STOP-4 A14,
+    partly resolved).
+  EVIDENCE:
+    m:239: "NULL-x if (i) and (iii) hold toward clean and (ii) fails → NULL". m:254: Main needs A3 =
+    NULL. S4A.18 is PARTIAL, F/F/F.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      m:239 order is REVERSE → POSITIVE → "NULL-x if (i) and (iii) hold toward clean and (ii) fails
+      → NULL". So (i)+(iii) toward corrupted with (ii) failing reaches NULL, and m:254's Main
+      accepts A3 = NULL. S4A.18 is PARTIAL, S/S/S.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:239 orders REVERSE → POSITIVE → NULL-x (toward clean only) → NULL, so the toward-corrupted
+      excursion with (ii) failing lands on NULL. m:254: Main needs A3 = NULL.
+
+[E27] CHECKER pass
+  CLAIM:
+    (A6) v1.8's condition (4) "fails at every higher rung if it fails at the lowest"; STOP-2's B11
+    (09-27 22:13:26) has a higher rung "possible for (4) only through sampling noise" (= STOP-4 C7,
+    claimed resolved; rationale only).
+  EVIDENCE:
+    m:137 is quoted exactly. Transcript 3f58e88e, message 2026-09-27T22:51:33Z, is the block stamped
+    "Sun Sep 27 22:13:26 UTC 2026" ("§8 step 2 STOPS v1.3"); its B11 reads "leaves possible for (4)
+    only through sampling noise". m:98 is "C7 B11 clause → §2.3". D1.15 is substantive×3 and calls
+    it rationale only.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      m:137 is quoted exactly. In transcript 3f58e88e at 22:51:33Z, the block stamped "Sun Sep 27
+      22:13:26 UTC 2026" titled "PROPOSAL-m v1.3: §8 step 2 STOPS" has B11 reading "leaves possible
+      for (4) only through sampling noise". m:98 is "C7 B11 clause → §2.3". D1.15 is S/S/S and its
+      note calls it "rationale only".
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      Transcript 3f58e88e at 2026-09-27T22:51:33Z: the block headed "PROPOSAL-m v1.3: §8 step 2
+      STOPS", stamp 22:13:26. Its B11 reads "…leaves possible for (4) only through sampling noise".
+      m:137 is quoted exactly. m:98 is C7 → §2.3. D1.15 is substantive×3.
+
+[E28] CHECKER pass
+  CLAIM:
+    (A7) §2.7's F0m-vs-f1 difference list is presented as complete, without the dose change among
+    others (= STOP-4 C25, claimed resolved).
+  EVIDENCE:
+    m:180 lists banner lines, the CORR delivery module and the cached path. m:46 names "CORR
+    delivery" and `corrupt_m` as separate modules, so the .15/operand-exclusion dose is not covered.
+    m:116 is "C25 disclosures → §2.7". C1.27 is substantive×3.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      m:180 lists the banner lines, the CORR delivery module and the cached path. The dose change
+      (.15 corrupt_m with operand exclusion vs f1's .12 corrupt()) is not named, and m:46 treats
+      CORR delivery and corrupt_m as separate modules. m:116 is "C25 disclosures → §2.7". C1.27 is
+      S/S/S.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:180 names only the banner lines, the CORR delivery module and the cached path. m:46 and
+      m:270 treat `corrupt_m` as a module separate from CORR delivery. m:116 is C25 → §2.7. C1.27 is
+      substantive×3.
+
+[E29] CHECKER pass
+  CLAIM:
+    (A8) §0.10 not exhaustive (eight Q-F3-bearing changes absent, most traceable only through §0.11
+    and the {n} pin nowhere), and decision (10) adopts "the changes v1.8 s0.10 lists" (= STOP-5 A8,
+    recurring).
+  EVIDENCE:
+    X1.8 lists eight: blinding, echo scope, reasoning-line stop, reasoning-line echo class, counter
+    (c), {n}, NOT-RUN triggers, G-VER. X1.18: the `[round {n} | reasoning]` pin is "recorded nowhere
+    (not in §0.10 or §0.11)". Routing (10) is quoted. X1.37 is the A8 recurrence.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      X1.8 (S/S/S) lists the omitted Q-F3-bearing changes: blinding, echo scope, reasoning-line
+      stop, reasoning-line echo class, counter (c), {n}, NOT-RUN triggers and G-VER, which makes 8.
+      X1.18 says the {n} pin is "recorded nowhere (not in §0.10 or §0.11)". Routing (10): "with the
+      changes v1.8 s0.10 lists". X1.37 covers the A8 recurrence.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      X1.8 (substantive×3) names the eight omissions, and routing (10) adopts "the changes v1.8
+      s0.10 lists". m:52 reads "exhaustively".
+
+[E30] CHECKER pass
+  CLAIM:
+    (A9) All 21 RESULTS.md anchors are e186162 line numbers; Code's STOP-5 entry inserted 271 lines
+    at the head of the Log (one hunk, @@ -21,6 +21,277 @@), so each lands 271 lines early at HEAD.
+  EVIDENCE:
+    m:280 lists 21 ranges, and the body anchors are all among them. The git diff is a single hunk at
+    the Log head. I spot-checked e186162:842–844 = HEAD:1113–1115 and e186162:1749 = HEAD:2020.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      m:280 lists 21 RESULTS.md line ranges. 87a1167's parent is e186162, and the RESULTS.md diff is
+      the single hunk @@ -21,6 +21,277 @@ at the Log head (+271). Code's 21:36:13 check and
+      R1.3–R1.21 land each anchor at N+271.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:280 lists 21 RESULTS.md ranges, and every body citation is among them. The single hunk sits
+      at the Log head (lines 21–23). The R1 group checked all 21 at N + 271.
+
+[E31] CHECKER fail
+  CLAIM:
+    (A9) Every gloss checks at N + 271, except that m:149's range should start at e186162:1749
+    (R1.12).
+  EVIDENCE:
+    R1.12 is confirmed: e186162:1749 starts "F1 plaza 6/6". But F1.6 and R1.7, both F/F/F minor×3,
+    find a second gloss failure. m:184's "p0 provenance (RESULTS.md:842–844)" points to a
+    standing-fix rule ("every gate bar names the contrast…", e186162:842–844). The anchor holds none
+    of the p0 figures (17/597 and 11/351 are Code's [C]), so it does not check at +271 either. K §C
+    4 and 31 list them.
+  CORRECTION:
+    Every gloss checks at N + 271 except two: m:149's range should start at e186162:1749 (R1.12),
+    and m:184's "p0 provenance" label on :842–844, a rule anchor holding none of the p0 figures
+    (F1.6, R1.7).
+  REFUTER [lenient] fail overturned=False
+    EVIDENCE:
+      R1.12 is confirmed. But F1.6 and R1.7 (both F/F/F minor×3) find a second gloss problem:
+      m:184's "p0 provenance (RESULTS.md:842–844)" labels a standing-fix rule anchor ("every gate
+      bar names the contrast…", e186162:842–844) that holds none of the p0 figures, which are Code's
+      17/597 and 11/351. The checker and the lenient lens flag this gloss in both items. The strict
+      lens calls it over-literal and keeps minor on the locator only, so the count is 2–1.
+      Separately, R1-lenient's missed item (block §C 9) finds m:196's "scaffold-hit" comparator
+      gloss undefined against its anchor's v2 frame/junk hits.
+    CORRECTION:
+      Every gloss checks at N + 271 except m:149's range, which should start at e186162:1749
+      (R1.12), and m:184's "p0 provenance" label on :842–844, a rule anchor that holds none of the
+      p0 figures (F1.6, R1.7; checker and lenient lens, the strict lens calling it over-literal).
+  REFUTER [strict] fail overturned=False
+    EVIDENCE:
+      R1.12 is confirmed. F1.6 and R1.7 are F/F/F minor×3 and both sit in K §C (#31, #4). Each
+      raises a gloss point: "p0 provenance" is attached to a rule anchor (e186162:842–844, the
+      standing fix) that holds none of the p0 figures (17/597 and 11/351 are Code's [C]). The
+      checker and the lenient lens uphold the point on both items ("Locator and gloss only"; "still
+      a misnomer"). The strict lens calls it over-literal and keeps F on the locator alone. So the
+      gloss failure is 2–1, not unanimous as the checker implies, and "every gloss checks except
+      R1.12" is still overstated.
+    CORRECTION:
+      "Every gloss checks at N + 271, except that m:149's range should start at e186162:1749
+      (R1.12); m:184's 'p0 provenance' label on :842–844, a rule anchor holding none of the p0
+      figures, is called a misnomer by the checker and lenient lens (F1.6, R1.7; the strict lens:
+      over-literal)."
+
+[E32] CHECKER pass
+  CLAIM:
+    (A9) This entry moves them again; durable fix is a header sentence pinning line numbers to
+    e186162; graded substantive 2–1 at R1.1 and R1.2 (strict lens minor), minor everywhere else;
+    listed as a STOP item because a +271 rebase would not survive step 3's prepended entry (the
+    strict lens disputes this).
+  EVIDENCE:
+    JSON: R1.1 and R1.2 are substantive/substantive/minor (strict minor). All other anchor referents
+    (L1.7, R1.3–R1.21, F1.6/18/21/30, O1.9/21, A1.27, P1.40, S4A.25, S4C.3, S5C.22/33) are minor×3.
+    The strict lens on R1.1 reads: "(c) 'The +271 fix will not hold' is overstated".
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      R1.1 and R1.2 are False/substantive, False/substantive, False/minor. The strict lens on R1.1
+      says "(c) 'The +271 fix will not hold' is overstated". Every other anchor referent (L1.7,
+      R1.3–R1.21, F1.6/18/21/30, O1.9/21, A1.27, P1.40, S4A.25, S4C.3, S5C.22/33, and contested
+      A1.18) is minor under every verdict. Prepending this entry shifts every anchor again.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      R1.1 and R1.2 are substantive/substantive/minor. All other anchor referents are minor×3. The
+      strict lens on R1.1 says "(c) 'The +271 fix will not hold' is overstated".
+
+[E33] CHECKER pass
+  CLAIM:
+    (B1) The corrected handoff needs placing if it is to be the record. (B2) Step 3 is to quote
+    decisions-block :96 as the record of (7); :96 also says "A Qwen A0 licenses the Qwen F0 cells
+    (e2a, e2b, f1)", which decision (12) overrides for e2b; the instruct-only OLMo design spans
+    :97–:98 as well as :99/:101. (B3) D1 = D_O = 2026-10-23 is nineteen days out.
+  EVIDENCE:
+    Routing: "the decisions block lines :91 and :96 as the records of (6') and (7)". Decisions block
+    :96 is quoted exactly. :97 has "on **OLMo-3.1-32B instruct**" and :98 has "Why instruct only".
+    2026-10-04 to 2026-10-23 is 19 days.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Routing: "the decisions block lines :91 and :96 as the records of (6') and (7)". Decisions
+      block :96 is quoted exactly. :97 "on **OLMo-3.1-32B instruct**" and :98 "Why instruct only"
+      are confirmed. 2026-10-04 → 2026-10-23 is 19 days (date arithmetic).
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      Decisions block :96 is quoted exactly. :97 has "on **OLMo-3.1-32B instruct**", and :98 "Why
+      instruct only". Routing step 3 names :91/:96. Oct 23 − Oct 4 = 19 days.
+
+[E34] CHECKER pass
+  CLAIM:
+    Arithmetic: the power figures and every critical count, old and new, resolve.
+  EVIDENCE:
+    A1.5–A1.9 and A1.22 are clean×3. I recomputed the eight counts in m:184 and the four sham-only
+    counts.
+  REFUTER [lenient] fail overturned=True
+    EVIDENCE:
+      The arithmetic is right: I recomputed 87/83/60/51 and all eight m:184 counts (A1.5–A1.9 and
+      A1.22 are clean×3). But the check counts attribution as part of "resolves" (the workflow PRE:
+      "figure, gloss, attribution…"). m:184 tags the eight counts "([C], exact)", and [C] means
+      Code's (m:282). Code's STOP-5 block supplied only n=240→19 (A5) and n=20 P(X≥4)=.016 (C27).
+      The other six (14, 7, 22, 3, 7, 8) are the seat's. S5C-strict's missed item says "Six of the
+      eight critical counts are the seat's … the attribution is the only defect", and S5C-lenient's
+      says the same. Both are refuter-found minor, in block §C as #84 and #88. That is STOP-5 C6's
+      class.
+    CORRECTION:
+      The power figures and every critical count, old and new, are arithmetically right. m:184's [C]
+      tag on the eight counts is not: six are the seat's (refuter-found minor, S5C, in §C; STOP-5
+      C6's attribution class).
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      Exact power recomputes .916, .878, .862, .848 (.8476 with exact fractions), .927, .665, .990.
+      Critical counts 87, 83, 60, 51 and the eight gate counts recompute.
+
+[E35] CHECKER fail
+  CLAIM:
+    Arithmetic: the launch figures are right where stated, but A1.11–A1.14 and A1.20 fail under all
+    three verdicts (minor), listed in §C: open-ended "below" totals false at reachable r, and two
+    Q-F3 branches (cached 768; uncached 704 with its 78–87 h) that no k/40 reaches; the root
+    .755890… truncating to .755889… (Code's STOP-5 figure, inherited); Q-F3's uncached hours
+    omitting the reasoning-line time.
+  EVIDENCE:
+    The sub-facts recompute: the A2s root is .7558899102; 768 holds only on [.785640, .792465) and
+    uncached 704 only on [.850194, .872454), with no k/40 in either; 704 × 401–446 s = 78.4–87.2 h;
+    672 × 401–446 s = 74.9–83.3 h with nothing added; STOP-5's block carries ".755890". Three
+    problems with the framing. (a) "Right where stated" is contradicted by its own list: "224 below
+    .7925", "192 below .8725", "768 below" and the "…" on .755890 are stated figures, and they are
+    false. (b) A1.3, also F/F/F minor×3 and in §C (#34), is omitted: §0.4's "per r domain" exposure
+    covers only the top domains. (c) The uncached-704 unreachability is refuter-found (A1-strict
+    missed; S5A-lenient missed). Its own referent, A1.15, resolves under all three, so it is not one
+    of "A1.11–A1.14 and A1.20".
+  CORRECTION:
+    The launch figures are right on their bounded domains, but A1.3, A1.11–A1.14 and A1.20 fail
+    under all three verdicts (minor), and the refuters add the unreachable branches; all are in the
+    block's §C: open-ended "below" totals false at reachable r, and §0.4's exposure not total over
+    r; two Q-F3 branches no k/40 reaches (cached 768, A1.14; uncached 704 with its 78–87 h,
+    refuter-found; A1.15 itself resolves); the root .755890…, which truncates to .755889…; Q-F3's
+    uncached hours, which omit the reasoning-line time.
+  REFUTER [lenient] fail overturned=False
+    EVIDENCE:
+      The sub-facts recompute. The A2s/A3s root is .7558899102. Cached Q-F3 768 holds only on
+      [.785640, .792465) and uncached 704 only on [.850194, .872454); no k/40 falls in either. 704 ×
+      401–446 s = 78.4–87.2 h. STOP-5's block carries ".755890…". Problems with the framing: (b)
+      A1.3, which is F/F/F minor×3 and in §C, is omitted. (c) The uncached-704 unreachability does
+      not come from "A1.11–A1.14 and A1.20": A1.15 resolves T/T/T, and the point comes from A1.15's
+      lenient verdict and the A1-lenient, A1-strict and S5A-lenient missed items. Cached 768's
+      unreachability comes from both lenses on A1.14, not from its checker note. (d) Also unlisted
+      here: F1.24 (F/F/F minor) and A1-strict's missed item, both on the [C] attribution of the
+      seat's hours and totals, and A1-strict's missed item on the OLMo hours range covering only the
+      top two r domains. (a) "Right where stated" sits awkwardly beside the stated open-ended totals
+      that fail.
+    CORRECTION:
+      The launch figures are right on their bounded domains, but A1.3, A1.11–A1.14 and A1.20 fail
+      under all three verdicts (minor), and the refuters add more; all are in the block's §C. The
+      items: open-ended "below" totals that are false at reachable r, and §0.4's exposure not total
+      over r; two Q-F3 branches no k/40 reaches (cached 768, per A1.14's lenses; uncached 704 with
+      its 78–87 h, refuter-found, A1.15 itself resolving); the root .755890…, which truncates to
+      .755889…; Q-F3's uncached hours omitting the reasoning-line time; and the seat's hours and
+      totals tagged [C] (F1.24).
+  REFUTER [strict] fail overturned=False
+    EVIDENCE:
+      Recomputed: the A2s root is .755889910, so .755890… is not a truncation. 768 holds only on
+      [.785640, .792465), and uncached 704 only on [.850194, .872454); no k/40 falls in either.
+      672/704 × 401–446 s = 74.9–83.3 / 78.4–87.2 h, with nothing added for the reasoning lines. E's
+      framing has three problems. (a) The stated open-ended totals are false, so "right where
+      stated" needs bounding. (b) A1.3 (§0.4's 'per r domain', F/F/F minor×3, K §C #34) is omitted.
+      (c) The uncached-704 unreachability is refuter-found (A1-lenient and A1-strict missed, K §C
+      #40–41); its own referent A1.15 resolves (clean/minor/clean). Grouping it under "A1.11–A1.14
+      and A1.20 fail under all three verdicts" mis-attributes it.
+    CORRECTION:
+      Use the checker's text, with one refinement: "The launch figures are right on their bounded
+      domains, but A1.3, A1.11–A1.14 and A1.20 fail under all three verdicts (minor), all in the
+      block's §C: open-ended 'below' totals false at reachable r, and §0.4's exposure not total over
+      r; '768 below' holding only where no k/40 lies (A1.14), and uncached 704 with its 78–87 h
+      equally unreachable (refuter-found; A1.15 itself resolves); the root .755890…, which truncates
+      to .755889…; Q-F3's uncached hours, which omit the reasoning-line time."
+
+[E36] CHECKER pass
+  CLAIM:
+    Battery size: 1,080 and 87,480 are right as sizes.
+  EVIDENCE:
+    5 × 6³ = 1,080 and 81 × 5 × 216 = 87,480. A1.28 and A1.30 are clean×3.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      5 × 6³ = 1,080 and 81 × 5 × 216 = 87,480. A1.28 and A1.30 are clean×3. "As sizes" correctly
+      scopes the claim away from the PENDING-definition gap.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      5 × 6³ = 1,080 and 81 × 5 × 216 = 87,480. A1.28 and A1.30 are clean×3.
+
+[E37] CHECKER fail
+  CLAIM:
+    Rules: every CLAUDE.md anchor resolves, and every rule citation except the G-TIME application of
+    rule 21 (A1) and rule 25 at the redacted gate reads (refuter-found minor); L1.29 and L1.33 carry
+    minor notes.
+  EVIDENCE:
+    Anchors L1.1–L1.5 are clean×3, and the rule-25 item is S4A-strict missed, minor. But naming only
+    L1.29 and L1.33 reads as the complete list. Eight L1 rule-citation referents resolve only with
+    minor notes: L1.6 (rules 9/11, "tracked, clean"), L1.13 (26), L1.16 (28(d)), L1.17 (backend
+    clause: m:165's "restarts that unit" where the clause says the campaign), L1.20 (28(c)), L1.29
+    (21), L1.32 (23) and L1.33 (25). The same "restarts that unit" misstatement at m:64 is a further
+    refuter-found minor item (L1-lenient missed, K §C 1).
+  CORRECTION:
+    Every CLAUDE.md anchor resolves, and every rule citation except the G-TIME application of rule
+    21 (A1) and two refuter-found minor items (rule 25 at the redacted gate reads; m:64's "restarts
+    that unit" against the backend-consistency clause); eight rule citations resolve only with minor
+    notes (L1.6, L1.13, L1.16, L1.17, L1.20, L1.29, L1.32, L1.33).
+  REFUTER [lenient] fail overturned=False
+    EVIDENCE:
+      Anchors L1.1–L1.5 are clean×3. But the L1 rule-citation referents that resolve only with minor
+      notes are L1.6 (rules 9/11, "tracked, clean"), L1.13 (26), L1.16 (28(d)), L1.17 (backend
+      clause: m:165's "restarts that unit" vs the clause's "the campaign"), L1.20 (28(c)), L1.29
+      (21), L1.32 (23) and L1.33 (25). Naming only L1.29 and L1.33 reads as the full list.
+      L1-lenient's missed item (block §C 1) adds m:64's same "restarts that unit" misstatement. Rule
+      25 at the redacted reads is S4A-strict missed (§C 58), correctly attributed.
+    CORRECTION:
+      Every CLAUDE.md anchor resolves, and every rule citation except the G-TIME application of rule
+      21 (A1) and two refuter-found minor items (rule 25 at the redacted gate reads; m:64's
+      "restarts that unit" against the backend-consistency clause). Eight rule citations resolve
+      only with minor notes (L1.6, L1.13, L1.16, L1.17, L1.20, L1.29, L1.32, L1.33).
+  REFUTER [strict] fail overturned=False
+    EVIDENCE:
+      L1.1–L1.5 are clean×3. The rule-25 item is S4A-strict missed (minor). The rule-citation
+      referents that resolve with minor notes are L1.6 (rules 9/11), L1.13 (26; clean/minor/clean),
+      L1.16 (28(d)), L1.17 (backend clause), L1.20 (28(c)), L1.29 (21), L1.32 (23) and L1.33 (25).
+      L1.8 also has a minor note but is a standing-fix anchor, not a CLAUDE.md rule. Naming only
+      L1.29 and L1.33 reads as complete. Adding m:64's "restarts that unit" (L1-lenient missed) is
+      defensible but optional, since m:64 does not cite CLAUDE.md directly.
+    CORRECTION:
+      "Every CLAUDE.md anchor resolves, and every rule citation except the G-TIME application of
+      rule 21 (A1) and rule 25 at the redacted gate reads (refuter-found minor); eight rule
+      citations resolve only with minor notes (L1.6, L1.13, L1.16, L1.17, L1.20, L1.29, L1.32,
+      L1.33)." Optionally add m:64's "restarts that unit" (refuter-found minor).
+
+[E38] CHECKER fail
+  CLAIM:
+    Code and data: the data anchors and OLMo pins resolve; the code anchors resolve except C1's
+    minor pin gaps (arm-rng draw calls, DRAW_SEED, banner joiner bytes, covariate sign) and
+    condition (4)'s unpinned parameters, all in §C.
+  EVIDENCE:
+    C1's F/F/F items are C1.2, C1.10, C1.13, C1.15, C1.20, C1.25, C1.26 and C1.27. The parenthesis
+    covers C1.2, C1.15, C1.13 and C1.10, and condition (4) is D1-strict missed. It omits C1.20, a
+    failing code anchor (minor×3, K §C 15): m:196 cites e2d/runner.py:55–58 for top-1-not-a-label,
+    but that class "has no constant or counter at :55–58 or anywhere in e2d/recon". (C1.25–C1.27 are
+    §2.7 disclosure text, covered by A7 and §C.) The O1 items are clean or resolve-minor, apart from
+    the anchor offsets and O1.27 (A1).
+  CORRECTION:
+    …The code anchors resolve except C1's minor pin gaps (arm-rng draw calls, DRAW_SEED, banner
+    joiner bytes, covariate sign), e2d/runner.py:55–58 not covering top-1-not-a-label (C1.20), and
+    condition (4)'s unpinned parameters, all in the block's §C.
+  REFUTER [lenient] fail overturned=False
+    EVIDENCE:
+      C1's F/F/F items are C1.2, C1.10, C1.13, C1.15, C1.20, C1.25, C1.26 and C1.27. The parenthesis
+      covers C1.2 (draw calls), C1.15 (DRAW_SEED), C1.13 (joiner) and C1.10 (covariate sign), and
+      condition (4) is D1-strict missed (§C 29). It omits C1.20, a failing code anchor (minor×3, in
+      §C): m:196 cites e2d/runner.py:55–58 for top-1-not-a-label, but that class "has no constant or
+      counter at :55–58 or anywhere in e2d/recon". C1.25–C1.27 are the §2.7 disclosure text (A7 and
+      §C).
+    CORRECTION:
+      …The code anchors resolve except C1's minor pin gaps (arm-rng draw calls, DRAW_SEED, banner
+      joiner bytes, covariate sign), e2d/runner.py:55–58 not covering top-1-not-a-label (C1.20), and
+      condition (4)'s unpinned parameters, all in the block's §C.
+  REFUTER [strict] fail overturned=False
+    EVIDENCE:
+      C1's F/F/F items are C1.2, C1.10, C1.13, C1.15, C1.20, C1.25, C1.26 and C1.27. C1.25–C1.27 are
+      covered by A7. C1.20 (minor×3, K §C #15) is a failing code anchor that E omits: m:196 cites
+      e2d/runner.py:55–58 for top-1-not-a-label, but "no constant or counter at :55–58 or anywhere
+      in e2d/recon". Condition (4)'s pins are D1-strict missed (K §C #29).
+    CORRECTION:
+      Use the checker's text: "…except C1's minor pin gaps (arm-rng draw calls, DRAW_SEED, banner
+      joiner bytes, covariate sign), e2d/runner.py:55–58 not covering top-1-not-a-label (C1.20), and
+      condition (4)'s unpinned parameters, all in the block's §C."
+
+[E39] CHECKER pass
+  CLAIM:
+    Dose: the operand exclusion behaves as §2.3 states (items 5, 11, 15 → 14 eligible; k unchanged;
+    54 changed letters; operands intact).
+  EVIDENCE:
+    I re-ran corrupt_m from data/f/pools.json with numpy. Items 5/11/15 go from 16/15/17 to 14
+    eligible each, k = 3 for all three, the k sum is 54 and 54 letters change (one skip, item 7).
+    The renders "Writa the oppcsite oc 'hot'.", "Writo the oppssitu of 'up'." and "Wtite thn
+    opposite on 'open'." keep their operands.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      I re-ran corrupt_m from data/f/pools.json with numpy (jlens venv). Items 5/11/15 go 16/15/17 →
+      14/14/14, and k is 3 before and after. n_eligible =
+      [6,19,19,13,24,14,10,45,19,10,24,14,6,19,10,14], k sum 54, 54 letters changed. Renders: "Writa
+      the oppcsite oc 'hot'.", "Writo the oppssitu of 'up'.", "Wtite thn opposite on 'open'.", with
+      the operands intact.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      My own numpy corrupt_m from data/f/pools.json gives items 5/11/15 at 16/15/17 → 14/14/14, k =
+      3 each, k sum 54, 54 changed letters and one skip (item 7). The renders "Writa the oppcsite oc
+      'hot'.", "Writo the oppssitu of 'up'." and "Wtite thn opposite on 'open'." keep their
+      operands.
+
+[E40] CHECKER pass
+  CLAIM:
+    Provenance: ledger 36 and the decisions of record match the routing in substance; two of m:4's
+    six stamp glosses are wrong (22:13:26 stopped v1.3, not v1.4; 07:27:18 validated the seat's
+    decisions block, not the v1.2 pre-read; S5A.11).
+  EVIDENCE:
+    m:4 lists six stamps. Transcript 3f58e88e: the 22:13:26 block is titled "PROPOSAL-m v1.3: §8
+    step 2 STOPS", and the 07:27:18 block is "v1.2 → v1.3: validation returned", answering the
+    seat's decisions block. P1.18–P1.24 resolve, with P1.20 and P1.22 minor wording.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Transcripts: the 22:13:26 block is "PROPOSAL-m v1.3: §8 step 2 STOPS"; the 07:27:18 block is
+      "v1.2 → v1.3: validation returned", which answers the seat's decisions block; 05:22:18 STOPS
+      v1.5; 05:36:23 is the v1.1 pre-read. So two of m:4's six glosses are wrong. Ledger 36's fix
+      (m:36) asks that lineage claims be checked against Code's transcript. S5A.11, P1.8 and P1.9
+      are F/F/F minor. P1.18–P1.24 resolve.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:4 lists six stamps. Transcript 3f58e88e: 22:13:26 is "PROPOSAL-m v1.3: §8 step 2 STOPS".
+      07:27:18 is "v1.2 → v1.3: validation returned", answering the seat's decisions block. S5A.11,
+      P1.8, P1.9 and D1.27 are all F/F/F minor. P1.18–P1.24 resolve.
+
+[E41] CHECKER pass
+  CLAIM:
+    The §7.3 italic pre-commitment is byte-identical to v1.6's.
+  EVIDENCE:
+    I extracted the italic text from v1.6, v1.7 and v1.8: equal strings, 571 chars each.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Extracted the italic §7.3 text from v1.6, v1.7 and v1.8: identical strings, 571 chars each.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      The §7.3 italic in v1.6:149, v1.7:168 and v1.8:258 is 571 chars each, with identical sha256
+      prefix 6a919b69a65c5096.
+
+[E42] CHECKER fail
+  CLAIM:
+    Not done: v1.8 not committed; v1.2–v1.7 not moved; no lock, no build; every untracked document
+    untouched. Committed here: this entry and, under results/raw/, the referent-check raw, the
+    Code-to-design block and the values-check raw.
+  EVIDENCE:
+    The not-done facts hold: git status, and the untracked docs' mtimes all predate the session's
+    work (the HANDOFF at 01:37; v1.8 placed at 17:32 EDT). But this pass 2 is itself a values-check
+    whose raw is not yet written. Both precedents committed two separate raws: 87a1167 has the
+    pass-1 and _pass2.txt raws, and e186162 has both as well. Only the pass-1 raw
+    (…_stop6_valuescheck.txt) exists now, so the singular undercounts once pass 2 is recorded.
+  CORRECTION:
+    …the referent-check raw, the Code-to-design block and the two values-check raws (passes 1 and
+    2).
+  REFUTER [lenient] fail overturned=False
+    EVIDENCE:
+      The not-done facts hold. But this pass 2 has its own record still to write. Both precedents
+      committed separate raws per pass: 87a1167 has _valuescheck.txt and _valuescheck_pass2.txt, and
+      e186162 has both as well. At 22:47:42Z Code said it would commit "the STOP-6 entry with its
+      three raws", which counts only one values-check raw. The singular is right only if pass 2 is
+      appended to the pass-1 file.
+    CORRECTION:
+      …the referent-check raw, the Code-to-design block and the two values-check raws (passes 1 and
+      2). If pass 2 is appended to the pass-1 file instead, say "the values-check raw (both
+      passes)".
+  REFUTER [strict] fail overturned=False
+    EVIDENCE:
+      The not-done facts hold, and the untracked docs' mtimes predate the session's writes. Both
+      precedents committed two values-check raws (87a1167: …valuescheck.txt and
+      …valuescheck_pass2.txt; e186162 likewise). Only the pass-1 raw exists now, and it is headed
+      "values-check PASS 1". The singular holds only if pass 2 is not recorded as its own raw.
+    CORRECTION:
+      "…the referent-check raw, the Code-to-design block and the two values-check raws (passes 1 and
+      2)." Make it conditional on the pass-2 raw being written.
+####################################################################################################
+SECTION K0AB
+####################################################################################################
+
+[K0.1] CHECKER pass
+  CLAIM:
+    §0: HEAD 87a1167, main == origin (fetched 2026-10-04, nothing new)
+  EVIDENCE:
+    git rev-parse HEAD and origin/main both 87a1167140157a93…; transcript adb70afc line 786
+    (21:32:56Z) shows git fetch printed nothing and all three rev-parses equal 87a1167.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      git rev-parse HEAD and origin/main both give 87a1167140157a93… now. Transcript adb70afc line
+      786/787 (21:32:56Z): `git fetch origin | tail -1` printed nothing and all three rev-parses are
+      87a1167.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      Transcript adb70afc:786–787 (date -u 21:32:56): git fetch printed nothing, and HEAD,
+      origin/main and the second rev-parse all equal 87a1167140157a93dcdb48785441fd5e56836c49.
+
+[K0.2] CHECKER pass
+  CLAIM:
+    §0: v1.8 sha256 12f65e92…963e as the routing gives it; 284 lines
+  EVIDENCE:
+    shasum gives 12f65e921af5234d9de32adf2961d830d3be34b0740ce7c715e134fedeef963e;
+    routing2_original.txt gives the same; wc -l = 284.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      shasum gives 12f65e921af5234d…fedeef963e, which matches routing2_original.txt:11. wc -l gives
+      284.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      shasum gives 12f65e921af5234d9de32adf2961d830d3be34b0740ce7c715e134fedeef963e, the same as
+      routing2_original.txt:11. wc -l gives 284.
+
+[K0.3] CHECKER pass
+  CLAIM:
+    §0: untracked root = v1.2–v1.8, decisions block, preprint d6431e97…222b8 and its three archived
+    versions, ADDENDUM-k1 61acf21ff2cc104e… untouched, two superseded g3-b2r addenda, six design
+    handoffs; no m artifact
+  EVIDENCE:
+    git status at the delta read (transcript line 786) lists exactly these files. Handoffs 08-22,
+    08-23, 08-28, 09-04, 09-13, 10-04 make six. ADDENDUM-g3-b2r-v1.2.md is tracked, so the two
+    untracked addenda are superseded. Preprint and ADDENDUM-k1 shas match. No valence_core/m and no
+    LOCK-m*. The archived preprints sit under archive/, so 'root' is loose but not wrong.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      git status at the delta read (transcript 787) lists exactly these files: 6 *-design handoffs
+      (08-22, 08-23, 08-28, 09-04, 09-13, 10-04), v1.2–v1.8, the decisions block, the preprint
+      d6431e97…6222b8, the three archive/PREPRINT pre-patch-v2/v3/v4 files, ADDENDUM-k1
+      61acf21ff2cc104e…, and ADDENDUM-g3-b2r.md / -v1.1.md. ADDENDUM-g3-b2r-v1.2.md is tracked
+      (f14d249). There is no valence_core/m and no LOCK-m*.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      git status at the delta read (adb70afc:787) lists v1_2–v1_8, the decisions block,
+      PREPRINT-v1_0-draft.md (d6431e97…a6222b8), three archive/PREPRINT pre-patch files,
+      ADDENDUM-k1.md (61acf21ff2cc104e…), ADDENDUM-g3-b2r.md and -v1.1.md (v1.2 is the tracked one)
+      and six HANDOFF-*-design.md. No valence_core/m and no LOCK-m*. Calling the archive/ files part
+      of the 'root' is loose.
+
+[K0.4] CHECKER pass
+  CLAIM:
+    §0: HANDOFF-2026-10-04-design.md on disk is ada1fa02…75d4f1 (mtime 2026-10-04 01:37 local), not
+    the routed bb830ba0…80a4a
+  EVIDENCE:
+    shasum ada1fa0241434633…5df75d4f1; stat mtime 2026-10-04 01:37:56; routing names
+    bb830ba00c1a50fe…94d80a4a.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      shasum gives ada1fa0241434633…5df75d4f1. stat gives 2026-10-04 01:37:56 local. The routing
+      (lines 17–18) names bb830ba00c1a…094d80a4a. No HANDOFF file in the repo has sha bb830ba0.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      shasum is ada1fa0241434633…5df75d4f1. stat gives mtime 2026-10-04 01:37:56.
+      routing2_original.txt:17–18 gives bb830ba00c1a50fe…94d80a4a. No .md in the repo hashes to
+      bb830ba0.
+
+[K0.5] CHECKER pass
+  CLAIM:
+    §0: v1.8 does not cite the 10-04 handoff; its only handoff referent is
+    HANDOFF-2026-09-04-design.md:79–80
+  EVIDENCE:
+    grep finds HANDOFF only as HANDOFF-2026-09-04-design.md, at m:8, m:20 and m:280. m:267's generic
+    'the design handoffs' in step 1's expected list is the only other mention (P1.43).
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      HANDOFF appears in v1.8 only as HANDOFF-2026-09-04-design.md, at m:8, m:20 and m:280. m:267's
+      generic 'the design handoffs' is step 1's expected-root list, not a §9 referent, so 'only
+      handoff referent' holds for the step-2 check. Wording is loose but not wrong.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      grep HANDOFF in v1.8 finds only HANDOFF-2026-09-04-design.md:79–80, at m:8, m:20 and m:280.
+      m:267's generic 'the design handoffs' is a step-1 expectation, not a referent.
+
+[K0.6] CHECKER pass
+  CLAIM:
+    §0: step 2 STOPS; v1.8 not committed, v1.2–v1.7 not moved, step-3 record not committed, nothing
+    built
+  EVIDENCE:
+    git status: all PROPOSAL-m versions are untracked at root; RESULTS.md is unmodified; no m
+    package exists.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      All PROPOSAL-m versions are still untracked at root. RESULTS.md equals HEAD (git diff
+      --quiet). There is no m package.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      git status: every PROPOSAL-m version is untracked at root, RESULTS.md is unmodified, and there
+      is no valence_core/m and no LOCK-m*.
+
+[K0.7] CHECKER pass
+  CLAIM:
+    §0 Method: 39 agents = 13 blind checkers over disjoint groups (L1 R1 C1 O1 D1 F1 A1 P1 S4A S4C
+    S5A S5C X1), each with two refuter lenses; a STOP item resolves only if its named section fixes
+    it without a new contradiction
+  EVIDENCE:
+    The JSON has agentCount 39 and 13 groups, each with lenient and strict refuters. The raw header
+    (line 15–16) states the same 'resolves' protocol.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      JSON: agentCount 39 and 13 groups (L1 R1 C1 O1 D1 F1 A1 P1 S4A S4C S5A S5C X1), each with
+      lenient and strict refuters. The raw header states the 'resolves' protocol.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      JSON agentCount 39; 13 groups, each with lenient and strict refuters. The group names match
+      the referent-check raw header lines 5–10, and 'resolves' is defined at raw :16.
+
+[K0.8] CHECKER pass
+  CLAIM:
+    §0 Totals: 442 referents; 259 clean under all three; 47 resolve with a minor note; 130 fail
+    under all three; 6 contested
+  EVIDENCE:
+    Recomputed from the JSON (checker plus both lens verdicts): clean3 259, resolve_minor 47, fail3
+    130, contested 6, total 442.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Recomputed from the JSON: 442 referents = clean 259, resolve-minor 47, fail3 130, contested 6.
+      The contested six are A1.18, A1.36, X1.5, X1.23, X1.39 and X1.40.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      I recomputed from the JSON (checker plus both lenses): 259 clean ×3, 47 resolved with a
+      non-clean severity, 130 fail ×3, 6 contested. The group sizes sum to 442.
+
+[K0.9] CHECKER pass
+  CLAIM:
+    §0: refuters added 51 items (4 substantive, 47 minor); all four substantive ones duplicate
+    A-items
+  EVIDENCE:
+    The JSON missed lists have 51 items (substantive 4, minor 47). The substantive four are L1
+    strict (= A2's read half) and A1 lenient, S4A lenient and S4C lenient (= A3's PENDING
+    predicate).
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      There are 51 missed items: 47 minor, 4 substantive. The four substantive ones: L1 strict
+      (m:77, = A2's read half; A2 cites 'L1-strict missed'), and A1 lenient, S4A lenient and S4C
+      lenient (the PENDING predicate, = A3, which cites 'refuter-found A1/S4A/S4C').
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      The refuters' missed lists hold 51 items: 4 substantive and 47 minor. The four substantive are
+      L1-strict (m:77 preview read half, i.e. A2) and A1-, S4A- and S4C-lenient (the PENDING
+      predicate, i.e. A3).
+
+[K0.10] CHECKER pass
+  CLAIM:
+    §0: before the workflow returned, Code computed the dose under the operand exclusion (n_eligible
+    and k row, 54 changed letters, all 16 renders with operands intact) and the eight critical
+    counts, all reproducing
+  EVIDENCE:
+    Transcript adb70afc: the workflow launched at 21:36:05 and returned at 22:17:25; Code's
+    computation ran at 21:36:49. I recomputed independently: n_eligible
+    [6,19,19,13,24,14,10,45,19,10,24,14,6,19,10,14], k sum 54, 54 changed, 'hot'/'up'/'open' intact.
+    All eight critical counts (14, 7, 19, 22, 4, 3, 7, 8 with their P values) reproduce by exact
+    binomial.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Transcript 856/861 (21:36:49) shows the workflow launched at 21:36:05 and returned at
+      22:17:25. I recomputed independently with the jlens venv: n_eligible
+      [6,19,19,13,24,14,10,45,19,10,24,14,6,19,10,14]; k sum 54 with 54 changed; 'hot', 'up' and
+      'open' intact. All eight criticals (14 .0305, 7 .0429, 19 .0336, 22 .0296, 4 .0159, 3 .0071, 7
+      .0297, 8 .0235) match m:184.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      The workflow launched at 21:36:05 (adb70afc:835) and returned at about 22:17:29. The dose and
+      critical-count script ran at 21:36:49 (:856). Its output gives n_eligible
+      [6,19,19,13,24,14,10,45,19,10,24,14,6,19,10,14], k sum 54, changed 54, all 16 renders with
+      'hot', 'up' and 'open' intact, and crit 14/7/19/22/4/3/7/8, all matching m:184.
+
+[K0.11] CHECKER fail
+  CLAIM:
+    §0: 'Code then re-verified on disk the shas, the handoff mismatch, the RESULTS.md offset at ten
+    anchors, the round template, STOP-2's B11 text and decisions-block :96'
+  EVIDENCE:
+    Every item was verified, but 'then' gets the order wrong. The shas (21:32:56), the handoff
+    mismatch (21:33:07) and the ten-anchor offset (21:36:13; anchors 613 1716 1734 2248 2336 2404
+    4576 5810 1697 1057) were checked before the dose computation (21:36:49) and before the workflow
+    returned (22:17:25). Only the round template (22:18:21), B11 (22:18:28) and :96 (22:19:34) came
+    after.
+  CORRECTION:
+    'Code also verified on disk the shas, the handoff mismatch and the RESULTS.md offset at ten
+    anchors (at the delta read, before the workflow returned), and after it returned the round
+    template (session_e2a.py:72–75), STOP-2's B11 text and decisions-block :96; …'
+  REFUTER [lenient] fail overturned=False
+    EVIDENCE:
+      Upheld. The shas were checked at 21:32:56 (787) and the handoff at 21:33:07 (793), during the
+      delta read. The ten-anchor offset (613 1716 1734 2248 2336 2404 4576 5810 1697 1057) was
+      checked at 21:36:13 (844), just after the workflow launch. All three came before the dose
+      computation (21:36:49) and before the return (22:17:25). Only the round template (22:18:21),
+      B11 (22:18:28) and :96 (22:19:34) followed. 'Then … re-verified' misorders three of the six.
+      Note that the checker's own fix places the offset check 'at the delta read', which is also
+      slightly off.
+    CORRECTION:
+      'Code also verified on disk, before the workflow returned, the shas and the handoff mismatch
+      (delta read) and the RESULTS.md offset at ten anchors (just after launch); after it returned,
+      the round template (session_e2a.py:72–75), STOP-2's B11 text and decisions-block :96; …'
+  REFUTER [strict] fail overturned=False
+    EVIDENCE:
+      Upheld. 'Then' follows 'Before the workflow returned, Code computed …' (21:36:49), but the
+      shas (21:32:54) and the handoff mismatch (21:33:07) were checked before that, and the
+      ten-anchor offset ran at 21:36:13. Only session_e2a.py:70–76 (22:18:20), B11 (22:18:28) and
+      decisions-block :96 (sed -n 96p at 22:19:33) came after the workflow returned. The checker's
+      correction is itself slightly off: the offset check ran 8 s after the workflow launched (step
+      2), so it was not 'at the delta read'.
+    CORRECTION:
+      Simplest fix: change 'Code then re-verified' to 'Code also re-verified'. If timing is wanted:
+      'Code also verified on disk the shas and the handoff mismatch (at the delta read) and the
+      RESULTS.md offset at ten anchors (while the workflow ran), and, after it returned, the round
+      template (session_e2a.py:72–75), STOP-2's B11 text and decisions-block :96; …'
+
+[K0.12] CHECKER pass
+  CLAIM:
+    §0: the four disposition groups hold 125 referents: 68 clean, 18 with a minor note, 39 failing
+    under all three
+  EVIDENCE:
+    From the JSON: S4A 26 (13/4/9), S4C 36 (19/1/16), S5A 27 (14/5/8), S5C 36 (22/8/6). Totals 125 =
+    68 + 18 + 39, none contested.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Recomputed: S4A 26 (13/4/9), S4C 36 (19/1/16), S5A 27 (14/5/8), S5C 36 (22/8/6). Totals: 125 =
+      68 + 18 + 39, none contested.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      From the JSON: S4A 26 (13/4/9), S4C 36 (19/1/16), S5A 27 (14/5/8), S5C 36 (22/8/6). That
+      totals 125 = 68 + 18 + 39, with none contested.
+
+[K0.13] CHECKER pass
+  CLAIM:
+    §0: the large repairs hold (two Qwen units, per-checkpoint OLMo locks, state sets and tuple
+    counts 1,080/87,480, operand exclusion, sham-only domains at qualification, posting-rule
+    clauses, e2b fixed, f2 release and control, ledger written out, provenance of v1.6/v1.7 and
+    ledger 36)
+  EVIDENCE:
+    S4C.12, S5A.7, S4A.20, S4A.2/S5A.15, S4A.4/S4A.5, S4A.19, S4A.10, S4A.15/S5C.19, S5A.9 and
+    S5A.12 are clean under all three. S4A.9 states the release (f2's VERDICTS) is fixed; its residue
+    is A4.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      These are clean under all three: S4C.12 (per-checkpoint locks), S5A.7 (sets and counts),
+      S4A.20 (operand exclusion), S4A.2/S5A.15 (sham-only qualification domains), S4A.4/S4A.5
+      (posting clauses), S4A.19 (e2b), S4A.10 (f2 control), S4A.15/S5C.19 (ledger), S5A.9/S5A.12
+      (provenance). S4A.9 records the release half as fixed.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      These are clean ×3: S4C.12 (OLMo locks), S5A.7 (counts and sets), S4A.20 (operand exclusion),
+      S4A.2/S5A.15 (qualification sham-only), S4A.4/S4A.5 (posting clauses), S4A.19 (e2b), S4A.10
+      (f2 control), S4A.15/S5C.19 (ledger), S5A.9/S5A.12 (provenance, ledger 36). S4A.9 says the
+      release is fixed, and its residue is A4.
+
+[K0.14] CHECKER fail
+  CLAIM:
+    §0: 'Two of m:4's six stamp glosses remain wrong (22:13:26 stopped v1.3, not v1.4; 07:27:18
+    validated the seat's decisions block, not the v1.2 pre-read; S5A.11)'
+  EVIDENCE:
+    Both facts are right. Transcript 3f58e88e:985 heads the 22:13:26 block 'PROPOSAL-m v1.3: §8 step
+    2 STOPS'; the 07:27:18 block (3f58e88e:609) is 'v1.2 → v1.3: validation returned' and answers
+    the seat's decisions block. m:4 has six stamps. 'Remain' is the problem: v1.6:4 and v1.7:4 list
+    the four stamps bare, with no per-stamp gloss, and kept the v1.2 pre-read separate. v1.8
+    introduced both glosses (S5A.11 lenient: 'v1.8 introduced the merge'; D1.27).
+  CORRECTION:
+    'Two of m:4's six stamp glosses, new in v1.8, are wrong (…; S5A.11)'
+  REFUTER [lenient] fail overturned=False
+    EVIDENCE:
+      Upheld. Both facts are right: the 22:13:26 block (3f58e88e, delivered 22:51:33Z) is headed
+      'PROPOSAL-m v1.3: §8 step 2 STOPS', and 07:27:18 is 'v1.2 → v1.3: validation returned'. v1.6:4
+      and v1.7:4 list the four stamps bare, and say separately that the v1.2 pre-read is cited only
+      through the decisions block. Neither STOP-4 nor STOP-5 raised the stamp glosses. v1.8
+      introduced both glosses (S5A.11 lenient: 'v1.8 introduced the merge'), so 'remain' is wrong.
+    CORRECTION:
+      'Two of m:4's six stamp glosses, new in v1.8, are wrong (22:13:26 stopped v1.3, not v1.4;
+      07:27:18 validated the seat's decisions block, not the v1.2 pre-read; S5A.11)'
+  REFUTER [strict] fail overturned=False
+    EVIDENCE:
+      Upheld. The facts are right: 3f58e88e:985 heads the 22:13:26 block 'PROPOSAL-m v1.3: §8 step 2
+      STOPS', and the 07:27:18 block is the 'v1.2 → v1.3: validation returned' answer to the
+      decisions block. 'Remain' is wrong, though. v1.4:4 and v1.5:4 glossed both stamps correctly;
+      v1.6:4 and v1.7:4 list the four stamps bare and keep the v1.2 pre-read separate. The glosses
+      were introduced in v1.8, and STOP-5 never flagged them (its A3 concerned the missing 13:08:11
+      stamp). S5A.11 lenient: 'v1.8 introduced the merge'.
+    CORRECTION:
+      'Two of m:4's six stamp glosses, new in v1.8, are wrong (22:13:26 stopped v1.3, not v1.4;
+      07:27:18 validated the seat's decisions block, not the v1.2 pre-read; S5A.11)'
+
+[KA.0] CHECKER pass
+  CLAIM:
+    §A header: every A item is unresolved under the checker and both refuter lenses unless marked
+  EVIDENCE:
+    Every cited checker id is fail3 in the JSON (L1.23–26, O1.27, A1.24, A1.37, S4A.3, S4C.30,
+    S5A.16, S5A.24, S5C.27, X1.20, L1.35, S4A.7, S5A.23, A1.29, S4A.13, S5A.8, S5C.26b, X1.21,
+    S4A.9, S4C.24, S4A.18, D1.15, S4C.10, C1.27, X1.8–X1.19, R1.1, R1.2). Refuter-found items and
+    R1.1/R1.2's 2–1 grading are marked.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Every checker id cited in A1–A9 is fail3 in the JSON: 30 are substantive×3, R1.1 and R1.2 are
+      2–1, and S4C.10, C1.26, X1.9–X1.19, R1.12, A1.20, F1.6 and P1.41 are minor×3. Refuter-found
+      items and R1.1/R1.2's grading are marked.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      Every id cited in A1–A9 is resolves=False under all three verdicts. R1.1 and R1.2 are
+      severity-split sub/sub/minor, as marked. Refuter-found items are marked.
+
+[KA1.1] CHECKER pass
+  CLAIM:
+    A1: §3 binds gate binomial bars on sham-template sessions only (quote of m:184), yet G-TIME-F0
+    '≤ 20 rounds (critical count 4)', G-TIME-OLMo '≤ 20 rounds, p0 .02, critical 3', G-TIME-F3 '≤ 60
+    rounds (critical 7) and ≤ 36 reasoning lines (critical 8)' bind on every session, contrast
+    included; half of G-TIME-F0's rounds are A0's
+  EVIDENCE:
+    The m:184 quote is verbatim, and m:193, m:215 and m:206 match. Sessions are 4 forced + 6 free =
+    10 rounds (COMMON line; b3 F = 2 per pole), so 2 sessions give 20 rounds (10 of them A0's) and 6
+    sessions give 60 rounds and 36 lines.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      The m:184 quote is verbatim. m:193 reads '≤ 20 rounds (critical count 4)', m:215 '≤ 20 rounds,
+      p0 .02, critical 3', and m:206 '≤ 60 rounds (critical 7) and ≤ 36 reasoning lines (critical
+      8)'. Sessions are 4 forced (A B A B) + N_FREE 6 (session_e2a.py:89) = 10 rounds, so 2 sessions
+      give 20 rounds (10 of them A0's), and 6 F3 sessions give 60 rounds and 36 lines.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      The quotes are substrings of m:184, m:193, m:215 and m:206. Sessions are F = 2 forced per pole
+      plus N_FREE = 6 (box_b3_sessions.py:76; session_e2a.py:89), so 10 rounds each. G-TIME-F0's 2
+      sessions are A0 + A0s, so half are A0's. G-TIME-F3's 6 sessions give 60 rounds and 36 lines.
+
+[KA1.2] CHECKER pass
+  CLAIM:
+    A1: an unprovoked domain exists at every G-TIME stage, so rule 21's annotation exception does
+    not apply and a fire stops the stage; this answers STOP-5 C27 (declare a departure or evaluate)
+    and STOP-4 C22, and reproduces STOP-5 A5 at G-TIME
+  EVIDENCE:
+    CLAUDE.md rule-21 annotation applies only 'where none exists by design'. m:184 says 'a fire
+    stops the stage'. STOP-5 block line 103 C27: 'declare G-TIME's bars a rule-21 departure, or
+    evaluate them'. m:99 and m:113 route C27 and C22 to §3. STOP-5 A5 (block :32) is the
+    provoked-domain defect.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      The rule-21 annotation applies only 'where none exists by design'. m:184 says 'a fire stops
+      the stage'. STOP-5 block :103 C27 reads 'declare G-TIME's bars a rule-21 departure, or
+      evaluate them'. m:99 (C27) and m:113 (C22) both route to §3. STOP-5 A5 (block :32) is the
+      provoked-domain defect.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      CLAUDE.md rule-21 annotation: 'where none exists by design, the bar is a pause-and-adjudicate
+      trigger'. m:184: '(a fire stops the stage)'. STOP-5 block :103 C27 ends 'declare G-TIME's bars
+      a rule-21 departure, or evaluate them'. m:99 (C27 → §3) and m:113 (C22 → §3).
+
+[KA1.3] CHECKER pass
+  CLAIM:
+    A1 [C] sham-only counts: G-TIME-F0 ≤10, p0 .05 → 3 (.0115); G-TIME-OLMo ≤10, .02 → 2 (.0162);
+    G-TIME-F3 ≤30, .05 → 5 (.0156); ≤18 lines, .10 → 5 (.0282)
+  EVIDENCE:
+    Exact binomial (math.comb) gives 3/.0115, 2/.0162, 5/.0156 and 5/.0282. Code computed these at
+    21:36:49, so the [C] tag is right.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Exact binomial recomputed: n10/p.05 → 3 (.0115); n10/p.02 → 2 (.0162); n30/p.05 → 5 (.0156);
+      n18/p.10 → 5 (.0282). Code computed these at 21:36:49, so [C] is right.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      Code's run at 21:36:49 printed crit 10/.05 → (3, .0115); 10/.02 → (2, .0162); 30/.05 → (5,
+      .0156); 18/.10 → (5, .0282). The [C] tag is warranted.
+
+[KA1.4] CHECKER fail
+  CLAIM:
+    A1's referent list [L1.23–L1.26, O1.27, A1.24, A1.37, S4A.3, S4C.30, S5A.16, S5A.24, S5C.27,
+    X1.20] supports the binomial-domain defect
+  EVIDENCE:
+    Every id except S5A.24 is about G-TIME bar domains. S5A.24's note is about pick reporting:
+    'G-TIME text still reports contrast-template picks: G-TIME-F0 reports its A0 session's pick
+    under rule 23 … G-TIME-OLMo's seat read carries no redaction clause'. Its fix is to report
+    G-TIME picks for sham arms only and redact every G-TIME read. That is A2's content (A2's last
+    paragraph) and is absent from A2's bracket.
+  CORRECTION:
+    Remove S5A.24 from A1's list and add it to A2's: '[L1.35, S4A.7, S5A.23, S5A.24; L1-strict
+    missed]'.
+  REFUTER [lenient] fail overturned=False
+    EVIDENCE:
+      Upheld. Every other bracketed id concerns G-TIME bar domains. S5A.24's note concerns picks:
+      'G-TIME text still reports contrast-template picks … G-TIME-OLMo's seat read carries no
+      redaction clause'. Its fix is to report G-TIME picks for sham arms only and redact every
+      G-TIME read. That is A2's content (A2's last sentences), yet A2's bracket omits it.
+    CORRECTION:
+      Move S5A.24 from A1's list to A2's: A1 '[L1.23–L1.26, O1.27, A1.24, A1.37, S4A.3, S4C.30,
+      S5A.16, S5C.27, X1.20]'; A2 '[L1.35, S4A.7, S5A.23, S5A.24; L1-strict missed]'.
+  REFUTER [strict] fail overturned=False
+    EVIDENCE:
+      Upheld. Every other bracket id (L1.23–26, O1.27, A1.24, A1.37, S4A.3, S4C.30, S5A.16, S5C.27,
+      X1.20) is about G-TIME bar domains. S5A.24 (sub ×3) is about G-TIME pick reporting under rule
+      23 and the unredacted G-TIME-OLMo read; its fix is 'report G-TIME picks for sham arms only …
+      apply the redaction to every G-TIME read', which is A2's content. The correction is right.
+    CORRECTION:
+      Remove S5A.24 from A1's bracket and add it to A2's: '[L1.35, S4A.7, S5A.23, S5A.24; L1-strict
+      missed]'.
+
+[KA2.1] CHECKER pass
+  CLAIM:
+    A2: m:184 says the redacted read 'carries no pick'; m:231 bans pick-bearing reads before
+    VERDICTS; every round prints its Task line (session_e2a.py:72–75 '[round {n} | config:
+    {tag}]\nTask: {task}\nResponse:'); in a contrast session the Task line is clean or a ≥3-letter
+    render according to the pick; forced headers are not redacted
+  EVIDENCE:
+    session_e2a.py:72–75 shows all four ROUND_TEMPLATES carrying 'Task: {task}', and the first
+    matches the quote verbatim. m:184 redacts only free-round headers and menus. m:137 sets k ≥ 3.
+    m:231's ban has only the adjudication exception.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      session_e2a.py:72–75: all four ROUND_TEMPLATES carry 'Task: {task}', and the first matches the
+      quote byte for byte. m:184 redacts only free-round tags and menus. m:137's clip floor is k ≥
+      3. m:231's ban excepts only adjudications. The forced headers are unredacted.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      session_e2a.py:71 opens ROUND_TEMPLATES, and :72–75 hold the four templates, each with 'Task:
+      {task}'; :72 matches the quote. b3 imports the same ROUND_TEMPLATES
+      (box_b3_sessions.py:65–66). m:184 redacts only free-round headers and menus. m:137 gives k ≥
+      3.
+
+[KA2.2] CHECKER pass
+  CLAIM:
+    A2: before the cap decision the seat reads told-control first picks: G-TIME-F0 1 A0 + G-F0m-Qwen
+    8; per OLMo checkpoint 1 + 8 (G-TIME-OLMo read not stated as redacted); Q-F3 3 + 16 (A1 1+4, A2
+    1+4, A3 1+8)
+  EVIDENCE:
+    m:193 says 'transcripts printed for the seat's read'; m:196 has 8 A0 contrast; m:215 has
+    G-TIME-OLMo 'the seat's read' with no redaction and 8 A0-OLMo contrast; m:206 has one per arm;
+    m:210 has 8 A3 + 4 A1 + 4 A2. Caps are set at LOCK v1.0 (step 15, step 19).
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      m:193 is redacted; m:196 has 8 A0 contrast sessions; m:215's G-TIME-OLMo 'the seat's read' has
+      no redaction clause, plus 8 A0-OLMo contrast. m:206 has one session per arm, as G-TIME-F0.
+      m:210 has 8 A3 + 4 A1 + 4 A2. m:271 steps 14→15 and m:274 ('the PI sets the Q-F3 cap →
+      LOCK-m-F3 v1.0') put the reads before each cap. The totals are 3 + 16.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:193 says 'transcripts printed for the seat's read (redacted as above)'. m:196 has 8 A0
+      contrast sessions. m:215 has a G-TIME-OLMo 'the seat's read' with no redaction, plus 8 A0-OLMo
+      contrast. m:206 has one per arm. m:210 has 8 A3 + 4 A1 + 4 A2. Caps are set at step 15 and in
+      step 19 after G-PWR (m:271, m:274).
+
+[KA2.3] CHECKER pass
+  CLAIM:
+    A2: G-TIME-F0 reports every arm's picks under rule 23 (m:193 'picks enter no DV (reported under
+    rule 23)'; G-TIME-F3 'as G-TIME-F0')
+  EVIDENCE:
+    The m:193 quote is verbatim, and m:206 says 'as G-TIME-F0'.
+  REFUTER [lenient] fail overturned=True
+    EVIDENCE:
+      The quotes are verbatim, but the conclusion 'so the G-TIME preview is reported as well as
+      read' overstates. m:193 says only '(reported under rule 23)', with no time. Rule 23
+      (CLAUDE.md:344–346) makes counters 'required in verdict entries', and §4 declares no pick
+      counter. S4A.8 (fail3 minor) records that 'the text does not say when'. Its strict lens gives
+      the harmonizing reading that the report happens in VERDICTS. Only S5A.24 reads it as reported
+      pre-cap.
+    CORRECTION:
+      'G-TIME-F0 also says picks are "reported under rule 23" (m:193; G-TIME-F3 "as G-TIME-F0")
+      without saying when (S4A.8): read as reported in the G-TIME entry, the preview is reported as
+      well as read (S5A.24); read as reported in VERDICTS, it is not.'
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:193 contains 'picks enter no DV (reported under rule 23)'; m:206 contains 'as G-TIME-F0'.
+
+[KA2.4] CHECKER fail
+  CLAIM:
+    A2: 'The report half of the fix (first-pick share for sham templates only) did land.'
+  EVIDENCE:
+    Overstated as written. S5A.22 says the reporting half is applied 'at all three qualification
+    stages'. A2's own previous sentence (and S5A.24/S4A.8) says G-TIME-F0/F3 still report
+    contrast-arm picks, so the report half did not land at G-TIME.
+  CORRECTION:
+    'The report half of the fix (first-pick share for sham templates only) landed at the three
+    qualification stages; G-TIME still reports contrast picks (above).'
+  REFUTER [lenient] fail overturned=False
+    EVIDENCE:
+      Upheld. S5A.22 scopes the landed report half to 'all three qualification stages'. S5A.24
+      (fail3 substantive) counts G-TIME's pick reporting against the same m:184 rule that A10's
+      disposition cites. The unqualified 'did land' sits right after A2's own G-TIME sentence. Given
+      KA2.3, the correction should not assert pre-VERDICTS timing.
+    CORRECTION:
+      'The report half of the fix (first-pick share for sham templates only) landed at the three
+      qualification stages; G-TIME's rule-23 pick report is not sham-only (above).'
+  REFUTER [strict] fail overturned=False
+    EVIDENCE:
+      I upheld this after re-testing. In the narrow reading it holds: STOP-5 A10's fix was
+      qualification-scoped, and S5A.22 is clean ×3 at all three qualification stages. But v1.8
+      implements the report half as §3's general rule ('contrast templates' picks are not reported …
+      until that unit's VERDICTS'). S5A.24 (sub ×3) finds the G-TIME rule-23 reporting contradicts
+      that rule, 'which is part of A10's claimed resolution'. Once KA1.4 moves S5A.24 into A2's
+      bracket, the unscoped 'did land' contradicts one of A2's own referents. The checker's
+      correction is right.
+    CORRECTION:
+      'The report half of the fix (first-pick share for sham templates only) landed at the three
+      qualification stages; G-TIME still reports contrast picks (above).'
+
+[KA2.5] CHECKER pass
+  CLAIM:
+    A2: = STOP-4 A5's read half and STOP-5 A10's read half; fix (b) quotes STOP-4 A5 'an n = 8
+    preview accepted by design'; m:231's last sentence records cross-unit decisions
+  EVIDENCE:
+    STOP4_recovered.md:55 contains the quote verbatim. STOP-5 block :51–52 has A10 = STOP-4 A5
+    residue. L1.35 and S5A.23 grade A10 'resolved in its report half … not in its read half'.
+    m:231's last sentence matches.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      STOP4_recovered.md:55 contains 'is an n = 8 preview accepted by design'. STOP-5 block :51
+      labels A10 '= STOP-4 A5 residue'. L1.35/S5A.23 grade A10 resolved in its report half, not its
+      read half. m:231's last sentence is the cross-unit recording clause.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      STOP4_recovered.md:55 contains 'is an n = 8 preview accepted by design'. STOP-5 block A10 is
+      the STOP-4 A5 residue. L1.35 and S5A.23 grade the read half unresolved. m:231's last sentence
+      records cross-unit decisions.
+
+[KA3.1] CHECKER pass
+  CLAIM:
+    A3: quote of m:237 PENDING/NOT-RUN; not total (locked by D_O, no VERDICTS at a posting after
+    D_O); includes v1.7's pending 'a unit still locked and running at v1' (v1.7:170); likely because
+    D1 = D_O and v1 posts after Q-F0's VERDICTS
+  EVIDENCE:
+    The m:237 quote is verbatim, and v1.7:170 contains the quoted phrase. m:16 sets D1 = D_O =
+    2026-10-23, and m:260 says v1 posts after Q-F0's VERDICTS. A1.29, S4A.13, S5A.8, S5C.26b and
+    X1.21 are all fail3 substantive.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      The m:237 quote is verbatim. v1.7:170 reads 'a unit still locked and running at v1 is
+      *pending* and re-labeled at v2'. m:16 (11) sets D1 = D_O = 2026-10-23, and m:260 says Q-F0
+      locked by D1 runs to completion and v1 posts after its VERDICTS. A1.29, S4A.13, S5A.8, S5C.26b
+      and X1.21 are all fail3 substantive.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      The m:237 quote is verbatim. v1.7:170 has 'a unit still locked and running at v1 is
+      *pending*'. m:16 (11) gives D1 = D_O = 2026-10-23. m:260 says v1 posts after Q-F0's VERDICTS.
+      A1.29, S4A.13, S5A.8, S5C.26b and X1.21 are sub ×3.
+
+[KA3.2] CHECKER pass
+  CLAIM:
+    A3: not exclusive, since a G-CAL-OLMo failure before D_O is NOT-RUN by m:137/m:215 ('dose not
+    completable') and PENDING by m:237; STOP-5 A2 resolved as a recount only; refuter-found
+    A1/S4A/S4C
+  EVIDENCE:
+    m:137 and m:215 give 'NOT-RUN … dose not completable'. The A1 lenient, S4A lenient and S4C
+    lenient missed items are substantive, and A1.29 and X1.21 call it 'resolves only as a recount'.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      m:137 and m:215 give 'NOT-RUN "dose not completable"'. A G-CAL-OLMo failure precedes v0.1, so
+      it has no VERDICTS, and before D_O m:237 makes it PENDING. The A1, S4A and S4C lenient missed
+      items are substantive. A1.29 and X1.21 say 'resolves only as a recount'.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:137 and m:215 give 'failure → … NOT-RUN … "dose not completable"'. The PENDING clause at
+      m:237 has no failure exception. X1.21 and A1.29 say 'resolves only as a recount'. 1,080 = 5·6³
+      and 87,480 = 81·5·216.
+
+[KA4.1] CHECKER pass
+  CLAIM:
+    A4: Step 4 replaces the screen's A3 'in Step 5' only; with screen POSITIVE, f2 NULL with control
+    passed and L0∧L1∧A2 = PASS, Step 5 reaches Main, Step 6 posts 'uninstructed, the screen returned
+    a hit, under confirmation' (false at every v2 posting) and Step 7 keeps §8.2 open; G-ANL-F3's
+    87,480 tuples have no f2 coordinate; nothing disposes of the v1 note; = STOP-4 A6, partly
+    resolved
+  EVIDENCE:
+    The quotes match m:253 and m:255. m:254 has Main iff …A3 = NULL, and m:256 closes §8.2 only iff
+    A3 = NULL. m:204's A3 set is screen-only. S4A.9 and S4C.24 are fail3 substantive, and S4A.9 says
+    'PARTIAL'. STOP-4 A6 is 'What releases a withheld paper?'.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      m:253 reads 'f2's A3 result replaces the screen's in Step 5'. m:254: Main iff …A3 = NULL.
+      m:255's PASS clause contains '(iff A3 ∈ {POSITIVE, REVERSE}) ; uninstructed, the screen
+      returned a hit, under confirmation'. m:256 closes §8.2 iff A3 = NULL. m:204's A3 set is
+      screen-only, with no f2 coordinate. S4A.9 ('PARTIAL') and S4C.24 are fail3 substantive, and
+      S4A lenient missed is the battery residue. STOP-4 A6 is 'What releases a withheld paper?'.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:253 says 'f2's A3 result replaces the screen's in Step 5'. m:254: Main iff …A3 = NULL. m:255
+      iff A3 ∈ {POSITIVE, REVERSE}: 'the screen returned a hit, under confirmation'. m:256 closes
+      §8.2 iff … A3 = NULL. m:204's A3 coordinate is screen-only. S4A.9 (PARTIAL) and S4C.24 are sub
+      ×3.
+
+[KA5.1] CHECKER pass
+  CLAIM:
+    A5: quote 'NULL-x if (i) and (iii) hold toward clean and (ii) fails → NULL'; the mirror case
+    falls to NULL, posts the NULL sentence, reaches 'nothing moves' and keeps Main reachable;
+    root:184 label-artifact class; PROPOSAL-k:531–533 requires disjunction-complete verdict
+    sentences; = STOP-4 A14 partly resolved
+  EVIDENCE:
+    m:239 is verbatim, and REVERSE needs (i)–(iii), so the mirror case falls through. m:254 and
+    m:255 key on A3 = NULL. root:184 calls the one-map excursion 'the third live capture of the
+    label-artifact class'. PROPOSAL-k-echo-channel.md:531–532 reads 'Verdict and stop sentences
+    disjunction-complete'. S4A.18 is fail3 'PARTIAL'.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      m:239 is verbatim. REVERSE needs (i)–(iii), so the mirror case falls through to NULL. m:254
+      and m:255 key on A3 = NULL. root:184 reads 'the third live capture of the label-artifact
+      class'. PROPOSAL-k-echo-channel.md:531–533 reads 'Verdict and stop sentences
+      disjunction-complete … Pre-written sentences name what the design cannot separate'. S4A.18 is
+      fail3 'PARTIAL'.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:239's order is REVERSE (all of (i)–(iii)) → POSITIVE → NULL-x (toward clean) → NULL, so the
+      mirror case falls to NULL. root:184: 'the third live capture of the label-artifact class'.
+      PROPOSAL-k-echo-channel.md:531–532 has the 'disjunction-complete' clause, and :533 'name what
+      the design cannot separate'. S4A.18 is sub ×3.
+
+[KA6.1] CHECKER pass
+  CLAIM:
+    A6: v1.8 m:137 says (4) 'fails at every higher rung if it fails at the lowest'; Code STOP-2's
+    B11 (09-27 22:13:26) says a higher rung 'is chosen only after .15 fails, which nesting rules out
+    for (3) and leaves possible for (4) only through sampling noise'; 'returns the lowest rung
+    whenever any rung passes' carries the same assumption; rationale only; = STOP-4 C7 claimed
+    resolved (m:98, m:56)
+  EVIDENCE:
+    Both m:137 quotes are verbatim. The B11 text in transcript 3f58e88e (22:51:33Z, block stamp
+    22:13:26) matches verbatim. m:98 is the C7 row and m:56 says 'restored'. D1.15 is fail3
+    substantive and S4C.10 fail3 minor.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      m:137's two quotes are verbatim. In the 3f58e88e block stamped 22:13:26 (assistant msg
+      2026-09-27T22:51:33Z), B11 reads 'is chosen only after .15 fails, which nesting rules out for
+      (3) and leaves possible for (4) only through sampling noise', verbatim. m:56 reads 'restored',
+      and m:98 maps C7 → §2.3. STOP-4 C7 (recovered :116) concerns the dropped condition-(4)
+      exception. D1.15 is substantive×3, S4C.10 minor×3.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      The m:137 quotes are verbatim. 3f58e88e:1140 (22:51:33Z, block stamp 'Sun Sep 27 22:13:26 UTC
+      2026') B11 reads 'is chosen only after .15 fails, which nesting rules out for (3) and leaves
+      possible for (4) only through sampling noise'. m:98 is the C7 row, and m:56 says 'restored'.
+
+[KA7.1] CHECKER pass
+  CLAIM:
+    A7: m:180 names three F0m-vs-f1 differences and omits dose (.15 corrupt_m vs .12 corrupt()),
+    roster, audit, sham pool, verify cadence, rng keys, assignment schedule and the absent ea_mass
+    read (f_sessions.py:355); it drops v1.3's position 5–6 window-change consequence
+    (refuter-found); card 9 is the wrong locator (C1.26); on the v1 path; = STOP-4 C25 claimed
+    resolved (m:116)
+  EVIDENCE:
+    m:180 is quoted correctly, and f_sessions.py:355 is 'eam = ea_mass(…)'. v1.3 carries 'so
+    position 5–6 comparisons with f1 cross a window change'. C1.27 is fail3 substantive and lists
+    exactly these omissions. C1.26 calls the card-9 locator wrong. m:116 is the C25 row.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      m:180 is quoted correctly. jlens-qwen36/scripts/f_sessions.py:355 is 'eam = ea_mass(model,
+      lens, marker_idx, transcript + menu)'. v1.3:55 reads 'so position 5–6 comparisons with f1
+      cross a window change' (C1 strict missed item). C1.27 lists exactly these omissions. C1.26
+      says the card-9 locator is wrong. m:116 maps C25 → §2.7.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:180 names banner lines, CORR delivery module and cached path. f_sessions.py:355 is 'eam =
+      ea_mass(…)'. v1.3 has 'so position 5–6 comparisons with f1 cross a window change' (C1 strict
+      missed). C1.26 gives the card-9 locator. m:116 is the C25 row. C1.27 is sub ×3.
+
+[KA8.1] CHECKER pass
+  CLAIM:
+    A8: decision (10) adopts Q-F3 'with the changes v1.8 s0.10 lists'; eight Q-F3-bearing changes
+    are outside §0.10 (blinding exceptions, echo scope, reasoning-line stop, reasoning-line echo
+    class, counter-(c) pins, {n} pin, cap in NOT-RUN iff-list 'or its cap' m:237, G-VER per family);
+    mostly traceable via §0.11, {n} nowhere; = STOP-5 A8 recurring
+  EVIDENCE:
+    The routing's (10) text matches. X1.8 names exactly these eight (X1.9, X1.11, X1.12 ×2, X1.15,
+    X1.18, X1.14, X1.16), and X1.18 says {n} is recorded nowhere. m:237 contains 'or its cap'. All
+    are fail3.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Routing (10) reads 'with the changes v1.8 s0.10 lists'. X1.8's own list is these eight (X1.9,
+      X1.11, X1.12×2, X1.15, X1.18, X1.14, X1.16). m:237 contains 'or its cap'. X1.18 says the {n}
+      change is recorded nowhere. Note: X1.18 says the v1.6 `{n}` pin was DROPPED. The bullet 'the
+      `{n}` byte pin' does not say so, but it does not claim an addition either.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      Routing :27 reads '(10) Q-F3 is retained as pre-registered, with the changes v1.8 s0.10
+      lists'. X1.8's checker note lists 'blinding, echo scope, reasoning-line stop and echo class,
+      counter (c), {n}, NOT-RUN triggers and G-VER', which makes eight. X1.18 says it is 'recorded
+      nowhere'. m:237 contains 'or its cap'.
+
+[KA8.2] CHECKER fail
+  CLAIM:
+    A8: 'Outside Q-F3, the OLMo exclusion guard's absolute bar also changed unlisted (X1.10).'
+  EVIDENCE:
+    True but incomplete, and it reads as the whole outside-Q-F3 residue. X1.13 (OLMo port acceptance
+    changed from the qualification read to the G-TIME-OLMo read, m:46 vs v1.6:26) is also unlisted
+    and outside Q-F3. So is X1.16's drop of the decisions-block hash from LOCK-m-OLMo v1.0's
+    contents.
+  CORRECTION:
+    'Outside Q-F3, the OLMo exclusion guard's absolute bar (X1.10), the OLMo port-acceptance
+    criterion (X1.13) and LOCK-m-OLMo v1.0's contents (decisions-block hash dropped, X1.16) also
+    changed unlisted.'
+  REFUTER [lenient] fail overturned=False
+    EVIDENCE:
+      Upheld as an incomplete enumeration that reads as complete. X1.8's own clause diff lists
+      further non-Q-F3 unlisted changes. X1.13: OLMo port acceptance moved from the qualification
+      read to the G-TIME-OLMo read (m:46 vs v1.6:26), which is not in §0.10. X1.16: the
+      decisions-block hash was dropped from LOCK-m-OLMo v1.0, 'recorded nowhere'. X1.19: the record
+      designation for (7′) was dropped. All are fail3 minor.
+    CORRECTION:
+      'Outside Q-F3, the OLMo exclusion guard's absolute bar (X1.10), the OLMo port-acceptance
+      criterion (X1.13), LOCK-m-OLMo v1.0's contents (decisions-block hash dropped, recorded
+      nowhere; X1.16) and §0.2's record designation for (7′) (X1.19) also changed unlisted.'
+  REFUTER [strict] fail overturned=False
+    EVIDENCE:
+      Upheld. A8's bracket cites X1.9–X1.19, and several of those are outside Q-F3 and unlisted
+      besides X1.10: X1.13 (OLMo port acceptance, m:46 vs v1.6:26), X1.16 (LOCK-m-OLMo v1.0
+      contents, decisions-block hash dropped), X1.19 ((7′)'s record designation dropped from m:16)
+      and X1.17 (pins and glosses). Singling out X1.10 under-reports. The checker's correction omits
+      X1.19 and X1.17.
+    CORRECTION:
+      'Outside Q-F3, further changes are also unlisted: the OLMo exclusion guard's absolute bar
+      (X1.10), OLMo port acceptance (X1.13), LOCK-m-OLMo v1.0's contents (decisions-block hash
+      dropped; X1.16), the record designation for (7′) (X1.19), and assorted pins and glosses
+      (X1.17).'
+
+[KA9.1] CHECKER pass
+  CLAIM:
+    A9: 21 RESULTS.md anchors on m:8, 20, 94, 123, 149, 159, 165, 176, 184, 194, 196, 280 are
+    e186162 numbers; git diff e186162 87a1167 -- RESULTS.md is the single hunk '@@ -21,6 +21,277 @@'
+    (271 lines at the head of the Log); each lands 271 early
+  EVIDENCE:
+    The diff gives that one hunk with 271 insertions directly after '## Log — Phase 2'. m:280 lists
+    21 anchors, and grep confirms the listed lines (m:94 carries ':613–615'). Code's spot check
+    confirms N+271 at ten anchors.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      `git diff e186162 87a1167 -- RESULTS.md` returns the single hunk '@@ -21,6 +21,277 @@' (271
+      insertions, after '## Log — Phase 2'). m:280 lists 21 anchors, all with N > 23. The body
+      citations sit on exactly m:8, 20, 94 (':613–615'), 123, 149, 159, 165, 176, 184, 194, 196 and
+      280. The worktree equals HEAD.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      git diff e186162 87a1167 -- RESULTS.md gives one hunk, '@@ -21,6 +21,277 @@', with 271
+      insertions after '## Log — Phase 2'. grep finds RESULTS.md anchors on exactly m:8, 20, 94,
+      123, 149, 159, 165, 176, 184, 194, 196 and 280. m:280 lists 21. m:180's 'ebcb206's entry' is
+      commit-identified.
+
+[KA9.2] CHECKER pass
+  CLAIM:
+    A9: R1.1 and R1.2 each graded substantive 2–1 with the strict lens minor; 29 minor duplicates
+  EVIDENCE:
+    In the JSON, R1.1 and R1.2 are checker substantive, lenient substantive and strict minor
+    (overturned=True on severity). The §C collapsed list has 29 distinct ids, each fail3 minor ×3
+    and offset-only.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      R1.1 and R1.2 are graded checker substantive, lenient substantive, strict minor. The collapsed
+      list has 29 distinct ids, each fail3 minor×3.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      In the JSON, R1.1 and R1.2 are resolves F/F/F with severity sub/sub/minor (strict overturned).
+      All 29 collapsed ids are F ×3 and minor ×3.
+
+[KA9.3] CHECKER fail
+  CLAIM:
+    A9: 'A1.20, F1.6, P1.41 and R1.12 include the offset and carry further content, listed in §C'
+  EVIDENCE:
+    The list is incomplete. R1.7 ('The anchor's locator also fails (R1.1)' plus the 'p0 provenance'
+    misnomer; §C item 4) and S4C.34 (':613–615 resolves only at e186162, not at HEAD 87a1167', plus
+    aeb4a2c and b3_screen residue; §C item 70) also include the offset and carry further content,
+    and are fail3.
+  CORRECTION:
+    'A1.20, F1.6, P1.41, R1.7, R1.12 and S4C.34 include the offset and carry further content, listed
+    in §C'.
+  REFUTER [lenient] fail overturned=False
+    EVIDENCE:
+      Upheld. R1.7 ('The anchor's locator also fails (R1.1)' plus the 'provenance' misnomer; §C item
+      4) and S4C.34 (':613–615 resolves only at e186162, not at HEAD 87a1167' plus aeb4a2c and
+      b3_screen residues; §C item 70) both carry the offset and further content. Both are fail3
+      minor and listed un-collapsed in §C.
+    CORRECTION:
+      'A1.20, F1.6, P1.41, R1.7, R1.12 and S4C.34 include the offset and carry further content,
+      listed in §C'.
+  REFUTER [strict] fail overturned=False
+    EVIDENCE:
+      Upheld. Two more F×3-minor, non-collapsed items include the offset alongside further content:
+      R1.7 ('The anchor's locator also fails (R1.1)' plus the provenance-label point; §C item 4) and
+      S4C.34 (':613–615 resolves only at e186162, not at HEAD 87a1167', plus aeb4a2c, b3_screen and
+      the [C] residue; §C item 70). I found no others; S5A.14, S5C.2 and S5C.29 are
+      resolve-with-note and not in §C.
+    CORRECTION:
+      'A1.20, F1.6, P1.41, R1.7, R1.12 and S4C.34 include the offset and carry further content,
+      listed in §C'.
+
+[KA9.4] CHECKER fail
+  CLAIM:
+    A9: 'Every gloss checks at N + 271, except that m:149's range should start at :1749 (R1.12).'
+  EVIDENCE:
+    Overstated. R1.1's checker says 'per-anchor entries R1.3–R1.21 list the exceptions'. R1.7 and
+    F1.6, each with its lenient lens, also fault m:184's 'p0 provenance (RESULTS.md:842–844)' gloss:
+    the anchor is the standing fix v1.8 departs from, not the p0s' provenance. Both strict lenses
+    call that over-literal and grade on the locator alone.
+  CORRECTION:
+    'Every gloss checks at N + 271, except that m:149's range should start at :1749 (R1.12); R1.7
+    and F1.6 (checker and lenient lens; strict calls it over-literal) also read m:184's "p0
+    provenance" label on :842–844 as a misnomer for the rule v1.8 declares a departure from.'
+  REFUTER [lenient] fail overturned=False
+    EVIDENCE:
+      Upheld. R1.7 (checker and lenient) and F1.6 (checker and lenient) fault m:184's 'p0 provenance
+      (RESULTS.md:842–844)' label: the anchor is the standing fix v1.8 departs from, not the p0s'
+      provenance. Each strict lens calls this over-literal. That is a 2–1 majority against the gloss
+      in both groups, so 'Every gloss checks … except m:149' overstates. R1.1's checker itself says
+      'R1.3–R1.21 list the exceptions'.
+    CORRECTION:
+      'Every gloss checks at N + 271, except that m:149's range should start at :1749 (R1.12), and
+      that R1.7 and F1.6 (checker and lenient lens; the strict lens calls it over-literal) read
+      m:184's "p0 provenance" label on :842–844 as a misnomer for the rule v1.8 declares a departure
+      from.'
+  REFUTER [strict] fail overturned=False
+    EVIDENCE:
+      Upheld. R1.7 (checker and lenient) calls m:184's 'p0 provenance' label on :842–844 a misnomer
+      for the rule v1.8 declares a departure from. F1.6 (checker and lenient) says the label sits on
+      a rule anchor while the provenance figures are elsewhere. That is a 2–1 gloss failure in two
+      groups. One part of the correction's attribution is inexact: R1.7's strict lens calls the
+      concern 'weak', and only F1.6's strict calls it 'over-literal'.
+    CORRECTION:
+      'Every gloss checks at N + 271, except that m:149's range should start at :1749 (R1.12); and
+      R1.7 and F1.6 (checker and lenient lens in each; the strict lenses call it weak or
+      over-literal) read m:184's "p0 provenance" label on :842–844 as a misnomer, since :842–844 is
+      the standing fix v1.8 declares a departure from.'
+
+[KA9.5] CHECKER pass
+  CLAIM:
+    A9: a rebase to N+271 would not hold because step 3's COMMITTED entry is prepended to the
+    newest-first Log (the strict lens disputes this); fix: 'RESULTS.md line numbers are at e186162'
+    or RESULTS.md@e186162:N
+  EVIDENCE:
+    R1.1's checker and lenient lens make this argument, and its strict reasoning says '"The +271 fix
+    will not hold" is overstated'. CLAUDE.md and RESULTS.md conventions are newest-first, and m:269
+    makes step 3 commit the entry.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      The argument is R1.1's (checker and lenient). R1.1 strict: '"The +271 fix will not hold" is
+      overstated'. m:269 and m:276 commit a 'PROPOSAL-m v1.8 — COMMITTED' entry, and the Log is
+      newest-first (CLAUDE.md; STOP-5's entry sits at the Log head).
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      R1.1's checker and lenient lens make the step-3-prepend argument, and R1.1 strict says '"The
+      +271 fix will not hold" is overstated'. RESULTS.md is newest-first, and m:269/m:276 name step
+      3's COMMITTED entry.
+
+[KB1.1] CHECKER pass
+  CLAIM:
+    B1: routing names HANDOFF-2026-10-04-design.md at bb830ba0…80a4a; root file is ada1fa02…75d4f1,
+    the 01:37 version, whose :19 still says v1.6 'was not routed'; Code has not edited it
+  EVIDENCE:
+    Routing lines 17–18 confirm the routed sha. HANDOFF :19 ends '**The thread ended there (09-28
+    09:24). D was not confirmed. v1.6 was not routed.**'. The sha is unchanged since the delta read.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Routing lines 17–18 give the bb830ba0 sha. On disk the file is ada1fa02…5df75d4f1, mtime
+      01:37:56, and its :19 ends 'v1.6 was not routed.**'. The sha is unchanged since 21:32:56.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      Routing :17–18 gives bb830ba0…80a4a. The on-disk sha is ada1fa02…df75d4f1 with mtime 01:37:56.
+      HANDOFF :19 ends '**The thread ended there (09-28 09:24). D was not confirmed. v1.6 was not
+      routed.**'
+
+[KB2.1] CHECKER pass
+  CLAIM:
+    B2: routing directs quoting :91 and :96 as records of (6′)/(7) and marking :99/:101 and :91's
+    'same ceiling' clause superseded; :96 says 'A Qwen A0 licenses the Qwen F0 cells (e2a, e2b,
+    f1)', which decision (12) overrides for e2b; the instruct-only design also spans :97–:98; P1.17,
+    refuter-found P1 and S5A
+  EVIDENCE:
+    routing2_original.txt's DO list matches. decisions-block :96 has the quoted clause verbatim, :97
+    has 'on OLMo-3.1-32B instruct' and :98 'Why instruct only'. P1.17 is fail3 minor, and the P1
+    lenient/strict and S5A strict missed items match.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Routing lines 51–53 match. Decisions block :96 contains 'A Qwen A0 licenses the Qwen F0 cells
+      (e2a, e2b, f1)' verbatim; :97 '…on OLMo-3.1-32B instruct'; :98 'Why instruct only'; :99 Gates;
+      :101 Outcome integration. Decision (12) makes e2b 'concluded, not answered' in every outcome.
+      P1.17 is fail3 minor, and P1 (lenient/strict) and S5A strict have missed items on this.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      Routing :51–53 matches. Decisions-block :96 contains 'A Qwen A0 licenses the Qwen F0 cells
+      (e2a, e2b, f1)', :97 has 'on **OLMo-3.1-32B instruct**' and :98 'Why instruct only'. Routing
+      (12) makes e2b 'concluded, not answered' in every outcome. P1.17 is minor ×3; the P1
+      lenient/strict and S5A strict missed items match.
+
+[KB3.1] CHECKER pass
+  CLAIM:
+    B3: D1 = D_O = 2026-10-23 is nineteen days out; step 3 has not run, so dates can move at no cost
+  EVIDENCE:
+    2026-10-04 to 2026-10-23 is 19 days. m:260 says moving a date is a visible re-specification only
+    'once in Code's step-3 commit'.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      2026-10-04 → 2026-10-23 is 19 days. m:260 reads 'Once in Code's step-3 commit, moving any date
+      is a visible re-specification'.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      2026-10-23 minus 2026-10-04 is 19 days. m:260 says moving a date becomes a 'visible
+      re-specification' only 'Once in Code's step-3 commit', and step 3 has not run.
+
+  MISSED (refuter lenient)
+    CLAIM:
+      §B2: 'The instruct-only OLMo design also spans :97–:98, not only :99/:101 … Code would quote
+      :96 verbatim and mark its e2b clause and :97–:98 superseded beside the quotation'
+    EVIDENCE:
+      B2 cites 'refuter-found P1', but P1's lenient missed item says the design 'spans :97–:101, not
+      only :99/:101'. That item names :100 too (Hardware: 'one pod session … The PI accepts the
+      cost'), whose pod terms differ from the routing's 'pod start needs my go'. It also says the
+      quoted :96 points at those lines through 'the arm below does'. P1.17 lenient asks that both
+      '(e2a, e2b, f1)' and 'the arm below' be marked. Code's plan marks only the e2b clause and
+      :97–:98, so :100 and :96's 'the arm below does' stay unmarked beside (7′).
+    CORRECTION:
+      'The instruct-only OLMo design also spans :97–:98 and :100 (P1 lenient), not only :99/:101 …
+      Code would quote :96 verbatim and mark its e2b clause, its "the arm below does" and :97–:98
+      and :100 superseded beside the quotation, by decisions (12), (7′) and the routing's pod line.'
+####################################################################################################
+SECTION KCDE
+####################################################################################################
+
+[KC-1] CHECKER pass
+  CLAIM:
+    §C header: the list is generated from the check's JSON and holds the items unresolved under all
+    three verdicts and graded minor by all three, less the collapsed A9 duplicates. The 69
+    checker-id lines are exactly that set.
+  EVIDENCE:
+    Recomputed from wxky1b2rc.output: 442 referents, of which 130 are F/F/F. 98 are graded (minor,
+    minor, minor), 30 are s/s/s and 2 are s/s/m (R1.1, R1.2). 98 less 29 collapsed leaves 69. The 69
+    checker ids in §C match this set exactly, with no missing, extra or duplicate id, and they
+    appear in JSON order. With the 46 refuter lines, the list runs 1–115 with no gap.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      I recomputed this from wxky1b2rc.output. There are 442 referents. 130 fail under all three
+      verdicts, graded (m,m,m) 98, (s,s,s) 30 and (s,s,m) 2 (R1.1, R1.2). Taking the 29 collapsed
+      ids out of the 98 leaves 69. Those 69 equal the §C checker-id lines exactly and appear in JSON
+      order. Adding the 46 refuter lines gives 115 lines, numbered 1–115 with no gaps.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      I recomputed this from wxky1b2rc.output (result.results; checker referents joined to both
+      lenses' verdicts by id). There are 442 referents: 259 resolve clean under all three verdicts,
+      47 resolve with a minor note, 130 fail under all three and 6 are contested. Of the 130, 98 are
+      graded (minor, minor, minor), 30 (s, s, s), and 2 (s, s, m): R1.1 and R1.2, where the strict
+      lens gave minor. 98 less the 29 collapsed ids leaves 69. The 69 checker-id lines in §C equal
+      that set exactly, appear in JSON order, and contain no duplicates. Lines run 1–115 with no gap
+      (69 + 46).
+
+[KC-2] CHECKER pass
+  CLAIM:
+    §C collapsed list: 29 ids (L1.7 … S5C.33), each a RESULTS.md-anchor duplicate of A9 (the +271
+    shift).
+  EVIDENCE:
+    The list holds 29 distinct ids, not the 33 the task text names; 33 was the pass-1 draft's count,
+    and pass 1 moved A1.20, F1.6, R1.12 and P1.41 out. All 29 are F/F/F graded minor by all three
+    verdicts, and every note names the e186162 numbering and the +271 offset at HEAD (or 'Locator
+    only' with the same cause). The count agrees with A9's '29 minor duplicates'. S4A.25, S4C.3,
+    S5C.22 and S5C.33 are among them, as §D says.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      All 29 ids are distinct and every one is F/F/F (minor, minor, minor). Each checker note names
+      the e186162 numbering, the +271 shift, or 'Locator only' with the same cause. The count
+      matches A9's '29 minor duplicates'. The task's '33' was the pass-1 count; valuescheck raw
+      :2612 and :2630 show it, and :1075 moved A1.20, F1.6, R1.12 and P1.41 out.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      K lists 29 distinct ids, not the 33 the task text gives. All 29 fail under all three verdicts
+      and are graded minor by all three. Every checker note cites +271, e186162 numbering, or 'the
+      same systematic +271 offset' (O1.21, F1.18, F1.21), so each is an anchor-shift item. The count
+      matches A9's '29 minor duplicates', and S4A.25, S4C.3, S5C.22 and S5C.33 are in the list.
+
+[KC-3] CHECKER fail
+  CLAIM:
+    §C: the collapsed duplicates are those 'whose only content is the offset'.
+  EVIDENCE:
+    This holds for 28 of the 29. R1.21 (m:159, 'b3 exclusion 5.6/15.2/10.6/11.6% by stage
+    (RESULTS.md:5810)') carries one more point. The checker writes 'The domain is all arms, steered
+    marker arms included. That is fine for a reference but goes unstated', and the strict lens adds
+    'ledger 19 asks every rate to name its domain'. v1.8's own ledger (19), at m:18, reads 'Fix:
+    every rate names its domain, checked against its anchor'. Collapsing R1.21 drops a
+    v1.8-against-its-own-ledger point that no other §C line carries. The checker and the lenient
+    lens call it acceptable, so this is a 1-of-3 point and low weight. R1.8's aside ('secondary
+    restatement; primary row e186162:1736') is called acceptable by the strict lens, so collapsing
+    it is defensible.
+  CORRECTION:
+    Either give R1.21 its own §C line ('m:159 — the b3 exclusion rates' domain (all arms, steered
+    marker arms included) is unstated; ledger 19, strict lens'), or write 'whose only content is the
+    offset (R1.21 also notes, strict lens, that m:159's b3 exclusion rates do not name their
+    all-arms domain, ledger 19)'.
+  REFUTER [lenient] fail overturned=False
+    EVIDENCE:
+      The fail stands, and it covers more than R1.21. R1.8's checker note also carries a non-offset
+      point: 'The anchor is a secondary restatement inside a referent check, not the recon entry
+      itself; the primary row is e186162:1736.' The lenient lens repeats it ('The anchor is a
+      secondary restatement, and the locator fails'). Pass 1's lenient refuter (valuescheck raw
+      ~:1070) named R1.8 alongside the four items Code later moved out, but Code left R1.8
+      collapsed. The checker excused R1.8 because the strict lens calls it acceptable. Yet the
+      checker and the lenient lens likewise call R1.21's domain point fine or acceptable, and the
+      checker still failed the claim on R1.21. The two items deserve the same treatment, so 27 of
+      the 29, not 28, have the offset as their only content.
+    CORRECTION:
+      Write 'collapsed where the only content is the offset' over 27 ids. Either give R1.8 ('m:159:
+      the anchor :1057 is a secondary restatement; the primary row is e186162:1736') and R1.21
+      ('m:159: b3 exclusion rates do not name their all-arms domain, ledger 19, strict lens') their
+      own §C lines, or note both points beside the collapsed list. If R1.8 and R1.21 come out of the
+      collapse, change A9's '29 minor duplicates' to 27 to match.
+  REFUTER [strict] fail overturned=False
+    EVIDENCE:
+      Confirmed; this is a real defect and the checker read it correctly. R1.21's checker note:
+      'Checks at +271. The domain is all arms, steered marker arms included. That is fine for a
+      reference but goes unstated. Locator only.' The strict lens adds: 'ledger 19 asks every rate
+      to name its domain.' v1.8's ledger 19 (m:19) reads 'Fix: every rate names its domain'. m:159
+      names a domain for its other rates ('56 of 64 launched', 'on the e2a corpus') but not for 'b3
+      exclusion 5.6/15.2/10.6/11.6% by stage'. So R1.21 carries more than the offset, and the 'only
+      content is the offset' gloss fails for it. The weight is low: the checker said 'fine' and the
+      lenient lens 'acceptable'. The asides in R1.8, R1.14, R1.19 and R1.20 are offset consequences,
+      or points the lenses called acceptable, so collapsing them holds.
+    CORRECTION:
+      The checker's second option is the cleaner one, because it keeps A9's '29' and the
+      generated-line format: '…whose only content is the offset (R1.21 also notes, strict lens, that
+      m:159's b3 exclusion rates do not name their all-arms domain, ledger 19)'. If R1.21 is
+      un-collapsed instead, A9's '29 minor duplicates' becomes 28, §C gains a line, and the quoted
+      excerpt must run through its third sentence ('…goes unstated.') to show the point.
+
+[KC-4] CHECKER fail
+  CLAIM:
+    §C header: the list holds 'the refuter-found minor items' (§0 counts 47 of them).
+  EVIDENCE:
+    The JSON has 47 refuter 'missed' items graded minor, and §C lists 46. The one left out is the C1
+    strict missed item at 'm:188 (G-PORT), scope note', whose note reads 'This is not a defect in
+    v1.8 … Graded minor only because the schema has no 'clean' option for missed items. It needs no
+    edit.' Pass 1 (C6) proposed removing it or marking it 'no edit'. Code removed it but did not
+    change the header, which still claims all refuter-found minor items. 69 + 46 = 115 lines.
+  CORRECTION:
+    '…and the refuter-found minor items except one (C1 strict, m:188 G-PORT scope note), whose
+    refuter says it is not a defect and needs no edit: 46 of 47.' Alternatively, restore it as a
+    line marked 'no edit (recorded so G-PORT is not widened to data/f/)'.
+  REFUTER [lenient] fail overturned=False
+    EVIDENCE:
+      Confirmed. The JSON has 47 minor refuter 'missed' items. I mapped §C one-to-one by (group,
+      lens, exact location), and only the C1 strict item 'm:188 (G-PORT), scope note' is unused. Its
+      note reads 'This is not a defect in v1.8 … It needs no edit.' The header still says it lists
+      'the refuter-found minor items'.
+    CORRECTION:
+      Write '…and the refuter-found minor items except C1 strict at m:188 (G-PORT scope note), which
+      its refuter says is no defect and needs no edit: 46 of 47.'
+  REFUTER [strict] fail overturned=False
+    EVIDENCE:
+      Confirmed. The JSON has 51 missed items: 4 substantive and 47 minor, matching §0's '(4
+      substantive, 47 minor)'. All 46 refuter lines map one-to-one onto minor missed items with
+      exact location matches. The unused one is C1 strict at 'm:188 (G-PORT), scope note', whose
+      note reads '…This is not a defect in v1.8… It needs no edit.' The §C header still claims 'the
+      refuter-found minor items' without exception.
+    CORRECTION:
+      Right as given: '…and the refuter-found minor items except one (C1 strict, m:188 G-PORT scope
+      note), whose refuter says it is not a defect and needs no edit: 46 of 47.'
+
+[KC-5] CHECKER pass
+  CLAIM:
+    §C: each line gives the raw id (or, for a refuter-found item, its group and lens), the full
+    location, and a quotation of the cited checker note or refuter 'missed' note, quoted from the
+    raw.
+  EVIDENCE:
+    Checked all 115 lines by script, not a sample. Each of the 69 checker lines' location equals its
+    JSON `location` (whitespace-normalised); line 48 (P1.17) contains ' — :96 quoted verbatim'
+    because that text is part of the location field. Each quote is a verbatim prefix of the JSON
+    `note`. Each of the 46 refuter lines maps one-to-one onto a minor missed item of the stated
+    (group, lens), with an exact location match, so the attributions are right. Every quote and
+    location string occurs in results/raw/2026-10-04_m-v1.8_referent_check.txt once whitespace is
+    normalised. The one interpolation, line 112's '[Code: in its reporting half only; the read half
+    persists, see A2]', is bracketed, attributed to Code, and consistent with A2.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      I ran a script over all 115 lines. For each checker line, the location equals the JSON
+      location after whitespace normalisation, and the quote is a verbatim prefix of the JSON note.
+      Each refuter line maps one-to-one onto a minor missed item with the stated group and lens and
+      the same location. All quote and location strings appear in the raw .txt. The only
+      interpolation is line 112's bracketed [Code: …], and it agrees with A2 ('The report half of
+      the fix … did land').
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      Checked all 115 lines by script. The 69 checker lines: each location equals the JSON location
+      after whitespace normalisation, and each quote is a verbatim prefix of the checker note. The
+      46 refuter lines: each matches exactly one minor missed item of the stated group and lens on
+      exact location, and each quote is a verbatim prefix of the note. Every location and quote
+      string is found in the normalised raw referent_check.txt. The only non-verbatim text is line
+      112's bracketed '[Code: in its reporting half only; the read half persists, see A2]'. It is
+      attributed to Code and consistent with A2 ('The report half of the fix … did land').
+
+[KC-6] CHECKER fail
+  CLAIM:
+    §C header: each line quotes 'the first two sentences' of the note.
+  EVIDENCE:
+    Nine lines do not quote two sentences. The splitter evidently breaks only before a capitalised
+    start, so sentences that begin with a lowercase letter, a digit, ':' or '.' are run together
+    with the one before. Lines 7, 25, 33, 35, 51, 52 and 81 quote three sentences; for example, line
+    7 runs on into 'e186162 is a new unquoted listing. If it was meant…', and line 35 into '.755890…
+    is rounded up…'. Line 76 (S5A.11) quotes all four sentences ('22:13:26 STOPPED…', '07:27:18
+    is…'). Line 74 (S5A.2) quotes only one: it splits at 'e.g. "128' and so omits the second
+    sentence, 'The intervals are under 5e-7 wide and contain no reachable r (k/24 or k/40), so no
+    figure moves.' That omitted sentence is the mitigation, so line 74 reads as more serious than
+    its source. All the text quoted is still verbatim.
+  CORRECTION:
+    Write 'the opening of the note (one to four sentences)', or re-cut the nine lines at true
+    sentence ends. At minimum, extend line 74 through '…so no figure moves.'
+  REFUTER [lenient] fail overturned=False
+    EVIDENCE:
+      The fail stands, but the checker undercounted. It is not nine lines but nineteen. Beyond the
+      checker's lines 7, 25, 33, 35, 51, 52, 74, 76 and 81, these lines also quote more than two
+      sentences, each giving the whole note: 12 C1.10 ('Sign convention.' / 'm defines…' / 'The
+      covariate is descriptive…'), 21 O1-lenient, 26 D1-lenient, 57 and 58 S4A-strict, 64 S4C.21, 65
+      S4C.26, 109 X1.38 and 112 X1-lenient (three each), and 53 P1-strict (four). The checker's
+      mechanism ('breaks only before a capitalised start') does not account for line 112: all three
+      of its sentences start with a capital ('A0's…', 'The literal half…', 'The fix is…'), and it is
+      still quoted whole. Every quoted text is verbatim; the problem is only the header's
+      description of what is quoted.
+    CORRECTION:
+      Change the header to 'the opening of the note (one to four sentences; the whole note where it
+      is short)'. Alternatively, re-cut all 19 lines (7, 12, 21, 25, 26, 33, 35, 51, 52, 53, 57, 58,
+      64, 65, 74, 76, 81, 109, 112) at true sentence ends. Whichever is chosen, extend line 74
+      through '…so no figure moves.'
+  REFUTER [strict] fail overturned=False
+    EVIDENCE:
+      The fail is right, but the checker undercounts. All checks are on full stops, with '"…text."'
+      in line 13 and 'e.g.' not counted as sentence ends. Nineteen lines, not nine, quote other than
+      two sentences. Three sentences: 7, 12, 21, 25, 26, 33, 35, 51, 52, 57, 58, 64, 65, 81, 109,
+      112. Four: 53, 76. One of three: 74. The checker missed ten: 12 (C1.10), 21 (O1 lenient), 26
+      (D1 lenient), 53 (P1 strict, four sentences), 57 and 58 (S4A strict), 64 (S4C.21), 65
+      (S4C.26), 109 (X1.38) and 112 (X1 lenient). In each of the ten the note has only three or four
+      sentences, and the cut took all of them. Examples: 64 is 'PARTIAL. f2's tier … n ≥ 100. §0.11
+      routes C15 to §4 only, and §4 does not mention f2.'; 109 is 'Unquoted referents remain in §9.
+      aeb4a2c was named … itself. STOP-4 C26 and STOP-5 C20 → §9 resolve in part.' The checker
+      counted line 76, also a whole-note quote, so the omission is inconsistent. The line-74 point
+      is right: the omitted 'The intervals are under 5e-7 wide and contain no reachable r … so no
+      figure moves.' is the mitigation. All quoted text is verbatim.
+    CORRECTION:
+      The checker's correction stands, and is now the only accurate one: every quote is one to four
+      sentences. Write 'the opening of the note (one to four sentences; the whole note where it is
+      short)', and extend line 74 through '…so no figure moves.' If the lines are re-cut to two
+      sentences instead, all 19 need it, not nine.
+
+[KC-7] CHECKER fail
+  CLAIM:
+    §C heading 'Minor corrections for v1.9': each line states a correction v1.9 needs.
+  EVIDENCE:
+    Pass 1 (missed item; C6) flagged lines whose excerpt states no defect. The two-sentence cut
+    fixed many of them, but 15 lines still name only the resolved half or context, not what remains.
+    Line 10 gives 'The fixed parts: …' only. Line 11 gives 'The function is pinned, and so is the
+    item-stream call', and the residue (the arm-rng calls) is cut. Line 22 says 'One residue
+    remains.' without naming it. Line 28 states no defect. Line 50 (P1.41) gives 'Fixed: …' only. In
+    line 54 (S4A.8) the conflict with m:184 is sentence 3. Lines 62 (S4C.11), 66 (S4C.27), 67
+    (S4C.29), 68 (S4C.32), 70 (S4C.34), 71 (S4C.36), 82 (S5C.6) and 83 (S5C.20) each give 'PARTIAL.'
+    plus what is resolved. Line 69 (S4C.33) gives what is restored, though A7 carries the omissions.
+    The quotes are faithful; the problem is that these lines carry no correction for the seat to act
+    on.
+  CORRECTION:
+    For these 15 lines, extend the excerpt to the first sentence that names the residue (e.g. 82:
+    '…The attribution half persists.'; 68: '…Dropped against both v1.3 and Stage 1: the one-process
+    … preflight and the adapter-wattage check'). Alternatively, add to the header: 'for PARTIAL
+    items the excerpt may name only the resolved half; the residue is in the raw'.
+  REFUTER [lenient] fail overturned=False
+    EVIDENCE:
+      Confirmed for all 15 listed lines (10, 11, 22, 28, 50, 54, 62, 66, 67, 68, 69, 70, 71, 82,
+      83). At least one more belongs in the list. Line 31 (F1.6) quotes only 'Two problems. (1)
+      Locator: the anchor uses e186162 line numbers and sits +271 at HEAD (see F1.30).' That is just
+      the A9-duplicate content. It cuts '(2) Gloss: the label 'p0 provenance' is attached to a rule
+      anchor…', which is the further content A9 gives as the reason F1.6 is listed in §C. As
+      printed, line 31 carries no correction beyond A9. Line 16 (C1.25), 'All three path facts are
+      true. The conditional is muddled.', is borderline: it does not say what is muddled, and the
+      actionable part is in sentences 3–4.
+    CORRECTION:
+      Add line 31, and arguably line 16, making 16–17 lines. Extend line 31 through '(2) Gloss: the
+      label 'p0 provenance' is attached to a rule anchor.' Extend line 16 through '…the real
+      differences (window: full vs a 512-token tail; chunking: two chunks vs one) are not stated.'
+      Otherwise, use the header-caveat alternative the checker gave.
+  REFUTER [strict] fail overturned=False
+    EVIDENCE:
+      Upheld at low weight. K never literally says each excerpt states the fix, and the header
+      points to the raw for the full evidence. The fail is a gloss problem, not a false statement.
+      Each listed item does need a v1.9 correction (all are unresolved under all three verdicts, or
+      refuter-found). Still, the 15 named lines (10, 11, 22, 28, 50, 54, 62, 66, 67, 68, 69, 70, 71,
+      82, 83) quote only resolved halves or context, under a heading that presents each line as a
+      correction. I checked every example: 22 ends 'One residue remains.'; 28 is 'This is outside
+      D1's lines … dispositioned to "§2.4, §0.4".'; 54's conflict is the note's sentence 3; 82's
+      next sentence is 'The attribution half persists.' Lines 30 ('This is a locator gap only…') and
+      113 are borderline additions: they name a defect class but not the content.
+    CORRECTION:
+      The checker's alternative is enough on its own and is the cheaper fix: add to the header 'for
+      PARTIAL items and some others the excerpt names only the resolved half or context; the residue
+      is in the raw'. Re-cutting the 15 lines to their residue sentences, with the suggested 82 and
+      68 extensions, also works but interacts with KC-6's sentence-count wording.
+
+[KC-8] CHECKER pass
+  CLAIM:
+    §C header: 'the 47 referents that resolve with a minor note are not listed (see the raw)'.
+  EVIDENCE:
+    Recomputed: 47 referents resolve under all three verdicts with at least one minor grade (259 are
+    clean under all three). None of them appears in §C.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      47 referents resolve under all three verdicts with at least one minor grade (259 are clean
+      throughout), and none of them is in §C. The 6 contested referents are also absent from §C, but
+      the header does not claim to include them.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      47 referents resolve under all three verdicts with at least one minor grade: 42 (m, m, m), 4
+      (c, m, c) and 1 (m, m, c). None of them is a §C line. L1.17, D1.23 and A1.36 appear only
+      inside quoted note text.
+
+[KD-1] CHECKER pass
+  CLAIM:
+    §D: of the four disposition groups' 125 referents, 68 resolve cleanly, 18 with a minor note, and
+    39 fail under all three verdicts.
+  EVIDENCE:
+    S4A 26 + S4C 36 + S5A 27 + S5C 36 = 125. Clean: 13+19+14+22 = 68. Minor note: 4+1+5+8 = 18.
+    F/F/F: 9+16+8+6 = 39. Contested: 0.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Recomputed per group (clean / minor-note / F/F/F): S4A 26 = 13/4/9, S4C 36 = 19/1/16, S5A 27 =
+      14/5/8, S5C 36 (including S5C.0, .11b, .26b) = 22/8/6. Totals are 68, 18 and 39, with no
+      contested items.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      S4A has 26 referents (13 clean, 4 minor-note, 9 fail under all three), S4C 36 (19, 1, 16), S5A
+      27 (14, 5, 8) and S5C 36 (22, 8, 6). Totals: 125 = 68 + 18 + 39, with none contested.
+
+[KD-2] CHECKER pass
+  CLAIM:
+    §D: the 15 substantive ones are A1–A5 and B1 (S4A.26, S5A.13).
+  EVIDENCE:
+    All 15 are s/s/s. A1: S4A.3, S4C.30, S5A.16, S5A.24, S5C.27. A2: S4A.7, S5A.23. A3: S4A.13,
+    S5A.8, S5C.26b. A4: S4A.9, S4C.24. A5: S4A.18. B1: S4A.26, S5A.13. Each id appears in the
+    bracket of its A-item in K §A.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      The 15 (s,s,s) referents are S4A.3, .7, .9, .13, .18, .26; S4C.24, .30; S5A.8, .13, .16, .23,
+      .24; S5C.26b and .27. All of them sit in the A1–A5 or B1 brackets, so the claim as stated
+      holds. One caveat: the checker's mapping puts S5A.24 under A1, copying K §A. S5A.24's content
+      (G-TIME pick reporting under rule 23, and the unredacted G-TIME-OLMo read) is A2's, not A1's
+      binomial domain. That is reported under missed.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      The substantive set is S4A.3, S4A.7, S4A.9, S4A.13, S4A.18, S4A.26, S4C.24, S4C.30, S5A.8,
+      S5A.13, S5A.16, S5A.23, S5A.24, S5C.26b and S5C.27, all (s, s, s): 15 as stated. As a set
+      statement ('A1–A5 and B1') it holds. The checker's evidence copies one misfiling from K §A,
+      though. S5A.24 ('G-TIME text still reports contrast-template picks … apply the redaction to
+      every G-TIME read') is A2's subject, not A1's (binomial-bar domains), yet K lists it in A1's
+      bracket. See missed.
+
+[KD-3] CHECKER pass
+  CLAIM:
+    §D: A6 and A7 are substantive under D1.15 and C1.27; their disposition referents S4C.10 and
+    S4C.33 are graded minor.
+  EVIDENCE:
+    D1.15 and C1.27 are s/s/s. S4C.10 ('NOT RESOLVED…', STOP-4 C7) and S4C.33 ('PARTIAL…', STOP-4
+    C25) are m/m/m F/F/F.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      D1.15 and C1.27 are (s,s,s) F/F/F. S4C.10 ('NOT RESOLVED…', STOP-4 C7) and S4C.33 ('PARTIAL…',
+      STOP-4 C25) are (m,m,m) F/F/F, and they map to A6 (= C7) and A7 (= C25).
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      D1.15 (the B11 clause states the opposite of B11's exception) and C1.27 (C25 only partly
+      resolved) are both (s, s, s). S4C.10 ('NOT RESOLVED…', STOP-4 C7) and S4C.33 ('PARTIAL…',
+      STOP-4 C25) are both (m, m, m) and fail under all three verdicts.
+
+[KD-4] CHECKER pass
+  CLAIM:
+    §D: of the 24 minor ones, 20 are in §C under their ids and four (S4A.25, S4C.3, S5C.22, S5C.33)
+    are among A9's collapsed duplicates.
+  EVIDENCE:
+    39 − 15 = 24 minor F/F/F. Twenty are §C lines (54, 55, 59–71, 74–76, 82, 83), and the four named
+    are in the collapsed list. The bullets enumerate exactly those 20 (5 + 11 + 2 + 2).
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      There are 24 minor F/F/F: S4A 3, S4C 14, S5A 3, S5C 4. The 20 in §C are lines 54, 55, 59–71,
+      74–76, 82 and 83. The 4 in the collapsed list are S4A.25, S4C.3, S5C.22 and S5C.33. The
+      bullets give 5 + 11 + 2 + 2 = 20.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      39 − 15 = 24 minor items. Twenty are §C lines (54, 55, 59–71, 74–76, 82, 83), and S4A.25,
+      S4C.3, S5C.22 and S5C.33 are in the collapsed list. The bullets enumerate exactly those 20 (5
+      + 11 + 2 + 2).
+
+[KD-5] CHECKER pass
+  CLAIM:
+    §D bullet: STOP-4/STOP-5 A-group residues are S4A.8, S4A.21, S5A.2, S5A.4 (STOP-5 A1's
+    open-ended totals persist in §2.4's bold lines) and S5A.11.
+  EVIDENCE:
+    S4A.8 sits beside S4A.7, the m:77 A5 row. S4A.21 is ledger 38 against m:137, under the A16 row
+    (m:88). S5A.2 and S5A.4 are STOP-5 A1 (S5A.4: 'A1's open-ended-range defect persists in §2.4's
+    bold totals'). S5A.11 (m:4 stamps) falls in the A3 provenance block (S5A.9–12). All five are
+    m/m/m F/F/F.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      S4A.8 falls under the STOP-4 A5 row, and S4A.21 is ledger 38 from STOP-4 A16. S5A.2 and S5A.4
+      belong to STOP-5 A1; S5A.4's note reads 'A1's open-ended-range defect persists in §2.4's bold
+      totals'. S5A.11 is STOP-5 A3's m:4 stamps. All five are (m,m,m) F/F/F.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      S4A.8, S4A.21, S5A.2, S5A.4 and S5A.11 are (m, m, m) and fail under all three verdicts, and
+      all sit in the S4A or S5A groups. S5A.4's note reads 'A1's open-ended-range defect persists in
+      §2.4's bold totals', which matches the parenthesis.
+
+[KD-6] CHECKER pass
+  CLAIM:
+    §D: STOP-4 C4, C5, C8, C15 (f2's tier), C18, C19, C21, C24, C25, C26 and C28 are PARTIAL.
+  EVIDENCE:
+    S4C.8 (C5), .11 (C8), .21 (C15 f2's tier), .26 (C18), .27 (C19), .29 (C21), .32 (C24), .33
+    (C25), .34 (C26) and .36 (C28) each open with 'PARTIAL.'. S4C.6 reads 'Residue of C4', with
+    S4C.5 resolved, so calling C4 PARTIAL is a fair aggregate. All are m/m/m F/F/F. C22 (S4C.30) is
+    PARTIAL but s/s/s, so it is correctly left to A1.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      S4C.8, .11, .21, .26, .27, .29, .32, .33, .34 and .36 each open with 'PARTIAL.'. S4C.6 reads
+      'Residue of C4.' while S4C.5 (C4) resolves clean, so C4 is fairly called partial. S4C.30 (C22)
+      is PARTIAL but substantive, and it is correctly left to A1.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      The C-number mappings are from locations and notes. S4C.6 is C4 ('Residue of C4'; S4C.5
+      resolves the rest). Then S4C.8 → C5, S4C.11 → C8, S4C.21 → C15 f2's tier, S4C.26 → C18, S4C.27
+      → C19, S4C.29 → C21, S4C.32 → C24, S4C.33 → C25, S4C.34 → C26 and S4C.36 → C28. All are (m, m,
+      m) and fail under all three verdicts. S4C.30 (C22) is (s, s, s) and is correctly carried by
+      A1.
+
+[KD-7] CHECKER pass
+  CLAIM:
+    §D: STOP-4 C7 (S4C.10; = A6) and C15's 'shams count-only' (S4C.20) are NOT RESOLVED; STOP-5 C6
+    and C20 are PARTIAL.
+  EVIDENCE:
+    S4C.10 and S4C.20 both open 'NOT RESOLVED.'. S5C.6 and S5C.20 both open 'PARTIAL.'. All four are
+    m/m/m F/F/F, and A6's heading reads '= STOP-4 C7'.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      S4C.10 and S4C.20 open with 'NOT RESOLVED.', and S5C.6 and S5C.20 open with 'PARTIAL.'. All
+      four are (m,m,m) F/F/F.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      S4C.10 and S4C.20 both open 'NOT RESOLVED.'; S5C.6 and S5C.20 both open 'PARTIAL.'. All four
+      are (m, m, m) and fail under all three verdicts.
+
+[KE-1] CHECKER pass
+  CLAIM:
+    §E: items 5, 11 and 15 go from 16, 15 and 17 eligible letters to 14 each, with k unchanged at 3,
+    as §2.3 states.
+  EVIDENCE:
+    An independent replay of m:137 (jlens venv numpy): crc32 'corr|i' rng; f1 word-start rule;
+    quoted-span exclusion; one permutation; one integers(25) draw per slot; roster-substring skip
+    over both rosters; k = clip(floor(.15n+.5), 3, n//2). Without the exclusion, the replay
+    reproduces all 16 STOP-5 §F renders byte for byte, which validates the implementation. With it,
+    n goes 16→14, 15→14 and 17→14 (losses 2, 1, 3), and k = 3 for all three. permutation(n)-indexing
+    and permutation(array) give identical output.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      I replayed m:137 independently with the jlens venv numpy, using
+      default_rng(crc32('corr|i')%2**31), the f1 word-start rule, quoted-span exclusion,
+      permutation, one integers(25) per slot, a whole-render case-insensitive substring check over
+      both rosters, and k = clip(floor(.15n+.5), 3, n//2). Without the exclusion, it reproduces all
+      16 STOP-5 §F renders, k values and skips byte for byte, under both permutation(n)-indexing and
+      permutation(array). With the exclusion, n goes 16→14, 15→14 and 17→14, and k = 3 throughout.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      Independent replay of m:137 (jlens venv numpy). Setup: crc32('corr|i') % 2**31 rng, then
+      permutation over the eligible positions, then one integers(25) draw per slot. Eligibility: f1
+      word_start rule, with the single-quote span excluded and quote marks included. Skip on a
+      case-insensitive substring of the union of both rosters (Qwen from e2d/config.py:36–37; OLMo
+      from a1_repair_roster.json selected_tags). k = clip(floor(.15n + .5), 3, n//2). Without the
+      exclusion the replay reproduces all 16 STOP-5 §F renders byte for byte, with the item-7 skip.
+      With it, n goes 16→14, 15→14 and 17→14 (losses 2, 1 and 3, matching m:137), and k = 3 for all
+      three (floor(2.6) = 2, clipped to 3).
+
+[KE-2] CHECKER pass
+  CLAIM:
+    §E: n_eligible is 6, 19, 19, 13, 24, 14, 10, 45, 19, 10, 24, 14, 6, 19, 10, 14; k sums to 54;
+    every item reaches k; one roster-substring skip, on item 7; no other item carries an apostrophe.
+  EVIDENCE:
+    The replay gives exactly that list. k = [3,3,3,3,4,3,3,7,3,3,4,3,3,3,3,3], which sums to 54, and
+    accepted changes equal k on all 16 items (54 changed letters). The only skip is item 7's, and it
+    is a roster substring. In CORR_clean only items 5, 11 and 15 contain an apostrophe.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      The replay gives n = [6,19,19,13,24,14,10,45,19,10,24,14,6,19,10,14] and k =
+      [3,3,3,3,4,3,3,7,3,3,4,3,3,3,3,3], which sum to 54. Accepted changes equal k on every item,
+      for 54 changed letters. The only skip is item 7's, a roster substring, and no clean item
+      contains a roster word. Only items 5, 11 and 15 contain an apostrophe.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      The replay gives n = [6,19,19,13,24,14,10,45,19,10,24,14,6,19,10,14] and k =
+      [3,3,3,3,4,3,3,7,3,3,4,3,3,3,3,3], which sums to 54. Accepted changes equal k on every item.
+      The one skip is on item 7, where 'State' → 'Slate' hits the roster word 'slate'. Only items 5,
+      11 and 15 contain an apostrophe, and no clean item already contains a roster substring.
+
+[KE-3] CHECKER pass
+  CLAIM:
+    §E: the operands survive: item 5 "Writa the oppcsite oc 'hot'.", item 11 "Writo the oppssitu of
+    'up'.", item 15 "Wtite thn opposite on 'open'."; the other 13 renders are unchanged from STOP-5
+    §F.
+  EVIDENCE:
+    The replay produces these three strings exactly. Items 0–4, 6–10 and 12–14 are byte-identical to
+    the STOP-5 §F table (2026-10-04_m-v1.7_code-to-design_STOP.md §F).
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      The replay produces exactly "Writa the oppcsite oc 'hot'.", "Writo the oppssitu of 'up'." and
+      "Wtite thn opposite on 'open'.". Items 0–4, 6–10 and 12–14 are byte-identical to the STOP-5 §F
+      table.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      The replay gives "Writa the oppcsite oc 'hot'.", "Writo the oppssitu of 'up'." and "Wtite thn
+      opposite on 'open'.", with the operands intact. The other 13 renders are byte-identical to
+      STOP-5 §F.
+
+[KE-4] CHECKER pass
+  CLAIM:
+    §E beside-note: item 9 renders "Comgute 90 miyms 45." for 'minus', item 2 'thiru' for 'third',
+    item 8 'ftrst' for 'first'; the seat's provisional read judged these recoverable.
+  EVIDENCE:
+    The replay gives 'Comgute 90 miyms 45.', 'Name thy thiru month of the yebr.' and 'Name the ftrst
+    month of the ybaa.', the same as the v1.7 renders the seat read. m:137 records the read as '14
+    of 16 golds recoverable; items 5 … and 15 … not recoverable', so items 2, 8 and 9 were judged
+    recoverable.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      The replay gives 'Comgute 90 miyms 45.', 'Name thy thiru month of the yebr.' and 'Name the
+      ftrst month of the ybaa.'. These are unchanged from the v1.7 renders the seat read. m:137
+      records '14 of 16 golds recoverable; items 5 … and 15 … not recoverable', so items 2, 8 and 9
+      were judged recoverable. The three are given as examples, not as an exhaustive list: items 1,
+      4, 10 and 13 also hit gold-bearing words.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      The replay gives 'Comgute 90 miyms 45.', 'Name thy thiru month of the yebr.' and 'Name the
+      ftrst month of the ybaa.'. These are unchanged from the v1.7 renders the seat read. m:137
+      records '14 of 16 golds recoverable; items 5 … and 15 … not recoverable', so the golds of
+      items 2, 8 and 9 were judged recoverable.
+
+  MISSED (refuter lenient)
+    CLAIM:
+      K §A9 (feeding §C's header): 'A1.20, F1.6, P1.41 and R1.12 include the offset and carry
+      further content, listed in §C'.
+    EVIDENCE:
+      Two more §C items also include the +271 offset and carry further content. R1.7 (line 4) has
+      the note 'The anchor's locator also fails (R1.1)' alongside the p0-provenance point. S4C.34
+      (line 70) has ':613–615 resolves only at e186162, not at HEAD 87a1167 (see S4C.3)' alongside
+      the other §9 residues. By the criterion A9 applies to P1.41 (offset as one residue among
+      several), both belong in the list.
+    CORRECTION:
+      'A1.20, F1.6, P1.41, R1.7, R1.12 and S4C.34 include the offset and carry further content,
+      listed in §C' (plus R1.8 and R1.21 if they leave the collapse per KC-3).
+
+  MISSED (refuter lenient)
+    CLAIM:
+      K §A1's bracket, which §D's 'The 15 substantive ones are A1–A5 and B1' relies on, lists S5A.24
+      as an A1 (G-TIME binomial domain) referent.
+    EVIDENCE:
+      S5A.24's note: 'G-TIME text still reports contrast-template picks: G-TIME-F0 reports its A0
+      session's pick under rule 23 … G-TIME-OLMo's seat read carries no redaction clause … Fix:
+      report G-TIME picks for sham arms only (or not at all) and apply the redaction to every G-TIME
+      read.' That is A2's content: A2 itself says 'G-TIME-F0 also reports every arm's picks under
+      rule 23' and 'the G-TIME-OLMo acceptance read is not stated as redacted'. S5A.16 is the STOP-5
+      A1-domain referent. §D's set of 15 is still right; only the A-item assignment is wrong.
+    CORRECTION:
+      Move S5A.24 from A1's bracket to A2's bracket: [L1.35, S4A.7, S5A.23, S5A.24; L1-strict
+      missed].
+
+  MISSED (refuter strict)
+    CLAIM:
+      K §A1's bracket [L1.23–L1.26, O1.27, A1.24, A1.37, S4A.3, S4C.30, S5A.16, S5A.24, S5C.27,
+      X1.20] places S5A.24 under A1. §D's 'The 15 substantive ones are A1–A5 above and B1' relies on
+      this per-item mapping, and KD-2's evidence repeats it.
+    EVIDENCE:
+      S5A.24 (location m:193, m:206, m:215; s/s/s) reads: 'G-TIME text still reports
+      contrast-template picks: G-TIME-F0 reports its A0 session's pick under rule 23 … G-TIME-OLMo's
+      seat read carries no redaction clause … Fix: report G-TIME picks for sham arms only (or not at
+      all) and apply the redaction to every G-TIME read.' That is A2's subject: A2 says 'Either fix
+      must cover G-TIME's rule-23 pick reporting too' and cites STOP-5 A10. It is not A1's (G-TIME
+      binomial bars binding on mixed domains). A2's bracket [L1.35, S4A.7, S5A.23; L1-strict missed]
+      omits S5A.24. §D's set count of 15 is unaffected.
+    CORRECTION:
+      Move S5A.24 from A1's bracket to A2's: A1 [L1.23–L1.26, O1.27, A1.24, A1.37, S4A.3, S4C.30,
+      S5A.16, S5C.27, X1.20]; A2 [L1.35, S4A.7, S5A.23, S5A.24; L1-strict missed].
+
+  MISSED (refuter strict)
+    CLAIM:
+      K §A9: 'A1.20, F1.6, P1.41 and R1.12 include the offset and carry further content, listed in
+      §C'. This enumerates the non-collapsed §C items that carry the +271 offset.
+    EVIDENCE:
+      S4C.34 (§C line 70; m/m/m, fails under all three verdicts) also carries the offset as one of
+      its residues. Its note ends '…and :613–615 resolves only at e186162, not at HEAD 87a1167 (see
+      S4C.3).' Its other residues (aeb4a2c unquoted, b3_screen_*.json unglossed, post-pick
+      exclusions missing from the [C] list) are further content. No other non-collapsed item
+      mentions the offset.
+    CORRECTION:
+      'A1.20, F1.6, P1.41, R1.12 and S4C.34 include the offset and carry further content, listed in
+      §C'.
