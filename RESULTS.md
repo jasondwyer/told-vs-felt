@@ -21,6 +21,212 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-10-05 — **PROPOSAL-m v1.10 (routed by the PI, PI date 2026-10-05): §8 step 2 STOPS the
+  commit on one item ("STOP-8").
+  The check: 546 referents by fifteen blind checkers over disjoint groups, two refuter lenses each.
+  412 resolve cleanly, 77 resolve with a minor note, 51 are unresolved under all three verdicts and
+  6 are contested; the refuters added 69 items, all minor. Nothing is blocking.
+  What reproduces: every [S] figure and every [C] figure that originates in a chat-only Code block,
+  in the check. The tables, looks, exposure, hours, tuples, gate schedule, power figures, critical
+  counts, A2 grid minimum, p0 ratios, 17/597 and 11/351 also reproduce in Code's own tool runs.
+  Separately, STOP-7 A3's on-record [C] figure, 135 of 3,074 f1 generations over the 512-token
+  tail, reproduces in Code's tokenizer-only recount and in the check's F1 group, which discharges
+  its [verify].
+  What resolves: STOP-7's A1–A3, A′1 and A′2 as STOP-7 asked, and A′3 on OLMo. The routing
+  answers B1–B3 by name.
+  Why it STOPs: one referent is substantive under all three verdicts (L1.22), and the PI's process
+  line STOPs on anything substantive. On Qwen, §3's new G-TIME pause pauses the stage for the seat's
+  adjudication before the next stage on any single audit- or echo-claimed round in a sham session.
+  That is a one-claim trigger on a class m:254 itself binds by binomial at p0 .05 against measured
+  v2 rates (17/597, 11/351), against rule 21 and against v1.10's own m:266.
+  [C] Between f1's archive rates and p0 .05, a healthy G-TIME-F0 would pause about .18–.40 of the
+  time and G-TIME-F3 about .44–.79 (.18–.27 and .44–.62 on the archive alone), against the binomial
+  bars' nominal .0115 and .0156. STOP-7 A′3 had offered the pause for G-TIME-OLMo only (0/756 on
+  b3's AuditSpec), where it is lawful on that class. Three observations in other groups grade the
+  subject minor, on the shared ground that a pause changes no verdict; the split is disclosed, not
+  adjudicated.
+  The fix is one clause, the seat's.
+  Not done: v1.10 is not committed, v1.2–v1.9 are not moved, the dates, decisions, marks and
+  approvals are not committed as step 3's record (this entry quotes the routing), and nothing is
+  built.** (Stamp verified at write time: `date -u` → **Mon Oct  5 07:59:18 UTC 2026**.)
+
+  - **The routing (the PI's word, quoted so the record carries it).**
+
+    > Routing — PROPOSAL-m v1.10 — PI date 2026-10-05 (I confirm the date).
+    >
+    > Files placed at root:
+    >   PROPOSAL-m-gating-campaign-v1_10.md
+    >     sha256 2a4bc50cd1274752d051038ed1acdaf55f571a6a6037140ac6587a22595de906
+    >   HANDOFF-2026-10-04-design.md (replaces the copy at root)
+    >     sha256 955a71a7c177ca852a543c524ed53bbf54c628e9ba79a133df1469bc4dec07c4
+    >
+    > Supersedes v1.9 (b1fbce3b…4e1ef; STOP-7, 939905a). v1.10 §0.13 dispositions every
+    > STOP-7 item (A1–A3, A′1–A′3, B1–B3, C1–C96). [S] figures and chat-only-origin [C]
+    > figures are reproduced at step 2.
+    >
+    > Clock (decision 11): D1 = 2026-10-30; D_O = 2026-10-30; D2 = 2026-12-22.
+    > Decision (15): f2 carries its own Clock, D_f2 ≤ 90 days after the Q-F3 VERDICTS
+    > commit; f2 NOT-RUN releases v2 (A3* = UNLICENSED); the exposure and design holds
+    > end at f2's VERDICTS or f2's NOT-RUN. I approve the §7.3 welfare text as amended
+    > in v1.10 (your B2).
+    >
+    > Your B1: I confirm the v2 title ladder as v1.10 Step 5 states it — Fallback-2
+    > under any confirmed, discordant or unconfirmed A3 hit.
+    >
+    > Decisions of record (8)–(15) as v1.10 §0.2 states them, with:
+    >   (7′) re-affirmed: told controls at SFT, DPO and instruct; base has none.
+    >   (10) Q-F3 retained as pre-registered with v1.10 §0.10's changes, read with
+    >        §0.11–§0.13; its track begins only after POSTING v1.
+    >   (12) e2b stays concluded, not answered.
+    >   (13) PI decisions on the three outstanding items: yes to all
+    >   Step 3 marks: quote :91 and :96 verbatim; mark superseded :91's "same
+    >   ceiling" clause, :96's e2b clause (by 12) and "the arm below does" (by 7′),
+    >   and :97–:101 (by 7/7′, v1.10, and this line: a pod start needs my go).
+    >
+    > Process (your B3): minor-only residues are carried as dated notes in the step-3
+    > entry; anything substantive STOPs.
+    >
+    > Run v1.10 §8 from step 1 (expected HEAD 939905a). Step 3 moves v1.2–v1.9 to
+    > archive/. No build before step 3 commits. The k arc is untouched. No pod start
+    > without my go; runpod re-auth first.
+
+  - **Step 1 (delta read).** HEAD `939905a`, `main == origin` (fetched; nothing new). v1.10 =
+    `2a4bc50cd1274752d051038ed1acdaf55f571a6a6037140ac6587a22595de906` and
+    `HANDOFF-2026-10-04-design.md` = `955a71a7c177ca852a543c524ed53bbf54c628e9ba79a133df1469bc4dec07c4`;
+    both match the routing. The untracked root is m:337's list. No m artifact exists, and
+    `ADDENDUM-k1.md` is `61acf21ff2cc104e…`, untouched. The routing gives v1.9's sha as
+    `b1fbce3b…4e1ef`; the file, and v1.10's header, end `…4a5dc` (P1.22; noted, nothing moves).
+
+  - **Step 2: the check.**
+    - **Method.** Workflow `wf_ecb16325-9ab`: 45 agents, 0 errors, 3,305 s. Fifteen groups: law;
+      anchors; Qwen code; OLMo; dose; f1 figures and timing; [S] launch, looks and exposure; [S]
+      hours, tuples and the ladder count; §2.1's schedules; the chat-only-origin [C] figures;
+      documents, provenance and the routing; STOP-7 A/A′/B; STOP-7 C1–C96; §0.10 over the
+      v1.9→v1.10 diff; consistency and regression against v1.9's resolved referents.
+    - **Refuters.** Each group had two lenses: one tried to break every resolves=true; the other
+      re-tested every resolves=false and every severity above clean.
+    - **Code's own pass.** While the workflow ran, Code ran in tools:
+      - every launch-table row for k = 24..1 and 40..1, the looks, the exposure figures and all hours;
+      - 519,480 as 481 enumerated Q-F3 states × 5 × 6³, and 69,120 / 51,840 under v1.10's A3\*;
+      - the gate-stage schedule rule at 4, 8 and 16 sessions;
+      - the sizing power figures, the critical counts and the A2 grid minimum;
+      - the 135 / 3,074 recount.
+      All reproduce. After the workflow returned, Code rescored f1's archive under `e2b_audit_v2`
+      for L1.22's rates; after values-check pass 1, it compared f1's frozen audit against v2.
+    - **Safety-classifier note.** For two agents (check:L1, refute:D7C:strict), the harness's
+      safety classifier timed out when reviewing their work. Code then verified the repository
+      untouched: no tracked change, and the untracked set and the document shas unchanged.
+    - **Record.**
+      - [`_m-v1.10_referent_check`](results/raw/2026-10-05_m-v1.10_referent_check.txt): the check.
+      - [`_m-v1.10_code_own_pass`](results/raw/2026-10-05_m-v1.10_code_own_pass.txt): Code's runs,
+        with their scripts and stamps.
+      - [`_m-v1.10_code-to-design_STOP`](results/raw/2026-10-05_m-v1.10_code-to-design_STOP.md):
+        the block for the seat (the STOP, three PI items, 125 minor items, and the [S], [C] and
+        disposition summaries).
+
+  - **The STOP (block §A1).** m:254 adds to §3's common bar convention: "any audit- or
+    echo-claimed round in a G-TIME sham session also pauses the stage for the seat's adjudication
+    before the next stage — a pause, not a verdict, recorded".
+    - **Why it is a hair trigger on Qwen.** On the `round_degeneracy` reading the Qwen claim class is
+      v2 plus echo (m:244); whether "audit" means v2 only is unpinned (L1.23). m:254, the paragraph
+      of the pause, binds that numerator by binomial at p0 .05 against v2-only measured rates, and
+      m:266 says "rule 21 forbids a hair trigger on a measured-base-rate class".
+    - **Its rate.** [C] On f1's clean CORR rounds v2 claims run 9/291 = .031 per round, and 7 of
+      f1's 40 sham-arm sessions carried at least one. A one-claim pause then fires on a healthy
+      G-TIME-F0 with probability about .18 (session rate) to .40 (at p0), and on G-TIME-F3's three
+      sham sessions about .44 to .79. That is the failure mode that completed the tripwire framework
+      on 2026-08-10, there on a smoke lexical bar (archive:193–195).
+    - **Why the annotation does not cover it.** Rule 21's annotation makes a degeneracy bar a
+      pause-and-adjudicate trigger only at dose-characterization rungs, and there only where no
+      unprovoked domain exists by design. G-TIME is not a dose rung, and every G-TIME stage has an
+      unprovoked domain (its sham sessions), as STOP-6 A1 recorded.
+    - **Where it came from.** STOP-7 A′3 offered the pause for G-TIME-OLMo, whose sham reference is
+      0/756 on b3's AuditSpec (m's echo class is unmeasured there); on that class it is lawful and
+      A′3 resolves. On Qwen a free-round v2 or echo claim does not end the session
+      (f_sessions.py:368–372; m:244, echo exclusion-bearing on forced rounds only), so the binomial
+      bars' critical 3 and 5 stay reachable. At G-TIME-F0, a forced-round claim at rounds 2–4 ends the
+      one sham session at n = 2–4 (critical 2), where the bar cannot fire (L1.22's strict lens); that
+      case may still want a scoped trigger.
+    - **The split.** D7A.24's residue, D7A's strict lens and X2's lenient lens grade the subject
+      minor: a pause changes no verdict. Code grades by L1.22's own verdicts, substantive under all
+      three, which meets every grading practice of STOP-5 to STOP-7 (the checker and the majority, or
+      all three); that is a practice, not a rule stated before this block. STOP-5 A5 and STOP-6 A1,
+      both unanimous, graded rule-21 contradictions at gates substantive. The L1 checker's own
+      counter-reading, that archive:154 (2026-08-10, before f1's screen) classes audit junk on sham/P
+      rounds as ~zero-base-rate, is answered on the record: [C] f1's own frozen audit claimed 11/351
+      sham and 9/291 clean CORR rounds, the same rounds v2 claims (own-pass raw, part 3). Code does not
+      adjudicate the split.
+    - **Fix (the seat's, one clause).** Scope the pause to G-TIME-OLMo; or, on Qwen, pause only on
+      a session-ending forced-round claim, declared with its expected rate; or let the Qwen binomial
+      bars bind alone. In the same edit, align m:70's "any claimed round" and §0.13's "a claimed
+      round" with §3's class, and admit the pause to §4's exception (1).
+
+  - **For the PI (block §B).**
+    - **(B1) The remedy.** One clause, the seat's. If your v1.11 routing carries the same process
+      line, a v1.11 whose remaining items are all minor commits at step 3 with those items as dated
+      notes. A routing line deciding the pause's scope could instead be recorded at step 3 beside
+      m:254, as your marks supersede decisions-block clauses; whether that is acceptable is yours and
+      the seat's call.
+    - **(B2) The "(13)" line.** "(13) PI decisions on the three outstanding items: yes to all" does
+      not state (6′)'s scope in your words, the record §0.2's (13) names. Its content is adopted
+      through "as v1.10 §0.2 states them". Your words for (13) are already on record, in the v1.8
+      and v1.9 routings (RESULTS.md@939905a:252–256 and :67). "The three outstanding items" has at
+      least two readings, three if the STOP items (13) cites count. Step 3 will quote all three
+      routings' (13) lines, the 2026-10-05 line as adoption, unless you direct otherwise.
+    - **(B3) The welfare italic.** Your approval covers §7.3's text as written. Against v1.9 it
+      also carries two edits that §7.3's amendment statement does not name:
+      - "no new session": it narrows the hold slightly, since a session in flight at the screen
+        result is no longer barred;
+      - "If f2 confirms a POSITIVE screen".
+      On a plain reading, "An f2 result toward clean after a REVERSE screen" also reaches f2
+      NULL-x↑, which the trigger gloss "f2 = OPPOSITE" does not. The wide reading is the protective
+      one, but the document's own usage supports the narrow one (D7A.10). Step 3 will record which
+      reading governs; please confirm it. A v1.11 change to the italic needs your approval again.
+
+  - **What resolves (block §D, §E).**
+    - **Figures.** The launch tables to k = 1, the looks, the exposure, every hour figure, 1,080 and
+      519,480 (every map total and exclusive) and the ladder count all reproduce. So does every
+      chat-only [C] figure: the eight power figures, the critical counts 87/83/60/51, the A2 grid
+      minimum, the f1 rates and ratios, the OLMo shares and the timing bases. Their residues are
+      locators, attributions and glosses.
+    - **Dispositions.** STOP-7 A1–A3, A′1, A′2 and A′3 (on OLMo) resolve as asked. Of STOP-7 §C's
+      96 items, 89 resolve, 6 fail minor and 1 is contested; coverage of all 96 is exact. The
+      regression sweep over v1.9's 447 resolved referents found two regressions, both minor: the
+      gate-stage schedule confounds the per-pair sham first-pick shares with start order, and the
+      cold-load gloss.
+
+  - **Not done, by the STOP.** v1.10 is not committed; v1.2–v1.9 are not moved; no lock, no
+    build; every untracked document untouched. Committed here: this entry, and under
+    `results/raw/` the referent-check raw, Code's own-pass raw, the Code-to-design block and the
+    values-check raws.
+
+  - **Values-check.** Entry and block values-checked pre-commit in two adversarial passes
+    (three claim checkers over disjoint sections, two refuter lenses each).
+    - **Totals.** Pass 1: 124 claims, 27 failing under at least one verdict, 6 more found by the
+      refuters. Pass 2: 152, 20 and 6. Both raws are committed:
+      [`_stop8_valuescheck`](results/raw/2026-10-05_m-v1.10_stop8_valuescheck.txt) and
+      [`_pass2`](results/raw/2026-10-05_m-v1.10_stop8_valuescheck_pass2.txt).
+    - **What pass 1 caught.**
+      - The 135 of 3,074 filed as an [S] or chat-only figure, and Code's share of the reproduction
+        overstated.
+      - "A standing rule" for a grading practice never stated before.
+      - The counter-reading's rebuttal: m does not measure v2 plus echo, and f1's frozen audit claims
+        the same rounds as v2. Code then ran that comparison (own-pass raw, part 3).
+      - The pause probabilities' basis.
+      - The effect of the §7.3 edits, and the narrow reading the PI should confirm.
+      - Three routings' (13) records, not two.
+      - The raw header's schedule range, the 519,480 method and the classifier note's timing
+        (corrected and stamped).
+    - **What pass 2 caught.**
+      - The annotation's two conditions.
+      - The strict lens's nuance, which holds only at G-TIME-F0.
+      - "Only for forced rounds": a free-round lexical hit also ends a Qwen session.
+      - 63/73 s and 75 of 1,745 listed as chat-only.
+      - Two non-C referents counted in STOP-7 §C's tally.
+      - A2 and A′1 residues left unlisted, and the block's missing revision stamp.
+    - **What did not move.** No count from the check moved in either pass. Every correction was
+      re-verified by Code against the file before it was applied.
+
 - 2026-10-05 — **PROPOSAL-m v1.9 (routed by the PI, PI date 2026-10-04): §8 step 2 STOPS the
   commit narrowly ("STOP-7"). 506 referents by thirteen blind checkers over disjoint groups, two
   refuter lenses each: 391 resolve cleanly, 56 with a minor note, 42 unresolved under all three
