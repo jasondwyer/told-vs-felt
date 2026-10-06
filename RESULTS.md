@@ -21,6 +21,322 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-10-06 — **m package — BUILD (Q-F0 subset) (PROPOSAL-m v1.11 §8 step 4, on the PI's word "Go ahead
+  with step 4"): BUILT, REVIEWED, FIXED, SELF-TESTED, SITE-CHECKED; nothing run. Built: every item of
+  step 4's list, in 16 files under `valence_core/m/` plus the driver `scripts/m_sessions.py`. That
+  covers the F0m (Qwen) and F0m-OLMo runners, the CORR delivery module with `corrupt_m` (§2.3 as
+  written, operand exclusion included), both verifiers, Q-F0's and the three OLMo units' schedules and
+  gate files (§2.1's construction, committed), the audit wrapper's task-round classes, the source guard,
+  the resume-identity machinery (pod-id refusal included) and §3's read-rule tooling. Also built: the
+  gate-stage and campaign drivers the later steps call, and no F3 code. Self-test 628/628, the same on
+  two runs; post-build site check 8/8 gates. Review: eight blind lenses, 44 findings, each put to a
+  lenient and a strict refuter (17 confirmed, 26 contested, 1 refuted). Then three agent fix rounds and
+  a fourth: Code's own edit, reviewed and patched by one agent. Rounds 1 and 2 were each checked by
+  fresh agents, whose new findings went to a strict refuter. Round 3 was checked by one independent
+  verifier, and round 4 by one independent reviewer that also wrote two fixes itself, which a further
+  agent then checked (Review bullet); none of these had a refuter. Every confirmed or contested finding
+  of the 44 is fixed or disclosed; its disposition and any residual are in the review raw, and those for
+  the seat are also below. None of the 44 is left open; the round-4 reviewer left three cosmetic or
+  unreachable items as is (Review bullet). Not done: no model loaded, no stage run, no pod started; the
+  stage subcommands refuse until their steps. The m package and its self-test load no tokenizer.
+  Tokenizers were instantiated only offline and tokenizer-only. The Qwen tokenizer was loaded by a
+  design-phase map agent (tokenizer.json) and by the site check's pre-existing `recon_echo` self-test,
+  also when values-check agents re-ran the site check. The OLMo base tokenizer (its cached tokenizer
+  files; the cache holds no weights) was loaded by two values-check agents, in passes 1 and 2 (For the
+  box, below). Review and confirmation agents also read both models' tokenizer.json or
+  tokenizer_config.json as JSON for vocab lookups, without loading a tokenizer. The k arc is untouched
+  (ADDENDUM-k1.md `61acf21ff2cc104e…`). Step 5 (G-PORT) waits for the PI's word.** (Stamp verified at
+  write time: `date -u` → **Tue Oct  6 11:18:04 UTC 2026**; the entry was corrected on its two
+  values-check passes and the round-5 check, last at **12:14:08 UTC**; stamps are write-time.)
+
+  - **What was built (step 4's list → module).**
+    - Runners: [`runner_qwen.py`](valence_core/m/runner_qwen.py) (F0m: e2a's template family, TEMP 0.7,
+      the frozen e2a ban list rebuilt from the live tokenizer and compared, `injections=()` always,
+      `cached` only as the licence gives; at G-ID both paths via `gid_paths`, the stage m:267 exempts)
+      and [`runner_olmo.py`](valence_core/m/runner_olmo.py) (F0m-OLMo: b3's context rule, TEMP 0.7, F =
+      2, uncached, ends at the first claim, m:262). Both build sessions through ONE scaffold,
+      [`scaffold.py`](valence_core/m/scaffold.py), which the verifier and G-PORT's f1 replay also use.
+      In the self-test the replay walks 10 archived f1 CORR rows; one review lens walked all 64
+      (G-PORT's own claim stays G-PORT's).
+    - Dose and delivery: [`corr.py`](valence_core/m/corr.py) and [`keys.py`](valence_core/m/keys.py).
+      `corrupt_m` at 0.15 reproduces the spec's figures independently: n_eligible per item, k summing to
+      54, the one roster skip at item 7. f1's corruptor at 0.12 gives 31 letters at sha16
+      `2c2c227395ea9f2d`. The m renders come to sha16 `a04f67b0e5105a05`, Code's figure and G-CAL's to
+      fix.
+    - Banner: [`banner.py`](valence_core/m/banner.py), m:253–258 byte-exact against the proposal's §2.5
+      literals at every stage start.
+    - Verifiers: [`verify.py`](valence_core/m/verify.py). G-VER (m:284) rebuilds every harness byte of a
+      session from its recorded fields, the committed schedule and the rng streams before that session
+      is recorded. A failure is a hair trigger (`template_breakage` / `schedule_mismatch`) and never
+      raises on a malformed record.
+    - Schedules: [`schedule.py`](valence_core/m/schedule.py); see the next bullet.
+    - Audit wrapper: [`audit.py`](valence_core/m/audit.py). Claiming order Qwen v2 → echo → v4 content →
+      lexical, OLMo AuditSpec → echo → lexical (m:261–262); session end per m:261, m:271 and m:308
+      (Qwen) and m:262 (OLMo).
+    - Source guard: [`guard.py`](valence_core/m/guard.py). An AST call-site check: a literal
+      `cached=True` only inside `run_gid_pair`; every other `cached=` is the literal False or comes from
+      the licence (`cached_path_admitted`), its names resolved by binding and rebinds flagged. Insulated
+      reads at KL exactly 0.0. The cached path is licensed only on the backend the G-ID artifact
+      records: the run's backend identifier must equal the artifact's.
+    - Resume identity: [`resume.py`](valence_core/m/resume.py). The OLMo campaign refuses a resume on
+      another pod (a pending end may only be re-finished there, launching nothing); an unfinished,
+      unstopped gate stage interrupted by a pod change is set aside and restarted, m:251/m:267.
+    - Read rule: [`readrule.py`](valence_core/m/readrule.py): strip, redact, `class@phase` printing.
+    - Exact bars: [`bars.py`](valence_core/m/bars.py). Fractions; fires iff P ≤ α (build pin 1); every
+      critical count recomputed by an independent lens.
+    - Drivers: [`stages.py`](valence_core/m/stages.py), with G-TIME, G-ID-F0m, qualification and the
+      campaign.
+    - Test doubles: [`testing.py`](valence_core/m/testing.py), never imported by production code.
+  - **Schedules (committed, [`data/m/schedules/`](data/m/schedules/manifest.json)).** 26 files (25
+    schedules and the manifest), 1,535,055 bytes; manifest sha256
+    `8c89636addb846c8d45cd9c6dcf97a7663df3e2b535dd91b3d40302cccc8d6bb`. A rebuild is byte-identical, and
+    every stage start regenerates and compares.
+    - Campaigns are built to the k = 1 launch row: Q-F0 A0 82 balance units (2,624 sessions; covers
+      cached and uncached), A0s 30 (960); each OLMo checkpoint A0 69 (2,208) and A0s 30 (960). The
+      launch rule as built gives these k = 1 counts, which sum to the spec's k = 1 totals 3,584 and
+      3,168; the self-test also cross-checks it against the table rows at k = 24/19/12 (cached) and k =
+      24/20/12 (uncached A0).
+    - The gate files take the first m rows of the sixteen-row table (m:161–170) under each template's
+      own π: G-TIME one row per arm, qualification 8 contrast and 16 sham, G-ID 16. Every m:172 balance
+      claim is checked at m = 4, 8 and 16 on the full sixteen-row schedule of each qualification and
+      G-ID template (9 of the 17 gate templates), and the 8-row files are asserted to be its prefix. The
+      eight one-session G-TIME templates' full schedules are not checked; the table's own balance is
+      checked and is invariant under π.
+    - The stages use only these committed files, never regenerated cells.
+  - **How a stage runs (for steps 10–16 and the OLMo track; built and stub-tested, not run).**
+    - Before any session, every stage checks the schedules (directory regenerated and each sha256
+      against the manifest). It also runs the startup checks: banner bytes against the proposal's
+      literals, numpy's stream known answer, and rule-18 / m:258 hygiene of both rosters against the
+      pool, golds, renders, the eight declared harness strings and e2a's wrapper.
+    - `identity_extra` must carry the governing lock's and the proposal's sha256, never "pre-lock".
+      - On a non-stub run, `lock_file` and `proposal_file` must be committed at HEAD, with working-tree
+        bytes equal to the blob and to the hashes. This is checked by read-only `git cat-file` /
+        `ls-tree`, not `git diff`, which writes the index.
+      - `renders_sha16` must equal the renders built at startup.
+      - `locked_path` must agree with the G-ID licence on this backend (no locked path at G-ID; G-TIME
+        and OLMo "uncached"). The exception is a checkpoint carrying an end pending: it is re-finished
+        under its locked path whatever this backend's licence gives (a PATH notice; nothing launches).
+    - The prior stage's persisted end must license this one, in §8's order (`prior_ckpt`):
+      - G-ID and qualification need G-TIME PASS;
+      - Qwen qualification also needs the G-ID artifact (any verdict);
+      - an OLMo qualification after a G-TIME PAUSE needs the named adjudication;
+      - the campaign needs qualification PASS.
+      - The artifact and every prior checkpoint must be under this run's proposal or one the lock
+        re-adopts (`prior_proposal_sha256s`, flag (n)); on a non-stub run neither may be stub-written.
+    - Non-stub Qwen stages also run the checkable part of m:267's laptop checklist: adapter ≥ 96 W on
+      AC, no other model process, disk headroom (nohup/caffeinate and display sleep are not checked).
+      They print its gate line to stdout: sha16s of the proposal, CLAUDE.md and the analyzer, plus HEAD.
+      CLAUDE.md and the analyzer are checked committed at HEAD by the preflight before the line prints.
+      The proposal is checked by the licence, which runs just after, so a proposal failing the licence
+      refuses the stage after the line has printed. OLMo stages require `RUNPOD_POD_ID`.
+    - The drivers neither run nor verify CLAUDE.md's respawn protocol ((i) the re-hash against
+      `data/olmo/manifest.json`, (ii) the backend characterization). On OLMo the only box-side check at
+      a stage start is that `RUNPOD_POD_ID` is set; the respawn protocol stays an operator step before
+      G-CAL-OLMo (m:302).
+    - The adapter's provenance is recorded verbatim, once per invocation that reaches its checkpoint (a
+      start, a resume, a re-finish); a paused campaign merely shown its pause records none (ledger 27).
+    - G-VER runs on every session before it is recorded. Hair triggers are evaluated on every session,
+      contrast included (m:271, m:280). The binomial bars, and the OLMo G-TIME pause, are evaluated once
+      at stage end on the sham-template sessions only (m:271, m:280–283, m:302). The campaign looks'
+      bars and guards are evaluated as m:316 and m:330 state them.
+    - Every end is persisted in three steps: first as a pending end with every session, then report,
+      reads, adjudication excerpt and artifact, then the end. A pending end is re-finish-only on any
+      pod, backend or invocation, and nothing launches, provided the m package's sources are unchanged
+      (For the steps that run stages, below). An announced STOP or PAUSE is never lifted by a kill.
+    - Exit codes (the `stages.EXIT_CODES` map, for the step that wires the subcommands; at step 4 every
+      stage subcommand exits 2): PASS / COMPLETE / CAP / PI-STOP 0, PAUSE 3, STOP 4, FAIL 5,
+      NOT-DETERMINED 6. A refusal (SystemExit with a message) exits 1.
+    - Outputs:
+      - `data/m/ckpt/` holds the pick-bearing checkpoints and m:271's confined adjudication excerpts
+        (with `picks_revealed`); it is tracked and marked `-diff` in `.gitattributes`, so git's default
+        diff and `log -p` never render a `ckpt/` file (it shows as binary; `--text` overrides). This
+        supports m:318's ban on reading pick-bearing artifacts before VERDICTS.
+      - `data/m/reports/` holds reports and reads with no contrast pick (sham picks only under m:318
+        (2)–(4)).
+      - `data/m/gates/` holds the G-ID artifact.
+    - Stdout from the stage drivers carries only:
+      - the PROVENANCE line, the LICENCE line (non-stub runs) and the GATE line (non-stub Qwen runs);
+      - one session line per session (`{stage} {template} s={s} valid` or `excluded:{class@phase}`);
+      - blinded bar messages and the STAGE / STOP / PAUSE / END LOOK lines;
+      - the RE-FINISH, PATH and POD CHANGE notices, and paths. None names a label or a pick, and a
+        contrast free-phase trigger is announced by phase alone. The driver script also prints an
+        `INVOCATION:` line echoing its argv on every invocation, which the wiring step must keep
+        label-free.
+  - **Self-test** ([`_selftest`](results/raw/2026-10-06_m-build_selftest.txt)): 628/628, model-free.
+    - keys 12, corr 44, banner 12, schedule 46, bars 96, audit 60, guard 46, resume 52, readrule 35,
+      testing 15, scaffold 22, runner_qwen 27, runner_olmo 21, verify 12, stages 46, and 82 checks in
+      the driver's own self-test. Most of those run stub stages through the drivers with scripted
+      adapters; the rest are CLI refusals, the schedule regeneration and static guard/grep checks.
+    - Bars are tested in both directions: each of the 27 declared bars must fire and must stay silent
+      (109 cases), plus 45 generic exact-test, Fisher and refusal cases, 154 in all. Many guards and
+      refusals are also tested both ways (must fire and must not fire).
+    - The stub stages run under temp roots, with kill-and-re-invoke at each STOP, PAUSE, PASS, COMPLETE
+      and PI-STOP finish (G-ID FAIL, NOT-DETERMINED and CAP are not kill-tested in the self-test).
+    - The stdout of all 198 driver integration runs is scanned for roster labels, pick lines and menu
+      text; the module self-tests check their own stub runs' stdout case by case.
+    - The fix rounds' mutation passes, in their final runs, killed every mutant their agents report.
+      Round 3's on-disk log records 12 of the 16 its agent reported, all killed; F2's 42 in round 1 have
+      no run log. Two first runs, in rounds 1 and 2, each let one survive; the tests were tightened and
+      re-run.
+  - **Review** ([`_review`](results/raw/2026-10-06_m-build_review.txt), every finding with both
+    refuters' reasoning and its disposition).
+    - Eight blind lenses, read-only on the repo, each running its experiments in the scratchpad (one on
+      a scratch copy of the repo): dose/delivery, schedules, audit/runners, bars, blinding,
+      guard/resume, verifier/tests, hard rules. They raised 44 findings (12 graded substantive by their
+      finder, 32 minor). Outcomes: 17 confirmed, 26 contested, 1 refuted. The strict refuter held 10
+      substantive; both refuters held 3: #3, the campaign treating L as a hard bound against m:192; #5,
+      OLMo's echo class missing a final period its newline stop drops; #41, a campaign that could never
+      rewrite its report once a recorded adjudication named a roster label.
+    - Fix round 1 (two file-disjoint agents), then a confirmation pass, one agent per lens:
+      - 35 resolved, 4 partly, 1 not resolved (#32), 4 disclosure-only (#10, #15, #31 and #40, the last
+        still unfixed then);
+      - 17 new findings, all minor after a strict refuter. N12, graded substantive by its finder: a
+        stopped stage's re-invocation printed the class of a contrast free-phase trigger.
+    - Fix round 2, then a check of it (two hunts and a dry-run of the step-10 wiring): 11 findings, one
+      substantive, R1: a STOP's outputs were written before the fired session and the stop were on disk,
+      so a kill there could lift the STOP.
+    - Fix round 3, independently verified: R1–R11 resolved. 104 of 104 kill-point combinations re-finish
+      with zero generate calls and byte-identical outputs. 11 of 11 blinding differentials (runs
+      differing only in contrast picks or a contrast free event's position) are byte-identical outside
+      `ckpt/`. Two new minor items, plus one gap the round-3 fix agent disclosed (a cached-path Qwen
+      stage's pending end could not re-finish after a backend change).
+    - Round 4: Code's own edit for those three. One independent agent reviewed it and found one
+      reachable defect (a re-finish re-announcing an already-adjudicated look) and one minor one (the
+      gate driver's re-finish-only refusal ran after a checkpoint write). It fixed both itself and added
+      9 checks and 14 mutants, all passing or killed. It left three items as is, judged cosmetic or
+      unreachable: a PATH line printed before load; a race in which a vanished pending end lets
+      `load_or_init` set a checkpoint aside under `--resume`; a duplicated helper.
+    - Round 5: a further independent agent checked those two fixes against the snapshot of Code's edit;
+      both are correct. Re-finish announcements match the first finish in 144 of 144 kill and re-finish
+      cases, against 88 of 144 before the fix. A 160-case matrix of path, backend, pod and checkpoint
+      state shows no unlicensed launch, and its cells are identical before and after the fix. The
+      selftest gives 628/628 on the current code and 625/628 on the snapshot, the 3 failures being the
+      new checks. It confirmed the race above as the one residual: it needs an external replacement of
+      the checkpoint file, and nothing launches. Its one-line fix, `load_or_init(cpath, ident, resume
+      and not refinish_only)`, was tested in memory only and is disclosed, not applied. It also noted a
+      pre-existing minor window: a silent look killed between its write and its print never prints its
+      messages. A fired look cannot be lost this way.
+  - **Site check** ([`_sitecheck`](results/raw/2026-10-06_m-build_sitecheck.txt)): 154/154, 67/67,
+    21/21, 20/20, 46/46, 18/18, 24/24 and the m self-test 628/628. Each is gated on its summary line,
+    not on `$?`, on the frozen tree before commit.
+  - **PINs.** 194 PIN markers `PIN (Code, declared at LOCK v0.1…)` record Code's choices, in 15 files.
+    Most mark a spec-open choice; a few concern the self-test harness or build scope. 171 are in the
+    plain form and 23 carry a qualifier after a semicolon (20 "; finding(s) …", 2 "; round-3
+    verification", 1 citing maps/olmo.md); 163 sit in comments and 31 in docstrings. They are listed
+    mechanically, file:line with the marked lines as written, in
+    [`_pins`](results/raw/2026-10-06_m-build_pins.txt). Each unit's LOCK v0.1 is to declare them
+    (LOCK-m-F0 v0.1 at §8 step 9; the OLMo locks on their track). The design the builders worked from is
+    [`_design`](results/raw/2026-10-06_m-build_design.md); where the code departs from it, the code
+    governs.
+  - **For the design seat: flags, not applied.**
+    - (a) m:263 has stdout AND every pre-VERDICTS report give a contrast session's free-round exclusion
+      as `excluded@free`, by phase alone (m:318 the same for stdout). m:271 withholds contrast
+      free-round events ("exclusions, degeneracy, any class") at every gate stage to the unit's VERDICTS
+      entry or NOT-RUN record. The build prints `excluded@free` per session on stdout and withholds it
+      from every report.
+    - (b) m:258 says Q-F0 uses neither reasoning-block line, but m:261 puts the literal `Reasoning (one
+      line):` in the Qwen task-round echo set. The build follows m:261 on F0m.
+    - (c) On OLMo, a response ending with a Note line minus its final `.`/`!`/`?` is echo, because
+      OLMo's newline stop drops a fused `.\n` token. Qwen keeps the complete line. This reads m:261's
+      "complete 'Note:' line", which m:262 applies to the OLMo banner's Note lines.
+    - (d) Campaign looks report the contrast arm's `round_degeneracy` on forced rounds only, and its
+      read flags on first reads only. m:330 says "reported on its contrast arms"; whether m:271's
+      withholding extends to looks is the seat's.
+    - (e) At G-ID a byte divergence on any pair, complete or not, is FAIL. This is stricter than m:281's
+      "complete", on its "a divergence sends Q-F0 uncached".
+    - (f) Seed and menu-order departures are classed `schedule_mismatch`. m:271's list names pair, map,
+      start and clause order, banner bytes and item stream.
+    - (g) m:271's sham redaction keeps the free Task lines, so under per-label item streams a sham pick
+      is recoverable from a redacted read plus the keys. This affects sham sessions only: no contrast
+      information, m:318 exception (2).
+    - (h) m:280, with m:271's forced-round counts, reports the one G-TIME contrast session's forced
+      rounds beside the bar, and the build does so: its forced-round count and any forced exclusion, by
+      class. With one session, that gives away which round was excluded and, with the committed start
+      order and map, its property. m:318 reserves that per-property information to VERDICTS; looks
+      report only pooled pre-pick counts.
+    - (i) m:302's "critical 2, reachable only at a realised n ≤ 2" (m:262: "reachable only at a realised
+      n ≤ 2"): the exact critical count is 1 at n ≤ 2 and 2 from n = 3, where one claim never reaches
+      it. The pause itself is built as the one-claim trigger §3 (m:271) states.
+    - (j) G-TIME files carry one row per arm (m:280, m:302: one session per arm). A session cut short by
+      an exclusion is evaluated at its realised n (m:271, m:280). The spec says nothing of a second
+      attempt (for example, for the uncached timing), and the build has no row for one.
+    - (k) The OLMo resume identity's audit hash is `olmo_audit_sha16()` = `dd3fe09bed429e54`, the sha16
+      of `OLMO_AUDIT`'s compact sort-keyed JSON; the design named none.
+    - (l) m:283's r is read as m:192's domain rate. The build does not compute r; it is derivable from
+      the per-template `domain_sessions` / `sessions` the qualification report carries.
+    - (m) A campaign arm still short of its floor when its committed schedule runs out PAUSEs, and only
+      a PI stop ends that pause (a resume with only an adjudication is refused). At k = 1 the committed
+      schedule equals L for Q-F0 cached A0 (2,624), every OLMo A0 (2,208) and every sham (960); there an
+      arm runs out below floor with probability .086, .089 and .081 respectively (exact binomial at the
+      valid rate 1/24, Code's run). Q-F0 uncached A0 has 2,624 cells against an L of 2,208.
+    - (n) A lock that re-adopts stages run under an earlier proposal names them in an optional
+      `prior_proposal_sha256s`, supplied by the operator from the lock; that mechanism needs the seat's
+      sign-off.
+    - (o) Per-property counter keys are left to the VERDICTS analyzer.
+    - (p) The gate line expects the analyzer at `scripts/m_analyze.py`; m:278 names the file, not its
+      folder.
+    - (q) Qwen's v4 content exclusion prints as `content@{phase}`, a class m:263's printed forms do not
+      list; the seat may fold it into `audit`.
+    - (r) The sham redaction also replaces own-pair labels in free-round responses, beyond m:271's
+      header-only wording.
+    - (s) A hair trigger on a contrast free round is withheld from stripped reads and from
+      `stage_report`. Its stop is announced by phase alone, on stdout and in the stage report's blinded
+      stop block (class withheld). The fired round is recorded in the checkpoint's stop block and can be
+      read before VERDICTS only in the m:318 (1) adjudication excerpt.
+  - **For the box, before G-TIME-OLMo (disclosed).**
+    - `assert_olmo_scaffold`'s accept path must run on each checkpoint's own tokenizer, which is on the
+      box only. In the repo the nine ban ids are only a sha16 (`2dd86a453a2275ef`) and n_ids in
+      `b3_screen_*.json`. A values-check agent loaded the OLMo base tokenizer from the laptop's HF cache
+      (tokenizer files only); it reproduces them (9 ids, same sha16), and the accept path passes on them
+      for sft, dpo and instruct.
+    - The rule-28(d)(a) boundary assertion on OLMo encodes with the adapter's default
+      (`add_special_tokens=True`). If a checkpoint's tokenizer APPENDS a special token (e.g. EOS), the
+      boundary collapses on every join: the first forced round raises `BOUNDARY INCIDENT` and halts the
+      stage, a false halt rather than a recorded STOP. A leading BOS does not trip it. The same agent
+      found the cached base tokenizer adds none, passing 142/142 scripted joins; the post-trained
+      tokenizers are box-only.
+    - Schedule regeneration has been byte-compared on the laptop (numpy 2.5.1) only. The box records
+      numpy 2.1.2; its first stage start re-derives all 26 files and refuses on any drift. None is
+      expected: b3's 377 box sessions replay across the two versions (review raw, #1's lenient refuter).
+  - **For the steps that run stages (disclosed).**
+    - The subcommands are argparse stubs that refuse with §8's step words. Wiring them, with the inputs
+      listed above, is a change to the driver at that step. `renders_sha16` must come from G-CAL's
+      record and the lock, never be computed by the run itself.
+    - `package_sha256` in the identity refuses, by design, a resume across any edit to the m package's
+      sources (`valence_core/m/*.py`). It also refuses the re-finish of a pending end (CHECKPOINT
+      MISMATCH), so an end left pending across such an edit cannot be finished until the sources are
+      restored. Edits to the driver, `scripts/m_sessions.py`, do not move it.
+    - A ruling offered to a campaign (the seat's adjudication or the PI's stop) while its end is pending
+      is not applied. The re-finish completes, the invocation exits NOT APPLIED, and the ruling must be
+      offered again.
+    - `analyzer_sha256` is optional in `identity_extra`: the analyzer's bytes are compared with the
+      lock's pin only when the wiring passes it. On OLMo, which has no laptop preflight, the analyzer is
+      never checked as committed at HEAD, only (when the hash is given) against its working-tree bytes
+      (review raw, R8).
+    - The call-site guard is static. The residual rebinding forms the round-3 verifier listed are in the
+      review raw.
+  - **Values-checked pre-commit in two adversarial passes** (144 claims / 37 failing or imprecise, then
+    139 / 33; four fresh section checkers each pass; every correction applied).
+    - Pass 1 caught: the PIN raw missing the 23 qualified markers (now 194); "no tokenizer loaded" (the
+      site check's `recon_echo` self-test and a map agent load the Qwen tokenizer); the fix rounds'
+      refuter coverage overstated; three flagged PINs missing from the flag list (now (q)–(s)).
+    - Pass 2 caught: the round-4 reviewer's own fixes left unchecked (a further agent then checked
+      them); the respawn protocol not covered by the drivers; `analyzer_sha256` optional; a pending end
+      unable to re-finish across a package edit; the PIN extractor truncating one docstring.
+    - No count from the review, the self-test or the site check moved in either pass.
+  - Committed:
+    - the entry;
+    - `valence_core/m/` (16 files) and `scripts/m_sessions.py`;
+    - `data/m/schedules/` (26 files);
+    - the `.gitignore` allowlist block for `data/m/` (schedules, gates, reports, ckpt JSON and
+      pod-change set-asides; `*.tmp` stays local) and `.gitattributes` `/data/m/ckpt/** -diff`;
+    - the five raws linked above and the two values-check raws,
+      [`_valuescheck`](results/raw/2026-10-06_m-build_valuescheck.txt) (pass 1) and
+      [`_valuescheck_pass2`](results/raw/2026-10-06_m-build_valuescheck_pass2.txt).
+  - Not committed: no checkpoint, report or gate artifact exists, and `data/m/` holds only the
+    schedules. The session-scratchpad evidence the raws cite (agent reports, probe, mutation and dry-run
+    scripts and their outputs) stays in the scratchpad; the raws are the record.
+
 - 2026-10-06 — **PROPOSAL-m v1.11 COMMITTED (routed by the PI, PI date 2026-10-05) at §8 step 3, its
   minor-only residues carried as dated notes under the PI's process line.
   The check: 589 referents by sixteen blind checkers over sixteen assigned groups, two refuter lenses

@@ -1,0 +1,16 @@
+{
+ "cells": [
+  {"P": "ridge", "Q": "saddle", "clause": 0, "map": 0, "pair": ["ridge", "saddle"], "pair_index": 3, "start": 0}
+ ],
+ "gate": "time",
+ "key_template": "m-sched|Q-F0|time|A0|0",
+ "kind": "gate",
+ "n": 1,
+ "pi": [3, 0, 2, 1],
+ "schema": "m-schedule-v1",
+ "session_keys": {"arm": "m-time|A0|{s}", "items": "m-items-time|{s}"},
+ "sha256_of_cells": "01e69c631671963f4ebb3f187083c7c86dc86e4af7dd53347ed51033674701f0",
+ "table": "m:161-170",
+ "template": "A0",
+ "unit": "Q-F0"
+}

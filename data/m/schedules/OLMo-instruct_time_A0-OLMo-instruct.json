@@ -1,0 +1,16 @@
+{
+ "cells": [
+  {"P": "quartz", "Q": "velvet", "clause": 0, "map": 0, "pair": ["quartz", "velvet"], "pair_index": 0, "start": 0}
+ ],
+ "gate": "time",
+ "key_template": "m-sched|OLMo-instruct|time|A0-OLMo-instruct|0",
+ "kind": "gate",
+ "n": 1,
+ "pi": [0, 1, 2, 3],
+ "schema": "m-schedule-v1",
+ "session_keys": {"arm": "m-olmo-time|instruct|A0-OLMo-instruct|{s}", "items": "m-olmo-items-time|instruct|{s}"},
+ "sha256_of_cells": "558601eddc49670bea0ab92e0116c17f553075063bbc95c0b853948ae4a4c71c",
+ "table": "m:161-170",
+ "template": "A0-OLMo-instruct",
+ "unit": "OLMo-instruct"
+}

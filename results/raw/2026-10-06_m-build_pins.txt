@@ -1,0 +1,961 @@
+# m package BUILD (Q-F0 subset) -- every PIN marker in code, 'PIN (Code, declared at LOCK v0.1)' (the plain form) and the
+# qualified form 'PIN (Code, declared at LOCK v0.1; ...)', extracted mechanically from the working tree: file:line and the marked lines
+# as written (a comment block runs until the next marker or a non-comment line; a docstring block until a blank line, the closing
+# quotes or the next marker). Most mark a spec-open choice; a few concern the self-test harness or build scope. Each unit's
+# LOCK v0.1 is to declare them (LOCK-m-F0 v0.1 at §8 step 9;
+# the OLMo locks on their track).
+# 194 PIN sites in 15 files.
+
+P001  valence_core/m/audit.py:70
+      # PIN (Code, declared at LOCK v0.1): OLMO_AUDIT is a replicated literal (maps/audit.md
+      # D12), asserted == box_b3_sessions.AUDIT in the self-test, never imported at runtime
+      # (b3's module imports `adapters.base.Injection`, which m never imports).
+P002  valence_core/m/audit.py:89
+      # PIN (Code, declared at LOCK v0.1): Q-F3's "reasoning-line defects by class" counter
+      # is not declared at step 4; it is added with Q-F3's runner (step 19).
+P003  valence_core/m/audit.py:119
+      # PIN (Code, declared at LOCK v0.1): echo = containment of the ws-normalised
+      # COMPLETE line in the ws-normalised response, case-sensitive (verbatim), lines
+      # passed without their "\n" (maps/audit.md D1); first match by line order.
+P004  valence_core/m/audit.py:122
+      # PIN (Code, declared at LOCK v0.1; maps/olmo.md §7 item 7 left "whether complete
+      # requires the trailing period" open for OLMo): ON OLMO ONLY, a line ending in
+      # . ! or ? also echoes when the ws-normalised response ENDS WITH the line minus
+      # that terminal mark. OLMo's newline stop drops the stop token and its tokenizer
+      # fuses sentence-final punctuation with the newline (".\n" is one token), so a
+      # copied Note line is stored without its period (finding 5). The mark-less form
+      # counts only at the END of the response -- mid-response it is not an echo -- and
+      # the complete form anywhere. QWEN KEEPS m:261's "complete 'Note:' line" (maps/
+      # audit.md D1; finding N6): Qwen's vocabulary has no punctuation+newline token, so
+      # its stop never takes a final period and a period-less Note copy is the model's
+      # own incomplete text, not an echo; it falls to the later classes in m:261's
+      # claiming order (a TOLD copy names the own pair: lexical; a COMMON copy: no class
+      # unless v4 content claims it).
+P005  valence_core/m/audit.py:160
+      # PIN (Code, declared at LOCK v0.1): m:261's literal reasoning label is in the Qwen
+      # task-round echo set on F0m too, though F0m writes no reasoning block (maps/audit.md
+      # D2); classify() refuses a Qwen set without it and an OLMo set with it.
+P006  valence_core/m/audit.py:228
+      # PIN (Code, declared at LOCK v0.1): comparisons are order-insensitive (sorted, with
+      # duplicates refused); build_ban_list returns sorted lists, the file is sorted. The
+      # Qwen set is pinned by the ban-list FILE's sha256 (maps/audit.md D11).
+P007  valence_core/m/audit.py:255
+      # PIN (Code, declared at LOCK v0.1): base is refused (keys.CKPTS); the pinned sha16
+      # must also equal that checkpoint's b3_screen record (n_ids 9).
+P008  valence_core/m/audit.py:296
+      # PIN (Code, declared at LOCK v0.1): "the other 15 items" = their CLEAN text only
+      # (maps/audit.md D4); only v5's advisory `wrong_task` reads it.
+P009  valence_core/m/audit.py:315
+      # PIN (Code, declared at LOCK v0.1): `detail` forms -- "audit:<AuditSpec reason>"
+      # (both substrates' v2/AuditSpec), "echo:<line index>", "content:<v4 class>",
+      # "lexical:<tag>"; detail carries a tag and is never printed or counted.
+P010  valence_core/m/audit.py:351
+      # PIN (Code, declared at LOCK v0.1): OLMo has no lenient scope (b3's rule is
+      # strict, m:262), so excludes("lenient") on an OLMo round raises.
+P011  valence_core/m/audit.py:399
+      # PIN (Code, declared at LOCK v0.1): hits are case-sensitive substrings, listed in the
+      # scaffold set's order, recorded on every round whatever the claim.
+P012  valence_core/m/audit.py:426
+      # PIN (Code, declared at LOCK v0.1): v4 content claims only its exclusion-bearing
+      # classes; v5 advisories never claim and are recorded on every round (D5).
+P013  valence_core/m/audit.py:428
+      # PIN (Code, declared at LOCK v0.1): a render equal to a clean CORR text must be
+      # the clean text of `item` (an item/render mismatch is refused).
+P014  valence_core/m/audit.py:551
+      # PIN (Code, declared at LOCK v0.1): keys are (template, phase[, v2 category | content
+      # class | claim]) -- never a tag, item, round index or property (D13); the v2 key is
+      # the reason's category (empty/special/frame/junk), not its fragment.
+P015  valence_core/m/audit.py:554
+      # PIN (Code, declared at LOCK v0.1): post_choice_degeneracy = a free-round v2, echo or
+      # content claim (DESIGN §1.12; D8), keyed (template, claim).
+P016  valence_core/m/audit.py:556
+      # PIN (Code, declared at LOCK v0.1): pre_pick_exclusion = an exclusion whose phase is
+      # "forced"; a hair-trigger stop without an exclusion is in `hair_triggers`, not here.
+P017  valence_core/m/audit.py:558
+      # PIN (Code, declared at LOCK v0.1): content_advisory counts every v5 advisory on every
+      # Qwen task round, whatever the round's claim (advisories exist only where v2 and v4
+      # did not hit, AuditV3:52-61).
+P018  valence_core/m/banner.py:41
+      # PIN (Code, declared at LOCK v0.1): m:256 quotes only the first TOLD-MAP-SHAM variant; the
+      # second is its mirror built by m:253's definition (the two label clauses swapped), i.e.
+      # {L_b}'s clause first.
+P019  valence_core/m/banner.py:70
+      # PIN (Code, declared at LOCK v0.1): the templates built here are Q-F0's A0/A0s and the OLMo
+      # A0/A0s per checkpoint in keys.CKPTS; base templates are refused (decision (7'), no told
+      # control on base) and every other arm (A1-A3s) is step 19's.
+P020  valence_core/m/banner.py:78
+      # PIN (Code, declared at LOCK v0.1): a label is a non-empty run of lowercase ASCII letters
+      # (every roster word is), so no label can carry a brace, a newline or a second clause.
+P021  valence_core/m/banner.py:93
+      # PIN (Code, declared at LOCK v0.1): clause is the int 0 or 1 (a bool is refused).
+P022  valence_core/m/bars.py:115
+      # PIN (Code, declared at LOCK v0.1): counts are exact integers; Python ints
+      # and numpy integers are accepted (both exact via operator.index), bool and
+      # float refused -- a float count is a bookkeeping defect, not a count.
+P023  valence_core/m/bars.py:217
+      # PIN (Code, declared at LOCK v0.1): printed P values are the exact Fraction
+      # rounded half-up to 4 places; the comparison itself is always exact.
+P024  valence_core/m/bars.py:232
+      # PIN (Code, declared at LOCK v0.1): n_j is the caller's input. The spec gives
+      # no model for the realised rounds per look (sessions end early; the sham arm
+      # leaves the rotation at its floor: maps/stats.md §6 item 9), so G-PWR states
+      # its n_j assumption beside the figure. A repeated n_j (an end look that
+      # coincides with a 40-multiple) is allowed and adds nothing.
+P025  valence_core/m/bars.py:297
+      # PIN (Code, declared at LOCK v0.1): declaration fields beyond DESIGN.md's
+      # eight -- stage (keys' vocabulary), scope (the m unit), substrate, numerator
+      # (what k counts), binding (False = reported only), on_fire, planned_n and
+      # planned_crit (asserted at declaration against the exact critical count).
+P026  valence_core/m/bars.py:319
+      # mirrors session.Tripwire; PIN (Code, declared at LOCK v0.1): the pause
+      # is a one-claim trigger too, so it carries the same refusal (m:271
+      # licenses it only because both classes are ~zero-base-rate there).
+P027  valence_core/m/bars.py:413
+      # PIN (Code, declared at LOCK v0.1): fires iff k >= 1 (e2d's threshold
+      # 0.0 form, k/n > 0); n is the units observed.
+P028  valence_core/m/bars.py:420
+      # PIN (Code, declared at LOCK v0.1): armed at every look with no minimum
+      # sham n (m:316 "at every look"; f1's sh_n >= 12, f_sessions.py:408, is
+      # not carried); n = sessions launched in the arm through the look, k =
+      # its pre-pick exclusions; excess tested in the contrast arm; no single
+      # critical count exists (it moves with the sham count), so crit is None.
+P029  valence_core/m/bars.py:450
+      # PIN (Code, declared at LOCK v0.1): a hair trigger's or the pause's
+      # message carries no count -- a count or n fired in a contrast free round
+      # could locate the round (m:263, m:271; maps/stats.md §6 item 6).
+P030  valence_core/m/bars.py:553
+      # PIN (Code, declared at LOCK v0.1): on OLMo the absolute bar is declared with
+      # binding=False -- evaluated against the same .20 and recorded (exceeds), its
+      # `fired` always False (m:316 "reported only").
+P031  valence_core/m/bars.py:575
+      # PIN (Code, declared at LOCK v0.1): G-ID-F0m's 2/2 criterion, which m:281
+      # calls a hair trigger, is declared as `gid_divergence` (unit: a complete
+      # cached/uncached pair); a fire ends G-ID with FAIL and sends Q-F0 uncached
+      # (its floors to the uncached column) -- not a STOP of the unit.
+P032  valence_core/m/bars.py:608
+      # PIN (Code, declared at LOCK v0.1): a round-1 or round-2 claim fires both the
+      # bar (STOP) and the pause; both are recorded, the STOP governs (maps/stats.md
+      # §6 item 5). The pause is evaluated at stage end, before G-F0m-OLMo.
+P033  valence_core/m/bars.py:859
+      # PIN (Code, declared at LOCK v0.1): the domain is every selected session,
+      # excluded ones included (they generated their rounds); n counts every
+      # recorded task round (<= 10 per session, asserted); k counts rounds whose
+      # audit claim is v2 or echo (Qwen) / AuditSpec or echo (OLMo) -- content and
+      # lexical claims never count. The selector defaults to the sham template; a
+      # selector admitting a contrast session for a sham-only bar is refused, as is
+      # a record of another substrate, unit or stage.
+P034  valence_core/m/corr.py:120
+      # PIN (Code, declared at LOCK v0.1): the OLMo roster must be exactly 4 pairs of two
+      # distinct lowercase ASCII words (b3 stops unless 4 pairs, box_b3_sessions.py:241-246);
+      # anything else is a CorrStop, not a repair.
+P035  valence_core/m/corr.py:136
+      # PIN (Code, declared at LOCK v0.1): ALL_ROSTER_WORDS is the sorted tuple of the union
+      # (12 words: 8 + 8 less the 4 shared), so its order is deterministic.
+P036  valence_core/m/corr.py:189
+      # PIN (Code, declared at LOCK v0.1): an odd number of "'" leaves the single-quoted span
+      # undefined, so it is refused; the pool's only apostrophes are the operand pairs of items
+      # 5, 11 and 15 (m:176).
+P037  valence_core/m/corr.py:206
+      # PIN (Code, declared at LOCK v0.1): where floor(n/2) < 3 the clip returns floor(n/2)
+      # (min after max, np.clip's lo > hi semantics); no CORR item reaches it (min n = 6), and
+      # condition (1) would report it.
+P038  valence_core/m/corr.py:216
+      # PIN (Code, declared at LOCK v0.1): corrupt_m refuses non-ASCII text, the one domain on
+      # which m's [A-Za-z] and f1's Unicode isalpha are the same rule (maps/f1.md §5 item 9).
+P039  valence_core/m/corr.py:248
+      # PIN (Code, declared at LOCK v0.1): changed_positions are character offsets into the
+      # clean text, ascending (the walk order is reproducible from the key and not recorded).
+P040  valence_core/m/corr.py:325
+      # PIN (Code, declared at LOCK v0.1): f1 has no k, so condition (2) is reported as
+      # changed <= floor(n_eligible / 2) with n_eligible under f1's own rule (non-word-start
+      # letters, operands included).
+P041  valence_core/m/corr.py:354
+      # PIN (Code, declared at LOCK v0.1): the rng must be a numpy Generator; ItemStreams
+      # draws nothing from it after the one permutation(16).
+P042  valence_core/m/corr.py:400
+      # PIN (Code, declared at LOCK v0.1): the property is the arm's delivery, not a byte
+      # diff -- a contrast Q round is "corrupted" even where a render equals the clean text
+      # (f1's items 1 and 12 at 0.12, maps/f1.md §5 item 5).
+P043  valence_core/m/corr.py:422
+      # PIN (Code, declared at LOCK v0.1): hygiene renders under the rosters it checks (m
+      # passes ROSTERS_OF_RECORD, so these are the renders of record); a render walk that
+      # STOPs is reported as a problem here rather than raised.
+P044  valence_core/m/corr.py:438
+      # PIN (Code, declared at LOCK v0.1): placeholders blanked to one space (format_recon
+      # .py:112's form), any {...} span.
+P045  valence_core/m/corr.py:455
+      PIN (Code, declared at LOCK v0.1): every stage driver runs it before any session and
+      STOPs on a non-empty list; a pool that fails its pin is a problem, never a raise.
+P046  valence_core/m/guard.py:82
+      # PIN (Code, declared at LOCK v0.1): laptop preflight thresholds -- adapter wattage
+      # >= 96 W read from `pmset -g adapter`, AC from `pmset -g ps` ("Now drawing from 'AC
+      # Power'"), disk headroom >= 5 GiB free on the volume holding REPO.
+P047  valence_core/m/guard.py:87
+      # PIN (Code, declared at LOCK v0.1): a "model process" is a python process (pgrep -ifl
+      # python) -- its EXECUTABLE, argv[0]'s basename, contains "python" (finding 23: a shell
+      # wrapper such as `/bin/zsh -c "... jlens-qwen36/.venv/bin/python ..."` or a viewer whose
+      # arguments name the venv is not one) -- whose command line names any of these,
+      # case-insensitively, other than this process and its ancestors (the caffeinate/nohup
+      # wrappers). The jlens venv's python path carries "jlens", so every process on the
+      # laptop's model stack matches; a live notebook kernel is counted because it can hold a
+      # loaded model invisibly.
+P048  valence_core/m/guard.py:103
+      # PIN (Code, declared at LOCK v0.1): a scanned file outside REPO/valence_core (a selftest's
+      # temp copy) resolves its relative imports as a member of valence_core.m, the package
+      # whose sources the check exists for; a file under REPO resolves them from its own path.
+P049  valence_core/m/guard.py:109
+      # PIN (Code, declared at LOCK v0.1): beyond generate and the two runners, ``forward``
+      # (it takes injections= exactly as generate does) and every function defined in the
+      # scanned files with an ``injections`` parameter, besides a cached/path_cached one,
+      # are guarded.
+P050  valence_core/m/guard.py:166
+      # PIN (Code, declared at LOCK v0.1): OLMo units have no G-ID artifact (no G-ID on
+      # OLMo, m:267) and asking for one is an error, not a path.
+P051  valence_core/m/guard.py:176
+      PIN (Code, declared at LOCK v0.1): uncached first, then cached, at every index.
+P052  valence_core/m/guard.py:192
+      # PIN (Code, declared at LOCK v0.1): the licence is per backend (CLAUDE.md rule 2,
+      # "gates re-validated per backend"; its annotation "T-step identity is its own
+      # gate"): the artifact's identity.backend_identifier -- resume.backend_identifier of
+      # the adapter G-ID ran on -- must equal the asking run's. A different, missing or
+      # malformed backend is an undetermined licence, i.e. uncached; a new G-ID on the new
+      # backend is the seat's to order (resume.py's backend PIN: an OS or mlx update on
+      # the laptop is a backend change).
+P053  valence_core/m/guard.py:223
+      # PIN (Code, declared at LOCK v0.1): G-TIME-F0 is uncached whatever is on disk
+      # ("G-TIME-F0 (Qwen, uncached)", m:280); only qual and campaign read the artifact.
+P054  valence_core/m/guard.py:456
+      # PIN (Code, declared at LOCK v0.1; finding 20): the licensed sources are resolved by
+      # BINDING, not spelling. Outside guard.py the names cached_path_admitted / gid_paths
+      # may be bound only by ``from valence_core.m.guard import <name>``; any other binding
+      # (def -- a method included --, lambda or other assignment, an import from elsewhere,
+      # a parameter, a loop, with, except or match target) is flagged wherever it stands.
+P055  valence_core/m/guard.py:473
+      # PIN (Code, declared at LOCK v0.1; findings N15, R7): a licensed name rebound as an
+      # ATTRIBUTE is flagged in every scanned file, guard.py included, in these static forms
+      # only: an assignment, augmented or annotated assignment, del, for / async for, with
+      # ... as, or comprehension target ``<expr>.<name>`` / ``<expr>["<name>"]``; setattr /
+      # delattr with the name as a string constant in slot 1 or as the last component of a
+      # dotted string in slot 0 (pytest's monkeypatch form); a bound or unbound
+      # __setattr__ / __delattr__ / __setitem__ / __delitem__ with it as a string constant
+      # in slot 0 or 1; patch.object (slot 1), patch (a dotted string ending in it),
+      # patch.multiple and patch.dict with it as a keyword or a dict-literal key; and
+      # ``<x>.__dict__.update`` / ``vars(<x>).update`` likewise. Anything else -- a name
+      # computed at run time (a helper's ``setattr(obj, attr, value)``), an alias of the
+      # module dict, exec -- escapes this check, and it defeats the runtime licence as well
+      # (runner_qwen's re-check calls the same module attribute): the declared limit, kept
+      # by the package containing no such code (check_call_sites over it is []).
+P056  valence_core/m/guard.py:570
+      # PIN (Code, declared at LOCK v0.1; finding 20): the G-ID exemption covers the BODY
+      # of a module-level function named run_gid_pair only -- not a scope nested in it,
+      # and not a def of that name nested in other code or in a class.
+P057  valence_core/m/guard.py:587
+      # PIN (Code, declared at LOCK v0.1): a cached/path_cached parameter is
+      # keyword-only, so every caller names it and its value is checked here.
+P058  valence_core/m/guard.py:592
+      # PIN (Code, declared at LOCK v0.1): its default is absent or the literal
+      # False -- anything else (1, True, None, a name) can reach generate as an
+      # unchecked path when a caller omits the keyword. No run_gid_pair
+      # exemption: G-ID passes its True at the call, never by default.
+P059  valence_core/m/guard.py:707
+      # PIN (Code, declared at LOCK v0.1): beyond DESIGN's "a name bound from the guard or
+      # the literal False", a direct cached_path_admitted(...) call, an IfExp whose two
+      # branches are licensed, and an `and` whose last operand is licensed are accepted:
+      # none of them can yield True except through the guard.
+P060  valence_core/m/guard.py:817
+      # PIN (Code, declared at LOCK v0.1): forward is held to the same rule.
+P061  valence_core/m/guard.py:821
+      # PIN (Code, declared at LOCK v0.1): no bound adapter generate/forward
+      # takes more than three positional arguments, so a fourth means shifted
+      # slots under some other unbound form (type(a).generate(a, ...)).
+P062  valence_core/m/guard.py:846
+      # PIN (Code, declared at LOCK v0.1): the path is declared at every generate
+      # call -- an absent cached= is flagged, never read as the adapter's default.
+P063  valence_core/m/guard.py:864
+      PIN (Code, declared at LOCK v0.1): a directory argument is expanded to its *.py
+      files (``__pycache__`` skipped); an unreadable or unparsable file is a problem,
+      never a pass.
+P064  valence_core/m/keys.py:39
+      clean. PIN (Code, declared at LOCK v0.1): run at every stage's startup on both sites
+      (rule 27; numpy promises no stream stability across versions), a mismatch being a
+      STOP before any session -- every key, item stream and render of record rests on it."""
+      try:
+      got = tuple(int(x) for x in stream("f|CORR|0").permutation(16).tolist())
+      except Exception as e:                      # noqa: BLE001 -- a broken stream is a problem
+      return [f"numpy stream known answer: f|CORR|0 permutation raised {type(e).__name__}"]
+      if got != F_CORR_0_PERMUTATION:
+      return [f"numpy stream known answer: f|CORR|0 permutation(16) is {list(got)}, expected "
+      f"{list(F_CORR_0_PERMUTATION)} (numpy {np.__version__})"]
+      return []
+P065  valence_core/m/readrule.py:82
+      # PIN (Code, declared at LOCK v0.1): Qwen's v4 content claim prints as
+      # ``content@forced`` / ``content@free``. m:263 lists only audit/lexical/echo,
+      # but m:261 makes v4 content exclusion-bearing on forced rounds, and m:314
+      # counts it apart from audit_degenerate (flagged; maps/audit.md §4 item 5 and
+      # D6). The seat may fold it into "audit" instead.
+P066  valence_core/m/readrule.py:90
+      # PIN (Code, declared at LOCK v0.1): the placeholder that replaces the chosen
+      # config tag in a sham free round's header (maps/olmo.md §7 item 15).
+P067  valence_core/m/readrule.py:108
+      # PIN (Code, declared at LOCK v0.1): both blinded forms are whitelists. A
+      # record key not listed here (for example a field a later runner adds) is
+      # withheld until release_full.
+P068  valence_core/m/readrule.py:114
+      # PIN (Code, declared at LOCK v0.1): the fields a redacted sham free round
+      # keeps. Dropped: item, label, role, pole, property, task_text, seed and n_tok.
+      # Under per-label item streams the item id names which label's stream was
+      # consumed, i.e. the pick (maps/olmo.md §6 item 17). In the audit dict, detail
+      # and lexical_raw are dropped, because a free-round lexical detail names the
+      # tag the model copied from the chosen header (m:263).
+P069  valence_core/m/readrule.py:310
+      # PIN (Code, declared at LOCK v0.1): a key is refused when it
+      # equals a label (the stated rule) and also when it contains one
+      # as a whole word ("granite@free"); a key holding a label only
+      # as a substring ("granites") passes.
+P070  valence_core/m/readrule.py:339
+      # PIN (Code, declared at LOCK v0.1): the stripped record keeps an exclusion
+      # (with its detail) and a strict exclusion only when its phase is forced, and
+      # replaces whole-session validity with ``excluded_at_forced``. It drops
+      # excluded / complete / seconds / first_free_pick_P / choices: each one
+      # encodes the free-round exclusion position or the pick.
+P071  valence_core/m/readrule.py:348
+      # PIN (Code, declared at LOCK v0.1): a hair-trigger fire on a contrast free
+      # round is a free-round event, so it is withheld here and from stage_report.
+      # The stop it causes is announced by the stage driver as an adjudication
+      # (m:318 exception (1)), not by a pick-free form (flagged).
+P072  valence_core/m/readrule.py:390
+      # PIN (Code, declared at LOCK v0.1): a free-round response that
+      # copies a label is redacted like the header. Both own-pair
+      # labels go to [config], at the lexical class's word boundary,
+      # case-insensitive, because the tag the model copied from the
+      # chosen header is the pick (m:263's own argument, STOP-7 §C
+      # item 19). This goes beyond m:271's header-only wording
+      # (flagged).
+P073  valence_core/m/readrule.py:516
+      # PIN (Code, declared at LOCK v0.1): v2 / AuditSpec reasons are reported by
+      # category (AuditSpec.check's precedence names, session.py:129-154). A reason
+      # that parses to none of them is counted "unparsed", never printed.
+P074  valence_core/m/readrule.py:545
+      # PIN (Code, declared at LOCK v0.1): stage_report computes a session's domain
+      # from forced-phase material only: N_FORCED forced rounds, none claimed, no
+      # forced exclusion, and no hair trigger outside the free phase. A record whose
+      # ``domain`` field disagrees is refused. So a contrast session's domain count
+      # reads nothing from its free rounds.
+P075  valence_core/m/readrule.py:614
+      # PIN (Code, declared at LOCK v0.1): per-pair first-pick share keyed
+      # by the roster pair index, never by a tag (m:283).
+P076  valence_core/m/readrule.py:634
+      # PIN (Code, declared at LOCK v0.1): strict-beside is reported for
+      # sham templates only before VERDICTS. A contrast session's strict
+      # first event can be a free-round event (maps/audit.md D7).
+P077  valence_core/m/resume.py:97
+      # PIN (Code, declared at LOCK v0.1): the statuses a gate stage's persisted end may
+      # carry (stage_end.status); G-ID's verdicts are its PASS / FAIL / NOT-DETERMINED.
+P078  valence_core/m/resume.py:100
+      # PIN (Code, declared at LOCK v0.1; finding R1): the pending end of a finish, written
+      # with every session before any output and cleared by persist_end. A gate stage's holds
+      # {status, fired, stop}; a campaign's also {terminal, end_look, pause} (the status of an
+      # invocation's end: STOP, PAUSE, or a terminal state).
+P079  valence_core/m/resume.py:109
+      # PIN (Code, declared at LOCK v0.1): the backend identifier is the sha16 of the
+      # compact sort-keyed JSON of adapter.provenance() minus these keys: the runtime
+      # counter n_encodes_clipped, the per-checkpoint weights path, and the seed (a run
+      # input, carried by the key templates). Everything else stays, the Qwen `platform`
+      # string (OS build) included: an OS update on the laptop is a backend change.
+      # Disclosed: it cannot tell two boxes of one class apart (m:267) -- hence the pod id.
+P080  valence_core/m/resume.py:116
+      # PIN (Code, declared at LOCK v0.1): stub/selftest output is refused under these
+      # roots, resolved (symlinks and '..' followed) and REPO-anchored; data/olmo is the
+      # precedent's own protected root (box_selftest_stub.py:171-182), kept.
+P081  valence_core/m/resume.py:161
+      # PIN (Code, declared at LOCK v0.1): a filesystem that cannot sync a directory
+      # (EINVAL / ENOTSUP, seen on some network volumes) is tolerated -- the rename is
+      # still atomic and the file itself was fsynced; any other error raises. Verify
+      # on the box's /workspace volume.
+P082  valence_core/m/resume.py:185
+      PIN (Code, declared at LOCK v0.1): exact JSON-native types only (np.float64 is
+      refused although json would take it), str dict keys only, NaN/Infinity refused.
+P083  valence_core/m/resume.py:224
+      PIN (Code, declared at LOCK v0.1): read from the RUNPOD_POD_ID environment variable
+      (empty or whitespace = absent); verify on the box before the first OLMo stage.
+P084  valence_core/m/resume.py:251
+      PIN (Code, declared at LOCK v0.1): one entry per invocation that reaches its
+      checkpoint (a start, every resume, a finish-only re-invocation), kept OUTSIDE the
+      identity, never edited afterwards except its own ``launched`` counter -- the
+      sessions launched and recorded (or quarantined) by this invocation; a session
+      interrupted mid-generation is not counted (finding R5). A gate stage restarted after
+      a pod change starts a new list (the set-aside file keeps the old).
+P085  valence_core/m/resume.py:270
+      PIN (Code, declared at LOCK v0.1; finding R5): the count reaches disk with the next
+      write -- the session's record, or the end pending that quarantines a G-VER record --
+      so ``launched`` means "sessions launched and recorded (or quarantined) by this
+      invocation"; a session interrupted mid-generation is not counted.
+P086  valence_core/m/resume.py:285
+      PIN (Code, declared at LOCK v0.1): the entries of the invocations that launched and
+      recorded (or quarantined) at least one session -- the backends that produced the
+      stage's records and stops. An invocation that recorded nothing (a finish-only
+      re-invocation, a PI stop, one whose only session was interrupted mid-generation --
+      finding R5) stays in the checkpoint's list only, so a re-finish re-derives a
+      byte-identical report.
+P087  valence_core/m/resume.py:299
+      PIN (Code, declared at LOCK v0.1): each file contributes ``{rel path}\\n{len}\\n``
+      then its bytes, rel path relative to REPO (posix form) where the file lies under
+      REPO, else to ``root``'s parent; files sorted by that path; ``__pycache__`` is not
+      a ``*.py`` file of the directory and never enters.
+P088  valence_core/m/resume.py:325
+      PIN (Code, declared at LOCK v0.1): computed at its first call in a process and
+      cached, so one invocation binds one value; a change between invocations moves it.
+P089  valence_core/m/resume.py:337
+      PIN (Code, declared at LOCK v0.1): computed over the items a stage serves (not the
+      pools file, whose sha prefix corr.load_pool already pins).
+P090  valence_core/m/resume.py:392
+      # PIN (Code, declared at LOCK v0.1): template_set is stored in §2.4's table order
+      # (contrast first), whatever order the caller lists it in.
+P091  valence_core/m/resume.py:397
+      # PIN (Code, declared at LOCK v0.1): the identity machinery keeps DESIGN §1.9's
+      # "pre-lock" for a stage run before its governing lock; every stage stages.py
+      # builds follows its lock (m:279-286, m:302) and refuses "pre-lock" itself.
+P092  valence_core/m/resume.py:419
+      # PIN (Code, declared at LOCK v0.1): G-ID's path is "cached+uncached" (it runs both
+      # at every index); OLMo and G-TIME-F0 are "uncached" by spec (m:267, m:280).
+P093  valence_core/m/resume.py:428
+      # PIN (Code, declared at LOCK v0.1): a campaign carries the PI's hour cap from its
+      # LOCK v1.0 (required); a gate stage may carry none.
+P094  valence_core/m/resume.py:558
+      # PIN (Code, declared at LOCK v0.1): every recorded session was launched by some
+      # invocation on the list; the sum can exceed the sessions by the G-VER-quarantined
+      # launches (counted, never recorded as sessions). A session interrupted
+      # mid-generation is counted nowhere (finding R5).
+P095  valence_core/m/resume.py:579
+      # PIN (Code, declared at LOCK v0.1): look_index == completed_launches // 40,
+      # with the look due at a multiple of 40 recorded in the same write.
+P096  valence_core/m/resume.py:692
+      PIN (Code, declared at LOCK v0.1; finding R1): a gate stage gains ``stage_end``
+      {status, fired, adjudication None} and the ``stop`` (hair trigger: the fired round's
+      identifiers; G-VER: the quarantined record); a campaign gains the ``stop``, its
+      ``terminal`` state, its ``end_look`` and the pause that ended the invocation
+      (appended to ``campaign.pauses``). ``end_pending`` is removed. Deterministic, so a
+      re-finish applies the same block to the same checkpoint and re-derives the same
+      outputs.
+P097  valence_core/m/resume.py:740
+      PIN (Code, declared at LOCK v0.1): a refusal names a stop's class from the stop's
+      blinded block alone. Where the blinded class differs from the recorded one (a
+      contrast session's free-phase hair trigger), the stop is named by phase alone --
+      template and s, as the STOP announcement printed them, never the class, round, n or
+      index (m:318 exception (1)); a stop with no blinded block names no class at all.
+P098  valence_core/m/resume.py:774
+      PIN (Code, declared at LOCK v0.1): read tolerantly here (an unreadable file is left
+      to load_or_init's own refusal); the refusal never suggests a restart. An end that is
+      only pending is not refused: it is re-finished (finding R1).
+P099  valence_core/m/resume.py:813
+      # PIN (Code, declared at LOCK v0.1; findings R1, R2): a checkpoint carrying an end
+      # pending is returned for its re-finish on ANY pod and with or without --resume --
+      # never set aside, never refused as existing. Its design must be the recorded one;
+      # the backend identifier and the pod id may differ (a re-finish generates nothing:
+      # its outputs are re-derived from the checkpoint under the RECORDED identity).
+P100  valence_core/m/resume.py:868
+      PIN (Code, declared at LOCK v0.1; finding R1): an OLMo campaign's checkpoint is
+      written on its own pod only, EXCEPT to re-finish an end pending (a provenance entry,
+      the end's persisted form): a re-finish generates nothing, so no session from another
+      box can enter -- the "never spliced" rule holds by construction.
+P101  valence_core/m/resume.py:919
+      # PIN (Code, declared at LOCK v0.1): the G-VER write gate is structural -- only a
+      # record verify.verify_and_mark marked verified (exactly True) is ever recorded
+      # (m:284 "before any artifact is written"); a failing one is quarantined by the
+      # stage driver in its stop block, never here.
+P102  valence_core/m/resume.py:960
+      PIN (Code, declared at LOCK v0.1): "finished" = present in the checkpoint (a
+      record is appended only after its session ends and verifies); excluded and
+      hair-trigger sessions count. At G-ID the unit is the pair: (template, s) is done
+      only when both its uncached and cached records are on disk; ``by_path=True``
+      returns the (template, s, path) halves instead.
+P103  valence_core/m/resume.py:989
+      PIN (Code, declared at LOCK v0.1): reached means used >= cap (no further launch);
+      the cap passed must be the identity's (no override); time inside a session that was
+      interrupted before its record was written is not counted.
+P104  valence_core/m/runner_olmo.py:55
+      # PIN (Code, declared at LOCK v0.1): OLMo has no v2 artifact; its identity's
+      # audit_v2_sha16 is sha256 of the compact sort-keyed JSON of the AuditSpec's three
+      # fields {ban_strings, frame_fragments, junk_regex} (lists, in the spec's order),
+      # first 16 hex -- format_recon's body-hash form applied to b3's literal.
+P105  valence_core/m/runner_olmo.py:67
+      # PIN (Code, declared at LOCK v0.1): where the adapter carries its weights path
+      # (OLMoHFAdapter.path = /workspace/models/{ckpt}), its last component must be the
+      # unit's checkpoint; the stub carries none and is not checked.
+P106  valence_core/m/runner_olmo.py:129
+      # PIN (Code, declared at LOCK v0.1): rule 28(d)(a)'s boundary assertion runs on OLMo
+      # too, on encode() with the adapter's own default (add_special_tokens=True, as
+      # olmo_hf.generate encodes); with injections=() the boundary does not change what OLMo
+      # forwards, so a fire there is a tokenizer fact to escalate [verify on box].
+P107  valence_core/m/runner_qwen.py:78
+      # PIN (Code, declared at LOCK v0.1): maps/e2a.md F6's form -- the live tokenizer is
+      # consulted: build_ban_list(adapter) with no path computes the list from the adapter's
+      # own encode and special tokens and writes nothing (session.py:111-126); its ids and
+      # strings must equal the frozen file's, else generation would ban ids the file does not
+      # name (finding 6). A no-op on the real tokenizer (maps/e2a.md [tok]).
+P108  valence_core/m/runner_qwen.py:93
+      # PIN (Code, declared at LOCK v0.1): legacy_truncate and max_length are checked where
+      # the adapter carries them (QwenMLXAdapter does, qwen_mlx.py:78-85; the stub does not).
+P109  valence_core/m/runner_qwen.py:139
+      # PIN (Code, declared at LOCK v0.1): defence in depth beside the static call-site
+      # check -- a cached session outside G-ID re-reads the licence itself (m:267), on THIS
+      # adapter's backend (rule 2: the licence is per backend); G-ID runs both paths by its
+      # own licence (guard.gid_paths).
+P110  valence_core/m/runner_qwen.py:206
+      # PIN (Code, declared at LOCK v0.1): seconds = perf_counter wall-clock of the whole
+      # session (generations and reads), rounded to the millisecond; it is the hour cap's
+      # increment (resume.hour_cap_exceeded) and is never printed.
+P111  valence_core/m/scaffold.py:194
+      # PIN (Code, declared at LOCK v0.1): the chosen round's template index is e2a's
+      # literal (s + ci) % 4 (session_e2a.py:169), equal to m:159's (s + i) % 4 for
+      # i = 2F + ci because 2F % 4 == 0 (asserted in __init__).
+P112  valence_core/m/scaffold.py:247
+      # PIN (Code, declared at LOCK v0.1): path is "cached" or "uncached" per session; OLMo
+      # and G-TIME-F0 are uncached by spec (m:267, m:280); the scaffold records it, the
+      # runner's cached argument must agree with it.
+P113  valence_core/m/scaffold.py:261
+      # PIN (Code, declared at LOCK v0.1): j = s at gate stages (session j of the
+      # sixteen-row table is the template's s-th launch, m:159), None in a campaign.
+P114  valence_core/m/scaffold.py:400
+      # PIN (Code, declared at LOCK v0.1): prefix_tokens_at_read = len(encode(transcript
+      # + menu)), the read's own context; low_label_mass = label_mass < e2d/runner.py's
+      # LOW_LABEL_MASS 0.20 (strict, descriptive); top1_not_label = not top1_is_label.
+P115  valence_core/m/scaffold.py:418
+      # PIN (Code, declared at LOCK v0.1): a scaffold_absorption record is
+      # {name, phase, detail = the hit strings joined by "|"}; the round itself carries
+      # the hits in audit.scaffold. The runner returns at once (the stage stops).
+P116  valence_core/m/scaffold.py:433
+      # PIN (Code, declared at LOCK v0.1): complete = 2F forced rounds, N_FREE reads and
+      # N_FREE chosen rounds generated (recon's 4 + 6, recon.py:184-186, with the sixth
+      # chosen round present); an exclusion at the last free round leaves it complete.
+P117  valence_core/m/scaffold.py:519
+      # PIN (Code, declared at LOCK v0.1): G-PORT's walk locates no generation by a bare
+      # newline search. A generation starts where its harness piece ("...Response:")
+      # ends and runs to the start of the NEXT harness piece, whose bytes the scaffold
+      # has already built; it must be newline-free (f1's newline stop, asserted).
+P118  valence_core/m/schedule.py:102
+      # PIN (Code, declared at LOCK v0.1): the campaign schedule is materialized to
+      # the k = 1 row of §2.4's launch tables (r = 1/24, the largest L the launch rule
+      # yields above k = 0): Q-F0 cached A0 2624 (82 units), Q-F0 uncached and OLMo
+      # A0 2208 (69 units), every sham 960 (30 units); the row totals are m:203's
+      # "1: 3,584" and m:214's "1: 3,168". Q-F0's A0 file carries 82 units, which
+      # covers both paths (the uncached k = 1 row's 69 is its prefix). The committed
+      # files bound the launches -- a campaign draws at most a file's n cells, on
+      # either path; LOCK v1.0's launch counts L are a projection, not a bound
+      # (m:192): stages.run_campaign launches each arm until its DOMAIN count reaches
+      # its floor, the hour cap, a PI stop, or the schedule's end (a PAUSE for the
+      # PI). The self-test re-derives each L from the launch rule in exact integer
+      # arithmetic.
+P119  valence_core/m/schedule.py:182
+      # PIN (Code, declared at LOCK v0.1): a schedule is built only on its unit's
+      # roster of record (Qwen e2d.config.ROSTER; OLMo a1_repair_roster.json); any
+      # other roster is refused, so a Qwen roster can never key an OLMo schedule.
+P120  valence_core/m/schedule.py:227
+      # PIN (Code, declared at LOCK v0.1): m:159's "permutation(cells)" is
+      # taken in index form, cells[k] for k in rng.permutation(len(cells));
+      # the self-test shows it equals the object-array permutation on this numpy.
+P121  valence_core/m/schedule.py:256
+      # PIN (Code, declared at LOCK v0.1): no row beyond j = 15; a gate stage that
+      # would need a seventeenth session (G-ID past sixteen indices) STOPs.
+P122  valence_core/m/schedule.py:399
+      # PIN (Code, declared at LOCK v0.1): the cross-template order is §2.4's
+      # table order, contrast template first (A0 then A0s; A0-OLMo-{ckpt} then
+      # A0s-OLMo-{ckpt}); any other order given is refused, not re-sorted.
+P123  valence_core/m/schedule.py:429
+      # PIN (Code, declared at LOCK v0.1): "strict rotation by launch index" is
+      # implemented as: next = the live arm with the fewest launches, ties to
+      # table order. From zero this is A0, A0s, A0, A0s, ...; on resume the
+      # caller passes the on-disk launch counts and the rotation continues where
+      # it stopped. Counts inconsistent with a strict rotation are refused.
+P124  valence_core/m/schedule.py:484
+      # PIN (Code, declared at LOCK v0.1): sha256_of_cells is computed over
+      # json.dumps(cells, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+      # encoded UTF-8 -- independent of the file's layout.
+P125  valence_core/m/schedule.py:493
+      # PIN (Code, declared at LOCK v0.1): file names as above, under
+      # data/m/schedules/, plus manifest.json.
+P126  valence_core/m/schedule.py:580
+      # PIN (Code, declared at LOCK v0.1): the manifest records each file's
+      # sha256 (of its bytes) and nothing machine-specific (no numpy version, no
+      # time), so a regeneration on the box is byte-identical iff the schedules are.
+P127  valence_core/m/schedule.py:595
+      # PIN (Code, declared at LOCK v0.1): an existing file whose bytes differ is a
+      # schedule change and is refused unless overwrite=True; identical files are
+      # left untouched.
+P128  valence_core/m/stages.py:126
+      # PIN (Code, declared at LOCK v0.1; findings R3, R11): the proposal a stage reads
+      # (banner.spec_problems, the gate line, the licence) is the repo-relative file
+      # identity_extra's ``proposal_file`` names -- REQUIRED on a non-stub run, never
+      # hard-coded there; this default serves stub runs only (the self-test's document).
+P129  valence_core/m/stages.py:133
+      # PIN (Code, declared at LOCK v0.1): the analyzer whose hash m:267's gate line logs is
+      # G-ANL-F0's `m_analyze.py` (m:278), at the k1/b3 analyzers' home (scripts/).
+P130  valence_core/m/stages.py:142
+      # PIN (Code, declared at LOCK v0.1): a test double is recognised by the precedent's own
+      # provenance tag (scripts/box_selftest_stub.py STUB_TAG "SELFTEST-STUB -- NOT A MODEL"),
+      # and every output path of a stage run on it goes through resume.refuse_canonical_out.
+P131  valence_core/m/stages.py:149
+      # PIN (Code, declared at LOCK v0.1): process exit codes a stage driver returns per
+      # status -- 0 for PASS (gate stage), COMPLETE, CAP and PI-STOP (campaign, all terminal
+      # by m:247); non-zero for every outcome that needs the seat or the PI.
+P132  valence_core/m/stages.py:198
+      PIN (Code, declared at LOCK v0.1): under out_root (default REPO/data/m) --
+      schedules/ (read only), ckpt/{unit}_{stage}.json (the default checkpoint,
+      pick-bearing; its adjudication excerpt beside it, ``adjudication_path``),
+      reports/{unit}_{stage}_report.json and reports/{unit}_{stage}_reads.json (no
+      contrast pick: G-ID's reads and the sham first-pick shares carry sham picks under
+      m:318's exceptions (2)-(4)) -- the report and reads of the DEFAULT checkpoint; a
+      stage names them after its resolved checkpoint (``for_checkpoint``); the G-ID
+      artifact lives where the licence reads it, guard.gid_artifact_path(unit).
+P133  valence_core/m/stages.py:218
+      PIN (Code, declared at LOCK v0.1; finding R10): reports/{checkpoint stem}_report.json
+      and reports/{checkpoint stem}_reads.json, as ``adjudication_path`` names the excerpt
+      -- the default checkpoint keeps {unit}_{stage}'s names; a campaign or gate stage
+      restarted at a new checkpoint path writes its own report and never overwrites the
+      one the old checkpoint's run wrote.
+P134  valence_core/m/stages.py:233
+      PIN (Code, declared at LOCK v0.1): every checkpoint -- a default one, an operator's
+      restart path, and therefore every pod-change set-aside beside it -- resolves to
+      ``<out_root>/ckpt/<name>.json``, the directory the -diff rule covers (m:318: a
+      pick-bearing file is never rendered by git diff); anything else is a SystemExit. The
+      resolved path must name no roster word (whole word, case-insensitive): the report
+      carries the checkpoint's name and stdout its path, so a roster word there would
+      reach a pick-free artifact after the stage had run (finding N10); a name ending
+      ``_adjudication`` is reserved for the excerpt beside a checkpoint.
+P135  valence_core/m/stages.py:260
+      PIN (Code, declared at LOCK v0.1): ``{checkpoint stem}_adjudication.json`` in the
+      checkpoint's directory -- ckpt/{unit}_{stage}_adjudication.json for a default
+      checkpoint -- so it is tracked and -diff exactly as the checkpoint is.
+P136  valence_core/m/stages.py:288
+      PIN (Code, declared at LOCK v0.1): on any adapter that is not the self-test stub,
+      ``out_root`` must resolve to DEFAULT_OUT (REPO/data/m) -- the tracked, -diff layout
+      .gitignore and .gitattributes declare -- else SystemExit before anything is written
+      (ledger 27: a measurement lands where the repo records it, finding 14).
+P137  valence_core/m/stages.py:304
+      PIN (Code, declared at LOCK v0.1): a provenance record that is not JSON-native, or
+      that names a roster word (it is copied into the report, which must name none), is a
+      SystemExit at stage start rather than a late refusal after the stage has run.
+P138  valence_core/m/stages.py:324
+      # PIN (Code, declared at LOCK v0.1): the PROVENANCE line is printed once per
+      # invocation, when its entry is appended (after the checkpoint is loaded, before the
+      # first write): the compact sort-keyed JSON of {record, stamp}.
+P139  valence_core/m/stages.py:332
+      # PIN (Code, declared at LOCK v0.1): every OLMo stage, gate or campaign, starts and
+      # resumes only with $RUNPOD_POD_ID set -- the backend identifier cannot tell two
+      # boxes of one class apart (m:267), so without a pod id a gate stage's pod-change
+      # detector is blind and a splice across boxes would pass.
+P140  valence_core/m/stages.py:389
+      PIN (Code, declared at LOCK v0.1; finding R9): "unknown" -- git unavailable, no HEAD,
+      a non-hex answer -- is a refusal on every non-stub run (the licence; and the gate
+      line on Qwen): m:267's gate line logs HEAD, and the licence hashes HEAD's blobs.
+P141  valence_core/m/stages.py:405
+      PIN (Code, declared at LOCK v0.1; finding R4): ``git cat-file -e HEAD:<rel>`` (HEAD
+      has the path), ``git ls-tree -z HEAD -- <rel>`` (exactly one entry, mode 100644 /
+      100755 type blob -- 120000, a symlink, is refused: git commits the link text, not the
+      bytes it points at), ``git cat-file blob HEAD:<rel>`` (the committed bytes); the
+      working-tree path must be a regular file, no symlink anywhere on it, whose bytes are
+      HEAD's blob byte for byte. Hashing the committed blob rather than trusting a clean
+      ``git diff`` defeats a tracked symlink and an assume-unchanged / skip-worktree file,
+      and no index is written. Any git error is a problem naming git's first stderr line.
+P142  valence_core/m/stages.py:456
+      PIN (Code, declared at LOCK v0.1): file hashes are sha256 prefixes (16 hex) of the
+      files' bytes -- what a lock pins -- the proposal being the file identity_extra names
+      (finding R11), and HEAD is ``git rev-parse --verify HEAD`` (finding R9); a missing
+      proposal, CLAUDE.md or analyzer, or HEAD "unknown", is a problem (the line cannot be
+      logged in full).
+P143  valence_core/m/stages.py:488
+      PIN (Code, declared at LOCK v0.1): run by every Qwen stage driver at its start for a
+      non-stub adapter (power, one model process, disk headroom: guard.preflight_laptop),
+      then the gate line's files: CLAUDE.md and the analyzer COMMITTED at HEAD with the
+      working tree's bytes HEAD's blob (``_committed``, k1_stage1.proposal_gate's trap-32
+      rule; findings R8, R9 -- an analyzer outside the repository is refused); any problem
+      a SystemExit before any session, then the gate line printed. A run on the self-test
+      stub (STUB_MARK) and every OLMo stage (the box's respawn protocol governs there)
+      skip it. The analyzer's hash against identity_extra's ``analyzer_sha256`` is the
+      licence's (every non-stub run).
+P144  valence_core/m/stages.py:573
+      # PIN (Code, declared at LOCK v0.1): the stage order of §8 and m:280-302 is enforced on
+      # the prior stage's PERSISTED end (stage_end): G-ID-F0m needs G-TIME-F0 PASS; G-F0m-Qwen
+      # needs G-TIME-F0 PASS and the unit's G-ID artifact on disk (any verdict -- a FAIL or
+      # NOT-DETERMINED sends Q-F0 uncached, m:281); G-F0m-OLMo needs G-TIME-OLMo PASS, or its
+      # PAUSE with the seat's adjudication named (recorded in this stage's checkpoint only,
+      # m:302); a campaign needs its unit's qualification stage PASS (m:283, m:302).
+P145  valence_core/m/stages.py:584
+      undeterminable? PIN (Code, declared at LOCK v0.1): a checkpoint whose provenance list
+      is absent or empty, or any of whose entries carries STUB_MARK in its adapter or
+      apparatus, counts as written on the stub ("an undetermined licence is not a granted
+      one", e2d_tstep_check.py:58-87)."""
+      prov = ck.get("provenance")
+      if not isinstance(prov, list) or not prov:
+      return True
+      return any(not isinstance(e, Mapping) or not isinstance(e.get("record"), Mapping)
+      or any(STUB_MARK in str(e["record"].get(k, "")) for k in ("adapter", "apparatus"))
+      for e in prov)
+P146  valence_core/m/stages.py:609
+      PIN (Code, declared at LOCK v0.1; finding R3): an artifact on disk licenses the
+      qualification and sets the Qwen path (m:281-283, m:267) only when its
+      identity.proposal_sha256 is this run's or one the governing lock re-adopts
+      (``prior_proposal_sha256s``); on a non-stub run it must not be written on the stub
+      (its ``provenance`` list, as ``written_on_stub`` reads a checkpoint's -- absent or
+      empty counts as the stub). An unreadable artifact is a problem, never a pass.
+P147  valence_core/m/stages.py:713
+      # PIN (Code, declared at LOCK v0.1; findings R8, R11): the files and earlier-proposal
+      # list that licensed the stage -- proposal_file, lock_file, prior_proposal_sha256s
+      # (the governing lock's re-adoption list) and analyzer_sha256 -- are recorded in the
+      # checkpoint (``licence``) at its first write; a resume or a re-finish offering
+      # different ones is refused, as a different prior is.
+P148  valence_core/m/stages.py:728
+      # PIN (Code, declared at LOCK v0.1): the prior licence is recorded at the first write
+      # (the adjudication text, if any, in the checkpoint only); a resume re-checks it and
+      # refuses a different prior status or adjudication.
+P149  valence_core/m/stages.py:751
+      # PIN (Code, declared at LOCK v0.1): a schedule directory that is not clean (or a file
+      # whose sha256 is not the manifest's) refuses the stage at its start, before any
+      # session, as a SystemExit -- not a per-session schedule_mismatch.
+P150  valence_core/m/stages.py:782
+      # PIN (Code, declared at LOCK v0.1): a stage's schedule_sha256 (resume identity) is
+      # sha256 over "{file name} {file sha256}\n" for the stage's files, sorted by name.
+P151  valence_core/m/stages.py:802
+      # PIN (Code, declared at LOCK v0.1): the identity's ban_sha is the sha16 of
+      # json.dumps(sorted(ban ids)) of the ban list the stage actually generates with --
+      # audit.assert_olmo_scaffold's form; on OLMo it equals b3's 2dd86a453a2275ef.
+P152  valence_core/m/stages.py:822
+      PIN (Code, declared at LOCK v0.1): identity_extra carries {lock_sha256,
+      proposal_sha256, locked_path, renders_sha16}: the governing lock's sha256 and this
+      document's (64 lower-case hex; "pre-lock" is refused -- G-TIME and G-ID follow LOCK
+      v0.1, qualification v0.2, the campaign v1.0, m:279-286, m:302), the path the lock
+      fixes ("cached" | "uncached"; G-TIME and every OLMo stage "uncached", m:267, m:280),
+      and the renders' sha16 the lock pins. G-ID-F0m carries no locked_path (the path is
+      locked at v0.2, AFTER G-ID, m:282; a value is refused) but carries renders_sha16 like
+      every stage (its scaffold is built with the renders of record). Optional keys:
+      ``lock_file`` and ``proposal_file`` -- the lock's and the proposal's repo-relative
+      posix paths (no '..', no roster word), REQUIRED on a non-stub adapter (the licence
+      by file checks each committed at HEAD with sha256 as named; findings 39, R11); on
+      the stub the lock file may be omitted and the proposal defaults to PROPOSAL_REL;
+      ``prior_proposal_sha256s`` -- the earlier proposals' sha256 the governing lock
+      re-adopts after an amendment (a list of distinct 64-hex, never this run's own;
+      default none): a prior stage or the G-ID artifact under one of them is accepted
+      (finding R11); ``analyzer_sha256`` -- the analyzer's sha256 the lock pins: when given
+      on a non-stub run, the analyzer's bytes must hash to it (finding R8).
+P153  valence_core/m/stages.py:871
+      # PIN (Code, declared at LOCK v0.1; finding R11): recorded sorted (the lock names a set).
+P154  valence_core/m/stages.py:915
+      # PIN (Code, declared at LOCK v0.1; round-3 verification): "re-finish-only on any pod
+      # and at any invocation" holds across a backend change too -- a pending end is
+      # re-finished under the locked path even where this backend's G-ID licence differs;
+      # the drivers assert that such an invocation reaches the re-finish (no launch).
+P155  valence_core/m/stages.py:975
+      # PIN (Code, declared at LOCK v0.1): a resume never lifts a STOP; the stopped
+      # checkpoint is the adjudication's record and the seat re-specifies (m:271).
+      # (resume.load_or_init refuses an ended checkpoint first; this is the backstop.)
+P156  valence_core/m/stages.py:1012
+      # PIN (Code, declared at LOCK v0.1): a G-VER failure names its trigger by the first
+      # problem's class (schedule_mismatch or template_breakage). The record is NOT a
+      # finished session: it is kept, verified False, in the checkpoint's stop block for
+      # the adjudication read (m:318 exception (1)); it never enters `sessions`.
+P157  valence_core/m/stages.py:1028
+      # PIN (Code, declared at LOCK v0.1): the fired round is the session's last recorded
+      # round (a runner ends the session there; verify refuses a record that continues
+      # past it); its phase, n and ri/ci go to the checkpoint's stop block only -- for the
+      # adjudication read m:271 confines -- and are never printed.
+P158  valence_core/m/stages.py:1047
+      # PIN (Code, declared at LOCK v0.1): the free-phase contrast announcement names the
+      # stage, the template and s (both already on the session's printed line) and the
+      # phase; the bar's class goes to the checkpoint's stop block only. Every other trigger
+      # prints the bar's own blinded message (name, template, phase where it has one) -- a
+      # G-VER failure has no phase and names its harness class (template_breakage /
+      # schedule_mismatch), which describes the harness, not the session's content.
+P159  valence_core/m/stages.py:1090
+      # PIN (Code, declared at LOCK v0.1): every gate-stage end -- hair trigger, stage-end
+      # bar STOP, the OLMo PAUSE, PASS, G-ID's verdicts -- is persisted as stage_end
+      # {status, fired bar names, adjudication None} (the drivers through the pending end,
+      # resume.apply_end, which builds this very dict; this helper builds synthetic priors);
+      # the next stage reads it (prior_gate) and no resume or pod change lifts it
+      # (resume.load_or_init). The seat's adjudication is never written here by Code.
+P160  valence_core/m/stages.py:1128
+      # PIN (Code, declared at LOCK v0.1; finding R1): a re-finish announces itself by the
+      # pending end's status only (the stop's class stays blinded, as at its announcement).
+P161  valence_core/m/stages.py:1135
+      # PIN (Code, declared at LOCK v0.1; finding R1): a finish with no STOP or PAUSE event
+      # removes any excerpt at its checkpoint's adjudication path -- one left by an earlier
+      # write of the same checkpoint name can only mislead (it names the checkpoint).
+P162  valence_core/m/stages.py:1157
+      # PIN (Code, declared at LOCK v0.1): stage timing is reported over sham-template
+      # sessions only; a contrast session's seconds encode its free-round exclusion
+      # position and stay in the checkpoint until VERDICTS (m:318; build design §0 rule 5).
+P163  valence_core/m/stages.py:1197
+      # PIN (Code, declared at LOCK v0.1): on every STOP or PAUSE the stage writes
+      # adjudication_path(checkpoint) (under ckpt/, tracked and -diff like the checkpoint),
+      # never printed, holding only what the adjudication needs: for a hair trigger, the fired
+      # session's identifiers and the fired round's header-piece bytes, generation text and
+      # audit dict; for a G-VER stop (no fired round), the identifiers and the verifier's
+      # problems; for a fired binomial bar or the OLMo G-TIME pause, the numerator's rounds
+      # (sham sessions only by construction) with the same fields; for a campaign look,
+      # end-look or schedule-exhausted pause, the counts only (no round). "picks_revealed"
+      # lists every pick the excerpt reveals: a free round's header names the chosen config
+      # and its task line is clean or corrupted by the pick, so each free round in an excerpt
+      # reveals that round's pick (m:271: "the pick it reveals is recorded as seen"). The
+      # file is rebuilt from the checkpoint's state at each STOP or PAUSE (a campaign's holds
+      # one event per pause and its stop), so a re-finish rewrites identical bytes.
+P164  valence_core/m/stages.py:1306
+      # PIN (Code, declared at LOCK v0.1): the counts are the committed gate files' n --
+      # G-TIME 1 + 1 (m:280, m:302), qualification 8 contrast + 16 sham (m:283, m:302) --
+      # in §2.4's table order; anything else is refused, never re-planned here.
+P165  valence_core/m/stages.py:1362
+      # PIN (Code, declared at LOCK v0.1): the qualification report carries m:283's
+      # "reported, no bar" read flags for the CONTRAST arm in the campaign looks' form
+      # (_read_flags, finding 12): reads, low label mass and top-1-not-a-label over the
+      # FIRST read of each contrast domain session -- label mass and whether the top-1 is
+      # a label say nothing about which label; later reads (which encode where a
+      # free-round exclusion fell) stay withheld. The sham arm's flags are stage_report's.
+P166  valence_core/m/stages.py:1379
+      # PIN (Code, declared at LOCK v0.1): the stage-end bars are the unit's
+      # binomial_stage_end and pause bars whose stage is this gate (Qwen time: G-TIME-F0;
+      # qual: G-F0m-Qwen; OLMo time: G-TIME-OLMo-{c} and its pause; OLMo qual:
+      # G-F0m-OLMo-{c}), each evaluated once on the sham-template sessions.
+P167  valence_core/m/stages.py:1460
+      # PIN (Code, declared at LOCK v0.1): a divergence fails G-ID whether or not the
+      # pair is complete -- a path that changes a session's length or exclusion has
+      # diverged; only a byte-identical incomplete pair advances j (m:281's "an
+      # undetermined licence is not a granted one", e2d_tstep_check.py:58-87).
+P168  valence_core/m/stages.py:1497
+      # PIN (Code, declared at LOCK v0.1): a G-ID artifact is never overwritten; a re-run
+      # after a re-specification starts with the old artifact moved aside by the operator.
+      # The one exception is the RE-FINISH of this stage's own checkpoint carrying an end
+      # pending (an interrupted finish: the artifact may be written, the end not yet
+      # persisted) -- its finish then accepts the artifact only if byte-identical to the
+      # one it re-derives and refuses a differing one (_finish_gid).
+P169  valence_core/m/stages.py:1610
+      # PIN (Code, declared at LOCK v0.1): G-ID's report carries readrule.stage_report per
+      # path (each (template, s) appears once per path) and both paths' generation seconds
+      # (sham-only sessions: "cached timing recorded", m:281).
+P170  valence_core/m/stages.py:1630
+      # PIN (Code, declared at LOCK v0.1): G-ID's sessions are sham-only and are read in
+      # full at G-ID (m:271; §4 exception (4), m:318), so its reads file carries the full
+      # records (readrule.release_full names the act).
+P171  valence_core/m/stages.py:1638
+      # PIN (Code, declared at LOCK v0.1): the artifact carries the five fields the
+      # licence reads (unit, criterion, verdict, n_pairs, pairs_identical), the
+      # identity summary whose backend_identifier the licence also reads (rule 2: a
+      # PASS licenses the backend it ran on only) and whose proposal_sha256 prior_gate
+      # and run_campaign read (finding R3), the provenance of the invocations that
+      # launched its sessions (report_provenance; a non-stub stage refuses a
+      # stub-written artifact, finding R3), plus pick-free descriptive fields; n_pairs
+      # counts decided pairs (complete identical, or any divergent pair). It is written
+      # on PASS / FAIL / NOT-DETERMINED, never on STOP.
+P172  valence_core/m/stages.py:1699
+      # PIN (Code, declared at LOCK v0.1): a pre-pick exclusion is a session excluded at
+      # the forced phase (m:308: "sessions that never reached a pick"); the guard's k.
+P173  valence_core/m/stages.py:1706
+      # PIN (Code, declared at LOCK v0.1): m:330's reported read flags at a look, pooled per
+      # arm -- the sham arm over ALL its reads; a contrast arm over FIRST reads only, one per
+      # domain session (a contrast session's later reads encode where its free-round
+      # exclusion fell, m:271, m:318).
+P174  valence_core/m/stages.py:1742
+      # PIN (Code, declared at LOCK v0.1): its free-round events stay withheld at looks as
+      # at gate stages (m:271: a free round's class sits on the pick) -- flagged for the
+      # seat: whether m:271's withholding extends to campaign looks.
+P175  valence_core/m/stages.py:1758
+      # PIN (Code, declared at LOCK v0.1): a pause reaches the pick-free report as {kind,
+      # at_launches, adjudicated, adjudication_sha16}; the seat's (or the PI's) text stays
+      # in the checkpoint only -- it may name anything, a pair label included.
+P176  valence_core/m/stages.py:1787
+      # PIN (Code, declared at LOCK v0.1): floors and launch counts are arguments taken from
+      # the unit's LOCK v1.0, never hard-coded. "L is a projection, not a bound" (m:192,
+      # m:48): the launch counts are recorded (checkpoint and report) as the projection
+      # only; the identity's n is the committed campaign schedule's n (MAX_UNITS x 32,
+      # m:159), and an arm launches until its DOMAIN count reaches its floor, the hour cap
+      # is reached, its committed schedule is exhausted (a PAUSE for the PI), or a PI stop.
+P177  valence_core/m/stages.py:1822
+      # PIN (Code, declared at LOCK v0.1; finding R3): where the campaign takes its path
+      # from the G-ID licence, the artifact on disk is re-checked as the qualification
+      # checked it -- under this run's proposal or one the lock re-adopts, and not
+      # written on the stub for a non-stub run; an absent artifact gives the uncached
+      # path (the licence's own reading) and has nothing to check.
+P178  valence_core/m/stages.py:1836
+      # PIN (Code, declared at LOCK v0.1; finding R6): a paused campaign re-invoked with
+      # neither the seat's adjudication nor the PI's stop is SHOWN its pause -- with or
+      # without --resume -- never refused as existing: its report and excerpt are
+      # re-derived from the checkpoint (no launch, no checkpoint change).
+P179  valence_core/m/stages.py:1847
+      # PIN (Code, declared at LOCK v0.1): floors and the launch-count projection are
+      # recorded in the checkpoint at the first write and must match on every resume
+      # (both come from the lock whose hash the identity carries).
+P180  valence_core/m/stages.py:1858
+      # PIN (Code, declared at LOCK v0.1): the PI's stop is persisted in the checkpoint at
+      # the invocation's first write (campaign.pi_stop), before the terminal state, which is
+      # persisted last (after the report): a re-invocation after an interrupted finish
+      # re-finishes the PI-STOP even when the stop is not offered again, and a DIFFERENT
+      # stop text offered then is refused.
+P181  valence_core/m/stages.py:1877
+      # PIN (Code, declared at LOCK v0.1): a PI stop ends a campaign that has launched;
+      # a unit that never launches is NOT-RUN by its Clock (m:192), not stopped.
+P182  valence_core/m/stages.py:1886
+      # PIN (Code, declared at LOCK v0.1): an arm that exhausts its committed schedule
+      # below its floor cannot launch again under this lock; only a PI stop ends the
+      # campaign (terminal, analyzed as obtained) -- a resume with only an adjudication
+      # is refused, never re-paused.
+P183  valence_core/m/stages.py:1894
+      # PIN (Code, declared at LOCK v0.1): a paused campaign resumes only with the
+      # seat's adjudication named (recorded with the pause, checkpoint only), or ends by
+      # the PI's stop, whose text then stands as the pause's ruling; Code never
+      # self-adjudicates.
+P184  valence_core/m/stages.py:1952
+      # PIN (Code, declared at LOCK v0.1; round-3 verification): a FIRED look
+      # announces itself only after its pending end is on disk (its messages go
+      # to the finish's lines, _pause_lines) -- an announced PAUSE is never lifted
+      # by a kill in the window; a silent look prints at once (its session and
+      # look were written above).
+P185  valence_core/m/stages.py:2003
+      # PIN (Code, declared at LOCK v0.1): Looks = ceil(total launches / 40) (m:330):
+      # when the campaign ends on a multiple of 40 the look recorded there IS the
+      # end look -- no new evaluation, no new pause (its pause, if it fired, was the
+      # seat's to adjudicate already).
+P186  valence_core/m/stages.py:2009
+      # PIN (Code, declared at LOCK v0.1): otherwise the end look is evaluated once
+      # (m:330 "and at the end"); a fired end look pauses the unit before its
+      # analysis (status PAUSE; the terminal state stands) -- at COMPLETE, CAP and
+      # a PI stop alike.
+P187  valence_core/m/stages.py:2072
+      # PIN (Code, declared at LOCK v0.1): the campaign writes its checkpoint and a pick-free
+      # report (looks with pooled pre-pick exclusion, domain and read-flag counts per arm,
+      # pauses without their texts, the terminal status, whether the hour cap is reached and
+      # the SHAM arm's generation ms -- a total that includes contrast sessions stays in the
+      # checkpoint, m:318, build design §0 rule 5) and NO reads file and no first-pick share:
+      # §4's exception (2) covers the gate stages only, and the campaign's reads are the
+      # VERDICTS entry's (m:318).
+P188  valence_core/m/stages.py:2147
+      # PIN (Code, declared at LOCK v0.1): as at the gate stages, a campaign's stop, pause
+      # or terminal state is computed in memory, written as end_pending with every session,
+      # its report and adjudication excerpt written, and only then persisted (findings N7,
+      # N10, N14, R1).
+P189  valence_core/m/stages.py:2166
+      # PIN (Code, declared at LOCK v0.1; finding R1): "re-finish-only at any invocation" --
+      # an invocation offering a ruling re-finishes the pending end first and then exits
+      # non-zero (NOT APPLIED); the ruling is offered again on the next invocation.
+P190  valence_core/m/verify.py:43
+      # PIN (Code, declared at LOCK v0.1): a verifier failure is schedule_mismatch when a
+      # cell, key, banner, menu order or per-round label/role/item/delivery/seed departs from
+      # the committed schedule and m:159's streams, and template_breakage otherwise (harness
+      # bytes, pieces, round/menu numbering, and the record's own end-rule consistency); a
+      # cell mismatch returns at once (the rebuild would only restate it).
+P191  valence_core/m/verify.py:91
+      # PIN (Code, declared at LOCK v0.1): any residual exception while replaying a record
+      # (beyond the explicit shape and type checks below) is template_breakage; a SystemExit
+      # (a STOP raised by a module G-VER calls) still propagates as the STOP it is.
+P192  valence_core/m/verify.py:188
+      # PIN (Code, declared at LOCK v0.1): the pick line is harness bytes written from the
+      # read (finding 27), so the recorded pick must follow choice_read's own rule over the
+      # recorded read -- menu_a iff p_a >= p_b, ties to menu_a (readout.py:114) -- and the
+      # read's verify KL must be exactly 0.0 (guard.insulated_read's halt; rule 26 (iii)).
+      # No tolerance and no threshold: the recorded floats are compared as recorded. On
+      # p_a == p_b exactly either label is consistent, because readout normalises AFTER
+      # deciding (p / (mass + EPS)) and two adjacent raw values can round to one.
+P193  scripts/m_sessions.py:65
+      # PIN (Code, declared at LOCK v0.1): the stage subcommands refuse with exit 2 until
+      # their step; the message names the step and quotes its words.
+P194  scripts/m_sessions.py:202
+      # PIN (Code, declared at LOCK v0.1): olmo_startup refuses the stub by design (its
+      # six ban ids cannot match b3's nine-id sha16), so the OLMo stage checks substitute
+      # stages' reference to it with a setup built as runner_olmo's selftest builds one
+      # (testing.olmo_kit), restored in finally. Production code has no seam.

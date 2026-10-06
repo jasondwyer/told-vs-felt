@@ -1,0 +1,31 @@
+{
+ "construction": "PROPOSAL-m v1.11 m:159-172",
+ "files": {
+  "OLMo-dpo_campaign_A0-OLMo-dpo.json": "f5e94f2e0b1cc2ef3584bc6aa046c773a801a7fed973bf818c86c0c358065c71",
+  "OLMo-dpo_campaign_A0s-OLMo-dpo.json": "fa202aab3cfcb39fce8f0e3fdb9e8c3aa4668354d147e29559c719ffc6b1b528",
+  "OLMo-dpo_qual_A0-OLMo-dpo.json": "429a64ecffdaeea3d179c2f872e92ec76af241d8d7541b72aabfd399264c6145",
+  "OLMo-dpo_qual_A0s-OLMo-dpo.json": "0a758e38e7b4942afecac0e1dd99d699cc80d5096fc0b33787c1ee05b68bc04b",
+  "OLMo-dpo_time_A0-OLMo-dpo.json": "b33490031b12c412f6dd45f57ef4d13fb947ad388ff035d794b3704e5e788440",
+  "OLMo-dpo_time_A0s-OLMo-dpo.json": "708572e82b40708619ed5e6c29ef83925a537b6df2a1542555f2c6e40ba68f75",
+  "OLMo-instruct_campaign_A0-OLMo-instruct.json": "f0203744859e16b1202d752fbabc6e7b5c25b41d143054e8ce07888f8d52d9b3",
+  "OLMo-instruct_campaign_A0s-OLMo-instruct.json": "6271c8ee2cfe97e0cf2e0f7973d994434a121af3923c89c3a743d3e5258f38e3",
+  "OLMo-instruct_qual_A0-OLMo-instruct.json": "7d72e3d346fc7200941f9104514c47b691c48730b6f2f37bd68df6171f11cde2",
+  "OLMo-instruct_qual_A0s-OLMo-instruct.json": "e1eacae99c7344ddd323775bb98f5428472d7e438ddab588b6ee9a60a18a12f4",
+  "OLMo-instruct_time_A0-OLMo-instruct.json": "40be4ebd717ad10ed7a4bf5f65d5a745adbde2c109f38ca69f2525d9ba309492",
+  "OLMo-instruct_time_A0s-OLMo-instruct.json": "74ee76c45959d2444e69bbc2d28fb2c6d368c1f4a4bd0b08f7db5df87cc160b4",
+  "OLMo-sft_campaign_A0-OLMo-sft.json": "8cb583e6e051b6b57bfbffcf316af560095e9fd2c80ff6ea06c5198c112160fe",
+  "OLMo-sft_campaign_A0s-OLMo-sft.json": "a5b85912b911e0b380723c1075434fe6c74ff6a0bfb2338807603d1f7aef7776",
+  "OLMo-sft_qual_A0-OLMo-sft.json": "4f57f03f1f19c5db4146fcc3aa063726d3d38a4c08dd2cfef4e803ae6c86b784",
+  "OLMo-sft_qual_A0s-OLMo-sft.json": "0e1735a1869040f209201f9ea1d8f7024918faeb917c6366627d6d71750f79e2",
+  "OLMo-sft_time_A0-OLMo-sft.json": "b0448f7f131b91fa8d1621704e23483a4f4565dbc45cac197d2cc26a208aa650",
+  "OLMo-sft_time_A0s-OLMo-sft.json": "1fcaa69010469029d2866bfa3413582f763e03cc220bae5f9e2f6d6e7a63fe2c",
+  "Q-F0_campaign_A0.json": "a573faf31ce52d760c1d45040e57b98ccd29edc4f470bac641e98adf934429b7",
+  "Q-F0_campaign_A0s.json": "38ab22677650e82af257b01d47adb26dcac05bb0dc24cdb76927eb5d78f29d0c",
+  "Q-F0_id_A0s.json": "61b734e3947b4a4d73d498b93061ca8dd8d5fe271f21335d3594eeb82335fb33",
+  "Q-F0_qual_A0.json": "201a3081fc6dfa0bfc9d716c036ae396b87e82bbf7ea4953b206538021438ae4",
+  "Q-F0_qual_A0s.json": "4d16c201f2bb7de32400abb09b5b5a1e6d1158b0ee668ee714cbaa84597efa25",
+  "Q-F0_time_A0.json": "bd873fdbd6f8a8c5a43ffcbf3e5a9ca56110237af89a4ff033f61feb112d0798",
+  "Q-F0_time_A0s.json": "7e900e3c1326ecb29fe5e0c067c2f41a8598cdb485d230f1f7c903391888482b"
+ },
+ "schema": "m-schedules-manifest-v1"
+}

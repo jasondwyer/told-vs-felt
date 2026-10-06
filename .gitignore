@@ -215,3 +215,28 @@ __pycache__/
 !/data/k/
 /data/k/*
 !/data/k/*.json
+
+# m package (PROPOSAL-m v1.11 §2.1, §2.7, §3): committed schedules, gate
+# artifacts, stage reports and reads, and the checkpoints travel as JSON
+# (ledger 27). Only files under ckpt/ carry a contrast pick: the checkpoints,
+# their pod-change set-asides and the adjudication excerpts (*_adjudication.json,
+# m:271's confined read, which list the picks they reveal). All of ckpt/ is marked
+# -diff in .gitattributes so no diff shows one before the unit's VERDICTS
+# (m:318). reports/ carries no contrast pick but may carry sham picks under
+# m:318's exceptions (2)-(4) (sham first-pick shares; G-ID's full sham-only
+# reads). Atomic-write temporaries (*.tmp) stay local.
+!/data/m/
+/data/m/*
+!/data/m/schedules/
+/data/m/schedules/*
+!/data/m/schedules/*.json
+!/data/m/gates/
+/data/m/gates/*
+!/data/m/gates/*.json
+!/data/m/reports/
+/data/m/reports/*
+!/data/m/reports/*.json
+!/data/m/ckpt/
+/data/m/ckpt/*
+!/data/m/ckpt/*.json
+!/data/m/ckpt/*.json.podchange-*

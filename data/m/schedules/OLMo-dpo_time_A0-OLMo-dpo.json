@@ -1,0 +1,16 @@
+{
+ "cells": [
+  {"P": "amber", "Q": "granite", "clause": 0, "map": 0, "pair": ["amber", "granite"], "pair_index": 3, "start": 0}
+ ],
+ "gate": "time",
+ "key_template": "m-sched|OLMo-dpo|time|A0-OLMo-dpo|0",
+ "kind": "gate",
+ "n": 1,
+ "pi": [3, 1, 2, 0],
+ "schema": "m-schedule-v1",
+ "session_keys": {"arm": "m-olmo-time|dpo|A0-OLMo-dpo|{s}", "items": "m-olmo-items-time|dpo|{s}"},
+ "sha256_of_cells": "141132d4311fe8a6aa2aa2acc185c5e78dc890821d6c1afffddbc0e38d5f139b",
+ "table": "m:161-170",
+ "template": "A0-OLMo-dpo",
+ "unit": "OLMo-dpo"
+}

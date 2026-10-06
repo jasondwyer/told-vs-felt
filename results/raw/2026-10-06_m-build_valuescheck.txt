@@ -1,0 +1,976 @@
+# m package BUILD (Q-F0 subset) -- values-check of the RESULTS entry, PASS 1 (pre-commit).
+# Four section checkers (headline+built; schedules+stages; self-test+review+site+PINs; flags+box+committed) extracted every factual
+# claim and verified each by running code or reading files: holds / fails / imprecise, with evidence and a corrected wording.
+# 144 claims, 37 failing or imprecise. Every one was applied to the entry before pass 2 (Code re-ran the k = 1 run-out
+# probabilities itself: .086 / .089 / .081, exact binomial at 1/24; and regenerated the PIN raw with both marker forms: 194 sites).
+
+====================================================================================================
+PART headline: 40 claims, 9 failing or imprecise
+====================================================================================================
+[headline 1] HOLDS: Headline: '2026-10-06 — m package — BUILD (Q-F0 subset) (PROPOSAL-m v1.11 §8 step 4, on the PI's word "Go ahead with step 4")'
+    EVIDENCE: Session transcript adb70afc...jsonl has the user message 'Go ahead with step 4' at
+    2026-10-06T04:43:24Z, which is 00:43 EDT on PI-local 2026-10-06. PROPOSAL-m-gating-campaign-v1_11.md:357 is §8
+    step 4, 'Build the Q-F0 subset of the m package ... entry `m package — BUILD (Q-F0 subset)`'. The proposal's
+    sha256 is 42ab36ec...6c6b.
+
+[headline 2] HOLDS: 'BUILT, REVIEWED, FIXED, SELF-TESTED, SITE-CHECKED; nothing run.'
+    EVIDENCE: `find data/m -type f` finds only the 26 files in data/m/schedules. There is no ckpt/, reports/ or
+    gates/. Raws for review, self-test and site check exist (results/raw/2026-10-06_m-build_*).
+
+[headline 3] HOLDS: 'Built: every item of step 4's list, in 16 files under valence_core/m/ plus the driver scripts/m_sessions.py.'
+    EVIDENCE: There are 16 .py files under valence_core/m/: __init__ plus 15 modules (audit, banner, bars, corr,
+    guard, keys, readrule, resume, runner_olmo, runner_qwen, scaffold, schedule, stages, testing, verify). The
+    only other file is __pycache__/readrule.cpython-312.pyc, which .gitignore:170 ignores. scripts/m_sessions.py
+    is untracked. Each item of m:357 maps to a module.
+
+[headline 4] HOLDS: 'That covers the F0m (Qwen) and F0m-OLMo runners, the CORR delivery module with corrupt_m (§2.3 as written, operand exclusion included), both verifiers, Q-F0's and the three OLMo units' schedules and gate files (§2.1's construction, committed), the audit wrapper's task-round classes, the source guard, the resume-identity machinery (pod-id refusal included) and §3's read-rule tooling.'
+    EVIDENCE: This matches m:357's list item for item. verify.py serves both substrates (SUBSTRATES). The
+    schedules are Q-F0 (7) plus OLMo-sft/-dpo/-instruct (6 each), 25 files plus the manifest. resume.py:20-28 has
+    the pod refusal. readrule.py has strip_contrast, redact_sham, session_line and printed_reason. My independent
+    reimplementation of m:176 matches corrupt_m (see below).
+
+[headline 5] HOLDS: 'Also built: the gate-stage and campaign drivers the later steps call, and no F3 code.'
+    EVIDENCE: stages.py has run_gate_stage (:1278), run_gid_pair (:1477) and run_campaign (:1766). There is no F3
+    runner, F3 verifier or reasoning-line class. keys.py:66, stages.py:167 and m_sessions refusal() refuse Q-F3
+    ('not licensed until step 19', exit 2, which I ran). F3 appears only as data and selftest material: m:258's
+    two reasoning-block literals in banner.DECLARED_HARNESS_STRINGS for roster hygiene, the F3 critical counts in
+    the bars selftest, and schedule.py's generic clause-free cell branch, which is constructible but not
+    scheduled. m:54 allows shared modules.
+
+[headline 6] HOLDS: 'Self-test 628/628, the same on two runs'
+    EVIDENCE: scratchpad step4/driver_final_1.txt and driver_final_2.txt both end '628/628 m selftest checks
+    pass'. Their check names are identical; they differ only in tmp paths and timestamps. The raw's body is run 1.
+    I ran it a third time (`PYTHONDONTWRITEBYTECODE=1 ... m_sessions.py --selftest` → vc1/selftest_vc1_a.txt):
+    628/628, exit 0, check names identical to the raw. The per-module tally from the raw sums to 628.
+
+[headline 7] HOLDS: 'post-build site check 8/8 gates'
+    EVIDENCE: results/raw/2026-10-06_m-build_sitecheck.txt has eight 'GATE <suite>: PASS (summary line matched;
+    exit 0)' lines: regression, format_recon, k1_stage1, k1_analyze, e2d_d2_analyze, recon_echo, closure_verify3,
+    m_sessions. It ends 'gates failed: 0'. sitecheck.sh has exactly eight run calls.
+
+[headline 8] HOLDS: 'Review: eight blind lenses, 44 findings, each put to a lenient and a strict refuter (17 confirmed, 26 contested, 1 refuted)'
+    EVIDENCE: review_result.json has tally {CONFIRMED 17, CONTESTED 26, REFUTED 1} and 8 lenses with findings
+    2+2+2+4+6+8+14+6 = 44. All 44 carry both 'lenient' and 'strict' fields. Severities are 12 substantive and 32
+    minor. The review raw header says the same.
+
+[headline 9] FAILS: 'then three fix rounds, each checked by fresh agents with refuters'
+    EVIDENCE: Review raw part headers: PART 2 (after fix round 1) is 'one agent per lens ... each new finding
+    (N1..N17) put to a STRICT refuter'. PART 3 (fix round 2) has 'each finding (R1..R11) put to a STRICT refuter'.
+    PART 4 (:5887) is 'INDEPENDENT STRICT VERIFICATION OF FIX ROUND 3', a single verifier's report; its two new
+    items V1 and V2 went to no refuter. PART 5 (:6049) is 'ROUND 4 (Code's own edit ... independent review by one
+    agent)', with no refuters. The entry's own Review bullet lists the Round 4.
+    CORRECTION: then three fix rounds and a fourth, Code's own edit. The checks of rounds 1 and 2 were run by
+    fresh agents, with every new finding put to a strict refuter. Round 3 was checked by one independent verifier
+    and round 4 by one independent reviewer, neither with refuters.
+
+[headline 10] IMPRECISE: 'Every confirmed or contested finding is fixed, or disclosed below with its reason; none is left open.'
+    EVIDENCE: scratchpad dispositions.json covers the 43 confirmed or contested findings: 40 FIXED, #10 and #31
+    'DISCLOSED (PIN)', and #32 'DOCSTRINGS CORRECTED (round 2)'. check2_result.json says '#32: RESOLVED
+    (documentation)': the check still cannot fire and is now documented as a consistency assertion. #31's reason
+    is given below as flag (f). #10's reason ('the look index is kept as invariant-checked checkpoint state, not
+    an identity field') is not in the entry text; it appears only in the review raw (:842) and the pins raw
+    (:377). The entry mentions #32 only as '1 not resolved (#32)'. 'None is left open' covers the original 44 only
+    (see the omission below).
+    CORRECTION: Every confirmed or contested finding of the 44 is fixed (#32 by correcting docstrings), or
+    disclosed with its reason (#31 as flag (f) below; #10, the look index kept as checkpoint state, in the review
+    and pins raws). None of the 44 is left open.
+
+[headline 11] FAILS: OMISSION: the headline's 'none is left open' does not tell the reader that the round-4 review left items unfixed.
+    EVIDENCE: Review raw PART 5 (:6070-6072) reads: 'Left as is (cosmetic or unreachable): the PATH line prints
+    before load; in a race where the pending end vanishes between the read and the load, load_or_init could still
+    set a checkpoint aside with --resume; _pending_on_disk duplicates resume.pending_at.' Nothing in the entry
+    mentions these. A grep of the entry for 'left as is', 'race', 'cosmetic' and 'unreachable' finds nothing.
+    CORRECTION: Add to the Review bullet: 'The round-4 reviewer left three items as is, judged cosmetic or
+    unreachable (a PATH line printed before load; a race in which a vanished pending end lets load_or_init set a
+    checkpoint aside under --resume; a duplicated helper); they are in the review raw.'
+
+[headline 12] FAILS: 'Not done: no model or tokenizer loaded'
+    EVIDENCE: No model was loaded, as far as the record shows. But the post-build site check this entry reports
+    ran `scripts/recon_echo.py --selftest`. Its selftest calls `_TokenizerOnly()` unconditionally
+    (recon_echo.py:272), which loads the Qwen tokenizer with mlx_lm `load_tokenizer` from the local snapshot
+    (:207-215). Its 18/18 pass is in the sitecheck raw. Separately, the step-4 design maps (scratchpad
+    step4/maps/e2a.md:22, dated Oct 6 01:07 local, after the 00:43 go-ahead) say '[tok]: checked with the local
+    Qwen tokenizer.json only, offline, through transformers. No weights were loaded.' The m self-test itself loads
+    no tokenizer; its stub adapters use a word-hash tokenizer.
+    CORRECTION: Not done: no model loaded and no OLMo tokenizer loaded. The Qwen tokenizer was loaded only
+    offline, tokenizer-only: by a design-phase map agent (tokenizer.json via transformers) and by the site check's
+    pre-existing recon_echo self-test. The m package and its self-test load none.
+
+[headline 13] HOLDS: 'no stage run, no pod started'
+    EVIDENCE: data/m holds only the schedules: no ckpt, reports or gates. Every stage subcommand refuses (below).
+    No pod is on record. The runpod MCP is unauthenticated in this session, so I could not query pods directly.
+
+[headline 14] HOLDS: 'The stage subcommands refuse until their steps.'
+    EVIDENCE: I ran four subcommands, each exit 2. `m_sessions.py time --unit Q-F0` gave 'not licensed until step
+    10: §8 step 10 -- "G-TIME-F0 (2 sessions)"'. `campaign --unit OLMo-sft` gave 'not licensed until step 9 ...'.
+    `id --unit OLMo-dpo` gave 'refused: no G-ID on OLMo'. `qual --unit Q-F3` gave 'not licensed until step 19'.
+    The selftest check covers all commands × units.
+
+[headline 15] HOLDS: 'The k arc is untouched (ADDENDUM-k1.md `61acf21ff2cc104e…`).'
+    EVIDENCE: `shasum -a 256 ADDENDUM-k1.md` gives
+    61acf21ff2cc104e6872c8149a2051fa0874a8c32aab6ab1b96e908ae3a81e26. `git diff --stat HEAD` shows only
+    .gitattributes, .gitignore and RESULTS.md. No k script or data file is modified, and the new untracked files
+    are all m-related.
+
+[headline 16] HOLDS: 'Step 5 (G-PORT) waits for the PI's word.'
+    EVIDENCE: m:358 begins '5. G-PORT.' No G-PORT entry or artifact exists. This is a status statement.
+
+[headline 17] HOLDS: Stamp: '`date -u` → Tue Oct  6 11:18:04 UTC 2026'
+    EVIDENCE: It cannot be re-run, but it is consistent with the record. Code was frozen at 11:07:58 UTC
+    (stages.py mtime 07:07:58 EDT). The site check ran 11:15:35–11:16:51 UTC and the selftest raw is stamped
+    11:17:19 UTC. RESULTS.md mtime is 07:19:28 EDT (11:19:28 UTC).
+
+[headline 18] HOLDS: runner_qwen.py: 'F0m: e2a's template family, TEMP 0.7'
+    EVIDENCE: runner_qwen.py:65 `TEMP = _e2d_config.TEMP`, and e2d/config.py:41 sets TEMP = 0.7 ("e2a's TEMP").
+    m:261 is 'inheriting e2a's v3 template family'.
+
+[headline 19] HOLDS: runner_qwen.py: 'the frozen e2a ban list rebuilt from the live tokenizer and compared'
+    EVIDENCE: runner_qwen.py:59-88 loads the file with build_ban_list(adapter, path=...), then rebuilds with
+    build_ban_list(adapter), which encodes the defaults plus adapter.special_token_strings (session.py:111-126).
+    If the ids or strings differ it raises SystemExit('BAN LIST MISMATCH'). The accept path has been exercised
+    only on the stub in this build; maps/e2a.md:126 says the real tokenizer's rebuild equals the file.
+
+[headline 20] HOLDS: runner_qwen.py: '`injections=()` always, `cached` only as the licence gives'
+    EVIDENCE: runner_qwen.py:159 and :190 are its only generate calls, both with injections=() and
+    cached=path_cached. path_cached must be a bool from guard.cached_path_admitted or gid_paths, and the runner
+    re-checks the licence on this backend for non-G-ID stages (:139-146). guard.check_call_sites over
+    valence_core/m plus the driver returns [] (I ran it).
+
+[headline 21] HOLDS: runner_olmo.py: 'F0m-OLMo: b3's context rule, TEMP 0.7, F = 2, uncached, ends at the first claim, m:262'
+    EVIDENCE: runner_olmo.py:48-49 set OLMO_TEMP = 0.7 and OLMO_F = 2, equal to box_b3_sessions.py:76-77. At :162
+    `gen_prefix = read_prefix + f" {pick}\n"` is used as prefix only; the stored transcript gets seg + text +
+    '\n'. Generate calls at :137-138 and :164-165 use the literal cached=False. audit.olmo_ends returns `ra.claim
+    is not None` for any round, per m:262's 'first AuditSpec, echo or lexical hit in any round'.
+
+[headline 22] HOLDS: 'Both build sessions through ONE scaffold, scaffold.py, which the verifier and G-PORT's f1 replay also use.'
+    EVIDENCE: Both runners take `scaffold: _sc.SessionScaffold`. verify.py:135 rebuilds through `_sc.m_config` and
+    :163 through `_sc.TranscriptBuilder`. G-PORT's replay is scaffold.replay_f1_row (:462) with f1_config (:282).
+
+[headline 23] HOLDS: 'In the self-test the replay walks 10 archived f1 CORR rows; one review lens walked all 64'
+    EVIDENCE: Selftest raw:436 reads 'f1_config replays 10 archived f1 CORR rows (s 0-7, 27, 53) byte-exact'. The
+    review raw's dose-delivery COVERED section reads 'all 64 archived f1 CORR rows pass replay_f1_row'. I re-
+    walked them (vc1/replay64.py): 'n CORR rows 64', 'failing 0'.
+
+[headline 24] HOLDS: 'corrupt_m at 0.15 reproduces the spec's figures independently: n_eligible per item, k = 54, the one roster skip at item 7.'
+    EVIDENCE: I reimplemented m:176 from the spec text (vc1/indep_corr.py): n_eligible
+    [6,19,19,13,24,14,10,45,19,10,24,14,6,19,10,14], k sum 54, skips [(7, 1)]. This equals m:176's list. The
+    selftest also asserts these against the literals (raw:20-22).
+
+[headline 25] HOLDS: 'f1's corruptor at 0.12 gives 31 letters at sha16 `2c2c227395ea9f2d`.'
+    EVIDENCE: In my independent f1 corruptor, 31 letters changed and the sha16 is 2c2c227395ea9f2d. That equals
+    data/f/calib.json corr_sha 2c2c227395ea9f2d. 31 counts changed letters (32 hits, one redrawn to the same
+    letter; selftest raw:43 shows (32, 31)).
+
+[headline 26] HOLDS: 'The m renders come to sha16 `a04f67b0e5105a05`, Code's figure and G-CAL's to fix.'
+    EVIDENCE: My independent implementation gives sha256('\n'.join(renders))[:16] = a04f67b0e5105a05, matching
+    selftest raw:31. m:358 says step 6 G-CAL fixes 'the renders of record and their sha'.
+
+[headline 27] HOLDS: 'banner.py, m:253–258 byte-exact against the proposal's §2.5 literals at every stage start.'
+    EVIDENCE: banner.spec_problems(proposal_path='PROPOSAL-m-gating-campaign-v1_11.md') returns [] (I ran it); it
+    parses the literals from the proposal file. It is called from stages.startup_problems (:351), via
+    _startup_checks inside _begin (:958), which all three drivers call (:1300, :1496, :1808).
+
+[headline 28] IMPRECISE: 'G-VER (m:284) rebuilds every harness byte from the recorded fields, the committed schedule and the rng streams before anything is written.'
+    EVIDENCE: m:284 says 'before any artifact is written'. verify.py:1-27 rebuilds through scaffold.m_config from
+    the record and the committed cell. stages.py:1006 calls verify_and_mark before resume.record_session (:1351,
+    :1540, :1933), and record_session refuses unverified records. But a stage writes its checkpoint init and
+    provenance entry before any session's G-VER, so 'anything' is broader than the code: it holds per session.
+    CORRECTION: G-VER (m:284) rebuilds every harness byte of a session from its recorded fields, the committed
+    schedule and the rng streams before that session is recorded.
+
+[headline 29] HOLDS: 'A failure is a hair trigger (`template_breakage` / `schedule_mismatch`) and never raises on a malformed record.'
+    EVIDENCE: verify.py:91-97 catches any residual exception and reports it as template_breakage. Selftest raw:500
+    reads 'malformed records (10 ...) return template_breakage and never raise'. m:271 lists both classes as hair
+    triggers.
+
+[headline 30] HOLDS: audit.py: 'Claiming order Qwen v2 → echo → v4 content → lexical, OLMo AuditSpec → echo → lexical (m:261–262)'
+    EVIDENCE: In QwenTaskRoundAudit.classify the claim is assigned 'v2', then 'echo', then 'content', then
+    'lexical'. In the OLMo classify it is 'audit', then 'echo', then 'lexical'. This matches m:261 'v2 → echo → v4
+    content → own-pair lexical' and m:262 'b3 audit → echo → lexical'.
+
+[headline 31] IMPRECISE: audit.py: 'session end per m:308 and m:262'
+    EVIDENCE: m:308 states only that every runner ends a session at its first exclusion-bearing forced round.
+    Qwen's free-round rule (a lexical hit ends the session, a v2/echo/content claim ends nothing) comes from m:261
+    and m:271 ('every Qwen runner ends a session at its first exclusion-bearing forced round or free-round lexical
+    hit'). audit.py's own docstring cites m:261, m:262, m:271 and m:308.
+    CORRECTION: session end per m:261, m:271 and m:308 (Qwen) and m:262 (OLMo)
+
+[headline 32] IMPRECISE: guard.py: 'An AST call-site check: `cached=True` only inside `run_gid_pair`'
+    EVIDENCE: guard.py:24-31: every cached= value must be the literal False, a call of cached_path_admitted, or a
+    name bound only from those; 'a literal True (and gid_paths) only in the body of a module-level run_gid_pair'.
+    A qualification or campaign on a licensed path does run with cached True at run time, so read plainly the
+    sentence suggests the cached path exists only at G-ID.
+    CORRECTION: An AST call-site check: a literal `cached=True` only inside `run_gid_pair`; every other `cached=`
+    must be the literal False or come from the licence (`cached_path_admitted`)
+
+[headline 33] HOLDS: guard.py: 'licensed names resolved by binding, rebinds flagged'
+    EVIDENCE: guard.py:28-45 resolves the licensed names by binding and flags attribute rebinds in the listed
+    static forms. Residual forms (operator.setitem(vars(g)...), __dict__ |= ...) are declared limits, recorded in
+    the review raw (PART 4, R7) and disclosed elsewhere in the entry.
+
+[headline 34] HOLDS: guard.py: 'Insulated reads at KL exactly 0.0.'
+    EVIDENCE: In guard.insulated_read, after assert_construction_stable, `if not (type(kl) is float and kl ==
+    0.0): raise SystemExit('CONSTRUCTION INCIDENT ...')`. The statepresent module is asserted absent before every
+    read.
+
+[headline 35] IMPRECISE: guard.py: 'The G-ID licence must match the artifact's backend.'
+    EVIDENCE: guard.py:199-205 (_gid_pass) requires `ident['backend_identifier'] == backend_identifier`, the
+    asking run's resume.backend_identifier(adapter.provenance()). It is the run's backend that must equal the
+    backend recorded in the G-ID artifact; the sentence as worded is ambiguous.
+    CORRECTION: The cached path is licensed only on the backend the G-ID artifact records: the run's backend
+    identifier must equal the artifact's.
+
+[headline 36] IMPRECISE: resume.py: 'The OLMo campaign refuses a resume on another pod; a gate stage interrupted by a pod change is set aside and restarted, m:251/m:267.'
+    EVIDENCE: resume.py:20-28 and :37-55: an OLMo campaign carries the pod id and is refused on another pod.
+    However, a checkpoint with end_pending is re-finish-only on ANY pod: the selftest has 'an OLMo campaign killed
+    with its end pending re-finishes on ANOTHER pod'. Only an UNFINISHED, UNSTOPPED gate stage is set aside; an
+    ended one is refused STAGE ENDED and an end-pending one re-finishes. m:267 supports the core rule.
+    CORRECTION: The OLMo campaign refuses a resume on another pod (a pending end may only be re-finished there,
+    launching nothing); an unfinished, unstopped gate stage interrupted by a pod change is set aside and
+    restarted, m:251/m:267.
+
+[headline 37] HOLDS: readrule.py: 'strip, redact, `class@phase` printing'
+    EVIDENCE: readrule.py defines strip_contrast (:325), redact_sham (:368), printed_reason (:443) and
+    session_line (:486). There are 35 readrule selftest checks (strip_contrast 9, redact_sham 7, printed_reason 5,
+    session_line 3, stage_report 8, release_full 1, readrule 2).
+
+[headline 38] HOLDS: bars.py: 'Fractions; fires iff P ≤ α (build pin 1); every critical count recomputed by an independent lens.'
+    EVIDENCE: bars.py:158-161: `fires` returns binom_sf(k,n,p0) <= alpha as exact Fractions, and q() refuses
+    floats. The bars lens's COVERED section reads 'All eight m:271 critical counts reproduce ... full realised-n
+    tables ... match'. I recomputed the eight counts exactly: 160/.05→14, 160/.02→7, 10/.05→3, 10/.02→2,
+    240/.05→19, 144/.10→22, 30/.05→5, 18/.10→5. Commit 05c4636 names build pin 1 as 'P <= alpha implemented
+    explicitly'.
+
+[headline 39] HOLDS: stages.py: 'with G-TIME, G-ID-F0m, qualification and the campaign'
+    EVIDENCE: run_gate_stage covers the time and qual gates, for Qwen and OLMo. run_gid_pair (:1477) is G-ID and
+    run_campaign (:1766) is the campaign.
+
+[headline 40] HOLDS: testing.py: 'never imported by production code'
+    EVIDENCE: testing is imported only inside _selftest functions (runner_qwen:226, runner_olmo:194, scaffold:544,
+    verify:274, stages:2275) and inside stages._script_policy (:2241), which is under the header 'self-test
+    helpers (selftests only; production code never calls them)'. The driver imports it only inside _selftest and
+    run_selftest.
+
+====================================================================================================
+PART schedules-stages: 35 claims, 8 failing or imprecise
+====================================================================================================
+[schedules-stages 1] HOLDS: Schedules are at data/m/schedules/ (link to manifest.json), described as committed
+    EVIDENCE: ls data/m/schedules: 26 files incl. manifest.json. git status: '?? data/m/' (untracked now; the
+    entry is pre-commit and its 'Committed:' list includes data/m/schedules/). .gitignore diff allowlists
+    !/data/m/schedules/*.json; git check-ignore --no-index data/m/schedules/manifest.json -> not ignored.
+
+[schedules-stages 2] HOLDS: 26 files (25 schedules and the manifest)
+    EVIDENCE: ls data/m/schedules | wc -l -> 26; manifest 'files' has 25 entries; set(dir) - set(manifest) =
+    ['manifest.json']. Breakdown: 8 campaign + 17 gate (Q-F0 time x2, id x1, qual x2; 3 OLMo x (time x2, qual
+    x2)). Self-test line 112 '[PASS] schedule: file set = Q-F0 (2 campaign + 5 gate) + 3 OLMo x (2 + 4) + manifest
+    26'.
+
+[schedules-stages 3] HOLDS: 1,535,055 bytes
+    EVIDENCE: find data/m/schedules -type f -exec stat -f %z {} \; | awk '{s+=$1} END{print s}' -> 1535055
+
+[schedules-stages 4] HOLDS: manifest sha256 8c89636addb846c8d45cd9c6dcf97a7663df3e2b535dd91b3d40302cccc8d6bb
+    EVIDENCE: shasum -a 256 data/m/schedules/manifest.json ->
+    8c89636addb846c8d45cd9c6dcf97a7663df3e2b535dd91b3d40302cccc8d6bb. All 25 file sha256s match the manifest
+    (python check: '25 bad 0').
+
+[schedules-stages 5] HOLDS: A rebuild is byte-identical
+    EVIDENCE: schedule.write_schedule_files(<vc1>/sched/rebuild) gave 26 files, same names as data/m/schedules and
+    every file byte-equal ('26 True / True'); schedule.verify_schedule_dir() on the committed dir -> []. Run on
+    the laptop's numpy 2.5.1. Scope is the laptop only (see the OMISSION entry about the box's numpy).
+
+[schedules-stages 6] HOLDS: every stage start regenerates and compares
+    EVIDENCE: stages.load_committed (stages.py:744-778) calls schedule.verify_schedule_dir (schedule.py:619-648).
+    That rebuilds every blob via _file_blobs(), compares bytes, checks each manifest sha256 and cells sha, and
+    refuses unlisted files. On any problem it raises SystemExit 'SCHEDULES NOT CLEAN'. Called by run_gate_stage
+    (:1304), run_gid_pair (:1507) and run_campaign (:1811), before any launch.
+
+[schedules-stages 7] HOLDS: Campaigns are built to the k = 1 launch row: Q-F0 A0 82 balance units (2,624 sessions; covers cached and uncached), A0s 30 (960); each OLMo checkpoint A0 69 (2,208) and A0s 30 (960)
+    EVIDENCE: Committed files: Q-F0_campaign_A0 n_units 82 n 2624; Q-F0_campaign_A0s 30/960;
+    OLMo-{sft,dpo,instruct}_campaign_A0-* 69/2208, A0s-* 30/960. I recomputed N90 at k=1 with exact integers:
+    floor 96 -> 2604 -> L 2624 (82 units); floor 80 -> 2194 -> 2208 (69); floor 32 -> 943 -> 960 (30). The
+    uncached 69 units are a prefix of the 82 (prefix property: each unit is keyed m-sched|unit|arm|b; self-test
+    checks '6 units == first 6 of 9').
+
+[schedules-stages 8] IMPRECISE: These reproduce the spec's k = 1 totals 3,584 and 3,168 and the k = 24/19/12 table rows
+    EVIDENCE: 2624+960=3584 and 2208+960=3168 match m:203 and m:214. The schedule files do not reproduce the
+    k=24/19/12 rows; the launch-rule function (schedule._n90_launch) does. Its self-test (schedule.py, '[PASS]
+    launch-rule cross-check on the k = 24 / 19 / 12 table rows', selftest raw line 108) checks 8 cells: cached
+    (96,24)->128, (32,24)->64, (96,19)->160, (96,12)->224, (32,12)->96; uncached A0 (80,24)->96, (80,20)->128,
+    (80,12)->192. So the uncached rows are checked at k=20, not 19, and A0s is not checked at k=19. My own exact
+    recomputation reproduces every row of both tables (k=24..12) and the parenthetical k=11..5 values
+    (352/416/448/544/608/736; 320/384/416/480/544/640).
+    CORRECTION: The launch rule as built gives these k = 1 counts, which sum to the spec's k = 1 totals 3,584 and
+    3,168. The self-test also cross-checks it against the table rows at k = 24/19/12 (cached) and k = 24/20/12
+    (uncached A0).
+
+[schedules-stages 9] IMPRECISE: Gate files are the sixteen-row table (m:161–170) with every m:172 balance claim checked at m = 4, 8 and 16
+    EVIDENCE: schedule.GATE_TABLE == the spec's table, parsed from PROPOSAL-m v1.11 lines 161-170
+    (_parse_spec_gate_table -> True). The gate files are not the whole table: each file takes the first m rows
+    under its own template's pi, with m = 1 (8 G-TIME files), 8 (4 contrast qual files) or 16 (4 sham qual files +
+    Q-F0 id). build_schedule_objects runs assert_gate_balance on every 16-row file. For each 8-row file it runs
+    the check on the full 16-row regeneration and asserts the file is its prefix. G-TIME's 1-row files get no
+    balance check (no claim applies at m=1). I re-ran assert_gate_balance on every committed 16-row file and the
+    prefix check on every 8-row file: all pass. The checks implement m:172's clauses at 4/8/16 (schedule.py
+    _gate_balance_problems).
+    CORRECTION: The gate files take the first m rows of the sixteen-row table (m:161–170) under each template's
+    own π: G-TIME one row per arm, qualification 8 contrast and 16 sham, G-ID 16. Every m:172 balance claim is
+    checked at m = 4, 8 and 16 on each gate template's full sixteen-row schedule, and the 8-row files are asserted
+    to be its prefix.
+
+[schedules-stages 10] HOLDS: The stages use only these committed files, never regenerated cells
+    EVIDENCE: load_committed returns cells parsed from the committed file bytes after sha checks
+    (stages.py:764-777). The drivers launch with scheds[t]['cells'][j] (:1347, :1536, :1932). Regeneration is used
+    only to verify the directory. Self-test line 527 '[PASS] stages: load_committed serves the committed cells ...
+    refuses a tampered cell, a manifest sha mismatch and a missing directory'.
+
+[schedules-stages 11] HOLDS: How a stage runs: for steps 10–16 and the OLMo track; built and stub-tested, not run
+    EVIDENCE: m:358: step 10 G-TIME-F0, 12 G-ID-F0m, 14 G-F0m-Qwen, 16 campaign. m_sessions.py docstring: the
+    time|id|qual|campaign subcommands refuse (exit 2). I re-ran the self-test (TMPDIR in vc1,
+    PYTHONDONTWRITEBYTECODE=1): '628/628 m selftest checks pass', exit 0, repo git status unchanged.
+
+[schedules-stages 12] HOLDS: Before any session, every stage checks the schedules (directory regenerated and each sha256 against the manifest)
+    EVIDENCE: load_committed -> verify_schedule_dir (regeneration byte-compare, manifest sha per file, cells sha,
+    no unlisted file). It then re-hashes each wanted file against the manifest (stages.py:766-770). All three
+    drivers call it before their launch loops.
+
+[schedules-stages 13] HOLDS: It also runs the startup checks: banner bytes against the proposal's literals, numpy's stream known answer, and rule-18 / m:258 hygiene of both rosters against the pool, golds, renders, the eight declared harness strings and e2a's wrapper
+    EVIDENCE: _begin -> _startup_checks -> startup_problems (stages.py:342-353). It runs keys.stream_known_answer
+    (the f|CORR|0 permutation), banner.spec_problems(proposal_path) (every built template x clause against §2.5
+    literals parsed from the proposal file) and corr.startup_hygiene. startup_hygiene runs
+    hygiene(ROSTERS_OF_RECORD, ...) over clean tasks, golds, renders_m, banner.DECLARED_HARNESS_STRINGS (len 8,
+    verified) and session_e2a SESSION_BANNER + ROUND_TEMPLATES + MENU_TEMPLATES (corr.py:413-467).
+    startup_problems() run now -> [].
+
+[schedules-stages 14] HOLDS: identity_extra must carry the governing lock's and the proposal's sha256, never "pre-lock"
+    EVIDENCE: stages._extra (stages.py:819-886): required keys lock_sha256, proposal_sha256, renders_sha16 (+
+    locked_path except at G-ID). Both shas must match ^[0-9a-f]{64}$, else ValueError naming 'pre-lock' as
+    refused. Self-test line 507 PASS.
+
+[schedules-stages 15] HOLDS: On a non-stub run, lock_file and proposal_file must be committed at HEAD, with working-tree bytes equal to the blob and to the hashes; checked by read-only git cat-file / ls-tree, not git diff, which writes the index
+    EVIDENCE: _extra requires both files when not stub. licence_problems (stages.py:516-555) calls _committed for
+    each: git cat-file -e, git ls-tree -z (regular blob, not a symlink), git cat-file blob, working-tree bytes ==
+    blob. It then checks sha256(bytes) == proposal_sha256 / lock_sha256, and HEAD via git rev-parse. My scratch-
+    repo experiment: after touching a tracked file, 'GIT_OPTIONAL_LOCKS=0 git diff' and plain 'git diff' each
+    changed .git/index mtime (1791285844->845->846), while cat-file -e / ls-tree / cat-file blob left it unchanged
+    (846).
+
+[schedules-stages 16] HOLDS: renders_sha16 must equal the renders built at startup
+    EVIDENCE: _renders_of_record (stages.py:889-896): corr.renders_sha(renders from scaffold.pool_and_renders())
+    must equal extra['renders_sha16'], else SystemExit 'RENDERS MISMATCH'. It is called by all three drivers
+    before load_committed.
+
+[schedules-stages 17] HOLDS: locked_path must agree with the G-ID licence on this backend (no locked path at G-ID)
+    EVIDENCE: _locked (stages.py:909-928) compares extra['locked_path'] with guard.cached_path_admitted(...,
+    backend_identifier=bid) and raises SystemExit 'PATH MISMATCH' on disagreement. The one exception is a
+    checkpoint carrying a pending end, which only re-finishes. _extra refuses a locked_path key at stage 'id' and
+    forces 'uncached' for G-TIME and every OLMo stage.
+
+[schedules-stages 18] HOLDS: The prior stage's persisted end must license this one, in §8's order (prior_ckpt): G-ID and qualification need G-TIME PASS; an OLMo qualification after a G-TIME PAUSE needs the named adjudication; the campaign needs qualification PASS
+    EVIDENCE: prior_gate (stages.py:637-709): PRIOR_STAGE = {id: time, qual: time, campaign: qual}. It reads
+    ck['stage_end'], the persisted end; an end that is only pending -> 'PRIOR STAGE NOT ENDED'. Requires PASS, or
+    PAUSE with prior_adjudication, and only for an OLMo qual. run_campaign passes no adjudication to _licensed, so
+    a campaign needs qual PASS. Self-test line 514 PASS (11 refusals).
+
+[schedules-stages 19] IMPRECISE: Qwen qualification also needs the G-ID artifact, under the same proposal
+    EVIDENCE: prior_gate: for qwen qual the artifact at guard.gid_artifact_path must exist (any verdict).
+    gid_artifact_problems accepts identity.proposal_sha256 in accepted_proposals = {this run's} ∪
+    prior_proposal_sha256s (the lock's re-adoption list, flag (n)). On a non-stub run it also refuses a stub-
+    written artifact. The same proposal rule binds the prior G-TIME checkpoint too, not only the artifact.
+    CORRECTION: Qwen qualification also needs the G-ID artifact (any verdict). The artifact and every prior
+    checkpoint must be under this run's proposal or one the lock re-adopts (prior_proposal_sha256s, flag (n)), and
+    on a model neither may be stub-written.
+
+[schedules-stages 20] IMPRECISE: Non-stub Qwen stages also run m:267's laptop checklist and log its gate line (proposal, CLAUDE.md and the analyzer, committed; HEAD)
+    EVIDENCE: _laptop_preflight (stages.py:485-513) runs guard.preflight_laptop (guard.py:935-967): adapter >= 96
+    W on AC (pmset), no other python model process (pgrep), and >= 5 GiB disk free. It does not check m:267's
+    'nohup caffeinate -is … & disown' or 'display sleep only' items; grep finds no check for them. CLAUDE.md and
+    the analyzer are checked committed via _committed. The proposal's committed check is the licence's
+    (licence_problems), not the preflight's. The gate line prints sha16 prefixes of all three plus HEAD.
+    CORRECTION: Non-stub Qwen stages also run the checkable part of m:267's laptop checklist: adapter ≥ 96 W on
+    AC, no other model process, and disk headroom (nohup/caffeinate and display sleep are not checked). They log
+    its gate line: sha16s of the proposal, CLAUDE.md and the analyzer, all three committed at HEAD (CLAUDE.md and
+    the analyzer by the preflight, the proposal by the licence), plus HEAD.
+
+[schedules-stages 21] HOLDS: OLMo stages require RUNPOD_POD_ID
+    EVIDENCE: _require_pod (stages.py:331-339) is called in _begin for every OLMo stage, gate or campaign.
+    resume.POD_ENV = 'RUNPOD_POD_ID' (resume.py:92); empty or whitespace counts as absent. Self-test line 573
+    PASS.
+
+[schedules-stages 22] IMPRECISE: The adapter's provenance is recorded verbatim, once per invocation (ledger 27)
+    EVIDENCE: _start_provenance -> resume.provenance_record(adapter.provenance()), JSON-normalized verbatim
+    (tuples become lists). _append_provenance appends one entry per invocation that reaches its checkpoint and
+    prints the PROVENANCE line. Exception: a paused campaign re-invoked with no ruling goes through _show_pause
+    before _append_provenance ('no provenance entry either', stages.py:2186-2189). Invocations refused at start
+    record none. Reports copy only entries with launched > 0 (resume.report_provenance).
+    CORRECTION: The adapter's provenance is recorded verbatim, once per invocation that reaches its checkpoint (a
+    start, a resume, a re-finish); a paused campaign merely shown its pause records none (ledger 27).
+
+[schedules-stages 23] HOLDS: G-VER runs on every session before it is recorded
+    EVIDENCE: _launch (stages.py:984-1008) calls verify.verify_and_mark on the record before returning. A problem
+    becomes a quarantined hit that never enters sessions. resume.record_session (resume.py:908-929) refuses any
+    record whose verified is not exactly True. Self-test line 555 PASS.
+
+[schedules-stages 24] HOLDS: Bars are evaluated as m:271, m:280–283, m:302, m:316 and m:330 state them, on sham sessions only at the gate stages
+    EVIDENCE: _gate_end evaluates the binomial_stage_end and pause bars once via bars.stage_end_eval, whose
+    default selector is sham_domain and which raises 'DOMAIN VIOLATION' if a contrast session enters a sham-only
+    bar (bars.py:853-898). campaign_look (stages.py:1724-1755): sham round_degeneracy cumulative, Fisher guard
+    binding, absolute .20 guard binding on Qwen and reported-only on OLMo (binding=abs_binding, bars.py:539-620);
+    looks every 40 (resume.LOOK_EVERY=40). Fires iff P <= alpha (fisher_fires uses <=). Spot-checked against spec
+    lines 271, 280-283, 302, 316 and 330; not an exhaustive audit of every bar constant.
+
+[schedules-stages 25] HOLDS: Every end is persisted in three steps: first as a pending end with every session, then report, reads, adjudication excerpt and artifact, then the end
+    EVIDENCE: _finish_gate (stages.py:1395-1448) and _finish_gid (:1595-1689) run _pend, then _write_pending
+    (end_pending + sessions) if first, then report, reads, adjudication (or _remove_stale) and the G-ID artifact
+    (_write_unless_identical), then resume.persist_end. _complete_campaign (:2143-2157) follows the same order;
+    the campaign writes no reads file and only gate stages do. Self-test lines 546, 571, 594 PASS.
+
+[schedules-stages 26] HOLDS: A pending end is re-finish-only on any pod, backend or invocation, and nothing launches
+    EVIDENCE: resume.load_or_init (resume.py:803-861): a checkpoint with end_pending is returned with or without
+    --resume and never set aside. Only backend_identifier and pod_id may differ; any other identity difference is
+    refused (package_sha256 included, so an m-package edit blocks even the re-finish). The drivers return
+    _finish_* or _refinish_campaign before any launch. _locked lets a re-finish proceed under the locked path
+    across a backend licence change. _finish_only lets an OLMo campaign checkpoint be written on another pod only
+    to re-finish. Self-test lines 366, 369, 510 PASS.
+
+[schedules-stages 27] HOLDS: An announced STOP or PAUSE is never lifted by a kill
+    EVIDENCE: STOP and PAUSE lines (announce_stop / _pause_lines) are printed only after resume.persist_end
+    (stages.py:1437-1440, :1674-1677, _campaign_done after persist_end at :2156). A fired look's messages are
+    deferred to the finish (stages.py:1950-1957 PIN). The fired session's own line printed before the pending
+    write shows only its exclusion class@phase, not the hair trigger. resume.refuse_ended refuses any ended
+    checkpoint on any pod. Self-test lines 553, 577, 580 PASS.
+
+[schedules-stages 28] HOLDS: Exit codes: PASS / COMPLETE / CAP / PI-STOP 0, PAUSE 3, STOP 4, FAIL 5, NOT-DETERMINED 6
+    EVIDENCE: stages.EXIT_CODES printed at run time: {'PASS': 0, 'COMPLETE': 0, 'CAP': 0, 'PI-STOP': 0, 'PAUSE':
+    3, 'STOP': 4, 'FAIL': 5, 'NOT-DETERMINED': 6}; exit_code() raises on an unknown status. This is the drivers'
+    mapping. The CLI subcommands are still stubs that exit 2, as the entry discloses elsewhere.
+
+[schedules-stages 29] HOLDS: data/m/ckpt/ holds the pick-bearing checkpoints and m:271's confined adjudication excerpts (with picks_revealed); it is tracked and marked -diff in .gitattributes
+    EVIDENCE: checkpoint_path forces <out_root>/ckpt/<name>.json; adjudication_path is {stem}_adjudication.json
+    beside it; events carry 'picks_revealed' (stages.py:1240, :1250, :1266). .gitattributes diff adds
+    '/data/m/ckpt/** -diff'. git check-attr diff on ckpt/*.json, *_adjudication.json and *.json.podchange-* ->
+    'diff: unset'. git check-ignore: those are not ignored, *.tmp is.
+
+[schedules-stages 30] IMPRECISE: so no diff shows a pick before VERDICTS (m:318)
+    EVIDENCE: Scratch repo with '/data/m/ckpt/** -diff': git diff and git log -p print 'Binary files ... differ'.
+    But git diff --text prints the JSON lines (-{"pick":"granite"} / +{"pick":"plaza"}), and git show HEAD:<path>
+    prints the file. m:318 itself says nothing about git diffs; it bars reading pick-bearing artifacts.
+    CORRECTION: so git's default diff and log -p never render a ckpt/ file (it shows as binary; --text overrides),
+    supporting m:318's ban on reading pick-bearing artifacts before VERDICTS.
+
+[schedules-stages 31] HOLDS: data/m/reports/ holds reports and reads with no contrast pick (sham picks only under m:318 (2)–(4))
+    EVIDENCE: out_paths and for_checkpoint put reports at reports/{stem}_report.json and reads at
+    reports/{stem}_reads.json. Every report and the G-ID artifact pass _assert_pick_free (no roster word
+    anywhere). Gate reads are readrule.strip_contrast (free rounds removed) or redact_sham. G-ID's reads are
+    release_full of sham-only sessions (exception (4)). The campaign writes no reads file.
+
+[schedules-stages 32] HOLDS: data/m/gates/ holds the G-ID artifact
+    EVIDENCE: guard.GATES_DIR = REPO/data/m/gates (guard.py:78); gid_artifact_path -> GATES_DIR/'{unit}_G-ID.json'
+    (guard.py:165-170). .gitignore allowlists /data/m/gates/*.json.
+
+[schedules-stages 33] IMPRECISE: Stdout carries only class@phase session lines, blinded bar messages, the STAGE / STOP / PAUSE lines and paths
+    EVIDENCE: print() calls in stages.py: the PROVENANCE line (:328) at every invocation that reaches its
+    checkpoint; the GATE line (:511, non-stub Qwen); the LICENCE line (:566, non-stub); the PATH notice (:920);
+    RE-FINISH lines (:1337, :1522, :2171); session lines; bar and look messages; the END LOOK line; the STAGE
+    line; CHECKPOINT/REPORT/READS/ADJUDICATION/G-ID ARTIFACT path lines. resume.py:849 prints the POD CHANGE line.
+    The self-test's own stdout check (line 529) names 'the PROVENANCE line, session lines, bar messages, the stage
+    line with its path and paths'. The blinding substance holds: none of these lines carries a label or pick.
+    CORRECTION: Stdout carries only the PROVENANCE line, the GATE and LICENCE lines (non-stub runs), class@phase
+    session lines, blinded bar messages, the STAGE / STOP / PAUSE / END LOOK lines, the RE-FINISH, PATH and POD
+    CHANGE notices, and paths; none names a label or a pick.
+
+[schedules-stages 34] HOLDS: A contrast free-phase trigger is announced by phase alone
+    EVIDENCE: announce_stop (stages.py:1040-1067): a hit with contrast and phase 'free' prints 'STOP {name}: a
+    hair trigger fired in the free phase of a contrast session ({t} s={s}); its class is withheld'. The blinded
+    block stores WITHHELD_CLASS. resume._stop_words repeats the phase-only form on every re-invocation.
+    readrule.printed_reason gives 'excluded@free' (CONTRAST_FREE) for the session line. Self-test lines 551 and
+    554 PASS.
+
+[schedules-stages 35] FAILS: OMISSION: the byte-identical rebuild and the stage-start regeneration were exercised only on the laptop's numpy 2.5.1; the box records numpy 2.1.2, and there the first OLMo stage start is the first test of schedule regeneration
+    EVIDENCE: My rebuild ran on numpy 2.5.1 (printed). data/olmo/b3_screen_base.json
+    provenance.library_versions.numpy = 2.1.2. schedule.py's docstring notes both versions and relies on
+    verify_schedule_dir at run time. If the box's Generator stream differed, every OLMo stage would refuse
+    'SCHEDULES NOT CLEAN'; that is safe but blocking. The review raw (#1 lenient refuter) reports 377 b3 sessions
+    generated under 2.1.2 that replay exactly on 2.5.1 (permutation, integers), so the risk is low. The entry's
+    'For the box, before G-TIME-OLMo' list does not mention it.
+    CORRECTION: Add to 'For the box, before G-TIME-OLMo': schedule regeneration has been byte-compared on the
+    laptop (numpy 2.5.1) only. The box records numpy 2.1.2; its first stage start re-derives all 26 files and
+    refuses on any drift (b3's 377 sessions replay across the two versions, so none is expected).
+
+====================================================================================================
+PART selftest-review-site: 42 claims, 13 failing or imprecise
+====================================================================================================
+[selftest-review-site 1] HOLDS: Header: "Self-test 628/628, the same on two runs"
+    EVIDENCE: The raw results/raw/2026-10-06_m-build_selftest.txt (minus its 3 header lines) is byte-identical to
+    scratchpad driver_final_1.txt (`diff` returns nothing). driver_final_2.txt also ends `628/628 m selftest
+    checks pass`, with the same per-prefix counts and the same check names; diffs are only temp paths and the
+    podchange stamp. Both runs (07:14:33 and 07:15:29 local) postdate the last code edits (stages.py 07:07:58,
+    m_sessions.py 06:47:31), and `find -newer driver_final_1.txt` over valence_core, m_sessions.py, data/m,
+    .gitignore and .gitattributes is empty. My own re-run (TMPDIR in vc1, PYTHONDONTWRITEBYTECODE=1) gave 628/628,
+    rc 0, the same names and per-module counts, and left git status unchanged.
+
+[selftest-review-site 2] HOLDS: Header: "post-build site check 8/8 gates"
+    EVIDENCE: The sitecheck raw has 8 `GATE <suite>: PASS (summary line matched; exit 0)` lines and
+    `SITECHECK_DONE 2026-10-06 11:16:51 UTC -- gates failed: 0`. The raw is byte-identical to scratchpad
+    sitecheck_final.txt.
+
+[selftest-review-site 3] HOLDS: Header: "Review: eight blind lenses, 44 findings, each put to a lenient and a strict refuter (17 confirmed, 26 contested, 1 refuted)"
+    EVIDENCE: review_result.json: tally {CONFIRMED 17, CONTESTED 26, REFUTED 1}; 8 lenses; 44 findings, each
+    carrying both a `lenient` and a `strict` block. Review raw lines 2-5 say "blind reviewers" and define the two
+    refuters.
+
+[selftest-review-site 4] IMPRECISE: Header: "then three fix rounds, each checked by fresh agents with refuters"
+    EVIDENCE: Review raw PART 2 (l.3163-3164): after round 1, one agent per lens checked it and each new finding
+    N1-N17 went to a STRICT refuter. PART 3 (l.4843-4844): round 2's three checks each sent R1-R11 to a STRICT
+    refuter. PART 4 (l.5887) is an "INDEPENDENT STRICT VERIFICATION OF FIX ROUND 3 (verbatim report)": a single
+    verifier (reportsC/verify3.md), and its two new minor items went to no refuter (grep 'refut' after l.5886
+    finds only copied directory names). There is also a fourth round (Code's own edit, PART 5), reviewed by one
+    agent with no refuter.
+    CORRECTION: then three agent fix rounds and a fourth by Code: rounds 1 and 2 were each checked by fresh
+    agents, whose new findings went to a strict refuter; round 3 was checked by one independent verifier and round
+    4 by one independent reviewer, neither with a refuter
+
+[selftest-review-site 5] IMPRECISE: Header: "Every confirmed or contested finding is fixed, or disclosed below with its reason; none is left open."
+    EVIDENCE: dispositions.json and the review raw's DISPOSITION lines show every one of the 43 is FIXED or
+    DISCLOSED. Several dispositions and residuals, however, are recorded only in the review raw or in a code PIN,
+    not in the entry: #10 'DISCLOSED (PIN): the look index is kept as invariant-checked checkpoint state, not an
+    identity field' (raw l.842; no 'look index' anywhere in the entry); #32 'DOCSTRINGS CORRECTED' (raw l.2446:
+    the check still cannot fire); #21's residual 'resume.Identity itself still accepts pre-lock for non-stage
+    callers (disclosed)' (raw l.1694); R8's residual (analyzer hash compared only when given; on OLMo against
+    working-tree bytes, dispositionsR.json). grep of the entry for 'look index|schedule_check' finds nothing.
+    CORRECTION: Every confirmed or contested finding is fixed or disclosed, its disposition and any residual
+    recorded in the review raw (those for the seat also below); none is left open.
+
+[selftest-review-site 6] HOLDS: Self-test: "628/628, model-free"
+    EVIDENCE: Raw header: "model-free (scripted stub adapters only; no model or tokenizer loaded)". Last line
+    `628/628 m selftest checks pass`; 628 [PASS], 0 [FAIL]. Reproduced by my own run.
+
+[selftest-review-site 7] HOLDS: Self-test per-module counts: keys 12, corr 44, banner 12, schedule 46, bars 96, audit 60, guard 46, resume 52, readrule 35, testing 15, scaffold 22, runner_qwen 27, runner_olmo 21, verify 12, stages 46, and 82 (m_sessions); sum 628
+    EVIDENCE: Prefix tally of the raw: keys 12, corr 44, banner 12, schedule 46, bars 96, audit 60, guard 46,
+    resume 52, readrule 2 + strip_contrast 9 + redact_sham 7 + printed_reason 5 + session_line 3 + stage_report 8
+    + release_full 1 = 35 (grep shows all seven prefixes live only in valence_core/m/readrule.py), testing 15,
+    scaffold 22, runner_qwen 27, runner_olmo 21, verify 12, stages 46, m_sessions 82. Total 628. My re-run gives
+    identical counts.
+
+[selftest-review-site 8] HOLDS: Self-test: "bars 96 (154 firing cases)"
+    EVIDENCE: `len(bars.FIRING_CASES)` = 154 (80 must-fire, 74 must-not-fire), built at bars.py:744 from the Q-F0
+    cases, the per-OLMo-ckpt cases, MANDATORY_CASES (21) and SPEC_COUNT_CASES. Checks at raw l.182-185:
+    'FIRING_CASES verify clean and complete' on Q-F0 and the three OLMo checkpoints.
+
+[selftest-review-site 9] IMPRECISE: Self-test: "and 82 integration checks run through the drivers with scripted adapters"
+    EVIDENCE: 82 checks carry the `m_sessions:` prefix, but about 11 of them run no stage through a driver:
+    'stages' run_session_qwen / olmo_startup reference is restored', the stdout-hygiene planted-label check,
+    'schedules regenerated ... byte-identical' and its tamper check, 'every stage subcommand refuses with exit 2',
+    'no action given is refused', 'guard.check_call_sites is []', the forbidden-literal grep, and 'quarantined
+    state-present module is not in sys.modules' (raw tail).
+    CORRECTION: and 82 checks in the driver's own self-test, most of them stub stages run through the drivers with
+    scripted adapters (the rest are CLI refusals, the schedule regeneration and static guard/grep checks)
+
+[selftest-review-site 10] IMPRECISE: Self-test: "Behaviours are tested in both directions, a case that must fire and one that must not."
+    EVIDENCE: True for the bars (80 must-fire and 74 must-not-fire FIRING_CASES; assert_firing_complete refuses a
+    one-way bar, raw l.186) and for many refusals. As a blanket statement about every behaviour it is unverified,
+    and some checks are one-directional, e.g. 'release_full: returns the records unchanged' and 'an existing G-ID
+    artifact is never overwritten'.
+    CORRECTION: Bars are tested in both directions (each declared bar must fire and must stay silent; 154 cases),
+    and so are most guards and refusals.
+
+[selftest-review-site 11] HOLDS: Self-test: "The integration checks run stub stages under temp roots"
+    EVIDENCE: scripts/m_sessions.py:293 `tempfile.TemporaryDirectory(prefix="m_selftest_")`; `fresh()` builds
+    roots under it, and resume.refuse_canonical_out guards them. My run left git status unchanged.
+
+[selftest-review-site 12] IMPRECISE: Self-test: "including kill-and-re-invoke at every finish"
+    EVIDENCE: m_sessions.py:1168-1225 (R1_CASES) kills and re-invokes 7 finish kinds: hair STOP, G-VER STOP, bar
+    STOP, OLMo PAUSE, campaign STOP, PASS, G-ID PASS. :1415-1445 (LW_CASES) covers 6 campaign ends, and PI-STOP
+    and campaign COMPLETE are killed elsewhere. G-ID FAIL, G-ID NOT-DETERMINED and the hour-cap CAP are never
+    killed in the self-test (:520, :584, :919 run them uninterrupted only; stages._selftest has no such test).
+    G-ID FAIL was killed only in the round-3 verifier's external matrix.
+    CORRECTION: including kill-and-re-invoke at each STOP, PAUSE, PASS, COMPLETE and PI-STOP finish (G-ID FAIL,
+    NOT-DETERMINED and CAP are not kill-tested in the self-test)
+
+[selftest-review-site 13] HOLDS: Self-test: "and every stdout scanned for roster labels, pick lines and menus"
+    EVIDENCE: Every stage call in the self-test goes through `capture()` (m_sessions.py:161-170), which appends
+    its stdout to `outs`. :1580-1584 scans all of them: 'stdout of 198 integration runs carries no roster label,
+    pick line or menu text []'. :1585-1586 shows the scan fires on a planted label, pick line and menu.
+
+[selftest-review-site 14] IMPRECISE: Self-test: "The fix rounds' mutation passes killed every mutant they planted."
+    EVIDENCE: The final runs killed all mutants: F1 35/35, F2 42, G 37 (mut_log2.txt: 37 KILLED, 0 SURVIVED), H 13
+    KILLED in H/mutants.out, R3fix 12 mutants all failing the self-test, round 4 14 KILLED
+    (check4/mut/results_pass1.json plus results.json). But first runs had survivors. reportsC/fix_F1.md:8 says
+    'The first pass let one through (package hash blind to bytes) and two only crashed the run; I tightened those
+    tests and re-ran' (f1_mut_log: M17_package_blind SURVIVED). G/mut/mut_log.txt has 'prior_driver_no_require ...
+    SURVIVED' before mut_log2. Also, the counts the fix reports claim do not all match their logs: H claims 15,
+    its log shows 13; R3fix claims 16, its log shows 12.
+    CORRECTION: The fix rounds' mutation passes, in their final runs, killed every mutant they planted (two first
+    runs, rounds 1 and 2, each let one survive; the tests were tightened and re-run).
+
+[selftest-review-site 15] HOLDS: Review raw link: "every finding with both refuters' reasoning and its disposition"
+    EVIDENCE: Review raw before PART 2 (l.<3162) has 44 'LENIENT REFUTER', 44 'STRICT REFUTER' and 44
+    'DISPOSITION:' blocks. After that, 28 DISPOSITION lines (N1-N17, R1-R11), each N and R with its strict
+    refuter.
+
+[selftest-review-site 16] IMPRECISE: Review: "Eight blind lenses, read-only, each working on scratch copies"
+    EVIDENCE: The lenses' 'covered' statements in review_result.json show only verifier-tests ran on 'a scratch
+    copy of the repo (review/verifier-tests/pkg)'. The others ran their experiments in scratchpad directories
+    against the real package, imported read-only: schedule 'All experiments ran in the scratchpad'; guard-resume
+    'ran on the scripted stub in scratch'; hard-rules 'Ran scripts/m_sessions.py --selftest ... from the
+    scratchpad' with an mtime snapshot of the repo; dose-delivery 'the run wrote nothing to the repo'.
+    CORRECTION: Eight blind lenses, read-only on the repo, each running its experiments in the scratchpad (one on
+    a scratch copy of the repo)
+
+[selftest-review-site 17] HOLDS: Review: lens list "dose/delivery, schedules, audit/runners, bars, blinding, guard/resume, verifier/tests, hard rules"
+    EVIDENCE: review_result.json lens names: dose-delivery, schedule, audit-runners, bars, blinding, guard-resume,
+    verifier-tests, hard-rules.
+
+[selftest-review-site 18] HOLDS: Review: "They raised 44 findings (12 graded substantive by their finder, 32 minor)"
+    EVIDENCE: Counter of the finding `severity`: substantive 12, minor 32 (review_result.json).
+
+[selftest-review-site 19] HOLDS: Review: "Outcomes: 17 confirmed, 26 contested, 1 refuted."
+    EVIDENCE: Counter of `outcome`: CONTESTED 26, CONFIRMED 17, REFUTED 1. Consistent with the refuters: the
+    lenient refuter refuted 27; minus #15, which both refuted, that leaves 26 split.
+
+[selftest-review-site 20] HOLDS: Review: "The strict refuter held 10 substantive"
+    EVIDENCE: Strict (refuted=False, severity=substantive) = 10: #3, 5, 11, 12, 17, 18, 19, 39, 40, 41.
+
+[selftest-review-site 21] HOLDS: Review: "both refuters held 3: #3 ... #5 ... #41"
+    EVIDENCE: Lenient (refuted=False, severity=substantive) = 3: #3, #5, #41. All three are strict-substantive too
+    (raw l.232, l.415, l.2917: 'lenient:substantive strict:substantive').
+
+[selftest-review-site 22] HOLDS: Review: "#3, the campaign treating L as a hard bound against m:192; #5, OLMo's echo class missing a final period its newline stop drops"
+    EVIDENCE: #3 title: 'Campaign treats the launch count L as a hard bound...'; spec_ref m:192 ('L is a
+    projection, not a bound'). #5: 'OLMo echo class almost never fires: a Note line that ends the response is
+    stored without its final period'; per the claim, the newline stop drops the fused punctuation token.
+
+[selftest-review-site 23] IMPRECISE: Review: "#41, a report the campaign could never rewrite"
+    EVIDENCE: #41 title: 'The campaign can never write its report again once a recorded adjudication names a
+    roster label'. The entry drops the trigger condition.
+    CORRECTION: #41, a campaign that could never rewrite its report once a recorded adjudication named a roster
+    label
+
+[selftest-review-site 24] HOLDS: Review: "Fix round 1 (two file-disjoint agents), then a confirmation pass, one agent per lens"
+    EVIDENCE: reportsC/fix_F1.md ('Checks in my files: stages 29, resume 44, m_sessions integration 48') and
+    fix_F2.md (guard, corr, banner, keys, runners, verify, audit...). F2 refers to stages.py only as 'F1's code'.
+    confirm_result.json has 8 entries, one per lens.
+
+[selftest-review-site 25] HOLDS: Review: "35 resolved, 4 partly, 1 not resolved (#32), 4 disclosure-only (#10, #15, #31 and #40, the last still unfixed then)"
+    EVIDENCE: confirm_result.json statuses: resolved 35, partly-resolved 4 (#14, 16, 39, 44), not-resolved 1
+    (#32), disclosure-only 4 (#10, 15, 31, 40). #40's evidence: 'Neither fix report addresses #40 ... the rule-27
+    gap stands.'
+
+[selftest-review-site 26] HOLDS: Review: "17 new findings, all minor after a strict refuter"
+    EVIDENCE: confirm_result.json new_findings per lens: 2+3+1+2+3+4+1+1 = 17. Every `verdict` has refuted=false,
+    severity=minor. Raw PART 2 l.3731-4781 marks each N1-N17 'strict refuter: refuted=False severity=minor'.
+
+[selftest-review-site 27] HOLDS: Review: "N12, graded substantive by its finder: a stopped stage's re-invocation printed the class of a contrast free-phase trigger"
+    EVIDENCE: N12 (guard-resume) has severity 'substantive' and title 'Refusing an ENDED stage prints a contrast
+    free-phase hair trigger's withheld class'. Its strict refuter says minor. It is the only finder-substantive
+    item among N1-N17.
+
+[selftest-review-site 28] HOLDS: Review: "Fix round 2, then a check of it (two hunts and a dry-run of the step-10 wiring): 11 findings, one substantive, R1: a STOP's outputs were written before the fired session and the stop were on disk, so a kill there could lift the STOP"
+    EVIDENCE: check2_result.json has three labels: round2-stages (6), round2-modules (1), step10-dryrun (4), so
+    11. Only the first is substantive, by both finder and strict refuter: 'A STOP's outputs are written before the
+    fired session and the stop are on disk; re-invoking re-launches the session, can lift the...'. Raw l.4903 'R1
+    [round2-stages] finder:substantive strict refuter: ... severity=substantive'.
+
+[selftest-review-site 29] HOLDS: Review: "Fix round 3, independently verified: R1–R11 resolved."
+    EVIDENCE: reportsC/verify3.md: 'All eleven findings are resolved on the current code'; its per-finding section
+    marks R1-R11 resolved.
+
+[selftest-review-site 30] HOLDS: Review: "104 of 104 kill-point combinations re-finish with zero generate calls and byte-identical outputs"
+    EVIDENCE: check3/r1_matrix.out has 80 OK lines (10 cases x 2 kill points x 4 re-invocations), 'FAILS: none'.
+    check3/r1_gid_qual.out has 24 OK lines (6 cases x 2 x 2), 'FAILS: none'. 80 + 24 = 104. OK requires 0 calls
+    and outputs == ref (r1_gid_qual.py:86-88). These ran on the round-3 tree (06:19-06:27). I re-ran copies of
+    r1_matrix.py and r1_gid_qual.py on the FINAL tree (vc1/rerun): 80 + 24 OK, FAILS: none, git unchanged.
+
+[selftest-review-site 31] HOLDS: Review: "11 of 11 blinding differentials (runs differing only in contrast picks or a contrast free event's position) are byte-identical outside ckpt/"
+    EVIDENCE: check3/blind_diff.out: 11 IDENTICAL lines and 'ALL IDENTICAL (and checkpoints differ): True' x11.
+    Each pair differs in picks P/Q or in the position of a free hair/lexical event. My re-run on the final tree
+    gives the same: 11 True.
+
+[selftest-review-site 32] IMPRECISE: Review: "Two new minor items, plus one gap the round-3 agent disclosed (a pending end could not re-finish across a backend change)"
+    EVIDENCE: verify3.md: 'two new defects, both minor'. The gap was disclosed by the round-3 fix agent
+    (fix3.md:41: 'A Qwen cached stage whose end is pending and whose backend has changed is still refused with
+    PATH MISMATCH'). It applied only to a cached-path stage: verify3 and r1_gid_qual.out show 'control (uncached
+    G-TIME pending, backend changed): STOP ... calls 0', i.e. an uncached pending end did re-finish.
+    CORRECTION: plus one gap the round-3 fix agent disclosed (a cached-path Qwen stage's pending end could not re-
+    finish after a backend change)
+
+[selftest-review-site 33] HOLDS: Review: "Round 4: Code's own edit for those three."
+    EVIDENCE: reportsC/round4.md and review raw PART 5 (l.6049-6055): 'Code's own edit to
+    valence_core/m/stages.py, made for the round-3 verifier's two new items (V1 ... V2 ...) and for the disclosed
+    PATH MISMATCH gap'.
+
+[selftest-review-site 34] IMPRECISE: Review: "An independent agent found one reachable defect in that edit, a re-finish re-announcing an already-adjudicated look; it is fixed."
+    EVIDENCE: round4.md lists '(a) had one reachable defect' (an end-is-look campaign's re-finish re-announced the
+    look's FIRED bar messages), and separately: 'Minor: run_gate_stage's refinish_only refusal ran after a
+    checkpoint write. It is moved straight after load_or_init, before any write'. That is a second defect in the
+    same edit, also fixed (mutant M5 'the gate driver writes before its re-finish-only refusal' is killed). Three
+    items are 'Left as is (cosmetic or unreachable)'.
+    CORRECTION: An independent agent found one reachable defect in that edit (a re-finish re-announcing an
+    already-adjudicated look) and one minor one (the gate driver's re-finish-only refusal ran after a checkpoint
+    write); both are fixed, and three cosmetic or unreachable items are left as is (review raw).
+
+[selftest-review-site 35] HOLDS: Review: "Its 9 added checks and 14 mutants all pass or are killed."
+    EVIDENCE: round4.md: 'Checks added: 1 in stages._selftest and 8 in the m_sessions integration selftest'.
+    Diffing baseline_selftest (619) against final (628) names shows 9 new checks: 8 m_sessions plus 'stages: a
+    path mismatch with an end pending...'. Mutants: results_pass1.json has M0, M1, M2, M2b, M3, M4, M4b, M5, M6,
+    M7, M8, M9, M10, all KILLED; pass 2 adds M9b KILLED, so 14 unique. Final self-test 628/628 on two runs.
+
+[selftest-review-site 36] HOLDS: Site check: "154/154, 67/67, 21/21, 20/20, 46/46, 18/18, 24/24 and the m self-test 628/628"
+    EVIDENCE: Sitecheck raw summary lines: regression 154/154, format_recon 67/67, k1_stage1 21/21, k1_analyze
+    20/20, e2d_d2_analyze 46/46, recon_echo 18/18, closure_verify3 24/24, m_sessions 628/628. I re-ran three of
+    them: `python -m valence_core.regression.analysis` → '154/154 reproduced through valence_core' rc 0;
+    e2d_closure_verify3.py → '24/24 third-pass checks pass' rc 0; m self-test 628/628. git status unchanged. I did
+    not re-run the others because their self-tests write files (the sitecheck window shows k1_analyze writing
+    gitignored data/k/_synthetic/*.npz).
+
+[selftest-review-site 37] HOLDS: Site check: "Each is gated on its summary line, not on $?"
+    EVIDENCE: scratchpad sitecheck.sh `run()`: `if /usr/bin/grep -qE "$want" $tmp; then ... PASS` with anchored
+    summary regexes. rc is only printed. For m_sessions the regex is '^  ([0-9]+)/\1 m selftest checks pass$',
+    which accepts any N/N; the printed value is 628/628.
+
+[selftest-review-site 38] HOLDS: Site check: "on the frozen tree before commit"
+    EVIDENCE: Raw: 'HEAD: 05c4636 + working tree (the build is uncommitted at this check)', run 11:15:35-11:16:51
+    UTC (07:15-07:16 local). The last code edit was stages.py at 07:07:58 local, and no file under valence_core/m,
+    scripts/m_sessions.py, data/m, .gitignore or .gitattributes is newer than 07:14:33.
+
+[selftest-review-site 39] FAILS: PINs: "171 spec-open choices are marked `# PIN (Code, declared at LOCK v0.1)` in code"
+    EVIDENCE: `grep -rhoE 'PIN \(Code, declared at LOCK v0\.1[);]' valence_core/m/*.py scripts/m_sessions.py | wc
+    -l` → 194. Of these, 171 use the plain '(Code, declared at LOCK v0.1)' form. The other 23 use '(Code, declared
+    at LOCK v0.1; finding …)': audit 1, guard 3, resume 5, stages 14 (e.g. stages.py:1128 'finding R1', :1952
+    'round-3 verification', guard.py:473 'findings N15, R7'). Also, only 146 of the 171 are `# PIN` comments; the
+    other 25 sit in docstrings or mid-comment (e.g. resume.py:185, stages.py:822, bars.py:319).
+    CORRECTION: 194 spec-open choices are marked `PIN (Code, declared at LOCK v0.1…)` in code (171 in the plain
+    form, 23 with a '; finding …' qualifier; in comments or docstrings)
+
+[selftest-review-site 40] FAILS: PINs: "listed mechanically, file:line with the comment as written, in _pins"
+    EVIDENCE: scratchpad gen_pins.py matches only the exact string 'PIN (Code, declared at LOCK v0.1)', so it
+    skips all 23 semicolon-form sites: the pins raw has 0 occurrences of 'v0.1;' and 171 P-entries. Its
+    continuation loop also stops at any line containing 'PIN (Code', so they are not folded into neighbouring
+    blocks. Re-running gen_pins.py on the current tree reproduces the raw byte for byte, so the 171 listed are
+    current but the list is incomplete. The raw header's '171 PIN sites in 17 files' counts the 17 files scanned;
+    PINs occur in 15 (none in __init__.py or testing.py).
+    CORRECTION: Regenerate the _pins raw with a matcher for both forms (194 sites in 15 files). Until then:
+    'listed mechanically ... in _pins (171 of 194; the 23 with a "; finding …" qualifier are missing)'.
+
+[selftest-review-site 41] IMPRECISE: PINs: "each unit's LOCK v0.1 declares them"
+    EVIDENCE: No LOCK-m-F0 or LOCK-m-OLMo file exists (root has only LOCK-g.md and LOCK-h.md). m:358 schedules
+    'Commit LOCK-m-F0 v0.1' as §8 step 9. The raw header also uses the present tense ('LOCK-m-F0 v0.1 / LOCK-m-
+    OLMo-{ckpt} v0.1 declare them').
+    CORRECTION: each unit's LOCK v0.1 is to declare them (LOCK-m-F0 v0.1 at §8 step 9; the OLMo locks on their
+    track)
+
+[selftest-review-site 42] HOLDS: PINs: "The design the builders worked from is _design; where the code departs from it, the code governs."
+    EVIDENCE: results/raw/2026-10-06_m-build_design.md is scratchpad DESIGN.md with a 5-line header prepended
+    (diff shows only that). The header says 'Where the code's PINs ... or the review's fixes ... depart from it,
+    the code governs'.
+
+====================================================================================================
+PART flags-box-committed: 27 claims, 7 failing or imprecise
+====================================================================================================
+[flags-box-committed 1] IMPRECISE: (a) m:263 and m:318 print a contrast session's free-round exclusion as `excluded@free`, by phase alone; m:271 withholds contrast free-round events from pre-VERDICTS reads. The build prints it per session on stdout and withholds it from every report.
+    EVIDENCE: The build half holds. readrule.session_line prints 'excluded:excluded@free' for a contrast free
+    exclusion (readrule.py:443-506). It is printed per session at stages.py:1355, :1544 and :1946. _contrast_block
+    reports forced material only, with free_rounds=WITHHELD (readrule.py:565-584). The campaign report carries
+    prepick_excluded only (stages.py:2079-2099). The spec half is mis-scoped. m:263 says 'Stdout AND every pre-
+    VERDICTS report give an exclusion as class and phase ... for a contrast-template session's free-round
+    exclusion the phase alone (`excluded@free`)', so it covers reports, not only printing. m:271's conflicting
+    clause is about REPORTING: 'At every gate stage ... their free-round events — exclusions, degeneracy, any
+    class — are withheld to the unit's VERDICTS entry or NOT-RUN record'. Removing free rounds from reads is a
+    separate clause of m:271. So the flag understates the actual conflict, which is report vs report.
+    CORRECTION: (a) m:263 has stdout AND every pre-VERDICTS report give a contrast session's free-round exclusion
+    as `excluded@free` (phase alone; m:318 the same for stdout), while m:271 withholds contrast free-round events
+    ('exclusions, degeneracy, any class') at every gate stage to the unit's VERDICTS entry or NOT-RUN record. The
+    build prints `excluded@free` per session on stdout and withholds it from every report.
+
+[flags-box-committed 2] HOLDS: (b) m:258 says Q-F0 uses neither reasoning-block line, but m:261 puts the literal `Reasoning (one line):` in the Qwen task-round echo set. The build follows m:261 on F0m.
+    EVIDENCE: m:258: 'Q-F0 and the OLMo units use five of the six (all but TOLD-OBJ) and neither reasoning-block
+    line'. m:261 (the Qwen bullet): 'reproduction of a complete "Note:" line of that session's banner or of
+    `Reasoning (one line):`'. In audit.py:158-163, qwen_echo_lines always appends REASONING_LABEL (a PIN).
+    _check_echo_set (:171-180) refuses a Qwen set without it.
+
+[flags-box-committed 3] HOLDS: (c) On OLMo, a response ending with a Note line minus its final ./!/? is echo, because OLMo's newline stop drops a fused `.\n` token. Qwen keeps the complete line. This reads m:261-262's 'complete Note line'.
+    EVIDENCE: audit.py:114-149 (harness_echo) admits the stem when substrate=='olmo' and t.endswith(stem); Qwen
+    calls it with substrate='qwen' (:441), which takes the complete line only. OLMo calls it with 'olmo' (:485).
+    In olmo_hf.py:290-294, _is_stop stops on any token whose decode contains '\n', and that token is not appended.
+    I read the cached OLMo base tokenizer.json as data: '.Ċ' is vocab id 627 ('!Ċ' 4999, '?Ċ' 5380), and 'Prefer
+    clean task text.\n' tokenizes to [..., 'Ġtext', '.Ċ']. 'complete' appears at m:261; m:262 applies 'm's echo
+    class'.
+
+[flags-box-committed 4] HOLDS: (d) Campaign looks report the contrast arm's round_degeneracy on forced rounds only, and its read flags on first reads only. m:330 says 'reported on its contrast arms'; whether m:271's withholding extends to looks is the seat's.
+    EVIDENCE: stages.py:1724-1760 (campaign_look): contrast_forced_degeneracy is computed over phase=='forced'
+    rounds only. read_flags uses first_only=(a == c_arm) (_read_flags, :1705-1721). The PIN at :1742-1744 flags it
+    for the seat. m:330: '`round_degeneracy` — ... domain the unit's sham arms, reported on its contrast arms'.
+
+[flags-box-committed 5] HOLDS: (e) At G-ID a byte divergence on any pair, complete or not, is FAIL. This is stricter than m:281's 'complete', on its 'a divergence sends Q-F0 uncached'.
+    EVIDENCE: stages.py:1449-1471 (gid_decide): `if not p['identical']: ... return {'verdict': 'FAIL'...}` runs
+    before the complete check, and only an identical incomplete pair advances j. m:281: 'indices advance until two
+    complete sessions exist; criterion 2/2 byte-identical ... a divergence sends Q-F0 uncached'.
+
+[flags-box-committed 6] HOLDS: (f) Seed and menu-order departures are classed `schedule_mismatch`. m:271's list names pair, map, start and clause order, banner bytes and item stream.
+    EVIDENCE: verify.py:164-168 includes 'seed' in sched_fields, whose departure is bad(MISMATCH).
+    verify.py:179-181 makes a menu order differing from the arm rng's bad(MISMATCH). The self-test (:316-325) has
+    'changed seed' and 'changed menu order' -> schedule_mismatch. m:271: '`schedule_mismatch` (pair, map, start
+    order, clause order, banner bytes or item stream differing from the committed schedule)'.
+
+[flags-box-committed 7] HOLDS: (g) m:271's sham redaction keeps the free Task lines, so under per-label item streams a sham pick is recoverable from a redacted read plus the keys. Sham sessions only: no contrast information, m:318 exception (2).
+    EVIDENCE: m:271: 'a sham-template transcript is read with the chosen config tag redacted from every free
+    round's header and the menu blocks removed'. Task lines are not removed. m:159: 'permutation(16), split [:8]
+    to the P label and [8:] to the Q label, each label consuming its stream in order'. In readrule.py:368-440
+    (redact_sham), the transcript keeps the free round piece with only the header tag replaced by [config]. The
+    structured item field is dropped, and the PIN at :112-118 acknowledges that the item id names the label's
+    stream. m:318 (2): 'the sham-template first-pick shares ... (a sham session carries no contrast information)'.
+
+[flags-box-committed 8] HOLDS: (h) m:280's one-session G-TIME report puts the forced-round count and a forced exclusion beside the bar; that gives away which round was excluded and, with the committed start order, its property, which m:318 reserves to VERDICTS at looks.
+    EVIDENCE: m:280: 'the A0 session's forced rounds reported beside'. m:271: 'contrast sessions' forced-round
+    counts are reported beside'. In the build, _contrast_block reports forced.rounds (the count) and
+    excluded_at_forced by class (readrule.py:565-584). The G-TIME schedule has a single contrast cell
+    (data/m/schedules/Q-F0_time_A0.json, 1 cell, with map/start). m:318: 'The per-property exclusion table is
+    reported in VERDICTS only; at looks, pooled pre-pick exclusion counts per arm'.
+
+[flags-box-committed 9] HOLDS: (i) m:302/m:262's 'critical 2, reachable only at a realised n <= 2': the exact critical count is 1 at n <= 2 and 2 from n = 3, where one claim never reaches it. The pause itself is built as the one-claim trigger §3 states.
+    EVIDENCE: m:302 contains 'p0 .02, critical 2, reachable only at a realised n ≤ 2'. m:262 has 'a one-session
+    stage's bar is reachable only at a realised n ≤ 2'. Exact Fraction computation (vc1/p3_crit.py): n=1 gives c=1
+    (P=.02), n=2 gives c=1 (.0396), n=3..10 give c=2 (n=10: .0162). An OLMo session ends at its first claim
+    (m:262), so at most one claim. bars.py:600-619 declares gtime_pause@G-TIME-OLMo-{c} of kind 'pause' (one-
+    claim, _ONE_CLAIM). In the self-test (bars.py:1295-1297), a round-3 echo pauses and does not fire; a round-2
+    AuditSpec fires both.
+
+[flags-box-committed 10] HOLDS: (j) G-TIME files carry one row per arm: no row for a second attempt if a G-TIME session is cut short; the spec is silent.
+    EVIDENCE: Every *_time_*.json in data/m/schedules has len(cells)==1 (Q-F0_time_A0/A0s and the
+    OLMo-{sft,dpo,instruct}_time_* files). m:280 says 'One session per Q-F0 arm (2)' and m:302 says 'two sessions,
+    one per arm'. A regex search of the spec finds no retry, re-run, replacement or 'cut short' clause for G-TIME.
+    Only G-ID has 'indices advance' (m:281).
+
+[flags-box-committed 11] HOLDS: (k) The OLMo resume identity's audit hash is `olmo_audit_sha16()` = `dd3fe09bed429e54`, the sha16 of `OLMO_AUDIT`'s compact sort-keyed JSON; the design named none.
+    EVIDENCE: vc1/k.py recomputes sha256(json.dumps({ban_strings, frame_fragments, junk_regex} as lists,
+    sort_keys=True, separators=(',',':')))[:16] = dd3fe09bed429e54. It equals runner_olmo.olmo_audit_sha16() and
+    olmo_audit_sha16(box_b3_sessions.AUDIT), and b3.AUDIT == OLMO_AUDIT. It is used at m_sessions.py:209 and
+    runner_olmo.py:105. Design raw :100 names only the identity key `audit_v2_sha16`, with no OLMo value.
+
+[flags-box-committed 12] IMPRECISE: (l) m:283's r is read as m:192's domain rate, reported per template.
+    EVIDENCE: m:283: 'r for Q-F0's launch rule = the valid rate pooled over all 24 (per template beside)'. m:192:
+    'k the valid sessions on the primary's domain pooled over all n_q sessions ... reported per template beside'.
+    The build computes and reports no r anywhere (grep in stages/readrule/m_sessions). The qualification report
+    carries per-template `domain_sessions` and `sessions` (readrule.py:579-582, :637-638), from which r is
+    derivable. This is review #15's refuted reading (review raw :1150-1213).
+    CORRECTION: (l) m:283's r is read as m:192's domain rate. The build does not compute r; it is derivable from
+    the per-template `domain_sessions` / `sessions` the qualification report carries.
+
+[flags-box-committed 13] IMPRECISE: (m) A campaign arm still short of its floor when its committed schedule runs out PAUSEs for the PI. At k = 1 the committed schedule equals L.
+    EVIDENCE: stages.py:1918-1923 PAUSEs with kind schedule_exhausted, and stages.py:1885-1892 refuses a resume
+    carrying only an adjudication ('SCHEDULE EXHAUSTED ... only the PI's stop (pi_stop) ends this campaign'). The
+    PAUSE therefore has one exit, a PI stop. Launch rule recomputed at r=1/24 (vc1/p3_L.py): N90 = 2604/2194/943,
+    giving L = 2624 (floor 96), 2208 (floor 80) and 960 (floor 32). The committed Q-F0 A0 file has 2,624 cells,
+    which equals L on the cached path (floor 96). On the uncached path (floor 80) L = 2,208 < 2,624. Review N3
+    (raw :3856-3920) gives the shortfall at k=1 as .0861/.0893/.0810 for the equal-L arms and .0012 for Q-F0
+    uncached; I reproduced all four.
+    CORRECTION: (m) A campaign arm still short of its floor when its committed schedule runs out PAUSEs, and only
+    a PI stop ends that pause (a resume with only an adjudication is refused). At k = 1 the committed schedule
+    equals L for Q-F0 cached A0 (2,624), every OLMo A0 (2,208) and every sham (960): an arm runs out below floor
+    with probability about .08-.09 there. Q-F0 uncached A0 has 2,624 cells against an L of 2,208.
+
+[flags-box-committed 14] HOLDS: (n) A lock that re-adopts stages run under an earlier proposal names them in an optional `prior_proposal_sha256s`, supplied by the operator from the lock; that mechanism needs the seat's sign-off.
+    EVIDENCE: stages.py:809 has _OPTIONAL_EXTRA including prior_proposal_sha256s. stages.py:864-872 defaults it to
+    [], requires distinct 64-hex values none of which is this run's, and records it sorted. stages.py:597-602
+    (accepted_proposals) and :669-674 apply it. Nothing reads it from a lock file, so it is operator-supplied.
+
+[flags-box-committed 15] HOLDS: (o) Per-property counter keys are left to the VERDICTS analyzer.
+    EVIDENCE: audit.py:550-553 PIN: 'keys are (template, phase[, v2 category | content class | claim]) -- never a
+    tag, item, round index or property'. m:314: 'Counters (rule 23; ...; by arm; by property in VERDICTS)'.
+
+[flags-box-committed 16] HOLDS: (p) The gate line expects the analyzer at `scripts/m_analyze.py`; m:278 names the file, not its folder.
+    EVIDENCE: stages.py:133-135: ANALYZER_PATH = REPO / 'scripts' / 'm_analyze.py' (PIN). m:278 reads
+    '**G-ANL-F0.** `m_analyze.py`, pre-committed', with no directory; m:267 says only 'analyzer'.
+
+[flags-box-committed 17] IMPRECISE: For the box, before G-TIME-OLMo (untestable off-box, disclosed): `assert_olmo_scaffold`'s accept path needs the OLMo tokenizer: the nine ban ids are on disk only as sha16 `2dd86a453a2275ef` and n_ids in `b3_screen_*.json`.
+    EVIDENCE: In the repo it holds: data/olmo/b3_screen_{sft,dpo,instruct}.json ban_list = {'n_ids': 9, 'sha16':
+    '2dd86a453a2275ef'}, and scaffold_*.json has only ban_roster_size 9 and the strings. The laptop's disk is a
+    different matter. The OLMo BASE tokenizer is cached at ~/.cache/huggingface/hub/models--allenai--
+    Olmo-3-1125-32B (6.8 MB, tokenizer files only, no weights). Encoding the six strings without special tokens
+    (session.build_ban_list's method) gives 9 ids with sha16 2dd86a453a2275ef. b3_screen_base shows the same sha16
+    as sft/dpo/instruct. Run against those ids (vc1/p3_accept.py), audit.assert_olmo_scaffold PASSES for sft, dpo
+    and instruct. Only the post-trained checkpoints' own tokenizers are box-only.
+    CORRECTION: For the box, before G-TIME-OLMo: `assert_olmo_scaffold`'s accept path must run on each
+    checkpoint's own tokenizer, which is on the box only. In the repo the nine ban ids are only a sha16
+    (`2dd86a453a2275ef`) and n_ids in `b3_screen_*.json`. The base tokenizer in the laptop's HF cache reproduces
+    them (9 ids, same sha16), and the accept path passes on them for sft, dpo and instruct.
+
+[flags-box-committed 18] IMPRECISE: For the box: the rule-28(d)(a) boundary assertion on OLMo uses `encode` with the adapter's default. If that adds a special token, it fires on every round, a false STOP.
+    EVIDENCE: In runner_olmo.py:129-136 and :159-163, scaffold.assert_boundary (scaffold.py:308-320) compares
+    encode(prefix) against encode(prefix+seg) with add_special_tokens=True by default (olmo_hf.py:95-98). A
+    LEADING special token (BOS) is common to both encodings and leaves k == len(p), so it passes. Only a TRAILING
+    one (EOS-like) collapses the boundary. A fire raises SystemExit 'BOUNDARY INCIDENT ... HALT, escalate'. No
+    production code catches it (all `except SystemExit` handlers are in _selftest), so the process exits with code
+    1 at the first forced round of the first session. No STOP end (exit 4) is persisted. On the cached OLMo base
+    tokenizer, tokenizer_config has add_bos/add_eos None and post_processor null, and encode is identical with and
+    without special tokens. With assert_boundary patched to also check the real base tokenizer, 142/142 boundary
+    checks over the 21 scripted OLMo cases keep the boundary (vc1/p3_boundary.py).
+    CORRECTION: For the box: the rule-28(d)(a) boundary assertion on OLMo encodes with the adapter's default
+    (add_special_tokens=True). If a checkpoint's tokenizer APPENDS a special token (e.g. EOS), the boundary
+    collapses on every join: the first forced round raises SystemExit 'BOUNDARY INCIDENT' and halts the stage (a
+    false halt, not a recorded STOP). A leading BOS does not trip it. The cached OLMo base tokenizer adds none and
+    passes 142/142 scripted joins; the post-trained tokenizers are box-only.
+
+[flags-box-committed 19] HOLDS: For the steps that run stages: the subcommands are argparse stubs that refuse with §8's step words; wiring them is a change to the driver at that step; `renders_sha16` must come from G-CAL's record and the lock, never be computed by the run itself.
+    EVIDENCE: I ran `m_sessions.py {time,id,qual,campaign} --unit Q-F0`. Each prints 'not licensed until step
+    10/12/14/16: §8 step N -- "<words>"', and the words match m:358 verbatim. Each returns rc=2 (main,
+    m_sessions.py:1683-1688). The OLMo and Q-F3 refusals quote m:358's OLMo track and m:361. The renders residual
+    is disclosed in the review raw :128: 'at wiring, renders_sha16 must be sourced from the G-CAL/lock record,
+    never self-computed'.
+
+[flags-box-committed 20] HOLDS: `package_sha256` in the identity refuses a resume across any edit to the m package, by design.
+    EVIDENCE: resume.py:296-328: sha256 over the sorted (rel path, len, bytes) of valence_core/m/*.py. It is in
+    Identity (:374-455), and the self-test case 'package code changed' is refused (:1199) and moved by a one-byte
+    edit (:1393). Scope is valence_core/m/*.py only: scripts/m_sessions.py and imported modules (session.py, e2d,
+    adapters) are outside it, consistent with 'the m package'.
+
+[flags-box-committed 21] HOLDS: A ruling offered while an end is pending is not applied: the re-finish completes, and the ruling must be offered again.
+    EVIDENCE: stages.py:2160-2183 (_refinish_campaign) re-finishes, then raises SystemExit 'NOT APPLIED (...) ...
+    offer it again' if an adjudication or pi_stop was offered. The campaign is the only driver that takes a ruling
+    on its own end. A gate stage's PAUSE is ruled on through the next stage's prior_adjudication
+    (stages.py:1283-1288).
+
+[flags-box-committed 22] HOLDS: The call-site guard is static. The residual rebinding forms the round-3 verifier listed are in the review raw.
+    EVIDENCE: guard.py is an AST call-site check (check_call_sites). The review raw PART 4 (:5983-5992), 'R7 –
+    resolved', lists the silent forms: operator.setitem(vars(g), name, f), pytest monkeypatch.setitem(g.__dict__,
+    ...), g.__dict__ |= {...}, dict.update(g.__dict__, ...) and __dict__.update([(name, f)]). It notes that
+    operator.setitem and __dict__ |= really rebind at runtime.
+
+[flags-box-committed 23] HOLDS: Committed: `valence_core/m/` (16 files) and `scripts/m_sessions.py`; `data/m/schedules/` (26 files).
+    EVIDENCE: `git status --short --untracked-files=all` shows 16 untracked valence_core/m/*.py (__init__, audit,
+    banner, bars, corr, guard, keys, readrule, resume, runner_olmo, runner_qwen, scaffold, schedule, stages,
+    testing, verify); __pycache__ is ignored. scripts/m_sessions.py is untracked. data/m/schedules holds 26 files
+    (25 schedules + manifest.json, 1,535,055 bytes). No tracked source file is modified: only .gitattributes,
+    .gitignore and RESULTS.md show M.
+
+[flags-box-committed 24] HOLDS: Committed: the `.gitignore` allowlist block for `data/m/` (schedules, gates, reports, ckpt JSON and pod-change set-asides; `*.tmp` stays local) and `.gitattributes` `/data/m/ckpt/** -diff`.
+    EVIDENCE: `git diff .gitignore` adds only the m block (25 lines); `git diff .gitattributes` adds only
+    `/data/m/ckpt/** -diff` and a comment. I ran `git check-ignore --no-index` against the code's own naming
+    (stages.py:209-227, :257-263; guard.py:170; resume.py:190, :793-796). Trackable: schedules/x.json,
+    gates/Q-F0_G-ID.json, reports/Q-F0_qual_report.json and _reads.json, ckpt/Q-F0_qual.json,
+    ckpt/Q-F0_qual_adjudication.json, ckpt/*.json.podchange-<stamp>[-k]. Ignored: every *.json.tmp,
+    data/m/other.json, ckpt/sub/x.json. `git check-attr diff` gives 'unset' for every data/m/ckpt path and
+    'unspecified' elsewhere.
+
+[flags-box-committed 25] IMPRECISE: Committed: the five raws linked above and two values-check raws.
+    EVIDENCE: All five linked raws exist untracked: results/raw/2026-10-06_m-
+    build_{design.md,pins.txt,review.txt,selftest.txt,sitecheck.txt}. No m-build values-check raw is on disk at
+    check time (`ls results/raw | grep 2026-10-06` shows only the five plus the v1.11 step-3 files), so 'two
+    values-check raws' describes files not yet written.
+    CORRECTION: Make sure exactly two values-check raws exist (e.g. results/raw/2026-10-06_m-build_valuescheck.txt
+    and _pass2.txt) and are staged before commit, or state the actual count and names.
+
+[flags-box-committed 26] HOLDS: Not committed: no checkpoint, report or gate artifact exists. `data/m/` holds only the schedules.
+    EVIDENCE: `find data/m -mindepth 1` lists only data/m/schedules and its 26 files (28 entries with data/m
+    itself). There is no data/m/ckpt, reports or gates directory. `git ls-files data/m` returns 0.
+
+[flags-box-committed 27] FAILS: OMISSION: the flag list (a)-(p) leaves out three departures that the code's own PINs mark '(flagged)' for the seat (pins raw :251, :282, :290). (1) Qwen's v4 content claim prints as `content@forced` / `content@free`, outside m:263's audit/lexical/echo forms (readrule.py:81-88; design raw :111 'PIN, flagged'). (2) A redacted sham free-round RESPONSE has both own-pair labels replaced by [config], 'beyond m:271's header-only wording' (readrule.py:387-397). (3) A hair-trigger fire on a contrast free round is withheld from strip_contrast and stage_report, and its stop is announced as an adjudication (m:318 exception (1)) rather than by a pick-free form (readrule.py:348-353).
+    EVIDENCE: `grep -n flagged results/raw/2026-10-06_m-build_pins.txt` shows :251 (content class, 'flagged;
+    maps/audit.md §4 item 5 ... The seat may fold it into "audit" instead'), :282 ('not by a pick-free form
+    (flagged)'), :290 ('This goes beyond m:271's header-only wording (flagged)') and :729 (= flag (d)). Only :729
+    appears among (a)-(p).
+    CORRECTION: Add to 'For the design seat': (q) Qwen's v4 content exclusion prints as `content@{phase}`, a class
+    m:263's printed forms do not list (the seat may fold it into `audit`). (r) The sham redaction also replaces
+    own-pair labels in free-round responses, beyond m:271's header-only wording. (s) A hair trigger on a contrast
+    free round is withheld from stripped reads and stage reports, and its stop is announced only through the m:318
+    (1) adjudication excerpt.
+

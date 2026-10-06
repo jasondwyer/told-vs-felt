@@ -1,0 +1,31 @@
+{
+ "cells": [
+  {"P": "ridge", "Q": "saddle", "clause": 0, "map": 0, "pair": ["ridge", "saddle"], "pair_index": 3, "start": 0},
+  {"P": "plaza", "Q": "granite", "clause": 1, "map": 1, "pair": ["granite", "plaza"], "pair_index": 0, "start": 0},
+  {"P": "prism", "Q": "slate", "clause": 1, "map": 0, "pair": ["prism", "slate"], "pair_index": 1, "start": 1},
+  {"P": "walnut", "Q": "velvet", "clause": 0, "map": 1, "pair": ["velvet", "walnut"], "pair_index": 2, "start": 1},
+  {"P": "saddle", "Q": "ridge", "clause": 1, "map": 1, "pair": ["ridge", "saddle"], "pair_index": 3, "start": 1},
+  {"P": "granite", "Q": "plaza", "clause": 0, "map": 0, "pair": ["granite", "plaza"], "pair_index": 0, "start": 1},
+  {"P": "slate", "Q": "prism", "clause": 0, "map": 1, "pair": ["prism", "slate"], "pair_index": 1, "start": 0},
+  {"P": "velvet", "Q": "walnut", "clause": 1, "map": 0, "pair": ["velvet", "walnut"], "pair_index": 2, "start": 0},
+  {"P": "saddle", "Q": "ridge", "clause": 0, "map": 1, "pair": ["ridge", "saddle"], "pair_index": 3, "start": 0},
+  {"P": "granite", "Q": "plaza", "clause": 1, "map": 0, "pair": ["granite", "plaza"], "pair_index": 0, "start": 0},
+  {"P": "slate", "Q": "prism", "clause": 1, "map": 1, "pair": ["prism", "slate"], "pair_index": 1, "start": 1},
+  {"P": "velvet", "Q": "walnut", "clause": 0, "map": 0, "pair": ["velvet", "walnut"], "pair_index": 2, "start": 1},
+  {"P": "ridge", "Q": "saddle", "clause": 1, "map": 0, "pair": ["ridge", "saddle"], "pair_index": 3, "start": 1},
+  {"P": "plaza", "Q": "granite", "clause": 0, "map": 1, "pair": ["granite", "plaza"], "pair_index": 0, "start": 1},
+  {"P": "prism", "Q": "slate", "clause": 0, "map": 0, "pair": ["prism", "slate"], "pair_index": 1, "start": 0},
+  {"P": "walnut", "Q": "velvet", "clause": 1, "map": 1, "pair": ["velvet", "walnut"], "pair_index": 2, "start": 0}
+ ],
+ "gate": "id",
+ "key_template": "m-sched|Q-F0|id|A0s|0",
+ "kind": "gate",
+ "n": 16,
+ "pi": [3, 0, 1, 2],
+ "schema": "m-schedule-v1",
+ "session_keys": {"arm": "m-id|F0m|A0s|{s}", "items": "m-items-id|{s}"},
+ "sha256_of_cells": "63641d1aec8ba432a5067b10afc5aae9c8445cc94db41ee9005f5e62572daec3",
+ "table": "m:161-170",
+ "template": "A0s",
+ "unit": "Q-F0"
+}

@@ -1,1 +1,6 @@
 *.ipynb filter=nbstripout
+
+# m package: everything under data/m/ckpt/ (checkpoints, pod-change set-asides,
+# adjudication excerpts) may carry a contrast pick and never renders in a diff or
+# a log -p (PROPOSAL-m v1.11 m:318).
+/data/m/ckpt/** -diff
