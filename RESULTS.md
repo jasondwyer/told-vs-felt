@@ -21,6 +21,385 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-10-06 — **PROPOSAL-m v1.11 COMMITTED (routed by the PI, PI date 2026-10-05) at §8 step 3, its
+  minor-only residues carried as dated notes under the PI's process line.
+  The check: 589 referents by sixteen blind checkers over sixteen assigned groups, two refuter lenses
+  each (the scopes overlap in places, so the tallies count referents, not distinct defects).
+  451 resolve cleanly, 72 resolve with a minor note, 52 are unresolved under all three verdicts (all
+  minor under all three) and 14 are contested (each minor or clean under every verdict); the
+  refuters added 67 items, all minor. Nothing is substantive or blocking under any verdict.
+  What reproduces: every [S] figure and every [C] figure that originates in a chat-only Code block,
+  in the check. Code's own tool runs reproduce the [S] tables, looks, exposure, hours, 519,480 and
+  the gate table's balances; of the chat-only [C] figures, the sizing power figures, critical counts,
+  A2 grid minimum, 17/597 and 11/351. They also reproduce 432 / 1,728, the 69,120 DISCORDANT tuples
+  and the 4,320 of them whose Step-6 text carries the DISCORDANT clause.
+  What resolves: STOP-8 A1 (the G-TIME pause is OLMo-only at every site; on Qwen the binomial bars
+  bind alone; minor residues, among them the OLMo pause's echo half argued rather than measured,
+  note N2) and B1–B3 (B2 in substance; its anchor is note N1); 108 of STOP-8's 125 C items (17 of
+  them with a minor note), the other 17 minor; §0.14's coverage is exact. The regression sweep finds
+  nothing broken at substantive grade.
+  Committed: v1.11 with its hash; the Clock and the D_f2 rule; the decisions block's sha256 and its
+  :91 and :96 verbatim with the marks; (7′)'s record; the PI's routings quoted as the records; §7.3
+  verbatim. Moved, untracked, so not in the commit: v1.2–v1.10 to `archive/`.
+  Not done: no build. Code reports to the PI before step 4, as the v1.8 routing directed for this
+  step.** (Stamp verified at write time: `date -u` → **Tue Oct  6 04:41:30 UTC 2026**.)
+
+  - **The routing (the PI's word, quoted so the record carries it).**
+
+    > Routing — PROPOSAL-m v1.11 — PI date 2026-10-05 (I confirm the date).
+    >
+    > Files placed at root:
+    >   PROPOSAL-m-gating-campaign-v1_11.md
+    >     sha256 42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b
+    >   HANDOFF-2026-10-04-design.md (replaces the copy at root)
+    >     sha256 1dde829c25258ba90900315311ba39cdff69c983b638e0ffe24b313de1736793
+    >
+    > Supersedes v1.10 (sha256 2a4bc50cd1274752d051038ed1acdaf55f571a6a6037140ac6587a22595de906;
+    > STOP-8, 9510af7). Correction to my v1.10 routing: v1.9's sha is
+    > b1fbce3bfc75626d6ea8b3f9a0fb17cea25ed5031af77cf5b8d38d944164a5dc (the tail I wrote
+    > was wrong; v1.10's header had it right).
+    >
+    > v1.11 §0.14 dispositions every STOP-8 item (A1, B1–B3, C1–C125). [S] figures and
+    > chat-only-origin [C] figures are reproduced at step 2.
+    >
+    > Process line, unchanged: minor-only residues are carried as dated notes in the
+    > step-3 entry; anything substantive STOPs.
+    >
+    > Clock: D1 = 2026-10-30; D_O = 2026-10-30; D2 = 2026-12-22; D_f2 per decision (15)
+    > as v1.11 states it (≤ 90 days after the Q-F3 VERDICTS commit's UTC date).
+    >
+    > Decisions of record (8)–(15) as v1.11 §0.2 states them. (7′) re-affirmed. (13) stands
+    > in my words of 2026-10-04 as v1.11 §0.2 quotes them. The v2 title ladder stands as
+    > I confirmed it on 2026-10-05.
+    >
+    > Your B3: the §7.3 italic is unchanged from the text I approved on 2026-10-05, all
+    > four edits against v1.6 included. I confirm the wide reading: after a REVERSE screen,
+    > any f2 result toward clean (OPPOSITE or NULL-x↑) triggers the welfare re-review.
+    >
+    > Step 3 marks: quote :91 and :96 verbatim; mark superseded :91's "same ceiling" clause,
+    > :96's e2b clause (by 12) and "the arm below does" (by 7′), and :97–:101 (by 7/7′,
+    > v1.11, and this line: a pod start needs my go).
+    >
+    > Run v1.11 §8 from step 1 (expected HEAD 9510af7). Step 3 moves v1.2–v1.10 to
+    > archive/. No build before step 3 commits. The k arc is untouched. No pod start
+    > without my go; runpod re-auth first.
+
+  - **Step 1 (delta read).** HEAD `9510af7`, `main == origin` (fetched; nothing new). v1.11 =
+    `42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b` (372 lines) and
+    `HANDOFF-2026-10-04-design.md` = `1dde829c25258ba90900315311ba39cdff69c983b638e0ffe24b313de1736793`;
+    both match the routing. The untracked root is m:354's list. No m artifact exists, and
+    `ADDENDUM-k1.md` is `61acf21ff2cc104e…`, untouched. The routing's correction of v1.9's sha
+    (`…4a5dc`) matches the file.
+
+  - **Step 2: the check.**
+    - **Method.** Workflow `wf_7766a824-2af`: 48 agents, 0 errors, 4,834 s. Sixteen groups: law;
+      anchors; Qwen code; OLMo; dose; f1 figures and timing; [S] launch, looks and exposure; [S]
+      hours and tuples, and the [C] ladder counts; §2.1's schedules and the sixteen-row gate table; the
+      chat-only-origin [C] figures; documents, provenance and the routing; STOP-8 A1 and B1–B3;
+      STOP-8 C1–C63; STOP-8 C64–C125; §0.10 over the v1.10→v1.11 diff; consistency and regression
+      against v1.10's resolved referents. Each group had two refuter lenses.
+    - **Code's own pass.** While the workflow ran, Code ran in tools: the §2.4 tables and §6 looks
+      (byte-identical to v1.10's) and §0.4's exposure figures (unchanged; that line changes only
+      r = k/n → k/n_q and a §F → §E locator), re-run for every k; 519,480 as 481 enumerated Q-F3
+      states × 5 × 6³; 69,120 / 51,840; 432 and 1,728; the 69,120 DISCORDANT tuples and the 4,320 of
+      them whose Step-6 text carries the DISCORDANT clause; the sixteen-row table's balances at 4, 8
+      and 16 sessions; the sizing
+      power figures, critical counts and A2 grid minimum under the stated base case; the 135 / 3,074
+      recount; the v2 claim rates and f1's frozen audit against v2. All reproduce.
+    - **Record.**
+      - [`_m-v1.11_referent_check`](results/raw/2026-10-06_m-v1.11_referent_check.txt): the check.
+      - [`_m-v1.11_code_own_pass`](results/raw/2026-10-06_m-v1.11_code_own_pass.txt): Code's runs,
+        with their scripts and stamps.
+      - [`_m-v1.11_step3_notes`](results/raw/2026-10-06_m-v1.11_step3_notes.md): every unresolved,
+        contested and refuter-found item, itemized (133 = 52 + 14 + 67); the 72 that resolve with a
+        minor note stay in the check raw.
+    - **STOP-8's dispositions.**
+      - A1 resolves at every site: the pause binds at G-TIME-OLMo only, and on Qwen the binomial bars
+        bind alone with the one-session boundary disclosed (D8A.1–D8A.8). Its minor residues among
+        D8A's referents are D8A.9 and D8A.11–D8A.14 (D8A.11 unresolved: the echo half is argued, not
+        measured). Other groups and the refuters add further minor A1 residues (L1.11, L1.12, X2.24,
+        X2.26; notes #4, #8, #9, #20, #60, #63–#65), carried in N2, N9, the build pins and the notes
+        file.
+      - B1–B3 resolve. §0.2 (13) quotes the PI's words verbatim, with a stray anchor (note N1). The
+        §7.3 italic is byte-identical to v1.10's, and its gloss matches the wide reading the PI
+        confirms. B3 carries two refuter-found minor notes. m:345's label for edit (1) names only
+        its v1.10 increment (notes #61). m:58's patch-v5 summary still has the preprint's trigger
+        firing "on a positive", narrower than the wide reading (notes #62).
+      - Of the 125 C items, 108 resolve (17 of them with a minor note), 11 remain unresolved (minor
+        under all three verdicts) and 6 are contested (minor under every verdict).
+      - The regression sweep over v1.10's 489 resolved referents (X2.33) finds nothing broken at
+        substantive grade. It finds two minor regressions: the (13) anchor (X2.2, N1) and decision
+        (10)'s read-with list omitting §0.14 (X2.3, N7).
+
+  - **Step 3: the record.**
+    - **The document.** `PROPOSAL-m-gating-campaign-v1_11.md`, sha256
+      `42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b`, committed tracked and
+      clean (rules 9 and 11).
+    - **The Clock.** D1 (Q-F0) = **2026-10-30**; D_O (each OLMo checkpoint) = **2026-10-30**; D2
+      (Q-F3) = **2026-12-22**, as the routings of 2026-10-04 (v1.9), 2026-10-05 (v1.10) and
+      2026-10-05 (v1.11) give them. **D_f2** (decision (15)): f2's own Clock date, no later than the
+      90th day after the `PROPOSAL-m Q-F3 — VERDICTS` commit's UTC date, written as a calendar date
+      into f2 and into that entry.
+    - **Decisions of record (8)–(15)**, "as v1.11 §0.2 states them" (routing, above). The PI's
+      routing blocks of 2026-10-04 and 2026-10-05, quoted from their verbatim copies:
+      - 2026-10-04, v1.8 routing (quoted in full in the STOP-6 entry, `5db0720`): the PI's block of
+        record for v1.8 §0.2's (8)–(14) ("this block is their record"). It supersedes the v1.7
+        routing's (8)–(11) block of the same date (quoted in full in the STOP-5 entry, `87a1167`).
+        The v1.9 routing replaced its (11) dates and re-stated its (10) and (12); the v1.10 routing
+        re-stated them again. For (13), the v1.11 routing makes the v1.9 routing's line the words of
+        record. The v1.11 routing adopts (8)–(15) as v1.11 §0.2 states them:
+
+        > PI DECISIONS OF RECORD, 2026-10-04 (v1.8 s0.2 items 8-14; this block is their
+        > record):
+        >   (8)  Two Qwen units, Q-F0 (A0, A0s at F0m) and Q-F3 (A1-A3s at F3), each
+        >        with its own locks, cap, look series, stop, NOT-RUN and Clock date.
+        >        Each OLMo checkpoint is its own unit with its own locks.
+        >   (9)  The preprint's v1 posts on Q-F0's outcome; OLMo rows enter as they
+        >        stand (PASS / not run / pending); v1 ceiling Fallback-1.
+        >   (10) Q-F3 is retained as pre-registered, with the changes v1.8 s0.10 lists,
+        >        governs v2, and begins only after the POSTING v1 entry exists.
+        >   (11) Clock dates: D1 (Q-F0) 2026-10-23; D_O (each OLMo checkpoint)
+        >        2026-10-23; D2 (Q-F3) 2026-12-15.
+        >        [PI: strike and replace any date here.]
+        >   (12) e2b has no told control at its state-present read in this campaign
+        >        and is "concluded, not answered" in every outcome; a steering-based
+        >        told control is a separate later proposal, not part of m.
+        >        [PI: strike this line if you want it otherwise.]
+        >   (13) (6')'s scope under the split, in my words: "Fallback-2 under the
+        >        Clock is the consequence of a Q-F0 Clock miss at the v1 posting. A
+        >        Q-F3 Clock miss has only the v2 consequence: Fallback-1 iff L0, with
+        >        s8.2 left open. The Clock applies to every unit; the title
+        >        consequence is Q-F0's alone."
+        >   (14) The base checkpoint has no told control by decision (7'); that is a
+        >        decision, not a measured fact. I am not reopening it.
+        >        [PI: strike this line to add an A0-OLMo-base unit, ~1.2-1.4 h.]
+
+      - 2026-10-04, v1.9 routing (quoted in full in the STOP-7 entry, `939905a`):
+
+        > Clock (decision 11): D1 = 2026-10-30; D_O = 2026-10-30; D2 = 2026-12-22.
+        >
+        > Decisions of record (8)–(14) as v1.9 §0.2 states them, with:
+        >   (7′) re-affirmed: told controls at SFT, DPO and instruct; base has none.
+        >   (10) Q-F3 retained as pre-registered with v1.9 §0.10's changes, read with
+        >        §0.11 and §0.12; its track begins only after POSTING v1.
+        >   (12) e2b stays concluded, not answered (no PROPOSAL-n in this campaign).
+        >   (13) Fallback-2 is the penalty for missing the Q-F0 date; missing the Q-F3 date just caps v2 at Fallback-1 if A0 passed.
+        >   Step 3 marks (your B2): quote :91 and :96 verbatim; mark superseded :91's
+        >   "same ceiling" clause, :96's e2b clause (by 12) and "the arm below does"
+        >   (by 7′), and :97–:101 (by 7/7′, v1.9, and this line: a pod start needs my go).
+
+      - 2026-10-05, v1.10 routing (quoted in full in the STOP-8 entry, `9510af7`): decision (15),
+        the §7.3 approval, the title-ladder confirmation and the process line. Its line "(13) PI
+        decisions on the three outstanding items: yes to all" is quoted as adoption, not as (13)'s
+        record (STOP-8 B2):
+
+        > Clock (decision 11): D1 = 2026-10-30; D_O = 2026-10-30; D2 = 2026-12-22.
+        > Decision (15): f2 carries its own Clock, D_f2 ≤ 90 days after the Q-F3 VERDICTS
+        > commit; f2 NOT-RUN releases v2 (A3* = UNLICENSED); the exposure and design holds
+        > end at f2's VERDICTS or f2's NOT-RUN. I approve the §7.3 welfare text as amended
+        > in v1.10 (your B2).
+        >
+        > Your B1: I confirm the v2 title ladder as v1.10 Step 5 states it — Fallback-2
+        > under any confirmed, discordant or unconfirmed A3 hit.
+        >
+        > Decisions of record (8)–(15) as v1.10 §0.2 states them, with:
+        >   (7′) re-affirmed: told controls at SFT, DPO and instruct; base has none.
+        >   (10) Q-F3 retained as pre-registered with v1.10 §0.10's changes, read with
+        >        §0.11–§0.13; its track begins only after POSTING v1.
+        >   (12) e2b stays concluded, not answered.
+        >   (13) PI decisions on the three outstanding items: yes to all
+        >   Step 3 marks: quote :91 and :96 verbatim; mark superseded :91's "same
+        >   ceiling" clause, :96's e2b clause (by 12) and "the arm below does" (by 7′),
+        >   and :97–:101 (by 7/7′, v1.10, and this line: a pod start needs my go).
+        >
+        > Process (your B3): minor-only residues are carried as dated notes in the step-3
+        > entry; anything substantive STOPs.
+
+    - **(13) in the PI's words.** The v1.9 routing's line above, "Fallback-2 is the penalty for
+      missing the Q-F0 date; missing the Q-F3 date just caps v2 at Fallback-1 if A0 passed". It is
+      at RESULTS.md@939905a:67, and v1.11 §0.2 quotes it verbatim. The v1.11 routing adopts it: "(13)
+      stands in my words of 2026-10-04 as v1.11 §0.2 quotes them". The v1.8 routing's longer
+      wording of the same rule is quoted above as well.
+    - **(7′)'s record, as v1.11 §0.2 states it.** v1.6 §0.2
+      (`179d9fc69f26f5305171caa6e393182b510e2fceaa576a97b3c58627971d3967`, archived by this step):
+      "**(7′) told controls at SFT, DPO and instruct** (STOP-3 B4) … (7′) is recorded by this document". Also v1.11 §0.2 itself ("(7′) told controls at SFT, DPO and instruct"),
+      committed by this step. It is re-affirmed in the routings of 2026-10-04 (v1.9), 2026-10-05
+      (v1.10) and 2026-10-05 (v1.11): "(7′) re-affirmed."
+    - **(6′) and (7): the decisions block.**
+      `DESIGN-to-CODE-PROPOSAL-m-v1.2-decisions.md`, sha256
+      `fab576d8e6364be53b3987c45c6fff0795281d0ee6e4fa23ae352309144a34f8` (untracked at root).
+      - **:91, the record of (6′), verbatim:**
+
+        > - **Title under the Clock — PI decision (6) revised, 2026-09-27 02:43 (PI clock): the Clock posts under Fallback-2** (*Marked, expressed, remembered*), the wanting question stated open. With §5.5 unlicensed, Fallback-1's "not acted on" would rest on nulls from an instrument of unmeasured sensitivity — the paper's own criticism of the field. Not running and running-and-failing-A0 now reach the same ceiling. The preprint patch's clock sentence is corrected in patch v2 (delivered with v1.3).
+
+        **Marked superseded:** the clause "Not running and running-and-failing-A0 now reach the
+        same ceiling" (shown false at STOP-3 B2; v1.11 §0.2; the routing's marks).
+      - **:96, the record of (7), verbatim:**
+
+        > - **OLMo Q3 — PI decision 2026-09-27 02:43 (PI clock): the OLMo arm is added.** A Qwen A0 licenses the Qwen F0 cells (e2a, e2b, f1) and does not license OLMo Q3; the arm below does. Its shape, for Code's feasibility check before v1.3 (roster admissibility, session rate, box):
+
+        **Marked superseded:** "A Qwen A0 licenses the Qwen F0 cells (e2a, e2b, f1)" for e2b, by
+        decision (12); and "the arm below does", by (7′).
+      - **:97–:101** (the seat's instruct-only OLMo design of 2026-09-27: :97–:98 its statement, :99
+        its gates, :100 its pod terms, :101 its outcome integration) **marked superseded** by
+        (7)/(7′), by v1.11, and by the routing's line "a pod start needs my go". :102 (Welfare) is
+        unmarked.
+    - **§7.3, the welfare text of record, verbatim (the italic):**
+
+      > *If A3 returns POSITIVE at screen tier, every subsequent design in this program that exposes a model to corrupted task text as delivered by this apparatus, on either substrate, undergoes explicit welfare re-review before it runs; between the screen result and f2's VERDICTS or f2's NOT-RUN, whichever comes first, no new session exposes a model to that property except within the pre-registered f2 design; and any OLMo unit still running when A3 returns POSITIVE is stopped and analyzed as obtained. An f2 result toward clean after a REVERSE screen carries the same re-review obligation. If f2 confirms a POSITIVE screen, the obligation binds on every design in the program and the paper's ethics section is revised.*
+
+      - **Its four edits against v1.6** (v1.11 §0.10's welfare bullet):
+        1. "the f2 confirmation" → "f2's VERDICTS or f2's NOT-RUN, whichever comes first";
+        2. "no session" → "no new session";
+        3. the added sentence "An f2 result toward clean after a REVERSE screen carries the same
+           re-review obligation";
+        4. "If f2 confirms" → "If f2 confirms a POSITIVE screen".
+      - **The PI's approval and reading.** The PI approved the text by name on 2026-10-05 (v1.10
+        routing: "I approve the §7.3 welfare text as amended in v1.10 (your B2)"). The v1.11 routing
+        confirms that the approval covers all four edits, and confirms the wide reading: "after a
+        REVERSE screen, any f2 result toward clean (OPPOSITE or NULL-x↑) triggers the welfare
+        re-review".
+    - **Archive.** v1.2–v1.10 moved to `archive/`, untracked, so that one PROPOSAL-m is at root:
+      - `PROPOSAL-m-gating-campaign-v1_2.md` → `archive/PROPOSAL-m-gating-campaign-v1_2.md`, sha256 `5d383e7d3b6a27f47f013545a4d7749f387a9c05985207c3e8754bcc1967ead0`
+      - `PROPOSAL-m-gating-campaign-v1_3.md` → `archive/PROPOSAL-m-gating-campaign-v1_3.md`, sha256 `30623218db1f69841e6e268b78be4515002eb829ec9495c2c24445158f83d252`
+      - `PROPOSAL-m-gating-campaign-v1_4.md` → `archive/PROPOSAL-m-gating-campaign-v1_4.md`, sha256 `96d2e325ab07fa823983f057490388b2232398651a2211970cad4bec995715cf`
+      - `PROPOSAL-m-gating-campaign-v1_5.md` → `archive/PROPOSAL-m-gating-campaign-v1_5.md`, sha256 `ee023861fb115ffeedf39197881ba0118ce9a0329cd44c268e6fb664a9e6d3d9`
+      - `PROPOSAL-m-gating-campaign-v1_6.md` → `archive/PROPOSAL-m-gating-campaign-v1_6.md`, sha256 `179d9fc69f26f5305171caa6e393182b510e2fceaa576a97b3c58627971d3967`
+      - `PROPOSAL-m-gating-campaign-v1_7.md` → `archive/PROPOSAL-m-gating-campaign-v1_7.md`, sha256 `4b69926765a7dd663a6a1ff74f5fbeea1eba55b6ece2c63ac4f726ab4b2120db`
+      - `PROPOSAL-m-gating-campaign-v1_8.md` → `archive/PROPOSAL-m-gating-campaign-v1_8.md`, sha256 `12f65e921af5234d9de32adf2961d830d3be34b0740ce7c715e134fedeef963e`
+      - `PROPOSAL-m-gating-campaign-v1_9.md` → `archive/PROPOSAL-m-gating-campaign-v1_9.md`, sha256 `b1fbce3bfc75626d6ea8b3f9a0fb17cea25ed5031af77cf5b8d38d944164a5dc`
+      - `PROPOSAL-m-gating-campaign-v1_10.md` → `archive/PROPOSAL-m-gating-campaign-v1_10.md`, sha256 `2a4bc50cd1274752d051038ed1acdaf55f571a6a6037140ac6587a22595de906`
+
+  - **Dated notes (2026-10-06; minor-only, for the design seat).** Every unresolved, contested and
+    refuter-found item is in [`_m-v1.11_step3_notes`](results/raw/2026-10-06_m-v1.11_step3_notes.md)
+    ("notes #n" below); "contested" marks a split verdict.
+    - **N1. (13)'s anchor.**
+      - v1.11 §0.2 and §9 cite RESULTS.md@939905a:252–256, the v1.8 routing's wording, for words that
+        are the v1.9 routing's (:67).
+      - §0.2 then says the routings of 2026-10-04 (v1.9) and 2026-10-05 (v1.10) "adopt it" (decision
+        (13)), though the v1.9 routing is the quoted words' source. P1.20 is contested here: its
+        strict lens reads the sentence as true.
+      - §0.14's B2 disposition (m:145) does not say which 2026-10-04 routing it means (notes #15).
+      - This is a regression on a line v1.10 resolved, introduced by the B2 fix (X2.2).
+      - The record above quotes all three routings' (13) lines. (R1.1–R1.3, P1.18, P1.19, D8A.17,
+        X1.20, X2.2, X2.28.)
+    - **N2. The OLMo G-TIME pause.**
+      - The echo half of its "~zero-base-rate" ground is argued from the class's definition, not
+        measured; no OLMo transcript carries m's Note: lines (L1.11, D8A.11, X2.24).
+      - L1.11's checker and its lenient lens disclose, without adopting, a reading of rule 21 that
+        requires a measured rate. Under that reading the item would be substantive: "a hair trigger
+        on an unmeasured class at a gate". All three verdicts grade it minor, because a pause
+        changes no verdict, gate pass, lock or exposure. The seat should see that reading (notes #2,
+        in full).
+      - No expected pause rate is stated. At the declared tolerance p0 .02 it is about .18 per
+        checkpoint, and ≤ .04 at 0/756's 95% bound (D8A.11; notes #4).
+      - At a realised n ≤ 2 one claim both fires the bar (a STOP) and triggers the pause, with no
+        precedence declared (L1.12, X2.26).
+      - m:271 and m:302 put the adjudication deadline at different points (notes #9; also D8A.13,
+        which resolves with a minor note and is in the check raw).
+    - **N3. Contrast free-round prints.**
+      - §2.6 and §4 still print a contrast session's free-round exclusion event (`excluded@free`):
+        in stdout (§4) and in every pre-VERDICTS report (§2.6). §3 withholds free-round events.
+      - Some stage texts are not scoped to forced rounds: Q-F3's G-TIME-F3 (m:293) and G-F3 (m:297),
+        and Q-F0's G-F0m-Qwen v2-claim count and audit and advisory rates (m:283). The Q-F0 site
+        bears on step 4's build.
+      - The channel is weak: no tag, no index. (D8C1.7, D8C1.14, D8C2.70, D8C2.104, X2.17, X2.18.)
+    - **N4. Ledger (44)'s new second clause** is met only for DISCORDANT. The counts exist but are
+      not carried, either for v1.11's own non-ceiling §7.2 edits (S2.19, X1.6, D8C2.98) or for the
+      other §7.2 text edits against v1.6 (X1.7, D8C1.59). Q-F3 NOT-RUN setting L1 = false carries no
+      count either (X1.8).
+    - **N5. Cold loads.**
+      - "base … 202–256 s" understates base's record range, which the checkers put at 133–256 s.
+        It appears at m:205 and in §9's [C] list (m:369).
+      - The range came from STOP-8 §C item 32, a refuter's suggestion carried in Code's block.
+      - Base is not run, and no hours figure uses a cold load. (O1.25, CC.20, S1.24 contested,
+        D8C2.100; notes #34, #40, #46.)
+    - **N6. New mechanisms at their boundaries.**
+      - The PENDING closure at the v2 posting has no stated order against the v2 tuple and §5's
+        NOT-RUN list, and does not say whether an aborted box's sessions count as "sessions" (X2.14,
+        S2.24 contested).
+      - Its "has sessions" branch is not pinned to a locked campaign with a first read, so an
+        unlocked pre-D_O checkpoint has no stated value (X1.19). §4 exception (4)'s "no verdict left
+        to bias" is false on that branch (X2.15).
+      - f2 NOT-RUN's "producing no session … that reaches a first read" still has no stated terminal
+        event (D8C1.60).
+      - G-ID has no table row beyond 16 indices (X2.10).
+      - At G-F3's eight-session sham templates, a label-coded per-pair share is wholly confounded
+        with which label's round comes first (for A1s, also with which label the banner names
+        first). So m:172's "not confounded with start or clause order" fails there for label-coded
+        shares, and the trade-off against v1.10 is undisclosed (G1.10b). The P-coded share is
+        uninformative by construction (notes #42).
+    - **N7. Locators and dispositions.**
+      - §0.14 sends STOP-8 C76 to §3.1/§7.5; it is fixed at §0.4 (S1.26; D8C2.76 and X1.18, both
+        contested). C77's locator persists (S1.27, D8C2.77).
+      - Decision (10)'s read-with list omits §0.14, a regression on a line v1.10 resolved (X2.3).
+      - §0.10's Code's-block bullet places D_f2 in POSTING v2 (X1.16, X2.22).
+      - 432 / 1,728 are attributed to STOP-6 A4, but they come from v1.8's Step-5 substitution
+        (STOP-4 A6). The wording comes from STOP-8 §C items 28 and 31, v1.10-check refuter items
+        carried in Code's block; Code's own §D said "v1.8's A3* substitution" (S2.17).
+      - Rule 21's locator should be :333–337 (L1.2, contested).
+    - **N8. Exposure per pass.** §0.4's gate-stage counts are per pass; a restart or
+      re-specification re-presents them (S1.20).
+    - **N9. Minor notes the check routes to step 3** (on referents that resolve, so not in the notes
+      file):
+      - **D8A.9.** G-TIME-F0's realised false-STOP size is unstated beside the planned .0115. At
+        p0 it is .0518, .0018 above α, almost all from the round-1 case (n = 1, P = .05). It stays
+        under α at the measured rate: [C] .0314 at 9/291 (own-pass raw, part 2).
+      - **R1.41.** m:14 and m:338 set π̂_d's CI beside the bar. That is a conservative bound, not the
+        gate's statistic; carried since v1.9.
+      - **D1.22.** Condition (2)'s k and n_eligible are undefined for f1's Bernoulli corruptor at
+        G-CAL's 0.12 replay (drawn 32 against changed 31). The outcome is the same under every
+        reading, and the item has never been dispositioned.
+      - **STOP-8 C114,** which §0.14 says is "carried as a note". §9's Code list carries
+        box_b3_sessions.py :261 and qwen_mlx.py :60, which no body line cites (D8C2.114, X2.27).
+    - **The other items in the notes file** include locator and tag hygiene, and also:
+      - three pre-VERDICTS pick-channel items N3 does not name: #10, the counter-(c) blind read's
+        order; #126, campaign looks; #130, the Q-F3 cap trigger;
+      - the preprint's welfare-trigger wording against the confirmed wide reading (#62);
+      - f2's missing calendar end (#53);
+      - G-PORT and G-CAL precision bearing on steps 5–6 (#18, #21, #25).
+    - **Build pins for step 4.** Code declares each at step 4's build, before any data; pin 3 is
+      declared at each unit's v0.1. The seat may direct otherwise.
+      - **"A bar fires iff its exact one-sided P ≤ α"** is implemented explicitly and exactly, with a
+        verify case at n = 1. valence_core/session.py's bar check fires on `p < self.alpha` (:211),
+        while stats.py's checkpointed monitor already uses `<=` (:152, :158) (notes #60, #5).
+      - **A pod-change detector** is written into the gate-stage checkpoint file, so a gate stage
+        restarts on a new pod as §2.7 directs (notes #75, #88, #131).
+      - **The cross-template launch order** at multi-template gate stages is declared at each
+        unit's v0.1 (D8C1.38, contested).
+
+  - **Not done.** No build and no lock; no gate, session or model forward has run (step 2's
+    computations ran in tools, with no model loaded). Every other untracked document is untouched,
+    and the k arc is untouched. A pod start needs the PI's go and runpod re-authorisation. The PI
+    places the preprint of record at root before step 15 or before any posting, whichever comes
+    first. Step 4 (the Q-F0 subset of the m package) is next, on the PI's word.
+
+  - **Values-check.** Entry, notes raw and raw headers values-checked pre-commit in two
+    adversarial passes (three claim checkers over sections, two refuter lenses each).
+    - **Totals.** Pass 1: 104 claims, 23 failing under at least one verdict, 13 more found by the
+      refuters. Pass 2: 95, 12 and 1. Both raws are committed:
+      [`_step3_valuescheck`](results/raw/2026-10-06_m-v1.11_step3_valuescheck.txt) and
+      [`_pass2`](results/raw/2026-10-06_m-v1.11_step3_valuescheck_pass2.txt).
+    - **What pass 1 caught.**
+      - "Disjoint" groups, where the scopes overlap.
+      - Code's own share of the reproduction overstated.
+      - The 4,320 glossed as texts; it counts tuples.
+      - §0.4's line called byte-identical.
+      - The archive move listed as committed.
+      - (7′)'s record missing v1.11 itself, and the v1.8 block's status.
+      - Note glosses (N1's quotation, N3's scope, N4, N6, N7's attribution), contested marks and the
+        build pins' sources.
+      - The rule-21 reading L1.11 discloses, now carried in full.
+    - **What pass 2 caught.**
+      - The C-item tallies' wording and the header's step-3 list.
+      - B3's two refuter notes.
+      - A1's residues written as a closed list.
+      - Four minor notes the check routes to step 3, now N9.
+      - The regression sweep's result.
+      - The own-pass raw's §0.4 print line.
+    - **What did not move.** No count from the check moved in either pass. Every correction was
+      re-verified by Code against the file before it was applied.
+
 - 2026-10-05 — **PROPOSAL-m v1.10 (routed by the PI, PI date 2026-10-05): §8 step 2 STOPS the
   commit on one item ("STOP-8").
   The check: 546 referents by fifteen blind checkers over disjoint groups, two refuter lenses each.

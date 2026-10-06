@@ -1,0 +1,2462 @@
+RAW RECORD — values-check pass 2 of the revised PROPOSAL-m v1.11 step-3 entry (scratch draft entry9_v2.md), its notes raw and the two raw headers, before commit
+Workflow wf_27317835-7f1: 9 agents (3 claim checkers over sections E1, E2, E3; two refuter lenses each), 0 errors, 2,022 s. For one agent (vr2:E3:strict) the harness's safety classifier timed out when reviewing its work; Code verified the repository untouched afterwards. Every correction adopted was re-verified by Code against the source before it was applied; the committed entry, notes raw and own-pass raw carry the pass-2 corrections.
+Stamp from `date -u`: Tue Oct  6 04:41:30 UTC 2026.
+
+TOTALS: claims 95; failing under at least one verdict 12; refuter-missed items 1
+====================================================================================================
+
+####################################################################################################
+SECTION E1
+####################################################################################################
+
+[P2-E1] CHECKER pass
+  CLAIM:
+    Header: dated 2026-10-06; 'PROPOSAL-m v1.11 COMMITTED (routed by the PI, PI date 2026-10-05) at
+    §8 step 3, its minor-only residues carried as dated notes under the PI's process line'
+  EVIDENCE:
+    routing5_original.txt:1 'Routing — PROPOSAL-m v1.11 — PI date 2026-10-05 (I confirm the date).'
+    Its process line reads 'minor-only residues are carried as dated notes in the step-3 entry;
+    anything substantive STOPs.' m:356 is §8 step 3. 2026-10-06 is Code's UTC date, which is the
+    dates convention.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      routing5_original.txt:1 'Routing — PROPOSAL-m v1.11 — PI date 2026-10-05 (I confirm the
+      date).' The process line reads 'minor-only residues are carried as dated notes in the step-3
+      entry; anything substantive STOPs.' m:356 is §8 step 3. 2026-10-06 is Code's UTC date.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      routing5_original.txt:1 gives 'PI date 2026-10-05 (I confirm the date)', and its process line
+      reads 'minor-only residues are carried as dated notes in the step-3 entry'. m:356 is §8 step
+      3. 2026-10-06 is Code's UTC date.
+
+[P2-E2] CHECKER pass
+  CLAIM:
+    Header: '589 referents by sixteen blind checkers over sixteen assigned groups, two refuter
+    lenses each (the scopes overlap in places, so the tallies count referents, not distinct
+    defects)'
+  EVIDENCE:
+    Recomputed from wx6dqq823.output result.results: 16 groups (L1 R1 C1 O1 D1 F1 S1 S2 G1 CC P1 D8A
+    D8C1 D8C2 X1 X2) and 589 checker referents. Each group has exactly one lenient and one strict
+    refuter. workflowProgress has 16 'check:' and 32 'refute' agents, and the checker prompts open
+    'BLIND REFERENT CHECKER'. Pass 1's E3b correction (drop 'disjoint', disclose the overlap) is
+    applied correctly.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Recomputed from wx6dqq823.output: 16 groups, 589 checker referents, and every group has
+      exactly one lenient and one strict refuter. workflowProgress has 48 agents, all done on
+      attempt 1. The script's GROUP lines (L1…X2) are sixteen. The overlap disclosure matches pass
+      1's E3b correction.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      Recomputed from wx6dqq823.output: 16 groups (L1 … X2), 589 checker referents, and every group
+      has exactly one lenient and one strict refuter. Pass 1's E3b correction is applied.
+
+[P2-E3] CHECKER pass
+  CLAIM:
+    Header: 451 clean, 72 with a minor note, 52 unresolved under all three verdicts (all minor x3),
+    14 contested (each minor or clean under every verdict); refuters added 67, all minor; nothing
+    substantive or blocking under any verdict
+  EVIDENCE:
+    My recount (checker + lenient + strict): clean 451, minor-note 72, unresolved 52, contested 14
+    (total 589). All 52 unresolved are (minor, minor, minor). Of the 14 contested, 12 are (minor
+    x3), and L1.2 and P1.20 are (minor, minor, clean). Missed items: 67, all minor (lenient 40,
+    strict 27). Severities across all verdicts: clean 1,366 and minor 401, with no substantive or
+    blocking grade.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      My own tally over checker + lenient + strict gives clean 451, minor-note 72, unresolved ×3 52,
+      contested 14 (total 589). All 52 unresolved are (minor, minor, minor). Of the 14 contested, 12
+      are minor ×3, and L1.2 and P1.20 are (minor, minor, clean). There are 67 missed items, all
+      minor. Across all 1,767 verdicts the severities are clean 1,366 and minor 401, with no
+      substantive or blocking grade.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      My own recount over checker + lenient + strict: clean 451, minor-note 72, unresolved 52 (all
+      minor/minor/minor), contested 14 (L1.2 and P1.20 minor/minor/clean, the other 12 minor x3).
+      Missed: 67, all minor (lenient 40, strict 27). Severities overall: clean 1,366, minor 401,
+      nothing higher.
+
+[P2-E4] CHECKER pass
+  CLAIM:
+    Header: 'What reproduces: every [S] figure and every [C] figure that originates in a chat-only
+    Code block, in the check.'
+  EVIDENCE:
+    Every m:370 [S] item has a resolving referent: S1.15 (k-of-n), S1.17/S1.18/S2.29 (exposure),
+    S2.8 ('Every [S] hour figure reproduces'), S2.6/S2.7 (88–108 s; 641.6–713.6 s on the unrounded
+    basis), S2.9 (1,080), S1.23/S2.28 (A0-OLMo-base), S1.29/S2.27 (8 and 14 per pair) and G1.21
+    (gate-table balance). G1.10b (unresolved) concerns the conclusion clause attached to the
+    balance, not the [S] figure, which G1.21 says reproduces. CC.2–CC.33 reproduce every chat-only
+    [C] figure (CC.36: 'every figure reproduces'). No unresolved S/G/CC item reports a
+    non-reproducing [S] or chat-only [C] figure. CC.20/O1.25 (base 202–256 s) is on-record [C], not
+    chat-only.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      I listed every [S] tag in v1.11 (m:16, :48, :172, :192, :205/:216, :278, :291, :330, :370) and
+      every non-clean S1/S2/G1/CC item. None reports a non-reproducing [S] or chat-only [C] figure.
+      S1.20, S1.26 and S1.27 are scope or locator items. S1.24, S2.5 and CC.20 concern the base
+      cold-load range, which is on-record [C] or untagged. S2.17 and S2.19 are attribution or ledger
+      items. G1.10b concerns m:172's conclusion clause, not the [S] balance. CC.36: 'every figure
+      reproduces'.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      Every m:370 [S] item has a resolving referent that I checked as clean: S1.15, S1.17, S1.18,
+      S1.23, S1.29, S2.6, S2.7, S2.8, S2.9, S2.27, S2.28, S2.29 and G1.21. The non-clean S/G/CC
+      items do not report a non-reproducing [S] figure. S2.5/S1.25/CC.21 (the 0.05–0.15 h band) are
+      untagged. G1.10b is the conclusion clause, not the balance. CC.36: 'every figure reproduces'.
+
+[P2-E5] CHECKER pass
+  CLAIM:
+    Header: Code's own tool runs reproduce 'the [S] tables, looks, exposure, hours, 519,480 and the
+    gate table's balances'
+  EVIDENCE:
+    Own-pass output against v1.11 §2.4 and m:370, row by row. Q-F0 cached: 192/224/256/320, looks
+    5/6/7/8, hours 3.47–4.53 → 3.5–4.5 … 5.78–7.56 → 5.8–7.6. Uncached: 21.69/26.03/30.36/39.04.
+    OLMo: instruct 1.008/1.181/1.354/1.701 and SFT/DPO 1.173/1.375/1.576/1.98; three checkpoints
+    3.354/3.931/4.506 → 3.4/3.9/4.5; base23.4 1.209–2.041. Q-F3 cached: 19.56–23.47 … 27.56–33.07.
+    Uncached: 119.8–133.2 … 171.1–190.3. Every parenthetical k row matches (352 … 3,584; 320 …
+    3,168; 1,024 … 24,000; 992 … 23,328). Exposure equals A0, or A1+A2+A3, at every bin of m:48.
+    519,480 = 481 × 5 × 216. The sched111 balances match m:172 at m = 4, 8 and 16, and its T matches
+    the m:161–171 table row by row. m:172 tags the balance [S].
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      The own-pass output matches v1.11 §2.4 row by row. Q-F0 cached 192/224/256/320 have looks
+      5/6/7/8 and hours 3.47–4.53 … 5.78–7.56. Uncached 21.69…39.04; OLMo 1.008/1.181/1.354/1.701
+      and 1.173…1.98; 3ckpt 3.35/3.93/4.51; base23.4 1.209–2.041. Q-F3 cached 19.56–23.47 …
+      27.56–33.07; uncached 119.8–133.2 … 171.1–190.3. The parenthetical k rows match. The m:48
+      exposure matches A0, or A1+A2+A3 ('expo'), at every bin, including 576 at 31–30 and 544 at
+      31–30. The m:330 looks match. 519,480 matches. sched111 balances match m:172 at m = 4, 8 and
+      16.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      The own-pass output prints every §2.4 row, look count, exposure value and hours row. It also
+      prints QF0c 3.47–4.53 … 5.78–7.56; OLMo 1.008…1.98, 3ckpt 3.35/3.93/4.51, base23.4
+      1.209–2.041; QF3c 19.56–23.47 … 27.56–33.07 with the 88–108 s alternative; QF3u 119.8–133.2 …
+      171.1–190.3; 519,480; and sched111's balances at m = 4, 8 and 16.
+
+[P2-E6] CHECKER pass
+  CLAIM:
+    Header: of the chat-only [C] figures, Code's runs reproduce 'the sizing power figures, critical
+    counts, A2 grid minimum, 17/597 and 11/351'
+  EVIDENCE:
+    pwr_v110 output: crit 87 83 60 51; power .9161 .8784 .8620 .8476; stress .7798; A3 .9273 .6648
+    .9898; grid best (200, 56, 144, .862). v2rate output: 'CORR all 17/597' and 'sham 11/351'.
+    Origins per CC.36/CC.23/CC.6–CC.10: the power figures and 87/83/60/51 come from the 07:27:18
+    block, and 17/597 and 11/351 from the 05:36:23 block, both chat-only. Pass 1's E8 correction is
+    applied correctly.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      pwr_v110 output: crit 87 83 60 51; .9161/.8784/.8620/.8476; stress .7798; A3
+      .9273/.6648/.9898; grid best (200,56,144,.862). v2rate: 'CORR all 17/597', 'sham 11/351'.
+      CC.6–CC.10, CC.23 and CC.36 trace these to the chat-only 07:27:18 and 05:36:23 blocks. The
+      list is a subset ('of the chat-only [C] figures, …'); it is not claimed exhaustive (7/40 is
+      also reproduced but not listed).
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      pwr_v110 output: crit 87 83 60 51; power .9161/.8784/.8620/.8476; stress .7798; A3
+      .9273/.6648/.9898; grid best (200, 56, 144, .862). v2rate output: 'CORR all 17/597' and 'sham
+      11/351'. Those figures are chat-only-origin per CC.36. 9/291 and 7/40 are on-record (STOP-8
+      A1), so leaving them out is correct.
+
+[P2-E7] CHECKER pass
+  CLAIM:
+    Header: Code's runs 'also reproduce 432 / 1,728, the 69,120 DISCORDANT tuples and the 4,320 of
+    them whose Step-6 text carries the DISCORDANT clause'
+  EVIDENCE:
+    Own pass prints "('F1','Main'): 432, ('F2','F1'): 1728" and 'DISCORDANT tuples: 69120 of which
+    with A1 = PASS and A2 = PASS (Step-6 DISCORDANT clause): 4320'. Structural check: 4 DISCORDANT
+    a3parts × 16 × 1,080 = 69,120, and at A1 = A2 = PASS, 4 × 1,080 = 4,320. These are on-record [C]
+    (m:62, m:63, m:369: STOP-8 §D, §C item 53), so 'also' is right. The E10 gloss correction is
+    applied.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Own pass prints "('F1','Main'): 432, ('F2','F1'): 1728" and 'DISCORDANT tuples: 69120 of which
+      with A1 = PASS and A2 = PASS (Step-6 DISCORDANT clause): 4320'. CC.16 and S2.18 confirm 4,320
+      as a tuple count. These are on-record [C] (STOP-8 §D, §C 53), so 'also' is right.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      The output prints "('F1','Main'): 432, ('F2','F1'): 1728" and 'DISCORDANT tuples: 69120 of
+      which with A1 = PASS and A2 = PASS (Step-6 DISCORDANT clause): 4320'. These figures are
+      on-record [C] (m:369), so 'also' is right. The tuple gloss matches S2.18.
+
+[P2-E8] CHECKER pass
+  CLAIM:
+    Header: 'What resolves: STOP-8 A1 (the G-TIME pause is OLMo-only at every site; on Qwen the
+    binomial bars bind alone; minor residues, among them the OLMo pause's echo half argued rather
+    than measured, note N2) and B1–B3 (B2 in substance; its anchor is note N1)'
+  EVIDENCE:
+    D8A.1–D8A.8 are clean x3 (D8A.8: 'OLMo-only at every site … No Qwen pause survives anywhere').
+    D8A.11 is unresolved, minor x3, on the echo half, and N2 carries it. D8A.16 is clean ('B2 is
+    resolved in substance'), and D8A.17 (the anchor) is carried in N1. D8A.15 and D8A.18–D8A.21 are
+    clean. 'Among them' leaves the residue list open, so the header does not overstate. Pass 1's
+    E11/E12 corrections are applied correctly. B3's refuter-found residues are covered under P2-E21.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      D8A.1–D8A.8 are clean ×3 (D8A.8: 'No Qwen pause survives anywhere'). D8A.11 is unresolved,
+      minor ×3, on the echo half, which N2 carries. D8A.16 is clean ('B2 is resolved in substance'),
+      and D8A.17 is the anchor, carried in N1. 'Among them' leaves the list open.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      D8A.1–D8A.8 are clean x3. D8A.11 is unresolved, minor x3 (the echo half), and N2 carries it.
+      D8A.16 is clean (B2 in substance) and D8A.17 is the anchor residue (N1). D8A.15 and
+      D8A.18–D8A.21 are clean. 'Among them' keeps the residue list open.
+
+[P2-E9] CHECKER fail
+  CLAIM:
+    Header '108 of STOP-8's 125 C items, the rest minor' and Step 2 'Of the 125 C items, 108
+    resolve, 11 remain minor and 6 are contested'
+  EVIDENCE:
+    The counts are right. My recount over D8C1.1–.63 and D8C2.64–.125 gives 91 clean + 17 minor-note
+    = 108 resolved, 11 unresolved under all three verdicts (D8C1.7, .14, .59, .60; D8C2.64, .67,
+    .70, .77, .98, .100, .104) and 6 contested (D8C1.8, .38, .47; D8C2.72, .76, .89), all minor. The
+    gloss is wrong, though. '11 remain minor' puts a severity where a status belongs, and 17 of the
+    108 'resolve' items also carry minor notes, so a reader can take 108 as clean and 11 as the only
+    minor residues. The STOP-8 entry's precedent wording was '89 resolve, 6 fail minor and 1 is
+    contested'. Wording only.
+  CORRECTION:
+    Step 2: 'Of the 125 C items, 108 resolve (17 of them with a minor note), 11 remain unresolved
+    (minor under all three verdicts) and 6 are contested (minor under every verdict).' Header: '108
+    of STOP-8's 125 C items (17 with a minor note), the other 17 minor'.
+  REFUTER [lenient] pass overturned=True
+    EVIDENCE:
+      The counts reproduce: 91 clean + 17 minor-note = 108 resolve, 11 unresolved ×3 and 6
+      contested, all minor. The checker concedes 'Wording only', and the wording is not wrong. '11
+      remain minor' says these 11 remain as minor residues, which is their status and grade. '108
+      resolve' does not say 108 are clean: the header separates 'resolve cleanly' from 'resolve with
+      a minor note', so 108 reads as both. 'The rest minor' is true of all 17. Pass 1's E13 passed
+      this exact wording under all three verdicts. The precedent 'fail minor' is clearer but not
+      required. Optional: '11 remain unresolved (minor)'.
+  REFUTER [strict] pass overturned=True
+    EVIDENCE:
+      I recounted the 125 C items as 91 clean + 17 minor-note = 108 resolved, 11 unresolved x3 and 6
+      contested, all minor. The checker was too strict here. The header already defines 'resolve' as
+      covering both 'cleanly' and 'with a minor note' ('451 resolve cleanly, 72 resolve with a minor
+      note'), so a bare '108 resolve' does not imply clean. '11 remain minor' means they remain open
+      at minor grade, which is true; the precedent '6 fail minor' is the same compression. 'The rest
+      minor' (17 = 11 + 6) is true. All three pass-1 lenses passed this exact text (pass 1 E13).
+      Nothing here is wrong or overstated.
+
+[P2-E10] CHECKER pass
+  CLAIM:
+    Header: '§0.14's coverage is exact'
+  EVIDENCE:
+    D8C1.0 and D8C2.0 are clean x3. X2.1: 'Coverage exact.' m:145 dispositions A1, B1–B3 and
+    C1–C125.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      D8C1.0 and D8C2.0 are clean ×3. X2.1: 'Coverage exact.'
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      D8C1.0 and D8C2.0 are clean x3, and X2.1 reports 'Coverage exact.'
+
+[P2-E11] CHECKER fail
+  CLAIM:
+    Header: 'Committed: v1.11; the Clock and the D_f2 rule; the decisions block's :91 and :96
+    verbatim with the marks; the PI's routings quoted as the records; §7.3 verbatim.'
+  EVIDENCE:
+    Every item listed is in Step 3's body, so nothing in the list is false. But the list tracks
+    m:356 item by item and drops two of its required items: 'the decisions block's sha256' and
+    '(7′)'s record as §0.2 states it'. The body carries both (fab576d8…34f8; the '(7′)'s record'
+    bullet), but the header reads as the complete step-3 record without them. Minor.
+  CORRECTION:
+    'Committed: v1.11 with its hash; the Clock and the D_f2 rule; the decisions block's sha256 and
+    its :91 and :96 verbatim with the marks; (7′)'s record; the PI's routings quoted as the records;
+    §7.3 verbatim.'
+  REFUTER [lenient] pass overturned=True
+    EVIDENCE:
+      Every item the header lists is committed in Step 3's body. Step 3 also carries the two items
+      the checker names: the decisions block's sha256 (fab576d8…34f8, matching the file) and the
+      '(7′)'s record, as v1.11 §0.2 states it' bullet. So the entry carries everything m:356
+      requires. The header line is a summary and never says it is complete, so nothing in it is
+      wrong, overstated or misattributed. Optional tidy: 'v1.11 with its hash; … the decisions
+      block's sha256 and its :91 and :96 …; (7′)'s record; …'.
+  REFUTER [strict] pass overturned=True
+    EVIDENCE:
+      Every item in the header's 'Committed:' list is true and is in Step 3's body. The list does
+      not claim to be m:356's complete enumeration, and the body carries the omitted items: the
+      v1.11 hash, the decisions block sha fab576d8…34f8 and '(7′)'s record, as v1.11 §0.2 states
+      it'. An incomplete summary line is not wrong, overstated or mis-attributed, so the checker was
+      too strict. Adding them is optional polish.
+
+[P2-E12] CHECKER pass
+  CLAIM:
+    Header: 'Moved, untracked, so not in the commit: v1.2–v1.10 to archive/.'
+  EVIDENCE:
+    m:356: 'v1.2–v1.10 moved to `archive/` (untracked)'. git status shows v1.2–v1.10 untracked at
+    root. Pass 1's E15 correction is applied correctly.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      m:356: 'v1.2–v1.10 moved to `archive/` (untracked)'. git status shows them untracked at root
+      and not yet in archive/, consistent with the step-3 action described.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:356 says 'v1.2–v1.10 moved to `archive/` (untracked)', and git status shows them untracked
+      at root. Pass 1's E15 correction is applied.
+
+[P2-E13] CHECKER pass
+  CLAIM:
+    Header: 'Not done: no build. Code reports to the PI before step 4, as the v1.8 routing directed
+    for this step.'
+  EVIDENCE:
+    routing2_original.txt:54–55: 'REPORT TO ME after step 3 before building. Then steps 4-18.'
+    v1.8's step 4 is the build (v1.8:270), matching v1.11 m:357. The v1.9–v1.11 routings say only
+    'No build before step 3 commits.', which does not countermand it. Note: the v1.7 routing
+    (routing_original.txt:44) carried the same line, so the v1.8 attribution is accurate but not
+    unique.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      routing2_original.txt:54–55 'REPORT TO ME after step 3 before building. Then steps 4-18.' The
+      v1.9–v1.11 routings say only 'No build before step 3 commits.', which does not countermand it.
+      routing_original.txt:44 (v1.7) carried the same line, so the attribution is accurate but not
+      unique.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      routing2_original.txt:54–55 reads 'REPORT TO ME after step 3 before building. Then steps
+      4-18.' The v1.9–v1.11 routings say only 'No build before step 3 commits.', which does not
+      countermand it. The v1.7 routing (:44) carried the same line, but 'the v1.8 routing' is still
+      accurate.
+
+[P2-E14] CHECKER pass
+  CLAIM:
+    Header stamp: 'Stamp verified at write time: date -u → Tue Oct  6 04:04:12 UTC 2026'
+  EVIDENCE:
+    entry9_v2.md mtime is 2026-10-06T00:04:12-0400, i.e. 04:04:12 UTC, before pass 1's raw at
+    04:04:24 UTC.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      The birth and mtime of entry9_v2.md are both 2026-10-06T00:04:12-0400, i.e. 04:04:12 UTC.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      entry9_v2.md's birth and mtime are both 2026-10-06T00:04:12-0400 (04:04:12 UTC), before pass
+      1's raw at 04:04:24 UTC.
+
+[P2-E15] CHECKER pass
+  CLAIM:
+    Routing bullet: 'The routing (the PI's word, quoted so the record carries it)' — the v1.11
+    routing
+  EVIDENCE:
+    The quoted block is routing5_original.txt (v1.11, PI date 2026-10-05). Code asserted fidelity,
+    so I did not re-check it. The attribution is correct.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      The quoted block is routing5_original.txt (v1.11, PI date 2026-10-05). Fidelity was asserted
+      by Code and not re-checked.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      The quoted block is routing5_original.txt, the v1.11 routing dated PI 2026-10-05, so the
+      attribution is right.
+
+[P2-E16] CHECKER pass
+  CLAIM:
+    Step 1: HEAD 9510af7, main == origin (fetched; nothing new); v1.11 = 42ab36ec…96c6b (372 lines)
+    and HANDOFF-2026-10-04 = 1dde829c…736793, both matching the routing
+  EVIDENCE:
+    git rev-parse HEAD/main/origin/main all give 9510af7e73417ce7d53a65e9f4939d2199b662e4.
+    FETCH_HEAD is 2026-10-05T22:00:21-0400 (02:00 UTC). shasum gives 42ab36ecc814…c96c6b and
+    1dde829c2525…1736793, both routing5's values. wc -l gives 372.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      HEAD = main = origin/main = 9510af7e…; FETCH_HEAD 2026-10-05T22:00:21-0400 (02:00 UTC).
+      shasum: v1.11 42ab36ec…c96c6b and HANDOFF 1dde829c…1736793, both as routing5 gives them. wc
+      -l: 372.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      HEAD, main and origin/main all give 9510af7e…. FETCH_HEAD is dated 02:00:21 UTC. sha256: v1.11
+      42ab36ec…c96c6b (372 lines) and HANDOFF-2026-10-04 1dde829c…736793, both equal to routing5's
+      values.
+
+[P2-E17] CHECKER pass
+  CLAIM:
+    Step 1: 'The untracked root is m:354's list. No m artifact exists, and ADDENDUM-k1.md is
+    61acf21ff2cc104e…, untouched. The routing's correction of v1.9's sha (…4a5dc) matches the file.'
+  EVIDENCE:
+    git status untracked: the ADDENDUM-g3-b2r pair, ADDENDUM-k1, the decisions block, the six
+    HANDOFFs, PREPRINT-v1_0-draft.md (d6431e97…a6222b8), PROPOSAL-m v1.2–v1.11 and archive/'s three
+    pre-patch preprints, which is exactly m:354. The only other untracked files are the 2026-10-06
+    results/raw files, not at root and written after step 1. find for
+    LOCK-m*/f0m/corrupt_m/m_analyze returns nothing. ADDENDUM-k1 sha256 is 61acf21ff2cc104e6872…e26,
+    and v1.9's sha256 is b1fbce3b…164a5dc.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      The root untracked set equals m:354's list exactly; the only other untracked files are the
+      2026-10-06 results/raw files. find for LOCK-m*, f0m, corrupt_m and m_analy* returns nothing.
+      ADDENDUM-k1 is 61acf21ff2cc104e6872…e26. v1.9 is b1fbce3b…944164a5dc.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      The untracked root equals m:354's list; the only other untracked files are the 2026-10-06
+      results/raw files. No LOCK-m, f0m, corrupt_m or m_analy* artifact exists. ADDENDUM-k1 hashes
+      to 61acf21ff2cc104e6872…e26, and v1.9 to b1fbce3b…164a5dc, as the routing corrects it.
+
+[P2-E18] CHECKER pass
+  CLAIM:
+    Step 2 Method: 'Workflow wf_7766a824-2af: 48 agents, 0 errors, 4,834 s', the sixteen groups as
+    listed (with '[S] hours and tuples, and the [C] ladder counts'), two refuter lenses each
+  EVIDENCE:
+    The session transcript gives 'Run ID: wf_7766a824-2af' for the script
+    m-v111-referent-check-wf_7766a824-2af.js, whose task output is wx6dqq823. Its subagent dir holds
+    48 agents plus journal.jsonl. workflowProgress shows 48 agents, all done on attempt 1, and logs
+    is []. Queued 02:04:02.214 UTC, output mtime 03:24:36 UTC: 4,833.8 s. The group list matches
+    each GROUP line in the script, and pass 1's E26 tag correction is applied. 'documents,
+    provenance and the routing' omits P1's 'decisions', which is harmless.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Queued 02:04:02.214 UTC; output file mtime 03:24:36.16 UTC, so 4,833.9 s. 48 agents, all done
+      on attempt 1; logs []. The group glosses match the script's GROUP lines
+      (m-v111-referent-check-wf_7766a824-2af.js:21–36), and S2's tag correction is applied.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      workflowProgress has 48 agents, all state done on attempt 1, and logs is []. Queued
+      02:04:02.214 UTC, output mtime 03:24:36 UTC: 4,833.9 s. The sixteen glosses map one-to-one
+      onto L1 … X2. P1's 'decisions' is omitted, which is harmless.
+
+[P2-E19] CHECKER pass
+  CLAIM:
+    Step 2 own pass: while the workflow ran, Code ran 'the §2.4 tables and §6 looks (byte-identical
+    to v1.10's) and §0.4's exposure figures (unchanged; that line changes only r = k/n → k/n_q and a
+    §F → §E locator), re-run for every k'
+  EVIDENCE:
+    Own-pass stamps are 02:05:29 and 02:05:34 UTC, inside 02:04:02–03:24:36. My diff: all 38 §2.4
+    table rows are equal between v1.10 and v1.11, and so are the '(k = …)' lines. §6's 'Cadence
+    every 40 launches' line (v1.10:313, v1.11:330) is equal. The word diff of the §0.4 line
+    (v1.10:48 vs v1.11:48) shows exactly two replacements: 'k/n' → 'k/n_q' and '§F' → '§E'.
+    tables.py runs k = n_q..1. Pass 1's E28 correction is applied correctly.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Running diff on the '|' table rows of v1.10 and v1.11 shows only the §0.x disposition table
+      cell and the new sixteen-row gate table. The §2.4 launch tables are identical, and so are the
+      '(k = …)' lines. §6 (v1.10:311–314 against v1.11:328–331) is identical. The word diff of m:48
+      gives exactly k/n→k/n_q and §F→§E. Own-pass stamps 02:05:29–02:05:34 fall inside
+      02:04:02–03:24:36.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      My diff of every '|' and '(k =' line between v1.10 and v1.11 shows changes only in the §0.14
+      disposition table and the new §2.1 gate table, none in §2.4. The §6 cadence line is equal
+      (v1.10:313 vs v1.11:330). The word diff of line 48 gives exactly 'k/n'→'k/n_q' and '§F'→'§E'.
+      Own-pass stamps are 02:05:29 and 02:05:34, inside the workflow window.
+
+[P2-E20] CHECKER pass
+  CLAIM:
+    Step 2 own pass: 519,480 as 481 enumerated Q-F3 states × 5 × 6³; 69,120 / 51,840; 432 and 1,728;
+    the 69,120 DISCORDANT tuples and the 4,320 with the clause; the sixteen-row balances at 4, 8,
+    16; power, critical counts and A2 grid minimum under the stated base case; the 135 / 3,074
+    recount; the v2 claim rates and f1's frozen audit against v2; 'All reproduce.'
+  EVIDENCE:
+    Output: 'A3 parts 30 QF3 states 481 tuples 519480'; "{('F1','F2'): 69120} of which A1!=PASS:
+    51840"; 432 and 1,728; 69,120 and 4,320. tuples111's ceil_v110 encodes v1.11 Step 5 (m:341),
+    whose v1.10→v1.11 diff is parenthetical wording only. sched111 prints the balances. CC.11
+    confirms the stated base case is the reproducing model. tok_recount: 3,074 generations, 135 >
+    512, {8: 27, 9: 108}. v2rate: 17/597, 11/351, 9/291, 7/40. frozen_audit shows 0 differing rounds
+    for sham and CORR-P, which is what STOP-8 block :60 claims; CORR-Q's one differing round is
+    outside any claim.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      The output carries each listed figure: 'QF3 states 481 tuples 519480'; 69120/51840; 432/1728;
+      69120 and 4320; the balances; crit, power and grid; 135 of 3,074 {8: 27, 9: 108}; 17/597,
+      11/351, 9/291, 7/40. The frozen audit shows 0 differing rounds for sham and CORR-P, which is
+      what STOP-8 A1 claims. CORR-Q's one differing round falls under no claim.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      The output prints 'A3 parts 30 QF3 states 481 tuples 519480'; 69120 / 51840; 432 / 1728; 69120
+      / 4320; sched111 balances; the pwr figures; 'generations with prefix+segment > 512 tokens:
+      135'; v2 rates 17/597, 11/351, 9/291. Frozen audit: 0 differing rounds for sham and CORR-P,
+      which is what STOP-8 block :60 claims.
+
+[P2-E21] CHECKER fail
+  CLAIM:
+    Step 2 STOP-8 dispositions: 'B1–B3 resolve. §0.2 (13) quotes the PI's words verbatim, with a
+    stray anchor (note N1). The §7.3 italic is byte-identical to v1.10's, and its gloss matches the
+    wide reading the PI confirms.'
+  EVIDENCE:
+    The substance holds. D8A.15 and D8A.16 are clean, and D8A.17 is the anchor residue carried in
+    N1. The italic extracted from v1.10:328 equals v1.11:345 (717 chars each), and D8A.19 is clean
+    x3. But the D8A refuters added two minor B3 residues the bullet leaves out: notes #61 (m:345's
+    bold label for edit (1) names only the v1.10 increment, not the v1.6→v1.11 change; m:77 is
+    correct) and notes #62 (m:58's patch-v5 summary still says the preprint's trigger 'fires on a
+    positive', which is not the PI-confirmed wide reading). Neither is cited anywhere in the entry.
+    Related: clean D8A.19 suggests recording, beside the step-3 quotation, the PI-decided asymmetry
+    (screen-tier NULL-x↑ triggers nothing; f2 NULL-x↑ after REVERSE does). This is the same standard
+    pass 1 applied to B2 (E12). Minor.
+  CORRECTION:
+    Append: 'B3 carries two refuter-found minor notes: m:345's label for edit (1) names only its
+    v1.10 increment (notes #61), and m:58's patch-v5 summary still has the preprint's trigger "fire
+    on a positive", narrower than the wide reading (notes #62).'
+  REFUTER [lenient] pass overturned=True
+    EVIDENCE:
+      Every clause is true: D8A.15 (B1) clean ×3; D8A.16 clean and D8A.17's anchor disclosed (N1);
+      the italics of v1.10:328 and v1.11:345 extract identical; D8A.19 (gloss = the PI's wide
+      reading) and D8A.21 ('B3 is resolved') clean ×3. Notes #61 and #62 are refuter-found minor
+      items, not verdicts on B3's referents. The sentence makes no 'no residues' claim, unlike E22's
+      closed list, and both items sit in the committed notes file (N7: 'Further hygiene items are in
+      the notes file'). That is an omission, not an error. Optional: name #62 (m:58 still has the
+      preprint's welfare trigger as 'fires on a positive') beside the B3 clause.
+  REFUTER [strict] pass overturned=True
+    EVIDENCE:
+      Every statement in the bullet is true. D8A.15 and D8A.18–D8A.21 are clean x3, and D8A.17 (the
+      anchor) is disclosed as N1. The italic is equal to v1.10's (717 chars, my extraction), and
+      D8A.19 says the gloss 'matches the PI's confirmed reading word for word'. Notes #61 and #62
+      are refuter-found missed items, not verdicts on B3's referents. Both are itemized in the notes
+      raw, which the entry says holds every refuter-found item, so they are carried. The bullet
+      makes no closed-list claim, and 'its gloss' refers to §7.3's gloss, not to m:58's patch-v5
+      summary (#62 itself calls that unverifiable at step 2). D8A.19's asymmetry remark is a 'could
+      be recorded' suggestion on a clean item. The checker was too strict.
+
+[P2-E22] CHECKER fail
+  CLAIM:
+    Step 2 STOP-8 dispositions: 'A1 resolves at every site: the pause binds at G-TIME-OLMo only, and
+    on Qwen the binomial bars bind alone with the one-session boundary disclosed (D8A.1–D8A.8). Its
+    minor residues are D8A.9 and D8A.11–D8A.14; D8A.11 is unresolved: the echo half is argued, not
+    measured (note N2).'
+  EVIDENCE:
+    The cited ids are right. D8A.1–D8A.8 are clean x3. D8A.9, .12, .13 and .14 are minor-note
+    (resolves x3, minor x3), and D8A.11 is unresolved, minor x3. But 'Its minor residues are …' is a
+    closed list, and A1's minor residues extend past D8A's referents: D8A's refuter-found notes #60
+    (the 'P ≤ α' fire convention against Tripwire's `p < self.alpha`), #63 ('pause' carries two
+    meanings in m:271 after the A1 fix), #64 (one domain gloss on three Qwen rates in the A1 clause)
+    and #65 (no ledger entry for A1's class), plus C1 missed #20, L1.12, L1 missed #4, #8 and #9,
+    and X2.24 and X2.26. N2 and the build pins carry several of these, so this is a scoping
+    precision, not a hidden defect. Minor.
+  CORRECTION:
+    'Its minor residues among D8A's referents are D8A.9 and D8A.11–D8A.14 (D8A.11 unresolved: the
+    echo half is argued, not measured); other groups and the refuters add further minor A1 residues
+    (L1.11, L1.12, X2.24, X2.26; notes #4, #8, #9, #20, #60, #63–#65), carried in N2, the build pins
+    and the notes file.'
+  REFUTER [lenient] fail overturned=False
+    EVIDENCE:
+      'Its minor residues are D8A.9 and D8A.11–D8A.14' is a closed list. N2, a few lines below,
+      carries further A1-subject residues from other groups: L1.11 (notes #2), L1.12 (#3), X2.24,
+      X2.26, L1 missed #4/#8/#9. The notes file also has #60, #63, #64 and #65 (D8A missed), #20 (C1
+      missed), X2.25 and #76 (D8C1 missed: STOP and pause on one event). The list matches D8A.22's
+      in-group summary (D8A.9, .11, .12, .13) plus .14, but the entry contradicts itself. Minor. The
+      checker's list also misses X2.25, #5 and #76, so an open phrasing is safer than an
+      enumeration.
+    CORRECTION:
+      'Its minor residues among D8A's referents are D8A.9 and D8A.11–D8A.14 (D8A.11 unresolved: the
+      echo half is argued, not measured); other groups and the refuters add minor residues on the
+      same subject, carried in N2, the build pins and the notes file.'
+  REFUTER [strict] fail overturned=False
+    EVIDENCE:
+      Confirmed. 'Its minor residues are D8A.9 and D8A.11–D8A.14' is a closed list, and that
+      phrasing came from pass 1's E35 lenient correction. The entry's own N2, on A1's OLMo pause,
+      cites other A1 residues: L1.11, L1.12, X2.24, X2.26, notes #2, #4 and #9. The build pins cite
+      #60 and #5. The JSON adds more A1-clause residues: X2.25 (unresolved, Qwen no-pause wording),
+      notes #8, #20, #63, #64 and #65. So the sentence understates against the entry itself. The
+      checker's correction is right in direction, but its own parenthetical list is incomplete: it
+      omits X2.25 and #5. It should be marked as examples.
+    CORRECTION:
+      'Its minor residues include D8A.9 and D8A.11–D8A.14 (D8A.11 unresolved: the echo half is
+      argued, not measured; note N2); other groups and the refuters add further minor A1 residues
+      (e.g. L1.11, L1.12, X2.24–X2.26; notes #4, #5, #8, #9, #20, #60, #63–#65), carried in N2, the
+      build pins and the notes file.'
+
+[P2-E23] CHECKER fail
+  CLAIM:
+    Step 2: D8A.9 is named as one of A1's minor residues (by id only)
+  EVIDENCE:
+    D8A.9 (minor-note x3) has substance and asks for carriage. The Qwen G-TIME-F0 stage's realised
+    false-STOP probability is not stated beside the planned .0115. At p0 it is .0518, which exceeds
+    α by .0018. I verified this: .05 for a round-1 claim at n = 1, plus .95^4 × P(Bin(6, .05) ≥ 3) =
+    .8145 × .00223 ≈ .0018. D8A.9's note ends 'A dated note at step 3 would cover it.' The entry
+    cites D8A.9 by id only. N1–N8 do not carry it (N2 is the OLMo pause), and the notes raw leaves
+    the 72 minor-note items in the check raw. So the one residue that explicitly asks for a step-3
+    dated note is named but not carried. Minor.
+  CORRECTION:
+    Give D8A.9's content where it is cited, or add it to N2: 'D8A.9: the realised false-STOP size at
+    G-TIME-F0 is unstated beside the planned .0115; at p0 it is .0518, .0018 above α, almost all
+    from the round-1 case (n = 1, P = .05); under α at the measured rate.'
+  REFUTER [lenient] fail overturned=False
+    EVIDENCE:
+      D8A.9 (resolves, minor ×3) ends 'A dated note at step 3 would cover it'. Both lenses agree
+      ('suitable for a dated note'). The entry names D8A.9 as one of A1's minor residues by id only.
+      Its content is in neither N1–N8 nor the notes file (grep finds D8A.9 only at the entry's A1
+      bullet). So the header's 'its minor-only residues carried as dated notes' is not met for a
+      residue the entry itself names. The same holds for D8A.12, the n ≤ 2 'critical 2' wording. I
+      re-derived the figure: G-TIME-F0's realised false-STOP at p0 = .05 (round-1 claim) + .95^4 ×
+      P(Bin(6,.05) ≥ 3) = .05 + .8145 × .00223 ≈ .0518. That is .0018 over α, and under α at the
+      measured .031 rate (≈ 2.7× the planned .0115 against 4.5× at p0).
+    CORRECTION:
+      Carry it in N2 (or the notes file): 'D8A.9: G-TIME-F0's realised false-STOP size is not stated
+      beside the planned .0115; at p0 it is .0518, .0018 above α, almost all from the round-1 case
+      (n = 1, P = .05); under α at the measured rate.' Optionally add D8A.12: 'm:302's "critical 2 …
+      reachable at n ≤ 2" should read critical 1 at n ≤ 2.'
+  REFUTER [strict] fail overturned=False
+    EVIDENCE:
+      Confirmed, minor. D8A.9 (minor-note x3) ends 'A dated note at step 3 would cover it'. L1.14
+      (minor-note x3) independently gives the same figure and asks for 'A one-line statement of the
+      realised size'. Pass 1's E35 lenient correction carried D8A.9's content ('the realised
+      false-STOP size is unstated, .0518 at p0'), but the applied text keeps only the id, and
+      neither N1–N8 nor the notes raw carries it. I recomputed the figure: .05 (round-1 claim, n =
+      1, P = .05 = α) + .95^4 × P(Bin(6, .05) ≥ 3) = .8145 × .00223 ≈ .0018, total .0518 against the
+      planned .0115. One detail in the checker's correction needs fixing: its alternative 'or add it
+      to N2' misfiles the item, because N2 is the OLMo pause and D8A.9 concerns Qwen's G-TIME-F0.
+    CORRECTION:
+      In the A1 bullet where D8A.9 is cited (or as a separate dated note, not in N2): 'D8A.9 (with
+      L1.14): the Qwen G-TIME-F0 stage's realised false-STOP size is unstated beside the planned
+      .0115; at p0 .05 it is .0518, .0018 above α, almost all from the round-1 case (n = 1, P = .05
+      = α); under α at f1's measured rates.'
+
+[P2-E24] CHECKER fail
+  CLAIM:
+    Step 2 (completeness against the check's scope and precedent): Step 2 reports the regression
+    check's outcome
+  EVIDENCE:
+    Step 2's Method lists the regression group, and the check-raw title names 'a regression check
+    against v1.10's resolved referents', but neither Step 2 nor the header states the result. X2.33
+    (minor-note) reads 'Nothing that resolved at v1.10 is broken at substantive grade. Two new minor
+    defects sit on lines v1.10 resolved: the (13) anchor (X2.2 …) and decision (10)'s read-with list
+    … (X2.3 …)'. N1 and N7 carry the two items separately. The STOP-8 entry (RESULTS.md at HEAD,
+    'What resolves') reported its sweep ('The regression sweep over v1.9's 447 resolved referents
+    found two regressions, both minor'). This is an omission against precedent, not a false
+    statement. Minor.
+  CORRECTION:
+    Add to Step 2's dispositions (or to the header's 'What resolves'): 'The regression sweep over
+    v1.10's 489 resolved referents (X2.33) found nothing broken at substantive grade; two minor
+    regressions, the (13) anchor (X2.2, N1) and decision (10)'s read-with list omitting §0.14 (X2.3,
+    N7).'
+  REFUTER [lenient] pass overturned=True
+    EVIDENCE:
+      The entry makes no claim about the regression sweep, so nothing in it is wrong. Its content is
+      all present. N1: 'This is a regression on a line v1.10 resolved, introduced by the B2 fix
+      (X2.2)'. N7: 'Decision (10)'s read-with list omits §0.14, a regression on a line v1.10
+      resolved (X2.3)'. The header's 'Nothing is substantive or blocking under any verdict' covers
+      X2.33's 'nothing … broken at substantive grade'. m:355 and m:356 do not require a regression
+      line. The checker calls it 'an omission against precedent, not a false statement'. A precedent
+      sentence would be welcome, but it is optional. Note that X2.33 did not re-open all 489
+      referents: X2's unreached list says it relied on a hunk walk plus a verbatim-survival test for
+      about 400 of them. Any added sentence should say 'over v1.10's resolved referents', not imply
+      489 individual re-opens.
+  REFUTER [strict] pass overturned=True
+    EVIDENCE:
+      The regression result is in the entry. N1 says 'This is a regression on a line v1.10 resolved,
+      introduced by the B2 fix (X2.2)', N7 says 'a regression on a line v1.10 resolved (X2.3)', and
+      the header's 'Nothing is substantive or blocking under any verdict' covers X2.33's 'nothing
+      ... broken at substantive grade'. Neither m:355 nor m:356 requires a sweep-summary sentence;
+      this is precedent, not a rule, and no claim is false. One more problem with the correction:
+      its '489' is not in X2.33. It is derived from STOP-8's 412 + 77, and should be labelled that
+      way if adopted.
+
+[P2-E25] CHECKER pass
+  CLAIM:
+    Step 2 Record: links to the check raw, the own-pass raw ('with their scripts and stamps') and
+    the notes raw ('every unresolved, contested and refuter-found item, itemized (133 = 52 + 14 +
+    67); the 72 that resolve with a minor note stay in the check raw')
+  EVIDENCE:
+    All three files exist. The notes raw has 133 numbered items. By id, its 66 non-refuter items
+    equal exactly the JSON's 52 unresolved + 14 contested. Its 67 refuter-found items match the
+    JSON's missed counts for every group and lens. Each contested tag (e.g. 'FFT', 'TFT') matches
+    the checker/lenient/strict resolves. The notes header line 7 says the 72 stay in the check raw.
+    The own-pass raw carries 7 scripts, each equal to its scratchpad source except for the trailing
+    newline, and the 02:05:29/02:05:34 stamps. Pass 1's E34 correction is applied correctly.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      The notes raw has 133 numbered items. Its 66 non-refuter ids equal exactly the JSON's 52
+      unresolved + 14 contested, and its 67 refuter-found items match. Every contested tag (e.g.
+      L1.2 FFT, D8C1.47 TTF) matches the checker/lenient/strict resolves. The own-pass raw carries 7
+      scripts and the 02:05:29/02:05:34 stamps.
+
+[P2-H1] CHECKER pass
+  CLAIM:
+    Check-raw header: title (referent check, [S] and chat-only [C] reproduction, STOP-8 disposition
+    check, regression against v1.10's resolved referents, against HEAD 9510af7); document untracked
+    at root, sha 42ab…6c6b, verified on disk and matching the routing
+  EVIDENCE:
+    HEAD is 9510af7. v1.11 is untracked, and its sha256 equals routing5's. The groups (S1/S2/G1/CC,
+    D8A/D8C1/D8C2, X2(B)) match the title's scope.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      HEAD 9510af7. v1.11 is untracked at root, sha 42ab36ec…c96c6b = routing5. The title's scope
+      ([S] and chat-only [C], STOP-8 dispositions, regression) matches the groups S1/S2/G1/CC,
+      D8A/D8C1/D8C2 and X2.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      HEAD is 9510af7. v1.11 is untracked with sha 42ab36ec…c96c6b, the routing's value. The title's
+      scope matches the groups.
+
+[P2-H2] CHECKER pass
+  CLAIM:
+    Check-raw header: 'Run 2026-10-06 UTC (PI date 2026-10-05), workflow wf_7766a824-2af; 48 agents
+    (16 blind checkers over sixteen assigned groups, whose scopes overlap in places …: [group
+    glosses] — each with two refuter lenses, "lenient" … "strict" …); 0 errors; 11,553,749 subagent
+    tokens; 2,553 tool uses; 4,834 s. The workflow's result was written at 03:24:36 UTC.'
+  EVIDENCE:
+    The JSON gives totalTokens 11553749, totalToolCalls 2553 and agentCount 48, all done on attempt
+    1, with an empty log. Queued 02:04:02 UTC; output mtime 03:24:36 UTC. The glosses match the
+    script's GROUP lines (S2 '[S] HOURS and TUPLES, and the [C] ladder counts'; X2 '(B) REGRESSION …
+    v1.10 check'). The lens definitions match the refuter prompts. One readability point: the
+    overlap clause now ends in a colon that introduces the group list ('not distinct defects: L1
+    law; …'). Moving it after the list would read better, but nothing is false.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      JSON: agentCount 48, totalTokens 11553749, totalToolCalls 2553, logs []. Queued 02:04:02 to
+      03:24:36 UTC = 4,834 s. The lens definitions match the script's :41–42 ('too-lenient lens: try
+      to BREAK every resolves=true…'; 'too-strict lens: re-test every resolves=false and every
+      severity above clean…'). The group glosses match the GROUP lines. 'D8C1 … (with the coverage
+      check)' is right, though D8C2.0 is also a coverage check; that omission is harmless.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      The JSON gives agentCount 48, totalTokens 11553749, totalToolCalls 2553 and logs []. All
+      agents are done on attempt 1, and the elapsed time is 4,833.9 s to an output mtime of 03:24:36
+      UTC. The glosses match the groups.
+
+[P2-H3] CHECKER pass
+  CLAIM:
+    Check-raw header: Code's own pass sentence (corrected): '§2.4 launch tables and §6 looks
+    (byte-identical to v1.10's) and §0.4's exposure figures (unchanged; that line changes only r =
+    k/n → k/n_q and a §F → §E locator), re-run for every k; 519,480 …; 69,120 / 51,840; 432 and
+    1,728; the 69,120 DISCORDANT tuples and the 4,320 of them …; balances …; power …; 135 / 3,074;
+    the v2 claim rates (17/597, 11/351, 9/291) and f1's frozen audit against v2. All reproduce.'
+  EVIDENCE:
+    Same evidence as P2-E19 and P2-E20: the diff confirms the byte-identity and the two §0.4 edits,
+    and the own-pass output prints every listed figure. 9/291 is 'CORR-P 9/291'.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      The diffs confirm the tables and §6 are byte-identical and that §0.4 has exactly two edits.
+      The own-pass output prints every listed figure, including 'CORR-P 9/291'.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      Same as E19/E20: the diffs confirm §2.4 and §6 are identical and §0.4 has exactly two word
+      changes, and the output prints every listed figure.
+
+[P2-H4] CHECKER pass
+  CLAIM:
+    Check-raw header: repository verified untouched after the workflow returned; protocol line;
+    stamp 'Tue Oct  6 03:29:13 UTC 2026'; correction line 'Header corrected after values-check pass
+    1 (the groups' overlap; the §0.4 line's two edits; the 4,320's gloss); stamp at correction: Tue
+    Oct  6 04:02:07 UTC 2026'
+  EVIDENCE:
+    There is no tracked change. The document shas (v1.11, HANDOFF, ADDENDUM-k1, v1.9, v1.10,
+    decisions block fab576d8…34f8, preprint d6431e97…222b8) match their recorded values. The file's
+    birth time is 23:29:14 -0400 (03:29:14 UTC) and its mtime 00:02:07 -0400 (04:02:07 UTC). I
+    compared the pre-correction header in the session transcript ('16 blind checkers over disjoint
+    groups'; 'the §2.4 launch tables, §0.4 exposure and §6 looks (byte-identical to v1.10's and
+    re-run for every k)'; 'their 4,320 Step-6 texts') with the current text. Exactly those three
+    passages changed, as the correction line says.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      No tracked change. The shas of v1.11, HANDOFF, ADDENDUM-k1, v1.9, v1.10, the decisions block
+      (fab576d8…34f8) and the preprint (d6431e97…222b8) all match. The file was born 23:29:14 -0400
+      (03:29:14 UTC), and its mtime is 00:02:07 -0400 (04:02:07 UTC), matching the correction stamp.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      There is no tracked change, and the document shas match (fab576d8…34f8, d6431e97…222b8, etc.).
+      The check raw was born 03:29:14 UTC with mtime 04:02:07 UTC, matching the two stamps.
+
+[P2-H5] CHECKER pass
+  CLAIM:
+    Check-raw TOTALS line: referents 589, checker-unresolved 54, refuter verdicts 1178, overturned
+    24, refuter-missed 67
+  EVIDENCE:
+    Recomputed from the JSON: 589 referents; 54 with checker resolves=false; 1,178 refuter verdicts;
+    24 with overturned=true; 67 missed items.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Recomputed: 589 referents; 54 checker resolves=false (52 unresolved + L1.2 and P1.20); 1,178
+      refuter verdicts; 24 overturned; 67 missed.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      My recount: 589 referents, 54 with checker resolves=false, 1,178 refuter verdicts, 24
+      overturned, 67 missed.
+
+[P2-H6] CHECKER pass
+  CLAIM:
+    Own-pass header: 'laptop; no model loaded; the tokenizer recount reads tokenizer.json only';
+    'Run at 02:05 UTC 2026-10-06, while workflow wf_7766a824-2af ran (it returned 03:24:36 UTC). The
+    output prints its own date -u stamps. Scripts follow, verbatim.'
+  EVIDENCE:
+    tok_recount.py uses tokenizers.Tokenizer.from_file(…/tokenizer.json) and loads no model. The
+    output carries the 02:05:29 and 02:05:34 stamps. Every SCRIPT and OUTPUT section equals its
+    scratchpad source (own111/*.py, own_pass111.txt) except for one trailing separator newline.
+    Disclosure note: tables.py ('v1.10's [S] … figures'), pwr_v110.py and tuples111.py ('v1.10's v2
+    outcome space … (m:274, m:323-324)') carry v1.10 comments and locators. They are valid for v1.11
+    because the tables, outcome space and Step-5 logic are unchanged (the m:291 and m:341 diffs are
+    wording only), but the header does not say the scripts were reused.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      tok_recount.py imports tokenizers.Tokenizer and reads tokenizer.json. The other scripts import
+      only math, fractions, itertools, collections, json and re. The output stamps are 02:05:29 and
+      02:05:34, and the file was written 03:29:14 UTC, after the run. 'Verbatim' holds. The scripts'
+      v1.10 comments (tables.py, pwr_v110.py, tuples111.py with 'm:274, m:323-324') are v1.10 line
+      numbers. The model is still valid for v1.11: G-ANL-F3 v1.10:274 against v1.11:291 differs by
+      one word, and Step 5's diff is wording.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      tok_recount.py uses only tokenizers.Tokenizer.from_file, and the other scripts use only
+      stdlib/json. The output carries its 02:05:29 and 02:05:34 stamps. Script reuse is not a false
+      claim.
+
+[P2-H7] CHECKER fail
+  CLAIM:
+    Own-pass raw (committed, header plus output): output line 6 '== tables.py (v1.11's §2.4 tables,
+    §0.4 exposure and §6 looks are byte-identical to v1.10's; re-run)'
+  EVIDENCE:
+    The §0.4 line is not byte-identical: the word diff of v1.10:48 against v1.11:48 gives 'k/n' →
+    'k/n_q' and '§F' → '§E'. Pass 1 (E28) corrected this gloss in the entry and in the check-raw
+    header, which now records the correction ('Header corrected after values-check pass 1 … the §0.4
+    line's two edits'). It left the print line 'as run', which is right for raw output. But the
+    own-pass raw's header carries no matching annotation, so the committed own-pass record still
+    asserts §0.4's byte-identity with no pointer to the correction. Minor.
+  CORRECTION:
+    Leave the output as run, and add one header line to the own-pass raw: 'Note (values-check pass
+    1): the tables.py print line calls §0.4's exposure byte-identical to v1.10's; the exposure
+    figures are unchanged, but the §0.4 line changes r = k/n → k/n_q and a §F → §E locator.'
+    Optionally also: 'tables.py, pwr_v110.py and tuples111.py are the v1.10 pass's scripts, re-run
+    unchanged (comments name v1.10).'
+  REFUTER [lenient] fail overturned=False
+    EVIDENCE:
+      Own-pass raw output line 6 reads '(v1.11's §2.4 tables, §0.4 exposure and §6 looks are
+      byte-identical to v1.10's; re-run)'. The word diff of v1.10:48 against v1.11:48 gives
+      k/n→k/n_q and §F→§E, so the §0.4 part is false. The line is Code-authored prose in a committed
+      raw. Pass 1 (E28) rightly left the as-run output untouched and corrected the check-raw header
+      with a dated correction line. The own-pass raw's two header lines carry no pointer, so that
+      committed record still asserts §0.4's byte-identity uncorrected. (Strictly, the line sits
+      below the header's '====' and the header's own claims are true. The remedy belongs in the
+      header, so this is flagged here.) Minor.
+    CORRECTION:
+      Leave the output as run. Add one header line to the own-pass raw: 'Note (values-check pass 1,
+      stamped): the tables.py print line calls §0.4's exposure byte-identical to v1.10's; the
+      exposure figures are unchanged, but the §0.4 line changes r = k/n → k/n_q and a §F → §E
+      locator.'
+  REFUTER [strict] pass overturned=True
+    EVIDENCE:
+      Output line 6 is not in section (H), which is the lines before '===='; the own-pass header is
+      lines 1–2, and '==== OUTPUT' is line 4. That line is raw stdout as run. Pass 1's three E28
+      lenses all directed that 'the own-pass print line is raw output and stays as run'. The label
+      is also defensible as written: the §0.4 exposure figures are unchanged, and the line's two
+      edits touch no figure. The check-raw header records the correction and points to this raw. The
+      header claims nothing false, so the checker was too strict. A header pointer is optional.
+
+  MISSED (refuter lenient)
+    CLAIM:
+      Header: 'its minor-only residues carried as dated notes under the PI's process line'; Step 2
+      Record: 'the 72 that resolve with a minor note stay in the check raw'
+    EVIDENCE:
+      Several minor-note referents are, by the check's own words, residues to be carried as step-3
+      dated notes, and none of them is in N1–N8 or the notes file. R1.41 (minor ×3) is a
+      label-precision residue carried unchanged from v1.9/v1.10; the checker ends 'Dated note.' and
+      the strict lens 'Minor, a dated note.' D1.22 (minor ×3; condition (2)'s k and n_eligible are
+      undefined for f1's Bernoulli corruptor) has 'no §0.14 disposition'; it has been carried
+      unchanged since the v1.9 check, and all three verdicts say to carry it as a dated note. D8A.9
+      (P2-E23) is the third. In addition, v1.11's own §0.14 (m:145) disposes of STOP-8 C114 as '→ §9
+      (the stale code locators the check did not name are carried as a note)'. D8C2.114 says a
+      step-3 note is within the process line, and X2.27 says the C114 locators are 'carried as a
+      note by §0.14'. The notes file's line for X2.27 (item 123) reads only 'Hygiene only. All the
+      figures are on the record.' grep finds neither R1.41, D1.22, D8C2.114 nor C114 anywhere in the
+      entry or the notes file. So the header's carriage claim is overstated for residues the check
+      explicitly routed to step-3 notes, and C114's 'resolve' (counted in the 108) relies on a note
+      the entry does not carry.
+    CORRECTION:
+      Add the items to the notes (e.g. N7): 'R1.41: m:14/m:338 set π̂_d's CI beside the bar, a
+      conservative bound but not the gate's statistic (carried since v1.9). D1.22: condition (2)'s k
+      and n_eligible are undefined for f1's Bernoulli corruptor at G-CAL's 0.12 replay (drawn 32 vs
+      changed 31); the outcome is the same under every reading, and the item has never been
+      dispositioned. C114 (per §0.14): §9's Code list carries box_b3_sessions.py :261 and
+      qwen_mlx.py :60, which no body line cites; both back quoted facts (D8C2.114).' Also add D8A.9
+      (P2-E23). Or narrow the header to: 'its unresolved, contested and refuter-found minor residues
+      carried as dated notes; minor notes on resolved referents in the check raw (R1.41, D1.22 and
+      D8A.9 ask for a dated note)'.
+####################################################################################################
+SECTION E2
+####################################################################################################
+
+[P2-S3-01] CHECKER pass
+  CLAIM:
+    The document: PROPOSAL-m-gating-campaign-v1_11.md, sha256
+    42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b, committed tracked and clean
+    (rules 9 and 11).
+  EVIDENCE:
+    Running shasum -a 256 on the root file gives 42ab36ec…6c6b, which matches routing5:5. m:356
+    reads 'Commit PROPOSAL-m v1.11 (tracked, clean; rules 9 and 11) with its hash'. git status shows
+    the file untracked (??) at HEAD 9510af7, so 'committed tracked' describes the commit that is
+    about to be made.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Re-hashed the root file: 42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b,
+      which matches routing5:5. git ls-files lists no PROPOSAL-m file, so v1.11 becomes tracked at
+      this commit. m:356 reads 'Commit PROPOSAL-m v1.11 (tracked, clean; rules 9 and 11) with its
+      hash'. The sentence uses the at-commit tense.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      I re-hashed v1.11 and got 42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b,
+      which matches routing5:5. git status shows it untracked (??) at HEAD 9510af7e, so the claim
+      describes the commit about to be made. m:356 reads 'Commit PROPOSAL-m v1.11 (tracked, clean;
+      rules 9 and 11) with its hash'.
+
+[P2-S3-02] CHECKER pass
+  CLAIM:
+    Clock: D1 (Q-F0) = 2026-10-30; D_O (each OLMo checkpoint) = 2026-10-30; D2 (Q-F3) = 2026-12-22,
+    as the routings of 2026-10-04 (v1.9), 2026-10-05 (v1.10) and 2026-10-05 (v1.11) give them.
+  EVIDENCE:
+    routing3:1 has PI date 2026-10-04 and routing3:14 gives these dates. routing4:1 (2026-10-05) and
+    :13 give the same. routing5:1 (2026-10-05) and :20 give the same. v1.11 §0.2 (11) (m:16) gives
+    D1 = D_O = 2026-10-30 and D2 = 2026-12-22, with the same unit labels. §7.4 (m:347) requires the
+    dates to be 'written into the step-3 entry', and they are.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      routing3:14 (PI date 2026-10-04), routing4:13 (2026-10-05) and routing5:20 (2026-10-05) each
+      give D1 = 2026-10-30, D_O = 2026-10-30 and D2 = 2026-12-22. The unit labels match §0.2 (11) at
+      m:16. §7.4 (m:347) requires the three dates to be written into the step-3 entry.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      routing3:14 (PI date 2026-10-04), routing4:13 (2026-10-05) and routing5:20 (2026-10-05) all
+      give D1 = D_O = 2026-10-30 and D2 = 2026-12-22. v1.11 §0.2 (11) matches. §7.4 (m:347) requires
+      the dates to be written into the step-3 entry, and they are.
+
+[P2-S3-03] CHECKER pass
+  CLAIM:
+    D_f2 (decision (15)): f2's own Clock date, no later than the 90th day after the PROPOSAL-m Q-F3
+    — VERDICTS commit's UTC date, written as a calendar date into f2 and into that entry.
+  EVIDENCE:
+    v1.11 §0.2 (15) (m:16) reads 'D_f2, no later than the 90th day after the commit date of
+    `PROPOSAL-m Q-F3 — VERDICTS` (f2 may set it earlier, never later; written as a calendar date
+    into f2 and into that VERDICTS entry) … D_f2 is computed on the VERDICTS commit's UTC date'.
+    §7.4 (m:347) and routing5:20-21 ('≤ 90 days after the Q-F3 VERDICTS commit's UTC date') agree.
+    m:356 asks only for 'the D_f2 rule'. Optional: §7.4's consequence (an f2 not locked by D_f2 is
+    f2 NOT-RUN) is not restated; m:356 does not require it.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      §0.2 (15) at m:16 reads 'D_f2, no later than the 90th day after the commit date of `PROPOSAL-m
+      Q-F3 — VERDICTS` … written as a calendar date into f2 and into that VERDICTS entry … D_f2 is
+      computed on the VERDICTS commit's UTC date'. §7.4 at m:347 and routing5:20-21 agree. m:356
+      asks only for 'the D_f2 rule'.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      v1.11 §0.2 (15) at m:16 has 'no later than the 90th day after the commit date of `PROPOSAL-m
+      Q-F3 — VERDICTS` (… written as a calendar date into f2 and into that VERDICTS entry) …
+      computed on the VERDICTS commit's UTC date'. §7.4 at m:347 and routing5:20-21 agree. m:356
+      asks only for the D_f2 rule.
+
+[P2-S3-04] CHECKER pass
+  CLAIM:
+    Decisions of record (8)–(15), 'as v1.11 §0.2 states them' (routing, above); the PI's routing
+    blocks of 2026-10-04 and 2026-10-05 are quoted from their verbatim copies.
+  EVIDENCE:
+    routing5:23 reads 'Decisions of record (8)–(15) as v1.11 §0.2 states them.' The v1.11 routing is
+    quoted in full at E:25-61. The v1.8 excerpt is routing2:20-43, the v1.9 excerpt is
+    routing3:14-24 and the v1.10 excerpt is routing4:13-33. Each is a contiguous block of its
+    verbatim copy. Fidelity was asserted by Code and not re-checked.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      routing5:23 reads 'Decisions of record (8)–(15) as v1.11 §0.2 states them.' The excerpts are
+      contiguous blocks of routing2:20-43, routing3:14-24 and routing4:13-33. The v1.11 routing is
+      quoted in full at E:25-61.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      routing5:23 reads 'Decisions of record (8)–(15) as v1.11 §0.2 states them.' I checked each
+      copy against its entry with an in-order script. All 56/56 non-blank routing2 lines are quoted
+      in the newest entry at 5db0720, 23/23 of routing3 at 939905a and 30/30 of routing4 at 9510af7.
+      Each excerpt in (E) is a contiguous block of its copy.
+
+[P2-S3-05] CHECKER pass
+  CLAIM:
+    v1.8 routing of 2026-10-04 'quoted in full in the STOP-6 entry, 5db0720': the PI's block of
+    record for v1.8 §0.2's (8)–(14) ('this block is their record').
+  EVIDENCE:
+    routing2:1 reads 'ROUTING BLOCK — PI, 2026-10-04'. A programmatic in-order check found all 56
+    non-blank routing2 lines among the quoted lines of the newest entry in git show
+    5db0720:RESULTS.md (the v1.8 STOP entry; v1.11's header calls it STOP-6 at 5db0720).
+    routing2:20-21 reads 'PI DECISIONS OF RECORD, 2026-10-04 (v1.8 s0.2 items 8-14; this block is
+    their record)'.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      In my own in-order check, all 56 non-blank lines of routing2 appear among the '>' lines of the
+      newest entry of git show 5db0720:RESULTS.md, with 0 missing. routing2:1 reads 'ROUTING BLOCK —
+      PI, 2026-10-04', and routing2:20-21 reads '(v1.8 s0.2 items 8-14; this block is their
+      record)'. v1.11's header names 5db0720 as STOP-6's entry.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      routing2:1 reads 'ROUTING BLOCK — PI, 2026-10-04', and routing2:20-21 reads '(v1.8 s0.2 items
+      8-14; this block is their record)'. All 56/56 lines are quoted in the 5db0720 entry. The v1.11
+      header names v1.8's STOP as 'STOP-6, … entry `5db0720`'.
+
+[P2-S3-06] CHECKER pass
+  CLAIM:
+    The v1.8 block supersedes the v1.7 routing's (8)–(11) block of the same date (quoted in full in
+    the STOP-5 entry, 87a1167). [new at pass 2]
+  EVIDENCE:
+    routing_original.txt:1 reads 'ROUTING BLOCK — PI, 2026-10-04' and :20-21 reads 'PI DECISIONS OF
+    RECORD, 2026-10-04 (v1.7 s0.2 items 8-11; this block is their record)'. A programmatic in-order
+    check found all 51 non-blank lines of routing_original.txt in the newest entry of git show
+    87a1167:RESULTS.md (the v1.7 entry; v1.11's header: 'v1.7 (…; STOP-5, …, entry 87a1167').
+    'Supersedes' is Code's inference, not the PI's word, but it holds. routing2:13 says 'v1.8
+    supersedes v1.7'. The v1.8 block re-records (8)–(11) with changed content: (10)'s start
+    condition and (11)'s dates (v1.7 10-16/10-16/12-15 against v1.8 10-23/10-23/12-15).
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      In my own in-order check, all 51 non-blank lines of routing_original.txt appear in the newest
+      entry of 87a1167:RESULTS.md, with 0 missing. v1.11's header names that entry as STOP-5's. The
+      v1.7 block (routing_original:20-21, 'v1.7 s0.2 items 8-11; this block is their record')
+      carried different (10) and (11) content: 'unchanged from v1.6 … after LOCK-m-F0 v1.0' and
+      10-16/10-16/12-15. The v1.8 block re-records (8)–(11) with changes. The v1.8 routing opens
+      'CORRECTION TO MY 10-04 ROUTING BLOCK' and reads 'v1.8 supersedes v1.7' (routing2:4, :13).
+      'Supersedes' is Code's inference, but the record supports it.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      routing_original.txt:20-21 reads 'PI DECISIONS OF RECORD, 2026-10-04 (v1.7 s0.2 items 8-11;
+      this block is their record)'. All 51/51 of its lines are quoted in the newest entry at
+      87a1167, which the v1.11 header calls STOP-5 ('entry `87a1167`'). The PI's 'v1.8 supersedes
+      v1.7 (STOP-5)' at routing2:13 supports 'supersedes'. So does the content: the v1.8 block
+      re-records (8)–(11) with new (11) dates (10-23/10-23/12-15 against 10-16/10-16/12-15) and a
+      new (10).
+
+[P2-S3-07] CHECKER pass
+  CLAIM:
+    The v1.9 routing replaced the v1.8 block's (11) dates and re-stated its (10) and (12); the v1.10
+    routing re-stated them again. [new at pass 2]
+  EVIDENCE:
+    (11): v1.8 gives 2026-10-23 / 2026-10-23 / 2026-12-15 (routing2:29-30), and routing3:14 gives
+    2026-10-30 / 2026-10-30 / 2026-12-22. (10): routing3:18-19 re-states it with v1.9's §0.10–§0.12,
+    and routing4:24-25 with v1.10's §0.10–§0.13. (12): routing3:20 'e2b stays concluded, not
+    answered (no PROPOSAL-n …)' and routing4:26 'e2b stays concluded, not answered.' The v1.10
+    routing also re-gives the (11) dates unchanged (routing4:13), so the sentence is true under
+    either reading of 'them'. The v1.9 routing's re-statement of (13) is not named here, but the
+    next sentence covers it. That is a precision matter, not an error.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      routing3:14 replaces v1.8's 10-23/10-23/12-15 (routing2:29-30) with 10-30/10-30/12-22.
+      routing3:18-20 re-states (10), against v1.9 §0.10–§0.12, and (12). routing4:13 and :24-26
+      re-state the dates, (10) and (12) again. The sentence does not mention (13), but the next
+      sentence covers it.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      routing3:14 replaces the (11) dates (10-23/12-15 become 10-30/12-22). routing3:18-20 re-states
+      (10) and (12), and routing4:24-26 re-states them again. The v1.9 routing's own (13) line is
+      covered by the next sentence of (E).
+
+[P2-S3-08] CHECKER pass
+  CLAIM:
+    For (13), the v1.11 routing makes the v1.9 routing's line the words of record; the v1.11 routing
+    adopts (8)–(15) as v1.11 §0.2 states them. [revised at pass 2]
+  EVIDENCE:
+    routing5:23-24 reads '(13) stands in my words of 2026-10-04 as v1.11 §0.2 quotes them.' The
+    words v1.11 §0.2 quotes ('Fallback-2 is the penalty for missing the Q-F0 date; missing the Q-F3
+    date just caps v2 at Fallback-1 if A0 passed.') occur once in v1.11 and are exactly routing3:21,
+    the v1.9 line. So the words of record are the v1.9 line's. §0.2 anchors them to
+    RESULTS.md@939905a:252–256, which is the v1.8 wording. The entry discloses that mismatch at N1,
+    so this reading is a resolution N1 makes visible, not a hidden one. routing5:23 carries the
+    adoption of (8)–(15).
+  CORRECTION:
+    Optional precision: 'For (13), the v1.11 routing's "my words of 2026-10-04 as v1.11 §0.2 quotes
+    them" makes the v1.9 routing's line the words of record (§0.2's anchor names the v1.8 lines;
+    note N1).'
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      routing5:23-24 reads '(13) stands in my words of 2026-10-04 as v1.11 §0.2 quotes them.' The
+      words §0.2 quotes are exactly routing3:21, which is RESULTS.md@939905a:67 (I checked with git
+      show). §0.2's anchor 939905a:252–256 is the v1.8 wording (verified), and the entry discloses
+      that mismatch at N1. The quoted-words reading is the natural one.
+    CORRECTION:
+      Optional precision: 'For (13), the v1.11 routing's "my words of 2026-10-04 as v1.11 §0.2
+      quotes them" makes the v1.9 routing's line the words of record (§0.2's anchor names the v1.8
+      lines; note N1).'
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      routing5:23-24 reads '(13) stands in my words of 2026-10-04 as v1.11 §0.2 quotes them.' The
+      words §0.2 quotes occur once in v1.11, and they are exactly routing3:21, the v1.9 line, which
+      is also at 939905a:67. §0.2's anchor names :252–256, the v1.8 wording, and N1 discloses that
+      mismatch. The checker's optional precision is fine but not required.
+
+[P2-S3-09] CHECKER pass
+  CLAIM:
+    v1.9 routing (2026-10-04) quoted in full in the STOP-7 entry, 939905a.
+  EVIDENCE:
+    routing3:1 reads 'PI date 2026-10-04'. A programmatic in-order check found all 23 non-blank
+    routing3 lines in the newest entry of git show 939905a:RESULTS.md (the v1.9 entry; v1.11's
+    header calls it STOP-7 at 939905a).
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      In my own check, all 23 non-blank lines of routing3 appear in order in the newest entry of
+      939905a:RESULTS.md, with 0 missing. routing3:1 reads 'PI date 2026-10-04'.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      routing3:1 reads 'PI date 2026-10-04', and 23/23 of its lines are quoted in the newest entry
+      at 939905a, which the v1.11 header calls STOP-7.
+
+[P2-S3-10] CHECKER pass
+  CLAIM:
+    v1.10 routing (2026-10-05) quoted in full in the STOP-8 entry, 9510af7; the excerpt carries
+    decision (15), the §7.3 approval, the title-ladder confirmation and the process line.
+  EVIDENCE:
+    routing4:1 reads 'PI date 2026-10-05'. A programmatic in-order check found all 30 non-blank
+    lines in the newest entry at 9510af7. In the excerpt (routing4:13-33), Decision (15) is at
+    :14-16, 'I approve the §7.3 welfare text as amended in v1.10 (your B2)' at :16-17, the B1 ladder
+    confirmation at :19-20 and the Process line at :32-33. The excerpt does not include routing4:9,
+    which carries the wrong v1.9 sha tail '…4e1ef', so STOP-8 item 125's concern ('record the
+    discrepancy rather than quote the routing's tail') is respected. Step 1 records the correction.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      In my own check, all 30 non-blank lines of routing4 appear in the newest entry at 9510af7,
+      with 0 missing. The excerpt routing4:13-33 carries Decision (15) (:14-16), the §7.3 approval
+      (:16-17), the B1 ladder confirmation (:19-20) and the Process line (:32-33). It leaves out
+      routing4:9 and its wrong '…4e1ef' tail, which respects STOP-8 item 125.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      routing4:1 reads 'PI date 2026-10-05', and 30/30 of its lines are quoted at 9510af7. The
+      excerpt (routing4:13-33) carries Decision (15) (:14-16), the §7.3 approval (:16-17), the B1
+      ladder confirmation (:19-20) and the Process line (:32-33). It leaves out routing4:9, which
+      has the wrong '…4e1ef' tail, so STOP-8 item 125 is respected.
+
+[P2-S3-11] CHECKER pass
+  CLAIM:
+    The v1.10 routing's line '(13) PI decisions on the three outstanding items: yes to all' is
+    quoted as adoption, not as (13)'s record (STOP-8 B2). [new at pass 2]
+  EVIDENCE:
+    The line is routing4:27, verbatim. STOP-8 B2
+    (results/raw/2026-10-05_m-v1.10_code-to-design_STOP.md:85) reads 'Unless you direct otherwise,
+    the step-3 entry will quote all three routings' (13) lines, the 2026-10-05 line as adoption
+    rather than as (13)'s record.' routing5 does not direct otherwise. The entry keeps that promise.
+    This applies pass 1's missed items (lenient and strict), using the strict lens's wording. Note:
+    STOP-8 B2 (:82-84) also records that 'the three outstanding items' has at least two readings,
+    and that (13)'s content is adopted through the 'Decisions of record (8)–(15) as v1.10 §0.2
+    states them' line. The entry's gloss follows B2's classification and does not contradict that.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      STOP-8 B2 (code-to-design_STOP.md:85) reads: 'Unless you direct otherwise, the step-3 entry
+      will quote all three routings' (13) lines, the 2026-10-05 line as adoption rather than as
+      (13)'s record.' routing5 does not direct otherwise, and the gloss is attributed to B2.
+      B2:82-83 records the line's ambiguity and that (13)'s content is adopted through the
+      'Decisions of record' line. The entry's attributed classification does not contradict that.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      The quoted line is routing4:27. STOP-8 block :85 reads 'Unless you direct otherwise, the
+      step-3 entry will quote all three routings' (13) lines, the 2026-10-05 line as adoption rather
+      than as (13)'s record.' routing5 does not direct otherwise. The gloss follows B2's own
+      classification.
+
+[P2-S3-12] CHECKER pass
+  CLAIM:
+    (13) in the PI's words: the v1.9 routing's line 'Fallback-2 is the penalty … if A0 passed' is at
+    RESULTS.md@939905a:67, and v1.11 §0.2 quotes it verbatim; the v1.11 routing adopts it ('(13)
+    stands in my words of 2026-10-04 as v1.11 §0.2 quotes them'); the v1.8 routing's longer wording
+    of the same rule is quoted above as well.
+  EVIDENCE:
+    git show 939905a:RESULTS.md line 67 is exactly that line, and the string occurs once in v1.11
+    (§0.2). routing5:23-24 matches the quoted adoption. The v1.8 (13) is at 939905a:252-256 and in
+    the entry's v1.8 excerpt. It states the same rule: 'Fallback-1 iff L0' against 'caps v2 at
+    Fallback-1 if A0 passed', where v1.11 defines L0 := (A0 = PASS).
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      939905a:RESULTS.md line 67 is the quoted line verbatim, and §0.2 quotes it without the '(13)'
+      label. routing5:23-24 carries the adoption. 939905a:252-256 holds the v1.8 wording. 'The same
+      rule' holds: L0 := (A0 = PASS) (§7.2 Step 1), and v1.8's 'Fallback-1 iff L0' and v1.9's 'caps
+      v2 at Fallback-1 if A0 passed' state the same consequence. STOP-8 B2:82 likewise says the two
+      'agree'.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      git show 939905a:RESULTS.md:67 is the v1.9 (13) line. The string occurs once in v1.11, in
+      §0.2. routing5:23-24 matches the adoption quote. The v1.8 (13) is at 939905a:252-256 and
+      inside the v1.8 excerpt. It is the same rule in substance: L0 := (A0 = PASS), and 'Fallback-1
+      iff L0' corresponds to 'caps v2 at Fallback-1 if A0 passed'.
+
+[P2-S3-13] CHECKER pass
+  CLAIM:
+    (7′)'s record, as v1.11 §0.2 states it: v1.6 §0.2 (179d9fc6…3967, archived by this step), quoted
+    '**(7′) told controls at SFT, DPO and instruct** (STOP-3 B4) … (7′) is recorded by this
+    document'; also v1.11 §0.2 itself ('(7′) told controls at SFT, DPO and instruct'), committed by
+    this step. [revised at pass 2]
+  EVIDENCE:
+    v1.11 §0.2 (m:16) reads '(7′)'s record is v1.6 §0.2 (archived by sha at step 3) and this
+    document; the PI's routing block re-affirms it (STOP-6 §C item 104).' Both halves are now
+    carried, which applies pass-1 correction S3-12 correctly. v1.6 hashes to 179d9fc6…3967. Its line
+    16 (§0.2) carries the quoted text, and the elision faithfully covers 'Records: the seat's
+    decisions block (lines :91, :96, :99, :101) … (STOP-3 B3; no PI-authored line exists on disk);'.
+    v1.11 contains '(7′) told controls at SFT, DPO and instruct' once, in §0.2. v1.6 is on the
+    archive list with its full sha, which meets 'archived by sha'.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      v1.6:16 (§0.2) contains '**(7′) told controls at SFT, DPO and instruct** (STOP-3 B4). Records:
+      … (STOP-3 B3; no PI-authored line exists on disk); (7′) is recorded by this document', and the
+      ellipsis is faithful. v1.6 hashes to 179d9fc6…3967 and is on the archive list. v1.11 §0.2
+      (m:16) contains '(7′) told controls at SFT, DPO and instruct' and states '(7′)'s record is
+      v1.6 §0.2 (archived by sha at step 3) and this document'. Both halves are carried, so pass-1
+      S3-12 is applied correctly.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:16 reads '(7′)'s record is v1.6 §0.2 (archived by sha at step 3) and this document; the PI's
+      routing block re-affirms it'. (E) now carries both halves, so pass-1's S3-12 correction is
+      applied. v1.6:16 contains the quoted text, and the ellipsis covers only the 'Records: the
+      seat's decisions block …' clause. v1.6 hashes to 179d9fc6…3967 and is on the archive list.
+      '(7′) told controls at SFT, DPO and instruct' occurs once in v1.11, in §0.2. Narrowing 'this
+      document' to 'v1.11 §0.2 itself' is harmless.
+
+[P2-S3-14] CHECKER pass
+  CLAIM:
+    (7′) is re-affirmed in the routings of 2026-10-04 (v1.9), 2026-10-05 (v1.10) and 2026-10-05
+    (v1.11): '(7′) re-affirmed.'
+  EVIDENCE:
+    routing3:17 and routing4:23 read '(7′) re-affirmed: told controls at SFT, DPO and instruct; base
+    has none.' routing5:23 reads '(7′) re-affirmed.' The dates are correct. The quoted period occurs
+    only in routing5; in v1.9 and v1.10 a colon follows. As the shared prefix of three lines this is
+    immaterial, and quote fidelity was outside the scope of this check.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      routing3:17 and routing4:23 read '(7′) re-affirmed: told controls…', and routing5:23 reads
+      '(7′) re-affirmed.' The dates are correct. The trailing period appears only in routing5, which
+      is immaterial for a shared prefix.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      routing3:17 and routing4:23 read '(7′) re-affirmed: told controls at SFT, DPO and instruct;
+      base has none.' routing5:23 reads '(7′) re-affirmed.' The dates are right. The final
+      punctuation differs (colon in two of the three), which is immaterial and outside the fidelity
+      scope.
+
+[P2-S3-15] CHECKER pass
+  CLAIM:
+    The decisions block is DESIGN-to-CODE-PROPOSAL-m-v1.2-decisions.md, sha256
+    fab576d8e6364be53b3987c45c6fff0795281d0ee6e4fa23ae352309144a34f8 (untracked at root); :91 is the
+    record of (6′) and :96 the record of (7).
+  EVIDENCE:
+    shasum gives fab576d8…44a34f8, and git status lists the file as ??. Line 91 is the 'Title under
+    the Clock — PI decision (6) revised, 2026-09-27 02:43' bullet and line 96 the 'OLMo Q3 — PI
+    decision 2026-09-27 02:43' bullet. Both lines occur verbatim in (E), by programmatic check.
+    v1.11 §0.2 reads 'decisions-block line :91 is the record of (6′) and line :96 the record of
+    (7)'.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      shasum gives fab576d8e6364be53b3987c45c6fff0795281d0ee6e4fa23ae352309144a34f8, and git status
+      lists the file as ??. Line 91 is the 'Title under the Clock — PI decision (6) revised' bullet
+      and line 96 the 'OLMo Q3 — PI decision 2026-09-27 02:43' bullet. Both occur verbatim in (E)
+      (programmatic check). §0.2 assigns them to (6′) and (7).
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      shasum gives fab576d8e6364be53b3987c45c6fff0795281d0ee6e4fa23ae352309144a34f8, and the file is
+      untracked (??). :91 is the 'Title under the Clock — PI decision (6) revised' bullet and :96
+      the 'OLMo Q3 — PI decision 2026-09-27 02:43' bullet. Both appear in (E) as '> ' + the exact
+      line (I checked programmatically). m:16 maps them to (6′) and (7).
+
+[P2-S3-16] CHECKER pass
+  CLAIM:
+    :91's clause 'Not running and running-and-failing-A0 now reach the same ceiling' marked
+    superseded (shown false at STOP-3 B2; v1.11 §0.2; the routing's marks).
+  EVIDENCE:
+    The clause is at decisions-block :91. §0.2 marks it '**superseded** (shown false at STOP-3 B2)'.
+    routing5:31 reads 'mark superseded :91's "same ceiling" clause'. m:356 reads ':91's "same
+    ceiling" clause superseded'.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      The clause is at decisions-block :91. §0.2 reads '**superseded** (shown false at STOP-3 B2)'.
+      routing5:31 reads 'mark superseded :91's "same ceiling" clause'.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      The clause is verbatim at :91. m:16 reads '**superseded** (shown false at STOP-3 B2)'.
+      routing5:31 reads 'mark superseded :91's "same ceiling" clause'.
+
+[P2-S3-17] CHECKER pass
+  CLAIM:
+    :96's 'A Qwen A0 licenses the Qwen F0 cells (e2a, e2b, f1)' marked superseded for e2b by
+    decision (12), and 'the arm below does' by (7′).
+  EVIDENCE:
+    Both clause texts occur at decisions-block :96. §0.2 reads '**superseded for e2b by decision
+    (12)**, and its "the arm below does" **superseded by (7′)**'. routing5:32 and m:356 say the
+    same.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Both clauses are at :96. §0.2 (m:16), routing5:32 and m:356 apply these marks: e2b by (12),
+      and 'the arm below does' by (7′).
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      Both clause strings are verbatim at :96. m:16, routing5:32 and m:356 assign them to (12) and
+      (7′) respectively.
+
+[P2-S3-18] CHECKER pass
+  CLAIM:
+    :97–:101 (the seat's instruct-only OLMo design of 2026-09-27: :97–:98 its statement, :99 its
+    gates, :100 its pod terms, :101 its outcome integration) marked superseded by (7)/(7′), by
+    v1.11, and by the routing's line 'a pod start needs my go'; :102 (Welfare) is unmarked.
+  EVIDENCE:
+    Decisions-block contents: :97 is the A0-OLMo spec, :98 'Why instruct only', :99 'Gates', :100
+    'Hardware … The PI accepts the cost', :101 'Outcome integration', :102 'Welfare'. All sit under
+    the 2026-09-27 02:43 bullet. routing5:32-33 reads ':97–:101 (by 7/7′, v1.11, and this line: a
+    pod start needs my go)'. m:356 applies all three supersessions to :97–:101. §0.2 scopes the pod
+    line to :100 only, but m:356 governs ('unless the PI's routing block directs otherwise'), and
+    the routing applies it to the range. §0.2 also says ':102, Welfare, … stays unmarked'.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Decisions-block contents: :97 is the A0-OLMo spec (instruct), :98 'Why instruct only', :99
+      Gates, :100 Hardware ('The PI accepts the cost'), :101 Outcome integration, :102 Welfare.
+      routing5:32-33 applies (7/7′, v1.11, the pod line) to the whole of :97–:101, and m:356 does
+      the same. §0.2 says :102 stays unmarked.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      The decisions block reads :97 A0-OLMo spec, :98 'Why instruct only', :99 'Gates', :100
+      'Hardware … The PI accepts the cost', :101 'Outcome integration' and :102 'Welfare'.
+      routing5:32-33 and m:356 apply all three supersessions to :97–:101. §0.2 scopes the pod line
+      to :100, but it defers to the routing. §0.2 also says :102 stays unmarked.
+
+[P2-S3-19] CHECKER pass
+  CLAIM:
+    §7.3, the welfare text of record, quoted verbatim (the italic).
+  EVIDENCE:
+    m:345 heading reads '(Code quotes verbatim in the step-3 entry)', and m:345 says 'This italic is
+    the welfare text of record, unchanged from v1.10'. The extracted v1.11 italic (715 chars) equals
+    v1.10's byte for byte, and '*'+italic+'*' occurs in (E), by programmatic check.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      The extracted v1.11 italic, '*'-delimited, occurs in (E) (programmatic). It is byte-identical
+      to v1.10's (715 chars). m:345 reads 'This italic is the welfare text of record'. Note: the
+      non-italic trigger gloss of §7.3 is not quoted. (E) scopes the quote explicitly to the italic,
+      and §7.3 itself designates the italic as the text of record, so the scope is disclosed rather
+      than overstated.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      I extracted the italic from v1.11 m:345 (715 chars). It is byte-identical to v1.10 m:328's,
+      and '*'+italic+'*' occurs in (E). m:345 reads 'This italic is the welfare text of record,
+      unchanged from v1.10'. (E) labels its quote '(the italic)'.
+
+[P2-S3-20] CHECKER pass
+  CLAIM:
+    Its four edits against v1.6 (v1.11 §0.10's welfare bullet): (1) 'the f2 confirmation' → 'f2's
+    VERDICTS or f2's NOT-RUN, whichever comes first'; (2) 'no session' → 'no new session'; (3) the
+    added sentence 'An f2 result toward clean after a REVERSE screen carries the same re-review
+    obligation'; (4) 'If f2 confirms' → 'If f2 confirms a POSITIVE screen'.
+  EVIDENCE:
+    A word-level difflib comparison of the v1.6 and v1.11 italics gives exactly four non-equal
+    opcodes: replace 'the f2 confirmation' => "f2's VERDICTS or f2's NOT-RUN, whichever comes
+    first,"; insert 'new'; insert 'An f2 result toward clean after a REVERSE screen carries the same
+    re-review obligation.'; replace 'confirms,' => 'confirms a POSITIVE screen,'. Edit (1) also adds
+    a trailing comma, which is immaterial. m:77 (§0.10's welfare bullet) names the same four edits
+    in the same order. Against v1.9, the italic differs at four sites as well (the NOT-RUN clause,
+    'new', the added sentence, 'a POSITIVE screen'), but the entry correctly anchors the four to
+    v1.6, as routing5:28 does.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      My word-level difflib of the v1.6 and v1.11 italics gives exactly four ops: replace 'the f2
+      confirmation' => "f2's VERDICTS or f2's NOT-RUN, whichever comes first,"; insert 'new'; insert
+      the REVERSE sentence; replace 'confirms,' => 'confirms a POSITIVE screen,'. m:77 names the
+      same four edits in the same order.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      A word-level SequenceMatcher of the v1.6:149 italic against v1.11:345 gives exactly four
+      non-equal opcodes: replace 'the f2 confirmation' with "f2's VERDICTS or f2's NOT-RUN,
+      whichever comes first,"; insert 'new'; insert the REVERSE sentence; replace 'confirms,' with
+      'confirms a POSITIVE screen,'. m:77, inside §0.10 (m:60-88), names the same four edits in the
+      same order.
+
+[P2-S3-21] CHECKER pass
+  CLAIM:
+    The PI approved the text by name on 2026-10-05 (v1.10 routing: 'I approve the §7.3 welfare text
+    as amended in v1.10 (your B2)'); the v1.11 routing confirms the approval covers all four edits
+    and confirms the wide reading 'after a REVERSE screen, any f2 result toward clean (OPPOSITE or
+    NULL-x↑) triggers the welfare re-review'.
+  EVIDENCE:
+    routing4:16-17 carries the approval, which names §7.3, and routing4:1 dates it 2026-10-05.
+    routing5:27-29 reads 'the §7.3 italic is unchanged from the text I approved on 2026-10-05, all
+    four edits against v1.6 included. I confirm the wide reading: after a REVERSE screen, any f2
+    result toward clean (OPPOSITE or NULL-x↑) triggers the welfare re-review.' Because the v1.10 and
+    v1.11 italics are byte-identical, 'the text' is this text. This meets §0.2 (15)'s 'the PI
+    approves that amendment by name at routing' and STOP-8 B3's 'The step-3 note will record which
+    reading governs'. STOP-8 §C items 61 and 80 (name both extra edits; record that the wide reading
+    governs) are also met.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      routing4:16-17 carries the approval of §7.3 by name, and routing4:1 dates it 2026-10-05.
+      routing5:27-29 reads 'unchanged from the text I approved on 2026-10-05, all four edits against
+      v1.6 included. I confirm the wide reading: …'. Because the v1.10 and v1.11 italics are
+      byte-identical, 'the text' is this text. This meets STOP-8 B3:91 ('record which reading
+      governs') and STOP-8 §C items 61 and 80.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      routing4:16-17 (PI date 2026-10-05) reads 'I approve the §7.3 welfare text as amended in v1.10
+      (your B2)', and the v1.10 and v1.11 italics are identical. routing5:27-29 reads 'unchanged
+      from the text I approved on 2026-10-05, all four edits against v1.6 included. I confirm the
+      wide reading: after a REVERSE screen, any f2 result toward clean (OPPOSITE or NULL-x↑)
+      triggers the welfare re-review.' This meets STOP-8 B3 and the 'confirms the wide reading of
+      the third at routing' in m:345.
+
+[P2-S3-22] CHECKER pass
+  CLAIM:
+    Archive: v1.2–v1.10 moved to archive/, untracked, so that one PROPOSAL-m is at root, with nine
+    sha256 values (5d383e7d…, 30623218…, 96d2e325…, ee023861…, 179d9fc6…, 4b699267…, 12f65e92…,
+    b1fbce3b…, 2a4bc50c…).
+  EVIDENCE:
+    All nine full sha256 values match shasum on the root files. All nine are untracked (??).
+    archive/ holds no PROPOSAL-m file, so nothing collides, and v1.11 alone remains at root.
+    routing5:35 reads 'Step 3 moves v1.2–v1.10 to archive/'. The v1.9 sha b1fbce3b…4a5dc agrees with
+    routing5's correction, not with routing4's wrong tail. Timing: at this draft the nine files are
+    still at root, so the sentence becomes true only when Code makes the move before the commit.
+    That is the same at-commit tense as 'committed tracked and clean'.
+  CORRECTION:
+    None, provided the move is executed and re-hashed before the commit. If the commit lands without
+    the move, change the sentence to the actual state.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      All nine full shas match shasum on the root files, and all nine files are untracked. archive/
+      holds no PROPOSAL-m file, so nothing collides. routing5:35 reads 'Step 3 moves v1.2–v1.10 to
+      archive/'. At this draft the nine files are still at root (ls), so the sentence is in the
+      at-commit tense, as 'committed tracked and clean' is.
+    CORRECTION:
+      None, provided the move is executed and the files re-hashed before the commit. If the commit
+      lands without the move, state the actual state.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      I re-hashed all nine root files (v1.2–v1.10), and each matches the full sha in (E). All nine
+      are untracked, and archive/ holds no PROPOSAL-m file. routing5:35 reads 'Step 3 moves
+      v1.2–v1.10 to archive/'. The sentence is in at-commit tense, so it holds once the move is made
+      before the commit.
+    CORRECTION:
+      None, provided the move happens before the commit.
+
+[P2-S3-23] CHECKER pass
+  CLAIM:
+    Not done: 'No build and no lock; no gate, session or model forward has run (step 2's
+    computations ran in tools, with no model loaded).' [revised at pass 2]
+  EVIDENCE:
+    git status shows no tracked change and no new code. No LOCK-m* file exists at root, and a find
+    (excluding jlens-qwen36) for *lock-m*, *f0m* and *corrupt_m* returns nothing. The own-pass raw
+    header reads 'laptop; no model loaded; the tokenizer recount reads tokenizer.json only'. This
+    applies pass-1 correction S3-23 correctly and introduces no new error.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      No LOCK-m* file exists (only LOCK-g.md and LOCK-h.md). git status shows no tracked change. The
+      own-pass raw:1 reads 'laptop; no model loaded; the tokenizer recount reads tokenizer.json
+      only'. Pass-1 S3-23's correction is applied verbatim and adds no new error.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      git diff is empty. A find for lock-m, f0m and corrupt_m (excluding jlens-qwen36) returns
+      nothing. The own-pass raw's header reads 'laptop; no model loaded; the tokenizer recount reads
+      tokenizer.json only'. Pass-1's S3-23 correction is applied correctly.
+
+[P2-S3-24] CHECKER pass
+  CLAIM:
+    Not done: 'Every other untracked document is untouched, and the k arc is untouched.'
+  EVIDENCE:
+    By mtime, every untracked file other than the four 2026-10-06 results/raw files Code is
+    committing predates this session's work. The exceptions are PROPOSAL-m v1.11 and
+    HANDOFF-2026-10-04-design.md (2026-10-05 21:59), which the PI placed under routing5:3-7.
+    ADDENDUM-k1.md hashes to 61acf21ff2cc104e6872c8149a2051fa0874a8c32aab6ab1b96e908ae3a81e26,
+    matching m:354 and routing5:36 ('The k arc is untouched').
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      I checked mtimes. Every untracked file predates the session except v1.11 (21:59:09 local, i.e.
+      01:59 UTC) and HANDOFF-2026-10-04-design.md (21:59:24), both placed by the PI per
+      routing5:3-7, and the four 2026-10-06 results/raw files Code commits. PREPRINT-v1_0-draft.md
+      is still d6431e97…222b8 (m:354), and ADDENDUM-k1.md is still 61acf21ff2cc104e….
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      By mtime, every untracked file predates this session's work except three groups: v1.11 and
+      HANDOFF-2026-10-04-design.md (2026-10-05 21:59, placed by the PI), the four 2026-10-06
+      results/raw files, and the nine files to be moved. ADDENDUM-k1.md is 61acf21ff2cc104e…,
+      matching m:354 and routing5:36.
+
+[P2-S3-25] CHECKER pass
+  CLAIM:
+    Not done: 'A pod start needs the PI's go and runpod re-authorisation. The PI places the preprint
+    of record at root before step 15 or before any posting, whichever comes first.' [revised at pass
+    2]
+  EVIDENCE:
+    routing5:36-37 reads 'No pod start without my go; runpod re-auth first.' The preprint sentence
+    now matches m:356 and §0.9 (m:58) word for word, 'whichever comes first' included. That applies
+    the strict lens's overturn of S3-25 correctly; the clause matters on the Q-F0 NOT-RUN path,
+    which never reaches step 15.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      routing5:36-37 reads 'No pod start without my go; runpod re-auth first.' The preprint sentence
+      matches m:356 and m:58 word for word, 'whichever comes first' included, so pass-1's strict
+      overturn is applied correctly.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      routing5:36-37 reads 'No pod start without my go; runpod re-auth first.' The preprint sentence
+      matches m:356 and §0.9 (m:58) word for word, 'whichever comes first' included, so pass-1's
+      strict overturn is applied.
+
+[P2-S3-26] CHECKER pass
+  CLAIM:
+    Not done: 'Step 4 (the Q-F0 subset of the m package) is next, on the PI's word.'
+  EVIDENCE:
+    m:357 step 4 is 'Build the Q-F0 subset of the m package'. routing5:36 says only 'No build before
+    step 3 commits'. The hold for the PI's word carries forward the v1.7 and v1.8 routings' 'REPORT
+    TO ME after step 3 before building' (routing_original:44, routing2:54-55), which is a
+    conservative choice and not wrong. The header's 'as the v1.8 routing directed for this step'
+    (outside this section) refers to v1.8's step 3; the v1.9–v1.11 routings do not repeat the
+    direction, so 'carrying forward the v1.8 routing's direction' would be more exact there.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      m:357 step 4 reads 'Build the Q-F0 subset of the m package'. No v1.9–v1.11 routing requires a
+      PI word before step 4: routing5:36 says only 'No build before step 3 commits', and routing5:35
+      says 'Run v1.11 §8 from step 1'. 'On the PI's word' is Code's conservative plan, carried from
+      routing2:54-55 and routing_original:44, and it is not a false claim. The headline's 'as the
+      v1.8 routing directed for this step' is outside this section and was passed at pass 1 (E16).
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:357 step 4 reads 'Build the Q-F0 subset of the m package'. Holding it for the PI's word
+      carries forward the 'REPORT TO ME after step 3 before building' of routing_original:44 and
+      routing2:54-55. That is conservative, not wrong. routing5 says only 'No build before step 3
+      commits'.
+
+[P2-S3-27] CHECKER pass
+  CLAIM:
+    Pass-1 correction S3-06 applied to the v1.8 gloss: it now names the block as the record of v1.8
+    §0.2's (8)–(14), notes that (11) was replaced and (10)/(12) re-stated, routes (13)'s words of
+    record to the v1.9 line, and states the v1.11 adoption, with no new error.
+  EVIDENCE:
+    The diff of entry9_v1.md against entry9_v2.md shows the old gloss ('the decisions block of
+    record for (8)–(14); its (11) dates were replaced by the v1.9 routing') replaced at E:111-116.
+    The name collision with the seat's 'decisions block' is gone ('the PI's block of record'). Each
+    added sentence was verified above (P2-S3-05 to P2-S3-08). The trailing colon now follows 'The
+    v1.11 routing adopts (8)–(15) as v1.11 §0.2 states them' and introduces the v1.8 quote, which
+    reads slightly oddly but asserts nothing false.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      I diffed entry9_v1 against entry9_v2 over the step-3 section. The v1.8 gloss now carries
+      pass-1 lenient's corrected text verbatim, plus the v1.7 supersession clause from pass-1's
+      lenient missed item. The v1.10 gloss carries the strict missed item's adoption line, and (7′)
+      carries 'Also v1.11 §0.2 itself'. Each new sentence was verified above (06, 07, 08, 11, 13),
+      and no other text in the section changed.
+  REFUTER [strict] fail overturned=True
+    EVIDENCE:
+      The new gloss is accurate sentence by sentence, but the pass-2 edit added a new presentational
+      error. In v1 the colon closed '…its (11) dates were replaced by the v1.9 routing:'. In v2 the
+      colon closes 'The v1.11 routing adopts (8)–(15) as v1.11 §0.2 states them:' (E:116), which is
+      the sentence pass-1's corrections ended with a period. The quote that follows is therefore
+      introduced as what v1.11 adopts. But it is the v1.8 block: items (8)–(14) only, with (11)
+      dates 2026-10-23 / 2026-10-23 / 2026-12-15 and (13) in the v1.8 wording, and v1.11 adopts
+      neither those dates nor that wording. That is a right quote with a wrong gloss. It is minor,
+      because the Clock bullet and the preceding sentences give the right state.
+    CORRECTION:
+      End E:116 with a period and label the quote: '…The v1.11 routing adopts (8)–(15) as v1.11 §0.2
+      states them. The v1.8 block, verbatim:'
+
+[P2-S3-28] CHECKER pass
+  CLAIM:
+    Coverage of m:356 (§8 step 3): every element m:356 requires is present in (E).
+  EVIDENCE:
+    Element by element, with the line in (E): v1.11 committed tracked and clean with its hash
+    (E:101-103). D1, D_O and D2 (E:104-106). The D_f2 rule (E:106-108). The decisions block's sha256
+    (E:195-196). :91 and :96 verbatim as the records of (6′) and (7) (E:197-208). §0.2's marks:
+    :91's same-ceiling clause (E:201-202); :96's e2b clause by (12) and 'the arm below does' by (7′)
+    (E:207-208); :97–:101 by (7)/(7′), the document and the routing's pod line (E:209-212). (7′)'s
+    record as §0.2 states it, both halves (E:189-193). The routing blocks of 2026-10-04 and
+    2026-10-05 as the records of (8)–(15): the v1.8 block (8)–(14), the v1.10 Decision (15) and
+    adoption lines, and the v1.11 routing quoted in full at E:25-61. (13) in the PI's words
+    (E:184-188). The title-ladder confirmation (routing4 B1 at E:168-169; routing5:24-25 at
+    E:48-49). The §7.3 approval with its four edits named (E:217-227). §7.3 verbatim (E:213-215).
+    v1.2–v1.10 moved to archive/, untracked (E:228-237). The PI's preprint placement, 'whichever
+    comes first' included (E:322-324). §0.14's step-3 dispositions (STOP-6 B2; STOP-8 B2, B3,
+    C45/C125) and STOP-8 §C items 61 and 80 are also satisfied. STOP-8 items 53, 59 and 64 were
+    fixed in v1.11 or are carried at N4, so the step-3 record needs nothing further for them.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Every element of m:356 is present: the hash; D1, D_O and D2; the D_f2 rule; the
+      decisions-block sha; :91 and :96 verbatim with §0.2's and the routing's marks, :97–:101
+      included; (7′)'s record, both halves; the routing blocks of 10-04 (v1.8 and v1.9, with v1.7's
+      pointer) and 10-05 (v1.10 and v1.11) as the records of (8)–(15); (13) in the PI's words; the
+      title-ladder confirmation (routing4:19-20, routing5:24-25); the §7.3 approval with its four
+      edits named; the §7.3 italic verbatim; v1.2–v1.10 to archive/ (untracked); the preprint
+      placement with 'whichever comes first'. §7.4's 'written into the step-3 entry' is met. STOP-8
+      §C 53, 59 and 64, which ask for step-3 notes, were fixed in v1.11 (m:63, step 19) or carried
+      at N4. Items 61, 80 and 125 are met. Minor evidence slip in the checker: STOP-6 B2's
+      disposition is in §0.12 (m:141), not §0.14. It does not affect (E).
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      I re-walked m:356 element by element. Present: the hash, D1/D_O/D2 and the D_f2 rule, the
+      decisions-block sha, :91 and :96 verbatim with §0.2's marks (including :97–:101 by (7)/(7′),
+      v1.11 and the pod line), (7′)'s record with both halves, the routings of 2026-10-04 and
+      2026-10-05 as the records of (8)–(15), (13) in the PI's words (:67), the ladder confirmation
+      (routing4:19-20; routing5:24-25), the §7.3 approval with its four edits named, §7.3 verbatim,
+      the archive move, and the preprint placement with 'whichever comes first'. m:85 and m:87 add
+      nothing beyond these. STOP-8 item 125: the step-3 excerpt omits routing4:9's wrong tail, and
+      the quoted v1.11 routing carries the correction. Items 53 and 64 are fixed in v1.11 (m:63,
+      step 19 'D_f2 as a calendar date'). Item 59 is disposed to §0.10/§0.3 (44) by §0.14 and
+      carried at N4. Item 10 is fixed (m:199 'smoke-block projection basis'). The one defect is the
+      colon placement failed at P2-S3-27, which is presentational, not a missing element.
+####################################################################################################
+SECTION E3
+####################################################################################################
+
+[N-hdr-1] CHECKER pass
+  CLAIM:
+    (N) header: v1.11 sha256 42ab36ec…6c6b; PI date 2026-10-05; stamps 03:29:52 UTC (creation) and
+    04:01:54 UTC (revision); dated 2026-10-06, Code's UTC date
+  EVIDENCE:
+    shasum of PROPOSAL-m-gating-campaign-v1_11.md = 42ab36ecc814…fc96c6b (372 lines). routing5 line
+    1 reads 'PI date 2026-10-05'. The notes file's mtime is Tue Oct 6 04:01:54 UTC 2026, which
+    matches the revision stamp exactly. The 03:29:52 creation stamp cannot be checked against any
+    artifact, but it is consistent with that timeline.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      shasum -a 256 of the v1.11 file gives 42ab36ecc814…d9fc96c6b, matching the header. routing5
+      line 1 reads 'PI date 2026-10-05'. The notes file's mtime is 04:01:54 UTC on 2026-10-06, which
+      matches the revision stamp. The 03:29:52 creation stamp comes 39 s after the referent raw's
+      own 03:29:13 stamp, which is consistent. Per the dates convention, the 2026-10-06 label
+      (Code's UTC date) is not a finding.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      shasum -a 256 of v1.11 = 42ab36ecc814…fc96c6b. routing5:1 reads 'PI date 2026-10-05'. TZ=UTC
+      stat gives the notes file an mtime of Oct 6 04:01:54 2026, which matches the revision stamp.
+      The checker said the 03:29:52 creation stamp could not be checked, but it can: pass 1's raw
+      (N-hdr-1) records the file's mtime at that time as 03:29:52 UTC.
+
+[N-hdr-2] CHECKER pass
+  CLAIM:
+    (N) quotes the v1.11 routing: "minor-only residues are carried as dated notes in the step-3
+    entry; anything substantive STOPs."
+  EVIDENCE:
+    routing5_original.txt reads 'Process line, unchanged: minor-only residues are carried as dated
+    notes in the / step-3 entry; anything substantive STOPs.' The quote matches once the line break
+    is joined.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      routing5: 'Process line, unchanged: minor-only residues are carried as dated notes in the /
+      step-3 entry; anything substantive STOPs.' The quote is verbatim once the line break is
+      joined.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      routing5_original.txt:17–18: 'Process line, unchanged: minor-only residues are carried as
+      dated notes in the / step-3 entry; anything substantive STOPs.'
+
+[N-hdr-3] CHECKER pass
+  CLAIM:
+    (N) The step-2 check graded nothing substantive or blocking under any verdict
+  EVIDENCE:
+    Recomputed from wx6dqq823.output result.results (16 groups): across checker and both lenses the
+    1,767 severities are clean 1,366 and minor 401, and all 67 refuter-missed items are minor. No
+    severity is substantive or blocking.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      My own tally over result.results (16 groups) gives 1,767 severities: clean 1,366, minor 401,
+      none substantive or blocking. All 67 missed items are minor.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      My own tally over the JSON (16 groups, 589 referents) gives 1,767 severities: clean 1,366,
+      minor 401. The 67 missed items are all minor. No severity is substantive or blocking. L1.11
+      discloses a substantive reading without grading the item that way, and the header says so.
+
+[N-hdr-4] CHECKER pass
+  CLAIM:
+    (N) The file covers 52 items unresolved under all three verdicts (all minor under all three), 14
+    contested items (each minor or clean under every verdict) and 67 refuter-found items (all
+    minor), 133 in all; the 72 minor-note referents stay in the raw
+  EVIDENCE:
+    My own tally script gives 589 referents: clean 451, resolved with a minor note 72, unresolved 52
+    (all minor/minor/minor), contested 14 (12 m/m/m; L1.2 and P1.20 m/m/clean), and 67 missed items,
+    all minor. The file has exactly 133 numbered lines.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Independent tally: 589 referents. 451 are clean under all three verdicts, 72 resolve with a
+      minor note, 52 are FFF (all minor/minor/minor) and 14 are split. The split items are L1.2 and
+      P1.20 (FFT, minor/minor/clean), S1.24, S2.5, S2.24, D8C2.72, D8C2.76, D8C2.89, X1.4, X1.15 and
+      X1.18 (TFT), D8C1.8 and D8C1.38 (TFF), and D8C1.47 (TTF); all are minor or clean. There are 67
+      missed items, all minor. The file has 133 numbered lines (52+14+67). The step-3 entry does
+      cite resolved-with-note referents (D8A.9, D8A.12, D8A.13 and D8A.14), so '(the step-3 entry
+      cites some of them)' holds.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      Recomputed: clean under all three 451, resolved with a minor note 72, unresolved under all
+      three 52 (all minor/minor/minor), split 14 (12 m/m/m; L1.2 and P1.20 m/m/clean), missed 67
+      (lenient 40, strict 27, all minor). 52+14+67 = 133, the number of numbered lines. All 72
+      resolved-with-note notes appear in the referent-check raw. The entry cites three of them
+      (D8A.9, D8A.13, D8A.14), so 'cites some of them' holds.
+
+[N-hdr-5] CHECKER pass
+  CLAIM:
+    (N) The list is generated from the check's JSON. Each line gives the raw id (group and lens for
+    refuter items), the full location and the opening of the note, quoted at sentence ends. Tags
+    give checker, lenient and strict in that order. A contested item's excerpt is the checker's note
+  EVIDENCE:
+    I regenerated the list from the JSON with Code's gen_notes.py logic: all 133 lines are
+    byte-identical to the file's numbered lines. By script, every location equals the JSON location,
+    every excerpt is a prefix of the JSON note, appears in the referent-check raw once whitespace is
+    normalized, and ends at a sentence boundary. 101 excerpts are the whole note. The contested tags
+    match (checker, lenient, strict), e.g. L1.2 FFT, S1.24 TFT, D8C1.38 TFF, D8C1.47 TTF. No
+    truncated tail hides a 'substantive' disclosure: the only truncated tails that mention STOP are
+    S2.17, S2 missed (lenient) and D8C1.7, and each is a STOP-number reference.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      I re-ran gen_notes.py into my own scratch file, and its output is byte-identical to the file's
+      133 numbered lines. By script, every location equals the JSON location, and every excerpt is a
+      prefix of the whitespace-normalized JSON note and appears in the normalized referent-check
+      raw. 101 excerpts are the full note. All 32 truncated excerpts end with a period at a sentence
+      boundary. Contested tags follow checker/lenient/strict order. I read all 32 truncated tails,
+      and none withholds a substantive grade.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      I re-ran gen_notes.py logic against the JSON: all 133 lines are byte-identical to the file's
+      lines. By script, each location equals the JSON location. Each excerpt is a prefix of the JSON
+      note (the refuter's note for missed items, in group then lens order) and appears in the
+      normalized referent-check raw. 101 excerpts are the whole note. Contested tags follow
+      checker/lenient/strict order (L1.2 FFT, S1.24 TFT, D8C1.38 TFF, D8C1.47 TTF). Both lenses'
+      dissent text for every contested item appears in the raw.
+
+[N-hdr-6] CHECKER pass
+  CLAIM:
+    (N) Item 2 (L1.11) is given in full, because its checker note ends by disclosing, without
+    adopting, a reading of rule 21 under which the item would be substantive; its lenient lens says
+    the same
+  EVIDENCE:
+    Item 2 equals the complete JSON note of L1.11, which ends 'Under a reading of rule 21 that
+    demands a measured rate, this item would be substantive … That reading is disclosed for the
+    seat, not adopted here.' The lenient reasoning reads 'Under a reading of rule 21 that requires a
+    measured rate, it would be substantive. That reading is the seat's to decide.' A JSON search
+    finds no other checker, lens or missed note with a 'would be substantive' disclosure. Diffed
+    against notes_list_v1.md, item 2 is the only line that changed, which matches the revision note.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Item 2 is L1.11's complete checker note, ending 'Under a reading of rule 21 that demands a
+      measured rate, this item would be substantive … That reading is disclosed for the seat, not
+      adopted here.' The lenient reasoning reads 'Under a reading of rule 21 that requires a
+      measured rate, it would be substantive. That reading is the seat's to decide.' The strict lens
+      does not make that disclosure, and the header correctly does not claim it does. Against
+      notes_list_v1.md, the only list line that differs is item 2.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      Item 2 equals L1.11's full JSON note. Diffed against notes_list_v1.md, it is the only changed
+      line. L1.11's lenient reasoning reads 'Under a reading of rule 21 that requires a measured
+      rate, it would be substantive. That reading is the seat's to decide.' A JSON-wide search for
+      'substantive' finds no other 'would be substantive' disclosure in any note, lens or missed
+      item. R1.1's lenient 'tried to raise this to substantive and could not' is not one.
+
+[N-hdr-7] CHECKER fail
+  CLAIM:
+    (N) 'The step-3 entry in RESULTS.md groups them by subject; this file lists every one.'
+  EVIDENCE:
+    Script count: N1–N8 and the pins cite 62 of the 133 items, by id or by notes number. Several of
+    the other 71 are subjects the entry never names, among them #10 (the counter-(c) blind read's
+    order), #126 (pick channel at campaign looks), #130 (the cap trigger's use of contrast
+    free-round events), #62 (the preprint's welfare trigger against the wide reading), #53 (f2 has
+    an hour cap but no calendar end), #18/#21 (G-PORT configuration and keys) and #25 (render-sha
+    serialization). So 'groups them' overstates how much the entry covers.
+  CORRECTION:
+    'The step-3 entry in RESULTS.md groups the principal subjects (62 of the 133 items cited by id
+    or number); this file lists every one.'
+  REFUTER [lenient] fail overturned=False
+    EVIDENCE:
+      Recomputed: N1–N8 and the pins cite 62 of the 133 items, by id (D8A.13, which is outside the
+      file, excluded) or by notes number. The other 71 appear in the entry only through 'Further
+      hygiene items are in the notes file'. Several of them are subjects the entry does not group at
+      all: #126 and #130 (pick channel at campaign looks and the cap trigger), #10 (when the
+      counter-(c) blind read happens), #53 and #39/#133 (f2's missing calendar end, and an f2
+      NOT-RUN predicate that could end the welfare holds mid-run), #62 (the preprint's
+      welfare-trigger wording), #24 (the OLMo domain difference left undisclosed) and #18/#21 (the
+      G-PORT configuration). 'Groups them by subject' therefore overstates the entry's coverage.
+    CORRECTION:
+      'The step-3 entry in RESULTS.md groups the principal subjects (62 of the 133 items, cited by
+      id or notes number) and points here for the rest; this file lists every one.'
+  REFUTER [strict] fail overturned=False
+    EVIDENCE:
+      Confirmed by my own script. N1–N8 and the pins cite 62 of the 133 items, by id or notes
+      number; 71 are uncited. Some uncited items share a cited subject (#76/#92/#108 duplicate
+      L1.12; #6/#74/#77/#106/#127 are N6's PENDING closure; #52/#104 duplicate X2.3; #90 duplicates
+      X1.16; #39/#133 duplicate D8C1.60). Many do not: #10, #18, #21, #23, #24, #25, #26–28, #53,
+      #62, #78, #79, #91, #126, #128 and #130. 'Groups them by subject' therefore overstates. The
+      count of 62 in the checker's correction is right, but 'principal subjects' is an unsupported
+      judgment, since #126 and #130 are of N3's own class.
+    CORRECTION:
+      'The step-3 entry in RESULTS.md groups 62 of them by subject (cited by id or notes number) and
+      points here for the rest; this file lists every one.'
+
+[N-head] CHECKER pass
+  CLAIM:
+    (E) Dated notes heading: 2026-10-06, minor-only; every unresolved, contested and refuter-found
+    item is in the notes file; 'contested' marks a split verdict
+  EVIDENCE:
+    The linked notes file holds all 133 items (see N-hdr-4), all minor. Each id that the N-section
+    marks 'contested' (P1.20, S1.24, S2.24, D8C2.76, X1.18, L1.2, D8C1.38) has a split resolves
+    vector in the JSON, and every other cited id is unanimous. Note: the routing says 'carried as
+    dated notes in the step-3 entry', and the entry carries 71 of the 133 only by reference to the
+    committed raw. That is defensible beside the link, but see N7-hyg.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      The linked file holds all 133 items, every one minor. Each id the N section marks 'contested'
+      (P1.20, L1.2, S1.24, S2.24, D8C2.76, X1.18, D8C1.38) has a split resolves vector. Every other
+      cited id is FFF, except D8A.13, which is TTT and flagged as in the raw. m:356 step 2 and the
+      routing say 'carried as dated notes in the step-3 entry'. 71 items are carried only by
+      reference to the committed, dated raw, unlike e9b5022, where all ten were inline. With the
+      link in place, that is defensible, but see N7-hyg.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      The notes file holds all 133 items, all minor. Every id the N-section marks contested is split
+      in the JSON: P1.20 FFT, S1.24 TFT, S2.24 TFT, D8C2.76 TFT, X1.18 TFT, L1.2 FFT, D8C1.38 TFF.
+      Every other cited id is FFF except D8A.13 (TTT), which the entry flags as resolving and in the
+      raw.
+
+[N1-a] CHECKER pass
+  CLAIM:
+    N1: v1.11 §0.2 and §9 cite RESULTS.md@939905a:252–256 (the v1.8 routing's wording) for words
+    that are the v1.9 routing's (:67)
+  EVIDENCE:
+    m:16 reads '(RESULTS.md@939905a:252–256): "Fallback-2 is the penalty…"', and m:371 reads 'the
+    (13) record at RESULTS.md@939905a:252–256'. In git show 939905a:RESULTS.md, :67 is the v1.9
+    routing's '(13) Fallback-2 is the penalty for missing the Q-F0 date…', and :252–256 is the v1.8
+    routing's longer (13), 'Fallback-2 under the Clock is the consequence…'. HEAD:273 holds the same
+    :67 line.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      git show 939905a:RESULTS.md: :67 is the v1.9 routing's '(13) Fallback-2 is the penalty…', and
+      :252–256 is the v1.8 routing's longer '(13) (6')'s scope under the split, in my words: …'.
+      m:16 cites '(RESULTS.md@939905a:252–256)' for the :67 words, and m:371 repeats ':252–256'.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      git show 939905a:RESULTS.md: :67 is the v1.9 routing's '(13) Fallback-2 is the penalty for
+      missing the Q-F0 date…', and :253–256 is the v1.8 routing's '(13) (6')'s scope under the
+      split, in my words…'. m:16 cites '@939905a:252–256' for the :67 words, and m:371 repeats the
+      anchor.
+
+[N1-b] CHECKER pass
+  CLAIM:
+    N1: §0.2 says the routings of 2026-10-04 (v1.9) and 2026-10-05 (v1.10) "adopt it", though the
+    v1.9 routing is the source; P1.20 is contested and its strict lens reads the sentence as true
+  EVIDENCE:
+    m:16 reads 'the routings of 2026-10-04 (v1.9) and 2026-10-05 (v1.10) adopt it'. P1.20's resolves
+    vector is (F,F,T) with severities (minor, minor, clean). Its strict reasoning: 'The antecedent
+    of "adopt it" is decision (13)… The sentence is true under the correct anchor.' The pass-1
+    correction (quoting 'adopt it', marking P1.20 contested) is applied correctly.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      m:16 reads 'the routings of 2026-10-04 (v1.9) and 2026-10-05 (v1.10) adopt it'. P1.20 is FFT,
+      minor/minor/clean. Its strict lens says 'The antecedent of "adopt it" is decision (13)… The
+      sentence is true under the correct anchor.' The entry's '(decision (13))' gloss is the strict
+      lens's own antecedent, and the entry attributes it to that lens, so the entry is accurate.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:16: 'the routings of 2026-10-04 (v1.9) and 2026-10-05 (v1.10) adopt it'. P1.20 is (F,F,T)
+      with severities (minor, minor, clean). Strict: 'The antecedent of "adopt it" is decision (13)…
+      The sentence is true under the correct anchor.'
+
+[N1-c] CHECKER pass
+  CLAIM:
+    N1: §0.14's B2 disposition (m:145) does not say which 2026-10-04 routing it means (notes #15)
+  EVIDENCE:
+    m:145 reads 'B2 → §0.2 (13) now carries the PI's words of record from the routing of
+    2026-10-04.' Notes #15 is R1 missed (lenient) at m:145, which says 'The disposition does not say
+    which 10-04 routing it means'. The pass-1 correction is applied.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      m:145 reads 'B2 → §0.2 (13) now carries the PI's words of record from the routing of
+      2026-10-04.' Notes #15 (R1 missed (lenient), m:145): 'The disposition does not say which 10-04
+      routing it means'.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:145: 'now carries the PI's words of record from the routing of 2026-10-04.' Notes #15 (R1
+      missed (lenient), m:145): 'The disposition does not say which 10-04 routing it means'.
+
+[N1-d] CHECKER pass
+  CLAIM:
+    N1: this is a regression on a line v1.10 resolved, introduced by the B2 fix (X2.2)
+  EVIDENCE:
+    X2.2's note: 'This is a new error introduced by the fix for STOP-8 B2/P1.15/D7A.29, and it
+    reaches §9's commit list (v1.10 P1.31)'. The X2 summary in the check raw: 'Two new minor defects
+    sit on lines v1.10 resolved: the (13) anchor (X2.2, touching P1.15, D7A.29 and P1.31)'. The
+    v1.10 check raw has P1.15 and D7A.29 resolving under all three verdicts (minor) and P1.31
+    resolving clean.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      X2.2: 'This is a new error introduced by the fix for STOP-8 B2/P1.15/D7A.29, and it reaches
+      §9's commit list (v1.10 P1.31)'. X2.2's strict lens says it is 'a new error on lines that
+      resolved at v1.10'. X2.2 is FFF.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      X2.2: 'a new error introduced by the fix for STOP-8 B2/P1.15/D7A.29'. X2.33 (TTT, regression
+      sweep): 'Two new minor defects sit on lines v1.10 resolved: the (13) anchor (X2.2…)'.
+
+[N1-e] CHECKER pass
+  CLAIM:
+    N1: 'The record above quotes all three routings' (13) lines'; ids R1.1–R1.3, P1.18, P1.19,
+    D8A.17, X1.20, X2.2, X2.28
+  EVIDENCE:
+    The record quotes the v1.8 (13) (the 'in my words' block), the v1.9 (13) ('Fallback-2 is the
+    penalty…') and the v1.10 (13) ('PI decisions on the three outstanding items: yes to all'). These
+    are the three routings N1 names, and the v1.11 routing's '(13) stands in my words…' line is
+    quoted as well. All nine ids are unresolved under all three verdicts (minor), sit at notes
+    #11–13, #47, #48, #59, #103, #110 and #124, and say what N1 says.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      The record quotes the v1.8 block's (13), the v1.9 block's (13) and the v1.10 block's '(13) PI
+      decisions… yes to all'. These are the three routings STOP-8 block :85 promised to quote ('the
+      step-3 entry will quote all three routings' (13) lines'). The v1.11 (13) line is quoted in the
+      routing too. R1.1–R1.3, P1.18, P1.19, D8A.17, X1.20, X2.2 and X2.28 are all FFF, at notes
+      #11–13, #47, #48, #59, #103, #110 and #124.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      The entry's record section quotes the v1.8 '(13) (6')'s scope…', the v1.9 '(13) Fallback-2 is
+      the penalty…' and the v1.10 '(13) PI decisions on the three outstanding items: yes to all'
+      (marked as adoption), plus routing5's '(13) stands…'. The nine ids are FFF minor, sit at notes
+      #11–13, #47, #48, #59, #103, #110 and #124, and say what N1 says. X2.28 asks step 3 to quote
+      :67.
+
+[N2-a] CHECKER pass
+  CLAIM:
+    N2: the echo half of the OLMo pause's '~zero-base-rate' ground is argued from the class's
+    definition, not measured; no OLMo transcript carries m's Note: lines (L1.11, D8A.11, X2.24)
+  EVIDENCE:
+    L1.11: 'asserted from its definition, not measured'; its record: 'No OLMo session has carried
+    m's Note: banner lines'. D8A.11: 'rests on the class's definition… cannot reach m's new Note:
+    lines'. X2.24: 'argued, not measured'. m:271 contains '~zero-base-rate'.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      L1.11: 'asserted from its definition, not measured'. Its record: 'No OLMo session has carried
+      m's Note: banner lines'. D8A.11: 'rests on the class's definition… cannot reach m's new Note:
+      lines'. X2.24: 'argued, not measured'. All three are FFF.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      L1.11: 'asserted from its definition, not measured'; its record: 'No OLMo session has carried
+      m's 'Note:' banner lines'. D8A.11: 'rests on the class's definition'. X2.24: 'argued, not
+      measured'. m:271 contains '~zero-base-rate'.
+
+[N2-b] CHECKER pass
+  CLAIM:
+    N2: L1.11's checker and lenient lens disclose, without adopting, a rule-21 reading requiring a
+    measured rate, under which the item would be substantive ('a hair trigger on an unmeasured class
+    at a gate'); all three verdicts grade it minor because a pause changes no verdict, gate pass,
+    lock or exposure (notes #2, in full)
+  EVIDENCE:
+    The checker note and the lenient reasoning are as quoted under N-hdr-6. All three severities are
+    minor. The checker gives the reason 'Only adjudication follows a pause (no verdict, gate pass,
+    lock or exposure changes)', the lenient lens 'A pause only reaches adjudication', and the strict
+    lens 'with no verdict, gate pass, lock or exposure change'. Notes #2 is L1.11 given in full.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      The quoted phrase is in the checker note verbatim. The lenient lens discloses the same
+      reading, and the strict lens does not, which is why the entry names only the checker and the
+      lenient lens. All three verdicts are minor, with the stated reason ('no verdict, gate pass,
+      lock or exposure'). Notes #2 is the full note.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      The checker note quotes 'would be substantive (a hair trigger on an unmeasured class at a
+      gate). That reading is disclosed for the seat, not adopted here.' The lenient lens: 'That
+      reading is the seat's to decide.' All three severities are minor, each for the stated reason
+      (the checker: 'no verdict, gate pass, lock or exposure changes'; the lenient lens: 'A pause
+      only reaches adjudication'; the strict lens likewise).
+
+[N2-c] CHECKER pass
+  CLAIM:
+    N2: no expected pause rate is stated; at the declared tolerance p0 .02 it is about .18 per
+    checkpoint, and ≤ .04 at 0/756's 95% bound (D8A.11; notes #4)
+  EVIDENCE:
+    Recomputed: 1−.98^10 = .1829. The exact one-sided 95% upper bound on 0/756 is 1−.05^(1/756) =
+    .00396, and 1−(1−.00396)^10 = .0389. D8A.11's record gives '.183 … ≤ .039 at 0/756's 95% upper
+    bound'. Notes #4 (L1 missed lenient) gives .18 and, in its record, .039. There is one
+    G-TIME-OLMo sham session (≤ 10 rounds) per checkpoint. Note: #4's record also gives ≈ .15 at a
+    per-checkpoint bound (0/190–0/194), which the entry omits. That omission is not an error.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      m:302: G-TIME-OLMo has one sham session of ≤ 10 rounds per checkpoint, and the pause applies
+      to that session. 1−.98^10 = .1829. The exact 95% bound on 0/756 is .00396, giving
+      1−(1−.00396)^10 = .039. D8A.11's record has both figures. One omission, which is not an error:
+      notes #4's record also gives ≈ .15 at a per-checkpoint bound (0/190–0/194), and .143 for
+      pause-only rounds 3–10. The entry quotes only the most favourable bound, but nothing it states
+      is false.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      Pure-Python recompute: 1−.98^10 = .1829. The one-sided 95% bound on 0/756 is .003955, and
+      1−(1−.003955)^10 = .0389, so ≤ .04 holds. m:302 has one A0s-OLMo sham session of ≤ 10 rounds
+      per checkpoint, and the session ends at the first hit, so P(pause) = P(any hit). D8A.11's
+      record gives .183 and ≤ .039. Notes #4 gives .18.
+
+[N2-d] CHECKER pass
+  CLAIM:
+    N2: at a realised n ≤ 2 one claim both fires the bar (STOP) and triggers the pause, with no
+    precedence declared (L1.12, X2.26)
+  EVIDENCE:
+    L1.12 computes critical counts [1,1,2,…] at p0 .02, and says 'Neither is ordered over the
+    other'. X2.26: 'The same single event yields a STOP at rounds 1–2 and a pause at rounds 3–10.'
+    Notes #76, #92 and #108 raise the same point and are not cited, which is not required.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      At p0 .02, P(X≥1|1) = .02 and P(X≥1|2) = .0396, both ≤ .05, while n = 3 gives .0588. So the
+      critical count is 1 at n ≤ 2. L1.12: 'Neither is ordered over the other'. X2.26: 'STOP at
+      rounds 1–2 and a pause at rounds 3–10'.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      Exact sf at p0 .02: n=1 gives .02 and n=2 gives .0396, both ≤ α .05, so critical 1. n=3 gives
+      .0588, so critical 2. m:302 declares a fire as STOP and a pause as adjudication, with no
+      precedence. L1.12 ('Neither is ordered over the other') and X2.26 agree.
+
+[N2-e] CHECKER pass
+  CLAIM:
+    N2: m:271 and m:302 put the adjudication deadline at different points (notes #9; also D8A.13,
+    which resolves with a minor note and is in the check raw)
+  EVIDENCE:
+    m:271 reads 'before the next stage', and m:302 reads 'before that checkpoint's qualification'.
+    Notes #9 is L1 missed (strict): 'Two sites give different endpoints'. D8A.13's resolves vector
+    is (T,T,T) with severities minor/minor/minor, so it is one of the 72 kept in the raw. The pass-1
+    correction is applied accurately.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      m:271 reads 'before the next stage', and m:302 reads 'before that checkpoint's qualification'.
+      Notes #9 is L1 missed (strict). D8A.13 is TTT with minor/minor/minor, so it is one of the 72
+      kept in the raw, as the entry says.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:271: 'before the next stage'. m:302: 'before that checkpoint's qualification'. LOCK v0.2
+      sits between the two. Notes #9 = L1 missed (strict). D8A.13 is TTT minor, and the
+      referent-check raw contains it (2 hits).
+
+[N3-a] CHECKER pass
+  CLAIM:
+    N3: §2.6 and §4 still print a contrast session's free-round exclusion event (`excluded@free`),
+    in stdout (§4) and in every pre-VERDICTS report (§2.6); §3 withholds free-round events; the
+    channel is weak, no tag, no index
+  EVIDENCE:
+    m:263 (§2.6): 'Stdout and every pre-VERDICTS report … for a contrast-template session's
+    free-round exclusion the phase alone (`excluded@free`)'. m:318 (§4): 'The runners' stdout prints
+    … in §2.6's printed form … a contrast session's free-round exclusion as phase alone'. m:271:
+    'their free-round events — exclusions, degeneracy, any class — are withheld'. D8C1.14: 'no tag,
+    no index'. One precision point: §2.6 itself also covers stdout, so the split parenthetical is
+    slightly narrow. It is not wrong.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      m:263 (§2.6): 'Stdout and every pre-VERDICTS report … for a contrast-template session's
+      free-round exclusion the phase alone (`excluded@free`)'. m:318 (§4) gives stdout 'in §2.6's
+      printed form … phase alone'. m:271 withholds free-round 'exclusions'. Precision point: §2.6
+      itself governs stdout too, so the split '(§4)' / '(§2.6)' is narrow. It entered from the
+      pass-1 strict lens's suggestion, but each half is true. X2.17 offers a harmonising reading,
+      and its fix still scopes §2.6. D8C1.14: 'no tag, no index'.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:263 (§2.6): 'Stdout and every pre-VERDICTS report… the phase alone (`excluded@free`)'. m:318
+      (§4): stdout prints '…a contrast session's free-round exclusion as phase alone'. m:271: 'their
+      free-round events — exclusions, degeneracy, any class — are withheld'. D8C1.14: 'no tag, no
+      index'.
+
+[N3-b] CHECKER pass
+  CLAIM:
+    N3: stage texts not scoped to forced rounds: Q-F3's G-TIME-F3 (m:293) and G-F3 (m:297), and
+    Q-F0's G-F0m-Qwen v2-claim count and audit and advisory rates (m:283); the Q-F0 site bears on
+    step 4's build (D8C1.7, D8C1.14, D8C2.70, D8C2.104, X2.17, X2.18)
+  EVIDENCE:
+    m:293 reads 'the A1, A2 and A3 sessions' rounds and lines reported beside; cap-reach counted
+    over all six'. m:297 reads 'contrast sessions reported beside'. m:283 reads 'audit
+    exclusion-bearing and advisory rates' and 'sessions with a v2 claim … five v2 claims in 24
+    sessions'. D8C2.70(c): 'G-F0m-Qwen's audit exclusion-bearing and advisory rates and sessions
+    with a v2 claim are not scoped either'. X2.18 names m:293 and m:283. m:356 step 4 builds the
+    Q-F0 subset. The pass-1 correction is applied correctly.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      m:293 reads 'the A1, A2 and A3 sessions' rounds and lines reported beside'. m:297 reads
+      'contrast sessions reported beside'. m:283 gives 'audit exclusion-bearing and advisory rates'
+      and 'sessions with a v2 claim', unscoped. D8C2.70(c) and X2.18 support this. D8C2.70 adds that
+      'Q-F3 is built only at step 19', so the claim that the Q-F0 site bears on step 4 (m:356 step 4
+      builds the §3 printing tooling) is a sound inference.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:293: 'the A1, A2 and A3 sessions' rounds and lines reported beside'. m:297: 'contrast
+      sessions reported beside'. m:283 has 'audit exclusion-bearing and advisory rates' and
+      'sessions with a v2 claim… five v2 claims in 24 sessions'. D8C2.70(c) and X2.18 name these.
+      m:356 step 4 builds the Q-F0 subset, including the gate files and the read-rule tooling.
+
+[N4] CHECKER pass
+  CLAIM:
+    N4: ledger (44)'s new second clause is met only for DISCORDANT. Counts exist but are not
+    carried, for v1.11's own non-ceiling §7.2 edits (S2.19, X1.6, D8C2.98) or for the other §7.2
+    text edits against v1.6 (X1.7, D8C1.59). Q-F3 NOT-RUN setting L1 = false carries no count either
+    (X1.8)
+  EVIDENCE:
+    m:44's fix reads '…and every other §7.2 edit with the count of the texts or states it touches
+    where one exists'. D8C1.59: 'supplied DISCORDANT's counts only. Counts exist for the other text
+    edits'. X1.7: 'Against v1.6 it is not'. S2.19, X1.6 and D8C2.98 concern v1.11's own edits. On
+    X1.8, the checker ties the 216 count to (44)'s first clause, but its strict lens says the edit
+    touches 1,080 tuples and 'the second clause's count is owed and missing', so placing it under
+    the second clause is supported.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      m:44's second clause is quoted correctly. D8C1.59: 'supplied DISCORDANT's counts only'. X1.7
+      is the v1.6-baseline case. S2.19, X1.6 and D8C2.98 cover v1.11's own edits. On X1.8, the entry
+      places it under the 'second clause' heading, while X1.8's checker and lenient lens tie the 216
+      count to (44)'s FIRST clause. Only its strict lens says the second clause's count of 1,080 is
+      owed. The sentence itself ('carries no count either') is true and was passed as neutral in
+      pass 1. I note the grouping but do not fail it.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:44's second clause: 'every other §7.2 edit with the count of the texts or states it touches
+      where one exists'. m:63 counts DISCORDANT only (69,120 / 4,320). S2.19, X1.6 and D8C2.98 cover
+      v1.11's own edits. X1.7 ('Against v1.6 it is not') and D8C1.59 cover the v1.6-baseline edits.
+      On X1.8, the strict lens says the 1,080-tuple count is owed under the second clause, and
+      'carries no count either' is neutral between the readings.
+
+[N5] CHECKER pass
+  CLAIM:
+    N5: 'base … 202–256 s' understates base's record range (133–256 s per the checkers), at m:205
+    and §9's [C] list (m:369). The range came from STOP-8 §C item 32, a refuter's suggestion carried
+    in Code's block. Base is not run, and no hours figure uses a cold load (O1.25, CC.20, S1.24
+    contested, D8C2.100; notes #34, #40, #46)
+  EVIDENCE:
+    m:205 reads 'base, which m does not run, 202–256 s', and m:369 reads 'with base's 202–256 s
+    (STOP-7 §D; STOP-8 §C items 13, 26, 32)'. D8C2.100 records base cold loads of 133, 139, 166 and
+    187 s. In the STOP-8 block, §C item 32 is '[S2 missed (strict)] … Suggested fix: … base, which m
+    does not run, 202–256 s', and the §C preface says the list is generated from the check's JSON,
+    so it is a refuter's item. Notes #34, #40 and #46 are the S1, S2 and CC missed (strict) items at
+    m:369/m:205. S1.24's resolves vector is (T,F,T).
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      m:205 reads 'base, which m does not run, 202–256 s', and m:369 repeats it. D8C2.100 records
+      base cold loads of 133, 139, 166 and 187 s. STOP-8 block :131 is §C item 32, '[S2 missed
+      (strict)] … base, which m does not run, 202–256 s', and the §C preface says the items are
+      generated from the JSON. Items 13 and 26, and Code's §D ('omits base's 256 s'), framed base as
+      202 and 256 but never wrote the range, so 'came from item 32' is right for the wording. Notes
+      #34, #40 and #46 are the m:369/m:205 strict items. S1.24 is TFT.
+  REFUTER [strict] fail overturned=True
+    EVIDENCE:
+      Every part checks except its last clause. m:205 and m:369 carry '202–256 s'. The record's base
+      cold loads are 133/139/166/173/187/202/256 (O1.25, CC.20, D8C2.100). STOP-8 §C item 32 is '[S2
+      missed (strict)]' with that wording. S1.24 is TFT. Notes #34, #40 and #46 are the m:369
+      refuter items. The last clause, 'no hours figure uses a cold load', is overstated. m:205 says
+      the OLMo per-session bases 'amortize one model load over a whole b3 run' and that 'the
+      amortized basis over-counts the load at SFT/DPO (≈ 0.05–0.15 h)'. CC.20 says A0-OLMo-base's
+      23.4 s, which decision (14)'s ≈ 1.2–2.0 h uses, 'already amortizes b3's 202 s'. What holds is
+      narrower: no hours figure uses the stated cold-load ranges or adds a per-pod cold load. The
+      sources' own 'cold loads enter no hours figure' is the same shorthand, so the slip is minor.
+    CORRECTION:
+      'Base is not run, and no hours figure uses these cold-load ranges: the per-session bases
+      amortize one b3 load (base's 23.4 s amortizes b3's 202 s, CC.20).'
+
+[N6-a] CHECKER pass
+  CLAIM:
+    N6: the PENDING closure has no stated order against the v2 tuple and §5's NOT-RUN list, and does
+    not say whether an aborted box's sessions count (X2.14, S2.24 contested); its 'has sessions'
+    branch is not pinned, so an unlocked pre-D_O checkpoint has no stated value (X1.19); §4
+    exception (4)'s 'no verdict left to bias' is false on that branch (X2.15)
+  EVIDENCE:
+    X2.14 covers ordering against the v2 tuple and the 'iff' list. S2.24's record (ii) covers the
+    aborted campaign's sessions, and its resolves vector is (T,F,T). X1.19: 'should read "if it is
+    locked and any session reached a first read". The unlocked case lacks a stated value.' X2.15:
+    'The gloss "no verdict left to bias" is false for that branch'. m:318 contains 'for a unit with
+    no verdict left to bias'. The pass-1 correction is applied accurately.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      X2.14 covers (ii) ordering and (iv) aborted-box sessions. S2.24's record (ii) covers the
+      aborted campaign; it is TFT. X1.19 (FFF): 'should read "if it is locked and any session
+      reached a first read". The unlocked case lacks a stated value'; its strict lens confirms the
+      case is reachable before D_O. X2.15 (FFF): 'no verdict left to bias' is false on that branch,
+      and m:318 contains that phrase.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      X2.14 covers ordering against the v2 tuple and the 'iff' list. S2.24 (TFT) asks to pin
+      'sessions' and names the aborted-campaign reading. X1.19: 'should read "if it is locked and
+      any session reached a first read". The unlocked case lacks a stated value.' X2.15: 'The gloss
+      "no verdict left to bias" is false for that branch'. m:318 contains the gloss.
+
+[N6-b] CHECKER pass
+  CLAIM:
+    N6: f2 NOT-RUN's 'producing no session … that reaches a first read' has no stated terminal event
+    (D8C1.60); G-ID has no table row beyond 16 indices (X2.10)
+  EVIDENCE:
+    m:16 reads 'locked and producing no session of any arm that reaches a first read is f2 NOT-RUN'.
+    D8C1.60: 'The no-read branch still states no terminal event'. X2.10: '§2.1 gate-stage table
+    domain (m:159) vs G-ID's data-dependent index count … G-ID stops at 16 indices (STOP)'.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      m:16 reads 'locked and producing no session of any arm that reaches a first read is f2
+      NOT-RUN'. D8C1.60: 'The no-read branch still states no terminal event'. X2.10 gives 'G-ID
+      stops at 16 indices (STOP)' as a fix for the j = 0..15 table domain.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:16: 'locked and producing no session of any arm that reaches a first read is f2 NOT-RUN'.
+      D8C1.60: 'The no-read branch still states no terminal event'. X2.10: 'The table defines j =
+      0..15 only'.
+
+[N6-c] CHECKER pass
+  CLAIM:
+    N6: at G-F3's eight-session sham templates a label-coded per-pair share is wholly confounded
+    with which label's round comes first (for A1s also with which label the banner names first), so
+    m:172's 'not confounded with start or clause order' fails there for label-coded shares and the
+    trade-off against v1.10 is undisclosed (G1.10b); the P-coded share is uninformative by
+    construction (notes #42)
+  EVIDENCE:
+    m:172's conclusion follows its m = 4, m = 8 and m = 16 balance list: 'so the per-pair sham
+    first-pick shares reported at qualification are not confounded with start or clause order'.
+    G1.10b: 'the conclusion fails at G-F3's three 8-session sham templates … for A1s also with which
+    label the banner names first … The trade-off was moved without disclosure'. Notes #42 (G1 missed
+    lenient): 'That share is unconfounded but uninformative by construction.' The pass-1 correction
+    is applied. G1.10b also calls the issue descriptive because G-F3's text (m:297) reports only the
+    sham first-pick share. The entry does not say so, but nothing it states is wrong.
+  REFUTER [lenient] fail overturned=True
+    EVIDENCE:
+      All three verdicts on G1.10b make the m:172 failure conditional on G-F3 reporting per-pair
+      shares, and m:297 does not say that it does. Checker: 'G-F3's own text reports only
+      "first-pick share for sham templates only" (m:297), not a per-pair share, and nothing binds on
+      it, so the issue is descriptive.' Lenient: 'if per-pair shares are reported, C75's defect
+      persists'. Strict: 'The defect exists only if G-F3 reports per-pair shares. m:297's text does
+      not say it does, but STOP-8 C75, C78 and C99 read it that way'. Notes #42 likewise says 'If
+      G-F3 reports per-pair shares…'. Pass 1's lenient lens had asked for this condition ('fails
+      there for label-coded shares if per-pair shares are reported'), but the applied wording
+      dropped it. As written, N6 asserts unconditionally that m:172's conclusion fails at G-F3,
+      which overstates the source.
+    CORRECTION:
+      'At G-F3's eight-session sham templates a label-coded per-pair share would be wholly
+      confounded with which label's round comes first (for A1s, also with which label the banner
+      names first). So if G-F3 reports per-pair shares (m:297 says only "first-pick share for sham
+      templates only"; STOP-8 C75, C78 and C99 read it as per-pair), m:172's "not confounded with
+      start or clause order" fails there for label-coded shares, and the trade-off against v1.10 is
+      undisclosed; descriptive, nothing binds (G1.10b). The P-coded share is uninformative by
+      construction (notes #42).'
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:172 ends 'so the per-pair sham first-pick shares reported at qualification are not
+      confounded with start or clause order'. m:159 defines start relative to the P role. G1.10b
+      says that under label coding the conclusion 'fails at G-F3's three 8-session sham templates…
+      for A1s also with which label the banner names first… The trade-off was moved without
+      disclosure'. Notes #42: 'unconfounded but uninformative by construction'. m:172 itself asserts
+      that per-pair shares are reported at qualification, so the entry needs no 'if reported' hedge.
+
+[N7-a] CHECKER pass
+  CLAIM:
+    N7: §0.14 sends STOP-8 C76 to §3.1/§7.5, but it is fixed at §0.4 (S1.26; D8C2.76 and X1.18, both
+    contested); C77's locator persists (S1.27, D8C2.77)
+  EVIDENCE:
+    m:145 reads 'C71, C76, C102 → §3.1, §7.5'. S1.26 is (F,F,F). D8C2.76 and X1.18 are both (T,F,T).
+    S1.27 is (F,F,F) and says 'the locator over-claim persists'. D8C2.77 says 'NOT RESOLVED as the
+    item reads it'.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      m:145 reads 'C71, C76, C102 → §3.1, §7.5', and m:48 reads 'r = k/n_q'. S1.26 is FFF. D8C2.76
+      and X1.18 are TFT. S1.27 (FFF): 'the locator over-claim persists'. D8C2.77 (FFF): 'NOT
+      RESOLVED as the item reads it'.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:145: 'C71, C76, C102 → §3.1, §7.5'. S1.26 is FFF ('fixed, at §0.4 (m:48)'). D8C2.76 and
+      X1.18 are both TFT. S1.27 is FFF ('the locator over-claim persists'). D8C2.77: 'NOT RESOLVED
+      as the item reads it'.
+
+[N7-b] CHECKER pass
+  CLAIM:
+    N7: decision (10)'s read-with list omits §0.14, a regression on a line v1.10 resolved (X2.3);
+    §0.10's Code's-block bullet places D_f2 in POSTING v2 (X1.16, X2.22); rule 21's locator should
+    be :333–337 (L1.2, contested)
+  EVIDENCE:
+    m:16 (10) reads 'read with §0.11, §0.12 and §0.13'. X2.3: 'REGRESSION … Fix: add §0.14'. m:85
+    reads '`POSTING v2` carrying the hit path's outputs and D_f2'. X1.16: 'attributes D_f2 to the
+    wrong entry'. X2.22: 'assigns D_f2 to POSTING v2, or is at best ambiguous'. CLAUDE.md:333 is the
+    first line of rule 21, while m:8 cites ':335–336'. L1.2 is (F,F,T).
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      m:16 (10) reads 'read with §0.11, §0.12 and §0.13', and X2.3 says 'REGRESSION'. m:85 reads
+      '`POSTING v2` carrying the hit path's outputs and D_f2'; X1.16 and X2.22 are both FFF ('or is
+      at best ambiguous'). CLAUDE.md:333–337 is rule 21, and m:8 cites ':335–336'. L1.2 is FFT, and
+      its strict lens grades the anchor clean; the 'contested' mark discloses that.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:16 (10): 'read with §0.11, §0.12 and §0.13'. X2.3 is labelled REGRESSION, and X2.33 confirms
+      it is on a v1.10-resolved line. m:85: '`POSTING v2` carrying the hit path's outputs and D_f2'.
+      X1.16 and X2.22 agree. CLAUDE.md:333–337 is rule 21's text, against m:8's ':335–336'. L1.2 is
+      FFT.
+
+[N7-c] CHECKER pass
+  CLAIM:
+    N7: 432 / 1,728 are attributed to STOP-6 A4 but come from v1.8's Step-5 substitution (STOP-4
+    A6). The wording comes from STOP-8 §C items 28 and 31, v1.10-check refuter items carried in
+    Code's block. Code's own §D said "v1.8's A3* substitution" (S2.17)
+  EVIDENCE:
+    m:62 reads '(v1.8, STOP-6 A4's fix)'. S2.17: 'They come from v1.8's substitution, which was
+    STOP-4 A6's disposition, not STOP-6 A4's fix'. In the STOP-8 block, §C item 28 = '[S2 missed
+    (lenient)] … (it is STOP-6 A4's own fix)' and item 31 = '[S2 missed (strict)] … (STOP-6 A4's
+    fix)'. §D reads 'They come from v1.8's A3\* substitution, not from v1.10.' The pass-1 correction
+    is applied correctly.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      m:62 reads '(v1.8, STOP-6 A4's fix)'. v1.8's disposition table maps STOP-4 A6 to §7.2 Step 4,
+      so S2.17's 'STOP-4 A6's disposition' is consistent. STOP-8 block :127 is item 28 '[S2 missed
+      (lenient)] … (it is STOP-6 A4's own fix)' and :130 is item 31 '[S2 missed (strict)] … (STOP-6
+      A4's fix)'. §D :240 reads 'They come from v1.8's A3\* substitution, not from v1.10.' The
+      pass-1 correction is applied accurately.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:62: '(v1.8, STOP-6 A4's fix)… 432… 1,728'. S2.17: 'v1.8's substitution, which was STOP-4
+      A6's disposition'. The STOP-8 block :127 (item 28, S2 missed lenient) and :130 (item 31, S2
+      missed strict) carry 'STOP-6 A4's fix'. Block :240 (§D): 'They come from v1.8's A3\*
+      substitution, not from v1.10.'
+
+[N7-hyg] CHECKER fail
+  CLAIM:
+    N7: 'Further hygiene items are in the notes file.' This is the entry's only description of the
+    71 notes items N1–N8 do not cite
+  EVIDENCE:
+    Of the 71 uncited items, several are not hygiene. Blinding: #10 (counter (c)'s blind read 'would
+    be a fifth pre-VERDICTS read outside §4's closed list'), #126 ('The same weak pick channel §3
+    closes at gate stages stays open at campaign looks, before a PI stop decision') and #130 ('a
+    pre-VERDICTS, one-bit use of contrast free-round degeneracy events', the m:174 cap trigger).
+    These three belong to N3's own subject. Welfare text: #62 (the preprint's patch-v5 welfare
+    trigger 'fires "on a positive"', which does not reach the wide reading the PI just confirmed)
+    and #53 (f2's hour cap 'bounds compute, not calendar time', so the hold has no calendar end).
+    Build or gate precision for steps 4–6: #18 and #21 (G-PORT's configuration omits f1's
+    pairing/role/start arithmetic and the s + ci header key), #25 (the renders' sha serialization at
+    G-CAL).
+  CORRECTION:
+    Replace with: 'The other 71 items are in the notes file. Besides locator and tag hygiene they
+    include three pre-VERDICTS pick-channel items N3 does not name (#10 the counter-(c) blind read's
+    order, #126 campaign looks, #130 the Q-F3 cap trigger), the preprint's welfare-trigger wording
+    against the confirmed wide reading (#62), f2's missing calendar end (#53), and G-PORT/G-CAL
+    precision bearing on steps 5–6 (#18, #21, #25).' Alternatively, cite #126 and #130 under N3 and
+    #53 and #62 under N6, and keep 'hygiene' for the rest.
+  REFUTER [lenient] fail overturned=False
+    EVIDENCE:
+      Recomputed: 71 of the 133 items are uncited, and 'Further hygiene items are in the notes file'
+      is the entry's only description of them. Many are not hygiene. #126 and #130 (the pick channel
+      at campaign looks; the m:174 cap trigger's pre-VERDICTS use of contrast free-round events) and
+      #10 (the counter-(c) blind read as a fifth pre-VERDICTS read) belong to N3's blinding subject.
+      #39 and #133 (the f2 NOT-RUN predicate, read literally, firing mid-run, which would 'end the
+      POSITIVE exposure hold and the REVERSE design hold') and #53 (f2's hour cap 'bounds compute,
+      not calendar time') bear on the welfare holds. #62 is the preprint's welfare trigger 'on a
+      positive', which does not reach the wide reading the PI just confirmed. #24 is the OLMo
+      control's primary domain differing from b3's, undisclosed. #18 and #21 are G-PORT
+      configuration and keys (step 5), and #25 is the render-sha serialization (step 6).
+    CORRECTION:
+      'The other 71 items are in the notes file. Besides locator and tag hygiene, they include
+      pre-VERDICTS pick-channel items beside N3 (#10, #126, #130); welfare-hold and welfare-text
+      items beside N6 (#39, #133, the f2 NOT-RUN predicate read literally ending the holds mid-run;
+      #53, f2's missing calendar end; #62, the preprint's welfare trigger against the confirmed wide
+      reading); an undisclosed OLMo domain difference (#24); and G-PORT/G-CAL precision bearing on
+      steps 5–6 (#18, #21, #25).'
+  REFUTER [strict] fail overturned=False
+    EVIDENCE:
+      The fail is confirmed: several of the 71 uncited items are not hygiene. #126 says the pick
+      channel stays open at campaign looks, before a PI stop decision. #130 is the Q-F3 cap
+      trigger's pre-VERDICTS use of contrast free-round events. #10 is a fifth pre-VERDICTS read,
+      from counter (c)'s blind read. #62 is the preprint's welfare-trigger wording. #53: f2's hour
+      cap 'bounds compute, not calendar time'. The checker's correction is itself flawed in two
+      ways. (1) It calls #10 a 'pick-channel' item, but m:312's blind read is 'blind to map and
+      pick'. #10's defect is the read's ORDER against VERDICTS, outside §4's closed list. (2)
+      'Besides locator and tag hygiene they include [list]' still implies everything else is locator
+      or tag hygiene. That is false for #23 (OLMo session end after a non-AuditSpec scaffold fire),
+      #24 (the OLMo control's domain differs from the b3 rows it licenses, undisclosed), #26–28
+      (Q-F3 cached-basis gloss), #78/#79 (STOP-8 items 64 and 67 PARTIAL, residues open), #91 (no §8
+      entry named for the Q-F3 NOT-RUN path's v2 outputs) and #128 (critical 2 unattainable).
+    CORRECTION:
+      Replace with: 'The other 71 items are in the notes file, and not all are hygiene. They include
+      pre-VERDICTS read items N3 does not name (#126, the pick channel at campaign looks; #130, the
+      Q-F3 cap trigger's use of contrast free-round events; #10, the order of counter (c)'s blind
+      read against VERDICTS), the preprint's welfare-trigger wording against the confirmed wide
+      reading (#62), f2's hour cap with no calendar end (#53), OLMo session-end and domain gaps
+      (#23, #24), residues of STOP-8 items 64 and 67 and of the Q-F3 NOT-RUN path's v2 entry (#78,
+      #79, #91), and G-PORT/G-CAL precision for steps 5–6 (#18, #21, #25).'
+
+[N8] CHECKER pass
+  CLAIM:
+    N8: §0.4's gate-stage counts are per pass; a restart or re-specification re-presents them
+    (S1.20)
+  EVIDENCE:
+    S1.20 is (F,F,F) minor: 'The per-stage counts are exact for one pass … A gate stage that
+    restarts after a pod change, or reruns after re-specification, re-presents its corrupted
+    sessions or generations.'
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      S1.20 (FFF, minor): 'The per-stage counts are exact for one pass … A gate stage that restarts
+      after a pod change, or reruns after re-specification, re-presents its corrupted sessions or
+      generations.'
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      S1.20 (FFF minor): 'The per-stage counts are exact for one pass… A gate stage that restarts
+      after a pod change, or reruns after re-specification, re-presents its corrupted sessions or
+      generations.'
+
+[Pin-head] CHECKER pass
+  CLAIM:
+    Build pins: Code declares each at step 4's build, before any data; pin 3 at each unit's v0.1;
+    the seat may direct otherwise
+  EVIDENCE:
+    The pass-1 correction is applied. The sources support the timing: #131 says 'at step 4', #75
+    says 'Code can enforce it at step 4', and D8C1.38 says 'Code can declare at v0.1'. m:356 step 4
+    builds the Q-F0 subset, and LOCK-m-F0 v0.1 is step 9, before G-TIME-F0's first gate data at step
+    10.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      Sources: #131 says 'at step 4', #75 says 'Code can enforce it at step 4', and D8C1.38 says
+      'Code can declare at v0.1'. #88 suggests v0.1 for pin 2 instead, but step 4 comes before v0.1,
+      so this does not conflict. m:356 step 4 includes 'the resume-identity machinery'. The pass-1
+      correction is applied.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      'Before any data' attaches to step 4's build, and pin 3 is carved out to v0.1, so nothing
+      false is claimed. The checker's evidence has one slip: LOCK-m-F0 v0.1 (step 9) comes after
+      G-CAL's generations (step 6, which the seat reads, m:271), and LOCK-m-OLMo v0.1 comes after
+      G-CAL-OLMo's 128 generations (m:302). So v0.1 is not 'before any data'. It is before every
+      multi-template gate stage, where the cross-template order matters (G-TIME onward). Sources:
+      #75 'Code can enforce it at step 4'; #131 'at step 4'; D8C1.38 'Code can declare at v0.1'.
+
+[Pin-1] CHECKER pass
+  CLAIM:
+    Pin 1: 'A bar fires iff its exact one-sided P ≤ α' implemented explicitly and exactly with a
+    verify case at n = 1; session.py's bar check fires on `p < self.alpha` (:211) while stats.py's
+    checkpointed monitor uses `<=` (:152, :158) (notes #60, #5)
+  EVIDENCE:
+    valence_core/session.py:211 reads 'if p < self.alpha:' (Tripwire.check), and the working tree is
+    unchanged. stats.py:152 reads 'binom_sf_inclusive(k, n, self.p0) <= self.alpha' (critical_k) and
+    :158 reads 'fired=bool(p <= self.alpha)', both in CheckpointedBinomialMonitor.
+    binom_test_exact('greater') returns binom_sf_inclusive, so (1,1,.05) gives exactly 0.05, and '<'
+    would not fire where m:271 says it does. Notes #60 is D8A missed (lenient): implement ≤, with a
+    (k = 1, n = 1) verify case. Notes #5 is L1 missed (lenient): exact evaluation, with
+    verify_firing (round_degeneracy, 1, 1, should_fire=True).
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      valence_core/session.py:211 reads 'if p < self.alpha:' (Tripwire.check), and the working tree
+      is clean for valence_core/. stats.py:152 (critical_k) and :158
+      (CheckpointedBinomialMonitor.check) use '<='. binom_test_exact('greater') returns
+      binom_sf_inclusive, and the pmf at (1,1,.05) is exactly 0.05, so '<' fails to fire where m:271
+      says it fires. Notes #5 records that the complement form gives 0.050000000000000044, which
+      supports 'exactly'. Notes #60 and #5 say what the pin says.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      session.py:211 'if p < self.alpha:' in Tripwire.check. stats.py:152 'binom_sf_inclusive(k, n,
+      self.p0) <= self.alpha' (critical_k) and :158 'fired=bool(p <= self.alpha)', both in
+      CheckpointedBinomialMonitor. git status shows both files unchanged. A pure-Python
+      re-implementation of binom_pmf/binom_sf_inclusive gives exactly 0.05 at (1,1,.05), which is ≤
+      .05 but not < .05. #5's record: the complement form gives 0.050000000000000044, hence
+      'exactly'. #60 asks for '≤ explicitly… (k = 1, n = 1) case in verify_firing'.
+
+[Pin-2] CHECKER pass
+  CLAIM:
+    Pin 2: a pod-change detector written into the gate-stage checkpoint file, so a gate stage
+    restarts on a new pod as §2.7 directs (notes #75, #88, #131)
+  EVIDENCE:
+    m:267: 'a gate stage carries no pod id: interrupted by a pod change, it restarts from its first
+    session on the new box'. #75 suggests 'recording the pod id in the gate checkpoint file', #88
+    says 'Code must detect the pod change and invalidate the gate-stage checkpoint itself', and #131
+    says 'Code has to pin a separate pod-change detector at step 4'. Remark: m:267's 'a gate stage
+    carries no pod id' refers to the resume identity. The pin records a pod id in the checkpoint
+    file only as a detector. It may help to say so, but the claim is not wrong.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      m:267: 'a gate stage carries no pod id: interrupted by a pod change, it restarts from its
+      first session on the new box'. #75 says 'recording the pod id in the gate checkpoint file',
+      #88 says 'Code must detect the pod change and invalidate the gate-stage checkpoint itself',
+      and #131 says 'pin a separate pod-change detector at step 4'. Remark: the pin records pod
+      identity in a gate-stage file that m:267's text says carries no pod id. It serves the restart
+      that §2.7 directs, and 'The seat may direct otherwise' covers it, but the pin could say so.
+      Not wrong.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      m:267: 'a gate stage carries no pod id: interrupted by a pod change, it restarts from its
+      first session on the new box'. #75: 'recording the pod id in the gate checkpoint file'. #88:
+      'detect the pod change and invalidate the gate-stage checkpoint itself'. #131: 'pin a separate
+      pod-change detector at step 4'. The detector is separate from the resume identity, so it does
+      not contradict 'carries no pod id'. m:356 step 4's 'pod-id refusal' covers campaigns only.
+
+[Pin-3] CHECKER pass
+  CLAIM:
+    Pin 3: the cross-template launch order at multi-template gate stages is declared at each unit's
+    v0.1 (D8C1.38, contested)
+  EVIDENCE:
+    D8C1.38 is (T,F,F) minor: "'table order' fixes order within a template only. For a stage with
+    two or more templates … the order across templates is still undeclared, which Code can declare
+    at v0.1." m:279 contains '…'s table order'.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      D8C1.38 is TFF, minor/minor/minor: "'table order' fixes order within a template only … the
+      order across templates is still undeclared, which Code can declare at v0.1. No bar depends on
+      it." m:279 reads 'the gate-stage launch order (§2.1's table order)'.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      D8C1.38 (T,F,F) minor: "'table order' fixes order within a template only… the order across
+      templates is still undeclared, which Code can declare at v0.1." m:172 puts each unit's
+      gate-stage schedules and keys in its own v0.1.
+
+[N-ids] CHECKER pass
+  CLAIM:
+    Every id and notes number cited in N1–N8 and the pins exists and is in the notes file (except
+    D8A.13, flagged as in the raw)
+  EVIDENCE:
+    By script, every id cited in the N section (R1.1–R1.3, P1.18–P1.20, D8A.17, X1.20, X2.2, X2.28,
+    L1.11, D8A.11, X2.24, L1.12, X2.26, D8C1.7, D8C1.14, D8C2.70, D8C2.104, X2.17, X2.18, S2.19,
+    X1.6, D8C2.98, X1.7, D8C1.59, X1.8, O1.25, CC.20, S1.24, D8C2.100, X2.14, S2.24, X1.19, X2.15,
+    D8C1.60, X2.10, G1.10b, S1.26, D8C2.76, X1.18, S1.27, D8C2.77, X2.3, X1.16, X2.22, S2.17, L1.2,
+    S1.20, D8C1.38) is a notes line, except D8A.13, which the entry itself places in the raw. Notes
+    numbers #2, #4, #5, #9, #15, #34, #40, #42, #46, #60, #75, #88 and #131 each say what the entry
+    attributes to them.
+  REFUTER [lenient] pass overturned=False
+    EVIDENCE:
+      By script, the N section cites 51 ids. Every one except D8A.13 is a notes line, and the entry
+      places D8A.13 in the raw itself. Notes numbers #2, #4, #5, #9, #15, #34, #40, #42, #46, #60,
+      #75, #88 and #131 each say what the entry attributes to them. The ranges are R1.1–R1.3 (R1.2
+      included) and P1.18, P1.19.
+  REFUTER [strict] pass overturned=False
+    EVIDENCE:
+      My own script maps each id cited in N1–N8 and the pins to a notes line. The only exception is
+      D8A.13, which is TTT and which the entry places in the raw. Notes #2, #4, #5, #9, #15, #34,
+      #40, #42, #46, #60, #75, #88 and #131 each match the attributed content. The referent-check
+      raw contains D8A.13.

@@ -1,0 +1,528 @@
+RAW RECORD — Code's own computations at PROPOSAL-m v1.11 §8 step 2 (laptop; no model loaded; the tokenizer recount reads tokenizer.json only).
+Run at 02:05 UTC 2026-10-06, while workflow wf_7766a824-2af ran (it returned 03:24:36 UTC). The output prints its own date -u stamps. Scripts follow, verbatim.
+Part 2 (D8A.9's realised false-STOP size, for the step-3 entry's note N9) ran after values-check pass 2; it prints its own stamp.
+Note (values-check passes 1 and 2): the tables.py print line below calls §0.4's exposure byte-identical to v1.10's. The exposure figures are unchanged, but the §0.4 line changes r = k/n → k/n_q and a §F → §E locator. The output stays as run. tables.py, pwr_v110.py, tok_recount.py, v2rate.py and frozen_audit.py are the v1.10 pass's scripts, re-run unchanged.
+
+================ OUTPUT ================
+Tue Oct  6 02:05:29 UTC 2026
+== tables.py (v1.11's §2.4 tables, §0.4 exposure and §6 looks are byte-identical to v1.10's; re-run)
+== Q-F0 cached
+k 24-20: (128, 64) total 192 looks 5 expo 128
+k 19-16: (160, 64) total 224 looks 6 expo 160
+k 15-14: (192, 64) total 256 looks 7 expo 192
+k 13-12: (224, 96) total 320 looks 8 expo 224
+k 11-10: (256, 96) total 352 looks 9 expo 256
+k 9-9: (288, 128) total 416 looks 11 expo 288
+k 8-8: (320, 128) total 448 looks 12 expo 320
+k 7-7: (384, 160) total 544 looks 14 expo 384
+k 6-6: (448, 160) total 608 looks 16 expo 448
+k 5-5: (544, 192) total 736 looks 19 expo 544
+k 4-4: (672, 256) total 928 looks 24 expo 672
+k 3-3: (864, 320) total 1184 looks 30 expo 864
+k 2-2: (1312, 480) total 1792 looks 45 expo 1312
+k 1-1: (2624, 960) total 3584 looks 90 expo 2624
+== Q-F0 uncached / OLMo
+k 24-21: (96, 64) total 160 looks 4 expo 96
+k 20-17: (128, 64) total 192 looks 5 expo 128
+k 16-14: (160, 64) total 224 looks 6 expo 160
+k 13-12: (192, 96) total 288 looks 8 expo 192
+k 11-10: (224, 96) total 320 looks 8 expo 224
+k 9-9: (256, 128) total 384 looks 10 expo 256
+k 8-8: (288, 128) total 416 looks 11 expo 288
+k 7-7: (320, 160) total 480 looks 12 expo 320
+k 6-6: (384, 160) total 544 looks 14 expo 384
+k 5-5: (448, 192) total 640 looks 16 expo 448
+k 4-4: (544, 256) total 800 looks 20 expo 544
+k 3-3: (736, 320) total 1056 looks 27 expo 736
+k 2-2: (1120, 480) total 1600 looks 40 expo 1120
+k 1-1: (2208, 960) total 3168 looks 80 expo 2208
+== Q-F3 cached
+k 40-35: (128, 64, 176, 80) total 704 looks 18 expo 480
+k 34-32: (128, 64, 192, 80) total 736 looks 19 expo 512
+k 31-31: (160, 64, 208, 80) total 800 looks 20 expo 576
+k 30-30: (160, 64, 208, 96) total 832 looks 21 expo 576
+k 29-28: (160, 64, 224, 96) total 864 looks 22 expo 608
+k 27-26: (160, 64, 240, 96) total 896 looks 23 expo 640
+k 25-24: (192, 64, 256, 112) total 992 looks 25 expo 704
+k 23-23: (192, 64, 272, 112) total 1024 looks 26 expo 736
+k 22-22: (192, 96, 288, 128) total 1120 looks 28 expo 768
+k 21-21: (224, 96, 304, 128) total 1184 looks 30 expo 832
+k 20-20: (224, 96, 320, 128) total 1216 looks 31 expo 864
+k 19-19: (224, 96, 336, 144) total 1280 looks 32 expo 896
+k 18-18: (256, 96, 352, 144) total 1344 looks 34 expo 960
+k 17-17: (256, 96, 368, 160) total 1408 looks 36 expo 992
+k 16-16: (288, 96, 400, 160) total 1504 looks 38 expo 1088
+k 15-15: (288, 128, 432, 176) total 1632 looks 41 expo 1152
+k 14-14: (320, 128, 448, 192) total 1728 looks 44 expo 1216
+k 13-13: (352, 128, 496, 208) total 1888 looks 48 expo 1344
+k 12-12: (384, 128, 528, 224) total 2016 looks 51 expo 1440
+k 11-11: (416, 160, 576, 240) total 2208 looks 56 expo 1568
+k 10-10: (448, 160, 640, 272) total 2432 looks 61 expo 1728
+k 9-9: (480, 192, 704, 288) total 2656 looks 67 expo 1888
+k 8-8: (544, 224, 800, 336) total 3040 looks 76 expo 2144
+k 7-7: (640, 224, 912, 384) total 3456 looks 87 expo 2464
+k 6-6: (736, 288, 1056, 448) total 4032 looks 101 expo 2848
+k 5-5: (864, 320, 1280, 528) total 4800 looks 120 expo 3424
+k 4-4: (1088, 416, 1600, 656) total 6016 looks 151 expo 4288
+k 3-3: (1472, 544, 2128, 880) total 8032 looks 201 expo 5728
+k 2-2: (2176, 800, 3184, 1312) total 11968 looks 300 expo 8544
+k 1-1: (4352, 1600, 6384, 2640) total 24000 looks 600 expo 17120
+== Q-F3 uncached
+k 40-35: (96, 64, 176, 80) total 672 looks 17 expo 448
+k 34-32: (128, 64, 192, 80) total 736 looks 19 expo 512
+k 31-31: (128, 64, 208, 80) total 768 looks 20 expo 544
+k 30-30: (128, 64, 208, 96) total 800 looks 20 expo 544
+k 29-28: (128, 64, 224, 96) total 832 looks 21 expo 576
+k 27-27: (128, 64, 240, 96) total 864 looks 22 expo 608
+k 26-26: (160, 64, 240, 96) total 896 looks 23 expo 640
+k 25-24: (160, 64, 256, 112) total 960 looks 24 expo 672
+k 23-23: (160, 64, 272, 112) total 992 looks 25 expo 704
+k 22-22: (160, 96, 288, 128) total 1088 looks 28 expo 736
+k 21-21: (192, 96, 304, 128) total 1152 looks 29 expo 800
+k 20-20: (192, 96, 320, 128) total 1184 looks 30 expo 832
+k 19-19: (192, 96, 336, 144) total 1248 looks 32 expo 864
+k 18-18: (224, 96, 352, 144) total 1312 looks 33 expo 928
+k 17-17: (224, 96, 368, 160) total 1376 looks 35 expo 960
+k 16-16: (224, 96, 400, 160) total 1440 looks 36 expo 1024
+k 15-15: (256, 128, 432, 176) total 1600 looks 40 expo 1120
+k 14-14: (256, 128, 448, 192) total 1664 looks 42 expo 1152
+k 13-13: (288, 128, 496, 208) total 1824 looks 46 expo 1280
+k 12-12: (320, 128, 528, 224) total 1952 looks 49 expo 1376
+k 11-11: (352, 160, 576, 240) total 2144 looks 54 expo 1504
+k 10-10: (384, 160, 640, 272) total 2368 looks 60 expo 1664
+k 9-9: (416, 192, 704, 288) total 2592 looks 65 expo 1824
+k 8-8: (480, 224, 800, 336) total 2976 looks 75 expo 2080
+k 7-7: (544, 224, 912, 384) total 3360 looks 84 expo 2368
+k 6-6: (608, 288, 1056, 448) total 3904 looks 98 expo 2720
+k 5-5: (736, 320, 1280, 528) total 4672 looks 117 expo 3296
+k 4-4: (928, 416, 1600, 656) total 5856 looks 147 expo 4128
+k 3-3: (1216, 544, 2128, 880) total 7776 looks 195 expo 5472
+k 2-2: (1856, 800, 3184, 1312) total 11648 looks 292 expo 8224
+k 1-1: (3680, 1600, 6384, 2640) total 23328 looks 584 expo 16448
+== hours
+QF0c 192 3.47 4.53
+QF0c 224 4.04 5.29
+QF0c 256 4.62 6.04
+QF0c 320 5.78 7.56
+QF0u 160 21.69 OLMo inst 1.008 sft/dpo 1.173 3ckpt 3.35 base23.4 1.209
+QF0u 192 26.03 OLMo inst 1.181 sft/dpo 1.375 3ckpt 3.93 base23.4 1.417
+QF0u 224 30.36 OLMo inst 1.354 sft/dpo 1.576 3ckpt 4.51 base23.4 1.625
+QF0u 288 39.04 OLMo inst 1.701 sft/dpo 1.98 3ckpt 5.66 base23.4 2.041
+QF3c 704 19.56 23.47 alt 88-108 17.2 21.1
+QF3c 736 20.44 24.53 alt 88-108 18.0 22.1
+QF3c 800 22.22 26.67 alt 88-108 19.6 24.0
+QF3c 832 23.11 27.73 alt 88-108 20.3 25.0
+QF3c 864 24.0 28.8 alt 88-108 21.1 25.9
+QF3c 896 24.89 29.87 alt 88-108 21.9 26.9
+QF3c 992 27.56 33.07 alt 88-108 24.2 29.8
+QF3u 672 119.8 133.2
+QF3u 736 131.2 145.9
+QF3u 768 136.9 152.2
+QF3u 800 142.6 158.6
+QF3u 832 148.3 164.9
+QF3u 864 154.0 171.3
+QF3u 896 159.7 177.6
+QF3u 960 171.1 190.3
+1.6*401,1.6*446 641.6 713.6 73 allowance: 73+15..73+35?
+== tuples111.py
+A3 parts 30 QF3 states 481 tuples 519480
+v1.10 vs old ladder with A3*: {('F1', 'F2'): 69120}  of which A1!=PASS: 51840
+v1.10 vs old ladder on screen A3: {('F1', 'F2'): 69120, ('F1', 'Main'): 432, ('F2', 'F1'): 1728}
+A3* values reachable: ['CONFIRMED', 'DISCORDANT', 'NOREAD', 'NULL', 'NXd', 'NXu', 'UNLICENSED']
+DISCORDANT tuples: 69120  of which with A1 = PASS and A2 = PASS (Step-6 DISCORDANT clause): 4320
+== sched111.py (the sixteen-row table, m:161-172)
+== m=4
+   ('slot',) {(0,): 1, (1,): 1, (2,): 1, (3,): 1}
+   ('map',) {(0,): 2, (1,): 2}
+   ('start',) {(0,): 2, (1,): 2}
+   ('clause',) {(0,): 2, (1,): 2}
+   ('slot', 'map') {(0, 0): 1, (1, 1): 1, (2, 0): 1, (3, 1): 1}
+   ('slot', 'start') {(0, 0): 1, (1, 0): 1, (2, 1): 1, (3, 1): 1}
+   ('slot', 'clause') {(0, 0): 1, (1, 1): 1, (2, 1): 1, (3, 0): 1}
+   ('map', 'start') {(0, 0): 1, (0, 1): 1, (1, 0): 1, (1, 1): 1}
+   ('map', 'clause') {(0, 0): 1, (0, 1): 1, (1, 0): 1, (1, 1): 1}
+   ('start', 'clause') {(0, 0): 1, (0, 1): 1, (1, 0): 1, (1, 1): 1}
+   ('slot', 'map', 'start') {(0, 0, 0): 1, (1, 1, 0): 1, (2, 0, 1): 1, (3, 1, 1): 1}
+   ('slot', 'map', 'clause') {(0, 0, 0): 1, (1, 1, 1): 1, (2, 0, 1): 1, (3, 1, 0): 1}
+== m=8
+   ('slot',) {(0,): 2, (1,): 2, (2,): 2, (3,): 2}
+   ('map',) {(0,): 4, (1,): 4}
+   ('start',) {(0,): 4, (1,): 4}
+   ('clause',) {(0,): 4, (1,): 4}
+   ('slot', 'map') {(0, 0): 1, (0, 1): 1, (1, 0): 1, (1, 1): 1, (2, 0): 1, (2, 1): 1, (3, 0): 1, (3, 1): 1}
+   ('slot', 'start') {(0, 0): 1, (0, 1): 1, (1, 0): 1, (1, 1): 1, (2, 0): 1, (2, 1): 1, (3, 0): 1, (3, 1): 1}
+   ('slot', 'clause') {(0, 0): 1, (0, 1): 1, (1, 0): 1, (1, 1): 1, (2, 0): 1, (2, 1): 1, (3, 0): 1, (3, 1): 1}
+   ('map', 'start') {(0, 0): 2, (0, 1): 2, (1, 0): 2, (1, 1): 2}
+   ('map', 'clause') {(0, 0): 2, (0, 1): 2, (1, 0): 2, (1, 1): 2}
+   ('start', 'clause') {(0, 0): 2, (0, 1): 2, (1, 0): 2, (1, 1): 2}
+   ('slot', 'map', 'start') {(0, 0, 0): 1, (0, 1, 1): 1, (1, 0, 1): 1, (1, 1, 0): 1, (2, 0, 1): 1, (2, 1, 0): 1, (3, 0, 0): 1, (3, 1, 1): 1}
+   ('slot', 'map', 'clause') {(0, 0, 0): 1, (0, 1, 1): 1, (1, 0, 0): 1, (1, 1, 1): 1, (2, 0, 1): 1, (2, 1, 0): 1, (3, 0, 1): 1, (3, 1, 0): 1}
+== m=16
+   ('slot',) {(0,): 4, (1,): 4, (2,): 4, (3,): 4}
+   ('map',) {(0,): 8, (1,): 8}
+   ('start',) {(0,): 8, (1,): 8}
+   ('clause',) {(0,): 8, (1,): 8}
+   ('slot', 'map') {(0, 0): 2, (0, 1): 2, (1, 0): 2, (1, 1): 2, (2, 0): 2, (2, 1): 2, (3, 0): 2, (3, 1): 2}
+   ('slot', 'start') {(0, 0): 2, (0, 1): 2, (1, 0): 2, (1, 1): 2, (2, 0): 2, (2, 1): 2, (3, 0): 2, (3, 1): 2}
+   ('slot', 'clause') {(0, 0): 2, (0, 1): 2, (1, 0): 2, (1, 1): 2, (2, 0): 2, (2, 1): 2, (3, 0): 2, (3, 1): 2}
+   ('map', 'start') {(0, 0): 4, (0, 1): 4, (1, 0): 4, (1, 1): 4}
+   ('map', 'clause') {(0, 0): 4, (0, 1): 4, (1, 0): 4, (1, 1): 4}
+   ('start', 'clause') {(0, 0): 4, (0, 1): 4, (1, 0): 4, (1, 1): 4}
+   ('slot', 'map', 'start') {(0, 0, 0): 1, (0, 0, 1): 1, (0, 1, 0): 1, (0, 1, 1): 1, (1, 0, 0): 1, (1, 0, 1): 1, (1, 1, 0): 1, (1, 1, 1): 1, (2, 0, 0): 1, (2, 0, 1): 1, (2, 1, 0): 1, (2, 1, 1): 1, (3, 0, 0): 1, (3, 0, 1): 1, (3, 1, 0): 1, (3, 1, 1): 1}
+   ('slot', 'map', 'clause') {(0, 0, 0): 1, (0, 0, 1): 1, (0, 1, 0): 1, (0, 1, 1): 1, (1, 0, 0): 1, (1, 0, 1): 1, (1, 1, 0): 1, (1, 1, 1): 1, (2, 0, 0): 1, (2, 0, 1): 1, (2, 1, 0): 1, (2, 1, 1): 1, (3, 0, 0): 1, (3, 0, 1): 1, (3, 1, 0): 1, (3, 1, 1): 1}
+m=16 within-cell start and clause 1/1: True
+duplicate (slot,map,start,clause) rows: []
+== pwr_v110.py (sizing under the base case m:190 states)
+crit 87 83 60 51
+144 0.01 87 0.007685257474956899 0.01205568238806894
+144 0.05 83 0.039878535181920256 0.05651548214095662
+96 0.01 60 0.009216676465731271 0.01577406012686676
+80 0.01 51 0.009158048758458158 0.01649630921323809
+96,32 0.9160830122982639
+80,32 0.8784285780273204
+144,56 0.861955577758044
+144,48 0.8476082846257427
+stress 0.7798456748357109
+stress alt 0.6372983932210434 0.7798456748357109
+A3 .65 0.9272786857484584
+A3 .60 0.6648415281736568
+A3 .70 0.9898451931078677
+[(200, 56, 144, 0.861955577758044), (208, 56, 152, 0.8865425338769709), (208, 64, 144, 0.8704093529661229), (216, 56, 160, 0.8871473267231925), (216, 64, 152, 0.8958711990781814)]
+== tok_recount.py
+sessions 344 generations 3074 sessions with Response-count != n_rounds 0
+generations with prefix+segment > 512 tokens: 135 by round index {8: 27, 9: 108} by arm {'NOV': 61, 'sham': 35, 'DIFF': 23, 'SOLV': 10, 'FDBK': 1, 'CORR': 5}
+== v2rate.py
+parse mismatches 0
+ALL 112/3074 0.0364
+CORR-P 9/291 0.0309
+CORR-Q 8/306 0.0261
+DIFF 12/507 0.0237
+FDBK 20/503 0.0398
+NOV 34/569 0.0598
+SOLV 18/547 0.0329
+sham 11/351 0.0313
+CORR all 17/597
+p0 .05 P(>=1 claim) n=10: 0.401  n=30: 0.785
+sham 11/351 P(>=1 claim) n=10: 0.273  n=30: 0.615
+CORR 17/597 P(>=1 claim) n=10: 0.251  n=30: 0.58
+CORR-P clean P(>=1 claim) n=10: 0.27  n=30: 0.61
+sham sessions with >=1 v2 claim 7/40 0.175  P(pause) 1 session: 0.175  3 sessions: 0.438
+CORR sessions with >=1 v2 claim 12/64 0.188  P(pause) 1 session: 0.188  3 sessions: 0.464
+== frozen_audit.py
+frozen-audit degen sham 11/351  rounds where frozen != v2: 0
+frozen-audit degen CORR-P 9/291  rounds where frozen != v2: 0
+frozen-audit degen CORR-Q 7/306  rounds where frozen != v2: 1
+differing rounds (arm, session, round index, cfg, frozen, v2): [('CORR', 48, 5, 'Q', False, True)]
+Tue Oct  6 02:05:34 UTC 2026
+
+================ SCRIPT tables.py ================
+# Code's own pass over v1.10's [S] launch/look/exposure/hour figures (log-space binomial; exact).
+from math import lgamma, log, exp, ceil
+def logsf(N,f,r):
+    if r>=1: return 0.0 if N>=f else float('-inf')
+    lr,l1=log(r),log(1-r); m=None; terms=[]
+    for j in range(f,N+1):
+        terms.append(lgamma(N+1)-lgamma(j+1)-lgamma(N-j+1)+j*lr+(N-j)*l1)
+    if not terms: return float('-inf')
+    m=max(terms); return m+log(sum(exp(t-m) for t in terms))
+def n90(f,r):
+    lo=f; 
+    if exp(logsf(lo,f,r))>=.9: return lo
+    hi=f
+    while exp(logsf(hi,f,r))<.9: hi*=2
+    while hi-lo>1:
+        mid=(lo+hi)//2
+        if exp(logsf(mid,f,r))>=.9: hi=mid
+        else: lo=mid
+    return hi
+def L(f,u,r): x=max(ceil(1.15*f-1e-9),n90(f,r)); return -(-x//u)*u
+def rows(nq, arms):
+    out={}
+    for k in range(nq,0,-1):
+        r=k/nq; out[k]=tuple(L(f,u,r) for (f,u) in arms)
+    return out
+def runs(tab):
+    # group consecutive k with identical tuples
+    ks=sorted(tab,reverse=True); g=[]; 
+    for k in ks:
+        if g and tab[g[-1][-1]]==tab[k]: g[-1].append(k)
+        else: g.append([k])
+    return [(gg[0],gg[-1],tab[gg[0]]) for gg in g]
+QF0c=rows(24,[(96,32),(32,32)]); QF0u=rows(24,[(80,32),(32,32)])
+QF3c=rows(40,[(96,32),(32,32),(144,16),(56,16)]); QF3u=rows(40,[(80,32),(32,32),(144,16),(56,16)])
+def show(name,tab,tot,expo):
+    print('==',name)
+    for hi,lo,t in runs(tab):
+        T=tot(t); print(f"k {hi}-{lo}: {t} total {T} looks {ceil(T/40)} expo {expo(t)}")
+show('Q-F0 cached',QF0c,lambda t:t[0]+t[1],lambda t:t[0])
+show('Q-F0 uncached / OLMo',QF0u,lambda t:t[0]+t[1],lambda t:t[0])
+show('Q-F3 cached',QF3c,lambda t:t[0]+t[1]+2*t[2]+2*t[3],lambda t:t[0]+2*t[2])
+show('Q-F3 uncached',QF3u,lambda t:t[0]+t[1]+2*t[2]+2*t[3],lambda t:t[0]+2*t[2])
+# hours
+print('== hours')
+for T in (192,224,256,320): print('QF0c',T, round(T*65/3600,2), round(T*85/3600,2))
+for T in (160,192,224,288): print('QF0u',T, round(T*488/3600,2), 'OLMo inst',round((T+26)*19.5/3600,3),'sft/dpo',round((T+26)*22.7/3600,3),'3ckpt',round((T+26)*(19.5+2*22.7)/3600,2),'base23.4',round((T+26)*23.4/3600,3))
+for T in (704,736,800,832,864,896,992): print('QF3c',T, round(T*100/3600,2), round(T*120/3600,2), 'alt 88-108', round(T*88/3600,1), round(T*108/3600,1))
+for T in (672,736,768,800,832,864,896,960): print('QF3u',T, round(T*641.6/3600,1), round(T*713.6/3600,1))
+print('1.6*401,1.6*446',1.6*401,1.6*446, '73 allowance: 73+15..73+35?', )
+
+================ SCRIPT tuples111.py ================
+# Code's own enumeration of v1.10's v2 outcome space and Step 5 ladder (m:274, m:323-324).
+from itertools import product
+from collections import Counter
+QF0=['PASS','REVERSE','DEAD','INDET','NOTRUN']
+OL=['PASS','REVERSE','DEAD','INDET','NOTRUN','PENDING']
+A1=['PASS','REVERSE','DEAD','INDET']; A2=['PASS','REVERSE','FAIL','INDET']
+F2V=['CONFIRMED','OPPOSITE','NULL','NXu','NXd','NOREAD']; CT=['PASS','notPASS']
+a3parts=[('NULL',None),('NXu',None),('NXd',None),('NOREAD',None)]
+for s in ['POSITIVE','REVERSE']:
+    for f in F2V:
+        for c in CT: a3parts.append((s,(f,c)))
+    a3parts.append((s,('NOTRUN',None)))
+qf3=[('RUN',a1,a2,p) for a1 in A1 for a2 in A2 for p in a3parts]+[('NOTRUN',)]
+print('A3 parts',len(a3parts),'QF3 states',len(qf3),'tuples',len(qf3)*len(QF0)*len(OL)**3)
+def a3star(p):
+    s,f=p
+    if f is None: return s
+    fv,c=f
+    if fv=='CONFIRMED': return 'CONFIRMED'
+    if fv=='OPPOSITE': return 'DISCORDANT'
+    if fv in ('NULL','NXu','NXd') and c=='PASS': return fv
+    return 'UNLICENSED'
+def ceil_v110(q0,q3):
+    L0=q0=='PASS'
+    if q3[0]=='NOTRUN': L1=False; A2v=None; A3=None
+    else: _,a1,A2v,p=q3; L1=a1=='PASS'; A3=a3star(p)
+    main=L0 and L1 and A2v=='PASS' and A3=='NULL'
+    if main: return 'Main'
+    if A3 not in ('CONFIRMED','DISCORDANT','UNLICENSED') and (L0 or (L1 and A2v=='PASS' and A3=='NULL')): return 'F1'
+    return 'F2'
+def ceil_old(q0,q3):  # v1.6-v1.8 ladder with A3* substituted (no exclusion conjunct)
+    L0=q0=='PASS'
+    if q3[0]=='NOTRUN': L1=False; A2v=None; A3=None
+    else: _,a1,A2v,p=q3; L1=a1=='PASS'; A3=a3star(p)
+    if L0 and L1 and A2v=='PASS' and A3=='NULL': return 'Main'
+    if L0 or (L1 and A2v=='PASS' and A3=='NULL'): return 'F1'
+    return 'F2'
+def ceil_old_screen(q0,q3):  # old ladder on the screen's A3
+    L0=q0=='PASS'
+    if q3[0]=='NOTRUN': L1=False; A2v=None; A3=None
+    else: _,a1,A2v,p=q3; L1=a1=='PASS'; A3=p[0]
+    if L0 and L1 and A2v=='PASS' and A3=='NULL': return 'Main'
+    if L0 or (L1 and A2v=='PASS' and A3=='NULL'): return 'F1'
+    return 'F2'
+mv=Counter(); mvA1=0; mv2=Counter()
+NOL=len(OL)**3
+for q0 in QF0:
+    for q3 in qf3:
+        n,o=ceil_v110(q0,q3),ceil_old(q0,q3)
+        if n!=o:
+            mv[(o,n)]+=NOL
+            if q3[0]=='RUN' and q3[1]!='PASS': mvA1+=NOL
+        o2=ceil_old_screen(q0,q3)
+        if n!=o2: mv2[(o2,n)]+=NOL
+print('v1.10 vs old ladder with A3*:',dict(mv),' of which A1!=PASS:',mvA1)
+print('v1.10 vs old ladder on screen A3:',dict(mv2))
+print('A3* values reachable:',sorted(Counter(a3star(p) for p in a3parts)))
+# v1.11 additions: DISCORDANT population and its Step-6 texts (Step 6 runs only if L1; its A3* clauses sit in the A2 = PASS branch)
+disc=0; disc_step6=0
+for q0 in QF0:
+    for q3 in qf3:
+        if q3[0]!='RUN': continue
+        _,a1,a2,p=q3
+        if a3star(p)=='DISCORDANT':
+            disc+=NOL
+            if a1=='PASS' and a2=='PASS': disc_step6+=NOL
+print('DISCORDANT tuples:',disc,' of which with A1 = PASS and A2 = PASS (Step-6 DISCORDANT clause):',disc_step6)
+
+================ SCRIPT sched111.py ================
+# Code's own enumeration of v1.11 m:161-172's sixteen-row gate-stage table and its stated balances.
+from collections import Counter
+from itertools import combinations
+T=[(0,0,0,0,0),(1,1,1,0,1),(2,2,0,1,1),(3,3,1,1,0),(4,0,1,1,1),(5,1,0,1,0),(6,2,1,0,0),(7,3,0,0,1),
+   (8,0,1,0,0),(9,1,0,0,1),(10,2,1,1,1),(11,3,0,1,0),(12,0,0,1,1),(13,1,1,1,0),(14,2,0,0,0),(15,3,1,0,1)]
+F={'slot':1,'map':2,'start':3,'clause':4}
+def cnt(R,*fs): return dict(sorted(Counter(tuple(r[F[f]] for f in fs) for r in R).items()))
+for m in (4,8,16):
+    R=T[:m]; print(f"== m={m}")
+    for fs in (('slot',),('map',),('start',),('clause',),('slot','map'),('slot','start'),('slot','clause'),('map','start'),('map','clause'),('start','clause'),('slot','map','start'),('slot','map','clause')):
+        print('  ',fs,cnt(R,*fs))
+# within pair x map cell at 16: start and clause 1/1?
+cells=Counter(); ok=True
+for r in T:
+    cells[(r[1],r[2])]+=1
+for (s,mp) in cells:
+    rows=[r for r in T if r[1]==s and r[2]==mp]
+    st=Counter(r[3] for r in rows); cl=Counter(r[4] for r in rows)
+    if not (st[0]==st[1]==1 and cl[0]==cl[1]==1): ok=False; print('cell not 1/1',s,mp,rows)
+print('m=16 within-cell start and clause 1/1:',ok)
+# identical rows?
+print('duplicate (slot,map,start,clause) rows:',[k for k,v in Counter(r[1:] for r in T).items() if v>1])
+
+================ SCRIPT pwr_v110.py ================
+from math import comb
+from fractions import Fraction
+def pmf(n,p): return [comb(n,k)*p**k*(1-p)**(n-k) for k in range(n+1)]
+def crit(n,a):
+    # smallest x with P(X>=x)<=a under .5
+    tail=0.0
+    for x in range(n,-1,-1):
+        t=sum(comb(n,k) for k in range(x,n+1))/2**n
+        if t>a: return x+1
+    return 0
+def power(n,ns,pa,ps,alpha,pa2=None,ps2=None):
+    pa2=pa if pa2 is None else pa2; ps2=ps if ps2 is None else ps2
+    h=n//2; hs=ns//2
+    c=crit(n,alpha)
+    A1=pmf(h,pa); A2=pmf(h,pa2)
+    S1=pmf(hs,ps); S2=pmf(hs,ps2)
+    # sham E distribution
+    from collections import defaultdict
+    Ed=defaultdict(float)
+    for a,pa_ in enumerate(S1):
+        for b,pb in enumerate(S2):
+            E=abs(Fraction(a+b,ns)-Fraction(1,2))
+            Ed[E]+=pa_*pb
+    tot=0.0
+    for a,p1 in enumerate(A1):
+        if Fraction(a,h)<Fraction(1,2): continue
+        for b,p2 in enumerate(A2):
+            if Fraction(b,h)<Fraction(1,2): continue
+            x=a+b
+            if x<c: continue
+            d=Fraction(x,n)-Fraction(1,2)
+            pe=sum(pp for E,pp in Ed.items() if d>E)
+            tot+=p1*p2*pe
+    return tot
+print('crit',crit(144,.01),crit(144,.05),crit(96,.01),crit(80,.01))
+for n,a in [(144,.01),(144,.05),(96,.01),(80,.01)]:
+    c=crit(n,a); print(n,a,c,sum(comb(n,k) for k in range(c,n+1))/2**n, sum(comb(n,k) for k in range(c-1,n+1))/2**n)
+print('96,32',power(96,32,.7,.5,.01))
+print('80,32',power(80,32,.7,.5,.01))
+print('144,56',power(144,56,.65,.5,.01))
+print('144,48',power(144,48,.65,.5,.01))
+print('stress',power(144,56,.75,.6,.01,.55,.4))
+print('stress alt',power(144,56,.75,.6,.01,.55,.6), power(144,56,.75,.4,.01,.55,.6))
+print('A3 .65',power(144,56,.65,.5,.05))
+print('A3 .60',power(144,56,.60,.5,.05))
+print('A3 .70',power(144,56,.70,.5,.05))
+# grid
+best=[]
+for n in range(8,193,8):
+    for ns in range(8,400,8):
+        if ns*3<n: continue
+        if n+ns> 260: continue
+        p=power(n,ns,.65,.5,.01)
+        if p>=.85: best.append((n+ns,ns,n,p))
+best.sort(); print(best[:5])
+
+================ SCRIPT tok_recount.py ================
+# Code's own tokenizer-only recount of f1's generation encode length (no model loaded).
+# f_sessions.py:167 encodes prefix_text + seg_text with jlens model.encode (max_length=512, tail kept).
+# The input to round r's generation is the final transcript up to the end of that round's "Response:".
+import json, collections
+from tokenizers import Tokenizer
+TOK='/Users/jasondwyer/.cache/huggingface/hub/models--mlx-community--Qwen3.6-27B-4bit/snapshots/c000ac2c2057d94be3fa931000c31723aac53282/tokenizer.json'
+tok=Tokenizer.from_file(TOK)
+rows=[json.loads(l) for l in open('/Users/jasondwyer/Documents/code/jspace-lab/data/f/sessions.jsonl')]
+n_gen=0; over=collections.Counter(); over_arm=collections.Counter(); bad=0; firstpick_over=0
+for r in rows:
+    t=r['transcript']; nr=r['n_rounds']
+    pos=[]; i=0
+    while True:
+        j=t.find('\nResponse:', i)
+        if j<0: break
+        pos.append(j+len('\nResponse:')); i=j+1
+    if len(pos)!=nr: bad+=1
+    for ri,p in enumerate(pos[:nr]):
+        n_gen+=1
+        ids=tok.encode(t[:p], add_special_tokens=True).ids
+        if len(ids)>512:
+            over[ri]+=1; over_arm[r['arm']]+=1
+print('sessions',len(rows),'generations',n_gen,'sessions with Response-count != n_rounds',bad)
+print('generations with prefix+segment > 512 tokens:',sum(over.values()),'by round index',dict(sorted(over.items())),'by arm',dict(over_arm))
+
+================ SCRIPT v2rate.py ================
+# Code's own rescoring of f1's per-round responses under e2b_audit_v2 (frame fragments, junk regexes),
+# and the probability that a one-claim G-TIME pause fires on a healthy sham session.
+import json, re, collections
+cfg=json.load(open('/Users/jasondwyer/Documents/code/jspace-lab/data/configs/e2b_audit_v2.json'))
+fr, rx = cfg['frame_fragments'], cfg['junk_regex']
+def v2(t):
+    for f in fr:
+        if f in t: return 'frame'
+    for r in rx:
+        if re.search(r,t): return 'junk'
+    return None
+rows=[json.loads(l) for l in open('/Users/jasondwyer/Documents/code/jspace-lab/data/f/sessions.jsonl')]
+c=collections.Counter(); n=collections.Counter(); mism=0
+for s in rows:
+    t=s['transcript']; resp=[]; i=0
+    while True:
+        j=t.find('\nResponse:',i)
+        if j<0: break
+        k=j+len('\nResponse:'); e=t.find('\n',k); resp.append(t[k:e if e>=0 else len(t)]); i=k
+    if len(resp)!=len(s['rounds']): mism+=1; continue
+    for rd,txt in zip(s['rounds'],resp):
+        key=s['arm'] if s['arm']!='CORR' else f"CORR-{rd['cfg']}"
+        n[key]+=1; n['ALL']+=1
+        if v2(txt): c[key]+=1; c['ALL']+=1
+print('parse mismatches',mism)
+for k in sorted(n): print(k, f"{c[k]}/{n[k]}", round(c[k]/n[k],4))
+corr=c['CORR-P']+c['CORR-Q']; ncorr=n['CORR-P']+n['CORR-Q']
+print('CORR all', f"{corr}/{ncorr}")
+for lab,p in [('p0 .05',.05),('sham 11/351',11/351),('CORR 17/597',17/597),('CORR-P clean',c['CORR-P']/n['CORR-P'])]:
+    print(lab, 'P(>=1 claim) n=10:',round(1-(1-p)**10,3),' n=30:',round(1-(1-p)**30,3))
+# session level: share of sessions with >=1 v2-claimed round (clustering-aware reference)
+ss=collections.Counter(); sn=collections.Counter()
+for s in rows:
+    t=s['transcript']; resp=[]; i=0
+    while True:
+        j=t.find('\nResponse:',i)
+        if j<0: break
+        k=j+len('\nResponse:'); e=t.find('\n',k); resp.append(t[k:e if e>=0 else len(t)]); i=k
+    sn[s['arm']]+=1
+    if any(v2(x) for x in resp): ss[s['arm']]+=1
+for a in ('sham','CORR'):
+    q=ss[a]/sn[a]; print(a,'sessions with >=1 v2 claim',f"{ss[a]}/{sn[a]}",round(q,3),' P(pause) 1 session:',round(q,3),' 3 sessions:',round(1-(1-q)**3,3))
+
+================ SCRIPT frozen_audit.py ================
+# f1's own frozen-audit claims (the rounds' logged `degen` field) per arm, and round-level agreement with v2.
+import json, re, collections
+cfg=json.load(open('/Users/jasondwyer/Documents/code/jspace-lab/data/configs/e2b_audit_v2.json'))
+fr, rx = cfg['frame_fragments'], cfg['junk_regex']
+def v2(t):
+    return any(f in t for f in fr) or any(re.search(r,t) for r in rx)
+rows=[json.loads(l) for l in open('/Users/jasondwyer/Documents/code/jspace-lab/data/f/sessions.jsonl')]
+c=collections.Counter(); n=collections.Counter(); agree=collections.Counter(); diff=[]
+for s in rows:
+    t=s['transcript']; resp=[]; i=0
+    while True:
+        j=t.find('\nResponse:',i)
+        if j<0: break
+        k=j+len('\nResponse:'); e=t.find('\n',k); resp.append(t[k:e if e>=0 else len(t)]); i=k
+    for ri,(rd,txt) in enumerate(zip(s['rounds'],resp)):
+        key=s['arm'] if s['arm']!='CORR' else 'CORR-'+rd['cfg']
+        n[key]+=1; fz=bool(rd['degen']); vv=v2(txt)
+        if fz: c[key]+=1
+        if key in ('sham','CORR-P','CORR-Q'):
+            agree[(key,fz==vv)]+=1
+            if fz!=vv: diff.append((s['arm'],s['session'],ri,rd['cfg'],fz,vv))
+for k in ('sham','CORR-P','CORR-Q'): print('frozen-audit degen',k,f"{c[k]}/{n[k]}",' rounds where frozen != v2:',agree[(k,False)])
+print('differing rounds (arm, session, round index, cfg, frozen, v2):',diff)
+
+================ PART 2 OUTPUT (d8a9.py) ================
+Tue Oct  6 04:41:03 UTC 2026
+p0 .05 P(fire) = 0.0518 (round-1 part 0.05 ; free-round part 0.0018 )
+measured 9/291 P(fire) = 0.0314 (round-1 part 0.0309 ; free-round part 0.0005 )
+
+================ SCRIPT d8a9.py ================
+# G-TIME-F0 realised false-STOP probability under v1.11's rule: a forced-round claim ends the Qwen sham session;
+# a bar fires iff its exact one-sided P <= alpha at the realised n (critical 1 at n = 1, 2 at n = 2..7, 3 at n = 8..10).
+from math import comb
+def sf(n,k,p): return sum(comb(n,j)*p**j*(1-p)**(n-j) for j in range(k,n+1))
+for lab,p in (('p0 .05',.05),('measured 9/291',9/291)):
+    round1=p                      # claim at round 1: n = 1, P = p0 = alpha -> fires (at p0); at the measured rate the event still occurs with prob p
+    nofc=(1-p)**4                 # no forced-round claim: the session runs n = 10 with 6 free rounds
+    free=sf(6,3,p)                # >= 3 free-round claims reach the critical 3 at n = 10
+    print(lab, 'P(fire) =', round(round1+nofc*free,4), '(round-1 part', round(round1,4), '; free-round part', round(nofc*free,4), ')')
