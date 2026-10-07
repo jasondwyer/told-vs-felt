@@ -1,0 +1,73 @@
+# G-PORT (PROPOSAL-m v1.11 §8 step 5, m:275) -- model-free replay of f1's 64 archived CORR transcripts through the m package's ported delivery module (f1 configuration).
+# Code stamp: 2026-10-07 03:15:40 UTC (date -u)
+# HEAD: 5f7b968 + the uncommitted disposition changes, committed next unchanged (package_sha256 in the artifact covers valence_core/m/*.py; the driver scripts/m_sessions.py is pinned by that commit).
+# This is the second run: a first run at 02:50:47 UTC on the same code but for two comment/string rewordings (scaffold.py's G-PORT PIN, readrule.py's G-TIME read label) also gave 64/64; its artifact was set aside before commit.
+# Gate: the final summary line '  G-PORT 64/64 ...' and the artifact's verdict, not $?
+
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/m_sessions.py gport
+gport s=0 ok
+gport s=1 ok
+gport s=2 ok
+gport s=3 ok
+gport s=4 ok
+gport s=5 ok
+gport s=6 ok
+gport s=7 ok
+gport s=8 ok
+gport s=9 ok
+gport s=10 ok
+gport s=11 ok
+gport s=12 ok
+gport s=13 ok
+gport s=14 ok
+gport s=15 ok
+gport s=16 ok
+gport s=17 ok
+gport s=18 ok
+gport s=19 ok
+gport s=20 ok
+gport s=21 ok
+gport s=22 ok
+gport s=23 ok
+gport s=24 ok
+gport s=25 ok
+gport s=26 ok
+gport s=27 ok
+gport s=28 ok
+gport s=29 ok
+gport s=30 ok
+gport s=31 ok
+gport s=32 ok
+gport s=33 ok
+gport s=34 ok
+gport s=35 ok
+gport s=36 ok
+gport s=37 ok
+gport s=38 ok
+gport s=39 ok
+gport s=40 ok
+gport s=41 ok
+gport s=42 ok
+gport s=43 ok
+gport s=44 ok
+gport s=45 ok
+gport s=46 ok
+gport s=47 ok
+gport s=48 ok
+gport s=49 ok
+gport s=50 ok
+gport s=51 ok
+gport s=52 ok
+gport s=53 ok
+gport s=54 ok
+gport s=55 ok
+gport s=56 ok
+gport s=57 ok
+gport s=58 ok
+gport s=59 ok
+gport s=60 ok
+gport s=61 ok
+gport s=62 ok
+gport s=63 ok
+  G-PORT 64/64 archived CORR transcripts reproduced
+EXIT=0

@@ -1,0 +1,10 @@
+{
+ "criterion": "64/64 archived CORR transcripts' harness-written lines reproduced (m:275)",
+ "f1_sessions_sha16": "d49913e5ffdfb935",
+ "mismatches": [],
+ "n_ok": 64,
+ "n_rows": 64,
+ "package_sha256": "96fbcacfb6c18903a0e893906441720443be5a278c28da4ae7edd8721a199808",
+ "unit": "Q-F0",
+ "verdict": "PASS"
+}

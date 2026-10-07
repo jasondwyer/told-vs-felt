@@ -21,6 +21,195 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-10-07 — **G-PORT (PROPOSAL-m v1.11 §8 step 5, m:275; the seat's go, routed by the PI 2026-10-06): PASS,
+  64/64. A model-free replay through the m package's ported CORR delivery module, configured with f1's
+  draw order and `corrupt()` at 0.12, reproduces every harness-written line of all 64 archived CORR
+  transcripts in `data/f/sessions.jsonl` (sha16 `d49913e5ffdfb935`; the smoke file's 4 are outside the
+  replay): the banner, round headers under f1's rotation, Task lines, menus and pick lines. It also
+  reproduces each round's seed, menu order, cell fields, role, tag, Task prefix, pick role and verify
+  cadence, and walks each transcript to its end with no mismatch. Differences from f1 beyond §2.7's
+  fourteen: 25, plus 2 borderline, from a five-lens comparison with a strict refuter on every claim. Each
+  is listed below, with where v1.11 already declares it where it does. m:267 adds them to Appendix D
+  through this entry; the seat may adjudicate any of them. The synthesis's one open [verify] is settled by Code's own tokenizer-only recount. Nothing run on a model; the k arc
+  untouched.** (Stamp verified at write time: `date -u` → **Wed Oct  7 02:54:19 UTC 2026**, first write; corrected on its two
+  values-check passes, last at **03:36:53 UTC**. The replay of record ran at 03:15:40 UTC; a first run at 02:50:47 UTC also
+  gave 64/64 and its artifact was set aside.)
+
+  - **The replay** ([`_gport`](results/raw/2026-10-07_m-gport.txt), artifact
+    [`Q-F0_G-PORT.json`](data/m/gates/Q-F0_G-PORT.json)).
+    - `scripts/m_sessions.py gport` printed 64 `gport s=<s> ok` lines and `  G-PORT 64/64 archived CORR
+      transcripts reproduced`, exit 0.
+    - The artifact records verdict PASS, `mismatches` [] and `package_sha256` `96fbcacf…199808`. That is
+      the working tree's `valence_core/m/*.py` at the replay: HEAD `5f7b968`, plus the disposition changes
+      to `readrule.py` and `stages.py` and the values-check's comment rewording in `scaffold.py`. These are
+      the bytes the disposition commit `54e41c9` holds: Code recomputed `package_sha256` from that
+      commit's 16 blobs, with repo-relative paths, and it is equal.
+    - `package_sha256` covers `valence_core/m/*.py` only. The `gport` driver itself, in
+      `scripts/m_sessions.py` (sha256 `984d05d9…dbcd3`, new in the disposition change), is pinned by the
+      disposition commit. The round, menu and banner templates come from `valence_core/session_e2a.py`
+      (unchanged, pinned by HEAD `5f7b968`), also outside `package_sha256`.
+    - This is the second run. A first run at 02:50:47 UTC also gave 64/64, on the same m package except
+      for two text rewordings the values-check asked for (`scaffold.py`'s G-PORT PIN, `readrule.py`'s
+      G-TIME read label). The driver `scripts/m_sessions.py` also changed between the runs (`22ba2544…3d0d`
+      → `984d05d9…dbcd3`, a comment). The first artifact was set aside uncommitted.
+    - The walk bounds every generation by the next harness piece the scaffold has built, never by a
+      newline alone. For each transcript's last generation that piece is the final `\n` joiner, anchored
+      by the end-of-transcript and rebuild checks.
+    - **Scope.** The replay exercises the shared scaffold and the delivery module (`Delivery`,
+      `ItemStreams`) under f1's configuration. m's own configuration (the §2.5 banner, committed-schedule
+      cells, split keys, `corrupt_m`) is not on G-PORT's path. It is checked by G-CAL (the renders of
+      record) and by G-VER and the `schedule_mismatch` trigger (banner bytes, cells, streams), and locked at
+      LOCK-m-F0 v0.1; G-SHAPE-F0 tests scoring scope only.
+  - **How the differences were found** ([`_differences`](results/raw/2026-10-07_m-gport_differences.md):
+    Code's errata, the synthesis verbatim (its A20 claim is corrected by the errata and this entry), Code's
+    recount, Code's re-run of the scripts behind C1–C3, and all 90 claims with their refuters).
+    - Five read-only lenses compared F0m (Q-F0, A0/A0s, HEAD `5f7b968`) with f1's
+      `jlens-qwen36/scripts/f_sessions.py`: harness bytes; delivery and rng; generation and reads; audit
+      and exclusion; records, verification, printing, statistics and blinding.
+    - The lenses compared HEAD `5f7b968`, before the disposition changes to `readrule.py` and `stages.py`.
+      Those changes' G-TIME reporting (ruling (h)) was not compared with f1.
+    - Each classified every difference as covered by one of §2.7's fourteen or beyond them. A strict
+      refuter checked each claim and its classification: 90 claimed, 1 refuted. The lenses' 52 "internal,
+      no effect" notes were not put to a refuter.
+    - A synthesizer de-duplicated the 89 survivors, re-checked its archive figures, and used the refuter's
+      classification where the two disagreed.
+    - The harness-bytes lens also drove m's real Qwen runner with f1's recorded texts and picks on an
+      f1-configured scaffold (bare banner, f1's cell, f1's single rng, the 0.12 renders). It rebuilt 62/64 f1 transcripts byte-for-byte; the other two end earlier under m's
+      audit (C2 below). So the banner's two Note lines are the only layout-level byte difference.
+  - **Beyond §2.7's fourteen** (most consequential first; "declared" = where v1.11 already states it).
+    - A1. **The primary's domain.** f1 took first picks from whole-session-valid sessions
+      (f_sessions.py:439, :461–473); m takes them from sessions that reached the first read (m:308). On
+      f1's own archive this moves CORR from 28/56 (Δ .000) to 30/58 (Δ +.017), since s4 and s25, excluded
+      after a P first pick, come back. The sham moves from 18/33 to 19/34. Under m's audit as well, the
+      count is again 28/56 but on a different set of sessions. CORR's Δ stays below E under either domain rule (.000 < .0455;
+      .017 < .0588). Under m's audit the sham's E was not recomputed, but Δ .000 cannot exceed any E.
+      Declared at m:306–308 only; m:261 still names f1's rule (`valid` = not excluded, :439) as the
+      "Valid-session rule of record" (a seat note).
+    - A2. **Conjunct (iii).** A0 is held at α .01 in the direction under test against f1's p < .05 toward
+      P (declared m:182, m:310, m:326).
+    - A3. **Outcome logic.** m's ordered outcome set (INDETERMINATE / REVERSE / PASS / DEAD) against f1's
+      `screen_hit` boolean (declared m:310, m:324–326).
+    - A4. **Floors.** What they count (domain, not valid sessions), their sizes, L as a projection, and
+      the hour cap and PI stop (declared m:182, m:190–192, m:247). Under m's rule, f1's DIFF and FDBK
+      would have met 48.
+    - A5. **The per-property exclusion table's unit.** m's table is per arm × property, with three
+      columns: rounds generated, rounds excluded by class, and sessions excluded pre-pick (m:314). f1
+      counted all excluded sessions in any phase. f1's reference is 7 vs 1, which on f1's archive is 5 vs
+      1 pre-pick under f1's audit and 5 vs 3 under m's. m:314 does not say which column 7 vs 1 is the
+      reference for.
+    - A6. **f1's pooled pause monitors are not carried:** lexical, cap-hit and low label mass. A sham-arm
+      `round_degeneracy` look bar is added. The lexical and low-mass monitors are disclosed (m:330,
+      m:283); **the cap-hit monitor's removal is disclosed nowhere**. None of f1's three came near
+      firing on its archive (lexical 19/344 sessions, cap 14/3,074 rounds, low mass 165/1,745 reads). A priming-driven rise in lexical
+      exclusions can now pause only through the guard, and only when it falls before the first pick; a
+      free-round rise pauses nothing.
+    - A7. **The exclusion guard.** Its numerator is now pre-pick exclusions; its comparator is the matched
+      A0s (m:316), with no minimum sham n (Code's PIN reading of m:316's "at every look"); it runs at every
+      look (m:316); and it fires on ≤ (m:271). On f1's archive the numerators move from 8/64 to 6/64 for
+      CORR (8/64 under m's audit) and from 7/40 to 6/40 for the sham.
+    - A8. **Pre-campaign stages:** G-TIME-F0, G-ID-F0m and G-F0m-Qwen (declared m:280–283) against f1's
+      smoke and its `smoke_bar_check`.
+    - A9. **Hair triggers stop the stage.** `scaffold_absorption` also cuts a free-round session, against
+      f1's `special:` post-degeneracy at a free round. There were 0 such rounds in f1's 3,074 (declared
+      m:271).
+    - A10. **G-VER** rebuilds each session before its record is written; f1 had none (declared m:284).
+    - A11. **The boundary assertion** before every generation is a new HALT condition against f1. v1.11
+      does not state it, but it is rule 28(d)'s standing form (a), which v1.11 cites (m:8, m:172).
+    - A12. **Exact P ≤ α against float p < .05.** The two rules disagree only at n 1, k 1, p0 .05, which
+      is G-TIME-F0's round-1 case (f1's float is 0.05000000000000001), and at Fisher ties of exactly 1/20
+      (m:271).
+    - A13. **Monitoring cadence:** looks every 40 launches pooled over both arms, against f1's checks at a
+      contrast's n = 24 and at completion (declared m:330).
+    - A14. **Running out of schedule** pauses for the PI; f1's fixed plan could not run out (not declared
+      in v1.11).
+    - A15. **Insulation.** f1 asserts six jlens modules absent; m asserts one module absent,
+      `valence_core.e2b.statepresent` (m:48), which is not a jlens module. Two of f1's six
+      (`forced_choice`, `conditioning`) load in every F0m Qwen process. With empty function sets those
+      paths are f1's line for line, but f1's own assertion would fail on F0m's apparatus.
+    - A16. **Pre-declared secondaries with a 20-event floor** (m:312); f1 pre-registered no secondary
+      choice analysis.
+    - A17. **A strict exclusion scope**, recorded beside the lenient one (declared m:261).
+    - A18. **Choice-read numerics.** m's softmax and verify KL are float64 against f1's MLX float32. The
+      pick and tie rules are the same: f1's 33 exact-tie reads of 1,745 go to the menu-first label in
+      both. KL is held to the same exact zero (88/88 f1 verified CORR reads gave 0.0). Not declared in
+      v1.11.
+    - A19–A22. **Record schemas** (session, round, choice; not declared in v1.11) and the rule-23
+      counters. The counters are named and keyed by arm and property at m:314, with `audit_degenerate`'s
+      and `round_degeneracy`'s numerators at m:261; their remaining definitions and the code's keys are not
+      declared. m does no in-session grading. f1 graded all 597 CORR rounds, and its verdict entry used the
+      grades: the in-session CORR accuracies, P .838 vs Q .833 (archive/RESULTS-cycles3-4.md:107–110), set
+      against the calibration accuracy-delta covariate PROPOSAL-f:86 pre-registered, plus DIFF's gap and
+      FDBK's composition. m computes
+      no in-session covariate; its covariate of record is G-CAL's (m:176). The in-session figure can be
+      rebuilt from the stored item, task and text.
+    - A23–A25. **The per-session stdout line** (f1 printed picks; declared m:318 and m:263), **blinding
+      and the order of analysis** (m:271, m:318), and **checkpoint storage and the resume identity**
+      (§2.7's resume-identity sentence, m:267).
+  - **Borderline, beyond §2.7 in the letter** (the refuters split; the synthesizer recommends a clause on
+    the named item, not a fifteenth).
+    - B1. **The encode limit.** m's uncached path also has no encode limit, but (14) is worded for the
+      cached path. v1.11 already says, without a path scope, "no encode limit on generation" (m:172); only
+      Appendix D's disclosure (14) is scoped to the cached path. Extend (14) to "no encode limit on either
+      path".
+    - B2. **The cell.** Sham session s no longer shares contrast session s's cell: f1's sham s carried
+      CORR s's pair, swap and start in all 40 sessions. m draws campaign cells per arm; at gate stages only
+      the pair is drawn per template (π), so sham s shares contrast s's map, start and clause. Its pair
+      comes from a separate π, and on the committed schedules it differs at every gate-stage session
+      (qualification 0/8, G-TIME 0/1).
+      This is a consequence of (8) that nothing states.
+  - **Covered by §2.7, with a consequence the seat may want stated under the item.**
+    - C1, under (3). **f1's corrupted label sometimes delivered byte-clean text:** items 1 and 12 survive
+      `corrupt()` unchanged. That gave 40 of 306 Q rounds clean (on record), and 16 of the 58 sessions that
+      reached the first read had exactly one byte-clean forced Q round before the pick, none two (new;
+      Code's re-run, in the differences raw). Every m
+      render differs from clean in at least 3 letters. This bears on A0's comparison with f1's primary.
+    - C2, under (6). **m's audit ends two f1 sessions at the forced phase where f1 continued:** s48 (valid
+      in f1, P first pick) on `content:stuck_attractor`, and s25 on `content:null_response`. The runner
+      replay rebuilds the other 62 byte-identically, including all six of f1's forced audit exclusions.
+    - C3–C9 (the §2.7 item each falls under in brackets).
+      - C3, C4 (6): the audit stacks differ in both directions (a probe table). Content classes reach
+        clean and corrupted rounds differently, because `corrupt_m` alters "Write" on items 5, 11 and 15,
+        the one verb of the content class's lists it hits; where a response restates the clean text, it
+        also breaks the "Name" runs of items 2 and 8. That is pick-independent on forced rounds
+        (descriptive for A0's primary, though it moves forced-round exclusions by property, and so by
+        arm in the guard's A0-vs-A0s comparison); on free rounds it bears on post-pick validity.
+      - C5 (8, with 5): header and menu wording is no longer tied to the pair in the campaign; at gate
+        stages π ties it again.
+      - C6 (5): the one shared pair is ordered the other way round, so map labels are not comparable
+        across rosters.
+      - C7 (8, 13): an arm can stop partway through a balance unit.
+      - C8 (7, 8): the gate-stage streams.
+      - C9 (1): the banner is the only layout difference.
+  - **For the seat (observations, not differences).**
+    - m:261's "rule of record" against m:308's domain (A1).
+    - m:271 says a Qwen free-round v2 claim ends nothing. But every scaffold hit is a v2 claim, and the
+      session ends on it through the hair trigger; the session-end rule could say so.
+    - m:172's claim that the per-pair sham shares reported at qualification are not confounded with start
+      or clause order: through π, each pair at a gate stage is tied to one wording sequence (C5).
+    - (12)'s and (14)'s "A0's comparison with f1's primary is unaffected" is true of the realised record:
+      no f1 CORR exclusion came from a clipped generation or followed a clipped read. But 5 of (14)'s 135
+      clipped generations and 2 of (12)'s 75 clipped reads are CORR, post-pick, inside f1's
+      primary-of-record sessions, and the phrase should not read as unaffected overall, given A1, C1 and
+      C2.
+  - **The synthesis's open [verify] (F6), settled by Code's own tokenizer-only recount.** This is not
+    (14)'s own [verify], which Code's v1.10 recount discharged. No model was loaded; the `tokenizers`
+    library ran on the local Qwen snapshot's tokenizer.json, offline, as in Code's v1.10 recount of STOP-7
+    A3's figure (results/raw/2026-10-05_m-v1.10_code_own_pass.txt, tok_recount.py); the script and output
+    are in the differences raw.
+    - f1's primary of record drops s4 and s25 for post-pick lexical hits at free4 (round index 8). That is
+      where 27 of (14)'s 135 clipped generations sit.
+    - The inputs to the two excluding generations (prefix plus segment, as f1's `gen_round` encoded them)
+      came to **403 and 467 tokens, under 512**. s4 and s25 are the only f1 CORR sessions excluded at a
+      free round.
+    - So (14)'s window does not bear on f1's primary of record through them. The 5 CORR generations that
+      did pass 512 (of the 135; 1 at index 8, 4 at index 9) are post-pick, in sessions f1 kept valid. None excluded, but whether any would
+      have hit unclipped is not settled.
+  - Committed: the entry; the artifact `data/m/gates/Q-F0_G-PORT.json`; the replay raw and the
+    differences raw. The values-check raws for this entry are committed with the dispositions entry,
+    which they also cover. Next: step 6, G-CAL, on the PI's word. Its steps are the 0.12 replay, the renders of
+    record and their sha, the seat's legibility read (on Code's ping), completability (128 Qwen
+    generations on the laptop, a model run) and the roster assertion.
+
 - 2026-10-07 — **DESIGN DISPOSITIONS OF THE BUILD FLAGS (a)–(s) (design seat, routed by the PI 2026-10-06):
   APPLIED. Fifteen flags are accepted as built, (i) is a wording note and (q) keeps `content@{phase}` as a
   fourth printed class, all with no change. Ruling (h) is implemented: at every built G-TIME stage the
