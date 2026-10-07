@@ -1,0 +1,917 @@
+# Values-check of the 2026-10-07 entries (DESIGN DISPOSITIONS ... APPLIED; G-PORT), PASS 1 (pre-commit).
+# Four section checkers (the dispositions entry; G-PORT headline, replay and method; G-PORT A1-A25; G-PORT B/C/seat/[verify]/committed) extracted every factual
+# claim and verified each by running code or reading files. 155 claims, 36 failing or imprecise. Every one was applied before pass 2.
+# Two were text in the package itself: readrule.py's G-TIME read label ('counts only, no class') and scaffold.py's G-PORT PIN ('no newline search'); both reworded,
+# then the self-test (647/647, two runs), the site check (8/8) and G-PORT (64/64; package_sha256 96fbcacf...199808) were re-run. The differences raw gained an errata block.
+
+====================================================================================================
+PART disp: 33 claims, 9 failing or imprecise
+====================================================================================================
+[disp 1] HOLDS: Headline: entry dated 2026-10-07, design seat's dispositions routed by the PI 2026-10-06, APPLIED; stamp 'date -u → Wed Oct  7 02:54:19 UTC 2026'; Code's date is UTC, hence 10-07 against the routing's 10-06
+    EVIDENCE: routing.txt line 1 '... 2026-10-06. Routed by the PI.'; stat of RESULTS.md and scratchpad
+    entry_disp.md both 2026-10-06T22:54:19-0400 = 02:54:19 UTC Oct 7 (date -u now gives Wed Oct 7 02:55:28 UTC
+    2026). The command output itself cannot be re-observed, but the mtimes match it.
+
+[disp 2] HOLDS: The routing quote is verbatim
+    EVIDENCE: sed -n 163,181p RESULTS.md | sed -E 's/^    > ?//' > vc1/quote.txt; diff quote.txt ../routing.txt →
+    IDENTICAL (byte-for-byte, including the ≤ and em dashes).
+
+[disp 3] HOLDS: Fifteen flags accepted as built; (i) is a wording note and (q) keeps content@{phase} as a fourth printed class, all with no change
+    EVIDENCE: routing.txt: '(a) (b) (c) (d) (e) (f) (g) (j) (k) (l) (m) (o) (p) (r) (s)' = 15; plus (i), (q), (h),
+    (n) = 19 = (a)–(s). readrule.PRINT_CLASS and _CLASS_RX = audit|echo|content|lexical (four). content@ was
+    already in HEAD's _PRINTED regex, so (q) needed no change.
+
+[disp 4] IMPRECISE: Headline: 'Ruling (h) is implemented: at every G-TIME stage the contrast session's forced rounds reach stdout and the report as counts only, rounds generated and excluded yes/no, with no class and no round position'
+    EVIDENCE: Code: readrule._contrast_block_time and session_line/printed_reason at stage 'time' (git diff
+    readrule.py). Two things the headline leaves out. (1) A forced-phase hair trigger or G-VER failure on the
+    contrast session still puts its class on stdout ('BAR scaffold_absorption FIRED template=A0 phase=forced') and
+    in the report's stop block {bar, template, s, phase}, as the m_sessions forced-hair check asserts; the body
+    discloses this as the m:318 exception (1) carve-out. (2) Stdout carries only excluded yes/no
+    (excluded@forced). Also 'every G-TIME stage' means only the built ones, since there is no Q-F3/G-TIME-F3 code;
+    the code keys on stage 'time'.
+    CORRECTION: ... reach stdout (by phase alone) and the report as ruling (h)'s counts only, rounds generated and
+    excluded yes/no, with no class and no round position, apart from the forced-phase hair-trigger/G-VER STOP
+    announcement, which keeps its class as built (m:318 exception (1)) ...
+
+[disp 5] HOLDS: Code also extended (h) to the stripped read, disclosed
+    EVIDENCE: readrule.py PIN at TIME_ROUND_KEEP: 'the ruling names the report; this extension to strip_contrast
+    is Code's, conservative, and flagged for the seat'; strip_contrast's stage=='time' branch.
+
+[disp 6] HOLDS: Ruling (n) is recorded as the condition the lock checks, with the helper that checks it
+    EVIDENCE: stages.accepted_proposals docstring PIN ('The condition binds at the LOCK, not here'); new
+    stages.governing_sections_identical(old_path, new_path, spans).
+
+[disp 7] IMPRECISE: Headline: the note 'the STOP governs' at G-TIME-OLMo was already built; it is now tested at n = 1 and 2, and n = 3 PAUSEs
+    EVIDENCE: The behaviour was already built: HEAD stages.py:1387 '# A round-1/2 OLMo claim fires both; the STOP
+    governs' and bars.py:609 PIN. But n = 1 and n = 3 were already tested at HEAD: HEAD m_sessions.py:679 'OLMo
+    G-TIME -- a round-1 claim fires bar and pause; the STOP governs' and :671 'a round-3 echo on the sham session
+    PAUSEs'. n = 2 was already tested at unit level in HEAD bars.py:1297 'a round-2 AuditSpec claim fires the bar
+    AND the pause (STOP governs)'. What is new is the n = 2 integration case and the assertions that the pause is
+    not acted on (one STOP event, no PAUSE line, the qualification refused with and without an adjudication, zero
+    generations). The body's 'the check is now extended' is accurate.
+    CORRECTION: The note 'the STOP governs' at G-TIME-OLMo was already built and tested at n = 1; the integration
+    check now also covers n = 2 and asserts that the pause is not separately acted on; n = 3 still PAUSEs.
+
+[disp 8] HOLDS: Headline: gport command for step 5 is added
+    EVIDENCE: git diff scripts/m_sessions.py: run_gport, gport_path, the 'gport' subparser.
+
+[disp 9] HOLDS: Self-test 647/647 (two runs); 628 before; 19 new checks
+    EVIDENCE: The raw's last line is '647/647 m selftest checks pass'; grep -c '^  \[PASS\]' = 647, [FAIL] = 0.
+    scratchpad sel_1.txt and sel_2.txt both 647/647 and differ only in temp paths, stamps and timing; the raw
+    minus its 3 header lines == sel_1.txt. The step-4 raw 2026-10-06_m-build_selftest.txt reads 628/628. Name
+    diff: 19 new check names (8 readrule, 2 stages, 9 m_sessions); the only other change is 'stdout of 198' → '228
+    integration runs', the same check.
+
+[disp 10] HOLDS: Site check 8/8: 154/154, 67/67, 21/21, 20/20, 46/46, 18/18, 24/24 and the m self-test 647/647, gated on summary lines
+    EVIDENCE: results/raw/2026-10-07_m-dispositions_sitecheck.txt has eight GATE lines, all 'PASS (summary line
+    matched; exit 0)', with exactly those summaries; 'SITECHECK_DONE ... gates failed: 0'.
+
+[disp 11] HOLDS: Two independent checkers raised four minor findings, all fixed by Code; none refuted; every finding put to a strict refuter
+    EVIDENCE: _check raw: blinding-h #1 plus correctness #1–#3. Each reads 'strict refuter: refuted=False
+    severity=minor', and each DISPOSITION reads 'FIXED by Code'.
+
+[disp 12] HOLDS: Nothing run on a model; the k arc untouched
+    EVIDENCE: git status/diff: only RESULTS.md, scripts/m_sessions.py, valence_core/m/readrule.py and stages.py
+    are modified, no k file. The selftests and differentials use testing.ScriptedAdapter / OLMoScriptedAdapter
+    stubs.
+
+[disp 13] HOLDS: (h) applies to G-TIME-F0 and each G-TIME-OLMo-{ckpt}, for the contrast template's session
+    EVIDENCE: stages.stage_name: 'time' → G-TIME-F0 (qwen) and G-TIME-OLMo-{c}. readrule keys on stage ==
+    TIME_STAGE ('time') and keys.is_contrast(t). _finish_gate calls _assert_time_counts_only iff gate == 'time'.
+
+[disp 14] HOLDS: The report's contrast block is exactly {contrast, sessions, per_session: [{s, forced_rounds_generated, excluded_at_forced}], free_rounds: withheld}
+    EVIDENCE: readrule._contrast_block_time builds and asserts tuple(out) == TIME_CONTRAST_KEYS and each per-
+    session tuple == TIME_SESSION_KEYS; free_rounds = WITHHELD. My re-run of the blinding harness diff2 on the
+    final bytes shows the report differing from clean only in those two per_session fields.
+
+[disp 15] HOLDS: The stdout session line prints an exclusion by phase alone: excluded:excluded@forced or excluded:excluded@free
+    EVIDENCE: printed_reason: contrast and free → CONTRAST_FREE; contrast and stage 'time' → CONTRAST_FORCED_TIME
+    'excluded@forced'. _LINE_RX time-contrast branch 'excluded:excluded@(?:forced|free)'. Re-run diff1: every case
+    prints 'time A0 s=0 excluded:excluded@forced' (or the OLMo form).
+
+[disp 16] HOLDS: Code's extension to the stripped read: keeps the banner and the forced rounds' bytes (m:280's mandated read); per forced round only {phase, ri, n, text}, plus n_forced_rounds and excluded_at_forced; every structured class, claim and domain field dropped, along with each round's label, role, pole, property, item, task_text and seed; the forced text still shows the number of forced rounds and each round's header, Task line and response
+    EVIDENCE: readrule.strip_contrast 'time' branch: rounds = {k for k in TIME_ROUND_KEEP}; tout keys come from
+    _TIME_STRIP_TOP (_STRIP_TOP minus 'domain'); transcript[:cut]; _assert_withheld(TIME_WITHHELD ∪ free-only
+    keys) walks nested keys. m:280: 'transcripts read under §3's rule (the A0 session's forced rounds only)'.
+    Note: the read also keeps the top-level cell (P, Q, map, start) and the pieces (idx/start/end), which are not
+    class fields.
+
+[disp 17] HOLDS: Before any write, the finish asserts the report's and the read's contrast forms
+    EVIDENCE: stages._finish_gate: _pend only computes in memory (set_end_pending on the in-memory ckpt plus
+    assert_writable). `if gate == "time": _assert_time_counts_only(...)` precedes _write_pending, the report/reads
+    writes and persist_end.
+
+[disp 18] IMPRECISE: Kept as built (m:318 exception (1)): a forced-phase hair trigger or G-VER failure on the contrast session is announced by its class (or the harness class), never its round or n; the fired round is read only in the confined excerpt under ckpt/
+    EVIDENCE: stages.announce_stop prints the bar's blinded message plus 'STOP {name}: hair trigger {bar} ({t}
+    s={s})', and the blinded block is {bar, template, s, phase}. _verify_hit names MISMATCH/BREAK with phase None.
+    None of these carries the round. However, the same report's per_session.forced_rounds_generated places the
+    fired round: m_sessions' forced-hair check asserts stop == {bar: scaffold_absorption, ...} beside per_session
+    [{forced_rounds_generated: 3, excluded_at_forced: True}]. So the report carries the class and the round
+    position together. The disclosure bullet covers exclusions, not this hair-trigger case.
+    CORRECTION: ... is announced by its class (or the harness class), never its round or n. The report's counts
+    still place the fired round as the last one generated, so at a forced hair stop the report carries both the
+    class and the position.
+
+[disp 19] HOLDS: Qualification and campaign blocks are unchanged; a must-not-fire check asserts classes are still reported at G-F0m-Qwen
+    EVIDENCE: stage_report calls the unchanged _contrast_block for stage != 'time'. New checks: readrule 'ruling
+    (h) is G-TIME only (must not fire) -- ... qualification stage' and m_sessions 'at G-F0m-Qwen a contrast forced
+    v2 exclusion still prints qual A0 s=0 excluded:audit@forced', both [PASS]. The blinding-h HEAD comparison
+    found qual byte-identical apart from package_sha256. stage_name('Q-F0','qual') = 'G-F0m-Qwen'.
+
+[disp 20] HOLDS: Disclosed in a PIN, unchanged: with one contrast session, forced_rounds_generated below 4 with excluded_at_forced true places the exclusion at the last generated round; with the committed start order and map that gives its property; the ruling permits exactly these two counts
+    EVIDENCE: readrule PIN above TIME_CONTRAST_KEYS says the same. G-TIME has one contrast session
+    (Q-F0_time_A0.json n=1). Forced rounds = 4 (bars: '4 forced + 6 free'). Property comes from role order
+    (scaffold: order from start; Q role = corrupted, scaffold.py:603). Nit: the PIN says start order alone gives
+    the property; the map adds the tag, not the property.
+
+[disp 21] IMPRECISE: (n): the condition binds at the lock; the PIN at accepted_proposals states the seat's words and adds one consequence, which a checker found and Code fixed in the wording
+    EVIDENCE: The PIN quotes the routing's (n) condition verbatim. But the fix for correctness #2 ('option (b),
+    wording + record') also changed code: governing_sections_identical now returns old_file, new_file,
+    sha256_old_file and sha256_new_file, and the selftest asserts them (_check raw:372). That is not only a
+    wording fix.
+    CORRECTION: ... which a checker found; Code fixed it in the wording and added the two files' paths and sha256
+    to the helper's record.
+
+[disp 22] IMPRECISE: The list is per run, not per stage: one listed proposal licenses every prior artifact the run checks under it (Qwen qualification: G-TIME prior and G-ID artifact; campaign: qualification prior and G-ID artifact); so a lock lists an earlier proposal only when the check passes for every such stage, each stage's spans recorded
+    EVIDENCE: stages.prior_gate:759 builds a single `accepted`, used for the prior (:760) and, if sub=='qwen' and
+    stage=='qual', for gid_artifact_problems (:792). The campaign G-ID check (:1980) applies only under `if sub ==
+    "qwen"`, and PRIOR_STAGE['campaign']='qual'. So the campaign's G-ID check is Qwen-only; OLMo has no G-ID.
+    CORRECTION: (at the Qwen qualification, the G-TIME prior and the G-ID artifact; at the Qwen campaign, the
+    qualification prior and the G-ID artifact)
+
+[disp 23] HOLDS: governing_sections_identical(old, new, spans) compares exact UTF-8 bytes from each start marker to its end marker; each marker must occur exactly once in each file, else it refuses; returns both files' paths and sha256 and each span's two sha256 and verdict
+    EVIDENCE: Code: bytes body[a:b], start inclusive and end exclusive; count != 1 → ValueError; also refuses an
+    end before its start, empty/non-str markers and unreadable files. My run on archive v1_10 vs v1_11 returned
+    {identical, old_file, new_file, sha256_old_file, sha256_new_file (42ab36ec...6c6b),
+    spans[{start,end,sha256_old,sha256_new,identical}]}. Duplicate start → ValueError 'occurs 2 times'; reversed
+    span → ValueError.
+
+[disp 24] HOLDS: STOP governs: a sham round-1 echo and a round-2 AuditSpec claim each give STOP with both bars firing (degeneracy bar k 1, critical 1); one STOP event naming both; no PAUSE line; the qualification refuses with or without an adjudication; a round-3 claim PAUSEs (critical 2, not fired)
+    EVIDENCE: m_sessions check 'OLMo G-TIME -- the STOP governs at realised n <= 2 ...' [PASS] in the selftest
+    raw. It asserts fired == {round_degeneracy: True, gtime_pause: True}, (k,n,crit) == (1,n,1), len(events)==1
+    with STOP, no 'PAUSE' line, 'PRIOR ADJUDICATION REFUSED' / 'PRIOR STAGE STOP' with 0 calls, and at n=3 PAUSE
+    with (1,3,2). bars.critical_k for round_degeneracy@G-TIME-OLMo-sft (p0 .02, α .05), n=1..8 →
+    [1,1,2,2,2,2,2,2].
+
+[disp 25] HOLDS: gport replays every CORR row of data/f/sessions.jsonl (sha-pinned) through scaffold.replay_f1_row
+    EVIDENCE: run_gport filters arm=='CORR' from scaffold.load_f1_rows(), which pins F1_SESSIONS_SHA16
+    'd49913e5ffdfb935'. shasum of data/f/sessions.jsonl starts d49913e5ffdfb935; 344 rows, 64 CORR.
+
+[disp 26] IMPRECISE: gport prints one line per row and a summary line, and writes data/m/gates/Q-F0_G-PORT.json: the criterion, counts, mismatches, the f1 sha16, package_sha256, and verdict PASS iff 64/64
+    EVIDENCE: My run `m_sessions.py gport --out vc1/disp/gp` gave rc 0: INVOCATION first, then 64 'gport s=<s> ok'
+    lines and '  G-PORT 64/64 archived CORR transcripts reproduced'. The artifact is byte-identical (cmp) to
+    data/m/gates/Q-F0_G-PORT.json. verdict = PASS iff n_ok == n == 64. The artifact also has a 'unit' key ('Q-F0')
+    that the entry omits, and stdout starts with an INVOCATION line.
+    CORRECTION: It prints an INVOCATION line, one line per row and a summary line, and writes ... the criterion,
+    the unit, the counts (n_rows, n_ok), mismatches, ...
+
+[disp 27] HOLDS: gport never overwrites differing bytes, refuses --out under data/m and an empty or blank --out, exits 0 on PASS and 4 on STOP
+    EVIDENCE: run_gport: refuses an existing artifact with different bytes (rc 1). stages.EXIT_CODES PASS 0, STOP
+    4. My probes: --out '' and --out '   ' → 'gport --out: an empty path is refused' rc 1; --out data/m/xyz →
+    'SELFTEST REFUSED ... under the canonical location' rc 1, with no directory created. The canonical artifact's
+    sha is unchanged (shasum -c OK). The selftest's tampered row gives exit 4. Not stated: a refused overwrite
+    exits 1 and combined flags exit 2.
+
+[disp 28] HOLDS: Checks: one implementing agent, then two independent checkers (a blinding differential and a correctness pass), every finding put to a strict refuter
+    EVIDENCE: _check raw header lines 1-4; sections 'IMPLEMENTER'S REPORT', 'CHECK blinding-h', 'CHECK
+    correctness'.
+
+[disp 29] IMPRECISE: The differential found every G-TIME output outside ckpt/ byte-identical across contrast forced exclusions of every class at rounds 1–4 on both substrates (stdout, report, read apart from the excluded round's response bytes); contrast picks; contrast free-round events; non-excluding forced-round properties; G-VER failures apart from the harness class name; re-finishes
+    EVIDENCE: _check raw (1)-(7) supports each item. I copied the checker's harness.py and diff1-7.py into
+    vc1/disp/bh and re-ran them on the final bytes: diff1 gave 64 cases (Q-F0 7 classes, OLMo-sft 6, OLMo-dpo 3,
+    each at rounds 1-4, each class confirmed in the checkpoint) with 0 DIFF; diff2-7 rc 0, 0 DIFF. Wording:
+    identity holds across classes at each round, not across rounds (the report's forced_rounds_generated and the
+    reads differ by round, diff2). In (4), OLMo free-claim runs are identical to one another but differ from clean
+    by the excluded@free line.
+    CORRECTION: ... byte-identical across the classes of a contrast forced exclusion at each of rounds 1–4 ...;
+    across contrast free-round events of different classes (OLMo's differing from clean only by the excluded@free
+    line) ...
+
+[disp 30] IMPRECISE: Four minor findings: two docstrings overclaimed the read as 'counts only'; gport --out "" became Path(".") and wrote into the working directory (the probe file was moved out; the root is clean); (n)'s per-run consequence
+    EVIDENCE: _check raw: blinding-h #1 and correctness #3 are the same defect ('as the previous (same defect)').
+    Each names three stages.py texts: the module BLINDING docstring, the _assert_time_counts_only PIN and that
+    function's docstring. These are now reworded (stages.py:82-87, :1494-1516). correctness #1: Path('') is '.';
+    the probe artifact is at scratchpad corrcheck/empty_out_artifact_from_repo_root.json; `ls Q-F0_G-PORT.json` at
+    the repo root → No such file. main now refuses a blank --out (my probe: rc 1). correctness #2 → the (n) PIN.
+    CORRECTION: two findings (one defect, found by both checkers): three stages.py texts (the module docstring,
+    the _assert_time_counts_only PIN and its docstring) overclaimed the read as 'counts only'; ...
+
+[disp 31] FAILS: OMISSION: the 'counts only' label survives in the read itself
+    EVIDENCE: readrule.py:392, written into every G-TIME contrast read's 'blinding' field: "contrast-stripped at
+    G-TIME: banner + forced rounds, counts only, no class (m:271, m:280; the seat's ruling (h))". The fix touched
+    only stages.py's texts; the read keeps {phase, ri, n, text} per round and the forced transcript. A selftest
+    comment at m_sessions.py:1394 also says 'forced rounds are counts only'.
+    CORRECTION: Either reword readrule.py:392 (for example 'banner + forced-round bytes, {phase, ri, n, text} per
+    round, no class field') or disclose it beside the docstring fix.
+
+[disp 32] HOLDS: Self-test: the call-site guard returns []; the schedules are unchanged (manifest 8c89636a…d6bb)
+    EVIDENCE: Selftest raw line 649: 'guard.check_call_sites is [] over valence_core/m + this driver'. shasum -a
+    256 data/m/schedules/manifest.json = 8c89636addb8...cccc8d6bb. git status shows no change under
+    data/m/schedules; its last commit is 5f7b968.
+
+[disp 33] HOLDS: Committed: the entry; readrule.py, stages.py and scripts/m_sessions.py; the three raws linked above; G-PORT ran on exactly these bytes and is its own entry
+    EVIDENCE: Pre-commit: these are the modified and untracked files (git status). The three linked raws exist:
+    _check, _selftest, _sitecheck. mtimes: stages.py 22:46:28 and m_sessions.py 22:45:41, both before the gport
+    raw and artifact at 22:50:48. The artifact's package_sha256 5beff2f9...f6da1f equals resume.package_sha256()
+    on the current tree. Note: package_sha256 covers valence_core/m/*.py only; m_sessions.py's bytes rest on the
+    mtime ordering, not on a recorded hash.
+
+====================================================================================================
+PART gport-head: 34 claims, 7 failing or imprecise
+====================================================================================================
+[gport-head 1] HOLDS: Headline: G-PORT is PROPOSAL-m v1.11 §8 step 5, specified at m:275
+    EVIDENCE: PROPOSAL-m-gating-campaign-v1_11.md:275 is '**G-PORT (Qwen).** Model-free replay ... 64/64 or STOP.
+    The entry lists any F0m-vs-f1 difference the port reveals beyond §2.7's fourteen.' m:358 (§8) reads '5.
+    G-PORT.'
+
+[gport-head 2] HOLDS: Headline: 'the seat's go, routed by the PI 2026-10-06'
+    EVIDENCE: scratchpad/step5/routing.txt line 1 'Design seat — dispositions of the build flags (a)–(s),
+    2026-10-06. Routed by the PI.'; last line 'Go for step 5.'
+
+[gport-head 3] HOLDS: Headline: PASS, 64/64
+    EVIDENCE: My re-run `m_sessions.py gport --out vc1/gport_part/out` exited 0 and printed 64 'gport s=N ok'
+    lines plus '  G-PORT 64/64 archived CORR transcripts reproduced'. Its Q-F0_G-PORT.json is byte-identical (cmp)
+    to data/m/gates/Q-F0_G-PORT.json: verdict PASS, n_ok 64, n_rows 64, mismatches []. A second in-process
+    run_gport also matched the artifact byte for byte.
+
+[gport-head 4] HOLDS: Headline: the replay is model-free
+    EVIDENCE: After an in-process run_gport, no module whose name contains mlx, jlens, transformers, torch,
+    tokenizers or safetensors was in sys.modules (list []). run_gport only calls scaffold.load_f1_rows,
+    pool_and_renders and replay_f1_row (scripts/m_sessions.py:142-204).
+
+[gport-head 5] HOLDS: Headline: the replay runs through the m package's ported CORR delivery module, configured with f1's draw order and corrupt() at 0.12
+    EVIDENCE: scaffold.f1_config (scaffold.py:282-292) builds keys.stream('f|CORR|{s}') = default_rng(crc32 %
+    2**31), the same as f_sessions.py:273-274. corr.ItemStreams(rng) draws permutation(16) first, as items_for
+    does at :253-259. Seeds and menus then come from the same rng. Delivery uses corr.renders_f1
+    (corr.py:276-309). corrupt_f1 equals f1's corrupt() on all 16 items (AST-extracted from f_sessions.py; renders
+    sha16 2c2c227395ea9f2d). F1_RATE == f1's CORR_RATE == 0.12. f1's ROUND_TEMPLATES, MENU_TEMPLATES and
+    SESSION_BANNER equal session_e2a's (True True True).
+
+[gport-head 6] HOLDS: Headline: it reproduces every harness-written line of all 64 archived CORR transcripts in data/f/sessions.jsonl
+    EVIDENCE: sessions.jsonl has 344 rows, and its CORR rows are sessions 0..63 (64). m's replay gives 64/64. My
+    independent replay (vc1/gport_part/indep_replay.py) uses f1's own TAG_PAIRS, templates, corrupt and items_for,
+    AST-extracted from f_sessions.py with no m code, and also gives 64/64 ok. In tamper tests
+    (vc1/gport_part/tamper.py), replay_f1_row catches every edit tried: a changed banner byte, round-3 header,
+    Task line, menu word, pick-line label, appended byte or newline inside a generation.
+
+[gport-head 7] HOLDS: Headline: sha16 d49913e5ffdfb935
+    EVIDENCE: shasum -a 256 data/f/sessions.jsonl ->
+    d49913e5ffdfb935d0ae344bd4202d852cb5723394c17870e37b619aa1033dcc; scaffold.F1_SESSIONS_SHA16 =
+    'd49913e5ffdfb935'; artifact f1_sessions_sha16 the same.
+
+[gport-head 8] HOLDS: Headline: the smoke file's 4 are outside the replay
+    EVIDENCE: data/f/sessions_smoke.jsonl has 24 rows, 4 of them CORR. load_f1_rows reads only F1_SESSIONS_PATH =
+    data/f/sessions.jsonl (scaffold.py:67, :454-459).
+
+[gport-head 9] HOLDS: Headline: harness lines reproduced are the banner, round headers under f1's rotation, Task lines, menus and pick lines
+    EVIDENCE: replay_f1_row builds its harness slots from the banner, forced segs ROUND_TEMPLATES[(s+ri)%4]
+    (header + Task line + 'Response:'), '\n' joiners, menus MENU_TEMPLATES[(s+ci)%4], pick lines f' {pick}\n' and
+    chosen segs (scaffold.py:483-500). It matches each with t.startswith (:509-513). The tamper tests trip on each
+    piece type.
+
+[gport-head 10] HOLDS: Headline: it also reproduces each round's seed, menu order, cell fields, role, tag, Task prefix, pick role and verify cadence
+    EVIDENCE: scaffold.py:474-498 compares pair/swap/start_P/tag_P, (seed, cfg, tag, task[:40]) per round, menu_a,
+    picked_cfg, and verify_kl presence against (s*6+ci)%4==0. f1 runs verify_every=4 with N_FREE=6
+    (f_sessions.py:353, :608). Tampering seed, cfg, tag, task prefix, menu_a, picked_cfg, verify_kl, swap or
+    start_P each gives a problem (tamper.py output). It also checks first_free_pick_P, which the claim does not
+    list.
+
+[gport-head 11] HOLDS: Headline: it walks each transcript to its end with no mismatch
+    EVIDENCE: scaffold.py:528-535 adds 'walk consumed X of Y bytes' if pos != len(t) and 'rebuilt transcript
+    differs' on a rebuild mismatch. Appending one byte triggers both. The 64/64 run had none. The walk covered 597
+    generations, equal to f1's 597 CORR rounds.
+
+[gport-head 12] HOLDS: Headline: differences from f1 beyond §2.7's fourteen: 25, plus 2 borderline
+    EVIDENCE: §2.7 (m:267) lists items (1)-(14). gport_synthesis.md Totals: '25 items beyond §2.7 (section A)', '2
+    borderline ... (section B)'. Its headers run A1..A25, B1, B2.
+
+[gport-head 13] HOLDS: Headline: from a five-lens comparison with a strict refuter on every claim
+    EVIDENCE: gport_diffs.json lenses: harness-bytes 16, delivery-rng 14, generation-reads 17, audit-exclusion 16,
+    records-stats 27 (90 differences). All 90 carry verdict {refuted, covered_by_verdict, reason}.
+
+[gport-head 14] IMPRECISE: Headline: 'Each is listed below with where v1.11 already declares it'
+    EVIDENCE: RESULTS.md:56-105. These items carry no v1.11 locus at all: A8, A9, A10, A11, A13, A14, A15, A17,
+    A18, A19-A22, A23 and A25 (A24 alone gets '(m:318)'). For several of them the synthesis does give one, and the
+    entry drops it: A9 'Declared in §3 (m:271)', A23 'already disclosed at m:318 and m:263', A24 'Declared at
+    m:271 ... and m:318', A25 '§2.7's resume-identity sentence specifies m's side'.
+    CORRECTION: Each is listed below, with where v1.11 already declares it where it does (A9 at m:271, A23 at
+    m:318 and m:263, A24 at m:271 and m:318, A25 in §2.7's resume-identity sentence); A8, A10, A11, A13–A15,
+    A17–A22 are declared nowhere in v1.11.
+
+[gport-head 15] HOLDS: Headline: which of the differences belong in Appendix D is the seat's call
+    EVIDENCE: m:267: 'Disclosures for the paper (Appendix D) — how F0m differs from f1's apparatus, fourteen items
+    (Code adds any difference the port reveals, in the G-PORT entry)'.
+
+[gport-head 16] HOLDS: Headline: one open [verify] is settled by Code's own tokenizer-only recount
+    EVIDENCE: m:267 item (14) ends '[verify]'. scratchpad/step5/own/tok_s4_s25.py and .out exist. The script is
+    byte-identical to the one in the differences raw Part 2, and the output matches the raw (403 and 467 tokens).
+    Checking the token counts themselves needs a tokenizer, which I did not load. Separately, sessions.jsonl
+    confirms s4 and s25 ('lexical:...@free4') are the only CORR exclusions at a free round; the other 6 are
+    audit:frame@forced.
+
+[gport-head 17] HOLDS: Headline: nothing run on a model; the k arc untouched
+    EVIDENCE: The gport path loads no model modules (see above). git status shows only RESULTS.md,
+    scripts/m_sessions.py, valence_core/m/readrule.py and valence_core/m/stages.py modified, plus untracked m and
+    doc files. No k-arc path changed.
+
+[gport-head 18] HOLDS: Headline stamp: date -u Wed Oct 7 02:54:19 UTC 2026; the replay itself ran at 02:50:47 UTC
+    EVIDENCE: Raw header '# Code stamp: 2026-10-07 02:50:47 UTC (date -u)'. UTC mtimes: Q-F0_G-PORT.json and
+    m-gport.txt 02:50:48, RESULTS.md 02:54:19. Every valence_core/m/*.py was last modified at or before 02:46:28,
+    so the replay ran on the current bytes.
+
+[gport-head 19] HOLDS: The replay: links the _gport raw and the artifact Q-F0_G-PORT.json
+    EVIDENCE: results/raw/2026-10-07_m-gport.txt and data/m/gates/Q-F0_G-PORT.json both exist. data/m/gates/ is
+    untracked but not ignored (git status '??').
+
+[gport-head 20] HOLDS: The replay: printed 64 'gport s=<s> ok' lines and '  G-PORT 64/64 archived CORR transcripts reproduced', exit 0
+    EVIDENCE: The raw has INVOCATION, then gport s=0 ok .. s=63 ok (64 lines), '  G-PORT 64/64 archived CORR
+    transcripts reproduced' and 'EXIT=0'. My re-run's 65 lines after INVOCATION match the raw's (diff empty), exit
+    0.
+
+[gport-head 21] HOLDS: The replay: the artifact records verdict PASS, mismatches [] and package_sha256 5beff2f9…f6da1f
+    EVIDENCE: The artifact has package_sha256 5beff2f9ad4dbe602a110d15fffffe745f47df9303ae507418719f3468f6da1f,
+    verdict PASS and mismatches []. On the working tree, resume.package_sha256() prints the same 5beff2f9…f6da1f.
+
+[gport-head 22] IMPRECISE: The replay: package_sha256 is 'the bytes of valence_core/m/*.py the disposition commit holds'
+    EVIDENCE: The hash is of the working tree: 16 files, HEAD 5f7b968 plus the uncommitted readrule.py (+273) and
+    stages.py (+250). Under the same scheme HEAD's own bytes hash to
+    4c75080fa7821ec0edaa83a3cc1a8ba44e1a6bf067ced54a8fbf4c2bbdea131d. No disposition commit exists yet, so the
+    claim holds only if those two files are committed unchanged.
+    CORRECTION: package_sha256 5beff2f9…f6da1f: the working tree's valence_core/m/*.py at the replay (HEAD 5f7b968
+    plus the uncommitted readrule.py and stages.py), the bytes the disposition commit is to hold unchanged.
+
+[gport-head 23] FAILS: OMISSION: what package_sha256 does not cover
+    EVIDENCE: package_sha256_of hashes only valence_core/m/*.py (resume.py:296-328). The gport subcommand itself
+    (run_gport, the CORR-row filter, the 64/64 PASS rule, artifact writing) is new in the uncommitted
+    scripts/m_sessions.py: `git show 5f7b968:scripts/m_sessions.py | grep -c gport` gives 0. That file is not in
+    the hash; its sha256 at check time is 22ba2544b49a46525ad3fd55d129f79d027425ebaabcf2c23b24705aa2ee3d0d.
+    CORRECTION: Add: the artifact's package_sha256 covers valence_core/m/*.py only. The gport driver
+    (scripts/m_sessions.py, sha256 22ba2544…3d0d, new in the disposition change) is outside it and is pinned by
+    the disposition commit.
+
+[gport-head 24] IMPRECISE: The replay: 'The walk locates every generation between its harness pieces, never by a newline search'
+    EVIDENCE: scaffold.py:518-524 finds each generation's end with t.find(nxt, pos), where nxt is the next merged
+    harness piece. For the last generation of every transcript, that piece is the bare final joiner '\n', so the
+    end is found by a bare newline search: 64 of 597 walked generations (vc1/gport_part/tamper.py). It is bounded
+    only afterwards, by the pos == len(t) and rebuild checks (:528-535). For the other 533 generations the piece
+    starts with '\n' plus the next header. The scaffold PIN at :518 makes the same overclaim ('locates no
+    generation by a bare newline search').
+    CORRECTION: The walk bounds every generation by the next harness piece the scaffold has built, never by a
+    newline alone. For the last generation of each transcript that piece is the final '\n' joiner, anchored by the
+    end-of-transcript and rebuild checks.
+
+[gport-head 25] HOLDS: How found: links the _differences raw, holding the synthesis verbatim, Code's recount, and all 90 claims with their refuters
+    EVIDENCE: In 2026-10-07_m-gport_differences.md, Part 1 (lines 9-623) differs from scratchpad
+    gport_synthesis.md only by a trailing '---'. Part 2 holds the tokenizer script and output. Part 3 has 5 '###
+    Lens' sections and 90 '#### ' claim headings, each with its refuter's verdict.
+
+[gport-head 26] HOLDS: How found: five read-only lenses compared F0m (Q-F0, A0/A0s, HEAD 5f7b968) with f1's jlens-qwen36/scripts/f_sessions.py
+    EVIDENCE: The lenses in gport_diffs.json are harness-bytes, delivery-rng, generation-reads, audit-exclusion
+    and records-stats. Each scope statement names HEAD 5f7b968: harness-bytes 'judged against HEAD 5f7b968 ...
+    nothing was written in the repo', records-stats 'Judged against HEAD 5f7b968 ... Read-only on the repo'.
+
+[gport-head 27] IMPRECISE: How found: the five lens names are harness bytes; delivery and rng; generation and reads; audit and exclusion; records, statistics and blinding
+    EVIDENCE: The differences raw's own Method line names the fifth lens 'records, verification, printing and
+    statistics'. The lens's scope (gport_diffs.json) covers records, verification (G-VER, verify cadence,
+    insulation), stdout, checkpoints and resume, monitors and bars, floors, the primary, E, outcome logic,
+    secondaries and counters, and blinding. The entry's label leaves out verification and printing and does not
+    match the raw's.
+    CORRECTION: ...; records, verification, printing, statistics and blinding (the raw's 'records, verification,
+    printing and statistics', whose scope includes blinding).
+
+[gport-head 28] HOLDS: How found: each lens classified every difference as covered by one of §2.7's fourteen or beyond them
+    EVIDENCE: Finder covered_by values over the 90: 'beyond' 62, and §2.7 (1)-(14) for the rest ((6) 4; (11) and
+    (12) 3 each; others 1-2). The lenses also kept a separate 'internal, no effect' list (52 items), which is not
+    a difference classification.
+
+[gport-head 29] HOLDS: How found: a strict refuter checked each claim and its classification; 90 claimed, 1 refuted
+    EVIDENCE: All 90 differences have verdict.refuted (a bool) and covered_by_verdict. Exactly one is refuted:
+    generation-reads 'Generation ban list: source, live rebuild and assertions', refuted as internal, no effect.
+    gport_diffs.json surviving_count = 89.
+
+[gport-head 30] HOLDS: How found: a synthesizer de-duplicated the 89 survivors, re-checked its archive figures, and used the refuter's classification where the two disagreed
+    EVIDENCE: gport_synthesis.md Basis: 'Where a refuter's covered_by_verdict differs from the finder's, the
+    refuter's is used'. 'What I re-checked myself' gives a recount of sessions.jsonl via synth/chk.py, which
+    exists. Spot checks agree: the byte-clean Q-render items (refuters: under (3)) become C1 under (3); the cross-
+    arm cell items (refuters split) become B2; the gate-stage streams (refuter: (7)/(8)) land in C; the uncached
+    encode limit (split) becomes B1.
+
+[gport-head 31] HOLDS: How found: the harness-bytes lens drove m's real Qwen runner with f1's recorded texts and picks under a bare banner and rebuilt 62/64 f1 transcripts byte-for-byte; the other two end earlier under m's audit (C2)
+    EVIDENCE: I re-ran scratchpad/step5/harness-bytes/runner_vs_f1.py (HEAD extract, ScriptedAdapter,
+    banner=SESSION_BANNER, f1_cell, f|CORR|s, corrupt_f1). Output: {"identical": 62, "prefix_shorter": 2, "other":
+    0}. s25 is cut at round 1 by content:null_response at forced; s48 is cut at round 2 by content:stuck_attractor
+    at forced. Pass 2 checked 578 generate calls and 335 reads with 0 problems. The output is identical to the
+    lens's runner_vs_f1.out.
+
+[gport-head 32] HOLDS: How found: 'So the banner's two Note lines are the only layout-level byte difference'
+    EVIDENCE: banner.build_banner gives SESSION_BANNER + COMMON + '\n' + TOLD + '\n' (banner.py:103). Both COMMON
+    and the TOLD-MAP / TOLD-MAP-SHAM lines begin 'Note:'. With the banner set to SESSION_BANNER alone, m's runner
+    rebuilds f1's layout on all 62 sessions its audit does not cut. 'Layout-level' fits, since labels, renders and
+    items were held at f1's values in that run.
+
+[gport-head 33] FAILS: OMISSION: G-PORT exercises only the f1 configuration
+    EVIDENCE: run_gport goes through scaffold.f1_config only (scaffold.py:282-292): SESSION_BANNER alone, f1_cell,
+    the f|CORR|s rng and corrupt_f1. m_config (the §2.5 banner, committed-schedule cells, arm_key/item_key split
+    streams) and corrupt_m are not on the replay path. What the replay validates is the shared SessionScaffold
+    layout and rotation plus corr.Delivery and corr.ItemStreams.
+    CORRECTION: Add: the replay exercises the shared scaffold and delivery module under f1's configuration. m's
+    own configuration (banner, schedule cells, split keys, corrupt_m) is not exercised by G-PORT and is G-CAL's,
+    G-SHAPE-F0's and G-VER's to check.
+
+[gport-head 34] FAILS: OMISSION: what the lenses' scope left out
+    EVIDENCE: All five lenses judged HEAD 5f7b968, not the working tree (records-stats: 'never the working tree
+    (readrule.py, stages.py and m_sessions.py may be in edit)'). G-PORT ran on HEAD plus the uncommitted
+    readrule.py and stages.py changes, which add further G-TIME withholding per ruling (h). The synthesis (§F item
+    1) defers that change: 'judge that fix against (h)'. The 52 'internal, no effect' lens items were not put to a
+    refuter either; only the 90 difference claims were.
+    CORRECTION: Add: the lenses compared HEAD 5f7b968, before the disposition changes to readrule.py and
+    stages.py; their G-TIME reporting changes (ruling (h)) were not compared with f1. The refuters checked the 90
+    difference claims, not the lenses' 52 'internal, no effect' notes.
+
+====================================================================================================
+PART gport-A: 49 claims, 8 failing or imprecise
+====================================================================================================
+[gport-A 1] HOLDS: A1: f1 took first picks from whole-session-valid sessions (f_sessions.py:439, :461–473)
+    EVIDENCE: f_sessions.py:439 `valid = [r for r in rows if not r.get("excluded")]`; :461–462 firsts from
+    `valid`; :467–473 by_map from `valid`.
+
+[gport-A 2] HOLDS: A1: m takes first picks from sessions that reached the first read (m:308)
+    EVIDENCE: m:308 'Sessions with no exclusion-bearing event before the first read ... Nothing after the first
+    pick removes a session from the domain'. Code: scaffold.py record() raises unless `domain ==
+    bool(self.choices)` ('domain must be exactly reached the first read (m:308)'); first_free_pick_P set iff
+    domain.
+
+[gport-A 3] HOLDS: A1: on f1's archive CORR moves from 28/56 (Δ .000) to 30/58 (Δ +.017)
+    EVIDENCE: vc1 recount of data/f/sessions.jsonl (sha16 d49913e5ffdfb935): 'CORR valid 28 56 0.0 reached 30 58
+    0.0172'.
+
+[gport-A 4] HOLDS: A1: s4 and s25, excluded after a P first pick, come back
+    EVIDENCE: CORR s4 'lexical:prism@free4' first_free_pick_P True; s25 'lexical:maple@free4' True. These are the
+    only CORR exclusions with a first pick.
+
+[gport-A 5] HOLDS: A1: the sham moves from 18/33 to 19/34
+    EVIDENCE: recount: 'sham valid 18 33 ... reached 19 34'; the added session is sham s35 'lexical:saddle@free5',
+    first pick P.
+
+[gport-A 6] HOLDS: A1: under m's audit as well the count is again 28/56, on a different set of sessions
+    EVIDENCE: vc1/maudit.py ran QwenTaskRoundAudit (audit v3 + echo + lexical, all prior texts as `earlier`, as
+    runner_qwen.py:151–198) on every f1 CORR round, walked by harness pieces. Output: 'm-audit domain: 28 / 56';
+    set minus f1-valid [4], f1-valid minus m [48]. s25 ends at forced0 (content:null_response) and s48 at forced1
+    (content:stuck_attractor); s4 comes in.
+
+[gport-A 7] HOLDS: A1: CORR's Δ stays below E either way
+    EVIDENCE: E = |sham share − .5| (m:310; f_sessions.py:456). f1: E = 18/33 − .5 = .0455 > Δ .000. m's domain: E
+    = 19/34 − .5 = .0588 > Δ .0172. Under m's audit CORR Δ is 0 (28/56). The sham could not be re-audited (the m
+    wrapper takes CORR item indices only), so 'below E' there holds only if the sham E is above 0.
+
+[gport-A 8] HOLDS: A1: declared at m:306–308 only
+    EVIDENCE: grep for '28/56', 'reached a first read' and 'whole-session valid' in v1.11: the domain rule and its
+    f1 consequence are stated at m:308 (m:306 is the primary). Elsewhere: 30/58 appears only in m:369's figure
+    list, and m:324 is the NOT-RUN rule. It is not one of §2.7's items.
+
+[gport-A 9] IMPRECISE: A1: m:261 still calls f1's `valid` "the valid-session rule of record"
+    EVIDENCE: m:261 reads: '**Qwen.** Valid-session rule of record: f1's (`run_session`: ...; `valid` = not
+    excluded, :439)'. The quoted words are not verbatim: there is no 'the' and the 'V' is capitalised.
+    CORRECTION: m:261 still names f1's rule (`valid` = not excluded, :439) as the "Valid-session rule of record"
+    (a seat note).
+
+[gport-A 10] HOLDS: A2: A0 is held at α .01 in the direction under test, against f1's p < .05 toward P (declared m:182, m:310, m:326)
+    EVIDENCE: f1: CORR is not two-sided, so p = p_hi, the upper tail toward P (:474, :477), and conj3 = p < 0.05
+    (:482). m:182 'control α .01'; m:310 '(iii) exact one-sided binomial vs 0.5 at the arm's α, in the direction
+    under test'; m:326 'Positive controls (A0, ...), α = .01'.
+
+[gport-A 11] HOLDS: A3: m's ordered outcome set (INDETERMINATE / REVERSE / PASS / DEAD) against f1's screen_hit boolean (declared m:310, m:324–326)
+    EVIDENCE: f1 :483 `hit = conj1 and conj2 and conj3`. m:326: INDETERMINATE (no domain session / E undefined) →
+    REVERSE → PASS → DEAD (CI upper bound < +0.15) → INDETERMINATE. m:310 defines REVERSE in (i)/(ii); m:324 is
+    the unit outcome; m:325 is blank.
+
+[gport-A 12] HOLDS: A4: floors — what they count (domain, not valid sessions), their sizes, L as a projection, hour cap and PI stop (declared m:182, m:190–192, m:247)
+    EVIDENCE: m:182 sizes 96 cached / 80 uncached / 32. m:190 sizing and power floors. m:192 'L is a projection,
+    not a bound'. m:247 'Floors count sessions in the primary's domain ... or its hour cap is reached, or the PI
+    stops it'. m:191 is blank. f1: valid floors 48/32 (archive/RESULTS-cycles3-4.md:141; PROPOSAL-f:101), fixed
+    plan (:597–608), no hour cap.
+
+[gport-A 13] HOLDS: A4: under m's rule f1's DIFF and FDBK would have met 48
+    EVIDENCE: recount: DIFF valid 47, reached-first-read 49; FDBK valid 44, reached 48. f1's floor is 48 valid
+    (archive:141 'valid floors 48/32'; archive:39–40 'DIFF (47) and FDBK (44) stand as SCOPED NULLS'). This uses
+    f1's audit; m's audit could not be applied to the DIFF/FDBK pools.
+
+[gport-A 14] IMPRECISE: A5: m counts arm × property, pre-pick (m:314)
+    EVIDENCE: m:314: 'per arm × property (clean, corrupted): rounds generated, rounds excluded by class, sessions
+    excluded pre-pick'. The table has three columns and only one is pre-pick; the entry's own last sentence relies
+    on that.
+    CORRECTION: m's table is per arm × property with three columns: rounds generated, rounds excluded by class,
+    and sessions excluded pre-pick (m:314).
+
+[gport-A 15] HOLDS: A5: f1 counted all excluded sessions in any phase
+    EVIDENCE: f_sessions.py:441–446: Counter[(arm, rounds[-1].cfg)] over every row with `excluded`, whatever the
+    phase.
+
+[gport-A 16] HOLDS: A5: f1's reference is 7 vs 1
+    EVIDENCE: m:314 'f1 CORR's 7-vs-1 anomaly (archive:91–93) is the reference'; archive:92–93 'CORR-P 7 vs CORR-Q
+    1'. Recount: CORR exclusions by rounds[-1].cfg = P 7, Q 1.
+
+[gport-A 17] HOLDS: A5: on f1's archive this is 5 vs 1 pre-pick under f1's audit
+    EVIDENCE: recount: CORR forced-phase exclusions P 5 (s27, s36, s49, s55, s60), Q 1 (s53).
+
+[gport-A 18] HOLDS: A5: and 5 vs 3 under m's audit
+    EVIDENCE: vc1/maudit.py: 'm-audit pre-pick by role: P 5, Q 3' (by property: clean 5, corrupted 3). The six f1
+    forced exclusions are reproduced; s25 (forced0) and s48 (forced1) are added, both corrupted Q rounds.
+
+[gport-A 19] HOLDS: A5: m:314 does not say which column 7 vs 1 is the reference for
+    EVIDENCE: m:314 names three columns, then says the 7-vs-1 anomaly 'is the reference' without naming a column.
+
+[gport-A 20] HOLDS: A6: f1's pooled pause monitors (lexical, cap-hit, low label mass) are not carried; a sham-arm round_degeneracy look bar is added
+    EVIDENCE: f1 :416–433: pooled lexical p0 .05, cap p0 .10 and low-mass p0 .20, each pausing at p < .05. m's
+    QF0_BARS (bars.py:568–591): hair triggers, the G-TIME/G-F0m degeneracy bars, gid_divergence, and the campaign
+    bars round_degeneracy@campaign (sham, binomial_look), exclusion_guard_fisher and exclusion_guard_abs. No
+    lexical, cap or mass bar. (Q-F3 carries an adapted lexical bar, m:330; the entry's scope is F0m.)
+
+[gport-A 21] HOLDS: A6: the lexical and low-mass monitors' removal is disclosed (m:330, m:283)
+    EVIDENCE: m:330 'in Q-F0 and on OLMo every banner names labels, so the lexical bar has no domain there and
+    lexical is reported only'; m:283 'f1's binomial monitor at p0 .20, archive:404, is not carried'.
+
+[gport-A 22] HOLDS: A6: the cap-hit monitor's removal is disclosed nowhere
+    EVIDENCE: In v1.11, cap_hit appears only as a reported counter (m:314). m:358 step 11 'No cap trigger in Q-F0'
+    is the reasoning-line cap trigger (archive v1.4/v1.5: '≥ 3/36 cap-reaches in G-TIME's reasoning lines raises
+    the reasoning-line cap'). §2.7 (m:267) mentions cap only in the resume identity. bars.py names no cap monitor.
+
+[gport-A 23] IMPRECISE: A6: a priming-driven rise in lexical exclusions can now pause only through the guard
+    EVIDENCE: The guard's numerator is pre-pick exclusions only (bars.py:509–510 _NUM_GUARD; stages.py _prepick).
+    round_degeneracy counts v2/echo claims only. stages.py selftest :2816–2818: '20/20 contrast FREE-phase lexical
+    exclusions are not pre-pick ... nothing fires'. So a free-round lexical rise pauses nothing.
+    CORRECTION: A priming-driven rise in lexical exclusions can now pause only through the guard, and only when it
+    falls before the first pick; a free-round rise pauses nothing.
+
+[gport-A 24] IMPRECISE: A7: the guard's numerator is now pre-pick exclusions, its comparator the matched A0s with no minimum sham n, it runs at every look and fires on ≤ (m:316)
+    EVIDENCE: Code: bars.py _NUM_GUARD is pre-pick; guard_fisher at every look; the PIN at bars.py:420–424 drops
+    f1's sh_n ≥ 12 (f_sessions.py:408); `p <= self.alphaq` at :425–426. Spec: m:316 states pre-pick, matched sham
+    and every look. 'No minimum sham n' is Code's PIN reading of m:316, and '≤' is m:271's general rule.
+    CORRECTION: ... no minimum sham n (Code's PIN reading of m:316's 'at every look'); it runs at every look
+    (m:316); and it fires on ≤ (m:271).
+
+[gport-A 25] HOLDS: A8: pre-campaign stages G-TIME-F0, G-ID-F0m and G-F0m-Qwen against f1's smoke and its smoke_bar_check
+    EVIDENCE: f1: smoke plan :591–595 and smoke_bar_check :497–511 / :629–662. m: m:280 G-TIME-F0, m:281 G-ID-F0m,
+    m:283 G-F0m-Qwen. The entry does not give these declarations (see the OMISSION item).
+
+[gport-A 26] HOLDS: A9: hair triggers stop the stage; scaffold_absorption also cuts a free-round session, against f1's special: post-degeneracy at a free round
+    EVIDENCE: f1 :132–134 makes a ban string `special:`; at a free round it becomes post_degen and the session
+    runs on (:368–372). m runner_qwen.py free loop: `if ra.scaffold: log.hair_trigger(ra, 'free'); break`, with no
+    exclusion; the forced loop breaks the same way. stages.py STOPs on _hair_hit. m:271 'a hair-trigger fire
+    anywhere stops the stage'.
+
+[gport-A 27] HOLDS: A9: there were 0 such rounds in f1's 3,074
+    EVIDENCE: recount: 'total rounds 3074', 'special rounds 0' (all arms, any phase). Degen classes: frame 86,
+    junk 7.
+
+[gport-A 28] HOLDS: A10: G-VER rebuilds each session before its record is written; f1 had none
+    EVIDENCE: resume.py record_session raises unless rec['verified'] is True (:923–925). verify.py verify_and_mark
+    rebuilds the session. f1 appends rows as generated (:386–387); its only check is the KL re-forward. Declared
+    at m:284 (not cited in the entry).
+
+[gport-A 29] HOLDS: A11: the rule-28(d)(a) boundary assertion before every generation is a new HALT condition
+    EVIDENCE: scaffold.py:308–320 assert_boundary raises 'BOUNDARY INCIDENT (rule 28(d)(a)) ... HALT'. It is
+    called before both generate calls (runner_qwen.py:158, :189; runner_olmo.py:136, :163). f1 :167–168 makes one
+    encode and computes no boundary.
+
+[gport-A 30] HOLDS: A12: exact P ≤ α against float p < .05; the binomial rules disagree only at n 1, k 1, p0 .05 (G-TIME-F0's round-1 case; f1's float is 0.05000000000000001)
+    EVIDENCE: vc1/bars_scan.py: 'f1 float n1 k1 .05: 0.05000000000000001 False m fires: True'. A scan of n ≤ 2,500
+    at p0 ∈ {.05, .02, .10, .20}, α .05, using m's bars.fires/critical_k against f1's binom_p_ge, found exactly
+    one disagreement, ('0.05', 1, 1). m:271 'A bar fires iff its exact one-sided P ≤ α' and '(a round-1 claim, n =
+    1, fires it at P = .05 = α)'.
+
+[gport-A 31] HOLDS: A12: ... and at Fisher ties of exactly 1/20 (m:271)
+    EVIDENCE: vc1/fisher_scan.py over n1 ≤ 130, n2 ≤ 70, every a and c: 25 disagreements, all at exactly 1/20,
+    e.g. (1,1,0,19), (2,4,0,12), (2,6,0,19); no non-tie disagreements. f1's int/int division is correctly rounded,
+    so it gives 0.05 and `< 0.05` is False.
+
+[gport-A 32] HOLDS: A13: looks every 40 launches pooled over both arms, against f1's checks at a contrast's n = 24 and at completion
+    EVIDENCE: resume.py:91 LOOK_EVERY = 40. stages.py: `at = len(records) + 1`, a look when at % LOOK_EVERY == 0,
+    with records pooled across arms. f1 GUARD_CHECKPOINTS = (24,) (:90) plus the completion call (:672). Declared
+    at m:330 'Cadence every 40 launches and at the end' (not cited in the entry).
+
+[gport-A 33] HOLDS: A14: running out of schedule pauses for the PI; f1's fixed plan could not run out
+    EVIDENCE: stages.py: `if s >= n_sched[arm]: pause = {... 'kind': 'schedule_exhausted' ...}`; the PIN at
+    :2039–2044 says only a PI stop ends it. f1's plan is the fixed --n-arms list (:597–607). No v1.11 declaration
+    found (grep 'exhaust').
+
+[gport-A 34] IMPRECISE: A15: f1 asserts six jlens modules absent; m asserts one
+    EVIDENCE: f1 :51–53 lists six jlens_qwen modules. m guard.py:77 FORBIDDEN_MODULES =
+    ('valence_core.e2b.statepresent',), which is not a jlens module. As written, 'one' reads as one jlens module.
+    CORRECTION: f1 asserts six jlens modules absent; m asserts one module absent, valence_core.e2b.statepresent
+    (not a jlens module).
+
+[gport-A 35] HOLDS: A15: two of f1's six (forced_choice, conditioning) load in every F0m Qwen process
+    EVIDENCE: qwen_mlx.py:73–76 QwenMLXAdapter.__init__ importlib-loads jlens_qwen.model, forced_choice,
+    conditioning and patch_gdn. A static grep of the m runtime path finds no import of jlens_qwen.e2a,
+    eval_awareness, fingerprint or interventions. Importing valence_core.m.runner_qwen and stages alone loads no
+    jlens module (checked).
+
+[gport-A 36] HOLDS: A15: with empty function sets those paths are f1's line for line, but f1's own assertion would fail on F0m's apparatus
+    EVIDENCE: conditioning.SteeredStreamSession.extend matches model.StreamSession.extend (model.py:296–318), plus
+    an `if i in self.induce_fns` branch that is inert at {}. Its default use_fused=False sets the ops kernel, as
+    f1's set_inference_mode(False) does. forced_choice.forward_with_positional_state (:27–58) matches
+    model.forward (:81–132) when layer_pos_fns is empty. f1's FORBIDDEN_MODULES includes both loaded modules.
+
+[gport-A 37] HOLDS: A16: pre-declared secondaries with a 20-event floor (m:312); f1 pre-registered no secondary choice analysis
+    EVIDENCE: m:312 'm's floor is 20 events'. The f1 pre-registration (archive:366–421) and PROPOSAL-f §3
+    (:99–119) have the primary and its conjuncts, monitors, the per-property table and FDBK/CORR reporting, but no
+    secondary choice analysis. (The 'SECONDARY' at archive:1312 is e2a's.)
+
+[gport-A 38] HOLDS: A17: a strict exclusion scope, recorded beside the lenient one
+    EVIDENCE: scaffold.py add_round sets self.strict at the first claim in any phase; the record carries
+    'strict_exclusion'. audit.py strict_excludes. Declared at m:261 'lenient scope with strict beside' (not cited
+    in the entry).
+
+[gport-A 39] HOLDS: A18: m's softmax and verify KL are float64 against f1's MLX float32
+    EVIDENCE: valence_core/readout.py softmax and kl use np.float64. f1 :197–198 and :207–211 use mx float32. m's
+    reads go through guard.insulated_read → readout.choice_read(verify=True).
+
+[gport-A 40] HOLDS: A18: pick and tie rules the same; f1's 33 exact-tie reads of 1,745 go to the menu-first label in both
+    EVIDENCE: recount: 1,745 choices, 33 with p_a == 0.5, all with pick == menu_a. The nearest other stored p_a is
+    .0156 from .5 (values .4844/.5156), consistent with bf16-granular logits, so 'exact' is inferred from 4-dp
+    data. Both rules use `pa >= pb` → label_a (f1 :202; readout.py choice_read).
+
+[gport-A 41] HOLDS: A18: KL held to the same exact zero (88/88 f1 verified CORR reads gave 0.0)
+    EVIDENCE: recount: 'CORR verified 88 all zero True' (all arms 433/433 zero). f1 halts on kl != 0.0 (:213). m
+    halts on > 0.0 and also unless type float and == 0.0 (guard.py).
+
+[gport-A 42] HOLDS: A19–A22: m does no in-session grading
+    EVIDENCE: grep 'grade|gold' over valence_core/m/*.py finds golds only in corr.py pool validation and hygiene;
+    there is no grader.
+
+[gport-A 43] HOLDS: A19–A22: f1 graded all 597 CORR rounds
+    EVIDENCE: recount: 'CORR rounds 597 graded non-None 597' (True 499, False 98).
+
+[gport-A 44] FAILS: A19–A22: no f1 analysis read the grades
+    EVIDENCE: f1's SCREEN VERDICT entry (archive/RESULTS-cycles3-4.md:106–113) reports, from the in-session
+    grades, 'FDBK composition ... 93.4% Correct' and the CORR note 'the calibration accuracy delta (+.094)
+    VANISHED in-session (P .838 vs Q .833)', plus 'DIFF in-session gap .883/.592'. The recount from `graded`
+    reproduces these exactly: CORR P 244/291 = .838, Q 255/306 = .833; DIFF .883/.592; FDBK verdict rounds 256/274
+    = .934. PROPOSAL-f:86 pre-registered the CORR 'accuracy delta measured and reported as covariate'. The
+    differences raw carries the same error (:361, 'no f1 analysis reads `graded`').
+    CORRECTION: m does no in-session grading. f1 graded all 597 CORR rounds, and its verdict entry used the
+    grades: the CORR in-session accuracy covariate, P .838 vs Q .833 (archive:107–110, the covariate PROPOSAL-f:86
+    pre-registered), plus DIFF's gap and FDBK's composition. m's covariate is G-CAL's calibration figure (m:176),
+    not an in-session one; m can rebuild in-session accuracy from the stored item, task and text.
+
+[gport-A 45] HOLDS: A19–A22: m can rebuild the grades from the stored item, task and text
+    EVIDENCE: scaffold.py add_round stores 'item', 'task_text' (full) and 'text'. The gold is pool[item]['gold']
+    (corr.load_pool, sha-pinned). f1's grade() (:97–103) is deterministic.
+
+[gport-A 46] HOLDS: A23–A25: the per-session stdout line (f1 printed picks), blinding and the order of analysis (m:318), checkpoint storage and the resume identity
+    EVIDENCE: f1 :624–628 prints first=P|Q|X. m:318 declares the stdout form 'never a pick (f1 printed picks,
+    f_sessions.py:624–627)' and that the analyzer runs before 'the reads'. resume.py:93–96 IDENTITY_KEYS. m:318
+    also covers A23, not only blinding.
+
+[gport-A 47] HOLDS: Count: 25 items beyond §2.7 (A1–A25)
+    EVIDENCE: The list runs A1 to A18 singly, then A19–A22 (4 items) and A23–A25 (3 items), which is 25. This
+    matches the synthesis's 'Totals: 25 items beyond §2.7'.
+
+[gport-A 48] FAILS: OMISSION: the lead says each A item is listed 'with where v1.11 already declares it', but several declared items carry no citation
+    EVIDENCE: These items are declared in v1.11 but the entry cites nothing: A8 (G-TIME-F0, G-ID-F0m and
+    G-F0m-Qwen at m:280–283); A9 (hair triggers stop the stage, m:271); A10 (G-VER, m:284); A13 (cadence, m:330);
+    A17 (strict beside, m:261); A15 in part (the statepresent assertion, m:48). A11, A14, A18 and A19–A22 have no
+    declaration that I found, so the absence of a citation is ambiguous between 'not declared' and 'not cited'.
+    CORRECTION: Add the declarations (A8 m:280–283; A9 m:271; A10 m:284; A13 m:330; A17 m:261; A15 m:48 for m's
+    assertion), and mark A11, A14, A18 and A19–A22 'not declared in v1.11'.
+
+[gport-A 49] FAILS: OMISSION (A19–A22): dropping in-session grading drops f1's pre-registered in-session CORR accuracy covariate
+    EVIDENCE: PROPOSAL-f:86 (CORR: 'accuracy delta measured and reported as covariate'). f1 reported it in-session
+    (archive:107–110, P .838 vs Q .833), and it bore on CORR's interpretation ('attach to any CORR
+    interpretation'). m's covariate comes from G-CAL calibration (m:176) only, so the f1 in-session figure has no
+    m counterpart unless it is rebuilt from the records.
+    CORRECTION: State under A19–A22 that f1's in-session CORR accuracy covariate (P .838 vs Q .833) is not
+    computed by m; it is rebuildable from the records, and m's covariate of record is G-CAL's (m:176).
+
+====================================================================================================
+PART gport-BCF: 39 claims, 12 failing or imprecise
+====================================================================================================
+[gport-BCF 1] HOLDS: B header: the two borderline items are ones where 'the refuters split', and 'the synthesizer recommends a clause on the named item, not a fifteenth'.
+    EVIDENCE: scratchpad/step5/gport_diffs.json. B1: HB item 11's refuter says 'beyond, as a scope gap in (14)';
+    GR item 44's refuter says '§2.7 (14), read with (11). Not beyond'. B2: HB item 5's refuter says 'beyond,
+    narrowly'; DR item 20's refuter says '(8), with (5)'s index arithmetic; not beyond'. The differences raw at
+    :450 reads 'I recommend a clause on that item rather than a fifteenth.'
+
+[gport-BCF 2] HOLDS: B1: m's uncached path also has no encode limit.
+    EVIDENCE: valence_core/adapters/qwen_mlx.py:78-80 sets max_length = None unless legacy_truncate. encode at
+    :97-110 tail-truncates only when max_length is set. generate encodes prefix and prefix+segment at :258-259,
+    before the cached branch (:307) and the uncached branch (:324). runner_qwen.py:91-100 (assert_qwen_adapter)
+    refuses any adapter with legacy_truncate or max_length set.
+
+[gport-BCF 3] HOLDS: B1: (14) is worded for the cached path.
+    EVIDENCE: m:267 item (14) reads 'the generation window and chunking on the cached path ... m's cached path has
+    no encode limit (rule 28(d)) and extends two chunks'. No path-general statement appears in §2.7.
+
+[gport-BCF 4] FAILS: OMISSION (B1): v1.11 already declares, without a path scope, that generation has no encode limit; the entry says each item is listed 'with where v1.11 already declares it' but gives no location for B1.
+    EVIDENCE: m:172 (§2.1, the Read sentence) ends: 'at `CHOICE_WINDOW = 8192` with no encode limit on generation
+    (rule 28(d))'. That clause names no path.
+    CORRECTION: Add: 'Declared, path-unscoped, at m:172 ("no encode limit on generation"); only Appendix D's
+    disclosure (14) is scoped to the cached path.'
+
+[gport-BCF 5] HOLDS: B1: recommended fix 'Extend (14) to "no encode limit on either path"'.
+    EVIDENCE: Differences raw :456: 'Extend (14) to say "m has no encode limit on either path".'
+
+[gport-BCF 6] HOLDS: B2: f1's sham s carried CORR s's pair, swap and start in all 40 sessions.
+    EVIDENCE: f_sessions.py:275-278 derives pair, swap and start_P from s alone; the arm is not used. vc1 check on
+    data/f/sessions.jsonl: 40 sham rows (s 0-39), and 40/40 have (pair, swap, start_P, tag_P) equal to CORR s's.
+
+[gport-BCF 7] IMPRECISE: B2: 'where m keys cells per arm'.
+    EVIDENCE: Campaign cells come from per-arm keys m-sched|{unit}|{arm}|{b} (keys.py:142-145;
+    schedule.campaign_schedule). At gate stages, schedule.gate_schedule keys only π per template (gate_sched_key
+    m-sched|unit|gate|template|0); map, start and clause come from the shared 16-row GATE_TABLE. vc1:
+    qualification π is A0 [1,0,2,3] and A0s [3,2,0,1], so the pair matches in 0 of 8 slots while map, start and
+    clause match in 8/8.
+    CORRECTION: '... where m draws campaign cells per arm; at gate stages only the pair (π) is per template, so
+    sham s shares contrast s's map, start and clause but not its pair.'
+
+[gport-BCF 8] HOLDS: B2: 'This is a consequence of (8) that nothing states.'
+    EVIDENCE: m:159 states the per-arm schedule key and that items are shared 'so sham session s sees contrast
+    session s's items uncorrupted'. §2.7 (7) and (8) (m:267) cover the item stream and the committed schedule. No
+    line says that sham s no longer shares contrast s's cell.
+
+[gport-BCF 9] HOLDS: C1: items 1 and 12 survive f1's corrupt() unchanged.
+    EVIDENCE: vc1/c1.py runs a verbatim copy of f_sessions.py:106-116 at 0.12 with the crc32 key. Item 1 'State
+    the number of days in a week.' and item 12 'Compute 11 + 33.' have 0 changed letters; every other item has
+    1-6.
+
+[gport-BCF 10] HOLDS: C1: that gave 40 of 306 Q rounds clean (on record).
+    EVIDENCE: vc1/c1c.py over the 64 CORR transcripts' Task lines finds 306 Q rounds, 40 of them clean (item 1:
+    23, item 12: 17); forced 16/124, free 24/182. On record at
+    results/raw/2026-10-04_m-v1.7_referent_check.txt:5204-5207 (tracked).
+
+[gport-BCF 11] HOLDS: C1: 16 of f1's 56 primary-of-record sessions had exactly one byte-clean forced Q round before the pick (new).
+    EVIDENCE: vc1/c1c.py: the 56 valid sessions split {0 clean: 40, 1 clean: 16}, none with two (s 6, 7, 13, 18,
+    22, 26, 30, 33, 39, 43, 45, 47, 48, 51, 58, 61); also 16 of the 58 that reached the first read. grep of
+    RESULTS.md and results/raw finds no earlier '16 of 56'.
+
+[gport-BCF 12] HOLDS: C1: every m render differs from clean in at least 3 letters.
+    EVIDENCE: vc1/c1b.py over scaffold.pool_and_renders() (corrupt_m renders of record): changed letters per item
+    3,3,3,3,4,3,3,7,3,3,4,3,3,3,3,3, minimum 3. corr.py _k_m clips k at 3 or more, positions come from a
+    permutation, and the shift is 1..25, so a change never lands on the same letter.
+
+[gport-BCF 13] HOLDS: C2: m's audit ends s48 (valid in f1, P first pick) at the forced phase on content:stuck_attractor.
+    EVIDENCE: In f1, s48 has excluded False and first_free_pick_P True (P = slate). vc1/runner_vs_f1_wt.py drives
+    m's real runner_qwen on the working tree with f1's texts and picks: (48, 'm ends earlier', 2 rounds vs 10,
+    content/forced/content:stuck_attractor). The forced1 response is '7', repeating forced0's '7'.
+
+[gport-BCF 14] HOLDS: C2: m's audit ends s25 at the forced phase on content:null_response, where f1 continued.
+    EVIDENCE: Same replay: (25, 'm ends earlier', 1 round vs 9, content:null_response). f1 ran s25 to free4
+    (lexical:maple@free4). The forced0 response is 'I cannot provide information on that topic.'
+
+[gport-BCF 15] HOLDS: C2 (and :53): the runner replay rebuilds the other 62 of 64 byte-identically, including all six of f1's forced audit exclusions.
+    EVIDENCE: Re-run on the working tree: {"identical": 62, "prefix_shorter": 2, "other": 0}; pass 2 checked 578
+    generate calls and 335 reads with 0 problems. f1's six CORR forced exclusions (s27, s36, s49, s53, s55, s60)
+    are all audit:frame. vc1/c2.py shows m claims each as v2 at the same round, and each transcript is identical.
+
+[gport-BCF 16] HOLDS: C3: the audit stacks differ in both directions (a probe table).
+    EVIDENCE: Re-ran refute-audit-exclusion/probes.py. Forced 'config: 77': f1 excludes, m does not. Forced '===
+    End of session ===' and 'Round 5 | 77': m excludes (v2), f1 does not. Free 'config: granite': m excludes
+    (lexical), f1 does not. Free 'Round 5 | granite': f1 excludes, m does not (v2 claim).
+
+[gport-BCF 17] IMPRECISE: C4: content classes reach clean and corrupted rounds differently 'because corrupt_m hits the imperative verb on items 5, 11 and 15'.
+    EVIDENCE: The renders are 'Writa the oppcsite oc 'hot'.', 'Writo the oppssitu of 'up'.' and "Wtite thn
+    opposite on 'open'." corrupt_m also alters the opening 'Compute' on items 0, 3, 6, 9, 12 and 14. 'Compute' is
+    not in contentclass.py's _IMPERATIVE (:58-61) or _VERBS (:172-174), so those changes are inert. Differences
+    raw C4 (:544) adds that items 2 and 8 ('Name', in _VERBS) come in when a response restates the clean text,
+    because the corruption breaks the word run.
+    CORRECTION: '... because corrupt_m alters "Write" on items 5, 11 and 15, the one verb of the content class's
+    lists it hits (and, where a response restates the clean text, breaks the "Name" runs of items 2 and 8).'
+
+[gport-BCF 18] IMPRECISE: C4: 'That is descriptive on forced rounds; on free rounds it bears on post-pick validity.'
+    EVIDENCE: vc1/c4.py on items 5, 11 and 15 with the response "Sure: Write the opposite of '<x>' granite.". Free
+    round: clean gives content:preamble_without_content and the session continues; corrupted gives lexical:granite
+    and the session ends. The free-round half holds. On forced rounds the effect does not depend on the pick, but
+    a label-free restatement still excludes on a clean round and not on a corrupted one. That shifts forced
+    exclusions by property, which the per-property table and the guard read. The synthesis (:544) scopes
+    'descriptive' to A0's primary.
+    CORRECTION: 'That is pick-independent on forced rounds (descriptive for A0's primary, though it moves forced-
+    round exclusions by property); on free rounds it bears on post-pick validity.'
+
+[gport-BCF 19] IMPRECISE: C5: header and menu wording is no longer tied to the pair.
+    EVIDENCE: In f1 the first-menu wording is fixed per pair: slate/prism 'Available configs' 14, maple/cedar
+    'Configs available' 14, granite/lattice 'Options' 16, plaza/saddle 'Configs on offer' 14 (vc1/c5.py). In m's
+    campaign the two are crossed: A0's first 80 give offset × pair [[7,6,5,2],[5,2,4,9],[4,5,8,3],[3,8,3,6]]. At
+    gate stages, scaffold.m_config sets j = s, and slot = j%4 equals the wording offset, so π ties each pair to
+    one wording sequence again (qualification A0 [1,0,2,3], A0s [3,2,0,1], G-ID A0s [3,0,1,2]).
+    CORRECTION: 'header and menu wording is no longer tied to the pair in the campaign (at gate stages π ties it
+    again)'.
+
+[gport-BCF 20] HOLDS: C6: the one shared pair is ordered the other way round, so map labels are not comparable across rosters.
+    EVIDENCE: f1 TAG_PAIRS[0] = ('slate','prism') (f_sessions.py:61-64), with swap False giving P = slate. m
+    roster_for('Q-F0') = (('granite','plaza'),('prism','slate'),('velvet','walnut'),('ridge','saddle')) with P =
+    pair[map], so f1's map A is m's map 1. {prism, slate} is the only pair the two rosters share.
+
+[gport-BCF 21] HOLDS: C7: an arm can stop partway through a balance unit.
+    EVIDENCE: In HEAD stages.py campaign loop (:1909), rotation = interleave(arms, lambda a: domain[a] >= fl[a]),
+    so an arm stops when its domain count reaches the floor, whatever the 32-cell unit boundary. f1's 64 sessions
+    are 4 complete 16-cell units (f_sessions.py:275-278).
+
+[gport-BCF 22] HOLDS: C8: the gate-stage streams (covered, with a consequence).
+    EVIDENCE: The gate item keys m-items-{time,id,qual}|s are in keys.py item_key (:96-109), as in m:159. This is
+    a label only; the substance is in differences raw C8 (:571-575).
+
+[gport-BCF 23] HOLDS: C9: the banner is the only layout difference.
+    EVIDENCE: The replay uses a bare SESSION_BANNER with f1's cells (f1_cell), rng (f|CORR|s) and renders
+    (renders_f1) through m's runner. 62/64 are byte-identical and the other 2 are prefix-shorter because of the
+    audit (C2), so the remaining harness layout matches.
+
+[gport-BCF 24] FAILS: OMISSION (C3-C9): the heading says these consequences belong 'under the item', but the entry names the §2.7 item only for C1 and C2.
+    EVIDENCE: Differences raw section C (:519-579) gives the items: C3 and C4 under (6); C5 under (8) with (5); C6
+    under (5); C7 under (8) and (13); C8 under (7) and (8); C9 under (1).
+    CORRECTION: Name the items in the entry: 'C3, C4 (6); C5 (8) with (5); C6 (5); C7 (8), (13); C8 (7), (8); C9
+    (1)'.
+
+[gport-BCF 25] HOLDS: For the seat: m:261's 'rule of record' against m:308's domain (A1).
+    EVIDENCE: m:261: 'Valid-session rule of record: f1's (... `valid` = not excluded, :439)'. m:308: 'Domain.
+    Sessions with no exclusion-bearing event before the first read'.
+
+[gport-BCF 26] HOLDS: For the seat: m:271 says a Qwen free-round v2 claim ends nothing, but every scaffold hit is a v2 claim and the session ends on it through the hair trigger.
+    EVIDENCE: m:271: 'every Qwen runner ends a session at its first exclusion-bearing forced round or free-round
+    lexical hit, a free-round v2 claim ending nothing'. audit.py:415-418 requires the Qwen scaffold set to equal
+    audit3.v2.ban_strings. session.py AuditSpec.check returns 'special:<s>' for any ban string (only empty text is
+    checked first), and classify maps 'audit:' to claim v2 (audit.py:445-446). runner_qwen.py:201-203: 'if
+    ra.scaffold: log.hair_trigger(ra, "free"); break'.
+
+[gport-BCF 27] IMPRECISE: For the seat: m:172's claim that gate-stage per-pair sham shares are free of start and clause confounding; through π each pair at a gate stage is tied to one wording sequence (C5).
+    EVIDENCE: m:172 scopes its claim to 'the per-pair sham first-pick shares reported at qualification'. The π tie
+    holds: scaffold.m_config sets j = s at gate stages, GATE_TABLE slot = j%4, and the wording offset is (s+i)%4.
+    CORRECTION: 'm:172's claim that the per-pair sham shares reported at qualification are not confounded with
+    start or clause order: through π, each pair at a gate stage is tied to one wording sequence (C5).'
+
+[gport-BCF 28] IMPRECISE: For the seat: (12) and (14) both say 'A0's comparison with f1's primary is unaffected', which 'is true of the windows'.
+    EVIDENCE: Both phrases are in m:267. f1's primary of record uses whole-session validity, and post-pick lexical
+    hits exclude. Code's v1.10 own pass (results/raw/2026-10-05_m-v1.10_code_own_pass.txt:176) gives the 135
+    clipped generations by arm with CORR 5. Every CORR generation at round index 8 or 9 lies in a session f1 kept
+    valid: the only CORR exclusions past round 4 are s4 and s25, whose index-8 inputs are 403 and 467 tokens. No
+    realised exclusion came from a clipped generation. Whether any of the 5 would have hit unclipped is not
+    settled.
+    CORRECTION: '... is true of the realised record (no f1 CORR exclusion came from a clipped generation), but 5
+    of the 135 clipped generations are CORR, post-pick, inside f1's primary-of-record sessions, and it should not
+    read as unaffected overall, given A1, C1 and C2.'
+
+[gport-BCF 29] IMPRECISE: Headline and section title: 'One open [verify]' / 'The open [verify]' settled by Code's recount.
+    EVIDENCE: The [verify] settled here is the synthesizer's F6 (differences raw :617, 'Open [verify], needing a
+    tokenizer (not done here)'), as the raw's Part 2 header says ('settles F6's open [verify]'). (14)'s own
+    '[verify]' in m:267 is about the 135 count. RESULTS.md:955-957 records that Code's v1.10 recount already
+    discharged that one.
+    CORRECTION: 'The synthesis's open [verify] (F6; not (14)'s own [verify], discharged at v1.10 step 2), settled
+    by Code's own tokenizer-only recount'.
+
+[gport-BCF 30] HOLDS: Recount method: no model; the tokenizers library on the local Qwen snapshot's tokenizer.json, offline, as STOP-7 A3's recount; script and output in the differences raw.
+    EVIDENCE: Differences raw :628-676 holds Tokenizer.from_file on .../snapshots/c000ac2c.../tokenizer.json (the
+    file exists as a symlink to its blob). The same library, file and '\nResponse:' parsing appear in Code's
+    earlier recount, results/raw/2026-10-05_m-v1.10_code_own_pass.txt:381-405. diff of raw :629-661 against
+    scratchpad own/tok_s4_s25.py: identical. diff of raw :667-675 against own/tok_s4_s25.out: identical. Not re-
+    run (it needs a tokenizer).
+
+[gport-BCF 31] HOLDS: f1's primary of record drops s4 and s25 for post-pick lexical hits at free4 (round index 8).
+    EVIDENCE: sessions.jsonl gives s4 'lexical:prism@free4' and s25 'lexical:maple@free4', each with n_rounds 9,
+    first_free_pick_P True and excluded True. f_sessions.py has F_FORCED = 2, so the order is [P,Q]×2 = 4 forced
+    rounds, and free ci sits at round index 4+ci, putting free4 at index 8.
+
+[gport-BCF 32] HOLDS: That is where 27 of (14)'s 135 clipped generations sit.
+    EVIDENCE: m:267 (14): '135 of 3,074 ... (27 at round index 8, 108 at 9)'. Own-pass raw :176: 'by round index
+    {8: 27, 9: 108}'. The 27 are pooled over all arms; CORR contributes 5 of the 135.
+
+[gport-BCF 33] IMPRECISE: The two excluding generations encoded to 403 and 467 tokens, under 512.
+    EVIDENCE: Differences raw :667-675: 'round index 8: 403 > 512: False' (s4) and '467 > 512: False' (s25). The
+    numbers match the recount output. What the script encodes is t[:p], the generation's input (prefix + segment
+    up to 'Response:'), as f1's gen_round encodes it (f_sessions.py:167; jlens model.encode keeps the 512 tail,
+    add_special_tokens=True). The generated text is not counted. Not re-run (it needs a tokenizer).
+    CORRECTION: 'The inputs to the two excluding generations (prefix + segment) encoded to 403 and 467 tokens,
+    under 512 ...'
+
+[gport-BCF 34] HOLDS: s4 and s25 are the only f1 CORR sessions excluded at a free round.
+    EVIDENCE: The 8 CORR exclusions: s4 and s25 at free4, and s27, s36, s49, s53, s55 and s60 at forced1-3 (all
+    audit:frame).
+
+[gport-BCF 35] HOLDS: So (14)'s window does not bear on f1's primary of record through them.
+    EVIDENCE: This follows from the two scoped facts above. It is correctly scoped to s4 and s25 ('through them').
+
+[gport-BCF 36] FAILS: OMISSION (open [verify]): the recount settles only the realised exclusions. The reader is not told that (14)'s window also touched CORR generations inside f1's primary-of-record sessions.
+    EVIDENCE: Own-pass raw :176 gives the by-arm count of the 135 with 'CORR': 5. By elimination, all 5 are post-
+    pick (index 8 or 9) in sessions f1 kept valid: the only CORR sessions excluded past round 4 are s4 and s25, at
+    403 and 467 tokens. Under f1's rule a lexical hit in any of them would have excluded its session.
+    CORRECTION: Add: 'The other 5 CORR generations past 512 (of the 135) are post-pick in sessions f1 kept valid.
+    None excluded, but whether any would have hit unclipped is not settled.'
+
+[gport-BCF 37] HOLDS: Committed: the entry; the artifact data/m/gates/Q-F0_G-PORT.json; the replay raw and the differences raw.
+    EVIDENCE: All three files exist and are untracked. git check-ignore -v matches the artifact only by the
+    negation rule '.gitignore:235:!/data/m/gates/*.json' (not ignored) and does not match the raws. data/m/gates/
+    holds only Q-F0_G-PORT.json. The artifact records verdict PASS, mismatches [], n_ok 64. The replay raw ends '
+    G-PORT 64/64 archived CORR transcripts reproduced', EXIT=0.
+
+[gport-BCF 38] HOLDS: Next: step 6, G-CAL, on the PI's word: the 0.12 replay, the renders of record and their sha, the seat's legibility read (on Code's ping), completability (128 Qwen generations on the laptop, a model run) and the roster assertion.
+    EVIDENCE: m:358 step 6 is 'G-CAL: the 0.12 replay first; the renders of record and their sha; the seat's read;
+    completability; roster assertion.' m:276 adds the seat's legibility read (condition (3)) and completability
+    (condition (4), 128 generations). m:176 specifies 128 generations per substrate over both pools. routing.txt:
+    'Go for step 5. Design reads at steps 6, 10 and 14 on your ping.' Step 6 is not licensed by the routing, so
+    'on the PI's word' is accurate.
+
+[gport-BCF 39] FAILS: OMISSION (Committed line, conditional): if this values-check pass's raws are committed with the entry, as in earlier entries, they are not listed.
+    EVIDENCE: The BUILD entry's committed list names its values-check raws (RESULTS.md:562-563, _valuescheck and
+    _valuescheck_pass2), as do commits 05c4636, 9510af7 and 939905a. Neither 2026-10-07 entry lists any.
+    CORRECTION: If committed, append to the G-PORT line: '; the two values-check raws (results/raw/2026-10-07_m-
+    gport_valuescheck*.txt)'. If they are not committed, no change.
+

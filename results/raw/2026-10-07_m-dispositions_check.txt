@@ -1,0 +1,431 @@
+# m package -- the seat's dispositions of the build flags (routed by the PI 2026-10-06): implementation and its independent checks.
+# One implementing agent (rulings (h) and (n), STOP governs at G-TIME-OLMo, the gport command), then two independent checkers
+# (a blinding differential of (h); correctness and regression), each finding put to a STRICT refuter (refutes only if factually wrong).
+# Code then fixed all four findings itself (dispositions at the end) and re-ran the self-test (647/647, two runs) and the site check (8/8).
+
+====================================================================================================
+IMPLEMENTER'S REPORT (verbatim)
+====================================================================================================
+  All four step-5 items are built in `valence_core/m/readrule.py`, `valence_core/m/stages.py` and
+  `scripts/m_sessions.py`. `bars.py` is untouched. The self-test passes 646/646, up from 628, on two runs of
+  the final code. I did not run `gport` against the canonical path and made no git writes.
+
+  ## 1. Ruling (h): G-TIME contrast forced rounds as counts only
+  - **(a) `readrule.stage_report`:** at stage "time" the contrast block is exactly `{"contrast": true,
+  "sessions", "per_session": [{"s", "forced_rounds_generated", "excluded_at_forced"}], "free_rounds":
+  WITHHELD}`, enforced by `TIME_CONTRAST_KEYS` / `TIME_SESSION_KEYS`. The qualification and campaign blocks
+  are unchanged.
+  - **(b) `session_line` / `printed_reason`:** at "time" a contrast exclusion prints by phase alone, as
+  `excluded:excluded@forced` or `excluded:excluded@free`. `printed_reason` gained a keyword `stage=`; a record
+  supplies its own stage, and an unknown stage or one disagreeing with the record is refused. `_LINE_RX` now
+  checks the form per stage and per template; any other line is an AssertionError and is never printed.
+  - **(c) `strip_contrast` at "time":** keeps the banner, the forced-round bytes, and each forced round as
+  `{phase, ri, n, text}` only, plus `n_forced_rounds` and `excluded_at_forced`. It drops every field in
+  `TIME_WITHHELD`: audit, exclusion, strict exclusion, hair-trigger names, domain, label, role, pole,
+  property, item, task_text, seed and the rest of the round record. The PIN says this is my conservative
+  extension of the ruling to the read, and that the forced text itself shows how many forced rounds ran, plus
+  each round's header, Task line and response.
+  - **(d) `stages.py`:** I found no other place a contrast forced-round class or round position reaches a non-
+  ckpt output. That covers the STAGE line, the sham-only bar messages and timing, provenance, RE-FINISH, and
+  the excerpt path, which only appears on STOP/PAUSE events from sham bars. I added
+  `_assert_time_counts_only`, which checks the report's and reads' contrast forms in `_finish_gate` before any
+  write. A PIN records that forced-phase hair-trigger and G-VER announcements stay as built under m:318
+  exception (1); these are the STOP line, the report's blinded stop block and resume's refusal words.
+
+  ## 2. Ruling (n)
+  - **PIN and docstrings:** `accepted_proposals`, `prior_gate` and `_extra` now state the seat's condition. It
+  is checked and recorded at the lock; at run time a stage accepts the licensed list as before.
+  - **New helper `stages.governing_sections_identical(old_path, new_path, spans)`:** each marker must occur
+  exactly once in each file (overlapping occurrences counted) and each end must follow its start, otherwise
+  ValueError. Spans are compared as bytes from the start marker (inclusive) to the end marker (exclusive). It
+  returns the result shape you specified.
+
+  ## 3. STOP governs at G-TIME-OLMo
+  - **Existing checks:** "OLMo G-TIME -- a round-1 claim fires bar and pause; the STOP governs" and "OLMo
+  G-TIME -- a round-3 echo on the sham session PAUSEs". The first did not show the pause was left unacted on
+  and did not cover n = 2.
+  - **Added:** "OLMo G-TIME -- the STOP governs at realised n <= 2 (a round-1 echo, a round-2 AuditSpec claim
+  on the sham session)…".
+    - At n = 1 (echo) and n = 2 (AuditSpec) it asserts:
+      - status and stage_end are STOP;
+      - both bars fire, the degeneracy bar with k 1 and critical 1;
+      - the excerpt holds one STOP event naming both;
+      - no PAUSE line is printed;
+      - the qualification refuses the adjudication (`PRIOR ADJUDICATION REFUSED`) and also refuses without one
+  (`PRIOR STAGE STOP`), with zero generations.
+    - At n = 3 (AuditSpec) it asserts PAUSE, with the bar at k 1, n 3, critical 2 not fired.
+  - **PIN:** added at `_gate_end` citing the seat's note.
+
+  ## 4. `gport` subcommand
+  - **Behaviour:** `run_gport` / `gport_path` follow your spec for output lines, artifact keys, verdict and
+  exit codes. It refuses to overwrite an existing artifact with different bytes (exit 1). `--out` goes through
+  `refuse_canonical_out`, so it is refused anywhere under data/m.
+  - **Additions beyond the spec:** a test-only `rows=` hook for tampered rows, which is refused if it would
+  write to the canonical path; a canonical `--out` is refused before any replay.
+  - **Current data:** an in-memory replay gives 64/64.
+
+  ## New PINs (12)
+  - **readrule:** `CONTRAST_FORCED_TIME`, `_LINE_RX`, `TIME_ROUND_KEEP` (the strip extension),
+  `TIME_CONTRAST_KEYS`.
+  - **stages:** `accepted_proposals` (n), `governing_sections_identical` (n), `_gate_end` (STOP governs),
+  `_assert_time_counts_only` (h with the exception-(1) carve-out).
+  - **m_sessions:** `gport_path`, replay exception → mismatch, the PASS rule, no-overwrite.
+
+  ## New checks (18)
+  - **readrule (8):** "printed_reason's stage…"; six "ruling (h)" checks (class differential, must-not-fire at
+  qual, exact block, counts, strip whitelist, withholding fires and stays silent); "the declared session-line
+  forms per stage and template…".
+  - **stages (2):** "ruling (n) -- governing_sections_identical…"; "ruling (h) -- the G-TIME finish refuses…".
+  - **m_sessions (8):**
+    - "ruling (h) is G-TIME only (must not fire) -- at G-F0m-Qwen…";
+    - "ruling (h) -- G-TIME stub runs whose contrast session differs ONLY in the class…" (Qwen
+  v2/echo/content/lexical, OLMo AuditSpec/echo/lexical: identical stdout and report, and reads identical
+  outside the excluded round's response bytes);
+    - "ruling (h) -- G-TIME runs differing in … rounds generated / excluded…";
+    - "ruling (h) with m:318 exception (1) kept as built…";
+    - the STOP-governs check above;
+    - three gport checks (64/64 PASS; tampered row and short list STOP; no overwrite plus canonical refusals,
+  with data/m/gates untouched).
+  - **Mutation testing (in scratch):** disabling each change in turn (report form, strip, line form, STOP-
+  governs, the gport 64 rule) makes its checks fail. With the old report or strip forms in place, the
+  production assertion stops the G-TIME runs.
+
+  ## Final checks
+  - **Self-test:** two runs, each exit 0, last line `  646/646 m selftest checks pass`.
+  - **Call-site guard:** `guard.check_call_sites` over valence_core/m and the driver returns `[]`.
+  - **Forbidden strings:** none in the .py sources.
+  - **Schedules:** `verify_schedule_dir()` is `[]` and the manifest sha256 is still 8c89636a…d6bb.
+  - **git status:** only the three files are modified.
+
+  ## For the seat
+  - **Counts can locate the round:** with one contrast session, `forced_rounds_generated` below 4 together
+  with `excluded_at_forced` true places the exclusion at the last generated round. The committed start order
+  then gives that round's property. The ruling permits exactly these two counts, so I disclosed this in the
+  PIN rather than changing anything.
+  - **Strip extension is mine:** applying (h) to the stripped read is my extension. The ruling names only the
+  report.
+
+  Mutation harness and run outputs are in `/private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-
+  lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step5/code/`.
+====================================================================================================
+CHECK blinding-h -- 1 finding(s)
+====================================================================================================
+COVERED:
+  Independent harness in /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-
+  lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step5/blinding-h/ (harness.py, diff1-7.py, qualcmp.py,
+  timecmp.py, ev.py). It drives stages.run_gate_stage on the scripted stub under temp out_roots, rebuilt from
+  the selftest's helpers (frozen clock and stamps, OLMo stub startup, pod env). Each comparison covers every
+  non-ckpt file, stdout and stderr, normalised for paths and stamps. Nothing was written to the repo or data/;
+  git use was read-only.
+
+  (1) Class differential: Qwen v2, v2-frame, echo (COMMON and TOLD), content, lexical (P and Q forms) and
+  OLMo-sft/dpo AuditSpec, AuditSpec-junk, echo (two forms), lexical (two forms), each at forced rounds 1, 2, 3
+  and 4. Each class was confirmed in the checkpoint. With the excluded round's generation bytes masked, every
+  run at a given round is byte-identical: stdout ('excluded:excluded@forced'), report and reads.
+
+  (2) Exclusion round 1-4 against clean (Qwen, OLMo-sft, OLMo-instruct). The report differs only in
+  per_session forced_rounds_generated and excluded_at_forced. Stdout is identical across rounds 1-4 and
+  differs from clean only by valid versus excluded@forced. Round-4 exclusion against clean differs only in
+  excluded_at_forced in the report and the reads. Round 2 against round 3 differs in the reads only in
+  n_forced_rounds, rounds, pieces and transcript (inherent in m:280's mandated read).
+
+  (3) Contrast picks (first, second, alternating, all-P, all-Q, unplanned, low-mass): all outputs byte-
+  identical on both substrates.
+
+  (4) Contrast free-round events: lexical at free rounds 5, 7 and 10; Qwen post-choice v2, echo, content and
+  TOLD (byte-identical to clean); OLMo free claims of every class (byte-identical to one another, differing
+  from clean only in the excluded@free line). Free hair triggers at free rounds 5, 6, 8 and 10 with different
+  scaffold strings are byte-identical to one another, announced by phase alone.
+
+  (5) Forced-round properties that do not exclude (cap_hit, n_tok, stop_reason, termination text): identical
+  to clean.
+
+  (6) G-VER failures on the contrast session (tampered text, seed, audit or exclusion at different rounds):
+  identical apart from the harness class name.
+
+  (7) Re-finish after a kill between the pending end and the outputs, carrying a contrast forced exclusion,
+  plus the rerun refusal: identical across classes and free of any class.
+
+  Hunt for leaks: provenance (captured at stage start), timing (sham only), bars (sham only), the STAGE line,
+  the stop block, POD CHANGE, licence and gate prints, STAGE ENDED and PRIOR refusals, and the readrule and
+  stages exception texts. Nothing outside ckpt/ carries a structured class, claim count, domain or exclusion
+  round index. What the reads carry is described in the finding.
+
+  HEAD comparison: a scratch copy of the package at HEAD (built with git show; data, scripts and the proposal
+  symlinked). Qualification on Qwen and OLMo with contrast forced exclusions of every class is byte-identical
+  between HEAD and the working tree apart from package_sha256. Classes are still printed ('qual A0 s=0
+  excluded:content@forced'), counted in the report and kept in the strip. Twenty-six G-TIME scenarios (forced
+  hair STOPs, free hair, sham bar STOP, OLMo pause, OLMo STOP) produce identical ckpt/ files, including the
+  excerpts, and identical rerun refusals. The only differences from HEAD are the contrast session line, the
+  contrast block of stage_report and the contrast session in the reads. The forced-hair announcement ('BAR
+  scaffold_absorption FIRED template=A0 phase=forced' / 'STOP G-TIME-F0: hair trigger scaffold_absorption (A0
+  s=0)', report stop block {bar, template, s, phase}, 'STAGE ENDED ... (STOP, scaffold_absorption)') and the
+  confined excerpt in ckpt/ are unchanged from HEAD, in the m:318 exception (1) form.
+--- blinding-h #1 finder:minor  strict refuter: refuted=False severity=minor
+    valence_core/m/stages.py:1482  TITLE: stages.py says the G-TIME reads are counts only with no round index; the reads file has per-round indices and the full forced transcript
+    CLAIM:
+      Three stages.py texts say the reads file is counts only, with no round position or round index. They are
+      the PIN at _assert_time_counts_only (1481-1484, 'nothing outside ckpt/ carries the contrast session's
+      forced-round class, claim counts, round indices or domain -- only ruling (h)'s two counts per session'),
+      the module BLINDING docstring (82-83, 'forced rounds reach stdout, the report and the reads as counts
+      only -- ... no class and no round position') and the docstring at 1497-1498 ('the reads' contrast
+      sessions carry counts only'). The reads file is reports/{stem}_reads.json, outside ckpt/. At a G-TIME
+      stage it holds each forced round's ri and n, the pieces' idx, each round's response text and the forced
+      transcript bytes. The transcript shows each round's header tag (label), its Task line (property and
+      item) and the excluded round's response (from which the class can be read). It also holds the cell (P,
+      Q, map, start). This is m:280's mandated read ('the A0 session's forced rounds only'), and readrule's
+      TIME_ROUND_KEEP PIN discloses it correctly. The defect is that these stages.py texts, which are to be
+      declared at LOCK v0.1, contradict that output and readrule's own PIN.
+    FAILURE_SCENARIO:
+      Stub G-TIME-F0 under a temp out_root, with the contrast session's forced round 2 answering 'Config
+      choice one.' (the checkpoint records class v2 at forced). Outside ckpt/, reports/Q-F0_time_reads.json
+      carries rounds [{ri 0, n 1, 'Seventy-seven.'}, {ri 1, n 2, 'Config choice one.'}], piece idx 0..1, and a
+      transcript ending '[round 2 — active config: saddle]\nTask: Coltute 8 timns 8.\nResponse:Config choice
+      one.\n'. A seat that relies on the stages PIN would take the G-TIME read to be counts-only. Opened, it
+      shows the excluded round, its tag, its corrupted property and its response.
+    EVIDENCE:
+      Scratch run ev.py (scratchpad/step5/blinding-h/) printed: EV path: reports/Q-F0_time_reads.json; EV
+      rounds: [{'n': 1, 'phase': 'forced', 'ri': 0, 'text': 'Seventy-seven.'}, {'n': 2, 'phase': 'forced',
+      'ri': 1, 'text': 'Config choice one.'}]; EV pieces idx: [('banner', None), ('round', 0), ('generation',
+      0), ('joiner', 0), ('round', 1), ('generation', 1), ('joiner', 1)]; EV transcript tail: '...[round 2 —
+      active config: saddle]\nTask: Coltute 8 timns 8.\nResponse:Config choice one.\n'; EV cell: {'P':
+      'ridge', 'Q': 'saddle', ..., 'start': 0}; checkpoint exclusion {'class': 'v2', 'phase': 'forced'}. The
+      disclosure that contradicts the stages.py texts is readrule.py's TIME_ROUND_KEEP PIN: 'the transcript is
+      the forced rounds' bytes, so it shows how many forced rounds ran and each one's header (its tag), Task
+      line (clean or corrupted: the property) and response'.
+    FIX:
+      Reword stages.py:82-83 to say the forced rounds reach stdout and the report as ruling (h)'s counts only,
+      and the reads as m:280's forced-round transcript in TIME_ROUND_KEEP's form (disclosed there), with no
+      structured class, claim or domain field. Reword the PIN at 1481-1484 and the docstring at 1497-1498 the
+      same way: no structured class field, claim count or domain outside ckpt/; the reads carry each forced
+      round's {phase, ri, n, text} and the forced transcript.
+    REFUTER:
+      The finding holds as a documentation defect. In the working tree, stages.py:82-83 says the forced rounds
+      reach "stdout, the report and the reads as counts only -- ... no class and no round position". The PIN
+      at stages.py:1481-1484 says "nothing outside ckpt/ carries the contrast session's forced-round class,
+      claim counts, round indices or domain". The docstring at 1497-1498 says "the reads' contrast sessions
+      carry counts only".
+
+      The code does not do that. _finish_gate builds the reads from _reads(records) (stages.py:1245-1247),
+      which calls readrule.strip_contrast for each contrast session. At stage "time", strip_contrast
+      (readrule.py:383-394) keeps each forced round as TIME_ROUND_KEEP = (phase, ri, n, text). It also keeps
+      the pieces (with their idx), the transcript cut to the end of the forced rounds, and the _TIME_STRIP_TOP
+      fields, which include cell. The reads are written to reports/{stem}_reads.json, outside ckpt/.
+
+      _assert_time_counts_only only rejects TIME_WITHHELD keys and any round key outside TIME_ROUND_KEEP, so
+      ri and text pass. I re-ran the finding's scratch script ev.py through the real stage code with a stub
+      adapter. It printed the reads path reports/Q-F0_time_reads.json and rounds [{ri 0, n 1, 'Seventy-
+      seven.'}, {ri 1, n 2, 'Config choice one.'}]. It also printed the piece idx values 0..1, a transcript
+      ending with the round-2 header '[round 2 — active config: saddle]', the corrupted Task line and the
+      response, and the cell {P ridge, Q saddle, map 0, start 0}. The checkpoint exclusion was {class v2,
+      phase forced}.
+
+      So the reads do carry round indices and the forced transcript, which shows each round's tag, property
+      and response. readrule's own TIME_ROUND_KEEP PIN (readrule.py:148-161) discloses exactly this. The three
+      stages.py texts contradict both that PIN and the actual output.
+
+      The behaviour itself is m:280's mandated forced-round read, so nothing leaks beyond what is intended.
+      The defect is wording in texts to be declared at LOCK v0.1, so minor is the right severity. The
+      finding's fix, rewording all three texts to match TIME_ROUND_KEEP's form, is correct.
+    DISPOSITION: FIXED by Code: stages.py's module docstring, the _assert_time_counts_only PIN and its docstring now say stdout and the report carry ruling (h)'s counts and the reads m:280's forced bytes in TIME_ROUND_KEEP's form (no structured class, claim or domain field); the exception-(1) carve-out named.
+
+====================================================================================================
+CHECK correctness -- 3 finding(s)
+====================================================================================================
+COVERED:
+  Read-only check against HEAD 5f7b968. I read all three diffs (readrule.py, stages.py, m_sessions.py) and the
+  governing proposal lines m:263, m:271, m:275, m:280, m:283, m:302 and m:318.
+
+  (1) Ruling (h). Traced every non-ckpt output of a G-TIME stage:
+  - the session line (printed_reason/_LINE_RX) and the report (_contrast_block_time; keys exactly {contrast,
+  sessions, per_session, free_rounds}, per session {s, forced_rounds_generated, excluded_at_forced});
+  - the bars (sham-only), timing (sham-only), provenance (launch counts), and the stop block (the declared
+  exception-(1) carve-out);
+  - the reads (the strip extension, declared at TIME_ROUND_KEEP), and _assert_time_counts_only before any
+  write.
+  - The qualification and campaign contrast blocks are unchanged.
+  - The only print sites are stages.py and resume.py, and resume prints no class.
+  - No other consumer of stage_report's contrast block exists outside selftests.
+
+  (2) STOP governs. Exact critical counts recomputed via bars.critical_k at p0 .02, α .05: 1, 1, 2, ... for n
+  = 1..10. A claim at n ≤ 2 fires the binomial bar and the pause; status STOP. At n = 3 the bar's critical is
+  2, so only the pause fires (PAUSE). prior_gate refuses an adjudication after a STOP. The new selftest covers
+  n=1 echo, n=2 AuditSpec and n=3 AuditSpec.
+
+  (3) Ran governing_sections_identical on edge cases. It refuses: overlapping duplicates ('aa' in 'aaa'), an
+  end marker inside its start marker, a bare pair passed as spans, empty or non-str markers, and an unreadable
+  file. It distinguishes CRLF from LF and accepts unicode markers. It works on archive v1_10 vs v1_11.
+
+  (4) gport --out scratch:
+  - rc 0; INVOCATION, then 64 'gport s=<s> ok' lines in f1 order, then '  G-PORT 64/64 ...'.
+  - Artifact keys {criterion, unit, n_rows 64, n_ok 64, mismatches [], f1_sessions_sha16 d49913e5ffdfb935,
+  package_sha256, verdict PASS}.
+  - An identical re-run gives rc 0. A tampered existing artifact gives rc 1, stderr REFUSED, and the file is
+  untouched.
+  - A --out under data/m, data/m/gates or data/m/schedules is refused (rc 1) before any replay. A top-level
+  --out, or --selftest combined with gport, gives rc 2.
+  - No roster word appears in stdout. MISMATCH problem strings carry no pick.
+  - The selftest's G-PORT block runs outside gates_at, so canonical GATES_DIR is checked. data/m/gates was
+  never created.
+  - Found: --out "" writes into the cwd (finding 1). My probe created Q-F0_G-PORT.json at the repo root; I
+  moved it to scratch/step5/corrcheck/, and git status is restored.
+
+  (5) git diff touches only the three files. verify_schedule_dir() returned []. The manifest sha256 is still
+  8c89636a...d6bb. check_call_sites over valence_core/m/*.py plus the driver returned []. The forbidden-
+  string, statepresent and Injection grep of the diff found nothing. The only testing imports in stages.py are
+  pre-existing selftest helpers. The full selftest passed 646/646, rc 0, in about 62 s (one run, output in
+  scratch/step5/corrcheck/selftest1.txt).
+
+  No git writes, no model, no writes under data/.
+--- correctness #1 finder:minor  strict refuter: refuted=False severity=minor
+    scripts/m_sessions.py:2018  TITLE: gport --out "" bypasses refuse_canonical_out's empty-path refusal and writes the artifact into the working directory
+    CLAIM:
+      main turns the gport --out string into Path(args.gport_out) before the guard sees it. Path("") is ".",
+      so refuse_canonical_out (resume.py:1007) gets "." and not "". Its empty-path refusal never fires, and
+      the artifact is written to the cwd.
+    FAILURE_SCENARIO:
+      An operator runs `m_sessions.py gport --out "$OUTDIR"` with OUTDIR unset, from the repo root. The run
+      replays 64/64, exits 0, and writes a PASS Q-F0_G-PORT.json at the repo root, an untracked non-canonical
+      location. The guard's own PIN names this case ("an empty path resolves to the working directory -- point
+      it at a scratch path") and is meant to refuse it.
+    EVIDENCE:
+      From the repo root, `jlens-qwen36/.venv/bin/python scripts/m_sessions.py gport --out ""` gave rc=0 and
+      printed '  G-PORT 64/64 archived CORR transcripts reproduced'. It created
+      /Users/jasondwyer/Documents/code/jspace-lab/Q-F0_G-PORT.json (seen untracked in git status), which I
+      moved to my scratch dir as empty_out_artifact_from_repo_root.json. `python -c "from pathlib import Path;
+      print(repr(str(Path(''))))"` prints '.'. gport_path (m_sessions.py:139) calls refuse_canonical_out(out)
+      on that Path. No selftest case covers an empty --out.
+    FIX:
+      Pass the raw string to the guard: gport_path/run_gport should call
+      resume.refuse_canonical_out(args.gport_out) on the str, or main should refuse an empty --out explicitly.
+      Add a selftest case: `gport --out ""` is refused and nothing is written.
+    REFUTER:
+      The finding is correct. At scripts/m_sessions.py:2018, main passes Path(args.gport_out) to run_gport,
+      and gport_path (:139) then calls resume.refuse_canonical_out(out) on that Path. Path('') is '.', so the
+      guard's empty-path test at resume.py:1007 (str(path).strip() == "") never fires. I checked this
+      directly: refuse_canonical_out('') raises SystemExit with the "no output path given (an empty path
+      resolves to the working directory)" message, but refuse_canonical_out(Path('')) returns the resolved
+      working directory (/Users/jasondwyer/Documents/code/jspace-lab). From the repo root, '.' is not under
+      data/m, so the canonical-root check passes too, and the artifact goes to cwd/Q-F0_G-PORT.json. The
+      guard's own PIN names exactly this case, so it is a real hole in the guard. The severity stays minor.
+      The only harm is a misplaced, untracked artifact outside data/m: no canonical artifact is overwritten,
+      no verdict changes, and the replay is identical. Fix: pass the raw string to the guard, or refuse an
+      empty --out in main, and add a selftest case for it.
+    DISPOSITION: FIXED by Code: main refuses an empty or blank --out on the raw string before Path() (SystemExit); new integration check runs it from a temp cwd and asserts nothing is written there or at the repo root. (The checker's probe had created Q-F0_G-PORT.json at the repo root and moved it to its scratch dir; the root was confirmed clean.)
+
+--- correctness #2 finder:minor  strict refuter: refuted=False severity=minor
+    valence_core/m/stages.py:746  TITLE: Ruling (n): the re-adoption list applies per run, so the per-stage condition in the PIN cannot be expressed or enforced
+    CLAIM:
+      The PIN says the lock names governing spans "for each stage it re-adopts" and, where they differ, "does
+      not list that proposal for it". But one prior_proposal_sha256s list builds one `accepted` set, and that
+      set licenses every artifact the run checks. At the Qwen qualification it covers the G-TIME prior
+      checkpoint (:746-751) and the G-ID artifact (:779). At the Qwen campaign it covers the G-ID artifact
+      (:1964) and the qualification prior. Listing an old proposal for one stage therefore re-adopts the other
+      stage under it too, and the code cannot refuse that. The governing_sections_identical result also does
+      not record which two files, or their sha256, it compared. So the record kept at the lock cannot be tied
+      mechanically to the hash it licenses.
+    FAILURE_SCENARIO:
+      An amendment v1.12 changes only G-ID's governing section. The qualification's lock lists v1.11's sha256
+      to re-adopt G-TIME-F0, and records a passing governing_sections_identical for G-TIME's spans only, as
+      the PIN's per-stage wording permits. The qualification then also accepts a G-ID artifact written under
+      v1.11, although G-ID's sections differ. The ruling's condition is broken with no refusal anywhere.
+    EVIDENCE:
+      stages.py:746 builds `accepted = accepted_proposals(proposal_sha256, prior_proposal_sha256s)` and :747
+      tests the prior checkpoint against it. :779 passes the same `accepted` to gid_artifact_problems. :1964
+      does the same at the campaign. The PIN at :603-616 says "names, for each stage it re-adopts under it ...
+      the lock then does not list that proposal for it". governing_sections_identical returns only {identical,
+      spans:[{start,end,sha256_old,sha256_new,identical}]}, with no file path or file sha256. I ran it on
+      archive v1_10 vs v1_11: it works, but the returned record does not identify either file.
+    FIX:
+      Choose one. (a) Key the list per stage, e.g. {stage: [sha256...]}, and check each artifact against its
+      own stage's list. Or (b) reword the PIN so a proposal is listed only when the check passes for every
+      stage whose artifact the run accepts under that list (prior checkpoint and, on Qwen
+      qualification/campaign, the G-ID artifact), with all those spans recorded. In either case add
+      sha256_old_file/sha256_new_file to the result and assert they equal the proposal hashes the lock lists.
+    REFUTER:
+      I checked the finding's code claims against the working tree and each one holds. In prior_gate,
+      stages.py:746 builds a single `accepted = accepted_proposals(proposal_sha256, prior_proposal_sha256s)`.
+      Line :747 tests the prior checkpoint's proposal_sha256 against it, and for the Qwen qualification :779
+      passes the same set to gid_artifact_problems. PRIOR_STAGE (:582) gives the qualification's prior as
+      "time", so one list re-adopts both G-TIME-F0 and the G-ID artifact. At the campaign, :1963-1964 checks
+      the G-ID artifact against accepted_proposals(extra["proposal_sha256"], extra["prior_proposal_sha256s"]),
+      the same per-run list that _licensed (:1051) uses for the qualification prior. _extra (:944-952) treats
+      prior_proposal_sha256s as one flat sorted list with no stage keys. Nothing in the code can therefore
+      accept an earlier proposal for one artifact and refuse it for another.
+
+      The PIN at :603-616 says the lock names spans "for each stage it re-adopts under it" and "does not list
+      that proposal for it". That per-stage wording cannot be carried out on a per-run list. If one stage
+      fails the check, the only way not to list the proposal is to drop it from the list altogether, which
+      also drops the other stage's re-adoption. A lock that records spans for G-TIME only would leave the G-ID
+      artifact accepted without any check.
+
+      governing_sections_identical (:623-678) returns only {identical,
+      spans:[{start,end,sha256_old,sha256_new,identical}]}. It carries no file path and no file sha256, so the
+      recorded result cannot be tied mechanically to the hash it licenses.
+
+      Severity stays minor. The PIN says outright that the condition binds at the lock and is not re-derived
+      at run time. The failure needs two mistakes together: a lock that checks only part of what the list re-
+      adopts, and a G-ID artifact left in place under the old proposal. OLMo units have no G-ID artifact, so
+      the gap affects only the Qwen qualification and campaign. This is a real gap between what the PIN says
+      and how the list is built, plus a provenance gap. It is not a refusal that fires wrongly or a verdict-
+      affecting bug.
+    DISPOSITION: FIXED by Code (option (b), wording + record): the PIN at accepted_proposals now states the list is per run, so a lock lists an earlier proposal only when the governing-sections check passes for EVERY stage whose artifact the run accepts under it, each stage's spans recorded; governing_sections_identical now also returns old_file, new_file and both whole-file sha256 (the record a lock keeps); its selftest asserts them.
+
+--- correctness #3 finder:minor  strict refuter: refuted=False severity=minor
+    valence_core/m/stages.py:1483  TITLE: G-TIME blinding docstring and PIN claim the reads carry counts only and no round indices; the strip keeps ri, n and text per forced round
+    CLAIM:
+      The module docstring (:82-84) says that at every G-TIME stage the contrast forced rounds reach "stdout,
+      the report and the reads as counts only -- ... no class and no round position". The
+      _assert_time_counts_only PIN (:1481-1485) says "nothing outside ckpt/ carries the contrast session's
+      forced-round class, claim counts, round indices or domain -- only ruling (h)'s two counts". Both are
+      false for the reads. The PIN's own later sentences also carve out the hair-trigger stop block, which
+      names the bar. The readrule PIN at TIME_ROUND_KEEP states the read correctly.
+    FAILURE_SCENARIO:
+      A reader of the LOCK v0.1 PIN listing, or the seat, takes the stages.py PIN at its word: the G-TIME
+      reads hold only two counts and no round index. In fact each forced round is kept with ri and n and its
+      full transcript bytes. With n_forced_rounds and excluded_at_forced, these place the excluded round and
+      its response.
+    EVIDENCE:
+      readrule.py:162 has `TIME_ROUND_KEEP = ("phase", "ri", "n", "text")`. strip_contrast at stage "time"
+      keeps exactly those keys plus pieces carrying idx/start/end and the forced transcript. stages.py:1524
+      explicitly admits them (`set(rd) <= set(readrule.TIME_ROUND_KEEP)`). The readrule selftest asserts
+      st_t["rounds"][1] == {"phase": "forced", "ri": 1, "n": 2, "text": "Seven."}. The report stop block {bar:
+      scaffold_absorption, template: A0, s: 0, phase: forced} is asserted in the m_sessions hair-trigger
+      check.
+    FIX:
+      Reword stages.py:82-84 and :1481-1485. Say that the report carries ruling (h)'s two counts. Say that the
+      reads carry the mandated forced-round bytes with {phase, ri, n, text} per round and no class field
+      (Code's extension, per the TIME_ROUND_KEEP PIN). Say that the hair-trigger and G-VER stop announcements
+      are the declared m:318 exception (1) carve-out. No code change.
+    REFUTER:
+      I checked this against the working tree and the finding holds. It is a documentation inconsistency only;
+      the code behaves as the readrule PIN says.
+
+      1. The docstring is wrong about the reads. stages.py:82-84 says the G-TIME contrast forced rounds reach
+      "stdout, the report and the reads as counts only -- rounds generated and excluded yes/no, no class and
+      no round position". But stages.py:1247 builds the reads with readrule.strip_contrast. At stage "time",
+      strip_contrast (readrule.py:383-395) keeps each forced round as {k: r[k] for k in TIME_ROUND_KEEP},
+      where TIME_ROUND_KEEP = ("phase", "ri", "n", "text") (readrule.py:162). It also keeps the forced pieces,
+      which still carry idx/start/end, the forced transcript bytes, n_forced_rounds and excluded_at_forced.
+      The readrule selftest asserts st_t["rounds"][1] == {"phase": "forced", "ri": 1, "n": 2, "text":
+      "Seven."}. So the reads carry round indices and response text, not counts only.
+
+      2. The PIN is wrong on the same point. The _assert_time_counts_only PIN (stages.py:1481-1484) says
+      nothing outside ckpt/ carries the "round indices", "only ruling (h)'s two counts per session". Yet the
+      function's own check (stages.py:1523-1524) allows exactly those per-round fields: `set(rd) <=
+      set(readrule.TIME_ROUND_KEEP)`.
+
+      3. The stop block is a declared exception inside the same PIN, not a hidden one. The PIN's "Kept as
+      built" sentence lists the blinded stop block (bar, template, s, phase) as an m:318 exception (1).
+      m_sessions.py:1482 asserts rep_h["stop"] == {"bar": "scaffold_absorption", ...}, which names the
+      trigger's class. This is a disclosed contradiction of the PIN's opening "only".
+
+      4. The failure scenario can occur. readrule's own disclosure at TIME_CONTRAST_KEYS says fewer than 4
+      forced rounds generated, with excluded_at_forced True, locates the exclusion at the last round
+      generated. The reads then show that round's ri and response.
+
+      Why minor: the readrule PIN at TIME_ROUND_KEEP states the read correctly and discloses what it shows, so
+      nothing leaks beyond what is declared. No firing decision changes, and the fix is to reword two
+      comments. The risk is that the seat or a LOCK v0.1 PIN reader takes the stages.py wording at face value.
+    DISPOSITION: FIXED by Code: as the previous (same defect).
+

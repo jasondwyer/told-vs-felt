@@ -28,6 +28,17 @@
   --build-schedules   writes the Q-F0 and OLMo schedule files + manifest (schedule.py,
                       §2.1 m:159-172) into data/m/schedules (or --out DIR); refuses to
                       overwrite a differing file; re-running changes nothing.
+  gport [--out DIR]   G-PORT (§8 step 5, m:275; licensed by the PI): model-free replay of
+                      every CORR row of data/f/sessions.jsonl (sha-pinned; the smoke file
+                      is outside the replay) through scaffold.replay_f1_row -- f1's draw
+                      order and corrupt() through the m package's CORR delivery module.
+                      Prints INVOCATION, one "gport s=<s> ok" or "gport s=<s> MISMATCH:
+                      <problems>" line per row, then "  G-PORT <n_ok>/<n> archived CORR
+                      transcripts reproduced"; writes data/m/gates/Q-F0_G-PORT.json
+                      (verdict PASS iff 64/64, else STOP), never overwriting an existing
+                      artifact with different bytes. Exit 0 on PASS, 4 on STOP, 1 on a
+                      refused overwrite. --out DIR is for tests only and is refused
+                      anywhere under data/m (resume.refuse_canonical_out).
   time|id|qual|campaign --unit U
                       wired to argparse only: each refuses (exit 2) "not licensed until
                       step N" -- §8's step for that stage and unit (m:358). Nothing here
@@ -105,6 +116,92 @@ def build_schedules(out: Path) -> int:
     probs = schedule.verify_schedule_dir(out)
     print("VERIFY clean" if not probs else f"VERIFY PROBLEMS {probs}", flush=True)
     return 0 if not probs else 1
+
+
+# --- G-PORT (§8 step 5, m:275) -------------------------------------------------------------
+GPORT_NAME = "Q-F0_G-PORT.json"
+GPORT_CRITERION = "64/64 archived CORR transcripts' harness-written lines reproduced (m:275)"
+GPORT_N = 64
+_SHA16 = re.compile(r"^[0-9a-f]{16}$")
+
+
+def gport_path(out: Path | None) -> Path:
+    """The G-PORT artifact's path.
+
+    PIN (Code, declared at LOCK v0.1): with no --out it is guard.GATES_DIR /
+    Q-F0_G-PORT.json (data/m/gates/, beside the G-ID artifact; tracked by .gitignore's
+    data/m/gates allowlist); --out DIR is a test directory and goes through
+    resume.refuse_canonical_out first, so no test run can land under data/m.
+    """
+    from valence_core.m import guard, resume
+    if out is None:
+        return guard.GATES_DIR / GPORT_NAME
+    return resume.refuse_canonical_out(out) / GPORT_NAME
+
+
+def run_gport(out: Path | None = None, *, rows: list[dict] | None = None,
+              f1_sha16: str | None = None) -> int:
+    """G-PORT: replay every archived f1 CORR row; write the artifact; 0 PASS / 4 STOP / 1 refused.
+
+    ``rows`` / ``f1_sha16`` are the selftest's seam (a tampered or shortened row list); a
+    run given rows is refused unless ``out`` names a test directory. Without them the rows
+    are scaffold.load_f1_rows()'s (sha16 pinned, a drift a SystemExit before any replay).
+    """
+    from valence_core.m import resume, scaffold, stages
+    if rows is None:
+        if f1_sha16 is not None:
+            raise ValueError("run_gport: f1_sha16 is given only with supplied rows")
+    else:
+        if out is None:
+            raise SystemExit("G-PORT REFUSED: supplied rows (a selftest) never write the canonical "
+                             "artifact; name a test directory")
+        if type(f1_sha16) is not str or not _SHA16.match(f1_sha16):
+            raise ValueError("run_gport: supplied rows need their 16-hex sha16")
+    path = gport_path(out)                         # a canonical --out is refused before any replay
+    if rows is None:
+        rows, f1_sha16 = scaffold.load_f1_rows(), scaffold.F1_SESSIONS_SHA16
+    pool, _renders = scaffold.pool_and_renders()
+    corr_rows = [r for r in rows if isinstance(r, dict) and r.get("arm") == "CORR"]
+    n_ok, mismatches = 0, []
+    for r in corr_rows:
+        try:
+            probs = list(scaffold.replay_f1_row(r, pool))
+        except (KeyError, TypeError, ValueError, IndexError, AttributeError, RuntimeError) as e:
+            # PIN (Code, declared at LOCK v0.1): a row the replay cannot walk is a mismatch
+            # (the exception's type only is printed and recorded), never a crash or a pass.
+            probs = [f"replay raised {type(e).__name__}"]
+        s = r.get("session")
+        if probs:
+            mismatches.append({"s": s, "problems": probs})
+            print(f"gport s={s} MISMATCH: {'; '.join(probs)}", flush=True)
+        else:
+            n_ok += 1
+            print(f"gport s={s} ok", flush=True)
+    n = len(corr_rows)
+    # PIN (Code, declared at LOCK v0.1): PASS iff every CORR row reproduces AND there are
+    # exactly 64 of them (m:275 "64/64 or STOP"); the artifact's keys are exactly these.
+    verdict = "PASS" if n_ok == n == GPORT_N else "STOP"
+    art = {"criterion": GPORT_CRITERION, "unit": "Q-F0", "n_rows": n, "n_ok": n_ok,
+           "mismatches": mismatches, "f1_sessions_sha16": f1_sha16,
+           "package_sha256": resume.package_sha256(), "verdict": verdict}
+    text = resume.json_text(art, indent=1)
+    rc = stages.exit_code(verdict)
+    if path.exists() or path.is_symlink():
+        try:
+            same = path.is_file() and not path.is_symlink() and path.read_text(encoding="utf-8") == text
+        except (OSError, UnicodeDecodeError):
+            same = False
+        if not same:
+            # PIN (Code, declared at LOCK v0.1): an existing G-PORT artifact is never
+            # overwritten; identical bytes are accepted as they are (a re-run changes nothing).
+            print(f"REFUSED: G-PORT ARTIFACT EXISTS at {path} with different bytes -- it is never "
+                  f"overwritten (this run's verdict {verdict} is not recorded)", file=sys.stderr, flush=True)
+            rc = 1
+    else:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        resume.atomic_write_json(path, art, indent=1)
+    print(f"  G-PORT {n_ok}/{n} archived CORR transcripts reproduced", flush=True)
+    return rc
 
 
 # --- self-test ---------------------------------------------------------------------------
@@ -543,6 +640,22 @@ def _selftest(chk) -> None:
                 all((all(x["phase"] == "forced" for x in r["rounds"]) if r["contrast"]
                      else "[config]" in r["transcript"]) for r in reads["sessions"])
                 and '"choices"' not in res["reads"].read_text())
+            # ruling (h) must not fire at the qualification stage: a contrast forced exclusion
+            # keeps its class on stdout, in the report and in the stripped read (m:263, m:283)
+            rqc = lambda t, s, n, c: "Config choice one." if t == "A0" and s == 0 and n == 2 else None
+            resqc, _, txtqc = gate("Q-F0", "qual", QQ, fresh("qual_forced_class"),
+                                   adapter_for("Q-F0", "qual", QQ, rqc), prior_ckpt=prior_time)
+            cbq = rep_of(resqc)["stage_report"]["templates"]["A0"]
+            rdq = [r for r in json.loads(resqc["reads"].read_text())["sessions"]
+                   if r["template"] == "A0" and r["s"] == 0][0]
+            chk("m_sessions: ruling (h) is G-TIME only (must not fire) -- at G-F0m-Qwen a contrast forced v2 "
+                "exclusion still prints 'qual A0 s=0 excluded:audit@forced', the report counts it by class "
+                "(audit@forced 1; claims v2 1; no per-session block) and the stripped read keeps its class",
+                resqc["status"] == "PASS" and "qual A0 s=0 excluded:audit@forced" in txtqc.splitlines()
+                and cbq["excluded_at_forced"]["audit@forced"] == 1 and cbq["forced"]["claims"]["v2"] == 1
+                and "per_session" not in cbq and rdq["exclusion"]["class"] == "v2"
+                and rdq["exclusion"]["phase"] == "forced" and "audit" in rdq["rounds"][1],
+                (cbq.get("excluded_at_forced"), resqc["status"]))
             # the contrast arm's first-read flags (N11), both directions on the same stage
             flags = {}
             for nm, low in (("high mass", False), ("low mass", True)):
@@ -690,6 +803,60 @@ def _selftest(chk) -> None:
                 and evp["rounds"][0]["generation"] == sham_p["rounds"][2]["text"]
                 and evp["rounds"][0]["audit"]["claim"] == "echo" and evp["picks_revealed"] == []
                 and resc["adjudication"] is None, evp.get("bars"))
+            # the seat's note (2026-10-06): at G-TIME-OLMo a claim at realised n <= 2 fires the
+            # bar (STOP), which subsumes the pause; the STOP governs -- the pause is recorded
+            # as fired and not separately acted on. From n = 3 the pause alone (PAUSE).
+            sg = {"r1 echo": lambda t, s, n, c: "{COMMON}" if t == "A0s-OLMo-sft" and n == 1 else None,
+                  "r2 AuditSpec": lambda t, s, n, c: ("Config choice one." if t == "A0s-OLMo-sft" and n == 2
+                                                      else None),
+                  "r3 AuditSpec": lambda t, s, n, c: ("Config choice one." if t == "A0s-OLMo-sft" and n == 3
+                                                      else None)}
+            sg_got = {}
+            with olmo_stub_startup():
+                with env_pod("podO"):
+                    for nm, rule_ in sg.items():
+                        tag_ = nm.replace(" ", "_")
+                        res_, _, txt_ = gate("OLMo-sft", "time", OT, fresh(f"olmo_governs_{tag_}"),
+                                             adapter_for("OLMo-sft", "time", OT, rule_))
+                        ex_q = []
+                        if res_["status"] == "STOP":
+                            for adj_ in ("seat: selftest -- the pause adjudicated", None):
+                                adq_ = adapter_for("OLMo-sft", "qual", OQ)
+                                _, exq_, _ = gate("OLMo-sft", "qual", OQ, fresh(f"olmo_after_{tag_}_{bool(adj_)}"),
+                                                  adq_, prior_ckpt=res_["checkpoint"], prior_adjudication=adj_)
+                                ex_q.append((exq_, len(adq_.calls)))
+                        sg_got[nm] = (res_, txt_, ex_q)
+
+            def governs(nm, n_real):
+                res_, txt_, ex_q = sg_got[nm]
+                ck_, ev_ = ckpt_of(res_), adj_of(res_)["events"]
+                bar_ = [b for b in rep_of(res_)["bars"] if b["name"].startswith("round_degeneracy@")][0]
+                sham_ = [r for r in ck_["sessions"] if r["template"] == "A0s-OLMo-sft"][0]
+                return (res_["status"] == "STOP" and fired(res_) == {"round_degeneracy": True, "gtime_pause": True}
+                        and (bar_["k"], bar_["n"], bar_["crit"]) == (1, n_real, 1) and len(sham_["rounds"]) == n_real
+                        and ck_["stage_end"]["status"] == "STOP"
+                        and sorted(x.split("@")[0] for x in ck_["stage_end"]["fired"])
+                        == ["gtime_pause", "round_degeneracy"]
+                        and len(ev_) == 1 and ev_[0]["event"] == "STOP" and ev_[0]["kind"] == "bars"
+                        and sorted(x.split("@")[0] for x in ev_[0]["bars"]) == ["gtime_pause", "round_degeneracy"]
+                        and "STAGE G-TIME-OLMo-sft STOP path=uncached" in txt_ and "STAGE G-TIME-OLMo-sft PAUSE" not in txt_
+                        and isinstance(ex_q[0][0], SystemExit) and "PRIOR ADJUDICATION REFUSED" in str(ex_q[0][0])
+                        and isinstance(ex_q[1][0], SystemExit) and "PRIOR STAGE STOP" in str(ex_q[1][0])
+                        and ex_q[0][1] == ex_q[1][1] == 0)
+            r3_res, r3_txt, _ = sg_got["r3 AuditSpec"]
+            r3_bar = [b for b in rep_of(r3_res)["bars"] if b["name"].startswith("round_degeneracy@")][0]
+            chk("m_sessions: OLMo G-TIME -- the STOP governs at realised n <= 2 (a round-1 echo, a round-2 "
+                "AuditSpec claim on the sham session): bar (k 1, critical 1) and pause both fire, status and "
+                "stage_end STOP, ONE STOP event naming both, no PAUSE line; the pause is not separately acted on "
+                "(the qualification refuses its adjudication -- PRIOR ADJUDICATION REFUSED -- and runs on "
+                "nothing: PRIOR STAGE STOP, zero generations); at n = 3 (AuditSpec) the bar's critical 2 is "
+                "unreached and the pause alone PAUSEs",
+                governs("r1 echo", 1) and governs("r2 AuditSpec", 2)
+                and r3_res["status"] == "PAUSE" and fired(r3_res) == {"round_degeneracy": False, "gtime_pause": True}
+                and (r3_bar["k"], r3_bar["n"], r3_bar["crit"]) == (1, 3, 2)
+                and ckpt_of(r3_res)["stage_end"]["status"] == "PAUSE"
+                and "STAGE G-TIME-OLMo-sft PAUSE path=uncached" in r3_txt,
+                {k: (v[0]["status"], [str(e)[:40] for e, _ in v[2]]) for k, v in sg_got.items()})
             with olmo_stub_startup():
                 with env_pod("podO2"):
                     _, expa, _ = gate("OLMo-sft", "time", OT, resp["report"].parents[1],
@@ -1224,6 +1391,101 @@ def _selftest(chk) -> None:
             all(all(v.values()) for v in r1.values()),
             {k: [n for n, ok in v.items() if not ok] for k, v in r1.items() if not all(v.values())})
 
+        # --- ruling (h): at every G-TIME stage the contrast session's forced rounds reach stdout and the report as counts only --
+        def blind_outputs(res, txt, root):
+            # stdout with the run's root normalised; the report's bytes; the reads with the
+            # contrast session's LAST forced response masked (its bytes are the one thing a
+            # different class must change, and m:280's mandated read shows them) and the
+            # piece offsets the mask moves dropped
+            rd = json.loads(res["reads"].read_text(encoding="utf-8"))
+            for r in rd["sessions"]:
+                if r["contrast"] and r["rounds"]:
+                    g = [p for p in r["pieces"] if p["kind"] == "generation"][-1]
+                    r["transcript"] = r["transcript"][:g["start"]] + "<GEN>" + r["transcript"][g["end"]:]
+                    r["rounds"][-1]["text"] = "<GEN>"
+                    for p in r["pieces"]:
+                        p.pop("start")
+                        p.pop("end")
+            return (txt.replace(str(root), "<ROOT>"), res["report"].read_bytes(), json.dumps(rd, sort_keys=True))
+
+        def at_n(text, tpl, n_at):
+            return lambda t, s, n, c: text if t == tpl and n == n_at else None
+
+        H_CASES = {"qwen": ("Q-F0", QT, "A0", {"v2": "Config choice one.", "echo": "{COMMON}",
+                                               "content": "* * *", "lexical": "{Pc} is the answer."}),
+                   "olmo": ("OLMo-sft", OT, "A0-OLMo-sft", {"audit": "Config choice one.", "echo": "{COMMON}",
+                                                            "lexical": "{Pc}."})}
+        hview, hcls, hblk = {}, {}, {}
+        for sub_, (unit_, counts_, ctpl, texts_) in H_CASES.items():
+            for cls_, text_ in texts_.items():
+                root_ = fresh(f"h_{sub_}_{cls_}")
+                with env_pod("podH" if sub_ == "olmo" else None), frozen():
+                    (res_, _, txt_), _ = gate_run(unit_, counts_, at_n(text_, ctpl, 2), olmo=sub_ == "olmo")(root_)
+                con_ = [r for r in ckpt_of(res_)["sessions"] if r["template"] == ctpl][0]
+                exc_ = con_["exclusion"] or {}
+                hcls[(sub_, cls_)] = (res_["status"], exc_.get("class"), exc_.get("phase"),
+                                      sum(r["phase"] == "forced" for r in con_["rounds"]))
+                hview[(sub_, cls_)] = blind_outputs(res_, txt_, root_)
+                hblk[(sub_, cls_)] = rep_of(res_)["stage_report"]["templates"][ctpl]
+        chk("m_sessions: ruling (h) -- G-TIME stub runs whose contrast session differs ONLY in the class of its "
+            "forced exclusion at round 2 (Qwen v2/echo/content/lexical, OLMo AuditSpec/echo/lexical; each class "
+            "recorded in the checkpoint) give byte-identical stdout (the line by phase alone, "
+            "'excluded:excluded@forced'), report and reads (outside the excluded round's response bytes, which "
+            "m:280's mandated read shows); the report's contrast block is the counts only",
+            all(hcls[(s_, c_)] == ("PASS", c_, "forced", 2) for s_, v in H_CASES.items() for c_ in v[3])
+            and all(len({hview[(s_, c_)] for c_ in v[3]}) == 1 for s_, v in H_CASES.items())
+            and "time A0 s=0 excluded:excluded@forced" in hview[("qwen", "v2")][0].splitlines()
+            and "time A0-OLMo-sft s=0 excluded:excluded@forced" in hview[("olmo", "audit")][0].splitlines()
+            and all(b == {"contrast": True, "sessions": 1, "per_session": [
+                {"s": 0, "forced_rounds_generated": 2, "excluded_at_forced": True}],
+                "free_rounds": hblk[("qwen", "v2")]["free_rounds"]} for b in hblk.values())
+            and not any(w in hview[k][0] for k in hview
+                        for w in ("audit@forced", "echo@forced", "content@forced", "lexical@forced")),
+            hcls)
+        cnt_rules = {"round 1": at_n("Config choice one.", "A0", 1), "round 3": at_n("{COMMON}", "A0", 3),
+                     "clean": None, "free lexical": at_n("{Pc} it is.", "A0", 7)}
+        cview, cper = {}, {}
+        for nm, rule_ in cnt_rules.items():
+            root_ = fresh(f"h_count_{nm.replace(' ', '_')}")
+            with env_pod(None), frozen():
+                (res_, _, txt_), _ = gate_run("Q-F0", QT, rule_)(root_)
+            cview[nm] = (txt_.replace(str(root_), "<ROOT>"), res_["report"].read_bytes(),
+                         res_["reads"].read_bytes())
+            cper[nm] = rep_of(res_)["stage_report"]["templates"]["A0"]["per_session"]
+        line_of = {nm: [ln for ln in v[0].splitlines() if ln.startswith("time A0 ")] for nm, v in cview.items()}
+        chk("m_sessions: ruling (h) -- G-TIME runs differing in the contrast session's rounds generated / "
+            "excluded give exactly the permitted counts (a round-1 exclusion 1/yes, a round-3 one 3/yes, clean 4/no, "
+            "a free-round exclusion 4/no); the round-1 and round-3 runs print the same stdout; a free-round "
+            "exclusion's report and reads equal the clean run's (its line excluded@free, m:263)",
+            cper == {"round 1": [{"s": 0, "forced_rounds_generated": 1, "excluded_at_forced": True}],
+                     "round 3": [{"s": 0, "forced_rounds_generated": 3, "excluded_at_forced": True}],
+                     "clean": [{"s": 0, "forced_rounds_generated": 4, "excluded_at_forced": False}],
+                     "free lexical": [{"s": 0, "forced_rounds_generated": 4, "excluded_at_forced": False}]}
+            and cview["round 1"][0] == cview["round 3"][0] and cview["round 1"][1] != cview["round 3"][1]
+            and cview["clean"][1:] == cview["free lexical"][1:]
+            and line_of == {"round 1": ["time A0 s=0 excluded:excluded@forced"],
+                            "round 3": ["time A0 s=0 excluded:excluded@forced"],
+                            "clean": ["time A0 s=0 valid"], "free lexical": ["time A0 s=0 excluded:excluded@free"]},
+            (cper, line_of))
+        root_ = fresh("h_forced_hair")
+        with env_pod(None), frozen():
+            (res_, _, txt_), _ = gate_run("Q-F0", QT, at_n("<|im_end|>", "A0", 3))(root_)
+        rep_h = rep_of(res_)
+        rd_h = [r for r in json.loads(res_["reads"].read_text())["sessions"] if r["contrast"]][0]
+        chk("m_sessions: ruling (h) with m:318 exception (1) kept as built -- a forced-phase hair trigger on the "
+            "G-TIME contrast session (a scaffold string, also a v2 claim) STOPs the stage; its session line is "
+            "by phase alone (no 'audit@forced'), the announcement names the trigger (BAR scaffold_absorption "
+            "FIRED template=A0 phase=forced; the report's blinded stop block), the report's contrast block is "
+            "counts only (3 rounds, excluded) and the read carries no hair-trigger name or class",
+            res_["status"] == "STOP" and "time A0 s=0 excluded:excluded@forced" in txt_.splitlines()
+            and "audit@forced" not in txt_ and "BAR scaffold_absorption FIRED template=A0 phase=forced" in txt_
+            and rep_h["stop"] == {"bar": "scaffold_absorption", "template": "A0", "s": 0, "phase": "forced"}
+            and rep_h["stage_report"]["templates"]["A0"]["per_session"]
+            == [{"s": 0, "forced_rounds_generated": 3, "excluded_at_forced": True}]
+            and "hair_triggers" not in rd_h and "exclusion" not in rd_h
+            and all(set(x) == {"phase", "ri", "n", "text"} for x in rd_h["rounds"])
+            and ckpt_of(res_)["sessions"][0]["exclusion"]["class"] == "v2", txt_.splitlines()[-6:-4])
+
         with gates_at(base / "no-gates"):
             # an OLMo campaign's pending end re-finishes on another pod (its checkpoint carries its
             # pod id: a write there is admitted only when it records no session)
@@ -1577,6 +1839,90 @@ def _selftest(chk) -> None:
                 and stages._pending_on_disk.__name__ == "_pending_on_disk",
                 (str(eg_)[:60], str(ec2_)[:60]))
 
+        # --- G-PORT (step 5, m:275): the gport subcommand, on test directories only ---------------
+        canon_g = guard.GATES_DIR / GPORT_NAME
+        canon_before = canon_g.read_bytes() if canon_g.is_file() else None
+        f1_rows = scaffold.load_f1_rows()
+        corr_s = [r["session"] for r in f1_rows if r["arm"] == "CORR"]
+        gdir = resume.refuse_canonical_out(base / "gport")
+        rc_g, ex_g, txt_g = capture(main, ["gport", "--out", str(gdir)])
+        lines_g = txt_g.splitlines()
+        art_p = gdir / GPORT_NAME
+        art_g = json.loads(art_p.read_text(encoding="utf-8")) if art_p.is_file() else {}
+        want_art = {"criterion": GPORT_CRITERION, "unit": "Q-F0", "n_rows": 64, "n_ok": 64, "mismatches": [],
+                    "f1_sessions_sha16": scaffold.F1_SESSIONS_SHA16, "package_sha256": resume.package_sha256(),
+                    "verdict": "PASS"}
+        chk("m_sessions: gport (G-PORT, m:275) on a temp dir -- all 64 archived CORR rows of data/f/sessions.jsonl "
+            "(sha-pinned; the smoke file outside) replay: INVOCATION first, one 'gport s=<s> ok' per row in f1 "
+            "order, last line '  G-PORT 64/64 archived CORR transcripts reproduced'; the artifact is exactly "
+            "{criterion, unit, n_rows, n_ok, mismatches, f1_sessions_sha16, package_sha256, verdict PASS}; exit 0",
+            rc_g == 0 and ex_g is None and len(corr_s) == 64 and lines_g[0].startswith("INVOCATION: ")
+            and lines_g[1:-1] == [f"gport s={s} ok" for s in corr_s]
+            and lines_g[-1] == "  G-PORT 64/64 archived CORR transcripts reproduced"
+            and art_g == want_art and art_p.read_text(encoding="utf-8") == resume.json_text(want_art, indent=1),
+            (rc_g, lines_g[-1:], {k: v for k, v in art_g.items() if want_art.get(k) != v}))
+        pass_bytes = art_p.read_bytes() if art_p.is_file() else b""
+        rc_g2, _, txt_g2 = capture(main, ["gport", "--out", str(gdir)])
+        tam = json.loads(json.dumps(f1_rows))
+        t_row = [r for r in tam if r["arm"] == "CORR" and r["session"] == 5][0]
+        t_row["transcript"] = t_row["transcript"].replace("Response:", "Response;", 1)
+        tam_sha = hashlib.sha256("".join(json.dumps(r) + "\n" for r in tam).encode()).hexdigest()[:16]
+        gdir_t = resume.refuse_canonical_out(base / "gport_tampered")
+        rc_t, _, txt_t = capture(run_gport, gdir_t, rows=tam, f1_sha16=tam_sha)
+        art_t = json.loads((gdir_t / GPORT_NAME).read_text(encoding="utf-8"))
+        short = [r for r in f1_rows if not (r["arm"] == "CORR" and r["session"] == 63)]
+        gdir_s = resume.refuse_canonical_out(base / "gport_short")
+        rc_s, _, txt_s = capture(run_gport, gdir_s, rows=short, f1_sha16="0" * 16)
+        art_s = json.loads((gdir_s / GPORT_NAME).read_text(encoding="utf-8"))
+        mism_line = [ln for ln in txt_t.splitlines() if "MISMATCH" in ln]
+        chk("m_sessions: gport STOPs (exit 4) on a tampered archived row -- 'gport s=5 MISMATCH: <problems>', "
+            "63/64, the artifact's mismatches name s 5 and verdict STOP -- and on a row list one CORR row short "
+            "(63/63 reproduced is not 64/64); a re-run over an identical artifact changes nothing (exit 0)",
+            rc_t == 4 and len(mism_line) == 1 and mism_line[0].startswith("gport s=5 MISMATCH: ")
+            and txt_t.splitlines()[-1] == "  G-PORT 63/64 archived CORR transcripts reproduced"
+            and art_t["verdict"] == "STOP" and art_t["n_ok"] == 63 and art_t["n_rows"] == 64
+            and [m["s"] for m in art_t["mismatches"]] == [5] and art_t["mismatches"][0]["problems"]
+            and art_t["f1_sessions_sha16"] == tam_sha
+            and rc_s == 4 and art_s["verdict"] == "STOP" and (art_s["n_ok"], art_s["n_rows"]) == (63, 63)
+            and art_s["mismatches"] == [] and txt_s.splitlines()[-1] == "  G-PORT 63/63 archived CORR transcripts reproduced"
+            and rc_g2 == 0 and art_p.read_bytes() == pass_bytes,
+            (rc_t, mism_line[:1], rc_s, rc_g2))
+        err_g = io.StringIO()
+        with contextlib.redirect_stderr(err_g):
+            rc_o, _, txt_o = capture(run_gport, gdir, rows=tam, f1_sha16=tam_sha)
+            rc_c, ex_c, _ = capture(main, ["gport", "--out", str(REPO / "data" / "m" / "gates")])
+            rc_r, ex_r, _ = capture(run_gport, None, rows=tam, f1_sha16=tam_sha)
+            rc_b, _, _ = capture(main, ["--build-schedules", "gport", "--out", str(base / "gport_combo")])
+        chk("m_sessions: gport never overwrites an artifact with different bytes (refused, exit 1, the PASS "
+            "artifact byte-identical); --out under data/m is refused (SELFTEST REFUSED) before anything runs; "
+            "supplied rows never reach the canonical path; gport refuses a combined --build-schedules (exit 2); "
+            "the canonical data/m/gates artifact is untouched by the selftest",
+            rc_o == 1 and "REFUSED: G-PORT ARTIFACT EXISTS" in err_g.getvalue() and art_p.read_bytes() == pass_bytes
+            and isinstance(ex_c, SystemExit) and "SELFTEST REFUSED" in str(ex_c) and rc_c is None
+            and isinstance(ex_r, SystemExit) and "G-PORT REFUSED" in str(ex_r)
+            and rc_b == 2 and not (base / "gport_combo").exists()
+            and (canon_g.read_bytes() if canon_g.is_file() else None) == canon_before,
+            (rc_o, str(ex_c)[:50], str(ex_r)[:50], rc_b))
+
+        # gport --out "" -- Path("") is "." (the working directory): refused on the raw string.
+        # Run from a temp cwd so a regression could never write into the repo.
+        ecwd = base / "gport_emptyout_cwd"
+        ecwd.mkdir()
+        here = os.getcwd()
+        try:
+            os.chdir(ecwd)
+            with contextlib.redirect_stderr(io.StringIO()):
+                rc_e, ex_e, _ = capture(main, ["gport", "--out", ""])
+                rc_w, ex_w, _ = capture(main, ["gport", "--out", "   "])
+        finally:
+            os.chdir(here)
+        chk("m_sessions: gport --out '' (and a blank --out) is refused before any replay -- an empty path "
+            "would resolve to the working directory; nothing is written there or at the repo root",
+            isinstance(ex_e, SystemExit) and "empty path is refused" in str(ex_e)
+            and isinstance(ex_w, SystemExit) and "empty path is refused" in str(ex_w)
+            and not any(ecwd.iterdir()) and not (REPO / "Q-F0_G-PORT.json").exists(),
+            (str(ex_e)[:60], sorted(x.name for x in ecwd.iterdir())))
+
         # --- stdout hygiene over every integration run --------------------------------------
         probs = [p for o in outs for p in stdout_problems(o)]
         chk(f"m_sessions: stdout of {len(outs)} integration runs carries no roster label, pick line or "
@@ -1670,7 +2016,7 @@ def run_selftest() -> int:
 def main(argv: list[str] | None = None) -> int:
     shown = sys.argv if argv is None else [sys.argv[0]] + list(argv)
     print("INVOCATION: " + " ".join([sys.executable] + shown), flush=True)
-    ap = argparse.ArgumentParser(description="PROPOSAL-m step-4 driver (self-test, schedules)")
+    ap = argparse.ArgumentParser(description="PROPOSAL-m driver (self-test, schedules, G-PORT)")
     ap.add_argument("--selftest", action="store_true", help="model-free self-test of the m package")
     ap.add_argument("--build-schedules", action="store_true",
                     help="write the schedule files + manifest (default data/m/schedules)")
@@ -1679,7 +2025,21 @@ def main(argv: list[str] | None = None) -> int:
     for c in STAGE_CMDS:
         p = sub.add_parser(c, help=f"the {c} stage (refused at step 4)")
         p.add_argument("--unit", required=True, choices=UNITS)
+    gp = sub.add_parser("gport", help="G-PORT (step 5, m:275): replay f1's 64 archived CORR transcripts")
+    gp.add_argument("--out", dest="gport_out", default=None,
+                    help="a test directory for the artifact (refused under data/m); default data/m/gates")
     args = ap.parse_args(argv)
+    if args.cmd == "gport":
+        if args.selftest or args.build_schedules or args.out is not None:
+            print("refused: gport takes no --selftest / --build-schedules / top-level --out "
+                  "(its own --out follows the subcommand)", file=sys.stderr)
+            return 2
+        if args.gport_out is not None and not args.gport_out.strip():
+            # an empty --out would become Path("") == "." (the working directory); refuse it
+            # on the raw string, before refuse_canonical_out sees a resolved path
+            raise SystemExit("gport --out: an empty path is refused (it would write into the "
+                             "working directory)")
+        return run_gport(Path(args.gport_out) if args.gport_out is not None else None)
     if args.cmd is not None:
         if args.selftest or args.build_schedules:
             print("refused: a stage subcommand takes no --selftest / --build-schedules", file=sys.stderr)

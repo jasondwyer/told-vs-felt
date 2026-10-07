@@ -78,7 +78,14 @@ BLINDING (m:318; build design §0 rule 5). Stdout carries only the PROVENANCE li
 PAUSE / PASS line (with its path) and file paths. A hair trigger on a contrast
 session's FREE phase is announced by phase alone (m:318 exception (1)), and so is every
 later refusal of the stopped stage (resume's blinded stop words): ``readrule.strip_contrast``
-and ``stage_report`` withhold it, so this module announces the stop itself. The
+and ``stage_report`` withhold it, so this module announces the stop itself. At every
+G-TIME stage the contrast session's forced rounds reach stdout and the report as
+ruling (h)'s counts only -- rounds generated and excluded yes/no, no class and no round
+position (the seat's ruling (h), 2026-10-06; ``_assert_time_counts_only``); the reads
+carry m:280's mandated forced-round bytes with {phase, ri, n, text} per round and no
+structured class, claim or domain field (Code's extension of (h) to the read,
+readrule's TIME_ROUND_KEEP PIN); a forced hair trigger's or G-VER failure's STOP is the
+declared m:318 exception (1) carve-out. The
 pick-bearing checkpoint and the adjudication excerpt are written only under ``ckpt/``
 (marked -diff in .gitattributes). Reports and reads carry no contrast pick; G-ID's
 reads and the sham first-pick shares carry sham picks under m:318's exceptions (2)-(4).
@@ -596,10 +603,92 @@ def written_on_stub(ck: Mapping) -> bool:
 def accepted_proposals(proposal_sha256: str | None,
                        prior_proposal_sha256s: Sequence[str] = ()) -> frozenset[str] | None:
     """The proposal hashes a prior stage or the G-ID artifact may carry: this run's, plus
-    those its governing lock re-adopts. None = no check (a direct call without a run)."""
+    those its governing lock re-adopts. None = no check (a direct call without a run).
+
+    PIN (Code, declared at LOCK v0.1; finding R11; the seat's ruling (n), 2026-10-06,
+    routed by the PI): ``prior_proposal_sha256s`` is approved "on one condition the lock
+    states: a stage is re-adopted only if the proposal sections governing it are
+    byte-identical between the two versions, which Code checks and records at the lock."
+    The condition binds at the LOCK, not here: the lock that names an earlier proposal's
+    sha256 in this list names, for each stage it re-adopts under it, the governing
+    sections as (start marker, end marker) spans; Code runs
+    ``governing_sections_identical(earlier, current, spans)`` on the two committed
+    proposal files and records its result -- every span's two sha256 and the verdict --
+    in the lock. The list is per RUN, not per stage: one listed proposal licenses every
+    prior artifact the run checks under it (at the Qwen qualification, the G-TIME prior
+    checkpoint and the G-ID artifact; at the campaign, the qualification prior and the
+    G-ID artifact). So the lock lists an earlier proposal only when the check passes for
+    EVERY stage whose artifact the run accepts under that list, each stage's spans
+    recorded; if any of them differs, the proposal is not listed, and the stages run under
+    it are not re-adopted. At run time a stage accepts exactly the list the identity
+    carries, recorded in its checkpoint's licence (``_record_licence``); it does not
+    re-derive the condition.
+    """
     if proposal_sha256 is None:
         return None
     return frozenset((proposal_sha256, *prior_proposal_sha256s))
+
+
+def governing_sections_identical(old_path: str | os.PathLike, new_path: str | os.PathLike,
+                                 spans: Sequence[Sequence[str]]) -> dict:
+    """Ruling (n)'s check at a lock: are the proposal sections governing a re-adopted
+    stage byte-identical between the two proposal versions?
+
+    ``spans`` is a non-empty list of (start_marker, end_marker) strings. Each marker must
+    occur exactly once in each file (overlapping occurrences counted) and each end marker
+    after its start marker in both files, else ValueError (refused, never a verdict). A
+    span is the bytes from its start marker, inclusive, to its end marker, exclusive.
+    Returns {"identical": all spans identical, "old_file", "new_file" (the paths as
+    given), "sha256_old_file", "sha256_new_file" (the two whole files), "spans": [{"start",
+    "end", "sha256_old", "sha256_new", "identical"}]} in the order given.
+
+    PIN (Code, declared at LOCK v0.1; ruling (n)): markers are matched as UTF-8 bytes,
+    exactly (no normalisation of whitespace, line endings or case); a marker that is
+    empty, or not a str, refuses the check; the result is recorded at the lock verbatim.
+    """
+    def raw(p) -> bytes:
+        try:
+            return Path(p).read_bytes()
+        except OSError as e:
+            raise ValueError(f"governing_sections_identical: cannot read {p} ({type(e).__name__})")
+
+    def count(hay: bytes, needle: bytes) -> int:
+        n, at = 0, hay.find(needle)
+        while at >= 0:
+            n += 1
+            at = hay.find(needle, at + 1)
+        return n
+
+    if isinstance(spans, (str, bytes)) or not isinstance(spans, Sequence) or not spans:
+        raise ValueError("governing_sections_identical: spans must be a non-empty list of "
+                         "(start_marker, end_marker) pairs")
+    files = {"old": raw(old_path), "new": raw(new_path)}
+    out: list[dict] = []
+    for sp in spans:
+        if (isinstance(sp, (str, bytes)) or not isinstance(sp, Sequence) or len(sp) != 2
+                or not all(type(m) is str and m for m in sp)):
+            raise ValueError(f"governing_sections_identical: a span is two non-empty marker strings, "
+                             f"got {sp!r}")
+        start, end = sp
+        a_m, b_m = start.encode("utf-8"), end.encode("utf-8")
+        shas: dict[str, str] = {}
+        for which, body in files.items():
+            for m, label in ((a_m, "start"), (b_m, "end")):
+                c = count(body, m)
+                if c != 1:
+                    raise ValueError(f"governing_sections_identical: the {label} marker {m.decode()!r} "
+                                     f"occurs {c} times in the {which} file (exactly once required)")
+            a, b = body.find(a_m), body.find(b_m)
+            if b < a + len(a_m):
+                raise ValueError(f"governing_sections_identical: the end marker {end!r} does not "
+                                 f"follow the start marker {start!r} in the {which} file")
+            shas[which] = hashlib.sha256(body[a:b]).hexdigest()
+        out.append({"start": start, "end": end, "sha256_old": shas["old"], "sha256_new": shas["new"],
+                    "identical": shas["old"] == shas["new"]})
+    return {"identical": all(s["identical"] for s in out), "old_file": str(old_path),
+            "new_file": str(new_path),
+            "sha256_old_file": hashlib.sha256(files["old"]).hexdigest(),
+            "sha256_new_file": hashlib.sha256(files["new"]).hexdigest(), "spans": out}
 
 
 def gid_artifact_problems(unit: str, *, accepted: frozenset[str] | None,
@@ -642,7 +731,8 @@ def prior_gate(unit: str, stage: str, prior_ckpt: str | os.PathLike | None,
     ``proposal_sha256``: this run's; a prior (and, for the Qwen qualification, the G-ID
     artifact) under another proposal is refused unless its hash is in
     ``prior_proposal_sha256s`` -- the earlier proposals the governing lock re-adopts
-    after an amendment (finding R11); a prior under an EARLIER LOCK is allowed -- the
+    after an amendment (finding R11; approved by the seat's ruling (n) on the condition
+    ``accepted_proposals``'s PIN states); a prior under an EARLIER LOCK is allowed -- the
     locks advance between stages, m:279-286. ``require_real``: this run is not on the
     stub, so a prior or artifact written on the stub (or whose provenance cannot show
     otherwise) is refused (finding N17).
@@ -834,7 +924,10 @@ def _extra(identity_extra: Mapping[str, Any], *, stage: str, sub: str, stub: boo
     ``prior_proposal_sha256s`` -- the earlier proposals' sha256 the governing lock
     re-adopts after an amendment (a list of distinct 64-hex, never this run's own;
     default none): a prior stage or the G-ID artifact under one of them is accepted
-    (finding R11); ``analyzer_sha256`` -- the analyzer's sha256 the lock pins: when given
+    (finding R11; approved by the seat's ruling (n): a stage is re-adopted only where its
+    governing proposal sections are byte-identical between the versions, which Code checks
+    with ``governing_sections_identical`` and records at the lock -- ``accepted_proposals``'s
+    PIN); ``analyzer_sha256`` -- the analyzer's sha256 the lock pins: when given
     on a non-stub run, the analyzer's bytes must hash to it (finding R8).
     """
     gid = stage == "id"
@@ -1385,11 +1478,69 @@ def _gate_end(unit: str, gate: str, records: Sequence[Mapping], bar_set, hit: Ma
     fired_stop = any(r.fired for r, b in zip(results, end_bars) if b.kind == "binomial_stage_end")
     fired_pause = any(r.fired for r, b in zip(results, end_bars) if b.kind == "pause")
     # A round-1/2 OLMo claim fires both; the STOP governs (bars.py's PIN).
+    # PIN (Code, declared at LOCK v0.1; the seat's note of 2026-10-06 on the step-3 notes:
+    # "at G-TIME-OLMo a claim at realised n <= 2 fires the bar (STOP), which subsumes the
+    # pause; the STOP governs"): both bars are recorded as fired (stage_end.fired, the
+    # report's bars), the status is STOP, the excerpt holds ONE event (a STOP naming both),
+    # and the pause is not separately acted on -- prior_gate takes an adjudication only
+    # after a PAUSE, so the qualification does not run on the subsumed pause.
     status = "STOP" if fired_stop else "PAUSE" if fired_pause else "PASS"
     return {"status": status, "fired": [r.name for r in results if r.fired], "results": results,
             "lines": [r.message for r in results], "stop": None,
             "events": ([_bars_event(records, status, [r for r in results if r.fired])]
                        if status in ("STOP", "PAUSE") else [])}
+
+
+# PIN (Code, declared at LOCK v0.1; the seat's ruling (h), 2026-10-06): at every G-TIME
+# stage (G-TIME-F0, each G-TIME-OLMo-{ckpt}) no structured field outside ckpt/ carries the
+# contrast session's forced-round class, claim counts or domain: stdout and the report carry
+# only ruling (h)'s two counts per session, rounds generated and excluded yes/no (what the
+# two locate together is disclosed at readrule's TIME_CONTRAST_KEYS); the reads carry m:280's
+# mandated forced-round bytes with {phase, ri, n, text} per round (readrule's TIME_ROUND_KEEP
+# PIN: the text shows how many forced rounds ran and each round's header, Task line and
+# response). Stdout: its session line by
+# phase alone (readrule.session_line); the bars bind on the sham session only (their messages,
+# report entries and excerpts read no contrast round). Report: the contrast block is
+# ruling (h)'s counts (readrule.stage_report); timing is sham-only. Reads: the G-TIME
+# strip (readrule.strip_contrast). This function asserts the report's and the reads'
+# contrast forms before anything is written. Kept as built, as m:318 exception (1)
+# adjudications: a hair trigger or G-VER failure on the contrast session's FORCED phase is
+# announced by the bar's blinded message, the STOP line, the report's blinded stop block
+# (bar, template, s, phase) and resume's refusal words -- they name the trigger's class
+# (or the harness class), never the round or its n -- and the fired round is read in the
+# confined excerpt under ckpt/. Ruling (h)'s counts-only form governs everything else.
+def _assert_time_counts_only(unit: str, report: Mapping, reads: Mapping) -> None:
+    """Ruling (h) at a G-TIME stage's finish: the report's contrast block carries ruling
+    (h)'s counts only and the reads' contrast sessions the G-TIME strip's form (forced bytes,
+    {phase, ri, n, text} per round, no class field); ValueError otherwise (before any write)."""
+    c_tpl = keys.templates(unit)[0]
+    sr = report.get("stage_report")
+    if sr is not None:
+        blk = sr["templates"][c_tpl]
+        per = blk.get("per_session") if isinstance(blk, Mapping) else None
+        if (not isinstance(blk, Mapping) or tuple(blk) != readrule.TIME_CONTRAST_KEYS
+                or not isinstance(per, list)
+                or any(not isinstance(p, Mapping) or tuple(p) != readrule.TIME_SESSION_KEYS
+                       or type(p["s"]) is not int or type(p["forced_rounds_generated"]) is not int
+                       or type(p["excluded_at_forced"]) is not bool for p in per)):
+            raise ValueError(f"{c_tpl}: the G-TIME report's contrast block is not ruling (h)'s counts "
+                             f"(rounds generated, excluded yes/no); refused before any write")
+    for r in reads.get("sessions") or []:
+        if not r.get("contrast"):
+            continue
+        ks: set = set()
+        stack: list[Any] = [r]
+        while stack:
+            x = stack.pop()
+            if isinstance(x, Mapping):
+                ks |= set(x)
+                stack.extend(x.values())
+            elif isinstance(x, list):
+                stack.extend(x)
+        if (ks & readrule.TIME_WITHHELD or "rounds" not in r
+                or any(not set(rd) <= set(readrule.TIME_ROUND_KEEP) for rd in r["rounds"])):
+            raise ValueError(f"{c_tpl}: a G-TIME contrast read carries a class or round field "
+                             f"(ruling (h)); refused before any write")
 
 
 def _finish_gate(unit: str, gate: str, name: str, ckpt: dict, cpath: Path, paths: Mapping,
@@ -1425,6 +1576,8 @@ def _finish_gate(unit: str, gate: str, name: str, ckpt: dict, cpath: Path, paths
              "form": "pre-VERDICTS reads (m:271): contrast = banner + forced rounds; sham = "
                      "menus removed, chosen tag [config]",
              "sessions": _reads(records)}
+    if gate == "time":
+        _assert_time_counts_only(unit, report, reads)
     adj = _adjudication_doc(unit, gate, name, cpath, paths["root"], events) if events else None
     if first:
         _write_pending(cpath, ckpt, final)
@@ -3275,6 +3428,95 @@ def _selftest(chk) -> None:
         "checkpoint has no end; the re-invocation launches nothing, re-finishes byte-identical report and "
         "reads, persists the end, and records its own provenance entry (0 launches)", refin,
         (died, res_r["status"], [e["launched"] for e in fin.get("provenance", [])]))
+
+    # ruling (n): the governing-sections check a lock records, both directions
+    def h256(x: str) -> str:
+        return hashlib.sha256(x.encode("utf-8")).hexdigest()
+
+    with tempfile.TemporaryDirectory() as td:
+        old, new = Path(td) / "old.md", Path(td) / "new.md"
+        body = "# P\n## §3 Rule\nalpha beta\n## §4 Next\ngamma\n## §5 End\nomega\n"
+        old.write_text(body, encoding="utf-8")
+        new.write_text(body.replace("gamma", "GAMMA").replace("omega", "omega!"), encoding="utf-8")
+        sp3, sp4 = ("## §3 Rule", "## §4 Next"), ("## §4 Next", "## §5 End")
+        r_same = governing_sections_identical(old, new, [sp3])
+        r_diff = governing_sections_identical(old, new, [sp3, sp4])
+        gs_ok = (r_same == {"identical": True, "old_file": str(old), "new_file": str(new),
+                            "sha256_old_file": h256(body),
+                            "sha256_new_file": h256(body.replace("gamma", "GAMMA").replace("omega", "omega!")),
+                            "spans": [
+                     {"start": sp3[0], "end": sp3[1], "sha256_old": h256("## §3 Rule\nalpha beta\n"),
+                      "sha256_new": h256("## §3 Rule\nalpha beta\n"), "identical": True}]}
+                 and r_same["sha256_old_file"] != r_same["sha256_new_file"]
+                 and r_diff["identical"] is False
+                 and [s["identical"] for s in r_diff["spans"]] == [True, False]
+                 and (r_diff["spans"][1]["sha256_old"], r_diff["spans"][1]["sha256_new"])
+                 == (h256("## §4 Next\ngamma\n"), h256("## §4 Next\nGAMMA\n")))
+        dup, miss = Path(td) / "dup.md", Path(td) / "miss.md"
+        dup.write_text(body + "## §3 Rule\n", encoding="utf-8")
+        miss.write_text(body.replace("## §4 Next", "## §4 Later"), encoding="utf-8")
+        gs_ref = {
+            "a start marker twice in the new file": lambda: governing_sections_identical(old, dup, [sp3]),
+            "an end marker absent from the new file": lambda: governing_sections_identical(old, miss, [sp3]),
+            "an end marker before its start": lambda: governing_sections_identical(old, new, [sp4[::-1]]),
+            "no spans": lambda: governing_sections_identical(old, new, []),
+            "an empty marker": lambda: governing_sections_identical(old, new, [("", "## §4 Next")]),
+            "a non-str marker": lambda: governing_sections_identical(
+                old, new, [("## §3 Rule".encode("utf-8"), "## §4 Next")]),
+            "a span of three": lambda: governing_sections_identical(old, new, [sp3 + ("x",)]),
+            "a bare string as spans": lambda: governing_sections_identical(old, new, "## §3 Rule"),
+            "an unreadable file": lambda: governing_sections_identical(old, Path(td) / "absent.md", [sp3])}
+        gs_bad = [k for k, fn in gs_ref.items() if not refuses(fn, ValueError)]
+    chk("stages: ruling (n) -- governing_sections_identical: identical spans (a change outside every span "
+        "ignored) give identical True with both span sha256 and both whole-file sha256 and paths recorded "
+        "(the record a lock keeps); a changed byte inside a span gives that "
+        "span False and the verdict False; refuses a marker not exactly once in either file, an end before "
+        "its start, no spans, an empty or non-str marker, a malformed span, an unreadable file",
+        gs_ok and not gs_bad, (gs_ok, gs_bad))
+
+    # ruling (h): the G-TIME finish's counts-only assertion, both directions
+    blk = {"contrast": True, "sessions": 1,
+           "per_session": [{"s": 0, "forced_rounds_generated": 2, "excluded_at_forced": True}],
+           "free_rounds": readrule.WITHHELD}
+    good_rep = {"stage_report": {"templates": {"A0": blk, "A0s": {"excluded_sessions": {"audit@forced": 1}}}}}
+    good_reads = {"sessions": [{"contrast": True, "rounds": [{"phase": "forced", "ri": 0, "n": 1, "text": "x"}]},
+                               {"contrast": False, "rounds": [{"phase": "forced", "audit": {"claim": "v2"}}]}]}
+
+    def rep_with(**over) -> dict:
+        b = copy.deepcopy(blk)
+        b.update(over)
+        return {"stage_report": {"templates": {"A0": b}}}
+
+    def reads_with(rd: dict, **top) -> dict:
+        return {"sessions": [{"contrast": True, "rounds": [rd], **top}]}
+
+    tc_bad = {
+        "the class-bearing contrast block": (rep_with(excluded_at_forced={"audit@forced": 1}), good_reads),
+        "a claim count beside the counts": (rep_with(claims={"v2": 1}), good_reads),
+        "a class in a per-session entry": (rep_with(per_session=[{**blk["per_session"][0], "class": "v2"}]),
+                                           good_reads),
+        "excluded yes/no as an int": (rep_with(per_session=[{**blk["per_session"][0], "excluded_at_forced": 1}]),
+                                      good_reads),
+        "an audit dict in a contrast round": (good_rep, reads_with({"phase": "forced", "ri": 0, "n": 1, "text": "x",
+                                                                    "audit": {"claim": "v2"}})),
+        "a round label": (good_rep, reads_with({"phase": "forced", "ri": 0, "n": 1, "text": "x", "label": "x"})),
+        "an exclusion record": (good_rep, reads_with({"phase": "forced", "ri": 0, "n": 1, "text": "x"},
+                                                     exclusion={"class": "v2", "phase": "forced"})),
+        "a domain flag": (good_rep, reads_with({"phase": "forced", "ri": 0, "n": 1, "text": "x"}, domain=True))}
+    tc_fired = [k for k, (rp, rd) in tc_bad.items()
+                if not refuses(lambda rp=rp, rd=rd: _assert_time_counts_only("Q-F0", rp, rd), ValueError)]
+    tc_silent = []
+    for k, (rp, rd) in {"the counts-only block, sham classes beside": (good_rep, good_reads),
+                        "no records (a G-VER stop on the first launch)": ({"stage_report": None}, {"sessions": []}),
+                        "OLMo's templates": ({"stage_report": {"templates": {"A0-OLMo-sft": blk}}}, good_reads)}.items():
+        try:
+            _assert_time_counts_only("Q-F0" if "OLMo" not in k else "OLMo-sft", rp, rd)
+        except ValueError:
+            tc_silent.append(k)
+    chk("stages: ruling (h) -- the G-TIME finish refuses (before any write) a report whose contrast block is "
+        "not counts only or a contrast read carrying a class, round label, exclusion or domain field; it is "
+        "silent on the counts-only form (sham classes beside), on a stage with no records, on OLMo",
+        not tc_fired and not tc_silent, (tc_fired, tc_silent))
 
     # the call-site guard holds over this file, and fires on a smuggled copy
     src = Path(__file__).read_text(encoding="utf-8")

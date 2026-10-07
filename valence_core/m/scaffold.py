@@ -516,10 +516,12 @@ def replay_f1_row(row: Mapping[str, Any], pool: Sequence[dict],
                 return probs + [f"harness bytes differ at offset {pos}"]
             pos += len(frag)
             continue
-        # PIN (Code, declared at LOCK v0.1): G-PORT's walk locates no generation by a bare
-        # newline search. A generation starts where its harness piece ("...Response:")
-        # ends and runs to the start of the NEXT harness piece, whose bytes the scaffold
-        # has already built; it must be newline-free (f1's newline stop, asserted).
+        # PIN (Code, declared at LOCK v0.1): G-PORT's walk bounds every generation by the
+        # NEXT harness piece the scaffold has built, never by a newline alone. A generation
+        # starts where its harness piece ("...Response:") ends and runs to the start of the
+        # next piece; it must be newline-free (f1's newline stop, asserted). For a
+        # transcript's last generation that next piece is the bare final "\n" joiner, so
+        # its end is anchored by the end-of-transcript and rebuild checks below.
         nxt = merged[i + 1][1]
         end = t.find(nxt, pos)
         if end < 0 or "\n" in t[pos:end]:

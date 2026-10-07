@@ -12,7 +12,11 @@ before the unit's VERDICTS entry:
   structured field a free round fills: choices, reads, picks, free items and
   properties, free claims, free exclusion detail. Whole-session validity,
   completeness and seconds go too, because each one encodes the free-round
-  exclusion position (maps/audit.md D15; build-design hard rule 5).
+  exclusion position (maps/audit.md D15; build-design hard rule 5). At a G-TIME
+  stage (stage "time") the seat's ruling (h) of 2026-10-06 is carried into the read
+  as well (Code's conservative extension, PIN at ``TIME_ROUND_KEEP``): each forced
+  round as {phase, ri, n, text} only, the forced-round count and excluded yes/no, no
+  class field.
 - ``redact_sham`` (m:271). A sham-template session with the menu blocks removed
   and the chosen config tag redacted from every free round's header. On OLMo the
   stored transcript carries no menu or pick line (b3's context rule,
@@ -20,13 +24,16 @@ before the unit's VERDICTS entry:
   item 16).
 - ``printed_reason`` / ``session_line`` (m:263, m:318). These are the only
   printed forms. A reason is class and phase; a contrast session's free-round
-  exclusion is the phase alone (``excluded@free``). Neither form ever carries a
-  tag, a free round's index, the render or a pick. The session line carries no
-  seconds, read count or completeness word.
+  exclusion is the phase alone (``excluded@free``), and at a G-TIME stage so is its
+  forced-round exclusion (``excluded@forced``; ruling (h)). Neither form ever
+  carries a tag, a free round's index, the render or a pick. The session line
+  carries no seconds, read count or completeness word.
 - ``stage_report`` (m:271, m:280, m:283, m:302). Contrast-template sessions are
   reported by their forced-round counts only, and their free-round events --
   "exclusions, degeneracy, any class" -- are withheld to the unit's VERDICTS
-  entry or NOT-RUN record. Sham-template sessions are reported in full by
+  entry or NOT-RUN record. At a G-TIME stage the contrast block is narrower still
+  (ruling (h)): per session, forced rounds generated and excluded yes/no, with no
+  class and no round position. Sham-template sessions are reported in full by
   class, with the first-pick share (m:318 exception (2)).
 - ``release_full`` (m:271's closing clause). The release at VERDICTS, at NOT-RUN,
   or at an OLMo checkpoint's PENDING closure. It returns the records unchanged;
@@ -87,17 +94,35 @@ AUDIT_CLASS = {"qwen": "v2", "olmo": "audit"}                      # audit_degen
 PRINT_CLASS = {"v2": "audit", "audit": "audit", "echo": "echo",
                "content": "content", "lexical": "lexical"}
 CONTRAST_FREE = "excluded@free"
+TIME_STAGE = "time"
+# PIN (Code, declared at LOCK v0.1; the seat's ruling (h), 2026-10-06, routed by the
+# PI): "at any G-TIME stage the contrast session's forced rounds are reported as counts
+# only -- rounds generated, and excluded yes/no -- with no class and no round position;
+# the per-class and per-property breakdown waits for VERDICTS." So at stage "time" a
+# contrast session's exclusion prints by phase alone in BOTH phases (``excluded@forced``
+# and m:263's ``excluded@free``), on stdout and in every pre-VERDICTS form; at every
+# other stage a contrast forced exclusion prints {class}@forced, as m:263 states. The
+# class is in the checkpoint only, released at the unit's VERDICTS or NOT-RUN record.
+CONTRAST_FORCED_TIME = "excluded@forced"
 # PIN (Code, declared at LOCK v0.1): the placeholder that replaces the chosen
 # config tag in a sham free round's header (maps/olmo.md §7 item 15).
 REDACTED_TAG = "[config]"
 WITHHELD = "withheld to the unit's VERDICTS entry or NOT-RUN record (m:271)"
 AUDIT_CATEGORIES = ("empty", "special", "frame", "junk", "unparsed")
 
-_PRINTED = r"(?:audit|echo|content|lexical)@(?:forced|free)|excluded@free"
+_CLASS_RX = r"(?:audit|echo|content|lexical)"
+_PRINTED = rf"{_CLASS_RX}@(?:forced|free)|excluded@(?:forced|free)"
 _PRINTED_RX = re.compile(_PRINTED)
+_CKPT_SFX = rf"(?:-OLMo-(?:{'|'.join(keys.CKPTS)}))?"
+# PIN (Code, declared at LOCK v0.1; ruling (h)): the declared session-line forms, per
+# stage and template. G-TIME contrast: valid, or excluded by phase alone in either phase.
+# Every other stage's contrast: valid, {class}@forced or excluded@free (m:263). Sham at
+# every stage: valid or {class}@{phase}. Any other line is an AssertionError, never printed.
 _LINE_RX = re.compile(
-    rf"(?:{'|'.join(STAGES)}) A0s?(?:-OLMo-(?:{'|'.join(keys.CKPTS)}))? "
-    rf"s=\d+ (?:valid|excluded:(?:{_PRINTED}))")
+    rf"(?:{TIME_STAGE} A0{_CKPT_SFX} s=\d+ (?:valid|excluded:excluded@(?:forced|free))"
+    rf"|(?:{'|'.join(x for x in STAGES if x != TIME_STAGE)}) A0{_CKPT_SFX} s=\d+ "
+    rf"(?:valid|excluded:(?:{_CLASS_RX}@forced|excluded@free))"
+    rf"|(?:{'|'.join(STAGES)}) A0s{_CKPT_SFX} s=\d+ (?:valid|excluded:{_CLASS_RX}@(?:forced|free)))")
 
 # Fields that exist only because a session reached a free choice. None of them
 # may survive a blinded form anywhere, including nested dicts.
@@ -120,6 +145,26 @@ _REDACT_TOP = _STRIP_TOP + ("excluded", "complete", "seconds")
 _FREE_ROUND_KEEP = ("phase", "ci", "n", "template_index", "text", "cap_hit",
                     "stop_reason", "termination", "audit")
 _AUDIT_KEEP = ("substrate", "phase", "claim", "v3", "advisory", "echo_line", "scaffold")
+# PIN (Code, declared at LOCK v0.1; the seat's ruling (h), 2026-10-06, carried by Code
+# into the read -- the ruling names the report; this extension to strip_contrast is
+# Code's, conservative, and flagged for the seat): at a G-TIME stage the stripped
+# contrast read keeps the banner and the forced rounds' transcript bytes (m:280's and
+# m:302's mandated read, "the A0 session's forced rounds only"), each forced round as
+# {phase, ri, n, text} only, and n_forced_rounds and excluded_at_forced. It drops every
+# class field -- each round's audit dict, the exclusion (class and detail), the strict
+# exclusion, the hair-trigger names -- the domain flag (a forced-claim test by another
+# name), and each round's label, role, pole, property, item, task_text, seed and the
+# rest of its record (template_index, n_tok, cap_hit, stop_reason, termination). What
+# the mandated read itself shows stays, and is inherent in it: the transcript is the
+# forced rounds' bytes, so it shows how many forced rounds ran and each one's header (its
+# tag), Task line (clean or corrupted: the property) and response. The structured fields
+# that would name a class are what is withheld.
+TIME_ROUND_KEEP = ("phase", "ri", "n", "text")
+_TIME_STRIP_TOP = tuple(k for k in _STRIP_TOP if k != "domain")
+TIME_WITHHELD = frozenset({"audit", "exclusion", "strict_exclusion", "hair_triggers", "domain",
+                            "label", "role", "pole", "property", "item", "task_text", "seed",
+                            "template_index", "n_tok", "cap_hit", "stop_reason", "termination",
+                            "claim", "class", "detail", "name"})
 
 
 # ----------------------------------------------------------------- checks
@@ -323,7 +368,11 @@ def _assert_no_label(out: Any, labels: Iterable[str]) -> None:
 # ----------------------------------------------------------------- blinded forms
 
 def strip_contrast(rec: Mapping) -> dict:
-    """m:271: a contrast-template session as banner + forced rounds and responses only."""
+    """m:271: a contrast-template session as banner + forced rounds and responses only.
+
+    At a G-TIME stage (the record's stage "time") the read is the ruling-(h) form: each
+    forced round as {phase, ri, n, text}, the forced-round count and excluded_at_forced,
+    no class field (``TIME_ROUND_KEEP``'s PIN)."""
     _check_record(rec)
     if not rec["contrast"]:
         raise ValueError("strip_contrast is the contrast-template read; a sham session is read "
@@ -331,6 +380,20 @@ def strip_contrast(rec: Mapping) -> dict:
     kept = [p for p in rec["pieces"] if p["kind"] == "banner" or p["phase"] == "forced"]
     # _check_pieces guarantees the banner and forced groups are a prefix of the tiling.
     cut = kept[-1]["end"]
+    if rec.get("stage") == TIME_STAGE:
+        forced = [r for r in rec["rounds"] if r["phase"] == "forced"]
+        exc = rec.get("exclusion")
+        tout: dict = {k: copy.deepcopy(rec.get(k)) for k in _TIME_STRIP_TOP}
+        tout["rounds"] = [{k: copy.deepcopy(r[k]) for k in TIME_ROUND_KEEP if k in r} for r in forced]
+        tout["pieces"] = [copy.deepcopy(p) for p in kept]
+        tout["transcript"] = rec["transcript"][:cut]
+        tout["n_forced_rounds"] = len(forced)
+        tout["excluded_at_forced"] = bool(exc) and exc.get("phase") == "forced"
+        tout["blinding"] = ("contrast-stripped at G-TIME: banner + forced-round bytes, {phase, ri, n, text} "
+                            "per round, no class field (m:271, m:280; the seat's ruling (h), Code's "
+                            "extension to the read)")
+        _assert_withheld(tout, _FREE_ONLY_KEYS | {"ci"} | TIME_WITHHELD, True, "strip_contrast")
+        return tout
     out: dict = {k: copy.deepcopy(rec.get(k)) for k in _STRIP_TOP}
     out["rounds"] = [copy.deepcopy(r) for r in rec["rounds"] if r["phase"] == "forced"]
     out["pieces"] = [copy.deepcopy(p) for p in kept]
@@ -440,20 +503,31 @@ def redact_sham(rec: Mapping) -> dict:
 
 # ----------------------------------------------------------------- printing
 
-def printed_reason(rec_or_exclusion: Any, contrast: bool) -> str:
+def printed_reason(rec_or_exclusion: Any, contrast: bool, *, stage: str | None = None) -> str:
     """m:263's printed form of an exclusion (or a claimed round): ``{class}@{phase}``.
 
     Accepts a session record, an exclusion dict ``{class, phase[, detail]}``, a
     RoundAudit or its ``as_dict()``. A contrast session's free-round reason is
-    ``excluded@free``, with the class withheld. Never a tag, index or render.
+    ``excluded@free``, with the class withheld. At a G-TIME stage -- ``stage`` "time",
+    or a record whose own stage is "time" -- a contrast session's forced-round reason is
+    the phase alone too, ``excluded@forced`` (the seat's ruling (h)). Never a tag,
+    index or render.
     """
     if not isinstance(contrast, bool):
         raise TypeError("contrast must be a bool")
+    if stage is not None and stage not in STAGES:
+        raise ValueError("printed_reason: unknown stage")
     obj, sub = rec_or_exclusion, None
     if isinstance(obj, Mapping) and "schema" in obj:
         _check_header(obj)
         if obj["contrast"] is not contrast:
             raise ValueError("printed_reason: contrast argument disagrees with the record")
+        rstage = obj.get("stage")
+        if rstage not in STAGES:
+            raise ValueError("printed_reason: the record's stage is unknown")
+        if stage is not None and stage != rstage:
+            raise ValueError("printed_reason: stage argument disagrees with the record")
+        stage = rstage
         exc = obj.get("exclusion")
         if obj.get("excluded") is not True or not exc:
             raise ValueError("printed_reason: the session is not excluded; there is no reason to print")
@@ -477,14 +551,22 @@ def printed_reason(rec_or_exclusion: Any, contrast: bool) -> str:
             raise ValueError("printed_reason: unknown substrate")
         if cls not in CLAIMS[sub] and not (sub == "qwen" and cls == "audit"):
             raise ValueError(f"printed_reason: class not a {sub} claim class")
-    out = CONTRAST_FREE if (phase == "free" and contrast) else f"{PRINT_CLASS[cls]}@{phase}"
+    if contrast and phase == "free":
+        out = CONTRAST_FREE
+    elif contrast and stage == TIME_STAGE:
+        out = CONTRAST_FORCED_TIME                 # ruling (h): the class waits for VERDICTS
+    else:
+        out = f"{PRINT_CLASS[cls]}@{phase}"
     if not _PRINTED_RX.fullmatch(out):
         raise AssertionError("printed_reason produced an undeclared form")
     return out
 
 
 def session_line(rec: Mapping) -> str:
-    """m:318: the one stdout line per session -- stage, template, s, validity / reason."""
+    """m:318: the one stdout line per session -- stage, template, s, validity / reason.
+
+    The reason is ``printed_reason`` of the record, so a G-TIME contrast session's
+    exclusion prints by phase alone in either phase (ruling (h))."""
     _check_header(rec)
     stage, s = rec.get("stage"), rec.get("s")
     if stage not in STAGES:
@@ -584,6 +666,34 @@ def _contrast_block(rs: list[Mapping], sub: str) -> dict:
             "free_rounds": WITHHELD}
 
 
+# PIN (Code, declared at LOCK v0.1; the seat's ruling (h), 2026-10-06): at a G-TIME stage
+# (Qwen G-TIME-F0, each G-TIME-OLMo-{ckpt}) the contrast block is EXACTLY {contrast,
+# sessions, per_session, free_rounds}; per session, in s order, its s, its forced rounds
+# generated and whether it was excluded at a forced round -- no class, no claim count, no
+# round index, no domain, no hair-trigger name; its free-round events withheld as at every
+# gate stage. _forced_domain still runs, as the refusal of an inconsistent record only;
+# its value is not reported. Disclosed, not applied: with one session per arm, a
+# forced_rounds_generated below 4 with excluded_at_forced True locates the exclusion at
+# the last generated forced round, and the committed schedule's start order gives that
+# round's property -- the ruling admits exactly these two counts.
+TIME_CONTRAST_KEYS = ("contrast", "sessions", "per_session", "free_rounds")
+TIME_SESSION_KEYS = ("s", "forced_rounds_generated", "excluded_at_forced")
+
+
+def _contrast_block_time(rs: list[Mapping]) -> dict:
+    per = []
+    for rec in rs:
+        _forced_domain(rec)
+        e = rec.get("exclusion")
+        per.append({"s": rec["s"],
+                    "forced_rounds_generated": sum(1 for r in rec["rounds"] if r["phase"] == "forced"),
+                    "excluded_at_forced": bool(e) and e.get("phase") == "forced"})
+    out = {"contrast": True, "sessions": len(rs), "per_session": per, "free_rounds": WITHHELD}
+    if tuple(out) != TIME_CONTRAST_KEYS or any(tuple(p) != TIME_SESSION_KEYS for p in per):
+        raise AssertionError("stage_report: the G-TIME contrast block is not ruling (h)'s form")
+    return out
+
+
 def _sham_block(rs: list[Mapping], sub: str) -> dict:
     allr = [r for rec in rs for r in rec["rounds"]]
     reasons = {f"{PRINT_CLASS[c]}@{ph}": 0 for ph in PHASES for c in CLAIMS[sub]}
@@ -654,7 +764,9 @@ def stage_report(records: Iterable[Mapping]) -> dict:
     first-pick share (pooled and per pair), read-flag counts. Contrast
     templates: forced-round counts only (rounds, claims by class, forced
     exclusions, domain). Their free-round events are withheld: no count, not
-    even of withheld sessions.
+    even of withheld sessions. At a G-TIME stage a contrast template's block is
+    ruling (h)'s: per session, forced rounds generated and excluded yes/no only
+    (``_contrast_block_time``).
     """
     recs = list(records)
     if not recs:
@@ -674,7 +786,12 @@ def stage_report(records: Iterable[Mapping]) -> dict:
                  "form": "pick-free stage report (m:271, m:318)", "templates": {}}
     for t in keys.templates(unit):
         rs = sorted((r for r in recs if r["template"] == t), key=lambda r: r["s"])
-        out["templates"][t] = _contrast_block(rs, sub) if keys.is_contrast(t) else _sham_block(rs, sub)
+        if not keys.is_contrast(t):
+            out["templates"][t] = _sham_block(rs, sub)
+        elif stage == TIME_STAGE:
+            out["templates"][t] = _contrast_block_time(rs)
+        else:
+            out["templates"][t] = _contrast_block(rs, sub)
     _assert_no_label(out, {x for r in recs for x in r["cell"]["pair"]})
     return out
 
@@ -1187,6 +1304,133 @@ def _selftest(chk) -> None:
         sub_ok = str(e)
     chk("stage_report: a label only as a substring of a key or value word ('granites' vs 'granite') passes",
         sub_ok is True, sub_ok)
+
+    # ------------------------------------------------ G-TIME: the seat's ruling (h)
+    def tbuild(sub, contrast, forced, free=(), stage="time", **kw):
+        return build(sub, contrast, 0, forced, list(free), pair=QP if sub == "qwen" else OP,
+                     pair_index=1 if sub == "qwen" else 0, stage=stage, **kw)
+
+    def at_round2(c):
+        return [("Seventy-seven.", None), ("Seven.", c)]
+
+    free6 = [("P", "Twenty-eight.", None), ("Q", "Six.", None), ("P", "Two.", None),
+             ("Q", "Forty.", None), ("P", "Eight.", None), ("Q", "Nine.", None)]
+    t_sham = {s_: tbuild(s_, False, f_clean, free6) for s_ in SUBSTRATES}
+    # the same response text in every record: only the class the audit recorded differs
+    by_cls = {s_: {c: tbuild(s_, True, at_round2(c)) for c in CLAIMS[s_]} for s_ in SUBSTRATES}
+    time_view = {s_: {c: (session_line(r), dump(strip_contrast(r)), dump(stage_report([r, t_sham[s_]])))
+                      for c, r in d.items()} for s_, d in by_cls.items()}
+    chk("readrule: ruling (h) -- G-TIME contrast sessions differing ONLY in their forced exclusion's class "
+        "(Qwen v2/echo/content/lexical, OLMo audit/echo/lexical; same round, same text) give byte-identical "
+        "session lines (excluded@forced), stripped reads and stage reports",
+        all(len(set(v.values())) == 1 for v in time_view.values())
+        and time_view["qwen"]["v2"][0] == "time A0 s=0 excluded:excluded@forced"
+        and time_view["olmo"]["audit"][0] == "time A0-OLMo-dpo s=0 excluded:excluded@forced",
+        {s_: v[CLAIMS[s_][0]][0] for s_, v in time_view.items()})
+    qual_by_cls = {s_: {c: tbuild(s_, True, at_round2(c), stage="qual") for c in CLAIMS[s_]}
+                   for s_ in SUBSTRATES}
+    qual_view = {s_: {c: (session_line(r), dump(strip_contrast(r)), dump(stage_report([r])))
+                      for c, r in d.items()} for s_, d in qual_by_cls.items()}
+    chk("readrule: ruling (h) is G-TIME only (must not fire) -- the same sessions at the qualification "
+        "stage print, strip and report their class: every view distinct per class, {class}@forced lines, "
+        "the class kept in the strip and counted in the report",
+        all(len({v[i] for v in d.values()}) == len(d) for d in qual_view.values() for i in range(3))
+        and [qual_view["qwen"][c][0] for c in CLAIMS["qwen"]]
+        == [f"qual A0 s=0 excluded:{x}@forced" for x in ("audit", "echo", "content", "lexical")]
+        and [qual_view["olmo"][c][0] for c in CLAIMS["olmo"]]
+        == [f"qual A0-OLMo-dpo s=0 excluded:{x}@forced" for x in ("audit", "echo", "lexical")]
+        and strip_contrast(qual_by_cls["qwen"]["content"])["exclusion"]["class"] == "content"
+        and stage_report([qual_by_cls["olmo"]["echo"]])["templates"]["A0-OLMo-dpo"]["excluded_at_forced"]
+        == {"audit@forced": 0, "echo@forced": 1, "lexical@forced": 0},
+        [qual_view["qwen"][c][0] for c in CLAIMS["qwen"]])
+    rep_t = stage_report([by_cls["qwen"]["v2"], t_sham["qwen"]])
+    cb_t, sb_t = rep_t["templates"]["A0"], rep_t["templates"]["A0s"]
+    chk("readrule: ruling (h) -- the G-TIME contrast block is exactly {contrast, sessions, per_session "
+        "[{s, forced_rounds_generated, excluded_at_forced}], free_rounds}; the G-TIME sham block is the "
+        "full sham block (classes by phase, first pick)",
+        cb_t == {"contrast": True, "sessions": 1,
+                 "per_session": [{"s": 0, "forced_rounds_generated": 2, "excluded_at_forced": True}],
+                 "free_rounds": WITHHELD}
+        and tuple(cb_t) == TIME_CONTRAST_KEYS and tuple(cb_t["per_session"][0]) == TIME_SESSION_KEYS
+        and sb_t == _sham_block([t_sham["qwen"]], "qwen") and sb_t["first_pick_P"]["n"] == 1
+        and "excluded_sessions" in sb_t, cb_t)
+    var = {"r1": tbuild("qwen", True, [("Seven.", "v2")]),
+           "r3": tbuild("qwen", True, [("Seventy-seven.", None), ("Seven.", None), ("March.", "echo")]),
+           "clean": tbuild("qwen", True, f_clean, free6),
+           "free_excl": tbuild("qwen", True, f_clean, [("Q", "Three.", None), ("P", "Slate.", "lexical")]),
+           "hair": tbuild("qwen", True, [("Seventy-seven.", None), ("<|im_end|>", None)],
+                          hair_at=("forced", 1))}
+    pv = {k: stage_report([r])["templates"]["A0"]["per_session"][0] for k, r in var.items()}
+    lt = {k: session_line(r) for k, r in var.items()}
+    chk("readrule: ruling (h) -- G-TIME contrast counts follow rounds generated and excluded yes/no only "
+        "(round-1 and round-3 exclusions, a clean session, a free-round exclusion, a forced hair stop); a "
+        "free exclusion's report and strip equal a clean session's; lines by phase alone",
+        pv == {"r1": {"s": 0, "forced_rounds_generated": 1, "excluded_at_forced": True},
+               "r3": {"s": 0, "forced_rounds_generated": 3, "excluded_at_forced": True},
+               "clean": {"s": 0, "forced_rounds_generated": 4, "excluded_at_forced": False},
+               "free_excl": {"s": 0, "forced_rounds_generated": 4, "excluded_at_forced": False},
+               "hair": {"s": 0, "forced_rounds_generated": 2, "excluded_at_forced": False}}
+        and dump(stage_report([var["clean"]])) == dump(stage_report([var["free_excl"]]))
+        and dump(strip_contrast(var["clean"])) == dump(strip_contrast(var["free_excl"]))
+        and lt == {"r1": "time A0 s=0 excluded:excluded@forced", "r3": "time A0 s=0 excluded:excluded@forced",
+                   "clean": "time A0 s=0 valid", "free_excl": "time A0 s=0 excluded:excluded@free",
+                   "hair": "time A0 s=0 valid"}, (pv, lt))
+    st_t = strip_contrast(by_cls["qwen"]["lexical"])
+    st_h = strip_contrast(var["hair"])
+    st_q = strip_contrast(tbuild("qwen", True, [("Seventy-seven.", None), ("<|im_end|>", None)],
+                                 stage="qual", hair_at=("forced", 1)))
+    tkeys = {k for x in (st_t, st_h) for k, _ in _walk(x) if k is not None}
+    chk("readrule: ruling (h) -- the G-TIME stripped read keeps banner + forced bytes, each forced round as "
+        "{phase, ri, n, text}, n_forced_rounds, excluded_at_forced; no audit, exclusion, strict exclusion, "
+        "hair-trigger name, domain, label, role, pole, property, item, task text or seed (the qualification "
+        "strip keeps the hair trigger)",
+        st_t["transcript"] == forced_bytes(by_cls["qwen"]["lexical"])
+        and st_h["transcript"] == forced_bytes(var["hair"])
+        and all(tuple(r) == TIME_ROUND_KEEP for x in (st_t, st_h) for r in x["rounds"])
+        and st_t["rounds"][1] == {"phase": "forced", "ri": 1, "n": 2, "text": "Seven."}
+        and (st_t["n_forced_rounds"], st_t["excluded_at_forced"]) == (2, True)
+        and (st_h["n_forced_rounds"], st_h["excluded_at_forced"]) == (2, False)
+        and not (tkeys & TIME_WITHHELD) and not (tkeys & _FREE_ONLY_KEYS)
+        and st_q["hair_triggers"] and st_q["exclusion"] is None, sorted(tkeys & TIME_WITHHELD))
+    t_pl1 = copy.deepcopy(st_t)
+    t_pl1["rounds"][1]["audit"] = {"claim": "lexical"}
+    t_pl2 = copy.deepcopy(st_t)
+    t_pl2["exclusion"] = {"class": "lexical", "phase": "forced"}
+    t_pl3 = copy.deepcopy(st_t)
+    t_pl3["rounds"][0]["property"] = "clean"
+    tw = _FREE_ONLY_KEYS | {"ci"} | TIME_WITHHELD
+    chk("readrule: ruling (h) -- the G-TIME strip's withholding check fires on a planted audit dict, an "
+        "exclusion and a round property, and is silent on the strip as built",
+        all(refuses(lambda x=x: _assert_withheld(x, tw, True, "strip_contrast")) for x in (t_pl1, t_pl2, t_pl3))
+        and not refuses(lambda: _assert_withheld(st_t, tw, True, "strip_contrast")))
+    chk("readrule: printed_reason's stage -- a contrast forced exclusion at 'time' is excluded@forced (dict, "
+        "RoundAudit, record), {class}@forced at qual and campaign; a sham one keeps its class at 'time'; "
+        "refuses an unknown stage and a stage disagreeing with the record",
+        [printed_reason({"class": c, "phase": "forced"}, True, stage="time") for c in CLAIMS["qwen"]]
+        == ["excluded@forced"] * 4
+        and printed_reason(_RA("olmo", "forced", "echo"), True, stage="time") == "excluded@forced"
+        and printed_reason(by_cls["olmo"]["audit"], True) == "excluded@forced"
+        and printed_reason(by_cls["olmo"]["audit"], True, stage="time") == "excluded@forced"
+        and [printed_reason({"class": "echo", "phase": "forced"}, True, stage=x) for x in ("qual", "campaign")]
+        == ["echo@forced"] * 2
+        and printed_reason({"class": "v2", "phase": "forced"}, False, stage="time") == "audit@forced"
+        and printed_reason({"class": "lexical", "phase": "free"}, True, stage="time") == "excluded@free"
+        and refuses(lambda: printed_reason({"class": "echo", "phase": "forced"}, True, stage="pilot"))
+        and refuses(lambda: printed_reason(by_cls["olmo"]["audit"], True, stage="qual")))
+    good_l = ["time A0 s=0 excluded:excluded@forced", "time A0-OLMo-sft s=0 excluded:excluded@free",
+              "time A0s s=0 excluded:audit@forced", "time A0s-OLMo-dpo s=0 excluded:lexical@free",
+              "qual A0 s=3 excluded:content@forced", "campaign A0 s=12 excluded:excluded@free",
+              "id A0s s=1 valid", "time A0 s=0 valid"]
+    bad_l = ["time A0 s=0 excluded:audit@forced", "time A0 s=0 excluded:lexical@free",
+             "qual A0 s=0 excluded:excluded@forced", "campaign A0 s=1 excluded:audit@free",
+             "time A0s s=0 excluded:excluded@forced", "qual A0s s=0 excluded:excluded@free",
+             "time A0-OLMo-base s=0 valid", "pilot A0 s=0 valid"]
+    with mock.patch.object(me, "printed_reason", lambda rec, contrast, **kw: "audit@forced"):
+        undeclared = refuses(lambda: session_line(by_cls["qwen"]["v2"]), (AssertionError,))
+    chk("readrule: the declared session-line forms per stage and template (ruling (h)): accepted and refused "
+        "as declared; session_line refuses (AssertionError) a class-bearing G-TIME contrast line",
+        all(_LINE_RX.fullmatch(x) for x in good_l) and not any(_LINE_RX.fullmatch(x) for x in bad_l)
+        and undeclared, [x for x in bad_l if _LINE_RX.fullmatch(x)])
 
     # ------------------------------------------------ release_full
     before = dump(every)

@@ -1,0 +1,652 @@
+# m package after the seat's dispositions of the build flags (rulings (h), (n); STOP governs at G-TIME-OLMo) and the gport command -- scripts/m_sessions.py --selftest (run 1 of 2; run 2 gave the same 647/647).
+# Code stamp: 2026-10-07 03:15:54 UTC (date -u); HEAD 5f7b968 + the uncommitted disposition changes (final, including the two wording fixes from the entries' values-check); model-free (scripted stubs).
+
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/m_sessions.py --selftest
+  [PASS] keys: stream(prefix|s) == session_e2a.session_rng(prefix, s) [195048581, 730600696]
+  [PASS] keys: numpy stream-stability known answer (f|CORR|0 permutation) [7, 9, 10, 1, 13, 12, 6, 2, 5, 8, 0, 11, 15, 3, 4, 14] numpy 2.5.1
+  [PASS] keys: stream_known_answer is clean on this numpy (the run-time form of the check) []
+  [PASS] keys: stream_known_answer fires on a mutated stream (a Philox stream; a raising stream) [['numpy stream known answer: f|CORR|0 permutation(16) is [9, 0, 4, 12, 13, 6, 3, 10, 1, 5, 2, 8, 14, 11, 15, 7], expected [7, 9, 10, 1, 13, 12, 6, 2, 5, 8, ...
+  [PASS] keys: cal_seed is crc32 % 2**31 of m-cal|pool|i|seed
+  [PASS] keys: cal_seed refuses a pool literal outside f0's two
+  [PASS] keys: Q-F0 item / gate item keys
+  [PASS] keys: OLMo item keys carry {ckpt}
+  [PASS] keys: arm keys (campaign, time, id, qual; OLMo campaign/qual)
+  [PASS] keys: refusals (G-ID on A0; id on OLMo; cross-unit template; Q-F3; base) [True, True, True, True, True]
+  [PASS] keys: schedule keys
+  [PASS] keys: contrast/sham classification
+  [PASS] corr: load_pool accepts the pinned pool (16 ASCII items) 16
+  [PASS] corr: load_pool refuses a pool whose sha256 is not 8547d9a11ba55b95
+  [PASS] corr: pool validation refuses non-ASCII / 15 items / bad record shape [True, True, True]
+  [PASS] corr: QWEN_ROSTER is e2d.config.ROSTER (imported, not re-literalled)
+  [PASS] corr: olmo_roster is a1_repair_roster selected_tags (4 pairs) (('quartz', 'velvet'), ('copper', 'walnut'), ('maple', 'saddle'), ('amber', 'granite'))
+  [PASS] corr: olmo_roster refuses a roster that is not 4 pairs
+  [PASS] corr: ALL_ROSTER_WORDS = sorted union, 12 words (4 shared) ('amber', 'copper', 'granite', 'maple', 'plaza', 'prism', 'quartz', 'ridge', 'saddle', 'slate', 'velvet', 'walnut')
+  [PASS] corr: corrupt_m n_eligible == m:176's list [6, 19, 19, 13, 24, 14, 10, 45, 19, 10, 24, 14, 6, 19, 10, 14]
+  [PASS] corr: corrupt_m k sums to 54 54
+  [PASS] corr: corrupt_m skips exactly once, at item 7 [(7, 1)]
+  [PASS] corr: corrupt_m items 5/11/15 render verbatim (m:176) ("Writa the oppcsite oc 'hot'.", "Writo the oppssitu of 'up'.", "Wtite thn opposite on 'open'.")
+  [PASS] corr: corrupt_m gold-bearing words miyms (9) / thiru (2) / ftrst (8) ('Comgute 90 miyms 45.', 'Name thy thiru month of the yebr.', 'Name the ftrst month of the ybaa.')
+  [PASS] corr: corrupt_m changes exactly k letters per item, all at reported eligible positions
+  [PASS] corr: corrupt_m consumes one draw per visited slot (n_visited == k + n_skips)
+  [PASS] corr: corrupt_m draw order = permutation(n), then one integers(25) per visited slot [True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True]
+  [PASS] corr: _eligible_m excludes word-initial letters and the quoted operand [1, 9]
+  [PASS] corr: corrupt_m refuses (walk runs dry; non-ASCII; odd quote; bare-string roster; i<0) [True, True, True, True, True]
+  [PASS] corr: corrupt_m roster skip fires only where a roster substring would form
+  [PASS] corr: renders_m == corrupt_m renders, deterministic, no roster substring a04f67b0e5105a05
+  [PASS] corr: renders_m refuses a pool that is not 16 items
+  [PASS] corr: renders_sha = sha256 of newline-joined renders [:16]; moves on a 1-byte change
+  [PASS] corr: corrupt_f1 renders sha16 2c2c227395ea9f2d (= calib corr_sha) 2c2c227395ea9f2d
+  [PASS] corr: corrupt_f1 changes 31 letters in total 31
+  [PASS] corr: corrupt_f1 leaves items 1 and 12 unchanged, changes items 2/4/6/7
+  [PASS] corr: corrupt_f1 never touches a word-initial letter (f1's word_start rule)
+  [PASS] corr: corrupt_f1 item 5 hits the 'of' outside the operand; item 15 hits the operand ("Write the opposite oy 'hot'.", "Write the opposite of 'opev'.")
+  [PASS] corr: f1_012_replay per-item n_eligible / hits / changed (maps/f1.md §3) (32, 31)
+  [PASS] corr: f1_012_replay cond1 holds on items 2/4/6/7 only; cond2 on all 16 (4, 16)
+  [PASS] corr: f1_012_replay sha == calib corr_sha; covariate quoted as stored 0.078125
+  [PASS] corr: ItemStreams splits one permutation(16) [:8] P / [8:] Q ((7, 11, 15, 0, 2, 9, 12, 8), (3, 5, 6, 13, 4, 14, 1, 10))
+  [PASS] corr: ItemStreams consumes exactly one permutation(16) of the injected rng
+  [PASS] corr: ItemStreams serves each role's 8 indices in order [7, 11, 15, 0, 2, 9, 12, 8]
+  [PASS] corr: ItemStreams refuses a 9th draw per role, an unknown role, a non-Generator [True, True, True, True]
+  [PASS] corr: Delivery contrast: P -> clean, Q -> render 'corrupted'
+  [PASS] corr: Delivery sham serves CORR_clean to both roles (m:159)
+  [PASS] corr: Delivery refuses bad role / index / render count / non-bool contrast [True, True, True, True, True]
+  [PASS] corr: hygiene clean on pool + golds + renders + the five Q-F0 strings, both rosters []
+  [PASS] corr: hygiene fires on a roster word planted in a harness string ["harness[5]: roster word 'walnut' in 'Note: config walnut presents clean task text.'"]
+  [PASS] corr: hygiene fires on a roster word in a clean task / gold / render / via the roster (True, True, True, True)
+  [PASS] corr: hygiene blanks {...} placeholders and is word-boundary (no fire)
+  [PASS] corr: hygiene clean on e2a's wrapper strings too (rule 28(c))
+  [PASS] corr: hygiene refuses a bare string as the harness-string list
+  [PASS] corr: startup_hygiene is clean on the real pool, golds, renders, the EIGHT declared strings of m:258 and e2a's wrapper templates []
+  [PASS] corr: startup_hygiene fires on a roster word planted in a declared string (TOLD-OBJ's slot, a reasoning line), in e2a's wrapper, and via the roster {'TOLD-OBJ slot': ["harness[5]: roster word 'walnut' in 'Note: configs walnut can differ.'"], 'reasoning line': ["harness[7]: roster word 'granite' in 'Reaso...
+  [PASS] banner: SESSION_BANNER is session_e2a's (imported)
+  [PASS] banner: COMMON / TOLD_MAP x2 / TOLD_MAP_SHAM[0] / TOLD_OBJ verbatim from m:254-257 {'REASONING': 2, 'SESSION_BANNER': 1, 'COMMON': 1, 'TOLD-MAP': 2, 'TOLD-MAP-SHAM': 1, 'TOLD-OBJ': 1}
+  [PASS] banner: TOLD_MAP_SHAM[1] is the mirror (label clauses swapped, m:253) Note: config {L_b} presents clean task text; config {L_a} presents clean task text. Prefer clean task text.
+  [PASS] banner: bytes exact for contrast/sham x clause 0/1 (P = maple, Q = cedar) []
+  [PASS] banner: note_lines = (COMMON, TOLD) without newlines; bytes = banner + lines + \n each
+  [PASS] banner: OLMo templates take the Q-F0 lines of their kind (TOLD-MAP / TOLD-MAP-SHAM)
+  [PASS] banner: P/Q fill L_clean/L_a and L_corr/L_b (swapping P,Q moves the labels)
+  [PASS] banner: TOLD_OBJ never used; HARNESS_STRINGS_QF0 is the five of m:258
+  [PASS] banner: refuses clause 2/bool, A1, base, P == Q, non-lowercase/brace/empty labels [True, True, True, True, True, True, True, True]
+  [PASS] banner: DECLARED_HARNESS_STRINGS = the five + TOLD_OBJ + the two reasoning-block lines (m:258's eight; m:174's literals; audit's reasoning label is the same string)
+  [PASS] banner: spec_problems is clean -- every template x clause built bytes = §2.5's literals []
+  [PASS] banner: spec_problems fires on every mutated banner line, build_banner assembly or proposal (11) []
+  [PASS] schedule: GATE_TABLE == spec's sixteen rows (m:161-170) header at m:161
+  [PASS] schedule: assert_gate_balance accepts the m:161-170 table (m:172 at 4/8/16)
+  [PASS] schedule: gate balance fires at m=4 on a flipped clause (row 3) ["m=4: clause not 2/2 {'0': 1, '1': 3}"]
+  [PASS] schedule: gate balance fires on start not 1/1 within pair at m=8, m=4 silent ["m=8: start not 1/1 within pair 0 {'0': 0, '1': 2}", "m=8: start not 1/1 within pair 2 {'0': 2, '1': 0}"]
+  [PASS] schedule: gate balance fires only at m=16 on a within-cell start swap ["m=16: start not 1/1 within pair x map cell 0,0 {'0': 2, '1': 0}"]
+  [PASS] schedule: gate balance fires on a duplicate (slot,map,start,clause) row ['m=16: 1 duplicate (pair, map, start, clause) rows']
+  [PASS] schedule: assert_gate_balance raises on a 15-row schedule
+  [PASS] schedule: Qwen roster is e2d.config.ROSTER (granite plaza prism slate velvet walnut ridge saddle) (('granite', 'plaza'), ('prism', 'slate'), ('velvet', 'walnut'), ('ridge', 'saddle'))
+  [PASS] schedule: OLMo roster quartz/velvet, copper/walnut, maple/saddle, amber/granite (('quartz', 'velvet'), ('copper', 'walnut'), ('maple', 'saddle'), ('amber', 'granite'))
+  [PASS] schedule: roster normalization refuses a one-label pair and a repeated label
+  [PASS] schedule: a foreign roster is refused (Qwen roster on an OLMo unit)
+  [PASS] schedule: campaign_cells is pair x map x start x clause in fixed order, 32 cells
+  [PASS] schedule: campaign_cells without a label-naming TOLD line has 16 cells, clause None
+  [PASS] schedule: every balance unit is a permutation of the 32 cells, each pair x map x start x clause once
+  [PASS] schedule: the balance-unit check fires on a unit with one cell doubled
+  [PASS] schedule: campaign prefix property (6 units == first 6 of 9)
+  [PASS] schedule: different arms / units give different unit orders
+  [PASS] schedule: index-form permutation == permutation(object array of cells) (PIN) numpy 2.5.1
+  [PASS] schedule: campaign cells carry Python ints only
+  [PASS] schedule: campaign_schedule refuses n_units 0, a bool, a Q-F3 unit, base, a cross-unit arm
+  [PASS] schedule: gate_schedule takes pair pi[slot_j] and row j's map/start/clause [3, 2, 0, 1]
+  [PASS] schedule: materialized 16-session gate schedules pass m:172 (Q-F0, OLMo)
+  [PASS] schedule: an 8-session gate schedule is the 16's prefix (qual A0's 8)
+  [PASS] schedule: gate_schedule refuses m = 17, m = 0 and G-ID on A0; accepts m = 16
+  [PASS] schedule: balance_report on one balance unit (all pair x map cells 4, no duplicates)
+  [PASS] schedule: balance_report shows a lopsided prefix (8 cells of pair 0 only)
+  [PASS] schedule: gate_launch_order rotates A0, A0s, then A0s alone past 8
+  [PASS] schedule: gate_launch_order refuses sham-first, mixed units, duplicates, count 17
+  [PASS] schedule: interleave is strict rotation, an arm at floor leaving ['A0', 'A0s', 'A0', 'A0s', 'A0', 'A0', 'A0']
+  [PASS] schedule: interleave resumes the rotation from on-disk launch counts ['A0', 'A0']
+  [PASS] schedule: interleave at equal counts resumes with the contrast arm ['A0', 'A0s', 'A0']
+  [PASS] schedule: interleave refuses sham-first order, counts off-rotation, foreign arms
+  [PASS] schedule: interleave accepts counts where the sham left at its floor earlier
+  [PASS] schedule: interleave ends when every arm is at floor
+  [PASS] schedule: k = 1 launch counts from the launch rule (2624 / 2208 / 960) {96: 2624, 80: 2208, 32: 960}
+  [PASS] schedule: launch-rule cross-check on the k = 24 / 19 / 12 table rows (m:198-201, m:209-212)
+  [PASS] schedule: k = 1 totals are the spec's '1: 3,584' and '1: 3,168'
+  [PASS] schedule: MAX_UNITS = Q-F0 A0 82, A0s 30; OLMo A0 69, A0s 30 {('Q-F0', 'A0'): 82, ('Q-F0', 'A0s'): 30, ('OLMo-sft', 'A0-OLMo-sft'): 69, ('OLMo-sft', 'A0s-OLMo-sft'): 30, ('OLMo-dpo', 'A0-OLMo-dpo'): 69, ('OLMo-dpo', 'A...
+  [PASS] schedule: write_schedule_files is byte-identical across two writes 26 files
+  [PASS] schedule: file set = Q-F0 (2 campaign + 5 gate) + 3 OLMo x (2 + 4) + manifest 26
+  [PASS] schedule: file contents (n, units, keys, cells sha, manifest sha)
+  [PASS] schedule: verify_schedule_dir is clean on a fresh write []
+  [PASS] schedule: verify_schedule_dir fires on a tampered cell (regen, manifest, cells sha) ['Q-F0_qual_A0s.json differs from the regeneration', 'Q-F0_qual_A0s.json sha256 != manifest', 'Q-F0_qual_A0s.json cells sha != sha256_of_cells']
+  [PASS] schedule: write_schedule_files refuses to overwrite a differing file
+  [PASS] schedule: overwrite=True restores the regeneration
+  [PASS] schedule: the quarantined state-present module is not imported
+  [PASS] bars: q accepts str, int and Fraction exactly
+  [PASS] bars: q refuses float, numpy float, bool and None (TypeError)
+  [PASS] bars: the float trap q exists for (Fraction(0.05) != 1/20, Fraction('0.05') == 1/20) 3602879701896397/72057594037927936
+  [PASS] bars: counts refuse float and bool, accept numpy ints exactly
+  [PASS] bars: fires refuses k > n and negative counts; binom_sf refuses p outside [0, 1]
+  [PASS] bars: binom_sf (both tail paths) == the direct rational sum, n <= 24
+  [PASS] bars: binom_sf agrees with stats.binom_sf_inclusive to 1e-12, n <= 60 (descriptive) max |diff| 3.44e-15
+  [PASS] bars: mandatory (1/1, p0 0.05) fires []
+  [PASS] bars: mandatory (0/1, p0 0.05) silent []
+  [PASS] bars: mandatory (1/1, p0 0.10) silent []
+  [PASS] bars: mandatory (1/2, p0 0.02) fires []
+  [PASS] bars: mandatory (1/3, p0 0.02) silent []
+  [PASS] bars: mandatory (3/10, p0 0.05) fires []
+  [PASS] bars: mandatory (2/10, p0 0.05) silent []
+  [PASS] bars: mandatory (2/7, p0 0.05) fires []
+  [PASS] bars: mandatory (2/8, p0 0.05) silent []
+  [PASS] bars: mandatory (14/160, p0 0.05) fires []
+  [PASS] bars: mandatory (13/160, p0 0.05) silent []
+  [PASS] bars: mandatory (13/155, p0 0.05) fires []
+  [PASS] bars: mandatory (7/160, p0 0.02) fires []
+  [PASS] bars: mandatory (6/160, p0 0.02) silent []
+  [PASS] bars: mandatory Fisher (3,3,0,3) fires []
+  [PASS] bars: mandatory Fisher (1,1,0,19) fires []
+  [PASS] bars: mandatory (117/2000, p0 0.05) fires []
+  [PASS] bars: mandatory (116/2000, p0 0.05) silent []
+  [PASS] bars: mandatory refuse p0=0.05 alpha='0.05' -> TypeError []
+  [PASS] bars: mandatory refuse p0='0.05' alpha=0.05 -> TypeError []
+  [PASS] bars: mandatory refuse p0='0.05' alpha='0.05' -> accepted []
+  [PASS] bars: every mandatory case is in FIRING_CASES
+  [PASS] bars: n = 2000 exact here while stats' float path overflows there
+  [PASS] bars: critical_k == stats.CheckpointedBinomialMonitor.critical_k, n 1..300, p0 0.05 []
+  [PASS] bars: critical_k == stats.CheckpointedBinomialMonitor.critical_k, n 1..300, p0 0.02 []
+  [PASS] bars: critical_k == stats.CheckpointedBinomialMonitor.critical_k, n 1..300, p0 0.10 []
+  [PASS] bars: critical_k == stats.CheckpointedBinomialMonitor.critical_k, n 1..300, p0 0.20 []
+  [PASS] bars: critical_k fires at crit and is silent at crit - 1 (n 1..300, four p0)
+  [PASS] bars: critical_k edge cases (n = 0 None; p0 0 -> 1; p0 1 -> None)
+  [PASS] bars: realised table p0 .05, n 1..160 == stats.md §5 [(126, 140, 12), (141, 155, 13), (156, 160, 14)]
+  [PASS] bars: realised table p0 .02, n 1..160 == stats.md §5 [(1, 2, 1), (3, 18, 2), (19, 41, 3), (42, 69, 4), (70, 99, 5), (100, 131, 6), (132, 160, 7)]
+  [PASS] bars: realised table p0 .10 (lines) head [1]:None [2-3]:2 [4-8]:3 [9-14]:4 [15-20]:5, n = 144 -> 22 (144, 144, 22)
+  [PASS] bars: realised table p0 .20 (guard) head [1]:None [2]:2 [3-4]:3 [5-7]:4 [8-10]:5, tail [237-240]:59 (237, 240, 59)
+  [PASS] bars: realised_table refuses a float p0
+  [PASS] bars: m:271 critical count G-F0m-Qwen 160 .05 -> 14 (P at crit and crit - 1) []
+  [PASS] bars: m:271 critical count G-F0m-OLMo 160 .02 -> 7 (P at crit and crit - 1) []
+  [PASS] bars: m:271 critical count G-F3 rounds 240 .05 -> 19 (P at crit and crit - 1) []
+  [PASS] bars: m:271 critical count G-F3 lines 144 .10 -> 22 (P at crit and crit - 1) []
+  [PASS] bars: m:271 critical count G-TIME-F0 10 .05 -> 3 (P at crit and crit - 1) []
+  [PASS] bars: m:271 critical count G-TIME-OLMo 10 .02 -> 2 (P at crit and crit - 1) []
+  [PASS] bars: m:271 critical count G-TIME-F3 rounds 30 .05 -> 5 (P at crit and crit - 1) []
+  [PASS] bars: m:271 critical count G-TIME-F3 lines 18 .10 -> 5 (P at crit and crit - 1) []
+  [PASS] bars: verdict counts at p0 .5 (144@.01 87, 144@.05 83, 96@.01 60, 80@.01 51) []
+  [PASS] bars: Fisher ties at exactly 1/20 fire under <= (stats.md §5's six), not under f1's <
+  [PASS] bars: fisher_sf == f1's formula exactly and session.fisher_two_groups to 1e-12 (n1, n2 <= 8) 0.0e+00
+  [PASS] bars: fisher_sf silent case (2,3,0,3) = 1/5 and refusals (a > n1, float alpha)
+  [PASS] bars: session.Tripwire (<) is silent at the n = 1 tie that m's <= fires (m:271)
+  [PASS] bars: declaration refusals (unjustified hair/pause, float p0/alpha, no p0, domain, planned crit, non-binding hair, kind, scope) [True, True, True, True, True, True, True, True, True, True]
+  [PASS] bars: a float p0 at declaration is a TypeError, not a ValueError
+  [PASS] bars: declaration accepts a justified hair trigger and a correct planned crit True
+  [PASS] bars: QF0_BARS names (m:271, m:280, m:281, m:283, m:316, m:330) []
+  [PASS] bars: QF0_BARS p0 .05 (degeneracy), .20 (guard abs), alpha .05, crits 3 and 14, all binding
+  [PASS] bars: OLMO_BARS(ckpt) for sft/dpo/instruct (p0 .02; crits 2 and 7; pause; guard abs reported only)
+  [PASS] bars: OLMO_BARS refuses base and an unknown checkpoint
+  [PASS] bars: every hair trigger and the pause carry a justification; no Q-F0 pause exists
+  [PASS] bars: LOCK rows carry class, unit, p0, alpha, domain, cadence; stage-end rows carry their realised table [[1, 1, 1], [2, 7, 2], [8, 10, 3]]
+  [PASS] bars: FIRING_CASES verify clean and complete on Q-F0 True
+  [PASS] bars: FIRING_CASES verify clean and complete on OLMo-sft True
+  [PASS] bars: FIRING_CASES verify clean and complete on OLMo-dpo True
+  [PASS] bars: FIRING_CASES verify clean and complete on OLMo-instruct True
+  [PASS] bars: assert_firing_complete refuses a bar exercised in one direction only (trap 5) FIRING CHECK INCOMPLETE (trap 5): ['one_way']
+  [PASS] bars: assert_firing_complete refuses a declared bar never exercised FIRING CHECK INCOMPLETE (trap 5): ['one_way']
+  [PASS] bars: assert_firing_complete refuses a misbehaving case (n = 2, one claim cannot fire) DECLARED BARS MISBEHAVE (rule 21): round_degeneracy@G-TIME-F0 1/2: stayed sile
+  [PASS] bars: verify_firing reports an undeclared bar name and a wrong arithmetic expectation ['round_degeneracy@G-TIME-F9: no such bar declared', "exact p0 0.05 ('exact', '0.05', '0.05') 1/1: fires=True, expected False"]
+  [PASS] bars: verify_firing skips another unit's bar but runs its own (no silent pass)
+  [PASS] bars: a sham-only bar refuses a contrast template and accepts the sham one
+  [PASS] bars: the guard refuses a sham template, a missing sham count, sham counts elsewhere
+  [PASS] bars: evaluate refuses unknown context, a phase on a domain bar, a look on a stage-end bar, another unit's template
+  [PASS] bars: OLMo's absolute guard is reported only (exceeds, never fires); Qwen's binds BAR exclusion_guard_abs@campaign-OLMo-dpo reported (exceeds; not binding) 5/10 exact one-sided P=0.0328 <= alpha 0.05 vs p0 0.20; critical 5 at n=10
+  [PASS] bars: BarResult carries an exact Fraction and a JSON-safe dict (no float)
+  [PASS] bars: messages name the bar, carry no roster word, and a hair/pause message no number 344 messages
+  [PASS] bars: a contrast free-round hair trigger prints name, template and phase only BAR scaffold_absorption FIRED template=A0 phase=free
+  [PASS] bars: stage_end_eval G-TIME-F0: 3 v2/echo claims in 10 sham rounds fire; 2 (content and lexical not counted) stay silent (3, 10, 2, 10)
+  [PASS] bars: stage_end_eval: a contrast session's claims never enter the sham domain
+  [PASS] bars: stage_end_eval refuses a selector admitting a contrast session
+  [PASS] bars: stage_end_eval one-session boundary: a round-1 claim fires (P = 1/20); a round-3 claim ending the session is reported, not fired
+  [PASS] bars: stage_end_eval refuses a foreign claim class, a duplicate session, > 10 rounds, another substrate, another stage, a guard bar [True, True, True, True, True, True]
+  [PASS] bars: stage_end_eval G-F0m-Qwen: 13 claims over 160 sham rounds silent, crit 14 (13, 160, 14)
+  [PASS] bars: OLMo G-TIME: a round-3 echo claim pauses where the bar cannot fire (STOP-7 A'3)
+  [PASS] bars: OLMo G-TIME: a round-2 AuditSpec claim fires the bar AND the pause (STOP governs)
+  [PASS] bars: OLMo G-TIME: a lexical-only session neither fires nor pauses; Qwen's v2 is foreign
+  [PASS] bars: stage_end_eval serves a campaign look (cumulative sham rounds; look printed) BAR round_degeneracy@campaign-Q-F0 FIRED template=A0s look=2 16/80 exact one-sided P=0.0000 <= alpha 0.05 vs p0 0.05; critical 8 at n=80
+  [PASS] bars: seq_false_pause == brute-force enumeration on looks [4, 8] at p0 .20 and [3, 6, 10] at .10
+  [PASS] bars: seq_false_pause small exact cases ([1, 2] at .05 = 1/20; one look = P(X >= crit))
+  [PASS] bars: seq_false_pause reproduces stats.md §5's illustrative figures under ITS n_j assumption (.0976 crits 16/28/40/42; .0863 crits 8/14/19/20; one look .0468) ['0.0976', '0.0863', '0.0468']
+  [PASS] bars: seq_false_pause refuses decreasing looks, no looks and a float p0
+  [PASS] bars: _dec is exact half-up (1/20 -> 0.0500, 1/8 -> 0.1250, 0.00005 -> 0.0001)
+  [PASS] bars: importing bars leaves the quarantined state-present module out of sys.modules
+  [PASS] bars: source carries none of the forbidden literals
+  [PASS] audit: replicated §2.5 templates appear verbatim in the spec
+  [PASS] audit: ws_norm == contentclass_v5._ws
+  [PASS] audit: harness_echo index by line order; None when absent
+  [PASS] audit: harness_echo refuses an empty line or one containing a newline
+  [PASS] audit: Qwen audit of record (v2 sha16 pinned, ban-list sha256 pinned) 7aa235d25eeb66dc
+  [PASS] audit: audit of record refuses a moved v2 body, a self-consistent resealed one, a moved ban file
+  [PASS] audit: Qwen scaffold set accepted (file ids/strings, any order) {'n_ids': 12, 'n_strings': 12, 'ban_list_sha256': '9a2f0744f81ac930fdf8533c7d07b77bd15a5361e89b060363d022c3661d31c4'}
+  [PASS] audit: Qwen scaffold set refused (string missing; id moved; duplicate; v2 differs)
+  [PASS] audit: OLMo scaffold comparator accepts six strings + 9 ids at their sha16
+  [PASS] audit: OLMo scaffold refused (fake ids vs b3 sha16; 8 ids; strings; base ckpt)
+  [PASS] audit: OLMO_AUDIT == box_b3_sessions.AUDIT; b3 TEMP 0.7, F 2
+  [PASS] audit: loading b3 does not load the state-present module
+  [PASS] audit: corr_others = the other 15 clean texts, own absent
+  [PASS] audit: corr_others refuses an out-of-range item and a short pool
+  [PASS] audit: empty -> v2 audit:empty (v2 first) audit:empty
+  [PASS] audit: '* * *' -> content:null_response content:null_response
+  [PASS] audit: verbatim clean instruction -> task_echo ADVISORY, no claim (None, ('content:task_echo',))
+  [PASS] audit: frame fragment claims first; lexical raw kept, not claimed (rule 28b) audit:frame:Config evaluation session
+  [PASS] audit: a plain answer -> no claim, no advisory, no hit
+  [PASS] audit: own tag in a response -> lexical
+  [PASS] audit: another pair's roster tag -> no claim (own pair only)
+  [PASS] audit: repeat of an earlier response -> content:stuck_attractor content:stuck_attractor
+  [PASS] audit: v3's task_text is the render as delivered (preamble on clean, not on the render) ('content:preamble_without_content', None)
+  [PASS] audit: classify refuses a clean render of another item
+  [PASS] audit: content claim ends the Qwen session on a forced round, not on a free round
+  [PASS] audit: lexical on a free round ends the Qwen session; strict excludes any claim
+  [PASS] audit: free-round v2 claim ends nothing (post_choice_degeneracy)
+  [PASS] audit: each banner Note line verbatim -> echo (both substrates, 4 TOLD variants) [True, True, True, True, True, True, True, True]
+  [PASS] audit: the reasoning label echoes on Qwen (m:261), not on OLMo (m:262)
+  [PASS] audit: echo sets validated (Qwen needs the label last; OLMo refuses it)
+  [PASS] audit: whitespace runs -> still echo
+  [PASS] audit: partial line -> not echo
+  [PASS] audit: case change -> not echo (verbatim)
+  [PASS] audit: mirror variant of the session's TOLD line -> lexical, not echo
+  [PASS] audit: echo claims before lexical (TOLD verbatim names both labels)
+  [PASS] audit: echo claims before v4 content (a stuck repeat of COMMON)
+  [PASS] audit: a Note line plus '[round' -> v2 / AuditSpec claim, echo raw kept
+  [PASS] audit: COMMON on a free round -> Qwen echo, session NOT ended; OLMo echo, ended
+  [PASS] audit: OLMo -- COMMON and TOLD (4 variants) without the final period at the END of a response (4 shapes) -> echo, forced and free, the session ended []
+  [PASS] audit: Qwen -- the same 64 period-less copies are NOT echo (finding N6): bare TOLD -> lexical (ends forced and free), bare COMMON -> no claim, a preamble before either -> content:preamble_without_content (ends forced only); never degeneracy []
+  [PASS] audit: harness_echo's stem form is OLMo's only -- substrate None / 'qwen' -> None, 'olmo' -> the line's index; the complete line echoes on every substrate; an unknown substrate raises
+  [PASS] audit: a period-less line in the MIDDLE of a response, a line with another final mark, a line short of its last word, and the reasoning label without ':' -> not echo []
+  [PASS] audit: a Qwen ban string -> v2 special: claim AND scaffold hit
+  [PASS] audit: OLMo <|pad|> -> scaffold hit, no AuditSpec claim
+  [PASS] audit: OLMo <think> -> AuditSpec special claim carries it, scaffold hit
+  [PASS] audit: no scaffold hit on plain text (both)
+  [PASS] audit: scaffold_absorption is case-sensitive (m:262; Qwen PIN): case variants of a real Qwen and a real OLMo scaffold string do not fire; the exact strings do []
+  [PASS] audit: classifier constructors refuse a foreign scaffold set or audit
+  [PASS] audit: OLMo empty / repetition junk / frame -> AuditSpec claims
+  [PASS] audit: OLMo lexical ends the session in either phase; a plain round does not
+  [PASS] audit: substrate-specific end rules refuse the other substrate
+  [PASS] audit: degeneracy = v2/AuditSpec or echo only
+  [PASS] audit: as_dict / from_dict round-trip; JSON-serialisable
+  [PASS] audit: RoundAudit refuses a foreign class, a detail without claim, a bad degeneracy flag
+  [PASS] audit: first_exclusion / ends_session / prepick_excluded
+  [PASS] audit: Qwen tally counts claims by template/phase/class {'total': 2, 'by_key': {'A0|forced': 1, 'A0|free': 1}}
+  [PASS] audit: OLMo tally (AuditSpec category, lexical, pre-pick)
+  [PASS] audit: counter reports contain no roster word (both rosters) []
+  [PASS] audit: tally refuses counters declared for the other substrate
+  [PASS] audit: source carries no forbidden string and imports neither Injection nor state-present ['Any', 'AuditSpec', 'AuditV3', 'DescriptiveCounters', 'Iterable', 'Mapping', 'Sequence', '__future__', 'annotations', 'ast', 'config', 'contentclass_v5', 'd...
+  [PASS] guard: FORBIDDEN_MODULES == e2d/runner.py:53's tuple ('valence_core.e2b.statepresent',)
+  [PASS] guard: assert_insulated passes with the primitive absent
+  [PASS] guard: assert_insulated fires when the primitive is in sys.modules
+  [PASS] guard: label_ids accepts single-token labels (ints, distinct) {'slate': 4012, 'prism': 1080}
+  [PASS] guard: label_ids refuses a two-token label
+  [PASS] guard: label_ids refuses duplicate labels
+  [PASS] guard: insulated_read accepts a reproducible read (verify KL exactly 0.0, real choice_read) {'kl': 0.0, 'has_pick': True}
+  [PASS] guard: insulated_read refuses before reading when the primitive is loaded
+  [PASS] guard: insulated_read halts on construction drift (KL > 0)
+  [PASS] guard: a NaN verify KL passes the frozen assert but insulated_read halts on it nan
+  [PASS] guard: insulated_read halts on a NEGATIVE verify KL (which the frozen assert passes) and on any nonzero one, and accepts exactly 0.0 (finding 38) ([True, True, True, True, True], [True, True])
+  [PASS] guard: insulated_read halts on a window overflow (8192)
+  [PASS] guard: insulated_read refuses a == b
+  [PASS] guard: gid_artifact_path is REPO/data/m/gates/{unit}_G-ID.json
+  [PASS] guard: gid_artifact_path refuses an OLMo unit
+  [PASS] guard: gid_paths is (uncached, cached)
+  [PASS] guard: cached_path_admitted True on a well-formed PASS from this backend (Q-F0 qual, campaign)
+  [PASS] guard: a PASS produced on backend X licenses X and refuses Y (rule 2, per backend)
+  [PASS] guard: backend_identifier is required, keyword-only, a non-empty str
+  [PASS] guard: cached_path_admitted False at G-TIME-F0 even with a PASS on disk (m:280)
+  [PASS] guard: cached_path_admitted False on OLMo whatever is on disk (m:267)
+  [PASS] guard: cached_path_admitted raises at stage 'id' (G-ID uses gid_paths)
+  [PASS] guard: cached_path_admitted refuses an unknown stage / a Q-F3 unit
+  [PASS] guard: every malformed or other-backend G-ID artifact -> uncached (23 variants) []
+  [PASS] guard: check_call_sites passes a clean example (param, False, admitted, IfExp, run_gid_pair, super() delegation) []
+  [PASS] guard: check_call_sites fires on every smuggled copy (17) []
+  [PASS] guard: (a) a cached/path_cached default other than absent or the literal False: fires on every must-fire source (6) []
+  [PASS] guard: (a) a cached/path_cached default other than absent or the literal False: silent on every must-not-fire source (1) []
+  [PASS] guard: (b) **mapping into a guarded callee unless a dict literal inspected as keywords: fires on every must-fire source (13) []
+  [PASS] guard: (b) **mapping into a guarded callee unless a dict literal inspected as keywords: silent on every must-not-fire source (3) []
+  [PASS] guard: (c) the unbound-method form Name.generate(...) (shifted positional slots): fires on every must-fire source (5) []
+  [PASS] guard: (c) the unbound-method form Name.generate(...) (shifted positional slots): silent on every must-not-fire source (1) []
+  [PASS] guard: (e) licensed sources resolved by binding, not spelling (finding 20): fires on every must-fire source (17) []
+  [PASS] guard: (e) licensed sources resolved by binding, not spelling (finding 20): silent on every must-not-fire source (4) []
+  [PASS] guard: (d) a non-empty injections= in test code (no exemption): fires on every must-fire source (3) []
+  [PASS] guard: (d) a non-empty injections= in test code (no exemption): silent on every must-not-fire source (1) []
+  [PASS] guard: (f) a licensed name rebound as an attribute (finding N15): fires on every must-fire source (31) []
+  [PASS] guard: (f) a licensed name rebound as an attribute (finding N15): silent on every must-not-fire source (1) []
+  [PASS] guard: check_call_sites reports an unparsable file (fails closed)
+  [PASS] guard: check_call_sites expands a directory
+  [PASS] guard: check_call_sites is clean on guard/resume/keys/__init__ ['guard.py', 'resume.py', 'keys.py', '__init__.py']
+  [PASS] guard: preflight_laptop clear on 140 W AC, only self running, 50 GiB free []
+  [PASS] guard: preflight_laptop fires on each failing condition (7) []
+  [PASS] guard: a model process is matched on its executable -- shell wrappers and viewers whose arguments name the jlens python are not model processes (finding 23); python3.12 / Python / python3 executables running the model stack are ([], ['31000', '31010', '31020'])
+  [PASS] guard: preflight parsers (wattage, AC, process list)
+  [PASS] guard: the quarantined primitive is still absent after the self-test
+  [PASS] resume: atomic_write_json round-trips sort-keyed, ensure_ascii off, ints stay ints {"a": ["é", [1, 2]], "b": 3, "c": 0.25}
+  [PASS] resume: atomic_write_json fsyncs the file and then its directory [False, True]
+  [PASS] resume: atomic_write_json refuses non-native objects with TypeError (6) []
+  [PASS] resume: atomic_write_json refuses NaN (ValueError)
+  [PASS] resume: a refused write leaves the old file byte-identical and no temp file
+  [PASS] resume: the encoder's default= raises TypeError (no default=float conversion)
+  [PASS] resume: backend_identifier is sha16 and drops n_encodes_clipped, path, seed 592072835d336e5e
+  [PASS] resume: backend_identifier moves with the GPU or a library version
+  [PASS] resume: pod_id reads RUNPOD_POD_ID (unset/blank -> None) (None, None, 'uimuzt7d890y5b')
+  [PASS] resume: Identity builds exact keys, §2.4 template order, m:159 key templates {'arm': 'm-f0m|A0|{s}', 'items': 'm-items-qual|{s}', 'sched': 'm-sched|Q-F0|qual|A0|0'}
+  [PASS] resume: an OLMo campaign identity carries the pod id; campaign keys {'arm': 'm-olmo|dpo|A0s-OLMo-dpo|{s}', 'items': 'm-olmo-items|dpo|{s}', 'sched': 'm-sched|OLMo-dpo|A0s-OLMo-dpo|{b}'}
+  [PASS] resume: Identity refuses each malformed identity (17) []
+  [PASS] resume: load_or_init refuses a hand-built identity with an extra or missing key
+  [PASS] resume: no file -> a new checkpoint (with or without --resume)
+  [PASS] resume: an existing checkpoint without --resume -> CHECKPOINT EXISTS
+  [PASS] resume: --resume with the identical identity continues the sessions on disk
+  [PASS] resume: --resume refuses any change of n, lock, path, backend (same pod), package code, renders or pool []
+  [PASS] resume: two-way equality -- an extra recorded identity key refuses
+  [PASS] resume: two-way equality -- a missing recorded identity key refuses
+  [PASS] resume: exact equality -- hour cap 8 recorded, 8.0 offered, refuses
+  [PASS] resume: an unreadable checkpoint refuses and is left untouched
+  [PASS] resume: done_ids lists finished sessions, excluded ones included [('A0', 0), ('A0s', 0)]
+  [PASS] resume: record_session refuses a session already on disk (never re-run)
+  [PASS] resume: record_session refuses s >= n and a foreign template
+  [PASS] resume: record_session refuses a record with a numpy int (no silent cast)
+  [PASS] resume: G-ID's unit is the pair (a half pair is not done; by_path shows halves)
+  [PASS] resume: gate stage, same pod -> resumes, nothing set aside
+  [PASS] resume: gate stage, new pod -> old checkpoint renamed aside byte-identical (never deleted), restart from the first session, one line printed POD CHANGE: olmo_qual.json was written on pod 'podA', this is pod 'podB'; set aside as olmo_qual.json.podchange-20261007T031213Z; the stage restarts from its...
+  [PASS] resume: gate stage, new pod AND a design change -> refused, nothing renamed
+  [PASS] resume: a finished (PASS / PAUSE) or stopped gate stage is refused 'STAGE ENDED' naming its status, on its own pod or another, with or without --resume; never set aside {'ended_pass': True, 'ended_pause': True, 'ended_stop': True}
+  [PASS] resume: an unfinished, unstopped gate stage on a new pod is the only one set aside and restarted
+  [PASS] resume: refuse_ended on a terminal campaign names its status and never advises a restart on a new path; silent on an unfinished one CAMPAIGN ENDED at /var/folders/g3/tknb56w13nl4206fr7jrsthw0000gn/T/tmp382y2um2/c
+  [PASS] resume: record_session refuses a record whose verified is not exactly True (False, 1, absent) and records a verified one []
+  [PASS] resume: nothing is recorded after a stage's end; an unverified session or a malformed stage_end on disk refuses the checkpoint
+  [PASS] resume: package_sha256 is a sha256 over the m sources, stable, moved by a one-byte edit, blind to __pycache__; an identity carries it with the pool and renders of record ('96fbcacfb6c18903', 'a04f67b0e5105a05')
+  [PASS] resume: OLMo campaign on another pod -> hard refusal, never set aside or spliced
+  [PASS] resume: OLMo campaign on its own pod -> resumes
+  [PASS] resume: hour cap accumulates across resumes; silent below, fires at the cap (>=) (False, True)
+  [PASS] resume: hour cap refuses an override and a reset counter on disk
+  [PASS] resume: a stage with no cap is never capped
+  [PASS] resume: look index == completed_launches // 40 (due look required in the same write; none early; tampered index refused)
+  [PASS] resume: refuse_canonical_out refuses canonical locations, resolved (7) []
+  [PASS] resume: refuse_canonical_out accepts a scratch path and returns it resolved
+  [PASS] resume: the self-test wrote nothing under REPO/data/m
+  [PASS] resume: a STOP refusal names a contrast free-phase trigger by phase alone (template, s; never its class, round, n or index), a sham trigger by its class, an unblinded stop by none STAGE ENDED at c.json (STOP: a hair trigger fired in the free phase of a contrast session (A0 s=0); its class
+  [PASS] resume: provenance is recorded verbatim (tuples as JSON lists) outside the identity, one entry per invocation with its stamp; a resume appends; the report copies the entries that launched a session [('2026-10-06T00:00:00Z', 2), ('2026-10-06T01:00:00Z', 0)]
+  [PASS] resume: provenance refuses a non-native value, a list started on a checkpoint that already has sessions, a launch with no entry, fewer launches than recorded sessions and a malformed entry on disk (True, True, True, True, True)
+  [PASS] resume: json_text equals atomic_write_json's bytes; assert_writable passes a writable checkpoint without writing it and refuses a broken invariant and a non-native value
+  [PASS] resume: a checkpoint carrying an end pending is returned for its re-finish on its own pod or another, with or without --resume, the backend identifier free to differ -- never set aside, never refused as existing; a design change is still refused {('podA', True): True, ('podA', False): True, ('podB', True): True, ('podB', False): True}
+  [PASS] resume: nothing is recorded past an end pending; a malformed pending end (a stop under PASS, a campaign status, fired not a list, a campaign key) is refused, a second one too, and one beside a persisted end refuses the checkpoint []
+  [PASS] resume: apply_end turns a gate stage's pending end into stage_end and its stop; persist_end writes only that persisted form (a checkpoint with another session refused, the file untouched) and refuses where nothing is pending
+  [PASS] resume: an OLMo campaign's checkpoint is written on another pod only to re-finish a pending end -- with nothing pending refused, a write adding a session refused (POD MISMATCH), the re-finish admitted and its terminal state persisted under the original pod id
+  [PASS] readrule: synthetic records (Qwen with menu/pick pieces, OLMo without) pass the piece check
+  [PASS] strip_contrast: transcript is exactly banner + forced rounds bytes (Qwen, OLMo, forced-excluded)
+  [PASS] strip_contrast: identical forced rounds + different free rounds -> identical stripped records
+  [PASS] strip_contrast: no pick line, menu, chosen header, free text or free task survives (dump + transcript) []
+  [PASS] strip_contrast: no read/choice/pick/free-round field and no 'read' or 'free' anywhere in the dump []
+  [PASS] strip_contrast: the pick label survives only at banner/forced positions (count equals the prefix's) (3, 10)
+  [PASS] strip_contrast: a forced exclusion is kept with its class; forced-round count kept
+  [PASS] strip_contrast: refuses a sham record, broken tiling, phase disorder, OLMo menu piece, generation/pick mismatch, contrast flag vs template, an already-blinded record
+  [PASS] strip_contrast: accepts a valid record whose forced response is exactly 'free' (Qwen, OLMo) True
+  [PASS] strip_contrast: refuses a free-phase round surviving the strip, and a nested free phase
+  [PASS] redact_sham: transcript == banner + forced + free rounds with [config] headers, menus/pick lines gone (Qwen) umber of wheels on a bicycle. Response:[config] says: open.
+  [PASS] redact_sham: OLMo (no menus in the stored transcript) -- headers and label copies redacted only
+  [PASS] redact_sham: no menu or pick piece, no menu template text, no original menu string survives
+  [PASS] redact_sham: pick labels appear nowhere in free-round text; only banner (1 each) + forced headers (2 each)
+  [PASS] redact_sham: redacted pieces tile the redacted transcript; generation pieces equal round texts
+  [PASS] redact_sham: picks, choices, reads, menus, first pick removed; free item/label/role/property/task/seed and audit detail/lexical_raw dropped; sham classes kept []
+  [PASS] redact_sham: refuses a contrast record, a free task line naming a label, a header not ending in its pick, an already-blinded record
+  [PASS] printed_reason: forced forms audit/echo/content/lexical (Qwen v2 -> audit; OLMo AuditSpec -> audit) ['audit@forced', 'echo@forced', 'content@forced', 'lexical@forced', 'audit@forced', 'echo@forced', 'lexical@forced']
+  [PASS] printed_reason: free sham {class}@free; free contrast excluded@free for every class ['audit@free', 'echo@free', 'content@free', 'lexical@free', 'audit@free', 'echo@free', 'lexical@free']
+  [PASS] printed_reason: from records (contrast free -> excluded@free; forced content; sham free lexical) ['excluded@free', 'content@forced', 'lexical@free', 'excluded@free', 'lexical@free']
+  [PASS] printed_reason: never a digit index or a tag (all outputs; every input carried a tag in detail)
+  [PASS] printed_reason: refuses a valid session, a contrast flag disagreeing with the record, an unknown class or phase, OLMo content, no claim, a non-bool contrast
+  [PASS] session_line: the declared form for valid / forced / free sham / free contrast (both substrates) ['qual A0 s=3 valid', 'qual A0 s=3 excluded:excluded@free', 'qual A0 s=3 valid', 'qual A0 s=5 excluded:content@forced', 'qual A0s s=3 excluded:lexical@free',...
+  [PASS] session_line: no seconds, read count, completeness word or pick in any line ['qual A0 s=3 valid', 'qual A0 s=3 excluded:excluded@free', 'qual A0 s=3 valid', 'qual A0 s=5 excluded:content@forced', 'qual A0s s=3 excluded:lexical@free',...
+  [PASS] session_line: refuses excluded without a reason, a reason without excluded, an unknown stage, a non-int s
+  [PASS] stage_report: contrast sessions identical in forced rounds, different in free rounds -> identical reports
+  [PASS] stage_report: contrast block = forced counts only; free events withheld as a constant, no count ['advisory_rounds', 'audit@forced', 'audit_categories', 'audit_sessions_forced', 'cap_hit', 'claims', 'content', 'content@forced', 'contrast', 'degeneracy_ro...
+  [PASS] stage_report: contrast forced exclusions by printed class (content@forced = 1), domain from forced {'audit@forced': 0, 'echo@forced': 0, 'content@forced': 1, 'lexical@forced': 0}
+  [PASS] stage_report: sham block reports free-round classes and first-pick share, and changes with free rounds
+  [PASS] stage_report: OLMo sham block by OLMo classes (audit/echo/lexical); no label anywhere in any report
+  [PASS] stage_report: refuses mixed units, mixed stages, duplicate (template, s), blinded records, no records, a domain field contradicting the forced rounds, a first pick contradicting the first choice
+  [PASS] stage_report: refuses a roster label as a value word, as a key, and as a whole word in a key
+  [PASS] stage_report: a label only as a substring of a key or value word ('granites' vs 'granite') passes True
+  [PASS] readrule: ruling (h) -- G-TIME contrast sessions differing ONLY in their forced exclusion's class (Qwen v2/echo/content/lexical, OLMo audit/echo/lexical; same round, same text) give byte-identical session lines (excluded@forced), stripped reads and stage reports {'qwen': 'time A0 s=0 excluded:excluded@forced', 'olmo': 'time A0-OLMo-dpo s=0 excluded:excluded@forced'}
+  [PASS] readrule: ruling (h) is G-TIME only (must not fire) -- the same sessions at the qualification stage print, strip and report their class: every view distinct per class, {class}@forced lines, the class kept in the strip and counted in the report ['qual A0 s=0 excluded:audit@forced', 'qual A0 s=0 excluded:echo@forced', 'qual A0 s=0 excluded:content@forced', 'qual A0 s=0 excluded:lexical@forced']
+  [PASS] readrule: ruling (h) -- the G-TIME contrast block is exactly {contrast, sessions, per_session [{s, forced_rounds_generated, excluded_at_forced}], free_rounds}; the G-TIME sham block is the full sham block (classes by phase, first pick) {'contrast': True, 'sessions': 1, 'per_session': [{'s': 0, 'forced_rounds_generated': 2, 'excluded_at_forced': True}], 'free_rounds': "withheld to the unit's...
+  [PASS] readrule: ruling (h) -- G-TIME contrast counts follow rounds generated and excluded yes/no only (round-1 and round-3 exclusions, a clean session, a free-round exclusion, a forced hair stop); a free exclusion's report and strip equal a clean session's; lines by phase alone ({'r1': {'s': 0, 'forced_rounds_generated': 1, 'excluded_at_forced': True}, 'r3': {'s': 0, 'forced_rounds_generated': 3, 'excluded_at_forced': True}, 'clean'...
+  [PASS] readrule: ruling (h) -- the G-TIME stripped read keeps banner + forced bytes, each forced round as {phase, ri, n, text}, n_forced_rounds, excluded_at_forced; no audit, exclusion, strict exclusion, hair-trigger name, domain, label, role, pole, property, item, task text or seed (the qualification strip keeps the hair trigger) []
+  [PASS] readrule: ruling (h) -- the G-TIME strip's withholding check fires on a planted audit dict, an exclusion and a round property, and is silent on the strip as built
+  [PASS] readrule: printed_reason's stage -- a contrast forced exclusion at 'time' is excluded@forced (dict, RoundAudit, record), {class}@forced at qual and campaign; a sham one keeps its class at 'time'; refuses an unknown stage and a stage disagreeing with the record
+  [PASS] readrule: the declared session-line forms per stage and template (ruling (h)): accepted and refused as declared; session_line refuses (AssertionError) a class-bearing G-TIME contrast line []
+  [PASS] release_full: returns the records unchanged (same object, same bytes)
+  [PASS] readrule: source free of the forbidden names; the quarantined module is not imported
+  [PASS] testing: ScriptedAdapter is a SelfTestAdapter with the declared 8192 window
+  [PASS] testing: encode is prefix-stable across a newline-ended prefix (and not trivially) (21, 32)
+  [PASS] testing: generate returns the script in call order with its cap/stop fields
+  [PASS] testing: every call's prefix/segment/seed/cached/injections is recorded
+  [PASS] testing: an exhausted script raises (a session never silently falls back)
+  [PASS] testing: with no script, generate delegates to the stub and strips its text autumn steady quiet ice down answer
+  [PASS] testing: a pick plan drives the REAL choice_read both ways, verify KL exactly 0.0 {'prism': ('prism', 0.0), 'slate': ('slate', 0.0)}
+  [PASS] testing: unplanned reads run the stub's own logits, reproducibly
+  [PASS] testing: the plan is consumed once per distinct read context (verify re-forward agrees)
+  [PASS] testing: OLMo variant's build_ban_list yields OLMo's six strings (scaffold_sft.json) ['</think>', '<think>', '<|endoftext|>', '<|im_end|>', '<|im_start|>', '<|pad|>']
+  [PASS] testing: the stub's six ids cannot match b3's nine-id sha16 (assert_olmo_scaffold refuses) 6
+  [PASS] testing: ScriptedAdapter's live build_ban_list reproduces the frozen e2a file (12 strings -> 12 ids); a moved id or the plain stub tokenizer does not; OLMo's variant keeps the stub map (12, 12)
+  [PASS] testing: a LOW_MASS plan entry wins the read for its label with label mass < .20 and a non-label top-1; a plain entry wins it with mass > .20 and a label top-1 (verify KL 0.0 both) (1.1109887890451277e-13, 1.0)
+  [PASS] testing: plan_picks maps P/Q to labels and p/q to LOW_MASS labels; refuses another role
+  [PASS] testing: MergingAdapter breaks prefix stability (the rule 28(d)(a) negative control)
+  [PASS] scaffold: m keys (qual A0 s0): m-f0m|A0|0 and m-items-qual|0; j = s at a gate stage {'arm': 'm-f0m|A0|0', 'items': 'm-items-qual|0'}
+  [PASS] scaffold: OLMo time keys carry {ckpt}; campaign keys m|A0s|5 / m-items|5, j None ({'arm': 'm-olmo-time|dpo|A0s-OLMo-dpo|0', 'items': 'm-olmo-items-time|dpo|0'}, {'arm': 'm|A0s|5', 'items': 'm-items|5'})
+  [PASS] scaffold: banner bytes and note lines are build_banner's
+  [PASS] scaffold: arm rng order = 4 forced seeds, then per choice (menu order, seed) (m:159) ([1, 1, 1, 0, 1, 1], [1, 1, 1, 0, 1, 1])
+  [PASS] scaffold: items = the item stream's permutation, [:8] to P and [8:] to Q, in order [12, 15, 4, 13, 11, 8, 10, 5, 3, 2]
+  [PASS] scaffold: contrast delivery -- P clean, Q the corrupt_m render, properties recorded
+  [PASS] scaffold: sham delivery -- both roles clean; same items as contrast s (shared item key)
+  [PASS] scaffold: rotation -- forced (s+ri)%4, menus and chosen rounds (s+ci)%4, n shared
+  [PASS] scaffold: round and menu bytes are e2a's templates filled with label/task and n
+  [PASS] scaffold: start 0 -> P Q P Q, start 1 -> Q P Q P {0: ('P', 'Q', 'P', 'Q'), 1: ('Q', 'P', 'Q', 'P')}
+  [PASS] scaffold: out-of-order calls and a foreign pick are refused [True, True, True, True, True, True]
+  [PASS] scaffold: m_config refuses a swapped P/Q, a bool clause, a foreign pair, cached G-TIME, an unknown path and a cached OLMo session [True, True, True, True, True, True]
+  [PASS] scaffold: the rotation pin refuses 2F = 6 (6 % 4 != 0)
+  [PASS] scaffold: f1_config replays 10 archived f1 CORR rows (s 0-7, 27, 53) byte-exact (banner, rotated headers, Task lines, menus, pick lines, joiners), seeds, menu_a, cadence {}
+  [PASS] scaffold: the replayed rows cover clean, free-excluded (s4 lexical@free4) and forced-excluded (s27 forced3, s53 forced1) shapes {0: (10, 6), 1: (10, 6), 2: (10, 6), 3: (10, 6), 4: (9, 5), 5: (10, 6), 6: (10, 6), 7: (10, 6), 27: (4, 0), 53: (2, 0)}
+  [PASS] scaffold: f1 cell arithmetic and bare banner (s1: maple/cedar, swap False, start_P True)
+  [PASS] scaffold: the f1 replay fails on a changed seed, a changed harness byte, a changed pick, and under corrupt_m's renders
+  [PASS] scaffold: TranscriptBuilder pieces tile the transcript, each piece its own bytes [{'kind': 'banner', 'phase': None, 'idx': None, 'start': 0, 'end': 2}, {'kind': 'round', 'phase': 'forced', 'idx': 0, 'start': 2, 'end': 41}, {'kind': 'gener...
+  [PASS] scaffold: rule 28(d)(a) boundary assertion passes on a prefix-stable join, fires on a collapsed boundary
+  [PASS] scaffold: low_label_mass / top1_not_label on real reads -- a read whose label mass is below .20 (a decoy token takes the top-1) flags both; a planned read (mass ~1) flags neither; the comparator is strict < .20 at its edge (e2d/runner.py's LOW_LABEL_MASS) (1.0, 8.39297667646023e-12, [True, False, False, True, False])
+  [PASS] scaffold: termination patterns load sha-pinned; fire on 'End of session', not on 'Seven.'
+  [PASS] scaffold: assert_native refuses a numpy int, accepts native nesting
+  [PASS] runner_qwen: startup -- ban list is the e2a file (12 strings, ids), audit v2 sha16 pinned
+  [PASS] runner_qwen: a missing ban-list file is a STOP, never a rebuild (nothing written)
+  [PASS] runner_qwen: the ban list is rebuilt from the live adapter and must equal the frozen file -- passes on a tokenizer that reproduces it; STOPs when one string maps elsewhere, an extra special string appears, or the tokenizer is another; the frozen file is never rewritten (finding 6) [('one id moved', True), ('an extra special string', True), ('the plain stub tokenizer', True)]
+  [PASS] runner_qwen: TEMP is m:159/m:172's literal 0.7 and e2d.config.TEMP (the runner's default) (0.7, 0.7)
+  [PASS] runner_qwen: startup refuses a read window other than 8192
+  [PASS] runner_qwen: 24 scripted sessions reach their declared outcomes (clean x8; forced v2/echo/content/lexical end; free v2/echo/content continue; free lexical ends; scaffold stops) []
+  [PASS] runner_qwen: picks follow the scripted plan through the real read path (KL exactly 0.0)
+  [PASS] runner_qwen: clean sessions -- 6 reads, valid, complete, domain, first pick coded on P
+  [PASS] runner_qwen: a forced v2 claim ends the session -- no read, domain False, first pick None
+  [PASS] runner_qwen: free v2, TOLD-line echo and content claims are post-choice degeneracy (no end); strict scope records the first ['v2', 'echo', 'content', None, None, None]
+  [PASS] runner_qwen: scaffold_absorption records the trigger and returns at once (free: no exclusion, domain kept; forced: v2 exclusion too)
+  [PASS] runner_qwen: on Qwen a Note line copied without its final period is not an echo (finding N6): TOLD at forced -> lexical@forced ends the session (no read, out of the domain); COMMON at forced -> no claim, the session runs on (6 reads, valid, in the domain); at free, COMMON -> no claim, TOLD -> lexical@free ends after its round (domain kept) ({'class': 'lexical', 'phase': 'forced', 'detail': 'lexical:plaza'}, None, [(None, None), (None, None), ('lexical', None)])
+  [PASS] runner_qwen: a forced round repeating an earlier forced answer -> content@forced (stuck_attractor), session ended; a free round repeating a forced answer -> free content claim, no end (audit v3's `earlier` carries the forced responses) ({'class': 'content', 'phase': 'forced', 'detail': 'content:stuck_attractor'}, [None, None, None, None, None, 'content', None, None, None, None])
+  [PASS] runner_qwen: a free round repeating an earlier FREE answer (in no forced round) -> free content claim (stuck_attractor), strict scope {content, free}, no end, complete (audit v3's `earlier` carries the free responses) ([('free', 2, 'content:stuck_attractor')], {'class': 'content', 'phase': 'free'})
+  [PASS] runner_qwen: every read's context (93 reads over 24 sessions) = the transcript up to its menu's end (transcript + menu) and prefix_tokens_at_read = that context's encoded length []
+  [PASS] runner_qwen: seeds and menu orders = an independent recomputation from the arm key (4 seeds, then per choice menu order then seed)
+  [PASS] runner_qwen: items = the item key's permutation split [:8] P / [8:] Q, consumed in order
+  [PASS] runner_qwen: contrast Q rounds deliver the corrupt_m render ('corrupted'); sham and P clean
+  [PASS] runner_qwen: the adapter saw injections=() and cached=False on every call, the recorded seed, and prefix = transcript so far (free: + menu + pick line)
+  [PASS] runner_qwen: a licensed cached path passes cached=True through on every call (the guard's licence on this adapter's backend, not a literal); record path 'cached'; bytes as uncached on the stub
+  [PASS] runner_qwen: a cached session is refused at the runner without a G-ID PASS on disk, and with a PASS produced on another backend (rule 2; C2: resume.backend_identifier(adapter.provenance())) (True, True)
+  [PASS] runner_qwen: refuses a path disagreeing with the scaffold, an OLMo scaffold, and halts before generating on a collapsed token boundary [True, True, True]
+  [PASS] runner_qwen: every record passes strip_contrast / redact_sham / stage_report / session_line ['qual A0 s=0 valid']
+  [PASS] runner_qwen: stripped contrast records carry no free-round material
+  [PASS] runner_qwen: bars.stage_end_eval on the sham-only domain counts v2/echo rounds over sham rounds (5, 118)
+  [PASS] runner_qwen: every record passes G-VER (verify_and_mark), goes into a gate-stage checkpoint (resume.record_session) and reloads skip-only []
+  [PASS] runner_qwen: the runner prints nothing; session lines carry no tag, pick or free-round index, and a contrast free exclusion prints 'excluded@free' ('', ['qual A0 s=0 valid', 'qual A0 s=1 valid'], 'qual A0 s=7 excluded:excluded@free')
+  [PASS] runner_olmo: TEMP 0.7 and F = 2 equal b3's constants; FORBIDDEN_MODULES equal b3's
+  [PASS] runner_olmo: olmo_audit_sha16 is a stable 16-hex body hash of b3's AuditSpec, moved by any change dd3fe09bed429e54
+  [PASS] runner_olmo: base refused (unit and loaded weights), a foreign checkpoint refused; the unit's own checkpoint accepted [True, True, True, True]
+  [PASS] runner_olmo: startup asserts the scaffold set -- the stub's six ids fail b3's nine-id sha16
+  [PASS] runner_olmo: 21 scripted sessions reach their declared outcomes (clean x8; forced AuditSpec/echo/lexical end; '* * *' continues; free echo/AuditSpec/lexical end; scaffold stops) []
+  [PASS] runner_olmo: clean sessions -- 6 reads, valid, complete, over contrast/sham x both start orders x both clauses
+  [PASS] runner_olmo: a free echo ends the session at that round (domain kept, first pick kept)
+  [PASS] runner_olmo: <|pad|> fires scaffold_absorption without a claim; <think> claims AuditSpec too
+  [PASS] runner_olmo: picks follow the scripted plan through the real read path (KL exactly 0.0)
+  [PASS] runner_olmo: a period-less TOLD copy on a forced round -> echo@forced, excluded, session ended (no read, out of the domain), counted in round_degeneracy's numerator; COMMON and the free-round copies end the session as echo too ({'class': 'echo', 'phase': 'forced', 'detail': 'echo:1'}, 1, 3)
+  [PASS] runner_olmo: the G-TIME-OLMo pause fires on a sham session whose round 3 copies its TOLD line without the final period, and stays silent on a clean one {'period-less TOLD at forced 3': True, 'clean': False}
+  [PASS] runner_olmo: every read's context (70 reads over 21 sessions) = the stored transcript so far + the menu, and prefix_tokens_at_read = its encoded length []
+  [PASS] runner_olmo: context rule -- menus and pick lines reach the chosen round's prefix only; the stored transcript and its pieces carry none; choices record menu, a, b
+  [PASS] runner_olmo: every generate call saw cached=False, injections=(), TEMP 0.7, STOP_CAP 60
+  [PASS] runner_olmo: keys m-olmo-qual|sft|{template}|{s} / m-olmo-items-qual|sft|{s}; seeds and menu orders = an independent recomputation (4 seeds, then menu order, seed per choice)
+  [PASS] runner_olmo: items from the item key's [:8]/[8:] split; contrast Q delivers the render
+  [PASS] runner_olmo: refuses a Qwen scaffold
+  [PASS] runner_olmo: every record passes strip_contrast / redact_sham / stage_report / session_line ['qual A0-OLMo-sft s=0 valid']
+  [PASS] runner_olmo: bars.stage_end_eval on the sham-only OLMo domain (AuditSpec/echo over sham rounds; at most one claim per session) (7, 81)
+  [PASS] runner_olmo: every record passes G-VER (verify_and_mark), goes into a gate-stage checkpoint with the OLMo audit sha16 and reloads skip-only []
+  [PASS] runner_olmo: the runner prints nothing; session lines carry no tag, pick or free index; a contrast free exclusion prints 'excluded@free', a sham one its class ['qual A0-OLMo-sft s=0 valid', 'qual A0-OLMo-sft s=1 valid', 'qual A0-OLMo-sft s=2 valid']
+  [PASS] verify: every produced record verifies against the committed schedule (24 Qwen, 21 OLMo: clean, excluded at forced and free, hair-trigger stops) {}
+  [PASS] verify: one transcript byte changed (a generation byte; a harness byte) -> template_breakage, no schedule_mismatch (both substrates) {'qwen one generation byte': {'template_breakage'}, 'qwen one harness byte': {'template_breakage'}, 'olmo one generation byte': {'template_breakage'}, 'olmo ...
+  [PASS] verify: a changed cell, banner, seed, item, menu order or key -> schedule_mismatch {'changed cell': ['schedule_mismatch'], 'changed banner': ['schedule_mismatch'], 'changed seed': ['schedule_mismatch'], 'changed item': ['schedule_mismatch']...
+  [PASS] verify: a recorded text off its transcript, a dropped exclusion, an erased end-rule claim, a flipped first pick, a menu in an OLMo stored transcript, a wrong substrate, a cached OLMo record -> template_breakage {'recorded text vs transcript': ['template_breakage'], 'exclusion dropped': ['template_breakage'], 'an end-rule claim erased (stopped without an end rule)': ...
+  [PASS] verify: every consistency clause fires on its own tampered record (35: j, shape, task_text/pole/property, forced and free n/template_index, menu n/index/bytes incl. OLMo, read.pick, picked role/pole, pieces, audit phase/substrate, past its end rule, stopped without one, strict, hair, domain, complete, contrast, pick vs p_a/p_b, verify KL) {}
+  [PASS] verify: those single-clause tampers fire their clause ALONE (a past-end session is not reported as stopped-early, and vice versa) {}
+  [PASS] verify: must-not-fire -- exactly equal recorded p_a/p_b accept either label (readout normalises after deciding); every produced record's pick follows its read and KL is 0.0 [[], [], [], []]
+  [PASS] verify: malformed records (10: foreign-substrate audit, non-dict choice / round / read / audit, bad pieces / transcript, a non-mapping record, a non-JSON field) return template_breakage and never raise ({}, [], ["template_breakage: a round's audit substrate or phase disagrees with the round"], ['template_breakage: the record could not be replayed (TypeError...
+  [PASS] verify: every suite record's cell IS its committed schedule file's cell (data/m/schedules/{unit}_qual_{template}.json)
+  [PASS] verify: no mismatch message names a label or pick ['template_breakage: transcript bytes differ from the harness rebuilt from the recorded fields', 'template_breakage: transcript bytes differ from the harness...
+  [PASS] verify: verify_and_mark sets verified True on [] and False on a mismatch
+  [PASS] verify: schedule_check (the driver's pre-session check) passes the scheduled cell and banner, fires on another cell or changed banner bytes; accepts a scaffold too
+  [PASS] stages: stage names are the spec's (G-TIME-F0, G-ID-F0m, G-F0m-Qwen, OLMo time/qual)
+  [PASS] stages: refusals (no G-ID on OLMo; Q-F3 NotImplementedError; base; substrate mismatch) [True, True, True, True, True, True]
+  [PASS] stages: declared output paths (ckpt/, reports/ _report and _reads, schedules/)
+  [PASS] stages: the report and reads are named after the resolved checkpoint's stem (finding R10) -- a restart name gets its own; the default checkpoint keeps {unit}_{stage}'s names /x/m/reports/Q-F0_qual.podB_report.json
+  [PASS] stages: exit codes -- PASS/COMPLETE/CAP/PI-STOP 0, every seat/PI outcome non-zero
+  [PASS] stages: identity_extra is lock/proposal (64 hex, 'pre-lock' refused), locked_path and renders_sha16 (G-ID: no locked_path) plus the optional lock_file / proposal_file (proposal_file REQUIRED on a non-stub run, the v1_11 default on the stub only), prior_proposal_sha256s (distinct, never its own; recorded sorted) and analyzer_sha256 -- 18 malformed refused, valid accepted []
+  [PASS] stages: the renders sha16 must be the renders of record built here (a mismatch refuses) a04f67b0e5105a05
+  [PASS] stages: the run's path must be the locked one, in either direction (PATH MISMATCH)
+  [PASS] stages: a path mismatch with an end pending at the checkpoint returns the LOCKED path (one PATH line; the drivers then only re-finish); with no end pending there (no block, a null one, an unreadable or absent file) it is still PATH MISMATCH, nothing printed; a matching path prints nothing {}
+  [PASS] stages: every checkpoint resolves to <out_root>/ckpt/<name>.json (5 other locations refused; the default and an operator's restart name under ckpt/ accepted) []
+  [PASS] stages: the startup known answers (numpy stream, banner vs §2.5, roster hygiene) are clean here and each one's problem refuses the stage before any session; the banner is read from the proposal file the run names (an absent one is a problem naming it, finding R11) ([], ['banner: banner spec: cannot read /Users/jasondwyer/Documents/code/jspace-lab/PROPOSAL-m-selftest-absent.md (FileNotFoundError)'])
+  [PASS] stages: the laptop preflight is skipped on the stub and on OLMo, and on a non-stub Qwen adapter calls guard.preflight_laptop, refuses on its problem, an absent analyzer, one outside the repository or not committed at HEAD, CLAUDE.md whose bytes are not HEAD's, a symlinked analyzer and HEAD unknown (findings R8, R9), else prints m:267's gate line with HEAD from git rev-parse ({'analyzer absent': True, 'analyzer outside the repository': True, 'analyzer not committed': True, 'CLAUDE.md edited after its commit': True, 'analyzer a sy...
+  [PASS] stages: the prior stage's persisted end gates the next (11 refusals: missing, STOP, unfinished, wrong stage, no G-ID artifact, unadjudicated OLMo PAUSE, misplaced adjudication) and licenses PASS, an adjudicated OLMo PAUSE, a G-ID artifact of any verdict ([], [True, True, True, True, True, True, True])
+  [PASS] stages: the prior licence is recorded once; a resume offering the same one continues, a different adjudication or status is refused
+  [PASS] stages: campaign_look -- 8/20 contrast pre-pick exclusions vs 0/20 sham fire the Fisher guard and (Qwen, binding) the .20 absolute guard; 1 vs 1 fires nothing [('round_degeneracy', False, False), ('exclusion_guard_fisher', True, True), ('exclusion_guard_abs', True, True)]
+  [PASS] stages: campaign_look on OLMo -- the absolute guard exceeds but is reported only (fired False); the Fisher guard binds [('round_degeneracy', False, False), ('exclusion_guard_fisher', True, True), ('exclusion_guard_abs', False, True)]
+  [PASS] stages: campaign_look -- OLMo contrast 9/20 vs sham 6/20 pre-pick: the absolute guard exceeds (reported only) and the look does NOT fire; the same counts on Qwen fire it (binding) ([('round_degeneracy', False, False), ('exclusion_guard_fisher', False, False), ('exclusion_guard_abs', False, True)], True)
+  [PASS] stages: campaign_look -- 20/20 contrast FREE-phase lexical exclusions are not pre-pick: absent from prepick_excluded and from the guards' k (nothing fires); forced-phase ones count {'round_degeneracy': (False, 0), 'exclusion_guard_fisher': (False, 0), 'exclusion_guard_abs': (False, 0)}
+  [PASS] stages: campaign_look reports m:330's read flags per arm -- sham over all reads, contrast over first reads of domain sessions only (later reads withheld) ({'scope': 'first reads of domain sessions', 'reads': 18, 'low_label_mass': 18, 'top1_not_label': 18}, {'scope': 'all reads', 'reads': 40, 'low_label_mass': ...
+  [PASS] stages: a pause reaches the report as {kind, at_launches, adjudicated, adjudication_sha16} (no text); an unadjudicated one carries no sha {'kind': 'look', 'at_launches': 40, 'adjudicated': True, 'adjudication_sha16': '9b8ee4e139765aa3'}
+  [PASS] stages: a contrast free-phase trigger is announced by phase alone (no class); a sham one names its class and phase
+  [PASS] stages: a hair trigger's stop block records the fired round (phase, n, ri/ci) for the checkpoint; a G-VER stop and a clean record carry none {'phase': 'free', 'n': 7, 'index': 2}
+  [PASS] stages: load_committed serves the committed cells (clean dir) and refuses a tampered cell, a manifest sha mismatch and a missing directory [True, True, True]
+  [PASS] stages: a stage on the self-test stub is refused under REPO/data/m before any write or generation
+  [PASS] stages: G-TIME-F0 on the stub -- A0 then A0s, uncached, verified, PASS persisted as stage_end; checkpoint, report and reads written; a re-run of the finished stage is refused PASS
+  [PASS] stages: the report's timing covers the sham session only (count and sum); contrast seconds withheld {'contrast_seconds': "withheld to the unit's VERDICTS entry (m:318)", 'sham_seconds': 0.018, 'sham_sessions': 1}
+  [PASS] stages: the A0 read is banner + forced rounds; the report carries no choice field
+  [PASS] stages: stdout is the PROVENANCE line, session lines, bar messages, the stage line with its path and paths -- no label, no menu ['PROVENANCE: {"record":{"D":32,"WARNING":"synthetic apparatus; no OLMo weights were loaded and no result from it is a measurement","adapter":"SELFTEST-STUB ...
+  [PASS] stages: the adapter's provenance is recorded verbatim in the checkpoint (one entry, its stamp, 2 launches), copied into the report, never inside the identity 2
+  [PASS] stages: G-TIME-F0's sham bar fires at 3 free v2 claims in 10 rounds -> STOP (m:280), persisted as stage_end STOP naming the bar BAR round_degeneracy@G-TIME-F0 FIRED template=A0s 3/10 exact one-sided P=0.0115 <= alpha 0.05 vs p0 0.05; critical 3 at n=10
+  [PASS] stages: a stage start refuses before any generation or write on a startup known-answer problem, a non-stub laptop preflight problem, a 'pre-lock' lock hash and a renders mismatch {'startup': True, 'preflight': True, 'pre-lock': True, 'renders': True}
+  [PASS] stages: a checkpoint path naming a roster word (whole word, any case, '.'/'-' bounded) or the reserved '_adjudication' stem is refused at start with nothing written or generated; 'maplewood' and a plain restart name are accepted ([], ['Q-F0_time.maplewood.json', 'Q-F0_time.podB.json'], True)
+  [PASS] stages: the adjudication excerpt sits beside its checkpoint, named after its stem
+  [PASS] stages: a provenance record naming a roster word or carrying a non-JSON value refuses the stage at start (nothing written, nothing generated); the stub's record is accepted {'roster word': True, 'non-native': True}
+  [PASS] stages: a non-stub adapter's out_root must resolve to REPO/data/m (accepted there, '..' resolved; refused elsewhere before any write or generation); the stub's is not bound by it (True, True, True, True, True)
+  [PASS] stages: identity_extra's lock_file is required on a non-stub run, optional on the stub, and refused in 6 malformed forms []
+  [PASS] stages: the licence by file passes a proposal and lock committed at HEAD as regular blobs whose bytes are the working tree's and hash to the identity's values (and an analyzer at its pinned sha256), and names each defect: a sha mismatch (proposal, lock, analyzer), no file named, a file not at HEAD, a symlink at HEAD or in the working tree, a tree entry, edits after the commit, HEAD unknown -- by object reads only (cat-file / ls-tree / rev-parse), never git diff {'clean': [], 'clean, analyzer pinned': [], 'proposal sha': ["proposal P.md: sha256 912921d05045fa85... is not identity_extra's 2222222222222222..."], 'lock ...
+  [PASS] stages: on a non-stub run the licence by file admits the committed proposal and lock (the LICENCE line names the proposal file the identity names and HEAD; the checkpoint records the licence) and refuses, before any generation or write, a proposal sha256 that is not the file's, a lock edited after its commit, a proposal not committed, and a missing lock_file or proposal_file {'licensed': True, 'proposal sha': True, 'lock edited': True, 'proposal not committed': True, 'no lock file': True, 'no proposal file': True}
+  [PASS] stages: a stage reads the proposal file identity_extra names at run time -- a stub run naming an absent one is refused at start (STARTUP CHECKS FAIL naming it), nothing generated or written
+  [PASS] stages: the licence (proposal file, lock file, the lock's re-adopted proposals, analyzer pin) is recorded once; the same one continues, a different re-adoption list or proposal file is refused {'analyzer_sha256': None, 'lock_file': None, 'prior_proposal_sha256s': ['9999999999999999999999999999999999999999999999999999999999999999'], 'proposal_file':...
+  [PASS] stages: prior_gate refuses a stub-written prior (or one whose provenance cannot show otherwise) for a non-stub run and a prior under another proposal unless the lock re-adopts it; it licenses a real prior, a stub prior for a stub run, a prior under an earlier lock and one under a re-adopted proposal ([], [True, True, True, True, True, True])
+  [PASS] stages: the qualification's G-ID artifact is held to the prior's rules (finding R3) -- refused under another proposal, with no identity, stub-written (or without provenance) for a non-stub run, or unreadable; admitted under the run's proposal or a re-adopted one, and a stub one for a stub run {'artifact under another proposal': True, 'artifact under the re-adopted proposal': True, 'artifact with no identity': True, 'stub artifact, non-stub run': T...
+  [PASS] stages: the drivers gate the prior -- a non-stub G-ID refuses a stub-written G-TIME and runs on a real one; a G-ID refuses a G-TIME under another proposal and runs on one its lock re-adopts -- refusals before any generation or write; the artifact records its proposal and provenance (a stub run's reads as stub-written) {'non-stub run, stub prior': True, 'non-stub run, real prior': True, 'stub run, prior under another proposal': True, 'stub run, prior under a re-adopted prop...
+  [PASS] stages: the qualification report's contrast first-read flags count the FIRST read of each contrast domain session only (3 flagged of 5; later reads and sham reads never counted) ({'scope': 'first reads of domain sessions', 'reads': 5, 'low_label_mass': 3, 'top1_not_label': 3}, {'scope': 'first reads of domain sessions', 'reads': 2, '...
+  [PASS] stages: the end is persisted LAST -- interrupted after the report and reads were written, the checkpoint has no end; the re-invocation launches nothing, re-finishes byte-identical report and reads, persists the end, and records its own provenance entry (0 launches) (True, 'PASS', [2, 0])
+  [PASS] stages: ruling (n) -- governing_sections_identical: identical spans (a change outside every span ignored) give identical True with both span sha256 and both whole-file sha256 and paths recorded (the record a lock keeps); a changed byte inside a span gives that span False and the verdict False; refuses a marker not exactly once in either file, an end before its start, no spans, an empty or non-str marker, a malformed span, an unreadable file (True, [])
+  [PASS] stages: ruling (h) -- the G-TIME finish refuses (before any write) a report whose contrast block is not counts only or a contrast read carrying a class, round label, exclusion or domain field; it is silent on the counts-only form (sham classes beside), on a stage with no records, on OLMo ([], [])
+  [PASS] stages: guard.check_call_sites is clean on stages.py and fires on a copy with a literal True path outside run_gid_pair ([], ['/var/folders/g3/tknb56w13nl4206fr7jrsthw0000gn/T/tmpwaugn3j7/stages_smuggled.py:1409: path_cached = True outside run_gid_pair'])
+  [PASS] m_sessions: G-TIME-F0 runs A0 then A0s uncached, verified; bar silent; PASS persisted as the checkpoint's stage_end; the STAGE line names the path PASS
+  [PASS] m_sessions: G-TIME-F0's sham bar fires at 3 v2 claims in 10 rounds (STOP) and is silent at 2 (PASS) ('BAR round_degeneracy@G-TIME-F0 FIRED template=A0s 3/10 exact one-sided P=0.0115 <= alpha 0.05 vs p0 0.05; critical 3 at n=10', 'BAR round_degeneracy@G-TIME...
+  [PASS] m_sessions: a fired binomial bar writes the confined adjudication excerpt beside the checkpoint -- the numerator's 3 sham rounds (header bytes, generation, audit) and the 3 sham picks those free rounds reveal; a PASS writes none [(5, 'Config choice one.'), (7, 'Config choice one.'), (9, 'Config choice one.')]
+  [PASS] m_sessions: a contrast free-phase hair trigger STOPs the stage, announced by phase alone (no class on stdout or in the report; the class and the fired round -- free, n 6, ci 1 -- only in the checkpoint) ['CHECKPOINT /private/var/folders/g3/tknb56w13nl4206fr7jrsthw0000gn/T/m_selftest_wowppta0/time_hair/m/ckpt/Q-F0_time.json']
+  [PASS] m_sessions: the contrast free-phase trigger's adjudication excerpt holds the fired round only (its header, generation and audit) and lists the pick its header reveals; neither the report nor stdout carries any of it [round 6 — active co
+  [PASS] m_sessions: a resume never lifts a STOP -- refused 'STAGE ENDED (STOP' on its own pod and on a new pod (never set aside, the checkpoint untouched) STAGE ENDED at /private/var/folders/g3/tknb56w13nl4206fr7jrsthw0000gn/
+  [PASS] m_sessions: every re-invocation of the stage a contrast free-phase trigger stopped names it by phase alone, as its announcement -- no class, round or n in the refusal or on stdout STAGE ENDED at /private/var/folders/g3/tknb56w13nl4206fr7jrsthw0000gn/T/m_selftest_wowppta0/time_hair/m/ckpt/Q-F0_time.j
+  [PASS] m_sessions: G-VER -- a transcript-byte defect (template_breakage) and a seed defect (schedule_mismatch) STOP the stage; the record is quarantined, never a session; the untampered A0 session stands; the excerpt holds the verifier's problems (no round) and the quarantined launch is counted in the invocation's provenance {'gver_bytes': True, 'gver_seed': True}
+  [PASS] m_sessions: stages' run_session_qwen reference is restored after the wrapping
+  [PASS] m_sessions: G-F0m-Qwen refuses without the unit's G-ID artifact, G-ID refuses after a G-TIME STOP and without a prior checkpoint -- before any generation ('G-ID ARTIFACT ABSENT: G-F0m-Qwen runs af', 'PRIOR STAGE STOP: G-TIME-F0 ended STOP a', 'PRIOR STAGE REQUIRED: G-ID-F0m runs only')
+  [PASS] m_sessions: G-ID refuses a renders sha16 that is not the renders of record (RENDERS MISMATCH) before any generation or checkpoint (finding N1) RENDERS MISMATCH (G-ID-F0m): the lock's renders sha16 000000
+  [PASS] m_sessions: G-ID PASS at two complete identical pairs (j = 0, 1); uncached first at every index; the artifact records its backend and licenses the cached path on that backend only PASS
+  [PASS] m_sessions: after a G-ID PASS on this backend the qualification stage locked 'cached' runs cached (every generate cached=True; identity path 'cached'; the STAGE line says so) PASS
+  [PASS] m_sessions: the G-ID PASS of backend X licenses nothing on backend Y -- a qualification locked 'cached' there is refused (PATH MISMATCH), as is one locked 'uncached' where the licence says cached; neither generates ('PATH MISMATCH (G-F0m-Qwen): the lock fixes the cached path; ', 'PATH MISMATCH (G-F0m-Qwen): the lock fixes the uncached path')
+  [PASS] m_sessions: an existing G-ID artifact is never overwritten
+  [PASS] m_sessions: G-ID FAILs on a scripted cached/uncached divergence (j = 0); the bar fires; the artifact grants nothing; FAIL persisted as stage_end naming the bar FAIL
+  [PASS] m_sessions: G-F0m-Qwen runs 24 sessions in the rotation (A0/A0s, then A0s), uncached after a G-ID FAIL; bar silent; PASS; the prior G-TIME recorded PASS
+  [PASS] m_sessions: qualification reads -- contrast stripped to forced rounds, sham redacted, no choice field anywhere
+  [PASS] m_sessions: ruling (h) is G-TIME only (must not fire) -- at G-F0m-Qwen a contrast forced v2 exclusion still prints 'qual A0 s=0 excluded:audit@forced', the report counts it by class (audit@forced 1; claims v2 1; no per-session block) and the stripped read keeps its class ({'audit@forced': 1, 'content@forced': 0, 'echo@forced': 0, 'lexical@forced': 0}, 'PASS')
+  [PASS] m_sessions: the qualification report carries the contrast arm's first-read flags over the FIRST read of each contrast domain session -- 0 flagged at high label mass, every one at low label mass; counts only, no label ({'low_label_mass': 0, 'reads': 8, 'scope': 'first reads of domain sessions', 'top1_not_label': 0}, {'low_label_mass': 8, 'reads': 8, 'scope': 'first reads o...
+  [PASS] m_sessions: after a G-ID FAIL a qualification locked 'cached' is refused (PATH MISMATCH) before any generation
+  [PASS] m_sessions: an incomplete identical pair advances j (j = 0 excluded in both paths; PASS at j = 1, 2) [{'j': 0, 'complete': False, 'identical': True, 'complete_uncached': False, 'complete_cached': False}, {'j': 1, 'complete': True, 'identical': True, 'complet...
+  [PASS] m_sessions: past j = 15 without two complete pairs G-ID is NOT-DETERMINED, never PASS NOT-DETERMINED
+  [PASS] m_sessions: G-VER at G-ID -- a tampered cached half (j = 1) STOPs the stage; the record is quarantined (verified False), never a session; no G-ID artifact is written STOP
+  [PASS] m_sessions: G-ID killed after its artifact and report were written but before its end was persisted (the end pending on disk) -- a fresh G-ID at another checkpoint is refused (G-ID ARTIFACT EXISTS); a PLAIN re-invocation of the pending one re-finishes: it launches nothing, accepts the byte-identical artifact, re-derives the identical report and persists PASS ('_Interrupt', 'PASS')
+  [PASS] m_sessions: a G-ID artifact that differs from the one the finish re-derives is refused (G-ID ARTIFACT DIFFERS): never overwritten, nothing written, the end not persisted G-ID ARTIFACT DIFFERS at /private/var/folders/g3/tknb56w13nl
+  [PASS] m_sessions: an OLMo stage refuses to start without $RUNPOD_POD_ID (absent or blank) before any generation; with it the stage runs POD ID ABSENT: an OLMo stage of OLMo-sft starts or resumes o
+  [PASS] m_sessions: OLMo G-TIME -- a round-3 echo on the sham session PAUSEs (pause fires, the bar's critical 2 unreached; PAUSE persisted); a clean stage PASSes with the pause silent ({'round_degeneracy': False, 'gtime_pause': True}, {'round_degeneracy': False, 'gtime_pause': False})
+  [PASS] m_sessions: OLMo G-TIME -- a round-1 claim fires bar and pause; the STOP governs
+  [PASS] m_sessions: the OLMo G-TIME pause's adjudication excerpt holds the claimed sham round (forced round 3: header, generation, audit) and reveals no pick; the PASS writes none ['gtime_pause@G-TIME-OLMo-sft']
+  [PASS] m_sessions: OLMo G-TIME -- the STOP governs at realised n <= 2 (a round-1 echo, a round-2 AuditSpec claim on the sham session): bar (k 1, critical 1) and pause both fire, status and stage_end STOP, ONE STOP event naming both, no PAUSE line; the pause is not separately acted on (the qualification refuses its adjudication -- PRIOR ADJUDICATION REFUSED -- and runs on nothing: PRIOR STAGE STOP, zero generations); at n = 3 (AuditSpec) the bar's critical 2 is unreached and the pause alone PAUSEs {'r1 echo': ('STOP', ['PRIOR ADJUDICATION REFUSED: only an OLMo', 'PRIOR STAGE STOP: G-TIME-OLMo-sft ended ']), 'r2 AuditSpec': ('STOP', ['PRIOR ADJUDICATION...
+  [PASS] m_sessions: a PAUSEd OLMo G-TIME is never re-run on a new pod (STAGE ENDED (PAUSE)); its qualification refuses without the seat's adjudication and runs with it, the text in the checkpoint only ('STAGE ENDED at /private/var/folders/g3/tknb56w13nl', 'PRIOR STAGE PAUSE: G-TIME-OLMo-sft ended PAUSE at ')
+  [PASS] m_sessions: stages' olmo_startup reference is restored after the substitution
+  [PASS] m_sessions: a gate stage interrupted by a pod change sets the old checkpoint aside (byte-identical, renamed) and restarts from its first session (_Interrupt('selftest interrupt at A0s s=0 round 2'), [PosixPath('/private/var/folders/g3/tknb56w13nl4206fr7jrsthw0000gn/T/m_selftest_wowppta0/pod_gate/m/ckp...
+  [PASS] m_sessions: a FINISHED gate stage re-invoked on another pod is refused 'STAGE ENDED (PASS)'; nothing more is set aside and the checkpoint is untouched STAGE ENDED at /private/var/folders/g3/tknb56w13nl4206fr7jrs
+  [PASS] m_sessions: campaign -- strict rotation A0/A0s, A0s leaves at its floor (20), A0 runs to 24; COMPLETE at 44 launches; look 1 at 40 and the end look silent; looks counted 2 = ceil(44/40) COMPLETE
+  [PASS] m_sessions: the campaign's identity n is the committed schedule's (L is a projection, recorded beside); its report carries the sham arm's ms only and whether the cap is reached -- no total that includes contrast sessions (370, 816)
+  [PASS] m_sessions: campaign -- the sham round_degeneracy look fires at launch 40 and PAUSEs the unit (exit non-zero), the Fisher and absolute guards silent; the look reports read flags per arm ['BAR round_degeneracy@campaign-Q-F0 FIRED template=A0s look=1 20/200 exact one-sided P=0.0027 <= alpha 0.05 vs p0 0.05; critical 16 at n=200', 'BAR exclusio...
+  [PASS] m_sessions: a campaign look pause's adjudication excerpt holds the counts only -- the look's results and arm counts, no round, no pick ['look']
+  [PASS] m_sessions: a paused campaign resumed with neither the seat's adjudication nor the PI's stop is shown its pause (finding R6): PAUSE (exit 3), its report re-derived byte-identical, nothing launched, the checkpoint unchanged None
+  [PASS] m_sessions: a paused campaign resumes only with the seat's adjudication named -- one naming roster labels included; it runs to its floors (44), its fired end look pauses again (terminal), and the report is written with the pauses as adjudicated/sha only PAUSE
+  [PASS] m_sessions: the end-look pause rewrites the campaign's excerpt with one event per pause (look 1, then the end look), counts only; the seat's adjudication text is not copied ['look', 'end_look']
+  [PASS] m_sessions: a campaign ending on launch 40 after an adjudicated look-1 pause ends COMPLETE, not PAUSE: the end look IS look 1 (no new evaluation, no new pause); looks counted 1 = ceil(40/40) COMPLETE
+  [PASS] m_sessions: a resume offering another launch-count projection is refused (CHECKPOINT MISMATCH) before any generation, the checkpoint untouched (finding N4) CHECKPOINT MISMATCH: floors / launch-count projection {'A0': 24, 'A0s'
+  [PASS] m_sessions: an interrupted campaign resumes skip-only and continues the rotation; its sessions equal an uninterrupted run's (seconds aside) (30, 'COMPLETE')
+  [PASS] m_sessions: the resume appends its own provenance entry (stamp, verbatim record, the sessions it launched and recorded: 30 then 14 -- the session interrupted mid-generation in the first invocation is counted by neither, finding R5) outside the identity, prints its PROVENANCE line, and the report copies both entries [30, 14]
+  [PASS] m_sessions: a launch count above the committed schedule's n is refused (ValueError) before any generation or checkpoint; one equal to it (2624 / 960) runs (finding N4) a launch count exceeds the committed schedule ({'A0': 2624,
+  [PASS] m_sessions: the campaign refuses a renders sha16 that is not the renders of record (RENDERS MISMATCH) before any generation or checkpoint (finding N1) RENDERS MISMATCH (campaign-Q-F0): the lock's renders sha16 0
+  [PASS] m_sessions: a campaign killed after its report was written but before its terminal state was persisted re-finishes on resume -- nothing launched, COMPLETE persisted, the report byte-identical ('_Interrupt', 'COMPLETE')
+  [PASS] m_sessions: the hour cap is terminal (CAP after the first launch; end look recorded); the report says the cap is reached and carries no ms of the one contrast session CAP
+  [PASS] m_sessions: an arm with forced-phase exclusions keeps launching until its DOMAIN count reaches its floor -- A0s 7 launches (> floor 4 = its L), 3 pre-pick, domain 4; COMPLETE, no pause {'A0': {'domain': 4, 'launched': 4, 'prepick_excluded': 0}, 'A0s': {'domain': 4, 'launched': 7, 'prepick_excluded': 3}}
+  [PASS] m_sessions: a PI stop is terminal (PI-STOP, exit 0) with nothing more launched, its text in the checkpoint only; a later resume is refused; a PI stop before any launch is refused ('PI-STOP', 10)
+  [PASS] m_sessions: the PI's stop is persisted at once and the terminal state last -- killed before the terminal was persisted, a resume WITHOUT the stop re-finishes PI-STOP (nothing launched, the report byte-identical); a different stop text is refused ('_Interrupt', 'PI-STOP')
+  [PASS] m_sessions: a campaign STOPped by a contrast free-phase trigger announces it by phase alone, and so does every re-invocation; its excerpt holds the fired round and the pick its header reveals STAGE ENDED at /private/var/folders/g3/tknb56w13nl4206fr7jrsthw0000gn/T/m_selftest_wowppta0/camp_hai
+  [PASS] m_sessions: a campaign checkpoint name naming a roster word is refused at start -- nothing generated or written CHECKPOINT PATH REFUSED: /private/var/folders/g3/tknb56w13nl
+  [PASS] m_sessions: an arm that exhausts its committed schedule below floor PAUSEs the unit for the PI; a resume with only an adjudication is refused, never re-paused; the PI's stop ends it (PI-STOP) ('PAUSE', 'SCHEDULE EXHAUSTED at /private/var/folde')
+  [PASS] m_sessions: the schedule-exhausted pause's adjudication excerpt holds the exhausted arm's counts only (launched 5 of its 5 committed cells, domain 2 below floor 4) {'arm': 'A0s', 'domain': 2, 'floor': 4, 'launched': 5, 'schedule_n': 5}
+  [PASS] m_sessions: G-VER in the campaign -- a tampered A0 s=3 record STOPs the unit; it is quarantined (verified False), never a session; every recorded session is verified STOP
+  [PASS] m_sessions: a campaign refuses a checkpoint outside <out_root>/ckpt/, a prior that is not its qualification stage and an adjudication with no pause, before any generation; a restart name under ckpt/ runs ('CHECKPOINT PATH REFUSED: /private/var/folders/g3/t', 'PRIOR STAGE MISMATCH: /private/var/folders/g3/tknb')
+  [PASS] m_sessions: an OLMo campaign resume on another pod id is refused (and without one), its checkpoint untouched ('CHECKPOINT MISMATCH: /private/var/folders/g3/tknb56w13nl4206fr7jrsthw0000gn/T/m_', 'POD ID ABSENT: an OLMo stage of OLMo-sft')
+  [PASS] m_sessions: an ENDED OLMo campaign resumed on another pod is refused 'CAMPAIGN ENDED' naming its status, never advised to restart at a new path CAMPAIGN ENDED at /private/var/folders/g3/tknb56w13nl4206fr7jrsthw0000gn/T/m_sel
+  [PASS] m_sessions: every finish writes its end PENDING with every session before any output (finding R1) -- a hair-trigger STOP, a G-VER STOP, a stage-end bar STOP, an OLMo PAUSE, a campaign STOP, a PASS and G-ID's PASS, each killed before its outputs and after them: re-invoked plainly on the same pod and with --resume on another pod, it re-finishes -- zero generate calls, no set-aside (finding R2), report, reads, excerpt (and artifact) byte-identical to an uninterrupted run's, the end persisted; a stale excerpt is removed by the PASS re-finish {}
+  [PASS] m_sessions: ruling (h) -- G-TIME stub runs whose contrast session differs ONLY in the class of its forced exclusion at round 2 (Qwen v2/echo/content/lexical, OLMo AuditSpec/echo/lexical; each class recorded in the checkpoint) give byte-identical stdout (the line by phase alone, 'excluded:excluded@forced'), report and reads (outside the excluded round's response bytes, which m:280's mandated read shows); the report's contrast block is the counts only {('qwen', 'v2'): ('PASS', 'v2', 'forced', 2), ('qwen', 'echo'): ('PASS', 'echo', 'forced', 2), ('qwen', 'content'): ('PASS', 'content', 'forced', 2), ('qwen'...
+  [PASS] m_sessions: ruling (h) -- G-TIME runs differing in the contrast session's rounds generated / excluded give exactly the permitted counts (a round-1 exclusion 1/yes, a round-3 one 3/yes, clean 4/no, a free-round exclusion 4/no); the round-1 and round-3 runs print the same stdout; a free-round exclusion's report and reads equal the clean run's (its line excluded@free, m:263) ({'round 1': [{'excluded_at_forced': True, 'forced_rounds_generated': 1, 's': 0}], 'round 3': [{'excluded_at_forced': True, 'forced_rounds_generated': 3, 's'...
+  [PASS] m_sessions: ruling (h) with m:318 exception (1) kept as built -- a forced-phase hair trigger on the G-TIME contrast session (a scaffold string, also a v2 claim) STOPs the stage; its session line is by phase alone (no 'audit@forced'), the announcement names the trigger (BAR scaffold_absorption FIRED template=A0 phase=forced; the report's blinded stop block), the report's contrast block is counts only (3 rounds, excluded) and the read carries no hair-trigger name or class ['STOP G-TIME-F0: hair trigger scaffold_absorption (A0 s=0); the stage stops (m:271)', 'STAGE G-TIME-F0 STOP path=uncached']
+  [PASS] m_sessions: an OLMo campaign killed with its end pending re-finishes on ANOTHER pod -- nothing launched, COMPLETE persisted, the identity still naming its own pod (no splice: the write records no session) ('None', 'ta0/r1_olmo_campaign_pod/m/ckpt/OLMo-sft_campaign.json\nREPORT /private/var/folders/g3/tknb56w13nl4206fr7jrsthw0000gn/T/m_selftest_wowppta0/r1_olmo...
+  [PASS] m_sessions: a campaign look pause killed after its end was pending and before its report: an invocation offering the seat's adjudication re-finishes the pause (nothing launched, report and excerpt written, the pause persisted UNadjudicated) and then refuses NOT APPLIED -- Code never applies a ruling to an end it has not shown NOT APPLIED (campaign-Q-F0): this invocation re-finished the end pending at /private/var/f
+  [PASS] m_sessions: a paused campaign whose report is missing, re-invoked PLAINLY with no ruling, re-derives its report and excerpt byte-identical from the checkpoint (finding R6) -- PAUSE, exit 3, nothing launched, no checkpoint change; with --resume likewise ('None', 'None')
+  [PASS] m_sessions: a campaign (and a gate stage) restarted at a new checkpoint path writes its report and reads under that checkpoint's stem and leaves the old checkpoint's report untouched (finding R10) ('Q-F0_campaign.podB_report.json', 'Q-F0_time.podB_reads.json')
+  [PASS] m_sessions: a G-ID artifact under another proposal licenses neither the qualification nor the campaign's path (refused before any generation or checkpoint, finding R3); under a proposal the lock re-adopts (prior_proposal_sha256s) both run ('G-ID ARTIFACT UNDER ANOTHER PROPOSAL: /private/var/folders/g3/tknb56w1', 'G-ID ARTIFACT UNDER ANOTHER PROPOSAL: /private/var/folders/g3/tknb56w1')
+  [PASS] m_sessions: a campaign whose look fires, killed as its pending end is written: stdout carries no FIRED line and nothing of the look is on disk (39 sessions, no look, no end, no report); the re-invocation launches only the 40th session, the look fires again and its bar messages print once, after the end is persisted (an announced PAUSE is never lifted by a kill in the window) ('_Interrupt', 0, 39, 'PAUSE')
+  [PASS] m_sessions: a SILENT look still prints at once -- killed inside the 41st session, stdout already ends with look 1's three bar messages right after the 40th session's line, and the look is on disk with its session ['campaign A0s s=19 valid']
+  [PASS] m_sessions: every campaign end -- a look PAUSE, an end-look PAUSE, a COMPLETE ending on look 1, a COMPLETE with its end look, a schedule-exhausted PAUSE, a hair-trigger STOP -- announces itself only after its end is persisted; killed with the end pending, the plain re-invocation re-finishes (zero generate calls) and prints the same announcement: the lines the killed run printed plus the re-finish's equal the uninterrupted run's, nothing twice, nothing lost []
+  [PASS] m_sessions: a fired look prints its bar messages exactly once per finish -- uninterrupted, once, after the end is persisted; killed with the end pending, none before the kill and once in the re-finish, after its RE-FINISH line (1, 0, 1)
+  [PASS] m_sessions: a campaign ending on look 1 (adjudicated) announces END LOOK at its finish AND at its re-finish -- never look 1's bar messages again (that FIRED bar is the seat's, already adjudicated) ['END LOOK campaign-Q-F0: the end look is look 1 (at 40 launches)']
+  [PASS] m_sessions: a Qwen stage with an end pending, re-invoked on a backend whose G-ID licence now gives the other path, RE-FINISHES under its locked path -- the qualification and the campaign locked cached (licence uncached on backend Y), and a qualification locked uncached (licence cached): a PATH line, zero generate calls, the end persisted, its identity's path and backend the recorded ones, a 0-launch provenance entry []
+  [PASS] m_sessions: the same path mismatch with NO end pending (an interrupted qualification and campaign, locked cached, re-invoked on backend Y with --resume and plainly) is still refused PATH MISMATCH before any launch -- no PATH line, zero generate calls, the checkpoints byte-identical []
+  [PASS] m_sessions: an invocation admitted as re-finish-only that finds no end pending once loaded is refused PATH MISMATCH by the qualification and the campaign drivers -- zero generate calls, no checkpoint written; stages' _pending_on_disk is restored after the substitution ('PATH MISMATCH (G-F0m-Qwen): the end pending at /private/var/', 'PATH MISMATCH (campaign-Q-F0): the end pending at /private/v')
+  [PASS] m_sessions: gport (G-PORT, m:275) on a temp dir -- all 64 archived CORR rows of data/f/sessions.jsonl (sha-pinned; the smoke file outside) replay: INVOCATION first, one 'gport s=<s> ok' per row in f1 order, last line '  G-PORT 64/64 archived CORR transcripts reproduced'; the artifact is exactly {criterion, unit, n_rows, n_ok, mismatches, f1_sessions_sha16, package_sha256, verdict PASS}; exit 0 (0, [' G-PORT 64/64 archived CORR transcripts reproduced'], {})
+  [PASS] m_sessions: gport STOPs (exit 4) on a tampered archived row -- 'gport s=5 MISMATCH: <problems>', 63/64, the artifact's mismatches name s 5 and verdict STOP -- and on a row list one CORR row short (63/63 reproduced is not 64/64); a re-run over an identical artifact changes nothing (exit 0) (4, ['gport s=5 MISMATCH: harness bytes differ at offset 0'], 4, 0)
+  [PASS] m_sessions: gport never overwrites an artifact with different bytes (refused, exit 1, the PASS artifact byte-identical); --out under data/m is refused (SELFTEST REFUSED) before anything runs; supplied rows never reach the canonical path; gport refuses a combined --build-schedules (exit 2); the canonical data/m/gates artifact is untouched by the selftest (1, 'SELFTEST REFUSED: /Users/jasondwyer/Documents/code', 'G-PORT REFUSED: supplied rows (a selftest) never w', 2)
+  [PASS] m_sessions: gport --out '' (and a blank --out) is refused before any replay -- an empty path would resolve to the working directory; nothing is written there or at the repo root ('gport --out: an empty path is refused (it would write into t', [])
+  [PASS] m_sessions: stdout of 228 integration runs carries no roster label, pick line or menu text []
+  [PASS] m_sessions: the stdout hygiene check fires on a planted label, pick line and menu
+  [PASS] m_sessions: schedules regenerated in a temp dir are byte-identical to data/m/schedules (fails if the directory is missing) (26, 26)
+  [PASS] m_sessions: the comparison fires on a tampered regeneration (bytes and verifier)
+  [PASS] m_sessions: every stage subcommand refuses with exit 2 -- Q-F0 steps 10/12/14/16, OLMo the step-9 track (no id), Q-F3 step 19 not licensed until step 10: §8 step 10 -- "G-TIME-F0 (2 sessions)"
+  [PASS] m_sessions: no action given is refused (exit 2), and INVOCATION is the first line
+  [PASS] m_sessions: guard.check_call_sites is [] over valence_core/m + this driver, and fires on a smuggled cached=True ([], ['/private/var/folders/g3/tknb56w13nl4206fr7jrsthw0000gn/T/m_selftest_wowppta0/m_sessions_smuggled.py:2065: cached= is a literal True outside the licens...
+  [PASS] m_sessions: no forbidden literal in valence_core/m/*.py or this driver; the grep fires on a planted copy []
+  [PASS] m_sessions: the quarantined state-present module is not in sys.modules after the selftest
+  647/647 m selftest checks pass

@@ -21,6 +21,138 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-10-07 — **DESIGN DISPOSITIONS OF THE BUILD FLAGS (a)–(s) (design seat, routed by the PI 2026-10-06):
+  APPLIED. Fifteen flags are accepted as built, (i) is a wording note and (q) keeps `content@{phase}` as a
+  fourth printed class, all with no change. Ruling (h) is implemented: at every built G-TIME stage the
+  contrast session's forced rounds reach stdout (by phase alone) and the report as counts only, rounds
+  generated and excluded yes/no, with no class and no round position. The exception is a forced-phase
+  hair-trigger or G-VER STOP, whose announcement keeps its class as built. That this falls under m:318
+  exception (1) is Code's reading, not the ruling's words; it is flagged for the seat. Code
+  also extended (h) to the stripped read, disclosed.
+  Ruling (n) is recorded as the condition the lock checks, with the helper that checks it. The note "the
+  STOP governs" at G-TIME-OLMo was already built and tested at n = 1. The integration check now also
+  covers n = 2 and asserts the pause is not separately acted on; n = 3 still PAUSEs. The
+  `gport` command for step 5 is added. Self-test 647/647 (two runs); site check 8/8; two independent
+  checkers raised four minor findings (three defects), all fixed by Code, and the entries' values-check
+  three more wording ones, also fixed. Nothing run on a model; the k arc untouched.**
+  (Stamp verified at write time: `date -u` → **Wed Oct  7 02:54:19 UTC 2026**, first write; corrected on its two
+  values-check passes, last at **03:36:53 UTC**; Code's date is UTC, so this entry is dated 10-07 against the
+  routing's 10-06.)
+
+  - **The routing (the seat's dispositions, routed by the PI; quoted so the record carries it).**
+
+    > Design seat — dispositions of the build flags (a)–(s), 2026-10-06. Routed by the PI.
+    >
+    > Accepted as built: (a) (b) (c) (d) (e) (f) (g) (j) (k) (l) (m) (o) (p) (r) (s).
+    > (i) the pause is built correctly as the one-claim trigger; my "critical 2, reachable
+    >     only at n ≤ 2" was imprecise (it is 1 at n ≤ 2) — a wording note, no change.
+    > (q) keep `content@{phase}` as a fourth printed class; do not fold it into `audit`.
+    >
+    > Two rulings:
+    > (h) at any G-TIME stage the contrast session's forced rounds are reported as counts
+    >     only — rounds generated, and excluded yes/no — with no class and no round
+    >     position; the per-class and per-property breakdown waits for VERDICTS.
+    > (n) `prior_proposal_sha256s` is approved, on one condition the lock states: a stage
+    >     is re-adopted only if the proposal sections governing it are byte-identical
+    >     between the two versions, which Code checks and records at the lock.
+    >
+    > From the step-3 notes: at G-TIME-OLMo a claim at realised n ≤ 2 fires the bar
+    > (STOP), which subsumes the pause; the STOP governs.
+    >
+    > Go for step 5. Design reads at steps 6, 10 and 14 on your ping.
+
+  - **(h), as built** ([`readrule.py`](valence_core/m/readrule.py), [`stages.py`](valence_core/m/stages.py)).
+    This applies to G-TIME-F0 and each G-TIME-OLMo-{ckpt}, for the contrast template's session.
+    - The report's contrast block is exactly {`contrast`, `sessions`, `per_session`: [{`s`,
+      `forced_rounds_generated`, `excluded_at_forced`}], `free_rounds`: withheld}.
+    - The stdout session line prints an exclusion by phase alone: `excluded:excluded@forced` or
+      `excluded:excluded@free`.
+    - **Code's extension of (h) to the stripped read, PIN, flagged for the seat.** The read keeps the
+      banner and the forced rounds' bytes, m:280's mandated read. Per forced round it keeps only {phase,
+      ri, n, text}. Beside them it keeps `n_forced_rounds`, `excluded_at_forced`, the session's top-level
+      fields (among them the cell: P, Q, map, start) and the forced pieces with their offsets. Every
+      structured class, claim and domain field is dropped, along with each round's label, role, pole,
+      property, item, task_text and seed. The forced text itself still shows how many forced rounds ran and
+      each round's header, Task line and response.
+    - Before any write, the finish asserts the report's and the read's contrast forms.
+    - Kept as built, as m:318 exception (1) adjudications: a hair trigger or G-VER failure on the contrast
+      session's FORCED phase is announced by its class (or the harness class), never its round or n. The
+      report's counts still place the fired round as the last one generated, so at a forced hair stop the
+      report carries both the class and the position. The fired round's text also stands in the stripped
+      read under `reports/` (it is a forced round, part of m:280's mandated read); its class, claim and
+      trigger name are only in the checkpoint and the confined excerpt under `ckpt/`. Flagged for the seat
+      with (h)'s carve-out above.
+    - Qualification and campaign blocks are unchanged; a must-not-fire check asserts classes are still
+      reported at G-F0m-Qwen.
+    - **Disclosed in a PIN, unchanged:** a forced exclusion ends the session, so with one contrast session
+      `excluded_at_forced` true places the exclusion at the last generated forced round (round
+      `forced_rounds_generated`, 4 included). The committed start order gives its property, and the map
+      its tag. The ruling permits exactly these two counts.
+  - **(n), as built.** The condition binds at the lock. The PIN at `accepted_proposals` states the seat's
+    words and adds one consequence, which a checker found. Code fixed it in the wording and added the two
+    files' paths and sha256 to the helper's record.
+    - The list is per run, not per stage: one listed proposal licenses every prior artifact the run
+      checks under it (at the Qwen qualification, the G-TIME prior and the G-ID artifact; at the Qwen
+      campaign, the qualification prior and the G-ID artifact).
+    - So a lock lists an earlier proposal only when the check passes for every such stage, each stage's
+      spans recorded.
+    - The helper `governing_sections_identical(old, new, spans)` compares exact UTF-8 bytes from each
+      start marker to its end marker. Each marker must occur exactly once in each file, else it refuses.
+      It returns both files' paths and sha256 and each span's two sha256 and verdict, the record the lock
+      keeps.
+  - **"The STOP governs" at G-TIME-OLMo.** This was built and tested at n = 1, and at unit level at n = 2;
+    the integration check is now extended.
+    - A sham round-1 echo and a round-2 AuditSpec claim each give STOP, with both bars firing (the
+      degeneracy bar at k 1, critical 1). The excerpt holds one STOP event naming both, and no PAUSE line
+      is printed.
+    - The qualification then refuses with or without an adjudication.
+    - A round-3 claim PAUSEs (critical 2 there, not fired).
+  - **`gport` (step 5), as built** ([`scripts/m_sessions.py`](scripts/m_sessions.py)).
+    - It replays every CORR row of `data/f/sessions.jsonl` (sha-pinned) through `scaffold.replay_f1_row`.
+    - It prints an INVOCATION line, one line per row and a summary line, and writes
+      `data/m/gates/Q-F0_G-PORT.json`: the criterion, the unit, the counts (`n_rows`, `n_ok`), mismatches,
+      the f1 sha16, `package_sha256` (covering `valence_core/m/*.py` only), and verdict PASS iff 64/64.
+    - It never overwrites differing bytes, refuses `--out` under `data/m` and an empty or blank `--out`,
+      and exits 0 on PASS and 4 on STOP.
+  - **Checks** ([`_check`](results/raw/2026-10-07_m-dispositions_check.txt)).
+    - One implementing agent, then two independent checkers, a blinding differential and a correctness
+      pass, with every finding put to a strict refuter.
+    - The differential found every G-TIME output outside `ckpt/` byte-identical across:
+      - the classes of a contrast forced exclusion at each of rounds 1–4, on both substrates (stdout,
+        report, and the read apart from the excluded round's own response bytes);
+      - contrast picks;
+      - contrast free-round events of different classes (those that exclude, Qwen's free lexical and
+        every OLMo free claim, differing from clean only by the `excluded@free` line);
+      - non-excluding forced-round properties;
+      - G-VER failures, apart from the harness class name;
+      - re-finishes.
+    - Four minor findings (three defects), none refuted, all fixed by Code:
+      - two findings, found by both checkers, were one defect: three `stages.py` texts (the module
+        docstring, the `_assert_time_counts_only` PIN and its docstring) overclaimed the read as "counts
+        only";
+      - `gport --out ""` became `Path(".")` and wrote into the working directory (the checker's probe
+        file was moved out; the root is clean);
+      - (n)'s per-run consequence above.
+    - The entries' values-check (pass 1) found three more texts that overclaimed. `readrule.py` wrote "counts
+      only, no class" into every G-TIME read's `blinding` field; it now names the read's actual form.
+      `scaffold.py`'s G-PORT PIN said the walk locates no generation by a newline search, but a
+      transcript's last generation is bounded by the final `\n` joiner, anchored by the end-of-transcript
+      and rebuild checks; it now says so. A selftest comment in `scripts/m_sessions.py` (:1394) said the
+      forced rounds "are counts only"; it now names stdout and the report. All three are text-only
+      changes. The self-test, site check and G-PORT were re-run on the result.
+  - **Self-test** ([`_selftest`](results/raw/2026-10-07_m-dispositions_selftest.txt)): 647/647, the same
+    on two runs (628 before; 19 new checks). The call-site guard returns `[]`. The schedules are unchanged
+    (manifest `8c89636a…d6bb`).
+  - **Site check** ([`_sitecheck`](results/raw/2026-10-07_m-dispositions_sitecheck.txt)): 154/154,
+    67/67, 21/21, 20/20, 46/46, 18/18, 24/24 and the m self-test 647/647, gated on summary lines.
+  - Committed: the entry; [`readrule.py`](valence_core/m/readrule.py),
+    [`stages.py`](valence_core/m/stages.py), [`scaffold.py`](valence_core/m/scaffold.py) (the reworded
+    G-PORT PIN) and [`scripts/m_sessions.py`](scripts/m_sessions.py); the
+    three raws linked above, and the two values-check raws
+    ([`_valuescheck`](results/raw/2026-10-07_m-dispositions-gport_valuescheck.txt),
+    [`_pass2`](results/raw/2026-10-07_m-dispositions-gport_valuescheck_pass2.txt)), which cover this entry
+    and the G-PORT entry. G-PORT ran on exactly these bytes (`scaffold.py` included) and is its own entry.
+
 - 2026-10-06 — **m package — BUILD (Q-F0 subset) (PROPOSAL-m v1.11 §8 step 4, on the PI's word "Go ahead
   with step 4"): BUILT, REVIEWED, FIXED, SELF-TESTED, SITE-CHECKED; nothing run. Built: every item of
   step 4's list, in 16 files under `valence_core/m/` plus the driver `scripts/m_sessions.py`. That
