@@ -1,0 +1,7 @@
+# G-CAL (PROPOSAL-m v1.11 §8 step 6, m:176) -- completability (condition (4)), Qwen, canonical run on the committed build.
+# Code stamp: 2026-10-08 04:41:33 UTC (date -u); HEAD c75d4d8; launched under caffeinate -is (m:267's checklist); AC power  Wattage = 140W.
+
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/m_sessions.py gcal completability --proposal-file PROPOSAL-m-gating-campaign-v1_11.md
+REFUSED: G-CAL REFUSED: ['preflight: ONE PROCESS: another model process is running: 1378 /Users/jasondwyer/miniconda3/envs/asi-experiments/bin/python -m ipykernel_launcher --f=/Users/jasondwyer/Library/Jupyter/runtime/kernel-v3374a2ee5cdd17dfc0b5963']
+EXIT=2
+# finished 2026-10-08 04:41:33 UTC

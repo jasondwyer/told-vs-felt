@@ -1,0 +1,11 @@
+# G-CAL (PROPOSAL-m v1.11 §8 step 6, m:176, m:277) -- the model-free half, canonical run on the committed build.
+# Code stamp: 2026-10-08 04:41:05 UTC (date -u); HEAD c75d4d8 (the G-CAL build commit); no model or tokenizer.
+
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/m_sessions.py gcal model-free
+G-CAL model-free (a) f1 corrupt() at 0.12: renders sha16 2c2c227395ea9f2d (calib corr_sha matches), 31 letters changed, condition (1) 4/16, condition (2) 16/16; covariate of record 0.078125 (+.078)
+G-CAL model-free (b) renders of record sha256 a04f67b0e5105a0514a0f33e64a4545ef3a3a3c75cece320d78434e853cd4372; n_eligible [6, 19, 19, 13, 24, 14, 10, 45, 19, 10, 24, 14, 6, 19, 10, 14]; k [3, 3, 3, 3, 4, 3, 3, 7, 3, 3, 4, 3, 3, 3, 3, 3] (sum 54); roster skips {'7': 1}
+G-CAL model-free (c) roster assertion on the renders, both rosters: clean
+G-CAL model-free (d) conditions: (1) PASS 16/16; (2) PASS 16/16; (3) pending -- the seat's legibility read of record at G-CAL; (4) pending -- completability
+G-CAL model-free artifact: /Users/jasondwyer/Documents/code/jspace-lab/data/m/gates/G-CAL_model-free.json (written)
+G-CAL seat read request: /Users/jasondwyer/Documents/code/jspace-lab/data/m/gates/G-CAL_seat_read_request.md (written)
+EXIT=0

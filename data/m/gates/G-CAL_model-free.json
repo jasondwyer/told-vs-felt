@@ -1,0 +1,636 @@
+{
+ "computation_order": [
+  "f1_012",
+  "f1_012_covariate_quote",
+  "renders_of_record",
+  "roster_assertion",
+  "conditions",
+  "provenance"
+ ],
+ "conditions": {
+  "1": {
+   "failing_items": [],
+   "n": 16,
+   "n_pass": 16,
+   "rule": "every item >= 3 changed positions (structural, reported)",
+   "verdict": "PASS"
+  },
+  "2": {
+   "failing_items": [],
+   "n": 16,
+   "n_pass": 16,
+   "rule": "k <= floor(n_eligible / 2) (structural, reported)",
+   "verdict": "PASS"
+  },
+  "3": "pending -- the seat's legibility read of record at G-CAL",
+  "4": "pending -- completability"
+ },
+ "f1_012": {
+  "calib_corr_sha16": "2c2c227395ea9f2d",
+  "calib_pools_sha16": "8547d9a11ba55b95",
+  "covariate_of_record": "0.078125",
+  "items": [
+   {
+    "changed": 1,
+    "cond1": false,
+    "cond2": true,
+    "hits": 1,
+    "i": 0,
+    "n_eligible": 6,
+    "render": "Comwute 31 + 46."
+   },
+   {
+    "changed": 0,
+    "cond1": false,
+    "cond2": true,
+    "hits": 0,
+    "i": 1,
+    "n_eligible": 19,
+    "render": "State the number of days in a week."
+   },
+   {
+    "changed": 5,
+    "cond1": true,
+    "cond2": true,
+    "hits": 5,
+    "i": 2,
+    "n_eligible": 19,
+    "render": "Name the thgrj mohqc of the year."
+   },
+   {
+    "changed": 2,
+    "cond1": false,
+    "cond2": true,
+    "hits": 2,
+    "i": 3,
+    "n_eligible": 13,
+    "render": "Compuhe 60 dinided by 5."
+   },
+   {
+    "changed": 3,
+    "cond1": true,
+    "cond2": true,
+    "hits": 3,
+    "i": 4,
+    "n_eligible": 24,
+    "render": "Smate the numbev of sidds of a triangle."
+   },
+   {
+    "changed": 1,
+    "cond1": false,
+    "cond2": true,
+    "hits": 1,
+    "i": 5,
+    "n_eligible": 16,
+    "render": "Write the opposite oy 'hot'."
+   },
+   {
+    "changed": 4,
+    "cond1": true,
+    "cond2": true,
+    "hits": 4,
+    "i": 6,
+    "n_eligible": 10,
+    "render": "Coujwte 14 timws 2."
+   },
+   {
+    "changed": 6,
+    "cond1": true,
+    "cond2": true,
+    "hits": 6,
+    "i": 7,
+    "n_eligible": 45,
+    "render": "State whgch is hepvier: a kilogram oi irzn oa half a kilogram ov feathers."
+   },
+   {
+    "changed": 2,
+    "cond1": false,
+    "cond2": true,
+    "hits": 3,
+    "i": 8,
+    "n_eligible": 19,
+    "render": "Name thk fiist month of the year."
+   },
+   {
+    "changed": 1,
+    "cond1": false,
+    "cond2": true,
+    "hits": 1,
+    "i": 9,
+    "n_eligible": 10,
+    "render": "Compute 90 minub 45."
+   },
+   {
+    "changed": 2,
+    "cond1": false,
+    "cond2": true,
+    "hits": 2,
+    "i": 10,
+    "n_eligible": 24,
+    "render": "State thh ngmber of wheels on a bicycle."
+   },
+   {
+    "changed": 1,
+    "cond1": false,
+    "cond2": true,
+    "hits": 1,
+    "i": 11,
+    "n_eligible": 15,
+    "render": "Write the oppodite of 'up'."
+   },
+   {
+    "changed": 0,
+    "cond1": false,
+    "cond2": true,
+    "hits": 0,
+    "i": 12,
+    "n_eligible": 6,
+    "render": "Compute 11 + 33."
+   },
+   {
+    "changed": 1,
+    "cond1": false,
+    "cond2": true,
+    "hits": 1,
+    "i": 13,
+    "n_eligible": 19,
+    "render": "Stwte the number of hours in a day."
+   },
+   {
+    "changed": 1,
+    "cond1": false,
+    "cond2": true,
+    "hits": 1,
+    "i": 14,
+    "n_eligible": 10,
+    "render": "Compuce 8 times 8."
+   },
+   {
+    "changed": 1,
+    "cond1": false,
+    "cond2": true,
+    "hits": 1,
+    "i": 15,
+    "n_eligible": 17,
+    "render": "Write the opposite of 'opev'."
+   }
+  ],
+  "n_changed": 31,
+  "n_cond1": 4,
+  "n_cond2": 16,
+  "n_hits": 32,
+  "renders_sha16": "2c2c227395ea9f2d",
+  "renders_sha_matches_calib": true,
+  "rule": "f1 corrupt() at 0.12, f_sessions.py:106-116 (26-letter draw, may repeat)"
+ },
+ "f1_012_covariate_quote": {
+  "as_quoted_in_m176": "+.078",
+  "sign": "clean minus corrupted (f0's)",
+  "source": "data/f/calib.json CORR_delta_covariate (calib2, pools 8547d9a11ba55b95)",
+  "stored": "0.078125"
+ },
+ "provenance": {
+  "numpy": "2.5.1",
+  "numpy_stream_known_answer": "clean (f|CORR|0 permutation)",
+  "package_sha256": "4b49658739523c60951910dd80c04983fbc01cf8e7abc351be6baadec84202ac",
+  "pool_sha16": "711deec1c2645194",
+  "pools_file": "data/f/pools.json",
+  "pools_file_sha256": "8547d9a11ba55b95dda2988d4e9bdc685196abcda55870d7713703df372d17a0",
+  "proposal_file": "PROPOSAL-m-gating-campaign-v1_11.md",
+  "proposal_sha256": "42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b"
+ },
+ "renders_of_record": {
+  "items": [
+   {
+    "changed_positions": [
+     1,
+     2,
+     5
+    ],
+    "clean": "Compute 31 + 46.",
+    "cond1": true,
+    "cond2": true,
+    "gold": [
+     "77"
+    ],
+    "i": 0,
+    "k": 3,
+    "n_changed": 3,
+    "n_eligible": 6,
+    "n_roster_skips": 0,
+    "operand_spans": [],
+    "render": "Clopuie 31 + 46."
+   },
+   {
+    "changed_positions": [
+     18,
+     21,
+     32
+    ],
+    "clean": "State the number of days in a week.",
+    "cond1": true,
+    "cond2": true,
+    "gold": [
+     "7",
+     "seven"
+    ],
+    "i": 1,
+    "k": 3,
+    "n_changed": 3,
+    "n_eligible": 19,
+    "n_roster_skips": 0,
+    "operand_spans": [],
+    "render": "State the number oq dsys in a wemk."
+   },
+   {
+    "changed_positions": [
+     7,
+     13,
+     30
+    ],
+    "clean": "Name the third month of the year.",
+    "cond1": true,
+    "cond2": true,
+    "gold": [
+     "march"
+    ],
+    "i": 2,
+    "k": 3,
+    "n_changed": 3,
+    "n_eligible": 19,
+    "n_roster_skips": 0,
+    "operand_spans": [],
+    "render": "Name thy thiru month of the yebr."
+   },
+   {
+    "changed_positions": [
+     2,
+     4,
+     13
+    ],
+    "clean": "Compute 60 divided by 5.",
+    "cond1": true,
+    "cond2": true,
+    "gold": [
+     "12",
+     "twelve"
+    ],
+    "i": 3,
+    "k": 3,
+    "n_changed": 3,
+    "n_eligible": 13,
+    "n_roster_skips": 0,
+    "operand_spans": [],
+    "render": "Coepqte 60 diyided by 5."
+   },
+   {
+    "changed_positions": [
+     15,
+     21,
+     22,
+     33
+    ],
+    "clean": "State the number of sides of a triangle.",
+    "cond1": true,
+    "cond2": true,
+    "gold": [
+     "3",
+     "three"
+    ],
+    "i": 4,
+    "k": 4,
+    "n_changed": 4,
+    "n_eligible": 24,
+    "n_roster_skips": 0,
+    "operand_spans": [],
+    "render": "State the numbev of szbes of a tryangle."
+   },
+   {
+    "changed_positions": [
+     4,
+     13,
+     20
+    ],
+    "clean": "Write the opposite of 'hot'.",
+    "cond1": true,
+    "cond2": true,
+    "gold": [
+     "cold"
+    ],
+    "i": 5,
+    "k": 3,
+    "n_changed": 3,
+    "n_eligible": 14,
+    "n_roster_skips": 0,
+    "operand_spans": [
+     {
+      "end": 27,
+      "start": 22,
+      "text": "'hot'"
+     }
+    ],
+    "render": "Writa the oppcsite oc 'hot'."
+   },
+   {
+    "changed_positions": [
+     3,
+     5,
+     6
+    ],
+    "clean": "Compute 14 times 2.",
+    "cond1": true,
+    "cond2": true,
+    "gold": [
+     "28"
+    ],
+    "i": 6,
+    "k": 3,
+    "n_changed": 3,
+    "n_eligible": 10,
+    "n_roster_skips": 0,
+    "operand_spans": [],
+    "render": "Combuks 14 times 2."
+   },
+   {
+    "changed_positions": [
+     8,
+     13,
+     18,
+     47,
+     58,
+     70,
+     71
+    ],
+    "clean": "State which is heavier: a kilogram of iron or half a kilogram of feathers.",
+    "cond1": true,
+    "cond2": true,
+    "gold": [
+     "iron"
+    ],
+    "i": 7,
+    "k": 7,
+    "n_changed": 7,
+    "n_eligible": 45,
+    "n_roster_skips": 1,
+    "operand_spans": [],
+    "render": "State whqch iy heayier: a kilogram of iron or holf a kilogdam of feathwis."
+   },
+   {
+    "changed_positions": [
+     10,
+     29,
+     31
+    ],
+    "clean": "Name the first month of the year.",
+    "cond1": true,
+    "cond2": true,
+    "gold": [
+     "january"
+    ],
+    "i": 8,
+    "k": 3,
+    "n_changed": 3,
+    "n_eligible": 19,
+    "n_roster_skips": 0,
+    "operand_spans": [],
+    "render": "Name the ftrst month of the ybaa."
+   },
+   {
+    "changed_positions": [
+     3,
+     13,
+     14
+    ],
+    "clean": "Compute 90 minus 45.",
+    "cond1": true,
+    "cond2": true,
+    "gold": [
+     "45"
+    ],
+    "i": 9,
+    "k": 3,
+    "n_changed": 3,
+    "n_eligible": 10,
+    "n_roster_skips": 0,
+    "operand_spans": [],
+    "render": "Comgute 90 miyms 45."
+   },
+   {
+    "changed_positions": [
+     11,
+     24,
+     36,
+     37
+    ],
+    "clean": "State the number of wheels on a bicycle.",
+    "cond1": true,
+    "cond2": true,
+    "gold": [
+     "2",
+     "two"
+    ],
+    "i": 10,
+    "k": 4,
+    "n_changed": 4,
+    "n_eligible": 24,
+    "n_roster_skips": 0,
+    "operand_spans": [],
+    "render": "State the nfmber of wheeqs on a bicyaxe."
+   },
+   {
+    "changed_positions": [
+     4,
+     13,
+     17
+    ],
+    "clean": "Write the opposite of 'up'.",
+    "cond1": true,
+    "cond2": true,
+    "gold": [
+     "down"
+    ],
+    "i": 11,
+    "k": 3,
+    "n_changed": 3,
+    "n_eligible": 14,
+    "n_roster_skips": 0,
+    "operand_spans": [
+     {
+      "end": 26,
+      "start": 22,
+      "text": "'up'"
+     }
+    ],
+    "render": "Writo the oppssitu of 'up'."
+   },
+   {
+    "changed_positions": [
+     1,
+     3,
+     4
+    ],
+    "clean": "Compute 11 + 33.",
+    "cond1": true,
+    "cond2": true,
+    "gold": [
+     "44"
+    ],
+    "i": 12,
+    "k": 3,
+    "n_changed": 3,
+    "n_eligible": 6,
+    "n_roster_skips": 0,
+    "operand_spans": [],
+    "render": "Cnmzote 11 + 33."
+   },
+   {
+    "changed_positions": [
+     14,
+     15,
+     24
+    ],
+    "clean": "State the number of hours in a day.",
+    "cond1": true,
+    "cond2": true,
+    "gold": [
+     "24",
+     "twenty-four"
+    ],
+    "i": 13,
+    "k": 3,
+    "n_changed": 3,
+    "n_eligible": 19,
+    "n_roster_skips": 0,
+    "operand_spans": [],
+    "render": "State the numbxi of hourw in a day."
+   },
+   {
+    "changed_positions": [
+     2,
+     3,
+     13
+    ],
+    "clean": "Compute 8 times 8.",
+    "cond1": true,
+    "cond2": true,
+    "gold": [
+     "64"
+    ],
+    "i": 14,
+    "k": 3,
+    "n_changed": 3,
+    "n_eligible": 10,
+    "n_roster_skips": 0,
+    "operand_spans": [],
+    "render": "Coltute 8 timns 8."
+   },
+   {
+    "changed_positions": [
+     1,
+     8,
+     20
+    ],
+    "clean": "Write the opposite of 'open'.",
+    "cond1": true,
+    "cond2": true,
+    "gold": [
+     "closed",
+     "shut"
+    ],
+    "i": 15,
+    "k": 3,
+    "n_changed": 3,
+    "n_eligible": 14,
+    "n_roster_skips": 0,
+    "operand_spans": [
+     {
+      "end": 28,
+      "start": 22,
+      "text": "'open'"
+     }
+    ],
+    "render": "Wtite thn opposite on 'open'."
+   }
+  ],
+  "k": [
+   3,
+   3,
+   3,
+   3,
+   4,
+   3,
+   3,
+   7,
+   3,
+   3,
+   4,
+   3,
+   3,
+   3,
+   3,
+   3
+  ],
+  "k_sum": 54,
+  "n_eligible": [
+   6,
+   19,
+   19,
+   13,
+   24,
+   14,
+   10,
+   45,
+   19,
+   10,
+   24,
+   14,
+   6,
+   19,
+   10,
+   14
+  ],
+  "renders_sha16": "a04f67b0e5105a05",
+  "renders_sha256": "a04f67b0e5105a0514a0f33e64a4545ef3a3a3c75cece320d78434e853cd4372",
+  "roster_skips": {
+   "7": 1
+  },
+  "rule": "corrupt_m at 0.15, operand excluded, roster skip (m:176)"
+ },
+ "roster_assertion": {
+  "clean_tasks_for_reference": {
+   "olmo": [],
+   "qwen": []
+  },
+  "pass": true,
+  "renders": {
+   "olmo": [],
+   "qwen": []
+  },
+  "rosters": {
+   "olmo": [
+    "amber",
+    "copper",
+    "granite",
+    "maple",
+    "quartz",
+    "saddle",
+    "velvet",
+    "walnut"
+   ],
+   "qwen": [
+    "granite",
+    "plaza",
+    "prism",
+    "ridge",
+    "saddle",
+    "slate",
+    "velvet",
+    "walnut"
+   ]
+  },
+  "rule": "case-insensitive substring of each roster word in each render (m:176 artifacts)"
+ },
+ "schema": "m-gcal-model-free-v1",
+ "spec": "PROPOSAL-m v1.11 §2.3 (m:176), §8 step 6 (m:358)",
+ "stage": "G-CAL (model-free)"
+}
