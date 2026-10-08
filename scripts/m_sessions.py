@@ -39,6 +39,28 @@
                       artifact with different bytes. Exit 0 on PASS, 4 on STOP, 1 on a
                       refused overwrite. --out DIR is for tests only and is refused
                       anywhere under data/m (resume.refuse_canonical_out).
+  gcal model-free [--out DIR]
+                      G-CAL (§8 step 6, m:176, m:358), the model-free half: the 0.12 replay
+                      first (m:358) -- f1's corrupt() at 0.12 against conditions (1)-(2); the
+                      remaining model-free items follow: the renders of record with their
+                      sha256 (m:176's n_eligible, k and skip asserted), the roster assertion
+                      (model-free, so ahead of m:358's listed position), conditions (1)-(2)
+                      reported and (3)-(4) pending, provenance. Writes
+                      data/m/gates/G-CAL_model-free.json and, beside it,
+                      G-CAL_seat_read_request.md (for a blind read: the recording instruction,
+                      then the renders alone, then the key); never overwrites a differing file.
+                      Exit 0 written or identical, 2 refused, 4 STOP. --out DIR as gport's.
+  gcal completability --proposal-file F [--resume] [--out DIR]
+                      condition (4) on Qwen, loaded only via qwen_or_explain: 128 uncached
+                      generations under f0's procedure (m:176), graded by f0's grader ported
+                      verbatim; checkpoint data/m/ckpt/G-CAL_qwen.json (skip-only resume),
+                      artifact data/m/gates/G-CAL_completability_qwen.json. F's sha256 is
+                      computed from its committed blob. Every refusal that needs no model
+                      (proposal, checkpoint, model-free artifact, laptop preflight, gate line)
+                      runs before the load. Exit 0 PASS, 4 FAIL or STOP, 2 refusal. --out is the
+                      selftest's (a scripted stub) and is refused on the Qwen path.
+                      Both gcal commands map any other SystemExit (a corr STOP, the insulation
+                      guard's, the loader's) to 4 with its message.
   time|id|qual|campaign --unit U
                       wired to argparse only: each refuses (exit 2) "not licensed until
                       step N" -- §8's step for that stage and unit (m:358). Nothing here
@@ -66,7 +88,7 @@ if str(REPO) not in sys.path:
     sys.path.insert(0, str(REPO))
 
 MODULES = ("keys", "corr", "banner", "schedule", "bars", "audit", "guard", "resume", "readrule",
-           "testing", "scaffold", "runner_qwen", "runner_olmo", "verify", "stages")
+           "testing", "scaffold", "runner_qwen", "runner_olmo", "verify", "stages", "gcal")
 SCHED_DIR = REPO / "data" / "m" / "schedules"
 UNITS = ("Q-F0", "OLMo-sft", "OLMo-dpo", "OLMo-instruct", "Q-F3")
 STAGE_CMDS = ("time", "id", "qual", "campaign")
@@ -202,6 +224,110 @@ def run_gport(out: Path | None = None, *, rows: list[dict] | None = None,
         resume.atomic_write_json(path, art, indent=1)
     print(f"  G-PORT {n_ok}/{n} archived CORR transcripts reproduced", flush=True)
     return rc
+
+
+# --- G-CAL (§8 step 6, m:176, m:358) ---------------------------------------------------------------
+# PIN (Code, declared at LOCK v0.1): gcal exits 0 on PASS (or a model-free artifact written or
+# identical), 4 on FAIL or a STOP, 2 on a refusal (nothing generated past it).
+# PIN (Code, declared at LOCK v0.1): after the G-CAL-specific clauses (GcalRefusal -> 2,
+# GcalStop -> 4), any other SystemExit reaching a gcal driver -- corr.CorrStop (a pool or
+# roster pin), guard.assert_insulated's (the quarantined module loaded mid-run),
+# qwen_or_explain's (the loader) -- is a STOP: exit 4, its message on stderr.
+GCAL_EXIT = {"PASS": 0, "FAIL": 4}
+
+
+def _load_qwen():
+    """The Qwen adapter, through the package's one loader (valence_core.adapters.qwen_or_explain)."""
+    from valence_core.adapters import qwen_or_explain
+    return qwen_or_explain(__file__)
+
+
+def run_gcal_model_free(out: Path | None = None) -> int:
+    """G-CAL's model-free step: the artifact (data/m/gates/G-CAL_model-free.json) and the seat
+    read request beside it; 0 written or identical, 2 refused, 4 STOP."""
+    from valence_core.m import gcal
+    try:
+        res = gcal.write_model_free(out)
+    except gcal.GcalRefusal as e:
+        print(f"REFUSED: {e}", file=sys.stderr, flush=True)
+        return 2
+    except gcal.GcalStop as e:
+        print(f"STOP: {e}", file=sys.stderr, flush=True)
+        return 4
+    except SystemExit as e:
+        print(f"STOP: {e}", file=sys.stderr, flush=True)
+        return 4
+    art = res["artifact"]
+    f1, ror, c = art["f1_012"], art["renders_of_record"], art["conditions"]
+    print(f"G-CAL model-free (a) f1 corrupt() at 0.12: renders sha16 {f1['renders_sha16']} (calib "
+          f"corr_sha {'matches' if f1['renders_sha_matches_calib'] else 'DIFFERS'}), {f1['n_changed']} "
+          f"letters changed, condition (1) {f1['n_cond1']}/16, condition (2) {f1['n_cond2']}/16; covariate "
+          f"of record {f1['covariate_of_record']} ({art['f1_012_covariate_quote']['as_quoted_in_m176']})",
+          flush=True)
+    print(f"G-CAL model-free (b) renders of record sha256 {ror['renders_sha256']}; n_eligible "
+          f"{ror['n_eligible']}; k {ror['k']} (sum {ror['k_sum']}); roster skips {ror['roster_skips']}",
+          flush=True)
+    print(f"G-CAL model-free (c) roster assertion on the renders, both rosters: "
+          f"{'clean' if art['roster_assertion']['pass'] else 'HITS'}", flush=True)
+    print(f"G-CAL model-free (d) conditions: (1) {c['1']['verdict']} {c['1']['n_pass']}/{c['1']['n']}; "
+          f"(2) {c['2']['verdict']} {c['2']['n_pass']}/{c['2']['n']}; (3) {c['3']}; (4) {c['4']}", flush=True)
+    print(f"G-CAL model-free artifact: {res['path']} ({res['how']})", flush=True)
+    print(f"G-CAL seat read request: {res['seat_path']} ({res['seat_how']})", flush=True)
+    return 0
+
+
+def run_gcal_completability(out: Path | None, resume_run: bool, proposal_file: str, *,
+                            adapter_factory=None) -> int:
+    """G-CAL's condition (4) on Qwen (m:176). The proposal's sha256 is computed here from its
+    COMMITTED blob; every refusal that needs no model runs before the model loads.
+
+    PIN (Code, declared at LOCK v0.1): ``adapter_factory`` is the selftest's seam (a scripted
+    stub); without it the adapter is Qwen through qwen_or_explain, which writes the canonical
+    paths only, so ``--out`` (a test directory) is refused on that path before any load."""
+    from valence_core.m import gcal, resume, stages
+    p = Path(proposal_file)
+    p = p if p.is_absolute() else REPO / p
+    try:
+        rel = p.resolve().relative_to(REPO.resolve()).as_posix()
+    except ValueError:
+        print(f"REFUSED: --proposal-file {proposal_file} lies outside the repository", file=sys.stderr,
+              flush=True)
+        return 2
+    probs, data = stages._committed(rel)
+    if probs or data is None:
+        print(f"REFUSED: --proposal-file {rel}: {probs} (G-CAL's identity is this document's hash, m:267; "
+              f"it must be committed)", file=sys.stderr, flush=True)
+        return 2
+    sha = hashlib.sha256(data).hexdigest()
+    if out is not None and adapter_factory is None:
+        print("REFUSED: gcal completability --out names a test directory; the Qwen run writes "
+              "data/m/gates and data/m/ckpt only (nothing loaded)", file=sys.stderr, flush=True)
+        return 2
+    out_path = None
+    if out is not None:
+        try:
+            out_path = resume.refuse_canonical_out(out) / gcal.COMPLETABILITY_NAME
+        except SystemExit as e:
+            print(f"REFUSED: {e}", file=sys.stderr, flush=True)
+            return 2
+    try:
+        if adapter_factory is None:
+            gcal.precheck(out_path=None, resume=resume_run, proposal_file=rel, proposal_sha256=sha,
+                          stub=False)
+            adapter_factory = _load_qwen
+        adapter = adapter_factory()
+        res = gcal.run_completability(adapter, out_path=out_path, resume=resume_run, proposal_file=rel,
+                                      proposal_sha256=sha)
+    except gcal.GcalRefusal as e:
+        print(f"REFUSED: {e}", file=sys.stderr, flush=True)
+        return 2
+    except gcal.GcalStop as e:
+        print(f"STOP: {e}", file=sys.stderr, flush=True)
+        return 4
+    except SystemExit as e:
+        print(f"STOP: {e}", file=sys.stderr, flush=True)
+        return 4
+    return GCAL_EXIT[res["verdict"]]
 
 
 # --- self-test ---------------------------------------------------------------------------
@@ -1923,6 +2049,254 @@ def _selftest(chk) -> None:
             and not any(ecwd.iterdir()) and not (REPO / "Q-F0_G-PORT.json").exists(),
             (str(ex_e)[:60], sorted(x.name for x in ecwd.iterdir())))
 
+        # --- G-CAL (step 6, m:176): the gcal subcommands, on test directories only; the Qwen
+        # loader is replaced by a sentinel that fails the check if it is ever called -------------
+        from valence_core.m import gcal
+        # each canonical G-CAL path's bytes (or its absence) before these checks; compared after
+        gsnap0 = gcal.canonical_snapshot()
+        loads: list[int] = []
+
+        def no_load():
+            loads.append(1)
+            raise AssertionError("selftest: the Qwen loader must never run")
+
+        me = sys.modules[__name__]
+        cdir = resume.refuse_canonical_out(base / "gcal")
+        fdir = resume.refuse_canonical_out(base / "gcal_fail")
+        art_c = gcal.model_free_artifact()
+        err_c = io.StringIO()
+        with patched(me, "_load_qwen", no_load), contextlib.redirect_stderr(err_c):
+            rc_m, _, txt_m = capture(main, ["gcal", "model-free", "--out", str(cdir)])
+            rc_m2, _, txt_m2 = capture(main, ["gcal", "model-free", "--out", str(cdir)])
+            capture(main, ["gcal", "model-free", "--out", str(fdir)])
+        mf_p, seat_p = cdir / gcal.MODEL_FREE_NAME, cdir / gcal.SEAT_READ_NAME
+        rsha256 = art_c["renders_of_record"]["renders_sha256"]
+        chk("m_sessions: gcal model-free (G-CAL, m:176) on a temp dir writes the model-free artifact (exactly "
+            "gcal.model_free_artifact()) and the seat read request beside it, prints the (a)-(d) summary and "
+            "both paths; a re-run finds both identical (exit 0)",
+            rc_m == 0 and mf_p.read_text(encoding="utf-8") == resume.json_text(art_c, indent=1)
+            and seat_p.read_text(encoding="utf-8") == gcal.seat_read_request(art_c)
+            and f"G-CAL model-free artifact: {mf_p} (written)" in txt_m.splitlines()
+            and f"G-CAL seat read request: {seat_p} (written)" in txt_m.splitlines()
+            and f"renders of record sha256 {rsha256};" in txt_m
+            and "renders sha16 2c2c227395ea9f2d (calib corr_sha matches), 31 letters changed" in txt_m
+            and "(1) PASS 16/16; (2) PASS 16/16;" in txt_m
+            and rc_m2 == 0 and f"G-CAL model-free artifact: {mf_p} (identical)" in txt_m2.splitlines(),
+            (rc_m, rc_m2, txt_m.splitlines()[-1:]))
+        seat_p.write_text(seat_p.read_text(encoding="utf-8") + "edited\n", encoding="utf-8")
+        seat_tampered = seat_p.read_bytes()
+        err_c2 = io.StringIO()
+        with patched(me, "_load_qwen", no_load), contextlib.redirect_stderr(err_c2):
+            rc_m3, _, _ = capture(main, ["gcal", "model-free", "--out", str(cdir)])
+            rc_m4, _, _ = capture(main, ["gcal", "model-free", "--out", str(REPO / "data" / "m" / "gates")])
+            rc_m5, _, _ = capture(main, ["gcal", "model-free", "--out", "  "])
+            rc_m6, _, _ = capture(main, ["--selftest", "gcal", "model-free", "--out", str(base / "gc_combo")])
+        chk("m_sessions: gcal model-free never overwrites a differing file (exit 2, the edited request left as "
+            "it is); --out under data/m, a blank --out and a combined --selftest are refused (exit 2) before "
+            "anything is written",
+            rc_m3 == 2 and seat_p.read_bytes() == seat_tampered and "never overwritten" in err_c2.getvalue()
+            and rc_m4 == 2 and "SELFTEST REFUSED" in err_c2.getvalue() and rc_m5 == 2 and rc_m6 == 2
+            and not (base / "gc_combo").exists(), (rc_m3, rc_m4, rc_m5, rc_m6))
+
+        pool_c, rend_c = scaffold.pool_and_renders()
+        gold_of = {f"Task: {it['task']}\nResponse:": it["gold"][0] for it in pool_c}
+        gold_of.update({f"Task: {r}\nResponse:": pool_c[i]["gold"][0] for i, r in enumerate(rend_c)})
+        made: list = []
+
+        def factory(hit: bool):
+            def f():
+                ad = testing.ScriptedAdapter("m-gcal-driver")
+                ad.load(lambda call: f"Verily {gold_of[call['segment']]}." if hit else "Zqxj unknown.")
+                made.append(ad)
+                return ad
+            return f
+
+        prel = stages.PROPOSAL_REL
+        outside = base / "outside_proposal.md"
+        outside.write_text("not the proposal\n", encoding="utf-8")
+        err_c3 = io.StringIO()
+        with patched(me, "_load_qwen", no_load), contextlib.redirect_stderr(err_c3):
+            rc_p, _, txt_p = capture(run_gcal_completability, cdir, False, prel, adapter_factory=factory(True))
+            n_pass_calls = len(made[-1].calls)
+            rc_f, _, txt_f = capture(run_gcal_completability, fdir, False, prel, adapter_factory=factory(False))
+            rc_x, _, _ = capture(run_gcal_completability, cdir, False, prel, adapter_factory=factory(True))
+            n_x_calls = len(made[-1].calls)
+            rc_r, _, txt_r = capture(run_gcal_completability, cdir, True, prel, adapter_factory=factory(True))
+            n_r_calls = len(made[-1].calls)
+            rc_o, _, _ = capture(main, ["gcal", "completability", "--proposal-file", prel, "--out", str(cdir)])
+            _, ex_np, _ = capture(main, ["gcal", "completability"])
+            rc_u, _, _ = capture(main, ["gcal", "completability", "--proposal-file", "no-such-proposal.md"])
+            rc_v, _, _ = capture(main, ["gcal", "completability", "--proposal-file", str(outside)])
+        art_pc = json.loads((cdir / gcal.COMPLETABILITY_NAME).read_text(encoding="utf-8"))
+        glines = [ln for ln in txt_p.splitlines() if ln.startswith("gcal CORR_")]
+        chk("m_sessions: gcal completability through the driver on the scripted stub -- 128 uncached "
+            "generations, PASS (exit 0) when every response carries its gold, FAIL (exit 4, 'STOP and "
+            "re-specify') when none does; the proposal's sha256 is its committed blob's",
+            rc_p == 0 and n_pass_calls == 128 and len(glines) == 128 and "Verily" not in txt_p
+            and art_pc["verdict"] == "PASS" and art_pc["accuracy"]["CORR_corrupted"]["fraction"] == "1"
+            and art_pc["identity"]["proposal_sha256"]
+            == hashlib.sha256(stages.PROPOSAL_PATH.read_bytes()).hexdigest()
+            and rc_f == 4 and "FAIL -- STOP and re-specify (m:176)" in (txt_f.splitlines() or [""])[-1],
+            (rc_p, rc_f, txt_p.splitlines()[-1:]))
+        chk("m_sessions: gcal completability refuses (exit 2) an existing checkpoint without --resume (no "
+            "generation), resumes a complete one with none (artifact identical, exit 0), and refuses before "
+            "any model load: --out on the Qwen path, a proposal not committed, one outside the repository; "
+            "--proposal-file is required (argparse, exit 2); the Qwen loader never ran",
+            rc_x == 2 and n_x_calls == 0 and rc_r == 0 and n_r_calls == 0 and "(identical)" in txt_r
+            and rc_o == 2 and isinstance(ex_np, SystemExit) and ex_np.code == 2 and rc_u == 2 and rc_v == 2
+            and "CHECKPOINT EXISTS" in err_c3.getvalue() and "not committed" in err_c3.getvalue()
+            and "outside the repository" in err_c3.getvalue() and loads == [],
+            (rc_x, rc_r, rc_o, rc_u, rc_v, len(loads)))
+
+        # every precheck refusal on the Qwen path (no adapter_factory) fires before the loader:
+        # the canonical directories are temp ones here (gcal.GATES_DIR / CKPT_DIR patched), the
+        # laptop checklist is canned clear, the loader is the sentinel
+        def no_factory(name: str, setup) -> tuple:
+            pg = resume.refuse_canonical_out(base / f"gcal_pre_{name}" / "gates")
+            pc = resume.refuse_canonical_out(base / f"gcal_pre_{name}" / "ckpt")
+            pg.mkdir(parents=True)
+            setup(pg, pc)
+            before = sorted(str(q.relative_to(pg.parent)) for q in pg.parent.rglob("*"))
+            e = io.StringIO()
+            n0 = len(loads)
+            with patched(gcal, "GATES_DIR", pg), patched(gcal, "CKPT_DIR", pc), \
+                    patched(guard, "preflight_laptop", lambda: []), patched(me, "_load_qwen", no_load), \
+                    contextlib.redirect_stderr(e):
+                try:
+                    rc_, ex_, _ = capture(main, ["gcal", "completability", "--proposal-file", prel])
+                except AssertionError as ae:          # the sentinel loader ran: a named failure
+                    rc_, ex_ = None, ae
+            after =sorted(str(q.relative_to(pg.parent)) for q in pg.parent.rglob("*"))
+            return rc_, ex_, e.getvalue(), len(loads) - n0, before == after
+
+        def mf_with(prop_sha=None):
+            def setup(pg, pc):
+                a = json.loads(json.dumps(art_c))
+                if prop_sha is not None:
+                    a["provenance"]["proposal_sha256"] = prop_sha
+                gcal.write_json_once(pg / gcal.MODEL_FREE_NAME, a)
+            return setup
+
+        def mf_and_ckpt(pg, pc):
+            mf_with()(pg, pc)
+            pc.mkdir()
+            resume.atomic_write_json(pc / gcal.CKPT_NAME, {"schema": gcal.CKPT_SCHEMA})
+
+        def mf_and_artifact(pg, pc):
+            mf_with()(pg, pc)
+            (pg / gcal.COMPLETABILITY_NAME).write_text("{}\n", encoding="utf-8")
+
+        pre_cases = {
+            "checkpoint": (mf_and_ckpt, "CHECKPOINT EXISTS"),
+            "no_model_free": (lambda pg, pc: None, "model-free artifact absent or unreadable"),
+            "other_proposal": (mf_with("5" * 64), "model-free artifact's proposal_sha256 is not this run's "
+                                                  "proposal"),
+            "artifact_no_ckpt": (mf_and_artifact, "COMPLETABILITY ARTIFACT EXISTS"),
+        }
+        pre_res = {nm: no_factory(nm, st) + (want,) for nm, (st, want) in pre_cases.items()}
+        chk("m_sessions: gcal completability on the Qwen path (no adapter_factory) is refused by gcal.precheck "
+            "before the loader runs -- an existing checkpoint without --resume, a missing model-free artifact, "
+            "one carrying another proposal_sha256, an existing artifact with no checkpoint: exit 2, the "
+            "refusal's own message on stderr, the loader never called, the (temp) canonical directories "
+            "unchanged",
+            all(rc_ == 2 and ex_ is None and "REFUSED: G-CAL REFUSED" in err and want in err and n_loads == 0
+                and unchanged for rc_, ex_, err, n_loads, unchanged, want in pre_res.values()) and loads == [],
+            {nm: (v[0], v[2][:80], v[3], v[4]) for nm, v in pre_res.items()
+             if not (v[0] == 2 and v[5] in v[2] and v[3] == 0 and v[4])})
+
+        # exit codes: any SystemExit past the G-CAL clauses is a STOP (4) with its message
+        def raiser(exc):
+            def f(*a, **kw):
+                raise exc
+            return f
+
+        sp_mod = guard.FORBIDDEN_MODULES[0]
+        planted: list = []
+        insul_ads: list = []
+        had_sp, prev_sp = sp_mod in sys.modules, sys.modules.get(sp_mod)
+
+        def restore_sp() -> None:
+            if had_sp:
+                sys.modules[sp_mod] = prev_sp
+            else:
+                sys.modules.pop(sp_mod, None)
+
+        def insul_factory():
+            ad = testing.ScriptedAdapter("m-gcal-driver")
+            insul_ads.append(ad)
+
+            def plan_(call):
+                if not planted:                   # the quarantined module appears mid-run
+                    planted.append(1)
+                    sys.modules[sp_mod] = types.ModuleType(sp_mod)
+                return "Zqxj unknown."
+            ad.load(plan_)
+            return ad
+
+        idir = resume.refuse_canonical_out(base / "gcal_insul")
+        idir.mkdir()
+        gcal.write_json_once(idir / gcal.MODEL_FREE_NAME, art_c)
+        xdir = resume.refuse_canonical_out(base / "gcal_x")
+        xdir.mkdir()
+        gcal.write_json_once(xdir / gcal.MODEL_FREE_NAME, art_c)
+        ex_err: dict[str, str] = {}
+        ex_rc: dict[str, tuple] = {}
+        try:
+            for nm, fn in {
+                "model-free CorrStop": lambda: run_gcal_model_free(fdir),
+                "model-free SystemExit": lambda: run_gcal_model_free(fdir),
+                "model-free GcalStop": lambda: run_gcal_model_free(fdir),
+                "model-free GcalRefusal": lambda: run_gcal_model_free(fdir),
+                "loader SystemExit": lambda: run_gcal_completability(
+                    xdir, False, prel, adapter_factory=raiser(SystemExit("qwen_or_explain (selftest): no MLX"))),
+                "insulation mid-run": lambda: run_gcal_completability(idir, False, prel,
+                                                                      adapter_factory=insul_factory),
+                "completability CorrStop": lambda: run_gcal_completability(xdir, False, prel,
+                                                                           adapter_factory=factory(True)),
+            }.items():
+                e = io.StringIO()
+                sub = {"model-free CorrStop": corr.CorrStop("POOL SHA STOP (selftest)"),
+                       "model-free SystemExit": SystemExit("a plain SystemExit (selftest)"),
+                       "model-free GcalStop": gcal.GcalStop("G-CAL STOP (selftest)"),
+                       "model-free GcalRefusal": gcal.GcalRefusal("G-CAL REFUSED (selftest)")}.get(nm)
+                with contextlib.ExitStack() as st:
+                    st.enter_context(patched(me, "_load_qwen", no_load))
+                    st.enter_context(contextlib.redirect_stderr(e))
+                    if sub is not None:
+                        st.enter_context(patched(gcal, "write_model_free", raiser(sub)))
+                    if nm == "completability CorrStop":
+                        st.enter_context(patched(gcal, "run_completability",
+                                                 raiser(corr.CorrStop("ROSTER STOP (selftest)"))))
+                    try:
+                        rc_, ex_, _ = capture(fn)
+                    finally:
+                        restore_sp()
+                ex_rc[nm] = (rc_, ex_)
+                ex_err[nm] = e.getvalue()
+        finally:
+            restore_sp()
+        n_insul = len(insul_ads[0].calls) if len(insul_ads) == 1 else -1
+        want_x = {"model-free CorrStop": (4, "STOP: POOL SHA STOP (selftest)"),
+                  "model-free SystemExit": (4, "STOP: a plain SystemExit (selftest)"),
+                  "model-free GcalStop": (4, "STOP: G-CAL STOP (selftest)"),
+                  "model-free GcalRefusal": (2, "REFUSED: G-CAL REFUSED (selftest)"),
+                  "loader SystemExit": (4, "STOP: qwen_or_explain (selftest): no MLX"),
+                  "insulation mid-run": (4, "STOP: STRUCTURAL VIOLATION: drug-free run has steering machinery"),
+                  "completability CorrStop": (4, "STOP: ROSTER STOP (selftest)")}
+        bad_x = {nm: (ex_rc[nm], ex_err[nm][:70]) for nm, (rc_w, msg) in want_x.items()
+                 if not (ex_rc[nm] == (rc_w, None) and msg in ex_err[nm])}
+        chk("m_sessions: gcal's exit codes past the G-CAL clauses -- a corr.CorrStop, a plain SystemExit, the "
+            "loader's SystemExit and the insulation guard's (the quarantined module planted at the first "
+            "generation: one generation, then the guard) are a STOP, exit 4 with the message; GcalStop stays "
+            "4 and GcalRefusal 2; nothing escapes as a SystemExit; the module is gone afterwards",
+            not bad_x and planted == [1] and n_insul == 1 and sp_mod not in sys.modules
+            and loads == [], (bad_x, n_insul))
+
+        chk("m_sessions: the gcal checks left every canonical G-CAL path under data/m as they found it (each "
+            "path's bytes, or its absence, snapshotted before and compared after; existing artifacts allowed)",
+            gcal.snapshot_changes(gsnap0, gcal.canonical_snapshot()) == [],
+            gcal.snapshot_changes(gsnap0, gcal.canonical_snapshot()))
+
         # --- stdout hygiene over every integration run --------------------------------------
         probs = [p for o in outs for p in stdout_problems(o)]
         chk(f"m_sessions: stdout of {len(outs)} integration runs carries no roster label, pick line or "
@@ -2016,7 +2390,7 @@ def run_selftest() -> int:
 def main(argv: list[str] | None = None) -> int:
     shown = sys.argv if argv is None else [sys.argv[0]] + list(argv)
     print("INVOCATION: " + " ".join([sys.executable] + shown), flush=True)
-    ap = argparse.ArgumentParser(description="PROPOSAL-m driver (self-test, schedules, G-PORT)")
+    ap = argparse.ArgumentParser(description="PROPOSAL-m driver (self-test, schedules, G-PORT, G-CAL)")
     ap.add_argument("--selftest", action="store_true", help="model-free self-test of the m package")
     ap.add_argument("--build-schedules", action="store_true",
                     help="write the schedule files + manifest (default data/m/schedules)")
@@ -2028,7 +2402,32 @@ def main(argv: list[str] | None = None) -> int:
     gp = sub.add_parser("gport", help="G-PORT (step 5, m:275): replay f1's 64 archived CORR transcripts")
     gp.add_argument("--out", dest="gport_out", default=None,
                     help="a test directory for the artifact (refused under data/m); default data/m/gates")
+    gc = sub.add_parser("gcal", help="G-CAL (step 6, m:176): the model-free artifact, or completability")
+    gcs = gc.add_subparsers(dest="gcal_cmd", required=True)
+    gmf = gcs.add_parser("model-free", help="f1's 0.12 replay, the renders of record, the roster "
+                                            "assertion, and the seat read request (no model)")
+    gmf.add_argument("--out", dest="gcal_out", default=None,
+                     help="a test directory (refused under data/m); default data/m/gates")
+    gcp = gcs.add_parser("completability", help="condition (4) on Qwen: 128 uncached generations")
+    gcp.add_argument("--out", dest="gcal_out", default=None,
+                     help="test directories only (refused on the Qwen path); default data/m/gates")
+    gcp.add_argument("--resume", action="store_true", help="continue the checkpoint (skip-only)")
+    gcp.add_argument("--proposal-file", dest="proposal_file", required=True,
+                     help="the governing proposal, committed at HEAD (its sha256 is G-CAL's identity)")
     args = ap.parse_args(argv)
+    if args.cmd == "gcal":
+        if args.selftest or args.build_schedules or args.out is not None:
+            print("refused: gcal takes no --selftest / --build-schedules / top-level --out (its own --out "
+                  "follows the subcommand)", file=sys.stderr)
+            return 2
+        if args.gcal_out is not None and not args.gcal_out.strip():
+            print("refused: gcal --out: an empty path is refused (it would write into the working "
+                  "directory)", file=sys.stderr)
+            return 2
+        gout = Path(args.gcal_out) if args.gcal_out is not None else None
+        if args.gcal_cmd == "model-free":
+            return run_gcal_model_free(gout)
+        return run_gcal_completability(gout, args.resume, args.proposal_file)
     if args.cmd == "gport":
         if args.selftest or args.build_schedules or args.out is not None:
             print("refused: gport takes no --selftest / --build-schedules / top-level --out "

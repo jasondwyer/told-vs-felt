@@ -1,0 +1,1292 @@
+# m package -- the G-CAL tooling (PROPOSAL-m v1.11 §8 step 6): build, adversarial review, fixes and verification.
+# One implementing agent; three review lenses (spec and f0 fidelity; harness and safety; tests and the seat request), each finding put to a STRICT refuter;
+# a fix agent and an independent verifier with mutation probes; then Code's own two closing edits (the artifact's write refused through a symlink;
+# the seat request names where the read of record goes). Self-test 706/706 (two runs); site check 8/8. No model or tokenizer loaded.
+
+====================================================================================================
+BUILDER'S REPORT (verbatim)
+====================================================================================================
+  I built G-CAL (§8 step 6) and tested it without loading a model. The self-test passes twice (`  696/696 m
+  selftest checks pass`, exit 0) and nothing under `data/m` was written. No G-CAL stage has run, nothing is
+  committed, and `git status` shows changes only in my three files.
+
+  ## Model-free figures (temp-dir run of `gcal model-free --out <scratch>`)
+  - **f1's corruptor at 0.12, computed first:** renders sha16 `2c2c227395ea9f2d`, equal to calib's `corr_sha`.
+  31 letters changed. Condition (1) holds on 4/16 items (2, 4, 6, 7); condition (2) on 16/16. The stored
+  covariate is `0.078125`, quoted as +.078.
+  - **Renders of record:** sha256 `a04f67b0e5105a0514a0f33e64a4545ef3a3a3c75cece320d78434e853cd4372`. Its
+  sha16 `a04f67b0e5105a05` matches the value already in RESULTS.md and the step-4/5 raws.
+    - n_eligible: 6,19,19,13,24,14,10,45,19,10,24,14,6,19,10,14, as m:176 states.
+    - k: [3,3,3,3,4,3,3,7,3,3,4,3,3,3,3,3], summing to 54.
+    - One roster skip, at item 7. Operand spans only on items 5, 11 and 15 (`'hot'` [22,27), `'up'` [22,26),
+  `'open'` [22,28)).
+  - **Roster assertion:** no hits on the renders for either roster; the clean tasks are clean too.
+  - **Conditions:** (1) PASS 16/16, (2) PASS 16/16. (3) and (4) pending.
+  - **Provenance:** package_sha256 `f66d1cf7f30146c4…`, proposal `42ab36ecc814c9c4…`, pools file
+  `8547d9a11ba55b95…`, numpy 2.5.1.
+
+  ## What was built
+  **`valence_core/m/gcal.py`** (new):
+  - `model_free_artifact(pool=None)` computes in m:358's order: the 0.12 replay, then the renders of record,
+  roster assertion, conditions and provenance. It stops if any of m:176's figures fail to reproduce.
+  - `normalize` and `grade` are f0's code copied byte for byte, with the source hashes pinned in the module.
+  - `seat_read_request(art)` produces the markdown for the seat. The renders' sha256 comes first, then the 16
+  renders alone (numbered 0–15), then the key: clean task, gold, k, changed positions, and condition (3)'s
+  instruction. Every phrase it quotes from m:176 is checked against the proposal's line.
+  - `run_completability(adapter, *, out_path, resume, proposal_file, proposal_sha256, pool=None)` runs the 128
+  generations (the 4 seeds you'd expect × 16 items × 2 pools):
+    - Each generation is `SESSION_BANNER + "Task: {task}\nResponse:"`, with `injections=()`, literal
+  `cached=False`, TEMP 0.7, STOP_CAP 60 and the frozen e2a ban list. The rule 28(d)(a) boundary is asserted
+  before each one.
+    - Accuracies are exact fractions. Condition (4) passes iff corrupted ≥ 7/10 and corrupted ≥ 3/4 × clean.
+  The covariate is clean minus corrupted.
+    - Writes are atomic and resume is skip-only. Any change to the identity (key set, proposal, renders, ban
+  list, package, backend, temp, cap) refuses a resume.
+    - A run on the real model must use the canonical paths, pass the laptop preflight, and log a gate line
+  that records the analyzer as "absent -- G-ANL-F0 is §8 step 8, after G-CAL".
+    - Stdout shows one `gcal <pool> i= s= hit|miss n_tok=` line per generation and no response text.
+  - `precheck(...)`, `gate_line(...)` and `write_model_free(out_dir)` are the supporting pieces. Refusals
+  raise `GcalRefusal` and spec failures raise `GcalStop`.
+  - **Artifacts:** `data/m/gates/G-CAL_model-free.json`, `data/m/gates/G-CAL_seat_read_request.md`,
+  `data/m/gates/G-CAL_completability_qwen.json`, and the checkpoint `data/m/ckpt/G-CAL_qwen.json`. None is
+  ever overwritten with different bytes.
+
+  **`scripts/m_sessions.py`** adds two commands, and the self-test now includes gcal:
+  - `gcal model-free [--out DIR]`: exit 0 when written or identical, 2 on a refusal, 4 on a STOP.
+  - `gcal completability --proposal-file F [--resume] [--out DIR]`: the proposal's sha256 is computed from its
+  committed version, and every refusal that needs no model runs before Qwen loads (only via
+  `qwen_or_explain`). Exit 0 PASS, 4 FAIL or STOP, 2 refusal. The existing stage subcommands refuse exactly as
+  before.
+
+  **`valence_core/m/__init__.py`**: one docstring line adding `gcal` to the module list.
+
+  ## Tests
+  - **gcal: 44 checks**, covering both directions:
+    - Grader: compared with f0's file by source text, syntax tree and a 32-case battery run against f0's own
+  definitions.
+    - Condition (4): its exact boundaries — 45/64 vs 44/64 against .70; equality at 3/4 × clean (60/45, 64/48
+  vs 47); and n = 100 for .70 and .75 exactly.
+    - Four full 128-generation scripted runs (two PASS, two FAIL at the boundaries), a resume after a kill at
+  generation 51 (78 generated, same records), and six kinds of refused resume.
+    - The real-model path, using a fake adapter, fake git and temp directories in place of the canonical
+  paths.
+  - **Driver: 5 checks.**
+  - **Mutation probes:** each of nine deliberate breakages made at least one check fail (most as named
+  failures; two by crashing the gcal self-test, which the driver also records as a FAIL).
+  - `check_call_sites` returns `[]`. The forbidden-string grep finds nothing. The schedules manifest is still
+  `8c89636a…d6bb` and `data/m/gates` holds only `Q-F0_G-PORT.json`.
+
+  ## PINs (17 in gcal.py, 2 in the driver)
+  - Refusal vs STOP classes.
+  - Grader copied verbatim with pinned hashes.
+  - The analyzer's absence logged, not refused.
+  - Operand spans as half-open offsets.
+  - Artifacts written once.
+  - Each item carries its gold list.
+  - Model-free provenance contents, with no timestamp.
+  - The seat request's wording is Code's.
+  - Key-set hash form.
+  - Real-model vs stub paths.
+  - Completability needs the model-free artifact first.
+  - Precheck order.
+  - Extra identity keys, with temp stored as a string.
+  - `--resume` with no checkpoint starts fresh.
+  - Records must be the key order's prefix and are re-graded on load.
+  - The boundary assertion is a G-CAL addition; f0 had none.
+  - f0's grader-honesty asserts run at start.
+  - The artifact copies only provenance entries that generated.
+  - Driver: the exit codes, and the stub seam (so `--out` is refused when Qwen would load).
+
+  ## Flags for you or the seat
+  1. **The seat read request can't be committed where it's written.** `.gitignore` only allows `*.json` under
+  `data/m/gates/`. It needs an allowlist line or a copy to `results/raw/`; I didn't edit `.gitignore`.
+  2. **The box will show three FAILs in the m self-test.** Three gcal checks read `jlens-
+  qwen36/scripts/f0_calibrate.py` (and `jlens_qwen/e2a.py`), which exist only on the laptop. On the box they
+  fail rather than pass silently. The port's pinned-hash check works everywhere.
+  3. **Run `gcal model-free` canonically only after this build is committed.** The artifact records the
+  package hash and is never overwritten, so a later code edit would make a re-run refuse.
+  4. **Completability won't start without the canonical model-free artifact,** and it must carry the same
+  renders and proposal sha256.
+  5. G-CAL-OLMo (per checkpoint, on the box) is not built.
+  6. gcal relies on some private helpers in `stages` and `resume`; I edited neither module. I found no defects
+  in other modules.
+
+  Paths: `/Users/jasondwyer/Documents/code/jspace-lab/valence_core/m/gcal.py`,
+  `/Users/jasondwyer/Documents/code/jspace-lab/scripts/m_sessions.py`,
+  `/Users/jasondwyer/Documents/code/jspace-lab/valence_core/m/__init__.py`. The temp-dir run and self-test
+  outputs are under `/private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-
+  lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step6/` (`modelfree_final/`,
+  `build/selftest_final{1,2}.txt`).
+====================================================================================================
+REVIEW LENS spec-f0-fidelity -- 2 finding(s)
+====================================================================================================
+COVERED:
+  I reviewed against m:176 (§2.3), m:267, m:277, m:279 and m:358 and found no blocking or substantive fidelity
+  defects; the two minor findings are in the findings list. Checked without loading a model or tokenizer:
+
+  - **Prompt bytes.** valence_core.session_e2a.SESSION_BANNER equals jlens e2a.SESSION_BANNER ("=== Config
+  evaluation session ===\n"). The segment is f"Task: {task}\nResponse:" with no round header, split
+  prefix/segment exactly as f0 does at :140-144. The adapter's encode matches jlens model.encode
+  (add_special_tokens=True). The 512-token cap is moot at this prompt length, and the adapter has no encode
+  limit.
+  - **Generation path.** It is uncached: a literal cached=False with injections=(). Through
+  `_positional_fns([])` this reaches a plain forward_with_positional_state. The temp is runner_qwen.TEMP,
+  which is 0.7 (e2d/config, the same value as e2a's TEMP) and is checked as Fraction(7,10). STOP_CAP is 60,
+  from session_e2a. The newline stop is the adapter default, using the same content_seen and eos logic as
+  e2a.generate_round_positional. mx.random.seed(seed) runs per generation, and the decoded text is
+  `.strip()`ped as in f0.
+  - **Ban list.** Both data/configs/e2a_ban_list.json and the jlens copy hash to sha256 9a2f0744f81ac930fdf8…,
+  equal to calib.json's ban_sha 9a2f0744f81ac930 and to audit.E2A_BAN_LIST_SHA256. assert_qwen_scaffold re-
+  checks the file's hash, and ids are loaded from the file as f0's build_ban_list does.
+  - **Seeds and pools.** The key set is 128 keys in f0's order (pool, then item, then seed). Each seed equals
+  crc32("m-cal|{pool}|{i}|{s}") % 2**31, all 128 are distinct, and the two pool literals are f0's (:184-186).
+  - **Grader.** gcal.normalize and grade are byte-identical to f0_calibrate.py:56-66 (diff of the line
+  ranges). Run against f0's AST-extracted definitions on 903 adversarial cases (Unicode, regex metacharacters,
+  empty and "-" golds, slashes, hyphens, word boundaries), they agree on every case.
+  - **Golds.** Both pools are graded against the CORR_clean item's own gold list, as f0's it["gold"] is.
+  Grader-honesty uses f0's two probe texts.
+  - **Condition (4).** Exhaustive over all 65×65 hit pairs at n=64: the result matches the integer reference
+  hx·10 ≥ 7·64 AND hx·4 ≥ 3·hc on every pair. The covariate is exactly (hc−hx)/64, clean minus corrupted, the
+  same sign as f0's `"CORR_delta_covariate": acc_clean - acc_corr`.
+  - **Model-free artifact.** I read the implementer's temp-dir output. The 0.12 replay is computed first:
+  sha16 2c2c227395ea9f2d matches calib, 31 letters changed, condition (1) holds on 4/16 (items 2, 4, 6, 7) and
+  condition (2) on 16/16. Stored covariate '0.078125' is quoted as +.078. n_eligible equals m:176's list. k =
+  [3,3,3,3,4,3,3,7,3,3,4,3,3,3,3,3], summing to 54, with one skip at item 7. Operand spans appear only on
+  items 5, 11 and 15, and those renders match m:176 verbatim. renders_sha256 is a04f67b0…, and the roster
+  assertion is clean on both rosters.
+  - **Supporting code.** I also reviewed corrupt_m, _k_m and _eligible_m against m:176's text, and checked
+  f0's cited line numbers (:124-130, :141-143, :152, :184-186).
+
+  My own runs:
+  - gcal._selftest: 44/44 pass, with TMPDIR set to my scratch directory.
+  - check_call_sites over valence_core/m and scripts/m_sessions.py returns [].
+  - The forbidden-string and float greps are clean.
+  - data/m still holds only gates/Q-F0_G-PORT.json and schedules/.
+
+  All scratch work is under /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-
+  lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step6/review-spec-f0-fidelity/ (probe1.py,
+  gcal_selftest.txt).
+--- spec-f0-fidelity #1 finder:minor  strict refuter: refuted=False severity=minor
+    valence_core/m/gcal.py:525  TITLE: Nothing records or gates condition (3) before completability, though m:358 orders the seat's read first
+    CLAIM:
+      m:358 lists step 6 as "the 0.12 replay first; the renders of record and their sha; the seat's read;
+      completability; roster assertion". run_completability's only ordering precondition is _model_free_check
+      (gcal.py:525-542), which checks the model-free artifact's schema, renders_sha256 and proposal_sha256. No
+      artifact records the seat's read, and completability does not require it. The model-free artifact is
+      write-once and fixes conditions["3"] = COND3_PENDING (gcal.py:350, 97), so the read of record can never
+      be added to it; it has to live elsewhere, such as the entry or the LOCK.
+    FAILURE_SCENARIO:
+      Code runs `gcal completability` (128 uncached generations on the laptop) before the seat returns the
+      condition-(3) read. If the seat then finds a gold unrecoverable, m:176 requires "STOP and re-specify".
+      The renders change, the completability artifact (write-once, bound to the old renders_sha256) no longer
+      applies, and the run has to be repeated. The verdict is not wrong, but the pre-registered order is
+      enforced only by procedure, and G-CAL_model-free.json says "(3) pending" permanently.
+    EVIDENCE:
+      gcal.py:525-542 (_model_free_check: schema, renders_sha256, proposal_sha256 only); gcal.py:346-350
+      (conditions 3 and 4 written as pending strings); gcal.py:194-209 (artifacts never overwritten); m:358
+      step-6 order; m:176 "(3) or (4) failing → STOP and re-specify". The driver's completability path
+      (m_sessions.py run_gcal_completability) adds no condition-(3) check.
+    FIX:
+      Either (a) say in the G-CAL entry and PIN that the seat's read of record must precede `gcal
+      completability`, and that the read is recorded in the entry or LOCK rather than in the model-free
+      artifact; or (b) add a small write-once `G-CAL_seat_read.json` (per-item yes/no plus the renders_sha256
+      it read) and have precheck refuse completability unless it exists with 16/16 on these renders.
+    REFUTER:
+      The finding is not refuted. Its claims about the code hold, and I confirmed them with a stub run. I am
+      keeping the severity at minor, at its low end, because the order claim is partly a matter of reading and
+      the worst consequence is wasted compute.
+
+      What the code does (working-tree valence_core/m/gcal.py and scripts/m_sessions.py):
+
+      - The only G-CAL-specific precondition in precheck (gcal.py:545-582) is _model_free_check
+      (gcal.py:525-542). It checks the model-free artifact's schema, renders_sha256 and proposal_sha256, and
+      nothing else. The other prechecks are generic: pool, paths, proposal bytes, checkpoint, laptop preflight
+      and gate line. None of them refers to condition (3).
+      - run_completability (gcal.py:713-789) adds no condition-(3) check, and neither does the driver's
+      run_gcal_completability (m_sessions.py:268-318).
+      - model_free_artifact writes conditions "3" = COND3_PENDING and "4" = COND4_PENDING (gcal.py:97-98,
+      350). write_json_once and _write_once_text (gcal.py:194-235) refuse any different bytes, so the
+      "pending" marker for (3) can never be updated in that file.
+      - completability_artifact (gcal.py:687-710) has no field for condition (3).
+      - Nothing in gcal.py writes or reads the seat's read. The only related output is
+      G-CAL_seat_read_request.md, which is the request, not the read.
+
+      Stub verification (scratch step6/refute-cond3/t.py, ScriptedAdapter, temp directory, nothing loaded):
+      with only G-CAL_model-free.json on disk, which says "(3) pending", run_completability ran all 128
+      generations and wrote a PASS artifact. That artifact contains neither "seat" nor "(3)". The module's own
+      selftest does the same thing (its scratch() helper writes only the model-free artifact before each run).
+
+      Where the finding overstates:
+
+      - m:358 marks only the 0.12 replay as "first". The rest of the line is a semicolon-separated list. The
+      code already moves the roster assertion, which comes last in that list, into the model-free artifact
+      ahead of completability, so the list is not being treated as a strict run order.
+      - m:176 sets no order between (3) and (4). It says only "(3) or (4) failing → STOP and re-specify", and
+      it places the seat's read in LOCK-m-F0 v0.1. The gcal docstring says "The read of record is the seat's;
+      Code records it", so recording it in the entry or the LOCK rather than in the model-free artifact is
+      consistent with the proposal.
+      - The failure scenario can still happen as described. If the seat later finds a gold unrecoverable, the
+      renders change and the write-once completability artifact no longer applies, so the run must be
+      repeated. But this costs about 128 uncached generations, not a wrong verdict. A re-specification would
+      also change m:176's asserted figures and the proposal hash, which invalidates the run anyway.
+      - The seat's provisional reads already found 16 of 16 golds recoverable under this rule, so this outcome
+      is unlikely.
+
+      The real remaining gap: nothing in the G-CAL tooling records or gates condition (3), and no PIN or entry
+      text says the read must come before `gcal completability`. The finding's fix (a), a PIN or entry
+      sentence, is enough.
+    DISPOSITION: OPEN, disclosed in the G-CAL entry: completability does not wait on the seat's read; both gate the same renders and either failing STOPs and re-specifies (m:176). The seat request now says where the read of record goes (the G-CAL entry, then LOCK-m-F0 v0.1) and asks the seat to cite the renders sha256.
+
+--- spec-f0-fidelity #2 finder:minor  strict refuter: refuted=False severity=nit
+    valence_core/m/gcal.py:322  TITLE: model_free_artifact says "computed in m:358's order" but moves the roster assertion ahead of the seat's read and completability
+    CLAIM:
+      m:358 orders G-CAL as: 0.12 replay; renders of record and sha; seat's read; completability; roster
+      assertion. model_free_artifact computes the roster assertion in the model-free half, after the renders
+      and before the seat's read and completability. Its docstring ("computed in m:358's order") and the
+      recorded computation_order still present this as m:358's order. Running the model-free roster assertion
+      early does no harm, since corr.renders_m already enforces it and it gates generation. The problem is
+      that the artifact's wording overstates fidelity to m:358.
+    FAILURE_SCENARIO:
+      A values-check of the G-CAL entry or LOCK that quotes the artifact's "computed in m:358's order" (or the
+      module docstring at gcal.py:4-6) records an ordering claim that m:358's text does not support. The
+      repo's entries have repeatedly been corrected for this kind of overclaiming text.
+    EVIDENCE:
+      gcal.py:322 docstring "G-CAL's model-free artifact (m:176, m:358), computed in m:358's order.";
+      gcal.py:342-344 (roster_assertion appended right after renders_of_record); the artifact's
+      computation_order is [f1_012, f1_012_covariate_quote, renders_of_record, roster_assertion, conditions,
+      provenance]; m:358 places "roster assertion" last, after "completability".
+    FIX:
+      Reword it to "the 0.12 replay first (m:358, m:176); the model-free items of step 6 in this order", and
+      note that the roster assertion, being model-free, is computed here, ahead of m:358's listed position.
+    REFUTER:
+      I checked this against the code and ran the model-free half on stubs only. The facts in the finding
+      hold.
+
+      1. **m:358 and m:276 put the roster assertion last.** Both list G-CAL as: the 0.12 replay; the renders
+      of record and their sha; the seat's read; completability; the roster assertion.
+
+      2. **The code runs the roster assertion before the seat's read and completability.**
+      `model_free_artifact` computes it at gcal.py:342-344, right after `_renders_of_record`. Running the
+      function returns this `computation_order`: [f1_012, f1_012_covariate_quote, renders_of_record,
+      roster_assertion, conditions, provenance]. The seat's read request is built from that artifact.
+      `run_completability` then refuses unless the artifact is already on disk (`_model_free_check`). Nothing
+      reruns the roster assertion after completability.
+
+      3. **The same phrase appears in three places.** The function docstring at gcal.py:322 says "computed in
+      m:358's order". The driver usage text at scripts/m_sessions.py:43 says "the model-free half, in m:358's
+      order". The self-test label at gcal.py:896 says "computes in m:358's order".
+
+      Two things reduce the severity:
+      - Inside the function, the three m:358 items it computes (replay, renders, roster) keep m:358's relative
+      order, so a narrow reading of the phrase is true.
+      - The module docstring (gcal.py:4-14) quotes m:358 and then lists its own order openly, with the roster
+      assertion at (c). It does not, however, say that this moves the assertion ahead of the seat's read and
+      completability.
+
+      The move does no harm. `corr.renders_m` already applies the roster skip, and the assertion is a
+      deterministic model-free check on fixed renders. So the only problem is that a values-check quoting "in
+      m:358's order" would record more fidelity to m:358 than the code has. That is a real wording issue but
+      only nit-grade, and the suggested rewording, applied at all three places, fixes it.
+    DISPOSITION: FIXED (fix 11): 'the 0.12 replay first (m:358); the remaining model-free items follow'.
+
+====================================================================================================
+REVIEW LENS harness-safety -- 4 finding(s)
+====================================================================================================
+COVERED:
+  Harness-safety review, read-only on the repo. All scratch files are under scratchpad/step6/review-harness-
+  safety/. I confirmed that data/m/gates still holds only Q-F0_G-PORT.json and that data/m/ckpt does not
+  exist.
+
+  **Found:** two substantive defects and two minor ones.
+  1. **A healthy run is refused after Qwen loads.** run_completability runs the laptop preflight a second
+  time, after the load. Loading Qwen from the Hub id makes a tqdm progress bar, which starts multiprocessing's
+  resource_tracker as a child of the process. The preflight counts it as another model process and refuses. A
+  model-free probe shows that child being flagged. The same post-load pattern already exists in
+  stages._laptop_preflight for the later gate stages.
+  2. **The self-test fails once step 6 has run canonically.** Both the gcal and driver checks require the
+  canonical G-CAL files to be absent, unlike G-PORT's before/after byte comparison. Simulated: the check fails
+  once the model-free artifact exists.
+  3. **Minor:** a CorrStop or plain SystemExit gets past the driver's 0/2/4 exit codes and exits 1.
+  4. **Minor:** an existing completability artifact is refused only after all 128 generations.
+
+  **Checked, no defect found:**
+  - **The generate call:** injections=(), a literal cached=False, TEMP 0.7, STOP_CAP 60, the frozen ban ids,
+  the newline stop by default, the rule 28(d)(a) boundary asserted before every generation (a STOP on
+  failure), and insulation asserted per generation. check_call_sites over valence_core/m and
+  scripts/m_sessions.py returns []. Two mutated copies of gcal.py (cached=True; non-empty injections) are both
+  flagged.
+  - **Startup:** assert_insulated; assert_qwen_adapter (window 8192, legacy_truncate False, max_length None);
+  qwen_ban_list (frozen file sha256 pinned in audit, plus the live rebuild compare). A failure in any of these
+  refuses before the first checkpoint write.
+  - **Forbidden strings and imports:** none in gcal.py or the driver. testing is imported only inside
+  _selftest. No float enters condition (4) or the TEMP check.
+  - **Analyzer:** absence is logged, not refused. Nothing else in precheck, gate_line or preflight_laptop
+  refers to the analyzer. A read-only real run of gate_line on the current HEAD (bbc9ffe, whose diff from
+  988e5df touches no m files) returned no problems: the proposal (42ab36ec...) is committed and CLAUDE.md is
+  committed. The non-stub precheck today lists two problems: the model-free artifact is absent (expected), and
+  a live ipykernel (pid 1378, the asi-experiments env) trips ONE PROCESS. That second one is by the PIN's
+  design and is for the PI to clear before a run.
+  - **Canonical paths:** a stub run is refused under data/m for its artifact, checkpoint and model-free paths
+  (resume.refuse_canonical_out, symlinks resolved). A non-stub run writes only the canonical paths and refuses
+  any other --out. The driver refuses --out on the Qwen path before loading.
+  - **Writes:** artifacts are written once and atomically; the checkpoint is replaced atomically.
+  - **Resume:** skip-only, records must be the key order's prefix and are re-graded on load, and any identity
+  difference refuses, including the package, backend, proposal, renders, temp and cap.
+  - **Provenance:** recorded verbatim per invocation, with the gate line in the entry.
+  - **Loading:** Qwen loads only through qwen_or_explain.
+  - **Diff against HEAD:** besides the gcal additions, the only changes are the MODULES tuple, the argparse
+  description, the new subparser and one __init__ docstring line, which moves package_sha256 as expected. The
+  stage subcommands are unchanged.
+--- harness-safety #1 finder:substantive  strict refuter: refuted=True severity=none
+    valence_core/m/gcal.py:718  TITLE: The laptop preflight runs again after Qwen loads and refuses because of the load's own multiprocessing child process
+    CLAIM:
+      run_completability calls precheck(stub=False) a second time after the driver has loaded Qwen, and
+      precheck runs guard.preflight_laptop() again (gcal.py:576). guard._model_processes excludes only this
+      process and its ancestors. Loading Qwen starts a descendant python process whose command line names the
+      jlens venv, so the second check reports 'ONE PROCESS: another model process is running' and refuses.
+      Nothing is generated, and the result is exit 2.
+    FAILURE_SCENARIO:
+      Code runs `jlens-qwen36/.venv/bin/python scripts/m_sessions.py gcal completability --proposal-file
+      PROPOSAL-m-gating-campaign-v1_11.md` on the laptop while online. No HF_* variables are set in this
+      environment. (1) The pre-load precheck passes. (2) qwen_or_explain loads QwenMLXAdapter(model_id='mlx-
+      community/Qwen3.6-27B-4bit'), which calls mlx_lm.load, then _download. That path does not exist relative
+      to the cwd, so it calls huggingface_hub.snapshot_download, which goes online. On the online path,
+      snapshot_download always runs _create_progress_bar and thread_map with tqdm. tqdm's get_lock calls
+      TqdmDefaultWriteLock.create_mp_lock, which creates multiprocessing.RLock(). Under macOS's spawn start
+      method, SemLock registers with resource_tracker, which spawns the child `<repo>/jlens-
+      qwen36/.venv/bin/python -c from multiprocessing.resource_tracker import main;main(N)`. (3)
+      run_completability's precheck, then preflight_laptop, flags that child. The run raises GcalRefusal after
+      the full model load and before any generation. This happens on every attempt, so G-CAL completability
+      can never run on the healthy laptop.
+    EVIDENCE:
+      Probe at scratchpad/step6/review-harness-safety/tracker_probe.py, run in the jlens venv with no model,
+      tokenizer or network. Before tqdm, _model_processes listed only an unrelated ipykernel. After one
+      `tqdm(total=1)`, it also listed '35801 /Users/jasondwyer/Documents/code/jspace-lab/jlens-
+      qwen36/.venv/bin/python -B -c from multiprocessing.resource_tracker import main;main(4)', and
+      guard.preflight_laptop() returned a matching 'ONE PROCESS: another model process is running: 35801 ...'
+      line. The library path is in the installed packages: mlx_lm/utils.py:236-251 (_download calls
+      snapshot_download when the path does not exist) and huggingface_hub 1.22.0 _snapshot_download.py:247-251
+      (repo_info online) then :412-497 (progress bar and thread_map, unconditional on the online path).
+      tqdm/std.py:115-121 is create_mp_lock. The gcal selftest replaces guard.preflight_laptop with a lambda
+      (gcal.py:1358), so no check can catch this. The same post-load pattern exists before this diff in
+      stages._laptop_preflight, where every Qwen gate stage passes an already-loaded adapter.
+    FIX:
+      Run m:267's checklist once, before the load; the driver already does this at m_sessions.py's pre-load
+      precheck. Add a `preflight: bool` parameter to precheck (or to run_completability). The driver's pre-
+      load call passes True, and run_completability's post-load re-check skips guard.preflight_laptop and
+      keeps everything else, including the gate line. Alternatively, exclude this process's descendants (a
+      recursive `pgrep -P`) from the post-load check. Add a selftest that runs the real _model_processes with
+      a descendant present.
+    REFUTER:
+      The claimed failure does not happen on the installed stack. The finding's evidence uses a plain `tqdm`,
+      but the Qwen load path never creates one.
+
+      What is correct: `run_completability` calls `precheck(stub=False)` after the load (gcal.py:718), and
+      that runs `guard.preflight_laptop()` again (gcal.py:576). `guard._self_and_ancestors` excludes only this
+      process and its ancestors. A child process from the jlens venv would be flagged.
+
+      What is wrong is how that child would appear. The load path is `mlx_lm.load` -> `_download` ->
+      `snapshot_download`, and it does use `_create_progress_bar` and `thread_map` on the online path. In both
+      places `tqdm_class` is huggingface_hub's own subclass (`_snapshot_download.py:24` imports it as
+      `hf_tqdm`; :412 does `tqdm_class = tqdm_class or hf_tqdm`). huggingface_hub 1.22.0 sets a thread lock on
+      that subclass when it is imported: `utils/tqdm.py:258` has `tqdm.set_lock(threading.RLock())`. The
+      comment there says the purpose is to keep tqdm's multiprocessing lock from starting a resource-tracker
+      process (#4065). So `get_lock()` returns the existing thread lock, and `create_mp_lock` is never
+      reached. `thread_map`'s `ensure_lock` (tqdm/contrib/concurrent.py:18-21) reuses that existing `_lock`.
+      The per-file `hf_hub_download` calls pass `_AggregatedTqdm`, which is not a tqdm subclass.
+
+      Checks I ran in the jlens venv. No model or tokenizer was loaded, there was no network (sockets
+      blocked), and scratch files went to scratchpad/step6/refuter-harness-safety/:
+      - probe2.py: an HF tqdm with `name="huggingface_hub.snapshot_download"` created no `mp_lock`, no
+      resource tracker and no child process.
+      - probe3.py first imported the adapter's modules (mlx.core, mlx_lm, transformers, jlens_qwen.model /
+      forced_choice / conditioning / patch_gdn): no tracker and no children.
+      - probe3.py then ran the real `snapshot_download` online path for 'mlx-community/Qwen3.6-27B-4bit'.
+      `repo_info`, `list_repo_tree` and `hf_hub_download` were mocked and the cache dir was temporary. The
+      progress bar and `thread_map` both ran ('Fetching 4 files', 4/4). Afterwards there was no tracker, no
+      children, and the guard flagged no child process.
+      - Only a plain `tqdm(total=1, disable=True)` reproduced the finding's child (`... -B -c from
+      multiprocessing.resource_tracker import main;main(5)`, flagged by `_model_processes`). That is what the
+      finding's own probe did, and it is not what the load path does.
+
+      Searches of mlx_lm/utils.py, mlx_lm/tokenizer_utils.py, jlens_qwen/*.py and the transformers 5.5.0
+      tokenizer modules found no tqdm or multiprocessing use. So the claims that the run refuses on every
+      attempt and that G-CAL completability can never run do not hold.
+
+      A narrow latent fragility remains. Any future library on the load path that creates a multiprocessing
+      primitive would trip the post-load check, because descendants are not excluded. That is speculative and
+      is not the finding as stated.
+    DISPOSITION: REFUTED by the strict refuter (the load path starts no such child); no change.
+
+--- harness-safety #2 finder:substantive  strict refuter: refuted=False severity=substantive
+    valence_core/m/gcal.py:1412  TITLE: G-CAL self-test checks require the canonical artifacts to be absent, so they fail after step 6's own canonical run
+    CLAIM:
+      The last gcal selftest check (gcal.py:1412-1414) asserts that G-CAL_model-free.json,
+      G-CAL_seat_read_request.md, G-CAL_completability_qwen.json and ckpt/G-CAL_qwen.json do not exist under
+      data/m. The driver's check (m_sessions.py:2137-2140) asserts `not any(gcanon_before.values())` and
+      `gck_before is False`. Both fail as soon as Code writes the canonical artifacts that step 6 exists to
+      produce. G-PORT's precedent (m_sessions.py:1955-1956) compares the canonical file's bytes before and
+      after, so it does not depend on whether the file exists.
+    FAILURE_SCENARIO:
+      Code runs `gcal model-free` canonically, then the site check. The m self-test drops to 694/696, and a
+      ckpt check is added to the failures once completability has run. Fixing the checks means editing
+      valence_core/m/gcal.py, which moves package_sha256 away from the value the never-overwritten model-free
+      artifact recorded. If the edit lands between a kill and a --resume of completability, the checkpoint's
+      package_sha256 no longer matches and the resume is refused (CHECKPOINT MISMATCH). The run restarts from
+      zero, or Code has to move canonical files aside by hand.
+    EVIDENCE:
+      Simulation at scratchpad/step6/review-harness-safety/post_canon.py: gcal.GATES_DIR and CKPT_DIR patched
+      to a temp dir holding a real model-free artifact written by write_json_once, then gcal._selftest run.
+      'gcal: the selftest wrote nothing under data/m (no G-CAL artifact, no checkpoint)' FAILs. The only other
+      failure comes from the patching itself (canon_out is no longer canonical). The driver's expression is
+      visible in the diff at m_sessions.py:2138-2140.
+    FIX:
+      Follow G-PORT: before the checks, snapshot each canonical G-CAL file's bytes (or None), and assert
+      afterwards that the bytes are unchanged. Drop `not any(gcanon_before.values())`, `gck_before is False`
+      and the absence assertion in gcal.py:1412-1414. Land this before the canonical model-free run, since
+      that artifact records package_sha256.
+    REFUTER:
+      The finding holds. I checked it by reading the code and running it with stubs only. Nothing was written
+      under data/, and data/m/gates still holds only Q-F0_G-PORT.json.
+
+      (1) Without --out, write_model_free (gcal.py:791-804) uses d = Path(GATES_DIR), which is data/m/gates.
+      It writes G-CAL_model-free.json and G-CAL_seat_read_request.md there with write_json_once and
+      write_text_once. The canonical completability paths (gcal.py:492-493) are
+      GATES_DIR/G-CAL_completability_qwen.json and CKPT_DIR/G-CAL_qwen.json. No unlink of the checkpoint
+      appears anywhere, and the selftest at :1391 asserts the checkpoint still exists after a PASS run.
+
+      (2) The check at gcal.py:1412-1414 asserts that all four of those files are absent.
+
+      (3) The driver check at m_sessions.py:2137-2140 requires `not any(gcanon_before.values())` and
+      `gck_before is False`. Both are False once any canonical G-CAL file exists, whatever the selftest itself
+      did.
+
+      (4) The G-PORT precedent at m_sessions.py:1955-1956 is as described: `canon_before =
+      canon_g.read_bytes() if canon_g.is_file() else None`. It already passes while the canonical Q-F0_G-
+      PORT.json exists.
+
+      (5) Today's full m selftest is 696/696 (68 s). The reviewer's simulation patches gcal.GATES_DIR and
+      CKPT_DIR to a temp dir that holds a real model-free artifact. Run as written, it gives two FAILs: 'the
+      selftest wrote nothing under data/m', and the canon_out check, which fails only because of the patch, as
+      the finding says.
+
+      (6) The completability checkpoint identity binds package_sha256 (gcal.py:591), and a resume with a
+      different identity is refused CHECKPOINT MISMATCH (gcal.py:622). So an edit to gcal.py between a kill
+      and a --resume does force a restart. The model-free artifact records package_sha256 in its provenance,
+      so editing after the canonical run leaves that recorded value stale.
+
+      One imprecision: 'a ckpt check is added to the failures once completability has run' is wrong as a
+      count. The checkpoint conditions sit inside the same two chk calls, so after completability the result
+      is still 694/696, not more failures.
+
+      The core defect is as stated. After step 6's own canonical model-free run, the m self-test, and with it
+      the site check that gates later steps, fails 2 of 696. The fix has to land before the canonical run,
+      because that artifact records package_sha256. Severity stays substantive.
+    DISPOSITION: FIXED (fix 1): byte snapshots before and after, as G-PORT's check.
+
+--- harness-safety #3 finder:minor  strict refuter: refuted=False severity=minor
+    scripts/m_sessions.py:2300  TITLE: STOPs raised as CorrStop or plain SystemExit bypass the driver's gcal exit-code mapping
+    CLAIM:
+      run_gcal_model_free and run_gcal_completability catch only gcal.GcalRefusal and gcal.GcalStop. A
+      corr.CorrStop (a SystemExit subclass, for example corr.load_pool's POOL SHA STOP, called from
+      model_free_artifact and precheck), guard.assert_insulated's SystemExit inside the generation loop
+      (gcal.py:750, not wrapped, unlike the startup call) and qwen_or_explain's SystemExit all propagate out
+      of main. The process exits 1, while the documented gcal codes are 0, 2 and 4.
+    FAILURE_SCENARIO:
+      data/f/pools.json drifts from its pinned sha. `gcal model-free` raises CorrStop from corr.load_pool,
+      which is not caught, and exits 1 instead of the documented 4 (STOP). A wrapper that gates on exit 4 or 2
+      would read this as an unclassified crash.
+    EVIDENCE:
+      corr.py:91 `class CorrStop(SystemExit)`; corr.py:181 raises it in load_pool. gcal.py:328 and :570 call
+      corr.load_pool() unwrapped, and gcal.py:750 calls guard.assert_insulated() unwrapped (session.py:55
+      raises SystemExit). The driver's except clauses are in the diff (run_gcal_model_free;
+      run_gcal_completability's `except gcal.GcalRefusal` / `except gcal.GcalStop`).
+    FIX:
+      In both driver functions, after the Gcal-specific clauses, add `except SystemExit as e:` that maps to 4
+      (STOP), or wrap corr.load_pool, the in-loop assert_insulated and the load in gcal so they raise GcalStop
+      or GcalRefusal.
+    REFUTER:
+      I confirmed this by running the code. Both driver functions catch only gcal.GcalRefusal and
+      gcal.GcalStop: run_gcal_model_free at scripts/m_sessions.py:242-248 and run_gcal_completability at
+      :310-315. corr.CorrStop subclasses SystemExit (corr.py:91), and corr.load_pool raises it on a pool-sha
+      mismatch (corr.py:181). gcal.model_free_artifact calls corr.load_pool with no wrapper (gcal.py:328), and
+      so does gcal.precheck (gcal.py:570). The guard.assert_insulated call inside the generation loop is also
+      unwrapped (gcal.py:750); the startup call at :653 is wrapped. _load_qwen calls qwen_or_explain, which
+      raises SystemExit by design, and that path is not caught either. Test: in a scratch harness I patched
+      corr.POOLS_SHA16 to a wrong value and ran m_sessions.main(["gcal","model-free","--out",<scratch>]) under
+      sys.exit. Python printed "POOL SHA STOP: ... sha256 8547d9a11ba55b95 != 0000000000000000 (m:176)" and
+      the process exited 1, not 4. The usage text at m_sessions.py:49-50 and :58 documents "Exit 0 written or
+      identical, 2 refused, 4 STOP" and "Exit 0 PASS, 4 FAIL or STOP, 2 refusal", and the PIN at :226-227 says
+      the same. So the exit-code contract is broken for these paths. Severity stays minor. Nothing is
+      generated or written before the raise, the STOP message still reaches stderr, the exit is still non-
+      zero, and no verdict or artifact is affected. Only the 2/4 classification is lost. The in-loop
+      assert_insulated case needs the quarantined module to be imported mid-run, which is close to impossible,
+      but the pool-pin and qwen_or_explain paths are realistic.
+    DISPOSITION: FIXED (fix 2): any other SystemExit exits 4 with its message.
+
+--- harness-safety #4 finder:minor  strict refuter: refuted=False severity=minor
+    valence_core/m/gcal.py:567  TITLE: An existing completability artifact with no checkpoint is refused only after all 128 generations
+    CLAIM:
+      precheck refuses an existing checkpoint, a missing model-free artifact, preflight problems and gate-line
+      problems, but it never looks at paths['out']. When the canonical G-CAL_completability_qwen.json exists
+      and the checkpoint has been moved aside, the run generates 128 times and then write_json_once refuses
+      with GcalRefusal (exit 2). This contradicts GcalRefusal's docstring ('nothing generated past it') and
+      the PIN's definition of a refusal as decided before the generations it governs.
+    FAILURE_SCENARIO:
+      After a FAIL artifact and a re-specification, Code moves only the checkpoint aside and re-runs. The full
+      set of Qwen generations runs, then the run ends with 'G-CAL ARTIFACT EXISTS ... never overwritten' and
+      exit 2, and a new canonical checkpoint is left beside the old artifact.
+    EVIDENCE:
+      precheck (gcal.py:545-581) has no check on paths['out']. write_json_once(paths['out'], art) is first
+      reached at gcal.py:782. The selftest asserts the behaviour: case e6 requires `len(ad6.calls) == 128`
+      before the refusal (gcal.py:1254).
+    FIX:
+      In precheck: when no checkpoint is on disk and paths['out'] exists (or is a symlink), refuse with
+      GcalRefusal before any load or generation. A complete checkpoint can still re-derive an identical
+      artifact under --resume.
+    REFUTER:
+      The finding holds. I confirmed it by reading the code and by running a stub. `precheck`
+      (gcal.py:545-581) checks the pool, the paths, the proposal hash, an existing checkpoint without
+      --resume, the model-free artifact, and on a non-stub run the preflight and the gate line. It never
+      checks `paths['out']`. The driver's early `gcal.precheck(out_path=None, ...)` in
+      scripts/m_sessions.py:304, which runs before the model loads, has the same gap. The first time anything
+      looks at the artifact path is `write_json_once(paths['out'], art)` at gcal.py:782, after the generation
+      loop. I ran a reproduction in scratch (scratchpad/step6/refute_out_precheck/repro.py) with
+      `testing.ScriptedAdapter`, a model-free artifact on disk, a differing G-CAL_completability_qwen.json
+      already at `out`, and no checkpoint. `precheck` passed. `run_completability` then made 128 generate
+      calls and raised `GcalRefusal` "G-CAL ARTIFACT EXISTS ... never overwritten". It left a new 128-record
+      checkpoint, and the old artifact was unchanged. This conflicts with the `GcalRefusal` docstring
+      ("nothing generated past it"). It also conflicts with the PIN, which lists "an existing different
+      artifact" among refusals "decided before a generation it would govern". The selftest's case e6
+      (gcal.py:1254, `len(ad6.calls) == 128`) asserts the post-generation behaviour, so it is built that way
+      rather than accidental, but that does not remove the contradiction. A fresh run cannot avoid the refusal
+      by producing identical bytes, because each provenance entry carries a UTC stamp, so the refusal after
+      128 generations is certain in this scenario. The severity stays minor. The never-overwrite protection
+      still works: the artifact is untouched and nothing is lost. The cost is the wasted Qwen generations
+      (uncached, cap 60), a stray canonical checkpoint, and a misleading exit-2 "refusal". The suggested fix
+      is sound: when no checkpoint exists and `out` exists or is a symlink, refuse in `precheck` before
+      anything loads. A complete checkpoint under --resume already re-derives identical bytes.
+    DISPOSITION: FIXED (fix 3): precheck refuses before any load or generation (file or symlink, dangling included); Code added the write-time symlink guard for the remaining case.
+
+====================================================================================================
+REVIEW LENS tests-and-request -- 8 finding(s)
+====================================================================================================
+COVERED:
+  I read gcal.py in full, the gcal diff to scripts/m_sessions.py and __init__.py, m:176, m:267, m:277, m:279
+  and m:358, f0_calibrate.py (read only), e2a.generate_round_positional's defaults, QwenMLXAdapter.generate
+  and its constructor (window 8192, no encode limit, newline stop on by default), and the stages, resume and
+  guard helpers. I ran `scripts/m_sessions.py gcal model-free --out <scratch>/mf_run` (rc 0) and read both
+  outputs: renders sha256 a04f67b0...4372, the f1 0.12 replay sha16 2c2c227395ea9f2d (31 changed, cond1 4/16,
+  cond2 16/16), covariate 0.078125 (+.078), and n_eligible, k, the item-7 skip, the operand spans and both
+  rosters clean as m:176 states. The seat request puts the sha first, then the renders alone numbered 0-15,
+  then the key. Its quoted condition (3) matches m:176, and I spot-checked the key content as correct. For
+  mutation testing I copied the package to scratch and ran 87 mutants against the gcal self-test, and 9 of
+  them against the driver integration self-test. git was faked in my harness; with it, the base copy passes
+  44/44 gcal and 96/96 integration checks. Caught: f0's grader regex, both bars and their strictness, the rel
+  factor, AND/OR, the covariate sign and argument order, the seed key (in keys.py, in gcal, and in both), the
+  seed index, the prompt bytes and banner, cached=True and an omitted cached= (both also flagged by
+  check_call_sites), temp, cap, the ban list, the pool literals, the _task_of swap, conditions (1)-(2), the
+  covariate-quote STOP, roster case-sensitivity, write-once, the launched count, stub detection, n, the non-
+  stub out/preflight/gate checks, the write_model_free guard (driver), and the FAIL exit code. Each of the
+  three refuse_canonical_out calls in _paths survives removal alone, because they share the out path's parent;
+  removing all three is caught. No self-test wrote to a canonical path in the copies. check_call_sites on the
+  repo returns []. The forbidden strings are absent. The repo's data/m/gates still holds only Q-F0_G-
+  PORT.json, and I made no repo writes or git writes. Flags 1-2 (the .gitignore line for the .md, and the box-
+  only f0 checks) are confirmed but were already disclosed, so I did not repeat them as findings. Scratch work
+  is under /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-
+  lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step6/review-tests-and-request/ (tools/, mut/,
+  postcanon/, mf_run/).
+--- tests-and-request #1 finder:substantive  strict refuter: refuted=False severity=substantive
+    valence_core/m/gcal.py:1412  TITLE: The no-write checks fail once G-CAL's own canonical artifacts exist, so the m self-test breaks at step 6
+    CLAIM:
+      Both no-write checks require the canonical G-CAL files to be absent, when they should check that the
+      files are unchanged. gcal.py:1412-1414 asserts `not any((GATES_DIR/n).exists() ...)` and `not
+      (CKPT_DIR/CKPT_NAME).exists()`. m_sessions.py:2137-2140 requires `not any(gcanon_before.values())`. So
+      once Code writes the canonical model-free artifact and seat request (the very next action in step 6,
+      flag 3), the self-test fails on a healthy repo. It fails again once completability writes
+      data/m/gates/G-CAL_completability_qwen.json and data/m/ckpt/G-CAL_qwen.json.
+    FAILURE_SCENARIO:
+      Code runs `gcal model-free` canonically, which writes data/m/gates/G-CAL_model-free.json and
+      G-CAL_seat_read_request.md. From then on every `m_sessions.py --selftest` and every site check reports
+      694/696 and exits 1: the gcal check 'the selftest wrote nothing under data/m' fails, and so does the
+      driver check 'the gcal checks wrote nothing under data/m'. A site check gated on 'N/N m selftest checks
+      pass' then fails at every later step (7, 8, 9 ...), even though the self-test wrote nothing.
+    EVIDENCE:
+      In a scratch copy of the repo (review-tests-and-request/postcanon) I ran `scripts/m_sessions.py gcal
+      model-free` with no --out, which wrote the copy's own data/m/gates. Then: gcal self-test 43/44, '[FAIL]
+      gcal: the selftest wrote nothing under data/m (no G-CAL artifact, no checkpoint)'. Driver integration
+      self-test, gcal checks only: 4/5, '[FAIL] m_sessions: the gcal checks wrote nothing under data/m (no
+      G-CAL artifact, request or checkpoint)'. G-PORT's equivalent check (m_sessions.py:1955-1956, 2016)
+      compares the canonical bytes before and after, and it passes today with Q-F0_G-PORT.json present.
+    FIX:
+      Snapshot each canonical G-CAL path's bytes (or None) before the self-test and assert the same
+      afterwards, as G-PORT's check does, in both gcal._selftest and the driver's gcal block. Drop the `not
+      any(gcanon_before.values())` conjunct.
+    REFUTER:
+      The finding is confirmed by reading the code and by running it with stubs only.
+
+      **Code read**
+      - `gcal.py:1412-1414`: the final self-test check requires that none of `G-CAL_model-free.json`,
+      `G-CAL_seat_read_request.md` or `G-CAL_completability_qwen.json` exists under `GATES_DIR`, and that
+      `CKPT_DIR/G-CAL_qwen.json` does not exist. It checks that the files are absent, not that they are
+      unchanged.
+      - `m_sessions.py:2042-2043` records which of those files exist before the run (`gcanon_before`,
+      `gck_before`). Then `m_sessions.py:2137-2140` requires three things: the same existence map afterwards,
+      `not any(gcanon_before.values())`, and `gck_before is False`. So the driver check also fails whenever
+      any canonical G-CAL file exists before the self-test starts.
+      - For contrast, G-PORT's check (`m_sessions.py:1956` and `:2016`) compares the canonical artifact's
+      bytes before and after (or None). It passes today with `data/m/gates/Q-F0_G-PORT.json` present, which is
+      the only file in that directory now.
+      - `gcal.write_model_free(out_dir=None)` writes into the canonical `GATES_DIR`, which is `data/m/gates`.
+      - §8 step 6 (m:358) lists the model-free replay, the renders of record, the seat's read and
+      completability. The commit history says `data/m/` gates and checkpoint JSON are allowlisted to be
+      committed. So these canonical files are meant to exist and stay after step 6.
+
+      **Run (stubs only, scratch `step6/refute-nowrite`)**
+      - I ran `gcal._selftest` with `gcal.GATES_DIR` and `gcal.CKPT_DIR` patched to a temp directory.
+      - Baseline with no files: 43/44. The one failure is an effect of my patch, not of the code: the temp
+      directory is outside `data/m`, so `refuse_canonical_out` does not fire on the canonical-out sub-case.
+      - With a dummy `G-CAL_model-free.json` placed in the temp gates directory: 42/44. The added failure is
+      exactly "gcal: the selftest wrote nothing under data/m (no G-CAL artifact, no checkpoint)", even though
+      the self-test wrote nothing there.
+      - Nothing was written under `data/`, and no model or tokenizer was loaded.
+
+      **Severity**
+      The scenario will happen: the first canonical write in step 6 will make every later m self-test and
+      every site check gated on "N/N m selftest checks pass" fail on a healthy repo. Verdicts are not
+      affected; this is a defect in the test harness. Substantive is still a fair grade because it blocks the
+      step-gating checks from step 6 onward.
+
+      The proposed fix is correct and matches G-PORT's existing pattern: snapshot the bytes (or None) of each
+      canonical file before the run, compare them after, and drop the conjuncts that require the files to be
+      absent beforehand.
+    DISPOSITION: FIXED (fix 1).
+
+--- tests-and-request #2 finder:minor  strict refuter: refuted=False severity=minor
+    valence_core/m/gcal.py:399  TITLE: The seat read request never asks for a blind recovered answer, and its key paragraph states the expected 16/16
+    CLAIM:
+      Section A only says 'read these first, each alone' and has no instruction to write down a recovered task
+      or answer per render. The only recording instruction ('yes or no, with the answer recovered') is in
+      section B, directly above each item's clean task and gold list. The same B paragraph also tells the seat
+      that the provisional reads 'found 16 of 16'. The 'answer recovered' that condition (3)'s read of record
+      asks for therefore cannot be blind, and the expected outcome anchors the read.
+    FAILURE_SCENARIO:
+      The seat opens G-CAL_seat_read_request.md and reads section A without being told to commit an answer per
+      render. The seat learns what to record only in section B, where the clean text and golds sit a few lines
+      below. The read of record then cannot show that the golds were recovered from the renders alone, which
+      defeats the 'renders alone first' purpose the docstring states (gcal.py:18-22).
+    EVIDENCE:
+      I rendered the request with `scripts/m_sessions.py gcal model-free --out <scratch>/mf_run`. Lines 7-24
+      hold the 16 renders and no instruction. Line 30, in section B, holds 'For each item 0-15, record whether
+      its gold is recoverable ... (yes or no, with the answer recovered)' and 'The seat's provisional reads of
+      2026-10-04 found 16 of 16'. The item keys start at line 32. The sha (line 3), the numbering 0-15, the
+      m:176 quotes and the per-item content all checked correct.
+    FIX:
+      Put the recording instruction in section A or before it, for example 'for each render write the task as
+      you read it and its answer, before opening B'. Move or omit the provisional 16/16 sentence, or place it
+      after the per-item records. Alternatively, emit the renders and the key as two files.
+    REFUTER:
+      I confirmed this by reading the code and running it on stubs only. `seat_read_request` (gcal.py, about
+      lines 380-418) writes section A as the SEAT_A header followed by the 16 renders, and nothing else. A
+      carries no instruction to write down a task or answer per render. The only recording instruction ("(yes
+      or no, with the answer recovered)") is the first paragraph under SEAT_B. The same paragraph contains
+      "The seat's provisional reads of 2026-10-04 found 16 of 16". The per-item keys follow it directly, each
+      with its clean task and gold.
+
+      I ran `scripts/m_sessions.py gcal model-free --out <scratch>/step6/refute-seatreq/mf_run`, which writes
+      nothing under data/. In the output, the renders are on lines 9-24, the instruction and the 16/16
+      sentence are on line 30, and Item 0's clean text and gold start at line 32. The defect is real: the
+      docstring says the renders are read alone first, but the request never has the seat commit an answer
+      from A before showing it the key.
+
+      Three things limit the severity:
+      - m:176 itself does not require a blind read or an "answer recovered". That wording is Code's own (its
+      PIN), so the finding slightly overstates what condition (3) asks for.
+      - The provisional 16/16 is already stated in m:176 and comes from the seat's own earlier reads, so the
+      anchoring added by repeating it is small.
+      - A seat that follows the instruction to read A before B still forms its read before seeing the key. The
+      read is not impossible to do blind; it is just not recorded blind.
+
+      The finding's main point stands: the request's wording and layout do not make the seat record its read
+      before showing the key. It is a small wording and ordering fix. Severity: minor.
+    DISPOSITION: FIXED (fix 4): the recording instruction stands before section A; the provisional count is removed.
+
+--- tests-and-request #3 finder:minor  strict refuter: refuted=False severity=minor
+    valence_core/m/gcal.py:1063  TITLE: Wrong grader calls survive every test, so a mis-graded condition (4) would go undetected
+    CLAIM:
+      Every scripted plan, in gcal.py:1063-1075 and in the driver at m_sessions.py:2096, answers either
+      'Verily {gold[0]}' or 'Zqxj unknown.'. Misses only ever fall on items 11-15. Two mutations of the grader
+      call therefore pass all 44 gcal checks and all 5 driver gcal checks: grading only the first gold variant
+      (in the loop and in the resume re-grade), and grading task + text. Six items have multi-variant golds
+      (1, 3, 4, 10, 13, 15), and items 7 ('iron') and 9 ('45') contain their gold inside the task, so both
+      bugs would change hit counts on a real run.
+    FAILURE_SCENARIO:
+      Suppose a later edit narrows the call to `grade(text, gold[:1])`. Qwen answering 'seven', 'twelve',
+      'three', 'two', 'twenty-four' or 'shut' is then scored a miss, which lowers the accuracies and can flip
+      condition (4) or shift the covariate, and no self-test fires. Grading against the prompt as well would
+      score every item-7 and item-9 generation a hit.
+    EVIDENCE:
+      Mutation runs on a scratch copy: grader_first_gold_only_run gives 44/44, grader_first_gold_only_both
+      gives 44/44 and driver 5/5, grader_grades_task_plus_text gives 44/44 and driver 5/5. By contrast, the
+      regex mutation of normalize is caught (41/44, by the pinned source hashes and f0's battery).
+    FIX:
+      Make some scripted hits use a non-first variant ('seven', 'shut', 'twenty-four'). Place some misses on
+      items 7 and 9. Assert the exact hit count.
+    REFUTER:
+      The finding is confirmed, both by reading the code and by running independent stub-only mutations. All
+      work was in-process on the module, using scratch under step6/refute-grader-mut/. No files under the repo
+      or data/ were written, and no model was loaded.
+
+      1. **Scripted plans.** In the gcal selftest (gcal.py:1063-1075), a hit always answers "Verily
+      {gold[0]}." and a miss always answers "Zqxj unknown.". Misses fall where i*4+s >= h. With h in {44, 45,
+      47, 48, 52, 64}, that means items 11-15 only.
+
+      2. **Driver plan.** The driver plan (m_sessions.py:2093-2096) is either all-hit with gold[0] or all-miss
+      with the same "Zqxj unknown." text. Its FAIL check tests only rc_f == 4 and the FAIL line. Under the
+      task+text mutation, the all-miss run would score 8/64 per pool, from items 7 and 9 over 4 seeds. That is
+      still a FAIL, so this check cannot catch it.
+
+      3. **Pool facts.** I loaded the pool through corr.load_pool and corr.renders_m. Items 1, 3, 4, 10, 13
+      and 15 have multi-variant golds. Items 7 ('iron') and 9 ('45') grade True against both their clean task
+      and their render.
+
+      4. **Mutation runs.** I used exact-string replacement of the call sites, exec'd into the imported gcal
+      module, then ran gcal._selftest.
+         - Unmutated baseline: 44/44.
+         - First gold only, at the run_completability:761 call: 44/44.
+         - First gold only, at :761 and at the _load_ckpt:641 resume re-grade: 44/44.
+         - grade(task + " " + text) at :761: 44/44.
+         - Control mutation 'hit = not grade(...)': 38/44, so the harness does apply its mutations.
+
+      5. **Why the existing checks miss it.** The checks at 1137 (hit is grade(text, full gold), plus sum ==
+      97) and the accuracy fractions do assert exact counts. They cannot tell the mutations apart because
+      every scripted hit uses gold[0]. The task-contains-gold items 7 and 9 are always scripted as hits.
+
+      6. **Real responses would differ.** grade('Seven.', ['7','seven']) is True, but with ['7'] alone it is
+      False. 'It is shut.' and 'twenty-four' behave the same way. grade('Compute 90 minus 45. Zqxj unknown.',
+      ['45']) is True, while the text alone is False.
+
+      7. **Scope.** The source-hash pin covers only the bodies of normalize and grade, not the call sites. So
+      a regression in either call would change hit counts on a real Qwen run and could flip condition (4) or
+      move the covariate, and no self-test would fire.
+
+      The production code is correct today. This is a real gap in test coverage only, so minor is the right
+      severity.
+    DISPOSITION: FIXED (fix 5): non-first variants, restatements on items 7 and 9 graded as f0 grades them, exact counts 46/64 and 45/64.
+
+--- tests-and-request #4 finder:minor  strict refuter: refuted=False severity=minor
+    valence_core/m/gcal.py:1217  TITLE: Most of the resume identity and the key-prefix check are never exercised
+    CLAIM:
+      The tampered-resume cases change only proposal_sha256 and renders_sha256, plus a backend case. The
+      comparison in _load_ckpt can ignore any one of the other 12 identity keys without a test failing,
+      including key_set_sha256, the very thing m:267 names as G-CAL's identity ('its key set and this
+      document's hash'), as well as package_sha256, ban_sha256, temp and stop_cap. The 'out of order' and
+      'retexted' cases are refused by the re-grade check before the prefix check runs, so the prefix check
+      (pool, i, seed, task) is never what refuses them.
+    FAILURE_SCENARIO:
+      A regression that drops package_sha256 or key_set_sha256 from the comparison would let a resume splice
+      records generated under different code or keys into one artifact, and the self-test would stay green.
+    EVIDENCE:
+      In mut2.py, ident_ignore_{package_sha256, key_set_sha256, ban_sha256, temp, stop_cap, pool_sha16,
+      banner_sha256, segment_form, path, n, stage, substrate} each give 44/44, as do want_ignore_seed,
+      want_ignore_task and resume_skip_prefix. resume_union_to_ident_only also gives 44/44.
+      resume_no_identity_check and resume_skip_regrade are caught.
+    FIX:
+      Add tampered-checkpoint cases for key_set_sha256 and package_sha256, and ideally one per identity key.
+      Add a record whose seed or task alone is altered while its text still grades consistently.
+    REFUTER:
+      The finding stands except for one sub-claim, which is wrong about the mechanism. I checked it against
+      the untracked valence_core/m/gcal.py (82,480 bytes), using a scratch copy that diffs clean against the
+      repo. Mutations were run with stubs only, in scratchpad/step6/refute-resume-ident/.
+
+      (1) What the tests tamper with. The resume refusal block at gcal.py:1192-1229 changes only
+      identity["proposal_sha256"], identity["renders_sha256"] and the backend through other_backend(). It also
+      has three record cases: "regraded", "out of order" and "retexted". IDENTITY_KEYS (:103-105) has 15 keys,
+      so 12 identity keys are never tampered.
+
+      (2) The 12 untested keys. I made the diff comprehension at _load_ckpt (:618) skip one key at a time. For
+      each of stage, substrate, n, key_set_sha256, ban_sha256, package_sha256, temp, stop_cap, path,
+      pool_sha16, banner_sha256 and segment_form, the gcal selftest still gives 44/44. Skipping
+      proposal_sha256, renders_sha256 or backend_identifier gives 43/44. m:267 says "G-CAL's identity is its
+      key set and this document's hash" and "a resume refuses any change of seed or n". Even so, no test fails
+      when key_set_sha256 or n is dropped.
+
+      (3) The prefix check. Removing the whole prefix check (want check to `if False:`) still gives 44/44. So
+      do dropping seed alone and dropping task alone. Removing the re-grade check gives 43/44.
+
+      The wrong sub-claim: the finding says "out of order" is refused by the re-grade check before the prefix
+      check runs. In the unmutated code the prefix check runs first and refuses that case itself. I printed
+      the message: "record 3 ... is not key 3 of the key set (order, seed or task) -- skip-only resumes a
+      prefix". The real point is weaker: the test asserts only that some GcalRefusal happens with zero
+      generations. When the prefix check is gone, the re-grade check refuses the swapped record instead, so
+      the prefix check is not load-bearing for any test. "Retexted" is refused only by the re-grade check, as
+      the finding says.
+
+      This is a test-coverage gap, not a code defect. The identity and prefix comparisons in _load_ckpt are
+      correct as written, so severity is minor.
+    DISPOSITION: FIXED (fix 6): one case per identity key (15), seed-only and task-only record tampering.
+
+--- tests-and-request #5 finder:minor  strict refuter: refuted=False severity=minor
+    valence_core/m/gcal.py:1301  TITLE: The grader-honesty refusal test passes for the wrong reason
+    CLAIM:
+      The 'honesty' case resumes o10, which the earlier 'boundary' run left with a checkpoint, using
+      pool=bad_gold. If the honesty refusal is removed, the case is still refused, but by a CHECKPOINT
+      MISMATCH on pool_sha16. The check asserts only `isinstance(..., GcalRefusal)` and does not look at the
+      message.
+    FAILURE_SCENARIO:
+      Deleting `if hon: raise GcalRefusal(...)` in run_completability leaves the check named 'startup refuses
+      ... f0's grader-honesty failure' still passing.
+    EVIDENCE:
+      The honesty_off mutant gives 44/44. With a debug print added, the mutant's refusal reads 'G-CAL REFUSED:
+      CHECKPOINT MISMATCH ... on ['pool_sha16'] ... calls: 0'. In the base copy the same case reads 'f0's
+      grader-honesty asserts fail: ['item 0: the non-answer is graded correct']'.
+    FIX:
+      Run the honesty case on a fresh out directory with no checkpoint, and assert 'grader-honesty' in the
+      message.
+    REFUTER:
+      Confirmed with stubs only. The 'boundary' case (gcal.py:1297) runs on o10 with resume=True. It passes
+      _startup and the honesty check, and _load_ckpt writes a fresh checkpoint (n_writes 1, no records) at
+      :742. The boundary STOP then fires. The 'honesty' case (:1301) resumes the same o10 with pool=bad_gold.
+      bad_gold changes only item 0's gold, so the renders and renders_sha256 stay the same, precheck passes,
+      and the only thing that refuses this case before _load_ckpt is the honesty refusal at :723-724. The
+      check (:1302-1308) asserts only isinstance(got['honesty'], GcalRefusal) and that no generation happened.
+      It never reads the message.
+
+      I ran the committed _selftest in-process from scratch/step6/refute-honesty/probe.py and captured each
+      pool= case's exception. The base run gives 44/44, and the honesty case reads "f0's grader-honesty
+      asserts fail: ['item 0: the non-answer is graded correct']". For the mutant, _grader_honesty returns []
+      only while it is inside run_completability, which is the same as deleting `if hon: raise`. The direct
+      _grader_honesty check at :1309 still calls the real function. The mutant also gives 44/44, and the
+      'startup refuses ... grader-honesty failure' check still PASSES. Its honesty case now reads "CHECKPOINT
+      MISMATCH at .../startup/ckpt/G-CAL_qwen.json on ['pool_sha16'] (recorded, this run: {'pool_sha16':
+      ['711deec1c2645194', '676ef657bd2ccc3e']})" with 0 calls.
+
+      So the check passes for the wrong reason, and the production refusal at :723-724 has no regression guard
+      through run_completability. The production code itself behaves correctly. This is a test-coverage
+      defect, so minor. The proposed fix works: a fresh dir needs only the model-free artifact, because
+      bad_gold's renders_sha256 matches. Asserting 'grader-honesty' in the message would also close the gap.
+    DISPOSITION: FIXED (fix 7).
+
+--- tests-and-request #6 finder:minor  strict refuter: refuted=False severity=minor
+    scripts/m_sessions.py:304  TITLE: The driver's 'every refusal runs before the model loads' guarantee is untested
+    CLAIM:
+      Every Qwen-path refusal the driver test exercises fires before gcal.precheck: --out, a proposal that is
+      not committed, and one outside the repo. No case drives a precheck refusal through the no-factory path
+      while asserting that the loader never ran: an existing checkpoint without --resume, a missing model-free
+      artifact, or a preflight problem. The model-free artifact's proposal_sha256 comparison is also never
+      exercised.
+    FAILURE_SCENARIO:
+      If the pre-load precheck call is removed or reordered, the real run loads the 27B model and only then
+      refuses, inside run_completability, for example on CHECKPOINT EXISTS. No test notices.
+    EVIDENCE:
+      driver_no_precheck_before_load gives driver 5/5. driver_out_refusal_removed gives 5/5, still rc 2 but
+      for a different reason. mfcheck_no_proposal and precheck_no_proposal_sha give gcal 44/44.
+      no_insulation_loop (removing the per-generation assert_insulated) also gives 44/44.
+    FIX:
+      Add a driver case that patches preflight_laptop or places a checkpoint at the canonical path in a
+      patched temp location, runs `gcal completability` without adapter_factory, and asserts rc 2, the
+      expected message, and loads == []. Add a model-free artifact carrying a different proposal_sha256.
+    REFUTER:
+      The finding is correct. It is a test-coverage gap only: the shipped code behaves correctly, and the gap
+      is that its tests would not notice the pre-load check being removed.
+
+      What the driver's gcal tests cover (scripts/m_sessions.py:2101-2127):
+      - Without adapter_factory, the tests only send cases that refuse before line 303: rc_o (--out on the
+      Qwen path, line 291), rc_u (proposal not committed), rc_v (proposal outside the repository) and ex_np
+      (argparse).
+      - The CHECKPOINT EXISTS case (rc_x) passes factory(True). On that path gcal.precheck at :304 never runs,
+      and the refusal comes from inside run_completability after the stub adapter is built.
+      - No test reaches the no-factory gcal.precheck call.
+
+      I re-ran this myself, in-process on the real repo, read-only, writing only to temp directories:
+      - With the :304-305 precheck call replaced by `pass` (re-compiled into the driver's globals), the
+      driver's gcal checks still pass 5/5. The unmutated baseline is also 5/5.
+      - The failure scenario is real. With a checkpoint at a patched canonical CKPT_DIR, no --resume and no
+      factory:
+        - The unmutated driver returns rc 2, "CHECKPOINT EXISTS", loads == [].
+        - The mutated driver calls the loader (loads == [1]) before any refusal. In a real run that is a 27B
+      load, followed by the refusal inside run_completability.
+      - With the proposal_sha256 comparison removed from gcal._model_free_check (:540-541), the gcal module
+      selftest passes 44/44 and the driver's gcal checks 5/5.
+        - The only model-free artifact variants tested are an absent one (d7) and one with different renders
+      (d8).
+        - The non-stub "proposal sha" case (sha 5*64) is refused earlier, by the working-tree hash check at
+      :564.
+      - The secondary evidence also holds: _startup (:653) already calls guard.assert_insulated, so the
+      selftest's loaded-module case is refused at startup, and the per-generation assert inside the loop is
+      never the one that fires.
+
+      Nothing was written under data/m (no G-CAL files) and git status is unchanged. The suggested fix is
+      sound: add a no-factory driver case that reaches precheck and asserts rc 2, the message and loads == [];
+      and add a model-free artifact carrying a different proposal_sha256. Severity stays minor.
+    DISPOSITION: FIXED (fix 9).
+
+--- tests-and-request #7 finder:minor  strict refuter: refuted=False severity=minor
+    valence_core/m/gcal.py:413  TITLE: The seat request's key content is never checked for correctness
+    CLAIM:
+      The self-test checks the order of sections A and B, the 16 renders, the clean tasks, the gold lists, the
+      'k:' prefix and the quoted phrases. It does not check that the key's render line, changed positions,
+      n_eligible or operand span are right. The driver test compares the file only against
+      seat_read_request(art) itself.
+    FAILURE_SCENARIO:
+      The key's '- render:' line could show the clean task, positions could be off by one or show
+      render>clean, n_eligible could print k, or the operand-span line could be blank. The seat would then
+      read a misleading key and every check would still pass.
+    EVIDENCE:
+      seat_render_in_key_is_clean gives 44/44 and driver 5/5. seat_positions_offby1, seat_positions_swapped,
+      seat_k_wrong and seat_operand_none each give 44/44. I checked the current output by hand and it is
+      correct, for example item 0's '1 (o>l), 2 (m>o), 5 (t>i)' and item 5's span '[22, 27)'.
+    FIX:
+      In the key section, assert for each item the '- render:' line, the exact changed-positions string built
+      independently from the byte diff, the n_eligible value and the operand-span text.
+    REFUTER:
+      The finding holds. I checked it by reading the code and running mutations with stubs only. Scratch files
+      are in /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-
+      lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step6/refute-key-content/run.py.
+
+      What the key-section check covers: the check at valence_core/m/gcal.py:994-999 only asserts these
+      things:
+      - COND3_WORDS appears in the key.
+      - f"- clean task: `{task}`" appears for each item.
+      - f"- k: {x['k']} " appears for each item. This is a prefix match, so it says nothing about the
+      n_eligible value that follows.
+      - The literal "- gold: `closed`, `shut`" appears.
+      - The bare substring "- changed positions: " appears.
+      - No roster word appears.
+
+      What it does not cover:
+      - The key's "- render:" line (gcal.py:413).
+      - The changed-positions content, meaning the offsets and clean>rendered letters.
+      - The n_eligible value.
+      - The operand-span text.
+
+      The driver check at scripts/m_sessions.py:2065 compares the written file only against
+      gcal.seat_read_request(art_c). It shares whatever the function itself produces, so it cannot catch a
+      wrong key.
+
+      Mutation runs: I monkeypatched seat_read_request to change only section B, then ran gcal._selftest.
+      Every run gave 44 passes and 0 fails:
+      - baseline: 44/44
+      - key render replaced by the clean task: 44/44
+      - changed positions shifted by 1: 44/44
+      - clean>render letters swapped: 44/44
+      - n_eligible printed as k: 44/44
+      - operand span blank: 44/44
+
+      Severity stays minor. The current output is correct; for example item 6 reads "3 (p>b), 5 (t>k), 6
+      (e>s)" with n_eligible 10. The artifact's own fields are checked independently, in the (b) checks at
+      gcal.py:914-933. So this is a test-coverage gap in the seat-facing rendering, not a defect in what is
+      written today.
+    DISPOSITION: FIXED (fix 10).
+
+--- tests-and-request #8 finder:minor  strict refuter: refuted=False severity=nit
+    valence_core/m/gcal.py:322  TITLE: The model-free artifact claims m:358's order, but the roster assertion runs before items m:358 lists ahead of it
+    CLAIM:
+      The docstring and the self-test check name say the model-free artifact is 'computed in m:358's order'.
+      m:358 lists 'the 0.12 replay first; the renders of record and their sha; the seat's read;
+      completability; roster assertion'. The code computes the roster assertion before the conditions
+      (computation_order: f1_012, f1_012_covariate_quote, renders_of_record, roster_assertion, conditions,
+      provenance), so before the seat's read and completability. Only 'the 0.12 replay first' is normative, so
+      this is a wording overclaim and not a behaviour defect.
+    FAILURE_SCENARIO:
+      An entry or values-check that quotes 'computed in m:358's order' would overstate what the code does.
+    EVIDENCE:
+      gcal.py:322 docstring and gcal.py:344, compared with m:358's text.
+    FIX:
+      Reword to 'the 0.12 replay first (m:358); the remaining model-free items follow', or similar.
+    REFUTER:
+      The finding's facts are correct, so it stands. I ran model_free_artifact() with no model and no writes.
+      Its computation_order is ['f1_012', 'f1_012_covariate_quote', 'renders_of_record', 'roster_assertion',
+      'conditions', 'provenance']. Conditions (3) and (4) come back as 'pending'. m:358 lists the step as "the
+      0.12 replay first; the renders of record and their sha; the seat's read; completability; roster
+      assertion", so the roster assertion comes last. Across the whole step the code puts the roster assertion
+      earlier. It sits inside the model-free artifact. seat_read_request(art) is built from that artifact, and
+      completability will not run unless the artifact is on disk (_model_free_check / precheck,
+      gcal.py:525-560). So the roster assertion always runs before the seat's read and before completability,
+      which is the reverse of m:358's listed order. Three places still say "m:358's order": the docstring at
+      gcal.py:322, the self-test check name at gcal.py:896, and the help text at scripts/m_sessions.py:43. A
+      reader could defend the docstring, because the three items model_free_artifact actually computes
+      (replay, renders, roster) do keep m:358's relative order. The 'conditions' entry is also only
+      placeholders, not the seat's read or completability. Read for the step as a whole, though, the phrase
+      overstates. The code is otherwise open about it: the module docstring at :4-15 lists (c) roster before
+      (d) conditions, and the self-test name adds "(the 0.12 replay first)". Only "the 0.12 replay first" is
+      normative, and that part is honoured. The roster assertion is also guaranteed by corrupt_m's roster skip
+      during the walk, so where it runs changes no behaviour. What remains is a wording imprecision a values-
+      check would flag, so I rate it nit rather than minor.
+    DISPOSITION: FIXED (fix 11).
+
+====================================================================================================
+FIX REPORT (verbatim)
+====================================================================================================
+  The G-CAL fixes are in and the self-test passes twice: `  705/705 m selftest checks pass`, exit 0 both runs.
+  It was 696 before; gcal has 51 checks (was 44) and the driver 7 gcal checks (was 5). Nothing is committed
+  and no model, tokenizer or network was used.
+
+  ## Fixes and their checks
+
+  **1. No-write checks.** Both checks now take a snapshot of every canonical G-CAL path before the runs and
+  compare it byte for byte afterwards. They no longer require the artifacts to be absent.
+  - New helpers in `gcal.py`: `canonical_files`, `canonical_snapshot`, `snapshot_changes`. The snapshot also
+  catches any stray `G-CAL*` file in either directory.
+  - New check: on a temp "canonical" pair of directories, the snapshot comparison passes with the artifacts
+  absent and with all four present. The old absence rule passes on the empty pair and fails on the populated
+  one. The comparison fires on a file appearing, an edited byte, a removed checkpoint and a stray temp file.
+  - Whole-suite simulation, with gcal's directories pointed at a temp `data/m` that is added to
+  `CANONICAL_ROOTS`: 705/705 with the directory empty, and 705/705 with all four artifacts present.
+
+  **2. Driver exit codes.** After the `GcalRefusal` and `GcalStop` clauses, any other `SystemExit` now exits 4
+  and prints `STOP: <message>`.
+  - New driver check covers a `CorrStop`, a plain `SystemExit`, the loader's `SystemExit`, a `CorrStop` raised
+  inside `run_completability`, and the real insulation guard. For the guard case the quarantined module is
+  planted at the first generation, so the run makes one generation and then stops. `GcalStop` still exits 4
+  and `GcalRefusal` 2.
+
+  **3. Early refusal of an existing artifact.** With no checkpoint on disk, `precheck` now refuses with
+  `COMPLETABILITY ARTIFACT EXISTS` when the artifact path holds a file or a symlink, dangling included. This
+  applies with or without `--resume`.
+  - I added an `out_link` entry to `_paths`, because resolving the path follows a symlink to its target and so
+  never sees the link itself.
+  - The earlier test expected the refusal only after 128 generations; it now expects zero generations and no
+  checkpoint written, and covers the symlink case.
+  - The other direction is also tested: a complete checkpoint next to a different artifact generates nothing
+  and is refused only at the write.
+
+  **4. Blind seat read.** The request now reads: sha256 line, then a "How to read" section with "For each
+  render, write down the task as you read it and its answer, before opening section B.", then section A, then
+  section B. The "16 of 16" sentence is gone.
+  - Check: that order holds, no clean task appears before B, nothing matching "N of 16" or "provisional"
+  appears before B, and "16 of 16" appears nowhere.
+  - The check fires on four planted variants: the instruction moved after A, and a count stated inside A,
+  above the instruction, or as "14 of 16".
+
+  **5. Grader coverage.** New scripted 128-generation run.
+  - 24 hits use a non-first gold variant ('seven', 'twelve', 'three', 'two', 'twenty-four', 'shut').
+  - Items 7 and 9 have their gold inside the task text. They get 8 plain misses and 4 responses that restate
+  the task. f0's own grade returns True for those restatements in both pools (I checked against f0's file),
+  and the test asserts exactly True.
+  - Exact counts asserted: 46/64 clean, 45/64 corrupted. The check fires on a grader narrowed to the first
+  gold (34) and on one that grades the task with the text (50).
+
+  **6. Resume identity.**
+  - One tampered-checkpoint case for each of the 15 identity keys, `key_set_sha256` and `package_sha256`
+  included. Each is refused with a message naming exactly that one key. An extra key and a missing key are
+  refused the same way.
+  - A record with only its seed changed (record 5), and one with only its task changed (record 9), is refused
+  by the key-prefix check with `record j of ... is not key j of the key set (order, seed or task)`.
+
+  **7. Grader-honesty refusal.** The test now runs on a fresh out directory with no checkpoint. It asserts the
+  message contains `f0's grader-honesty asserts fail` and `item 0: the non-answer is graded correct`, and that
+  no checkpoint was written.
+
+  **8. `.gitignore`.** The two lines are appended after the m package block. `git check-ignore --no-index`
+  confirms `data/m/gates/G-CAL_seat_read_request.md` is not ignored and `data/m/gates/x.md` still is.
+
+  **9. Pre-load refusals through the driver.** New check runs `gcal completability` with no adapter factory
+  and gcal's directories pointed at temp locations, for four cases:
+  - an existing checkpoint without `--resume`;
+  - a missing model-free artifact;
+  - a model-free artifact carrying a different `proposal_sha256`;
+  - an existing artifact with no checkpoint.
+
+  Each exits 2 with its own message, the loader never runs, and the directories are unchanged. If the loader
+  does run, the check now records a named failure instead of crashing the self-test.
+
+  **10. Seat request key content.** For each item the check rebuilds the "- render:" line, the changed
+  positions (from a byte diff of clean vs render), k and n_eligible (m:176's literal list and formula) and the
+  operand span (a regex over the clean task), and asserts each line exactly. It fires on five planted defects:
+  the render line showing the clean task, positions off by one, positions reversed, n_eligible printing k, and
+  a blank span.
+
+  **11. Wording.** The module docstring, `model_free_artifact`'s docstring and code comment, the check name,
+  and the driver help text now say "the 0.12 replay first (m:358); the remaining model-free items follow".
+  Each notes that the roster assertion runs ahead of m:358's listed position because it is model-free.
+
+  **12. Site without the jlens clone.** The three f0/e2a comparisons now live in `_f0_port_checks(f0_path,
+  e2a_path)` with new constants `E2A_PATH` and `F0_ABSENT_NOTE`. Where the files are absent, each passes on
+  the pinned source hashes with the note "f0 source absent on this site; the port is verified by its pinned
+  hash"; the prompt check also requires the banner literal and `SEGMENT_FORM`.
+  - New check: pointed at a missing temp path, the three checks keep their names and pass with that note. They
+  fail when the pinned hash is broken. A synthetic faithful f0 passes in present mode, and a tampered grader
+  or banner fails there.
+  - Whole gcal self-test with `F0_PATH` and `E2A_PATH` patched to a missing location: 51/51, the same count as
+  on the laptop.
+
+  ## Mutation probes
+  In-memory only; no file on disk was changed. Each of 22 deliberate breakages (18 in gcal, 4 in the driver)
+  produced at least one named FAIL. Both unmutated baselines produced none.
+
+  ## New PINs
+  - `gcal.py`, three new: the site without the clone (`F0_ABSENT_NOTE`), the snapshot rule
+  (`canonical_snapshot`), and the early refusal of an existing artifact (in `precheck`).
+  - `gcal.py`, three revised: the seat request wording (blind read), `_paths` (`out_link`), and `precheck`'s
+  order.
+  - `m_sessions.py`, one new: any other `SystemExit` exits 4. There are now 21 PIN markers in `gcal.py` and 9
+  in the driver (6 at HEAD).
+
+  ## Final state
+  - `check_call_sites` returns `[]`.
+  - The forbidden-string grep (`/usr/bin/grep -n` over `valence_core/m/*.py` and `scripts/m_sessions.py`)
+  finds nothing, and there is no statepresent or Injection import.
+  - The schedules manifest sha256 is still `8c89636addb846c8d45cd9c6dcf97a7663df3e2b535dd91b3d40302cccc8d6bb`.
+  `data/m/gates` holds only `Q-F0_G-PORT.json` and `data/m/ckpt` does not exist.
+  - `git status` shows my changes only in `.gitignore`, `scripts/m_sessions.py`, `valence_core/m/__init__.py`
+  (the builder's one-line change, untouched by me) and `valence_core/m/gcal.py`. I did not touch the audit
+  session's files.
+
+  ## Flags
+  - **Commit before the canonical run.** These edits changed `package_sha256` (now `d6282cfc4233d76c…`), so
+  `gcal model-free` should run canonically only after this build is committed. The canonical artifact records
+  the package hash and is never overwritten.
+  - **Edge not fixed: a symlink at the artifact path when a checkpoint exists.** In that case precheck does
+  not refuse, so the final write would follow the link to its target. It would only matter if someone placed a
+  symlink in `data/m/gates`. A one-line change would refuse a symlink there whether or not a checkpoint
+  exists; I left it for your decision.
+
+  Files are in /Users/jasondwyer/Documents/code/jspace-lab:
+  - valence_core/m/gcal.py
+  - scripts/m_sessions.py
+  - .gitignore
+
+  Outputs are in /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-
+  lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step6/fix/:
+  - selftest_final1.txt
+  - selftest_final2.txt
+  - postcanon/absent.txt
+  - postcanon/present.txt
+  - mut/mut_results.json
+====================================================================================================
+INDEPENDENT VERIFICATION (verbatim)
+====================================================================================================
+  **G-CAL fix verification: all 12 fixes are resolved and tested.** Every required mutation makes the full
+  `--selftest` fail. Three minor items stay open: the symlink edge the fixer disclosed, a narrow leftover of
+  fix 3, and the review's spec finding 0, which none of the 12 fixes covers. I found no blocking or
+  substantive defects.
+
+  **Baseline.** The repo self-test (no bytecode written) gives `705/705 m selftest checks pass`, rc 0. That is
+  51 gcal checks and 7 driver gcal checks. There are 21 PINs in `gcal.py` and 9 in the driver (6 at HEAD).
+  `check_call_sites` returns `[]`. The forbidden-string and import greps are clean, and `testing` is imported
+  only inside `_selftest`. The schedule manifest sha256 is still `8c89636a…d6bb`. The sha256 list of `data/m`
+  is identical before and after all my runs, and `git status` is unchanged (I used `--no-optional-locks`, so
+  no index write). I did not touch the audit session's files.
+
+  **(1) Per fix**
+  1. **No-write checks: resolved.** I re-ran the reviewer's `post_canon.py`. It still gives 2 FAILs, but both
+  come from its own patch: the temp `GATES_DIR` is not a canonical root, so the stub run writes
+  `G-CAL_selftest_never.json` there, and the new snapshot check correctly catches that file. With the temp
+  root added to `CANONICAL_ROOTS` and all four artifacts present, gcal gives 0 FAIL and the driver's gcal
+  checks give 0 FAIL. Mutants F01 (snapshot blind) and F01b (no glob) are caught.
+  2. **Exit codes: resolved.** The reviewer's repro (`POOLS_SHA16` patched) now exits 4 with `STOP: POOL SHA
+  STOP…`. Removing either new `except SystemExit` clause (F02, F02b) is caught.
+  3. **Early refusal: resolved for the finding's scenario.** The repro is refused in `precheck` with 0
+  generate calls, no checkpoint left, and the artifact unchanged. Mutants R33, R34 and R35 are caught. Two
+  leftovers, both minor:
+     - **Disclosed symlink edge, confirmed on the non-stub path.** Setup: a complete checkpoint and a dangling
+  symlink at `gates/G-CAL_completability_qwen.json`, then `--resume`. Result: 0 generations, verdict returned,
+  and the artifact written through the link to `…/outside/landed.json`. Stub runs are not affected, because
+  their checkpoint path comes from the resolved target and the early refusal fires.
+     - **Incomplete checkpoint beside an existing artifact.** `--resume` generated 118 times and was then
+  refused at the write ("G-CAL ARTIFACT EXISTS"). It cannot happen in the normal flow, since the artifact is
+  written only after the checkpoint is complete.
+  4. **Blind seat read: resolved.** The order is sha line 3, instruction (line 9), section A, section B. No
+  clean task, "N of 16" or "provisional" appears anywhere. Mutants F04 and F04b are caught.
+  5. **Grader coverage: resolved.** R01–R04 (first gold only, or grading task plus text, at the run call alone
+  and also at the resume re-grade) are each caught by the coverage check. Executing f0's own `grade` from
+  `f0_calibrate.py`, restatements of items 7 and 9 grade True for both the clean task and the render. A non-
+  first variant hits under the full gold list and misses under the first gold alone. The counts 46/45, 34 and
+  50 check out arithmetically.
+  6. **Resume identity: resolved.** Ignoring `key_set_sha256`, `package_sha256`, `temp` or `segment_form`, and
+  union→ident-only (R24–R28), are all caught. So are a prefix check without seed (F06) and without task
+  (F06b).
+  7. **Honesty test: resolved.** The reviewer's probe with `--mutant` now gives 50/51; the startup/honesty
+  check fails because no refusal happens. F07 is caught.
+  8. **`.gitignore`: resolved.** `check-ignore --no-index`: the seat request `.md` and the G-CAL json/ckpt
+  files are not ignored; `gates/x.md` and `*.json.tmp` still are.
+  9. **Pre-load refusals: resolved.** Removing the driver's pre-load precheck (F09) and removing the model-
+  free proposal sha comparison (F09b) are both caught.
+  10. **Key content: resolved.** F10, F10b and F10c are caught. My own independent rebuild of all 16 key
+  sections matches exactly.
+  11. **Wording: resolved.** "m:358's order" no longer appears in the module docstring, the function
+  docstring, the check name or the help text.
+  12. **Site without the jlens clone: resolved.** The whole gcal self-test with `F0_PATH`/`E2A_PATH` patched
+  to a missing path gives 51/51, with notes reading "f0 source absent on this site; the port is verified by
+  its pinned hash (…)". F12 (absent mode always True) is caught.
+
+  **(2) Mutation probes**
+  I ran the full `--selftest` on a 15 MB scratch copy of the repo, using read-only git through `GIT_DIR`. 52
+  runs: 2 unmutated controls passed 705/705 while running in parallel; 49 of 50 mutants were caught.
+  - **Required set, all caught (rc 1):**
+    - grader: R01–R04
+    - condition-(4) bars: absolute 69/100 and 71/100, relative 74/100 and 76/100, each comparison made strict,
+  AND→OR (R05–R11)
+    - seed key: in `keys` only, in `gcal` only, in both, and seed index passed instead of seed (R12–R15)
+    - prompt bytes: trailing space, double newline, a round header, extra banner newline (R16–R19)
+    - `cached=True` (R20)
+    - pool literal, in `keys` only and consistently in both (R21, R22)
+    - covariate sign (R23)
+    - identity keys (R24–R28)
+    - canonical guard: all three `_paths` guards (R29), the `write_model_free` guard (R31),
+  `refuse_canonical_out` made a no-op (R32)
+    - early refusal (R33–R35)
+  - **One survivor, R30** (only the out-path `refuse_canonical_out` in `_paths` removed). It is effectively
+  equivalent: the checkpoint and model-free guards share the out path's parent, so they refuse the same
+  inputs. With all three removed (R29) it is caught.
+  - **Nit:** R12, R13, R15–R18, R21 and R22 fail the suite by crashing a self-test ("`gcal: _selftest raised`
+  KeyError/GcalRefusal", or the driver's "integration selftest raised FileNotFoundError" when it reads an
+  artifact that was never written) rather than through a named check. The rest of that self-test's checks are
+  skipped.
+
+  **(3) `gcal model-free --out <scratch>`**
+  rc 0. A re-run into a fresh directory is byte-identical, and a re-run into the same directory reports
+  "(identical)". I re-derived every figure without importing `valence_core`, using only `pools.json`,
+  `calib.json`, m:176's text and f1's `corrupt()`:
+  - pools sha256 `8547d9a11ba55b95…`
+  - f1 replay: sha16 `2c2c227395ea9f2d` equals calib's `corr_sha`; 31 letters changed; condition (1) 4/16
+  (items 2, 4, 6, 7); condition (2) 16/16; covariate `0.078125` → +.078
+  - `corrupt_m` from m:176: n_eligible [6,19,19,13,24,14,10,45,19,10,24,14,6,19,10,14]; k
+  [3,3,3,3,4,3,3,7,3,3,4,3,3,3,3,3], summing to 54; every item reaches k; one roster skip, at item 7
+  - renders sha256 `a04f67b0e5105a0514a0f33e64a4545ef3a3a3c75cece320d78434e853cd4372`; the renders equal the
+  artifact's
+  - items 5, 11 and 15 appear verbatim in m:176, and "miyms", "thiru" and "ftrst" are present; no roster hits;
+  apostrophes only in items 5, 11 and 15
+  - the request's quoted phrases are all verbatim in m:176; package_sha256 is `d6282cfc4233d76c`,
+  proposal_sha256 `42ab36ecc814c9c4`
+
+  The request is ready for a blind read, correct, and complete for condition (3)'s criterion.
+
+  **Open items and new observations**
+  - **Minor, open, not among the 12 fixes: spec-lens finding 0.** Nothing records or gates the seat's
+  condition-(3) read before completability. The model-free artifact says "(3) pending" permanently. The
+  request also does not say where the read of record goes, or ask the seat to cite the renders sha256 when it
+  replies.
+  - **Minor, disclosed, open:** the symlink edge in fix 3 above.
+  - **Nit:** the incomplete-checkpoint leftover in fix 3 above.
+  - **Nit:** the driver's `no_factory` check claims the temp directories are "unchanged" but compares file
+  names only, not bytes.
+  - **Note:** the loader's `SystemExit` exits 4 (STOP), though nothing has been generated at that point. This
+  follows the new PIN, but it sits uneasily with the refusal definition (a decision made before any generation
+  is a refusal, exit 2).
+
+  Files are in `/private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-
+  lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step6/verify/`:
+  - `selftest_repo_1.txt`
+  - `selftest_base.txt`
+  - `mut_results.json`
+  - `mut_logs/`
+  - `mf/G-CAL_model-free.json`
+  - `mf/G-CAL_seat_read_request.md`
+  - `tools/muts.py`
+  - `tools/run_muts.py`
+  - `tools/indep_check.py`
+  - `tools/post_canon2.py`
+====================================================================================================
+CODE'S CLOSING EDITS
+====================================================================================================
+  (1) gcal._write_artifact: the completability artifact's write is refused when its path as named is a symlink
+  (dangling or not) -- the verifier's disclosed edge (a complete checkpoint, a symlink placed at the artifact
+  path, --resume) no longer writes through the link; new check. (2) The seat request adds: 'Reply with the
+  renders_sha256 at the top and the 16 per-item records ... The read of record is recorded in the G-CAL entry
+  and carried into LOCK-m-F0 v0.1, whose calibration artifacts include the seat's read (m:176).' Self-test
+  706/706 twice; check_call_sites []; site check 8/8. Left as disclosed: an incomplete checkpoint beside an
+  existing artifact generates and is refused at the write (unreachable in the normal flow); the driver's
+  no_factory check compares names, not bytes; a loader SystemExit exits 4 though nothing generated (the PIN's
+  mapping).

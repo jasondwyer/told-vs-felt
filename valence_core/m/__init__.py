@@ -14,7 +14,9 @@ f1's corruptor for G-PORT/G-CAL), ``banner`` (§2.5's lines), ``schedule``
 licence, call-site check), ``resume`` (identity, atomic checkpoints),
 ``readrule`` (§3's stripping, redaction, printing), ``scaffold`` (one session
 code path for runner, verifier and G-PORT), ``runner_qwen``, ``runner_olmo``,
-``verify``, ``stages``. Driver and self-test: ``scripts/m_sessions.py``.
+``verify``, ``stages``; step 6 adds ``gcal`` (G-CAL: the model-free artifact, the
+seat's read request, completability on Qwen). Driver and self-test:
+``scripts/m_sessions.py``.
 
 No module here imports steering machinery; ``guard.assert_insulated`` asserts
 the quarantined state-present module absent at startup and before every read.

@@ -240,3 +240,5 @@ __pycache__/
 /data/m/ckpt/*
 !/data/m/ckpt/*.json
 !/data/m/ckpt/*.json.podchange-*
+# G-CAL's seat read request (markdown, Code -> design; m:176 condition (3)).
+!/data/m/gates/G-CAL_seat_read_request.md
