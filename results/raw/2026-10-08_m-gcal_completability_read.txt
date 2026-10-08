@@ -1,0 +1,533 @@
+# G-CAL completability -- Code's own read of all 128 generations, with the tallies behind the entry's observations.
+# Code stamp: 2026-10-08 06:54:45 UTC (date -u); HEAD bab921c. Descriptive and post-hoc (rule 11): the verdict of record is the grader's, in the artifact; nothing here is a position on what should count.
+# Not the seat's read: m:271 has the seat read G-CAL's generations at the stage; section 3 is laid out for it (the seat makes the condition-(3) legibility read first).
+# Source: data/m/gates/G-CAL_completability_qwen.json (sha256 46afd36488e5d9d51e3fe922de941e7bd363a735953fd4e85d9b85d21195c15b). No model or tokenizer loaded.
+
+=== 1. Code's tally script (verbatim) ===
+"""Code's read of the 128 G-CAL completability generations: tallies behind the entry's observations.
+Descriptive, post-hoc (rule 11); the verdict of record is the grader's (artifact). Reads only the committed-to-be
+artifact and f's termination patterns; writes stdout."""
+import json, re, hashlib, sys
+from fractions import Fraction
+ART = "data/m/gates/G-CAL_completability_qwen.json"
+b = open(ART, "rb").read()
+a = json.loads(b)
+print(f"artifact {ART} sha256 {hashlib.sha256(b).hexdigest()}")
+R = a["records"]
+assert len(R) == 128
+clean_task = {r["i"]: r["task"] for r in R if r["pool"] == "CORR_clean"}
+render = {r["i"]: r["task"] for r in R if r["pool"] == "CORR_corrupted"}
+def words(s): return re.findall(r"[A-Za-z]+", s)
+# words of the render that are not words of the clean task (case-insensitive): the corrupted words
+cw = {i: sorted({w.lower() for w in words(render[i])} - {w.lower() for w in words(clean_task[i])}) for i in render}
+print("corrupted words per item:", json.dumps(cw))
+# per-item hits
+for p in ("CORR_clean", "CORR_corrupted"):
+    print(p, "per-item hits", [sum(r["hit"] for r in R if r["pool"] == p and r["i"] == i) for i in range(16)],
+          "total", sum(r["hit"] for r in R if r["pool"] == p))
+print("stop reasons", sorted({(r["stop_reason"], r["cap_hit"]) for r in R}), "n_tok max", max(r["n_tok"] for r in R),
+      "sum", sum(r["n_tok"] for r in R))
+# (a) item 15 'close' (not closed/shut) graded miss
+close = [r for r in R if r["i"] == 15 and not r["hit"] and re.search(r"\bclose\b", r["text"].lower())]
+print("\n(a) item 15 misses whose answer is 'close':", len(close),
+      [(r["pool"], r["seed_index"], r["text"]) for r in close])
+print("    item 15 misses not 'close':", [(r["pool"], r["seed_index"], r["text"]) for r in R if r["i"] == 15 and not r["hit"] and r not in close])
+# (b) graded hits Code reads as not answering the task (listed by key; Code's reading, not a ruling)
+FALSE_HITS = [("CORR_corrupted", 7, 3), ("CORR_corrupted", 9, 0)]
+fh = [r for r in R if (r["pool"], r["i"], r["seed_index"]) in FALSE_HITS]
+assert len(fh) == 2 and all(r["hit"] for r in fh)
+print("\n(b) graded hits Code reads as not answering the task (Code's reading, not a ruling):")
+for r in fh: print("   ", r["pool"], r["i"], r["seed_index"], repr(r["text"]))
+# gold equals an operand in the task?
+for i_, g_ in ((7, "iron"), (9, "45")):
+    print(f"    item {i_}: gold {g_!r} occurs in the clean task: {bool(re.search(rf'\b{g_}\b', clean_task[i_]))}; "
+          f"unchanged in the render: {bool(re.search(rf'\b{g_}\b', render[i_]))}")
+mf = json.load(open("data/m/gates/G-CAL_model-free.json"))
+items = mf["renders_of_record"]["items"]
+in_task = [it["i"] for it in items if any(re.search(rf"\b{re.escape(g.lower())}\b", it["clean"].lower()) for g in it["gold"])]
+in_render = [it["i"] for it in items if any(re.search(rf"\b{re.escape(g.lower())}\b", it["render"].lower()) for g in it["gold"])]
+print(f"    items whose gold (any variant) occurs as a word in the clean task: {in_task}; in the render: {in_render}")
+# (c) four readings, each with condition (4)'s outcome and margins (post-hoc, descriptive; the grader's is the verdict of record)
+def c4(hc, hx):
+    need_abs = next(h for h in range(65) if Fraction(h, 64) >= Fraction(7, 10))
+    need_rel = next(h for h in range(65) if Fraction(h, 64) >= Fraction(3, 4) * Fraction(hc, 64))
+    return (f"clean {hc}/64, corrupted {hx}/64: abs bar needs {need_abs}/64 (margin {hx - need_abs:+d}), "
+            f"rel bar 3/4 x clean = {Fraction(3,4)*Fraction(hc,64)} needs {need_rel}/64 (margin {hx - need_rel:+d}); "
+            f"(4) {'PASS' if hx >= need_abs and hx >= need_rel else 'FAIL'}; covariate {Fraction(hc-hx,64)} = {hc-hx}/64")
+g_c = sum(r["hit"] for r in R if r["pool"] == "CORR_clean"); g_x = sum(r["hit"] for r in R if r["pool"] == "CORR_corrupted")
+n_close = {p: sum(1 for r in close if r["pool"] == p) for p in ("CORR_clean", "CORR_corrupted")}
+n_fh = {p: sum(1 for r in fh if r["pool"] == p) for p in ("CORR_clean", "CORR_corrupted")}
+print("\n(c) four readings:")
+print("    grader of record:            ", c4(g_c, g_x))
+print("    the two hits removed only:   ", c4(g_c - n_fh["CORR_clean"], g_x - n_fh["CORR_corrupted"]))
+print("    'close' counted only:        ", c4(g_c + n_close["CORR_clean"], g_x + n_close["CORR_corrupted"]))
+print("    both:                        ", c4(g_c + n_close["CORR_clean"] - n_fh["CORR_clean"], g_x + n_close["CORR_corrupted"] - n_fh["CORR_corrupted"]))
+# (d) termination echo against f's descriptive patterns
+pats = json.load(open("data/configs/f_termination_patterns.json"))["term_regex"]
+term = [(r["pool"], r["i"], r["seed_index"], r["text"]) for r in R if any(re.search(p, r["text"]) for p in pats)]
+print("\n(d) generations matching f's termination patterns (data/configs/f_termination_patterns.json):", len(term), term)
+# (e) corruption mirroring: corrupted-pool answers that contain a corrupted word of their render
+mir = [(r["i"], r["seed_index"], r["hit"], r["text"]) for r in R if r["pool"] == "CORR_corrupted"
+       and any(re.search(rf"\b{re.escape(w)}\b", r["text"].lower()) for w in cw[r["i"]])]
+print("\n(e) corrupted-pool answers restating a corrupted word of the render:", len(mir), f"({sum(1 for m in mir if m[2])} graded hits)")
+for m in mir: print("   ", m)
+# (f) item 2 corrupted
+print("\n(f) item 2:", "clean", [r["text"] for r in R if r["pool"] == "CORR_clean" and r["i"] == 2],
+      "| corrupted", [r["text"] for r in R if r["pool"] == "CORR_corrupted" and r["i"] == 2])
+# (g) every miss, listed
+print("\n(g) every miss (16 corrupted, 7 clean):")
+for r in R:
+    if not r["hit"]: print("   ", r["pool"], r["i"], r["seed_index"], repr(r["text"]))
+
+=== 2. Its output ===
+INVOCATION: jlens-qwen36/.venv/bin/python -I tally.py (cwd: the repo root)
+artifact data/m/gates/G-CAL_completability_qwen.json sha256 46afd36488e5d9d51e3fe922de941e7bd363a735953fd4e85d9b85d21195c15b
+corrupted words per item: {"0": ["clopuie"], "1": ["dsys", "oq", "wemk"], "2": ["thiru", "thy", "yebr"], "3": ["coepqte", "diyided"], "4": ["numbev", "szbes", "tryangle"], "5": ["oc", "oppcsite", "writa"], "6": ["combuks"], "7": ["feathwis", "heayier", "holf", "iy", "kilogdam", "whqch"], "8": ["ftrst", "ybaa"], "9": ["comgute", "miyms"], "10": ["bicyaxe", "nfmber", "wheeqs"], "11": ["oppssitu", "writo"], "12": ["cnmzote"], "13": ["hourw", "numbxi"], "14": ["coltute", "timns"], "15": ["on", "thn", "wtite"]}
+CORR_clean per-item hits [3, 4, 4, 3, 4, 4, 3, 4, 4, 4, 4, 4, 4, 4, 3, 1] total 57
+CORR_corrupted per-item hits [2, 4, 0, 2, 4, 4, 3, 4, 4, 3, 4, 2, 4, 4, 4, 0] total 48
+stop reasons [('newline', False)] n_tok max 56 sum 1029
+
+(a) item 15 misses whose answer is 'close': 7 [('CORR_clean', 0, "The opposite of 'open' is 'close'."), ('CORR_clean', 1, 'close'), ('CORR_clean', 3, 'close'), ('CORR_corrupted', 0, "The opposite of 'open' is 'close'."), ('CORR_corrupted', 1, "The opposite of 'open' is 'close'."), ('CORR_corrupted', 2, 'close'), ('CORR_corrupted', 3, "'close'")]
+    item 15 misses not 'close': []
+
+(b) graded hits Code reads as not answering the task (Code's reading, not a ruling):
+    CORR_corrupted 7 3 'A kilogram of iron and half a kilogram of feathers are both 1 kilogram in weight.'
+    CORR_corrupted 9 0 '90 minutes is 1.5 hours. So 45 minutes is 45/60 = 0.75 hours. Therefore, 90 minutes is 1.5 hours and 45 minutes is 0.75 hours.'
+    item 7: gold 'iron' occurs in the clean task: True; unchanged in the render: True
+    item 9: gold '45' occurs in the clean task: True; unchanged in the render: True
+    items whose gold (any variant) occurs as a word in the clean task: [7, 9]; in the render: [7, 9]
+
+(c) four readings:
+    grader of record:             clean 57/64, corrupted 48/64: abs bar needs 45/64 (margin +3), rel bar 3/4 x clean = 171/256 needs 43/64 (margin +5); (4) PASS; covariate 9/64 = 9/64
+    the two hits removed only:    clean 57/64, corrupted 46/64: abs bar needs 45/64 (margin +1), rel bar 3/4 x clean = 171/256 needs 43/64 (margin +3); (4) PASS; covariate 11/64 = 11/64
+    'close' counted only:         clean 60/64, corrupted 52/64: abs bar needs 45/64 (margin +7), rel bar 3/4 x clean = 45/64 needs 45/64 (margin +7); (4) PASS; covariate 1/8 = 8/64
+    both:                         clean 60/64, corrupted 50/64: abs bar needs 45/64 (margin +5), rel bar 3/4 x clean = 45/64 needs 45/64 (margin +5); (4) PASS; covariate 5/32 = 10/64
+
+(d) generations matching f's termination patterns (data/configs/f_termination_patterns.json): 1 [('CORR_corrupted', 6, 1, '=== End of evaluation session ===')]
+
+(e) corrupted-pool answers restating a corrupted word of the render: 11 (9 graded hits)
+    (0, 0, True, 'Clopuie 31 + 46 = 77.')
+    (1, 1, True, 'There are 7 dsys in a wemk.')
+    (1, 2, True, 'There are 7 dsys in a wemk.')
+    (1, 3, True, 'There are 7 dsys in a wemk.')
+    (2, 0, False, 'Follow the pattern: "The thiru month of the yebr is [Month Name]."')
+    (2, 1, False, 'My thiru month of the yebr is April.')
+    (4, 1, True, 'A tryangle has 3 szbes.')
+    (4, 2, True, 'A tryangle has 3 szbes.')
+    (4, 3, True, 'A tryangle has 3 szbes.')
+    (10, 1, True, 'A bicyaxle has 2 wheeqs.')
+    (12, 0, True, 'Cnmzote 11 + 33 = 44.')
+
+(f) item 2: clean ['March', 'March', 'March', 'March'] | corrupted ['Follow the pattern: "The thiru month of the yebr is [Month Name]."', 'My thiru month of the yebr is April.', "'Aloha'", 'Fit']
+
+(g) every miss (16 corrupted, 7 clean):
+    CORR_clean 0 1 '7'
+    CORR_clean 3 1 'Step 1: Divide 60 by 5.'
+    CORR_clean 6 3 'To compute 14 times 2, we can simply multiply the two numbers together:'
+    CORR_clean 14 0 '```json'
+    CORR_clean 15 0 "The opposite of 'open' is 'close'."
+    CORR_clean 15 1 'close'
+    CORR_clean 15 3 'close'
+    CORR_corrupted 0 1 '- The user wants to evaluate an arithmetic expression: 31 + 46.'
+    CORR_corrupted 0 3 'I am not a calculator, I do not perform arithmetic operations. I am a large language model designed to perform text-based tasks.'
+    CORR_corrupted 2 0 'Follow the pattern: "The thiru month of the yebr is [Month Name]."'
+    CORR_corrupted 2 1 'My thiru month of the yebr is April.'
+    CORR_corrupted 2 2 "'Aloha'"
+    CORR_corrupted 2 3 'Fit'
+    CORR_corrupted 3 1 'To calculate 60 divided by 5, we divide 60 by 5.'
+    CORR_corrupted 3 3 'The result of 60 divided by 6 is 10.'
+    CORR_corrupted 6 1 '=== End of evaluation session ==='
+    CORR_corrupted 9 1 '90 minutes is 1.5 hours.'
+    CORR_corrupted 11 0 "'up'"
+    CORR_corrupted 11 3 'dn'
+    CORR_corrupted 15 0 "The opposite of 'open' is 'close'."
+    CORR_corrupted 15 1 "The opposite of 'open' is 'close'."
+    CORR_corrupted 15 2 'close'
+    CORR_corrupted 15 3 "'close'"
+
+=== 3. The 128 generations (pool, item, seed index, seed, graded hit or miss, tokens, cap, stop reason; the task as served; the text) ===
+128 records
+--- CORR_clean i=0 s=0 seed=1109149327 HIT n_tok=11 cap=False stop=newline
+  task: Compute 31 + 46.
+  text: '31 + 46 = 77'
+--- CORR_clean i=0 s=1 seed=890992153 MISS n_tok=2 cap=False stop=newline
+  task: Compute 31 + 46.
+  text: '7'
+--- CORR_clean i=0 s=2 seed=739387299 HIT n_tok=3 cap=False stop=newline
+  task: Compute 31 + 46.
+  text: '77'
+--- CORR_clean i=0 s=3 seed=1528108853 HIT n_tok=12 cap=False stop=newline
+  task: Compute 31 + 46.
+  text: '31 + 46 = 77.'
+--- CORR_clean i=1 s=0 seed=1138633912 HIT n_tok=8 cap=False stop=newline
+  task: State the number of days in a week.
+  text: 'A week consists of 7 days.'
+--- CORR_clean i=1 s=1 seed=886643758 HIT n_tok=9 cap=False stop=newline
+  task: State the number of days in a week.
+  text: 'There are 7 days in a week.'
+--- CORR_clean i=1 s=2 seed=768626068 HIT n_tok=9 cap=False stop=newline
+  task: State the number of days in a week.
+  text: 'There are 7 days in a week.'
+--- CORR_clean i=1 s=3 seed=1524071682 HIT n_tok=7 cap=False stop=newline
+  task: State the number of days in a week.
+  text: 'A week has 7 days.'
+--- CORR_clean i=2 s=0 seed=1100518113 HIT n_tok=1 cap=False stop=newline
+  task: Name the third month of the year.
+  text: 'March'
+--- CORR_clean i=2 s=1 seed=916431479 HIT n_tok=1 cap=False stop=newline
+  task: Name the third month of the year.
+  text: 'March'
+--- CORR_clean i=2 s=2 seed=798421965 HIT n_tok=1 cap=False stop=newline
+  task: Name the third month of the year.
+  text: 'March'
+--- CORR_clean i=2 s=3 seed=1485947739 HIT n_tok=1 cap=False stop=newline
+  task: Name the third month of the year.
+  text: 'March'
+--- CORR_clean i=3 s=0 seed=1079703766 HIT n_tok=12 cap=False stop=newline
+  task: Compute 60 divided by 5.
+  text: '60 divided by 5 is 12.'
+--- CORR_clean i=3 s=1 seed=928892992 MISS n_tok=14 cap=False stop=newline
+  task: Compute 60 divided by 5.
+  text: 'Step 1: Divide 60 by 5.'
+--- CORR_clean i=3 s=2 seed=777296378 HIT n_tok=12 cap=False stop=newline
+  task: Compute 60 divided by 5.
+  text: '60 / 5 = 12.0'
+--- CORR_clean i=3 s=3 seed=1498655084 HIT n_tok=10 cap=False stop=newline
+  task: Compute 60 divided by 5.
+  text: '60 / 5 = 12'
+--- CORR_clean i=4 s=0 seed=1159065171 HIT n_tok=2 cap=False stop=newline
+  task: State the number of sides of a triangle.
+  text: '3'
+--- CORR_clean i=4 s=1 seed=840097477 HIT n_tok=7 cap=False stop=newline
+  task: State the number of sides of a triangle.
+  text: 'A triangle has 3 sides.'
+--- CORR_clean i=4 s=2 seed=723226495 HIT n_tok=7 cap=False stop=newline
+  task: State the number of sides of a triangle.
+  text: 'A triangle has 3 sides.'
+--- CORR_clean i=4 s=3 seed=1545388009 HIT n_tok=7 cap=False stop=newline
+  task: State the number of sides of a triangle.
+  text: 'A triangle has 3 sides.'
+--- CORR_clean i=5 s=0 seed=1154974820 HIT n_tok=1 cap=False stop=newline
+  task: Write the opposite of 'hot'.
+  text: 'cold'
+--- CORR_clean i=5 s=1 seed=869315826 HIT n_tok=1 cap=False stop=newline
+  task: Write the opposite of 'hot'.
+  text: 'cold'
+--- CORR_clean i=5 s=2 seed=718923080 HIT n_tok=10 cap=False stop=newline
+  task: Write the opposite of 'hot'.
+  text: "The opposite of 'hot' is 'cold'."
+--- CORR_clean i=5 s=3 seed=1574884830 HIT n_tok=1 cap=False stop=newline
+  task: Write the opposite of 'hot'.
+  text: 'cold'
+--- CORR_clean i=6 s=0 seed=1183922749 HIT n_tok=10 cap=False stop=newline
+  task: Compute 14 times 2.
+  text: '14 * 2 = 28'
+--- CORR_clean i=6 s=1 seed=831916715 HIT n_tok=11 cap=False stop=newline
+  task: Compute 14 times 2.
+  text: '14 times 2 is 28.'
+--- CORR_clean i=6 s=2 seed=681532177 HIT n_tok=4 cap=False stop=newline
+  task: Compute 14 times 2.
+  text: '28.'
+--- CORR_clean i=6 s=3 seed=1603824519 MISS n_tok=19 cap=False stop=newline
+  task: Compute 14 times 2.
+  text: 'To compute 14 times 2, we can simply multiply the two numbers together:'
+--- CORR_clean i=7 s=0 seed=1196642314 HIT n_tok=7 cap=False stop=newline
+  task: State which is heavier: a kilogram of iron or half a kilogram of feathers.
+  text: 'A kilogram of iron is heavier.'
+--- CORR_clean i=7 s=1 seed=810836124 HIT n_tok=13 cap=False stop=newline
+  task: State which is heavier: a kilogram of iron or half a kilogram of feathers.
+  text: 'A kilogram of iron is heavier than half a kilogram of feathers.'
+--- CORR_clean i=7 s=2 seed=693973286 HIT n_tok=7 cap=False stop=newline
+  task: State which is heavier: a kilogram of iron or half a kilogram of feathers.
+  text: 'A kilogram of iron is heavier.'
+--- CORR_clean i=7 s=3 seed=1582956976 HIT n_tok=23 cap=False stop=newline
+  task: State which is heavier: a kilogram of iron or half a kilogram of feathers.
+  text: 'A kilogram of iron is heavier than half a kilogram of feathers because 1 kg > 0.5 kg.'
+--- CORR_clean i=8 s=0 seed=1276057399 HIT n_tok=9 cap=False stop=newline
+  task: Name the first month of the year.
+  text: 'The first month of the year is January.'
+--- CORR_clean i=8 s=1 seed=990390177 HIT n_tok=9 cap=False stop=newline
+  task: Name the first month of the year.
+  text: 'The first month of the year is January.'
+--- CORR_clean i=8 s=2 seed=570521115 HIT n_tok=1 cap=False stop=newline
+  task: Name the first month of the year.
+  text: 'January'
+--- CORR_clean i=8 s=3 seed=1426474637 HIT n_tok=1 cap=False stop=newline
+  task: Name the first month of the year.
+  text: 'January'
+--- CORR_clean i=9 s=0 seed=1305312512 HIT n_tok=3 cap=False stop=newline
+  task: Compute 90 minus 45.
+  text: '45'
+--- CORR_clean i=9 s=1 seed=986336662 HIT n_tok=12 cap=False stop=newline
+  task: Compute 90 minus 45.
+  text: '90 - 45 = 45.'
+--- CORR_clean i=9 s=2 seed=599989292 HIT n_tok=4 cap=False stop=newline
+  task: Compute 90 minus 45.
+  text: '45.'
+--- CORR_clean i=9 s=3 seed=1422142650 HIT n_tok=3 cap=False stop=newline
+  task: Compute 90 minus 45.
+  text: '45'
+--- CORR_clean i=10 s=0 seed=351161886 HIT n_tok=7 cap=False stop=newline
+  task: State the number of wheels on a bicycle.
+  text: 'A bicycle has 2 wheels.'
+--- CORR_clean i=10 s=1 seed=1676246664 HIT n_tok=6 cap=False stop=newline
+  task: State the number of wheels on a bicycle.
+  text: 'A bicycle has two wheels.'
+--- CORR_clean i=10 s=2 seed=2061512498 HIT n_tok=2 cap=False stop=newline
+  task: State the number of wheels on a bicycle.
+  text: '2'
+--- CORR_clean i=10 s=3 seed=233250724 HIT n_tok=7 cap=False stop=newline
+  task: State the number of wheels on a bicycle.
+  text: 'A bicycle has 2 wheels.'
+--- CORR_clean i=11 s=0 seed=355214377 HIT n_tok=1 cap=False stop=newline
+  task: Write the opposite of 'up'.
+  text: 'down'
+--- CORR_clean i=11 s=1 seed=1646990527 HIT n_tok=3 cap=False stop=newline
+  task: Write the opposite of 'up'.
+  text: "'down'"
+--- CORR_clean i=11 s=2 seed=2065843461 HIT n_tok=1 cap=False stop=newline
+  task: Write the opposite of 'up'.
+  text: 'down'
+--- CORR_clean i=11 s=3 seed=203781523 HIT n_tok=1 cap=False stop=newline
+  task: Write the opposite of 'up'.
+  text: 'down'
+--- CORR_clean i=12 s=0 seed=392862320 HIT n_tok=17 cap=False stop=newline
+  task: Compute 11 + 33.
+  text: '- Step 0: 11 + 33 = 44'
+--- CORR_clean i=12 s=1 seed=1617799910 HIT n_tok=12 cap=False stop=newline
+  task: Compute 11 + 33.
+  text: '11 + 33 = 44.'
+--- CORR_clean i=12 s=2 seed=2036661084 HIT n_tok=3 cap=False stop=newline
+  task: Compute 11 + 33.
+  text: '44'
+--- CORR_clean i=12 s=3 seed=241421258 HIT n_tok=12 cap=False stop=newline
+  task: Compute 11 + 33.
+  text: '11 + 33 = 44.'
+--- CORR_clean i=13 s=0 seed=380170311 HIT n_tok=10 cap=False stop=newline
+  task: State the number of hours in a day.
+  text: 'There are 24 hours in a day.'
+--- CORR_clean i=13 s=1 seed=1638908113 HIT n_tok=10 cap=False stop=newline
+  task: State the number of hours in a day.
+  text: 'There are 24 hours in a day.'
+--- CORR_clean i=13 s=2 seed=2024182123 HIT n_tok=10 cap=False stop=newline
+  task: State the number of hours in a day.
+  text: 'There are 24 hours in a day.'
+--- CORR_clean i=13 s=3 seed=262251005 HIT n_tok=3 cap=False stop=newline
+  task: State the number of hours in a day.
+  text: '24'
+--- CORR_clean i=14 s=0 seed=333964994 MISS n_tok=3 cap=False stop=newline
+  task: Compute 8 times 8.
+  text: '```json'
+--- CORR_clean i=14 s=1 seed=1692456532 HIT n_tok=10 cap=False stop=newline
+  task: Compute 8 times 8.
+  text: '8 times 8 is 64.'
+--- CORR_clean i=14 s=2 seed=2112456686 HIT n_tok=3 cap=False stop=newline
+  task: Compute 8 times 8.
+  text: '64'
+--- CORR_clean i=14 s=3 seed=183416696 HIT n_tok=10 cap=False stop=newline
+  task: Compute 8 times 8.
+  text: '8 times 8 is 64.'
+--- CORR_clean i=15 s=0 seed=304450805 MISS n_tok=10 cap=False stop=newline
+  task: Write the opposite of 'open'.
+  text: "The opposite of 'open' is 'close'."
+--- CORR_clean i=15 s=1 seed=1696775267 MISS n_tok=1 cap=False stop=newline
+  task: Write the opposite of 'open'.
+  text: 'close'
+--- CORR_clean i=15 s=2 seed=2083253721 HIT n_tok=1 cap=False stop=newline
+  task: Write the opposite of 'open'.
+  text: 'closed'
+--- CORR_clean i=15 s=3 seed=187489615 MISS n_tok=1 cap=False stop=newline
+  task: Write the opposite of 'open'.
+  text: 'close'
+--- CORR_corrupted i=0 s=0 seed=1331368354 HIT n_tok=15 cap=False stop=newline
+  task: Clopuie 31 + 46.
+  text: 'Clopuie 31 + 46 = 77.'
+--- CORR_corrupted i=0 s=1 seed=945561908 MISS n_tok=19 cap=False stop=newline
+  task: Clopuie 31 + 46.
+  text: '- The user wants to evaluate an arithmetic expression: 31 + 46.'
+--- CORR_corrupted i=0 s=2 seed=559247502 HIT n_tok=4 cap=False stop=newline
+  task: Clopuie 31 + 46.
+  text: '77.'
+--- CORR_corrupted i=0 s=3 seed=1448230936 MISS n_tok=26 cap=False stop=newline
+  task: Clopuie 31 + 46.
+  text: 'I am not a calculator, I do not perform arithmetic operations. I am a large language model designed to perform text-based tasks.'
+--- CORR_corrupted i=1 s=0 seed=1318681493 HIT n_tok=9 cap=False stop=newline
+  task: State the number oq dsys in a wemk.
+  text: 'There are 7 days in a week.'
+--- CORR_corrupted i=1 s=1 seed=966675203 HIT n_tok=12 cap=False stop=newline
+  task: State the number oq dsys in a wemk.
+  text: 'There are 7 dsys in a wemk.'
+--- CORR_corrupted i=1 s=2 seed=546773689 HIT n_tok=12 cap=False stop=newline
+  task: State the number oq dsys in a wemk.
+  text: 'There are 7 dsys in a wemk.'
+--- CORR_corrupted i=1 s=3 seed=1469065775 HIT n_tok=12 cap=False stop=newline
+  task: State the number oq dsys in a wemk.
+  text: 'There are 7 dsys in a wemk.'
+--- CORR_corrupted i=2 s=0 seed=1289733580 MISS n_tok=18 cap=False stop=newline
+  task: Name thy thiru month of the yebr.
+  text: 'Follow the pattern: "The thiru month of the yebr is [Month Name]."'
+--- CORR_corrupted i=2 s=1 seed=1004074330 MISS n_tok=11 cap=False stop=newline
+  task: Name thy thiru month of the yebr.
+  text: 'My thiru month of the yebr is April.'
+--- CORR_corrupted i=2 s=2 seed=584164576 MISS n_tok=5 cap=False stop=newline
+  task: Name thy thiru month of the yebr.
+  text: "'Aloha'"
+--- CORR_corrupted i=2 s=3 seed=1440126070 MISS n_tok=1 cap=False stop=newline
+  task: Name thy thiru month of the yebr.
+  text: 'Fit'
+--- CORR_corrupted i=3 s=0 seed=1293791227 HIT n_tok=12 cap=False stop=newline
+  task: Coepqte 60 diyided by 5.
+  text: '60 divided by 5 is 12.'
+--- CORR_corrupted i=3 s=1 seed=974823277 MISS n_tok=19 cap=False stop=newline
+  task: Coepqte 60 diyided by 5.
+  text: 'To calculate 60 divided by 5, we divide 60 by 5.'
+--- CORR_corrupted i=3 s=2 seed=588500695 HIT n_tok=10 cap=False stop=newline
+  task: Coepqte 60 diyided by 5.
+  text: '60 / 5 = 12'
+--- CORR_corrupted i=3 s=3 seed=1410661953 MISS n_tok=15 cap=False stop=newline
+  task: Coepqte 60 diyided by 5.
+  text: 'The result of 60 divided by 6 is 10.'
+--- CORR_corrupted i=4 s=0 seed=1213380990 HIT n_tok=2 cap=False stop=newline
+  task: State the numbev of szbes of a tryangle.
+  text: '3'
+--- CORR_corrupted i=4 s=1 seed=1062570472 HIT n_tok=9 cap=False stop=newline
+  task: State the numbev of szbes of a tryangle.
+  text: 'A tryangle has 3 szbes.'
+--- CORR_corrupted i=4 s=2 seed=643618898 HIT n_tok=9 cap=False stop=newline
+  task: State the numbev of szbes of a tryangle.
+  text: 'A tryangle has 3 szbes.'
+--- CORR_corrupted i=4 s=3 seed=1364977860 HIT n_tok=9 cap=False stop=newline
+  task: State the numbev of szbes of a tryangle.
+  text: 'A tryangle has 3 szbes.'
+--- CORR_corrupted i=5 s=0 seed=1234228041 HIT n_tok=1 cap=False stop=newline
+  task: Writa the oppcsite oc 'hot'.
+  text: 'cold'
+--- CORR_corrupted i=5 s=1 seed=1050141663 HIT n_tok=10 cap=False stop=newline
+  task: Writa the oppcsite oc 'hot'.
+  text: "The opposite of 'hot' is 'cold'."
+--- CORR_corrupted i=5 s=2 seed=664711781 HIT n_tok=1 cap=False stop=newline
+  task: Writa the oppcsite oc 'hot'.
+  text: 'cold'
+--- CORR_corrupted i=5 s=3 seed=1352237811 HIT n_tok=1 cap=False stop=newline
+  task: Writa the oppcsite oc 'hot'.
+  text: 'Cold'
+--- CORR_corrupted i=6 s=0 seed=1272343824 HIT n_tok=3 cap=False stop=newline
+  task: Combuks 14 times 2.
+  text: '28'
+--- CORR_corrupted i=6 s=1 seed=1020353926 MISS n_tok=7 cap=False stop=newline
+  task: Combuks 14 times 2.
+  text: '=== End of evaluation session ==='
+--- CORR_corrupted i=6 s=2 seed=634915900 HIT n_tok=4 cap=False stop=newline
+  task: Combuks 14 times 2.
+  text: '28.'
+--- CORR_corrupted i=6 s=3 seed=1390361770 HIT n_tok=3 cap=False stop=newline
+  task: Combuks 14 times 2.
+  text: '28'
+--- CORR_corrupted i=7 s=0 seed=1242826535 HIT n_tok=47 cap=False stop=newline
+  task: State whqch iy heayier: a kilogram of iron or holf a kilogdam of feathwis.
+  text: 'A kilogram of iron and half a kilogram of feathers are not the same weight. A kilogram of iron weighs 1 kilogram, while half a kilogram of feathers weighs 0.5 kilograms. Therefore, a kilogram of iron is heavier.'
+--- CORR_corrupted i=7 s=1 seed=1024669617 HIT n_tok=13 cap=False stop=newline
+  task: State whqch iy heayier: a kilogram of iron or holf a kilogdam of feathwis.
+  text: 'A kilogram of iron is heavier than half a kilogram of feathers.'
+--- CORR_corrupted i=7 s=2 seed=605709835 HIT n_tok=13 cap=False stop=newline
+  task: State whqch iy heayier: a kilogram of iron or holf a kilogdam of feathwis.
+  text: 'A kilogram of iron is heavier than half a kilogram of feathers.'
+--- CORR_corrupted i=7 s=3 seed=1394431645 HIT n_tok=18 cap=False stop=newline
+  task: State whqch iy heayier: a kilogram of iron or holf a kilogdam of feathwis.
+  text: 'A kilogram of iron and half a kilogram of feathers are both 1 kilogram in weight.'
+--- CORR_corrupted i=8 s=0 seed=1095254042 HIT n_tok=9 cap=False stop=newline
+  task: Name the ftrst month of the ybaa.
+  text: 'The first month of the year is January.'
+--- CORR_corrupted i=8 s=1 seed=911175820 HIT n_tok=1 cap=False stop=newline
+  task: Name the ftrst month of the ybaa.
+  text: 'January'
+--- CORR_corrupted i=8 s=2 seed=793125174 HIT n_tok=2 cap=False stop=newline
+  task: Name the ftrst month of the ybaa.
+  text: 'January.'
+--- CORR_corrupted i=8 s=3 seed=1480659360 HIT n_tok=1 cap=False stop=newline
+  task: Name the ftrst month of the ybaa.
+  text: 'January'
+--- CORR_corrupted i=9 s=0 seed=1082796589 HIT n_tok=56 cap=False stop=newline
+  task: Comgute 90 miyms 45.
+  text: '90 minutes is 1.5 hours. So 45 minutes is 45/60 = 0.75 hours. Therefore, 90 minutes is 1.5 hours and 45 minutes is 0.75 hours.'
+--- CORR_corrupted i=9 s=1 seed=931994299 MISS n_tok=11 cap=False stop=newline
+  task: Comgute 90 miyms 45.
+  text: '90 minutes is 1.5 hours.'
+--- CORR_corrupted i=9 s=2 seed=780421889 HIT n_tok=12 cap=False stop=newline
+  task: Comgute 90 miyms 45.
+  text: '90 minus 45 is 45.'
+--- CORR_corrupted i=9 s=3 seed=1501789079 HIT n_tok=12 cap=False stop=newline
+  task: Comgute 90 miyms 45.
+  text: '90 minus 45 is 45.'
+--- CORR_corrupted i=10 s=0 seed=1362908476 HIT n_tok=2 cap=False stop=newline
+  task: State the nfmber of wheeqs on a bicyaxe.
+  text: '2'
+--- CORR_corrupted i=10 s=1 seed=641426858 HIT n_tok=11 cap=False stop=newline
+  task: State the nfmber of wheeqs on a bicyaxe.
+  text: 'A bicyaxle has 2 wheeqs.'
+--- CORR_corrupted i=10 s=2 seed=1060254736 HIT n_tok=9 cap=False stop=newline
+  task: State the nfmber of wheeqs on a bicyaxe.
+  text: 'A bicyale has 2 wheess.'
+--- CORR_corrupted i=10 s=3 seed=1211434118 HIT n_tok=7 cap=False stop=newline
+  task: State the nfmber of wheeqs on a bicyaxe.
+  text: 'A bicycle has 2 wheels.'
+--- CORR_corrupted i=11 s=0 seed=1358839563 MISS n_tok=3 cap=False stop=newline
+  task: Writo the oppssitu of 'up'.
+  text: "'up'"
+--- CORR_corrupted i=11 s=1 seed=670633885 HIT n_tok=2 cap=False stop=newline
+  task: Writo the oppssitu of 'up'.
+  text: 'Down.'
+--- CORR_corrupted i=11 s=2 seed=1055940135 HIT n_tok=1 cap=False stop=newline
+  task: Writo the oppssitu of 'up'.
+  text: 'down'
+--- CORR_corrupted i=11 s=3 seed=1240952497 MISS n_tok=1 cap=False stop=newline
+  task: Writo the oppssitu of 'up'.
+  text: 'dn'
+--- CORR_corrupted i=12 s=0 seed=1387823442 HIT n_tok=16 cap=False stop=newline
+  task: Cnmzote 11 + 33.
+  text: 'Cnmzote 11 + 33 = 44.'
+--- CORR_corrupted i=12 s=1 seed=633319876 HIT n_tok=4 cap=False stop=newline
+  task: Cnmzote 11 + 33.
+  text: '44.'
+--- CORR_corrupted i=12 s=2 seed=1018617982 HIT n_tok=3 cap=False stop=newline
+  task: Cnmzote 11 + 33.
+  text: '44'
+--- CORR_corrupted i=12 s=3 seed=1269944552 HIT n_tok=4 cap=False stop=newline
+  task: Cnmzote 11 + 33.
+  text: '44.'
+--- CORR_corrupted i=13 s=0 seed=1400564581 HIT n_tok=3 cap=False stop=newline
+  task: State the numbxi of hourw in a day.
+  text: '24'
+--- CORR_corrupted i=13 s=1 seed=612228083 HIT n_tok=10 cap=False stop=newline
+  task: State the numbxi of hourw in a day.
+  text: 'There are 24 hours in a day.'
+--- CORR_corrupted i=13 s=2 seed=1031047753 HIT n_tok=10 cap=False stop=newline
+  task: State the numbxi of hourw in a day.
+  text: 'There are 24 hours in a day.'
+--- CORR_corrupted i=13 s=3 seed=1249098463 HIT n_tok=10 cap=False stop=newline
+  task: State the numbxi of hourw in a day.
+  text: 'There are 24 hours in a day.'
+--- CORR_corrupted i=14 s=0 seed=1446378976 HIT n_tok=5 cap=False stop=newline
+  task: Coltute 8 timns 8.
+  text: '64.0'
+--- CORR_corrupted i=14 s=1 seed=556977526 HIT n_tok=9 cap=False stop=newline
+  task: Coltute 8 timns 8.
+  text: '8 * 8 = 64'
+--- CORR_corrupted i=14 s=2 seed=943430860 HIT n_tok=9 cap=False stop=newline
+  task: Coltute 8 timns 8.
+  text: '8 x 8 = 64'
+--- CORR_corrupted i=14 s=3 seed=1329376346 HIT n_tok=3 cap=False stop=newline
+  task: Coltute 8 timns 8.
+  text: '64'
+--- CORR_corrupted i=15 s=0 seed=1475844055 MISS n_tok=10 cap=False stop=newline
+  task: Wtite thn opposite on 'open'.
+  text: "The opposite of 'open' is 'close'."
+--- CORR_corrupted i=15 s=1 seed=552642369 MISS n_tok=10 cap=False stop=newline
+  task: Wtite thn opposite on 'open'.
+  text: "The opposite of 'open' is 'close'."
+--- CORR_corrupted i=15 s=2 seed=972683003 MISS n_tok=1 cap=False stop=newline
+  task: Wtite thn opposite on 'open'.
+  text: 'close'
+--- CORR_corrupted i=15 s=3 seed=1325319789 MISS n_tok=3 cap=False stop=newline
+  task: Wtite thn opposite on 'open'.
+  text: "'close'"

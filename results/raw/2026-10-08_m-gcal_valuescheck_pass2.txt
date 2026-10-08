@@ -1,0 +1,1515 @@
+# G-CAL entry -- values-check, pass 2 (before commit), on the second draft (the first draft with pass 1's corrections applied).
+# Written by Code 2026-10-08 06:56:27 UTC (date -u). Workflow wf_90b22195-e51: the same design as pass 1 (claim extractor; a verifier per section; a STRICT
+# refuter on every FAILS/IMPRECISE; a holistic values lens), told also to check that each pass-1 correction was applied correctly.
+# All agents read-only; no model or tokenizer loaded by any agent (instructed; none reported one).
+# Claims 400: verified 375, uncheckable 3, flagged 22, confirmed failing or imprecise after refutation 22 (none refuted).
+# Values lens: 15 findings. Code's disposition: every confirmed correction and every values finding applied in the third draft, the one committed
+# (one finding's alternative, holding the commit until the seat's read, was not taken: see V1). Code checked the new text's added citations itself
+# (m_sessions.py:300-305; the c75d4d8 and bab921c message phrases; gcal.py's ORDER note; the N13 raws' mtime 05:44:45 UTC; the session clock times).
+
+====================================================================================================
+CONFIRMED CORRECTIONS (checker verdict upheld by the strict refuter)
+====================================================================================================
+--- [S0-32] IMPRECISE  (S0 Header (bolded paragraph, summary bullets, stamp))
+  CLAIM:
+    Whether 'close' or the two hits should count is the seat's to say.
+  REFUTER'S EVIDENCE:
+    The checker is right. Draft lines 18-19 read: 'The verdict of record is the grader's; whether "close" or two
+    hits should count is the seat's to say.' The claim as quoted puts in a "the" that the draft does not have. Pass
+    1's V6 CORRECTION (valuescheck raw, lines 698-700) reads: 'whether "close" or the two hits count is the seat's
+    to say.' Its DISPOSITION line 701 says the wording was applied that way. The draft instead drops "the" and adds
+    "should", so the correction was applied inexactly.
+
+    In the headline, neither "close" nor the two hits has been introduced yet. O1 ("Item 15's 'close'") and O2 ("Two
+    graded hits Code reads as wrong") come about 140 lines later. Without the article, "two hits" reads as any two
+    hits rather than O2's specific pair.
+
+    V6's PROBLEM text states the two questions separately: 'whether "close" counts and whether the two hits count'.
+    The four readings (draft lines 170-175; read raw lines 110-111) also treat them as independent: two hits removed
+    only, "close" counted only, both. A bare 'whether X or Y should count' can be misread as an either/or choice.
+
+    The substance holds:
+    - 7 'close' answers on item 15, gold {closed, shut} (read raw line 98).
+    - The grader is pinned as f0's grade (m:176).
+    - The seat reads G-CAL's generations at the stage (m:271).
+    - Code does not self-adjudicate.
+
+    The checker's correction is accurate, but it leaves "close" unintroduced and keeps the either/or construction.
+    The wording below names both items as O1 and O2 do and separates the two questions.
+  CORRECTION:
+    whether item 15's "close" should count, and whether the two hits Code reads as wrong should, is the seat's to
+    say.
+  DISPOSITION: applied in the third draft.
+
+--- [S0-33] IMPRECISE  (S0 Header (bolded paragraph, summary bullets, stamp))
+  CLAIM:
+    Code launched completability before the read request reached the seat.
+  REFUTER'S EVIDENCE:
+    The checker is right: the claim is true only of the first launch, which ran nothing.
+
+    What the sources show:
+    - **The first launch was refused.** The refused raw (results/raw/2026-10-08_m-gcal_completability_qwen_refused-
+    preflight.txt) is stamped 04:41:33 UTC. The preflight refused because a Jupyter kernel was running, and the run
+    exited 2 with nothing generated.
+    - **That launch came before the request existed in the repo.** `git log` shows bab921c, the commit that carries
+    G-CAL_seat_read_request.md, at 00:41:55 -0400, which is 04:41:55 UTC. The draft's own line 102 says the first
+    launch was "before the request was sent to the seat". So for the first launch the claim holds.
+    - **The run that produced the data was a second launch.** The completability raw is stamped 05:39:33 UTC with
+    HEAD bab921c and finished at 05:46:22 UTC with exit 0. The wait raw puts the preflight clearing at 05:39:22,
+    after the PI's "go ahead with completability".
+    - **No source says whether the request had reached the seat by 05:39.** The entry says only that the request
+    "was sent to the PI in chat for routing". Nothing in the repo records when the PI routed it.
+    - **What is certain for the second launch is that it ran before the seat's read.** G-CAL_model-free.json still
+    has conditions."3" as "pending -- the seat's le…", and the entry's headline says G-CAL "WAITS ON TWO READS BY
+    THE SEAT, THE LEGIBILITY READ OF RECORD …".
+    - **That is the departure.** m:358 lists step 6 as "the 0.12 replay first; the renders of record and their sha;
+    the seat's read; completability; roster assertion". Running completability before the seat's read departs from
+    that order.
+
+    The bullet sits under "Order", so "launched completability" reads as the run of record. For that run, "before
+    the read request reached the seat" is not established. The verdict is IMPRECISE, not FAILS, because the sentence
+    is literally true of the first launch.
+
+    **The checker's correction holds.** "First launched (04:41:33 UTC)" matches the refused raw. "Ran it
+    (05:39–05:46 UTC)" matches the run of 05:39:33–05:46:22. "Before the seat's read" holds because condition (3) is
+    still pending. "Departing from m:358's listed order" holds. I add only that the first launch was refused, so it
+    isn't mistaken for the run.
+  CORRECTION:
+    Code first launched completability (04:41:33 UTC, refused by the preflight) before the read request reached the
+    seat, and ran it (05:39–05:46 UTC) before the seat's read, departing from m:358's listed order; that is for the
+    seat to rule.
+  DISPOSITION: applied in the third draft.
+
+--- [S1-08] FAILS  (S1 For the seat (the seat instruction in the header))
+  CLAIM:
+    (Implicit completeness) The list -- this entry plus those four files -- names every file the seat should avoid
+    before the read, i.e. every committed file of this entry carrying golds or answers.
+  REFUTER'S EVIDENCE:
+    The checker is right that the list leaves out files that carry golds. Its correction also leaves one out.
+
+    Files the entry commits or links that carry golds or answers but are not named:
+    - `results/raw/2026-10-08_m-gcal_valuescheck.txt` is committed with this entry (entry :222-225). Lines 52-55
+    list all 16 golds ('77', '7'/'seven', 'march', ... '64', 'closed'/'shut'). Lines 403-407 give item 3's gold
+    (12), the served task, and the model's answer "The result of 60 divided by 6 is 10."
+    - `_valuescheck_pass2.txt` is linked at :225. It will carry this pass's evidence, which quotes golds.
+    - `2026-10-08_m-gcal-build_review.txt` (linked at :30). Lines 721-725 name item 7 ('iron') and item 9 ('45') and
+    the variants 'seven', 'twelve', 'three', 'two', 'twenty-four' and 'shut'.
+    - `2026-10-08_m-gcal-build_selftest.txt` (linked at :31). Line 597 names the same variants. Line 28 gives the
+    gold-bearing words miyms (9), thiru (2) and ftrst (8) with their renders.
+    - `valence_core/m/gcal.py`, which the checker did not list. The entry links it at :33. Its `GRADER_BATTERY`
+    (:918-928) holds 13 of the 16 golds: 77, march, 7/seven, 24/twenty-four, cold, closed/shut, iron, down,
+    12/twelve, 2/two, 44, 45, 64. Line 1114 holds item 3's gold, `{"gold": ["12", "twelve"]}`, and line 1490 the
+    variant list. That file has the same status as `_review` and `_selftest`: committed in `c75d4d8` and linked from
+    the entry. The checker's correction is therefore incomplete in the same way as the original.
+
+    The five files the original names do each carry golds or answers:
+    - the entry (closed/shut, 45, iron, "March", and the answers);
+    - the completability artifact and the checkpoint (each record has `task` and `text`, e.g. 'Compute 31 + 46.' /
+    '31 + 46 = 77');
+    - `_completability_read.txt` (golds and answers);
+    - `G-CAL_model-free.json` (the gold lists).
+
+    Linked files with no golds or answers:
+    - `_sitecheck`, `_model-free.txt`, `_refused-preflight`, `_completability_wait` and `_sitecheck_post`, checked
+    by grep;
+    - `scripts/m_sessions.py`, whose stubs take `gold[0]` from the pool at run time, with no gold literals
+    (:2102-2109).
+
+    `_completability_qwen.txt` has no golds or answers. It does print per-item hit and miss lines (:9-136),
+    including item 2 corrupted 0/4 and item 15 corrupted 0/4. Pass-1 V3 kept exactly this kind of information away
+    from the read, so the correction names it under a widened criterion.
+
+    On pass 1: V4's sentence was applied faithfully ('SEAT' became 'Seat'). Its disposition, "naming every file that
+    carries golds or answers", overclaims for the reasons above. I left out the checker's `data/f/pools.json`
+    parenthetical. That file is neither linked from nor committed with the entry. Naming one outside file implies a
+    completeness that does not hold: m:176 and the STOP-5 §F renders also carry golds, and the entry already says
+    the seat knows the key.
+  CORRECTION:
+    Seat: make the condition-(3) read from [`G-CAL_seat_read_request.md`](data/m/gates/G-CAL_seat_read_request.md)
+    (section A, then section B) and send it before opening this entry, `G-CAL_completability_qwen.json`,
+    `data/m/ckpt/G-CAL_qwen.json`, `_completability_read.txt`, `G-CAL_model-free.json`, the values-check raws
+    (`_valuescheck.txt`, `_valuescheck_pass2.txt`), the build raws `_review` and `_selftest`,
+    `valence_core/m/gcal.py` (its grader battery) or `_completability_qwen.txt` (per-item hits); each carries golds,
+    the model's answers or its per-item hits.
+  DISPOSITION: applied in the third draft.
+
+--- [S3-06] IMPRECISE  (S3 The build)
+  CLAIM:
+    (Implicit) The build's file changes are gcal.py, the m_sessions.py commands and the .gitignore line.
+  REFUTER'S EVIDENCE:
+    The checker is right. `git show --stat c75d4d8` lists seven paths. Four are code or config: `.gitignore` (+2: a
+    comment line and `!/data/m/gates/G-CAL_seat_read_request.md`), `scripts/m_sessions.py`, the new
+    `valence_core/m/gcal.py`, and `valence_core/m/__init__.py` (4 lines changed, +3/−1). The other three are the
+    build raws, which the entry cites.
+
+    The `__init__.py` diff rewraps the module docstring's list of modules. It replaces "``verify``, ``stages``.
+    Driver and self-test: ..." with "``verify``, ``stages``; step 6 adds ``gcal`` (G-CAL: the model-free artifact,
+    the seat's read request, completability on Qwen). Driver and self-test: ...".
+
+    The builder's report notes this change: "**`valence_core/m/__init__.py`**: one docstring line adding `gcal` to
+    the module list." The edit also matters to a hash the entry quotes. `resume.package_sha256_of` hashes every
+    `valence_core/m/*.py` file, `__init__.py` included. So the `package_sha256` 4b49658739523c60… that the entry
+    gives as "equal to c75d4d8's" depends on this edit.
+
+    The entry's build bullet (entry_gcal_v2.md lines 33–35) lists only gcal.py, the two m_sessions.py commands and
+    the `.gitignore` line. As a list of what the build changed, it is incomplete. None of its statements is false,
+    though, and the commit message leaves out `__init__.py` the same way. The omission is therefore IMPRECISE, not
+    FAILS.
+
+    I tightened the checker's wording. The edit is not literally one docstring line: it rewraps one line into three
+    to insert a sentence. The `m_sessions.py` diff also adds about 250 lines of gcal self-test checks. The entry's
+    Tests section already covers those, so the build bullet does not need to mention them.
+  CORRECTION:
+    New [`valence_core/m/gcal.py`](valence_core/m/gcal.py) (with `valence_core/m/__init__.py`'s module docstring
+    amended to list `gcal`), and two commands in [`scripts/m_sessions.py`](scripts/m_sessions.py): `gcal model-free`
+    and `gcal completability`. A `.gitignore` line admits the seat request (markdown) under `data/m/gates/`.
+  DISPOSITION: applied in the third draft.
+
+--- [S3-11] IMPRECISE  (S3 The build)
+  CLAIM:
+    Completability is built as m:176 pins it.
+  REFUTER'S EVIDENCE:
+    The checker is right, so I am not refuting it. m:176 pins completability (condition 4) for both substrates. It
+    says "on both pools (128 generations per substrate or checkpoint); on OLMo the same prompt form under b3's
+    banner and b3's generation path". It also declares "G-CAL-OLMo: condition (4) per checkpoint (128 generations),
+    before that checkpoint's G-TIME-OLMo". m:302 and m:358 step 16 put that gate on the OLMo track, which runs on
+    the box.
+
+    The build covers the Qwen half only:
+    - gcal.py's docstring (lines 39-40) says "G-CAL-OLMo (per checkpoint, b3's banner and generation path) is the
+    OLMo track's and is not built here".
+    - `run_completability` is documented as "Condition (4) on Qwen" and writes "substrate": "qwen".
+    - No OLMo completability code exists anywhere in valence_core/ or scripts/. A grep for G-CAL-OLMo or gcal_olmo
+    finds only gcal.py's docstring.
+    - The builder flagged the gap (review raw line 110, flag 5: "G-CAL-OLMo (per checkpoint, on the box) is not
+    built").
+
+    The draft never mentions this. Its only OLMo-related hit is the gate line's "G-ANL-F0", and its "Left open and
+    disclosed here" list leaves it out.
+
+    The Qwen half does match m:176 point by point:
+    - prompt `SESSION_BANNER + "Task: {task}\nResponse:"` with no round header
+    - `cached=False`, `injections=()`
+    - newline stop, e2a ban list, `STOP_CAP` 60, TEMP 0.7
+    - the seed formula `crc32("m-cal|{pool}|{i}|{s}") % 2**31`
+    - f0's grader, 128 generations
+
+    These are at gcal.py:801-809 and :854-864. So the claim is true for what was built, but unqualified it covers
+    more of m:176's completability pin than the build implements. Pass 1 marked it VERIFIED as [S3-13] without
+    catching the scope. The checker's correction is accurate against m:176 and the gcal.py docstring. I added "b3's"
+    before "generation path" to follow m:176's wording.
+  CORRECTION:
+    Completability on Qwen is built as m:176 pins it (G-CAL-OLMo, per checkpoint under b3's banner and b3's
+    generation path, is the OLMo track's and is not built):
+  DISPOSITION: applied in the third draft.
+
+--- [S3-29] IMPRECISE  (S3 The build)
+  CLAIM:
+    Artifacts are never overwritten with different bytes.
+  REFUTER'S EVIDENCE:
+    The checker is right. The claim (entry_gcal_v2.md:49, "Writes are atomic, artifacts are never overwritten with
+    different bytes, and resume is skip-only under a 15-key identity") holds only for the write-once files.
+
+    1. Three files are write-once. `write_model_free` writes the model-free artifact with `write_json_once` and the
+    seat request with `write_text_once` (gcal.py:903-907). The completability artifact goes through
+    `_write_artifact` → `write_json_once` (gcal.py:248-259). All three use `_write_once_text` (gcal.py:206-237). If
+    the bytes on disk are identical, it accepts them ("identical"). If they differ, it refuses with "never
+    overwritten". Its write is temp file, fsync, `os.replace`, then a directory fsync.
+
+    2. The checkpoint is not write-once. `run_completability` rewrites `data/m/ckpt/G-CAL_qwen.json` with
+    `_resume.atomic_write_json`:
+       - once at each invocation's start, after `_load_ckpt` (gcal.py:844-845);
+       - again after every generation (gcal.py:870-871).
+
+       On disk the checkpoint has n_writes 129, 128 records, and one provenance entry with launched 128, so 129 = 1
+    start write + 128. Each of those writes replaced the file with different bytes. `atomic_write_json`
+    (resume.py:179+) does use temp file, fsync, replace, so every write is atomic.
+
+    3. The entry calls the checkpoint an artifact. Lines 218-220 say "all four canonical G-CAL artifacts" and "the
+    four G-CAL artifacts", and line 55 says "the canonical artifacts". `gcal.canonical_files` lists the checkpoint
+    among "the four named artifacts" (gcal.py:263-264). Read with the entry's own wording, "artifacts are never
+    overwritten with different bytes" is false for one of the four. In pass 1 this claim was VERIFIED on the reading
+    that artifact and checkpoint are separate kinds of file, but v2's post-run site-check paragraph counts them
+    together.
+
+    4. The other parts check out. The identity has exactly 15 keys, on both the checkpoint and the artifact, and the
+    two identities are equal. Resume is skip-only: `_load_ckpt` refuses on any identity difference and accepts only
+    records that are the key order's prefix (gcal.py:714-748).
+
+    The checker's correction is accurate but incomplete. It says the checkpoint is replaced "after each generation",
+    which leaves out the write at each invocation's start. The wording below states both.
+  CORRECTION:
+    Writes are atomic. The model-free artifact, the seat request and the completability artifact are write-once:
+    they are never overwritten with different bytes. The checkpoint is rewritten atomically at each invocation's
+    start and after every generation (n_writes 129 in this run). Resume is skip-only under a 15-key identity.
+  DISPOSITION: applied in the third draft.
+
+--- [S3-49] IMPRECISE  (S3 The build)
+  CLAIM:
+    This entry's values-check found one input where the survivor differs: --out equal to a canonical root exactly.
+  REFUTER'S EVIDENCE:
+    The checker is right that the claim is imprecise, but its correction carries over one of the claim's errors.
+
+    1. **More than one input.** R30 (verify/tools/muts.py) replaces only `out =
+    _resume.refuse_canonical_out(out_path)` at gcal.py:606 with `Path(out_path).expanduser().resolve()`. The
+    checkpoint and model-free guards then check `d/ckpt/G-CAL_qwen.json` and `d/G-CAL_model-free.json`, where `d =
+    out.parent`. CANONICAL_ROOTS (resume.py:119) has three roots: data/m, /workspace/models and data/olmo. I re-ran
+    the logic in scratch (vc/s349_sim.py, python -I -B, no repo import).
+       - For data/m, /workspace/models, data/olmo and data/m/gates/.., the original refuses and the survivor's
+    `_paths` passes.
+       - For an out path strictly under a root (data/m/x.json, data/m/gates/x.json, /workspace/models/x), both
+    refuse, but the survivor's message names `<d>/ckpt/G-CAL_qwen.json`, not the out path. Pass-1's refuter (point
+    4) recorded this too.
+       - So the survivor differs on one class of input (three roots, plus any spelling that resolves to one of
+    them), and also in its messages. "One input" is wrong.
+
+    2. **The flag named is wrong, in both the claim and the checker's correction.** The input that differs is
+    `_paths`'s `out_path` in a stub run, not the CLI `--out`. In m_sessions.py, `gcal completability --out` is a
+    directory.
+       - On the Qwen path (main → run_gcal_completability, adapter_factory None), the driver refuses any `--out`
+    outright (lines 302-305).
+       - On the stub seam, the driver passes `resume.refuse_canonical_out(out) / COMPLETABILITY_NAME` (line 309).
+    That guard is not mutated, so `--out` equal to a root is refused identically under the survivor. A path ending
+    in the artifact's filename can never equal a root. The only exception is a leaf symlink to a root, which the
+    driver does not resolve, and the wording "resolving to" covers that case.
+
+    3. **Precheck does refuse these inputs too.** Precheck (gcal.py:656-678) is checked against this tree. data/ckpt
+    does not exist. data/m and data/olmo exist, so precheck fires "COMPLETABILITY ARTIFACT EXISTS". /workspace does
+    not exist on the laptop, so /workspace/models falls through to the model-free check (/workspace/G-CAL_model-
+    free.json is absent) and is refused there. In each case the message differs from the original's "SELFTEST
+    REFUSED ... canonical location".
+  CORRECTION:
+    This entry's values-check found where the survivor differs: a stub run's out path (`_paths`'s `out_path`, not
+    the CLI's `--out`, which the driver refuses itself) resolving exactly to a canonical root (data/m, data/olmo or
+    /workspace/models) passes the survivor's `_paths`, and precheck refuses it later, with a different message;
+    where both refuse in `_paths`, the survivor's message names the checkpoint path, not the out path.
+  DISPOSITION: applied in the third draft.
+
+--- [S3-62] IMPRECISE  (S3 The build)
+  CLAIM:
+    (Implicit) These four are the only open items from the review.
+  REFUTER'S EVIDENCE:
+    The checker is right. Under "Left open and disclosed here" (entry_gcal_v2.md:67-74), the draft lists four items:
+    spec-lens finding 0, plus the three items that Code's closing-edits section of results/raw/2026-10-08_m-gcal-
+    build_review.txt (lines 1289-1292) leaves "as disclosed". The list reads as complete, but it is not.
+
+    In its mutation-probe section, the independent verifier records a separate open nit (review raw 1233-1236):
+    "R12, R13, R15–R18, R21 and R22 fail the suite by crashing a self-test ('gcal: _selftest raised'
+    KeyError/GcalRefusal, or the driver's 'integration selftest raised FileNotFoundError' ...) rather than through a
+    named check. The rest of that self-test's checks are skipped."
+
+    Nothing addresses this nit:
+    - None of the 12 fixes does: the fix report comes before the verifier, and the verifier observed this after the
+    fixes.
+    - Neither of Code's two closing edits does. Edit (1) is the symlink write guard and edit (2) is the seat request
+    text (review raw 1284-1288).
+    - The crash-to-FAIL wrapper is still at HEAD: scripts/m_sessions.py:2381 `chk(f"{m}: _selftest raised", False,
+    ...)` and :2385 "integration selftest raised".
+    - It is not in Code's "Left as disclosed" list.
+    - /usr/bin/grep finds no "crash", "named check" or "R12" anywhere in the entry draft.
+
+    Every other open item in the review is accounted for:
+    - Spec finding 0 is listed. Its DISPOSITION at review raw:238 is OPEN.
+    - The symlink edge is closed by closing edit 1.
+    - The request's missing "where the read of record goes" and "cite the renders sha256" are closed by closing edit
+    2. G-CAL_seat_read_request.md:36 now has both.
+    - The verifier's incomplete-checkpoint, no_factory and loader-SystemExit items are listed.
+    - Builder flags 1-2 are fixed (fixes 8 and 12).
+    - R30 is covered elsewhere in the entry as the equivalent survivor.
+
+    Pass 1's correction V9, which added the three "as disclosed" items, was applied correctly, but it missed this
+    nit. The checker's count is right: eight mutants (R12, R13, R15, R16, R17, R18, R21, R22), all among the 49
+    caught (review raw 1217-1224). R14 is not among them.
+  CORRECTION:
+    Add a bullet under "**Left open and disclosed here:**", after the "Three items the review raw leaves "as
+    disclosed":" block, at the same level as that block: "- The verifier's nit that eight of the caught mutants
+    (R12, R13, R15–R18, R21 and R22) fail the suite by crashing a self-test rather than through a named check; the
+    rest of that self-test's checks are then skipped."
+  DISPOSITION: applied in the third draft.
+
+--- [S4-35x] IMPRECISE  (S4 The model-free half)
+  CLAIM:
+    [Cross-section, raised by the S4-35 check] Next item 1 (entry line 227): 'The seat's legibility read of record
+    (condition (3)), made blind from the request.'
+  REFUTER'S EVIDENCE:
+    The checker is right, and I could not refute it. "Made blind" in Next item 1 (entry_gcal_v2.md line 227)
+    contradicts the draft's own S4, lines 93-96: "Its form orders the read within the request only. The read of
+    record repeats the seat's provisional reads of 2026-10-04 on Code's renders of these items (STOP-5 §F, STOP-6
+    §E), and m:176 quotes items 5, 11 and 15 with their golds. So the reader already knows the key." That S4 text is
+    pass-1 V5's correction, applied (valuescheck.txt V5, "blinding"). V5 removed "blind form" from S4 because
+    "'Blind' holds only within the request" and the seat already knows the key. Putting "blind" back in Next item 1
+    brings back the overclaim V5 removed.
+
+    Pass-1 V1 (valuescheck.txt around lines 598-611) gave the correction "Next, in this order: the seat's legibility
+    read of record (condition (3)), made before opening this entry or its raws; ...". The draft did not apply that
+    wording. It rewrote it as "made blind from the request", so a new error came in while a pass-1 correction was
+    being applied.
+
+    m:176 sets no blinding requirement. It says only "the seat's legibility read of the 16 renders of record finds
+    every gold recoverable" and "the read of record is repeated at G-CAL on the renders of record". The only blind-
+    read pins in m (m:312, m:318) concern Q-F3 and pick-bearing artifacts, not condition (3).
+
+    The request's form is A-before-B. G-CAL_seat_read_request.md line 9 says "Read section A before section B";
+    section A holds the 16 renders and section B (line 32) is headed "Key -- open only after section A". So
+    "(section A, then section B)" is exact, and it matches the headline's neutral form (lines 1-2): "make the
+    condition-(3) read from [`G-CAL_seat_read_request.md`] (section A, then section B)". The checker's correction is
+    accurate and makes no claim about blinding. The rest of item 1 is right: "legibility read of record (condition
+    (3))" matches the request's title and m:176. Final verdict IMPRECISE: one overclaiming word in an otherwise
+    correct item, and the checker's correction fixes it.
+  CORRECTION:
+    1. The seat's legibility read of record (condition (3)), made from the request (section A, then section B).
+  DISPOSITION: applied in the third draft.
+
+--- [S5-09] IMPRECISE  (S5 Completability)
+  CLAIM:
+    The first launch was before the request was sent to the seat.
+  REFUTER'S EVIDENCE:
+    The timing is right, but the claim names the wrong recipient.
+
+    1. **Timing holds.** The refused-preflight raw stamps the first launch at 04:41:33 UTC. Commit bab921c, which
+    carries data/m/gates/G-CAL_seat_read_request.md, is dated 2026-10-08T00:41:55-04:00 (04:41:55 UTC). That same
+    commit also contains the refused-preflight raw and its message reports the refusal, so the request was committed
+    after the launch. The entry's account (lines 20 and 205; pass-1 V2) is that the request was sent after that. So
+    the launch did come before any sending.
+
+    2. **The recipient is wrong.** The draft's own line 93 says the request "was sent to the PI in chat for
+    routing", and Code has no direct channel to the seat. The repo shows only that the request went to the PI.
+    Whether the PI has passed it on to the seat yet is not recorded. "Sent to the seat" therefore contradicts line
+    93 and assumes a step that is not on record.
+
+    3. **The pass-1 correction was changed.** The pass-1 correction (V2 in results/raw/2026-10-08_m-
+    gcal_valuescheck.txt, lines 631-632) said "so before the request reached the seat". The draft changed this to
+    "sent to the seat", which brought in the inconsistency.
+
+    4. **The draft's other wording is consistent.** Line 20 says "before the read request reached the seat" and line
+    205 says "before the read request was committed or sent". Only line 102 is off.
+
+    The checker's correction fits all of these sources: before the request was sent to the PI for routing, and so
+    before it could reach the seat.
+  CORRECTION:
+    That was before the request was sent to the PI for routing, so before it reached the seat.
+  DISPOSITION: applied in the third draft.
+
+--- [S5-15] IMPRECISE  (S5 Completability)
+  CLAIM:
+    The PI shut the kernel down.
+  REFUTER'S EVIDENCE:
+    The checker read the sources correctly. The only source for this claim is the PI's chat line, quoted in the
+    entry draft at line 29: "Kernel's shut down, go ahead with completability" (taken as given). It says the kernel
+    is shut down but not who shut it down.
+
+    Nothing in the repo names who did it:
+    - The refused-preflight raw (2026-10-08_m-gcal_completability_qwen_refused-preflight.txt) shows only that PID
+    1378 was running at the first launch. That process was an ipykernel_launcher in
+    /Users/jasondwyer/miniconda3/envs/asi-experiments.
+    - The wait raw (2026-10-08_m-gcal_completability_wait.txt) shows the 05:18:41 UTC one-shot preflight listing
+    only the audit jobs (PIDs 8603, 8623–8629, 15767). /usr/bin/grep finds 0 matches for "1378" or "ipykernel" in
+    that file. This backs up the claim that the kernel was gone, but not who stopped it.
+    - The completability, read and sitecheck_post raws do not mention the kernel.
+    - Pass 1 (valuescheck line 1008, S5-10) marked "The PI shut the kernel down" VERIFIED with no supporting
+    evidence.
+
+    That the PI did it is a likely inference, since the kernel ran in the PI's own conda env. But the record does
+    not say so. The draft also puts this in Code's narrative voice as a fact, even though Code only knows what the
+    PI reported. The checker's correction, which attributes the statement to the PI and quotes it, is exactly right.
+  CORRECTION:
+    The PI reported the kernel shut down ("Kernel's shut down").
+  DISPOSITION: applied in the third draft.
+
+--- [S5-98] IMPRECISE  (S5 Completability)
+  CLAIM:
+    calib2 used f1's corruptor's renders (corr_sha 2c2c227395ea9f2d).
+  REFUTER'S EVIDENCE:
+    The checker is right. The bytes match, but the wording names the wrong source.
+
+    1. What holds:
+    - data/f/calib.json has corr_sha 2c2c227395ea9f2d and pools_sha 8547d9a11ba55b95.
+    - In G-CAL_model-free.json, f1_012 has renders_sha16 2c2c227395ea9f2d, renders_sha_matches_calib true, and rule
+    "f1 corrupt() at 0.12, f_sessions.py:106-116".
+    - I re-ran the check myself in scratch, with no model and no mlx. I copied both functions verbatim:
+    f0_calibrate.py:69-80 corrupt() and f_sessions.py:106-116 corrupt(). Over data/f/pools.json CORR_clean (pools
+    sha16 8547d9a11ba55b95), they produce identical renders for all 16 items. Hashed the way f0 does it (sha256 of
+    "\n".join(...), first 16 hex), the result is 2c2c227395ea9f2d.
+
+    2. What does not hold:
+    - calib.json was written by f0_calibrate.py. Its docstring lists "Artifacts: data/f/calib.json".
+    - That script generates the corrupted pool with its own corrupt(), defined at :69-80 and called in main():
+    corr_items = [corrupt(it["task"], i) ...]. It does not import f_sessions. The two functions differ only in
+    formatting ("out = []; word_start = True" against "out, word_start = [], True").
+    - The run is logged as "f0 recalibration v2" in archive/RESULTS-cycles3-4.md:248-255, with raw
+    results/raw/2026-08-10_f_calib2.txt. That raw prints the corrupted-pool sha 2c2c227395ea9f2d and shows
+    CORR_clean 59/64 and CORR_corrupted 54/64.
+    - So calib2 did not use renders from f1's corruptor. f0's own copy produced renders that are byte-identical to
+    the ones f1's corrupt() gives. "f1's corruptor's renders" is right only through that equality.
+
+    3. The pass-1 correction was not applied as written. Pass 1 (valuescheck S5-63) warned that "f1's corruptor's
+    renders" is acceptable only by byte equality. It proposed "the renders f1's `corrupt()` gives at 0.12, sha16
+    `2c2c227395ea9f2d`". The second draft (line 150) went back to "f1's corruptor's renders". The entry's line 147,
+    two lines above, already uses the precise form ("the renders f1's corruptor gives").
+
+    4. The checker's correction is itself exactly right:
+    - f1's corrupt() fixes CORR_RATE = 0.12 as a module constant (f_sessions.py:89), so "gives" needs no rate. The
+    sentence already says "f0's calibration at 0.12".
+    - `corr_sha` is calib.json's own field name, and its value is 2c2c227395ea9f2d.
+
+    5. Outside this claim: line 16 uses the same loose form ("+.078 on f1's corruptor's renders"), and line 84 says
+    "measured on these renders". Both are true only by the same byte equality.
+  CORRECTION:
+    it used the renders f1's corruptor gives (`corr_sha` `2c2c227395ea9f2d`)
+  DISPOSITION: applied in the third draft.
+
+--- [S5-99] IMPRECISE  (S5 Completability)
+  CLAIM:
+    calib2 used f0's seed key, per f0_calibrate.py:143 and m:176.
+  REFUTER'S EVIDENCE:
+    The checker is right, so the IMPRECISE verdict stands. The fault is the line citation. The facts in the claim
+    are correct.
+
+    - **f0_calibrate.py.** In jlens-qwen36/scripts/f0_calibrate.py, line 143 is `model, e2a.SESSION_BANNER, seg, {},
+    seed=seed, use_cached=True,`. That line is the cached path. It passes `seed` along but does not build it. The
+    seed key is built at line 152: `seed = zlib.crc32(f"f0|{name}|{i}|{s}".encode()) % 2 ** 31`.
+    - **m:176.** The 2.3 Dose paragraph of PROPOSAL-m-gating-campaign-v1_11.md cites the two lines separately: "f0
+    itself generated on the jlens cached path, :143" and "f0's form (:152) under m's key". It also names calib2 as
+    the source of the +.078 figure.
+    - **The script ran calib2.** results/raw/2026-08-10_f_calib2.txt is f0_calibrate.py's own output: pools
+    8547d9a11ba55b95, corr 2c2c227395ea9f2d, CORR_clean 59/64, CORR_corrupted 54/64, delta +0.078. The file's mtime
+    is Aug 9, a day before calib2, so the line numbers match the version that ran.
+    - **Where the error came from.** Pass 1's V15 correction in results/raw/2026-10-08_m-gcal_valuescheck.txt, line
+    822, reads "f0's seed key and jlens's cached path per f0_calibrate.py:143 and m:176". That one :143 citation
+    covered both attributes, and the draft's line 151 carried it forward. So the error entered through the pass-1
+    correction.
+    - **Substance.** calib2 used f0's seed key (`f0|{name}|{i}|{s}`), the cached path and f1's renders. That is all
+    correct. Only the `:143` citation for the seed key is wrong.
+
+    The checker's replacement is exactly right. Each citation points to its own line, and m:176 supports both.
+  CORRECTION:
+    and f0's seed key (`f0_calibrate.py:152`) and the cached path (`:143`), per m:176
+  DISPOSITION: applied in the third draft.
+
+--- [S7-07] IMPRECISE  (S7 Order, disclosed)
+  CLAIM:
+    The same reading is behind the build review's disposition of spec finding #1.
+  REFUTER'S EVIDENCE:
+    The checker is right, so its verdict stands.
+
+    1. The disposition's stated ground is m:176. Its full text, at review raw `results/raw/2026-10-08_m-gcal-
+    build_review.txt` line 238, is: "OPEN, disclosed in the G-CAL entry: completability does not wait on the seat's
+    read; both gate the same renders and either failing STOPs and re-specifies (m:176). The seat request now says
+    where the read of record goes (the G-CAL entry, then LOCK-m-F0 v0.1) and asks the seat to cite the renders
+    sha256." It cites m:176 only. It never cites m:358 and never says that m:358's list fixes no order.
+
+    2. The m:358 reading appears only in the refuter's text (line 221: "m:358 marks only the 0.12 replay as 'first'
+    ... the list is not being treated as a strict run order"). The refuter also called the order claim "partly a
+    matter of reading" and concluded "The finding's fix (a), a PIN or entry sentence, is enough." So the refuter's
+    reasoning led to recommending fix (a), not declining it. The disposition kept only the m:176 half of the
+    refuter's argument (line 224: "m:176 sets no order between (3) and (4)"). gcal.py's `_model_free_check`
+    docstring ("The 0.12 replay comes first (m:358)") fits Code's reading but is not the disposition.
+
+    3. Where the wording came from: the pass-1 values-check (`results/raw/2026-10-08_m-gcal_valuescheck.txt`, V2,
+    lines 618-636) wrote "The same reading is behind the build review's disposition" as a new inference. Its PROBLEM
+    text only showed that the disposition declined fix (a). The draft applied that correction faithfully, but the
+    attribution goes beyond the record. The claim is not plainly false, since Code wrote both the reading and the
+    disposition, so IMPRECISE rather than FAILS.
+
+    4. "Declined that finding's fix (a)" is also loose. Fix (a) at line 190 reads: "say in the G-CAL entry and PIN
+    that the seat's read of record must precede `gcal completability`, and that the read is recorded in the entry or
+    LOCK rather than in the model-free artifact". The disposition declined only the ordering half. It took up the
+    recording half: `data/m/gates/G-CAL_seat_read_request.md` line 36 says "The read of record is recorded in the
+    G-CAL entry and carried into LOCK-m-F0 v0.1", and c75d4d8's message lists "the request says where the read of
+    record goes".
+
+    5. I checked the checker's correction and it is accurate. My replacement makes one change: it quotes the
+    disposition's ground word for word instead of paraphrasing it.
+  CORRECTION:
+    The build review's disposition of spec finding #1 had made the same call, citing m:176 and not m:358:
+    "completability does not wait on the seat's read; both gate the same renders and either failing STOPs and re-
+    specifies (m:176)". It declined the ordering half of that finding's fix (a), a sentence in the G-CAL entry and a
+    PIN saying the seat's read of record must precede `gcal completability`; it took up the other half, where the
+    read is recorded (now stated in the seat request).
+  DISPOSITION: applied in the third draft.
+
+--- [S7-08] IMPRECISE  (S7 Order, disclosed)
+  CLAIM:
+    That disposition declined the finding's fix (a).
+  REFUTER'S EVIDENCE:
+    The checker is right. Fix (a) for spec-f0-fidelity #1 (results/raw/2026-10-08_m-gcal-build_review.txt:189-191)
+    has two halves: "say in the G-CAL entry and PIN that the seat's read of record must precede `gcal
+    completability`, and that the read is recorded in the entry or LOCK rather than in the model-free artifact".
+
+    The disposition (:238) is "OPEN, disclosed in the G-CAL entry". It says "completability does not wait on the
+    seat's read", which declines the ordering half. It also says "The seat request now says where the read of record
+    goes (the G-CAL entry, then LOCK-m-F0 v0.1) and asks the seat to cite the renders sha256", which takes up the
+    recording half. Closing edit (2) at :1285-1288 carries that out, and the committed request shows it:
+    data/m/gates/G-CAL_seat_read_request.md:36, generated from gcal.py:493-495, in bab921c. That half went into the
+    seat request rather than the entry or PIN that fix (a) names, but in substance it was adopted.
+
+    The draft (entry_gcal_v2.md:207-208) gives fix (a) as only "the read of record before completability" and says
+    the disposition declined it. That misdescribes fix (a) and overstates what was declined. The narrowing came in
+    with pass 1's V2: that correction's PROBLEM text (valuescheck.txt:625) already reduced fix (a) to "that the read
+    of record precede completability". Calling the disposition a decline of the ordering is fair, since it states
+    outright that completability does not wait.
+
+    The checker's correction is accurate but leaves out what the ordering half was. The wording below keeps that, so
+    the sentence still says what was declined.
+  CORRECTION:
+    which declined the ordering half of that finding's fix (a), the read of record before completability, and took
+    up its recording half (the seat request says where the read of record goes)
+  DISPOSITION: applied in the third draft.
+
+--- [S7-09] IMPRECISE  (S7 Order, disclosed)
+  CLAIM:
+    Fix (a) was the read of record before completability.
+  REFUTER'S EVIDENCE:
+    The checker read the source correctly. Review raw 2026-10-08_m-gcal-build_review.txt:189-192 states finding
+    spec-f0-fidelity #1's FIX: "Either (a) say in the G-CAL entry and PIN that the seat's read of record must
+    precede `gcal completability`, and that the read is recorded in the entry or LOCK rather than in the model-free
+    artifact; or (b) add a small write-once `G-CAL_seat_read.json` ... and have precheck refuse completability
+    unless it exists". The refuter calls it the same way at :236-237: "The finding's fix (a), a PIN or entry
+    sentence, is enough." So fix (a) was a documentation fix: an entry and PIN sentence. It was not the ordering
+    itself. It also has two halves (the order, and where the read is recorded). The draft's gloss at line 208, "fix
+    (a), the read of record before completability", gives the substance of the first half only, and presents it as
+    the fix. So IMPRECISE stands, not FAILS.
+
+    The checker's correction needs fixing too. The disposition at :238 reads "OPEN, disclosed in the G-CAL entry:
+    completability does not wait on the seat's read ... The seat request now says where the read of record goes (the
+    G-CAL entry, then LOCK-m-F0 v0.1)". Code's closing edit (2) at :1286-1288 agrees, and
+    data/m/gates/G-CAL_seat_read_request.md:36 confirms it: "The read of record is recorded in the G-CAL entry and
+    carried into LOCK-m-F0 v0.1". So the disposition declined only the order half, and the recording half was
+    adopted through the seat request. Dropped into the entry's sentence ("declined that finding's fix (a), ..."),
+    the checker's wording, with its "(with the read recorded in the entry or LOCK)", would say the recording half
+    was declined as well. That would be wrong.
+
+    Pass 1 (valuescheck:625) had glossed fix (a) as "that the read of record precede completability". Its CORRECTION
+    (:634-635) shortened this to the current wording, so the imprecision comes from the pass-1 correction.
+  CORRECTION:
+    The same reading is behind the build review's disposition of spec finding #1. That disposition declined the
+    order half of the finding's fix (a), an entry and PIN sentence saying the seat's read of record must precede
+    `gcal completability`: completability does not wait on the seat's read. The fix's other half, that the read is
+    recorded in the entry or LOCK, is carried by the seat request.
+  DISPOSITION: applied in the third draft.
+
+--- [S9-07] IMPRECISE  (S9 Committed / Next)
+  CLAIM:
+    Next 1: the seat's legibility read of record (condition (3)), made blind from the request.
+  REFUTER'S EVIDENCE:
+    The checker is right that the wording is imprecise. I don't fully accept its replacement.
+
+    (1) Why "blind" is wrong here. The request (data/m/gates/G-CAL_seat_read_request.md) orders the read: line 9
+    says "Read section A before section B", line 11 says to read section A first, each render alone, and line 32
+    says "open only after section A". The code (gcal.py:22, :456) and the bab921c message ("blind-read form") call
+    this a blind read. Pass-1 V5 (valuescheck raw, lines 671-683) found that "blind" holds only within the request.
+    The seat already saw these renders with their golds in its provisional reads of 2026-10-04 (STOP-5 §F, STOP-6
+    §E), and m:176 quotes items 5, 11 and 15 with their golds. m:176 also says the read of record "is repeated".
+    V5's correction was applied at draft lines 93-96: "Its form orders the read within the request only ... So the
+    reader already knows the key." Draft line 227 now says the read is "made blind" with no qualifier. That brings
+    back the claim V5 removed, and it contradicts lines 93-96 of the same entry.
+
+    (2) How V1 was applied. Pass-1 V1's correction for this line (raw lines 609-611) read "made before opening this
+    entry or its raws". The draft's "made blind from the request" does not apply it faithfully. The timing condition
+    was replaced by an unqualified "blind".
+
+    (3) Where the checker's replacement falls short. "Before opening this entry or its raws" does not match the
+    draft's own headline (lines 1-4). The headline asks the seat to make and send the read before opening this entry
+    and four files: `G-CAL_completability_qwen.json`, `data/m/ckpt/G-CAL_qwen.json`, `_completability_read.txt` and
+    `G-CAL_model-free.json`. Three of those four are data artifacts under data/m/, not results/raw/ files, and they
+    are the files that carry golds or the model's answers. Of the raws, a search for golds found them only in
+    `_completability_read.txt`; the model-free, completability, wait and sitecheck_post raws had no matches. So "its
+    raws" leaves out three of the files the headline names. The headline also says the read is made and sent before
+    opening those files, not only made. The replacement below follows the headline.
+  CORRECTION:
+    1. The seat's legibility read of record (condition (3)), made from the request (section A, then section B) and
+    sent before opening this entry or the files the headline names.
+  DISPOSITION: applied in the third draft.
+
+--- [S9-09] IMPRECISE  (S9 Committed / Next)
+  CLAIM:
+    Next 3: G-CAL closes on both, in its own entry.
+  REFUTER'S EVIDENCE:
+    The checker is right on its main point. The draft leaves a third item open with the seat that neither read
+    covers. At lines 20-21 it says Code launched completability "departing from m:358's listed order; that is for
+    the seat to rule". At lines 209-210 it says "Whether this departure from m:358's order is acceptable is for the
+    seat to rule."
+
+    m:358 lists step 6 as "the 0.12 replay first; the renders of record and their sha; the seat's read;
+    completability; roster assertion". The build review's spec finding #1 is still OPEN (review raw lines 168-238).
+    The refuter there called the order "partly a matter of reading". If the seat rules against the departure, the
+    natural remedy is to re-run completability after the read. So G-CAL's close depends on that ruling as well as on
+    the two reads. Closing on the reads alone would mean Code settled the order question itself, which the project's
+    rule against self-adjudication forbids.
+
+    The ruling is not part of either read:
+    - The seat request (G-CAL_seat_read_request.md:9, :34, :36) covers only the condition-(3) legibility read. It
+    does not mention the order.
+    - The read raw's section 3 is laid out for m:271's read of the generations. The draft's other seat questions
+    belong to that read: whether "close" or the two hits should count (lines 18-19), and O3 (lines 183-185). The
+    procedural order question does not.
+
+    The first part of the claim holds: "both" reads, matching m:176 (condition (3)) and m:271 (the seat reads
+    G-CAL's generations at the stage), and pass-1 V1's correction, which was applied correctly. "In its own entry"
+    also holds: it means a later entry, per the pass-1 refutation of S9-07 and request line 36.
+
+    The checker's second point does not need a change. A failed (3) means STOP and re-specify (m:176), but the draft
+    states that path just above (lines 211-213), and "closes on" in a Next list reads as the planned path.
+
+    The checker's correction is close. My wording names the departure exactly as the draft does ("this departure
+    from m:358's order"), where "the ruling on the order" is looser. "(above)" is correct: the order material is at
+    lines 20-21 and 203-213, both before line 229.
+
+    The headline (lines 5-6, "IT WAITS ON TWO READS BY THE SEAT") leaves out the same ruling. It is outside this
+    claim, but it should be aligned if this correction is applied.
+  CORRECTION:
+    3. G-CAL closes on both reads and on the seat's ruling on the departure from m:358's order (above), in its own
+    entry.
+  DISPOSITION: applied in the third draft.
+
+--- [S10-03] IMPRECISE  (S10 Pass-1 corrections: applied correctly, no new error)
+  CLAIM:
+    [S1-03/V4] 'each item's gold' removed; seat instruction now opens the header naming the files carrying
+    golds/answers.
+  REFUTER'S EVIDENCE:
+    The checker is right that the file list is incomplete. Its own parenthetical also understates.
+
+    What holds:
+    - "each item" does not appear anywhere in entry v2.
+    - Lines 1-4 put the seat instruction straight after the bold title. That is pass-1 V4's form ("make this the
+    headline's first sentence"), with "Seat:" written instead of "SEAT:".
+    - All five files it names do carry golds or answers. G-CAL_completability_qwen.json and
+    data/m/ckpt/G-CAL_qwen.json have the tasks and the model's texts ('March', 'cold', 'iron'). The read raw names
+    golds at :30, :42 and :104-105. G-CAL_model-free.json has the gold lists at :235-538.
+
+    What does not hold: the claim, and V4's disposition in the committed pass-1 raw ("naming every file that carries
+    golds or answers"), say the instruction names the files that carry them. Other files carry golds too:
+    - **Pass-1 values-check raw.** Entry lines 222-225 commit it with the entry. It lists all 16 golds at
+    results/raw/2026-10-08_m-gcal_valuescheck.txt:53-55 ("0 '77', 1 '7'/'seven' ... 15 'closed'/'shut'"). At :1096
+    it quotes item 2's four corrupted answers.
+    - **Pass-2 values-check raw.** It is committed with the entry and will carry the same kind of content. The
+    checker's evidence here quotes the golds.
+    - **Build review raw (c75d4d8).** It names golds or gold variants of more items than the checker says. Line 721
+    gives items 7 ('iron') and 9 ('45'), and :953 gives item 15 (`closed`, `shut`). Lines 720-725 also say "Six
+    items have multi-variant golds (1, 3, 4, 10, 13, 15)" and then list 'seven', 'twelve', 'three', 'two', 'twenty-
+    four', 'shut' in that order. Line 765 gives grade('Seven.', ['7','seven']). So it covers items 1, 3, 4, 7, 9,
+    10, 13 and 15, not only 7, 9 and 15.
+    - **Build self-test raw (c75d4d8).** Line 597 lists the same six non-first gold variants ('seven', 'twelve',
+    'three', 'two', 'twenty-four', 'shut').
+
+    These carry no golds or answers:
+    - The completability stdout raw has only hit/miss and n_tok.
+    - The wait, sitecheck_post, model-free stdout and refused-preflight raws have none either.
+
+    So the checker's correction is right to add the values-check raws, but its "(the build review raw also names the
+    golds of items 7, 9 and 15)" is incomplete, and it leaves out the self-test raw. The corrected header sentence
+    follows.
+  CORRECTION:
+    Seat: make the condition-(3) read from [`G-CAL_seat_read_request.md`](data/m/gates/G-CAL_seat_read_request.md)
+    (section A, then section B) and send it before opening this entry, `G-CAL_completability_qwen.json`,
+    `data/m/ckpt/G-CAL_qwen.json`, `_completability_read.txt`, `G-CAL_model-free.json` or this entry's values-check
+    raws (`_valuescheck.txt`, `_valuescheck_pass2.txt`); each carries golds or the model's answers. The build's
+    `_review` raw also names golds or gold variants of items 1, 3, 4, 7, 9, 10, 13 and 15, and its `_selftest` raw
+    lists six gold variants.
+  DISPOSITION: applied in the third draft.
+
+--- [S10-06] IMPRECISE  (S10 Pass-1 corrections: applied correctly, no new error)
+  CLAIM:
+    [S3-49] survivor described as 'effectively equivalent' by the verifier; new v2 sentence on the values-check's
+    input and precheck's refusal is itself correct.
+  REFUTER'S EVIDENCE:
+    The checker is right about the substance. Its correction has two inaccuracies of its own, so my replacement
+    differs from it.
+
+    1. **The attribution is right.** results/raw/2026-10-08_m-gcal-build_review.txt:1230-1232 says R30 "is
+    effectively equivalent" and gives the reason that "the checkpoint and model-free guards share the out path's
+    parent". Pass 1's correction for S3-49 was "(the survivor, by the verifier's reading, effectively equivalent)",
+    and v2 applies it correctly.
+
+    2. **What R30 changes.** The verifier's mutant file (scratchpad/step6/verify/tools/muts.py:53) replaces one line
+    in `_paths`: `out = _resume.refuse_canonical_out(out_path)` becomes `out =
+    Path(out_path).expanduser().resolve()`.
+       - `refuse_canonical_out` (resume.py:1001-1017) refuses a path p when `p == r or r in p.parents`, for r in
+    CANONICAL_ROOTS: data/m, /workspace/models and data/olmo (resume.py:119).
+       - The mutant therefore lets a stub `out_path` through `_paths` only when that path resolves exactly to one of
+    the three roots. In that case `d = out.parent` lies outside every root, so the checkpoint and model-free guards
+    pass.
+       - precheck still refuses that input, with a different message. data/m and data/olmo exist on the laptop
+    (checked), so the "COMPLETABILITY ARTIFACT EXISTS" check fires (gcal.py:672-675). /workspace does not exist on
+    the laptop, so /workspace/models falls through to the model-free check.
+       - The values-check raw (2026-10-08_m-gcal_valuescheck.txt:150-164) says the same thing.
+
+    3. **The v2 sentence names the wrong input.** It says "`--out` equal to a canonical root exactly", but the CLI's
+    `--out` never reaches precheck.
+       - The CLI calls `run_gcal_completability(gout, args.resume, args.proposal_file)` without `adapter_factory`
+    (m_sessions.py:2430).
+       - The driver then refuses any `gcal completability --out` at m_sessions.py:302-305 before precheck runs.
+       - Even through the self-test seam, an `--out` that is itself a canonical root is refused by the driver's own
+    `refuse_canonical_out` at m_sessions.py:309-312.
+       - So the sentence's input is wrong, and so is its claim that precheck refuses that input.
+       - The input is also a class covering three roots, not one input.
+
+    4. **Two problems in the checker's correction.**
+       - (a) It says "Through the driver it never arrives". Through the self-test seam, an `--out` scratch directory
+    holding a symlink named G-CAL_completability_qwen.json that points at data/m passes line 309. The resulting
+    `out_path` then resolves to data/m, so the input does arrive. Precheck catches it through out_link's is_symlink
+    check. Only the CLI never arrives there, and the CLI is refused at 302-305, before the 307-312 guard the checker
+    cites.
+       - (b) The condition is that the path resolves to a root, because R30 resolves it. The checker's "as passed
+    ... equal" is narrower than that.
+       - Separately, pass 1's point 4 found that the survivor's message differs even in the common case: it names
+    the checkpoint path. So the wording should not suggest that the survivor differs only on this class. My
+    replacement says instead which inputs it lets through `_paths`.
+  CORRECTION:
+    This entry's values-check found one class of input the survivor lets through `_paths`: a stub run's artifact
+    path as passed to gcal (`out_path`) that resolves exactly to a canonical root (data/m, data/olmo,
+    /workspace/models); precheck still refuses it, later and with a different message. A CLI `--out` never gets
+    there: the CLI never passes the self-test's adapter seam, so the driver refuses any `gcal completability --out`
+    before precheck runs (m_sessions.py:302–305).
+  DISPOSITION: applied in the third draft.
+
+--- [S10-07] IMPRECISE  (S10 Pass-1 corrections: applied correctly, no new error)
+  CLAIM:
+    [S3-50] closing edit 1 scoped to the completability artifact's leaf symlink; v2 adds 'checked only by the self-
+    test' (V9).
+  REFUTER'S EVIDENCE:
+    The checker is right, so the IMPRECISE verdict stands.
+
+    What the claim gets right:
+    - The S3-50 scope fix was applied correctly. Draft lines 63-64 match review raw :1284-1286, which reads: "the
+    completability artifact's write is refused when its path as named is a symlink (dangling or not)".
+    - The draft does add the V9 sentence at line 66, as pass 1 proposed.
+
+    The problem: the added words "checked only by the self-test" are not exact. The review raw's CODE'S CLOSING
+    EDITS section (:1288-1289) records three checks run after the edits: "Self-test 706/706 twice; check_call_sites
+    []; site check 8/8."
+    - The build site-check raw ran 04:37:54-04:39:49 UTC. Its m_sessions suite shows 706/706, so it ran after
+    closing edit 1.
+    - The 706th check is the new symlink check. I compared the check names in the verifier's own run (scratchpad
+    verify/selftest_repo_1.txt, 705/705) with those in results/raw/2026-10-08_m-gcal-build_selftest.txt. The only
+    added line is "[PASS] gcal: the artifact's final write is refused when its path as named is a symlink" (selftest
+    raw :603).
+    - The verifier's earlier run is 705/705 (review raw :1165, "INDEPENDENT VERIFICATION" section), so that
+    verification does not cover the closing edits. That much of V9 is correct.
+    - The draft's own line 75 also reports "site check 8/8" for the build, which the word "only" contradicts.
+
+    Two mitigating facts:
+    - `check_call_sites` is also run inside the self-test (selftest :708), and the site check's one relevant suite
+    is that same self-test. In substance, the self-test is the only check that tests the edits.
+    - Still, the record lists three checks. The accurate contrast is that the edits were not independently verified,
+    not that only the self-test checked them.
+
+    On the checker's correction: "no independent check covers them" goes slightly too far. The values-check passes
+    read the symlink guard's code (pass 1's S3-50 refuter read gcal.py:248-259). "Code checked them with … the site
+    check" also overstates what the site check's other seven suites do. My replacement ties "independent" to the
+    verifier's 705/705 run and says "ran", not "checked them with".
+  CORRECTION:
+    These came after the independent verification (705/705), which therefore does not cover them. After them Code
+    ran the self-test (706/706, two runs; its one new check is the symlink refusal), `check_call_sites` ([]) and the
+    site check (8/8).
+  DISPOSITION: applied in the third draft.
+
+--- [S10-10] IMPRECISE  (S10 Pass-1 corrections: applied correctly, no new error)
+  CLAIM:
+    [S5-63/V15] 'f0's calibration at 0.12 (calib2)' with each attribute's source named; check the :143 citation for
+    the seed key (m:176 cites :152).
+  REFUTER'S EVIDENCE:
+    The entry draft (entry_gcal_v2.md, lines 149–151) says the calibration used "f0's seed key and the cached path
+    per `f0_calibrate.py:143` and m:176". The checker is right that this citation is imprecise.
+
+    1. **The two lines in f0_calibrate.py.** The file is jlens-qwen36/scripts/f0_calibrate.py. It is untracked in
+    jlens and its mtime is Aug 9 11:25, before the calib2 run on 2026-08-10, so the current line numbers are the
+    ones that ran.
+       - :143 is `model, e2a.SESSION_BANNER, seg, {}, seed=seed, use_cached=True,`. That is the cached path only.
+       - :152 is the seed key, `seed = zlib.crc32(f"f0|{name}|{i}|{s}".encode()) % 2 ** 31`.
+
+    2. **What m:176 cites.** It cites the two attributes separately: "f0 itself generated on the jlens cached path,
+    :143" and "f0's form (:152)" for the seed. So the draft's single ":143" for both the seed key and the path
+    misplaces the seed key.
+
+    3. **Where the error came from.** In the pass-1 valuescheck raw (lines 814–826), V15's own correction introduced
+    the wording "f0's seed key and jlens's cached path per f0_calibrate.py:143 and m:176". The draft carried that
+    slip forward. Pass-1 S5-63 had stated it correctly: "f0's seeds are crc32(...) (f0_calibrate.py:152)" and
+    "use_cached=True (:143)".
+
+    4. **The rest of the sentence is correct.**
+       - calib.json gives CORR_clean 0.921875 (59/64), CORR_corrupted 0.84375 (54/64), corr_sha 2c2c227395ea9f2d and
+    corr_rate 0.12. The calib2 raw prints the same 59/64, 54/64 and corrupted-pool sha 2c2c227395ea9f2d.
+       - G-CAL_model-free.json has renders_sha16 2c2c227395ea9f2d for f1's corrupt() at 0.12, matching calib's
+    corr_sha.
+
+    5. **A wording issue in the checker's correction.** The corruptor that actually produced calib2's renders is
+    f0_calibrate.py's own `corrupt()` (:69–80). It is the same algorithm as f_sessions.py's `corrupt()`, so the
+    renders match f1's byte for byte. Pass-1 S5-63 settled on "the renders f1's corrupt() gives at 0.12" for that
+    reason. The checker's "f1's corruptor's renders" is only true by that byte equality.
+
+    6. **The trailing clause.** In the checker's version, "as m:176 cites them" can be read as covering the renders'
+    sha too, but m:176 does not cite corr_sha. The replacement below fixes both points.
+  CORRECTION:
+    Its accuracies come from `calib.json`; it used the renders f1's corruptor gives at 0.12 (`corr_sha`
+    `2c2c227395ea9f2d`), f0's seed key (`f0_calibrate.py:152`) and the cached path (`f0_calibrate.py:143`), the two
+    lines m:176 cites.
+  DISPOSITION: applied in the third draft.
+
+====================================================================================================
+UNCHECKABLE
+====================================================================================================
+--- [S4-30]
+    The request was sent to the PI in chat for routing.
+  WHY:
+    No repo source records the send. bab921c's message labels the request '(Code -> design, condition (3))', and the
+    request file names no recipient. This is Code's session-only account (pass-1 raw [S4-26] disposition: sent with
+    SendUserFile). It is consistent with the entry's 'before the request was sent to the seat' (line 102).
+  DISPOSITION: Code's account (SendUserFile in this session); stated as 'sent to the PI in chat for routing'.
+
+--- [S7-06]
+    That followed Code's reading that m:358's list fixes no order after the 0.12 replay.
+  WHY:
+    Code's motive is session-only and no repo source settles it. The repo states this reading only in the build
+    review's strict refuter (review raw:221-223): 'm:358 marks only the 0.12 replay as "first". The rest of the line
+    is a semicolon-separated list ... the list is not being treated as a strict run order'. The refuter called it
+    'partly a matter of reading' (:196). Code's own gcal.py docstrings (:4-7, :389-392, :412-414) say something
+    different: they describe the roster assertion as computed 'ahead of m:358's listed position ... because it is
+    model-free'. That treats the list as positions, with a stated reason for departing from one. Nothing in gcal.py,
+    c75d4d8's message or bab921c's message states the no-order reading for completability.
+  DISPOSITION: Code's reading, stated as Code's; the build review's refuter (review raw :221-223) had read m:358 the same way.
+
+--- [S10-30]
+    [S9-05 uncheckable] values-check raws committed with the entry, discharged by pass-1 + pass-2 raws.
+  WHY:
+    results/raw/2026-10-08_m-gcal_valuescheck.txt exists (untracked, 84270 bytes) and is not ignored (git check-
+    ignore --no-index gives no match). results/raw/2026-10-08_m-gcal_valuescheck_pass2.txt does not exist yet, and
+    no commit has been made, so whether both are committed with the entry (entry line 222-225) can only be settled
+    at the commit.
+  DISPOSITION: Discharged by this file and pass 1's, committed with the entry.
+
+====================================================================================================
+VALUES LENS
+====================================================================================================
+--- V1 [blinding]
+  QUOTE:
+    `_completability_read.txt` or `G-CAL_model-free.json`; each carries golds or the model's answers.
+  PROBLEM:
+    The list of files the seat must not open before its condition-(3) read leaves out several that are committed
+    with this entry or linked from it. (a) results/raw/2026-10-08_m-gcal_valuescheck.txt: pass 1's S1-03 names all
+    16 golds ('0 77, 1 7/seven, 2 march …') and quotes the model's answers throughout. The _pass2 raw will do the
+    same. (b) results/raw/2026-10-08_m-gcal_completability_qwen.txt: it prints hit or miss for every generation, so
+    it shows item 2 corrupted at 0/4 and item 15 at 0/4. That is the model-performance evidence O3 itself says must
+    not feed the read. (c) The build raws _review.txt and _selftest.txt name golds for items 7 ('iron'), 9 ('45')
+    and 15 ('closed', 'shut'), and variants such as 'seven' and 'twelve'. (d) This commit's message. The design seat
+    reads the repo, and a sentence inside the entry is the only guard. Code also told the PI at 04:42:06 UTC
+    (session) that it would write the G-CAL entry 'once both completability and the seat's read are in'. The entry
+    does not say why it is now committed before the read.
+  CORRECTION:
+    Replace with: "…and send it before opening this entry or anything else this commit adds or links:
+    `G-CAL_completability_qwen.json`, `data/m/ckpt/G-CAL_qwen.json`, any `results/raw/2026-10-08_m-gcal*` raw (the
+    completability stdout's per-item hits, the read raw, both values-check raws, the build's `_review` and
+    `_selftest`), `G-CAL_model-free.json`, or this commit's message. Each carries golds, the model's answers or its
+    per-item accuracy. PI: route the request without relaying anything from this commit. Seat: stop reading here."
+    Then either hold this commit (or at least its gold-bearing raws) until the read of record is in, as Code told
+    the PI at 04:42 UTC, or state in the entry that it is committed first and why.
+  DISPOSITION: applied: the headline's seat instruction now covers everything this commit adds or links (every 2026-10-08_m-gcal* raw, gcal.py's grader battery, the commit message) and asks the PI to route the request without relaying anything from this commit. The alternative, holding the commit until the read of record, was not taken: the repo is the record and the artifacts carry the same content; the routing bullet discloses that this differs from the plan in Code's 04:42:06 message
+
+--- V2 [overclaim]
+  QUOTE:
+    1. The seat's legibility read of record (condition (3)), made blind from the request.
+  PROBLEM:
+    This reintroduces 'blind', which pass 1 (V5) removed and which the entry's own model-free section contradicts
+    ('So the reader already knows the key'). The request orders the read within one file only, and the seat saw
+    these renders with their golds at STOP-5 §F and STOP-6 §E.
+  CORRECTION:
+    1. The seat's legibility read of record (condition (3)), made from the request, section A before section B (the
+    reader already knows the key; see the model-free half).
+  DISPOSITION: applied: Next 1 no longer says 'blind'
+
+--- V3 [other]
+  QUOTE:
+    Code launched completability before the read request reached the seat
+  PROBLEM:
+    This is true only of the first launch (04:41:33), which the preflight refused. The run of record ran
+    05:39:33–05:46:22 UTC, and Code does not know whether the request had reached the seat by then. The departure
+    from m:358 is that completability ran before the seat's read of record, which is still outstanding, not merely
+    before the request arrived. The body has the same imprecision ('before the request was sent to the seat.'): Code
+    sends to the PI, who relays.
+  CORRECTION:
+    Headline: "Code ran completability (05:39:33–05:46:22 UTC) before the seat's read of record, which is still
+    outstanding. The first launch (04:41:33, refused by the preflight) came before the read request was committed or
+    sent to the PI. This departs from m:358's listed order; that is for the seat to rule." Body: "before the request
+    was committed or sent to the PI for routing (04:42:00 UTC, Code's account)."
+  DISPOSITION: applied: the headline's Order bullet distinguishes the run of record (05:39:33-05:46:22, before the seat's read) from the refused first launch (before the request was committed or sent)
+
+--- V4 [missing-disclosure]
+  QUOTE:
+    The PI's later "go ahead with completability" answered the kernel refusal.
+  PROBLEM:
+    The seat needs the sequence to rule on the order, and the entry omits it. At 04:42:00 UTC Code sent the PI the
+    request. At 04:42:06 Code's message said it would 'start the 128 generations' once the kernel was shut down and
+    write the entry 'once both completability and the seat's read are in'. It did not mention m:358's order. The
+    PI's 'Kernel's shut down, go ahead with completability' (05:17:44 UTC) replied to that message, not only to the
+    refusal. The entry also leaves out two facts. Code's own G-PORT entry listed 'the seat's legibility read (on
+    Code's ping), completability' in that order (RESULTS.md, 988e5df). And Code applied its no-order reading without
+    putting it to the seat, which pass 1's V2 named but the applied text dropped.
+  CORRECTION:
+    "The PI's 'Kernel's shut down, go ahead with completability' (05:17:44 UTC; Code's account) replied to Code's
+    message of 04:42:06. That message, sent 6 s after the read request, said Code would start the 128 generations
+    once the kernel was down and write the entry once both completability and the seat's read were in. It did not
+    name m:358's order. Code's G-PORT entry had listed the read (on Code's ping) before completability. Code applied
+    its reading of m:358 without putting it to the seat. Whether this departure is acceptable is for the seat to
+    rule."
+  DISPOSITION: applied: the routing bullet gives the sequence with Code's session-clock times (02:40:46, 04:42:06, 05:17:44 UTC), what Code's message said and did not say, the G-PORT entry's listed order, and that Code applied its reading without putting it to the seat
+
+--- V5 [missing-disclosure]
+  QUOTE:
+    G-CAL IS NOT YET CLOSED: IT WAITS ON TWO READS BY THE SEAT
+  PROBLEM:
+    The entry also puts two rulings to the seat: whether the order departure is acceptable, and whether 'close' or
+    the two hits should count. If the seat rejects the order, completability may have to be re-run after the read.
+    The headline and the Next list name only the two reads, so a reader would conclude G-CAL closes on the reads
+    alone, with (4)'s PASS standing.
+  CORRECTION:
+    Headline: "…IT WAITS ON TWO READS BY THE SEAT (THE LEGIBILITY READ OF RECORD, CONDITION (3), AND THE READ OF THE
+    128 GENERATIONS AT THE STAGE, m:271) AND ON THE SEAT'S RULING ON THE ORDER DEPARTURE." Next: insert "3. The
+    seat's rulings: the order departure (Order, disclosed) and, if it chooses, O1–O3." and renumber.
+  DISPOSITION: applied: the headline names the seat's ruling on two order departures; Next lists the rulings
+
+--- V6 [self-adjudication]
+  QUOTE:
+    Code's tally script and its output)
+  PROBLEM:
+    The read raw committed with this entry still contains what pass 1's V6 removed from the entry. Its tally prints
+    '(c0) Code's reading (post-hoc, descriptive): clean 60/64, corrupted 50/64; >= 7/10: True; >= 3/4 x clean …:
+    True', labelled as kept from the script's first version, and it calls the two hits 'Code's two hits a reader
+    would not count'. That is Code's position on what counts (close counted, hits removed) with (4) passing under
+    it. The entry says that question is the seat's, but does not mention the raw's (c0) block.
+  CORRECTION:
+    Before commit, drop the (c0) block from tally.py and the raw, and reword comment (b) to 'graded hits Code reads
+    as not answering the task'. Otherwise add to the entry: "The raw's (c0) line, kept from the script's first
+    version, is the 'both' reading under the label 'Code's reading'; it is not a position on what counts."
+  DISPOSITION: applied: the (c0) block is dropped from the tally script and the read raw (regenerated); comment (b) reads 'graded hits Code reads as not answering the task (Code's reading, not a ruling)'
+
+--- V7 [other]
+  QUOTE:
+    artifacts are never overwritten with different bytes
+  PROBLEM:
+    The entry counts the checkpoint among 'all four canonical G-CAL artifacts' (post-run site check). But the
+    checkpoint is rewritten atomically after every generation: n_writes is 129 in data/m/ckpt/G-CAL_qwen.json. Only
+    the completability artifact, the model-free artifact and the seat request are write-once. Pass 1 fixed this
+    conflation in the Order bullet (S7-08) but not here.
+  CORRECTION:
+    "Writes are atomic. The completability and model-free artifacts and the seat request are never overwritten with
+    different bytes. The checkpoint is rewritten after each generation, and resume is skip-only under a 15-key
+    identity."
+  DISPOSITION: applied: only the three artifacts are write-once; the checkpoint is rewritten atomically (n_writes 129); the site-check bullet says 'files'
+
+--- V8 [other]
+  QUOTE:
+    it used f1's corruptor's renders
+  PROBLEM:
+    Pass 1's S5-63 correction was not applied as given. The refuter called 'f1's corruptor's renders' acceptable
+    only by byte equality and supplied replacement wording: calib2 (f0, 2026-08-10) predates f1, and
+    f0_calibrate.py's own corrupt() (:69) produced the renders. The phrase also remains in the headline: 'on f1's
+    corruptor's renders, is quoted beside'.
+  CORRECTION:
+    Line 150: "it used renders byte-identical to those f1's `corrupt()` gives at 0.12 (produced by f0_calibrate.py's
+    own copy of the corruptor; `corr_sha` `2c2c227395ea9f2d`)". Line 16: "+.078 on the renders f1's corruptor gives
+    at 0.12, is quoted beside".
+  DISPOSITION: applied: 'renders byte-identical to those f1's corrupt() gives at 0.12, produced by f0_calibrate.py's own copy of the corruptor'; the headline says 'on the renders f1's corruptor gives at 0.12'
+
+--- V9 [missing-disclosure]
+  QUOTE:
+    It judged the survivor "effectively equivalent".
+  PROBLEM:
+    The entry corrects four statements in already-committed texts without saying they are corrections. The c75d4d8
+    message says 'ten minor confirmed', 'the survivor equivalent' and 'no artifact written through a symlink', and
+    calls the request 'the seat's blind read request'. The header of the review raw (line 4) says 'No model or
+    tokenizer loaded.', but the site check loaded the Qwen tokenizer. The entry flags the artifact's
+    f1_012_of_record label slip explicitly but not these, so a reader comparing the raws and the commit messages
+    with the entry finds unexplained conflicts.
+  CORRECTION:
+    Add under the build: "Corrections to committed texts, flagged and not changed: c75d4d8's message says 'ten minor
+    confirmed' (the refuters graded one a nit), 'the survivor equivalent' (the verifier wrote 'effectively
+    equivalent'), 'no artifact written through a symlink' (the edit covers the completability artifact's leaf only)
+    and 'blind read request' (see the model-free half). The review raw's header says 'No model or tokenizer loaded'
+    (the site check loaded the tokenizer)."
+  DISPOSITION: applied: a bullet lists the committed texts the entry corrects (c75d4d8's and bab921c's messages; the review raw's header)
+
+--- V10 [other]
+  QUOTE:
+    Item 9, seed 0: it reads `miyms` as minutes
+  PROBLEM:
+    The model read `miyms` as 'minutes' in 2 of 4 corrupted item-9 generations (s0 here, and s1 under 'Also seen').
+    m:176 lists 'item 9 `miyms` for minus' among the seat's provisional recoverable readings, exactly as it lists
+    `thiru` for third. O3 links item 2 to that provisional read and defers it to the seat ('offered for after the
+    read of record, not as input to it'). O2 makes neither link for item 9, so Code's framing picks which model
+    evidence bears on (3).
+  CORRECTION:
+    Add to O2: "Item 9's two 'minutes' readings (seeds 0 and 1) bear on `miyms`, which the seat's provisional read
+    of 2026-10-04 listed as recoverable for minus (m:176). As with O3, whether this bears on (3) is the seat's to
+    say, offered for after the read of record."
+  DISPOSITION: applied: O2 notes both 'minutes' readings and defers their bearing on (3) to the seat, as O3 does
+
+--- V11 [rule]
+  QUOTE:
+    G-CAL declares no counter (rule 23),
+  PROBLEM:
+    Rule 23 makes observations into pre-declared descriptive counters before later runs. G-CAL-OLMo runs the same
+    128-generation procedure per checkpoint. The entry stops at 'observation only' and does not flag O1–O4 to the
+    seat as candidate counters for those runs: the near-miss form ('close'), restatement hits on gold-in-task items
+    7 and 9, corruption mirroring, and the termination echo.
+  CORRECTION:
+    "…so this is an observation only. O1–O4 and the mirroring tally are flagged as candidate pre-declared counters
+    for G-CAL-OLMo (rule 23), the seat's to adopt or not. Code adopts none."
+  DISPOSITION: applied: O1-O4 and the mirroring tally flagged as candidate counters for G-CAL-OLMo, the seat's to adopt; Code adopts none
+
+--- V12 [missing-disclosure]
+  QUOTE:
+    The preflight passed its power (adapter ≥ 96 W, 140 W here), AC, one-process and disk-headroom
+  PROBLEM:
+    The one-process condition was checked only at launch. The PI's parallel audit session was still active during
+    the run: in the results/raw listing, the note-N13 provenance outputs have mtime 05:44:45 UTC, inside
+    05:39:33–05:46:22. Nothing checked for other model processes during the generations, and the entry does not say
+    so.
+  CORRECTION:
+    Add: "The one-process check ran at launch only. The parallel audit session kept working during the run (its N13
+    outputs are stamped 05:44:45 UTC), and whether any process the check would flag ran during the generations was
+    not checked."
+  DISPOSITION: applied: the one-process check ran at launch only; the audit session's N13 raws were written at 05:44:45 UTC, during the run
+
+--- V13 [missing-disclosure]
+  QUOTE:
+    Launched at 05:39:33 UTC as `nohup caffeinate -is … &`.
+  PROBLEM:
+    No real-model smoke preceded the run of record. The tooling allows a non-stub run only at the canonical paths
+    (gcal._paths), so the first real-model completability run was the canonical one. The only end-to-end test before
+    it was the stub self-test. The PI's standing practice is to smoke-test every new stage, and rule 25 reads
+    smokes, so a reader will look for one. The entry does not say there was none.
+  CORRECTION:
+    Add: "No real-model smoke preceded this run. A non-stub run writes only the canonical paths (gcal._paths), so
+    this was the first real-model completability run, and the stub self-test was its only end-to-end test."
+  DISPOSITION: applied: no real-model smoke preceded the run
+
+--- V14 [self-adjudication]
+  QUOTE:
+    The roster assertion needs no model and is computed in the model-free half.
+  PROBLEM:
+    This is a second departure from m:358's listed order: the roster assertion is listed last and was computed
+    before both the read and completability. Code justifies it ('needs no model', a build-time choice in gcal.py's
+    ORDER note) instead of referring it, and the bullet's closing sentence puts only one departure to the seat
+    ('this departure'). m:176's 'computed first … because it is model-free' covers only the 0.12 replay.
+  CORRECTION:
+    "The roster assertion, listed last, was computed in the model-free half (Code's build-time choice, gcal.py's
+    ORDER note: it needs no model)." Then end the bullet: "Whether these two departures from m:358's order (the
+    roster assertion early, completability before the read) are acceptable is for the seat to rule."
+  DISPOSITION: applied: the roster assertion's early computation is named as a second departure and referred to the seat
+
+--- V15 [self-adjudication]
+  QUOTE:
+    There was no `disown`: the launching shell
+  PROBLEM:
+    m:267's laptop checklist specifies `nohup caffeinate -is … & disown`. The entry states the deviation but then
+    rules on it itself ('nohup ignores one anyway'). The raw's header calls the launch 'under caffeinate -is
+    (m:267's checklist)', which reads as full compliance.
+  CORRECTION:
+    "There was no `disown`, a departure from m:267's checklist (`… & disown`). Code's reading is that it changes
+    nothing: the launching shell was non-interactive, which sends its jobs no hangup, and nohup ignores one anyway.
+    Flagged for the seat; the raw's header 'm:267's checklist' does not record the omission."
+  DISPOSITION: applied: the missing disown is stated as a departure from m:267's checklist, with Code's reading labelled as Code's and flagged for the seat
+
+====================================================================================================
+ALL CLAIMS (id, first verdict, final verdict, claim)
+====================================================================================================
+[S0-01] VERIFIED -> VERIFIED: Entry dated 2026-10-08.
+[S0-02] VERIFIED -> VERIFIED: G-CAL is PROPOSAL-m v1.11 §8 step 6.
+[S0-03] VERIFIED -> VERIFIED: G-CAL is attributed to m:176 (header parenthetical 'm:176').
+[S0-04] VERIFIED -> VERIFIED: The run proceeded on 'the PI's go'.
+[S0-05] VERIFIED -> VERIFIED: CONDITIONS (1), (2) AND (4) PASS.
+[S0-06] VERIFIED -> VERIFIED: G-CAL is not yet closed.
+[S0-07] VERIFIED -> VERIFIED: G-CAL waits on exactly two reads by the seat: the legibility read of record (condition (3)) and the read of the 128 generations at the stage (m:271).
+[S0-08] VERIFIED -> VERIFIED: The tooling was built and reviewed in commit c75d4d8.
+[S0-09] VERIFIED -> VERIFIED: The model-free half was run on it (the c75d4d8 build) and committed in bab921c.
+[S0-10] VERIFIED -> VERIFIED: f1's corrupt() at 0.12 was replayed first.
+[S0-11] VERIFIED -> VERIFIED: At 0.12: 31 letters changed.
+[S0-12] VERIFIED -> VERIFIED: At 0.12: condition (1) 4/16.
+[S0-13] VERIFIED -> VERIFIED: At 0.12: condition (2) 16/16.
+[S0-14] VERIFIED -> VERIFIED: The 16 renders of record have sha256 a04f67b0…4372.
+[S0-15] VERIFIED -> VERIFIED: k sums to 54.
+[S0-16] VERIFIED -> VERIFIED: One roster skip, at item 7.
+[S0-17] VERIFIED -> VERIFIED: The roster assertion is clean.
+[S0-18] VERIFIED -> VERIFIED: Conditions (1) and (2) are 16/16 on the renders of record.
+[S0-19] VERIFIED -> VERIFIED: Completability on Qwen: 128 uncached generations, run on the laptop.
+[S0-20] VERIFIED -> VERIFIED: Clean 57/64.
+[S0-21] VERIFIED -> VERIFIED: Corrupted 48/64 = 3/4.
+[S0-22] VERIFIED -> VERIFIED: Corrupted clears both bars: ≥ 7/10 and ≥ 3/4 × clean = 171/256; PASS.
+[S0-23] VERIFIED -> VERIFIED: The covariate is clean minus corrupted (f0's sign).
+[S0-24] VERIFIED -> VERIFIED: Covariate = 9/64 = +0.1406.
+[S0-25] VERIFIED -> VERIFIED: f0's calib2 figure at 0.12 is +.078.
+[S0-26] VERIFIED -> VERIFIED: The +.078 was measured on f1's corruptor's renders.
+[S0-27] VERIFIED -> VERIFIED: +.078 is quoted beside; m declares no comparison.
+[S0-28] VERIFIED -> VERIFIED: Code read all 128 generations itself.
+[S0-29] VERIFIED -> VERIFIED: Four observations go to the seat, none adjudicated.
+[S0-30] VERIFIED -> VERIFIED: Post-hoc re-gradings (rule 11) are given below.
+[S0-31] VERIFIED -> VERIFIED: The verdict of record is the grader's.
+[S0-32] IMPRECISE -> IMPRECISE: Whether 'close' or the two hits should count is the seat's to say.
+[S0-33] IMPRECISE -> IMPRECISE: Code launched completability before the read request reached the seat.
+[S0-34] VERIFIED -> VERIFIED: That departs from m:358's listed order (the seat's read listed before completability).
+[S0-35] VERIFIED -> VERIFIED: Nothing on the box.
+[S0-36] VERIFIED -> VERIFIED: The k arc is untouched.
+[S0-37] VERIFIED -> VERIFIED: Stamp: `date -u` → Thu Oct  8 06:13:48 UTC 2026 at first write.
+[S0-38] VERIFIED -> VERIFIED: The entry was corrected on its values-check passes.
+[S1-01] VERIFIED -> VERIFIED: The seat request is at data/m/gates/G-CAL_seat_read_request.md (link path correct).
+[S1-02] VERIFIED -> VERIFIED: The request has a section A and a section B, read A then B.
+[S1-03] VERIFIED -> VERIFIED: The condition-(3) read is made from that request.
+[S1-04] VERIFIED -> VERIFIED: G-CAL_completability_qwen.json carries golds or the model's answers.
+[S1-05] VERIFIED -> VERIFIED: data/m/ckpt/G-CAL_qwen.json carries golds or the model's answers.
+[S1-06] VERIFIED -> VERIFIED: _completability_read.txt carries golds or the model's answers.
+[S1-07] VERIFIED -> VERIFIED: G-CAL_model-free.json carries golds or the model's answers.
+[S1-08] FAILS -> FAILS: (Implicit completeness) The list -- this entry plus those four files -- names every file the seat should avoid before the read, i.e. every committed file of this entry carrying golds or answers.
+[S2-01] VERIFIED -> VERIFIED: The PI wrote 'Go for step 6'.
+[S2-02] VERIFIED -> VERIFIED: 'Go for step 6' licensed m:358's step 6.
+[S2-03] VERIFIED -> VERIFIED: m:358's step 6 reads verbatim: 'the 0.12 replay first; the renders of record and their sha; the seat's read; completability; roster assertion'.
+[S2-04] VERIFIED -> VERIFIED: The PI's 'Kernel's shut down, go ahead with completability' came after the first completability launch was refused.
+[S2-05] VERIFIED -> VERIFIED: Quote: 'Kernel's shut down, go ahead with completability'.
+[S3-01] VERIFIED -> VERIFIED: The build is commit c75d4d8.
+[S3-02] VERIFIED -> VERIFIED: The review, selftest and sitecheck raws are at results/raw/2026-10-08_m-gcal-build_{review,selftest,sitecheck}.txt and belong to the build (c75d4d8).
+[S3-03] VERIFIED -> VERIFIED: valence_core/m/gcal.py is new in c75d4d8.
+[S3-04] VERIFIED -> VERIFIED: scripts/m_sessions.py gains two commands: gcal model-free and gcal completability.
+[S3-05] VERIFIED -> VERIFIED: A .gitignore line admits the seat request (markdown) under data/m/gates/.
+[S3-06] IMPRECISE -> IMPRECISE: (Implicit) The build's file changes are gcal.py, the m_sessions.py commands and the .gitignore line.
+[S3-07] VERIFIED -> VERIFIED: f0's normalize and grade are copied byte for byte from f0_calibrate.py:56–66.
+[S3-08] VERIFIED -> VERIFIED: The source hashes are pinned.
+[S3-09] VERIFIED -> VERIFIED: A review lens ran them against f0's own definitions on 903 adversarial cases.
+[S3-10] VERIFIED -> VERIFIED: They agree on every one of the 903.
+[S3-11] IMPRECISE -> IMPRECISE: Completability is built as m:176 pins it.
+[S3-12] VERIFIED -> VERIFIED: The prompt is SESSION_BANNER + "Task: {task}\nResponse:".
+[S3-13] VERIFIED -> VERIFIED: No round header in the prompt.
+[S3-14] VERIFIED -> VERIFIED: Generation is uncached (cached=False).
+[S3-15] VERIFIED -> VERIFIED: Generation passes injections=().
+[S3-16] VERIFIED -> VERIFIED: Newline stop.
+[S3-17] VERIFIED -> VERIFIED: The frozen e2a ban list.
+[S3-18] VERIFIED -> VERIFIED: STOP_CAP = 60.
+[S3-19] VERIFIED -> VERIFIED: TEMP 0.7.
+[S3-20] VERIFIED -> VERIFIED: Each (pool, item i, seed index s) is seeded with crc32("m-cal|{pool}|{i}|{s}") % 2**31.
+[S3-21] VERIFIED -> VERIFIED: Both pools are graded against the clean item's gold list.
+[S3-22] VERIFIED -> VERIFIED: Condition (4) is computed on exact fractions.
+[S3-23] VERIFIED -> VERIFIED: There is exactly one addition to f0's procedure, a PIN: rule 28(d)(a)'s boundary asserted before every generation.
+[S3-24] VERIFIED -> VERIFIED: f0 had no such boundary assertion.
+[S3-25] VERIFIED -> VERIFIED: A second PIN ports f0's own grader-honesty asserts from f0_calibrate.py:124–130.
+[S3-26] VERIFIED -> VERIFIED: The grader-honesty asserts run on CORR_clean's golds.
+[S3-27] VERIFIED -> VERIFIED: They run at every completability start.
+[S3-28] VERIFIED -> VERIFIED: Writes are atomic.
+[S3-29] IMPRECISE -> IMPRECISE: Artifacts are never overwritten with different bytes.
+[S3-30] VERIFIED -> VERIFIED: Resume is skip-only.
+[S3-31] VERIFIED -> VERIFIED: Resume identity has 15 keys.
+[S3-32] VERIFIED -> VERIFIED: A real-model run must pass m:267's laptop preflight.
+[S3-33] VERIFIED -> VERIFIED: A real-model run logs a gate line that records the analyzer as absent.
+[S3-34] VERIFIED -> VERIFIED: G-ANL-F0 is step 8.
+[S3-35] VERIFIED -> VERIFIED: Three read-only review lenses: spec and f0 fidelity; harness and safety; tests and the seat request.
+[S3-36] VERIFIED -> VERIFIED: Every finding was put to a strict refuter.
+[S3-37] VERIFIED -> VERIFIED: 14 findings in all.
+[S3-38] VERIFIED -> VERIFIED: One finding was refuted.
+[S3-39] VERIFIED -> VERIFIED: One substantive defect, found by two lenses.
+[S3-40] VERIFIED -> VERIFIED: The defect: the self-test's no-write checks required the canonical artifacts to be absent.
+[S3-41] VERIFIED -> VERIFIED: So they would have failed from step 6's own canonical run on.
+[S3-42] VERIFIED -> VERIFIED: Ten minor findings as their finders graded them.
+[S3-43] VERIFIED -> VERIFIED: The refuters kept nine at minor and graded the tenth a nit.
+[S3-44] VERIFIED -> VERIFIED: The nit is a wording point found by two lenses.
+[S3-45] VERIFIED -> VERIFIED: A fix agent fixed the substantive defect and nine of the minor findings.
+[S3-46] VERIFIED -> VERIFIED: An independent verifier confirmed the fixes.
+[S3-47] VERIFIED -> VERIFIED: The verifier caught 49 of 50 mutants.
+[S3-48] VERIFIED -> VERIFIED: The verifier judged the survivor "effectively equivalent" (quoted).
+[S3-49] IMPRECISE -> IMPRECISE: This entry's values-check found one input where the survivor differs: --out equal to a canonical root exactly.
+[S3-50] VERIFIED -> VERIFIED: Precheck refuses that input there too, with a different message.
+[S3-51] VERIFIED -> VERIFIED: Code then made two closing edits.
+[S3-52] VERIFIED -> VERIFIED: Closing edit 1: the completability artifact's write is refused when its path, as named, is a symlink (dangling or not).
+[S3-53] VERIFIED -> VERIFIED: Closing edit 2: the seat request says where the read of record goes.
+[S3-54] VERIFIED -> VERIFIED: The closing edits came after the independent verification.
+[S3-55] VERIFIED -> VERIFIED: The closing edits were checked only by the self-test.
+[S3-56] VERIFIED -> VERIFIED: Left open and disclosed: the minor finding that nothing in the tooling records or gates condition (3) before completability.
+[S3-57] VERIFIED -> VERIFIED: Three items the review raw leaves "as disclosed".
+[S3-58] VERIFIED -> VERIFIED: Disclosed item: an incomplete checkpoint beside an existing artifact generates and is refused only at the write.
+[S3-59] VERIFIED -> VERIFIED: That item is unreachable in the normal flow.
+[S3-60] VERIFIED -> VERIFIED: Disclosed item: the driver's no_factory check compares names, not bytes.
+[S3-61] VERIFIED -> VERIFIED: Disclosed item: a loader SystemExit exits 4 although nothing was generated.
+[S3-62] IMPRECISE -> IMPRECISE: (Implicit) These four are the only open items from the review.
+[S3-63] VERIFIED -> VERIFIED: Self-test 706/706 (two runs).
+[S3-64] VERIFIED -> VERIFIED: Site check 8/8.
+[S3-65] VERIFIED -> VERIFIED: No model was loaded for the build.
+[S3-66] VERIFIED -> VERIFIED: The m self-test ran on scripted stubs with no model or tokenizer.
+[S3-67] VERIFIED -> VERIFIED: The site check's recon_echo suite loaded the Qwen tokenizer, but no model, for its span checks.
+[S3-68] VERIFIED -> VERIFIED: (Implicit) recon_echo is the only site-check suite that loaded a tokenizer.
+[S4-01] VERIFIED -> VERIFIED: The model-free half is commit bab921c.
+[S4-02] VERIFIED -> VERIFIED: Raw at results/raw/2026-10-08_m-gcal_model-free.txt.
+[S4-03] VERIFIED -> VERIFIED: Artifact at data/m/gates/G-CAL_model-free.json.
+[S4-04] VERIFIED -> VERIFIED: package_sha256 4b49658739523c60….
+[S4-05] VERIFIED -> VERIFIED: That package_sha256 equals c75d4d8's.
+[S4-06] VERIFIED -> VERIFIED: f1's corrupt() at 0.12 was computed first (m:358).
+[S4-07] VERIFIED -> VERIFIED: 0.12 renders sha16 2c2c227395ea9f2d.
+[S4-08] VERIFIED -> VERIFIED: Equal to calib.json's corr_sha.
+[S4-09] VERIFIED -> VERIFIED: 31 letters changed.
+[S4-10] VERIFIED -> VERIFIED: Condition (1) holds on 4/16 items.
+[S4-11] VERIFIED -> VERIFIED: Those four items are 2, 4, 6 and 7.
+[S4-12] VERIFIED -> VERIFIED: Condition (2) holds on 16/16 at 0.12.
+[S4-13] VERIFIED -> VERIFIED: Covariate of record 0.078125.
+[S4-14] VERIFIED -> VERIFIED: 0.078125 is f0's calib2 figure.
+[S4-15] VERIFIED -> VERIFIED: 0.078125 was measured on these renders (the 0.12 renders, sha16 2c2c…).
+[S4-16] VERIFIED -> VERIFIED: It is quoted beside, as m:176's +.078.
+[S4-17] VERIFIED -> VERIFIED: Renders of record: corrupt_m at 0.15, operand excluded.
+[S4-18] VERIFIED -> VERIFIED: Renders of record sha256 a04f67b0e5105a0514a0f33e64a4545ef3a3a3c75cece320d78434e853cd4372.
+[S4-19] VERIFIED -> VERIFIED: n_eligible 6, 19, 19, 13, 24, 14, 10, 45, 19, 10, 24, 14, 6, 19, 10, 14.
+[S4-20] VERIFIED -> VERIFIED: The n_eligible list is as m:176 states.
+[S4-21] VERIFIED -> VERIFIED: k 3, 3, 3, 3, 4, 3, 3, 7, 3, 3, 4, 3, 3, 3, 3, 3.
+[S4-22] VERIFIED -> VERIFIED: The k list is what m:176's formula gives on that n_eligible list.
+[S4-23] VERIFIED -> VERIFIED: The k sum is 54.
+[S4-24] VERIFIED -> VERIFIED: The sum 54 is as m:176 states.
+[S4-25] VERIFIED -> VERIFIED: One roster skip, at item 7.
+[S4-26] VERIFIED -> VERIFIED: Operand spans on items 5, 11 and 15 only.
+[S4-27] VERIFIED -> VERIFIED: The roster assertion on the renders, both rosters, is clean.
+[S4-28] VERIFIED -> VERIFIED: Conditions (1) and (2) PASS 16/16.
+[S4-29] VERIFIED -> VERIFIED: The seat's read request has the form: the renders alone first, then the key.
+[S4-30] UNCHECKABLE -> UNCHECKABLE: The request was sent to the PI in chat for routing.
+[S4-31] VERIFIED -> VERIFIED: The request's form orders the read within the request only.
+[S4-32] VERIFIED -> VERIFIED: The read of record repeats the seat's provisional reads of 2026-10-04.
+[S4-33] VERIFIED -> VERIFIED: The provisional reads were on Code's renders of these items (STOP-5 §F, STOP-6 §E).
+[S4-34] VERIFIED -> VERIFIED: m:176 quotes items 5, 11 and 15 with their golds.
+[S4-35] VERIFIED -> VERIFIED: So the reader already knows the key.
+[S4-35x] IMPRECISE -> IMPRECISE: [Cross-section, raised by the S4-35 check] Next item 1 (entry line 227): 'The seat's legibility read of record (condition (3)), made blind from the request.'
+[S5-01] VERIFIED -> VERIFIED: Raw at results/raw/2026-10-08_m-gcal_completability_qwen.txt; artifact at data/m/gates/G-CAL_completability_qwen.json; checkpoint at data/m/ckpt/G-CAL_qwen.json.
+[S5-02] VERIFIED -> VERIFIED: First launch at 04:41:33 UTC.
+[S5-03] VERIFIED -> VERIFIED: Code launched it under 'Go for step 6'.
+[S5-04] VERIFIED -> VERIFIED: The model-free run was at 04:41:05 UTC.
+[S5-05] VERIFIED -> VERIFIED: The first launch came 28 s after the model-free run.
+[S5-06] VERIFIED -> VERIFIED: bab921c was committed at 04:41:55 UTC.
+[S5-07] VERIFIED -> VERIFIED: bab921c carries the read request.
+[S5-08] VERIFIED -> VERIFIED: The first launch was before bab921c was committed.
+[S5-09] IMPRECISE -> IMPRECISE: The first launch was before the request was sent to the seat.
+[S5-10] VERIFIED -> VERIFIED: The preflight refused it before anything loaded.
+[S5-11] VERIFIED -> VERIFIED: A Jupyter kernel was running.
+[S5-12] VERIFIED -> VERIFIED: The refusal was m:267's one-process item.
+[S5-13] VERIFIED -> VERIFIED: The log is kept at results/raw/2026-10-08_m-gcal_completability_qwen_refused-preflight.txt.
+[S5-14] VERIFIED -> VERIFIED: The refused-preflight log was committed in bab921c.
+[S5-15] IMPRECISE -> IMPRECISE: The PI shut the kernel down.
+[S5-16] VERIFIED -> VERIFIED: Wait raw at results/raw/2026-10-08_m-gcal_completability_wait.txt.
+[S5-17] VERIFIED -> VERIFIED: At 05:18:41 UTC a one-shot preflight still refused.
+[S5-18] VERIFIED -> VERIFIED: It named two jobs of the PI's parallel audit session.
+[S5-19] VERIFIED -> VERIFIED: One job: audit_note_N3_compute.py with its process pool.
+[S5-20] VERIFIED -> VERIFIED: Other job: audit_note_N12_history.py.
+[S5-21] VERIFIED -> VERIFIED: By their docstrings neither loads a language model or tokenizer.
+[S5-22] VERIFIED -> VERIFIED: N3 fits probes (linear, a one-hidden-layer MLP and RBF kernel ridge) with permutation nulls on stored residual arrays.
+[S5-23] VERIFIED -> VERIFIED: N3's docstring says "No model inference".
+[S5-24] VERIFIED -> VERIFIED: N12 scans git history.
+[S5-25] VERIFIED -> VERIFIED: Both run from the jlens-qwen36 venv.
+[S5-26] VERIFIED -> VERIFIED: "jlens" is one of the check's markers.
+[S5-27] VERIFIED -> VERIFIED: Code changed neither the check nor the jobs.
+[S5-28] VERIFIED -> VERIFIED: A poll re-ran the preflight every 30 s.
+[S5-29] VERIFIED -> VERIFIED: The poll started at 05:18:44 UTC.
+[S5-30] VERIFIED -> VERIFIED: It printed its clear line at 05:39:22 UTC.
+[S5-31] VERIFIED -> VERIFIED: The refusals in between printed nothing, by the poll's design.
+[S5-32] VERIFIED -> VERIFIED: So those refusals are not recorded.
+[S5-33] VERIFIED -> VERIFIED: The run launched at 05:39:33 UTC.
+[S5-34] VERIFIED -> VERIFIED: Launched as `nohup caffeinate -is … &`.
+[S5-35] VERIFIED -> VERIFIED: There was no `disown`.
+[S5-36] VERIFIED -> VERIFIED: The launching shell was non-interactive, which sends its jobs no hangup.
+[S5-37] VERIFIED -> VERIFIED: nohup ignores a hangup anyway.
+[S5-38] VERIFIED -> VERIFIED: caffeinate -is keeps the system awake and lets the display sleep (display sleep only).
+[S5-39] VERIFIED -> VERIFIED: The preflight passed its power check (adapter ≥ 96 W).
+[S5-40] VERIFIED -> VERIFIED: The adapter was 140 W.
+[S5-41] VERIFIED -> VERIFIED: The preflight passed its AC check.
+[S5-42] VERIFIED -> VERIFIED: The preflight passed its one-process check.
+[S5-43] VERIFIED -> VERIFIED: The preflight passed its disk-headroom check (≥ 5 GiB).
+[S5-44] VERIFIED -> VERIFIED: (Implicit) These four are the preflight's checks.
+[S5-45] VERIFIED -> VERIFIED: Finished at 05:46:22 UTC.
+[S5-46] VERIFIED -> VERIFIED: Exit 0.
+[S5-47] VERIFIED -> VERIFIED: The raw shows the INVOCATION line twice.
+[S5-48] VERIFIED -> VERIFIED: Code's wrapper echoes it and the driver prints it.
+[S5-49] VERIFIED -> VERIFIED: Gate line: proposal 42ab36ecc814c9c4.
+[S5-50] VERIFIED -> VERIFIED: Gate line: CLAUDE.md 955788dec22ee820.
+[S5-51] VERIFIED -> VERIFIED: Gate line: analyzer absent.
+[S5-52] VERIFIED -> VERIFIED: G-ANL-F0 is step 8, after G-CAL.
+[S5-53] VERIFIED -> VERIFIED: Gate line: HEAD bab921c.
+[S5-54] VERIFIED -> VERIFIED: Provenance: adapter qwen3.6-27b-4bit-mlx.
+[S5-55] VERIFIED -> VERIFIED: mlx 0.31.2.
+[S5-56] VERIFIED -> VERIFIED: mlx-lm 0.31.3.
+[S5-57] VERIFIED -> VERIFIED: numpy 2.5.1.
+[S5-58] VERIFIED -> VERIFIED: GDN in ops mode (fused disabled).
+[S5-59] VERIFIED -> VERIFIED: Backend identifier a734dadec8f8ce9b.
+[S5-60] VERIFIED -> VERIFIED: Identity package_sha256 4b49658739523c60….
+[S5-61] VERIFIED -> VERIFIED: That equals c75d4d8's package hash.
+[S5-62] VERIFIED -> VERIFIED: valence_core/m is unchanged at HEAD bab921c (vs c75d4d8).
+[S5-63] VERIFIED -> VERIFIED: The driver (scripts/m_sessions.py) is unchanged at HEAD bab921c.
+[S5-64] VERIFIED -> VERIFIED: Identity renders sha256 a04f67b0…4372.
+[S5-65] VERIFIED -> VERIFIED: Ban list 9a2f0744….
+[S5-66] VERIFIED -> VERIFIED: Banner 6124c724….
+[S5-67] VERIFIED -> VERIFIED: Key set 47ee69b6….
+[S5-68] VERIFIED -> VERIFIED: Pool sha16 711deec1c2645194.
+[S5-69] VERIFIED -> VERIFIED: Path uncached.
+[S5-70] VERIFIED -> VERIFIED: TEMP 0.7.
+[S5-71] VERIFIED -> VERIFIED: STOP_CAP 60.
+[S5-72] VERIFIED -> VERIFIED: All 128 generations stopped at the newline.
+[S5-73] VERIFIED -> VERIFIED: None stopped at the cap.
+[S5-74] VERIFIED -> VERIFIED: At most 56 tokens.
+[S5-75] VERIFIED -> VERIFIED: 1,029 tokens in all.
+[S5-76] VERIFIED -> VERIFIED: The checkpoint's records equal the artifact's.
+[S5-77] VERIFIED -> VERIFIED: CORR_clean 57/64 (0.8906).
+[S5-78] VERIFIED -> VERIFIED: CORR_corrupted 48/64 = 3/4 (0.7500).
+[S5-79] VERIFIED -> VERIFIED: Clean hits per item 0–15: 3, 4, 4, 3, 4, 4, 3, 4, 4, 4, 4, 4, 4, 4, 3, 1.
+[S5-80] VERIFIED -> VERIFIED: Corrupted hits per item: 2, 4, 0, 2, 4, 4, 3, 4, 4, 3, 4, 2, 4, 4, 4, 0.
+[S5-81] VERIFIED -> VERIFIED: Condition (4): PASS.
+[S5-82] VERIFIED -> VERIFIED: Corrupted 3/4 ≥ 7/10.
+[S5-83] VERIFIED -> VERIFIED: Corrupted ≥ 3/4 × 57/64 = 171/256.
+[S5-84] VERIFIED -> VERIFIED: The artifact has a top-level verdict: PASS beside stage: G-CAL.
+[S5-85] VERIFIED -> VERIFIED: The top-level verdict is condition (4)'s alone.
+[S5-86] VERIFIED -> VERIFIED: The model-free artifact's '(3) pending' and '(4) pending' stay as written.
+[S5-87] VERIFIED -> VERIFIED: Because the model-free artifact is write-once.
+[S5-88] VERIFIED -> VERIFIED: G-CAL's state of record is this entry, then the read-of-record entry.
+[S5-89] VERIFIED -> VERIFIED: Covariate (clean minus corrupted, f0's sign): 9/64 = +0.1406.
+[S5-90] VERIFIED -> VERIFIED: The artifact has a field f1_012_of_record carrying +.078.
+[S5-91] VERIFIED -> VERIFIED: The stdout line calls +.078 "f1's 0.12 figure of record".
+[S5-92] VERIFIED -> VERIFIED: m:176 attributes +.078 to f0 (calib2).
+[S5-93] VERIFIED -> VERIFIED: +.078 was measured on the renders f1's corruptor gives.
+[S5-94] VERIFIED -> VERIFIED: This label slip is in the write-once outputs, flagged and not changed.
+[S5-95] VERIFIED -> VERIFIED: f0's calibration at 0.12 (calib2) had clean 59/64.
+[S5-96] VERIFIED -> VERIFIED: calib2 corrupted 54/64.
+[S5-97] VERIFIED -> VERIFIED: calib2's accuracies come from calib.json.
+[S5-98] IMPRECISE -> IMPRECISE: calib2 used f1's corruptor's renders (corr_sha 2c2c227395ea9f2d).
+[S5-99] IMPRECISE -> IMPRECISE: calib2 used f0's seed key, per f0_calibrate.py:143 and m:176.
+[S5-100] VERIFIED -> VERIFIED: calib2 used the cached path, per f0_calibrate.py:143 and m:176.
+[S5-101] VERIFIED -> VERIFIED: calib2's renders differ from G-CAL's.
+[S5-102] VERIFIED -> VERIFIED: calib2's seeds differ from G-CAL's.
+[S5-103] VERIFIED -> VERIFIED: calib2's path differs from G-CAL's.
+[S5-104] VERIFIED -> VERIFIED: m declares no comparison between the two.
+[S6-01] VERIFIED -> VERIFIED: The read raw holds the generations, Code's tally script and its output.
+[S6-02] VERIFIED -> VERIFIED: Rule 25 names smokes and pilots.
+[S6-03] VERIFIED -> VERIFIED: m:271 has the seat read G-CAL's generations at the stage.
+[S6-04] VERIFIED -> VERIFIED: The read raw's section 3 is laid out for that read.
+[S6-05] VERIFIED -> VERIFIED: These are observations, post-hoc (rule 11), none adjudicated.
+[S6-06] VERIFIED -> VERIFIED: The verdict of record is the grader's.
+[S6-07] VERIFIED -> VERIFIED: 7 of item 15's 8 generations answer 'close'.
+[S6-08] VERIFIED -> VERIFIED: The 'close' answers are alone, quoted, or in "The opposite of 'open' is 'close'."
+[S6-09] VERIFIED -> VERIFIED: Clean seeds 0, 1 and 3 answer 'close'.
+[S6-10] VERIFIED -> VERIFIED: All four corrupted item-15 generations answer 'close'.
+[S6-11] VERIFIED -> VERIFIED: Item 15's gold list is {closed, shut}.
+[S6-12] VERIFIED -> VERIFIED: f0's grader, ported verbatim, grades all 7 as misses.
+[S6-13] VERIFIED -> VERIFIED: They are 3 of the clean pool's 7 misses.
+[S6-14] VERIFIED -> VERIFIED: They are 4 of the corrupted pool's 16 misses.
+[S6-15] VERIFIED -> VERIFIED: Two graded hits Code reads as wrong, both on the corrupted pool.
+[S6-16] VERIFIED -> VERIFIED: Item 7, seed 3 text: "A kilogram of iron and half a kilogram of feathers are both 1 kilogram in weight."
+[S6-17] VERIFIED -> VERIFIED: Item 7 s3 hits on "iron".
+[S6-18] VERIFIED -> VERIFIED: Item 9, seed 0 reads `miyms` as minutes.
+[S6-19] VERIFIED -> VERIFIED: Item 9 s0 text begins "90 minutes is 1.5 hours. So 45 minutes is …".
+[S6-20] VERIFIED -> VERIFIED: Item 9 s0 hits on "45".
+[S6-21] VERIFIED -> VERIFIED: Items 7 and 9 are the only items whose gold occurs as a word in the task text.
+[S6-22] VERIFIED -> VERIFIED: For items 7 and 9 the gold is unchanged in the render ('iron'; the operand 45).
+[S6-23] VERIFIED -> VERIFIED: So a restatement of either task hits.
+[S6-24] VERIFIED -> VERIFIED: The build tests restatements on both items 7 and 9 (the review's fix 5).
+[S6-25] VERIFIED -> VERIFIED: All four clean item-9 hits are real answers.
+[S6-26] VERIFIED -> VERIFIED: Four readings are post-hoc, descriptive, from tally section 2(c).
+[S6-27] VERIFIED -> VERIFIED: Grader of record: corrupted 48/64.
+[S6-28] VERIFIED -> VERIFIED: It clears the absolute bar (45/64) by 3 hits.
+[S6-29] VERIFIED -> VERIFIED: It clears the relative bar by 5.
+[S6-30] VERIFIED -> VERIFIED: Two hits removed only: 46/64.
+[S6-31] VERIFIED -> VERIFIED: That clears the absolute bar by 1.
+[S6-32] VERIFIED -> VERIFIED: Covariate under two-hits-removed: 11/64.
+[S6-33] VERIFIED -> VERIFIED: 'close' counted only: clean 60/64, corrupted 52/64.
+[S6-34] VERIFIED -> VERIFIED: Clearing both bars by 7.
+[S6-35] VERIFIED -> VERIFIED: Covariate 8/64.
+[S6-36] VERIFIED -> VERIFIED: Both: clean 60/64, corrupted 50/64.
+[S6-37] VERIFIED -> VERIFIED: Clearing both bars by 5.
+[S6-38] VERIFIED -> VERIFIED: Covariate 10/64.
+[S6-39] VERIFIED -> VERIFIED: Item 2 corrupted is 0/4.
+[S6-40] VERIFIED -> VERIFIED: Item 2's render is "Name thy thiru month of the yebr."
+[S6-41] VERIFIED -> VERIFIED: Item 2 corrupted answer: "Follow the pattern: "The thiru month of the yebr is [Month Name].""
+[S6-42] VERIFIED -> VERIFIED: Item 2 corrupted answer: "My thiru month of the yebr is April."
+[S6-43] VERIFIED -> VERIFIED: Item 2 corrupted answer: "'Aloha'".
+[S6-44] VERIFIED -> VERIFIED: Item 2 corrupted answer: "Fit".
+[S6-45] VERIFIED -> VERIFIED: Clean item 2 is 4/4 "March".
+[S6-46] VERIFIED -> VERIFIED: The seat's provisional read of 2026-10-04 listed `thiru` for third as recoverable (m:176).
+[S6-47] VERIFIED -> VERIFIED: Condition (4) has no per-item bar.
+[S6-48] VERIFIED -> VERIFIED: Item 2's four misses enter (4) only as 4 of the corrupted pool's 16.
+[S6-49] VERIFIED -> VERIFIED: One termination echo: corrupted item 6, seed 1, is the whole line "=== End of evaluation session ===".
+[S6-50] VERIFIED -> VERIFIED: The banner is "=== Config evaluation session ===".
+[S6-51] VERIFIED -> VERIFIED: The line matches f's descriptive termination patterns (data/configs/f_termination_patterns.json).
+[S6-52] VERIFIED -> VERIFIED: (Implicit) Exactly one generation matches.
+[S6-53] VERIFIED -> VERIFIED: G-CAL declares no counter (rule 23).
+[S6-54] VERIFIED -> VERIFIED: 11 corrupted-pool answers restate a corrupted word of their render.
+[S6-55] VERIFIED -> VERIFIED: 9 of the 11 are graded hits.
+[S6-56] VERIFIED -> VERIFIED: "There are 7 dsys in a wemk." appears three times.
+[S6-57] VERIFIED -> VERIFIED: "A tryangle has 3 szbes." appears three times.
+[S6-58] VERIFIED -> VERIFIED: "A bicyale has 2 wheess." is a corrupted-pool answer.
+[S6-59] VERIFIED -> VERIFIED: It rewrites two of the render's three corrupted words (bicyaxe, wheeqs) with new misspellings.
+[S6-60] VERIFIED -> VERIFIED: It is not among the 11.
+[S6-61] VERIFIED -> VERIFIED: Other clean miss: a bare "7" on item 0.
+[S6-62] VERIFIED -> VERIFIED: Other clean misses: two working lines cut by the newline stop before an answer (items 3 and 6).
+[S6-63] VERIFIED -> VERIFIED: Other clean miss: "```json" on item 14.
+[S6-64] VERIFIED -> VERIFIED: (Implicit) These four plus the three 'close' are all 7 clean misses.
+[S6-65] VERIFIED -> VERIFIED: Corrupted item 0: a reasoning-style preamble "- The user wants to evaluate an arithmetic expression: 31 + 46."
+[S6-66] VERIFIED -> VERIFIED: Corrupted item 0: a refusal ("I am not a calculator, …").
+[S6-67] VERIFIED -> VERIFIED: Corrupted item 3: a working line.
+[S6-68] VERIFIED -> VERIFIED: Corrupted item 3: "The result of 60 divided by 6 is 10."
+[S6-69] VERIFIED -> VERIFIED: Corrupted item 9 miss: "90 minutes is 1.5 hours."
+[S6-70] VERIFIED -> VERIFIED: Corrupted item 11 misses: "'up'" and "dn".
+[S6-71] VERIFIED -> VERIFIED: (Implicit) These plus item 2's four, item 6's echo and item 15's four are all 16 corrupted misses.
+[S7-01] VERIFIED -> VERIFIED: m:358 lists the seat's read before completability.
+[S7-02] VERIFIED -> VERIFIED: m:358 lists the roster assertion last.
+[S7-03] VERIFIED -> VERIFIED: The roster assertion needs no model.
+[S7-04] VERIFIED -> VERIFIED: The roster assertion is computed in the model-free half.
+[S7-05] VERIFIED -> VERIFIED: Code launched completability under 'Go for step 6' before the read request was committed or sent.
+[S7-06] UNCHECKABLE -> UNCHECKABLE: That followed Code's reading that m:358's list fixes no order after the 0.12 replay.
+[S7-07] IMPRECISE -> IMPRECISE: The same reading is behind the build review's disposition of spec finding #1.
+[S7-08] IMPRECISE -> IMPRECISE: That disposition declined the finding's fix (a).
+[S7-09] IMPRECISE -> IMPRECISE: Fix (a) was the read of record before completability.
+[S7-10] VERIFIED -> VERIFIED: The PI's later 'go ahead with completability' answered the kernel refusal.
+[S7-11] VERIFIED -> VERIFIED: If the read finds any gold unrecoverable, (3) fails.
+[S7-12] VERIFIED -> VERIFIED: m:176 says STOP and re-specify.
+[S7-13] VERIFIED -> VERIFIED: A re-specification is the seat's.
+[S7-14] VERIFIED -> VERIFIED: This run's artifact and checkpoint are both bound to the renders' sha256.
+[S7-15] VERIFIED -> VERIFIED: If the renders change, they no longer apply and completability re-runs.
+[S7-16] VERIFIED -> VERIFIED: Nothing in the tooling records or gates (3).
+[S7-17] VERIFIED -> VERIFIED: That is the review's open minor finding.
+[S7-18] VERIFIED -> VERIFIED: The seat is asked to reply citing the renders sha256.
+[S7-19] VERIFIED -> VERIFIED: The read of record goes into a G-CAL entry, then into LOCK-m-F0 v0.1.
+[S8-01] VERIFIED -> VERIFIED: Raw at results/raw/2026-10-08_m-gcal_sitecheck_post.txt.
+[S8-02] VERIFIED -> VERIFIED: Post-run site check 8/8.
+[S8-03] VERIFIED -> VERIFIED: All four canonical G-CAL artifacts were present.
+[S8-04] VERIFIED -> VERIFIED: So the self-test's no-write checks pass on the populated directories.
+[S8-05] VERIFIED -> VERIFIED: That is the substantive finding's fix.
+[S8-06] VERIFIED -> VERIFIED: Code hashed the five data/m/gates and data/m/ckpt files.
+[S8-07] VERIFIED -> VERIFIED: The five are the four G-CAL artifacts and Q-F0_G-PORT.json.
+[S8-08] VERIFIED -> VERIFIED: Hashed just before the check, at 06:12:35 UTC.
+[S8-09] VERIFIED -> VERIFIED: Hashed again after the check.
+[S8-10] VERIFIED -> VERIFIED: The sha256 are unchanged.
+[S8-11] VERIFIED -> VERIFIED: Both listings are in the raw.
+[S9-01] VERIFIED -> VERIFIED: Committed: the entry.
+[S9-02] VERIFIED -> VERIFIED: Committed: the completability artifact.
+[S9-03] VERIFIED -> VERIFIED: Committed: the checkpoint.
+[S9-04] VERIFIED -> VERIFIED: Committed: the completability raw, the wait raw, the read raw, the post-run site check raw.
+[S9-05] VERIFIED -> VERIFIED: Committed: the values-check raws for this entry, results/raw/2026-10-08_m-gcal_valuescheck.txt and _valuescheck_pass2.txt.
+[S9-06] VERIFIED -> VERIFIED: (Implicit) The list covers every new file the entry relies on (refused-preflight raw, model-free artifact and request already in bab921c).
+[S9-07] IMPRECISE -> IMPRECISE: Next 1: the seat's legibility read of record (condition (3)), made blind from the request.
+[S9-08] VERIFIED -> VERIFIED: Next 2: the seat's read of the 128 generations (m:271), from the read raw's section 3 or the artifact.
+[S9-09] IMPRECISE -> IMPRECISE: Next 3: G-CAL closes on both, in its own entry.
+[S9-10] VERIFIED -> VERIFIED: Next 4: Step 7, G-SHAPE-F0, on the PI's word.
+[S10-01] VERIFIED -> VERIFIED: Pass-1 raw header counts: 273 claims; 254 verified, 2 uncheckable, 17 flagged, 16 confirmed after refutation (1 refuted); values lens 18 findings.
+[S10-02] VERIFIED -> VERIFIED: [S0-30/V14] +.078 now attributed to f0's calib2 everywhere in v2 (no remaining 'f1's +.078'); 'against' replaced by 'quoted beside; m declares no comparison'.
+[S10-03] IMPRECISE -> IMPRECISE: [S1-03/V4] 'each item's gold' removed; seat instruction now opens the header naming the files carrying golds/answers.
+[S10-04] VERIFIED -> VERIFIED: [S3-25/V13] 'one addition' (boundary) + 'a second PIN ports' grader-honesty asserts applied.
+[S10-05] VERIFIED -> VERIFIED: [S3-44] ten minor as finders graded; refuters nine minor and one nit (wording point, two lenses) applied.
+[S10-06] IMPRECISE -> IMPRECISE: [S3-49] survivor described as 'effectively equivalent' by the verifier; new v2 sentence on the values-check's input and precheck's refusal is itself correct.
+[S10-07] IMPRECISE -> IMPRECISE: [S3-50] closing edit 1 scoped to the completability artifact's leaf symlink; v2 adds 'checked only by the self-test' (V9).
+[S10-08] VERIFIED -> VERIFIED: [S3-56] 'no model loaded; recon_echo loaded the tokenizer' applied.
+[S10-09] VERIFIED -> VERIFIED: [S4-20] n_eligible 'as m:176 states', k 'as m:176's formula gives', sum 'as m:176 states' applied.
+[S10-10] IMPRECISE -> IMPRECISE: [S5-63/V15] 'f0's calibration at 0.12 (calib2)' with each attribute's source named; check the :143 citation for the seed key (m:176 cites :152).
+[S10-11] VERIFIED -> VERIFIED: [S6-01] rule-25 label dropped; v2 says rule 25 names smokes and pilots, m:271 has the seat read the generations.
+[S10-12] VERIFIED -> VERIFIED: [S6-32/V3] O3 now says (4) has no per-item bar and item 2's misses are 4 of 16; whether it bears on (3)/(4) is the seat's; offered after the read.
+[S10-13] VERIFIED -> VERIFIED: [S6-43] bicyale: 'two of the render's three corrupted words' applied.
+[S10-14] VERIFIED -> VERIFIED: [S6-49] item-3 quote now full: "The result of 60 divided by 6 is 10."
+[S10-15] VERIFIED -> VERIFIED: [S7-08/V11] 'artifact and checkpoint (both bound to the renders' sha256)'; re-specification is the seat's.
+[S10-16] VERIFIED -> VERIFIED: [S7-10] 'The seat is asked to reply citing the renders sha256' applied.
+[S10-17] VERIFIED -> VERIFIED: [S8-06/V16] hashes now appended to the sitecheck_post raw, and v2 says both listings are in the raw.
+[S10-18] VERIFIED -> VERIFIED: [V1] header names both seat reads; Next lists them in order.
+[S10-19] VERIFIED -> VERIFIED: [V2] Order bullet states launch under 'Go for step 6' at 04:41:33 before bab921c, Code's reading, the declined fix (a), left to the seat.
+[S10-20] VERIFIED -> VERIFIED: [V5] request's form orders the read within the request only; reader already knows the key.
+[S10-21] VERIFIED -> VERIFIED: [V6] header says re-gradings are post-hoc (rule 11), verdict of record is the grader's, 'close'/two hits are the seat's to say.
+[S10-22] VERIFIED -> VERIFIED: [V7] four readings with margins, computed by the tally script section 2(c).
+[S10-23] VERIFIED -> VERIFIED: [V8] items 7 and 9 named as the only two gold-in-task items.
+[S10-24] VERIFIED -> VERIFIED: [V9] three 'as disclosed' items listed.
+[S10-25] VERIFIED -> VERIFIED: [V10] wait raw added; poll ran 05:18:44-05:39:22 (about 21 min).
+[S10-26] VERIFIED -> VERIFIED: [V12] top-level verdict is condition (4)'s alone; model-free pending fields stay (write-once).
+[S10-27] VERIFIED -> VERIFIED: [V17] audit jobs described per their docstrings.
+[S10-28] VERIFIED -> VERIFIED: [V18] nohup caffeinate -is … & with no disown (and why), display sleep only, and the preflight's four checks stated.
+[S10-29] VERIFIED -> VERIFIED: [S4-26 uncheckable] request 'sent to the PI in chat for routing' is Code's account.
+[S10-30] UNCHECKABLE -> UNCHECKABLE: [S9-05 uncheckable] values-check raws committed with the entry, discharged by pass-1 + pass-2 raws.

@@ -1,0 +1,28 @@
+# G-CAL completability -- the wait on the laptop preflight between the PI's "go ahead with completability" and the launch.
+# Code's record, written 2026-10-08 06:31:30 UTC (date -u) from Code's session: nothing here is a model run.
+# Times from file metadata (stat, UTC): the poll script written and the one-shot preflight run 05:18:41; the poll started 05:18:44; its output's last write 05:39:22.
+
+=== 1. One-shot preflight, 05:18:41 UTC (guard.preflight_laptop(), from the jlens venv; output copied verbatim from Code's session) ===
+INVOCATION: jlens-qwen36/.venv/bin/python -c "from valence_core.m import guard; print(guard.preflight_laptop())"
+['ONE PROCESS: another model process is running: 8603 /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python /Users/jasondwyer/Documents/code/jspace-lab/scripts/audit_note_N3_compute.py', 'ONE PROCESS: another model process is running: 8623 /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python -B -c from multiprocessing.resource_tracker import main;main(8)', 'ONE PROCESS: another model process is running: 8624 /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python -B -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=9, pipe_hand', 'ONE PROCESS: another model process is running: 8625 /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python -B -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=9, pipe_hand', 'ONE PROCESS: another model process is running: 8626 /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python -B -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=9, pipe_hand', 'ONE PROCESS: another model process is running: 8627 /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python -B -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=9, pipe_hand', 'ONE PROCESS: another model process is running: 8628 /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python -B -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=9, pipe_hand', 'ONE PROCESS: another model process is running: 8629 /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python -B -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=9, pipe_hand', 'ONE PROCESS: another model process is running: 15767 jlens-qwen36/.venv/bin/python scripts/audit_note_N12_history.py --pin bbc9ffe72fb8a942431c9bf2622a36e581fdf93c --out /private/tmp/claude-501/-Users-jasondwyer-D']
+# The processes named are the parallel audit session's (AUDIT-note-release v1.2): scripts/audit_note_N3_compute.py with its process pool, and
+# scripts/audit_note_N12_history.py. By their docstrings neither loads a language model or tokenizer (N3_compute: "No model inference", numpy probe
+# fits with permutation nulls on stored residual arrays; N12_history: a git-history scan). The check flags them because they run from the
+# jlens-qwen36 venv and "jlens" is one of guard.MODEL_PROCESS_MARKERS. Code changed neither the check nor the jobs. Power and disk were not
+# among the problems listed (AC, 140 W; disk headroom held).
+
+=== 2. The poll (script verbatim; re-runs the preflight every 30 s, prints one line on clear or on a check error, nothing on a refusal) ===
+#!/bin/zsh
+cd /Users/jasondwyer/Documents/code/jspace-lab || exit 9
+while true; do
+  out=$(jlens-qwen36/.venv/bin/python -c "from valence_core.m import guard; p=guard.preflight_laptop(); print('CLEAR' if not p else 'BLOCKED '+str(len(p))+' '+p[0][:120])" 2>&1)
+  if [[ "$out" == CLEAR ]]; then echo "PREFLIGHT CLEAR $(date -u +%H:%M:%S)"; exit 0; fi
+  if [[ "$out" != BLOCKED* ]]; then echo "CHECK ERROR: $out"; exit 3; fi
+  sleep 30
+done
+
+=== 3. The poll's output (verbatim) ===
+PREFLIGHT CLEAR 05:39:22
+
+[exited with code 0]
+# The refusals between 05:18:44 and 05:39:22 printed nothing (by the script's design), so their content after the one-shot check is not recorded.

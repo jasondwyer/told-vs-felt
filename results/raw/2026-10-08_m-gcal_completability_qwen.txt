@@ -1,0 +1,143 @@
+# G-CAL (PROPOSAL-m v1.11 §8 step 6, m:176) -- completability (condition (4)), Qwen, canonical run on the committed build.
+# Code stamp: 2026-10-08 05:39:33 UTC (date -u); HEAD bab921c; launched under caffeinate -is (m:267's checklist); AC power  Wattage = 140W.
+
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/m_sessions.py gcal completability --proposal-file PROPOSAL-m-gating-campaign-v1_11.md
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/m_sessions.py gcal completability --proposal-file PROPOSAL-m-gating-campaign-v1_11.md
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 14691.08it/s]
+GATE G-CAL: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, CLAUDE.md 955788dec22ee820, analyzer absent -- G-ANL-F0 is §8 step 8, after G-CAL, HEAD bab921ce5229e72c22985d516e8b7ed07ef2cbee
+PROVENANCE: {"record":{"adapter":"qwen3.6-27b-4bit-mlx","backend":"mlx","choice_window_declared":8192,"dtype":"4bit-quantized (MLX)","gdn_inference_mode":"ops (fused disabled)","legacy_truncate_512":false,"library_versions":{"mlx":"0.31.2","mlx-lm":"0.31.3","numpy":"2.5.1"},"mlx_version":"0.31.2","model_id":"mlx-community/Qwen3.6-27B-4bit","n_encodes_clipped":0,"n_layers":64,"platform":"macOS-15.6.1-arm64-arm-64bit","python":"3.12.9"},"stamp":"2026-10-08T05:39:39Z"}
+gcal CORR_clean i=0 s=0 hit n_tok=11
+gcal CORR_clean i=0 s=1 miss n_tok=2
+gcal CORR_clean i=0 s=2 hit n_tok=3
+gcal CORR_clean i=0 s=3 hit n_tok=12
+gcal CORR_clean i=1 s=0 hit n_tok=8
+gcal CORR_clean i=1 s=1 hit n_tok=9
+gcal CORR_clean i=1 s=2 hit n_tok=9
+gcal CORR_clean i=1 s=3 hit n_tok=7
+gcal CORR_clean i=2 s=0 hit n_tok=1
+gcal CORR_clean i=2 s=1 hit n_tok=1
+gcal CORR_clean i=2 s=2 hit n_tok=1
+gcal CORR_clean i=2 s=3 hit n_tok=1
+gcal CORR_clean i=3 s=0 hit n_tok=12
+gcal CORR_clean i=3 s=1 miss n_tok=14
+gcal CORR_clean i=3 s=2 hit n_tok=12
+gcal CORR_clean i=3 s=3 hit n_tok=10
+gcal CORR_clean i=4 s=0 hit n_tok=2
+gcal CORR_clean i=4 s=1 hit n_tok=7
+gcal CORR_clean i=4 s=2 hit n_tok=7
+gcal CORR_clean i=4 s=3 hit n_tok=7
+gcal CORR_clean i=5 s=0 hit n_tok=1
+gcal CORR_clean i=5 s=1 hit n_tok=1
+gcal CORR_clean i=5 s=2 hit n_tok=10
+gcal CORR_clean i=5 s=3 hit n_tok=1
+gcal CORR_clean i=6 s=0 hit n_tok=10
+gcal CORR_clean i=6 s=1 hit n_tok=11
+gcal CORR_clean i=6 s=2 hit n_tok=4
+gcal CORR_clean i=6 s=3 miss n_tok=19
+gcal CORR_clean i=7 s=0 hit n_tok=7
+gcal CORR_clean i=7 s=1 hit n_tok=13
+gcal CORR_clean i=7 s=2 hit n_tok=7
+gcal CORR_clean i=7 s=3 hit n_tok=23
+gcal CORR_clean i=8 s=0 hit n_tok=9
+gcal CORR_clean i=8 s=1 hit n_tok=9
+gcal CORR_clean i=8 s=2 hit n_tok=1
+gcal CORR_clean i=8 s=3 hit n_tok=1
+gcal CORR_clean i=9 s=0 hit n_tok=3
+gcal CORR_clean i=9 s=1 hit n_tok=12
+gcal CORR_clean i=9 s=2 hit n_tok=4
+gcal CORR_clean i=9 s=3 hit n_tok=3
+gcal CORR_clean i=10 s=0 hit n_tok=7
+gcal CORR_clean i=10 s=1 hit n_tok=6
+gcal CORR_clean i=10 s=2 hit n_tok=2
+gcal CORR_clean i=10 s=3 hit n_tok=7
+gcal CORR_clean i=11 s=0 hit n_tok=1
+gcal CORR_clean i=11 s=1 hit n_tok=3
+gcal CORR_clean i=11 s=2 hit n_tok=1
+gcal CORR_clean i=11 s=3 hit n_tok=1
+gcal CORR_clean i=12 s=0 hit n_tok=17
+gcal CORR_clean i=12 s=1 hit n_tok=12
+gcal CORR_clean i=12 s=2 hit n_tok=3
+gcal CORR_clean i=12 s=3 hit n_tok=12
+gcal CORR_clean i=13 s=0 hit n_tok=10
+gcal CORR_clean i=13 s=1 hit n_tok=10
+gcal CORR_clean i=13 s=2 hit n_tok=10
+gcal CORR_clean i=13 s=3 hit n_tok=3
+gcal CORR_clean i=14 s=0 miss n_tok=3
+gcal CORR_clean i=14 s=1 hit n_tok=10
+gcal CORR_clean i=14 s=2 hit n_tok=3
+gcal CORR_clean i=14 s=3 hit n_tok=10
+gcal CORR_clean i=15 s=0 miss n_tok=10
+gcal CORR_clean i=15 s=1 miss n_tok=1
+gcal CORR_clean i=15 s=2 hit n_tok=1
+gcal CORR_clean i=15 s=3 miss n_tok=1
+gcal CORR_corrupted i=0 s=0 hit n_tok=15
+gcal CORR_corrupted i=0 s=1 miss n_tok=19
+gcal CORR_corrupted i=0 s=2 hit n_tok=4
+gcal CORR_corrupted i=0 s=3 miss n_tok=26
+gcal CORR_corrupted i=1 s=0 hit n_tok=9
+gcal CORR_corrupted i=1 s=1 hit n_tok=12
+gcal CORR_corrupted i=1 s=2 hit n_tok=12
+gcal CORR_corrupted i=1 s=3 hit n_tok=12
+gcal CORR_corrupted i=2 s=0 miss n_tok=18
+gcal CORR_corrupted i=2 s=1 miss n_tok=11
+gcal CORR_corrupted i=2 s=2 miss n_tok=5
+gcal CORR_corrupted i=2 s=3 miss n_tok=1
+gcal CORR_corrupted i=3 s=0 hit n_tok=12
+gcal CORR_corrupted i=3 s=1 miss n_tok=19
+gcal CORR_corrupted i=3 s=2 hit n_tok=10
+gcal CORR_corrupted i=3 s=3 miss n_tok=15
+gcal CORR_corrupted i=4 s=0 hit n_tok=2
+gcal CORR_corrupted i=4 s=1 hit n_tok=9
+gcal CORR_corrupted i=4 s=2 hit n_tok=9
+gcal CORR_corrupted i=4 s=3 hit n_tok=9
+gcal CORR_corrupted i=5 s=0 hit n_tok=1
+gcal CORR_corrupted i=5 s=1 hit n_tok=10
+gcal CORR_corrupted i=5 s=2 hit n_tok=1
+gcal CORR_corrupted i=5 s=3 hit n_tok=1
+gcal CORR_corrupted i=6 s=0 hit n_tok=3
+gcal CORR_corrupted i=6 s=1 miss n_tok=7
+gcal CORR_corrupted i=6 s=2 hit n_tok=4
+gcal CORR_corrupted i=6 s=3 hit n_tok=3
+gcal CORR_corrupted i=7 s=0 hit n_tok=47
+gcal CORR_corrupted i=7 s=1 hit n_tok=13
+gcal CORR_corrupted i=7 s=2 hit n_tok=13
+gcal CORR_corrupted i=7 s=3 hit n_tok=18
+gcal CORR_corrupted i=8 s=0 hit n_tok=9
+gcal CORR_corrupted i=8 s=1 hit n_tok=1
+gcal CORR_corrupted i=8 s=2 hit n_tok=2
+gcal CORR_corrupted i=8 s=3 hit n_tok=1
+gcal CORR_corrupted i=9 s=0 hit n_tok=56
+gcal CORR_corrupted i=9 s=1 miss n_tok=11
+gcal CORR_corrupted i=9 s=2 hit n_tok=12
+gcal CORR_corrupted i=9 s=3 hit n_tok=12
+gcal CORR_corrupted i=10 s=0 hit n_tok=2
+gcal CORR_corrupted i=10 s=1 hit n_tok=11
+gcal CORR_corrupted i=10 s=2 hit n_tok=9
+gcal CORR_corrupted i=10 s=3 hit n_tok=7
+gcal CORR_corrupted i=11 s=0 miss n_tok=3
+gcal CORR_corrupted i=11 s=1 hit n_tok=2
+gcal CORR_corrupted i=11 s=2 hit n_tok=1
+gcal CORR_corrupted i=11 s=3 miss n_tok=1
+gcal CORR_corrupted i=12 s=0 hit n_tok=16
+gcal CORR_corrupted i=12 s=1 hit n_tok=4
+gcal CORR_corrupted i=12 s=2 hit n_tok=3
+gcal CORR_corrupted i=12 s=3 hit n_tok=4
+gcal CORR_corrupted i=13 s=0 hit n_tok=3
+gcal CORR_corrupted i=13 s=1 hit n_tok=10
+gcal CORR_corrupted i=13 s=2 hit n_tok=10
+gcal CORR_corrupted i=13 s=3 hit n_tok=10
+gcal CORR_corrupted i=14 s=0 hit n_tok=5
+gcal CORR_corrupted i=14 s=1 hit n_tok=9
+gcal CORR_corrupted i=14 s=2 hit n_tok=9
+gcal CORR_corrupted i=14 s=3 hit n_tok=3
+gcal CORR_corrupted i=15 s=0 miss n_tok=10
+gcal CORR_corrupted i=15 s=1 miss n_tok=10
+gcal CORR_corrupted i=15 s=2 miss n_tok=1
+gcal CORR_corrupted i=15 s=3 miss n_tok=3
+gcal accuracy CORR_clean 57/64 = 57/64 (0.8906)
+gcal accuracy CORR_corrupted 48/64 = 3/4 (0.7500)
+gcal condition (4): PASS -- corrupted 3/4 >= 7/10: yes; >= 3/4 x clean = 171/256: yes
+gcal covariate (clean minus corrupted, f0's sign): 9/64 = +0.1406 (f1's 0.12 figure of record +.078)
+G-CAL completability (Qwen): PASS; artifact /Users/jasondwyer/Documents/code/jspace-lab/data/m/gates/G-CAL_completability_qwen.json (written)
+EXIT=0
+# finished 2026-10-08 05:46:22 UTC

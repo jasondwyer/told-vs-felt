@@ -1,0 +1,63 @@
+# Post-run site check -- the m package at c75d4d8 (unchanged at HEAD bab921c), with all four canonical G-CAL artifacts present (model-free, seat read request, completability, checkpoint): the self-test's no-write checks compare snapshots (the review's substantive finding, fixed in c75d4d8).
+# Code stamp: 2026-10-08 06:12:39 UTC (date -u)
+# HEAD: bab921c; valence_core/m and scripts/m_sessions.py unchanged against HEAD; the canonical G-CAL artifacts on disk.
+# Gated on each suite's SUMMARY LINE, not on $? (trap 12; a pipeline's $? is tail's).
+# Interpreter: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python
+
+=== regression ===
+  [PASS] e2d: resume reproduces the run and refuses a different one   expected identical transcripts + refusal got identical True, reads True, refused True   (incident 2026-09-02 (D2 died at 9/64 with nothing on disk))
+------------------------------------------------------------------------------
+  154/154 reproduced through valence_core
+GATE regression: PASS (summary line matched; exit 0)
+=== format_recon ===
+  [PASS] anchors carry both domains: e2a all 157/187 & 32/188; valid 154/184 & 30/184   
+------------------------------------------------------------------------------
+  67/67 selftest checks pass
+GATE format_recon: PASS (summary line matched; exit 0)
+=== k1_stage1 ===
+  [PASS] startup hygiene (rule 18 / 28c) runs on the roster vs the 64 paraphrases and the wrapper 
+------------------------------------------------------------------------------
+  21/21 Stage 1 selftest checks pass
+GATE k1_stage1: PASS (summary line matched; exit 0)
+=== k1_analyze ===
+  [PASS] select_sentence is disjunction-complete: G3 FAIL dominates, then G1 FAIL, then G2's three 
+------------------------------------------------------------------------------
+  20/20 analyzer battery checks pass (19s)
+GATE k1_analyze: PASS (summary line matched; exit 0)
+=== e2d_d2_analyze ===
+  [PASS] empty inputs STOP rather than passing vacuously            got     'STOP, SCOPED'  want 'STOP, SCOPED'
+------------------------------------------------------------------------------
+  46/46 branches verified (every criterion, both directions, plus the sign-flip and g2r branches)
+GATE e2d_d2_analyze: PASS (summary line matched; exit 0)
+=== recon_echo ===
+  [PASS] stage A roster: 24 sessions, 12/12 by map  first 24 were 14/10; took the first 12 of each map
+
+  18/18 selftest checks pass
+GATE recon_echo: PASS (summary line matched; exit 0)
+=== closure_verify3 ===
+  PASS  R7-R15 no old or struck clause survives in the quoted text         got []                           want []  
+----------------------------------------------------------------------------------------------------
+  24/24 third-pass checks pass
+GATE closure_verify3: PASS (summary line matched; exit 0)
+=== m_sessions ===
+  [PASS] m_sessions: no forbidden literal in valence_core/m/*.py or this driver; the grep fires on a planted copy []
+  [PASS] m_sessions: the quarantined state-present module is not in sys.modules after the selftest
+  706/706 m selftest checks pass
+GATE m_sessions: PASS (summary line matched; exit 0)
+
+SITECHECK_DONE 2026-10-08 06:14:31 UTC -- gates failed: 0
+
+=== Code's hash check around the site check (appended by Code 2026-10-08 06:32:19 UTC) ===
+# Before: shasum -a 256 data/m/gates/* data/m/ckpt/*, run by Code at 06:12:35 UTC (file mtime), 4 s before the stamp above:
+46afd36488e5d9d51e3fe922de941e7bd363a735953fd4e85d9b85d21195c15b  data/m/gates/G-CAL_completability_qwen.json
+aad8096a6aa90ebb6e4bd476e47a9cb40d50e666c1801270031b899abc1834af  data/m/gates/G-CAL_model-free.json
+063d19992f8157e40efa6c804ac8a79dfa07e9360500f2c8874773cafaa10546  data/m/gates/G-CAL_seat_read_request.md
+137e7010a7ca344faa0d4488665a3272b98c2790fbc4fba5158c36ff42fa5c34  data/m/gates/Q-F0_G-PORT.json
+9214718365c0226dc1932156e7f1278de45560a1d35953bb3a1ced767a853ecc  data/m/ckpt/G-CAL_qwen.json
+# After (now):
+46afd36488e5d9d51e3fe922de941e7bd363a735953fd4e85d9b85d21195c15b  data/m/gates/G-CAL_completability_qwen.json
+aad8096a6aa90ebb6e4bd476e47a9cb40d50e666c1801270031b899abc1834af  data/m/gates/G-CAL_model-free.json
+063d19992f8157e40efa6c804ac8a79dfa07e9360500f2c8874773cafaa10546  data/m/gates/G-CAL_seat_read_request.md
+137e7010a7ca344faa0d4488665a3272b98c2790fbc4fba5158c36ff42fa5c34  data/m/gates/Q-F0_G-PORT.json
+9214718365c0226dc1932156e7f1278de45560a1d35953bb3a1ced767a853ecc  data/m/ckpt/G-CAL_qwen.json
+# identical: the five files' sha256 are unchanged across the check
