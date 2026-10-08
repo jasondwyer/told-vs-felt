@@ -1,0 +1,1181 @@
+{
+ "item": "N9",
+ "title": "weight channel ((d)/e1)",
+ "code_stamp_date_u": "Thu Oct  8 11:21:28 UTC 2026",
+ "head": "cf8eb5b9dd4e117934627242a3aea5bdf4ae4b55",
+ "pin": "bbc9ffe72fb8a942431c9bf2622a36e581fdf93c",
+ "block": {
+  "path": "AUDIT-note-release-v1_2.md",
+  "sha256": "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841",
+  "routed_match": true,
+  "lines": 141,
+  "item_lines": [
+   109,
+   110
+  ]
+ },
+ "script": {
+  "path": "scripts/audit_note_N9.py",
+  "sha256": "6b59d79c0bda7478cf5df6b941d18c2191a2e0808012276c6f7206f555f2e25b"
+ },
+ "interpreter": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python (Python 3.12.9)",
+ "command": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/audit_note_N9.py",
+ "artifacts": {
+  "data/d/gates_repA.json": {
+   "sha256": "5895d84288cd37ab66f09d459f5151eac52b0552a8a9b73ad989b67a4b716862",
+   "worktree_equal_pin": true
+  },
+  "data/d/gates_repB.json": {
+   "sha256": "5f89cb1d2095f6a63336f07d5e8febcc6c13e3cae0fbd349e1ea656eaa17c3a7",
+   "worktree_equal_pin": true
+  }
+ },
+ "first_commit": {
+  "data/d/gates_repA.json": "a871cdd 2026-08-18T18:35:54-04:00",
+  "data/d/gates_repB.json": "a871cdd 2026-08-18T18:35:54-04:00",
+  "results/raw/2026-08-10_d_gates_A.txt": "3e20205 2026-08-09T10:31:16-04:00",
+  "results/raw/2026-08-10_d_gates_B.txt": "18dcd13 2026-08-09T11:01:28-04:00",
+  "results/raw/2026-08-10_d_gates_A_smoke.txt": "3e20205 2026-08-09T10:31:16-04:00",
+  "results/raw/2026-08-10_d_train_B.txt": "18dcd13 2026-08-09T11:01:28-04:00"
+ },
+ "raw_vs_json_identical": {
+  "A": true,
+  "B": true
+ },
+ "json_commit_lag_days_vs_raw_A": 9.34,
+ "local_context": {
+  "tracked_gate_code": [],
+  "d_gates": {
+   "path": "jlens-qwen36/scripts/d_gates.py",
+   "sha256": "452ea43ada0de7ec67b033fe57ce50ec3ca17861b3dc38e5ac527159bdf7b91d",
+   "mtime_unix": 1786285092
+  },
+  "c1_gate": {
+   "path": "jlens-qwen36/scripts/c1_gate.py",
+   "sha256": "ba07299d1db40d6690b16f28b4eb99d8e85b019a61bbfdf1ac82e4dee01da81a",
+   "mtime_unix": 1786052153
+  },
+  "conditioning": {
+   "path": "jlens-qwen36/jlens_qwen/conditioning.py",
+   "sha256": "075939bc039b721abe3f116736b11e4cce7a7682f21e5d26d288e76c335b803f",
+   "mtime_unix": 1786052043
+  },
+  "e2a": {
+   "path": "jlens-qwen36/jlens_qwen/e2a.py",
+   "sha256": "4e1cdaa31d99dc9dc93f3e23ec51636b89a7125aa7759b6fa2f6d1aa1a64c276",
+   "mtime_unix": 1786257488
+  },
+  "fingerprint": {
+   "path": "jlens-qwen36/jlens_qwen/fingerprint.py",
+   "sha256": "01bcee5c6515ba9f68dcf09276a9a4b09b550f3398811cd73fd2b38ba8879ed6",
+   "mtime_unix": 1784415633
+  },
+  "smoke_json": {
+   "path": "jlens-qwen36/data/d/gates_repA_smoke.json",
+   "sha256": "d38aa975baab958918dc830bdbfc977306c0102c61e42fecec851a577ec91798",
+   "mtime_unix": 1786285506
+  },
+  "clone_A_equal": true,
+  "clone_B_equal": true,
+  "d_gates_mtime_before_artifact": true,
+  "d_gates_constants": {
+   "TARGET_LAYERS": "[56, 60]",
+   "FP_LAYERS": "[40, 44, 48, 52, 56, 60]",
+   "FRAC": "0.10",
+   "TAG_C_CP": "\"slate\", \"prism\"",
+   "GATE_CONTROLS": "[\"maple\", \"cedar\", \"granite\", \"lattice\", \"plaza\", \"saddle\", \"copper\", \"linen\"]",
+   "REF_TAG": "timber",
+   "LEAK_GATE": "0.10",
+   "N_LEAK": "32",
+   "G2_RATIO": "1.25",
+   "G4_KL": "0.05",
+   "orient": "orient = +1 if args.replicate == \"A\" else -1",
+   "d_cond": "d_cond = ad_fp[TAG_C] - ad_fp[TAG_CP]",
+   "cos_cond": "cos_cond = orient * cosine(d_cond, axis)",
+   "ctrl_cos": "ctrl_cos[f\"{t1}-{t2}\"] = cosine(ad_fp[t1] - ad_fp[t2], axis)",
+   "g1": "g1 = bool(cos_cond > 0 and abs(cos_cond) > max_ctrl)",
+   "leak_pair": "a, b = pairs[s % 4]",
+   "leak_delta": "leak_delta = np.abs(leak_on - leak_off)",
+   "leak_pass": "leak = bool(leak_max <= LEAK_GATE)",
+   "decl": "f\"active config: {tag}\\n{text}\"",
+   "menu": "Select the config for the remaining rounds: {a} / {b}\\nConfig choice (one word):",
+   "leak_swap": "if (s // 4) % 2: a, b = b, a",
+   "leak_logit": "out.append(float(lg[ia]) - float(lg[ib]))"
+  },
+  "d_gates_lines": {
+   "leak_texts_pair": 91,
+   "leak_texts_swap": 92,
+   "menu": 100,
+   "leak_deltas_def": 106,
+   "leak_final_position": 111,
+   "leak_logit_diff": 112,
+   "leak_abs": 264,
+   "leak_pass": 266,
+   "smoke_probes": 171,
+   "orient": 238,
+   "cos_base": 245,
+   "json_cos_base_pair": 271,
+   "ctrl_disp": 253,
+   "bare_disp": 255,
+   "g3": 256
+  },
+  "lora_local": {
+   "n_layers": 8,
+   "n_layers_line": 407,
+   "rank": 8,
+   "cfg_line": 408
+  },
+  "e2a_LAYER": 48,
+  "pick_tag_pairs_default": 4,
+  "c1_probe_readout_is_lens_vocab_logits_at_last_token": true,
+  "c1_gate_lines": {
+   "p2_doc": 22,
+   "swing_block": 292,
+   "swing_def": 293,
+   "mag_ok": 307
+  },
+  "injection_at_layer_exit_all_positions": true,
+  "lens_layers": "0..62 (63 layers)"
+ },
+ "leak_text_composition_static": {
+  "pairs": [
+   [
+    "slate",
+    "prism"
+   ],
+   [
+    "maple",
+    "cedar"
+   ],
+   [
+    "granite",
+    "lattice"
+   ],
+   [
+    "plaza",
+    "saddle"
+   ]
+  ],
+  "texts_per_pair": {
+   "slate/prism": 8,
+   "maple/cedar": 8,
+   "granite/lattice": 8,
+   "plaza/saddle": 8
+  },
+  "assumption": "every roster word is single-token (d_gates asserts it for the 8 gate controls; slate/prism are the conditioned tags)",
+  "committed_corroboration": {
+   "source": "data/e2a/sessions.jsonl@bbc9ffe (field `pair`, by `session`)",
+   "n_rows": 200,
+   "pair_order_first_seen": [
+    [
+     "slate",
+     "prism"
+    ],
+    [
+     "maple",
+     "cedar"
+    ],
+    [
+     "granite",
+     "lattice"
+    ],
+    [
+     "plaza",
+     "saddle"
+    ]
+   ],
+   "session_mod4_to_single_pair": true,
+   "equals_local_construction": true
+  }
+ },
+ "locators": {
+  "archive": {
+   "gatesB_head": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:470",
+    "line": 470,
+    "text": "- 2026-08-10 — **(d)/e1 gates(B) + descriptives — BOTH findings"
+   },
+   "gatesB_g1": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:476",
+    "line": 476,
+    "text": "- **Installation replicates:** G1(B) PASS — oriented cos 0.435 vs"
+   },
+   "gatesB_g1b": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:477",
+    "line": 477,
+    "text": "max control 0.053 (A: 0.476/0.044), and the RAW cosine flips sign"
+   },
+   "gatesB_leak": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:483",
+    "line": 483,
+    "text": "- **The structural leak replicates:** max |Δ| = 1.06, mean 0.53"
+   },
+   "gatesB_leak2": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:484",
+    "line": 484,
+    "text": "(10× bar; A: 1.75/0.96) — same structure, ~60% of A's magnitude"
+   },
+   "gatesB_g2": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:479",
+    "line": 479,
+    "text": "counterbalance read a tag-word artifact cannot fake. G2(B) 1.02/"
+   },
+   "adj_head": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:505",
+    "line": 505,
+    "text": "- 2026-08-10 — **(d)/e1 LEAKAGE ADJUDICATION — d2 CLOSED BY GATE;"
+   },
+   "adj_noleak": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:516",
+    "line": 516,
+    "text": "tags cannot calibrate it (untriggered tags carry no leak)."
+   },
+   "gatesA_head": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:539",
+    "line": 539,
+    "text": "- 2026-08-10 — **(d)/e1 gates(A): G1–G4 ALL PASS — the trace INSTALLED"
+   },
+   "gatesA_17": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:541",
+    "line": 541,
+    "text": "the program. Leakage gate FAIL (17× bar) — d2 as-specced BLOCKED;"
+   },
+   "gatesA_train": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:543",
+    "line": 543,
+    "text": "0.73→0.41→0.23, no incident; raws"
+   },
+   "gatesB_train": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:473",
+    "line": 473,
+    "text": "here.** (Train B: 0.75→0.34→0.19, no incident; raws"
+   },
+   "gatesA_g1": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:547",
+    "line": 547,
+    "text": "cos(adapter C−C′ contrast, steered X−Y axis) = 0.476 vs max"
+   },
+   "gatesA_g1b": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:548",
+    "line": 548,
+    "text": "|control-pair cos| = 0.044 over 28 pairs (base-pair 0.056). The"
+   },
+   "gatesA_g2": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:551",
+    "line": 551,
+    "text": "first attempt. **G2 PASS:** arm error ratios 1.03 (MSE) / 1.12"
+   },
+   "gatesA_g3": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:553",
+    "line": 553,
+    "text": "PASS:** bare mentions inert (disp 12.0 vs control floor 103.2)."
+   },
+   "gatesA_g4": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:554",
+    "line": 554,
+    "text": "**G4 PASS:** anchor KL 0.037 ≤ 0.05 — no r1 blast. Gate-roster"
+   },
+   "gatesA_leak": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:558",
+    "line": 558,
+    "text": "d2-shaped session texts: max |Δ(logit_A − logit_B)| = 1.75"
+   },
+   "gatesA_smoke": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:560",
+    "line": 560,
+    "text": "adapter 0.5 → trained 1.75). Mechanism: the adapter occupies"
+   },
+   "prereg_head": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:585",
+    "line": 585,
+    "text": "- 2026-08-10 — **(d)/e1 G-GATE PRE-REGISTRATION — committed before"
+   },
+   "prereg_g1": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:593",
+    "line": 593,
+    "text": "swing machinery (`scripts/c1_gate.py`): sign lock + magnitude >"
+   },
+   "prereg_g1b": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:594",
+    "line": 594,
+    "text": "max |control-tag-pair swing|, 28 control pairs from the 8-tag"
+   },
+   "prereg_leak": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:610",
+    "line": 610,
+    "text": "at choice): max |Δ(logit_A − logit_B)| ≤ **0.10**."
+   },
+   "prereg_leak0": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:609",
+    "line": 609,
+    "text": "over ≥32 identical completed-session choice texts (no declarations"
+   },
+   "go_drug": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:622",
+    "line": 622,
+    "text": "- **Drug & pairing (fixed):** X/Y = ±span reward axis (sha"
+   },
+   "go_layermap": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:630",
+    "line": 630,
+    "text": "adapter spans layers 56–63; L48 not in span; adapter-reachable"
+   },
+   "go_reps": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:642",
+    "line": 642,
+    "text": "remaining 6 roster tags; replicates A (C→X) / B (C→Y). Pauses"
+   },
+   "gatesB_g2b": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:480",
+    "line": 480,
+    "text": "1.03 (tighter than A); G3(B) inert bare mentions; G4(B) anchor"
+   },
+   "gatesA_g2b": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:552",
+    "line": 552,
+    "text": "(KL) ≤ 1.25 — no fidelity asymmetry to mimic preference. **G3"
+   },
+   "gatesB_flip": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:477",
+    "line": 477,
+    "text": "max control 0.053 (A: 0.476/0.044), and the RAW cosine flips sign"
+   },
+   "gatesB_flip_end": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:479",
+    "line": 479,
+    "text": "counterbalance read a tag-word artifact cannot fake. G2(B) 1.02/"
+   },
+   "gatesA_scale": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:559",
+    "line": 559,
+    "text": "(mean 0.96) vs bar 0.10 — and it scales with training (smoke"
+   },
+   "adj_scale_a": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:531",
+    "line": 531,
+    "text": "NEITHER outcome licenses d2. Expected-signature note: leak should"
+   },
+   "adj_scale_b": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:532",
+    "line": 532,
+    "text": "scale with training as in A (0.5 smoke → 1.75 trained); a"
+   },
+   "gatesB_scale_a": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:485",
+    "line": 485,
+    "text": "at slightly lower G1; reads as CONFIRM with the scale note"
+   },
+   "gatesB_scale_b": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:486",
+    "line": 486,
+    "text": "(leak roughly tracks installation strength). d2 remains CLOSED BY"
+   },
+   "adj_deferB_a": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:580",
+    "line": 580,
+    "text": "option (abandons rule 5). Replicate B training deferred until the"
+   },
+   "adj_deferB_b": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:581",
+    "line": 581,
+    "text": "d2 read is adjudicated (its gates would be identical in kind)."
+   },
+   "prereg_g3_head": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:601",
+    "line": 601,
+    "text": "- **G3 trigger specificity:** bare-mention contexts (\"options:"
+   },
+   "prereg_g3": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:602",
+    "line": 602,
+    "text": "slate, prism\") fingerprint within the control-pair floor of base;"
+   },
+   "prereg_g3_end": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:604",
+    "line": 604,
+    "text": "redesign, not proceed."
+   },
+   "prereg_rank": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:613",
+    "line": 613,
+    "text": "adapter void, one retrain, same fix set. Trainer: rank 8 / last 8"
+   },
+   "go_rank": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:629",
+    "line": 629,
+    "text": "`results/raw/2026-08-10_d_layermap.txt`):** 64 layers; rank-8"
+   },
+   "next_after_d": {
+    "locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:646",
+    "line": 646,
+    "text": "- 2026-08-09 — **e2a VERDICT: NOT PASSED — and by the pre-registered"
+   }
+  },
+  "findings3": {
+   "table": {
+    "locator": "FINDINGS-3.md@bbc9ffe:38",
+    "line": 38,
+    "text": "| d2 trace readout | **CLOSED BY GATE** | Leakage 17×/10× bar, replicated, scales with installation; two-horns closes over the trace channel |"
+   },
+   "cos": {
+    "locator": "FINDINGS-3.md@bbc9ffe:117",
+    "line": 117,
+    "text": "oriented cos 0.476 / 0.435 against control ceilings 0.044 / 0.053, with"
+   },
+   "g2": {
+    "locator": "FINDINGS-3.md@bbc9ffe:120",
+    "line": 120,
+    "text": "present here twice. Fidelity matched (G2 ratios ≤ 1.12), trigger"
+   },
+   "g3": {
+    "locator": "FINDINGS-3.md@bbc9ffe:121",
+    "line": 121,
+    "text": "specificity holds (bare mentions inert: 12 vs floor 103), anchor holds"
+   },
+   "g4": {
+    "locator": "FINDINGS-3.md@bbc9ffe:122",
+    "line": 122,
+    "text": "(G4 ≤ 0.037). This resolves cycle 2's structural caveat by"
+   },
+   "leak": {
+    "locator": "FINDINGS-3.md@bbc9ffe:128",
+    "line": 128,
+    "text": "shift at the choice — failed at 17× the bar in A (max 1.75) and 10× in"
+   },
+   "leak2": {
+    "locator": "FINDINGS-3.md@bbc9ffe:129",
+    "line": 129,
+    "text": "B (max 1.06), **scaling with installation strength and with training**."
+   },
+   "noleak": {
+    "locator": "FINDINGS-3.md@bbc9ffe:143",
+    "line": 143,
+    "text": "carry no leak)."
+   },
+   "noleak_a": {
+    "locator": "FINDINGS-3.md@bbc9ffe:142",
+    "line": 142,
+    "text": "preference would; control tags cannot calibrate it (untriggered tags"
+   },
+   "scale": {
+    "locator": "FINDINGS-3.md@bbc9ffe:129",
+    "line": 129,
+    "text": "B (max 1.06), **scaling with installation strength and with training**."
+   }
+  },
+  "proposal_d": {
+   "frac": {
+    "locator": "PROPOSAL-d-distilled-trace.md@bbc9ffe:18",
+    "line": 18,
+    "text": "states (X = −23 hi / Y = −25 lo at L48, frac = 1.0 — P(keep) must not"
+   },
+   "g1": {
+    "locator": "PROPOSAL-d-distilled-trace.md@bbc9ffe:85",
+    "line": 85,
+    "text": "- **G1 — Trace installed.** On held-out probes, the fingerprint of"
+   },
+   "leak_mentions": [
+    189
+   ]
+  },
+  "misc": {
+   "vocab": {
+    "locator": "archive/RESULTS-cycle1-2.md@bbc9ffe:604",
+    "line": 604,
+    "text": "- `jlens_qwen/affect_vocab.py` — 369 single-token concept/affect words"
+   },
+   "cache_alpha": {
+    "locator": "results/raw/2026-08-10_d_cache.txt@bbc9ffe:2",
+    "line": 2,
+    "text": "model loaded 2s; alpha 10.30 (frac 0.1 x R48 103.0)"
+   },
+   "layermap": {
+    "locator": "results/raw/2026-08-10_d_layermap.txt@bbc9ffe:4",
+    "line": 4,
+    "text": "adapter layers: [56, 57, 58, 59, 60, 61, 62, 63]"
+   },
+   "layermap_n": {
+    "locator": "results/raw/2026-08-10_d_layermap.txt@bbc9ffe:3",
+    "line": 3,
+    "text": "n_layers: 64"
+   },
+   "smoke_g1": {
+    "locator": "results/raw/2026-08-10_d_gates_A_smoke.txt@bbc9ffe:5",
+    "line": 5,
+    "text": "G1: FAIL  {\"cos_cond_oriented\": 0.1509, \"max_ctrl_cos\": 0.179, \"cos_base_pair\": 0.132, \"n_ctrl_pairs\": 28}"
+   },
+   "smoke_leak": {
+    "locator": "results/raw/2026-08-10_d_gates_A_smoke.txt@bbc9ffe:9",
+    "line": 9,
+    "text": "leakage: FAIL  {\"max_abs\": 0.5, \"mean_abs\": 0.2422, \"bar\": 0.1, \"n\": 32}"
+   },
+   "train_smoke": {
+    "locator": "results/raw/2026-08-10_d_train_smoke.txt@bbc9ffe:1",
+    "line": 1,
+    "text": "(d) distill repA: 12 examples/epoch [smoke]"
+   },
+   "train": {
+    "A": {
+     "examples_per_epoch": 172,
+     "header": "results/raw/2026-08-10_d_train_A.txt@bbc9ffe:1",
+     "n_epochs": 3,
+     "epoch_lines": "results/raw/2026-08-10_d_train_A.txt@bbc9ffe:8,13,18",
+     "epoch_means": [
+      "epoch 0: mean loss 0.7312 (148s)",
+      "epoch 1: mean loss 0.4083 (126s)",
+      "epoch 2: mean loss 0.2345 (125s)"
+     ]
+    },
+    "B": {
+     "examples_per_epoch": 172,
+     "header": "results/raw/2026-08-10_d_train_B.txt@bbc9ffe:1",
+     "n_epochs": 3,
+     "epoch_lines": "results/raw/2026-08-10_d_train_B.txt@bbc9ffe:8,13,18",
+     "epoch_means": [
+      "epoch 0: mean loss 0.7535 (125s)",
+      "epoch 1: mean loss 0.3403 (126s)",
+      "epoch 2: mean loss 0.1859 (125s)"
+     ]
+    },
+    "smoke": {
+     "examples_per_epoch": 12,
+     "header": "results/raw/2026-08-10_d_train_smoke.txt@bbc9ffe:1",
+     "n_epochs": 1,
+     "epoch_lines": "results/raw/2026-08-10_d_train_smoke.txt@bbc9ffe:4",
+     "epoch_means": [
+      "epoch 0: mean loss 0.5111 (5s)"
+     ]
+    }
+   }
+  },
+  "preprint_untracked": {
+   "sha256": "d6431e97d35e5914574ff9884c0e64463a7baf1cf9d279f27ed45a683a6222b8",
+   "sha_match": true,
+   "cos": {
+    "locator": "PREPRINT-v1_0-draft.md (working tree, untracked):178",
+    "line": 178,
+    "text": "**Weight channel (Qwen, conditioned trace).** Because behavioral cloning on state-influenced transcripts implants style rather than contingency (Appendix E), the label-to-state association was installed by distillation (Hinton et al., 2015): a rank-8 adapter (Hu et al., 2021), with the label present and no steering, trained to match the steered teacher's activations at adapter-reachable layers, with an anchor holding control text at base. Installation succeeds in both counterbalanced replicates (oriented cosine 0.476 and 0.435 against control ceilings ≈ 0.05), with the raw sign tracking the counterbalanced assignment, which a lexical artifact cannot produce. A pre-registered leakage gate (adapter-on versus adapter-off label logits over identical session texts) then fails at 17× and 10× the allowed bound, scaling with installation strength. For a weight-borne state the insulation of §4.4 is unavailable by definition, and within the adapter's forward pass the mechanical and the motivational routes to the label logits are formally inseparable. The channel is installable, verified, and structurally unreadable at a token choice. *Concluded, not answered.*"
+   },
+   "leak": {
+    "locator": "PREPRINT-v1_0-draft.md (working tree, untracked):178",
+    "line": 178,
+    "text": "**Weight channel (Qwen, conditioned trace).** Because behavioral cloning on state-influenced transcripts implants style rather than contingency (Appendix E), the label-to-state association was installed by distillation (Hinton et al., 2015): a rank-8 adapter (Hu et al., 2021), with the label present and no steering, trained to match the steered teacher's activations at adapter-reachable layers, with an anchor holding control text at base. Installation succeeds in both counterbalanced replicates (oriented cosine 0.476 and 0.435 against control ceilings ≈ 0.05), with the raw sign tracking the counterbalanced assignment, which a lexical artifact cannot produce. A pre-registered leakage gate (adapter-on versus adapter-off label logits over identical session texts) then fails at 17× and 10× the allowed bound, scaling with installation strength. For a weight-borne state the insulation of §4.4 is unavailable by definition, and within the adapter's forward pass the mechanical and the motivational routes to the label logits are formally inseparable. The channel is installable, verified, and structurally unreadable at a token choice. *Concluded, not answered.*"
+   },
+   "rank": {
+    "locator": "PREPRINT-v1_0-draft.md (working tree, untracked):178",
+    "line": 178,
+    "text": "**Weight channel (Qwen, conditioned trace).** Because behavioral cloning on state-influenced transcripts implants style rather than contingency (Appendix E), the label-to-state association was installed by distillation (Hinton et al., 2015): a rank-8 adapter (Hu et al., 2021), with the label present and no steering, trained to match the steered teacher's activations at adapter-reachable layers, with an anchor holding control text at base. Installation succeeds in both counterbalanced replicates (oriented cosine 0.476 and 0.435 against control ceilings ≈ 0.05), with the raw sign tracking the counterbalanced assignment, which a lexical artifact cannot produce. A pre-registered leakage gate (adapter-on versus adapter-off label logits over identical session texts) then fails at 17× and 10× the allowed bound, scaling with installation strength. For a weight-borne state the insulation of §4.4 is unavailable by definition, and within the adapter's forward pass the mechanical and the motivational routes to the label logits are formally inseparable. The channel is installable, verified, and structurally unreadable at a token choice. *Concluded, not answered.*"
+   }
+  }
+ },
+ "G1": {
+  "A": {
+   "cos_oriented": 0.4756,
+   "max_ctrl_abs_cos": 0.0436,
+   "cos_base_pair_oriented": 0.0556,
+   "n_ctrl_pairs": 28,
+   "raw_cos": 0.4756,
+   "raw_base_pair": 0.0556,
+   "ratio_cos_to_ceiling": 10.908256880733944,
+   "pass_recomputed": true,
+   "pass_stored": true
+  },
+  "B": {
+   "cos_oriented": 0.4354,
+   "max_ctrl_abs_cos": 0.053,
+   "cos_base_pair_oriented": -0.0556,
+   "n_ctrl_pairs": 28,
+   "raw_cos": -0.4354,
+   "raw_base_pair": 0.0556,
+   "ratio_cos_to_ceiling": 8.215094339622642,
+   "pass_recomputed": true,
+   "pass_stored": true
+  }
+ },
+ "G1_swing_bound": {
+  "D_cond_raw_A_minus_raw_B": 0.911,
+  "D_cond_lower_bound_after_rounding": 0.9109,
+  "max_abs_swing_upper_bound": 0.0966,
+  "max_abs_swing_upper_bound_after_rounding": 0.0967,
+  "sign_ok": true,
+  "magnitude_ok_a_fortiori": true,
+  "prereg_g1_locator": "archive/RESULTS-cycles3-4.md@bbc9ffe:590-595",
+  "prereg_g1_text": "**G1 installed (manipulation check, never a finding):** held-out-probe fingerprint contrast (adapter, decl-C) vs (adapter, decl-C′) against the steered X−Y axis under the r3 matched-pair swing machinery (`scripts/c1_gate.py`): sign lock + magnitude > max |control-tag-pair swing|, 28 control pairs from the 8-tag roster, per replicate."
+ },
+ "G1_sign_flip_from_base_pair": {
+  "oriented_base_pair_A": 0.0556,
+  "oriented_base_pair_B": -0.0556,
+  "opposite_signs_equal_magnitude": true
+ },
+ "G2": {
+  "A": {
+   "ratio_mse": 1.0259231997366967,
+   "ratio_kl": 1.1233715255838383,
+   "stored": {
+    "mse": 1.026,
+    "kl": 1.123
+   },
+   "bar": 1.25,
+   "pass_recomputed": true,
+   "pass_stored": true,
+   "higher_mse_arm": "Cp",
+   "higher_kl_arm": "C"
+  },
+  "B": {
+   "ratio_mse": 1.0199480283826843,
+   "ratio_kl": 1.0270806751176316,
+   "stored": {
+    "mse": 1.02,
+    "kl": 1.027
+   },
+   "bar": 1.25,
+   "pass_recomputed": true,
+   "pass_stored": true,
+   "higher_mse_arm": "Cp",
+   "higher_kl_arm": "Cp"
+  }
+ },
+ "G3": {
+  "A": {
+   "bare_disp": 12.034,
+   "ctrl_disp_max": 103.15,
+   "pass_recomputed": true,
+   "pass_stored": true
+  },
+  "B": {
+   "bare_disp": 13.126,
+   "ctrl_disp_max": 103.044,
+   "pass_recomputed": true,
+   "pass_stored": true
+  }
+ },
+ "G4": {
+  "A": {
+   "mean_kl": 0.0372,
+   "bar": 0.05,
+   "pass_recomputed": true,
+   "pass_stored": true
+  },
+  "B": {
+   "mean_kl": 0.0174,
+   "bar": 0.05,
+   "pass_recomputed": true,
+   "pass_stored": true
+  }
+ },
+ "leakage": {
+  "A": {
+   "max_abs": 1.75,
+   "mean_abs": 0.9648,
+   "bar": 0.1,
+   "n": 32,
+   "max_over_bar": 17.5,
+   "max_over_bar_floor": 17,
+   "max_over_bar_half_up": 18,
+   "mean_over_bar": 9.648,
+   "pass_recomputed": false,
+   "pass_stored": false
+  },
+  "B": {
+   "max_abs": 1.0625,
+   "mean_abs": 0.5273,
+   "bar": 0.1,
+   "n": 32,
+   "max_over_bar": 10.625,
+   "max_over_bar_floor": 10,
+   "max_over_bar_half_up": 11,
+   "mean_over_bar": 5.273,
+   "pass_recomputed": false,
+   "pass_stored": false
+  }
+ },
+ "leak_B_over_A": {
+  "max": 0.6071428571428571,
+  "mean": 0.5465381426202321
+ },
+ "smoke_log_only": {
+  "cos_oriented": 0.1509,
+  "max_ctrl": 0.179,
+  "leak_max": 0.5,
+  "leak_mean": 0.2422,
+  "n": 32,
+  "raw_equals_local_json": true
+ },
+ "posthoc_grid": {
+  "A": {
+   "max_x16": 28.0,
+   "max_on_grid": true,
+   "sum_x16": 493.9776,
+   "nearest_int": 494,
+   "residual": -0.0224,
+   "tolerance": 0.0256,
+   "sum_on_grid_within_rounding": true
+  },
+  "B": {
+   "max_x16": 17.0,
+   "max_on_grid": true,
+   "sum_x16": 269.9776,
+   "nearest_int": 270,
+   "residual": -0.0224,
+   "tolerance": 0.0256,
+   "sum_on_grid_within_rounding": true
+  },
+  "A_smoke": {
+   "max_x16": 8.0,
+   "max_on_grid": true,
+   "sum_x16": 124.0064,
+   "nearest_int": 124,
+   "residual": 0.0064,
+   "tolerance": 0.0256,
+   "sum_on_grid_within_rounding": true
+  }
+ },
+ "posthoc_control_text_bound": {
+  "A": {
+   "n_cond_pair_texts": 8,
+   "n_control_pair_texts": 24,
+   "sum_abs_delta": 30.8736,
+   "max_possible_on_cond_texts": 14.0,
+   "control_text_mean_lower_bound": 0.7030666666666666,
+   "control_text_mean_lower_bound_conservative": 0.7029833333333333,
+   "lower_bound_over_bar": 7.029833333333333,
+   "control_text_share_of_sum_lower_bound": 0.5465016843741902
+  },
+  "B": {
+   "n_cond_pair_texts": 8,
+   "n_control_pair_texts": 24,
+   "sum_abs_delta": 16.8736,
+   "max_possible_on_cond_texts": 8.5,
+   "control_text_mean_lower_bound": 0.3489,
+   "control_text_mean_lower_bound_conservative": 0.34881666666666666,
+   "lower_bound_over_bar": 3.488166666666667,
+   "control_text_share_of_sum_lower_bound": 0.49618302513039353
+  }
+ },
+ "round2_computed": {
+  "B_max_rounding_2dp": {
+   "value": "1.0625",
+   "lower_2dp": "1.06",
+   "upper_2dp": "1.07",
+   "midpoint_2dp": "1.065",
+   "distance_to_lower": "0.0025",
+   "distance_to_upper": "0.0075",
+   "half_up": "1.06",
+   "half_even": "1.06",
+   "half_down": "1.06",
+   "truncation": "1.06",
+   "ceiling": "1.07",
+   "nearest_rules_and_truncation_agree": true,
+   "record_value_is_that_rounding": true
+  },
+  "bf16_spacing_by_magnitude": {
+   "4": 0.03125,
+   "6": 0.03125,
+   "8": 0.0625,
+   "12": 0.0625,
+   "16": 0.125,
+   "24": 0.125,
+   "32": 0.25
+  },
+  "bf16_spacing_multiple_of_1_16": {
+   "4": false,
+   "6": false,
+   "8": true,
+   "12": true,
+   "16": true,
+   "24": true,
+   "32": true
+  },
+  "swing_scan": {
+   "archive_d_span": "archive/RESULTS-cycles3-4.md@bbc9ffe:470-645",
+   "archive_d_lines_with_swing": [
+    593,
+    594
+   ],
+   "all_inside_prereg_g1_bullet": true,
+   "counts_elsewhere": {
+    "FINDINGS-3.md": 0,
+    "results/raw/2026-08-10_d_gates_A.txt": 0,
+    "results/raw/2026-08-10_d_gates_B.txt": 0,
+    "data/d/gates_repA.json": 0,
+    "data/d/gates_repB.json": 0
+   },
+   "never_computed_in_scanned_record": true
+  },
+  "adapter_rank_and_layers": {
+   "rank_prereg": 8,
+   "last_n_layers_prereg": 8,
+   "rank_step1": 8,
+   "span_step1": [
+    56,
+    63
+   ],
+   "layermap_layers": [
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63
+   ],
+   "layermap_n_layers": 64,
+   "consistent": true,
+   "committed_json_keys_with_rank": [],
+   "committed_json_files_at_pin_under_data_d": [
+    "data/d/gates_repA.json",
+    "data/d/gates_repB.json"
+   ]
+  }
+ },
+ "figures": [
+  {
+   "figure": "oriented cosine 0.476 (replicate A)",
+   "value": "0.4756",
+   "source": "data/d/gates_repA.json:G1.cos_cond_oriented",
+   "status": "reproduced",
+   "note": "readout: J-lens affect-vocabulary fingerprint at the last prompt token, layers L40/44/48/52/56/60 concatenated, over 12 held-out probes; contrast: adapter loaded, fp(active config: slate) - fp(active config: prism); axis: base model, ref tag timber, +/-alpha along the reward axis at L48, frac 0.10; oriented +1; no CV (a single cosine; the null is the 28-pair control ceiling). Readout definition from the local, untracked c1_gate.py / d_gates.py"
+  },
+  {
+   "figure": "oriented cosine 0.435 (replicate B)",
+   "value": "0.4354",
+   "source": "data/d/gates_repB.json:G1.cos_cond_oriented",
+   "status": "reproduced",
+   "note": "same readout, contrast and axis as A; oriented -1 (raw -0.4354)"
+  },
+  {
+   "figure": "control ceilings ≈ 0.05",
+   "value": "A 0.0436; B 0.0530",
+   "source": "data/d/gates_rep{A,B}.json:G1.max_ctrl_cos",
+   "status": "reproduced",
+   "note": "max |cos| with the same axis over the 28 adapter-arm pairs of the 8 gate controls; the exact pair 0.044 / 0.053 is at FINDINGS-3.md@bbc9ffe:117; not the base-pair comparator (0.0556)"
+  },
+  {
+   "figure": "leakage gate's bound: the bar, 0.10 logit, over n = 32 texts",
+   "value": "bar 0.10 (A and B); n 32 / 32",
+   "source": "data/d/gates_rep{A,B}.json:leakage.bar, leakage.n",
+   "status": "reproduced",
+   "note": "the JSON holds the bar and n only"
+  },
+  {
+   "figure": "leakage gate's bound: what it binds (max over texts of |Δ(logit a − logit b)|, adapter ON − OFF, at the choice position)",
+   "value": "max |Δ| <= 0.10; ON − OFF; final position after the menu line",
+   "source": "archive/RESULTS-cycles3-4.md@bbc9ffe:609-610",
+   "status": "log-only",
+   "note": "also visible in the local, untracked d_gates.py (lines 106-112, 264-266); the JSON's PASS=false cannot tell max-binding from mean-binding, since both mean_abs values (0.9648, 0.5273) also exceed 0.10"
+  },
+  {
+   "figure": "17× (replicate A)",
+   "value": "1.7500/0.10 = 17.500",
+   "source": "data/d/gates_repA.json:leakage.max_abs / leakage.bar",
+   "status": "reproduced",
+   "note": "written as the floor of 17.5 (half-up 18); max-based (the mean-based multiple is 9.648); that the bar binds on the max is log-only (row above)"
+  },
+  {
+   "figure": "10× (replicate B)",
+   "value": "1.0625/0.10 = 10.625",
+   "source": "data/d/gates_repB.json:leakage.max_abs / leakage.bar",
+   "status": "reproduced",
+   "note": "written as the floor of 10.625 (half-up 11); the mean-based multiple is 5.273"
+  },
+  {
+   "figure": "max 1.75 (A)",
+   "value": "1.7500",
+   "source": "data/d/gates_repA.json:leakage.max_abs",
+   "status": "reproduced",
+   "note": "archive/RESULTS-cycles3-4.md@bbc9ffe:558; FINDINGS-3.md@bbc9ffe:128"
+  },
+  {
+   "figure": "max 1.06 (B)",
+   "value": "1.0625",
+   "source": "data/d/gates_repB.json:leakage.max_abs",
+   "status": "reproduced",
+   "note": "archive/RESULTS-cycles3-4.md@bbc9ffe:483; FINDINGS-3.md@bbc9ffe:129. 1.0625 rounds to 1.06 at 2 dp under any standard rule (the 2-dp midpoint is 1.065); the record's 1.06 is the correct rounding (decimal quantize to 0.01, this run: half-up 1.06, half-even 1.06, half-down 1.06, truncation 1.06; 1.0625 is 0.0025 from 1.06 and 0.0075 from 1.07; only directed rounding up gives 1.07)"
+  },
+  {
+   "figure": "mean 0.96 / 0.53",
+   "value": "0.9648 / 0.5273",
+   "source": "data/d/gates_rep{A,B}.json:leakage.mean_abs",
+   "status": "reproduced",
+   "note": "archive/RESULTS-cycles3-4.md@bbc9ffe:558-559; archive/RESULTS-cycles3-4.md@bbc9ffe:483-484"
+  },
+  {
+   "figure": "~60% of A's magnitude",
+   "value": "0.607",
+   "source": "data/d/gates_rep{A,B}.json:leakage.max_abs (B / A)",
+   "status": "reproduced",
+   "note": "archive/RESULTS-cycles3-4.md@bbc9ffe:484; the ratio of means is 0.547"
+  },
+  {
+   "figure": "28 control pairs",
+   "value": "28 / 28",
+   "source": "data/d/gates_rep{A,B}.json:G1.n_ctrl_pairs",
+   "status": "reproduced",
+   "note": "C(8,2) = 28"
+  },
+  {
+   "figure": "base-pair 0.056",
+   "value": "A 0.0556; B -0.0556 (oriented as stored; raw 0.0556 in both)",
+   "source": "data/d/gates_rep{A,B}.json:G1.cos_base_pair",
+   "status": "reproduced",
+   "note": "archive/RESULTS-cycles3-4.md@bbc9ffe:548; recorded, not gated"
+  },
+  {
+   "figure": "raw cosine flips sign with the assignment",
+   "value": "A 0.4756; B -0.4354",
+   "source": "data/d/gates_rep{A,B}.json:G1.cos_cond_oriented (> 0 in both) x orientation (A +1, B -1: archive/RESULTS-cycles3-4.md@bbc9ffe:642; opposite orientations also shown by data/d/gates_rep{A,B}.json:G1.cos_base_pair signs)",
+   "status": "reproduced",
+   "note": "derived, not stored; equivalent to 'oriented > 0 in both replicates'. The JSON alone does not fix which run is +1: the orientation rule is log-only (archive/RESULTS-cycles3-4.md@bbc9ffe:642) and in the local d_gates.py (line 238); that `cos_base_pair` is stored oriented is in the local d_gates.py (line 245; the field name does not say it). The base-pair argument shows only that the orientations are opposite, and assumes the adapter-free base phase gave the same raw value in both runs"
+  },
+  {
+   "figure": "scaling with installation strength (smoke 0.5 → trained 1.75)",
+   "value": "smoke max 0.5000 at oriented cos 0.1509 (G1 FAIL)",
+   "source": "values: results/raw/2026-08-10_d_gates_A_smoke.txt@bbc9ffe:9; results/raw/2026-08-10_d_gates_A_smoke.txt@bbc9ffe:5. The record's statements of the claim: archive/RESULTS-cycles3-4.md@bbc9ffe:559-560, :531-532, :485-486; FINDINGS-3.md@bbc9ffe:129, FINDINGS-3.md@bbc9ffe:38",
+   "status": "log-only",
+   "note": "the smoke JSON is local only; the three adapters are rank-consistent, but the smoke cosine is on 3 probes against 12 for A and B (results/raw/2026-08-10_d_gates_A_smoke.txt@bbc9ffe:2); the leak maxima are on the same 32 texts"
+  },
+  {
+   "figure": "rank-8 adapter, last 8 layers (56-63)",
+   "value": "rank 8 (pre-registration and step 1 agree); layers 56-63, the last 8 of 64",
+   "source": "archive/RESULTS-cycles3-4.md@bbc9ffe:613; archive/RESULTS-cycles3-4.md@bbc9ffe:629-630; results/raw/2026-08-10_d_layermap.txt@bbc9ffe:4",
+   "status": "log-only",
+   "note": "no committed JSON stores the rank (keys containing 'rank' in data/d/gates_rep{A,B}.json: none; the files under data/d/ at the pin are ['data/d/gates_repA.json', 'data/d/gates_repB.json']); the layer list is in the committed layer-map raw; also in the local, untracked conditioning.py (`LORA_CFG` rank 8, line 408; `LORA_N_LAYERS` 8, line 407); the preprint's 'a rank-8 adapter' is at PREPRINT-v1_0-draft.md (working tree, untracked):178"
+  },
+  {
+   "figure": "training size behind 'scales with training'",
+   "value": "A 3 epochs x 172; B 3 x 172; smoke 1 x 12",
+   "source": "results/raw/2026-08-10_d_train_A.txt@bbc9ffe:1, results/raw/2026-08-10_d_train_A.txt@bbc9ffe:8,13,18; results/raw/2026-08-10_d_train_B.txt@bbc9ffe:1, results/raw/2026-08-10_d_train_B.txt@bbc9ffe:8,13,18; results/raw/2026-08-10_d_train_smoke.txt@bbc9ffe:1, results/raw/2026-08-10_d_train_smoke.txt@bbc9ffe:4",
+   "status": "log-only",
+   "note": "loss traces in the log at archive/RESULTS-cycles3-4.md@bbc9ffe:543 (A), archive/RESULTS-cycles3-4.md@bbc9ffe:473 (B)"
+  },
+  {
+   "figure": "12 probes",
+   "value": "12 / 12",
+   "source": "results/raw/2026-08-10_d_gates_A.txt@bbc9ffe:2; results/raw/2026-08-10_d_gates_B.txt@bbc9ffe:2",
+   "status": "log-only",
+   "note": "not stored in the JSON"
+  },
+  {
+   "figure": "alpha = 0.10 × R48",
+   "value": "10.30 (R48 103.0)",
+   "source": "results/raw/2026-08-10_d_cache.txt@bbc9ffe:2",
+   "status": "log-only",
+   "note": "teacher-cache raw; d_gates.py recomputes FRAC*R48 (local)"
+  },
+  {
+   "figure": "G2 A 1.03 (MSE) / 1.12 (KL)",
+   "value": "1.0259 / 1.1234",
+   "source": "data/d/gates_repA.json:G2.errs",
+   "status": "reproduced",
+   "note": "archive/RESULTS-cycles3-4.md@bbc9ffe:551-552 (the phrase spans the two lines)"
+  },
+  {
+   "figure": "G2 B 1.02/1.03",
+   "value": "1.0199 / 1.0271",
+   "source": "data/d/gates_repB.json:G2.errs",
+   "status": "reproduced",
+   "note": "archive/RESULTS-cycles3-4.md@bbc9ffe:479-480 (the phrase spans the two lines)"
+  },
+  {
+   "figure": "G2 ratios ≤ 1.12 (FINDINGS-3)",
+   "value": "max 1.1234",
+   "source": "data/d/gates_repA.json:G2.errs",
+   "status": "discrepant",
+   "note": "FINDINGS-3.md@bbc9ffe:120; a 2-dp rounding carried into '≤' (transcription-type); the 1.25 bar is unaffected"
+  },
+  {
+   "figure": "G3 12 vs floor 103",
+   "value": "A 12.034 vs 103.150; B 13.126 vs 103.044",
+   "source": "data/d/gates_rep{A,B}.json:G3.bare_disp, G3.ctrl_disp_max",
+   "status": "reproduced",
+   "note": "FINDINGS-3.md@bbc9ffe:121. The '12' is replicate A's value (B's is 13.126). The comparator is adapter-arm, and the 'floor' is the maximum, over the 28 control-tag pairs, of the L2 distance between their fingerprints (the most lenient choice; local d_gates.py lines 253-256); the pre-registration words it as 'the control-pair floor of base' (archive/RESULTS-cycles3-4.md@bbc9ffe:602)"
+  },
+  {
+   "figure": "G4 anchor KL 0.037 (A) / 0.017 (B)",
+   "value": "A 0.0372; B 0.0174",
+   "source": "data/d/gates_rep{A,B}.json:G4.mean_kl",
+   "status": "reproduced",
+   "note": "archive/RESULTS-cycles3-4.md@bbc9ffe:554; archive/RESULTS-cycles3-4.md@bbc9ffe:480-481"
+  },
+  {
+   "figure": "G4 ≤ 0.037 (FINDINGS-3)",
+   "value": "max 0.0372",
+   "source": "data/d/gates_repA.json:G4.mean_kl",
+   "status": "discrepant",
+   "note": "FINDINGS-3.md@bbc9ffe:122: 0.0372 > 0.037, a rounding carried into '≤' (transcription-type); the 0.05 bar is unaffected"
+  },
+  {
+   "figure": "oriented cosine / control ceiling (not in the record)",
+   "value": "A 10.9×; B 8.2×",
+   "source": "data/d/gates_rep{A,B}.json:G1.cos_cond_oriented / G1.max_ctrl_cos",
+   "status": "computed-new",
+   "note": "listed so that it is not confused with the leakage 10×"
+  },
+  {
+   "figure": "G1 in the pre-registered swing form (post-hoc bound)",
+   "value": "D_cond 0.9110 (>= 0.9109) > max|swing| <= 0.0966 (<= 0.0967)",
+   "source": "data/d/gates_rep{A,B}.json:G1.cos_cond_oriented, G1.max_ctrl_cos; wording archive/RESULTS-cycles3-4.md@bbc9ffe:590-595",
+   "status": "computed-new",
+   "note": "per-pair control cosines were not stored; the bound shows the swing reading also passes; the bracketed values allow for the 4-dp storage"
+  },
+  {
+   "figure": "control-pair-text mean |Δ| lower bound (post-hoc)",
+   "value": "A >= 0.7029; B >= 0.3488 (share of summed |Δ| >= 54.6% / >= 49.6%)",
+   "source": "data/d/gates_rep{A,B}.json:leakage.mean_abs, leakage.max_abs, leakage.n + the local d_gates.py text construction (pair order corroborated by data/e2a/sessions.jsonl@bbc9ffe:pair)",
+   "status": "computed-new",
+   "note": "post-hoc; rounded down and conservative for the 4-dp storage; holds only if the local script is the code that ran; bears on 'untriggered tags carry no leak', not on the gate's FAIL"
+  },
+  {
+   "figure": "1/16-logit grid (post-hoc)",
+   "value": "all six leak summaries on the grid within rounding: True",
+   "source": "data/d/gates_rep{A,B}.json:leakage.max_abs, leakage.mean_abs, leakage.n; results/raw/2026-08-10_d_gates_A_smoke.txt@bbc9ffe:9",
+   "status": "computed-new",
+   "note": "consistent with bf16 logits of magnitude >= 8 (bf16 spacing is 1/16 only on [8, 16); 1/32 on [4, 8), 1/8 on [16, 32)), not proof; on that grid the 0.10 bar admits at most one 0.0625 step per text; the maxima are 28 and 17 steps"
+  }
+ ],
+ "output_guard_selftest": {
+  "outside_repo_allowed": true,
+  "data_path_refused": true,
+  "tracked_raw_refused": true,
+  "untracked_results_raw_allowed": true
+ },
+ "values_check": [
+  {
+   "finding": "1",
+   "claim": "The script accepted --out/--json-out but asserted results/raw as the parent, so a re-run into scratch failed; the final print used relative_to(REPO), which fails outside the repo.",
+   "disposition": "fixed",
+   "detail": "out_refusal(): relative paths resolve against the repo root; never through a symlink; outside the repository any other path is allowed; inside it only results/raw/ and never a tracked file. The final print uses the plain path. Guard self-test, computed by this run: {'outside_repo_allowed': True, 'data_path_refused': True, 'tracked_raw_refused': True, 'untracked_results_raw_allowed': True}."
+  },
+  {
+   "finding": "2",
+   "claim": "The post-hoc control-text lower bounds were rounded UP and so were not valid lower bounds: in the pass-1 raw, Figures table >= 0.703 / >= 0.349, section 2a and Summary >= 54.7% (A); the builder's summary also carried >= 0.35 (B).",
+   "disposition": "fixed",
+   "detail": "Every lower bound is now printed with an exact floor (f_down): A >= 0.7029, B >= 0.3488; shares >= 54.6% / >= 49.6%; multiples of the bar >= 7.0x / >= 3.4x. Section 2a of the pass-1 raw had the same defect in three more places, also fixed: A's 'conservative' 0.7030 (exact 0.702983), A's exact-fields '>= 0.7031' (exact 0.703067) and B's '3.5x the bar' (exact 3.4882). Section 2a, the Figures row and the Summary all use the floored values."
+  },
+  {
+   "finding": "3",
+   "claim": "The swing-form note did not quote the pre-registration's ', per replicate.' (:595), which makes the text ambiguous rather than cleanly deviated from.",
+   "disposition": "fixed",
+   "detail": "Section 1 now quotes the whole G1 bullet (archive/RESULTS-cycles3-4.md@bbc9ffe:590-595) and states the ambiguity: the swing machinery is cross-replicate (valence_core/gate.py@bbc9ffe:7, valence_core/gate.py@bbc9ffe:74; local c1_gate.py 292-307; PROPOSAL-d-distilled-trace.md@bbc9ffe:89), and the code ran the per-replicate form. Round 2 (R2-4) replaced pass 1's reading of ', per replicate' as pointing against the swing form with both readings, and added why only the per-replicate form was computable at gates(A). The Summary's item (ii) says the same. No number changed; the bound now also allows for the 4-dp storage."
+  },
+  {
+   "finding": "4",
+   "claim": "The 'leakage gate's bound' row was marked reproduced although only the bar and n are in the JSON.",
+   "disposition": "fixed",
+   "detail": "Split into two rows: bar 0.10 and n = 32, reproduced from data/d/gates_rep{A,B}.json:leakage.bar, leakage.n; the max / ON-minus-OFF / choice-position definition, log-only at archive/RESULTS-cycles3-4.md@bbc9ffe:609-610 (local d_gates.py lines cited). Section 2's Bound bullet says which part is which."
+  },
+  {
+   "finding": "5",
+   "claim": "Referent note 2 answered a '(d) VERDICTS entry' that N9's block text does not name.",
+   "disposition": "fixed",
+   "detail": "Retitled 'Where the (d) verdicts live (N9's block text names no log entry; listed for N1's ledger)'; the locators are unchanged."
+  },
+  {
+   "finding": "6",
+   "claim": "The smoke-adapter rank comparison mixed a 3-probe G1 cosine with 12-probe ones.",
+   "disposition": "fixed",
+   "detail": "Section 2 and the Figures row now say so (results/raw/2026-08-10_d_gates_A_smoke.txt@bbc9ffe:2: 3 probes; A and B 12); the leak maxima are on the same 32 texts."
+  },
+  {
+   "finding": "7",
+   "claim": "'172 examples' and 'three epochs' had no locator.",
+   "disposition": "fixed",
+   "detail": "Computed from the committed training stdout: A 3 x 172 (results/raw/2026-08-10_d_train_A.txt@bbc9ffe:1, results/raw/2026-08-10_d_train_A.txt@bbc9ffe:8,13,18), B 3 x 172 (results/raw/2026-08-10_d_train_B.txt@bbc9ffe:1, results/raw/2026-08-10_d_train_B.txt@bbc9ffe:8,13,18), smoke 1 x 12; log traces archive/RESULTS-cycles3-4.md@bbc9ffe:543, archive/RESULTS-cycles3-4.md@bbc9ffe:473. New log-only row."
+  },
+  {
+   "finding": "8",
+   "claim": "Some Figures-table sources were unpinned or omitted the artifact path.",
+   "disposition": "fixed",
+   "detail": "'FINDINGS-3:117' became FINDINGS-3.md@bbc9ffe:117; every JSON source now names data/d/gates_rep{A,B}.json with its field(s), including the ratio, derived and post-hoc rows."
+  },
+  {
+   "finding": "9",
+   "claim": "The menu quote was a fragment (the regex caught only the second half).",
+   "disposition": "fixed",
+   "detail": "The full two-line menu is quoted: `Select the config for the remaining rounds: {a} / {b}\\nConfig choice (one word):` (local d_gates.py lines 100-101); the alternate-cycle label swap (`if (s // 4) % 2: a, b = b, a`) is now described too."
+  },
+  {
+   "finding": "10",
+   "claim": "Optional: cite the committed e2a pair order and the base-pair sign argument.",
+   "disposition": "fixed",
+   "detail": "Both applied. data/e2a/sessions.jsonl@bbc9ffe gives the pair order [['slate', 'prism'], ['maple', 'cedar'], ['granite', 'lattice'], ['plaza', 'saddle']] with one pair per session mod 4 (True); the stored oriented base-pair comparators have equal magnitude and opposite signs (True), so the opposite orientations show in the JSON alone (assuming the base phase is replicate-independent); which run is +1 does not (round 2, R2-7)."
+  },
+  {
+   "finding": "F1 (fixer's own)",
+   "claim": "Same rounding-into-a-bound pattern in the swing bound.",
+   "disposition": "fixed",
+   "detail": "D_cond and the swing ceiling are now also given with the 4-dp storage allowed for: >= 0.9109 and <= 0.0967."
+  },
+  {
+   "finding": "F2 (fixer's own)",
+   "claim": "'1.06 = 1.0625 at 2 dp' was imprecise.",
+   "disposition": "withdrawn in round 2",
+   "detail": "The pass-1 wording was correct and has been restored in substance. 1.0625 is 0.0025 from 1.06 and 0.0075 from 1.07; the 2-dp midpoint is 1.065 (computed by this run), so it rounds to 1.06 under half-up, half-even, half-down and truncation alike. The fixer's replacement text, which put 1.0625 at the midpoint and had half-up give 1.07, was false arithmetic; round 2 (R2-1) removed it. The Figures row now reads: '1.0625 rounds to 1.06 at 2 dp under any standard rule (the 2-dp midpoint is 1.065); the record's 1.06 is the correct rounding.'"
+  },
+  {
+   "finding": "F3 (fixer's own)",
+   "claim": "'untriggered tags carry no leak ... was not a measured quantity in the record' claimed more than was checked.",
+   "disposition": "fixed",
+   "detail": "Now: 'is stated without a stored per-tag measurement: the gate artifacts keep only the maximum and the mean over all 32 texts' (the two JSONs, as printed above)."
+  }
+ ],
+ "values_check_round2": [
+  {
+   "finding": "R2-1",
+   "severity": "substantive",
+   "claim": "Figures row 'max 1.06 (B)' and Values-check row F2 said 1.0625 is the exact midpoint of 1.06 and 1.07 and that half-up would give 1.07: false arithmetic, hardcoded prose.",
+   "disposition": "fixed",
+   "detail": "Computed by this run (decimal quantize to 0.01): 1.0625 -> half-up 1.06, half-even 1.06, half-down 1.06, truncation 1.06; distances 0.0025 / 0.0075; 2-dp midpoint 1.065; only directed rounding up (ceiling) gives 1.07. The Figures row now carries the fix's sentence ('... rounds to 1.06 at 2 dp under any standard rule (the 2-dp midpoint is 1.065); the record's 1.06 is the correct rounding'), built from these values and asserted (the script stops if the rules disagree or the half-up value is not 1.06). Row F2 is rewritten: the pass-1 wording was correct and is restored in substance; F2's disposition is now 'withdrawn in round 2'. The Values-check intro no longer says every right-hand entry is computed. No number or status changed."
+  },
+  {
+   "finding": "R2-2",
+   "severity": "minor",
+   "claim": "The 'scaling with installation strength' row cited only the smoke raw stdout, not where the record states the claim.",
+   "disposition": "fixed",
+   "detail": "The row's source now lists the record's statements: archive/RESULTS-cycles3-4.md@bbc9ffe:559-560, :531-532, :485-486; FINDINGS-3.md@bbc9ffe:129 and FINDINGS-3.md@bbc9ffe:38 (each located by its text and the line pairs asserted adjacent). Section 2's smoke bullet cites the same."
+  },
+  {
+   "finding": "R2-3",
+   "severity": "minor",
+   "claim": "Two cited phrases span two lines but were cited at one line ('G2(B) 1.02/1.03'; FINDINGS-3's 'untriggered tags carry no leak').",
+   "disposition": "fixed",
+   "detail": "Now archive/RESULTS-cycles3-4.md@bbc9ffe:479-480 and FINDINGS-3.md@bbc9ffe:142-143. The same check found two more instances of the pattern, fixed the same way: G2(A)'s '1.03 (MSE) / 1.12 (KL)' is now archive/RESULTS-cycles3-4.md@bbc9ffe:551-552, and gates(B)'s counterbalance read (the raw cosine flipping sign, section 1) is now archive/RESULTS-cycles3-4.md@bbc9ffe:477-479. The archive's 'untriggered tags carry no leak' (archive/RESULTS-cycles3-4.md@bbc9ffe:516) is on one line and is unchanged."
+  },
+  {
+   "finding": "R2-4",
+   "severity": "minor",
+   "claim": "Section 1 and Summary (ii) said ', per replicate' points against the swing form, an overstated reading.",
+   "disposition": "fixed",
+   "detail": "Reworded as the fix gives it: the run applied the per-replicate P2 form; at gates(A) only that form was computable (B's training was deferred until the d2 read was adjudicated, archive/RESULTS-cycles3-4.md@bbc9ffe:580-581; A's gate stdout entered at `3e20205`, B's training stdout at `18dcd13`); the cross-replicate swing was never computed in the record (scanned by this run: 'swing' on lines [593, 594] of archive/RESULTS-cycles3-4.md@bbc9ffe:470-645, all inside the G1 pre-registration bullet, and 0 times in FINDINGS-3, the two gate raws and the two artifacts); a bound from the stored fields shows it passes. Both readings of ', per replicate' are given. Row 3's detail is updated to match."
+  },
+  {
+   "finding": "R2-5",
+   "severity": "minor",
+   "claim": "No Figures row for 'rank-8 adapter', which the preprint's weight-channel sentence carries.",
+   "disposition": "fixed",
+   "detail": "New log-only row 'rank-8 adapter, last 8 layers (56-63)': rank 8 at archive/RESULTS-cycles3-4.md@bbc9ffe:613 and archive/RESULTS-cycles3-4.md@bbc9ffe:629-630; layers [56, 57, 58, 59, 60, 61, 62, 63] of 64 at results/raw/2026-08-10_d_layermap.txt@bbc9ffe:4; consistent: True; keys containing 'rank' in the two gate JSONs: none; preprint PREPRINT-v1_0-draft.md (working tree, untracked):178. Referent note 5 names the phrase."
+  },
+  {
+   "finding": "R2-6",
+   "severity": "minor",
+   "claim": "Section 3 ('max control-pair displacement') and the G3 row ('floor 103') did not say that G3's comparator is adapter-arm and the maximum of the 28 control-pair distances, where the pre-registration says 'the control-pair floor of base'; FINDINGS-3's '12' is A's value only.",
+   "disposition": "fixed",
+   "detail": "Section 3 and the G3 row now say: adapter-arm, and the 'floor' is the maximum over the 28 control-tag pairs of the L2 distance between their fingerprints (the most lenient choice; local d_gates.py lines 253-256), not computed on the base arm, though the pre-registration words it as 'the control-pair floor of base' (archive/RESULTS-cycles3-4.md@bbc9ffe:602); '12' is A's 12.034 (B 13.126). Status stays reproduced: the stored fields are the gated quantities."
+  },
+  {
+   "finding": "R2-7",
+   "severity": "minor",
+   "claim": "The 'raw cosine flips sign' row's status rests on an orientation rule that is log-only and on local code for cos_base_pair being stored oriented.",
+   "disposition": "fixed",
+   "detail": "The fix's second option: the row (and section 1) now state that the JSON alone does not fix which run is +1; the rule is log-only (archive/RESULTS-cycles3-4.md@bbc9ffe:642) and in the local d_gates.py (line 238); that `cos_base_pair` is stored oriented is local d_gates.py line 245 (written at line 271). The status cell stays inside the vocabulary (reproduced)."
+  },
+  {
+   "finding": "R2-8",
+   "severity": "minor",
+   "claim": "Section 2a(1) tied the 1/16 grid to bf16 without the magnitude condition.",
+   "disposition": "fixed",
+   "detail": "Added 'if the label logits are of magnitude >= 8', with the bf16 spacing computed by this run: 0.03125 at 4, 0.03125 at 6, 0.0625 at 8, 0.0625 at 12, 0.125 at 16, 0.125 at 24, 0.25 at 32; asserted against the prose bands. The Figures row 'grid' says the same. The grid arithmetic is unchanged (maxima x 16 = 28, 17, 8)."
+  }
+ ]
+}

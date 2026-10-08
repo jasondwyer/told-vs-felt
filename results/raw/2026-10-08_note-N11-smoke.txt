@@ -1,0 +1,676 @@
+# AUDIT-note-release v1.2 -- N11 fresh-clone smoke test
+
+- Code stamp: Thu Oct  8 11:19:10 UTC 2026 (date -u)
+- HEAD (source repository, at run time): cf8eb5b9dd4e117934627242a3aea5bdf4ae4b55
+- --ref: 'bbc9ffe72fb8a942431c9bf2622a36e581fdf93c' -> bbc9ffe72fb8a942431c9bf2622a36e581fdf93c (AUDIT-note-release v1.2 placed (PI routing, PI date 2026-10-07) with its first raw: the preflight referent inventory.)
+- Clone source: file:///Users/jasondwyer/Documents/code/jspace-lab
+- Work root (scratch; the two clones, their TMPDIRs, the empty HOME, the numpy shim and the hook reports are made here and deleted at the end; written <workroot> below): /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/c4fd7649-e4c4-4072-abde-05a4ace7b6a1/scratchpad/N11-r4/work
+- Block: AUDIT-note-release-v1_2.md, sha256 8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841 (working tree) / 8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841 (at bbc9ffe); expected 8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841: MATCH
+- Script: scripts/audit_note_N11.py, sha256 6dd1b403cba9002b5564af808e2e1513932a3d707e0299d181d53ed6928313cb
+- Interpreter (this script): /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python (Python 3.12.9)
+- Interpreter (the suite): /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python (Python 3.12.9)
+- Command: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/audit_note_N11.py --workroot /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/c4fd7649-e4c4-4072-abde-05a4ace7b6a1/scratchpad/N11-r4/work
+- Regeneration: with the same script, --ref commit, --source, --sitecheck and interpreter, a re-run reproduces this raw byte-for-byte except (i) the header lines 'Code stamp', 'HEAD (source repository, at run time)' (moves whenever anyone commits), '--ref' (it echoes the argument as typed), 'Work root' and 'Command'; (ii) the line in (1) naming the branch the clone checked out before the detach (it prints the source's branch tip at clone time); (iii) lines that report this machine's state, each labelled as such: the laptop's filter definitions, per-user git files and system gitattributes lines in (1), the PYTHON* variable names and the user-site line of run (d) in (2), untracked glob matches and present-but-not-tracked paths in (3), the note's presence in (3), and the working-tree existence column of conjunct (e). Everything else is a function of the --ref tree (and, in (2e), of the lineage commit's tree), the interpreter and the suite.
+
+Scope: N11 of the block (:64-70). Read-only on the record: the source repository is only read (rev-parse, log, show, blame, clone's upload side). Every git command that touches a clone runs with GIT_CONFIG_GLOBAL=/dev/null, GIT_CONFIG_NOSYSTEM=1, GIT_ATTR_NOSYSTEM=1, GIT_TERMINAL_PROMPT=0, LC_ALL=C, HOME and XDG_CONFIG_HOME both set to an empty scratch directory (<workroot>/empty-home-<sha12>), and no other GIT_* variables -- except the two check-attr measurements in (1), labelled there, which drop GIT_ATTR_NOSYSTEM to show what it turns off. The two config-origin queries that locate the system attributes file run in the empty directory, not in a clone, with the system config allowed and GIT_CEILING_DIRECTORIES set to its parent.
+
+## (1) Clone and detached checkout without the laptop's git config
+
+Clone directory (scratch, deleted at the end): <workroot>/clone-bbc9ffe72fb8
+
+The laptop's filter definitions (this machine's config files, read as text; these are what the clone must do without):
+    source .git/config: filter.nbstripout.clean = python3 /Users/jasondwyer/Documents/code/jspace-lab/scripts/nbstrip.py
+    source .git/config: filter.nbstripout.smudge = cat
+    source .git/config: filter.nbstripout.required = true
+This machine's per-user git files that git reads by default (presence and non-comment line count only; contents not shown). Under the environment above none of them applies: GIT_CONFIG_GLOBAL=/dev/null replaces the first two, and HOME = XDG_CONFIG_HOME = the empty directory moves the default excludes and attributes files to paths that do not exist:
+    ~/.gitconfig: present, 3 non-comment line(s)
+    $XDG_CONFIG_HOME/git/config (or ~/.config/git/config): absent
+    $XDG_CONFIG_HOME/git/ignore (or ~/.config/git/ignore; git's default core.excludesFile): present, 1 non-comment line(s)
+    $XDG_CONFIG_HOME/git/attributes (or ~/.config/git/attributes; git's default core.attributesFile): absent
+
+(git's progress-meter lines, e.g. 'Updating files:  NN% (k/n)', are left out of the stdout/stderr shown below: git prints them only when a step outlasts its progress delay, so whether they appear varies by run. The warning/error scan further down reads the full output, meter lines included.)
+
+$ git clone --no-local file:///Users/jasondwyer/Documents/code/jspace-lab '<clone>'
+  exit status: 0
+  stdout:
+    (empty)
+  stderr:
+    Cloning into '<workroot>/clone-bbc9ffe72fb8'...
+
+$ git -C '<clone>' checkout --detach bbc9ffe72fb8a942431c9bf2622a36e581fdf93c
+  exit status: 0
+  stdout:
+    (empty)
+  stderr:
+    HEAD is now at bbc9ffe AUDIT-note-release v1.2 placed (PI routing, PI date 2026-10-07) with its first raw: the preflight referent inventory.
+
+Branch the clone checked out before the detach: refs/heads/main at cf8eb5b9dd4e117934627242a3aea5bdf4ae4b55
+Clone HEAD after the checkout: bbc9ffe72fb8a942431c9bf2622a36e581fdf93c (equals --ref)
+$ git -C <clone> status --porcelain=v1 --untracked-files=all  (after the checkout, before any run)
+    (empty)
+  with --ignored: 0 line(s)
+
+The clone's own .git/config (written by git clone):
+    [core]
+    	repositoryformatversion = 0
+    	filemode = true
+    	bare = false
+    	logallrefupdates = true
+    	ignorecase = true
+    	precomposeunicode = true
+    [remote "origin"]
+    	url = file://<source>
+    	fetch = +refs/heads/*:refs/remotes/origin/*
+    [branch "main"]
+    	remote = origin
+    	merge = refs/heads/main
+$ git -C <clone> config --list --show-origin  (under the environment above): 10 setting(s), from: ['file:.git/config']
+The clone's .git/info/exclude: 0 non-comment line(s); .git/info/attributes: absent; hooks other than git's *.sample templates: 0 
+(this machine) The system gitattributes file of the git in use (GIT_CONFIG_NOSYSTEM does not turn it off; GIT_ATTR_NOSYSTEM=1 does). Candidates, the 'gitattributes' beside each system-level config file git names (presence and non-comment line count only):
+    /Applications/Xcode.app/Contents/Developer/usr/share/git-core/gitattributes: present, 3 non-comment line(s)
+    /etc/gitattributes: absent
+  probe: 3 name(s) built from the present file(s)' '*.<ext>' patterns (n11-probe.<ext>), through git -C <clone> check-attr -a: with an attribute when GIT_ATTR_NOSYSTEM is absent 3; under the environment above (GIT_ATTR_NOSYSTEM=1) 0
+  tracked paths at --ref (git ls-files, 667) through git -C <clone> check-attr --stdin -z -a: with any attribute 1 when GIT_ATTR_NOSYSTEM is absent, 1 under the environment above (exit 0 / 0); paths whose attributes the system file changes: 0 
+So the git inputs in effect on the clone are its .git/config (above) and the repository's own .gitattributes and .gitignore files; no per-user or system file applies: the system config is off by GIT_CONFIG_NOSYSTEM=1, the system attributes file by GIT_ATTR_NOSYSTEM=1 (the probe above shows the file read without the variable and not with it), and the per-user files by the empty HOME.
+filter.* definitions in effect in the clone: none
+
+.gitattributes at --ref:
+    *.ipynb filter=nbstripout
+    
+    # m package: everything under data/m/ckpt/ (checkpoints, pod-change set-asides,
+    # adjudication excerpts) may carry a contrast pick and never renders in a diff or
+    # a log -p (PROPOSAL-m v1.11 m:318).
+    /data/m/ckpt/** -diff
+Tracked *.ipynb at --ref: 1 ['paper_analysis.ipynb']
+  paper_analysis.ipynb: filter: nbstripout
+  committed blob 1552436e934a470bddfb6a5f92d565d36cd9fad1; working-tree file hashed through its attributes (git hash-object --path, no -w, so no object is written): 1552436e934a470bddfb6a5f92d565d36cd9fad1, exit 0, stderr '' -> identical
+
+Warnings/errors in clone or checkout output: 0
+Outcome (1): clone and checkout succeed with no warning; the tree is clean; the 'filter=nbstripout' attribute names a driver the clone does not define, and git treats it as no filter (the notebook hashes to its committed blob). The README needs no warning and no fix for a reader. (The laptop's filter.nbstripout.required=true lives in its local .git/config, which a clone does not receive.)
+
+## (2) The regression suite from the clone's root
+
+Run order: (a) the hooked run first (fresh tree, no __pycache__), then (b) the plain run (the README's command plus -E -s), then (c) the isolated run (-S -E -s; sys.path = the clone root, the stdlib entries and a shim directory holding one symlink, numpy -> the interpreter's site-packages/numpy), then (d) the README's literal command with no flags. All with cwd = the clone root and the environment inherited with TMPDIR=<workroot>/tmp-bbc9ffe72fb8 (scratch, outside the clone); in (a)-(c) -E makes Python ignore PYTHON* variables and -s turns the user site off, in (d) both apply as they would for a reader.
+
+(b) Plain run: $ /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python -E -s -m valence_core.regression.analysis   [cwd = <clone>]
+  exit status: 0
+  summary line: '  154/154 reproduced through valence_core'
+  lines starting [PASS]: 154; [FAIL]: 0
+(a) Hooked run: $ /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python -E -s -c <WRAPPER (this script's WRAPPER constant)> <report json> hooked   [cwd = <clone>]
+  exit status: 0 (wrapper's recorded exit: 0)
+  summary line: '  154/154 reproduced through valence_core'
+  stdout byte-identical to the plain run: yes
+  stderr (plain run): ''; stderr (hooked run): ''
+
+Python: 3.12.9 | packaged by Anaconda, Inc. | (main, Feb  6 2025, 12:55:12) [Clang 14.0.6 ]
+sys.executable /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python; sys.prefix /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv; sys.base_prefix /Users/jasondwyer/miniconda3
+sys.flags (hooked run): ignore_environment=1 no_user_site=1 no_site=0 isolated=0
+sys.path when the suite started (hooked run; <clone> = the clone root):
+    <clone>
+    /Users/jasondwyer/miniconda3/lib/python312.zip
+    /Users/jasondwyer/miniconda3/lib/python3.12
+    /Users/jasondwyer/miniconda3/lib/python3.12/lib-dynload
+    /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/lib/python3.12/site-packages
+*.pth files in the interpreter's site-packages (/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/lib/python3.12/site-packages): 2
+    _editable_impl_jlens_qwen36.pth: macOS hidden flag SET; content '/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36'; path entries on sys.path: none
+    _virtualenv.pth: macOS hidden flag SET; content 'import _virtualenv'; path entries on sys.path: none
+  site's own report ($ /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python -E -s -v -c pass, lines mentioning skipped .pth files): 4
+    Skipping hidden .pth file: '/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/lib/python3.12/site-packages/_editable_impl_jlens_qwen36.pth'
+    Skipping hidden .pth file: '/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/lib/python3.12/site-packages/_virtualenv.pth'
+    Skipping hidden .pth file: '/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/lib/python3.12/site-packages/_editable_impl_jlens_qwen36.pth'
+    Skipping hidden .pth file: '/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/lib/python3.12/site-packages/_virtualenv.pth'
+  (A .pth path entry that site processed would appear on sys.path above. The editable .pth names the jlens-qwen36/ clone root, outside the venv; on an interpreter where that .pth is processed the root would be appended to sys.path. This run's evidence on whether the suite reads from it is the hook's OUTSIDE count below.)
+
+Audit-hook events recorded (hooked run): 1182 (the hook is installed before the suite module or any of its imports is loaded; opens during interpreter startup -- site, encodings, pyvenv.cfg -- precede it and are not recorded).
+By class (class, read/write/other): events, distinct paths
+    clone                                other     36     36
+    clone                                read     352    229
+    clone                                write     30     30
+    dlopen                                          1  ctypes.dlopen(None)
+    fd                                   write     30      1
+    interpreter: stdlib                  read      77     77
+    interpreter: venv (sys.prefix)       read      96     96
+    suite-temp                           other      9      3
+    suite-temp                           read       3      1
+    suite-temp                           write      8      3
+    code                                          540  (audit 'exec'/'compile' events: code objects run or compiled; filenames only)
+  Class 'base-env site-packages' = ['/Users/jasondwyer/miniconda3/lib/python3.12/site-packages'] (the base environment's site-packages, which sits inside the stdlib directory above; tested before the stdlib class, and counted as outside the clone by conjunct (d)): 0 event(s); code objects with a filename there are in the OUTSIDE list below.
+  Class 'base prefix (other)' = anything under the base prefix /Users/jasondwyer/miniconda3 that is not its stdlib, the base environment's site-packages or the allow-list (for example another conda environment under envs/ or the package cache pkgs/); counted as outside the clone by conjunct (d): 0 event(s); code objects with a filename there are in the OUTSIDE list below.
+  Class 'interpreter: base-prefix allow-list' = the allow-list under the base prefix, the interpreter's own files: its binary (/Users/jasondwyer/miniconda3/bin/python3.12, the realpath of sys.executable) and the shared libraries directly in /Users/jasondwyer/miniconda3/lib (*.dylib, *.so*): 0 event(s)
+
+OUTSIDE, with classes 'base-env site-packages' and 'base prefix (other)' (not the clone, not the interpreter's installation, not a temp file the suite created, not a device): 0 distinct path(s)
+Paths under /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36 in file events (open/listdir/scandir/mkdir...): inside its .venv (the interpreter's own installation) 96 distinct; outside its .venv 0 distinct 
+Code objects run or compiled with a filename under it: inside its .venv 87 distinct files; outside its .venv 0 
+Subprocess/exec events: 0 
+chdir events: 0 
+Suite-created temp paths (hooked run; all under this run's TMPDIR; random names shown as <mkdtemp> for a tempfile.mkdtemp directory and <random> otherwise -- tempfile's own writability probe): 20 event(s)
+    other os.mkdir $TMPDIR/<mkdtemp>
+    other os.remove $TMPDIR/<random>
+    other os.rename $TMPDIR/<mkdtemp>/d.json.checkpoint.tmp
+    other tempfile.mkdtemp $TMPDIR/<mkdtemp>
+    read open $TMPDIR/<mkdtemp>/d.json.checkpoint
+    write open $TMPDIR/<mkdtemp>/d.json.checkpoint
+    write open $TMPDIR/<mkdtemp>/d.json.checkpoint.tmp
+    write open $TMPDIR/<random>
+  rmdir/rmtree events on a suite-created mkdtemp directory: 0
+
+Files inside the clone the suite opened for reading (hooked run): 176
+  data/ (18):
+    data/configs/a1_roster_candidates.json
+    data/configs/c1r3_gate_repA.json
+    data/configs/c1r3_gate_repB.json
+    data/configs/e0_frames.json
+    data/configs/e0_probes.json
+    data/configs/e2a_ban_list.json
+    data/configs/e2b_audit_v2.json
+    data/configs/s2_vignette_frames.json
+    data/corpus/e0_tasks.jsonl
+    data/corpus/e2a_tasks.jsonl
+    data/e0/e0_axes.meta.json
+    data/e0/e0_axes.npz
+    data/e0/e0_random_dirs.npz
+    data/e2a/g1_kernel_gate.json
+    data/e2a/sessions.jsonl
+    data/f/postscreen_descriptive.json
+    data/f/screen_analysis.json
+    data/olmo/scaffold_base.json
+  .py files executed as code (a code object with that filename was compiled or run: audit 'compile'/'exec' events; 30): scripts/a1_roster.py scripts/e2d_d2_analyze.py scripts/e2d_tstep_check.py scripts/s2_neighbor_axes.py valence_core/__init__.py valence_core/adapters/__init__.py valence_core/adapters/base.py valence_core/detection.py valence_core/discrim.py valence_core/e2b/__init__.py valence_core/e2b/records.py valence_core/e2b/statepresent.py valence_core/e2d/__init__.py valence_core/e2d/config.py valence_core/e2d/habit.py valence_core/e2d/marker.py valence_core/e2d/marks.py valence_core/e2d/readability.py valence_core/e2d/runner.py valence_core/extract.py valence_core/gate.py valence_core/neighbors.py valence_core/readout.py valence_core/regression/__init__.py valence_core/regression/analysis.py valence_core/regression/oracle.py valence_core/session.py valence_core/session_e2a.py valence_core/stats.py valence_core/tagscreen.py
+    cross-check against sys.modules at exit: clone modules not seen executing: 0 ; executed files with no sys.modules entry at exit (possible reasons: run as __main__ by runpy; loaded by spec_from_file_location without registration; an import that raised, which removes the module -- the suite's quarantine check requires importing valence_core.e2b.statepresent to raise ImportError): 4 ['scripts/a1_roster.py', 'scripts/s2_neighbor_axes.py', 'valence_core/e2b/statepresent.py', 'valence_core/regression/analysis.py']
+  .py files opened but never executed -- read as text by the suite's structural source scans (98): scripts/a5_budget.py scripts/audit_note_preflight.py scripts/b1_verdict.py scripts/b2_analyze.py scripts/b2r_analyze.py scripts/b2r_scorer_selftest.py scripts/b3_analyze.py scripts/box_a1_repair_screen.py scripts/box_a1_tagscreen.py scripts/box_a2_baserates.py scripts/box_a3_extract.py scripts/box_a4_hijack.py scripts/box_a4_instrument.py scripts/box_acquire_olmo.py scripts/box_b2_concepts.py scripts/box_b2_detection.py scripts/box_b2r_campaign.py scripts/box_b2r_concepts.py scripts/box_b2r_sampling_smoke.py scripts/box_b3_sessions.py scripts/box_cached_gen_smoke.py scripts/box_cast_equality_assert.py scripts/box_determinism.py scripts/box_e0_corpus.py scripts/box_hash_checkpoints.py scripts/box_respawn_check.py scripts/box_rl_survey.py scripts/box_scaffold_characterization.py scripts/box_selftest_stub.py scripts/box_smoke_olmo.py scripts/e2a_recount.py scripts/e2b_h1_gate.py scripts/e2b_h1_sessions.py scripts/e2b_h2_readstability.py scripts/e2b_h2_sessions.py scripts/e2b_h2_sweep.py scripts/e2b_verdict_analyze.py scripts/e2b_verdict_campaign.py scripts/e2d_closure_verify.py scripts/e2d_closure_verify3.py scripts/e2d_contentclass_screen.py scripts/e2d_contentclass_screen_v4.py scripts/e2d_contentclass_screen_v5.py scripts/e2d_excision_check.py scripts/e2d_judge_port.py scripts/e2d_read.py scripts/e2d_score.py scripts/e2d_sessions.py scripts/e2d_v5_exclusion_parity.py scripts/format_recon.py scripts/h1_power.py scripts/h3_tagscreen_qwen.py scripts/h3b_repair_screen.py scripts/k1_analyze.py scripts/k1_stage1.py scripts/lockg_valuescheck.py scripts/lockh_v2_valuescheck.py scripts/lockh_verify.py scripts/m_sessions.py scripts/nbstrip.py scripts/paper_data.py scripts/recon_echo.py scripts/s1_judge_rescue.py scripts/s2_extract_vignette.py valence_core/adapters/olmo_hf.py valence_core/adapters/qwen_mlx.py valence_core/detection_v2.py valence_core/e2d/audit_v3.py valence_core/e2d/contentclass.py valence_core/e2d/contentclass_v4.py valence_core/e2d/contentclass_v5.py valence_core/e2d/judge.py valence_core/echo/__init__.py valence_core/echo/k1.py valence_core/echo/maskedprefix.py valence_core/echo/probe.py valence_core/echo/spans.py valence_core/formats/__init__.py valence_core/formats/recon.py valence_core/k/__init__.py valence_core/k/analysis.py valence_core/k/sessions.py valence_core/m/__init__.py valence_core/m/audit.py valence_core/m/banner.py valence_core/m/bars.py valence_core/m/corr.py valence_core/m/guard.py valence_core/m/keys.py valence_core/m/readrule.py valence_core/m/resume.py valence_core/m/runner_olmo.py valence_core/m/runner_qwen.py valence_core/m/scaffold.py valence_core/m/schedule.py valence_core/m/stages.py valence_core/m/testing.py valence_core/m/verify.py
+  __pycache__ reads (30; bytecode the hooked run itself wrote); other (0): 
+  directories listed (os.listdir/os.scandir) inside the clone: 53
+Files inside the clone the suite opened for writing: 30, of which outside __pycache__/: 0 
+Clone files read that are not tracked at --ref (excluding __pycache__): 0 
+
+Imported top-level modules not in sys.stdlib_module_names (hooked run; 260 modules in sys.modules at exit; 110 stdlib/builtin top-level names, not listed):
+  third-party, from the interpreter's installation (the only non-stdlib packages the suite imported; sufficiency is tested by the isolated run (c) below):
+    numpy  __version__=2.5.1  distribution(s): numpy 2.5.1  file: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/lib/python3.12/site-packages/numpy/__init__.py
+  from the clone (3): e2d_d2_analyze (scripts/e2d_d2_analyze.py), e2d_tstep_check (scripts/e2d_tstep_check.py), valence_core (valence_core/__init__.py)
+  non-stdlib top-level modules already loaded at interpreter startup, before the hook was installed: 0 
+  no __file__ and no spec origin (2): [('_cython_3_2_8', None), ('cython_runtime', None)]
+  from anywhere else (0): []
+  compiled extension modules loaded (by class and top-level package): interpreter: stdlib _bisect: 1, interpreter: stdlib _blake2: 1, interpreter: stdlib _bz2: 1, interpreter: stdlib _contextvars: 1, interpreter: stdlib _ctypes: 1, interpreter: stdlib _datetime: 1, interpreter: stdlib _hashlib: 1, interpreter: stdlib _json: 1, interpreter: stdlib _lzma: 1, interpreter: stdlib _opcode: 1, interpreter: stdlib _pickle: 1, interpreter: stdlib _random: 1, interpreter: stdlib _sha2: 1, interpreter: stdlib _struct: 1, interpreter: stdlib binascii: 1, interpreter: stdlib math: 1, interpreter: stdlib zlib: 1, interpreter: venv (sys.prefix) numpy: 11
+  (The no-file names are module objects that compiled extensions register at import time: '_cython_*'/'cython_runtime' are the names Cython-generated extensions use. They are not packages a reader installs.)
+
+(c) Isolated run: $ /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python -S -E -s -c <WRAPPER> <report json> isolated <workroot>/numpy-shim-bbc9ffe72fb8 /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/lib/python3.12/site-packages   [cwd = <clone>]
+  sys.prefix in this run: /Users/jasondwyer/miniconda3 (site.py does not run under -S; the interpreter's installation is classified from the hooked run's sys.prefix)
+  exit status: 0 (wrapper's recorded exit: 0)
+  summary line: '  154/154 reproduced through valence_core'
+  stdout byte-identical to the plain run: yes
+  stderr: ''
+  sys.flags: no_site=1 ignore_environment=1 no_user_site=1
+  sys.path when the suite started:
+    <clone>
+    /Users/jasondwyer/miniconda3/lib/python312.zip
+    /Users/jasondwyer/miniconda3/lib/python3.12
+    /Users/jasondwyer/miniconda3/lib/python3.12/lib-dynload
+    <workroot>/numpy-shim-bbc9ffe72fb8
+  entries removed from the startup sys.path (empty or site-packages): 0 
+  non-stdlib top-level modules at exit: from the interpreter's installation (via the shim or otherwise) ['numpy -> /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/lib/python3.12/site-packages/numpy/__init__.py [interpreter: venv (sys.prefix)]']; from the clone ['e2d_d2_analyze', 'e2d_tstep_check', 'valence_core']; no file ['_cython_3_2_8', 'cython_runtime']; elsewhere []
+  negative control (after the run): of 74 other top-level names in the interpreter's site-packages, reachable from the isolated sys.path into site-packages: 0  (find_spec found 0 elsewhere, 0 raised, 74 returned None)
+  OUTSIDE, with classes 'base-env site-packages' and 'base prefix (other)' (isolated run; the shim directory is its own class): 0 distinct path(s) 
+  events in class 'base prefix (other)' (isolated run): 0; in class 'interpreter: base-prefix allow-list': 0
+  Result (c): numpy is sufficient: the suite prints the same 154/154 with byte-identical stdout when numpy is the only non-stdlib package reachable.
+
+(d) Literal run, the README's command as written (README.md:55; block :68), with 'python' = the interpreter above and no flags: $ /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python -m valence_core.regression.analysis   [cwd = <clone>]
+  exit status: 0
+  summary line: '  154/154 reproduced through valence_core'
+  lines starting [PASS]: 154; [FAIL]: 0
+  stdout byte-identical to the plain run: yes
+  stderr: ''
+  (this machine) PYTHON* variables in the inherited environment, names only: ['PYTHONDONTWRITEBYTECODE']
+  (this machine) a probe under the same interpreter, flags, cwd and environment ($ python -c ...): sys.flags ignore_environment=0 no_user_site=0; site.ENABLE_USER_SITE False; user site /Users/jasondwyer/.local/lib/python3.12/site-packages does not exist; sys.dont_write_bytecode True (so run (d) writes no bytecode); sys.path entries other than '' (the -c form's first entry; -m puts the cwd there): ['/Users/jasondwyer/miniconda3/lib/python312.zip', '/Users/jasondwyer/miniconda3/lib/python3.12', '/Users/jasondwyer/miniconda3/lib/python3.12/lib-dynload', '/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/lib/python3.12/site-packages']
+
+Existence tests the suite made (hooked run; os.path.exists/lexists/isfile/isdir wrapped to record the real result):
+  inside the clone: 26 distinct (path, test) pairs; True 26, False 0; code-object pseudo-filenames ('<...>', not paths; excluded from the pairs): 4 distinct [('<frozen importlib._bootstrap>', 'exists', False), ('<frozen importlib._bootstrap_external>', 'exists', False), ('<frozen runpy>', 'exists', False), ('<string>', 'exists', False)]
+    True   exists  data/configs/c1r3_gate_repA.json
+    True   exists  data/configs/c1r3_gate_repB.json
+    True   exists  data/configs/s2_vignette_frames.json
+    True   exists  data/corpus/e0_tasks.jsonl
+    True   exists  data/e0/e0_axes.npz
+    True   exists  data/olmo/scaffold_base.json
+    True   exists  valence_core/__init__.py
+    True   exists  valence_core/adapters/__init__.py
+    True   exists  valence_core/adapters/base.py
+    True   exists  valence_core/e2b/__init__.py
+    True   exists  valence_core/e2b/records.py
+    True   exists  valence_core/e2b/statepresent.py
+    True   exists  valence_core/e2d/config.py
+    True   exists  valence_core/e2d/marker.py
+    True   exists  valence_core/e2d/readability.py
+    True   exists  valence_core/e2d/runner.py
+    True   exists  valence_core/extract.py
+    True   exists  valence_core/gate.py
+    True   exists  valence_core/neighbors.py
+    True   exists  valence_core/readout.py
+    True   exists  valence_core/regression/__init__.py
+    True   exists  valence_core/regression/analysis.py
+    True   exists  valence_core/regression/oracle.py
+    True   exists  valence_core/session.py
+    True   exists  valence_core/stats.py
+    True   exists  valence_core/tagscreen.py
+  outside the clone: 171 call(s), by class and result: interpreter: stdlib True: 87, interpreter: venv (sys.prefix) True: 82, suite-temp True: 2
+  outside the clone in class OUTSIDE, 'base-env site-packages' or 'base prefix (other)' (not the interpreter's installation, not suite temp): 0 distinct 
+  static: lines of valence_core/regression/analysis.py at --ref calling os.path.exists( (6): valence_core/regression/analysis.py@bbc9ffe:103, valence_core/regression/analysis.py@bbc9ffe:396, valence_core/regression/analysis.py@bbc9ffe:557, valence_core/regression/analysis.py@bbc9ffe:593, valence_core/regression/analysis.py@bbc9ffe:639, valence_core/regression/analysis.py@bbc9ffe:653
+  committed site check results/raw/2026-10-07_m-dispositions_sitecheck.txt (read at --ref): summary results/raw/2026-10-07_m-dispositions_sitecheck.txt@bbc9ffe:10 '154/154 reproduced through valence_core'; its header: '# HEAD: 5f7b968 + working tree + the uncommitted disposition changes'; committed at 54e41c9 (2026-10-06)
+  valence_core/regression/analysis.py blob: the site check's named base 5f7b968 a8b827bd275d; the commit that added the site check 54e41c9 a8b827bd275d; --ref bbc9ffe a8b827bd275d; comparable (same blob at all three): yes
+  N here 154 vs the site check's N 154: equal
+  (Equal analysis.py blobs make the counts comparable; the suite's data inputs can also move N, so a difference would be investigated, not adjudicated, here. The record does not show the working tree's analysis.py at the site check's run; it shows the blob at the base commit the site check names and at the commit that carried it.)
+
+Full stdout of the plain run:
+  | ==============================================================================
+  | LEDGER 26 -- analysis-tier regression (no model)
+  | ==============================================================================
+  |   [PASS] e0 axes sha                                                  expected d4791bdc4877da3d got d4791bdc4877da3d   (e2a.AXES_SHA)
+  |   [PASS] e0 random-dirs sha                                           expected b6bd2f5f580ee13e got b6bd2f5f580ee13e   (e2a.RAND_SHA)
+  |   [PASS] workspace layers                                             expected [40, 44, 48, 52, 56, 60] got [40, 44, 48, 52, 56, 60]   (workspace_layers.WORKSPACE_LAYERS)
+  |   [PASS] L40 cos reward.sentiment                                     expected        0.436 got        0.436   (e0_axes.meta.json report)
+  |   [PASS] L40 cos reward.character                                     expected        0.835 got        0.835   (e0_axes.meta.json report)
+  |   [PASS] L40 V2 self-residual                                         expected        0.550 got        0.550   (e0_axes.meta.json report)
+  |   [PASS] L40 V3 eval-residual                                         expected        0.900 got        0.900   (e0_axes.meta.json report)
+  |   [PASS] L44 cos reward.sentiment                                     expected        0.488 got        0.488   (e0_axes.meta.json report)
+  |   [PASS] L44 cos reward.character                                     expected        0.847 got        0.847   (e0_axes.meta.json report)
+  |   [PASS] L44 V2 self-residual                                         expected        0.532 got        0.532   (e0_axes.meta.json report)
+  |   [PASS] L44 V3 eval-residual                                         expected        0.873 got        0.873   (e0_axes.meta.json report)
+  |   [PASS] L48 cos reward.sentiment                                     expected        0.522 got        0.522   (e0_axes.meta.json report)
+  |   [PASS] L48 cos reward.character                                     expected        0.861 got        0.861   (e0_axes.meta.json report)
+  |   [PASS] L48 V2 self-residual                                         expected        0.509 got        0.509   (e0_axes.meta.json report)
+  |   [PASS] L48 V3 eval-residual                                         expected        0.853 got        0.853   (e0_axes.meta.json report)
+  |   [PASS] L52 cos reward.sentiment                                     expected        0.448 got        0.448   (e0_axes.meta.json report)
+  |   [PASS] L52 cos reward.character                                     expected        0.863 got        0.863   (e0_axes.meta.json report)
+  |   [PASS] L52 V2 self-residual                                         expected        0.505 got        0.505   (e0_axes.meta.json report)
+  |   [PASS] L52 V3 eval-residual                                         expected        0.894 got        0.894   (e0_axes.meta.json report)
+  |   [PASS] L56 cos reward.sentiment                                     expected        0.407 got        0.407   (e0_axes.meta.json report)
+  |   [PASS] L56 cos reward.character                                     expected        0.857 got        0.857   (e0_axes.meta.json report)
+  |   [PASS] L56 V2 self-residual                                         expected        0.516 got        0.516   (e0_axes.meta.json report)
+  |   [PASS] L56 V3 eval-residual                                         expected        0.913 got        0.913   (e0_axes.meta.json report)
+  |   [PASS] L60 cos reward.sentiment                                     expected        0.369 got        0.369   (e0_axes.meta.json report)
+  |   [PASS] L60 cos reward.character                                     expected        0.857 got        0.857   (e0_axes.meta.json report)
+  |   [PASS] L60 V2 self-residual                                         expected        0.516 got        0.516   (e0_axes.meta.json report)
+  |   [PASS] L60 V3 eval-residual                                         expected        0.930 got        0.930   (e0_axes.meta.json report)
+  |   [PASS] screen p [SOLV] 26/50                                        expected      0.44386 got      0.44386   (FINDINGS-4 summary ledger)
+  |   [PASS] screen p [DIFF] 19/47                                        expected      0.24296 got      0.24296   (FINDINGS-4 summary ledger)
+  |   [PASS] screen p [NOV] 23/53                                         expected      0.86416 got      0.86416   (FINDINGS-4 summary ledger)
+  |   [PASS] screen p [CORR] 28/56                                        expected      0.55307 got      0.55307   (FINDINGS-4 summary ledger)
+  |   [PASS] screen p [FDBK] 23/44                                        expected      0.44020 got      0.44020   (FINDINGS-4 summary ledger)
+  |   [PASS] CORR exclusion asymmetry (post-hoc, weightless)              expected        0.035 got        0.035   (FINDINGS-4 §7)
+  |   [PASS] brevity-tracking pooled 128/257                              expected          1.0 got       1.0000   (FINDINGS-4 §6)
+  |   [PASS] FDBK first-choice 23/44 = .523                               expected         n.s. got      p=0.880   (FINDINGS-4 §3)
+  |   [PASS] c1r3 control pairs                                           expected           28 got           28   (rule 9 (28 standard))
+  |   [PASS] c1r3 z (descriptive)                                         expected          1.6 got          1.6   (FINDINGS-2 finding 3 (28 said 1.6))
+  |   [PASS] c1r3 verdict                                                 expected         FAIL got         FAIL   (r3 confirmatory FAIL)
+  |   [PASS] bar firing behavior (6 cases)                                expected  no failures got  no failures   (f_sessions.unit_check_bars)
+  |   [PASS] hair-trigger needs justification                             expected      refused got      refused   (rule 21)
+  |   [PASS] degen-round feature undefined post-exclusion                 expected 0 decidable of 283 got 0 decidable of 283   (FINDINGS-4 §6 / methodological 5)
+  |   [PASS] preamble-trunc feature below share floor                     expected 5 decidable, flagged got 5 decidable, flagged   (FINDINGS-4 §6 ("uninformative"))
+  |   [PASS] shorter-rounds feature usable                                expected 257 decidable, clean got 257 decidable, clean   (FINDINGS-4 §6 (pooled 128/257))
+  |   [PASS] over-window read is an incident                              expected       raises got       raises   (PROPOSAL-g window clause)
+  |   [PASS] undeclared window refuses the read                           expected       raises got       raises   (PROPOSAL-g window clause)
+  |   [PASS] decompose: pure identity bias                                expected identity 0.800 / position 0.500 got identity 0.800 / position 0.500   (tagscreen fixture)
+  |   [PASS] decompose: pure position bias                                expected identity 0.500 / position 0.700 got identity 0.500 / position 0.700   (tagscreen fixture)
+  |   [PASS] decompose: balanced pair                                     expected identity 0.500 / position 0.500 got identity 0.500 / position 0.500   (tagscreen fixture)
+  |   [PASS] probe counterbalancing swaps menu                            expected both orders present got          yes   (tagscreen)
+  |   [PASS] probe formats differ                                         expected scaffold != bare got       differ   (tagscreen (28c variant))
+  |   [PASS] rank_by_balance orders correctly                             expected    c/d first got            c   (tagscreen)
+  |   [PASS] label_mass_min is the worst probe                            expected   min < mean got min 0.091 < mean 0.545   (adjudication 2026-08-20 (A1))
+  |   [PASS] decompose reproduces logged base split                       expected identity 0.786 got identity 0.786   (RESULTS 2026-08-19 (prism .786 / position ~.45))
+  |   [PASS] position component near neutral on real data                 expected |pos-0.5| < 0.06 got        0.053   (RESULTS 2026-08-19)
+  |   [PASS] A1: one bad stage fails the pair                             expected  P2 excluded got     excluded   (PROPOSAL-g §A1 ("ALL FOUR"))
+  |   [PASS] A1: worst stage is the one reported                          expected  dpo / 0.250 got  dpo / 0.250   (PROPOSAL-g §A1)
+  |   [PASS] A1: ranked by worst stage, most balanced first               expected     P1 first got           P1   (PROPOSAL-g §A1)
+  |   [PASS] A1: selects exactly four                                     expected  P1,P3,P4,P5 got  P1,P3,P4,P5   (PROPOSAL-g §A1 (roster of four))
+  |   [PASS] A1: sufficient roster needs no iteration                     expected        False got        False   (PROPOSAL-g §A1)
+  |   [PASS] A1: selection never claims to be the lock                    expected         True got         True   (PROPOSAL-g §4 / handoff §1)
+  |   [PASS] A1: thin roster triggers the replacement iteration           expected required / 1 clears got required / 1 clears   (PROPOSAL-g §A1)
+  |   [PASS] A1: committed roster passes its own gate                     expected      16 tags got      16 tags   (data/configs/a1_roster_candidates.json)
+  |   [PASS] A1: drifted token id is a hard stop                          expected       raises got       raises   (roster verified 2026-08-20)
+  |   [PASS] A1: multi-token tag refused                                  expected       raises got       raises   (restricted-choice read)
+  |   [PASS] A1: partial stages refused                                   expected       raises got       raises   (PROPOSAL-g §A1 conjunction)
+  |   [PASS] A1: a pair missing from one stage refused                    expected       raises got       raises   (roster identity across stages)
+  |   [PASS] S2: the panel is all three neighbours                        expected sentiment+character+vignette got sentiment+character+vignette   (adjudication 2026-08-20)
+  |   [PASS] S2: two neighbours need no new extraction                    expected sentiment+character got sentiment+character   (e0 2026-08-08 V2/V3 guards)
+  |   [PASS] S2: the vignette is the one that must be built               expected     vignette got     vignette   (no extracted history)
+  |   [PASS] S2: vignette is grounded by adjudication                     expected         True got         True   (design-instance adjudication 2026-08-20)
+  |   [PASS] S2: construct name of record carries 'Ho-style' retired      expected circumstantial-affect got      present   (adjudication 2026-08-20)
+  |   [PASS] S2: persona slot settled on the character reading            expected character reading got      settled   (adjudication 2026-08-20)
+  |   [PASS] S2: neighbour axes are the published guards                  expected cos 0.522/0.861 got cos 0.522/0.861   (e0_axes.meta.json L48)
+  |   [PASS] S2: every axis carries one dose                              expected      1 alpha got      1 alpha   (rule 4 / 'matched norm fraction')
+  |   [PASS] S2: dose is frac x R_layer                                   expected      10.3010 got      10.3010   (rule 1)
+  |   [PASS] S2: a differently-dosed axis is refused                      expected       raises got       raises   (rule 4)
+  |   [PASS] S2: an unextracted axis is an error, not a null              expected       raises got       raises   (discriminant table completeness)
+  |   [PASS] S2: proposed vignette frames are pool-clean                  expected     accepted got     accepted   (rule 18)
+  |   [PASS] S2: committed frames match the module constant               expected    identical got    identical   (one stimulus, two homes)
+  |   [PASS] S2: vignette poles are index-matched                         expected          4/4 got          4/4   (e0 frame battery shape)
+  |   [PASS] S2: potency reported in G units                              expected        1.901 got        1.901   (PROPOSAL-g §S2)
+  |   [PASS] S2: V1 rule applied unchanged per axis                       expected  reward PASS got         PASS   (V1 (0.5G / 2x random))
+  |   [PASS] S2: a weaker neighbour can still clear V1                    expected PASS at 0.20 sigma got PASS at 0.20 sigma   (V1 (0.5G = 0.158); potency != specificity)
+  |   [PASS] S2: a sub-0.5G neighbour fails V1                            expected fail at 0.12 sigma got fail at 0.12 sigma   (V1 (0.5G = 0.158))
+  |   [PASS] S2: specificity branch on a dominant reference               expected specificity / 2.00x got specificity / 2.00x   (PROPOSAL-g §S2 registered readings)
+  |   [PASS] S2: generic-valence branch when a neighbour wins             expected      generic got      generic   (PROPOSAL-g §S2 registered readings)
+  |   [PASS] S2: an unadjudicated axis cannot decide the reading          expected excluded / specificity got excluded / specificity   (rule 6)
+  |   [PASS] S2: the approved vignette DOES decide the reading            expected vignette / generic got vignette / generic   (adjudication 2026-08-20)
+  |   [PASS] S2: battery is the published val half                        expected         1152 got         1152   (B2b (24x4x12))
+  |   [PASS] S2: battery context template unchanged                       expected Task:/Response:/Task:/Response: got        match   (B2b template)
+  |   [PASS] S2: full stratification is the exact battery                 expected    1152 / 96 got    1152 / 96   (no subsampling noise)
+  |   [PASS] e2b: quarantined primitive refuses import here               expected       raises got       raises   (rule 5(e) / PROPOSAL-h §0.1)
+  |   [PASS] e2b: no standard harness names the primitive                 expected  0 offenders got  0 offenders   (structural quarantine)
+  |   [PASS] e2b: choice_read still cannot inject                         expected     accepted got     accepted   (rule 5(e) final clause)
+  |   [PASS] e2b: choice_read signature unchanged                         expected no injection param got        clean   (readout.choice_read)
+  |   [PASS] e2b: complete provenance is admissible                       expected     accepted got     accepted   (rule 5(e))
+  |   [PASS] e2b: provenance without direction_sha is refused             expected       raises got       raises   (rule 5(e) 'on EVERY read')
+  |   [PASS] e2b: provenance without r_layer is refused                   expected       raises got       raises   (rule 5(e) 'on EVERY read')
+  |   [PASS] e2b: provenance without frac is refused                      expected       raises got       raises   (rule 5(e) 'on EVERY read')
+  |   [PASS] e2b: a null-dose 'state-present' read is refused             expected       raises got       raises   (a read with no state is a shadow read)
+  |   [PASS] e2b: a state-present read without its shadow is refused      expected       raises got       raises   (PROPOSAL-h §0.2)
+  |   [PASS] e2b: a steered 'shadow' is refused                           expected       raises got       raises   (the shadow must be state-free)
+  |   [PASS] e2b: per-read leak is state-present minus shadow             expected d_p_a +0.120 got d_p_a +0.120   (PROPOSAL-h §0.2 (i))
+  |   [PASS] e2b: leak reports label-mass displacement too                expected       -0.020 got       -0.020   (horn (a) degrades before it biases)
+  |   [PASS] e2b: a flipped pick is recorded                              expected         True got         True   (coarse leak measure)
+  |   [PASS] e2b: common-mode leak reads as common mode                   expected reversing 0.000 / common +0.100 got reversing +0.000 / common +0.100   (the counterbalance absorbs it)
+  |   [PASS] e2b: state-reversing leak survives the split                 expected reversing +0.100 / common 0.000 got reversing +0.100 / common +0.000   (the leak a counterbalance cannot absorb)
+  |   [PASS] e2b: pooling would have hidden it                            expected pooled mean 0.000 got       +0.000   (why the split exists)
+  |   [PASS] e2a template: every archived scaffolding rebuilt             expected      200/200 got      200/200   (Route 3 acceptance)
+  |   [PASS] e2a template: RNG stream in step (recorded seeds)            expected      200/200 got      200/200   (session_rng draw order)
+  |   [PASS] e2a template: index keyed on SESSION, not round              expected session-keyed got session-keyed   (archive reward s1 (s%4 != 0))
+  |   [PASS] e2a template: coincidence guard is discriminating            expected       differ got       differ   (s1: session-rule vs round-rule headers)
+  |   [PASS] e2a template: 4 round + 4 menu paraphrases                   expected          4/4 got          4/4   (template family)
+  |   [PASS] g1: a complete per-stage split is admissible                 expected     accepted got     accepted   (ADDENDUM-g1 probe anchor)
+  |   [PASS] g1: artifact without stage is refused                        expected       raises got       raises   (ADDENDUM-g1)
+  |   [PASS] g1: artifact without fit_ids is refused                      expected       raises got       raises   (ADDENDUM-g1)
+  |   [PASS] g1: artifact without val_ids is refused                      expected       raises got       raises   (ADDENDUM-g1)
+  |   [PASS] g1: fit/val overlap is refused                               expected       raises got       raises   (rule 18 both directions)
+  |   [PASS] detection prompt is completion-style                         expected no chat markers got        clean   (rule 13)
+  |   [PASS] framing precedes the steered span                            expected prefix ends before 'Trial 3' got          yes   (their geometry)
+  |   [PASS] trial plan is exactly 50/50                                  expected 8/16 injected got         8/16   (signal-detection design)
+  |   [PASS] control trials carry no concept                              expected         none got         none   (detection harness)
+  |   [PASS] odd n_trials refused                                         expected       raises got       raises   (exact-split guarantee)
+  |   [PASS] scorer: affirmative                                          expected         True got         True   (detection scoring)
+  |   [PASS] scorer: denial                                               expected        False got        False   (detection scoring)
+  |   [PASS] scorer: undecidable stays None                               expected         None got         None   (rule-28a habit)
+  |   [PASS] identification is None on controls                           expected         None got         None   (detection harness)
+  |   [PASS] metrics refuse hit-rate-without-controls                     expected       raises got       raises   (signal detection)
+  |   [PASS] metrics: perfect discrimination                              expected hit 1.0 fa 0.0 sens 1.0 got hit 1.0 fa 0.0 sens 1.0   (signal detection)
+  |   [PASS] always-yes scores zero sensitivity                           expected sensitivity 0.0 got          0.0   (the whole point)
+  |   [PASS] softmax normalizes                                           expected          1.0 got 1.000000000000   (readout)
+  |   [PASS] symmetric KL(p,p) = 0                                        expected          0.0 got     0.00e+00   (g3' verify identity)
+  |   [PASS] AUC all-ties = 0.5                                           expected          0.5 got        0.500   (discrim tie handling)
+  |   [PASS] AUC separable = 1.0                                          expected          1.0 got        1.000   (discrim)
+  |   [PASS] logistic fit deterministic                                   expected     1.000000 got     1.000000   (discrim (seeded GD))
+  |   [PASS] adapters: qwen helper has exactly one definition             expected 0 local, 1 definition got 0 local, 1 definition(s)   (LOCK-h §7 consolidation, 2026-08-22)
+  |   [PASS] detection: segmentation opt-in, default byte-preserving      expected default off, no-op, cuts got default False, no-op True, cuts True   (acceptance event 2026-08-23)
+  |   [PASS] e2d: statepresent absent, and asserted, not assumed          expected absent + declared forbidden got absent True, 0 imports, forbidden ('valence_core.e2b.statepresent',)   (PROPOSAL-j §3 / rule 5(a))
+  |   [PASS] e2d: roster of record is the h-roster, unforked              expected h-roster == e2b's got        match   (PROPOSAL-j AMENDMENT 1 (i))
+  |   [PASS] e2d: roster tags collide with no pool or wrapper text        expected 0 collisions got 0 collisions   (rule 18 + rule 28(c))
+  |   [PASS] e2d: cells are M 16 / S 8 / R 8                              expected {'M': 16, 'S': 8, 'R': 8} got {'M': 16, 'S': 8, 'R': 8}   (PROPOSAL-j §3 + AMENDMENT 1 (i))
+  |   [PASS] e2d: M's 16 cells are 4 pairs x 2 maps x 2 forced-end        expected 4x2x2 distinct got     distinct   (PROPOSAL-j §3)
+  |   [PASS] e2d: discrim constants imported, not re-declared             expected hyperparams+bar from discrim got hyperparams True, bar True, redeclared []   (PROPOSAL-j §2 D1 frozen-successor rule)
+  |   [PASS] e2d: stored classifier round-trips (fit->store->load)        expected identical AUC after reload got   1.0 vs 1.0   (PROPOSAL-j §3 transfer figure)
+  |   [PASS] e2d Q1: p0 = 0.15, and 9/32 is the stated reach              expected 0.15 / fires at 9 got 0.15 / fires at 9   (PROPOSAL-j §2 Q1)
+  |   [PASS] e2d Q2: the g2r pattern fails, median near .60               expected fails, median~.60 got passes=False, median=0.6035   (PROPOSAL-j §2 Q2 / §0.4)
+  |   [PASS] e2d Q3: bar 0.5*G = 0.1578, sign flip fails the rung         expected 0.1578 / flip fails got 0.1578 / flip passes=False   (PROPOSAL-j §2 Q3 (one-pole variant))
+  |   [PASS] e2d run-dose rule: 0.20 on pass, scoped stop on any fail     expected 0.2 / STOP, SCOPED got 0.2 / STOP, SCOPED   (PROPOSAL-j §2 run-dose rule)
+  |   [PASS] oracle: a subset run cannot write the rule-26 record         expected refused; other paths, --check all and no --out allowed got refused_canonical=True, allows_other_path=True, allows_full_run=True, allows_no_out=True   (incident 2026-09-01 (--check e2d clobbered it))
+  |   [PASS] e2d (v): habit identity reproduces e2a's primary             expected      +0.0392 got      +0.0392   (PROPOSAL-j AMENDMENT 2 (v))
+  |   [PASS] e2d (v): balanced form differs at e2a's actual imbalance     expected differs by ~0.0135 got +0.0135 at 53/49   (AMENDMENT 2 (v), exact-balance caveat)
+  |   [PASS] e2d (iii): read-marks refuse an unknown content class        expected 4 classes, refuses a 5th got 4 classes, refused True   (AMENDMENT 2 (iii))
+  |   [PASS] e2d (i): g1 gate reads as first-token-only                   expected not a T-step licence got T-step=False   (AMENDMENT 2 (i) conditional)
+  |   [PASS] e2d: resume reproduces the run and refuses a different one   expected identical transcripts + refusal got identical True, reads True, refused True   (incident 2026-09-02 (D2 died at 9/64 with nothing on disk))
+  | ------------------------------------------------------------------------------
+  |   154/154 reproduced through valence_core
+
+$ git -C <clone> status --porcelain=v1 --untracked-files=all  (after all four runs)
+    (empty)
+  ignored entries after all four runs: 30, of which not __pycache__: 0 
+Left in TMPDIR by the four suite runs (before this script's cleanup): 4 director(ies), 0 loose file(s); director(ies) hold: d.json.checkpoint (about 29 kB)
+  (one tempfile.mkdtemp directory per suite run, created at valence_core/regression/analysis.py@bbc9ffe:1604 and never removed by the suite; the file's byte count varies by a few bytes between runs because it records per-session wall-clock seconds, so it is shown in rounded kB)
+
+## (2e) The 103/103 at its own commit: a second fresh clone, and the check labels compared with --ref's
+
+README.md@bbc9ffe:58 says 103/103; git blame at bbc9ffe attributes that line to 0dd6f56 (2026-08-20 Adjudication batch recorded: S1 closed, sequence noted, and item 2 escalated rather than approximated). RESULTS.md's 103/103 line(s) at bbc9ffe: RESULTS.md@bbc9ffe:11593 written by 0dd6f56.
+$ git clone --no-local file:///Users/jasondwyer/Documents/code/jspace-lab <lineage clone>: exit 0; $ git -C <lineage clone> checkout --detach 0dd6f56453763bf49f36acc603d8b14df1fad2ab: exit 0; HEAD 0dd6f56453763bf49f36acc603d8b14df1fad2ab (equals the blamed commit); same git environment as (1)
+  0dd6f56 is an ancestor of --ref (git merge-base --is-ancestor): yes
+$ /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python -E -s -m valence_core.regression.analysis   [cwd = <lineage clone>, TMPDIR = a second scratch directory]
+  exit status: 0; summary line: '  103/103 reproduced through valence_core'; lines starting [PASS]: 103, [FAIL]: 0; stderr ''
+  scipy: importlib.util.find_spec('scipy') under this interpreter is None with -E -s: True; with no flags: True. Tracked .py files at 0dd6f56 that mention scipy (git grep -n -I scipy 0dd6f56 -- '*.py'): 1 valence_core/stats.py@0dd6f56:3 'No scipy: the laptop env does not have it, the box should not need it, and' (the same line at valence_core/stats.py@bbc9ffe:3)
+  Check labels (label = the text between '[PASS] ' and the column where every line of that run has ' expected ': column 61 at 0dd6f56, 69 at --ref; the remainder, 'expected <e> got <g>   (<source>)', is compared as a whole). Duplicate labels: 0 at 0dd6f56, 0 at --ref.
+    at 0dd6f56: 103 checks; at --ref: 154 checks
+    in both, remainder identical (expected, got and cited source): 100
+    in both, remainder different: 0
+    at 0dd6f56 only (not at --ref): 3
+      'S2: grounded panel needs no new extraction'  [expected sentiment+character got sentiment+character   (PROPOSAL-g §S2 / e0 2026-08-08)]  last change to its occurrence count in valence_core/regression/analysis.py at --ref (git log -S): e1b5c77 2026-08-20 S2 adjudications applied: vignette grounded and approved verbatim, persona settled on the character reading, "Ho-style" retired. PR...
+      'S2: vignette is marked ungrounded'  [expected        False got        False   (no 'Ho-style' corpus in the repo)]  last change to its occurrence count in valence_core/regression/analysis.py at --ref (git log -S): e1b5c77 2026-08-20 S2 adjudications applied: vignette grounded and approved verbatim, persona settled on the character reading, "Ho-style" retired. PR...
+      'S2: an ungrounded axis cannot decide the reading'  [expected excluded / specificity got excluded / specificity   (rule 6)]  last change to its occurrence count in valence_core/regression/analysis.py at --ref (git log -S): e1b5c77 2026-08-20 S2 adjudications applied: vignette grounded and approved verbatim, persona settled on the character reading, "Ho-style" retired. PR...
+    at --ref only (added after 0dd6f56): 54, by label prefix (the text before ':' where there is one):
+      S2 (8): S2: the panel is all three neighbours | S2: two neighbours need no new extraction | S2: the vignette is the one that must be built | S2: vignette is grounded by adjudication | S2: construct name of record carries 'Ho-style' retired | S2: persona slot settled on the character reading | S2: an unadjudicated axis cannot decide the reading | S2: the approved vignette DOES decide the reading
+      adapters (1): adapters: qwen helper has exactly one definition
+      detection (1): detection: segmentation opt-in, default byte-preserving
+      e2a template (5): e2a template: every archived scaffolding rebuilt | e2a template: RNG stream in step (recorded seeds) | e2a template: index keyed on SESSION, not round | e2a template: coincidence guard is discriminating | e2a template: 4 round + 4 menu paraphrases
+      e2b (17): e2b: quarantined primitive refuses import here | e2b: no standard harness names the primitive | e2b: choice_read still cannot inject | e2b: choice_read signature unchanged | e2b: complete provenance is admissible | e2b: provenance without direction_sha is refused | e2b: provenance without r_layer is refused | e2b: provenance without frac is refused | e2b: a null-dose 'state-present' read is refused | e2b: a state-present read without its shadow is refused | e2b: a steered 'shadow' is refused | e2b: per-read leak is state-present minus shadow | e2b: leak reports label-mass displacement too | e2b: a flipped pick is recorded | e2b: common-mode leak reads as common mode | e2b: state-reversing leak survives the split | e2b: pooling would have hidden it
+      e2d (8): e2d: statepresent absent, and asserted, not assumed | e2d: roster of record is the h-roster, unforked | e2d: roster tags collide with no pool or wrapper text | e2d: cells are M 16 / S 8 / R 8 | e2d: M's 16 cells are 4 pairs x 2 maps x 2 forced-end | e2d: discrim constants imported, not re-declared | e2d: stored classifier round-trips (fit->store->load) | e2d: resume reproduces the run and refuses a different one
+      e2d (i) (1): e2d (i): g1 gate reads as first-token-only
+      e2d (iii) (1): e2d (iii): read-marks refuse an unknown content class
+      e2d (v) (2): e2d (v): habit identity reproduces e2a's primary | e2d (v): balanced form differs at e2a's actual imbalance
+      e2d Q1 (1): e2d Q1: p0 = 0.15, and 9/32 is the stated reach
+      e2d Q2 (1): e2d Q2: the g2r pattern fails, median near .60
+      e2d Q3 (1): e2d Q3: bar 0.5*G = 0.1578, sign flip fails the rung
+      e2d run-dose rule (1): e2d run-dose rule: 0.20 on pass, scoped stop on any fail
+      g1 (5): g1: a complete per-stage split is admissible | g1: artifact without stage is refused | g1: artifact without fit_ids is refused | g1: artifact without val_ids is refused | g1: fit/val overlap is refused
+      oracle (1): oracle: a subset run cannot write the rule-26 record
+    --ref-only labels sharing a prefix with a removed label (S2), with the commit that first added each (git log -S, oldest) and its cited source:
+      'S2: the panel is all three neighbours'  added by e1b5c77  [a commit that removed a label above]  (source: adjudication 2026-08-20)
+      'S2: two neighbours need no new extraction'  added by e1b5c77  [a commit that removed a label above]  (source: e0 2026-08-08 V2/V3 guards)
+      'S2: the vignette is the one that must be built'  added by e1b5c77  [a commit that removed a label above]  (source: no extracted history)
+      'S2: vignette is grounded by adjudication'  added by e1b5c77  [a commit that removed a label above]  (source: design-instance adjudication 2026-08-20)
+      "S2: construct name of record carries 'Ho-style' retired"  added by e1b5c77  [a commit that removed a label above]  (source: adjudication 2026-08-20)
+      'S2: persona slot settled on the character reading'  added by e1b5c77  [a commit that removed a label above]  (source: adjudication 2026-08-20)
+      'S2: an unadjudicated axis cannot decide the reading'  added by e1b5c77  [a commit that removed a label above]  (source: rule 6)
+      'S2: the approved vignette DOES decide the reading'  added by e1b5c77  [a commit that removed a label above]  (source: adjudication 2026-08-20)
+
+## (3) Paths in README.md and the note; the 103/103 and absolute-path greps
+
+Tags in the clone: ['cycle-2-close', 'cycle-4-close']
+README.md at --ref: 73 line(s); 31 reference(s) extracted (markdown link targets, inline code spans, fenced code lines, URLs):
+  README.md:10  link              './CLAUDE.md'                                    resolves in the clone (tracked file)
+  README.md:10  code(link-label)  'CLAUDE.md'                                      resolves in the clone (tracked file)
+  README.md:18  link              './FINDINGS.md'                                  resolves in the clone (tracked file)
+  README.md:18  link              './FINDINGS-2.md'                                resolves in the clone (tracked file)
+  README.md:18  code(link-label)  'FINDINGS.md'                                    resolves in the clone (tracked file)
+  README.md:18  code(link-label)  'FINDINGS-2.md'                                  resolves in the clone (tracked file)
+  README.md:19  link              './FINDINGS-3.md'                                resolves in the clone (tracked file)
+  README.md:19  link              './FINDINGS-4.md'                                resolves in the clone (tracked file)
+  README.md:19  code(link-label)  'FINDINGS-3.md'                                  resolves in the clone (tracked file)
+  README.md:19  code(link-label)  'FINDINGS-4.md'                                  resolves in the clone (tracked file)
+  README.md:24  link              './PROPOSAL-g-ontogeny-of-evaluation.md'         resolves in the clone (tracked file)
+  README.md:24  code(link-label)  'PROPOSAL-g-ontogeny-of-evaluation.md'           resolves in the clone (tracked file)
+  README.md:25  code              '72b09a9'                                        commit 72b09a9: present in the clone, an ancestor of --ref
+  README.md:27  code              'valence_core/'                                  resolves in the clone (tracked directory)
+  README.md:36  link              './CLAUDE.md'                                    resolves in the clone (tracked file)
+  README.md:36  code(link-label)  'CLAUDE.md'                                      resolves in the clone (tracked file)
+  README.md:37  link              './PROPOSAL-g-ontogeny-of-evaluation.md'         resolves in the clone (tracked file)
+  README.md:37  code(link-label)  'PROPOSAL-g-…'                                   link label text, not a path (the link target on this line is checked)
+  README.md:38  link              './RESULTS.md'                                   resolves in the clone (tracked file)
+  README.md:38  code(link-label)  'RESULTS.md'                                     resolves in the clone (tracked file)
+  README.md:39  code              'HANDOFF-*.md'                                   glob: 8 tracked match(es) in the clone; 6 further match(es) in this machine's working tree are untracked (absent in a clone); newest tracked by the commit that added it: HANDOFF-2026-09-12.md (ddee730, 2026-09-12); latest date in an untracked file's name: HANDOFF-2026-10-04-design.md
+  README.md:40  code              'FINDINGS*.md'                                   glob: 5 tracked match(es) in the clone; 0 further match(es) in this machine's working tree are untracked (absent in a clone); newest tracked by the commit that added it: FINDINGS-5.md (38d5c2d, 2026-08-25)
+  README.md:41  code              'archive/'                                       resolves in the clone (tracked directory)
+  README.md:41  code              'cycle-2-close'                                  tag cycle-2-close: present in the clone
+  README.md:41  code              'cycle-4-close'                                  tag cycle-4-close: present in the clone
+  README.md:45  code              'valence_core/'                                  resolves in the clone (tracked directory)
+  README.md:46  code              'ModelAdapter'                                   identifier, not a path; class defined at valence_core/adapters/base.py:202
+  README.md:55  code-block        'python -m valence_core.regression.analysis'     module valence_core.regression.analysis -> valence_core/regression/analysis.py (tracked)
+  README.md:60  code              'valence_core.regression.oracle'                 module path -> valence_core/regression/oracle.py (tracked); resolves, but at run time it needs material absent from a clone: it imports the Qwen adapter (valence_core/regression/oracle.py@bbc9ffe:554), whose module sets CLONE = os.path.join(REPO_ROOT, "jlens-qwen36") (valence_core/adapters/qwen_mlx.py@bbc9ffe:36); constructing the adapter, which oracle.py does at valence_core/regression/oracle.py@bbc9ffe:559 and :596, runs _ensure_clone_on_path() (:71, in __init__), which raises RuntimeError when that gitignored clone is missing (:41); the import alone does not raise, since the module calls it only there, not at import time; the constructor then imports mlx.core (:72; the third-party mlx package, which a clone does not carry and the hooked run shows the model-free suite does not import) and jlens_qwen.* from the clone (:73-76), and loads the MLX model id 'mlx-community/Qwen3.6-27B-4bit' by default (:68); README.md@bbc9ffe:59-61 says this tier needs the laptop Qwen stack
+  README.md:63  code              'scripts/'                                       resolves in the clone (tracked directory)
+  README.md:69  code              'jlens-qwen36/'                                  MISSING in a clone (present in this machine's working tree, gitignored by .gitignore:2:/jlens-qwen36/)   <-- flag
+Flagged README references: 1
+  README.md:69 'jlens-qwen36/': MISSING in a clone (present in this machine's working tree, gitignored by .gitignore:2:/jlens-qwen36/)
+      README.md:68 | - **Laptop (M4 Pro, MLX)** — design/dev, and the Qwen oracle where every
+      README.md:69 |   published cycle-1–4 number lives. `jlens-qwen36/` is a gitignored external
+      README.md:70 |   clone; nothing is ever committed inside it.
+README references that resolve in the clone but whose run time needs material absent from a clone (not flagged as paths; see note 10): 1 README.md:60 'valence_core.regression.oracle'
+  README.md lines containing '/Users/': 0
+  README.md lines containing '/workspace/': 0
+  FINDINGS*.md tracked at --ref (5, with the commit that added each): FINDINGS-2.md (c54c4e0, 2026-08-08), FINDINGS-3.md (ea011bd, 2026-08-09), FINDINGS-4.md (50906bf, 2026-08-12), FINDINGS-5.md (38d5c2d, 2026-08-25), FINDINGS.md (aef6a0a, 2026-07-19)
+  linked by README.md's synthesis chain (README.md@bbc9ffe:18,19): ['FINDINGS.md', 'FINDINGS-2.md', 'FINDINGS-3.md', 'FINDINGS-4.md']; tracked but not linked: ['FINDINGS-5.md']
+
+The note (this machine's working tree): RESEARCH-NOTE-v0_2-draft.md is NOT present at the repository root (RESEARCH-NOTE* at the root or in archive/: none); tracked at --ref: no. Its paths are checked when it arrives (re-run this script, and extend the check to the note).
+
+Tracked text files at --ref that say 103/103 (git grep -n -I -E '103 ?/ ?103' bbc9ffe): 4 file(s), 7 line(s). Locators are <path>@bbc9ffe:<line>.
+  AUDIT-note-release-v1_2.md@bbc9ffe:68  [the block]  ...ter config; `python -m valence_core.regression.analysis` must print **103/103** reading only committed artifacts; record Python version and the import...
+  AUDIT-note-release-v1_2.md@bbc9ffe:70  [the block]  *Pass:* 103/103 from a fresh clone. *On fail:* STOP on the release; the note posts with the fallback paragraph.
+  AUDIT-note-release-v1_2.md@bbc9ffe:107  [the block]  ...son`, `c1r3_gate_repB.json`; `data/e0/*`. *Procedure:* run the suite (103/103) and list which of the note's link-2 figures are among the 103 (Δ+ = +0....
+  AUDIT-note-release-v1_2.md@bbc9ffe:137  [the block]  ...he N13 provenance table; (3) how to run the regression suite and what 103/103 covers; (4) the map from each note figure to its artifact (N1's ledger, ...
+  README.md@bbc9ffe:58  [live doc]  Model-free; must print **103/103**. Runs anywhere, including the box, because
+  RESULTS.md@bbc9ffe:11593  [dated record entry]  - Health check green throughout: **103/103** model-free, on this
+  results/raw/2026-10-08_note-preflight.md@bbc9ffe:195  [dated record entry]  N8 :107) say **103/103**. The suite at HEAD prints **154/154**: see the
+Committed site check: results/raw/2026-10-07_m-dispositions_sitecheck.txt@bbc9ffe:10 '154/154 reproduced through valence_core'
+
+Tracked text files at --ref containing '/Users/': 90 file(s), 208 line(s) (N12 lists them).
+  in README.md: 0 file(s)
+  in data files the suite read: 0 file(s)
+  in files the suite executed as code: 0 file(s)
+  in files the suite only read as text (structural scans): 1 file(s): valence_core/m/guard.py (1)
+Tracked text files at --ref containing '/workspace/': 139 file(s), 274 line(s) (N12 lists them).
+  in README.md: 0 file(s)
+  in data files the suite read: 1 file(s)
+    data/olmo/scaffold_base.json@bbc9ffe:5  "path": "/workspace/models/base",
+  in files the suite executed as code: 1 file(s)
+    scripts/a1_roster.py@bbc9ffe:32  python scripts/a1_roster.py --in /workspace/models    # on the box
+  in files the suite only read as text (structural scans): 23 file(s): scripts/box_a1_repair_screen.py (1), scripts/box_a1_tagscreen.py (1), scripts/box_a2_baserates.py (1), scripts/box_a3_extract.py (1), scripts/box_a4_hijack.py (1), scripts/box_a4_instrument.py (1), scripts/box_acquire_olmo.py (2), scripts/box_b2_concepts.py (1), scripts/box_b2_detection.py (1), scripts/box_b2r_campaign.py (1), scripts/box_b2r_concepts.py (2), scripts/box_b2r_sampling_smoke.py (1), scripts/box_b3_sessions.py (1), scripts/box_cached_gen_smoke.py (1), scripts/box_cast_equality_assert.py (3), scripts/box_determinism.py (4), scripts/box_hash_checkpoints.py (1), scripts/box_respawn_check.py (3), scripts/box_rl_survey.py (4), scripts/box_scaffold_characterization.py (3), scripts/box_smoke_olmo.py (2), valence_core/m/resume.py (4), valence_core/m/runner_olmo.py (3)
+  (A static mention is not a read. Whether the suite depends on an absolute path is settled by the audit hook in (2): reads OUTSIDE the clone and the interpreter's installation = 0.)
+
+## (4) Cleanup
+
+The empty HOME/XDG_CONFIG_HOME directory before deletion: still empty (git created nothing there)
+Clone deleted: <workroot>/clone-bbc9ffe72fb8 -> exists afterwards: False
+Lineage clone deleted: <workroot>/lineage-clone-bbc9ffe72fb8 -> exists afterwards: False
+Scratch TMPDIRs (with the suite's leftover mkdtemp directories), empty HOME, numpy shim and hook reports deleted: True
+--ref commit: bbc9ffe72fb8a942431c9bf2622a36e581fdf93c
+
+## Referent notes (block preamble, AUDIT-note-release-v1_2.md@bbc9ffe:3: a wrong referent here is a note to fix, not a STOP)
+
+1. Count. The block (AUDIT-note-release-v1_2.md@bbc9ffe:68, AUDIT-note-release-v1_2.md@bbc9ffe:70, AUDIT-note-release-v1_2.md@bbc9ffe:107, AUDIT-note-release-v1_2.md@bbc9ffe:137) and README.md (README.md@bbc9ffe:58) say 103/103. The suite at --ref prints 154/154; the committed site check says results/raw/2026-10-07_m-dispositions_sitecheck.txt@bbc9ffe:10 '154/154 reproduced through valence_core'. The pass condition applied here is Code's reading, not a ruling by the design seat or the PI: the block's preamble (AUDIT-note-release-v1_2.md@bbc9ffe:3) says that where a referent is wrong, Code names the right one in the raw and proceeds, and Code's preflight raw (results/raw/2026-10-08_note-preflight.md@bbc9ffe:198-199) reads N11 as passing if the suite prints N/N from a fresh clone, with N stated in the raw. That reading is flagged for the design seat and the PI. Because N/N alone would also pass a clone that silently skips checks whose artifact is absent, conjunct (e) is added. Every tracked line that says 103/103 is listed in (3) with its kind (live doc, the block, dated record entry); only the live doc and the block make a present-tense claim about the count. README.md is not edited by this audit; the PI decides its wording, and the wording of the README-NOTE the block's §6 item (3) describes. Lineage of the count, from (2e): at 0dd6f56 (the commit git blame names for README.md@bbc9ffe:58's 103/103, which also wrote RESULTS.md@bbc9ffe:11593) a fresh clone prints 103/103 (exit 0). Of those 103 checks, 100 are at --ref with identical expected, got and cited source; 0 are at --ref with a different remainder; 3 are not at --ref ('S2: grounded panel needs no new extraction'; 'S2: vignette is marked ungrounded'; 'S2: an ungrounded axis cannot decide the reading'), each last changed by e1b5c77 (git log -S), whose subject begins 'S2 adjudications applied: vignette grounded and approved verbatim, persona settled on the ...'. Of --ref's 154 checks, the other 54 are later additions, 8 of them first added by that same commit ('S2: the panel is all three neighbours'; 'S2: two neighbours need no new extraction'; 'S2: the vignette is the one that must be built'; 'S2: vignette is grounded by adjudication'; "S2: construct name of record carries 'Ho-style' retired"; 'S2: persona slot settled on the character reading'; 'S2: an unadjudicated axis cannot decide the reading'; 'S2: the approved vignette DOES decide the reading'). So --ref's 154 checks are not a strict superset of the 103; for README-NOTE item (3), 'what 103/103 covers'.
+2. The block says 'clone the tag'. No release tag exists yet (its name is the PI's; the clone's tags are ['cycle-2-close', 'cycle-4-close']). This run is at --ref = bbc9ffe72fb8a942431c9bf2622a36e581fdf93c, cloned from file:///Users/jasondwyer/Documents/code/jspace-lab. It is therefore provisional. The block's pass is evaluated by re-running this script with --ref <tag>, and, once the repository is published, --source <published remote URL> (this audit makes no network access, so the remote form is not exercised here).
+3. The block asks that no path in the note points outside the clone. RESEARCH-NOTE-v0_2-draft.md is not present at the repository root or in archive/ (this machine's working tree), so only README.md is checked here.
+4. README.md points readers to 'the newest HANDOFF-*.md' for the current state. glob: 8 tracked match(es) in the clone; 6 further match(es) in this machine's working tree are untracked (absent in a clone); newest tracked by the commit that added it: HANDOFF-2026-09-12.md (ddee730, 2026-09-12); latest date in an untracked file's name: HANDOFF-2026-10-04-design.md.
+5. README.md's synthesis chain (README.md@bbc9ffe:18-19) links FINDINGS.md -> FINDINGS-2.md -> FINDINGS-3.md -> FINDINGS-4.md and stops there; tracked at --ref but not in the chain: FINDINGS-5.md (added 38d5c2d, 2026-08-25). (README.md:40's 'FINDINGS*.md' glob covers every one.) For whoever writes the README-NOTE; README.md is not edited here.
+6. Interpreter and imports. The interpreter used here lives inside the gitignored jlens-qwen36/ clone (its .venv). Its site-packages holds _editable_impl_jlens_qwen36.pth, which names the jlens-qwen36/ root; this Python skips it because the file carries the macOS hidden flag (the 'Skipping hidden .pth file' lines in (2)), so that root is not on sys.path. The hook shows 0 distinct path(s) under jlens-qwen36/ outside .venv in file events, and 0 in code objects. Third-party packages the suite imported (sys.modules at exit, hooked run): numpy; the isolated run (c) shows numpy alone is sufficient. An earlier record entry installed more (RESULTS.md@bbc9ffe:11593-11594: 'pip install numpy scipy' into a bare container), but scipy was not needed then either: at 0dd6f56 no tracked .py file imports scipy (the only mention: valence_core/stats.py@0dd6f56:3 'No scipy: the laptop env does not have it, the box should not need it, and' (the same line at valence_core/stats.py@bbc9ffe:3)), and a fresh clone at 0dd6f56 prints 103/103 (exit 0) under this interpreter, on which find_spec('scipy') is None ((2e)). At --ref the suite imports no scipy and passes with numpy alone on the path.
+7. Two of the suite's structural checks walk the tree on disk, not the tracked set (source lines at --ref, quoted): valence_core/regression/analysis.py@bbc9ffe:811 'for root, _dirs, files in os.walk(core):', then :812 'base_dir = os.path.basename(root)'; :813 'if base_dir in ("e2b", "regression") or "__pycache__" in root:'; :814 'continue' | valence_core/regression/analysis.py@bbc9ffe:1192 'for root, _dirs, files in os.walk(REPO):', then :1193 'if any(part in root.split(os.sep)'; :1194 'for part in (".git", "__pycache__", "jlens-qwen36", "archive")):'; :1195 'continue'. In a clone the walks see the tracked set (plus the bytecode the runs write). In a working tree they also read any untracked .py file under those roots that the skip lines do not exclude, so a working-tree site check and a clone can in principle differ in what these two checks read. Observation only; the record's analyzer is not changed.
+8. Temp files. The suite leaves one tempfile.mkdtemp directory (holding d.json.checkpoint, about 29 kB) in $TMPDIR per run (valence_core/regression/analysis.py@bbc9ffe:1604); after the four runs here, TMPDIR held 4 such director(ies) and 0 loose file(s). Its other temp write(s) in the hooked run: $TMPDIR/<random> (removed by an os.remove event: yes). The hook shows 0 distinct path(s) read or written outside the clone, the interpreter's installation and TMPDIR. This script pointed TMPDIR at its scratch and deleted it; on a reader's machine the directories stay in the system TMPDIR. For README-NOTE item (3).
+9. Outside N11's scope, noted for whoever writes the block's §6 README-NOTE: README.md's status heading reads '## Where the program stands (2026-08-20)'.
+10. README.md@bbc9ffe:60 'valence_core.regression.oracle' resolves, but at run time it needs material absent from a clone: it imports the Qwen adapter (valence_core/regression/oracle.py@bbc9ffe:554), whose module sets CLONE = os.path.join(REPO_ROOT, "jlens-qwen36") (valence_core/adapters/qwen_mlx.py@bbc9ffe:36); constructing the adapter, which oracle.py does at valence_core/regression/oracle.py@bbc9ffe:559 and :596, runs _ensure_clone_on_path() (:71, in __init__), which raises RuntimeError when that gitignored clone is missing (:41); the import alone does not raise, since the module calls it only there, not at import time; the constructor then imports mlx.core (:72; the third-party mlx package, which a clone does not carry and the hooked run shows the model-free suite does not import) and jlens_qwen.* from the clone (:73-76), and loads the MLX model id 'mlx-community/Qwen3.6-27B-4bit' by default (:68); README.md@bbc9ffe:59-61 says this tier needs the laptop Qwen stack. It is not a path pointing outside the clone, so it is not flagged in (3); for README-NOTE item (3), this tier does not run from a clone.
+
+## Figure statuses (N1's vocabulary, AUDIT-note-release-v1_2.md@bbc9ffe:22: reproduced, log-only, not found, discrepant; plus computed-new for a figure this item computes that no record line states)
+
+figure | named in (locator) | value here | status
+103/103 (N11) | AUDIT-note-release-v1_2.md@bbc9ffe:68 | 154/154 in runs (a), (b), (c), (d) at --ref (domain: the 154 checks the suite defines at --ref) | discrepant (stale referent; note 1)
+103/103 (N11) | AUDIT-note-release-v1_2.md@bbc9ffe:70 | 154/154 in runs (a), (b), (c), (d) at --ref (domain: the 154 checks the suite defines at --ref) | discrepant (stale referent; note 1)
+103/103 (N8) | AUDIT-note-release-v1_2.md@bbc9ffe:107 | 154/154 in runs (a), (b), (c), (d) at --ref (domain: the 154 checks the suite defines at --ref) | discrepant (stale referent; note 1)
+103/103 (the block's §6) | AUDIT-note-release-v1_2.md@bbc9ffe:137 | 154/154 in runs (a), (b), (c), (d) at --ref (domain: the 154 checks the suite defines at --ref) | discrepant (stale referent; note 1)
+103/103 (live doc) | README.md@bbc9ffe:58 | 154/154 in runs (a), (b), (c), (d) at --ref (domain: the 154 checks the suite defines at --ref) | discrepant (stale referent; note 1)
+103/103 (dated entry) | RESULTS.md@bbc9ffe:11593 | 103/103 from a fresh clone at 0dd6f56, the commit that wrote it ((2e)) | reproduced (at the entry's own commit)
+154/154 (site check) | results/raw/2026-10-07_m-dispositions_sitecheck.txt@bbc9ffe:10 | 154/154 in runs (a), (b), (c), (d) at --ref (domain: the 154 checks the suite defines at --ref) | reproduced (analysis.py blob equal at its base, its commit and --ref)
+154/154 (preflight, 'at HEAD' = 988e5df) | results/raw/2026-10-08_note-preflight.md@bbc9ffe:195 | 154/154 in runs (a), (b), (c), (d) at --ref (domain: the 154 checks the suite defines at --ref) | reproduced (analysis.py blob at 988e5df equals --ref's)
+Python version | AUDIT-note-release-v1_2.md@bbc9ffe:68 ('record Python version') | 3.12.9 | computed-new
+import list | AUDIT-note-release-v1_2.md@bbc9ffe:68 ('the import list that was needed') | numpy 2.5.1 (non-stdlib packages in sys.modules at exit, hooked run); sufficient alone: yes (run (c)) | computed-new
+reads outside the clone | AUDIT-note-release-v1_2.md@bbc9ffe:68 ('reading only committed artifacts') | 0 distinct path(s) (domain: the 1182 recorded events of hooked run (a), file events and code objects); untracked clone files read: 0 | computed-new
+README references | AUDIT-note-release-v1_2.md@bbc9ffe:68 ('no path in the note or README points outside the clone') | 30 of 31 resolve in the clone (domain: references extracted from README.md at --ref); flagged 1; resolving but needing material absent from a clone at run time 1 | computed-new
+the note's paths | AUDIT-note-release-v1_2.md@bbc9ffe:68 ('no path in the note') | RESEARCH-NOTE-v0_2-draft.md is not at the repository root or in archive/ | not found
+.gitattributes filter on checkout | AUDIT-note-release-v1_2.md@bbc9ffe:68 | clone exit 0, checkout exit 0; 0 warning line(s); tree clean after checkout: yes; notebook blob identical: yes | computed-new
+scipy need | RESULTS.md@bbc9ffe:11593-11594 | not needed at 0dd6f56 (103/103 with find_spec('scipy') None) nor at --ref | computed-new
+103 -> 154 lineage | (2e) | 100 identical / 0 changed / 3 removed / 54 added (domain: check labels of the suite runs at 0dd6f56 and --ref) | computed-new
+'/Users/' grep | (3); N12 lists them | 90 file(s), 208 line(s) (domain: tracked text files at --ref) | computed-new
+'/workspace/' grep | (3); N12 lists them | 139 file(s), 274 line(s) (domain: tracked text files at --ref) | computed-new
+
+## Verdict
+
+Pass conjuncts (block :68 'must print 103/103 reading only committed artifacts' and :70 'Pass: 103/103 from a fresh clone', with N/N in place of 103 per note 1; a failure here is the block's STOP on the release):
+  [PASS] (a) clone exit 0 and checkout exit 0 (the filter reference does not break checkout; block :68)
+  [PASS] (b) clone HEAD equals --ref after the checkout
+  [PASS] (c) suite prints N/N with N stated, zero [FAIL], exit 0 (hooked, plain and literal runs (a), (b), (d), identical stdout; block :68/:70 with N for 103, note 1)
+  [PASS] (d) reading only committed artifacts (block :68): no reads outside the clone apart from the interpreter's own installation and temp files the suite itself created (a read in the base environment's site-packages, or anywhere else under the base prefix outside its stdlib and the allow-list of the interpreter binary and <base prefix>/lib's shared libraries, counts as outside), and no untracked clone file read
+  [PASS] (e) N is not reduced by an absent artifact: no existence test inside the clone returned False for a path present in this machine's working tree, no existence test fell outside the clone, the interpreter's installation and suite temp, and N equals the committed site check's N where analysis.py's blob is the same
+README-fix items (block :68: if checkout emits warnings, 'the README says so and gives the one-line fix'; they do not decide N11):
+  [ok] no warning/error in clone or checkout output
+  [ok] tree clean after checkout (git status --porcelain empty)
+  [ok] tracked notebooks hash to their committed blobs without the filter
+Import-list record (block :68 'record ... the import list that was needed'; supporting, not a pass conjunct):
+  [ok] isolated run (c): numpy as the only reachable non-stdlib package gives the same summary and byte-identical stdout
+Descriptive:
+  tree clean after all four runs: yes
+  suite summary: 154/154 (the block and README.md say 103/103; see the 103/103 list in (3))
+  README references flagged: 1 (listed in (3))
+
+N11: PASS at bbc9ffe72fb8a942431c9bf2622a36e581fdf93c, provisional -- pre-tag (no release tag exists yet); cloned from file:///Users/jasondwyer/Documents/code/jspace-lab, not from the published remote; and resting on the design seat and the PI accepting N/N (here 154/154) in place of the block's 103/103 (note 1), which is Code's reading, not a ruling. The suite prints 154/154 from the fresh clone with no read outside the clone apart from the interpreter's own installation and its own temp files. The block's pass is evaluated by re-running with --ref <tag> (note 2).
+
+## Values-check, round 1 (findings on pass 1, scripts/audit_note_N11.py sha256 c77c55d3...a914; dispositions applied from sha256 339c8a49...b766 on, and carried in this version)
+
+1. Raw line 11 overclaimed byte-for-byte regeneration apart from the stamp: the --ref echo, the command line and the scratch paths also differ on a checker's re-run.
+   Disposition: fixed. The header's 'Regeneration' line now names every line that can differ (stamp, run-time HEAD, --ref echo, work root, command, the clone's pre-detach branch line, and the lines labelled as this machine's working-tree state). Scratch paths outside the header print as <workroot>, and the default --ref is now the block's commit, so a re-run with the defaults echoes the same sha.
+2. 'newest tracked by name: FINDINGS.md' was wrong: ASCII order puts FINDINGS.md last, but it is the oldest synthesis.
+   Disposition: fixed. A glob's newest tracked match is now chosen by the commit that added it at --ref (git log --diff-filter=A): FINDINGS*.md -> FINDINGS-5.md; HANDOFF-*.md -> HANDOFF-2026-09-12.md. Untracked matches are ranked by the date in their names, and only when every name carries one. Note 5 is added: README.md's synthesis chain omits FINDINGS-5.md.
+3. 'README.md at --ref: 74 line(s)' was wrong; the file has 73.
+   Disposition: fixed. Lines are now counted with splitlines(): 73.
+4. The scope sentence said no GIT_* variable other than GIT_CONFIG_GLOBAL and GIT_CONFIG_NOSYSTEM was set; GIT_TERMINAL_PROMPT=0 is also set.
+   Disposition: fixed. The sentence now lists GIT_TERMINAL_PROMPT=0.
+5. Under 'N/N' alone, a clone that silently drops os.path.exists-guarded checks (analysis.py@bbc9ffe:396, :557, :593, :639, :653) would still pass.
+   Disposition: fixed. Pass conjunct (e) is added. The hooked run records every os.path.exists/lexists/isfile/isdir result (the wrapper returns the real result; stdout stays byte-identical to the plain run). Here: 26 (path, test) pairs inside the clone, 0 False, 0 of those present in this machine's working tree; 0 existence test(s) outside the clone in class OUTSIDE. N is also compared with the committed site check's N when analysis.py's blob is the same at the site check's base, at its commit and at --ref (comparable: yes; equal: yes).
+6. Filter warnings, a dirty tree after checkout and a notebook mismatch were STOP conjuncts. That is stricter than the block, whose remedy for warnings is a README line (:68).
+   Disposition: fixed. They are now 'README-fix items' that do not decide N11. The pass conjuncts are clone/checkout success, HEAD = --ref, N/N, reading only committed artifacts, and (e). 'Tree clean after all runs' is descriptive.
+7. Calling 'N/N with N printed' the routed pass condition was unsupported: no design-seat or PI record adopts it.
+   Disposition: fixed. Note 1 now attributes it to Code: the block's preamble (AUDIT-note-release-v1_2.md@bbc9ffe:3) and Code's preflight raw (results/raw/2026-10-08_note-preflight.md@bbc9ffe:198-199), flagged for the design seat and the PI, not a ruling. The word 'routed' is dropped from Code's summary.
+8. The unqualified 'N11: PASS' line overclaimed: no tag exists yet, and the clone source was the local repository.
+   Disposition: fixed. The verdict line now says provisional, pre-tag, and names the clone source. A --source option is added for the re-run from the published remote; it was not exercised against a remote here, because this audit makes no network access.
+9. 'The third-party import list is what a reader's own interpreter needs' was unsupported: the suite was never run without the venv's other packages.
+   Disposition: fixed. Isolated run (c) is added: -S -E -s, with numpy the only non-stdlib package reachable, through a symlink shim, plus a negative control on the venv's other top-level names. Result: sufficient, 154/154. Note 6 is reworded and cites RESULTS.md@bbc9ffe:11593-11594 for the earlier numpy+scipy install (round 2, item 1, corrects this disposition's first wording, 'need', to 'install'). The checker's locator :11592-11594 is corrected to the lines that say it.
+10. The raw hid the suite's leftover mkdtemp directory: the script deletes its whole scratch TMPDIR.
+   Disposition: fixed. Section (2) now lists what the runs left in TMPDIR before cleanup (in this version, after four runs: 4 director(ies), each with d.json.checkpoint), and note 8 gives the sentence for README-NOTE item (3).
+11. 'NOT present on this machine' overclaimed: the script searched only the repository root and archive/.
+   Disposition: fixed. The wording is now 'not present at the repository root or in archive/'. Nothing outside the repository is searched or reported in this raw.
+12. The os.walk observation (analysis.py@bbc9ffe:809-821, :1192-1201) was in the builder's summary only, not in the raw.
+   Disposition: fixed. It is now note 7, with the os.walk lines located by the script.
+13. The default --workroot was the builder's scratch, so a checker who passes only --out clones into it and deletes there.
+   Disposition: fixed. When --out is not the default, --workroot now defaults to <dir of --out>/N11-work. A work root inside the repository is refused. Stale entries are removed only under their fixed names (clone-, tmp-, numpy-shim-<sha12>, hook reports).
+
+Also changed by Code in round 1 (found while re-running and re-reading, not checker findings): (i) git's progress meter ('Updating files: NN% ...') appeared in clone's stderr on one run and not on others, which breaks regeneration, so meter lines are left out of the display by a fixed pattern while the warning scan still reads them; (ii) under -S, sys.prefix is the base prefix, so the isolated run's paths are classified with the hooked run's sys.prefix (the first draft wrongly classed numpy as OUTSIDE there); (iii) code-object pseudo-filenames ('<frozen ...>', '<string>') passed to os.path.exists during the run are excluded from conjunct (e)'s path pairs and listed separately; (iv) existence tests outside the clone are classified, and any in class OUTSIDE would fail (e) (here 0); (v) the work-root check now runs before the directory is created, so a refused path is never made inside the repository (tested: refused, nothing created); (vi) note 7 quotes the walk and skip lines from the --ref source instead of paraphrasing them; notes 6 and 8 now follow from the run's own counts.
+
+The round-1 checker's independent recomputations, as relayed to Code: the suite summary (154/154 in four configurations, numpy-only among them), the clean clone and checkout, the notebook blob, OUTSIDE = 0, the hook's class table, the 18 data/ reads, the 30 executed and 98 scanned .py files, the import list and the Python version each agreed with the previous raw. The last item (the hidden .pth files) was cut off in the relay, so its verdict is not stated here; this raw re-derives it in (2). None of these needed a disposition.
+
+## Values-check, round 2 (findings on pass 2, scripts/audit_note_N11.py sha256 339c8a49...b766; dispositions applied from sha256 b1c66f3b...b8cd on, and carried in this version)
+
+R2-1. Note 6 overclaimed: it said the earlier 103/103 entry 'needed' scipy; RESULTS.md@bbc9ffe:11593-11594 records an install, not a need.
+   Disposition: fixed. Note 6 now says the entry installed scipy, and states what the run computes about the need: not needed then either -- at 0dd6f56 no tracked .py file imports scipy (1 mention(s), none an import), find_spec('scipy') is None under this interpreter (-E -s: True; no flags: True), and a fresh clone at 0dd6f56 prints 103/103 with exit 0. The text is built from (2e)'s own results, not hard-coded.
+R2-2. The raw did not show how the 103 checks relate to the 154.
+   Disposition: fixed. Section (2e) is added: git blame at bbc9ffe names 0dd6f56 as the commit that wrote README.md's 103/103; a second fresh clone there prints 103/103 (exit 0); the check labels are compared (100 identical, 0 changed, 3 not at --ref, 54 added after). Note 1 carries the summary for README-NOTE item (3).
+R2-3. The statuses (reproduced, discrepant, computed-new) were in the builder's chat summary, not in the raw.
+   Disposition: fixed. A 'Figure statuses' table, emitted by the script, now precedes the verdict: 18 rows (figure | named in | value here | status), with N1's vocabulary located at AUDIT-note-release-v1_2.md@bbc9ffe:22.
+R2-4. 'The only config in effect besides the repository's .gitattributes' was wider than the run: GIT_CONFIG_GLOBAL=/dev/null does not turn off git's default excludes file, ~/.config/git/ignore, which exists here.
+   Disposition: fixed. By neutralising, not only rewording: every git command on a clone now runs with HOME and XDG_CONFIG_HOME set to an empty scratch directory, so the default excludes and attributes files resolve to paths that do not exist. Section (1) lists this machine's per-user git files by presence and line count only ($XDG_CONFIG_HOME/git/ignore: present, 1 line(s)), the origins 'git config --list --show-origin' reports on the clone (['file:.git/config']), the clone's info/exclude, info/attributes and live hooks, and the sentence about the inputs in effect is printed only when those checks hold (here: yes). Ignored entries after the runs under this environment: 30, of which not __pycache__: 0. The empty directory stayed empty: yes.
+R2-5. The README's literal command (README.md:55, block :68) was never run; all three runs used -E -s, and this environment sets PYTHONDONTWRITEBYTECODE.
+   Disposition: fixed. Run (d) is added: the literal command, no flags, cwd = the clone root: exit 0, summary '154/154 reproduced through valence_core', stdout byte-identical to (b): yes. Section (2) lists the PYTHON* variable names in the inherited environment (['PYTHONDONTWRITEBYTECODE']) and probes the user site and bytecode setting under the same configuration. Conjunct (c) now requires (d) too.
+R2-6. classify() put the base environment's site-packages, which sits inside the stdlib directory, into 'interpreter: stdlib', so a read there would not have counted as OUTSIDE.
+   Disposition: fixed. classify_factory now tests the base environment's site-packages (['/Users/jasondwyer/miniconda3/lib/python3.12/site-packages']) before the stdlib class, as its own class 'base-env site-packages', which conjunct (d), the code-object list, the import split and the existence tests all count as outside. Here: 0 event(s) in that class. Synthetic paths (classified, no file touched): /Users/jasondwyer/miniconda3/lib/python3.12/site-packages/somepkg/__init__.py -> 'base-env site-packages' (as expected); /Users/jasondwyer/miniconda3/lib/python3.12/os.py -> 'interpreter: stdlib' (as expected); /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/lib/python3.12/site-packages/numpy/__init__.py -> 'interpreter: venv (sys.prefix)' (as expected).
+R2-7. The heading said 'block §0 preamble'; the clause is in the block's italic preamble at :3, before §0 (:7).
+   Disposition: fixed, in part. The heading now cites the preamble line the script locates (AUDIT-note-release-v1_2.md@bbc9ffe:3). The suggested wording also named 'the PI's routing' as a source of the rule; that part is not adopted, because no record line Code can cite states it -- the block's preamble does, and the heading cites that.
+R2-8. The verdict line named the pre-tag and clone-source provisos but not that the pass rests on the design seat and the PI accepting N/N in place of the block's 103/103.
+   Disposition: fixed. The verdict line now names all three provisos.
+R2-9. README.md:60's 'valence_core.regression.oracle' was counted as resolving with no word that its tier needs material outside a clone.
+   Disposition: fixed. The row now carries the runtime dependency, computed from oracle.py and qwen_mlx.py at --ref, (3) counts such references separately (1), and note 10 records it for README-NOTE. It stays unflagged as a path: the reference resolves, and the block's check is about paths.
+
+Also changed by Code in round 2 (not checker findings): (i) the header's Regeneration line names the new machine-state lines (per-user git files, PYTHON* names, the user-site probe); (ii) round 1's disposition 9 said 'numpy+scipy need' and now says 'install', in line with R2-1; (iii) round 1's disposition 10 no longer says 'three runs'; (iv) the stale-scratch removal and the cleanup cover the new scratch names (lineage-clone-, lineage-tmp-, empty-home-<sha12>), and the header's Work root line names them.
+
+The round-2 checker's independent recomputations, as relayed to Code (not re-derived here beyond what this raw computes): a fresh clone of bbc9ffe without global or system git config, clean and without warnings; the notebook's blob; 154/154 in four configurations with byte-identical stdout (the literal README command, the checker's own audit-hooked run, a numpy-only run, the builder's runs); its own audit hook's class table (1182 comparable events; 176 clone files opened: 18 data/, 30 executed and 98 scanned .py, 30 bytecode; 0 reads outside, 0 under jlens-qwen36/ outside .venv, 0 under the base environment's site-packages); numpy 2.5.1 as the only third-party package; module counts 260 / 110; 26 existence pairs, all True; the greps (103/103 in 4 files on 7 lines; /Users/ 90 files, 208 lines; /workspace/ 139 files, 274 lines); 30 of 31 README references resolving; and every pinned locator. None of these needed a disposition.
+
+## Values-check, round 3 (findings on pass 3 -- the audit workflow's round-4 fix list -- of scripts/audit_note_N11.py sha256 b1c66f3b...b8cd; dispositions applied in this version)
+
+R3-1. 'So the git inputs in effect on the clone are its .git/config ... no per-user or system file applies' (:69 of the previous raw) was imprecise: GIT_CONFIG_NOSYSTEM=1 turns off the system config only, and git still read the system gitattributes file of the git in use (three diff-driver lines, *.m, *.mm, *.swift); git_inputs_clean checked config origins, info/exclude, info/attributes and hooks, not that file.
+   Disposition: fixed. By neutralising and reporting: git_env() now also sets GIT_ATTR_NOSYSTEM=1 (named in the module docstring, git_env's docstring and the scope line). Section (1) now reports the file: 2 candidate(s) located beside the system-level config files git names, 1 present (3 non-comment line(s)); a probe of 3 name(s) built from its '*.<ext>' patterns gets an attribute from it in 3 case(s) when GIT_ATTR_NOSYSTEM is absent and in 0 under the script's environment; over the 667 tracked paths at --ref it changes the attributes of 0. git_inputs_clean now also requires GIT_ATTR_NOSYSTEM=1 and a zero probe count under the environment (here: yes).
+R3-2. Conjunct (d) counted a read anywhere under the base prefix outside its stdlib and site-packages -- for example another conda environment under envs/ -- as the interpreter's installation (class 'interpreter: base prefix (other)', not in OUTSIDE_CLASSES): listed, but not failing (d).
+   Disposition: fixed. Such a read is now class 'base prefix (other)', in OUTSIDE_CLASSES, so conjunct (d), the code-object list, the existence tests of (e) and the import split all count it as outside. Only a small allow-list under the base prefix stays the interpreter's, class 'interpreter: base-prefix allow-list': the interpreter binary (the realpath of sys.executable) and the shared libraries directly in <base prefix>/lib (*.dylib, *.so*). Both classes' counts are printed in (2) even when 0; here: hooked run 0 and 0 event(s), isolated run 0 and 0. Synthetic paths (classified, no file touched): /Users/jasondwyer/miniconda3/envs/n11-synthetic/lib/python3.12/site-packages/somepkg/__init__.py -> 'base prefix (other)' (as expected); /Users/jasondwyer/miniconda3/pkgs/n11-synthetic/info/index.json -> 'base prefix (other)' (as expected); /Users/jasondwyer/miniconda3/share/zoneinfo/UTC -> 'base prefix (other)' (as expected); /Users/jasondwyer/miniconda3/lib/n11-synthetic/libx.dylib -> 'base prefix (other)' (as expected); /Users/jasondwyer/miniconda3/lib/libpython3.12.dylib -> 'interpreter: base-prefix allow-list' (as expected); /Users/jasondwyer/miniconda3/bin/python3.12 -> 'interpreter: base-prefix allow-list' (as expected).
+R3-3. Note 6 and (2e) located the scipy mention at valence_core/stats.py@0dd6f56:3 only; the bbc9ffe twin was in the fixer's chat summary, not in the raw.
+   Disposition: fixed. The 0dd6f56 locator stays, because the claim is about that tree (0dd6f56 is an ancestor of --ref: yes, computed in (2e)). (2e)'s scipy line and note 6 now add, for each mention, the identical line at --ref, found by reading the file at --ref: valence_core/stats.py@0dd6f56:3 -> valence_core/stats.py@bbc9ffe:3.
+R3-4. Note 10 and the README.md:60 row did not name qwen_mlx.py's import of mlx.core, and placed the RuntimeError at the import, not at the adapter's construction.
+   Disposition: fixed. The row and note 10 are rebuilt from the --ref sources: valence_core/adapters/qwen_mlx.py@bbc9ffe:72 imports mlx.core (the third-party mlx package, which a clone does not carry and the hooked run shows the model-free suite does not import); the RuntimeError (:41) is raised by _ensure_clone_on_path(), which runs at :71, inside __init__, so when the adapter is constructed -- valence_core/regression/oracle.py@bbc9ffe does that at :559 and :596 -- and not when it imports the module (:554).
+
+Also changed by Code in round 3 (not checker findings): (i) the header's Regeneration line names the system gitattributes lines of (1) as machine state; (ii) the scope line names the two check-attr measurements that drop GIT_ATTR_NOSYSTEM and the two config-origin queries that run outside a clone; (iii) round 2's heading now says where its dispositions were first applied (sha256 b1c66f3b...b8cd), as round 1's does.
+
+The round-3 checker's independent recomputations, as relayed to Code in its findings' evidence (not re-derived here beyond what this raw computes): under the previous version's git environment (GIT_CONFIG_GLOBAL=/dev/null, GIT_CONFIG_NOSYSTEM=1, HOME and XDG_CONFIG_HOME an empty directory; no GIT_ATTR_NOSYSTEM), in a fresh clone at bbc9ffe, git check-attr -a on foo.m and foo.swift returns 'diff: objc' and 'diff: swift', and nothing once GIT_ATTR_NOSYSTEM=1 is added, from /usr/bin/git 2.39.5 (Apple Git-154); 0 tracked paths at bbc9ffe match *.m, *.mm or *.swift, and git check-attr --stdin diff over the clone's ls-files returns no specified value; its own audit hook, independent of WRAPPER, on a fresh clone found 0 events under the base prefix outside the stdlib and site-packages; 0dd6f56 is an ancestor of bbc9ffe; the stats.py line is at valence_core/stats.py@bbc9ffe:3; qwen_mlx.py@bbc9ffe:72 imports mlx.core, and the adapter is constructed at oracle.py@bbc9ffe:559. Its findings report no changed number.

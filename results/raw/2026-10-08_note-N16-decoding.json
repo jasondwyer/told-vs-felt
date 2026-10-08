@@ -1,0 +1,3525 @@
+{
+ "item": "N16",
+ "block": "AUDIT-note-release-v1_2.md",
+ "block_sha256": "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841",
+ "record_commit": "bbc9ffe72fb8a942431c9bf2622a36e581fdf93c",
+ "head_at_run": "cf8eb5b9dd4e117934627242a3aea5bdf4ae4b55",
+ "script": "scripts/audit_note_N16.py",
+ "script_sha256": "e0a6c1f91a2dc20c74fd05d7672253308a6449a29492cc863c749dbb86db4d84",
+ "interpreter": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python",
+ "python": "3.12.9",
+ "numpy": "2.5.1",
+ "command": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/audit_note_N16.py",
+ "code_stamp": "Thu Oct  8 11:26:09 UTC 2026",
+ "ban_list_file": {
+  "path": "data/configs/e2a_ban_list.json",
+  "sha256": "9a2f0744f81ac930fdf8533c7d07b77bd15a5361e89b060363d022c3661d31c4",
+  "n_strings": 12,
+  "n_ids": 12,
+  "strings": [
+   "</think>",
+   "<think>",
+   "<|audio_end|>",
+   "<|audio_pad|>",
+   "<|audio_start|>",
+   "<|endoftext|>",
+   "<|im_end|>",
+   "<|im_start|>",
+   "<|image_pad|>",
+   "<|video_pad|>",
+   "<|vision_end|>",
+   "<|vision_start|>"
+  ],
+  "ids": [
+   248044,
+   248045,
+   248046,
+   248053,
+   248054,
+   248056,
+   248057,
+   248068,
+   248069,
+   248070,
+   248071,
+   248076
+  ],
+  "first_commit": "6e49242",
+  "recorded_sha16_fields": {
+   "data/e2a/g2_discriminability.json:ban_sha": "9a2f0744f81ac930",
+   "data/e2a/g2_discriminability_v2.json:ban_sha": null,
+   "data/e2a/g2_spotcheck.json:ban_sha": "9a2f0744f81ac930",
+   "data/f/calib.json:ban_sha": "9a2f0744f81ac930"
+  }
+ },
+ "qwen_local_snapshot_outside_record": {
+  "snapshot": "c000ac2c...",
+  "eos_token": "<|im_end|>",
+  "eos_id": 248046,
+  "eos_id_in_ban_ids": true,
+  "endoftext_id": 248044,
+  "endoftext_in_ban_ids": true,
+  "ban_strings_to_ids_local": {
+   "</think>": 248069,
+   "<think>": 248068,
+   "<|audio_end|>": 248071,
+   "<|audio_pad|>": 248076,
+   "<|audio_start|>": 248070,
+   "<|endoftext|>": 248044,
+   "<|im_end|>": 248046,
+   "<|im_start|>": 248045,
+   "<|image_pad|>": 248056,
+   "<|video_pad|>": 248057,
+   "<|vision_end|>": 248054,
+   "<|vision_start|>": 248053
+  },
+  "ban_ids_equal_local_map": true,
+  "generation_config_sha16": "e70c136c1b78ddc1",
+  "generation_config": {
+   "bos_token_id": 248044,
+   "do_sample": true,
+   "eos_token_id": [
+    248046,
+    248044
+   ],
+   "pad_token_id": 248044,
+   "temperature": 1.0,
+   "top_k": 20,
+   "top_p": 0.95
+  }
+ },
+ "clone_files_outside_record": {
+  "jlens_qwen/e2a.py": "4e1cdaa31d99dc9dc93f3e23ec51636b89a7125aa7759b6fa2f6d1aa1a64c276",
+  "scripts/e2a_sessions.py": "0950b0054ad84a4a1fd0a6e90912d1643ef46a48f1a452daad62e3c655bec1dc",
+  "scripts/f_sessions.py": "d2dcde569080fe86d69da3f7d908a0c7fde401f4d201bfd3ffcec4b7891ee071",
+  "scripts/e2a_g2_discriminability.py": "47d0d32f020375b004c5a7ad6da8f243b4c3836086762b8fe48cb300e2026f51"
+ },
+ "prereg_docs_temperature_mentions": {
+  "ADDENDUM-g1-archival-reading-screen.md": 0,
+  "ADDENDUM-g3-b2r-v1.2.md": 3,
+  "LOCK-g.md": 0,
+  "LOCK-h.md": 0,
+  "PROPOSAL-d-distilled-trace.md": 0,
+  "PROPOSAL-e-reward-axis-hijack.md": 0,
+  "PROPOSAL-f-natural-reinforcer-screen.md": 0,
+  "PROPOSAL-g-ontogeny-of-evaluation.md": 0,
+  "PROPOSAL-h-state-present-choice.md": 0,
+  "PROPOSAL-j-dose-escalation.md": 0,
+  "PROPOSAL-k-echo-channel.md": 0,
+  "PROPOSAL-m-gating-campaign-v1_11.md": 3
+ },
+ "g2_temperature_search": {
+  "files": [
+   "archive/RESULTS-cycles3-4.md",
+   "results/raw/2026-08-09_e2a_analysis.txt",
+   "results/raw/2026-08-09_e2a_full.txt",
+   "results/raw/2026-08-09_e2a_g1.txt",
+   "results/raw/2026-08-09_e2a_g1r.txt",
+   "results/raw/2026-08-09_e2a_g2.txt",
+   "results/raw/2026-08-09_e2a_g2check.txt",
+   "results/raw/2026-08-09_e2a_g2r.txt",
+   "results/raw/2026-08-09_e2a_g2r2.txt",
+   "results/raw/2026-08-09_e2a_g2r_crash.txt",
+   "results/raw/2026-08-09_e2a_g3.txt",
+   "results/raw/2026-08-09_e2a_g3prime.txt",
+   "results/raw/2026-08-09_e2a_ndecl.txt",
+   "results/raw/2026-08-09_e2a_smoke.txt",
+   "results/raw/2026-08-09_e2a_smoke2.txt",
+   "results/raw/2026-08-09_e2a_smoke3.txt"
+  ],
+  "regex": "(temp|temperature)[^a-z0-9]{0,6}0\\.7|0\\.7[^0-9].{0,12}\\btemp",
+  "hits": 0,
+  "hit_lines": []
+ },
+ "stop_cap_intro_follow_detail": {
+  "follow": "bfa87a5",
+  "no_follow": "1465b34",
+  "path_at_follow_hit": "valence_core/e2b/session.py"
+ },
+ "adapter_locators": {
+  "qwen_sample": "valence_core/adapters/qwen_mlx.py@bbc9ffe:290",
+  "qwen_argmax": "valence_core/adapters/qwen_mlx.py@bbc9ffe:288",
+  "qwen_seed": "valence_core/adapters/qwen_mlx.py@bbc9ffe:269",
+  "qwen_ban": "valence_core/adapters/qwen_mlx.py@bbc9ffe:285",
+  "qwen_stop": "valence_core/adapters/qwen_mlx.py@bbc9ffe:299",
+  "qwen_eos": "valence_core/adapters/qwen_mlx.py@bbc9ffe:293",
+  "qwen_cached": "valence_core/adapters/qwen_mlx.py@bbc9ffe:307",
+  "qwen_strip": "valence_core/adapters/qwen_mlx.py@bbc9ffe:343",
+  "olmo_pick": "valence_core/adapters/olmo_hf.py@bbc9ffe:235",
+  "olmo_argmax": "valence_core/adapters/olmo_hf.py@bbc9ffe:232",
+  "olmo_seed": "valence_core/adapters/olmo_hf.py@bbc9ffe:221",
+  "olmo_load_seed": "valence_core/adapters/olmo_hf.py@bbc9ffe:78",
+  "olmo_ban": "valence_core/adapters/olmo_hf.py@bbc9ffe:231",
+  "olmo_stop": "valence_core/adapters/olmo_hf.py@bbc9ffe:293",
+  "olmo_stop_default": "valence_core/adapters/olmo_hf.py@bbc9ffe:206",
+  "olmo_stop_rule": "valence_core/adapters/olmo_hf.py@bbc9ffe:290-294",
+  "olmo_special": "valence_core/adapters/olmo_hf.py@bbc9ffe:109",
+  "ban_builder": "valence_core/session.py@bbc9ffe:88",
+  "ban_builder_special": "valence_core/session.py@bbc9ffe:116",
+  "stop_cap": "valence_core/session_e2a.py@bbc9ffe:90",
+  "readout_no_ban": "valence_core/readout.py@bbc9ffe:90",
+  "e2d_temp_comment": "valence_core/e2d/config.py@bbc9ffe:41"
+ },
+ "introducing_commits": {
+  "session_e2a STOP_CAP = 60": [
+   "bfa87a5",
+   "2026-08-21"
+  ],
+  "e2d/config TEMP = 0.7": [
+   "4e41288",
+   "2026-09-01"
+  ],
+  "e2b_h1 TEMP = 0.7": [
+   "6b89ce2",
+   "2026-08-21"
+  ],
+  "e2b_h2 TEMP = 0.7": [
+   "05fc98f",
+   "2026-08-21"
+  ],
+  "e2b_verdict TEMP = 0.7": [
+   "0afdcb7",
+   "2026-08-22"
+  ],
+  "box_b3 TEMP = 0.7": [
+   "a07d8fa",
+   "2026-08-23"
+  ],
+  "box_b2r TEMP = 1.0": [
+   "c1bbf7c",
+   "2026-08-24"
+  ],
+  "box_b2r MAX_TOKENS = 100": [
+   "c1bbf7c",
+   "2026-08-24"
+  ],
+  "box_b2r --seed 20260824": [
+   "c1bbf7c",
+   "2026-08-24"
+  ],
+  "box_b2 temp=0.0": [
+   "0d4c147",
+   "2026-08-23"
+  ],
+  "box_b2 --max-tokens 60": [
+   "0d4c147",
+   "2026-08-23"
+  ],
+  "box_b2 --seed 20260823": [
+   "0d4c147",
+   "2026-08-23"
+  ],
+  "qwen_mlx categorical(lg / temp)": [
+   "c5b8f1a",
+   "2026-08-12"
+  ],
+  "olmo_hf multinomial": [
+   "e26e9c9",
+   "2026-08-18"
+  ],
+  "session.py DEFAULT_SCAFFOLD_STRINGS": [
+   "c34c821",
+   "2026-08-12"
+  ],
+  "formats/recon cached = False": [
+   "07224b6",
+   "2026-09-06"
+  ],
+  "e2d_sessions --round-path": [
+   "db5b09c",
+   "2026-09-01"
+  ],
+  "e2a_ban_list.json added": [
+   "6e49242",
+   "2026-08-21"
+  ],
+  "log: e2a pre-registration, 'ROUND generation is temperature-sampled'": [
+   "1970b50",
+   "2026-08-08"
+  ],
+  "log: e2a template amendment, '(a) Stop discipline' / 'backstop cap 60 tokens'": [
+   "3637c06",
+   "2026-08-09"
+  ],
+  "log: smoke2 adjudication (config v3), scaffold logit ban 'ROUND GENERATION ONLY'": [
+   "8fa0b75",
+   "2026-08-09"
+  ],
+  "log: g2 spot-check, 'ban list frozen, 12 ids'": [
+   "bf0439f",
+   "2026-08-09"
+  ],
+  "PROPOSAL-f 'v3 template family (newline stop'": [
+   "ea011bd",
+   "2026-08-09"
+  ],
+  "ADDENDUM-g3-b2r-v1.2 '0.5 Decoding of record'": [
+   "f14d249",
+   "2026-08-24"
+  ],
+  "PROPOSAL-j 'Held fixed, by design' (template family v3, e2d)": [
+   "f7a4a1e",
+   "2026-09-01"
+  ],
+  "log: g2r incident, refinement of amendment (a), 'consumed before the newline stop arms'": [
+   "4ad0c5a",
+   "2026-08-09"
+  ]
+ },
+ "log_locators": {
+  "e2a_prereg_sampled_cached": "archive/RESULTS-cycles3-4.md@bbc9ffe:1251",
+  "e2a_prereg_choice_greedy": "archive/RESULTS-cycles3-4.md@bbc9ffe:1255",
+  "e2a_amend_stop": "archive/RESULTS-cycles3-4.md@bbc9ffe:1049",
+  "e2a_amend_cap": "archive/RESULTS-cycles3-4.md@bbc9ffe:1050",
+  "e2a_v1_cap90": "archive/RESULTS-cycles3-4.md@bbc9ffe:1096",
+  "e2a_full_cached": "results/raw/2026-08-09_e2a_full.txt@bbc9ffe:2",
+  "e2a_full_ban": "results/raw/2026-08-09_e2a_full.txt@bbc9ffe:5",
+  "g2r2_cached": "results/raw/2026-08-09_e2a_g2r2.txt@bbc9ffe:6",
+  "g2r2_ban": "results/raw/2026-08-09_e2a_g2r2.txt@bbc9ffe:3",
+  "f_cached_proposal": "PROPOSAL-f-natural-reinforcer-screen.md@bbc9ffe:65",
+  "f_stop_ban_proposal": "PROPOSAL-f-natural-reinforcer-screen.md@bbc9ffe:60",
+  "f_ndecl_cached": "results/raw/2026-08-10_f_ndecl.txt@bbc9ffe:16",
+  "gport_f1_temp_cap": "results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:1552",
+  "gport_f1_sampling": "results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:1556",
+  "gport_f1_stop": "results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:1557",
+  "gport_eos_banned": "results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:1671",
+  "gport_eos_tokcfg": "results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:1672",
+  "gport_ban_correction": "results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:1682",
+  "gport_f1_512": "results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:466",
+  "gport_ban_read": "results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:1678",
+  "gport_f1_ban": "results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:729",
+  "gport_gdn": "results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:730",
+  "gport_f1_seedtiming": "results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:1555",
+  "e2a_512_claude": "CLAUDE.md@bbc9ffe:400",
+  "d1_uncached": "RESULTS.md@bbc9ffe:6382",
+  "b_phase_uncached": "RESULTS.md@bbc9ffe:7834",
+  "b2_temp0": "RESULTS.md@bbc9ffe:7636",
+  "b2_seed_inert": "RESULTS.md@bbc9ffe:7641",
+  "b2_max60": "RESULTS.md@bbc9ffe:7645",
+  "b3_temp07": "RESULTS.md@bbc9ffe:8364",
+  "k1_temp": "RESULTS.md@bbc9ffe:2541",
+  "qwen_snapshot": "RESULTS.md@bbc9ffe:4968",
+  "e2a_ban_adjudication": "archive/RESULTS-cycles3-4.md@bbc9ffe:929-932",
+  "e2a_ban_frozen": "archive/RESULTS-cycles3-4.md@bbc9ffe:895-896",
+  "e2a_full_stale_banner": "results/raw/2026-08-09_e2a_full.txt@bbc9ffe:3",
+  "e2a_stale_banner_cosmetic": "archive/RESULTS-cycles3-4.md@bbc9ffe:838-840",
+  "f_stop_ban_proposal_range": "PROPOSAL-f-natural-reinforcer-screen.md@bbc9ffe:60-61",
+  "d1_code_commit": "RESULTS.md@bbc9ffe:6332",
+  "e2d_prereg_held_fixed": "PROPOSAL-j-dose-escalation.md@bbc9ffe:114-116",
+  "e2a_stop_refinement": "archive/RESULTS-cycles3-4.md@bbc9ffe:1024-1026"
+ },
+ "e2d_preregistration": {
+  "commit": "f7a4a1e",
+  "date": "2026-09-01",
+  "first_commit_of_file": "f7a4a1e",
+  "lines": "PROPOSAL-j-dose-escalation.md@bbc9ffe:114-116",
+  "ancestor_of": {
+   "4e41288": true,
+   "a274ecd": true,
+   "db5b09c": true,
+   "e58dfca": true
+  },
+  "temperature_mentions": 0,
+  "precedes_every_e2d_code_and_data_commit": true
+ },
+ "stop_refinement": {
+  "lines": "archive/RESULTS-cycles3-4.md@bbc9ffe:1024-1026",
+  "commit": "4ad0c5a",
+  "date": "2026-08-09"
+ },
+ "e2a_draw_order": {
+  "order_lines": "valence_core/session_e2a.py@bbc9ffe:40-46",
+  "sequence_lines": "valence_core/session_e2a.py@bbc9ffe:122-123",
+  "n_rounds_line": "valence_core/session_e2a.py@bbc9ffe:136",
+  "interleave_warning_line": "valence_core/session_e2a.py@bbc9ffe:118",
+  "F_values": [
+   2
+  ],
+  "N_FREE": 6,
+  "n_planned": [
+   10
+  ]
+ },
+ "cross_checks": {
+  "n2": {
+   "sha256_at_read": "4accacdebd538dabedea23185db3d363959a26905886f7d48a3e7b251a58a337",
+   "rows": [
+    {
+     "param": "temperature",
+     "n2_b2r_cell_has": true,
+     "n2_b2_cell_has": true,
+     "n2_b2r_status": "reproduced",
+     "n2_b2_status": "log-only"
+    },
+    {
+     "param": "top-p",
+     "n2_b2r_cell_has": true,
+     "n2_b2_cell_has": true,
+     "n2_b2r_status": "not found",
+     "n2_b2_status": "(descriptive)"
+    },
+    {
+     "param": "top-k",
+     "n2_b2r_cell_has": true,
+     "n2_b2_cell_has": true,
+     "n2_b2r_status": "not found",
+     "n2_b2_status": "(descriptive)"
+    },
+    {
+     "param": "max new tokens",
+     "n2_b2r_cell_has": true,
+     "n2_b2_cell_has": true,
+     "n2_b2r_status": "reproduced",
+     "n2_b2_status": "log-only"
+    },
+    {
+     "param": "seed policy",
+     "n2_b2r_cell_has": true,
+     "n2_b2_cell_has": true,
+     "n2_b2r_status": "reproduced",
+     "n2_b2_status": "log-only"
+    },
+    {
+     "param": "stop rule",
+     "n2_b2r_cell_has": true,
+     "n2_b2_cell_has": true,
+     "n2_b2r_status": "(descriptive)",
+     "n2_b2_status": "(descriptive)"
+    },
+    {
+     "param": "banned tokens",
+     "n2_b2r_cell_has": true,
+     "n2_b2_cell_has": true,
+     "n2_b2r_status": "(descriptive)",
+     "n2_b2_status": "(descriptive)"
+    },
+    {
+     "param": "generation path",
+     "n2_b2r_cell_has": true,
+     "n2_b2_cell_has": true,
+     "n2_b2r_status": "(descriptive)",
+     "n2_b2_status": "(descriptive)"
+    }
+   ],
+   "cap_diag": {
+    "header_line": 218,
+    "rows": {
+     "base": {
+      "line": 220,
+      "b2r_over_100": "0/96",
+      "b2r_max": 100,
+      "cut60_shortens": "96/96",
+      "cut60_shortens_all": true,
+      "b2_over_60": "0/96",
+      "b2_max": 60
+     },
+     "sft": {
+      "line": 221,
+      "b2r_over_100": "3/96",
+      "b2r_max": 102,
+      "cut60_shortens": "96/96",
+      "cut60_shortens_all": true,
+      "b2_over_60": "23/96",
+      "b2_max": 63
+     },
+     "dpo": {
+      "line": 222,
+      "b2r_over_100": "9/96",
+      "b2r_max": 104,
+      "cut60_shortens": "96/96",
+      "cut60_shortens_all": true,
+      "b2_over_60": "4/96",
+      "b2_max": 61
+     },
+     "instruct": {
+      "line": 223,
+      "b2r_over_100": "17/96",
+      "b2r_max": 103,
+      "cut60_shortens": "96/96",
+      "cut60_shortens_all": true,
+      "b2_over_60": "2/96",
+      "b2_max": 61
+     }
+    },
+    "impossible_for_exact_ids_line": 216,
+    "overshoot": [
+     1,
+     2,
+     3,
+     4
+    ],
+    "stages_at_caps_exactly": [
+     "base"
+    ]
+   }
+  },
+  "n4": {
+   "sha256_at_read": "12ddec97824a85eaddea318a9be7d22f0a34c2495a5ba5c70dffc24b197916af",
+   "json_sha256_at_read": "e38076b5f2354a615440ec0deff9333bf32a1230c25c7782104c69d73f45b902",
+   "script": {
+    "path": "scripts/audit_note_N4.py",
+    "sha256_at_read": "7236277c0dfeb85fac69720c5638137532a9bb7d6386d9f70f7d17b8ffc53080",
+    "ngen_formula_line": 1647,
+    "ngen_formula": "ngen = sum(len(x[\"rounds\"]) + len(x[\"choices\"]) for x in ss)"
+   },
+   "e2b_generated_rounds": {
+    "data/e2b/h1u_sessions.json": [
+     1003,
+     1003,
+     1003,
+     1003
+    ],
+    "data/e2b/h1_sessions.json": [
+     1111,
+     1110,
+     1111,
+     1111
+    ],
+    "data/e2b/h2_sessions.json": [
+     307,
+     307,
+     307,
+     null
+    ],
+    "data/e2b/verdict_campaign.json": [
+     1707,
+     1707,
+     1707,
+     1707
+    ]
+   },
+   "e2b_round_path_cached_agree": {
+    "data/e2b/h1u_sessions.json": [
+     true,
+     true,
+     true
+    ],
+    "data/e2b/h1_sessions.json": [
+     true,
+     true,
+     true
+    ],
+    "data/e2b/h2_sessions.json": [
+     true,
+     true,
+     true
+    ],
+    "data/e2b/verdict_campaign.json": [
+     true,
+     true,
+     true
+    ]
+   },
+   "uncached_counts_agree": {
+    "data/e2d/d2_analysis.json": [
+     {
+      "false": 1
+     },
+     {
+      "false": 1
+     },
+     true
+    ],
+    "data/e2d/d2_sessions.json": [
+     {
+      "false": 65
+     },
+     {
+      "false": 65
+     },
+     true
+    ],
+    "data/e2d/d3_sessions.json": [
+     {
+      "false": 25
+     },
+     {
+      "false": 25
+     },
+     true
+    ],
+    "data/format/format_recon_F0_sessions.json": [
+     {
+      "false": 89
+     },
+     {
+      "false": 89
+     },
+     true
+    ],
+    "data/format/format_recon_F1_sessions.json": [
+     {
+      "false": 236
+     },
+     {
+      "false": 236
+     },
+     true
+    ],
+    "data/format/format_recon_F2_sessions.json": [
+     {
+      "false": 265
+     },
+     {
+      "false": 265
+     },
+     true
+    ],
+    "data/format/format_recon_timing.json": [
+     {
+      "false": 39
+     },
+     {
+      "false": 39
+     },
+     true
+    ],
+    "data/k/k1_sessions.json": [
+     {
+      "false": 486
+     },
+     {
+      "false": 486
+     },
+     true
+    ]
+   },
+   "g2_use_cached_agree": {
+    "g2r (v2)": [
+     true,
+     true
+    ],
+    "g2r2 (v3)": [
+     true,
+     true
+    ]
+   },
+   "md_statements": {
+    "e2a full run cached (log-only)": true,
+    "D1 uncached (log-only)": true,
+    "f1 cached vanilla (log-only)": true,
+    "first g2 ladder uncached": true,
+    "TEMP 0.7 cited to clone e2a.py:48": true
+   }
+  }
+ },
+ "evidence": {
+  "e2a": {
+   "artifact": "data/e2a/sessions.jsonl",
+   "commit": "d49bb5d",
+   "n_sessions": 200,
+   "n_rounds_generated": 1894,
+   "walk_reconstructed": 200,
+   "seed_streams_matched": 200,
+   "cap": {
+    "n": 1894,
+    "cap_hits": 5,
+    "n_tok_eq_cap": 5,
+    "consistent": 1894,
+    "max_n_tok": 60,
+    "all_consistent": true
+   },
+   "banned_string_hits_in_transcripts": 0,
+   "row_fields_present": [
+    "F",
+    "arm",
+    "choices",
+    "dose",
+    "exclude_reason",
+    "excluded",
+    "first_free_pick_pos",
+    "has_degen_post_choice",
+    "n_cap_hits",
+    "n_rounds_generated",
+    "pair",
+    "rounds",
+    "session",
+    "start_plus",
+    "swap",
+    "tag_plus",
+    "transcript"
+   ],
+   "temp_field": false,
+   "path_field": false
+  },
+  "g2": {
+   "rounds": {
+    "data/e2a/g2_rounds_f0.1.json": {
+     "n_rounds": 128,
+     "seed_formula_matches": 128,
+     "cap_hits": 1,
+     "texts_with_newline": 0,
+     "commit": "947b9ea",
+     "texts_with_think": 0,
+     "has_cap_hit_field": true
+    },
+    "data/e2a/g2_rounds_f0.1_v2.json": {
+     "n_rounds": 128,
+     "seed_formula_matches": 128,
+     "cap_hits": 1,
+     "texts_with_newline": 0,
+     "commit": "947b9ea",
+     "texts_with_think": 1,
+     "has_cap_hit_field": true
+    },
+    "data/e2a/g2_rounds_f0.2_v2.json": {
+     "n_rounds": 128,
+     "seed_formula_matches": 128,
+     "cap_hits": 0,
+     "texts_with_newline": 124,
+     "commit": "947b9ea",
+     "texts_with_think": 102,
+     "has_cap_hit_field": false
+    }
+   },
+   "g2r2_use_cached": true,
+   "g2r_use_cached": true,
+   "g2r2_template_family": "v3",
+   "g2r_template_family": "v2"
+  },
+  "s1": {
+   "artifact": "data/e2a/s1_judge_rescue.json",
+   "commit": "f526377",
+   "n_cells": 8,
+   "n_reads": 512,
+   "row_keys": [
+    "a_is_pos",
+    "key",
+    "order",
+    "p_A",
+    "p_B",
+    "picked_pos"
+   ],
+   "any_generated_text_field": false,
+   "corpus": "e2a g2_rounds_f0.1 val half",
+   "pick_rule_consistent": 512,
+   "generate_calls_in_runner": 0,
+   "rng_uses": [
+    113
+   ],
+   "runner_blob_equal_pin": false
+  },
+  "f1": {
+   "artifact": "data/f/sessions.jsonl",
+   "commit": "50906bf",
+   "n_sessions": 344,
+   "seed_streams_match": 344,
+   "menu_orders_match": 344,
+   "n_seeds_checked": 3074,
+   "first_mismatches": [],
+   "pool_sizes": {
+    "SOLV_P": 16,
+    "SOLV_Q": 16,
+    "DIFF_easy": 16,
+    "DIFF_hard": 16,
+    "CORR_clean": 16,
+    "FDBK": 16,
+    "NOV": 16,
+    "SHAM": 16
+   },
+   "n_rounds": 3074,
+   "cap": {
+    "n": 3074,
+    "cap_hits": 14,
+    "n_tok_eq_cap": 14,
+    "consistent": 3074,
+    "max_n_tok": 60,
+    "all_consistent": true
+   },
+   "banned_string_hits_in_transcripts": 0,
+   "temp_field": false,
+   "calib_ban_sha": "9a2f0744f81ac930"
+  },
+  "e2b": {
+   "data/e2b/h1u_sessions.json": {
+    "data_commit_touched_runner_code": [
+     "scripts/e2b_h1_sessions.py"
+    ],
+    "runner_changed_between_run_and_data_commit": [
+     "6df2072"
+    ],
+    "stop_cap_def": "valence_core/e2b/session.py@b2d051b:83",
+    "session_e2a_py_exists_at_run_commit": false,
+    "data_commit": "6df2072",
+    "runner": "scripts/e2b_h1_sessions.py",
+    "runner_commit": "b2d051b",
+    "key": "\"h1\"",
+    "ban_file_committed_at_run_commit": true,
+    "runner_blob_equal_pin": false,
+    "temp": 0.7,
+    "round_path_cached": true,
+    "frac": 0.1,
+    "order_seed": 2026,
+    "provenance_gdn": "ops (fused disabled)",
+    "legacy_truncate_512": false,
+    "choice_window_declared": 8192,
+    "n_sessions": 112,
+    "replay": {
+     "n_sessions": 112,
+     "seed_streams_match": 112,
+     "task_streams_match": 112,
+     "n_seeds_checked": 1003,
+     "n_reads_without_round": 0,
+     "first_mismatches": []
+    },
+    "cap": {
+     "n": 1003,
+     "cap_hits": 5,
+     "n_tok_eq_cap": 5,
+     "consistent": 1003,
+     "max_n_tok": 60,
+     "all_consistent": true
+    },
+    "n_entries": 1003,
+    "n_generated": 1003,
+    "n_rounds_field": 1003,
+    "budget": {
+     "stop": false,
+     "stop_reason": null,
+     "stop_at": null,
+     "N": 576,
+     "N_max": 640
+    },
+    "reads_without_round": [],
+    "banned_string_hits_in_transcripts": 0,
+    "adapter_blob_equal_pin": false,
+    "adapter_generate_equal_pin": true,
+    "adapter_sample_line": "valence_core/adapters/qwen_mlx.py@b2d051b:238",
+    "adapter_stop_line": "valence_core/adapters/qwen_mlx.py@b2d051b:247",
+    "ban_path_line": "scripts/e2b_h1_sessions.py@b2d051b:317",
+    "temp_line": "scripts/e2b_h1_sessions.py@b2d051b:89",
+    "cached_line": "scripts/e2b_h1_sessions.py@b2d051b:323",
+    "rng_line": "scripts/e2b_h1_sessions.py@b2d051b:165",
+    "gen_line": "scripts/e2b_h1_sessions.py@b2d051b:189"
+   },
+   "data/e2b/h1_sessions.json": {
+    "data_commit_touched_runner_code": [],
+    "runner_changed_between_run_and_data_commit": [],
+    "stop_cap_def": "valence_core/e2b/session.py@6df2072:83",
+    "session_e2a_py_exists_at_run_commit": false,
+    "data_commit": "7527270",
+    "runner": "scripts/e2b_h1_sessions.py",
+    "runner_commit": "6df2072",
+    "key": "\"h1\"",
+    "ban_file_committed_at_run_commit": true,
+    "runner_blob_equal_pin": false,
+    "temp": 0.7,
+    "round_path_cached": true,
+    "frac": 0.1,
+    "order_seed": 2026,
+    "provenance_gdn": "ops (fused disabled)",
+    "legacy_truncate_512": false,
+    "choice_window_declared": 8192,
+    "n_sessions": 123,
+    "replay": {
+     "n_sessions": 123,
+     "seed_streams_match": 123,
+     "task_streams_match": 123,
+     "n_seeds_checked": 1110,
+     "n_reads_without_round": 1,
+     "first_mismatches": []
+    },
+    "cap": {
+     "n": 1110,
+     "cap_hits": 5,
+     "n_tok_eq_cap": 5,
+     "consistent": 1110,
+     "max_n_tok": 60,
+     "all_consistent": true
+    },
+    "n_entries": 1111,
+    "n_generated": 1110,
+    "n_rounds_field": 1111,
+    "budget": {
+     "stop": true,
+     "stop_reason": "N_max",
+     "stop_at": {
+      "session": 123,
+      "read": 4
+     },
+     "N": 640,
+     "N_max": 640
+    },
+    "reads_without_round": [
+     {
+      "session": 122,
+      "read": 4,
+      "global_read_index": 640,
+      "session_truncated_by_stop": true
+     }
+    ],
+    "banned_string_hits_in_transcripts": 0,
+    "adapter_blob_equal_pin": false,
+    "adapter_generate_equal_pin": true,
+    "adapter_sample_line": "valence_core/adapters/qwen_mlx.py@6df2072:238",
+    "adapter_stop_line": "valence_core/adapters/qwen_mlx.py@6df2072:247",
+    "ban_path_line": "scripts/e2b_h1_sessions.py@6df2072:339",
+    "temp_line": "scripts/e2b_h1_sessions.py@6df2072:94",
+    "cached_line": "scripts/e2b_h1_sessions.py@6df2072:345",
+    "rng_line": "scripts/e2b_h1_sessions.py@6df2072:170",
+    "gen_line": "scripts/e2b_h1_sessions.py@6df2072:201"
+   },
+   "data/e2b/h2_sessions.json": {
+    "data_commit_touched_runner_code": [],
+    "runner_changed_between_run_and_data_commit": [],
+    "stop_cap_def": "valence_core/e2b/session.py@2d419f2:83",
+    "session_e2a_py_exists_at_run_commit": false,
+    "data_commit": "2d419f2",
+    "runner": "scripts/e2b_h2_sessions.py",
+    "runner_commit": "2d419f2",
+    "key": "\"h2\"",
+    "ban_file_committed_at_run_commit": true,
+    "runner_blob_equal_pin": false,
+    "temp": 0.7,
+    "round_path_cached": true,
+    "frac": 0.1,
+    "order_seed": 2026,
+    "provenance_gdn": "ops (fused disabled)",
+    "legacy_truncate_512": false,
+    "choice_window_declared": 8192,
+    "n_sessions": 32,
+    "replay": {
+     "n_sessions": 32,
+     "seed_streams_match": 32,
+     "task_streams_match": 32,
+     "n_seeds_checked": 307,
+     "n_reads_without_round": 0,
+     "first_mismatches": []
+    },
+    "cap": {
+     "n": 307,
+     "cap_hits": 2,
+     "n_tok_eq_cap": 2,
+     "consistent": 307,
+     "max_n_tok": 60,
+     "all_consistent": true
+    },
+    "n_entries": 307,
+    "n_generated": 307,
+    "n_rounds_field": null,
+    "budget": null,
+    "reads_without_round": [],
+    "banned_string_hits_in_transcripts": 0,
+    "adapter_blob_equal_pin": false,
+    "adapter_generate_equal_pin": true,
+    "adapter_sample_line": "valence_core/adapters/qwen_mlx.py@2d419f2:238",
+    "adapter_stop_line": "valence_core/adapters/qwen_mlx.py@2d419f2:247",
+    "ban_path_line": "scripts/e2b_h2_sessions.py@2d419f2:323",
+    "temp_line": "scripts/e2b_h2_sessions.py@2d419f2:84",
+    "cached_line": "scripts/e2b_h2_sessions.py@2d419f2:338",
+    "rng_line": "scripts/e2b_h2_sessions.py@2d419f2:148",
+    "gen_line": "scripts/e2b_h2_sessions.py@2d419f2:176"
+   },
+   "data/e2b/verdict_campaign.json": {
+    "data_commit_touched_runner_code": [],
+    "runner_changed_between_run_and_data_commit": [],
+    "stop_cap_def": "valence_core/e2b/session.py@485cc94:83",
+    "session_e2a_py_exists_at_run_commit": false,
+    "data_commit": "485cc94",
+    "runner": "scripts/e2b_verdict_campaign.py",
+    "runner_commit": "485cc94",
+    "key": "f\"e2b-{arm}\"",
+    "ban_file_committed_at_run_commit": true,
+    "runner_blob_equal_pin": false,
+    "temp": 0.7,
+    "round_path_cached": true,
+    "frac": 0.1,
+    "order_seed": 2026,
+    "provenance_gdn": "ops (fused disabled)",
+    "legacy_truncate_512": false,
+    "choice_window_declared": 8192,
+    "n_sessions": 181,
+    "replay": {
+     "n_sessions": 181,
+     "seed_streams_match": 181,
+     "task_streams_match": 181,
+     "n_seeds_checked": 1707,
+     "n_reads_without_round": 0,
+     "first_mismatches": []
+    },
+    "cap": {
+     "n": 1707,
+     "cap_hits": 5,
+     "n_tok_eq_cap": 5,
+     "consistent": 1707,
+     "max_n_tok": 60,
+     "all_consistent": true
+    },
+    "n_entries": 1707,
+    "n_generated": 1707,
+    "n_rounds_field": 1707,
+    "budget": null,
+    "reads_without_round": [],
+    "banned_string_hits_in_transcripts": 0,
+    "adapter_blob_equal_pin": false,
+    "adapter_generate_equal_pin": true,
+    "adapter_sample_line": "valence_core/adapters/qwen_mlx.py@485cc94:238",
+    "adapter_stop_line": "valence_core/adapters/qwen_mlx.py@485cc94:247",
+    "ban_path_line": "scripts/e2b_verdict_campaign.py@485cc94:335",
+    "temp_line": "scripts/e2b_verdict_campaign.py@485cc94:83",
+    "cached_line": "scripts/e2b_verdict_campaign.py@485cc94:341",
+    "rng_line": "scripts/e2b_verdict_campaign.py@485cc94:177",
+    "gen_line": "scripts/e2b_verdict_campaign.py@485cc94:211"
+   }
+  },
+  "e2d_shared_seeds": {
+   "d1_vs_d2": "8/8",
+   "d1_vs_d3": "4/4",
+   "d2_vs_d3": "24/24"
+  },
+  "e2d": {
+   "d1": {
+    "data_commit": "db5b09c",
+    "code_commit": "4e41288",
+    "data_commit_touched_runner_code": [
+     "scripts/e2d_sessions.py",
+     "valence_core/e2d/runner.py"
+    ],
+    "runner_changed_between_code_and_data_commit": [
+     "db5b09c"
+    ],
+    "temp": 0.7,
+    "frac": 0.1,
+    "round_path_cached": "absent",
+    "round_path_source": "absent",
+    "draw_seed": "absent",
+    "ban_list": {
+     "n_ids": 12,
+     "n_strings": 12
+    },
+    "legacy_truncate_512": false,
+    "provenance_gdn": "ops (fused disabled)",
+    "n_sessions": 8,
+    "replay": {
+     "n_sessions": 8,
+     "seed_streams_match": 8,
+     "task_streams_match": 8,
+     "n_seeds_checked": 72,
+     "n_reads_without_round": 0,
+     "first_mismatches": []
+    },
+    "cap": {
+     "n": 72,
+     "cap_hits": 0,
+     "n_tok_eq_cap": 0,
+     "consistent": 72,
+     "max_n_tok": 27,
+     "all_consistent": true
+    },
+    "stop_reason": {
+     "newline": 72
+    },
+    "banned_string_hits_in_texts": 0,
+    "round_path_cached_key_counts": {},
+    "runner_lines": {
+     "temp": "valence_core/e2d/config.py@4e41288:41",
+     "rng": "valence_core/e2d/runner.py@4e41288:155",
+     "gen": "valence_core/e2d/runner.py@4e41288:191",
+     "ban": "scripts/e2d_sessions.py@4e41288:126",
+     "path": "valence_core/e2d/runner.py@4e41288:192"
+    },
+    "d1_data_commit_cached_line": "valence_core/e2d/runner.py@db5b09c:193",
+    "round_path_field_writer_at_data_commit": "valence_core/e2d/runner.py@db5b09c:262",
+    "round_path_field_writer_at_code_commit": null,
+    "adapter_blob_equal_pin": false,
+    "adapter_generate_equal_pin": true,
+    "adapter_sample_line": "valence_core/adapters/qwen_mlx.py@4e41288:238",
+    "adapter_stop_line": "valence_core/adapters/qwen_mlx.py@4e41288:247",
+    "stop_cap_line": "valence_core/session_e2a.py@4e41288:90",
+    "stopcap_field": false
+   },
+   "d2": {
+    "data_commit": "a274ecd",
+    "code_commit": "a274ecd",
+    "data_commit_touched_runner_code": [],
+    "runner_changed_between_code_and_data_commit": [],
+    "temp": 0.7,
+    "frac": 0.2,
+    "round_path_cached": false,
+    "round_path_source": "gate",
+    "draw_seed": 20260902,
+    "ban_list": {
+     "n_ids": 12,
+     "n_strings": 12
+    },
+    "legacy_truncate_512": false,
+    "provenance_gdn": "ops (fused disabled)",
+    "n_sessions": 64,
+    "replay": {
+     "n_sessions": 64,
+     "seed_streams_match": 64,
+     "task_streams_match": 64,
+     "n_seeds_checked": 607,
+     "n_reads_without_round": 0,
+     "first_mismatches": []
+    },
+    "cap": {
+     "n": 607,
+     "cap_hits": 0,
+     "n_tok_eq_cap": 0,
+     "consistent": 607,
+     "max_n_tok": 42,
+     "all_consistent": true
+    },
+    "stop_reason": {
+     "newline": 607
+    },
+    "banned_string_hits_in_texts": 0,
+    "round_path_cached_key_counts": {
+     "false": 65
+    },
+    "runner_lines": {
+     "temp": "valence_core/e2d/config.py@a274ecd:41",
+     "rng": "valence_core/e2d/runner.py@a274ecd:158",
+     "gen": "valence_core/e2d/runner.py@a274ecd:194",
+     "ban": "scripts/e2d_sessions.py@a274ecd:162",
+     "path": "scripts/e2d_sessions.py@a274ecd:237"
+    },
+    "d1_data_commit_cached_line": null,
+    "round_path_field_writer_at_data_commit": null,
+    "round_path_field_writer_at_code_commit": null,
+    "adapter_blob_equal_pin": false,
+    "adapter_generate_equal_pin": true,
+    "adapter_sample_line": "valence_core/adapters/qwen_mlx.py@a274ecd:238",
+    "adapter_stop_line": "valence_core/adapters/qwen_mlx.py@a274ecd:247",
+    "stop_cap_line": "valence_core/session_e2a.py@a274ecd:90",
+    "stopcap_field": true
+   },
+   "d3": {
+    "data_commit": "e58dfca",
+    "code_commit": "e58dfca",
+    "data_commit_touched_runner_code": [],
+    "runner_changed_between_code_and_data_commit": [],
+    "temp": 0.7,
+    "frac": 0.3,
+    "round_path_cached": false,
+    "round_path_source": "uncached",
+    "draw_seed": 20260902,
+    "ban_list": {
+     "n_ids": 12,
+     "n_strings": 12
+    },
+    "legacy_truncate_512": false,
+    "provenance_gdn": "ops (fused disabled)",
+    "n_sessions": 24,
+    "replay": {
+     "n_sessions": 24,
+     "seed_streams_match": 24,
+     "task_streams_match": 24,
+     "n_seeds_checked": 233,
+     "n_reads_without_round": 0,
+     "first_mismatches": []
+    },
+    "cap": {
+     "n": 233,
+     "cap_hits": 0,
+     "n_tok_eq_cap": 0,
+     "consistent": 233,
+     "max_n_tok": 42,
+     "all_consistent": true
+    },
+    "stop_reason": {
+     "newline": 233
+    },
+    "banned_string_hits_in_texts": 0,
+    "round_path_cached_key_counts": {
+     "false": 25
+    },
+    "runner_lines": {
+     "temp": "valence_core/e2d/config.py@e58dfca:41",
+     "rng": "valence_core/e2d/runner.py@e58dfca:158",
+     "gen": "valence_core/e2d/runner.py@e58dfca:194",
+     "ban": "scripts/e2d_sessions.py@e58dfca:162",
+     "path": "scripts/e2d_sessions.py@e58dfca:237"
+    },
+    "d1_data_commit_cached_line": null,
+    "round_path_field_writer_at_data_commit": null,
+    "round_path_field_writer_at_code_commit": null,
+    "adapter_blob_equal_pin": false,
+    "adapter_generate_equal_pin": true,
+    "adapter_sample_line": "valence_core/adapters/qwen_mlx.py@e58dfca:238",
+    "adapter_stop_line": "valence_core/adapters/qwen_mlx.py@e58dfca:247",
+    "stop_cap_line": "valence_core/session_e2a.py@e58dfca:90",
+    "stopcap_field": true
+   }
+  },
+  "fmt": {
+   "data/k/k1_sessions.json": {
+    "data_commit": "7742e2c",
+    "data_commit_touched_runner_code": [],
+    "artifact": "data/k/k1_sessions.json",
+    "temp_top": 0.7,
+    "temp_rows": {
+     "0.7": 48
+    },
+    "identity_temp": 0.7,
+    "draw_seed": 20260909,
+    "ban_list": "absent",
+    "rng_keys": [
+     "k1-F2"
+    ],
+    "legacy_truncate_512": false,
+    "n_sessions": 48,
+    "replay": {
+     "n_sessions": 48,
+     "seed_streams_match": 48,
+     "task_streams_match": 48,
+     "n_seeds_checked": 438,
+     "n_reads_without_round": 0,
+     "first_mismatches": []
+    },
+    "cap": {
+     "n": 438,
+     "cap_hits": 0,
+     "n_tok_eq_cap": 0,
+     "consistent": 438,
+     "max_n_tok": 50,
+     "all_consistent": true
+    },
+    "stop_reason": {
+     "newline": 438
+    },
+    "round_path_cached_items": {
+     "false": 438
+    },
+    "round_path_cached_key_counts": {
+     "false": 486
+    },
+    "banned_string_hits_in_texts": 0,
+    "runner_lines": {
+     "cached": "valence_core/formats/recon.py@7742e2c:312",
+     "gen": "valence_core/formats/recon.py@7742e2c:314",
+     "rng": "valence_core/formats/recon.py@7742e2c:278",
+     "temp": "valence_core/e2d/config.py@7742e2c:41"
+    },
+    "adapter_blob_equal_pin": true,
+    "adapter_generate_equal_pin": true,
+    "adapter_sample_line": "valence_core/adapters/qwen_mlx.py@7742e2c:290",
+    "adapter_stop_line": "valence_core/adapters/qwen_mlx.py@7742e2c:299",
+    "stop_cap_line": "valence_core/session_e2a.py@7742e2c:90",
+    "ban_line": "scripts/k1_stage1.py@7742e2c:264"
+   },
+   "data/format/format_recon_F0_sessions.json": {
+    "data_commit": "3c23320",
+    "data_commit_touched_runner_code": [],
+    "artifact": "data/format/format_recon_F0_sessions.json",
+    "temp_top": 0.7,
+    "temp_rows": {
+     "0.7": 8
+    },
+    "identity_temp": 0.7,
+    "draw_seed": 20260906,
+    "ban_list": {
+     "n_ids": 12,
+     "n_strings": 12
+    },
+    "rng_keys": [
+     "fmt-F0"
+    ],
+    "legacy_truncate_512": false,
+    "n_sessions": 8,
+    "replay": {
+     "n_sessions": 8,
+     "seed_streams_match": 8,
+     "task_streams_match": 8,
+     "n_seeds_checked": 80,
+     "n_reads_without_round": 0,
+     "first_mismatches": []
+    },
+    "cap": {
+     "n": 80,
+     "cap_hits": 1,
+     "n_tok_eq_cap": 1,
+     "consistent": 80,
+     "max_n_tok": 60,
+     "all_consistent": true
+    },
+    "stop_reason": {
+     "newline": 79,
+     "cap": 1
+    },
+    "round_path_cached_items": {
+     "false": 80
+    },
+    "round_path_cached_key_counts": {
+     "false": 89
+    },
+    "banned_string_hits_in_texts": 0,
+    "runner_lines": {
+     "cached": "valence_core/formats/recon.py@3c23320:307",
+     "gen": "valence_core/formats/recon.py@3c23320:309",
+     "rng": "valence_core/formats/recon.py@3c23320:273",
+     "temp": "valence_core/e2d/config.py@3c23320:41"
+    },
+    "adapter_blob_equal_pin": true,
+    "adapter_generate_equal_pin": true,
+    "adapter_sample_line": "valence_core/adapters/qwen_mlx.py@3c23320:290",
+    "adapter_stop_line": "valence_core/adapters/qwen_mlx.py@3c23320:299",
+    "stop_cap_line": "valence_core/session_e2a.py@3c23320:90",
+    "ban_line": "scripts/format_recon.py@3c23320:627"
+   },
+   "data/format/format_recon_F1_sessions.json": {
+    "data_commit": "3c23320",
+    "data_commit_touched_runner_code": [],
+    "artifact": "data/format/format_recon_F1_sessions.json",
+    "temp_top": 0.7,
+    "temp_rows": {
+     "0.7": 24
+    },
+    "identity_temp": 0.7,
+    "draw_seed": 20260906,
+    "ban_list": {
+     "n_ids": 12,
+     "n_strings": 12
+    },
+    "rng_keys": [
+     "fmt-F1"
+    ],
+    "legacy_truncate_512": false,
+    "n_sessions": 24,
+    "replay": {
+     "n_sessions": 24,
+     "seed_streams_match": 24,
+     "task_streams_match": 24,
+     "n_seeds_checked": 211,
+     "n_reads_without_round": 0,
+     "first_mismatches": []
+    },
+    "cap": {
+     "n": 211,
+     "cap_hits": 0,
+     "n_tok_eq_cap": 0,
+     "consistent": 211,
+     "max_n_tok": 33,
+     "all_consistent": true
+    },
+    "stop_reason": {
+     "newline": 211
+    },
+    "round_path_cached_items": {
+     "false": 211
+    },
+    "round_path_cached_key_counts": {
+     "false": 236
+    },
+    "banned_string_hits_in_texts": 0,
+    "runner_lines": {
+     "cached": "valence_core/formats/recon.py@3c23320:307",
+     "gen": "valence_core/formats/recon.py@3c23320:309",
+     "rng": "valence_core/formats/recon.py@3c23320:273",
+     "temp": "valence_core/e2d/config.py@3c23320:41"
+    },
+    "adapter_blob_equal_pin": true,
+    "adapter_generate_equal_pin": true,
+    "adapter_sample_line": "valence_core/adapters/qwen_mlx.py@3c23320:290",
+    "adapter_stop_line": "valence_core/adapters/qwen_mlx.py@3c23320:299",
+    "stop_cap_line": "valence_core/session_e2a.py@3c23320:90",
+    "ban_line": "scripts/format_recon.py@3c23320:627"
+   },
+   "data/format/format_recon_F2_sessions.json": {
+    "data_commit": "3c23320",
+    "data_commit_touched_runner_code": [],
+    "artifact": "data/format/format_recon_F2_sessions.json",
+    "temp_top": 0.7,
+    "temp_rows": {
+     "0.7": 24
+    },
+    "identity_temp": 0.7,
+    "draw_seed": 20260906,
+    "ban_list": {
+     "n_ids": 12,
+     "n_strings": 12
+    },
+    "rng_keys": [
+     "fmt-F2"
+    ],
+    "legacy_truncate_512": false,
+    "n_sessions": 24,
+    "replay": {
+     "n_sessions": 24,
+     "seed_streams_match": 24,
+     "task_streams_match": 24,
+     "n_seeds_checked": 240,
+     "n_reads_without_round": 0,
+     "first_mismatches": []
+    },
+    "cap": {
+     "n": 240,
+     "cap_hits": 0,
+     "n_tok_eq_cap": 0,
+     "consistent": 240,
+     "max_n_tok": 38,
+     "all_consistent": true
+    },
+    "stop_reason": {
+     "newline": 240
+    },
+    "round_path_cached_items": {
+     "false": 240
+    },
+    "round_path_cached_key_counts": {
+     "false": 265
+    },
+    "banned_string_hits_in_texts": 0,
+    "runner_lines": {
+     "cached": "valence_core/formats/recon.py@3c23320:307",
+     "gen": "valence_core/formats/recon.py@3c23320:309",
+     "rng": "valence_core/formats/recon.py@3c23320:273",
+     "temp": "valence_core/e2d/config.py@3c23320:41"
+    },
+    "adapter_blob_equal_pin": true,
+    "adapter_generate_equal_pin": true,
+    "adapter_sample_line": "valence_core/adapters/qwen_mlx.py@3c23320:290",
+    "adapter_stop_line": "valence_core/adapters/qwen_mlx.py@3c23320:299",
+    "stop_cap_line": "valence_core/session_e2a.py@3c23320:90",
+    "ban_line": "scripts/format_recon.py@3c23320:627"
+   }
+  },
+  "b2": {
+   "data_commit_touched_runner_code": [],
+   "runner_intro": "0d4c147",
+   "driver_commit": "c3dbf38",
+   "driver_committed_after_data": true,
+   "files": {
+    "data/olmo/b2_fidelity_base.json": {
+     "n": 48,
+     "alloc_replay_20260823": true,
+     "fields": {
+      "temp": false,
+      "max_tokens": false,
+      "seed": false,
+      "ban_list": false
+     },
+     "trial_seed_field": false,
+     "provenance_seed": 20260818,
+     "deterministic": true,
+     "alloc_replay_plan_trials_default_seed": false,
+     "resp_len_chars": [
+      243,
+      265
+     ],
+     "banned_hits_raw": 0
+    },
+    "data/olmo/b2_fidelity_sft.json": {
+     "n": 48,
+     "alloc_replay_20260823": true,
+     "fields": {
+      "temp": false,
+      "max_tokens": false,
+      "seed": false,
+      "ban_list": false
+     },
+     "trial_seed_field": false,
+     "provenance_seed": 20260818,
+     "deterministic": true,
+     "alloc_replay_plan_trials_default_seed": false,
+     "resp_len_chars": [
+      227,
+      310
+     ],
+     "banned_hits_raw": 0
+    },
+    "data/olmo/b2_fidelity_dpo.json": {
+     "n": 48,
+     "alloc_replay_20260823": true,
+     "fields": {
+      "temp": false,
+      "max_tokens": false,
+      "seed": false,
+      "ban_list": false
+     },
+     "trial_seed_field": false,
+     "provenance_seed": 20260818,
+     "deterministic": true,
+     "alloc_replay_plan_trials_default_seed": false,
+     "resp_len_chars": [
+      239,
+      311
+     ],
+     "banned_hits_raw": 0
+    },
+    "data/olmo/b2_fidelity_instruct.json": {
+     "n": 48,
+     "alloc_replay_20260823": true,
+     "fields": {
+      "temp": false,
+      "max_tokens": false,
+      "seed": false,
+      "ban_list": false
+     },
+     "trial_seed_field": false,
+     "provenance_seed": 20260818,
+     "deterministic": true,
+     "alloc_replay_plan_trials_default_seed": false,
+     "resp_len_chars": [
+      239,
+      293
+     ],
+     "banned_hits_raw": 0
+    },
+    "data/olmo/b2_register_base.json": {
+     "n": 48,
+     "alloc_replay_20260823": true,
+     "fields": {
+      "temp": false,
+      "max_tokens": false,
+      "seed": false,
+      "ban_list": false
+     },
+     "trial_seed_field": false,
+     "provenance_seed": 20260818,
+     "deterministic": true,
+     "alloc_replay_plan_trials_default_seed": false,
+     "resp_len_chars": [
+      317,
+      349
+     ],
+     "banned_hits_raw": 0
+    },
+    "data/olmo/b2_register_sft.json": {
+     "n": 48,
+     "alloc_replay_20260823": true,
+     "fields": {
+      "temp": false,
+      "max_tokens": false,
+      "seed": false,
+      "ban_list": false
+     },
+     "trial_seed_field": false,
+     "provenance_seed": 20260818,
+     "deterministic": true,
+     "alloc_replay_plan_trials_default_seed": false,
+     "resp_len_chars": [
+      272,
+      348
+     ],
+     "banned_hits_raw": 0
+    },
+    "data/olmo/b2_register_dpo.json": {
+     "n": 48,
+     "alloc_replay_20260823": true,
+     "fields": {
+      "temp": false,
+      "max_tokens": false,
+      "seed": false,
+      "ban_list": false
+     },
+     "trial_seed_field": false,
+     "provenance_seed": 20260818,
+     "deterministic": true,
+     "alloc_replay_plan_trials_default_seed": false,
+     "resp_len_chars": [
+      254,
+      333
+     ],
+     "banned_hits_raw": 0
+    },
+    "data/olmo/b2_register_instruct.json": {
+     "n": 48,
+     "alloc_replay_20260823": true,
+     "fields": {
+      "temp": false,
+      "max_tokens": false,
+      "seed": false,
+      "ban_list": false
+     },
+     "trial_seed_field": false,
+     "provenance_seed": 20260818,
+     "deterministic": true,
+     "alloc_replay_plan_trials_default_seed": false,
+     "resp_len_chars": [
+      281,
+      337
+     ],
+     "banned_hits_raw": 0
+    }
+   },
+   "data_commit": "720a104",
+   "plan_trials_default_seed": 20260819,
+   "runner_blob_equal_pin": true,
+   "adapter_blob_equal_pin": true,
+   "lines": {
+    "gen": "scripts/box_b2_detection.py@720a104:198",
+    "max": "scripts/box_b2_detection.py@720a104:129",
+    "seed": "scripts/box_b2_detection.py@720a104:130",
+    "stop": "scripts/box_b2_detection.py@720a104:199",
+    "cached": "scripts/box_b2_detection.py@720a104:200",
+    "ban": "scripts/box_b2_detection.py@720a104:155",
+    "driver_no_override": "scripts/run_bphase.sh@c3dbf38:67"
+   },
+   "lock_g": {
+    "seeded_perm_line": "LOCK-g.md@bbc9ffe:103-104",
+    "decoding_terms": [],
+    "greedy_lines": "LOCK-g.md@bbc9ffe:40,42"
+   }
+  },
+  "b2r": {
+   "data_commit_touched_runner_code": [],
+   "addendum": "ADDENDUM-g3-b2r-v1.2.md",
+   "addendum_commit": "f14d249",
+   "addendum_commit_date": "2026-08-24",
+   "addendum_decoding_lines": "ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:89-96",
+   "addendum_names_all_line": "ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:95-96",
+   "addendum_b2_greedy_line": "ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:31",
+   "addendum_mentions_top_p_or_k": false,
+   "addendum_before_runner_intro": true,
+   "files": {
+    "data/olmo/b2r_control_base.json": {
+     "temp": 1.0,
+     "max_tokens": 100,
+     "seed": 20260824,
+     "provenance_seed": 20260818,
+     "deterministic": true,
+     "n": 96,
+     "seed_eq_base_plus_trial": 96,
+     "resp_len_chars": [
+      384,
+      545
+     ],
+     "banned_hits_raw": 2,
+     "banned_hit_trials": [
+      {
+       "trial": 59,
+       "string": "<|endoftext|>",
+       "audit": null,
+       "claimed_detection": false
+      },
+      {
+       "trial": 95,
+       "string": "<|im_end|>",
+       "audit": "special:<|im_end|>",
+       "claimed_detection": null
+      }
+     ]
+    },
+    "data/olmo/b2r_control_sft.json": {
+     "temp": 1.0,
+     "max_tokens": 100,
+     "seed": 20260824,
+     "provenance_seed": 20260818,
+     "deterministic": true,
+     "n": 96,
+     "seed_eq_base_plus_trial": 96,
+     "resp_len_chars": [
+      390,
+      570
+     ],
+     "banned_hits_raw": 0,
+     "banned_hit_trials": []
+    },
+    "data/olmo/b2r_control_dpo.json": {
+     "temp": 1.0,
+     "max_tokens": 100,
+     "seed": 20260824,
+     "provenance_seed": 20260818,
+     "deterministic": true,
+     "n": 96,
+     "seed_eq_base_plus_trial": 96,
+     "resp_len_chars": [
+      408,
+      588
+     ],
+     "banned_hits_raw": 0,
+     "banned_hit_trials": []
+    },
+    "data/olmo/b2r_control_instruct.json": {
+     "temp": 1.0,
+     "max_tokens": 100,
+     "seed": 20260824,
+     "provenance_seed": 20260818,
+     "deterministic": true,
+     "n": 96,
+     "seed_eq_base_plus_trial": 96,
+     "resp_len_chars": [
+      321,
+      548
+     ],
+     "banned_hits_raw": 0,
+     "banned_hit_trials": []
+    },
+    "data/olmo/b2r_explore_sft.json": {
+     "temp": 1.0,
+     "max_tokens": 100,
+     "seed": 20260824,
+     "provenance_seed": 20260818,
+     "deterministic": true,
+     "n": 96,
+     "alloc_replay": true,
+     "seed_eq_base_plus_trial": 96,
+     "explore_seeds_equal_control_seeds": 96,
+     "resp_len_chars": [
+      346,
+      570
+     ],
+     "banned_hits_raw": 0,
+     "banned_hit_trials": []
+    },
+    "data/olmo/b2r_explore_dpo.json": {
+     "temp": 1.0,
+     "max_tokens": 100,
+     "seed": 20260824,
+     "provenance_seed": 20260818,
+     "deterministic": true,
+     "n": 96,
+     "alloc_replay": true,
+     "seed_eq_base_plus_trial": 96,
+     "explore_seeds_equal_control_seeds": 96,
+     "resp_len_chars": [
+      275,
+      535
+     ],
+     "banned_hits_raw": 0,
+     "banned_hit_trials": []
+    },
+    "data/olmo/b2r_explore_instruct.json": {
+     "temp": 1.0,
+     "max_tokens": 100,
+     "seed": 20260824,
+     "provenance_seed": 20260818,
+     "deterministic": true,
+     "n": 96,
+     "alloc_replay": true,
+     "seed_eq_base_plus_trial": 96,
+     "explore_seeds_equal_control_seeds": 96,
+     "resp_len_chars": [
+      385,
+      538
+     ],
+     "banned_hits_raw": 0,
+     "banned_hit_trials": []
+    },
+    "data/olmo/b2r_qualify_base.json": {
+     "temp": 1.0,
+     "max_tokens": 100,
+     "seed": 20260824,
+     "provenance_seed": 20260818,
+     "deterministic": true,
+     "n_control_rows": 24,
+     "control_seed_formula_ok": 24,
+     "n_injected_rows": 96,
+     "injected_seed_formula_ok": 96,
+     "max_rows_sharing_one_seed_within_strength": 4,
+     "n_concepts": 4,
+     "banned_hits_raw": 0,
+     "banned_hit_trials": []
+    },
+    "data/olmo/b2r_qualify_sft.json": {
+     "temp": 1.0,
+     "max_tokens": 100,
+     "seed": 20260824,
+     "provenance_seed": 20260818,
+     "deterministic": true,
+     "n_control_rows": 24,
+     "control_seed_formula_ok": 24,
+     "n_injected_rows": 96,
+     "injected_seed_formula_ok": 96,
+     "max_rows_sharing_one_seed_within_strength": 4,
+     "n_concepts": 4,
+     "banned_hits_raw": 0,
+     "banned_hit_trials": []
+    },
+    "data/olmo/b2r_qualify_dpo.json": {
+     "temp": 1.0,
+     "max_tokens": 100,
+     "seed": 20260824,
+     "provenance_seed": 20260818,
+     "deterministic": true,
+     "n_control_rows": 24,
+     "control_seed_formula_ok": 24,
+     "n_injected_rows": 96,
+     "injected_seed_formula_ok": 96,
+     "max_rows_sharing_one_seed_within_strength": 4,
+     "n_concepts": 4,
+     "banned_hits_raw": 0,
+     "banned_hit_trials": []
+    },
+    "data/olmo/b2r_qualify_instruct.json": {
+     "temp": 1.0,
+     "max_tokens": 100,
+     "seed": 20260824,
+     "provenance_seed": 20260818,
+     "deterministic": true,
+     "n_control_rows": 24,
+     "control_seed_formula_ok": 24,
+     "n_injected_rows": 96,
+     "injected_seed_formula_ok": 96,
+     "max_rows_sharing_one_seed_within_strength": 4,
+     "n_concepts": 4,
+     "banned_hits_raw": 0,
+     "banned_hit_trials": []
+    }
+   },
+   "data_commit": "b6e8f3f",
+   "stamped_head": "745c196",
+   "stamped_head_line": "results/raw/2026-08-25_b2r_arc.txt@bbc9ffe:5",
+   "runner_blob_equal_pin": true,
+   "runner_blob_stamped_equal_pin": true,
+   "adapter_blob_equal_pin": true,
+   "lines": {
+    "temp": "scripts/box_b2r_campaign.py@b6e8f3f:54",
+    "max": "scripts/box_b2r_campaign.py@b6e8f3f:55",
+    "seed": "scripts/box_b2r_campaign.py@b6e8f3f:257",
+    "qual_seed": "scripts/box_b2r_campaign.py@b6e8f3f:163",
+    "stop": "scripts/box_b2r_campaign.py@b6e8f3f:129",
+    "cached": "scripts/box_b2r_campaign.py@b6e8f3f:130",
+    "ban": "scripts/box_b2r_campaign.py@b6e8f3f:269",
+    "audit_ban": "scripts/box_b2r_campaign.py@b6e8f3f:65"
+   }
+  },
+  "b3": {
+   "files": {
+    "data/olmo/b3_screen_base.json": {
+     "temp_field": false,
+     "ban_list": {
+      "n_ids": 9,
+      "sha16": "2dd86a453a2275ef"
+     },
+     "provenance_seed": 20260818,
+     "deterministic": true,
+     "n_sessions": 89,
+     "replay": {
+      "n_sessions": 89,
+      "seed_streams_match": 89,
+      "task_streams_match": 89,
+      "n_seeds_checked": 856,
+      "n_reads_without_round": 0,
+      "first_mismatches": []
+     },
+     "cap": {
+      "n": 856,
+      "cap_hits": 3,
+      "n_tok_eq_cap": 3,
+      "consistent": 856,
+      "max_n_tok": 60,
+      "all_consistent": true
+     },
+     "path_field": false,
+     "banned_hits": 0
+    },
+    "data/olmo/b3_screen_sft.json": {
+     "temp_field": false,
+     "ban_list": {
+      "n_ids": 9,
+      "sha16": "2dd86a453a2275ef"
+     },
+     "provenance_seed": 20260818,
+     "deterministic": true,
+     "n_sessions": 99,
+     "replay": {
+      "n_sessions": 99,
+      "seed_streams_match": 99,
+      "task_streams_match": 99,
+      "n_seeds_checked": 869,
+      "n_reads_without_round": 0,
+      "first_mismatches": []
+     },
+     "cap": {
+      "n": 869,
+      "cap_hits": 5,
+      "n_tok_eq_cap": 5,
+      "consistent": 869,
+      "max_n_tok": 60,
+      "all_consistent": true
+     },
+     "path_field": false,
+     "banned_hits": 0
+    },
+    "data/olmo/b3_screen_dpo.json": {
+     "temp_field": false,
+     "ban_list": {
+      "n_ids": 9,
+      "sha16": "2dd86a453a2275ef"
+     },
+     "provenance_seed": 20260818,
+     "deterministic": true,
+     "n_sessions": 94,
+     "replay": {
+      "n_sessions": 94,
+      "seed_streams_match": 94,
+      "task_streams_match": 94,
+      "n_seeds_checked": 860,
+      "n_reads_without_round": 0,
+      "first_mismatches": []
+     },
+     "cap": {
+      "n": 860,
+      "cap_hits": 0,
+      "n_tok_eq_cap": 0,
+      "consistent": 860,
+      "max_n_tok": 42,
+      "all_consistent": true
+     },
+     "path_field": false,
+     "banned_hits": 0
+    },
+    "data/olmo/b3_screen_instruct.json": {
+     "temp_field": false,
+     "ban_list": {
+      "n_ids": 9,
+      "sha16": "2dd86a453a2275ef"
+     },
+     "provenance_seed": 20260818,
+     "deterministic": true,
+     "n_sessions": 95,
+     "replay": {
+      "n_sessions": 95,
+      "seed_streams_match": 95,
+      "task_streams_match": 95,
+      "n_seeds_checked": 877,
+      "n_reads_without_round": 0,
+      "first_mismatches": []
+     },
+     "cap": {
+      "n": 877,
+      "cap_hits": 0,
+      "n_tok_eq_cap": 0,
+      "consistent": 877,
+      "max_n_tok": 42,
+      "all_consistent": true
+     },
+     "path_field": false,
+     "banned_hits": 0
+    }
+   },
+   "data_commit": "720a104",
+   "data_commit_touched_runner_code": [],
+   "same_arm_session_seeds_equal_across_stages": "267/267",
+   "same_arm_session_seeds_equal_all_stage_pairs": "546/546",
+   "keys_present_at_all_four_stages": 89,
+   "a2_ban_lists": {
+    "base": {
+     "n_ids": 9,
+     "sha16": "c0297fa8ee89d29d",
+     "strings": [
+      "</think>",
+      "<think>",
+      "<|endoftext|>",
+      "<|im_end|>",
+      "<|im_start|>",
+      "<|pad|>"
+     ]
+    },
+    "sft": {
+     "n_ids": 9,
+     "sha16": "c0297fa8ee89d29d",
+     "strings": [
+      "</think>",
+      "<think>",
+      "<|endoftext|>",
+      "<|im_end|>",
+      "<|im_start|>",
+      "<|pad|>"
+     ]
+    },
+    "dpo": {
+     "n_ids": 9,
+     "sha16": "c0297fa8ee89d29d",
+     "strings": [
+      "</think>",
+      "<think>",
+      "<|endoftext|>",
+      "<|im_end|>",
+      "<|im_start|>",
+      "<|pad|>"
+     ]
+    },
+    "instruct": {
+     "n_ids": 9,
+     "sha16": "c0297fa8ee89d29d",
+     "strings": [
+      "</think>",
+      "<think>",
+      "<|endoftext|>",
+      "<|im_end|>",
+      "<|im_start|>",
+      "<|pad|>"
+     ]
+    }
+   },
+   "olmo_ban": {
+    "record_ids_locator": "results/raw/2026-10-05_m-v1.10_referent_check.txt@bbc9ffe:4184-4186",
+    "record_five_locator": "results/raw/2026-10-05_m-v1.10_referent_check.txt@bbc9ffe:4177",
+    "record_check_locator": "results/raw/2026-10-05_m-v1.10_referent_check.txt@bbc9ffe:4188",
+    "subword_pieces_from_record": {
+     "</": 524,
+     "think": 27963,
+     ">": 29,
+     "<th": 14023,
+     "ink": 771
+    },
+    "special_ids_from_record": [
+     100257,
+     100265,
+     100264,
+     100277
+    ],
+    "ids": [
+     29,
+     524,
+     771,
+     14023,
+     27963,
+     100257,
+     100264,
+     100265,
+     100277
+    ],
+    "sha16_sorted_ids_convention": "2dd86a453a2275ef",
+    "b3_sha16_fields": [
+     "2dd86a453a2275ef"
+    ],
+    "b3_convention_matches_all_stages": true,
+    "sha16_ids_strings_convention": "c0297fa8ee89d29d",
+    "a2_sha16_fields": [
+     "c0297fa8ee89d29d"
+    ],
+    "a2_convention_matches_all_stages": true,
+    "b3_sha_line": "scripts/box_b3_sessions.py@720a104:262",
+    "a2_data_commit": "cc9db1d",
+    "scaffold_fields": {
+     "base": {
+      "ban_roster_size": 9,
+      "ban_strings": [
+       "</think>",
+       "<think>",
+       "<|endoftext|>",
+       "<|im_end|>",
+       "<|im_start|>",
+       "<|pad|>"
+      ]
+     },
+     "sft": {
+      "ban_roster_size": 9,
+      "ban_strings": [
+       "</think>",
+       "<think>",
+       "<|endoftext|>",
+       "<|im_end|>",
+       "<|im_start|>",
+       "<|pad|>"
+      ]
+     },
+     "dpo": {
+      "ban_roster_size": 9,
+      "ban_strings": [
+       "</think>",
+       "<think>",
+       "<|endoftext|>",
+       "<|im_end|>",
+       "<|im_start|>",
+       "<|pad|>"
+      ]
+     },
+     "instruct": {
+      "ban_roster_size": 9,
+      "ban_strings": [
+       "</think>",
+       "<think>",
+       "<|endoftext|>",
+       "<|im_end|>",
+       "<|im_start|>",
+       "<|pad|>"
+      ]
+     }
+    },
+    "scaffold_commit": "ef12c58",
+    "builder_lines": "valence_core/session.py@bbc9ffe:116-120",
+    "builder_source_equal": {
+     "720a104": true,
+     "b6e8f3f": true
+    },
+    "a2_sha_line": "scripts/box_a2_baserates.py@cc9db1d:319-320",
+    "local_base_tokenizer_outside_record": {
+     "snapshot": "c2b61dae...",
+     "id_to_piece": {
+      "29": ">",
+      "524": "</",
+      "771": "ink",
+      "14023": "<th",
+      "27963": "think",
+      "100257": "<|endoftext|>",
+      "100264": "<|im_start|>",
+      "100265": "<|im_end|>",
+      "100277": "<|pad|>"
+     },
+     "pieces_agree_with_record": true,
+     "think_strings_are_added_tokens": {
+      "<think>": false,
+      "</think>": false
+     },
+     "eos_token": "<|endoftext|>",
+     "eos_id": 100257,
+     "eos_id_in_ids": true,
+     "tokenizer_json_sha256_equals_manifest_base": false,
+     "tokenizer_config_sha256_equals_manifest_base": false
+    }
+   },
+   "runner_blob_equal_pin": true,
+   "lines": {
+    "temp": "scripts/box_b3_sessions.py@720a104:77",
+    "temp_cli": "scripts/box_b3_sessions.py@720a104:220",
+    "rng": "scripts/box_b3_sessions.py@720a104:131",
+    "gen": "scripts/box_b3_sessions.py@720a104:156",
+    "cached_default": "scripts/box_b3_sessions.py@720a104:129",
+    "call_no_cached": "scripts/box_b3_sessions.py@720a104:321",
+    "ban": "scripts/box_b3_sessions.py@720a104:261",
+    "driver_no_override": "scripts/run_bphase.sh@c3dbf38:81",
+    "driver_cached_forbidden": "scripts/run_bphase.sh@c3dbf38:3"
+   }
+  }
+ },
+ "data_commits_touching_runner_code": [
+  "6df2072 (data/e2b/h1u_sessions.json: scripts/e2b_h1_sessions.py; cited at its run commit b2d051b)",
+  "db5b09c (e2d D1: scripts/e2d_sessions.py, valence_core/e2d/runner.py; cited at its code commit 4e41288)"
+ ],
+ "table": [
+  {
+   "dv": "e2a rounds (Qwen; 200 sessions, 1894 generated rounds)",
+   "temperature": "0.7 [log-only: committed prose valence_core/e2d/config.py@bbc9ffe:41 ('e2a's TEMP'), a later code comment (introduced 4e41288, 2026-09-01; e2a's data commit d49bb5d is 2026-08-12), not an e2a log entry; pre-reg says only 'temperature-sampled' (archive/RESULTS-cycles3-4.md@bbc9ffe:1251); clone jlens-qwen36/jlens_qwen/e2a.py:48]",
+   "top_p_top_k": "none [not found in the record; clone jlens-qwen36/jlens_qwen/e2a.py:274; the ported adapter that rebuilt e2a's scaffolding samples the same way (valence_core/adapters/qwen_mlx.py@bbc9ffe:290)]",
+   "max_new_tokens": "60 [reproduced: 5 cap hits in 1894 rounds, all at n_tok = 60; cap_hit iff n_tok = 60 on 1894/1894; max n_tok 60 (sessions.jsonl n_tok/cap_hit); log archive/RESULTS-cycles3-4.md@bbc9ffe:1050]",
+   "seed_policy": "per session: one numpy Generator default_rng(crc32(f\"{arm}|{s}\") % 2**31); draws permutation(16), then integers(4) for each of the 10 planned rounds (2F + N_FREE, F = 2, N_FREE = 6; all 10 before any seed), then per forced round a seed integers(2**31), per free round integers(2) (menu) then a seed (valence_core/session_e2a.py@bbc9ffe:40-46; valence_core/session_e2a.py@bbc9ffe:122-123; interleaving the paraphrase draws with the seed draws collapses the replay to 4/200, valence_core/session_e2a.py@bbc9ffe:118); the clone passes each round's seed to mx.random.seed (context) [reproduced: 200/200 seed streams and 200/200 scaffoldings replayed by session_e2a.verify_archived_session@bbc9ffe]",
+   "stop": "newline-after-content or cap 60 [log-only: archive/RESULTS-cycles3-4.md@bbc9ffe:1049 (newline stop, cap 60); 'after content' = leading pure-whitespace tokens consumed before the newline stop arms, text stripped, archive/RESULTS-cycles3-4.md@bbc9ffe:1024-1026 (the g2r incident's logged refinement of amendment (a)); consistent: the positional walk (200/200) finds no newline inside any generated text]; EOS banned [log-only: the frozen list's strings include `<|im_end|>` and `<|endoftext|>` (data/configs/e2a_ban_list.json@bbc9ffe), the run printed that list's sha16 (results/raw/2026-08-09_e2a_full.txt@bbc9ffe:5), and the tokenizer config gives eos_token `<|im_end|>` (results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:1672); recomputed on the local snapshot, section 3]",
+   "ban_list": "frozen 12-id list, sha16 9a2f0744f81ac930 [log-only: results/raw/2026-08-09_e2a_full.txt@bbc9ffe:5; frozen before the full run, archive/RESULTS-cycles3-4.md@bbc9ffe:895-896; fixed by the v3 adjudication, archive/RESULTS-cycles3-4.md@bbc9ffe:929-932; sessions.jsonl has no ban field; the same sha16 is the committed file's and the stored `ban_sha` of the v3 gate artifact g2_discriminability.json (reproduced there)]",
+   "path": "cached (KV stream), steered and sham [log-only: results/raw/2026-08-09_e2a_full.txt@bbc9ffe:2; sessions.jsonl has no path field; the same raw's 'uncached path (g1)' banner (results/raw/2026-08-09_e2a_full.txt@bbc9ffe:3) is stale, as the record says (archive/RESULTS-cycles3-4.md@bbc9ffe:838-840; N4 note 13)]",
+   "commits": "runner in the clone only (no record commit); pre-reg 1970b50 (2026-08-08: 'temperature-sampled', cached behind the g1 gate); template family v3 = the amendment 3637c06 (2026-08-09: newline stop, cap 60; archive/RESULTS-cycles3-4.md@bbc9ffe:1049) + the smoke2 adjudication 8fa0b75 (2026-08-09: scaffold logit ban, round generation only, list frozen; archive/RESULTS-cycles3-4.md@bbc9ffe:929-932); data d49bb5d; ban file admitted to the repo 6e49242 (2026-08-21), after the run",
+   "notes": "generation encode kept the 512-token tail (rule 28(d) instance; CLAUDE.md@bbc9ffe:400, log-only)",
+   "source_tiers": "T L; p/k K; max A; seed A; stop L; ban L; path L"
+  },
+  {
+   "dv": "e2a readability corpus g2r2 (Qwen; 128 rounds at dose 0.10; the S1 judge's corpus)",
+   "temperature": "0.7 [not found: clone only, docstring jlens-qwen36/scripts/e2a_g2_discriminability.py:11; no artifact field and no log line; the e2d config comment that is log-only for e2a (valence_core/e2d/config.py@bbc9ffe:41) names e2a, not the g2 corpora]",
+   "top_p_top_k": "none [as e2a]",
+   "max_new_tokens": "60 [log-only: the template family's cap, archive/RESULTS-cycles3-4.md@bbc9ffe:1050; the artifact has no n_tok (1 of 128 rounds flag cap_hit)]",
+   "seed_policy": "per round: crc32(f\"{task_id}|{para}|{pole}|{frac}\") % 2**31 [reproduced: 128/128 recorded seeds; formula from clone jlens-qwen36/scripts/e2a_g2_discriminability.py:44]",
+   "stop": "newline-after-content or cap 60, EOS banned: the v3 template family [log-only: archive/RESULTS-cycles3-4.md@bbc9ffe:1049, 'after content' archive/RESULTS-cycles3-4.md@bbc9ffe:1024-1026, archive/RESULTS-cycles3-4.md@bbc9ffe:929-932; the artifact records `template_family` = 'v3' (reproduced: g2_discriminability.json:template_family); consistent: 0 of 128 texts contain a newline]",
+   "ban_list": "sha16 9a2f0744f81ac930 [reproduced: g2_discriminability.json ban_sha 9a2f0744f81ac930; log results/raw/2026-08-09_e2a_g2r2.txt@bbc9ffe:3]",
+   "path": "cached [reproduced: g2_discriminability.json fracs.0.1.use_cached = True; log results/raw/2026-08-09_e2a_g2r2.txt@bbc9ffe:6]",
+   "commits": "clone runner; template family v3 = the amendment 3637c06 (2026-08-09: newline stop, cap 60; archive/RESULTS-cycles3-4.md@bbc9ffe:1049) + the smoke2 adjudication 8fa0b75 (2026-08-09: scaffold logit ban, round generation only, list frozen; archive/RESULTS-cycles3-4.md@bbc9ffe:929-932); data 947b9ea",
+   "notes": "g2r (v2 corpus, g2_rounds_f0.1_v2.json) also cached; first g2 ladder uncached (N4)",
+   "source_tiers": "T K; p/k =e2a; max L; seed A; stop L; ban A; path A"
+  },
+  {
+   "dv": "S1 judge (s1_judge_rescue; Qwen)",
+   "temperature": "n/a: no generation; the judge is a logit-level two-alternative read",
+   "top_p_top_k": "n/a",
+   "max_new_tokens": "n/a",
+   "seed_policy": "none used: every read is one deterministic forward; the runner declares rng = default_rng(20260820) at line 113 and never uses it [reproduced from the artifact: 512 rows carry p_A/p_B/picked_pos only, no text field; pick = (p_A >= p_B) agrees with picked_pos on 512/512]",
+   "stop": "n/a: next-token distribution at the prompt end, softmax over the full vocabulary, compare p(' A') vs p(' B') (scripts/s1_judge_rescue.py@f526377:141-144)",
+   "ban_list": "none (no generation; reads take no ban)",
+   "path": "uncached plain forward (scripts/s1_judge_rescue.py@f526377:141)",
+   "commits": "runner scripts/s1_judge_rescue.py, data f526377 (2026-08-20); runner blob equal at bbc9ffe: False",
+   "notes": "the judged texts are the g2r2 corpus (row above)",
+   "source_tiers": "T -; p/k -; max -; seed A; stop -; ban -; path -"
+  },
+  {
+   "dv": "f1 rounds (Qwen; 344 sessions, 3074 rounds)",
+   "temperature": "0.7 [log-only: results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:1552; clone jlens-qwen36/scripts/f_sessions.py:83]",
+   "top_p_top_k": "none [log-only: results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:1556 ('mx.random.categorical(lg/0.7)')]",
+   "max_new_tokens": "60 [reproduced: 14 cap hits in 3074 rounds, all at n_tok = 60; cap_hit iff n_tok = 60 on 3074/3074; max n_tok 60; log results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:1552]",
+   "seed_policy": "per session: default_rng(crc32(f\"f|{arm}|{s}\") % 2**31); the arm's item permutation(s) first, then per forced round a seed, per free round integers(2) (menu) then a seed; mx.random.seed(seed) after the prefill (results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:1555) [reproduced: 344/344 seed streams, 344/344 menu orders; draw order from clone jlens-qwen36/scripts/f_sessions.py:234]",
+   "stop": "newline-after-content or cap 60; EOS banned [log-only: PROPOSAL-f registers the v3 template family (PROPOSAL-f-natural-reinforcer-screen.md@bbc9ffe:60-61); 'after content' archive/RESULTS-cycles3-4.md@bbc9ffe:1024-1026; results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:1557; results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:1671 (its 'every special token' is corrected at results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:1682)]",
+   "ban_list": "sha16 9a2f0744f81ac930 [log-only: PROPOSAL-f-natural-reinforcer-screen.md@bbc9ffe:60-61 (scaffold-token ban, v3); results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:729; sessions.jsonl has no ban field; data/f/calib.json `ban_sha` 9a2f0744f81ac930 records it for the calibration run (reproduced there); clone jlens-qwen36/scripts/f_sessions.py:57]",
+   "path": "cached, vanilla (no state anywhere) [log-only: PROPOSAL-f-natural-reinforcer-screen.md@bbc9ffe:65; results/raw/2026-08-10_f_ndecl.txt@bbc9ffe:16]",
+   "commits": "clone runner; PROPOSAL-f ea011bd (2026-08-09; v3 template family PROPOSAL-f-natural-reinforcer-screen.md@bbc9ffe:60-61, cached PROPOSAL-f-natural-reinforcer-screen.md@bbc9ffe:65); template family v3 as e2a (3637c06 + 8fa0b75); data 50906bf",
+   "notes": "generation encode kept the 512-token tail (results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:466, log-only)",
+   "source_tiers": "T L; p/k L; max A; seed A; stop L; ban L; path L"
+  },
+  {
+   "dv": "e2b H1-u (aux.; free-phase rounds unsteered; Qwen); 112 sessions",
+   "temperature": "0.7 [reproduced: artifact `temp`; code scripts/e2b_h1_sessions.py@b2d051b:89]",
+   "top_p_top_k": "none [not found: code-fixed, valence_core/adapters/qwen_mlx.py@b2d051b:238; generate() source identical to bbc9ffe's: True]",
+   "max_new_tokens": "60 [reproduced: 5 cap hits in 1003 rounds, all at n_tok = 60; cap_hit iff n_tok = 60 on 1003/1003; max n_tok 60; code scripts/e2b_h1_sessions.py@b2d051b:189, STOP_CAP defined at valence_core/e2b/session.py@b2d051b:83]",
+   "seed_policy": "per session: session_rng(key, idx) with key \"h1\", e2a's draw order [reproduced: 112/112 seed streams (1003 seeds)]; order_seed 2026 (artifact) shuffles the schedule only",
+   "stop": "newline-after-content or cap 60; EOS banned (adapter port of e2a's rule) [not found as a field; code-fixed valence_core/adapters/qwen_mlx.py@b2d051b:247; EOS banned via the frozen list's strings, section 3]",
+   "ban_list": "frozen file data/configs/e2a_ban_list.json, sha16 9a2f0744f81ac930 [not found as a field; code-fixed scripts/e2b_h1_sessions.py@b2d051b:317; the file was committed at the run commit]",
+   "path": "cached [reproduced: artifact `round_path_cached` = True; kernel `ops (fused disabled)` (provenance)]",
+   "commits": "runner scripts/e2b_h1_sessions.py@b2d051b (blob = bbc9ffe: False); TEMP 0.7 introduced 6b89ce2 (2026-08-21); data 6df2072",
+   "notes": "provenance legacy_truncate_512 = False, choice_window_declared 8192",
+   "source_tiers": "T A; p/k C; max A; seed A; stop C; ban C; path A"
+  },
+  {
+   "dv": "e2b H1 gate run (Qwen); 123 sessions",
+   "temperature": "0.7 [reproduced: artifact `temp`; code scripts/e2b_h1_sessions.py@6df2072:94]",
+   "top_p_top_k": "none [not found: code-fixed, valence_core/adapters/qwen_mlx.py@6df2072:238; generate() source identical to bbc9ffe's: True]",
+   "max_new_tokens": "60 [reproduced: 5 cap hits in 1110 rounds, all at n_tok = 60; cap_hit iff n_tok = 60 on 1110/1110; max n_tok 60; code scripts/e2b_h1_sessions.py@6df2072:201, STOP_CAP defined at valence_core/e2b/session.py@6df2072:83]",
+   "seed_policy": "per session: session_rng(key, idx) with key \"h1\", e2a's draw order [reproduced: 123/123 seed streams (1110 seeds)]; order_seed 2026 (artifact) shuffles the schedule only",
+   "stop": "newline-after-content or cap 60; EOS banned (adapter port of e2a's rule) [not found as a field; code-fixed valence_core/adapters/qwen_mlx.py@6df2072:247; EOS banned via the frozen list's strings, section 3]",
+   "ban_list": "frozen file data/configs/e2a_ban_list.json, sha16 9a2f0744f81ac930 [not found as a field; code-fixed scripts/e2b_h1_sessions.py@6df2072:339; the file was committed at the run commit]",
+   "path": "cached [reproduced: artifact `round_path_cached` = True; kernel `ops (fused disabled)` (provenance)]",
+   "commits": "runner scripts/e2b_h1_sessions.py@6df2072 (blob = bbc9ffe: False); TEMP 0.7 introduced 6b89ce2 (2026-08-21); data 7527270",
+   "notes": "provenance legacy_truncate_512 = False, choice_window_declared 8192",
+   "source_tiers": "T A; p/k C; max A; seed A; stop C; ban C; path A"
+  },
+  {
+   "dv": "e2b H2 (Qwen); 32 sessions",
+   "temperature": "0.7 [reproduced: artifact `temp`; code scripts/e2b_h2_sessions.py@2d419f2:84]",
+   "top_p_top_k": "none [not found: code-fixed, valence_core/adapters/qwen_mlx.py@2d419f2:238; generate() source identical to bbc9ffe's: True]",
+   "max_new_tokens": "60 [reproduced: 2 cap hits in 307 rounds, all at n_tok = 60; cap_hit iff n_tok = 60 on 307/307; max n_tok 60; code scripts/e2b_h2_sessions.py@2d419f2:176, STOP_CAP defined at valence_core/e2b/session.py@2d419f2:83]",
+   "seed_policy": "per session: session_rng(key, idx) with key \"h2\", e2a's draw order [reproduced: 32/32 seed streams (307 seeds)]; order_seed 2026 (artifact) shuffles the schedule only",
+   "stop": "newline-after-content or cap 60; EOS banned (adapter port of e2a's rule) [not found as a field; code-fixed valence_core/adapters/qwen_mlx.py@2d419f2:247; EOS banned via the frozen list's strings, section 3]",
+   "ban_list": "frozen file data/configs/e2a_ban_list.json, sha16 9a2f0744f81ac930 [not found as a field; code-fixed scripts/e2b_h2_sessions.py@2d419f2:323; the file was committed at the run commit]",
+   "path": "cached [reproduced: artifact `round_path_cached` = True; kernel `ops (fused disabled)` (provenance)]",
+   "commits": "runner scripts/e2b_h2_sessions.py@2d419f2 (blob = bbc9ffe: False); TEMP 0.7 introduced 05fc98f (2026-08-21); data 2d419f2",
+   "notes": "provenance legacy_truncate_512 = False, choice_window_declared 8192",
+   "source_tiers": "T A; p/k C; max A; seed A; stop C; ban C; path A"
+  },
+  {
+   "dv": "e2b verdict campaign (Qwen); 181 sessions",
+   "temperature": "0.7 [reproduced: artifact `temp`; code scripts/e2b_verdict_campaign.py@485cc94:83]",
+   "top_p_top_k": "none [not found: code-fixed, valence_core/adapters/qwen_mlx.py@485cc94:238; generate() source identical to bbc9ffe's: True]",
+   "max_new_tokens": "60 [reproduced: 5 cap hits in 1707 rounds, all at n_tok = 60; cap_hit iff n_tok = 60 on 1707/1707; max n_tok 60; code scripts/e2b_verdict_campaign.py@485cc94:211, STOP_CAP defined at valence_core/e2b/session.py@485cc94:83]",
+   "seed_policy": "per session: session_rng(key, idx) with key f\"e2b-{arm}\", e2a's draw order [reproduced: 181/181 seed streams (1707 seeds)]; order_seed 2026 (artifact) shuffles the schedule only",
+   "stop": "newline-after-content or cap 60; EOS banned (adapter port of e2a's rule) [not found as a field; code-fixed valence_core/adapters/qwen_mlx.py@485cc94:247; EOS banned via the frozen list's strings, section 3]",
+   "ban_list": "frozen file data/configs/e2a_ban_list.json, sha16 9a2f0744f81ac930 [not found as a field; code-fixed scripts/e2b_verdict_campaign.py@485cc94:335; the file was committed at the run commit]",
+   "path": "cached [reproduced: artifact `round_path_cached` = True; kernel `ops (fused disabled)` (provenance)]",
+   "commits": "runner scripts/e2b_verdict_campaign.py@485cc94 (blob = bbc9ffe: False); TEMP 0.7 introduced 0afdcb7 (2026-08-22); data 485cc94",
+   "notes": "provenance legacy_truncate_512 = False, choice_window_declared 8192",
+   "source_tiers": "T A; p/k C; max A; seed A; stop C; ban C; path A"
+  },
+  {
+   "dv": "e2d D1 (Qwen; harness smoke, dose 0.10); 8 sessions",
+   "temperature": "0.7 [reproduced: artifact `temp`; code valence_core/e2d/config.py@4e41288:41]",
+   "top_p_top_k": "none [not found: code-fixed, valence_core/adapters/qwen_mlx.py@4e41288:238; generate() source identical to bbc9ffe's: True]",
+   "max_new_tokens": "60 [not found: code-fixed valence_core/e2d/runner.py@4e41288:191, valence_core/session_e2a.py@4e41288:90; no cap hit in 72 rounds; max n_tok 27 < 60, consistent with the cap but not showing it]",
+   "seed_policy": "per session: session_rng(f\"e2d-{arm}\", idx) [reproduced: 8/8]; no draw_seed field (D1 built its schedule before the flag existed); seeds do not depend on the tier (section 4)",
+   "stop": "newline (or the cap, never reached) [reproduced: stop_reason tally {'newline': 72}, no 'eos']; EOS banned [not found as a field: code-fixed valence_core/adapters/qwen_mlx.py@4e41288:247 with the EOS id in the ban list (section 3)]",
+   "ban_list": "rebuilt from the live tokenizer [reproduced (count only): artifact `ban_list` = {'n_ids': 12, 'n_strings': 12} (counts only, equal to the frozen file's 12/12; identity with the file is not shown by the artifact); code scripts/e2d_sessions.py@4e41288:126]",
+   "path": "uncached [log-only: no artifact field; RESULTS.md@bbc9ffe:6382; code valence_core/e2d/runner.py@4e41288:192 (`cached=False` hard-coded at the code commit)]",
+   "commits": "pre-reg PROPOSAL-j f7a4a1e (v3 family held fixed, PROPOSAL-j-dose-escalation.md@bbc9ffe:114-116); code of record 4e41288 (2026-09-01; RESULTS.md@bbc9ffe:6332: 'D1 ran that code'): valence_core/e2d/runner.py + scripts/e2d_sessions.py (valence_core/e2d/runner.py@4e41288:155, valence_core/e2d/runner.py@4e41288:191); data db5b09c, which also changed scripts/e2d_sessions.py, valence_core/e2d/runner.py after the run (`cached=False` became `cached=cached` at valence_core/e2d/runner.py@db5b09c:193, and --round-path was added); decoding values unchanged",
+   "notes": "",
+   "source_tiers": "T A; p/k C; max C; seed A; stop A+C; ban A; path L"
+  },
+  {
+   "dv": "e2d D2 (Qwen; dose 0.20); 64 sessions",
+   "temperature": "0.7 [reproduced: artifact `temp`; code valence_core/e2d/config.py@a274ecd:41]",
+   "top_p_top_k": "none [not found: code-fixed, valence_core/adapters/qwen_mlx.py@a274ecd:238; generate() source identical to bbc9ffe's: True]",
+   "max_new_tokens": "60 [reproduced: artifact `tstep_licence.position_coverage_note` states 'STOP_CAP is 60'; no cap hit in 607 rounds; max n_tok 42 < 60, consistent with the cap but not showing it]",
+   "seed_policy": "per session: session_rng(f\"e2d-{arm}\", idx) [reproduced: 64/64]; draw_seed 20260902 (artifact) assigns cells only; seeds do not depend on the tier (section 4)",
+   "stop": "newline (or the cap, never reached) [reproduced: stop_reason tally {'newline': 607}, no 'eos']; EOS banned [not found as a field: code-fixed valence_core/adapters/qwen_mlx.py@a274ecd:247 with the EOS id in the ban list (section 3)]",
+   "ban_list": "rebuilt from the live tokenizer [reproduced (count only): artifact `ban_list` = {'n_ids': 12, 'n_strings': 12} (counts only, equal to the frozen file's 12/12; identity with the file is not shown by the artifact); code scripts/e2d_sessions.py@a274ecd:162]",
+   "path": "uncached [reproduced: artifact `round_path_cached` = False, `round_path_source` = gate]",
+   "commits": "pre-reg PROPOSAL-j f7a4a1e (v3 family held fixed, PROPOSAL-j-dose-escalation.md@bbc9ffe:114-116); runner valence_core/e2d/runner.py + scripts/e2d_sessions.py @a274ecd = data commit (it changes no runner file: True) (valence_core/e2d/runner.py@a274ecd:158, valence_core/e2d/runner.py@a274ecd:194)",
+   "notes": "",
+   "source_tiers": "T A; p/k C; max A; seed A; stop A+C; ban A; path A"
+  },
+  {
+   "dv": "e2d D3 (Qwen; dose 0.30, M arm only); 24 sessions",
+   "temperature": "0.7 [reproduced: artifact `temp`; code valence_core/e2d/config.py@e58dfca:41]",
+   "top_p_top_k": "none [not found: code-fixed, valence_core/adapters/qwen_mlx.py@e58dfca:238; generate() source identical to bbc9ffe's: True]",
+   "max_new_tokens": "60 [reproduced: artifact `tstep_licence.position_coverage_note` states 'STOP_CAP is 60'; no cap hit in 233 rounds; max n_tok 42 < 60, consistent with the cap but not showing it]",
+   "seed_policy": "per session: session_rng(f\"e2d-{arm}\", idx) [reproduced: 24/24]; draw_seed 20260902 (artifact) assigns cells only; seeds do not depend on the tier (section 4)",
+   "stop": "newline (or the cap, never reached) [reproduced: stop_reason tally {'newline': 233}, no 'eos']; EOS banned [not found as a field: code-fixed valence_core/adapters/qwen_mlx.py@e58dfca:247 with the EOS id in the ban list (section 3)]",
+   "ban_list": "rebuilt from the live tokenizer [reproduced (count only): artifact `ban_list` = {'n_ids': 12, 'n_strings': 12} (counts only, equal to the frozen file's 12/12; identity with the file is not shown by the artifact); code scripts/e2d_sessions.py@e58dfca:162]",
+   "path": "uncached [reproduced: artifact `round_path_cached` = False, `round_path_source` = uncached]",
+   "commits": "pre-reg PROPOSAL-j f7a4a1e (v3 family held fixed, PROPOSAL-j-dose-escalation.md@bbc9ffe:114-116); runner valence_core/e2d/runner.py + scripts/e2d_sessions.py @e58dfca = data commit (it changes no runner file: True) (valence_core/e2d/runner.py@e58dfca:158, valence_core/e2d/runner.py@e58dfca:194)",
+   "notes": "",
+   "source_tiers": "T A; p/k C; max A; seed A; stop A+C; ban A; path A"
+  },
+  {
+   "dv": "OLMo B2 detection (greedy; both arms, 4 stages, 8 files x 48 trials)",
+   "temperature": "0.0 [log-only: RESULTS.md@bbc9ffe:7636; ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:31 ('ours ran 0.0'); code scripts/box_b2_detection.py@720a104:198; no artifact field]",
+   "top_p_top_k": "n/a: argmax (valence_core/adapters/olmo_hf.py@bbc9ffe:232)",
+   "max_new_tokens": "60 [log-only: RESULTS.md@bbc9ffe:7645; code scripts/box_b2_detection.py@720a104:129, no override in the driver (scripts/run_bphase.sh@c3dbf38:67; the driver was committed after the run, as its provenance)]",
+   "seed_policy": "allocation and generation share args.seed = 20260823: plan_trials permutation seeded 20260823 [reproduced: 8/8 files' injected/concept allocation replayed by detection.plan_trials@bbc9ffe; plan_trials' own default seed 20260819 replays 0/8]; generation seed 20260823 + n per trial (torch.manual_seed per call, valence_core/adapters/olmo_hf.py@bbc9ffe:221) [not found: code-fixed scripts/box_b2_detection.py@720a104:198; not recorded, and inert at T = 0, RESULTS.md@bbc9ffe:7641]; adapter load seed 20260818 (provenance `seed`, reproduced)",
+   "stop": "EOS or the 60 cap, no newline stop; EOS banned, so by the code argument every generation runs to 60 tokens [not found: code-fixed scripts/box_b2_detection.py@720a104:199; section 3]; the scored text is then cut at the first turn marker (segment_own_turn), a text operation, not a decoding stop",
+   "ban_list": "rebuilt per stage from the live tokenizer: scaffold strings + tokenizer special strings [not found as a B2 field: code-fixed scripts/box_b2_detection.py@720a104:155, the default builder (source at 720a104 = bbc9ffe's: True)]; by the same builder on the same tokenizers: 9 ids from 6 strings at every stage, 5 of them ordinary sub-word pieces (29 '>', 524 '</', 771 'ink', 14023 '<th', 27963 'think'), because `<think>`/`</think>` are not added tokens in OLMo's vocabulary and the builder bans every piece of each string (valence_core/session.py@bbc9ffe:116-120) [log-only: ids results/raw/2026-10-05_m-v1.10_referent_check.txt@bbc9ffe:4184-4186, the 'five of nine' results/raw/2026-10-05_m-v1.10_referent_check.txt@bbc9ffe:4177; reproduced: those 9 ids hash to the B3 artifacts' `ban_list.sha16` 2dd86a453a2275ef (sorted-ids convention, scripts/box_b3_sessions.py@720a104:262; all four stages: True) and to the A2 artifacts' c0297fa8ee89d29d ({ids, strings} convention, scripts/box_a2_baserates.py@cc9db1d:319-320; all four stages: True); the strings are the A2 and scaffold artifacts' `ban_list.strings` / `ban_strings` (reproduced)]",
+   "path": "uncached [log-only: RESULTS.md@bbc9ffe:7834; code scripts/box_b2_detection.py@720a104:200]",
+   "commits": "runner built 0d4c147 (2026-08-23; temp=0.0, --max-tokens 60, --seed 20260823 all introduced there); data 720a104 (blob = bbc9ffe: True; adapter blob = bbc9ffe: True); not pre-registered: LOCK-g's B2 section registers the seeded allocation (LOCK-g.md@bbc9ffe:103-104) and names no decoding parameter (no temperature, max-token or top-p/top-k string in LOCK-g.md: True; its only 'greedy' is the roster search, LOCK-g.md@bbc9ffe:40,42)",
+   "notes": "provenance deterministic = True (all 8 files)",
+   "source_tiers": "T L; p/k -; max L; seed A+C; stop C; ban C+L; path L"
+  },
+  {
+   "dv": "OLMo B2-r detection (sampled; control x4, qualify x4, explore x3)",
+   "temperature": "1.0 [reproduced: artifact `temp`, one value on all 11 files; pre-registered: ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:89-96 (f14d249, 2026-08-24); code scripts/box_b2r_campaign.py@b6e8f3f:54]",
+   "top_p_top_k": "none [not found: code-fixed, valence_core/adapters/olmo_hf.py@bbc9ffe:235; the addendum says it names every decoding parameter (ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:95-96) and names no top-p/top-k (no top-p/top-k string in it: True), consistent with none]",
+   "max_new_tokens": "100 [reproduced: artifact `max_tokens`, one value on all 11 files; pre-registered: ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:89-96 (f14d249, 2026-08-24); code scripts/box_b2r_campaign.py@b6e8f3f:55]",
+   "seed_policy": "per trial, torch.manual_seed per call: control and explore 20260824 + trial n [reproduced: 384/384 control trials; explore 288/288, allocation replay 3/3; explore trials reuse the control trial's seed 288/288]; qualify: control 20260824 + 9000 + 100*prompt + k, injected 20260824 + 1000*strength + 100*prompt + k [reproduced: 96/96 and 384/384; one seed serves every concept at a (strength, prompt, k)]; 'per-trial seeds are live and declared' (ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:89-96); adapter load seed 20260818",
+   "stop": "EOS or the 100 cap, no newline stop; EOS banned, so by the code argument every generation runs to 100 tokens [not found: code-fixed scripts/box_b2r_campaign.py@b6e8f3f:129; section 3]; then segment_own_turn_v2 (turn markers + a re-emitted 'Trial N:')",
+   "ban_list": "as B2 [not found as a B2-r field: code-fixed scripts/box_b2r_campaign.py@b6e8f3f:269, the default builder (source at b6e8f3f = bbc9ffe's: True)]: the same 9 ids, 5 of them sub-word pieces (B2 cell)",
+   "path": "uncached [log-only: RESULTS.md@bbc9ffe:7834; code scripts/box_b2r_campaign.py@b6e8f3f:130; no artifact field]",
+   "commits": "decoding pre-registered in ADDENDUM-g3-b2r-v1.2 \u00a70.5 at f14d249 (2026-08-24; ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:89-96; an ancestor of the runner commit c1bbf7c: True); runner c1bbf7c (TEMP 1.0, MAX_TOKENS 100, --seed 20260824 introduced); stamped head 745c196 (results/raw/2026-08-25_b2r_arc.txt@bbc9ffe:5); data b6e8f3f; runner blob = bbc9ffe at data and stamped head: True / True",
+   "notes": "",
+   "source_tiers": "T A; p/k C; max A; seed A; stop C; ban C; path L"
+  },
+  {
+   "dv": "OLMo B3 / Q3 rounds (screen tier, 4 stages, 377 sessions)",
+   "temperature": "0.7 [log-only: RESULTS.md@bbc9ffe:8364; code scripts/box_b3_sessions.py@720a104:77, CLI default scripts/box_b3_sessions.py@720a104:220, no override in the driver (scripts/run_bphase.sh@c3dbf38:81, committed after the run as its provenance); no artifact field]",
+   "top_p_top_k": "none [not found: code-fixed, valence_core/adapters/olmo_hf.py@bbc9ffe:235]",
+   "max_new_tokens": "60 [reproduced: 8 cap hits in 3462 rounds, cap_hit iff n_tok = 60 on 3462/3462; code scripts/box_b3_sessions.py@720a104:156]",
+   "seed_policy": "per session: session_rng(f\"b3-{arm}\", idx), e2a's draw order [reproduced: 377/377 seed streams]; the key omits the stage, so the same (arm, idx) draws the same seeds and tasks at every stage (267/267 same-(arm, idx) pairs equal, each non-base stage against base; 546/546 over all six stage pairs; 89 (arm, idx) keys at all four stages); adapter load seed 20260818",
+   "stop": "newline-after-content or cap 60; EOS banned (code argument) [not found as a field: code-fixed, adapter default stop_newline=True (valence_core/adapters/olmo_hf.py@bbc9ffe:206), rule valence_core/adapters/olmo_hf.py@bbc9ffe:290-294; consistent: cap_hit iff n_tok = 60]",
+   "ban_list": "rebuilt per stage; one list at all four stages: artifact `ban_list` n_ids 9, sha16 2dd86a453a2275ef [reproduced]; 9 ids from 6 strings at every stage, 5 of them ordinary sub-word pieces (29 '>', 524 '</', 771 'ink', 14023 '<th', 27963 'think'), because `<think>`/`</think>` are not added tokens in OLMo's vocabulary and the builder bans every piece of each string (valence_core/session.py@bbc9ffe:116-120) [log-only: ids results/raw/2026-10-05_m-v1.10_referent_check.txt@bbc9ffe:4184-4186, the 'five of nine' results/raw/2026-10-05_m-v1.10_referent_check.txt@bbc9ffe:4177; reproduced: those 9 ids hash to the B3 artifacts' `ban_list.sha16` 2dd86a453a2275ef (sorted-ids convention, scripts/box_b3_sessions.py@720a104:262; all four stages: True) and to the A2 artifacts' c0297fa8ee89d29d ({ids, strings} convention, scripts/box_a2_baserates.py@cc9db1d:319-320; all four stages: True); the strings are the A2 and scaffold artifacts' `ban_list.strings` / `ban_strings` (reproduced)]",
+   "path": "uncached [log-only: RESULTS.md@bbc9ffe:7834; code: run_session's default (scripts/box_b3_sessions.py@720a104:129), the call passes none (scripts/box_b3_sessions.py@720a104:321); no artifact field]",
+   "commits": "runner TEMP 0.7 introduced a07d8fa (2026-08-23); data 720a104 (runner blob = bbc9ffe: True)",
+   "notes": "",
+   "source_tiers": "T L; p/k C; max A; seed A; stop C; ban A+L; path L"
+  },
+  {
+   "dv": "PROPOSAL-k Stage 1 (k1) sham sessions (Qwen); 48 sessions",
+   "temperature": "0.7 [reproduced: artifact `temp`, `identity.temp` = 0.7; per-session `temp` {'0.7': 48}; log RESULTS.md@bbc9ffe:2541; code valence_core/e2d/config.py@7742e2c:41]",
+   "top_p_top_k": "none [not found: code-fixed, valence_core/adapters/qwen_mlx.py@7742e2c:290; generate() source identical to bbc9ffe's: True]",
+   "max_new_tokens": "60 [not found: code-fixed valence_core/formats/recon.py@7742e2c:314, valence_core/session_e2a.py@7742e2c:90; no cap hit in 438 rounds; max n_tok 50 < 60, consistent with the cap but not showing it]",
+   "seed_policy": "per session: session_rng(key, idx), key \"k1-F2\" [reproduced: 48/48]; draw_seed 20260909 assigns cells only",
+   "stop": "newline, or the cap where hit [reproduced: stop_reason tally {'newline': 438}, no 'eos']; EOS banned [not found as a field: code-fixed valence_core/adapters/qwen_mlx.py@7742e2c:299 with the EOS id in the ban list (section 3)]",
+   "ban_list": "rebuilt from the live tokenizer (scripts/k1_stage1.py@7742e2c:264); no artifact field [not found: code-fixed]",
+   "path": "uncached [reproduced: per-round `round_path_cached` {'false': 438}; code valence_core/formats/recon.py@7742e2c:312]",
+   "commits": "runner valence_core/formats/recon.py@7742e2c = data commit (it changes no runner file: True) (valence_core/formats/recon.py@7742e2c:278, valence_core/formats/recon.py@7742e2c:314); recon's `cached = False` introduced 07224b6 (2026-09-06)",
+   "notes": "provenance legacy_truncate_512 = False",
+   "source_tiers": "T A; p/k C; max C; seed A; stop A+C; ban C; path A"
+  },
+  {
+   "dv": "format recon F0 (Qwen); 8 sessions",
+   "temperature": "0.7 [reproduced: artifact `temp`, `identity.temp` = 0.7; per-session `temp` {'0.7': 8}; code valence_core/e2d/config.py@3c23320:41]",
+   "top_p_top_k": "none [not found: code-fixed, valence_core/adapters/qwen_mlx.py@3c23320:290; generate() source identical to bbc9ffe's: True]",
+   "max_new_tokens": "60 [reproduced: 1 cap hit in 80 rounds, all at n_tok = 60; cap_hit iff n_tok = 60 on 80/80; max n_tok 60]",
+   "seed_policy": "per session: session_rng(key, idx), key \"fmt-F0\" [reproduced: 8/8]; draw_seed 20260906 assigns cells only",
+   "stop": "newline, or the cap where hit [reproduced: stop_reason tally {'newline': 79, 'cap': 1}, no 'eos']; EOS banned [not found as a field: code-fixed valence_core/adapters/qwen_mlx.py@3c23320:299 with the EOS id in the ban list (section 3)]",
+   "ban_list": "rebuilt from the live tokenizer [reproduced (count only): artifact `ban_list` = {'n_ids': 12, 'n_strings': 12} (counts only, equal to the frozen file's 12/12; identity with the file is not shown by the artifact); code scripts/format_recon.py@3c23320:627]",
+   "path": "uncached [reproduced: per-round `round_path_cached` {'false': 80}; code valence_core/formats/recon.py@3c23320:307]",
+   "commits": "runner valence_core/formats/recon.py@3c23320 = data commit (it changes no runner file: True) (valence_core/formats/recon.py@3c23320:273, valence_core/formats/recon.py@3c23320:309); recon's `cached = False` introduced 07224b6 (2026-09-06)",
+   "notes": "provenance legacy_truncate_512 = False",
+   "source_tiers": "T A; p/k C; max A; seed A; stop A+C; ban A; path A"
+  },
+  {
+   "dv": "format recon F1 (Qwen); 24 sessions",
+   "temperature": "0.7 [reproduced: artifact `temp`, `identity.temp` = 0.7; per-session `temp` {'0.7': 24}; code valence_core/e2d/config.py@3c23320:41]",
+   "top_p_top_k": "none [not found: code-fixed, valence_core/adapters/qwen_mlx.py@3c23320:290; generate() source identical to bbc9ffe's: True]",
+   "max_new_tokens": "60 [not found: code-fixed valence_core/formats/recon.py@3c23320:309, valence_core/session_e2a.py@3c23320:90; no cap hit in 211 rounds; max n_tok 33 < 60, consistent with the cap but not showing it]",
+   "seed_policy": "per session: session_rng(key, idx), key \"fmt-F1\" [reproduced: 24/24]; draw_seed 20260906 assigns cells only",
+   "stop": "newline, or the cap where hit [reproduced: stop_reason tally {'newline': 211}, no 'eos']; EOS banned [not found as a field: code-fixed valence_core/adapters/qwen_mlx.py@3c23320:299 with the EOS id in the ban list (section 3)]",
+   "ban_list": "rebuilt from the live tokenizer [reproduced (count only): artifact `ban_list` = {'n_ids': 12, 'n_strings': 12} (counts only, equal to the frozen file's 12/12; identity with the file is not shown by the artifact); code scripts/format_recon.py@3c23320:627]",
+   "path": "uncached [reproduced: per-round `round_path_cached` {'false': 211}; code valence_core/formats/recon.py@3c23320:307]",
+   "commits": "runner valence_core/formats/recon.py@3c23320 = data commit (it changes no runner file: True) (valence_core/formats/recon.py@3c23320:273, valence_core/formats/recon.py@3c23320:309); recon's `cached = False` introduced 07224b6 (2026-09-06)",
+   "notes": "provenance legacy_truncate_512 = False",
+   "source_tiers": "T A; p/k C; max C; seed A; stop A+C; ban A; path A"
+  },
+  {
+   "dv": "format recon F2 (Qwen); 24 sessions",
+   "temperature": "0.7 [reproduced: artifact `temp`, `identity.temp` = 0.7; per-session `temp` {'0.7': 24}; code valence_core/e2d/config.py@3c23320:41]",
+   "top_p_top_k": "none [not found: code-fixed, valence_core/adapters/qwen_mlx.py@3c23320:290; generate() source identical to bbc9ffe's: True]",
+   "max_new_tokens": "60 [not found: code-fixed valence_core/formats/recon.py@3c23320:309, valence_core/session_e2a.py@3c23320:90; no cap hit in 240 rounds; max n_tok 38 < 60, consistent with the cap but not showing it]",
+   "seed_policy": "per session: session_rng(key, idx), key \"fmt-F2\" [reproduced: 24/24]; draw_seed 20260906 assigns cells only",
+   "stop": "newline, or the cap where hit [reproduced: stop_reason tally {'newline': 240}, no 'eos']; EOS banned [not found as a field: code-fixed valence_core/adapters/qwen_mlx.py@3c23320:299 with the EOS id in the ban list (section 3)]",
+   "ban_list": "rebuilt from the live tokenizer [reproduced (count only): artifact `ban_list` = {'n_ids': 12, 'n_strings': 12} (counts only, equal to the frozen file's 12/12; identity with the file is not shown by the artifact); code scripts/format_recon.py@3c23320:627]",
+   "path": "uncached [reproduced: per-round `round_path_cached` {'false': 240}; code valence_core/formats/recon.py@3c23320:307]",
+   "commits": "runner valence_core/formats/recon.py@3c23320 = data commit (it changes no runner file: True) (valence_core/formats/recon.py@3c23320:273, valence_core/formats/recon.py@3c23320:309); recon's `cached = False` introduced 07224b6 (2026-09-06)",
+   "notes": "provenance legacy_truncate_512 = False",
+   "source_tiers": "T A; p/k C; max C; seed A; stop A+C; ban A; path A"
+  }
+ ],
+ "cross_check_disagreements": [
+  "N4 gives data/e2b/h1_sessions.json 1111 generated rounds; generated (n_tok) 1110, entries 1111 (section 5)"
+ ],
+ "figures": [
+  {
+   "figure": "e2a: temperature",
+   "printed": "0.7",
+   "source": "valence_core/e2d/config.py@bbc9ffe:41 (committed prose, a code comment written at 4e41288, 2026-09-01); clone jlens-qwen36/jlens_qwen/e2a.py:48",
+   "status": "log-only",
+   "note": "a later code comment (4e41288, 2026-09-01; e2a data commit d49bb5d, 2026-08-12), not an e2a log entry; no e2a artifact field and no e2a-era log line states the value; the pre-registration says only 'temperature-sampled'; the PI decides whether the note prints e2a's T (section 7)"
+  },
+  {
+   "figure": "e2a: top-p / top-k",
+   "printed": "none",
+   "source": "clone jlens-qwen36/jlens_qwen/e2a.py:274",
+   "status": "not found",
+   "note": "clone only (outside the record); same sampler as the ported adapter"
+  },
+  {
+   "figure": "e2a: max new tokens",
+   "printed": "60",
+   "source": "data/e2a/sessions.jsonl:rounds[].n_tok,cap_hit (5 cap hits, all at 60); archive/RESULTS-cycles3-4.md@bbc9ffe:1050",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "e2a: seed policy",
+   "printed": "per-session Generator crc32(f'{arm}|{s}'); per-round seeds",
+   "source": "data/e2a/sessions.jsonl:rounds[].seed,choices[].seed via valence_core/session_e2a.py@bbc9ffe",
+   "status": "reproduced",
+   "note": "200/200 streams"
+  },
+  {
+   "figure": "e2a: stop discipline",
+   "printed": "newline after content, cap 60",
+   "source": "archive/RESULTS-cycles3-4.md@bbc9ffe:1049; archive/RESULTS-cycles3-4.md@bbc9ffe:1024-1026",
+   "status": "log-only",
+   "note": "the amendment gives the newline stop and the cap; the g2r incident's logged refinement gives 'after content' (leading pure-whitespace tokens consumed before the newline stop arms)"
+  },
+  {
+   "figure": "e2a: EOS banned",
+   "printed": "yes (<|im_end|> and <|endoftext|> in the frozen list)",
+   "source": "data/configs/e2a_ban_list.json@bbc9ffe:strings; results/raw/2026-08-09_e2a_full.txt@bbc9ffe:5; results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:1672",
+   "status": "log-only",
+   "note": "the run printed the file's sha16; the eos identity is the G-PORT raw's; recomputed on the local snapshot (computed-new row below)"
+  },
+  {
+   "figure": "e2a: ban list",
+   "printed": "12 ids, sha16 9a2f0744f81ac930",
+   "source": "results/raw/2026-08-09_e2a_full.txt@bbc9ffe:5; archive/RESULTS-cycles3-4.md@bbc9ffe:895-896",
+   "status": "log-only",
+   "note": "fixed by the v3 adjudication (archive/RESULTS-cycles3-4.md@bbc9ffe:929-932); sessions.jsonl has no ban field; corroborated by data/e2a/g2_discriminability.json:ban_sha = sha256(data/configs/e2a_ban_list.json)[:16] (reproduced for the gate corpus)"
+  },
+  {
+   "figure": "e2a: generation path",
+   "printed": "cached",
+   "source": "results/raw/2026-08-09_e2a_full.txt@bbc9ffe:2",
+   "status": "log-only",
+   "note": "sessions.jsonl has no path field (N4 agrees); the raw's 'uncached path (g1)' banner is stale (archive/RESULTS-cycles3-4.md@bbc9ffe:838-840)"
+  },
+  {
+   "figure": "e2a: commit(s) that fixed them",
+   "printed": "pre-reg 1970b50; amendment 3637c06 (stop, cap); v3 adjudication 8fa0b75 (ban); data d49bb5d; ban file admitted 6e49242",
+   "source": "archive/RESULTS-cycles3-4.md@bbc9ffe:1251; archive/RESULTS-cycles3-4.md@bbc9ffe:1049; archive/RESULTS-cycles3-4.md@bbc9ffe:929-932",
+   "status": "computed-new",
+   "note": "introducing commits from git log -S over the log at bbc9ffe; the runner is the clone's (no record commit)"
+  },
+  {
+   "figure": "g2r2 corpus: temperature",
+   "printed": "0.7",
+   "source": "clone jlens-qwen36/scripts/e2a_g2_discriminability.py:11",
+   "status": "not found",
+   "note": "clone only; the e2d config comment names e2a, not the g2 corpora"
+  },
+  {
+   "figure": "g2r2 corpus: top-p / top-k",
+   "printed": "none",
+   "source": "as e2a (clone)",
+   "status": "not found",
+   "note": "clone only"
+  },
+  {
+   "figure": "g2r2 corpus: max new tokens",
+   "printed": "60",
+   "source": "archive/RESULTS-cycles3-4.md@bbc9ffe:1050; data/e2a/g2_rounds_f0.1.json:pos[],neg[].cap_hit (1 of 128 flagged)",
+   "status": "log-only",
+   "note": "the rounds carry no n_tok"
+  },
+  {
+   "figure": "g2r2 corpus: seed policy",
+   "printed": "crc32(task|para|pole|frac) per round",
+   "source": "data/e2a/g2_rounds_f0.1.json:pos[].seed,neg[].seed",
+   "status": "reproduced",
+   "note": "128/128"
+  },
+  {
+   "figure": "g2r2 corpus: stop discipline / EOS",
+   "printed": "v3 template family: newline stop, cap 60, EOS banned",
+   "source": "archive/RESULTS-cycles3-4.md@bbc9ffe:1049; archive/RESULTS-cycles3-4.md@bbc9ffe:1024-1026; archive/RESULTS-cycles3-4.md@bbc9ffe:929-932; data/e2a/g2_discriminability.json:template_family = 'v3'",
+   "status": "log-only",
+   "note": "the family's label is an artifact field (reproduced); its definition is log-only; 0 of 128 texts contain a newline"
+  },
+  {
+   "figure": "g2r2 corpus: ban list",
+   "printed": "sha16 9a2f0744f81ac930",
+   "source": "data/e2a/g2_discriminability.json:ban_sha",
+   "status": "reproduced",
+   "note": "log results/raw/2026-08-09_e2a_g2r2.txt@bbc9ffe:3"
+  },
+  {
+   "figure": "g2r2 corpus: generation path",
+   "printed": "cached",
+   "source": "data/e2a/g2_discriminability.json:fracs.0.1.use_cached",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "g2r2 corpus: commit(s) that fixed them",
+   "printed": "v3 family 3637c06 + 8fa0b75; data 947b9ea",
+   "source": "archive/RESULTS-cycles3-4.md@bbc9ffe:1049; archive/RESULTS-cycles3-4.md@bbc9ffe:929-932",
+   "status": "computed-new",
+   "note": "clone runner"
+  },
+  {
+   "figure": "S1 judge: decoding",
+   "printed": "none (logit-level 2AFC read, no generation)",
+   "source": "data/e2a/s1_judge_rescue.json:cells.*.rows[] (p_A, p_B, picked_pos; no text)",
+   "status": "reproduced",
+   "note": "pick = (p_A >= p_B) on 512/512; rng declared at scripts/s1_judge_rescue.py@f526377:113 and never used"
+  },
+  {
+   "figure": "S1 judge: commit",
+   "printed": "runner and data f526377",
+   "source": "git log over bbc9ffe (data/e2a/s1_judge_rescue.json)",
+   "status": "computed-new",
+   "note": ""
+  },
+  {
+   "figure": "f1: temperature",
+   "printed": "0.7",
+   "source": "results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:1552",
+   "status": "log-only",
+   "note": ""
+  },
+  {
+   "figure": "f1: top-p / top-k",
+   "printed": "none",
+   "source": "results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:1556",
+   "status": "log-only",
+   "note": ""
+  },
+  {
+   "figure": "f1: max new tokens",
+   "printed": "60",
+   "source": "data/f/sessions.jsonl:rounds[].n_tok,cap_hit (14 cap hits, all at 60)",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "f1: seed policy",
+   "printed": "per-session Generator crc32(f'f|{arm}|{s}'); per-round seeds",
+   "source": "data/f/sessions.jsonl:rounds[].seed,choices[].menu_a + data/f/pools.json sizes",
+   "status": "reproduced",
+   "note": "344/344 streams; draw order from the clone"
+  },
+  {
+   "figure": "f1: stop discipline",
+   "printed": "newline after content, cap 60, EOS banned",
+   "source": "PROPOSAL-f-natural-reinforcer-screen.md@bbc9ffe:60-61; archive/RESULTS-cycles3-4.md@bbc9ffe:1024-1026; results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:1557; results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:1671",
+   "status": "log-only",
+   "note": "PROPOSAL-f registers the v3 template family; the G-PORT line's 'every special token' is corrected at results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:1682"
+  },
+  {
+   "figure": "f1: ban list",
+   "printed": "sha16 9a2f0744f81ac930",
+   "source": "PROPOSAL-f-natural-reinforcer-screen.md@bbc9ffe:60-61; results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:729",
+   "status": "log-only",
+   "note": "sessions.jsonl has no ban field; data/f/calib.json:ban_sha records the same sha16 for the calibration run (reproduced there)"
+  },
+  {
+   "figure": "f1: generation path",
+   "printed": "cached, vanilla",
+   "source": "PROPOSAL-f-natural-reinforcer-screen.md@bbc9ffe:65; results/raw/2026-08-10_f_ndecl.txt@bbc9ffe:16",
+   "status": "log-only",
+   "note": ""
+  },
+  {
+   "figure": "f1: commit(s) that fixed them",
+   "printed": "PROPOSAL-f ea011bd; v3 family 3637c06 + 8fa0b75; data 50906bf",
+   "source": "PROPOSAL-f-natural-reinforcer-screen.md@bbc9ffe:60-61; PROPOSAL-f-natural-reinforcer-screen.md@bbc9ffe:65",
+   "status": "computed-new",
+   "note": "clone runner"
+  },
+  {
+   "figure": "e2b h1u: temperature",
+   "printed": "0.7",
+   "source": "data/e2b/h1u_sessions.json:temp",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "e2b h1u: max new tokens",
+   "printed": "60",
+   "source": "data/e2b/h1u_sessions.json:sessions[].rounds[].n_tok,cap_hit (5 cap hit(s), all at 60)",
+   "status": "reproduced",
+   "note": "STOP_CAP defined at valence_core/e2b/session.py@b2d051b:83"
+  },
+  {
+   "figure": "e2b h1u: seed policy",
+   "printed": "session_rng(key, idx) per-round seeds",
+   "source": "data/e2b/h1u_sessions.json:sessions[].rounds[].seed",
+   "status": "reproduced",
+   "note": "112/112"
+  },
+  {
+   "figure": "e2b h1u: stop discipline",
+   "printed": "newline after content, cap 60, EOS banned",
+   "source": "valence_core/adapters/qwen_mlx.py@b2d051b:247; data/configs/e2a_ban_list.json@bbc9ffe:strings",
+   "status": "not found",
+   "note": "code-fixed (the adapter's rule and the frozen list); no artifact field"
+  },
+  {
+   "figure": "e2b h1u: generation path",
+   "printed": "cached",
+   "source": "data/e2b/h1u_sessions.json:round_path_cached",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "e2b h1u: ban list",
+   "printed": "frozen file, sha16 9a2f0744f81ac930",
+   "source": "scripts/e2b_h1_sessions.py@b2d051b:317",
+   "status": "not found",
+   "note": "code-fixed; no artifact field"
+  },
+  {
+   "figure": "e2b h1u: commit(s) that fixed them",
+   "printed": "runner b2d051b; TEMP introduced 6b89ce2; data 6df2072",
+   "source": "scripts/e2b_h1_sessions.py@b2d051b",
+   "status": "computed-new",
+   "note": "git history at bbc9ffe; H1-u's run commit is the first H1 run's (section 7)"
+  },
+  {
+   "figure": "e2b h1: temperature",
+   "printed": "0.7",
+   "source": "data/e2b/h1_sessions.json:temp",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "e2b h1: max new tokens",
+   "printed": "60",
+   "source": "data/e2b/h1_sessions.json:sessions[].rounds[].n_tok,cap_hit (5 cap hit(s), all at 60)",
+   "status": "reproduced",
+   "note": "STOP_CAP defined at valence_core/e2b/session.py@6df2072:83"
+  },
+  {
+   "figure": "e2b h1: seed policy",
+   "printed": "session_rng(key, idx) per-round seeds",
+   "source": "data/e2b/h1_sessions.json:sessions[].rounds[].seed",
+   "status": "reproduced",
+   "note": "123/123"
+  },
+  {
+   "figure": "e2b h1: stop discipline",
+   "printed": "newline after content, cap 60, EOS banned",
+   "source": "valence_core/adapters/qwen_mlx.py@6df2072:247; data/configs/e2a_ban_list.json@bbc9ffe:strings",
+   "status": "not found",
+   "note": "code-fixed (the adapter's rule and the frozen list); no artifact field"
+  },
+  {
+   "figure": "e2b h1: generation path",
+   "printed": "cached",
+   "source": "data/e2b/h1_sessions.json:round_path_cached",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "e2b h1: ban list",
+   "printed": "frozen file, sha16 9a2f0744f81ac930",
+   "source": "scripts/e2b_h1_sessions.py@6df2072:339",
+   "status": "not found",
+   "note": "code-fixed; no artifact field"
+  },
+  {
+   "figure": "e2b h1: commit(s) that fixed them",
+   "printed": "runner 6df2072; TEMP introduced 6b89ce2; data 7527270",
+   "source": "scripts/e2b_h1_sessions.py@6df2072",
+   "status": "computed-new",
+   "note": "git history at bbc9ffe; the run commit's message names the launch (section 7)"
+  },
+  {
+   "figure": "e2b h2: temperature",
+   "printed": "0.7",
+   "source": "data/e2b/h2_sessions.json:temp",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "e2b h2: max new tokens",
+   "printed": "60",
+   "source": "data/e2b/h2_sessions.json:sessions[].rounds[].n_tok,cap_hit (2 cap hit(s), all at 60)",
+   "status": "reproduced",
+   "note": "STOP_CAP defined at valence_core/e2b/session.py@2d419f2:83"
+  },
+  {
+   "figure": "e2b h2: seed policy",
+   "printed": "session_rng(key, idx) per-round seeds",
+   "source": "data/e2b/h2_sessions.json:sessions[].rounds[].seed",
+   "status": "reproduced",
+   "note": "32/32"
+  },
+  {
+   "figure": "e2b h2: stop discipline",
+   "printed": "newline after content, cap 60, EOS banned",
+   "source": "valence_core/adapters/qwen_mlx.py@2d419f2:247; data/configs/e2a_ban_list.json@bbc9ffe:strings",
+   "status": "not found",
+   "note": "code-fixed (the adapter's rule and the frozen list); no artifact field"
+  },
+  {
+   "figure": "e2b h2: generation path",
+   "printed": "cached",
+   "source": "data/e2b/h2_sessions.json:round_path_cached",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "e2b h2: ban list",
+   "printed": "frozen file, sha16 9a2f0744f81ac930",
+   "source": "scripts/e2b_h2_sessions.py@2d419f2:323",
+   "status": "not found",
+   "note": "code-fixed; no artifact field"
+  },
+  {
+   "figure": "e2b h2: commit(s) that fixed them",
+   "printed": "runner 2d419f2; TEMP introduced 05fc98f; data 2d419f2",
+   "source": "scripts/e2b_h2_sessions.py@2d419f2",
+   "status": "computed-new",
+   "note": "git history at bbc9ffe"
+  },
+  {
+   "figure": "e2b verdict_campaign: temperature",
+   "printed": "0.7",
+   "source": "data/e2b/verdict_campaign.json:temp",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "e2b verdict_campaign: max new tokens",
+   "printed": "60",
+   "source": "data/e2b/verdict_campaign.json:sessions[].rounds[].n_tok,cap_hit (5 cap hit(s), all at 60)",
+   "status": "reproduced",
+   "note": "STOP_CAP defined at valence_core/e2b/session.py@485cc94:83"
+  },
+  {
+   "figure": "e2b verdict_campaign: seed policy",
+   "printed": "session_rng(key, idx) per-round seeds",
+   "source": "data/e2b/verdict_campaign.json:sessions[].rounds[].seed",
+   "status": "reproduced",
+   "note": "181/181"
+  },
+  {
+   "figure": "e2b verdict_campaign: stop discipline",
+   "printed": "newline after content, cap 60, EOS banned",
+   "source": "valence_core/adapters/qwen_mlx.py@485cc94:247; data/configs/e2a_ban_list.json@bbc9ffe:strings",
+   "status": "not found",
+   "note": "code-fixed (the adapter's rule and the frozen list); no artifact field"
+  },
+  {
+   "figure": "e2b verdict_campaign: generation path",
+   "printed": "cached",
+   "source": "data/e2b/verdict_campaign.json:round_path_cached",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "e2b verdict_campaign: ban list",
+   "printed": "frozen file, sha16 9a2f0744f81ac930",
+   "source": "scripts/e2b_verdict_campaign.py@485cc94:335",
+   "status": "not found",
+   "note": "code-fixed; no artifact field"
+  },
+  {
+   "figure": "e2b verdict_campaign: commit(s) that fixed them",
+   "printed": "runner 485cc94; TEMP introduced 0afdcb7; data 485cc94",
+   "source": "scripts/e2b_verdict_campaign.py@485cc94",
+   "status": "computed-new",
+   "note": "git history at bbc9ffe"
+  },
+  {
+   "figure": "e2d D1: temperature",
+   "printed": "0.7",
+   "source": "data/e2d/d1_sessions.json:temp",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "e2d D1: max new tokens",
+   "printed": "60",
+   "source": "code valence_core/e2d/runner.py@4e41288:191, valence_core/session_e2a.py@4e41288:90",
+   "status": "not found",
+   "note": "code-fixed at the code commit 4e41288; no cap hit in 72 rounds (max n_tok 27), so the artifact bounds the cap but does not show it"
+  },
+  {
+   "figure": "e2d D1: seed policy",
+   "printed": "session_rng(f'e2d-{arm}', idx)",
+   "source": "data/e2d/d1_sessions.json:sessions[].rounds[].seed",
+   "status": "reproduced",
+   "note": "8/8"
+  },
+  {
+   "figure": "e2d D1: stop (newline)",
+   "printed": "stop_reason {'newline': 72}",
+   "source": "data/e2d/d1_sessions.json:sessions[].rounds[].stop_reason",
+   "status": "reproduced",
+   "note": "no 'eos' in the tally"
+  },
+  {
+   "figure": "e2d D1: EOS banned",
+   "printed": "yes",
+   "source": "valence_core/adapters/qwen_mlx.py@4e41288:247; the rebuilt list (counts below)",
+   "status": "not found",
+   "note": "code-fixed; inferred, not an artifact field"
+  },
+  {
+   "figure": "e2d D1: ban list (count)",
+   "printed": "12 ids / 12 strings",
+   "source": "data/e2d/d1_sessions.json:ban_list",
+   "status": "reproduced",
+   "note": "counts only; identity with the frozen file not shown"
+  },
+  {
+   "figure": "e2d D1: generation path",
+   "printed": "uncached",
+   "source": "RESULTS.md@bbc9ffe:6382; code valence_core/e2d/runner.py@4e41288:192",
+   "status": "log-only",
+   "note": "no artifact field"
+  },
+  {
+   "figure": "e2d D1: commit(s) that fixed them",
+   "printed": "pre-reg PROPOSAL-j f7a4a1e (v3 family held fixed); code 4e41288; data db5b09c",
+   "source": "RESULTS.md@bbc9ffe:6332; PROPOSAL-j-dose-escalation.md@bbc9ffe:114-116",
+   "status": "log-only",
+   "note": "the record names the code commit; the data commit db5b09c changed the runner after the run (cached=False -> cached=cached, --round-path added), values unchanged; f7a4a1e is an ancestor of 4e41288 and db5b09c: True"
+  },
+  {
+   "figure": "e2d D2: temperature",
+   "printed": "0.7",
+   "source": "data/e2d/d2_sessions.json:temp",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "e2d D2: max new tokens",
+   "printed": "60",
+   "source": "data/e2d/d2_sessions.json:tstep_licence.position_coverage_note ('STOP_CAP is 60')",
+   "status": "reproduced",
+   "note": "no cap hit in 607 rounds (max n_tok 42)"
+  },
+  {
+   "figure": "e2d D2: seed policy",
+   "printed": "session_rng(f'e2d-{arm}', idx)",
+   "source": "data/e2d/d2_sessions.json:sessions[].rounds[].seed",
+   "status": "reproduced",
+   "note": "64/64"
+  },
+  {
+   "figure": "e2d D2: stop (newline)",
+   "printed": "stop_reason {'newline': 607}",
+   "source": "data/e2d/d2_sessions.json:sessions[].rounds[].stop_reason",
+   "status": "reproduced",
+   "note": "no 'eos' in the tally"
+  },
+  {
+   "figure": "e2d D2: EOS banned",
+   "printed": "yes",
+   "source": "valence_core/adapters/qwen_mlx.py@a274ecd:247; the rebuilt list (counts below)",
+   "status": "not found",
+   "note": "code-fixed; inferred, not an artifact field"
+  },
+  {
+   "figure": "e2d D2: ban list (count)",
+   "printed": "12 ids / 12 strings",
+   "source": "data/e2d/d2_sessions.json:ban_list",
+   "status": "reproduced",
+   "note": "counts only; identity with the frozen file not shown"
+  },
+  {
+   "figure": "e2d D2: generation path",
+   "printed": "uncached",
+   "source": "data/e2d/d2_sessions.json:round_path_cached",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "e2d D2: commit(s) that fixed them",
+   "printed": "pre-reg PROPOSAL-j f7a4a1e (v3 family held fixed); code = data a274ecd",
+   "source": "git log over bbc9ffe (data/e2d/d2_sessions.json); PROPOSAL-j-dose-escalation.md@bbc9ffe:114-116",
+   "status": "computed-new",
+   "note": "the data commit changes no runner file: True; f7a4a1e is an ancestor of a274ecd: True"
+  },
+  {
+   "figure": "e2d D3: temperature",
+   "printed": "0.7",
+   "source": "data/e2d/d3_sessions.json:temp",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "e2d D3: max new tokens",
+   "printed": "60",
+   "source": "data/e2d/d3_sessions.json:tstep_licence.position_coverage_note ('STOP_CAP is 60')",
+   "status": "reproduced",
+   "note": "no cap hit in 233 rounds (max n_tok 42)"
+  },
+  {
+   "figure": "e2d D3: seed policy",
+   "printed": "session_rng(f'e2d-{arm}', idx)",
+   "source": "data/e2d/d3_sessions.json:sessions[].rounds[].seed",
+   "status": "reproduced",
+   "note": "24/24"
+  },
+  {
+   "figure": "e2d D3: stop (newline)",
+   "printed": "stop_reason {'newline': 233}",
+   "source": "data/e2d/d3_sessions.json:sessions[].rounds[].stop_reason",
+   "status": "reproduced",
+   "note": "no 'eos' in the tally"
+  },
+  {
+   "figure": "e2d D3: EOS banned",
+   "printed": "yes",
+   "source": "valence_core/adapters/qwen_mlx.py@e58dfca:247; the rebuilt list (counts below)",
+   "status": "not found",
+   "note": "code-fixed; inferred, not an artifact field"
+  },
+  {
+   "figure": "e2d D3: ban list (count)",
+   "printed": "12 ids / 12 strings",
+   "source": "data/e2d/d3_sessions.json:ban_list",
+   "status": "reproduced",
+   "note": "counts only; identity with the frozen file not shown"
+  },
+  {
+   "figure": "e2d D3: generation path",
+   "printed": "uncached",
+   "source": "data/e2d/d3_sessions.json:round_path_cached",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "e2d D3: commit(s) that fixed them",
+   "printed": "pre-reg PROPOSAL-j f7a4a1e (v3 family held fixed); code = data e58dfca",
+   "source": "git log over bbc9ffe (data/e2d/d3_sessions.json); PROPOSAL-j-dose-escalation.md@bbc9ffe:114-116",
+   "status": "computed-new",
+   "note": "the data commit changes no runner file: True; f7a4a1e is an ancestor of e58dfca: True"
+  },
+  {
+   "figure": "B2: temperature",
+   "printed": "0.0 (greedy)",
+   "source": "RESULTS.md@bbc9ffe:7636; ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:31; code scripts/box_b2_detection.py@720a104:198",
+   "status": "log-only",
+   "note": "N2 agrees"
+  },
+  {
+   "figure": "B2: max new tokens",
+   "printed": "60",
+   "source": "RESULTS.md@bbc9ffe:7645; code scripts/box_b2_detection.py@720a104:129",
+   "status": "log-only",
+   "note": "N2 agrees"
+  },
+  {
+   "figure": "B2: allocation seed",
+   "printed": "20260823 (plan_trials permutation)",
+   "source": "data/olmo/b2_{fidelity,register}_*.json:trials[].trial,concept,injected via detection.plan_trials",
+   "status": "reproduced",
+   "note": "8/8 files replay with 20260823; plan_trials' own default seed 20260819 replays 0/8 (the replay discriminates); N2 has the seed log-only"
+  },
+  {
+   "figure": "B2: generation seed",
+   "printed": "20260823 + n per trial",
+   "source": "scripts/box_b2_detection.py@720a104:198",
+   "status": "not found",
+   "note": "code-fixed; not recorded in any B2 artifact; inert at T = 0 (RESULTS.md@bbc9ffe:7641)"
+  },
+  {
+   "figure": "B2: ban list",
+   "printed": "9 ids from 6 strings, 5 of them ordinary sub-word pieces",
+   "source": "scripts/box_b2_detection.py@720a104:155; results/raw/2026-10-05_m-v1.10_referent_check.txt@bbc9ffe:4184-4186; data/olmo/a2_baserates_*.json:ban_list",
+   "status": "not found",
+   "note": "code-fixed for B2 (no B2 field); the id set is reproduced from the A2/B3 sha16s (section 3)"
+  },
+  {
+   "figure": "B2: generation path",
+   "printed": "uncached",
+   "source": "RESULTS.md@bbc9ffe:7834; code scripts/box_b2_detection.py@720a104:200",
+   "status": "log-only",
+   "note": ""
+  },
+  {
+   "figure": "B2: commit(s) that fixed them",
+   "printed": "runner built 0d4c147; data 720a104",
+   "source": "scripts/box_b2_detection.py@0d4c147",
+   "status": "computed-new",
+   "note": "not pre-registered: LOCK-g names no decoding parameter (section 1)"
+  },
+  {
+   "figure": "B2-r: temperature",
+   "printed": "1.0",
+   "source": "data/olmo/b2r_*.json:temp",
+   "status": "reproduced",
+   "note": "pre-registered ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:89-96; N2 agrees"
+  },
+  {
+   "figure": "B2-r: max new tokens",
+   "printed": "100",
+   "source": "data/olmo/b2r_*.json:max_tokens",
+   "status": "reproduced",
+   "note": "pre-registered ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:89-96; N2 agrees"
+  },
+  {
+   "figure": "B2-r: seed policy",
+   "printed": "20260824 + trial n (control, explore); qualify formula",
+   "source": "data/olmo/b2r_*.json:trials[].seed, control.rows[].seed, injected.*.rows[].seed",
+   "status": "reproduced",
+   "note": "'per-trial seeds are live and declared', ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:89-96; N2 agrees"
+  },
+  {
+   "figure": "B2-r: ban list",
+   "printed": "as B2 (the same 9 ids)",
+   "source": "scripts/box_b2r_campaign.py@b6e8f3f:269",
+   "status": "not found",
+   "note": "code-fixed; no B2-r field"
+  },
+  {
+   "figure": "B2-r: generation path",
+   "printed": "uncached",
+   "source": "RESULTS.md@bbc9ffe:7834; code scripts/box_b2r_campaign.py@b6e8f3f:130",
+   "status": "log-only",
+   "note": ""
+  },
+  {
+   "figure": "B2-r: commit(s) that fixed them",
+   "printed": "ADDENDUM-g3-b2r-v1.2 f14d249; runner c1bbf7c; stamped head 745c196; data b6e8f3f",
+   "source": "ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:89-96; results/raw/2026-08-25_b2r_arc.txt@bbc9ffe:5",
+   "status": "log-only",
+   "note": "the addendum's commit precedes the runner's: True"
+  },
+  {
+   "figure": "B2/B2-r: top-p / top-k",
+   "printed": "none (full softmax; argmax at T = 0)",
+   "source": "valence_core/adapters/olmo_hf.py@bbc9ffe:235",
+   "status": "not found",
+   "note": "code-fixed; the B2-r addendum names every decoding parameter and no top-p/top-k (ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:95-96); N2 agrees"
+  },
+  {
+   "figure": "B2/B2-r: stop",
+   "printed": "cap only (stop_newline=False; EOS banned)",
+   "source": "scripts/box_b2_detection.py@720a104:199; scripts/box_b2r_campaign.py@b6e8f3f:129; valence_core/session.py@bbc9ffe:116; data/olmo/a2_baserates_*.json:ban_list.strings",
+   "status": "not found",
+   "note": "code-fixed; code argument; refines N2's 'EOS token or the cap'; consistent (computed-new, not token-exact): response_raw 227-349 chars (B2, n 384), 275-588 (B2-r control/explore, n 672), none under 60 (section 5 (c))"
+  },
+  {
+   "figure": "B3: temperature",
+   "printed": "0.7",
+   "source": "RESULTS.md@bbc9ffe:8364; code scripts/box_b3_sessions.py@720a104:77",
+   "status": "log-only",
+   "note": "no artifact field"
+  },
+  {
+   "figure": "B3: top-p / top-k",
+   "printed": "none (full softmax at T)",
+   "source": "valence_core/adapters/olmo_hf.py@bbc9ffe:235",
+   "status": "not found",
+   "note": "code-fixed"
+  },
+  {
+   "figure": "B3: max new tokens",
+   "printed": "60",
+   "source": "data/olmo/b3_screen_*.json:sessions[].rounds[].n_tok,cap_hit (8 cap hits, all at 60)",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "B3: seed policy",
+   "printed": "session_rng(f'b3-{arm}', idx); stage-independent",
+   "source": "data/olmo/b3_screen_*.json:sessions[].rounds[].seed",
+   "status": "reproduced",
+   "note": "377/377 streams; 267/267 pairs equal against base, 546/546 over all six stage pairs"
+  },
+  {
+   "figure": "B3: stop discipline",
+   "printed": "newline after content, cap 60, EOS banned",
+   "source": "valence_core/adapters/olmo_hf.py@bbc9ffe:206; valence_core/adapters/olmo_hf.py@bbc9ffe:290-294",
+   "status": "not found",
+   "note": "code-fixed (adapter default and rule); consistent: cap_hit iff n_tok = 60"
+  },
+  {
+   "figure": "B3: ban list",
+   "printed": "9 ids, sha16 2dd86a453a2275ef; 5 ordinary sub-word pieces",
+   "source": "data/olmo/b3_screen_*.json:ban_list; results/raw/2026-10-05_m-v1.10_referent_check.txt@bbc9ffe:4184-4186",
+   "status": "reproduced",
+   "note": "the count and sha16 are artifact fields; the ids are the record's (log-only) and hash to the stored sha16 (True)"
+  },
+  {
+   "figure": "B3: generation path",
+   "printed": "uncached",
+   "source": "RESULTS.md@bbc9ffe:7834; code scripts/box_b3_sessions.py@720a104:129",
+   "status": "log-only",
+   "note": ""
+  },
+  {
+   "figure": "B3: commit(s) that fixed them",
+   "printed": "TEMP introduced a07d8fa; data 720a104",
+   "source": "scripts/box_b3_sessions.py@a07d8fa",
+   "status": "computed-new",
+   "note": "git history at bbc9ffe"
+  },
+  {
+   "figure": "k1: temperature",
+   "printed": "0.7",
+   "source": "data/k/k1_sessions.json:temp, identity.temp",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "k1: max new tokens",
+   "printed": "60",
+   "source": "code valence_core/formats/recon.py@7742e2c:314, valence_core/session_e2a.py@7742e2c:90",
+   "status": "not found",
+   "note": "code-fixed; no cap hit in 438 rounds (max n_tok 50)"
+  },
+  {
+   "figure": "k1: seed policy",
+   "printed": "session_rng('k1-F2', idx)",
+   "source": "data/k/k1_sessions.json:sessions[].rounds[].seed",
+   "status": "reproduced",
+   "note": "48/48"
+  },
+  {
+   "figure": "k1: stop (newline / cap)",
+   "printed": "stop_reason {'newline': 438}",
+   "source": "data/k/k1_sessions.json:sessions[].rounds[].stop_reason",
+   "status": "reproduced",
+   "note": "no 'eos' in the tally"
+  },
+  {
+   "figure": "k1: EOS banned",
+   "printed": "yes",
+   "source": "valence_core/adapters/qwen_mlx.py@7742e2c:299; scripts/k1_stage1.py@7742e2c:264",
+   "status": "not found",
+   "note": "code-fixed; inferred, not an artifact field"
+  },
+  {
+   "figure": "k1: ban list",
+   "printed": "rebuilt from the live tokenizer",
+   "source": "scripts/k1_stage1.py@7742e2c:264",
+   "status": "not found",
+   "note": "code-fixed; no artifact field"
+  },
+  {
+   "figure": "k1: generation path",
+   "printed": "uncached",
+   "source": "data/k/k1_sessions.json:sessions[].rounds[].round_path_cached",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "k1: commit(s) that fixed them",
+   "printed": "code = data 7742e2c",
+   "source": "git log over bbc9ffe (data/k/k1_sessions.json)",
+   "status": "computed-new",
+   "note": "the data commit changes no runner file: True"
+  },
+  {
+   "figure": "format F0: temperature",
+   "printed": "0.7",
+   "source": "data/format/format_recon_F0_sessions.json:temp, identity.temp",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "format F0: max new tokens",
+   "printed": "60",
+   "source": "data/format/format_recon_F0_sessions.json:sessions[].rounds[].n_tok,cap_hit (1 cap hit(s), all at 60)",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "format F0: seed policy",
+   "printed": "session_rng('fmt-F0', idx)",
+   "source": "data/format/format_recon_F0_sessions.json:sessions[].rounds[].seed",
+   "status": "reproduced",
+   "note": "8/8"
+  },
+  {
+   "figure": "format F0: stop (newline / cap)",
+   "printed": "stop_reason {'newline': 79, 'cap': 1}",
+   "source": "data/format/format_recon_F0_sessions.json:sessions[].rounds[].stop_reason",
+   "status": "reproduced",
+   "note": "no 'eos' in the tally"
+  },
+  {
+   "figure": "format F0: EOS banned",
+   "printed": "yes",
+   "source": "valence_core/adapters/qwen_mlx.py@3c23320:299; scripts/format_recon.py@3c23320:627",
+   "status": "not found",
+   "note": "code-fixed; inferred, not an artifact field"
+  },
+  {
+   "figure": "format F0: ban list (count)",
+   "printed": "12 ids / 12 strings",
+   "source": "data/format/format_recon_F0_sessions.json:ban_list",
+   "status": "reproduced",
+   "note": "counts only; identity with the frozen file not shown"
+  },
+  {
+   "figure": "format F0: generation path",
+   "printed": "uncached",
+   "source": "data/format/format_recon_F0_sessions.json:sessions[].rounds[].round_path_cached",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "format F0: commit(s) that fixed them",
+   "printed": "code = data 3c23320",
+   "source": "git log over bbc9ffe (data/format/format_recon_F0_sessions.json)",
+   "status": "computed-new",
+   "note": "the data commit changes no runner file: True"
+  },
+  {
+   "figure": "format F1: temperature",
+   "printed": "0.7",
+   "source": "data/format/format_recon_F1_sessions.json:temp, identity.temp",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "format F1: max new tokens",
+   "printed": "60",
+   "source": "code valence_core/formats/recon.py@3c23320:309, valence_core/session_e2a.py@3c23320:90",
+   "status": "not found",
+   "note": "code-fixed; no cap hit in 211 rounds (max n_tok 33)"
+  },
+  {
+   "figure": "format F1: seed policy",
+   "printed": "session_rng('fmt-F1', idx)",
+   "source": "data/format/format_recon_F1_sessions.json:sessions[].rounds[].seed",
+   "status": "reproduced",
+   "note": "24/24"
+  },
+  {
+   "figure": "format F1: stop (newline / cap)",
+   "printed": "stop_reason {'newline': 211}",
+   "source": "data/format/format_recon_F1_sessions.json:sessions[].rounds[].stop_reason",
+   "status": "reproduced",
+   "note": "no 'eos' in the tally"
+  },
+  {
+   "figure": "format F1: EOS banned",
+   "printed": "yes",
+   "source": "valence_core/adapters/qwen_mlx.py@3c23320:299; scripts/format_recon.py@3c23320:627",
+   "status": "not found",
+   "note": "code-fixed; inferred, not an artifact field"
+  },
+  {
+   "figure": "format F1: ban list (count)",
+   "printed": "12 ids / 12 strings",
+   "source": "data/format/format_recon_F1_sessions.json:ban_list",
+   "status": "reproduced",
+   "note": "counts only; identity with the frozen file not shown"
+  },
+  {
+   "figure": "format F1: generation path",
+   "printed": "uncached",
+   "source": "data/format/format_recon_F1_sessions.json:sessions[].rounds[].round_path_cached",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "format F1: commit(s) that fixed them",
+   "printed": "code = data 3c23320",
+   "source": "git log over bbc9ffe (data/format/format_recon_F1_sessions.json)",
+   "status": "computed-new",
+   "note": "the data commit changes no runner file: True"
+  },
+  {
+   "figure": "format F2: temperature",
+   "printed": "0.7",
+   "source": "data/format/format_recon_F2_sessions.json:temp, identity.temp",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "format F2: max new tokens",
+   "printed": "60",
+   "source": "code valence_core/formats/recon.py@3c23320:309, valence_core/session_e2a.py@3c23320:90",
+   "status": "not found",
+   "note": "code-fixed; no cap hit in 240 rounds (max n_tok 38)"
+  },
+  {
+   "figure": "format F2: seed policy",
+   "printed": "session_rng('fmt-F2', idx)",
+   "source": "data/format/format_recon_F2_sessions.json:sessions[].rounds[].seed",
+   "status": "reproduced",
+   "note": "24/24"
+  },
+  {
+   "figure": "format F2: stop (newline / cap)",
+   "printed": "stop_reason {'newline': 240}",
+   "source": "data/format/format_recon_F2_sessions.json:sessions[].rounds[].stop_reason",
+   "status": "reproduced",
+   "note": "no 'eos' in the tally"
+  },
+  {
+   "figure": "format F2: EOS banned",
+   "printed": "yes",
+   "source": "valence_core/adapters/qwen_mlx.py@3c23320:299; scripts/format_recon.py@3c23320:627",
+   "status": "not found",
+   "note": "code-fixed; inferred, not an artifact field"
+  },
+  {
+   "figure": "format F2: ban list (count)",
+   "printed": "12 ids / 12 strings",
+   "source": "data/format/format_recon_F2_sessions.json:ban_list",
+   "status": "reproduced",
+   "note": "counts only; identity with the frozen file not shown"
+  },
+  {
+   "figure": "format F2: generation path",
+   "printed": "uncached",
+   "source": "data/format/format_recon_F2_sessions.json:sessions[].rounds[].round_path_cached",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "format F2: commit(s) that fixed them",
+   "printed": "code = data 3c23320",
+   "source": "git log over bbc9ffe (data/format/format_recon_F2_sessions.json)",
+   "status": "computed-new",
+   "note": "the data commit changes no runner file: True"
+  },
+  {
+   "figure": "Qwen session families: top-p / top-k",
+   "printed": "none (full-vocabulary categorical at T)",
+   "source": "valence_core/adapters/qwen_mlx.py@bbc9ffe:290",
+   "status": "not found",
+   "note": "code-fixed for e2b/e2d/k1/format (generate() source at every code commit identical to bbc9ffe's: True); f1 is log-only via the G-PORT raw"
+  },
+  {
+   "figure": "Qwen: EOS id in the ban list",
+   "printed": "<|im_end|> -> 248046: True",
+   "source": "local snapshot tokenizer_config.json + tokenizer.json (outside the record) vs data/configs/e2a_ban_list.json:ids",
+   "status": "computed-new",
+   "note": "the record: results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:1672"
+  },
+  {
+   "figure": "Qwen vendor generation_config (not used)",
+   "printed": "T 1.0, top_k 20, top_p 0.95",
+   "source": "local snapshot generation_config.json (outside the record)",
+   "status": "computed-new",
+   "note": "no runner reads it"
+  },
+  {
+   "figure": "OLMo: the two stored ban sha16s",
+   "printed": "B3 2dd86a453a2275ef (sorted ids); A2 c0297fa8ee89d29d ({ids, strings})",
+   "source": "data/olmo/b3_screen_*.json:ban_list.sha16; data/olmo/a2_baserates_*.json:ban_list.sha16; scripts/box_b3_sessions.py@720a104:262; scripts/box_a2_baserates.py@cc9db1d:319-320",
+   "status": "reproduced",
+   "note": "both recomputed from the record's nine ids (results/raw/2026-10-05_m-v1.10_referent_check.txt@bbc9ffe:4184-4186); B3 match True, A2 match True"
+  },
+  {
+   "figure": "OLMo: banned sub-word pieces",
+   "printed": "29 '>', 524 '</', 771 'ink', 14023 '<th', 27963 'think'",
+   "source": "results/raw/2026-10-05_m-v1.10_referent_check.txt@bbc9ffe:4184-4186",
+   "status": "log-only",
+   "note": "piece names corroborated on a local base tokenizer.json that is not the run's file (computed-new: True; equal to the manifest's base file: False)"
+  },
+  {
+   "figure": "N4 cross-check: h1_sessions.json generated rounds",
+   "printed": "1110 generated; 1111 entries",
+   "source": "data/e2b/h1_sessions.json:sessions[].rounds[],choices[] (n_tok present) vs n_rounds",
+   "status": "discrepant",
+   "note": "N4 raw states 1111; cause: N4 counts round+choice entries, the artifact's n_rounds formula, which includes one budget-stop read with no generated round (a counting definition, not a transcription; section 5)"
+  }
+ ],
+ "stops": [],
+ "discrepancies": [],
+ "referent_notes": [
+  "The block's N16 asks for 'max tokens'; for the session families that value is STOP_CAP, a backstop under a newline stop, not a generation length. For B2/B2-r (no newline stop, EOS banned) it is the generation length.",
+  "'S1 judge' generates no text. Its decoding row is 'none': a deterministic logit read. The texts it judges are the g2r2 corpus (cached, T 0.7, per-round crc32 seeds), which this raw tabulates as its own row. The runner declares rng = default_rng(20260820) (scripts/s1_judge_rescue.py@f526377:113) and never draws from it.",
+  "The k1 / format-recon rows are included because the block's N3(i) cites PROPOSAL-k Stage 1 figures and k1 runs through the format-recon runner; the note itself could not be checked (preflight :15).",
+  "Echo-probe recon stages A-C (N3) generate nothing: scripts/recon_echo.py@bbc9ffe:4 re-forwards archived e2a sessions, so the e2a row covers their text.",
+  "`data/e2a/g2_rounds_f0.2_v2.json` is not a DV and is not tabulated: it is consistent with the first g2 ladder's dose-0.20 corpus, generated before the template amendment (the first g2 entry, archive/RESULTS-cycles3-4.md@bbc9ffe:1204, precedes the amendment at :1043; results/raw/2026-08-09_e2a_g2.txt prints a 0.2 generation, g2r and g2r2 print only 0.1). Its texts run past newlines (124/128) and 102/128 contain a `<think>` string, and its rows carry no cap_hit field: consistent with the pre-amendment decoding, which had no newline stop and a 90-token cap (archive/RESULTS-cycles3-4.md@bbc9ffe:1096, log-only; clone jlens-qwen36/jlens_qwen/e2a.py:49); whether a scaffold ban was in force for it is not settled here. Listed so that a reader of data/e2a does not mistake it for the readability corpus of record; its seeds still follow the per-round crc32 formula (128/128).",
+  "The S1 runner changed after its run at 47ef4c7 (2026-08-20): only the TASKS path moved from the clone into the record; its read code is cited at the run commit f526377.",
+  "H1-u's data is the first H1 run (data/e2b/h1_sessions.json@b2d051b, relabelled at 6df2072); its runner of record is scripts/e2b_h1_sessions.py@b2d051b, which steered forced rounds (:188) and generated free-phase rounds with no injection (:250), the defect the 6df2072 message names. Decoding is the same as H1's. H1's runner is cited at 6df2072, whose commit subject ends 'gate run of record launched.' (git log); H1's data commit 7527270 changes no runner file (True) and no runner file changed between the two (True).",
+  "e2d D1's code is cited at 4e41288, not at its data commit db5b09c: the record says 'Module + analyzer committed BEFORE the run at `4e41288`; D1 ran that code' (RESULTS.md@bbc9ffe:6332), and db5b09c changed the runner after the run (scripts/e2d_sessions.py, valence_core/e2d/runner.py; commits touching D1's code between the two: ['db5b09c']). At 4e41288 the round call hard-codes `cached=False` (valence_core/e2d/runner.py@4e41288:192); at db5b09c it is `cached=cached` (valence_core/e2d/runner.py@db5b09c:193) and the runner writes `round_path_cached` (valence_core/e2d/runner.py@db5b09c:262), a field D1's artifact lacks; the runner at 4e41288 has no `round_path_cached` line (True). Values (T 0.7, cap 60, uncached, the ban builder) are the same at both commits."
+ ],
+ "pi_items": [
+  "Code-fixed parameters. The block's status vocabulary has no slot for a value fixed by committed code at the run's commit when no artifact field or log line states it. This raw marks those 'not found (code-fixed)' with file:line@commit, as the N2 raw does (its row 10), so that N1 does not cut them: top-p/top-k 'none' for every Qwen valence_core family and all three OLMo campaigns; the e2b, B2, B2-r and k1 ban lists; B2's per-trial generation seed (inert at T = 0); the 60-token cap where no round reached it (e2d D1, k1, format F1/F2); the e2b and B3 stop rule; the EOS ban for e2b, e2d, k1 and format; the B2/B2-r 'cap is the only reachable stop'. A decision is needed on how N1 treats them.",
+  "OLMo's ban list suppresses five ordinary sub-word tokens in every OLMo round generation (B2, B2-r, B3, all four stages): 29 '>', 524 '</', 771 'ink', 14023 '<th', 27963 'think'. `<think>`/`</think>` are not added tokens in OLMo's vocabulary, and the builder bans every piece of every string. The record already says so (results/raw/2026-10-05_m-v1.10_referent_check.txt@bbc9ffe:4177); this raw reproduces the nine-id set from the two stored sha16s (section 3). Banning '>' (id 29) is the one most likely to matter to a reader, since it is a common piece. No DV was re-examined for it here. The decoding paragraph should state it, and whether it needs any further look is the design seat's call.",
+  "Pre-registration of decoding: B2-r's temperature, max tokens and seeds were pre-registered (ADDENDUM-g3-b2r-v1.2 section 0.5, f14d249); B2's greedy decoding was not (LOCK-g names no decoding parameter) and was diagnosed afterwards (RESULTS.md@bbc9ffe:7636); the Qwen families' stop rule, cap and ban were fixed in the log before their data (e2a amendment 3637c06, v3 adjudication 8fa0b75), and for f1 and e2d also pre-registered by reference to the v3 family (PROPOSAL-f ea011bd, PROPOSAL-f-natural-reinforcer-screen.md@bbc9ffe:60-61; PROPOSAL-j f7a4a1e, PROPOSAL-j-dose-escalation.md@bbc9ffe:114-116, before e2d's code and data: True), no tracked PROPOSAL-/LOCK-/ADDENDUM- document governing them states a temperature (section 2's search), and e2a's log pre-registration says only 'temperature-sampled'. Log entries other than those cited here were not searched for pre-data temperature statements.",
+  "e2a's temperature (0.7) is in no e2a artifact and no e2a-era log line. The record states it only in a code comment written three weeks later (valence_core/e2d/config.py@bbc9ffe:41, introduced 4e41288) and in the gitignored clone. If the note prints e2a's temperature, the README should say where it comes from. The same holds for the g2r2 corpus's temperature. e2a's status here stays log-only (committed prose), but N1's ledger should carry this raw's note with it ('a later code comment, not an e2a log entry', section 6), so that 'log-only' is not read as a contemporaneous e2a log entry; whether the note prints e2a's T is the PI's call.",
+  "EOS is banned in every Qwen and OLMo generation (Qwen: recorded in the G-PORT raw and recomputed here from the local snapshot; OLMo: code argument plus the recorded ban strings). One consequence belongs in the decoding paragraph: by that code argument, B2 and B2-r generations always ran to their caps (60 / 100 tokens) and were then segmented at turn markers (consistent, not shown token-exactly: the stored responses' lengths, section 5 (c)).",
+  "Seed pairing by construction (e2d across doses, B3 across stages, B2-r explore vs control, B2-r qualify across concepts) is not a defect, but a reader comparing doses or stages should be told the comparisons are seed-paired."
+ ],
+ "values_check": [
+  {
+   "finding": "1 (substantive) e2a/g2r2/f1 ban fixed by 8fa0b75, not only 6e49242",
+   "disposition": "fixed",
+   "detail": "Confirmed by tool run: git log -S'ROUND GENERATION ONLY' over RESULTS.md + archive gives 8fa0b75 (2026-08-09); the adjudication text is archive/RESULTS-cycles3-4.md@bbc9ffe:929-932; the frozen list is logged before the full run at archive/RESULTS-cycles3-4.md@bbc9ffe:895-896; PROPOSAL-f registers the v3 family at PROPOSAL-f-natural-reinforcer-screen.md@bbc9ffe:60-61. Now cited in the e2a, g2r2 and f1 rows (ban, stop, commit cells), in section 2 (new rows and reading) and in section 6 (commit rows). 6e49242 stays, labelled as the later admission of the file."
+  },
+  {
+   "finding": "2 (substantive) B2-r decoding pre-registered in ADDENDUM-g3-b2r-v1.2 section 0.5 (f14d249)",
+   "disposition": "fixed",
+   "detail": "Confirmed: ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:89-96; the addendum's first commit is f14d249 (2026-08-24); it is an ancestor of the runner commit c1bbf7c: True. Added to the B2-r temperature, max-token, seed, top-p/top-k and commit cells, to section 2 and to section 6. The addendum's 'ours ran 0.0' (ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:31) now sits beside RESULTS.md's line for B2's temperature."
+  },
+  {
+   "finding": "3 (substantive) e2d D1 cited at its data commit db5b09c; the record says D1 ran 4e41288",
+   "disposition": "fixed",
+   "detail": "Confirmed: RESULTS.md@bbc9ffe:6332; db5b09c changed scripts/e2d_sessions.py, valence_core/e2d/runner.py. D1's temperature, cap, seed, ban and path lines are now at 4e41288 (valence_core/e2d/config.py@4e41288:41, valence_core/e2d/runner.py@4e41288:191, valence_core/e2d/runner.py@4e41288:155, scripts/e2d_sessions.py@4e41288:126, valence_core/e2d/runner.py@4e41288:192); adapter generate() at 4e41288 equal to bbc9ffe's: True. The commit cell names both commits. The same check over every other DV's data commit (vocabulary paragraph) finds only H1-u's relabel commit, already cited at its run commit."
+  },
+  {
+   "finding": "4 (substantive) g2r2 temperature labelled log-only in section 1 but not found in section 6",
+   "disposition": "fixed",
+   "detail": "Both tables now say not found (clone only), tier K. No artifact field (keys of g2_discriminability.json: ['ban_sha', 'bar', 'fracs', 'template_family', 'verdict']; of a g2r2 round: ['cap_hit', 'para', 'seed', 'task_id', 'text']) and no log line: a search for a 0.7 temperature (regex /(temp|temperature)[^a-z0-9]{0,6}0\\.7|0\\.7[^0-9].{0,12}\\btemp/i) over archive/RESULTS-cycles3-4.md and the 15 results/raw/2026-08-01..12 e2a raws at bbc9ffe (listed in the JSON) finds 0 hit(s). The e2d config comment names e2a, not the g2 corpora. If the PI accepts that comment as covering the g2 corpora, both cells change together."
+  },
+  {
+   "finding": "5 (minor) unescaped '|' in section 6 cells",
+   "disposition": "fixed",
+   "detail": "Every table row is now written by one helper that escapes '|' (sections 1, 2 and 6); the column-count check at the end of this section runs over the whole file."
+  },
+  {
+   "finding": "6 (minor) k1/format section 6 sources name no artifact; seed key printed as a Python list",
+   "disposition": "fixed",
+   "detail": "Each source is now prefixed with its artifact path (data/k/k1_sessions.json, data/format/format_recon_F{0,1,2}_sessions.json), and keys print as strings ('k1-F2', 'fmt-F0', ...)."
+  },
+  {
+   "finding": "7 (minor) section 6 lacks rows for some main-table cells and has no commit rows",
+   "disposition": "fixed",
+   "detail": "Added: e2a EOS; g2r2 top-p/top-k, max, stop/EOS, ban, commit; S1 commit; f1 commit; e2b stop and commit (x4); e2d EOS, ban (count) and commit (x3); B2 ban and commit; B2-r ban and commit; B3 top-p/top-k, stop, commit; k1/format EOS, ban and commit; the OLMo sha16 and sub-word rows. Commit rows are computed-new (git history) except where the record names the commit (D1, B2-r: log-only)."
+  },
+  {
+   "finding": "8 (minor) B3 cross-stage seed equality: domain unstated",
+   "disposition": "fixed",
+   "detail": "Now '267/267 same-(arm, idx) pairs, each non-base stage against base; 546/546 over all six stage pairs' (89 keys at all four stages), computed here, in section 1, section 4 and section 6. The checker's 546/546 reproduces."
+  },
+  {
+   "finding": "9 (minor) B3 stop default cited at olmo_hf.py:293",
+   "disposition": "fixed",
+   "detail": "The default is the signature, valence_core/adapters/olmo_hf.py@bbc9ffe:206; the rule is valence_core/adapters/olmo_hf.py@bbc9ffe:290-294."
+  },
+  {
+   "finding": "10 (minor) OLMo: 6 strings -> 9 ids implies banned sub-word pieces; the two sha16 conventions differ",
+   "disposition": "fixed, with one part rejected",
+   "detail": "Applied: both omissions are real and are now stated (section 1 B2/B2-r/B3 ban cells, section 3, section 6, a PI item). Rejected: 'a decoding fact the record cannot resolve'. The record lists the ids (results/raw/2026-10-05_m-v1.10_referent_check.txt@bbc9ffe:4184-4186) and says five of nine are sub-word pieces (results/raw/2026-10-05_m-v1.10_referent_check.txt@bbc9ffe:4177). This pass reproduces the id set from the artifacts: sha256(json.dumps(sorted ids))[:16] = 2dd86a453a2275ef, equal to B3's stored sha16 at all four stages (True), and sha256(json.dumps({ids, strings}, sort_keys=True))[:16] = c0297fa8ee89d29d, equal to A2's at all four stages (True). So the two sha16s are one id set under two conventions. The A2 convention is cited at A2's data commit (scripts/box_a2_baserates.py@cc9db1d:319-320) rather than at bbc9ffe."
+  },
+  {
+   "finding": "11 (minor) e2a 'EOS banned' cited to G-PORT :1671, which is about f1's and m's runners",
+   "disposition": "fixed",
+   "detail": "e2a's EOS ban now cites the frozen file's strings (<|im_end|> and <|endoftext|> in data/configs/e2a_ban_list.json), the run's sha16 (results/raw/2026-08-09_e2a_full.txt@bbc9ffe:5) and the eos identity (results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:1672); :1671 is kept for f1 with its correction (results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:1682)."
+  },
+  {
+   "finding": "12 (minor) e2d stop cells 'EOS banned [reproduced]' and ban cells '12 ids [reproduced]' overclaim",
+   "disposition": "fixed",
+   "detail": "The e2d stop cells now read 'newline [reproduced: stop_reason tally, no eos]; EOS banned [not found as a field: code-fixed, the adapter's rule with the EOS id in the ban list]', and the ban cells 'reproduced (count only)', noting the artifact stores {n_ids, n_strings} and does not show identity with the frozen file. Section 6 splits the same way (stop (newline), EOS banned, ban list (count))."
+  },
+  {
+   "finding": "13 (minor) section 2 STOP_CAP introducing commit needs --follow",
+   "disposition": "fixed",
+   "detail": "Both forms computed: --follow gives bfa87a5 (file then `valence_core/e2b/session.py`); without it, 1465b34 (the rename). The row's note says so."
+  },
+  {
+   "finding": "self-found A: e2b's STOP_CAP module and a misleading appendix field",
+   "disposition": "fixed",
+   "detail": "At all four e2b run commits STOP_CAP is defined in valence_core/e2b/session.py (valence_core/e2b/session.py@b2d051b:83; valence_core/e2b/session.py@6df2072:83; valence_core/e2b/session.py@2d419f2:83; valence_core/e2b/session.py@485cc94:83); valence_core/session_e2a.py exists at none of them ([False, False, False, False]), so the earlier appendix field `session_e2a_blob_equal_pin` = false only reflected the file not existing yet. The field is replaced by `stop_cap_def`, and the e2b cap cells cite the definition."
+  },
+  {
+   "finding": "self-found B: finding 12's overclaim in the k1/format and g2r2 rows",
+   "disposition": "fixed",
+   "detail": "The k1 and format stop and ban cells had the same overclaim as e2d's and are split the same way. The g2r2 stop cell, which said 'reproduced in part' on the strength of zero newlines, is now log-only (the v3 family's definition) with the artifact's template_family = 'v3' as the reproduced part. The tier column marks split cells X+Y."
+  },
+  {
+   "finding": "self-found C: section 2 header said 'committer-local' dates",
+   "disposition": "fixed",
+   "detail": "The dates are git author dates (%ad, --date=short); the header says so."
+  },
+  {
+   "finding": "self-found D: B2's decoding and pre-registration",
+   "disposition": "added",
+   "detail": "LOCK-g names no decoding parameter (no temperature, max-token or top-p/top-k string: True; its only 'greedy' is the roster search, LOCK-g.md@bbc9ffe:40,42). Stated in the B2 commit cell and a PI item."
+  }
+ ],
+ "round2_line_numbering": {
+  "old_method_replay": {
+   "e2a_full_ban": {
+    "text_mode_splitlines": 7,
+    "text_mode_split_newline": 7,
+    "bytes_split_newline (now)": 5
+   },
+   "g2r2_ban": {
+    "text_mode_splitlines": 5,
+    "text_mode_split_newline": 5,
+    "bytes_split_newline (now)": 3
+   },
+   "g2r2_cached": {
+    "text_mode_splitlines": 8,
+    "text_mode_split_newline": 8,
+    "bytes_split_newline (now)": 6
+   }
+  },
+  "record_files_read": 146,
+  "record_files_with_splitlines_only_separators": {
+   "results/raw/2026-08-09_e2a_full.txt@bbc9ffe": [
+    "'\\r'"
+   ],
+   "results/raw/2026-08-09_e2a_g1.txt@bbc9ffe": [
+    "'\\r'"
+   ],
+   "results/raw/2026-08-09_e2a_g1r.txt@bbc9ffe": [
+    "'\\r'"
+   ],
+   "results/raw/2026-08-09_e2a_g2.txt@bbc9ffe": [
+    "'\\r'"
+   ],
+   "results/raw/2026-08-09_e2a_g2check.txt@bbc9ffe": [
+    "'\\r'"
+   ],
+   "results/raw/2026-08-09_e2a_g2r.txt@bbc9ffe": [
+    "'\\r'"
+   ],
+   "results/raw/2026-08-09_e2a_g2r2.txt@bbc9ffe": [
+    "'\\r'"
+   ],
+   "results/raw/2026-08-09_e2a_g2r_crash.txt@bbc9ffe": [
+    "'\\r'"
+   ],
+   "results/raw/2026-08-09_e2a_g3.txt@bbc9ffe": [
+    "'\\r'"
+   ],
+   "results/raw/2026-08-09_e2a_smoke.txt@bbc9ffe": [
+    "'\\r'"
+   ],
+   "results/raw/2026-08-09_e2a_smoke2.txt@bbc9ffe": [
+    "'\\r'"
+   ],
+   "results/raw/2026-08-09_e2a_smoke3.txt@bbc9ffe": [
+    "'\\r'"
+   ]
+  },
+  "clone_files_with_splitlines_only_separators": [],
+  "sibling_raws_with_splitlines_only_separators": [],
+  "separator_files_carrying_a_locator": [
+   "results/raw/2026-08-09_e2a_full.txt@bbc9ffe",
+   "results/raw/2026-08-09_e2a_g2r2.txt@bbc9ffe"
+  ],
+  "separator_files_read_only_by_the_temperature_search": [
+   "results/raw/2026-08-09_e2a_g1.txt@bbc9ffe",
+   "results/raw/2026-08-09_e2a_g1r.txt@bbc9ffe",
+   "results/raw/2026-08-09_e2a_g2.txt@bbc9ffe",
+   "results/raw/2026-08-09_e2a_g2check.txt@bbc9ffe",
+   "results/raw/2026-08-09_e2a_g2r.txt@bbc9ffe",
+   "results/raw/2026-08-09_e2a_g2r_crash.txt@bbc9ffe",
+   "results/raw/2026-08-09_e2a_g3.txt@bbc9ffe",
+   "results/raw/2026-08-09_e2a_smoke.txt@bbc9ffe",
+   "results/raw/2026-08-09_e2a_smoke2.txt@bbc9ffe",
+   "results/raw/2026-08-09_e2a_smoke3.txt@bbc9ffe"
+  ]
+ },
+ "values_check_round2": [
+  {
+   "finding": "R2-1 (minor) three log locators off by two: e2a_full.txt :7, e2a_g2r2.txt :5 and :8",
+   "disposition": "fixed",
+   "detail": "Confirmed, with the cause one step earlier than the finding's. git() ran git in subprocess text mode, whose universal-newline translation turns the bare '\\r' of tqdm's 'Fetching 14 files' line into line breaks before any split, so split('\\n') alone does not fix it: replaying the old read gives, per locator (text-mode splitlines / text-mode split('\\n') / bytes split('\\n'), now): {\"e2a_full_ban\": {\"text_mode_splitlines\": 7, \"text_mode_split_newline\": 7, \"bytes_split_newline (now)\": 5}, \"g2r2_ban\": {\"text_mode_splitlines\": 5, \"text_mode_split_newline\": 5, \"bytes_split_newline (now)\": 3}, \"g2r2_cached\": {\"text_mode_splitlines\": 8, \"text_mode_split_newline\": 8, \"bytes_split_newline (now)\": 6}}. Fixed both halves: git() decodes stdout bytes, every emitted line number comes from one helper, lines_of() (split on '\\n' only, as sed numbers lines), and the N2/N4 sibling reads are byte-exact. Now results/raw/2026-08-09_e2a_full.txt@bbc9ffe:5, results/raw/2026-08-09_e2a_g2r2.txt@bbc9ffe:3 and results/raw/2026-08-09_e2a_g2r2.txt@bbc9ffe:6, the finding's expected values. Of the 146 record files this script reads, 12 contain a splitlines-only separator (each a bare '\\r': True); of those, the ones this raw cites by line are ['results/raw/2026-08-09_e2a_full.txt@bbc9ffe', 'results/raw/2026-08-09_e2a_g2r2.txt@bbc9ffe']; the other 10 (2026-08-09_e2a_g1.txt, 2026-08-09_e2a_g1r.txt, 2026-08-09_e2a_g2.txt, 2026-08-09_e2a_g2check.txt, 2026-08-09_e2a_g2r.txt, 2026-08-09_e2a_g2r_crash.txt, 2026-08-09_e2a_g3.txt, 2026-08-09_e2a_smoke.txt, 2026-08-09_e2a_smoke2.txt, 2026-08-09_e2a_smoke3.txt) are read only by the e2a-era temperature search (all in its file list: True), which finds 0 hit(s) and so emits no line number into them. Clone files with one: none; sibling raws (N2, N4) with one: none. So no other locator in this raw moves. The cited text: 'v3 roster [('slate', 'prism'), ('maple', 'cedar'), ('granite...' and 'config v3: ban 12 ids sha 9a2f0744f81ac930; collis...'. The other two locators in these files are before the progress line and unchanged (results/raw/2026-08-09_e2a_full.txt@bbc9ffe:2, results/raw/2026-08-09_e2a_full.txt@bbc9ffe:3). The corrected locators reach every cell that carries them: the section-1 e2a stop and ban cells and g2r2 ban and path cells, the section-3 Qwen bullet, the section-6 rows 'e2a: EOS banned', 'e2a: ban list' and 'g2r2 corpus: ban list', and round 1's row 11 above."
+  },
+  {
+   "finding": "R2-2 (minor) section 5(c) cited N2's 2(d) base row only",
+   "disposition": "fixed (both forms the fix offers)",
+   "detail": "Confirmed from the N2 raw at read: rows at lines 220, 221, 222, 223; B2-r over 100: base 0/96 (max 100); sft 3/96 (max 102); dpo 9/96 (max 104); instruct 17/96 (max 103); B2 over 60: base 0/96 (max 60); sft 23/96 (max 63); dpo 4/96 (max 61); instruct 2/96 (max 61); 'cut at 60 shortens' base 96/96; sft 96/96; dpo 96/96; instruct 96/96; N2 calls an over-cap re-encoding impossible for exact ids at line 216. Section 5(c) now cites all four rows with that caveat, and adds the computed-new response lengths from the committed `response_raw`: B2 227-349 characters (384 responses, 8 files), B2-r control/explore 275-588 (672 responses, 7 files), none under 60. Per file (B2): b2_fidelity_base.json [243, 265]; b2_fidelity_sft.json [227, 310]; b2_fidelity_dpo.json [239, 311]; b2_fidelity_instruct.json [239, 293]; b2_register_base.json [317, 349]; b2_register_sft.json [272, 348]; b2_register_dpo.json [254, 333]; b2_register_instruct.json [281, 337]; (B2-r): b2r_control_base.json [384, 545]; b2r_control_sft.json [390, 570]; b2r_control_dpo.json [408, 588]; b2r_control_instruct.json [321, 548]; b2r_explore_sft.json [346, 570]; b2r_explore_dpo.json [275, 535]; b2r_explore_instruct.json [385, 538]. The code argument (every B2/B2-r generation ran to its cap) is unchanged; the sentence no longer suggests the diagnostics show it exactly."
+  },
+  {
+   "finding": "R2-3 (minor) e2d's governing pre-registration (PROPOSAL-j) not cited",
+   "disposition": "fixed",
+   "detail": "Confirmed: PROPOSAL-j-dose-escalation.md@bbc9ffe:114-116 holds 'template family v3 with its bans, stop discipline, and audit patterns' fixed; git log -S 'Held fixed, by design' gives f7a4a1e (2026-09-01; the file's first commit f7a4a1e); ancestor of {\"4e41288\": true, \"a274ecd\": true, \"db5b09c\": true, \"e58dfca\": true}; temperature lines in PROPOSAL-j: 0. Added 'pre-reg PROPOSAL-j f7a4a1e (v3 family held fixed, PROPOSAL-j-dose-escalation.md@bbc9ffe:114-116)' to the D1/D2/D3 commit cells (section 1) and commit rows (section 6), a section-2 row, and PROPOSAL-j beside PROPOSAL-f in the section-2 reading and the PI pre-registration item. 'B2-r is the one DV whose temperature and max-token values were pre-registered' stays (PROPOSAL-f and PROPOSAL-j state no temperature); the reading now says f1's and e2d's cap and stop discipline were pre-registered by reference."
+  },
+  {
+   "finding": "R2-4 (minor) N4 cross-check cause labelled 'transcription'",
+   "disposition": "fixed (status stays discrepant)",
+   "detail": "Confirmed: N4's script counts entries (`scripts/audit_note_N4.py` at read, sha256 7236277c0dfeb85fac69720c5638137532a9bb7d6386d9f70f7d17b8ffc53080, line 1647: `ngen = sum(len(x[\"rounds\"]) + len(x[\"choices\"]) for x in ss)`; the finding's :1569 was an earlier state of that untracked sibling, so the line is located by pattern at read), the same formula as the artifact's n_rounds (scripts/e2b_h1_sessions.py@6df2072:412). Recount: 1111 entries, 1110 with n_tok; the one read without a round is [{'session': 122, 'read': 4, 'global_read_index': 640, 'session_truncated_by_stop': True}], the leakage budget's stop ({'stop': True, 'stop_reason': 'N_max', 'stop_at': {'session': 123, 'read': 4}, 'N': 640, 'N_max': 640}); seed replay 123/123 sessions, 1110 seeds. Section 5 and the section-6 row now give the cause as a counting definition."
+  },
+  {
+   "finding": "R2-5 (minor) e2a temperature 'log-only' rests on a later code comment",
+   "disposition": "disclosed (no status change, as the fix says)",
+   "detail": "Confirmed: the only committed statement is valence_core/e2d/config.py@bbc9ffe:41, introduced 4e41288 (2026-09-01); e2a's data commit d49bb5d is 2026-08-12; this script's search for a 0.7 temperature over archive/RESULTS-cycles3-4.md and the 15 e2a-era raws finds 0 hit(s); the pre-registration says only 'temperature-sampled' (archive/RESULTS-cycles3-4.md@bbc9ffe:1251). The section-1 cell and the section-6 note now read 'a later code comment, not an e2a log entry', so N1 can carry it in its note column. N1's ledger is another item's file and is not edited here; the PI item says N1 should carry the note and that whether the note prints e2a's T is the PI's call."
+  },
+  {
+   "finding": "R2-6 (minor) e2a stop cell's locator covers only part of the printed rule",
+   "disposition": "fixed",
+   "detail": "Confirmed: archive/RESULTS-cycles3-4.md@bbc9ffe:1049 (the amendment: newline stop, cap 60); the 'after content' half is archive/RESULTS-cycles3-4.md@bbc9ffe:1024-1026 (the g2r incident entry, logged at 4ad0c5a, 2026-08-09). Added to the e2a, g2r2 and f1 stop cells (section 1) and stop rows (section 6), and as a section-2 row."
+  },
+  {
+   "finding": "R2-7 (minor) B2 seed row: one 'reproduced' status covers two halves",
+   "disposition": "fixed",
+   "detail": "Confirmed: plan_trials with 20260823 replays 8/8 files' allocation and plan_trials' own default 20260819 replays 0/8; the per-trial generation seed is in no artifact and is code-fixed (scripts/box_b2_detection.py@720a104:198), inert at T = 0 (RESULTS.md@bbc9ffe:7641). Section 6 now has 'B2: allocation seed' (reproduced) and 'B2: generation seed' (not found, code-fixed); the section-1 cell carries both statuses (tier A+C), and the code-fixed PI item lists the generation seed."
+  },
+  {
+   "finding": "R2-8 (minor) e2a seed cell: 'integers(4) per round' can be read as interleaved",
+   "disposition": "fixed",
+   "detail": "Confirmed: valence_core/session_e2a.py@bbc9ffe:40-46 and valence_core/session_e2a.py@bbc9ffe:122-123 draw all 10 paraphrase indices (2F + N_FREE, F = 2, N_FREE = 6; valence_core/session_e2a.py@bbc9ffe:136) right after the permutation and before any seed; the module warns that interleaving collapses the replay to 4/200 (valence_core/session_e2a.py@bbc9ffe:118). The cell is reworded to that order; the replay itself was already in that order and still matches 200/200."
+  }
+ ],
+ "table_column_check": {
+  "rows_checked": 235,
+  "mismatches": []
+ }
+}

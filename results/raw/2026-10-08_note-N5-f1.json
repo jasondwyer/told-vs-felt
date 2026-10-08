@@ -1,0 +1,1147 @@
+{
+ "item": "N5",
+ "pin": "bbc9ffe72fb8a942431c9bf2622a36e581fdf93c",
+ "header": {
+  "stamp": "Thu Oct  8 11:21:25 UTC 2026",
+  "head": "cf8eb5b9dd4e117934627242a3aea5bdf4ae4b55",
+  "block_sha256": "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841",
+  "script": "scripts/audit_note_N5.py",
+  "script_sha256": "e5ed5007185d84a3e93dd6bfe8436cecdc89122095ba567615ea4b6e98c7192b",
+  "interpreter": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python",
+  "python": "3.12.9",
+  "numpy": "2.5.1",
+  "command": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/audit_note_N5.py",
+  "preprint": "PREPRINT-v1_0-draft.md",
+  "preprint_sha256_computed": "d6431e97d35e5914574ff9884c0e64463a7baf1cf9d279f27ed45a683a6222b8",
+  "preprint_matches_block": true
+ },
+ "integrity": {
+  "data/f/sessions.jsonl": {
+   "sha256": "d49913e5ffdfb935d0ae344bd4202d852cb5723394c17870e37b619aa1033dcc",
+   "working_tree_equal": true
+  },
+  "data/f/sessions_smoke.jsonl": {
+   "sha256": "fb7a749d7a62a305d9e162f53d0209a164b056d2f514738812f5a77c02b88727",
+   "working_tree_equal": true
+  },
+  "data/f/screen_analysis.json": {
+   "sha256": "f71048c63fd61bebf8acda4eb237614427fa6e76018552ba4d9f3d0895ca920d",
+   "working_tree_equal": true
+  },
+  "data/f/postscreen_descriptive.json": {
+   "sha256": "4a6506b6c56654823d44512dcf7f9e55301d0a59ce1b7ae7c02bc69f0e0d8fdd",
+   "working_tree_equal": true
+  },
+  "data/f/calib.json": {
+   "sha256": "55e5f75fb9c5bbf4f90d3c04f25ef63e8fad9e7b3ed612e47e164a56ef4ce2c3",
+   "working_tree_equal": true
+  },
+  "data/f/pools.json": {
+   "sha256": "8547d9a11ba55b95dda2988d4e9bdc685196abcda55870d7713703df372d17a0",
+   "working_tree_equal": true
+  },
+  "data/configs/f_termination_patterns.json": {
+   "sha256": "014b3940d62401b0b698e803145362b56c0b74de7d9f087a4fce0ecb111c2f46",
+   "working_tree_equal": true
+  },
+  "PROPOSAL-f-natural-reinforcer-screen.md": {
+   "sha256": "d7a131eabf8d30a8b7d6ebde75c7b53b7ded88468d6d366010d1403282afb8bf",
+   "working_tree_equal": true
+  },
+  "results/raw/2026-08-10_f_run.txt": {
+   "sha256": "fea3adfbc574be81d7a44c4f3e5e4e4dcae6883f0ae1a2d59375c9dab460753d",
+   "working_tree_equal": true
+  },
+  "results/raw/2026-08-10_f_analysis.txt": {
+   "sha256": "d6e0a85ce3e5adc550411de57b511f12861ac2b2efa0f78c49e35bae891461ff",
+   "working_tree_equal": true
+  },
+  "results/raw/2026-08-10_f_postscreen_descriptive.txt": {
+   "sha256": "2d13c4d78846f38caf6ebc5358b628df487f75ee7795f73fd45b0f886e9fb353",
+   "working_tree_equal": true
+  },
+  "results/raw/2026-08-10_f_ndecl.txt": {
+   "sha256": "a4f7a7a982329efcc7b280b1d565734524678e2f73e03d8248a99b8fc75775ec",
+   "working_tree_equal": true
+  },
+  "results/raw/2026-08-10_f_calib.txt": {
+   "sha256": "5ff8b24263d4d42cbecc6b22b6d7b8888576f8e787bf1f6fca4db2210b09962c",
+   "working_tree_equal": true
+  },
+  "results/raw/2026-08-10_f_calib2.txt": {
+   "sha256": "f62ef579a1fa828acf3bbae2b01912322d040b6d69aa357068a641249e142838",
+   "working_tree_equal": true
+  },
+  "archive/RESULTS-cycles3-4.md": {
+   "sha256": "5ec5d48a0fcb977b55de244c2dfdb81547887ed36398b1c7f33e4991f5b6e051",
+   "working_tree_equal": true
+  },
+  "FINDINGS-4.md": {
+   "sha256": "1b344f4e2a139d193700b2ba4301b301f7e646606be54f5a08842610d22b9701",
+   "working_tree_equal": true
+  }
+ },
+ "clone": {
+  "sha256": {
+   "jlens-qwen36/scripts/f_sessions.py": "d2dcde569080fe86d69da3f7d908a0c7fde401f4d201bfd3ffcec4b7891ee071",
+   "jlens-qwen36/scripts/f_postscreen_descriptive.py": "484ca469cd1874b5ab7387b606020f0e3e2229168c8db785e0acbc2e882d366b",
+   "jlens-qwen36/scripts/f0_calibrate.py": "a3dddbb0b08856297781d95c3f773b8eacf09d68c86950d17c703d48ddff2ae4"
+  },
+  "ports": {
+   "analyze()": "jlens-qwen36/scripts/f_sessions.py (clone, gitignored; sha256 d2dcde569080fe86):437-494",
+   "checkpoint_eval()": "jlens-qwen36/scripts/f_sessions.py (clone, gitignored; sha256 d2dcde569080fe86):391-434",
+   "binom_p_ge()": "jlens-qwen36/scripts/f_sessions.py (clone, gitignored; sha256 d2dcde569080fe86):144-151",
+   "corrupt()": "jlens-qwen36/scripts/f_sessions.py (clone, gitignored; sha256 d2dcde569080fe86):106-116",
+   "termination counter (in run_round)": "jlens-qwen36/scripts/f_sessions.py (clone, gitignored; sha256 d2dcde569080fe86):319-325",
+   "FDBK verdict line (in run_round)": "jlens-qwen36/scripts/f_sessions.py (clone, gitignored; sha256 d2dcde569080fe86):328-329",
+   "postscreen features": "jlens-qwen36/scripts/f_postscreen_descriptive.py (clone, gitignored; sha256 484ca469cd1874b5):68-122",
+   "f0 corr_sha": "jlens-qwen36/scripts/f0_calibrate.py (clone, gitignored; sha256 a3dddbb0b0885629):118-121"
+  }
+ },
+ "run_integrity": {
+  "rows": 344,
+  "distinct": 344,
+  "per_arm": {
+   "CORR": 64,
+   "NOV": 64,
+   "SOLV": 64,
+   "DIFF": 56,
+   "FDBK": 56,
+   "sham": 40
+  },
+  "declared": {
+   "SOLV": 64,
+   "CORR": 64,
+   "NOV": 64,
+   "DIFF": 56,
+   "FDBK": 56,
+   "sham": 40
+  },
+  "order_matches_run_raw": true,
+  "monitor_lines_reproduced": true,
+  "n_monitor_lines": 22,
+  "replay_pauses": [],
+  "completion_monitors": [
+   "guard[SOLV] n=64 x=14 binom p=0.4019 vs .20; sham 7/40 Fisher p=0.3905",
+   "guard[DIFF] n=56 x=9 binom p=0.8149 vs .20; sham 7/40 Fisher p=0.6807",
+   "guard[NOV] n=64 x=11 binom p=0.7590 vs .20; sham 7/40 Fisher p=0.6251",
+   "guard[CORR] n=64 x=8 binom p=0.9580 vs .20; sham 7/40 Fisher p=0.8397",
+   "guard[FDBK] n=56 x=12 binom p=0.4469 vs .20; sham 7/40 Fisher p=0.4179",
+   "pooled: lex 19/344 p=0.3614; cap 14/3074 p=1.0000; low-mass 165/1745 p=1.0000"
+  ]
+ },
+ "contrasts": {
+  "SOLV": {
+   "n": 50,
+   "delta": 0.02,
+   "by_map": {
+    "A": 0.0769,
+    "B": -0.0417
+   },
+   "p": 0.44386,
+   "sided": "one",
+   "conjuncts": [
+    false,
+    false,
+    false
+   ],
+   "screen_hit": false,
+   "k": 26,
+   "by_map_kn": {
+    "A": [
+     15,
+     26
+    ],
+    "B": [
+     11,
+     24
+    ]
+   },
+   "p_exact": 0.4438624136703915
+  },
+  "DIFF": {
+   "n": 47,
+   "delta": -0.0957,
+   "by_map": {
+    "A": -0.06,
+    "B": -0.1364
+   },
+   "p": 0.24296,
+   "sided": "two",
+   "conjuncts": [
+    true,
+    true,
+    false
+   ],
+   "screen_hit": false,
+   "k": 19,
+   "by_map_kn": {
+    "A": [
+     11,
+     25
+    ],
+    "B": [
+     8,
+     22
+    ]
+   },
+   "p_exact": 0.24296021728332562
+  },
+  "NOV": {
+   "n": 53,
+   "delta": -0.066,
+   "by_map": {
+    "A": 0.0185,
+    "B": -0.1538
+   },
+   "p": 0.86416,
+   "sided": "one",
+   "conjuncts": [
+    false,
+    false,
+    false
+   ],
+   "screen_hit": false,
+   "k": 23,
+   "by_map_kn": {
+    "A": [
+     14,
+     27
+    ],
+    "B": [
+     9,
+     26
+    ]
+   },
+   "p_exact": 0.8641604169672483
+  },
+  "CORR": {
+   "n": 56,
+   "delta": 0.0,
+   "by_map": {
+    "A": 0.1207,
+    "B": -0.1296
+   },
+   "p": 0.55307,
+   "sided": "one",
+   "conjuncts": [
+    false,
+    false,
+    false
+   ],
+   "screen_hit": false,
+   "k": 28,
+   "by_map_kn": {
+    "A": [
+     18,
+     29
+    ],
+    "B": [
+     10,
+     27
+    ]
+   },
+   "p_exact": 0.5530734525824892
+  },
+  "FDBK": {
+   "n": 44,
+   "delta": 0.0227,
+   "by_map": {
+    "A": 0.15,
+    "B": -0.0833
+   },
+   "p": 0.4402,
+   "sided": "one",
+   "conjuncts": [
+    false,
+    false,
+    false
+   ],
+   "screen_hit": false,
+   "k": 23,
+   "by_map_kn": {
+    "A": [
+     13,
+     20
+    ],
+    "B": [
+     10,
+     24
+    ]
+   },
+   "p_exact": 0.440197910640336
+  }
+ },
+ "sham_pseudo": {
+  "k": 18,
+  "n": 33,
+  "value": 0.045454545454545414
+ },
+ "diff_length_test": {
+  "features": {
+   "shorter_rounds": {
+    "pooled": {
+     "k": 128,
+     "n": 257,
+     "share": 0.498,
+     "p": 1.0
+    },
+    "per_arm": {
+     "SOLV": {
+      "k": 24,
+      "n": 43,
+      "share": 0.558,
+      "p": 0.5424
+     },
+     "DIFF": {
+      "k": 18,
+      "n": 47,
+      "share": 0.383,
+      "p": 0.1439
+     },
+     "NOV": {
+      "k": 32,
+      "n": 52,
+      "share": 0.615,
+      "p": 0.1263
+     },
+     "CORR": {
+      "k": 17,
+      "n": 46,
+      "share": 0.37,
+      "p": 0.1038
+     },
+     "FDBK": {
+      "k": 17,
+      "n": 36,
+      "share": 0.472,
+      "p": 0.8679
+     },
+     "sham": {
+      "k": 20,
+      "n": 33,
+      "share": 0.606,
+      "p": 0.2962
+     }
+    },
+    "ties_dropped": 26
+   },
+   "fewer_preamble_trunc": {
+    "pooled": {
+     "k": 3,
+     "n": 5,
+     "share": 0.6,
+     "p": 1.0
+    },
+    "per_arm": {
+     "SOLV": {
+      "k": 1,
+      "n": 1,
+      "share": 1.0,
+      "p": 1.0
+     },
+     "DIFF": {
+      "k": 0,
+      "n": 1,
+      "share": 0.0,
+      "p": 1.0
+     },
+     "sham": {
+      "k": 2,
+      "n": 3,
+      "share": 0.667,
+      "p": 1.0
+     }
+    },
+    "ties_dropped": 278
+   },
+   "fewer_degen_rounds": {
+    "pooled": {
+     "k": 0,
+     "n": 0,
+     "share": null,
+     "p": null
+    },
+    "per_arm": {},
+    "ties_dropped": 283
+   }
+  },
+  "equal_to_stored": {
+   "shorter_rounds": true,
+   "fewer_preamble_trunc": true,
+   "fewer_degen_rounds": true
+  },
+  "direction_check": {
+   "n": 47,
+   "hard_longer": 42,
+   "easy_longer": 5,
+   "tie": 0,
+   "mean_ntok_easy": 5.542553191489362,
+   "mean_ntok_hard": 12.946808510638299,
+   "pool_task_chars_mean": {
+    "DIFF_easy": 24.6875,
+    "DIFF_hard": 31.0
+   }
+  }
+ },
+ "fdbk_stream": {
+  "delivered": 274,
+  "correct": 256,
+  "transcript_result_lines": {
+   "Result: Correct.": 256,
+   "Result: Incorrect.": 18
+  },
+  "model_echoes_of_Result": 2,
+  "prepick_valid": {
+   "sessions": 44,
+   "verdicts": 88,
+   "correct": 87,
+   "sessions_all_correct": 43
+  }
+ },
+ "termination": {
+  "total": 39,
+  "rounds": 3074,
+  "agree_with_stored": 3074,
+  "sessions_with_attempt": 26,
+  "excluded_sessions_with_attempt": 13,
+  "analysis_raw_dict_keys": 33,
+  "analysis_raw_dict_sum": 39,
+  "record_figure": "33 attempts ≈ 1.0% (= number of dict keys)",
+  "disagree": 0,
+  "table_equals_analysis_raw": true,
+  "per_arm": {
+   "SOLV": [
+    7,
+    547
+   ],
+   "DIFF": [
+    4,
+    507
+   ],
+   "NOV": [
+    6,
+    569
+   ],
+   "CORR": [
+    9,
+    597
+   ],
+   "FDBK": [
+    6,
+    503
+   ],
+   "sham": [
+    7,
+    351
+   ]
+  },
+  "per_arm_cfg": {
+   "SOLV|P": 2,
+   "SOLV|Q": 5,
+   "DIFF|P": 2,
+   "DIFF|Q": 2,
+   "NOV|P": 3,
+   "NOV|Q": 3,
+   "CORR|P": 4,
+   "CORR|Q": 5,
+   "FDBK|P": 2,
+   "FDBK|Q": 4,
+   "sham|P": 4,
+   "sham|Q": 3
+  },
+  "posthoc_homogeneity_p": 0.7173365024333407,
+  "n_tables": 1086008
+ },
+ "exploration": {
+  "SOLV": {
+   "sessions": 50,
+   "picks": 300,
+   "share_P": 0.54,
+   "k_P": 162,
+   "mean_session_share": 0.54,
+   "switches": 204,
+   "pairs": 250,
+   "break": 46,
+   "n_break": 50,
+   "free_picks_per_session": [
+    6
+   ],
+   "by_map_kn": {
+    "A": [
+     85,
+     156
+    ],
+    "B": [
+     77,
+     144
+    ]
+   },
+   "sessions_all_P": 3,
+   "sessions_all_Q": 0,
+   "sessions_at_half": 33,
+   "posthoc_signflip": {
+    "S": 24,
+    "nonzero_sessions": 17,
+    "p_two_sided": 0.121002197265625,
+    "bonferroni6": 0.72601318359375
+   }
+  },
+  "DIFF": {
+   "sessions": 47,
+   "picks": 282,
+   "share_P": 0.4787234042553192,
+   "k_P": 135,
+   "mean_session_share": 0.4787234042553192,
+   "switches": 212,
+   "pairs": 235,
+   "break": 40,
+   "n_break": 47,
+   "free_picks_per_session": [
+    6
+   ],
+   "by_map_kn": {
+    "A": [
+     74,
+     150
+    ],
+    "B": [
+     61,
+     132
+    ]
+   },
+   "sessions_all_P": 0,
+   "sessions_all_Q": 1,
+   "sessions_at_half": 37,
+   "posthoc_signflip": {
+    "S": -12,
+    "nonzero_sessions": 10,
+    "p_two_sided": 0.32421875,
+    "bonferroni6": 1.0
+   }
+  },
+  "NOV": {
+   "sessions": 53,
+   "picks": 318,
+   "share_P": 0.5251572327044025,
+   "k_P": 167,
+   "mean_session_share": 0.5251572327044025,
+   "switches": 239,
+   "pairs": 265,
+   "break": 44,
+   "n_break": 53,
+   "free_picks_per_session": [
+    6
+   ],
+   "by_map_kn": {
+    "A": [
+     87,
+     162
+    ],
+    "B": [
+     80,
+     156
+    ]
+   },
+   "sessions_all_P": 0,
+   "sessions_all_Q": 1,
+   "sessions_at_half": 40,
+   "posthoc_signflip": {
+    "S": 16,
+    "nonzero_sessions": 13,
+    "p_two_sided": 0.156494140625,
+    "bonferroni6": 0.93896484375
+   }
+  },
+  "CORR": {
+   "sessions": 56,
+   "picks": 336,
+   "share_P": 0.47023809523809523,
+   "k_P": 158,
+   "mean_session_share": 0.47023809523809523,
+   "switches": 235,
+   "pairs": 280,
+   "break": 49,
+   "n_break": 56,
+   "free_picks_per_session": [
+    6
+   ],
+   "by_map_kn": {
+    "A": [
+     91,
+     174
+    ],
+    "B": [
+     67,
+     162
+    ]
+   },
+   "sessions_all_P": 1,
+   "sessions_all_Q": 3,
+   "sessions_at_half": 37,
+   "posthoc_signflip": {
+    "S": -20,
+    "nonzero_sessions": 19,
+    "p_two_sided": 0.22706222534179688,
+    "bonferroni6": 1.0
+   }
+  },
+  "FDBK": {
+   "sessions": 44,
+   "picks": 264,
+   "share_P": 0.5757575757575758,
+   "k_P": 152,
+   "mean_session_share": 0.5757575757575757,
+   "switches": 169,
+   "pairs": 220,
+   "break": 34,
+   "n_break": 44,
+   "free_picks_per_session": [
+    6
+   ],
+   "by_map_kn": {
+    "A": [
+     72,
+     120
+    ],
+    "B": [
+     80,
+     144
+    ]
+   },
+   "sessions_all_P": 6,
+   "sessions_all_Q": 1,
+   "sessions_at_half": 29,
+   "posthoc_signflip": {
+    "S": 40,
+    "nonzero_sessions": 15,
+    "p_two_sided": 0.03070068359375,
+    "bonferroni6": 0.1842041015625
+   }
+  },
+  "sham": {
+   "sessions": 33,
+   "picks": 198,
+   "share_P": 0.5050505050505051,
+   "k_P": 100,
+   "mean_session_share": 0.5050505050505051,
+   "switches": 157,
+   "pairs": 165,
+   "break": 29,
+   "n_break": 33,
+   "free_picks_per_session": [
+    6
+   ],
+   "by_map_kn": {
+    "A": [
+     43,
+     84
+    ],
+    "B": [
+     57,
+     114
+    ]
+   },
+   "sessions_all_P": 0,
+   "sessions_all_Q": 0,
+   "sessions_at_half": 26,
+   "posthoc_signflip": {
+    "S": 2,
+    "nonzero_sessions": 7,
+    "p_two_sided": 1.0,
+    "bonferroni6": 1.0
+   }
+  }
+ },
+ "calibration": {
+  "calib": {
+   "pools_sha": "8547d9a11ba55b95",
+   "corr_sha": "2c2c227395ea9f2d",
+   "ban_sha": "9a2f0744f81ac930",
+   "n_seeds": 4,
+   "corr_rate": 0.12,
+   "acc": {
+    "SOLV_P": 0.875,
+    "DIFF_easy": 0.984375,
+    "DIFF_hard": 0.5,
+    "CORR_clean": 0.921875,
+    "CORR_corrupted": 0.84375,
+    "FDBK": 0.96875
+   },
+   "CORR_delta_covariate": 0.078125,
+   "DIFF_gold_NLL": {
+    "easy": 0.6857344309488932,
+    "hard": 1.5032449432781765,
+    "gap": 0.8175105123292833
+   },
+   "NOV_rotation": "repeated item = NOV[session_index % 16]",
+   "bars": {
+    "SOLV_P_acc": {
+     "value": 0.875,
+     "pass": true
+    },
+    "DIFF_easy_acc": {
+     "value": 0.9844,
+     "pass": true
+    },
+    "DIFF_hard_acc": {
+     "value": 0.5,
+     "pass": true
+    },
+    "DIFF_gap": {
+     "value": 0.4844,
+     "pass": true
+    }
+   }
+  },
+  "nper": 64,
+  "in_session": {
+   "CORR|P": [
+    244,
+    291
+   ],
+   "CORR|Q": [
+    255,
+    306
+   ],
+   "DIFF|P": [
+    218,
+    247
+   ],
+   "DIFF|Q": [
+    154,
+    260
+   ],
+   "FDBK|P": [
+    256,
+    274
+   ],
+   "FDBK|Q": [
+    208,
+    229
+   ],
+   "SOLV|P": [
+    257,
+    285
+   ]
+  }
+ },
+ "corr_dose": {
+  "q_rounds": 306,
+  "q_forced": 124,
+  "q_free": 182,
+  "byte_clean_q": 40,
+  "byte_clean_forced": 16,
+  "byte_clean_free": 24,
+  "byte_clean_by_item": {
+   "12": 17,
+   "1": 23
+  },
+  "changed_per_item": [
+   1,
+   0,
+   5,
+   2,
+   3,
+   1,
+   4,
+   6,
+   2,
+   1,
+   2,
+   1,
+   0,
+   1,
+   1,
+   1
+  ],
+  "draws_total": 32,
+  "zero_items": [
+   1,
+   12
+  ],
+  "items_ge3": [
+   2,
+   4,
+   6,
+   7
+  ],
+  "renders_sha16": "2c2c227395ea9f2d",
+  "calib_corr_sha": "2c2c227395ea9f2d",
+  "reached_first_read": 58,
+  "reached_valid": 56,
+  "clean_prepick_counts": {
+   "0": 42,
+   "1": 16
+  },
+  "valid_one_clean": 16,
+  "valid_both_corrupted": 40,
+  "posthoc_first_pick_P": {
+   "one_clean": [
+    9,
+    16
+   ],
+   "both_corrupted": [
+    19,
+    40
+   ]
+  },
+  "q_accuracy": {
+   "byte_clean": [
+    38,
+    40
+   ],
+   "corrupted_text": [
+    217,
+    266
+   ]
+  },
+  "m_domain_first_reads": [
+   30,
+   58
+  ],
+  "post_pin_gcal_equal": true,
+  "post_pin_rev": "bab921c",
+  "gcal_artifact_at_pin": false,
+  "in_session_delta_pooled": 0.005154639175257714,
+  "in_session_delta_corrupted_text_only": 0.022698498824380575,
+  "calib_runs_on_unchanged_items": 8,
+  "smoke_corr_rows_vs_v2_pools": {
+   "first smoke (1000-series)": {
+    "sessions": 2,
+    "task_lines": 18,
+    "verbatim_in_v2_pools": 0,
+    "q_rounds_within_6_letters_of_a_v2_clean_item": 0,
+    "q_rounds": 8,
+    "start_What_is": 12
+   },
+   "later smokes (1100-series)": {
+    "sessions": 2,
+    "task_lines": 20,
+    "verbatim_in_v2_pools": 11,
+    "q_rounds_within_6_letters_of_a_v2_clean_item": 9,
+    "q_rounds": 9,
+    "start_What_is": 0
+   }
+  }
+ },
+ "values_check": [
+  {
+   "id": "1",
+   "severity": "substantive",
+   "finding": "§5 / Figures: 'consistent with ≈ .50 in every arm' had no test; FDBK's all-picks share .576 is map-consistent, 6/44 sessions 6/6 to the verdict config, session-level sign-flip p = .031 uncorrected",
+   "disposition": "fixed",
+   "evidence": "Re-run here (exact two-sided sign-flip over sessions, ties at 3/6 dropped): FDBK S = +40 over 15 sessions, p = 0.0307, Bonferroni ×6 0.184; maps A 72/120, B 80/144; 6 sessions 6/6, 1 0/6; other arms p ≥ 0.121 -- all as the checker reported. The claim is withdrawn; §5 prints the range, the post-hoc table and the FDBK line (labeled post-hoc, no verdict weight, primary untouched); new Figures row; Notes 1 and 3."
+  },
+  {
+   "id": "2",
+   "severity": "minor",
+   "finding": "§7d: 'accurate as far as it goes' is too generous; the v1.7 referent check's G6a.11 says root:182 'states found ahead of its record'; at the pin no calibration had found anything",
+   "disposition": "fixed",
+   "evidence": "G6a.11 read at results/raw/2026-10-04_m-v1.7_referent_check.txt@bbc9ffe:5557-5574; `data/m/gates/G-CAL_model-free.json` at bbc9ffe: absent (git rev-parse), first at bab921c. §7d now says the clause stated 'found' ahead of its record and that the pinned support was model-free replays (v1.7 referent check, G-PORT C1), not a calibration; Figures row note rewritten. [v2 wording; refined in round 2, row R2-2.]"
+  },
+  {
+   "id": "3",
+   "severity": "minor",
+   "finding": "§7d suggested wording mixes domains (58 = m's reached-the-first-read; 306 rounds from all 64 sessions incl. excluded)",
+   "disposition": "fixed",
+   "evidence": "Recount: valid sessions with one clean pre-pick Q round 16/56, both corrupted 40; reached-first-read {0: 42, 1: 16}; Q rounds 306 over all 64 sessions. Wording now '16 of the 56 valid sessions' and '306 ... across all 64 CORR sessions'; Figures row reworded."
+  },
+  {
+   "id": "4",
+   "severity": "minor",
+   "finding": "§4 locators: '33 attempts ≈ 1.0%' is :97-98 (not :98); sham 7 and NOV-Q 3 vs NOV-P 3 are on :99 (not :97)",
+   "disposition": "fixed",
+   "evidence": "Anchored by text: '33 attempts ≈ 1.0%' archive/RESULTS-cycles3-4.md@bbc9ffe:97-98; sham (7), NOV-Q 3 vs NOV-P 3 archive/RESULTS-cycles3-4.md@bbc9ffe:99; FINDINGS-4 '33 attempts, ~1.0% of rounds' FINDINGS-4.md@bbc9ffe:82-83 (v1 printed :82 only)."
+  },
+  {
+   "id": "5",
+   "severity": "minor",
+   "finding": "§6 locators: P .838 vs Q .833 is :109, DIFF .883/.592 :112 (v1 printed :108 for both); the verdict entry's '274 delivered verdicts, 93.4% Correct' (:106) was not cited in the FDBK row",
+   "disposition": "fixed",
+   "evidence": "P .838/.833 archive/RESULTS-cycles3-4.md@bbc9ffe:109; DIFF .883/.592 archive/RESULTS-cycles3-4.md@bbc9ffe:112; '+.094' stays at archive/RESULTS-cycles3-4.md@bbc9ffe:108; CORR note span archive/RESULTS-cycles3-4.md@bbc9ffe:108-112; '274 delivered, 93.4%' archive/RESULTS-cycles3-4.md@bbc9ffe:106-107 and the post-screen '93.4%-positive' archive/RESULTS-cycles3-4.md@bbc9ffe:54-55 now cited in §3b and the FDBK row."
+  },
+  {
+   "id": "6",
+   "severity": "minor",
+   "finding": "CORR covariate row: the cycle-4 record itself logs +.078 for the run's pools (f0 v2 entry, :258), which v1 did not cite",
+   "disposition": "fixed",
+   "evidence": "'CORR delta +.078 covariate' at archive/RESULTS-cycles3-4.md@bbc9ffe:258; v1's +.094 at archive/RESULTS-cycles3-4.md@bbc9ffe:432; both now cited in §1, §6 and the covariate row (the transcription inference is unchanged and stronger)."
+  },
+  {
+   "id": "7",
+   "severity": "minor",
+   "finding": "The preprint's sha256 was printed from a constant, never hashed",
+   "disposition": "fixed",
+   "evidence": "The working-tree file is now hashed at run time: sha256 d6431e97d35e5914574ff9884c0e64463a7baf1cf9d279f27ed45a683a6222b8; asserted against the block's d6431e97…222b8 before line 182 is quoted (MATCH); header line added; the constant is gone."
+  },
+  {
+   "id": "8",
+   "severity": "minor",
+   "finding": "Termination '≈ 1% by arm': by arm 0.79%-1.99%, sham's 2.0% double the stated rate; the note's sentence should rest on the overall rate",
+   "disposition": "fixed",
+   "evidence": "Per arm SOLV 7/547, DIFF 4/507, NOV 6/569, CORR 9/597, FDBK 6/503, sham 7/351; sham 1.99% is double the record's stated ≈ 1.0% but 1.57× the overall 1.27% (the raw says both); homogeneity p = 0.7173 over 1086008 tables (unchanged). §4 and the row now say the 1% is overall and give a wording, using 'no detectable heterogeneity' rather than the checker's 'no heterogeneity' (a p of 0.72 shows absence of evidence, not uniformity). [The row is split in round 2, row R2-3.]"
+  },
+  {
+   "id": "9",
+   "severity": "minor",
+   "finding": "§7c/§7d: the byte-clean rounds' bearing on the record's 'vanished' / 'visible but costless' reading was not drawn",
+   "disposition": "fixed",
+   "evidence": "Q accuracy on corrupted-text rounds 217/266, byte-clean 38/40, P 244/291: in-session delta +0.0052 pooled vs +0.0227 on corrupted-text rounds. One post-hoc sentence added to §7c (no test; rounds clustered); it also notes that calib.json's +.078 includes 8 runs on the two unchanged items."
+  },
+  {
+   "id": "10",
+   "severity": "minor",
+   "finding": "§1: the pre-registration entry ends at :420, not :419",
+   "disposition": "fixed",
+   "evidence": "Span now archive/RESULTS-cycles3-4.md@bbc9ffe:366-420, end anchor asserted to be the line after 'After the screen: pause ...'."
+  },
+  {
+   "id": "F1",
+   "severity": "minor (fixer's own)",
+   "finding": "The '33 attempts' row cited `results/raw/2026-08-10_f_analysis.txt:3` without the pin",
+   "disposition": "fixed",
+   "evidence": "Now results/raw/2026-08-10_f_analysis.txt@bbc9ffe:3."
+  },
+  {
+   "id": "F2",
+   "severity": "minor (fixer's own)",
+   "finding": "§5 cited `jlens-qwen36/scripts/e2a_sessions.py`:N without marking it as the gitignored clone (not the record) or giving its hash",
+   "disposition": "fixed",
+   "evidence": "Now jlens-qwen36/scripts/e2a_sessions.py (clone, gitignored; sha256 0950b0054ad84a4a):361."
+  },
+  {
+   "id": "F3",
+   "severity": "minor (fixer's own)",
+   "finding": "FINDINGS-4's 'Session share ≈ .50 in every arm' spans two lines; v1 cited :58",
+   "disposition": "fixed",
+   "evidence": "Now FINDINGS-4.md@bbc9ffe:58-59."
+  },
+  {
+   "id": "R2-1",
+   "severity": "minor",
+   "finding": "§3a: 'A generic brevity preference would mimic a toward-hard lean if it were general' is wrong-signed given the raw's own direction check: hard rounds were the longer ones, so a brevity preference would push toward easy; the sentence copies FINDINGS-4's pre-named wording",
+   "disposition": "fixed",
+   "evidence": "Re-run here: in the 47 valid DIFF sessions the hard config's forced rounds were longer in 42, shorter in 5, tied in 0; mean forced n_tok easy 5.54 vs hard 12.95; DIFF shorter-share 18/47 = 0.383. Added (computed-new, descriptive): the DIFF pools' task texts are longer on hard too (means 24.7 vs 31.0 characters), so the sign holds on either length. FINDINGS-4's wording at FINDINGS-4.md@bbc9ffe:94-95; the preprint's phrase is unsigned (PREPRINT-v1_0-draft.md:182). §3a reworded as the fix says; the direction-check bullet gives the task-text means; the length-test row's note now quotes the record's 'brevity-tracking' instead of using it in Code's voice; the fix's optional step taken: FINDINGS-4's 'brevity' flagged for the design seat (Note 5). No note sentence changes."
+  },
+  {
+   "id": "R2-2",
+   "severity": "minor",
+   "finding": "§7d(i): 'It stated found before any record supported it ... At the pin that was still so' is overbroad: at the pin the substance was on record (12/16 items below the floor; byte-clean delivery documented); only the attribution to a calibration ran ahead, the G-CAL artifact being absent at the pin",
+   "disposition": "fixed",
+   "evidence": "The v1.7 checker note reads 'the computation supports the note's substance' (results/raw/2026-10-04_m-v1.7_referent_check.txt@bbc9ffe:5570-5572); the substance at results/raw/2026-10-04_m-v1.7_referent_check.txt@bbc9ffe:5196-5207 and G-PORT C1 RESULTS.md@bbc9ffe:161-165; `data/m/gates/G-CAL_model-free.json` at bbc9ffe: absent (git rev-parse --verify), first at bab921c (descendant of the pin: True). §7d(i) replaced with the fix's two sentences (its figures computed by this run: 12/16, 40/306), locators appended in brackets; the preprint-clause row's note and Note 1 brought in line. The suggested note wording in §7d is unchanged."
+  },
+  {
+   "id": "R2-3",
+   "severity": "minor",
+   "finding": "Figures row 'termination attempts ≈ 1% of rounds by arm' carried status reproduced; the overall rate reproduces (~1%), but per arm the figure does not hold for sham (~2x)",
+   "disposition": "fixed",
+   "evidence": "Re-run: overall 39/3074 = 1.27%; by arm SOLV 7/547 (1.28%), DIFF 4/507 (0.79%), NOV 6/569 (1.05%), CORR 9/597 (1.51%), FDBK 6/503 (1.19%), sham 7/351 (1.99%); the stored rounds[].term agrees with the four regexes on 3074/3074 rounds. The fix's second alternative taken, because the status vocabulary is fixed (a status cell carries one of five words): the row is split into an overall row (reproduced) and a by-arm row (discrepant for sham; not a transcription, since the record's ≈ 1.0% is an overall rate and sham's 7 a count). Note 1 now counts the discrepant rows from the table (4)."
+  },
+  {
+   "id": "R2-4",
+   "severity": "minor",
+   "finding": "§5: 'FDBK is the exception to ≈ .50' is stronger than the raw's own test supports: p = .031 uncorrected is .18 after the raw's six-arm Bonferroni correction; FDBK is the largest deviation, not an established exception",
+   "disposition": "fixed",
+   "evidence": "Re-run (exact two-sided sign-flip over sessions, ties dropped): FDBK S = +40 over 15 untied sessions, p = 0.0307, ×6 = 0.184; share 152/264 = 0.576; map A 72/120, map B 80/144; 6 sessions 6/6, 1 0/6; other arms p ≥ 0.121; FDBK asserted to have the largest |share − ½| and the smallest p of the six arms. §5's bullet now opens with the fix's wording; the exploration row's note and Note 1 say 'largest deviation, not an established exception'. The 0.47-0.58 range proposal stands."
+  },
+  {
+   "id": "R2-5",
+   "severity": "minor",
+   "finding": "§7a: the smoke read 'corrupted tasks render correctly' (archive:357) is cited without scope: that smoke ran on the superseded v1 pools (corrupted sha 12907bcf), before the recast to v2 (2c2c2273), so it says nothing about the run's items 1 and 12",
+   "disposition": "fixed",
+   "evidence": "Placement: the read (archive/RESULTS-cycles3-4.md@bbc9ffe:357) is inside the first f1 smoke entry (archive/RESULTS-cycles3-4.md@bbc9ffe:323), which the newest-first log places before the pool-recast amendment (entry archive/RESULTS-cycles3-4.md@bbc9ffe:285; recast bullet archive/RESULTS-cycles3-4.md@bbc9ffe:291); the order is asserted. v1 shas at archive/RESULTS-cycles3-4.md@bbc9ffe:425-426; v2 shas at archive/RESULTS-cycles3-4.md@bbc9ffe:253-254. Computed-new check (the first smoke's raw logs no pools sha; `data/f/pools.json` has 1 committed version up to the pin, v2, so the v1 pools cannot be compared directly): the first smoke's CORR rows (sessions < 1100) have 0 of 18 Task lines verbatim in the v2 pools, 12 in the QA form the recast removed, 0 of 8 Q rounds within 6 letters of a v2 clean item; the later smokes' CORR rows have 11 of 20 verbatim and 9 of 9 Q rounds within 6 letters. The fix's parenthesis added to the §7a bullet; the 'no known artifact in the f1-era record' conclusion is unchanged."
+  },
+  {
+   "id": "R2-6",
+   "severity": "minor",
+   "finding": "Locator precision: four locators anchored to an entry's start rather than the quoted span, and FINDINGS-4 §6 ('tested (ii) and it failed') was not cited",
+   "disposition": "fixed",
+   "evidence": "Anchored by text, end anchors on the line carrying the quoted words: 'directionally consistent' archive/RESULTS-cycles3-4.md@bbc9ffe:48-50; '274 delivered verdicts, 93.4% Correct' archive/RESULTS-cycles3-4.md@bbc9ffe:106-107; G-PORT A1's 30/58 RESULTS.md@bbc9ffe:80-82; FINDINGS-4 summary ledger FINDINGS-4.md@bbc9ffe:30-44; FINDINGS-4 §6 FINDINGS-4.md@bbc9ffe:89-98, now cited in the length-test row."
+  }
+ ],
+ "figures": [
+  {
+   "figure": "f1 VERDICTS entry (Code locates)",
+   "value": "archive/RESULTS-cycles3-4.md@bbc9ffe:65-123",
+   "source": "archive/RESULTS-cycles3-4.md (the block's referent)",
+   "status": "log-only",
+   "note": "located; 2026-08-10 'f1 SCREEN VERDICT: FIVE NULLS'; post-hoc descriptive at archive/RESULTS-cycles3-4.md@bbc9ffe:32-63"
+  },
+  {
+   "figure": "344/344 sessions",
+   "value": "344 rows, 344 distinct; per arm {'CORR': 64, 'NOV': 64, 'SOLV': 64, 'DIFF': 56, 'FDBK': 56, 'sham': 40} = N declaration",
+   "source": "data/f/sessions.jsonl; results/raw/2026-08-10_f_ndecl.txt",
+   "status": "reproduced",
+   "note": "record: archive/RESULTS-cycles3-4.md@bbc9ffe:70"
+  },
+  {
+   "figure": "zero pauses",
+   "value": "0 pause conditions in a replay of f1's checkpoint_eval over the 344 rows in run order; 22/22 printed monitor lines reproduced verbatim",
+   "source": "data/f/sessions.jsonl (excluded, exclude_reason, n_rounds, n_cap_hits, choices[].label_mass); results/raw/2026-08-10_f_run.txt",
+   "status": "reproduced",
+   "note": "checkpointed exact binomial guards vs p0 .20 at arm n = 24 and completion, one-sided Fisher vs sham at sham n >= 12, pooled lexical p0 .05, cap-hit p0 .10 (rounds), low label mass p0 .20 (choices), all one-sided, pause at p < .05. Scope: the 344-session screen run; the f1 smokes before it paused three times under the smoke bars (archive/RESULTS-cycles3-4.md@bbc9ffe:323; archive/RESULTS-cycles3-4.md@bbc9ffe:248; archive/RESULTS-cycles3-4.md@bbc9ffe:172)"
+  },
+  {
+   "figure": "SOLV +.020 p = .44",
+   "value": "26/50 → Δ +0.0200; P(X ≥ 26 | 50, ½) = 0.44386",
+   "source": "data/f/screen_analysis.json contrasts.SOLV (delta, p, n)",
+   "status": "reproduced",
+   "note": "one-sided exact binomial (H1: avoid ill-posed); valid n 50 of 64"
+  },
+  {
+   "figure": "DIFF −.096 p = .24",
+   "value": "19/47 first picks to EASY → Δ -0.0957 (toward hard); 2·P(X ≤ 19 | 47, ½) = 0.24296",
+   "source": "data/f/screen_analysis.json contrasts.DIFF",
+   "status": "reproduced",
+   "note": "two-sided exact binomial; conjuncts (1) and (2) pass, (3) fails; P = easy"
+  },
+  {
+   "figure": "DIFF valid-n floor",
+   "value": "valid 47 of 56 declared, floor 48: below by 1 (FDBK 44 of 56, below by 4)",
+   "source": "data/f/sessions.jsonl (excluded); floor PROPOSAL-f-natural-reinforcer-screen.md@bbc9ffe:101",
+   "status": "reproduced",
+   "note": "adjudicated as scoped null, no top-up: archive/RESULTS-cycles3-4.md@bbc9ffe:38"
+  },
+  {
+   "figure": "NOV −.066",
+   "value": "23/53 → Δ -0.0660 (toward repeated); P(X ≥ 23 | 53, ½) = 0.86416",
+   "source": "data/f/screen_analysis.json contrasts.NOV",
+   "status": "reproduced",
+   "note": "one-sided exact binomial (H1: prefer novel)"
+  },
+  {
+   "figure": "NOV map-inconsistency",
+   "value": "map A 14/27 → +0.0185; map B 9/26 → -0.1538; conjunct (2) False",
+   "source": "data/f/screen_analysis.json contrasts.NOV.by_map",
+   "status": "reproduced",
+   "note": "signs differ across maps"
+  },
+  {
+   "figure": "CORR 0.000",
+   "value": "28/56 → Δ +0.0000 exactly; P(X ≥ 28 | 56, ½) = 0.55307",
+   "source": "data/f/screen_analysis.json contrasts.CORR",
+   "status": "reproduced",
+   "note": "one-sided exact binomial (H1: avoid corrupted); FINDINGS-4's table prints p as '—' (FINDINGS-4.md@bbc9ffe:37); the stored p is .55307"
+  },
+  {
+   "figure": "CORR maps +.121/−.130",
+   "value": "map A 18/29 → +0.1207; map B 10/27 → -0.1296",
+   "source": "data/f/screen_analysis.json contrasts.CORR.by_map",
+   "status": "reproduced",
+   "note": "mirror-cancel; map A = swap False (tag_P = pair[0])"
+  },
+  {
+   "figure": "FDBK +.023",
+   "value": "23/44 → Δ +0.0227; P(X ≥ 23 | 44, ½) = 0.44020; maps +0.1500/-0.0833",
+   "source": "data/f/screen_analysis.json contrasts.FDBK",
+   "status": "reproduced",
+   "note": "one-sided exact binomial (H1: seek feedback); map-inconsistent; valid n 44 below floor"
+  },
+  {
+   "figure": "sham pseudo-Δ .045 (conjunct-1 bar)",
+   "value": "|18/33 − ½| = 0.0455",
+   "source": "data/f/screen_analysis.json sham_pseudo",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "DIFF length-preference deflation test (tested and failed)",
+   "value": "shorter-rounds share pooled 128/257 = .498, p = 1.0000; DIFF 18/47 = .383, p = 0.1439; sham 20/33 = .606, p = 0.2962",
+   "source": "data/f/postscreen_descriptive.json features.shorter_rounds",
+   "status": "reproduced",
+   "note": "POST-HOC on the record; two-sided exact binomial vs ½, valid sessions with a first pick, ties dropped; 'failed' = no length preference is general (the record's words: 'brevity-tracking is NOT general', archive/RESULTS-cycles3-4.md@bbc9ffe:45-47), so the DIFF lean does not deflate to one (hard was the longer config in 42/47 DIFF sessions, so the candidate deflation is a longer-rounds preference); FINDINGS-4's account of the test, 'tested (ii) and it failed': FINDINGS-4.md@bbc9ffe:89-98; the preprint's phrase is unsigned ('length-preference', PREPRINT-v1_0-draft.md:182, working tree)"
+  },
+  {
+   "figure": "FDBK 93% positive delivery rate",
+   "value": "256/274 = 93.4% Correct",
+   "source": "data/f/sessions.jsonl rounds[].verdict, rounds[].graded (arm FDBK); transcripts' Result: lines",
+   "status": "reproduced",
+   "note": "domain: every delivered verdict line, all 56 FDBK sessions incl. excluded (P rounds only). Record: '274 delivered verdicts, 93.4% Correct' archive/RESULTS-cycles3-4.md@bbc9ffe:106-107; post-screen '93.4%-positive' archive/RESULTS-cycles3-4.md@bbc9ffe:54-55. The record's 93.4% is hard-coded text in the post-screen analyzer (jlens-qwen36/scripts/f_postscreen_descriptive.py (clone, gitignored; sha256 484ca469cd1874b5):136), not computed there; the G-PORT differences raw reports a values-check reproduction from `graded` (results/raw/2026-10-07_m-gport_differences.md@bbc9ffe:9); computed here from the JSONL. Pre-pick, valid sessions: 87/88"
+  },
+  {
+   "figure": "termination attempts ≈ 1% of rounds (overall)",
+   "value": "39/3074 = 1.27%",
+   "source": "data/f/sessions.jsonl (transcript Response lines; rounds[].term) + data/configs/f_termination_patterns.json",
+   "status": "reproduced",
+   "note": "domain: all generated rounds of all 344 sessions incl. excluded; the record's '≈ 1.0% of rounds' (archive/RESULTS-cycles3-4.md@bbc9ffe:97-98) is an overall rate and reproduces as one; the record's count (33) is wrong, separate discrepant row below; suggested wording in §4"
+  },
+  {
+   "figure": "termination attempts ≈ 1% of rounds by arm",
+   "value": "SOLV 7/547 (1.28%), DIFF 4/507 (0.79%), NOV 6/569 (1.05%), CORR 9/597 (1.51%), FDBK 6/503 (1.19%), sham 7/351 (1.99%)",
+   "source": "data/f/sessions.jsonl (transcript Response lines; rounds[].term) + data/configs/f_termination_patterns.json",
+   "status": "discrepant",
+   "note": "per arm the figure holds for the five contrast arms (0.79%-1.51%) but not for sham: 7/351 = 1.99%, about 2%, twice the stated ≈ 1% (1.57× the overall 1.27%). Not a transcription: the record states ≈ 1.0% overall (archive/RESULTS-cycles3-4.md@bbc9ffe:97-98) and gives sham's count (7, archive/RESULTS-cycles3-4.md@bbc9ffe:99), not a per-arm rate; the per-arm reading is the block's 'by arm' and the preprint's 'uniformly across arms' (PREPRINT-v1_0-draft.md:182, working tree). No detectable heterogeneity across arms (post-hoc p = 0.72, row below). Domain as in the overall row"
+  },
+  {
+   "figure": "33 attempts ≈ 1.0% of rounds (verdict entry; FINDINGS-4)",
+   "value": "39 attempts = 1.27% of 3074 rounds; 33 = the number of distinct (arm, config, round-position) cells in the analysis raw's table",
+   "source": "data/f/sessions.jsonl rounds[].term; results/raw/2026-08-10_f_analysis.txt@bbc9ffe:3 (dict, values sum to 39)",
+   "status": "discrepant",
+   "note": "transcription, inferred: 33 equals the table's cell count exactly, consistent with its length having been read as the count; verdict entry archive/RESULTS-cycles3-4.md@bbc9ffe:97-98; FINDINGS-4 FINDINGS-4.md@bbc9ffe:82-83; if the note carries a count it is 39 (1.3%)"
+  },
+  {
+   "figure": "termination 'uniformly across arms including sham' (preprint wording)",
+   "value": "post-hoc exact homogeneity test across six arms (6x2, Freeman-Halton, two-sided) p = 0.7173",
+   "source": "computed from data/f/sessions.jsonl; preprint PREPRINT-v1_0-draft.md:182",
+   "status": "computed-new",
+   "note": "not a record computation; rounds treated as exchangeable (clustering ignored); supports 'no detectable heterogeneity', which is weaker than 'uniformly'"
+  },
+  {
+   "figure": "exploration share ≈ .50 by arm",
+   "value": "SOLV 0.540, DIFF 0.479, NOV 0.525, CORR 0.470, FDBK 0.576, sham 0.505 (share of all free picks to P, valid sessions); range 0.470-0.576",
+   "source": "computed from data/f/sessions.jsonl choices[].picked_cfg; record prose FINDINGS-4.md@bbc9ffe:58-59",
+   "status": "computed-new",
+   "note": "the record's figure is prose with no committed f1 computation; definition = e2a's share_all_choices with P as the pole; FDBK shows the largest deviation from .50 (post-hoc p = 0.031 uncorrected, 0.18 Bonferroni ×6; next row), not an established exception; give the range or name FDBK"
+  },
+  {
+   "figure": "FDBK all-picks share toward the verdict config (POST-HOC)",
+   "value": "152/264 = 0.576; maps A 0.600, B 0.556; 6/44 sessions 6/6 to verdict config; exact two-sided sign-flip over sessions p = 0.0307 uncorrected, Bonferroni ×6 0.184; other arms p ≥ 0.121",
+   "source": "computed from data/f/sessions.jsonl choices[].picked_cfg, swap (valid FDBK sessions)",
+   "status": "computed-new",
+   "note": "post-hoc, descriptive, no verdict weight; includes picks made after free-phase verdicts; the pre-registered first-choice primary (23/44, p = .44) is untouched"
+  },
+  {
+   "figure": "calibrated accuracies .98/.50 for DIFF (calib.json)",
+   "value": "easy 0.984375 (63/64), hard 0.5 (32/64)",
+   "source": "data/f/calib.json acc.DIFF_easy, acc.DIFF_hard",
+   "status": "reproduced",
+   "note": "f0 v2 on the run's pools (8547d9a1); v1's .953/.500 was on superseded pools"
+  },
+  {
+   "figure": "CORR calibration delta in the verdict entry (+.094)",
+   "value": "calib.json CORR_delta_covariate = 0.078125 (+.078); +.094 is f0 v1 on the superseded pools",
+   "source": "data/f/calib.json CORR_delta_covariate; v1: results/raw/2026-08-10_f_calib.txt@bbc9ffe:15",
+   "status": "discrepant",
+   "note": "transcription of the superseded v1 figure into the verdict entry (archive/RESULTS-cycles3-4.md@bbc9ffe:108; v1 logged at archive/RESULTS-cycles3-4.md@bbc9ffe:432); the record's own f0 v2 entry carries +.078 for the run's pools (archive/RESULTS-cycles3-4.md@bbc9ffe:258); the note should carry +.078 if it carries the covariate; the 'vanished in-session' reading is unchanged"
+  },
+  {
+   "figure": "CORR in-session accuracy P .838 vs Q .833 (verdict entry)",
+   "value": "244/291 = 0.838 vs 255/306 = 0.833",
+   "source": "data/f/sessions.jsonl rounds[].graded (arm CORR)",
+   "status": "reproduced",
+   "note": "all generated CORR rounds incl. excluded sessions; record archive/RESULTS-cycles3-4.md@bbc9ffe:109"
+  },
+  {
+   "figure": "DIFF in-session gap .883/.592 (verdict entry)",
+   "value": "218/247 = 0.883 vs 154/260 = 0.592",
+   "source": "data/f/sessions.jsonl rounds[].graded (arm DIFF)",
+   "status": "reproduced",
+   "note": "all generated DIFF rounds incl. excluded sessions; record archive/RESULTS-cycles3-4.md@bbc9ffe:112"
+  },
+  {
+   "figure": "CORR dose caveat: known artifact at 0.12? (yes/no)",
+   "value": "YES (not in the f1-era record): items [1, 12] unchanged; 40/306 Q rounds byte-clean over all 64 CORR sessions (forced 16/124, free 24/182); 16/56 valid sessions (16/58 reaching the first read) had one clean pre-pick Q round, none two; 31 letters over 16 items; 4/16 items ≥ 3 changed; Q accuracy on corrupted-text rounds 217/266 vs byte-clean 38/40 (post-hoc)",
+   "source": "data/f/sessions.jsonl (CORR transcripts' Task lines) + data/f/pools.json CORR_clean; replay validated by data/f/calib.json corr_sha",
+   "status": "reproduced",
+   "note": "first on record at results/raw/2026-10-04_m-v1.7_referent_check.txt@bbc9ffe:5196-5207 and RESULTS.md@bbc9ffe G-PORT C1 (RESULTS.md@bbc9ffe:161-165); post-pin G-CAL artifact (bab921c) agrees; the f1-era record (archive) has no dose defect"
+  },
+  {
+   "figure": "preprint 'at a dose a later calibration (§8.1) found below its visibility criterion'",
+   "value": "4/16 items meet m's ≥3-letter floor at 0.12; at the pin the support was a model-free replay of f1's corruptor (v1.7 referent check, G-PORT C1), not a calibration and not a measurement on the model; G-CAL's artifact is post-pin; the byte-clean delivery is omitted",
+   "source": "PREPRINT-v1_0-draft.md:182 (working tree, untracked; sha256 d6431e97...6222b8, computed at run time, MATCH vs the block's d6431e97…222b8)",
+   "status": "discrepant",
+   "note": "wording, not a number: the clause attributes the finding to a calibration (§8.1) whose artifact did not exist at the pin (G-CAL's 0.12 artifact first at bab921c); the substance (12/16 items below the floor; 40/306 byte-clean Q rounds) was on record through model-free replays of f1's corruptor (v1.7 referent check, whose checker note G6a.11 says 'the computation supports the note's substance', results/raw/2026-10-04_m-v1.7_referent_check.txt@bbc9ffe:5570-5572; G-PORT C1, RESULTS.md@bbc9ffe:161-165); the clause omits the byte-clean delivery; suggested replacement in §7d; whether PROPOSAL-m's posting flag is set is not N5's call"
+  }
+ ]
+}

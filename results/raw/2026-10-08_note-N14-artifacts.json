@@ -1,0 +1,3832 @@
+{
+ "item": "N14",
+ "pin": "bbc9ffe72fb8a942431c9bf2622a36e581fdf93c",
+ "head_at_run": "cf8eb5b9dd4e117934627242a3aea5bdf4ae4b55",
+ "stamp_date_u": "Thu Oct  8 11:26:15 UTC 2026",
+ "block_sha256": "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841",
+ "script": "scripts/audit_note_N14.py",
+ "script_sha256": "933b36529326788e4afd1b98fe7a974d04a1147f196af499f60075191e0e1e95",
+ "command": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/audit_note_N14.py  (run from the repository root)",
+ "interpreter": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python",
+ "python": "3.12.9",
+ "artifacts_sha256_at_pin": {
+  "data/e2a/sessions.jsonl": "58a7949fc0e98e714b4f96070d4b2ba945c47df85a992e7f617f39c6197bd24e",
+  "data/e2a/analysis.json": "79cd53c0adf55878628d38a5a00e4045d2a216d28b1f0b2ed90b2304920dd52e",
+  "data/f/sessions.jsonl": "d49913e5ffdfb935d0ae344bd4202d852cb5723394c17870e37b619aa1033dcc",
+  "data/f/screen_analysis.json": "f71048c63fd61bebf8acda4eb237614427fa6e76018552ba4d9f3d0895ca920d",
+  "data/olmo/b3_screen_base.json": "7d2ac0d5ffb429e2496ad69ff42b01dd5e80fce5ad953720a0be6d7c595731d8",
+  "data/olmo/b3_analysis_base.json": "953d01834b1b78897eddeaa0da4942e11240b5bc7d6fb0c8252cf2b7945d38b6",
+  "data/olmo/b3_screen_sft.json": "015aed2bf5fb730f5509c5793a91b195ccce5ec4b6d2966215faa7360ff71e66",
+  "data/olmo/b3_analysis_sft.json": "a860572ba4a37747c83835742b4c2e89b1450e3bde2c2135096c8380ac0d71ba",
+  "data/olmo/b3_screen_dpo.json": "e900b67606c4a3c113689e8a4d402705de6d51b1e749abd3710e90f2f26d1067",
+  "data/olmo/b3_analysis_dpo.json": "8dc645e04f0103b2998ab4c684fabe39301ddea68cc62905f96df218ddf47318",
+  "data/olmo/b3_screen_instruct.json": "9ba4b64d95b26e1cd720902d569a0ed6179d67b6ea5aa344614b546cfc32bd24",
+  "data/olmo/b3_analysis_instruct.json": "014cb8283a271b0d44e3718448da0b43b0960da30aa153ef496fc7cc492e3863",
+  "data/e2b/h3_tagscreen.json": "2b764063a1b635d35f0b989c204cd9ccdea7130bde21d57ea15bd0daa2745f30",
+  "data/f/pools.json": "8547d9a11ba55b95dda2988d4e9bdc685196abcda55870d7713703df372d17a0"
+ },
+ "artifacts_worktree_vs_pin": {
+  "data/e2a/sessions.jsonl": "EQUAL to pin",
+  "data/e2a/analysis.json": "EQUAL to pin",
+  "data/f/sessions.jsonl": "EQUAL to pin",
+  "data/f/screen_analysis.json": "EQUAL to pin",
+  "data/olmo/b3_screen_base.json": "EQUAL to pin",
+  "data/olmo/b3_analysis_base.json": "EQUAL to pin",
+  "data/olmo/b3_screen_sft.json": "EQUAL to pin",
+  "data/olmo/b3_analysis_sft.json": "EQUAL to pin",
+  "data/olmo/b3_screen_dpo.json": "EQUAL to pin",
+  "data/olmo/b3_analysis_dpo.json": "EQUAL to pin",
+  "data/olmo/b3_screen_instruct.json": "EQUAL to pin",
+  "data/olmo/b3_analysis_instruct.json": "EQUAL to pin",
+  "data/e2b/h3_tagscreen.json": "EQUAL to pin",
+  "data/f/pools.json": "EQUAL to pin",
+  "valence_core/e2d/habit.py": "EQUAL to pin"
+ },
+ "locators": {
+  "e2a_verdict_head": 646,
+  "e2a_conj2": 655,
+  "e2a_absorbed": 657,
+  "e2a_conj3": 658,
+  "e2a_conj1": 652,
+  "e2a_random1_noise": 684,
+  "e2a_prereg_stat": 1306,
+  "e2a_prereg_conj2": 1308,
+  "f1_verdict_head": 65,
+  "f1_mirror": 83,
+  "f1_sham_pseudo": 85,
+  "f1_prereg": 104,
+  "f1_hornfree": 17,
+  "f1_noinj": 27,
+  "f1_corr_row": 86,
+  "f1_corr_zero": 82,
+  "recount_frozen": 120,
+  "proph_h1": 68,
+  "f4_noinj": 15,
+  "f4_table": 37,
+  "f4_point4_start": 71,
+  "f4_point4_end": 77,
+  "f3_start": 86,
+  "f3_end": 89,
+  "b3_head": 7655,
+  "b3_table_dpo": 7670,
+  "b3_artifact_start": 7673,
+  "b3_artifact_end": 7681,
+  "b3_envelope": 7682,
+  "lockg_trigger": 151,
+  "propj_three": 288,
+  "proph_receipt": 68,
+  "proph_leak": 63,
+  "claude_rule12": 313,
+  "habit_identity": 22,
+  "habit_weighted": 25,
+  "habit_rule11": 37,
+  "habit_e2a_rate": 6,
+  "b3_order": 141,
+  "b3_strata": 111,
+  "b3a_delta": 55,
+  "b3a_bymap": 65,
+  "b3a_locks": 122,
+  "recount_primary": 118,
+  "reg_screen": 69,
+  "h3_head": 11254,
+  "h3_c2": 11271,
+  "h3_basis": 11276,
+  "h3_noimpeach": 11279,
+  "h3_noimpeach_end": 11281,
+  "mapswap": 12273,
+  "mapswap_end": 12275,
+  "spends_power": 12277,
+  "tagscreen_doc": 78,
+  "propj_e2a_pairs": 359,
+  "propj_not_admitted": 361,
+  "f3_tenth": 87,
+  "b3_tenth": 7678,
+  "claude_tenth": 314
+ },
+ "forced_order_schedule_posthoc": {
+  "e2a reward": {
+   "A": {
+    "launched": 56,
+    "launched_start_plus": 28,
+    "valid": 53,
+    "valid_start_plus": 26
+   },
+   "B": {
+    "launched": 56,
+    "launched_start_plus": 28,
+    "valid": 49,
+    "valid_start_plus": 23
+   }
+  },
+  "e2a sham": {
+   "A": {
+    "launched": 20,
+    "launched_start_plus": 12,
+    "valid": 18,
+    "valid_start_plus": 10
+   },
+   "B": {
+    "launched": 20,
+    "launched_start_plus": 12,
+    "valid": 19,
+    "valid_start_plus": 11
+   }
+  },
+  "f1 CORR": {
+   "A": {
+    "launched": 32,
+    "launched_start_plus": 16,
+    "valid": 29,
+    "valid_start_plus": 15
+   },
+   "B": {
+    "launched": 32,
+    "launched_start_plus": 16,
+    "valid": 27,
+    "valid_start_plus": 12
+   }
+  },
+  "f1 sham": {
+   "A": {
+    "launched": 20,
+    "launched_start_plus": 12,
+    "valid": 14,
+    "valid_start_plus": 8
+   },
+   "B": {
+    "launched": 20,
+    "launched_start_plus": 12,
+    "valid": 19,
+    "valid_start_plus": 12
+   }
+  },
+  "B3-dpo marker": {
+   "0": {
+    "launched": 27,
+    "launched_start_plus": 12,
+    "valid": 24,
+    "valid_start_plus": 11
+   },
+   "1": {
+    "launched": 26,
+    "launched_start_plus": 15,
+    "valid": 24,
+    "valid_start_plus": 15
+   }
+  },
+  "B3-dpo sham": {
+   "0": {
+    "launched": 10,
+    "launched_start_plus": 5,
+    "valid": 8,
+    "valid_start_plus": 4
+   },
+   "1": {
+    "launched": 11,
+    "launched_start_plus": 6,
+    "valid": 10,
+    "valid_start_plus": 6
+   }
+  },
+  "B3-dpo random": {
+   "0": {
+    "launched": 11,
+    "launched_start_plus": 7,
+    "valid": 10,
+    "valid_start_plus": 6
+   },
+   "1": {
+    "launched": 9,
+    "launched_start_plus": 3,
+    "valid": 8,
+    "valid_start_plus": 3
+   }
+  }
+ },
+ "per_pair_posthoc": {
+  "e2a reward": {
+   "granite/lattice": {
+    "pair": "granite/lattice",
+    "n": 26,
+    "pick_pair0": 11,
+    "pick_pair1": 15,
+    "pick_pair0_p_two_sided": 0.557197093963623,
+    "maps": {
+     "A": {
+      "k_plus": 5,
+      "n": 13,
+      "plus_tag": "granite"
+     },
+     "B": {
+      "k_plus": 7,
+      "n": 13,
+      "plus_tag": "lattice"
+     }
+    },
+    "starts": {
+     "granite": {
+      "A": {
+       "n": 6,
+       "broke_to": "lattice",
+       "broke": 1
+      },
+      "B": {
+       "n": 7,
+       "broke_to": "lattice",
+       "broke": 1
+      }
+     },
+     "lattice": {
+      "A": {
+       "n": 7,
+       "broke_to": "granite",
+       "broke": 0
+      },
+      "B": {
+       "n": 6,
+       "broke_to": "granite",
+       "broke": 0
+      }
+     }
+    },
+    "fisher_two_sided_maps_within_pair": 0.6950975905236236,
+    "breaks_to_tag": {
+     "granite": 0,
+     "lattice": 2
+    },
+    "breaks_to_plus_by_map": {
+     "A": 0,
+     "B": 1
+    },
+    "breaks_to_minus_by_map": {
+     "A": 1,
+     "B": 0
+    }
+   },
+   "maple/cedar": {
+    "pair": "maple/cedar",
+    "n": 21,
+    "pick_pair0": 20,
+    "pick_pair1": 1,
+    "pick_pair0_p_two_sided": 2.09808349609375e-05,
+    "maps": {
+     "A": {
+      "k_plus": 11,
+      "n": 12,
+      "plus_tag": "maple"
+     },
+     "B": {
+      "k_plus": 0,
+      "n": 9,
+      "plus_tag": "cedar"
+     }
+    },
+    "starts": {
+     "maple": {
+      "A": {
+       "n": 6,
+       "broke_to": "cedar",
+       "broke": 0
+      },
+      "B": {
+       "n": 6,
+       "broke_to": "cedar",
+       "broke": 0
+      }
+     },
+     "cedar": {
+      "A": {
+       "n": 6,
+       "broke_to": "maple",
+       "broke": 5
+      },
+      "B": {
+       "n": 3,
+       "broke_to": "maple",
+       "broke": 3
+      }
+     }
+    },
+    "fisher_two_sided_maps_within_pair": 3.402170584833123e-05,
+    "breaks_to_tag": {
+     "maple": 8,
+     "cedar": 0
+    },
+    "breaks_to_plus_by_map": {
+     "A": 5,
+     "B": 0
+    },
+    "breaks_to_minus_by_map": {
+     "A": 0,
+     "B": 3
+    }
+   },
+   "plaza/saddle": {
+    "pair": "plaza/saddle",
+    "n": 27,
+    "pick_pair0": 10,
+    "pick_pair1": 17,
+    "pick_pair0_p_two_sided": 0.24778856337070465,
+    "maps": {
+     "A": {
+      "k_plus": 7,
+      "n": 14,
+      "plus_tag": "plaza"
+     },
+     "B": {
+      "k_plus": 10,
+      "n": 13,
+      "plus_tag": "saddle"
+     }
+    },
+    "starts": {
+     "plaza": {
+      "A": {
+       "n": 7,
+       "broke_to": "saddle",
+       "broke": 0
+      },
+      "B": {
+       "n": 6,
+       "broke_to": "saddle",
+       "broke": 3
+      }
+     },
+     "saddle": {
+      "A": {
+       "n": 7,
+       "broke_to": "plaza",
+       "broke": 0
+      },
+      "B": {
+       "n": 7,
+       "broke_to": "plaza",
+       "broke": 0
+      }
+     }
+    },
+    "fisher_two_sided_maps_within_pair": 0.23646071700991608,
+    "breaks_to_tag": {
+     "plaza": 0,
+     "saddle": 3
+    },
+    "breaks_to_plus_by_map": {
+     "A": 0,
+     "B": 3
+    },
+    "breaks_to_minus_by_map": {
+     "A": 0,
+     "B": 0
+    }
+   },
+   "slate/prism": {
+    "pair": "slate/prism",
+    "n": 28,
+    "pick_pair0": 17,
+    "pick_pair1": 11,
+    "pick_pair0_p_two_sided": 0.34492845088243484,
+    "maps": {
+     "A": {
+      "k_plus": 9,
+      "n": 14,
+      "plus_tag": "slate"
+     },
+     "B": {
+      "k_plus": 6,
+      "n": 14,
+      "plus_tag": "prism"
+     }
+    },
+    "starts": {
+     "slate": {
+      "A": {
+       "n": 7,
+       "broke_to": "prism",
+       "broke": 0
+      },
+      "B": {
+       "n": 7,
+       "broke_to": "prism",
+       "broke": 0
+      }
+     },
+     "prism": {
+      "A": {
+       "n": 7,
+       "broke_to": "slate",
+       "broke": 2
+      },
+      "B": {
+       "n": 7,
+       "broke_to": "slate",
+       "broke": 1
+      }
+     }
+    },
+    "fisher_two_sided_maps_within_pair": 0.4494817606676538,
+    "breaks_to_tag": {
+     "slate": 3,
+     "prism": 0
+    },
+    "breaks_to_plus_by_map": {
+     "A": 2,
+     "B": 0
+    },
+    "breaks_to_minus_by_map": {
+     "A": 0,
+     "B": 1
+    }
+   }
+  },
+  "e2a sham": {
+   "granite/lattice": {
+    "pair": "granite/lattice",
+    "n": 9,
+    "pick_pair0": 3,
+    "pick_pair1": 6,
+    "pick_pair0_p_two_sided": 0.5078125,
+    "maps": {
+     "A": {
+      "k_plus": 1,
+      "n": 4,
+      "plus_tag": "granite"
+     },
+     "B": {
+      "k_plus": 3,
+      "n": 5,
+      "plus_tag": "lattice"
+     }
+    },
+    "starts": {
+     "granite": {
+      "A": {
+       "n": 2,
+       "broke_to": "lattice",
+       "broke": 1
+      },
+      "B": {
+       "n": 2,
+       "broke_to": "lattice",
+       "broke": 0
+      }
+     },
+     "lattice": {
+      "A": {
+       "n": 2,
+       "broke_to": "granite",
+       "broke": 0
+      },
+      "B": {
+       "n": 3,
+       "broke_to": "granite",
+       "broke": 0
+      }
+     }
+    },
+    "fisher_two_sided_maps_within_pair": 0.5238095238095238,
+    "breaks_to_tag": {
+     "granite": 0,
+     "lattice": 1
+    },
+    "breaks_to_plus_by_map": {
+     "A": 0,
+     "B": 0
+    },
+    "breaks_to_minus_by_map": {
+     "A": 1,
+     "B": 0
+    }
+   },
+   "maple/cedar": {
+    "pair": "maple/cedar",
+    "n": 10,
+    "pick_pair0": 10,
+    "pick_pair1": 0,
+    "pick_pair0_p_two_sided": 0.001953125,
+    "maps": {
+     "A": {
+      "k_plus": 5,
+      "n": 5,
+      "plus_tag": "maple"
+     },
+     "B": {
+      "k_plus": 0,
+      "n": 5,
+      "plus_tag": "cedar"
+     }
+    },
+    "starts": {
+     "maple": {
+      "A": {
+       "n": 3,
+       "broke_to": "cedar",
+       "broke": 0
+      },
+      "B": {
+       "n": 2,
+       "broke_to": "cedar",
+       "broke": 0
+      }
+     },
+     "cedar": {
+      "A": {
+       "n": 2,
+       "broke_to": "maple",
+       "broke": 2
+      },
+      "B": {
+       "n": 3,
+       "broke_to": "maple",
+       "broke": 3
+      }
+     }
+    },
+    "fisher_two_sided_maps_within_pair": 0.007936507936507936,
+    "breaks_to_tag": {
+     "maple": 5,
+     "cedar": 0
+    },
+    "breaks_to_plus_by_map": {
+     "A": 2,
+     "B": 0
+    },
+    "breaks_to_minus_by_map": {
+     "A": 0,
+     "B": 3
+    }
+   },
+   "plaza/saddle": {
+    "pair": "plaza/saddle",
+    "n": 9,
+    "pick_pair0": 4,
+    "pick_pair1": 5,
+    "pick_pair0_p_two_sided": 1.0,
+    "maps": {
+     "A": {
+      "k_plus": 2,
+      "n": 4,
+      "plus_tag": "plaza"
+     },
+     "B": {
+      "k_plus": 3,
+      "n": 5,
+      "plus_tag": "saddle"
+     }
+    },
+    "starts": {
+     "plaza": {
+      "A": {
+       "n": 2,
+       "broke_to": "saddle",
+       "broke": 0
+      },
+      "B": {
+       "n": 2,
+       "broke_to": "saddle",
+       "broke": 0
+      }
+     },
+     "saddle": {
+      "A": {
+       "n": 2,
+       "broke_to": "plaza",
+       "broke": 0
+      },
+      "B": {
+       "n": 3,
+       "broke_to": "plaza",
+       "broke": 0
+      }
+     }
+    },
+    "fisher_two_sided_maps_within_pair": 1.0,
+    "breaks_to_tag": {
+     "plaza": 0,
+     "saddle": 0
+    },
+    "breaks_to_plus_by_map": {
+     "A": 0,
+     "B": 0
+    },
+    "breaks_to_minus_by_map": {
+     "A": 0,
+     "B": 0
+    }
+   },
+   "slate/prism": {
+    "pair": "slate/prism",
+    "n": 9,
+    "pick_pair0": 5,
+    "pick_pair1": 4,
+    "pick_pair0_p_two_sided": 1.0,
+    "maps": {
+     "A": {
+      "k_plus": 3,
+      "n": 5,
+      "plus_tag": "slate"
+     },
+     "B": {
+      "k_plus": 2,
+      "n": 4,
+      "plus_tag": "prism"
+     }
+    },
+    "starts": {
+     "slate": {
+      "A": {
+       "n": 3,
+       "broke_to": "prism",
+       "broke": 1
+      },
+      "B": {
+       "n": 2,
+       "broke_to": "prism",
+       "broke": 0
+      }
+     },
+     "prism": {
+      "A": {
+       "n": 2,
+       "broke_to": "slate",
+       "broke": 1
+      },
+      "B": {
+       "n": 2,
+       "broke_to": "slate",
+       "broke": 0
+      }
+     }
+    },
+    "fisher_two_sided_maps_within_pair": 1.0,
+    "breaks_to_tag": {
+     "slate": 1,
+     "prism": 1
+    },
+    "breaks_to_plus_by_map": {
+     "A": 1,
+     "B": 0
+    },
+    "breaks_to_minus_by_map": {
+     "A": 1,
+     "B": 0
+    }
+   }
+  },
+  "f1 CORR": {
+   "granite/lattice": {
+    "pair": "granite/lattice",
+    "n": 16,
+    "pick_pair0": 7,
+    "pick_pair1": 9,
+    "pick_pair0_p_two_sided": 0.803619384765625,
+    "maps": {
+     "A": {
+      "k_plus": 4,
+      "n": 8,
+      "plus_tag": "granite"
+     },
+     "B": {
+      "k_plus": 5,
+      "n": 8,
+      "plus_tag": "lattice"
+     }
+    },
+    "starts": {
+     "granite": {
+      "A": {
+       "n": 4,
+       "broke_to": "lattice",
+       "broke": 0
+      },
+      "B": {
+       "n": 4,
+       "broke_to": "lattice",
+       "broke": 1
+      }
+     },
+     "lattice": {
+      "A": {
+       "n": 4,
+       "broke_to": "granite",
+       "broke": 0
+      },
+      "B": {
+       "n": 4,
+       "broke_to": "granite",
+       "broke": 0
+      }
+     }
+    },
+    "fisher_two_sided_maps_within_pair": 1.0,
+    "breaks_to_tag": {
+     "granite": 0,
+     "lattice": 1
+    },
+    "breaks_to_plus_by_map": {
+     "A": 0,
+     "B": 1
+    },
+    "breaks_to_minus_by_map": {
+     "A": 0,
+     "B": 0
+    }
+   },
+   "maple/cedar": {
+    "pair": "maple/cedar",
+    "n": 13,
+    "pick_pair0": 12,
+    "pick_pair1": 1,
+    "pick_pair0_p_two_sided": 0.00341796875,
+    "maps": {
+     "A": {
+      "k_plus": 5,
+      "n": 6,
+      "plus_tag": "maple"
+     },
+     "B": {
+      "k_plus": 0,
+      "n": 7,
+      "plus_tag": "cedar"
+     }
+    },
+    "starts": {
+     "maple": {
+      "A": {
+       "n": 3,
+       "broke_to": "cedar",
+       "broke": 0
+      },
+      "B": {
+       "n": 4,
+       "broke_to": "cedar",
+       "broke": 0
+      }
+     },
+     "cedar": {
+      "A": {
+       "n": 3,
+       "broke_to": "maple",
+       "broke": 2
+      },
+      "B": {
+       "n": 3,
+       "broke_to": "maple",
+       "broke": 3
+      }
+     }
+    },
+    "fisher_two_sided_maps_within_pair": 0.004662004662004662,
+    "breaks_to_tag": {
+     "maple": 5,
+     "cedar": 0
+    },
+    "breaks_to_plus_by_map": {
+     "A": 2,
+     "B": 0
+    },
+    "breaks_to_minus_by_map": {
+     "A": 0,
+     "B": 3
+    }
+   },
+   "plaza/saddle": {
+    "pair": "plaza/saddle",
+    "n": 14,
+    "pick_pair0": 8,
+    "pick_pair1": 6,
+    "pick_pair0_p_two_sided": 0.79052734375,
+    "maps": {
+     "A": {
+      "k_plus": 4,
+      "n": 7,
+      "plus_tag": "plaza"
+     },
+     "B": {
+      "k_plus": 3,
+      "n": 7,
+      "plus_tag": "saddle"
+     }
+    },
+    "starts": {
+     "plaza": {
+      "A": {
+       "n": 4,
+       "broke_to": "saddle",
+       "broke": 0
+      },
+      "B": {
+       "n": 4,
+       "broke_to": "saddle",
+       "broke": 0
+      }
+     },
+     "saddle": {
+      "A": {
+       "n": 3,
+       "broke_to": "plaza",
+       "broke": 0
+      },
+      "B": {
+       "n": 3,
+       "broke_to": "plaza",
+       "broke": 0
+      }
+     }
+    },
+    "fisher_two_sided_maps_within_pair": 1.0,
+    "breaks_to_tag": {
+     "plaza": 0,
+     "saddle": 0
+    },
+    "breaks_to_plus_by_map": {
+     "A": 0,
+     "B": 0
+    },
+    "breaks_to_minus_by_map": {
+     "A": 0,
+     "B": 0
+    }
+   },
+   "slate/prism": {
+    "pair": "slate/prism",
+    "n": 13,
+    "pick_pair0": 8,
+    "pick_pair1": 5,
+    "pick_pair0_p_two_sided": 0.5810546875,
+    "maps": {
+     "A": {
+      "k_plus": 5,
+      "n": 8,
+      "plus_tag": "slate"
+     },
+     "B": {
+      "k_plus": 2,
+      "n": 5,
+      "plus_tag": "prism"
+     }
+    },
+    "starts": {
+     "slate": {
+      "A": {
+       "n": 4,
+       "broke_to": "prism",
+       "broke": 0
+      },
+      "B": {
+       "n": 3,
+       "broke_to": "prism",
+       "broke": 0
+      }
+     },
+     "prism": {
+      "A": {
+       "n": 4,
+       "broke_to": "slate",
+       "broke": 1
+      },
+      "B": {
+       "n": 2,
+       "broke_to": "slate",
+       "broke": 0
+      }
+     }
+    },
+    "fisher_two_sided_maps_within_pair": 0.5920745920745921,
+    "breaks_to_tag": {
+     "slate": 1,
+     "prism": 0
+    },
+    "breaks_to_plus_by_map": {
+     "A": 1,
+     "B": 0
+    },
+    "breaks_to_minus_by_map": {
+     "A": 0,
+     "B": 0
+    }
+   }
+  },
+  "f1 sham": {
+   "granite/lattice": {
+    "pair": "granite/lattice",
+    "n": 8,
+    "pick_pair0": 3,
+    "pick_pair1": 5,
+    "pick_pair0_p_two_sided": 0.7265625,
+    "maps": {
+     "A": {
+      "k_plus": 2,
+      "n": 4,
+      "plus_tag": "granite"
+     },
+     "B": {
+      "k_plus": 3,
+      "n": 4,
+      "plus_tag": "lattice"
+     }
+    },
+    "starts": {
+     "granite": {
+      "A": {
+       "n": 2,
+       "broke_to": "lattice",
+       "broke": 0
+      },
+      "B": {
+       "n": 1,
+       "broke_to": "lattice",
+       "broke": 0
+      }
+     },
+     "lattice": {
+      "A": {
+       "n": 2,
+       "broke_to": "granite",
+       "broke": 0
+      },
+      "B": {
+       "n": 3,
+       "broke_to": "granite",
+       "broke": 0
+      }
+     }
+    },
+    "fisher_two_sided_maps_within_pair": 1.0,
+    "breaks_to_tag": {
+     "granite": 0,
+     "lattice": 0
+    },
+    "breaks_to_plus_by_map": {
+     "A": 0,
+     "B": 0
+    },
+    "breaks_to_minus_by_map": {
+     "A": 0,
+     "B": 0
+    }
+   },
+   "maple/cedar": {
+    "pair": "maple/cedar",
+    "n": 10,
+    "pick_pair0": 9,
+    "pick_pair1": 1,
+    "pick_pair0_p_two_sided": 0.021484375,
+    "maps": {
+     "A": {
+      "k_plus": 4,
+      "n": 5,
+      "plus_tag": "maple"
+     },
+     "B": {
+      "k_plus": 0,
+      "n": 5,
+      "plus_tag": "cedar"
+     }
+    },
+    "starts": {
+     "maple": {
+      "A": {
+       "n": 3,
+       "broke_to": "cedar",
+       "broke": 0
+      },
+      "B": {
+       "n": 2,
+       "broke_to": "cedar",
+       "broke": 0
+      }
+     },
+     "cedar": {
+      "A": {
+       "n": 2,
+       "broke_to": "maple",
+       "broke": 1
+      },
+      "B": {
+       "n": 3,
+       "broke_to": "maple",
+       "broke": 3
+      }
+     }
+    },
+    "fisher_two_sided_maps_within_pair": 0.047619047619047616,
+    "breaks_to_tag": {
+     "maple": 4,
+     "cedar": 0
+    },
+    "breaks_to_plus_by_map": {
+     "A": 1,
+     "B": 0
+    },
+    "breaks_to_minus_by_map": {
+     "A": 0,
+     "B": 3
+    }
+   },
+   "plaza/saddle": {
+    "pair": "plaza/saddle",
+    "n": 9,
+    "pick_pair0": 4,
+    "pick_pair1": 5,
+    "pick_pair0_p_two_sided": 1.0,
+    "maps": {
+     "A": {
+      "k_plus": 2,
+      "n": 4,
+      "plus_tag": "plaza"
+     },
+     "B": {
+      "k_plus": 3,
+      "n": 5,
+      "plus_tag": "saddle"
+     }
+    },
+    "starts": {
+     "plaza": {
+      "A": {
+       "n": 2,
+       "broke_to": "saddle",
+       "broke": 0
+      },
+      "B": {
+       "n": 2,
+       "broke_to": "saddle",
+       "broke": 0
+      }
+     },
+     "saddle": {
+      "A": {
+       "n": 2,
+       "broke_to": "plaza",
+       "broke": 0
+      },
+      "B": {
+       "n": 3,
+       "broke_to": "plaza",
+       "broke": 0
+      }
+     }
+    },
+    "fisher_two_sided_maps_within_pair": 1.0,
+    "breaks_to_tag": {
+     "plaza": 0,
+     "saddle": 0
+    },
+    "breaks_to_plus_by_map": {
+     "A": 0,
+     "B": 0
+    },
+    "breaks_to_minus_by_map": {
+     "A": 0,
+     "B": 0
+    }
+   },
+   "slate/prism": {
+    "pair": "slate/prism",
+    "n": 6,
+    "pick_pair0": 3,
+    "pick_pair1": 3,
+    "pick_pair0_p_two_sided": 1.0,
+    "maps": {
+     "A": {
+      "k_plus": 1,
+      "n": 1,
+      "plus_tag": "slate"
+     },
+     "B": {
+      "k_plus": 3,
+      "n": 5,
+      "plus_tag": "prism"
+     }
+    },
+    "starts": {
+     "slate": {
+      "A": {
+       "n": 1,
+       "broke_to": "prism",
+       "broke": 0
+      },
+      "B": {
+       "n": 2,
+       "broke_to": "prism",
+       "broke": 0
+      }
+     },
+     "prism": {
+      "A": {
+       "n": 0,
+       "broke_to": "slate",
+       "broke": 0
+      },
+      "B": {
+       "n": 3,
+       "broke_to": "slate",
+       "broke": 0
+      }
+     }
+    },
+    "fisher_two_sided_maps_within_pair": 1.0,
+    "breaks_to_tag": {
+     "slate": 0,
+     "prism": 0
+    },
+    "breaks_to_plus_by_map": {
+     "A": 0,
+     "B": 0
+    },
+    "breaks_to_minus_by_map": {
+     "A": 0,
+     "B": 0
+    }
+   }
+  },
+  "B3-dpo marker": {
+   "amber/granite": {
+    "pair": "amber/granite",
+    "n": 12,
+    "pick_pair0": 1,
+    "pick_pair1": 11,
+    "pick_pair0_p_two_sided": 0.00634765625,
+    "maps": {
+     "0": {
+      "k_plus": 1,
+      "n": 6,
+      "plus_tag": "amber"
+     },
+     "1": {
+      "k_plus": 6,
+      "n": 6,
+      "plus_tag": "granite"
+     }
+    },
+    "starts": {
+     "amber": {
+      "0": {
+       "n": 2,
+       "broke_to": "granite",
+       "broke": 1
+      },
+      "1": {
+       "n": 0,
+       "broke_to": "granite",
+       "broke": 0
+      }
+     },
+     "granite": {
+      "0": {
+       "n": 4,
+       "broke_to": "amber",
+       "broke": 0
+      },
+      "1": {
+       "n": 6,
+       "broke_to": "amber",
+       "broke": 0
+      }
+     }
+    },
+    "fisher_two_sided_maps_within_pair": 0.015151515151515152,
+    "breaks_to_tag": {
+     "amber": 0,
+     "granite": 1
+    },
+    "breaks_to_plus_by_map": {
+     "0": 0,
+     "1": 0
+    },
+    "breaks_to_minus_by_map": {
+     "0": 1,
+     "1": 0
+    }
+   },
+   "copper/walnut": {
+    "pair": "copper/walnut",
+    "n": 12,
+    "pick_pair0": 8,
+    "pick_pair1": 4,
+    "pick_pair0_p_two_sided": 0.3876953125,
+    "maps": {
+     "0": {
+      "k_plus": 4,
+      "n": 6,
+      "plus_tag": "copper"
+     },
+     "1": {
+      "k_plus": 2,
+      "n": 6,
+      "plus_tag": "walnut"
+     }
+    },
+    "starts": {
+     "copper": {
+      "0": {
+       "n": 2,
+       "broke_to": "walnut",
+       "broke": 0
+      },
+      "1": {
+       "n": 3,
+       "broke_to": "walnut",
+       "broke": 0
+      }
+     },
+     "walnut": {
+      "0": {
+       "n": 4,
+       "broke_to": "copper",
+       "broke": 2
+      },
+      "1": {
+       "n": 3,
+       "broke_to": "copper",
+       "broke": 1
+      }
+     }
+    },
+    "fisher_two_sided_maps_within_pair": 0.5670995670995671,
+    "breaks_to_tag": {
+     "copper": 3,
+     "walnut": 0
+    },
+    "breaks_to_plus_by_map": {
+     "0": 2,
+     "1": 0
+    },
+    "breaks_to_minus_by_map": {
+     "0": 0,
+     "1": 1
+    }
+   },
+   "maple/saddle": {
+    "pair": "maple/saddle",
+    "n": 10,
+    "pick_pair0": 8,
+    "pick_pair1": 2,
+    "pick_pair0_p_two_sided": 0.109375,
+    "maps": {
+     "0": {
+      "k_plus": 4,
+      "n": 5,
+      "plus_tag": "maple"
+     },
+     "1": {
+      "k_plus": 1,
+      "n": 5,
+      "plus_tag": "saddle"
+     }
+    },
+    "starts": {
+     "maple": {
+      "0": {
+       "n": 4,
+       "broke_to": "saddle",
+       "broke": 0
+      },
+      "1": {
+       "n": 3,
+       "broke_to": "saddle",
+       "broke": 0
+      }
+     },
+     "saddle": {
+      "0": {
+       "n": 1,
+       "broke_to": "maple",
+       "broke": 0
+      },
+      "1": {
+       "n": 2,
+       "broke_to": "maple",
+       "broke": 1
+      }
+     }
+    },
+    "fisher_two_sided_maps_within_pair": 0.20634920634920634,
+    "breaks_to_tag": {
+     "maple": 1,
+     "saddle": 0
+    },
+    "breaks_to_plus_by_map": {
+     "0": 0,
+     "1": 0
+    },
+    "breaks_to_minus_by_map": {
+     "0": 0,
+     "1": 1
+    }
+   },
+   "quartz/velvet": {
+    "pair": "quartz/velvet",
+    "n": 14,
+    "pick_pair0": 2,
+    "pick_pair1": 12,
+    "pick_pair0_p_two_sided": 0.012939453125,
+    "maps": {
+     "0": {
+      "k_plus": 2,
+      "n": 7,
+      "plus_tag": "quartz"
+     },
+     "1": {
+      "k_plus": 7,
+      "n": 7,
+      "plus_tag": "velvet"
+     }
+    },
+    "starts": {
+     "quartz": {
+      "0": {
+       "n": 3,
+       "broke_to": "velvet",
+       "broke": 1
+      },
+      "1": {
+       "n": 3,
+       "broke_to": "velvet",
+       "broke": 3
+      }
+     },
+     "velvet": {
+      "0": {
+       "n": 4,
+       "broke_to": "quartz",
+       "broke": 0
+      },
+      "1": {
+       "n": 4,
+       "broke_to": "quartz",
+       "broke": 0
+      }
+     }
+    },
+    "fisher_two_sided_maps_within_pair": 0.02097902097902098,
+    "breaks_to_tag": {
+     "quartz": 0,
+     "velvet": 4
+    },
+    "breaks_to_plus_by_map": {
+     "0": 0,
+     "1": 3
+    },
+    "breaks_to_minus_by_map": {
+     "0": 1,
+     "1": 0
+    }
+   }
+  }
+ },
+ "maple_cedar_all_qwen_arms_posthoc": {
+  "arms": [
+   "e2a random1",
+   "e2a random2",
+   "e2a reward",
+   "e2a sham",
+   "f1 CORR",
+   "f1 DIFF",
+   "f1 FDBK",
+   "f1 NOV",
+   "f1 SOLV",
+   "f1 sham"
+  ],
+  "n": 113,
+  "maple_first": 103,
+  "cedar_start_n": 53,
+  "cedar_start_broke_to_maple": 43,
+  "cedar_start_by_map": {
+   "A": {
+    "label": "maple = +label",
+    "n": 26,
+    "broke_to_maple": 17
+   },
+   "B": {
+    "label": "maple = −label",
+    "n": 27,
+    "broke_to_maple": 26
+   }
+  },
+  "maple_start_n": 60,
+  "maple_start_broke_to_cedar": 0,
+  "other_pairs_n": 354,
+  "other_pairs_breaks": 28
+ },
+ "maps_without_maple_cedar_posthoc": {
+  "e2a reward": {
+   "maps": {
+    "A": {
+     "k": 21,
+     "n": 41,
+     "delta": 0.012195121951219513,
+     "delta_exact": "1/82",
+     "breaks_to_plus": 2,
+     "breaks_to_minus": 1
+    },
+    "B": {
+     "k": 23,
+     "n": 40,
+     "delta": 0.075,
+     "delta_exact": "3/40",
+     "breaks_to_plus": 4,
+     "breaks_to_minus": 1
+    }
+   },
+   "maple_cedar_pooled_over_maps": {
+    "k": 11,
+    "n": 21,
+    "delta": 0.023809523809523808
+   },
+   "pair0_breaks": 11,
+   "pair0_breaks_that_are_maple": 8,
+   "breaks_plus_vs_minus_without_mc": [
+    6,
+    2
+   ],
+   "breaks_plus_vs_minus_without_mc_p_two_sided": 0.2890625,
+   "opposite_signed": false
+  },
+  "e2a sham": {
+   "maps": {
+    "A": {
+     "k": 6,
+     "n": 13,
+     "delta": -0.038461538461538464,
+     "delta_exact": "-1/26",
+     "breaks_to_plus": 1,
+     "breaks_to_minus": 2
+    },
+    "B": {
+     "k": 8,
+     "n": 14,
+     "delta": 0.07142857142857142,
+     "delta_exact": "1/14",
+     "breaks_to_plus": 0,
+     "breaks_to_minus": 0
+    }
+   },
+   "maple_cedar_pooled_over_maps": {
+    "k": 5,
+    "n": 10,
+    "delta": 0.0
+   },
+   "pair0_breaks": 6,
+   "pair0_breaks_that_are_maple": 5,
+   "breaks_plus_vs_minus_without_mc": [
+    1,
+    2
+   ],
+   "breaks_plus_vs_minus_without_mc_p_two_sided": 1.0,
+   "opposite_signed": true
+  },
+  "f1 CORR": {
+   "maps": {
+    "A": {
+     "k": 13,
+     "n": 23,
+     "delta": 0.06521739130434782,
+     "delta_exact": "3/46",
+     "breaks_to_plus": 1,
+     "breaks_to_minus": 0
+    },
+    "B": {
+     "k": 10,
+     "n": 20,
+     "delta": 0.0,
+     "delta_exact": "0",
+     "breaks_to_plus": 1,
+     "breaks_to_minus": 0
+    }
+   },
+   "maple_cedar_pooled_over_maps": {
+    "k": 5,
+    "n": 13,
+    "delta": -0.11538461538461539
+   },
+   "pair0_breaks": 6,
+   "pair0_breaks_that_are_maple": 5,
+   "breaks_plus_vs_minus_without_mc": [
+    2,
+    0
+   ],
+   "breaks_plus_vs_minus_without_mc_p_two_sided": 0.5,
+   "opposite_signed": false
+  },
+  "f1 sham": {
+   "maps": {
+    "A": {
+     "k": 5,
+     "n": 9,
+     "delta": 0.05555555555555555,
+     "delta_exact": "1/18",
+     "breaks_to_plus": 0,
+     "breaks_to_minus": 0
+    },
+    "B": {
+     "k": 9,
+     "n": 14,
+     "delta": 0.14285714285714285,
+     "delta_exact": "1/7",
+     "breaks_to_plus": 0,
+     "breaks_to_minus": 0
+    }
+   },
+   "maple_cedar_pooled_over_maps": {
+    "k": 4,
+    "n": 10,
+    "delta": -0.1
+   },
+   "pair0_breaks": 4,
+   "pair0_breaks_that_are_maple": 4,
+   "breaks_plus_vs_minus_without_mc": [
+    0,
+    0
+   ],
+   "breaks_plus_vs_minus_without_mc_p_two_sided": null,
+   "opposite_signed": false
+  }
+ },
+ "b3_dpo_marker_map1_by_pair_posthoc": {
+  "by_pair": {
+   "amber/granite": {
+    "plus_tag": "granite",
+    "n": 6,
+    "started_on_plus": 6,
+    "started_on_plus_and_picked_it": 6,
+    "breaks_to_plus": 0
+   },
+   "copper/walnut": {
+    "plus_tag": "walnut",
+    "n": 6,
+    "started_on_plus": 3,
+    "started_on_plus_and_picked_it": 2,
+    "breaks_to_plus": 0
+   },
+   "maple/saddle": {
+    "plus_tag": "saddle",
+    "n": 5,
+    "started_on_plus": 2,
+    "started_on_plus_and_picked_it": 1,
+    "breaks_to_plus": 0
+   },
+   "quartz/velvet": {
+    "plus_tag": "velvet",
+    "n": 7,
+    "started_on_plus": 4,
+    "started_on_plus_and_picked_it": 4,
+    "breaks_to_plus": 3
+   }
+  },
+  "map1_breaks_to_plus_tags": [
+   "velvet"
+  ]
+ },
+ "h3_tagscreen_c_pairs": {
+  "rows": {
+   "C1": {
+    "tag_lo": "prism",
+    "tag_hi": "slate",
+    "identity_split": 0.4809031543274137,
+    "identity_split_recomputed": 0.4809031543274137,
+    "recomputed_matches": true,
+    "imbalance": 0.019096845672586293,
+    "n": 16
+   },
+   "C2": {
+    "tag_lo": "cedar",
+    "tag_hi": "maple",
+    "identity_split": 0.2066124993665652,
+    "identity_split_recomputed": 0.20661249936656517,
+    "recomputed_matches": true,
+    "imbalance": 0.2933875006334348,
+    "n": 16
+   },
+   "C3": {
+    "tag_lo": "granite",
+    "tag_hi": "lattice",
+    "identity_split": 0.43509739772234474,
+    "identity_split_recomputed": 0.43509739772234474,
+    "recomputed_matches": true,
+    "imbalance": 0.06490260227765526,
+    "n": 16
+   },
+   "C4": {
+    "tag_lo": "plaza",
+    "tag_hi": "saddle",
+    "identity_split": 0.4771870551250091,
+    "identity_split_recomputed": 0.4771870551250091,
+    "recomputed_matches": true,
+    "imbalance": 0.022812944874990915,
+    "n": 16
+   }
+  },
+  "c2_is_largest_imbalance_of_c_pairs": true,
+  "band": {
+   "centre": 0.5,
+   "halfwidth": 0.1,
+   "applies_to": "identity_split, scaffold format primary",
+   "source": "PROPOSAL-h §2 H3, band as PROPOSAL-g A1",
+   "note": "Single apparatus, so unlike A1 this band is decidable within one run. position_split recorded with no band (order counterbalancing absorbs it); label_mass recorded with no band (§2 H3 asks for it as a report)."
+  }
+ },
+ "n5_cross_reference_corr_delivery": {
+  "corr_sessions": 64,
+  "q_rounds": 306,
+  "q_rounds_clean_prefix": 40,
+  "clean_items": [
+   1,
+   12
+  ],
+  "valid_sessions": 56,
+  "valid_with_one_clean_forced_q": 16,
+  "stored_task_field_max_len": 40
+ },
+ "posthoc_tests_count": {
+  "n_tests": 72,
+  "below_0.05": [
+   [
+    "e2a sham first pick = first-listed menu item",
+    0.04703102743951604
+   ],
+   [
+    "B3-dpo random first pick = first-listed menu item",
+    0.001312255859375
+   ],
+   [
+    "e2a reward maple/cedar first pick = pair[0]",
+    2.09808349609375e-05
+   ],
+   [
+    "e2a reward maple/cedar Fisher maps differ (within pair)",
+    3.402170584833123e-05
+   ],
+   [
+    "e2a sham maple/cedar first pick = pair[0]",
+    0.001953125
+   ],
+   [
+    "e2a sham maple/cedar Fisher maps differ (within pair)",
+    0.007936507936507936
+   ],
+   [
+    "f1 CORR maple/cedar first pick = pair[0]",
+    0.00341796875
+   ],
+   [
+    "f1 CORR maple/cedar Fisher maps differ (within pair)",
+    0.004662004662004662
+   ],
+   [
+    "f1 sham maple/cedar first pick = pair[0]",
+    0.021484375
+   ],
+   [
+    "f1 sham maple/cedar Fisher maps differ (within pair)",
+    0.047619047619047616
+   ],
+   [
+    "B3-dpo marker amber/granite first pick = pair[0]",
+    0.00634765625
+   ],
+   [
+    "B3-dpo marker amber/granite Fisher maps differ (within pair)",
+    0.015151515151515152
+   ],
+   [
+    "B3-dpo marker quartz/velvet first pick = pair[0]",
+    0.012939453125
+   ],
+   [
+    "B3-dpo marker quartz/velvet Fisher maps differ (within pair)",
+    0.02097902097902098
+   ]
+  ]
+ },
+ "preprint_working_tree": {
+  "path": "PREPRINT-v1_0-draft.md",
+  "sha256": "d6431e97d35e5914574ff9884c0e64463a7baf1cf9d279f27ed45a683a6222b8",
+  "matches_block_sha": true,
+  "lines": {
+   "identically": 190,
+   "by_construction": 190,
+   "dpo_single_map": 190
+  }
+ },
+ "rule12_vs_b3_commits": {
+  "rule12_text_commits": [
+   "c07a5e0 2026-08-12"
+  ],
+  "b3_entry_commits": [
+   "720a104 2026-08-24"
+  ]
+ },
+ "values_check": {
+  "pass": 1,
+  "findings": [
+   {
+    "finding": "f1 'no injection' locator PROPOSAL-f:17 is the §0 heading; the explicit line is :27",
+    "disposition": "fixed",
+    "change": "section 2 now cites PROPOSAL-f-natural-reinforcer-screen.md@bbc9ffe:27 (\"Nothing is injected\"), with the §0 heading at :17; anchor searched, not typed"
+   },
+   {
+    "finding": "four Figures rows (e2a reward/sham pooled, f1 CORR pooled 0.000, f1 sham .045) read as block figures; .045 had no record locator",
+    "disposition": "fixed",
+    "change": "every row that N14's block text (:116) does not write now says so in its note (applied to all such rows, not only the four); f1 CORR 0.000 carries archive/RESULTS-cycles3-4.md@bbc9ffe:82 and N5's block line 98; f1 sham .045 carries archive/RESULTS-cycles3-4.md@bbc9ffe:85"
+   },
+   {
+    "finding": "note 3 overstated: the f1 receipt does show a label-locked push cancelling under the swap; what it lacks is the size/form of a vector-borne push",
+    "disposition": "fixed",
+    "change": "note 3 reworded to that scope, with the lean computed here (pair[0] 35/56, p = 0.0814 two-sided; breaks 6 vs 1) and §1's own H1 clause (:68); the forced-order share of map B disclosed"
+   },
+   {
+    "finding": "section 6 called the 22-cell count 'the premise of' PROPOSAL-j's 'a fourth capture is expected'",
+    "disposition": "fixed",
+    "change": "now 'consistent with'; adds that PROPOSAL-j rests the expectation on the three captures (:288) and that the count is computed-new"
+   },
+   {
+    "finding": "17/22 includes a cell exactly at 0.10 (B3-dpo sham); 16/22 under a strict '>'",
+    "disposition": "fixed",
+    "change": "max abs map Δ now compared as exact Fractions; section 6 and the Figures row print 17/22 ≥ 0.10, 16/22 > 0.10, cells exactly at 0.10: B3-dpo sham"
+   },
+   {
+    "finding": "missing locators for the CORR target direction and B3's 48:18:18 targets",
+    "disposition": "fixed",
+    "change": "PROPOSAL-f-natural-reinforcer-screen.md@bbc9ffe:86 (CORR table row); targets 48:18:18 and per_stratum 6:3:3 now read from `data/olmo/b3_screen_dpo.json:targets` / `:per_stratum` at the pin and printed"
+   },
+   {
+    "finding": "e2a domain sentence does not say which audit (frozen vs v2) the map figures use",
+    "disposition": "fixed",
+    "change": "section 1 states the frozen audit (stored `excluded` flag; exclusions per arm printed from the pinned records) with scripts/e2a_recount.py@bbc9ffe:120; Code also ran `jlens-qwen36/.venv/bin/python scripts/e2a_recount.py` from the repository root with the root on PYTHONPATH (read-only, writes nothing; it reads the working tree's data/e2a/sessions.jsonl, EQUAL to the pin per section 0), which printed 'session set identical = True; every reason string identical = True' for the frozen audit and 55/102 (frozen) / 54/101 (v2), both '[MATCHES the record]'"
+   },
+   {
+    "finding": "JSON header has no exact command",
+    "disposition": "fixed",
+    "change": "J['command'] added (the same string as the raw's Command line)"
+   }
+  ],
+  "checker_summary": "165 claims checked; all independent recomputations agreed; 8 minor findings, none changing a number or a status; no STOP"
+ },
+ "values_check_round2": {
+  "round": 2,
+  "findings": [
+   {
+    "severity": "substantive",
+    "finding": "section 5's Qwen reading ('habit breaks lean toward pair[0]'; 'cannot be separated at these counts'; 'should not be read as a demonstrated effect in any single campaign') is misleading for the two Qwen captures: the pooled pair[0] coordinate hides one strong tag preference, maple over cedar, which the record measured (H3 C2) and N14 did not cite",
+    "disposition": "fixed",
+    "verified": "every count in the finding reproduced, first by Code's own scratch code (pinned artifacts via git show), then by this script: maple first 20/21 (e2a reward, p = 2.1e-05), 10/10 (e2a sham), 12/13 (f1 CORR); within-pair Fisher 3.4e-05, 0.0079, 0.0047; ten arms 103/113; cedar-start → maple 43/53 (17/26, 26/27); maple-start → cedar 0/60; other pairs 28/354; maps without maple/cedar and maple's share of the pair[0] breaks as the finding states; H3 C2 identity_split 0.2066 = cedar's share (tag_lo) per valence_core/tagscreen.py@bbc9ffe:78, recomputed from the per-probe rows. Two refinements from the pinned text: PROPOSAL-j's sentence is at :359-361 (the finding cited 360-363); and with maple/cedar removed e2a sham's maps are still opposite-signed, the other way (A -0.0385, B +0.0714), so the raw says the A-positive/B-negative pattern is gone rather than that opposite signs are",
+    "change": "section 5 gains a per-pair table for every pair of every capture arm (first pick by tag with exact binomial p; +label share by map with within-pair Fisher p; breaks by start tag and map; breaks by tag), the maple/cedar paragraph over all ten Qwen arms, a maps-without-maple/cedar table (with maple/cedar alone pooled over maps and maple's share of the pair[0] breaks), and the H3 C pairs recomputed; the Qwen bullets are rewritten (the label artifact is a measured tag-identity imbalance, maple over cedar, H3 C2 at RESULTS.md@bbc9ffe:11271, concentrated in one pair of four, which the map counterbalance turns into opposite-signed maps and mostly cancels); 'cannot be separated at these counts' is replaced by the per-pair separation of the state arm; 'should not be read as a demonstrated effect in any single campaign' is dropped; the arm-level Fisher table and Figures row now say they are the pooled-over-pairs test; note 7 (PI/design seat) names the source and the H3 sentence's slate/prism-only basis (RESULTS.md@bbc9ffe:11279-11281); note 3 says the receipt's lean is maple's; the e2a/f1 classification rows carry the post-hoc pointer. Post-hoc test count 72 (was 29), every one listed when below .05. Rule 11 stated at each step; no verdict moves"
+   },
+   {
+    "severity": "minor",
+    "finding": "B3 DPO: 'its breaks do not lean toward pair[0] (4 vs 5 pooled)' and 'rather than a label-identity preference' hide per-pair breaks that all run one way",
+    "disposition": "fixed",
+    "verified": "this script: granite 1/1 (amber/granite), copper 3/3 (copper/walnut), maple 1/1 (maple/saddle), velvet 4/4 (quartz/velvet); pair[0] coordinate 4 vs 5; map-1 breaks to + all velvet; amber/granite map 1 6/6 started on granite (+label) and 6 picked it; forced-order +0.1250 vs net-break +0.0417; base quartz/velvet first pick quartz 0/12 (B3-base marker; verified, not added to the body because base is not a capture arm)",
+    "change": "the B3 bullet now gives the per-pair break statement, the amber/granite concentration of map 1's forced-order term and a per-pair map-1 table; 'mostly forced-order' kept with the exact terms; 'rather than a label-identity preference' replaced by 'the residual break term is tag-specific (velvet), not absent'; the B3 classification row's note updated"
+   },
+   {
+    "severity": "minor",
+    "finding": "section 6 cites the random1 'noise doing its criterion job' phrase at :684; it spans two lines",
+    "disposition": "fixed",
+    "verified": "git show bbc9ffe:archive/RESULTS-cycles3-4.md lines 684-685; the script now asserts the phrase's end is on the second line",
+    "change": "cited as archive/RESULTS-cycles3-4.md@bbc9ffe:684-685"
+   },
+   {
+    "severity": "minor",
+    "finding": "Figures row 'Δ ≈ 0.10 scale' is marked computed-new, but the ~0.10 is a record prose figure",
+    "disposition": "fixed",
+    "verified": "anchors searched in the pinned text: FINDINGS-3.md:87, RESULTS.md:7678, CLAUDE.md:314, PROPOSAL-j-dose-escalation.md:288; the maxima reproduce (0.1038, 0.1111, 0.1296, 0.1667)",
+    "change": "the row is now log-only with the four locators; the per-capture maxima are a separate computed-new row; note 5 carries the locators"
+   },
+   {
+    "severity": "minor",
+    "finding": "N14 does not point to N5's CORR delivery artifact (clean text in corrupted-label rounds at rate .12)",
+    "disposition": "fixed",
+    "verified": "this script's check of the stored task field against `data/f/pools.json:CORR_clean` at the pin: 40/306 Q rounds, items [1, 12], 16/56 valid sessions with one corrupted forced task, as N5 reports",
+    "change": "note 6 points to N5 section 7 by heading (N5's raw is an untracked sibling still under revision, so no line number is cited) with the corroborated counts; no N14 number moves"
+   }
+  ]
+ },
+ "capture_cells": [
+  {
+   "capture": 1,
+   "model": "Qwen3.6-27B (MLX 4-bit)",
+   "campaign": "e2a",
+   "arm": "sham",
+   "role": "capture (sham arm)",
+   "map": "A",
+   "k": 11,
+   "n": 18,
+   "delta": 0.1111111111111111,
+   "delta_exact": "1/9",
+   "stored": 0.1111,
+   "stored_src": "data/e2a/analysis.json:sham.by_map.A",
+   "match": "YES",
+   "status": "reproduced",
+   "map_def": "A = swap False (tag_plus = pair[0]); B = swap True (tag_plus = pair[1]); swap = (s // 4) % 2",
+   "plus_def": "designated label, no state (sham)"
+  },
+  {
+   "capture": 1,
+   "model": "Qwen3.6-27B (MLX 4-bit)",
+   "campaign": "e2a",
+   "arm": "sham",
+   "role": "capture (sham arm)",
+   "map": "B",
+   "k": 8,
+   "n": 19,
+   "delta": -0.07894736842105263,
+   "delta_exact": "-3/38",
+   "stored": -0.0789,
+   "stored_src": "data/e2a/analysis.json:sham.by_map.B",
+   "match": "YES",
+   "status": "reproduced",
+   "map_def": "A = swap False (tag_plus = pair[0]); B = swap True (tag_plus = pair[1]); swap = (s // 4) % 2",
+   "plus_def": "designated label, no state (sham)"
+  },
+  {
+   "capture": 1,
+   "model": "Qwen3.6-27B (MLX 4-bit)",
+   "campaign": "e2a",
+   "arm": "reward",
+   "role": "beside (state arm)",
+   "map": "A",
+   "k": 32,
+   "n": 53,
+   "delta": 0.10377358490566038,
+   "delta_exact": "11/106",
+   "stored": 0.1038,
+   "stored_src": "data/e2a/analysis.json:reward.by_map.A",
+   "match": "YES",
+   "status": "reproduced",
+   "map_def": "A = swap False (tag_plus = pair[0]); B = swap True (tag_plus = pair[1]); swap = (s // 4) % 2",
+   "plus_def": "label whose forced rounds carried +alpha on the reward axis (L48, frac 0.10)"
+  },
+  {
+   "capture": 1,
+   "model": "Qwen3.6-27B (MLX 4-bit)",
+   "campaign": "e2a",
+   "arm": "reward",
+   "role": "beside (state arm)",
+   "map": "B",
+   "k": 23,
+   "n": 49,
+   "delta": -0.030612244897959183,
+   "delta_exact": "-3/98",
+   "stored": -0.0306,
+   "stored_src": "data/e2a/analysis.json:reward.by_map.B",
+   "match": "YES",
+   "status": "reproduced",
+   "map_def": "A = swap False (tag_plus = pair[0]); B = swap True (tag_plus = pair[1]); swap = (s // 4) % 2",
+   "plus_def": "label whose forced rounds carried +alpha on the reward axis (L48, frac 0.10)"
+  },
+  {
+   "capture": 2,
+   "model": "Qwen3.6-27B (MLX 4-bit)",
+   "campaign": "f1",
+   "arm": "CORR",
+   "role": "capture (contrast arm)",
+   "map": "A",
+   "k": 18,
+   "n": 29,
+   "delta": 0.1206896551724138,
+   "delta_exact": "7/58",
+   "stored": 0.1207,
+   "stored_src": "data/f/screen_analysis.json:contrasts.CORR.by_map.A",
+   "match": "YES",
+   "status": "reproduced",
+   "map_def": "A = swap False (tag_P = pair[0]); B = swap True (tag_P = pair[1]); swap = (s // 4) % 2",
+   "plus_def": "P = clean-text config (target: avoid corrupted); Q = seeded character corruption"
+  },
+  {
+   "capture": 2,
+   "model": "Qwen3.6-27B (MLX 4-bit)",
+   "campaign": "f1",
+   "arm": "CORR",
+   "role": "capture (contrast arm)",
+   "map": "B",
+   "k": 10,
+   "n": 27,
+   "delta": -0.12962962962962962,
+   "delta_exact": "-7/54",
+   "stored": -0.1296,
+   "stored_src": "data/f/screen_analysis.json:contrasts.CORR.by_map.B",
+   "match": "YES",
+   "status": "reproduced",
+   "map_def": "A = swap False (tag_P = pair[0]); B = swap True (tag_P = pair[1]); swap = (s // 4) % 2",
+   "plus_def": "P = clean-text config (target: avoid corrupted); Q = seeded character corruption"
+  },
+  {
+   "capture": 2,
+   "model": "Qwen3.6-27B (MLX 4-bit)",
+   "campaign": "f1",
+   "arm": "sham",
+   "role": "beside (sham arm)",
+   "map": "A",
+   "k": 9,
+   "n": 14,
+   "delta": 0.14285714285714285,
+   "delta_exact": "1/7",
+   "stored": null,
+   "stored_src": "recomputed from data/f/sessions.jsonl (no stored by-map field for sham)",
+   "match": "n/a (not stored)",
+   "status": "computed-new",
+   "map_def": "A = swap False (tag_P = pair[0]); B = swap True (tag_P = pair[1]); swap = (s // 4) % 2",
+   "plus_def": "P = designated config; property-identical (sham)"
+  },
+  {
+   "capture": 2,
+   "model": "Qwen3.6-27B (MLX 4-bit)",
+   "campaign": "f1",
+   "arm": "sham",
+   "role": "beside (sham arm)",
+   "map": "B",
+   "k": 9,
+   "n": 19,
+   "delta": -0.02631578947368421,
+   "delta_exact": "-1/38",
+   "stored": null,
+   "stored_src": "recomputed from data/f/sessions.jsonl (no stored by-map field for sham)",
+   "match": "n/a (not stored)",
+   "status": "computed-new",
+   "map_def": "A = swap False (tag_P = pair[0]); B = swap True (tag_P = pair[1]); swap = (s // 4) % 2",
+   "plus_def": "P = designated config; property-identical (sham)"
+  },
+  {
+   "capture": 3,
+   "model": "OLMo-3.1-32B-Instruct-DPO (bf16)",
+   "campaign": "B3-dpo",
+   "arm": "marker",
+   "role": "capture (marker arm)",
+   "map": "1",
+   "k": 16,
+   "n": 24,
+   "delta": 0.16666666666666666,
+   "delta_exact": "1/6",
+   "stored": {
+    "delta": 0.16666666666666663,
+    "k": 16,
+    "n": 24
+   },
+   "stored_src": "data/olmo/b3_analysis_dpo.json:by_label_map.1",
+   "match": "YES",
+   "status": "reproduced",
+   "map_def": "0: tag_plus = pair[0]; 1: tag_plus = pair[1] (strata = 4 roster pairs x 2 maps)",
+   "plus_def": "label whose forced rounds carried +alpha on span_reward (L44, frac 0.05 at DPO)"
+  },
+  {
+   "capture": 3,
+   "model": "OLMo-3.1-32B-Instruct-DPO (bf16)",
+   "campaign": "B3-dpo",
+   "arm": "marker",
+   "role": "beside (other map)",
+   "map": "0",
+   "k": 11,
+   "n": 24,
+   "delta": -0.041666666666666664,
+   "delta_exact": "-1/24",
+   "stored": {
+    "delta": -0.041666666666666685,
+    "k": 11,
+    "n": 24
+   },
+   "stored_src": "data/olmo/b3_analysis_dpo.json:by_label_map.0",
+   "match": "YES",
+   "status": "reproduced",
+   "map_def": "0: tag_plus = pair[0]; 1: tag_plus = pair[1] (strata = 4 roster pairs x 2 maps)",
+   "plus_def": "label whose forced rounds carried +alpha on span_reward (L44, frac 0.05 at DPO)"
+  },
+  {
+   "capture": 3,
+   "model": "OLMo-3.1-32B-Instruct-DPO (bf16)",
+   "campaign": "B3-dpo",
+   "arm": "sham",
+   "role": "beside (sham arm)",
+   "map": "0",
+   "k": 4,
+   "n": 8,
+   "delta": 0.0,
+   "delta_exact": "0",
+   "stored": null,
+   "stored_src": "recomputed from data/olmo/b3_screen_dpo.json (by-map not stored for controls)",
+   "match": "n/a (not stored)",
+   "status": "computed-new",
+   "map_def": "0: tag_plus = pair[0]; 1: tag_plus = pair[1] (strata = 4 roster pairs x 2 maps)",
+   "plus_def": "designated label, no state (sham)"
+  },
+  {
+   "capture": 3,
+   "model": "OLMo-3.1-32B-Instruct-DPO (bf16)",
+   "campaign": "B3-dpo",
+   "arm": "sham",
+   "role": "beside (sham arm)",
+   "map": "1",
+   "k": 4,
+   "n": 10,
+   "delta": -0.1,
+   "delta_exact": "-1/10",
+   "stored": null,
+   "stored_src": "recomputed from data/olmo/b3_screen_dpo.json (by-map not stored for controls)",
+   "match": "n/a (not stored)",
+   "status": "computed-new",
+   "map_def": "0: tag_plus = pair[0]; 1: tag_plus = pair[1] (strata = 4 roster pairs x 2 maps)",
+   "plus_def": "designated label, no state (sham)"
+  },
+  {
+   "capture": 3,
+   "model": "OLMo-3.1-32B-Instruct-DPO (bf16)",
+   "campaign": "B3-dpo",
+   "arm": "random",
+   "role": "beside (random arm)",
+   "map": "0",
+   "k": 4,
+   "n": 10,
+   "delta": -0.1,
+   "delta_exact": "-1/10",
+   "stored": null,
+   "stored_src": "recomputed from data/olmo/b3_screen_dpo.json (by-map not stored for controls)",
+   "match": "n/a (not stored)",
+   "status": "computed-new",
+   "map_def": "0: tag_plus = pair[0]; 1: tag_plus = pair[1] (strata = 4 roster pairs x 2 maps)",
+   "plus_def": "label whose forced rounds carried +alpha on a norm-matched random direction"
+  },
+  {
+   "capture": 3,
+   "model": "OLMo-3.1-32B-Instruct-DPO (bf16)",
+   "campaign": "B3-dpo",
+   "arm": "random",
+   "role": "beside (random arm)",
+   "map": "1",
+   "k": 2,
+   "n": 8,
+   "delta": -0.25,
+   "delta_exact": "-1/4",
+   "stored": null,
+   "stored_src": "recomputed from data/olmo/b3_screen_dpo.json (by-map not stored for controls)",
+   "match": "n/a (not stored)",
+   "status": "computed-new",
+   "map_def": "0: tag_plus = pair[0]; 1: tag_plus = pair[1] (strata = 4 roster pairs x 2 maps)",
+   "plus_def": "label whose forced rounds carried +alpha on a norm-matched random direction"
+  }
+ ],
+ "pooled": [
+  {
+   "capture": 1,
+   "campaign": "e2a",
+   "arm": "reward",
+   "k": 55,
+   "n": 102,
+   "delta": 0.0392156862745098,
+   "stored": 0.0392,
+   "stored_src": "data/e2a/analysis.json:reward.delta_first",
+   "stored_is_abs": false,
+   "match": true
+  },
+  {
+   "capture": 1,
+   "campaign": "e2a",
+   "arm": "sham",
+   "k": 19,
+   "n": 37,
+   "delta": 0.013513513513513514,
+   "stored": 0.0135,
+   "stored_src": "data/e2a/analysis.json:sham.delta_first",
+   "stored_is_abs": false,
+   "match": true
+  },
+  {
+   "capture": 2,
+   "campaign": "f1",
+   "arm": "CORR",
+   "k": 28,
+   "n": 56,
+   "delta": 0.0,
+   "stored": 0.0,
+   "stored_src": "data/f/screen_analysis.json:contrasts.CORR.delta",
+   "stored_is_abs": false,
+   "match": true
+  },
+  {
+   "capture": 2,
+   "campaign": "f1",
+   "arm": "sham",
+   "k": 18,
+   "n": 33,
+   "delta": 0.045454545454545456,
+   "stored": 0.045454545454545414,
+   "stored_src": "data/f/screen_analysis.json:sham_pseudo",
+   "stored_is_abs": true,
+   "match": true
+  },
+  {
+   "capture": 3,
+   "campaign": "B3-dpo",
+   "arm": "marker",
+   "k": 27,
+   "n": 48,
+   "delta": 0.0625,
+   "stored": 0.0625,
+   "stored_src": "data/olmo/b3_analysis_dpo.json:delta_first",
+   "stored_is_abs": false,
+   "match": true
+  },
+  {
+   "capture": 3,
+   "campaign": "B3-dpo",
+   "arm": "sham",
+   "k": 8,
+   "n": 18,
+   "delta": -0.05555555555555555,
+   "stored": -0.05555555555555558,
+   "stored_src": "data/olmo/b3_analysis_dpo.json:controls.sham.pseudo_delta",
+   "stored_is_abs": false,
+   "match": true
+  },
+  {
+   "capture": 3,
+   "campaign": "B3-dpo",
+   "arm": "random",
+   "k": 6,
+   "n": 18,
+   "delta": -0.16666666666666666,
+   "stored": -0.16666666666666669,
+   "stored_src": "data/olmo/b3_analysis_dpo.json:controls.random.pseudo_delta",
+   "stored_is_abs": false,
+   "match": true
+  }
+ ],
+ "weighted_identity": {
+  "e2a reward": {
+   "pooled": 0.0392156862745098,
+   "weighted_mean_of_maps": 0.0392156862745098,
+   "identity_holds": true,
+   "simple_mean_of_maps": 0.036580670003850596,
+   "n_sum_equals_pooled_n": true
+  },
+  "e2a sham": {
+   "pooled": 0.013513513513513514,
+   "weighted_mean_of_maps": 0.013513513513513514,
+   "identity_holds": true,
+   "simple_mean_of_maps": 0.01608187134502924,
+   "n_sum_equals_pooled_n": true
+  },
+  "f1 CORR": {
+   "pooled": 0.0,
+   "weighted_mean_of_maps": 0.0,
+   "identity_holds": true,
+   "simple_mean_of_maps": -0.004469987228607918,
+   "n_sum_equals_pooled_n": true
+  },
+  "f1 sham": {
+   "pooled": 0.045454545454545456,
+   "weighted_mean_of_maps": 0.045454545454545456,
+   "identity_holds": true,
+   "simple_mean_of_maps": 0.05827067669172932,
+   "n_sum_equals_pooled_n": true
+  },
+  "B3-dpo marker": {
+   "pooled": 0.0625,
+   "weighted_mean_of_maps": 0.0625,
+   "identity_holds": true,
+   "simple_mean_of_maps": 0.0625,
+   "n_sum_equals_pooled_n": true
+  }
+ },
+ "decomposition_posthoc": {
+  "e2a reward": {
+   "A": {
+    "N": 53,
+    "k_plus": 32,
+    "delta": 0.10377358490566038,
+    "start_is_plus": 26,
+    "forced_end_neg": 26,
+    "forced_end_pos": 27,
+    "breaks_to_plus": 7,
+    "breaks_to_minus": 1,
+    "component_forced_end_balance": -0.009433962264150943,
+    "component_net_breaks": 0.11320754716981132,
+    "habit_weighted_form": 0.10377358490566035,
+    "habit_weighted_matches": true,
+    "habit_b_plus": {
+     "breaks": 7,
+     "n": 27,
+     "rate": 0.25925925925925924,
+     "meaning": "forced_end = pos; breaking the habit picks the +label"
+    },
+    "habit_b_sham": {
+     "breaks": 1,
+     "n": 26,
+     "rate": 0.038461538461538464,
+     "meaning": "forced_end = neg; breaking the habit picks the sham label"
+    },
+    "follows_habit": 45,
+    "breaks_to_pair0": 7,
+    "breaks_to_pair1": 1
+   },
+   "B": {
+    "N": 49,
+    "k_plus": 23,
+    "delta": -0.030612244897959183,
+    "start_is_plus": 23,
+    "forced_end_neg": 23,
+    "forced_end_pos": 26,
+    "breaks_to_plus": 4,
+    "breaks_to_minus": 4,
+    "component_forced_end_balance": -0.030612244897959183,
+    "component_net_breaks": 0.0,
+    "habit_weighted_form": -0.030612244897959107,
+    "habit_weighted_matches": true,
+    "habit_b_plus": {
+     "breaks": 4,
+     "n": 26,
+     "rate": 0.15384615384615385,
+     "meaning": "forced_end = pos; breaking the habit picks the +label"
+    },
+    "habit_b_sham": {
+     "breaks": 4,
+     "n": 23,
+     "rate": 0.17391304347826086,
+     "meaning": "forced_end = neg; breaking the habit picks the sham label"
+    },
+    "follows_habit": 41,
+    "breaks_to_pair0": 4,
+    "breaks_to_pair1": 4
+   },
+   "pooled": {
+    "N": 102,
+    "k_plus": 55,
+    "delta": 0.0392156862745098,
+    "start_is_plus": 49,
+    "forced_end_neg": 49,
+    "forced_end_pos": 53,
+    "breaks_to_plus": 11,
+    "breaks_to_minus": 5,
+    "component_forced_end_balance": -0.0196078431372549,
+    "component_net_breaks": 0.058823529411764705,
+    "habit_weighted_form": 0.03921568627450989,
+    "habit_weighted_matches": true,
+    "habit_b_plus": {
+     "breaks": 11,
+     "n": 53,
+     "rate": 0.20754716981132076,
+     "meaning": "forced_end = pos; breaking the habit picks the +label"
+    },
+    "habit_b_sham": {
+     "breaks": 5,
+     "n": 49,
+     "rate": 0.10204081632653061,
+     "meaning": "forced_end = neg; breaking the habit picks the sham label"
+    },
+    "follows_habit": 86,
+    "breaks_to_pair0": 11,
+    "breaks_to_pair1": 5,
+    "breaks_pair0_vs_pair1_p_two_sided": 0.210113525390625
+   }
+  },
+  "e2a sham": {
+   "A": {
+    "N": 18,
+    "k_plus": 11,
+    "delta": 0.1111111111111111,
+    "start_is_plus": 10,
+    "forced_end_neg": 10,
+    "forced_end_pos": 8,
+    "breaks_to_plus": 3,
+    "breaks_to_minus": 2,
+    "component_forced_end_balance": 0.05555555555555555,
+    "component_net_breaks": 0.05555555555555555,
+    "habit_weighted_form": 0.11111111111111116,
+    "habit_weighted_matches": true,
+    "habit_b_plus": {
+     "breaks": 3,
+     "n": 8,
+     "rate": 0.375,
+     "meaning": "forced_end = pos; breaking the habit picks the +label"
+    },
+    "habit_b_sham": {
+     "breaks": 2,
+     "n": 10,
+     "rate": 0.2,
+     "meaning": "forced_end = neg; breaking the habit picks the sham label"
+    },
+    "follows_habit": 13,
+    "breaks_to_pair0": 3,
+    "breaks_to_pair1": 2
+   },
+   "B": {
+    "N": 19,
+    "k_plus": 8,
+    "delta": -0.07894736842105263,
+    "start_is_plus": 11,
+    "forced_end_neg": 11,
+    "forced_end_pos": 8,
+    "breaks_to_plus": 0,
+    "breaks_to_minus": 3,
+    "component_forced_end_balance": 0.07894736842105263,
+    "component_net_breaks": -0.15789473684210525,
+    "habit_weighted_form": -0.0789473684210526,
+    "habit_weighted_matches": true,
+    "habit_b_plus": {
+     "breaks": 0,
+     "n": 8,
+     "rate": 0.0,
+     "meaning": "forced_end = pos; breaking the habit picks the +label"
+    },
+    "habit_b_sham": {
+     "breaks": 3,
+     "n": 11,
+     "rate": 0.2727272727272727,
+     "meaning": "forced_end = neg; breaking the habit picks the sham label"
+    },
+    "follows_habit": 16,
+    "breaks_to_pair0": 3,
+    "breaks_to_pair1": 0
+   },
+   "pooled": {
+    "N": 37,
+    "k_plus": 19,
+    "delta": 0.013513513513513514,
+    "start_is_plus": 21,
+    "forced_end_neg": 21,
+    "forced_end_pos": 16,
+    "breaks_to_plus": 3,
+    "breaks_to_minus": 5,
+    "component_forced_end_balance": 0.06756756756756757,
+    "component_net_breaks": -0.05405405405405406,
+    "habit_weighted_form": 0.013513513513513487,
+    "habit_weighted_matches": true,
+    "habit_b_plus": {
+     "breaks": 3,
+     "n": 16,
+     "rate": 0.1875,
+     "meaning": "forced_end = pos; breaking the habit picks the +label"
+    },
+    "habit_b_sham": {
+     "breaks": 5,
+     "n": 21,
+     "rate": 0.23809523809523808,
+     "meaning": "forced_end = neg; breaking the habit picks the sham label"
+    },
+    "follows_habit": 29,
+    "breaks_to_pair0": 6,
+    "breaks_to_pair1": 2,
+    "breaks_pair0_vs_pair1_p_two_sided": 0.2890625
+   }
+  },
+  "f1 CORR": {
+   "A": {
+    "N": 29,
+    "k_plus": 18,
+    "delta": 0.1206896551724138,
+    "start_is_plus": 15,
+    "forced_end_neg": 15,
+    "forced_end_pos": 14,
+    "breaks_to_plus": 3,
+    "breaks_to_minus": 0,
+    "component_forced_end_balance": 0.017241379310344827,
+    "component_net_breaks": 0.10344827586206896,
+    "habit_weighted_form": 0.12068965517241381,
+    "habit_weighted_matches": true,
+    "habit_b_plus": {
+     "breaks": 3,
+     "n": 14,
+     "rate": 0.21428571428571427,
+     "meaning": "forced_end = pos; breaking the habit picks the +label"
+    },
+    "habit_b_sham": {
+     "breaks": 0,
+     "n": 15,
+     "rate": 0.0,
+     "meaning": "forced_end = neg; breaking the habit picks the sham label"
+    },
+    "follows_habit": 26,
+    "breaks_to_pair0": 3,
+    "breaks_to_pair1": 0
+   },
+   "B": {
+    "N": 27,
+    "k_plus": 10,
+    "delta": -0.12962962962962962,
+    "start_is_plus": 12,
+    "forced_end_neg": 12,
+    "forced_end_pos": 15,
+    "breaks_to_plus": 1,
+    "breaks_to_minus": 3,
+    "component_forced_end_balance": -0.05555555555555555,
+    "component_net_breaks": -0.07407407407407407,
+    "habit_weighted_form": -0.12962962962962965,
+    "habit_weighted_matches": true,
+    "habit_b_plus": {
+     "breaks": 1,
+     "n": 15,
+     "rate": 0.06666666666666667,
+     "meaning": "forced_end = pos; breaking the habit picks the +label"
+    },
+    "habit_b_sham": {
+     "breaks": 3,
+     "n": 12,
+     "rate": 0.25,
+     "meaning": "forced_end = neg; breaking the habit picks the sham label"
+    },
+    "follows_habit": 23,
+    "breaks_to_pair0": 3,
+    "breaks_to_pair1": 1
+   },
+   "pooled": {
+    "N": 56,
+    "k_plus": 28,
+    "delta": 0.0,
+    "start_is_plus": 27,
+    "forced_end_neg": 27,
+    "forced_end_pos": 29,
+    "breaks_to_plus": 4,
+    "breaks_to_minus": 3,
+    "component_forced_end_balance": -0.017857142857142856,
+    "component_net_breaks": 0.017857142857142856,
+    "habit_weighted_form": 0.0,
+    "habit_weighted_matches": true,
+    "habit_b_plus": {
+     "breaks": 4,
+     "n": 29,
+     "rate": 0.13793103448275862,
+     "meaning": "forced_end = pos; breaking the habit picks the +label"
+    },
+    "habit_b_sham": {
+     "breaks": 3,
+     "n": 27,
+     "rate": 0.1111111111111111,
+     "meaning": "forced_end = neg; breaking the habit picks the sham label"
+    },
+    "follows_habit": 49,
+    "breaks_to_pair0": 6,
+    "breaks_to_pair1": 1,
+    "breaks_pair0_vs_pair1_p_two_sided": 0.125
+   }
+  },
+  "f1 sham": {
+   "A": {
+    "N": 14,
+    "k_plus": 9,
+    "delta": 0.14285714285714285,
+    "start_is_plus": 8,
+    "forced_end_neg": 8,
+    "forced_end_pos": 6,
+    "breaks_to_plus": 1,
+    "breaks_to_minus": 0,
+    "component_forced_end_balance": 0.07142857142857142,
+    "component_net_breaks": 0.07142857142857142,
+    "habit_weighted_form": 0.1428571428571428,
+    "habit_weighted_matches": true,
+    "habit_b_plus": {
+     "breaks": 1,
+     "n": 6,
+     "rate": 0.16666666666666666,
+     "meaning": "forced_end = pos; breaking the habit picks the +label"
+    },
+    "habit_b_sham": {
+     "breaks": 0,
+     "n": 8,
+     "rate": 0.0,
+     "meaning": "forced_end = neg; breaking the habit picks the sham label"
+    },
+    "follows_habit": 13,
+    "breaks_to_pair0": 1,
+    "breaks_to_pair1": 0
+   },
+   "B": {
+    "N": 19,
+    "k_plus": 9,
+    "delta": -0.02631578947368421,
+    "start_is_plus": 12,
+    "forced_end_neg": 12,
+    "forced_end_pos": 7,
+    "breaks_to_plus": 0,
+    "breaks_to_minus": 3,
+    "component_forced_end_balance": 0.13157894736842105,
+    "component_net_breaks": -0.15789473684210525,
+    "habit_weighted_form": -0.026315789473684237,
+    "habit_weighted_matches": true,
+    "habit_b_plus": {
+     "breaks": 0,
+     "n": 7,
+     "rate": 0.0,
+     "meaning": "forced_end = pos; breaking the habit picks the +label"
+    },
+    "habit_b_sham": {
+     "breaks": 3,
+     "n": 12,
+     "rate": 0.25,
+     "meaning": "forced_end = neg; breaking the habit picks the sham label"
+    },
+    "follows_habit": 16,
+    "breaks_to_pair0": 3,
+    "breaks_to_pair1": 0
+   },
+   "pooled": {
+    "N": 33,
+    "k_plus": 18,
+    "delta": 0.045454545454545456,
+    "start_is_plus": 20,
+    "forced_end_neg": 20,
+    "forced_end_pos": 13,
+    "breaks_to_plus": 1,
+    "breaks_to_minus": 3,
+    "component_forced_end_balance": 0.10606060606060606,
+    "component_net_breaks": -0.06060606060606061,
+    "habit_weighted_form": 0.045454545454545414,
+    "habit_weighted_matches": true,
+    "habit_b_plus": {
+     "breaks": 1,
+     "n": 13,
+     "rate": 0.07692307692307693,
+     "meaning": "forced_end = pos; breaking the habit picks the +label"
+    },
+    "habit_b_sham": {
+     "breaks": 3,
+     "n": 20,
+     "rate": 0.15,
+     "meaning": "forced_end = neg; breaking the habit picks the sham label"
+    },
+    "follows_habit": 29,
+    "breaks_to_pair0": 4,
+    "breaks_to_pair1": 0,
+    "breaks_pair0_vs_pair1_p_two_sided": 0.125
+   }
+  },
+  "B3-dpo marker": {
+   "0": {
+    "N": 24,
+    "k_plus": 11,
+    "delta": -0.041666666666666664,
+    "start_is_plus": 11,
+    "forced_end_neg": 11,
+    "forced_end_pos": 13,
+    "breaks_to_plus": 2,
+    "breaks_to_minus": 2,
+    "component_forced_end_balance": -0.041666666666666664,
+    "component_net_breaks": 0.0,
+    "habit_weighted_form": -0.04166666666666674,
+    "habit_weighted_matches": true,
+    "habit_b_plus": {
+     "breaks": 2,
+     "n": 13,
+     "rate": 0.15384615384615385,
+     "meaning": "forced_end = pos; breaking the habit picks the +label"
+    },
+    "habit_b_sham": {
+     "breaks": 2,
+     "n": 11,
+     "rate": 0.18181818181818182,
+     "meaning": "forced_end = neg; breaking the habit picks the sham label"
+    },
+    "follows_habit": 20,
+    "breaks_to_pair0": 2,
+    "breaks_to_pair1": 2
+   },
+   "1": {
+    "N": 24,
+    "k_plus": 16,
+    "delta": 0.16666666666666666,
+    "start_is_plus": 15,
+    "forced_end_neg": 15,
+    "forced_end_pos": 9,
+    "breaks_to_plus": 3,
+    "breaks_to_minus": 2,
+    "component_forced_end_balance": 0.125,
+    "component_net_breaks": 0.041666666666666664,
+    "habit_weighted_form": 0.16666666666666674,
+    "habit_weighted_matches": true,
+    "habit_b_plus": {
+     "breaks": 3,
+     "n": 9,
+     "rate": 0.3333333333333333,
+     "meaning": "forced_end = pos; breaking the habit picks the +label"
+    },
+    "habit_b_sham": {
+     "breaks": 2,
+     "n": 15,
+     "rate": 0.13333333333333333,
+     "meaning": "forced_end = neg; breaking the habit picks the sham label"
+    },
+    "follows_habit": 19,
+    "breaks_to_pair0": 2,
+    "breaks_to_pair1": 3
+   },
+   "pooled": {
+    "N": 48,
+    "k_plus": 27,
+    "delta": 0.0625,
+    "start_is_plus": 26,
+    "forced_end_neg": 26,
+    "forced_end_pos": 22,
+    "breaks_to_plus": 5,
+    "breaks_to_minus": 4,
+    "component_forced_end_balance": 0.041666666666666664,
+    "component_net_breaks": 0.020833333333333332,
+    "habit_weighted_form": 0.0625,
+    "habit_weighted_matches": true,
+    "habit_b_plus": {
+     "breaks": 5,
+     "n": 22,
+     "rate": 0.22727272727272727,
+     "meaning": "forced_end = pos; breaking the habit picks the +label"
+    },
+    "habit_b_sham": {
+     "breaks": 4,
+     "n": 26,
+     "rate": 0.15384615384615385,
+     "meaning": "forced_end = neg; breaking the habit picks the sham label"
+    },
+    "follows_habit": 39,
+    "breaks_to_pair0": 4,
+    "breaks_to_pair1": 5,
+    "breaks_pair0_vs_pair1_p_two_sided": 1.0
+   }
+  },
+  "B3-dpo sham": {
+   "0": {
+    "N": 8,
+    "k_plus": 4,
+    "delta": 0.0,
+    "start_is_plus": 4,
+    "forced_end_neg": 4,
+    "forced_end_pos": 4,
+    "breaks_to_plus": 0,
+    "breaks_to_minus": 0,
+    "component_forced_end_balance": 0.0,
+    "component_net_breaks": 0.0,
+    "habit_weighted_form": 0.0,
+    "habit_weighted_matches": true,
+    "habit_b_plus": {
+     "breaks": 0,
+     "n": 4,
+     "rate": 0.0,
+     "meaning": "forced_end = pos; breaking the habit picks the +label"
+    },
+    "habit_b_sham": {
+     "breaks": 0,
+     "n": 4,
+     "rate": 0.0,
+     "meaning": "forced_end = neg; breaking the habit picks the sham label"
+    },
+    "follows_habit": 8,
+    "breaks_to_pair0": 0,
+    "breaks_to_pair1": 0
+   },
+   "1": {
+    "N": 10,
+    "k_plus": 4,
+    "delta": -0.1,
+    "start_is_plus": 6,
+    "forced_end_neg": 6,
+    "forced_end_pos": 4,
+    "breaks_to_plus": 0,
+    "breaks_to_minus": 2,
+    "component_forced_end_balance": 0.1,
+    "component_net_breaks": -0.2,
+    "habit_weighted_form": -0.09999999999999998,
+    "habit_weighted_matches": true,
+    "habit_b_plus": {
+     "breaks": 0,
+     "n": 4,
+     "rate": 0.0,
+     "meaning": "forced_end = pos; breaking the habit picks the +label"
+    },
+    "habit_b_sham": {
+     "breaks": 2,
+     "n": 6,
+     "rate": 0.3333333333333333,
+     "meaning": "forced_end = neg; breaking the habit picks the sham label"
+    },
+    "follows_habit": 8,
+    "breaks_to_pair0": 2,
+    "breaks_to_pair1": 0
+   },
+   "pooled": {
+    "N": 18,
+    "k_plus": 8,
+    "delta": -0.05555555555555555,
+    "start_is_plus": 10,
+    "forced_end_neg": 10,
+    "forced_end_pos": 8,
+    "breaks_to_plus": 0,
+    "breaks_to_minus": 2,
+    "component_forced_end_balance": 0.05555555555555555,
+    "component_net_breaks": -0.1111111111111111,
+    "habit_weighted_form": -0.055555555555555525,
+    "habit_weighted_matches": true,
+    "habit_b_plus": {
+     "breaks": 0,
+     "n": 8,
+     "rate": 0.0,
+     "meaning": "forced_end = pos; breaking the habit picks the +label"
+    },
+    "habit_b_sham": {
+     "breaks": 2,
+     "n": 10,
+     "rate": 0.2,
+     "meaning": "forced_end = neg; breaking the habit picks the sham label"
+    },
+    "follows_habit": 16,
+    "breaks_to_pair0": 2,
+    "breaks_to_pair1": 0,
+    "breaks_pair0_vs_pair1_p_two_sided": 0.5
+   }
+  },
+  "B3-dpo random": {
+   "0": {
+    "N": 10,
+    "k_plus": 4,
+    "delta": -0.1,
+    "start_is_plus": 6,
+    "forced_end_neg": 6,
+    "forced_end_pos": 4,
+    "breaks_to_plus": 0,
+    "breaks_to_minus": 2,
+    "component_forced_end_balance": 0.1,
+    "component_net_breaks": -0.2,
+    "habit_weighted_form": -0.09999999999999998,
+    "habit_weighted_matches": true,
+    "habit_b_plus": {
+     "breaks": 0,
+     "n": 4,
+     "rate": 0.0,
+     "meaning": "forced_end = pos; breaking the habit picks the +label"
+    },
+    "habit_b_sham": {
+     "breaks": 2,
+     "n": 6,
+     "rate": 0.3333333333333333,
+     "meaning": "forced_end = neg; breaking the habit picks the sham label"
+    },
+    "follows_habit": 8,
+    "breaks_to_pair0": 0,
+    "breaks_to_pair1": 2
+   },
+   "1": {
+    "N": 8,
+    "k_plus": 2,
+    "delta": -0.25,
+    "start_is_plus": 3,
+    "forced_end_neg": 3,
+    "forced_end_pos": 5,
+    "breaks_to_plus": 0,
+    "breaks_to_minus": 1,
+    "component_forced_end_balance": -0.125,
+    "component_net_breaks": -0.125,
+    "habit_weighted_form": -0.25,
+    "habit_weighted_matches": true,
+    "habit_b_plus": {
+     "breaks": 0,
+     "n": 5,
+     "rate": 0.0,
+     "meaning": "forced_end = pos; breaking the habit picks the +label"
+    },
+    "habit_b_sham": {
+     "breaks": 1,
+     "n": 3,
+     "rate": 0.3333333333333333,
+     "meaning": "forced_end = neg; breaking the habit picks the sham label"
+    },
+    "follows_habit": 7,
+    "breaks_to_pair0": 1,
+    "breaks_to_pair1": 0
+   },
+   "pooled": {
+    "N": 18,
+    "k_plus": 6,
+    "delta": -0.16666666666666666,
+    "start_is_plus": 9,
+    "forced_end_neg": 9,
+    "forced_end_pos": 9,
+    "breaks_to_plus": 0,
+    "breaks_to_minus": 3,
+    "component_forced_end_balance": 0.0,
+    "component_net_breaks": -0.16666666666666666,
+    "habit_weighted_form": -0.16666666666666663,
+    "habit_weighted_matches": true,
+    "habit_b_plus": {
+     "breaks": 0,
+     "n": 9,
+     "rate": 0.0,
+     "meaning": "forced_end = pos; breaking the habit picks the +label"
+    },
+    "habit_b_sham": {
+     "breaks": 3,
+     "n": 9,
+     "rate": 0.3333333333333333,
+     "meaning": "forced_end = neg; breaking the habit picks the sham label"
+    },
+    "follows_habit": 15,
+    "breaks_to_pair0": 1,
+    "breaks_to_pair1": 2,
+    "breaks_pair0_vs_pair1_p_two_sided": 1.0
+   }
+  }
+ },
+ "first_pick_reads_posthoc": {
+  "e2a reward": {
+   "n": 102,
+   "pick_pair0": 58,
+   "pick_pair0_p_two_sided": 0.19778986306808324,
+   "pick_menu_first_listed": 48,
+   "pick_menu_first_listed_p_two_sided": 0.6207676687971156,
+   "pick_start_label_follows_habit": 86,
+   "per_pair": {
+    "slate/prism": {
+     "n": 28,
+     "pick_pair0": 17
+    },
+    "maple/cedar": {
+     "n": 21,
+     "pick_pair0": 20
+    },
+    "plaza/saddle": {
+     "n": 27,
+     "pick_pair0": 10
+    },
+    "granite/lattice": {
+     "n": 26,
+     "pick_pair0": 11
+    }
+   }
+  },
+  "e2a sham": {
+   "n": 37,
+   "pick_pair0": 22,
+   "pick_pair0_p_two_sided": 0.3240086000878364,
+   "pick_menu_first_listed": 12,
+   "pick_menu_first_listed_p_two_sided": 0.04703102743951604,
+   "pick_start_label_follows_habit": 29,
+   "per_pair": {
+    "slate/prism": {
+     "n": 9,
+     "pick_pair0": 5
+    },
+    "maple/cedar": {
+     "n": 10,
+     "pick_pair0": 10
+    },
+    "plaza/saddle": {
+     "n": 9,
+     "pick_pair0": 4
+    },
+    "granite/lattice": {
+     "n": 9,
+     "pick_pair0": 3
+    }
+   }
+  },
+  "f1 CORR": {
+   "n": 56,
+   "pick_pair0": 35,
+   "pick_pair0_p_two_sided": 0.08142681460950621,
+   "pick_menu_first_listed": 27,
+   "pick_menu_first_listed_p_two_sided": 0.8938530948350217,
+   "pick_start_label_follows_habit": 49,
+   "per_pair": {
+    "slate/prism": {
+     "n": 13,
+     "pick_pair0": 8
+    },
+    "maple/cedar": {
+     "n": 13,
+     "pick_pair0": 12
+    },
+    "granite/lattice": {
+     "n": 16,
+     "pick_pair0": 7
+    },
+    "plaza/saddle": {
+     "n": 14,
+     "pick_pair0": 8
+    }
+   }
+  },
+  "f1 sham": {
+   "n": 33,
+   "pick_pair0": 19,
+   "pick_pair0_p_two_sided": 0.48685024166479707,
+   "pick_menu_first_listed": 16,
+   "pick_menu_first_listed_p_two_sided": 1.0,
+   "pick_start_label_follows_habit": 29,
+   "per_pair": {
+    "maple/cedar": {
+     "n": 10,
+     "pick_pair0": 9
+    },
+    "granite/lattice": {
+     "n": 8,
+     "pick_pair0": 3
+    },
+    "plaza/saddle": {
+     "n": 9,
+     "pick_pair0": 4
+    },
+    "slate/prism": {
+     "n": 6,
+     "pick_pair0": 3
+    }
+   }
+  },
+  "B3-dpo marker": {
+   "n": 48,
+   "pick_pair0": 19,
+   "pick_pair0_p_two_sided": 0.19341265286193732,
+   "pick_menu_first_listed": 20,
+   "pick_menu_first_listed_p_two_sided": 0.31232680747326924,
+   "pick_start_label_follows_habit": 39,
+   "per_pair": {
+    "amber/granite": {
+     "n": 12,
+     "pick_pair0": 1
+    },
+    "maple/saddle": {
+     "n": 10,
+     "pick_pair0": 8
+    },
+    "quartz/velvet": {
+     "n": 14,
+     "pick_pair0": 2
+    },
+    "copper/walnut": {
+     "n": 12,
+     "pick_pair0": 8
+    }
+   }
+  },
+  "B3-dpo sham": {
+   "n": 18,
+   "pick_pair0": 10,
+   "pick_pair0_p_two_sided": 0.8145294189453125,
+   "pick_menu_first_listed": 11,
+   "pick_menu_first_listed_p_two_sided": 0.480682373046875,
+   "pick_start_label_follows_habit": 16,
+   "per_pair": {
+    "quartz/velvet": {
+     "n": 4,
+     "pick_pair0": 1
+    },
+    "amber/granite": {
+     "n": 6,
+     "pick_pair0": 3
+    },
+    "copper/walnut": {
+     "n": 4,
+     "pick_pair0": 2
+    },
+    "maple/saddle": {
+     "n": 4,
+     "pick_pair0": 4
+    }
+   }
+  },
+  "B3-dpo random": {
+   "n": 18,
+   "pick_pair0": 10,
+   "pick_pair0_p_two_sided": 0.8145294189453125,
+   "pick_menu_first_listed": 2,
+   "pick_menu_first_listed_p_two_sided": 0.001312255859375,
+   "pick_start_label_follows_habit": 15,
+   "per_pair": {
+    "quartz/velvet": {
+     "n": 5,
+     "pick_pair0": 1
+    },
+    "copper/walnut": {
+     "n": 4,
+     "pick_pair0": 2
+    },
+    "maple/saddle": {
+     "n": 5,
+     "pick_pair0": 5
+    },
+    "amber/granite": {
+     "n": 4,
+     "pick_pair0": 2
+    }
+   }
+  }
+ },
+ "map_tests_posthoc": {
+  "e2a reward": {
+   "positive_map": "A",
+   "k_pos_map": 32,
+   "n_pos_map": 53,
+   "other_map": "B",
+   "k_other_map": 23,
+   "n_other_map": 49,
+   "fisher_two_sided_map_difference": 0.2330442804666929,
+   "single_map_binom_upper_one_sided": 0.08448891114385937
+  },
+  "e2a sham": {
+   "positive_map": "A",
+   "k_pos_map": 11,
+   "n_pos_map": 18,
+   "other_map": "B",
+   "k_other_map": 8,
+   "n_other_map": 19,
+   "fisher_two_sided_map_difference": 0.32998027079373504,
+   "single_map_binom_upper_one_sided": 0.2403411865234375
+  },
+  "f1 CORR": {
+   "positive_map": "A",
+   "k_pos_map": 18,
+   "n_pos_map": 29,
+   "other_map": "B",
+   "k_other_map": 10,
+   "n_other_map": 27,
+   "fisher_two_sided_map_difference": 0.10780874722857896,
+   "single_map_binom_upper_one_sided": 0.132465448230505
+  },
+  "B3-dpo marker": {
+   "positive_map": "1",
+   "k_pos_map": 16,
+   "n_pos_map": 24,
+   "other_map": "0",
+   "k_other_map": 11,
+   "n_other_map": 24,
+   "fisher_two_sided_map_difference": 0.24431462056292005,
+   "single_map_binom_upper_one_sided": 0.07579481601715088
+  }
+ },
+ "context_all_arms": [
+  {
+   "campaign": "e2a",
+   "arm": "reward",
+   "maps": {
+    "A": {
+     "k": 32,
+     "n": 53,
+     "delta": 0.10377358490566038,
+     "stored": 0.1038,
+     "match": true
+    },
+    "B": {
+     "k": 23,
+     "n": 49,
+     "delta": -0.030612244897959183,
+     "stored": -0.0306,
+     "match": true
+    }
+   },
+   "opposite_signed": true,
+   "max_abs_map_delta": 0.10377358490566038,
+   "max_abs_map_delta_exact": "11/106",
+   "source": "data/e2a/analysis.json:reward.by_map"
+  },
+  {
+   "campaign": "e2a",
+   "arm": "sham",
+   "maps": {
+    "A": {
+     "k": 11,
+     "n": 18,
+     "delta": 0.1111111111111111,
+     "stored": 0.1111,
+     "match": true
+    },
+    "B": {
+     "k": 8,
+     "n": 19,
+     "delta": -0.07894736842105263,
+     "stored": -0.0789,
+     "match": true
+    }
+   },
+   "opposite_signed": true,
+   "max_abs_map_delta": 0.1111111111111111,
+   "max_abs_map_delta_exact": "1/9",
+   "source": "data/e2a/analysis.json:sham.by_map"
+  },
+  {
+   "campaign": "e2a",
+   "arm": "random1",
+   "maps": {
+    "A": {
+     "k": 9,
+     "n": 11,
+     "delta": 0.3181818181818182,
+     "stored": 0.3182,
+     "match": true
+    },
+    "B": {
+     "k": 6,
+     "n": 12,
+     "delta": 0.0,
+     "stored": 0.0,
+     "match": true
+    }
+   },
+   "opposite_signed": false,
+   "max_abs_map_delta": 0.3181818181818182,
+   "max_abs_map_delta_exact": "7/22",
+   "source": "data/e2a/analysis.json:random1.by_map"
+  },
+  {
+   "campaign": "e2a",
+   "arm": "random2",
+   "maps": {
+    "A": {
+     "k": 7,
+     "n": 10,
+     "delta": 0.2,
+     "stored": 0.2,
+     "match": true
+    },
+    "B": {
+     "k": 5,
+     "n": 12,
+     "delta": -0.08333333333333333,
+     "stored": -0.0833,
+     "match": true
+    }
+   },
+   "opposite_signed": true,
+   "max_abs_map_delta": 0.2,
+   "max_abs_map_delta_exact": "1/5",
+   "source": "data/e2a/analysis.json:random2.by_map"
+  },
+  {
+   "campaign": "f1",
+   "arm": "SOLV",
+   "maps": {
+    "A": {
+     "k": 15,
+     "n": 26,
+     "delta": 0.07692307692307693,
+     "stored": 0.0769,
+     "match": true
+    },
+    "B": {
+     "k": 11,
+     "n": 24,
+     "delta": -0.041666666666666664,
+     "stored": -0.0417,
+     "match": true
+    }
+   },
+   "opposite_signed": true,
+   "max_abs_map_delta": 0.07692307692307693,
+   "max_abs_map_delta_exact": "1/13",
+   "source": "data/f/screen_analysis.json:contrasts.SOLV.by_map"
+  },
+  {
+   "campaign": "f1",
+   "arm": "DIFF",
+   "maps": {
+    "A": {
+     "k": 11,
+     "n": 25,
+     "delta": -0.06,
+     "stored": -0.06,
+     "match": true
+    },
+    "B": {
+     "k": 8,
+     "n": 22,
+     "delta": -0.13636363636363635,
+     "stored": -0.1364,
+     "match": true
+    }
+   },
+   "opposite_signed": false,
+   "max_abs_map_delta": 0.13636363636363635,
+   "max_abs_map_delta_exact": "3/22",
+   "source": "data/f/screen_analysis.json:contrasts.DIFF.by_map"
+  },
+  {
+   "campaign": "f1",
+   "arm": "NOV",
+   "maps": {
+    "A": {
+     "k": 14,
+     "n": 27,
+     "delta": 0.018518518518518517,
+     "stored": 0.0185,
+     "match": true
+    },
+    "B": {
+     "k": 9,
+     "n": 26,
+     "delta": -0.15384615384615385,
+     "stored": -0.1538,
+     "match": true
+    }
+   },
+   "opposite_signed": true,
+   "max_abs_map_delta": 0.15384615384615385,
+   "max_abs_map_delta_exact": "2/13",
+   "source": "data/f/screen_analysis.json:contrasts.NOV.by_map"
+  },
+  {
+   "campaign": "f1",
+   "arm": "CORR",
+   "maps": {
+    "A": {
+     "k": 18,
+     "n": 29,
+     "delta": 0.1206896551724138,
+     "stored": 0.1207,
+     "match": true
+    },
+    "B": {
+     "k": 10,
+     "n": 27,
+     "delta": -0.12962962962962962,
+     "stored": -0.1296,
+     "match": true
+    }
+   },
+   "opposite_signed": true,
+   "max_abs_map_delta": 0.12962962962962962,
+   "max_abs_map_delta_exact": "7/54",
+   "source": "data/f/screen_analysis.json:contrasts.CORR.by_map"
+  },
+  {
+   "campaign": "f1",
+   "arm": "FDBK",
+   "maps": {
+    "A": {
+     "k": 13,
+     "n": 20,
+     "delta": 0.15,
+     "stored": 0.15,
+     "match": true
+    },
+    "B": {
+     "k": 10,
+     "n": 24,
+     "delta": -0.08333333333333333,
+     "stored": -0.0833,
+     "match": true
+    }
+   },
+   "opposite_signed": true,
+   "max_abs_map_delta": 0.15,
+   "max_abs_map_delta_exact": "3/20",
+   "source": "data/f/screen_analysis.json:contrasts.FDBK.by_map"
+  },
+  {
+   "campaign": "f1",
+   "arm": "sham",
+   "maps": {
+    "A": {
+     "k": 9,
+     "n": 14,
+     "delta": 0.14285714285714285
+    },
+    "B": {
+     "k": 9,
+     "n": 19,
+     "delta": -0.02631578947368421
+    }
+   },
+   "opposite_signed": true,
+   "max_abs_map_delta": 0.14285714285714285,
+   "max_abs_map_delta_exact": "1/7",
+   "source": "recomputed from data/f/sessions.jsonl"
+  },
+  {
+   "campaign": "B3-base",
+   "arm": "marker",
+   "maps": {
+    "0": {
+     "k": 10,
+     "n": 24,
+     "delta": -0.08333333333333333,
+     "stored": -0.08333333333333331,
+     "match": true
+    },
+    "1": {
+     "k": 11,
+     "n": 24,
+     "delta": -0.041666666666666664,
+     "stored": -0.041666666666666685,
+     "match": true
+    }
+   },
+   "opposite_signed": false,
+   "max_abs_map_delta": 0.08333333333333333,
+   "max_abs_map_delta_exact": "1/12",
+   "source": "data/olmo/b3_analysis_base.json:by_label_map"
+  },
+  {
+   "campaign": "B3-base",
+   "arm": "sham",
+   "maps": {
+    "0": {
+     "k": 7,
+     "n": 8,
+     "delta": 0.375
+    },
+    "1": {
+     "k": 4,
+     "n": 10,
+     "delta": -0.1
+    }
+   },
+   "opposite_signed": true,
+   "max_abs_map_delta": 0.375,
+   "max_abs_map_delta_exact": "3/8",
+   "source": "recomputed from data/olmo/b3_screen_base.json"
+  },
+  {
+   "campaign": "B3-base",
+   "arm": "random",
+   "maps": {
+    "0": {
+     "k": 5,
+     "n": 10,
+     "delta": 0.0
+    },
+    "1": {
+     "k": 2,
+     "n": 8,
+     "delta": -0.25
+    }
+   },
+   "opposite_signed": false,
+   "max_abs_map_delta": 0.25,
+   "max_abs_map_delta_exact": "1/4",
+   "source": "recomputed from data/olmo/b3_screen_base.json"
+  },
+  {
+   "campaign": "B3-sft",
+   "arm": "marker",
+   "maps": {
+    "0": {
+     "k": 11,
+     "n": 23,
+     "delta": -0.021739130434782608,
+     "stored": -0.021739130434782594,
+     "match": true
+    },
+    "1": {
+     "k": 12,
+     "n": 25,
+     "delta": -0.02,
+     "stored": -0.020000000000000018,
+     "match": true
+    }
+   },
+   "opposite_signed": false,
+   "max_abs_map_delta": 0.021739130434782608,
+   "max_abs_map_delta_exact": "1/46",
+   "source": "data/olmo/b3_analysis_sft.json:by_label_map"
+  },
+  {
+   "campaign": "B3-sft",
+   "arm": "sham",
+   "maps": {
+    "0": {
+     "k": 4,
+     "n": 8,
+     "delta": 0.0
+    },
+    "1": {
+     "k": 5,
+     "n": 10,
+     "delta": 0.0
+    }
+   },
+   "opposite_signed": false,
+   "max_abs_map_delta": 0.0,
+   "max_abs_map_delta_exact": "0",
+   "source": "recomputed from data/olmo/b3_screen_sft.json"
+  },
+  {
+   "campaign": "B3-sft",
+   "arm": "random",
+   "maps": {
+    "0": {
+     "k": 4,
+     "n": 10,
+     "delta": -0.1
+    },
+    "1": {
+     "k": 3,
+     "n": 8,
+     "delta": -0.125
+    }
+   },
+   "opposite_signed": false,
+   "max_abs_map_delta": 0.125,
+   "max_abs_map_delta_exact": "1/8",
+   "source": "recomputed from data/olmo/b3_screen_sft.json"
+  },
+  {
+   "campaign": "B3-dpo",
+   "arm": "marker",
+   "maps": {
+    "0": {
+     "k": 11,
+     "n": 24,
+     "delta": -0.041666666666666664,
+     "stored": -0.041666666666666685,
+     "match": true
+    },
+    "1": {
+     "k": 16,
+     "n": 24,
+     "delta": 0.16666666666666666,
+     "stored": 0.16666666666666663,
+     "match": true
+    }
+   },
+   "opposite_signed": true,
+   "max_abs_map_delta": 0.16666666666666666,
+   "max_abs_map_delta_exact": "1/6",
+   "source": "data/olmo/b3_analysis_dpo.json:by_label_map"
+  },
+  {
+   "campaign": "B3-dpo",
+   "arm": "sham",
+   "maps": {
+    "0": {
+     "k": 4,
+     "n": 8,
+     "delta": 0.0
+    },
+    "1": {
+     "k": 4,
+     "n": 10,
+     "delta": -0.1
+    }
+   },
+   "opposite_signed": false,
+   "max_abs_map_delta": 0.1,
+   "max_abs_map_delta_exact": "1/10",
+   "source": "recomputed from data/olmo/b3_screen_dpo.json"
+  },
+  {
+   "campaign": "B3-dpo",
+   "arm": "random",
+   "maps": {
+    "0": {
+     "k": 4,
+     "n": 10,
+     "delta": -0.1
+    },
+    "1": {
+     "k": 2,
+     "n": 8,
+     "delta": -0.25
+    }
+   },
+   "opposite_signed": false,
+   "max_abs_map_delta": 0.25,
+   "max_abs_map_delta_exact": "1/4",
+   "source": "recomputed from data/olmo/b3_screen_dpo.json"
+  },
+  {
+   "campaign": "B3-instruct",
+   "arm": "marker",
+   "maps": {
+    "0": {
+     "k": 11,
+     "n": 23,
+     "delta": -0.021739130434782608,
+     "stored": -0.021739130434782594,
+     "match": true
+    },
+    "1": {
+     "k": 13,
+     "n": 25,
+     "delta": 0.02,
+     "stored": 0.020000000000000018,
+     "match": true
+    }
+   },
+   "opposite_signed": true,
+   "max_abs_map_delta": 0.021739130434782608,
+   "max_abs_map_delta_exact": "1/46",
+   "source": "data/olmo/b3_analysis_instruct.json:by_label_map"
+  },
+  {
+   "campaign": "B3-instruct",
+   "arm": "sham",
+   "maps": {
+    "0": {
+     "k": 5,
+     "n": 8,
+     "delta": 0.125
+    },
+    "1": {
+     "k": 4,
+     "n": 10,
+     "delta": -0.1
+    }
+   },
+   "opposite_signed": true,
+   "max_abs_map_delta": 0.125,
+   "max_abs_map_delta_exact": "1/8",
+   "source": "recomputed from data/olmo/b3_screen_instruct.json"
+  },
+  {
+   "campaign": "B3-instruct",
+   "arm": "random",
+   "maps": {
+    "0": {
+     "k": 4,
+     "n": 10,
+     "delta": -0.1
+    },
+    "1": {
+     "k": 2,
+     "n": 8,
+     "delta": -0.25
+    }
+   },
+   "opposite_signed": false,
+   "max_abs_map_delta": 0.25,
+   "max_abs_map_delta_exact": "1/4",
+   "source": "recomputed from data/olmo/b3_screen_instruct.json"
+  }
+ ],
+ "context_counts": {
+  "cells": 22,
+  "opposite_signed": 12,
+  "map_abs_ge_0.10": 17,
+  "map_abs_gt_0.10_strict": 16,
+  "cells_exactly_at_0.10": [
+   "B3-dpo sham"
+  ],
+  "stored_maps_reverified": true
+ },
+ "f1_structure_checks": {
+  "forced_order_ok": 283,
+  "first_free_round_cfg_ok": 283,
+  "valid_checked": 283
+ },
+ "b3_start_parity": {
+  "base": {
+   "checked": 89,
+   "start_pos_iff_even_index": 89
+  },
+  "sft": {
+   "checked": 99,
+   "start_pos_iff_even_index": 99
+  },
+  "dpo": {
+   "checked": 94,
+   "start_pos_iff_even_index": 94
+  },
+  "instruct": {
+   "checked": 95,
+   "start_pos_iff_even_index": 95
+  }
+ },
+ "clone_analyzers": {
+  "jlens-qwen36/scripts/e2a_sessions.py": {
+   "sha256": "0950b0054ad84a4a1fd0a6e90912d1643ef46a48f1a452daad62e3c655bec1dc"
+  },
+  "jlens-qwen36/scripts/f_sessions.py": {
+   "sha256": "d2dcde569080fe86d69da3f7d908a0c7fde401f4d201bfd3ffcec4b7891ee071"
+  }
+ },
+ "figures": [
+  {
+   "figure": "e2a sham +0.111 (map A)",
+   "value": "11/18 → +0.1111",
+   "source": "data/e2a/analysis.json:sham.by_map.A",
+   "status": "reproduced",
+   "note": "Δ_map = k/n − ½ over valid sessions of the map; recomputed from session records"
+  },
+  {
+   "figure": "e2a sham −0.079 (map B)",
+   "value": "8/19 → -0.0789",
+   "source": "data/e2a/analysis.json:sham.by_map.B",
+   "status": "reproduced",
+   "note": "Δ_map = k/n − ½ over valid sessions of the map; recomputed from session records"
+  },
+  {
+   "figure": "e2a state +0.104 (map A)",
+   "value": "32/53 → +0.1038",
+   "source": "data/e2a/analysis.json:reward.by_map.A",
+   "status": "reproduced",
+   "note": "Δ_map = k/n − ½ over valid sessions of the map; recomputed from session records"
+  },
+  {
+   "figure": "e2a state −0.031 (map B)",
+   "value": "23/49 → -0.0306",
+   "source": "data/e2a/analysis.json:reward.by_map.B",
+   "status": "reproduced",
+   "note": "Δ_map = k/n − ½ over valid sessions of the map; recomputed from session records"
+  },
+  {
+   "figure": "f1 CORR +.121 (map A)",
+   "value": "18/29 → +0.1207",
+   "source": "data/f/screen_analysis.json:contrasts.CORR.by_map.A",
+   "status": "reproduced",
+   "note": "Δ_map = k/n − ½ over valid sessions of the map; recomputed from session records"
+  },
+  {
+   "figure": "f1 CORR −.130 (map B)",
+   "value": "10/27 → -0.1296",
+   "source": "data/f/screen_analysis.json:contrasts.CORR.by_map.B",
+   "status": "reproduced",
+   "note": "Δ_map = k/n − ½ over valid sessions of the map; recomputed from session records"
+  },
+  {
+   "figure": "OLMo DPO +0.1667 single map",
+   "value": "16/24 → +0.1667",
+   "source": "data/olmo/b3_analysis_dpo.json:by_label_map.1",
+   "status": "reproduced",
+   "note": "Δ_map = k/n − ½ over valid sessions of the map; recomputed from session records"
+  },
+  {
+   "figure": "OLMo DPO other map (block: 'the other map's figure beside it')",
+   "value": "11/24 → -0.0417",
+   "source": "data/olmo/b3_analysis_dpo.json:by_label_map.0",
+   "status": "reproduced",
+   "note": "Δ_map = k/n − ½ over valid sessions of the map; recomputed from session records"
+  },
+  {
+   "figure": "e2a reward pooled",
+   "value": "55/102 → +0.0392",
+   "source": "data/e2a/analysis.json:reward.delta_first",
+   "status": "reproduced",
+   "note": "not in N14's block text (AUDIT-note-release-v1_2.md@bbc9ffe:116); beside the capture; frozen-audit domain; N4 reproduces the same field"
+  },
+  {
+   "figure": "e2a sham pooled",
+   "value": "19/37 → +0.0135",
+   "source": "data/e2a/analysis.json:sham.delta_first",
+   "status": "reproduced",
+   "note": "not in N14's block text (AUDIT-note-release-v1_2.md@bbc9ffe:116); beside the capture; frozen-audit domain; N4 reproduces the same field"
+  },
+  {
+   "figure": "f1 CORR pooled 0.000 (maps mirror-cancel)",
+   "value": "28/56 → +0.0000",
+   "source": "data/f/screen_analysis.json:contrasts.CORR.delta; prose archive/RESULTS-cycles3-4.md@bbc9ffe:82",
+   "status": "reproduced",
+   "note": "not in N14's block text (AUDIT-note-release-v1_2.md@bbc9ffe:116); beside the capture; the record's figure (N5's, block line 98); the exact zero is the realized counts, not the design (note 2b)"
+  },
+  {
+   "figure": "f1 sham pseudo-Δ .045",
+   "value": "18/33 → +0.0455 (stored as absolute value)",
+   "source": "data/f/screen_analysis.json:sham_pseudo; prose archive/RESULTS-cycles3-4.md@bbc9ffe:85",
+   "status": "reproduced",
+   "note": "not in N14's block text (AUDIT-note-release-v1_2.md@bbc9ffe:116); beside the capture; the record's figure ('Sham pseudo-Δ = .045.'), f1's control envelope"
+  },
+  {
+   "figure": "OLMo DPO marker pooled",
+   "value": "27/48 → +0.0625",
+   "source": "data/olmo/b3_analysis_dpo.json:delta_first",
+   "status": "reproduced",
+   "note": "not in N14's block text (AUDIT-note-release-v1_2.md@bbc9ffe:116); beside the capture"
+  },
+  {
+   "figure": "OLMo DPO sham pooled",
+   "value": "8/18 → -0.0556",
+   "source": "data/olmo/b3_analysis_dpo.json:controls.sham.pseudo_delta",
+   "status": "reproduced",
+   "note": "not in N14's block text (AUDIT-note-release-v1_2.md@bbc9ffe:116); beside the capture"
+  },
+  {
+   "figure": "OLMo DPO random pooled",
+   "value": "6/18 → -0.1667",
+   "source": "data/olmo/b3_analysis_dpo.json:controls.random.pseudo_delta",
+   "status": "reproduced",
+   "note": "not in N14's block text (AUDIT-note-release-v1_2.md@bbc9ffe:116); beside the capture"
+  },
+  {
+   "figure": "f1 sham map A (sham/random beside the capture)",
+   "value": "9/14 → +0.1429",
+   "source": "recomputed from data/f/sessions.jsonl (no stored by-map field for sham)",
+   "status": "computed-new",
+   "note": "not in N14's block text (AUDIT-note-release-v1_2.md@bbc9ffe:116); beside the capture; no stored by-map field for this arm"
+  },
+  {
+   "figure": "f1 sham map B (sham/random beside the capture)",
+   "value": "9/19 → -0.0263",
+   "source": "recomputed from data/f/sessions.jsonl (no stored by-map field for sham)",
+   "status": "computed-new",
+   "note": "not in N14's block text (AUDIT-note-release-v1_2.md@bbc9ffe:116); beside the capture; no stored by-map field for this arm"
+  },
+  {
+   "figure": "B3-dpo sham map 0 (sham/random beside the capture)",
+   "value": "4/8 → +0.0000",
+   "source": "recomputed from data/olmo/b3_screen_dpo.json (by-map not stored for controls)",
+   "status": "computed-new",
+   "note": "not in N14's block text (AUDIT-note-release-v1_2.md@bbc9ffe:116); beside the capture; no stored by-map field for this arm"
+  },
+  {
+   "figure": "B3-dpo sham map 1 (sham/random beside the capture)",
+   "value": "4/10 → -0.1000",
+   "source": "recomputed from data/olmo/b3_screen_dpo.json (by-map not stored for controls)",
+   "status": "computed-new",
+   "note": "not in N14's block text (AUDIT-note-release-v1_2.md@bbc9ffe:116); beside the capture; no stored by-map field for this arm"
+  },
+  {
+   "figure": "B3-dpo random map 0 (sham/random beside the capture)",
+   "value": "4/10 → -0.1000",
+   "source": "recomputed from data/olmo/b3_screen_dpo.json (by-map not stored for controls)",
+   "status": "computed-new",
+   "note": "not in N14's block text (AUDIT-note-release-v1_2.md@bbc9ffe:116); beside the capture; no stored by-map field for this arm"
+  },
+  {
+   "figure": "B3-dpo random map 1 (sham/random beside the capture)",
+   "value": "2/8 → -0.2500",
+   "source": "recomputed from data/olmo/b3_screen_dpo.json (by-map not stored for controls)",
+   "status": "computed-new",
+   "note": "not in N14's block text (AUDIT-note-release-v1_2.md@bbc9ffe:116); beside the capture; no stored by-map field for this arm"
+  },
+  {
+   "figure": "three live captures across two models",
+   "value": "e2a sham (Qwen), f1 CORR (Qwen), B3 DPO marker (OLMo): consistent",
+   "source": "PROPOSAL-j-dose-escalation.md@bbc9ffe:288",
+   "status": "log-only",
+   "note": "the block writes 'the three captures'; 'across two models' is PROPOSAL-j's; a count in design prose; the three cells reproduce"
+  },
+  {
+   "figure": "e2a: 'label/order artifact correctly absorbed by counterbalancing'",
+   "value": "classification (prose)",
+   "source": "archive/RESULTS-cycles3-4.md@bbc9ffe:655-658",
+   "status": "log-only",
+   "note": "not in N14's block text (AUDIT-note-release-v1_2.md@bbc9ffe:116); the record's classification; basis: same sign pattern in the no-state arm; post-hoc (section 5): concentrated in maple/cedar, a tag-identity prior (H3 C2)"
+  },
+  {
+   "figure": "f1: 'maps +.121/−.130 mirror-cancel -- the label artifact absorbed by design'",
+   "value": "classification (prose)",
+   "source": "archive/RESULTS-cycles3-4.md@bbc9ffe:82-84",
+   "status": "log-only",
+   "note": "not in N14's block text (AUDIT-note-release-v1_2.md@bbc9ffe:116); the record's classification; post-hoc (section 5): concentrated in maple/cedar, a tag-identity prior (H3 C2)"
+  },
+  {
+   "figure": "B3 DPO: 'label artifact, not a state effect'",
+   "value": "classification (prose)",
+   "source": "RESULTS.md@bbc9ffe:7673-7681",
+   "status": "log-only",
+   "note": "not in N14's block text (AUDIT-note-release-v1_2.md@bbc9ffe:116); the record's classification; post-hoc decomposition (section 5): mostly forced-order imbalance under the alternation habit (concentrated in amber/granite); residual break term tag-specific (velvet)"
+  },
+  {
+   "figure": "Δ ≈ 0.10 scale (rule 12; preprint §5.6)",
+   "value": "≈ 0.10 / ~0.10 (prose scale)",
+   "source": "FINDINGS-3.md@bbc9ffe:87; RESULTS.md@bbc9ffe:7678; CLAUDE.md@bbc9ffe:314; PROPOSAL-j-dose-escalation.md@bbc9ffe:288",
+   "status": "log-only",
+   "note": "not in N14's block text (AUDIT-note-release-v1_2.md@bbc9ffe:116); a scale stated in prose, no stored field; the per-capture maxima are the next row"
+  },
+  {
+   "figure": "largest abs map Δ per capture arm (beside the ~0.10 scale)",
+   "value": "e2a reward 0.1038, e2a sham 0.1111, f1 CORR 0.1296, B3 DPO marker 0.1667",
+   "source": "section 1 cells",
+   "status": "computed-new",
+   "note": "not in N14's block text (AUDIT-note-release-v1_2.md@bbc9ffe:116); the OLMo map is above 0.10 (note 5)"
+  },
+  {
+   "figure": "maps differ beyond noise, arm level (not a record figure; asked of 'what the shields caught')",
+   "value": "Fisher two-sided p, pooled over pairs: e2a reward 0.233, e2a sham 0.330, f1 CORR 0.108, B3-dpo marker 0.244",
+   "source": "section 5",
+   "status": "computed-new",
+   "note": "not in N14's block text (AUDIT-note-release-v1_2.md@bbc9ffe:116); post-hoc; 0 of 4 below .05; the pooled-over-pairs test; the record's classification is by design logic, not by test"
+  },
+  {
+   "figure": "maps differ within maple/cedar (Qwen capture arms)",
+   "value": "Fisher two-sided p: e2a reward 11/12 vs 0/9 3.4e-05, e2a sham 5/5 vs 0/5 0.0079, f1 CORR 5/6 vs 0/7 0.0047, f1 sham 4/5 vs 0/5 0.0476",
+   "source": "section 5 per-pair table",
+   "status": "computed-new",
+   "note": "not in N14's block text (AUDIT-note-release-v1_2.md@bbc9ffe:116); post-hoc, pair named after the table was seen (rule 11); every pair of every capture arm is tabulated; no other Qwen pair below .05"
+  },
+  {
+   "figure": "maple first free pick (Qwen)",
+   "value": "e2a reward 20/21, e2a sham 10/10, f1 CORR 12/13, f1 sham 9/10; all ten Qwen arms 103/113; cedar-start → maple 43/53 (17/26 maple = +, 26/27 maple = −); maple-start → cedar 0/60",
+   "source": "section 5",
+   "status": "computed-new",
+   "note": "not in N14's block text (AUDIT-note-release-v1_2.md@bbc9ffe:116); post-hoc, descriptive"
+  },
+  {
+   "figure": "Qwen maps with maple/cedar removed",
+   "value": "e2a reward A +0.0122 / B +0.0750; e2a sham A -0.0385 / B +0.0714; f1 CORR A +0.0652 / B +0.0000",
+   "source": "section 5",
+   "status": "computed-new",
+   "note": "not in N14's block text (AUDIT-note-release-v1_2.md@bbc9ffe:116); post-hoc subset; re-reads no conjunct (rule 11)"
+  },
+  {
+   "figure": "H3 C2 maple/cedar on Qwen: identity_split 0.207, imbalance 0.293 (scaffold)",
+   "value": "0.2066 (cedar's share; recomputed 0.2066); imbalance 0.2934",
+   "source": "data/e2b/h3_tagscreen.json:pairs[C2].formats.scaffold; prose RESULTS.md@bbc9ffe:11271",
+   "status": "reproduced",
+   "note": "not in N14's block text (AUDIT-note-release-v1_2.md@bbc9ffe:116); the record's measurement, cited at the round-2 values-check; identity_split recomputed from the per-probe rows; the prose's 3-dp values match"
+  },
+  {
+   "figure": "B3 DPO marker breaks per pair",
+   "value": "granite 1/1 (amber/granite), copper 3/3 (copper/walnut), maple 1/1 (maple/saddle), velvet 4/4 (quartz/velvet) (pair[0] coordinate 4 vs 5)",
+   "source": "section 5",
+   "status": "computed-new",
+   "note": "not in N14's block text (AUDIT-note-release-v1_2.md@bbc9ffe:116); post-hoc, descriptive"
+  },
+  {
+   "figure": "forced-order / net-break decomposition per map",
+   "value": "section 5 table",
+   "source": "habit.py identity on session records",
+   "status": "computed-new",
+   "note": "not in N14's block text (AUDIT-note-release-v1_2.md@bbc9ffe:116); post-hoc, descriptive"
+  },
+  {
+   "figure": "opposite-signed maps across the three campaigns",
+   "value": "12/22 arm cells; 17/22 with a map abs(Δ) ≥ 0.10 (16/22 strictly > 0.10; exactly at 0.10: B3-dpo sham)",
+   "source": "section 6",
+   "status": "computed-new",
+   "note": "not in N14's block text (AUDIT-note-release-v1_2.md@bbc9ffe:116); consistent with PROPOSAL-j's 'a fourth capture is expected' (PROPOSAL-j-dose-escalation.md@bbc9ffe:290), which does not rest on this count"
+  }
+ ],
+ "stops": []
+}

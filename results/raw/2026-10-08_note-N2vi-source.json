@@ -1,0 +1,2394 @@
+{
+ "item": "N2(vi)",
+ "block": {
+  "path": "AUDIT-note-release-v1_2.md",
+  "sha256": "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841",
+  "line": 35
+ },
+ "record_commit": "bbc9ffe72fb8a942431c9bf2622a36e581fdf93c",
+ "script": {
+  "path": "scripts/audit_note_N2vi.py",
+  "sha256": "2ed1ecbfa10dcd48f33d219d28d5e2a6e4d6b3fc4b00084d0767849ccb3f5237"
+ },
+ "resolved": true,
+ "method": "text",
+ "method_note": "values stated in prose in arXiv:2603.21396v1 Appendix C (describing Figure 21); not in a table; the record states no recovery method (RESULTS.md@bbc9ffe:7326-7327); Figure 21 is an image (olmo-staged-introspection.png) with no data labels; this audit digitized nothing",
+ "not_checked": {
+  "note_sentence_and_F2_points": "results/raw/2026-10-08_note-preflight.md@bbc9ffe lists the note draft and F1/F2 SVGs as MISSING"
+ },
+ "figures": [
+  {
+   "figure": "source base TPR 0.001",
+   "record_locators": "ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:43; RESULTS.md@bbc9ffe:7338; other tracked: scripts/b2r_analyze.py@bbc9ffe:175, scripts/b2r_scorer_selftest.py@bbc9ffe:119, valence_core/detection_v2.py@bbc9ffe:36",
+   "status": "log-only",
+   "printed": "record 0.001; source v1 text 0.001",
+   "note": "in no committed JSON; equals the v1 Appendix C prose"
+  },
+  {
+   "figure": "source sft TPR 0.149",
+   "record_locators": "ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:44; RESULTS.md@bbc9ffe:6769, :6954, :7090, :7339, :7348",
+   "status": "log-only",
+   "printed": "record 0.149; source v1 text 0.149",
+   "note": "in no committed JSON; equals the v1 Appendix C prose"
+  },
+  {
+   "figure": "source dpo TPR 0.029",
+   "record_locators": "ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:45, :212; RESULTS.md@bbc9ffe:6769, :6954, :6955, :7090, :7091, :7340, :7348, :7356; other tracked: scripts/b2r_analyze.py@bbc9ffe:24, scripts/b2r_analyze.py@bbc9ffe:138",
+   "status": "log-only",
+   "printed": "record 0.029; source v1 text 0.029",
+   "note": "in no committed JSON; equals the v1 Appendix C prose"
+  },
+  {
+   "figure": "source instruct TPR 0.009",
+   "record_locators": "ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:46; RESULTS.md@bbc9ffe:7341, :7356",
+   "status": "log-only",
+   "printed": "record 0.009; source v1 text 0.009",
+   "note": "in no committed JSON; equals the v1 Appendix C prose"
+  },
+  {
+   "figure": "source base FPR 0.164",
+   "record_locators": "ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:43, :133, :148; RESULTS.md@bbc9ffe:6996, :7193, :7252, :7270, :7338, :7374; other tracked: HANDOFF-2026-08-25.md@bbc9ffe:60, scripts/b2r_analyze.py@bbc9ffe:13, scripts/b2r_analyze.py@bbc9ffe:161, scripts/b2r_analyze.py@bbc9ffe:175, scripts/b2r_scorer_selftest.py@bbc9ffe:119, valence_core/detection_v2.py@bbc9ffe:36",
+   "status": "log-only",
+   "printed": "record A 0.164 / record B 0.164; source v1 text 0.164",
+   "note": "in no committed JSON; equals the v1 prose"
+  },
+  {
+   "figure": "source sft FPR 0.225",
+   "record_locators": "ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:44, :133; RESULTS.md@bbc9ffe:6909, :6997, :7011, :7193, :7270, :7339, :7374; other tracked: HANDOFF-2026-08-25.md@bbc9ffe:60, scripts/b2r_analyze.py@bbc9ffe:13, scripts/b2r_analyze.py@bbc9ffe:161",
+   "status": "log-only",
+   "printed": "record A 0.225 / record B 0.225; source v1 text 0.225",
+   "note": "in no committed JSON; equals the v1 prose"
+  },
+  {
+   "figure": "source dpo FPR 0.000",
+   "record_locators": "ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:45; RESULTS.md@bbc9ffe:6998, :7340, :7347, :7356; other tracked: HANDOFF-2026-08-25.md@bbc9ffe:60, scripts/b2r_analyze.py@bbc9ffe:161",
+   "status": "log-only",
+   "printed": "record A 0.000 / record B 0.000; source v1 text 0.000",
+   "note": "in no committed JSON; equals the v1 prose"
+  },
+  {
+   "figure": "source instruct FPR 0.003",
+   "record_locators": "ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:46; RESULTS.md@bbc9ffe:6999, :7341, :7356; other tracked: HANDOFF-2026-08-25.md@bbc9ffe:60, scripts/b2r_analyze.py@bbc9ffe:161",
+   "status": "discrepant",
+   "printed": "record A 0.003 / record B 0.003; source v1 text 0.000",
+   "note": "Code's reading: transcription of the v1 prose, where 0.3% is the introspection rate and FPR is 0%. Fig. 21 (a PNG, olmo-staged-introspection.png) was not digitized, so a figure reading is not excluded; under block :23 the classification decides correction or STOP if the note carries it (section 12)"
+  },
+  {
+   "figure": "source TPR - FPR, base/sft/dpo (−16.3 pp / −7.6 pp / +2.9 pp)",
+   "record_locators": "ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:43, :44, :45; RESULTS.md@bbc9ffe:7329, :7338, :7339, :7340",
+   "status": "log-only",
+   "printed": "source arithmetic -16.3 pp / -7.6 pp / +2.9 pp",
+   "note": "equal"
+  },
+  {
+   "figure": "source instruct TPR - FPR +0.6 pp",
+   "record_locators": "ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:46; RESULTS.md@bbc9ffe:7330, :7341; other tracked: scripts/b2r_analyze.py@bbc9ffe:15",
+   "status": "discrepant",
+   "printed": "source arithmetic +0.9 pp",
+   "note": "follows from the instruct FPR reading (row above); same block :23 condition"
+  },
+  {
+   "figure": "aggregation over L in [25, 32, 38, 45, 51] x alpha in [1, 2, 4, 8] (20 configurations)",
+   "record_locators": "ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:39; RESULTS.md@bbc9ffe:7343",
+   "status": "log-only",
+   "printed": "20 configurations; addendum :39 text asserted",
+   "note": "equals the v1 Figure 21 caption; every per-stage value is this aggregate, not best-of-grid"
+  },
+  {
+   "figure": "~800 injected / ~80 control per (layer, alpha) configuration, and its ratio ~33× our 24, as the record's inference (eight concepts x the code's 100 / 10 per concept)",
+   "record_locators": "RESULTS.md@bbc9ffe:7438-7440 (carriers :7439, :7440)",
+   "status": "log-only",
+   "printed": "computed-new: 8 x 100 / 8 x 10 = 800 / 80 per cell; pooled over 20 cells 16000 / 1600; ratio 800/24 = 33.3 (one of their configurations against our whole stage, the record's unit); per stage under the same premise 16000/24 = 666.7; with the code's 50 concepts 208.3 and 4166.7",
+   "note": "the eight is our B2 registration (data/configs/b2_concepts.json@bbc9ffe selection_for_B2.registered_n = 8; its canonical set is 50, n_canonical); a per-configuration n, while the source's rates are pooled over 20 configurations (section 7); our 24 per stage as run from RESULTS.md@bbc9ffe:7440, :7358"
+  },
+  {
+   "figure": "~800 injected / ~80 control per configuration, as the source's n, and figures derived from it (~33× ours; the 'theirs, OLMo cell (~800/80)' power row)",
+   "record_locators": "ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:32-33; RESULTS.md@bbc9ffe:7365, :7485, :7500 (:7485 and :7500-7502 are the power row at that n); the block's premise, AUDIT-note-release-v1_2.md@bbc9ffe:34",
+   "status": "not found",
+   "printed": "the source states no n (v1-v5); code default 50 concepts gives 5000 / 500 per cell; the ratio is 33.3 only per their configuration at eight concepts (row above)",
+   "note": "under block :23 a note sentence presenting it as the source's n is cut, and so is any figure derived from it unless stated with its premise and unit (section 12, condition 4); RESULTS :7485 and :7500 sit in the entry (:7419-7506) that states the eight-concept premise at :7438-7439 but write the figure as theirs without it, and :7365's entry (:7326-7418) does not state the premise; as an assumption with its premise it is the row above"
+  },
+  {
+   "figure": "layer indices from the code's default fractions",
+   "record_locators": "ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:60-68",
+   "status": "computed-new",
+   "printed": "int [25, 32, 38, 44, 51]; round [26, 32, 38, 45, 51]; caption [25, 32, 38, 45, 51]; README absolute list equals the caption 5/5",
+   "note": "neither rule yields the caption list; not adjudicated"
+  },
+  {
+   "figure": "decoding: temperature 1.0, max_new_tokens 100",
+   "record_locators": "ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:89-91; RESULTS.md@bbc9ffe:7433",
+   "status": "log-only",
+   "printed": "source code DEFAULT_TEMPERATURE 1.0, DEFAULT_MAX_TOKENS 100; paper v1 App. A T = 1.0",
+   "note": "consistent"
+  },
+  {
+   "figure": "lineage: our four acquired HF repos and revisions",
+   "record_locators": "data/olmo/manifest.json@bbc9ffe fields repo, revision",
+   "status": "reproduced",
+   "printed": "base allenai/Olmo-3-1125-32B @ c2b61dae89a1; sft allenai/Olmo-3.1-32B-Instruct-SFT @ 152782ecc41a; dpo allenai/Olmo-3.1-32B-Instruct-DPO @ fc84a4f69991; instruct allenai/Olmo-3.1-32B-Instruct @ ac0587e4a774",
+   "note": "read from the committed manifest"
+  },
+  {
+   "figure": "lineage: our four repos match the source's MODEL_NAME_MAP",
+   "record_locators": "RESULTS.md@bbc9ffe:12565-12569",
+   "status": "log-only",
+   "printed": "computed-new against Code's WebFetch reading of src/model_utils.py@5d5d9b4: 4/4 repo match",
+   "note": "the source half is a WebFetch reading, not a committed artifact, so the match is the record's prose claim; revision-level match not determinable (source pins none)"
+  },
+  {
+   "figure": "retired criterion's power, DPO column (2.9 vs 0.0): 0.001/0.012/0.147/0.691 at n = 24/48/96/200",
+   "record_locators": "RESULTS.md@bbc9ffe:7354-7361",
+   "status": "log-only",
+   "printed": "recomputed with the record's newcombe: 4/4 cells agree to 3 dp",
+   "note": "inputs are prose rates, so log-only; they equal the v1 text, so the cells stand as described ('at their own numbers'); the arithmetic is re-derived and agrees (computed-new)"
+  },
+  {
+   "figure": "retired criterion's Instruct power, as the record describes it: at the source's own (reported) rates, 0.000/0.000/0.001/0.020 at n = 24/48/96/200 (the table's 'Instruct (0.9 vs 0.3)')",
+   "record_locators": "ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:52-53; RESULTS.md@bbc9ffe:7330-7331, :7354-7361; other tracked: scripts/b2r_analyze.py@bbc9ffe:16 (docstring, 0.000 at n=48; unchanged at either rate)",
+   "status": "discrepant",
+   "printed": "at the record's transcribed rates (0.9 vs 0.3) recomputed 0.000 / 0.000 / 0.001 / 0.020 (4/4 agree to 3 dp); at the source's rates (0.9 vs 0.0) 0.000 / 0.000 / 0.002 / 0.036; differs at n = 96, n = 200",
+   "note": "described as at the source's own rates ('their own Instruct rates', 'Instruct's own reported rates', 'their own numbers'), where the n = 96 and n = 200 cells differ; the arithmetic reproduces at the record's 0.3%; follows from the instruct FPR reading (row 8); under block :23 corrected to the source-rate values under Code's transcription reading, a STOP otherwise (section 12, condition 3)"
+  },
+  {
+   "figure": "[g3-A] joint power 0.9642 (and 'the exact number is 0.964')",
+   "record_locators": "ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:148, :273; RESULTS.md@bbc9ffe:7173, :7180, :7192, :7194, :7251, :7269, :7270; data/olmo/b2r_valuescheck.json@bbc9ffe 1_g3A_power.detail",
+   "status": "discrepant",
+   "printed": "exact at the record's inputs 0.96455 (0.9645; 0.965 at 3 dp); at instruct FPR .000 0.98274",
+   "note": "residual -0.0003; discrepant at the record's own 3 dp too; cause not identified (simulation a candidate, not established), so not classifiable as transcription; under block :23 a STOP for the design seat and PI if the note carries 0.9642 or 0.964 (section 12); both values clear the 0.90 bar"
+  },
+  {
+   "figure": "single weakest pair (base vs dpo) 0.9825",
+   "record_locators": "RESULTS.md@bbc9ffe:7192, :7268",
+   "status": "discrepant",
+   "printed": "at the record's inputs base > dpo 0.98296; weakest pair base > instruct 0.96540; at instruct FPR .000 base > dpo = base > instruct 0.98296",
+   "note": "value residual -0.0005 and the label is wrong at the record's inputs; under block :23 a STOP if the note carries it (section 12)"
+  },
+  {
+   "figure": "design seat's N2(v) source points (block :34: d' -1.9 / -0.3 / +0.6 / +0.15; p ~ .11 DPO, ~ .5 instruct, at 800/80 per configuration)",
+   "record_locators": "AUDIT-note-release-v1_2.md@bbc9ffe:34",
+   "status": "computed-new",
+   "printed": "at 800/80 (per configuration): -1.931 / -0.296 / +0.611 / +0.151; p DPO 0.1085, instruct 0.5119. At 16000/1600 (pooled, same premise): -2.103 / -0.286 / +1.525 / +1.056; p DPO 3.34e-20, instruct 1.03e-06; instruct at record FPR .003 +0.339, p 0.0055",
+   "note": "arithmetic confirmed under the seat's premise (800/80 is a per-configuration n applied to rates pooled over 20 configurations), not confirmed as the source's points: at the pooled n 1 of 6 figures hold, and there the instruct FPR correction changes the instruct point (d' +0.339 -> +1.056; p 0.0055 -> 1.03e-06); N2(v) declares concept count and unit"
+  },
+  {
+   "figure": "p ~ .28 for our 0/43 at the source's dpo TPR 2.9%",
+   "record_locators": "RESULTS.md@bbc9ffe:6955, :7091",
+   "status": "log-only",
+   "printed": "computed-new 0.2821 = P(X <= 0) for X ~ Binomial(n = 43, p = .029), exact binomial lower tail (= 0.971^43); 0/43 from data/olmo/b2r_explore_dpo.json@bbc9ffe fields hit, inj_decidable",
+   "note": "agrees at the record's 2 dp; the test is Code's reading (the record names none); the 2.9% is a source prose rate, so log-only"
+  },
+  {
+   "figure": "'Reaching conventional power there needs n in the thousands per cell' (the retired criterion at Instruct, the sentence after the table under 'Power at their own numbers')",
+   "record_locators": "RESULTS.md@bbc9ffe:7363-7364",
+   "status": "discrepant",
+   "printed": "computed-new, n per arm: at the source's rates (0.9 vs 0.0) 0.80 power at n ≈ 750 per arm (0.8042), and 0.90 at ≈ 890 (0.9020); first n 746 (0.80054) and 887 (0.90043). At the record's transcribed rates (0.9 vs 0.3) ≈ 2700 (0.8011) and ≈ 3500 (0.9001); first n 2694 (0.80012) and 3500 (0.90008); step-1 values at 5 dp",
+   "note": "holds only at the transcribed 0.3%; described as at the source's own rates (it sits under 'Power at their own numbers', :7354), where conventional power needs hundreds per arm; 'per cell' read as n per arm, the table's unit (:7356; Code's reading); :7363's 'binding constraint ... not close' holds at both inputs; the only carrier the round-4 'thousands' grep finds in the tracked .py/.md files (section 2); follows from the instruct FPR reading (row 8); under block :23 corrected to the source-rate figures under Code's transcription reading, a STOP otherwise (section 12, condition 3), the same fork as row 19"
+  }
+ ],
+ "source": {
+  "citation": "Macar, Yang, Wang, Wallich, Ameisen, Lindsey 2026, Mechanisms of Introspective Awareness, arXiv:2603.21396",
+  "version_of_values": "v1 (2026-03-22)",
+  "versions": [
+   {
+    "version": "v1",
+    "date": "2026-03-22",
+    "url": "https://arxiv.org/html/2603.21396v1",
+    "olmo_content": "Appendix C 'Introspection Across OLMo-3.1-32B's Training Pipeline': one paragraph stating per-stage TPR and FPR in prose (it opens by naming Figure 21); Figure 21 caption: rates aggregated across L in [25,32,38,45,51] with alpha in [1,2,4,8]; the figure is an image (olmo-staged-introspection.png, alt text 'Refer to caption') with no data table. Section 3.3 ('The Role of Post-Training') points to Appendix C and also says in text that base and SFT have high FPR, which reaches 0% only after DPO (no per-stage TPR numbers there). No per-(layer, alpha) breakdown; no n; no concept count."
+   },
+   {
+    "version": "v2",
+    "date": "2026-04-10",
+    "url": "https://arxiv.org/html/2603.21396v2",
+    "olmo_content": "Appendix C is 'Abliterated Model Details' (no OLMo). OLMo per-stage results are Figure 5 (Section 3.3) at L=25, alpha in {1,2,4,8}, over the original 50 Lindsey (2025) concepts, plus Appendix D.1 Figure 20 at L=19 and L=22. No numeric per-stage TPR/FPR in text. Table 3 is a LoRA fine-tuning study on the OLMo SFT checkpoint (L=25, alpha=4); its starred official-checkpoint rows read TPR-FPR SFT* -11.5 +/- 2.4, DPO* +9.8 +/- 0.5."
+   },
+   {
+    "version": "v3",
+    "date": "2026-04-13",
+    "url": "https://arxiv.org/html/2603.21396v3",
+    "olmo_content": "Same structure as v2 (Appendix C abliteration; OLMo in Figure 5 at L=25; D.1 at L=19/22); no numeric per-stage TPR/FPR in text."
+   },
+   {
+    "version": "v4",
+    "date": "2026-05-15",
+    "url": "https://arxiv.org/html/2603.21396v4",
+    "olmo_content": "Appendix C 'Refusal Direction Ablation (Abliteration) Details'; OLMo Figure 5 at L=25, alpha in {1,2,4,8}; D.1 is Figure 21 (OLMo base/SFT/DPO/instruct at L=19 and L=22, alpha in {1,2,4,8}); no numeric per-stage TPR/FPR in text; Table 3 (LoRA fine-tuning of the OLMo SFT checkpoint under different training conditions, L=25, alpha=4, 11 rows as Code read it) includes the starred SFT* and DPO* rows with the v2 values."
+   },
+   {
+    "version": "v5",
+    "date": "2026-06-10",
+    "url": "https://arxiv.org/html/2603.21396v5",
+    "olmo_content": "As v4; D.1 figure is Figure 22 (L=19, L=22); no numeric per-stage TPR/FPR in text; official SFT*/DPO* TPR-FPR -11.5 +/- 2.4 / +9.8 +/- 0.5 at L=25, alpha=4 (Table 3, Section 3.3; Code's fetch also named a Table 8 in D.2 carrying the same two rows)."
+   }
+  ],
+  "read_by_code_utc_date": "2026-10-08",
+  "read_with": "WebFetch (model-processed page rendering); each v1 App. C sentence returned verbatim in 2 fetches, agreeing with a 3rd paraphrase",
+  "fixer_pass_reads": [
+   {
+    "url": "https://raw.githubusercontent.com/safety-research/introspection-mechanisms/5d5d9b485e293dc766c3a056cfe50283a7e435b6/experiments/03_behavioral_robustness.py",
+    "what": "build_base_model_prompt and the base/chat-template switch in run_experiment / run_single_trial; the 'Tell me about {word}' template's location"
+   },
+   {
+    "url": "https://arxiv.org/html/2603.21396v1",
+    "what": "Section 3.3's base-model prompt format; whether any passage gives an OLMo-specific format (characters 0-100000, which hold Section 3.3 and Appendix C, and 100000-end)"
+   },
+   {
+    "url": "https://arxiv.org/html/2603.21396v4",
+    "what": "the list of OLMo figures (characters 0-100000 and 100000-end): Figure 5 in Section 3.3, Figure 21 in Appendix D.1"
+   },
+   {
+    "url": "https://arxiv.org/html/2603.21396v4",
+    "what": "Table 3's caption, study, layer/alpha, row count and starred rows"
+   }
+  ],
+  "round2_reads": [
+   {
+    "url": "https://arxiv.org/html/2603.21396v1",
+    "what": "Section 3.3 'The Role of Post-Training' (main text, characters 0-100000): one sentence points to Appendix C for OLMo-3.1-32B and says, with no per-stage TPR numbers, that the base and SFT checkpoints have high FPR, which reaches 0% only after DPO; it is the sentence the record quotes at RESULTS.md@bbc9ffe:7346-7347 (both fetches returned the same wording)",
+    "utc_date": "2026-10-08"
+   },
+   {
+    "url": "https://arxiv.org/html/2603.21396v1",
+    "what": "Figure 21's form: an image, 2603.21396v1/olmo-staged-introspection.png, alt text 'Refer to caption'; the HTML carries no data table and no numeric labels for it beyond the caption (both fetches)",
+    "utc_date": "2026-10-08"
+   }
+  ],
+  "round3_reads": [
+   {
+    "url": "https://raw.githubusercontent.com/safety-research/introspection-mechanisms/5d5d9b485e293dc766c3a056cfe50283a7e435b6/experiments/03_behavioral_robustness.py",
+    "what": "DEFAULT_TEST_CONCEPTS: read 1 (asked whether it is defined or imported, its entries in order, and every top-level import) returned a literal list defined in this file, under a one-line comment describing it as the paper's 50 baseline words, with 50 entries (listed in EXP03_CONCEPTS_READ1), and no import of the name",
+    "utc_date": "2026-10-08"
+   },
+   {
+    "url": "https://raw.githubusercontent.com/safety-research/introspection-mechanisms/5d5d9b485e293dc766c3a056cfe50283a7e435b6/experiments/03_behavioral_robustness.py",
+    "what": "DEFAULT_TEST_CONCEPTS: read 2 (asked for the assignment character for character) declined to copy the full list, and confirmed the comment line, 50 entries in 10 lines of 5, first entry 'Dust', last 'Silver', the name in no import statement, and its use as the --concepts default",
+    "utc_date": "2026-10-08"
+   }
+  ],
+  "exp03_default_test_concepts": {
+   "defined_in": "experiments/03_behavioral_robustness.py (a literal list in that file; not imported)",
+   "n": 50,
+   "read1_entries": [
+    "Dust",
+    "Satellites",
+    "Trumpets",
+    "Origami",
+    "Illusions",
+    "Cameras",
+    "Lightning",
+    "Constellations",
+    "Treasures",
+    "Phones",
+    "Trees",
+    "Avalanches",
+    "Mirrors",
+    "Fountains",
+    "Quarries",
+    "Sadness",
+    "Xylophones",
+    "Secrecy",
+    "Oceans",
+    "Happiness",
+    "Deserts",
+    "Kaleidoscopes",
+    "Sugar",
+    "Vegetables",
+    "Poetry",
+    "Aquariums",
+    "Bags",
+    "Peace",
+    "Caverns",
+    "Memories",
+    "Frosts",
+    "Volcanoes",
+    "Boulders",
+    "Harmonies",
+    "Masquerades",
+    "Rubber",
+    "Plastic",
+    "Blood",
+    "Amphitheaters",
+    "Contraptions",
+    "Youths",
+    "Dynasties",
+    "Snow",
+    "Dirigibles",
+    "Algorithms",
+    "Denim",
+    "Monoliths",
+    "Milk",
+    "Bread",
+    "Silver"
+   ],
+   "read2": {
+    "n": 50,
+    "first": "Dust",
+    "last": "Silver",
+    "imported": false
+   },
+   "equals_b2_concepts_canonical_in_order_computed_new": true,
+   "b2_concepts_provenance_cites": "experiments/01_concept_injection.py:58 (DEFAULT_TEST_CONCEPTS, comment: '50 words from the paper')",
+   "identity_with_01": "Code's reading from one model-processed read (read 1); read 2 corroborates only the count, end entries and import status; not established"
+  },
+  "v1_figure21_image": "2603.21396v1/olmo-staged-introspection.png",
+  "quote": {
+   "text": "Supervised fine-tuning improves detection (14.9% TPR) but maintains high false positives (22.5%).",
+   "attribution": "Macar et al. 2026, arXiv:2603.21396v1, Appendix C"
+  },
+  "urls_read": [
+   "https://arxiv.org/abs/2603.21396",
+   "https://arxiv.org/abs/2603.21396v5",
+   "https://arxiv.org/html/2603.21396v1",
+   "https://arxiv.org/html/2603.21396v2",
+   "https://arxiv.org/html/2603.21396v3",
+   "https://arxiv.org/html/2603.21396v4",
+   "https://arxiv.org/html/2603.21396v5",
+   "https://github.com/safety-research/introspection-mechanisms/blob/5d5d9b485e293dc766c3a056cfe50283a7e435b6/README.md",
+   "https://raw.githubusercontent.com/safety-research/introspection-mechanisms/5d5d9b485e293dc766c3a056cfe50283a7e435b6/README.md",
+   "https://github.com/safety-research/introspection-mechanisms/blob/5d5d9b485e293dc766c3a056cfe50283a7e435b6/src/model_utils.py",
+   "https://raw.githubusercontent.com/safety-research/introspection-mechanisms/5d5d9b485e293dc766c3a056cfe50283a7e435b6/src/model_utils.py",
+   "https://raw.githubusercontent.com/safety-research/introspection-mechanisms/5d5d9b485e293dc766c3a056cfe50283a7e435b6/experiments/03_behavioral_robustness.py",
+   "https://github.com/safety-research/introspection-mechanisms/commits/main"
+  ],
+  "later_versions_official_checkpoint_tpr_minus_fpr": {
+   "config": "v2-v5 Table 3, a LoRA fine-tuning study on the OLMo SFT checkpoint at L=25, alpha=4; the starred SFT*/DPO* rows are the official checkpoints (values as printed, '+/-' meaning not recorded)",
+   "sft": "-11.5 +/- 2.4",
+   "dpo": "+9.8 +/- 0.5",
+   "introspection_pct": {
+    "sft": "1.7 +/- 0.2",
+    "dpo": "3.5 +/- 0.3"
+   }
+  }
+ },
+ "grid": {
+  "layers_v1_caption": [
+   25,
+   32,
+   38,
+   45,
+   51
+  ],
+  "alphas_v1_caption": [
+   1,
+   2,
+   4,
+   8
+  ],
+  "n_configs": 20,
+  "aggregation": "aggregate over all 20 configs (caption); released code pools all trials per model (compute_metrics_from_results -> summary_stats.json) -- that the figure used it is Code's inference",
+  "code_default_layer_fractions": [
+   0.4,
+   0.5,
+   0.6,
+   0.7,
+   0.8
+  ],
+  "code_layer_indices_int_n_layers_x_f": [
+   25,
+   32,
+   38,
+   44,
+   51
+  ],
+  "code_layer_indices_round_n_layers_x_f": [
+   26,
+   32,
+   38,
+   45,
+   51
+  ],
+  "n_layers_record": {
+   "base": 64,
+   "sft": 64,
+   "dpo": 64,
+   "instruct": 64
+  },
+  "caption_vs_code_layers_differ_at": [
+   45,
+   44
+  ],
+  "readme_ls_as_fractions_to_indices": [
+   63,
+   63,
+   63,
+   63,
+   63
+  ],
+  "readme_model_keys_rejected_by_argparse": [
+   "olmo_32b_base",
+   "olmo_32b_sft",
+   "olmo_32b_dpo",
+   "olmo_32b"
+  ],
+  "per_concept_per_cell": {
+   "injected": 100,
+   "control": 10
+  },
+  "n_scenarios_computed_new": [
+   {
+    "n_concepts": 8,
+    "label": "eight concepts (the record's assumption, RESULTS.md@bbc9ffe:7438-7440)",
+    "per_cell_injected": 800,
+    "per_cell_control": 80,
+    "per_stage_pooled_injected": 16000,
+    "per_stage_pooled_control": 1600
+   },
+   {
+    "n_concepts": 50,
+    "label": "the code's default DEFAULT_TEST_CONCEPTS (50)",
+    "per_cell_injected": 5000,
+    "per_cell_control": 500,
+    "per_stage_pooled_injected": 100000,
+    "per_stage_pooled_control": 10000
+   }
+  ],
+  "n_stated_by_source": null,
+  "ratio_to_ours_computed_new": {
+   "record_figure": "~33× ours (ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:32-33; RESULTS.md@bbc9ffe:7440)",
+   "our_injected_per_stage_as_run": 24,
+   "our_n_locators": "RESULTS.md@bbc9ffe:7440 'our 24/24'; :7358 '24 (as run)'",
+   "rows": [
+    {
+     "n_concepts": 8,
+     "our_injected_per_stage_as_run": 24,
+     "their_per_configuration": 800,
+     "their_pooled_per_stage": 16000,
+     "ratio_their_configuration_to_our_stage": 33.333333333333336,
+     "ratio_their_stage_to_our_stage": 666.6666666666666
+    },
+    {
+     "n_concepts": 50,
+     "our_injected_per_stage_as_run": 24,
+     "their_per_configuration": 5000,
+     "their_pooled_per_stage": 100000,
+     "ratio_their_configuration_to_our_stage": 208.33333333333334,
+     "ratio_their_stage_to_our_stage": 4166.666666666667
+    }
+   ]
+  }
+ },
+ "stages": {
+  "base": {
+   "tpr": 0.001,
+   "n_injected": null,
+   "n_control": null,
+   "fpr": 0.164,
+   "introspection_rate": null,
+   "config": "aggregate over L in [25, 32, 38, 45, 51] x alpha in [1, 2, 4, 8] (20 configs), per v1 Figure 21 caption",
+   "best_of_grid": false,
+   "provenance": "from the source, read by Code on 2026-10-08 at https://arxiv.org/html/2603.21396v1: Appendix C prose describing Figure 21 (v1 only)",
+   "source_text_paraphrase": "TPR 0.1%, FPR 16.4% (in the paragraph's first sentence, which names Figure 21)",
+   "record_addendum_tpr": 0.001,
+   "record_addendum_fpr": 0.164,
+   "record_results_their_fpr": 0.164,
+   "record_addendum_sensitivity": "−16.3 pp",
+   "tpr_matches_source": true,
+   "fpr_matches_source": true,
+   "source_tpr_minus_fpr_pp": -16.3,
+   "n_note": "not stated by the source; see grid.n_scenarios_computed_new"
+  },
+  "sft": {
+   "tpr": 0.149,
+   "n_injected": null,
+   "n_control": null,
+   "fpr": 0.225,
+   "introspection_rate": null,
+   "config": "aggregate over L in [25, 32, 38, 45, 51] x alpha in [1, 2, 4, 8] (20 configs), per v1 Figure 21 caption",
+   "best_of_grid": false,
+   "provenance": "from the source, read by Code on 2026-10-08 at https://arxiv.org/html/2603.21396v1: Appendix C prose describing Figure 21 (v1 only)",
+   "source_text_paraphrase": "TPR 14.9%, FPR 22.5% (the sentence quoted below)",
+   "record_addendum_tpr": 0.149,
+   "record_addendum_fpr": 0.225,
+   "record_results_their_fpr": 0.225,
+   "record_addendum_sensitivity": "−7.6 pp",
+   "tpr_matches_source": true,
+   "fpr_matches_source": true,
+   "source_tpr_minus_fpr_pp": -7.6,
+   "n_note": "not stated by the source; see grid.n_scenarios_computed_new"
+  },
+  "dpo": {
+   "tpr": 0.029,
+   "n_injected": null,
+   "n_control": null,
+   "fpr": 0.0,
+   "introspection_rate": null,
+   "config": "aggregate over L in [25, 32, 38, 45, 51] x alpha in [1, 2, 4, 8] (20 configs), per v1 Figure 21 caption",
+   "best_of_grid": false,
+   "provenance": "from the source, read by Code on 2026-10-08 at https://arxiv.org/html/2603.21396v1: Appendix C prose describing Figure 21 (v1 only)",
+   "source_text_paraphrase": "FPR falls to 0% and TPR to 2.9%",
+   "record_addendum_tpr": 0.029,
+   "record_addendum_fpr": 0.0,
+   "record_results_their_fpr": 0.0,
+   "record_addendum_sensitivity": "+2.9 pp",
+   "tpr_matches_source": true,
+   "fpr_matches_source": true,
+   "source_tpr_minus_fpr_pp": 2.9,
+   "n_note": "not stated by the source; see grid.n_scenarios_computed_new"
+  },
+  "instruct": {
+   "tpr": 0.009,
+   "n_injected": null,
+   "n_control": null,
+   "fpr": 0.0,
+   "introspection_rate": 0.003,
+   "config": "aggregate over L in [25, 32, 38, 45, 51] x alpha in [1, 2, 4, 8] (20 configs), per v1 Figure 21 caption",
+   "best_of_grid": false,
+   "provenance": "from the source, read by Code on 2026-10-08 at https://arxiv.org/html/2603.21396v1: Appendix C prose describing Figure 21 (v1 only)",
+   "source_text_paraphrase": "FPR stays at 0%; TPR 0.9%; introspection rate 0.3%",
+   "record_addendum_tpr": 0.009,
+   "record_addendum_fpr": 0.003,
+   "record_results_their_fpr": 0.003,
+   "record_addendum_sensitivity": "+0.6 pp",
+   "tpr_matches_source": true,
+   "fpr_matches_source": false,
+   "source_tpr_minus_fpr_pp": 0.9,
+   "n_note": "not stated by the source; see grid.n_scenarios_computed_new"
+  }
+ },
+ "dependent_power_computed_new": {
+  "code": "record's clopper_pearson/newcombe (scripts/b2_analyze.py@bbc9ffe) and binom_pmf (valence_core/stats.py@bbc9ffe); exact enumeration; CP 95% two-sided",
+  "own_vs_record_cp_max_abs_diff_n96": 1.0547118733938987e-15,
+  "g3a_joint": {
+   "rule": "min CP-lower{base,sft} > max CP-upper{dpo,instruct}, n = 96 per stage, independent binomial FPR counts",
+   "record_printed": 0.9642,
+   "record_pair_printed": 0.9825,
+   "at_record_inputs": 0.9645485410399544,
+   "pair_at_record_inputs": 0.9829571668509532,
+   "at_source_instruct_fpr_0": 0.9827373791768146,
+   "pair_at_source_instruct_fpr_0": 0.9829571668509532,
+   "valuescheck_json_detail": "joint=0.9642 >= 0.90",
+   "at_record_inputs_3dp": "0.965",
+   "pairs_at_record_inputs": {
+    "base>dpo": 0.9829571668509532,
+    "base>instruct": 0.9653960610665329,
+    "sft>dpo": 0.9997764015752153,
+    "sft>instruct": 0.9990119918234673
+   },
+   "pairs_at_source_instruct_fpr_0": {
+    "base>dpo": 0.9829571668509532,
+    "base>instruct": 0.9829571668509532,
+    "sft>dpo": 0.9997764015752153,
+    "sft>instruct": 0.9997764015752153
+   },
+   "weakest_pair_at_record_inputs": "base>instruct",
+   "weakest_pairs_at_source_inputs": [
+    "base>dpo",
+    "base>instruct"
+   ],
+   "pairs_equal_to_0_9825_at_4dp": [],
+   "record_exactness_claims": "RESULTS.md@bbc9ffe:7194, :7251, :7269-7270",
+   "cause_variants_computed_new": [
+    {
+     "variant": "Wilson score 95% intervals in place of CP",
+     "joint": 0.9819246984157114,
+     "base>dpo": 0.9928529473109134,
+     "reproduces_both_4dp": false
+    },
+    {
+     "variant": "Clopper-Pearson at 90% (alpha .10)",
+     "joint": 0.9914665732660612,
+     "base>dpo": 0.9973872703936906,
+     "reproduces_both_4dp": false
+    },
+    {
+     "variant": "n = 95 per stage",
+     "joint": 0.961673703511402,
+     "base>dpo": 0.9811776624699954,
+     "reproduces_both_4dp": false
+    },
+    {
+     "variant": "base FPR .163 (one unit lower at 3 dp)",
+     "joint": 0.9627656506464533,
+     "base>dpo": 0.9818862492827013,
+     "reproduces_both_4dp": false
+    }
+   ],
+   "monte_carlo_se_computed_new": [
+    {
+     "draws": 10000,
+     "se_pair": 0.0012943096610664895,
+     "se_joint": 0.0018491796293937982,
+     "pair_residual_in_se": -0.3532128861469734,
+     "joint_residual_in_se": -0.18848414421949267
+    },
+    {
+     "draws": 100000,
+     "se_pair": 0.00040929665265306665,
+     "se_joint": 0.0005847619431670451,
+     "pair_residual_in_se": -1.1169572191461712,
+     "joint_residual_in_se": -0.5960391985612566
+    },
+    {
+     "draws": 1000000,
+     "se_pair": 0.00012943096610664896,
+     "se_joint": 0.0001849179629393798,
+     "pair_residual_in_se": -3.5321288614697335,
+     "joint_residual_in_se": -1.8848414421949267
+    }
+   ],
+   "cause": "not identified; a simulation of ~1e4-1e5 draws is a candidate, not established"
+  },
+  "record_p28": {
+   "locators": "RESULTS.md@bbc9ffe:6955, :7091",
+   "record": "p ≈ .28",
+   "test_code_reading": "exact binomial lower tail P(X <= k | n, .029)",
+   "k": 0,
+   "n": 43,
+   "source": "data/olmo/b2r_explore_dpo.json@bbc9ffe hit, inj_decidable",
+   "computed_new": 0.2821154598616653
+  },
+  "retired_criterion_power": {
+   "rule": "P(Newcombe lower > 0), n per arm all decidable, hits ~ Bin(n, TPR), FA ~ Bin(n, FPR)",
+   "prune_below": 1e-15,
+   "rows": [
+    {
+     "n_per_arm": 24,
+     "record_dpo": 0.001,
+     "record_instruct": 0.0,
+     "recomputed_dpo": 0.0005494082589294972,
+     "recomputed_instruct_fpr_0p003": 2.02464557567276e-06,
+     "recomputed_instruct_fpr_0p000": 2.1759271290897565e-06,
+     "omitted_mass_bound": 4.4361391101651345e-16,
+     "dpo_agrees_3dp": true,
+     "instruct_agrees_3dp": true,
+     "instruct_source_rate_differs_3dp": false
+    },
+    {
+     "n_per_arm": 48,
+     "record_dpo": 0.012,
+     "record_instruct": 0.0,
+     "recomputed_dpo": 0.012475966335465308,
+     "recomputed_instruct_fpr_0p003": 6.345188977834773e-05,
+     "recomputed_instruct_fpr_0p000": 7.325862335815537e-05,
+     "omitted_mass_bound": 7.138273350984028e-16,
+     "dpo_agrees_3dp": true,
+     "instruct_agrees_3dp": true,
+     "instruct_source_rate_differs_3dp": false
+    },
+    {
+     "n_per_arm": 96,
+     "record_dpo": 0.147,
+     "record_instruct": 0.001,
+     "recomputed_dpo": 0.14704483928102668,
+     "recomputed_instruct_fpr_0p003": 0.0013736227911275878,
+     "recomputed_instruct_fpr_0p000": 0.0018320465371317782,
+     "omitted_mass_bound": 8.849143630408813e-16,
+     "dpo_agrees_3dp": true,
+     "instruct_agrees_3dp": true,
+     "instruct_source_rate_differs_3dp": true
+    },
+    {
+     "n_per_arm": 200,
+     "record_dpo": 0.691,
+     "record_instruct": 0.02,
+     "recomputed_dpo": 0.6910648959874182,
+     "recomputed_instruct_fpr_0p003": 0.019740535154991166,
+     "recomputed_instruct_fpr_0p000": 0.03568864149764156,
+     "omitted_mass_bound": 9.42487665457229e-16,
+     "dpo_agrees_3dp": true,
+     "instruct_agrees_3dp": true,
+     "instruct_source_rate_differs_3dp": true
+    }
+   ],
+   "cells_agreeing_3dp": 8,
+   "record_description": "power at the source's own rates ('their own Instruct rates', ADDENDUM :52-53; 'Instruct's own reported rates', RESULTS :7330-7331; 'Power at their own numbers', RESULTS :7354)",
+   "instruct_cells_differing_at_source_rates_3dp": [
+    96,
+    200
+   ],
+   "conventional_power_n": {
+    "record_figure": "'Reaching conventional power there needs n in the thousands per cell' (RESULTS.md@bbc9ffe:7363-7364), Instruct, under 'Power at their own numbers' (:7354)",
+    "unit": "n per arm, all decidable ('per cell' read as n per arm, the table's unit at :7356; Code's reading)",
+    "tpr": 0.009,
+    "bars": [
+     0.8,
+     0.9
+    ],
+    "grid": "step 10 from n = 210; then step 1 between the first grid point at or above each bar and the one before it",
+    "code": "the record's newcombe (scripts/b2_analyze.py@bbc9ffe, by AST) compiled with a stdlib Clopper-Pearson (own_cp_fast) and the stdlib pmf; the record's clopper_pearson raises OverflowError from n = 1030",
+    "record_cp_overflow_from_n": 1030,
+    "crosscheck_vs_record_path_max_abs_diff": 1.5210055437364645e-13,
+    "crosscheck_values": 13,
+    "crosscheck_n750_record_path": 0.8042144736518554,
+    "cp_fast_vs_record_max_abs_diff": 3.748390486890685e-14,
+    "at_source_instruct_fpr_0": {
+     "instruct_fpr": 0.0,
+     "grid": {
+      "210": 0.04250820641201263,
+      "220": 0.05005933775392811,
+      "230": 0.058347102990873874,
+      "240": 0.06737047114891219,
+      "250": 0.07712259498652406,
+      "260": 0.08759115702494209,
+      "270": 0.09875876519561091,
+      "280": 0.1106033851041928,
+      "290": 0.12309879721534045,
+      "300": 0.13621506858607899,
+      "310": 0.14991903008102792,
+      "320": 0.16417475126035155,
+      "330": 0.17894400632567842,
+      "340": 0.1941867256223031,
+      "350": 0.20986142822216372,
+      "360": 0.2259256320486717,
+      "370": 0.24233623884400668,
+      "380": 0.2590498920293566,
+      "390": 0.2760233061717542,
+      "400": 0.29321356734185844,
+      "410": 0.3105784041483897,
+      "420": 0.3280764296488082,
+      "430": 0.345667354696423,
+      "440": 0.3633121735672162,
+      "450": 0.3809733229489525,
+      "460": 0.39861481555440154,
+      "470": 0.4162023497607002,
+      "480": 0.4337033967802979,
+      "490": 0.4510872669242649,
+      "500": 0.46832515656210655,
+      "510": 0.4853901773938398,
+      "520": 0.5022573696245258,
+      "530": 0.5189037006220053,
+      "540": 0.5353080505790929,
+      "550": 0.5514511866512475,
+      "560": 0.5673157269811016,
+      "570": 0.5828860959355825,
+      "580": 0.5981484718239569,
+      "590": 0.613090728264797,
+      "600": 0.62770237030637,
+      "610": 0.6419744663121681,
+      "620": 0.6558995765354928,
+      "630": 0.6694716792528855,
+      "640": 0.6826860952097379,
+      "650": 0.6955394110923775,
+      "660": 0.708029402639624,
+      "670": 0.7201549579644636,
+      "680": 0.7319160015586337,
+      "690": 0.7433134194262384,
+      "700": 0.7543489857086316,
+      "710": 0.7650252911235843,
+      "720": 0.7753456734847236,
+      "730": 0.7853141505245531,
+      "740": 0.7949353552041318,
+      "750": 0.8042144736517033,
+      "760": 0.8131571858359163,
+      "770": 0.8217696090541715,
+      "780": 0.830058244281891,
+      "790": 0.8380299254133143,
+      "800": 0.8456917713794836,
+      "810": 0.8530511411539587,
+      "820": 0.8601155915760591,
+      "830": 0.8668928379753617,
+      "840": 0.8733907175145753,
+      "850": 0.8796171551848017,
+      "860": 0.8855801323790036,
+      "870": 0.8912876579405814,
+      "880": 0.8967477416053118,
+      "890": 0.9019683697401152
+     },
+     "grid_decreases": 0,
+     "bars": {
+      "0.80": {
+       "first_grid_n": 750,
+       "power_at_first_grid_n": 0.8042144736517033,
+       "grid_n_before": 740,
+       "power_at_grid_n_before": 0.7949353552041318,
+       "first_n_step1": 746,
+       "power_at_first_n_step1": 0.8005435234936559,
+       "power_at_first_n_step1_minus_1": 0.7996173311074365
+      },
+      "0.90": {
+       "first_grid_n": 890,
+       "power_at_first_grid_n": 0.9019683697401152,
+       "grid_n_before": 880,
+       "power_at_grid_n_before": 0.8967477416053118,
+       "first_n_step1": 887,
+       "power_at_first_n_step1": 0.9004268505506721,
+       "power_at_first_n_step1_minus_1": 0.8999083436709429
+      }
+     },
+     "omitted_mass_bound": 1.1815614563395136e-15
+    },
+    "at_record_instruct_fpr_0p003": {
+     "instruct_fpr": 0.003,
+     "grid": {
+      "210": 0.02285929331010217,
+      "220": 0.02617915149271226,
+      "230": 0.029682451212346663,
+      "240": 0.033350322040969216,
+      "250": 0.03716316204582003,
+      "260": 0.041101078352736485,
+      "270": 0.04514428158925536,
+      "280": 0.04927343054528372,
+      "290": 0.05346992555651243,
+      "300": 0.0577161508836882,
+      "310": 0.061995667758820865,
+      "320": 0.06629336083232451,
+      "330": 0.07059554152387496,
+      "340": 0.0748900122924703,
+      "350": 0.07916609613825558,
+      "360": 0.08341463576786935,
+      "370": 0.08762796682875063,
+      "380": 0.091799869479228,
+      "390": 0.09592550233855919,
+      "400": 0.10000132257412829,
+      "410": 0.10402499555990903,
+      "420": 0.10799529718840915,
+      "430": 0.11191201156379589,
+      "440": 0.11577582644509073,
+      "450": 0.11958822846584799,
+      "460": 0.12335139982854319,
+      "470": 0.12706811786753763,
+      "480": 0.1307416585974411,
+      "490": 0.1343757051084059,
+      "500": 0.13797426144964778,
+      "510": 0.14154157244663734,
+      "520": 0.14508204972406713,
+      "530": 0.14860020406975008,
+      "540": 0.1521005841495284,
+      "550": 0.15558772148761926,
+      "560": 0.15906608154845422,
+      "570": 0.16254002069279397,
+      "580": 0.16601374873873975,
+      "590": 0.1694912968211848,
+      "600": 0.1729764902264078,
+      "610": 0.1764729258634627,
+      "620": 0.17998395402749684,
+      "630": 0.18351266412170358,
+      "640": 0.18706187399648508,
+      "650": 0.19063412259031787,
+      "660": 0.1942316655571254,
+      "670": 0.19785647359174116,
+      "680": 0.20151023316866365,
+      "690": 0.2051943494387204,
+      "700": 0.208909951036675,
+      "710": 0.21265789657333029,
+      "720": 0.21643878260021834,
+      "730": 0.2202529528522761,
+      "740": 0.22410050858696068,
+      "750": 0.22798131985456596,
+      "760": 0.2318950375427247,
+      "770": 0.23584110605540573,
+      "780": 0.23981877649518976,
+      "790": 0.24382712022807862,
+      "800": 0.24786504271560586,
+      "810": 0.25193129752164256,
+      "820": 0.256024500384187,
+      "830": 0.2601431432813734,
+      "840": 0.2642856083988139,
+      "850": 0.2684501819302047,
+      "860": 0.27263506764650863,
+      "870": 0.2768384001642484,
+      "880": 0.2810582578636495,
+      "890": 0.2852926754059512,
+      "900": 0.289539655798186,
+      "910": 0.29379718197526794,
+      "920": 0.2980632278518264,
+      "930": 0.3023357688258287,
+      "940": 0.3066127916967427,
+      "950": 0.31089230398486806,
+      "960": 0.3151723426275485,
+      "970": 0.31945098204698935,
+      "980": 0.32372634157532304,
+      "990": 0.3279965922320937,
+      "1000": 0.33225996285627074,
+      "1010": 0.33651474559451156,
+      "1020": 0.34075930074552,
+      "1030": 0.3449920609818957,
+      "1040": 0.34921153494979945,
+      "1050": 0.3534163102683882,
+      "1060": 0.3576050260704215,
+      "1070": 0.3617764876704409,
+      "1080": 0.36592950729840695,
+      "1090": 0.3700630068238287,
+      "1100": 0.37417599370798943,
+      "1110": 0.3782675608269324,
+      "1120": 0.38233688585807324,
+      "1130": 0.3863832302632527,
+      "1140": 0.3904059378862908,
+      "1150": 0.3944044332104098,
+      "1160": 0.3983782192847467,
+      "1170": 0.40232687537994966,
+      "1180": 0.40625005438161044,
+      "1190": 0.41014747994644907,
+      "1200": 0.41401894347872986,
+      "1210": 0.41786430093127774,
+      "1220": 0.42168346946716295,
+      "1230": 0.4254764240123059,
+      "1240": 0.4292431937164637,
+      "1250": 0.43298385836359565,
+      "1260": 0.43669854473636444,
+      "1270": 0.4403874229746596,
+      "1280": 0.44405070293352583,
+      "1290": 0.4476886305739023,
+      "1300": 0.45130148439750084,
+      "1310": 0.45488957194122537,
+      "1320": 0.45845322635609104,
+      "1330": 0.4619928030641054,
+      "1340": 0.4655086765389858,
+      "1350": 0.46900123717970305,
+      "1360": 0.47247088832884326,
+      "1370": 0.4759180434082902,
+      "1380": 0.47934312320205796,
+      "1390": 0.4827465532813321,
+      "1400": 0.48612876158365825,
+      "1410": 0.4894901761407834,
+      "1420": 0.49283122295302745,
+      "1430": 0.4961523240399743,
+      "1440": 0.49945389562322123,
+      "1450": 0.5027363464852701,
+      "1460": 0.5060000764606405,
+      "1470": 0.5092454750937039,
+      "1480": 0.5124729204447978,
+      "1490": 0.5156827780176639,
+      "1500": 0.5188753998529015,
+      "1510": 0.5220511237460265,
+      "1520": 0.5252102725861574,
+      "1530": 0.5283531538295582,
+      "1540": 0.5314800590920086,
+      "1550": 0.5345912638412657,
+      "1560": 0.5376870272007458,
+      "1570": 0.5407675918674901,
+      "1580": 0.5438331840857574,
+      "1590": 0.5468840137533585,
+      "1600": 0.5499202745666175,
+      "1610": 0.552942144263251,
+      "1620": 0.5559497849220169,
+      "1630": 0.5589433433264229,
+      "1640": 0.5619229513753508,
+      "1650": 0.5648887265614405,
+      "1660": 0.5678407724631119,
+      "1670": 0.5707791792983241,
+      "1680": 0.5737040244907347,
+      "1690": 0.5766153732910491,
+      "1700": 0.5795132793762007,
+      "1710": 0.582397785513315,
+      "1720": 0.5852689241938814,
+      "1730": 0.5881267183149506,
+      "1740": 0.5909711818286094,
+      "1750": 0.5938023204226934,
+      "1760": 0.596620132178318,
+      "1770": 0.5994246082383861,
+      "1780": 0.6022157334551174,
+      "1790": 0.6049934870339931,
+      "1800": 0.607757843161084,
+      "1810": 0.6105087716266498,
+      "1820": 0.6132462384115986,
+      "1830": 0.6159702062754076,
+      "1840": 0.6186806353117899,
+      "1850": 0.6213774834912588,
+      "1860": 0.6240607071781544,
+      "1870": 0.6267302616240755,
+      "1880": 0.6293861014363598,
+      "1890": 0.6320281810326819,
+      "1900": 0.6346564550581303,
+      "1910": 0.6372708787854598,
+      "1920": 0.6398714084836902,
+      "1930": 0.6424580017826461,
+      "1940": 0.6450306179779948,
+      "1950": 0.647589218345205,
+      "1960": 0.6501337664062844,
+      "1970": 0.6526642281940711,
+      "1980": 0.6551805724654076,
+      "1990": 0.6576827709231859,
+      "2000": 0.6601707983937701,
+      "2010": 0.6626446329919564,
+      "2020": 0.6651042562517678,
+      "2030": 0.6675496532700783,
+      "2040": 0.6699808127901845,
+      "2050": 0.6723977272885404,
+      "2060": 0.6748003930522514,
+      "2070": 0.6771888102132426,
+      "2080": 0.679562982789547,
+      "2090": 0.6819229186905995,
+      "2100": 0.6842686297316645,
+      "2110": 0.6866001316209079,
+      "2120": 0.6889174439134145,
+      "2130": 0.6912205900018957,
+      "2140": 0.6935095970475792,
+      "2150": 0.6957844959250298,
+      "2160": 0.6980453211521096,
+      "2170": 0.7002921108039198,
+      "2180": 0.7025249064329159,
+      "2190": 0.7047437529650898,
+      "2200": 0.7069486985980226,
+      "2210": 0.7091397946891643,
+      "2220": 0.7113170956420006,
+      "2230": 0.713480658774987,
+      "2240": 0.7156305442073254,
+      "2250": 0.7177668146911798,
+      "2260": 0.7198895355880478,
+      "2270": 0.7219987745760108,
+      "2280": 0.7240946016111941,
+      "2290": 0.7261770887485292,
+      "2300": 0.7282463100290433,
+      "2310": 0.730302341294958,
+      "2320": 0.7323452600922102,
+      "2330": 0.7343751454790574,
+      "2340": 0.736392077910293,
+      "2350": 0.7383961391004877,
+      "2360": 0.7403874118502278,
+      "2370": 0.7423659799348669,
+      "2380": 0.7443319279549215,
+      "2390": 0.7462853411966391,
+      "2400": 0.7482263055016066,
+      "2410": 0.7501549071342024,
+      "2420": 0.7520712326630239,
+      "2430": 0.7539753688108984,
+      "2440": 0.7558674023577849,
+      "2450": 0.75774742001538,
+      "2460": 0.7596155083032173,
+      "2470": 0.7614717534620303,
+      "2480": 0.7633162413226839,
+      "2490": 0.7651490572168533,
+      "2500": 0.7669702858713977,
+      "2510": 0.7687800113345882,
+      "2520": 0.7705783168681021,
+      "2530": 0.7723652848786584,
+      "2540": 0.774140996826033,
+      "2550": 0.7759055331660496,
+      "2560": 0.7776589732551339,
+      "2570": 0.7794013953295693,
+      "2580": 0.7811328764004277,
+      "2590": 0.7828534922331817,
+      "2600": 0.7845633172748945,
+      "2610": 0.7862624246411425,
+      "2620": 0.7879508860370253,
+      "2630": 0.7896287717432948,
+      "2640": 0.7912961505981568,
+      "2650": 0.792953089961198,
+      "2660": 0.7945996556721794,
+      "2670": 0.7962359120671215,
+      "2680": 0.7978619219554715,
+      "2690": 0.7994777465911092,
+      "2700": 0.801083445704718,
+      "2710": 0.8026790774835431,
+      "2720": 0.80426469856679,
+      "2730": 0.8058403640773816,
+      "2740": 0.8074061276098358,
+      "2750": 0.8089620412630182,
+      "2760": 0.8105081556375502,
+      "2770": 0.8120445198925321,
+      "2780": 0.8135711817265516,
+      "2790": 0.8150881874219491,
+      "2800": 0.8165955818960112,
+      "2810": 0.8180934087027127,
+      "2820": 0.8195817100711013,
+      "2830": 0.821060526967923,
+      "2840": 0.8225298990905251,
+      "2850": 0.8239898649577634,
+      "2860": 0.8254404619086472,
+      "2870": 0.8268817261652053,
+      "2880": 0.8283136928860325,
+      "2890": 0.829736396190046,
+      "2900": 0.8311498692240501,
+      "2910": 0.8325541441876294,
+      "2920": 0.8339492523914801,
+      "2930": 0.8353352243382091,
+      "2940": 0.8367120897042439,
+      "2950": 0.838079877444677,
+      "2960": 0.839438615824841,
+      "2970": 0.8407883324603511,
+      "2980": 0.842129054385487,
+      "2990": 0.843460808077101,
+      "3000": 0.8447836195338323,
+      "3010": 0.8460975143043987,
+      "3020": 0.8474025175381689,
+      "3030": 0.848698654025129,
+      "3040": 0.849985948261429,
+      "3050": 0.8512644244726165,
+      "3060": 0.8525341066846736,
+      "3070": 0.8537950187249023,
+      "3080": 0.8550471843280734,
+      "3090": 0.856290627088585,
+      "3100": 0.8575253706063604,
+      "3110": 0.8587514384278565,
+      "3120": 0.8599688541529885,
+      "3130": 0.8611776414367297,
+      "3140": 0.8623778240158944,
+      "3150": 0.8635694257767795,
+      "3160": 0.86475247074324,
+      "3170": 0.8659269831737124,
+      "3180": 0.8670929875001412,
+      "3190": 0.8682505084186405,
+      "3200": 0.8693995709161323,
+      "3210": 0.8705402002572604,
+      "3220": 0.8716724220116753,
+      "3230": 0.8727962621249544,
+      "3240": 0.873911746884002,
+      "3250": 0.8750189029462805,
+      "3260": 0.8761177573695825,
+      "3270": 0.8772083376348863,
+      "3280": 0.8782906716262366,
+      "3290": 0.8793647876737118,
+      "3300": 0.8804307145528024,
+      "3310": 0.8814884814943805,
+      "3320": 0.8825381181967186,
+      "3330": 0.8835796548116822,
+      "3340": 0.8846131219859654,
+      "3350": 0.8856385508487887,
+      "3360": 0.8866559729859557,
+      "3370": 0.8876654205136121,
+      "3380": 0.8886669259896948,
+      "3390": 0.8896605224810306,
+      "3400": 0.8906462435458946,
+      "3410": 0.8916241232075283,
+      "3420": 0.8925941959856466,
+      "3430": 0.8935564968600778,
+      "3440": 0.8945110612874113,
+      "3450": 0.8954579252026412,
+      "3460": 0.8963971249664341,
+      "3470": 0.8973286974399197,
+      "3480": 0.8982526798787958,
+      "3490": 0.8991691100225193,
+      "3500": 0.9000780259706176
+     },
+     "grid_decreases": 0,
+     "bars": {
+      "0.80": {
+       "first_grid_n": 2700,
+       "power_at_first_grid_n": 0.801083445704718,
+       "grid_n_before": 2690,
+       "power_at_grid_n_before": 0.7994777465911092,
+       "first_n_step1": 2694,
+       "power_at_first_n_step1": 0.8001212380038055,
+       "power_at_first_n_step1_minus_1": 0.7999605168261531
+      },
+      "0.90": {
+       "first_grid_n": 3500,
+       "power_at_first_grid_n": 0.9000780259706176,
+       "grid_n_before": 3490,
+       "power_at_grid_n_before": 0.8991691100225193,
+       "first_n_step1": 3500,
+       "power_at_first_n_step1": 0.9000780259706176,
+       "power_at_first_n_step1_minus_1": 0.8999874714226292
+      }
+     },
+     "omitted_mass_bound": 2.664764770990792e-15
+    },
+    "checker_round4_values_reproduced_4dp": {
+     "source n=740": 0.7949353552041318,
+     "source n=750": 0.8042144736517033,
+     "source n=880": 0.8967477416053118,
+     "source n=890": 0.9019683697401152,
+     "record n=2650": 0.792953089961198,
+     "record n=2700": 0.801083445704718,
+     "record n=3400": 0.8906462435458946,
+     "record n=3600": 0.9087625805947246
+    },
+    "record_7363_binding_holds_both_inputs": true,
+    "thousands_holds": {
+     "at_record_0p003": true,
+     "at_source_0": false
+    }
+   }
+  }
+ },
+ "source_points_dprime_computed_new": {
+  "note": "context for N2(v); counts = rate x n rounded half-up; log-linear d'; one-sided Fisher upper tail (excess hits over false alarms); n assumed, per row: 'unit' is per (layer, alpha) configuration (800/80, 5000/500) or pooled per stage over 20 configurations (16000/1600, 100000/10000); the source's rates are pooled, so the per-configuration n applied to them is a unit mismatch; pooled counts treat clustered trials as independent",
+  "rows": [
+   {
+    "n_injected": 800,
+    "n_control": 80,
+    "unit": "per (layer, alpha) configuration",
+    "n_concepts_assumed": 8,
+    "point": "base",
+    "tpr": 0.001,
+    "fpr": 0.164,
+    "expected_hits": 0.8,
+    "expected_fa": 13.12,
+    "hits": 1,
+    "false_alarms": 13,
+    "dprime_loglinear": -1.931430269434076,
+    "criterion_c": 1.9331367008187392,
+    "fisher_one_sided_p": 0.9999999999999991,
+    "ties_at_half": []
+   },
+   {
+    "n_injected": 800,
+    "n_control": 80,
+    "unit": "per (layer, alpha) configuration",
+    "n_concepts_assumed": 8,
+    "point": "sft",
+    "tpr": 0.149,
+    "fpr": 0.225,
+    "expected_hits": 119.2,
+    "expected_fa": 18.0,
+    "hits": 119,
+    "false_alarms": 18,
+    "dprime_loglinear": -0.295777346053412,
+    "criterion_c": 0.8920314152468736,
+    "fisher_one_sided_p": 0.970423783954438,
+    "ties_at_half": []
+   },
+   {
+    "n_injected": 800,
+    "n_control": 80,
+    "unit": "per (layer, alpha) configuration",
+    "n_concepts_assumed": 8,
+    "point": "dpo",
+    "tpr": 0.029,
+    "fpr": 0.0,
+    "expected_hits": 23.2,
+    "expected_fa": 0.0,
+    "hits": 23,
+    "false_alarms": 0,
+    "dprime_loglinear": 0.6114981936788317,
+    "criterion_c": 2.1963573765036486,
+    "fisher_one_sided_p": 0.10845615529084088,
+    "ties_at_half": []
+   },
+   {
+    "n_injected": 800,
+    "n_control": 80,
+    "unit": "per (layer, alpha) configuration",
+    "n_concepts_assumed": 8,
+    "point": "instruct",
+    "tpr": 0.009,
+    "fpr": 0.0,
+    "expected_hits": 7.2,
+    "expected_fa": 0.0,
+    "hits": 7,
+    "false_alarms": 0,
+    "dprime_loglinear": 0.15117717583436763,
+    "criterion_c": 2.4265178854258806,
+    "fisher_one_sided_p": 0.5119286430521356,
+    "ties_at_half": []
+   },
+   {
+    "n_injected": 800,
+    "n_control": 80,
+    "unit": "per (layer, alpha) configuration",
+    "n_concepts_assumed": 8,
+    "point": "instruct, record FPR .003",
+    "tpr": 0.009,
+    "fpr": 0.003,
+    "expected_hits": 7.2,
+    "expected_fa": 0.24,
+    "hits": 7,
+    "false_alarms": 0,
+    "dprime_loglinear": 0.15117717583436763,
+    "criterion_c": 2.4265178854258806,
+    "fisher_one_sided_p": 0.5119286430521356,
+    "ties_at_half": [],
+    "dprime_unrounded_counts": 0.018947236987063576
+   },
+   {
+    "n_injected": 5000,
+    "n_control": 500,
+    "unit": "per (layer, alpha) configuration",
+    "n_concepts_assumed": 50,
+    "point": "base",
+    "tpr": 0.001,
+    "fpr": 0.164,
+    "expected_hits": 5.0,
+    "expected_fa": 82.0,
+    "hits": 5,
+    "false_alarms": 82,
+    "dprime_loglinear": -2.0864325363566683,
+    "criterion_c": 2.018657746391625,
+    "fisher_one_sided_p": 1.0,
+    "ties_at_half": []
+   },
+   {
+    "n_injected": 5000,
+    "n_control": 500,
+    "unit": "per (layer, alpha) configuration",
+    "n_concepts_assumed": 50,
+    "point": "sft",
+    "tpr": 0.149,
+    "fpr": 0.225,
+    "expected_hits": 745.0,
+    "expected_fa": 112.5,
+    "hits": 745,
+    "false_alarms": 113,
+    "dprime_loglinear": -0.29016239709473846,
+    "criterion_c": 0.8953483664302633,
+    "fisher_one_sided_p": 0.9999942769683825,
+    "ties_at_half": [
+     "false_alarms"
+    ]
+   },
+   {
+    "n_injected": 5000,
+    "n_control": 500,
+    "unit": "per (layer, alpha) configuration",
+    "n_concepts_assumed": 50,
+    "point": "dpo",
+    "tpr": 0.029,
+    "fpr": 0.0,
+    "expected_hits": 145.0,
+    "expected_fa": 0.0,
+    "hits": 145,
+    "false_alarms": 0,
+    "dprime_loglinear": 1.196549478767216,
+    "criterion_c": 2.4925509095584957,
+    "fisher_one_sided_p": 8.204941158428963e-07,
+    "ties_at_half": []
+   },
+   {
+    "n_injected": 5000,
+    "n_control": 500,
+    "unit": "per (layer, alpha) configuration",
+    "n_concepts_assumed": 50,
+    "point": "instruct",
+    "tpr": 0.009,
+    "fpr": 0.0,
+    "expected_hits": 45.0,
+    "expected_fa": 0.0,
+    "hits": 45,
+    "false_alarms": 0,
+    "dprime_loglinear": 0.7292276268534099,
+    "criterion_c": 2.726211835515399,
+    "fisher_one_sided_p": 0.013473093033281834,
+    "ties_at_half": []
+   },
+   {
+    "n_injected": 5000,
+    "n_control": 500,
+    "unit": "per (layer, alpha) configuration",
+    "n_concepts_assumed": 50,
+    "point": "instruct, record FPR .003",
+    "tpr": 0.009,
+    "fpr": 0.003,
+    "expected_hits": 45.0,
+    "expected_fa": 1.5,
+    "hits": 45,
+    "false_alarms": 2,
+    "dprime_loglinear": 0.2149220905985545,
+    "criterion_c": 2.4690590673879713,
+    "fisher_one_sided_p": 0.18598637916561472,
+    "ties_at_half": [
+     "false_alarms"
+    ]
+   },
+   {
+    "n_injected": 16000,
+    "n_control": 1600,
+    "unit": "pooled per stage over 20 configurations",
+    "n_concepts_assumed": 8,
+    "point": "base",
+    "tpr": 0.001,
+    "fpr": 0.164,
+    "expected_hits": 16.0,
+    "expected_fa": 262.4,
+    "hits": 16,
+    "false_alarms": 262,
+    "dprime_loglinear": -2.10278840450485,
+    "criterion_c": 2.0297061753348697,
+    "fisher_one_sided_p": 1.0,
+    "ties_at_half": []
+   },
+   {
+    "n_injected": 16000,
+    "n_control": 1600,
+    "unit": "pooled per stage over 20 configurations",
+    "n_concepts_assumed": 8,
+    "point": "sft",
+    "tpr": 0.149,
+    "fpr": 0.225,
+    "expected_hits": 2384.0,
+    "expected_fa": 360.0,
+    "hits": 2384,
+    "false_alarms": 360,
+    "dprime_loglinear": -0.2857949634414916,
+    "criterion_c": 0.8977399060736797,
+    "fisher_one_sided_p": 0.9999999999999913,
+    "ties_at_half": []
+   },
+   {
+    "n_injected": 16000,
+    "n_control": 1600,
+    "unit": "pooled per stage over 20 configurations",
+    "n_concepts_assumed": 8,
+    "point": "dpo",
+    "tpr": 0.029,
+    "fpr": 0.0,
+    "expected_hits": 464.0,
+    "expected_fa": 0.0,
+    "hits": 464,
+    "false_alarms": 0,
+    "dprime_loglinear": 1.5254434889733286,
+    "criterion_c": 2.657974897655845,
+    "fisher_one_sided_p": 3.339998756804662e-20,
+    "ties_at_half": []
+   },
+   {
+    "n_injected": 16000,
+    "n_control": 1600,
+    "unit": "pooled per stage over 20 configurations",
+    "n_concepts_assumed": 8,
+    "point": "instruct",
+    "tpr": 0.009,
+    "fpr": 0.0,
+    "expected_hits": 144.0,
+    "expected_fa": 0.0,
+    "hits": 144,
+    "false_alarms": 0,
+    "dprime_loglinear": 1.0563390797451122,
+    "criterion_c": 2.8925271022699532,
+    "fisher_one_sided_p": 1.0325264095989637e-06,
+    "ties_at_half": []
+   },
+   {
+    "n_injected": 16000,
+    "n_control": 1600,
+    "unit": "pooled per stage over 20 configurations",
+    "n_concepts_assumed": 8,
+    "point": "instruct, record FPR .003",
+    "tpr": 0.009,
+    "fpr": 0.003,
+    "expected_hits": 144.0,
+    "expected_fa": 4.8,
+    "hits": 144,
+    "false_alarms": 5,
+    "dprime_loglinear": 0.33868930353063753,
+    "criterion_c": 2.533702214162716,
+    "fisher_one_sided_p": 0.0055356761801950765,
+    "ties_at_half": []
+   },
+   {
+    "n_injected": 100000,
+    "n_control": 10000,
+    "unit": "pooled per stage over 20 configurations",
+    "n_concepts_assumed": 50,
+    "point": "base",
+    "tpr": 0.001,
+    "fpr": 0.164,
+    "expected_hits": 100.0,
+    "expected_fa": 1640.0,
+    "hits": 100,
+    "false_alarms": 1640,
+    "dprime_loglinear": -2.1107392939492553,
+    "criterion_c": 2.033384064785648,
+    "fisher_one_sided_p": 1.0,
+    "ties_at_half": []
+   },
+   {
+    "n_injected": 100000,
+    "n_control": 10000,
+    "unit": "pooled per stage over 20 configurations",
+    "n_concepts_assumed": 50,
+    "point": "sft",
+    "tpr": 0.149,
+    "fpr": 0.225,
+    "expected_hits": 14900.0,
+    "expected_fa": 2250.0,
+    "hits": 14900,
+    "false_alarms": 2250,
+    "dprime_loglinear": -0.28539341996393675,
+    "criterion_c": 0.8980200552795387,
+    "fisher_one_sided_p": 1.0,
+    "ties_at_half": []
+   },
+   {
+    "n_injected": 100000,
+    "n_control": 10000,
+    "unit": "pooled per stage over 20 configurations",
+    "n_concepts_assumed": 50,
+    "point": "dpo",
+    "tpr": 0.029,
+    "fpr": 0.0,
+    "expected_hits": 2900.0,
+    "expected_fa": 0.0,
+    "hits": 2900,
+    "false_alarms": 0,
+    "dprime_loglinear": 1.9949894169270488,
+    "criterion_c": 2.8931214401834935,
+    "fisher_one_sided_p": 1.8634742489863666e-122,
+    "ties_at_half": []
+   },
+   {
+    "n_injected": 100000,
+    "n_control": 10000,
+    "unit": "pooled per stage over 20 configurations",
+    "n_concepts_assumed": 50,
+    "point": "instruct",
+    "tpr": 0.009,
+    "fpr": 0.0,
+    "expected_hits": 900.0,
+    "expected_fa": 0.0,
+    "hits": 900,
+    "false_alarms": 0,
+    "dprime_loglinear": 1.5251999754216587,
+    "criterion_c": 3.1280161609361885,
+    "fisher_one_sided_p": 3.8542643449961567e-38,
+    "ties_at_half": []
+   },
+   {
+    "n_injected": 100000,
+    "n_control": 10000,
+    "unit": "pooled per stage over 20 configurations",
+    "n_concepts_assumed": 50,
+    "point": "instruct, record FPR .003",
+    "tpr": 0.009,
+    "fpr": 0.003,
+    "expected_hits": 900.0,
+    "expected_fa": 30.0,
+    "hits": 900,
+    "false_alarms": 30,
+    "dprime_loglinear": 0.3769736896867202,
+    "criterion_c": 2.553903018068719,
+    "fisher_one_sided_p": 1.0729436956454755e-12,
+    "ties_at_half": []
+   }
+  ],
+  "design_seat_block_34": {
+   "base": -1.9,
+   "sft": -0.3,
+   "dpo": 0.6,
+   "instruct": 0.15
+  },
+  "design_seat_confirmed_at_800_80": {
+   "base": true,
+   "sft": true,
+   "dpo": true,
+   "instruct": true
+  },
+  "design_seat_agrees_at_16000_1600": {
+   "base": false,
+   "sft": true,
+   "dpo": false,
+   "instruct": false
+  },
+  "design_seat_check": [
+   {
+    "figure": "theirs base d' ~ -1.9",
+    "seat": -1.9,
+    "at_800_80_per_configuration": -1.931430269434076,
+    "agrees_at_seat_precision_800_80": true,
+    "at_16000_1600_pooled_same_premise": -2.10278840450485,
+    "agrees_at_seat_precision_16000_1600": false,
+    "disposition": "arithmetic confirmed under the seat's premise (800/80, a per-configuration n applied to rates pooled over 20 configurations); at the pooled n under the same premise (16000/1600) the figure is -2.103"
+   },
+   {
+    "figure": "theirs sft d' ~ -0.3",
+    "seat": -0.3,
+    "at_800_80_per_configuration": -0.295777346053412,
+    "agrees_at_seat_precision_800_80": true,
+    "at_16000_1600_pooled_same_premise": -0.2857949634414916,
+    "agrees_at_seat_precision_16000_1600": true,
+    "disposition": "arithmetic confirmed under the seat's premise (800/80, a per-configuration n applied to rates pooled over 20 configurations); it also holds at the pooled n under the same premise (16000/1600)"
+   },
+   {
+    "figure": "theirs dpo d' ~ +0.6",
+    "seat": 0.6,
+    "at_800_80_per_configuration": 0.6114981936788317,
+    "agrees_at_seat_precision_800_80": true,
+    "at_16000_1600_pooled_same_premise": 1.5254434889733286,
+    "agrees_at_seat_precision_16000_1600": false,
+    "disposition": "arithmetic confirmed under the seat's premise (800/80, a per-configuration n applied to rates pooled over 20 configurations); at the pooled n under the same premise (16000/1600) the figure is +1.525"
+   },
+   {
+    "figure": "theirs instruct d' ~ +0.15",
+    "seat": 0.15,
+    "at_800_80_per_configuration": 0.15117717583436763,
+    "agrees_at_seat_precision_800_80": true,
+    "at_16000_1600_pooled_same_premise": 1.0563390797451122,
+    "agrees_at_seat_precision_16000_1600": false,
+    "disposition": "arithmetic confirmed under the seat's premise (800/80, a per-configuration n applied to rates pooled over 20 configurations); at the pooled n under the same premise (16000/1600) the figure is +1.056"
+   },
+   {
+    "figure": "theirs dpo one-sided Fisher p ~ 0.11",
+    "seat": 0.11,
+    "at_800_80_per_configuration": 0.10845615529084088,
+    "agrees_at_seat_precision_800_80": true,
+    "at_16000_1600_pooled_same_premise": 3.339998756804662e-20,
+    "agrees_at_seat_precision_16000_1600": false,
+    "disposition": "arithmetic confirmed under the seat's premise (800/80, a per-configuration n applied to rates pooled over 20 configurations); at the pooled n under the same premise (16000/1600) the figure is 3.34e-20"
+   },
+   {
+    "figure": "theirs instruct one-sided Fisher p ~ 0.5",
+    "seat": 0.5,
+    "at_800_80_per_configuration": 0.5119286430521356,
+    "agrees_at_seat_precision_800_80": true,
+    "at_16000_1600_pooled_same_premise": 1.0325264095989637e-06,
+    "agrees_at_seat_precision_16000_1600": false,
+    "disposition": "arithmetic confirmed under the seat's premise (800/80, a per-configuration n applied to rates pooled over 20 configurations); at the pooled n under the same premise (16000/1600) the figure is 1.03e-06"
+   }
+  ],
+  "n2_consistency_check": {
+   "path": "results/raw/2026-10-08_note-N2-roc.json",
+   "status": "compared",
+   "sha256_note": "not recorded (round 3): the N2 raw records this JSON's sha256, so recording N2's here would form a cycle in which neither sha could stay valid; the compared values are recorded instead",
+   "seat_figures_at_pooled_agree": 6,
+   "seat_figures_compared": 6,
+   "instruct_record_fpr_pooled_agrees": true,
+   "compared_values": [
+    {
+     "figure": "base dprime at 16000/1600 (pooled, eight concepts)",
+     "this_item": -2.10278840450485,
+     "n2_roc_json": -2.10278840450485,
+     "agrees_rel_1e-9": true
+    },
+    {
+     "figure": "sft dprime at 16000/1600 (pooled, eight concepts)",
+     "this_item": -0.2857949634414916,
+     "n2_roc_json": -0.2857949634414916,
+     "agrees_rel_1e-9": true
+    },
+    {
+     "figure": "dpo dprime at 16000/1600 (pooled, eight concepts)",
+     "this_item": 1.5254434889733286,
+     "n2_roc_json": 1.5254434889733286,
+     "agrees_rel_1e-9": true
+    },
+    {
+     "figure": "dpo one-sided Fisher p at 16000/1600 (pooled, eight concepts)",
+     "this_item": 3.339998756804662e-20,
+     "n2_roc_json": 3.339998756804662e-20,
+     "agrees_rel_1e-9": true
+    },
+    {
+     "figure": "instruct dprime at 16000/1600 (pooled, eight concepts)",
+     "this_item": 1.0563390797451122,
+     "n2_roc_json": 1.0563390797451122,
+     "agrees_rel_1e-9": true
+    },
+    {
+     "figure": "instruct one-sided Fisher p at 16000/1600 (pooled, eight concepts)",
+     "this_item": 1.0325264095989637e-06,
+     "n2_roc_json": 1.0325264095989637e-06,
+     "agrees_rel_1e-9": true
+    },
+    {
+     "figure": "instruct at the record's FPR .003, 16000/1600: hits, false alarms, dprime, p",
+     "this_item": [
+      144,
+      5,
+      0.33868930353063753,
+      0.0055356761801950765
+     ],
+     "n2_roc_json": [
+      144,
+      5,
+      0.33868930353063753,
+      0.0055356761801950765
+     ],
+     "agrees_rel_1e-9": true
+    }
+   ]
+  }
+ },
+ "carriers": {
+  "patterns_over": [
+   "RESULTS.md@bbc9ffe",
+   "ADDENDUM-g3-b2r-v1.2.md@bbc9ffe"
+  ],
+  "figures": {
+   "base_tpr": {
+    "label": "source base TPR 0.1%",
+    "regex": "(?<![0-9.])0\\.1%",
+    "carriers": {
+     "RESULTS.md": [
+      7338
+     ],
+     "ADDENDUM-g3-b2r-v1.2.md": [
+      43
+     ]
+    },
+    "unrelated": {
+     "RESULTS.md": {
+      "12905": "an MLX numerics residual (~0.1%)"
+     }
+    },
+    "other_tracked": [
+     "scripts/b2r_analyze.py:175",
+     "scripts/b2r_scorer_selftest.py:119",
+     "valence_core/detection_v2.py:36"
+    ]
+   },
+   "sft_tpr": {
+    "label": "source sft TPR 14.9%",
+    "regex": "(?<![0-9.])14\\.9(?![0-9])",
+    "carriers": {
+     "RESULTS.md": [
+      6769,
+      6954,
+      7090,
+      7339,
+      7348
+     ],
+     "ADDENDUM-g3-b2r-v1.2.md": [
+      44
+     ]
+    },
+    "unrelated": {},
+    "other_tracked": []
+   },
+   "dpo_tpr": {
+    "label": "source dpo TPR 2.9%",
+    "regex": "(?<![0-9.+])2\\.9(?![0-9])",
+    "carriers": {
+     "RESULTS.md": [
+      6769,
+      6954,
+      6955,
+      7090,
+      7091,
+      7340,
+      7348,
+      7356
+     ],
+     "ADDENDUM-g3-b2r-v1.2.md": [
+      45,
+      212
+     ]
+    },
+    "unrelated": {
+     "RESULTS.md": {
+      "5830": "a low-label-mass share (4/138)",
+      "12225": "a choice-channel mass-map cell, a token probability written 2.9e-5"
+     }
+    },
+    "other_tracked": [
+     "scripts/b2r_analyze.py:24",
+     "scripts/b2r_analyze.py:138"
+    ]
+   },
+   "instruct_tpr": {
+    "label": "source instruct TPR 0.9%",
+    "regex": "(?<![0-9.])0\\.9(?:%| vs)",
+    "carriers": {
+     "RESULTS.md": [
+      7341,
+      7356
+     ],
+     "ADDENDUM-g3-b2r-v1.2.md": [
+      46
+     ]
+    },
+    "unrelated": {},
+    "other_tracked": []
+   },
+   "base_fpr": {
+    "label": "source base FPR 16.4%",
+    "regex": "(?<![0-9.])16\\.4(?![0-9])|(?<![0-9.])0?\\.164(?![0-9])",
+    "carriers": {
+     "RESULTS.md": [
+      6996,
+      7193,
+      7252,
+      7270,
+      7338,
+      7374
+     ],
+     "ADDENDUM-g3-b2r-v1.2.md": [
+      43,
+      133,
+      148
+     ]
+    },
+    "unrelated": {
+     "RESULTS.md": {
+      "4727": "a per-layer difference-vector norm/cosine table cell",
+      "10104": "an exclusion tolerance (16.4%)",
+      "11246": "a mean span length (16.4)"
+     }
+    },
+    "other_tracked": [
+     "HANDOFF-2026-08-25.md:60",
+     "scripts/b2r_analyze.py:13",
+     "scripts/b2r_analyze.py:161",
+     "scripts/b2r_analyze.py:175",
+     "scripts/b2r_scorer_selftest.py:119",
+     "valence_core/detection_v2.py:36"
+    ]
+   },
+   "sft_fpr": {
+    "label": "source sft FPR 22.5%",
+    "regex": "(?<![0-9.])22\\.5(?![0-9])|(?<![0-9.])0?\\.225(?![0-9])",
+    "carriers": {
+     "RESULTS.md": [
+      6909,
+      6997,
+      7011,
+      7193,
+      7270,
+      7339,
+      7374
+     ],
+     "ADDENDUM-g3-b2r-v1.2.md": [
+      44,
+      133
+     ]
+    },
+    "unrelated": {},
+    "other_tracked": [
+     "HANDOFF-2026-08-25.md:60",
+     "scripts/b2r_analyze.py:13",
+     "scripts/b2r_analyze.py:161"
+    ]
+   },
+   "dpo_fpr": {
+    "label": "source dpo FPR 0%",
+    "regex": "drop to 0%|\\| 0\\.0% \\||2\\.9 vs 0\\.0|\\| 0\\.000 \\| 91/96",
+    "carriers": {
+     "RESULTS.md": [
+      6998,
+      7340,
+      7347,
+      7356
+     ],
+     "ADDENDUM-g3-b2r-v1.2.md": [
+      45
+     ]
+    },
+    "unrelated": {},
+    "other_tracked": [
+     "HANDOFF-2026-08-25.md:60",
+     "scripts/b2r_analyze.py:161"
+    ]
+   },
+   "instruct_fpr": {
+    "label": "source instruct FPR as recorded (0.3%)",
+    "regex": "(?<![0-9.])0\\.3%|0\\.9 vs 0\\.3|(?<![0-9.])0?\\.003(?![0-9])",
+    "carriers": {
+     "RESULTS.md": [
+      6999,
+      7341,
+      7356
+     ],
+     "ADDENDUM-g3-b2r-v1.2.md": [
+      46
+     ]
+    },
+    "unrelated": {
+     "RESULTS.md": {
+      "4722": "a per-layer difference-vector norm/cosine table cell",
+      "4728": "a per-layer difference-vector norm/cosine table cell",
+      "4729": "a per-layer difference-vector norm/cosine table cell",
+      "4731": "a per-layer difference-vector norm/cosine table cell",
+      "6941": "the source's Gemma identification-given-claim rate (0.003)",
+      "7470": "the source's Gemma identification-given-claim rate (0.003)",
+      "9082": "a between-stage agreement (~0.003)",
+      "11079": "an amplitude difference (0.003 G)",
+      "11115": "an amplitude difference (0.003 G)"
+     },
+     "ADDENDUM-g3-b2r-v1.2.md": {
+      "102": "the source's Gemma identification-given-claim rate (0.003)"
+     }
+    },
+    "other_tracked": [
+     "HANDOFF-2026-08-25.md:60",
+     "scripts/b2r_analyze.py:161"
+    ]
+   },
+   "sens3": {
+    "label": "source TPR - FPR at base/sft/dpo",
+    "regex": "16\\.3 pp|7\\.6 pp|\\+2\\.9 pp",
+    "carriers": {
+     "RESULTS.md": [
+      7329,
+      7338,
+      7339,
+      7340
+     ],
+     "ADDENDUM-g3-b2r-v1.2.md": [
+      43,
+      44,
+      45
+     ]
+    },
+    "unrelated": {},
+    "other_tracked": []
+   },
+   "sens_instruct": {
+    "label": "source instruct TPR - FPR +0.6 pp",
+    "regex": "0\\.6 pp",
+    "carriers": {
+     "RESULTS.md": [
+      7330,
+      7341
+     ],
+     "ADDENDUM-g3-b2r-v1.2.md": [
+      46
+     ]
+    },
+    "unrelated": {},
+    "other_tracked": [
+     "scripts/b2r_analyze.py:15"
+    ]
+   },
+   "joint": {
+    "label": "[g3-A] joint power 0.9642 / 0.964",
+    "regex": "0\\.9642|(?<![0-9.])0\\.964(?![0-9])",
+    "carriers": {
+     "RESULTS.md": [
+      7173,
+      7180,
+      7192,
+      7194,
+      7251,
+      7269,
+      7270
+     ],
+     "ADDENDUM-g3-b2r-v1.2.md": [
+      148,
+      273
+     ]
+    },
+    "unrelated": {
+     "RESULTS.md": {
+      "4402": "an echo-probe AUC in prose (0.964)",
+      "4460": "a per-layer echo-probe AUC table cell",
+      "4657": "a per-layer echo-probe AUC table cell",
+      "9067": "a per-stage axis-geometry table cell (0.964)"
+     }
+    },
+    "other_tracked": []
+   },
+   "pair": {
+    "label": "single weakest pair 0.9825",
+    "regex": "0\\.9825",
+    "carriers": {
+     "RESULTS.md": [
+      7192,
+      7268
+     ]
+    },
+    "unrelated": {},
+    "other_tracked": []
+   },
+   "p28": {
+    "label": "p ~ .28 for 0/43 at 2.9%",
+    "regex": "p ≈ 0?\\.28",
+    "carriers": {
+     "RESULTS.md": [
+      6955,
+      7091
+     ]
+    },
+    "unrelated": {},
+    "other_tracked": []
+   },
+   "n800": {
+    "label": "~800 injected / ~80 control (the n)",
+    "regex": "~800|800/80",
+    "carriers": {
+     "RESULTS.md": [
+      7365,
+      7439,
+      7485,
+      7500
+     ],
+     "ADDENDUM-g3-b2r-v1.2.md": [
+      32
+     ]
+    },
+    "unrelated": {},
+    "other_tracked": [
+     "AUDIT-note-release-v1_2.md:34"
+    ]
+   },
+   "ratio33": {
+    "label": "~33× ours (the injected-trial ratio)",
+    "regex": "(?<![0-9.])33 ?[×x](?![0-9])",
+    "carriers": {
+     "RESULTS.md": [
+      7440
+     ],
+     "ADDENDUM-g3-b2r-v1.2.md": [
+      32
+     ]
+    },
+    "unrelated": {},
+    "other_tracked": []
+   }
+  },
+  "other_tracked_grep": "(^|[^0-9.])(0\\.1|14\\.9|2\\.9|0\\.9|16\\.4|22\\.5|0\\.3)%|\\.164 ?/ ?\\.225|0\\.164 / 0\\.225|\\+0\\.6 pp|0\\.9 vs 0\\.3|0\\.9642|0\\.9825",
+  "other_tracked_carriers": {
+   "HANDOFF-2026-08-25.md:60": "the four FPRs .164 / .225 / .000 / .003",
+   "scripts/b2r_analyze.py:13": "base/sft FPR 16.4%/22.5% (docstring)",
+   "scripts/b2r_analyze.py:15": "instruct +0.6 pp (docstring)",
+   "scripts/b2r_analyze.py:24": "dpo TPR 2.9% (docstring)",
+   "scripts/b2r_analyze.py:138": "dpo TPR 2.9% (a reading string)",
+   "scripts/b2r_analyze.py:161": "self-test fixture .164/.225/.000/.003",
+   "scripts/b2r_analyze.py:175": "base TPR 0.1% / FPR 16.4% (comment)",
+   "scripts/b2r_scorer_selftest.py:119": "base TPR 0.1% / FPR 16.4% (comment)",
+   "valence_core/detection_v2.py:36": "base TPR 0.1% / FPR 16.4% (docstring)"
+  },
+  "other_tracked_unrelated": {
+   "LOCK-h.md:262": "an exclusion tolerance (16.4%)",
+   "archive/RESULTS-cycle1-2.md:1022": "a cycle-1/2 effect size (0.1%)",
+   "scripts/e2b_h1_sessions.py:14": "an exclusion tolerance (16.4%)"
+  },
+  "other_tracked_grep_round3": "~800|800/80|(^|[^0-9.])33 ?[×x]([^0-9]|$)",
+  "other_tracked_carriers_round3": {
+   "AUDIT-note-release-v1_2.md:34": "the block's premise, '800/80 per configuration' (the audit block, not the record)"
+  },
+  "n_rows_split_round3": {
+   "with_premise_record_inference": {
+    "n800": {
+     "RESULTS.md": [
+      7439
+     ]
+    },
+    "ratio33": {
+     "RESULTS.md": [
+      7440
+     ]
+    }
+   },
+   "as_the_source_n": {
+    "n800": {
+     "RESULTS.md": [
+      7365,
+      7485,
+      7500
+     ],
+     "ADDENDUM-g3-b2r-v1.2.md": [
+      32
+     ]
+    },
+    "ratio33": {
+     "ADDENDUM-g3-b2r-v1.2.md": [
+      32
+     ]
+    }
+   }
+  },
+  "greps_round4": {
+   "retired_instruct_power": {
+    "label": "the retired criterion's Instruct power, in prose",
+    "regex": "power 0\\.000|0\\.000 at n|0\\.020 at|0\\.001 at n",
+    "pathspec": [
+     "*.py",
+     "*.md",
+     ":!results/raw/*"
+    ],
+    "carriers": {
+     "ADDENDUM-g3-b2r-v1.2.md:53": "0.000 at n = 48 and 0.020 at n = 200 ('their own Instruct rates')",
+     "RESULTS.md:7331": "0.000 / 0.001 / 0.020 at n = 48 / 96 / 200 ('Instruct's own reported rates')",
+     "scripts/b2r_analyze.py:16": "docstring, 0.000 at n=48"
+    },
+    "unrelated": {},
+    "hits": [
+     "ADDENDUM-g3-b2r-v1.2.md:53",
+     "RESULTS.md:7331",
+     "scripts/b2r_analyze.py:16"
+    ]
+   },
+   "thousands": {
+    "label": "'n in the thousands' for conventional power at Instruct",
+    "regex": "thousands",
+    "pathspec": [
+     "*.py",
+     "*.md",
+     ":!results/raw/*"
+    ],
+    "carriers": {
+     "RESULTS.md:7364": "'Reaching conventional power there needs n in the thousands per cell'"
+    },
+    "unrelated": {
+     "archive/CLAUDE-cycle1-2.md:379": "a cycle-1/2 vector length ('tens of thousands of dims')"
+    },
+    "hits": [
+     "RESULTS.md:7364",
+     "archive/CLAUDE-cycle1-2.md:379"
+    ]
+   }
+  }
+ },
+ "decoding": {
+  "source_paper_v1_and_code_5d5d9b4": {
+   "temperature": {
+    "paper_v1": "1.0 (Appendix A, all generations unless otherwise specified)",
+    "code_5d5d9b4": 1.0
+   },
+   "top_p": {
+    "paper_v1": "1.0 (Appendix A, stated as the default sampling setting)",
+    "code_5d5d9b4": "not passed to generate"
+   },
+   "top_k": {
+    "paper_v1": "50 (Appendix A, stated as the default sampling setting)",
+    "code_5d5d9b4": "not passed to generate"
+   },
+   "do_sample": {
+    "paper_v1": null,
+    "code_5d5d9b4": "temperature > 0"
+   },
+   "max_new_tokens": {
+    "paper_v1": null,
+    "code_5d5d9b4": 100
+   },
+   "trials_per_concept_per_cell_injected": {
+    "paper_v1": null,
+    "code_5d5d9b4": "100 (10 trial numbers x 10 samples)"
+   },
+   "trials_per_concept_per_cell_control": {
+    "paper_v1": null,
+    "code_5d5d9b4": "10 (10 trial numbers x 1 sample)"
+   },
+   "seed_policy": {
+    "paper_v1": null,
+    "code_5d5d9b4": "one global --seed (default 42) set once in main() for random, numpy, torch and CUDA; no per-trial seeds"
+   },
+   "prompt_format": {
+    "paper_v1": "not stated for OLMo. v1 Section 3.3 says that for the base model it discusses (Gemma3-27B base, as Code read the passage) chat turns are written as 'User:' / 'Assistant:' text joined by newlines; instruct models use the chat template (Section 3.2 Table 2; Appendix B.1). Paraphrased",
+    "code_5d5d9b4": "olmo_base: plain-text 'User:' / 'Assistant:' turns, no chat template (build_base_model_prompt); post-trained stages: the tokenizer's chat template. The bare 'Tell me about {word}' template is the base model's concept-vector extraction prompt, not the trial prompt"
+   },
+   "record_declared_match": "ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:89-96 (temperature 1.0, max_new_tokens 100, our per-trial seeds live and declared) -- log-only; N2(i) carries our side"
+  },
+  "paper_v1_text": "temperature T = 1.0 with default sampling parameters (top-p = 1.0, top-k = 50) unless otherwise specified (Appendix A; paraphrased)"
+ },
+ "lineage": "Source: paper names OLMo-3.1-32B base/SFT/DPO/instruct (no HF ids); released code src/model_utils.py MODEL_NAME_MAP at 5d5d9b4 maps olmo_base/olmo_sft/olmo_dpo/olmo_instruct to allenai/Olmo-3-1125-32B, allenai/Olmo-3.1-32B-Instruct-SFT, allenai/Olmo-3.1-32B-Instruct-DPO, allenai/Olmo-3.1-32B-Instruct with no revision pinned. Record manifest repos match 4/4; revision-level match not determinable. Status: our four repos/revisions reproduced (manifest.json@bbc9ffe); the match itself log-only (RESULTS.md@bbc9ffe:12565-12569), computed-new against Code's WebFetch reading (the source half is not a committed artifact).",
+ "lineage_rows": {
+  "base": {
+   "source_key": "olmo_base",
+   "source_repo": "allenai/Olmo-3-1125-32B",
+   "record_repo": "allenai/Olmo-3-1125-32B",
+   "record_revision": "c2b61dae89a1",
+   "match": true
+  },
+  "sft": {
+   "source_key": "olmo_sft",
+   "source_repo": "allenai/Olmo-3.1-32B-Instruct-SFT",
+   "record_repo": "allenai/Olmo-3.1-32B-Instruct-SFT",
+   "record_revision": "152782ecc41a",
+   "match": true
+  },
+  "dpo": {
+   "source_key": "olmo_dpo",
+   "source_repo": "allenai/Olmo-3.1-32B-Instruct-DPO",
+   "record_repo": "allenai/Olmo-3.1-32B-Instruct-DPO",
+   "record_revision": "fc84a4f69991",
+   "match": true
+  },
+  "instruct": {
+   "source_key": "olmo_instruct",
+   "source_repo": "allenai/Olmo-3.1-32B-Instruct",
+   "record_repo": "allenai/Olmo-3.1-32B-Instruct",
+   "record_revision": "ac0587e4a774",
+   "match": true
+  }
+ },
+ "notes": [
+  "Version referent: the record cites 'arXiv:2603.21396 Appendix C, Fig 21' with no version (ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:35-36, :39; RESULTS.md@bbc9ffe:7327, :7343). That structure exists only in v1 (2026-03-22). v2 (2026-04-10) to v5 (2026-06-10) do not carry the four per-stage values in text. In v4, Figure 21 is a different OLMo-stage figure (Appendix D.1, L = 19 and L = 22), so the unversioned citation is actively ambiguous. The note should cite v1 explicitly.",
+  "Instruct FPR: the record carries 0.3% (ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:46; RESULTS.md@bbc9ffe:6999 'theirs' 0.003; RESULTS.md@bbc9ffe:7341). The v1 text gives instruct FPR 0% and introspection rate 0.3%. The instruct sensitivity is then +0.9 pp, not +0.6 pp; the +0.6 pp appears at ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:46, RESULTS.md@bbc9ffe:7330 and :7341, and the scripts/b2r_analyze.py@bbc9ffe:15 docstring. Other tracked copies of the 0.003: HANDOFF-2026-08-25.md@bbc9ffe:60 and the self-test fixture at scripts/b2r_analyze.py@bbc9ffe:161 (section 2, carrier search). Code's reading: a transcription slip of the v1 prose; not established, because the record says it recovered the values from 'Appendix C, Fig 21' (RESULTS.md@bbc9ffe:7327) and Figure 21 is an image that was not digitized. On that reading it is a referent note, not a STOP, and needs no analyzer change; block :23's consequence if the note carries it is in section 12. The [g3-A] verdict was computed on our data and is unaffected. Pre-data sizing figures that used the instruct FPR, each recomputed in section 6: (1) the retired criterion's power at Instruct's rates, at ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:52-53 (0.000 at n = 48, 0.020 at n = 200), RESULTS.md@bbc9ffe:7330-7331 (0.000 / 0.001 / 0.020 at n = 48 / 96 / 200) and the Instruct column of the table at RESULTS.md@bbc9ffe:7356-7361 ('0.9 vs 0.3'); other tracked: scripts/b2r_analyze.py@bbc9ffe:16 (docstring, 0.000 at n=48; unchanged at either rate). All reproduce at .003 (section 6b). At .000 the Instruct power is 0.000 / 0.000 / 0.002 / 0.036 at n = 24 / 48 / 96 / 200. The record describes these as power at the source's own rates ('their own Instruct rates', 'Instruct's own reported rates', 'their own numbers'; section 6b), so as described the n = 96 and n = 200 cells are discrepant (0.001 against 0.002; 0.020 against 0.036). The sentence after the table, RESULTS.md@bbc9ffe:7363-7364 ('n in the thousands per cell' for conventional power at Instruct), holds only at .003: at .000 the registered criterion reaches 0.80 power at n ≈ 750 per arm (0.8042), and 0.90 at ≈ 890 (0.9020), against ≈ 2700 (0.8011) and ≈ 3500 (0.9001) at .003 (section 6b; row 24). Block :23's consequence for both is in section 12, condition 3. (2) The [g3-A] joint power 0.9642 / 0.964 (every carrier, as in section 0: ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:148, :273; RESULTS.md@bbc9ffe:7173, :7180, :7192, :7194, :7251, :7269, :7270; also data/olmo/b2r_valuescheck.json@bbc9ffe 1_g3A_power.detail; the arithmetic passages around them are ADDENDUM :147-148 and RESULTS :7189-7194, :7266-7270). The exact value at the record's inputs is 0.9645 (0.965 at 3 dp; residual -0.0003, cause not identified), and at .000 it is 0.9827. Both stay above the 0.90 bar. (3) The b2r_analyze self-test fixture uses .164/.225/.000/.003 (scripts/b2r_analyze.py@bbc9ffe:160-162). It is a synthetic case, not a verdict input, and is not touched (read-only).",
+  "The block's N2(v) design-seat arithmetic for the source's points (block :34) is checked in section 7. At the seat's premise, 800/80, every figure reproduces at the seat's precision: base -1.931, SFT -0.296, DPO +0.611 (one-sided Fisher p = 0.1085), instruct +0.151 (p = 0.5119). That confirms the arithmetic under the premise, not the points. The seat's 800/80 is a per-(layer, alpha) n, but the source's rates are pooled over 20 configurations. At the pooled per-stage n under the same eight-concept assumption (16000/1600) the points are base -2.103, SFT -0.286, DPO +1.525 (p 3.34e-20), instruct +1.056 (p 1.03e-06). There the FPR correction does change the instruct point (d' +0.339 -> +1.056; one-sided Fisher p 0.0055 -> 1.03e-06). At 800/80 it does not (7/0 under both, because 0.24 expected false alarms round to 0). N2(v) must choose and declare both the concept count and the unit (per configuration or pooled).",
+  "n: the block's '800/80 per configuration' and the record's '~800 injected / ~80 control' (every carrier, section 2: ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:32; RESULTS.md@bbc9ffe:7365, :7439, :7485, :7500; other tracked: AUDIT-note-release-v1_2.md@bbc9ffe:34) assume eight concepts, which is our own B2 registration (data/configs/b2_concepts.json@bbc9ffe selection_for_B2.registered_n = 8), not a source count (data/configs/b2_concepts.json@bbc9ffe n_canonical = 50, the 50-entry list its provenance cites at experiments/01_concept_injection.py:58). The source states no n. The OLMo experiment's own default concept list (experiments/03_behavioral_robustness.py, defined in that file) has 50 entries, giving 5000 / 500 per cell and 100000 / 10000 per stage pooled (section 5). As the record's inference with its premise (RESULTS.md@bbc9ffe:7438-7440), 800/80 is log-only; as a statement of the source's n it is not found, and under block :23 a note sentence presenting it as the source's n is cut (section 0). The same holds for figures derived from it. The ratio '~33×' (ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:32; RESULTS.md@bbc9ffe:7440) is 800/24 = 33.3 (one of their configurations against our whole stage, the record's unit); per stage under the same premise 16000/24 = 666.7; with the code's 50 concepts 208.3 and 4166.7, so it depends on both premise and unit. The power row 'theirs, OLMo cell (~800/80)' (RESULTS.md@bbc9ffe:7485, :7500-7502) is computed at that n; this item does not recompute it. N2(v)'s tests on the source points depend on the concept count and the unit and must name both.",
+  "Layers: ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:66 says 'L_M stands on the code rule and the paper's caption'. The code rule gives int(64 x 0.7) = 44 at the fourth slot, but the v1 caption gives 45 there, so the 'and the paper's caption' support does not hold at that slot. Neither int() nor round() of the default fractions yields the caption's list ([25, 32, 38, 44, 51] and [26, 32, 38, 45, 51] against [25, 32, 38, 45, 51]), while the README's absolute list does (5/5; section 5). Recorded, not adjudicated; L_M = 44 is not touched.",
+  "README: besides the layer-fraction issue the record already notes (RESULTS.md@bbc9ffe:7393-7398), the README's -m keys (olmo_32b_*) are not in the script's argparse choices, so the README command would be refused as written. Its layer list still equals the v1 caption (5/5).",
+  "Values-check wording: ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:274 says the section 0.2/0.6 tables are 'exact against paper and cache'. RESULTS.md@bbc9ffe:7181 records the item as 'PASS -- exact' and data/olmo/b2r_valuescheck.json@bbc9ffe 2_tables.detail as '§0.2 exact'. Against the v1 text, 7 of the table's 8 rate cells are exact; the instruct FPR is the exception.",
+  "Method limits: the source was read through WebFetch's processed rendering. Each v1 Appendix C sentence came back verbatim in two fetches (one omitting the base sentence's opening clause). The v2-v5 Table 3 values came back the same in three fetches (v2, v4, v5). No figure image was fetched or digitized. One v4 fetch returned an off-target answer and was re-run with a rephrased prompt. The fixer pass's four reads and round 2's two reads (each made twice, agreeing) are listed in section 3, and so are round 3's two reads of 03_behavioral_robustness.py (the second declined to copy the list in full, so only its count, end entries and import status corroborate the first).",
+  "Not checked: the note's sentence and F2's points. The note draft and the F1/F2 SVGs are not on this machine (results/raw/2026-10-08_note-preflight.md@bbc9ffe:15, :17-18: MISSING), so whether the note 'carries 0.001 / 0.149 / 0.029 / 0.009' (block :35) and what F2 plots for the source's instruct FPR were not read.",
+  "Weakest pair: the record labels base vs dpo the 'single weakest pair' at 0.9825 (RESULTS.md@bbc9ffe:7268; :7192). At the record's own inputs the weakest pair is base > instruct (0.9654), not base > dpo (0.9830). The label holds only when the instruct FPR equals the dpo FPR, as under the source's 0% (section 6a). The record's 'base binds, not sft' (RESULTS.md@bbc9ffe:7193, :7270) is unaffected: both base pairs are below both sft pairs at either input.",
+  "Exactness claims: the record calls 0.964 'the exact number' and 'the exact figure' (RESULTS.md@bbc9ffe:7194, :7269-7270) and states 'joint figure is 0.964' at :7251. Exact enumeration gives 0.9645485 at its inputs, 0.965 at 3 dp (section 6a)."
+ ],
+ "stops": [],
+ "conditional_stops_block_23": [
+  {
+   "figure": "[g3-A] joint power 0.9642 / 0.964",
+   "if_in_note": "STOP (design seat and PI)",
+   "text": "If the note carries the [g3-A] joint power as 0.9642 or 0.964: exact enumeration at the record's inputs gives 0.96455 (0.9645 at 4 dp, 0.965 at 3 dp; section 6a). The cause of the residual is not identified (a simulation is a candidate, not established), so Code cannot classify it as transcription. Under block :23 that figure is then a STOP for the design seat and PI. The [g3-A] verdict itself is computed on our data and is not touched. The addendum describes the figure as 'at their own rates' (ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:148); at the source's text rates (instruct FPR 0%) the exact value is 0.98274, which bears on any correction the design seat and PI choose."
+  },
+  {
+   "figure": "single weakest pair (base vs dpo) 0.9825",
+   "if_in_note": "STOP (design seat and PI)",
+   "text": "If the note carries 'single weakest pair (base vs dpo) 0.9825': at the record's inputs base > dpo is 0.98296 and the weakest pair is base > instruct (0.96540) (section 6a). The label is wrong at the record's own inputs, which is not a transcription slip, and the value's residual has no identified cause, so under block :23 it is a STOP."
+  },
+  {
+   "figure": "source instruct FPR 0.3%, TPR - FPR +0.6 pp, the retired criterion's Instruct power described as at the source's own rates, and 'n in the thousands per cell' for conventional power at Instruct (RESULTS :7363-7364)",
+   "if_in_note": "correction (Code's reading) or STOP",
+   "text": "If the note or F2 carries the source's instruct FPR as 0.3%, or its instruct TPR - FPR as +0.6 pp: Code reads the discrepancy as transcription of the v1 prose (section 4). On that reading block :23 corrects the note to 0% and +0.9 pp, and there is no STOP. If the design seat or PI do not accept that reading (the record says it recovered the values from 'Appendix C, Fig 21', and the figure was not digitized), block :23 makes it a STOP. The same fork covers the figures derived from that input: if the note carries the retired criterion's Instruct power described as at their own (reported) rates (0.001 at n = 96, 0.020 at n = 200; ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:52-53, RESULTS.md@bbc9ffe:7330-7331, :7354-7361), then under Code's transcription reading block :23 corrects it to the source-rate values 0.002 / 0.036 (section 6b), and otherwise it is a STOP. At n = 24 and 48 the value is 0.000 either way. The same holds for the sentence after the table, if the note carries it: 'Reaching conventional power there needs n in the thousands per cell' (RESULTS.md@bbc9ffe:7363-7364, Instruct) holds only at the transcribed 0.3% (≈ 2700 per arm for 0.80, ≈ 3500 for 0.90). Under Code's transcription reading block :23 corrects it to the source-rate figures, 0.80 power at n ≈ 750 per arm (0.8042), and 0.90 at ≈ 890 (0.9020) (section 6b), and otherwise it is a STOP. :7363's 'Instruct is the binding constraint and it is not close' holds at both inputs and needs no correction."
+  },
+  {
+   "figure": "~800 / ~80 as the source's n, and figures derived from it",
+   "if_in_note": "cut",
+   "text": "If the note presents ~800 injected / ~80 control per configuration as the source's n: the source states no n (section 5), so under block :23 the figure is not found and is cut. Stated as an assumption with its premise (eight concepts, per configuration, applied to pooled rates), it is the record's log-only inference. Any figure derived from it is cut likewise, or stated with its premise and unit: the ratio '~33× ours' (ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:32-33; RESULTS.md@bbc9ffe:7440) is 800/24 = 33.3 (one of their configurations against our whole stage, the record's unit); per stage under the same premise 16000/24 = 666.7; with the code's 50 concepts 208.3 and 4166.7; the power row 'theirs, OLMo cell (~800/80)' (RESULTS.md@bbc9ffe:7485, :7500-7502) is computed at that n and is not recomputed by this item."
+  }
+ ],
+ "values_check": [
+  {
+   "round": 1,
+   "finding": "1 (substantive): No per-figure status in the raw or the JSON.",
+   "action": "fixed",
+   "detail": "Section 0 is a per-figure status table and the JSON carries `figures[].status`. The TPR, FPR and sensitivity statuses are derived from the computed comparisons; the others are assigned from the rule-4 vocabulary, with the printed value beside each. Beyond the checker's list, rows were added for the power figures (section 6) and the seat's N2(v) points (section 7)."
+  },
+  {
+   "round": 1,
+   "finding": "2 (substantive): Note 3: the seat's N2(v) instruct arithmetic 'cannot be checked here'; the correction 'changes' it.",
+   "action": "fixed",
+   "detail": "Section 7 computes log-linear d', c and a one-sided Fisher (stdlib, equal to the record's fisher_one_sided). At 800/80 the instruct point is 7/0 under both FPRs, giving d' +0.151 and p = 0.5119; 4 of the seat's 4 d' agree at its precision, and its two p (DPO 0.1085, instruct 0.5119) match its ~.11 and ~.5. Note 3 is rewritten. The pi_item in the builder's returned summary (not in the raw) is superseded by note 3."
+  },
+  {
+   "round": 1,
+   "finding": "3 (substantive): Code's base trial prompt called 'bare'.",
+   "action": "fixed",
+   "detail": "Re-read of 03_behavioral_robustness.py@5d5d9b4 (section 3, fixer-pass reads): build_base_model_prompt writes plain-text User:/Assistant: turns with no chat template; 'Tell me about {word}' is only in extract_concept_vector_base_model. The section 3 fact, the section 9 row and the JSON's decoding.prompt_format are corrected."
+  },
+  {
+   "round": 1,
+   "finding": "4 (minor): Paper v1 prompt_format 'not stated'.",
+   "action": "fixed",
+   "detail": "Re-read of v1 (both halves): Section 3.3 gives a User:/Assistant: newline format for the base model it discusses (Gemma3-27B base as read); no OLMo-specific format anywhere. The row is reworded."
+  },
+  {
+   "round": 1,
+   "finding": "5 (minor): Note 2 omitted ADDENDUM :52-53 and RESULTS :7330-7331.",
+   "action": "fixed",
+   "detail": "Both are added, and both are recomputed in section 6(b). Anchors are asserted on :53 and :7331."
+  },
+  {
+   "round": 1,
+   "finding": "6 (minor): Joint power 'presumably' used 0.3%; not recomputed.",
+   "action": "fixed",
+   "detail": "Section 6(a) enumerates exactly with the record's own CP: 0.9645 at .003 and 0.9827 at .000; pair 0.9830. The residual against 0.9642 / 0.9825 is disclosed and unexplained. One correction to the checker's evidence: 0.9642 is not only in prose. data/olmo/b2r_valuescheck.json@bbc9ffe field 1_g3A_power.detail holds 'joint=0.9642 >= 0.90' (as a result string, without inputs or method)."
+  },
+  {
+   "round": 1,
+   "finding": "7 (minor): Note 5 paraphrase of ADDENDUM :66 dropped 'and the paper's caption'.",
+   "action": "fixed",
+   "detail": "Note 5 quotes :66 and states that the caption's fourth slot (45) contradicts the code rule's 44. round() is added beside int() (section 5); neither yields the caption list."
+  },
+  {
+   "round": 1,
+   "finding": "8 (minor): v4 row / note 1 omit that v4's Figure 21 is a different OLMo figure.",
+   "action": "fixed",
+   "detail": "Re-read of v4 (both halves): Figure 21 is the Appendix D.1 OLMo-stage figure at L=19/L=22. The v4 row, section 3's version paragraph and note 1 say so."
+  },
+  {
+   "round": 1,
+   "finding": "9 (minor): Table 3 described as 'official checkpoints'.",
+   "action": "fixed",
+   "detail": "Re-read of v4: Table 3 is a LoRA fine-tuning study on the OLMo SFT checkpoint (L=25, alpha=4, 11 rows as read); only SFT* and DPO* are official. The v2/v4/v5 rows and the JSON config string are reworded; 'only' is dropped."
+  },
+  {
+   "round": 1,
+   "finding": "10 (minor): Answer 3 'Nothing was digitized' over-reaches.",
+   "action": "fixed",
+   "detail": "Answer 3 now says the record states no recovery method (RESULTS :7326-7327). The source holds the values in prose; the 7-of-8 equality supports text-reading; this audit digitized nothing."
+  },
+  {
+   "round": 1,
+   "finding": "11 (minor): Note 7 attributed 'exact against paper' to RESULTS :7181; '7 of 8' hard-coded.",
+   "action": "fixed",
+   "detail": "The quote is attributed to ADDENDUM :274, :7181 is paraphrased as 'PASS -- exact', and the valuescheck JSON's '§0.2 exact' is added. The count is formatted from n_tpr + n_fpr."
+  },
+  {
+   "round": 1,
+   "finding": "12 (minor): The note's sentence was never checked; no line says so.",
+   "action": "fixed",
+   "detail": "A header line and note 9 cite the preflight raw's MISSING rows (located and asserted by the script) and say the note's wording and F2's points were not read."
+  },
+  {
+   "round": 1,
+   "finding": "13 (minor): Answer 4 locator :213-214.",
+   "action": "fixed",
+   "detail": "Now :212-213. Anchors are asserted on both lines."
+  },
+  {
+   "round": 1,
+   "finding": "14 (minor): Paraphrase without stated reason.",
+   "action": "fixed",
+   "detail": "Section 3 says the raw keeps to one short quotation from the source and that the paraphrases carry every number exactly as printed."
+  },
+  {
+   "round": 2,
+   "finding": "1 (substantive): Joint power 0.9642 labelled discrepant and 'not a STOP' without addressing block :23; the record's 'exact number is 0.964' is 0.965 at 3 dp.",
+   "action": "fixed",
+   "detail": "Section 12 now separates active STOPs (none for N2(vi)) from block :23 conditions. The joint-power row says: a STOP for the design seat and PI if the note carries 0.9642 or 0.964, because the cause is not identified and so cannot be classed as transcription. Section 6(a) prints 0.9645485 (0.965 at 3 dp) against the record's exactness claims (RESULTS :7194, :7269-7270, :7251). Code's own checks: 0 of 4 deterministic variants reproduce both printed values. Monte Carlo standard errors make a 10^4-10^5-draw simulation a candidate, stated as not established. Beyond the checker's list, the carrier search found two more carriers of the figure, RESULTS :7173 and :7251. 'Immaterial' is no longer used; the 0.90-bar fact is kept beside the conditional."
+  },
+  {
+   "round": 2,
+   "finding": "2 (substantive): 800/80 is a per-cell n applied to rates pooled over 20 configurations; the seat's arithmetic was called 'confirmed' and the correction 'does not change' it, without that premise.",
+   "action": "fixed",
+   "detail": "Section 7 adds the pooled rows (16000/1600 and 100000/10000) and a unit column. It states the unit mismatch and reports the seat's figures as 'arithmetic confirmed under the seat's premise', with the pooled value beside each. The JSON adds design_seat_check, and the old design_seat_confirmed_at_800_80 key is kept for N2. At 16000/1600: instruct 144/5 at .003, d' +0.339, p 0.0055; 144/0 at .000, d' +1.056, p 1.03e-06; DPO d' +1.525, p 3.34e-20; base -2.103; SFT -0.286. All 5 points equal the checker's printed counts, d' and p at its precision (asserted by the script; so are its joint and four pair values, finding 1 and 3). Note 3, the seat row and answer 2 are rewritten. Consistency with N2: 6/6 seat figures and the record-FPR instruct point agree with results/raw/2026-10-08_note-N2-roc.json (section 7)."
+  },
+  {
+   "round": 2,
+   "finding": "3 (minor): The record's 'single weakest pair (base vs dpo)' is wrong at its own inputs.",
+   "action": "fixed",
+   "detail": "Section 6(a) prints all four pairs at both inputs. At .003 the weakest is base > instruct 0.96540 (base > dpo 0.98296); at .000 base > dpo and base > instruct tie at 0.98296. 0 of the four equals 0.9825 at 4 dp. Changes: a new status row, note 10 and a section 12 condition. 'base binds, not sft' is asserted to hold at both inputs."
+  },
+  {
+   "round": 2,
+   "finding": "4 (minor): Row 8 'transcription' note unhedged.",
+   "action": "fixed",
+   "detail": "Round-2 read of v1 (two fetches): Figure 21 is an image, olmo-staged-introspection.png, alt text 'Refer to caption', with no data labels. Row 8, section 4, answer 6 and note 2 now give 'Code's reading: transcription ... not established', and section 12 states the block :23 fork (correction under that reading, STOP otherwise)."
+  },
+  {
+   "round": 2,
+   "finding": "5 (minor): 'The README is therefore not evidence of the producing configuration' overstates.",
+   "action": "fixed",
+   "detail": "Reworded. The README cannot run as written, but its list equals the caption (5/5), which int() (4/5) and round() (4/5) do not; Code computes all three counts. One adaptation: the checker's 'points to' is written 'consistent with', since the record itself reads it that way (RESULTS :7396-7398) and the source does not say. Notes 5 and 6 carry the 5/5."
+  },
+  {
+   "round": 2,
+   "finding": "6 (minor): The 'paraphrases' reproduce the source's wording.",
+   "action": "fixed",
+   "detail": "The DPO, instruct and base lines now give the numbers only, in Code's words, as the checker proposed; the SFT line is reduced the same way. The one quotation is unchanged."
+  },
+  {
+   "round": 2,
+   "finding": "7 (minor): Section 2 label calls :7345-7348 a paraphrase; the v1 row omits Section 3.3's FPR statement.",
+   "action": "fixed",
+   "detail": "Round-2 read of v1 (two fetches) found the sentence in Section 3.3 'The Role of Post-Training'. The label now reads 'the record quoting v1 Section 3.3'. The v1 row and a section 3 paragraph state, in Code's words, that Section 3.3 gives the FPR pattern with no per-stage TPR numbers."
+  },
+  {
+   "round": 2,
+   "finding": "8 (minor): Locator lists not exhaustive; the record's p ~ .28 unchecked.",
+   "action": "fixed",
+   "detail": "Section 2 adds a carrier search. Per figure, a regex over every line of RESULTS.md and the addendum at bbc9ffe, with hits asserted equal to declared carriers plus declared unrelated lines (20 unrelated, each with a reason). One git grep covers the other tracked .py/.md files (9 carriers, 3 unrelated). Section 0 locators come from it. A new row gives p ~ .28: 0.2821, exact binomial P(X <= 0) for X ~ Binomial(43, .029), with 0/43 read from b2r_explore_dpo.json. It is labelled log-only, not computed-new as the checker proposed, because the figure is in the record and its 2.9% input is source prose (the same convention as the retired-power row); the recomputation is printed as computed-new."
+  },
+  {
+   "round": 2,
+   "finding": "9 (minor): Row 12 '~800/~80' conflates 'absent from the source' with 'absent from the record'.",
+   "action": "fixed",
+   "detail": "Split into two rows. As the record's inference (RESULTS :7438-7440) it is log-only. As the source's n (ADDENDUM :32-33, RESULTS :7365, block :34) it is not found, and block :23's cut applies. The log-only row cites data/configs/b2_concepts.json@bbc9ffe (n_canonical = 50; selection_for_B2.registered_n = 8, so the eight is ours), and so do section 5 and note 4."
+  },
+  {
+   "round": 2,
+   "finding": "10 (minor): 'clopper' described without its docstring line.",
+   "action": "fixed",
+   "detail": "The script lists the lines (:10 docstring, :49 import, :60, :61, :74, :112 calls) and asserts the list, the docstring span and the call form."
+  },
+  {
+   "round": 3,
+   "finding": "1 (substantive): The retired criterion's Instruct power, which the record describes as at the source's own rates, was relabelled 'at the record's rates' and given no block :23 condition.",
+   "action": "fixed",
+   "detail": "Old row 17 is split. Row 18 is the DPO column, log-only: its inputs equal the v1 text, and 4/4 cells recompute. Row 19 gives the Instruct figures in the record's own framing ('their own Instruct rates', ADDENDUM :52-53; 'Instruct's own reported rates', RESULTS :7330-7331; 'Power at their own numbers', RESULTS :7354), with the source-rate column beside the recomputation at the record's 0.3%. At the source's rates the cells differ at n = 96 (0.001 against 0.002), n = 200 (0.020 against 0.036). Section 12 condition 3 now covers these figures with the same fork: corrected to the source-rate values under Code's transcription reading, a STOP otherwise. Section 6(b) and note 2(1) say the same. Anchors are asserted on RESULTS :7330, :7331, :7354 and ADDENDUM :53, :148. One adaptation: the Instruct row's status is 'discrepant', not only a note, by the raw's own convention for the +0.6 pp row (correct arithmetic on the slipped input, labelled discrepant). Beyond the checker's list: condition 1 now notes that the addendum also describes the joint power as 'at their own rates' (ADDENDUM :148), where the exact value is 0.98274. Condition 1's consequence (a STOP if carried) is unchanged."
+  },
+  {
+   "round": 3,
+   "finding": "2 (substantive): The lineage row was labelled 'reproduced' although its source half is a WebFetch reading, not a committed artifact.",
+   "action": "fixed",
+   "detail": "Split into row 16 (our four acquired repos and revisions, reproduced from data/olmo/manifest.json@bbc9ffe) and row 17 (the match to the source's MODEL_NAME_MAP, log-only at RESULTS :12565-12569, printed as 'computed-new against Code's WebFetch reading of 5d5d9b4: 4/4'). Section 8, answer 7 and the JSON lineage string say the same. Both statuses pass N1, so only the label changes."
+  },
+  {
+   "round": 3,
+   "finding": "3 (minor): The N2 ROC JSON's sha256 recorded here was stale, and the two items' sha references form a cycle.",
+   "action": "fixed",
+   "detail": "This item no longer records that sha, in the .md or the JSON. The JSON's n2_consistency_check now carries the compared values from both sides and the agreement counts, and section 7 says why the sha is omitted. The round-2 header's sentence about the sha moving between runs is kept as written at round 2, and this row supersedes it. Ordering: this run changes this JSON's sha256, so the N2 raw's recorded N2vi JSON sha is now stale until N2 re-runs. The N2 run belongs to that item and should come after this one. Code did not run it (not this item's file)."
+  },
+  {
+   "round": 3,
+   "finding": "4 (minor): b2_concepts.json's concepts_source was said to cite 'the source's DEFAULT_TEST_CONCEPTS'; it cites experiments/01_concept_injection.py:58, while the OLMo experiment 03 defines its own list.",
+   "action": "fixed",
+   "detail": "Confirmed by git show (data/configs/b2_concepts.json@bbc9ffe; the script asserts that concepts_source starts with 'experiments/01_concept_injection.py:58 (DEFAULT_TEST_CONCEPTS') and by two round-3 WebFetch reads of 03_behavioral_robustness.py@5d5d9b4 (section 3): there DEFAULT_TEST_CONCEPTS is a literal list defined in the file and imported from nowhere, with 50 entries. Section 5 and note 4 now cite 01:58 and say the OLMo run's 50 is 03's own list. One adaptation: instead of 'identity with 01's not checked', read 1's 50 entries are compared with canonical_concepts (the record's recovery of 01:58) and are equal entry for entry and in order (computed-new). Read 2 declined to copy the list and corroborates only the count, the first and last entries and the import status. So the identity is stated as Code's reading, not established."
+  },
+  {
+   "round": 3,
+   "finding": "5 (minor): Note 2's joint-power locators omitted RESULTS :7270 and ADDENDUM :273.",
+   "action": "fixed",
+   "detail": "Note 2(2) now prints the carrier search's list, the same as row 20: ADDENDUM-g3-b2r-v1.2.md@bbc9ffe:148, :273; RESULTS.md@bbc9ffe:7173, :7180, :7192, :7194, :7251, :7269, :7270. It names the arithmetic passages (ADDENDUM :147-148; RESULTS :7189-7194, :7266-7270) separately."
+  },
+  {
+   "round": 3,
+   "finding": "6 (minor): Condition 4 cut ~800/~80 as the source's n but not the ratio derived from it ('~33× ours').",
+   "action": "fixed",
+   "detail": "Condition 4 now covers figures derived from the n: cut, or stated with premise and unit. The ratio is computed (computed-new): 800/24 = 33.3 (one of their configurations against our whole stage, the record's unit); per stage under the same premise 16000/24 = 666.7; with the code's 50 concepts 208.3 and 4166.7, with our 24 injected per stage as run (RESULTS :7440, :7358). Rows 12 and 13 carry it. Beyond the checker's list: a round-3 carrier search for the n ('~800|800/80') and the ratio ('33×') over RESULTS.md and the addendum, with the split between the two rows asserted, found two more carriers of the n written as the source's: RESULTS :7485 (a power row 'theirs, OLMo cell (~800/80)') and :7500 ('Their own cell is ~800/80'). Both are added to row 13 and to condition 4. The power figures there are computed at that n and are not recomputed by this item. A separate git grep of the other tracked .py/.md files for the two patterns finds 1 hit, the block's own premise at :34. The round-2 grep and its counts are unchanged."
+  },
+  {
+   "round": 4,
+   "finding": "1 (substantive): Section 6(b) called the record's conclusion at RESULTS :7363 'unchanged', but the next sentence, :7363-7364 ('Reaching conventional power there needs n in the thousands per cell'), is a quantitative figure derived from the instruct FPR that the raw did not recompute; at the source's 0% conventional power is reached below 1,000 per arm.",
+   "action": "fixed",
+   "detail": "Confirmed. :7363-7364 sits under 'Power at their own numbers' (:7354, anchors asserted), and the round-4 'thousands' grep finds it as the only carrier in the tracked .py/.md files (section 2). Section 6(b) now computes, at both instruct FPRs, the n per arm at which the registered criterion reaches 0.80 and 0.90 power at Instruct. At 0%: 0.80 power at n ≈ 750 per arm (0.8042), and 0.90 at ≈ 890 (0.9020). At 0.3%: ≈ 2700 (0.8011) and ≈ 3500 (0.9001). The 'is unchanged' sentence is replaced by the fix's wording. New row 24 (discrepant, locator RESULTS.md@bbc9ffe:7363-7364) carries row 19's fork, and note 2(1) and section 12 condition 3 carry the figure: corrected under Code's transcription reading, a STOP otherwise. The JSON mirrors it in figures[], conditional_stops_block_23[2] and dependent_power_computed_new.retired_criterion_power.conventional_power_n. The checker's 20 printed values (eight large-n powers and the twelve table cells, at 4 dp) reproduce (asserted). Method: the record's own clopper_pearson raises OverflowError from n = 1030 (asserted), so the scan uses the record's newcombe compiled with a stdlib CP. That path agrees with the record's own on the 12 table cells and at n = 750 (max abs difference 1.5e-13). Adaptations: (a) the step-1 first n is given beside the fix's grid values (at 0%: 0.80 first reached at n = 746 (0.80054; 0.79962 at n = 745), 0.90 first reached at n = 887 (0.90043; 0.89991 at n = 886); at 0.3%: 0.80 first reached at n = 2694 (0.80012; 0.79996 at n = 2693), 0.90 first reached at n = 3500 (0.90008; 0.89999 at n = 3499)); (b) the row is appended as row 24 rather than inserted after row 19, so the earlier rounds' row numbers stay valid; (c) reading 'per cell' as n per arm (the table's unit, :7356) is stated as Code's reading. The fix's 'At 0.3% the figures are ... ≈ 3500' is given with its value (0.9001)."
+  },
+  {
+   "round": 4,
+   "finding": "2 (minor): Row 19 and note 2(1) omitted the copy at scripts/b2r_analyze.py@bbc9ffe:16 (docstring, 'power 0.000 at n=48').",
+   "action": "fixed",
+   "detail": "Confirmed by git grep with the checker's pattern: 3 hits, ADDENDUM-g3-b2r-v1.2.md:53, RESULTS.md:7331, scripts/b2r_analyze.py:16. The grep now runs in the script, and its hits are asserted (section 2). Row 19 and note 2(1) add 'other tracked: scripts/b2r_analyze.py@bbc9ffe:16 (docstring, 0.000 at n=48; unchanged at either rate)'. Anchors are asserted on scripts/b2r_analyze.py :15 and :16. The n = 48 value is 0.00006 at .003 and 0.00007 at .000, 0.000 at 3 dp at both (asserted). So no number and no STOP changes. Beyond the checker's list: a second round-4 grep, for 'thousands', supplies row 24's locator (finding 1)."
+  }
+ ]
+}

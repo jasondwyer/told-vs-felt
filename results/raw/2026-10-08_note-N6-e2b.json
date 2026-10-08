@@ -1,0 +1,2076 @@
+{
+ "item": "N6",
+ "pin": "bbc9ffe72fb8a942431c9bf2622a36e581fdf93c",
+ "head_at_run": "cf8eb5b9dd4e117934627242a3aea5bdf4ae4b55",
+ "stamp": "Thu Oct  8 11:26:42 UTC 2026",
+ "block_sha256": "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841",
+ "script_sha256": "fbd0735a7d3167e43c3b82b52a7ffd8c6e82e57b3e5a23383d9a80c5826565ef",
+ "interpreter": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python",
+ "python": "3.12.9",
+ "command": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/audit_note_N6.py",
+ "pinned_sha256": {
+  "data/e2b/verdict_campaign.json": "1f3763143edd4f529933464e2633e01a398856cf33a7fd58f213d55409318ab2",
+  "data/e2b/verdict_analysis.json": "2344f4a648b0ffe514057d6584fd9f6546637c19e2e50100e4278b8b50357726",
+  "data/e2b/h1_sessions.json": "10f85d079e5649885be72b77f8eec4e59a9b22da5e211481046f5163f481ade9",
+  "data/e2b/h1_gate.json": "3e62629519be49725b1b759855f8d740db21437eebbd8287eb4301cdaf9cd28c",
+  "data/e2b/h1_power.json": "a6bfb9d644e3b66ee6e9bee95c2daa243749bf269fb788a93c6603544934ed2f",
+  "data/e2b/h1u_sessions.json": "788a87bcc7a76d76fa416636877c8e255627f4947c68aa2e1e3441b6a5980b41",
+  "data/e2b/h2_sessions.json": "13f8b888f5f3a4e5a03d2f98bcbb8f9510fafc0ef56e5580ea91d62ec0dcfff9",
+  "data/e2b/h2_read_stability.json": "21bca2dd615bb2547fb51ba3a2680be115cf362b630831317bfcf5e443b87649",
+  "data/e2b/lockh_verify.json": "6c54effd85bce5162fca1b3837ba696ecbccd3c80c98d622d8c062e06159f962",
+  "data/e2b/lockh_verify_nd200.json": "7bcd7dc75b2fb9db08631532ec319c4d85243beb28bb6997b7c89634dc0c51cd",
+  "data/e2b/lockh_verify_v11.json": "d5e192a53d74dfada3914da197195b1c69b48c2b6c03351691ac3eab5dbe8847",
+  "data/e2b/lockh_v2_valuescheck.json": "8c03c48ee103e616dbb00a3d454623089ea5776b53ebaf861e0710c1f0b9faca",
+  "scripts/e2b_verdict_analyze.py": "5114657c82478d9521b0ab07920cbcb94ebae5a3f53717ef305492feb1bda718",
+  "scripts/e2b_h1_gate.py": "adb79e7f1bff3cad923841d68cd3f8adac66fbac99d6176928a0c601d038d86a",
+  "scripts/h1_power.py": "37a87a0793d9cabc32e3b4183fae7dfc3b6e40211a905c866d4e34c4a6e0e360",
+  "scripts/e2b_h1_sessions.py": "c981039a029824946b58bf62f9caf80c6511ab955f739707cd77d72fa525a6f1",
+  "scripts/e2b_verdict_campaign.py": "3ab6a5473dd81bdb7618e774a268c399723e98bb21ba5da913a23bd35dcd9cdd",
+  "valence_core/e2b/__init__.py": "4d4813d2f841a5f8bc08b0faeee125c7f54b9d61178a4d38f79efffe28f30719",
+  "valence_core/e2b/statepresent.py": "2ef62542c086a55e5ef2456cc06f947bd6015a1a12793f2a9f24be548931881d",
+  "valence_core/e2b/records.py": "eddf380be203aa4de971f9e62dece09c3f797cb00be3302127dcf92aa7194dd6",
+  "valence_core/readout.py": "774e5ca359c5671cafd6f7a2d645d040d8eecb9e67944964c0ba074c22483136",
+  "valence_core/regression/analysis.py": "1f897ea99390e4d676eee83fb406234b8f5eaed27414647bbc1bc0523c126f10",
+  "valence_core/session_e2a.py": "f1e53db2e9089ed3869e75693474fa6f36eccf667d1f2a4fbe52b4ba1fe73c71",
+  "PROPOSAL-h-state-present-choice.md": "445c631db0b278331784bd67308373ab12c39ef530f9bc5f90b0cdf02dd45584",
+  "LOCK-h.md": "7f08260ef4054a03c8df7c6abdd21bd948ef7ac3541aee2a2e590a4bd3c877c7",
+  "CLAUDE.md": "955788dec22ee820917693bf49137619bda1a30eb37e07f118b3940473de8a62",
+  "FINDINGS-5.md": "4dabcf7ef7fae10cb1d0723842105fee75b78f2ac846176ad149bfb85a906c9b",
+  "RESULTS.md": "37a2f1087df2e7af28889ebfd3e3564dd17a7556b508344074300f1a5a2a5250",
+  "results/raw/2026-08-22_verdict_analysis.txt": "913495a15b159db7b9009955668cc308e117b572683442b2d4f422d3ca9776a7",
+  "results/raw/2026-08-21_h1_gate_eval.txt": "476fb0992f02c9d2d30bd097a5cbaf9418e58852dda8b75dc07f24cf4d26ba68"
+ },
+ "wt_equal_pin": {
+  "valence_core/__init__.py": true,
+  "valence_core/adapters/__init__.py": true,
+  "valence_core/adapters/base.py": true,
+  "valence_core/readout.py": true,
+  "valence_core/e2b/__init__.py": true,
+  "valence_core/e2b/records.py": true,
+  "valence_core/e2b/statepresent.py": true
+ },
+ "preprint": {
+  "sha256": "d6431e97d35e5914574ff9884c0e64463a7baf1cf9d279f27ed45a683a6222b8",
+  "match": true,
+  "tracked": false
+ },
+ "commit_order": [
+  {
+   "commit": "34eb7ee",
+   "what": "PROPOSAL-h committed (pre-registration of record)",
+   "ancestor_of_next": true,
+   "date": "2026-08-20T16:56:01-04:00"
+  },
+  {
+   "commit": "6897b67",
+   "what": "quarantine built: statepresent.py, records.py, suite checks",
+   "ancestor_of_next": true,
+   "date": "2026-08-20T21:07:46+00:00"
+  },
+  {
+   "commit": "8a97513",
+   "what": "LOCK-h v1.1 committed (bar_leak 0.0735 fixed)",
+   "ancestor_of_next": true,
+   "date": "2026-08-21T01:25:20-04:00"
+  },
+  {
+   "commit": "d94e281",
+   "what": "LOCK-h v1.4 committed (steered-rounds clarification, LOCK-h.md@bbc9ffe:248; also carries h1u_sessions.json)",
+   "ancestor_of_next": true,
+   "date": "2026-08-21T17:00:19-04:00"
+  },
+  {
+   "commit": "7527270",
+   "what": "H1 gate run of record: h1_sessions.json + h1_gate.json",
+   "ancestor_of_next": true,
+   "date": "2026-08-21T20:05:41-04:00"
+  },
+  {
+   "commit": "b400083",
+   "what": "PROPOSAL-h interpretive note appended (steered rounds); criteria lines unchanged",
+   "ancestor_of_next": true,
+   "date": "2026-08-22T00:19:55-04:00"
+  },
+  {
+   "commit": "f030cdd",
+   "what": "LOCK-h v2.0 committed (licenses the verdict tier)",
+   "ancestor_of_next": true,
+   "date": "2026-08-22T00:27:19-04:00"
+  },
+  {
+   "commit": "a2f074d",
+   "what": "scripts/e2b_verdict_analyze.py committed",
+   "ancestor_of_next": true,
+   "date": "2026-08-22T00:45:14-04:00"
+  },
+  {
+   "commit": "485cc94",
+   "what": "verdict_campaign.json + verdict_analysis.json committed",
+   "ancestor_of_next": null,
+   "date": "2026-08-22T04:50:59-04:00"
+  }
+ ],
+ "h1_runner_drift": {
+  "same_as_7527270": false,
+  "commits_after_7527270": [
+   "1465b34"
+  ],
+  "hunks": 6,
+  "hunk_kinds": {
+   "adapter loader": 4,
+   "imports": 2
+  },
+  "import_block_moved_same": true,
+  "slices": [
+   {
+    "pin": [
+     171,
+     174
+    ],
+    "at_7527270": [
+     183,
+     186
+    ],
+    "n_hits": 1
+   },
+   {
+    "pin": [
+     213,
+     225
+    ],
+    "at_7527270": [
+     225,
+     237
+    ],
+    "n_hits": 1
+   },
+   {
+    "pin": [
+     210,
+     215
+    ],
+    "at_7527270": [
+     222,
+     227
+    ],
+    "n_hits": 1
+   }
+  ],
+  "slices_identical": true,
+  "menu_templates_lines": {
+   "7527270": 71,
+   "485cc94": 71,
+   "bbc9ffe": 78
+  },
+  "menu_templates_equal": true,
+  "menu_templates_renamed_1465b34": true
+ },
+ "unchanged": {
+  "analyzer_a2f074d": true,
+  "statepresent_records_6897b67": true,
+  "h1_gate_7527270": true,
+  "readout_6897b67": true,
+  "readout_485cc94": true
+ },
+ "proposal_h_history": {
+  "commits": [
+   "b400083",
+   "34eb7ee"
+  ],
+  "prefix_lines_equal_34eb7ee": 195,
+  "prefix_equal": true,
+  "lines_appended_b400083": 11,
+  "b400083_equals_pin": true,
+  "cited_lines": [
+   35,
+   135,
+   136,
+   137
+  ],
+  "cited_lines_in_prefix": true
+ },
+ "envelope_abs_provenance": {
+  "proposal_h_defer": [
+   135
+  ],
+  "proposal_h_signed_words": [
+   137
+  ],
+  "proposal_h_abs_on_lines": false,
+  "lock_h_history": [
+   "f030cdd",
+   "d94e281",
+   "a58692f",
+   "09ae918",
+   "8a97513"
+  ],
+  "lock_h_pseudo": {
+   "f030cdd": {
+    "pseudo": 1,
+    "abs": [
+     62
+    ]
+   },
+   "d94e281": {
+    "pseudo": 0,
+    "abs": []
+   },
+   "a58692f": {
+    "pseudo": 0,
+    "abs": []
+   },
+   "09ae918": {
+    "pseudo": 0,
+    "abs": []
+   },
+   "8a97513": {
+    "pseudo": 0,
+    "abs": []
+   }
+  },
+  "lock_h_first_abs": "f030cdd",
+  "lock_h_before_without_pseudo": true,
+  "first_abs_before_analyzer_and_data": true,
+  "signed_envelope": -0.027777777777777776,
+  "c1_signed": true,
+  "verdict_signed_reading": "NULL"
+ },
+ "primary": {
+  "marker": [
+   47,
+   96,
+   -0.010416666666666666
+  ],
+  "sham": [
+   15,
+   36,
+   -0.08333333333333333
+  ],
+  "random": [
+   17,
+   36,
+   -0.027777777777777776
+  ],
+  "envelope": 0.08333333333333333,
+  "envelope_from": "sham",
+  "map0": [
+   23,
+   47,
+   -0.010638297872340425
+  ],
+  "map1": [
+   24,
+   49,
+   -0.01020408163265306
+  ],
+  "p_one_sided": 0.6201753558381852,
+  "p_reverse": 0.4593890176822685,
+  "critical_k": 57,
+  "conjuncts": [
+   false,
+   false,
+   false
+  ],
+  "verdict": "NULL",
+  "matches_stored": {
+   "delta": true,
+   "sham": true,
+   "random": true,
+   "env": true,
+   "map0": true,
+   "map1": true,
+   "p": true,
+   "kcrit": true,
+   "c": true,
+   "verdict": true
+  },
+  "ffp_consistency": [
+   168,
+   168
+  ],
+  "pick_source_consistency": [
+   1008,
+   1008
+  ]
+ },
+ "arm_geometry": {
+  "marker": {
+   "first_on_forced_end": [
+    96,
+    96
+   ],
+   "delivered_by_choice": [
+    480,
+    480
+   ],
+   "provenance_sign_matches_live": [
+    576,
+    576
+   ]
+  },
+  "random": {
+   "first_on_forced_end": [
+    36,
+    36
+   ],
+   "delivered_by_choice": [
+    180,
+    180
+   ],
+   "provenance_sign_matches_live": [
+    216,
+    216
+   ]
+  }
+ },
+ "marker_forced_end": {
+  "neg": 49,
+  "pos": 47
+ },
+ "shadow": {
+  "k": 48,
+  "n": 96,
+  "delta": 0.0,
+  "match": true,
+  "first_read_flips_b_c": [
+   1,
+   2
+  ]
+ },
+ "envelope_reference": {
+  "p50": 0.08333333333333333,
+  "p90": 0.16666666666666666,
+  "p95": 0.19444444444444445,
+  "cdf_at_realised": 0.5730717798175279,
+  "p_ge_realised": 0.6460133718676946,
+  "match_stored": true
+ },
+ "mde_binomial": {
+  "k_crit": 57,
+  "p1": 0.6299999999999857,
+  "mde": 0.12999999999998568,
+  "grid_index": 260,
+  "match_stored": true
+ },
+ "h1": {
+  "N": 640,
+  "n_d": 11,
+  "b": 6,
+  "c": 5,
+  "pi_hat_d": 0.0171875,
+  "pi_ci": [
+   0.008610369541675576,
+   0.03054470375913558
+  ],
+  "L_hat": 0.0015625,
+  "p_flip_ci": [
+   0.23379359765934515,
+   0.8325119059362929
+  ],
+  "L_ci": [
+   -0.009150845080460011,
+   0.011430096766560068
+  ],
+  "bar": 0.0735,
+  "pass": true,
+  "low_discordance": true,
+  "matches_stored": {
+   "budget": true,
+   "fields": true,
+   "gate": true,
+   "pi": true,
+   "L": true,
+   "p_ci": true,
+   "L_ci": true,
+   "pi_ci": true,
+   "verdict": true,
+   "low_disc": true
+  },
+  "sessions_run": 123,
+  "sessions_valid": 107,
+  "reads_per_session": {
+   "6": 106,
+   "4": 1
+  },
+  "pi_over_bar": 0.23384353741496602,
+  "pi_hi_over_bar": 0.41557420080456575,
+  "L_over_bar": 0.021258503401360547
+ },
+ "certification_definition": "π̂_d = n_d/N = 11/640 = 0.0172 is the share of H1's 640 paired choice reads (all six free-choice reads of each of the 107 valid H1 sessions pooled, the last cut at the read-level stop N_max = 640; sessions identical to the verdict tier's except that no pick selects a state [LOCK-h.md@bbc9ffe:248] -- the state at each read and in each following round is scheduled, alternating from the forced-phase end state) in which the live state changed the PICK, i.e. the state-present read (the reward axis added at L48, frac 0.10, |α| = 10.301) chose a different label from the vanilla shadow read of the byte-identical prefix -- a pick-discordance rate, not a logit or probability displacement -- and it certifies the leak because the directional leak L = (b − c)/N (flips toward the map's +tag minus flips toward its −tag) cannot exceed the discordance carrying it (|L| ≤ π̂_d < 0.0735), so the exact Clopper–Pearson 95% interval on b | n_d ~ Binomial(n_d, ½), mapped through π̂_d to [-0.00915, +0.01143], lies inside ±0.0735 whatever the b/c split (certification by low discordance, not a powered directional test).",
+ "certification_definition_short": "π̂_d = 11/640 = 0.0172 is the share of H1's 640 paired choice reads (107 valid sessions, 106 × 6 + 4 free reads, the state scheduled and never selected by the pick) in which injecting the reward axis changed the pick relative to a vanilla read of the byte-identical prefix -- a pick-discordance rate, not a logit displacement -- and it certifies the leak because the directional leak L = (b − c)/N can be no larger than π̂_d, so the exact 95% interval on L, [-0.00915, +0.01143], lies inside the pre-registered ±0.0735 whatever the direction of the 11 flips.",
+ "bar_derivation": {
+  "type1": 0.00033734673137828994,
+  "mde_conj": 0.211,
+  "half_mde": 0.1055,
+  "leak_at_fvr": 0.0735,
+  "fvr_at_leak": 0.024497002881371372,
+  "bar": 0.0735,
+  "matches_stored": {
+   "type1": true,
+   "mde_conj": true,
+   "half": true,
+   "leak": true,
+   "fvr": true,
+   "bar": true
+  }
+ },
+ "menu_a_is_plus_tag": {
+  "H1": [
+   325,
+   640
+  ],
+  "H1-u": [
+   292,
+   576
+  ],
+  "H2": [
+   105,
+   180
+  ],
+  "verdict marker": [
+   297,
+   576
+  ],
+  "verdict random": [
+   108,
+   216
+  ]
+ },
+ "monitor_pool": {
+  "admitted_by_arm": {
+   "marker": 576,
+   "random": 216
+  },
+  "total": 792,
+  "stored_n_paired_reads": 792,
+  "ok": true,
+  "runner_lines_485cc94": [
+   [
+    366
+   ],
+   [
+    386
+   ],
+   [
+    388
+   ],
+   [
+    401
+   ]
+  ],
+  "runner_lines_pin": [
+   [
+    379
+   ],
+   [
+    399
+   ],
+   [
+    401
+   ],
+   [
+    414
+   ]
+  ],
+  "lock_declaration_names_arms": false
+ },
+ "menu_templates_a_first": 4,
+ "leak_family": [
+  {
+   "campaign": "read half",
+   "family_value": "+0.00084",
+   "quantity": "half-gap",
+   "half_gap": 0.0008377177136261232,
+   "N": 288,
+   "n_d": 6,
+   "b": null,
+   "c": null,
+   "L_hat": null,
+   "source": "data/e2b/h2_read_stability.json per_read"
+  },
+  {
+   "campaign": "H2 proper",
+   "family_value": "+0.00220",
+   "quantity": "half-gap",
+   "half_gap": 0.0021956003179871473,
+   "N": 180,
+   "n_d": 5,
+   "b": 1,
+   "c": 4,
+   "L_hat": -0.016666666666666666,
+   "source": "data/e2b/h2_sessions.json sessions"
+  },
+  {
+   "campaign": "H1-u",
+   "family_value": "0.00000",
+   "quantity": "L̂ = (b−c)/N",
+   "half_gap": 0.0028617789818655326,
+   "N": 576,
+   "n_d": 12,
+   "b": 6,
+   "c": 6,
+   "L_hat": 0.0,
+   "source": "data/e2b/h1u_sessions.json sessions"
+  },
+  {
+   "campaign": "H1",
+   "family_value": "+0.00156",
+   "quantity": "L̂ = (b−c)/N",
+   "half_gap": 0.0007682992238224214,
+   "N": 640,
+   "n_d": 11,
+   "b": 6,
+   "c": 5,
+   "L_hat": 0.0015625,
+   "source": "data/e2b/h1_sessions.json sessions"
+  },
+  {
+   "campaign": "verdict marker",
+   "family_value": "+0.00198",
+   "quantity": "half-gap",
+   "half_gap": 0.0019826187680544328,
+   "N": 576,
+   "n_d": 11,
+   "b": 5,
+   "c": 6,
+   "L_hat": -0.001736111111111111,
+   "source": "data/e2b/verdict_campaign.json sessions"
+  }
+ ],
+ "leak_family_max": {
+  "half_gap": 0.0028617789818655326,
+  "L_hat": 0.016666666666666666,
+  "half_gap_campaign": "H1-u",
+  "L_campaign": "H2 proper"
+ },
+ "verdict_leak": {
+  "marker_half_gap": 0.0019826187680544328,
+  "marker_common": 0.0010570738857877775,
+  "marker_flip": [
+   11,
+   576
+  ],
+  "marker_b_c": [
+   5,
+   6
+  ],
+  "random_half_gap": -0.013245426022736147,
+  "random_flip": [
+   3,
+   216
+  ],
+  "random_b_c": [
+   2,
+   1
+  ],
+  "match_stored": true,
+  "checkpoints_pi": [
+   0.022727272727272728,
+   0.027131782945736434,
+   0.0234375,
+   0.01744186046511628,
+   0.020249221183800622,
+   0.018229166666666668
+  ],
+  "max_abs_L_checkpoint": 0.007575757575757576
+ },
+ "absence_asserting_files": [
+  "scripts/box_a2_baserates.py",
+  "scripts/box_b3_sessions.py",
+  "scripts/e2d_sessions.py",
+  "scripts/format_recon.py",
+  "scripts/k1_stage1.py",
+  "scripts/recon_echo.py",
+  "valence_core/e2d/judge.py",
+  "valence_core/e2d/runner.py",
+  "valence_core/echo/maskedprefix.py",
+  "valence_core/m/audit.py",
+  "valence_core/m/bars.py",
+  "valence_core/m/guard.py",
+  "valence_core/m/readrule.py",
+  "valence_core/m/schedule.py"
+ ],
+ "absence_split": {
+  "by_file": {
+   "scripts/box_a2_baserates.py": {
+    "runtime_lines": [
+     277
+    ],
+    "selftest_lines": [],
+    "hits": [
+     {
+      "line": 277,
+      "functions": [
+       "main"
+      ],
+      "selftest": false
+     }
+    ],
+    "kind": "runtime"
+   },
+   "scripts/box_b3_sessions.py": {
+    "runtime_lines": [
+     230
+    ],
+    "selftest_lines": [],
+    "hits": [
+     {
+      "line": 230,
+      "functions": [
+       "main"
+      ],
+      "selftest": false
+     }
+    ],
+    "kind": "runtime"
+   },
+   "scripts/e2d_sessions.py": {
+    "runtime_lines": [
+     123,
+     311
+    ],
+    "selftest_lines": [],
+    "hits": [
+     {
+      "line": 123,
+      "functions": [
+       "main"
+      ],
+      "selftest": false
+     },
+     {
+      "line": 311,
+      "functions": [
+       "main"
+      ],
+      "selftest": false
+     }
+    ],
+    "kind": "runtime"
+   },
+   "scripts/format_recon.py": {
+    "runtime_lines": [
+     630,
+     656
+    ],
+    "selftest_lines": [
+     500
+    ],
+    "hits": [
+     {
+      "line": 630,
+      "functions": [
+       "load_model_and_inputs"
+      ],
+      "selftest": false
+     },
+     {
+      "line": 500,
+      "functions": [
+       "selftest"
+      ],
+      "selftest": true
+     },
+     {
+      "line": 656,
+      "functions": [
+       "acceptance_for"
+      ],
+      "selftest": false
+     }
+    ],
+    "kind": "runtime"
+   },
+   "scripts/k1_stage1.py": {
+    "runtime_lines": [
+     257,
+     283
+    ],
+    "selftest_lines": [],
+    "hits": [
+     {
+      "line": 257,
+      "functions": [
+       "stage_sessions"
+      ],
+      "selftest": false
+     },
+     {
+      "line": 283,
+      "functions": [
+       "stage_sessions"
+      ],
+      "selftest": false
+     }
+    ],
+    "kind": "runtime"
+   },
+   "scripts/recon_echo.py": {
+    "runtime_lines": [
+     39
+    ],
+    "selftest_lines": [
+     236,
+     237
+    ],
+    "hits": [
+     {
+      "line": 39,
+      "functions": [],
+      "selftest": false
+     },
+     {
+      "line": 236,
+      "functions": [
+       "selftest"
+      ],
+      "selftest": true
+     },
+     {
+      "line": 237,
+      "functions": [
+       "selftest"
+      ],
+      "selftest": true
+     }
+    ],
+    "kind": "runtime"
+   },
+   "valence_core/e2d/judge.py": {
+    "runtime_lines": [
+     71
+    ],
+    "selftest_lines": [],
+    "hits": [
+     {
+      "line": 71,
+      "functions": [
+       "guarded_ab_read"
+      ],
+      "selftest": false
+     }
+    ],
+    "kind": "runtime"
+   },
+   "valence_core/e2d/runner.py": {
+    "runtime_lines": [
+     220,
+     321
+    ],
+    "selftest_lines": [],
+    "hits": [
+     {
+      "line": 321,
+      "functions": [
+       "run_campaign"
+      ],
+      "selftest": false
+     },
+     {
+      "line": 220,
+      "functions": [
+       "run_session"
+      ],
+      "selftest": false
+     }
+    ],
+    "kind": "runtime"
+   },
+   "valence_core/echo/maskedprefix.py": {
+    "runtime_lines": [
+     88,
+     257
+    ],
+    "selftest_lines": [],
+    "hits": [
+     {
+      "line": 88,
+      "functions": [],
+      "selftest": false
+     },
+     {
+      "line": 257,
+      "functions": [
+       "read_choice_maskedprefix"
+      ],
+      "selftest": false
+     }
+    ],
+    "kind": "runtime"
+   },
+   "valence_core/m/audit.py": {
+    "runtime_lines": [],
+    "selftest_lines": [
+     723
+    ],
+    "hits": [
+     {
+      "line": 723,
+      "functions": [
+       "_selftest"
+      ],
+      "selftest": true
+     }
+    ],
+    "kind": "self-test only"
+   },
+   "valence_core/m/bars.py": {
+    "runtime_lines": [],
+    "selftest_lines": [
+     1345
+    ],
+    "hits": [
+     {
+      "line": 1345,
+      "functions": [
+       "_selftest"
+      ],
+      "selftest": true
+     }
+    ],
+    "kind": "self-test only"
+   },
+   "valence_core/m/guard.py": {
+    "runtime_lines": [
+     121,
+     127
+    ],
+    "selftest_lines": [
+     1332,
+     1339
+    ],
+    "hits": [
+     {
+      "line": 121,
+      "functions": [
+       "assert_insulated"
+      ],
+      "selftest": false
+     },
+     {
+      "line": 127,
+      "functions": [
+       "insulated_read"
+      ],
+      "selftest": false
+     },
+     {
+      "line": 1332,
+      "functions": [
+       "_selftest"
+      ],
+      "selftest": true
+     },
+     {
+      "line": 1339,
+      "functions": [
+       "_selftest"
+      ],
+      "selftest": true
+     }
+    ],
+    "kind": "runtime"
+   },
+   "valence_core/m/readrule.py": {
+    "runtime_lines": [],
+    "selftest_lines": [
+     1447
+    ],
+    "hits": [
+     {
+      "line": 1447,
+      "functions": [
+       "_selftest"
+      ],
+      "selftest": true
+     }
+    ],
+    "kind": "self-test only"
+   },
+   "valence_core/m/schedule.py": {
+    "runtime_lines": [],
+    "selftest_lines": [
+     991
+    ],
+    "hits": [
+     {
+      "line": 991,
+      "functions": [
+       "_selftest"
+      ],
+      "selftest": true
+     }
+    ],
+    "kind": "self-test only"
+   }
+  },
+  "runtime": [
+   "scripts/box_a2_baserates.py",
+   "scripts/box_b3_sessions.py",
+   "scripts/e2d_sessions.py",
+   "scripts/format_recon.py",
+   "scripts/k1_stage1.py",
+   "scripts/recon_echo.py",
+   "valence_core/e2d/judge.py",
+   "valence_core/e2d/runner.py",
+   "valence_core/echo/maskedprefix.py",
+   "valence_core/m/guard.py"
+  ],
+  "selftest_only": [
+   "valence_core/m/audit.py",
+   "valence_core/m/bars.py",
+   "valence_core/m/readrule.py",
+   "valence_core/m/schedule.py"
+  ],
+  "none_found": [],
+  "named_without_marker": [
+   "scripts/e2d_judge_port.py",
+   "valence_core/e2d/__init__.py"
+  ]
+ },
+ "quarantine": {
+  "name": "choice_read_statepresent",
+  "module": "valence_core/e2b/statepresent.py",
+  "import_from_unsanctioned": "ImportError",
+  "absent_after": true,
+  "absent_end": true,
+  "uninjectable": "accepted",
+  "choice_read_params": [
+   "adapter",
+   "transcript_text",
+   "label_a",
+   "label_b",
+   "label_ids",
+   "verify"
+  ],
+  "scan_scope": 54,
+  "offenders": [],
+  "named_outside_core": [
+   "scripts/e2b_h1_sessions.py",
+   "scripts/e2b_h2_readstability.py",
+   "scripts/e2b_h2_sessions.py",
+   "scripts/e2b_verdict_campaign.py"
+  ],
+  "importers": [
+   "scripts/e2b_h1_sessions.py",
+   "scripts/e2b_h2_readstability.py",
+   "scripts/e2b_h2_sessions.py",
+   "scripts/e2b_verdict_campaign.py"
+  ],
+  "provenance_checked": 1432,
+  "provenance_bad": 0,
+  "shadow_bad": 0,
+  "sham_ok": [
+   216,
+   216
+  ],
+  "provenance_sets": {
+   "marker": [
+    [
+     "span_reward",
+     48,
+     0.1,
+     10.301,
+     103.01,
+     "3c17b0d8fbcad716"
+    ]
+   ],
+   "random": [
+    [
+     "random_dir_L48",
+     48,
+     0.1,
+     10.301,
+     103.01,
+     "7be5db23d9224375"
+    ]
+   ]
+  }
+ },
+ "sanctioned_direction_campaigns": [
+  {
+   "campaign": "read half",
+   "artifact": "data/e2b/h2_read_stability.json",
+   "commits": [
+    "b87075f"
+   ],
+   "runner": "scripts/e2b_h2_readstability.py",
+   "module_level_import_lines": {
+    "b87075f": [
+     66
+    ]
+   },
+   "ok": true
+  },
+  {
+   "campaign": "H2 proper",
+   "artifact": "data/e2b/h2_sessions.json",
+   "commits": [
+    "2d419f2"
+   ],
+   "runner": "scripts/e2b_h2_sessions.py",
+   "module_level_import_lines": {
+    "2d419f2": [
+     75
+    ]
+   },
+   "ok": true
+  },
+  {
+   "campaign": "H1-u",
+   "artifact": "data/e2b/h1u_sessions.json",
+   "commits": [
+    "6df2072",
+    "d94e281"
+   ],
+   "runner": "scripts/e2b_h1_sessions.py",
+   "module_level_import_lines": {
+    "6df2072": [
+     85
+    ],
+    "d94e281": [
+     80
+    ]
+   },
+   "ok": true
+  },
+  {
+   "campaign": "H1",
+   "artifact": "data/e2b/h1_sessions.json",
+   "commits": [
+    "7527270",
+    "d94e281",
+    "b2d051b"
+   ],
+   "runner": "scripts/e2b_h1_sessions.py",
+   "module_level_import_lines": {
+    "7527270": [
+     85
+    ],
+    "d94e281": [
+     80
+    ],
+    "b2d051b": [
+     80
+    ]
+   },
+   "ok": true
+  },
+  {
+   "campaign": "verdict",
+   "artifact": "data/e2b/verdict_campaign.json",
+   "commits": [
+    "485cc94"
+   ],
+   "runner": "scripts/e2b_verdict_campaign.py",
+   "module_level_import_lines": {
+    "485cc94": [
+     73
+    ]
+   },
+   "ok": true
+  }
+ ],
+ "suite_directions_6897b67_sanctioned": false,
+ "suite_directions": {
+  "refusal_at_pin": true,
+  "sanctioned_direction_at_pin": false,
+  "refusal_at_6897b67": true,
+  "scripts_e2b_at_6897b67": [],
+  "suite_files_naming_statepresent_6897b67": [
+   "valence_core/regression/analysis.py"
+  ]
+ },
+ "values_check": {
+  "findings": [
+   {
+    "finding": "F1 (minor): three non-numeric Figures rows (certification definition; the primitive's name; what 'quarantined' enforces) were labelled 'reproduced', which rule 4 reserves for figures computed from committed JSON",
+    "disposition": "fixed",
+    "evidence": "statuses now: 'certification definition (what is displaced, over what set, bounded how)' → computed-new; 'quarantined primitive's name' → computed-new; 'what 'quarantined' enforces' → computed-new. The status vocabulary line now defines computed-new to include a code reading the block asks for; each row's note says the numbers inside it are reproduced in their own rows."
+   },
+   {
+    "finding": "F2 (minor): the two 'discrepant' rows (preprint :111 gloss; leak-family characterisation) beside 'STOPs: None' could be read by N1 under block :23 as figure STOPs",
+    "disposition": "fixed, wording adapted",
+    "evidence": "both rows' notes now state 'values reproduced', 'not a transcription' and 'no number ... is discrepant' (check over the 2 discrepant rows: True); the STOPs section says the same. Adapted: N6 does not write 'not a figure STOP' as a ruling -- block :23 makes that N1's and the design seat's routing; N6 states the facts and its reading (sentence corrections)."
+   },
+   {
+    "finding": "F3 (minor): 'marker + random pooled, as declared at LOCK-h.md@bbc9ffe:83' -- the lock declares the monitor but not the pooling",
+    "disposition": "fixed",
+    "evidence": "LOCK-h's six-line declaration names no arm ('pool'/'random'/'marker' present: False); the runner's counter admits every read whose `flipped` is not None (scripts/e2b_verdict_campaign.py@485cc94:366,386,388,401); data recount of the admitted reads {'marker': 576, 'random': 216} = 792 = stored n_paired_reads 792: True. §4 now attributes the pooling to the runner, with Code's reading that it is the plain reading of '128-paired-read'."
+   },
+   {
+    "finding": "F4 (minor): §5 said the sanctioned import direction 'is logged once, in' the consolidation raw; it is also in the consolidation RESULTS entry, and every campaign exercised it implicitly",
+    "disposition": "fixed",
+    "evidence": "added RESULTS.md@bbc9ffe:9740 (row) under RESULTS.md@bbc9ffe:9680 (entry); module-level imports in each campaign's runner at every commit of its artifact's history: read half scripts/e2b_h2_readstability.py @b87075f:66; H2 proper scripts/e2b_h2_sessions.py @2d419f2:75; H1-u scripts/e2b_h1_sessions.py @6df2072:85, @d94e281:80; H1 scripts/e2b_h1_sessions.py @7527270:85, @d94e281:80, @b2d051b:80; verdict scripts/e2b_verdict_campaign.py @485cc94:73 (all: True). The core point stands: the suite pins only refusal (suite files naming `statepresent` at 6897b67: ['valence_core/regression/analysis.py']; e2b runners there: []). One correction to the finding's evidence: the 1432 provenance-complete state-present reads of §5 are the verdict campaign's (marker + random) and H1's only; H2 proper's 180 valid-session reads (and H1-u's, read half's) are not in that count."
+   },
+   {
+    "finding": "F5 (minor): §3b's identity clause ('sessions identical to the verdict tier's except that no pick selects a state') was uncited, and the sentence is long",
+    "disposition": "fixed",
+    "evidence": "identity clause now cites LOCK-h.md@bbc9ffe:248 (LOCK-h v1.4, d94e281; ancestor of the H1 data commit 7527270: True) and PROPOSAL-h's note PROPOSAL-h-state-present-choice.md@bbc9ffe:199 (b400083); a one-sentence short form (101 words) is printed beside the long form (189 words); both carry only values reproduced in §3a."
+   },
+   {
+    "finding": "F6 (minor): §0's commit-order table omits b400083, which appended an interpretive note to PROPOSAL-h after the H1 data and before LOCK-h v2.0",
+    "disposition": "fixed",
+    "evidence": "rows added for b400083 and (fixer's addition, it carries the clause F5 cites) d94e281; chain verified ancestor-by-ancestor: True. PROPOSAL-h at the pin = the 34eb7ee text's first 195 lines unchanged (True) + 11 appended lines; the cited lines [35, 135, 136, 137] lie in the unchanged prefix: True. No N6 locator or figure moves."
+   }
+  ],
+  "pass1_comparison_quoted": {
+   "text": "Pass-1 comparison (this run vs the builder's JSON, sha256 9fe16ae8bfbfa133, read from the path given by --compare-json; that file is the superseded pass-1 output, kept only in session scratch, so this comparison is a record, not reproducible from the repository): primary same; shadow same; arm_geometry same; marker_forced_end same; envelope_reference same; mde_binomial same; h1 same; bar_derivation same; leak_family same; leak_family_max same; verdict_leak same; menu_a_is_plus_tag same; menu_templates_a_first same; quarantine same; absence_asserting_files same; pinned_sha256 same; wt_equal_pin same; preprint same; stops same; unchanged (pass-1 keys) same. All computed sections the same: True. Figures rows whose value text changed: [\"quarantined primitive's name (only the locator pinned: '@bbc9ffe' inserted)\"]; status changes: ['certification definition (what is displaced, over what set, bounded how): reproduced → computed-new', \"quarantined primitive's name: reproduced → computed-new\", \"what 'quarantined' enforces: reproduced → computed-new\"]; rows new in this pass: ['47 (state-present) vs 48 (shadow) at the first free read', 'realised envelope relative to its null'].",
+   "pass2_script_sha256": "296ed698ac2aa9fd69a239b3ce4a7f98cf485baa09ad5bd96fc11fa5440108fc",
+   "pass2_md_sha256": "9c25f2b8937903e3ef2a32422bec4fd02196defe4806fb26b3be2e717c484cd1",
+   "pass2_json_sha256": "283f0d6d00f5f7fa808bd88e33f7ea1f1054e2c79888aa928553e86a076961ec",
+   "pass1_json_sha256": "9fe16ae8bfbfa133f8426ad4a2089127aa4faaaedfd4464524244302fca288ff"
+  },
+  "round2": [
+   {
+    "finding": "R2-F1 (minor): §2a cites PROPOSAL-h §3 and LOCK-h v2.0 §2 together, but PROPOSAL-h:136-137 says 'max pseudo-Δ' with no absolute value and defers to '[LOCK-h formula]'; the |·| first appears in LOCK-h v2.0 (f030cdd). Read signed, (i) would pass; the verdict is NULL either way",
+    "disposition": "fixed",
+    "evidence": "§2a now carries the sentence; computed: PROPOSAL-h '[LOCK-h formula]' PROPOSAL-h-state-present-choice.md@bbc9ffe:135, signed words PROPOSAL-h-state-present-choice.md@bbc9ffe:137 ('|' on :136-137: False; in the 34eb7ee prefix: True); LOCK-h history (newest first) ['f030cdd', 'd94e281', 'a58692f', '09ae918', '8a97513'], lines with 'pseudo': f030cdd 1, d94e281 0, a58692f 0, 09ae918 0, 8a97513 0; '|pseudo-Δ|' first at f030cdd (line [62]); f030cdd → a2f074d → 485cc94 ancestors: True. Signed envelope max(-0.0833, -0.0278) = -0.0278; Δ_first -0.0104 > it: True; (ii) False, (iii) False; verdict under the signed reading NULL, under the lock NULL. Code's addition: the power model behind the planning reference p90 = 0.167 and bar_leak folds with np.abs (scripts/h1_power.py@bbc9ffe:94,95,141; unchanged since 7302384: True; 7302384 an ancestor of LOCK-h v1.1 8a97513: True). The Figures row for (i) and §6 point to §2a."
+   },
+   {
+    "finding": "R2-F2 (minor): §3b quotes scripts/e2b_h1_sessions.py@bbc9ffe as 'code of record' and §4 cites session_e2a.py:78, but the H1 runner changed after 7527270 (1465b34) and MENU_TEMPLATES then lived in valence_core/e2b/session.py; §0 said nothing of either",
+    "disposition": "fixed",
+    "evidence": "§0 now carries both lines: runner == at 7527270: False; commits after 7527270: ['1465b34']; 6 hunks, kinds {'adapter loader': 4, 'imports': 2}; moved import block identical apart from the module name: True; slices 171-174 → 7527270:183-186; 213-225 → 7527270:225-237; 210-215 → 7527270:222-227 (all unique and identical: True); MENU_TEMPLATES at 7527270:71, 485cc94:71 (valence_core/e2b/session.py) and bbc9ffe:78 (valence_core/session_e2a.py) identical: True; renamed by 1465b34: True. §3b's heading and §4's template bullet point to §0."
+   },
+   {
+    "finding": "R2-F3 (minor): '23.4%/41.5% RESULTS.md@bbc9ffe:6795' -- :6795 carries only 41.5%; the pair is at :6798",
+    "disposition": "fixed",
+    "evidence": "§3a now cites 41.5% at RESULTS.md@bbc9ffe:6795 and the pair at RESULTS.md@bbc9ffe:6798."
+   },
+   {
+    "finding": "R2-F4 (minor): the header's command took --compare-json on a session-scratch file, so it cannot be re-run from the repository",
+    "disposition": "fixed (the fix's first option)",
+    "evidence": "this raw was written without the flag (flag given to this run: False); the pass-1 comparison above is now quoted text with its provenance, emitted on every run; when --compare-json is given, a live comparison is appended under its own heading after this table, and that output is not the canonical raw. The command in the header needs no session-scratch input; it reads the untracked PREPRINT-v1_0-draft.md at the root (§0), so a checkout without that file cannot re-run it."
+   },
+   {
+    "finding": "R2-F5 (minor): the routing summary handed to the verifier was stale (script sha256 cb87babd...; 'reproduced' for three rows); the '14 harnesses' line, if reused, should keep the raw's phrasing or be split 9 harness/runtime + 5 m-package self-test checks",
+    "disposition": "staleness noted for N1; the raw's phrasing kept and the split computed; the finding's 9/5 split rejected (10/4)",
+    "evidence": "this run's script sha256 begins fbd0735a (begins cb87babd: False); the three rows' statuses here: 'certification definition (what is displaced, over what set, bounded how)' → computed-new; 'quarantined primitive's name' → computed-new; 'what 'quarantined' enforces' → computed-new. N1 should ingest this raw's JSON (results/raw/2026-10-08_note-N6-e2b.json), not a routing summary (Code's note 5). AST split of the 14 files (§5): runtime assertion 10, self-test only 4 ['valence_core/m/audit.py', 'valence_core/m/bars.py', 'valence_core/m/readrule.py', 'valence_core/m/schedule.py']. The finding's 9/5 counts valence_core/m/guard.py as self-test only, but it carries a runtime assertion: `assert_insulated` (valence_core/m/guard.py@bbc9ffe:119) calls `assert_modules_absent(FORBIDDEN_MODULES)` (:121), and `insulated_read` (:124) calls it before every read (:127); its self-test exercises it too (:1332,1339). Files naming the module without a marker (excluded by the heuristic): ['scripts/e2d_judge_port.py', 'valence_core/e2d/__init__.py']."
+   }
+  ],
+  "live_comparison": null
+ },
+ "figures": [
+  {
+   "figure": "e2b VERDICTS entry (Code locates and pins)",
+   "value": "verdict RESULTS.md@bbc9ffe:9837; disposition RESULTS.md@bbc9ffe:9792; H1 gate RESULTS.md@bbc9ffe:10012",
+   "source": "RESULTS.md (Phase-2 log)",
+   "status": "log-only",
+   "note": "entry prose; every figure in it that the block names is reproduced from JSON in the rows below"
+  },
+  {
+   "figure": "Δ_first = −0.0104 (47/96)",
+   "value": "47/96 → -0.0104",
+   "source": "data/e2b/verdict_campaign.json sessions (valid marker, first read pick vs stratum.tag_plus); data/e2b/verdict_analysis.json primary.delta_first",
+   "status": "reproduced",
+   "note": "log RESULTS.md@bbc9ffe:9859; share of first free picks to the map's +tag − ½"
+  },
+  {
+   "figure": "shadow 48/96",
+   "value": "48/96 → +0.0000",
+   "source": "data/e2b/verdict_campaign.json choices[0].paired_read.shadow.pick; verdict_analysis.json descriptives.shadow_delta_first",
+   "status": "reproduced",
+   "note": "vanilla choice_read over the identical prefix at the first free read; first-read flips b 1 / c 2 explain 48 → 47"
+  },
+  {
+   "figure": "47 (state-present) vs 48 (shadow) at the first free read",
+   "value": "3 of 96 first-read picks flipped: 1 toward the +tag, 2 toward the −tag; 48 + 1 − 2 = 47",
+   "source": "data/e2b/verdict_campaign.json choices[0].paired_read (state_present.pick vs shadow.pick vs stratum.tag_plus)",
+   "status": "computed-new",
+   "note": "descriptive only (§2c); not a block figure"
+  },
+  {
+   "figure": "conjunct (i): Δ_first exceeds the realised control ('sham') envelope",
+   "value": "-0.0104 > 0.0833? False → fail",
+   "source": "verdict_analysis.json primary.control_envelope, conjunct_envelope",
+   "status": "reproduced",
+   "note": "envelope = max(|pseudo-Δ_sham|, |pseudo-Δ_random|), strict >; defined over sham AND random (analyzer :14-16, :221, :227); the |·| is LOCK-h v2.0's (f030cdd, before the analyzer and the data); under PROPOSAL-h's literal signed wording (i) would pass (-0.0104 > -0.0278), and the verdict is NULL either way (§2a)"
+  },
+  {
+   "figure": "envelope value 0.0833 (sham −0.0833, random −0.0278)",
+   "value": "sham 15/36 → -0.0833; random 17/36 → -0.0278; envelope 0.0833 (from sham)",
+   "source": "verdict_analysis.json primary.sham, primary.random, primary.control_envelope",
+   "status": "reproduced",
+   "note": "realised envelope sits at the exact null median (CDF 0.5731)"
+  },
+  {
+   "figure": "realised envelope relative to its null",
+   "value": "0.0833 = 1/12: exact null CDF 0.5731; P(envelope ≥ 0.0833) = 0.6460",
+   "source": "exact distribution of max(|k_s/36 − ½|, |k_r/36 − ½|), k_s, k_r ~ Binomial(36, ½) independent (§2d)",
+   "status": "computed-new",
+   "note": "the realised envelope was at the null median, not in its tail; not a block figure"
+  },
+  {
+   "figure": "envelope planning reference p90 = 0.167",
+   "value": "0.1667 (= 1/6, exact)",
+   "source": "data/e2b/h1_power.json lockh_v1.envelope_exact.p90",
+   "status": "reproduced",
+   "note": "LOCK-h v2.0 §2 planning reference, not the criterion"
+  },
+  {
+   "figure": "conjunct (ii): sign lock across maps",
+   "value": "map0 23/47 → -0.0106; map1 24/49 → -0.0102; → fail",
+   "source": "verdict_analysis.json primary.by_map, conjunct_sign_lock",
+   "status": "reproduced",
+   "note": "Δ ≥ 0 required in BOTH maps (analyzer :17, :228)"
+  },
+  {
+   "figure": "conjunct (iii): one-sided exact binomial p = 0.6202, critical k ≥ 57",
+   "value": "P(X ≥ 47 | 96, ½) = 0.6202; k_crit 57; → fail",
+   "source": "verdict_analysis.json primary.p_one_sided, critical_k, conjunct_binomial",
+   "status": "reproduced",
+   "note": "one-sided (approach), α = .05; reverse tail P(X ≤ 47) = 0.4594, not an unexpected-direction finding"
+  },
+  {
+   "figure": "verdict NULL (all three conjuncts fail)",
+   "value": "NULL",
+   "source": "verdict_analysis.json primary.verdict",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "MDE 0.130 at 80% power (n = 96, binomial-only)",
+   "value": "0.1300",
+   "source": "data/e2b/h1_power.json mde_verdict_share",
+   "status": "reproduced",
+   "note": "LOCK-h v2.0 §2 constant; the conjunctive MDE is 0.211 (§3c)"
+  },
+  {
+   "figure": "π̂_d = 0.0172",
+   "value": "11/640 = 0.0171875",
+   "source": "data/e2b/h1_sessions.json sessions[].choices[].paired_read; data/e2b/h1_gate.json pi_hat_d",
+   "status": "reproduced",
+   "note": "pick-discordance rate over H1's 640 paired reads (definition §3b)"
+  },
+  {
+   "figure": "π̂_d CI [0.0086, 0.0305]",
+   "value": "[0.0086, 0.0305] (Clopper–Pearson 95%)",
+   "source": "data/e2b/h1_gate.json pi_hat_d_ci",
+   "status": "reproduced",
+   "note": "23.4% / 41.6% of bar (the log's 41.5% divides the rounded 0.0305; both under half)"
+  },
+  {
+   "figure": "bar 0.0735",
+   "value": "min(0.5 × 0.2110, 0.0735) = 0.0735",
+   "source": "data/e2b/h1_power.json lockh_v1.bar_leak, variants[0]",
+   "status": "reproduced",
+   "note": "leak at ≤ 2.5% false-verdict rate binds; a bound on L (share shift), fixed at LOCK-h v1.1 8a97513 before H1 data"
+  },
+  {
+   "figure": "L̂ = +0.00156; mapped L CI [−0.00915, +0.01143]; PASS by low discordance",
+   "value": "+0.00156; [-0.00915, +0.01143]; PASS=True, low-discordance=True",
+   "source": "data/e2b/h1_gate.json L_hat, L_ci, verdict, certified_by_low_discordance",
+   "status": "reproduced",
+   "note": "b 6 / c 5 of n_d 11; CP on p_flip [0.2338, 0.8325]"
+  },
+  {
+   "figure": "certification definition (what is displaced, over what set, bounded how)",
+   "value": "the pick (state-present vs shadow) over H1's 640 paired reads; |L| ≤ π̂_d; exact CP CI on b|n_d mapped inside ±0.0735",
+   "source": "scripts/e2b_h1_sessions.py@bbc9ffe:171-174,213-225; scripts/e2b_h1_gate.py@bbc9ffe:97-100,114-118,125; LOCK-h.md@bbc9ffe:182,185,208,229,248",
+   "status": "computed-new",
+   "note": "a code reading at pinned locators, not a figure computed from JSON; every number inside it (11/640, b 6 / c 5, the mapped CI, the bar) is reproduced in its own row; short and long forms of the sentence in §3b"
+  },
+  {
+   "figure": "preprint :111 gloss 'direct displacement of label logits'",
+   "value": "π̂_d is a pick-discordance rate, not a logit displacement",
+   "source": "PREPRINT-v1_0-draft.md:111 (untracked, sha d6431e97...)",
+   "status": "discrepant",
+   "note": "values reproduced (π̂_d 0.0172 and bar 0.0735, rows above); the gloss is discrepant -- a definition error, not a transcription; no number in this row is discrepant. For N1 (block :23): a sentence correction; replace the gloss with §3b's short form. Routing is N1's and the design seat's; N6 raises no STOP"
+  },
+  {
+   "figure": "verdict in-campaign leak: half-gap +0.00198 = 2.7% of bar; flip rate 0.0191",
+   "value": "+0.00198 (2.7%); 11/576 = 0.0191",
+   "source": "verdict_analysis.json descriptives.marker_leak",
+   "status": "reproduced",
+   "note": "half-gap is a menu-position quantity; the like-for-like L̂ for the marker arm is -0.00174 (2.4% of bar)"
+  },
+  {
+   "figure": "directional-leak family +0.00084/+0.00220/0.00000/+0.00156/+0.00198, '≤ 3% of bar'",
+   "value": "each value reproduces under its own quantity; uniformly: |half-gap| max 3.9% (H1-u), |L̂| max 22.7% (H2 proper)",
+   "source": "h2_read_stability.json, h2_sessions.json, h1u_sessions.json, h1_sessions.json, verdict_campaign.json",
+   "status": "discrepant",
+   "note": "values reproduced: each of the five family values reproduces from its artifact under its own quantity, and '≤ 3%' holds for the list as printed (max 2.99% of bar); the characterisation is discrepant -- RESULTS.md@bbc9ffe:6859 calls all five 'L (half-gap)', but two are L̂ = (b−c)/N and three are the d_p_a half-gap. Not a transcription; no number is discrepant. Post-hoc. For N1 (block :23): a wording correction to the O-leakage sentence; routing is N1's and the design seat's; N6 raises no STOP. Every gate-form CI inside ±0.0735"
+  },
+  {
+   "figure": "quarantined primitive's name",
+   "value": "choice_read_statepresent (valence_core/e2b/statepresent.py@bbc9ffe:108)",
+   "source": "valence_core/e2b/statepresent.py@bbc9ffe",
+   "status": "computed-new",
+   "note": "a code reading at a pinned locator (not a JSON figure); live: import refused from an unsanctioned file (ImportError); 0 offenders in valence_core"
+  },
+  {
+   "figure": "what 'quarantined' enforces",
+   "value": "import guard; no re-export; per-read provenance; mandatory paired shadow; choice_read uninjectable; suite structural scan; insulated harnesses assert absence; clause 4 by commit order only",
+   "source": "§5 table (statepresent.py, records.py, readout.py, regression/analysis.py, session.py, e2d/runner.py, echo/maskedprefix.py; all @bbc9ffe)",
+   "status": "computed-new",
+   "note": "a code reading at pinned locators plus model-free live checks (not a JSON figure); provenance complete on 1432/1432 state-present reads (verdict marker + random, H1); guard is basename-based (any e2b_*.py); the suite pins only the refusal direction"
+  }
+ ],
+ "stops": [],
+ "notes": [
+  "Leak family: the five-member 'directional-leak (L) family' (LOCK-h v2.0 §1, the verdict entry, FINDINGS-5 §3) mixes the d_p_a state-reversing half-gap (read half, H2, verdict) with L̂ = (b−c)/N (H1-u, H1); RESULTS.md@bbc9ffe:6859 calls all five 'L (half-gap)'. Uniformly: half-gap max +0.00286 (3.9% of bar, H1-u); |L̂| max 0.01667 (22.7% of bar, H2 proper, n_d = 5). All gate-form CIs inside ±0.0735. Post-hoc; a wording note for the note's O-leakage sentence, not a STOP.",
+  "Quarantine: the guard admits any importer file named e2b_*.py in any directory (statepresent.py:75-76) where its prose says scripts/e2b_*.py (:24-25); the suite pins only the refusal direction; the sanctioned direction was checked explicitly at the 2026-08-22 consolidation (raw results/raw/2026-08-22_consolidation.txt@bbc9ffe:30; RESULTS.md@bbc9ffe:9740; log-only) and exercised implicitly by every e2b campaign run (each runner imports the primitive at module level at its data commit). The 2026-08-20 claim 'both directions are suite-pinned' is not borne out by the suite. Clause 4 (gate passed) is commit order, not code. None is a STOP; the README can say exactly this.",
+  "Preprint :111 glosses π̂_d as 'a pre-registered bound on the direct displacement of label logits'; the record's π̂_d is a pick-discordance rate and the bar bounds L. Numbers reproduce; the gloss is the discrepancy (definition, not transcription).",
+  "Envelope wording (round 2): PROPOSAL-h's criterion text (:136-137) says 'max pseudo-Δ across sham and random families', signed, and defers to '[LOCK-h formula]'; the absolute value is LOCK-h v2.0's (f030cdd, committed before the analyzer and the data). The note's 'null on all three conjuncts' is right under the operative lock; under PROPOSAL-h's literal signed words (i) would pass and the verdict is still NULL ((ii) and (iii) fail). A sentence-level note, not a STOP.",
+  "For N1 and the README (round 2): ingest this raw's JSON (results/raw/2026-10-08_note-N6-e2b.json), not a routing summary of an earlier pass (the verifier's summary carried a stale script sha and pass-1 statuses). If the README reuses §5's '14 files' line, keep the raw's phrasing ('name the quarantined module beside an absence assertion') or the computed split: 10 carry a runtime absence assertion and 4 (m-package files) check it only in a self-test."
+ ],
+ "locators": {
+  "R.verdict_entry": {
+   "path": "RESULTS.md",
+   "needle": "e2b VERDICT CAMPAIGN: NULL. All three conjuncts fail.",
+   "lines": [
+    9837
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "R.disposition": {
+   "path": "RESULTS.md",
+   "needle": "e2b DISPOSITION (design instance): the NULL is",
+   "lines": [
+    9792
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "R.h1_entry": {
+   "path": "RESULTS.md",
+   "needle": "H1 GATE RUN OF RECORD: reached its declared exit at",
+   "lines": [
+    10012
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "L.primary": {
+   "path": "LOCK-h.md",
+   "needle": "**Primary criterion (values in place):**",
+   "lines": [
+    60
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "L.envelope": {
+   "path": "LOCK-h.md",
+   "needle": "campaign's own realised control envelope (max |pseudo-Δ| across the",
+   "lines": [
+    62
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "Ph.criteria": {
+   "path": "PROPOSAL-h-state-present-choice.md",
+   "needle": "counterbalanced Δ_first exceeds the campaign's own control envelope",
+   "lines": [
+    136
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "Ph.defer": {
+   "path": "PROPOSAL-h-state-present-choice.md",
+   "needle": "**Verdict criteria [LOCK-h formula], conjunctive",
+   "lines": [
+    135
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "Ph.env_signed": {
+   "path": "PROPOSAL-h-state-present-choice.md",
+   "needle": "(max pseudo-Δ across sham and random families)",
+   "lines": [
+    137
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "R.delta_row": {
+   "path": "RESULTS.md",
+   "needle": "| Δ_first, marker | **−0.0104** (47/96)",
+   "lines": [
+    9859
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "R.c1_row": {
+   "path": "RESULTS.md",
+   "needle": "| (i) exceeds realised envelope | envelope **0.0833**",
+   "lines": [
+    9860
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "R.c2_row": {
+   "path": "RESULTS.md",
+   "needle": "| (ii) sign locks across maps | map0 −0.0106 (n=47), map1 −0.0102 (n=49)",
+   "lines": [
+    9861
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "R.c3_row": {
+   "path": "RESULTS.md",
+   "needle": "| (iii) one-sided exact binomial | **p = 0.6202**, critical k ≥ 57",
+   "lines": [
+    9862
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "raw.delta": {
+   "path": "results/raw/2026-08-22_verdict_analysis.txt",
+   "needle": "Delta = -0.0104  (47/96)",
+   "lines": [
+    8
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "R.shadow": {
+   "path": "RESULTS.md",
+   "needle": "give **Δ_first = +0.0000 (48/96)**",
+   "lines": [
+    9869
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "L.p90": {
+   "path": "LOCK-h.md",
+   "needle": "sham and random families; planning reference: p90 = 0.167 from the",
+   "lines": [
+    63
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "L.mde": {
+   "path": "LOCK-h.md",
+   "needle": "MDE 0.130 at 80% power).",
+   "lines": [
+    66
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "R.h1_vals": {
+   "path": "RESULTS.md",
+   "needle": "π̂_d = 0.0172, L̂ = +0.00156; mapped L CI [−0.00915, +0.01143] against a",
+   "lines": [
+    10014
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "R.h1_ci": {
+   "path": "RESULTS.md",
+   "needle": "certifies. π̂_d",
+   "lines": [
+    10034
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "raw.h1": {
+   "path": "results/raw/2026-08-21_h1_gate_eval.txt",
+   "needle": "N = 640, n_d = 11 (b = 6, c = 5), pi_hat_d = 0.0172",
+   "lines": [
+    6
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "L.h1": {
+   "path": "LOCK-h.md",
+   "needle": "π̂_d = 0.0172, exact 95% CI [0.0086, 0.0305]; L̂ = +0.00156;",
+   "lines": [
+    22
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "R.disp_pi": {
+   "path": "RESULTS.md",
+   "needle": "(PASS by low-discordance certification, π̂_d .0172, CI",
+   "lines": [
+    9804
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "R.ratio": {
+   "path": "RESULTS.md",
+   "needle": "0.0735 = 41.5%**, not a fifth.",
+   "lines": [
+    6795
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "R.ratio2": {
+   "path": "RESULTS.md",
+   "needle": "**23.4% < 25%** and **41.5% < 50%**",
+   "lines": [
+    6798
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "L.unit": {
+   "path": "LOCK-h.md",
+   "needle": "Unit: a **paired read**",
+   "lines": [
+    182
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "L.Lhat": {
+   "path": "LOCK-h.md",
+   "needle": "π_d = discordance rate; leak L̂ = (b − c)/N.",
+   "lines": [
+    185
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "L.gate": {
+   "path": "LOCK-h.md",
+   "needle": "the null, mapped through π̂_d = n_d/N. **PASS iff the CI lies",
+   "lines": [
+    208
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "L.feas": {
+   "path": "LOCK-h.md",
+   "needle": "**Feasibility corollary, recorded for interpretation:**",
+   "lines": [
+    229
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "L.v14": {
+   "path": "LOCK-h.md",
+   "needle": "**Clarification (v1.4):** H1 sessions are identical to verdict sessions",
+   "lines": [
+    248
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "Ph.note": {
+   "path": "PROPOSAL-h-state-present-choice.md",
+   "needle": "**INTERPRETIVE NOTE (2026-08-21, design instance):**",
+   "lines": [
+    199
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "L.type1": {
+   "path": "LOCK-h.md",
+   "needle": "Type-I of the full verdict conjunction at Δ = 0 is 0.00034",
+   "lines": [
+    177
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "L.bar": {
+   "path": "LOCK-h.md",
+   "needle": "**bar_leak = 0.0735** (share units).",
+   "lines": [
+    169
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "R.v_leak": {
+   "path": "RESULTS.md",
+   "needle": "rate 0.0191, state-reversing half-gap **+0.00198 = 2.7% of bar_leak**",
+   "lines": [
+    9891
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "L.monitor": {
+   "path": "LOCK-h.md",
+   "needle": "**In-campaign leak monitor (declared):**",
+   "lines": [
+    83
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "SE2A.menu": {
+   "path": "valence_core/session_e2a.py",
+   "needle": "MENU_TEMPLATES = (",
+   "lines": [
+    78
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "VR.menu": {
+   "path": "scripts/e2b_verdict_campaign.py",
+   "needle": "a, b = ((tag_plus, tag_minus) if rng.integers(2) == 0",
+   "lines": [
+    233
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "VR.sham_forced": {
+   "path": "scripts/e2b_verdict_campaign.py",
+   "needle": "injs = [] if inj is None else [inj[pole]]",
+   "lines": [
+    207
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "VR.sham_read": {
+   "path": "scripts/e2b_verdict_campaign.py",
+   "needle": "# sham: no state anywhere, so the untouched state-free primitive.",
+   "lines": [
+    237
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "VR.sham_round": {
+   "path": "scripts/e2b_verdict_campaign.py",
+   "needle": "injs = [] if inj is None else [inj[picked_pole]]",
+   "lines": [
+    256
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "L.family": {
+   "path": "LOCK-h.md",
+   "needle": "measurements: +0.00084 / +0.00220 / 0.00000 / +0.00156 — never above",
+   "lines": [
+    27
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "R.family": {
+   "path": "RESULTS.md",
+   "needle": "members across every configuration tested — +0.00084, +0.00220, 0.00000,",
+   "lines": [
+    9893
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "R.family4": {
+   "path": "RESULTS.md",
+   "needle": "now been measured four times — read half +0.00084, H2 +0.00220, H1-u",
+   "lines": [
+    10053
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "F5.family": {
+   "path": "FINDINGS-5.md",
+   "needle": "directional-leak (L) family — a distinct quantity from the discordance",
+   "lines": [
+    128
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "R.family_desc": {
+   "path": "RESULTS.md",
+   "needle": "**+0.00084, +0.00220, 0.00000, +0.00156, +0.00198** — all L (half-gap)",
+   "lines": [
+    6859
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "C.5e": {
+   "path": "CLAUDE.md",
+   "needle": "(e) [h-amendment, PROPOSAL-h §0.4, design-instance authored, applied",
+   "lines": [
+    274
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "SP.def": {
+   "path": "valence_core/e2b/statepresent.py",
+   "needle": "def choice_read_statepresent(adapter",
+   "lines": [
+    108
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "Ph.name": {
+   "path": "PROPOSAL-h-state-present-choice.md",
+   "needle": "`choice_read_statepresent` is a distinct function in the e2b",
+   "lines": [
+    35
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "RO.def": {
+   "path": "valence_core/readout.py",
+   "needle": "def choice_read(adapter",
+   "lines": [
+    90
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "SP.guard": {
+   "path": "valence_core/e2b/statepresent.py",
+   "needle": "def _importer_is_sanctioned",
+   "lines": [
+    53
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "SP.basename": {
+   "path": "valence_core/e2b/statepresent.py",
+   "needle": "return base.startswith(\"e2b_\") and base.endswith(\".py\")",
+   "lines": [
+    76
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "SP.raise": {
+   "path": "valence_core/e2b/statepresent.py",
+   "needle": "if not _importer_is_sanctioned():",
+   "lines": [
+    80
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "SP.late_import": {
+   "path": "valence_core/e2b/statepresent.py",
+   "needle": "from ..adapters.base import Injection, ModelAdapter",
+   "lines": [
+    92
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "I.export": {
+   "path": "valence_core/e2b/__init__.py",
+   "needle": "from .records import (InjectionProvenance",
+   "lines": [
+    34
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "I.all": {
+   "path": "valence_core/e2b/__init__.py",
+   "needle": "__all__ = [",
+   "lines": [
+    39
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "SP.inj": {
+   "path": "valence_core/e2b/statepresent.py",
+   "needle": "if not isinstance(injection, Injection):",
+   "lines": [
+    127
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "RC.atfrac": {
+   "path": "valence_core/e2b/records.py",
+   "needle": "if inj.frac is None or inj.r_layer is None:",
+   "lines": [
+    48
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "RC.req": {
+   "path": "valence_core/e2b/records.py",
+   "needle": "REQUIRED_PROVENANCE = (",
+   "lines": [
+    59
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "RC.null": {
+   "path": "valence_core/e2b/records.py",
+   "needle": "if float(d[\"frac\"]) <= 0 or float(d[\"alpha\"]) == 0:",
+   "lines": [
+    78
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "RC.post": {
+   "path": "valence_core/e2b/records.py",
+   "needle": "        assert_provenance_complete(self.provenance)",
+   "lines": [
+    100
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "SP.fwd": {
+   "path": "valence_core/e2b/statepresent.py",
+   "needle": "res = adapter.forward(ids, capture_layers=(), injections=[injection])",
+   "lines": [
+    137
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "SP.shadow": {
+   "path": "valence_core/e2b/statepresent.py",
+   "needle": "shadow = choice_read(adapter, transcript_text, label_a, label_b,",
+   "lines": [
+    150
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "SP.ret": {
+   "path": "valence_core/e2b/statepresent.py",
+   "needle": "return PairedRead(state_present=sp, shadow=shadow,",
+   "lines": [
+    153
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "RC.noshadow": {
+   "path": "valence_core/e2b/records.py",
+   "needle": "if self.shadow is None:",
+   "lines": [
+    130
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "RC.steered": {
+   "path": "valence_core/e2b/records.py",
+   "needle": "if getattr(self.shadow, \"provenance\", None) is not None:",
+   "lines": [
+    134
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "RO.fwd": {
+   "path": "valence_core/readout.py",
+   "needle": "res = adapter.forward(ids, capture_layers=())",
+   "lines": [
+    107
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "RC.unin": {
+   "path": "valence_core/e2b/records.py",
+   "needle": "def assert_choice_read_uninjectable",
+   "lines": [
+    217
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "AN.def": {
+   "path": "valence_core/regression/analysis.py",
+   "needle": "def check_e2b_quarantine",
+   "lines": [
+    776
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "AN.import": {
+   "path": "valence_core/regression/analysis.py",
+   "needle": "lambda: importlib.import_module(\"valence_core.e2b.statepresent\"),",
+   "lines": [
+    797
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "AN.scan": {
+   "path": "valence_core/regression/analysis.py",
+   "needle": "if \"choice_read_statepresent\" in fh.read():",
+   "lines": [
+    819
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "AN.unin": {
+   "path": "valence_core/regression/analysis.py",
+   "needle": "got, ok = _raises(assert_choice_read_uninjectable, AssertionError)",
+   "lines": [
+    828
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "AN.reg": {
+   "path": "valence_core/regression/analysis.py",
+   "needle": "checks += check_e2b_quarantine()",
+   "lines": [
+    1152
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "SE.def": {
+   "path": "valence_core/session.py",
+   "needle": "def assert_modules_absent",
+   "lines": [
+    42
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "E2D.forb": {
+   "path": "valence_core/e2d/runner.py",
+   "needle": "FORBIDDEN_MODULES = (\"valence_core.e2b.statepresent\",)",
+   "lines": [
+    53
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "E2D.call": {
+   "path": "valence_core/e2d/runner.py",
+   "needle": "assert_modules_absent(FORBIDDEN_MODULES)",
+   "lines": [
+    220,
+    321
+   ],
+   "expect": 2,
+   "ok": true
+  },
+  "MP.forb": {
+   "path": "valence_core/echo/maskedprefix.py",
+   "needle": "FORBIDDEN_MODULES = (\"valence_core.e2b.statepresent\",)",
+   "lines": [
+    49
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "MP.def": {
+   "path": "valence_core/echo/maskedprefix.py",
+   "needle": "def assert_statepresent_absent",
+   "lines": [
+    80
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "SP.clause4": {
+   "path": "valence_core/e2b/statepresent.py",
+   "needle": "leakage-budget gate passed    -> H1; a campaign precondition, not a code",
+   "lines": [
+    12
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "SP.honest": {
+   "path": "valence_core/e2b/statepresent.py",
+   "needle": "It is not a security boundary and is not claimed as one",
+   "lines": [
+    29
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "SP.prose": {
+   "path": "valence_core/e2b/statepresent.py",
+   "needle": "package, and `scripts/e2b_*.py` runners). It stops the accident it is meant",
+   "lines": [
+    25
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "raw.consol": {
+   "path": "results/raw/2026-08-22_consolidation.txt",
+   "needle": "-- sanctioned scripts/e2b_*.py runners (module-level statepresent import):",
+   "lines": [
+    30
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "R.consol_tab": {
+   "path": "RESULTS.md",
+   "needle": "| sanctioned `scripts/e2b_*.py` runners still import it | 4/4 clean |",
+   "lines": [
+    9740
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "R.consol_hdr": {
+   "path": "RESULTS.md",
+   "needle": "CONSOLIDATION ACCEPTANCE EVENT: GREEN.",
+   "lines": [
+    9680
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "R.both": {
+   "path": "RESULTS.md",
+   "needle": "Both directions are",
+   "lines": [
+    11493
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "PRE.111": {
+   "path": "PREPRINT-v1_0-draft.md",
+   "needle": "(π̂_d = 0.0172 against a 0.0735 bar)",
+   "lines": [
+    111
+   ],
+   "expect": 1,
+   "ok": true
+  },
+  "PRE.176": {
+   "path": "PREPRINT-v1_0-draft.md",
+   "needle": "Δ_first = −0.0104 (47/96; shadow passes 48/96 exactly)",
+   "lines": [
+    176
+   ],
+   "expect": 1,
+   "ok": true
+  }
+ }
+}

@@ -1,0 +1,1372 @@
+{
+ "item": "N4",
+ "pin": "bbc9ffe",
+ "block_sha256": "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841",
+ "script": "scripts/audit_note_N4.py",
+ "script_sha256": "7236277c0dfeb85fac69720c5638137532a9bb7d6386d9f70f7d17b8ffc53080",
+ "interpreter": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python",
+ "python": "3.12.9",
+ "recount": {
+  "reward": {
+   "launched": 112,
+   "excluded": 10,
+   "n": 102,
+   "k": 55,
+   "delta_first": 0.0392,
+   "map": {
+    "A": [
+     32,
+     53,
+     0.1038
+    ],
+    "B": [
+     23,
+     49,
+     -0.0306
+    ]
+   },
+   "share_all_choices": 0.5033,
+   "p_exact": 0.24421723226631642,
+   "n_choices": 612,
+   "match_analysis_json": true
+  },
+  "sham": {
+   "launched": 40,
+   "excluded": 3,
+   "n": 37,
+   "k": 19,
+   "delta_first": 0.0135,
+   "map": {
+    "A": [
+     11,
+     18,
+     0.1111
+    ],
+    "B": [
+     8,
+     19,
+     -0.0789
+    ]
+   },
+   "share_all_choices": 0.509,
+   "p_exact": 0.5,
+   "n_choices": 222,
+   "match_analysis_json": true
+  },
+  "random1": {
+   "launched": 24,
+   "excluded": 1,
+   "n": 23,
+   "k": 15,
+   "delta_first": 0.1522,
+   "map": {
+    "A": [
+     9,
+     11,
+     0.3182
+    ],
+    "B": [
+     6,
+     12,
+     0.0
+    ]
+   },
+   "share_all_choices": 0.5,
+   "p_exact": 0.10501980781555176,
+   "n_choices": 138,
+   "match_analysis_json": true
+  },
+  "random2": {
+   "launched": 24,
+   "excluded": 2,
+   "n": 22,
+   "k": 12,
+   "delta_first": 0.0455,
+   "map": {
+    "A": [
+     7,
+     10,
+     0.2
+    ],
+    "B": [
+     5,
+     12,
+     -0.0833
+    ]
+   },
+   "share_all_choices": 0.4924,
+   "p_exact": 0.4159059524536133,
+   "n_choices": 132,
+   "match_analysis_json": true
+  }
+ },
+ "integrality": {
+  "reward pooled": {
+   "n": 102,
+   "stored": 0.0392,
+   "k_share": [
+    55
+   ],
+   "k_diff_over_n": [
+    53
+   ]
+  },
+  "reward map A": {
+   "n": 53,
+   "stored": 0.1038,
+   "k_share": [
+    32
+   ],
+   "k_diff_over_n": []
+  },
+  "reward map B": {
+   "n": 49,
+   "stored": -0.0306,
+   "k_share": [
+    23
+   ],
+   "k_diff_over_n": []
+  },
+  "sham pooled": {
+   "n": 37,
+   "stored": 0.0135,
+   "k_share": [
+    19
+   ],
+   "k_diff_over_n": []
+  },
+  "sham map A": {
+   "n": 18,
+   "stored": 0.1111,
+   "k_share": [
+    11
+   ],
+   "k_diff_over_n": [
+    10
+   ]
+  },
+  "sham map B": {
+   "n": 19,
+   "stored": -0.0789,
+   "k_share": [
+    8
+   ],
+   "k_diff_over_n": []
+  },
+  "random1 pooled": {
+   "n": 23,
+   "stored": 0.1522,
+   "k_share": [
+    15
+   ],
+   "k_diff_over_n": []
+  },
+  "random1 map A": {
+   "n": 11,
+   "stored": 0.3182,
+   "k_share": [
+    9
+   ],
+   "k_diff_over_n": []
+  },
+  "random1 map B": {
+   "n": 12,
+   "stored": 0.0,
+   "k_share": [
+    6
+   ],
+   "k_diff_over_n": [
+    6
+   ]
+  },
+  "random2 pooled": {
+   "n": 22,
+   "stored": 0.0455,
+   "k_share": [
+    12
+   ],
+   "k_diff_over_n": []
+  },
+  "random2 map A": {
+   "n": 10,
+   "stored": 0.2,
+   "k_share": [
+    7
+   ],
+   "k_diff_over_n": [
+    6
+   ]
+  },
+  "random2 map B": {
+   "n": 12,
+   "stored": -0.0833,
+   "k_share": [
+    5
+   ],
+   "k_diff_over_n": []
+  }
+ },
+ "habit": {
+  "reward": {
+   "b_plus": [
+    11,
+    53
+   ],
+   "b_minus": [
+    5,
+    49
+   ],
+   "balanced": 0.052753176742395075,
+   "weighted": 0.03921568627450989
+  },
+  "sham": {
+   "b_plus": [
+    3,
+    16
+   ],
+   "b_minus": [
+    5,
+    21
+   ],
+   "balanced": -0.02529761904761904,
+   "weighted": 0.013513513513513487
+  },
+  "random1": {
+   "b_plus": [
+    1,
+    7
+   ],
+   "b_minus": [
+    2,
+    16
+   ],
+   "balanced": 0.008928571428571425,
+   "weighted": 0.15217391304347827
+  },
+  "random2": {
+   "b_plus": [
+    0,
+    7
+   ],
+   "b_minus": [
+    3,
+    15
+   ],
+   "balanced": -0.1,
+   "weighted": 0.045454545454545414
+  }
+ },
+ "literal_between_arm": -0.029676735559088507,
+ "intervals": {
+  "55/102 Wilson score": [
+   0.44281961379120005,
+   0.632765134275744
+  ],
+  "55/102 Clopper-Pearson exact": [
+   0.4376839674528829,
+   0.6384107667040319
+  ],
+  "55/102 Wald": [
+   0.4424819177771769,
+   0.6359494547718427
+  ],
+  "54/101 Wilson score": [
+   0.4378967072526264,
+   0.6288707726998587
+  ],
+  "54/101 Clopper-Pearson exact": [
+   0.4326763249552508,
+   0.6345451369390369
+  ],
+  "54/101 Wald": [
+   0.43737609114358855,
+   0.6319308395494808
+  ]
+ },
+ "first_pick_habit": {
+  "ge2": [
+   156,
+   187
+  ],
+  "ge1": [
+   156,
+   188
+  ],
+  "valid": [
+   154,
+   184
+  ]
+ },
+ "record_analyzer": {
+  "frozen": [
+   55,
+   102
+  ],
+  "v2": [
+   54,
+   101
+  ],
+  "v2_extra_sessions": [
+   1
+  ]
+ },
+ "mde_registered_test": {
+  "101": {
+   "c": 60,
+   "size": 0.036378503438762096,
+   "p_star": 0.6294337446129656,
+   "delta_star": 0.12943374461296564,
+   "power_at_p_star": 0.8000000000000005,
+   "power_grid": [
+    0.21519544141724053,
+    0.5908374000261265,
+    0.8992512560309819
+   ]
+  },
+  "102": {
+   "c": 60,
+   "size": 0.04591883913454116,
+   "p_star": 0.6235939059610057,
+   "delta_star": 0.12359390596100572,
+   "power_at_p_star": 0.8000000000000017,
+   "power_grid": [
+    0.24997388660451736,
+    0.6365691555360933,
+    0.9196819197484885
+   ]
+  },
+  "96": {
+   "c": 57,
+   "size": 0.04109653427847161,
+   "p_star": 0.6298892335507844,
+   "delta_star": 0.1298892335507844,
+   "power_at_p_star": 0.8000000000000017,
+   "power_grid": [
+    0.2244309789897267,
+    0.5931205315130057,
+    0.8956485583267241
+   ]
+  }
+ },
+ "mde_envelope": {
+  "E1 n=101 |·|": {
+   "reading": "|·|",
+   "p_star": 0.6911279130822249,
+   "delta_star": 0.19112791308222488,
+   "power": 0.8000000000000027,
+   "P_env_ge_0.10": 0.6549892659038055,
+   "controls": [
+    37,
+    23,
+    22
+   ]
+  },
+  "E1 n=102 |·|": {
+   "reading": "|·|",
+   "p_star": 0.6908676785252165,
+   "delta_star": 0.19086767852521647,
+   "power": 0.8000000000000025,
+   "P_env_ge_0.10": 0.6549892659038055,
+   "controls": [
+    37,
+    23,
+    22
+   ]
+  },
+  "E1 floors n=96 |·|": {
+   "reading": "|·|",
+   "p_star": 0.724271772385537,
+   "delta_star": 0.22427177238553697,
+   "power": 0.8000000000000036,
+   "P_env_ge_0.10": 0.7665032407484251,
+   "controls": [
+    32,
+    16,
+    16
+   ]
+  },
+  "E1 n=101 signed": {
+   "reading": "signed",
+   "p_star": 0.6558023155164662,
+   "delta_star": 0.15580231551646617,
+   "power": 0.8000000000000003,
+   "P_env_ge_0.10": 0.38075055268688207,
+   "controls": [
+    37,
+    23,
+    22
+   ]
+  },
+  "E1 n=102 signed": {
+   "reading": "signed",
+   "p_star": 0.6555878278132695,
+   "delta_star": 0.15558782781326952,
+   "power": 0.8000000000000018,
+   "P_env_ge_0.10": 0.38075055268688207,
+   "controls": [
+    37,
+    23,
+    22
+   ]
+  },
+  "E1 floors n=96 signed": {
+   "reading": "signed",
+   "p_star": 0.6826856825676537,
+   "delta_star": 0.18268568256765372,
+   "power": 0.8000000000000008,
+   "P_env_ge_0.10": 0.4671467620447173,
+   "controls": [
+    32,
+    16,
+    16
+   ]
+  },
+  "E2 n=101": {
+   "reading": "both",
+   "p_star": 0.6871610731698243,
+   "delta_star": 0.18716107316982433,
+   "power": 0.8000000000000005,
+   "k_min": 66
+  },
+  "E2 n=102": {
+   "reading": "both",
+   "p_star": 0.6903077051018879,
+   "delta_star": 0.19030770510188788,
+   "power": 0.8000000000000025,
+   "k_min": 67
+  }
+ },
+ "mde_joint": {
+  "102 |·|": {
+   "reading": "|·|",
+   "n": 102,
+   "maps": [
+    53,
+    49
+   ],
+   "p_star": 0.6915555687928974,
+   "delta_star": 0.19155556879289737
+  },
+  "101 |·|": {
+   "reading": "|·|",
+   "n": 101,
+   "maps": [
+    52,
+    49
+   ],
+   "p_star": 0.6919276271595797,
+   "delta_star": 0.19192762715957967
+  },
+  "102 signed": {
+   "reading": "signed",
+   "n": 102,
+   "maps": [
+    53,
+    49
+   ],
+   "p_star": 0.6631220375088923,
+   "delta_star": 0.16312203750889231
+  },
+  "101 signed": {
+   "reading": "signed",
+   "n": 101,
+   "maps": [
+    52,
+    49
+   ],
+   "p_star": 0.6644945705010598,
+   "delta_star": 0.16449457050105976
+  }
+ },
+ "kl_ledger": {
+  "rows": 360,
+  "distinct": 311,
+  "dup_rows": 49,
+  "dup_keys": 38,
+  "all_zero": true,
+  "smoke2_rows": 37,
+  "smoke3_rows": 42,
+  "run_rows": 281,
+  "run_choice_forwards": 1115,
+  "smoke3_only": 29,
+  "smoke2_only": [
+   [
+    "reward",
+    5,
+    0
+   ]
+  ],
+  "record_inputs_verified": 310,
+  "segments_asserted": [
+   true,
+   true,
+   true
+  ]
+ },
+ "rule26_recheck_log_only": {
+  "verify_kl_nonzero": "0/48",
+  "picks": "48/48",
+  "max_abs_dp_a": "4.95e-05",
+  "max_abs_dlabel_mass": "5.03e-05",
+  "locator": "results/raw/2026-08-18_rule26_recheck_choiceread.txt@bbc9ffe:21-24"
+ },
+ "tstep": {
+  "data/e2d/tstep_check_f010.json": {
+   "frac": 0.1,
+   "n_rounds": 24,
+   "n_identical": 23,
+   "positions_verified": 42,
+   "divergent": [
+    [
+     1,
+     3,
+     1
+    ]
+   ],
+   "cp95_divergence": [
+    0.0010543524454697524,
+    0.21120168345697116
+   ],
+   "stop_cap": 60,
+   "adapter": "qwen3.6-27b-4bit-mlx",
+   "choice_window_declared": 8192,
+   "legacy_truncate_512": false,
+   "item": "e2d T-step identity check",
+   "proposal": "PROPOSAL-j v1.2 AMENDMENT 2 (i)"
+  },
+  "data/e2d/tstep_check.json": {
+   "frac": 0.2,
+   "n_rounds": 24,
+   "n_identical": 22,
+   "positions_verified": 44,
+   "divergent": [
+    [
+     5,
+     0,
+     19
+    ],
+    [
+     5,
+     3,
+     5
+    ]
+   ],
+   "cp95_divergence": [
+    0.010256341281250142,
+    0.26997280155760217
+   ],
+   "stop_cap": 60,
+   "adapter": "qwen3.6-27b-4bit-mlx",
+   "choice_window_declared": 8192,
+   "legacy_truncate_512": false,
+   "item": "e2d T-step identity check",
+   "proposal": "PROPOSAL-j v1.2 AMENDMENT 2 (i)"
+  }
+ },
+ "e2a_g2_cached": {
+  "g2r": {
+   "path": "data/e2a/g2_discriminability_v2.json",
+   "template_family": "v2",
+   "fracs": {
+    "0.1": {
+     "use_cached": true,
+     "aucs": {
+      "1": 0.645,
+      "2": 0.759
+     },
+     "judge_plus": 14,
+     "judge_total": 32
+    }
+   },
+   "verdict": {
+    "dose_e2a": 0.1,
+    "F": 2,
+    "k": 2,
+    "auc": 0.759,
+    "use_cached": true
+   },
+   "raw": "results/raw/2026-08-09_e2a_g2r.txt",
+   "raw_cached_lines": [
+    5
+   ],
+   "raw_n_rounds": [
+    128
+   ],
+   "raw_judge_lines": [
+    16
+   ],
+   "raw_auc_lines": [
+    14,
+    15
+   ]
+  },
+  "g2r2": {
+   "path": "data/e2a/g2_discriminability.json",
+   "template_family": "v3",
+   "fracs": {
+    "0.1": {
+     "use_cached": true,
+     "aucs": {
+      "1": 0.633,
+      "2": 0.759
+     },
+     "judge_plus": 14,
+     "judge_total": 32
+    }
+   },
+   "verdict": {
+    "dose_e2a": 0.1,
+    "F": 2,
+    "k": 2,
+    "auc": 0.759,
+    "use_cached": true
+   },
+   "raw": "results/raw/2026-08-09_e2a_g2r2.txt",
+   "raw_cached_lines": [
+    6
+   ],
+   "raw_n_rounds": [
+    128
+   ],
+   "raw_judge_lines": [
+    17
+   ],
+   "raw_auc_lines": [
+    15,
+    16
+   ]
+  }
+ },
+ "e2a_g2_first_ladder_uncached_raw_lines": [
+  5,
+  20
+ ],
+ "e2b_cached": {
+  "data/e2b/h1_sessions.json": {
+   "round_path_cached": true,
+   "frac": 0.1,
+   "temp": 0.7,
+   "n_sessions": 123,
+   "n_rounds_generated": 1111,
+   "n_rounds_field": 1111
+  },
+  "data/e2b/h1u_sessions.json": {
+   "round_path_cached": true,
+   "frac": 0.1,
+   "temp": 0.7,
+   "n_sessions": 112,
+   "n_rounds_generated": 1003,
+   "n_rounds_field": 1003
+  },
+  "data/e2b/h2_sessions.json": {
+   "round_path_cached": true,
+   "frac": 0.1,
+   "temp": 0.7,
+   "n_sessions": 32,
+   "n_rounds_generated": 307,
+   "n_rounds_field": null
+  },
+  "data/e2b/verdict_campaign.json": {
+   "round_path_cached": true,
+   "frac": 0.1,
+   "temp": 0.7,
+   "n_sessions": 181,
+   "n_rounds_generated": 1707,
+   "n_rounds_field": 1707
+  }
+ },
+ "uncached_cells": {
+  "data/e2d/d2_analysis.json": {
+   "false": 1
+  },
+  "data/e2d/d2_sessions.json": {
+   "false": 65
+  },
+  "data/e2d/d3_sessions.json": {
+   "false": 25
+  },
+  "data/format/format_recon_F0_sessions.json": {
+   "false": 89
+  },
+  "data/format/format_recon_F1_sessions.json": {
+   "false": 236
+  },
+  "data/format/format_recon_F2_sessions.json": {
+   "false": 265
+  },
+  "data/format/format_recon_timing.json": {
+   "false": 39
+  },
+  "data/k/k1_sessions.json": {
+   "false": 486
+  }
+ },
+ "e2a_window_coverage_log_only": {
+  "rows": {
+   "1": {
+    "n": 188,
+    "median": 205,
+    "max": 270,
+    "over_512": 0
+   },
+   "2": {
+    "n": 187,
+    "median": 274,
+    "max": 354,
+    "over_512": 0
+   },
+   "3": {
+    "n": 186,
+    "median": 342,
+    "max": 438,
+    "over_512": 0
+   },
+   "4": {
+    "n": 185,
+    "median": 409,
+    "max": 520,
+    "over_512": 1
+   },
+   "5": {
+    "n": 185,
+    "median": 478,
+    "max": 580,
+    "over_512": 22
+   },
+   "6": {
+    "n": 184,
+    "median": 548,
+    "max": 666,
+    "over_512": 152
+   }
+  },
+  "n_by_index_recount": {
+   "1": 188,
+   "2": 187,
+   "3": 186,
+   "4": 185,
+   "5": 185,
+   "6": 184
+  },
+  "n_by_index_match": true,
+  "over_512": 175,
+  "total": 1115,
+  "locator": "RESULTS.md@bbc9ffe:11896-11913"
+ },
+ "readme_paragraph": "**Cached-generation disclosure.** On Qwen, the round text of the e2a self-administration run (all 200 sessions, steered and sham, and its second and third smokes), of e2a's readability-gate corpora (g2r and g2r2, 128 rounds each at dose 0.10; the readability AUC 0.759 that the e2a verdict cites -- a logistic readout on base-model mean-pooled final-layer embeddings of the round text, +α vs −α rounds, records of 2 concatenated rounds, fit on fit-task rounds and scored on held-out val-task rounds -- and its model-as-judge secondary, 14 of 32 AB trials judging the +α response better, were computed on g2r2's corpus), and of the e2b present-tense arc (H1, H1-u, H2 and the verdict campaign) was generated on a cached (KV-stream) decoding path. The first g2 ladder (before g1r) ran uncached; e2d, the PROPOSAL-k Stage 1 sessions and the format recon generated uncached; f1 generated on a cached path with no state injected. The cached path was licensed by a kernel gate (`data/e2a/g1_kernel_gate.json`) that compares the cached and uncached steered forwards' next-token distributions at the first response token only (16 prefixes x 2 poles per dose; max symmetric KL 7.11e-04 at dose 0.10 against a 0.001 bar). That licenses reads of the first-token distribution, not the identity of sampled tokens or of whole rounds. A later T-step check at the e2a/e2b dose, run on e2d-format rounds through the ported adapter (`data/e2d/tstep_check_f010.json`), found 23 of 24 rounds token-identical between the paths, the one divergence beginning at the second sampled token (0-based index 1; the first sampled token was identical on both paths and decoded to whitespace) (Clopper-Pearson 95% for the divergence rate 0.001-0.211); at dose 0.2, 22 of 24. Neither path is the reference: they are two samplers whose first-token distributions agree (symmetric KL ≤ 7.1e-04 at dose 0.10), and every verdict was computed on a corpus produced by one of them. The choice reads, which carry every primary DV, are not generated: each is a separate, uncached forward pass over the transcript text (in e2a, unsteered, over the text's last 512 tokens, a window every first-free-choice read fit; in e2b, with the declared injection plus an unsteered shadow; `valence_core/readout.py`, `valence_core/e2b/statepresent.py`). In e2a, 281 of the 1115 choice forwards (every fourth) were re-run on identical token ids at KL exactly 0.0 (`data/e2a/g3prime_kl.jsonl`); that shows the read is deterministic, while its independence from the generation path rests on the code: the read takes the text, never the generation cache. The generation path decides which sentences the transcripts contain, not how a choice was read from them. Separately, and not a cached-path matter: in the e2a run the same 512-token encode tail collapsed the generation-side steering boundary to 0 on 270 of 1894 generated rounds (free rounds 3-5 whose prefix plus segment exceeded 512 tokens), so those rounds carried the state over the whole tail window rather than the round-task span; the first-free-choice read was never clipped (RESULTS.md@bbc9ffe:4934-4937; :11896-11913; the 270 is log-only).",
+ "scope_sentence": "Generation in the Qwen e2a and e2b cells, including e2a's readability-gate corpora, ran on a cached path whose licence covers the first-token distribution only (1 of 24 rounds differed from the uncached path in the T-step check at the e2a/e2b dose); the choice reads are separate uncached forwards over the transcript text, which by construction take nothing from the generation path but its text.",
+ "figures": [
+  {
+   "figure": "Δ = share of first free choices toward the state label minus ½ (definition)",
+   "named_in": "N4(i)",
+   "reproduced": "delta_first = k/n − ½ over valid sessions, k = first free pick to the +pole label",
+   "source": "jlens-qwen36/scripts/e2a_sessions.py:355 (clone, producing analyzer); scripts/e2a_recount.py@bbc9ffe:118-123,151",
+   "status": "reproduced",
+   "note": "'state label' = +pole label (tag_plus); in the reward arm both labels carry a state (±α)"
+  },
+  {
+   "figure": "e2a VERDICTS entry (Code locates)",
+   "named_in": "N4 referents",
+   "reproduced": "entry archive/RESULTS-cycles3-4.md@bbc9ffe:646-692; primary line archive/RESULTS-cycles3-4.md@bbc9ffe:651",
+   "source": "archive/RESULTS-cycles3-4.md (design seat's belief confirmed)",
+   "status": "log-only",
+   "note": "e2a VERDICT entry 2026-08-09 ('reward Δ = +0.0392 (55/102 first free choices toward +pole)')"
+  },
+  {
+   "figure": "state arm 55 of 102 → +0.0392",
+   "named_in": "N4(i)",
+   "reproduced": "55/102 → +0.0392",
+   "source": "data/e2a/analysis.json reward.delta_first,n; data/e2a/sessions.jsonl",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "P(X ≥ 55 | 102, ½) = 0.24422 = stored p",
+   "named_in": "N4(i)",
+   "reproduced": "0.24421723 (stored 0.24422)",
+   "source": "data/e2a/analysis.json reward.binom_p_one_sided",
+   "status": "reproduced",
+   "note": "one-sided exact binomial, H1 approach"
+  },
+  {
+   "figure": "sham 19/37 → +0.0135",
+   "named_in": "N4(i)",
+   "reproduced": "19/37 → +0.0135",
+   "source": "data/e2a/analysis.json sham",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "random-1 15/23 → +0.1522 (largest pseudo-Δ)",
+   "named_in": "N4(i)",
+   "reproduced": "15/23 → +0.1522; max |pseudo-Δ| = 0.1522 (random1)",
+   "source": "data/e2a/analysis.json random1",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "random-2 12/22 → +0.0455",
+   "named_in": "N4(i)",
+   "reproduced": "12/22 → +0.0455",
+   "source": "data/e2a/analysis.json random2",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "every arm integer under share − ½, none under (approach − avoid)/n",
+   "named_in": "N4(i)",
+   "reproduced": "first half CONFIRMED; second half REFUTED for reward pooled, sham map A, random1 map B, random2 map A",
+   "source": "data/e2a/analysis.json (all delta_first, by_map)",
+   "status": "discrepant",
+   "note": "the design seat's arithmetic, not a record figure (a note under block :3, not an (i) STOP under :62; the record's figures reproduce): reward +0.0392 = (2·53−102)/102; the stored p and the code disambiguate"
+  },
+  {
+   "figure": "preprint quotation '54 of 101 valid sessions' (the sentence as the block quotes it)",
+   "named_in": "N4(i)",
+   "reproduced": "no match in PREPRINT-v1_0-draft.md nor in the pre-patch v2/v3/v4 copies",
+   "source": "grep of PREPRINT-v1_0-draft.md (sha256 d6431e97d35e5914) and archive/PREPRINT-v1_0-draft.pre-patch-v2.md, archive/PREPRINT-v1_0-draft.pre-patch-v3.md, archive/PREPRINT-v1_0-draft.pre-patch-v4.md; PREPRINT-v1_1-draft.md and RESEARCH-NOTE v0.2 absent (results/raw/2026-10-08_note-preflight.md@bbc9ffe:15 (RESEARCH-NOTE v0.2), :20 (v1.1))",
+   "status": "not found",
+   "note": "the quotation only; the figure it carries reproduces (next row); v1.0 has 'valid sessions' on 55 of 102"
+  },
+  {
+   "figure": "preprint footnote 1 (:174): '54 of 101, Δ = +0.035, p = 0.275'",
+   "named_in": "N4(i)",
+   "reproduced": "audit-v2 recount 54/101, Δ_first = +0.0347, one-sided exact binomial p = 0.27535 (equal at printed precision: YES)",
+   "source": "scripts/e2a_recount.py primary(V2) over data/e2a/sessions.jsonl + data/configs/e2b_audit_v2.json",
+   "status": "reproduced",
+   "note": "a different n the record explains (archive/RESULTS-cycles3-4.md@bbc9ffe:3-12), not a transcription error"
+  },
+  {
+   "figure": "preprint quotation 'Δ_first is half the difference between the state and sham arms' break rates'",
+   "named_in": "N4(i)",
+   "reproduced": "no match for 'half the difference' in PREPRINT-v1_0-draft.md nor in the pre-patch v2/v3/v4 copies",
+   "source": "grep of PREPRINT-v1_0-draft.md and archive/PREPRINT-v1_0-draft.pre-patch-v2.md, archive/PREPRINT-v1_0-draft.pre-patch-v3.md, archive/PREPRINT-v1_0-draft.pre-patch-v4.md; v1.1 and RESEARCH-NOTE v0.2 absent (results/raw/2026-10-08_note-preflight.md@bbc9ffe:15 (RESEARCH-NOTE v0.2), :20 (v1.1))",
+   "status": "not found",
+   "note": "the quotation only; v1.0 :172 states the within-arm decomposition instead (next row)"
+  },
+  {
+   "figure": "the break-rate identity the sentence glosses (definition, gloss or error?)",
+   "named_in": "N4(i)",
+   "reproduced": "within-arm identity: balanced +0.0528, weighted +0.0392 (= measured Δ_first); literal between-arm reading -0.0297",
+   "source": "valence_core/e2d/habit.py break_rates over data/e2a/sessions.jsonl (valid reward)",
+   "status": "computed-new",
+   "note": "between-arm wording is an error; within-arm form is a mechanism gloss (exact only at balance), not the definition"
+  },
+  {
+   "figure": "map-level +0.104 / −0.031 (state arm)",
+   "named_in": "N4(i)",
+   "reproduced": "A 32/53 → +0.1038; B 23/49 → -0.0306",
+   "source": "data/e2a/analysis.json reward.by_map",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "sham-arm map-level +0.111 / −0.079",
+   "named_in": "N4(i)",
+   "reproduced": "A 11/18 → +0.1111; B 8/19 → -0.0789",
+   "source": "data/e2a/analysis.json sham.by_map",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "approach-probability interval ≈ [.44, .64]",
+   "named_in": "N4(i)",
+   "reproduced": "95% two-sided on 55/102: Clopper-Pearson [0.4377, 0.6384] → [0.44, 0.64]; Wald [0.4425, 0.6359] → [0.44, 0.64] (reproduced under Clopper-Pearson or Wald)",
+   "source": "computed from 55/102 (analysis.json reward.n, sessions.jsonl); the record figure: FINDINGS-3.md@bbc9ffe:95",
+   "status": "reproduced",
+   "note": "reproduced at 2 dp under Clopper-Pearson or Wald; the record states no method (FINDINGS-3.md@bbc9ffe:95); the block's method claim has its own row (next)"
+  },
+  {
+   "figure": "the interval's method (block: 'Wilson on 55/102 gives it')",
+   "named_in": "N4(i)",
+   "reproduced": "Wilson score 95% on 55/102: [0.4428, 0.6328] → [0.44, 0.63], not [.44, .64]",
+   "source": "computed from 55/102; the claim: AUDIT-note-release-v1_2.md@bbc9ffe:57",
+   "status": "discrepant",
+   "note": "the design seat's method claim, not a record figure (a note under block :3, not an (i) STOP under :62, treated like the integrality row); the record names no method (referent note 4); the interval itself has its own reproduced row (previous)"
+  },
+  {
+   "figure": "first-pick habit 83.4%",
+   "named_in": "N4(i)",
+   "reproduced": "156/187 = 0.8342 (all arms, incl. excluded, ≥2 free choices); 156/188 = 0.8298 (≥1); valid 154/184",
+   "source": "data/e2a/sessions.jsonl (rounds[-1].pole vs choices[0].picked_pole)",
+   "status": "reproduced",
+   "note": "record locator RESULTS.md@bbc9ffe:6466"
+  },
+  {
+   "figure": "control-arm sizes 37/23/22",
+   "named_in": "N4(i)",
+   "reproduced": "37/23/22",
+   "source": "data/e2a/analysis.json sham.n, random1.n, random2.n",
+   "status": "reproduced",
+   "note": "the verdict entry pools random1 + random2 as 'random 45' (see (i-f))"
+  },
+  {
+   "figure": "F1 link-5 y-axis '(approach − avoid)'",
+   "named_in": "N4(i)",
+   "reproduced": "record quantity Δ_first = k/n − ½ = (approach − avoid)/(2n); e.g. reward (8)/(2·102) = +0.0392",
+   "source": "jlens-qwen36/scripts/e2a_sessions.py:355 (clone); scripts/e2a_recount.py@bbc9ffe:118-123,151",
+   "status": "discrepant",
+   "note": "a figure label, not a record figure; the block (:57) already says the post version is relabeled. Relabel: 'Δ_first = share of first free picks to the +pole label − ½'"
+  },
+  {
+   "figure": "MDE at n = 101, α as pre-registered, power .80, registered test",
+   "named_in": "N4(ii)",
+   "reproduced": "c = 60, p* = 0.62943, δ* = +0.1294",
+   "source": "computed from the registered test (archive/RESULTS-cycles3-4.md@bbc9ffe:1307-1309)",
+   "status": "computed-new",
+   "note": "one-sided exact binomial α = .05"
+  },
+  {
+   "figure": "MDE at n = 102 (record's published n)",
+   "named_in": "N4(ii)",
+   "reproduced": "c = 60, p* = 0.62359, δ* = +0.1236",
+   "source": "computed",
+   "status": "computed-new",
+   "note": ""
+  },
+  {
+   "figure": "MDE at the sham-envelope criterion",
+   "named_in": "N4(ii)",
+   "reproduced": "E1, controls at the null 37/23/22: signed n=101 δ* = +0.1558, n=102 δ* = +0.1556; |·| n=101 δ* = +0.1911, n=102 δ* = +0.1909. E2 (realized envelope 0.1522, both readings): n=101 δ* = +0.1872, n=102 δ* = +0.1903. Joint, n=101: signed +0.1645, |·| +0.1919",
+   "source": "criterion archive/RESULTS-cycles3-4.md@bbc9ffe:1307-1309; reaffirmed archive/RESULTS-cycles3-4.md@bbc9ffe:1156-1158",
+   "status": "computed-new",
+   "note": "the criterion is not a test; two readings x two conditionings stated; the reading is the PI's/design seat's pick"
+  },
+  {
+   "figure": "311 distinct verified forward passes at KL = 0",
+   "named_in": "N4(iii)",
+   "reproduced": "311 distinct keys, all kl == 0.0 (360 rows)",
+   "source": "data/e2a/g3prime_kl.jsonl (distinct (arm, session, choice))",
+   "status": "reproduced",
+   "note": "run proper verified 281 of 1115 (every fourth); 30 keys are smoke"
+  },
+  {
+   "figure": "360 (earlier count)",
+   "named_in": "N4(iii)",
+   "reproduced": "360 rows = 37 smoke2 + 42 smoke3 + 281 run; 49 duplicate rows over 38 keys",
+   "source": "data/e2a/g3prime_kl.jsonl rows; archive/RESULTS-cycles3-4.md@bbc9ffe:662",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "one in every four choice reads (preprint :109)",
+   "named_in": "N4(iii)",
+   "reproduced": "281/1115 = 0.2520",
+   "source": "data/e2a/sessions.jsonl choices[].verify_kl non-null",
+   "status": "reproduced",
+   "note": "applies to 281, not to 311"
+  },
+  {
+   "figure": "rule-26 recheck 0/48 nonzero, 48/48 picks",
+   "named_in": "N4(iii)/(iv)",
+   "reproduced": "not recomputed (needs the model); values read from the raw",
+   "source": "results/raw/2026-08-18_rule26_recheck_choiceread.txt@bbc9ffe:21-24",
+   "status": "log-only",
+   "note": ""
+  },
+  {
+   "figure": "cells generated on the cached path: e2a full run + smoke2/smoke3",
+   "named_in": "N4(iv)",
+   "reproduced": "cached (200 sessions; 1894 generated rounds, reproduced from n_rounds_generated)",
+   "source": "results/raw/2026-08-09_e2a_full.txt@bbc9ffe:2,25,50,199; smoke2 :2; smoke3 :2; clone jlens-qwen36/scripts/e2a_sessions.py:421 (context)",
+   "status": "log-only",
+   "note": "sessions.jsonl carries no path field"
+  },
+  {
+   "figure": "cells generated on the cached path: e2a g2r and g2r2 (readability gate; judge secondary)",
+   "named_in": "N4(iv)",
+   "reproduced": "use_cached g2r True, g2r2 True (frac 0.1; rounds per the raws [128] / [128])",
+   "source": "data/e2a/g2_discriminability_v2.json (g2r), data/e2a/g2_discriminability.json (g2r2) fracs.0.1.use_cached",
+   "status": "reproduced",
+   "note": "the verdict's AUC 0.759 (k = 2; the AUC of a logistic readout on base-model mean-pooled final-layer embeddings of the round-response text (the record's wording; layer: final); contrast: rounds generated at +α vs at −α along the reward axis (64 rounds/pole/dose), frac 0.10, records of k concatenated same-pole rounds; scheme: fit on fit-task rounds, AUC on held-out val-task rounds, one split declared pre-data, no cross-validation (archive/RESULTS-cycles3-4.md@bbc9ffe:1261-1264; archive/RESULTS-cycles3-4.md@bbc9ffe:1265-1266; archive/RESULTS-cycles3-4.md@bbc9ffe:1268; clone jlens-qwen36/scripts/e2a_g2_discriminability.py:4-6: fit t01-t08, val t09-t16, context)) and judge 14 of 32 model-as-judge AB trials (val-task pairs of a +α and a −α response to the same task) in which the model called the +α response 'the better response' rest on g2r2 (archive/RESULTS-cycles3-4.md@bbc9ffe:660-661; archive/RESULTS-cycles3-4.md@bbc9ffe:669-671)"
+  },
+  {
+   "figure": "cells NOT cached: e2a first g2 ladder",
+   "named_in": "N4(iv)",
+   "reproduced": "cached=False at both fracs",
+   "source": "results/raw/2026-08-09_e2a_g2.txt@bbc9ffe:5,20",
+   "status": "log-only",
+   "note": "superseded"
+  },
+  {
+   "figure": "e2a g2 spot-check path",
+   "named_in": "N4(iv)",
+   "reproduced": "the record states none; clone code use_cached=True",
+   "source": "data/e2a/g2_spotcheck.json (no field); results/raw/2026-08-09_e2a_g2check.txt (no line); clone jlens-qwen36/scripts/e2a_g2_spotcheck.py:66",
+   "status": "not found",
+   "note": "no verdict figure rests on it"
+  },
+  {
+   "figure": "cells generated on the cached path: e2b H1, H1-u, H2, verdict campaign",
+   "named_in": "N4(iv)",
+   "reproduced": "h1_sessions.json True; h1u_sessions.json True; h2_sessions.json True; verdict_campaign.json True",
+   "source": "data/e2b/*.json round_path_cached",
+   "status": "reproduced",
+   "note": ""
+  },
+  {
+   "figure": "cells NOT cached: e2d D2/D3, k1, format recon F0-F2 (and the D2 analysis and format-recon timing artifacts)",
+   "named_in": "N4(iv)",
+   "reproduced": "d2_analysis.json {'false': 1}; d2_sessions.json {'false': 65}; d3_sessions.json {'false': 25}; format_recon_F0_sessions.json {'false': 89}; format_recon_F1_sessions.json {'false': 236}; format_recon_F2_sessions.json {'false': 265}; format_recon_timing.json {'false': 39}; k1_sessions.json {'false': 486}",
+   "source": "round_path_cached in those JSONs; completeness by a read-only git grep at the pin over data/*.json(l)",
+   "status": "reproduced",
+   "note": "e2d D1 uncached is log-only (RESULTS.md@bbc9ffe:6382)"
+  },
+  {
+   "figure": "cells generated on the cached path: f1 (vanilla, no state)",
+   "named_in": "N4(iv)",
+   "reproduced": "cached vanilla",
+   "source": "PROPOSAL-f-natural-reinforcer-screen.md@bbc9ffe:65-66; results/raw/2026-08-10_f_ndecl.txt@bbc9ffe:16",
+   "status": "log-only",
+   "note": "outside the preprint's disclosure scope as worded"
+  },
+  {
+   "figure": "first-token licence (g1): max KL 7.11e-4 / 7.39e-4, bar 1e-3, no position dimension",
+   "named_in": "N4(iv)",
+   "reproduced": "7.1064e-04 / 7.3906e-04; rows keyed ['kl_c_u', 'kl_u_c', 'pole', 'probe']",
+   "source": "data/e2a/g1_kernel_gate.json results, rows",
+   "status": "reproduced",
+   "note": "'first response position' is not in the artifact: RESULTS.md@bbc9ffe:6099; tstep JSON g1_gate.why; archive/RESULTS-cycles3-4.md@bbc9ffe:1253-1254"
+  },
+  {
+   "figure": "T-step identity 23/24 at 0.10, 22/24 at 0.20",
+   "named_in": "N4(iv)",
+   "reproduced": "23/24 (divergence from 0-based token index 1, the second sampled token; index 0 agreed); 22/24",
+   "source": "data/e2d/tstep_check_f010.json, tstep_check.json verdict",
+   "status": "reproduced",
+   "note": "e2d-format rounds through the ported adapter, not e2a/e2b transcripts"
+  },
+  {
+   "figure": "e2a reads: 512-token encode window; DV never clipped",
+   "named_in": "N4(iv)",
+   "reproduced": "175 of 1115 reads over 512 (index 1: 0); per-index n reproduce: YES",
+   "source": "RESULTS.md@bbc9ffe:11896-11913; RESULTS.md@bbc9ffe:12920-12927",
+   "status": "log-only",
+   "note": "the over-512 counts need the tokenizer"
+  },
+  {
+   "figure": "steering boundary collapsed to 0 on 270 of 1,894 e2a generations (HANDOFF review card 9)",
+   "named_in": "N4(iv)",
+   "reproduced": "1894 generated rounds reproduced (sum of n_rounds_generated); 270 not recomputed (needs the tokenizer)",
+   "source": "RESULTS.md@bbc9ffe:4934-4937; HANDOFF-2026-09-13-design.md(working tree, sha256 93e370442175bc28):148-150; quoted at the pin results/raw/2026-10-04_m-v1.8_referent_check.txt@bbc9ffe:11402-11404",
+   "status": "log-only",
+   "note": "card 9 by the handoffs' numbering; the block's '(card 9)' on (iv) names the cached path, card 8 there"
+  },
+  {
+   "figure": "choice reads unaffected by the generation path",
+   "named_in": "N4(iv)",
+   "reproduced": "a code argument (the read takes text, never the generation cache); e2a's code is in the clone",
+   "source": "clone jlens_qwen/e2a.py choice_read and generate_round_positional (context); rule-26 recheck results/raw/2026-08-18_rule26_recheck_choiceread.txt@bbc9ffe:21-24",
+   "status": "log-only",
+   "note": "the KL ledger (281/1115 at 0.0, reproduced in (iii)) shows read determinism, not path independence"
+  }
+ ],
+ "stops": [],
+ "referent_notes": [
+  "Design seat's claim 'none [integer] under (approach - avoid)/n' is refuted for reward pooled, sham map A, random1 map B, random2 map A: +0.0392 = (2*53-102)/102. The stored p (0.24422 = P(X>=55|102,1/2), not P(X>=53)=0.38330) and the analyzer's code fix the definition as k/n - 1/2. This is the design seat's arithmetic, not a record figure: under block :3 it is a note, not an (i) discrepancy under :62 (see STOPs).",
+  "'54 of 101 valid sessions' is not in PREPRINT-v1_0-draft.md (sha d6431e97...). That file has 55 of 102 valid sessions at :172 and '54 of 101, Δ = +0.035, p = 0.275' as footnote 1 at :174 -- the audit-v2 recount (archive/RESULTS-cycles3-4.md@bbc9ffe:3-12, the correction of record), reproduced here by scripts/e2a_recount.py. Not a transcription error. The quotation is also absent from the untracked pre-patch copies archive/PREPRINT-v1_0-draft.pre-patch-v2.md, archive/PREPRINT-v1_0-draft.pre-patch-v3.md, archive/PREPRINT-v1_0-draft.pre-patch-v4.md (none carries it). Its source is not on this machine: PREPRINT-v1_1-draft.md (the block's project copy, AUDIT-note-release-v1_2.md@bbc9ffe:21) and RESEARCH-NOTE v0.2 are both absent (results/raw/2026-10-08_note-preflight.md@bbc9ffe:15 (RESEARCH-NOTE v0.2), :20 (v1.1)); either may carry the sentence.",
+  "'Δ_first is half the difference between the state and sham arms' break rates' is not in PREPRINT-v1_0-draft.md nor in the pre-patch v2/v3/v4 copies (no 'half the difference'; PREPRINT-v1_1-draft.md and RESEARCH-NOTE v0.2, where it may live, are absent, results/raw/2026-10-08_note-preflight.md@bbc9ffe:15 (RESEARCH-NOTE v0.2), :20 (v1.1)). The record's identity (valence_core/e2d/habit.py@bbc9ffe:13-25) is WITHIN an arm, split by forced-end pole; ½(b+ − bs) is exact only at forced-end balance (reward 53/49: balanced +0.0528, weighted +0.0392 = measured). The literal between-arm reading gives -0.0297. The record's own short wordings (valence_core/e2d/habit.py@bbc9ffe:31; PROPOSAL-j-dose-escalation.md@bbc9ffe:429-430) state the halved difference without the balance condition; the note should state the weighted form or name the condition.",
+  "The approach-probability interval ≈ [.44, .64] (a record figure, reproduced at 2 dp under Clopper-Pearson and Wald) has no stated method in the record (FINDINGS-3.md@bbc9ffe:95; preprint :172). Wilson 95% on 55/102 = [0.4428, 0.6328] -> [0.44, 0.63] (the design seat's guess does not reproduce .64); Clopper-Pearson [0.4377, 0.6384] -> [0.44, 0.64]; Wald [0.4425, 0.6359] -> [0.44, 0.64].",
+  "Pre-registration power line (archive/RESULTS-cycles3-4.md@bbc9ffe:1303-1304): 'P(+) = 0.65 vs 0.5 at ~0.85 power, one-sided α = 0.05' at n = 96; exact binomial power is 0.896 (critical count 57). Conservative; method unstated. Descriptive, no action proposed.",
+  "Conjunct (1) as coded compares Δ_first with max |pseudo-Δ| (absolute values, jlens-qwen36/scripts/e2a_sessions.py `pseudo = [abs(...)]`); the pre-registered text reads 'Δ > max pseudo-Δ' without absolute values (archive/RESULTS-cycles3-4.md@bbc9ffe:1307-1309). At the realized arms the two readings coincide (max signed +0.1522 = max |.| 0.1522), so the verdict is unaffected. They do not coincide in power: (ii) computes the MDE under both, and the PI or design seat picks the reading the note uses.",
+  "T-step 'position': `first_divergent_position` in data/e2d/tstep_check*.json is a 0-based index into the sampled token ids (scripts/e2d_tstep_check.py@bbc9ffe:160-164; valence_core/adapters/qwen_mlx.py@bbc9ffe:272-344), while the verdict's 'positions 1..N' is a 1-based count of tokens. The record's 'at POSITION 1' (RESULTS.md@bbc9ffe:6073-6074) is right as that stored 0-based index. What invites the first-token reading is the record's own 1-based 'Positions 1..42' beside it (RESULTS.md@bbc9ffe:6085) and its 'choose a different FIRST token' (RESULTS.md@bbc9ffe:6096-6097): at 0.1 the first sampled token (index 0) was identical on both paths and decoded to whitespace (the stored texts are stripped and share no first character), and the paths diverged from index 1. 'FIRST token' holds, if at all, only as 'first content token', and that is inferred, not shown: the artifact stores no token ids, and the adapter admits more than one leading whitespace token (valence_core/adapters/qwen_mlx.py@bbc9ffe:292-305). Record prose, not a figure; no (i) figure depends on it. The note should not say the divergence was at the first token.",
+  "g3′ amendment: its adjudication basis (archive/RESULTS-cycles3-4.md@bbc9ffe:1131-1136) included 'the g1 fallback locked all generation to the uncached positional path', and it recorded the counterfactual archive/RESULTS-cycles3-4.md@bbc9ffe:1138-1139 ('had g1 passed and sessions run cached, g3's fail would bind'). Neither is revisited after g1r passed and the run generated cached; the basis also rests on the read recomputing from text, which the built read does. Reported for the design seat/PI; not adjudicated.",
+  "Block N4 referent: scripts/box_cached_gen_smoke.py is the OLMo/CUDA (box) cached-generation T-step gate; the Qwen cached-path identity records are data/e2d/tstep_check_f010.json (23/24 at 0.1) and data/e2d/tstep_check.json (22/24 at 0.2), both on e2d-format rounds.",
+  "Review card 9 as the design handoff numbers it (HANDOFF-2026-09-13-design.md(working tree, sha256 93e370442175bc28):148-150, untracked, read only; text found: True; quoted at the pin by results/raw/2026-10-04_m-v1.8_referent_check.txt@bbc9ffe:11402-11404): e2a's 512-token encode tail collapsed the generation-side steering boundary to 0 on 270 of 1894 archived generations, so those rounds carried the state over the whole tail window rather than the round-task span (RESULTS.md@bbc9ffe:4934-4937; ledger rule 28(d), CLAUDE.md@bbc9ffe:391). The 1894 reproduces (sum of `n_rounds_generated`); the 270 is log-only (it needs the tokenizer). It is a delivery-geometry fact about the generated text, distinct from the cached-vs-uncached path; the README paragraph in (iv) now carries it as one log-only clause.",
+  "Review-card numbering. The block names each card's subject itself (AUDIT-note-release-v1_2.md@bbc9ffe:54; (iii) at :59, 311 vs 360 = 'card 10'; (iv) at :60, 'Cached-generation disclosure (card 9)'), and (iii) and (iv) answer those subjects as the block states them; FIGURE-REVIEW-2026-10-06.md is not needed for that. The design handoffs on this machine (untracked, read only) number the cards differently: HANDOFF-2026-09-04-design.md(working tree, sha256 def593b73ac4bcbd):93 calls e2a/e2b's cached generation 'review-round card 8' (also RESULTS.md@bbc9ffe:5211-5213: '(8) the cached-generation / T-step methods disclosure'); HANDOFF-2026-09-13-design.md(working tree, sha256 93e370442175bc28):148-155 keeps 'Cards 1–8 as in the 09-04 handoff' and adds 9 = the 512-token boundary collapse (note above), 10 = 360 rows vs 311 distinct (the block's (iii) subject; see (iii) for its 'verify_every = 4' wording) and 11 = the content-class screen. A committed raw quotes card 9 at the pin (results/raw/2026-10-04_m-v1.8_referent_check.txt@bbc9ffe:11402-11404), and PROPOSAL-k maps 'Review card 10' to e2a's every-fourth verification (PROPOSAL-k-echo-channel.md@bbc9ffe:24). Under the handoffs' numbering the block's '(card 9)' on (iv) names card 8's subject: a wrong referent (block :3), not a STOP. Both subjects are answered: (iv) covers the cached path as the block words it, and its README paragraph now carries card 9's boundary collapse as one log-only clause. (RESULTS.md@bbc9ffe:3086-3087 reads '\"card 10\" occurs only in the proposal; the cards on record stop at 8'; cards 9 and 10 are defined in the untracked 09-13 handoff.)",
+  "Rule-27 status of the producing code: the e2a session runner, choice read, analyzer and gate scripts (g1, g2, g2 spot-check) quoted here live in the gitignored clone (jlens-qwen36/), not in the record. The tracked ports (scripts/e2a_recount.py, valence_core/readout.py, valence_core/session_e2a.py) reproduce the analysis and scaffolding; a reader of the tag sees only those.",
+  "The full-run raw results/raw/2026-08-09_e2a_full.txt prints both 'round generation path (g1r, mechanical): cached' (operative, :2,25,50,199) and a stale 'uncached path (g1)' banner (:3); the record names the stale string cosmetic (archive/RESULTS-cycles3-4.md@bbc9ffe:838-840). A reader of the raw alone could misread it."
+ ],
+ "pi_items": [
+  "Which interval method the note names for ≈[.44, .64] (the record states none; Clopper-Pearson gives [0.44, 0.64], Wald [0.44, 0.64], Wilson [0.44, 0.63]).",
+  "Whether the note carries 311 (ledger distinct keys, incl. 30 smoke keys) or 281 of 1,115 (the run's own every-fourth verifications) beside 'one in every four'.",
+  "Whether the disclosure names f1's cached vanilla generation (outside the preprint's stated scope).",
+  "The g3′ amendment's basis clause (archive/RESULTS-cycles3-4.md@bbc9ffe:1131-1136: 'the g1 fallback locked all generation to the uncached positional path') and its counterfactual (archive/RESULTS-cycles3-4.md@bbc9ffe:1138-1139) after the cached unlock: design seat/PI to say whether either needs a line in Appendix D.",
+  "Which reading of conjunct (1) the note's MDE sentence uses: the registered text (signed; E1 δ* +0.156 at n = 101) or the analyzer's |·| (E1 δ* +0.191); conditional on the realized envelope both give +0.187.",
+  "Review-card numbering (referent notes on cards 9 and 10): the block cites '(card 9)' for the cached-generation disclosure, which the design handoffs number card 8, while their card 9 is e2a's boundary collapse on 270 of 1894 generations. The README draft now carries card 9 as one log-only clause; design seat/PI to confirm the clause and the card numbers the note cites."
+ ],
+ "values_check": [
+  {
+   "finding": "1 (substantive) (iv) cached-cell list omits e2a's g2r and g2r2",
+   "disposition": "fixed",
+   "detail": "Added as reproduced from `use_cached` (data/e2a/g2_discriminability_v2.json and data/e2a/g2_discriminability.json, both True at frac 0.1), with their raws; the first g2 ladder added as uncached (log-only); the g2 spot-check added (path not in the record; clone code cached). README paragraph and scope sentence extended."
+  },
+  {
+   "finding": "2 (substantive) figures row 'cells generated on the cached path' marked reproduced",
+   "disposition": "fixed",
+   "detail": "Split into seven rows: e2a full run + smokes (log-only), e2a g2r/g2r2 (reproduced), first g2 ladder (log-only), spot-check (not found), e2b arc (reproduced), not-cached cells (reproduced; D1 log-only), f1 (log-only)."
+  },
+  {
+   "finding": "3 (substantive) 'choice reads unaffected' marked reproduced",
+   "disposition": "fixed",
+   "detail": "Now log-only: a code argument whose e2a code is in the clone, with the rule-26 recheck at results/raw/2026-08-18_rule26_recheck_choiceread.txt@bbc9ffe:21-24. The (iii) and (iv) prose and the README now say the KL ledger shows read determinism on identical token ids, not path independence; the 281/1115 re-forwards stay a separate reproduced row."
+  },
+  {
+   "finding": "4 (substantive) STOPs 'None' beside a 'discrepant' (i) row, no pass line",
+   "disposition": "fixed",
+   "detail": "Kept the row 'discrepant' (the design seat's claim does disagree with the record) and added to STOPs why it and the F1-label row are notes under block :3, not (i) discrepancies under :62, plus an explicit pass-condition line."
+  },
+  {
+   "finding": "5 (substantive) envelope MDE computed only under the |·| reading",
+   "disposition": "fixed",
+   "detail": "Added the signed (registered-text) reading for E1 and the joint power; E2 is the same under both (asserted). Checker's signed values against this run: E1 n=101 signed: checker +0.1558, this run +0.1558 (match); E1 n=102 signed: checker +0.1556, this run +0.1556 (match); E1 floors n=96 signed: checker +0.1827, this run +0.1827 (match); 101 signed: checker +0.1645, this run +0.1645 (match); 102 signed: checker +0.1631, this run +0.1631 (match). The |·| values match the checker's reproduction at 4 dp: YES. Reading paragraph restated; the choice of reading is a PI item."
+  },
+  {
+   "finding": "6 (minor) e2a full-raw locators 2,27,54,205",
+   "disposition": "fixed",
+   "detail": "Cause confirmed: str.splitlines() also breaks on the tqdm '\\r' characters. lines_with, quote_lines and pinned_jsonl now split on '\\n' only; the locators are now :2,25,50,199."
+  },
+  {
+   "finding": "7 (minor) rule-26 locator :23-26",
+   "disposition": "fixed",
+   "detail": "Same cause; now results/raw/2026-08-18_rule26_recheck_choiceread.txt@bbc9ffe:21-24. The four values are parsed from those lines."
+  },
+  {
+   "finding": "8 (minor) habit.py :31 and PROPOSAL-j :429-430 unquoted; 'post-hoc algebra' wording",
+   "disposition": "fixed",
+   "detail": "Both quoted (valence_core/e2d/habit.py@bbc9ffe:31; PROPOSAL-j-dose-escalation.md@bbc9ffe:429-430); noted that :31's 'either way' holds only under balance; reworded to 'algebra, not a finding ... the motivating e2a rates post-hoc' (valence_core/e2d/habit.py@bbc9ffe:37-38)."
+  },
+  {
+   "finding": "9 (minor) 'not in the preprint' unscoped; Appendices C/D absent",
+   "disposition": "fixed",
+   "detail": "Scoped to PREPRINT-v1_0-draft.md; PREPRINT-v1_1-draft.md (the block's project copy, AUDIT-note-release-v1_2.md@bbc9ffe:21) is named as absent and as a candidate source; the planned-appendices line :454 is cited."
+  },
+  {
+   "finding": "10 (minor) README wording: T-step corpus, 'agree in distribution', 512-token window, the 281/1115 clause",
+   "disposition": "fixed",
+   "detail": "All four applied: e2d-format rounds through the ported adapter; first-token distributions agree; e2a reads see the last 512 tokens and every DV read fit (log-only counts, with the per-index n reproduced); the re-forward clause now attaches to e2a alone."
+  },
+  {
+   "finding": "11 (minor) g1 'first response position' unsourced; 1e-6 bar cited at readout.py:57-61",
+   "disposition": "fixed",
+   "detail": "Position now cited to RESULTS.md@bbc9ffe:6099, the T-step JSON's g1_gate.why, the pre-registration (archive/RESULTS-cycles3-4.md@bbc9ffe:1253-1254) and the clone gate script as context; the bar to valence_core/readout.py@bbc9ffe:36-41 and the g3′ clause-1 text archive/RESULTS-cycles3-4.md@bbc9ffe:1150; :57-61 kept for the KL form."
+  },
+  {
+   "finding": "12 (minor) note 7 / PI item 4 omit the g3′ basis clause",
+   "disposition": "fixed",
+   "detail": "Basis quoted (archive/RESULTS-cycles3-4.md@bbc9ffe:1131-1136) in the (iv) note, the referent note (the finding's note 7, now note 8) and PI item 4; still reported, not adjudicated."
+  },
+  {
+   "finding": "13 (minor) no figures row for F1's link-5 y-axis label",
+   "disposition": "fixed",
+   "detail": "Row added, status discrepant (label), with the relabel."
+  },
+  {
+   "finding": "14 (minor) prose values hard-coded rather than computed (relayed finding truncated after its location list '562, 660-665, 701-708, 1010, 1029-1030, 1041-')",
+   "disposition": "fixed",
+   "detail": "Every numeral at the listed locations is now printed from computed variables (the 2·53 example, the measured Δ, the interval values, the 36 smoke2 overlaps, the 49/38/311 sentence, the 30 smoke keys). The rest of the script was swept (an AST scan of every string literal for numerals) and fixed likewise: launched counts in (i-c), the 0.24422 check, the preprint footnote values (now parsed and compared), g1 prefix count, KLs and bar, g1r's pass and the first smoke's dose, T-step counts and STOP_CAP, control-arm sizes and floors in (ii), sham map figures, PI items, notes. Literal numbers that remain are the block's claims being tested, quotations of the record beside their locators, anchors, assertion targets checked against the record's text, or labels naming the n or dose a computation is for."
+  }
+ ],
+ "values_check_pass2": [
+  {
+   "finding": "1 (substantive) note 10: cards 9 and 10 'cannot be checked here'; note 9 'beyond the block's ask'",
+   "disposition": "fixed",
+   "detail": "The block names each card's subject itself (AUDIT-note-release-v1_2.md@bbc9ffe:54; :59; :60), and the design handoffs on this machine number them: HANDOFF-2026-09-13-design.md(working tree, sha256 93e370442175bc28):148-155 (card 9 = the 270/1894 boundary collapse, 10 = 360 vs 311) and HANDOFF-2026-09-04-design.md(working tree, sha256 def593b73ac4bcbd):93 (card 8 = the cached-generation disclosure). The finding's note 10 (the post-pass-1 numbering; now note 11) is rewritten: the block's '(card 9)' on (iv) names card 8's subject under the handoffs' numbering, a wrong referent (block :3), and both subjects are answered. The finding's note 9 (now note 10) now calls the boundary collapse the handoffs' card 9; the README paragraph carries it as one log-only clause; a figures row is added (log-only); PI item 6 is restated. (iii) now says card 10's 'at verify_every = 4' holds for the run's 281 only, the 30 smoke keys having been verified at every choice."
+  },
+  {
+   "finding": "2 (substantive) 'the one divergence at the first token' / 'at position 1'",
+   "disposition": "fixed",
+   "detail": "Confirmed: `first_divergent_position` is a 0-based index (scripts/e2d_tstep_check.py@bbc9ffe:160-164) into every sampled token (valence_core/adapters/qwen_mlx.py@bbc9ffe:272-344); at 0.1 it is 1, the stored stripped texts share no first character, and the artifact stores no token ids. The (iv) parenthetical, the README ('beginning at the second sampled token ... after a whitespace token both paths shared') and the figures row are reworded; the T-step tuple is labelled 0-based and 'positions 1..N' is labelled a 1-based count. A referent note records that the record's 'POSITION 1' / 'FIRST token' (RESULTS.md@bbc9ffe:6073-6074; RESULTS.md@bbc9ffe:6096-6097) holds only as 'first content token'. (Round 4, row 2, rewords the README clause and that note; see there.)"
+  },
+  {
+   "finding": "3 (substantive) interval ≈ [.44, .64] marked computed-new",
+   "disposition": "fixed",
+   "detail": "Status now reproduced (at 2 dp: Clopper-Pearson [0.44, 0.64], Wald [0.44, 0.64]; Wilson [0.44, 0.63]); the record figure is FINDINGS-3.md@bbc9ffe:95; the method attribution stays a note and PI item 1. (i) tally then {'reproduced': 12, 'discrepant': 2, 'not found': 2, 'computed-new': 1} (round 4, row 4, splits the method claim into its own row; see there)."
+  },
+  {
+   "finding": "4 (minor) g2 AUCs lack probe/layer/contrast/scheme; judge 14/32 has no unit",
+   "disposition": "fixed",
+   "detail": "Every g2 AUC in (iv), the README draft and the figures row now names the probe, layer, contrast and scheme from archive/RESULTS-cycles3-4.md@bbc9ffe:1261-1264, archive/RESULTS-cycles3-4.md@bbc9ffe:1265-1266 and archive/RESULTS-cycles3-4.md@bbc9ffe:1268 (clone jlens-qwen36/scripts/e2a_g2_discriminability.py:4-6 as context); a single declared split, no cross-validation. The judge figure is written as 14 of 32 AB trials judging the +α response better, from the raws' 'judge AB (descriptive): ... picked +pole' lines."
+  },
+  {
+   "finding": "5 (minor) H2 smoke cited at RESULTS.md:10410 only",
+   "disposition": "fixed",
+   "detail": "Now RESULTS.md@bbc9ffe:10410-10415."
+  },
+  {
+   "finding": "6 (minor) control-arm sizes cited at archive :666",
+   "disposition": "fixed",
+   "detail": "Now random1 at archive/RESULTS-cycles3-4.md@bbc9ffe:653 and sham/random pooled at archive/RESULTS-cycles3-4.md@bbc9ffe:666-667; the entry pools random1 + random2 as 45 (asserted)."
+  },
+  {
+   "finding": "7 (minor) ±α at L48 cited at archive :1246 only",
+   "disposition": "fixed",
+   "detail": "Now archive/RESULTS-cycles3-4.md@bbc9ffe:1246-1249 and, for sham, archive/RESULTS-cycles3-4.md@bbc9ffe:1300-1301."
+  },
+  {
+   "finding": "8 (minor) preflight :20 cited for RESEARCH-NOTE; pre-patch copies not searched",
+   "disposition": "fixed",
+   "detail": "Cited as results/raw/2026-10-08_note-preflight.md@bbc9ffe:15 (RESEARCH-NOTE v0.2), :20 (v1.1). The 3 untracked pre-patch copies are now grepped by the script; none carries '54 of 101 valid sessions' or 'half the difference': True."
+  },
+  {
+   "finding": "9 (minor) '54 of 101 valid sessions' row mixes statuses",
+   "disposition": "fixed",
+   "detail": "Split: the quotation (not found) and footnote 1's 54/101, Δ, p (reproduced, audit v2). The 'half the difference' row is split the same way for consistency (quotation not found; identity computed-new)."
+  },
+  {
+   "finding": "10 (minor) format_recon_timing.json missing from the uncached list",
+   "disposition": "fixed",
+   "detail": "The list is now computed by a read-only git grep at the pin over every data/*.json(l) for round_path_cached/use_cached: 14 files, the 6 true ones exactly the g2r/g2r2 and e2b files (asserted); the false ones now include format_recon_timing.json {'false': 39} and d2_analysis.json {'false': 1}; no data/olmo file carries either key (asserted)."
+  },
+  {
+   "finding": "p1 (pass-1 remark, rule 4) the integrality table's p column header names no test",
+   "disposition": "fixed",
+   "detail": "The column header now reads 'one-sided exact binomial P(X ≥ k; n, ½) for the (2k−n)/n k vs stored p'."
+  }
+ ],
+ "values_check_round4": [
+  {
+   "finding": "1 (minor) pass-2 row 1 points to notes 10 and 9 by a numbering the T-step note had already shifted",
+   "disposition": "fixed",
+   "detail": "Confirmed: pass 2 added the T-step note (now note 7) ahead of them, so every later note moved down by one; the pass-2 checker's re-run of the post-pass-1 raw had the boundary collapse at note 9 ('Beyond the block's ask ...') and the card numbering at note 10. Note numbers in the dispositions and the STOPs paragraph are now computed from the printed list (`note_no`), never written by hand: pass-2 row 1 now reads 'the finding's note 10 (the post-pass-1 numbering; now note 11)' and 'the finding's note 9 (now note 10)'; pass-1 row 12's 'note 7' (the g3′ note in the builder's raw) is given as now note 8 in its detail, the same defect; referent notes 1 and 4, cited in the STOPs paragraph and the figures rows, are computed likewise. Finding titles keep the numbering of the raw each checker read. The JSON's values_check_pass2[0] carries the same text."
+  },
+  {
+   "finding": "2 (minor) README and note 7 state 'the first content token' as fact; note 7 places the misleading wording on 'POSITION 1'",
+   "disposition": "fixed",
+   "detail": "Confirmed: index 0 was identical on both paths (first_divergent_position = 1; scripts/e2d_tstep_check.py@bbc9ffe:160-164) and decoded to no visible text (the texts are stripped, valence_core/adapters/qwen_mlx.py@bbc9ffe:343, and share no first character), but the adapter admits more than one leading whitespace token (valence_core/adapters/qwen_mlx.py@bbc9ffe:292-305) and the artifact stores no token ids, so 'index 1 is the first content token on both paths' is an inference. The README now reads 'beginning at the second sampled token (0-based index 1; the first sampled token was identical on both paths and decoded to whitespace)', 'first content token' dropped. Note 7 now says 'POSITION 1' (RESULTS.md@bbc9ffe:6073-6074) is right as the stored 0-based index and that the record's 1-based 'Positions 1..42' (RESULTS.md@bbc9ffe:6085) and 'FIRST token' (RESULTS.md@bbc9ffe:6096-6097) invite the first-token reading; 'first content token' stays there only with the inference label. The (iv) parenthetical, already labelled an inference, now names the leading-whitespace rule. Pass-2 row 2 describes the pass-2 wording, superseded here. No number changes."
+  },
+  {
+   "finding": "3 (minor) the card-8 and card-10 locators stop at the anchor line, not the quoted words",
+   "disposition": "fixed",
+   "detail": "Confirmed at the pin: the quoted '(8) the cached-generation / T-step methods disclosure' runs onto the next two lines, and 'the cards on record stop at 8' onto the next one. Both now pass the closing line to loc() as an end anchor: RESULTS.md@bbc9ffe:5211-5213; RESULTS.md@bbc9ffe:3086-3087 (note 11)."
+  },
+  {
+   "finding": "4 (minor) the interval row mixes a reproduced record figure with a refuted method claim",
+   "disposition": "fixed",
+   "detail": "Split, as pass-2 finding 9 split its mixed row: 'approach-probability interval ≈ [.44, .64]' stays reproduced (under Clopper-Pearson or Wald, named in its value cell; the status column keeps the block's status vocabulary), and a new row, 'the interval's method (block: 'Wilson on 55/102 gives it')' (AUDIT-note-release-v1_2.md@bbc9ffe:57), is discrepant: Wilson 95% on 55/102 = [0.4428, 0.6328] → [0.44, 0.63] (re-computed by this run; Clopper-Pearson [0.4377, 0.6384], Wald [0.4425, 0.6359]); a design-seat claim and a note, not an (i) STOP, treated like the integrality row. (i) tally now {'reproduced': 12, 'discrepant': 3, 'not found': 2, 'computed-new': 1} (before: {'reproduced': 12, 'discrepant': 2, 'not found': 2, 'computed-new': 1}); the STOPs paragraph names the new row and the pass line points to it. The pass/STOP outcome is unchanged."
+  },
+  {
+   "finding": "5 (minor) (iii) calls the 8 smoke3 sessions byte-identical, having compared transcripts only",
+   "disposition": "fixed (wording amended)",
+   "detail": "Confirmed for the point and applied with the proposed wording amended, because one part of it does not hold on re-run: the rows do not differ only in verify_kl. Re-run here: transcripts equal 8/8; every pick and p_a equal 8/8; rows equal as JSON 1/8 (reward s5: 0 free choices); verify_kl differs in 7; in 4 (sham s0, sham s4, random1 s0, random2 s4) the run's rows also carry an `oop_tag` key (values null) that smoke3's lack; with both keys set aside 8/8 are equal. NaN or Infinity tokens in either file (a text scan of both pinned blobs): none, so the finding's 'the remaining round inequalities are NaN fields' is not borne out: they are the oop_tag key. (iii) now says all of this; the conclusion that the 29 smoke3-only keys are identical-input verifications stands."
+  }
+ ],
+ "smoke3_vs_run_rows": {
+  "transcripts_equal": 8,
+  "pick_p_a_equal": 8,
+  "rows_json_equal": 1,
+  "verify_kl_differs": [
+   "reward s0",
+   "reward s1",
+   "reward s4",
+   "sham s0",
+   "sham s4",
+   "random1 s0",
+   "random2 s4"
+  ],
+  "oop_tag_in_run_only": [
+   "sham s0",
+   "sham s4",
+   "random1 s0",
+   "random2 s4"
+  ],
+  "oop_tag_values": [
+   "null"
+  ],
+  "equal_without_verify_kl_oop_tag": 8,
+  "n": 8,
+  "nan_or_inf_token_in_files": false
+ },
+ "interval_method_row_status": "discrepant",
+ "path_flag_scan": {
+  "data/e2a/g2_discriminability.json": {
+   "use_cached=true": 2
+  },
+  "data/e2a/g2_discriminability_v2.json": {
+   "use_cached=true": 2
+  },
+  "data/e2b/h1_sessions.json": {
+   "round_path_cached=true": 1
+  },
+  "data/e2b/h1u_sessions.json": {
+   "round_path_cached=true": 1
+  },
+  "data/e2b/h2_sessions.json": {
+   "round_path_cached=true": 1
+  },
+  "data/e2b/verdict_campaign.json": {
+   "round_path_cached=true": 1
+  },
+  "data/e2d/d2_analysis.json": {
+   "round_path_cached=false": 1
+  },
+  "data/e2d/d2_sessions.json": {
+   "round_path_cached=false": 65
+  },
+  "data/e2d/d3_sessions.json": {
+   "round_path_cached=false": 25
+  },
+  "data/format/format_recon_F0_sessions.json": {
+   "round_path_cached=false": 89
+  },
+  "data/format/format_recon_F1_sessions.json": {
+   "round_path_cached=false": 236
+  },
+  "data/format/format_recon_F2_sessions.json": {
+   "round_path_cached=false": 265
+  },
+  "data/format/format_recon_timing.json": {
+   "round_path_cached=false": 39
+  },
+  "data/k/k1_sessions.json": {
+   "round_path_cached=false": 486
+  }
+ },
+ "preprint_prepatch_grep": {
+  "archive/PREPRINT-v1_0-draft.pre-patch-v2.md": {
+   "sha256_16": "f6ad20fbda5e75a7",
+   "tracked": false,
+   "54 of 101 valid sessions": [],
+   "half the difference": [],
+   "54 of 101": [
+    174
+   ],
+   "55 of 102": [
+    172
+   ]
+  },
+  "archive/PREPRINT-v1_0-draft.pre-patch-v3.md": {
+   "sha256_16": "a7a704f396de9a0f",
+   "tracked": false,
+   "54 of 101 valid sessions": [],
+   "half the difference": [],
+   "54 of 101": [
+    174
+   ],
+   "55 of 102": [
+    172
+   ]
+  },
+  "archive/PREPRINT-v1_0-draft.pre-patch-v4.md": {
+   "sha256_16": "c9739fda05374e58",
+   "tracked": false,
+   "54 of 101 valid sessions": [],
+   "half the difference": [],
+   "54 of 101": [
+    174
+   ],
+   "55 of 102": [
+    172
+   ]
+  }
+ },
+ "tstep_index_semantics": {
+  "first_divergent_position": "0-based token index",
+  "locator": "scripts/e2d_tstep_check.py@bbc9ffe:160-164",
+  "f010_divergent_index": 1,
+  "f010_first_char_shared": false,
+  "token_ids_stored": false
+ },
+ "review_cards": {
+  "card9_handoff": "HANDOFF-2026-09-13-design.md(working tree, sha256 93e370442175bc28):148-150",
+  "card9_text_found": true,
+  "card10_handoff": "HANDOFF-2026-09-13-design.md(working tree, sha256 93e370442175bc28):151-152",
+  "card10_text_found": true,
+  "card8_handoff": "HANDOFF-2026-09-04-design.md(working tree, sha256 def593b73ac4bcbd):93",
+  "block_lines": [
+   "AUDIT-note-release-v1_2.md@bbc9ffe:54",
+   "AUDIT-note-release-v1_2.md@bbc9ffe:59",
+   "AUDIT-note-release-v1_2.md@bbc9ffe:60"
+  ]
+ }
+}
