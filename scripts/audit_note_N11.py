@@ -36,8 +36,19 @@ Read-only on the record. What it does, in order:
       clone; the 103/103 and /Users/, /workspace/ greps over the tracked
       text files at --ref.
   (4) the clones, TMPDIRs, empty HOME, shim and hook reports are deleted at
-      the end. A status table (reproduced / discrepant / not found /
-      computed-new) closes the raw.
+      the end, and the work root itself when this run made it and it is then
+      empty. A status table (reproduced / discrepant / not found /
+      computed-new) and the verdict follow; a 'Portability fix and interim
+      re-run' section closes the raw, comparing it with the committed raw at
+      --compare-rev (default 09c3a8c).
+
+The work root is --workroot when given; otherwise a fresh directory made with
+tempfile.mkdtemp(prefix="audit_note_N11_") under tempfile.gettempdir()
+(portability fix, 2026-10-08: the default used to be the builder's session
+scratch, or <dir of --out>/N11-work when --out was not the default). --ref
+and --python are checked before it is made, and a work root this run made is
+removed at exit if it is empty. Off this laptop pass --python: the default is
+the interpreter of the gitignored jlens-qwen36/ clone.
 
 Writes only --out (default results/raw/2026-10-08_note-N11-smoke.txt). For a
 fixed --ref commit, interpreter and machine state, the raw regenerates
@@ -48,6 +59,8 @@ No model is loaded; nothing is installed or downloaded.
 from __future__ import annotations
 
 import argparse
+import atexit
+import difflib
 import fnmatch
 import glob
 import hashlib
@@ -59,10 +72,15 @@ import shutil
 import stat
 import subprocess
 import sys
+import tempfile
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SCRATCH = ("/private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/"
-           "c4fd7649-e4c4-4072-abde-05a4ace7b6a1/scratchpad/N11")
+# No fixed default work root (portability fix, 2026-10-08): without
+# --workroot, main() makes a fresh tempfile.mkdtemp(prefix=WORK_PREFIX)
+# directory under tempfile.gettempdir().
+WORK_PREFIX = "audit_note_N11_"
+COMPARE_REV = "09c3a8c"   # the commit whose committed N11 raw a re-run is compared with
+TEMP_TOKEN = "<tempfile.gettempdir()>"
 DEFAULT_OUT = os.path.join(REPO, "results/raw/2026-10-08_note-N11-smoke.txt")
 DEFAULT_PY = os.path.join(REPO, "jlens-qwen36/.venv/bin/python")
 BLOCK = "AUDIT-note-release-v1_2.md"
@@ -445,6 +463,18 @@ def under(path, root):
     return path == root or path.startswith(root + os.sep)
 
 
+def tempdir_display(path):
+    """`path` with this machine's tempfile.gettempdir() prefix (as given or
+    as its realpath) written <tempfile.gettempdir()>: the per-user temp
+    directory is machine-specific, so the raw does not print it."""
+    t = tempfile.gettempdir()
+    for base in sorted({t.rstrip(os.sep), os.path.realpath(t).rstrip(os.sep)},
+                       key=len, reverse=True):
+        if path == base or path.startswith(base + os.sep):
+            return TEMP_TOKEN + path[len(base):]
+    return path
+
+
 def filter_sections(cfg_text):
     """[filter "x"] sections and their keys, from a git config file's text."""
     out, cur = [], None
@@ -492,9 +522,18 @@ def find_lines(lines, needle, regex=False):
 class Out:
     def __init__(self):
         self.lines = []
+        # line index -> "machine" | "machine+ref": the lines that report this
+        # machine's state (Regeneration (iii)), for the closing section's
+        # classifier (values-check of the portability fix, finding 3)
+        self.machine = {}
 
     def __call__(self, s=""):
         self.lines.append(s)
+
+    def mark(self, kind, start, end=None):
+        """Mark lines [start, end) (default: to the current end) as kind."""
+        for i in range(start, len(self.lines) if end is None else end):
+            self.machine.setdefault(i, kind)
 
     def block(self, text, indent="    "):
         if text == "":
@@ -893,9 +932,14 @@ def main(argv=None):
     ap.add_argument("--out", default=DEFAULT_OUT)
     ap.add_argument("--workroot", default=None,
                     help="scratch directory the clone, TMPDIR, shim and hook "
-                         "reports are made under (default: the N11 scratch "
-                         "when --out is the default, else <dir of --out>/"
-                         "N11-work); refused inside the repository")
+                         "reports are made under (default: a fresh "
+                         "tempfile.mkdtemp directory, prefix %r, under "
+                         "tempfile.gettempdir(), removed at the end when "
+                         "empty); refused inside the repository" % WORK_PREFIX)
+    ap.add_argument("--compare-rev", default=COMPARE_REV,
+                    help="commit whose committed raw (the default --out path) "
+                         "the closing section compares this raw with "
+                         "(default %s)" % COMPARE_REV)
     ap.add_argument("--source", default="file://" + REPO,
                     help="what to clone (default: this repository via "
                          "file://, with --no-local); the release re-run can "
@@ -914,13 +958,46 @@ def main(argv=None):
     out_real = os.path.realpath(a.out)
     if os.path.isdir(out_real):
         sys.exit("refusing: --out must be a file path")
-    if a.workroot is None:
-        a.workroot = SCRATCH if out_real == os.path.realpath(DEFAULT_OUT) \
-            else os.path.join(os.path.dirname(out_real), "N11-work")
+    # Checked before anything is made (values-check of the portability fix,
+    # finding 4): an unresolvable --ref or a missing interpreter used to
+    # exit after mkdtemp and leave an empty work root in the temp directory.
+    rc, h, err = sh(["git", "-C", REPO, "rev-parse", "--verify",
+                     a.ref + "^{commit}"])
+    if rc != 0:
+        sys.exit("cannot resolve --ref %r: %s" % (a.ref, err.strip()))
+    h = h.strip()
+    if shutil.which(a.python) is None:
+        sys.exit("cannot run --python %r: not found or not executable (the "
+                 "default is the interpreter of the gitignored jlens-qwen36/ "
+                 "clone, which a fresh clone does not carry; pass --python "
+                 "<an interpreter with numpy>)" % a.python)
+    made_root = a.workroot is None
+    if made_root:
+        # checked before anything is made: the temp directory's parent
+        t_real = os.path.realpath(tempfile.gettempdir())
+        if under(t_real, os.path.realpath(REPO)):
+            sys.exit("refusing: tempfile.gettempdir() %s is inside the "
+                     "repository; pass --workroot" % t_real)
+        a.workroot = tempfile.mkdtemp(prefix=WORK_PREFIX)
+        print("work root: %s" % a.workroot, file=sys.stderr)
     wr_real = os.path.realpath(a.workroot)      # checked before anything is made
     if under(wr_real, os.path.realpath(REPO)):
         sys.exit("refusing: --workroot %s is inside the repository" % wr_real)
     os.makedirs(wr_real, exist_ok=True)
+    if made_root and not a.keep:
+        # On any exit, a work root this run made is removed if it is empty
+        # (a completed run has removed it already, in (4)); one that is not
+        # empty -- a run that failed with scratch in it -- is left and named.
+        def _root_at_exit(path=wr_real):
+            try:
+                os.rmdir(path)
+            except FileNotFoundError:
+                pass
+            except OSError:
+                print("work root left in place (not empty): %s" % path,
+                      file=sys.stderr)
+        atexit.register(_root_at_exit)
+    wr_disp = tempdir_display(wr_real)
     o = Out()
 
     # ---- header -----------------------------------------------------------
@@ -928,12 +1005,7 @@ def main(argv=None):
                            text=True).stdout.strip()
     _, head, _ = sh(["git", "-C", REPO, "rev-parse", "HEAD"])
     head = head.strip()
-    rc, h, err = sh(["git", "-C", REPO, "rev-parse", "--verify",
-                     a.ref + "^{commit}"])
-    if rc != 0:
-        sys.exit("cannot resolve --ref %r: %s" % (a.ref, err.strip()))
-    h = h.strip()
-    h12, h7 = h[:12], h[:7]
+    h12, h7 = h[:12], h[:7]          # h: --ref, resolved before the work root
     _, subj, _ = sh(["git", "-C", REPO, "log", "-1", "--format=%s", h])
     blk_wt = sha256_file(os.path.join(REPO, BLOCK))
     p = subprocess.run(["git", "-C", REPO, "show", "%s:%s" % (PIN, BLOCK)],
@@ -952,7 +1024,10 @@ def main(argv=None):
     o("- Clone source: %s" % a.source)
     o("- Work root (scratch; the two clones, their TMPDIRs, the empty HOME, "
       "the numpy shim and the hook reports are made here and deleted at the "
-      "end; written <workroot> below): %s" % wr_real)
+      "end; written <workroot> below): %s%s"
+      % (wr_disp, " (a fresh tempfile.mkdtemp directory made by this run, "
+         "removed at the end when empty; this machine's temp-directory "
+         "prefix is written %s)" % TEMP_TOKEN if made_root else ""))
     o("- Block: %s, sha256 %s (working tree) / %s (at %s); expected %s: %s"
       % (BLOCK, blk_wt, blk_pin, PIN, BLOCK_SHA,
          "MATCH" if blk_wt == BLOCK_SHA == blk_pin else "MISMATCH"))
@@ -966,7 +1041,8 @@ def main(argv=None):
       "--sitecheck and interpreter, a re-run reproduces this raw "
       "byte-for-byte except (i) the header lines 'Code stamp', 'HEAD (source "
       "repository, at run time)' (moves whenever anyone commits), '--ref' "
-      "(it echoes the argument as typed), 'Work root' and 'Command'; (ii) "
+      "(it echoes the argument as typed), 'Work root' and 'Command', and "
+      "the closing section's 'This run' line (it names the work root); (ii) "
       "the line in (1) naming the branch the clone checked out before the "
       "detach (it prints the source's branch tip at clone time); (iii) "
       "lines that report this machine's state, each labelled "
@@ -974,7 +1050,9 @@ def main(argv=None):
       "system gitattributes lines in (1), the PYTHON* variable names and the user-site line of run (d) in "
       "(2), untracked glob matches and present-but-not-tracked paths in "
       "(3), the note's presence in (3), and the working-tree existence "
-      "column of conjunct (e). Everything else is a function of the --ref "
+      "column of conjunct (e), and the lines that quote them (referent "
+      "notes 3 and 4, round 1's disposition 5 and round 2's disposition "
+      "R2-4). Everything else is a function of the --ref "
       "tree (and, in (2e), of the lineage commit's tree), the interpreter "
       "and the suite.")
     o()
@@ -1026,6 +1104,7 @@ def main(argv=None):
         if os.path.exists(path):
             for sec, k, v in filter_sections(open(path).read()):
                 laptop.append("%s: filter.%s.%s = %s" % (label, sec, k, v))
+    m0 = len(o.lines)
     o("The laptop's filter definitions (this machine's config files, read "
       "as text; these are what the clone must do without):")
     o.block("\n".join(laptop) if laptop else "none found")
@@ -1039,6 +1118,7 @@ def main(argv=None):
     for label, _p, ex, n in pu:
         o("    %s: %s" % (label, ("present, %s non-comment line(s)" % n)
                           if ex else "absent"))
+    o.mark("machine", m0)
     o()
     steps = []
     cmd = ["git", "clone", "--no-local", a.source, clone]
@@ -1122,6 +1202,7 @@ def main(argv=None):
          "present" if os.path.exists(attr_p) else "absent",
          len(hooks_live), hooks_live or ""))
     sar = system_attr_report(clone, genv, home)
+    m0 = len(o.lines)
     o("(this machine) The system gitattributes file of the git in use "
       "(GIT_CONFIG_NOSYSTEM does not turn it off; GIT_ATTR_NOSYSTEM=1 does). "
       "Candidates, the 'gitattributes' beside each system-level config file "
@@ -1131,6 +1212,8 @@ def main(argv=None):
                           if ex_ else "absent"))
     if not sar["cands"]:
         o("    none located")
+    o.mark("machine", m0)
+    m0 = len(o.lines)
     o("  probe: %d name(s) built from the present file(s)' '*.<ext>' "
       "patterns (n11-probe.<ext>), through git -C <clone> check-attr -a: "
       "with an attribute when GIT_ATTR_NOSYSTEM is absent %d; under the "
@@ -1143,6 +1226,7 @@ def main(argv=None):
       % (sar["n_tracked"], sar["n_with_attr"][0], sar["n_with_attr"][1],
          sar["rc"][0], sar["rc"][1], len(sar["changed"]),
          sar["changed"] or ""))
+    o.mark("machine+ref", m0)
     git_inputs_clean = bool(origins == ["file:.git/config"] and
                             exc_n in (0, None) and
                             not os.path.exists(attr_p) and not hooks_live and
@@ -1661,6 +1745,7 @@ def main(argv=None):
     o("  stdout byte-identical to the plain run: %s"
       % ("yes" if lso == pso else "NO"))
     o("  stderr: %r" % (lse if len(lse) < 2000 else lse[:2000] + "..."))
+    m0 = len(o.lines)
     o("  (this machine) PYTHON* variables in the inherited environment, "
       "names only: %s" % (py_env_names or "none"))
     if lprobe:
@@ -1678,6 +1763,7 @@ def main(argv=None):
              [x for x in lprobe["path"] if x]))
     else:
         o("  probe of run (d)'s configuration: no output")
+    o.mark("machine", m0)
     o()
 
     # ---- (2d') existence tests: are checks silently dropped? ----------------
@@ -1844,9 +1930,9 @@ def main(argv=None):
     r103 = find_lines(rd_pin, r"103 ?/ ?103", regex=True)
     res103 = find_lines(res_lines, r"103 ?/ ?103", regex=True)
 
-    def blame_commit(path, ln):
+    def blame_commit(path, ln, rev=PIN):
         rc_, so_, _ = sh(["git", "-C", REPO, "blame", "--porcelain", "-L",
-                          "%d,%d" % (ln, ln), PIN, "--", path])
+                          "%d,%d" % (ln, ln), rev, "--", path])
         return so_.split()[0] if rc_ == 0 and so_.strip() else None
     lineage = blame_commit("README.md", r103[0][0]) if r103 else None
     res_blame = [(i, blame_commit("RESULTS.md", i)) for i, _ in res103]
@@ -2271,6 +2357,15 @@ def main(argv=None):
           (not os.path.exists(tmpd) and not os.path.exists(ltmp) and
            not os.path.exists(home) and not os.path.lexists(shim) and
            not os.path.exists(report) and not os.path.exists(report_iso)))
+    root_removed = None
+    if made_root and not a.keep:
+        try:
+            os.rmdir(wr_real)               # only if empty
+            root_removed = True
+        except OSError:
+            root_removed = False
+        o("Work root made by this run, removed now that it is empty: %s"
+          % ("yes" if root_removed else "NO (not empty; left in place)"))
     o("--ref commit: %s" % h)
     o()
 
@@ -2524,6 +2619,7 @@ def main(argv=None):
         pf_blob = pf_blob.strip()
     ref_blob = blobs.get("--ref", (None, None))[1]
     stab = []
+    res_ref_blame = {}      # RESULTS.md hit line at --ref -> blamed commit there
     for p_, ln_, _t in hits:
         loc = "%s@%s:%d" % (p_, h7, ln_)
         if p_ == BLOCK:
@@ -2532,8 +2628,14 @@ def main(argv=None):
         elif p_ == "README.md":
             stab.append(("103/103 (live doc)", loc, suite_val,
                          "discrepant (stale referent; note 1)"))
-        elif p_ == "RESULTS.md" and lineage and any(
-                i == ln_ and c == lineage for i, c in res_blame):
+        # The hit's own line, blamed at --ref (values-check of the
+        # portability fix, finding 1): ln_ is a --ref line number, and
+        # RESULTS.md is newest-first, so comparing it with res_blame's
+        # pin-side line numbers dropped this row at any --ref after the pin.
+        # At --ref = the pin the two are the same blame.
+        elif p_ == "RESULTS.md" and lineage and \
+                res_ref_blame.setdefault(ln_, blame_commit(
+                    "RESULTS.md", ln_, rev=h)) == lineage:
             ok_ = bool(lin.get("exit") == 0 and lin.get("summary") and
                        lin["summary"][0] == lin["summary"][1] == 103)
             stab.append(("103/103 (dated entry)", loc, lin_val,
@@ -2788,7 +2890,10 @@ def main(argv=None):
          "fixed", "When --out is not the default, --workroot now defaults "
          "to <dir of --out>/N11-work. A work root inside the repository is "
          "refused. Stale entries are removed only under their fixed names "
-         "(clone-, tmp-, numpy-shim-<sha12>, hook reports)."),
+         "(clone-, tmp-, numpy-shim-<sha12>, hook reports). [Superseded "
+         "2026-10-08 by the portability fix in the closing section: without "
+         "--workroot the work root is now a fresh tempfile.mkdtemp "
+         "directory, whatever --out is.]"),
     ]
     o("## Values-check, round 1 (findings on pass 1, scripts/"
       "audit_note_N11.py sha256 c77c55d3...a914; dispositions applied from "
@@ -2947,6 +3052,10 @@ def main(argv=None):
     for num, claim, disp, how in vc2:
         o("R2-%s. %s" % (num, claim))
         o("   Disposition: %s. %s" % (disp, how))
+        if num == "4":
+            # it quotes the per-user git files' report of (1) (machine
+            # state) beside --ref counts; named in Regeneration (iii)
+            o.mark("machine+ref", len(o.lines) - 1)
     o()
     o("Also changed by Code in round 2 (not checker findings): (i) the "
       "header's Regeneration line names the new machine-state lines "
@@ -3109,11 +3218,323 @@ def main(argv=None):
       "mlx.core, and the adapter is constructed at oracle.py@bbc9ffe:559. "
       "Its findings report no changed number.")
 
+    # ---- machine-state marks, by label (values-check of the portability
+    # fix, finding 3): besides the lines marked where they are written ((1)'s
+    # filter definitions, per-user git files and system gitattributes lines;
+    # run (d)'s PYTHON* names and user-site probe; R2-4), every line outside
+    # the header and the verdict that reports this machine's working tree.
+    in_verdict = False
+    for i in range(n_header, len(o.lines)):
+        if o.lines[i].startswith("## "):
+            in_verdict = o.lines[i].startswith("## Verdict")
+        if not in_verdict and "this machine's working tree" in o.lines[i]:
+            o.machine.setdefault(i, "machine+ref")
+    n_mk = sum(1 for k in o.machine.values() if k == "machine")
+    n_mr = sum(1 for k in o.machine.values() if k == "machine+ref")
+
+    # ---- values-check, round 4: the adversarial check of the portability fix
+    r4_start = len(o.lines)
+    o()
+    n_dated = sum(1 for r in stab if r[0] == "103/103 (dated entry)")
+    rhits = sorted(res_ref_blame.items())
+    vc4 = [
+        ("1", "substantive; the checker's finding 1", "The 'Figure statuses' table dropped its "
+         "'103/103 (dated entry)' row at any --ref after the pin, and R2-3's "
+         "row count fell by one with it: the row was kept only when a --ref "
+         "line number (git grep at --ref) equalled a RESULTS.md line number "
+         "blamed at the pin, and RESULTS.md is newest-first, so the line "
+         "moves (RESULTS.md@bbc9ffe:11593 is RESULTS.md@6485da2:11888, both "
+         "blamed to 0dd6f56). Pre-existing: the 09c3a8c script does the "
+         "same. The previous version's closing section labelled the two "
+         "lines this changed 'content at the new --ref'; the script, not "
+         "the tree, caused them.",
+         "fixed", "Each RESULTS.md hit at --ref is now blamed at --ref "
+         "(git blame -L n,n <--ref> -- RESULTS.md) and the row is kept when "
+         "that names the lineage commit; at --ref = the pin it is the blame "
+         "the previous versions made, so the table at --ref = the pin is "
+         "unchanged. "
+         "Here: %s; 'dated entry' row(s): %d; the table has %d rows, the "
+         "count R2-3 prints. The verdict and (2e) do not use this match."
+         % ("; ".join("RESULTS.md@%s:%d blamed at --ref to %s" % (
+             h7, ln_, (c_ or "?")[:7]) for ln_, c_ in rhits) or
+            "no RESULTS.md hit at --ref", n_dated, len(stab)) +
+         " Code's check, a separate run of this script before the check sentences of round 4 "
+         "were added (sha256 17bc691a...352b), at --ref bbc9ffe, output not committed: its "
+         "Figure statuses table equals the committed raw's at 09c3a8c line for line, and the "
+         "only lines that differ from that raw are the header's run metadata, the Regeneration "
+         "line, the pre-detach branch line, the new cleanup line, round 1's disposition 13, "
+         "round 4 and the closing section."),
+        ("2", "minor; the checker's finding 3", "The closing section's classifier had no "
+         "machine-state class, so on another machine, or under another HOME, "
+         "it labelled machine-state lines 'content at the new --ref' (the "
+         "checker's run with HOME and XDG_CONFIG_HOME an empty directory: "
+         "217 differing lines instead of 213, the four extra all so "
+         "labelled); and R2-4 quotes a machine-state value "
+         "($XDG_CONFIG_HOME/git/ignore present) that Regeneration (iii) did "
+         "not name.",
+         "fixed", "The script now marks the lines that report this "
+         "machine's state as it writes them: (1)'s filter definitions, "
+         "per-user git files and system gitattributes lines, run (d)'s "
+         "PYTHON* names and user-site probe, R2-4, and every line outside "
+         "the header and the verdict that reports this machine's working "
+         "tree. Here: %d line(s) marked as machine state alone and %d as "
+         "machine state beside --ref content. The classifier puts a marked "
+         "line that differs in 'machine state (Regeneration (iii))' or "
+         "'machine state and --ref content (Regeneration (iii); either can "
+         "move it)'; a line "
+         "that differs only by the --ref / HEAD sha stays 'sha only'. "
+         "Regeneration (iii) now names the lines that quote machine state: "
+         "referent notes 3 and 4, round 1's disposition 5 and R2-4. R2-4's "
+         "text is unchanged. Code's check, a separate run of the same version "
+         "(sha256 17bc691a...352b) at --ref 6485da2 with HOME and "
+         "XDG_CONFIG_HOME an empty directory, output not committed: lines 26 "
+         "and 28 (per-user git files) and 222 (user-site probe) were classed "
+         "'machine state (Regeneration (iii))' and line 789 (R2-4) in the "
+         "class for machine state beside --ref content; none of the four "
+         "'content at the new --ref'." % (n_mk, n_mr)),
+        ("3", "minor; the checker's finding 4", "Without --workroot, an early exit left an empty "
+         "audit_note_N11_* directory in the temp directory (an unresolvable "
+         "--ref, or a missing --python: mkdtemp ran first), so 'a default "
+         "run leaves nothing in the temp directory' held only for a run "
+         "that completes.",
+         "fixed", "--ref is resolved and --python located (shutil.which) "
+         "before the work root is made, and an exit handler removes a work "
+         "root this run made if it is empty at exit; one that is not empty "
+         "(a run that failed with scratch in it) is left, and named on "
+         "stderr. The closing section's Fix bullet now says which runs "
+         "leave nothing. Reproduced first with the previous version "
+         "(sha256 1c7eda5a...fb80) copied into a directory outside any "
+         "repository, TMPDIR a scratch directory: it made its work root, "
+         "exited at --ref resolution, and left the empty directory (at "
+         "09c3a8c too the work root was made, scripts/audit_note_N11.py@"
+         "09c3a8c:923, before --ref was resolved, :934). Code's check, "
+         "separate runs of the same version "
+         "(sha256 17bc691a...352b) with TMPDIR a scratch directory: --ref "
+         "0000000badref and --python /nonexistent/python each exited 1 with "
+         "its message and left nothing in TMPDIR; a run interrupted (SIGINT) "
+         "after 6 s left its work root, holding 4 entries, and named it on "
+         "stderr."),
+        ("4", "minor; this script's half of the checker's finding 5", "The portability section did not say what a run "
+         "still needs off this laptop: the default --python is the "
+         "interpreter of the gitignored jlens-qwen36/ clone, absent from a "
+         "fresh clone (there the default fails), and README-NOTE.md does not "
+         "mention --python.",
+         "fixed (README-NOTE.md flagged, not edited)", "The closing "
+         "section's 'Still needed' bullet names it. README-NOTE.md is not "
+         "this script's output; whether its run instructions name --python "
+         "is the PI's."),
+    ]
+    o("## Values-check, round 4 (findings of the adversarial check of the "
+      "portability fix, on scripts/audit_note_N11.py sha256 1c7eda5a...fb80 "
+      "and the raw it wrote; dispositions applied in this version)")
+    o()
+    o("The check re-ran the script under a sandbox (the session scratch "
+      "unreadable, the repository unwritable, TMPDIR redirected; in a second "
+      "run HOME and XDG_CONFIG_HOME too), from the repository and from a "
+      "scratch clone, and recounted the raw's figures from git. Of its six "
+      "findings, four bear on this script (one substantive, three minor; "
+      "its finding 5 covers both scripts) and three on "
+      "scripts/audit_note_N8.py, disposed in that script's raw; none changes "
+      "the verdict or a figure's value. Code verified each with its own "
+      "tool run before applying it; none was rejected.")
+    o()
+    for num, sev, claim, disp, how in vc4:
+        o("R4-%s (%s). %s" % (num, sev, claim))
+        o("   Disposition: %s. %s" % (disp, how))
+    o()
+    o("Also changed by Code in round 4 (not checker findings): the closing "
+      "section's Fix bullet no longer says that nothing else is computed "
+      "differently; it names these dispositions.")
+    r4_end = len(o.lines)
+
     # scratch paths -> <workroot> outside the header
     subs = sorted({wr_real, a.workroot.rstrip(os.sep)}, key=len, reverse=True)
     for i in range(n_header, len(o.lines)):
         for s_ in subs:
             o.lines[i] = o.lines[i].replace(s_, "<workroot>")
+
+    # ---- portability fix + interim re-run (compared on the raw as it stands)
+    # cur: the raw's lines as they will be written; cur_src: the o.lines
+    # index each comes from (for the machine-state marks)
+    cur, cur_src = [], []
+    for i_, x_ in enumerate(o.lines):
+        for part in x_.split("\n"):
+            cur.append(part)
+            cur_src.append(i_)
+    while cur and cur[-1] == "":
+        cur.pop()
+        cur_src.pop()
+    cmp_rev = a.compare_rev
+    rc_c, cmp_full, _ = sh(["git", "-C", REPO, "rev-parse", "--verify",
+                            cmp_rev + "^{commit}"])
+    cmp_full = cmp_full.strip() if rc_c == 0 else None
+    old = None
+    if cmp_full:
+        po = subprocess.run(["git", "-C", REPO, "show", "%s:%s" % (
+            cmp_full, os.path.relpath(DEFAULT_OUT, REPO))], capture_output=True)
+        if po.returncode == 0:
+            old = po.stdout.decode("utf-8").rstrip("\n").split("\n")
+    o()
+    o("## Portability fix and interim re-run (2026-10-08)")
+    o()
+    o("- Fix: at %s, with no --workroot, the work root was a fixed path in "
+      "the builder's session scratch directory (or <dir of --out>/N11-work "
+      "when --out was not the default), which exists on one machine only. "
+      "Without --workroot the script now makes a fresh directory with "
+      "tempfile.mkdtemp(prefix='%s') under tempfile.gettempdir(), whatever "
+      "--out is (refused before anything is made if that directory is inside "
+      "the repository); an explicit --workroot is used as before (refused "
+      "inside the repository, made if absent). Cleanup is unchanged (clones, "
+      "TMPDIRs, empty HOME, shim and hook reports deleted unless --keep); in "
+      "addition, a work root the run made is removed once empty: a default "
+      "run that completes leaves nothing in the temp directory, and one that "
+      "exits early removes the work root it made if that is still empty "
+      "(--ref and --python are checked before it is made) and otherwise "
+      "leaves it, named on stderr. Round 1's disposition 13 carries a "
+      "superseded note. Also changed, by round 4's dispositions: the Figure "
+      "statuses' '103/103 (dated entry)' row is matched by a blame at --ref "
+      "(at --ref = the pin the table is unchanged); Regeneration (iii) names "
+      "the lines that quote machine state; this section's classifier has "
+      "machine-state classes. Nothing else is computed differently; round 4 "
+      "and this section are new." % (COMPARE_REV, WORK_PREFIX))
+    o("- Still needed off this laptop: --python <an interpreter with numpy>. "
+      "The default, <repository>/jlens-qwen36/.venv/bin/python, is inside "
+      "the gitignored jlens-qwen36/ clone, so a fresh clone (or another "
+      "machine) has no such file; without --python the script now exits "
+      "before making anything (round 4, R4-3). Also git, and read access to "
+      "--source (default: this repository, file://). The round-4 checker's "
+      "run from a scratch clone needed only --python (with it, the run "
+      "printed 154/154). README-NOTE.md does not mention --python "
+      "(for the PI).")
+    o("- This run: work root %s; made by this run: %s; removed at the end: "
+      "%s." % (wr_disp, "yes" if made_root else "no (--workroot given)",
+               ("yes" if root_removed else "NO") if made_root and not a.keep
+               else "no (not made by this run, or --keep)"))
+    o("- --ref %s; the source repository's HEAD at run time %s: %s. %s"
+      % (h, head, "the same commit" if head == h else "a DIFFERENT commit",
+         "An interim, provisional re-run at the audit's latest commit, before "
+         "the tag; the block's pass is evaluated at --ref <tag> (note 2)."
+         if head == h else ""))
+    o("- Results here: suite %s; clone exit %d, checkout exit %d, clone "
+      "HEAD equals --ref: %s; warning/error lines %d; tree clean after "
+      "checkout: %s; distinct paths read outside the clone apart from the "
+      "interpreter's installation and the suite's own temp files "
+      "(conjunct (d)): %d; untracked clone files read: %d; verdict line: %s."
+      % ("%d/%d" % (sp[0], sp[1]) if sp else "NO SUMMARY", rc, rc2,
+         "yes" if head_c == h else "NO", len(warn_lines),
+         "yes" if clean_after_checkout else "NO", len({x[2] for x in outside}),
+         len(untr_read), "PASS (provisional)" if allok else "STOP"))
+    if old is None:
+        o("- Comparison with the committed raw at %s: not made (not "
+          "readable)." % cmp_rev)
+    else:
+        # the run-dependent shas: --ref and run-time HEAD, here and there
+        shas = {h, head}
+        for ln in old[:30]:
+            for pfx in ("- HEAD (source repository, at run time): ", "- --ref: "):
+                if ln.startswith(pfx):
+                    shas |= set(re.findall(r"\b[0-9a-f]{40}\b", ln))
+        forms = sorted({f for x in shas for f in (x, x[:12], x[:10], x[:7])},
+                       key=len, reverse=True)
+
+        def norm(x):
+            for f in forms:
+                x = x.replace(f, "<SHA>")
+            return x
+        hdr_pfx = ("- Code stamp:", "- HEAD (source repository", "- --ref:",
+                   "- Work root", "- Script:", "- Command:")
+
+        def sect(lines, i):
+            for k in range(i, -1, -1):
+                if lines[k].startswith("## "):
+                    return lines[k][3:]
+            return "header"
+        rows = []
+        # aligned on the sha-normalised lines, so a line that differs only
+        # in the --ref / HEAD sha pairs with its counterpart
+        sm = difflib.SequenceMatcher(None, [norm(x) for x in old],
+                                     [norm(x) for x in cur], autojunk=False)
+        for tag, i1, i2, j1, j2 in sm.get_opcodes():
+            if tag == "equal":
+                pairs = [(i1 + k, j1 + k) for k in range(i2 - i1)
+                         if old[i1 + k] != cur[j1 + k]]
+            elif tag == "replace" and i2 - i1 == j2 - j1:
+                pairs = [(i1 + k, j1 + k) for k in range(i2 - i1)]
+            else:
+                pairs = [(i, None) for i in range(i1, i2)] + \
+                        [(None, j) for j in range(j1, j2)]
+            for i, j in pairs:
+                ol = old[i] if i is not None else None
+                nl = cur[j] if j is not None else None
+                ref_line = nl if nl is not None else ol
+                jj = cur_src[j] if j is not None else None   # o.lines index
+                if jj is not None and jj < n_header and ref_line.startswith(hdr_pfx):
+                    c = "header run metadata (Regeneration (i))"
+                elif ref_line.startswith("Branch the clone checked out before"):
+                    c = "pre-detach branch line (Regeneration (ii))"
+                elif jj is not None and r4_start <= jj < r4_end:
+                    c = "new in this version (values-check, round 4)"
+                elif nl is not None and ("[Superseded 2026-10-08" in nl or
+                                         nl.startswith("Work root made by this run") or
+                                         (nl.startswith("- Regeneration:") and
+                                          "closing section" in nl)):
+                    c = "new in this version (portability fix)"
+                elif ol is not None and nl is not None and norm(ol) == norm(nl):
+                    c = "sha only (--ref commit / run-time HEAD)"
+                elif jj is not None and jj in o.machine:
+                    c = ("machine state (Regeneration (iii))"
+                         if o.machine[jj] == "machine" else
+                         "machine state and --ref content (Regeneration "
+                         "(iii); either can move it)") + ("" if ol is not None else
+                                      " (line only here)")
+                else:
+                    c = "content at the new --ref" + (
+                        "" if (ol is not None and nl is not None)
+                        else " (line only %s)" % ("there" if nl is None else "here"))
+                s_ = sect(cur, j) if j is not None else sect(old, i)
+                rows.append((s_, c, None if j is None else j + 1,
+                             None if i is None else i + 1))
+        old_ref = next((re.findall(r"-> ([0-9a-f]{40})", x_)
+                        for x_ in old[:30] if x_.startswith("- --ref: ")), [])
+        o("- Compared with %s@%s (--ref there: %s), this section left out: "
+          "%d line(s) there, %d here; %d differing (paired %d, only there "
+          "%d, only here %d). By section and class (line numbers here, or "
+          "there for a line only there):"
+          % (os.path.relpath(DEFAULT_OUT, REPO), cmp_full[:7],
+             (old_ref[0][:7] + (" -- the block's commit" if old_ref[0] == PIN_FULL
+                                else "")) if old_ref else "?", len(old),
+             len(cur), len(rows),
+             sum(1 for r in rows if r[2] and r[3]),
+             sum(1 for r in rows if r[2] is None),
+             sum(1 for r in rows if r[3] is None)))
+
+        def ranges(ns):
+            ns = sorted(ns)
+            out, st, pv = [], None, None
+            for n in ns:
+                if st is None:
+                    st = pv = n
+                elif n == pv + 1:
+                    pv = n
+                else:
+                    out.append("%d" % st if st == pv else "%d-%d" % (st, pv))
+                    st = pv = n
+            if st is not None:
+                out.append("%d" % st if st == pv else "%d-%d" % (st, pv))
+            return ",".join(out)
+        order = []
+        for r in rows:
+            if (r[0], r[1]) not in order:
+                order.append((r[0], r[1]))
+        for s_, c in order:
+            here = [r[2] for r in rows if (r[0], r[1]) == (s_, c) and r[2]]
+            there = [r[3] for r in rows if (r[0], r[1]) == (s_, c) and not r[2]]
+            o("    - %s | %s: %d (%s%s)" % (
+                s_[:60] + ("..." if len(s_) > 60 else ""), c,
+                len(here) + len(there),
+                ("here " + ranges(here)) if here else "",
+                ("; " if here and there else "") +
+                (("there " + ranges(there)) if there else "")))
 
     os.makedirs(os.path.dirname(out_real), exist_ok=True)
     with open(out_real, "w") as fh:

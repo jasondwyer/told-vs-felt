@@ -12,6 +12,13 @@ READ-ONLY ON THE RECORD. What this script does, in order:
          data/ in the scratch directory, so the count is also stated AT THE PIN
          (the working tree carries a concurrent session's files). The
          extraction is deleted afterwards.
+     The scratch directory is --scratch when given; otherwise a fresh
+     directory made with tempfile.mkdtemp(prefix="audit_note_N8_") under
+     tempfile.gettempdir() (portability fix, 2026-10-08: the default used to
+     be the builder's session scratch, which exists on one machine only).
+     Before anything is made, the untracked PREPRINT-v1_0-draft.md is looked
+     for; if absent (a fresh clone, unless the PI commits it) the script
+     prints '[not run: ... absent]' on stderr and exits 2, writing nothing.
   2. Maps each link-2 figure of the block (N8, block lines 106-107) to the
      suite checks that hold it, by check name, or says that none does.
   3. Recomputes every link-2 figure it can from committed artifacts, read AT
@@ -26,6 +33,11 @@ READ-ONLY ON THE RECORD. What this script does, in order:
      scripts/e2d_closure_verify3.py is read, not run.
   4. Reads the rule-26 oracle record's history (data/regression/oracle_rule26.json)
      with read-only git.
+  5. Closes the md with a 'Portability fix and interim re-run' section and the
+     JSON with a "portability" key: the work root used, what cleanup left in
+     it, and a comparison of this run's outputs (that section and key left
+     out) with the committed outputs at --compare-rev (default 09c3a8c),
+     read with `git show`; each differing md line and JSON leaf is classed.
 
 No model is loaded; no inference. Exact tests are stdlib (math.comb). numpy is
 used for array geometry (npz) and is the record's own dependency. Outputs: the
@@ -35,7 +47,8 @@ Usage:
   jlens-qwen36/.venv/bin/python scripts/audit_note_N8.py \
       [--out results/raw/2026-10-08_note-N8-link2.md] \
       [--json-out results/raw/2026-10-08_note-N8-link2.json] \
-      [--scratch <dir>]
+      [--scratch <dir>]    (default: a fresh tempfile.mkdtemp directory)
+      [--compare-rev 09c3a8c]
 """
 from __future__ import annotations
 
@@ -43,6 +56,8 @@ import sys
 sys.dont_write_bytecode = True
 
 import argparse
+import atexit
+import difflib
 import hashlib
 import io
 import json
@@ -54,6 +69,7 @@ import shutil
 import statistics
 import subprocess
 import tarfile
+import tempfile
 
 import numpy as np
 
@@ -66,8 +82,11 @@ PREPRINT = "PREPRINT-v1_0-draft.md"          # untracked; sha-pinned below
 PREPRINT_SHA = "d6431e97d35e5914574ff9884c0e64463a7baf1cf9d279f27ed45a683a6222b8"
 DEF_OUT = "results/raw/2026-10-08_note-N8-link2.md"
 DEF_JSON = "results/raw/2026-10-08_note-N8-link2.json"
-DEF_SCRATCH = ("/private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/"
-               "c4fd7649-e4c4-4072-abde-05a4ace7b6a1/scratchpad/N8")
+# No fixed default scratch (portability fix, 2026-10-08): without --scratch,
+# main() makes a fresh tempfile.mkdtemp(prefix=SCRATCH_PREFIX) directory
+# under tempfile.gettempdir().
+SCRATCH_PREFIX = "audit_note_N8_"
+COMPARE_REV = "09c3a8c"     # the commit whose committed N8 raws a re-run is compared with
 SUITE_SUMMARY = re.compile(r"^\s+(\d+)/(\d+) reproduced through valence_core\s*$")
 SUITE_LINE = re.compile(
     r"^  \[(PASS|FAIL)\] (.+?) {3,}expected (.*?) got (.*?)   \((.*)\)$")
@@ -300,16 +319,259 @@ def residual_fraction(axis, guard) -> float:
     return float(np.linalg.norm(res) / (np.linalg.norm(axis) + EPS))
 
 
+# --------------------- attribution of the tracked-differing list (round 3) --
+
+QWEN_SCAN_SKIP = (".git", "__pycache__", "jlens-qwen36", "archive")
+
+
+def _subject_head(subj: str, n: int = 60) -> str:
+    if len(subj) <= n:
+        return subj
+    cut = subj[:n].rsplit(" ", 1)[0]
+    return cut + " ..."
+
+
+def attribute_changed(changed: list[str], head: str) -> dict:
+    """Which commits after the pin touch each file of `changed`; which carry
+    uncommitted changes; which the suite's two structural source scans read.
+    The scan predicates mirror valence_core/regression/analysis.py at the pin
+    (the quarantine offender scan, :809-822; the qwen-helper definition scan,
+    :1192-1205)."""
+    raw = git("log", "--no-renames", "--name-only", "--date=short",
+              "--format=%x00%h%x09%ad%x09%s", f"{PIN}..{head}").decode()
+    commits = []
+    for chunk in raw.split("\0")[1:]:
+        first, _, rest = chunk.partition("\n")
+        h_, d_, subj = first.split("\t", 2)
+        commits.append((h_, d_, subj, {x for x in rest.split("\n") if x}))
+    ch = set(changed)
+    by_commit = [{"commit": h_, "date": d_, "subject_head": _subject_head(subj),
+                  "files": len(ch & fs)} for h_, d_, subj, fs in commits]
+    touched = set().union(*(fs for *_, fs in commits)) if commits else set()
+    no_commit = sorted(x for x in changed if x not in touched)
+    uncommitted = sorted(x for x in git("diff", "--name-only", head).decode().split("\n")
+                         if x)
+
+    def quarantine(f: str) -> bool:
+        d = os.path.dirname(f)
+        return (f.endswith(".py") and f.startswith("valence_core/")
+                and os.path.basename(d) not in ("e2b", "regression")
+                and "__pycache__" not in d)
+
+    def qwen(f: str) -> bool:
+        return f.endswith(".py") and not any(
+            p in QWEN_SCAN_SKIP for p in os.path.dirname(f).split("/"))
+    present = [x for x in changed if os.path.isfile(os.path.join(REPO, x))]
+    scan_both = [x for x in present if quarantine(x) and qwen(x)]
+    scan_qwen_only = [x for x in present if qwen(x) and not quarantine(x)]
+    tracked = set(git("ls-files").decode().split("\n"))
+    untracked_py = []
+    for root, dirs, files in os.walk(REPO):
+        dirs[:] = sorted(d for d in dirs if d not in QWEN_SCAN_SKIP)
+        for f in sorted(files):
+            if f.endswith(".py"):
+                rel = os.path.relpath(os.path.join(root, f), REPO)
+                if rel not in tracked:
+                    untracked_py.append(rel)
+    return {"commits_after_pin": len(commits), "by_commit": by_commit,
+            "no_commit": no_commit, "uncommitted": uncommitted,
+            "scan_both": scan_both, "scan_qwen_only": scan_qwen_only,
+            "untracked_py_scanned": untracked_py}
+
+
+# ------------------------------------------- portability fix / re-run check --
+
+TEMP_TOKEN = "<tempfile.gettempdir()>"
+
+
+def tempdir_display(path: str) -> str:
+    """`path` with this machine's tempfile.gettempdir() prefix (as given or as
+    its realpath) written <tempfile.gettempdir()>: the per-user temp directory
+    is machine-specific, so the outputs do not print it."""
+    t = tempfile.gettempdir()
+    for base in sorted({t.rstrip(os.sep), os.path.realpath(t).rstrip(os.sep)},
+                       key=len, reverse=True):
+        if path == base or path.startswith(base + os.sep):
+            return TEMP_TOKEN + path[len(base):]
+    return path
+
+
+def flatten(x, pre: str = "") -> dict:
+    """JSON leaves by path; a list of scalars is one leaf."""
+    if isinstance(x, dict):
+        if not x:
+            return {pre: {}}
+        out = {}
+        for k, v in x.items():
+            out.update(flatten(v, f"{pre}.{k}" if pre else str(k)))
+        return out
+    if isinstance(x, list) and any(isinstance(v, (dict, list)) for v in x):
+        out = {}
+        for i, v in enumerate(x):
+            out.update(flatten(v, f"{pre}[{i}]"))
+        return out
+    return {pre: x}
+
+
+def head_norm(s: str, heads: set[str]) -> str:
+    """Every full and 7-character form of the given HEAD shas -> <HEAD>."""
+    for h in sorted(heads, key=len, reverse=True):
+        s = s.replace(h, "<HEAD>")
+    return s
+
+
+# md line prefixes / JSON paths of the run-dependent outputs, with their class
+MD_CLASSES = (
+    ("- Code stamp:", "stamp"),
+    ("- Script:", "script sha256"),
+    ("- Command:", "command echo (with --scratch given, it carried the work root)"),
+    ("- Tracked files whose working-tree content differs from the pin",
+     "tracked files differing from the pin (moves with HEAD and the working tree)"),
+    ("  Attribution (computed from the list at run start)",
+     "attribution sentence (moves with HEAD and the working tree)"),
+)
+# a paired line whose old and new forms differ by design: (old prefix, new prefix, class)
+MD_PAIR_CLASSES = (
+    ("  These are the concurrent PROPOSAL-m session's",
+     "  Attribution (computed from the list at run start)",
+     "attribution sentence, computed since values-check round 3 (was fixed text)"),
+)
+NEW_R3 = "new in this version (values-check round 3)"
+NEW_ATTR = "new in this version (attribution of the list, values-check round 3)"
+JSON_NEW_PREFIXES = {
+    "values_check_round3": NEW_R3,
+    "integrity.tracked_files_differing_from_pin_attribution": NEW_ATTR,
+}
+MD_SIDE = ("    repository side effects:",
+           "working-tree state: counts of untracked / ignored paths (machine state)")
+JSON_CLASSES = {
+    "meta.stamp_date_u": "stamp",
+    "meta.script_sha256": "script sha256",
+    "meta.command": "command echo (with --scratch given, it carried the work root)",
+    "meta.head_at_start": "HEAD (the source repository's HEAD moved)",
+    "meta.head_at_end": "HEAD (the source repository's HEAD moved)",
+    "suite.head_at_wt_run_end": "HEAD (the source repository's HEAD moved)",
+    "integrity.tracked_files_differing_from_pin":
+        "tracked files differing from the pin (moves with HEAD and the working tree)",
+}
+HEAD_CLASS = "HEAD (the source repository's HEAD moved)"
+UNEXPECTED = "UNEXPECTED"
+
+
+def compare_md(old: list[str], new: list[str], heads: set[str],
+               new_ranges=()) -> list[dict]:
+    """new_ranges: (start, end, class) blocks of `new` (0-based, end exclusive)
+    that are new in this version; a blank line just outside one counts with it
+    (the aligner may pair blank lines either way)."""
+    def in_new(j):
+        for a_, b_, c_ in new_ranges:
+            if a_ <= j < b_ or (new[j] == "" and j in (a_ - 1, b_)):
+                return c_
+        return None
+    rows = []
+    # aligned on HEAD-normalised lines (values-check round 3: once round 3's
+    # block is inserted, 'HEAD at run end' no longer pairs by position)
+    sm = difflib.SequenceMatcher(None, [head_norm(x, heads) for x in old],
+                                 [head_norm(x, heads) for x in new], autojunk=False)
+    for tag, i1, i2, j1, j2 in sm.get_opcodes():
+        if tag == "equal":
+            for k in range(i2 - i1):
+                if old[i1 + k] != new[j1 + k]:
+                    rows.append({"line_new": j1 + k + 1, "line_old": i1 + k + 1,
+                                 "class": HEAD_CLASS})
+            continue
+        if tag == "replace" and i2 - i1 == j2 - j1:
+            for k in range(i2 - i1):
+                o_, n_ = old[i1 + k], new[j1 + k]
+                if in_new(j1 + k):
+                    rows.append({"line_new": None, "line_old": i1 + k + 1, "class":
+                                 UNEXPECTED + " (line only at the compared commit)"})
+                    rows.append({"line_new": j1 + k + 1, "line_old": None,
+                                 "class": in_new(j1 + k)})
+                    continue
+                cls = next((c for p, c in MD_CLASSES
+                            if o_.startswith(p) and n_.startswith(p)), None)
+                if cls is None:
+                    cls = next((c for po, pn, c in MD_PAIR_CLASSES
+                                if o_.startswith(po) and n_.startswith(pn)), None)
+                if cls is None and o_.startswith(MD_SIDE[0]) and n_.startswith(MD_SIDE[0]):
+                    cls = MD_SIDE[1]
+                if cls is None and head_norm(o_, heads) == head_norm(n_, heads):
+                    cls = HEAD_CLASS
+                rows.append({"line_new": j1 + k + 1, "line_old": i1 + k + 1,
+                             "class": cls or UNEXPECTED})
+            continue
+        for i in range(i1, i2):
+            rows.append({"line_new": None, "line_old": i + 1,
+                         "class": UNEXPECTED + " (line only at the compared commit)"})
+        for j in range(j1, j2):
+            rows.append({"line_new": j + 1, "line_old": None,
+                         "class": in_new(j) or UNEXPECTED + " (line only in this run)"})
+    return rows
+
+
+def compare_json(old, new, heads: set[str]) -> list[dict]:
+    fo, fn = flatten(old), flatten(new)
+    rows = []
+    for k in list(fo) + [k for k in fn if k not in fo]:
+        if k in fo and k in fn and fo[k] == fn[k]:
+            continue
+        if k not in fn or k not in fo:
+            newc = (next((c for p, c in JSON_NEW_PREFIXES.items()
+                          if k == p or k.startswith((p + ".", p + "[")))
+                         , None) if k not in fo else None)
+            rows.append({"path": k, "class": newc or UNEXPECTED + (
+                " (only at the compared commit)" if k not in fn else " (only in this run)")})
+            continue
+        cls = JSON_CLASSES.get(k)
+        if (cls is None and isinstance(fo[k], str) and isinstance(fn[k], str)
+                and head_norm(fo[k], heads) == head_norm(fn[k], heads)):
+            cls = HEAD_CLASS
+        rows.append({"path": k, "class": cls or UNEXPECTED})
+    return rows
+
+
 # ================================================================== main ==
 
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=DEF_OUT)
     ap.add_argument("--json-out", default=DEF_JSON)
-    ap.add_argument("--scratch", default=DEF_SCRATCH)
+    ap.add_argument("--scratch", default=None,
+                    help="work root for the suite TMPDIRs and the git-archive "
+                         "extraction (default: a fresh tempfile.mkdtemp "
+                         f"directory, prefix {SCRATCH_PREFIX!r}, under "
+                         "tempfile.gettempdir())")
     ap.add_argument("--keep-tree", action="store_true",
                     help="keep the git-archive extraction (debugging only)")
+    ap.add_argument("--compare-rev", default=COMPARE_REV,
+                    help="commit whose committed N8 md/JSON this run's outputs "
+                         f"are compared with (default {COMPARE_REV})")
     args = ap.parse_args()
+    # Checked before anything is made (values-check round 3, finding 5): the
+    # untracked preprint is an input this script cannot run without; a fresh
+    # clone does not carry it unless the PI commits it.
+    if not os.path.isfile(os.path.join(REPO, PREPRINT)):
+        print(f"[not run: {PREPRINT} absent] this script reads the untracked preprint "
+              f"(sha256 {PREPRINT_SHA[:8]}...{PREPRINT_SHA[-5:]}) for its integrity check and "
+              "its wording locators; a fresh clone does not carry it unless it is committed. "
+              "Nothing was made or written.", file=sys.stderr)
+        return 2
+    scratch_made = args.scratch is None
+    scratch_existed = (not scratch_made) and os.path.isdir(args.scratch)
+    if scratch_made:
+        args.scratch = tempfile.mkdtemp(prefix=SCRATCH_PREFIX)
+
+        def _scratch_at_exit(path=args.scratch):
+            # a work root this run made is removed at exit only if empty (a
+            # run that stops before the suite runs); otherwise it stays, as
+            # the cleanup bullet of the closing section says
+            try:
+                os.rmdir(path)
+            except OSError:
+                pass
+        atexit.register(_scratch_at_exit)
+    print(f"work root: {args.scratch}", file=sys.stderr)
 
     L: list[str] = []          # markdown lines
     J: dict = {"item": "N8", "pin": PIN}
@@ -387,12 +649,32 @@ def main() -> int:
                       "tracked_files_differing_from_pin": changed}
     P(f"- Tracked files whose working-tree content differs from the pin (`git diff --name-only "
       f"{PIN}`), at run start: {len(changed)} -- " + ", ".join(f"`{c}`" for c in changed))
-    P("  These are the concurrent PROPOSAL-m session's commits after the pin and the PI's "
-      "notebook edit. Of them, only `valence_core/m/*.py` and `scripts/m_sessions.py` are "
-      "visible to the suite, and only to its two structural source scans (the quarantine "
-      "offender scan over valence_core/ and the qwen-helper definition scan over every .py "
-      "file, which also sees untracked scripts such as scripts/audit_note_*.py); run (b) below "
-      "removes all of that.")
+    # Attribution, computed from the list (values-check round 3, finding 2: this
+    # was a fixed sentence written at the first run's HEAD, stale at any later one).
+    attr = attribute_changed(changed, head0)
+    J["integrity"]["tracked_files_differing_from_pin_attribution"] = attr
+
+    def fl(xs, k=6):
+        xs = list(xs)
+        return (", ".join(f"`{x}`" for x in xs[:k]) +
+                (f" and {len(xs) - k} more" if len(xs) > k else "")) if xs else "none"
+    P("  Attribution (computed from the list at run start): by the commits after the pin that "
+      f"touch them (`git log {PIN}..HEAD`; a file counts under each commit that touches it): " +
+      "; ".join(f"{c['commit']} {c['date']} '{c['subject_head']}': {c['files']}"
+                for c in attr["by_commit"]) +
+      f"; touched by none of them (working-tree change only): {len(attr['no_commit'])} "
+      f"({fl(attr['no_commit'])}); with uncommitted working-tree changes against HEAD: "
+      f"{len(attr['uncommitted'])} ({fl(attr['uncommitted'])}). The suite's two structural "
+      "source scans read .py files by directory walk (the quarantine offender scan every .py "
+      "under valence_core/ outside e2b/ and regression/; the qwen-helper definition scan every "
+      ".py outside .git, __pycache__, jlens-qwen36 and archive, untracked and ignored files "
+      f"included): of the listed files, {len(attr['scan_both'])} are read by both scans "
+      f"({fl(attr['scan_both'])}) and {len(attr['scan_qwen_only'])} by the qwen-helper scan "
+      f"only ({fl(attr['scan_qwen_only'])}); .py files the qwen-helper scan reads that are "
+      f"not tracked at HEAD: {len(attr['untracked_py_scanned'])} "
+      f"({fl(attr['untracked_py_scanned'])}). Which listed files the suite opens otherwise is "
+      "not computed here. Run (b) below runs the suite on the pin's own tree, where none of "
+      "these changes exists.")
     P("")
 
     # ------------------------------------------------------------ suite runs
@@ -1751,6 +2033,90 @@ def main() -> int:
     for a, b, c, d, e in vc2:
         P(f"| {a} | {b} | {cell(c)} | {d} | {cell(e)} |")
     P("")
+    # Round 3: the adversarial check of the portability fix (its findings 2, 5
+    # and 6 bear on this script; 1, 3 and 4 on scripts/audit_note_N11.py).
+    r3_start = len(L)
+    n_aud = sum(c["files"] for c in attr["by_commit"]
+                if c["subject_head"].startswith("AUDIT-note-release"))
+    vc3 = [
+        ("1", "minor (the check's finding 2)",
+         "§0's sentence after the tracked-differing list was fixed text written at the first "
+         "run's HEAD: at 6485da2 it still called the 84 listed files the concurrent PROPOSAL-m "
+         "session's commits and the PI's notebook edit, though 63 come from the audit's own "
+         "commits 09c3a8c and 6485da2, and it called scripts/audit_note_*.py untracked, though "
+         "21 are tracked and in the list",
+         "FIXED",
+         "Confirmed (`git log --name-only 09c3a8c^..6485da2`). The sentence is now computed "
+         "from the list at run start: per commit after the pin, the listed files it touches; "
+         "the files no commit touches; those with uncommitted changes; and which .py files the "
+         "suite's two structural source scans read (their predicates ported from "
+         "valence_core/regression/analysis.py at the pin), with the untracked .py files the "
+         "qwen-helper scan also reads. Here: " +
+         "; ".join(f"{c['commit']} {c['files']}" for c in attr["by_commit"]) +
+         f" (commits whose subject starts 'AUDIT-note-release': {n_aud} file-touches); "
+         f"no commit {len(attr['no_commit'])}; uncommitted {len(attr['uncommitted'])}; both "
+         f"scans {len(attr['scan_both'])}, qwen-helper scan only {len(attr['scan_qwen_only'])}; "
+         f"untracked .py read {len(attr['untracked_py_scanned'])}. The claim that only "
+         "valence_core/m/*.py and scripts/m_sessions.py are visible to the suite is dropped: "
+         "which other listed files the suite opens is not computed here. The JSON carries "
+         "integrity.tracked_files_differing_from_pin_attribution."),
+        ("2", "minor (this script's half of the check's finding 5)",
+         "in a fresh clone the script stops with FileNotFoundError on the untracked "
+         f"{PREPRINT}, and the closing section did not name that dependency",
+         "FIXED (README-NOTE.md flagged, not edited)",
+         "Confirmed: the version at 09c3a8c opens it unguarded "
+         "(scripts/audit_note_N8.py@09c3a8c:361), and the previous version (sha256 "
+         "9d33aee3...0595) did so after making its mkdtemp work root. "
+         f"The script now looks for {PREPRINT} before it makes anything; if it is absent it "
+         f"prints '[not run: {PREPRINT} absent] ...' on stderr and exits 2 without writing "
+         "either output (the committed raws are not overwritten by a not-run). With the file "
+         "present nothing changes. The closing section's 'Still needed' bullet names it. "
+         "README-NOTE.md's dependency list says N8 opens the file 'with no existence check'; "
+         "after this change that clause no longer holds for N8, while the need for the file "
+         "does: for the PI. Code's check, a separate run of this script before these check "
+         "sentences were added (sha256 d17d801d...ba2b), copied alone into an empty directory "
+         "(so no preprint), TMPDIR a scratch directory: exit 2 with that line; nothing in "
+         "TMPDIR, no output written."),
+        ("3", "minor (the check's finding 6)",
+         "the closing section's 'This run' line printed 'made by this run: no, --scratch given' "
+         "even when the --scratch directory did not exist and the run created it",
+         "FIXED",
+         "The line now records whether the work root was made by mkdtemp and, for --scratch, "
+         "whether it existed beforehand (here: " +
+         ("mkdtemp, default" if scratch_made else
+          f"--scratch, existed beforehand: {'yes' if scratch_existed else 'no'}") + "). "
+         "Code's check, separate runs of the same version (sha256 d17d801d...ba2b), outputs "
+         "not committed: --scratch at a new path printed 'existed beforehand: no, made by "
+         "os.makedirs in this run'; a second run at the same path 'existed beforehand: yes'."),
+    ]
+    J["values_check_round3"] = [{"finding": a, "severity": b, "claim": c, "disposition": d,
+                                 "detail": e} for a, b, c, d, e in vc3]
+    P("### Round 3 (adversarial check of the portability fix, on the outputs of script sha256 "
+      "9d33aee3...0595; dispositions)")
+    P("")
+    P("A third independent check re-ran this script and scripts/audit_note_N11.py under a "
+      "sandbox (the session scratch unreadable, the repository unwritable, TMPDIR redirected; "
+      "in second runs HOME and XDG_CONFIG_HOME too), from the repository and from a scratch "
+      "clone, and recounted the outputs from git. Of its six findings, three bear on this "
+      "script (all minor; its finding 5 covers both scripts) and four on "
+      "scripts/audit_note_N11.py, disposed in that script's raw. It found no figure, status "
+      "or verdict here that moved. Code verified each finding with its own tool run before "
+      "applying it; none was rejected.")
+    P("")
+    P("| # | severity | finding | disposition | evidence / what changed |")
+    P("|---|---|---|---|---|")
+    for a, b, c, d, e in vc3:
+        P(f"| {a} | {b} | {cell(c)} | {d} | {cell(e)} |")
+    P("")
+    P("Also changed by Code in round 3 (not findings): a default run that stops after making "
+      "its mkdtemp work root and before writing into it now removes that empty directory at "
+      "exit (the defect class of the check's finding 4 on N11; reproduced with the previous "
+      "version, sha256 9d33aee3...0595, copied into an empty directory: it made its work "
+      "root, stopped at its first git call and left the directory empty); the closing section's "
+      "comparison classes the computed attribution sentence, its JSON key, this subsection "
+      "and the \"values_check_round3\" key as new.")
+    P("")
+    r3_end = len(L)
     J["stops"] = []
     head_end = git("rev-parse", "HEAD").decode().strip()
     J["meta"]["head_at_end"] = head_end
@@ -1761,6 +2127,178 @@ def main() -> int:
     for l in pn["stdout"].rstrip("\n").split("\n"):
         P("    " + l)
     P("")
+
+    # ---------------------------------------- portability fix + re-run check
+    # Compared first, on the outputs as they stand (this section and the JSON's
+    # "portability" key are not part of the comparison).
+    left = sorted(os.listdir(args.scratch)) if os.path.isdir(args.scratch) else []
+    left_n = {d: (len(os.listdir(os.path.join(args.scratch, d)))
+                  if os.path.isdir(os.path.join(args.scratch, d)) else None)
+              for d in ("tmp-wt", "tmp-pin")}
+    other_left = [x for x in left if x not in ("tmp-wt", "tmp-pin")]
+    tree_gone = not os.path.exists(tree)
+    cmp_rev = args.compare_rev
+    port = {"fix": "default --scratch: tempfile.mkdtemp(prefix=%r) under "
+                   "tempfile.gettempdir(); was a fixed builder-session path" % SCRATCH_PREFIX,
+            "work_root": tempdir_display(os.path.realpath(args.scratch)),
+            "work_root_made_by_this_run": scratch_made,
+            "scratch_given_existed_beforehand": None if scratch_made else scratch_existed,
+            "tree_removed": tree_gone, "keep_tree": args.keep_tree,
+            "left_in_work_root": {"tmp-wt_entries": left_n["tmp-wt"],
+                                  "tmp-pin_entries": left_n["tmp-pin"],
+                                  "other_top_level_entries": len(other_left)},
+            "compare_rev": cmp_rev}
+    try:
+        cmp_full = git("rev-parse", "--verify", cmp_rev + "^{commit}").decode().strip()
+        old_md = git("show", f"{cmp_full}:{DEF_OUT}").decode("utf-8").split("\n")
+        old_js = json.loads(git("show", f"{cmp_full}:{DEF_JSON}"))
+    except subprocess.CalledProcessError as e:
+        cmp_full, old_md, old_js = None, None, None
+        port["compare_error"] = (e.stderr or b"").decode(errors="replace").strip()[:300]
+    if old_md is not None:
+        if old_md and old_md[-1] == "":
+            old_md = old_md[:-1]               # the file's final newline
+        om = old_js.get("meta", {})
+        nm = J["meta"]
+        heads = set()
+        for h in (om.get("head_at_start"), om.get("head_at_end"),
+                  old_js.get("suite", {}).get("head_at_wt_run_end"),
+                  nm.get("head_at_start"), nm.get("head_at_end"),
+                  J["suite"].get("head_at_wt_run_end")):
+            if isinstance(h, str) and re.fullmatch(r"[0-9a-f]{40}", h):
+                heads |= {h, h[:7]}
+        md_rows = compare_md(old_md, L, heads, new_ranges=[(r3_start, r3_end, NEW_R3)])
+        new_js = json.loads(json.dumps(J, default=float, ensure_ascii=False))
+        js_rows = compare_json(old_js, new_js, heads)
+        o_tr = old_js.get("integrity", {}).get("tracked_files_differing_from_pin") or []
+        n_tr = J["integrity"]["tracked_files_differing_from_pin"]
+        added, removed = sorted(set(n_tr) - set(o_tr)), sorted(set(o_tr) - set(n_tr))
+        o_head, n_head = om.get("head_at_start"), nm.get("head_at_start")
+        between = []
+        if o_head and n_head and o_head != n_head:
+            between = [x for x in git("diff", "--name-only", o_head, n_head
+                                      ).decode().split("\n") if x]
+        between_vsd = [x for x in between
+                       if x.split("/")[0] in ("valence_core", "scripts", "data")]
+        added_vsd = []
+        if o_head and n_head and o_head != n_head:
+            added_vsd = [x for x in git("diff", "--name-only", "--diff-filter=A", o_head,
+                                        n_head, "--", "valence_core", "scripts", "data"
+                                        ).decode().split("\n") if x]
+        side_rx = re.compile(r"\((\d+) before, (\d+) after\)")
+        side_old = next((side_rx.findall(x) for x in old_md if x.startswith(MD_SIDE[0])), [])
+        side_new = next((side_rx.findall(x) for x in L if x.startswith(MD_SIDE[0])), [])
+        port.update({
+            "compare_rev_full": cmp_full,
+            "md_lines_compared": {"old": len(old_md), "new": len(L)},
+            "md_differing": md_rows, "json_differing": js_rows,
+            "tracked_differing": {"old": len(o_tr), "new": len(n_tr),
+                                  "added": len(added), "removed": len(removed),
+                                  "added_changed_between_heads":
+                                      sum(1 for x in added if x in between)},
+            "heads": {"old": o_head, "new": n_head},
+            "files_changed_between_heads": len(between),
+            "of_which_under_valence_core_scripts_data": len(between_vsd),
+            "added_under_valence_core_scripts_data": len(added_vsd),
+            "gitignore_changed_between_heads": ".gitignore" in between,
+            "working_tree_state_counts": {
+                "old": {"ignored_before_after": side_old[0] if side_old else None,
+                        "untracked_before_after": side_old[1] if len(side_old) > 1 else None},
+                "new": {"ignored_before_after": side_new[0] if side_new else None,
+                        "untracked_before_after": side_new[1] if len(side_new) > 1 else None}},
+            "unexpected": sum(1 for r in md_rows + js_rows
+                              if r["class"].startswith(UNEXPECTED))})
+    sec = []
+    S_ = sec.append
+    S_("## Portability fix and interim re-run (2026-10-08)")
+    S_("")
+    S_(f"- Fix: at `{COMPARE_REV}` the `--scratch` default was a fixed path in the builder's "
+       "session scratch directory, which exists on one machine only (the committed run passed "
+       "`--scratch` explicitly, as its command line shows). Without `--scratch` the script now "
+       f"makes a fresh directory with `tempfile.mkdtemp(prefix='{SCRATCH_PREFIX}')` under "
+       "`tempfile.gettempdir()`; an explicit `--scratch <dir>` is used as before (made if absent). "
+       "Also changed, by the values-check's round 3 (above): §0's attribution sentence after the "
+       "tracked-differing list is computed from the list (it was fixed text); a missing "
+       f"`{PREPRINT}` stops the run before anything is made; the line below records whether "
+       "`--scratch` existed. Nothing else above this section is computed differently; round 3, "
+       "this section and the JSON's \"values_check_round3\", \"portability\" and "
+       "integrity.tracked_files_differing_from_pin_attribution keys are new.")
+    S_(f"- Still needed off this laptop: the untracked `{PREPRINT}` (sha256 "
+       f"{PREPRINT_SHA[:8]}...{PREPRINT_SHA[-5:]}) at the repository root, which a fresh clone does "
+       "not carry unless the PI commits it (README-NOTE.md's dependency list asks for that); "
+       "without it the script exits 2 before making anything, with '[not run: ... absent]' on "
+       "stderr. The suite runs under the interpreter that runs this script, which needs numpy. "
+       "The round-3 check's run from a scratch clone, with the preprint copied in, exited 0 "
+       "and reproduced every figure.")
+    S_("- Cleanup, unchanged: the git-archive extraction `<scratch>/tree-" + PIN + "` is deleted "
+       "after run (b) unless --keep-tree is given; the suite runs' TMPDIRs `<scratch>/tmp-wt` and "
+       "`<scratch>/tmp-pin` (with the suite's leftover temp directories) stay in the work root, "
+       "as before the fix.")
+    masked = port["work_root"].startswith(TEMP_TOKEN)
+    S_(f"- This run: work root `{port['work_root']}` ("
+       + ("made by tempfile.mkdtemp in this run" if scratch_made else
+          "--scratch given; existed beforehand: " + ("yes" if scratch_existed else
+                                                      "no, made by os.makedirs in this run"))
+       + (f"; this machine's temp-directory prefix is written `{TEMP_TOKEN}`, and the full "
+          "path goes to stderr only" if masked else "") + "); extraction removed: "
+       f"{'yes' if tree_gone else 'NO'}; left in the work root: tmp-wt {left_n['tmp-wt']} "
+       f"entr(ies), tmp-pin {left_n['tmp-pin']} entr(ies), other top-level entries "
+       f"{len(other_left)}.")
+    if old_md is None:
+        S_(f"- Comparison with the committed outputs at `{cmp_rev}`: not made "
+           f"({port.get('compare_error') or 'not readable'}).")
+    else:
+        S_(f"- Interim re-run, compared with the committed outputs at `{cmp_full[:10]}` "
+           f"(`git show {cmp_full[:7]}:{DEF_OUT}` and `:{DEF_JSON}`; this section and the "
+           "\"portability\" key left out): md "
+           f"{len(md_rows)} differing line(s) of {len(old_md)} there / {len(L)} here; JSON "
+           f"{len(js_rows)} differing leaf path(s). Unexpected (in no class below): "
+           f"{port['unexpected']}. Consecutive lines or leaves that are new in this version are "
+           "listed as one range or one key.")
+        grp = []
+        for r in md_rows:
+            if (grp and r["line_old"] is None and grp[-1]["line_old"] is None
+                    and r["line_new"] and grp[-1]["hi"] and grp[-1]["class"] == r["class"]
+                    and r["line_new"] == grp[-1]["hi"] + 1):
+                grp[-1]["hi"] = r["line_new"]
+            else:
+                grp.append(dict(r, lo=r["line_new"], hi=r["line_new"]))
+        for r in grp:
+            here_ = ("-" if not r["lo"] else
+                     f"{r['lo']}" if r["lo"] == r["hi"] else f"{r['lo']}-{r['hi']}")
+            S_(f"    - md line{'s' if r['lo'] != r['hi'] else ''} {here_} here / "
+               f"{r['line_old'] if r['line_old'] else '-'} at {cmp_full[:7]}: {r['class']}")
+        newj = {}
+        for r in js_rows:
+            pre = next((p for p, c in JSON_NEW_PREFIXES.items() if c == r["class"]), None)
+            if pre:
+                newj[pre] = newj.get(pre, 0) + 1
+                continue
+            S_(f"    - JSON `{r['path']}`: {r['class']}")
+        for pre, n_ in newj.items():
+            S_(f"    - JSON `{pre}` ({n_} leaf path(s)): {JSON_NEW_PREFIXES[pre]}")
+        S_(f"- HEAD at the compared run's start {(o_head or '?')[:10]}, here {(n_head or '?')[:10]}; "
+           f"files changed between them (`git diff --name-only`): {len(between)}, of which under "
+           f"valence_core/, scripts/ or data/: {len(between_vsd)}. Tracked files differing from "
+           f"the pin: {len(o_tr)} there, {len(n_tr)} here ({len(added)} added, {len(removed)} "
+           f"removed; of the added, {port['tracked_differing']['added_changed_between_heads']} "
+           "are among the files changed between the two HEADs).")
+        def bf(x):
+            return f"{x[0]}/{x[1]}" if x else "?"
+        S_("- The working-tree-state line counts untracked-and-ignored and untracked-not-ignored "
+           "paths under valence_core/, scripts/ and data/ before/after run (a): there "
+           f"{bf(side_old[0] if side_old else None)} and "
+           f"{bf(side_old[1] if len(side_old) > 1 else None)}, here "
+           f"{bf(side_new[0] if side_new else None)} and "
+           f"{bf(side_new[1] if len(side_new) > 1 else None)}. Files added under those "
+           f"directories by the commits between the two HEADs: {len(added_vsd)}; .gitignore "
+           f"changed between them: {'yes' if '.gitignore' in between else 'no'}. The committed "
+           "raw records the counts, not the paths, so a change in them is attributed only as "
+           "far as these figures go; the line's own claim (the suite run leaves both sets "
+           "unchanged) is evaluated afresh on each run.")
+    S_("")
+    L.extend(sec)
+    J["portability"] = port
 
     out = os.path.join(REPO, args.out) if not os.path.isabs(args.out) else args.out
     jout = os.path.join(REPO, args.json_out) if not os.path.isabs(args.json_out) else args.json_out
