@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""AUDIT-note-release v1.2 -- N1: the claims ledger (PROVISIONAL).
+"""AUDIT-note-release v1.2 -- N1: the claims ledger (provisional; FINAL with --note-rows).
 
 The block (AUDIT-note-release-v1_2.md, lines 18-23) wants one row per figure
 in RESEARCH-NOTE-v0_2-draft.md and in the Digest seat's F1/F2 SVGs. Neither is
@@ -60,15 +60,85 @@ entries are added; the --note matcher reads context words only in the clause
 that holds the unit and flags a value shared by several rows; the 1b list is
 labelled as examples and extended; L089's source is cited at the record pin.
 
+Round 4 (N1 final, 2026-10-09). The PI placed RESEARCH-NOTE-v0_3-draft.md (it
+supersedes v0.2) and the two SVGs. --note-rows PATH reads the verified mapping
+of every numeral unit in the three files (results/raw/2026-10-09_note-N1-note-
+rows.json: ten mapper chains, each checked once adversarially and revised) as
+data, and: asserts each file's sha256 against the routed one; asserts that every
+unit the --note matcher extracts has a row; validates every row (the unit is on
+its cited line; a cited source line carries a value the row states, level A tied
+to the note's own number or level B another stated value; a cited ledger row
+exists and, for a ledger-row map, carries the row's status); any failure without
+a 'validation_note' on the row stops the run before anything is written (round 5
+narrows this: a note explains only the check it names, see below). It then
+adds section 9: the figures one row each, the block's pass check over them
+(discrepant rows by the block :23 branch their own cause reads into, asserted),
+the watch-list outcome per conditional STOP, the mappers' span notes, the tag
+commit over the note's figures, and the open items. With --note-rows the title
+reads FINAL for the note's sha256; sections 1-8 are the provisional round's
+block-quotation ledger, re-run unchanged.
+
+Round 5 (N1 final fixes, 2026-10-09; the final checker's findings 1-9 and the
+PI's N19 routing). Every row's status is its item raw's, checked mechanically
+(the status check: JSON figure row, table status cell, quoted status_basis;
+record rows log-only, audit-raw-new rows computed-new); corrections N1 reads in
+a sentence are recorded beside the status ('correction', section 9i), never as
+one. The validator's checks are named (note-line, kind-hash, schema,
+locator-value, source-values, status, ledger, ledger-span, double-rounding,
+correction, corrected-in-note); a validation_note explains only the check it
+names, matched (in round 5) to a substring of its failure message. The unit ->
+kind assignment is frozen by NR_KIND_SHA256. Every final run repeats the
+validation on in-memory mutations of the rows and on the overwrite guard's
+cases, and stops if any is not caught. The guard never writes the committed
+provisional ledger, in any mode. Section 10 is the round's values check.
+
+Round 6 (N1 final fixes, round 2, 2026-10-09; the adversarial check of round
+5, n1chk2, findings 1-9). New checks: maps-to (item-raw and audit-raw-new rows
+cite an item-raw line, record rows a record line), pins (every cited revision
+is its path class's pin), unit-stated (an integer unit's number is stated in
+the source value), correction-declared (NR_CORRECTIONS); the status check reads
+inline '[status: ...]' tags and every cited item-raw line of a record row, and
+compares every named ledger row's status; corrected_in_note needs the item
+raw's correction wording, a figure row whose quoted figure the note no longer
+carries, and NR_DISC's branch C exactly; an exemption equals its whole message
+and its row is declared with a fingerprint (NR_EXEMPT_FP); the clauses are
+frozen by NR_CLAUSE_SHA256; one-place decimals are checked. The self-test adds
+n1chk2's mutations, Code's, five generated families, and three known limits
+that must stay uncaught. Section 11 is the round's values check.
+
+Round 7 (N1 final fixes, round 3, 2026-10-09; the strict check of round 6,
+r6chk, findings 1-4). The status check binds a status to its figure: a cited
+item-raw status line decides only where it carries a value the row states;
+a source with several terms decides nothing by itself (the row needs a
+status_basis quoting the single-term clause); a status_basis is an item-raw
+line and agrees with every value-carrying status line; a 'related row'
+ledger field is compared with that related row only. New checks: ledger-bind
+(the named ledger row is named in the locator or its item-raw line cited);
+pins also require every cited file and line to exist. Frozen by hash:
+NR_STATUS_SHA256 (every row's maps_to, status, ledger_row and status_basis,
+and a not-found row's locator and source value), NR_TEXT_SHA256 (free text
+and change history); NR_CORRECTIONS carries a fingerprint per correction; a
+quotation scan over the rows file runs at every run (NR_QUOTE_REVIEWED). The
+self-test adds r6chk's mutations, Code's, row-level families F-H and two
+levels of known limits. Section 12 is the round's values check.
+
 Read-only on the record. git runs only in this repository (never inside
 jlens-qwen36/). Writes only --out and --json-out. No model, no network, no
 randomness; stdlib only.
 
 Usage (from the repository root):
+  provisional round (its ledger is committed at 6485da2 and never rewritten;
+  --out and --json-out are required and may not name it):
   jlens-qwen36/.venv/bin/python scripts/audit_note_N1.py \
-      [--out results/raw/2026-10-08_note-N1-claims-ledger.md] \
-      [--json-out results/raw/2026-10-08_note-N1-claims-ledger.json] \
+      --out <scratch>/ledger.md --json-out <scratch>/ledger.json \
       [--note RESEARCH-NOTE-v0_2-draft.md --note F1.svg --note F2.svg]
+  N1 final:
+  jlens-qwen36/.venv/bin/python scripts/audit_note_N1.py \
+      --note-rows results/raw/2026-10-09_note-N1-note-rows.json \
+      --note RESEARCH-NOTE-v0_3-draft.md --note 2026-10-06_F1b_five-link-panels.svg \
+      --note 2026-10-06_F2_macar-lineage-roc_post.svg \
+      --out results/raw/2026-10-09_note-N1-claims-ledger-final.md \
+      --json-out results/raw/2026-10-09_note-N1-claims-ledger-final.json
 """
 
 from __future__ import annotations
@@ -793,8 +863,14 @@ def show(rev: str, path: str) -> bytes:
     return git("show", f"{rev}:{path}", binary=True)
 
 
+_FULL: dict = {}
+
+
 def full(rev: str) -> str:
-    return git("rev-parse", rev + "^{commit}").strip()
+    # round 6: cached per process (the mutation self-test repeats the same lookups on every run)
+    if rev not in _FULL:
+        _FULL[rev] = git("rev-parse", rev + "^{commit}").strip()
+    return _FULL[rev]
 
 
 def sha256(b: bytes) -> str:
@@ -1753,14 +1829,2563 @@ def note_mode(paths, rows, lines_block, raws, watch):
     return out
 
 
+# ------------------------------------------------------------------ N1 final: the note's own rows (--note-rows)
+# Round 4 (N1 final, 2026-10-09). The PI placed RESEARCH-NOTE-v0_3-draft.md (it supersedes the block's v0.2) and the
+# Digest seat's two SVGs at root. Ten mapper chains (a mapper, one adversarial checker, the mapper's revision) mapped
+# every numeral unit of the three files -- the --note matcher's units plus the number words it cannot see -- to a
+# source and a status: results/raw/2026-10-09_note-N1-note-rows.json. --note-rows reads that mapping as data,
+# validates every row mechanically, and adds section 9. The checks are consistency checks on the mapping (the unit is
+# on the cited note line; a cited source line carries a value the row says it does; a cited ledger row exists and
+# carries the row's status); they re-derive no figure. A row that fails a check fails the run unless it carries a
+# 'validation_note' saying why. Round 5 (below, nr_validate_row) adds checks and binds each note to the one check it
+# explains.
+NOTE_ROUTED = {
+    "RESEARCH-NOTE-v0_3-draft.md": ("5a34309ffe402cdeb99d0c60635adac67e08db23d82fc496142c656777d14871", ""),
+    "2026-10-06_F1b_five-link-panels.svg": ("192250ca", "0afd"),
+    "2026-10-06_F2_macar-lineage-roc_post.svg": ("5e4fc91c", "1fef"),
+}
+FINAL_NOTE = "RESEARCH-NOTE-v0_3-draft.md"
+NR_STATUSES = ("reproduced", "log-only", "computed-new", "discrepant", "not found", "not run")
+NR_MAPS = ("ledger-row", "item-raw", "audit-raw-new", "record", "none")
+NR_WORDS = dict(zero=0, one=1, two=2, three=3, four=4, five=5, six=6, seven=7, eight=8, nine=9, ten=10, eleven=11,
+                twelve=12, twenty=20, seventy=70, twice=2, second=2, third=3, fourth=4, half=0.5)
+NR_S9_RE = re.compile(r"^'(?P<u>.+?)' in node '")
+NR_NUM_RE = re.compile(r"(?<![A-Za-z0-9_.])(?:\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?|\.\d+)(?![0-9A-Za-z_])")
+NR_SPEC = r"\d+(?:-\d+)?(?:,\s?\d+(?:-\d+)?)*"
+NR_ABBR = {k: v[0] for k, v in RAWS.items()}
+NR_ABBR["ledger"] = "results/raw/2026-10-08_note-N1-claims-ledger.md"
+NR_LOC_RE = re.compile(
+    r"(?P<path>(?:[A-Za-z0-9_.\-]+/)*[A-Za-z0-9_.\-]+\.(?:md|json|jsonl|txt|py|svg))@(?P<rev>[0-9a-f]{7,40})"
+    r"(?::(?P<spec>" + NR_SPEC + r"))?"
+    r"|(?<![\w/.\-])(?P<abbr>N\d+[a-z]*|ledger)@(?P<arev>[0-9a-f]{7,40})(?::(?P<aspec>" + NR_SPEC + r"))?"
+    r"|(?<![\w/.])@(?P<rev2>[0-9a-f]{7,40})(?::(?P<spec2>" + NR_SPEC + r"))?"
+    r"|(?<=[\s(;,]):(?P<spec3>" + NR_SPEC + r")")
+NR_STRIP_RES = [re.compile(r"\w+\[\d+\](?:\[\d+\])*"), re.compile(r"\b\d{1,2}:\d{2}(?::\d{2})?Z?\b"), HASH_RE, ARXIV_RE,
+                # round 5: a section sign with a dotted number ('§7.3'), and a version inside a hyphenated name
+                # ('OLMo-3.1-32B'), are identifiers, never values
+                re.compile(r"§\s*\d+(?:\.\d+)*(?:\s*[-–,]\s*\d+(?:\.\d+)*)*"), re.compile(r"(?<=[A-Za-z])-\d+(?:\.\d+)+"),
+                # round 6: a dotted section number ('section 5.6') is stripped whole
+                re.compile(r"(?i)\b(?:rows?|sections?|items?|notes?|findings?|conditions?|nodes?|lines?|steps?|tiers?|"
+                           r"parts?|appendix|§)\s*\d+(?:\.\d+)*(?:\s*[-–,]\s*\d+(?:\.\d+)*)*")]
+# section 9's not-figure summary: the mapper's reason, grouped by the first rule whose pattern it contains
+NR_REASON_GROUPS = [
+    ("axis tick label (SVG)", r"axis tick"),
+    ("commit-hash fragment", r"commit hash|hash"),
+    ("date, year or decade", r"\bdate|year|decade"),
+    ("citation apparatus (arXiv id, journal, cited section)", r"arxiv|journal|citation|in a cited work"),
+    ("section or heading number / reference", r"section|heading"),
+    ("link or figure identifier", r"\blink|figure id|figure label|figure identifier|cross-reference"),
+    ("model name, version or size label", r"model|version|product"),
+    ("identifier, item id, campaign or file name, path", r"identifier|item id|question id|cell|campaign|tier|test name|"
+                                                         r"file name|path"),
+    ("list ordinal or label", r"ordinal|list label|bullet"),
+    ("procedure or plot parameter, method name", r"parameter|procedure|setting|instruction|quantile|plot|method name|"
+                                                 r"label pair"),
+    ("prose: pronoun, rhetoric, editorial, or a count of the note's own parts", r"."),
+]
+# span-note markers (section 9f): the upper-case status markers the mappers wrote in their notes, in order of
+# appearance (longer forms first, so 'NOT APPLIED' is never also read as 'APPLIED'); lower-case prose is not read
+NR_NOTE_MARK_RE = re.compile(r"\b(NOT APPLIED|PARTLY APPLIED|NOT CARRIED|CHOICE NOT MADE|OPEN CONDITIONAL STOP|ACTIVE STOP|"
+                             r"POSSIBLE STOP|APPLIED|PARTLY|OPEN|CORRECTED|FIRES|REJECTED)\b")
+NR_OPEN_MARKS = ("NOT APPLIED", "PARTLY APPLIED", "PARTLY", "NOT CARRIED", "CHOICE NOT MADE", "OPEN", "OPEN CONDITIONAL STOP",
+                 "ACTIVE STOP", "POSSIBLE STOP", "FIRES")
+# discrepant note rows (section 9e): the block :23 branch each row's own cause reads into, with a quote from that
+# cause (asserted present). Keys are span#seq.
+NR_DISC = {
+    # round 5 (finding 1): S1#26, S1#27, S1#34, S1#140 and S4#19 are no longer discrepant; they carry their item raws'
+    # statuses and their corrections are recorded separately (9i)
+    "S1#71": ("T", "Transcription (layer scope)"),
+    "S1#72": ("T", "Transcription (layer scope)"), "S1#73": ("C", "The note now carries the raw's correction"),
+    "S1#134": ("T", "Transcription (layer scope)"),
+    "S4#4": ("T", "Transcription, in the domain"), "S4#5": ("T", "('discrepant (transcription)', domain)"),
+    "S4#10": ("T", "Transcription, in the domain"), "S4#11": ("T", "Status carried from L058 (domain; see .81)"),
+    "S4#31": ("T", "Transcription (item raw 'discrepant (transcription)', carried)"),
+    "S4#32": ("T", "Transcription, in referent and scope"),
+    "S4#33": ("T", "Status carried from L049 (referent and scope; see .02)"),
+    "S5#13": ("FORK-W3", "Range end, belongs with the next row (0–0.003)"),
+    "S5#14": ("FORK-W3", "Transcription on Code's reading"),
+    "S5#38": ("C", "the discrepancy is resolved in the note"),
+    "S5#57": ("FORK-W3", "Range end, belongs with the next row (0–0.3%)"),
+    "S5#58": ("FORK-W3", "Transcription on Code's reading"),
+    "S6#68": ("NT", "not transcription (item raw)"),
+    "S8#68": ("FORK-W3", "N2vi row 8 is discrepant"), "S8#69": ("FORK-W3", "transcription on Code's reading"),
+    "S10#36": ("FORK-W3", "transcription on Code's reading"), "S10#60": ("FORK-W3", "transcription on Code's reading"),
+}
+NR_DISC_PATH = {
+    "T": "transcription (the row's cause): block :23 corrects the note to the reproduced value; not a STOP",
+    "C": ("corrected in the note: the item raw's discrepancy was a transcription in an earlier text and the note now "
+          "carries the reproduced value (corrected_in_note, verified: the item raw's correction quoted from its line "
+          "and the note's figure tied to the source value at level A); the status is carried, not upgraded, and the "
+          "row counts as passing (round 5, finding 6)"),
+    "NT": ("not transcription (the row's cause): under block :23 a STOP on the item unless the clause is reworded; "
+           "Code's reading, the PI and the design seat decide"),
+    "FORK-W3": ("the W3 fork (N2vi section 12, condition 3): transcription on Code's reading, and then corrected to 0 "
+                "(+0.9 pp wherever TPR - FPR is carried) under block :23; a STOP if that reading is not accepted. The "
+                "note carries the value as a range ('0–0.003', '0–0.3%') and F2 as the point 0.003, which settles "
+                "neither branch"),
+}
+# watch-list outcome per conditional STOP (section 9f). 'rows': span#seq of note rows that carry (or collide with) the
+# watched value, each with the status asserted; 'quote': a substring asserted in that row's cause/comment or in the
+# span note named; 'outcome': Code's one-line summary of the rows and span notes cited.
+NR_WATCH = [
+    dict(id="W1", rows=[], outcome="not carried: no unit or text match in the note or either SVG"),
+    dict(id="W2", rows=[], outcome="not carried: no unit or text match in the note or either SVG"),
+    dict(id="W3", rows=[("S5#14", "discrepant"), ("S5#58", "discrepant"), ("S8#69", "discrepant"),
+                        ("S10#36", "discrepant"), ("S10#60", "discrepant")],
+         note=("S10", "W3 FIRES twice"),
+         outcome=("CARRIED, uncorrected: the note gives the source's instruct FPR as the range '0–0.003' (:92, :208) "
+                  "and '0–0.3%' (:98); F2 plots it as the point 0.003 (text nodes 46, 73). The fork stays open: "
+                  "corrected to 0 on Code's transcription reading, a STOP if that reading is not accepted; the note "
+                  "and F2 change together. The +0.6 pp form is not carried")),
+    dict(id="W4", rows=[("S6#47", "reproduced"), ("S8#61", "log-only"), ("S10#31", "log-only")],
+         outcome=("not carried: the three hits are value collisions (f1 SOLV +.020 at :111; the source's base hit "
+                  "rate 0.001 at :208 and in F2 node 40), not the retired criterion's power")),
+    dict(id="W5", rows=[("S10#66", "not found"), ("S10#67", "not found")],
+         note=("S10", "W5 FIRES at node 79"),
+         outcome=("CARRIED in F2 (node 79, '~800 injected and ~80 control trials per stage'): not found, so cut, or "
+                  "restated with its premise (eight concepts) and unit. The note does not print 800/80; its derived "
+                  "0.6 (:98, :173) falls under the same condition 4 (cut unless the premise is stated; S5 and S7 span "
+                  "notes)")),
+    dict(id="W6", rows=[("S1#66", "reproduced"), ("S7#73", "reproduced")],
+         outcome=("corrected: the note carries 154/154 (:3, :175), not 103/103; N11's PASS is provisional (pre-tag, "
+                  "local clone) and is to be re-run with --ref at the tag, a condition on the tag (9g)")),
+    dict(id="W7", rows=[("S1#42", "reproduced"), ("S6#5", "reproduced")],
+         outcome=("not triggered: the note carries 54 of 101 as the audit-v2 correction of record (reproduced, N4 :362), "
+                  "not the not-found quotation '54 of 101 valid sessions'; the third matcher hit (:215) is '54' inside "
+                  "the commit hash c54c4e0")),
+    dict(id="W8", rows=[("S6#68", "discrepant")],
+         outcome=("CARRIED in the STOP-triggering form: ':111 about 1% of rounds, uniformly across arms including "
+                  "sham' (L102: not transcription; sham 7/351 = 1.99%). A live conditional STOP unless reworded; N5's "
+                  "suggested wording is at N5 :122")),
+    dict(id="W9", rows=[], outcome="not carried (no '33 attempts' in the note or either SVG)"),
+    dict(id="W10", rows=[], outcome="not carried (no '+.094' in the note or either SVG)"),
+]
+NR_WATCH_EXTRA = [
+    dict(id="d′ 'roughly 1–1.5 at DPO' (block watch item; no matcher key)",
+         what="the d′ wording the item raws tie to N2(v)/(vi); no matcher key, searched as text",
+         rows=[("S1#26", "computed-new"), ("S1#27", "computed-new"), ("S8#78", "computed-new"), ("S8#79", "computed-new")],
+         text="1–1.5",
+         outcome=("CARRIED at :3 (the design seat's changelog) and :208 (the PI section), both outside the post body, "
+                  "which says 'about 1 and 2' (:98), '≈ 1–2' (:100), 'about 1–2' (:164) and 'roughly 0.6, 1.5 or 2' "
+                  "(:173). Round 5: all four rows carry N2 5(b)'s status (computed-new); the range wording is one "
+                  "correction, N1's own reading, not an item raw's, recorded on S1#26, S1#27 and S8#79 (9i; S8 records "
+                  ":208's range once, on its upper end, so S8#78 carries none; round 6); the design seat decides")),
+    dict(id="'n in the thousands' (4g C8; no matcher key)", rows=[], text="n in the thousands",
+         what="Instruct power 'n in the thousands per cell' (N2vi; holds only at the transcribed 0.3%, the W3 fork)",
+         outcome="not carried"),
+]
+
+# open items for the PI and the design seat (section 9h): each names the rows (with their status, asserted) and the
+# span notes (a quote, asserted) it rests on; 'text' is Code's one-paragraph summary of those rows and notes.
+NR_T_ROWS = ["S1#71", "S1#72", "S1#134", "S4#4", "S4#5", "S4#10", "S4#11", "S4#31", "S4#32", "S4#33"]
+NR_NF_ROWS = ["S1#117", "S1#147", "S3#36", "S5#72", "S5#77", "S7#19", "S7#20", "S7#24", "S7#25", "S7#28", "S7#66", "S10#66",
+              "S10#67"]
+NR_OPEN = [
+    dict(id="O1", what="TL;DR :27 'five natural-reinforcer contrasts inside the sham envelope'",
+         rows=[("S1#140", "reproduced")], corrections=["S1#140"], notes=[("S1", "POSSIBLE STOP (Code's reading; the PI and design seat decide)")],
+         text=("A wording correction, N1's own reading (round 5, finding 1): the row carries N5's status (the DIFF row "
+               "reproduces, N5 @09c3a8c:206, :79), and N5 has no 'envelope' wording and classifies nothing here. The "
+               "clause does not hold for DIFF, whose |Δ| .0957 exceeds f1's sham pseudo-Δ .0455 (N5 @09c3a8c:79, :74); "
+               "a form the record supports is 'five natural-reinforcer contrasts, none passing its screen'. No item "
+               "raw raises a STOP on it; whether the wording is a correction or something more is the design seat's "
+               "call. The body's f1 bullet (:111) does not make the claim.")),
+    dict(id="O2", what="link 5 f1 (:111) 'about 1% of rounds, uniformly across arms including sham' (W8)",
+         rows=[("S6#68", "discrepant")], notes=[("S6", "W8 (f1 termination per arm) -- carried in the STOP-triggering form")],
+         text=("L102: not a transcription (sham 7/351 = 1.99%); a live conditional STOP unless the clause is reworded; "
+               "N5's suggested wording is at N5 @09c3a8c:122.")),
+    dict(id="O3", what="the source's instruct false-alarm rate (W3): note :92, :98, :208; F2 text nodes 46 and 73",
+         rows=[("S5#14", "discrepant"), ("S5#58", "discrepant"), ("S8#69", "discrepant"), ("S10#36", "discrepant"),
+               ("S10#60", "discrepant")], notes=[("S10", "W3 FIRES twice")],
+         text=("Carried as a range in the note ('0–0.003', '0–0.3%') and as the single point 0.003 in F2. The fork "
+               "(N2vi @09c3a8c:619, condition 3) is the PI's and design seat's: accept Code's transcription reading and "
+               "write 0.000 (+0.9 pp wherever TPR − FPR is carried; F2's point at (0.000, 0.009)), or treat it as a STOP. "
+               "The note and F2 change together.")),
+    dict(id="O4", what="d′ 'roughly 1–1.5 at DPO' at :3 and :208",
+         rows=[("S1#26", "computed-new"), ("S1#27", "computed-new"), ("S8#78", "computed-new"), ("S8#79", "computed-new")],
+         corrections=["S1#26", "S1#27", "S8#79"],
+         notes=[("S1", "POSSIBLE STOP 2"), ("S8", "d′ wording at :208")],
+         text=("A wording correction, N1's own reading (round 5, finding 1): all four rows carry N2 5(b)'s status "
+               "(computed-new, N2 @09c3a8c:376), and no item raw classifies the wording. The post body says 'about 1 "
+               "and 2' (:98), '≈ 1–2' (:100), 'about 1–2' (:164) and 'roughly 0.6, 1.5 or 2' (:173); the computed DPO "
+               "d′ by assumed n is +0.611, +1.197, +1.525, +1.995 (N2 @09c3a8c:344, :382, :386, :390). Read as a stale "
+               "summary of the body, '1–1.5' is corrected to '1–2' at :3 and :208; read as a claim about which n "
+               "premise holds, it would be a STOP on N2 under block :23. That fork is the S1 and S8 mappers' reading, "
+               "not an item raw's; the design seat decides. :208's 'must not be tightened' is the PI section's own "
+               "instruction. The correction is recorded on S1#26, S1#27 and S8#79 (9i); S8 records :208's range once, on "
+               "its upper end, so S8#78 carries none (round 6).")),
+    dict(id="O5", what="the π̂ gloss 'direct displacement of the label logits' at :58 and :170 (N6; ledger 4g C13)",
+         rows=[("S2#37", "reproduced"), ("S2#38", "reproduced"), ("S7#61", "reproduced")],
+         corrections=["S2#37", "S2#38", "S7#61"],
+         notes=[("S2", "OPEN CONDITIONAL STOP, NOT APPLIED"), ("S7", "LEAKAGE CERTIFICATION (:170, C13)")],
+         text=("Conditional; the design seat's call (round 6, n1chk2 finding 6, which found round 5's 'Not a STOP' "
+               "overstated N6). The values reproduce. N6's own row for the gloss is 'discrepant': a definition error, "
+               "not a transcription, with no number discrepant (N6 @09c3a8c:493). N6 raises no STOP, reads it as a "
+               "sentence correction, and says that whether such a row is a figure STOP or a sentence correction is "
+               "N1's and the design seat's call, not N6's (:505). N1 reads it as a sentence correction too: π̂_d is a "
+               "pick-discordance rate, not a logit displacement, and N6's note-ready short form is at :249. It is "
+               "recorded as a wording correction on the three rows (9i). If the design seat does not accept that "
+               "reading, block :23's non-transcription branch makes it a STOP on N6. The S2 span note's conditional "
+               "framing stands (its round-6 annotation in 9f).")),
+    dict(id="O6", what="the N2(ii) STOP on link 4's ROC paragraph",
+         rows=[], notes=[("S1", "N2(ii) 'resolved' (line 3): partly met"), ("S5", "ACTIVE STOP N2(ii)"),
+                         ("S10", "ACTIVE STOP carried (N2(ii)")],
+         text=("Note :3 and :209 call it resolved by the rewording at :96, which names three of the six "
+               "outcome-relevant differences N2 lists (N2 @09c3a8c:190); whether that discharges it is the design "
+               "seat's call. F2 still says 'GREEDY — the same protocol at temperature 0.0' (text node 47), so the STOP "
+               "stays active on F2's greedy series until F2 is reworded or the series withheld.")),
+    dict(id="O7", what="F2 as placed is the 2026-10-06 draft, not the annotated post version",
+         rows=[], notes=[("S10", "F2 departs from block :34 and contradicts note v0.3")],
+         text=("F2 carries no d′, c or Fisher p annotations, which block :34 directs for the post version and note :13 "
+               "and :3 describe. Section 9 covers F2 as placed; an annotated F2 needs its own N1 pass (or :13 and :3 are "
+               "reworded).")),
+    dict(id="O8", what="not found: cut from the note under block :23",
+         rows=[(k, "not found") for k in NR_NF_ROWS], notes=[],
+         text=("Thirteen units (9d). Where the figure is an external literature or historical claim ('seventy years', "
+               "Tagliabue et al.'s 'five families', 57.7% / 79.7%, 'one of three sizes', the two arms, 'eleven "
+               "published designs'), the rows leave to the PI whether block :23's cut covers a citation; the ablation "
+               "d′ ≈ 1.8 (:100, twice) has no source at all; F2's ~800 / ~80 is W5 (O11). Round 5 (finding 3) adds "
+               "S1#117, 'three months of pre-registered experiments' (:20): no record line carries the duration; the "
+               "record states the start (July 2026) and N13's earliest pre-registration is 2026-08-04 (N13 "
+               "@09c3a8c:56), 66 days before the note's date. Cut, or reworded to what the record carries.")),
+    dict(id="O9", what="N19: the 0.394 and the 0.70 (:144, :210), the clause around them, and TL;DR :29",
+         rows=[("S1#145", "computed-new"), ("S7#29", "reproduced"), ("S7#33", "reproduced"), ("S8#84", "reproduced"),
+               ("S8#85", "reproduced")], corrections=["S1#145", "S7#33"],
+         notes=[("S1", "TL;DR :29 (the two indicators carry most of the optimist-sceptic gap)"), ("S8", ":210 (N19), REVISED")],
+         text=("Round 5 (the PI's routing 10): the rows are re-mapped to N19's raw, committed at e0fd85c. The 0.394 and "
+               "the 0.70 reproduce there (N19 @e0fd85c:119, :120), so block :125's cut does not apply and the "
+               "[verify → N19] brackets at :144 and :210 are discharged (removing them is the design seat's edit). "
+               "'Moves nothing' holds (computed-new, :121). The 'because … weakly undemanding (false-positive rate "
+               "0.70)' clause does not hold on this vector (computed-new, post-hoc, :122): a demanding false-positive "
+               "rate leaves the strike just as inert. TL;DR :29's 'carry most of the gap' is contradicted by N19's "
+               "post-hoc section 8: striking both indicators closes 17.8% of the gap under equal credences (14.3% "
+               "under the cell-28 credences; at most 35.8%), N19 @e0fd85c:151, :169. Both are sentences for the design "
+               "seat and the PI, not verdicts (rule 11).")),
+    dict(id="O10", what="link 3 (:88) 'with the re-derived diagnostic pre-registered as the next step'",
+         rows=[], notes=[("S4", "Line 88's 'with the re-derived diagnostic pre-registered as the next step'")],
+         text=("The record contradicts it: ADDENDUM-k1's Stage 1b was STOPPED twice and is uncommitted "
+               "(RESULTS.md@bbc9ffe:1912-1921, :2090-2096). N1's own finding (S4); no item raw routes it.")),
+    dict(id="O11", what="W5: F2 text node 79 ('~800 injected and ~80 control trials per stage'); the derived 0.6 at :98 and :173",
+         rows=[("S10#66", "not found"), ("S10#67", "not found"), ("S5#61", "computed-new"), ("S7#68", "computed-new")],
+         notes=[("S10", "W5 FIRES at node 79")],
+         text=("F2's clause is cut, or restated with its premise (eight concepts) and unit (N2vi @09c3a8c:620, condition "
+               "4); the note's 0.6 falls under the same condition (cut unless the premise is stated).")),
+    dict(id="O12", what="the published e2a pair leads TL;DR :27 and F1b's link-5 bar",
+         rows=[("S1#137", "reproduced"), ("S1#138", "reproduced")], notes=[("S1", "TL;DR :27 leads with the published pair")],
+         text=("TL;DR :27 (and F1b's state bar) give +0.039 from 55/102, p .24, while note :3 and :108 call 54/101, "
+               "+0.035, p .275 the correction of record. Both reproduce (N4 @09c3a8c:355-356, :362); an internal "
+               "inconsistency for the design seat, not a figure error (S1; S9's open item 1).")),
+    dict(id="O13", what="transcription corrections routed and not applied (block :23 correction branch)",
+         rows=[(k, "discrepant") for k in NR_T_ROWS], notes=[("S4", "Transcription corrections routed to this paragraph by N3 (i)")],
+         text=("Each row's cause names the correction: 'L50–L63' for '.94' (:26, :84); 'from L51' for label_b's "
+               "'.81–.96' (:3, :85; N3 and N3c give this series different statuses); '≈ .10' or '≤ .103' for the leak "
+               "median (:86); 'on the mixed random block masks B3x/B4x, toward the first round's label' for the "
+               "pseudo-shift (:86), whose 'that a random direction produces too' S4 flags as well (the signed shift was "
+               "computed on random masks only). The MLP lower end ('.59', :3, :85) is a precision correction since "
+               "round 5 (O17).")),
+    dict(id="O14", what="Epistemic status (:20) 'Everything quantitative is from a committed record'",
+         rows=[], notes=[("S1", "Epistemic status (:20) says")],
+         text=("Holds only if the committed audit raws count as record (the note's computed-new figures live only "
+               "there; 9g) and fails for the not-found figures (O8), among them the line's own 'three months' "
+               "(S1#117, round 5).")),
+    dict(id="O15", what="'committed before data' at :179 (and :166)",
+         rows=[], notes=[("S8", "Disclosure at :179")],
+         text=("Broader than N13 supports: the cycle-2 'pre-registered rule (|t| < 1)' first appears in its own result "
+               "commit, and some amendments inside arcs came after part of their data (N13 @09c3a8c:965, :983, :994). "
+               "S8 offers a scoped form tied to the "
+               "provenance table.")),
+    dict(id="O17", what="precision corrections: double rounding (round 5, findings 1 and 4; the rule in section 10)",
+         rows=[("S1#34", "computed-new"), ("S4#19", "computed-new"), ("S3#64", "reproduced")], notes=[],
+         corrections=["S1#34", "S4#19", "S3#64"],
+         text=("One rule for every double rounding: the item raw's status is carried and the rounding is recorded as a "
+               "precision correction (9i). The MLP lower end '.60' (:3, :85) rounds the print 0.5950 of the stored "
+               "0.594963, which is '.59' at two decimals (N3 @09c3a8c:479 applies the same rounding to its draft); "
+               "the purity–potency upper end '0.88' (:76) rounds the three-decimal 0.875 of 0.8747, which is '0.87' "
+               "(N8 @02b6a61:263 leaves the choice to N1 and the PI). Whether the note writes the direct rounding or "
+               "keeps the printed one with a precision note is the PI's choice; neither is a STOP.")),
+]
+
+
+def nr_unit(r):
+    m = NR_S9_RE.match(r.get("text") or "")
+    return m.group("u") if m else (r.get("text") or "")
+
+
+def nr_dec(tok):
+    from decimal import Decimal, InvalidOperation
+    t = tok.replace(",", "") if re.fullmatch(r"\d{1,3}(?:,\d{3})+(?:\.\d+)?", tok) else tok
+    try:
+        d = Decimal(t)
+    except InvalidOperation:
+        return None
+    return (d, len(t.split(".")[1]) if "." in t else 0, tok)
+
+
+def nr_tokens(s):
+    return [v for v in (nr_dec(m.group()) for m in NR_NUM_RE.finditer(s or "")) if v]
+
+
+def nr_values(text):
+    """The values a row's source_value states: ISO dates (matched literally) and numerals (unsigned; unicode minus,
+    '+', '%', thousands separators and a missing leading zero normalised), after removing locators, JSON indexes,
+    times, hashes, arXiv ids and 'row 15'-style labels."""
+    s = str(text or "")
+    dates = DATE_RE.findall(s)
+    s = DATE_RE.sub(" ", s)
+    s = NR_LOC_RE.sub(" ", s)
+    for rx in NR_STRIP_RES:
+        s = rx.sub(" ", s)
+    return dates, nr_tokens(s)
+
+
+def nr_same(a, b):
+    from decimal import Decimal, ROUND_HALF_UP
+    if a[0] == b[0]:
+        return "equal"
+    hi, lo = (a, b) if a[1] > b[1] else (b, a)
+    if lo[1] >= 2 and hi[1] > lo[1] and hi[0].quantize(Decimal(1).scaleb(-lo[1]), rounding=ROUND_HALF_UP) == lo[0]:
+        return "rounds"
+    return None
+
+
+def nr_parse_locs(text):
+    """Every pinned locator in a locator string: path@rev[:lines], an item abbreviation (N3c@rev:lines, ledger@rev),
+    a bare @rev:lines (same path), and a bare :lines after a space, '(' , ';' or ',' (same path and rev)."""
+    out, last = [], None
+    for m in NR_LOC_RE.finditer(str(text or "")):
+        if m.group("path"):
+            last, spec = (m.group("path"), m.group("rev")), m.group("spec")
+        elif m.group("abbr"):
+            last = (NR_ABBR[m.group("abbr")], m.group("arev")) if m.group("abbr") in NR_ABBR else None
+            spec = m.group("aspec")
+        elif m.group("rev2"):
+            last, spec = ((last[0], m.group("rev2")) if last else None), m.group("spec2")
+        else:
+            spec = m.group("spec3")
+        if last is None:
+            continue
+        out.append(dict(path=last[0], rev=last[1], lines=parse_lines(spec) if spec else [], raw=m.group().strip()))
+    return out
+
+
+_NRSHOW: dict = {}
+
+
+def nr_lines_at(rev, path):
+    k = (rev, path)
+    if k not in _NRSHOW:
+        r = subprocess.run(["git", "-C", str(REPO), "show", f"{rev}:{path}"], capture_output=True)
+        _NRSHOW[k] = r.stdout.decode("utf-8", "replace").split("\n") if r.returncode == 0 else None
+    return _NRSHOW[k]
+
+
+def nr_line(rev, path, n):
+    ls = nr_lines_at(rev, path)
+    return ls[n - 1] if ls is not None and 1 <= n <= len(ls) else None
+
+
+NR_CARDINAL = {v: k for k, v in NR_WORDS.items() if k in ("one", "two", "three", "four", "five", "six", "seven", "eight",
+                                                         "nine", "ten", "eleven", "twelve", "twenty", "seventy")}
+
+
+def nr_unit_values(u):
+    """The note unit's value, and the words to look for: the unit itself if it is a number word, and the cardinal of
+    its value ('third' -> 'three')."""
+    w = u.strip().lower()
+    if w in NR_WORDS:
+        v = NR_WORDS[w]
+        return [nr_dec(str(v))], [x for x in dict.fromkeys([w, NR_CARDINAL.get(v)]) if x]
+    if u.strip() == "½":
+        return [nr_dec("0.5")], ["½"]
+    vs = nr_tokens(u)
+    return vs, [NR_CARDINAL[int(v[0])] for v in vs if v[1] == 0 and int(v[0]) in NR_CARDINAL]
+
+
+def nr_ledger_ids(field):
+    f = str(field or "").strip()
+    if not f or f.lower().startswith("none"):
+        return []
+    return re.findall(r"L\d{3}", f)
+
+
+def nr_row_ledger_ids(r):
+    """A row's ledger ids: its ledger_row field; for a ledger-row map with no such field, the ids its locator names."""
+    ids = nr_ledger_ids(r.get("ledger_row"))
+    if not ids and r.get("maps_to") == "ledger-row" and not r.get("ledger_row"):
+        return re.findall(r"\bL\d{3}\b", str(r.get("locator") or "")), "locator"
+    return ids, "ledger_row"
+
+
+# round 7 (r6chk finding 1b): 'Lnnn (related row: N2 row 37, computed-new)' names one related row of the ledger row
+NR_REL_RE = re.compile(r"\(related row: (?P<item>N\d+[a-z]*) row (?P<n>\d+), (?P<st>reproduced|log-only|not found|"
+                       r"discrepant|computed-new|not run)\)")
+NR_RELONLY_RE = re.compile(r"\(related only\b")
+
+
+def nr_related_entry(r, ledger):
+    """The related row a 'related row: <item> row <n>, <status>' field names (its entry in the ledger row's 'related'
+    list, matched by item and JSON index n-1), or None; and the match."""
+    ids, _ = nr_row_ledger_ids(r)
+    m = NR_REL_RE.search(str(r.get("ledger_row") or ""))
+    if not m or not ids or ids[0] not in ledger:
+        return None, m
+    ent = [rr for rr in ledger[ids[0]]["related"] if rr.get("item") == m.group("item")
+           and f"figures[{int(m.group('n')) - 1}]" in str(rr.get("locator") or "")]
+    return (ent[0] if len(ent) == 1 else None), m
+
+
+def nr_check_ledger(r, ledger):
+    ids, frm = nr_row_ledger_ids(r)
+    missing = [i for i in ids if i not in ledger]
+    if missing:
+        return dict(result=f"FAIL: ledger row(s) not in the ledger: {', '.join(missing)}", ids=ids)
+    if not ids:
+        return dict(result="FAIL: maps_to ledger-row names no ledger row", ids=ids) if r.get("maps_to") == "ledger-row" \
+            else dict(result="n/a", ids=ids)
+    # round 6 (finding 1): a row that names a ledger row carries that row's status whatever its maps_to (round 5
+    # compared only ledger-row maps, so a remap to 'record' skipped the comparison)
+    row = ledger[ids[0]]
+    st = sorted({rr["base_status"] or "none" for rr in row["refs"]})
+    rel = sorted({rr["base_status"] or "none" for rr in row["related"]})
+    lr = str(r.get("ledger_row") or "")
+    # round 7 (r6chk finding 1b): 'related only' names a ledger row that is context for the figure, not its row (the
+    # row's own status check decides); 'related row: <item> row <n>, <status>' compares the status with that related
+    # row only (round 6 accepted the primary row's status too, so 'reproduced' passed on S5#20, S5#22 and S5#23)
+    if NR_RELONLY_RE.search(lr):
+        return dict(result="n/a (related only: the ledger row is context, not the figure's row; the row's own status "
+                           "check decides)", ids=ids, ledger_status=st)
+    if "related" in lr.lower():
+        ent, m = nr_related_entry(r, ledger)
+        if m is None:
+            return dict(result=f"FAIL: ledger_row mentions a related row in a form the script does not read", ids=ids)
+        if ent is None:
+            return dict(result=f"FAIL: the related row the field names ({m.group('item')} row {m.group('n')}) is not "
+                               f"one of {ids[0]}'s related rows", ids=ids)
+        b = ent["base_status"] or "none"
+        if m.group("st") != b:
+            return dict(result=f"FAIL: ledger_row says the related row is {m.group('st')}; it is {b}", ids=ids)
+        if r["status"] != b:
+            return dict(result=f"FAIL: status '{r['status']}' vs the related row's {b} ({ids[0]}: {m.group('item')} row "
+                               f"{m.group('n')}; only the related row's status counts)", ids=ids, ledger_status=st,
+                        related_status=[b])
+        return dict(result="pass (via the related row the field names)", ids=ids, ledger_status=st, related_status=[b])
+    if r["status"] in st:
+        return dict(result="pass" + (" (id from the locator; the row has no ledger_row field)" if frm == "locator" else ""),
+                    ids=ids, ledger_status=st)
+    return dict(result=f"FAIL: status '{r['status']}' vs {ids[0]}'s {'/'.join(st)}", ids=ids, ledger_status=st,
+                related_status=rel)
+
+
+def nr_check_ledger_bind(r, ledger):
+    """Round 7 (r6chk finding 2): the ledger row a row names is bound to the row's figure. Every ledger id the locator
+    names is one the ledger_row names; and the first ledger_row id (the one whose status the row carries) is named in
+    the locator, or the locator cites one of its item-raw rows' lines (same path and line number, the same text at
+    both revisions; for 'related row: …' the related row's line; for 'related only' a primary or related row's)."""
+    ids, frm = nr_row_ledger_ids(r)
+    if not ids or any(i not in ledger for i in ids):
+        return dict(result="n/a")
+    loc = str(r.get("locator") or "")
+    li = list(dict.fromkeys(re.findall(r"\bL\d{3}\b", loc)))
+    extra = [i for i in li if i not in ids]
+    if extra:
+        return dict(result=f"FAIL: the locator names ledger row(s) {', '.join(extra)} that the row's ledger_row does not "
+                           f"({', '.join(ids)})")
+    if ids[0] in li:
+        return dict(result="pass", how="named in the locator")
+    lr = str(r.get("ledger_row") or "")
+    if NR_RELONLY_RE.search(lr):
+        ents = ledger[ids[0]]["refs"] + ledger[ids[0]]["related"]
+    elif "related" in lr.lower():
+        e_, _ = nr_related_entry(r, ledger)
+        ents = [e_] if e_ else []
+    else:
+        ents = ledger[ids[0]]["refs"]
+    cited = {}
+    for l in nr_parse_locs(loc):
+        for n in l["lines"]:
+            cited[(l["path"], n)] = nr_line(l["rev"], l["path"], n)
+    for e_ in ents:
+        for l in nr_parse_locs(e_.get("locator")):
+            for n in l["lines"]:
+                t = nr_line(l["rev"], l["path"], n)
+                if t is not None and cited.get((l["path"], n)) == t:
+                    return dict(result="pass", how=f"cites {ids[0]}'s item-raw row {l['path']}:{n}")
+    return dict(result=f"FAIL: nothing binds {ids[0]} to the row (the locator neither names it nor cites a line of its "
+                       f"item-raw rows)")
+
+
+# ------------------------------------------------------------------ round 5 (N1 final fixes, 2026-10-09)
+# The final checker's findings 1-9 (scratch final_result.json, key 'fin') and the PI's N19 routing (10). Every check
+# has a name. A failure is explained only by a row whose 'validation_exempts' maps that check (one of NR_EXEMPTABLE)
+# to its failure message, and whose 'validation_note' says why. An exemption from 'locator-value' also needs a
+# 'validation_quote' asserted on the row's first cited line. No note exempts a row from any other check (round 4's
+# notes exempted the whole row). Round 5 matched the exemption as a substring of the message; round 6 (n1chk2
+# finding 4) requires the whole message, names the values sought and the lines read in the locator-value message,
+# and binds every exempted row to a fingerprint the script declares (NR_EXEMPT_FP), so a change to any of its
+# mapping fields leaves the failure unexplained.
+NR_EXEMPTABLE = ("locator-value", "source-values", "ledger-status", "ledger-span", "unit-stated")
+NR_CORR_KINDS = ("wording", "precision", "scope")
+NR_ITEMRAW_RE = re.compile(r"^results/raw/2026-10-0[89]_note-N\d+[a-z]*-[A-Za-z0-9_.\-]+\.(?:md|txt)$")
+NR_RAW_MD = {v[0] for v in RAWS.values()}
+NR_SEP_RE = re.compile(r"^\|\s*:?-")
+# the matcher-unit -> kind assignment, frozen (finding 2): sha256 over one line per row, in file order,
+# 'span#seq<TAB>note_file<TAB>note_line<TAB>unit<TAB>kind'. A run whose rows give another hash stops; a deliberate
+# change of any row's kind (or of its unit or line) is made here as well, where it shows in the script's diff.
+NR_KIND_SHA256 = "88dbdcc6cf021359562267cd7441ec250d807ff57f1d7b8c9fc6a78727bc50e2"
+
+# ------------------------------------------------------------------ round 6 (N1 final fixes, round 2, 2026-10-09)
+# The adversarial check of round 5 (n1chk2, scratch) found nine problems; section 11 gives each with its disposition.
+# The constants below are the round's frozen declarations: each is asserted at every run, and a deliberate change to
+# any of them is a visible change to this script.
+NR_TAG_RE = re.compile(r"\[status:([^\]]*)\]")
+# finding 7: the revisions a row may cite, by path class (full shas compared)
+NR_PIN_RULES = (
+    ("the provisional N1 ledger", lambda p: p.startswith("results/raw/2026-10-08_note-N1-claims-ledger"), ("6485da2",)),
+    ("an N8 or N11 item raw", lambda p: p in ("results/raw/2026-10-08_note-N8-link2.md",
+                                              "results/raw/2026-10-08_note-N11-smoke.txt"), ("09c3a8c", "02b6a61")),
+    ("an item raw of 2026-10-08", lambda p: p.startswith("results/raw/2026-10-08_note-"), ("09c3a8c",)),
+    ("an audit raw of 2026-10-09 (N19)", lambda p: p.startswith("results/raw/2026-10-09_note-"), ("e0fd85c",)),
+    ("the record", lambda p: True, ("bbc9ffe",)),
+)
+# finding 7: the clause of every row, frozen like the kind assignment ('span#seq<TAB>clause', file order)
+NR_CLAUSE_SHA256 = "fe98c899f111c586a3b0a17a3b8d1e9accbe7edc036419313c1be1c6b5b8bcae"
+# finding 4: every row that carries an exemption, with a fingerprint of its mapping fields (nr_fingerprint). An
+# exemption holds only for the row as it was when the exemption was declared here. Round 7 re-declares seven (S1#51, S4#24, S7#29,
+# S7#33, S7#73, S8#84, S8#85), whose locators now name their ledger row (section 12c); their exemptions are unchanged.
+NR_FP_FIELDS = ("note_file", "note_line", "text", "kind", "maps_to", "status", "ledger_row", "locator", "source_value",
+                "status_basis", "corrected_in_note", "correction", "validation_exempts", "validation_quote",
+                "validation_note")
+NR_EXEMPT_FP = {
+    "S1#51": "6ce2eef6c007fc71", "S1#59": "c91471234461f7c2", "S1#119": "3bb20c8fb9259a39", "S3#11": "fb85afd1b8aee5c6",
+    "S3#59": "b1e79dfdb886dc61", "S4#24": "1a85bcd079edd8a8", "S5#47": "b699445a05877816", "S6#54": "c1ec1d332f5df2b1",
+    "S6#80": "c8ca7fd470fa3494", "S6#84": "730211522c348e2b", "S7#12": "79bb37b36622b2db", "S7#15": "185af915fc9a34ad",
+    "S7#29": "174f7c0af82c6597", "S7#33": "f90fb66e955cbb6f", "S7#73": "1b0578c1075c474a", "S8#84": "933a54de7eac0b7d",
+    "S8#85": "1e40765e49368db4", "S9#85": "ebd5df3048ab46ac",
+}
+# finding 5: every correction (9i), its kind and whose reading it is: 'N1' (N1's own reading or rounding check; the
+# 'whose' text starts "N1's") or an item ('whose' starts '<item> (' and the basis cites that item's raw). Round 7
+# (r6chk finding 4b): and a fingerprint of the whole correction (nr_corr_fp: kind, text, whose and basis), so an N1-own
+# correction's basis, and any correction's text, can change only together with this declaration
+NR_CORRECTIONS = {
+    "S1#26": ("wording", "N1", "99728e4b8b668778"), "S1#27": ("wording", "N1", "99728e4b8b668778"),
+    "S1#34": ("precision", "N1", "2967b2da87a3b422"), "S1#140": ("wording", "N1", "4a5fbd2b0f2bd803"),
+    "S1#145": ("wording", "N19", "80eaf0b09c3cc733"), "S2#37": ("wording", "N6", "859a7080cd05be6f"),
+    "S2#38": ("wording", "N6", "859a7080cd05be6f"), "S3#64": ("precision", "N8", "84776afd1647dbae"),
+    "S4#19": ("precision", "N1", "2967b2da87a3b422"), "S7#33": ("wording", "N19", "8ebbc7b67cd99cfa"),
+    "S7#61": ("wording", "N6", "859a7080cd05be6f"), "S8#79": ("wording", "N1", "86a93f88058cdd02"),
+}
+# finding 2: the wording an item raw uses for its correction, which a corrected_in_note quote must carry, followed by
+# the note's value
+NR_CORR_WORD_RE = re.compile(r"(?i)\bcorrect(?:ed)?(?:\s+value)?\s*(?:to\b|:)")
+
+# ------------------------------------------------------------------ round 7 (N1 final fixes, round 3, 2026-10-09)
+# The strict check of round 6 (r6chk, scratch) raised four findings; section 12 gives each with its disposition. As in
+# round 6, the constants below are the round's frozen declarations, asserted at every run; a deliberate change to any
+# of them is a visible change to this script.
+# finding 2: the fields that decide a row's status, frozen like the kind assignment: one line per row, in file order,
+# 'span#seq<TAB>maps_to<TAB>status<TAB>ledger_row<TAB>status_basis' (the basis as sorted JSON); for a not-found row
+# also '<TAB>locator<TAB>source_value' (finding 3: what a not-found row says was searched). Any other hash fails
+# validation ('status-hash'). The row checks bind a status to its figure only as far as section 12 says; this freeze
+# makes every change of a status, a mapping, a ledger row or a status basis a change to this script as well.
+NR_STATUS_SHA256 = "35932d8ea485e17fd0c85b6e3f130c09bf917b5b88dfe29b57e450702eacf30e"
+# finding 4: the free text and the change history, frozen the same way (nr_text_freeze): the file's item, title,
+# how_built, schema and provenance; every span (header, summary, span notes, annotations); and per row its comment,
+# cause, not_figure_reason, validation_note and round5/round6/round7 change records. Any other hash fails validation
+# ('text-hash'). The text is frozen, not judged.
+NR_TEXT_SHA256 = "250ae5d72cdb60a9e2711c069c301e3b2740fc4a9f1f9cfa92f0d2839dd67f68"
+NR_TEXT_ROW_FIELDS = ("comment", "cause", "not_figure_reason", "validation_note", "round5", "round6", "round7")
+# finding 4 (the quotation rule): every string in the rows file is scanned at each run for a quoted span of fifteen
+# words or more ('…', "…", “…”, ‘…’) within 250 characters before or 120 after a name of an external source
+# (NR_QUOTE_EXT_RE, the round-6 checker's list). Each hit must be declared here, by the first 16 hex of the span's
+# sha256, with Code's reading of it; an undeclared hit fails validation ('quote-scan').
+NR_QUOTE_EXT_RE = re.compile(r"arXiv|et al\.|Macar|Sofroniew|Tagliabue|Chua|Anthropic|WebFetch|the source's|source v\d|"
+                             r"paper|preprint|PREPRINT|Appendix|github|journal|§\d", re.I)
+NR_QUOTE_PAIRS = (('"', '"'), ("“", "”"), ("‘", "’"))
+NR_QUOTE_REVIEWED = {
+    "20c8d57b6b58ec20": "S1#25's source value quotes N2 @09c3a8c:393, an item raw's own sentence; 'the source's' "
+                           "there names the external source, and the words are N2's",
+    "80b9105080fa2c4e": "S7#16's source value quotes N14 @09c3a8c:459, a table row of the item raw between quotation "
+                           "marks; 'preprint §5.6' is a citation inside the row, and nothing in it quotes the preprint",
+}
+
+
+def nr_freeze_line(r):
+    s = (f"{r.get('span')}#{r.get('seq')}\t{r.get('maps_to')}\t{r.get('status')}\t{r.get('ledger_row')}\t"
+         + json.dumps(r.get("status_basis"), sort_keys=True, ensure_ascii=False))
+    if r.get("status") == "not found":
+        s += f"\t{r.get('locator')}\t{r.get('source_value')}"
+    return s
+
+
+def nr_status_freeze(rows):
+    return sha256("\n".join(nr_freeze_line(r) for r in rows).encode("utf-8"))
+
+
+def nr_text_freeze(D):
+    out = [json.dumps({k: D.get(k) for k in ("item", "title", "how_built", "schema", "provenance")}, sort_keys=True,
+                      ensure_ascii=False)]
+    out += [json.dumps(s, sort_keys=True, ensure_ascii=False) for s in D["spans"]]
+    out += [f"{r.get('span')}#{r.get('seq')}\t" + json.dumps({k: r.get(k) for k in NR_TEXT_ROW_FIELDS}, sort_keys=True,
+                                                             ensure_ascii=False) for r in D["rows"]]
+    return sha256("\n".join(out).encode("utf-8"))
+
+
+def nr_quoted_spans(text):
+    out = []
+    for o, c in NR_QUOTE_PAIRS:
+        rx = re.compile(re.escape(o) + r"([^" + re.escape(o + c) + r"\n]{20,600}?)" + re.escape(c))
+        out += [(m.start(), m.group(1)) for m in rx.finditer(text)]
+    # single quotes: an opening ' after the start, a space, '(' or '['; a closing ' before a space, punctuation or the end
+    out += [(m.start(), m.group(1)) for m in
+            re.finditer(r"(?:(?<=^)|(?<=[\s(\[]))'([^'\n]{20,600}?[^\s])'(?=[\s.,;:)\]|]|$)", text, re.M)]
+    return out
+
+
+def nr_quote_scan(D):
+    """Every quoted span of fifteen words or more near the name of an external source, in every string of the rows
+    file (change records included), with its declaration in NR_QUOTE_REVIEWED (None if undeclared)."""
+    strings = []
+
+    def walk(x, where):
+        if isinstance(x, str):
+            strings.append((where, x))
+        elif isinstance(x, dict):
+            for k, v in x.items():
+                if not str(k).startswith("_"):
+                    walk(v, f"{where}.{k}")
+        elif isinstance(x, list):
+            for i, v in enumerate(x):
+                walk(v, f"{where}[{i}]")
+    walk(D, "$")
+    hits = []
+    for where, t in strings:
+        for pos, sp in nr_quoted_spans(t):
+            nw = len(sp.split())
+            if nw < 15 or not NR_QUOTE_EXT_RE.search(t[max(0, pos - 250):pos + len(sp) + 120]):
+                continue
+            h = sha256(sp.encode("utf-8"))[:16]
+            hits.append(dict(where=where, words=nw, sha=h, reviewed=NR_QUOTE_REVIEWED.get(h)))
+    return hits
+
+
+def nr_is_item_raw(path):
+    """An item raw (or a later audit raw such as N19's), never the N1 ledger itself."""
+    return bool(NR_ITEMRAW_RE.match(path or "")) and "N1-claims-ledger" not in path
+
+
+def nr_clause_lines(rows):
+    return "\n".join(f"{r['span']}#{r['seq']}\t{r.get('clause')}" for r in rows)
+
+
+def nr_kind_lines(rows):
+    return "\n".join(f"{r['span']}#{r['seq']}\t{r['note_file']}\t{r['note_line']}\t{nr_unit(r)}\t{r.get('kind')}"
+                     for r in rows)
+
+
+def nr_table_cells(line):
+    return [c.strip() for c in re.split(r"(?<!\\)\|", line.strip().strip("|"))]
+
+
+def nr_status_cell(path, rev, n):
+    """The cell under a 'status' column header for a markdown table row (path@rev:n), or None."""
+    ls = nr_lines_at(rev, path)
+    if ls is None or not 1 <= n <= len(ls):
+        return None
+    line = ls[n - 1]
+    if not line.startswith("|") and " | " in line and not line.startswith("figure | "):
+        # N11's text table: 'figure | named in (locator) | value here | status' rows under a 'figure | ' header
+        i = n - 1
+        while i >= 1 and " | " in ls[i - 1] and not ls[i - 1].startswith("figure | "):
+            i -= 1
+        if i < 1 or not ls[i - 1].startswith("figure | "):
+            return None
+        hdr, cells = [c.strip() for c in ls[i - 1].split(" | ")], [c.strip() for c in line.split(" | ")]
+        idx = [k for k, x in enumerate(hdr) if x.lower().startswith("status")]
+        return cells[idx[0]] if len(hdr) == len(cells) and len(idx) == 1 else None
+    if not line.startswith("|") or NR_SEP_RE.match(line):
+        return None
+    i = n - 1
+    while i >= 1 and ls[i - 1].startswith("|") and not NR_SEP_RE.match(ls[i - 1]):
+        i -= 1
+    if i < 2 or not NR_SEP_RE.match(ls[i - 1]):
+        return None
+    hdr, cells = nr_table_cells(ls[i - 2]), nr_table_cells(line)
+    idx = [k for k, x in enumerate(hdr) if x.lower().startswith("status")]
+    if len(hdr) != len(cells) or len(idx) != 1:
+        return None
+    return cells[idx[0]]
+
+
+_NRFIG: dict = {}
+
+
+def nr_fig_index(raws):
+    """(item raw md path, line at the audit pin) -> the item raw's JSON figure row (status, locator)."""
+    if not _NRFIG:
+        for item in raws.js:
+            for i, f in enumerate(raws.figures(item)):
+                try:
+                    rr = raws.resolve((item, "id", f["id"]) if f.get("id") and item == "N3" else F(item, f.get("figure")))
+                except SystemExit:
+                    continue
+                _NRFIG[(RAWS[item][0], rr["md_line"])] = rr
+    return _NRFIG
+
+
+def nr_terms(s):
+    return list(dict.fromkeys(re.findall(r"reproduced|log-only|not found|discrepant|computed-new|not run", s or "")))
+
+
+def nr_line_status(path, rev, n, figidx):
+    """The status a cited item-raw line gives: its JSON figure row's (the line, matched by exact text at the audit
+    pin, is a figure row of the item's JSON), else the cell under its table's 'status' column; None if neither, or if
+    the cell carries no term of the vocabulary. A cell with several terms gives all of them ('mixed')."""
+    t = nr_line(rev, path, n)
+    if t is None:
+        return None
+    if path in NR_RAW_MD:
+        al = nr_lines_at(AUDIT, path) or []
+        for i in [k + 1 for k, x in enumerate(al) if x == t]:
+            if (path, i) in figidx:
+                f = figidx[(path, i)]
+                b = base_status(f["status"])
+                return dict(terms=nr_terms(f["status"]) if b == "mixed" else [b], raw=f["status"],
+                            how=f"JSON figure row {f['locator']}")
+    c = nr_status_cell(path, rev, n)
+    if c is not None:
+        b = base_status(c)
+        if b in STATUS_VOCAB or b == "not run":
+            return dict(terms=[b], raw=c, how=f"status cell of {path}@{rev}:{n}")
+        if b == "mixed":
+            return dict(terms=nr_terms(c), raw=c, how=f"status cell of {path}@{rev}:{n} (several terms)")
+    # round 6 (n1chk2 finding 1b): N3c (and N16) write a figure's status inline as '[status: ...]'; every term of
+    # every tag on the line counts ('mixed' when there are several)
+    tags = NR_TAG_RE.findall(t)
+    ts = list(dict.fromkeys(x for tg in tags for x in nr_terms(tg)))
+    if ts:
+        return dict(terms=ts, raw="; ".join(x.strip() for x in tags),
+                    how=f"status tag on {path}@{rev}:{n}" + (" (several terms)" if len(ts) > 1 else ""))
+    return None
+
+
+# round 7: the levels at which a status line counts as carrying the row's value (level B only where the locator check
+# accepts it: integer and word units). Level A alone was tried: it broke five rows and closed few prefix upgrades
+# (section 12, finding 2).
+NR_CARRY_LEVELS = ("A", "B")
+
+
+def nr_line_carries(r, path, rev, n):
+    """Round 7 (finding 2): does this one cited line carry a value the row states (nr_check_locator on that line
+    alone: level A, or level B where B is accepted)?"""
+    v = nr_check_locator(r, only=(path, rev, n))
+    return v["result"] == "pass" and v.get("level") in NR_CARRY_LEVELS, v.get("level")
+
+
+def nr_status_lines(r, figidx):
+    """Round 7: every cited item-raw line that gives a status (nr_line_status), in the row's order, with whether it
+    carries a value the row states. A status line that carries none of the row's values is another figure's row (or
+    section) and decides nothing."""
+    out = []
+    for l in nr_parse_locs(r.get("locator")):
+        if not l["lines"] or not nr_is_item_raw(l["path"]):
+            continue
+        for n in l["lines"]:
+            s = nr_line_status(l["path"], l["rev"], n, figidx)
+            if s:
+                c, lev = nr_line_carries(r, l["path"], l["rev"], n)
+                out.append(dict(where=f"{l['path']}@{l['rev']}:{n}", terms=s["terms"], raw=s["raw"], how=s["how"],
+                                carries=c, level=lev))
+    return out
+
+
+def nr_check_status(r, figidx):
+    """The status of an item-raw, audit-raw-new or record row against what the item raw gives (finding 2 of round 5;
+    amended in rounds 6 and 7). Round 7 (r6chk findings 1 and 2) binds the status to the row's figure:
+      - only a cited item-raw line that gives a status AND carries a value the row states (nr_status_lines) decides;
+        a status line carrying none of the row's values is another figure's and decides nothing;
+      - a source that gives several terms (a '[status: …]' tag such as N3c :151, a status cell, a JSON 'mixed'
+        status, or a record row's lines together) decides nothing by itself: the row needs a status_basis whose quote
+        is the single-term clause that applies;
+      - status_basis ({locator, quote}): one line of an item raw the row cites (round 7: never a record line), the
+        quote on it; the line's single term decides, or, where the line gives several terms or none, the quote's
+        single term (one of the line's terms where it gives several). With a basis, every cited status line that
+        carries the row's value must also give the basis's term.
+    Without a basis: item-raw / audit-raw-new rows take the first such line's term (an audit-raw-new row with none is
+    computed-new by its mapping; an item-raw row with none fails); record rows take their lines' one term, or
+    log-only where none carries the row's value."""
+    mp, st = r.get("maps_to"), r.get("status")
+    if mp not in ("item-raw", "audit-raw-new", "record"):
+        return dict(result="n/a (maps_to " + str(mp) + ")")
+    locs = [l for l in nr_parse_locs(r.get("locator")) if l["lines"]]
+    sl = nr_status_lines(r, figidx)
+    own = [x for x in sl if x["carries"]]
+    skipped = len(sl) - len(own)
+    sb = r.get("status_basis")
+    if sb:
+        bl = nr_parse_locs(sb.get("locator"))
+        if len(bl) != 1 or len(bl[0]["lines"]) != 1:
+            return dict(result="FAIL: status_basis needs exactly one line locator")
+        p, rv, n = bl[0]["path"], bl[0]["rev"], bl[0]["lines"][0]
+        # round 6 (n1chk2 finding 8): the basis is a line of a file the row cites
+        if p not in {l["path"] for l in locs}:
+            return dict(result=f"FAIL: status_basis names {p}, a file the row's locator does not cite")
+        # round 7 (r6chk finding 2, N07): statuses are the item raws'; a record line gives none
+        if not nr_is_item_raw(p):
+            return dict(result=f"FAIL: status_basis names {p}, which is not an item raw (a record line gives no status)")
+        line = nr_line(rv, p, n)
+        if line is None or not sb.get("quote") or sb["quote"] not in line:
+            return dict(result=f"FAIL: status_basis quote not on {p}@{rv}:{n}")
+        ls_ = nr_line_status(p, rv, n, figidx)
+        qt = nr_terms(sb["quote"])
+        if ls_ and len(ls_["terms"]) == 1:
+            bt, how = ls_["terms"][0], ls_["how"]
+            if qt and qt != [bt]:
+                return dict(result=f"FAIL: status_basis quote carries {'/'.join(qt)}; its line gives {bt} ({how})")
+        else:
+            if len(qt) != 1:
+                return dict(result=f"FAIL: status_basis quote carries {len(qt)} status terms (needs one: the single-term "
+                                   f"clause that applies)" + (f"; its line gives several ({'/'.join(ls_['terms'])})"
+                                                              if ls_ else ""))
+            if ls_ and qt[0] not in ls_["terms"]:
+                return dict(result=f"FAIL: status_basis quote's {qt[0]} is not one of its line's terms "
+                                   f"({'/'.join(ls_['terms'])})")
+            bt = qt[0]
+            how = f"status_basis quote on {p}@{rv}:{n}" + (f" (its line gives several terms, {'/'.join(ls_['terms'])}; "
+                                                           f"the quoted clause decides)" if ls_ else "")
+        if st != bt:
+            return dict(result=f"FAIL: status '{st}' vs the status_basis's {bt} ({how})", expected=[bt])
+        conflict = [x for x in own if bt not in x["terms"]]
+        if conflict:
+            return dict(result=f"FAIL: status_basis gives {bt}, but a cited status line that carries the row's value "
+                               f"gives {'/'.join(conflict[0]['terms'])} ({conflict[0]['where']})", expected=[bt])
+        # a status line that carries none of the row's values decided nothing, unless it is the basis's own line
+        sk = sum(1 for x in sl if not x["carries"] and x["where"] != f"{p}@{rv}:{n}")
+        return dict(result="pass", expected=[bt], how="status_basis -> " + how, status_lines=len(sl), skipped=sk)
+    if mp == "record":
+        terms = list(dict.fromkeys(t for x in own for t in x["terms"]))
+        if not terms:
+            exp = dict(terms=["log-only"], how="record lines only: log-only" + (
+                f" ({skipped} cited item-raw status line(s) carry none of the row's values and decide nothing)"
+                if skipped else ""))
+        elif len(terms) > 1:
+            return dict(result=f"FAIL: the cited item-raw lines that carry the row's value give several terms "
+                               f"({'/'.join(terms)}); several terms decide nothing: a status_basis quoting the "
+                               f"single-term clause is needed")
+        else:
+            exp = dict(terms=terms, how=own[0]["how"] + (f" (and {len(own) - 1} more cited item-raw line(s) giving the "
+                                                         f"same term)" if len(own) > 1 else ""))
+    else:
+        if own:
+            x = own[0]
+            if len(x["terms"]) > 1:
+                return dict(result=f"FAIL: the deciding line {x['where']} gives several terms ({'/'.join(x['terms'])}); "
+                                   f"several terms decide nothing: a status_basis quoting the single-term clause is "
+                                   f"needed")
+            exp = dict(terms=x["terms"], how=x["how"])
+        elif mp == "audit-raw-new":
+            exp = dict(terms=["computed-new"], how="audit-raw-new: computed new by the audit raw it cites")
+        else:
+            return dict(result="FAIL: no cited item-raw line that carries the row's value gives a status, and the row "
+                               "has no status_basis" + (f" ({skipped} status line(s) carry none of the row's values)"
+                                                        if skipped else ""))
+    if st not in exp["terms"]:
+        return dict(result=f"FAIL: status '{st}' vs {'/'.join(exp['terms'])} ({exp['how']})", expected=exp["terms"])
+    return dict(result="pass", expected=exp["terms"], how=exp["how"], status_lines=len(sl), skipped=skipped)
+
+
+def nr_unit_class(u):
+    """'word' (number words, ordinals, '½'), 'fraction' (k/n), 'decimal' (a decimal point), else 'integer'."""
+    s = u.strip()
+    if s.lower() in NR_WORDS or s == "½" or not re.search(r"\d", s):
+        return "word"
+    if FRAC_RE.search(s):
+        return "fraction"
+    if re.search(r"\d\.\d|(?<!\d)\.\d", s):
+        return "decimal"
+    return "integer"
+
+
+def nr_tie(v, u):
+    """A source value v ties to the note's value u: equal, or v, stated to more places, rounds (half-up) to u at u's
+    places (round 5: 0.6115 -> 0.6, 1.525 -> 1.5, 1.995 -> 2 for the note's 'about 2')."""
+    from decimal import Decimal, ROUND_HALF_UP
+    if v[0] == u[0]:
+        return "equal"
+    if v[1] > u[1] and v[0].quantize(Decimal(1).scaleb(-u[1]), rounding=ROUND_HALF_UP) == u[0]:
+        return "rounds"
+    return None
+
+
+def nr_line_numbers(r):
+    """Integers that are line numbers in the row: every locator spec in its locator and source_value, and every
+    ':<digits>' in its source_value (a file:line reference, 'e2a_sessions.py:355', 'LOCK-g:167-171')."""
+    out = set()
+    for f in ("locator", "source_value"):
+        for l in nr_parse_locs(r.get(f)):
+            out.update(l["lines"])
+    for m in re.finditer(r":(\d+(?:-\d+)?(?:,\s?:?\d+(?:-\d+)?)*)", str(r.get("source_value") or "")):
+        try:
+            out.update(parse_lines(m.group(1).replace(":", "")))
+        except Exception:
+            pass
+    return out
+
+
+def nr_check_locator(r, only=None):
+    """Does a cited source line carry a value the row's source_value states? Every line of every locator that names
+    lines is read, in the order the row gives them ('primary' = the first such locator). Two levels:
+      A  a cited line carries a value tied to the note's own number: an ISO date the source_value states; a
+         source_value numeral equal to the note unit's value, or rounding to it (half-up at the unit's places; a
+         percent unit is also compared as a proportion); for a fraction unit k/n, the same fraction in the
+         source_value and on the line; or, where the source_value states no distinctive numeral (a decimal, or an
+         integer of 10 or more) and no date, the note unit's value or its number word itself;
+      B  no A, but a cited line carries one of the source_value's distinctive numerals (another value the row states,
+         such as a denominator or an n). Round 5 (finding 2): B never matches on a year (1900-2099), on a line
+         number the row cites, or on 0 or 1; and B is not accepted at all for a decimal or a fraction unit, whose
+         value the source_value must state (A).
+    Neither: FAIL. A and B are consistency checks on the mapping; neither re-derives a figure.
+    Round 7: with 'only' ((path, rev, line)), the same check reads that one line alone (everything else, the values
+    sought and the line numbers excluded from B, still comes from the whole row); the status check uses it to ask
+    whether a status line carries a value the row states."""
+    from decimal import Decimal
+    locs = nr_parse_locs(r.get("locator"))
+    lls = [l for l in locs if l["lines"]]
+    if only is not None:
+        lls = [dict(path=only[0], rev=only[1], lines=[only[2]], raw=f"{only[0]}@{only[1]}:{only[2]}")]
+    if not lls:
+        return dict(result="FAIL: no line locator", locators=[l["raw"] for l in locs])
+    unit = nr_unit(r)
+    ucls = nr_unit_class(unit)
+    sv = str(r.get("source_value") or "")
+    dates, vals = nr_values(sv)
+    uv, words = nr_unit_values(unit)
+    uv = [v for v in uv if v]
+    if unit.strip().endswith("%"):
+        uv += [(v[0] / Decimal(100), v[1] + 2, v[2]) for v in uv]
+    fr_u = [(int(m.group(1)), int(m.group(2))) for m in FRAC_RE.finditer(unit)]
+    fr_sv = nr_fracs(nr_strip_locs(sv))
+    lnum = nr_line_numbers(r)
+    # a leading-zero digit run ('0551224') is an identifier (a commit-hash fragment), never a value
+    vals = [v for v in vals if not (v[1] == 0 and len(v[2]) > 1 and v[2][0] == "0")]
+    distinct = [v for v in vals if (v[1] > 0 or v[0] >= 10) and v[0] not in (0, 1)
+                and not (v[1] == 0 and (1900 <= v[0] <= 2099 or int(v[0]) in lnum))]
+    if ucls == "fraction":
+        tied = []
+        frac_need = [f for f in fr_u if f in fr_sv]
+    else:
+        tied = [v for v in vals if any(nr_tie(v, u) for u in uv)]
+        frac_need = []
+    # a fraction k/n the source_value states is also an exact value (15/85 = 0.17647 -> 0.176, where the printed
+    # 0.1765 would round to 0.177); it ties at level A when the same k/n is on a cited line
+    frac_tied = [f for f in sorted(fr_sv) if f[1] and ucls == "decimal" and any(nr_tie(nr_fracval(f), u) for u in uv)]
+    fallback = not distinct and not dates and ucls != "fraction"
+    if fallback:
+        # the unit's own value, except a bare 0 or 1 (round 5: a lone '1' or '0' on a line ties to nothing; the
+        # number word itself still counts)
+        tied = tied + [u for u in uv if u[0] not in (0, 1)]
+    else:
+        words = []
+    if not (tied or dates or words or distinct or frac_need or frac_tied):
+        return dict(result="FAIL: no value to look for", locators=[l["raw"] for l in lls], unit_class=ucls)
+    errors, a_hit, b_hit = [], None, None
+    for k, l in enumerate(lls):
+        lines = nr_lines_at(l["rev"], l["path"])
+        if lines is None:
+            errors.append(f"{l['path']}@{l['rev']}: not readable")
+            continue
+        for n in l["lines"]:
+            if not 1 <= n <= len(lines):
+                errors.append(f"{l['path']}@{l['rev']}:{n} out of range")
+                continue
+            s_ = lines[n - 1]
+            lt = nr_tokens(s_)
+            where = dict(where="primary" if k == 0 else "secondary", locator=f"{l['path']}@{l['rev']}:{n}")
+            if a_hit is None:
+                d = next((d for d in dates if d in s_), None)
+                if d:
+                    a_hit = dict(where, value=d, how="date")
+                elif frac_need:
+                    fl = nr_fracs(s_)
+                    if all(f in fl for f in frac_need) and len(frac_need) == len(fr_u):
+                        a_hit = dict(where, value=", ".join(f"{a}/{b}" for a, b in frac_need), how="fraction")
+                else:
+                    for v in tied:
+                        how = next((nr_same(v, w) for w in lt if nr_same(v, w)), None)
+                        if how:
+                            a_hit = dict(where, value=v[2], how=how)
+                            break
+                    if a_hit is None and frac_tied:
+                        fl = nr_fracs(s_)
+                        f = next((f for f in frac_tied if f in fl), None)
+                        if f:
+                            a_hit = dict(where, value=f"{f[0]}/{f[1]}", how="fraction value")
+                    if a_hit is None:
+                        ww = next((x for x in words if (x in s_ if x == "½" else
+                                                        re.search(r"\b" + re.escape(x) + r"\b", s_, flags=re.I))), None)
+                        if ww:
+                            a_hit = dict(where, value=ww, how="word")
+            if b_hit is None:
+                for v in distinct:
+                    how = next((nr_same(v, w) for w in lt if nr_same(v, w)), None)
+                    if how:
+                        b_hit = dict(where, value=v[2], how=how)
+                        break
+    if a_hit:
+        return dict(result="pass", level="A", errors=errors, unit_class=ucls, **a_hit)
+    if b_hit and ucls in ("decimal", "fraction"):
+        return dict(result=f"FAIL: a {ucls} unit needs level A (the source_value states no value tied to the note's "
+                           f"number on a cited line); level B would match on {b_hit['value']}", unit_class=ucls,
+                    errors=errors)
+    if b_hit:
+        return dict(result="pass", level="B", errors=errors, unit_class=ucls, **b_hit)
+    # round 6 (finding 4): the message names what was looked for and where, so an exemption that must equal it is
+    # bound to the row's source_value and locator
+    sought = list(dict.fromkeys([v[2] for v in tied + distinct] + dates + words
+                                + [f"{a}/{b}" for a, b in frac_need + frac_tied]))
+    read = [f"{l['path']}@{l['rev']}:{','.join(str(n) for n in l['lines'])}" for l in lls]
+    return dict(result=f"FAIL: no cited line carries a stated value (sought: {', '.join(sought) or 'none'}; read: "
+                       f"{'; '.join(read)})", values=sought, locators=[l["raw"] for l in lls], errors=errors,
+                unit_class=ucls)
+
+
+NR_OF_RE = re.compile(r"(?<![\d.])(\d+) of (\d+)(?!\.?\d)")
+
+
+def nr_fracs(s):
+    """The fractions a text states, as (k, n): 'k/n' and 'k of n' (round 5: '14 of 32' is the note's '14/32')."""
+    s = str(s or "")
+    return {(int(m.group(1)), int(m.group(2))) for rx in (FRAC_RE, NR_OF_RE) for m in rx.finditer(s)}
+
+
+def nr_fracval(f):
+    from decimal import Decimal
+    return ((Decimal(f[0]) / Decimal(f[1])).quantize(Decimal(1).scaleb(-12)), 12, f"{f[0]}/{f[1]}")
+
+
+def nr_strip_locs(s):
+    s = NR_LOC_RE.sub(" ", str(s or ""))
+    return re.sub(r":\d+(?:-\d+)?(?:,\s?:?\d+(?:-\d+)?)*", " ", s)
+
+
+def nr_cited_lines(r):
+    """The lines a row cites: its locator's, plus the line references inside its source_value (a bare ':n' there is
+    read against the locator's first file)."""
+    lls = [l for l in nr_parse_locs(r.get("locator")) if l["lines"]]
+    out = list(lls)
+    if lls:
+        for l in nr_parse_locs(f"{lls[0]['path']}@{lls[0]['rev']} " + str(r.get("source_value") or "")):
+            if l["lines"]:
+                out.append(l)
+    return out
+
+
+def nr_check_source_values(r):
+    """Finding 2 (round 5): every value the source_value states to two or more places, and every fraction it states
+    ('k/n' or 'k of n'; not '1/2'), is on a cited line (equal, or one rounding to the other at two or more places).
+    A source_value that misstates any of its values, not only the one tied to the note's number, fails. Round 6
+    (n1chk2 finding 8): one-place decimals too (equal on the line)."""
+    sv = str(r.get("source_value") or "")
+    _, vals = nr_values(sv)
+    decs = [v for v in vals if v[1] >= 1]
+    fr = {f for f in nr_fracs(nr_strip_locs(sv)) if f != (1, 2)}
+    toks, lfr, unread = [], set(), []
+    for l in nr_cited_lines(r):
+        for n in l["lines"]:
+            t = nr_line(l["rev"], l["path"], n)
+            if t is None:
+                unread.append(f"{l['path']}@{l['rev']}:{n}")
+                continue
+            toks += nr_tokens(t)
+            lfr |= nr_fracs(t)
+    md = [v[2] for v in decs if not any(nr_same(v, w) for w in toks)]
+    mf = [f"{a}/{b}" for a, b in sorted(fr) if (a, b) not in lfr]
+    if md or mf:
+        return dict(result="FAIL: stated value(s) on no cited line: " + ", ".join(md + mf), unreadable=unread)
+    return dict(result="pass", n_decimals=len(decs), n_fractions=len(fr))
+
+
+def nr_check_double_rounding(r):
+    """Finding 4: a note figure that rounds from a printed value which is itself a rounding of a more precise value
+    the row states, while the more precise value rounds to something else at the note's places (0.594963 -> 0.5950
+    -> .60, directly .59; 0.8747 -> 0.875 -> 0.88, directly 0.87). The rule (one for every such row): the item raw's
+    status is carried, and the row must record a precision correction ('correction', kind 'precision')."""
+    from decimal import Decimal
+    unit = nr_unit(r)
+    if nr_unit_class(unit) != "decimal":
+        return dict(result="n/a")
+    _, vals = nr_values(r.get("source_value"))
+    uv, _ = nr_unit_values(unit)
+    uv = [v for v in uv if v]
+    if unit.strip().endswith("%"):
+        uv += [(v[0] / Decimal(100), v[1] + 2, v[2]) for v in uv]
+    hits = []
+    for v in vals:
+        for u in uv:
+            if not nr_tie(v, u):
+                continue
+            for a in vals:
+                if a[1] > v[1] and nr_tie(a, v) == "rounds" and not nr_tie(a, u):
+                    hits.append(f"{a[2]} -> {v[2]} -> {u[2]}")
+    hits = list(dict.fromkeys(hits))
+    if not hits:
+        return dict(result="pass (no double rounding)")
+    c = r.get("correction") or {}
+    if c.get("kind") == "precision":
+        return dict(result="pass (double rounding; precision correction recorded)", chains=hits)
+    return dict(result="FAIL: double rounding (" + "; ".join(hits) + ") without a precision correction", chains=hits)
+
+
+def nr_ledger_values(lrow):
+    """The texts a ledger row carries for a figure: its block span, and its primary and related item-raw rows'
+    figure labels and printed values."""
+    out = [lrow.get("figure") or ""]
+    for rr in lrow.get("refs", []) + lrow.get("related", []):
+        out += [str(rr.get("figure") or ""), str(rr.get("printed") or "")]
+    return [x for x in out if x]
+
+
+def nr_check_ledger_span(r, ledger):
+    """Finding 2: a ledger id the row names must carry the note's number. Pass if any named ledger row's span or
+    item-raw figure label or printed value contains the unit's text, a numeral tied to its value (equal, or one
+    rounding to the other at two or more places; a fraction as the same k/n), or its number word."""
+    from decimal import Decimal
+    ids, _ = nr_row_ledger_ids(r)
+    if not ids:
+        return dict(result="n/a")
+    unit = nr_unit(r)
+    ucls = nr_unit_class(unit)
+    uv, words = nr_unit_values(unit)
+    uv = [v for v in uv if v]
+    if unit.strip().endswith("%"):
+        uv += [(v[0] / Decimal(100), v[1] + 2, v[2]) for v in uv]
+    fr_u = {(int(m.group(1)), int(m.group(2))) for m in FRAC_RE.finditer(unit)}
+    lit = unit.strip().strip("'").lstrip("+−-")
+    for i in ids:
+        if i not in ledger:
+            continue
+        for t in nr_ledger_values(ledger[i]):
+            if ucls == "fraction":
+                if fr_u and fr_u <= nr_fracs(t):
+                    return dict(result="pass", id=i, how="fraction")
+                continue
+            if ucls == "word":
+                if any((x in t if x == "½" else re.search(r"\b" + re.escape(x) + r"\b", t, flags=re.I))
+                       for x in words + ([unit.strip()] if unit.strip() == "½" else [])):
+                    return dict(result="pass", id=i, how="word")
+            if ucls in ("decimal", "integer") and re.search(r"(?<![\d.])" + re.escape(lit) + r"(?![\d])", t):
+                return dict(result="pass", id=i, how="text")
+            toks = nr_tokens(nr_strip_locs(t))
+            if ucls == "decimal":
+                toks += [nr_fracval(f) for f in sorted(nr_fracs(nr_strip_locs(t))) if f[1]]
+            for w in toks:
+                for u in uv:
+                    if nr_same(w, u) or nr_tie(w, u):
+                        if ucls == "word" and u[0] in (0, 1) and w[1] == 0:
+                            continue
+                        return dict(result="pass", id=i, how="value")
+    return dict(result=f"FAIL: no ledger row named ({', '.join(ids)}) carries '{unit}' or its value", ids=ids)
+
+
+def nr_check_correction(r):
+    c = r.get("correction")
+    if c is None:
+        return dict(result="n/a")
+    if not isinstance(c, dict) or c.get("kind") not in NR_CORR_KINDS or not c.get("text") or not c.get("whose"):
+        return dict(result="FAIL: correction needs kind (" + "/".join(NR_CORR_KINDS) + "), text and whose")
+    bad = [l["raw"] for l in nr_parse_locs(c.get("basis")) for n in l["lines"]
+           if nr_line(l["rev"], l["path"], n) is None]
+    if bad:
+        return dict(result=f"FAIL: correction basis not readable: {bad}")
+    return dict(result="pass")
+
+
+def nr_fig_row(path, rev, n, figidx):
+    """The item raw's JSON figure row for a cited line (matched by exact line text at the audit pin), or None."""
+    t = nr_line(rev, path, n)
+    if t is None or path not in NR_RAW_MD:
+        return None
+    al = nr_lines_at(AUDIT, path) or []
+    for i in [k + 1 for k, x in enumerate(al) if x == t]:
+        if (path, i) in figidx:
+            return figidx[(path, i)]
+    return None
+
+
+_NRFULL: dict = {}
+
+
+def nr_full(rev):
+    """A revision's full sha, or None where it names no commit (never raises)."""
+    if rev not in _NRFULL:
+        r = subprocess.run(["git", "-C", str(REPO), "rev-parse", "--verify", "--quiet", rev + "^{commit}"],
+                           capture_output=True, text=True)
+        _NRFULL[rev] = r.stdout.strip() if r.returncode == 0 else None
+    return _NRFULL[rev]
+
+
+def nr_check_corrected(r, loc_res, figidx):
+    """Finding 6 (round 5): a row the note already corrects carries its item raw's status (discrepant), is marked
+    'corrected_in_note' ({locator, quote}: the item raw's correction, quoted from the line), and counts as passing
+    when the note's figure ties to the source value at level A (the note now carries the reproduced value).
+    Round 6 (n1chk2 finding 2): the quote must carry the item raw's correction wording ('correct to', 'corrected to',
+    'Corrected value:') followed by the note's value; the line must be the item raw's figure row, and the note's value
+    must differ from the discrepant figure that row quotes; and the corrected rows must be exactly NR_DISC's branch C
+    (asserted in final_note_rows)."""
+    ci = r.get("corrected_in_note")
+    if ci is None:
+        return dict(result="n/a")
+    if r.get("status") != "discrepant":
+        return dict(result="FAIL: corrected_in_note on a row that is not discrepant")
+    if not isinstance(ci, dict):
+        return dict(result="FAIL: corrected_in_note must be {locator, quote}")
+    bl = nr_parse_locs(ci.get("locator"))
+    if len(bl) != 1 or len(bl[0]["lines"]) != 1:
+        return dict(result="FAIL: corrected_in_note needs exactly one line locator")
+    p_, rv_, n_ = bl[0]["path"], bl[0]["rev"], bl[0]["lines"][0]
+    cited = {(l["path"], nr_full(l["rev"]), n) for l in nr_parse_locs(r.get("locator")) for n in l["lines"]}
+    if nr_full(rv_) is None or (p_, nr_full(rv_), n_) not in cited:
+        return dict(result="FAIL: corrected_in_note's line is not one the row cites")
+    line = nr_line(rv_, p_, n_)
+    q = ci.get("quote")
+    if line is None or not q or q not in line:
+        return dict(result="FAIL: corrected_in_note quote not on its line")
+    uv = [v for v in nr_unit_values(nr_unit(r))[0] if v]
+    m = NR_CORR_WORD_RE.search(q)
+    if not m:
+        return dict(result="FAIL: corrected_in_note's quote carries no correction wording ('correct to', 'corrected "
+                           "to', 'Corrected value:')")
+    if not any(nr_tie(x, u) for x in nr_tokens(q[m.end():]) for u in uv):
+        return dict(result="FAIL: corrected_in_note's quote does not state the note's value after its correction "
+                           "wording (the correction it applies)")
+    fr = nr_fig_row(p_, rv_, n_, figidx)
+    if fr is None:
+        return dict(result="FAIL: corrected_in_note's line is not an item-raw figure row, so the discrepant figure it "
+                           "corrects cannot be read")
+    old = nr_tokens(nr_strip_locs(str(fr.get("figure") or "")))
+    if not old:
+        return dict(result=f"FAIL: the item raw's figure row ({fr['locator']}) quotes no figure to compare")
+    if any(o[0] == u[0] or nr_tie(o, u) or nr_tie(u, o) for o in old for u in uv):
+        return dict(result=f"FAIL: the note still carries the discrepant figure the item raw quotes "
+                           f"({fr.get('figure')!r}, {fr['locator']})")
+    if loc_res.get("level") != "A":
+        return dict(result="FAIL: corrected_in_note but the note's figure does not tie to the source value (level A)")
+    return dict(result="pass", corrects=fr.get("figure"), figure_row=fr["locator"])
+
+
+def nr_check_maps_to(r):
+    """Round 6 (n1chk2 finding 1a): a row's maps_to names what it cites. item-raw and audit-raw-new: at least one
+    cited line of an item raw (or of a later audit raw such as N19's); record: at least one cited record line (a path
+    outside the audit outputs, at or before the record pin, readable there); ledger-row: a ledger id (the ledger
+    check); none: status not found (the schema check)."""
+    mp = r.get("maps_to")
+    lls = [l for l in nr_parse_locs(r.get("locator")) if l["lines"]]
+    if mp in ("item-raw", "audit-raw-new"):
+        if not any(nr_is_item_raw(l["path"]) for l in lls):
+            return dict(result=f"FAIL: maps_to {mp} but the locator cites no item-raw line")
+        return dict(result="pass")
+    if mp == "record":
+        if not any(not nr_is_audit_path(l["path"]) and nr_full(l["rev"]) and at_or_before_pin(l["rev"])
+                   and nr_lines_at(l["rev"], l["path"]) is not None for l in lls):
+            return dict(result="FAIL: maps_to record but the locator cites no record line (a path outside the audit "
+                               "outputs, at or before the record pin)")
+        return dict(result="pass")
+    return dict(result="n/a")
+
+
+def nr_check_pins(r):
+    """Round 6 (n1chk2 finding 7): every revision a row cites (locator, source_value, status_basis, corrected_in_note,
+    correction basis) is the pin of its path's class (NR_PIN_RULES): the record at bbc9ffe; item raws at 09c3a8c (N8
+    and N11 also at 02b6a61); N19's raw at e0fd85c; the provisional ledger at 6485da2. Round 7 (r6chk finding 3): and
+    the cited file exists at that revision, and every cited line is within it (every row, not-found rows included)."""
+    fields = [("locator", r.get("locator")), ("source_value", r.get("source_value"))]
+    for f in ("status_basis", "corrected_in_note"):
+        if isinstance(r.get(f), dict):
+            fields.append((f, r[f].get("locator")))
+    if isinstance(r.get("correction"), dict):
+        fields.append(("correction basis", r["correction"].get("basis")))
+    bad, gone, n = [], [], 0
+    for f, txt in fields:
+        for l in nr_parse_locs(txt):
+            n += 1
+            name, _, revs = next(x for x in NR_PIN_RULES if x[1](l["path"]))
+            if nr_full(l["rev"]) is None or nr_full(l["rev"]) not in {nr_full(x) for x in revs}:
+                bad.append(f"{f} {l['path']}@{l['rev']} ({name}: {'/'.join(revs)})")
+                continue
+            # round 7 (r6chk finding 3): the cited path exists at its revision and every cited line is in range
+            ls_ = nr_lines_at(l["rev"], l["path"])
+            if ls_ is None:
+                gone.append(f"{f} {l['path']}@{l['rev']} (no such file at that revision)")
+                continue
+            out = [x for x in l["lines"] if not 1 <= x <= len(ls_)]
+            if out:
+                gone.append(f"{f} {l['path']}@{l['rev']}:{','.join(str(x) for x in out)} (beyond its {len(ls_)} lines)")
+    if bad or gone:
+        return dict(result="FAIL: " + "; ".join((["revision off its pin: " + "; ".join(bad)] if bad else [])
+                                                + (["cited file or line does not exist: " + "; ".join(gone)]
+                                                   if gone else [])))
+    return dict(result="pass" if n else "n/a", n_locators=n)
+
+
+def nr_strip_all(text):
+    """The source_value text as nr_values reads it (dates, locators, indexes, times, hashes, ids, labels removed)."""
+    s = DATE_RE.sub(" ", str(text or ""))
+    s = NR_LOC_RE.sub(" ", s)
+    for rx in NR_STRIP_RES:
+        s = rx.sub(" ", s)
+    return s
+
+
+def nr_check_unit_stated(r, texts):
+    """Round 6 (n1chk2 finding 8): an integer unit's value is stated in the source_value -- a numeral tied to it
+    (equal, or rounding half-up to it); a value whose integer part it is (a floor, '17×' for 17.500, which those rows'
+    comments state); the unit's digits inside a label ('L60', '4bit', 'L49-L63'); or, where the note prints the unit
+    as a percentage (a '%' after it or after its range), a proportion tied to it at the percentage scale. Level B
+    alone no longer passes an integer unit whose number the source_value does not state."""
+    from decimal import Decimal
+    unit = nr_unit(r)
+    if nr_unit_class(unit) != "integer":
+        return dict(result="n/a")
+    uv = [v for v in nr_unit_values(unit)[0] if v]
+    if not uv:
+        return dict(result="n/a")
+    s = nr_strip_all(r.get("source_value"))
+    vals = nr_tokens(s)
+    for u in uv:
+        if any(nr_tie(v, u) for v in vals):
+            return dict(result="pass", how="tied")
+        if any(v[1] > 0 and v[0] >= u[0] and int(v[0]) == int(u[0]) for v in vals):
+            return dict(result="pass", how="floor")
+        dg = re.sub(r"\D", "", u[2])
+        if dg and re.search(r"(?<![\d.,])" + dg + r"(?![\d]|[.,]\d)", s):
+            return dict(result="pass", how="label")
+        ln = texts.get(r.get("note_file"), [""] * 0)
+        line = ln[r["note_line"] - 1] if isinstance(r.get("note_line"), int) and 1 <= r["note_line"] <= len(ln) else ""
+        pct = unit.strip().endswith("%") or re.search(re.escape(unit.strip()) + r"\s*(?:[–-]\s*\d+(?:\.\d+)?\s*)?%", line)
+        if pct and any(v[1] >= 2 and v[0] < 1 and nr_tie((v[0] * Decimal(100), v[1] - 2, v[2]), u) for v in vals):
+            return dict(result="pass", how="percentage")
+    return dict(result=f"FAIL: the source_value does not state the note's {unit.strip()!r} (no tied value, floor, "
+                       f"label or percentage)")
+
+
+def nr_check_corr_declared(r):
+    """Round 6 (n1chk2 finding 5): the row's correction is the one NR_CORRECTIONS declares for it (kind, and whose
+    reading: N1's own, or an item raw's, whose basis then cites that raw); a correction the script does not declare,
+    or a declared one that is missing, fails."""
+    key = f"{r.get('span')}#{r.get('seq')}"
+    c, d = r.get("correction"), NR_CORRECTIONS.get(key)
+    if d is None and c is None:
+        return dict(result="n/a")
+    if d is None:
+        return dict(result="FAIL: the row carries a correction the script does not declare (NR_CORRECTIONS)")
+    if not isinstance(c, dict):
+        return dict(result=f"FAIL: the script declares a {d[0]} correction ({d[1]}'s) and the row carries none")
+    if c.get("kind") != d[0]:
+        return dict(result=f"FAIL: correction kind {c.get('kind')!r}; the script declares {d[0]!r}")
+    whose = str(c.get("whose") or "")
+    if d[1] == "N1":
+        if not whose.startswith("N1's"):
+            return dict(result=f"FAIL: the correction is N1's own reading (NR_CORRECTIONS); 'whose' reads {whose[:60]!r}")
+    else:
+        if not whose.startswith(d[1] + " ("):
+            return dict(result=f"FAIL: the correction is {d[1]}'s (NR_CORRECTIONS); 'whose' reads {whose[:60]!r}")
+        rx = re.compile(r"^results/raw/2026-10-0[89]_note-" + re.escape(d[1]) + r"-")
+        if not any(rx.match(l["path"]) for l in nr_parse_locs(c.get("basis"))):
+            return dict(result=f"FAIL: the correction is {d[1]}'s but its basis cites no line of {d[1]}'s raw")
+    # round 7 (r6chk finding 4b): the whole correction as declared (an N1-own correction's basis is bound here)
+    fp = nr_corr_fp(c)
+    if fp != d[2]:
+        return dict(result=f"FAIL: the correction changed after it was declared (fingerprint {fp}, declared {d[2]})")
+    return dict(result="pass")
+
+
+def nr_corr_fp(c):
+    return sha256(json.dumps(c, sort_keys=True, ensure_ascii=False).encode("utf-8"))[:16]
+
+
+def nr_fingerprint(r):
+    return sha256(json.dumps({k: r.get(k) for k in NR_FP_FIELDS}, sort_keys=True, ensure_ascii=False)
+                  .encode("utf-8"))[:16]
+
+
+def nr_validate_row(r, texts, ledger, figidx):
+    """Every check on one row: [(check, message)] failures and the per-check results."""
+    v, bad = {}, []
+    key = f"{r.get('span')}#{r.get('seq')}"
+    if r.get("note_file") not in texts:
+        bad.append(("note-line", f"note_file {r.get('note_file')!r} is not one of the three routed files"))
+    else:
+        ls = texts[r["note_file"]]
+        u = nr_unit(r)
+        n = r.get("note_line")
+        ok = isinstance(n, int) and 1 <= n <= len(ls) and u in ls[n - 1]
+        v["note_line"] = "pass" if ok else f"FAIL: '{u}' not on {r['note_file']}:{n}"
+        if not ok:
+            bad.append(("note-line", v["note_line"]))
+    v["pins"] = nr_check_pins(r)
+    if v["pins"]["result"].startswith("FAIL"):
+        bad.append(("pins", v["pins"]["result"]))
+    kind, st, mp = r.get("kind"), r.get("status"), r.get("maps_to")
+    if kind == "figure":
+        if st not in NR_STATUSES or mp not in NR_MAPS:
+            bad.append(("schema", f"status {st!r} / maps_to {mp!r}"))
+        if mp == "none" and st != "not found":
+            bad.append(("schema", f"maps_to none with status {st!r}"))
+        v["maps_to"] = nr_check_maps_to(r)
+        if v["maps_to"]["result"].startswith("FAIL"):
+            bad.append(("maps-to", v["maps_to"]["result"]))
+        if st in ("reproduced", "log-only", "computed-new", "discrepant"):
+            v["locator"] = nr_check_locator(r)
+            if v["locator"]["result"] != "pass":
+                bad.append(("locator-value", v["locator"]["result"]))
+            v["source_values"] = nr_check_source_values(r)
+            if v["source_values"]["result"] != "pass":
+                bad.append(("source-values", v["source_values"]["result"]))
+            v["unit_stated"] = nr_check_unit_stated(r, texts)
+            if v["unit_stated"]["result"].startswith("FAIL"):
+                bad.append(("unit-stated", v["unit_stated"]["result"]))
+        else:
+            v["locator"] = dict(result=f"n/a ({st})")
+        v["status"] = nr_check_status(r, figidx)
+        if v["status"]["result"].startswith("FAIL"):
+            bad.append(("status", v["status"]["result"]))
+        v["ledger"] = nr_check_ledger(r, ledger)
+        if v["ledger"]["result"].startswith("FAIL"):
+            bad.append(("ledger-status" if "not in the ledger" not in v["ledger"]["result"] else "ledger-exists",
+                        v["ledger"]["result"]))
+        # round 7 (r6chk finding 2): the named ledger row is bound to the row's figure
+        v["ledger_bind"] = nr_check_ledger_bind(r, ledger)
+        if v["ledger_bind"]["result"].startswith("FAIL"):
+            bad.append(("ledger-bind", v["ledger_bind"]["result"]))
+        v["ledger_span"] = nr_check_ledger_span(r, ledger)
+        if v["ledger_span"]["result"].startswith("FAIL"):
+            bad.append(("ledger-span", v["ledger_span"]["result"]))
+        v["double_rounding"] = nr_check_double_rounding(r)
+        if v["double_rounding"]["result"].startswith("FAIL"):
+            bad.append(("double-rounding", v["double_rounding"]["result"]))
+        v["correction"] = nr_check_correction(r)
+        if v["correction"]["result"].startswith("FAIL"):
+            bad.append(("correction", v["correction"]["result"]))
+        v["correction_declared"] = nr_check_corr_declared(r)
+        if v["correction_declared"]["result"].startswith("FAIL"):
+            bad.append(("correction-declared", v["correction_declared"]["result"]))
+        v["corrected_in_note"] = nr_check_corrected(r, v["locator"], figidx)
+        if v["corrected_in_note"]["result"].startswith("FAIL"):
+            bad.append(("corrected-in-note", v["corrected_in_note"]["result"]))
+    elif kind == "not-figure":
+        if st != "n/a":
+            bad.append(("schema", f"not-figure with status {st!r}"))
+        if not r.get("not_figure_reason"):
+            bad.append(("schema", "not-figure without a not_figure_reason"))
+        for f in ("correction", "corrected_in_note", "status_basis"):
+            if r.get(f) is not None:
+                bad.append(("schema", f"not-figure with {f}"))
+        if key in NR_CORRECTIONS:
+            bad.append(("correction-declared", "FAIL: the script declares a correction on a row that is not a figure"))
+    else:
+        bad.append(("schema", f"kind {kind!r}"))
+    ex = r.get("validation_exempts") or {}
+    if not isinstance(ex, dict):
+        bad.append(("schema", "validation_exempts must map a check to the failure message it explains"))
+        ex = {}
+    if ex and not r.get("validation_note"):
+        bad.append(("schema", "validation_exempts without a validation_note"))
+    if r.get("validation_note") and not ex:
+        bad.append(("schema", "validation_note without validation_exempts (round 5: a note names the check it explains)"))
+    for e in ex:
+        if e not in NR_EXEMPTABLE:
+            bad.append(("schema", f"validation_exempts names {e!r}, which no note can exempt"))
+    # round 6 (n1chk2 finding 4): an exemption holds only for the row as declared in the script (NR_EXEMPT_FP)
+    if ex or key in NR_EXEMPT_FP:
+        fp = nr_fingerprint(r)
+        v["fingerprint"] = fp
+        if key not in NR_EXEMPT_FP:
+            bad.append(("exemption-declared", f"an exemption the script does not declare (NR_EXEMPT_FP; fingerprint "
+                                              f"{fp})"))
+        elif not ex:
+            bad.append(("exemption-declared", "the script declares an exemption on this row and the row carries none"))
+        elif fp != NR_EXEMPT_FP[key]:
+            bad.append(("exemption-declared", f"the row changed after its exemption was declared (fingerprint {fp}, "
+                                              f"declared {NR_EXEMPT_FP[key]})"))
+    if "locator-value" in ex:
+        q = r.get("validation_quote")
+        lls = [l for l in nr_parse_locs(r.get("locator")) if l["lines"]]
+        first = nr_line(lls[0]["rev"], lls[0]["path"], lls[0]["lines"][0]) if lls else None
+        if not q or first is None or q not in first:
+            bad.append(("validation-quote", "an exemption from locator-value needs a validation_quote on the row's "
+                                            "first cited line"))
+
+    # round 6 (n1chk2 finding 4): an exemption explains a failure only when it equals the whole message
+    def is_explained(c, m):
+        return c in NR_EXEMPTABLE and isinstance(ex.get(c), str) and ex.get(c) == m
+    for e, msg in ex.items():
+        if e in NR_EXEMPTABLE and not any(c == e and msg == m for c, m in bad):
+            bad.append(("schema", f"validation_exempts names {e!r} with {msg!r}, which equals no failure message of "
+                                  f"that check (an unused, stale or partial exemption)"))
+    failures = [(c, m) for c, m in bad if not is_explained(c, m)]
+    explained = [(c, m) for c, m in bad if is_explained(c, m)]
+    return v, failures, explained
+
+
+_TOPO_H: dict = {}
+
+
+def topo_h(c):
+    """Position of a commit in `git rev-list --topo-order HEAD` (0 = newest); section 9 reaches past the audit pin."""
+    if not _TOPO_H:
+        for i, s in enumerate(git("rev-list", "--topo-order", "HEAD").split()):
+            _TOPO_H[s] = i
+    if c and len(c) < 40:
+        c = full(c)
+    return _TOPO_H.get(c)
+
+
+def latest_h(cs):
+    cs = [c for c in cs if c]
+    if not cs:
+        return None
+    idx = [(topo_h(c), full(c) if len(c) < 40 else c) for c in cs]
+    if any(i is None for i, _ in idx):
+        raise SystemExit(f"commit(s) not ancestors of HEAD: {[c for i, c in idx if i is None]}")
+    return min(idx)[1]
+
+
+def earliest_h(cs):
+    cs = [c for c in cs if c]
+    if not cs:
+        return None
+    idx = [(topo_h(c), full(c) if len(c) < 40 else c) for c in cs]
+    if any(i is None for i, _ in idx):
+        raise SystemExit(f"commit(s) not ancestors of HEAD: {[c for i, c in idx if i is None]}")
+    return max(idx)[1]
+
+
+_ANC: dict = {}
+
+
+def at_or_before_pin(rev):
+    if rev not in _ANC:
+        _ANC[rev] = subprocess.run(["git", "-C", str(REPO), "merge-base", "--is-ancestor", rev, PIN]).returncode == 0
+    return _ANC[rev]
+
+
+def nr_is_audit_path(p):
+    return p.startswith("results/raw/2026-10-08_note-") or p.startswith("results/raw/2026-10-09_note-") or p == "README-NOTE.md"
+
+
+def nr_record_entry_from_locs(locs):
+    """Record locators (a revision at or before the record pin, a path that is not an audit output): each locator is
+    one carrier entering at its latest line's blamed commit; a row's carriers are alternatives, so the row enters with
+    the earliest (the provisional ledger's round-3 rule)."""
+    carriers = []
+    for l in locs:
+        if not l["lines"] or nr_is_audit_path(l["path"]) or not at_or_before_pin(l["rev"]):
+            continue
+        if nr_lines_at(l["rev"], l["path"]) is None:
+            continue
+        cs = [blame_line(l["path"], l["rev"], n) for n in l["lines"]]
+        carriers.append(dict(locator=f"{l['path']}@{l['rev']}:{','.join(str(n) for n in l['lines'])}",
+                             commit=latest_h(cs)))
+    return carriers
+
+
+def final_note_rows(path, ledger, raws, note_res, watch, D=None, raw_bytes=None, stop_after_validation=False):
+    """Validate the note rows and compute section 9 (see the block comment above NOTE_ROUTED). D and raw_bytes,
+    when given, are the rows data in memory (the round-5 mutation self-test passes mutated copies)."""
+    if D is None:
+        p = REPO / path if not Path(path).is_absolute() else Path(path)
+        raw_bytes = p.read_bytes()
+        D = json.loads(raw_bytes)
+    rows = D["rows"]
+    # 0. round 5 (finding 2): the matcher-unit -> kind assignment is frozen by its hash (a validation failure below)
+    kh = sha256(nr_kind_lines(rows).encode("utf-8"))
+    # 1. the note files: sha256 against the routed values, and their text (the matcher's extraction)
+    files, texts = [], {}
+    for f in NOTE_ROUTED:
+        b, t = note_text(REPO / f)
+        h = sha256(b)
+        a, z = NOTE_ROUTED[f]
+        ok = (h == a) if not z else (h.startswith(a) and h.endswith(z))
+        if not ok:
+            raise SystemExit(f"{f}: sha256 {h} does not match the routed {a}...{z}")
+        dec = [x for x in D.get("note_files", []) if x["path"] == f]
+        if not dec or dec[0]["sha256"] != h:
+            raise SystemExit(f"{f}: the rows file declares another sha256 ({dec[0]['sha256'] if dec else None})")
+        files.append(dict(path=f, sha256=h, routed=a + ("..." + z if z else ""), match=ok, tracked=bool(
+            git("ls-files", "--", f).strip())))
+        texts[f] = t.split("\n")
+    # 2. coverage: every matcher unit has a row, per file (multiset over (line, unit))
+    cover = []
+    for res in note_res or []:
+        mu = {}
+        for x in res["numerals"]:
+            mu[(x["line"], x["text"])] = mu.get((x["line"], x["text"]), 0) + 1
+        ru = {}
+        for r in rows:
+            if r["note_file"] == res["path"]:
+                k = (r["note_line"], nr_unit(r))
+                ru[k] = ru.get(k, 0) + 1
+        miss = {f"{k[0]}:{k[1]}": v - ru.get(k, 0) for k, v in mu.items() if ru.get(k, 0) < v}
+        extra = {f"{k[0]}:{k[1]}": v - mu.get(k, 0) for k, v in ru.items() if mu.get(k, 0) < v}
+        cover.append(dict(path=res["path"], matcher_units=sum(mu.values()), rows=sum(ru.values()),
+                          matcher_units_without_row=miss, rows_beyond_matcher=extra))
+        if miss:
+            raise SystemExit(f"{res['path']}: matcher units without a row: {miss}")
+    # 3. per-row validation (round 5: every check named; a note explains only the check it names)
+    figidx = nr_fig_index(raws)
+    fails, explained = [], []
+    if kh != NR_KIND_SHA256:
+        nf_ = sum(1 for r in rows if r.get("kind") == "figure")
+        fails.append(dict(row="(all rows)", file=None, line=None, unit=None, status=None, validation_note=None,
+                          failures=[f"kind-hash: the unit -> kind assignment hashes to {kh[:16]}..., not the frozen "
+                                    f"{NR_KIND_SHA256[:16]}... ({nf_} figures, {len(rows) - nf_} other; a deliberate "
+                                    f"change is made in NR_KIND_SHA256 too)"]))
+    # round 6 (n1chk2 finding 7): the clauses are frozen the same way
+    clh = sha256(nr_clause_lines(rows).encode("utf-8"))
+    if clh != NR_CLAUSE_SHA256:
+        fails.append(dict(row="(all rows)", file=None, line=None, unit=None, status=None, validation_note=None,
+                          failures=[f"clause-hash: the clauses hash to {clh[:16]}..., not the frozen "
+                                    f"{NR_CLAUSE_SHA256[:16]}... (a deliberate change is made in NR_CLAUSE_SHA256 too)"]))
+    # round 6 (n1chk2 finding 4): every exemption the script declares is on a row of the file
+    gone = sorted(k for k in NR_EXEMPT_FP if k not in {f"{r['span']}#{r['seq']}" for r in rows})
+    if gone:
+        fails.append(dict(row="(all rows)", file=None, line=None, unit=None, status=None, validation_note=None,
+                          failures=[f"exemption-declared: NR_EXEMPT_FP names rows the file does not have: {gone}"]))
+    # round 7 (r6chk findings 2-4): the status and text freezes and the quotation scan, computed on the file as read
+    # (before the rows carry this run's own fields) and reported after the rows' own failures
+    sth, txh, qhits = nr_status_freeze(rows), nr_text_freeze(D), nr_quote_scan(D)
+    for r in rows:
+        key = f"{r['span']}#{r['seq']}"
+        r["_key"] = key
+        v, bad, exp_ = nr_validate_row(r, texts, ledger, figidx)
+        r["_validation"] = v
+        r["_failures"] = [f"{c}: {m}" for c, m in bad + exp_]
+        r["_explained"] = [c for c, _ in exp_]
+        if bad:
+            fails.append(dict(row=key, file=r.get("note_file"), line=r.get("note_line"), unit=nr_unit(r),
+                              status=r.get("status"), failures=[f"{c}: {m}" for c, m in bad],
+                              validation_note=r.get("validation_note")))
+        if exp_:
+            explained.append(dict(row=key, file=r.get("note_file"), line=r.get("note_line"), unit=nr_unit(r),
+                                  status=r.get("status"), failures=[f"{c}: {m}" for c, m in exp_],
+                                  exempts=r.get("validation_exempts"), validation_note=r.get("validation_note"),
+                                  validation_quote=r.get("validation_quote")))
+    if sth != NR_STATUS_SHA256:
+        fails.append(dict(row="(all rows)", file=None, line=None, unit=None, status=None, validation_note=None,
+                          failures=[f"status-hash: the status-deciding fields hash to {sth[:16]}..., not the frozen "
+                                    f"{NR_STATUS_SHA256[:16]}... (a deliberate change of a status, maps_to, ledger row "
+                                    f"or status basis, or of a not-found row's locator or source value, is made in "
+                                    f"NR_STATUS_SHA256 too)"]))
+    if txh != NR_TEXT_SHA256:
+        fails.append(dict(row="(all rows)", file=None, line=None, unit=None, status=None, validation_note=None,
+                          failures=[f"text-hash: the free text and change history hash to {txh[:16]}..., not the "
+                                    f"frozen {NR_TEXT_SHA256[:16]}... (a deliberate change is made in NR_TEXT_SHA256 "
+                                    f"too)"]))
+    qbad = [q for q in qhits if not q["reviewed"]]
+    if qbad:
+        fails.append(dict(row="(all rows)", file=None, line=None, unit=None, status=None, validation_note=None,
+                          failures=[f"quote-scan: {len(qbad)} quoted span(s) of fifteen words or more near the name of "
+                                    f"an external source, not declared in NR_QUOTE_REVIEWED: "
+                                    + "; ".join(f"{q['where']} ({q['words']} words, {q['sha']})" for q in qbad)]))
+    if stop_after_validation and fails:
+        return dict(stopped_after_validation=True, validation=dict(failures=fails, explained=explained))
+    noted_ok = [f"{r['span']}#{r['seq']}" for r in rows if r.get("validation_note") and not r["_failures"]]
+    figs = [r for r in rows if r["kind"] == "figure"]
+    byk = {r["_key"]: r for r in rows}
+    # the status the pass check reads: the row's own, except where its ledger row's item raw gives no status in N1's
+    # vocabulary (base 'other' or 'mixed'); then the ledger row's, as the provisional ledger's note 2 and hard rule 4
+    # require (N1 does not assign such a row a status)
+    for r in figs:
+        ids, _ = nr_row_ledger_ids(r)
+        lst = sorted({rr["base_status"] or "none" for rr in ledger[ids[0]]["refs"]}) if ids and ids[0] in ledger else []
+        if lst and set(lst) <= {"other", "mixed"} and r["status"] not in lst:
+            r["_eff"] = "outside N1's vocabulary (" + "/".join(lst) + f", {ids[0]})"
+        else:
+            r["_eff"] = r["status"]
+    pc = {}
+    for r in figs:
+        pc.setdefault(r["_eff"], []).append(r["_key"])
+    # round 5 (finding 6): a discrepant row the note already corrects (corrected_in_note, verified) passes; round 6
+    # (n1chk2 finding 2): the rows marked are exactly NR_DISC's branch C, the rows whose own cause says the note now
+    # carries the correction
+    corrected = [r["_key"] for r in figs if r["status"] == "discrepant" and r.get("corrected_in_note")
+                 and r["_validation"].get("corrected_in_note", {}).get("result") == "pass"]
+    c_branch = sorted(k for k, (b_, _) in NR_DISC.items() if b_ == "C")
+    marked = sorted(r["_key"] for r in rows if r.get("corrected_in_note") is not None)
+    if marked != c_branch or sorted(corrected) != c_branch:
+        raise SystemExit(f"corrected_in_note rows {marked} (verified {sorted(corrected)}) are not NR_DISC's branch C "
+                         f"{c_branch}")
+    passing = [r["_key"] for r in figs if r["_eff"] in ("reproduced", "log-only")] + corrected
+    loc_ok = [k for k in passing if byk[k]["_validation"]["locator"]["result"] == "pass"
+              or "locator-value" in (byk[k].get("validation_exempts") or [])]
+    # 4. discrepant branches (asserted against each row's cause) and the not-found / not-run lists
+    disc = []
+    for r in figs:
+        if r["status"] != "discrepant":
+            continue
+        if r["_key"] not in NR_DISC:
+            raise SystemExit(f"discrepant row {r['_key']} has no NR_DISC entry")
+        br, q = NR_DISC[r["_key"]]
+        if q not in (r.get("cause") or ""):
+            raise SystemExit(f"NR_DISC quote not in {r['_key']}'s cause: {q!r}")
+        disc.append(dict(row=r["_key"], file=r["note_file"], line=r["note_line"], unit=nr_unit(r),
+                         ledger_row=r.get("ledger_row"), branch=br, quoted=q, cause=r.get("cause"),
+                         clause=r.get("clause")))
+    stale = [k for k in NR_DISC if k not in byk or byk[k]["status"] != "discrepant"]
+    if stale:
+        raise SystemExit(f"NR_DISC entries for rows that are not discrepant: {stale}")
+    nf = [dict(row=r["_key"], file=r["note_file"], line=r["note_line"], unit=nr_unit(r), clause=r.get("clause"),
+               cause=r.get("cause"), comment=r.get("comment"), ledger_row=r.get("ledger_row")) for r in figs
+          if r["status"] == "not found"]
+    nrun = [dict(row=r["_key"], file=r["note_file"], line=r["note_line"], unit=nr_unit(r), clause=r.get("clause"),
+                 comment=r.get("comment"), ledger_row=r.get("ledger_row")) for r in figs if r["status"] == "not run"]
+    n19 = []
+    for x in sorted((REPO / "results" / "raw").glob("*N19*")):
+        rel = str(x.relative_to(REPO))
+        d19 = dict(path=rel, sha256=sha256(x.read_bytes()), tracked=bool(git("ls-files", "--", rel).strip()))
+        d19["commit"] = last_change(rel, "HEAD") if d19["tracked"] else None
+        d19["equal_to_committed"] = (sha256(show("HEAD", rel)) == d19["sha256"]) if d19["tracked"] else None
+        if x.suffix == ".md":
+            st19 = []
+            for i, l in enumerate(x.read_text(encoding="utf-8", errors="replace").split("\n"), start=1):
+                for v in ("0.394", "0.70"):
+                    if l.startswith(f"| {v} ("):
+                        cells = [c.strip() for c in l.strip().strip("|").split("|")]
+                        st19.append(dict(value=v, line=i, status=cells[1] if len(cells) > 1 else None))
+            d19["status_rows"] = st19
+        n19.append(d19)
+    # 5. watch-list outcomes: matcher hits per id, text search, and the asserted rows
+    hits = {}
+    for res in note_res or []:
+        for h in res["watch_hits"]:
+            hits.setdefault(h["watch"], []).append(dict(file=res["path"], line=h["line"], unit=h["text"],
+                                                         excluded=h.get("excluded")))
+    wl = {w["id"]: w for w in watch}
+    watch_out = []
+    for w in NR_WATCH + NR_WATCH_EXTRA:
+        for k, s_ in w["rows"]:
+            if k not in byk or byk[k]["status"] != s_:
+                raise SystemExit(f"NR_WATCH {w['id']}: row {k} is not {s_!r}")
+        if w.get("note"):
+            sp, q = w["note"]
+            spn = [s for s in D["spans"] if s["span"] == sp][0]["span_notes"]
+            if not any(q in x for x in spn):
+                raise SystemExit(f"NR_WATCH {w['id']}: quote not in {sp}'s span notes: {q!r}")
+        found = []
+        needles = list(wl[w["id"]]["quotes"]) if w["id"] in wl else [w["text"]]
+        for f, ls in texts.items():
+            for i, s in enumerate(ls, start=1):
+                for nd in needles:
+                    nd_ = nd.strip("'")
+                    if nd_ and nd_ in s:
+                        found.append(dict(file=f, line=i, text=nd_))
+        watch_out.append(dict(id=w["id"], matcher_hits=hits.get(w["id"], []), text_hits=found,
+                              rows=[dict(row=k, status=s_, file=byk[k]["note_file"], line=byk[k]["note_line"],
+                                         unit=nr_unit(byk[k])) for k, s_ in w["rows"]],
+                              outcome=w["outcome"],
+                              what=wl[w["id"]]["what"] if w["id"] in wl else w.get("what"),
+                              locator=wl[w["id"]]["locator"] if w["id"] in wl else None))
+    # every matcher watch hit must be accounted for by a listed row (same file, line, unit) or a stated collision
+    for wo in watch_out:
+        for h in wo["matcher_hits"]:
+            rk = [r["_key"] for r in rows if r["note_file"] == h["file"] and r["note_line"] == h["line"]
+                  and nr_unit(r) == h["unit"]]
+            h["rows"] = rk
+            h["listed"] = any(x["row"] in rk for x in wo["rows"])
+    # open items (9h), each row's status and each span-note quote asserted
+    spn_by = {s_["span"]: s_["span_notes"] for s_ in D["spans"]}
+    open_items = []
+    for o in NR_OPEN:
+        for k, s_ in o["rows"]:
+            if k not in byk or byk[k]["status"] != s_:
+                raise SystemExit(f"NR_OPEN {o['id']}: row {k} is not {s_!r}")
+        # round 6 (n1chk2 finding 5): an item that rests on a correction names it, and the row carries it
+        for k in o.get("corrections", []):
+            if k not in NR_CORRECTIONS or not isinstance(byk.get(k, {}).get("correction"), dict):
+                raise SystemExit(f"NR_OPEN {o['id']}: row {k} carries no declared correction")
+        locs_ = []
+        for sp, q in o["notes"]:
+            hit = [i for i, x in enumerate(spn_by[sp]) if q in x]
+            if len(hit) != 1:
+                raise SystemExit(f"NR_OPEN {o['id']}: quote not unique in {sp}'s span notes: {q!r} {hit}")
+            locs_.append(f"{sp} span note {hit[0]}")
+        open_items.append(dict(id=o["id"], what=o["what"], text=o["text"], corrections=o.get("corrections", []),
+                               rows=[dict(row=k, status=s_, file=byk[k]["note_file"], line=byk[k]["note_line"],
+                                          unit=nr_unit(byk[k])) for k, s_ in o["rows"]], span_notes=locs_))
+    t_rows = [x["row"] for x in disc if x["branch"] == "T"]
+    if sorted(t_rows) != sorted(NR_T_ROWS):
+        raise SystemExit(f"NR_T_ROWS differs from the T-branch rows: {sorted(t_rows)}")
+    if sorted(x["row"] for x in nf) != sorted(NR_NF_ROWS):
+        raise SystemExit(f"NR_NF_ROWS differs from the not-found rows: {sorted(x['row'] for x in nf)}")
+    # 6. entry commits per figure (section 9g)
+    fig_index = {}
+    for item in raws.js:
+        for i, f in enumerate(raws.figures(item)):
+            try:
+                rr = raws.resolve((item, "id", f["id"]) if f.get("id") and item == "N3" else F(item, f.get("figure")))
+            except SystemExit:
+                continue
+            fig_index[(RAWS[item][0], rr["md_line"])] = rr
+    raw_md = {v[0] for v in RAWS.values()}
+
+    def fig_record(rr):
+        if rr.get("_rec") is None:
+            ps = parse_sources(rr.get("source"))
+            hints = [os.path.dirname(x["path"]) for x in ps if "/" in x["path"] and x["path"].startswith("data/")]
+            hints += ITEM_DIRS.get(rr.get("item") or "", [])
+            srcs = [classify_source(x, hints) for x in ps]
+            cs = [e["commit"] for s in srcs if s["kind"] in ("artifact", "line locator") for e in s["entries"]
+                  if e.get("commit")]
+            rr["_rec"] = (latest_h(cs), base_status(rr.get("status")), [s["raw"] for s in srcs
+                                                                         if s["kind"] in ("artifact", "line locator")])
+        return rr["_rec"]
+
+    entries = []
+    for r in figs:
+        st = r["status"]
+        e = dict(row=r["_key"], status=st)
+        if st in ("not found", "not run"):
+            e.update(record=None, audit=None, how="enters no commit (" + st + ")", computed_new=False, basis=None)
+            entries.append(e)
+            continue
+        locs = nr_parse_locs(r.get("locator"))
+        ids, _ = nr_row_ledger_ids(r)
+        rec, how, aud, fc = None, None, None, None
+        al = [l for l in locs if l["lines"] and nr_is_item_raw(l["path"])]
+        # computed-new, strictly: the row's own status, its ledger row's or its item-raw figure row's
+        computed, basis = st == "computed-new", ("the row's status" if st == "computed-new" else None)
+        lrow = ledger.get(ids[0]) if ids else None
+        if lrow is not None:
+            rec, how = lrow["entry_record"], f"ledger {ids[0]} entry (record sources)"
+            fc = lrow.get("entry_note_first_carrier")
+            if not computed and any(rr["base_status"] == "computed-new" for rr in lrow["refs"]):
+                computed, basis = True, f"ledger {ids[0]}"
+        carriers = nr_record_entry_from_locs(locs) + nr_record_entry_from_locs(nr_parse_locs(r.get("source_value")))
+        if rec is None and lrow is None and r["maps_to"] == "record" and carriers:
+            rec, how = earliest_h([c["commit"] for c in carriers]), "record locators (first carrier)"
+        if rec is None and lrow is None and not computed and r["maps_to"] in ("item-raw", "audit-raw-new"):
+            for l in locs:
+                if l["path"] in raw_md and l["lines"]:
+                    same = full(l["rev"]) == full(AUDIT) or all(
+                        nr_line(l["rev"], l["path"], n) is not None and
+                        nr_line(l["rev"], l["path"], n) == nr_line(AUDIT, l["path"], n) for n in l["lines"])
+                    hit = next((fig_index[(l["path"], n)] for n in l["lines"] if same and (l["path"], n) in fig_index),
+                               None)
+                    if hit:
+                        c, bst, srcs = fig_record(hit)
+                        if bst == "computed-new":
+                            computed, basis = True, f"item-raw figure row {hit['locator']}"
+                        elif c:
+                            rec, how = c, f"item-raw figure row {hit['locator']} -> its sources ({'; '.join(srcs)[:200]})"
+                        break
+            if rec is None and not computed and carriers:
+                rec, how = earliest_h([c["commit"] for c in carriers]), "record locators named in the row (first carrier)"
+        # computed-new, as a fallback where no record entry was found: the row's source value is computed-new by the
+        # row's own words or by the first item-raw line it cites (a discrepant row's reproduced value can be one)
+        if rec is None and not computed and (
+                "computed-new" in str(r.get("source_value") or "") or bool(al and "computed-new" in (
+                    nr_line(al[0]["rev"], al[0]["path"], al[0]["lines"][0]) or ""))):
+            computed, basis = True, "the row's source value (its words or its cited item-raw line)"
+        # round 5 (N19): a figure the audit reproduced from an external source, whose only carrier in the record is an
+        # audit raw committed after the audit pin (N19's, at e0fd85c), enters with that raw
+        audit_only = bool(rec is None and not computed and al and al[0]["path"] not in raw_md)
+        if audit_only:
+            basis = f"its only carrier is the audit raw {al[0]['path']} (reproduced there from an external source)"
+        if computed or audit_only:
+            if al:
+                l = al[0]
+                aud = latest_h([blame_line(l["path"], l["rev"], n) for n in l["lines"]])
+                e["audit_locator"] = f"{l['path']}@{l['rev']}:{','.join(str(n) for n in l['lines'])}"
+            elif lrow is not None and lrow.get("entry_with_audit"):
+                aud = lrow["entry_with_audit"]
+                e["audit_locator"] = f"ledger {ids[0]} entry (+audit)"
+        if audit_only:
+            how = "reproduced in an audit raw from an external source: enters with that raw"
+        e.update(record=rec, how=how or ("computed-new: its only source is an audit raw" if computed else
+                                          "UNRESOLVED (no ledger row, record locator or item-raw figure row with "
+                                          "record sources)"),
+                 audit=aud, first_carrier=fc if fc and rec and topo_h(fc) < topo_h(rec) else None,
+                 computed_new=computed, audit_only=audit_only, basis=basis, carriers=carriers)
+        entries.append(e)
+    rec_rows = [e for e in entries if e["record"]]
+    cand_rec = latest_h([e["record"] for e in rec_rows])
+    cand_fc = latest_h([e["first_carrier"] or e["record"] for e in rec_rows])
+    def with_audit(e):
+        return e["audit"] if (e["computed_new"] or e.get("audit_only")) and e["audit"] else e["record"]
+    cand_aud = latest_h([with_audit(e) for e in entries if with_audit(e)])
+    unresolved = [e for e in entries if not e["record"] and not e.get("computed_new") and not e.get("audit_only")
+                  and e["status"] not in ("not found", "not run")]
+    head = full("HEAD")
+    T = dict(
+        record_sources_only=dict(commit=cand_rec, date=cdate(cand_rec) if cand_rec else None,
+                                 rows=[e["row"] for e in rec_rows if e["record"] == cand_rec]),
+        record_with_first_carriers=dict(commit=cand_fc, date=cdate(cand_fc) if cand_fc else None,
+                                        rows=[e["row"] for e in rec_rows if (e["first_carrier"] or e["record"]) == cand_fc]),
+        including_audit_raws=dict(commit=cand_aud, date=cdate(cand_aud) if cand_aud else None,
+                                  rows=[e["row"] for e in entries if with_audit(e) == cand_aud]),
+        first_carrier_rows=[dict(row=e["row"], record=e["record"], first_carrier=e["first_carrier"]) for e in entries
+                            if e.get("first_carrier")],
+        computed_without_audit=[e["row"] for e in entries if e["computed_new"] and not e["audit"]],
+        audit_only_rows=[dict(row=e["row"], audit=e["audit"], locator=e.get("audit_locator")) for e in entries
+                         if e.get("audit_only")],
+        unresolved_rows=[dict(row=e["row"], status=e["status"]) for e in unresolved],
+        head_at_run=head,
+        candidate_is_ancestor_of_head=bool(cand_aud) and subprocess.run(
+            ["git", "-C", str(REPO), "merge-base", "--is-ancestor", cand_aud, head]).returncode == 0,
+        n_figures_entering=len([e for e in entries if e["record"] or e["audit"]]),
+    )
+    # 7. the not-figure summary, by reason group
+    nfig = [r for r in rows if r["kind"] != "figure"]
+    groups = {}
+    for r in nfig:
+        reason = (r.get("not_figure_reason") or "").lower()
+        g = next(name for name, pat in NR_REASON_GROUPS if re.search(pat, reason))
+        x = groups.setdefault(g, dict(n=0, by_file={}, reasons=set()))
+        x["n"] += 1
+        x["by_file"][r["note_file"]] = x["by_file"].get(r["note_file"], 0) + 1
+        x["reasons"].add(r.get("not_figure_reason"))
+    nf_summary = [dict(group=g, n=x["n"], by_file=x["by_file"], n_distinct_reasons=len(x["reasons"]))
+                  for g, x in sorted(groups.items(), key=lambda kv: -kv[1]["n"])]
+    # 8. span notes with their keyword
+    sn = []
+    for s in D["spans"]:
+        ann = {}
+        for a in s.get("span_note_annotations", []):
+            if not (0 <= a["index"] < len(s["span_notes"])) or a["quote"] not in s["span_notes"][a["index"]]:
+                raise SystemExit(f"span-note annotation for {s['span']} #{a['index']}: quote not in that note")
+            ann.setdefault(a["index"], []).append(a["text"])
+        for i, t in enumerate(s["span_notes"]):
+            marks = list(dict.fromkeys(m.group(1) for m in NR_NOTE_MARK_RE.finditer(t)))
+            sn.append(dict(span=s["span"], index=i, markers=marks, stop=bool(re.search(r"\bSTOP\b", t)), text=t,
+                           annotations=ann.get(i, [])))
+    counts = {}
+    for r in figs:
+        counts.setdefault(r["note_file"], {})
+        counts[r["note_file"]][r["status"]] = counts[r["note_file"]].get(r["status"], 0) + 1
+    return dict(
+        rows_file=str(path), rows_file_sha256=sha256(raw_bytes), files=files, coverage=cover,
+        n_rows=len(rows), n_figures=len(figs), n_not_figures=len(nfig), status_counts_by_file=counts,
+        validation=dict(n_rows=len(rows), failures=fails, explained=explained, noted_but_passing=noted_ok,
+                        locator_results={k: sum(1 for r in figs if r["_validation"].get("locator", {}).get("result", "")
+                                                 .startswith(k)) for k in ("pass", "FAIL", "n/a")},
+                        locator_secondary=[r["_key"] for r in figs if r["_validation"].get("locator", {})
+                                           .get("where") == "secondary"]),
+        pass_check=dict(n_figures=len(figs), by_status={k: len(v) for k, v in pc.items()}, rows_by_status=pc,
+                        passing=len(passing), passing_with_a_validated_locator=len(loc_ok),
+                        passing_without=[k for k in passing if k not in loc_ok], corrected_in_note=corrected),
+        corrections=[dict(row=r["_key"], file=r["note_file"], line=r["note_line"], unit=nr_unit(r), status=r["status"],
+                          **{k: r["correction"].get(k) for k in ("kind", "text", "whose", "basis")})
+                     for r in figs if r.get("correction")],
+        round5=[dict(row=r["_key"], file=r["note_file"], line=r["note_line"], unit=nr_unit(r), status=r.get("status"),
+                     kind=r.get("kind"), **r["round5"]) for r in rows if r.get("round5")],
+        status_check={k: sum(1 for r in figs if (r["_validation"].get("status", {}).get("how") or
+                                                  r["_validation"].get("status", {}).get("result", ""))
+                             .startswith(k)) for k in ("JSON figure row", "status cell", "status tag", "status_basis",
+                                                       "record lines only", "audit-raw-new", "n/a")},
+        kind_sha256=NR_KIND_SHA256, clause_sha256=NR_CLAUSE_SHA256, status_sha256=NR_STATUS_SHA256,
+        text_sha256=NR_TEXT_SHA256, quote_scan=qhits,
+        check_counts={c: {k: sum(1 for r in figs if str(r["_validation"].get(f, {}).get("result", "n/a"))
+                                 .startswith(k)) for k in ("pass", "FAIL", "n/a")}
+                      for c, f in (("maps-to", "maps_to"), ("pins", "pins"), ("unit-stated", "unit_stated"),
+                                   ("correction-declared", "correction_declared"), ("ledger-bind", "ledger_bind"),
+                                   ("ledger-status", "ledger"), ("status", "status"))},
+        round6=[dict(row=r["_key"], file=r["note_file"], line=r["note_line"], unit=nr_unit(r), status=r.get("status"),
+                     kind=r.get("kind"), **r["round6"]) for r in rows if r.get("round6")],
+        round7=[dict(row=r["_key"], file=r["note_file"], line=r["note_line"], unit=nr_unit(r), status=r.get("status"),
+                     kind=r.get("kind"), **r["round7"]) for r in rows if r.get("round7")],
+        discrepant=disc, not_found=nf, not_run=nrun, n19_raws_present=n19,
+        watch=watch_out, entries=entries, tag=T, not_figure_summary=nf_summary, span_notes=sn, open_items=open_items,
+        spans=[dict(span=s["span"], header=s["header"], summary=s.get("summary")) for s in D["spans"]],
+        provenance=D.get("provenance"), how_built=D.get("how_built"),
+        rows=[{k: v for k, v in r.items() if not k.startswith("_")} | dict(
+            validation=r["_validation"], failures=r["_failures"], pass_check_status=r.get("_eff")) for r in rows],
+    )
+
+
+# ------------------------------------------------------------------ round 5: the mutation self-test (finding 2)
+# Each mutation changes the rows data in memory (never the file) and the run is repeated on it: a mutation is caught
+# when the validation reports a failure no named exemption explains, or when the run stops (a frozen hash, coverage,
+# or an assertion on a row the script names). 'checker' = the final checker's 29 mutations (its mutate.py, scratch),
+# reproduced as written unless the row has since changed (then adapted, and the 'what' says how); 'round 5' = Code's.
+def _nr_row(D, key):
+    s_, q = key.split("#")
+    m = [r for r in D["rows"] if r["span"] == s_ and r["seq"] == int(q)]
+    if len(m) != 1:
+        raise KeyError(key)
+    return m[0]
+
+
+def _m_set(key, **kv):
+    def f(D):
+        r = _nr_row(D, key)
+        for k, v in kv.items():
+            if v is None:
+                r.pop(k, None)
+            else:
+                r[k] = v
+    return f
+
+
+def _m_sub(key, field, old, new):
+    def f(D):
+        r = _nr_row(D, key)
+        assert old in str(r.get(field)), (key, field, old)
+        r[field] = r[field].replace(old, new, 1)
+    return f
+
+
+def _m_line(key, d):
+    def f(D):
+        _nr_row(D, key)["note_line"] += d
+    return f
+
+
+def _m_kind_nf(key):
+    def f(D):
+        r = _nr_row(D, key)
+        r.update(kind="not-figure", status="n/a", not_figure_reason="prose")
+    return f
+
+
+def _m_delete(key):
+    def f(D):
+        D["rows"].remove(_nr_row(D, key))
+    return f
+
+
+def _m_many(*fs):
+    def f(D):
+        for x in fs:
+            x(D)
+    return f
+
+
+def _m_loc(key, loc, where="prefix"):
+    """Round 7: a locator with one more line, before ('prefix') or after ('suffix') the row's own."""
+    def f(D):
+        r = _nr_row(D, key)
+        r["locator"] = (loc + "; " + (r.get("locator") or "")) if where == "prefix" else ((r.get("locator") or "") + "; " + loc)
+    return f
+
+
+def _m_span_note(span, idx, old, new):
+    def f(D):
+        s_ = [x for x in D["spans"] if x["span"] == span][0]
+        assert old in s_["span_notes"][idx], (span, idx, old)
+        s_["span_notes"][idx] = s_["span_notes"][idx].replace(old, new, 1)
+    return f
+
+
+def _m_history(key, rnd, new):
+    def f(D):
+        ch = _nr_row(D, key)[rnd]["changed"]
+        assert ch, key
+        ch[0]["previous"] = new
+    return f
+
+
+def _m_note_sha(path, new):
+    def f(D):
+        [x for x in D["note_files"] if x["path"] == path][0]["sha256"] = new
+    return f
+
+
+_N2 = "results/raw/2026-10-08_note-N2-introspection.md"
+_N2VI = "results/raw/2026-10-08_note-N2vi-source.md"
+_N3 = "results/raw/2026-10-08_note-N3-echo-robustness.md"
+_N3C = "results/raw/2026-10-08_note-N3-echo-compute.md"
+_N4 = "results/raw/2026-10-08_note-N4-e2a.md"
+# round 7: a synthetic sentence of twenty words (no source; it plants a long quotation next to an arXiv id)
+_SYN20 = ("amber lanterns drift past the quiet harbour while seven grey herons count the tides beneath a patient "
+          "violet moon tonight")
+
+
+NR_MUTATIONS = [
+    ("M01", "checker", "S6#47 note_line +1", _m_line("S6#47", 1)),
+    ("M02", "checker", "S6#47 source_value '+0.0200' -> '+0.0300'", _m_sub("S6#47", "source_value", "+0.0200", "+0.0300")),
+    ("M03", "checker", "S6#47 locator ':205' -> ':204'", _m_sub("S6#47", "locator", ":205", ":204")),
+    ("M04", "checker", "S6#47 status -> log-only", _m_set("S6#47", status="log-only")),
+    ("M05", "checker", "S6#47 deleted", _m_delete("S6#47")),
+    ("M06", "checker", "S6#47 kind -> not-figure", _m_kind_nf("S6#47")),
+    ("M07", "checker", "S1#147 (not found) status -> reproduced", _m_set("S1#147", status="reproduced")),
+    ("M08", "checker", "S9#57 note_line +1", _m_line("S9#57", 1)),
+    ("M09", "checker", "S1#137 source_value '+0.0392' -> '+0.0492'", _m_sub("S1#137", "source_value", "+0.0392", "+0.0492")),
+    ("M10", "checker", "S2#37 source_value '0.0171875' -> '0.0271875'",
+     _m_sub("S2#37", "source_value", "0.0171875", "0.0271875")),
+    ("M11", "checker", "S1#137 locator ':355' -> ':300'", _m_sub("S1#137", "locator", ":355", ":300")),
+    ("M12", "checker", "S5#14 (discrepant) status -> reproduced", _m_set("S5#14", status="reproduced")),
+    ("M13", "checker", "S7#29 status -> log-only (adapted: the checker set this N19 row from 'not run' to "
+                       "'reproduced', which is its status since round 5)", _m_set("S7#29", status="log-only")),
+    ("M14", "checker", "S3#20 source_value '0.8533' -> '0.9533'", _m_sub("S3#20", "source_value", "0.8533", "0.9533")),
+    ("M15", "checker", "S1#137 ledger_row -> L999", _m_set("S1#137", ledger_row="L999")),
+    ("M16", "checker", "S6#47 ledger_row -> L001 (same status)", _m_set("S6#47", ledger_row="L001")),
+    ("M17", "checker", "S10#28 note_line +3", _m_line("S10#28", 3)),
+    ("M18", "checker", "S6#5 status -> discrepant", _m_set("S6#5", status="discrepant")),
+    ("M19", "checker", "S1#26 kind -> not-figure", _m_kind_nf("S1#26")),
+    ("M20", "checker", "S10#28 source_value '0/46' -> '0/47'", _m_sub("S10#28", "source_value", "0/46", "0/47")),
+    ("M21", "checker", "S3#20 kind -> not-figure", _m_kind_nf("S3#20")),
+    ("M22", "checker", "S3#11 (noted) locator ':12399' -> ':5'", _m_sub("S3#11", "locator", ":12399", ":5")),
+    ("M23", "checker", "S3#20 status -> log-only", _m_set("S3#20", status="log-only")),
+    ("M24", "checker", "S1#22 (item-raw) status -> log-only", _m_set("S1#22", status="log-only")),
+    ("M25", "checker", "S1#22 (item-raw) status -> computed-new", _m_set("S1#22", status="computed-new")),
+    ("M26", "checker", "S1#20 (item-raw, log-only) status -> reproduced", _m_set("S1#20", status="reproduced")),
+    ("M27", "checker", "S2#36 (item-raw, computed-new) status -> reproduced", _m_set("S2#36", status="reproduced")),
+    ("M28", "checker", "S9#57 status -> log-only", _m_set("S9#57", status="log-only")),
+    ("M29", "checker", "S1#22 kind -> not-figure", _m_kind_nf("S1#22")),
+    ("R01", "round 5", "S1#26 status -> discrepant (N1's round-4 classification)", _m_set("S1#26", status="discrepant")),
+    ("R02", "round 5", "S1#140 status -> discrepant", _m_set("S1#140", status="discrepant")),
+    ("R03", "round 5", "S1#34 status -> discrepant", _m_set("S1#34", status="discrepant")),
+    ("R04", "round 5", "S3#64 correction removed (double rounding unrecorded)", _m_set("S3#64", correction=None)),
+    ("R05", "round 5", "S5#14 (W3 fork) given S1#73's corrected_in_note", _m_set(
+        "S5#14", corrected_in_note=dict(locator="results/raw/2026-10-08_note-N2-introspection.md@09c3a8c:51",
+                                        quote="transcription, correct to +0.095"))),
+    ("R06", "round 5", "S1#73 corrected_in_note quote altered", _m_set(
+        "S1#73", corrected_in_note=dict(locator="results/raw/2026-10-08_note-N2-introspection.md@09c3a8c:51",
+                                        quote="transcription, correct to +0.096"))),
+    ("R07", "round 5", "S7#29 (N19) status -> not run", _m_set("S7#29", status="not run")),
+    ("R08", "round 5", "S1#145 (audit-raw-new) status -> reproduced", _m_set("S1#145", status="reproduced")),
+    ("R09", "round 5", "S5#48 (audit-raw-new) status -> reproduced", _m_set("S5#48", status="reproduced")),
+    ("R10", "round 5", "S2#24 (record) status -> reproduced", _m_set("S2#24", status="reproduced")),
+    ("R11", "round 5", "S1#36 (status_basis computed-new) status -> reproduced", _m_set("S1#36", status="reproduced")),
+    ("R12", "round 5", "S1#22 status_basis quote altered", _m_set(
+        "S1#22", status_basis=dict(locator="results/raw/2026-10-08_note-N2-introspection.md@09c3a8c:136",
+                                   quote="48 per arm (24 injected / 24 control) [log-only]"))),
+    ("R13", "round 5", "S1#117 restored to its round-4 mapping (record, log-only; the year is its only match)",
+     _m_set("S1#117", maps_to="record", status="log-only", locator="README.md@bbc9ffe:3-4")),
+    ("R14", "round 5", "S3#13 source_value -> 'see notes.md:1344' (a line number as its only value; 1344 is on the "
+                       "cited line, so round 4 passed it at level B)", _m_set("S3#13", source_value="see notes.md:1344")),
+    ("R15", "round 5", "S5#63 source_value -> '1.0000' (a 1 as its only value; 1.0000 is on a cited line, so round 4 "
+                       "passed it at level B)", _m_set("S5#63", source_value="1.0000")),
+    ("R16", "round 5", "S1#59 exemption renamed to locator-value", _m_set(
+        "S1#59", validation_exempts={"locator-value": "no cited line carries a stated value"})),
+    ("R17", "round 5", "S1#59 (exempted from ledger-status) status -> reproduced", _m_set("S1#59", status="reproduced")),
+    ("R18", "round 5", "S3#11 (exempted from locator-value) status -> reproduced", _m_set("S3#11", status="reproduced")),
+    ("R19", "round 5", "S6#84 validation_quote altered", _m_set("S6#84", validation_quote="four live captures")),
+    ("R20", "round 5", "S6#3 ledger_row L164 -> L001 (same status)", _m_set("S6#3", ledger_row="L001")),
+    ("R21", "round 5", "S1#137 ledger_row -> L090 (same status)", _m_set("S1#137", ledger_row="L090")),
+    ("R22", "round 5", "S1#51 (exempted from ledger-span) ledger_row L084 -> L001", _m_set("S1#51", ledger_row="L001")),
+    ("R23", "round 5", "S2#43 (round 5's ordinal row) kind -> not-figure", _m_kind_nf("S2#43")),
+    ("R24", "round 5", "S10#17 source_value '9/44' -> '9/45'", _m_sub("S10#17", "source_value", "9/44", "9/45")),
+    ("R25", "round 5", "S1#20 given a validation_note and a 'status' exemption, then status -> reproduced",
+     _m_many(_m_set("S1#20", validation_note="mutation", validation_exempts={"status": "status"}),
+             _m_set("S1#20", status="reproduced"))),
+    ("R26", "round 5", "S7#33 correction kind -> 'opinion'", _m_set(
+        "S7#33", correction=dict(kind="opinion", text="x", whose="x"))),
+    # round 6: n1chk2's mutations that round 5 did not catch (its lib/muts.py, reproduced as written; E05b and C18b
+    # are its decoupled twins of E05 and C18), and its two that round 5 caught only through this self-test
+    ("E01", "checker 2", "S3#11 (locator-value exempt) source_value fabricated",
+     _m_set("S3#11", source_value="NVIDIA H100-SXM5-80GB, eight GPUs")),
+    ("E02", "checker 2", "S6#84 (locator-value and ledger-span exempt) source_value fabricated",
+     _m_set("S6#84", source_value="three label-artifact classes across the four captures")),
+    ("E03", "checker 2", "S9#85 (locator-value exempt) source_value fabricated",
+     _m_set("S9#85", source_value="a banner carries five Note: lines")),
+    ("E04", "checker 2", "S1#119 (locator-value exempt) source_value fabricated",
+     _m_set("S1#119", source_value="two public lineages, Base -> Instruct")),
+    ("E05", "checker 2", "S6#47 wrong value, with forged generic exemptions ('FAIL'), a note and a quote", _m_many(
+        _m_sub("S6#47", "source_value", "+0.0200", "+0.0300"),
+        _m_set("S6#47", validation_exempts={"locator-value": "FAIL", "source-values": "FAIL"}, validation_note="x",
+               validation_quote="SOLV"))),
+    ("E05b", "checker 2", "S4#34 wrong value 0.8610 -> 0.8710, with forged generic exemptions, a note and a quote",
+     _m_many(_m_sub("S4#34", "source_value", "0.8610", "0.8710"), _m_sub("S4#34", "source_value", "0.861006", "0.871006"),
+             _m_set("S4#34", validation_exempts={"locator-value": "FAIL", "source-values": "FAIL"}, validation_note="x",
+                    validation_quote="3j-a"))),
+    ("E06", "checker 2", "S1#51 (ledger-span exempt) status -> log-only", _m_set("S1#51", status="log-only")),
+    ("C01", "checker 2", "S5#48 (computed-new) -> maps_to record, log-only", _m_set("S5#48", maps_to="record",
+                                                                                     status="log-only")),
+    ("C02", "checker 2", "S6#27 (computed-new) -> maps_to record, log-only", _m_set("S6#27", maps_to="record",
+                                                                                     status="log-only")),
+    ("C03", "checker 2", "S1#32 (ledger-row L062, computed-new) -> maps_to record, log-only",
+     _m_set("S1#32", maps_to="record", status="log-only")),
+    ("C04", "checker 2", "S8#117 (computed-new) -> maps_to record, log-only", _m_set("S8#117", maps_to="record",
+                                                                                      status="log-only")),
+    ("C05", "checker 2", "S4#5 (T row) given a corrected_in_note quoting its own cited line", _m_set("S4#5", corrected_in_note=dict(
+        locator="results/raw/2026-10-08_note-N3-echo-robustness.md@09c3a8c:370", quote="max 0.9951 -> 0.995"))),
+    ("C06", "checker 2", "S6#68 (W8, not transcription) given a corrected_in_note quoting its own cited line",
+     _m_set("S6#68", corrected_in_note=dict(locator="results/raw/2026-10-08_note-N5-f1.md@09c3a8c:217",
+                                            quote="termination attempts ≈ 1% of rounds by arm"))),
+    ("C07", "checker 2", "S5#14 (W3 fork) given a corrected_in_note quoting its own cited line",
+     _m_set("S5#14", corrected_in_note=dict(locator="results/raw/2026-10-08_note-N2vi-source.md@09c3a8c:26",
+                                            quote="source instruct FPR 0.003"))),
+    ("C08", "checker 2", "S1#140 correction removed", _m_set("S1#140", correction=None)),
+    ("C09", "checker 2", "S1#26 correction removed", _m_set("S1#26", correction=None)),
+    ("C10", "checker 2", "S7#33 correction removed", _m_set("S7#33", correction=None)),
+    ("C11", "checker 2", "S1#145 correction removed", _m_set("S1#145", correction=None)),
+    ("C12", "checker 2", "S1#20 source_value '60 (B2' -> '67 (B2' (an integer unit misstated)",
+     _m_sub("S1#20", "source_value", "60 (B2", "67 (B2")),
+    ("C13", "checker 2", "S1#37 source_value '63]' -> '70]' (an integer unit misstated)",
+     _m_sub("S1#37", "source_value", "63]", "70]")),
+    ("C14", "checker 2", "S2#38 source_value '0.5 ×' -> '1.5 ×' (a one-place decimal)",
+     _m_sub("S2#38", "source_value", "0.5 ×", "1.5 ×")),
+    ("C15", "checker 2", "S6#47 locator revision 09c3a8c -> e0fd85c (off its pin)",
+     _m_sub("S6#47", "locator", "@09c3a8c", "@e0fd85c")),
+    ("C16", "checker 2", "S6#47 clause '+.020' -> '+.030'", _m_sub("S6#47", "clause", "+.020", "+.030")),
+    ("C18", "checker 2", "S1#36 status -> reproduced, status_basis retargeted to N3c :34 '[status: reproduced]'",
+     _m_set("S1#36", status="reproduced", status_basis=dict(
+         locator="results/raw/2026-10-08_note-N3-echo-compute.md@09c3a8c:34", quote="[status: reproduced]"))),
+    ("C18b", "checker 2", "S1#37 status -> reproduced, status_basis retargeted to N3c :34 '[status: reproduced]'",
+     _m_set("S1#37", status="reproduced", status_basis=dict(
+         locator="results/raw/2026-10-08_note-N3-echo-compute.md@09c3a8c:34", quote="[status: reproduced]"))),
+    ("C20", "checker 2", "S5#38 corrected_in_note removed (a corrected row stops passing)",
+     _m_set("S5#38", corrected_in_note=None)),
+    ("C21", "checker 2", "S1#140 correction 'whose' -> 'N5 (item raw)' (a misattribution)",
+     lambda D: _nr_row(D, "S1#140")["correction"].update(whose="N5 (item raw)")),
+    # round 6: Code's
+    ("S01", "round 6", "S7#29 ledger-status exemption cut to a substring of its message",
+     lambda D: _nr_row(D, "S7#29")["validation_exempts"].update({"ledger-status": "status 'reproduced' vs L159"})),
+    ("S02", "round 6", "S5#48 locator without the column header :399 (its '97.5' then on no cited line)",
+     _m_sub("S5#48", "locator", "; column header :399", "")),
+    ("S03", "round 6", "S1#73 corrected_in_note quote -> '+0.095455' (on its line, without the correction wording)",
+     _m_set("S1#73", corrected_in_note=dict(locator="results/raw/2026-10-08_note-N2-introspection.md@09c3a8c:51", quote="+0.095455"))),
+    ("S04", "round 6", "S7#12 maps_to record -> audit-raw-new (status kept log-only)", _m_set("S7#12", maps_to="audit-raw-new")),
+    ("S05", "round 6", "S1#145 correction 'whose' -> N1's own reading (the declared reading is N19's)",
+     lambda D: _nr_row(D, "S1#145")["correction"].update(whose="N1's own reading")),
+    ("S06", "round 6", "S3#64 correction basis -> N3's raw (the declared reading is N8's)",
+     lambda D: _nr_row(D, "S3#64")["correction"].update(
+         basis="results/raw/2026-10-08_note-N3-echo-robustness.md@09c3a8c:479")),
+    ("S07", "round 6", "S7#15 locator given back ':174' (the unrelated 'second')",
+     _m_sub("S7#15", "locator", "@bbc9ffe:345", "@bbc9ffe:345, :174")),
+    ("S08", "round 6", "S6#43 source_value '17.500' -> '18.500' (the floor no longer the note's 17)",
+     _m_sub("S6#43", "source_value", "17.500", "18.500")),
+    ("S09", "round 6", "S1#20 correction added (not declared in the script)",
+     _m_set("S1#20", correction=dict(kind="wording", text="x", whose="N1's own reading", basis=None))),
+    ("S10", "round 6", "S8#79 (item-raw, computed-new; L028 related only) -> maps_to record, log-only",
+     _m_set("S8#79", maps_to="record", status="log-only")),
+    ("S11", "round 6", "S1#140 status_basis locator moved to N5 :79 with the same quote (not on that line)",
+     lambda D: _nr_row(D, "S1#140")["status_basis"].update(locator="results/raw/2026-10-08_note-N5-f1.md@09c3a8c:79")),
+    # round 7: the strict check of round 6 (r6chk; its lib/muts.py, group N, reproduced as written), the twenty that
+    # round 6 did not catch (its N01-N03, N18, N19 and N21-N26, N31 were caught); and Code's
+    ("N04", "checker 3", "S2#25 (record, log-only) -> reproduced, locator + an unrelated reproduced N2 figure row (:24)",
+     _m_many(_m_loc("S2#25", f"{_N2}@09c3a8c:24", "suffix"), _m_set("S2#25", status="reproduced"))),
+    ("N05", "checker 3", "S5#8 (item-raw, log-only) -> reproduced, locator prefixed with an unrelated reproduced N2vi "
+                         "row (:34)", _m_many(_m_loc("S5#8", f"{_N2VI}@09c3a8c:34"), _m_set("S5#8", status="reproduced"))),
+    ("N06", "checker 3", "S1#146 (ledger-row, log-only) -> reproduced, ledger_row L041 -> L008",
+     _m_set("S1#146", status="reproduced", ledger_row="L008")),
+    ("N07", "checker 3", "S1#118 (record, log-only) -> reproduced with a status_basis on an unrelated CLAUDE.md line "
+                         "('reproduced')", _m_set("S1#118", status="reproduced", status_basis=dict(
+                             locator="CLAUDE.md@bbc9ffe:195", quote="reproduced"))),
+    ("N08", "checker 3", "S4#23 (item-raw, computed-new) status -> reproduced, one field", _m_set("S4#23", status="reproduced")),
+    ("N09", "checker 3", "S5#20 (ledger-row L004 related row, computed-new) status -> reproduced, one field",
+     _m_set("S5#20", status="reproduced")),
+    ("N10", "checker 3", "S7#51 (item-raw, computed-new) status -> reproduced, one field", _m_set("S7#51", status="reproduced")),
+    ("N11", "checker 3", "S5#23 (ledger-row L004 related row, computed-new) status -> reproduced, one field",
+     _m_set("S5#23", status="reproduced")),
+    ("N12", "checker 3", "S6#28 (audit-raw-new, computed-new) -> reproduced, locator prefixed with an unrelated "
+                         "reproduced N4 row (:353)", _m_many(_m_loc("S6#28", f"{_N4}@09c3a8c:353"),
+                                                             _m_set("S6#28", status="reproduced"))),
+    ("N13", "checker 3", "S1#47 (ledger-row L082, computed-new) -> reproduced, ledger_row -> L097",
+     _m_set("S1#47", status="reproduced", ledger_row="L097")),
+    ("N14", "checker 3", "S5#35 (item-raw, computed-new) -> reproduced, locator prefixed with an unrelated reproduced N2 "
+                         "row (:24)", _m_many(_m_loc("S5#35", f"{_N2}@09c3a8c:24"), _m_set("S5#35", status="reproduced"))),
+    ("N15", "checker 3", "S3#7 (item-raw N17, log-only) -> reproduced, locator prefixed with a reproduced row of another "
+                         "raw (N2 :24)", _m_many(_m_loc("S3#7", f"{_N2}@09c3a8c:24"), _m_set("S3#7", status="reproduced"))),
+    ("N16", "checker 3", "S3#36 (not found) given a fabricated record locator (a real, unrelated RESULTS.md line)",
+     _m_set("S3#36", locator="RESULTS.md@bbc9ffe:1912")),
+    ("N17", "checker 3", "S5#77 (not found) given a fabricated locator to a nonexistent record line and file",
+     _m_set("S5#77", locator="data/olmo/ablation_dprime.json@bbc9ffe:12; RESULTS.md@bbc9ffe:999999",
+            source_value="ablation d′ = 1.80 (RESULTS.md@bbc9ffe:999999)")),
+    ("N20", "checker 3", "S6#68 (NT) cause rewritten as a transcription, keeping the asserted quote",
+     _m_set("S6#68", cause="transcription per the item raw: correct to ≈ 1.3% overall (an earlier mapping read it as "
+                           "not transcription (item raw); superseded)")),
+    ("N27", "checker 3", "S1#140 correction basis -> an unrelated record line (RESULTS.md :41)",
+     lambda D: _nr_row(D, "S1#140")["correction"].update(basis="RESULTS.md@bbc9ffe:41")),
+    ("N28", "checker 3", "S7#19 round5 change record 'previous' rewritten (change history)",
+     _m_history("S7#19", "round5", "reproduced")),
+    ("N29", "checker 3", "S7 span note 4: 'STOP' -> 'pass' (a span note no open item asserts)",
+     _m_span_note("S7", 4, "STOP", "pass")),
+    ("N30", "checker 3", "S7#73 (exempted) comment rewritten (outside the fingerprint)",
+     _m_set("S7#73", comment="Fabricated comment: the block's 103/103 is the count of record.")),
+    ("N32", "checker 3", "S5#22 (ledger-row L004 related row, computed-new) status -> reproduced, one field",
+     _m_set("S5#22", status="reproduced")),
+    ("T01", "round 7", "S9#57 status_basis removed (its cited status line, N2 :90, carries none of its values)",
+     _m_set("S9#57", status_basis=None)),
+    ("T02", "round 7", "S5#20 ledger_row 'related row' field states the primary row's status, and the row carries it",
+     _m_set("S5#20", ledger_row="L004 (related row: N2 row 37, reproduced)", status="reproduced")),
+    ("T03", "round 7", "S1#37 locator without its 'L062' (nothing then binds L062 to the row)",
+     _m_sub("S1#37", "locator", "; ledger results/raw/2026-10-08_note-N1-claims-ledger.json@6485da2 L062", "")),
+    ("T04", "round 7", "S2#34 ledger_row back to 'L085' (its locator names L084)", _m_set("S2#34", ledger_row="L085")),
+    ("T05", "round 7", "S4#28 locator back to the bare 'stageC_analysis.json@bbc9ffe' (no such file at that revision)",
+     _m_sub("S4#28", "locator", "data/echo/stageC_analysis.json@bbc9ffe", "stageC_analysis.json@bbc9ffe")),
+    ("T06", "round 7", "S6#47 source value given a synthetic twenty-word quotation beside an arXiv id",
+     lambda D: _nr_row(D, "S6#47").update(source_value=_nr_row(D, "S6#47")["source_value"]
+                                          + f" ('{_SYN20}', arXiv:0000.00000)")),
+    ("T07", "round 7", "S4#23 status_basis quote -> the line's 'reproduced' clause (status unchanged: computed-new)",
+     _m_set("S4#23", status_basis=dict(locator=f"{_N3C}@09c3a8c:151",
+                                       quote="which is the stored c1_read_M1M2 auc_kfold (reproduced)"))),
+    ("T08", "round 7", "S1#26 correction text edited (an N1-own wording correction)",
+     lambda D: _nr_row(D, "S1#26")["correction"].update(text=_nr_row(D, "S1#26")["correction"]["text"] + " (edited)")),
+]
+
+
+def _m_forge_ci(key):
+    """A forged corrected_in_note: the first token on a cited line that ties to the note's value, quoted from the
+    nearest correction wording before it on that line when there is one (n1chk2's forge_scan, generalised)."""
+    def f(D):
+        r = _nr_row(D, key)
+        uv = [v for v in nr_unit_values(nr_unit(r))[0] if v]
+        for l in nr_parse_locs(r.get("locator")):
+            for n in l["lines"]:
+                line = nr_line(l["rev"], l["path"], n) or ""
+                for m in NR_NUM_RE.finditer(line):
+                    t = nr_dec(m.group())
+                    if t and any(nr_tie(t, u) for u in uv):
+                        w = None
+                        for mm in NR_CORR_WORD_RE.finditer(line[:m.start()]):
+                            w = mm
+                        r["corrected_in_note"] = dict(locator=f"{l['path']}@{l['rev']}:{n}",
+                                                      quote=line[w.start():m.end()] if w else m.group())
+                        return
+        raise KeyError(f"{key}: no cited line carries a value tied to the note's")
+    return f
+
+
+def nr_family_mutations(D):
+    """Round 6: the mutation families n1chk2 found open, generated from the rows (each member is one run)."""
+    out = []
+    figs = [r for r in D["rows"] if r.get("kind") == "figure"]
+    for r in figs:
+        k = f"{r['span']}#{r['seq']}"
+        if r.get("status") == "computed-new":
+            out.append((f"FA:{k}", "family A", f"{k} (computed-new) -> maps_to record, log-only",
+                        _m_set(k, maps_to="record", status="log-only")))
+    for r in figs:
+        k = f"{r['span']}#{r['seq']}"
+        if r.get("status") == "discrepant" and r.get("corrected_in_note") is None:
+            out.append((f"FB:{k}", "family B", f"{k} (discrepant, uncorrected) given a forged corrected_in_note",
+                        _m_forge_ci(k)))
+    for k, (kind_, who, _fp) in NR_CORRECTIONS.items():
+        out.append((f"FC:{k}", "family C", f"{k} correction removed", _m_set(k, correction=None)))
+        alt = "N6 (item raw)" if who == "N1" else "N1's own reading"
+        out.append((f"FD:{k}", "family D", f"{k} correction 'whose' -> {alt!r}",
+                    (lambda kk, aa: lambda D_: _nr_row(D_, kk)["correction"].update(whose=aa))(k, alt)))
+    for k in NR_EXEMPT_FP:
+        out.append((f"FE:{k}", "family E", f"{k} each exemption cut to the first half of its message",
+                    (lambda kk: lambda D_: _nr_row(D_, kk).update(validation_exempts={
+                        c: m_[:len(m_) // 2] for c, m_ in _nr_row(D_, kk)["validation_exempts"].items()}))(k)))
+    return out
+
+
+# round 6: mutations the validator is known NOT to catch; each is a sentence of 10f, and the self-test fails if one
+# is caught (10f would then be wrong). Round 7 adds a level: 'full' limits pass a whole run (10f); 'row' limits pass
+# the row checks and are caught only by a round-7 freeze (status-hash), so the self-test requires both, the row checks
+# NOT catching them and the whole run catching them. L01 was a 'full' limit in round 6.
+NR_LIMIT_MUTATIONS = [
+    ("L01", "row", "S1#25 status computed-new -> reproduced, its status_basis moved to another line of the same item raw "
+                   "that gives 'reproduced' (N2 :136)", _m_set("S1#25", status="reproduced", status_basis=dict(
+                       locator="results/raw/2026-10-08_note-N2-introspection.md@09c3a8c:136",
+                       quote="[reproduced: artifact `n`, trial rows]"))),
+    ("L02", "full", "S1#143 (a word unit that passes at level A on the word) source_value replaced by a text with no "
+                    "number", _m_set("S1#143", source_value="(no number: a fabricated source text)")),
+    ("L03", "full", "S1#52 source_value '311 distinct' -> '312 distinct' (an integer that is neither the unit nor in a "
+                    "fraction)", _m_sub("S1#52", "source_value", "311 distinct", "312 distinct")),
+    ("L04", "row", "S4#23 status computed-new -> reproduced, its status_basis quote moved to the 'reproduced' clause of "
+                   "the same N3c :151 tag", _m_set("S4#23", status="reproduced", status_basis=dict(
+                       locator=f"{_N3C}@09c3a8c:151",
+                       quote="which is the stored c1_read_M1M2 auc_kfold (reproduced)"))),
+    ("L05", "row", "S5#20 status computed-new -> reproduced, its ledger_row 'L004 (related row: N2 row 37, "
+                   "computed-new)' cut to 'L004' (L004's primary row is reproduced and the locator cites its line)",
+     _m_set("S5#20", status="reproduced", ledger_row="L004")),
+]
+
+
+def nr_row_level(D0, D1, texts, ledger, figidx):
+    """Round 7: the row checks alone (nr_validate_row, no file-level freeze or hash) on every row a mutation changed;
+    rows are validated independently, so this is what a whole run's validation reports for those rows."""
+    b0 = {f"{r['span']}#{r['seq']}": r for r in D0["rows"]}
+    out, n = [], 0
+    for r in D1["rows"]:
+        k = f"{r['span']}#{r['seq']}"
+        if b0.get(k) != r:
+            n += 1
+            _, bad, _ = nr_validate_row(json.loads(json.dumps(r)), texts, ledger, figidx)
+            out += [(k, c, m) for c, m in bad]
+    return out, n
+
+
+NR_ROW_FAMILIES = ("family F", "family G", "family H")
+
+
+def nr_round7_families(D, texts, ledger, figidx):
+    """Round 7 (r6chk findings 1 and 2): three families, evaluated on the mutated row alone (the row checks, and
+    whether the row's status-freeze line changed; for a one-row mutation that is exactly what a whole run's
+    validation reports). F: every figure row's status set to each other term, one field (expected caught by the row
+    checks themselves). G: every row whose status is computed-new, discrepant, not found or log-only, given a locator
+    prefix with a reproduced item-raw figure row and the status 'reproduced' (the first such row, in path and line order, that the
+    row checks let through, else the first row). H: the same rows given another ledger row whose item-raw rows are
+    all reproduced, and the status 'reproduced' (the first that the row checks let through, else the first). G and H
+    are expected caught; the members the row checks let through are caught only by the status freeze (section 12)."""
+    figs = [r for r in D["rows"] if r.get("kind") == "figure"]
+    out = []
+
+    def ev(r0, m):
+        _, bad, _ = nr_validate_row(m, texts, ledger, figidx)
+        frozen = nr_freeze_line(m) != nr_freeze_line(r0)
+        return bad, frozen
+
+    def rec(mid, fam, what, r0, m, exp_row):
+        bad, frozen = ev(r0, m)
+        by = (f"row checks [{', '.join(dict.fromkeys(c for c, _ in bad))}]; first: {bad[0][1]}" if bad
+              else "status-hash only (the row checks let it through)" if frozen else "NOT CAUGHT")
+        out.append(dict(id=mid, origin=fam, what=what, applied=True, caught=bool(bad) or frozen, row_caught=bool(bad),
+                        expected=True, expected_row=exp_row, by=by[:300]))
+    for r in figs:
+        k = f"{r['span']}#{r['seq']}"
+        for st in NR_STATUSES:
+            if st != r.get("status"):
+                m = json.loads(json.dumps(r))
+                m["status"] = st
+                rec(f"FF:{k}:{st}", "family F", f"{k} status {r.get('status')} -> {st}", r, m, True)
+    targets = [r for r in figs if r.get("status") in ("computed-new", "discrepant", "not found", "not run", "log-only")]
+    pool = sorted({(p, n) for (p, n), f in figidx.items() if base_status(f["status"]) == "reproduced"})
+    lpool = sorted(i for i, L in ledger.items() if L["refs"] and {rr["base_status"] for rr in L["refs"]} == {"reproduced"})
+    for r in targets:
+        k = f"{r['span']}#{r['seq']}"
+        pick = None
+        for p, n in pool:
+            if not nr_line_carries(r, p, AUDIT, n)[0]:
+                continue
+            m = json.loads(json.dumps(r))
+            m["locator"] = f"{p}@{AUDIT}:{n}; " + (r.get("locator") or "")
+            m["status"] = "reproduced"
+            if not ev(r, m)[0]:
+                pick = (p, n)
+                break
+        p, n = pick or pool[0]
+        m = json.loads(json.dumps(r))
+        m["locator"] = f"{p}@{AUDIT}:{n}; " + (r.get("locator") or "")
+        m["status"] = "reproduced"
+        rec(f"FG:{k}", "family G", f"{k} ({r.get('status')}) locator prefixed with {p.split('note-')[-1]}:{n} (a "
+                                   f"reproduced figure row), status -> reproduced", r, m, None)
+        pick = None
+        for i in lpool:
+            m = json.loads(json.dumps(r))
+            m["ledger_row"], m["status"] = i, "reproduced"
+            if not nr_check_ledger_bind(m, ledger)["result"].startswith("pass"):
+                continue
+            if not ev(r, m)[0]:
+                pick = i
+                break
+        i = pick or lpool[0]
+        m = json.loads(json.dumps(r))
+        m["ledger_row"], m["status"] = i, "reproduced"
+        rec(f"FH:{k}", "family H", f"{k} ({r.get('status')}) ledger_row -> {i} (reproduced), status -> reproduced", r, m,
+            None)
+    return out
+
+
+def nr_self_test(path, raw_bytes, ledger, raws, note_res, watch):
+    """Every mutation in NR_MUTATIONS (expected caught), the families (expected caught; a member with nothing to
+    mutate is reported as not applicable), NR_LIMIT_MUTATIONS (a 'full' limit expected NOT caught by a whole run; a
+    'row' limit expected NOT caught by the row checks and caught by the whole run) and, round 7, families F-H
+    (nr_round7_families, evaluated row by row)."""
+    out = []
+    texts = {f: note_text(REPO / f)[1].split("\n") for f in NOTE_ROUTED}
+    figidx = nr_fig_index(raws)
+    D0 = json.loads(raw_bytes)
+    plan = ([(m, o, w, f, True, None) for m, o, w, f in NR_MUTATIONS]
+            + [(m, o, w, f, True, None) for m, o, w, f in nr_family_mutations(json.loads(raw_bytes))]
+            + [(m, "limit", w, f, lv == "row", lv) for m, lv, w, f in NR_LIMIT_MUTATIONS])
+    for mid, origin, what, fn, expect, lvl in plan:
+        D = json.loads(raw_bytes)
+        try:
+            fn(D)
+        except (AssertionError, KeyError) as e:
+            out.append(dict(id=mid, origin=origin, what=what, applied=False, caught=None, expected=expect,
+                            by=f"not applicable: {e}"))
+            continue
+        rl, nch = nr_row_level(D0, D, texts, ledger, figidx)
+        try:
+            res = final_note_rows(path, ledger, raws, note_res, watch, D=D, raw_bytes=raw_bytes,
+                                  stop_after_validation=True)
+            fl = res["validation"]["failures"]
+            checks = list(dict.fromkeys(m.split(":")[0] for x in fl for m in x["failures"]))
+            caught, by = ((True, f"validation [{', '.join(checks)}]; first: {fl[0]['row']} {fl[0]['failures'][0]}")
+                          if fl else (False, "NOT CAUGHT" + (f" (passing {res['pass_check']['passing']})"
+                                                             if "pass_check" in res else "")))
+        except SystemExit as e:
+            caught, by = True, f"run stops: {e}"
+        x = dict(id=mid, origin=origin, what=what, applied=True, caught=caught, expected=expect, by=by[:400],
+                 row_caught=(bool(rl) if nch else None),
+                 row_by=(f"{rl[0][0]} {rl[0][1]}: {rl[0][2]}"[:300] if rl else None))
+        if lvl == "row":
+            x["expected_row"] = False
+        out.append(x)
+    out += nr_round7_families(D0, texts, ledger, figidx)
+    return out
+
+
+# ------------------------------------------------------------------ round 5: the overwrite guard (finding 7)
+NR_PROV_PATHS = ("results/raw/2026-10-08_note-N1-claims-ledger.md", "results/raw/2026-10-08_note-N1-claims-ledger.json")
+NR_FINAL_PATHS = ("results/raw/2026-10-09_note-N1-claims-ledger-final.md",
+                  "results/raw/2026-10-09_note-N1-claims-ledger-final.json")
+
+
+def nr_output_guard(out, json_out, final_mode):
+    """Finding 7: the provisional ledger (committed at 6485da2; README-NOTE.md and the N12 scrub index cite it) is
+    never written, in any mode; a provisional run writes only where --out and --json-out say (no default), and never
+    over the final ledger either. Paths are compared after resolving symlinks and '..', and by inode where both
+    exist. Returns the (out, json_out) to write."""
+    def ab(x):
+        return REPO / x if not Path(x).is_absolute() else Path(x)
+    if final_mode:
+        out, json_out = out or NR_FINAL_PATHS[0], json_out or NR_FINAL_PATHS[1]
+    elif not out or not json_out:
+        raise SystemExit("guard: the provisional round writes nothing by default (its ledger is committed at 6485da2 "
+                         "and is never rewritten); give --out and --json-out")
+    forbidden = list(NR_PROV_PATHS) + ([] if final_mode else list(NR_FINAL_PATHS))
+    for x in (out, json_out):
+        for y in forbidden:
+            a, b = ab(x), ab(y)
+            same = os.path.realpath(a) == os.path.realpath(b)
+            if not same and a.exists() and b.exists():
+                try:
+                    same = os.path.samefile(a, b)
+                except OSError:
+                    same = False
+            if same:
+                raise SystemExit(f"guard: refusing to write {x} (it is {y}, which this mode never writes)")
+    return out, json_out
+
+
+NR_GUARD_CASES = [
+    ("provisional, no --out/--json-out", None, None, False, "refuse"),
+    ("provisional, --out = the provisional ledger", NR_PROV_PATHS[0], "/dev/null/x.json", False, "refuse"),
+    ("provisional, --json-out = the provisional JSON via '..'",
+     "/dev/null/x.md", "results/raw/../raw/2026-10-08_note-N1-claims-ledger.json", False, "refuse"),
+    ("provisional, --out = the final ledger", NR_FINAL_PATHS[0], "/dev/null/x.json", False, "refuse"),
+    ("final, --out = the provisional ledger", NR_PROV_PATHS[0], None, True, "refuse"),
+    ("final, --json-out = the provisional JSON (absolute)", None, str(REPO / NR_PROV_PATHS[1]), True, "refuse"),
+    ("final, defaults", None, None, True, "allow"),
+    ("provisional, both outside the repository", "/dev/null/x.md", "/dev/null/x.json", False, "allow"),
+]
+
+
+def nr_guard_self_test():
+    res = []
+    for what, o, j, fm, want in NR_GUARD_CASES:
+        try:
+            nr_output_guard(o, j, fm)
+            got = "allow"
+        except SystemExit:
+            got = "refuse"
+        res.append(dict(case=what, expected=want, got=got, ok=(got == want)))
+    return res
+
+
 # ------------------------------------------------------------------ main
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--out", default="results/raw/2026-10-08_note-N1-claims-ledger.md")
-    ap.add_argument("--json-out", default="results/raw/2026-10-08_note-N1-claims-ledger.json")
+    ap.add_argument("--out", default=None, help="default (with --note-rows only): the final ledger path; the "
+                                                "provisional round has no default and never writes the committed "
+                                                "provisional ledger")
+    ap.add_argument("--json-out", default=None)
     ap.add_argument("--note", action="append", default=[],
                     help="note markdown or F1/F2 SVG to match against the ledger (repeatable)")
+    ap.add_argument("--note-rows", default=None,
+                    help="N1 final: the verified mapping of every numeral in the note and the SVGs "
+                         "(results/raw/2026-10-09_note-N1-note-rows.json); validates it and adds section 9")
     a = ap.parse_args()
+    # round 5 (finding 7): the guard runs before anything is computed, in every mode
+    a.out, a.json_out = nr_output_guard(a.out, a.json_out, bool(a.note_rows))
+    if a.note_rows and not a.note:
+        a.note = list(NOTE_ROUTED)
 
     stamp = subprocess.run(["date", "-u"], capture_output=True, text=True).stdout.strip()
     head = full("HEAD")
@@ -2073,6 +4698,49 @@ def main():
     # 7. note mode
     note_res = note_mode(a.note, rows, lines, raws, watch) if a.note else None
 
+    # 9. N1 final: the note's own rows
+    final = None
+    if a.note_rows:
+        led_ = {row["id"]: row for row in rows}
+        # round 5: validation failures are reported before any later assertion (the self-test reads them the same way)
+        final = final_note_rows(a.note_rows, led_, raws, note_res, watch, stop_after_validation=True)
+        fl = final["validation"]["failures"]
+        # round 5 (finding 2): the mutation self-test, in memory, and the guard's own cases
+        rb = (REPO / a.note_rows if not Path(a.note_rows).is_absolute() else Path(a.note_rows)).read_bytes()
+        st_ = nr_self_test(a.note_rows, rb, led_, raws, note_res, watch) if not fl else []
+        gt_ = nr_guard_self_test()
+        final["self_test"] = dict(mutations=st_, guard=gt_)
+        # round 7: a member that declares what the row checks alone must do (family F: catch; a 'row' limit: not
+        # catch) is held to it as well
+        miss_ = ([x["id"] for x in st_ if x["applied"] and x["caught"] is not x["expected"]]
+                 + [x["id"] for x in st_ if x["applied"] and x.get("expected_row") is not None
+                    and x["row_caught"] is not x["expected_row"]]
+                 + [x["id"] for x in st_ if not x["applied"] and not x["origin"].startswith("family")]
+                 + [x["case"] for x in gt_ if not x["ok"]])
+        for x in st_:
+            if x["origin"] in NR_ROW_FAMILIES:
+                continue
+            print(f"SELF-TEST {x['id']} ({x['origin']}): "
+                  f"{'not applicable' if not x['applied'] else 'caught' if x['caught'] else 'NOT CAUGHT'}"
+                  f"{'' if x['expected'] else ' (a known limit: expected not caught)'}"
+                  f"{'' if not x.get('applied') or x.get('row_caught') is None else ' [row checks: ' + ('caught' if x['row_caught'] else 'not caught') + ']'}"
+                  f" -- {x['what']}")
+        for fam in NR_ROW_FAMILIES:
+            xs = [x for x in st_ if x["origin"] == fam]
+            print(f"SELF-TEST {fam}: {len(xs)} members; caught {sum(1 for x in xs if x['caught'])}; by the row checks "
+                  f"{sum(1 for x in xs if x['row_caught'])}; only by the status freeze "
+                  f"{sum(1 for x in xs if x['caught'] and not x['row_caught'])}")
+        if miss_:
+            raise SystemExit(f"self-test: {len(miss_)} mutation(s) or guard case(s) not caught: {miss_}; nothing written")
+        for x in final["validation"]["explained"]:
+            print(f"EXPLAINED {x['row']} {x['file']}:{x['line']} {x['unit']!r} [{x['status']}]: "
+                  + " | ".join(x["failures"]))
+        for x in fl:
+            print(f"VALIDATION FAILURE {x['row']} {x['file']}:{x['line']} {x['unit']!r} [{x['status']}]: "
+                  + " | ".join(x["failures"]))
+        if fl:
+            raise SystemExit(f"{len(fl)} note row(s) failed validation that no named exemption explains; nothing written")
+
     # ------------------------------------------------------------- outputs
     counts = {}
     for t in ctoks:
@@ -2100,7 +4768,11 @@ def main():
     note_present = (REPO / NOTE_DEFAULT).exists()
 
     J = dict(
-        item="N1", title="claims ledger", provisional=True,
+        item="N1", title="claims ledger", provisional=final is None,
+        final_for=(dict(note=FINAL_NOTE, note_sha256=[f for f in final["files"] if f["path"] == FINAL_NOTE][0]["sha256"],
+                        svgs=[dict(path=f["path"], sha256=f["sha256"]) for f in final["files"] if f["path"] != FINAL_NOTE],
+                        rows_file=final["rows_file"], rows_file_sha256=final["rows_file_sha256"])
+                   if final else None),
         provisional_basis=("built from the block's quotations of the note (block lines 21-133), because "
                            "RESEARCH-NOTE-v0_2-draft.md and the F1/F2 SVGs are not on this machine; to be re-run with "
                            "--note against the note and the SVGs when the PI places them"),
@@ -2171,6 +4843,7 @@ def main():
                          keys=[list(k) for k in w["keys"]], what=w["what"]) for w in watch],
         note_mode=note_res,
         preflight_locators=preflight_note,
+        note_rows_final=final,
     )
 
     md = render(J, rows, ctoks, lines, raws)
@@ -2186,6 +4859,19 @@ def main():
     print("status counts (primary refs):", {k: len(v) for k, v in by_status.items()})
     print("tag candidate, record only:", short(cand_rec), which_rec)
     print("tag candidate, incl. audit raws:", short(cand_aud), len(which_aud), "rows")
+    if final:
+        P9, T9 = final["pass_check"], final["tag"]
+        st5 = final.get("self_test") or {}
+        print(f"N1 final: {final['n_rows']} note rows ({final['n_figures']} figures); unexplained validation failures "
+              f"{len(final['validation']['failures'])}, rows with a failure a named exemption explains "
+              f"{len(final['validation']['explained'])}; self-test: as expected "
+              f"{sum(1 for x in st5.get('mutations', []) if x['applied'] and x['caught'] is x['expected'])}/"
+              f"{sum(1 for x in st5.get('mutations', []) if x['applied'])} (known limits uncaught "
+              f"{sum(1 for x in st5.get('mutations', []) if x['origin'] == 'limit' and x['caught'] is False)}), guard cases "
+              f"{sum(1 for x in st5.get('guard', []) if x['ok'])}/{len(st5.get('guard', []))}")
+        print("N1 final pass check:", P9["by_status"])
+        print("N1 final tag: record only", short(T9["record_sources_only"]["commit"]), "| incl. audit raws",
+              short(T9["including_audit_raws"]["commit"]))
     if unassigned:
         for t in unassigned:
             print("UNASSIGNED", t["line"], t["text"], lines[t["line"] - 1][max(0, t["start"] - 30):t["end"] + 30])
@@ -2224,10 +4910,31 @@ def src_entries(rr):
 def render(J, rows, ctoks, lines, raws):
     o = []
     w = o.append
-    w("# AUDIT-note-release v1.2 -- N1: claims ledger (PROVISIONAL)")
-    w("")
-    w("**PROVISIONAL.** " + J["provisional_basis"][0].upper() + J["provisional_basis"][1:] + ". Missing referents: " + J["preflight_locators"] + ".")
-    w("")
+    FN = J.get("note_rows_final")
+    if FN:
+        fs = J["final_for"]
+        w(f"# AUDIT-note-release v1.2 -- N1: claims ledger (FINAL for {fs['note']} sha256 {fs['note_sha256'][:8]}...)")
+        w("")
+        w(f"**FINAL** for `{fs['note']}` (sha256 `{fs['note_sha256']}`) and its two SVGs ("
+          + "; ".join(f"`{x['path']}` sha256 `{x['sha256']}`" for x in fs["svgs"]) + "), all three hashed at this run "
+          "and equal to the routed values. It supersedes, for this note, the provisional ledger "
+          "(results/raw/2026-10-08_note-N1-claims-ledger.md@6485da2), which stays as committed because README-NOTE.md "
+          "and the N12 scrub index cite it. Sections 1-8 are the provisional round's block-quotation ledger, re-run "
+          "here by the same code at the same pins (record bbc9ffe, item raws 09c3a8c); section 7 is now a summary of "
+          "the matcher over the three files, and section 8's notes 1 and 6 are updated. **Section 9 is new: one row "
+          "for every numeral unit in the note and both SVGs**, read from the verified mapping "
+          f"`{fs['rows_file']}` (sha256 `{fs['rows_file_sha256']}`) and validated mechanically at this run. "
+          "'FINAL' means the mapping is complete for this note sha; it does not mean the block's pass condition is "
+          "met (section 9d says it is not) or that the open items in 9h are settled. Section 10 is the values check "
+          "of round 5 (the final checker's findings and the PI's N19 routing, with the mutation self-test); sections "
+          "11 and 12 are rounds 6 and 7 (the adversarial check of round 5 and the strict check of round 6). 10f, what "
+          "the validator still does not catch, is current at this run.")
+        w("")
+    else:
+        w("# AUDIT-note-release v1.2 -- N1: claims ledger (PROVISIONAL)")
+        w("")
+        w("**PROVISIONAL.** " + J["provisional_basis"][0].upper() + J["provisional_basis"][1:] + ". Missing referents: " + J["preflight_locators"] + ".")
+        w("")
     w(f"- Code stamp: {J['code_stamp_utc']} (date -u)")
     w(f"- HEAD at run (informational): {J['head_at_run']}")
     w(f"- Record pin: {PIN} = {J['record_pin']} (every record read and every record locator below)")
@@ -2238,15 +4945,34 @@ def render(J, rows, ctoks, lines, raws):
     w(f"- Script: `{J['script']}` sha256 `{J['script_sha256']}`")
     w(f"- Interpreter: {J['interpreter']} (Python {J['python']}); stdlib only; no model, no network")
     w(f"- Command: `{J['command']}`")
-    w(f"- Note at root on this run: {'present' if J['note_present_at_root'] else 'absent'}; --note arguments: "
-      f"{J['note_args'] or 'none'}")
+    if FN:
+        w(f"- Note at root on this run: {NOTE_DEFAULT} (the block's referent) absent; its successor {FINAL_NOTE} and "
+          f"both SVGs present (untracked); --note arguments: {J['note_args']}")
+    else:
+        w(f"- Note at root on this run: {'present' if J['note_present_at_root'] else 'absent'}; --note arguments: "
+          f"{J['note_args'] or 'none'}")
     w("- Item raws (read at the audit pin; working tree equal to the pinned blob):")
     for p, d in J["item_raws"].items():
         w(f"  - `{p}` sha256 `{d['sha256_at_audit_pin'][:16]}` working tree equal: {d['working_tree_equal']}")
+    moved = [p for p, d in J["item_raws"].items() if d["working_tree_equal"] is False]
+    if moved:
+        w("  - Working tree not equal: " + ", ".join(f"`{p}`" for p in moved) + ". Each was regenerated in a later audit "
+          "commit (" + ", ".join(sorted({short(last_change(p, 'HEAD')) for p in moved})) + ", its last change at HEAD); "
+          "every read here is at the audit pin, so the flag records only that the working tree moved on.")
     w("")
     w("Status vocabulary (block :22, plus the item raws' computed-new): reproduced | log-only | not found | discrepant | "
       "computed-new; 'not run' for N19. Every status below is the item raw's, carried verbatim with its cause; this "
       "ledger reclassifies nothing. Where an item raw gives no status in that vocabulary, the row says so.")
+    if FN:
+        w("")
+        w("Section 9 (N1 final): every row's status is its item raw's (or its ledger row's), carried exactly, and the "
+          "validator checks each against what the item raw gives (9a; round 5). There are no exceptions of N1's own "
+          "since round 5 (finding 1): the five rows that carried N1's own classification (S1#26, S1#27, S1#34, S1#140, "
+          "S4#19) now carry their item raws' statuses, and what N1 reads in their sentences is recorded separately as a "
+          "wording or precision correction (9i), as S8 does at :208. One row maps a status its item raw does not give "
+          "in N1's vocabulary: S1#59 (N13's own vocabulary; its validation_note names the check it explains), which the "
+          "pass check reads as its ledger row's, outside the vocabulary (9a, 9d). Where an item raw itself classifies a "
+          "discrepancy (N2vi row 8 for W3, N5's L102 for W8, N3's transcription rows), the row carries that.")
     w("")
     # ---------------------------------------------------------------- 1
     E = J["extraction"]
@@ -2428,6 +5154,12 @@ def render(J, rows, ctoks, lines, raws):
     P = J["pass_check"]
     w("## 4. The block's pass check (block :23)")
     w("")
+    if FN:
+        w("*N1 final:* 4a-4g are the provisional round's pass check over the block's quotations, kept as built. Where "
+          "they say the note is not on this machine or defer to the --note run, section 9 is that run: 9d is the pass "
+          "check over the note's own figures, 9e the watch-list per conditional STOP, and 9f the span notes that read "
+          "the 4g corrections against the note's sentences.")
+        w("")
     w("*Pass:* every figure is `reproduced` or `log-only` with a locator. *On fail:* a `not found` figure is cut from "
       "the note; a `discrepant` figure is corrected in the note to the reproduced value if the discrepancy is "
       "transcription, and is a STOP on that item if it is not. (AUDIT-note-release-v1_2.md@bbc9ffe:23)")
@@ -2554,6 +5286,10 @@ def render(J, rows, ctoks, lines, raws):
     T = J["tag_commit_candidate"]
     w("## 5. The commit at which the last of the note's figures entered the record (the tag-commit candidate)")
     w("")
+    if FN:
+        w("*N1 final:* this section is the provisional computation over the block's quotations, kept as built; 9g "
+          "computes the tag commit over the note's own figures and states it.")
+        w("")
     r1, r2 = T["record_sources_only"], T["including_audit_raw_sources"]
     rn = T["item_raw_note_locators"]
     cv = rn["corr_dose_caveat"]
@@ -2673,7 +5409,34 @@ def render(J, rows, ctoks, lines, raws):
         w(f"| {x['id']} | {cell(x['locator'])} | {cell(' / '.join(x['quotes']))} | "
           f"{cell('; '.join(':'.join(str(v) for v in k) for k in x['keys']))} | {cell(x['what'])} |")
     w("")
-    if J["note_mode"] is None:
+    if FN and J["note_mode"]:
+        w("The matcher ran over the three files at this run. Its per-unit table (every unit with its kind, sign, "
+          "context and match) is in the JSON (`note_mode[].numerals`) and is not repeated here: section 9 replaces it "
+          "with the verified mapping. Counts and the watch-list hits:")
+        w("")
+        w("| file | sha256 | units | matched | shared value | candidate | not in ledger | weak | excluded | watch-list hits |")
+        w("|---|---|---|---|---|---|---|---|---|---|")
+        for res in J["note_mode"]:
+            nn = res["numerals"]
+            w(f"| `{res['path']}` | `{res['sha256'][:16]}` | {len(nn)} | "
+              f"{sum(1 for x in nn if x.get('match') == 'matched')} | "
+              f"{sum(1 for x in nn if str(x.get('match', '')).startswith('matched; value shared'))} | "
+              f"{sum(1 for x in nn if x.get('match') == 'candidate (verify context)')} | "
+              f"{sum(1 for x in nn if x.get('match') == 'not in ledger')} | "
+              f"{sum(1 for x in nn if str(x.get('match', '')).startswith(('weak', 'not in ledger (small')))} | "
+              f"{sum(1 for x in nn if 'excluded' in x)} | {len(res['watch_hits'])} |")
+        w("")
+        w("| file | line | unit | kind | context | watch | what |")
+        w("|---|---|---|---|---|---|---|")
+        for res in J["note_mode"]:
+            for x in res["watch_hits"]:
+                w(f"| `{res['path']}` | {x['line']} | {cell(x['text'])} | {x['kind']}"
+                  f"{' (excluded: ' + x['excluded'] + ')' if x.get('excluded') else ''} | {cell(x['context'])} | "
+                  f"{x['watch']} | {cell(x['what'], 300)} |")
+        w("")
+        w("What each hit is (carried, corrected, or a value collision) is in 9e.")
+        w("")
+    elif J["note_mode"] is None:
         w("Not run: no --note given. RESEARCH-NOTE-v0_2-draft.md and the F1/F2 SVGs are not on this machine "
           f"({J['preflight_locators']}). When the PI places them, re-run with `--note RESEARCH-NOTE-v0_2-draft.md "
           "--note <F1.svg> --note <F2.svg>`. The numerals needing a human read are then the candidates, the shared-"
@@ -2729,10 +5492,16 @@ def render(J, rows, ctoks, lines, raws):
     # ---------------------------------------------------------------- 8
     w("## 8. Notes for the PI and the design seat (none is a STOP declared by N1)")
     w("")
-    w("1. Provisional basis. The block's referent for N1 is the note and the SVGs (AUDIT-note-release-v1_2.md@bbc9ffe:21); "
-      "neither is here. The rows are the block's quotations of them. A figure the note carries that the block does not "
-      "quote is absent from this ledger until the --note re-run; a quoted figure the note no longer carries can be "
-      "dropped then.")
+    if FN:
+        w("1. Basis (updated at N1 final). Sections 1-8 are built from the block's quotations of the note; the note the "
+          "block names (v0.2) was superseded by v0.3, which section 9 maps unit by unit. A block-quoted figure the note "
+          "no longer carries stays in sections 2-5 as a row of the block's ledger; it binds nothing in the note. Section "
+          "9 is the ledger of the note itself.")
+    else:
+        w("1. Provisional basis. The block's referent for N1 is the note and the SVGs (AUDIT-note-release-v1_2.md@bbc9ffe:21); "
+          "neither is here. The rows are the block's quotations of them. A figure the note carries that the block does not "
+          "quote is absent from this ledger until the --note re-run; a quoted figure the note no longer carries can be "
+          "dropped then.")
     w("2. Rows whose item raw gives no status in N1's vocabulary are listed in 4d with the item raw's own wording: "
       "N13 row 15 (the Q1 bet's date) uses N13's vocabulary (block :93); the N3 CV-scheme row is stated 'as stored' "
       "without a status row; the block's 'sub-0.05-cosine' wording has no N17 figure row of its own (N17's note F3 "
@@ -2750,8 +5519,13 @@ def render(J, rows, ctoks, lines, raws):
     w("5. Sources outside the record enter no entry commit; rows resting on them show it in section 3. Over the "
       "primary rows (computed from the parsed sources): "
       + ("; ".join(f"{x['source']} ({x['kind']}; rows {', '.join(x['rows'])})" for x in oo) or "none") + ".")
-    w("6. N19 rows (0.394, 0.70) are 'not run': cloning the external repository waits on the PI (preflight raw, note 9). "
-      "Under block :125 the note's numbers are cut if N19 is not run by T.")
+    if FN:
+        w("6. N19 (the 0.394 and the 0.70): " + n19_text(FN) + " Section 9 maps the note's N19 figures to that raw "
+          "(round 5, the PI's routing 10; 9h O9). Sections 2-5 keep the provisional rows L159/L160 as built ('not run' "
+          "at 6485da2).")
+    else:
+        w("6. N19 rows (0.394, 0.70) are 'not run': cloning the external repository waits on the PI (preflight raw, note 9). "
+          "Under block :125 the note's numbers are cut if N19 is not run by T.")
     l105 = [x for x in fn if x["row"] == "L105"]
     l099 = [x for x in ol if x["row"] == "L099"]
     w("7. The G-CAL 0.12 row (L105, the CORR dose caveat) is reproduced by N5 from f1-era artifacts, but N5's note says "
@@ -2796,7 +5570,1057 @@ def render(J, rows, ctoks, lines, raws):
       "are listed so that the --note run reads each against the note's sentence. Who decides each is as its item-raw "
       "line says.")
     w("")
+    if FN:
+        render_final(w, J, FN)
     return "\n".join(o) + "\n"
+
+
+def n19_text(FN):
+    xs = FN["n19_raws_present"]
+    if not xs:
+        return "results/raw/ holds no N19 file at this run."
+    parts = []
+    for x in xs:
+        t = (f"`{x['path']}` ({'committed at `' + short(x['commit']) + '`' if x['tracked'] else 'untracked: not committed'}"
+             + ("" if not x["tracked"] else ", working tree equal to the committed blob" if x.get("equal_to_committed")
+                else ", WORKING TREE DIFFERS from the committed blob")
+             + f"; sha256 `{x['sha256'][:16]}`)")
+        if x.get("status_rows"):
+            t += " whose status table gives " + ", ".join(f"{y['value']} '{y['status']}' (:{y['line']})"
+                                                           for y in x["status_rows"])
+        parts.append(t)
+    return "results/raw/ holds " + "; ".join(parts) + "."
+
+
+NR_ROUND5 = [
+    ("1", "MEDIUM", "Five discrepant rows (S1#26, S1#27, S1#140, S1#34, S4#19) were N1's own classification, not the "
+                    "item raws'; the status paragraph named only the two '.60' rows, and O1 and O4 rested on N1's "
+                    "readings while 9h said N1 declares no STOP.",
+     "APPLIED, the first option. No item raw supports keeping them discrepant: N2 gives 5(b) as computed-new (N2 "
+     "@09c3a8c:376); N5 gives the DIFF row reproduced (:206, :79) and has no 'envelope' wording; N3c gives L062 "
+     "computed-new. N3's R1/R3 rule would call a wording that fails R1 'discrepant (transcription)', but N3 applies it "
+     "to its own rows; for the MLP it checks its own draft (N3 @09c3a8c:479), not the note. The five rows now carry "
+     "their item raws' statuses (four computed-new, one reproduced). What N1 reads in their sentences is recorded "
+     "separately as a wording or precision correction (9i), as S8 does at :208. O1 and O4 say they are N1's own "
+     "reading (the S1 and S8 mappers'), not an item raw's, and the status paragraph says there are no exceptions of "
+     "N1's own. W8 stays N5's own classification (L102)."),
+    ("2", "MEDIUM", "The validator was weaker than claimed. Of the checker's 29 mutations, these passed: status "
+                    "changes on item-raw, record and audit-raw-new rows; a figure reclassified as not-figure; a wrong "
+                    "source value matched at level B on another number or on '0'; a wrong ledger id with the same "
+                    "status; and any change to a row that carried a validation_note. Some level-B passes matched only a "
+                    "year or a line number.",
+     "APPLIED (rules in 10b). New checks: the status check against the item raw (JSON figure row, table status cell, "
+     "or a quoted status_basis; record rows log-only unless an item raw computes them; audit-raw-new rows "
+     "computed-new); the kind assignment frozen by a hash; level B never on a year, a cited line number, a leading-zero "
+     "identifier, a section number, a version inside a model name, or 0/1; level A required for decimal and fraction "
+     "units; a fraction unit matched as the same k/n; every decimal to two or more places and every fraction a "
+     "source_value states found on a cited line (the source-values check); the ledger-span check; and exemptions "
+     "bound to the check they name and to a substring of its failure message, with a quote asserted on the first "
+     "cited line for a value-check exemption. All 29 of the checker's mutations and Code's 26 now fail the run (10d). "
+     "[Round 6 corrects this text: round 5's summary said 'every decimal' and 'its exact failure message'; the check "
+     "read decimals to two or more places and matched a substring. Round 6 makes the match exact (11a, findings 4 "
+     "and 8).]"),
+    ("3", "LOW-MEDIUM", "S1#117 'three months of pre-registered experiments' (:20) was log-only on a README line that "
+                        "carries only the start; it passed on the year '2026'.",
+     "APPLIED: not found (O8). The record states the start (July 2026); N13's earliest pre-registration is 2026-08-04 "
+     "(N13 @09c3a8c:56), 66 days before the note's date. Cut, or reworded to what the record carries."),
+    ("4", "LOW", "Double rounding was handled two ways: S3#64 '0.88' stayed reproduced with 'choice not made', and the "
+                 "MLP '.60' was discrepant.",
+     "APPLIED: one rule (10b), checked mechanically. The item raw's status is carried and the rounding is recorded as "
+     "a precision correction: S3#64 (reproduced), S1#34 and S4#19 (computed-new). The choice of form is the PI's (O17)."),
+    ("5", "LOW", "O5 was listed among the STOPs; N6 raises none and calls it a sentence correction.",
+     "APPLIED: O5 is a sentence correction, not a STOP (N6 @09c3a8c:493, :505), recorded on S2#37, S2#38 and S7#61; the "
+     "S2 and S7 span notes carry annotations. [Round 6 revises this: N6 leaves the call to N1 and the design seat, so "
+     "O5 is conditional, the design seat's call (11a, finding 6).]"),
+    ("6", "LOW", "S1#73 and S5#38 could never pass: they carry the item raw's 'discrepant' although the note now "
+                 "carries the reproduced value.",
+     "APPLIED: the corrected-in-note rule (10b). Both carry 'discrepant', are marked corrected_in_note (the item raw's "
+     "'correct to +0.095', quoted from N2 @09c3a8c:51, and the note's 0.095 tied to the source value at level A), and "
+     "count as passing."),
+    ("7", "LOW", "The overwrite guard worked only in final mode; a provisional run wrote the committed provisional "
+                 "ledger by default.",
+     "APPLIED: one guard for every mode, before anything is computed (10e). The provisional round has no default "
+     "output, and no mode writes the provisional ledger; a provisional run never writes the final ledger either."),
+    ("8", "LOW", "9g's tag conditions left out N11's re-run at the tag.",
+     "APPLIED: 9g names it (W6: the 154/154 PASS is provisional, pre-tag, from a local clone)."),
+    ("9", "nits", "'every fourth' (:58) had no row while 'third' and 'second' did; a span note said a search for the "
+                  "cloud provider's name 'returned 0 in each file' while the committed files carried it in that "
+                  "sentence; S7#19/S7#20 quoted about 20 words of arXiv:2609.16247v1.",
+     "APPLIED: S2#43 'fourth' added (reproduced, N4 @09c3a8c:377); the S3 span note reworded so that it no longer "
+     "spells out the strings it says were absent (annotated in 9f); the S7#19/S7#20 comments give the two numbers "
+     "and the citation only. [Round 6: the quotation had stayed in round 5's change record for those two rows; it is "
+     "removed there too (11a, finding 3).]"),
+    ("10", "PI", "The PI's routing 10: re-map the five N19 rows to N19's raw at e0fd85c.",
+     "APPLIED: S7#29, S7#33, S8#84 and S8#85 are reproduced (N19 @e0fd85c:119, :120). S1#145, the TL;DR's 'two', is "
+     "computed-new (N19's post-hoc section 8) with a correction: 'carry most of the gap' is contradicted (17.8% under "
+     "equal credences). 'Moves nothing' holds (computed-new, :121), and the 'because' clause does not "
+     "(computed-new, :122). Both are recorded on S7#33. 9g moves to e0fd85c (O9)."),
+]
+
+NR_RULES = [
+    ("Status (finding 1)", "A row's status is its item raw's (or ledger row's), carried exactly; N1 assigns none of "
+     "its own. A wording, scope or precision problem N1 reads in the note's sentence is recorded in the row's "
+     "'correction' ({kind, text, whose, basis}, 9i), never as a status. 'whose' says whether the reading is an item "
+     "raw's or N1's own."),
+    ("Status check (finding 2)", "item-raw and audit-raw-new rows: the first cited item-raw line that gives a status "
+     "decides (its JSON figure row's status, matched by exact line text at the audit pin; else the cell under its "
+     "table's 'status' column, including N11's text table); where none does, the row's status_basis (a line locator "
+     "and a quote asserted on it, whose line gives a status or whose quote carries exactly one term); else an "
+     "audit-raw-new row is computed-new by its mapping and an item-raw row fails. record rows: log-only, unless the "
+     "row's first line locator is an item-raw line that gives a status. ledger-row rows: the ledger row's status, as "
+     "before. No note exempts a row from this check. (Amended in round 6, 11b: record rows read every cited item-raw "
+     "line, '[status: …]' tags are read, a status_basis must be in a file the row cites, and every row that names a "
+     "ledger row carries its status.)"),
+    ("Double rounding (finding 4)", "A note figure that rounds from a printed value which itself rounds a more "
+     "precise value the row states, while the precise value rounds to something else at the note's places, is a "
+     "double rounding. The item raw's status is carried; the row must carry a precision correction (else the run "
+     "fails); the form the note uses is the PI's choice."),
+    ("Corrected in the note (finding 6)", "A row whose item raw is discrepant and whose note figure now carries the "
+     "item raw's correction keeps the status 'discrepant', is marked corrected_in_note ({locator, quote}: a line the "
+     "row cites, quoting the item raw's correction, which states the note's value), and counts as passing when the "
+     "note's figure ties to the source value at level A. A mark that fails any of these fails the run. (Amended in "
+     "round 6, 11b.)"),
+    ("Value check (finding 2)", "Level A: a cited line carries a value the source_value states that is tied to the "
+     "note's number (equal, or stated to more places and rounding half-up to it; a fraction k/n, written 'k/n' or "
+     "'k of n', is also its exact value; a fraction unit needs the same k/n in the source_value and on the line). "
+     "Level B: a cited line carries another distinctive value the row states, never a year (1900-2099), a cited line "
+     "number, a leading-zero identifier, a section number ('§7.3'), a version inside a hyphenated name "
+     "('OLMo-3.1-32B'), or 0/1. A decimal or fraction unit must pass at level A."),
+    ("Stated values (finding 2)", "Every value a source_value states to two or more places, and every fraction it "
+     "states ('k/n' or 'k of n', not '1/2'), is on a line the row cites (its locator's lines, and line references "
+     "inside the source_value, read against the locator's first file when they name none). A misstated value fails "
+     "even when another stated value ties the note's number."),
+    ("Ledger span (finding 2)", "A ledger id a row names must carry the note's number: the ledger row's block span, or "
+     "its item-raw rows' figure labels or printed values, contain the unit's text, a value tied to it (fractions as "
+     "values) or its number word."),
+    ("Kind (finding 2)", "The unit -> kind assignment (one line per row: span#seq, file, line, unit, kind) hashes to "
+     "NR_KIND_SHA256 in the script; any other assignment stops the run, so a reclassification is a visible change to "
+     "the script."),
+    ("Exemptions (finding 2)", "A failure is explained only by 'validation_exempts' mapping its check (locator-value, "
+     "source-values, ledger-status or ledger-span) to a substring of its message, with a validation_note saying why; "
+     "a locator-value exemption also needs a validation_quote on the row's first cited line. An exemption that "
+     "explains nothing fails the run. (Amended in round 6, 11b: the whole message, and a fingerprint the script "
+     "declares.)"),
+]
+
+NR_LIMITS = [
+    "Integer and word units can still pass at level B on another distinctive value the row states that is on a cited "
+    "line ({nb} rows at level B). Since round 6 an integer unit's own number must be stated in the source_value (the "
+    "unit-stated check), but the cited line need not carry it. The source-values check covers every decimal (one "
+    "place or more) and every fraction a source_value states; an integer elsewhere in a source_value, neither the "
+    "unit nor in a fraction, is not checked (self-test L03).",
+    "A word unit ('one', 'two') passes at level A when the word occurs on a cited line, whatever its source_value "
+    "says (self-test L02); the word can be a coincidence. S7#12's round-4 pass and S7#15's round-5 pass were; both "
+    "rows now carry a locator-value exemption that says what their lines do carry.",
+    "Status binding (rewritten in round 7). The status check binds a row's status to the cited item-raw lines that "
+    "give a status and carry a value the row states, to its quoted status_basis (an item-raw line; a single-term "
+    "clause where its line gives several terms), or to the ledger row it names, which the ledger-bind check ties to "
+    "the row. The row checks cannot tell a row's own figure line from another figure's line that carries the same "
+    "value, or the clause that applies from another clause of the same line. So a status changed together with one "
+    "more field still passes them: a locator prefix with a reproduced figure row that carries one of the row's values "
+    "({g} of the {ng} rows whose status is computed-new, discrepant, not found or log-only; family G, 12d), a ledger_row swap to a row the "
+    "locator binds ({h} of {nh}; family H), a status_basis moved with the status to another line or clause of a cited "
+    "item raw (L01; N3c :151's 'reproduced' clause, L04), and a 'related row' field cut to its ledger row (L05). Since "
+    "round 7 every such change also changes the input of the status freeze (NR_STATUS_SHA256: every row's maps_to, "
+    "status, ledger_row and status_basis), so the run fails (status-hash) unless the script is changed with it, where "
+    "it shows in a diff. The freeze does not judge whether a status is right.",
+    "The frozen declarations (NR_KIND_SHA256, NR_CLAUSE_SHA256, NR_STATUS_SHA256, NR_TEXT_SHA256, NR_EXEMPT_FP, "
+    "NR_CORRECTIONS with its fingerprints, NR_QUOTE_REVIEWED, NR_DISC, the watch rows and the open items' rows) "
+    "freeze; they do not judge. A row edited together with its declaration passes, and both show in a diff. Whether a "
+    "unit is a figure, whether a clause is a fair cut of its sentence, and whether a status, a correction or a comment "
+    "is right stays the mappers' and their checkers' reading.",
+    "Ledger rows (rewritten in round 7). The ledger-span check accepts any named ledger row that carries the value, so "
+    "a common value (0.000, 0.5) can pass on a wrong row. Since round 7 the ledger-bind check requires the row's "
+    "first ledger id to be named in its locator, or one of that ledger row's item-raw lines to be cited, and every "
+    "ledger id the locator names to be in ledger_row; a swap to a ledger row the locator binds passes the row checks "
+    "(bullet 3). Every ledger_row change, of any status, fails the status freeze.",
+    "Free text is frozen, not judged (rewritten in round 7). NR_TEXT_SHA256 covers every comment, cause, not-figure "
+    "reason and validation note, every change record (round5, round6 and round7, their 'why' and 'previous' "
+    "included), every span note and annotation, and the file's how_built, schema and provenance; NR_CORRECTIONS' "
+    "fingerprints cover each correction's text and basis (an N1-own correction's basis line is bound to the "
+    "declaration, not checked against the correction). Beyond that, only the quotes the script asserts (NR_DISC's "
+    "causes, the open items' and the watch-list's span notes) and the quotation scan read it.",
+    "Not-found rows (round 7). A not-found row's locator and source value are in the status freeze, and every file and "
+    "line they cite must exist (pins); whether the search they describe was complete stays the mappers' reading.",
+    "The quotation scan (round 7) is a heuristic: a quoted span of fifteen words or more within reach of a name in "
+    "NR_QUOTE_EXT_RE, in the rows file only. A long quotation without quotation marks, or with no such name nearby, is "
+    "not flagged, and the script's own prose and the rendered ledger are not scanned; the rule on external quotations "
+    "stays the author's to keep.",
+    "A mutation test run from outside the script that edits a field one of the self-test's own mutations edits makes "
+    "that self-test mutation not applicable, and the run stops for that reason, not by validation (n1chk2's E05 and "
+    "C18 did). The self-test now runs both, and their decoupled twins, each on a fresh copy.",
+    "Every check is a consistency check on the mapping; none re-derives a figure.",
+]
+
+NR_ROUND6 = [
+    ("1", "MEDIUM-HIGH", "maps_to was never checked: a computed-new row remapped to 'record' with status 'log-only' "
+                         "passed end to end (29 of 62 at the row checks, 25 after the script's hard-coded lists). The "
+                         "record rule fell back to log-only when the first cited item-raw line gave no status; nothing "
+                         "required a record row to cite a record line; N3c's '[status: …]' tags were not read; and a "
+                         "ledger-row row remapped to 'record' skipped the ledger-status comparison. 10f did not say so.",
+     "APPLIED. A maps-to check: item-raw and audit-raw-new rows must cite an item-raw line, and record rows a record "
+     "line (outside the audit outputs, at or before bbc9ffe). The record rule reads every cited item-raw line that "
+     "gives a status, and N3c's inline '[status: …]' tags are read. A row that names a ledger row carries that row's "
+     "status whatever its maps_to. Five rows differ for a stated reason and carry ledger-status exemptions: the four N19 "
+     "rows against the provisional ledger's 'not run' (L159, L160) and S7#73 against L088's stale referent. All 62 "
+     "computed-new rows remapped to record and log-only now fail (self-test family A). Every one fails maps-to, and 52 "
+     "also fail status or ledger-status. (Round 7, 12a finding 1: the class was not closed. A one-field change from "
+     "computed-new to reproduced still passed on five rows, through N3c :151's two-term tag and the 'related row' "
+     "fields.)"),
+    ("2", "MEDIUM", "The corrected_in_note check verified nothing that mattered. All 19 uncorrected discrepant rows "
+                    "passed with a mark quoting the note's own number from their own cited line, and then counted as "
+                    "passing. On S6#68 the ledger said both 'passes (corrected in the note)' and that O2 is a live "
+                    "STOP. 10f did not say so.",
+     "APPLIED, all three of the checker's fixes, the third in adjusted form. The quote must carry the item raw's "
+     "correction wording ('correct to', 'corrected to', 'Corrected value:') followed by the note's value. The marked rows "
+     "must be exactly NR_DISC's branch C, or the run stops. The cited line must be the item raw's JSON figure row, and "
+     "the note's value must differ from the discrepant figure that row quotes: for S1#73 and S5#38, N2 :51 quotes "
+     "'+0.096' and the note carries 0.095. The checker asked for a difference from the item raw's printed value. N2's "
+     "printed value is the reproduced one, which a corrected note carries by design, so the check compares the quoted "
+     "figure instead. All 19 forged marks now fail (family B), and so do C05-C07 and C20. S6#68 is branch NT, so the "
+     "contradiction cannot recur."),
+    ("3", "MEDIUM (hard rule)", "A 20-word verbatim quotation of arXiv:2609.16247v1 was still in the files. Round 5 cut "
+                                "it from the S7#19/S7#20 comments but kept it in round5.changed[].previous: twice in "
+                                "the rows file and four times in the final JSON.",
+     "APPLIED. The quotation is removed from both rows' change records and replaced by a bracketed statement that a "
+     "twenty-word quotation was removed. Round 6's own record names the change without repeating the quotation. Code "
+     "re-ran n1chk2's quotation scan (quoted spans of fifteen or more words near an external citation, outside the "
+     "script) on the round-5 and the round-6 files: every hit new in round 6 is round 6's own prose, none a "
+     "quotation of an external source (n1chk2 had found every other external quotation at fourteen words or "
+     "fewer), and neither half of the removed sentence occurs in any of the four files."),
+    ("4", "LOW-MEDIUM", "Exemptions were matched by substring, not by the exact message, so a forged 'FAIL' exempted "
+                        "anything (E05b). The five locator-value exemptions used the generic message, so their "
+                        "source_value could be anything (E01-E04). Round 5's summary ('matched to the exact failure "
+                        "message') overclaimed.",
+     "APPLIED. An exemption explains a failure only when it equals the whole message, and the locator-value message "
+     "names the values sought and the lines read. Every exempted row is declared in the script with a fingerprint of "
+     "its mapping fields (NR_EXEMPT_FP, 18 rows), so a change to any of them leaves the failure unexplained. E01-E06 "
+     "and E05b now fail, and so does every exemption cut to half its message (family E). 10a's text for round 5's "
+     "finding 2 now says that round 5 matched a substring."),
+    ("5", "LOW", "Corrections could be deleted (C08-C11) or misattributed (C21) without failing the run; their 9i "
+                 "entries disappeared while the hard-coded O-items survived.",
+     "APPLIED. NR_CORRECTIONS declares the twelve corrections: row, kind, and whose reading it is (N1's own, or an "
+     "item raw's, whose basis must then cite that raw). A missing, undeclared, re-kinded or re-attributed correction "
+     "fails. The open items that rest on a correction (O1, O4, O5, O9, O17) name it, and each is asserted. C08-C11 and "
+     "C21 now fail, and so do families C and D (every correction removed; every 'whose' swapped)."),
+    ("6", "LOW", "O5's 'Not a STOP' overstated N6. N6 @09c3a8c:505 says that whether these rows are figure STOPs or "
+                 "sentence corrections is N1's and the design seat's call, not N6's; N6's own reading is a sentence "
+                 "correction. The O5 headline and the S2/S7 annotations dropped the design seat.",
+     "APPLIED. O5 now says what N6 says. N6's gloss row is 'discrepant' (a definition error, not a transcription; no "
+     "number is discrepant, :493). N6 raises no STOP and leaves the call to N1 and the design seat (:505). N1 reads the "
+     "row as a sentence correction, as N6 does, and records it on S2#37, S2#38 and S7#61. The design seat rules; if it "
+     "does not accept that reading, block :23's non-transcription branch makes it a STOP on N6. The S2 and S7 span "
+     "notes carry round-6 annotations that supersede round 5's, and the S2 mapper's conditional framing stands. The "
+     "9h preamble lists O5 as conditional."),
+    ("7", "LOW", "Two fields were unchecked: a locator revision moved off the pins passed (C15), and so did an altered "
+                 "clause (C16).",
+     "APPLIED. A pins check requires every revision a row cites (locator, source value, status basis, "
+     "corrected_in_note, correction basis) to be its path class's pin. The clauses are frozen by a hash "
+     "(NR_CLAUSE_SHA256), like the kind assignment. 98 of the 504 clauses are not verbatim on their note line (the "
+     "mappers describe SVG nodes and mark range ends), so a text check would not hold; the hash freezes the clauses "
+     "and does not judge them. C15 and C16 now fail."),
+    ("8", "LOW (disclosed)", "Confirmed as disclosed in 10f: integers still pass at level B (C12, C13), one-place "
+                             "decimals are unchecked (C14), and a status changed together with its basis passes "
+                             "(C18b). Round 5's summary 'every stated decimal' left out 'two or more places'.",
+     "PARTLY CLOSED; the rest stays disclosed (10f). An integer unit's number must now be stated in the source value "
+     "(tied, a floor such as 17.500 for '17×', a label such as 'L60', or a percentage), so C12 and C13 fail. One-place "
+     "decimals are checked, so C14 fails; S5#48's '97.5' needed its table's column header (N2 :399) cited, and "
+     "'section 5.6' is now stripped whole. A status_basis in a file the row does not cite now fails; C18 and C18b "
+     "moved the basis within N3c, the file they cite, and fail instead on the status tag (C18) and the ledger check "
+     "(both). Still open, each run in the self-test as a known limit that must "
+     "stay uncaught: a status and its basis moved together within one item raw (L01); a word unit whose word is on a "
+     "cited line, with any source value (L02); and an integer elsewhere in a source value (L03). 10a's text for round "
+     "5's finding 2 now says 'two or more places'."),
+    ("9", "nits", "O4 lists S8#78, but 9i records no correction on it (S8#79 has one). S7#15's 'second' passed at "
+                  "level A on an unrelated 'second' (PROPOSAL-m :174).",
+     "APPLIED. O4 and the d′ watch line now say that the correction is on S1#26, S1#27 and S8#79, because S8 records "
+     ":208's range once, on its upper end; the three are asserted. S7#15's :174 and :186 move from its locator to the "
+     "source value's context; they support 'the scaffolded cell', not the count. The row carries a locator-value "
+     "exemption: the ordinal is the S7 mapper's count of the record's armed clauses, and no line states it."),
+]
+
+NR_RULES6 = [
+    ("maps-to (finding 1)", "item-raw and audit-raw-new rows cite at least one item-raw line (an item raw of 2026-10-08, "
+     "or N19's of 2026-10-09); record rows cite at least one record line (a path outside the audit outputs, at or "
+     "before bbc9ffe, readable there). Not exemptable."),
+    ("Status check (finding 1; amends 10b)", "record rows: every cited item-raw line that gives a status is read, and "
+     "the row's status is one of their terms (log-only where none gives one). An inline '[status: …]' tag on a cited "
+     "line gives its terms (several terms: any of them). A status_basis is a line of a file the row's locator cites. A "
+     "row that names a ledger row (not 'related only') carries that row's status whatever its maps_to; a row whose "
+     "status differs for a stated reason carries a ledger-status exemption. (Amended in round 7, 12b: several terms "
+     "decide nothing; a status line decides only where it carries the row's value; a 'related row' field is compared "
+     "with that related row only.)"),
+    ("Corrected in the note (finding 2; amends 10b)", "The quote carries the item raw's correction wording ('correct to', "
+     "'corrected to', 'Corrected value:') followed by the note's value; the line is the item raw's JSON figure row; "
+     "the note's value differs from the discrepant figure that row quotes; and the rows marked are exactly NR_DISC's "
+     "branch C (else the run stops)."),
+    ("Exemptions (finding 4; amends 10b)", "An exemption explains a failure only when it equals the whole message; the "
+     "locator-value message names the values sought and the lines read. Every exempted row is declared in "
+     "NR_EXEMPT_FP with a fingerprint (the first 16 hex of a sha256) over its note file and line, unit, kind, maps_to, "
+     "status, ledger row, locator, source value, status basis, correction, corrected_in_note, exemptions, quote and "
+     "note; any change to them, or an undeclared exemption, fails. Exemptable: locator-value, source-values, "
+     "ledger-status, ledger-span, unit-stated."),
+    ("Corrections (finding 5)", "NR_CORRECTIONS declares each correction: its row, kind, and whose reading it is (N1's "
+     "own: 'whose' starts \"N1's\"; an item raw's: 'whose' starts '<item> (' and the basis cites that raw). A missing, "
+     "undeclared, re-kinded or re-attributed correction fails; an open item that rests on a correction names it, "
+     "asserted."),
+    ("Pins and clauses (finding 7)", "Every revision a row cites is its path class's pin: the record at bbc9ffe; item "
+     "raws at 09c3a8c (N8 and N11 also at 02b6a61); N19's raw at e0fd85c; the provisional ledger at 6485da2. The "
+     "clauses hash to NR_CLAUSE_SHA256 ('span#seq<TAB>clause', file order)."),
+    ("Unit stated; one-place decimals (finding 8)", "An integer unit's number is stated in the source_value: a tied "
+     "numeral, a value whose integer part it is (a floor), the unit's digits inside a label ('L60', '4bit'), or, where "
+     "the note prints it as a percentage, a proportion tied at the percentage scale. The source-values check covers "
+     "one-place decimals (equal on a cited line). A dotted section number ('section 5.6') is stripped whole."),
+    ("Self-test (all findings)", "Besides round 5's 55, the self-test runs the 27 n1chk2 mutations round 5 did not "
+     "catch, or caught only through the self-test's own coupling ('checker 2'), and Code's 11 ('round 6'). It also "
+     "runs five families generated from the rows: (A) every computed-new row remapped to record and log-only; (B) "
+     "every uncorrected discrepant row given a forged corrected_in_note; (C) every correction removed; (D) every "
+     "correction's 'whose' swapped; (E) every exemption cut to half its message. Three known limits must stay "
+     "uncaught (10f). A mutation that is not caught, or a limit that is caught, stops the run."),
+]
+
+
+NR_ROUND7 = [
+    ("1", "substantive", "A one-field edit changed a computed-new figure to reproduced and passed end to end on five "
+                         "rows, and 10f and 11 did not disclose it; 11a reported round 6's finding 1 as closed. Two "
+                         "causes: the 'several terms: any of them' rule for '[status: …]' tags let N3c :151's tag "
+                         "(computed-new, except one column reproduced) pass 'reproduced' for S4#23 and S7#51; and a "
+                         "ledger_row naming a related row ('L004 (related row: N2 row 37, computed-new)') also accepted "
+                         "the primary row's status, so S5#20, S5#22 and S5#23 passed as reproduced.",
+     "APPLIED. (a) A source that gives several terms (a '[status: …]' tag, a status cell, a JSON 'mixed' status, or a "
+     "record row's lines together) decides nothing by itself: the row needs a status_basis whose quote is the "
+     "single-term clause that applies, and the quote's term decides. S4#23 and S7#51 already quote N3c :151's "
+     "computed-new clause, which now decides. (b) A ledger_row that names a related row is compared with that related "
+     "row only (resolved by item and JSON index; the status the field states must be the related row's), and a "
+     "'related only' field leaves the status to the row's own check. A new self-test family F sets every figure "
+     "row's status to each other term, one field at a time: the row checks alone catch every member (12d); r6chk's "
+     "N08-N11 and N32 are in the self-test, each caught by the row checks. What remains, a clause or basis moved with the status (L04, "
+     "L01), is in 10f bullet 3. 11a's finding 1 now points here."),
+    ("2", "substantive", "Two-field upgrades passed, and 10f's disclosures were narrower than the hole. The status "
+                         "check bound a row to whatever item-raw line it cited first, or to whatever ledger row it "
+                         "named; nothing checked that the line or ledger row addresses the row's figure. A status "
+                         "change plus an unrelated locator line, a swapped ledger_row, or a status_basis on an "
+                         "unrelated record line passed (N04-N07, N12-N15). The checker's screen found 44 of the 62 "
+                         "computed-new rows and 75 of the 88 log-only rows upgradable with at most two fields.",
+     "APPLIED, in two layers. Row checks: a cited item-raw status line decides only where it carries a value the row "
+     "states (the locator check, read on that line), so another figure's line decides nothing; a status_basis must be "
+     "an item-raw line, and every cited status line that carries the row's value must agree with it; a new "
+     "ledger-bind check requires the first ledger id to be named in the locator, or one of its item-raw rows' lines to "
+     "be cited, and every ledger id the locator names to be in ledger_row. Fourteen locators now name their ledger "
+     "row, and S2#34, S5#61 and S10#62 name their comparison rows (12c). The checker's level-A option for the deciding "
+     "line was tried: it broke five rows and closed 10 of the 67 rows Code's screen found open, so level B counts "
+     "where the locator check accepts it. Freeze: NR_STATUS_SHA256 over every row's maps_to, status, ledger_row and "
+     "status_basis, the checker's simplest robust option, so every status or ledger change is also a script diff. "
+     "N04-N07, N12 and N13 now fail the row checks; N14 and N15 fail only the freeze (N2 :24 carries a value S5#35 "
+     "and S3#7 state). Families G (a reproduced figure row prefixed) and H (a ledger row swapped) run over the 184 "
+     "rows whose status is computed-new, discrepant, not found or log-only: every member is caught, and 12d counts those the row checks let "
+     "through. 10f bullets 3 and 5 now say what remains. S10#68, the checker's illustration, carries a status_basis on "
+     "N2 :136, its own inline status; S9#57 carries one on N2 :90, whose status cell no longer decides without it."),
+    ("3", "minor", "Not-found rows accepted fabricated locators and source values, including nonexistent files and "
+                   "lines (N16, N17); the pins check verified only the revision, and the ledger rendered what it "
+                   "was given.",
+     "APPLIED. The pins check also requires every cited file to exist at its revision and every cited line to be "
+     "within it, on every row. S4#28 and S4#32 named 'stageC_analysis.json@bbc9ffe', which is no file at that "
+     "revision; they now give the stored analyses' full paths under data/echo/. A not-found row's locator and source "
+     "value are in the status freeze. N16 now fails status-hash and N17 fails pins. Whether a not-found row's search "
+     "was complete stays the mappers' reading (10f bullet 7)."),
+    ("4", "minor", "Two fields were unchecked, and 10f's free-text list did not name them: the change records "
+                   "('previous', 'why'; where round 5's twenty-word quotation survived; N28), and the basis of an "
+                   "N1-own correction (N27).",
+     "APPLIED, beyond naming them. NR_TEXT_SHA256 freezes the free text and the change history: every comment, cause, "
+     "not-figure reason, validation note, change record, span note and annotation, and the file's how_built, schema "
+     "and provenance. N20, N28, N29 and N30 now fail text-hash. NR_CORRECTIONS carries a fingerprint of each whole "
+     "correction (kind, text, whose, basis), so N27 fails correction-declared. The optional scan runs at every run: "
+     "quoted spans of fifteen words or more near the name of an external source, in every string of the rows file. "
+     "Its two hits (S1#25 and S7#16 quote item-raw lines) are declared with Code's reading, and an undeclared hit "
+     "fails validation (T06 plants one). 10f bullets 6 and 8 say what stays open: frozen text is not judged, and the "
+     "scan is a heuristic."),
+]
+
+NR_RULES7 = [
+    ("Status check (findings 1 and 2; amends 10b and 11b)", "A cited item-raw line that gives a status decides only "
+     "where it carries a value the row states (nr_line_carries: the locator check read on that line alone, level A, "
+     "or B where B is accepted); a status line that carries none decides nothing. A source with several terms (a "
+     "'[status: …]' tag, a status cell, a JSON 'mixed' status, a record row's lines together) decides nothing by "
+     "itself. A status_basis is a line of an item raw the row cites (never a record line); its line's single term "
+     "decides, or, where the line gives several terms or none, its quote's single term (one of the line's where it "
+     "gives several); every cited status line that carries the row's value must give the basis's term too. Without "
+     "a basis: item-raw and audit-raw-new rows take the first such line's term (an audit-raw-new row with none is "
+     "computed-new; an item-raw row with none fails), record rows their lines' single term, or log-only."),
+    ("ledger-status (finding 1)", "'Lnnn (related row: <item> row <n>, <status>)' compares the row's status with that "
+     "related row only, resolved by item and JSON index n-1, and the stated status must be the related row's; "
+     "'(related only …)' leaves the status to the row's own check (the ledger row is context)."),
+    ("ledger-bind (finding 2)", "The first ledger id a row names is named in its locator, or the locator cites a line "
+     "of one of that ledger row's item-raw rows (same path and line number, the same text at both revisions; the "
+     "named related row for 'related row', any for 'related only'); and every ledger id the locator names is in "
+     "ledger_row. Not exemptable."),
+    ("Pins (finding 3; amends 11b)", "Every cited file exists at its revision and every cited line is within it, on "
+     "every row and in every field the pins check reads."),
+    ("Freezes (findings 2-4)", "NR_STATUS_SHA256: one line per row, 'span#seq, maps_to, status, ledger_row, "
+     "status_basis', and for a not-found row its locator and source value. NR_TEXT_SHA256: the file's item, title, "
+     "how_built, schema and provenance, every span, and per row its comment, cause, not_figure_reason, "
+     "validation_note and change records. NR_CORRECTIONS: a fingerprint of each whole correction. A mismatch fails "
+     "validation; a deliberate change is made in the script too."),
+    ("Quotation scan (finding 4)", "Every string of the rows file is scanned for quoted spans of fifteen words or more "
+     "within 250 characters before or 120 after a name in NR_QUOTE_EXT_RE (the round-6 checker's list); each hit is "
+     "declared in NR_QUOTE_REVIEWED by its sha256 prefix with Code's reading, and an undeclared hit fails validation."),
+    ("Self-test (all findings)", "Besides round 6's, the self-test runs r6chk's twenty mutations that round 6 did not "
+     "catch ('checker 3'), Code's eight ('round 7'), three families evaluated row by row (F: every figure row's "
+     "status set to each other term, expected caught by the row checks alone; G: a reproduced figure row prefixed to "
+     "the locator, and H: a ledger row swapped, each with the status 'reproduced', over every row whose status "
+     "is computed-new, discrepant, not found or log-only, expected caught; G and H pick the first candidate the row checks let through, so they "
+     "report the worst case), and five known limits at two levels: 'full' (L02, L03; uncaught by a whole run) and "
+     "'row' (L01, L04, L05; uncaught by the row checks, caught by the status freeze). Each self-test entry also says "
+     "whether the row checks alone catch it."),
+]
+
+
+def render_final(w, J, FN):
+    """Section 9: the note v0.3 and its two SVGs, row by row (N1 final); section 10: round 5's values check."""
+    short_f = {"RESEARCH-NOTE-v0_3-draft.md": "note", "2026-10-06_F1b_five-link-panels.svg": "F1b",
+               "2026-10-06_F2_macar-lineage-roc_post.svg": "F2"}
+    rows = FN["rows"]
+    byk = {f"{r['span']}#{r['seq']}": r for r in rows}
+    figs = [r for r in rows if r["kind"] == "figure"]
+    ent = {e["row"]: e for e in FN["entries"]}
+
+    def fl(r):
+        return f"{short_f[r['note_file']]}:{r['note_line']}"
+
+    def ref(k):
+        return f"{k} ({nr_unit(byk[k])}, {fl(byk[k])})"
+
+    w("## 9. Note v0.3 and SVG rows (N1 final)")
+    w("")
+    w("Block :22 asks for one row per figure in the note and in the F1/F2 SVGs, with its source and a status, and for "
+      "the commit at which the last of the note's figures entered the record. Sections 1-8 answered that over the "
+      "block's quotations; this section answers it over the files the PI placed. Line numbers are the note's lines; "
+      "for an SVG, the text-node index under the matcher's extraction (text, tspan, title and desc content, one node "
+      "per line). Locators: the record at bbc9ffe, item raws at 09c3a8c (N8 and N11 also at 02b6a61, where they were "
+      "regenerated; S3's rows note that every N8 line they cite is byte-identical at 09c3a8c), N19's raw at e0fd85c, "
+      "the provisional ledger at 6485da2 (since round 6 every row's revisions are checked against these pins). Round 5 "
+      "(section 10) applied the final checker's findings and the PI's N19 routing; round 6 (section 11) applied the "
+      "adversarial check of round 5; round 7 (section 12) applied the strict check of round 6 (since round 7 every "
+      "cited file and line must also exist).")
+    w("")
+    w("| file | sha256 (at this run) | routed | match | tracked at HEAD |")
+    w("|---|---|---|---|---|")
+    for f in FN["files"]:
+        w(f"| `{f['path']}` | `{f['sha256']}` | {f['routed']} | {'MATCH' if f['match'] else 'MISMATCH'} | "
+          f"{'yes' if f['tracked'] else 'no (untracked)'} |")
+    w("")
+    # ---------------------------------------------------------------- 9a
+    w("### 9a. Inputs, coverage and validation")
+    w("")
+    w(f"Input: `{FN['rows_file']}` (sha256 `{FN['rows_file_sha256']}`), {FN['n_rows']} rows: {FN['n_figures']} figures "
+      f"and {FN['n_not_figures']} not-figures. How it was built (from the file): {FN['how_built']}")
+    w("")
+    w("| span | covers | source of the final set (scratch; not committed) | sha256 | round | rows |")
+    w("|---|---|---|---|---|---|")
+    hdr = {s["span"]: s["header"] for s in FN["spans"]}
+    for x in FN["provenance"]:
+        w(f"| {x['span']} | {cell(hdr.get(x['span']), 260)} | `{x['source_file']}` | `{x['source_sha256'][:16]}` | "
+          f"{x['round']}{(' -- ' + cell(x['integration_note'])) if x.get('integration_note') else ''} | {x['n_rows']} |")
+    w("")
+    w("The table gives each span's mapper set as it came from scratch; round 5 added one row (S2#43) and edited the "
+      "rows listed in 10c.")
+    w("")
+    w("Coverage. Every unit the matcher (section 7) extracts has a row, per file, as a multiset over (line, unit); a run "
+      "with a matcher unit and no row stops. Rows beyond the matcher are units it cannot see (number words above "
+      "twelve, ordinals, multiplicative words, '½'):")
+    w("")
+    w("| file | matcher units | rows | rows beyond the matcher |")
+    w("|---|---|---|---|")
+    for c in FN["coverage"]:
+        w(f"| `{c['path']}` | {c['matcher_units']} | {c['rows']} | "
+          f"{', '.join(f'{k} ({v})' for k, v in c['rows_beyond_matcher'].items()) or 'none'} |")
+    w("")
+    V = FN["validation"]
+    nl_pass = sum(1 for r in rows if r["validation"].get("note_line") == "pass")
+
+    def tally(key):
+        t = {}
+        for r in figs:
+            res = r["validation"].get(key, {}).get("result", "n/a")
+            k = res.split(":")[0].split(" (")[0]
+            if r.get("validation_exempts") and k == "FAIL":
+                k = "FAIL, explained by a named exemption"
+            t[k] = t.get(k, 0) + 1
+        return "; ".join(f"{k} {v}" for k, v in sorted(t.items()))
+    lv = {}
+    for r in figs:
+        lc = r["validation"].get("locator", {})
+        k = ("level A" if lc.get("level") == "A" else "level B" if lc.get("level") == "B" else
+             "n/a (not found)" if lc.get("result", "").startswith("n/a") else "FAIL, explained by a named exemption")
+        lv[k] = lv.get(k, 0) + 1
+    w("Validation (every row; each check has a name, and the rules are in 10b and in the script, `nr_validate_row`):")
+    w("")
+    w(f"- **note-line.** The unit occurs on the cited line of its file: {nl_pass} of {len(rows)} rows.")
+    w(f"- **kind-hash.** The unit -> kind assignment hashes to `{FN['kind_sha256']}` (NR_KIND_SHA256): "
+      f"{FN['n_figures']} figures, {FN['n_not_figures']} not-figures.")
+    w("- **schema.** A figure's status is one of " + ", ".join(NR_STATUSES[:-1]) + "; a not-figure's is n/a and it "
+      "carries a reason; maps_to none goes with not found; exemptions and notes come in pairs.")
+    w(f"- **locator-value** (figures that are reproduced, log-only, computed-new or discrepant): "
+      + "; ".join(f"{k} {v}" for k, v in sorted(lv.items())) + f". Found on a later locator than the first: "
+      f"{len(V['locator_secondary'])}.")
+    bl = [ref(k) for k in (f"{r['span']}#{r['seq']}" for r in figs)
+          if byk[k]["validation"].get("locator", {}).get("level") == "B"]
+    w(f"  - Level-B rows ({len(bl)}, every one an integer or word unit): " + "; ".join(bl) + ".")
+    sc = FN["status_check"]
+    sb = [ref(k) for k in (f"{r['span']}#{r['seq']}" for r in figs) if byk[k].get("status_basis")]
+    w(f"- **status** (item-raw, audit-raw-new and record rows; ledger-row rows are checked against their ledger row): "
+      f"decided by a JSON figure row {sc.get('JSON figure row', 0)}, a table status cell {sc.get('status cell', 0)}, "
+      f"an inline '[status: …]' tag {sc.get('status tag', 0)} (round 6), "
+      f"a quoted status_basis {sc.get('status_basis', 0)}, the record rule (log-only) {sc.get('record lines only', 0)}, "
+      f"the audit-raw-new rule (computed-new) {sc.get('audit-raw-new', 0)}; n/a (ledger-row maps and not found) "
+      f"{sc.get('n/a', 0)}. Every status agrees. Rows with a status_basis ({len(sb)}): " + "; ".join(sb) + ".")
+    skp = [ref(k) for k in (f"{r['span']}#{r['seq']}" for r in figs)
+           if byk[k]["validation"].get("status", {}).get("skipped")]
+    w(f"  - Round 7 (12b): a cited item-raw status line decides only where it carries a value the row states, a source "
+      f"with several terms decides nothing by itself, and a status_basis is an item-raw line. Rows citing a status line "
+      f"that carries none of their values and is not their status_basis (another figure's row or section; it decided "
+      f"nothing) ({len(skp)}): "
+      + ("; ".join(skp) or "none") + ".")
+    cc = FN.get("check_counts", {})
+
+    def cct(c):
+        x = cc.get(c, {})
+        return f"pass {x.get('pass', 0)}, FAIL {x.get('FAIL', 0)}, n/a {x.get('n/a', 0)}"
+    w(f"- **maps-to** (round 6; item-raw and audit-raw-new rows cite an item-raw line, record rows a record line): "
+      f"{cct('maps-to')}.")
+    w(f"- **pins** (round 6; every revision a row cites is its path class's pin; round 7: the cited file exists at "
+      f"that revision and every cited line is within it): {cct('pins')}.")
+    w(f"- **unit-stated** (round 6; an integer unit's number is stated in the source_value): {cct('unit-stated')}.")
+    w(f"- **correction-declared** (round 6; corrections as NR_CORRECTIONS declares them; round 7: each with a "
+      f"fingerprint of the whole correction): {cct('correction-declared')}.")
+    w(f"- **clause-hash** (round 6): the clauses hash to `{FN.get('clause_sha256')}` (NR_CLAUSE_SHA256).")
+    w(f"- **exemption-declared** (round 6): every exempted row is declared in NR_EXEMPT_FP with its fingerprint "
+      f"({len(NR_EXEMPT_FP)} rows); an exemption equals its whole failure message.")
+    w(f"- **source-values** (every decimal, one place or more since round 6, and every fraction the source_value "
+      f"states is on a cited line): {tally('source_values')}.")
+    w(f"- **ledger** (a named ledger id exists and the row carries its status; round 5 compared only ledger-row maps, "
+      f"round 6 every row that names one): {tally('ledger')}.")
+    w(f"- **ledger-span** (a named ledger row carries the note's number): {tally('ledger_span')}.")
+    w(f"- **ledger-bind** (round 7; the first named ledger row is named in the locator or one of its item-raw rows' "
+      f"lines is cited, and every ledger id the locator names is in ledger_row): {cct('ledger-bind')}.")
+    w(f"- **status-hash** (round 7): the status-deciding fields (maps_to, status, ledger_row, status_basis; a "
+      f"not-found row's locator and source value too) hash to `{FN.get('status_sha256')}` (NR_STATUS_SHA256).")
+    w(f"- **text-hash** (round 7): the free text and the change history hash to `{FN.get('text_sha256')}` "
+      f"(NR_TEXT_SHA256).")
+    qs = FN.get("quote_scan") or []
+    w(f"- **quote-scan** (round 7): quoted spans of fifteen words or more near the name of an external source, in every "
+      f"string of the rows file: {len(qs)}, each declared in NR_QUOTE_REVIEWED with Code's reading ("
+      + ("; ".join(f"{q['where']}, {q['words']} words: {q['reviewed']}" for q in qs) or "none") + ").")
+    dr = [ref(k) for k in (f"{r['span']}#{r['seq']}" for r in figs)
+          if byk[k]["validation"].get("double_rounding", {}).get("chains")]
+    w(f"- **double-rounding**: {len(dr)} rows ({'; '.join(dr) or 'none'}), each with a precision correction.")
+    w(f"- **correction** and **corrected-in-note**: {len(FN['corrections'])} corrections (9i), "
+      f"{len(FN['pass_check']['corrected_in_note'])} rows corrected in the note "
+      f"({', '.join(FN['pass_check']['corrected_in_note']) or 'none'}); all pass their checks.")
+    w(f"- **Failures without an exemption: {len(V['failures'])}.** Failures explained by a named exemption "
+      f"({len(V['explained'])} rows; each note N1 final's):")
+    w("")
+    w("| row | file:line | unit | status | check: what it found | exemption (check: its whole failure message) | quote on the first cited line | validation_note |")
+    w("|---|---|---|---|---|---|---|---|")
+    for x in V["explained"]:
+        w(f"| {x['row']} | {short_f[x['file']]}:{x['line']} | {cell(x['unit'])} | {x['status']} | "
+          f"{cell(' | '.join(x['failures']), 300)} | "
+          f"{cell('; '.join(f'{k}: {v}' for k, v in (x.get('exempts') or {}).items()), 200)} | "
+          f"{cell(x.get('validation_quote') or '-', 120)} | {cell(x['validation_note'], 700)} |")
+    w("")
+    # ---------------------------------------------------------------- 9b
+    w("### 9b. Not-figure rows, by reason")
+    w("")
+    w(f"{FN['n_not_figures']} units are not figures. Each row carries the mapper's reason; here they are grouped by the "
+      "first group whose pattern the reason contains (`NR_REASON_GROUPS`; the last group takes the rest). The full "
+      "reasons are in the JSON (`note_rows_final.rows[].not_figure_reason`).")
+    w("")
+    w("| group | rows | note / F1b / F2 | distinct reasons |")
+    w("|---|---|---|---|")
+    for g in FN["not_figure_summary"]:
+        bf = g["by_file"]
+        w(f"| {g['group']} | {g['n']} | {bf.get('RESEARCH-NOTE-v0_3-draft.md', 0)} / "
+          f"{bf.get('2026-10-06_F1b_five-link-panels.svg', 0)} / {bf.get('2026-10-06_F2_macar-lineage-roc_post.svg', 0)} | "
+          f"{g['n_distinct_reasons']} |")
+    w("")
+    # ---------------------------------------------------------------- 9c
+    w("### 9c. The figures, one row each")
+    w("")
+    w("'status' is the row's (carried from the item raw or the ledger row; 'pass check' differs only where the ledger "
+      "row's item raw gives no status in N1's vocabulary, or where a discrepant row is corrected in the note). 'corr.' "
+      "names a correction recorded in 9i. 'source' is the row's first locator and its source value (cut here; whole "
+      "in the JSON). 'check' = source-line level (A/B), the status check, and the ledger result. 'entry' = the commit "
+      "at which the figure entered the record (record sources), and, for a figure whose only carrier is an audit raw, "
+      "that raw's commit (9g).")
+    w("")
+    w("| row | file:line | unit | clause (cut) | status | pass check | corr. | maps to | source (cut) | check | entry (record / audit) |")
+    w("|---|---|---|---|---|---|---|---|---|---|---|")
+    for r in figs:
+        k = f"{r['span']}#{r['seq']}"
+        lc = r["validation"].get("locator", {})
+        chk = ("A" if lc.get("level") == "A" else "B" if lc.get("level") == "B" else lc.get("result", "")[:24])
+        if r.get("validation_exempts"):
+            chk += " (exempt: " + ", ".join(r["validation_exempts"]) + ")"
+        stc = r["validation"].get("status", {}).get("result", "")
+        if stc and not stc.startswith("n/a"):
+            chk += "; status " + stc.split(" (")[0]
+        lg = r["validation"].get("ledger", {}).get("result", "")
+        if lg and lg != "n/a":
+            chk += "; ledger " + lg.split(" (")[0]
+        e = ent.get(k, {})
+        en = f"{short(e.get('record'))} / {short(e.get('audit'))}" if (e.get("record") or e.get("audit")) else "-"
+        mp = r["maps_to"] + (f" {r['ledger_row']}" if r.get("ledger_row") else "")
+        src = (r.get("locator") or "") + (" -- " + str(r.get("source_value")) if r.get("source_value") else "")
+        pcs = r["pass_check_status"] if r["pass_check_status"] != r["status"] else (
+            "passes (corrected in the note)" if k in FN["pass_check"]["corrected_in_note"] else "")
+        w(f"| {k} | {fl(r)} | {cell(nr_unit(r))} | {cell(r.get('clause'), 140)} | {r['status']} | {pcs} | "
+          f"{(r.get('correction') or {}).get('kind', '')} | {cell(mp, 80)} | {cell(src, 260)} | {cell(chk, 140)} | {en} |")
+    w("")
+    # ---------------------------------------------------------------- 9d
+    P = FN["pass_check"]
+    w("### 9d. The block's pass check (block :23) over the note's figures")
+    w("")
+    w("*Pass:* every figure is `reproduced` or `log-only` with a locator. *On fail:* a `not found` figure is cut from "
+      "the note; a `discrepant` figure is corrected in the note to the reproduced value if the discrepancy is "
+      "transcription, and is a STOP on that item if it is not. (AUDIT-note-release-v1_2.md@bbc9ffe:23)")
+    w("")
+    w("| pass-check status | note | F1b | F2 | all |")
+    w("|---|---|---|---|---|")
+    for st in sorted(P["by_status"], key=lambda x: -P["by_status"][x]):
+        ks = P["rows_by_status"][st]
+        c = {f: sum(1 for k in ks if byk[k]["note_file"] == f) for f in short_f}
+        w(f"| {st} | {c['RESEARCH-NOTE-v0_3-draft.md']} | {c['2026-10-06_F1b_five-link-panels.svg']} | "
+          f"{c['2026-10-06_F2_macar-lineage-roc_post.svg']} | {len(ks)} |")
+    w("")
+    met = P["passing"] == P["n_figures"]
+    rl = P["rows_by_status"].get("reproduced", []) + P["rows_by_status"].get("log-only", [])
+    pv = [k for k in rl if byk[k]["validation"]["locator"].get("result") == "pass"]
+    pe = [k for k in rl if k not in pv and byk[k].get("validation_exempts")]
+    ci = P["corrected_in_note"]
+    w(f"**The pass condition is {'met' if met else 'NOT met'}.** {P['passing']} of {P['n_figures']} figures pass: "
+      f"{len(rl)} reproduced or log-only, each with a locator ({len(pv)} pass the value check, {len(pe)} carry a named "
+      f"exemption: {', '.join(pe) or 'none'}), and {len(ci)} discrepant rows corrected in the note "
+      f"({', '.join(ci) or 'none'}; the rule in 10b). The rest, by the block's branches (each consequence is block "
+      ":23's, applied to the row's own classification; Code decides none of them):")
+    w("")
+    w("**Discrepant**, by the branch each row's cause reads into (`NR_DISC`; the quoted words are asserted to occur in "
+      "the cause). Every discrepant row here carries its item raw's own classification (round 5):")
+    w("")
+    for b, txt in NR_DISC_PATH.items():
+        ks = [x["row"] for x in FN["discrepant"] if x["branch"] == b]
+        if ks:
+            w(f"- **{b}** ({len(ks)}: {', '.join(f'{k} {fl(byk[k])} {nr_unit(byk[k])!r}' for k in ks)}): {txt}.")
+    w("")
+    w("| row | file:line | unit | branch | quoted from the cause | ledger row | cause (cut) |")
+    w("|---|---|---|---|---|---|---|")
+    for x in FN["discrepant"]:
+        w(f"| {x['row']} | {short_f[x['file']]}:{x['line']} | {cell(x['unit'])} | {x['branch']} | {cell(x['quoted'])} | "
+          f"{cell(x.get('ledger_row') or '')} | {cell(x['cause'], 500)} |")
+    w("")
+    w(f"**Not found** ({len(FN['not_found'])}; block :23: cut from the note; the comment column carries the row's own "
+      "condition):")
+    w("")
+    w("| row | file:line | unit | clause (cut) | cause / comment (cut) |")
+    w("|---|---|---|---|---|")
+    for x in FN["not_found"]:
+        w(f"| {x['row']} | {short_f[x['file']]}:{x['line']} | {cell(x['unit'])} | {cell(x['clause'], 160)} | "
+          f"{cell((x.get('cause') or '') + ' // ' + (x.get('comment') or ''), 600)} |")
+    w("")
+    if FN["not_run"]:
+        w(f"**Not run** ({len(FN['not_run'])}: " + ", ".join(f"{x['row']} {short_f[x['file']]}:{x['line']} {x['unit']!r}"
+                                                            for x in FN["not_run"]) + "). " + n19_text(FN))
+    else:
+        w("**Not run**: none. The five N19 rows (S1#145, S7#29, S7#33, S8#84, S8#85) were re-mapped in round 5 to N19's "
+          "raw (the PI's routing 10). " + n19_text(FN))
+    w("")
+    cn = P["rows_by_status"].get("computed-new", [])
+    w(f"**Computed-new** ({len(cn)}): no record line states the figure; its only source is an audit raw. Block :23 "
+      "names no branch for them; they are in the record from the commit of the audit raw that computes them, which is "
+      "why the tag must sit at or after it (9g). Rows: " + ", ".join(ref(k) for k in cn) + ".")
+    w("")
+    ov = [k for st, ks in P["rows_by_status"].items() if st.startswith("outside") for k in ks]
+    if ov:
+        w(f"**Status outside N1's vocabulary** ({len(ov)}): " + ", ".join(
+            f"{k} ({nr_unit(byk[k])}, {fl(byk[k])}: {byk[k]['pass_check_status']})" for k in ov)
+          + ". N1 assigns such a row no status (hard rule 4; provisional ledger note 2).")
+        w("")
+    lo = P["rows_by_status"].get("log-only", [])
+    lo_ok = [k for k in lo if byk[k]["validation"]["locator"].get("result") == "pass"]
+    note_txt = (REPO / FINAL_NOTE).read_text(encoding="utf-8")
+    w(f"**Log-only** ({len(lo)}) pass, each with a locator ({len(lo_ok)} pass the value check; "
+      f"{', '.join(k for k in lo if k not in lo_ok) or 'none'} carry a named exemption). Block :10 adds that the "
+      f"note's sentence carrying a log-only figure is downgraded; the note's text contains the string 'log-only' "
+      f"{note_txt.count('log-only')} times, so no sentence is marked. The wording is the design seat's (S5's span notes "
+      "list its span's carrying sentences).")
+    w("")
+    # ---------------------------------------------------------------- 9e
+    w("### 9e. The watch-list: what the note and the SVGs carry, per conditional STOP")
+    w("")
+    w("'matcher hits' are section 7's (value keys); 'text hits' are the watch-list's quoted strings searched in the "
+      "three files; 'rows' are the note rows that carry or collide with the value, each status asserted at this run. "
+      "The outcome is Code's summary of those rows and the mappers' span notes.")
+    w("")
+    w("| watch | what it ties to | matcher hits | text hits | rows | outcome |")
+    w("|---|---|---|---|---|---|")
+    for x in FN["watch"]:
+        mh = "; ".join(f"{short_f[h['file']]}:{h['line']} {h['unit']!r}" + (f" -> {', '.join(h['rows'])}" if h.get("rows") else "")
+                       for h in x["matcher_hits"]) or "none"
+        th = "; ".join(f"{short_f[h['file']]}:{h['line']} {h['text']!r}" for h in x["text_hits"]) or "none"
+        rr = "; ".join(f"{y['row']} {short_f[y['file']]}:{y['line']} {y['unit']!r} [{y['status']}]" for y in x["rows"]) or "-"
+        w(f"| {cell(x['id'])} | {cell(x.get('what') or '', 220)} | {cell(mh, 400)} | {cell(th, 300)} | {cell(rr, 500)} | "
+          f"{cell(x['outcome'], 900)} |")
+    w("")
+    # ---------------------------------------------------------------- 9f
+    w("### 9f. Corrections routed to the note, and whether the note applies them (the mappers' span notes)")
+    w("")
+    w("Every span note, verbatim, by span (one exception: S3's redaction note, reworded in round 5 and annotated). "
+      "'markers' lists, in order, the upper-case status markers the mapper wrote in the note (NOT APPLIED, PARTLY "
+      "APPLIED, NOT CARRIED, CHOICE NOT MADE, OPEN, APPLIED, CORRECTED, FIRES, ...; `NR_NOTE_MARK_RE`). It is "
+      "mechanical: a note can say 'not done' or 'not applied' in lower case and carry no marker, so read the note. "
+      "'STOP' marks a note that uses the word, whatever it says about it. The notes are the mappers' (each after one "
+      "adversarial check). N1 final's round-5 and round-6 annotations follow the note they qualify, marked 'N1 final'; "
+      "where an annotation supersedes the note, the annotation holds, and where a round-6 annotation supersedes a "
+      "round-5 one, the round-6 annotation holds.")
+    w("")
+    tc = {}
+    for x in FN["span_notes"]:
+        for m in x["markers"] or ["(none)"]:
+            tc[m] = tc.get(m, 0) + 1
+    w("Notes carrying each marker: " + "; ".join(f"{k} {v}" for k, v in sorted(tc.items(), key=lambda kv: -kv[1])) + ".")
+    w("")
+    w("| span | # | markers | STOP | note |")
+    w("|---|---|---|---|---|")
+    for x in FN["span_notes"]:
+        w(f"| {x['span']} | {x['index']} | {', '.join(x['markers'])} | {'STOP' if x['stop'] else ''} | {cell(x['text'])} |")
+        for a in x.get("annotations", []):
+            w(f"| {x['span']} | {x['index']} (N1 final) | | | {cell(a)} |")
+    w("")
+    # ---------------------------------------------------------------- 9g
+    T = FN["tag"]
+    w("### 9g. The commit at which the last of the note's figures entered the record (the tag commit)")
+    w("")
+    w("Rule, per figure (not-found figures enter nothing): a figure mapped to a ledger row takes that row's entry from "
+      "sections 2-5; a figure mapped to record lines takes, per record locator, the latest blamed commit of its lines, "
+      "and over its locators the earliest (a fact enters with its first carrier); a figure mapped to an item-raw "
+      "figure row takes that row's record sources; a computed-new figure (by its own status, its ledger row's or its "
+      "item-raw row's; or, where no record entry is found, by the row's source value or the item-raw line it cites) "
+      "enters with the audit raw: the blamed commit of the first audit-raw line it cites; and (round 5) a figure the "
+      "audit reproduced from an external source, whose only carrier is an audit raw committed after the audit pin "
+      "(N19's), enters with that raw. Over figures, the latest. Each figure's entry and how it was found are in the "
+      "JSON (`note_rows_final.entries`).")
+    w("")
+    r1, r2, r3 = T["record_sources_only"], T["record_with_first_carriers"], T["including_audit_raws"]
+    w(f"- **Over record sources only:** `{short(r1['commit'])}` ({r1['date']}), set by {', '.join(r1['rows'])}.")
+    fcr = T["first_carrier_rows"]
+    w(f"- **Counting a ledger-mapped figure at its first record carrier where that is later than its sources** "
+      f"(section 5's third branch; the note carries the f1 CORR dose caveat as a statement at :111): "
+      f"`{short(r2['commit'])}` ({r2['date']}), set by {', '.join(r2['rows'])}. Figures with such a carrier: "
+      + ("; ".join(f"{x['row']} ({nr_unit(byk[x['row']])}, {fl(byk[x['row']])}): sources {short(x['record'])}, first "
+                   f"carrier {short(x['first_carrier'])}" for x in fcr) or "none")
+      + (". It does not move the candidate." if r2["commit"] == r1["commit"] else "."))
+    ao = T.get("audit_only_rows", [])
+    w(f"- **Including the audit raws** (the note carries {len(cn)} computed-new figures and {len(ao)} figures whose only "
+      f"carrier is N19's raw): `{short(r3['commit'])}` ({r3['date']}), set by {len(r3['rows'])} figures "
+      f"({', '.join(r3['rows'][:40])}{' ...' if len(r3['rows']) > 40 else ''}).")
+    if ao:
+        w("- Figures entering with N19's raw (round 5): " + "; ".join(
+            f"{ref(x['row'])} at `{short(x['audit'])}` ({x['locator']})" for x in ao) + ".")
+    if T["computed_without_audit"]:
+        w(f"- Computed-new figures with no audit-raw line to blame ({', '.join(T['computed_without_audit'])}).")
+    if T["unresolved_rows"]:
+        ust = sorted({x["status"] for x in T["unresolved_rows"]})
+        w(f"- Figures whose record entry the rule does not resolve ({len(T['unresolved_rows'])}; statuses "
+          f"{', '.join(ust)}: " + ", ".join(ref(x["row"]) for x in T["unresolved_rows"])
+          + "). Each cites an item raw that reproduces or reads it from the record at the pin (or, for a discrepant "
+          "row, its reproduced value), so each entered at or before bbc9ffe. That bound is below the including-audit "
+          f"candidate, so it cannot move it; the record-only candidate (`{short(r1['commit'])}`) holds only if each "
+          "of these entered no later than that, which this rule does not establish.")
+    w("")
+    w(f"**Stated plainly: the last of the note's figures entered the record at `{r3['commit']}` ({r3['date']}).** "
+      "Every figure the note and its SVGs carry is in the record at that commit (not-found figures are not, and are "
+      "cut or reworded, 9d). It is an ancestor of HEAD at this run "
+      f"(`{T['head_at_run'][:7]}`): {'yes' if T['candidate_is_ancestor_of_head'] else 'NO'}. The PI's resolution "
+      "places the tag note-2026-10-v1 on the final audit commit, after N1 and N18; that commit descends from this one, "
+      "so the tag holds every figure. Conditions that are the PI's to keep: (1) the tag commit also contains the note "
+      "and both SVGs (untracked at this run; N18 hashes the final note); (2) N11's suite is re-run with --ref at the "
+      "tag, since the 154/154 the note carries rests on N11's provisional, pre-tag PASS from a local clone (W6; "
+      "results/raw/2026-10-08_note-N11-smoke.txt@02b6a61:745); (3) if F2 is re-rendered with d′/c/p annotations "
+      "(9h O7), its new numerals get their own N1 pass; (4) if the note is edited after this run (the corrections in "
+      "9h and 9i), its sha256 changes and this section covers the edited note only after a re-run against it.")
+    w("")
+    # ---------------------------------------------------------------- 9h
+    w("### 9h. Open items for the PI and the design seat")
+    w("")
+    w("Each item names the rows it rests on (status asserted at this run), the corrections it rests on (each "
+      "asserted to be on its row and declared in NR_CORRECTIONS; round 6) and the span notes it summarises (quote "
+      "asserted). N1 declares no STOP of its own. Where an item says STOP, it is an item raw's STOP (O2, W8: N5's L102; "
+      "O3, W3: N2vi's condition 3; O6: N2(ii)) or block :23's consequence of an item raw's own classification (O5, "
+      "conditional: N6's gloss row, N6 @09c3a8c:493, :505); where a reading is N1's own (O1, O4, O10, and the MLP half "
+      "of O17), the item says so.")
+    w("")
+    items = []
+    for o in FN["open_items"]:
+        rr = ", ".join(f"{y['row']} ({short_f[y['file']]}:{y['line']} {y['unit']!r}, {y['status']})" for y in o["rows"])
+        items.append((int(o["id"][1:]), f"- **{o['id']}. {o['what']}.** {o['text']}" + (f" Rows: {rr}." if rr else "")
+                      + (f" Corrections (9i): {', '.join(o['corrections'])}." if o.get("corrections") else "")
+                      + (f" Span notes: {', '.join(o['span_notes'])}." if o["span_notes"] else "")))
+    nap = sum(1 for x in FN["span_notes"] if any(m in NR_OPEN_MARKS for m in x["markers"]))
+    items.append((16, f"- **O16. Wording, scope and disclosure routings the note has not applied.** At least {nap} "
+                      "span notes in 9f carry an open marker (NOT APPLIED, PARTLY APPLIED, NOT CARRIED, CHOICE NOT MADE, "
+                      "OPEN, ACTIVE or POSSIBLE STOP, FIRES); others say so in lower case (e.g. S10's 'not done in F2'). "
+                      "The routings, with or without a marker, include the N4 cached-generation scope sentence, which no "
+                      "line of the note carries; C16/C19 on G_c and the sham; C23/C24/C26/C27 on link 2; N17's "
+                      "'untouched model' and 'custom kernel patch'; the D3 caveats. Who decides each is as the span note "
+                      "says."))
+    for _, t in sorted(items):
+        w(t)
+    w("")
+    # ---------------------------------------------------------------- 9i
+    w("### 9i. Corrections recorded separately from status (round 5)")
+    w("")
+    w("A correction is what the note's sentence should say, recorded beside the row's carried status, never as a "
+      "status (10b). 'whose' says whether the reading is an item raw's or N1's own. Kind: wording, precision or scope. "
+      "Since round 6 the script declares every correction, with its kind and whose reading it is (NR_CORRECTIONS, "
+      "11b); the rows here are exactly those.")
+    w("")
+    w("| row | file:line | unit | status | kind | correction | whose | basis |")
+    w("|---|---|---|---|---|---|---|---|")
+    for x in FN["corrections"]:
+        w(f"| {x['row']} | {short_f[x['file']]}:{x['line']} | {cell(x['unit'])} | {x['status']} | {x['kind']} | "
+          f"{cell(x['text'], 900)} | {cell(x['whose'], 200)} | {cell(x.get('basis') or '', 200)} |")
+    w("")
+    render_round5(w, FN, byk, fl, ref)
+
+
+def render_round5(w, FN, byk, fl, ref):
+    """Section 10: round 5's values check (the final checker's findings, the PI's N19 routing, the rules, the rows
+    changed, the mutation self-test and the guard's cases)."""
+    ST = FN.get("self_test") or {}
+    w("## 10. Values check, round 5 (N1 final fixes, 2026-10-09)")
+    w("")
+    w("An adversarial check of round 4 (the final checker: a re-run, a 50-row sample against the sources, 29 mutations "
+      "of the rows file and a status cross-check over the 413 figures) found no value error and confirmed the tag "
+      "result at 09c3a8c; it raised the nine findings below. The PI's routing of 2026-10-09 adds item 10. Each finding "
+      "is Code's summary of the checker's; each disposition says what this round changed. The changes are this "
+      "script's (the validator, the guard, the sections that render them) and the rows file's (named rows, each with "
+      "a 'round5' record).")
+    w("")
+    w("### 10a. Findings and dispositions")
+    w("")
+    w("| # | severity | finding (Code's summary) | disposition |")
+    w("|---|---|---|---|")
+    for n, sev, f, d in NR_ROUND5:
+        w(f"| {n} | {sev} | {cell(f)} | {cell(d)} |")
+    w("")
+    w("### 10b. Rules adopted this round")
+    w("")
+    for name, txt in NR_RULES:
+        w(f"- **{name}.** {txt}")
+    w("")
+    w("### 10c. Rows changed in round 5")
+    w("")
+    w("Every row the round edited, with the fields it changed and their previous values (whole in the rows file, "
+      "`rows[].round5`).")
+    w("")
+    w("| row | file:line | unit | status now | finding | fields changed (previous status where it changed) |")
+    w("|---|---|---|---|---|---|")
+    for x in FN["round5"]:
+        chg = []
+        for c in x["changed"]:
+            chg.append(c["field"] + (f" (was {c['previous']})" if c["field"] in ("status", "maps_to", "kind") else ""))
+        w(f"| {x['row']} | {fl(byk[x['row']])} | {cell(x['unit'])} | {x['status']} | {cell(', '.join(x['finding']))} | "
+          f"{cell(', '.join(chg), 300)} |")
+    w("")
+    w("### 10d. Mutation self-test (run in memory at every run; the rows file is never changed)")
+    w("")
+    ms = ST.get("mutations", [])
+    fixed = [x for x in ms if not x["origin"].startswith("family") and x["origin"] != "limit"]
+    fam = [x for x in ms if x["origin"].startswith("family") and x["origin"] not in NR_ROW_FAMILIES]
+    lim = [x for x in ms if x["origin"] == "limit"]
+    lim_full = [x for x in lim if not x.get("expected")]
+    nc = sum(1 for x in fixed if x["caught"] is True)
+    by_o = {}
+    for x in fixed:
+        by_o[x["origin"]] = by_o.get(x["origin"], 0) + 1
+    w(f"Each mutation changes the rows data in memory and the validation runs again; it is caught when a failure no "
+      f"named exemption explains is reported, or when the run stops (a frozen hash, coverage, or an assertion on a row "
+      f"the script names). A mutation that is not caught, or a known limit that is caught, stops the run before "
+      f"anything is written. At this run: **{nc} of {len(fixed)}** fixed mutations caught ("
+      + ", ".join(f"{v} {k}" for k, v in by_o.items()) + f"); **{sum(1 for x in fam if x['caught'] is True)} of "
+      f"{sum(1 for x in fam if x['applied'])}** family members caught ({sum(1 for x in fam if not x['applied'])} not "
+      f"applicable); **{sum(1 for x in lim_full if x['applied'] and x['caught'] is False)} of {len(lim_full)}** known "
+      f"limits uncaught by a whole run, and **{sum(1 for x in lim if x.get('expected') and x['caught'] and not x['row_caught'])} "
+      f"of {len(lim) - len(lim_full)}** row-level limits uncaught by the row checks and caught by the status freeze, as 10f "
+      f"says. 'checker' = the final checker's 29 (round 5); 'checker 2' = n1chk2's that round 5 did not catch, or caught "
+      f"only through this self-test's coupling (round 6); 'checker 3' = r6chk's that round 6 did not catch (round 7); "
+      f"'round 7' = Code's. Round 7's families F-H, evaluated row by row, are in 12d. The last column says whether the "
+      f"row checks alone catch the mutation (round 7; '-' where it changed no row).")
+    w("")
+    w("| id | origin | mutation | caught by (the first failure) | row checks |")
+    w("|---|---|---|---|---|")
+    for x in fixed:
+        w(f"| {x['id']} | {x['origin']} | {cell(x['what'])} | {cell(x['by'], 300)} | "
+          f"{'-' if x.get('row_caught') is None else 'caught' if x['row_caught'] else 'not caught'} |")
+    w("")
+    w("Families (round 6; generated from the rows at every run; every member in the JSON, `self_test.mutations`):")
+    w("")
+    w("| family | what each member does | members | caught | not applicable | checks that fail (members) |")
+    w("|---|---|---|---|---|---|")
+    fdesc = {"family A": "a computed-new row remapped to record, status log-only",
+             "family B": "an uncorrected discrepant row given a forged corrected_in_note (a token tied to the note's "
+                         "value on a cited line, quoted from the nearest correction wording before it if any)",
+             "family C": "a declared correction removed", "family D": "a correction's 'whose' swapped (N1's <-> an item raw's)",
+             "family E": "every exemption on an exempted row cut to the first half of its message"}
+    for fname in sorted({x["origin"] for x in fam}):
+        xs = [x for x in fam if x["origin"] == fname]
+        ck = {}
+        for x in xs:
+            m = re.match(r"validation \[([^\]]*)\]", x["by"])
+            for c in (m.group(1).split(", ") if m else (["run stops"] if x["by"].startswith("run stops") else [])):
+                ck[c] = ck.get(c, 0) + 1
+        w(f"| {fname[-1]} | {cell(fdesc.get(fname, ''))} | {len(xs)} | {sum(1 for x in xs if x['caught'] is True)} | "
+          f"{sum(1 for x in xs if not x['applied'])} | {cell('; '.join(f'{k} {v}' for k, v in sorted(ck.items(), key=lambda kv: -kv[1])))} |")
+    w("")
+    w("Known limits (round 6; round 7 adds the level). A 'full' limit must stay uncaught by a whole run; a 'row' "
+      "limit must stay uncaught by the row checks and be caught by the whole run (the status freeze). Otherwise 10f is "
+      "wrong and the run stops:")
+    w("")
+    w("| id | level | mutation | whole run | row checks |")
+    w("|---|---|---|---|---|")
+    for x in lim:
+        w(f"| {x['id']} | {'row' if x.get('expected') else 'full'} | {cell(x['what'])} | {cell(x['by'], 200)} | "
+          f"{'-' if x.get('row_caught') is None else 'caught' if x['row_caught'] else 'not caught'} |")
+    w("")
+    w("### 10e. The overwrite guard's cases (run in memory; nothing is written)")
+    w("")
+    w("| case | expected | got |")
+    w("|---|---|---|")
+    for x in ST.get("guard", []):
+        w(f"| {cell(x['case'])} | {x['expected']} | {x['got']}{'' if x['ok'] else ' (MISMATCH)'} |")
+    w("")
+    w("### 10f. What the validator still does not catch")
+    w("")
+    nb = sum(1 for r in FN["rows"] if r["kind"] == "figure" and r["validation"].get("locator", {}).get("level") == "B")
+    fg = [x for x in ms if x["origin"] == "family G"]
+    fh = [x for x in ms if x["origin"] == "family H"]
+    w("Current at this run: round 7 rewrote bullets 3, 5 and 6, extended 4, and added 7 and 8 (12a).")
+    w("")
+    for t in NR_LIMITS:
+        w("- " + t.format(nb=nb, g=sum(1 for x in fg if not x["row_caught"]), ng=len(fg),
+                          h=sum(1 for x in fh if not x["row_caught"]), nh=len(fh)))
+    w("")
+    w("Determinism (two runs compared) and the redaction check are run by Code on this script's outputs, outside the "
+      "script; their results are reported with the commit, not here.")
+    w("")
+    render_round6(w, FN, byk, fl)
+
+
+def render_round6(w, FN, byk, fl):
+    """Section 11: round 6 (the adversarial check of round 5, n1chk2): findings, dispositions, rules, rows changed."""
+    w("## 11. Values check, round 6 (N1 final fixes, round 2, 2026-10-09)")
+    w("")
+    w("An adversarial check of round 5 (n1chk2: a re-run, the provisional mode against 6485da2, a 30-row sample "
+      "against the sources, 59 mutations each run as its own process, a quotation scan and a redaction check) found "
+      "no value error in the sample and confirmed both tag candidates; it found the validator weak (24 of its "
+      "mutations passed) and raised the nine findings below. Each finding is Code's summary of the checker's; each "
+      "disposition says what this round changed. The self-test (10d) runs every one of the checker's mutations that "
+      "round 5 missed; the known limits that remain are in 10f.")
+    w("")
+    w("### 11a. Findings and dispositions")
+    w("")
+    w("| # | severity | finding (Code's summary) | disposition |")
+    w("|---|---|---|---|")
+    for n, sev, f, d in NR_ROUND6:
+        w(f"| {n} | {sev} | {cell(f)} | {cell(d)} |")
+    w("")
+    w("### 11b. Rules adopted or amended this round")
+    w("")
+    for name, txt in NR_RULES6:
+        w(f"- **{name}.** {txt}")
+    w("")
+    w("### 11c. Rows and span notes changed in round 6")
+    w("")
+    w("Every row the round edited, with the fields it changed (previous values whole in the rows file, "
+      "`rows[].round6`), and the span-note annotations it added (9f, marked 'round 6').")
+    w("")
+    w("| row | file:line | unit | status now | finding | fields changed |")
+    w("|---|---|---|---|---|---|")
+    for x in FN.get("round6", []):
+        w(f"| {x['row']} | {fl(byk[x['row']])} | {cell(x['unit'])} | {x['status']} | {cell(', '.join(x['finding']))} | "
+          f"{cell(', '.join(c['field'] for c in x['changed']), 300)} |")
+    w("")
+    ann = [(x["span"], x["index"]) for x in FN["span_notes"] for a in x.get("annotations", []) if "round 6" in a]
+    w("Span-note annotations added: " + ("; ".join(f"{sp} #{i}" for sp, i in ann) or "none") + ".")
+    w("")
+    render_round7(w, FN, byk, fl)
+
+
+def render_round7(w, FN, byk, fl):
+    """Section 12: round 7 (the strict check of round 6, r6chk): findings, dispositions, rules, rows changed, and the
+    row-level families."""
+    ST = FN.get("self_test") or {}
+    ms = ST.get("mutations", [])
+    w("## 12. Values check, round 7 (N1 final fixes, round 3, 2026-10-09)")
+    w("")
+    w("A strict check of round 6 (r6chk: 64 mutations, each run as its own process on a scratch copy of the rows file; "
+      "an in-memory screen of status upgrades over every figure row; a re-run, the provisional mode against 6485da2, "
+      "a 30-row sample against the sources, a quotation scan and a redaction check) found no value error in the "
+      "sample and confirmed determinism and the section 10f/11 counts. It returned FAIL on two substantive findings "
+      "(status upgrades the validator did not catch and 10f/11 did not disclose) and raised two minor ones. Each "
+      "finding is Code's summary of the checker's; each disposition says what this round changed.")
+    w("")
+    w("### 12a. Findings and dispositions")
+    w("")
+    w("| # | severity | finding (Code's summary) | disposition |")
+    w("|---|---|---|---|")
+    for n, sev, f, d in NR_ROUND7:
+        w(f"| {n} | {sev} | {cell(f)} | {cell(d)} |")
+    w("")
+    w("### 12b. Rules adopted or amended this round")
+    w("")
+    for name, txt in NR_RULES7:
+        w(f"- **{name}.** {txt}")
+    w("")
+    w("### 12c. Rows changed in round 7")
+    w("")
+    w("Every row the round edited, with the fields it changed (previous values whole in the rows file, "
+      "`rows[].round7`). Seven of them carry exemptions; their fingerprints are re-declared in NR_EXEMPT_FP, the "
+      "exemptions themselves unchanged.")
+    w("")
+    w("| row | file:line | unit | status now | finding | fields changed |")
+    w("|---|---|---|---|---|---|")
+    for x in FN.get("round7", []):
+        w(f"| {x['row']} | {fl(byk[x['row']])} | {cell(x['unit'])} | {x['status']} | {cell(', '.join(x['finding']))} | "
+          f"{cell(', '.join(c['field'] for c in x['changed']), 300)} |")
+    w("")
+    w("### 12d. Families F-H (round 7; run at every run, row by row)")
+    w("")
+    w("Each member mutates one row; the row checks run on that row alone and the status freeze compares the row's "
+      "freeze line, which is exactly what a whole run's validation reports for a one-row mutation. F is expected "
+      "caught by the row checks alone. G and H are expected caught, and pick for each row the first candidate the row "
+      "checks let through (the worst case), so their 'only by the freeze' column is the residue 10f bullet 3 states.")
+    w("")
+    w("| family | what each member does | members | caught | by the row checks | only by the status freeze |")
+    w("|---|---|---|---|---|---|")
+    fdesc = {"family F": "a figure row's status set to another term of the vocabulary (one field)",
+             "family G": "a row whose status is computed-new, discrepant, not found or log-only given a locator "
+                         "prefix with a reproduced item-raw figure row, and the status 'reproduced'",
+             "family H": "the same rows given another ledger row whose item-raw rows are all reproduced, and the "
+                         "status 'reproduced'"}
+    for fam in NR_ROW_FAMILIES:
+        xs = [x for x in ms if x["origin"] == fam]
+        w(f"| {fam[-1]} | {cell(fdesc[fam])} | {len(xs)} | {sum(1 for x in xs if x['caught'])} | "
+          f"{sum(1 for x in xs if x['row_caught'])} | {sum(1 for x in xs if x['caught'] and not x['row_caught'])} |")
+    w("")
+    for fam in ("family G", "family H"):
+        xs = [x for x in ms if x["origin"] == fam and not x["row_caught"]]
+        w(f"- {fam[0].upper() + fam[1:]}, rows the row checks let through ({len(xs)}; each caught by the status "
+          f"freeze; the members in the JSON, `self_test.mutations`): "
+          + (", ".join(x["id"].split(":", 1)[1] for x in xs) or "none") + ".")
+    w("")
+    w("Determinism (two runs compared), the provisional mode against 6485da2 and the redaction check are run by Code "
+      "on this script's outputs, outside the script; their results are reported with the round, not here.")
+    w("")
 
 
 if __name__ == "__main__":
