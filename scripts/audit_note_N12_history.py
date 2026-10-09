@@ -39,6 +39,37 @@ needs a letter outside a-f), and the pending scan passes each match's line to th
 scan's new-value classes include email addresses (other than the service address and the commit identities'),
 the one class of third-party personal data it scans.
 
+Round 5 (guard fix, 2026-10-09): at a HEAD that holds this audit's own committed raws and scripts (09c3a8c on), the
+round-4 leak assertion refused to write: it refused on every value printed in redacted form with the sensitive
+flag, and generic tokens that this raw itself writes (class labels, pattern text, triage reasons, prose) had
+entered history as values. Round 5 adds (a) TRIAGE16, value triage keyed by the first 16 hex of sha256(value),
+for those values and for the values the pre-flip raw (results/raw/2026-10-08_note-N12-preflip.json) triaged,
+and SHAPE_TRIAGE16, the pre-flip raw's triage of the credential-shaped fallback rows keyed by (path, key, the
+value's 16-hex prefix); (b) a verdict-based leak guard (guard_candidates / guard_decide / guard_scan). Its
+candidates are every value printed in redacted form with the sensitive flag, every known sensitive value (with the
+session link's bare id), and every value of this run's tables that has a verdict other than FALSE-POSITIVE / PUBLIC /
+LOCAL-PATH, a mechanical (not hash-keyed) record of a redaction-rule class, or a mechanical verdict on a value with a
+generated-looking segment -- printed or not. Of those it exempts only the two values printed verbatim by policy
+(SAFE_VERBATIM) and the values whose every verdict is FALSE-POSITIVE / PUBLIC / LOCAL-PATH, with no record of a
+redaction-rule class and no generated-looking segment unless a hash-keyed entry (TRIAGE16 / SHAPE_TRIAGE16 /
+MANUAL_TRIAGE) gave it, that carry no known value (in any case or separator variant) and no session link; it
+refuses to write if any other candidate appears in either output. Known values of 8+ characters are matched as
+plain substrings, case- and separator-insensitively; the all-digit ones (the SSH ports) digit-bounded, except inside
+a run of 8+ hex characters (a digest); every other refused value of 8+ characters as a plain substring; shorter
+ones word-bounded, as round 4 matched. (c) positive controls run before every write (and alone with --selftest):
+the guard must refuse a real RunPod pod id and a real SSH port resolved from history in memory, a synthetic
+secret-shaped value whose triage is UNTRIAGED, and (second check) the gap cases the round-5 checker found -- a
+rule-class value with a mechanical exempt verdict, a METADATA value, a temp path with a generated segment, known
+values glued to letters or inside an exempt value, case and separator variants, the bare session id -- each
+injected into a copy of the outputs; and it must pass the outputs as written. The control values are held in
+memory only. The redacted-form policy for everything printed is unchanged. (d) Found on re-reading the
+regenerated raw (text that the audit's own commits made stale; no guard change): the `/Users/` per-file note for
+code classifies each occurrence by the path segment after `/Users/` (a bare prefix or pattern text names no home
+directory) and the recommendation after it is computed from those notes; the round-1 values-check attributes each
+commit after the base by its subject; round 4 compares the fourth checker's figures with counts restricted to the
+sources reachable from the checker's snapshot when the run is at a later HEAD (as round 3 does); R2-9's list of
+the port-class values names the round-5 counts; R2-1's N13 line reports a committed file as committed.
+
 --pin <commit>: scan the history as of <commit> (refs that descend from it are
 replaced by it; HEAD = <commit>; the fallback runs `git log -p <those refs>`).
 --since <commit> (default: the commit that added the audit block): sources new
@@ -52,15 +83,16 @@ Each is reported by locator, class, matched pattern, and the redacted form
     first 4 chars + '...' + '[len N]' + '#' + first 8 hex of sha256(value)
 (SSH-port-class values: 'len' + N + ':' + first 8 hex of sha256 -- no digit of the value)
 so the PI can match a value without seeing it. Before writing, the script
-asserts that no value it redacted appears verbatim in either output.
+asserts that no value its guard covers appears verbatim in either output (round 5: the guard is verdict-based;
+see guard_decide).
 
 Individual triage of hits that no mechanical rule clears is recorded in
-MANUAL_TRIAGE below, keyed by the first 8 hex of sha256(value) (the redacted form's hash) -- never by the
-value itself.
+MANUAL_TRIAGE below, keyed by the first 8 hex of sha256(value) (the redacted form's hash), and (round 5) in
+TRIAGE16 / SHAPE_TRIAGE16, keyed by the first 16 hex -- never by the value itself.
 
     jlens-qwen36/.venv/bin/python scripts/audit_note_N12_history.py \
         [--out results/raw/2026-10-08_note-N12-history.md] \
-        [--json-out results/raw/2026-10-08_note-N12-history.json]
+        [--json-out results/raw/2026-10-08_note-N12-history.json] [--selftest]
 """
 import argparse
 import base64
@@ -430,6 +462,255 @@ MANUAL_TRIAGE = {
                          "spike's raw); not a credential by origin. Reported redacted under hard rule 5 so "
                          "the PI can compare its hash against the continuity password (N12(iii))", True),
 }
+
+
+# Round 5 (2026-10-09): value triage keyed by the first 16 hex of sha256(value). Each entry: (verdict, reason,
+# sensitive, source). The values are never stored; the comment after each key gives its class(es) and redacted
+# form. 'sensitive' keeps the round-4 display: True prints the redacted form; False only for public website hosts
+# of the url_host class, which the identifier table prints verbatim like the other public hosts.
+TRIAGE16 = {
+    # local_temp_path `/tmp...[len 6]#fc22e2de`
+    'fc22e2dea2799ddc': ('LOCAL-PATH', "the bare temporary-directory prefix followed by a colon, in this raw's own values-check prose (a count of bare prefixes); names no file and no session",
+                         True, "pre-flip 3(a) leak list; the script's own verdict, carried; reason Code's (round 5)"),
+    # ipv4_address `0.0....[len 7]#19e36255`
+    '19e36255972107d4': ('FALSE-POSITIVE', "the unspecified IPv4 address, which this script's own address classifier names in its class label and in the verdict reason it prints; identifies no machine",
+                         True, "pre-flip 3(a) leak list; the script's own verdict, carried; reason Code's (round 5)"),
+    # ssh_identity_flag `<fil...[len 7]#1aedc48e`
+    '1aedc48eac0ed163': ('FALSE-POSITIVE', "the same placeholder [the angle-bracketed file placeholder of this class's label, with trailing punctuation], from this class's label in the history raw's table",
+                         True, "pre-flip 3(c), Code's triage; also on the pre-flip 3(a) leak list"),
+    # ssh_identity_flag `<fil...[len 8]#c17d7b45`
+    'c17d7b45d14c2522': ('FALSE-POSITIVE', "the same placeholder [the angle-bracketed file placeholder of this class's label, with trailing punctuation], from this class's label in the history raw's pattern list",
+                         True, "pre-flip 3(c), Code's triage; also on the pre-flip 3(a) leak list"),
+    # ssh_identity_flag `<fil...[len 9]#13dfbe0e`
+    '13dfbe0ea7c7925d': ('FALSE-POSITIVE', "the placeholder '<file>' with trailing punctuation, from this class's own label as the history JSON prints it",
+                         True, "pre-flip 3(c), Code's triage; also on the pre-flip 3(a) leak list"),
+    # passphrase_shaped `A-Za...[len 9]#fab79a8e`
+    'fab79a8ed5412bf8': ('FALSE-POSITIVE', "a fragment of this class's own regular expression, as the history JSON's pattern table stores it; not a phrase",
+                         True, "pre-flip 3(c), Code's triage; also on the pre-flip 3(a) leak list"),
+    # ssh_key_name `id_e...[len 10]#8e5d92fd`
+    '8e5d92fdbeaf08fd': ('FALSE-POSITIVE', "the other generic default key-file name in the same description [the history raw's description of its credential-file path pattern]",
+                         True, "pre-flip 3(c), Code's triage; also on the pre-flip 3(a) leak list"),
+    # ssh_key_name `id_r...[len 6]#f40883a1`
+    'f40883a1267f9443': ('FALSE-POSITIVE', "a generic default key-file name inside the history raw's description of its credential-file path pattern; no key file is named or tracked",
+                         True, "pre-flip 3(c), Code's triage; also on the pre-flip 3(a) leak list"),
+    # runpod_hostname `runp...[len 10]#421bbde9`
+    '421bbde981cebce3': ('FALSE-POSITIVE', "the RunPod service domain as written in this class's own label, printed by the history JSON's tables",
+                         True, "pre-flip 3(c), Code's triage; also on the pre-flip 3(a) leak list"),
+    # runpod_hostname `runp...[len 9]#3124edae`
+    '3124edaeda39b6f8': ('PUBLIC', "RunPod's public site domain (on the history script's own public-host list), here inside class labels and flag text",
+                         True, "pre-flip 3(c), Code's triage; also on the pre-flip 3(a) leak list"),
+    # claude_projects_path `~/.c...[len 22]#a83bf7e9`
+    'a83bf7e975a73bbe': ('LOCAL-PATH', "the class label's own path template (the Claude projects directory followed by an ellipsis), as this raw and its JSON print it; names no project and no session",
+                         True, "pre-flip 3(a) leak list; the script's own verdict, carried; reason Code's (round 5)"),
+    # claude_projects_path `~/.c...[len 43]#1a4fb901`
+    '1a4fb901c1a3ec03': ('LOCAL-PATH', "a path template with angle-bracket placeholders for the project and the session id, in this script's own triage reason for the Claude projects class; names no project and no session",
+                         True, "pre-flip 3(a) leak list; the script's own verdict, carried; reason Code's (round 5)"),
+    # context_free `/Use...[len 42]#77f5bcb1`
+    '77f5bcb11b1f4a7d': ('LOCAL-PATH', "a path under the author's home directory (a local Python library directory) in N11's printed sys.path of the regression-suite run; the author is named in the repository; not a credential",
+                         True, "pre-flip 3(c), Code's triage"),
+    # proxy_hostname/runpod_hostname `len21:80e1d10e`
+    '80e1d10e06456ba4': ('FALSE-POSITIVE', "a synthetic fixture in the content script's self-test (a placeholder number and the proxy suffix; its pod-id part is assembled from string pieces at run time); names no real host",
+                         True, "pre-flip 3(c), Code's triage"),
+    # runpod_hostname `prox...[len 16]#e0b5f502`
+    'e0b5f5021a3c7311': ('PUBLIC', "the RunPod proxy service's domain, named in the content review's flag text about the ssh alias; it names the service, not a pod or an account",
+                         True, "pre-flip 3(c), Code's triage"),
+    # runpod_hostname `ssh....[len 13]#f8ec340d`
+    'f8ec340dd4ad9f9d': ('PUBLIC', "RunPod's public SSH gateway host, named in the same flag text [the content review's flag text about the ssh alias]; it names no pod or account",
+                         True, "pre-flip 3(c), Code's triage"),
+    # runpod_hostname `docs...[len 14]#f4b8c41f`
+    'f4b8c41f331cd18d': ('PUBLIC', "an entry of the history script's own public-host list (RunPod's documentation site)",
+                         True, "pre-flip 3(c), Code's triage"),
+    # runpod_hostname `www....[len 13]#f53cd0c4`
+    'f53cd0c45f9ec8f2': ('PUBLIC', "an entry of the history script's own public-host list (RunPod's www site)",
+                         True, "pre-flip 3(c), Code's triage"),
+    # ssh_identity_flag `argu...[len 11]#a36807c9`
+    'a36807c9aa7c8226': ('FALSE-POSITIVE', "the word after the ssh identity flag in the content screen's category description; not a file",
+                         True, "pre-flip 3(c), Code's triage"),
+    # ssh_identity_flag `<fil...[len 9]#a2b73321`
+    'a2b733213c2767ef': ('FALSE-POSITIVE', "the same placeholder [the angle-bracketed file placeholder of this class's label, with trailing punctuation], from this class's label in the history script's source",
+                         True, "pre-flip 3(c), Code's triage"),
+    # ssh_key_path `conf...[len 11]#41c256ae`
+    '41c256aeb502cb07': ('FALSE-POSITIVE', "the prefix of a timestamped backup name of the standard ssh client config, quoted in the content review's flag text, which says it is not a key name; no key file",
+                         True, "pre-flip 3(c), Code's triage"),
+    # url_host `crea...[len 19]#01ac74e6`
+    '01ac74e6305467bf': ('PUBLIC', "a public website host (the Creative Commons site), in the licenses raw's licence links",
+                         False, "pre-flip 3(c), Code's triage"),
+    # url_host `api....[len 14]#5b3097c5`
+    '5b3097c5c7bd083b': ('PUBLIC', "a public website host (GitHub's REST service host), in the licenses raw's source URLs",
+                         False, "pre-flip 3(c), Code's triage"),
+    # url_host `docs...[len 15]#26ca8550`
+    '26ca8550a0510ee2': ('PUBLIC', "a public website host (GitHub's documentation host), in the licenses raw's source URLs",
+                         False, "pre-flip 3(c), Code's triage"),
+    # ssh_port, Code's triage (round 5): a number new at 02b6a610
+    'd7b6fab9aa91943d': ('FALSE-POSITIVE', "the committed history raw's fallback-grep hit-line count, quoted in the 02b6a610 commit message on a line whose 'port' is one word in a list of identifier kinds; a count, not a port",
+                         True, 'Code, round 5, read in context'),
+    # ssh_port, Code's triage (round 5): a number new at 02b6a610
+    'f783659d8065aa37': ('FALSE-POSITIVE', 'the pre-flip interim fallback-grep hit-line count, quoted on the same 02b6a610 commit-message line; a count, not a port',
+                         True, 'Code, round 5, read in context'),
+    # id-shape sweep, Code's triage (round 5): two tokens first committed in 09c3a8c that the pre-flip raw's dump
+    # does not print (the dump has no sweep table)
+    'a15c50fd9bb3ffdf': ('FALSE-POSITIVE', "a piece of the content script's synthetic self-test fixture (string pieces "
+                         "concatenated at run time into a made-up proxy host); names no pod", True,
+                         'Code, round 5, read in context'),
+    'f66375188136ef7f': ('FALSE-POSITIVE', "the same synthetic fixture, assembled, in that self-test's list of values "
+                         "that must not appear in its output; a made-up placeholder, not a RunPod id", True,
+                         'Code, round 5, read in context'),
+}
+# Round 5: the pre-flip raw's triage of the 128 credential-shaped fallback rows (its section 3(c)), keyed by
+# (path, key in lower case, the first 16 hex of sha256(value)); each entry: (verdict, reason). Code re-read
+# every row in context before carrying it (round 5) and agrees with each verdict.
+SHAPE_TRIAGE16 = {
+    ('results/raw/2026-10-08_note-N12-history.md', 'token', '8d33f520a3c4cef8'):  # 1 row(s) at 6485da2
+        ('FALSE-POSITIVE', 'prose quoting a key spelled with a trailing colon; the captured value is the closing backtick'),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '39bdcc67ae893fc1'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '790d326121c28d07'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '886384e4c6d06100'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', 'a9502067f2684276'):  # 4 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', 'ab35ea0cb6a8fe5f'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a sha256)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', 'd021497da982a488'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a sha256)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '476e300e27f08a67'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', 'a73a6e2153d3108a'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', 'fbc7671ed7a74fa3'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '70af3d9e2d7accd5'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', 'b063f0e9448e5740'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', 'efaba63d61f25a1c'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '6e80c16f8163d7f9'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a sha256)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', 'e22619e40e3ac394'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', 'f5c4e67de35720b2'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '17660783aa5202cd'):  # 4 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '6e8a85d86ab579fc'):  # 4 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a sha256)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', 'fab00b52f1b3af08'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '06bcf7b3c7fbba1a'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a sha256)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', 'a95fdd8b6e9b9547'):  # 6 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '9ed2de3dff6684e3'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a sha256)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '95b6524305037473'):  # 4 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a sha256)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', 'e3df8067db1e3b19'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', 'eb5ef41a5c6d87b0'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a sha256)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '1d4b10b53e497027'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', 'd9b622cd7fd1da72'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a sha256)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', 'cd58a10861b6b066'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '8593ff18bb498c12'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a sha256)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '2af4268f43523757'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '070f42a27ebaa4b3'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a sha256)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '7a48bb773b2dbd9a'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', 'c27ba29889887d00'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a sha256)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '88eddb53252eff9d'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '029221aa6892959b'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a sha256)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '076642afd215536b'):  # 4 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a sha256)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '328dfb7dafc9c30f'):  # 3 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', 'b735f27d9b7450c7'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a sha256)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', 'dc24be923de7bdde'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '8ff70da0b56f1418'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a sha256)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '56181af002d0e6cf'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '00cfee510a81a6d4'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a sha256)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', 'e8bd41a9d48c42c1'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', 'ffe03c205e007f3f'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a sha256)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '2d51e294c8a30754'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '715e08cd3c9eb8de'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '7714df9f7f8969d6'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a sha256)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '181060cbf8f3c897'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '1ce51ffc321ef4d4'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a sha256)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', 'f72afd0d1e87c87d'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a commit id)"),
+    ('results/raw/2026-10-08_note-N13-provenance.json', 'token', '3d758122c29d47cc'):  # 2 row(s) at 6485da2
+        ('FALSE-POSITIVE', "an abbreviated hash in N13's provenance JSON; the next line holds its full form (a sha256)"),
+    ('results/raw/2026-10-08_note-N16-decoding.json', 'max_new_tokens', 'a683c5c5349f6f7f'):  # 1 row(s) at 6485da2
+        ('FALSE-POSITIVE', "a decoding parameter (maximum new tokens) recorded as 'n/a'"),
+    ('results/raw/2026-10-08_note-N16-decoding.md', 'eos_token', 'd918ff431c288b10'):  # 1 row(s) at 6485da2
+        ('FALSE-POSITIVE', "LLM-token sense: the model's end-of-sequence token string"),
+    ('results/raw/2026-10-08_note-N3-echo-robustness.json', 'token', '5141d821294bd8f1'):  # 1 row(s) at 6485da2
+        ('FALSE-POSITIVE', "the same sentence as the md's line [a label's token, then its probe-AUC range], in the JSON"),
+    ('results/raw/2026-10-08_note-N3-echo-robustness.json', 'token', 'b4a03256a339c539'):  # 1 row(s) at 6485da2
+        ('FALSE-POSITIVE', "the same sentence as the md's line [a label's token, then its probe-AUC range], in the JSON"),
+    ('results/raw/2026-10-08_note-N3-echo-robustness.md', 'token', '5141d821294bd8f1'):  # 1 row(s) at 6485da2
+        ('FALSE-POSITIVE', "LLM-token sense: a label's token, then its probe-AUC range"),
+    ('results/raw/2026-10-08_note-N3-echo-robustness.md', 'token', 'b4a03256a339c539'):  # 1 row(s) at 6485da2
+        ('FALSE-POSITIVE', "LLM-token sense: the second label's token, then its probe-AUC range"),
+    ('results/raw/2026-10-08_note-tier1_valuescheck.md', 'secret', '46dc943e3424a225'):  # 1 row(s) at 6485da2
+        ('FALSE-POSITIVE', "prose ('Informational, not a secret' followed by a path prefix); no value"),
+    ('scripts/audit_note_N12_history.py', 'token', '8d33f520a3c4cef8'):  # 1 row(s) at 6485da2
+        ('FALSE-POSITIVE', "the same prose [quoting a key spelled with a trailing colon; the captured value is the closing backtick], in the script that writes it"),
+    ('scripts/audit_note_N13.py', 'cite_token', '97ba63ebc3d84b64'):  # 1 row(s) at 6485da2
+        ('FALSE-POSITIVE', "a document:line citation label in N13's trigger table"),
+    ('scripts/audit_note_N13.py', 'cite_token', '14fa637189542a09'):  # 1 row(s) at 6485da2
+        ('FALSE-POSITIVE', "a document:line citation label in N13's trigger table"),
+    ('scripts/audit_note_N16.py', 'tokens', '416759ca652721f6'):  # 1 row(s) at 6485da2
+        ('FALSE-POSITIVE', 'a decoding-parameters table entry whose value starts with a run label (B2-r)'),
+    ('scripts/audit_note_N2.py', 'max_tokens', 'ce7f5d9dffb4a889'):  # 1 row(s) at 6485da2
+        ('FALSE-POSITIVE', 'source code (a keyword argument) inside a regular expression of a referent check'),
+}
+
+# Round 5: the leak guard's policy (guard_candidates, guard_decide). A value is exempt only if it is one of the two
+# values printed verbatim by policy (SAFE_VERBATIM), or: every verdict it receives in this run is one of
+# GUARD_EXEMPT_VERDICTS, it is not one of the known sensitive values (the pre-release section's set, plus the
+# session link's bare id), it carries none of them inside it (in any case or separator variant) and no session link,
+# and -- for every record of a redaction-rule class, and (second check) for every record of a value with a
+# generated-looking segment (has_random_segment) -- that verdict comes from an explicit hash-keyed entry (TRIAGE16,
+# SHAPE_TRIAGE16 or MANUAL_TRIAGE), never from a mechanical rule alone. Every other value the run redacts, finds or
+# knows is guarded, printed or not.
+GUARD_EXEMPT_VERDICTS = ("FALSE-POSITIVE", "PUBLIC", "LOCAL-PATH")
+GUARD_REFUSE_VERDICTS = ("TRUE-SECRET-CANDIDATE", "IDENTIFIER", "PASSPHRASE-SHAPED", "UNTRIAGED")
+SWEEP_CLASS = "id-shape sweep (RunPod-id-shaped token)"
+SHAPE_CLASS = "credential-shaped fallback row"
+# The identifier classes the routing's redaction rule names (RunPod ids, names and hosts, SSH ports / keys /
+# fingerprints / identity files, container and laptop hostnames, IP addresses, the session link, the
+# pass-phrase-shaped value, email addresses, cloud account ids), as the pre-flip raw partitioned them: every
+# identifier class except the two local-path classes and url_host; plus the id-shape sweep.
+NON_RULE_ID_CLASSES = ("local_temp_path", "claude_projects_path", "url_host")
+REDACTION_RULE_CLASSES = tuple(c for c in ID_PATTERNS if not c.startswith(NON_RULE_ID_CLASSES)) + (SWEEP_CLASS,)
+assert all(re.fullmatch(r"[0-9a-f]{16}", k_) for k_ in TRIAGE16), "TRIAGE16 keys are 16 hex"
+assert all(re.fullmatch(r"[0-9a-f]{16}", k_[2]) for k_ in SHAPE_TRIAGE16), "SHAPE_TRIAGE16 keys hold 16 hex"
+assert not {k_[:8] for k_ in TRIAGE16} & set(MANUAL_TRIAGE), "a TRIAGE16 key shadows a MANUAL_TRIAGE key"
+assert all(e_[0] in GUARD_EXEMPT_VERDICTS + GUARD_REFUSE_VERDICTS for e_ in TRIAGE16.values())
+assert all(e_[0] in GUARD_EXEMPT_VERDICTS for e_ in SHAPE_TRIAGE16.values())
 
 
 # ---------------------------------------------------------------- helpers
@@ -910,11 +1191,21 @@ def fallback_bulk_rule(alt, word, path, after=""):
 
 # ---------------------------------------------------------------- triage of precise / HE hits
 def manual(value):
-    """MANUAL_TRIAGE entry -> (verdict, reason, sensitive)."""
-    e = MANUAL_TRIAGE.get(vkey(value))
+    """Explicit triage -> (verdict, reason, sensitive): a TRIAGE16 entry (round 5: the first 16 hex of sha256) first,
+    then a MANUAL_TRIAGE entry (the first 8 hex)."""
+    h_ = sha256_hex(value.encode())
+    e = TRIAGE16.get(h_[:16])
+    if e is not None:
+        return (e[0], e[1], e[2])
+    e = MANUAL_TRIAGE.get(h_[:8])
     if e is None:
         return None
     return (e[0], e[1], e[2] if len(e) > 2 else True)
+
+
+def shape_manual(path, key, value):
+    """Round 5: SHAPE_TRIAGE16 entry for a credential-shaped fallback row -> (verdict, reason), or None."""
+    return SHAPE_TRIAGE16.get((path, key.lower(), sha256_hex(value.encode())[:16]))
 
 
 def triage_precise(name, value, line, path):
@@ -1908,6 +2199,440 @@ def pending_group(f):
     return "other untracked or modified files (the PI's documents)"
 
 
+# ---------------------------------------------------------------- round 5: the leak guard
+def guard_decide(R, known, candidates, r5a=False):
+    """Round 5. R: value -> list of (source, class, verdict, explicit) records from every table this run fills;
+    known: the known sensitive values (never exempt); candidates: every value the guard considers. Returns
+    (refuse, why, exempt): the values the guard refuses to see verbatim, a reason label per refused value, and the
+    verdict set per exempt value. r5a=True replays the first round-5 decision (no generated-segment rule; a known
+    value inside another found only word-bounded), for the second check's controls only."""
+    known = {v for v in known if v}
+    kms = ([(k_, "word", re.compile(r"(?<![A-Za-z0-9])" + re.escape(k_) + r"(?![A-Za-z0-9])")) for k_ in sorted(known)]
+           if r5a else known_matchers(known))
+    refuse, why, exempt = set(), {}, {}
+    for v in candidates:
+        if not v:
+            continue
+        if v in SAFE_VERBATIM:
+            exempt[v] = ("SAFE-VERBATIM",)
+            continue
+        if v in known:
+            refuse.add(v)
+            why[v] = "a known sensitive value"
+            continue
+        recs = R.get(v, ())
+        if not recs:
+            refuse.add(v)
+            why[v] = "redacted, with no verdict"
+            continue
+        bad = sorted({r_[2] for r_ in recs if r_[2] not in GUARD_EXEMPT_VERDICTS})
+        if bad:
+            refuse.add(v)
+            why[v] = "verdict " + "/".join(bad)
+            continue
+        if any(r_[1] in REDACTION_RULE_CLASSES and not r_[3] for r_ in recs):
+            refuse.add(v)
+            why[v] = "a redaction-rule class with no explicit triage"
+            continue
+        if not r5a and any(not r_[3] for r_ in recs) and random_segment(v):
+            refuse.add(v)
+            why[v] = "a mechanical verdict on a value with a generated-looking segment, with no explicit triage"
+            continue
+        if any(km_count(km_, v, first=True) for km_ in kms) or SESSION_LINK_RE.search(v):
+            refuse.add(v)
+            why[v] = "carries a known sensitive value or a session link"
+            continue
+        exempt[v] = tuple(sorted({r_[2] for r_ in recs}))
+    return refuse, why, exempt
+
+
+_RANDSEG = {}
+
+
+def random_segment(v):
+    """has_random_segment, memoized (the guard asks it of every candidate on every control)."""
+    if v not in _RANDSEG:
+        _RANDSEG[v] = has_random_segment(v)
+    return _RANDSEG[v]
+
+
+KNOWN_MIN_SUBSTR = 8
+HEX_CHARS = frozenset("0123456789abcdefABCDEF")
+_KM = {}
+
+
+def known_matchers(known):
+    """Round 5, second check: one (value, kind, regex) per known value. A value of KNOWN_MIN_SUBSTR or more characters
+    is matched as a plain substring, case-insensitively, with each interior run of separators (`-`, `_`, space, `.`)
+    matching any run of them, tabs included, or none (kind 'variant'); an all-digit value (an SSH port) digit-bounded (kind
+    'digits'; km_count skips a match inside a run of 8+ hex characters, a digest); any other value word-bounded, as
+    round 4 matched (kind 'word')."""
+    key = frozenset(known)
+    if key not in _KM:
+        out = []
+        for v in sorted(key, key=lambda x: (-len(x), sha256_hex(x.encode()))):
+            if v.isdigit():
+                out.append((v, "digits", re.compile(r"(?<![0-9])" + re.escape(v) + r"(?![0-9])")))
+            elif len(v) >= KNOWN_MIN_SUBSTR:
+                # interior separator runs only: a leading or trailing one stays literal, so the pattern never
+                # shrinks to a bare word
+                parts = [p_ for p_ in re.split(r"([-_ .]+)", v) if p_]
+                out.append((v, "variant", re.compile("".join(
+                    r"[-_ \t.]*" if (re.fullmatch(r"[-_ .]+", p_) and 0 < i_ < len(parts) - 1) else re.escape(p_)
+                    for i_, p_ in enumerate(parts)), re.I)))
+            else:
+                out.append((v, "word", re.compile(r"(?<![A-Za-z0-9])" + re.escape(v) + r"(?![A-Za-z0-9])")))
+        _KM[key] = out
+    return _KM[key]
+
+
+def in_digest(txt, s, e):
+    """True if txt[s:e] lies inside a maximal run of 8 or more hex characters (a sha8 or longer digest)."""
+    a, b = s, e
+    while a > 0 and txt[a - 1] in HEX_CHARS:
+        a -= 1
+    while b < len(txt) and txt[b] in HEX_CHARS:
+        b += 1
+    return b - a >= 8
+
+
+def km_count(km, txt, first=False):
+    """Matches of one known matcher in txt (a digit match inside a digest not counted); first=True stops at one."""
+    v, kind, rx = km
+    if kind != "variant" and v not in txt:
+        return 0
+    n = 0
+    for m_ in rx.finditer(txt):
+        if kind == "digits" and in_digest(txt, m_.start(), m_.end()):
+            continue
+        n += 1
+        if first:
+            break
+    return n
+
+
+def digest_skips(known, txt):
+    """Digit-bounded matches of the all-digit known values that km_count skips because they sit inside a digest."""
+    n = 0
+    for v, kind, rx in known_matchers({k_ for k_ in known if k_}):
+        if kind == "digits" and v in txt:
+            n += sum(1 for m_ in rx.finditer(txt) if in_digest(txt, m_.start(), m_.end()))
+    return n
+
+
+def guard_known(pend_known):
+    """Round 5, second check: the guard's known set -- the pre-release section's sensitive values plus, for each
+    session link, its bare id (the last run of 8+ letters and digits), so the id without its claude.ai/code/ prefix
+    is guarded too. Guard-only: the pre-release section's own set is unchanged."""
+    out = {v for v in pend_known if v}
+    for v, labels in pend_known.items():
+        if any(str(c_).startswith("claude_session_or_artifact_link") for c_ in labels):
+            ids_ = re.findall(r"[A-Za-z0-9]{8,}", v)
+            if ids_:
+                out.add(ids_[-1])
+    return out
+
+
+def guard_form(v):
+    """Round 5: the form the guard's refusal message prints -- 'lenN:sha8' for a value of 4 characters or fewer or one
+    that opens with 4 digits (no character of it shown), else the generic redacted form; never registers the value."""
+    if len(v) <= 4 or re.match(r"\d{4}", v):
+        return f"len{len(v)}:{sha256_hex(v.encode())[:8]}"
+    return f"{v[:4]}...[len {len(v)}]#{sha256_hex(v.encode())[:8]}"
+
+
+def guard_candidates(R, known, redacted):
+    """Round 5: every value the guard considers -- each value printed in redacted form with the sensitive flag, each
+    known sensitive value, and (second check, finding 2) each value of this run's tables, printed or not, with a
+    verdict outside GUARD_EXEMPT_VERDICTS (the refuse verdicts and METADATA, METADATA-ECHO, PUBLIC-KEY,
+    SSH-SIGNATURE alike), a mechanical record of a redaction-rule class, or (finding 3) a mechanical record on a value
+    with a generated-looking segment. guard_decide exempts SAFE_VERBATIM first."""
+    return (set(redacted) | {v for v in known if v}
+            | {v for v, recs in R.items()
+               if any(r_[2] not in GUARD_EXEMPT_VERDICTS or (r_[1] in REDACTION_RULE_CLASSES and not r_[3])
+                      for r_ in recs)
+               or (any(not r_[3] for r_ in recs) and random_segment(v))})
+
+
+def guard_candidates_r5a(R, known, redacted):
+    """The first round-5 candidate rule, kept only so the controls can show which gap cases it missed."""
+    return (set(redacted) | {v for v in known if v}
+            | {v for v, recs in R.items() if any(r_[2] in GUARD_REFUSE_VERDICTS for r_ in recs)})
+
+
+def guard_scan(values, outputs, known=(), round4=False):
+    """Round 5. Every (output label, value) with the value verbatim in the output; deterministic order. Second check
+    (finding 4, 5): a known value is matched by its known_matchers entry (8+ characters: plain substring, case- and
+    separator-insensitive; all-digit: digit-bounded outside digests); any other value of KNOWN_MIN_SUBSTR or more
+    characters as a plain substring; a shorter one word-bounded (no letter or digit touching it). round4=True
+    replays round 4's rule (word-bounded throughout, no known matcher)."""
+    kmd = {} if round4 else {km_[0]: km_ for km_ in known_matchers({k_ for k_ in known if k_})}
+    leaks = []
+    for v in sorted(values, key=lambda x: (sha256_hex(x.encode()), x)):
+        for label, txt in outputs:
+            if v in kmd:
+                hit = km_count(kmd[v], txt, first=True) > 0
+            elif len(v) >= KNOWN_MIN_SUBSTR and not round4:
+                hit = v in txt
+            else:
+                hit = v in txt and bool(re.search(r"(?<![A-Za-z0-9])" + re.escape(v) + r"(?![A-Za-z0-9])", txt))
+            if hit:
+                leaks.append((label, v))
+    return leaks
+
+
+def guard_controls(R, known, redacted, outputs, pend_known):
+    """Round 5 positive controls. Every control value is resolved from this run's own tables (or generated) in memory
+    and is never printed, returned or written: the result holds booleans, counts and class labels only."""
+    import secrets
+    import string
+    md_, js_ = outputs["md"], outputs["json"]
+    base_out = [("md", md_), ("json", js_)]
+    candidates = guard_candidates(R, known, redacted)
+    ref0, why0, ex0 = guard_decide(R, known, candidates)
+    base = guard_scan(ref0, base_out, known)
+    res = {"outputs_as_written": {"leaks": len(base), "pass": not base}}
+
+    def injected(v, extra_R=None):
+        """Inject v into a copy of each output (alone on its own line) and run the guard as a real run would."""
+        R2 = R if extra_R is None else {**R, **extra_R}
+        c2 = guard_candidates(R2, known, redacted)
+        ref, why, _ = guard_decide(R2, known, c2)
+        out = {}
+        for lab_ in ("md", "json"):
+            outs = [(l_, (t_ + "\n" + v + "\n") if l_ == lab_ else t_) for l_, t_ in base_out]
+            lk = guard_scan(ref, outs, known)
+            out[lab_] = {"refused": (lab_, v) in lk, "other_new_leaks": len(set(lk) - set(base) - {(lab_, v)})}
+        # the same value with the known set emptied: does its own verdict alone make the guard refuse it?
+        ref_k, why_k, _ = guard_decide(R2, set(), guard_candidates(R2, set(), redacted))
+        out["refused_by_its_verdict_alone"] = v in ref_k
+        out["reason"] = why.get(v)
+        out["reason_without_known_set"] = why_k.get(v)
+        out["verbatim_in_outputs_as_written"] = bool(guard_scan({v}, base_out, known))
+        return out
+
+    def injected_text(text, targets, extra_R=None, extra_red=()):
+        """Second check: inject text (its own line) into a copy of each output and run the guard as a real run would.
+        Per output: refused = every target value is reported in that copy (the target can differ from the text, as
+        when the text is a variant of a known value or a value glued into other characters)."""
+        R2 = R if extra_R is None else {**R, **extra_R}
+        red2 = set(redacted) | set(extra_red)
+        c2 = guard_candidates(R2, known, red2)
+        ref, why, _ = guard_decide(R2, known, c2)
+        out = {"targets": len(targets)}
+        for lab_ in ("md", "json"):
+            outs = [(l_, (t_ + "\n" + text + "\n") if l_ == lab_ else t_) for l_, t_ in base_out]
+            lk = set(guard_scan(ref, outs, known))
+            out[lab_] = all((lab_, t_) in lk for t_ in targets)
+        out["reasons"] = sorted({str(why.get(t_)) for t_ in targets})
+        out["refused"] = out["md"] and out["json"]
+        # the first round-5 guard (its candidate rule, its decision without the generated-segment rule, round 4's
+        # word-bounded matching) on the same copies: True would mean the case was no gap
+        ref_a, _, _ = guard_decide(R2, known, guard_candidates_r5a(R2, known, red2), r5a=True)
+        out["first_round5_guard_refused"] = all(
+            (lab_, t_) in set(guard_scan(ref_a, [(l_, (x_ + "\n" + text + "\n") if l_ == lab_ else x_)
+                                                 for l_, x_ in base_out], round4=True))
+            for lab_ in ("md", "json") for t_ in targets)
+        return out
+    # (i) a real RunPod pod id, resolved from this run's history tables
+    pods = sorted((v for v, c_ in pend_known.items() if any(x.startswith("runpod_pod_id") for x in c_)),
+                  key=lambda x: sha256_hex(x.encode()))
+    if pods:
+        r_ = injected(pods[0])
+        r_.update({"n_candidates": len(pods), "class": "runpod_pod_id",
+                   "verdicts": sorted({x[2] for x in R.get(pods[0], ())})})
+        res["i_pod_id"] = r_
+    else:
+        res["i_pod_id"] = {"missing": True}
+    # (ii) a synthetic secret-shaped value, generated here, whose triage under the script's own rules is UNTRIAGED
+    name_ = "huggingface_token hf_"
+    rx_ = next(rx for n_, rx, _ in PRECISE if n_ == name_)
+    alph = string.ascii_letters + string.digits
+    syn = "hf" + "_" + "".join(secrets.choice(alph) for _ in range(34))
+    tri = triage_precise(name_, syn, "token = " + syn, "<round-5 control>")
+    r_ = injected(syn, {syn: [("control", "precise:" + name_, tri[0], False)]})
+    r_.update({"pattern": name_, "pattern_matches": bool(rx_.fullmatch(syn)), "triage": tri[0],
+               "in_this_run_tables": syn in R})
+    res["ii_synthetic_untriaged"] = r_
+    # (iii) one of the SSH ports (verdict IDENTIFIER), resolved from this run's history tables
+    ports = sorted((v for v, c_ in pend_known.items() if PORT_CLASS in c_), key=lambda x: sha256_hex(x.encode()))
+    if ports:
+        r_ = injected(ports[0])
+        r_.update({"n_candidates": len(ports), "class": "ssh_port",
+                   "verdicts": sorted({x[2] for x in R.get(ports[0], ())})})
+        res["iii_ssh_port"] = r_
+    else:
+        res["iii_ssh_port"] = {"missing": True}
+    # (iv) the generic tokens: every round-5-triaged value this run holds, its verbatim presence and its decision
+    t16 = sorted({v for v in set(R) | candidates if sha256_hex(v.encode())[:16] in TRIAGE16})
+    shv = sorted({v for v, recs in R.items() for x in recs if x[0] == "shape16"})
+    verb = {v: [l_ for l_, t_ in base_out if v in t_ and re.search(r"(?<![A-Za-z0-9])" + re.escape(v)
+                                                                       + r"(?![A-Za-z0-9])", t_)] for v in t16 + shv}
+    res["iv_generic_tokens"] = {
+        "triage16_values_in_run": len(t16), "triage16_verbatim_in_outputs": sum(1 for v in t16 if verb[v]),
+        "triage16_refused": sum(1 for v in t16 if v in ref0),
+        "shape16_values_in_run": len(shv), "shape16_verbatim_in_outputs": sum(1 for v in shv if verb[v]),
+        "shape16_refused": sum(1 for v in shv if v in ref0),
+        "guard_passes_outputs": not base}
+    # (v) the same outputs with the round-5 entries' verdicts read as UNTRIAGED (the triage absent)
+    R_cf = {v: ([(x[0], x[1], "UNTRIAGED", False) for x in recs]
+                if (sha256_hex(v.encode())[:16] in TRIAGE16 or any(x[0] == "shape16" for x in recs)) else recs)
+            for v, recs in R.items()}
+    ref_cf, _, _ = guard_decide(R_cf, known, guard_candidates(R_cf, known, redacted))
+    lk_cf = guard_scan(ref_cf, base_out, known)
+    res["v_without_round5_triage"] = {"entries": len(lk_cf), "distinct": len({v for _, v in lk_cf}),
+                                      "all_round5_values": all(sha256_hex(v.encode())[:16] in TRIAGE16 or
+                                                               any(x[0] == "shape16" for x in R.get(v, ()))
+                                                               for _, v in lk_cf)}
+    # (vi) the round-4 rule replayed on the same outputs: every value printed redacted with the sensitive flag,
+    # matched word-bounded as round 4 matched
+    lk4 = guard_scan(set(redacted), base_out, round4=True)
+    d4 = {v for _, v in lk4}
+    res["vi_round4_rule"] = {"entries": len(lk4), "distinct": len(d4),
+                             "exempt_now_by_explicit_entry": sum(1 for v in d4 if v in ex0 and manual(v)),
+                             "exempt_now_by_mechanical_verdict": sum(1 for v in d4 if v in ex0 and not manual(v)),
+                             "refused_now": sum(1 for v in d4 if v in ref0),
+                             "by_exempt_verdict": dict(most_common_sorted(collections.Counter(
+                                 "/".join(ex0[v]) for v in d4 if v in ex0)))}
+    # ---- second check (the round-5 checker's findings 2-5): the gap cases, each injected as a real write would see it
+    rnd = lambda n_, al_=alph: "".join(secrets.choice(al_) for _ in range(n_))
+    lower = string.ascii_lowercase
+    nk = lambda x_: x_ not in R and x_ not in known and x_ not in md_ and x_ not in js_
+    pod_cls = next(c_ for c_ in ID_PATTERNS if c_.startswith("runpod_pod_id"))
+    sc = {}
+    # (vii) finding 2: values the first round-5 candidate rule did not consider
+    while True:
+        s1 = rnd(14, string.ascii_lowercase + string.digits)
+        if nk(s1) and re.search(r"\d", s1) and re.search(r"[a-z]", s1):
+            break
+    sc["vii_a_rule_class_mechanical_exempt"] = injected_text(
+        s1, [s1], {s1: [("control", pod_cls, "FALSE-POSITIVE", False, None)]})
+    s2 = rnd(12, lower) + "." + rnd(6, lower)
+    sc["vii_b_metadata_verdict"] = injected_text(s2, [s2], {s2: [("control", "context_free", "METADATA", False, None)]})
+    # (viii) finding 3: a temp path holding a fresh 32-character generated segment, a mechanical LOCAL-PATH verdict;
+    # beside it the case the exemption is for: a temp path of words only, with the same mechanical verdict
+    while True:
+        seg = rnd(32)
+        if has_random_segment(seg):
+            break
+    s3 = "/tmp/" + seg + "/" + rnd(6, lower) + ".log"
+    sc["viii_temp_path_generated_segment"] = injected_text(
+        s3, [s3], {s3: [("control", "local_temp_path", "LOCAL-PATH", False, None)]}, extra_red=[s3])
+    s3b = "/tmp/" + rnd(10, lower) + "/" + rnd(6, lower) + ".log"
+    R3b = {**R, s3b: [("control", "local_temp_path", "LOCAL-PATH", False, None)]}
+    ref3b, _, ex3b = guard_decide(R3b, known, guard_candidates(R3b, known, set(redacted) | {s3b}))
+    sc["viii_b_words_only_temp_path_exempt"] = {"exempt": s3b in ex3b and s3b not in ref3b,
+                                                "random_segment": has_random_segment(s3b)}
+    # (ix) finding 4: a known value glued to letters, or inside an exempt-looking value
+    pods_ = sorted((v for v, c_ in pend_known.items() if any(x.startswith("runpod_pod_id") for x in c_)),
+                   key=lambda x: sha256_hex(x.encode()))
+    ports_ = sorted((v for v, c_ in pend_known.items() if PORT_CLASS in c_), key=lambda x: sha256_hex(x.encode()))
+    if pods_:
+        p0 = pods_[0]
+        sc["ix_a_pod_id_glued_to_letters"] = injected_text(rnd(3, lower) + p0 + rnd(3, lower), [p0])
+        s4 = "/tmp/run" + p0 + "x/" + rnd(6, lower)
+        sc["ix_b_pod_id_inside_mechanical_local_path"] = injected_text(
+            s4, [s4, p0], {s4: [("control", "local_temp_path", "LOCAL-PATH", False, None)]}, extra_red=[s4])
+        # (x) finding 5: case variants of a pod id
+        sc["x_a_pod_id_upper_case"] = injected_text(p0.upper(), [p0])
+    if ports_:
+        q0 = ports_[0]
+        sc["ix_c_port_glued_to_letters"] = injected_text("p" + q0 + "x", [q0])
+        sc["ix_d_port_ssh_flag_form"] = injected_text("ssh -p" + q0 + " box", [q0])
+        # the declared exception: a port's digits inside a run of 8+ hex characters (a digest) are not a port
+        hx = rnd(4, "abcdef") + q0 + rnd(4, "abcdef")
+        outs_e = [(l_, t_ + "\n#" + hx + "\n") for l_, t_ in base_out]
+        sc["ix_f_port_inside_digest_not_refused"] = {
+            "refused": any(v_ == q0 for _, v_ in guard_scan(ref0, outs_e, known)), "declared_exception": True}
+    pph = sorted((v for v, c_ in pend_known.items() if any(str(x).startswith("passphrase") for x in c_)),
+                 key=lambda x: sha256_hex(x.encode()))
+    if pph:
+        f0 = pph[0]
+        has_sep = bool(re.search(r"[-_ .]", f0))
+        # (ix-e) finding 4, the 'carries' path itself: a temp path with no generated-looking segment (so the
+        # generated-segment rule does not decide it) carrying the pass-phrase-shaped value glued to letters
+        s5 = "/tmp/" + rnd(2, lower) + f0 + rnd(2, lower) + "/" + rnd(5, lower) + ".log"
+        sc["ix_e_known_value_inside_words_only_local_path"] = {
+            **injected_text(s5, [s5, f0], {s5: [("control", "local_temp_path", "LOCAL-PATH", False, None)]},
+                            extra_red=[s5]),
+            "random_segment": has_random_segment(s5)}
+        sc["x_b_passphrase_variants"] = {"has_separators": has_sep, **{
+            k_: injected_text(t_, [f0])["refused"] for k_, t_ in (
+                ("spaces", re.sub(r"[-_ .]+", " ", f0)), ("underscores", re.sub(r"[-_ .]+", "_", f0)),
+                ("no_separators", re.sub(r"[-_ .]+", "", f0)), ("upper_case", f0.upper()),
+                ("title_spaces", re.sub(r"[-_ .]+", " ", f0).title()))}}
+    lap = sorted((v for v, c_ in pend_known.items() if "laptop hostname" in c_), key=lambda x: sha256_hex(x.encode()))
+    if lap:
+        sc["x_c_laptop_hostname_case"] = {"lower": injected_text(lap[0].lower(), [lap[0]])["refused"],
+                                          "upper": injected_text(lap[0].upper(), [lap[0]])["refused"]}
+    ses = sorted((v for v, c_ in pend_known.items()
+                  if any(str(x).startswith("claude_session_or_artifact_link") for x in c_)),
+                 key=lambda x: sha256_hex(x.encode()))
+    if ses:
+        sid = re.findall(r"[A-Za-z0-9]{8,}", ses[0])[-1]
+        sc["x_d_session_id_without_prefix"] = {
+            "id_in_guard_known_set": sid in known,
+            "bare_id": injected_text(sid, [sid])["refused"],
+            "session_word_and_id": injected_text("session_" + sid, [sid])["refused"],
+            "id_upper_case": injected_text(sid.upper(), [sid])["refused"]}
+    res["second_check"] = sc
+    c_a = guard_candidates_r5a(R, known, redacted)
+    w_ = {v for v, recs in R.items() if any(x[2] not in GUARD_EXEMPT_VERDICTS or
+                                            (x[1] in REDACTION_RULE_CLASSES and not x[3]) for x in recs)}
+    add_w, add_g = (candidates - c_a) & w_, (candidates - c_a) - w_
+    kinds_ = collections.Counter(k_ for _, k_, _ in known_matchers({k_ for k_ in known if k_}))
+    vc_ = lambda vs_: dict(most_common_sorted(collections.Counter(
+        "/".join(sorted({x[2] + " | " + x[1].split(" (")[0] for x in R.get(v, ())})) for v in vs_)))
+    res["second_check_counts"] = {
+        "candidates": len(candidates), "candidates_first_round5_rule": len(c_a),
+        "added_by_widened_rule": len(add_w), "added_by_widened_rule_verdict_class": vc_(add_w),
+        "added_by_widened_rule_safe_verbatim": sum(1 for v in add_w if v in SAFE_VERBATIM),
+        "added_by_widened_rule_refused": sum(1 for v in add_w if v in ref0),
+        "added_by_generated_segment_rule": len(add_g), "added_by_generated_segment_rule_verdict_class": vc_(add_g),
+        "added_by_generated_segment_rule_refused": sum(1 for v in add_g if v in ref0),
+        "refused_by_generated_segment_rule": sum(1 for v in ref0 if why0[v].startswith("a mechanical verdict on")),
+        "generated_segment_rule_values_substring_in_outputs": sum(
+            1 for v in ref0 if why0[v].startswith("a mechanical verdict on") and (v in md_ or v in js_)),
+        "known_matcher_kinds": dict(most_common_sorted(kinds_)),
+        "known_in_guard_set": len([k_ for k_ in known if k_]),
+        "digest_skips": {"md": digest_skips(known, md_), "json": digest_skips(known, js_)},
+        "known_any_variant_hits": {"md": sum(km_count(km_, md_) for km_ in known_matchers({k_ for k_ in known if k_})),
+                                   "json": sum(km_count(km_, js_) for km_ in known_matchers({k_ for k_ in known if k_}))},
+        "refused_8plus_substring_hits": sum(1 for v in ref0 if v not in known and len(v) >= KNOWN_MIN_SUBSTR
+                                            and (v in md_ or v in js_))}
+
+    def sc_ok():
+        need = ["vii_a_rule_class_mechanical_exempt", "vii_b_metadata_verdict", "viii_temp_path_generated_segment",
+                "ix_a_pod_id_glued_to_letters", "ix_b_pod_id_inside_mechanical_local_path", "x_a_pod_id_upper_case",
+                "ix_e_known_value_inside_words_only_local_path",
+                "ix_c_port_glued_to_letters", "ix_d_port_ssh_flag_form"]
+        if not all(k_ in sc and sc[k_]["refused"] for k_ in need):
+            return False
+        if not sc["viii_b_words_only_temp_path_exempt"]["exempt"] or sc["ix_f_port_inside_digest_not_refused"]["refused"]:
+            return False
+        if not all(sc["x_b_passphrase_variants"][k_] for k_ in ("spaces", "underscores", "no_separators",
+                                                                 "upper_case", "title_spaces")):
+            return False
+        if not all(sc["x_c_laptop_hostname_case"].values()):
+            return False
+        return all(sc["x_d_session_id_without_prefix"].values())
+    res["second_check_all_pass"] = bool(pods_ and ports_ and pph and lap and ses and sc_ok())
+    ok = (res["second_check_all_pass"] and res["outputs_as_written"]["pass"]
+          and all(res[k_].get(lab_, {}).get("refused") for k_ in ("i_pod_id", "ii_synthetic_untriaged", "iii_ssh_port")
+                  for lab_ in ("md", "json"))
+          and all(res[k_].get("refused_by_its_verdict_alone") for k_ in ("i_pod_id", "ii_synthetic_untriaged",
+                                                                        "iii_ssh_port"))
+          and res["ii_synthetic_untriaged"]["triage"] == "UNTRIAGED" and res["ii_synthetic_untriaged"]["pattern_matches"]
+          and not res["ii_synthetic_untriaged"]["in_this_run_tables"]
+          and not any(res[k_].get("verbatim_in_outputs_as_written") for k_ in ("i_pod_id", "ii_synthetic_untriaged",
+                                                                              "iii_ssh_port"))
+          and res["iv_generic_tokens"]["triage16_refused"] == 0 and res["iv_generic_tokens"]["shape16_refused"] == 0
+          and res["v_without_round5_triage"]["all_round5_values"]
+          and res["vi_round4_rule"]["refused_now"] == 0)
+    res["all_pass"] = bool(ok)
+    return res, (candidates, ref0, why0, ex0, base)
+
+
 # ---------------------------------------------------------------- report
 def compact_shape(rows):
     """One record per distinct (key, op, value, class, verdict, reason), with every locator."""
@@ -1934,12 +2659,21 @@ def values_check(w, V):
     w("## Values-check")
     w("")
     lnc = V["live_new_commits"]
+    # round 5: attribute each commit by its subject, as the header's coverage line does (round 4 called every one of
+    # them the PROPOSAL-m session's, which stopped being true when the audit's own commits landed)
+    subj_ = {c: git("log", "-1", "--format=%s", c).decode("utf-8", "replace") for c in lnc}
+    lnc_m = [c for c in lnc if re.search(r"G-CAL|PROPOSAL-m|^m package", subj_[c])]
+    lnc_a = [c for c in lnc if c not in lnc_m and subj_[c].startswith("AUDIT-note-release")]
+    lnc_o = [c for c in lnc if c not in lnc_m and c not in lnc_a]
     w("The builder's raw (script sha256 `bd80512c...1a2d`, run at `bbc9ffe72f`) was checked by an adversarial "
       "checker, who re-ran it, re-derived its counts by other methods and returned 9 findings plus a list of "
       "missed items. Code (the fixer) applied every finding that its own tool runs confirmed; none was rejected. "
       "Each disposition below carries this run's evidence. "
-      + (f"{len(lnc)} commit(s) landed on top of the base after the builder's run "
-         f"({', '.join('`' + c[:10] + '`' for c in lnc)}), from the concurrent PROPOSAL-m session (G-CAL, step 6). "
+      + (f"{len(lnc)} commit(s) landed on top of the base after the builder's run: "
+         + "; ".join(f"{lab_} ({', '.join('`' + c[:10] + '`' for c in cs_)})" for lab_, cs_ in (
+             ("from the concurrent PROPOSAL-m session (G-CAL, step 6; subjects beginning `m package` / `G-CAL`)", lnc_m),
+             ("this audit's own (subjects beginning `AUDIT-note-release`)", lnc_a),
+             ("other", lnc_o)) if cs_) + ". "
          if lnc else "")
       + (f"This run is pinned at `{head[:10]}` (`--pin`); the live HEAD was `{V['head_live'][:10]}`. "
          if V["a"].pin else f"This run scans the state at `{head[:10]}`. ")
@@ -2169,7 +2903,16 @@ def values_check_r2(w, V):
                 out.append(f"`{r_['file']}`: " + (", ".join(f"`{show(pend_known.get(v, ()), v)}` x{n_}"
                                                              for v, n_ in r_["known"].most_common()) or "clean"))
         missing = [f for f in files if f not in {r_["file"] for r_ in pend}]
-        return "; ".join(out + [f"`{f}`: not present" for f in missing])
+
+        def committed(f):
+            """Round 5: a file no longer pending because it is committed -- the history scan covers it; the known
+            sensitive values (exact recount) at HEAD in it are counted from their HEAD locators."""
+            n_ = sum(1 for v, ex_ in V["exact"].items() if v in pend_known
+                     for loc_ in ex_["head_locators"] if loc_.rsplit(":", 1)[0] == f)
+            return (f"`{f}`: committed (tracked at HEAD, so the history scan above covers it; exact-recounted "
+                    f"sensitive values in it at HEAD: {n_})")
+        return "; ".join(out + [committed(f) if f in V["m"]["head_files"] else f"`{f}`: not present"
+                                for f in missing])
     n13 = ["results/raw/2026-10-08_note-N13-provenance.md", "results/raw/2026-10-08_note-N13-provenance.json"]
     others = [r_ for r_ in pend if pending_group(r_["file"]).startswith("other") and r_["known"]]
     items = []
@@ -2290,10 +3033,12 @@ def values_check_r2(w, V):
     md_sofar = "\n".join(V["L"])
     old_port_forms = re.findall(r"(?<![0-9A-Za-z])\d{4}\.\.\.\[len [45]\]", md_sofar)
     n_port_vals = len(V["ids"][PORT_CLASS])
+    n_port_r5 = sum(1 for v in V["ids"][PORT_CLASS] if sha256_hex(v.encode())[:16] in TRIAGE16)
     items.append(("Missed (informational) -- the prescribed form prints values of 4 characters or fewer in full "
                   "and 4 of 5 digits of a port.",
                   f"FIXED for ports, by the routing's direction: every one of the {n_port_vals} SSH-port-class values "
-                  "(real ports, process ids, a token-window length, a local viewer port) now prints as "
+                  "(real ports, process ids, a token-window length, a local viewer port"
+                  + (f"; round 5: {n_port_r5} fallback-grep hit-line count(s)" if n_port_r5 else "") + ") now prints as "
                   "`lenN:hhhhhhhh` -- no digit -- in the md and the JSON; old-form port strings left in the md "
                   f"before this section: {len(old_port_forms)}. DISCLOSED for the rest: values of 4 characters or "
                   f"fewer that the generic form prints in full: {len(short)} distinct. In the identifier tables: "
@@ -2650,6 +3395,16 @@ def values_check_r4(w, V):
     run's evidence."""
     head, ids, exact, m = V["head"], V["ids"], V["exact"], V["m"]
     C = R4_CHECKER
+    # round 5: the checker counted at its snapshot (C["r3_head"]); when this run is at a later HEAD, its figures are
+    # compared with the counts restricted to the sources reachable from that snapshot (as round 3 does for R3-2),
+    # and this run's own figures are printed beside them
+    snap_full = git("rev-parse", "--verify", C["r3_head"] + "^{commit}").decode().strip()
+    moved = snap_full != head and is_ancestor(snap_full, head)
+    snap = ({l_.split(" ", 1)[0] for l_ in git("rev-list", "--objects", snap_full).decode("utf-8", "replace").split("\n")
+             if l_.strip()} if moved else None)
+
+    def at_snap(srcs):
+        return {x for x in srcs if x[1] in snap} if moved else set(srcs)
     w("")
     w("## Values-check, round 4")
     w("")
@@ -2664,13 +3419,18 @@ def values_check_r4(w, V):
     # R4-1: the class table's src column
     rows_ = []
     agree1 = []
+    snap_fig = []
     for cls, (u_, s_) in V["id_class_src"].items():
         if u_ != s_:
             rows_.append(f"{cls.split(' (')[0]} {s_} summed / {u_} distinct")
         if cls in C["class_src"]:
-            agree1.append(C["class_src"][cls] == (s_, u_))
+            tab_ = ids[cls]
+            s_s = sum(len(at_snap(e["sources"])) for e in tab_.values())
+            u_s = len(set().union(*(at_snap(e["sources"]) for e in tab_.values()))) if tab_ else 0
+            agree1.append(C["class_src"][cls] == (s_s, u_s))
+            snap_fig.append(f"{cls.split(' (')[0]} {s_s} / {u_s}")
     vt_ = ids[VOLNAME_CLASS]
-    both_ = (set.intersection(*(e["sources"] for e in vt_.values())) if len(vt_) == 2 else set())
+    both_ = (set.intersection(*(at_snap(e["sources"]) for e in vt_.values())) if len(vt_) == 2 else set())
     u_v, s_v = V["id_class_src"][VOLNAME_CLASS]
     items.append(("R4-1 (minor) -- the class table's `src` column is defined as 'distinct blobs/messages', but each "
                   "class row added up its values' own source counts (the volume-name row: 147).",
@@ -2679,7 +3439,10 @@ def values_check_r4(w, V):
                   "value's own sources). Class rows whose two counts differ in this run: "
                   + ("; ".join(rows_) or "none") + ". The volume-name row: " f"{s_v} summed, {u_v} distinct; sources "
                   f"holding both of its values: {len(both_)}. The checker's figures (volume name 147 / 84, held by "
-                  f"both {C['volname_both']}; pod ids (context) 223 / 145; url_host 72 / 24; ipv4 14 / 14): "
+                  f"both {C['volname_both']}; pod ids (context) 223 / 145; url_host 72 / 24; ipv4 14 / 14)"
+                  + (f", against this run's counts restricted to the sources reachable from the checker's snapshot "
+                     f"`{C['r3_head']}` ({'; '.join(snap_fig)}; held by both {len(both_)}; round 5: this run is at a "
+                     f"later HEAD, whose new commits add sources)" if moved else "") + ": "
                   + ("AGREES" if agree1 and all(agree1) and len(both_) == C["volname_both"] else "DIFFERS")
                   + ". The JSON carries both counts per class (`identifier_class_sources`). The class rows' `src` "
                     "figures appear nowhere else in the raw (round 3's md: each only in its table row)."))
@@ -2709,6 +3472,9 @@ def values_check_r4(w, V):
                 grows += i_ + 1 < len(tl) and "grows only" in tl[i_ + 1]
                 dc += any("datacenter" in x for x in tl[max(0, i_ - 3):i_])
         ex = exact.get(tool, {})
+        bs_ = ex.get("by_source", collections.Counter())
+        occ_s = sum(n_ for k_, n_ in bs_.items() if not moved or k_[1] in snap)
+        src_s = sum(1 for k_ in bs_ if not moved or k_[1] in snap)
         items.append(("R4-2 (minor) -- MANUAL_TRIAGE `84cbedd5` (`update-network-volume`): the verdict is right, but "
                       "the reason says 'in prose about renaming the volume'; the prose says a network volume cannot "
                       "be moved, because the tool only renames and grows it.",
@@ -2720,9 +3486,12 @@ def values_check_r4(w, V):
                       f"'datacenter' in the 3 lines before {dc}; lines also carrying the volume name {with_name}. "
                       f"First locator {e_['first']}; at HEAD {', '.join(ex.get('head_locators', [])) or '-'}. The "
                       f"checker: {C['tool_occ']} occurrences in {C['tool_src']} sources, introduced by "
-                      f"`{C['tool_intro']}`, at `{C['r3_head']}` {C['tool_locs_cf8']}: "
-                      + ("AGREES" if (e_["n_occ"], len(e_["sources"])) == (C["tool_occ"], C["tool_src"]) and
-                         e_["first"].startswith(C["tool_intro"]) else "DIFFERS")
+                      f"`{C['tool_intro']}`, at `{C['r3_head']}` {C['tool_locs_cf8']}"
+                      + (f", against this run's exact count restricted to the sources reachable from that snapshot "
+                         f"({occ_s} occurrences in {src_s} sources; round 5: this run is at a later HEAD)" if moved else "")
+                      + ": "
+                      + ("AGREES" if ((occ_s, src_s) if moved else (e_["n_occ"], len(e_["sources"]))) ==
+                         (C["tool_occ"], C["tool_src"]) and e_["first"].startswith(C["tool_intro"]) else "DIFFERS")
                       + ". Verdict unchanged: FALSE-POSITIVE."))
 
     # R4-3: hex-only values and the label rule
@@ -2831,6 +3600,339 @@ def values_check_r4(w, V):
       "line, and no history verdict changes; the pre-release scan is stricter (hex-only values, email addresses).")
 
 
+def guard_summary(R, res, aux, outputs, known):
+    """Round 5: the data the round-5 section and the JSON's `guard` print (booleans, counts, labels, redacted forms
+    and 16-hex keys only -- no control value)."""
+    cands, ref, why, ex, base = aux
+    md_, js_ = outputs["md"], outputs["json"]
+
+    def nverb(v, t_):
+        return len(re.findall(r"(?<![A-Za-z0-9])" + re.escape(v) + r"(?![A-Za-z0-9])", t_)) if v in t_ else 0
+    by_key = {}
+    for v in set(R) | set(cands):
+        k_ = sha256_hex(v.encode())[:16]
+        if k_ in TRIAGE16:
+            by_key[k_] = v
+    t16 = []
+    for k_, (vd_, rs_, sens_, src_) in TRIAGE16.items():
+        v = by_key.get(k_)
+        classes = sorted({r_[1] for r_ in R.get(v, ())}) if v is not None else []
+        is_port = PORT_CLASS in classes
+        form = (red_port(v, sensitive=sens_) if is_port else red(v, sensitive=sens_)) if v is not None else None
+        t16.append({"prefix16": k_, "form": form, "classes": [c_.split(" (")[0] for c_ in classes],
+                    "verdict": vd_, "reason": rs_, "source": src_, "in_this_run": v is not None,
+                    "run_verdicts": sorted({r_[2] for r_ in R.get(v, ())}) if v is not None else [],
+                    "verbatim_md": nverb(v, md_) if v is not None else 0,
+                    "verbatim_json": nverb(v, js_) if v is not None else 0,
+                    "guard": ("refused: " + why[v]) if v in ref else ("exempt" if v in ex else "not a candidate")})
+    sh_rows = collections.Counter()
+    for v, recs in R.items():
+        for r_ in recs:
+            if r_[0] == "shape16":
+                sh_rows[r_[4]] += 1
+    groups = collections.OrderedDict()
+    for (p_, k_, h_), (vd_, rs_) in SHAPE_TRIAGE16.items():
+        g_ = groups.setdefault((p_, k_, vd_, rs_), {"entries": 0, "rows_this_run": 0})
+        g_["entries"] += 1
+        g_["rows_this_run"] += sh_rows.get((p_, k_, h_), 0)
+    return {
+        "policy": {"exempt_verdicts": list(GUARD_EXEMPT_VERDICTS), "refuse_verdicts": list(GUARD_REFUSE_VERDICTS),
+                   "redaction_rule_classes": [c_.split(" (")[0] for c_ in REDACTION_RULE_CLASSES],
+                   "safe_verbatim": len(SAFE_VERBATIM), "known_min_substring": KNOWN_MIN_SUBSTR,
+                   "mechanical_verdict_exempts_generated_segment": False,
+                   "digest_run_min": 8},
+        "counts": {"candidates": len(cands), "refused": len(ref), "exempt": len(ex), "known": len(known),
+                   "exempt_explicit": sum(1 for v in ex if ex[v] != ("SAFE-VERBATIM",) and
+                                          all(r_[3] for r_ in R.get(v, ()))),
+                   "exempt_mechanical_only_outside_rule_classes": sum(
+                       1 for v in ex if ex[v] != ("SAFE-VERBATIM",) and not all(r_[3] for r_ in R.get(v, ()))),
+                   "refused_by_reason": dict(most_common_sorted(collections.Counter(why[v] for v in ref))),
+                   "exempt_by_verdicts": dict(most_common_sorted(collections.Counter("/".join(ex[v]) for v in ex))),
+                   "leaks": len(base)},
+        "triage16": t16,
+        "shape16": [{"path": p_, "key": k_, "verdict": vd_, "reason": rs_, **g_}
+                    for (p_, k_, vd_, rs_), g_ in groups.items()],
+        "shape16_rows_this_run": sum(sh_rows.values()),
+        "controls": res,
+    }
+
+
+def values_check_r5(w, C, G):
+    """Round 5 (2026-10-09): the guard fix -- the change, the triage additions, the positive controls and their
+    results. G is the guard summary of the outputs that print it (iterated to a fixed point)."""
+    w("")
+    w("## Values-check, round 5: guard fix (2026-10-09)")
+    w("")
+    if G is None:
+        w("(pending: the guard summary is computed on the outputs that print it)")
+        return
+    c_, ct_ = G["counts"], G["controls"]
+    vi_, v_ = ct_["vi_round4_rule"], ct_["v_without_round5_triage"]
+    w("**The problem.** At a HEAD that holds this audit's own committed raws and scripts (`09c3a8c` and after), the "
+      "round-4 script exited 1 and wrote nothing: its leak assertion refused on every value it printed in redacted "
+      "form with the sensitive flag, and generic tokens that this raw itself writes -- class labels, pattern text, "
+      "triage reasons, prose -- had entered history as values with `09c3a8c` (the pre-flip raw, "
+      "`results/raw/2026-10-08_note-N12-preflip.md@02b6a61` section 3(a): 19 entries, 12 distinct values, at "
+      "`6485da2`; the script's verdicts for 8 of them were UNTRIAGED). Replayed on this run's outputs (this file and its JSON), the "
+      f"round-4 rule finds {vi_['entries']} entries, {vi_['distinct']} distinct values; under round 5 they are exempt "
+      f"{vi_['exempt_now_by_explicit_entry'] + vi_['exempt_now_by_mechanical_verdict']} ("
+      + (", ".join(f"{k_} {n_}" for k_, n_ in sorted(vi_["by_exempt_verdict"].items())) or "-")
+      + f"): by an explicit hash-keyed entry {vi_['exempt_now_by_explicit_entry']}, by a mechanical verdict "
+      f"{vi_['exempt_now_by_mechanical_verdict']}; refused {vi_['refused_now']}.")
+    w("")
+    w("**The change.** (1) Explicit triage: `TRIAGE16` (value triage keyed by the first 16 hex of sha256(value); "
+      f"{len(TRIAGE16)} entries) and `SHAPE_TRIAGE16` (the credential-shaped fallback rows, keyed by path, key and "
+      f"the value's 16-hex prefix; {len(SHAPE_TRIAGE16)} entries), both in the script; `manual()` reads `TRIAGE16` "
+      "before `MANUAL_TRIAGE`, and the fallback loop reads `SHAPE_TRIAGE16` before both. (2) The leak guard is "
+      "verdict-based (as amended by the second check, below). Its candidates are every value printed in redacted "
+      "form with the sensitive flag; every known sensitive value (the pre-release section's set: RunPod ids and "
+      "volume name with its stem, SSH ports, the container hostname, the session link, the pass-phrase-shaped value, "
+      "the identity emails other than the service address, the laptop hostname, the signing-key fingerprint; plus "
+      "the session link's bare id); and every value of this run's tables, printed or not, that has a verdict other "
+      "than " + " / ".join(GUARD_EXEMPT_VERDICTS) + " (credential-shaped rows included, whose values round 4 never "
+      "guarded), a mechanical record of a redaction-rule class, or a mechanical verdict on a value with a "
+      "generated-looking segment. It refuses to write if any candidate appears in this file or its JSON, unless the "
+      "value is exempt: one of the " + str(G["policy"]["safe_verbatim"]) + " values printed verbatim by policy (the "
+      "service address and the synthetic tool-identity domain); or every verdict it receives is "
+      + " / ".join(GUARD_EXEMPT_VERDICTS) + ", it is not a known sensitive value, it carries none inside it (in any "
+        "case or separator variant) and no session link, every record of it in a redaction-rule class ("
+      + ", ".join(dict.fromkeys(G["policy"]["redaction_rule_classes"]))
+      + ") comes from an explicit hash-keyed entry, and so does every record of a value with a generated-looking "
+        "segment (a segment of 10 or more characters that mixes letters and digits and is not hex: the shape of a "
+        "generated key, and also of an OS temp-folder or tempfile name) -- a mechanical verdict exempts neither. "
+        "Refused always: " + " / ".join(GUARD_REFUSE_VERDICTS) + ", any other verdict (METADATA, METADATA-ECHO, "
+        "PUBLIC-KEY, SSH-SIGNATURE), and a redacted value with no verdict. Matching: a known value of "
+      + str(G["policy"]["known_min_substring"]) + " or more characters is found as a plain substring, "
+        "case-insensitively, with any interior run of `-`, `_`, space or `.` in it matching any run of those (or tabs) "
+        "or none; an "
+        "all-digit known value (an SSH port) digit-bounded, so a port glued to letters is found, except inside a run "
+        "of 8 or more hex characters (a digest, such as this raw's sha8 forms, where a port's digits can occur by "
+        "chance); every other refused value of " + str(G["policy"]["known_min_substring"]) + " or more characters "
+        "as a plain substring; a shorter one word-bounded, as round 4 matched. Its message lists every refused entry "
+        "by redacted form, sorted (round 4 printed the first 10 in set order, with context). (3) Positive controls, "
+        "below, run before every write; `--selftest` runs them alone and writes nothing. The redacted-form policy "
+        "for everything printed is unchanged. (4) Found while re-reading this raw -- text that the audit's own "
+        "commits made stale; no guard change: (a) the `/Users/` per-file note for code labelled every code file "
+        "without the synthetic fixture user 'a real absolute path in code', and the recommendation after it said "
+        "'the code hit is a test fixture' whatever the notes said; the note now classifies each occurrence by the "
+        "path segment after `/Users/` (empty, pattern text or the fixture user names no home directory) and the "
+        "recommendation is computed from the notes (this run's code files with `/Users/`: "
+        + str(C["code_users_files"]) + ": "
+        + (", ".join(f"{k_} {n_}" for k_, n_ in sorted(C["code_users_kinds"].items())) or "none")
+        + "; 'real' = names a user directory); (b) the round-1 values-check called every commit after the base the "
+          "PROPOSAL-m session's; it now attributes each by its subject; (c) round 4 compared the fourth checker's "
+          "figures, counted at its snapshot, with this run's totals, so a later HEAD read DIFFERS for sources the "
+          "new commits add; it now compares counts restricted to the sources reachable from that snapshot, as round "
+          "3 does, and prints both; (d) R2-9's list of what the port-class values are names the round-5 counts; (e) "
+          "R2-1's N13 line said 'not present' for N13's raws, which are no longer pending because they are committed; "
+          "it now says so and counts the exact-recounted sensitive values in them at HEAD.")
+    w("")
+    w(f"This run: candidates {c_['candidates']}, refused set {c_['refused']} ("
+      + ", ".join(f"{k_} {n_}" for k_, n_ in c_["refused_by_reason"].items()) + f"), exempt {c_['exempt']} ("
+      + ", ".join(f"{k_} {n_}" for k_, n_ in c_["exempt_by_verdicts"].items()) + f"; every record explicit "
+      f"{c_['exempt_explicit']}, at least one mechanical verdict -- outside the redaction-rule classes and without a "
+      f"generated-looking segment, by the rule -- {c_['exempt_mechanical_only_outside_rule_classes']}); refused "
+      f"values found in the outputs: {c_['leaks']}.")
+    w("")
+    src_n = collections.Counter(e_[3] for e_ in TRIAGE16.values())
+    w(f"**Triage additions, `TRIAGE16`** ({len(TRIAGE16)} values). By source: "
+      + "; ".join(f"\"{md_escape(k_)}\" {n_}" for k_, n_ in most_common_sorted(src_n))
+      + ". 'pre-flip' = `results/raw/2026-10-08_note-N12-preflip.json@02b6a61` (`history.full_leak_list`, its "
+        "section 3(a), and `new_values_detail`, its section 3(c)): the verdict and reason of every value it "
+        "triaged are carried verbatim, five reasons that refer to a neighbouring row of its table with their "
+        "referent added in square brackets (Code's addition); the four leak-list values the script had already "
+        "triaged keep the script's verdict, with a reason of Code's. 'Code, round 5' = values new to triage at this "
+        "HEAD: two numbers on a line of `02b6a610`'s commit message and two id-shape sweep tokens first committed in "
+        "`09c3a8c` (the pre-flip raw's dump prints no sweep table, so its 3(c) could not list them), each read in "
+        "context. Columns: the 16-hex key, the class(es) the value has in this run, its redacted form as this "
+      "raw prints it, the verdict, the reason, the source, its verbatim occurrences in this file / its JSON "
+      "(word-bounded), and the guard's decision.")
+    w("")
+    w("| key (16 hex) | class(es) here | form | verdict | reason | source | verbatim md / json | guard |")
+    w("|---|---|---|---|---|---|---|---|")
+    for x in G["triage16"]:
+        w(f"| `{x['prefix16']}` | {', '.join(x['classes']) or '-'} | "
+          + (f"`{x['form']}`" if x["form"] else "not in this run") + f" | {x['verdict']} | {md_escape(x['reason'])} | "
+          f"{md_escape(x['source'])} | {x['verbatim_md']} / {x['verbatim_json']} | {x['guard']} |")
+    w("")
+    nt_ = sum(1 for x in G["triage16"] if x["in_this_run"])
+    w(f"In this run: {nt_} of {len(TRIAGE16)} values; their verdicts here equal the entries' verdicts: "
+      + ("yes" if all(x["run_verdicts"] == [x["verdict"]] for x in G["triage16"] if x["in_this_run"]) else "NO") + ".")
+    w("")
+    w(f"**Triage additions, `SHAPE_TRIAGE16`** ({len(SHAPE_TRIAGE16)} entries for the pre-flip raw's 128 "
+      "credential-shaped rows, `shape_rows_detail`; verdicts and reasons carried verbatim, three entries -- two "
+      "reasons -- with a bracketed referent). "
+      f"Rows of this run matched by an entry: {G['shape16_rows_this_run']}. Grouped:")
+    w("")
+    w("| path | key | verdict | reason | entries | rows matched here |")
+    w("|---|---|---|---|---|---|")
+    for x in G["shape16"]:
+        w(f"| `{x['path']}` | `{x['key']}` | {x['verdict']} | {md_escape(x['reason'])} | {x['entries']} | "
+          f"{x['rows_this_run']} |")
+    w("")
+    w("Code re-read every carried value in the committed file that first holds it and every credential-shaped row "
+      "at its locator (`09c3a8c`) before carrying its verdict (the 115 N13 provenance rows by rule: each value is a "
+      "7- or 8-hex abbreviation whose next line holds the full commit id or sha256 that it abbreviates -- 67 and 48 "
+      "rows). Code disagrees with none, so no carried entry is kept UNTRIAGED.")
+    w("")
+    p_, s_, t_ = ct_["i_pod_id"], ct_["ii_synthetic_untriaged"], ct_["iii_ssh_port"]
+    yn = lambda b: "yes" if b else "NO"
+    bad = lambda b: "YES" if b else "no"
+    w("**Positive controls** (each control value is resolved from this run's tables or generated, held in memory "
+      "only, and appears in no file; each is injected on its own line into a copy of this file and, separately, of "
+      "its JSON, and the guard is run as a real write would run it):")
+    w("")
+    w(f"- (i) A real RunPod pod id (one of {p_.get('n_candidates', 0)} in the known set; its verdict here "
+      f"{'/'.join(p_.get('verdicts', [])) or '-'}): refused in the md copy {yn(p_.get('md', {}).get('refused'))}, "
+      f"in the JSON copy {yn(p_.get('json', {}).get('refused'))}; refused by its own verdict alone, with the known set "
+      f"emptied: {yn(p_.get('refused_by_its_verdict_alone'))} ({p_.get('reason_without_known_set')}); verbatim in the "
+      f"outputs as written: {bad(p_.get('verbatim_in_outputs_as_written'))}"
+      f"; other new refusals from the injection: {p_.get('md', {}).get('other_new_leaks')} / "
+      f"{p_.get('json', {}).get('other_new_leaks')}.")
+    w(f"- (ii) A synthetic secret-shaped value generated at run time (the `{s_['pattern']}` shape; the pattern "
+      f"matches it: {yn(s_['pattern_matches'])}; the script's own triage: {s_['triage']}; absent from this run's "
+      f"tables: {yn(not s_['in_this_run_tables'])}), entered as a table value with that verdict: refused in the md "
+      f"copy {yn(s_['md']['refused'])}, in the JSON copy {yn(s_['json']['refused'])}; by its verdict alone: "
+      f"{yn(s_['refused_by_its_verdict_alone'])} ({s_['reason_without_known_set']}); verbatim in the outputs as "
+      f"written: {bad(s_['verbatim_in_outputs_as_written'])}.")
+    w(f"- (iii) One of the {t_.get('n_candidates', 0)} SSH ports (its verdict here {'/'.join(t_.get('verdicts', [])) or '-'}): "
+      f"refused in the md copy {yn(t_.get('md', {}).get('refused'))}, in the JSON copy "
+      f"{yn(t_.get('json', {}).get('refused'))}; by its own verdict alone: {yn(t_.get('refused_by_its_verdict_alone'))} "
+      f"({t_.get('reason_without_known_set')}); other new refusals from the injection: "
+      f"{t_.get('md', {}).get('other_new_leaks')} / {t_.get('json', {}).get('other_new_leaks')}; verbatim in the "
+      f"outputs as written: {bad(t_.get('verbatim_in_outputs_as_written'))}.")
+    iv_ = ct_["iv_generic_tokens"]
+    w(f"- (iv) The generic tokens pass: of the {iv_['triage16_values_in_run']} `TRIAGE16` values in this run, "
+      f"{iv_['triage16_verbatim_in_outputs']} occur verbatim in this file or its JSON, refused {iv_['triage16_refused']}; "
+      f"of the {iv_['shape16_values_in_run']} `SHAPE_TRIAGE16` values, {iv_['shape16_verbatim_in_outputs']} occur "
+      f"verbatim, refused {iv_['shape16_refused']}. The guard over this file and its JSON as written: "
+      f"{'0 refusals' if iv_['guard_passes_outputs'] else 'REFUSED'} (the script writes only if this holds).")
+    w(f"- (v) The same outputs with every round-5 entry's verdict read as UNTRIAGED (the triage absent): the guard "
+      f"refuses {v_['entries']} entries, {v_['distinct']} distinct values, all of them round-5 values: "
+      f"{yn(v_['all_round5_values'])} -- so it is the explicit entries, not a weaker guard, that let them pass.")
+    w(f"- (vi) The round-4 rule replayed: {vi_['entries']} entries, {vi_['distinct']} distinct values (above).")
+    w(f"- (vii)-(x) The second check's gap cases: below, with the findings they answer (all pass: "
+      f"{yn(ct_.get('second_check_all_pass'))}).")
+    w("")
+    w(f"Controls: {'ALL PASS' if ct_['all_pass'] else 'FAIL'}. A failing control, or any refused value found "
+      "verbatim, stops the write.")
+    w("")
+    u_ = C["untriaged"]
+    w("**Untriaged at this run** (all tables): precise, in-context and context-free high-entropy over blobs, "
+      f"messages, headers and binary content (the script's own count) {u_['script']}; content identifier classes "
+      f"{u_['ids']}; id-shape sweep {u_['sweep']}; credential-shaped fallback rows {u_['shape']}; TRUE-SECRET-CANDIDATE "
+      f"{u_['true']}. Files not yet in history (the pre-release section; not history): new values UNTRIAGED "
+      f"{u_['pending']}. The fallback grep: {u_['fallback']} hit lines (section (i-a)); its inspection-rule hits "
+      "are listed there by locator.")
+    values_check_r5_second(w, G)
+    w("")
+    w(f"This is an interim snapshot at HEAD `{C['head'][:10]}`; pre-flip step 3 still needs the clean run at the "
+      "release commit.")
+
+
+def values_check_r5_second(w, G):
+    """Round 5, second check (2026-10-09): the round-5 checker's six findings (all minor; its verdict: the guard is
+    safe, no instance of any gap at its HEAD), each with its disposition and this run's evidence."""
+    ct_ = G["controls"]
+    sc, n_ = ct_.get("second_check", {}), ct_.get("second_check_counts", {})
+    vi_ = ct_["vi_round4_rule"]
+    yn = lambda b: "yes" if b else "NO"
+    no = lambda b: "no" if not b else "YES"
+
+    def inj(k_):
+        x_ = sc.get(k_)
+        if not x_:
+            return "MISSING"
+        return (f"refused in the md copy {yn(x_['md'])}, in the JSON copy {yn(x_['json'])} ("
+                + "; ".join(x_["reasons"]) + f"); the first round-5 guard refused it: {no(x_['first_round5_guard_refused'])}")
+    w("")
+    w("### Round 5, second check: the checker's findings and their dispositions")
+    w("")
+    w("The round-5 checker (adversarial, in memory, at `02b6a610`) found the guard safe -- none of the 14 sensitive "
+      "values it resolved from history got through, in 7 contexts each -- and reported six minor findings, four of "
+      "them latent gaps with no instance at its HEAD. Each is applied below, guard safety first; each control value is "
+      "resolved from this run's tables or generated at run time, held in memory only, and injected on its own line "
+      "into a copy of this file and, separately, of its JSON, as in (i)-(iii).")
+    w("")
+    w("1. **The JSON was not reproducible byte for byte beyond its stamps** "
+      "(`guard.controls.vi_round4_rule.by_exempt_verdict` took its key order from iterating a hash-ordered set). APPLIED: the dict is built with `most_common_sorted` (count "
+      "descending, then label), as the guard's other counts are. This run's order: "
+      + (", ".join(f"{k_} {v_}" for k_, v_ in vi_["by_exempt_verdict"].items()) or "-") + ".")
+    w("2. **The guard was described as stronger than it was**: the candidate rule took only values printed redacted "
+      "with the sensitive flag, the known values and the four refuse verdicts, so a rule-class value with a "
+      "mechanical exempt verdict printed in the non-sensitive form, or a METADATA value, was never considered. "
+      "APPLIED to the code (the checker's widened rule), and the text above and the script's docstring now describe "
+      "the code as it is. This run: candidates under the first round-5 rule "
+      f"{n_.get('candidates_first_round5_rule')}, now {n_.get('candidates')}; added by the widened rule "
+      f"{n_.get('added_by_widened_rule')} ("
+      + (", ".join(f"{k_} {v_}" for k_, v_ in n_.get("added_by_widened_rule_verdict_class", {}).items()) or "-")
+      + f"), of them printed verbatim by policy (SAFE_VERBATIM; the checker named two) "
+      f"{n_.get('added_by_widened_rule_safe_verbatim')}, refused {n_.get('added_by_widened_rule_refused')}; added by finding "
+      f"3's rule alone {n_.get('added_by_generated_segment_rule')} ("
+      + (", ".join(f"{k_} {v_}" for k_, v_ in n_.get("added_by_generated_segment_rule_verdict_class", {}).items())
+         or "-")
+      + f"; mechanical verdicts printed in the non-sensitive form), refused "
+      f"{n_.get('added_by_generated_segment_rule_refused')}. Controls: (vii-a) a generated pod-id-shaped value with a mechanical "
+      f"FALSE-POSITIVE verdict in the pod-id class, not printed redacted: {inj('vii_a_rule_class_mechanical_exempt')}; "
+      f"(vii-b) a generated value with a METADATA verdict: {inj('vii_b_metadata_verdict')}.")
+    v8b = sc.get("viii_b_words_only_temp_path_exempt", {})
+    w("3. **A mechanical LOCAL-PATH verdict exempted a value with a generated-looking segment**: `triage_cf` gives "
+      "LOCAL-PATH to a run inside a temp or projects path before its random-segment test, so a secret-like run "
+      "inside such a path would have passed. APPLIED, the stricter of the checker's two options: a mechanical "
+      "verdict -- FALSE-POSITIVE, PUBLIC or LOCAL-PATH alike -- no longer exempts a value with a generated-looking "
+      "segment; only a hash-keyed entry does. OS temp-folder and tempfile names have that shape and are not "
+      "excepted (the checker's other option would have kept them exempt); a temp path of words and UUID parts keeps "
+      f"its mechanical exemption. This run: values refused by this rule {n_.get('refused_by_generated_segment_rule')}, "
+      f"of them found in this file or its JSON (plain substring) {n_.get('generated_segment_rule_values_substring_in_outputs')}"
+      " -- they are printed only in redacted form, so the outputs still pass. Controls: (viii) a temp path holding a "
+      f"fresh 32-character generated segment, a mechanical LOCAL-PATH verdict, printed redacted: "
+      f"{inj('viii_temp_path_generated_segment')}; (viii-b) a temp path of words only with the same verdict: exempt "
+      f"{yn(v8b.get('exempt'))} (generated-looking segment: {no(v8b.get('random_segment'))}).")
+    ds = n_.get("digest_skips", {})
+    hk = n_.get("known_any_variant_hits", {})
+    w("4. **Known values were matched only bounded by non-alphanumerics**, in the scan and in the 'carries a known "
+      "value' check, so a known value glued to letters -- in the text or inside an exempt value -- was not refused. "
+      "APPLIED as the checker proposed -- a known value of 8 or more characters is matched as a plain substring "
+      "(case- and separator-insensitively, finding 5), in the scan and in the 'carries' check alike -- with two "
+      "extensions: every other refused value of 8 or more characters is matched as a plain substring in the scan "
+      "too; and the SSH ports (5 characters, below that floor) are now digit-bounded instead of letter-bounded, so "
+      "the ssh flag form `-p` followed by the port is found, except inside a run of 8 or more hex characters, a "
+      "digest, where a port's digits can occur by chance. This run: hits of the known "
+      f"values under the new matching, md {hk.get('md')} / JSON {hk.get('json')}; digit-bounded port matches skipped "
+      f"inside a digest, md {ds.get('md')} / JSON {ds.get('json')}; other refused values of 8 or more characters "
+      f"found as a substring: {n_.get('refused_8plus_substring_hits')}. Controls: (ix-a) a real pod id with "
+      f"generated letters on both sides: {inj('ix_a_pod_id_glued_to_letters')}; (ix-b) a temp path carrying a real "
+      f"pod id glued to letters, with a mechanical LOCAL-PATH verdict -- the path and the pod id both: "
+      f"{inj('ix_b_pod_id_inside_mechanical_local_path')}; (ix-c) a real SSH port between two letters: "
+      f"{inj('ix_c_port_glued_to_letters')}; (ix-d) the same port in the ssh flag form: "
+      f"{inj('ix_d_port_ssh_flag_form')}; (ix-e) the 'carries' check itself -- a temp path of words only (generated-"
+      f"looking segment: {no(sc.get('ix_e_known_value_inside_words_only_local_path', {}).get('random_segment'))}) with "
+      f"the pass-phrase-shaped value glued to letters inside it, a mechanical LOCAL-PATH verdict -- the path and the "
+      f"value both: {inj('ix_e_known_value_inside_words_only_local_path')}; (ix-f) the declared exception -- the "
+      f"same port's digits inside a run of hex letters: refused {no(sc.get('ix_f_port_inside_digest_not_refused', {}).get('refused'))} (as declared).")
+    xb, xc, xd = (sc.get("x_b_passphrase_variants", {}), sc.get("x_c_laptop_hostname_case", {}),
+                  sc.get("x_d_session_id_without_prefix", {}))
+    w("5. **Matching was exact-form**, so case and separator variants of known values passed, and so did the session "
+      "id without its prefix. APPLIED (the checker marked it optional; applied as guard safety): see 4 for the "
+      "matching; the session link's bare id is added to the guard's own known set (guard-only: the pre-release "
+      f"section's set is unchanged; the guard's set holds {n_.get('known_in_guard_set')} values, by matcher kind "
+      + (", ".join(f"{k_} {v_}" for k_, v_ in n_.get("known_matcher_kinds", {}).items()) or "-")
+      + f"). Controls: (x-a) a real pod id upper-cased: {inj('x_a_pod_id_upper_case')}; (x-b) the pass-phrase-shaped "
+      f"value (separators in it: {yn(xb.get('has_separators'))}) with its separators as spaces "
+      f"{yn(xb.get('spaces'))}, as underscores {yn(xb.get('underscores'))}, removed {yn(xb.get('no_separators'))}, "
+      f"upper-cased {yn(xb.get('upper_case'))}, title-cased with spaces {yn(xb.get('title_spaces'))} (refused in "
+      f"both copies); (x-c) the laptop hostname lower-cased {yn(xc.get('lower'))}, upper-cased {yn(xc.get('upper'))}; "
+      f"(x-d) the session id in the guard's set {yn(xd.get('id_in_guard_known_set'))}; refused bare "
+      f"{yn(xd.get('bare_id'))}, after `session_` {yn(xd.get('session_word_and_id'))}, upper-cased "
+      f"{yn(xd.get('id_upper_case'))}.")
+    w("6. **A parenthetical in the problem paragraph above read as splitting the mechanical-verdict count of 0**, when "
+      "it split all the exempt values. APPLIED: it now follows the exempt total, and the split by entry and by "
+      "mechanical verdict comes after it.")
+    w("")
+    w(f"Second-check controls: {'ALL PASS' if ct_.get('second_check_all_pass') else 'FAIL'} (part of the controls "
+      "above, so a failure stops the write).")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=DEFAULT_MD)
@@ -2844,6 +3946,9 @@ def main():
                     help="scan the history as of this commit (refs descending from it are replaced by it)")
     ap.add_argument("--since", default=None,
                     help="count sources new since this commit separately (default: the commit that added the block)")
+    ap.add_argument("--selftest", action="store_true",
+                    help="round 5: run the scan and the leak guard's positive controls, print their outcome (booleans "
+                         "and counts only) and write nothing; exit 0 only if every control behaves")
     a = ap.parse_args()
     for o in (a.out, a.json_out):
         ab = os.path.abspath(os.path.join(ROOT, o))
@@ -2921,6 +4026,7 @@ def main():
     bulk_first = {}
     bulk_locs = collections.defaultdict(list)
     shape_rows = []
+    shape_raw = []   # round 5: (value, triage source) per shape row, index-aligned; in memory only, never printed
     multi_alt_lines = 0
     for gl in grep_lines:
         num, _, text = gl.partition(":")
@@ -2950,7 +4056,10 @@ def main():
         for sm in SHAPE_RE.finditer(text):
             name, op, q, v = sm.groups()
             cls, why = classify_value(v, bool(q))
-            mt_ = manual(v)
+            # round 5: the pre-flip raw's row triage (path, key, value) first, then value-keyed explicit triage
+            st_ = shape_manual(path or "", name, v)
+            mt_ = (st_[0], st_[1], True) if st_ else manual(v)
+            shape_raw.append((v, "shape16" if st_ else ("shape-manual" if mt_ else "shape")))
             if mt_:
                 verdict, why = mt_[0], mt_[1]
                 cls = cls or "manual"
@@ -3848,14 +4957,27 @@ def main():
     w("")
     code_users = groups.get("code", [])
     notes = []
+    code_kinds = collections.Counter()   # round 5: the recommendation below is computed from these
     for p_, c_ in code_users:
         blob = git("show", f"{head}:{p_}").decode("utf-8", "replace")
         lines_ = [l for l in blob.split("\n") if "/Users/" in l]
+        # round 5: classify each occurrence by the path segment after `/Users/` -- empty or pattern/prose text
+        # (a regular-expression fragment, a placeholder, an ellipsis) names no home directory; `u` is the
+        # synthetic fixture user; anything else names a user directory
+        segs = [blob[mo_.end():].split("/", 1)[0] for mo_ in re.finditer(r"/Users/", blob)]
+        bare = all(re.fullmatch(r"(?:u|[^A-Za-z0-9_].*)?", sg_.split("\n", 1)[0]) for sg_ in segs)
         if all("/Users/u/" in l for l in lines_):
+            code_kinds["fixture"] += 1
             notes.append(f"`{p_}` ({c_}): every occurrence is the synthetic path `/Users/u/...` inside a "
                          f"canned process-list string a self-test parses; nothing reads it as a path -- no "
                          f"change needed")
+        elif bare:
+            code_kinds["pattern"] += 1
+            notes.append(f"`{p_}` ({c_}): every occurrence is a bare `/Users/` prefix, pattern text (a regular "
+                         f"expression or a class label) or the synthetic fixture user -- no home directory is "
+                         f"named; no change needed (round 5)")
         else:
+            code_kinds["real"] += 1
             notes.append(f"`{p_}` ({c_}): a real absolute path in code -- parameterize if a reader is "
                          f"expected to run it")
     w("Per-file note for code: " + ("; ".join(notes) if notes else "none") + ". `README.md` contains "
@@ -3899,9 +5021,14 @@ def main():
           + "; tracked .py lines at HEAD naming the file or a field as a key: "
           + ("; ".join(refs_) if refs_ else "none") + ".")
     w("")
-    w("Recommendation: none of these files needs a change before release (the code hit is a test fixture; "
-      "the data/ and raw paths are recorded provenance, not inputs -- see the per-file notes for the "
-      "lines that name them); the README should not cite any of these paths.")
+    code_desc = " and ".join(x_ for x_, k_ in (("a test fixture", "fixture"), ("pattern text naming no home directory",
+                                                                          "pattern")) if code_kinds[k_])
+    w(("Recommendation: none of these files needs a change before release (the code hits are "
+       + (code_desc or "none") + "; " if not code_kinds["real"] else
+       f"Recommendation: {code_kinds['real']} code file(s) name a real home directory (per-file notes above: "
+       "parameterize if a reader is expected to run them); the other files need no change before release (")
+      + "the data/ and raw paths are recorded provenance, not inputs -- see the per-file notes for the "
+        "lines that name them); the README should not cite any of these paths.")
     w("")
     hk = hp_out["kinds"]
     env_s = []
@@ -4599,24 +5726,97 @@ def main():
         print("DUMP ONLY: no file written")
         return
 
-    # leak assertion: no redacted sensitive value appears verbatim in either output
-    leaks = []
-    for v in REDACTED_SENSITIVE:
-        rx = re.compile(r"(?<![A-Za-z0-9])" + re.escape(v) + r"(?![A-Za-z0-9])")
-        for label, txt in (("md", md), ("json", js)):
-            mt_ = rx.search(txt)
-            if mt_:
-                ctx = txt[max(0, mt_.start() - 60):mt_.start()] + "<VALUE>" + txt[mt_.end():mt_.end() + 30]
-                leaks.append((label, red(v, sensitive=False), ctx))
+    # ---- round 5: the verdict-based leak guard (guard_decide), its positive controls, and the round-5 section
+    R = collections.defaultdict(list)
+
+    def rec(v, src, cls, verdict, explicit=None, extra=None):
+        if not v:
+            return
+        if explicit is None:
+            mt_ = manual(v)
+            explicit = bool(mt_ and mt_[0] == verdict)
+        R[v].append((src, cls, verdict, explicit, extra))
+    for n_, t_ in precise.items():
+        for v, e in t_.items():
+            rec(v, "blob/message", "precise:" + n_, e["triage"][0])
+    for v, e in he.items():
+        rec(v, "blob/message", "high_entropy", e["triage"][0])
+    for v, e in cf.items():
+        rec(v, "blob/message", "context_free", e["triage"][0])
+    for lab_, src_ in (("header", hdr), ("binary", binc)):
+        for n_, t_ in src_["precise"].items():
+            for v, e in t_.items():
+                rec(v, lab_, "precise:" + n_, e["triage"][0])
+        for v, e in src_["cf"].items():
+            rec(v, lab_, "context_free", e["triage"][0])
+        for c_, t_ in src_["ids"].items():
+            for v, e in t_.items():
+                rec(v, lab_, c_, e["triage"][0])
+    for c_, t_ in ids.items():
+        for v, e in t_.items():
+            rec(v, "blob/message", c_, e["triage"][0])
+    for v, e in sw_other:
+        rec(v, "blob/message", SWEEP_CLASS, (manual(v) or ("UNTRIAGED",))[0])
+    for (v, srcl), r_ in zip(shape_raw, shape_rows):
+        rec(v, srcl, SHAPE_CLASS, r_["verdict"], explicit=srcl in ("shape16", "shape-manual"),
+            extra=(r_["locator"].split(" ", 1)[1].rsplit(":", 1)[0], r_["key"].lower(), sha256_hex(v.encode())[:16])
+            if srcl == "shape16" else None)
+    for r_ in pend:
+        for c_, v, t_ in r_["new"]:
+            rec(v, "pending file", c_, t_[0])
+        for n_, v, t_ in r_["precise"]:
+            rec(v, "pending file", "precise:" + n_, t_[0])
+    # shape16 rows: the key the row matched (path, key, value prefix), for the round-5 table
+    R = {v: [(x[0], x[1], x[2], x[3], x[4]) for x in recs] for v, recs in R.items()}
+    known = guard_known(pend_known)   # second check (finding 5): plus the session link's bare id
+    untri_counts = {
+        "script": len(untriaged_precise),
+        "ids": sum(1 for _, _, e in id_rows if e["triage"][0] == "UNTRIAGED"),
+        "sweep": sum(1 for v, _ in sw_other if (manual(v) or ("UNTRIAGED",))[0] == "UNTRIAGED"),
+        "shape": sum(1 for r_ in shape_rows if r_["verdict"] == "UNTRIAGED"),
+        "true": len(true_candidates),
+        "pending": sum(1 for r_ in pend for _, _, t_ in list(r_["new"]) + list(r_["precise"]) if t_[0] == "UNTRIAGED"),
+        "fallback": len(grep_lines)}
+    C5 = {"head": head, "untriaged": untri_counts, "code_users_kinds": dict(code_kinds),
+          "code_users_files": len(code_users)}
+    md_base = md
+    G = None
+    for it_ in range(8):
+        L5 = []
+        values_check_r5(L5.append, C5, G)
+        md = md_base + "\n".join(L5) + "\n"
+        J["guard"] = G
+        J["untriaged_all_tables"] = untri_counts
+        js = json.dumps(J, indent=1, default=lambda o: sorted(o) if isinstance(o, set) else str(o))
+        res5, aux5 = guard_controls(R, known, set(REDACTED_SENSITIVE), {"md": md, "json": js + "\n"}, pend_known)
+        Gn = guard_summary(R, res5, aux5, {"md": md, "json": js + "\n"}, known)
+        if G is not None and json.dumps(Gn, sort_keys=True) == json.dumps(G, sort_keys=True):
+            break
+        G = Gn
+    else:
+        raise SystemExit("REFUSING TO WRITE: the round-5 guard summary did not reach a fixed point")
+    cands5, ref5, why5, ex5, leaks = aux5
+    if a.selftest:
+        print(json.dumps({"selftest": "round-5 leak guard", "head": head, "controls": G["controls"],
+                          "counts": G["counts"], "untriaged_all_tables": untri_counts}, indent=1, sort_keys=True))
+        print("SELFTEST " + ("PASS" if G["controls"]["all_pass"] and not leaks else "FAIL") + ": no file written")
+        raise SystemExit(0 if G["controls"]["all_pass"] and not leaks else 1)
     if leaks:
-        raise SystemExit(f"REFUSING TO WRITE: {len(leaks)} redacted value(s) appear verbatim: {leaks[:10]}")
+        raise SystemExit(f"REFUSING TO WRITE: {len(leaks)} guarded value(s) appear verbatim: "
+                         + "; ".join(f"{lab_} `{guard_form(v)}` ({why5.get(v)})" for lab_, v in leaks))
+    if not G["controls"]["all_pass"]:
+        raise SystemExit("REFUSING TO WRITE: a round-5 positive control failed: "
+                         + json.dumps(G["controls"], sort_keys=True))
     with open(os.path.join(ROOT, a.out), "w") as f:
         f.write(md)
     with open(os.path.join(ROOT, a.json_out), "w") as f:
         f.write(js + "\n")
     print(f"wrote {a.out} ({len(md):,} chars) and {a.json_out} ({len(js):,} chars); "
           f"fallback hit lines {len(grep_lines)}; true-secret candidates {len(true_candidates)}; "
-          f"untriaged {len(untriaged_precise)}; leak check passed over {len(REDACTED_SENSITIVE)} values")
+          f"untriaged {len(untriaged_precise)} (all tables: ids {untri_counts['ids']}, sweep {untri_counts['sweep']}, "
+          f"shape rows {untri_counts['shape']}; pending files {untri_counts['pending']}); round-5 guard: candidates "
+          f"{len(cands5)}, refused set {len(ref5)}, exempt {len(ex5)}, found verbatim 0; controls "
+          f"{'ALL PASS' if G['controls']['all_pass'] else 'FAIL'}; fixed point after {it_ + 1} rendering(s)")
 
 
 if __name__ == "__main__":
