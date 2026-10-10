@@ -1,0 +1,1168 @@
+# G-CAL close entry (2026-10-10) -- values-check, both passes (before commit). Written by Code 2026-10-10 17:23:40 UTC (date -u).
+# Each pass: two verifiers (one per half of the entry) extract and check every atomic claim; a STRICT refuter on every FAILS/IMPRECISE; a values lens.
+# All agents read-only; no model or tokenizer loaded (instructed; none reported one). Code's disposition: every confirmed correction and every values
+# finding of both passes applied (pass 1's to the second draft, pass 2's to the third, the one committed). Code checked pass 2's new sourced claims itself
+# (the build-inputs raw's line 1008, 'These items do block LOCK-m-F0 v0.1'; the G-SHAPE-F0 entry's 'Still owed for G-CAL's close' list naming the `disown`).
+
+####################################################################################################
+PASS 1: claims 97, verified 81, confirmed corrections 12, refuted flags 0, uncheckable 4, values findings 12
+####################################################################################################
+============================================================ CONFIRMED CORRECTIONS
+--- [H0-08] IMPRECISE
+  CLAIM:
+    L7-8: Next, by the same rulings: the D2 + C9(ii) edit and the G-ANL-F0 re-run (in progress, their own entry), then
+    LOCK-m-F0 v0.1 on the PI's word.
+  REFUTER'S EVIDENCE:
+    The checker is right; I'm not refuting it.
+    
+    The seat's file (results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1.md) lists Code's ordered steps under "What
+    Code does now, in order". Item 2 (line 117) reads: "The D2 edit with C9(ii); rebuild and re-run G-ANL-F0; supersede
+    the manifest by `git mv`; D3's comparison for G-SHAPE-F0." Item 3 (line 118) is "Draft and commit LOCK-m-F0 v0.1
+    (m:279) on the PI's word".
+    
+    The headline at L7-8 says "the D2 + C9(ii) edit and the G-ANL-F0 re-run (in progress, their own entry), then LOCK-
+    m-F0 v0.1". The word "then" presents that pair as everything that comes before LOCK. It drops two parts of item 2:
+    - **D3's comparison.** This one matters. Per D3 (line 94), it can re-run G-SHAPE-F0 before the lock ("any other
+    difference re-runs G-SHAPE-F0 first").
+    - **The manifest supersession by hand `git mv`.** D2 (line 92) says the lock hashes the re-run's manifest.
+    
+    The entry's own body (L142-147) lists both, so the headline understates its own body.
+    
+    Two smaller points:
+    - **"(in progress)" is too broad.** The working tree shows only valence_core/m/stages.py modified. Nothing has been
+    re-run, compared or superseded yet, and the body (L144) says only "The edit is being built now". The checker's
+    correction carries this over by putting "(in progress...)" over D3's comparison as well.
+    - **"Nothing run on a model" holds.** D2 says the G-ANL-F0 re-run is "(model-free)". "then LOCK-m-F0 v0.1 on the
+    PI's word" matches item 3.
+  CORRECTION:
+    **Next, by the same rulings: the D2 + C9(ii) edit (being built now), G-ANL-F0 rebuilt and re-run with its manifest
+    superseded by hand `git mv`, and D3's comparison for G-SHAPE-F0, in their own entry; then LOCK-m-F0 v0.1 on the PI's
+    word. Nothing run on a model.**
+--- [H0-16] IMPRECISE
+  CLAIM:
+    L16: sections B-E are recorded in the D2 round's entry and carried into LOCK v0.1.
+  REFUTER'S EVIDENCE:
+    The checker is right. The claim is entry_close.md L16: "They are recorded in the D2 round's entry and carried into
+    LOCK v0.1." "They" means sections B–E of results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1.md. "Carried into
+    LOCK v0.1" is too broad, because the seat's own text sends several B–E items somewhere other than the lock:
+    (1) E4 (seat file L104) says the 25 + 2 differences "enter Appendix D" and "The seat adjudicates at the drafting of
+    Appendix D, if at all, not at the lock."
+    (2) E2 (L100) says the two clauses are "accepted for Appendix D".
+    (3) E5 (L106) says C2 "is stated under (6) in Appendix D".
+    (4) m:267 defines Appendix D as the paper's: "Disclosures for the paper (Appendix D)". So it is not part of LOCK
+    v0.1. E3 (L102) keeps the two apart too: "Resolved for the lock and Appendix D".
+    (5) The fourth item of C7 (L82), G-ANL-F3's versioning, is "Deferred to before step 19".
+    (6) C2's resume question (L67) is "a question for the adjudication, if one arises; nothing is built for it now". B2
+    (L53) and B3 (L58) send their statements to G-SHAPE-F0's artifact register.
+    What the lock does carry is set by the seat's step 3 (L118): "the declarations above (C5's date meaning; C7's three
+    settled inputs; E1–E3; E6)". The calibration artifacts and the 43-entry register are added to that, and D1, D3 and
+    B3 (the ban-list sha) say what the lock states. That is a subset of B–E, not all of it.
+    "Recorded in the D2 round's entry" is Code's plan, not the seat's text. The seat's step 2 (L117) orders the D2 work
+    but never says where B–E are recorded. No such entry exists yet: RESULTS.md's newest entry is G-ANL-F0, and git
+    status shows only stages.py modified. The plan does match the entry's own L105 ("in their own entry"), so that part
+    is not a defect.
+    The checker's replacement holds: it limits the lock clause to what the rulings themselves list for the lock, and it
+    adds nothing the seat did not say.
+  CORRECTION:
+    They are recorded in the D2 round's entry, and LOCK v0.1 carries the declarations the rulings list for it.
+--- [H0-21] IMPRECISE
+  CLAIM:
+    L20-21: the '7' and '```json' items are listed without the seat's qualifiers.
+  REFUTER'S EVIDENCE:
+    I checked this myself. The checker is right. The seat's file, line 13 of /Users/jasondwyer/Documents/code/jspace-
+    lab/results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1.md, reads (one exact match, checked with python): `one is
+    a bare "7" on item 0 (an answer cut to its first digit, or wrong — the read cannot tell); one is "```json" on item
+    14 (a format fault).` The entry draft (/private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-
+    lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step9/entry_close.md, lines 20–21) has only `a bare "7" on item
+    0; "```json" on item 14.` That drops two things the seat said.
+    
+    1. The hedge on "7". The seat says the generation may be an answer cut to its first digit, or simply wrong, and that
+    the read cannot tell which. This changes the meaning. Without it, the entry presents "7" under "are not legibility
+    misses" as plainly settled, but the seat said it could not settle it.
+    2. The label on "```json". The seat calls it "a format fault".
+    
+    The same bullet keeps the seat's labels for the other misses: "(O1)" on item 15, and "cut by the newline stop before
+    an answer" on the two working lines. Only these two items lose theirs, so the record is uneven and incomplete. The
+    rest of what the entry says about these two items is correct. Code's close check (results/raw/2026-10-10_m-
+    gcal_close_check.txt, lines 55–56 and 123) confirms that item 0 seed 1 is a bare "7" and item 14 seed 0 is
+    "```json", both misses. So the problem is the dropped qualifiers, not the facts.
+  CORRECTION:
+    Replace lines 20–21 with: `working lines cut by the newline stop before an answer (item 3 seed 1, item 6 seed 3); a
+    bare "7" on item 0 ("an answer cut to its first digit, or wrong — the read cannot tell"); "```json" on item 14 ("a
+    format fault").` I checked both quoted parts against the seat's file and each appears exactly once, em dash
+    included: `an answer cut to its first digit, or wrong — the read cannot tell` and `a format fault`. The checker's
+    version left "a format fault" without quote marks. That is accurate but inconsistent with the quoted hedge, so this
+    version quotes both.
+--- [H0-23] IMPRECISE
+  CLAIM:
+    L24: item 2's four (O3; "the model never recovers 'third' from `thiru`").
+  REFUTER'S EVIDENCE:
+    I checked this independently and the checker is right. Line 14 of the seat's file (results/raw/2026-10-10_m-design-
+    to-code_pre-LOCK-v0.1.md, the Corrupted pool bullet) reads: item 2's four (O3; the model never recovers "third" from
+    `thiru`: a template, "April", "'Aloha'", "Fit"). Line 24 of the entry reads: - item 2's four (O3; "the model never
+    recovers 'third' from `thiru`"). A Python substring test against the seat's file gave these results: "the model
+    never recovers 'third' from `thiru`" was not found (count 0), and 'the model never recovers "third" from `thiru`'
+    was found once. The items are attributed correctly: the seat lists item 2's four misses under O3. Cutting the quote
+    at `thiru` is legitimate and drops no qualifier that changes the meaning. The only defect is that the double quotes
+    around third were changed to single quotes. That change also misleads in this entry. The entry uses single quotes
+    inside double quotes to mean literal single quotes in the source: "'up'" on line 31 matches the seat's "'up'", and
+    the seat writes "'Aloha'" on this same line. A reader would therefore conclude the seat wrote 'third' in single
+    quotes, which it did not. The checker's correction is also correct, since its verbatim part is an exact substring of
+    the seat's text.
+  CORRECTION:
+    - item 2's four (O3; the model never recovers "third" from `thiru`);    [Leave the clause unquoted and verbatim. The
+    string item 2's four (O3; the model never recovers "third" from `thiru` is an exact substring of seat line 14, as
+    confirmed by a Python test. A1 is already introduced with "Recorded as the seat's", so the attribution is covered.
+    The checker's version also works: item 2's four (O3; in the seat's words, the model never recovers "third" from
+    `thiru`);]
+--- [H0-31] IMPRECISE
+  CLAIM:
+    L41: "a re-grading after the data would be post hoc under rule 11".
+  REFUTER'S EVIDENCE:
+    The seat's file, results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1.md (still untracked), has exactly one
+    occurrence of this sentence, at line 19 inside the A1 ruling's parenthetical: "a re-grading after the data is rule
+    11's post hoc by definition". The phrase "would be post hoc" never appears in the seat's file.
+    
+    The entry is entry_close.md in the scratchpad. Its lines 40-41 read: "the grader is m:176's pin, ported verbatim
+    from f0, and a re-grading after the data would be post hoc under rule 11." This text is not in quotation marks, so
+    it reads as a paraphrase, but it still changes the seat's claim in two ways:
+    1. It turns the seat's flat "is" into the conditional "would be".
+    2. It drops "by definition", the seat's stated reason that the re-grading counts as post hoc: it does so by
+    definition, not by judgment.
+    
+    That is a softening the seat did not give. The checker was right to mark it IMPRECISE, and its evidence is accurate.
+    
+    The checker's correction ("is post hoc under rule 11 by definition") puts back both the "is" and the "by
+    definition". It is acceptable, but it is still a reordered paraphrase. The wording that is exactly right is the
+    seat's own text.
+  CORRECTION:
+    In entry_close.md line 41, replace "a re-grading after the data would be post hoc under rule 11" with the seat's
+    exact words (seat file line 19, checked byte for byte): a re-grading after the data is rule 11's post hoc by
+    definition
+    
+    The sentence then reads: "...the grader is m:176's pin, ported verbatim from f0, and a re-grading after the data is
+    rule 11's post hoc by definition."
+    
+    If the entry wants to mark this as the seat's wording, it can put the phrase in quotation marks. The checker's
+    paraphrase "is post hoc under rule 11 by definition" is also acceptable, because it restores both the "is" and the
+    "by definition".
+--- [H0-34] IMPRECISE
+  CLAIM:
+    L43-45: every statement A1 makes about an individual generation, and A1's arithmetic, holds against the
+    completability artifact of record.
+  REFUTER'S EVIDENCE:
+    I re-ran Code's check independently and it does give 22/22. The scratchpad step9/close_check.py is byte-identical to
+    section 1 of results/raw/2026-10-10_m-gcal_close_check.txt. Running it with the venv python -I prints 22/22 PASS.
+    The artifact's sha256 is 46afd36488e5…c15b and the seat file's is b4c69f5d…f125, matching the raw.
+    
+    I then read all 128 records directly. Every generation A1 names is where A1 puts it:
+    - Clean misses: (0,1) '7', (3,1), (6,3), (14,0) '```json', and 15 seeds 0, 1 and 3, all ending at the newline stop.
+    The other 57 are hits.
+    - Corrupted misses: 0 s1 and s3, 2 s0–s3, 3 s1 and s3, 6 s1, 9 s1, 11 s0 and s3, 15 s0–s3. The texts match what A1
+    quotes.
+    - O2: (7,3) and (9,0) are hits.
+    - Mirroring: I made an exhaustive whole-word recount of corrupted-pool hits that contain a render-only word. It
+    gives exactly 9 (1, 3, 3, 1, 1). 10 s2 'A bicyale has 2 wheess.' does not count, because its words are not render
+    words.
+    - Arithmetic: 57−48 = 9/64 = .1406, and 48−45 = +3 (7/10·64 = 44.8).
+    
+    The claim is IMPRECISE for two reasons. It says every A1 statement holds "against the completability artifact", and
+    attaches 22/22.
+    
+    (1) f0's calib2 59/64 and 54/64 are not in that artifact. The check labels them "(quoted, not recomputed here)" and
+    computes only 59−54 = 5/64. They do hold at their source: data/f/calib.json has acc.CORR_clean 0.921875 and
+    acc.CORR_corrupted 0.84375 (corr_rate 0.12). The checker overstated one point. +.078 IS in the completability
+    artifact, at covariate.f1_012_of_record = "0.078125 (+.078)" (the A7 label slip). Only 59/64 and 54/64 are absent.
+    
+    (2) The checker missed a second gap. The completability records carry no gold: their keys are cap_hit, hit, i,
+    n_tok, pool, seed, seed_index, stop_reason, task and text. So O2's per-generation statements cannot be established
+    from that artifact:
+    - item 7 seed 3 "hits on the word 'iron'";
+    - item 9 seed 0 "hits on the operand '45'";
+    - "the two items whose gold is a word of the task text".
+    
+    For these the check tests only the hit flag and whether the word is present. The statements are true, though.
+    G-CAL_model-free.json has gold ['iron'] for item 7 and ['45'] for item 9. Those are the only golds that appear in
+    their tasks.
+    
+    The checker's correction does not fix this. Its first sentence keeps the overclaim, and it misses the gold gap.
+  CORRECTION:
+    **Code's check** ([`_close_check`](results/raw/2026-10-10_m-gcal_close_check.txt)): 22/22 PASS. It works against the
+    completability artifact of record (sha256 `46afd364…c15b`). There it confirms every generation A1 identifies: pool,
+    item, seed, hit or miss, and any text A1 quotes. It confirms the nine mirroring hits with their multiplicities. It
+    recomputes A1's arithmetic: +.1406, margin +3, and 59 − 54 = 5/64 = +.078. Two inputs are not in that artifact. The
+    first is f0's calib2 59/64 and 54/64, which the check quotes. The second is O2's golds (`iron`, `45`); for these the
+    check tests the hit flag and whether the word is present. The seat's readings of what a generation means are
+    recorded, not checked.
+    
+    [Optional, only if this entry's values-check raw records it: "Both hold against their sources: `data/f/calib.json`
+    0.921875 and 0.84375, and `G-CAL_model-free.json`'s gold lists."]
+--- [H0-39] IMPRECISE
+  CLAIM:
+    L52-53: 'the seat had not opened the completability outputs (see A9)'.
+  REFUTER'S EVIDENCE:
+    The checker is right, so its finding stands. The seat's file (results/raw/2026-10-10_m-design-to-code_pre-
+    LOCK-v0.1.md, line 21, A2) reads: "the read is of the renders alone; the seat had not opened the completability
+    outputs — see A9 for what it had opened)". The entry (scratchpad/step9/entry_close.md, lines 52-53) reads: "the read
+    is of the renders alone; and the seat had not opened the completability outputs (see A9)." The entry puts this text
+    in its own words and does not mark it as a quote, so changing the dash to a parenthesis and adding "and" are
+    acceptable. Dropping "for what it had opened" changes the meaning of the pointer. The seat's wording sends the
+    reader to A9 for what it HAD opened. A9 (seat line 44, and the entry's own lines 111-119) says the seat read the
+    head of RESULTS.md, "cannot certify" that the G-CAL entry body, "which quotes golds and answers", was not among the
+    lines it saw, and so treats that entry as possibly opened. A bare "(see A9)" reads as a citation backing "had not
+    opened the completability outputs". The seat's wording instead flags A9 as the account of the exposure that sits
+    beside that statement: answers quoted in the entry body, not the completability artifact itself. That is a qualifier
+    the seat gave, and the entry drops it. The checker's correction fits the sentence: the clause stays "and the seat
+    had not opened the completability outputs (...)." and the next sentence still begins "The only cost risked...". The
+    added words match the seat's text exactly.
+  CORRECTION:
+    and the seat had not opened the completability outputs (see A9 for what it had opened).
+--- [H0-44] IMPRECISE
+  CLAIM:
+    L60: A4 heading 'Steps 7 and 8 run before G-CAL closed.'
+  REFUTER'S EVIDENCE:
+    The checker is right. In the seat's file (results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1.md), line 25 begins
+    with the heading "**A4. Steps 7 and 8 built and run before G-CAL closed.** Ruling: acceptable, and no re-run."
+    Code's block (results/raw/2026-10-10_m-code-to-design_pre-LOCK-v0.1.md, line 88) also says "steps 7 and 8 were built
+    and run before G-CAL closed". Line 60 of entry_close.md reads "**A4. Steps 7 and 8 run before G-CAL closed.**", so
+    it drops "built and".
+    
+    This matters because the entry copies the seat's A2, A3, A5 and A6 headings word for word, so the A4 heading reads
+    as the seat's own heading, and it isn't. The seat named both the build and the run as happening before close. The
+    builds were d092078 for step 7 and 64df36b for step 8. Dropping "built and" narrows what the ruling covers. The
+    shortened heading is not false, since the steps were run before close, but it loses a qualifier the seat gave, so
+    IMPRECISE is the right verdict.
+    
+    A separate problem on the same line, outside this claim: the entry quotes "Acceptable, and no re-run." with a
+    capital A, but the seat's text is "Ruling: acceptable, and no re-run." with a lowercase a. That quote is not exact
+    either.
+  CORRECTION:
+    **A4. Steps 7 and 8 built and run before G-CAL closed.**
+--- [H0-45] IMPRECISE
+  CLAIM:
+    L60: quote "Acceptable, and no re-run."
+  REFUTER'S EVIDENCE:
+    The seat's file /Users/jasondwyer/Documents/code/jspace-lab/results/raw/2026-10-10_m-design-to-code_pre-
+    LOCK-v0.1.md, line 25 (A4), reads: "**A4. Steps 7 and 8 built and run before G-CAL closed.** Ruling: acceptable, and
+    no re-run. ..." Entry L60 (scratchpad/step9/entry_close.md) puts "Acceptable, and no re-run." in quotation marks. I
+    ran a substring test in Python: 'Acceptable, and no re-run.' appears 0 times in the seat file, 'acceptable, and no
+    re-run.' appears 1 time, and 'Ruling: acceptable, and no re-run.' appears 1 time. The words and the ruling are
+    right, but the quote capitalises the 'a', so it does not match the seat's text character for character. The
+    checker's finding holds.
+  CORRECTION:
+    Replace `"Acceptable, and no re-run."` on L60 with `The seat's ruling: "acceptable, and no re-run."`. The quoted
+    part matches the seat file exactly, once (line 25). Another exact option is `"Ruling: acceptable, and no re-run."`,
+    which also matches once.
+--- [H0-47] IMPRECISE
+  CLAIM:
+    L60-62: A4 is recorded without the seat's stated basis that the PI's go came with condition (3) passed.
+  REFUTER'S EVIDENCE:
+    I checked this myself against the seat's file, results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1.md. Its sha256
+    is b4c69f5d...f125, which matches the hash the entry cites. The A4 ruling is on line 25. Here is the exact text,
+    read with Python repr: 'Ruling: acceptable, and no re-run. The PI\'s "Go for steps 7 and 8" came with condition (3)
+    passed; the items that were still owed (A1–A3) could change nothing the two steps take from G-CAL: ...'.
+    
+    Line 60 of the entry reads: '**A4. Steps 7 and 8 run before G-CAL closed.** "Acceptable, and no re-run." A1–A3 could
+    change nothing'. So the entry does drop the seat's clause that the PI's go came with condition (3) passed. The
+    ruling then appears to rest only on "A1–A3 could change nothing". This drops part of the basis the seat gave, so the
+    checker's IMPRECISE holds and the finding is not refuted.
+    
+    The timeline agrees with the seat's clause. Condition (3) passed in 2c50e03 (2026-10-10 01:34 -0400). The step-7/8
+    work came after it: d092078 at 07:33, 64df36b, f23b444 at 07:56, b62af85, b4d7f13 at 08:25.
+    
+    Two more points about line 60:
+    (a) The quote is not exact character for character. The seat wrote "acceptable", lowercase, after "Ruling:". The
+    entry's quote capitalizes it as "Acceptable".
+    (b) The checker's correction fixes the case, but it then opens a sentence with a lowercase quote straight after the
+    bold heading. Putting the seat's own "Ruling:" lead-in back fixes both problems.
+    
+    A minor flaw in the checker's evidence: it says the dropped clause "is what the A4 rule's 'after the fact' clause
+    refers to". That is not quite right. In the seat's text, "— which is what happened here, after the fact" refers to
+    the rule's exception being met after the event (the PI's go, plus the seat saying the open items cannot change the
+    step's inputs). It does not refer to condition (3) specifically. Also, the entry's version of that rule (lines
+    70-71) drops "— which is what happened here, after the fact" entirely. That is a separate omission, outside this
+    claim, and should be raised on its own.
+  CORRECTION:
+    Replace lines 60-62 (up to "is unchanged.") with:
+      - **A4. Steps 7 and 8 run before G-CAL closed.** Ruling: "acceptable, and no re-run." The PI's
+        "Go for steps 7 and 8" came with condition (3) passed; the items still owed (A1–A3) could change nothing
+        the two steps take from G-CAL: the renders of record are unchanged, (4) stands as graded, no
+        re-specification arises, and the flag's source (`G-CAL_model-free.json`) is unchanged.
+    (Lines 62-64 continue unchanged: "G-SHAPE-F0's artifact and G-ANL-F0's manifest stand as committed, subject only to
+    D2, a separate cause (its own entry).")
+    
+    Checked against the seat's line 25: "acceptable, and no re-run." and "Go for steps 7 and 8" now match exactly. The
+    remaining text is unquoted and close to verbatim, attributed to the seat, with "that were" dropped and the same en
+    dash in A1–A3.
+--- [H0-52] IMPRECISE
+  CLAIM:
+    L70-71: a step that follows a gate in m:358 starts after that gate's close entry, unless the PI's go names the open
+    items and the seat has said they cannot change the step's inputs.
+  REFUTER'S EVIDENCE:
+    The seat's A4 is at results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1.md:25. It ends with one sentence: "Rule
+    going forward: a step that follows a gate in m:358 starts after that gate's close entry, unless the PI's go names
+    the open items and the seat has said they cannot change the step's inputs — which is what happened here, after the
+    fact." Lines 70-71 of entry_close.md copy the rule word for word; only the first letter is capitalized. They then
+    stop at "inputs." and leave out the seat's closing clause "which is what happened here, after the fact".
+    
+    I searched the rest of the entry for "after the fact", "Go for steps" and "PI's go", and none of them appears
+    anywhere else. The entry's A4 paragraph (L60-64) also leaves out the seat's "The PI's 'Go for steps 7 and 8' came
+    with condition (3) passed". So the seat's only statement that steps 7 and 8 met the rule's exception, and met it
+    only retroactively, appears nowhere in the entry. The header's general "accepted both departures from m:358's order
+    post hoc" does not say this.
+    
+    The rule itself is reproduced correctly, so the line is not wrong. But it drops a clause the seat gave in the same
+    sentence, and the entry does not record that clause anywhere else. The checker's IMPRECISE stands.
+  CORRECTION:
+    - A step that follows a gate in m:358 starts after that gate's close entry, unless the PI's go names the open items
+    and the seat has said they cannot change the step's inputs. Of steps 7 and 8 the seat adds: "which is what happened
+    here, after the fact."
+--- [H1-37] IMPRECISE
+  CLAIM:
+    L142-144: Item 2: the D2 edit with C9(ii), then G-ANL-F0 rebuilt and re-run, its manifest superseded by hand `git
+    mv` (PIN-37), and D3's comparison for G-SHAPE-F0, in their own entry
+  REFUTER'S EVIDENCE:
+    I checked the claim against the seat's file, results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1.md. Every part of
+    item 2 has a source in that file except "in their own entry".
+    - "the D2 edit with C9(ii)" and "D3's comparison for G-SHAPE-F0" come word for word from the seat's step 2 (line
+    117): "The D2 edit with C9(ii); rebuild and re-run G-ANL-F0; supersede the manifest by `git mv`; D3's comparison for
+    G-SHAPE-F0."
+    - "then G-ANL-F0 rebuilt and re-run, its manifest superseded by hand `git mv`" follows D2 (line 92): "G-ANL-F0 is
+    then rebuilt and re-run on the new package and analyzer (model-free), and its manifest superseded by hand `git mv`
+    (PIN-37, PIN-S9)".
+    - Citing "(PIN-37)" without PIN-S9 is fine, because the seat's own short form (line 5) also gives only "PIN-37".
+    Leaving out "(model-free)" is fine too, since step 2 (line 117) leaves it out.
+    - "in their own entry" appears nowhere in the seat's file. The only "own entry" there is line 47, "G-CAL closes on
+    A1–A9 in its own entry", which is about the G-CAL close, not the D2 work. For D2 the seat says only "One round,
+    before LOCK v0.1" (line 92).
+    - Code's block (results/raw/2026-10-10_m-code-to-design_pre-LOCK-v0.1.md, D2 at about line 338) does not propose a
+    separate entry either.
+    - The entry's own header (line 7) does carry the phrase, "(in progress, their own entry)". So it is Code's
+    arrangement, but item 2 sits in a list headed "What the rulings order next, in the seat's order", which presents it
+    as part of what the seat ordered. That adds something the seat did not say.
+    - The checker's suggested wording keeps every phrase that has a source and marks the separate entry as Code's.
+    - Side note, outside this claim: line 7 uses the same phrase under "Next, by the same rulings:" and may deserve the
+    same attribution.
+  CORRECTION:
+    2. the D2 edit with C9(ii), then G-ANL-F0 rebuilt and re-run, its manifest superseded by hand `git mv` (PIN-37), and
+    D3's comparison for G-SHAPE-F0 (Code records these in their own entry). The edit is being built now: …
+============================================================ REFUTED FLAGS (the claim stood)
+  (none)
+============================================================ UNCHECKABLE
+--- [H0-10]
+    L8-9: the stamp 'Sat Oct 10 17:01:09 UTC 2026', first write, taken with date -u.
+  WHY:
+    The task says this was taken by Code at write time. It is consistent with the close_check raw's stamp of 17:00:29
+    UTC, which comes earlier.
+--- [H0-13]
+    L13: the PI placed the file in results/raw/, and it is committed verbatim with this entry.
+  WHY:
+    No repo record shows who placed the file. The close_check raw line 2 says 'placed by the PI', and git status shows
+    the file untracked, so it is not yet committed. Committing it with this entry is future action.
+--- [H1-39]
+    L144: "The edit is being built now"
+  WHY:
+    This is Code's status statement, not the seat's. At check time `git status`/`git diff --stat` show no uncommitted
+    change under valence_core/m/ or scripts/m_analyze.py, so the tree has no trace of the build; it may live in Code's
+    scratchpad. The harness says the build is in progress and not this entry's concern.
+--- [H1-42]
+    L151-152: Committed: this entry; the seat's rulings, verbatim; the check raw; and this entry's values-check raw
+    (`_close_valuescheck`, both passes)
+  WHY:
+    This describes a future commit. Current state: results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1.md and
+    results/raw/2026-10-10_m-gcal_close_check.txt exist and are untracked (??). The seat file's sha256 b4c69f5d...f125
+    equals the hash the check raw recorded. results/raw/2026-10-10_m-gcal_close_valuescheck.txt does not exist yet, as
+    expected before the passes finish.
+============================================================ VALUES LENS
+--- (overclaim / missing disclosure)
+  QUOTE:
+    Every statement A1 makes about an individual generation, and A1's arithmetic, holds against the completability
+    artifact of record (sha256 `46afd364…c15b`): 22/22.
+  PROBLEM:
+    This overstates what the check covers. (a) The check raw's line 106 says f0's calib2 accuracies (59/64, 54/64;
+    +.078) are "quoted, not recomputed here". They come from data/f/calib.json, not from this artifact, and only the
+    subtraction 5/64 was checked. (b) The artifact has no gold lists (record keys: cap_hit, hit, i, n_tok, pool, seed,
+    seed_index, stop_reason, task, text). So A1's claims that item 7 seed 3 "hits on the word 'iron'" and item 9 seed 0
+    "hits on the operand '45'", and the claim "the two items whose gold is a word of the task text", were checked only
+    as hit=True plus the word appearing in the text. (c) A1's "Every other generation answers the clean task" is not
+    checked beyond the hit flag. As written, a reader would take all of A1's numbers and gold attributions as verified
+    against the artifact.
+  CORRECTION:
+    Code's check (…): A1's statements about which generations hit or miss and what they say, and A1's subtraction and
+    bar arithmetic, hold against the completability artifact of record (sha256 `46afd364…c15b`): 22/22. Limits: f0's
+    calib2 accuracies (59/64, 54/64) are quoted, not re-checked (they come from `data/f/calib.json`). The artifact has
+    no gold lists, so the gold each O2 hit matched ("iron", "45") is checked only as the hit flag plus the word's
+    presence in the text. The seat's readings of what a generation means are recorded, not checked.
+--- (self-adjudication / dropped qualifier)
+  QUOTE:
+    The G-CAL entry's "Next, in this order" is done: items 1–4 by the read of record and this entry, item 5 (step 7) at
+    `f23b444`, ahead of this close, as A4 accepts.
+  PROBLEM:
+    The seat never says "is done". That is Code's own judgment that the items were met, and it drops a qualifier the
+    seat gave. Item 1 of that list asked for the read to be "sent before opening this entry or the files the headline
+    names". In A9 the seat says it "cannot certify" this and treats the G-CAL entry as possibly opened before the lines
+    were written. The seat accepted the read as key-known; it did not say item 1 was met as written. The items were also
+    not done in their listed order (item 5 ran before items 2–4).
+  CORRECTION:
+    The G-CAL entry's "Next, in this order" has been worked through, not in its order. Item 1 was met by the read of
+    record, which A9 treats as possibly made after the G-CAL entry was opened (item 1 asked otherwise) and records as
+    key-known. Items 2–4 are met by this entry. Item 5 (step 7) ran at `f23b444`, ahead of this close, as A4 accepts.
+--- (dropped qualifier / attribution)
+  QUOTE:
+    **A4. Steps 7 and 8 run before G-CAL closed.** "Acceptable, and no re-run." A1–A3 could change nothing the two steps
+    take from G-CAL:
+  PROBLEM:
+    This drops the premise the seat's acceptance rests on: "The PI's "Go for steps 7 and 8" came with condition (3)
+    passed". Without it, the entry reads as if Code started steps 7–8 on its own. The going-forward rule in the entry
+    also drops the seat's coda on its exception, "— which is what happened here, after the fact". That coda is the
+    seat's statement that this case met the exception only after the event. The heading also drops "built" (the seat has
+    "built and run").
+  CORRECTION:
+    **A4. Steps 7 and 8 built and run before G-CAL closed.** The seat's ruling: "acceptable, and no re-run." The PI's
+    "Go for steps 7 and 8" came with condition (3) passed, and the items still owed (A1–A3) could change nothing the two
+    steps take from G-CAL: … In the rules list, after "…cannot change the step's inputs." add: "(The seat: "which is
+    what happened here, after the fact.")"
+--- (overclaim / adds to seat)
+  QUOTE:
+    They are recorded in the D2 round's entry and carried into LOCK v0.1.
+  PROBLEM:
+    This states Code's plan as accomplished fact, and it is broader than the seat's rulings. The seat does not route
+    sections B–E to the D2 round's entry. It also does not send all of them to LOCK v0.1. E4's 25+2 differences enter
+    Appendix D, and the seat adjudicates them "at the drafting of Appendix D, if at all, not at the lock". E2's clauses
+    also go to Appendix D. B2 tells Code to "State that in the artifact's register" (G-SHAPE-F0's). C8 "No seat ruling
+    was needed". For LOCK v0.1 the seat names C5's date meaning, C7's three settled inputs, E1–E3 and E6, plus D1's lock
+    statements.
+  CORRECTION:
+    Code will record them in the D2 round's entry. The declarations the seat names for LOCK v0.1 go into it: C5's date
+    meaning, C7's three settled inputs, D1, E1–E3 and E6. E4's differences (and E2's clauses) enter Appendix D, not the
+    lock.
+--- (dropped qualifier / ambiguity)
+  QUOTE:
+    It accepted both departures from m:358's order post hoc and set rules for later stages.
+  PROBLEM:
+    In this record, "the two departures" are A2 (completability before the read) and A3 (the early roster assertion);
+    see the read-of-record entry and Code's block. The seat ruled A3 "Not a departure in substance." The header calls it
+    an accepted departure without that qualifier, which contradicts the entry's own A3 bullet. The header also omits A4,
+    the third order question, which the seat accepted after the fact.
+  CORRECTION:
+    It accepted the two departures from m:358's order post hoc (A2, and A3, which it rules "not a departure in
+    substance"). It accepted steps 7 and 8's start before the close (A4) and set rules for later stages.
+--- (dropped qualifier)
+  QUOTE:
+    and the seat had not opened the completability outputs (see A9).
+  PROBLEM:
+    The seat wrote "see A9 for what it had opened". That qualifier points to A9's admission that the seat may have
+    opened the G-CAL entry body, which "quotes golds and answers" (the entry quotes O1–O4's generations). A bare "(see
+    A9)" turns a disclosure that limits A2's premise into a neutral cross-reference.
+  CORRECTION:
+    and the seat had not opened the completability outputs (the seat: "see A9 for what it had opened").
+--- (dropped qualifier)
+  QUOTE:
+    a bare "7" on item 0; "```json" on item 14.
+  PROBLEM:
+    This drops the seat's stated uncertainty and its characterization. The seat wrote "one is a bare "7" on item 0 (an
+    answer cut to its first digit, or wrong — the read cannot tell); one is "```json" on item 14 (a format fault)". The
+    seat explicitly could not tell whether the "7" was a cut answer or a wrong one.
+  CORRECTION:
+    a bare "7" on item 0 (in the seat's reading an answer cut to its first digit, or wrong; "the read cannot tell");
+    "```json" on item 14 (a format fault).
+--- (misquote)
+  QUOTE:
+    item 2's four (O3; "the model never recovers 'third' from `thiru`");
+  PROBLEM:
+    This is presented as a quotation but is not exact. The seat's text is: the model never recovers "third" from `thiru`
+    (double quotes around third). The entry changes them to single quotes inside its own quotation marks. In the seat's
+    file this phrase is not a standalone quotation either; it runs on into ": a template, …".
+  CORRECTION:
+    item 2's four (O3; the model never recovers "third" from `thiru`);
+--- (misquote)
+  QUOTE:
+    "Acceptable, and no re-run."
+  PROBLEM:
+    This is not character-exact. The seat's text is "Ruling: acceptable, and no re-run.", with a lowercase "acceptable".
+    Every other quote in the entry matches the seat's file exactly; this one does not.
+  CORRECTION:
+    The seat's ruling: "acceptable, and no re-run."
+--- (attribution / softening)
+  QUOTE:
+    The seat reads m:358's step-6 list as an order:
+  PROBLEM:
+    The seat ruled; it did not offer a reading. Its text is "m:358's step-6 list is an order", and it calls Code's view
+    "Code's contrary reading". Recasting the ruling as "reads … as" puts it on the same footing as Code's reading.
+  CORRECTION:
+    The seat rules that m:358's step-6 list is an order:
+--- (ambiguous wording)
+  QUOTE:
+    the D2 + C9(ii) edit and the G-ANL-F0 re-run (in progress, their own entry)
+  PROBLEM:
+    It is unclear what "(in progress …)" applies to. Only the edit is being built (the body says "The edit is being
+    built now"). G-ANL-F0 has not been rebuilt or re-run. The header also leaves out D3's comparison for G-SHAPE-F0,
+    which the seat lists in the same item.
+  CORRECTION:
+    the D2 + C9(ii) edit (being built), then G-ANL-F0's rebuild and re-run and D3's comparison for G-SHAPE-F0, in their
+    own entry
+--- (ambiguous wording)
+  QUOTE:
+    LOCK v0.1's calibration artifacts attribute +.078 correctly:
+  PROBLEM:
+    The seat's directive is carried over in the present tense, but LOCK v0.1 is not drafted (Code's block: "LOCK v0.1 is
+    not drafted"). A reader of the record may take this as a description of an existing lock. A9's "LOCK v0.1 records
+    the read as key-known, with the three exposures named" has the same problem. The entry also drops the seat's "the"
+    before +.078.
+  CORRECTION:
+    LOCK v0.1 (not yet drafted) is to attribute the +.078 correctly in its calibration artifacts: … and, in A9: "LOCK
+    v0.1 is to record the read as key-known, with the three exposures named."
+============================================================ EVERY CLAIM (id, checker verdict -> final)
+  [H0-01] VERIFIED -> VERIFIED: L1: G-CAL is PROPOSAL-m v1.11 §8 step 6, cited as m:176.
+  [H0-02] VERIFIED -> VERIFIED: L1: the rulings are the design seat's, dated 2026-10-10, and were routed by the PI.
+  [H0-03] VERIFIED -> VERIFIED: L2: conditions (1)-(4) pass on Qwen.
+  [H0-04] VERIFIED -> VERIFIED: L2-3: the renders of record are unchanged (a04f67b0…4372) and there is no re-
+  specification.
+  [H0-05] VERIFIED -> VERIFIED: L3-4: the seat read the 128 completability generations (m:271) and kept condition
+  (4)'s PASS as graded.
+  [H0-06] VERIFIED -> VERIFIED: L4: the seat accepted both departures from m:358's order post hoc and set rules for
+  later stages.
+  [H0-07] VERIFIED -> VERIFIED: L5: G-CAL-OLMo's per-checkpoint condition (4) belongs to the OLMo track and has not
+  run.
+  [H0-08] IMPRECISE -> IMPRECISE: L7-8: Next, by the same rulings: the D2 + C9(ii) edit and the G-ANL-F0 re-run (in
+  progress, their own entry), then LOCK-m-F0 v0.1 on the PI's word.
+  [H0-09] VERIFIED -> VERIFIED: L8: Nothing run on a model (for this entry).
+  [H0-10] UNCHECKABLE -> UNCHECKABLE: L8-9: the stamp 'Sat Oct 10 17:01:09 UTC 2026', first write, taken with date -u.
+  [H0-11] VERIFIED -> VERIFIED: L11-12: the rulings file is results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1.md,
+  sha256 b4c69f5d…f125.
+  [H0-12] VERIFIED -> VERIFIED: L12: the rulings answer Code's consolidated block (ea47e89) item by item.
+  [H0-13] UNCHECKABLE -> UNCHECKABLE: L13: the PI placed the file in results/raw/, and it is committed verbatim with
+  this entry.
+  [H0-14] VERIFIED -> VERIFIED: L14: section A closes G-CAL and is recorded here.
+  [H0-15] VERIFIED -> VERIFIED: L15: sections B-E rule on G-SHAPE-F0, G-ANL-F0, LOCK v0.1's wiring and the items
+  carried from earlier steps.
+  [H0-16] IMPRECISE -> IMPRECISE: L16: sections B-E are recorded in the D2 round's entry and carried into LOCK v0.1.
+  [H0-17] VERIFIED -> VERIFIED: L17: A1, the seat's read of the 128 generations (m:271), was made from the read raw's
+  section 3, every record.
+  [H0-18] VERIFIED -> VERIFIED: L18: A1 is recorded as the seat's.
+  [H0-19] VERIFIED -> VERIFIED: L19: clean pool 57/64. Quote: the seven misses "are not legibility misses".
+  [H0-20] VERIFIED -> VERIFIED: L19-21: the seven clean misses are item 15's three 'close' (O1); two working lines cut
+  by the newline stop before an answer (item 3 seed 1, item 6 seed 3); a bare '7' on item 0; '```json' on item 14.
+  [H0-21] IMPRECISE -> IMPRECISE: L20-21: the '7' and '```json' items are listed without the seat's qualifiers.
+  [H0-22] VERIFIED -> VERIFIED: L22-23: corrupted pool 48/64; sixteen misses; item 15's four 'close' (O1).
+  [H0-23] IMPRECISE -> IMPRECISE: L24: item 2's four (O3; "the model never recovers 'third' from `thiru`").
+  [H0-24] VERIFIED -> VERIFIED: L25-26: item 0's reasoning preamble and refusal (seeds 1 and 3), which in the seat's
+  reading both read the task and "decline to answer it in one line".
+  [H0-25] VERIFIED -> VERIFIED: L27-28: item 3's working line (seed 1) and a wrong computation (seed 3) that "mis-
+  reads the operand, not the verb".
+  [H0-26] VERIFIED -> VERIFIED: L29-31: item 6's termination echo (O4); item 9's 'minutes' line (seed 1); item 11's
+  "'up'" and "dn" (seeds 0 and 3); "dn" is "a near-answer the grader rightly rejects".
+  [H0-27] VERIFIED -> VERIFIED: L32-33: O2 is 'the two hits Code reads as not answering'. "Agreed on both": item 7
+  seed 3 and item 9 seed 0 are "grader artifacts of the two items whose gold is a word of the task text".
+  [H0-28] VERIFIED -> VERIFIED: L34-36: nine graded hits restate a corrupted word of the render. The seat reads them
+  "as recoveries, not failures", and as "the clearest evidence in the pool that the renders are legible to the model
+  at this dose".
+  [H0-29] VERIFIED -> VERIFIED: L37-39: f0's calib2 had 59/64 and 54/64 at 0.12, covariate +.078. At 0.15 with the
+  operand excluded: 57/64 and 48/64 (+.1406). "The dose is stronger, as §2.3 intended"; completability holds with
+  margin +3 on the absolute bar under the grader of record.
+  [H0-30] VERIFIED -> VERIFIED: L40-41: Ruling: condition (4) PASS stands as graded. The seat adopts no re-grading.
+  The grader is m:176's pin, ported verbatim from f0.
+  [H0-31] IMPRECISE -> IMPRECISE: L41: "a re-grading after the data would be post hoc under rule 11".
+  [H0-32] VERIFIED -> VERIFIED: L41-42: the read is recorded for LOCK v0.1's calibration artifacts (m:176) as the
+  seat's.
+  [H0-33] VERIFIED -> VERIFIED: L43-45: Code's check (_close_check raw) ran against the completability artifact of
+  record, sha256 46afd364…c15b, with result 22/22.
+  [H0-34] IMPRECISE -> IMPRECISE: L43-45: every statement A1 makes about an individual generation, and A1's
+  arithmetic, holds against the completability artifact of record.
+  [H0-35] VERIFIED -> VERIFIED: L45-46: the seat's readings of what a generation means are recorded, not checked.
+  [H0-36] VERIFIED -> VERIFIED: L48-49: the seat reads m:358's step-6 list as an order: 'first' attaches to the
+  replay, and the rest is listed in sequence, with the seat's read before completability.
+  [H0-37] VERIFIED -> VERIFIED: L49-50: Code's contrary reading "should have been put to the seat before a model stage
+  ran".
+  [H0-38] VERIFIED -> VERIFIED: L51-54: accepted post hoc. Nothing could flow from completability into the read of
+  record. The renders and sha were fixed in the model-free half before either, and the read is of the renders alone.
+  The only cost risked was a wasted run, had (3) failed.
+  [H0-39] IMPRECISE -> IMPRECISE: L52-53: 'the seat had not opened the completability outputs (see A9)'.
+  [H0-40] VERIFIED -> VERIFIED: L55: recorded here as a process deviation.
+  [H0-41] VERIFIED -> VERIFIED: L56-57: A3 accepted: the roster assertion needs no model, and its result does not
+  depend on when it runs. Not a departure in substance.
+  [H0-42] VERIFIED -> VERIFIED: L57-59: the order as executed was the 0.12 replay, then the renders of record and
+  their sha, then the roster assertion, all three in the model-free half (bab921c).
+  [H0-43] VERIFIED -> VERIFIED: L59: completability ran 2026-10-08 (cf8eb5b); the seat's read of record was made
+  2026-10-09 and recorded at 2c50e03.
+  [H0-44] IMPRECISE -> IMPRECISE: L60: A4 heading 'Steps 7 and 8 run before G-CAL closed.'
+  [H0-45] IMPRECISE -> IMPRECISE: L60: quote "Acceptable, and no re-run."
+  [H0-46] VERIFIED -> VERIFIED: L60-62: A1-A3 could change nothing the two steps take from G-CAL. The renders of
+  record are unchanged, (4) stands as graded, no re-specification arises, and the flag's source (G-CAL_model-
+  free.json) is unchanged.
+  [H0-47] IMPRECISE -> IMPRECISE: L60-62: A4 is recorded without the seat's stated basis that the PI's go came with
+  condition (3) passed.
+  [H0-48] VERIFIED -> VERIFIED: L62-64: G-SHAPE-F0's artifact and G-ANL-F0's manifest stand as committed, subject only
+  to D2, a separate cause (its own entry).
+  [H0-49] VERIFIED -> VERIFIED: L65-66: A5. Code's reading accepted (a non-interactive launching shell sends no
+  hangup, and nohup ignores one). Not blocking anything.
+  [H0-50] VERIFIED -> VERIFIED: L67: the seat's rules going forward come from A2, A4, A5 and C8, and are collected
+  here.
+  [H0-51] VERIFIED -> VERIFIED: L68-69: for every stage of every unit, a list inside a §8 step is ordered as written
+  unless the proposal says otherwise, and a departing reading is put to the seat before Code acts on it.
+  [H0-52] IMPRECISE -> IMPRECISE: L70-71: a step that follows a gate in m:358 starts after that gate's close entry,
+  unless the PI's go names the open items and the seat has said they cannot change the step's inputs.
+  [H0-53] VERIFIED -> VERIFIED: L72-73: every later launch follows m:267's checklist as written, and where a launch
+  departs from it, the raw's header says so at the time.
+  [H0-54] VERIFIED -> VERIFIED: L74-75: a discarded gate run is disclosed in its entry with its stamp and sha (C8, on
+  G-ANL-F0's set-aside first manifest).
+  [H0-55] VERIFIED -> VERIFIED: L76-77: none of O1-O4 holds G-CAL's close. None bears on condition (3), whose referent
+  is "recoverability by the reader (the seat's read, 16/16), not the model's completions".
+  [H1-01] VERIFIED -> VERIFIED: L77-78: A6 — none of O1–O4 bears on condition (3), whose referent is "recoverability
+  by the reader (the seat's read, 16/16), not the model's completions"
+  [H1-02] VERIFIED -> VERIFIED: L78-79: On condition (4) O1–O4 are descriptive; (4) passes under all four readings,
+  and the verdict of record is the grader's
+  [H1-03] VERIFIED -> VERIFIED: L80-81: O1 is a grader-strictness effect, near-equal in the two pools (3 clean, 4
+  corrupted); the relative bar is insensitive to it; f0's gold lists are not amended
+  [H1-04] VERIFIED -> VERIFIED: L82: O2 is agreed and descriptive: margin +1 on the strictest reading, recorded
+  [H1-05] VERIFIED -> VERIFIED: L83-84: O3 is a completability fact about one item's content word; condition (4) has
+  no per-item bar, and none is added
+  [H1-06] VERIFIED -> VERIFIED: L85: O4 (one generation) is an observation
+  [H1-07] VERIFIED -> VERIFIED: L86-88: The seat adopts no counters for G-CAL-OLMo (rule 23); it declares now, so that
+  they are pre-declared, four descriptive tallies for each G-CAL-OLMo-{ckpt} entry, count-only, no bar, no effect on
+  condition (4)
+  [H1-08] VERIFIED -> VERIFIED: L89-93: Tallies (i) hits on items 7 and 9 whose text does not state the answer, by
+  Code's read, labelled as such; (ii) 'close' answers on item 15; (iii) lines matching f's descriptive termination
+  patterns; (iv) the corruption-mirroring count (corrupted-pool answers containing a corrupted word of their render)
+  [H1-09] VERIFIED -> VERIFIED: L95-96: They go in the entries, not in any lock or analyzer. G-CAL-OLMo's grader and
+  gold lists are the same ported ones.
+  [H1-10] VERIFIED -> VERIFIED: L97: A7, the label slip (`f1_012_of_record`): recorded; the write-once outputs stay
+  [H1-11] VERIFIED -> VERIFIED: L97-100: LOCK v0.1's calibration artifacts attribute +.078 correctly: f0's calib2
+  figure, on renders byte-identical to those f1's corruptor gives at 0.12, under f0's seed key and cached path. m
+  declares no comparison with G-CAL's +.1406.
+  [H1-12] VERIFIED -> VERIFIED: L101: A8 — Code's two factual notes on the seat's read notes (read-of-record entry,
+  `2c50e03`); both accepted
+  [H1-13] VERIFIED -> VERIFIED: L103: The renders of record are `corrupt_m` at 0.15
+  [H1-14] VERIFIED -> VERIFIED: L103-104: The note's "0.12 walk" was a slip for the k = 3 walk; k = 3 on the six
+  "Compute" items at either rate, so the words are the same
+  [H1-15] VERIFIED -> VERIFIED: L105-106: The six render words keep 4, 5, 4, 6, 4 and 5 of "Compute"'s seven letters
+  in place, not "only the initial letter and the length"
+  [H1-16] VERIFIED -> VERIFIED: L108-109: The read file stays as committed; this entry records the corrections beside
+  it. Code drafts the operand-exclusion sentence for the calibration artifacts, and the seat reads it at the lock.
+  [H1-17] VERIFIED -> VERIFIED: L110: A9 — the two questions the read-of-record entry left to the seat
+  [H1-18] VERIFIED -> VERIFIED: L111-112: The seat's disclosure, which named the request file only, "was too narrow"
+  [H1-19] VERIFIED -> VERIFIED: L113-114: The seat read the head of RESULTS.md during its repository checks of
+  2026-10-08 and 2026-10-09, to report the m thread's state to the PI, and the G-CAL entry stood at that head from
+  2026-10-08
+  [H1-20] VERIFIED -> VERIFIED: L115-116: The seat "cannot certify" that the entry's body, which quotes golds and
+  answers, was not among the lines it saw, so it treats the entry as possibly opened before the lines were written
+  [H1-21] VERIFIED -> VERIFIED: L117-119: The seat's record of its reads lists none of the completability artifact,
+  the checkpoint, the G-CAL raws, `G-CAL_model-free.json`, `gcal.py` or the commit message, and the seat believes none
+  was opened
+  [H1-22] VERIFIED -> VERIFIED: L120: The disclosure of record is corrected to this
+  [H1-23] VERIFIED -> VERIFIED: L121: The exposures "do not add up to anything the condition depends on"
+  [H1-24] VERIFIED -> VERIFIED: L122-124: Through the 2026-10-04 exposure (STOP-5 §F, STOP-6 §E, m:176) the seat knew
+  every gold before any read in October; the batch exposure of 2026-10-08 and the possible entry exposure added
+  nothing to that
+  [H1-25] VERIFIED -> VERIFIED: L125-127: The read of record is a key-known recoverability read, "the only kind this
+  seat could make after 2026-10-04"; that is what condition (3) asks — whether a reader can recover each task from its
+  render, which does not turn on the reader's ignorance of the answer
+  [H1-26] VERIFIED -> VERIFIED: L128: LOCK v0.1 records the read as key-known, with the three exposures named
+  [H1-27] VERIFIED -> VERIFIED: L129-130: A key-blind read beside it, if the PI wants one, would need a reader who has
+  not seen STOP-5, STOP-6 or m:176; the seat does not require one, and none is a condition of the lock
+  [H1-28] VERIFIED -> VERIFIED: L131: G-CAL's state of record: CLOSED
+  [H1-29] VERIFIED -> VERIFIED: L132: On Qwen, conditions (1) and (2) PASS 16/16 (`bab921c`)
+  [H1-30] VERIFIED -> VERIFIED: L132-133: (3) PASS 16/16, the seat's key-known read (`2c50e03`)
+  [H1-31] VERIFIED -> VERIFIED: L133: (4) PASS, 57/64 and 48/64 = 3/4 (`cf8eb5b`), kept as graded by A1
+  [H1-32] VERIFIED -> VERIFIED: L133-134: Renders of record `a04f67b0…4372`
+  [H1-33] VERIFIED -> VERIFIED: L135: G-CAL-OLMo, per checkpoint, belongs to the OLMo track, with A6's four tallies
+  declared above
+  [H1-34] VERIFIED -> VERIFIED: L136-137: The G-CAL entry's "Next, in this order" is done: items 1–4 by the read of
+  record and this entry, item 5 (step 7) at `f23b444`, ahead of this close, as A4 accepts
+  [H1-35] VERIFIED -> VERIFIED: L138-140: The PI's answers to the block's section F (chat, 2026-10-10, verbatim; not
+  otherwise in the repo): "F1 accepted as Code's default: the one-process preflight stays as it is; Qwen stages launch
+  only when the audit session is idle. F2 (OLMo pod, runpod re-auth) waits for step 9."
+  [H1-36] VERIFIED -> VERIFIED: L141: What the rulings order next, in the seat's order (items 1–4: this entry; D2 +
+  C9(ii) round; LOCK v0.1; step 10)
+  [H1-37] IMPRECISE -> IMPRECISE: L142-144: Item 2: the D2 edit with C9(ii), then G-ANL-F0 rebuilt and re-run, its
+  manifest superseded by hand `git mv` (PIN-37), and D3's comparison for G-SHAPE-F0, in their own entry
+  [H1-38] VERIFIED -> VERIFIED: L144-147: The edit = `analyzer_sha256` and `package_sha256` required in the stages'
+  `identity_extra` on non-stub runs, with the package hash checked against the lock at stage start; and the end look
+  evaluated and recorded at a campaign STOP, with the verdict sentence naming it
+  [H1-39] UNCHECKABLE -> UNCHECKABLE: L144: "The edit is being built now"
+  [H1-40] VERIFIED -> VERIFIED: L148: Item 3: LOCK-m-F0 v0.1 on the PI's word, with the declarations the rulings list
+  [H1-41] VERIFIED -> VERIFIED: L149-150: Item 4: step 10, G-TIME-F0, on the PI's word, under F1 as accepted; the seat
+  reads its forced rounds and LOCK v0.1 together at Code's ping
+  [H1-42] UNCHECKABLE -> UNCHECKABLE: L151-152: Committed: this entry; the seat's rulings, verbatim; the check raw;
+  and this entry's values-check raw (`_close_valuescheck`, both passes)
+
+####################################################################################################
+PASS 2: claims 101, verified 93, confirmed corrections 6, refuted flags 0, uncheckable 2, values findings 10
+####################################################################################################
+============================================================ CONFIRMED CORRECTIONS
+--- [H0-07] IMPRECISE
+  CLAIM:
+    L4-5: A3, which it rules "not a departure in substance" (quotation)
+  REFUTER'S EVIDENCE:
+    The draft (entry_close.md L4-5) has: (A2; and A3, which it rules "not a departure in substance"). The rulings file
+    (results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1.md, L23, A3) ends: "Ruling: accepted; it needs no model and
+    its result does not depend on when it runs. The G-CAL close entry records the order as executed. Not a departure in
+    substance." I ran a substring test against the rulings file with the isolated python. 'not a departure in substance'
+    is False (0 hits). 'Not a departure in substance.' is True (1 hit, A3 only). The only difference is the capital N,
+    but this pass requires every quotation to match character for character, so the checker is right. The substance
+    holds: the sentence sits in A3's ruling paragraph, so "which it rules" fits. The "two departures" framing also
+    matches the seat's own wording in section B item 1, "the two order departures accepted post hoc" (substring True).
+    Elsewhere the draft (L68, A3 bullet) uses the sentence without quotation marks and capitalised. That is fine and
+    needs no change.
+  CORRECTION:
+    Replace "(A2; and A3, which it rules "not a departure in substance")" with "(A2; and A3: "Not a departure in
+    substance.")". The quoted string 'Not a departure in substance.' passes the substring test against the rulings file
+    (1 hit). An equally exact alternative is to drop the quotation marks and keep the paraphrase: "(A2; and A3, which it
+    rules not a departure in substance)".
+--- [H0-11] IMPRECISE
+  CLAIM:
+    L9: '... all in their own entry' -- inside 'Next, by the same rulings:'
+  REFUTER'S EVIDENCE:
+    The checker is right. In results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1.md, the rulings never say which entry
+    records the step-2 work. D2 (line 92) orders the edit, the rebuild and re-run, and the manifest superseded by hand
+    `git mv` (PIN-37, PIN-S9), and calls it "One round, before LOCK v0.1." D3 (line 94) orders the comparison. Item 2 of
+    "What Code does now, in order" (line 117) lists the same steps and says nothing about an entry. The only "own entry"
+    phrase in the file is at line 47, "G-CAL closes on A1–A9 in its own entry.", and that is about the G-CAL close, not
+    the D2 round. So "all in their own entry" is Code's plan. The draft says so elsewhere: L18 has "Code will record
+    them in the D2 round's entry", and L160 of the draft has "(Code records these in their own entry)". At L9 the clause
+    sits inside "Next, by the same rulings:", so it reads as the seat's. Everything else in the bold sentence holds. The
+    step order matches item 2. LOCK v0.1 "on the PI's word" matches item 3. "(being built now)" is a parenthetical in
+    Code's voice, and git status shows valence_core/m/stages.py and scripts/m_analyze.py modified. The proposed
+    correction is accurate and copies the L160 wording, which keeps the clause in Code's voice.
+  CORRECTION:
+    Replace only the bold sentence on L8–10 and keep the stamp sentence after it unchanged: "**Next, by the same
+    rulings: the D2 + C9(ii) edit (being built now); G-ANL-F0 rebuilt and re-run, with its manifest superseded by hand
+    `git mv`; and D3's comparison for G-SHAPE-F0 (Code records these in their own entry). Then LOCK-m-F0 v0.1 on the
+    PI's word. Nothing run on a model.** (Stamp verified at write time: `date -u` → **Sat Oct 10 17:01:09 UTC 2026**,
+    first write.)"
+--- [H0-21] IMPRECISE
+  CLAIM:
+    L18-19: LOCK v0.1 is to carry the declarations the rulings list for it (C5's date meaning, C7's three settled
+    inputs, D1, E1–E3 and E6)
+  REFUTER'S EVIDENCE:
+    The draft's L18-19 says LOCK v0.1 is to carry "the declarations the rulings list for it (C5's date meaning, C7's
+    three settled inputs, D1, E1–E3 and E6)". The only list in the rulings file that matches this phrasing is item 3 of
+    "What Code does now, in order" (results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1.md:118). It reads "with the
+    declarations above (C5's date meaning; C7's three settled inputs; E1–E3; E6), the calibration artifacts (...), and
+    the 43-entry register as Code's readings". D1 is not in that list. D1 (line 90) is a separate acceptance: "Accepted:
+    the lock states each gate artifact's `package_sha256`, the diffs between them (...), the import closures (...), and
+    the condition that the `valence_core/m` diff shows no SCORING_STACK_FILES."
+    
+    The parenthetical also fails on a broad reading, where "the rulings list" means everything the rulings assign to the
+    lock. That set includes more than D1: D2's hashes of the re-run manifest and analyzer, D3's diff statement, B3's
+    ban-list sha pin, C6's 43-entry register, A7's attribution and A9's key-known record. So the parenthetical matches
+    neither item 3's list nor the full set. The checker is right.
+    
+    The dashes check out: both the rulings and the draft use an en dash (U+2013) in "E1–E3".
+    
+    The fix also touches L19-20, which says "E2's clauses enter Appendix D, not the lock". Appendix D is the paper's
+    disclosures (m:267: "Disclosures for the paper (Appendix D)"). E2 says "Both accepted for Appendix D, as clauses on
+    the named items", but item 3 counts E1–E3, which includes E2, among the lock's declarations. So "not the lock" for
+    E2 is Code's addition and contradicts the seat's list. For E4, the seat's "not at the lock" is about when the
+    differences are adjudicated ("The seat adjudicates at the drafting of Appendix D, if at all, not at the lock"), not
+    about where they are entered.
+  CORRECTION:
+    Replace L18-20, from "Code will record them" to "not the lock.", with:
+    
+    Code will record them in the D2 round's entry. LOCK v0.1 is to carry "the declarations above (C5's date meaning;
+    C7's three settled inputs; E1–E3; E6)", with the calibration artifacts and the 43-entry register (the rulings'
+    closing list, item 3). By D1 it also states each gate artifact's `package_sha256`, the diffs between them, the
+    import closures, and the condition that the `valence_core/m` diff shows no SCORING_STACK_FILES. E4's differences
+    enter Appendix D and are adjudicated at its drafting if at all, not at the lock. E2's two clauses are accepted for
+    Appendix D.
+    
+    If only the H0-21 span changes, the minimum fix is to drop "D1, " from the parenthetical and state D1 separately as
+    above. "E2's clauses enter Appendix D, not the lock" must also lose "not the lock", because item 3 counts E1–E3
+    among the lock's declarations.
+--- [H0-22] FAILS
+  CLAIM:
+    L19-20: E4's differences and E2's clauses enter Appendix D, not the lock
+  REFUTER'S EVIDENCE:
+    I checked this against the rulings file results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1.md and agree with the
+    checker: the claim fails.
+    
+    (1) E2. Rulings line 100 says "Both accepted for Appendix D, as clauses on the named items and not as fifteenth and
+    sixteenth differences". It says nothing that keeps them out of the lock. Rulings item 3 (line 118) says LOCK v0.1 is
+    drafted "with the declarations above (C5's date meaning; C7's three settled inputs; E1–E3; E6)", and E2 falls inside
+    E1–E3. The draft's own preceding sentence (L18–19) also puts E1–E3 in the lock. So "not the lock" for E2's clauses
+    contradicts item 3 and the draft itself.
+    
+    (2) E4. Rulings line 104 says "None adjudicated now; all enter Appendix D as the G-PORT entry lists them. The seat
+    adjudicates at the drafting of Appendix D, if at all, not at the lock." Here "not at the lock" says when the seat
+    adjudicates, not where the differences go. The rulings never say the differences stay out of the lock. Item 3 does
+    not list them, and m:279's lock contents do not name Appendix D, but neither is a ruling. The draft turns a
+    statement about timing into a statement about content.
+    
+    The "+2" in E4's "25 + 2" are the same items as E2's two clauses. Code's block, E4, reads "G-PORT's 25 differences,
+    plus 2 borderline"; the G-PORT entry (RESULTS.md ~L1061–1072) calls them B1 and B2, the two clauses E2 rules on.
+    
+    Problems with the checker's correction:
+    (a) Its D1 list ("each gate artifact's `package_sha256`, the diffs between them and the import closures") leaves out
+    D1's fourth item, "the condition that the `valence_core/m` diff shows no SCORING_STACK_FILES" (rulings line 90).
+    (b) In "the seat adjudicates those, if at all", "those" can be read as covering E2's clauses as well, which E2 has
+    already accepted. E4's sentence should be tied only to E4's differences.
+    
+    Side note on L18–19, which is a separate claim: the draft's list "(C5's date meaning, C7's three settled inputs, D1,
+    E1–E3 and E6)" adds D1 to item 3's list of declarations, which does not contain it. D1 is what the lock states
+    ("Accepted: the lock states ..."), not one of item 3's declarations. The replacement below fixes that as well.
+  CORRECTION:
+    Replace L18 (from "LOCK v0.1 is to carry") through L20 with the text below. "Code will record them in the D2 round's
+    entry." stays as it is.
+    
+    LOCK v0.1 is to carry the declarations the rulings list for it (C5's date meaning, C7's three settled inputs, E1–E3
+    and E6) and to state what D1 accepts: each gate artifact's `package_sha256`, the diffs between them, the import
+    closures, and the condition that the `valence_core/m` diff shows no SCORING_STACK_FILES. E2's two clauses are
+    accepted for Appendix D, as clauses on the named items. G-PORT's 25 + 2 differences (E4) all enter Appendix D as the
+    G-PORT entry lists them; the seat adjudicates them, if at all, at the drafting of Appendix D, not at the lock.
+    
+    Minimal alternative, if L18–19 is kept as it is and only the claim sentence changes: "E2's two clauses are accepted
+    for Appendix D, as clauses on the named items. G-PORT's 25 + 2 differences (E4) all enter Appendix D as the G-PORT
+    entry lists them; the seat adjudicates them, if at all, at the drafting of Appendix D, not at the lock."
+    
+    Every phrase in both versions was checked against rulings lines 90, 100, 104 and 118. None of the wording is
+    presented as a quotation.
+--- [H0-43] IMPRECISE
+  CLAIM:
+    L74-76: G-SHAPE-F0's artifact and G-ANL-F0's manifest stand as committed, subject only to D2, a separate cause (its
+    own entry)
+  REFUTER'S EVIDENCE:
+    The seat's A4 (results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1.md, line 25) reads: "G-SHAPE-F0's artifact and
+    G-ANL-F0's manifest stand as committed, subject only to D2 below, which is a separate cause." The draft at L74-76
+    says "subject only to D2, a separate cause (its own entry)."
+    
+    What is right:
+    - The substance matches the seat's text.
+    - Dropping "below" is correct, because the entry has no D2 section below it.
+    - "(its own entry)" is true as Code's plan. The draft's L8-9 says "all in their own entry", and L18 says "Code will
+    record them in the D2 round's entry."
+    
+    What is wrong: the parenthetical is not in the seat's A4. It sits inside a paragraph that otherwise paraphrases the
+    seat's ruling closely, and nothing marks it as Code's. Nowhere in A4 or D2 does the seat say where D2 is recorded;
+    D2 says only "One round, before LOCK v0.1", and item 2 of "What Code does now" lists the edit as a separate step. So
+    Code's plan reads as part of the seat's ruling. Pass 1 corrected exactly this kind of attribution slip. The pointer
+    is also redundant, since L8-9 and L18 already state where D2 is recorded and attribute it to Code.
+    
+    The checker's reading holds. The correction keeps the seat's content exactly, minus "below", and only changes "which
+    is a separate cause" to the appositive "a separate cause", which keeps the meaning.
+  CORRECTION:
+    G-SHAPE-F0's artifact and G-ANL-F0's manifest stand as committed, subject only to D2, a separate cause.
+--- [H1-46] IMPRECISE
+  CLAIM:
+    L153: 'Item 5 (step 7) ran at `f23b444`, ahead of this close, as A4 accepts.'
+  REFUTER'S EVIDENCE:
+    The checker is right. RESULTS.md:332 (in the G-SHAPE-F0 entry) reads "`scripts/m_sessions.py gshape` ran at HEAD
+    `d092078`, the build commit, 11:33:27–11:33:32 UTC, exit 0." The message of f23b444 reads "PASS on the committed
+    build d092078". `d092078`'s own message calls it "the G-SHAPE-F0 tooling ... the gate of record not yet run". So
+    `f23b444` is the commit that recorded the run, not the one it ran at. RESULTS.md:299 calls it "The G-SHAPE-F0 entry
+    (committed in `f23b444`)". The repo's habit is "ran at HEAD X" for the run commit and "committed in X" for the
+    record (see also RESULTS.md:53 "ran at HEAD `b62af85`"). The rest of the claim checks out. The G-CAL entry's list at
+    RESULTS.md:929-935 has item 5 = "Step 7, G-SHAPE-F0, on the PI's word." The step ran before G-CAL's close. A4 in
+    results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1.md:25 is headed "Steps 7 and 8 built and run before G-CAL
+    closed." and rules "acceptable, and no re-run", so "as A4 accepts" holds. Only the commit hash is misattributed.
+  CORRECTION:
+    Item 5 (step 7) ran at HEAD `d092078` and was recorded in `f23b444`, ahead of this close, as A4 accepts.
+============================================================ REFUTED FLAGS (the claim stood)
+  (none)
+============================================================ UNCHECKABLE
+--- [H0-14]
+    L10-11: stamp `date -u` -> Sat Oct 10 17:01:09 UTC 2026, first write
+  WHY:
+    Taken by Code at write time; consistent with the check raw's stamp 2026-10-10 17:00:29 UTC (40 s earlier). Not
+    failed per instructions.
+--- [H0-20]
+    L18: Code will record them in the D2 round's entry
+  WHY:
+    Code's plan; the rulings do not say where B–E are recorded. Stated as Code's, so no attribution issue.
+============================================================ VALUES LENS
+--- (misstates-seat / Code-adjudicating)
+  QUOTE:
+    for it (C5's date meaning, C7's three settled inputs, D1, E1–E3 and E6). E4's differences and E2's
+          clauses enter Appendix D, not the lock.
+  PROBLEM:
+    This misstates the seat and settles a question in Code's voice. (1) The seat's step 3 lists E1–E3, so E2 is
+    included, among the lock's declarations. Its E2 says the clauses are "accepted for Appendix D". The draft resolves
+    that tension with "E2's clauses enter Appendix D, not the lock", which the seat never says, and it contradicts the
+    draft's own "E1–E3" in the same sentence. (2) E4's "not at the lock" ("The seat adjudicates at the drafting of
+    Appendix D, if at all, not at the lock") is about when the seat adjudicates, not where the differences go. The draft
+    turns it into a placement rule. (3) The parenthetical reads as the full list but leaves out items the rulings put in
+    the lock: the calibration artifacts and the 43-entry register (step 3, C6), D2's hashes of the re-run manifest and
+    analyzer, D3's stated diff, and B3's pinned ban-list sha.
+  CORRECTION:
+    for it: the seat's step 3 lists the declarations (C5's date meaning; C7's three settled inputs; E1–E3; E6), the
+    calibration artifacts, and the 43-entry register as Code's readings (C6). D1–D3 add the package hashes and diffs,
+    the re-run's manifest and analyzer hashes, and G-SHAPE-F0's diff. E2's two clauses are "accepted for Appendix D";
+    whether they also sit among the lock's declarations, where step 3's "E1–E3" places them, is the seat's to say. E4's
+    differences all enter Appendix D, and the seat adjudicates them at its drafting, if at all, "not at the lock".
+--- (Code-adjudicating / overclaim)
+  QUOTE:
+    Item 1 was met by the read of record.
+  PROBLEM:
+    Code is judging that its own condition was satisfied. Item 1 of the G-CAL entry's "Next, in this order" asked for
+    the read to be "sent before opening this entry or the files the headline names". A9 says the seat "cannot certify"
+    that it had not seen the entry and treats the entry as possibly opened first. The seat never ruled that item 1 was
+    met. It ruled that the read stands as a key-known read and that this is what condition (3) asks. The parenthetical
+    "(item 1 asked otherwise)" admits the gap while the sentence before it says item 1 was met.
+  CORRECTION:
+    Item 1 was answered by the read of record. Item 1 asked for that read before the G-CAL entry was opened; A9 treats
+    the entry as possibly opened first, and the seat holds the read as condition (3)'s, as a key-known read.
+--- (understatement / misstates-seat)
+  QUOTE:
+    accepted the start of steps 7 and 8 before this close (A4)
+  PROBLEM:
+    This understates A4. The seat's ruling is about steps 7 and 8 "built and run before G-CAL closed" — completed,
+    committed PASSes — and it says "acceptable, and no re-run." Saying only that "the start" was accepted drops the no-
+    re-run ruling. That ruling matters here because Code's block (A4) set out the re-run branches, and G-ANL-F0 is about
+    to re-run for a different cause (D2).
+  CORRECTION:
+    accepted steps 7 and 8, built and run before this close, with no re-run on that account (A4)
+--- (inexact-quote)
+  QUOTE:
+    which it rules "not
+      a departure in substance"
+  PROBLEM:
+    The quotation is not character-exact. The seat's text is "Not a departure in substance." with a capital N. This is
+    the only quotation in the draft that does not match its source byte for byte.
+  CORRECTION:
+    of which it rules: "Not a departure in substance."
+--- (attribution)
+  QUOTE:
+    Accepted post hoc. Nothing could flow from completability into the read of record:
+  PROBLEM:
+    The seat gives this as its reason ("the departure is accepted post hoc, because nothing could flow ..."). With
+    "because" dropped, it reads as a flat factual claim in Code's voice. Per A9, the G-CAL entry, which reports
+    completability and quotes the model's answers, may have been seen before the read lines were written. A claim about
+    whether anything flowed into the read must therefore stay visibly the seat's ground.
+  CORRECTION:
+    Accepted post hoc, on the seat's ground that nothing could flow from completability into the read of record:
+--- (overclaim (check coverage))
+  QUOTE:
+    (pool, item, seed, hit or miss, and any text A1 quotes)
+  PROBLEM:
+    This overstates what the check covers. A1 also quotes render words (`thiru` on item 2, `miyms` on item 9) and the
+    gold "third". The script tests none of these: for item 9 seed 0 it tests only that "minutes" and "45" appear in the
+    generation, and it never reads item 2's or item 9's render. In the artifact, the renders do contain `thiru` and
+    `miyms`, but the check did not establish that.
+  CORRECTION:
+    (pool, item, seed, hit or miss, and the generation text A1 quotes; the render words A1 quotes, `thiru` and `miyms`,
+    are not tested)
+--- (ambiguous wording / missing context)
+  QUOTE:
+    "Agreed on both": item 7 seed 3 and item 9 seed 0 are
+  PROBLEM:
+    The O2 bullet leaves out what the seat says about the two hits: item 7 seed 3 states the wrong answer ("both 1
+    kilogram") and hits on the word "iron"; item 9 seed 0 reads `miyms` as minutes and hits on the operand "45". As a
+    result, the check's Limits line ("the presence of \"iron\" and \"45\" in the text") refers to words the entry never
+    introduces, and the reader cannot tell what they stand in for.
+  CORRECTION:
+    "Agreed on both": item 7 seed 3 (which states "both 1 kilogram" and hits on the word "iron") and item 9 seed 0
+    (which reads `miyms` as minutes and hits on the operand "45") are
+--- (missing disclosure)
+  QUOTE:
+    and nohup ignores one). Not blocking anything.
+  PROBLEM:
+    There is a missing disclosure. Code's block A5 flagged that the sources disagreed on whether the `disown` blocks.
+    The G-SHAPE-F0 entry (`f23b444`) lists it among items "Still owed for G-CAL's close". The build-inputs raw (line
+    1008) says G-CAL's closing items, the `disown` among them, "do block LOCK-m-F0 v0.1". A5's "Not blocking anything"
+    settles that, but the entry does not record that these committed texts are now answered. The G-CAL entry's
+    convention is to name committed texts that an entry corrects, flagged and left unchanged.
+  CORRECTION:
+    and nohup ignores one). Not blocking anything. This answers the disagreement Code's block A5 flagged: the G-SHAPE-F0
+    entry (`f23b444`) listed the `disown` as owed for G-CAL's close, and the build-inputs raw (its line 1008) said
+    G-CAL's closing items, the `disown` among them, block LOCK-m-F0 v0.1. Both texts are flagged here and not changed.
+--- (missing disclosure (flag, not adjudicate))
+  QUOTE:
+    "which is what happened here, after the fact".
+  PROBLEM:
+    The seat's exception requires that "the PI's go names the open items". The PI's go as recorded verbatim at `2c50e03`
+    ("Go for steps 7 and 8. Also, the seat's condition-(3) read is at ...; (3) passes 16/16.") names none of A1–A3. The
+    open items were named in Code's `2c50e03` entry. Recording the seat's "which is what happened here" without noting
+    this lets a factual mismatch with the record pass silently. Code should flag it, not settle it.
+  CORRECTION:
+    "which is what happened here, after the fact". (Flagged for the seat, not weighed: the PI's go as recorded at
+    `2c50e03` does not itself name the open items; that entry names them.)
+--- (convention / disclosure)
+  QUOTE:
+    **Sat Oct 10 17:01:09 UTC 2026**, first write.)
+  PROBLEM:
+    The stamp's value is not in question. The line leaves out the correction clause that the G-CAL entry (`cf8eb5b`) and
+    the read-of-record entry (`2c50e03`) both carry: "corrected on its two values-check passes, last at **…**". The
+    draft has already been corrected on pass 1, and the Committed line cites both passes, so the line as written implies
+    an uncorrected first write.
+  CORRECTION:
+    **Sat Oct 10 17:01:09 UTC 2026**, first write; corrected on its two values-check passes, last at **<date -u at the
+    last correction>**.)
+============================================================ EVERY CLAIM (id, checker verdict -> final)
+  [H0-01] VERIFIED -> VERIFIED: L1: entry dated 2026-10-10; G-CAL is PROPOSAL-m v1.11 §8 step 6, m:176
+  [H0-02] VERIFIED -> VERIFIED: L1-2: the design seat's rulings of 2026-10-10, routed by the PI
+  [H0-03] VERIFIED -> VERIFIED: L2: Conditions (1)-(4) pass on Qwen
+  [H0-04] VERIFIED -> VERIFIED: L2-3: renders of record unchanged (`a04f67b0…4372`) and no re-specification
+  [H0-05] VERIFIED -> VERIFIED: L3-4: the seat read the 128 completability generations (m:271) and kept condition
+  (4)'s PASS as graded
+  [H0-06] VERIFIED -> VERIFIED: L4-5: it accepted the two departures from m:358's order post hoc (A2; and A3)
+  [H0-07] IMPRECISE -> IMPRECISE: L4-5: A3, which it rules "not a departure in substance" (quotation)
+  [H0-08] VERIFIED -> VERIFIED: L5-6: accepted the start of steps 7 and 8 before this close (A4), and set rules for
+  later stages
+  [H0-09] VERIFIED -> VERIFIED: L6: G-CAL-OLMo's per-checkpoint condition (4) belongs to the OLMo track and has not
+  run
+  [H0-10] VERIFIED -> VERIFIED: L8-9: next by the rulings: the D2 + C9(ii) edit; G-ANL-F0 rebuilt and re-run, manifest
+  superseded by hand `git mv`; D3's comparison for G-SHAPE-F0; then LOCK-m-F0 v0.1 on the PI's word
+  [H0-11] IMPRECISE -> IMPRECISE: L9: '... all in their own entry' -- inside 'Next, by the same rulings:'
+  [H0-12] VERIFIED -> VERIFIED: L8: the D2 + C9(ii) edit is being built now
+  [H0-13] VERIFIED -> VERIFIED: L10: Nothing run on a model
+  [H0-14] UNCHECKABLE -> UNCHECKABLE: L10-11: stamp `date -u` -> Sat Oct 10 17:01:09 UTC 2026, first write
+  [H0-15] VERIFIED -> VERIFIED: L13-14: rulings file results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1.md, sha256
+  `b4c69f5d…f125`
+  [H0-16] VERIFIED -> VERIFIED: L14: they answer Code's consolidated block (`ea47e89`) item by item
+  [H0-17] VERIFIED -> VERIFIED: L15: the PI placed the file in results/raw/; committed verbatim with this entry
+  [H0-18] VERIFIED -> VERIFIED: L16: Section A closes G-CAL and is recorded here
+  [H0-19] VERIFIED -> VERIFIED: L17: Sections B–E rule on G-SHAPE-F0, G-ANL-F0, LOCK v0.1's wiring and the items
+  carried from earlier steps
+  [H0-20] UNCHECKABLE -> UNCHECKABLE: L18: Code will record them in the D2 round's entry
+  [H0-21] IMPRECISE -> IMPRECISE: L18-19: LOCK v0.1 is to carry the declarations the rulings list for it (C5's date
+  meaning, C7's three settled inputs, D1, E1–E3 and E6)
+  [H0-22] FAILS -> FAILS: L19-20: E4's differences and E2's clauses enter Appendix D, not the lock
+  [H0-23] VERIFIED -> VERIFIED: L21: A1 (m:271) made from the read raw's section 3, every record; recorded as the
+  seat's
+  [H0-24] VERIFIED -> VERIFIED: L23: clean pool 57/64; the seven misses "are not legibility misses"
+  [H0-25] VERIFIED -> VERIFIED: L23-26: clean misses = item 15's three 'close' (O1); working lines cut by the newline
+  stop (item 3 seed 1, item 6 seed 3); bare "7" on item 0; "```json" on item 14; quotes "an answer cut to its first
+  digit, or wrong — the read cannot tell" and "a format fault"
+  [H0-26] VERIFIED -> VERIFIED: L27-36: corrupted pool 48/64, sixteen misses: item 15 x4 (O1); item 2 x4 (O3; never
+  recovers "third" from `thiru`); item 0 seeds 1 and 3; item 3 seeds 1 and 3; item 6 termination echo (O4); item 9
+  seed 1 'minutes'; item 11 seeds 0 and 3 "'up'" and "dn"
+  [H0-27] VERIFIED -> VERIFIED: L30-36: quotes "decline to answer it in one line", "mis-reads the operand, not the
+  verb", "a near-answer the grader rightly rejects"
+  [H0-28] VERIFIED -> VERIFIED: L37-38: O2 "Agreed on both": item 7 seed 3 and item 9 seed 0 are "grader artifacts of
+  the two items whose gold is a word of the task text"
+  [H0-29] VERIFIED -> VERIFIED: L39-41: nine graded hits restate a corrupted word of the render; the seat reads them
+  "as recoveries, not failures" and "the clearest evidence in the pool that the renders are legible to the model at
+  this dose"
+  [H0-30] VERIFIED -> VERIFIED: L42-44: against f0's calib2 (59/64 and 54/64 at 0.12, covariate +.078); at 0.15
+  operand excluded 57/64 and 48/64 (+.1406); "The dose is stronger, as §2.3 intended"; margin +3 on the absolute bar
+  under the grader of record
+  [H0-31] VERIFIED -> VERIFIED: L45-47: Ruling: (4) PASS stands as graded; no re-grading; grader is m:176's pin,
+  ported verbatim from f0; "a re-grading after the data is rule 11's post hoc by definition"; read recorded for LOCK
+  v0.1's calibration artifacts (m:176) as the seat's
+  [H0-32] VERIFIED -> VERIFIED: L48-49: Code's check: 22/22 hold against the completability artifact of record (sha256
+  `46afd364…c15b`)
+  [H0-33] VERIFIED -> VERIFIED: L50-51: it confirms every generation A1 identifies (pool, item, seed, hit or miss, and
+  any text A1 quotes) and the nine mirroring hits with their multiplicities
+  [H0-34] VERIFIED -> VERIFIED: L52-53: it recomputes A1's arithmetic: covariate 9/64 = +.1406, margin +3, and 59/64 −
+  54/64 = 5/64 = +.078
+  [H0-35] VERIFIED -> VERIFIED: L54-55: f0's calib2 accuracies (59/64, 54/64) come from data/f/calib.json and are
+  quoted, not re-checked
+  [H0-36] VERIFIED -> VERIFIED: L55-56: the artifact carries no gold lists, so for O2's two hits the check tests the
+  hit flag and the presence of "iron" and "45" in the text
+  [H0-37] VERIFIED -> VERIFIED: L57: the seat's readings of what a generation means are recorded, not checked
+  [H0-38] VERIFIED -> VERIFIED: L59-61: the seat rules m:358's step-6 list is an order: "first" attaches to the replay
+  ...; Code's contrary reading "should have been put to the seat before a model stage ran"
+  [H0-39] VERIFIED -> VERIFIED: L62-66: accepted post hoc; nothing could flow from completability into the read
+  (renders and sha fixed in the model-free half before either; read of renders alone; seat had not opened the
+  completability outputs, "see A9 for what it had opened"); only cost risked a wasted run had (3) failed; recorded as
+  a process deviation
+  [H0-40] VERIFIED -> VERIFIED: L67-68: A3 accepted: needs no model, result does not depend on when it runs; not a
+  departure in substance
+  [H0-41] VERIFIED -> VERIFIED: L68-70: order as executed: 0.12 replay; renders of record and sha; roster assertion
+  (all three in the model-free half, `bab921c`); completability (2026-10-08, `cf8eb5b`); read of record (made
+  2026-10-09, recorded `2c50e03`)
+  [H0-42] VERIFIED -> VERIFIED: L71-74: A4 "acceptable, and no re-run."; PI's "Go for steps 7 and 8" came with (3)
+  passed; items still owed (A1–A3) could change nothing; renders unchanged, (4) as graded, no re-specification, flag
+  source `G-CAL_model-free.json` unchanged
+  [H0-43] IMPRECISE -> IMPRECISE: L74-76: G-SHAPE-F0's artifact and G-ANL-F0's manifest stand as committed, subject
+  only to D2, a separate cause (its own entry)
+  [H0-44] VERIFIED -> VERIFIED: L77-78: A5 Code's reading accepted (non-interactive launching shell sends no hangup,
+  nohup ignores one); not blocking anything
+  [H0-45] VERIFIED -> VERIFIED: L79: rules going forward come from A2, A4, A5 and C8
+  [H0-46] VERIFIED -> VERIFIED: L80-81: for every stage of every unit, a list inside a §8 step is ordered as written
+  unless the proposal says otherwise; a departing reading is put to the seat before Code acts on it
+  [H0-47] VERIFIED -> VERIFIED: L82-84: a step that follows a gate in m:358 starts after that gate's close entry
+  unless the PI's go names the open items and the seat has said they cannot change the step's inputs; "which is what
+  happened here, after the fact"
+  [H1-01] VERIFIED -> VERIFIED: L85: 'Every later launch follows m:267's checklist as written.' (A5's going-forward
+  rule)
+  [H1-02] VERIFIED -> VERIFIED: L85-86: 'Where a launch departs from it, the raw's header says so at the time.'
+  [H1-03] VERIFIED -> VERIFIED: L87-88: 'A discarded gate run is disclosed in its entry with its stamp and sha (C8, on
+  G-ANL-F0's set-aside first manifest).'
+  [H1-04] VERIFIED -> VERIFIED: L89: A6 heading 'O1–O4 and the candidate counters'; 'None of O1–O4 holds G-CAL's
+  close.'
+  [H1-05] VERIFIED -> VERIFIED: L89-91: 'None bears on condition (3), whose referent is "recoverability by the reader
+  (the seat's read, 16/16), not the model's completions".'
+  [H1-06] VERIFIED -> VERIFIED: L91-92: 'On condition (4) they are descriptive: (4) passes under all four readings,
+  and the verdict of record is the grader's.'
+  [H1-07] VERIFIED -> VERIFIED: L93-94: 'O1 is a grader-strictness effect, near-equal in the two pools (3 clean, 4
+  corrupted); the relative bar is insensitive to it.'
+  [H1-08] VERIFIED -> VERIFIED: L94: 'f0's gold lists are not amended.'
+  [H1-09] VERIFIED -> VERIFIED: L95: 'O2 is agreed and descriptive: margin +1 on the strictest reading, recorded.'
+  [H1-10] VERIFIED -> VERIFIED: L96-97: O3 is a completability fact about one item's content word; condition (4) has
+  no per-item bar, and none is added.
+  [H1-11] VERIFIED -> VERIFIED: L98: 'O4 (one generation) is an observation.'
+  [H1-12] VERIFIED -> VERIFIED: L99: 'The seat adopts none for G-CAL-OLMo (rule 23).'
+  [H1-13] VERIFIED -> VERIFIED: L99-101: the seat declares now, so they are pre-declared, four descriptive tallies for
+  each G-CAL-OLMo-{ckpt} entry; count-only, no bar, no effect on condition (4).
+  [H1-14] VERIFIED -> VERIFIED: L102-106: tallies (i) hits on items 7 and 9 whose text does not state the answer, by
+  Code's read, labelled as such; (ii) 'close' answers on item 15; (iii) lines matching f's descriptive termination
+  patterns; (iv) the corruption-mirroring count (corrupted-pool answers containing a corrupted word of their render).
+  [H1-15] VERIFIED -> VERIFIED: L108-109: the tallies go in the entries, not in any lock or analyzer; G-CAL-OLMo's
+  grader and gold lists are the same ported ones.
+  [H1-16] VERIFIED -> VERIFIED: L110: 'A7. The label slip (`f1_012_of_record`). Recorded; the write-once outputs
+  stay.'
+  [H1-17] VERIFIED -> VERIFIED: L110-111: LOCK v0.1 is 'not yet drafted'.
+  [H1-18] VERIFIED -> VERIFIED: L111-113: LOCK v0.1 is to attribute the +.078 as f0's calib2 figure, on renders byte-
+  identical to those f1's corruptor gives at 0.12, under f0's seed key and cached path; m declares no comparison with
+  G-CAL's +.1406.
+  [H1-19] VERIFIED -> VERIFIED: L114: A8 concerns Code's two factual notes on the seat's read notes, in the read-of-
+  record entry `2c50e03`; both accepted.
+  [H1-20] VERIFIED -> VERIFIED: L116: 'The renders of record are `corrupt_m` at 0.15.'
+  [H1-21] VERIFIED -> VERIFIED: L116-117: the note's "0.12 walk" was a slip for the k = 3 walk: k = 3 on the six
+  "Compute" items at either rate, so the words are the same.
+  [H1-22] VERIFIED -> VERIFIED: L118-119: the six render words keep 4, 5, 4, 6, 4 and 5 of "Compute"'s seven letters
+  in place, not "only the initial letter and the length".
+  [H1-23] VERIFIED -> VERIFIED: L121: 'The read file stays as committed; this entry records the corrections beside
+  it.'
+  [H1-24] VERIFIED -> VERIFIED: L121-122: Code drafts the operand-exclusion sentence for the calibration artifacts,
+  and the seat reads it at the lock.
+  [H1-25] VERIFIED -> VERIFIED: L123: 'A9. The two questions the read-of-record entry left to the seat.'
+  [H1-26] VERIFIED -> VERIFIED: L124-125: the bold question text, and 'The seat's disclosure, which named the request
+  file only, "was too narrow".'
+  [H1-27] VERIFIED -> VERIFIED: L126-127: the seat read the head of RESULTS.md during its repository checks of
+  2026-10-08 and 2026-10-09, to report the m thread's state to the PI; the G-CAL entry stood at that head from
+  2026-10-08.
+  [H1-28] VERIFIED -> VERIFIED: L128-129: the seat "cannot certify" that the entry's body, which quotes golds and
+  answers, was not among the lines it saw, so it treats the entry as possibly opened before the lines were written.
+  [H1-29] VERIFIED -> VERIFIED: L130-132: the seat's record of its reads lists none of the completability artifact,
+  the checkpoint, the G-CAL raws, `G-CAL_model-free.json`, `gcal.py` or the commit message, and the seat believes none
+  was opened.
+  [H1-30] VERIFIED -> VERIFIED: L133: 'The disclosure of record is corrected to this.'
+  [H1-31] VERIFIED -> VERIFIED: L134: the exposures "do not add up to anything the condition depends on".
+  [H1-32] VERIFIED -> VERIFIED: L135-136: through the 2026-10-04 exposure (STOP-5 §F, STOP-6 §E, m:176), the seat knew
+  every gold before any read in October.
+  [H1-33] VERIFIED -> VERIFIED: L136-137: the batch exposure of 2026-10-08 and the possible entry exposure added
+  nothing to that.
+  [H1-34] VERIFIED -> VERIFIED: L138-140: the read of record is a key-known recoverability read, "the only kind this
+  seat could make after 2026-10-04"; that is what condition (3) asks, whether a reader can recover each task from its
+  render, which does not turn on the reader's ignorance of the answer.
+  [H1-35] VERIFIED -> VERIFIED: L141: LOCK v0.1 is to record the read as key-known, with the three exposures named.
+  [H1-36] VERIFIED -> VERIFIED: L142-143: a key-blind read, if the PI wants one, would need a reader who has not seen
+  STOP-5, STOP-6 or m:176; the seat does not require one, and none is a condition of the lock.
+  [H1-37] VERIFIED -> VERIFIED: L144: G-CAL's state of record: CLOSED.
+  [H1-38] VERIFIED -> VERIFIED: L145: on Qwen, conditions (1) and (2) PASS 16/16 (`bab921c`).
+  [H1-39] VERIFIED -> VERIFIED: L145-146: (3) PASS 16/16, the seat's key-known read (`2c50e03`).
+  [H1-40] VERIFIED -> VERIFIED: L146: (4) PASS, 57/64 and 48/64 = 3/4 (`cf8eb5b`), kept as graded by A1.
+  [H1-41] VERIFIED -> VERIFIED: L146-147: renders of record `a04f67b0…4372`.
+  [H1-42] VERIFIED -> VERIFIED: L148: G-CAL-OLMo, per checkpoint, belongs to the OLMo track, with A6's four tallies
+  declared above.
+  [H1-43] VERIFIED -> VERIFIED: L149: the G-CAL entry's "Next, in this order" has been worked through, not in its
+  order.
+  [H1-44] VERIFIED -> VERIFIED: L150-151: item 1 was met by the read of record; A9 treats that read as possibly made
+  after the G-CAL entry was opened (item 1 asked otherwise) and records it as key-known.
+  [H1-45] VERIFIED -> VERIFIED: L152: items 2–4 are met by the seat's rulings and this entry.
+  [H1-46] IMPRECISE -> IMPRECISE: L153: 'Item 5 (step 7) ran at `f23b444`, ahead of this close, as A4 accepts.'
+  [H1-47] VERIFIED -> VERIFIED: L154-156: the PI's answers to the block's section F (chat, 2026-10-10, verbatim; not
+  otherwise in the repo): "F1 accepted as Code's default: … F2 (OLMo pod, runpod re-auth) waits for step 9."
+  [H1-48] VERIFIED -> VERIFIED: L157-158: what the rulings order next, in the seat's order; 1. this entry.
+  [H1-49] VERIFIED -> VERIFIED: L159-160: 2. the D2 edit with C9(ii), then G-ANL-F0 rebuilt and re-run, its manifest
+  superseded by hand `git mv` (PIN-37), and D3's comparison for G-SHAPE-F0.
+  [H1-50] VERIFIED -> VERIFIED: L160-161: 'The edit is being built now'.
+  [H1-51] VERIFIED -> VERIFIED: L162-164: `analyzer_sha256` and `package_sha256` required in the stages'
+  `identity_extra` on non-stub runs, with the package hash checked against the lock at stage start; and the end look
+  evaluated and recorded at a campaign STOP, with the verdict sentence naming it.
+  [H1-52] VERIFIED -> VERIFIED: L165: 3. LOCK-m-F0 v0.1 on the PI's word, with the declarations the rulings list.
+  [H1-53] VERIFIED -> VERIFIED: L166-167: 4. step 10, G-TIME-F0, on the PI's word, under F1 as accepted; the seat
+  reads its forced rounds and LOCK v0.1 together at Code's ping.
+  [H1-54] VERIFIED -> VERIFIED: L168-169: Committed: this entry; the seat's rulings, verbatim; the check raw; and this
+  entry's values-check raw (both passes).

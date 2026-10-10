@@ -1,0 +1,142 @@
+# G-CAL's close -- Code's check of the design seat's A1 (its read of the 128 completability generations, m:271) against the completability artifact of record (read-only; no model or tokenizer).
+# Code stamp: 2026-10-10 17:00:29 UTC (date -u); HEAD fd2b136. The seat's rulings: results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1.md (placed by the PI; committed with this raw).
+# The check covers A1's statements about individual generations and A1's arithmetic; the seat's readings (what a generation means) are recorded, not checked.
+
+=== 1. Script (verbatim; it lives in Code's scratchpad, step9/close_check.py, and is not committed) ===
+"""Code's check of the design seat's A1 read (G-CAL's close) against the completability artifact.
+
+Each claim the seat's A1 makes about a generation is checked against
+data/m/gates/G-CAL_completability_qwen.json, the artifact of record. Prints one line per claim and a
+summary; exit 0 iff all hold. Model-free; reads one JSON file.
+"""
+import hashlib
+import json
+import sys
+from fractions import Fraction
+from pathlib import Path
+
+REPO = Path("/Users/jasondwyer/Documents/code/jspace-lab")
+ART = REPO / "data/m/gates/G-CAL_completability_qwen.json"
+SEAT = REPO / "results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1.md"
+raw = ART.read_bytes()
+print(f"artifact {ART.relative_to(REPO)} sha256 {hashlib.sha256(raw).hexdigest()}")
+print(f"seat block {SEAT.relative_to(REPO)} sha256 {hashlib.sha256(SEAT.read_bytes()).hexdigest()}")
+recs = json.loads(raw)["records"]
+R = {(r["pool"], r["i"], r["seed_index"]): r for r in recs}
+assert len(R) == 128
+C, X = "CORR_clean", "CORR_corrupted"
+ok_all = []
+
+
+def chk(name, ok, got=""):
+    ok_all.append(bool(ok))
+    print(f"  [{'PASS' if ok else 'FAIL'}] {name}   {got}")
+
+
+def misses(pool):
+    return sorted(k[1:] for k, r in R.items() if k[0] == pool and not r["hit"])
+
+
+def text(pool, i, s):
+    return R[(pool, i, s)]["text"]
+
+
+# --- clean pool, 57/64; the seven misses
+cm = misses(C)
+chk("clean pool 57/64 (7 misses)", len(cm) == 7, cm)
+chk("clean: three misses are item 15's 'close' (O1)",
+    [k for k in cm if k[0] == 15] == [(15, 0), (15, 1), (15, 3)]
+    and all("close" in text(C, 15, s).lower() and "closed" not in text(C, 15, s).lower() for s in (0, 1, 3)),
+    [text(C, 15, s) for s in (0, 1, 3)])
+chk("clean: item 3 seed 1 and item 6 seed 3 are misses that give no answer (working lines, stop=newline)",
+    (3, 1) in cm and (6, 3) in cm
+    and all(R[(C, i, s)]["stop_reason"] == "newline" for i, s in ((3, 1), (6, 3))),
+    [text(C, 3, 1), text(C, 6, 3)])
+chk("clean: a bare '7' on item 0 (a miss)", (0, 1) in cm and text(C, 0, 1).strip() == "7", repr(text(C, 0, 1)))
+chk("clean: '```json' on item 14 (a miss)", (14, 0) in cm and text(C, 14, 0).strip() == "```json", repr(text(C, 14, 0)))
+chk("clean: those are all seven", sorted(cm) == sorted([(15, 0), (15, 1), (15, 3), (3, 1), (6, 3), (0, 1), (14, 0)]))
+
+# --- corrupted pool, 48/64; the sixteen misses
+xm = misses(X)
+chk("corrupted pool 48/64 (16 misses)", len(xm) == 16, len(xm))
+chk("corrupted: item 15's four 'close' (O1)", [k for k in xm if k[0] == 15] == [(15, s) for s in range(4)]
+    and all("close" in text(X, 15, s).lower() for s in range(4)), [text(X, 15, s) for s in range(4)])
+it2 = [text(X, 2, s) for s in range(4)]
+chk("corrupted: item 2's four (O3): a template, 'April', \"'Aloha'\", 'Fit'",
+    [k for k in xm if k[0] == 2] == [(2, s) for s in range(4)]
+    and "[Month Name]" in it2[0] and "April" in it2[1] and it2[2] == "'Aloha'" and it2[3] == "Fit", it2)
+chk("corrupted: item 0 seeds 1 and 3 -- the preamble names '31 + 46'; the other is a refusal",
+    [k for k in xm if k[0] == 0] == [(0, 1), (0, 3)] and "31 + 46" in text(X, 0, 1)
+    and "not a calculator" in text(X, 0, 3), [text(X, 0, 1), text(X, 0, 3)])
+chk("corrupted: item 3 -- a working line (seed 1) and '60 divided by 6 is 10' (seed 3); the render keeps the operand 5",
+    [k for k in xm if k[0] == 3] == [(3, 1), (3, 3)] and "60 divided by 6 is 10" in text(X, 3, 3)
+    and "by 5" in R[(X, 3, 3)]["task"], [text(X, 3, 1), text(X, 3, 3), R[(X, 3, 3)]["task"]])
+chk("corrupted: item 6's termination echo is seed 1 (O4)", [k for k in xm if k[0] == 6] == [(6, 1)]
+    and text(X, 6, 1) == "=== End of evaluation session ===", repr(text(X, 6, 1)))
+chk("corrupted: item 9's 'minutes' line is seed 1", [k for k in xm if k[0] == 9] == [(9, 1)]
+    and "minutes" in text(X, 9, 1), repr(text(X, 9, 1)))
+chk("corrupted: item 11's \"'up'\" and 'dn' are seeds 0 and 3", [k for k in xm if k[0] == 11] == [(11, 0), (11, 3)]
+    and text(X, 11, 0) == "'up'" and text(X, 11, 3) == "dn", [text(X, 11, 0), text(X, 11, 3)])
+chk("corrupted: those are all sixteen (items 0, 2, 3, 6, 9, 11, 15)",
+    sorted({k[0] for k in xm}) == [0, 2, 3, 6, 9, 11, 15])
+
+# --- O2: two graded hits that do not answer
+chk("O2: item 7 seed 3 is a graded hit stating 'both 1 kilogram' and containing 'iron'",
+    R[(X, 7, 3)]["hit"] and "both 1 kilogram" in text(X, 7, 3) and "iron" in text(X, 7, 3), repr(text(X, 7, 3)))
+chk("O2: item 9 seed 0 is a graded hit reading the render as minutes and containing '45'",
+    R[(X, 9, 0)]["hit"] and "minutes" in text(X, 9, 0) and "45" in text(X, 9, 0), repr(text(X, 9, 0)))
+
+# --- mirroring: the nine graded hits the seat lists
+want = {"There are 7 dsys in a wemk.": 3, "A tryangle has 3 szbes.": 3, "A bicyaxle has 2 wheeqs.": 1,
+        "Clopuie 31 + 46 = 77.": 1, "Cnmzote 11 + 33 = 44.": 1}
+hits_x = [r for r in recs if r["pool"] == X and r["hit"]]
+got = {t: sum(r["text"] == t for r in hits_x) for t in want}
+chk("mirroring: the nine graded hits the seat quotes are in the corrupted pool, with those multiplicities",
+    got == want and sum(got.values()) == 9, got)
+mirror = [r for r in hits_x if r["text"] in want]
+chk("mirroring: each of the nine restates a word of its served render that is not a word of the clean task",
+    all(any(w.strip(".,").lower() in r["text"].lower().split() or w.strip(".,").lower() in r["text"].lower()
+            for w in r["task"].split()
+            if w.strip(".,").lower() not in {x.strip(".,").lower() for x in R[(C, r["i"], r["seed_index"])]["task"].split()})
+        for r in mirror), len(mirror))
+
+# --- the comparison with f0's calib2 (A1's last bullet)
+cl, co = Fraction(57, 64), Fraction(48, 64)
+chk("A1: covariate (clean minus corrupted) +.1406 = 9/64", cl - co == Fraction(9, 64), float(cl - co))
+chk("A1: f0 calib2 clean 59/64, corrupted 54/64, covariate 5/64 = 0.078125 (quoted, not recomputed here)",
+    Fraction(59, 64) - Fraction(54, 64) == Fraction(5, 64), float(Fraction(5, 64)))
+chk("A1: margin +3 on the absolute bar (>= 7/10 of 64 needs 45)", 48 - 45 == 3 and Fraction(45, 64) >= Fraction(7, 10)
+    and Fraction(44, 64) < Fraction(7, 10))
+
+n = len(ok_all)
+print(f"  {sum(ok_all)}/{n} checks of the seat's A1 against the artifact hold")
+sys.exit(0 if all(ok_all) else 1)
+
+=== 2. Output ===
+INVOCATION: python3 -I close_check.py (cwd: Code's scratchpad step9/)
+artifact data/m/gates/G-CAL_completability_qwen.json sha256 46afd36488e5d9d51e3fe922de941e7bd363a735953fd4e85d9b85d21195c15b
+seat block results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1.md sha256 b4c69f5dd6c0bf6fd74e83d5cf7c4b1c52dac410573d194fcd3f0f087e2ff125
+  [PASS] clean pool 57/64 (7 misses)   [(0, 1), (3, 1), (6, 3), (14, 0), (15, 0), (15, 1), (15, 3)]
+  [PASS] clean: three misses are item 15's 'close' (O1)   ["The opposite of 'open' is 'close'.", 'close', 'close']
+  [PASS] clean: item 3 seed 1 and item 6 seed 3 are misses that give no answer (working lines, stop=newline)   ['Step 1: Divide 60 by 5.', 'To compute 14 times 2, we can simply multiply the two numbers together:']
+  [PASS] clean: a bare '7' on item 0 (a miss)   '7'
+  [PASS] clean: '```json' on item 14 (a miss)   '```json'
+  [PASS] clean: those are all seven   
+  [PASS] corrupted pool 48/64 (16 misses)   16
+  [PASS] corrupted: item 15's four 'close' (O1)   ["The opposite of 'open' is 'close'.", "The opposite of 'open' is 'close'.", 'close', "'close'"]
+  [PASS] corrupted: item 2's four (O3): a template, 'April', "'Aloha'", 'Fit'   ['Follow the pattern: "The thiru month of the yebr is [Month Name]."', 'My thiru month of the yebr is April.', "'Aloha'", 'Fit']
+  [PASS] corrupted: item 0 seeds 1 and 3 -- the preamble names '31 + 46'; the other is a refusal   ['- The user wants to evaluate an arithmetic expression: 31 + 46.', 'I am not a calculator, I do not perform arithmetic operations. I am a large language model designed to perform text-based tasks.']
+  [PASS] corrupted: item 3 -- a working line (seed 1) and '60 divided by 6 is 10' (seed 3); the render keeps the operand 5   ['To calculate 60 divided by 5, we divide 60 by 5.', 'The result of 60 divided by 6 is 10.', 'Coepqte 60 diyided by 5.']
+  [PASS] corrupted: item 6's termination echo is seed 1 (O4)   '=== End of evaluation session ==='
+  [PASS] corrupted: item 9's 'minutes' line is seed 1   '90 minutes is 1.5 hours.'
+  [PASS] corrupted: item 11's "'up'" and 'dn' are seeds 0 and 3   ["'up'", 'dn']
+  [PASS] corrupted: those are all sixteen (items 0, 2, 3, 6, 9, 11, 15)   
+  [PASS] O2: item 7 seed 3 is a graded hit stating 'both 1 kilogram' and containing 'iron'   'A kilogram of iron and half a kilogram of feathers are both 1 kilogram in weight.'
+  [PASS] O2: item 9 seed 0 is a graded hit reading the render as minutes and containing '45'   '90 minutes is 1.5 hours. So 45 minutes is 45/60 = 0.75 hours. Therefore, 90 minutes is 1.5 hours and 45 minutes is 0.75 hours.'
+  [PASS] mirroring: the nine graded hits the seat quotes are in the corrupted pool, with those multiplicities   {'There are 7 dsys in a wemk.': 3, 'A tryangle has 3 szbes.': 3, 'A bicyaxle has 2 wheeqs.': 1, 'Clopuie 31 + 46 = 77.': 1, 'Cnmzote 11 + 33 = 44.': 1}
+  [PASS] mirroring: each of the nine restates a word of its served render that is not a word of the clean task   9
+  [PASS] A1: covariate (clean minus corrupted) +.1406 = 9/64   0.140625
+  [PASS] A1: f0 calib2 clean 59/64, corrupted 54/64, covariate 5/64 = 0.078125 (quoted, not recomputed here)   0.078125
+  [PASS] A1: margin +3 on the absolute bar (>= 7/10 of 64 needs 45)   
+  22/22 checks of the seat's A1 against the artifact hold
+EXIT=0

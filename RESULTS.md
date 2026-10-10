@@ -21,6 +21,191 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-10-10 — **G-CAL CLOSES (PROPOSAL-m v1.11 §8 step 6, m:176; the design seat's rulings of 2026-10-10,
+  routed by the PI). Conditions (1)–(4) pass on Qwen, with the renders of record unchanged (`a04f67b0…4372`)
+  and no re-specification. The seat read the 128 completability generations (m:271) and kept condition (4)'s
+  PASS as graded. It accepted the two departures from m:358's order post hoc (A2; and A3: "Not a departure in
+  substance."), accepted steps 7 and 8, built and run before this close, with no re-run on that account (A4),
+  and set rules for later stages. G-CAL-OLMo's per-checkpoint condition (4) belongs to the OLMo track and has not run.**
+
+  **Next, by the same rulings: the D2 + C9(ii) edit (being built now); G-ANL-F0 rebuilt and re-run, with its
+  manifest superseded by hand `git mv`; and D3's comparison for G-SHAPE-F0 (Code records these in their own
+  entry). Then LOCK-m-F0 v0.1 on the PI's word. Nothing run on a model.** (Stamp verified at write time:
+  `date -u` → **Sat Oct 10 17:01:09 UTC 2026**, first write; corrected on its two values-check passes, last
+  at **17:23:40 UTC**.)
+
+  - **The rulings** ([`_design-to-code_pre-LOCK-v0.1`](results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1.md),
+    sha256 `b4c69f5d…f125`). They answer Code's consolidated block (`ea47e89`) item by item.
+    - The PI placed the file in `results/raw/`; it is committed verbatim with this entry.
+    - Section A closes G-CAL and is recorded here.
+    - Sections B–E rule on G-SHAPE-F0, G-ANL-F0, LOCK v0.1's wiring and the items carried from earlier steps.
+      Code will record them in the D2 round's entry.
+    - LOCK v0.1 is to carry the declarations the rulings' closing list names (C5's date meaning; C7's three
+      settled inputs; E1–E3; E6), the calibration artifacts and the 43-entry register as Code's readings. By
+      D1 it also states each gate artifact's `package_sha256`, the diffs between them, the import closures,
+      and the condition that the `valence_core/m` diff shows no SCORING_STACK_FILES.
+    - E2's two clauses are accepted for Appendix D, as clauses on the named items. G-PORT's 25 + 2
+      differences (E4) all enter Appendix D as the G-PORT entry lists them; the seat adjudicates them, if at
+      all, at the drafting of Appendix D, not at the lock.
+  - **A1. The seat's read of the 128 generations** (m:271), made from the read raw's section 3, every record.
+    Recorded as the seat's:
+    - *Clean pool, 57/64.* The seven misses "are not legibility misses": item 15's three "close" (O1); two
+      working lines cut by the newline stop before an answer (item 3 seed 1, item 6 seed 3); a bare "7" on
+      item 0 ("an answer cut to its first digit, or wrong — the read cannot tell"); "```json" on item 14 ("a
+      format fault").
+    - *Corrupted pool, 48/64.* The sixteen misses:
+      - item 15's four "close" (O1);
+      - item 2's four (O3; the model never recovers "third" from `thiru`);
+      - item 0's reasoning preamble and refusal (seeds 1 and 3), which in the seat's reading both read the task
+        and "decline to answer it in one line";
+      - item 3's working line (seed 1), and a wrong computation (seed 3) that "mis-reads the operand, not the
+        verb";
+      - item 6's termination echo (O4);
+      - item 9's "minutes" line (seed 1);
+      - item 11's "'up'" and "dn" (seeds 0 and 3); "dn" is "a near-answer the grader rightly rejects".
+    - *O2, the two hits Code reads as not answering.* "Agreed on both": item 7 seed 3 (which states "both 1
+      kilogram" and hits on the word "iron") and item 9 seed 0 (which reads `miyms` as minutes and hits on
+      the operand "45") are "grader artifacts of the two items whose gold is a word of the task text".
+    - *Mirroring.* Nine graded hits restate a corrupted word of the render. The seat reads them "as
+      recoveries, not failures", and as "the clearest evidence in the pool that the renders are legible to
+      the model at this dose".
+    - *Against f0's calib2* (59/64 and 54/64 at 0.12, covariate +.078): at 0.15 with the operand excluded,
+      57/64 and 48/64 (+.1406). "The dose is stronger, as §2.3 intended", and completability holds with margin
+      +3 on the absolute bar under the grader of record.
+    - **Ruling:** condition (4) PASS stands as graded. The seat adopts no re-grading: the grader is m:176's
+      pin, ported verbatim from f0, and "a re-grading after the data is rule 11's post hoc by definition". The
+      read is recorded for LOCK v0.1's calibration artifacts (m:176) as the seat's.
+    - **Code's check** ([`_close_check`](results/raw/2026-10-10_m-gcal_close_check.txt)): 22/22 hold against
+      the completability artifact of record (sha256 `46afd364…c15b`).
+      - It confirms every generation A1 identifies (pool, item, seed, hit or miss, and the generation text A1
+        quotes) and the nine mirroring hits with their multiplicities. The render words A1 quotes (`thiru`,
+        `miyms`) are not tested.
+      - It recomputes A1's arithmetic: the covariate 9/64 = +.1406, the margin +3, and 59/64 − 54/64 = 5/64 =
+        +.078.
+      - Limits: f0's calib2 accuracies (59/64, 54/64) come from `data/f/calib.json` and are quoted, not
+        re-checked. The artifact carries no gold lists, so for O2's two hits the check tests the hit flag and
+        the presence of "iron" and "45" in the text.
+      - The seat's readings of what a generation means are recorded, not checked.
+  - **A2. Completability before the seat's read of record.**
+    - The seat rules that m:358's step-6 list is an order: "first" attaches to the replay, and what follows
+      is listed in sequence, with the seat's read before completability. Code's contrary reading "should have
+      been put to the seat before a model stage ran".
+    - Accepted post hoc, on the seat's ground that nothing could flow from completability into the read of
+      record: the renders and
+      their sha were fixed in the model-free half before either; the read is of the renders alone; and the
+      seat had not opened the completability outputs (the seat: "see A9 for what it had opened"). The only
+      cost risked was a wasted run, had (3) failed.
+    - Recorded here as a process deviation.
+  - **A3. The roster assertion computed in the model-free half.** Accepted: it needs no model, and its result
+    does not depend on when it runs. Not a departure in substance. The order as executed: the 0.12 replay;
+    the renders of record and their sha; the roster assertion (all three in the model-free half, `bab921c`);
+    completability (2026-10-08, `cf8eb5b`); the seat's read of record (made 2026-10-09, recorded `2c50e03`).
+  - **A4. Steps 7 and 8 built and run before G-CAL closed.** The seat's ruling: "acceptable, and no re-run."
+    The PI's "Go for steps 7 and 8" came with condition (3) passed, and the items still owed (A1–A3) could
+    change nothing the two steps take from G-CAL: the renders of record are unchanged, (4) stands as graded,
+    no re-specification arises, and the flag's source (`G-CAL_model-free.json`) is unchanged. G-SHAPE-F0's
+    artifact and G-ANL-F0's manifest stand as committed, subject only to D2, a separate cause.
+  - **A5. The missing `disown`.** Code's reading accepted (a non-interactive launching shell sends no hangup,
+    and nohup ignores one). Not blocking anything.
+    - This answers the disagreement Code's block flagged under A5. The G-SHAPE-F0 entry (`f23b444`) listed
+      the `disown` as owed for G-CAL's close, and the build-inputs raw (its line 1008) said G-CAL's closing
+      items, the `disown` among them, "do block LOCK-m-F0 v0.1". Both texts are flagged here and not
+      changed.
+  - **The seat's rules going forward** (A2, A4, A5 and C8, collected here):
+    - For every stage of every unit, a list inside a §8 step is ordered as written unless the proposal says
+      otherwise. A reading that departs from a listed order is put to the seat before Code acts on it.
+    - A step that follows a gate in m:358 starts after that gate's close entry, unless the PI's go names the
+      open items and the seat has said they cannot change the step's inputs. Of steps 7 and 8 the seat adds:
+      "which is what happened here, after the fact". (Flagged for the seat, not weighed: the PI's go as
+      recorded at `2c50e03` does not itself name the open items; that entry names them.)
+    - Every later launch follows m:267's checklist as written. Where a launch departs from it, the raw's
+      header says so at the time.
+    - A discarded gate run is disclosed in its entry with its stamp and sha (C8, on G-ANL-F0's set-aside first
+      manifest).
+  - **A6. O1–O4 and the candidate counters.** None of O1–O4 holds G-CAL's close. None bears on condition
+    (3), whose referent is "recoverability by the reader (the seat's read, 16/16), not the model's
+    completions". On condition (4) they are descriptive: (4) passes under all four readings, and the verdict
+    of record is the grader's.
+    - O1 is a grader-strictness effect, near-equal in the two pools (3 clean, 4 corrupted); the relative bar
+      is insensitive to it. f0's gold lists are not amended.
+    - O2 is agreed and descriptive: margin +1 on the strictest reading, recorded.
+    - O3 is a completability fact about one item's content word. Condition (4) has no per-item bar, and none
+      is added.
+    - O4 (one generation) is an observation.
+    - **Counters.** The seat adopts none for G-CAL-OLMo (rule 23). It declares now, so that they are
+      pre-declared, four descriptive tallies for each G-CAL-OLMo-{ckpt} entry. They are count-only, with no
+      bar and no effect on condition (4):
+      - (i) hits on items 7 and 9 whose text does not state the answer, by Code's read, labelled as such;
+      - (ii) "close" answers on item 15;
+      - (iii) lines matching f's descriptive termination patterns;
+      - (iv) the corruption-mirroring count (corrupted-pool answers containing a corrupted word of their
+        render).
+
+      They go in the entries, not in any lock or analyzer. G-CAL-OLMo's grader and gold lists are the same
+      ported ones.
+  - **A7. The label slip** (`f1_012_of_record`). Recorded; the write-once outputs stay. LOCK v0.1 (not yet
+    drafted) is to attribute the +.078 correctly in its calibration artifacts: f0's calib2 figure, on renders
+    byte-identical to those f1's corruptor gives at 0.12, under f0's seed key and cached path. m declares no
+    comparison with G-CAL's +.1406.
+  - **A8. Code's two factual notes on the seat's read notes** (read-of-record entry, `2c50e03`). Both
+    accepted:
+    - The renders of record are `corrupt_m` at 0.15. The note's "0.12 walk" was a slip for the k = 3 walk: k
+      = 3 on the six "Compute" items at either rate, so the words are the same.
+    - The six render words keep 4, 5, 4, 6, 4 and 5 of "Compute"'s seven letters in place, not "only the
+      initial letter and the length".
+
+    The read file stays as committed; this entry records the corrections beside it. Code drafts the
+    operand-exclusion sentence for the calibration artifacts, and the seat reads it at the lock.
+  - **A9. The two questions the read-of-record entry left to the seat.**
+    - **Whether the G-CAL entry or its raws had been opened before the per-item lines were written.** The
+      seat's disclosure, which named the request file only, "was too narrow".
+      - The seat read the head of `RESULTS.md` during its repository checks of 2026-10-08 and 2026-10-09, to
+        report the m thread's state to the PI, and the G-CAL entry stood at that head from 2026-10-08.
+      - The seat "cannot certify" that the entry's body, which quotes golds and answers, was not among the
+        lines it saw. So it treats the entry as possibly opened before the lines were written.
+      - The seat's record of its reads lists none of the completability artifact, the checkpoint, the G-CAL
+        raws, `G-CAL_model-free.json`, `gcal.py` or the commit message, and the seat believes none was
+        opened.
+      - The disclosure of record is corrected to this.
+    - **How the exposures bear on each other.** They "do not add up to anything the condition depends on".
+      - Through the 2026-10-04 exposure (STOP-5 §F, STOP-6 §E, m:176), the seat knew every gold before any
+        read in October. The batch exposure of 2026-10-08 and the possible entry exposure added nothing to
+        that.
+      - So the read of record is a key-known recoverability read, "the only kind this seat could make after
+        2026-10-04". That is what condition (3) asks: whether a reader can recover each task from its render,
+        which does not turn on the reader's ignorance of the answer.
+      - LOCK v0.1 is to record the read as key-known, with the three exposures named.
+      - A key-blind read beside it, if the PI wants one, would need a reader who has not seen STOP-5, STOP-6
+        or m:176. The seat does not require one, and none is a condition of the lock.
+  - **G-CAL's state of record: CLOSED.**
+    - On Qwen: conditions (1) and (2) PASS 16/16 (`bab921c`); (3) PASS 16/16, the seat's key-known read
+      (`2c50e03`); (4) PASS, 57/64 and 48/64 = 3/4 (`cf8eb5b`), kept as graded by A1. Renders of record
+      `a04f67b0…4372`.
+    - G-CAL-OLMo, per checkpoint, belongs to the OLMo track, with A6's four tallies declared above.
+    - The G-CAL entry's "Next, in this order" has been worked through, not in its order.
+      - Item 1 was answered by the read of record. Item 1 asked for that read before the G-CAL entry was
+        opened; A9 treats the entry as possibly opened first, and the seat holds the read as condition (3)'s,
+        as a key-known read.
+      - Items 2–4 are met by the seat's rulings and this entry.
+      - Item 5 (step 7) ran on the committed build `d092078` and was recorded in `f23b444`, ahead of this
+        close, as A4 accepts.
+  - **The PI's answers to the block's section F** (chat, 2026-10-10, verbatim; not otherwise in the repo): "F1
+    accepted as Code's default: the one-process preflight stays as it is; Qwen stages launch only when the
+    audit session is idle. F2 (OLMo pod, runpod re-auth) waits for step 9."
+  - **What the rulings order next**, in the seat's order:
+    1. this entry;
+    2. the D2 edit with C9(ii), then G-ANL-F0 rebuilt and re-run, its manifest superseded by hand `git mv`
+       (PIN-37), and D3's comparison for G-SHAPE-F0 (Code records these in their own entry). The edit is
+       being built now:
+       `analyzer_sha256` and `package_sha256` required in the stages' `identity_extra` on non-stub runs, with
+       the package hash checked against the lock at stage start; and the end look evaluated and recorded at a
+       campaign STOP, with the verdict sentence naming it;
+    3. LOCK-m-F0 v0.1 on the PI's word, with the declarations the rulings list;
+    4. step 10, G-TIME-F0, on the PI's word, under F1 as accepted. The seat reads its forced rounds and LOCK
+       v0.1 together at Code's ping.
+  - Committed: this entry; the seat's rulings, verbatim; the check raw; and this entry's values-check raw
+    ([`_close_valuescheck`](results/raw/2026-10-10_m-gcal_close_valuescheck.txt), both passes).
+
 - 2026-10-10 — **G-ANL-F0 (PROPOSAL-m v1.11 §8 step 8, m:278; the PI's go "Go for steps 7 and 8"): PASS. The
   analyzer `scripts/m_analyze.py` is pre-committed: built at `64df36b`, and amended at `b62af85` (sha256
   `24d44a3c…31327fa` as amended) by a PIN-43 follow-up before the manifest of record. Its synthetic battery
