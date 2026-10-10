@@ -1,0 +1,89 @@
+# G-CAL condition (3) -- Code's check of the seat's legibility read of record against the model-free artifact (read-only; no model or tokenizer).
+# Code stamp: 2026-10-10 05:26:01 UTC (date -u); HEAD e60b633. The read file was placed by the PI at data/m/gates/G-CAL_seat_read_of_record.md.
+# First version stamped 05:17:46 UTC; regenerated after the entry's values-check pass 1 with the 0.12-walk and head -30 checks added (sections 2's tail).
+
+=== 1. Script (verbatim; it lives in Code's scratchpad, step78/seatcheck.py, and is not committed) ===
+"""Code's check of the seat's legibility read of record (G-CAL condition (3)) against the model-free artifact. Read-only."""
+import hashlib, json, re
+RD = "data/m/gates/G-CAL_seat_read_of_record.md"
+MF = "data/m/gates/G-CAL_model-free.json"
+rb = open(RD, "rb").read(); mb = open(MF, "rb").read()
+print(f"{RD} sha256 {hashlib.sha256(rb).hexdigest()} ({len(rb)} bytes)")
+print(f"{MF} sha256 {hashlib.sha256(mb).hexdigest()}")
+mf = json.loads(mb); ro = mf["renders_of_record"]; items = ro["items"]
+t = rb.decode("utf-8")
+m = re.search(r"renders_sha256: `([0-9a-f]{64})`", t)
+print("renders_sha256 cited:", m.group(1), "| of record:", ro["renders_sha256"], "| equal:", m.group(1) == ro["renders_sha256"])
+rows = [l for l in t.split("\n") if re.match(r"\| \d+ \|", l)]
+print("per-item rows:", len(rows), "| item numbers:", [int(l.split("|")[1]) for l in rows])
+bad = []
+for l in rows:
+    c = [x.strip() for x in l.strip("|").split("|")]
+    i = int(c[0]); it = items[i]
+    golds = re.findall(r"`([^`]+)`", c[3])
+    if c[1] != it["clean"]: bad.append((i, "task as read != clean task", c[1], it["clean"]))
+    if golds != it["gold"]: bad.append((i, "gold column != artifact gold list", golds, it["gold"]))
+    if c[4] != "yes": bad.append((i, "recoverable", c[4]))
+    ans = c[2].lower()
+    if not any(re.search(rf"\b{re.escape(g)}\b", ans) for g in it["gold"]): bad.append((i, "answer contains no gold variant", c[2]))
+print("mismatches:", bad if bad else "none")
+print("recoverable yes:", sum(1 for l in rows if l.strip("|").split("|")[4].strip() == "yes"), "of", len(rows))
+# the read note's 'Compute' items: letters of 'Compute' (positions 0-6) left unchanged by corrupt_m at 0.15
+print("\n'Compute' items -- positions 0-6 changed by the renders of record (0-based), letters of 'Compute' kept:")
+for it in items:
+    if it["clean"].startswith("Compute"):
+        ch = [p for p in it["changed_positions"] if (p["pos"] if isinstance(p, dict) else p) < 7] if it["changed_positions"] and isinstance(it["changed_positions"][0], dict) else [p for p in it["changed_positions"] if p < 7]
+        n = len(ch)
+        print(f"  item {it['i']}: render word {it['render'].split()[0]!r}, k {it['k']}, changes inside 'Compute' {n}, letters kept {7 - n}/7")
+
+# The read note's "0.12 walk at k = 3": the same walk with k from the formula at 0.12 instead of 0.15
+# (m:176's walk depends on the rate only through k), and f1's corrupt() at 0.12 for comparison.
+import sys
+sys.path.insert(0, ".")
+from valence_core.m import corr
+pool = corr.load_pool()
+print("\nm:176's walk with k at 0.12 vs the renders of record (0.15), the six 'Compute' items; and f1's corrupt() at 0.12:")
+k015 = corr._k_m
+def k012(n): return min(max(int((12 * n + 50) // 100), 3), n // 2)
+for it in items:
+    if not it["clean"].startswith("Compute"):
+        continue
+    n = it["n_eligible"]
+    print(f"  item {it['i']}: n_eligible {n}, k at 0.15 {k015(n)}, k at 0.12 {k012(n)}; "
+          f"render of record {it['render']!r}; f1 corrupt() at 0.12 {corr.corrupt_f1(it['clean'], it['i'])!r}")
+# head -30 of the request: what the seat's first listing held
+rq = open("data/m/gates/G-CAL_seat_read_request.md", encoding="utf-8").read().split("\n")
+print("\nThe request's first 30 lines (the seat's `head -30`): line 30 is", repr(rq[29]), "| line 32 is", repr(rq[31]))
+key_markers = ("## B.", "### Item", "- gold:", "- clean task:", "- changed positions:")
+hits = [(n + 1, l) for n, l in enumerate(rq[:30]) if any(l.startswith(m) for m in key_markers)]
+print("key-section lines (section B header, item headers, gold / clean-task / changed-position lines) within lines 1-30:", hits if hits else "none")
+print("first key-section line in the file:", next(n + 1 for n, l in enumerate(rq) if any(l.startswith(m) for m in key_markers)))
+
+=== 2. Output ===
+INVOCATION: jlens-qwen36/.venv/bin/python -I <Code's scratchpad>/step78/seatcheck.py (cwd: the repo root)
+data/m/gates/G-CAL_seat_read_of_record.md sha256 39990bae8481ee313274e3b37ed6332026d936f2f4db55454c62a5d67fea878a (3764 bytes)
+data/m/gates/G-CAL_model-free.json sha256 aad8096a6aa90ebb6e4bd476e47a9cb40d50e666c1801270031b899abc1834af
+renders_sha256 cited: a04f67b0e5105a0514a0f33e64a4545ef3a3a3c75cece320d78434e853cd4372 | of record: a04f67b0e5105a0514a0f33e64a4545ef3a3a3c75cece320d78434e853cd4372 | equal: True
+per-item rows: 16 | item numbers: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+mismatches: none
+recoverable yes: 16 of 16
+
+'Compute' items -- positions 0-6 changed by the renders of record (0-based), letters of 'Compute' kept:
+  item 0: render word 'Clopuie', k 3, changes inside 'Compute' 3, letters kept 4/7
+  item 3: render word 'Coepqte', k 3, changes inside 'Compute' 2, letters kept 5/7
+  item 6: render word 'Combuks', k 3, changes inside 'Compute' 3, letters kept 4/7
+  item 9: render word 'Comgute', k 3, changes inside 'Compute' 1, letters kept 6/7
+  item 12: render word 'Cnmzote', k 3, changes inside 'Compute' 3, letters kept 4/7
+  item 14: render word 'Coltute', k 3, changes inside 'Compute' 2, letters kept 5/7
+
+m:176's walk with k at 0.12 vs the renders of record (0.15), the six 'Compute' items; and f1's corrupt() at 0.12:
+  item 0: n_eligible 6, k at 0.15 3, k at 0.12 3; render of record 'Clopuie 31 + 46.'; f1 corrupt() at 0.12 'Comwute 31 + 46.'
+  item 3: n_eligible 13, k at 0.15 3, k at 0.12 3; render of record 'Coepqte 60 diyided by 5.'; f1 corrupt() at 0.12 'Compuhe 60 dinided by 5.'
+  item 6: n_eligible 10, k at 0.15 3, k at 0.12 3; render of record 'Combuks 14 times 2.'; f1 corrupt() at 0.12 'Coujwte 14 timws 2.'
+  item 9: n_eligible 10, k at 0.15 3, k at 0.12 3; render of record 'Comgute 90 miyms 45.'; f1 corrupt() at 0.12 'Compute 90 minub 45.'
+  item 12: n_eligible 6, k at 0.15 3, k at 0.12 3; render of record 'Cnmzote 11 + 33.'; f1 corrupt() at 0.12 'Compute 11 + 33.'
+  item 14: n_eligible 10, k at 0.15 3, k at 0.12 3; render of record 'Coltute 8 timns 8.'; f1 corrupt() at 0.12 'Compuce 8 times 8.'
+
+The request's first 30 lines (the seat's `head -30`): line 30 is '---' | line 32 is '## B. Key -- open only after section A'
+key-section lines (section B header, item headers, gold / clean-task / changed-position lines) within lines 1-30: none
+first key-section line in the file: 32

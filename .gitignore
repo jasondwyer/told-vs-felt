@@ -242,3 +242,6 @@ __pycache__/
 !/data/m/ckpt/*.json.podchange-*
 # G-CAL's seat read request (markdown, Code -> design; m:176 condition (3)).
 !/data/m/gates/G-CAL_seat_read_request.md
+# The seat's legibility read of record (markdown, design -> Code via the PI; m:176 condition (3),
+# carried into LOCK-m-F0 v0.1).
+!/data/m/gates/G-CAL_seat_read_of_record.md

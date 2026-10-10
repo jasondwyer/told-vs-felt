@@ -21,6 +21,116 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-10-10 — **G-CAL — THE SEAT'S LEGIBILITY READ OF RECORD (condition (3), m:176; design seat 2026-10-09,
+  routed by the PI): PASS, 16/16. Every gold is recoverable from its render, so G-CAL's conditions (1)–(4) all
+  pass on Qwen. G-CAL-OLMo's per-checkpoint condition (4) belongs to the OLMo track and has not run.**
+
+  **G-CAL does not close here. It still waits on two things from the seat: its read of the 128 generations
+  (m:271), and its ruling on the two departures from m:358's order. The missing `disown`, flagged for the
+  seat in the G-CAL entry, is also unanswered. Steps 7 and 8 (both model-free) start now on the PI's word,
+  before G-CAL closes; whether that is acceptable is a third order question for the seat. The read is
+  recorded for LOCK-m-F0 v0.1. Nothing run on a model.** (Stamps: `date -u` → **Sat Oct 10 05:17:46 UTC 2026**, taken with the check raw's first version,
+  16 s before this entry's first write (the committed raw is its regeneration at 05:26:01 UTC, after
+  values-check pass 1, adding the 0.12-walk and head -30 checks); corrected on its two values-check passes, last at **05:34:08 UTC**.)
+
+  - **The PI's message**, verbatim (it is not otherwise in the repo): "Go for steps 7 and 8. Also, the seat’s
+    condition-(3) read is at data/m/gates/G-CAL_seat_read_of_record.md; (3) passes 16/16."
+  - **The read** ([`G-CAL_seat_read_of_record.md`](data/m/gates/G-CAL_seat_read_of_record.md), sha256
+    `39990bae…a878a`).
+    - The PI placed the file at the path the seat suggested, and it is committed verbatim.
+    - A new `.gitignore` line admits it, as the request's line does.
+  - **Code's check** ([`_seat-read_check`](results/raw/2026-10-10_m-gcal_seat-read_check.txt)), against
+    [`G-CAL_model-free.json`](data/m/gates/G-CAL_model-free.json):
+    - The read cites renders sha256 `a04f67b0…4372`, which is the renders of record.
+    - It has 16 per-item rows, one for each of items 0–15.
+    - In every row the task as read equals the clean task, the gold column equals the artifact's gold list,
+      and the answer contains a gold variant. All 16 are marked recoverable.
+    - The renders of record (`a04f67b0…4372`) stand, so the G-CAL entry's "If the read fails" branch does
+      not arise. The completability artifact and checkpoint bound to them stand too.
+    - Code records the read; the condition is the seat's.
+  - **Reading conditions, as the seat discloses them.**
+    - The seat first saw the sixteen renders together, in one listing, on 2026-10-08, while reading the
+      repository to report on the audit's progress. That listing was a `head -30` of the request, "which
+      ended at the rule before section B". So they were not read one at a time on first sight, as the
+      request asks. (13 of the sixteen had appeared together, with their golds, on 2026-10-04: see "An
+      earlier exposure" below. How the two bear on each other is the seat's to say.)
+      - Code checked this: line 30 of the request is the `---` rule, and section B's header is line 32. No
+        key-section line (section B's header, an item header, a gold, clean-task or changed-positions line)
+        falls in lines 1–30. The request has one commit (`bab921c`, 2026-10-08), so its lines 1–30 were
+        these bytes at the seat's first sight and at `961e90a`.
+    - The seat wrote its per-item lines on 2026-10-09 from that listing, and committed them to a file
+      "before section B or anything after it was opened". In its words, "nothing in section B informed any
+      line".
+    - **The seat's view on the batch exposure.** The seat writes that "Code may weigh the batch exposure as
+      it sees fit", and gives its own view that it "does not bear on recoverability, which is the
+      condition". Code records the exposure and declines to weigh it, since adjudication stays with the
+      seat; the seat's view is the only one on record.
+    - **What the disclosure covers.** Section B runs to the end of the request file, so "anything after it"
+      points past the request without saying what it covers. It does not name the G-CAL entry (`cf8eb5b`)
+      or the other files that entry asked the seat not to open before the read: its artifact, checkpoint
+      and raws, `G-CAL_model-free.json`, `valence_core/m/gcal.py` and the commit message.
+      - The read is stated as made against the request at HEAD `961e90a`, committed 2026-10-09: after
+        `cf8eb5b`, and after the first sight on 2026-10-08. It names `cf8eb5b` as "the m thread's last
+        commit".
+      - Whether the entry or its raws had been opened before the lines were written is a question for the
+        seat. Code does not weigh it.
+    - **An earlier exposure.** As the G-CAL entry records, the read of record repeats the seat's
+      provisional reads of 2026-10-04 on Code's renders of these items (STOP-5 §F, STOP-6 §E).
+      - 13 of the 16 renders of record (all but items 5, 11 and 15) appear byte-identical in STOP-5 §F's
+        one table (`results/raw/2026-10-04_m-v1.7_code-to-design_STOP.md`, commit `87a1167`), each beside
+        its clean task and gold.
+      - Items 5, 11 and 15's renders of record are in STOP-6 §E, and m:176 quotes them with their golds.
+      - So the reader knew the key before this read. The batch exposure is in addition to that.
+  - **The seat's read notes** (descriptive, "for the G-CAL entry, not for the condition") are recorded as
+    written in the file. Code adds two factual notes, from its check and the model-free artifact, and one
+    plan.
+    - **The "0.12 walk".** The note on items 0, 3, 6, 9, 12 and 14 speaks of "the 0.12 walk at k = 3".
+      - The renders of record are `corrupt_m` at 0.15, with k = 3 on each of these six items. m:176's walk
+        depends on the rate only through k, and at 0.12 the formula also gives k = 3 for these items
+        (n_eligible 6, 13, 10, 10, 6, 10). So the walk gives the same words at either rate: the "0.12"
+        changes nothing in these six renders.
+      - f1's corruptor at 0.12, replayed at G-CAL against conditions (1)–(2), is not this walk.
+        - It decides for each letter that does not begin a word, independently and with probability 0.12,
+          whether to replace it with a letter drawn from all 26, so a replacement can repeat the original.
+          It has no k.
+        - The first words of its renders of these items are `Comwute`, `Compuhe`, `Coujwte`, `Compute`,
+          `Compute` and `Compuce`; "Compute" is intact on items 9 and 12.
+        - The check raw computes both.
+    - **"Only the initial letter and the length".** The same note says the six render words share with
+      "Compute" only those. In fact they keep 4, 5, 4, 6, 4 and 5 of its 7 letters in place (items 0, 3, 6,
+      9, 12, 14). "Four of seven letters" holds for items 0, 6 and 12.
+    - **The plan.** The seat suggests the operand exclusion is "worth a sentence in the LOCK's calibration
+      note". Code will draft that sentence for LOCK-m-F0 v0.1's calibration artifacts (§2.3, m:279), which
+      by m:176 include this read, and flag it for the seat at the lock.
+  - **G-CAL now.**
+    - Conditions (1)–(4) PASS on Qwen.
+    - Still owed by the seat for G-CAL to close: the read of the 128 generations (m:271; the read raw's
+      section 3), and rulings on the two order departures (completability before the read; the early roster
+      assertion).
+    - Flagged for the seat in the G-CAL entry and still unanswered: the missing `disown`. The G-CAL entry did
+      not list it among what G-CAL waits on.
+    - Optional, as the G-CAL entry put them ("if it chooses"): O1–O4 and the candidate counters for
+      G-CAL-OLMo.
+      - O2 asks whether two graded hits should count: item 7 seed 3, and item 9 seed 0, which reads
+        `miyms` as minutes. It also asks whether the "minutes" readings bear on (3).
+      - O3 asks whether item 2's 0/4 on `thiru` bears on (3) or (4).
+      - The request asked for the read of record before them, and the read does not mention them. Whether
+        its PASS covers them is the seat's to say.
+    - G-CAL closes in its own entry once the owed items are in. Whether any flagged or optional item holds
+      the close is the seat's to say.
+  - **Steps 7 and 8** (G-SHAPE-F0, G-ANL-F0; both model-free) start now on the PI's word, each to its own
+    entry, while G-CAL (step 6) is still open.
+    - m:358 lists them after step 6, and the G-CAL entry's "Next, in this order" put step 7 after G-CAL's
+      close.
+    - G-SHAPE-F0 uses the renders of record, which (3)'s pass leaves unchanged. G-ANL-F0's battery is
+      synthetic.
+    - Whether starting 7 and 8 before G-CAL closes is acceptable is for the seat to rule, beside the two
+      order departures already flagged.
+    - LOCK-m-F0 v0.1 (step 9) waits on G-CAL closing.
+  - Committed: the entry; the read file and its `.gitignore` line; the check raw; and this entry's
+    values-check raw ([`_seat-read_valuescheck`](results/raw/2026-10-10_m-gcal_seat-read_valuescheck.txt),
+    both passes).
+
 - 2026-10-08 — **G-CAL (PROPOSAL-m v1.11 §8 step 6, m:176; the PI's go). Seat: make the condition-(3) read
   from [`G-CAL_seat_read_request.md`](data/m/gates/G-CAL_seat_read_request.md), section A then section B,
   and send it before opening this entry or anything else this commit adds or links. That means
