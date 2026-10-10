@@ -1,0 +1,382 @@
+# m_analyze battery (G-ANL-F0, PROPOSAL-m v1.11 §8 step 8) -- the synthetic battery, before the build commit; no model or tokenizer; reads no checkpoint or pick.
+# Code stamp: 2026-10-10 11:34:56 UTC (date -u); HEAD d092078 + the uncommitted G-ANL-F0 build; scripts/m_analyze.py sha256 95f5fe33d9d8e56fa2bd8df759beda77815632243e5c92682ba68039eb7ca7c9.
+INVOCATION: jlens-qwen36/.venv/bin/python -B scripts/m_analyze.py --selftest
+
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/m_analyze.py --selftest
+  [PASS] proposal: sha256 is the pinned v1.11's (42ab36ec...6c6b) 42ab36ecc814c9c4
+  [PASS] outcome Q-F0 PASS: (40, 28, 40, 28, 32, 16) -> PASS ('PASS', None)
+  [PASS] outcome Q-F0 REVERSE: (40, 12, 40, 12, 32, 16) -> REVERSE ('REVERSE', None)
+  [PASS] outcome Q-F0 DEAD: (40, 20, 40, 20, 32, 16) -> DEAD ('DEAD', None)
+  [PASS] outcome Q-F0 INDET-iii: (40, 24, 40, 24, 32, 16) -> INDETERMINATE ('INDETERMINATE', {'toward_clean': ['iii'], 'toward_corrupted': ['i', 'ii', 'iii'], 'dead': False})
+  [PASS] outcome Q-F0 INDET-i-equal: (40, 28, 40, 28, 40, 28) -> INDETERMINATE ('INDETERMINATE', {'toward_clean': ['i'], 'toward_corrupted': ['i', 'ii', 'iii'], 'dead': False})
+  [PASS] outcome Q-F0 INDET-ii-share: (40, 19, 40, 37, 32, 16) -> INDETERMINATE ('INDETERMINATE', {'toward_clean': ['ii'], 'toward_corrupted': ['i', 'ii', 'iii'], 'dead': False})
+  [PASS] outcome Q-F0 INDET-ii-emptymap: (0, 0, 80, 60, 32, 16) -> INDETERMINATE ('INDETERMINATE', {'toward_clean': ['ii'], 'toward_corrupted': ['i', 'ii', 'iii'], 'dead': False})
+  [PASS] outcome Q-F0 INDET-E-half: (40, 40, 40, 40, 32, 32) -> INDETERMINATE ('INDETERMINATE', {'toward_clean': ['i'], 'toward_corrupted': ['i', 'ii', 'iii'], 'dead': False})
+  [PASS] outcome Q-F0 NOREAD-contrast-empty: (0, 0, 0, 0, 32, 16) -> INDETERMINATE ('INDETERMINATE', None)
+  [PASS] outcome Q-F0 NOREAD-sham-empty: (40, 28, 40, 28, 0, 0) -> INDETERMINATE ('INDETERMINATE', None)
+  [PASS] outcome OLMo-sft PASS: (40, 28, 40, 28, 32, 16) -> PASS ('PASS', None)
+  [PASS] outcome OLMo-sft REVERSE: (40, 12, 40, 12, 32, 16) -> REVERSE ('REVERSE', None)
+  [PASS] outcome OLMo-sft DEAD: (40, 20, 40, 20, 32, 16) -> DEAD ('DEAD', None)
+  [PASS] outcome OLMo-sft INDET-iii: (40, 24, 40, 24, 32, 16) -> INDETERMINATE ('INDETERMINATE', {'toward_clean': ['iii'], 'toward_corrupted': ['i', 'ii', 'iii'], 'dead': False})
+  [PASS] outcome OLMo-sft INDET-i-equal: (40, 28, 40, 28, 40, 28) -> INDETERMINATE ('INDETERMINATE', {'toward_clean': ['i'], 'toward_corrupted': ['i', 'ii', 'iii'], 'dead': False})
+  [PASS] outcome OLMo-sft INDET-ii-share: (40, 19, 40, 37, 32, 16) -> INDETERMINATE ('INDETERMINATE', {'toward_clean': ['ii'], 'toward_corrupted': ['i', 'ii', 'iii'], 'dead': False})
+  [PASS] outcome OLMo-sft INDET-ii-emptymap: (0, 0, 80, 60, 32, 16) -> INDETERMINATE ('INDETERMINATE', {'toward_clean': ['ii'], 'toward_corrupted': ['i', 'ii', 'iii'], 'dead': False})
+  [PASS] outcome OLMo-sft INDET-E-half: (40, 40, 40, 40, 32, 32) -> INDETERMINATE ('INDETERMINATE', {'toward_clean': ['i'], 'toward_corrupted': ['i', 'ii', 'iii'], 'dead': False})
+  [PASS] outcome OLMo-sft NOREAD-contrast-empty: (0, 0, 0, 0, 32, 16) -> INDETERMINATE ('INDETERMINATE', None)
+  [PASS] outcome OLMo-sft NOREAD-sham-empty: (40, 28, 40, 28, 0, 0) -> INDETERMINATE ('INDETERMINATE', None)
+  [PASS] outcome OLMo-dpo PASS: (40, 28, 40, 28, 32, 16) -> PASS ('PASS', None)
+  [PASS] outcome OLMo-dpo REVERSE: (40, 12, 40, 12, 32, 16) -> REVERSE ('REVERSE', None)
+  [PASS] outcome OLMo-dpo DEAD: (40, 20, 40, 20, 32, 16) -> DEAD ('DEAD', None)
+  [PASS] outcome OLMo-dpo INDET-iii: (40, 24, 40, 24, 32, 16) -> INDETERMINATE ('INDETERMINATE', {'toward_clean': ['iii'], 'toward_corrupted': ['i', 'ii', 'iii'], 'dead': False})
+  [PASS] outcome OLMo-dpo INDET-i-equal: (40, 28, 40, 28, 40, 28) -> INDETERMINATE ('INDETERMINATE', {'toward_clean': ['i'], 'toward_corrupted': ['i', 'ii', 'iii'], 'dead': False})
+  [PASS] outcome OLMo-dpo INDET-ii-share: (40, 19, 40, 37, 32, 16) -> INDETERMINATE ('INDETERMINATE', {'toward_clean': ['ii'], 'toward_corrupted': ['i', 'ii', 'iii'], 'dead': False})
+  [PASS] outcome OLMo-dpo INDET-ii-emptymap: (0, 0, 80, 60, 32, 16) -> INDETERMINATE ('INDETERMINATE', {'toward_clean': ['ii'], 'toward_corrupted': ['i', 'ii', 'iii'], 'dead': False})
+  [PASS] outcome OLMo-dpo INDET-E-half: (40, 40, 40, 40, 32, 32) -> INDETERMINATE ('INDETERMINATE', {'toward_clean': ['i'], 'toward_corrupted': ['i', 'ii', 'iii'], 'dead': False})
+  [PASS] outcome OLMo-dpo NOREAD-contrast-empty: (0, 0, 0, 0, 32, 16) -> INDETERMINATE ('INDETERMINATE', None)
+  [PASS] outcome OLMo-dpo NOREAD-sham-empty: (40, 28, 40, 28, 0, 0) -> INDETERMINATE ('INDETERMINATE', None)
+  [PASS] outcome OLMo-instruct PASS: (40, 28, 40, 28, 32, 16) -> PASS ('PASS', None)
+  [PASS] outcome OLMo-instruct REVERSE: (40, 12, 40, 12, 32, 16) -> REVERSE ('REVERSE', None)
+  [PASS] outcome OLMo-instruct DEAD: (40, 20, 40, 20, 32, 16) -> DEAD ('DEAD', None)
+  [PASS] outcome OLMo-instruct INDET-iii: (40, 24, 40, 24, 32, 16) -> INDETERMINATE ('INDETERMINATE', {'toward_clean': ['iii'], 'toward_corrupted': ['i', 'ii', 'iii'], 'dead': False})
+  [PASS] outcome OLMo-instruct INDET-i-equal: (40, 28, 40, 28, 40, 28) -> INDETERMINATE ('INDETERMINATE', {'toward_clean': ['i'], 'toward_corrupted': ['i', 'ii', 'iii'], 'dead': False})
+  [PASS] outcome OLMo-instruct INDET-ii-share: (40, 19, 40, 37, 32, 16) -> INDETERMINATE ('INDETERMINATE', {'toward_clean': ['ii'], 'toward_corrupted': ['i', 'ii', 'iii'], 'dead': False})
+  [PASS] outcome OLMo-instruct INDET-ii-emptymap: (0, 0, 80, 60, 32, 16) -> INDETERMINATE ('INDETERMINATE', {'toward_clean': ['ii'], 'toward_corrupted': ['i', 'ii', 'iii'], 'dead': False})
+  [PASS] outcome OLMo-instruct INDET-E-half: (40, 40, 40, 40, 32, 32) -> INDETERMINATE ('INDETERMINATE', {'toward_clean': ['i'], 'toward_corrupted': ['i', 'ii', 'iii'], 'dead': False})
+  [PASS] outcome OLMo-instruct NOREAD-contrast-empty: (0, 0, 0, 0, 32, 16) -> INDETERMINATE ('INDETERMINATE', None)
+  [PASS] outcome OLMo-instruct NOREAD-sham-empty: (40, 28, 40, 28, 0, 0) -> INDETERMINATE ('INDETERMINATE', None)
+  [PASS] both arms empty: arm_outcome raises BothArmsEmpty; the unit layer gives NOT-RUN instead neither arm has a domain session: the unit is NOT-RUN by §5
+  [PASS] boundary n = 80: PASS at 51, INDETERMINATE at 50 ((i), (ii) hold) ('PASS', 'INDETERMINATE')
+  [PASS] boundary n = 80: REVERSE at 29, not at 30 ('REVERSE', 'DEAD')
+  [PASS] boundary n = 80: DEAD at 43, not at 44 (exact tail at 13/20 vs 1/40) ('DEAD', 'INDETERMINATE')
+  [PASS] boundary n = 96: PASS at 60, INDETERMINATE at 59 ((i), (ii) hold) ('PASS', 'INDETERMINATE')
+  [PASS] boundary n = 96: REVERSE at 36, not at 37 ('REVERSE', 'DEAD')
+  [PASS] boundary n = 96: DEAD at 52, not at 53 (exact tail at 13/20 vs 1/40) ('DEAD', 'INDETERMINATE')
+  [PASS] a map share exactly .5 passes (ii): 20/40 + 31/40 -> PASS at 51/80 PASS
+  [PASS] k = n is never DEAD (CP upper bound 1) [False, False, False, False]
+  [PASS] Δ_c = E fails (i) (strict); Δ_c > E by one sham pick passes ('INDETERMINATE', 'PASS')
+  [PASS] REVERSE: a map share exactly .5 satisfies (ii) toward corrupted: 20/40 + 9/40 -> REVERSE at 29/80 REVERSE
+  [PASS] REVERSE: a map with no domain session fails (ii) toward corrupted: 0 + 20/80 -> DEAD, not REVERSE ((i) and (iii) hold) DEAD
+  [PASS] REVERSE: Δ_c = −E fails (i) (strict) -> DEAD; one fewer sham pick (E .175 < .2) -> REVERSE ('DEAD', 'REVERSE')
+  [PASS] P ≤ α ≡ P < α at n = 80 (a dyadic P never equals 1/100) 80
+  [PASS] P ≤ α ≡ P < α at n = 96 (a dyadic P never equals 1/100) 96
+  [PASS] P ≤ α ≡ P < α at n = 213 (a dyadic P never equals 1/100) 213
+  [PASS] DEAD's exact tail agrees with the bisected CP upper bound < .65 at every k of n = 32, 80 and the boundaries 96 (52, 53) and 213 (124) 117/117
+  [PASS] order: 29/80 meets REVERSE and DEAD -> REVERSE REVERSE
+  [PASS] order: n = 213, k = 124 (maps 62/107 + 62/106) meets PASS and DEAD -> PASS ('PASS', '0.0098')
+  [PASS] order: a sham with no domain session gives no read even where the contrast data would PASS ('INDETERMINATE', 'PASS')
+  [PASS] order: unit outcome first -- a NOT-RUN unit emits no arm outcome NOT-RUN
+  [PASS] signed display: -1/20 -> '-0.0500', +1/20 -> '+0.0500', 0 -> '+0.0000'; bars._dec misprints the negative (why sdec exists) ('-0.0500', '-1.9500')
+  [PASS] power (48, 48, 32) = .9161 (m:190's .916 at (96, 32)) 0.9161
+  [PASS] power (40, 40, 32) = .8784 (m:190's .878 at (80, 32)) 0.8784
+  [PASS] power is 0 with a map or the sham empty
+  [PASS] power equals a brute-force sum of arm_outcome's PASS over the full (k0, k1, j) space (3 shapes, α .05); a different share gives a different figure [True, True, True]
+  [PASS] the figure of record is m:190's n/2 split at the realised n (80 -> 40/40: .878); the realised 10/70 split is reported beside and differs ('0.878', '0.846')
+  [PASS] odd n: the figure of record at n = 81 is the 40 / 41 split's exact figure (from either realised split), distinct from 40 / 40 and 41 / 41 ('0.867', '0.878', '0.892')
+  [PASS] sentence PASS: the exact text (every mandated clause, in order)
+  [PASS] sentence REVERSE: state word and 'instruction inversion; reported; not-PASS for licensing' A0 (Q-F0): REVERSE; n = 80 domain sessio
+  [PASS] sentence DEAD on OLMo: the absolute bar 'reported only', Fisher 'binding' 0.5000, not fired (binding); absolute vs .20 p = 0.0100, P ≤ α (reported only).
+  [PASS] sentence INDETERMINATE (data): the state word and both p's, no REVERSE phrase A0 (Q-F0): INDETERMINATE; n = 80 domain sessions o
+  [PASS] sentence no read (contrast empty): 'no read obtained' with its sub-reason, below-floor clause with shortfall and power
+  [PASS] sentence no read (sham empty): 'its sham A0s has no domain session, so E is undefined'; 'no look reached' e realised n (m:190's base case: n/2 per map at P = .70, the sham pooled at .5, α .01); 0.000 at the realised map split.
+  [PASS] NOT-RUN Q-F0 by clock:pi-declined: every cell NOT-RUN, reason recorded, label 'was not run: <reason>' the PI declined to commit its LOCK v1.0 by its Clock date (2026-10-30)
+  [PASS] NOT-RUN Q-F0 by clock:k-zero: every cell NOT-RUN, reason recorded, label 'was not run: <reason>' no valid qualification session (k = 0), so no launch count and no LOCK v1.0 by its Clock date (2026-10-30)
+  [PASS] NOT-RUN Q-F0 by clock:gate-stopped:G-F0m-Qwen: every cell NOT-RUN, reason recorded, label 'was not run: <reason>' G-F0m-Qwen stopped and no re-specification was locked by its Clock date (2026-10-30)
+  [PASS] NOT-RUN Q-F0 by clock:not-locked:G-CAL: every cell NOT-RUN, reason recorded, label 'was not run: <reason>' G-CAL had not reached its end and no LOCK v1.0 was committed by its Clock date (2026-10-30)
+  [PASS] NOT-RUN Q-F0 by no-first-read:cap (no session reached a first read before the CAP) no session reached a first read before its hour cap
+  [PASS] NOT-RUN Q-F0 by no-first-read:pi-stop (no session reached a first read before the PI-STOP) no session reached a first read before a PI stop
+  [PASS] NOT-RUN Q-F0 by no-first-read:gver-stop (no session reached a first read before the STOP) no session reached a first read before a G-VER STOP
+  [PASS] NOT-RUN OLMo-sft by clock:pi-declined: every cell NOT-RUN, reason recorded, label 'was not run: <reason>' the PI declined to commit its LOCK v1.0 by its Clock date (2026-10-30)
+  [PASS] NOT-RUN OLMo-sft by clock:k-zero: every cell NOT-RUN, reason recorded, label 'was not run: <reason>' no valid qualification session (k = 0), so no launch count and no LOCK v1.0 by its Clock date (2026-10-30)
+  [PASS] NOT-RUN OLMo-sft by clock:gate-stopped:G-F0m-OLMo-sft: every cell NOT-RUN, reason recorded, label 'was not run: <reason>' G-F0m-OLMo-sft stopped and no re-specification was locked by its Clock date (2026-10-30)
+  [PASS] NOT-RUN OLMo-sft by clock:not-locked:G-TIME-OLMo-sft: every cell NOT-RUN, reason recorded, label 'was not run: <reason>' G-TIME-OLMo-sft had not reached its end and no LOCK v1.0 was committed by its Clock date (2026-10-30)
+  [PASS] NOT-RUN OLMo-sft by clock:no-box: every cell NOT-RUN, reason recorded, label 'was not run: <reason>' no box before its Clock date (2026-10-30)
+  [PASS] NOT-RUN OLMo-sft by dose-not-completable: every cell NOT-RUN, reason recorded, label 'was not run: <reason>' dose not completable
+  [PASS] NOT-RUN OLMo-sft by no-first-read:cap (no session reached a first read before the CAP) no session reached a first read before its hour cap
+  [PASS] NOT-RUN OLMo-sft by no-first-read:pi-stop (no session reached a first read before the PI-STOP) no session reached a first read before a PI stop
+  [PASS] NOT-RUN OLMo-sft by no-first-read:gver-stop (no session reached a first read before the STOP) no session reached a first read before a G-VER STOP
+  [PASS] NOT-RUN OLMo-sft pending-closed-at-v2 reaches the state function; the v1 posting refuses it still pending at the v2 posting, with no session
+  [PASS] NOT-RUN OLMo-dpo by clock:pi-declined: every cell NOT-RUN, reason recorded, label 'was not run: <reason>' the PI declined to commit its LOCK v1.0 by its Clock date (2026-10-30)
+  [PASS] NOT-RUN OLMo-dpo by clock:k-zero: every cell NOT-RUN, reason recorded, label 'was not run: <reason>' no valid qualification session (k = 0), so no launch count and no LOCK v1.0 by its Clock date (2026-10-30)
+  [PASS] NOT-RUN OLMo-dpo by clock:gate-stopped:G-F0m-OLMo-dpo: every cell NOT-RUN, reason recorded, label 'was not run: <reason>' G-F0m-OLMo-dpo stopped and no re-specification was locked by its Clock date (2026-10-30)
+  [PASS] NOT-RUN OLMo-dpo by clock:not-locked:G-TIME-OLMo-dpo: every cell NOT-RUN, reason recorded, label 'was not run: <reason>' G-TIME-OLMo-dpo had not reached its end and no LOCK v1.0 was committed by its Clock date (2026-10-30)
+  [PASS] NOT-RUN OLMo-dpo by clock:no-box: every cell NOT-RUN, reason recorded, label 'was not run: <reason>' no box before its Clock date (2026-10-30)
+  [PASS] NOT-RUN OLMo-dpo by dose-not-completable: every cell NOT-RUN, reason recorded, label 'was not run: <reason>' dose not completable
+  [PASS] NOT-RUN OLMo-dpo by no-first-read:cap (no session reached a first read before the CAP) no session reached a first read before its hour cap
+  [PASS] NOT-RUN OLMo-dpo by no-first-read:pi-stop (no session reached a first read before the PI-STOP) no session reached a first read before a PI stop
+  [PASS] NOT-RUN OLMo-dpo by no-first-read:gver-stop (no session reached a first read before the STOP) no session reached a first read before a G-VER STOP
+  [PASS] NOT-RUN OLMo-dpo pending-closed-at-v2 reaches the state function; the v1 posting refuses it still pending at the v2 posting, with no session
+  [PASS] NOT-RUN OLMo-instruct by clock:pi-declined: every cell NOT-RUN, reason recorded, label 'was not run: <reason>' the PI declined to commit its LOCK v1.0 by its Clock date (2026-10-30)
+  [PASS] NOT-RUN OLMo-instruct by clock:k-zero: every cell NOT-RUN, reason recorded, label 'was not run: <reason>' no valid qualification session (k = 0), so no launch count and no LOCK v1.0 by its Clock date (2026-10-30)
+  [PASS] NOT-RUN OLMo-instruct by clock:gate-stopped:G-F0m-OLMo-instruct: every cell NOT-RUN, reason recorded, label 'was not run: <reason>' G-F0m-OLMo-instruct stopped and no re-specification was locked by its Clock date (2026-10-30)
+  [PASS] NOT-RUN OLMo-instruct by clock:not-locked:G-TIME-OLMo-instruct: every cell NOT-RUN, reason recorded, label 'was not run: <reason>' G-TIME-OLMo-instruct had not reached its end and no LOCK v1.0 was committed by its Clock date (2026-10-30)
+  [PASS] NOT-RUN OLMo-instruct by clock:no-box: every cell NOT-RUN, reason recorded, label 'was not run: <reason>' no box before its Clock date (2026-10-30)
+  [PASS] NOT-RUN OLMo-instruct by dose-not-completable: every cell NOT-RUN, reason recorded, label 'was not run: <reason>' dose not completable
+  [PASS] NOT-RUN OLMo-instruct by no-first-read:cap (no session reached a first read before the CAP) no session reached a first read before its hour cap
+  [PASS] NOT-RUN OLMo-instruct by no-first-read:pi-stop (no session reached a first read before the PI-STOP) no session reached a first read before a PI stop
+  [PASS] NOT-RUN OLMo-instruct by no-first-read:gver-stop (no session reached a first read before the STOP) no session reached a first read before a G-VER STOP
+  [PASS] NOT-RUN OLMo-instruct pending-closed-at-v2 reaches the state function; the v1 posting refuses it still pending at the v2 posting, with no session
+  [PASS] NOT-RUN routing on a STOP with no first read: scaffold_absorption + PI-stop record -> no-first-read:pi-stop; schedule_mismatch -> no-first-read:gver-stop (every unit) ('no-first-read:pi-stop', 'no-first-read:gver-stop')
+  [PASS] refused: clock:no-box on Q-F0 cause 'clock:no-box' applies to OLMo checkpoints only (m:324
+  [PASS] refused: dose-not-completable on Q-F0 cause 'dose-not-completable' applies to OLMo checkpoints onl
+  [PASS] refused: a <stage> that is not the unit's (G-PORT and G-ID-F0m on OLMo -- no G-ID, m:267; Q-F3's G-ID-F3 and an OLMo stage on Q-F0) stage 'G-ID-F0m' is not a STOPping gate of OLMo-dpo (('G-CAL
+  [PASS] G-ID-F0m is a STOPping gate of Q-F0 (a hair-trigger fire or G-VER failure stops it, m:271, m:284): accepted as the primary cause and in `also` G-ID-F0m stopped and no re-specification was locked by its C
+  [PASS] G-CAL is a STOPping gate of every unit (it serves all units, m:176, m:276; the OLMo track starts at step 9, m:358): clock:gate-stopped:G-CAL accepted on Q-F0 and each OLMo checkpoint G-CAL stopped and no re-specification was locked by its Cloc
+  [PASS] unit_rows (a unit's own VERDICTS / NOT-RUN rows) equals label_set's row for every unit and every state in Q5 (OLMo DEAD / REVERSE / NOT-RUN included) 20/20
+  [PASS] refused: the not-run command takes no pending-closed-at-v2 record at v1
+  [PASS] PENDING OLMo-sft unlocked-before-D_O ('PENDING', 'unlocked-before-D_O')
+  [PASS] PENDING OLMo-sft locked-running ('PENDING', 'locked-running')
+  [PASS] PENDING OLMo-sft restarting-after-box-change ('PENDING', 'restarting-after-box-change')
+  [PASS] PENDING OLMo-sft awaiting-verdicts-session ('PENDING', 'awaiting-verdicts-session')
+  [PASS] PENDING OLMo-dpo unlocked-before-D_O ('PENDING', 'unlocked-before-D_O')
+  [PASS] PENDING OLMo-dpo locked-running ('PENDING', 'locked-running')
+  [PASS] PENDING OLMo-dpo restarting-after-box-change ('PENDING', 'restarting-after-box-change')
+  [PASS] PENDING OLMo-dpo awaiting-verdicts-session ('PENDING', 'awaiting-verdicts-session')
+  [PASS] PENDING OLMo-instruct unlocked-before-D_O ('PENDING', 'unlocked-before-D_O')
+  [PASS] PENDING OLMo-instruct locked-running ('PENDING', 'locked-running')
+  [PASS] PENDING OLMo-instruct restarting-after-box-change ('PENDING', 'restarting-after-box-change')
+  [PASS] PENDING OLMo-instruct awaiting-verdicts-session ('PENDING', 'awaiting-verdicts-session')
+  [PASS] PENDING refused: unlocked-before-D_O with the Clock passed (NOT-RUN by its Clock)
+  [PASS] PENDING refused where a VERDICTS output exists
+  [PASS] PENDING refused where a NOT-RUN output exists
+  [PASS] PENDING refused for Q-F0
+  [PASS] PENDING: the Clock comparison's date is required beside clock_passed (a declaration without it, or with a date not YYYY-MM-DD, is refused); either clock_passed is accepted on either side of D_O and on it ([True, True, True, True], 6)
+  [PASS] PENDING: a date with a character beyond YYYY-MM-DD (a trailing x, space or newline, a third day digit, a leading space or letter) is refused under clock_passed true and false; the bare 2026-11-02 is accepted under both (12, ['locked-running', 'locked-running'])
+  [PASS] PENDING with clock_passed false: a malformed date (slashes, words, None, an int, a one-digit day, empty) is refused on every sub-state, as under true; a YYYY-MM-DD date is accepted on every sub-state (24, ['unlocked-before-D_O', 'locked-running', 'restarting-after-box-change', 'awaiting-verdicts-session'])
+  [PASS] PENDING: a declaration with a key beyond {state, substate, clock_passed, date} (note, reason, cause) is refused, directly and through the posting's / V10's cross-check; exactly the four keys are accepted ([True, True, True], [True, True, True], True)
+  [PASS] decisions with another unit's outcome known: a non-empty list is carried verbatim
+  [PASS] decisions: a missing key is refused (record and file); a decision naming its own unit is refused
+  [PASS] decisions: Q-F3 is an other_unit (its NOT-RUN, or A1/A2/A3[/A3*] in m:326's and m:340's words) and is carried verbatim; a bare word, a foreign A-word, a missing A2, PENDING (no VERDICTS exist, m:318) and an unknown unit are refused (True, [True, True, True, True, True, True])
+  [PASS] decisions: a decisions file naming another unit is refused (its own is accepted); a decision dated other than YYYY-MM-DD is refused (2026-10-20 accepted) ('the decisions input is {schema m-decisions-v1, uni', [True, True, True, True])
+  [PASS] decisions: a decision date with a character beyond YYYY-MM-DD (a trailing x, space or newline, a third day digit) is refused -- in the list, the decisions file and the NOT-RUN record; 2026-10-20 is accepted in each ([True, True, True, True], [True, True, True, True], [True, True, True, True])
+  [PASS] dates (PIN-43): full-width digits and impossible days (02-30, month 13, month 00) are refused by the PENDING, decision and Clock-date validators; 2026-02-28, the leap day 2024-02-29 and 2026-10-30 are accepted ([True, True, True, True], [True, True, True, True], [True, True, True, True], ['locked-running', 'locked-running', 'locked-running'], ['2026-02-28', '2024-0...
+  [PASS] NOT-RUN record (PIN-43): a dose-not-completable record dated None, 2026-02-30 or '' is refused although its reason phrase has no {date}; dated 2026-10-30 it is accepted and the date is carried ([True, True, True], '2026-10-30')
+  [PASS] the placeholder file is the builder's json_text(indent=1) byte for byte, and validates; a mutated table differs b1cce4f844f78e45
+  [PASS] no-dose-row variant flag=T: (c) carries ('carry', every item) at the f1-corr-line row (P03) in all 1,080 tuples under T, none under F ({'P03': 1080}, {'carry': 1080})
+  [PASS] no-dose-row variant flag=F: (c) carries ('carry', every item) at the f1-corr-line row (P03) in all 1,080 tuples under T, none under F ({}, {})
+  [PASS] table accepted: two sentences of one preprint line are two rows (loc.sentence 1, 2) -- the placeholder's P20 / P21 and an of-record table over a one-line preprint []
+  [PASS] table refused: schema ["schema 'x'"]
+  [PASS] table refused: kind outside the vocabulary ["kind 'draft' not in ('placeholder', 'of-record', 'posted')"]
+  [PASS] table refused: cells ["cells ['e2a', 'f1', 'e2b', 'weight', 'S1', 'olmo-base', 'olmo-sft', 'olmo-dpo'] != ['e2a', 'f1', 'e2b', 'weight', 'S1', 'olmo-base', 'olmo-sft', 'olmo-dpo'...
+  [PASS] table refused: a null cell outside cells ["P02: null_cells outside the cells ['e2a', 'f1', 'e2b', 'weight', 'S1', 'olmo-base', 'olmo-sft', 'olmo-dpo', 'olmo-instruct']"]
+  [PASS] table refused: a thesis outside the vocabulary ["P14: thesis 'fallback-3' not in (None, 'main', 'fallback-1', 'fallback-2')"]
+  [PASS] table refused: dose_note true without its span ['P03: a dose-note row needs a non-empty span that is a substring of its text']
+  [PASS] table refused: a span while dose_note is false ['P01: a span on a row whose dose_note is false']
+  [PASS] table refused: text_sha256 wrong ['P01: text_sha256 is not sha256(text)']
+  [PASS] table refused: duplicate ids ['duplicate row ids']
+  [PASS] table refused: rows out of (loc.line, loc.sentence) order ['rows are not in strictly increasing (loc.line, loc.sentence) order']
+  [PASS] table refused: a kind outside the vocabulary ['P01: a kind outside the vocabulary']
+  [PASS] table refused: no f1-corr-line row ['no row of kind f1-corr-line']
+  [PASS] table refused: a placeholder with a preprint ['a placeholder table carries no preprint']
+  [PASS] table refused: an of-record preprint hash mismatch (an exact table accepted) ["the preprint's sha256 / bytes / lines differ from the table's"]
+  [PASS] table refused: an of-record row not in the preprint ['P01: row text not found in the preprint']
+  [PASS] table refused: a forbidden literal ['P01: a forbidden literal in the text']
+  [PASS] table refused: posting other than v1 ["posting 'v2' (v1 only; v2 is G-ANL-F3's)"]
+  [PASS] table refused: a duplicate (loc.line, loc.sentence) (P21 made sentence 1 of line 20, as P20) ['rows are not in strictly increasing (loc.line, loc.sentence) order']
+  [PASS] table refused: a loc without its sentence ordinal ['P01: loc must be {line (int >= 1), sentence (int >= 1), section (str)}']
+  [PASS] table refused: an of-record row whose text does not begin on its declared line ['P01: row text does not begin on its declared preprint line 1']
+  [PASS] table refused: of-record rows sharing a line out of their in-line order ['P01: rows sharing line 1 do not occur there in loc.sentence order']
+  [PASS] tuples T1 flag=T: 1080/1080 tuples: exactly one licensing state, equal to the oracle; NOT-RUN never licenses
+  [PASS] tuples T1 flag=F: 1080/1080 tuples: exactly one licensing state, equal to the oracle; NOT-RUN never licenses
+  [PASS] tuples T2 flag=T: 1080/1080 tuples: one label set (one alternative per row), equal to the oracle; e2b and base fixed
+  [PASS] tuples T2 flag=F: 1080/1080 tuples: one label set (one alternative per row), equal to the oracle; e2b and base fixed
+  [PASS] tuples T3 flag=T: 1080/1080 tuples: one ceiling in {Fallback-1, Fallback-2}, never Main; the OLMo coordinates never enter
+  [PASS] tuples T3 flag=F: 1080/1080 tuples: one ceiling in {Fallback-1, Fallback-2}, never Main; the OLMo coordinates never enter
+  [PASS] tuples T4 flag=T: 1080/1080 tuples: one abstract clause of the three-way; Q-F0 never enters
+  [PASS] tuples T4 flag=F: 1080/1080 tuples: one abstract clause of the three-way; Q-F0 never enters
+  [PASS] tuples T5 flag=T: 1080/1080 tuples: one §8.1 text, one token per control
+  [PASS] tuples T5 flag=F: 1080/1080 tuples: one §8.1 text, one token per control
+  [PASS] tuples T6 flag=T: 1080/1080 tuples: Step 7 'open'
+  [PASS] tuples T6 flag=F: 1080/1080 tuples: Step 7 'open'
+  [PASS] tuples T7 flag=T: 1080/1080 tuples: the dose note equals the oracle and is invariant over the tuple
+  [PASS] tuples T7 flag=F: 1080/1080 tuples: the dose note equals the oracle and is invariant over the tuple
+  [PASS] tuples T8 flag=T: 1080/1080 tuples: the §7.5 enumeration equals the oracle; no empty item; table order
+  [PASS] tuples T8 flag=F: 1080/1080 tuples: the §7.5 enumeration equals the oracle; no empty item; table order
+  [PASS] tuples T9 flag=T: 1080/1080 tuples: outputs under the two flag values differ only in the dose note and the (c) items
+  [PASS] tuples T9 flag=F: 1080/1080 tuples: outputs under the two flag values differ only in the dose note and the (c) items
+  [PASS] tuples T10 flag=T: 1,080 distinct tuples, 2,160 evaluations x 9 assertions; over the flag=T outputs: L0 216; each L0-OLMo-c 180; 16 licensing vectors; Fallback-1 216 / Fallback-2 864; abstract 5 / 450 (375 + 75) / 625, 8 texts; e2a/f1 216 per branch; OLMo rows 180 / 540 / 180 / 180; 1,080 §8.1 texts; 'open' 1,080 ({'Fallback-1': 216, 'Fallback-2': 864}, {'all': 5, 'one': 375, 'two': 75, 'none': 625}, 19440)
+  [PASS] tuples T10 flag=F: 1,080 distinct tuples, 2,160 evaluations x 9 assertions; over the flag=F outputs: L0 216; each L0-OLMo-c 180; 16 licensing vectors; Fallback-1 216 / Fallback-2 864; abstract 5 / 450 (375 + 75) / 625, 8 texts; e2a/f1 216 per branch; OLMo rows 180 / 540 / 180 / 180; 1,080 §8.1 texts; 'open' 1,080 ({'Fallback-1': 216, 'Fallback-2': 864}, {'all': 5, 'one': 375, 'two': 75, 'none': 625}, 19440)
+  [PASS] enumeration P01 flag=T fires (a, b, c) = (0, 0, 0) (0, 0, 0)
+  [PASS] enumeration P01 flag=F fires (a, b, c) = (0, 0, 0) (0, 0, 0)
+  [PASS] enumeration P02 flag=T fires (a, b, c) = (864, 0, 0) (864, 0, 0)
+  [PASS] enumeration P02 flag=F fires (a, b, c) = (864, 0, 0) (864, 0, 0)
+  [PASS] enumeration P03 flag=T fires (a, b, c) = (864, 0, 0) (864, 0, 0)
+  [PASS] enumeration P03 flag=F fires (a, b, c) = (864, 0, 1080) (864, 0, 1080)
+  [PASS] enumeration P04 flag=T fires (a, b, c) = (1080, 0, 0) (1080, 0, 0)
+  [PASS] enumeration P04 flag=F fires (a, b, c) = (1080, 0, 0) (1080, 0, 0)
+  [PASS] enumeration P05 flag=T fires (a, b, c) = (1080, 0, 0) (1080, 0, 0)
+  [PASS] enumeration P05 flag=F fires (a, b, c) = (1080, 0, 0) (1080, 0, 0)
+  [PASS] enumeration P06 flag=T fires (a, b, c) = (1080, 0, 0) (1080, 0, 0)
+  [PASS] enumeration P06 flag=F fires (a, b, c) = (1080, 0, 0) (1080, 0, 0)
+  [PASS] enumeration P07 flag=T fires (a, b, c) = (900, 0, 0) (900, 0, 0)
+  [PASS] enumeration P07 flag=F fires (a, b, c) = (900, 0, 0) (900, 0, 0)
+  [PASS] enumeration P08 flag=T fires (a, b, c) = (900, 0, 0) (900, 0, 0)
+  [PASS] enumeration P08 flag=F fires (a, b, c) = (900, 0, 0) (900, 0, 0)
+  [PASS] enumeration P09 flag=T fires (a, b, c) = (900, 0, 0) (900, 0, 0)
+  [PASS] enumeration P09 flag=F fires (a, b, c) = (900, 0, 0) (900, 0, 0)
+  [PASS] enumeration P10 flag=T fires (a, b, c) = (0, 0, 0) (0, 0, 0)
+  [PASS] enumeration P10 flag=F fires (a, b, c) = (0, 0, 0) (0, 0, 0)
+  [PASS] enumeration P11 flag=T fires (a, b, c) = (1080, 0, 0) (1080, 0, 0)
+  [PASS] enumeration P11 flag=F fires (a, b, c) = (1080, 0, 0) (1080, 0, 0)
+  [PASS] enumeration P12 flag=T fires (a, b, c) = (1075, 0, 0) (1075, 0, 0)
+  [PASS] enumeration P12 flag=F fires (a, b, c) = (1075, 0, 0) (1075, 0, 0)
+  [PASS] enumeration P13 flag=T fires (a, b, c) = (1044, 0, 0) (1044, 0, 0)
+  [PASS] enumeration P13 flag=F fires (a, b, c) = (1044, 0, 0) (1044, 0, 0)
+  [PASS] enumeration P14 flag=T fires (a, b, c) = (0, 1080, 0) (0, 1080, 0)
+  [PASS] enumeration P14 flag=F fires (a, b, c) = (0, 1080, 0) (0, 1080, 0)
+  [PASS] enumeration P15 flag=T fires (a, b, c) = (0, 864, 0) (0, 864, 0)
+  [PASS] enumeration P15 flag=F fires (a, b, c) = (0, 864, 0) (0, 864, 0)
+  [PASS] enumeration P16 flag=T fires (a, b, c) = (0, 0, 0) (0, 0, 0)
+  [PASS] enumeration P16 flag=F fires (a, b, c) = (0, 0, 0) (0, 0, 0)
+  [PASS] enumeration P17 flag=T fires (a, b, c) = (864, 864, 0) (864, 864, 0)
+  [PASS] enumeration P17 flag=F fires (a, b, c) = (864, 864, 0) (864, 864, 0)
+  [PASS] enumeration P18 flag=T fires (a, b, c) = (0, 0, 0) (0, 0, 0)
+  [PASS] enumeration P18 flag=F fires (a, b, c) = (0, 0, 1080) (0, 0, 1080)
+  [PASS] enumeration P19 flag=T fires (a, b, c) = (864, 0, 0) (864, 0, 0)
+  [PASS] enumeration P19 flag=F fires (a, b, c) = (864, 0, 0) (864, 0, 0)
+  [PASS] enumeration P20 flag=T fires (a, b, c) = (0, 0, 0) (0, 0, 0)
+  [PASS] enumeration P20 flag=F fires (a, b, c) = (0, 0, 0) (0, 0, 0)
+  [PASS] enumeration P21 flag=T fires (a, b, c) = (900, 864, 0) (900, 864, 0)
+  [PASS] enumeration P21 flag=F fires (a, b, c) = (900, 864, 0) (900, 864, 0)
+  [PASS] NOT-RUN reasons routed per unit: 1080/1080 tuples with a distinct reason per unit (155 with two or more NOT-RUN units) give the oracle's labels and enumeration (1080, 155)
+  [PASS] two passes over the 2,160 evaluations give byte-identical canonical JSON (sha256 equal) 83df98b12a27be8e
+  [PASS] flag of record: data/m/gates/G-CAL_model-free.json committed, schema m-gcal-model-free-v1, f1_012 present -> TRUE (read-only; the sha and renders_sha_matches_calib printed beside, not asserted) (True, 'aad8096a6aa90ebb', True)
+  [PASS] flag FALSE on a temp copy: absent
+  [PASS] flag FALSE: schema wrong
+  [PASS] flag FALSE: f1_012 missing
+  [PASS] flag FALSE: uncommitted
+  [PASS] renders_sha_matches_calib false is recorded beside; the flag stays TRUE (existence-keyed)
+  [PASS] counters: the declaration reproduces m:314's two lists verbatim and in order (a reordered copy does not) per substrate:** Qwen — cap_hit, audit_degenerate (v2), harn
+  [PASS] counters: the tabulated names equal audit.DECLARED_COUNTERS_QWEN / _OLMO; Qwen adds the [Q-F3] counter, declared and scoped
+  [PASS] counters: each Qwen counter fires on a crafted record and is silent on a clean one {'cap_hit': 0, 'audit_degenerate': 0, 'harness_echo': 0, 'content_exclusion': 0, 'content_advisory': 0, 'lexical': 0, 'post_choice_degeneracy': 0, 'low_label...
+  [PASS] counters: tabulated over all sessions, excluded included (n_sessions = every record; excluded ones counted) (24, 10)
+  [PASS] counters: round counters carry the property key (VERDICTS form); read counters carry the read position ['clean', 'corrupted']
+  [PASS] counters: denominators -- rounds generated, free rounds, reads taken, sessions launched (179, 93)
+  [PASS] counters: an undeclared name raises (content_exclusion on OLMo; the [Q-F3] counter anywhere)
+  [PASS] per-property table equals hand counts (rounds by property, the excluding round's class and property, pre-pick and any-phase columns); a sham corrupted round is a STOP {'clean': {'rounds_generated': 6, 'rounds_claimed_by_class': {'v2': 1, 'echo': 0, 'content': 0, 'lexical': 0}, 'rounds_excluding_by_class': {'v2': 1, 'echo':...
+  [PASS] excluding round: a session whose exclusion class or phase disagrees with its first excluding round's is a STOP (excluding_round, so tabulate and the per-property table); an agreeing one returns that round ("STOP: a record's exclusion (lexical@forced) is not its first", "STOP: a record's exclusion (v2@free) is ")
+  [PASS] counters by property, uncollapsed: the exact keyed counts on crafted records (a corrupted forced-round exclusion, a corrupted free-round exclusion, a clean advisory, a sham echo); the per-property table's any-phase column (2) differs from its pre-pick column (1) on the corrupted row; whole-session validity lenient 2 / strict 1 of 3 ([], {'launched': 3, 'valid_lenient': 2, 'valid_strict': 1})
+  [PASS] counters: a record carrying reasoning-line material is a STOP at Q-F0 (record check and tabulation)
+  [PASS] counters summed over property (and read position) equal audit.tally on the same records (Qwen and OLMo); records that differ give tables that differ [True, True]
+  [PASS] pre-pick: this file's definition equals stages._prepick on every record (both values occur); a free-phase exclusion is not pre-pick for either 12
+  [PASS] secondary floor: 19 events count-only (no interval), 20 events an interval (19, 20)
+  [PASS] secondary (b) lose-shift: contrast arm only (no sham key); the transition after a corrupted chosen round counted {'corrupted': {'num': 1, 'den': 1, 'domain': 'A0 transitions after a chosen corrupted round by sessions valid through the next choice', 'floor': 20, 'count_o...
+  [PASS] secondary (d): a sham arm of 32 gives 8 per pair -> count-only 8
+  [PASS] secondary (d): a sham arm of 56 gives 14 per pair -> count-only 14
+  [PASS] 'valid through p': a session excluded at free round ci = 1 is valid through 1 and 2, not 3 (its third choice notwithstanding); unexcluded, through 3 ([True, True, False, False], [True, True, True, False])
+  [PASS] habit identity: break_rates' weighted form + 1/2 reproduces the arm's P exactly (Fractions); a pole/role inconsistency breaks it ('3/22', '7/11')
+  [PASS] secondary values, hand-counted: (a) P-role share at p = 1, 2, 3 is 2/3, 2/3, 1/1 (the free-excluded session drops at p = 3); (d) per pair x start 0|0 1/1, 0|1 0/1, 1|0 1/1, 1|1 0/0; (e) terminations forced 1/16, free 1/8 (cap_hit is not a termination) ({'1': (2, 3), '2': (2, 3), '3': (1, 1)}, {'0|0': (1, 1), '0|1': (0, 1), '1|0': (1, 1), '1|1': (0, 0)}, {'forced': (1, 16), 'free': (1, 8)})
+  [PASS] record -> counts -> outcome: crafted records 28/40 + 28/40 vs sham 16/32 (5 + 3 non-domain launched) -> PASS; the role-flipped twin (12/40 + 12/40) -> REVERSE ((40, 28, 40, 28, 32, 16), 'PASS', 'REVERSE')
+  [PASS] record -> counts with non-domain sham sessions and free-phase exclusions: mS 8 (3 non-domain sham launches not counted), E = 1/4; pre-pick A0 2/12 (the 3 free-phase exclusions not pre-pick), A0s 3/11 (8, '1/4', {'A0': 2, 'A0s': 3}, {'A0': 12, 'A0s': 11})
+  [PASS] reader: a COMPLETE stub campaign (production writer) -> analyzed; VERDICTS and secondary written; the sentence names the end look ('ok', 'INDETERMINATE')
+  [PASS] reader: the same VERDICTS run again is byte-identical ('identical'); its stdout carries no roster word identical
+  [PASS] reader: every rate in the VERDICTS output carries {num, den, domain} and every p its test (m:358); a planted rate without its domain and a p without its test are caught (6, 26, [])
+  [PASS] refused: Q-F0's declared OLMo states contradict an existing OLMo output (instruct PASS declared, its VERDICTS says DEAD) REFUSED: OLMo-instruct = PASS in the tuple; its VERDICTS says 'DEAD'
+  [PASS] reader: Q-F0's VERDICTS carries §7's v1 outputs under the tuple (its own state, the declared OLMo states) over the table of record, and the flag of record {'OLMo-dpo': 'NOT-RUN', 'OLMo-instruct': 'DEAD', 'OLMo-sft': 'PENDING', 'Q-F0': 'INDETERMINATE'}
+  [PASS] reader: Q-F0's VERDICTS records the analyzer's, package's and closure's sha256s (the lock's), the pinned proposal, and the power block of record at its own realised n (True, '0.000')
+  [PASS] reader: the secondary output carries (d)'s habit identity per arm (habit.break_rates over the arm's domain sessions): it holds, and its delta_c is the VERDICTS arm's / sham's P - 1/2 [True, True]
+  [PASS] reader: a non-empty decisions list is carried verbatim into {U}_VERDICTS.json (the empty one into the default run); a decisions file naming another unit is refused ('ok', 'REFUSED: decisions input: the decisions input is {')
+  [PASS] Q-F0 VERDICTS (V10) under a FALSE flag: an absent and an uncommitted --flag-source each give flag FALSE with the passed path recorded, the dose note struck, and the (c) strike items (P03, P18) ('ok', 'ok', 'absent')
+  [PASS] refused at Q-F0's VERDICTS: a placeholder table (it serves G-ANL-F0 only, m:286) and an uncommitted table of record ('REFUSED: the sentence table is not an accepted table of reco', 'REFUSED: the sentence table is not committed at HE')
+  [PASS] refused: a write-once conflict (an existing VERDICTS with different bytes) REFUSED: Q-F0_VERDICTS.json exists with different bytes -- w
+  [PASS] reader fixture: the COMPLETE campaign's session 0 is a forced-phase exclusion outside the domain (the FFP-OUTSIDE, EXCLROUND and DOMAIN mutants act on it) (False, 'v2')
+  [PASS] refused: not ended (has not ended) REFUSED: the campaign has not ended (status None); VERDICTS waits for
+  [PASS] refused: stage (not Q-F0/campaign) REFUSED: the campaign checkpoint is Q-F0/qual, not Q-F0/campaign
+  [PASS] refused: backend splice (backend identifier) REFUSED: a launching invocation's backend identifier is not the identi
+  [PASS] STOP: domain stop (domain field disagrees) STOP: a campaign record fails V4 (domain: stage_report: a record's dom
+  [PASS] STOP: firstpick stop (first_free_pick_P disagrees) STOP: a campaign record fails V4 (first_free_pick_P disagrees with the
+  [PASS] STOP: cell stop (cell.P is not pair[map]) STOP: a campaign record fails V4 (cell.P is not pair[map])
+  [PASS] refused: unverified (not a verified record) REFUSED: the campaign checkpoint: CHECKPOINT STATE INCONSISTENT (<tmp>
+  [PASS] STOP: ffp outside stop (first_free_pick_P set outside the domain) STOP: a campaign record fails V4 (first_free_pick_P set outside the do
+  [PASS] STOP: exclround stop (is not its first excluding round's) STOP: a record's exclusion (lexical@forced) is not its first excluding
+  [PASS] refused: no floors (records no floors) REFUSED: the campaign records no floors for A0 and A0s (campaign.floor
+  [PASS] refused: no floors before v4 (records no floors) REFUSED: the campaign records no floors for A0 and A0s (campaign.floor
+  [PASS] refused: a negative floor (contrast or sham), a bool floor and a float floor, each alone (records no floors, as for a missing one); zero floors are accepted (analyzed) ({'neg-contrast': 'refused', 'neg-sham': 'refused', 'bool': 'refused', 'float': 'refused'}, 'ok')
+  [PASS] refused before V3: the floors refusal releases no record (readrule.release_full not called, nothing written); an accepted run releases the campaign and both gate stages (3 calls) ('refused', 0, 'ok', 3)
+  [PASS] refused: a different unit's checkpoint (Q-F0's campaign read as OLMo-sft) REFUSED: the campaign checkpoint is Q-F0/campaign, not OLMo-sft/campai
+  [PASS] refused: the identity's lock sha256 is not the lock's REFUSED: the campaign's identity lock_sha256 is not the lock's sha256
+  [PASS] refused: the analyzer sha256 is not named in the lock (the full lock is accepted: C3-COMPLETE) REFUSED: the lock does not name this run's analyzer sha256 (PIN-14, PI
+  [PASS] refused: the package sha256 is not named in the lock (the full lock is accepted: C3-COMPLETE) REFUSED: the lock does not name this run's package_sha256 (PIN-14, PIN
+  [PASS] refused: the closure sha256 is not named in the lock (the full lock is accepted: C3-COMPLETE) REFUSED: the lock does not name this run's closure sha256 (PIN-14, PIN
+  [PASS] refused: the table sha256 is not named in the lock (the full lock is accepted: C3-COMPLETE) REFUSED: the lock does not name the sentence table of record's sha256
+  [PASS] refused: the preprint sha256 is not named in the lock (the full lock is accepted: C3-COMPLETE) REFUSED: the lock does not name the preprint of record's sha256 (m:286
+  [PASS] refused: a proposal whose sha256 is not the pinned v1.11's REFUSED: the proposal's sha256 is not the pinned v1.11's (PIN-31)
+  [PASS] refused: STUB_MARK provenance outside the battery's internal path (PIN-30) REFUSED: the campaign was written by the self-test stub (STUB_MARK)
+  [PASS] refused: the lock not committed at HEAD (the analyzer committed; env double) REFUSED: the lock is not committed at HEAD: ['not committed
+  [PASS] refused: the analyzer not committed at HEAD (the lock committed; env double) REFUSED: the analyzer is not committed at HEAD: ['not commit
+  [PASS] refused (PIN-30), each check alone: a stub-written campaign beside stub-free gate stages; a stub-free campaign beside a stub-written time or qualification stage; with no stub provenance anywhere the CLI path analyzes ('ok', 'REFUSED: the campaign was written by the', 'REFUSED: the time checkpoint was written')
+  [PASS] refused: an end pending (finding R1) REFUSED: the campaign carries an end pending (re-finish it first, find
+  [PASS] a fired end look on a terminal campaign: refused without --adjudication; analyzed with it, its path and sha256 recorded ('PAUSE', "REFUSED: the campaign's last pause is un")
+  [PASS] C3: CAP with no session reaching a first read -> NOT-RUN no-first-read:cap ({U}_NOT-RUN.json) no-first-read:cap
+  [PASS] C3: PI-STOP with no session reaching a first read -> NOT-RUN no-first-read:pi-stop PI-STOP
+  [PASS] C3: a G-VER STOP before any first read -> NOT-RUN no-first-read:gver-stop (the quarantined record beside, not counted) no-first-read:gver-stop
+  [PASS] C3: a G-VER STOP after domain sessions -> analyzed as obtained (a PI stop by m:284); no cadence look on disk (8 launches) -> 'no look reached' in the guard and the sentence, the missing end look on STOP flagged ('written', 'no look reached')
+  [PASS] last look: COMPLETE at 42 launches with look 1 at 40 on disk -> the end look (at 42) is named, not the cadence look ('written', 'the end look at 42 launches')
+  [PASS] last look: a G-VER STOP after look 1 at 40 (no end look on a STOP) -> 'look 1 at 40 launches, the last cadence look' named, the missing end look flagged; with a second cadence look added (80) the last one is named ('written', 'STOP', 'look 1 at 40 launches, the last cadence look')
+  [PASS] C3: a scaffold_absorption hair-trigger STOP with no disposition is refused (PIN-8) REFUSED: the campaign ended on a scaffold_absorption hair-tr
+  [PASS] C3: the same STOP with a declared PI-stop record -> analyzed as obtained (path and sha recorded) written
+  [PASS] refused: an --adjudication naming another checkpoint's sha256, another pause (launch count or kind) or another unit, each alone (the exact one is accepted) {'sha': 'refused', 'pause': 'refused', 'kind': 'refused', 'unit': 'refused'}
+  [PASS] refused: a --pi-stop record naming another checkpoint's sha256, another unit or another bar, each alone (the exact one is accepted) {'sha': 'refused', 'unit': 'refused', 'bar': 'refused'}
+  [PASS] refused: an --adjudication carrying another document's schema (the PI-stop record's; stages' adjudication excerpt's) or none, each alone (the exact one is accepted) {"pi-stop's": 'refused', "excerpt's": 'refused', 'missing': 'refused'}
+  [PASS] refused: an --adjudication whose text is blank, empty, null, not a str or missing, each alone (the seat's ruling is its text; the exact one is accepted) {'blank': 'refused', 'empty': 'refused', 'null': 'refused', 'int': 'refused', 'missing': 'refused'}
+  [PASS] refused: a --pi-stop record carrying another document's schema (the adjudication's) or none, each alone (the exact one is accepted) {"adjudication's": 'refused', 'missing': 'refused'}
+  [PASS] refused: a --pi-stop record whose text is blank, empty, null, not a str or missing, each alone (the PI's stop is its text; the exact one is accepted) {'blank': 'refused', 'empty': 'refused', 'null': 'refused', 'int': 'refused', 'missing': 'refused'}
+  [PASS] refused: a surplus --adjudication (no pause here; an adjudicated last pause: REF-SURPLUS-ADJ-ADJUDICATED) and a surplus --pi-stop (COMPLETE here; CAP, PI-STOP, G-VER STOP: REF-SURPLUS-PISTOP-TERMINAL) -- nothing undeclared enters the record (each is accepted where its campaign needs it: C3-ENDLOOK-PAUSE, C3-HAIR-DISP) ('REFUSED: --adjudication given but the last pause i', 'REFUSED: --pi-stop given but the campaign did not ')
+  [PASS] a last pause already adjudicated: analyzed with no --adjudication (the pause recorded adjudicated, no seat input recorded); an --adjudication naming that unit, checkpoint and pause exactly is surplus and refused ('ok', 'REFUSED: --adjudication given but the last pause i')
+  [PASS] refused: a surplus --pi-stop on a CAP, a PI-STOP and a G-VER STOP campaign (no first read, and after one), each -- no hair-trigger STOP to dispose; each is analyzed without it {'CAP': 'refused', 'PI-STOP': 'refused', 'G-VER-0': 'refused', 'G-VER-1': 'refused'}
+  [PASS] C3: CAP with the sham the only domain arm -> analyzed; the contrast arm INDETERMINATE, no read obtained (contrast-empty) ('CAP', 'contrast-empty')
+  [PASS] STOP: COMPLETE with an arm below its floor STOP: COMPLETE with an arm below its floor -- a bookkeeping
+  [PASS] STOP: COMPLETE with no domain session in either arm (the unit layer's bookkeeping STOP) STOP: a COMPLETE campaign with no domain session in either a
+  [PASS] reader: an OLMo COMPLETE stub campaign -> analyzed; its row state and row label only (no v1 outputs), the label label_set's for that state; the absolute guard 'reported only' ('ok', 'written')
+  [PASS] reader: the VERDICTS counts (n0, k0, n1, k1, mS, j; launched, pre-pick, domain per arm) equal an independent recount from the checkpoint's raw sessions (the first pick coded from choices[0].pick vs cell.P) -- COMPLETE, CAP sham-only, OLMo COMPLETE [True, True, True]
+  [PASS] exclusivity (m:324): verdicts refuses a VERDICTS beside an existing NOT-RUN and a no-first-read NOT-RUN beside an existing VERDICTS; not-run refuses beside an existing VERDICTS (nothing written) ('REFUSED: Q-F0_NOT-RUN.json exists, so Q-F0_VERDICT', 'REFUSED: Q-F0_VERDICTS.json exists, so Q-F0_NOT-RU')
+  [PASS] refused: an OLMo campaign identity without its pod id REFUSED: an OLMo campaign identity carries no pod id (m:267;
+  [PASS] refused: a time checkpoint not ended (also with a defective record), a qualification checkpoint passed as the time stage, and another unit's time stage -- each a refusal, not a STOP (the ended Q-F0/time and Q-F0/qual stages are accepted: C3-COMPLETE) {'not-ended': 'refused', 'not-ended+defect': 'refused', 'stage': 'refused', 'unit': 'refused'}
+  [PASS] reader: `verdicts`' no-first-read {U}_NOT-RUN.json carries a non-empty decisions list verbatim, and the analyzer's, package's and closure's sha256s written
+  [PASS] refused: a canonical --out in the battery (data/m/verdicts)
+  [PASS] not-run: a Clock NOT-RUN record -> {U}_NOT-RUN.json with its reason, rows, the gate-stage release (contrast first picks by role) and the decisions; a re-run is identical the PI declined to commit its LOCK v1.0 by its Clock date (2
+  [PASS] not-run: a no-first-read cause is refused (it comes from the campaign through `verdicts`) REFUSED: cause 'no-first-read:cap' is not a record cause (no
+  [PASS] not-run: a non-empty decisions list is carried verbatim into {U}_NOT-RUN.json (the empty one into the default run) written
+  [PASS] not-run refused: a time stage not ended (also with a defective record: refused, not a STOP), a qualification checkpoint passed as the time stage, another unit's time stage; nothing written (the ended Q-F0/time and Q-F0/qual stages are released: CMD-NOTRUN) {'not-ended': 'refused', 'not-ended+defect': 'refused', 'stage': 'refused', 'unit': 'refused'}
+  [PASS] not-run: a time stage not ended (with or without a defective record) is refused before any gate record is released (readrule.release_full not called; nothing written); ended time and qual stages are both released (2 calls) (0, 'ok', 2)
+  [PASS] not-run (PIN-30): a stub-written time stage is refused off the battery path; a stub-free one is released ('REFUSED: the time checkpoint was written by the se', 'ok')
+  [PASS] not-run (PIN-42): refused with the analyzer uncommitted or a proposal not the pinned v1.11 (nothing written); its output records the analyzer's, package's and closure's sha256s ("REFUSED: the analyzer is not committed at HEAD: ['", "REFUSED: the proposal's sha256 is not th")
+  [PASS] not-run (PIN-42): the binding is decided before any input is read -- with the analyzer uncommitted, an absent record, a record that is not an object and a not-ended time stage each refuse on the analyzer (nothing written); with it committed each refuses on its own input {'absent': 'REFUSED: the NOT-RUN record un', 'malformed': 'REFUSED: NOT-RUN record: a NOT', 'gate': 'REFUSED: the time checkpoint h'}
+  [PASS] not-run: {U}_NOT-RUN.json records the pinned proposal's sha256 (the default and the decisions run; `verdicts`' no-first-read NOT-RUN too) 42ab36ecc814c9c4
+  [PASS] posting: the v1 outputs under the declared tuple (Fallback-2; e2a and f1 'was not run: <Q-F0's reason>'; sft Answered; dpo 'was not run: dose not completable'; instruct pending), written as POSTING-v1_outputs.of-record.json POSTING v1: tuple ('NOT-RUN', 'PASS', 'NOT-RUN', 'PENDING'); ceiling F
+  [PASS] posting: the output records the tuple it used, its reasons and its PENDING declarations (the Clock comparison's date beside clock_passed, as given); Q-F0's VERDICTS records its declared OLMo states (the PENDING date included) ({'OLMo-dpo': 'NOT-RUN', 'OLMo-instruct': 'PENDING', 'OLMo-sft': 'PASS', 'Q-F0': 'NOT-RUN'}, {'clock_passed': False, 'date': '2026-10-30', 'state': 'PENDING'...
+  [PASS] posting (PIN-42): refused with the analyzer uncommitted or a proposal not the pinned v1.11 (nothing written); its output records the analyzer's, package's and closure's sha256s ("REFUSED: the analyzer is not committed at HEAD: ['", "REFUSED: the proposal's sha256 is not th")
+  [PASS] posting (PIN-42): the binding is decided before any input is read -- with the analyzer uncommitted, an absent tuple, a tuple contradicting a unit's VERDICTS and an absent sentence table each refuse on the analyzer (nothing written); with it committed each refuses on its own input {'absent-tuple': 'REFUSED: the tuple unreadable ', 'contradicting': 'REFUSED: OLMo-sft = DEAD in th', 'absent-table': 'REFUSED: the sentence table is'}
+  [PASS] posting: each coordinate is cross-checked against the unit's VERDICTS / NOT-RUN output (a tuple contradicting a VERDICTS is refused; PENDING beside an existing VERDICTS is refused; a VERDICTS file carries its verdict) REFUSED: OLMo-sft = DEAD in the tuple; its VERDICTS says 'PA
+  [PASS] posting: the table of record's run and the posted text's re-run write two records in one directory (POSTING-v1_outputs.of-record.json, then .posted.json; the of-record run again is identical) ('written', 'written', 'identical')
+  [PASS] posting: POSTING-v1_outputs.*.json records the pinned proposal's sha256 (the table of record's runs and the posted text's re-run) ['42ab36ecc814c9c4', '42ab36ecc814c9c4', '42ab36ecc814c9c4']
+  [PASS] posting under a FALSE flag: an absent and an uncommitted --flag-source each give flag FALSE with the passed path recorded, the dose note struck, and the (c) strike items (P03, P18) ('absent', 'not committed at HEAD with identical working-tree bytes')
+  [PASS] posting refused: a NOT-RUN coordinate whose reason differs from the unit's NOT-RUN output REFUSED: Q-F0's reason differs from its NOT-RUN output's
+  [PASS] posting refused: a unit carrying both a VERDICTS and a NOT-RUN output, whether its coordinate is NOT-RUN or an outcome (m:324) ('REFUSED: Q-F0 is NOT-RUN in the tuple but has no N', 'REFUSED: Q-F0 = PASS in the tuple but has no VERDI')
+  [PASS] posting refused: reasons naming a unit that is not NOT-RUN; pending naming a unit that is not PENDING REFUSED: reasons name exactly the NOT-RUN units, pending exa
+  [PASS] posting refused: an uncommitted sentence table; a placeholder table (it serves G-ANL-F0 only, m:286) ('REFUSED: the sentence table is not committed at HE', "REFUSED: the sentence table is refused: ['a placeh")
+  [PASS] posting refused (exit 2, not a traceback): a unit output that is not a JSON object REFUSED: Q-F0's NOT-RUN output is not a JSON object (list)
+  [PASS] posting: once Q-F0's lock was reached, an of-record table other than the one its `verdicts` output read is refused -- after its VERDICTS and after a no-first-read NOT-RUN (PIN-40); the recorded table is accepted; a posted-kind table is not bound; a Clock NOT-RUN binds none (CMD-POSTING) ("REFUSED: the table of record is not the one Q-F0's VERDICTS ", "REFUSED: the table of record is not the one Q-F0's NOT-RUN o", 'written', 'written')
+  [PASS] proposal constants: every m-verbatim constant appears on its cited line (m:14, :16, :190, :192, :247, :306, :310, :312, :314, :316, :324, :326, :334, :337, :338, :340, :341, :343, :349) []
+  [PASS] proposal constants: a mutated proposal (m:338's slot, m:334's title) is caught ["m:334: 'Fallback-1: *Marked, expressed, remembered, not acted on*'", "m:338: '*concluded, not answered — the told control at F0 on this su'"]
+  [PASS] open hook: planted reads under data/m/ckpt (open, io.open, Path.read_bytes/read_text/open) and results/raw are caught before the file is touched; an allowed read passes ([True, True, True, True, True, True], ['results/raw/PLANTED.txt'])
+  [PASS] no torch, mlx, mlx_lm or transformers in sys.modules []
+  [PASS] guard.check_call_sites is [] over this file and fires on a planted cached=True (0, 1)
+  [PASS] no forbidden literal in this file; the grep fires on a planted copy []
+  [PASS] closure: computed in a fresh interpreter -- valence_core modules outside the package (session, habit, stages' e2d.runner ...), none inside it, the data file opened at import; its sha moves with any entry (15, ['data/olmo/a1_repair_roster.json'])
+  [PASS] canonical ganl: every analyzer / placeholder / proposal / package / closure file must be committed (PIN-39); one uncommitted closure file (habit.py) is named ['valence_core/e2d/habit.py: not committed']
+  [PASS] exit codes (PIN-26): a canonical ganl whose closure cannot be computed returns 4 (STOP), not 1 4
+  [PASS] lazy imports: module-level valence_core imports are exactly the declared primitives (MODULE_LEVEL_IMPORTS); outside the battery a function-level one names only the declared lazy verdict-path module (stages); a planted module-level testing / guard import and a planted verdict-path testing import are caught, a battery one is not ([], [('<module>', ['valence_core.m.testing']), ('<module>', ['valence_core.m.guard'])])
+  [PASS] G-ANL-F0 manifest: the analyzer / placeholder / proposal sha256s are the files', package_sha256 is resume's, the closure and battery block are the run's, no timestamp or HEAD key; a planted wrong package, analyzer, closure or battery count, a timestamp and a HEAD are each caught ([], {'package': True, 'analyzer': True, 'closure': True, 'battery': True, 'stamp': True, 'head': True})
+  [PASS] G-ANL-F0 manifest: analyzer.sha16 is its sha256's first 16 hex digits -- a wrong one, the sha256's last 16 and a missing one are each caught as exactly 'analyzer sha16' {'wrong': ['analyzer sha16'], 'sha256-tail': ['analyzer sha16'], 'missing': ['analyzer sha16']}
+  [PASS] G-ANL-F0 manifest: the flag of record is the battery's -- a flipped value, a null and an extra key are each caught as exactly 'flag_of_record' {'flipped': ['flag_of_record'], 'null': ['flag_of_record'], 'extra-key': ['flag_of_record']}
+  [PASS] G-ANL-F0 manifest: the PIN register, the seat-routed list and the schema are this file's -- a dropped and an edited PIN, an edited seat-routed entry and another schema are each caught as exactly 'pins / seat_routed / schema' {'pin-dropped': ['pins / seat_routed / schema'], 'pin-edited': ['pins / seat_routed / schema'], 'seat-routed': ['pins / seat_routed / schema'], 'schema': ['p...
+  [PASS] G-ANL-F0 manifest: the placeholder's path and sha256 are the file's -- a wrong sha256 and another path are each caught as exactly 'placeholder path / sha256' (the proposal's path likewise) {'placeholder-sha': ['placeholder path / sha256'], 'placeholder-path': ['placeholder path / sha256'], 'proposal-path': ['proposal path / sha256']}
+  [PASS] G-ANL-F0 manifest: the battery block is the run's beyond checks_pass -- a wrong checks_total, expected_checks, coverage_ids, outputs_sha256 and tallies are each caught as exactly 'battery.<key>' {'checks_total': ['battery.checks_total'], 'expected_checks': ['battery.expected_checks'], 'coverage_ids': ['battery.coverage_ids'], 'outputs_sha256': ['batt...
+  [PASS] exit codes (PIN-26): a ganl whose manifest fails its own content check (a planted HEAD key) returns 4 (STOP) and writes nothing; the same battery double with the true manifest writes G-ANL-F0.json (0) {'planted-head': (4, True, []), 'true': (0, False, ['G-ANL-F0.json'])}
+  [PASS] PIN register: every register id has a '# PIN (Code, declared at LOCK v0.1): PIN-n' site comment and every site names a register id; a planted id without a site is caught ([], [])
+  [PASS] insulation: the quarantined state-present module is not in sys.modules
+  [PASS] the battery wrote nothing canonical (data/m before == after; blocked dirs by os.stat only) []
+  [PASS] coverage: every one of the 386 required ids reached []
+  [PASS] check count 375 == EXPECTED_CHECKS 375 (a skipped assertion is a failure) 375
+  375/375 m_analyze battery checks pass
+EXIT=0

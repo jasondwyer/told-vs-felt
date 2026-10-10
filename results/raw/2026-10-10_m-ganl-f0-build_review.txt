@@ -1,0 +1,2189 @@
+# m package -- the G-ANL-F0 tooling (PROPOSAL-m v1.11 §8 step 8): build, adversarial review, fixes and verification.
+# Compiled by Code 2026-10-10 09:54:26 UTC (date -u). scripts/m_analyze.py (new) and data/m/gates/m_posting_sentences.placeholder.json (new); nothing under valence_core/ edited.
+# Process: an understand workflow (five readers, two synthesizers, a completeness critic; its specs and Code's decisions are summarized in the entry);
+# one implementing agent; three review lenses (outcome fidelity; posting fidelity; harness and tests), each finding put to a STRICT refuter; a fix agent;
+# an independent verifier with mutation probes; round 2 (fix the verifier's gaps; re-verify); round 3 (the remaining Low gaps; confirm); Code's closing edit.
+# No model or tokenizer loaded by any agent; no commits by any agent; mutation probes on scratch copies only.
+
+====================================================================================================
+BUILDER'S REPORT (verbatim)
+====================================================================================================
+  **G-ANL-F0 (step 8) builder's report**
+  
+  The analyzer and its battery are built and pass. The battery ran twice at 283/283 with byte-identical raws, and the m self-test still passes. A temp-dir `ganl` run wrote the artifact, and a second run reported it identical. The canonical run is refused (exit 2) until the files are committed, as intended. Nothing is committed and no canonical run was made. Nothing under `valence_core/` was edited.
+  
+  **Files**
+  - `/Users/jasondwyer/Documents/code/jspace-lab/scripts/m_analyze.py` (new, 4,356 lines, sha256 `5dd81bc454d1a5e77ccc7e136ade54a3ce345f7d1fba6e718c96fb22b310772f`).
+    - **Verdict logic:** `arm_outcome`, `dead_pred`, `cp_interval`, `power_exact` / `power_block`, `unit_state`, `pending_state`, `validate_not_run_record`, `validate_decisions`, `record_problems` (the V4 checks), `campaign_counts`.
+    - **Counters and tables:** `COUNTERS` (12 Qwen counters, Q-F3 included; 8 OLMo), `tabulate`, `collapse_to_tally`, `counter_rates`, `per_property_table`, `beside_blocks`.
+    - **Guard, sentence, secondaries:** `guard_at_last_look`, `verdict_sentence` with `SENTENCE_TEMPLATES`, `secondaries` (a/b/d/e), `habit_identity`.
+    - **Posting:** `licensing`, `label_set`, `ceiling`, `abstract_clause`, `s81_text`, `dose_note`, `enumeration`, `v1_outputs`, `table_problems`, `placeholder_table`, `flag_of_record`.
+    - **Binding and IO:** `closure` / `closure_sha256`, `write_texts_once`, `crosscheck_coordinate`.
+    - **Commands:** `run_verdicts`, `run_not_run`, `run_posting`, `run_ganl`, `ganl_commit_problems`, `battery`. The CLI has `--selftest`, `ganl`, `verdicts`, `not-run` and `posting`.
+  - `/Users/jasondwyer/Documents/code/jspace-lab/data/m/gates/m_posting_sentences.placeholder.json` (new, sha256 `4ff15f1f632b4ea18f672fb1ea5ab0fb6fb49db5fe79f139d7a8144076586615`, 8,880 bytes). It is written by `placeholder_table()`, has 20 synthetic rows, and is not gitignored (`.gitignore:235`).
+  
+  **Self-test results**
+  - `jlens-qwen36/.venv/bin/python scripts/m_analyze.py --selftest`, run twice: `  283/283 m_analyze battery checks pass` both times, exit 0, raws byte-identical. `EXPECTED_CHECKS` is 283 and all 290 coverage ids were reached. Each run takes about 3 s.
+  - `jlens-qwen36/.venv/bin/python scripts/m_sessions.py --selftest`: `  706/706 m selftest checks pass`, then `  732/732 m selftest checks pass` on a later run after the concurrent G-SHAPE build edited `m_sessions.py` and added `gshape.py`. Both exit 0.
+  - **Mutation probes**, run on scratch copies only (`.../scratchpad/step8/mutate.py`): 23 mutants were tried and 22 were caught. Each caught one failed both its own check and coverage. The one survivor, which swaps the floor/ceil map split in the power figure, gives the same figure, because power is symmetric in the two maps.
+  
+  **Temp-dir run**
+  - `ganl --out .../scratchpad/step8/ganl_final` returned exit 0 and wrote the artifact (sha256 `efa07af923f64dc36debe0370948dbe490252319e04c887faaabbdb7a237418c`). A second run reported it identical.
+  - Values recorded in it:
+    - `closure_sha256` `a3bc7bb9df3d8361bfa803238e61a61a7eef76a6d839540413e53cd7919cb22b` (15 modules, plus the data file `data/olmo/a1_repair_roster.json`).
+    - `outputs_sha256` `bca177db6191b4d1adfe35710c76f1f2b30e98fa6116592d850894581766e69e`.
+    - Flag of record TRUE (file sha256 `aad8096a…`).
+    - `package_sha256` `73752fe1…`. This value is still moving because G-SHAPE is editing the package.
+  - Refusals checked:
+    - Canonical `ganl`: exit 2, because the analyzer and placeholder are not committed.
+    - `ganl --out data/m/foo`: exit 2.
+    - `verdicts`, `not-run` and `posting` on real paths: exit 2, nothing written. `verdicts` printed the gate line before refusing.
+  
+  **PINs** (each also has a `# PIN (Code, declared at LOCK v0.1): PIN-n` comment in the code, and the battery checks the register against those comments)
+  1. The analyzer's sha256, package_sha256 and the import closure outside the package together bind the verdict logic. The closure is computed in a fresh `python -I -B`, its sha must be named in the lock (else exit 2), and `stages` is imported lazily.
+  2. All arithmetic is exact (Fractions). (iii) is P ≤ α, which equals P < α here. DEAD ⇔ k < n ∧ P(Bin(n,13/20) ≤ k) < 1/40. The CP bounds are display-only bisection.
+  3. Power of record is m:190's base case at the realised n: ⌊n/2⌋ on map 0 and ⌈n/2⌉ on map 1, with the sham pooled. The figure at the realised map split is reported beside it.
+  4. The verdict sentence is the mandated clauses in order. Power and shortfall appear only below floor. The absolute guard prints "fired (binding)" on Qwen and "P ≤ α (reported only)" on OLMo.
+  5. NOT-RUN cause codes and reason phrases; the primary cause is the earliest, the rest go in `also`.
+  6. PENDING is a declared input {state, substate, clock_passed}, refused for Q-F0, for unlocked-before-D_O with the Clock passed, and where an output exists.
+  7. VERDICTS pipeline: V1 refusals before any pick is read, then V2 structure checks (now also requiring floors for both arms), release, V4 STOPs, write-once, print after writing. A no-first-read NOT-RUN writes `{U}_NOT-RUN.json`.
+  8. Conservative default, seat ruling needed before LOCK v0.1: a hair-trigger STOP is analyzed only with a PI-stop record bound to the checkpoint's sha256.
+  9. Conservative default, seat ruling needed before LOCK v0.1: an unadjudicated last pause is refused unless an `--adjudication` file bound to the checkpoint's sha256 is supplied.
+  10. Last look = end_look, else the last cadence look, else "no look reached". No end-of-data guard is recomputed.
+  11. Counters reproduce m:314 verbatim; the Q-F3 counter is declared and not tabulated. Summed over property, they equal `audit.tally`. Gate-stage sessions are tabulated separately.
+  12. Property keys as specified; the interim `sessions_excluded_any_phase` column; whole-session validity defined.
+  13. Secondaries (a), (b), (d), (e), with the 20-event floor. "Valid through p" as specified. The habit identity uses `habit.break_rates`, recomputed in Fractions.
+  14. The analyzer of record is the lock's blob. Analyzer, package and closure shas are asserted against the lock. The worktree rule is declared, not implemented.
+  15. Label slots take the state word and the PIN-5 phrase.
+  16. "[passing stages]" renders as "the A stage" or "the A or B stage", in lineage order.
+  17. Conservative default, seat ruling needed before LOCK v0.1: §8.1 covers A0 and the three OLMo controls; A1 belongs to §8.2.
+  18. The ceiling is reported as its name plus its m:334 title.
+  19. The flag is existence-keyed (committed, schema, f1_012 present). `renders_sha_matches_calib` is recorded beside it, not part of it.
+  20. Sentence table schema and validation; the roster-word refusal is dropped and the forbidden-literal check kept.
+  21. Enumeration (c) is two-sided, on m:349's own "iff".
+  22. S1 counts as Answered under clause (a).
+  23. The tuple is an explicit input, and each coordinate is cross-checked against the unit's own outputs.
+  24. Battery scope, coverage registry and fixed check count.
+  25. Output paths; the `.gitignore` block for `data/m/verdicts/` is deferred.
+  26. Exit codes.
+  27. The abstract clause is emitted verbatim and may dangle.
+  28. The battery runs the call-site check and the forbidden-literal grep over this file.
+  29. An open hook blocks reads under ckpt, reports, verdicts and results/raw; the no-write snapshot uses only `os.stat` there.
+  30. Stub provenance is accepted only on the battery's internal path.
+  31. The proposal sha is pinned and every verbatim constant is checked against the file.
+  32. Gate-stage release: contrast first picks by role and released free-round events, reported beside the counters.
+  33. The pre-pick rate uses `stages._prepick`'s definition (checked equal) over sessions launched.
+  34. A domain or first-pick disagreement is a STOP, not a refusal.
+  35. The `decisions_with_other_outcomes_known` input is required.
+  36. Signed display: sign followed by `_dec` of the magnitude.
+  37. Write-once supersession by `git mv` on the seat's ruling.
+  38. `not-run` takes Clock and dose causes only.
+  39. The canonical `ganl` requires every analyzer, placeholder, proposal, package and closure file to be committed.
+  
+  **Deviations from the spec and decisions, with reasons**
+  - **Closure.** The artifact field `sources` is replaced by `closure` plus `closure_sha256`, per decision 1. The closure is computed in a subprocess so it does not depend on what the current process has loaded. A VERDICTS run is refused unless the closure sha appears in the lock text.
+  - **PIN-39 is new.** The canonical `ganl` refuses unless every package and closure file is committed. Without it, the artifact would record a working-tree `package_sha256`, which right now includes the untracked `gshape.py`.
+  - **C3 NOT-RUN output.** The spec does not say what `verdicts` writes for a no-first-read NOT-RUN; it writes `{U}_NOT-RUN.json`. The `not-run` command refuses no-first-read causes (PIN-38).
+  - **Stricter cross-checks.** In the posting and in Q-F0's declared OLMo states, NOT-RUN requires a NOT-RUN output and an outcome state requires a VERDICTS output.
+  - **Write-once timing.** The write-once check happens at write time, with both files checked before either is written. It cannot sit in V1, because identity is unknown until the output is computed.
+  - **`content_advisory`** counts every advisory entry, as `audit.tally` does, so that summing over property reproduces tally exactly. AuditV3 emits at most one advisory per round, so this changes nothing in practice.
+  - **Pod splice.** It cannot be detected from a checkpoint, because provenance records carry no pod id. The analyzer checks that an OLMo identity carries a pod id; `resume._refuse_pod` refuses splices at write time.
+  - **Battery fixtures.**
+    - The qualification checkpoints are assembled from `testing.suite` records through `resume`'s public API. The reason is that `run_gate_stage` for qual needs a G-ID artifact.
+    - G-TIME and all campaigns run through the production writers on the stub.
+    - The CAP cases sleep inside one scripted session. A session that ends at forced round 1 can log 0 ms, so the cap would never be reached.
+  
+  **Flags for Code or the seat**
+  - **Package hash is moving.** `package_sha256` is changing under the concurrent G-SHAPE work (`gshape.py` is untracked; `m_sessions.py` is modified; the m count went from 706 to 732). The canonical `ganl` should run after G-SHAPE's commits, so that the package sha in G-ANL-F0 equals the one LOCK v0.1 records.
+  - **Seat rulings that block LOCK v0.1:** PIN-8, PIN-9 and PIN-17, to go in one Code-to-seat block under `results/raw` before step 9.
+  - **Build gaps for the seat:**
+    - `stages.py` has no path that records the seat's ruling on a terminal campaign's fired end look (PIN-9).
+    - A STOP-ended campaign has no end look (PIN-10).
+  - **Non-blocking seat items:** the Clock boundary-day convention (`clock_passed` is declared and recorded as given); which per-property column the G-PORT A5 reference uses; PIN-14 versioning for G-ANL-F3; the pass bar for the posting re-run.
+  - **Critic routing to carry forward:**
+    - `analyzer_sha256` is optional in `identity_extra`; requiring it is a PIN for the LOCK v0.1 build.
+    - The G-CAL / steps-7–8 order question goes to the seat as non-blocking.
+    - Package edits outside `SCORING_STACK_FILES` do not force a G-SHAPE re-run (PIN-S10).
+  - **Code's work at commit:**
+    - Raws: battery, record, build_review, sitecheck (adding the `m_analyze` suite under the regex `^  ([0-9]+)/\1 m_analyze battery checks pass$`), and the two values-check passes.
+    - Correct the proposal line count to 372.
+    - The 2,160-row output table is not committed; only its sha256 is recorded.
+  
+  Scratch evidence is in `/private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step8/`: `final_selftest_1.txt`, `final_selftest_2.txt`, `m_sessions_selftest.txt`, `m_sessions_selftest_2.txt`, `ganl_final/G-ANL-F0.json`, `ganl_final_1.txt`, `ganl_final_2.txt`, `mutate.py` and `write_placeholder.py`.
+====================================================================================================
+REVIEW LENS outcome-fidelity -- 4 finding(s)
+====================================================================================================
+COVERED:
+  Lens: outcome-fidelity, read-only on the repo. Probes are in /private/tmp/claude-501/-Users-jasondwyer-Documents-
+  code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step8/review_of/ (p1.py to p4.py, plus
+  selftest.txt).
+
+  **Per-arm arithmetic (m:306, m:310, m:326).** `arm_outcome`, `dead_pred`, `p_up`/`p_down`, `cp_interval`: checked
+  against an independent Fraction recomputation. The thresholds I computed match the spec:
+
+  | n | PASS at k ≥ | REVERSE at k ≤ | DEAD at k ≤ |
+  |---|---|---|---|
+  | 80 | 51 | 29 | 43 |
+  | 96 | 60 | 36 | 52 |
+  | 32 | 24 | 8 | 14 |
+  | 213 | 124 | 89 | 124 |
+
+  At n = 213, PASS and DEAD overlap and PASS wins. Further results:
+  - DEAD's exact tail agrees with the bisected CP upper bound below .65 at every k < n for n = 1..120. The 4-place
+  display never contradicts the decision.
+  - (i) is strict: Δ_c = E gives INDETERMINATE, and Δ_c = E + 1/32 gives PASS.
+  - (ii) is non-strict, needs both maps non-empty, and a share of exactly .5 passes.
+  - (iii) is P ≤ α.
+  - E = 1/2 makes (i) unreachable in both directions.
+  - k = n is never DEAD.
+  - The order is no-read → REVERSE → PASS → DEAD → INDETERMINATE.
+
+  **Power (m:190, m:247).** `power_exact` equals a brute-force sum of arm_outcome's PASS states over all (k0, k1, j)
+  on 11 shapes, including empty maps, an empty sham and mS = 1. It reproduces .9161 and .8784. `power_block` uses
+  floor(n/2) / ceil(n/2), with the realised split beside.
+
+  **Unit composition (m:324).** `unit_state`:
+  - Both arms empty gives NOT-RUN by cap / PI stop / G-VER STOP; COMPLETE with both empty is a STOP.
+  - A hair-trigger STOP is refused without a PI-stop record (PIN-8). With one, it goes to no-first-read:pi-stop or
+  is analyzed as obtained.
+  - A G-VER STOP is analyzed as obtained, and its quarantined record is not counted.
+  - No-read collapses to INDETERMINATE in the tuple.
+
+  **`run_verdicts` V1–V11 as it bears on outcomes.**
+  - PIN-9 refuses an unadjudicated last pause. I confirmed `resume.ended_status` keeps the terminal status when an
+  end look fires, so the `--adjudication` path is reachable.
+  - PIN-10's last-look selection checked against stages `_campaign_end` (end_is_look; no end look on STOP).
+  - The guard sentence: Fisher binding; absolute bar binding on Qwen, P ≤ α / P > α reported only on OLMo
+  (bars.exceeds).
+  - Pre-pick rates use the guard's denominator; the floor/shortfall clause; COMPLETE-below-floor STOP.
+  - First-pick and domain consistency go through `readrule._forced_domain`; scaffold.record asserts domain = reached
+  the first read.
+
+  **PENDING, NOT-RUN, decisions and posting cross-checks.**
+  - PENDING: substates, the Clock refusal, the existing-output refusals, and the refusal for Q-F0.
+  - NOT-RUN: cause table, phrases and stage sets, compared with m:271, m:276, m:280–283, m:302, m:324, m:347 and
+  m:358, and with the stages.py G-ID and prior-gate code.
+  - `run_not_run` (PIN-38); `crosscheck_coordinate`; `_validate_olmo_states`.
+  - The m:318 decisions input (PIN-35).
+  - PIN-17's `s81_text`.
+
+  **Battery.** Re-ran `--selftest` with -B: 283/283, exit 0, `git status` unchanged before and after.
+
+  **Not covered.** Counters, secondaries, the sentence-table enumeration and closure/IO, beyond where they touch
+  outcomes.
+--- outcome-fidelity: Q-F0's gate-stopped vocabulary omits G-ID-F0m, though a G-ID-F0m STOP is a reachable route to Q-F0 NOT-RUN; the battery requires it to be refused
+    finder: substantive  strict refuter: refuted=False severity=substantive  location: scripts/m_analyze.py:378-383 (gate_stop_stages); battery check scripts/m_analyze.py:2862-2866
+    CLAIM:
+      `gate_stop_stages("Q-F0")` returns (G-PORT, G-CAL, G-SHAPE-F0, G-ANL-F0, G-TIME-F0, G-F0m-Qwen). So
+      `not_run_reason` refuses `clock:gate-stopped:G-ID-F0m`, and `run_not_run` exits 2. The spec and the battery
+      treat G-ID as never STOPping because its FAIL verdict only sends the unit uncached. But G-ID-F0m can STOP:
+      m:271 says "a hair-trigger fire anywhere stops the stage", and G-VER applies at every stage. A G-ID STOP
+      blocks Q-F0's qualification, and so its LOCK v1.0. That is exactly m:324's "a gate STOPPED and no re-
+      specification was locked".
+    FAILURE SCENARIO:
+      1. During G-ID-F0m (step 12), one of the A0s sessions emits a banned scaffold string (scaffold_absorption), or
+      fails G-VER.
+      2. `stages._gid_end` returns status STOP and writes no G-ID artifact ("never on STOP").
+      3. G-F0m-Qwen then refuses to run ("G-ID ARTIFACT ABSENT", stages.py:790).
+      4. The seat does not lock a re-specification by D1 = 2026-10-30, so Q-F0 is NOT-RUN by its Clock, and v1 posts
+      at Fallback-2 with e2a/f1 "was not run: <reason>".
+      5. Code writes the record `{cause: "clock:gate-stopped:G-ID-F0m"}`. `m_analyze.py not-run --unit Q-F0` exits
+      2: "stage 'G-ID-F0m' is not a STOPping gate of Q-F0". Probe p4.py reproduces this.
+      6. The true cause cannot be recorded as primary or in `also`. Code must either misattribute it (e.g. clock:pi-
+      declined) or edit an analyzer whose hash LOCK v0.1 has already frozen.
+    EVIDENCE:
+      - [C] m_analyze.py:380-381: the Q-F0 stage tuple has no G-ID-F0m.
+      - [C] m_analyze.py:2862 builds `r4 = not_run_reason("Q-F0", "clock:gate-stopped:G-ID-F0m")`, and :2865 passes
+      only if it is refused, with the label "G-ID-F0m, whose FAIL is no STOP".
+      - [C] stages.py:1691-1698: the G-ID loop takes `_verify_hit` and `_hair_hit`.
+      - [C] stages.py:1734-1737: `_gid_end` returns {"status": "STOP"} on a hit.
+      - [C] stages.py:1799: the artifact is written "on PASS / FAIL / NOT-DETERMINED, never on STOP".
+      - [C] stages.py:788-791: qualification refuses without the artifact.
+      - [S] m:271: "a hair-trigger fire anywhere stops the stage".
+      - [S] m:281: a divergence (the FAIL) "sends Q-F0 uncached". That is a verdict, not a STOP.
+      - [S] m:324: NOT-RUN when "a gate STOPPED and no re-specification was locked".
+      - The spec's justification cites m:295, which is G-ID-F3 ("sends Q-F3 uncached"), not G-ID-F0m.
+    FIX:
+      - Add "G-ID-F0m" to Q-F0's tuple in `gate_stop_stages`.
+      - Change the battery check at :2862-2866 to accept G-ID-F0m, and refuse only a name that truly is not a stage
+      of the unit (e.g. G-ID-F0m on OLMo, which has no G-ID per m:267).
+      - Update the PIN-5 table and the cause cite.
+      - This must land before LOCK v0.1 hashes the analyzer.
+    REFUTER:
+      I could not refute the claim; it reproduces.
+
+      **What the code does**
+      - [C] `gate_stop_stages("Q-F0")` (scripts/m_analyze.py:378-383) returns exactly ('G-PORT', 'G-CAL',
+      'G-SHAPE-F0', 'G-ANL-F0', 'G-TIME-F0', 'G-F0m-Qwen').
+      - [C] My probe is at /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-
+      lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step8/refute_gid/probe.py and is read-only on the repo. It
+      shows three refusals:
+        - `not_run_reason("Q-F0", "clock:gate-stopped:G-ID-F0m", "2026-10-30")` is refused with "stage 'G-ID-F0m' is
+      not a STOPping gate of Q-F0".
+        - The same code placed in `also` is also refused, because `validate_not_run_record` runs `not_run_reason` on
+      every `also` entry (m_analyze.py:470-471).
+        - `run_not_run` refuses a record whose primary cause is G-ID-F0m.
+      - So the analyzer can record the true cause neither as primary nor as secondary. The only free-text field is
+      `detail`.
+
+      **G-ID-F0m can STOP**
+      - [C] valence_core/m/bars.py:513-527: the three hair triggers (scaffold_absorption, template_breakage,
+      schedule_mismatch) are declared `stage="every"` with `on_fire=_STOP`. `_qf0_bars` includes them alongside
+      `gid_divergence@G-ID-F0m`.
+      - [C] stages.py:1691-1698: the G-ID loop takes `_verify_hit` and `_hair_hit`.
+      - [C] stages.py:1734-1737: `_gid_end` returns status STOP on a hit.
+      - [C] stages.py:1799: the G-ID artifact is written "on PASS / FAIL / NOT-DETERMINED, never on STOP".
+      - [C] stages.py:788-791: qualification refuses with "G-ID ARTIFACT ABSENT".
+      - [C] schedule.py:256-257 adds a further G-ID STOP route: G-ID needing more than sixteen indices.
+      - Result: a G-ID STOP blocks G-F0m-Qwen, and so blocks LOCK v1.0, until the seat re-specifies. If no re-
+      specification is locked by D1, m:324 makes Q-F0 NOT-RUN because "a gate STOPPED and no re-specification was
+      locked". The stage that stopped is G-ID-F0m.
+
+      **Why the spec's exclusion is not a defence**
+      - spec_ganl.md §4.2 does list this exact set. decisions_ganl.md says "everything else as spec_ganl.md states",
+      and the critic does not mention it.
+      - But the spec's only reason for leaving G-ID out is "G-ID FAIL is not a STOP (m:295)". That treats the
+      divergence verdict (FAIL, which sends Q-F0 uncached, m:281) as if it were the stage's only possible end.
+      - m:271's common convention, "a hair-trigger fire anywhere stops the stage" (domain every session), applies to
+      G-ID. The build's own stages.py implements it.
+      - The cite is also wrong: m:295 is G-ID-F3, not G-ID-F0m.
+      - The governing text (m:278 via m:324, which the decisions declare authoritative) names "a gate STOPPED" as a
+      NOT-RUN cause without excluding any gate.
+      - So the spec's exclusion rests on a factual error. It is not a deliberate ruling that a G-ID STOP should be
+      unrecordable. The battery check at m_analyze.py:2862-2866 ("G-ID-F0m, whose FAIL is no STOP") entrenches the
+      same confusion.
+
+      **The other route also fails**
+      I considered recording a G-VER failure at G-ID as `no-first-read:gver-stop` (m:284's post-lock instrument-
+      failure branch). `run_not_run` refuses no-first-read causes (m_analyze.py:2071-2074): those come only from a
+      campaign checkpoint through `verdicts`. Before LOCK v1.0 no campaign checkpoint exists, and a
+      scaffold_absorption STOP is not G-VER in any case.
+
+      **Severity**
+      It takes a low-probability chain to trigger: a G-ID hair-trigger STOP, then no re-specification by 2026-10-30.
+      When it happens, Code must either misattribute the cause or edit an analyzer whose hash LOCK v0.1 freezes. The
+      fix is a one-token tuple change plus inverting one battery check, and it must land before the hash. So
+      substantive, not blocking.
+
+      **Files**
+      - /Users/jasondwyer/Documents/code/jspace-lab/scripts/m_analyze.py: lines 378-383, 456-476, 2058-2074 and
+      2862-2866.
+      - /Users/jasondwyer/Documents/code/jspace-lab/valence_core/m/stages.py: lines 788-791, 1691-1737 and 1799.
+      - /Users/jasondwyer/Documents/code/jspace-lab/valence_core/m/bars.py: lines 513-527 and 570-583.
+
+--- outcome-fidelity: The OLMo gate-stopped vocabulary omits G-CAL, though G-CAL serves all units and the OLMo track starts only at LOCK-m-F0 v0.1
+    finder: substantive  strict refuter: refuted=False severity=minor  location: scripts/m_analyze.py:382-383 (gate_stop_stages for OLMo-c)
+    CLAIM:
+      For OLMo-c the STOPping gates are (G-SHAPE-F0, G-ANL-F0, G-TIME-OLMo-c, G-F0m-OLMo-c). These include the
+      shared pre-v0.1 gates G-SHAPE-F0 and G-ANL-F0, but not G-CAL. Yet G-CAL "Serves all units" (m:276), and LOCK-
+      m-F0 v0.1 carries "calibration (§2.3 artifacts)" (m:279). The OLMo track begins "from step 9" (m:358), i.e. at
+      that lock. So a Qwen G-CAL STOP with no re-specification locked by D_O makes each OLMo checkpoint NOT-RUN by
+      its Clock with G-CAL as its earliest cause, and the analyzer refuses that cause. G-CAL is still open at HEAD:
+      2c50e03 says "G-CAL does not close here", with the 128-generation read and O2/O3 owed, either of which could
+      re-specify the renders.
+    FAILURE SCENARIO:
+      1. G-CAL's owed read or O3 STOPs G-CAL for re-specification after step 8, and no re-specification is locked by
+      2026-10-30.
+      2. LOCK-m-F0 v0.1 is never committed, so the OLMo track never starts, and each OLMo checkpoint is NOT-RUN at
+      D_O.
+      3. `not-run --unit OLMo-sft` with cause `clock:gate-stopped:G-CAL` exits 2: "stage 'G-CAL' is not a STOPping
+      gate of OLMo-sft" (probe p4.py). The same cause in `also` is refused too.
+      4. Code is left with `clock:no-box`, which misstates the cause and breaks PIN-5's earliest-cause precedence,
+      or with an analyzer edit after LOCK v0.1.
+    EVIDENCE:
+      - [C] m_analyze.py:382-383.
+      - [S] m:276: "G-CAL. … Serves all units."
+      - [S] m:279: LOCK-m-F0 v0.1 carries "calibration (§2.3 artifacts)".
+      - [S] m:358: "OLMo track, from step 9 when a box exists" (step 9 = commit LOCK-m-F0 v0.1).
+      - [S] m:324: "a gate STOPPED and no re-specification was locked". The Qwen G-CAL clause there ("STOPs for re-
+      specification and reaches NOT-RUN only through the Clock") is the same route.
+      - [C] The analyzer itself already lists the other shared pre-lock gates (G-SHAPE-F0, G-ANL-F0) for OLMo, so
+      G-CAL is the inconsistent omission. G-PORT is moot here: it has passed, and a G-PORT STOP would precede the
+      analyzer (m:349).
+    FIX:
+      - Add "G-CAL" to the OLMo-c tuple in `gate_stop_stages`.
+      - Add a battery case: `clock:gate-stopped:G-CAL` is accepted on each OLMo unit.
+      - Cite m:276/m:358 in the PIN-5 table.
+      - This must land before LOCK v0.1.
+    REFUTER:
+      I could not refute this finding. I reproduced it, and the proposal text supports it. I rate it minor rather
+      than substantive.
+
+      **Reproduced.** Probe at /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-
+      lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step8/refute_gcal/probe.py. It loads scripts/m_analyze.py
+      read-only.
+      - For every OLMo unit, `gate_stop_stages` returns ('G-SHAPE-F0', 'G-ANL-F0', 'G-TIME-OLMo-c', 'G-F0m-OLMo-c').
+      - `not_run_reason('OLMo-sft'|'OLMo-dpo'|'OLMo-instruct', 'clock:gate-stopped:G-CAL', '2026-10-30')` raises
+      "stage 'G-CAL' is not a STOPping gate of OLMo-...".
+      - The same cause placed in `also` is also refused, by `validate_not_run_record`.
+      - On all three OLMo units, G-SHAPE-F0 and G-ANL-F0 are accepted.
+
+      **Not covered by the spec or Code's decisions.**
+      - spec_ganl.md §4.2 (lines 187–188) has the same OLMo set but gives no reason for leaving G-CAL out.
+      - decisions_ganl.md does not touch the stage set.
+      - critic.md has no G-ANL item on it.
+      - The spec's own Q-F0 justification quotes m:324's "a Qwen G-CAL failure STOPs for re-specification and
+      reaches NOT-RUN only through the Clock". It does not limit that to Q-F0.
+
+      **The proposal makes G-CAL an upstream gate for OLMo.**
+      - m:176: the dose is "calibrated once, at G-CAL, and serves all five units", and "(3) or (4) failing → STOP
+      and re-specify".
+      - m:276: "Serves all units."
+      - m:279: LOCK-m-F0 v0.1 carries "calibration (§2.3 artifacts)".
+      - m:300 and m:358: the OLMo track starts "from step 9", which is the commit of LOCK-m-F0 v0.1.
+
+      So if G-CAL STOPs and no re-specification is locked by D_O, the OLMo checkpoints are NOT-RUN by the Clock with
+      G-CAL as the stopped gate (m:324). The build already lists the other shared pre-lock gates (G-SHAPE-F0,
+      G-ANL-F0) for OLMo, so leaving G-CAL out is inconsistent.
+
+      G-PORT is left out for OLMo on purpose: the battery checks that G-PORT is refused on OLMo (m_analyze.py around
+      :2861). G-PORT has passed, so that case is moot. G-CAL has not passed: HEAD 2c50e03 says "G-CAL does not close
+      here", and the 128-generation read is still owed.
+
+      **The scenario can happen.** Steps 7 and 8 started before G-CAL closed, on the PI's go. If G-CAL then STOPs
+      and a box exists, the analyzer has no truthful cause to record for OLMo. `clock:no-box` would be false, and
+      `clock:pi-declined` does not apply.
+
+      **Why minor rather than substantive.**
+      - The analyzer fails loudly: it refuses with exit 2 and never writes a wrong record.
+      - The trigger is unlikely. Condition (3) passed 16/16 and condition (4) passed.
+      - The fix is one line in the uncommitted build.
+      - In every scenario that triggers it, LOCK v0.1 is never committed, so the lock never binds the analyzer's
+      hash. The cost of finding it later is a superseded G-ANL-F0 artifact, because the write-once manifest records
+      the vocabularies, plus an analyzer change made after the outcome is known. That is a real cost, so this should
+      be fixed before the G-ANL-F0 artifact of record is written.
+
+      **Recommended fix (the reviewer's).**
+      - Add "G-CAL" to the OLMo tuple in `gate_stop_stages` (m_analyze.py:382-383).
+      - Cite m:176, m:276 and m:358 in PIN-5's gate-stopped row.
+      - Add a battery case that accepts `clock:gate-stopped:G-CAL` on each OLMo unit.
+
+--- outcome-fidelity: No cause code exists for a Clock miss whose blocking gate is paused or still open rather than STOPPED
+    finder: minor  strict refuter: refuted=False severity=minor  location: scripts/m_analyze.py:340-375 (NOT_RUN_CAUSES) and :409-421 (not_run_reason)
+    CLAIM:
+      The Clock causes are no-box (OLMo only), gate-stopped, pi-declined and k-zero. m:347 is unconditional ("A
+      checkpoint not locked by D_O is NOT-RUN"; "A Q-F0 not locked by D1 is NOT-RUN"). Some routes to a Clock miss
+      are neither a STOP nor a PI decision, and the record cannot state them truthfully:
+      - m:302: "a pause → the seat's adjudication, before that checkpoint's qualification". A G-TIME-OLMo-c PAUSE
+      awaiting adjudication at D_O is such a route.
+      - G-CAL still open (not STOPPED) at D1 is another.
+    FAILURE SCENARIO:
+      1. G-TIME-OLMo-dpo PAUSEs on an AuditSpec-claimed sham round. The seat's adjudication is not given before
+      2026-10-30, so no LOCK v1.0 is committed and the unit is NOT-RUN.
+      2. None of the codes describes this: gate-stopped is refused because no STOP occurred, and pi-declined names a
+      decision nobody took.
+      3. Code must misattribute the cause, and the posted row label prints that misattributed reason.
+    EVIDENCE:
+      - [C] m_analyze.py: the NOT_RUN_CAUSES keys are closed, and `parse_cause` refuses anything else.
+      - [S] m:302: "a fire → STOP, a pause → the seat's adjudication, before that checkpoint's qualification".
+      - [S] m:347: "A checkpoint not locked by D_O is NOT-RUN".
+      - [S] m:324's parenthetical lists "no box; a gate STOPPED …; the PI declined …". Whether that list is
+      exhaustive is not stated.
+    FIX:
+      - Put to the seat, before LOCK v0.1, whether m:324's parenthetical is exhaustive.
+      - If it is not, add a residual Clock code, e.g. `clock:not-locked:<stage>` with the phrase "{stage} had not
+      reached its end and no LOCK v1.0 was committed by its Clock date ({date})", plus a battery case.
+    REFUTER:
+      I reproduced the gap and could not refute it.
+
+      **What the code does.** NOT_RUN_CAUSES (scripts/m_analyze.py:344-373) is a closed set. parse_cause (:399-407)
+      refuses every other code. The probe ran on a scratch copy at step8/refute_clock/probe.py and tried `clock:not-
+      locked`, `clock:not-locked:G-TIME-OLMo-dpo`, `clock:paused` and `clock:gate-open:G-CAL`. All four were
+      REFUSED. The only Clock codes the analyzer accepts are no-box, gate-stopped:<stage>, pi-declined and k-zero.
+
+      **The route is forced.** A unit that is not locked after its Clock date cannot be declared PENDING:
+      pending_state refuses `unlocked-before-D_O` with clock_passed=true (:448). That unit therefore has to be NOT-
+      RUN, and run_not_run (:2056) takes only these codes.
+
+      **The proposal supplies routes that fit none of the codes.**
+      - m:302: "a pause → the seat's adjudication, before that checkpoint's qualification".
+      - Step-3 note 3 (results/raw/2026-10-06_m-v1.11_step3_notes.md:13) confirms the pause-only path: a sham claim
+      at rounds 3-10 of G-TIME-OLMo triggers the pause and no STOP.
+      - m:349 separately names "a Clock miss before step 8" as its own path, so Clock misses without a STOP are
+      anticipated by the text.
+      - Other no-STOP misses after step 8: Qwen G-CAL still open at D1 (it is open now per commit 2c50e03), or the
+      preprint of record not placed before LOCK-m-F0 v1.0 (m:286 "required here").
+      - m:347 is unconditional, and none of these is a STOP or a PI decision.
+
+      **Neither the spec nor Code's decisions make this omission intended.** spec_ganl §4.2/PIN-5 tables the
+      vocabulary as Code-authored, "the seat may author them". Nothing claims the list covers every m:347 route. The
+      build itself already goes beyond m:324's parenthetical by adding clock:k-zero from m:192. So the parenthetical
+      is already being read as non-exhaustive, and the gap is an omission rather than a decision. decisions_ganl.md
+      says nothing about it.
+
+      **Where the finding is overstated:**
+      - (a) "gate-stopped is refused because no STOP occurred" is wrong mechanically. The analyzer never checks that
+      a STOP happened, so `clock:gate-stopped:G-TIME-OLMo-dpo` is accepted silently (the probe printed its phrase).
+      This makes misattribution easier, not harder.
+      - (b) The record's free-text `detail` field is carried into {U}_NOT-RUN.json, so the true cause can be written
+      down. Only the code and the label phrase would be false.
+      - (c) PIN-5's phrases are rewritten by the PI at posting, so a false phrase need not reach the posted paper.
+      - (d) Under the workflow, Code would more likely refuse and escalate than misattribute. That still leaves the
+      hash-locked analyzer unable to record a true NOT-RUN after LOCK v0.1 without re-specification.
+
+      **Severity.** A vocabulary gap that the fix (put the parenthetical's exhaustiveness to the seat before LOCK
+      v0.1, and add a residual code) closes cheaply. Minor is the right severity.
+
+      **Adjacent observation.** gate_stop_stages for OLMo units (:378-379) lists G-SHAPE-F0 and G-ANL-F0 but not the
+      shared Qwen G-CAL, although G-CAL also precedes step 9 and the dose "serves all five units" (m:176). A Qwen
+      G-CAL STOP that is never re-specified by D_O therefore cannot be recorded for OLMo units as gate-stopped
+      either; the probe confirmed `clock:gate-stopped:G-CAL` is refused for OLMo-dpo.
+
+--- outcome-fidelity: The m:318 decisions input refuses Q-F3 as the other unit, and accepts PENDING as a known outcome
+    finder: minor  strict refuter: refuted=False severity=minor  location: scripts/m_analyze.py:484-500 (validate_decisions); UNITS at :108
+    CLAIM:
+      `validate_decisions` requires `other_unit ∈ UNITS` (Q-F0 and the three OLMo units) and `other_state ∈ O6`.
+      m:318 covers any decision "taken after another unit's VERDICTS exist", and Q-F3 is a unit (m:324). An OLMo
+      checkpoint PENDING at v1 can reach VERDICTS between the v1 and v2 postings (m:338: "A row PENDING at v1 is re-
+      labeled at v2"), after Q-F3's VERDICTS. Its analyzer of record is the F0 blob hashed in its LOCK v1.0
+      (PIN-14), so the decision cannot be recorded. Separately, PENDING is accepted as other_state, although a
+      PENDING unit by definition has no VERDICTS (m:324).
+    FAILURE SCENARIO:
+      1. OLMo-instruct is restarting after a box change at v1.
+      2. Q-F3's VERDICTS are committed in early 2027.
+      3. The PI then PI-stops OLMo-instruct, knowing A1's outcome.
+      4. Its `--decisions` file names other_unit "Q-F3". `run_verdicts` exits 2 at V1 ("other_unit must be another
+      built unit: 'Q-F3'", probe p4.py).
+      5. The VERDICTS can then run only by omitting a decision that m:318 requires to be recorded.
+    EVIDENCE:
+      - [C] m_analyze.py:495-498: `if d["other_unit"] not in UNITS or …: raise`; `if d["other_state"] not in O6:
+      raise`. O6 includes PENDING.
+      - [S] m:318: "A decision about one unit taken after another unit's VERDICTS exist … is … recorded in that
+      unit's VERDICTS entry or NOT-RUN record as taken with the other unit's outcome known."
+      - [S] m:324: "A unit (Q-F0; Q-F3; each OLMo checkpoint)".
+      - [S] m:338: "A row PENDING at v1 is re-labeled at v2".
+      - [S] m:361: Q-F3 runs after the v1 posting.
+    FIX:
+      - Admit "Q-F3" as other_unit, with a declared state vocabulary that covers its outcome: e.g. its unit state
+      NOT-RUN, or "VERDICTS" plus the A1/A2/A3 words, or a free-text state when other_unit is Q-F3.
+      - Refuse PENDING as other_state.
+      - Add a battery case for each.
+      - This must land before LOCK v0.1.
+    REFUTER:
+      I reproduced both halves of the claim on a scratch probe (step8/refute_qf3dec/probe.py), which imports
+      scripts/m_analyze.py read-only. validate_decisions([...other_unit "Q-F3"...], "OLMo-instruct") raises
+      "other_unit must be another built unit: 'Q-F3'" for both PASS and POSITIVE. The same call accepts other_state
+      "PENDING", and it does so even with other_unit "Q-F0", a unit for which PENDING is not defined at all (m:324
+      defines PENDING only for an OLMo checkpoint).
+
+      Neither the spec nor Code's decisions make this restriction intended:
+      - Decision 5 and the critic's correction (critic.md:78-86) fix only the shape {decision, date, other_unit,
+      other_state}. They name no vocabulary.
+      - PIN-35's text (m_analyze.py:479-483, :2328) declares no vocabulary either. Restricting to UNITS (:108) and
+      O6 was the builder's own choice, and nothing records it as a scoping decision.
+      - m:278's F3 exclusion covers only "Steps 3, 4, 6; counter (c)'s scorer and lexicons". An OLMo unit's record
+      of a decision taken with Q-F3's outcome known is none of those.
+
+      The spec contemplates the scenario explicitly, and in stronger terms than the reviewer's example:
+      - m:340: "if A3 = POSITIVE while an OLMo unit is still running, §7.3 wins: that unit is PI-stopped and
+      analyzed as obtained". That is a PI stop of an OLMo unit taken after Q-F3's VERDICTS, where A3 is computed
+      (m:361).
+      - m:324 closes any checkpoint still PENDING at v2 by a PI stop, which also comes after Q-F3.
+      - m:358 step 17 requires each OLMo VERDICTS to record "any decision taken with another unit's outcome known".
+
+      The OLMo locks almost certainly bind the F0 blob. CLOCK_DATE (D_O) is 2026-10-30, POSTING v1 follows the Q-F0
+      lock, and G-ANL-F3 starts only after POSTING v1 (m:361). Under PIN-14 the OLMo locks would therefore hash the
+      F0 analyzer, so the gap cannot be fixed at G-ANL-F3.
+
+      One mitigation partly softens "cannot be recorded". m:318 says "VERDICTS entry", so the decision could still
+      go into the RESULTS.md entry as prose. That would leave the analyzer's required, verbatim-carried m:318 record
+      (PIN-35) incomplete, and inconsistent with the entry. The PENDING half is also real: accepting PENDING
+      contradicts m:318's "after another unit's VERDICTS exist". Severity minor stands. The fix is a vocabulary
+      change that must land before LOCK v0.1 hashes the analyzer.
+
+====================================================================================================
+REVIEW LENS posting-fidelity -- 6 finding(s)
+====================================================================================================
+COVERED:
+  Posting-fidelity lens on scripts/m_analyze.py (sha256 5dd81bc4…772f) and the placeholder (4ff15f1f…6615), read-
+  only. Probes are in /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-
+  lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step8/posting_lens/.
+
+  (1) Independent recomputation (recompute.py). I took every text directly from the proposal lines: m:334 titles;
+  m:338 label templates, e2b, base, the three abstract clauses; m:337/m:341 licensing and ceiling; m:343 tokens;
+  m:349 (a)/(b)/(c) with the decisions' two-sided (c) and PIN-22. I then compared against v1_outputs over 5×6³×2
+  flags.
+  - 0 mismatches in 2,160 evaluations.
+  - Tallies agree with the battery and with ganl_final/G-ANL-F0.json: L0 216; each L0-OLMo-c 180; 16 licensing
+  vectors; Fallback-1/2 216/864; abstract 5 / 375 / 75 / 625 with 8 texts; e2a/f1 216 per state; each OLMo row
+  180/540/180/180; 1,080 distinct §8.1 texts; 'open' 1,080.
+  - All 20 placeholder rows' (a, b, c) fire counts under T and F equal PLACEHOLDER_FIRES and spec §9.5.
+
+  (2) Checked against the proposal and the decisions:
+  - verbatim constants (constants_by_line vs m:14/334/337/338/341/343/349);
+  - the flag of record against decision 9: existence-keyed, renders recorded beside;
+  - dose_note under T, F and no-dose-row;
+  - §8.1 text under PIN-17 and Step 7 'open';
+  - the counters declaration against m:314 and audit.DECLARED_COUNTERS_*;
+  - table_problems, run_posting, crosscheck_coordinate, _validate_olmo_states and Q-F0's V10 path in run_verdicts.
+
+  (3) Ran 13 mutation probes, on scratch copies only. Out of scope: per-arm outcome math, counter tabulation beyond
+  the declaration, secondaries, the closure.
+--- posting-fidelity: The sentence table cannot hold two sentences from the same preprint line, so a one-row-per-sentence table of record is refused
+    finder: substantive  strict refuter: refuted=False severity=substantive  location: scripts/m_analyze.py:1380, :1406-1410 (table_problems)
+    CLAIM:
+      table_problems refuses any two rows with the same loc.line ('rows are not in strictly increasing loc.line
+      order'). loc is fixed to {line, section}, with no way to place a sentence within a line. In the preprint's
+      form a paragraph is one line, so two gated sentences of one paragraph can never be separate rows. m:349
+      enumerates 'every sentence', and the spec's PIN-20 says one row per sentence. Spec §9.4 only refused rows 'not
+      in loc.line order' (non-strict); the build tightened it to strictly increasing.
+    FAILURE SCENARIO:
+      Step 15, LOCK-m-F0 v1.0: Code builds the table of record from the placed preprint. Line 13 of the v1.0 draft
+      (the abstract) is a single 2,961-character line with 15 sentences. Two of them are gated: 'And no choice
+      moves…' (nulls on e2a, f1 and the OLMo rows) and 'We conclude that such states are functional for the
+      character…' (main thesis). Both get loc.line 13, and the table is refused. By then the analyzer hash is frozen
+      at LOCK v0.1. Code must either (i) merge whole paragraphs into one row, so the §7.5 enumeration reports
+      15-sentence items with unioned null_cells and the highest thesis, or (ii) put a number that is not a line into
+      loc.line (loc.line is never checked against the preprint), or (iii) edit the analyzer and break the hash chain
+      of LOCK v0.1, Q-F0's LOCK v1.0 and the OLMo LOCK v1.0s.
+    EVIDENCE:
+      probe_sameline.py, using the real PREPRINT-v1_0-draft.md as the preprint:
+      - the two line-13 sentences as rows S01 and S02 return ['rows are not in strictly increasing loc.line order'];
+      - the same table without S02 returns [].
+      The draft has 175 of 455 lines carrying two or more sentences. The placeholder gives every row a distinct line
+      (loc.line = nn), so no battery case has a tie.
+    FIX:
+      Before LOCK v0.1:
+      - Add an integer loc.sentence (ordinal within the line) or loc.offset (character offset).
+      - Require (line, sentence) strictly increasing and unique, rather than line alone.
+      - For of-record and posted tables, verify that the row text occurs on its declared preprint line.
+      - Add a placeholder row pair that shares a line, with its fire counts asserted.
+    REFUTER:
+      I reproduced the finding and could not refute it.
+
+      **What the code does.** In `/Users/jasondwyer/Documents/code/jspace-lab/scripts/m_analyze.py`,
+      `table_problems` (lines 1380–1384 and 1409–1410) collects every row's `loc.line` and refuses with "rows are
+      not in strictly increasing loc.line order" when `lines != sorted(lines) or len(set(lines)) != len(lines)`.
+      `loc` must have exactly the keys {line, section}, so a row has no field that places it within a line.
+
+      **Reproduced.** I ran the reviewer's probe, `scratchpad/step8/posting_lens/probe_sameline.py`, against the
+      real `PREPRINT-v1_0-draft.md` with `PYTHONDONTWRITEBYTECODE=1`:
+      - the two line-13 sentences as rows S01 and S02 return `['rows are not in strictly increasing loc.line
+      order']`;
+      - the same table with S02 removed returns `[]`.
+      - Line 13 is 2,961 characters and splits into 15 sentences. By my count 158 lines of the draft carry two or
+      more sentences. The reviewer says 175; the exact number depends on the splitter and does not matter.
+
+      **Why the spec and decisions do not make this intended.**
+      - Spec §9.4 refuses only "duplicate ids, or rows not in `loc.line` order". Read plainly, that allows ties. The
+      build added the uniqueness conjunct on its own.
+      - `decisions_ganl.md` says nothing about it (item 15: "Everything else as spec_ganl.md states"), and
+      `critic.md` has no G-ANL-F0 item on it.
+      - The spec's own PIN-20 answer (spec_ganl.md:825) says "one row per sentence with ungated rows included", and
+      `read_anl-posting.md` §5 says the same.
+      - m:349 has Code enumerate "every sentence of the preprint of record that falls under (a), (b) or (c)".
+      - So a table built the way the spec designs it is refused by the build whenever a paragraph-line holds two
+      rows. Because ungated sentences are included too, that means almost every multi-sentence paragraph, not just
+      two gated sentences.
+
+      **Nothing needs the strict check.** Neither `enumeration()` nor any other code path keys on unique lines. The
+      reverse-order battery case (around :3221) would also be caught by a check that allows ties.
+
+      **Why it matters before LOCK v0.1.** The analyzer hash freezes at LOCK v0.1 (m:279). The table of record is
+      built at LOCK v1.0 from the PI's placed preprint (m:278, m:286). That preprint is not on disk yet, but the
+      v1.0 draft puts one paragraph per line, and Code cannot reformat the PI's file because its hash is checked. At
+      that point the only ways through are the ones the reviewer lists:
+      - merge paragraphs into single rows, which breaks the per-sentence enumeration;
+      - put a number that is not a line into `loc.line`, which `table_problems` never cross-checks against the
+      preprint;
+      - edit the frozen analyzer, which breaks the hash chain.
+
+      **Limits on the claim.**
+      - The defect is latent at step 8: the placeholder uses `loc.line = nn`, so no current battery case has a tie.
+      - Merging paragraphs would still be conservative: (a) and (b) become ORs over the merged sentences, so nothing
+      is missed. The cost is fidelity to m:349 and PIN-20, not correctness.
+      - The minimal fix is the spec's literal rule: rows in non-decreasing `loc.line` order, plus a placeholder pair
+      that shares a line. The reviewer's extra parts (`loc.sentence`, and checking each row's text on its declared
+      line) are optional hardening, not required to cure the defect.
+
+      Severity stays substantive, because the fix is cheap now and blocked once the analyzer hash is locked.
+
+--- posting-fidelity: Q-F0's VERDICTS does not check the table of record (or the preprint of record) against the hashes in LOCK-m-F0 v1.0
+    finder: substantive  strict refuter: refuted=False severity=substantive  location: scripts/m_analyze.py:1750-1757 and :1772-1781 (run_verdicts V1 / V10); :2166-2170 (run_posting)
+    CLAIM:
+      m:286 has LOCK v1.0 hash 'the sentence table of record — … values-checked and hashed here, so that the
+      VERDICTS entry (step 17) enumerates over it', and the preprint of record. run_verdicts checks only the
+      analyzer, package and closure shas against the lock text. For --sentences it requires only that the table is
+      committed at HEAD, passes table_problems and has kind 'of-record'. table_problems compares the preprint file
+      with the table's own declared sha, never with the lock.
+    FAILURE SCENARIO:
+      After LOCK-m-F0 v1.0 commits table sha X, a reclassified data/m/gates/m_posting_sentences.json (sha Y) is
+      committed. For example, null_cells or thesis are edited once OLMo VERDICTS are known, which ends the outcome-
+      blindness PIN-20 promises. At step 17, `verdicts --unit Q-F0 --sentences …` accepts Y and writes 'the §7.5
+      enumeration of record' over it, with no refusal. The mismatch can only be found by comparing
+      inputs.sentences.sha256 against the lock by hand. The step-18 posting has no lock input at all.
+    EVIDENCE:
+      The battery itself shows the gap. Its lock text (m_analyze.py:3619) names only the analyzer, package and
+      closure shas, with no table hash, yet the Q-F0 V10 check CMD-VERDICTS-QF0-V1 passes over _bt_qf0_v10_inputs'
+      table. Mutation: making V10 accept any table kind (`if tp:`) also survives, 283/283 (mutate_posting.py).
+    FIX:
+      In V1:
+      - Refuse unless sha256(sentences bytes) and table.preprint.sha256 both appear in the --lock text, as is
+      already done for the analyzer.
+      - Add a battery check in both directions: a lock without the table sha is refused, and a lock with it is
+      accepted.
+      - Declare in a PIN that the posting's of-record table must be LOCK v1.0's. For example, posting takes --lock
+      when the table kind is of-record, or records and asserts the lock's table sha.
+    REFUTER:
+      I reproduced the core claim and could not refute it. Two parts of the finding are overstated.
+
+      What I checked (read-only, plus one mutation probe on a scratch copy):
+
+      1. **The lock binds only three hashes.** At V1 (scripts/m_analyze.py:1750-1757), run_verdicts substring-checks
+      just three values against the lock text: the analyzer sha256, package_sha256 and the closure sha256.
+         - For Q-F0 (:1772-1781) the table only has to be committed at HEAD, pass table_problems, and carry `kind ==
+      "of-record"`.
+         - The `kind` field is something the table declares about itself.
+         - TABLE_OF_RECORD_REL (:83) is declared but never used, so `--sentences` can be any committed path.
+         - The closure (PIN-1) covers only data files opened during imports, so the table is not bound there either.
+         - table_problems (:1413-1431) checks the preprint against the table's own declared sha/bytes/lines, never
+      against the lock.
+
+      2. **The battery passes with a lock that never names the table.** The battery's lock text (:3619) names only
+      the analyzer, package and closure, yet Q-F0's VERDICTS writes v1_outputs over `_bt_qf0_v10_inputs`' table,
+      which no lock names (CMD-VERDICTS-QF0-V1, :3687-3692).
+
+      3. **The kind check is untested.** I ran my own scratch mutation, replacing `if tp or table.get("kind") !=
+      "of-record":` with `if tp:` (step8/refute_tablelock/mut1.py). The battery still reports 283/283 with rc 0, so
+      no check covers a placeholder or posted table at Q-F0 VERDICTS.
+
+      Why the spec and decisions do not make this intended:
+      - The spec's V1 list (spec_ganl.md:228-235) names the analyzer and package shas in the lock and "`--sentences`
+      has kind of-record and is committed". The decisions add the closure.
+      - Neither document states that the table is deliberately left unbound to the lock; it is a silent omission.
+      - The governing text binds the table explicitly. m:286 has LOCK v1.0 hash "the sentence table of record — …
+      values-checked and hashed here, so that the VERDICTS entry (step 17) enumerates over it". m:278 says "hashed
+      where built". PIN-20 and the spec (:475) promise the classification is outcome-blind at LOCK v1.0.
+      - Without a lock check, a reclassified m_posting_sentences.json committed after the lock is accepted silently.
+      A post-lock edit is detectable only by comparing `inputs.sentences.sha256` against the lock by hand.
+      - This matters now because LOCK v0.1 freezes the analyzer's hash, so the check cannot be added after that
+      point. The analyzer already uses the same substring mechanism for its own hashes (PIN-14), so the fix is
+      cheap.
+
+      Overstated parts:
+      - **(a) Posting.** "The step-18 posting has no lock input at all" is largely by design. m:278 and m:286 have
+      the table of record built at the posting on Q-F0's NOT-RUN path, where no LOCK v1.0 exists, and the posting
+      re-runs on the posted text, a table no lock hashes. The finding's suggested fix, making the posting take
+      `--lock` whenever the table kind is of-record, would break the NOT-RUN path. A posting-side binding would have
+      to be conditional, for example only when Q-F0 has a VERDICTS output.
+      - **(b) Preprint.** A separate preprint-vs-lock check is redundant once the table's sha is checked against the
+      lock. The table records the preprint's sha, and table_problems verifies the file against it, so the preprint
+      would be bound transitively.
+
+      Severity: the gap needs a post-lock re-commit of a table that convention treats as write-once, and the
+      recorded sha leaves a trail. Even so, it is the only mechanical guard for an integrity property m:286 states
+      outright, and it cannot be retrofitted after LOCK v0.1. That keeps it substantive rather than minor.
+
+--- posting-fidelity: The m:278 re-run on the posted text cannot write its output: both posting runs use one write-once file name
+    finder: minor  strict refuter: refuted=False severity=minor  location: scripts/m_analyze.py:2177 (run_posting)
+    CLAIM:
+      The output is always out/POSTING-v1_outputs.json, whatever the table kind. m:278 and m:73 require two
+      enumerations at the posting:
+      - one over the table of record, under the posting tuple;
+      - one 're-run on the posted text at the posting', over a 'posted' table.
+      The second run differs in table and so in bytes, and write_texts_once refuses it.
+    FAILURE SCENARIO:
+      Step 18:
+      1. `posting --tuple T --sentences m_posting_sentences.json` writes POSTING-v1_outputs.json.
+      2. After the PI rewrites, `posting --tuple T --sentences m_posting_sentences.posted-v1.json` exits 2: 'exists
+      with different bytes -- write-once'. Under PIN-37, the mandated re-run then needs a seat ruling and a `git mv`
+      of the record output.
+
+      The same happens if the tuple changes because an OLMo VERDICTS lands before the PI posts. The only way around
+      it is an ad-hoc --out directory, which no PIN declares.
+    EVIDENCE:
+      probe_posted.py, using _bt_env in a temp dir:
+      - of-record run: written;
+      - posted run: 'AnlRefusal REFUSED: POSTING-v1_outputs.json exists with different bytes -- write-once (move it
+      aside by hand on the seat's ruling, PIN-37)'.
+    FIX:
+      Name the output by table kind, for example POSTING-v1_outputs.of-record.json and
+      POSTING-v1_outputs.posted.json. Declare this in PIN-25, and add a battery check that runs both kinds in one
+      directory.
+    REFUTER:
+      I reproduced the claim. I ran the reviewer's probe (scratch/step8/posting_lens/probe_posted.py, temp dir,
+      _bt_env). The run on the table of record returns 'written'. The second `run_posting` call in the same out dir,
+      on a valid kind='posted' table, raises: "AnlRefusal REFUSED: POSTING-v1_outputs.json exists with different
+      bytes -- write-once (... PIN-37)".
+
+      The code confirms why:
+      - scripts/m_analyze.py:2177 hard-codes `out / "POSTING-v1_outputs.json"` whatever the table kind.
+      - The output doc carries `table_kind` and `inputs.sentences`, so the two runs always differ in bytes.
+      - The CLI defaults `--out` to data/m/verdicts for every posting run.
+
+      The proposal mandates both runs at one posting:
+      - m:278 says the table of record is built "else at the posting ... and re-run on the posted text at the
+      posting".
+      - m:73 says "each re-run on the posted text at the posting".
+      - m:349 says Code enumerates, then the PI rewrites at posting.
+
+      The spec and decisions do not make the collision intended:
+      - spec_ganl.md §9.4 declares a separate `posted` kind with its own path (m_posting_sentences.posted-v1.json).
+      - The spec's [SEAT] note says "the analyzer accepts any table kind and reports the enumeration".
+      - decisions_ganl.md §2 routes only the re-run's pass bar to the seat, not its mechanism or output name.
+      - PIN-25 names a single output, data/m/verdicts/POSTING-v1_outputs.json, and declares no home for the posted
+      re-run.
+      - PIN-37 covers replacing an artifact (a seat strike or a re-specified input). The posted re-run is a second
+      mandated record, not a replacement. Applying PIN-37 here would `git mv` a still-valid of-record enumeration to
+      a "superseded" name.
+
+      The path occurs in practice in two cases:
+      - Q-F0 is NOT-RUN, so there is no VERDICTS V10 enumeration and the posting command must run on the table of
+      record first.
+      - An OLMo VERDICTS lands between steps 17 and 18. The spec itself says this may happen, and PIN-23 then
+      requires recomputing at the posting.
+
+      Where the claim is overstated:
+      1. The tuple-change scenario is arguably intended. A changed tuple is a re-specified input under PIN-37. The
+      battery itself sends its changed-tuple run to a separate dir `z` (m_analyze.py:3975) rather than reusing pdir.
+      2. "Cannot write" holds only with the defaults. `posting` accepts `--out` (it is in the spec's own command
+      signature) and does not restrict it, so the posted re-run can be written elsewhere today. But no PIN declares
+      that location.
+
+      The analyzer, including its PINS text, is hashed at LOCK v0.1 (m:279). A declared naming fix is therefore
+      cheap now and costs a version bump later. I agree with minor: it is a real gap in a supported, mandated path,
+      but a workaround exists and it is not reached until step 18.
+
+--- posting-fidelity: Almost none of the posting and Q-F0 V10 guards are tested: 10 of 11 mutants pass 283/283
+    finder: minor  strict refuter: refuted=False severity=minor  location: scripts/m_analyze.py:2108-2134 (crosscheck_coordinate), :2154-2170 and :2175 (run_posting), :1778 and :1943 (V10); battery :3940-3979
+    CLAIM:
+      The 1,080-tuple pass calls v1_outputs directly. In the command paths, the battery checks only the state-vs-
+      VERDICTS mismatch, PENDING beside a VERDICTS, and pending-closed-at-v2. Every other guard that PIN-23, m:286
+      and m:338/m:349(c) rely on can be removed without any check failing. The code is correct today: I verified
+      unit_rows against label_set for every unit and state, with 0 differences.
+    FAILURE SCENARIO:
+      Edits to this file are expected before LOCK v0.1 hashes it (the seat's rulings on PIN-8/9/17). A regression
+      there would pass the battery and be frozen. Examples:
+      - a plausible `bool(flag)` (always truthy) in place of `bool(flag['value'])` carries the dose note at the
+      posting with G-CAL's artifact absent, against m:338's 'iff';
+      - a dropped reason crosscheck lets the posted label print a reason different from the unit's NOT-RUN record
+      (m:324 'with the reason recorded');
+      - the posting accepting the placeholder contradicts m:286 'the placeholder table serves G-ANL-F0 only'.
+    EVIDENCE:
+      mutate_posting.py and mutate_posting2.py, run on scratch copies. Each of these mutants passes 283/283, exit 0:
+      - posting reason crosscheck off;
+      - posting accepts placeholder;
+      - Q-F0 VERDICTS accepts placeholder;
+      - posting flag forced True;
+      - Q-F0 V10 flag forced True;
+      - crosscheck NOT-RUN ignores an existing VERDICTS;
+      - crosscheck outcome ignores an existing NOT-RUN;
+      - reasons/pending keyset unchecked;
+      - uncommitted table accepted at posting;
+      - OLMo unit_rows 'did not pass ' text altered.
+      Only the content-keyed flag mutant was caught.
+    FIX:
+      Add CMD-POSTING-* and CMD-VERDICTS-QF0-* checks (refusals checked both ways):
+      - a FALSE flag end to end, using a temp flag source that is absent: dose_note reads 'none (struck…)' and (c)
+      strike items appear, in both the posting and V10;
+      - a reason mismatch is refused;
+      - NOT-RUN beside a VERDICTS output is refused, and an outcome state beside a NOT-RUN output is refused;
+      - a reasons/pending keyset mismatch is refused;
+      - an uncommitted table is refused;
+      - a placeholder is refused at both posting and V10;
+      - an OLMo VERDICTS rows label equals label_set's row for each state.
+      Then raise EXPECTED_CHECKS.
+    REFUTER:
+      I reproduced the claim myself and could not refute it.
+
+      **Method.** I wrote my own harness: /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-
+      lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step8/refute_postcov/mut.py, with results in results.txt
+      beside it and per-mutant stdout under mut/. It runs on scratch copies only, with the REPO line pinned to the
+      repo. I included a no-op control and one extra mutant, the reviewer's suggested plausible regression
+      `bool(flag)`.
+
+      **Results.** The control passes 283/283. Each of these mutants applied once, then passed 283/283 with exit 0:
+      - the posting's reason crosscheck off;
+      - the posting accepts the placeholder;
+      - the Q-F0 VERDICTS path accepts the placeholder;
+      - the posting flag forced True;
+      - `bool(flag)` (a non-empty dict, so always truthy) at the posting;
+      - the Q-F0 V10 flag forced True;
+      - the NOT-RUN crosscheck ignores an existing VERDICTS;
+      - the outcome crosscheck ignores an existing NOT-RUN;
+      - the reasons/pending keyset check removed;
+      - an uncommitted sentence table accepted at the posting;
+      - OLMo unit_rows "did not pass: " changed to "did not pass ".
+
+      Only the content-keyed flag mutant was caught: 281/283, failing FLAG-RENDERS-BESIDE. So the harness is
+      sensitive, and the gap is real.
+
+      **Why the gaps exist** (code read):
+      - The posting's flag source in CMD-POSTING is always the committed G-CAL_model-free.json, so the flag is True.
+      CMD-VERDICTS-QF0-V1 asserts `flag.value is True`. No run of either command takes a FALSE flag.
+      - The FLAG-FALSE-* checks and the 2,160-evaluation pass test `flag_of_record` and `v1_outputs` directly, not
+      what `run_posting` / `run_verdicts` pass to them.
+      - Every posting and V10 call uses the of-record temp table (`_BT_STATE['rec_table']`).
+      - `_bt_env.committed` treats any existing file as committed, so the posting's uncommitted-table refusal is
+      unreachable in the battery.
+      - The NOT-RUN fixtures always carry the matching reason. No fixture has both a VERDICTS and a NOT-RUN output,
+      and no tuple has a mismatched keyset.
+      - C3-OLMO-COMPLETE says "its row state and row label", but it asserts only `rows.state`. `labels_ok` checks
+      unit_rows for Q-F0 only.
+
+      **Not made intended by the spec or decisions.** Spec §11's coverage registry does not list these checks, and
+      m:278(i)–(iii) does not require them. So the battery meets its declared registry, and this is a test-adequacy
+      gap, not a spec violation. But nothing in the spec, the decisions or critic.md says these guards should go
+      untested. The guarded behaviours themselves are specified or built deliberately:
+      - §9.1/§5 posting: "cross-checks each coordinate";
+      - m:286: "the placeholder table serves G-ANL-F0 only";
+      - m:338/m:349(c): the dose note "iff" the artifact exists;
+      - PIN-23.
+
+      Spec §5 also says these commands "are exercised only by the battery". Decisions item 2 confirms that analyzer
+      edits (PIN-8/9/17) are expected before LOCK v0.1 hashes the file. So a regression in these paths would be
+      frozen at LOCK v0.1 without any check catching it, which is the reviewer's failure scenario.
+
+      **One partial overstatement, not enough to refute.** Spec line 831 says "the analyzer accepts any table kind"
+      for the posted re-run. That makes the posting's placeholder refusal Code's reading of m:286, not a spec'd
+      requirement. It is still deliberately built and cited to m:286 in the code, and it is untested.
+
+      **Severity.** The code is correct today: no current wrong output, a test-coverage gap only. Minor is the right
+      severity.
+
+--- posting-fidelity: The battery's check of the real flag source also requires renders_sha_matches_calib to be True
+    finder: nit  strict refuter: refuted=False severity=nit  location: scripts/m_analyze.py:3240-3244 (_bt_flag, FLAG-OF-RECORD-TRUE)
+    CLAIM:
+      Decision 9 and PIN-19 say renders_sha_matches_calib is 'recorded beside the flag (not part of it)'.
+      flag_of_record follows that. The battery check on the real file, however, passes only if
+      `real['renders_sha_matches_calib'] is True`. The analyzer's own acceptance (selftest, and so `ganl`) therefore
+      depends on a content field that the flag ignores.
+    FAILURE SCENARIO:
+      A legitimate re-issue of data/m/gates/G-CAL_model-free.json (PIN-37 supersession after the seat's owed G-CAL
+      items) carries renders_sha_matches_calib false. flag_of_record still returns TRUE, as designed, but the
+      battery fails 282/283 and `ganl` STOPs with exit 4. That is content-keying, which the decision rules out.
+    EVIDENCE:
+      Line 3243: `real["value"] is True and real["renders_sha_matches_calib"] is True`. FLAG-RENDERS-BESIDE (a temp
+      copy) asserts the opposite design: the flag stays TRUE when the field is false.
+    FIX:
+      Assert only `real['value'] is True` (plus the sha) in FLAG-OF-RECORD-TRUE, and print renders_sha_matches_calib
+      beside it.
+    REFUTER:
+      I reproduced the defect. It is a real inconsistency, and nit is the right severity.
+
+      **What the decision says.** Decision 9 overrides the spec's §9.3 predicate. The spec's predicate included
+      `renders_sha_matches_calib is True`, and the critic flagged that as a content test. Decision 9 sets the flag
+      to TRUE iff three things hold: the file is committed at HEAD and identical in the working tree, the schema is
+      m-gcal-model-free-v1, and an f1_012 block is present. `renders_sha_matches_calib` is "recorded beside the flag
+      (not part of it)".
+
+      **The code follows the decision everywhere but one place.**
+      - `flag_of_record` (scripts/m_analyze.py:1487-1519) follows it.
+      - So do its PIN comment (1490-1492) and the PIN-19 wording (2279-2283).
+      - The battery check FLAG-OF-RECORD-TRUE (3241-3244) does not. Its condition is `real["value"] is True and
+      real["renders_sha_matches_calib"] is True`. Its own label lists only the existence criteria, so the extra
+      conjunct looks like a leftover of the predicate that the critic and Decision 9 removed. Nothing in the
+      decisions, the critic or the PINs declares it intended.
+      - The sibling check FLAG-RENDERS-BESIDE (3269-3270) asserts the opposite design on a temp copy: the field is
+      false and the flag stays TRUE.
+
+      **Probe** (scratch only, `step8/probe_flag_renders.py`, repo untouched). I imported the analyzer and wrapped
+      `flag_of_record` so that only the real path reports `renders_sha_matches_calib` False.
+      - `_bt_flag` went from [T,T,T,T,T,T] to [F,T,T,T,T,T].
+      - The flag value under the patch stayed True.
+      - The FAIL line printed `(True, 'aad8096a6aa90ebb')`, which is misleading: it shows the value as TRUE while
+      reporting a failure.
+      - Nothing else in the battery depends on the real file's content: the posting checks at 3949-3975 use only the
+      flag's value. So this conjunct is the only thing that ties the battery's pass to that field.
+      - A failed battery makes `ganl` return 4 (line 4242), as the finding claims.
+
+      **Why nit and not higher.**
+      - The defect is dormant. The committed file has `renders_sha_matches_calib: true`, so the battery passes
+      today.
+      - The scenario needs a G-CAL re-issue whose renders do not match the calibration. That would be an anomaly the
+      seat would want to see anyway, and STOPping on it fails safe.
+
+      **Caveat on the proposed fix.** Asserting "plus the sha" would itself tie the check to the file's exact bytes:
+      any re-issue would fail it, which brings back the problem the finding objects to. The better fix is to assert
+      only `value is True`, and to print the sha and `renders_sha_matches_calib` beside it as diagnostics.
+
+--- posting-fidelity: The TUP-T10-F check never reads a flag=F output
+    finder: nit  strict refuter: refuted=False severity=nit  location: scripts/m_analyze.py:3044-3060, :3117-3129 (_bt_tuple_pass / _bt_tuples, TUP-T10-F)
+    CLAIM:
+      Aggregate tallies are collected only under `if flag:`. The 'tuples T10 flag=F' check reuses the same `agg`
+      boolean as flag=T, so coverage id TUP-T10-F is marked by a check that examines no flag-False result. The
+      F-side tallies are implied today only through T9's invariance check.
+    FAILURE SCENARIO:
+      If T9's strip() were loosened in a later edit (for example to tolerate label differences), a flag-dependent
+      drift in the licensing, label or ceiling tallies under F would still be reported as 'T10 flag=F … PASS'. The
+      artifact's tallies block is also flag-T only, while it is presented as per-flag.
+    EVIDENCE:
+      The raw prints identical lines 166 and 167 ('tuples T10 flag=T' / 'flag=F'), with the same tuple
+      ({'Fallback-1': 216, 'Fallback-2': 864}, …, 19440).
+    FIX:
+      Accumulate the tallies per flag and assert each flag's tallies separately, or relabel the F check as implied
+      by T9 and drop TUP-T10-F from REQUIRED_COVERAGE.
+    REFUTER:
+      I could not refute the claim's core. It is a real nit, though the failure scenario is overstated.
+
+      **Reproduced from the code.** In `_bt_tuple_pass`, every content tally sits under `if flag:`
+      (scripts/m_analyze.py:3056-3069): L0, L0c, lic_vectors, ceiling, abstract, abstract_texts, f0, olmo, s81 and
+      open. Only two things are counted for both flags: `tallies["tuples"][flag]`, which is a loop counter, and
+      `tallies["fires"][flag]`. In `_bt_tuples` (:3117-3129) one boolean, `agg`, is built from those flag-T tallies.
+      Both B.chk calls reuse it, and the second one marks `TUP-T10-F`. The only flag-F inputs `agg` sees are
+      `tal["tuples"][False] == 1080` and `total`, which includes the F assertion counts. Neither is F output
+      content. The raw lines 166 and 167 of ganl_final_1.txt are identical.
+
+      **Scratch probe** (scratchpad/step8/refute_t10/probe.py, in memory, repo untouched). I patched `v1_outputs` so
+      that under flag F the ceiling became "Main" and every licensing bool was inverted. Result:
+      - T1-F: 0/1080
+      - T3-F: 0/1080
+      - T9: 0/1080
+      - tallies unchanged: ceiling {Fallback-1: 216, Fallback-2: 864}, L0 216
+
+      So `agg`, and with it the T10-F check, would still pass. The F check examines nothing on the F side.
+
+      **The spec does not make this intended.** spec_ganl.md §11 says "Tuples: TUP-T1…T10 (§10), each under both
+      flags". §10's T10 aggregates (L0 216, Fallback 216/864, etc.) are figures for a 1,080-tuple population, i.e.
+      one flag. decisions_ganl.md and critic.md say nothing about T10, and no PIN declares an "implied by T9"
+      reading. A coverage ID marked by a check that never evaluates its subject undercuts the registry's purpose:
+      m:278, "a skipped assertion is a failure".
+
+      **Where the claim overstates:**
+      1. "Implied only through T9" is wrong. Under flag F, T1–T8 each compare every F output to the independent
+      oracle, and the probe shows T1-F and T3-F catch the drift. Loosening T9 alone would not let a flag-F drift in
+      licensing, labels or ceiling through. It would need T9 loosened and the oracle drifting identically under F.
+      2. `licensing`, `label_set`, `ceiling`, `abstract_clause`, `s81_text` and `step7` take no flag argument in
+      `v1_outputs` (:1322-1324). Today the F tallies are equal by construction.
+      3. The artifact's tallies block is not really "presented as per-flag". Only `tuples_per_flag` (hardcoded) and
+      `placeholder_fires` (genuinely per-flag) carry flag keys. The spec's per-flag fire-count clause of T10 is
+      asserted separately per flag under ENUM-*-T/F.
+
+      **Net:** the defect is real but cosmetic, a coverage label that claims more than its check examines, with no
+      current path to a wrong verdict. Nit is the right severity. The suggested fixes are proportionate: accumulate
+      per flag and assert each, or relabel and drop TUP-T10-F.
+
+====================================================================================================
+REVIEW LENS harness-tests -- 11 finding(s)
+====================================================================================================
+COVERED:
+  I reviewed the build through the harness-tests lens. All probes ran on scratch copies under
+  /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-
+  lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step8/review_ht/. Nothing was written in the repo, and I made
+  no git writes.
+
+  **What I read**
+  - spec_ganl.md in full, decisions_ganl.md, and every critic.md item tagged G-ANL-F0.
+  - scripts/m_analyze.py in full (sha256 5dd81bc4…772f), with the battery, closure, write-once, CLI and verdict path
+  read line by line.
+
+  **Scope of the change**
+  - `git diff` shows the scripts/m_sessions.py changes are all G-SHAPE's (the gshape subcommand and its self-test).
+  - Nothing tracked under valence_core/ changed. The only new file there is G-SHAPE's untracked gshape.py.
+  - .gitignore is untouched (deferral honoured). The placeholder file is admitted by .gitignore:235.
+
+  **Closure (decision 1)**
+  - Recomputed it with `python -I -B`: 15 valence_core modules outside the package, plus
+  data/olmo/a1_repair_roster.json.
+  - No repo-local module outside valence_core is loaded, and no closure module imports conditionally.
+  - A tracer around run_verdicts during the full battery saw only two repo files opened: the proposal and the flag
+  source. So the closure's import-time data capture misses nothing on the verdict path.
+  - The V1 closure refusal is killed by mutant H02.
+
+  **Reads (m:318)**
+  - The open hook and the snapshot stat-only rule are as declared. The battery reads nothing under ckpt, reports,
+  verdicts or results/raw.
+
+  **Write-once, artifact, display**
+  - write-once refuses before writing anything (H03 killed).
+  - The temp G-ANL-F0.json carries the decision-12 fields: 283/283, 290 coverage ids, no HEAD and no timestamp.
+  - sdec is used for every signed display. Lazy imports: stages only, checked both directions.
+
+  **Baseline battery and CLI**
+  - Baseline battery on a scratch copy: 283/283, rc 0.
+  - CLI probes:
+    - `--selftest ganl`, `ganl --out ''`, `ganl --out data/m/foo` and canonical `ganl` (uncommitted analyzer) each
+  return 2 and write nothing.
+    - Canonical `ganl` with a failing closure returns 1.
+    - `posting` with a malformed unit output returns 1.
+
+  **Mutation probes: 43 total (mut_ht.py, mut_ht2.py, H10, plus H09 under -O)**
+  - Killed: O04, O11, E02, E03, E04, E05, F05, H01, H02, H03, and H09 (the latter only without -O).
+  - Survivors I judge equivalent or not silent:
+    - O12 (DEAD `<=`; equality with 1/40 does not occur in practice).
+    - E06 (check_tuple admits Q-F0 PENDING; pending_state refuses it downstream on both command paths).
+    - F01 (a non-mapping f1_012 makes the mutant crash rather than pass silently).
+    - The builder's floor/ceil power-split survivor (power is symmetric in the two maps).
+    - H06 is environment-dependent: it survives only while the analyzer is uncommitted.
+  - Non-equivalent survivors, all passing 283/283: O01, O02, O03, O05, O06, O07, O08, O09, O10, O20, O24, O25, E01,
+  E07, E08, E11, F02, F03, F04, F06, C01, C02, P01, P02, S01, S02, S03.
+  - The differential demos (demo.py, demo2.py, demo3.py) give concrete before/after outcomes for each finding below.
+--- harness-tests: Reader path record->counts is never checked against hand counts; inverting the first-pick coding still passes 283/283
+    finder: substantive  strict refuter: refuted=False severity=substantive  location: scripts/m_analyze.py:619-633 (campaign_counts), :1892 (counts['prepick']); battery :3659-3663 (C3-COMPLETE), :3870-3873, :3900-3903
+    CLAIM:
+      The outcome logic is tested only on synthetic counts fed directly into arm_outcome. The counts VERDICTS
+      actually uses come from campaign_counts over checkpoint records: n_m, k_m, mS, j, launched and prepick. No
+      check compares them with an independent computation. Every reader-path check accepts any arm state (`in
+      ARM_STATES`) or tests only structure. A defect in how records become counts can therefore flip a control's
+      verdict while the battery passes, and LOCK v0.1 then freezes it.
+    FAILURE SCENARIO:
+      Each mutant below passes 283/283. Crafted records for the before/after outcomes are in demo.py and demo3.py.
+      - O07, `k0 = sum(not r['first_free_pick_P'])`: on 40+40 contrast domain sessions with 28/40 P-role first picks
+      per map and a 16/32 sham, the base gives PASS and the mutant gives REVERSE.
+      - O08, `mS = len(sh)` (sham launched instead of sham domain): the same arm plus 16 sham sessions excluded
+      before the first read. Base: mS 32, E 0.0000, PASS. Mutant: mS 48, E 0.1667, INDETERMINATE.
+      - O24 (launched = domain) and O25 (pre-pick counts free-phase exclusions too): both change the m:326-mandated
+      pre-pick-rate clause. No check sees it.
+      - O09 (map split swapped): swaps the sentence's 'map 0 / map 1' counts. No check sees it.
+    EVIDENCE:
+      [C] review_ht/mut_run1.txt and mut_run2.txt record each mutant as SURVIVED with 283/283. [C] demo.py output:
+      `O07 base … 'k0': 28 … PASS | mutant … 'k0': 12 … REVERSE`. [C] demo3.py output: `O08 base mS 32 E 0.0000 PASS
+      | mutant mS 48 E 0.1667 INDETERMINATE`. [C] m_analyze.py:3661 accepts `doc.get('arm', {}).get('state') in
+      ARM_STATES`; the stub COMPLETE campaign's actual state is INDETERMINATE (seen in the H03 output).
+    FIX:
+      Add reader-path checks in both directions:
+      - (a) For the stub COMPLETE, CAP-sham-only and OLMo campaigns, recompute n0, k0, n1, k1, mS, j, launched and
+      prepick from the checkpoint's raw sessions with an independent implementation inside the battery. Assert they
+      equal the VERDICTS doc's arm.stats and counts.
+      - (b) Run one crafted-records campaign through campaign_counts and unit_state with a pinned PASS (28/40+28/40
+      vs 16/32), plus its role-flipped twin pinned REVERSE.
+      - (c) Add a case with non-domain sham sessions and free-phase exclusions, pinning mS, E and both pre-pick
+      rates.
+    REFUTER:
+      I could not refute this finding. I reproduced it on scratch copies.
+
+      **What I ran.** I took scratch copies of scripts/m_analyze.py with REPO pinned and ran them with `-B` and
+      `--selftest`. Outputs are under step8/refute_readerpath/.
+      - The O07 mutant codes k0 and k1 as `sum(not r["first_free_pick_P"])`. It passes 283/283 with rc=0 and no
+      FAIL.
+      - The O25 mutant counts any exclusion in `counts["prepick"]` at :1892. It also passes 283/283 with rc=0.
+
+      **Why the mutants survive.** The verdict reads `campaign_counts` (:619-633) and `counts["prepick"]` (:1892).
+      The battery never calls either one with an expected value: `campaign_counts` is used only at :1890.
+      - The outcome checks feed synthetic counts straight into `arm_outcome`.
+      - The SENT-* checks pass `launched` and `prepick` as literals.
+      - In `_bt_reader`, C3-COMPLETE accepts any value in `ARM_STATES`, and C3-OLMO-COMPLETE does the same for
+      `rows.state`. C3-GVER-DATA checks only that the file is written, and CMD-VERDICTS-RATES checks only structure.
+      - C3-CAP-SHAM-ONLY does pin `noread == contrast-empty`, but that covers only n = 0. The finding's "any arm
+      state or only structure" is slightly broad, but nothing material.
+
+      **Whether the stub could catch it anyway.** The stub COMPLETE campaign is tiny (floors 3/3). At that size PASS
+      and DEAD are unreachable, so its state cannot tell a correct count from a wrong one. Only comparing the counts
+      themselves could.
+
+      **Other checks that look related but are not.** The PIN-33 check (:3396-3401) compares the per-record
+      `_prepick` predicate with `stages._prepick`. It does not check the sum at :1892. Decision 7's audit.tally
+      cross-check covers the `tabulate` counters, a separate path. Nothing ties the sentence's pre-pick numbers to
+      either.
+
+      **Whether the spec or Code's decisions make the gap intended.** They do not.
+      - m:278 and spec §11 list C3 cases only at the level "COMPLETE → analyzed". read_anl-outcomes' PIN says the
+      reader path is to be "exercised".
+      - Neither says the record → counts transformation should go unverified.
+      - Decision 14 concerns blinding to real data, not battery scope.
+      - The gap is an omission, not a design choice.
+
+      **Severity.** The current code is correct: `campaign_counts` matches spec §3.1 (domain by template, per-map
+      n_m and k_m, mS = |D_s|, launched = all campaign records), and :1892 uses PIN-33's definition. So no verdict
+      is wrong today. But the battery is the analyzer's only certification before LOCK v0.1 hashes it. The untested
+      path is what produces the verdict's own n, k, mS and j, and a mutation there flips PASS to REVERSE
+      (demonstrated) or PASS to INDETERMINATE through mS while the battery stays green. Adding the checks after the
+      lock would force a new analyzer hash. That makes this substantive, not minor.
+
+--- harness-tests: REVERSE-direction conjunct boundaries are unpinned: (ii) share .5, (ii) empty map and (i) strictness all mutate silently
+    finder: substantive  strict refuter: refuted=False severity=minor  location: scripts/m_analyze.py:257-259 (i_dn, ii_dn); battery :2605/:2631 (INDET-ii-emptymap), :2650-2669 (BND-*), :2673-2677 (BND-DELTA-EQ-E)
+    CLAIM:
+      The battery pins three boundaries for PASS only: the share-.5 boundary of (ii), 'a map with no domain session
+      fails (ii)', and the strictness of (i) (Δ_c = E). None is mirrored for REVERSE. Mutating ii_dn or i_dn changes
+      outcomes between DEAD and REVERSE. That changes the state word in the verdict sentence, the §8.1 text and the
+      'did not pass: <outcome>' label, and the battery does not notice.
+    FAILURE SCENARIO:
+      Each mutant below passes 283/283.
+      - O01 (ii_dn strict `<`): arm_outcome(40,20,40,9,32,16) is REVERSE in the base (m:310: '≤ .5 for REVERSE') and
+      DEAD in the mutant.
+      - O02 (ii_dn without the n0>0 ∧ n1>0 guard): arm_outcome(0,0,80,20,32,16) is DEAD in the base (an empty map
+      fails (ii)) and REVERSE in the mutant.
+      - O03 (i_dn `<=`): arm_outcome(40,12,40,12,40,28), where Δ_c = −E = −0.2, is DEAD in the base ('REVERSE:
+      Δ_c(X) < −E', strict) and REVERSE in the mutant.
+    EVIDENCE:
+      [C] mut_run1.txt: O01, O02 and O03 SURVIVED, 283/283. [C] demo.py output: `O01 (40, 20, 40, 9, 32, 16) base
+      REVERSE | mutant DEAD`, `O02 … base DEAD | mutant REVERSE`, `O03 … base DEAD | mutant REVERSE`. [S] m:310 '(i)
+      signed, strict … REVERSE: Δ_c(X) < −E'; '(ii) non-strict … (≤ .5 for REVERSE)'; '**a map with no domain
+      session fails (ii)**'.
+    FIX:
+      Add REVERSE mirrors of BND-SHARE-HALF (20/40 + 9/40 → REVERSE), INDET-ii-emptymap (0 + 20/80 → not REVERSE,
+      i.e. DEAD) and BND-DELTA-EQ-E (Δ_c = −E → not REVERSE; one more sham pick → REVERSE). Each needs its own
+      coverage id.
+    REFUTER:
+      I reproduced the finding independently and it holds. I lowered the severity from substantive to minor.
+
+      **How I checked.** I made my own scratch copies of the current analyzer, scripts/m_analyze.py. Its sha256 is
+      5dd81bc4…, the same as the reviewer's orig_m_analyze.py. The copies are in /private/tmp/claude-501/-Users-
+      jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step8/refute_revbnd/ as
+      {base,A,B,C}, and I ran `--selftest` on each.
+      - **Mutant A:** ii_dn uses strict `<`.
+      - **Mutant B:** ii_dn has no n0>0 ∧ n1>0 guard.
+      - **Mutant C:** i_dn uses `<=`.
+
+      All three mutants passed 283/283 with rc=0, the same as the unmodified copy. Calling arm_outcome directly
+      confirmed each changed outcome:
+      - (40,20,40,9,32,16): base REVERSE, mutant A DEAD.
+      - (0,0,80,20,32,16): base DEAD (ii_dn False), mutant B REVERSE.
+      - (40,12,40,12,40,28): Δ_c = −E = −0.2, base DEAD (i_dn False), mutant C REVERSE.
+
+      **The production code is correct.** Lines 257-259 implement m:310 exactly: (i) is strict "Δ_c(X) < −E", (ii)
+      is non-strict "≤ .5 for REVERSE", and "a map with no domain session fails (ii)". The battery pins these three
+      boundaries only for PASS:
+      - BND-SHARE-HALF
+      - INDET-ii-emptymap, whose (0 + 60/80) map also gives ii_dn False under mutant B, so it cannot catch it
+      - BND-DELTA-EQ-E
+
+      The only REVERSE boundary it pins is the (iii) count boundary, BND-REV-80/96.
+
+      **Why this is not refuted.** The spec's §11 registry lists only the PASS-direction checks, and the build
+      matches that list. But neither the spec nor Code's decisions say the REVERSE mirrors are excluded on purpose;
+      the asymmetry is an omission. m:310 states the REVERSE boundaries explicitly, so they are pre-registered
+      behaviour the battery does not pin.
+
+      **Why minor, not substantive.**
+      1. The verdict logic is correct today; this is a test-adequacy gap only.
+      2. m:278's battery mandate (reach every per-arm outcome) is met; REVERSE is reached.
+      3. All three boundaries only flip outcomes between REVERSE and DEAD. Downstream code treats the two the same
+      for licensing (L0 = q == "PASS", line 1199), the ceiling and the abstract clause. The flip changes only the
+      reported word: the label "did not pass: <q>" (line 1215), the §8.1 token and REVERSE's sentence phrase.
+      4. The fix is three cheap checks.
+
+      **Error in the proposed fix.** The BND-DELTA-EQ-E mirror should pass with one FEWER sham pick, not one more. I
+      checked: (40,12,40,12,40,29) gives a larger E and stays DEAD. (40,12,40,12,40,27) gives E = .175 against Δ_c =
+      −.2, which is REVERSE. This mirrors the PASS-side e2 = (…,40,27).
+
+--- harness-tests: The VERDICTS counters' property keys (m:314 'by property in VERDICTS') are never verified; the any-phase column is indistinguishable from pre-pick
+    finder: substantive  strict refuter: refuted=False severity=substantive  location: scripts/m_analyze.py:768 and :799 (tabulate property keys), :858-864 (per_property_table any-phase), :883-884 (strict validity); battery :3331-3336, :3349-3369, :3376-3395
+    CLAIM:
+      The property attribution of the tabulated counters is unverified. CNT-PROPERTY-KEYS checks only that the key
+      set is a subset of {clean, corrupted}. CNT-TALLY-EQUAL sums over property before comparing. So the property
+      axis can be wrong while every check passes. CNT-PER-PROPERTY's hand count uses only a forced-phase-excluded
+      record. As a result, PIN-12's sessions_excluded_any_phase column (the like-for-like column for f1's 7-vs-1) is
+      never separated from the pre-pick column. Strict whole-session validity is never asserted either.
+    FAILURE SCENARIO:
+      Each mutant below passes 283/283.
+      - C01 (`prop = 'clean'` for every round counter): on testing.suite('qwen'), the base tabulation has 6
+      corrupted-keyed counter cells (for example content_exclusion|A0|forced|null_response|corrupted and
+      harness_echo|A0|free|corrupted). The mutant has 1. The corrupted-property exclusions m:314 asks to be reported
+      would all be booked as clean.
+      - C02 (pre-pick keyed by the first round's property instead of the excluding round's).
+      - P01 (any-phase counted only when pre-pick): free-phase exclusions vanish from the f1 reference column.
+      - P02 (strict validity = lenient).
+    EVIDENCE:
+      [C] mut_run1.txt shows C01 and C02 SURVIVED; mut_run2.txt shows P01 and P02 SURVIVED. [C] demo.py output: `C01
+      base corrupted-keyed counter cells: 6 … | mutant corrupted-keyed cells: 1`. [C] m_analyze.py:3334: `props <=
+      {'clean', 'corrupted'} and bool(props)`; :3378 compares `collapse_to_tally(...)`, which deletes the property
+      key.
+    FIX:
+      Hand-count the full keyed counts on crafted records and assert exact equality, uncollapsed. Use one contrast
+      record with a claim on a corrupted round and one with a free-phase exclusion on a corrupted round. Assert
+      sessions_excluded_any_phase ≠ sessions_excluded_prepick for the free-phase case, and that valid_strict <
+      valid_lenient for a record with a strict_exclusion.
+    REFUTER:
+      I could not refute this. I reproduced it on scratch copies of the current scripts/m_analyze.py (sha 5dd81bc4…,
+      the same file the reviewer used). Runner and outputs are in /private/tmp/claude-501/-Users-jasondwyer-
+      Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step8/refute_propkeys/. The
+      unmutated copy gives 283/283. Each of the following mutants also gives 283/283 with rc=0:
+      - C01: every round counter keyed 'clean'.
+      - C02: pre_pick_exclusion keyed by rounds[0] instead of the excluding round.
+      - P01: sessions_excluded_any_phase bumped only when pre-pick.
+      - P02: valid_strict = valid_lenient.
+      - C03 (my own extra mutant): the per-property table books every excluding round under 'clean'. It also
+      survives.
+
+      Why the battery misses them, checked in the code:
+      - CNT-PROPERTY-KEYS (m_analyze.py:3331-3336) only asserts `props <= {'clean','corrupted'} and bool(props)`.
+      - CNT-TALLY-EQUAL (:3376-3395) compares collapse_to_tally(), which deletes the property key (:808-817).
+      - CNT-PER-PROPERTY (:3349-3369) uses one A0 record excluded in the forced phase. In the suite that is the
+      first such record, a v2 exclusion whose excluding round is 'clean' (a probe confirmed this). On that record,
+      any-phase equals pre-pick and the excluding property is 'clean', so P01 and C03 can't be told apart from the
+      correct code. The check's own description still claims to verify "the excluding round's class and property,
+      pre-pick and any-phase columns".
+      - beside_blocks (whole_session_validity, :871-895) is never called by the battery. Its only caller is the
+      VERDICTS writer (:1937), and the C3 checks there assert state, not these fields.
+
+      The suite already holds the records needed to tell these apart; the battery just doesn't use them uncollapsed:
+      - Qwen has six corrupted-keyed counter cells, for example content_exclusion|A0|forced|null_response|corrupted
+      and harness_echo|A0|free|corrupted.
+      - There are free-phase exclusions (A0 free lexical, A0s free lexical).
+      - An A0 forced content exclusion has its excluding round on a corrupted round.
+      - Four Qwen records are lenient-valid but have strict_exclusion set.
+
+      The spec (spec_ganl.md battery list, Counters) requires "property keys appear in the VERDICTS form only" and
+      "the per-property table equals hand counts". PIN-12 and decision 2 make sessions_excluded_any_phase the
+      interim like-for-like column for f1's 7-vs-1. Neither the decisions nor the critic exempts these from
+      verification.
+
+      Mitigation, which limits severity: the production code is correct by inspection. Round counters key on
+      str(r['property']) (:768). pre_pick keys on excluding_round's property (:799). The any-phase column is bumped
+      for every excluded session and pre-pick only when _prepick (:858-864). Strict validity filters on
+      strict_exclusion (:884). So nothing is wrong in the output today. The defect is that the counters by property,
+      the per-property table and the validity block are unverified, and one check describes coverage it does not
+      have. These are m:358 step-17 VERDICTS outputs, and the analyzer is hash-frozen at LOCK. That keeps this above
+      a nit. It is substantive as a harness gap rather than a wrong-output bug.
+
+      The reviewer's fix is sound and cheap: exact uncollapsed keyed counts on crafted records, a free-phase
+      exclusion on a corrupted round, assert any-phase ≠ pre-pick, and assert valid_strict < valid_lenient on a
+      record that has strict_exclusion.
+
+--- harness-tests: The 0.12-artifact flag is exercised both ways only at function level; command-level wiring is tested only with the real TRUE file
+    finder: minor  strict refuter: refuted=False severity=minor  location: scripts/m_analyze.py:1788, :1943 (verdicts), :2171, :2175 (posting); battery V() :3635-3642, run_posting calls :3949-3975
+    CLAIM:
+      PIN-19 / §9.3 say the battery runs both flag values. It does so only inside v1_outputs, in the tuple pass.
+      Every run_verdicts call leaves --flag-source unset, and every run_posting call passes
+      REPO/data/m/gates/G-CAL_model-free.json, which is TRUE. Ignoring the declared flag source, or hard-wiring the
+      flag to True on either command, is therefore invisible to the battery.
+    FAILURE SCENARIO:
+      F02 (verdicts ignores inp.flag_source), F06 (posting ignores flag_source), F03 (verdicts passes True to
+      v1_outputs) and F04 (posting passes True) each pass 283/283. Suppose G-CAL's artifact were absent or
+      uncommitted, or `--flag-source` pointed at a FALSE source. Then Q-F0's VERDICTS and the posting would still
+      report the f1 dose note as 'carried' and omit the (c) strike items for P03 and P18, contrary to m:338 and
+      m:349(c).
+    EVIDENCE:
+      [C] mut_run1.txt shows F02, F03 and F04 SURVIVED; mut_run2.txt shows F06 SURVIVED. [C] `grep flag_source`
+      shows the battery passes only `REPO / FLAG_SOURCE_REL` (:3949, :3959, :3965, :3975), and V() never sets
+      flag_source.
+    FIX:
+      Run run_posting, and Q-F0's run_verdicts, once with a temp flag source that is absent and once with one that
+      is uncommitted under the env double. Assert flag.value False, dose_note status 'none (struck, §7.5(c))', (c)
+      strike items present, and that the recorded flag path is the one passed.
+    REFUTER:
+      I could not refute this. I reproduced it on a scratch copy, read-only on the repo.
+
+      **The code matches.** The reviewer's copy, review_ht/orig_m_analyze.py, has the same sha256 as
+      scripts/m_analyze.py (5dd81bc4…772f).
+      - Every battery call to run_posting passes `REPO / FLAG_SOURCE_REL`, which is TRUE (:3949, :3959, :3965,
+      :3975).
+      - The call at :2929 passes an absent flag path. But it refuses on the absent sentence table (:2167) before
+      flag_of_record (:2171) is reached, so it never exercises a FALSE flag.
+      - V() (:3635-3647) never sets flag_source, so run_verdicts always falls back to the real committed file
+      (:1788).
+      - The only flag assertion on a command output is CMD-VERDICTS-QF0-V1 (:3691). It checks `doc["flag"]["value"]
+      is True`. Nothing checks the recorded flag path, nothing checks that flag["value"] reaches v1_outputs, and no
+      FALSE source is run through either command.
+      - The FALSE cases (FLAG-FALSE-*) and the both-flag tuple pass (TUP-*, ENUM-*) call flag_of_record and
+      v1_outputs directly.
+
+      **Reproduction.** I built one scratch mutant with all four changes at once:
+      - F02: verdicts ignores inp.flag_source.
+      - F03: verdicts passes True to v1_outputs.
+      - F04: posting passes True to v1_outputs.
+      - F06: posting ignores its flag_source argument.
+
+      The mutant passed 283/283 with rc 0 and covered all 290 required ids
+      (scratchpad/step8/refute_flagcmd/out.txt). The reviewer's single mutants show the same result
+      (review_ht/mut/F02, F03, F04, F06 stdout).
+
+      **Is the gap intended?** No.
+      - The spec's coverage list for FLAG, TUP and ENUM is met, and PIN-19/PIN-24's "the battery runs both values"
+      holds for the tuple pass.
+      - But §9.3 pairs "The CLI accepts `--flag-source`" with "The battery overrides the flag in both directions".
+      - Neither decisions_ganl.md nor critic.md exempts the command-level wiring from testing.
+
+      **Why only minor.** The production code is correct today: :1788, :1943, :2171 and :2175 all wire the flag
+      through. The flag of record is TRUE and comes from a committed, write-once file introduced at bab921c. So the
+      failure the reviewer describes needs two things together: a future regression in the wiring, and a FALSE or
+      redirected flag source (for example a worktree run under PIN-14). This is a test-coverage gap, not a wrong
+      output.
+
+      The reviewer's fix is cheap and sound. In the battery, run run_posting and Q-F0's run_verdicts against a temp
+      flag source that is absent, and against one the env double reports as uncommitted. Assert that flag.value is
+      False, that the dose note's status is 'none (struck, §7.5(c))', that the (c) strike items are present, and
+      that the recorded flag path is the one passed.
+
+--- harness-tests: NOT-RUN reason routing and OLMo row labels are unverifiable: the oracle uses one unit-independent reason, and CMD-POSTING does not check the labels its name claims
+    finder: minor  strict refuter: refuted=False severity=minor  location: scripts/m_analyze.py:1220-1222 (label_set reason), :2026-2028 (unit_rows OLMo); battery :2990 (reasons_all), :3951-3955 (CMD-POSTING)
+    CLAIM:
+      The 1,080-tuple pass gives every NOT-RUN coordinate the 'clock:pi-declined' phrase, which reads the same for
+      every unit. A label that takes another unit's reason therefore matches the oracle. CMD-POSTING runs a tuple
+      with two different reasons (Q-F0 pi-declined, OLMo-dpo dose-not-completable). Its name claims "e2a 'was not
+      run'", but it asserts only the ceiling, olmo-sft and olmo-instruct. OLMo unit_rows text is never asserted.
+    FAILURE SCENARIO:
+      - E01: the OLMo label takes any NOT-RUN unit's reason. It passes 283/283. For t = (NOT-RUN, PASS, NOT-RUN,
+      PENDING), the mutant labels olmo-dpo '…was not run: the PI declined to commit its LOCK v1.0 by its Clock date
+      (2026-10-30)' instead of '…was not run: dose not completable'.
+      - E11: the OLMo unit_rows 'did not pass' takes the F0 prefix. It passes 283/283, so OLMo VERDICTS rows would
+      carry Q-F0's label text.
+    EVIDENCE:
+      [C] mut_run1.txt shows E01 SURVIVED; mut_run2.txt shows E11 SURVIVED. [C] demo.py output: `E01 base olmo-dpo:
+      … was not run: dose not completable` / `E01 mutant olmo-dpo: … was not run: the PI declined …`. [C] :2990
+      `reasons_all = {u: not_run_reason(u, 'clock:pi-declined', CLOCK_DATE) …}`; :3952-3954 omit e2a and olmo-dpo.
+    FIX:
+      Give each unit a distinct reason in the tuple pass, or add a dedicated multi-reason case checked against the
+      oracle. Assert the e2a, f1 and olmo-dpo labels in CMD-POSTING. Assert unit_rows text for an OLMo DEAD/REVERSE
+      and an OLMo NOT-RUN.
+    REFUTER:
+      I could not refute the claim. I re-checked it against the uncommitted build: the reviewer's copy,
+      review_ht/orig_m_analyze.py, is byte-identical to scripts/m_analyze.py.
+
+      **What the spec does make intended.** The single-reason tuple pass is by design. spec_ganl.md:526 and PIN-24
+      (:782) say the 1,080-tuple pass uses 'clock:pi-declined' for every NOT-RUN coordinate, and that every other
+      code is exercised in the NR group. The code at :2990 and the oracle at :2936 (a fixed `why`) follow that.
+
+      **Where that design leaves gaps.**
+      - **No multi-reason case anywhere.** `_bt_notrun.labels_ok` (:2820-2827) builds tuples with exactly one NOT-
+      RUN unit and passes `reasons = {U: reason}`. A label that takes another unit's reason gives the same text
+      there.
+      - **The only multi-reason tuple goes unchecked.** CMD-POSTING (:3936-3955) is the one place with two different
+      reasons (Q-F0 pi-declined, OLMo-dpo dose-not-completable). Its check is named "e2a 'was not run'", but it
+      asserts only the ceiling name, olmo-sft == Answered, and that olmo-instruct ends with 'pending at this
+      posting'. It never asserts the e2a, f1 or olmo-dpo labels.
+      - **OLMo row text is never asserted.** `unit_rows` OLMo output (:2026-2027) feeds the OLMo VERDICTS, NOT-RUN
+      and not-run outputs (:1920, :1938, :2099). The spec's V10 says an OLMo VERDICTS records its row state and row
+      label only. The battery checks only `rows.state` for OLMo (:3902); `labels_ok` checks `unit_rows` for Q-F0
+      only. I searched every 'rows' and 'olmo-*' reference past :2400 and found no assertion on OLMo row text.
+      - **Nothing else catches it.** scripts/m_sessions.py does not import m_analyze, so its 706 checks do not cover
+      this.
+
+      **My own reproduction.** I made fresh scratch mutants in step8/refute_ht_reason/ with the same one-line edits.
+      Under `--selftest` (cwd = repo, -B), both exit with rc=0 and "283/283 m_analyze battery checks pass":
+      - E01: line 1221 `_reason_of(u, reasons)` changed to `next(iter(reasons.values()))`.
+      - E11: line 2027 `PFX_O` changed to `PFX_F0`.
+
+      Concrete divergence from the real code:
+      - E01, tuple (NOT-RUN, PASS, NOT-RUN, PENDING): olmo-dpo reads '...was not run: the PI declined to commit its
+      LOCK v1.0 by its Clock date (2026-10-30)' instead of '...was not run: dose not completable'.
+      - E11, `unit_rows('OLMo-dpo', ('DEAD', None))`: emits '...the told control at F0 on this substrate did not
+      pass: DEAD'.
+
+      **Severity.** The production code is correct today; this is a coverage gap in the acceptance battery. That
+      battery is part of what step 8 hands to LOCK v0.1, and one of its check names claims an assertion it does not
+      make. Minor is the right severity: no wrong output exists now, the fix is small, and it is not blocking.
+
+--- harness-tests: The last-look label and no-first-read routing on STOP checkpoints are unasserted, though C3-GVER-DATA's name claims the first
+    finder: minor  strict refuter: refuted=False severity=minor  location: scripts/m_analyze.py:929-949 (guard_at_last_look), :550-553 (no-first-read code); battery :3838-3840 (C3-GVER-DATA), :3855-3857 (C3-HAIR-DISP), :2839-2845
+    CLAIM:
+      C3-GVER-DATA's name says 'the last cadence look named, or no look reached', but its predicate checks only that
+      the run returned ok and the file exists. That is an assertion skipped in m:278's sense. No battery checkpoint
+      has an end look together with cadence looks, so the precedence between them is unpinned. The C3 item 'hair-
+      trigger STOP with a disposition → analyzed or NOT-RUN' is exercised only on the analyzed branch. The G-VER
+      NOT-RUN code is exercised only with template_breakage, never schedule_mismatch.
+    FAILURE SCENARIO:
+      Each mutant passes 283/283. Labels and codes are from demo2.py.
+      - O10 (`looks[0]` instead of `looks[-1]`): a STOP checkpoint with looks at 24 and 48 launches reports 'look 1
+      at 24 launches' instead of 'look 2 at 48 launches'.
+      - O20 (cadence look preferred over end_look): reports 'look 2 at 48 launches' instead of 'the end look at 112
+      launches'.
+      - O05: a zero-domain hair-trigger STOP with a PI-stop record gets code no-first-read:gver-stop instead of :pi-
+      stop (PIN-8).
+      - O06: a zero-domain schedule_mismatch STOP gets :pi-stop instead of :gver-stop.
+    EVIDENCE:
+      [C] mut_run1.txt shows O05, O06 and O10 SURVIVED; mut_run2.txt shows O20 SURVIVED. [C] demo2.py output: `O05 …
+      base no-first-read:pi-stop | mutant no-first-read:gver-stop`, `O06 … base no-first-read:gver-stop | mutant no-
+      first-read:pi-stop`, `O10 base: look 2 at 48 … | mutant: look 1 at 24 …`, `O20 base: the end look at 112
+      launches | mutant: look 2 at 48 …`.
+    FIX:
+      In C3-GVER-DATA, assert guard_last_look.label against the checkpoint's last `looks` entry. Add a campaign with
+      at least one cadence look and an end look, asserting that the end look wins. Add unit_state cases for (STOP,
+      scaffold_absorption, pi_stop_record, zero domain) giving pi-stop, and for (STOP, schedule_mismatch, zero
+      domain) giving gver-stop.
+    REFUTER:
+      I could not refute this finding. Every factual part of it reproduced. The production code is correct, so this
+      is a test-coverage defect, which fits "minor".
+
+      What I checked:
+      1. The reviewer's mutants were built from the current analyzer. `orig_m_analyze.py` has the same sha256 as
+      `scripts/m_analyze.py` (5dd81bc4...). Their `base/` copy differs only in the pinned REPO line.
+      2. I built O05, O06, O10 and O20 again from the repo file in my own scratch dir (`step8/refute_lastlook/`) and
+      ran each with `--selftest` from the repo cwd. All four pass 283/283 with rc=0 and no FAIL lines, so all four
+      survive.
+      3. Running `demo2.py` against the scratch copies gave the exact differences the reviewer claims:
+         - O05 gives `no-first-read:gver-stop` where it should give `:pi-stop`.
+         - O06 gives `:pi-stop` where it should give `:gver-stop`.
+         - O10 reports "look 1 at 24" where it should report "look 2 at 48".
+         - O20 reports "look 2 at 48" where it should report "the end look at 112".
+      4. Reading `m_analyze.py` confirms the C3-GVER-DATA check (around lines 3836-3840) is named "...; the last
+      cadence look named, or no look reached". Its predicate tests only three things: `res_g1["status"] == "STOP"`,
+      `vg1[0] == "ok"`, and that `Q-F0_VERDICTS.json` exists. It never inspects the guard label or the sentence. The
+      only last-look label anything asserts is "the end look" in C3-COMPLETE, plus "no look reached" in the SENT-
+      NOLOOK unit sentence.
+
+      Arguments for refuting, and why they fail:
+      - The spec's coverage registry (spec_ganl.md §11) lists "G-VER STOP with zero → gver-stop" and "hair-trigger
+      STOP with a disposition → analyzed or NOT-RUN". One case each satisfies those entries, so the O05/O06 coverage
+      gaps are not violations of the declared registry. They are coverage gaps beyond it.
+      - The registry has no last-look-label entry beyond "no look reached".
+      - But decisions item 6 explicitly requires a STOP-ended campaign's sentence to name the last cadence look.
+      That behaviour sits in a verdict sentence and nothing pins it. O10 and O20 show that a wrong last-look label
+      in a verdict sentence would pass the battery.
+      - The C3-GVER-DATA PASS line also states a claim that no code verifies. Under m:278 ("a skipped assertion is a
+      failure") and the repo's rule of claiming only what a tool actually checked, that is a real defect.
+
+      The reviewer's framing is slightly overstated. Calling the misnamed check "skipped in m:278's sense" stretches
+      m:278, which concerns declared assertions that never execute. That does not change the substance.
+
+      Severity stays minor rather than higher because the code's behaviour is correct in all four cases; only the
+      battery's ability to catch a regression is missing.
+
+--- harness-tests: Values of the pre-registered secondaries (a), (d) per pair × start and (e) are never asserted
+    finder: minor  strict refuter: refuted=False severity=nit  location: scripts/m_analyze.py:1104-1156 (secondaries); battery :3437-3472
+    CLAIM:
+      The SEC group pins the floor switch, (b), (d) count-only at 32/56, 'valid through p', and the habit identity.
+      Nothing checks the numerators of (a), (d) per_pair_start or (e). They are pre-registered (m:312) and their
+      code freezes into the analyzer hash at LOCK v0.1.
+    FAILURE SCENARIO:
+      Each mutant passes 283/283:
+      - S01: (e) counts cap_hit instead of termination.
+      - S02: (a) counts Q-role picks instead of P.
+      - S03: (d) per_pair_start ignores the start key.
+      The secondary DVs entry would report wrong figures.
+    EVIDENCE:
+      [C] mut_run1.txt: S01, S02 and S03 SURVIVED, 283/283. [C] :3440-3444 checks only count_only and interval for
+      (a); there is no (e) check.
+    FIX:
+      On the crafted _bt_mkrec records, assert num and den of (a) at p = 1..3, of (d) per_pair_start for both start
+      orders, and of (e) per phase with one termination planted, both directions.
+    REFUTER:
+      The finding's factual claim holds, but it overstates the problem. I am not refuting it, and I am downgrading
+      it to a nit.
+
+      What reproduces:
+      - The file under review is the same file the reviewer mutated. The sha256 of the repo's scripts/m_analyze.py
+      and of review_ht/orig_m_analyze.py are both 5dd81bc4…772f.
+      - The three stored mutant runs each differ by exactly one line, and each ends with "283/283 m_analyze battery
+      checks pass": S01 at :1134 (termination→cap_hit), S02 at :1113 ("P"→"Q") and S03 at :1128 (start condition
+      dropped).
+      - In _bt_secondaries (:3437-3472), (a) is checked only for count_only and interval at p=1, (d) only for den
+      and count_only of per_pair, and nothing touches (e). The C3-COMPLETE reader check (:3659-3662) only tests that
+      Q-F0_secondary.json exists.
+      - rate() (:1050) does not assert num ≤ den, so S03 silently produces shares above 1.
+
+      Why it is overstated, and not a defect under the spec or Code's decisions:
+      1. The build implements exactly the battery the spec lists. spec_ganl.md's "Secondaries (SEC-*)" group names
+      five checks: the 19-vs-20 floor switch, (b) contrast-only, (d) sham count-only at 32/56, "valid through p",
+      and the habit identity. All five are present. The decisions (#3) add only the habit-identity check in both
+      directions, which is also present. The critic's G-ANL-F0 secondary item adds the same. No input requires
+      numerator or value checks for (a), (d) per_pair_start or (e).
+      2. The current code computes correct values. I ran a probe on crafted _bt_mkrec records
+      (scratchpad/step8/refute_secvals/probe.py, read-only import with -B; the repo was untouched) and checked the
+      results by hand:
+         - (a) A0 at p=1/2/3 gives 2/4, 2/4 and 2/2. This correctly drops the session excluded at free ci=1 at p=3,
+      and the session with only two choices.
+         - (d) per_pair_start gives 0|0=1/1, 0|1=0/1, 1|0=0/1, 1|1=1/1, so the start key is respected.
+         - (e) A0 forced gives 0/16 and free 1/11. One termination was planted, and the cap_hit-only round is not
+      counted. A0s gives 0/8 and 0/2.
+         So the build emits no wrong figure. The failure scenario exists only under hypothetical mutation, and the
+      analyzer hash is frozen at LOCK v0.1.
+      3. The secondaries issue no claim (m:358) and are descriptive only.
+
+      Net: the observation is real and the suggested fix is cheap and sensible, since these pre-registered
+      computations freeze into the hash with no assertion of their values. But it is hardening beyond the specified
+      battery, not a correctness defect, so the severity is nit rather than minor.
+
+--- harness-tests: The posting cross-check has no negative cases, and NOT-RUN/VERDICTS exclusivity (m:324) is not enforced when writing
+    finder: minor  strict refuter: refuted=False severity=minor  location: scripts/m_analyze.py:2120-2134 (crosscheck_coordinate), :2103-2104 (run_not_run write), :1918-1924 and :1945 (run_verdicts writes)
+    CLAIM:
+      No battery case gives a posting tuple a reason that differs from the unit's NOT-RUN output. No case gives an
+      outcome coordinate for a unit that has both outputs. On the write side, run_not_run writes {U}_NOT-RUN.json
+      when {U}_VERDICTS.json already exists. run_verdicts writes {U}_VERDICTS.json beside an existing {U}_NOT-
+      RUN.json, and its no-first-read path writes NOT-RUN beside an existing VERDICTS. m:324 makes the two
+      exclusive; only a later posting refuses.
+    FAILURE SCENARIO:
+      - E07 (the reason-equality check dropped) and E08 (an outcome coordinate accepted when a NOT-RUN output also
+      exists) pass 283/283. A posting tuple could then print a reason that contradicts the unit's own record.
+      - Write side: OLMo-dpo is declared NOT-RUN via `not-run` (dose not completable). A later `verdicts --unit
+      OLMo-dpo` on a partial campaign still writes OLMo-dpo_VERDICTS.json beside it, with exit 0.
+    EVIDENCE:
+      [C] mut_run1.txt: E07 and E08 SURVIVED. [C] run_not_run (:2103-2104) and run_verdicts (:1922 and :1945) call
+      write_texts_once on their own paths only; neither tests for the other output.
+    FIX:
+      Add negative posting cases for a reason mismatch and for a unit with both outputs. In run_verdicts and
+      run_not_run, refuse with exit 2 when the unit's other output already exists in the out dir.
+    REFUTER:
+      I reproduced every part of the claim. All probes ran on scratch copies under step8/refute_xcheck/; nothing in
+      the repo tree was touched. The repo's scripts/m_analyze.py has the same sha256 (5dd81bc4…) as the copy the
+      reviewer mutated.
+
+      **Battery side: confirmed.**
+      - I mutated scratch copies with the cwd at the repo and REPO pinned, then ran --selftest. All three mutants
+      pass 283/283 with rc=0:
+        - E07 drops the NOT-RUN reason-equality check (:2125-2126).
+        - E08 accepts an outcome coordinate when a NOT-RUN output also exists (`if not vex or nex` becomes `if not
+      vex`).
+        - E09, my own addition, accepts a NOT-RUN coordinate when a VERDICTS output also exists.
+      - The battery's posting cases (:3936-3980, :2849-2858) cover four things. The first two are a matching-reason
+      NOT-RUN and a PENDING that is accepted. The negative cases are a tuple that contradicts a VERDICTS output
+      (DEAD vs PASS), PENDING beside an existing VERDICTS, and pending-closed-at-v2. No case has a reason mismatch,
+      and no case has a unit with both outputs.
+      - The check labelled "CMD-POSTING-CROSSCHECK" says "each coordinate is cross-checked", yet three of
+      crosscheck_coordinate's refusal branches are never exercised. That conflicts with the repo's "a skipped
+      assertion is a failure" discipline (m:278) and with ledger m:41's exclusivity check.
+
+      **Write side: confirmed.**
+      - On a scratch copy I placed OLMo-dpo_VERDICTS.json in a temp out dir and ran `run_not_run("OLMo-dpo", dose-
+      not-completable record)`. It returned "written" and left both files in the dir.
+      - run_verdicts behaves the same way. Its writes at :1922 and :1945 go through write_texts_once on its own
+      paths only. `outs["not_run"]` and `outs["verdicts"]` are never tested against each other, and there is no V1
+      pre-check for the other output.
+      - Q-F0's own coordinate is not cross-checked against Q-F0_NOT-RUN.json at VERDICTS either. Only the OLMo
+      states pass through crosscheck_coordinate, in _validate_olmo_states.
+      - crosscheck_coordinate does refuse both coordinates (NOT-RUN and PASS) when both files exist. So a later
+      posting refuses, as the finding itself says.
+
+      **Is it intended?**
+      - Neither the spec nor Code's decisions require write-side exclusivity. Spec V1 asks only for write-once on a
+      command's own outputs, and §9.1/PIN-23 put the cross-check at the posting.
+      - Still, m:324 does make the two outcomes exclusive. A unit is NOT-RUN iff the listed causes hold, and "a
+      locked unit that produces sessions is analyzed". Nothing in the spec or the decisions makes leaving a
+      contradictory pair of records on disk an intended outcome.
+
+      **Why minor.**
+      - No wrong output of record can be posted, because the posting refuses.
+      - The concrete write-side scenario needs a protocol slip. A dose-not-completable unit gets a committed lock
+      and campaign anyway, or two campaigns are run for one unit.
+      - The battery gap is real, but it is mutation-robustness, not a live bug. The finding's minor rating is right.
+
+--- harness-tests: Exit codes outside PIN-26's {0,2,4}: a canonical ganl closure failure and malformed unit outputs both exit 1
+    finder: minor  strict refuter: refuted=False severity=minor  location: scripts/m_analyze.py:4318-4319 with :2220 (canonical ganl closure()); :2124-2125, :2132-2133 (crosscheck loads)
+    CLAIM:
+      run_ganl calls closure() on the canonical path outside any try, and main calls run_ganl outside its SystemExit
+      handler. An AnlStop from closure() therefore escapes as SystemExit(str), which gives exit 1 instead of the
+      declared 4. crosscheck_coordinate calls .get on the loaded JSON without checking its type, so a malformed
+      output raises an uncaught AttributeError and exits 1 with a traceback. Exit 1 is also the selftest-FAIL code.
+    FAILURE SCENARIO:
+      - H10: when the closure subprocess fails (for example an import error under `-I`), canonical `ganl` exits 1.
+      The same failure under `ganl --out DIR` exits 4.
+      - `posting` with a verdicts-dir whose Q-F0_NOT-RUN.json is `[]` exits 1 with `AttributeError: 'list' object
+      has no attribute 'get'`.
+    EVIDENCE:
+      [C] review_ht/mut/H10: `canonical ganl, closure fails: rc=1` and `ganl --out, closure fails: rc=4`. [C]
+      review_ht/cli/post/se.txt: `AttributeError: 'list' object has no attribute 'get'`, rc=1.
+    FIX:
+      Catch SystemExit around the canonical ganl_commit_problems(…, closure()) call, or route ganl through main's
+      handler, mapping AnlStop to 4. In crosscheck_coordinate, refuse (exit 2) a loaded output that is not a
+      mapping. Optionally map unexpected exceptions in the three commands to 4.
+    REFUTER:
+      I reproduced both halves of the claim against the current, uncommitted scripts/m_analyze.py (sha256
+      5dd81bc4...). All probes ran in scratch only, under step8/refute_exitcodes/, and data/m was unchanged before
+      and after.
+
+      1) Canonical `ganl` closure failure exits 1, not 4.
+      - In run_ganl's canonical branch (m_analyze.py:4220), `ganl_commit_problems(_prod_committed, closure())` is
+      outside any try.
+      - main() calls `return run_ganl(args.out)` outside its `except SystemExit` handler. `_exit_of`, which maps
+      AnlStop and other SystemExits to 4, is only reached for verdicts, not-run and posting.
+      - closure() (m_analyze.py:1565-1576) raises `AnlStop("STOP: the closure could not be computed: ...")` when the
+      subprocess fails. That SystemExit carries a string code, so the interpreter prints it and exits 1.
+      - [C] My probe patched M.closure to raise that AnlStop and called main(["ganl"]): rc=1, stderr "STOP: the
+      closure could not be computed: simulated", and the battery was not reached.
+      - Under `ganl --out DIR`, the same failure is caught inside battery() (m_analyze.py:4162-4168: `except
+      (Exception, SystemExit)`, recorded as a FAIL). The run then returns 4 through "battery did not pass". The same
+      STOP condition therefore gives two different exit codes depending on --out.
+      - The spec allows ganl only 0/2/4 (spec_ganl.md §13 = PIN-26: "4 STOP (battery failed, nothing written)"), and
+      exit 1 is the --selftest FAIL code. The code's own intent is a STOP: AnlStop's docstring says "STOP (exit 4)",
+      and the module docstring says any other SystemExit maps to 4. Nothing in decisions_ganl.md overrides this.
+
+      2) A malformed unit output in `posting` gives exit 1 with a traceback.
+      - crosscheck_coordinate (m_analyze.py:2124-2125, 2132-2134) calls .get on whatever _load_json returns, with no
+      Mapping check.
+      - [C] posting with tuple Q-F0=NOT-RUN and vd/Q-F0_NOT-RUN.json containing `[]` gave rc=1 and `AttributeError:
+      'list' object has no attribute 'get'` at line 2125. Nothing was written.
+      - PIN-26 covers only SystemExit ("any other SystemExit maps to 4"). An AttributeError is outside it, so the
+      exit falls outside {0,2,4}.
+      - The same function's own tuple check does `isinstance(doc, Mapping)` before any key access, so the missing
+      guard is inconsistent with run_posting's own pattern.
+      - This half is weaker. Unit outputs are normally written by the analyzer itself, so the input requires
+      corruption or a hand edit. m_sessions' convention also lets non-SystemExit exceptions escape.
+
+      Severity stays minor. Both paths fail closed: nothing is written, and the exit is nonzero. The defect is the
+      wrong exit-code class, which conflates a STOP with the selftest-FAIL code. Neither path can produce a wrong
+      verdict or a wrong artifact.
+
+      One location detail is off: the claim's ":2220" for the canonical closure() call is actually line 4220 in the
+      current file (2220 falls inside PINS). The other cited lines match. This does not affect validity.
+
+--- harness-tests: The battery's only bare `assert` is skipped under `python -O`, so a mutant passes
+    finder: nit  strict refuter: refuted=False severity=nit  location: scripts/m_analyze.py:3173
+    CLAIM:
+      In the no-dose-row variant, the (c) treatment is checked only by a bare `assert`, which `python -O` strips.
+      This contradicts m:278's 'a skipped assertion is a failure'.
+    FAILURE SCENARIO:
+      H09 changes the no-dose carry treatment to 'strike'. Without -O it is killed: the group raises and 262/265
+      checks pass. With `python -O` it passes 283/283, rc 0.
+    EVIDENCE:
+      [C] review_ht/mut/H09/stdout_O.txt: `283/283 m_analyze battery checks pass`, rc=0.
+    FIX:
+      Replace the assert with an explicit treatment tally checked inside the B.chk predicate, or with an if/raise.
+    REFUTER:
+      The finding holds; I reproduced it. scripts/m_analyze.py:3173 is the only bare `assert` in the analyzer. It
+      sits in `_bt_table`'s no-dose-row loop and is the only thing that checks `it["c"]["treatment"] == "carry"` on
+      the `flag and not has_dose` branch (m_analyze.py:1309-1310). That branch fires only in the no-dose variant,
+      because the placeholder table has a dose-note row. The B.chk that follows (ENUM-NODOSE-T/F) checks only the
+      per-row fire counts ({'P03': 1080} under T, {} under F) and the dose_note status text. Neither depends on the
+      treatment.
+
+      I ran the reviewer's H09 mutant on a scratch copy (scratchpad/step8/refute_assertO/m_analyze_H09.py; the only
+      diff from the build is line 1310 `"carry"` -> `"strike"`, plus the REPO path). Under `jlens-
+      qwen36/.venv/bin/python -O ... --selftest` it gave `283/283 m_analyze battery checks pass`, rc=0. Lines
+      129-130 show the NODOSE checks passing with {'P03': 1080} and {}. Without -O, the reviewer's stdout shows the
+      mutant killed: the assert raises, coverage misses ENUM-NODOSE-T/F, and the count is 265 != 283, so 262/265.
+
+      Nothing in the build guards against optimized mode. There is no `__debug__` or `sys.flags.optimize` check
+      anywhere in m_analyze.py. The INVOCATION line records sys.executable and argv but not interpreter flags, so a
+      G-ANL-F0.json produced under -O would look the same as a normal one. Neither the spec nor Code's decisions
+      (decisions_ganl.md has no ruling on asserts or -O) makes this intended. m:278's "a skipped assertion is a
+      failure" reads directly on a check that can be skipped silently.
+
+      Two points limit the severity:
+      - The canonical path (`m_analyze.py ganl` / `--selftest` with the repo venv, no -O) kills the mutant. No
+      current or documented invocation uses -O.
+      - The repo already has bare asserts in committed m modules (banner.py:102/104, gcal.py:1422, readrule.py:848,
+      scaffold.py:198), so this is not a departure from local practice.
+
+      So the defect is real but only robustness-level, and "nit" is the right severity. The proposed fix is correct
+      and cheap: fold a treatment tally into the B.chk predicate, or use an explicit if/raise.
+
+--- harness-tests: REF-LOCK-UNCOMMITTED's needle matches both the analyzer and the lock refusal, so the lock-commit branch is not exercised in the build-commit battery raw
+    finder: nit  strict refuter: refuted=False severity=nit  location: scripts/m_analyze.py:3749-3751 (REF-LOCK-UNCOMMITTED)
+    CLAIM:
+      The predicate matches 'not committed at HEAD', which appears in both refusal messages. While
+      scripts/m_analyze.py is untracked (when commit #1's battery raw is produced), the analyzer refusal fires first
+      and satisfies the check. The `--lock` committed check is then unexercised. After commit the reverse holds: the
+      analyzer-committed branch goes untested.
+    FAILURE SCENARIO:
+      H06 replaces env.committed(inp.lock) with a raw read. Run from an uncommitted analyzer, it passes 283/283, so
+      an uncommitted lock would be accepted with no FAIL in that raw.
+    EVIDENCE:
+      [C] mut_run2.txt: `H06 lock commit check dropped: SURVIVED rc=0`.
+    FIX:
+      Use distinct needles ('the lock is not committed' vs 'the analyzer is not committed'). Add two cases: an env
+      double with the analyzer committed and the lock uncommitted, and the reverse.
+    REFUTER:
+      I could not refute this finding: I reproduced it, and it holds as stated.
+
+      Code facts:
+      - In run_verdicts (scripts/m_analyze.py:1742-1747), the analyzer commit check comes before the lock commit
+      check.
+      - The two refusals have different messages: "REFUSED: the analyzer is not committed at HEAD" and "REFUSED: the
+      lock is not committed at HEAD". Both contain "not committed at HEAD".
+      - The battery check at 3749-3751 uses `_bt_env(base, committed=_prod_committed)`. In that env, analyzer_path
+      is Path(__file__), the real analyzer, and the lock is a temp file outside the repo.
+      - The check passes on `"not committed at HEAD" in vlu[1]`.
+      - Its printed value is vlu[0], which is just "refused". So the battery raw cannot show which refusal fired.
+      - The check still claims coverage id REF-LOCK-UNCOMMITTED, which _REQUIRED (line 2400) lists as a required id.
+
+      [C] stages._committed('scripts/m_analyze.py') returns "not committed at HEAD (git: fatal: path ... exists on
+      disk, but not in 'HEAD')", so the analyzer is untracked right now.
+
+      [C] I ran an in-process probe (scratch: step8/refute_lockunc/probe.py) that imports the repo file without
+      modifying it:
+      - (A) With the battery's env, the refusal that fires is "the analyzer is not committed at HEAD". The lock
+      check is never reached.
+      - (B) With an env double that treats the analyzer as committed, the refusal is "the lock is not committed at
+      HEAD".
+
+      So the build-commit battery raw, which spec §14 has produced before commit #1, credits REF-LOCK-UNCOMMITTED
+      while the lock branch goes unexercised. After the commit the reverse holds: the analyzer's committed bytes
+      pass, so the lock refusal fires and the analyzer branch goes untested.
+
+      [C] review_ht/mut_run2.txt shows H06, which replaces env.committed(inp.lock) with a raw read, surviving at
+      283/283. That copy ran outside the repo, where the analyzer check always fires anyway. That is the same
+      masking mechanism, so the evidence holds.
+
+      Neither the spec nor the decisions make this intended:
+      - spec §5 V1 lists the analyzer commit check and the --lock commit check as separate refusals.
+      - The coverage id names the lock specifically.
+      - The check's own label, "the analyzer / lock", admits the conflation but does not make up for the missing
+      coverage.
+
+      Severity is nit. The production checks themselves are correct, and the ganl record run happens after commit
+      #1, so it does exercise the lock branch. The defect is a mislabelled, state-dependent coverage gap. The fix is
+      the one proposed: distinct needles, plus two env-double cases (analyzer committed with lock uncommitted, and
+      the reverse).
+
+====================================================================================================
+FIX REPORT (verbatim)
+====================================================================================================
+  **G-ANL-F0 (step 8): fix report.** All 21 confirmed findings are fixed in the working tree, and none conflicts with `decisions_ganl.md`. Nothing is committed, and I did no git writes.
+  
+  Files changed:
+  - `/Users/jasondwyer/Documents/code/jspace-lab/scripts/m_analyze.py` (sha256 `30ece578ee341d86ba9a8e613f7f714a94bb448c6ef7eb749cadc0d79cabee9d`)
+  - `/Users/jasondwyer/Documents/code/jspace-lab/data/m/gates/m_posting_sentences.placeholder.json`, regenerated by the builder. Its sha256 went from `4ff15f1f…6615` to `b1cce4f844f78e45ab2a8465699fb70a96321a21415abd66f6bad6fd1dae4a0b`.
+  
+  Nothing under `valence_core/` and nothing in `m_sessions.py` was touched, and nothing else under `data/m/` was written. `EXPECTED_CHECKS` goes from 283 to 325 and the coverage ids from 290 to 332; each new check has its own id.
+  
+  **Final runs** (raws in `.../scratchpad/step8/fix/`):
+  - `m_analyze.py --selftest`, run 1: `  325/325 m_analyze battery checks pass`, rc 0
+  - run 2: `  325/325 m_analyze battery checks pass`, rc 0. The two raws are byte-identical (`final_m_analyze_{1,2}.txt`).
+  - `m_sessions.py --selftest`, runs 1 and 2: `  735/735 m selftest checks pass`, rc 0. The count moved from 706 because of the concurrent G-SHAPE-F0 build.
+  - `ganl --out <scratch>` writes the artifact (325/325, 332 ids). Canonical `ganl` still refuses with exit 2 because the files are uncommitted, and writes nothing.
+  
+  **Mutation evidence:** `.../scratchpad/step8/fix/mutate.py` and `mut_results_final.txt`. These run on scratch copies only. The control passes 325/325. 50 mutants each revert one fix or plant one regression, and every one fails its intended check, with one expected exception under F9 (explained there).
+  
+  **Per finding:**
+  
+  1. **G-ID-F0m: FIXED.** It is added to Q-F0's `gate_stop_stages`, in step order. The docstring's wrong m:295 cite is corrected to m:281, m:271 and m:284. The PIN-5 comment, register entry and cause cite are updated. Checks:
+     - New `NR-GATE-STOPPED-GID-Q-F0`: accepted as the primary cause, in `also`, and under not-locked.
+     - `NR-REFUSE-unknown-stage` inverted: it now refuses G-ID-F0m and G-PORT on OLMo, and G-ID-F3 and an OLMo stage on Q-F0.
+     - Mutant `F1-no-GID` fails.
+  2. **G-CAL on OLMo: FIXED.** It is added first in the OLMo tuple, citing m:176, m:276, m:300 and m:358 in PIN-5. New check `NR-GATE-STOPPED-GCAL-OLMO` (accepted on every unit); mutant fails.
+  3. **Residual Clock cause: FIXED as a conservative default.**
+     - New code `clock:not-locked:<stage>` with the phrase "{stage} had not reached its end and no LOCK v1.0 was committed by its Clock date ({date})".
+     - The stage is validated against `gate_stop_stages`. `run_not_run` accepts it.
+     - It is marked seat-routed in `SEAT_ROUTED` ("blocking LOCK v0.1, not step 8"). **Code should add "is m:324's parenthetical exhaustive?" to the consolidated seat block.**
+     - Checks: four new `NR-clock:not-locked-<U>` checks; mutant fails.
+  4. **Decisions vocabulary: FIXED.** `other_unit` can now be Q-F3. Its `other_state` must be "NOT-RUN" or `{A1, A2, A3[, A3*]}` using m:326's and m:340's words. Those words are verified against the proposal under `STR-CONSTANTS`, which now also covers m:326 and m:340.
+     - PENDING is refused as an `other_state`.
+     - Entries are deep-copied verbatim, and the artifact records `decisions_other_states`. PIN-35 is updated.
+     - Check: `DEC-QF3-PENDING`. A true revert of the PENDING change fails it, as does a revert of the Q-F3 change.
+  5. **Two sentences on one line: FIXED.**
+     - `loc` gains `sentence` (an integer ≥ 1), and rows must be in strictly increasing (line, sentence) order.
+     - For of-record and posted tables, each row's text must begin on its declared preprint line, and rows sharing a line must appear there in sentence order.
+     - The placeholder gains P21 as sentence 2 of line 20 (null olmo-dpo, thesis fallback-1, fires (900, 864, 0, 0)). The battery's preprint now joins rows that share a line. PIN-20 is updated.
+     - Checks: `ENUM-SAMELINE`, `ENUM-REF-18..21`, `ENUM-P21-T/F`. Both mutants fail.
+     - Note for Code: spec §9.5 now has 21 rows.
+  6. **Table of record bound to the lock: FIXED. New PIN-40.**
+     - Q-F0's VERDICTS refuses unless the lock text names both the table's sha256 and its preprint's sha256. The kind check runs first, so it is tested on its own.
+     - At the posting, an of-record table must equal the table recorded by Q-F0's `verdicts` output: its VERDICTS, or the no-first-read NOT-RUN that a locked unit gets.
+     - A Clock NOT-RUN binds no table, and a posted-kind table is never bound. Extending the binding to the no-first-read NOT-RUN is my reading of m:278's "when that lock is reached"; it is declared in PIN-40.
+     - The battery lock now names the table and its preprint.
+     - Checks: `REF-TABLE-NOT-IN-LOCK`, `REF-PREPRINT-NOT-IN-LOCK`, `CMD-POSTING-TABLE-BOUND`, `CMD-VERDICTS-QF0-TABLE-REFUSALS`. All three mutants fail.
+  7. **Posting output names: FIXED.** The posting writes `POSTING-v1_outputs.of-record.json` or `POSTING-v1_outputs.posted.json`, via `posting_out_name`. PIN-25 and the docstring are updated. Check: `CMD-POSTING-BOTH-KINDS`, both kinds in one directory; mutant fails.
+  8. **Posting and V10 guards untested: FIXED.** New checks:
+     - `CMD-POSTING-REASON-MISMATCH`, `CMD-POSTING-BOTH-OUTPUTS`, `CMD-POSTING-KEYSET`
+     - `CMD-POSTING-TABLE-REFUSALS` (uncommitted table; placeholder)
+     - `CMD-VERDICTS-QF0-TABLE-REFUSALS`
+     - the FALSE-flag checks under finding 14
+     - `ROWS-EQ-LABELSET`, and C3-OLMO-COMPLETE now asserts the row label
+  
+     All 11 of the reviewer's mutant classes fail.
+  9. **FLAG-OF-RECORD-TRUE: FIXED.** It asserts only `value is True`; the sha and `renders_sha_matches_calib` are printed beside it. This is the expected exception: the renders-false mutant still passes 325/325, which is decision 9's behaviour. The same mutant fails on the pre-fix copy.
+  10. **TUP-T10-F: FIXED.** Tallies are kept per flag and read from each flag's own outputs: labels, abstract text, ceiling. They also no longer crash on unexpected values. PIN-24 is updated. A ceiling drift under flag F now fails T10-F, where before it passed.
+  11. **Record to counts: FIXED.** The pre-pick counting is factored into `prepick_counts`. New checks:
+      - `C3-COUNTS-INDEPENDENT`: an independent recount from raw sessions for COMPLETE, CAP sham-only and OLMo COMPLETE.
+      - `CNT-COUNTS-CRAFTED`: crafted records give PASS at 28/40+28/40 vs 16/32, and the role-flipped twin gives REVERSE.
+      - `CNT-PREPICK-RATES`: mS 8, E 1/4, pre-pick 2/12 and 3/11.
+  
+      The O07 and O25 mutants fail.
+  12. **REVERSE boundaries: FIXED.** New checks `BND-REV-SHARE-HALF`, `BND-REV-EMPTYMAP`, and `BND-REV-DELTA-EQ-E` (which uses one fewer sham pick, per the refuter). Mutants A, B and C fail.
+  13. **Property keys: FIXED.** New check `CNT-PROPERTY-EXACT` covers:
+      - exact uncollapsed keyed counts on crafted records;
+      - a free-phase exclusion on a corrupted round, where any-phase = 2 and pre-pick = 1;
+      - validity lenient 2 vs strict 1.
+  
+      The C01, C02, C03, P01 and P02 mutants fail.
+  14. **Flag at command level: FIXED.** New checks `CMD-VERDICTS-QF0-FLAG-FALSE` and `CMD-POSTING-FLAG-FALSE`, each with an absent flag source and an uncommitted env double. They assert value False, the passed path recorded, the dose note struck, and strike items P03 and P18. The F02/F03/F04/F06 mutants fail.
+  15. **Reason routing and OLMo rows: FIXED.**
+      - `TUP-REASONS-DISTINCT`: all 1,080 tuples with a distinct reason per unit, against the oracle, which now takes per-unit reasons.
+      - `ROWS-EQ-LABELSET`: all 20 unit-by-state pairs.
+      - CMD-POSTING now asserts the e2a, f1 and olmo-dpo labels.
+  
+      The E01 and E11 mutants fail.
+  16. **Last look and STOP routing: FIXED.**
+      - C3-GVER-DATA now asserts "no look reached" and `stop_no_end_look`.
+      - New stub campaigns run to 42 launches. `C3-LASTLOOK-END-WINS`: the end look at 42 beats look 1 at 40. `C3-LASTLOOK-STOP-CADENCE`: a STOP after 40 names look 1, plus a production-shaped second cadence look at 80.
+      - `NR-STOP-ROUTING`: hair-trigger STOP with a PI-stop record routes to pi-stop; schedule_mismatch routes to gver-stop.
+  
+      The O05, O06, O10 and O20 mutants fail. No end-look recomputation was added (decision 6).
+  17. **Secondary values: FIXED.** New check `SEC-VALUES` hand-counts (a) at p = 1..3, (d) per pair × start, and (e) per phase, with a planted termination and cap_hit decoys. The S01, S02 and S03 mutants fail.
+  18. **Cross-check negatives and write-side exclusivity: FIXED. New PIN-41.**
+      - `refuse_beside` makes `verdicts` and `not-run` refuse (exit 2, nothing written) when the unit's other output already exists.
+      - Checks: `CMD-EXCLUSIVE-WRITE`, `CMD-POSTING-BOTH-OUTPUTS`, `CMD-POSTING-REASON-MISMATCH`. The E07, E08 and E09 mutants and the write-side mutant fail.
+  19. **Exit codes: FIXED.**
+      - Canonical `ganl` catches SystemExit around the closure (AnlStop maps to 4), and `main` also wraps `run_ganl` as a backstop.
+      - A unit output that is not a JSON object is refused with exit 2 via `_load_mapping`.
+      - PIN-26 is updated.
+      - Checks: `STR-GANL-EXIT` (`main(["ganl"])` returns 4, with the battery guarded against recursion) and `CMD-POSTING-MALFORMED`. Both mutants fail.
+  20. **Bare `assert`: FIXED.** The treatment tally is now inside the ENUM-NODOSE predicate. The H09 mutant fails under `python -O`.
+  21. **REF-LOCK-UNCOMMITTED: FIXED.** The two needles are now distinct, with two env doubles: `REF-LOCK-UNCOMMITTED` (analyzer committed, lock not) and the new `REF-ANALYZER-UNCOMMITTED` (the reverse). The H06 mutant and its analyzer counterpart both fail.
+  
+  **For Code:**
+  - The new seat item from finding 3 belongs in the consolidated seat block.
+  - New PINs: PIN-40 and PIN-41. Updated PINs: 5, 20, 24, 25, 26, 35.
+  - The battery takes about 7 s (it was about 5 s).
+  - The pre-fix analyzer and placeholder are saved in `.../scratchpad/step8/fix/` as `m_analyze.pre-fix.py` and `placeholder.pre-fix.json`.
+====================================================================================================
+INDEPENDENT VERIFICATION (verbatim)
+====================================================================================================
+  **G-ANL-F0 (step 8) verification report**
+  
+  The fixed build passes. All 21 fixes are present and each one has a test. No decision item is unmet in the code, and I found no high-severity defect. Two decision items are only partly met, and the mutation probes turned up 25 test gaps, all low or medium severity.
+  
+  **(1) Self-tests**, each run twice from the repo root:
+  - `scripts/m_analyze.py --selftest`: `  325/325 m_analyze battery checks pass` both times, rc 0.
+    - The two raws are byte-identical (sha256 `060c80fc…`) and identical to the fixer's `final_m_analyze_1.txt`.
+    - The analyzer's sha256 is `30ece578…cabee9d` and the placeholder's is `b1cce4f8…4a0b`. Both match the fix report.
+  - `scripts/m_sessions.py --selftest`: `  735/735 m selftest checks pass` both times, rc 0.
+    - Its two raws differ only in a timestamped podchange filename, temp-dir names and `sham_seconds`. That nondeterminism belongs to the m suite's own output, not to this build.
+  - Temp-dir `ganl --out <scratch>`: rc 0 "written", then rc 0 "identical".
+    - My artifact differs from the fixer's only in `package_sha256` (`bbf68294…` now, `d5290ed2…` then), because G-SHAPE has been editing the package.
+    - `outputs_sha256` is `83df98b1…`, `closure_sha256` is `a3bc7bb9…`, and there is no timestamp or HEAD field.
+  - Canonical `ganl`: rc 2 (uncommitted), and nothing was written.
+  
+  **(2) The 21 fixes.** All are present in the code and each has its own test.
+  - Examples of the new tests: NR-GATE-STOPPED-GID-Q-F0 and -GCAL-OLMO, `NR-clock:not-locked-*`, DEC-QF3-PENDING, ENUM-SAMELINE, ENUM-REF-18..21, the PIN-40 and PIN-41 checks, CMD-POSTING-*, C3-COUNTS-INDEPENDENT, BND-REV-*, CNT-PROPERTY-EXACT, SEC-VALUES, C3-LASTLOOK-*, STR-GANL-EXIT and REF-ANALYZER-UNCOMMITTED.
+  - The step order G-TIME-F0 → G-ID-F0m → G-F0m-Qwen matches m:358 steps 10, 12 and 14.
+  - No bare `assert` is left in the file.
+  - I reread the fixer's mutation results: 50 mutants, 49 caught. The one survivor, F9, is decision 9's intended behaviour.
+  
+  **(3) My mutation probes.** I wrote 83 mutants plus a control, on scratch copies only (`verify/mutate_v.py`, results in `verify/mut_results.txt`). 52 were caught, each by its intended check. 31 survived.
+  
+  6 survivors are equivalent:
+  - **C02** (`P<α` instead of `P≤α`): P = j/2ⁿ can never equal 1/100.
+  - **C03** (DEAD without `k<n`): the CDF at k = n is 1, which is never below 1/40.
+  - **C05** (REVERSE and PASS swapped): the two are exclusive, since E ≥ 0.
+  - **R12** (Q-F0 PENDING allowed): `_ckpt` still raises ValueError, so it is still refused.
+  - **D07** (advisories counted as a set): AuditV3 emits at most one advisory per round (audit_v3.py:58).
+  - **D24** (`check_tuple` accepts q = PENDING): unreachable, because the posting's cross-check refuses Q-F0 PENDING with exit 2.
+  
+  25 survivors are test gaps:
+  
+  | Severity | Mutant | What goes undetected |
+  |---|---|---|
+  | Medium | R02, R04 | The `--adjudication` file (PIN-9) and the PI-stop record (PIN-8) are not tested for binding to the checkpoint's sha256 (code at m_analyze.py:1955 and 1973). |
+  | Low | R03 | The adjudication's pause is not matched. |
+  | Low | R05, D28 | A surplus `--adjudication` or `--pi-stop` is accepted. |
+  | Low–Medium | I07, I08 | PIN-30: the campaign-level and gate-level STUB_MARK checks mask each other in REF-STUB, so neither is tested on its own. |
+  | Low–Medium | A02, A10 | A non-empty decisions list is checked only at the validator, never in the emitted `{U}_VERDICTS.json` or `{U}_NOT-RUN.json`. |
+  | Low | I09, I10 | `verdicts`' checks on its time and qual checkpoints (`stage_end`, unit, stage) are untested; for unit and stage, V4 still catches the mismatch as a STOP instead of a refusal. |
+  | Low | R14, R20 | Same gap in `not-run`. |
+  | Low | A01 | Nothing automated checks the G-ANL-F0 manifest's contents. |
+  | Low | A03, A04, A14 | `power`, `closure_sha256` and `analyzer_sha256` in the VERDICTS output are not asserted. |
+  | Low | A05, A13 | The secondary output's habit block and the posting output's `tuple` are not asserted. |
+  | Low | C14 | The odd-n split of the power figure is untested. |
+  | Low | I15 | A module-level `testing` import is not caught; the lazy-import check covers function-level imports only. |
+  | Low | I16, D09 | The decisions file's `unit` and the decision date format are untested. |
+  | Low | R08 | A `first_free_pick_P` set outside the domain is untested. |
+  | Low | R16 | The STOP on an excluding round whose class or phase disagrees with the session's exclusion is untested. |
+  
+  **(4) Decisions file, item by item.**
+  - **Met:** items 1, 3, 4, 6, 7, 8, 9, 10, 11, 12 and 14.
+    - Item 1: PIN-1's wording, the mechanical closure, the closure sha in the lock (exit 2), and lazy `stages`. Only the verdict path's import-time data is in the closure, but no call-time data reads exist on that path besides declared inputs.
+    - Item 8: `.gitignore` is untouched, the roster-word refusal is dropped and the forbidden-literal check is kept.
+    - Item 12: no timestamp or HEAD in the artifact; write-once with PIN-37.
+  - **Partly met, item 2:** PENDING records `clock_passed` but no date beside it, where the decision says "+ date". This is at m_analyze.py:451–476.
+  - **Partly met, item 5:** the code emits the decisions into both outputs, but the battery checks "carried verbatim" only at the validator (A02 and A10 above).
+  - **Item 13** is Code's, at commit.
+  - **Item 15:** spot checks pass. The write-once check moved to write time, as declared.
+  - **Hard rules:** all met, per (5).
+  
+  **Residual defects** beyond the test gaps:
+  1. **Low–Medium:** `posting` and `not-run` neither require the analyzer to be committed nor record the analyzer, package or closure sha in their outputs (m_analyze.py:2189–2334). VERDICTS does both. The posting's v1 outputs are therefore not bound to the locked analyzer. The spec doesn't require this, so it is a candidate for LOCK v0.1.
+  2. **Low:** the missing-floors refusal (exit 2, m_analyze.py:2022–2024) runs after V3 and V4 have parsed records that carry picks. PIN-26 and PIN-7 say refusals are decided before that. Nothing is printed or written, so nothing leaks.
+  3. **Note:** the canonical `ganl` must run after G-SHAPE's commits, because `package_sha256` is still moving.
+  
+  **(5) Repo state.**
+  - `data/m`: sha256s of all 33 files are identical before and after every one of my runs, including the 83 mutants.
+  - `git status` is unchanged and HEAD is still `2c50e03`. There is no stash and only one worktree.
+  - There are no tracked diffs under `valence_core/`, `.gitignore` or `.gitattributes`.
+  - The `m_sessions.py` diff belongs to G-SHAPE: 64 lines mention gshape and none mention m_analyze or ganl.
+  - No model or tokenizer was loaded:
+    - STR-NO-HEAVY passes.
+    - The analyzer has no torch, mlx or transformers imports.
+    - The m suite's own insulation checks pass.
+  
+  All my evidence is in /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step8/verify/:
+  - `ma_1.txt`, `ma_2.txt`, `ms_1.txt`, `ms_2.txt` (self-test raws)
+  - `mutate_v.py`, `mut_results.txt`, `mut/` (mutation probes)
+  - `ganl_v/G-ANL-F0.json`, `ganl_v1.txt`, `ganl_v2.txt`, `ganl_canon.txt` (ganl runs)
+  - `datam_before.txt`, `datam_after.txt`, `gitstatus_before.txt`, `gitstatus_after.txt` (repo state)
+====================================================================================================
+ROUND 2 -- FIX REPORT (verbatim)
+====================================================================================================
+  **G-ANL-F0 (step 8), round 2 fix report**
+  
+  All 25 mutation survivors, both partly-met decision items and the two code defects are closed. The analyzer self-test passes. Two items are not closed: residual 3 is Code's sequencing note, not a code defect, and `m_sessions.py --selftest` does not pass because of G-SHAPE's in-flight build.
+  
+  Summary lines:
+  - `scripts/m_analyze.py --selftest`, run twice: `  350/350 m_analyze battery checks pass`, rc 0. The two raws are byte-identical (sha256 810876d3…).
+    - The analyzer's sha256 is now 81e25d069b41865140380ceb6f7d4e4110d42315e62250b49ff1789774bc70a4.
+    - The placeholder is unchanged (b1cce4f8…).
+    - EXPECTED_CHECKS goes from 325 to 350; required coverage ids go from 332 to 361.
+  - `scripts/m_sessions.py --selftest`, run twice: `  723/724 m selftest checks pass`, rc 1 both times.
+    - The one FAIL is G-SHAPE's own check: `gshape: _selftest raised GshapeRefusal: G-SHAPE-F0 REFUSED: the m package's committed blobs hash to abf2e949…, not the package_sha256 d8542e04…`.
+    - It comes from the committed-package check at `valence_core/m/gshape.py:466`. `gshape.py` is untracked and was edited at 04:30:24, during this round.
+    - It has nothing to do with `m_analyze`. I did not touch `m_sessions.py` or `gshape.py`.
+  - Mutation probes: 42 mutants, all caught, each by its intended check. They are the verifier's 25 survivors (adapted where the text moved) plus 17 on the new code. The unmutated control passes 350/350.
+  - Temp-dir `ganl --out`: rc 0 "written", then rc 0 "identical" on an unchanged package.
+  - Canonical `ganl`: rc 2, nothing written.
+  - `data/m` sha256s and `git status` are the same before and after. HEAD is still 2c50e03. Nothing was committed.
+  
+  **Test gaps (mutation survivors)**
+  - R02 (adjudication not bound to the checkpoint sha): CLOSED, REF-ADJ-BINDING.
+  - R03 (adjudication's pause not matched): CLOSED, REF-ADJ-BINDING. It also covers the pause kind and the unit, each tested alone; the exact file is still accepted.
+  - R04 (PI-stop record not bound to the sha): CLOSED, REF-PISTOP-BINDING. It also covers the unit and the bar, each alone.
+  - R05 and D28 (surplus `--adjudication` / `--pi-stop` accepted): CLOSED, REF-SURPLUS-SEAT-INPUT. Both directions: each is refused when not needed and accepted where the campaign needs it.
+  - I07 and I08 (campaign- and gate-level STUB_MARK checks mask each other): CLOSED, REF-STUB-CAMPAIGN-ONLY and REF-STUB-GATE-ONLY.
+    - Each check is tested alone on scrubbed checkpoint copies, and a fully stub-free campaign is analyzed.
+    - `not-run`'s own gate-stub check now has a test too: NR-CMD-STUB.
+  - A02 and A10 (non-empty decisions never checked in the emitted outputs): CLOSED.
+    - CMD-VERDICTS-DECISIONS covers `{U}_VERDICTS.json`.
+    - CMD-VERDICTS-NR-DECISIONS covers the no-first-read `{U}_NOT-RUN.json` that `verdicts` writes.
+    - CMD-NOTRUN-DECISIONS covers the `not-run` command's output.
+  - I09 and I10 (`verdicts`' time/qual checks on `stage_end`, unit and stage untested): CLOSED, REF-GATE-NOT-ENDED and REF-GATE-WRONG-STAGE.
+    - Cases: not ended, not ended with a defective record, qual passed as time, and another unit's time stage.
+    - Each must be a refusal, not a STOP; the ended stages are still accepted.
+  - R14 and R20 (the same gaps in `not-run`): CLOSED, NR-CMD-GATE-NOT-ENDED and NR-CMD-GATE-WRONG-STAGE. Same four cases; nothing is written.
+  - A01 (G-ANL-F0 manifest contents unchecked): CLOSED, STR-GANL-ARTIFACT.
+    - The manifest is now built by `ganl_artifact()` and checked by `ganl_artifact_problems()`. Planted wrong package, analyzer, closure or battery values, a timestamp and a HEAD field are each caught.
+    - `run_ganl` also STOPs (exit 4) if its own manifest fails that check.
+  - A03, A04 and A14 (power, closure and analyzer sha in VERDICTS not asserted): CLOSED, CMD-VERDICTS-BINDING. A04 and A14 are also caught by CMD-VERDICTS-NR-DECISIONS.
+  - A05 (secondary output's habit block): CLOSED, CMD-SECONDARY-HABIT.
+  - A13 (posting output's `tuple`): CLOSED, CMD-POSTING-TUPLE.
+  - C14 (odd-n power split): CLOSED, PWR-ODD-N.
+  - I15 (module-level `testing` import): CLOSED, STR-LAZY-IMPORTS.
+    - The check is extended with a new `MODULE_LEVEL_IMPORTS` allowlist. Planted module-level `testing` and `guard` imports are both caught.
+  - I16 and D09 (decisions file's `unit` and decision date format): CLOSED, DEC-UNIT-DATE (both directions). I16 is also caught by CMD-VERDICTS-DECISIONS.
+  - R08 (`first_free_pick_P` set outside the domain): CLOSED, REF-FFP-OUTSIDE-STOP. REF-FIXTURE-S0 pins the fixture session it acts on.
+  - R16 (excluding round's class or phase disagrees with the session's exclusion): CLOSED, CNT-EXCLROUND-STOP (both directions) and REF-EXCLROUND-STOP (exit-4 path).
+  
+  **Partly-met decision items**
+  - Item 2 (PENDING has no date beside `clock_passed`): CLOSED, PEND-DATE and PEND-DATE-RECORDED.
+    - The declaration is now {state, substate, clock_passed, date}; the date must be YYYY-MM-DD.
+    - The date is recorded as given in the posting output's pending block and in Q-F0's VERDICTS, under a new `olmo_states_declared` field.
+    - I did not add any date-versus-D_O consistency check, because the boundary-day convention is the seat's. PIN-6's text is updated.
+  - Item 5 (decisions "carried verbatim" checked only at the validator): CLOSED, CMD-VERDICTS-DECISIONS, CMD-VERDICTS-NR-DECISIONS and CMD-NOTRUN-DECISIONS.
+  
+  **Residual defects**
+  1. `posting` and `not-run` not bound to the analyzer: CLOSED (a binding defect), NR-CMD-BINDING and CMD-POSTING-BINDING.
+     - New `analyzer_binding()` under a new PIN-42. Both commands now refuse (exit 2, before reading any input) if the proposal is not the pinned v1.11 or the analyzer is not committed.
+     - Both outputs now record `analyzer_sha256`, `package_sha256` and `closure_sha256`.
+     - Flag for Code: PIN-42 is Code-added and needs the seat's confirmation at LOCK v0.1; it says so in its own text. Neither command has a lock, so there is no lock-naming check.
+  2. Missing-floors refusal ran after V3/V4: CLOSED, REF-NO-FLOORS and REF-NO-FLOORS-BEFORE-V4 (no floors plus a V4 defect still refuses rather than STOPs).
+     - The same refusal-order defect existed in `not-run`: its gate `stage_end` refusal ran after V3/V4. It now runs before them; the case is covered by NR-CMD-GATE-NOT-ENDED. PIN-38's text is updated.
+  3. Canonical `ganl` must run after G-SHAPE's commits: NOT CLOSED. This is Code's sequencing, not a code defect.
+     - Confirmed this round: `gshape.py` changed mid-round, which moved `package_sha256`. A second temp-dir `ganl` into the same directory was then refused as a write-once conflict. With the package stable, the rerun was identical.
+  
+  **Other changes and notes for Code**
+  - The reader's `V()` and the new `nr_try()` now return "crash" on an unexpected exception, so a crash fails its own check instead of aborting the whole reader group.
+  - Output schema additions:
+    - Q-F0 VERDICTS gains `olmo_states_declared`.
+    - `{U}_NOT-RUN.json` and the posting outputs gain the three sha fields.
+    - The PENDING declaration gains `date`.
+  - The PIN register now has 42 entries (PIN-42 added). The G-ANL-F0 entry's PIN list should grow to match.
+  - The verifier's A10 mutant string no longer matches the code, because `**binding` was appended after it. My harness uses the adapted string.
+  
+  Files are in /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step8/round2/:
+  - /Users/jasondwyer/Documents/code/jspace-lab/scripts/m_analyze.py (the only repo file edited)
+  - `ma_1.txt`, `ma_2.txt` (analyzer self-test raws)
+  - `ms_1.txt`, `ms_2.txt` (m_sessions self-test raws)
+  - `mutate_r2.py`, `mut_results_final.txt` (mutation probes)
+  - `ganl_out2/G-ANL-F0.json`, `ganl_canon.txt` (ganl runs)
+  - `datam_before.txt`, `datam_after.txt`, `gitstatus_before.txt`, `gitstatus_after.txt` (repo state)
+  - `m_analyze.orig.py` (backup of the analyzer before this round)
+====================================================================================================
+ROUND 2 -- INDEPENDENT RE-VERIFICATION (verbatim)
+====================================================================================================
+  **G-ANL-F0 (step 8): independent re-verification, round 1**
+  
+  Verdict: **CLEAN.** No surviving mutant is non-equivalent and above Low severity, and no code defect is left. 23 new Low test gaps are listed in (2). Residual 3 is a sequencing step for Code, not a code defect: the canonical `ganl` already refuses (rc 2) until the files are committed.
+  
+  **(1) Self-tests**, run from the repo root:
+  - `scripts/m_analyze.py --selftest`, run twice: `  350/350 m_analyze battery checks pass`, rc 0 both times.
+    - The two raws are byte-identical, sha256 `810876d3…`. They are also identical to the fixer's `round2/ma_1.txt`.
+    - The analyzer's sha256 is `81e25d06…70a4` and the placeholder's is `b1cce4f8…4a0b`. Both match the fix report.
+  - `scripts/m_sessions.py --selftest`, run four times:
+    - Runs 2 and 4: `  740/740 m selftest checks pass`, rc 0.
+    - Runs 1 and 3: 739/740 and 738/740, rc 1.
+    - The only FAILs are G-SHAPE's own package-hash checks ("the m package re-hashes to … / committed blobs hash to …").
+    - In both failing runs, `valence_core/m/gshape.py` changed during the run: `4c717ec`→`ddc3419` in run 1, `ddc3419`→`f561dd1` in run 3. That is the concurrent G-SHAPE build. The `m_sessions.py` diff mentions gshape on 61 lines and m_analyze or ganl on 0.
+  - Temp-dir `ganl --out`: rc 0 "written", then rc 0 "identical".
+    - The artifact shows 350/350, 361 coverage ids, 42 PINs, `outputs_sha256 83df98b1…`, `closure_sha256 a3bc7bb9…` and `package_sha256 80356d8e…`. The package sha is still moving with G-SHAPE.
+    - It has no timestamp or HEAD key.
+  - Canonical `ganl`: rc 2 (the analyzer and placeholder are not committed), and nothing was written.
+  
+  **(2) Mutation probes.** I ran 126 mutants on a scratch snapshot of the analyzer (sha `81e25d06…`): 1 control, the 83 previous mutants and 42 new ones. The control passes 350/350.
+  
+  Previous set (83):
+  - 77 are caught, each by its intended check, including all 25 former gaps. One mutant (`I01`, `I08`, `A10`) was retargeted for each place the text now appears twice or moved.
+  - The 6 survivors are the equivalents classified last round: C02, C03, C05, R12, D07 and D24. Their code is unchanged.
+  
+  New set (42), aimed at the fix code:
+  - 17 are caught by their intended checks: V05, V06, V11, V12, V22, V23, V24, V31, V33, V34, V35, V36, V37, V38, V39, V41 and V42.
+  - 25 survived. 2 are equivalent:
+    - **V40**, odd-n power split with its arguments swapped: `power_exact` is symmetric in (n0, n1), which I checked numerically. The split is recorded separately.
+    - **V32**, module-level `all`→`any`: any mixed top-level import is still caught by STR-LAZY-IMPORTS' exact `mod_level == MODULE_LEVEL_IMPORTS` check, which I checked. It differs only for an import nested in a module-level `if`/`try` block.
+  - The other 23 are gaps, **all Low**:
+  
+  | Mutant | What goes untested |
+  |---|---|
+  | V01, V02 | A date with trailing characters ("2026-11-02x"): `fullmatch`→`match` survives for both PENDING and decision dates. |
+  | V03 | A PENDING declaration with extra keys. |
+  | V04 | A malformed PENDING date with `clock_passed` false. Every bad-date case uses true. |
+  | V07–V10 | The schema and non-empty-text conjuncts of `--adjudication` and `--pi-stop`. |
+  | V13 | A surplus `--adjudication` when the last pause *is* adjudicated. The fixture has no pauses, so the REF-SURPLUS-SEAT-INPUT label's "(the last pause adjudicated, or none)" claims more than the test covers. |
+  | V14 | A surplus `--pi-stop` on a CAP, PI-STOP or G-VER-STOP campaign. Only COMPLETE is tested. |
+  | V15 | Negative floors. |
+  | V16, V17 | The floors refusal and `not-run`'s `stage_end` refusal moved after V3 `release_full` but before V4. Nothing is printed or written either way. |
+  | V18, V19 | PIN-42's "before any input is read" order for `not-run` and `posting`. |
+  | V20, V21 | `proposal_sha256` in the `{U}_NOT-RUN.json` and posting outputs is not asserted. |
+  | V25–V29 | `ganl_artifact_problems`' sha16, flag_of_record, pins/seat_routed/schema and placeholder sub-checks, and its battery sub-check beyond `checks_pass`. Only package, analyzer sha, closure, `checks_pass`, timestamp and HEAD are planted. |
+  | V30 | `run_ganl`'s exit-4 manifest-content branch. |
+  
+  **(3) Repo state**
+  - `data/m`: the sha256s of all 33 files are identical before and after every run.
+  - `git status` and HEAD (`2c50e03`) are unchanged. There is no stash and only one worktree.
+  - There are no tracked diffs under `valence_core/`, `.gitignore` or `.gitattributes`. No G-ANL-F0 file exists in `data/m/gates`.
+  - No model or tokenizer was loaded:
+    - The analyzer imports no torch, mlx or transformers.
+    - STR-NO-HEAVY passes.
+    - G-SHAPE's no-heavy check in the m suite passes.
+    - Importing the snapshot leaves `sys.modules` heavy-free.
+  - I wrote only in scratch. Nothing was committed.
+  
+  **(4) Verdict: CLEAN.** The previous verifier's 25 gaps and both partly-met decision items are closed, and residual defects 1 and 2 are fixed. Notes for Code:
+  - PIN-42 is Code-added and needs the seat's confirmation at LOCK v0.1.
+  - Run the canonical `ganl` only after G-SHAPE's commits, because `package_sha256` is still moving.
+  - The 23 Low gaps above are optional battery additions.
+  
+  Files are in /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step8/verify2/:
+  - `ma_1.txt`, `ma_2.txt`, `ms_1.txt`–`ms_4.txt`, `ms_shas_*.txt` (self-test raws and the file shas around each m_sessions run)
+  - `mutate_v2.py`, `mut_results.txt`, `mut/` (mutation probes)
+  - `m_analyze.snapshot.py`, `round2.diff`
+  - `ganl_out/G-ANL-F0.json`, `ganl_1.txt`, `ganl_2.txt`, `ganl_canon.txt`
+  - `datam_before.txt`, `datam_after.txt`, `datam_after2.txt`, `gitstatus_before.txt`, `gitstatus_after.txt`, `gitstatus_after2.txt`
+====================================================================================================
+ROUND 3 -- FIX REPORT (verbatim)
+====================================================================================================
+  **G-ANL-F0 step 8, round 3: all 23 Low gaps are closed.**
+  
+  Each of the 23 mutants is now caught by a new check of its own. No verdict logic needed changing: the three behaviour questions you named were already refused by the code. A probe confirmed each one: extra keys in a PENDING declaration, negative floors, and dates with trailing characters. The new checks lock that in, both directions where the behaviour has two sides.
+  
+  Only `scripts/m_analyze.py` was edited, and only its battery: 23 new checks, 23 new coverage ids, `EXPECTED_CHECKS` 350→373, coverage 361→384. I also reworded one existing check label, REF-SURPLUS-SEAT-INPUT, which no longer claims more than it tests.
+  
+  **Self-test, run twice from the repo root (`-B`):**
+  - Run 1: `  373/373 m_analyze battery checks pass`, rc 0
+  - Run 2: `  373/373 m_analyze battery checks pass`, rc 0
+  - The two outputs are byte-identical (sha256 `858b3d67…2177`). The analyzer's sha256 is now `8309f72d…0468`.
+  
+  **Mutation re-run.** I re-ran all 126 mutants (r2's harness, retargeted at the new file):
+  - The control passes 373/373.
+  - 117 are caught: 77 old and 40 new.
+  - 9 survive: the control plus the 8 equivalents classified earlier (C02, C03, C05, R12, D07, D24, V32, V40).
+  - No mutant failed to apply, because no verdict-path text changed.
+  
+  **Per mutant:**
+  
+  | Mutant | Status | Check id | Notes |
+  |---|---|---|---|
+  | V01 | CLOSED | PEND-DATE-TRAILING | |
+  | V02 | CLOSED | DEC-DATE-TRAILING | Covers the decisions list, the decisions file and the NOT-RUN record |
+  | V03 | CLOSED | PEND-EXTRA-KEYS | Refused directly and through `crosscheck_coordinate` |
+  | V04 | CLOSED | PEND-DATE-CLOCK-FALSE | PEND-DATE-TRAILING also catches it |
+  | V07 | CLOSED | REF-ADJ-SCHEMA | |
+  | V08 | CLOSED | REF-ADJ-TEXT | |
+  | V09 | CLOSED | REF-PISTOP-SCHEMA | |
+  | V10 | CLOSED | REF-PISTOP-TEXT | |
+  | V13 | CLOSED | REF-SURPLUS-ADJ-ADJUDICATED | New fixture: the last pause adjudicated |
+  | V14 | CLOSED | REF-SURPLUS-PISTOP-TERMINAL | Covers CAP, PI-STOP, and G-VER STOP before and after a first read |
+  | V15 | CLOSED | REF-FLOORS-NEGATIVE | Also refuses bool and float floors; zero floors are accepted |
+  | V16 | CLOSED | REF-NO-FLOORS-BEFORE-V3 | A call counter shows `release_full` is never called on the refusal (0 calls), and an accepted run makes 3 |
+  | V17 | CLOSED | NR-CMD-GATE-BEFORE-RELEASE | 0 `release_full` calls on refusal, 2 on an accepted run |
+  | V18 | CLOSED | NR-CMD-BINDING-FIRST | |
+  | V19 | CLOSED | CMD-POSTING-BINDING-FIRST | |
+  | V20 | CLOSED | NR-CMD-PROPOSAL-SHA | |
+  | V21 | CLOSED | CMD-POSTING-PROPOSAL-SHA | |
+  | V25 | CLOSED | STR-GANL-SHA16 | |
+  | V26 | CLOSED | STR-GANL-FLAG | |
+  | V27 | CLOSED | STR-GANL-REGISTER | |
+  | V28 | CLOSED | STR-GANL-PLACEHOLDER | |
+  | V29 | CLOSED | STR-GANL-BATTERY-BLOCK | |
+  | V30 | CLOSED | STR-GANL-CONTENT-EXIT | A planted manifest gives exit 4 with nothing written; the true one writes with exit 0, in temp `--out` dirs with a battery double |
+  
+  NOT CLOSED: none.
+  
+  **Repo state:**
+  - `data/m` is unchanged: same sha256s for its 33 files before and after. That includes only a hash of `data/m/ckpt/G-CAL_qwen.json`; nothing was interpreted.
+  - `git status` and HEAD (`2c50e03`) are unchanged. There are no commits or stashes, and there is one worktree.
+  - No model or tokenizer was loaded.
+  - A scratch `ganl --out` run gave rc 0 "written", then rc 0 "identical". The artifact shows 373/373 checks and 384 coverage ids, with no timestamp or HEAD key. `outputs_sha256` (`83df98b1…`) and `closure_sha256` (`a3bc7bb9…`) are unchanged. `package_sha256` is still moving with the concurrent G-SHAPE build.
+  
+  **Found but not applied** (outside the 23, for the seat):
+  1. The PENDING-date and decision-date checks use `\d`. That accepts non-ASCII digits ("２０２６-１１-０２") and impossible dates such as "2026-02-30".
+  2. The date on a `dose-not-completable` NOT-RUN record is never validated, because its reason phrase has no `{date}`. A date of `None` is accepted and lands in `{U}_NOT-RUN.json` as given.
+  
+  Files are in /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step8/round3/:
+  - `ma_1.txt`, `ma_2.txt` (self-test raws)
+  - `round3.diff`, `m_analyze.orig.py` (the diff and the pre-change copy)
+  - `mutate_v3.py`, `mut_results_v3.txt`, `mut/` (mutation re-run)
+  - `ganl_out/G-ANL-F0.json`, `ganl_1.txt`, `ganl_2.txt` (scratch `ganl` runs)
+  - `datam_before.txt`, `datam_after.txt`, `gitstatus_before.txt`, `gitstatus_after.txt` (repo-state checks)
+====================================================================================================
+ROUND 3 -- INDEPENDENT CONFIRMATION (verbatim)
+====================================================================================================
+  **G-ANL-F0 step 8, round 3: independent confirmation. Verdict: CLEAN.**
+  
+  All 23 Low gaps are closed. Each targeted mutant is caught by the new check the fix report names for it. Every surviving mutant is equivalent, and the repo state is unchanged.
+  
+  **(1) Self-test**, run twice from the repo root with `-B`:
+  - Both runs print `  373/373 m_analyze battery checks pass` and exit with rc 0. No check fails.
+  - The two raws are byte-identical, sha256 `858b3d67…2177`. That is the same hash as the fixer's `round3/ma_1.txt`.
+  - The analyzer's sha256 is `8309f72d…0468`, matching the fix report.
+  - **Edit scope:** I diffed it against r2's snapshot (`81e25d06…`). Every hunk falls inside the battery:
+    - The first 2,583 lines are byte-identical.
+    - Everything from `lazy_import_problems` through `main` is byte-identical. That covers `run_ganl`, `ganl_artifact` and `ganl_artifact_problems`.
+    - The only non-check edits are `EXPECTED_CHECKS` 350→373, the 23 new coverage ids, and the reworded REF-SURPLUS-SEAT-INPUT label.
+  
+  **(2) Mutation probes** on a scratch snapshot of the current analyzer:
+  - **r2's harness, unchanged.** It needed no edits: all 125 mutants still apply exactly once, because no verdict-path text moved.
+    - The control passes 373/373.
+    - 117 are caught: 77 of the old 83 and 40 of the 42 new. This matches the fix report.
+  - **The 23 targeted mutants.** All are caught, and each is caught by the id in the fix report, confirmed from the coverage-miss line:
+    - V01 PEND-DATE-TRAILING; V02 DEC-DATE-TRAILING; V03 PEND-EXTRA-KEYS; V04 PEND-DATE-CLOCK-FALSE (and PEND-DATE-TRAILING)
+    - V07 REF-ADJ-SCHEMA; V08 REF-ADJ-TEXT; V09 REF-PISTOP-SCHEMA; V10 REF-PISTOP-TEXT
+    - V13 REF-SURPLUS-ADJ-ADJUDICATED; V14 REF-SURPLUS-PISTOP-TERMINAL; V15 REF-FLOORS-NEGATIVE; V16 REF-NO-FLOORS-BEFORE-V3
+    - V17 NR-CMD-GATE-BEFORE-RELEASE; V18 NR-CMD-BINDING-FIRST; V19 CMD-POSTING-BINDING-FIRST; V20 NR-CMD-PROPOSAL-SHA; V21 CMD-POSTING-PROPOSAL-SHA
+    - V25 STR-GANL-SHA16; V26 STR-GANL-FLAG; V27 STR-GANL-REGISTER; V28 STR-GANL-PLACEHOLDER; V29 STR-GANL-BATTERY-BLOCK; V30 STR-GANL-CONTENT-EXIT
+  - **No regression against r2's run.** Every mutant caught in r2 is still caught by the same checks. The only label change is REF-SURPLUS-SEAT-INPUT's rewording, and R05, D28 and V12 are still caught by that check under its new label. A01 and V31 now also trip the new STR-GANL checks, as expected, because those checks require the true manifest to have no problems.
+  - **39 extra mutants of my own (W series).** These write the same 23 defect classes in a different form, to check the new checks are not fitted to r2's exact wording. A control passes 373/373, and all 39 are caught by their intended ids. Examples:
+    - date regexes that allow one trailing character, strip whitespace, or use `re.search`
+    - the cross-check silently dropping extra PENDING keys
+    - a missing schema accepted by default
+    - floors of -1, bool or float accepted
+    - the floors refusal or the stage-end refusal moved after a release
+    - the binding moved after the record or tuple is read
+    - `run_ganl` returning 2, or falling through to the write
+  
+  **Survivors.** Nine survive: the control plus 8 mutants, all equivalent:
+  - **C02** (`<=`→`<` in (iii)): a dyadic P never equals 1/100 (PIN-2).
+  - **C03** (drops `k < n`): at k = n the binomial CDF is 1, which is never below 1/40.
+  - **C05** (REVERSE and PASS order swapped): the up and down predicates cannot both hold.
+  - **R12** (Q-F0 PENDING branch removed): `_ckpt("Q-F0")` raises next, so Q-F0 is still refused. Only the message differs.
+  - **D07** (`sorted(set(advisory))`): audit_v3 builds `advisory` with at most one element, so the result is the same.
+  - **D24** (`t[0]` in O6): a Q-F0 PENDING is still refused by `crosscheck_coordinate` through `pending_state`, so the outcome is unchanged.
+  - **V32** (`all`→`any`): STR-LAZY-IMPORTS' exact set-equality check still catches it.
+  - **V40** (odd-n split swapped): `power_exact` is symmetric in (n0, n1).
+  
+  **Found-but-not-applied items: both reproduce** (probe in `probe_found.py`):
+  1. `\d` accepts non-ASCII and impossible dates. "２０２６-１１-０２", "٢٠٢٦-١١-٠٢", "2026-02-30" and "9999-99-99" are all accepted, both as PENDING dates and as decision dates.
+  2. A `dose-not-completable` NOT-RUN record's date is never validated. `None`, `"not a date"` and `7` are all accepted and returned as given.
+  
+  Neither is a regression; both are outside the 23 and are for the seat.
+  
+  **(3) Repo state:**
+  - **`data/m`:** all 33 files have the same sha256s before and after.
+  - **Git:** status, HEAD `2c50e03`, the empty stash list and the single worktree are all unchanged. There are no tracked diffs under `valence_core/`, `.gitignore` or `.gitattributes`, and no G-ANL file in `data/m/gates`.
+  - **Scratch `ganl --out` run:** rc 0 "written", then rc 0 "identical".
+    - The artifact shows 373/373/373 and 384 coverage ids.
+    - `outputs_sha256` is `83df98b1…` and `closure_sha256` is `a3bc7bb9…`, both unchanged.
+    - It has 42 PINs and no timestamp or HEAD key.
+    - `package_sha256` is now `fc10d3f5…`, still moving: `valence_core/m/gshape.py` changed from `f561dd1` to `e7886dc` during this session, which is the concurrent G-SHAPE build, not this work.
+  - **No model or tokenizer:** the analyzer has no torch, mlx, transformers or tokenizers imports, `sys.modules` has no heavy module after importing the snapshot, and STR-NO-HEAVY passes.
+  - I wrote only in scratch and made no commits.
+  
+  **(4) Verdict: CLEAN.**
+  
+  Files are in /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step8/verify3/:
+  - `ma_1.txt`, `ma_2.txt` (self-test raws)
+  - `m_analyze.snapshot.py`, `round3.mine.diff` (the snapshot and my diff against r2's)
+  - `mutate_v3.py`, `mut_results.txt`, `mut/` (r2's 126 mutants)
+  - `mutate_w.py`, `mutw_results.txt`, `mutw/` (the 39 W mutants)
+  - `cmp_runs.py` (the r2-versus-r3 comparison)
+  - `probe_found.py` (the two found-but-not-applied items)
+  - `ganl_out/G-ANL-F0.json`, `ganl_1.txt`, `ganl_2.txt` (scratch `ganl` runs)
+  - `datam_before.txt`, `datam_after.txt`, `gitstatus_before.txt`, `gitstatus_after.txt` (repo-state checks)
+====================================================================================================
+CODE'S CLOSING EDIT
+====================================================================================================
+  CODE'S CLOSING EDIT (after round 3's confirmation, 2026-10-10 09:18:09 UTC)
+  Round 3's fixer found, outside its brief, two date-validation defects ("found but not applied"): the three date
+  checks used \d (accepting non-ASCII digits) and no calendar check (accepting 2026-02-30); a NOT-RUN record's date
+  was never validated when its cause's phrase has no {date} (dose-not-completable; a date of None reached the output).
+  Code's edit, scripts/m_analyze.py only:
+  - new _iso_date(d): ASCII [0-9]{4}-[0-9]{2}-[0-9]{2} full match AND datetime.date.fromisoformat accepts it;
+    it replaces the three regex checks (not_run_reason's Clock date, pending_state's date, validate_decisions' date);
+  - validate_not_run_record checks the record's date with _iso_date whatever the cause;
+  - PIN-43 (comment and register entry); two battery checks, DATE-ISO-REAL and NR-RECORD-DATE (both directions:
+    full-width digits, 2026-02-30, month 13, month 00 refused in all three validators; 2026-02-28, 2024-02-29,
+    2026-10-30 accepted; a dose-not-completable record dated None, 2026-02-30 or '' refused, 2026-10-30 accepted);
+    EXPECTED_CHECKS 373 -> 375, coverage ids 384 -> 386.
+  Battery: 375/375 twice, raws byte-identical. Mutation check on scratch copies (REPO pinned, as the round harness):
+  control 375/375; fromisoformat dropped -> 372/375 (caught); NOT-RUN record date check dropped -> 373/375 (caught);
+  [0-9] -> \d survives: equivalent, because date.fromisoformat itself rejects non-ASCII digits (the ASCII class is
+  kept as a belt-and-braces guard).
+
