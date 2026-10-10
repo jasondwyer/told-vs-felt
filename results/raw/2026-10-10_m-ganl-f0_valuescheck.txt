@@ -1,0 +1,1212 @@
+# G-ANL-F0 entry (2026-10-10) -- values-check, both passes (before commit). Written by Code 2026-10-10 12:25:21 UTC (date -u).
+# Each pass: two verifiers (one per half) extract and check every atomic claim; a STRICT refuter on every FAILS/IMPRECISE; a values lens.
+# All agents read-only; no model or tokenizer loaded (instructed; none reported one). Pass 1 checked the first draft; between the passes Code's
+# closing edit was independently verified, the PIN-43 follow-up was made and committed (b62af85), the first manifest run was set aside, and the
+# manifest of record was re-run; pass 2 checked the draft revised for pass 1 and updated for those events. Code's disposition: every confirmed
+# correction and every values finding of both passes applied. Code checked the new claims it relied on (the battery lines cited; PIN-11/33/37).
+
+####################################################################################################
+PASS 1: claims 122, verified 111, confirmed corrections 8, refuted flags 0, uncheckable 3, values findings 20
+####################################################################################################
+============================================================ CONFIRMED CORRECTIONS
+--- [H0-34] IMPRECISE
+  CLAIM:
+    INDETERMINATE, with its conjunct reasons, and with no read when either domain is empty
+  REFUTER'S EVIDENCE:
+    I checked this independently. `scripts/m_analyze.py` has no diff against the build commit 64df36b.
+
+    - **`arm_outcome` (lines 227–282).** It first raises `BothArmsEmpty` when `n + mS == 0`, with the message
+    "neither arm has a domain session: the unit is NOT-RUN by §5 (m:324), never an arm outcome". After that, `if n
+    == 0 or mS == 0` returns INDETERMINATE with `noread` set to "contrast-empty" or "sham-empty", `route` None and
+    `pred` None. So a no-read outcome happens only when exactly one of the arm's domain and its sham's domain is
+    empty.
+    - **Terminal INDETERMINATE.** This case records its conjunct reasons in `route`: `toward_clean` and
+    `toward_corrupted` list the failing conjuncts (i)–(iii), and `dead` is False. That part of the claim is right.
+    - **`unit_state` (lines 623–631).** When both are empty it returns NOT-RUN with the cause `no-first-read:{cap,
+    pi-stop, gver-stop}`. The one exception is `ended == COMPLETE`, which gives AnlStop ("impossible at floors >= 1;
+    a bookkeeping defect").
+    - **Battery.** The raw `results/raw/2026-10-10_m-ganl-f0.txt:46` shows "[PASS] both arms empty: arm_outcome
+    raises BothArmsEmpty; the unit layer gives NOT-RUN instead".
+    - **Design input.** `spec_ganl.md:113` says "Both empty is the unit layer's NOT-RUN (§4.4), so it raises here".
+    Line 131 says no-read needs "exactly one arm empty".
+
+    **Why the claim is imprecise.** "When either domain is empty" reads inclusively, so it covers the both-empty
+    case, and that case never produces an arm outcome. The claim also never says which two domains it means. If a
+    reader takes them to be the two maps, it is wrong: an empty map is not a no-read. That case is INDETERMINATE
+    through (ii), as in the battery case INDET-ii-emptymap (0,0,80,60,32,16), and can also be DEAD.
+
+    **The checker's correction is nearly right.** Its "arm's or its sham's" still reads inclusively and depends on
+    the parenthetical to exclude both-empty. And "unit layer's NOT-RUN" is right for every reachable input, but a
+    COMPLETE campaign with both empty is a STOP.
+  CORRECTION:
+    INDETERMINATE, with its conjunct reasons, and with no read when exactly one of the arm's and its sham's domains
+    is empty (`contrast-empty` or `sham-empty`). When both are empty there is no arm outcome: arm_outcome raises
+    BothArmsEmpty and the unit layer gives NOT-RUN by its no-first-read cause.
+  DISPOSITION: applied.
+
+--- [H0-47] IMPRECISE
+  CLAIM:
+    Label set: 1,080 distinct
+  REFUTER'S EVIDENCE:
+    The draft (entry_ganl_v1.md:52-54) puts "Label set: 1,080 distinct" under "Each tuple is asserted to have
+    exactly one of each of the following". The other items in that list are asserted counts. Nothing asserts or
+    records this one.
+
+    (1) scripts/m_analyze.py `_bt_tuple_pass`, T2 check: each tuple's labels must equal the oracle's, with exactly
+    one alternative per row, and e2b and olmo-base fixed. The run raw lines 179-180 report this as "one label set
+    (one alternative per row), equal to the oracle; e2b and base fixed". It is a per-tuple check and counts nothing.
+
+    (2) The T10 aggregate (`agg`) does count distinct values for some fields: len(lic_vectors)==16,
+    len(abstract_texts)==8 and len(s81)==1080, which backs the draft's "§8.1 status text: 1,080 distinct". It keeps
+    no set of label sets. For labels it checks only branch tallies: tf["f0"]=={Answered, REVERSE, DEAD,
+    INDETERMINATE, NOT-RUN: 216 each}, and each checkpoint's tf["olmo"][c]=={Answered 180, did-not-pass 540, not-run
+    180, pending 180}. Run raw lines 197-198 read "e2a/f1 216 per branch; OLMo rows 180 / 540 / 180 / 180; 1,080
+    §8.1 texts". The manifest G-ANL-F0.json tallies hold e2a_f1_branches and olmo_row_branches, keyed
+    sft/dpo/instruct only, with no distinct-label-set count. None of the design inputs (spec_ganl.md:25,
+    decisions_ganl.md, critic.md) asks for one.
+
+    (3) The number itself is right. label_set (m_analyze.py:1293) maps Q5 to 5 distinct e2a/f1 strings and O6 to 6
+    distinct strings for each checkpoint row, so the map is injective and 5 × 6³ = 1,080. But the draft presents a
+    derived fact as if the battery had checked it.
+
+    (4) The checker's correction has one slip. "each OLMo row" would include olmo-base. ROWS (m_analyze.py:1243) has
+    four OLMo rows, and olmo-base is the fixed LABEL_BASE in all 1,080 tuples. Only sft, dpo and instruct carry the
+    180/540/180/180 split, and the manifest keys only those three.
+  CORRECTION:
+    Label set: one per tuple, equal to the oracle (T2), with e2b and OLMo-base fixed. e2a and f1: 216 per branch
+    (Answered, REVERSE, DEAD, INDETERMINATE, NOT-RUN). Each OLMo checkpoint row (sft, dpo, instruct): Answered 180,
+    did not pass 540, not run 180, pending 180.
+  DISPOSITION: applied.
+
+--- [H0-55] IMPRECISE
+  CLAIM:
+    Rows covering every clause branch
+  REFUTER'S EVIDENCE:
+    The checker was right. In scripts/m_analyze.py, enumeration() at lines 1366-1399 (PIN-21) gives clause (c) three
+    branches:
+    - flag false with a dose-note row → "strike"
+    - flag true, no dose-note row anywhere in the table, at an f1-corr-line row → "carry"
+    - flag true with a dose-note row present → nothing
+
+    The placeholder (data/m/gates/m_posting_sentences.placeholder.json; PLACEHOLDER_SPEC at 1550-1572) has 21 rows.
+    Two of them, P03 and P18, have dose_note true. So inside the placeholder `has_dose` is always true, and the
+    carry branch can never fire. PLACEHOLDER_FIRES (1577-1584) gives every row a (c)-under-T count of 0; the only
+    non-zero (c) counts are P03 and P18 under flag F, at 1080 each.
+
+    The carry branch is reached only by the in-memory variant in _bt_table (3658-3677), which clears dose_note on
+    every dose-note row (P03, P18). Run raw results/raw/2026-10-10_m-ganl-f0.txt:153-154 confirms it: "no-dose-row
+    variant flag=T ... ({'P03': 1080}, {'carry': 1080})", and nothing under F. Spec §9.5 (spec_ganl.md:477-503) says
+    the same: "A battery variant (in memory) clears `dose_note` on P03 and P18."
+
+    The rest of the claim checks out. The raw has 42 per-row assertions ("enumeration Pnn flag=T/F fires (a, b,
+    c)"), all PASS, so each row's fire counts are asserted under both flag values. The rows by themselves reach (a),
+    (b), (c)-strike and (c)'s do-nothing case. "Every clause branch" is wrong only for the carry branch.
+  CORRECTION:
+    21 synthetic rows, each row's fire counts asserted under both values of the flag. The rows reach clauses (a) and
+    (b) and clause (c)'s strike branch (P03 and P18 under flag false). Clause (c)'s carry branch (flag true, no
+    dose-note row) is reached only by an in-memory variant with the dose-note rows (P03, P18) cleared. That variant
+    carries at P03 in all 1,080 tuples under flag true and nowhere under flag false.
+  DISPOSITION: applied.
+
+--- [H0-58] IMPRECISE
+  CLAIM:
+    The table of record is built by Code from the placed preprint at LOCK-m-F0 v1.0 (m:278, m:286)
+  REFUTER'S EVIDENCE:
+    The checker is right: the entry's wording leaves out a condition the cited lines state. m:278 says the table of
+    record "is built by Code from the placed preprint at LOCK-m-F0 v1.0 when that lock is reached, else at the
+    posting, values-checked and hashed where built, and re-run on the posted text at the posting". m:286 adds: "the
+    sentence table of record — built by Code here from the placed preprint ... (the placeholder table serves
+    G-ANL-F0 only; on the Q-F0 NOT-RUN path the table is built at the posting instead, §3.1 G-ANL-F0)". m:73 agrees:
+    "the sentence table of record built and hashed at LOCK-m-F0 v1.0 when reached, else at the posting". The entry
+    (entry_ganl_v1.md lines 63-64) says only "The table of record is built by Code from the placed preprint at LOCK-
+    m-F0 v1.0 (m:278, m:286)". That makes a conditional rule sound unconditional and drops the posting branch that
+    both cited lines contain. The main-path statement is true, so the claim is imprecise rather than false. The
+    checker's correction copies m:278's own clause word for word and is accurate.
+  CORRECTION:
+    The table of record is built by Code from the placed preprint at LOCK-m-F0 v1.0 when that lock is reached, else
+    at the posting (the Q-F0 NOT-RUN path) (m:278, m:286).
+  DISPOSITION: applied.
+
+--- [H1-13] IMPRECISE
+  CLAIM:
+    L81-82: VERDICTS runs at HEAD when the three shas equal the lock's, and otherwise from a worktree of the lock
+    commit on the PI's word.
+  REFUTER'S EVIDENCE:
+    I re-checked this independently, and the checker is right. The claim at entry_ganl_v1.md:81-82 restates PIN-14
+    but leaves out the pin's own qualifier.
+
+    - **What the pin says.** PIN-14 is at scripts/m_analyze.py:2485-2490 and in the manifest of record at
+    data/m/gates/G-ANL-F0.json:1170. It ends "...and only on the PI's word for the worktree (not implemented at step
+    8; G-ANL-F3's versioning is the seat's)."
+    - **The code comment.** m_analyze.py:1894-1899 says the same: "(git writes; not implemented at step 8)".
+    - **The builder's review.** results/raw/2026-10-10_m-ganl-f0-build_review.txt:56 reads "The worktree rule is
+    declared, not implemented."
+    - **The design decision.** decisions_ganl.md:19 says "Declare it; do not implement worktree creation now."
+    - **What the code does.** At :1891-1901 the VERDICTS command only checks that the lock text names the analyzer
+    sha256, package_sha256 and closure sha256. If any is missing it refuses: "REFUSED: the lock does not name this
+    run's {what} (PIN-14, PIN-1)". The battery confirms all three refusals (G-ANL-F0 raw lines 296-298).
+    - **The worktree branch would not run either.** REPO is `Path(__file__).parents[1]` (:64). `_prod_committed`
+    (:1727-1732) returns "outside the repository" for any path outside REPO. So in a worktree, the declared absolute
+    paths into the main tree would also be refused.
+    - **Nothing else in the entry adds the qualifier.** Line 82 is the only place entry_ganl_v1.md mentions the
+    worktree, so the entry presents the worktree branch as working.
+
+    The claim also drops the pin's "every data input and output passed as an absolute path into the main tree",
+    which is a minor gap.
+
+    The checker's correction is right in substance. One wording change: "which is not implemented..., so the
+    analyzer refuses" makes the refusal sound like a result of the missing feature. The refusal actually comes from
+    the sha check that does exist. The replacement below separates the two.
+  CORRECTION:
+    VERDICTS runs at HEAD when the three shas equal the lock's. Otherwise, the declared rule is to run from a
+    worktree of the lock commit on the PI's word, with every data input and output passed as an absolute path into
+    the main tree. That rule is declared but not implemented at step 8, so the analyzer refuses any run whose shas
+    the lock does not name.
+  DISPOSITION: applied.
+
+--- [H1-22] IMPRECISE
+  CLAIM:
+    L98: The seat may replace the verdict sentence's clauses (PIN-4), since m:326 pre-writes only 'no read
+    obtained'.
+  REFUTER'S EVIDENCE:
+    I checked this independently and the checker is right. m:326 pre-writes more than "no read obtained". It quotes
+    A3's NULL sentence ("*the property does not drive choice beyond exploration policy at these stakes, this
+    scaffolding, and this power*"), A3's NULL-x sentence and A3's NO-READ sentence. Read without a scope, "m:326
+    pre-writes only 'no read obtained'" is false.
+
+    The claim's own source states the scope: spec_ganl.md:816 says "m:326 pre-writes only 'no read obtained' for the
+    controls", and the entry drops that qualifier.
+
+    The correction's scope is also right:
+    - m:326 headed "Positive controls (A0, A0-OLMo-{ckpt}, A1)". For these arms the only text it labels as a
+    sentence is "INDETERMINATE with the sentence *no read obtained*".
+    - Its REVERSE parenthetical "(instruction inversion; reported; not-PASS for licensing)" is a gloss on the
+    outcome rule. The sentence that "Every contrast arm's verdict sentence states the arm's pre-pick exclusion rate
+    beside its sham's, with the guard's result at that unit's last look" sets required content, not wording.
+    - The PIN-4 code builds sentences only for F0's contrast arms. In scripts/m_analyze.py:1082, verdict_sentence
+    takes `arm, sham = keys.templates(unit)` for Q-F0 / OLMo units, meaning A0 and A0-OLMo-{ckpt}, which are both
+    positive controls.
+    - SENTENCE_TEMPLATES (m_analyze.py:1057-1078) shows that every clause other than "no read obtained" and the
+    REVERSE phrase is Code-worded. That supports the claim's point once it is scoped.
+    - A2 is also covered: m:74 separates "a control or A2", and A2's rule is "the same with FAIL for DEAD", so it
+    too has no other pre-written sentence.
+
+    The scoped wording is therefore exactly true.
+  CORRECTION:
+    the verdict sentence's clauses (PIN-4), since for the positive controls m:326 pre-writes only the sentence "no
+    read obtained";
+  DISPOSITION: applied.
+
+--- [H1-45] IMPRECISE
+  CLAIM:
+    L127-128: Round 2 closed them, re-verified CLEAN over 126 mutants.
+  REFUTER'S EVIDENCE:
+    I checked this against results/raw/2026-10-10_m-ganl-f0-build_review.txt. The checker is right.
+
+    - **Round 1 verifier (around line 1814):** "I wrote 83 mutants plus a control". The entry's "(83 mutants)"
+    leaves the control out.
+    - **Round 2 re-verification (line 1980):** "I ran 126 mutants ... 1 control, the 83 previous mutants and 42 new
+    ones". So the 126 counts the control, and the real mutants number 83 + 42 = 125.
+    - **Round 3 confirmation (line 2113):** "all 125 mutants still apply exactly once". It also lists "the control"
+    separately from the 8 survivors that are equivalent mutants.
+
+    "126 mutants" is the round-2 verifier's own loose wording, and the round-3 fixer repeats it ("re-ran all 126
+    mutants"; "9 survive: the control plus the 8 equivalents"). But a control is not a mutant. The entry's next
+    phrase also counts round 1 as 83 without its control, so writing 126 for round 2 breaks the entry's own
+    convention: a reader adding 83 + 42 gets 125.
+
+    The rest of the claim holds:
+    - **"Closed them":** the round-2 fix report says "All 25 mutation survivors, both partly-met decision items and
+    the two code defects are closed". The re-verifier agrees, both at line 1964 and in its verdict (4): the "25 gaps
+    and both partly-met decision items are closed, and residual defects 1 and 2 are fixed".
+    - **"CLEAN":** the verdict is "Verdict: **CLEAN.**". CLEAN is defined as no surviving mutant that is both non-
+    equivalent and above Low severity; 23 Low gaps remained, and the entry's next bullet covers them.
+
+    The checker's added parenthetical is accurate, and it fills an omission: the round-1 verifier also reported two
+    partly-met decision items (line 1795, items 2 and 5), and round 2 closed them.
+  CORRECTION:
+    Round 2 closed them (and both partly-met decision items), re-verified CLEAN over 125 mutants and a control.
+  DISPOSITION: applied.
+
+--- [H1-55] IMPRECISE
+  CLAIM:
+    L137-138: LOCK-m-F0 v0.1 (step 9) waits on G-CAL closing and on the seat's rulings above.
+  REFUTER'S EVIDENCE:
+    The claim is entry_ganl_v1.md L137-138: "LOCK-m-F0 v0.1 (step 9) waits on G-CAL closing and on the seat's
+    rulings above." "Above" points to the entry's list "For the seat, before LOCK-m-F0 v0.1 hashes the analyzer"
+    (L123-150). That list has four groups: seat-routed defaults, Code-added bindings, Code's readings the seat may
+    replace, and "Open, non-blocking for step 8".
+
+    What holds up:
+    - The G-CAL part is right. RESULTS.md L129 (2c50e03 seat-read entry) says "LOCK-m-F0 v0.1 (step 9) waits on
+    G-CAL closing." G-CAL's close still waits on the 128-generation read and the two m:358 order rulings (RESULTS
+    L28-30).
+    - The four seat-routed defaults do block the lock. In G-ANL-F0.json, seat_routed marks PIN-5, PIN-8, PIN-9 and
+    PIN-17 as "blocking LOCK v0.1, not step 8". decisions_ganl.md:6 says the same: "Seat-routed defaults (blocking
+    LOCK v0.1, NOT step 8)".
+
+    What does not hold up. Not every ruling "above" is something LOCK v0.1 waits on:
+    - A5: per spec_ganl.md:820, the ruling "can come at any time before step 17's entry".
+    - G-ANL-F3 versioning: per spec_ganl.md:823, "Ask the seat, before step 19 ... Not blocking for step 8".
+    - Re-run pass bar: per spec_ganl.md:831, "Ask the seat to state the bar before the v1 posting".
+    - Clock boundary-day: per spec_ganl.md:818, it "does not block the build". No deadline is given, and nothing
+    marks it as blocking LOCK v0.1.
+    - Code's readings: these are optional replacements. PIN-4 (spec:816) says "the seat may author replacements
+    before then"; that is permission, not a wait.
+    - Code's own design input words it narrower than the entry. spec_ganl.md:832 says "waits on G-CAL closing and on
+    the seat's order rulings".
+
+    So the claim overstates what blocks the lock. IMPRECISE stands.
+
+    The checker's correction has two small slips of its own:
+    - "its confirmation of the Code-added bindings" covers PIN-43 as well. Only PIN-42 carries "for the seat's
+    confirmation at LOCK v0.1"; PIN-43's text in the manifest has no seat routing.
+    - "the open items have later deadlines" is wrong for the Clock boundary-day item, which has no stated deadline.
+  CORRECTION:
+    LOCK-m-F0 v0.1 (step 9) waits on G-CAL closing and on the seat's rulings on the four seat-routed defaults above
+    (PIN-5, PIN-8, PIN-9, PIN-17, which the manifest marks "blocking LOCK v0.1, not step 8"). PIN-42 goes to the
+    seat for confirmation at LOCK v0.1. None of the open items is marked as blocking it: A5 is due before step 17's
+    entry, G-ANL-F3's versioning before step 19, and the re-run bar before the v1 posting.
+  DISPOSITION: applied.
+
+============================================================ REFUTED FLAGS
+============================================================ UNCHECKABLE
+--- [H1-14]
+    L83-84: The seat items are also in the consolidated Code→seat block before step 9.
+  WHY:
+    The consolidated block is future work and does not exist yet. The round-1 fix report does ask Code to add the
+    PIN-5 question to 'the consolidated seat block'.
+  DISPOSITION: a plan or the commit to come; noted.
+
+--- [H1-56]
+    L139-140: Committed: the entry; the manifest; the run raw; and this entry's values-check raw (both passes).
+  WHY:
+    This is a prospective commit. The manifest (sha256 ea985c11…f62a781) and run raw exist on disk and are
+    untracked. The values-check raw is not yet expected (per instructions).
+  DISPOSITION: a plan or the commit to come; noted.
+
+--- [H1-58]
+    L141: Next: the consolidated Code→seat block before step 9.
+  WHY:
+    This is a future plan. It is consistent with the fix report's note that the PIN-5 item 'belongs in the
+    consolidated seat block'.
+  DISPOSITION: a plan or the commit to come; noted.
+
+============================================================ VALUES LENS
+--- V1 [seat-routing]
+  QUOTE:
+    **Order.** G-ANL-F0 ran while G-CAL is still open, on the PI's word. Its only G-CAL input is the flag's
+  PROBLEM:
+    The 2c50e03 entry calls starting steps 7 and 8 before G-CAL closes "a third order question for the seat" and
+    says whether that is acceptable "is for the seat to rule". The critic routed it to the seat, and the builder's
+    report (committed in _review) lists "The G-CAL / steps-7–8 order question goes to the seat as non-blocking"
+    under routings to carry forward. This entry drops that routing. It puts the order item outside 'For the seat'
+    and gives Code's mitigating argument ("pick-free") with no statement that the ruling is the seat's. Its closing
+    clause, "waits on G-CAL closing and on the seat's rulings above", leaves out the seat's order rulings: the two
+    departures from m:358 plus this third one. The G-SHAPE-F0 entry of the same date does route it, as "(the third
+    order question of the read-of-record entry)".
+  CORRECTION:
+    Move the item under 'For the seat' and reword it: "**Order (the third order question of the read-of-record
+    entry; the seat's to rule).** G-ANL-F0 ran while G-CAL is still open, on the PI's word. Its only G-CAL input is
+    the flag's source, `G-CAL_model-free.json`, which carries no pick. A re-run on unchanged inputs is byte-
+    identical, so a seat ruling that step 8 must follow G-CAL's close costs one re-run; supersession is by hand `git
+    mv` on the seat's ruling, as G-SHAPE-F0's. LOCK-m-F0 v0.1 (step 9) waits on G-CAL closing, on the seat's three
+    order rulings (completability before the read; the early roster assertion; steps 7–8 before the close), and on
+    the seat's rulings above."
+  DISPOSITION: applied.
+
+--- V2 [missing-disclosure]
+  QUOTE:
+    Code's closing edit fixed two date defects the round-3 fixer found outside its brief (PIN-43; two
+  PROBLEM:
+    Two things are left out. (1) Round 3's independent CLEAN confirmation is on analyzer sha256 8309f72d…, the pre-
+    edit file (_review: "The analyzer's sha256 is `8309f72d…0468`"). The committed 95f5fe33… adds Code's closing
+    edit, made after that confirmation and checked by Code alone. Placed right after 'confirmed CLEAN', the line
+    reads as if CLEAN covers the committed analyzer. (2) The round-3 fixer and the round-3 confirmer both routed
+    these two items to the seat: "Found but not applied (outside the 23, for the seat)" and "Neither is a
+    regression; both are outside the 23 and are for the seat." Code fixed them itself without saying it departed
+    from that routing.
+  CORRECTION:
+    "Code's closing edit came after round 3's CLEAN, which is on analyzer sha256 `8309f72d…`. It fixed the two date
+    defects the round-3 fixer found outside its brief. The fixer and the confirmer both routed them 'for the seat';
+    Code treated them as input-validation defects in its own tool and fixed them as Code-added PIN-43 (listed below
+    for the seat) instead of routing them. The edit (`_iso_date`, its three call sites, the NOT-RUN record's date
+    check, PIN-43's register entry and two battery checks) was checked by Code alone, not by an independent
+    verifier: 375/375 twice, and three mutants (two caught, one equivalent). The committed `95f5fe33…` is the
+    round-3 analyzer plus this edit and nothing else."
+  DISPOSITION: applied, and superseded by events: the closing edit was then independently verified (CLEAN), which led to the PIN-43 follow-up (b62af85); the entry records both.
+
+--- V3 [missing-disclosure]
+  QUOTE:
+    PIN-42: `not-run` and `posting` refuse unless the analyzer is committed and the proposal is v1.11,
+  PROBLEM:
+    PIN-42's own text in the manifest says "Code-added at step 8 (a binding the spec does not state); for the seat's
+    confirmation at LOCK v0.1". The round-2 fixer and verifier both flag it as needing the seat's confirmation. The
+    entry lists it as a plain 'Code-added binding' and drops the confirmation it awaits, so only four items appear
+    to await the seat at LOCK v0.1.
+  CORRECTION:
+    "PIN-42: `not-run` and `posting` refuse unless the analyzer is committed and the proposal is v1.11, and record
+    the three shas. It is Code-added (a binding the spec does not state; the first verifier's residual defect 1) and
+    awaits the seat's confirmation at LOCK v0.1, as its own text says."
+  DISPOSITION: applied.
+
+--- V4 [missing-disclosure]
+  QUOTE:
+    **Seat items.** Four of Code's defaults are built conservatively and await the seat's ruling before LOCK-m-F0
+  PROBLEM:
+    The headline PASS is for the analyzer as built. The entry never says that a seat ruling against any default,
+    binding or reading changes the analyzer's sha256, which forces a new build commit, a new battery run and a
+    superseding G-ANL-F0.json. The critic named exactly this hazard: "a seat ruling after the lock forces a new
+    analyzer, a new battery run, and a new G-ANL-F0.json". The only supersession sentence sits under 'Order' and
+    covers re-runs on unchanged inputs.
+  CORRECTION:
+    "**Seat items.** Four of Code's defaults are built conservatively and await the seat's ruling before LOCK-m-F0
+    v0.1 hashes the analyzer; Code-added PIN-42 awaits the seat's confirmation there too. This PASS is for the
+    analyzer as built. A ruling that changes any default, binding or reading below changes its sha256; G-ANL-F0 is
+    then rebuilt and re-run, and its manifest is superseded by hand `git mv` on that ruling."
+  DISPOSITION: applied.
+
+--- V5 [missing-disclosure]
+  QUOTE:
+    **Abstract OLMo clause** (§7.2 Step 2's three-way): all in 5, one in 375, two in 75, none in 625, with
+  PROBLEM:
+    (1) PIN-27 commits the entry to a disclosure: "The abstract clause is emitted verbatim even where its host
+    sentence is enumerated under (a); the entry notes that it can dangle." The draft never notes it. (2) The three-
+    way of m:338 (all three / one or two / none) is shown as four categories. The raw's own form is "abstract 5 /
+    450 (375 + 75) / 625".
+  CORRECTION:
+    "**Abstract OLMo clause** (§7.2 Step 2's three-way): all three pass in 5; one or two in 450 (one 375, two 75);
+    none in 625; 8 distinct texts. The clause is emitted verbatim even where its host sentence is itself enumerated
+    under (a), so it can dangle in the posting's output (PIN-27)."
+  DISPOSITION: applied.
+
+--- V6 [overclaim]
+  QUOTE:
+    **Label set:** 1,080 distinct.
+  PROBLEM:
+    The battery does not assert or tally this. T2 asserts one label set per tuple equal to the oracle. T10 and the
+    manifest's tallies record e2a/f1 at 216 per branch and the OLMo rows at Answered 180 / did-not-pass 540 / not-
+    run 180 / pending 180. No distinct-label-set count exists in the raw or the manifest. Under 'Each tuple is
+    asserted to have…', the line presents an uncomputed inference as a battery result. Contrast '§8.1 status text:
+    1,080 distinct', which T10 does assert.
+  CORRECTION:
+    "**Label set:** one per tuple, equal to the oracle (e2b and base fixed); e2a/f1 216 per branch (Answered,
+    REVERSE, DEAD, INDETERMINATE, not run); each OLMo row Answered 180, did not pass 540, not run 180, pending 180."
+  DISPOSITION: applied.
+
+--- V7 [misstates-seat-text]
+  QUOTE:
+    Code from the placed preprint at LOCK-m-F0 v1.0 (m:278, m:286).
+  PROBLEM:
+    This misstates m:278 and m:286 by truncation. m:278 says the table of record is built "at LOCK-m-F0 v1.0 when
+    that lock is reached, else at the posting, values-checked and hashed where built, and re-run on the posted text
+    at the posting". m:286 says: "on the Q-F0 NOT-RUN path the table is built at the posting instead". The analyzer
+    implements the posting path (PIN-40).
+  CORRECTION:
+    "The table of record is built by Code from the placed preprint at LOCK-m-F0 v1.0 when that lock is reached, else
+    at the posting (the Q-F0 NOT-RUN path). It is values-checked and hashed where built, and re-run on the posted
+    text at the posting (m:278, m:286)."
+  DISPOSITION: applied.
+
+--- V8 [missing-disclosure]
+  QUOTE:
+    The same understand workflow as step 7 produced the spec, and Code's decisions applied the
+  PROBLEM:
+    (1) The committed _review raw's header promises "its specs and Code's decisions are summarized in the entry".
+    The entry gives no summary, and the spec, critic and decisions files exist only in scratch (rule 27: the repo is
+    the record). The G-SHAPE-F0 entry does list its decisions. (2) "applied the critic's corrections" overclaims.
+    The builder's report lists two critic routings 'to carry forward' that are in neither the analyzer nor this
+    entry. One is the order question (finding above). The other is "`analyzer_sha256` is optional in
+    `identity_extra`; requiring it is a PIN for the LOCK v0.1 build".
+  CORRECTION:
+    "**Spec.** The same understand workflow as step 7 (five readers, two synthesizers, a completeness critic)
+    produced the build spec. Code's decisions, applying the critic's G-ANL corrections, fixed: the binding (analyzer
+    sha256, package_sha256 and the import closure, in place of the single-file hash); PIN-8, PIN-9 and PIN-17 as
+    seat-routed defaults blocking LOCK v0.1; the secondaries built now; the power figure of record at m:190's base
+    case; the m:318 decisions input; no end-of-data guard; pre-pick rates and counters on `stages._prepick` and
+    `audit.tally`; the `.gitignore` block deferred and the roster-word refusal dropped; the flag existence-keyed;
+    signed display; and the worktree rule declared, not built. Carried forward, not applied here: `analyzer_sha256`
+    is optional in `stages`' `identity_extra`, and requiring it is a PIN for the LOCK v0.1 build; and the order
+    question goes to the seat (below)."
+  DISPOSITION: applied.
+
+--- V9 [overclaim]
+  QUOTE:
+    three shas equal the lock's, and otherwise from a worktree of the lock commit on the PI's word.
+  PROBLEM:
+    PIN-14 says the worktree path is "not implemented at step 8; G-ANL-F3's versioning is the seat's", and the
+    builder's report says "The worktree rule is declared, not implemented." The entry presents it as working
+    behaviour.
+  CORRECTION:
+    "…and otherwise from a worktree of the lock commit on the PI's word. That path is declared, not implemented at
+    step 8; how the analyzer is versioned for G-ANL-F3 is the seat's (PIN-14)."
+  DISPOSITION: applied.
+
+--- V10 [missing-disclosure]
+  QUOTE:
+    **The build** (`64df36b`;
+  PROBLEM:
+    The build commit's message, which is part of the record, contradicts the artifacts this entry cites, and the
+    entry does not reconcile them. The message says "Three defaults built conservatively … (PIN-8 …, PIN-9 …, PIN-17
+    …)" and "a 20-row synthetic table". The committed register and manifest route four (PIN-5 was added at the
+    review fix: _review "It is marked seat-routed in `SEAT_ROUTED`"). The committed placeholder has 21 rows
+    (_review: "spec §9.5 now has 21 rows"). A reader of `git log` meets two different counts.
+  CORRECTION:
+    Add to 'The build': "The build commit's message undercounts. It names three seat-routed defaults; the committed
+    register routes four (PIN-5's routing was added at the review fix). It calls the placeholder a 20-row table; the
+    committed file has 21 rows (P21, a second sentence on line 20, was added at the fix). The manifest and this
+    entry are the record."
+  DISPOSITION: applied.
+
+--- V11 [missing-disclosure]
+  QUOTE:
+    **The 0.12-artifact flag of record: TRUE.**
+  PROBLEM:
+    TRUE rests on Code's reading of m:349's "G-CAL's 0.12 artifact exists". By PIN-19 that means committed at HEAD
+    and identical in the working tree, schema m-gcal-model-free-v1, and an f1_012 block present. That reading is
+    missing from 'Code's readings the seat may replace', though PIN-21, which it feeds, is listed. The line also
+    reads as if the posting's dose note were settled now. VERDICTS and the posting re-read the flag from their
+    declared `--flag-source` (battery: V10 and the posting under a FALSE flag).
+  CORRECTION:
+    "**The 0.12-artifact flag of record, as of this run: TRUE** (Code's reading of m:349's 'G-CAL's 0.12 artifact
+    exists', PIN-19: …). VERDICTS and the posting re-read the flag from their declared `--flag-source`." Also add to
+    'Code's readings the seat may replace': "what counts as G-CAL's 0.12 artifact existing (PIN-19)".
+  DISPOSITION: applied.
+
+--- V12 [overclaim]
+  QUOTE:
+    `data/m/gates/m_posting_sentences.placeholder.json`: 21 synthetic rows covering every clause branch,
+  PROBLEM:
+    The placeholder alone does not cover every clause branch. Under the flag of record (TRUE), clause (c) fires on
+    no placeholder row (all P-rows show c = 0 under T). (c)'s carry branch, flag TRUE with no dose-note row, is
+    reached only by a separate no-dose-row variant of the table (the 'no-dose-row variant' checks).
+  CORRECTION:
+    "…: 21 synthetic rows on 20 lines (P20 and P21 share line 20), with each row's fire counts under (a), (b) and
+    (c)'s strike branch asserted. (c)'s carry branch (flag TRUE, no dose-note row) is reached by a no-dose-row
+    variant of the table."
+  DISPOSITION: applied.
+
+--- V13 [ambiguous]
+  QUOTE:
+    **Open, non-blocking for step 8:**
+  PROBLEM:
+    The heading sits under "For the seat, before LOCK-m-F0 v0.1 hashes the analyzer", but its own items carry other
+    deadlines. G-ANL-F3's versioning is "before step 19". The spec puts the A5 column ruling "at any time before
+    step 17's entry". The boundary-day comparison and the posting re-run's bar bite at the Clock and the posting.
+    The reader cannot tell which of these, if any, blocks LOCK v0.1.
+  CORRECTION:
+    "**Open, not blocking LOCK v0.1 (each by its own stage):**". Give each item its deadline: the boundary-day
+    comparison (by the first Clock date); the A5 column (before step 17's entry); G-ANL-F3's versioning (before step
+    19); the posting re-run's pass bar (before the v1 posting).
+  DISPOSITION: applied.
+
+--- V14 [ambiguous]
+  QUOTE:
+    Qwen has 12. Q-F3's `reasoning_line_defect` is declared, scoped to Q-F3 and not tabulated at Q-F0.
+  PROBLEM:
+    This reads as 12 plus one. The manifest's 12 Qwen counters include `reasoning_line_defect` (q_f3_only true), so
+    11 are tabulated at Q-F0.
+  CORRECTION:
+    "Qwen has 12, one of them Q-F3's `reasoning_line_defect`, which is declared, scoped to Q-F3 and not tabulated at
+    Q-F0 (11 are tabulated there)."
+  DISPOSITION: applied.
+
+--- V15 [ambiguous]
+  QUOTE:
+    INDETERMINATE, with its conjunct reasons, and with no read when either domain is empty.
+  PROBLEM:
+    'Either' can be read as 'at least one'. When both the arm and its sham have no domain session, the analyzer
+    gives no INDETERMINATE: `arm_outcome` raises and the unit is NOT-RUN by m:324 (battery: "both arms empty … the
+    unit layer gives NOT-RUN instead").
+  CORRECTION:
+    "INDETERMINATE, with its conjunct reasons, and with *no read obtained* when exactly one of the arm and its sham
+    has no domain session (m:326). When neither has one, no session reached a first read and the unit is NOT-RUN
+    (m:324)."
+  DISPOSITION: applied.
+
+--- V16 [misstates-seat-text]
+  QUOTE:
+    **Attained power** is computed at m:190's base case at the realised n (the arm split ⌊n/2⌋/⌈n/2⌉, the
+  PROBLEM:
+    This attributes to m:190 parts of the rule that are Code's (PIN-3). m:190's base case splits the sham "m/2 per
+    map at .5", not pooled. It gives no odd-n rule, and it states P = .70 at α .01, which the entry leaves out.
+    Pooling is equivalent here only because E pools the sham.
+  CORRECTION:
+    "**Attained power** is computed at m:190's base case at the realised n (P = .70, α .01). Code's PIN-3 adds an
+    odd-n split, ⌊n/2⌋ on map 0 and ⌈n/2⌉ on map 1, and pools the sham at .5. Pooling gives the same E as m:190's
+    m/2 per map, because E pools the sham. The realised-split figure is reported beside it. It is descriptive only."
+  DISPOSITION: applied.
+
+--- V17 [ambiguous]
+  QUOTE:
+    the verdict sentence's clauses (PIN-4), since m:326 pre-writes only "no read obtained";
+  PROBLEM:
+    This understates what the seat's text fixes. m:326 also requires every contrast arm's sentence to state the pre-
+    pick exclusion rate beside its sham's, with the guard at the last look, and gives REVERSE's parenthetical. m:247
+    puts shortfall and attained power into a below-floor sentence. Code's reading covers wording and order, not
+    contents. Also, 'only' holds just for the positive controls: m:326 pre-writes the NULL and NULL-x sentences too.
+  CORRECTION:
+    "the verdict sentence's clause order and wording (PIN-4). For the positive controls, m:326 pre-writes only *no
+    read obtained*; it and m:247 fix the contents (the pre-pick rates beside the sham's with the guard at the last
+    look; shortfall and attained power below floor) but not their wording;"
+  DISPOSITION: applied.
+
+--- V18 [misstates-seat-text]
+  QUOTE:
+    `clock:pi-declined` and `clock:k-zero` (m:192);
+  PROBLEM:
+    The single citation covers both causes, but only k-zero comes from m:192. The PI-declined cause is m:324's ("the
+    PI declined to commit v1.0, for projected hours or any reason").
+  CORRECTION:
+    "`clock:pi-declined` (m:324) and `clock:k-zero` (m:192);"
+  DISPOSITION: applied.
+
+--- V19 [ambiguous]
+  QUOTE:
+    **Status.** Model-free; no checkpoint or contrast pick read;
+  PROBLEM:
+    As written, this also covers the build, which the entry reports. During the build the verifiers' before/after
+    snapshots of data/m hashed every file there, including data/m/ckpt/G-CAL_qwen.json (_review: "That includes only
+    a hash of `data/m/ckpt/G-CAL_qwen.json`; nothing was interpreted"). The run's own guarantee is the open hook.
+  CORRECTION:
+    "**Status.** Model-free. The run read no checkpoint and no pick. During the build, the verifiers' before/after
+    snapshots of `data/m` hashed the one checkpoint there, `G-CAL_qwen.json` (no contrast pick), without
+    interpreting it. Nothing on the box; the k arc untouched."
+  DISPOSITION: applied.
+
+--- V20 [overclaim]
+  QUOTE:
+    An open hook refuses any read under `data/m/ckpt`,
+  PROBLEM:
+    'Any read' overstates PIN-29. The hook wraps only builtins.open, io.open and Path.open/read_bytes/read_text, in-
+    process: the closure's fresh interpreter and os-level reads are outside it. The battery plants reads only under
+    data/m/ckpt and results/raw, not data/m/reports or data/m/verdicts.
+  CORRECTION:
+    "An open hook (builtins.open, io.open and Path's open/read_bytes/read_text, in-process) refuses reads under
+    `data/m/ckpt`, `data/m/reports`, `data/m/verdicts` or `results/raw` during `--selftest` and `ganl`. The battery
+    plants reads under `data/m/ckpt` and `results/raw` and catches each."
+  DISPOSITION: applied.
+
+============================================================ ALL CLAIMS
+[H0-01] VERIFIED -> VERIFIED: Entry dated 2026-10-10
+[H0-02] VERIFIED -> VERIFIED: G-ANL-F0 is PROPOSAL-m v1.11 §8 step 8
+[H0-03] VERIFIED -> VERIFIED: m:278 is G-ANL-F0's spec line
+[H0-04] VERIFIED -> VERIFIED: The PI's go was "Go for steps 7 and 8"
+[H0-05] VERIFIED -> VERIFIED: G-ANL-F0 verdict: PASS
+[H0-06] VERIFIED -> VERIFIED: The analyzer scripts/m_analyze.py is pre-committed at 64df36b
+[H0-07] VERIFIED -> VERIFIED: Analyzer sha256 95f5fe33…7ca7c9
+[H0-08] VERIFIED -> VERIFIED: The synthetic battery passes 375/375
+[H0-09] VERIFIED -> VERIFIED: Every per-arm outcome of §5 for A0 and each A0-OLMo-{ckpt} is reached, including NOT-RUN by each listed cause, INDETERMINATE-by-no-domain and OLMo PENDING
+[H0-10] VERIFIED -> VERIFIED: The v1 outcome space of 5 × 6³ = 1,080 tuples is enumerated under each value of the 0.12-artifact flag
+[H0-11] VERIFIED -> VERIFIED: 2,160 evaluations and 19,440 per-tuple assertions
+[H0-12] VERIFIED -> VERIFIED: The counters are declared per substrate
+[H0-13] VERIFIED -> VERIFIED: Four of Code's defaults are built conservatively and await the seat's ruling before LOCK-m-F0 v0.1 hashes the analyzer
+[H0-14] VERIFIED -> VERIFIED: Model-free; no checkpoint or contrast pick read
+[H0-15] VERIFIED -> VERIFIED: Nothing on the box
+[H0-16] VERIFIED -> VERIFIED: The k arc is untouched
+[H0-17] VERIFIED -> VERIFIED: G-CAL (step 6) is still open
+[H0-18] VERIFIED -> VERIFIED: Stamp: date -u → Sat Oct 10 11:39:44 UTC 2026, first write
+[H0-19] VERIFIED -> VERIFIED: Run raw results/raw/2026-10-10_m-ganl-f0.txt; manifest data/m/gates/G-ANL-F0.json
+[H0-20] VERIFIED -> VERIFIED: Manifest sha256 ea985c11…f62a781
+[H0-21] VERIFIED -> VERIFIED: `scripts/m_analyze.py ganl` ran at HEAD 64df36b, the build commit
+[H0-22] VERIFIED -> VERIFIED: Ran 11:38:18–11:38:28 UTC, exit 0
+[H0-23] VERIFIED -> VERIFIED: It ran the battery (375/375) and wrote the manifest
+[H0-24] VERIFIED -> VERIFIED: The manifest is write-once, with no timestamp and no HEAD
+[H0-25] VERIFIED -> VERIFIED: The manifest records the analyzer's sha256
+[H0-26] VERIFIED -> VERIFIED: package_sha256 06ab1430…, the same as G-SHAPE-F0's, since step 8 edits nothing under valence_core/
+[H0-27] VERIFIED -> VERIFIED: Import closure outside the package, sha256 a3bc7bb9…: 15 modules and one data file, data/olmo/a1_repair_roster.json
+[H0-28] VERIFIED -> VERIFIED: Records the placeholder table (b1cce4f8…) and the proposal (42ab36ec…)
+[H0-29] VERIFIED -> VERIFIED: Records the battery block, the counters, the NOT-RUN vocabulary, the 43 PINs, the four seat-routed items and the flag of record
+[H0-30] VERIFIED -> VERIFIED: (i) Per-arm outcomes cite m:322–327, m:306–316
+[H0-31] VERIFIED -> VERIFIED: The arm's outcome is evaluated in m:326's order, on exact Fractions
+[H0-32] VERIFIED -> VERIFIED: Outcome is one of PASS; REVERSE; DEAD; INDETERMINATE
+[H0-33] VERIFIED -> VERIFIED: DEAD = CI upper bound on Δ_c below +0.15, decided exactly as P(Bin(n, 13/20) ≤ k) < 1/40 with k < n
+[H0-34] IMPRECISE -> IMPRECISE: INDETERMINATE, with its conjunct reasons, and with no read when either domain is empty
+[H0-35] VERIFIED -> VERIFIED: Boundary cases are pinned at both floors (80 and 96)
+[H0-36] VERIFIED -> VERIFIED: NOT-RUN causes each reached in the battery: clock:no-box (OLMo), dose-not-completable (OLMo), clock:gate-stopped:<stage>, clock:not-locked:<stage>, clock:pi-declined, clock:k-zero, no-first-read:{pi-stop, gver-stop, cap}, pending-closed-at-v2
+[H0-37] VERIFIED -> VERIFIED: The stage is one of the unit's gates; for Q-F0: G-PORT, G-CAL, G-SHAPE-F0, G-ANL-F0, G-TIME-F0, G-ID-F0m, G-F0m-Qwen
+[H0-38] VERIFIED -> VERIFIED: clock:k-zero cites m:192
+[H0-39] VERIFIED -> VERIFIED: pending-closed-at-v2 is v2 only
+[H0-40] VERIFIED -> VERIFIED: The primary cause is the earliest; the others are listed beside it
+[H0-41] VERIFIED -> VERIFIED: OLMo PENDING is a declared input with four sub-states, refused for Q-F0 and where the unit's VERDICTS or NOT-RUN output exists
+[H0-42] VERIFIED -> VERIFIED: Attained power at m:190's base case at the realised n (split ⌊n/2⌋/⌈n/2⌉, sham pooled), realised-split figure beside; descriptive only
+[H0-43] VERIFIED -> VERIFIED: (ii) cites m:278, §7
+[H0-44] VERIFIED -> VERIFIED: Each value of the flag gives 1,080 tuples, with tallies equal between the two values
+[H0-45] VERIFIED -> VERIFIED: Each tuple is asserted to have exactly one of each listed output
+[H0-46] VERIFIED -> VERIFIED: L0 true in 216 tuples (Q-F0 PASS); L0-OLMo-c true in 180 per checkpoint
+[H0-47] IMPRECISE -> IMPRECISE: Label set: 1,080 distinct
+[H0-48] VERIFIED -> VERIFIED: Ceiling: Fallback-1 in 216, Fallback-2 in 864
+[H0-49] VERIFIED -> VERIFIED: Abstract OLMo clause (§7.2 Step 2's three-way): all in 5, one in 375, two in 75, none in 625, with 8 distinct texts
+[H0-50] VERIFIED -> VERIFIED: §8.1 status text: 1,080 distinct
+[H0-51] VERIFIED -> VERIFIED: Step-7 status "open" in all 1,080
+[H0-52] VERIFIED -> VERIFIED: The f1 dose-note under the flag
+[H0-53] VERIFIED -> VERIFIED: The §7.5 enumeration over the declared sentence table; the battery uses the placeholder data/m/gates/m_posting_sentences.placeholder.json
+[H0-54] VERIFIED -> VERIFIED: The placeholder has 21 synthetic rows
+[H0-55] IMPRECISE -> IMPRECISE: Rows covering every clause branch
+[H0-56] VERIFIED -> VERIFIED: Each row's fire counts asserted
+[H0-57] VERIFIED -> VERIFIED: The placeholder is not derived from any preprint
+[H0-58] IMPRECISE -> IMPRECISE: The table of record is built by Code from the placed preprint at LOCK-m-F0 v1.0 (m:278, m:286)
+[H0-59] VERIFIED -> VERIFIED: The 2,160 outputs hash to 83df98b1…; they regenerate byte-identically and are not committed
+[H0-60] VERIFIED -> VERIFIED: The 0.12-artifact flag of record: TRUE
+[H0-61] VERIFIED -> VERIFIED: data/m/gates/G-CAL_model-free.json is committed, introduced at bab921c
+[H0-62] VERIFIED -> VERIFIED: Schema m-gcal-model-free-v1 and an f1_012 block
+[H0-63] VERIFIED -> VERIFIED: renders_sha_matches_calib (true) is recorded beside the flag, not as part of it
+[H0-64] VERIFIED -> VERIFIED: (iii) Counters per substrate (m:314), declared verbatim and checked against the proposal line at run time
+[H1-01] VERIFIED -> VERIFIED: L71: Qwen has 12 counters.
+[H1-02] VERIFIED -> VERIFIED: L71: Q-F3's reasoning_line_defect is declared, scoped to Q-F3 and not tabulated at Q-F0.
+[H1-03] VERIFIED -> VERIFIED: L72: OLMo has 8 counters.
+[H1-04] VERIFIED -> VERIFIED: L73: Summed over property, the counters equal audit.tally on the same records.
+[H1-05] VERIFIED -> VERIFIED: L73-74: Pre-pick rates use stages._prepick's definition, so the sentence and the guard share one denominator.
+[H1-06] VERIFIED -> VERIFIED: L75: The battery is synthetic.
+[H1-07] VERIFIED -> VERIFIED: L75-76: An open hook refuses any read under data/m/ckpt, data/m/reports, data/m/verdicts or results/raw during --selftest and ganl.
+[H1-08] VERIFIED -> VERIFIED: L76-77: The no-write snapshot only stats files in those directories.
+[H1-09] VERIFIED -> VERIFIED: L77: Blinding (m:318) governs every later read.
+[H1-10] VERIFIED -> VERIFIED: L79: The analyzer's sha256, package_sha256 and the import closure together bind the verdict logic (PIN-1).
+[H1-11] VERIFIED -> VERIFIED: L80: A verdict run refuses a closure its lock does not name.
+[H1-12] VERIFIED -> VERIFIED: L81: The analyzer of record for a unit is the blob its LOCK v1.0 hashes (PIN-14).
+[H1-13] IMPRECISE -> IMPRECISE: L81-82: VERDICTS runs at HEAD when the three shas equal the lock's, and otherwise from a worktree of the lock commit on the PI's word.
+[H1-14] UNCHECKABLE -> UNCHECKABLE: L83-84: The seat items are also in the consolidated Code→seat block before step 9.
+[H1-15] VERIFIED -> VERIFIED: L85: The seat-routed items built as conservative defaults are PIN-5, PIN-8, PIN-9 and PIN-17.
+[H1-16] VERIFIED -> VERIFIED: L86-87: PIN-5 asks whether m:324's list of Clock causes is exhaustive; clock:not-locked:<stage> (a gate that had not reached its end) is the residual cause.
+[H1-17] VERIFIED -> VERIFIED: L88-89: PIN-8: a campaign ended by a scaffold-absorption hair-trigger STOP is analyzed only with a declared PI-stop record bound to its checkpoint.
+[H1-18] VERIFIED -> VERIFIED: L90-91: PIN-9: VERDICTS refuses while the last pause is unadjudicated; the seat's adjudication enters as a declared file bound to the checkpoint.
+[H1-19] VERIFIED -> VERIFIED: L92: PIN-17: §8.1 covers the controls with a v1 coordinate; A1 belongs to §8.2, 'open' at v1.
+[H1-20] VERIFIED -> VERIFIED: L93-95: PIN-42 is a Code-added binding: not-run and posting refuse unless the analyzer is committed and the proposal is v1.11, and they record the three shas.
+[H1-21] VERIFIED -> VERIFIED: L96: PIN-43 is a Code-added binding: every declared date is an ASCII, real calendar date.
+[H1-22] IMPRECISE -> IMPRECISE: L98: The seat may replace the verdict sentence's clauses (PIN-4), since m:326 pre-writes only 'no read obtained'.
+[H1-23] VERIFIED -> VERIFIED: L99: The NOT-RUN reason phrases and precedence are Code's reading (PIN-5).
+[H1-24] VERIFIED -> VERIFIED: L100: The label-slot and '[passing stages]' renderings are PIN-15 and PIN-16.
+[H1-25] VERIFIED -> VERIFIED: L101: S1 is counted as Answered under clause (a) (PIN-22).
+[H1-26] VERIFIED -> VERIFIED: L102: Clause (c) is applied two-sidedly on m:349's 'iff' (PIN-21).
+[H1-27] VERIFIED -> VERIFIED: L103: The secondaries are built now from m:312 (PIN-13).
+[H1-28] VERIFIED -> VERIFIED: L104: The power figure of record is PIN-3.
+[H1-29] VERIFIED -> VERIFIED: L106: The Clock's boundary-day comparison is open and non-blocking; it is a declared input (step-3 note 55).
+[H1-30] VERIFIED -> VERIFIED: L107-108: Which per-property-table column f1's 7-vs-1 refers to is open (G-PORT A5); interim PIN-12 adds sessions_excluded_any_phase.
+[H1-31] VERIFIED -> VERIFIED: L109: G-ANL-F3's versioning is open (m:291 'extended', before step 19).
+[H1-32] VERIFIED -> VERIFIED: L110: The pass bar for the posting's re-run on the posted text is open.
+[H1-33] VERIFIED -> VERIFIED: L105: These four open items are non-blocking for step 8.
+[H1-34] VERIFIED -> VERIFIED: L112-113: Build gap flagged, not patched: stages.py has no path for recording a seat adjudication of a fired end look on a terminal campaign.
+[H1-35] VERIFIED -> VERIFIED: L114-115: No end look is evaluated on a STOP-ended campaign; the sentence names the last cadence look as the last look.
+[H1-36] VERIFIED -> VERIFIED: L116-118: The build is commit 64df36b, with raws _review, _battery and _sitecheck.
+[H1-37] VERIFIED -> VERIFIED: L119: scripts/m_analyze.py is new and has 5,857 lines.
+[H1-38] VERIFIED -> VERIFIED: L119-120: The CLI is --selftest, ganl, verdicts, not-run and posting.
+[H1-39] VERIFIED -> VERIFIED: L120-121: The build included the placeholder table; nothing under valence_core/ and no .gitignore line.
+[H1-40] VERIFIED -> VERIFIED: L121: The data/m/verdicts/ block is deferred to the commit that first writes there.
+[H1-41] VERIFIED -> VERIFIED: L122: The same understand workflow as step 7 produced the spec.
+[H1-42] VERIFIED -> VERIFIED: L122-123: Code's decisions applied the critic's corrections.
+[H1-43] VERIFIED -> VERIFIED: L124-125: Three lenses (outcome fidelity; posting fidelity; harness and tests) put each finding to a strict refuter: 21 findings, all confirmed and fixed.
+[H1-44] VERIFIED -> VERIFIED: L127: An independent verifier (83 mutants) left 25 test gaps and two code defects.
+[H1-45] IMPRECISE -> IMPRECISE: L127-128: Round 2 closed them, re-verified CLEAN over 126 mutants.
+[H1-46] VERIFIED -> VERIFIED: L129: Round 3 closed the 23 Low gaps that remained, confirmed CLEAN.
+[H1-47] VERIFIED -> VERIFIED: L129-130: The only surviving mutants are 8 equivalents.
+[H1-48] VERIFIED -> VERIFIED: L131-132: Code's closing edit fixed two date defects the round-3 fixer found outside its brief (PIN-43; two checks; its own mutation check).
+[H1-49] VERIFIED -> VERIFIED: L133: Battery 375/375, deterministic (byte-identical runs).
+[H1-50] VERIFIED -> VERIFIED: L133-134: Site check 9/9: the eight suites of record plus the battery.
+[H1-51] VERIFIED -> VERIFIED: L135: G-ANL-F0 ran while G-CAL is still open, on the PI's word.
+[H1-52] VERIFIED -> VERIFIED: L135-136: Its only G-CAL input is the flag's source, which is pick-free.
+[H1-53] VERIFIED -> VERIFIED: L136: A re-run on unchanged inputs is byte-identical.
+[H1-54] VERIFIED -> VERIFIED: L136-137: Supersession is by hand git mv on the seat's ruling, as G-SHAPE-F0's.
+[H1-55] IMPRECISE -> IMPRECISE: L137-138: LOCK-m-F0 v0.1 (step 9) waits on G-CAL closing and on the seat's rulings above.
+[H1-56] UNCHECKABLE -> UNCHECKABLE: L139-140: Committed: the entry; the manifest; the run raw; and this entry's values-check raw (both passes).
+[H1-57] VERIFIED -> VERIFIED: L140-141: The build and its three raws are in 64df36b.
+[H1-58] UNCHECKABLE -> UNCHECKABLE: L141: Next: the consolidated Code→seat block before step 9.
+
+####################################################################################################
+PASS 2: claims 111, verified 105, confirmed corrections 6, refuted flags 0, uncheckable 0, values findings 12
+####################################################################################################
+============================================================ CONFIRMED CORRECTIONS
+--- [H0-05] IMPRECISE
+  CLAIM:
+    The headline parenthetical '(sha256 `24d44a3c…31327fa`)' gives the analyzer's sha256
+  REFUTER'S EVIDENCE:
+    The hash value is right; where it sits is the problem. `shasum -a 256 scripts/m_analyze.py` gives
+    24d44a3c61b06dd3a5e116e2edf59268174ca4e65e9b9960b20873b9d31327fa. That matches `git show
+    b62af85:scripts/m_analyze.py`, and the manifest's analyzer.sha256 is the same value. The abbreviation
+    24d44a3c…31327fa is the first 8 and last 7 hex digits.
+
+    The draft's headline (entry_ganl_v2.md lines 2-3) reads: "amended at `b62af85` by a PIN-43 follow-up before the
+    manifest of record (sha256 `24d44a3c…31327fa`)". A parenthetical placed straight after a noun normally describes
+    that noun, so this one reads as the manifest's hash. The draft uses that same pattern for the manifest
+    elsewhere: line 26 has "manifest [`G-ANL-F0.json`]…, sha256 `9bea8339…ec787904`", and RESULTS.md:47 formats the
+    G-SHAPE-F0 manifest the same way. The real manifest sha256 is 9bea83399ac6…ec787904, so the headline and line 26
+    seem to give two different hashes for the manifest.
+
+    The checker's suggested fix has its own ambiguity. It puts the sha right after the analyzer's name, ahead of
+    "built at `64df36b`". But the analyzer as built at 64df36b hashes to 95f5fe33d9d8e56f…eb7ca7c9 (`git show
+    64df36b:scripts/m_analyze.py`), and the set-aside first-run manifest records that value too. 24d44a3c is only
+    the hash after the b62af85 amendment, so the hash should be attached to that commit.
+  CORRECTION:
+    The analyzer `scripts/m_analyze.py` is pre-committed: built at `64df36b`, and amended at `b62af85` (sha256
+    `24d44a3c…31327fa` as amended) by a PIN-43 follow-up before the manifest of record.
+  DISPOSITION: applied.
+
+--- [H0-14] IMPRECISE
+  CLAIM:
+    During the build, the verifiers' before/after snapshots of data/m hashed the one checkpoint there,
+    G-CAL_qwen.json, which carries no contrast pick, without interpreting it
+  REFUTER'S EVIDENCE:
+    The checker is right that "During the build" understates the disclosure. I looked at every verifier data/m
+    snapshot in scratch/step8, and each one includes `data/m/ckpt/G-CAL_qwen.json` (same sha256 9214718365…53ecc),
+    not only the ones taken during the build:
+    - Build verifiers verify/, verify2/, verify3/, round2/ and round3/ each list 33 files with the ckpt line,
+    matching build_review raw:2081.
+    - closing_verify/datam_before.txt and datam_after.txt list 35 files with the ckpt line. They were written at
+    07:51 and 07:59 -0400. That is after the build commit 64df36b (07:38:08 -0400) and after the first manifest run
+    (11:38:18 UTC), and the 35 include the first-run G-ANL-F0.json. This is followup_review raw:89, "All 35 `data/m`
+    sha256s are identical before and after".
+    - closing_verify/followup/datam_before.txt and datam_after.txt list 34 files with the ckpt line. They were
+    written at 08:03 and 08:07 -0400, before b62af85 (08:12:45). This is followup_review raw:161, "All 34 `data/m`
+    sha256s are unchanged".
+
+    The raw itself names its two reports "verification of Code's closing edit (PIN-43, in 64df36b) and the follow-up
+    it led to" (raw:1). None of the verifiers' probe scripts reads data/m/ckpt; it shows up only in copies of the
+    analyzer, whose open hook blocks it. "Carries no contrast pick" holds: RESULTS.md calls it the G-CAL
+    completability checkpoint, which holds G-CAL answers and hits.
+
+    The checker's correction still leaves one gap. The first report verified PIN-43 as committed in 64df36b, after
+    the build commit and the first run. That verification is neither "during the build" nor "the verification of the
+    PIN-43 follow-up", which is b62af85 in the draft's own terms (line 2, "amended at `b62af85` by a PIN-43 follow-
+    up").
+  CORRECTION:
+    During the build, and in both verifications recorded in the follow-up review (of Code's closing edit and of the
+    follow-up), the verifiers' before/after snapshots of `data/m` hashed the one checkpoint there,
+    `G-CAL_qwen.json`, which carries no contrast pick, without interpreting it.
+  DISPOSITION: applied.
+
+--- [H0-21] IMPRECISE
+  CLAIM:
+    The first run's 2,160 outputs hash the same (83df98b1…); only the analyzer, battery count and register differ
+  REFUTER'S EVIDENCE:
+    I compared the set-aside manifest (`scratchpad/step8/set_aside/G-ANL-F0.first_run_64df36b.json`, sha256
+    ea985c11…) with the manifest of record (`data/m/gates/G-ANL-F0.json`, sha256 9bea8339…) field by field. The diff
+    covered every key and every list. These are the only differences:
+
+    - `analyzer.sha16` and `analyzer.sha256`: 95f5fe33… → 24d44a3c…. The path is the same, and `sha16` is just the
+    start of `sha256`.
+    - `battery.checks_pass`, `battery.checks_total` and `battery.expected_checks`: 375 → 376.
+    - `battery.coverage_ids`: 386 → 387 entries. The record's list is the first-run list plus one id, `OLMO-STATES-
+    DATE`, at index 207. No other id was removed or reordered.
+    - `pins.PIN-43` text: the reworded register entry.
+
+    Things that match:
+
+    - `battery.outputs_sha256` is 83df98b12a27be8e… in both files.
+    - `battery.evaluations` is 2160 in both.
+    - Every other block (tallies, closure, `package_sha256`, placeholder, proposal, the other PINs, `seat_routed`,
+    verdict and so on) is byte-equal.
+
+    So the outputs-hash half of the claim is right. The word "only" leaves out the `coverage_ids` change. That is a
+    separate field in the battery block, and it gained a new id; "battery count" does not cover it.
+
+    The sentence also does not say it is comparing manifests. The two run raws differ in more than these fields: the
+    header HEAD and stamp lines, the finished time, and the new PIN-43 OLMo-states check line. The replacement
+    wording therefore names the manifest as the thing being compared.
+  CORRECTION:
+    Its 2,160 outputs hash the same (`83df98b1…`); its manifest differs from the record's only in the analyzer's
+    sha256, the battery's check count (375 → 376) and coverage ids (386 → 387, adding `OLMO-STATES-DATE`), and
+    PIN-43's register text.
+  DISPOSITION: applied.
+
+--- [H0-57] IMPRECISE
+  CLAIM:
+    Pre-pick rates use stages._prepick's definition, so the sentence and the guard share one denominator
+  REFUTER'S EVIDENCE:
+    The checker is right that this is imprecise, but its suggested replacement goes too far.
+
+    1. `stages._prepick` (valence_core/m/stages.py:1851-1855) is a per-record boolean: a session counts when
+    `exclusion.phase == "forced"`. Its own comment calls this "the guard's k". It says nothing about a denominator.
+    The analyzer's copy (scripts/m_analyze.py:715-722) is the same predicate.
+    2. The denominator is chosen separately. The sentence's rate uses `counts["launched"][a]`
+    (m_analyze.py:1108-1110). The VERDICTS rate uses `counts["launched"][a]` (m_analyze.py:2144). Both come from
+    `campaign_counts`, which counts the arm's released campaign records (len(con), m_analyze.py:709).
+    3. The guard uses the same definition of denominator: in `stages.campaign_look`, `fis.evaluate(kc, len(con),
+    ..., sham_n=len(sh))` and `ab.evaluate(kc, len(con))` (stages.py:1889-1892).
+    4. PIN-33 (m_analyze.py:2556) states the denominator as its own choice: "/ campaign session records of the arm
+    (launched) -- the guard's own denominator".
+
+    So "share one denominator" holds as a definition, but it does not follow from `_prepick`. The "so" gives
+    `_prepick` credit for a choice that PIN-33 makes separately.
+
+    The checker's correction ("the sentence and the guard report one rate") is wrong in two ways:
+    - **The guard reports no rate.** It reports Fisher and absolute p values (m_analyze.py:1003-1009, 1111-1116).
+    - **The counts can differ.** The guard is read at "the unit's last look" (`guard_at_last_look`,
+    m_analyze.py:1013-1033). At a terminal end, the end look runs over all of `ckpt["sessions"]`
+    (stages.py:2148-2166), so the counts coincide. A STOP-ended campaign has no end look, so its guard is read at
+    the last cadence look; the draft says this itself at line 173. The fired session is recorded in `sessions`
+    (stages.py:66), and sessions launched after that look count in the sentence's A but not in the guard's n.
+
+    The replacement below claims only that the two are defined alike, which holds in every case.
+  CORRECTION:
+    Pre-pick rates count exclusions by `stages._prepick`'s definition (the guard's k) over the arm's launched
+    campaign session records, the guard's own denominator (PIN-33), so the sentence's rates and the guard are
+    defined alike.
+  DISPOSITION: applied.
+
+--- [H2-41] IMPRECISE
+  CLAIM:
+    l.232-233: it added the verifier's battery strings: 20261030, 2026-W44-5, 2026-02-29 and 1900-02-29 refused,
+    2000-02-29 accepted
+  REFUTER'S EVIDENCE:
+    The strings and how they are handled are right. In b62af85's battery diff, DATE-ISO-REAL's `unreal` gains
+    "20261030", "2026-W44-5", "2026-02-29" and "1900-02-29", and `real` gains "2000-02-29" (diff lines 711-712).
+
+    The problem is calling them all "the verifier's". In results/raw/2026-10-10_m-ganl-f0-followup_review.txt:
+    - Report 1 (l.84-85) suggests adding only "20261030" and "2026-W44-5" to `unreal`, then "2026-02-29". It
+    mentions 1900-02-29 only as something the committed code already refuses ("it refuses 1900-, 2026- and
+    2100-02-29").
+    - 1900-02-29 first appears as a battery string in CODE'S FOLLOW-UP (1) (l.104). That makes it Code's own
+    addition. Report 3 (l.154) later says it is the string that guards the century rule.
+    - 2000-02-29 was not part of that first addition. Report 3 (l.157) raised the gap "no 2000-02-29 acceptance case
+    exists". Code closed it afterwards in CODE'S FOLLOW-UP (2) (l.170, "DATE-ISO-REAL's `real` gains 2000-02-29").
+
+    So putting 2000-02-29 in this bullet is wrong on timing as well as attribution. It also counts that string
+    twice, because the entry's next sub-bullet (l.237-238) already says "Its two remaining battery-strength gaps
+    were then closed by Code". 2000-02-29 is one of those two gaps; the other is the no-first-read:cap case added to
+    OLMO-STATES-DATE, l.171.
+
+    The checker's correction fixes the attribution but still lists 2000-02-29 here, before the follow-up
+    verification, so the timing and the double count remain. b62af85's commit message uses the same loose wording,
+    but that is a committed text, not this entry.
+  CORRECTION:
+    Replace l.232-233 with: "It added battery strings to DATE-ISO-REAL's refused set: the verifier's suggested
+    20261030, 2026-W44-5 and 2026-02-29, and its own 1900-02-29." Then put 2000-02-29 where it was actually added,
+    at l.237-238: "The verifier's follow-up verification was CLEAN. Its two remaining battery-strength gaps were
+    then closed by Code, each with a mutant shown caught: 2000-02-29 now accepted (the /400 rule), and a no-first-
+    read:cap case added to OLMO-STATES-DATE." If only l.232-233 may change, use: "It added battery strings to DATE-
+    ISO-REAL: the verifier's suggested 20261030, 2026-W44-5 and 2026-02-29 and its own 1900-02-29, refused; later,
+    closing a gap the verifier's follow-up report found, 2000-02-29, accepted."
+  DISPOSITION: applied.
+
+--- [H2-46] IMPRECISE
+  CLAIM:
+    l.240-241: site check 9/9 at each of 64df36b and b62af85: the eight suites of record plus the battery
+  REFUTER'S EVIDENCE:
+    I checked this myself, and the checker is right. Neither site check ran at the commit the claim names. Each ran
+    before its commit, on the previous HEAD plus the uncommitted work.
+
+    Build check (results/raw/2026-10-10_m-ganl-f0-build_sitecheck.txt):
+    - Header: "# HEAD: d092078 + the uncommitted G-ANL-F0 build (scripts/m_analyze.py,
+    data/m/gates/m_posting_sentences.placeholder.json)".
+    - Title line: "before its build commit".
+    - Ran from 11:35:04 to 11:37:45 UTC. Footer: "gates failed: 0".
+    - 64df36b was committed at 07:38:08-04:00, which is 11:38:08 UTC.
+
+    Follow-up check (results/raw/2026-10-10_m-ganl-f0-followup_sitecheck.txt):
+    - Header: "# HEAD: f23b444 + the uncommitted PIN-43 follow-up to scripts/m_analyze.py".
+    - Title line: "before its commit".
+    - Ran from 12:09:57 to 12:12:29 UTC. Footer: "gates failed: 0".
+    - b62af85 was committed at 08:12:45-04:00, which is 12:12:45 UTC.
+
+    The "9/9" and "the eight suites of record plus the battery" parts are correct. Both raws gate nine suites, all
+    PASS: regression, format_recon, k1_stage1, k1_analyze, e2d_d2_analyze, recon_echo, closure_verify3, m_sessions
+    and m_analyze. The m_analyze suite shows 375/375 (386 ids) in the build check and 376/376 (387 ids) in the
+    follow-up.
+
+    The site-check raws record no analyzer sha. The analyzer bytes are tied to the commits only through the battery
+    raws, stamped 8 seconds before each site check:
+    - 11:34:56 UTC: sha256 95f5fe33...
+    - 12:09:49 UTC: sha256 24d44a3c...
+
+    I computed the sha256 of the analyzer blobs in the commits, and they match these: `git show
+    64df36b:scripts/m_analyze.py` gives 95f5fe33..., and `git show b62af85:scripts/m_analyze.py` gives 24d44a3c...
+
+    The checker's correction is right in substance, with two loose points:
+    - "each commit's tree" is loose. The working tree that was checked is not the commit's tree: it lacks the raws
+    the commit adds, and it held unrelated uncommitted files.
+    - "the analyzer bytes those commits hold" reads as if the site-check raws recorded that. Only the adjacent
+    battery raws record it.
+  CORRECTION:
+    Site check 9/9 before each commit, run on d092078 + the uncommitted build (for `64df36b`) and on f23b444 + the
+    uncommitted follow-up (for `b62af85`), as each raw's header records: the eight suites of record plus the
+    battery. The battery raws, run seconds before each check, record analyzer sha256s 95f5fe33… and 24d44a3c…, the
+    blobs those commits hold.
+  DISPOSITION: applied.
+
+============================================================ REFUTED FLAGS
+============================================================ UNCHECKABLE
+============================================================ VALUES LENS
+--- V1 [missing-disclosure]
+  QUOTE:
+    **Committed texts this entry corrects, flagged and not changed.** `64df36b`'s message undercounts.
+  PROBLEM:
+    Another committed text is now wrong, and the list leaves it out. The G-SHAPE-F0 entry in RESULTS.md (committed
+    in f23b444, line 246) says of G-ANL-F0: "its run of record was made at 11:38 UTC, after this one, and goes to
+    its own entry". The G-SHAPE-F0 values-check raw committed with it (results/raw/2026-10-10_m-
+    gshape-f0_valuescheck.txt:1072-1077, V13) says the same and names manifest ea985c11…. This entry sets that 11:38
+    run aside. The run of record is now the 12:12:52 UTC run on b62af85 (manifest 9bea8339…). A reader following the
+    G-SHAPE-F0 entry's pointer lands on the wrong run.
+  CORRECTION:
+    Add to the paragraph: "The G-SHAPE-F0 entry (RESULTS.md, committed in `f23b444`) says G-ANL-F0's 'run of record
+    was made at 11:38 UTC'. Its values-check raw (`_valuescheck`, V13) says the same and names manifest `ea985c11…`.
+    That run, on `64df36b`, was set aside. The run of record is the 12:12:52 UTC run on `b62af85` (manifest
+    `9bea8339…`)."
+  DISPOSITION: applied.
+
+--- V2 [missing-disclosure]
+  QUOTE:
+    `stages.py` is not in G-SHAPE-F0's scoring-stack map, so it would not re-run
+  PROBLEM:
+    The proposed stages.py change would also affect G-ANL-F0, and the entry discusses only G-SHAPE-F0. G-ANL-F0.json
+    records package_sha256 06ab1430…, which a stages.py edit moves. The battery also exercises stages, the lazily
+    imported verdict-path module (PIN-1), through its reader-path checks. So the edit would leave this manifest on a
+    superseded package. Re-running G-ANL-F0 then produces different bytes, which write-once refuses until
+    supersession. G-ANL-F0 has no counterpart to G-SHAPE's PIN-S10 that says which package edits force a re-run.
+  CORRECTION:
+    After "…but LOCK v0.1 would state the new package." add: "It would also move the `package_sha256` this manifest
+    records (`06ab1430…`), and G-ANL-F0's battery exercises `stages` on the verdict path (PIN-1). Either G-ANL-F0 is
+    re-run after the edit and this manifest is superseded by hand `git mv`, or LOCK v0.1 states the diff, as for
+    G-SHAPE-F0. Which one is the seat's."
+  DISPOSITION: applied.
+
+--- V3 [ambiguous]
+  QUOTE:
+    A re-run on unchanged inputs is byte-identical, so a ruling that step 8 must follow G-CAL's close
+  PROBLEM:
+    This conflates two cases. If the inputs are unchanged, the re-run is byte-identical, `ganl` accepts it as
+    identical (PIN-26: exit 0, "written or identical") and nothing is superseded. Yet the next sentence attaches a
+    git-mv supersession. Whether the inputs will be unchanged at G-CAL's close is also not given. The manifest
+    records the flag source's sha256 (flag_of_record.sha256 aad8096a…), and G-CAL_model-free.json holds the renders
+    of record. The G-SHAPE-F0 entry says an owed G-CAL item could re-specify those renders. In that case the bytes
+    differ and "costs one re-run" understates the cost. The G-SHAPE-F0 entry states this condition explicitly; this
+    entry drops it.
+  CORRECTION:
+    "A re-run is byte-identical only if its recorded inputs are unchanged then: the analyzer, the placeholder, the
+    proposal, the m package, the import closure and the flag source `G-CAL_model-free.json` (its sha256 is in the
+    manifest). If they are unchanged, a ruling that step 8 must follow G-CAL's close costs one re-run, which write-
+    once accepts as identical, and nothing is superseded. If any has changed (for example, an owed G-CAL item re-
+    specifies the renders that file holds), the bytes differ, write-once refuses, and the manifest is superseded by
+    hand `git mv` on the seat's ruling (PIN-37), as G-SHAPE-F0's."
+  DISPOSITION: applied.
+
+--- V4 [missing-disclosure]
+  QUOTE:
+    Code-added PIN-42 awaits the seat's confirmation there too.
+  PROBLEM:
+    The headline summary of seat items names PIN-42 but not PIN-43. PIN-43 also carries a question the entry itself
+    calls "the seat's to say": what a now-required date means for a no-first-read NOT-RUN declared in --olmo-states.
+    PIN-43 also fixes defects that the round-3 fixer and confirmer both routed "for the seat" and that Code fixed
+    itself. A reader of the summary alone sees only five items for the seat.
+  CORRECTION:
+    "Code-added PIN-42 awaits the seat's confirmation there too. Code-added PIN-43 (dates; fixed by Code where the
+    round-3 reviewers routed it to the seat) leaves one question that is the seat's: what the date means for a no-
+    first-read NOT-RUN declared in `--olmo-states`."
+  DISPOSITION: applied.
+
+--- V5 [missing-disclosure]
+  QUOTE:
+    **Code's readings the seat may replace:**
+  PROBLEM:
+    The list reads as exhaustive, but it covers only nine of the 43 Code-declared PINs. Some substantive readings of
+    the seat's text that shape VERDICTS contents are missing. One example is PIN-11: m:314's counters "over all
+    sessions including excluded" are read as the unit's campaign sessions, with G-TIME and qualification sessions
+    tabulated separately. That reading appears nowhere in the seat list.
+  CORRECTION:
+    "**Code's readings the seat may replace** (the principal ones; every PIN in the manifest's 43-entry register is
+    Code's, declared for LOCK v0.1, and the seat may strike any):". Add the item: "m:314's 'over all sessions' read
+    as the unit's campaign sessions, excluded included, with G-TIME and qualification sessions tabulated separately
+    (PIN-11);".
+  DISPOSITION: applied.
+
+--- V6 [missing-disclosure]
+  QUOTE:
+    It was set aside uncommitted when the verification of Code's closing
+  PROBLEM:
+    Twice the entry says a manifest is superseded "by a hand `git mv` on the seat's ruling". Here, though, Code
+    changed the analyzer after its build commit and replaced a manifest-of-record run without a seat ruling. The
+    first run's own raw header called it "the manifest of record on the committed analyzer". This happened outside
+    PIN-37 only because that manifest was never committed. The entry gives the precedent but does not say the set-
+    aside was Code's call, so it reads as contradicting the rule the entry states.
+  CORRECTION:
+    "It was set aside uncommitted by Code, without a seat ruling, when the verification of Code's closing edit found
+    the gap the follow-up closes. PIN-37's git-mv supersession governs committed artifacts, and this one was never
+    committed (G-PORT's precedent). The set-aside is recorded here for the seat."
+  DISPOSITION: applied.
+
+--- V7 [misstates-seat-text]
+  QUOTE:
+    For the positive controls, m:326 pre-writes
+  PROBLEM:
+    This misstates the seat's text. For the positive controls m:326 pre-writes REVERSE's parenthetical as well as
+    *no read obtained*: "(instruction inversion; reported; not-PASS for licensing)". The analyzer's REVERSE sentence
+    template uses that phrase verbatim (templates.sentence.reverse), and the battery checks it ("sentence REVERSE:
+    state word and 'instruction inversion; reported; not-PASS for licensing'").
+  CORRECTION:
+    "For the positive controls, m:326 pre-writes *no read obtained* and REVERSE's 'instruction inversion; reported;
+    not-PASS for licensing', which the sentence uses verbatim; it and m:247 fix the contents (…) but not their
+    wording;"
+  DISPOSITION: applied.
+
+--- V8 [ambiguous]
+  QUOTE:
+    The arm's outcome is evaluated in m:326's order, on exact Fractions. It is one of:
+  PROBLEM:
+    The list that follows puts PASS before REVERSE, but m:326's order is *no read obtained* → REVERSE → PASS → DEAD
+    → INDETERMINATE. The order decides overlapping cases, which the battery pins: "order: 29/80 meets REVERSE and
+    DEAD -> REVERSE" and "n = 213 … meets PASS and DEAD -> PASS". Listing the outcomes in a different order right
+    after "in m:326's order" invites the wrong reading.
+  CORRECTION:
+    List them in m:326's order: "It is one of, in that order: REVERSE; PASS; DEAD (CI upper bound on Δ_c below
+    +0.15, …); INDETERMINATE (terminal), with its conjunct reasons." The no-read case, evaluated first, follows in
+    the next bullet.
+  DISPOSITION: applied.
+
+--- V9 [ambiguous]
+  QUOTE:
+    The realised-split figure is reported beside it. It is descriptive only.
+  PROBLEM:
+    "It" attaches to the realised-split figure, which implies the figure of record is something more than
+    descriptive. m:190 makes the power figure of record descriptive too ("reported in VERDICTS, descriptively, and
+    is the power figure of record"). PIN-3 says "Descriptive only" of both.
+  CORRECTION:
+    "The realised-split figure is reported beside it, labelled. Both figures are descriptive only (m:190; PIN-3)."
+  DISPOSITION: applied.
+
+--- V10 [misstated-provenance]
+  QUOTE:
+    Site check 9/9 at each of `64df36b` and
+  PROBLEM:
+    Neither site check ran at those commits. The build site-check raw records "HEAD: d092078 + the uncommitted
+    G-ANL-F0 build" (11:35–11:37 UTC; 64df36b was committed at 11:38:08). The follow-up raw records "HEAD: f23b444 +
+    the uncommitted PIN-43 follow-up" (12:09:57; b62af85 was committed at 12:12:45). The analyzer bytes match the
+    committed blobs (95f5fe33…, 24d44a3c… in the battery headers), but "at" misstates the provenance.
+  CORRECTION:
+    "Site check 9/9 on each commit's content just before its commit (HEAD `d092078`, then `f23b444`, plus the
+    uncommitted analyzer, sha256 `95f5fe33…` and `24d44a3c…`, the blobs committed at `64df36b` and `b62af85`): the
+    eight suites of record plus the battery."
+  DISPOSITION: applied.
+
+--- V11 [ambiguous]
+  QUOTE:
+    is reached by an in-memory variant with P03 and P18
+  PROBLEM:
+    "with P03 and P18 cleared" reads as if the two rows were removed. The next sentence then says the variant
+    "carries at P03", which contradicts that reading. In fact only the two rows' dose-note marks are cleared; P03
+    stays as the f1-corr-line row (run raw: "(c) carries ('carry', every item) at the f1-corr-line row (P03)").
+  CORRECTION:
+    "…is reached by an in-memory variant with P03's and P18's dose-note marks cleared (the rows kept). It carries at
+    P03 in all 1,080 tuples under flag true."
+  DISPOSITION: applied.
+
+--- V12 [ambiguous]
+  QUOTE:
+    It carries the follow-up's
+  PROBLEM:
+    This says b62af85 carries the battery and site-check raws. It also carries the follow-up review raw (git show
+    --stat b62af85), as the entry's last bullet says ("the follow-up and its three raws in `b62af85`"). The two
+    statements disagree on what the commit holds.
+  CORRECTION:
+    "It carries the follow-up's review, battery and site-check raws."
+  DISPOSITION: applied.
+
+============================================================ ALL CLAIMS
+[H0-01] VERIFIED -> VERIFIED: Entry date 2026-10-10; G-ANL-F0 is PROPOSAL-m v1.11 §8 step 8, m:278
+[H0-02] VERIFIED -> VERIFIED: The PI's go was "Go for steps 7 and 8"
+[H0-03] VERIFIED -> VERIFIED: Verdict PASS
+[H0-04] VERIFIED -> VERIFIED: The analyzer scripts/m_analyze.py is pre-committed: built at 64df36b, amended at b62af85 by a PIN-43 follow-up before the manifest of record
+[H0-05] IMPRECISE -> IMPRECISE: The headline parenthetical '(sha256 `24d44a3c…31327fa`)' gives the analyzer's sha256
+[H0-06] VERIFIED -> VERIFIED: The synthetic battery passes 376/376
+[H0-07] VERIFIED -> VERIFIED: The battery reaches every per-arm outcome of §5 for A0 and each A0-OLMo-{ckpt}, including NOT-RUN by each listed cause, INDETERMINATE-by-no-domain and OLMo PENDING
+[H0-08] VERIFIED -> VERIFIED: It enumerates 5 × 6³ = 1,080 tuples under each flag value: 2,160 evaluations and 19,440 per-tuple assertions
+[H0-09] VERIFIED -> VERIFIED: It declares the counters per substrate
+[H0-10] VERIFIED -> VERIFIED: Four of Code's defaults are built conservatively and await the seat's ruling before LOCK-m-F0 v0.1 hashes the analyzer
+[H0-11] VERIFIED -> VERIFIED: Code-added PIN-42 awaits the seat's confirmation there too
+[H0-12] VERIFIED -> VERIFIED: A ruling that changes any default, binding or reading changes the analyzer's sha256; G-ANL-F0 is then rebuilt and re-run, and the manifest is superseded by a hand git mv on that ruling
+[H0-13] VERIFIED -> VERIFIED: Model-free; the run read no checkpoint and no pick; nothing ran on the box; the k arc untouched
+[H0-14] IMPRECISE -> IMPRECISE: During the build, the verifiers' before/after snapshots of data/m hashed the one checkpoint there, G-CAL_qwen.json, which carries no contrast pick, without interpreting it
+[H0-15] VERIFIED -> VERIFIED: G-CAL (step 6) is still open
+[H0-16] VERIFIED -> VERIFIED: Stamp: date -u → Sat Oct 10 11:39:44 UTC 2026 at first write
+[H0-17] VERIFIED -> VERIFIED: Run raw results/raw/2026-10-10_m-ganl-f0.txt; manifest data/m/gates/G-ANL-F0.json, sha256 9bea8339…ec787904
+[H0-18] VERIFIED -> VERIFIED: scripts/m_analyze.py ganl ran at HEAD b62af85, the follow-up commit, 12:12:52–12:13:02 UTC, exit 0; it ran the battery (376/376) and wrote the manifest
+[H0-19] VERIFIED -> VERIFIED: A first run on 64df36b at 11:38:18–11:38:28 UTC; manifest sha256 ea985c11…, run raw 1e8276fb…
+[H0-20] VERIFIED -> VERIFIED: The first run was set aside uncommitted when the verification of Code's closing edit found the gap the follow-up closes (G-PORT's precedent)
+[H0-21] IMPRECISE -> IMPRECISE: The first run's 2,160 outputs hash the same (83df98b1…); only the analyzer, battery count and register differ
+[H0-22] VERIFIED -> VERIFIED: The manifest is write-once, with no timestamp and no HEAD
+[H0-23] VERIFIED -> VERIFIED: The manifest records the analyzer's sha256
+[H0-24] VERIFIED -> VERIFIED: package_sha256 06ab1430…, the same as G-SHAPE-F0's, since neither 64df36b nor b62af85 touches anything under valence_core/
+[H0-25] VERIFIED -> VERIFIED: Import closure outside the package, sha256 a3bc7bb9…: 15 modules and one data file, data/olmo/a1_repair_roster.json
+[H0-26] VERIFIED -> VERIFIED: Manifest records the placeholder table (b1cce4f8…) and the proposal (42ab36ec…)
+[H0-27] VERIFIED -> VERIFIED: Manifest records the battery block, counters, NOT-RUN vocabulary, the 43 PINs, the four seat-routed items and the flag of record
+[H0-28] VERIFIED -> VERIFIED: The arm's outcome is evaluated in m:326's order, on exact Fractions
+[H0-29] VERIFIED -> VERIFIED: Outcomes PASS, REVERSE, DEAD (CI upper bound on Δ_c below +0.15, decided as P(Bin(n,13/20) ≤ k) < 1/40 with k < n), INDETERMINATE with conjunct reasons
+[H0-30] VERIFIED -> VERIFIED: Exactly one of arm/sham with no domain session gives INDETERMINATE 'no read obtained' (m:326); neither gives no arm outcome and the unit is NOT-RUN by its no-first-read cause (m:324)
+[H0-31] VERIFIED -> VERIFIED: Boundary cases pinned at both floors (80 and 96)
+[H0-32] VERIFIED -> VERIFIED: NOT-RUN causes each reached in the battery: clock:no-box (OLMo), dose-not-completable (OLMo), clock:gate-stopped:<stage>, clock:not-locked:<stage>, clock:pi-declined (m:324), clock:k-zero (m:192), no-first-read:{pi-stop,gver-stop,cap}, pending-closed-at-v2 (v2 only)
+[H0-33] VERIFIED -> VERIFIED: For Q-F0 the <stage> is one of G-PORT, G-CAL, G-SHAPE-F0, G-ANL-F0, G-TIME-F0, G-ID-F0m, G-F0m-Qwen
+[H0-34] VERIFIED -> VERIFIED: The primary cause is the earliest; the others are listed beside it
+[H0-35] VERIFIED -> VERIFIED: OLMo PENDING is a declared input with four sub-states, refused for Q-F0 and wherever the unit's VERDICTS or NOT-RUN output exists
+[H0-36] VERIFIED -> VERIFIED: Attained power computed at m:190's base case at the realised n (P = .70, α .01)
+[H0-37] VERIFIED -> VERIFIED: PIN-3 adds an odd-n split ⌊n/2⌋ map 0 / ⌈n/2⌉ map 1 and pools the sham at .5; pooling gives the same E as m:190's m/2 per map because E pools the sham
+[H0-38] VERIFIED -> VERIFIED: The realised-split figure is reported beside it, descriptive only
+[H0-39] VERIFIED -> VERIFIED: Each flag value gives 1,080 tuples; each flag's tallies are asserted on its own outputs and are equal
+[H0-40] VERIFIED -> VERIFIED: L0 true in 216 tuples (Q-F0 PASS); L0-OLMo-c in 180 per checkpoint; 16 licensing vectors
+[H0-41] VERIFIED -> VERIFIED: One label set equal to the oracle, e2b and OLMo-base fixed; e2a/f1 216 per branch (Answered, REVERSE, DEAD, INDETERMINATE, not run); each OLMo row Answered 180, did not pass 540, not run 180, pending 180
+[H0-42] VERIFIED -> VERIFIED: One ceiling: Fallback-1 in 216, Fallback-2 in 864
+[H0-43] VERIFIED -> VERIFIED: Abstract OLMo clause from §7.2 Step 2's three-way: all three pass in 5; one or two in 450 (375 + 75); none in 625; 8 distinct texts
+[H0-44] VERIFIED -> VERIFIED: The abstract clause is emitted verbatim even where its host sentence is enumerated under (a), so it can dangle (PIN-27)
+[H0-45] VERIFIED -> VERIFIED: One §8.1 status text, 1,080 distinct; Step-7 status 'open' in all 1,080; f1 dose-note under the flag
+[H0-46] VERIFIED -> VERIFIED: Placeholder data/m/gates/m_posting_sentences.placeholder.json: 21 synthetic rows on 20 lines (P20 and P21 share line 20), not derived from any preprint
+[H0-47] VERIFIED -> VERIFIED: Each row's (a),(b),(c) fire counts are asserted for both flag values; rows reach (a), (b) and (c)'s strike branch (P03 and P18 under flag false)
+[H0-48] VERIFIED -> VERIFIED: (c)'s carry branch is reached by an in-memory variant with P03 and P18 cleared; it carries at P03 in all 1,080 tuples under flag true
+[H0-49] VERIFIED -> VERIFIED: The table of record is built by Code from the placed preprint at LOCK-m-F0 v1.0 when reached, else at the posting; values-checked and hashed where built, re-run on the posted text at the posting (m:278, m:286)
+[H0-50] VERIFIED -> VERIFIED: The 2,160 outputs hash to 83df98b1…; regenerate byte-identically; not committed
+[H0-51] VERIFIED -> VERIFIED: Flag of record TRUE; Code's reading (PIN-19) of m:349's "G-CAL's 0.12 artifact exists"
+[H0-52] VERIFIED -> VERIFIED: The flag means G-CAL_model-free.json is committed at HEAD and identical in the working tree (introduced at bab921c), schema m-gcal-model-free-v1, with an f1_012 block
+[H0-53] VERIFIED -> VERIFIED: renders_sha_matches_calib (true) is recorded beside the flag, not as part of it; VERDICTS and the posting re-read the flag from their declared --flag-source
+[H0-54] VERIFIED -> VERIFIED: Counters (m:314) declared verbatim and checked against the proposal line at run time
+[H0-55] VERIFIED -> VERIFIED: Qwen has 12 counters; Q-F3's reasoning_line_defect is declared, scoped to Q-F3, not tabulated at Q-F0 (11 tabulated); OLMo has 8
+[H0-56] VERIFIED -> VERIFIED: Summed over property, counters equal audit.tally on the same records
+[H0-57] IMPRECISE -> IMPRECISE: Pre-pick rates use stages._prepick's definition, so the sentence and the guard share one denominator
+[H0-58] VERIFIED -> VERIFIED: The battery is synthetic; during --selftest and ganl an open hook (builtins.open, io.open, Path open/read_bytes/read_text) refuses reads under data/m/ckpt, data/m/reports, data/m/verdicts or results/raw
+[H0-59] VERIFIED -> VERIFIED: The battery plants reads under data/m/ckpt and results/raw and catches each; the no-write snapshot only stats files there
+[H0-60] VERIFIED -> VERIFIED: Blinding (m:318) governs every later read
+[H0-61] VERIFIED -> VERIFIED: Analyzer sha256, package_sha256 and import closure together bind the verdict logic; a verdict run refuses a closure its lock does not name (PIN-1)
+[H0-62] VERIFIED -> VERIFIED: The analyzer of record is the blob its LOCK v1.0 hashes; VERDICTS runs at HEAD when the three shas equal the lock's
+[H0-63] VERIFIED -> VERIFIED: Otherwise: run from a worktree of the lock commit, on the PI's word, every data input/output as an absolute path into the main tree; declared, not implemented at step 8, so the analyzer refuses any such run; G-ANL-F3 versioning is the seat's
+[H2-01] VERIFIED -> VERIFIED: l.123-125: otherwise (HEAD's three shas not the lock's) the declared rule is to run from a worktree of the lock commit, on the PI's word, every data input and output an absolute path into the main tree
+[H2-02] VERIFIED -> VERIFIED: l.124-125: that path is declared, not implemented at step 8, so the analyzer refuses any such run
+[H2-03] VERIFIED -> VERIFIED: l.125-126: how the analyzer is versioned for G-ANL-F3 is the seat's
+[H2-04] VERIFIED -> VERIFIED: l.129-130: seat-routed conservative defaults; the manifest marks each 'blocking LOCK v0.1, not step 8'
+[H2-05] VERIFIED -> VERIFIED: l.131-132: PIN-5 asks whether m:324's list of Clock causes is exhaustive; clock:not-locked:<stage>, a gate that had not reached its end, is the residual cause
+[H2-06] VERIFIED -> VERIFIED: l.133-134: PIN-8: a campaign ended by a scaffold-absorption hair-trigger STOP is analyzed only with a declared PI-stop record bound to its checkpoint
+[H2-07] VERIFIED -> VERIFIED: l.135-136: PIN-9: VERDICTS refuses while the last pause is unadjudicated; the seat's adjudication enters as a declared file bound to the checkpoint
+[H2-08] VERIFIED -> VERIFIED: l.137: PIN-17: §8.1 covers the controls with a v1 coordinate; A1 belongs to §8.2, 'open' at v1
+[H2-09] VERIFIED -> VERIFIED: l.139-141: PIN-42: not-run and posting refuse unless the analyzer is committed and the proposal is v1.11, and record the three shas; it is a binding the spec does not state (the first verifier's residual defect 1) and awaits the seat's confirmation at LOCK v0.1, as its own text says
+[H2-10] VERIFIED -> VERIFIED: l.142-144: PIN-43: every declared date is ASCII and a real calendar date: a NOT-RUN record's, a declared OLMo NOT-RUN state's, a PENDING declaration's and a decision's (closing edit and follow-up)
+[H2-11] VERIFIED -> VERIFIED: l.145-147: a no-first-read NOT-RUN declared in --olmo-states must now carry a real date, though the unit's own NOT-RUN output (from verdicts) has none; nothing states what the date means; the verifier flagged it; it is the seat's
+[H2-12] VERIFIED -> VERIFIED: l.149-151: PIN-4 sentence; for positive controls m:326 pre-writes only 'no read obtained'; m:326 and m:247 fix the contents (pre-pick rates beside the sham's with the guard at the last look; shortfall and attained power below floor) but not the wording
+[H2-13] VERIFIED -> VERIFIED: l.152-158: Code's readings: NOT-RUN phrases and precedence (PIN-5), label slots and [passing stages] (PIN-15, PIN-16), S1 as Answered under (a) (PIN-22), (c) two-sided on m:349's 'iff' (PIN-21), the 0.12 artifact's existence (PIN-19), secondaries from m:312 (PIN-13), power figure of record (PIN-3)
+[H2-14] VERIFIED -> VERIFIED: l.159-161: carried from the critic: analyzer_sha256 is optional in the stages' identity_extra, and nothing checks package_sha256 against the lock at stage start; Code proposes LOCK v0.1 require both on non-stub runs
+[H2-15] VERIFIED -> VERIFIED: l.161-163: that change would land in stages.py, moving package_sha256; stages.py is not in G-SHAPE-F0's scoring-stack map, so it would not re-run G-SHAPE-F0, but LOCK v0.1 would state the new package
+[H2-16] VERIFIED -> VERIFIED: l.165: the Clock's boundary-day comparison is a declared input (step-3 note 55), due by the first Clock date
+[H2-17] VERIFIED -> VERIFIED: l.166-167: which per-property column f1's 7-vs-1 refers to (G-PORT A5; interim PIN-12 adds sessions_excluded_any_phase), due before step 17's entry
+[H2-18] VERIFIED -> VERIFIED: l.168: G-ANL-F3's versioning (m:291 'extended'), due before step 19
+[H2-19] VERIFIED -> VERIFIED: l.169: the pass bar for the posting's re-run on the posted text, due before the v1 posting
+[H2-20] VERIFIED -> VERIFIED: l.170-174: build gaps flagged, not patched: stages.py has no path recording a seat adjudication of a fired end look on a terminal campaign; no end look on a STOP-ended campaign, and the sentence names the last cadence look
+[H2-21] VERIFIED -> VERIFIED: l.175-176: order is the third order question of the read-of-record entry; G-ANL-F0 ran while G-CAL is still open, on the PI's word
+[H2-22] VERIFIED -> VERIFIED: l.177: its only G-CAL input is the flag's source, G-CAL_model-free.json, which carries no pick
+[H2-23] VERIFIED -> VERIFIED: l.178-179: a re-run on unchanged inputs is byte-identical, so a ruling that step 8 must follow G-CAL's close costs one re-run; supersession by hand git mv on the seat's ruling, as G-SHAPE-F0's
+[H2-24] VERIFIED -> VERIFIED: l.180-181: LOCK-m-F0 v0.1 waits on G-CAL closing, on the seat's three order rulings (completability before the read; the early roster assertion; steps 7-8 before the close), and on the rulings above
+[H2-25] VERIFIED -> VERIFIED: l.182-186: the build is 64df36b with _review, _battery, _sitecheck raws; the build spec, critic's corrections and Code's decisions are verbatim in _build-inputs
+[H2-26] VERIFIED -> VERIFIED: l.187-189: new scripts/m_analyze.py (5,857 lines), CLI --selftest/ganl/verdicts/not-run/posting, and the placeholder table; nothing under valence_core/, no .gitignore line; data/m/verdicts/ block deferred
+[H2-27] VERIFIED -> VERIFIED: l.190: the same understand workflow as step 7 (five readers, two synthesizers, a completeness critic) produced the build spec
+[H2-28] VERIFIED -> VERIFIED: l.191-203: Code's decisions, applying the critic's G-ANL corrections, fixed the 11 listed items
+[H2-29] VERIFIED -> VERIFIED: l.204-205: three lenses (outcome fidelity; posting fidelity; harness and tests), each finding put to a strict refuter: 21 findings, all confirmed and fixed
+[H2-30] VERIFIED -> VERIFIED: l.205-206: at that fix PIN-5 became seat-routed and a 21st placeholder row (P21, a second sentence on line 20) was added
+[H2-31] VERIFIED -> VERIFIED: l.208: an independent verifier (83 mutants) left 25 test gaps and two code defects
+[H2-32] VERIFIED -> VERIFIED: l.209-210: round 2 closed them and both partly-met decision items; re-verified CLEAN over 125 mutants and a control
+[H2-33] VERIFIED -> VERIFIED: l.211-212: round 3 closed the 23 remaining Low gaps, confirmed CLEAN on analyzer 8309f72d; the only surviving mutants are 8 equivalents
+[H2-34] VERIFIED -> VERIFIED: l.213-216: the closing edit came after round 3's confirmation and fixed two date defects the round-3 fixer found outside its brief (\d accepting non-ASCII digits and impossible days like 2026-02-30; a NOT-RUN record's date unchecked when its phrase has no date)
+[H2-35] VERIFIED -> VERIFIED: l.217-218: the fixer and the confirmer routed these 'for the seat'
+[H2-36] VERIFIED -> VERIFIED: l.219-220: the edit adds _iso_date, uses it at the three call sites, checks the NOT-RUN record's date, adds PIN-43's register entry and two battery checks
+[H2-37] VERIFIED -> VERIFIED: l.221: Code's own check: 375/375 twice, three mutants (two caught, one equivalent)
+[H2-38] VERIFIED -> VERIFIED: l.222-226: an independent verifier reviewed the edit (both reports verbatim in _followup_review): CLEAN as scoped; only declared hunks; _iso_date matches an oracle on 157,708 cases; nothing valid newly refused; 14 of 21 mutants caught, the rest equivalent or battery-strength gaps
+[H2-39] VERIFIED -> VERIFIED: l.227-229: a declared --olmo-states NOT-RUN state's date was checked only through its reason phrase, so a dose-not-completable or no-first-read declaration dated None or 2026-02-30 would be carried into Q-F0's VERDICTS; PIN-43's 'every declared date' overclaimed
+[H2-40] VERIFIED -> VERIFIED: l.230-231: the follow-up (b62af85): Code fixed the gap itself rather than routing it: one _iso_date check in that branch, PIN-43's text extended
+[H2-41] IMPRECISE -> IMPRECISE: l.232-233: it added the verifier's battery strings: 20261030, 2026-W44-5, 2026-02-29 and 1900-02-29 refused, 2000-02-29 accepted
+[H2-42] VERIFIED -> VERIFIED: l.234-235: a new check OLMO-STATES-DATE over two causes; EXPECTED_CHECKS 375 -> 376, coverage ids 386 -> 387
+[H2-43] VERIFIED -> VERIFIED: l.236-237: the verifier's follow-up verification was CLEAN; its two remaining battery-strength gaps were then closed by Code, each with a mutant shown caught
+[H2-44] VERIFIED -> VERIFIED: l.238-239: b62af85 is the round-3 analyzer plus these edits and nothing else; it carries the follow-up's battery and site-check raws
+[H2-45] VERIFIED -> VERIFIED: l.240: battery 376/376, deterministic (byte-identical runs)
+[H2-46] IMPRECISE -> IMPRECISE: l.240-241: site check 9/9 at each of 64df36b and b62af85: the eight suites of record plus the battery
+[H2-47] VERIFIED -> VERIFIED: l.242-245: 64df36b's message undercounts: it names three seat-routed defaults while the committed register routes four (PIN-5's routing added at the review fix), and calls the placeholder a 20-row table while the committed file has 21 rows
+[H2-48] VERIFIED -> VERIFIED: l.246-249: the build and its three raws are in 64df36b, the follow-up and its three raws in b62af85, the build-inputs raw in f23b444 with the G-SHAPE-F0 entry

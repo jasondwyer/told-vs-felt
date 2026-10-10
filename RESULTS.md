@@ -21,6 +21,290 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-10-10 — **G-ANL-F0 (PROPOSAL-m v1.11 §8 step 8, m:278; the PI's go "Go for steps 7 and 8"): PASS. The
+  analyzer `scripts/m_analyze.py` is pre-committed: built at `64df36b`, and amended at `b62af85` (sha256
+  `24d44a3c…31327fa` as amended) by a PIN-43 follow-up before the manifest of record. Its synthetic battery
+  passes 376/376.**
+  - **What the battery covers.**
+    - It reaches every per-arm outcome of §5 for A0 and each A0-OLMo-{ckpt}, including NOT-RUN by each listed
+      cause, INDETERMINATE-by-no-domain and OLMo PENDING.
+    - It enumerates the v1 outcome space of 5 × 6³ = 1,080 tuples under each value of the 0.12-artifact
+      flag: 2,160 evaluations and 19,440 per-tuple assertions.
+    - It declares the counters per substrate.
+  - **Seat items.**
+    - Four of Code's defaults are built conservatively and await the seat's ruling before LOCK-m-F0 v0.1
+      hashes the analyzer. Code-added PIN-42 awaits the seat's confirmation there too.
+    - Code-added PIN-43 (dates) leaves one question that is the seat's: what the date means for a no-first-read
+      NOT-RUN declared in `--olmo-states`. Code fixed the PIN-43 defects itself, where the round-3 reviewers had
+      routed them to the seat.
+    - This PASS is for the analyzer as built. A ruling that changes any default, binding or reading below
+      changes the analyzer's sha256. G-ANL-F0 is then rebuilt and re-run, and its manifest is superseded by a
+      hand `git mv` on that ruling.
+  - **Status.** Model-free. The run read no checkpoint and no pick. During the build, and in both
+    verifications recorded in the follow-up review, the verifiers' before/after snapshots of `data/m` hashed
+    the one checkpoint there, `G-CAL_qwen.json`, which carries no contrast pick, without interpreting it. Nothing ran on the box; the k arc untouched. G-CAL (step 6) is
+    still open.
+
+  (Stamp verified at write time: `date -u` → **Sat Oct 10 11:39:44 UTC 2026**, first write; corrected on its
+  two values-check passes, last at **12:25:21 UTC**.)
+
+  - **The run** ([`_ganl-f0`](results/raw/2026-10-10_m-ganl-f0.txt), manifest
+    [`G-ANL-F0.json`](data/m/gates/G-ANL-F0.json), sha256 `9bea8339…ec787904`).
+    - `scripts/m_analyze.py ganl` ran at HEAD `b62af85`, the follow-up commit, 12:12:52–12:13:02 UTC, exit 0.
+      It ran the battery (376/376) and wrote the manifest.
+    - **A first run, set aside.** It ran on `64df36b` at 11:38:18–11:38:28 UTC (manifest sha256 `ea985c11…`,
+      run raw `1e8276fb…`).
+      - Code set it aside uncommitted, without a seat ruling, when the verification of Code's closing edit
+        found the gap the follow-up closes. PIN-37's `git mv` supersession governs committed artifacts, and
+        this one was never committed (G-PORT's precedent). The set-aside is recorded here for the seat.
+      - Its 2,160 outputs hash the same (`83df98b1…`). Its manifest differs from the record's only in the
+        analyzer's sha256, the battery's check count (375 → 376) and coverage ids (386 → 387, adding
+        `OLMO-STATES-DATE`), and PIN-43's register text.
+    - The manifest is write-once, with no timestamp and no HEAD. It records:
+      - the analyzer's sha256;
+      - `package_sha256` `06ab1430…`, the same as G-SHAPE-F0's, since neither `64df36b` nor `b62af85` touches
+        anything under `valence_core/`;
+      - the import closure outside the package, sha256 `a3bc7bb9…`: 15 modules and one data file,
+        `data/olmo/a1_repair_roster.json`;
+      - the placeholder table (`b1cce4f8…`) and the proposal (`42ab36ec…`);
+      - the battery block, the counters and the NOT-RUN vocabulary;
+      - the 43 PINs and the four seat-routed items;
+      - the flag of record.
+  - **(i) Per-arm outcomes** (m:322–327, m:306–316).
+    - The arm's outcome is evaluated in m:326's order, on exact Fractions. It is one of, in that order:
+      - REVERSE;
+      - PASS;
+      - DEAD (CI upper bound on Δ_c below +0.15, decided exactly as P(Bin(n, 13/20) ≤ k) < 1/40 with
+        k < n);
+      - INDETERMINATE (terminal), with its conjunct reasons.
+
+      The no-read case, below, is evaluated first. The battery pins the overlaps: 29/80 meets REVERSE and DEAD
+      and gives REVERSE; n = 213 meets PASS and DEAD and gives PASS.
+    - When exactly one of the arm and its sham has no domain session, the outcome is INDETERMINATE with
+      *no read obtained* (m:326). When neither has one, there is no arm outcome: the unit is NOT-RUN by its
+      no-first-read cause (m:324).
+    - Boundary cases are pinned at both floors (80 and 96).
+    - **NOT-RUN causes**, each reached in the battery:
+      - `clock:no-box` (OLMo) and `dose-not-completable` (OLMo);
+      - `clock:gate-stopped:<stage>` and `clock:not-locked:<stage>`, where the stage is one of the unit's gates
+        (for Q-F0: G-PORT, G-CAL, G-SHAPE-F0, G-ANL-F0, G-TIME-F0, G-ID-F0m, G-F0m-Qwen);
+      - `clock:pi-declined` (m:324) and `clock:k-zero` (m:192);
+      - `no-first-read:{pi-stop, gver-stop, cap}`;
+      - `pending-closed-at-v2` (v2 only).
+
+      The primary cause is the earliest; the others are listed beside it.
+    - **OLMo PENDING** is a declared input with four sub-states. It is refused for Q-F0 and wherever the
+      unit's VERDICTS or NOT-RUN output exists.
+    - **Attained power** is computed at m:190's base case at the realised n (P = .70, α .01).
+      - Code's PIN-3 adds an odd-n split, ⌊n/2⌋ on map 0 and ⌈n/2⌉ on map 1, and pools the sham at .5.
+        Pooling gives the same E as m:190's m/2 per map, because E pools the sham.
+      - The realised-split figure is reported beside it, labelled. Both figures are descriptive only (m:190;
+        PIN-3).
+  - **(ii) The 1,080 tuples** (m:278, §7). Each value of the flag gives 1,080 tuples, and each flag's tallies
+    are asserted on its own outputs and are equal. Each tuple is asserted to have:
+    - **One licensing state.** L0 is true in 216 tuples (Q-F0 PASS) and L0-OLMo-c in 180 per checkpoint;
+      there are 16 licensing vectors.
+    - **One label set**, equal to the oracle, with e2b and OLMo-base fixed. The e2a and f1 rows have 216 per
+      branch (Answered, REVERSE, DEAD, INDETERMINATE, not run). Each OLMo checkpoint row (sft, dpo,
+      instruct) has Answered 180, did not pass 540, not run 180, pending 180.
+    - **One ceiling:** Fallback-1 in 216, Fallback-2 in 864.
+    - **One abstract OLMo clause**, from §7.2 Step 2's three-way:
+      - all three pass in 5;
+      - one or two pass in 450 (one in 375, two in 75);
+      - none in 625.
+
+      There are 8 distinct texts. The clause is emitted verbatim even where its host sentence is itself
+      enumerated under (a), so it can dangle in the posting's output (PIN-27).
+    - **One §8.1 status text**, 1,080 distinct.
+    - **Step-7 status** "open" in all 1,080.
+    - **The f1 dose-note** under the flag.
+    - **The §7.5 enumeration** over the declared sentence table.
+      - The battery uses the placeholder, `data/m/gates/m_posting_sentences.placeholder.json`: 21 synthetic
+        rows on 20 lines (P20 and P21 share line 20). It is not derived from any preprint.
+      - Each row's fire counts under (a), (b) and (c) are asserted for both flag values. The rows reach (a),
+        (b) and (c)'s strike branch (P03 and P18 under flag false).
+      - (c)'s carry branch (flag true, no dose-note row) is reached by an in-memory variant with P03's and P18's
+        dose-note marks cleared (the rows kept). It carries at P03 in all 1,080 tuples under flag true.
+      - The table of record is built by Code from the placed preprint at LOCK-m-F0 v1.0 when that lock is
+        reached, else at the posting (the Q-F0 NOT-RUN path). It is values-checked and hashed where built,
+        and re-run on the posted text at the posting (m:278, m:286).
+    - The 2,160 outputs hash to `83df98b1…`; they regenerate byte-identically and are not committed.
+  - **The 0.12-artifact flag of record, as of this run: TRUE.** This is Code's reading (PIN-19) of m:349's
+    "G-CAL's 0.12 artifact exists".
+    - It means `data/m/gates/G-CAL_model-free.json` is committed at HEAD and identical in the working tree
+      (introduced at `bab921c`), with schema `m-gcal-model-free-v1` and an `f1_012` block.
+    - `renders_sha_matches_calib` (true) is recorded beside the flag, not as part of it.
+    - VERDICTS and the posting re-read the flag from their declared `--flag-source`.
+  - **(iii) Counters per substrate** (m:314), declared verbatim and checked against the proposal line at run
+    time.
+    - Qwen has 12. One of them, Q-F3's `reasoning_line_defect`, is declared, scoped to Q-F3 and not tabulated
+      at Q-F0, so 11 are tabulated there.
+    - OLMo has 8.
+    - Summed over property, they equal `audit.tally` on the same records.
+    - Pre-pick rates count exclusions by `stages._prepick`'s definition (the guard's k), over the arm's launched
+      campaign session records, which is the guard's own denominator (PIN-33). So the sentence's rates and the
+      guard are defined alike.
+  - **What it never reads.**
+    - The battery is synthetic.
+    - During `--selftest` and `ganl`, an in-process open hook (builtins.open, io.open and Path's
+      open/read_bytes/read_text) refuses reads under `data/m/ckpt`, `data/m/reports`, `data/m/verdicts` or
+      `results/raw`. The battery plants reads under `data/m/ckpt` and `results/raw` and catches each, and the
+      no-write snapshot only stats files there.
+    - Blinding (m:318) governs every later read.
+  - **Binding (PIN-1, PIN-14).**
+    - The analyzer's sha256, `package_sha256` and the import closure together bind the verdict logic, and a
+      verdict run refuses a closure its lock does not name.
+    - The analyzer of record for a unit is the blob its LOCK v1.0 hashes. VERDICTS runs at HEAD when the
+      three shas equal the lock's.
+    - Otherwise the declared rule is to run from a worktree of the lock commit, on the PI's word, with every
+      data input and output passed as an absolute path into the main tree. That path is declared, not
+      implemented at step 8, so the analyzer refuses any such run. How the analyzer is versioned for G-ANL-F3
+      is the seat's.
+  - **For the seat, before LOCK-m-F0 v0.1 hashes the analyzer** (also in the consolidated Code→seat block
+    before step 9).
+    - **Seat-routed, built as conservative defaults** (the manifest marks each "blocking LOCK v0.1, not step
+      8"):
+      - PIN-5: whether m:324's list of Clock causes is exhaustive. `clock:not-locked:<stage>`, a gate that had
+        not reached its end, is the residual cause.
+      - PIN-8: a campaign ended by a scaffold-absorption hair-trigger STOP is analyzed only with a declared
+        PI-stop record bound to its checkpoint.
+      - PIN-9: VERDICTS refuses while the last pause is unadjudicated. The seat's adjudication enters as a
+        declared file bound to the checkpoint.
+      - PIN-17: §8.1 covers the controls with a v1 coordinate; A1 belongs to §8.2, "open" at v1.
+    - **Code-added bindings:**
+      - PIN-42: `not-run` and `posting` refuse unless the analyzer is committed and the proposal is v1.11,
+        and record the three shas. It is a binding the spec does not state (the first verifier's residual
+        defect 1), and it awaits the seat's confirmation at LOCK v0.1, as its own text says.
+      - PIN-43: every declared date is an ASCII, real calendar date: a NOT-RUN record's, a declared OLMo
+        NOT-RUN state's, a PENDING declaration's and a decision's (Code's closing edit and its follow-up,
+        below).
+        - It narrows one input. A no-first-read NOT-RUN declared in `--olmo-states` must now carry a real date,
+          though the unit's own NOT-RUN output (from `verdicts`) has none; nothing states what that date means
+          for that cause. The verifier flagged this, and it is the seat's to say.
+    - **Code's readings the seat may replace.** These are the principal ones. Every PIN in the manifest's
+      43-entry register is Code's, declared for LOCK v0.1, and the seat may strike any.
+      - the verdict sentence's clause order and wording (PIN-4). For the positive controls, m:326 pre-writes
+        *no read obtained* and REVERSE's "instruction inversion; reported; not-PASS for licensing", which the
+        sentence uses verbatim. m:326 and m:247 fix the contents (the pre-pick rates beside the sham's, with the
+        guard at the last look; shortfall and attained power below floor) but not their wording;
+      - m:314's "over all sessions" read as the unit's campaign sessions, excluded included, with G-TIME and
+        qualification sessions tabulated separately (PIN-11);
+      - the NOT-RUN reason phrases and precedence (PIN-5);
+      - the label-slot and "[passing stages]" renderings (PIN-15, PIN-16);
+      - S1 counted as Answered under clause (a) (PIN-22);
+      - clause (c) two-sided on m:349's "iff" (PIN-21);
+      - what counts as G-CAL's 0.12 artifact existing (PIN-19);
+      - the secondaries built now from m:312 (PIN-13);
+      - the power figure of record (PIN-3).
+    - **For the LOCK v0.1 build (step 9), carried from the critic.** `analyzer_sha256` is optional in the
+      stages' `identity_extra`, and nothing checks `package_sha256` against the lock at stage start. Code
+      proposes that LOCK v0.1 require both on non-stub runs. That change would land in `stages.py`, moving
+      `package_sha256`. `stages.py` is not in G-SHAPE-F0's scoring-stack map, so it would not re-run
+      G-SHAPE-F0, but LOCK v0.1 would state the new package.
+      - It would also move the `package_sha256` this manifest records (`06ab1430…`), and G-ANL-F0's battery
+        exercises `stages` on the verdict path (PIN-1).
+      - Either G-ANL-F0 is re-run after the edit and this manifest is superseded by hand `git mv`, or LOCK v0.1
+        states the diff, as for G-SHAPE-F0. Which one is the seat's.
+    - **Open, not blocking LOCK v0.1 (each due by its own stage):**
+      - the Clock's boundary-day comparison, a declared input (step-3 note 55), due by the first Clock date;
+      - which column of the per-property table f1's 7-vs-1 refers to (G-PORT A5; interim PIN-12 adds
+        `sessions_excluded_any_phase`), due before step 17's entry;
+      - G-ANL-F3's versioning (m:291 "extended"), due before step 19;
+      - the pass bar for the posting's re-run on the posted text, due before the v1 posting.
+    - **Build gaps flagged, not patched in the analyzer:**
+      - `stages.py` has no path for recording a seat adjudication of a fired end look on a terminal
+        campaign;
+      - no end look is evaluated on a STOP-ended campaign; the sentence names the last cadence look as the
+        last look.
+    - **Order: the third order question of the read-of-record entry, the seat's to rule.**
+      - G-ANL-F0 ran while G-CAL is still open, on the PI's word.
+      - Its only G-CAL input is the flag's source, `G-CAL_model-free.json`, which carries no pick.
+      - A re-run is byte-identical only if its recorded inputs are unchanged then: the analyzer, the
+        placeholder, the proposal, the m package, the import closure, and the flag source
+        `G-CAL_model-free.json` (its sha256 is in the manifest).
+      - If they are unchanged, a ruling that step 8 must follow G-CAL's close costs one re-run, which
+        write-once accepts as identical, and nothing is superseded.
+      - If any has changed (for example, an owed G-CAL item re-specifies the renders that file holds), the
+        bytes differ and write-once refuses. The manifest is then superseded by hand `git mv` on the seat's
+        ruling (PIN-37), as G-SHAPE-F0's.
+      - LOCK-m-F0 v0.1 (step 9) waits on G-CAL closing, on the seat's three order rulings (completability
+        before the read; the early roster assertion; steps 7–8 before the close), and on the rulings above.
+  - **The build** (`64df36b`; [`_review`](results/raw/2026-10-10_m-ganl-f0-build_review.txt),
+    [`_battery`](results/raw/2026-10-10_m-ganl-f0-build_battery.txt),
+    [`_sitecheck`](results/raw/2026-10-10_m-ganl-f0-build_sitecheck.txt); the build spec, the critic's
+    corrections and Code's decisions verbatim in
+    [`_build-inputs`](results/raw/2026-10-10_m-steps7-8_build-inputs.md)).
+    - **What was built.** New `scripts/m_analyze.py` (5,857 lines), with the CLI `--selftest`, `ganl`,
+      `verdicts`, `not-run` and `posting`, and the placeholder table. Nothing under `valence_core/`, and no
+      `.gitignore` line; the `data/m/verdicts/` block is deferred to the commit that first writes there.
+    - **Spec.** The same understand workflow as step 7 (five readers, two synthesizers, a completeness critic)
+      produced the build spec. Code's decisions, applying the critic's G-ANL corrections, fixed:
+      - the binding: the analyzer sha256, `package_sha256` and the import closure, in place of the
+        single-file hash;
+      - PIN-8, PIN-9 and PIN-17 as seat-routed defaults blocking LOCK v0.1;
+      - the secondaries built now;
+      - the power figure of record at m:190's base case;
+      - the m:318 decisions input;
+      - no end-of-data guard;
+      - pre-pick rates and counters on `stages._prepick` and `audit.tally`;
+      - the `.gitignore` block deferred and the roster-word refusal dropped;
+      - the flag existence-keyed;
+      - signed display;
+      - the worktree rule declared.
+    - **Review.** Three lenses (outcome fidelity; posting fidelity; harness and tests) put each finding to a
+      strict refuter: 21 findings, all confirmed and fixed. At that fix PIN-5 became seat-routed and a 21st
+      placeholder row (P21, a second sentence on line 20) was added.
+    - **Verification.**
+      - An independent verifier (83 mutants) left 25 test gaps and two code defects.
+      - Round 2 closed them, and both partly-met decision items. It was re-verified CLEAN over 125 mutants
+        and a control.
+      - Round 3 closed the 23 Low gaps that remained, confirmed CLEAN on analyzer sha256 `8309f72d…`. The
+        only surviving mutants are 8 equivalents.
+    - **Code's closing edit** came after round 3's confirmation.
+      - It fixed two date defects the round-3 fixer found outside its brief: `\d` accepted non-ASCII digits
+        and impossible days such as 2026-02-30, and a NOT-RUN record's date went unchecked when its cause's
+        phrase has no date.
+      - The fixer and the confirmer routed these "for the seat". Code treated them as input-validation
+        defects in its own tool and fixed them as Code-added PIN-43, listed above for the seat.
+      - The edit adds `_iso_date`, uses it at the three call sites, checks the NOT-RUN record's date, adds
+        PIN-43's register entry, and adds two battery checks.
+      - Code's own check: 375/375 twice, and three mutants (two caught, one equivalent).
+      - **An independent verifier then reviewed the edit**
+        ([`_followup_review`](results/raw/2026-10-10_m-ganl-f0-followup_review.txt), both of its reports
+        verbatim). It found the edit CLEAN as scoped: the diff holds only the declared hunks; `_iso_date`
+        matches an independent oracle on 157,708 cases; nothing valid is newly refused; 14 of 21 mutants were
+        caught and the rest are equivalent or battery-strength gaps.
+      - **It also found the same defect one level up.** A declared `--olmo-states` NOT-RUN state's date was
+        checked only through its reason phrase, so a dose-not-completable or no-first-read declaration dated
+        None or 2026-02-30 would be carried into Q-F0's VERDICTS. PIN-43's "every declared date" overclaimed.
+      - **The follow-up (`b62af85`).** Code fixed the gap in its own tool rather than routing it: one
+        `_iso_date` check in that branch, and PIN-43's text extended.
+        - It added battery strings to DATE-ISO-REAL's refused set: the verifier's suggested 20261030,
+          2026-W44-5 and 2026-02-29, and its own 1900-02-29.
+        - It added a new check, OLMO-STATES-DATE, over two causes. EXPECTED_CHECKS went from 375 to 376, and
+          coverage ids from 386 to 387.
+        - The verifier's follow-up verification was CLEAN. Its two remaining battery-strength gaps were then
+          closed by Code, each with a mutant shown caught: 2000-02-29 now accepted (the /400 rule), and a
+          no-first-read:cap case added to OLMO-STATES-DATE.
+      - `b62af85` is the round-3 analyzer plus these edits and nothing else. It carries the follow-up's review,
+        battery and site-check raws.
+    - Battery 376/376, deterministic (byte-identical runs).
+    - Site check 9/9 on each commit's content just before its commit: the eight suites of record plus the
+      battery. The checks ran at HEAD `d092078`, then `f23b444`, each plus the uncommitted analyzer (sha256
+      `95f5fe33…`, then `24d44a3c…`), which are the blobs committed at `64df36b` and `b62af85`.
+    - **Committed texts this entry corrects, flagged and not changed.**
+      - `64df36b`'s message undercounts. It names three seat-routed defaults; the committed register routes
+        four (PIN-5's routing was added at the review fix). It calls the placeholder a 20-row table; the
+        committed file has 21 rows.
+      - The G-SHAPE-F0 entry (committed in `f23b444`) says G-ANL-F0's "run of record was made at 11:38 UTC",
+        and its values-check raw (V13) says the same and names manifest `ea985c11…`. That run, on `64df36b`,
+        was set aside. The run of record is the 12:12:52 UTC run on `b62af85` (manifest `9bea8339…`).
+      - The manifest and this entry are the record.
+  - Committed: the entry; the manifest; the run raw; and this entry's values-check raw
+    ([`_valuescheck`](results/raw/2026-10-10_m-ganl-f0_valuescheck.txt), both passes). The build and its three
+    raws are in `64df36b`, the follow-up and its three raws in `b62af85`, and the build-inputs raw in `f23b444`
+    with the G-SHAPE-F0 entry. Next: the consolidated Code→seat block before step 9.
+
 - 2026-10-10 — **G-SHAPE-F0 (PROPOSAL-m v1.11 §8 step 7, m:277; the PI's go "Go for steps 7 and 8"): PASS.
   Every render of record was placed inside each round template, beside its bracketed header, with a clean
   gold as the response. There were 11,264 placements: 2,816 on Qwen, and one OLMo computation of 2,816 run
