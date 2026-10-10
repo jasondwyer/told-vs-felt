@@ -1,0 +1,2087 @@
+# Code -> design seat block before LOCK-m-F0 v0.1 (2026-10-10) -- values-check, both passes (before commit). Written by Code 2026-10-10 12:55:12 UTC (date -u).
+# Each pass: two verifiers extract and check every atomic claim against the cited entries, raws, artifacts, code and proposal lines; a STRICT
+# refuter on every FAILS/IMPRECISE; a values lens told also to judge completeness (open seat items the block omits), adjudication by Code, and
+# whether each blocking label matches its source. All agents read-only; no model or tokenizer loaded. Code's disposition: every confirmed correction
+# and every values finding of both passes applied (pass 1's to the second draft, pass 2's to the third, the one committed). Code checked the new
+# sources it relied on (the step-3 notes #25, #69 and N9's D1.22; schedule.py's gate_launch_order PIN; build-inputs raw :1008; RESULTS.md:1105).
+
+####################################################################################################
+PASS 1: claims 98, verified 75, confirmed corrections 21, refuted flags 2, uncheckable 0, values findings 23
+####################################################################################################
+============================================================ CONFIRMED CORRECTIONS
+--- [H0-03] FAILS
+  CLAIM:
+    L5-6: the block collects in one place every question G-CAL (step 6), G-SHAPE-F0 (step 7) and G-ANL-F0 (step 8)
+    left for the seat.
+  REFUTER'S EVIDENCE:
+    I checked the checker's finding independently, and it holds. The block says at L5-6 that it collects every
+    question G-CAL (step 6), G-SHAPE-F0 (step 7) and G-ANL-F0 (step 8) left for the seat. Several questions that the
+    sources route to the seat are missing. I grepped seat_block_v1.md for exposure, opened, cover, PIN-11, strike,
+    head -30 and 2026-10-04; nothing matches except the O2/O3 bullets at L68 and L73.
+
+    **The read-of-record entry (`2c50e03`, RESULTS.md 532-640).** It is part of step 6. The checker's line numbers
+    are off by about 3; the actual lines are below.
+    - **(i)** RESULTS.md:583-584: "Whether the entry or its raws had been opened before the lines were written is a
+    question for the seat. Code does not weigh it." The block does not have this.
+    - **(ii)** RESULTS.md:564: "How the two bear on each other is the seat's to say." This refers to the 2026-10-08
+    `head -30` batch exposure and the 2026-10-04 exposure (STOP-5 §F, STOP-6 §E). The block does not have this
+    either.
+    - **(iii)** RESULTS.md:625-626: "the read does not mention them. Whether its PASS covers them is the seat's to
+    say." This is about O2 and O3. The block's A6 partly overlaps ("Whether any bears on condition (3) or (4), or on
+    the renders, is the seat's"). It does not say that the read of record is silent on O2/O3, or ask whether its
+    PASS covers them.
+    - **A fourth omission the checker missed.** RESULTS.md:627-628: "Whether any flagged or optional item holds the
+    close is the seat's to say." The block leaves A6 without any blocking label. Its section header instead asserts
+    "G-CAL closes on A1–A4", which answers that question for the seat. It also contradicts A4's own label
+    ("Blocking: yes, for LOCK v0.1").
+      - Per the sources, G-CAL's close is owed A1–A3: RESULTS.md:615-617 and :536-538.
+      - A4 blocks LOCK, not the close: G-ANL-F0 entry, RESULTS.md ~277-278, "LOCK-m-F0 v0.1 (step 9) waits on G-CAL
+    closing, on the seat's three order rulings…".
+
+    **The G-ANL-F0 entry (`b4d7f13`), RESULTS.md:184-199.** It reads: "Code's readings the seat may replace. These
+    are the principal ones. Every PIN in the manifest's 43-entry register is Code's, declared for LOCK v0.1, and the
+    seat may strike any."
+    - Its list includes PIN-11 (m:314's "over all sessions" as campaign sessions, excluded included, with G-TIME and
+    qualification tabulated separately).
+    - The block's C6 leaves out both PIN-11 and the "may strike any" sentence.
+    - The manifest data/m/gates/G-ANL-F0.json does have 43 pins, and PIN-11's register text
+    (scripts/m_analyze.py:2470-2475) matches.
+
+    **Everything else is covered.** I checked the remaining seat items in the G-SHAPE-F0, G-ANL-F0 and G-CAL entries
+    against the block: B1-B3, C1-C5, C7-C9, D1-D2 and A1-A8. I found no other omitted seat question.
+
+    **On the checker's correction.** It is right in substance, but I would change three things:
+    - (iii) belongs in A6, not in a new A9, where it would duplicate A6.
+    - It misses the "holds the close" question and the A-header's pre-emption of it.
+    - Its line citations are slightly off: 567-591 and 629-631 should be 564, 583-584 and 625-626; 186-200 should be
+    184-199.
+  CORRECTION:
+    Keep L5-6 as written and make the block match it:
+
+    (1) Section A header. Replace "G-CAL closes on A1–A4; LOCK v0.1 needs G-CAL closed." with: "G-CAL closes on
+    A1–A3. Whether any flagged or optional item (A5, A6) also holds the close is the seat's to say (`2c50e03`). LOCK
+    v0.1 needs G-CAL closed and A4 ruled."
+
+    (2) In A6, add after its lead line:
+    "- Blocking: the seat's to say (`2c50e03`: "Whether any flagged or optional item holds the close is the seat's
+    to say").
+    - The read of record does not mention O2 or O3. Whether its PASS covers them is the seat's to say (`2c50e03`)."
+
+    (3) Insert after A8:
+    "**A9. Left to the seat by the read-of-record entry (`2c50e03`). Code does not weigh them.**
+    - Blocking: the seat's to say.
+    - Whether the G-CAL entry (`cf8eb5b`) or its raws had been opened before the seat wrote its per-item lines. The
+    disclosure's "anything after it" points past the request without naming them.
+    - How the two exposures bear on each other:
+      - the 2026-10-08 batch exposure, a `head -30` of the request ending at the rule before section B;
+      - the 2026-10-04 exposure: 13 of the 16 renders beside their golds in STOP-5 §F; items 5, 11 and 15 in STOP-6
+    §E, with m:176 quoting their golds.
+      The seat's own view is that the batch exposure "does not bear on recoverability", and it is the only view on
+    record."
+
+    (4) In C6, replace the lead with: "**C6. Readings the seat may replace** (not blocking unless the seat says so).
+    These are the principal ones. Every PIN in the manifest's 43-entry register is Code's, declared for LOCK v0.1,
+    and the seat may strike any:"
+
+    Then insert after the PIN-4 line: "- m:314's "over all sessions" read as the unit's campaign sessions, excluded
+    included, with G-TIME and qualification sessions tabulated separately (PIN-11);"
+  DISPOSITION: applied.
+
+--- [H0-04] IMPRECISE
+  CLAIM:
+    L6-7: "Nothing here has been adjudicated by Code."
+  REFUTER'S EVIDENCE:
+    The checker is right, so its verdict is not refuted. L6-7 says flatly that Code adjudicated nothing. The record
+    says Code acted on its own reading, without the seat, on matters the block carries:
+
+    - **A2.** The G-CAL entry (RESULTS.md ~909-911) says Code "applied its reading without putting it to the seat".
+    The block quotes this at its own L42.
+    - **A3.** The record calls the early roster assertion "Code's build-time choice" (RESULTS.md ~901).
+    - **C8.** The G-ANL-F0 entry (RESULTS.md:57-59) says Code set aside the first manifest "uncommitted, without a
+    seat ruling ... recorded here for the seat".
+    - **PIN-43.** The G-ANL-F0 entry's own "Seat items" summary (RESULTS.md:37-38) says "Code fixed the PIN-43
+    defects itself, where the round-3 reviewers had routed them to the seat". The build section (RESULTS.md:264-268)
+    adds that the fixer and confirmer routed these "for the seat", and that Code "treated them as input-validation
+    defects in its own tool and fixed them as Code-added PIN-43". The review raw confirms the routing:
+    results/raw/2026-10-10_m-ganl-f0-build_review.txt:2086 says "Found but not applied (outside the 23, for the
+    seat)", and :2146 says "both are outside the 23 and are for the seat". RESULTS.md:280 adds that the follow-up
+    gap was fixed "rather than routing it".
+
+    The block's C5 (L161-164) shows PIN-43 only as a Code-added binding to confirm. It never says the reviewers
+    routed these defects to the seat. On the values lens, that leaves out a seat-relevant fact the source entry put
+    among its seat items.
+
+    The sentence is defensible only in a narrow sense: every question stays open for the seat. As written, it
+    overstates and does not match A2/C8 and the PIN-43 record.
+
+    The checker's own replacement is also imprecise in one way. Its closed list, "Where Code has already acted on
+    its own reading ...: A2 and A3, PIN-43, C8", implies those are the only such items. They are not. B1 (the PASS
+    rests on Code's PIN-S6 reading), B2/B3, C1-C4 and C6 (defaults built into the analyzer), PIN-42 and E1 (Code's
+    extension of ruling (h), "disclosed") are also Code's readings already acted on. "The seat may reverse it" is
+    also loose. The A2/A3 runs already happened and the C8 manifest was never committed. The seat rules on them; it
+    cannot literally reverse them. So the replacement below names those four as included, not as the full list.
+  CORRECTION:
+    Replace L6-7 "Nothing here has been adjudicated by Code." with:
+    "Code adjudicates none of the questions below; every ruling is the seat's. Where Code has already acted on its
+    own reading, the item says so, and the seat may rule otherwise. That includes steps Code took before any seat
+    ruling: A2 and A3 (the two departures from m:358's order), C8 (the first manifest, set aside uncommitted) and
+    C5's PIN-43 (date defects the round-3 fixer and confirmer routed "for the seat", which Code fixed itself)."
+
+    And add to C5's PIN-43 bullet (after L161):
+    "The round-3 fixer and confirmer routed these date defects "for the seat". Code treated them as input-validation
+    defects in its own tool and fixed them itself (G-ANL-F0 entry)."
+  DISPOSITION: applied.
+
+--- [H0-05] IMPRECISE
+  CLAIM:
+    L7-11: each item names where it is recorded, Code's default or reading, and whether it blocks LOCK v0.1.
+  REFUTER'S EVIDENCE:
+    The claim is wrong, but the checker's account of it is incomplete and its fix is partly unsourced.
+
+    What the checker got right: A7 (L80-83) and A8 (L85-90) give no blocking status. A1-A3 (L29, L34, L45) say
+    "Blocking: yes, for G-CAL's close", so they block LOCK v0.1 only through L21's "LOCK v0.1 needs G-CAL closed".
+    B3 (L114-126) has no label of its own; the B header (L92) calls these items only "readings to confirm or
+    replace".
+
+    What the checker missed:
+    - C8 (L184-188) and C9 (L190-192) have no blocking statement. Their source, the G-ANL-F0 entry (RESULTS
+    L24-307), says only "recorded here for the seat" and "flagged, not patched in the analyzer".
+    - D1-D3 (L196-213) have no blocking statement. The D header says "Code's proposals, for the seat's word".
+    - F1 and F2 have no blocking statement.
+    - The "where it is recorded" part also fails. D has no Sources line, and D1, D2, F1 and F2 do not name their
+    source:
+      - D1 and D3 come from the G-SHAPE-F0 entry ("package_sha256 moved"; PIN-S10).
+      - D2 comes from the G-ANL-F0 entry ("For the LOCK v0.1 build (step 9), carried from the critic").
+      - F1 comes from the G-CAL entry's "The wait", RESULTS L784-795.
+      - F2 comes from the PI's routing, e.g. "No pod start without my go; runpod re-auth first."
+
+    Why the checker's fix is wrong:
+    - It labels A7 "Not blocking; a record only." No source says that. The G-CAL entry calls the label slip only
+    "flagged and not changed". The 2c50e03 entry says "Whether any flagged or optional item holds the close is the
+    seat's to say." So the label would have Code adjudicating.
+    - Its new L11 wording ("directly, or through G-CAL's close, or ... a record only") would still be false for B3,
+    C8, C9, D1-D3 and F1-F2.
+
+    The replacement below holds against the block:
+    - A4, A5, B1, B2, C6 and C7 carry their status on the item.
+    - C1-C5 carry it in the C header (L128).
+    - E carries it in the E header (L215).
+    - A6 says "Optional".
+  CORRECTION:
+    Replace L7-11 with: "Each item gives Code's default or reading, where there is one. Sections A-C list their
+    sources, and E's items name theirs. D's items come from the G-SHAPE-F0 and G-ANL-F0 entries, F1 from the G-CAL
+    entry, and F2 from the PI's routing. Blocking status is stated on the item or in its section's header: A1-A3
+    block LOCK v0.1 through G-CAL's close (L21), and A6 is optional. A7, A8, B3, C8, C9 and D1-D3 carry no blocking
+    statement; whether any of them holds the lock is the seat's to say. F is for the PI." Do not add "Not blocking;
+    a record only." to A7. If A7 gets a label, it should follow A5's form: "Blocking: the seat's to say. The G-CAL
+    entry did not list it among what G-CAL waits on."
+  DISPOSITION: applied.
+
+--- [H0-09] IMPRECISE
+  CLAIM:
+    L16-17: everything below may be read in any order; A1 (the read of the 128 generations) is not blinded.
+  REFUTER'S EVIDENCE:
+    The checker is right on substance, but its correction maps the order to the wrong items.
+
+    What holds:
+    - "Not blinded": m:271 says "G-CAL's and each G-CAL-OLMo's generations are read by the seat at the stage (they
+    carry no pick)".
+    - "The seat has already made the condition-(3) legibility read (`2c50e03`)": the 2c50e03 entry records it, PASS
+    16/16.
+
+    What is missing — a recorded order:
+    - The G-CAL entry (cf8eb5b; RESULTS.md:929-935 at HEAD) says "Next, in this order:". Item 1 is the legibility
+    read of record. Item 2 is "The seat's read of the 128 generations (m:271)". Item 3 is "The seat's rulings: the
+    two order departures, and, if it chooses, O1–O4 and the candidate counters". Item 4 is the close. Item 5 is step
+    7.
+    - Later entries treat departures from this list as questions for the seat. The 2c50e03 entry flags step 7
+    starting early as "the G-CAL entry's 'Next, in this order' put step 7 after G-CAL's close", making it a third
+    order question. The f23b444 and b4d7f13 entries repeat that.
+    - So the block's "Everything below may be read in any order" drops the read-before-rulings order without noting
+    it or routing it. Nothing in 2c50e03 or later entries restates or relaxes that order.
+
+    Where the checker's correction goes wrong — "(A2–A6)":
+    - Item 3 covers only the block's A2 and A3 (the two order departures) and A6 (O1–O4 and the candidate counters).
+    - A4 (steps 7–8 run before the close) arose after cf8eb5b, in 2c50e03.
+    - A5 (disown) is not in item 3. The 2c50e03 entry says the G-CAL entry "did not list it among what G-CAL waits
+    on".
+    - Also, "before the rulings and before O1–O4" treats O1–O4 as separate from the rulings, when item 3 lists them
+    as rulings.
+  CORRECTION:
+    **Order of reading.** The seat has already made the condition-(3) legibility read (`2c50e03`), item 1 of the
+    G-CAL entry's "Next, in this order". That list put the seat's read of the 128 generations (its item 2; here A1)
+    before its rulings (its item 3: the two order departures, here A2 and A3, and, if it chooses, O1–O4 and the
+    candidate counters, here A6). Whether that order still holds is the seat's to say. A1 is not blinded: m:271 has
+    the seat read G-CAL's generations at the stage, and they carry no pick. Otherwise the items below may be read in
+    any order.
+  DISPOSITION: applied.
+
+--- [H0-10] FAILS
+  CLAIM:
+    L21: "G-CAL closes on A1–A4; LOCK v0.1 needs G-CAL closed."
+  REFUTER'S EVIDENCE:
+    I re-checked this independently, and the checker is right. The header misstates what G-CAL's close waits on.
+
+    (1) The read-of-record entry 2c50e03 says what the close waits on, at RESULTS.md:536-537 and again at :615-617.
+    "G-CAL does not close here. It still waits on two things from the seat: its read of the 128 generations (m:271),
+    and its ruling on the two departures from m:358's order." Those are the block's A1, A2 and A3. Steps 7-8 running
+    before the close is "a third order question for the seat" (:538-539, :635-636). It is not on the list of what
+    G-CAL waits on. The same entry, at :627-628, says: "Whether any flagged or optional item holds the close is the
+    seat's to say." At :618-619 it also says the disown "The G-CAL entry did not list ... among what G-CAL waits
+    on."
+
+    (2) The G-CAL entry cf8eb5b's "Next, in this order" (RESULTS.md:930-935) has G-CAL closing on the two reads and
+    the two order rulings, plus O1-O4 and the counters "if it chooses". Step 7 comes after the close. Nothing there
+    makes the steps 7-8 ruling a condition of the close.
+
+    (3) The G-ANL-F0 entry b4d7f13 (RESULTS.md:230-231) says "LOCK-m-F0 v0.1 (step 9) waits on G-CAL closing, on the
+    seat's three order rulings (... steps 7–8 before the close), and on the rulings above." The steps 7-8 ruling is
+    therefore a LOCK condition and separate from the close. That matches the block's own A4 label, "Blocking: yes,
+    for LOCK v0.1", and contradicts the header's "closes on A1–A4". The A1-A3 items are each labelled "for G-CAL's
+    close".
+
+    (4) "Closes on A1–A4" also states as fact that A5 (the disown) and A6 (O1-O4 and the counters) do not hold the
+    close. 2c50e03 leaves that to the seat. One source differs: the G-SHAPE-F0 entry at RESULTS.md:515-516
+    paraphrases 2c50e03 and counts the disown as owed for the close. 2c50e03 is the cited authority, and it puts the
+    disown with the seat, so the header is wrong either way.
+
+    I checked the replacement against 2c50e03 (:536-539, :615-628) and b4d7f13 (:230-231). It keeps the "flagged or
+    optional" wording of :627. A7, the label slip, is also flagged in cf8eb5b (:830-832), but 2c50e03 does not carry
+    it among the open items. It is left out of the parenthesis, which matches 2c50e03's explicit lists.
+  CORRECTION:
+    ## A. G-CAL (step 6). G-CAL's close waits on A1–A3 (`2c50e03`); whether a flagged or optional item (A5, A6) also
+    holds it is the seat's to say. LOCK v0.1 needs G-CAL closed and the A4 ruling.
+  DISPOSITION: applied.
+
+--- [H0-19] IMPRECISE
+  CLAIM:
+    L38: the first launch (04:41:33 UTC, 2026-10-08) was refused by the preflight.
+  REFUTER'S EVIDENCE:
+    The words at L38 are true. The refused-preflight raw (results/raw/2026-10-08_m-gcal_completability_qwen_refused-
+    preflight.txt) is stamped 2026-10-08 04:41:33 UTC and records REFUSED with EXIT=2: "ONE PROCESS: another model
+    process is running: ... ipykernel_launcher". The run of record's raw is stamped 05:39:33 UTC and finished at
+    05:46:22 UTC. The read of record, 2c50e03, was committed 2026-10-10.
+
+    The line still leaves out a fact the source treats as part of this departure. `git log` dates bab921c at
+    2026-10-08T00:41:55-04:00, which is 04:41:55 UTC. That commit carries data/m/gates/G-CAL_seat_read_request.md
+    and the refused-preflight log. So the launch came 22 s before the read request was even committed.
+
+    The G-CAL entry states this twice. At RESULTS.md:785-788 it says the launch came "before `bab921c` (04:41:55
+    UTC, carrying the read request) was committed. So it came before the request was sent to the PI for routing, and
+    before it reached the seat." At RESULTS.md:902-903 it says "first launched it before the read request was
+    committed or sent". It then hands "these two departures from m:358's order" to the seat.
+
+    A2 is the item where the seat rules on that order. Leaving the fact out makes the departure look like running
+    before the read only, when the first launch came before the read had even been requested. The block mentions
+    neither bab921c nor the request anywhere: a grep for 'bab921c|request|04:41' hits only L38. The checker's
+    IMPRECISE verdict and its correction both hold.
+  CORRECTION:
+    The first launch (04:41:33 UTC, 2026-10-08) came before `bab921c` (04:41:55 UTC), the commit carrying the read
+    request. So it came before the request was sent to the PI or reached the seat. The preflight refused it because
+    a Jupyter kernel was running (m:267's one-process item). The run of record (05:39–05:46 UTC) preceded the read.
+  DISPOSITION: applied.
+
+--- [H0-30] IMPRECISE
+  CLAIM:
+    L54-55: if a G-CAL ruling re-specifies the renders, G-SHAPE-F0 re-runs after an edit to its pinned renders
+    sha256, a package change, and the re-run is not byte-identical.
+  REFUTER'S EVIDENCE:
+    The sentence is correct for G-SHAPE-F0. It closely follows RESULTS.md:518-520 ("would re-run on the new renders
+    only after an edit to gshape.py's pinned renders sha256. That is a package change, which moves `package_sha256`
+    again. The re-run is not byte-identical"), and the pin is gshape.py:73, RENDERS_SHA256_OF_RECORD.
+
+    The block leaves out G-ANL-F0, and the same event hits it twice:
+    1. The flag source changes. The manifest data/m/gates/G-ANL-F0.json records flag_of_record.path as G-CAL_model-
+    free.json (sha256 aad8096a…), and that file holds `renders_of_record`.
+    2. The package hash changes. The manifest records package_sha256 06ab1430…. resume.package_sha256() hashes
+    valence_core/m/*.py, so editing gshape.py moves it.
+
+    The G-ANL-F0 entry says this outright (RESULTS.md:227-229): "(for example, an owed G-CAL item re-specifies the
+    renders that file holds), the bytes differ and write-once refuses. The manifest is then superseded by hand `git
+    mv` on the seat's ruling (PIN-37), as G-SHAPE-F0's." The block gives this case for G-SHAPE-F0 only. Its L50-51
+    adds that G-ANL-F0's G-CAL input "carries no pick", which reads as if G-ANL-F0 were unaffected.
+
+    The checker's correction also needs a fix. It says G-ANL-F0's manifest "is re-run and superseded", but the
+    source makes both conditional:
+    - At RESULTS.md:222-229 the re-run follows from a seat ruling that step 8 must follow G-CAL's close, and
+    supersession is "on the seat's ruling".
+    - At RESULTS.md:204-206, for a package change it is the seat's choice whether G-ANL-F0 re-runs or LOCK v0.1
+    states the diff.
+  CORRECTION:
+    If a G-CAL ruling re-specifies the renders, G-SHAPE-F0 re-runs after an edit to gshape.py's pinned renders
+    sha256. That is a package change, and the re-run is not byte-identical. The same edit moves the `package_sha256`
+    that G-ANL-F0's manifest records (`06ab1430…`). The re-specified renders also change its flag source,
+    `G-CAL_model-free.json`, which holds them. So a G-ANL-F0 re-run would not be byte-identical either. Write-once
+    refuses it until the manifest is superseded by hand `git mv` on the seat's ruling (PIN-37).
+  DISPOSITION: applied.
+
+--- [H0-33] IMPRECISE
+  CLAIM:
+    L60: A5 blocking is 'the seat's to say'; the G-CAL entry did not list it among what G-CAL waits on.
+  REFUTER'S EVIDENCE:
+    The checker is right. Both halves of L60 are literally true, but the line leaves out a conflict in Code's own
+    committed record, which matters for a block that says it gives "whether it blocks LOCK v0.1" for each item.
+
+    (1) The G-CAL entry (`cf8eb5b`) is accurately described. Its headline says G-CAL "WAITS ON TWO READS BY THE SEAT
+    … ALSO WAITS ON THE SEAT'S RULING ON TWO DEPARTURES". Its "Next, in this order" list does not include the
+    disown, which appears only as "Flagged for the seat" (RESULTS.md:796-799).
+
+    (2) `2c50e03` (RESULTS.md:617-625) keeps the disown apart from the owed items. It says "Still owed by the seat
+    for G-CAL to close" (the 128-read and the two rulings), then "Flagged … still unanswered: the missing `disown`.
+    The G-CAL entry did not list it among what G-CAL waits on", and "Whether any flagged or optional item holds the
+    close is the seat's to say." L60 copies this.
+
+    (3) The later G-SHAPE-F0 entry (`f23b444`, RESULTS.md:515-516) cites `2c50e03` but lumps the disown in. It says
+    "Still owed for G-CAL's close (the `2c50e03` entry): the seat's read of the 128 generations, its rulings on the
+    two order departures, and the unanswered `disown`." Its status line (RESULTS.md:323) says LOCK v0.1 waits on
+    G-CAL.
+
+    (4) The step-7 build spec is `spec_gshape.md`, committed in `results/raw/2026-10-10_m-steps7-8_build-inputs.md`
+    at `f23b444`; its FILE section covers lines 375-1011. At :1008 it says the seat owes "G-CAL's closing items …
+    and the unanswered 'disown'" and "These items do block LOCK-m-F0 v0.1". It also lists the disown under "Still
+    open" at :931. `spec_ganl.md` (:1845) lists it among "the seat's owed items" as well.
+
+    Code's decisions files and `critic.md` do not override this, and the G-ANL-F0 entry does not correct it:
+    `disown` appears in RESULTS.md only at 516, 537, 618 and 796. So committed texts disagree on whether the disown
+    holds G-CAL's close and LOCK v0.1. L60 cites only the side that says it does not, and does not disclose
+    `f23b444`'s misreading of `2c50e03`. The block's own A header (L21, "G-CAL closes on A1–A4") leans the same way.
+
+    The checker's correction is directionally right but slightly loose. The G-SHAPE-F0 entry never says the items
+    "block LOCK v0.1" (only the spec does), and the correction leaves out that `f23b444` attributes its list to
+    `2c50e03`.
+  CORRECTION:
+    - Blocking: the seat's to say. The G-CAL entry (`cf8eb5b`) did not list it among what G-CAL waits on, and
+    `2c50e03` kept it apart from the owed items. But the G-SHAPE-F0 entry (`f23b444`), citing `2c50e03`, lists it
+    among the items "Still owed for G-CAL's close". The step-7 build spec (`spec_gshape.md` in
+    `results/raw/2026-10-10_m-steps7-8_build-inputs.md`) says those items "do block LOCK-m-F0 v0.1". Code does not
+    reconcile the two; which holds is the seat's.
+  DISPOSITION: applied.
+
+--- [H0-42] IMPRECISE
+  CLAIM:
+    L75: "Under all four post-hoc re-gradings, condition (4) still passes."
+  REFUTER'S EVIDENCE:
+    The checker is right, so its finding is not refuted. Raw tally section 2(c) of results/raw/2026-10-08_m-
+    gcal_completability_read.txt, headed "(c) four readings", lists four lines, all of which PASS condition (4):
+    - the grader of record: 48/64, margin +3 on the absolute bar and +5 on the relative bar;
+    - the two hits removed only: 46/64, margins +1 and +3;
+    - 'close' counted only: clean 60/64, corrupted 52/64, margins +7 and +7;
+    - both: clean 60/64, corrupted 50/64, margins +5 and +5.
+
+    The script's own comment says "the grader's is the verdict of record". The G-CAL entry in RESULTS.md (around
+    line 663) keeps the two apart: "with post-hoc re-gradings (rule 11) below. The verdict of record is the
+    grader's." Its heading at line 862 is "Condition (4) under four readings". So there are four readings, but only
+    three of them are post-hoc re-gradings. The first is the grader of record, which is the verdict and not a re-
+    grading. "All four post-hoc re-gradings" therefore wrongly calls the verdict of record a re-grading, and it
+    blurs the line rule 11 draws between the verdict and the post-hoc readings. The following sentence in the block
+    is still correct: the tightest reading is the two hits removed only, at 46/64, which clears the absolute bar of
+    45/64 by one hit, and it is the tightest whether counted among three or four. The checker's suggested wording is
+    accurate. The version below matches the source's own split and also fits "still".
+  CORRECTION:
+    Under each of the three post-hoc re-gradings (tally 2(c)), condition (4) still passes, as it does under the
+    grader of record.
+  DISPOSITION: applied.
+
+--- [H0-56] IMPRECISE
+  CLAIM:
+    L111: "The one dynamic check lives in the self-test."
+  REFUTER'S EVIDENCE:
+    The checker is right, and I re-checked it against the sources.
+
+    - **RESULTS.md, G-SHAPE-F0 entry (lines 392–396):** "The dynamic half is in the m self-test, never on a run
+    path. It is six existing runner checks, named in the artifact's `runner_dynamic_evidence`: four on classify
+    outcomes, and two that show the render placed in situ. There is also one new gshape check, the only one that
+    asserts what classify receives".
+    - **data/m/gates/G-SHAPE-F0.json, `runner_dynamic_evidence`:** `existing_checks` has 6 entries. Three are from
+    runner_qwen and three from runner_olmo: four are tagged "classify outcomes" and two "render placed in situ". It
+    also has one `gshape_check`. Its `where` field is "the m self-test (scripts/m_sessions.py --selftest) ... never
+    on a run path (PIN-S5)".
+    - **valence_core/m/gshape.py:26–27:** the docstring separates "the existing runner checks named in
+    RUNNER_DYNAMIC_EVIDENCE" from "this module's one runner-identity check".
+    - **gshape.py:2947–2956:** the self-test asserts `len(RUNNER_DYNAMIC_EVIDENCE) == 6`.
+
+    **Where "one" came from.** The phrase has a narrow source. The section header at gshape.py:2852 reads "the one
+    dynamic check". Build-inputs line 18 says to add "exactly ONE dynamic self-test check". Both refer only to the
+    new gshape check.
+
+    **Why it is still wrong.** Block line 111 says "The one dynamic check" with no qualifier, inside the PIN-S5
+    summary. Read that way, the self-test holds a single dynamic check. That leaves out the six existing runner
+    checks, which the entry of record counts as part of the dynamic half. So the sentence is true of the new check
+    alone and misstates the count for the dynamic half. It does not change any blocking label or routing.
+
+    **The correction.** I checked the checker's replacement against the entry and the artifact. It is accurate: 6
+    existing checks plus 1 new one; self-test only; never on a run path; and the new check is the only one that
+    asserts what classify receives. A tighter version fits the block's bullet style.
+  CORRECTION:
+    - The dynamic half lives in the m self-test, never on a run path: six existing runner checks (named in the
+    artifact's `runner_dynamic_evidence`) and one new gshape check, the only one that asserts what classify
+    receives.
+  DISPOSITION: applied.
+
+--- [H0-57] IMPRECISE
+  CLAIM:
+    L112: under B2 (PIN-S5): "Also, Layer C: segment + gold must fire on every placement."
+  REFUTER'S EVIDENCE:
+    The checker is right; I did not refute it. Block L112 puts "Also, Layer C: segment + gold must fire on every
+    placement" under B2, which is headed "PIN-S5: Layer S". The facts are correct. In data/m/gates/G-SHAPE-F0.json,
+    controls/<unit>/seg+gold has required=true and n_fired=2816 of n=2816 for each of Q-F0, OLMo-sft, OLMo-dpo and
+    OLMo-instruct. A silent control is a STOP, with stop_reason_forms "control-silent:<unit>:<control>". The PIN is
+    wrong, though: every source that names Layer C's PIN names PIN-S6.
+    - RESULTS.md G-SHAPE-F0 entry (f23b444) says: "Layer C (PIN-S6). One scope-widened control, segment + gold, must
+    fire on every placement or the gate STOPs." In the same entry, PIN-S5 heads only Layer S: "Layer S (PIN-S5)".
+    - valence_core/m/gshape.py:815 says: "PIN-S6, trimmed per Code's decisions): Layer C is ONE scope-widened
+    control". gshape.py:938 says: "Layer S: static runner scope (PIN-S5)".
+    - The PIN register in the build inputs (results/raw/2026-10-10_m-steps7-8_build-inputs.md) says "PIN-S6
+    (controls)" at line 958 and "## 7. Layer C: controls (PIN-S6)" at line 646. Its PIN-S5 item (line 954) covers
+    Layers A, S and B and runner scope, not the controls.
+
+    One early framing in the build inputs, the line-453 "Resolution (PIN-S5)" paragraph, lists Layer C among the
+    three layers of the artifact. The register and the decisions list then assign the controls to PIN-S6 (line
+    1002), and the committed code and the entry follow that. Layer C therefore belongs under PIN-S6. Filed under B2,
+    the bullet tells the seat that its ruling on the seg+gold must-fire control falls under PIN-S5. Both PINs block
+    LOCK v0.1, so no blocking label is wrong. Only the PIN routing is misattributed.
+  CORRECTION:
+    Delete the last bullet of B2 ("- Also, Layer C: segment + gold must fire on every placement."). Add this bullet
+    to B1 (PIN-S6) after "- OLMo fires 0.": "- Also under PIN-S6, Layer C: one scope-widened control, segment +
+    gold, must fire on every placement or the gate STOPs (instrument validity, not an m:277 criterion). It fired
+    2,816/2,816 on each unit."
+  DISPOSITION: applied.
+
+--- [H1-08] IMPRECISE
+  CLAIM:
+    C sources (l.133-134): the manifest's 'register marks each of C1–C4 "blocking LOCK v0.1, not step 8"'.
+  REFUTER'S EVIDENCE:
+    The block's C1–C4 are PIN-5, PIN-8, PIN-9 and PIN-17 (seat_block_v1.md l.138, 142, 148, 153). The manifest's
+    sha256 is 9bea83399ac6…, as the claim says. It has no field named "register". The quoted phrase "blocking LOCK
+    v0.1, not step 8" appears only in its `seat_routed` field. That field reads exactly that for PIN-8, PIN-9 and
+    PIN-17. For PIN-5 it gives a longer text ending "-- blocking LOCK v0.1, not step 8". This is SEAT_ROUTED at
+    scripts/m_analyze.py:2603-2606.
+
+    The `pins` field holds 43 entries, and the RESULTS entry calls it "the manifest's 43-entry register"
+    (RESULTS.md:185). Its texts for those four PINs read "awaiting the seat's ruling before LOCK v0.1". PIN-5's adds
+    "before LOCK v0.1, on whether m:324's parenthetical is exhaustive". None of them contains the quoted phrase.
+
+    The analyzer treats the two as separate objects. It has a comment "the PIN register" (m_analyze.py:2395), and
+    its check at :5538 is labelled "the PIN register, the seat-routed list and the schema". RESULTS.md:71 lists "the
+    43 PINs and the four seat-routed items" separately as well. RESULTS.md:296 does say, loosely, that "the
+    committed register routes four". Even so, a reader who looks up "the register" in the manifest lands on `pins`
+    and does not find the quote. The routing and the quote are correct; the field named is wrong.
+  CORRECTION:
+    - the manifest `data/m/gates/G-ANL-F0.json` (sha256 `9bea8339…`), whose seat-routed list (`seat_routed`) marks
+    each of C1–C4 "blocking LOCK v0.1, not step 8".
+  DISPOSITION: applied.
+
+--- [H1-12] IMPRECISE
+  CLAIM:
+    C2 (l.144): 'm:324's C3 list'.
+  REFUTER'S EVIDENCE:
+    I checked the checker's finding independently and it holds. m:324 is the "Unit outcome first" paragraph under
+    §5, which starts at m:322. Its no-first-read cause says a locked unit is NOT-RUN when it "produces no session
+    reaching a first read before a PI stop, a G-VER STOP, or its cap". The string "C3" does not appear anywhere on
+    m:324. "C3" is a private label in the build spec, results/raw/2026-10-10_m-steps7-8_build-inputs.md. It appears
+    in the heading at l.1218 ("### 4.4 NOT-RUN by C3 ... (STATED m:324 ...)"), in l.1633 (the battery ids `C3-*`),
+    and in the PIN-8 question at l.1824, which has the exact source phrase "m:324's C3 list names only ...". The
+    analyzer and the manifest use that label only in battery ids (C3-CAP-ZERO and the like, in m_analyze.py around
+    l.2660 and in G-ANL-F0.json). In prose the analyzer calls it "§5's no-first-read cause" (l.1873, 2080, 2243) and
+    gives the cause codes `no-first-read:pi-stop|gver-stop|cap`, each cited to m:324. The seat block never defines
+    "C3" in this sense. It does use C1–C5 as its own item labels, and at l.148 "**C3. PIN-9.**" sits five lines
+    below l.143, so "m:324's C3 list" reads as a cross-reference to item C3 (PIN-9). That is not what it means. The
+    quoted words and "names only" are accurate. The only defect is the borrowed label.
+  CORRECTION:
+    Replace l.143's "m:324's C3 list names only "a PI stop, a G-VER STOP, or its cap"." with: m:324's no-first-read
+    clause names only "a PI stop, a G-VER STOP, or its cap". Drop the "C3" label entirely; if it is kept even as a
+    parenthetical, it still collides with the block's item C3 (PIN-9).
+  DISPOSITION: applied.
+
+--- [H1-17] IMPRECISE
+  CLAIM:
+    C5 as a whole presents PIN-43 for the seat's confirmation, without saying how the defects were handled.
+  REFUTER'S EVIDENCE:
+    The defect is real. The block (seat_block_v1.md l.158-164) presents PIN-43 only as "every declared date is an
+    ASCII, real calendar date" and adds the narrowing note. It never says that Code fixed these defects after the
+    reviewers had routed them to the seat. The block has no mention of "round-3", "fixer", "confirmer" or "closing
+    edit" in connection with PIN-43. Line 185 mentions the closing edit only for the first manifest run that was set
+    aside. The G-ANL-F0 entry lists this under its "Seat items" (RESULTS.md l.37-39): "Code fixed the PIN-43 defects
+    itself, where the round-3 reviewers had routed them to the seat." With that left out, the block's l.6 statement
+    "Nothing here has been adjudicated by Code" overreaches. The claim's wording ("without saying how the defects
+    were handled") is too vague: the block never names the defects at all, and the point it actually omits is that
+    the routing was overridden. So the claim is IMPRECISE, not refuted.
+
+    The checker's correction is also inexact. It says "the round-3 fixer and confirmer had routed them 'for the
+    seat'" and attaches that routing to both the closing edit and `b62af85`. Only the closing edit's two defects
+    come from them:
+    - build_review raw l.2086-2088 (fixer): "Found but not applied (outside the 23, for the seat)" — `\d` accepting
+    non-ASCII digits and impossible dates; a dose-not-completable NOT-RUN record's date never validated.
+    - build_review raw l.2142-2146 (confirmer): "both are outside the 23 and are for the seat."
+
+    The gap `b62af85` closes was found later, by the independent verifier of the closing edit. That verifier flagged
+    it "for Code and the seat" (followup_review raw l.93), not "for the seat", and RESULTS l.280 says Code "fixed
+    the gap in its own tool rather than routing it." RESULTS l.265-266 confirms the "input-validation defects in its
+    own tool" framing for the closing edit.
+  CORRECTION:
+    Add under PIN-43 in C5: "- Code fixed these date defects itself instead of routing them. The round-3 fixer and
+    confirmer had routed two of them 'for the seat': `\d` accepted non-ASCII digits and impossible days such as
+    2026-02-30, and a NOT-RUN record's date went unchecked when its cause's phrase has no date. Code fixed both in
+    its closing edit, as input-validation defects in its own tool. The follow-up verifier then flagged the `--olmo-
+    states` gap 'for Code and the seat', and Code fixed that at `b62af85`. The seat may rule otherwise." Also
+    qualify l.6's "Nothing here has been adjudicated by Code" to point to this item, as C8 already does for the run
+    that was set aside.
+  DISPOSITION: applied.
+
+--- [H1-18] IMPRECISE
+  CLAIM:
+    C6 (l.166-174) lists the readings the seat may replace: PIN-4, PIN-5, PIN-15/16, PIN-22, PIN-21, PIN-19 (flag of
+    record TRUE), PIN-13, PIN-3 (m:190 base case, odd-n split, sham pooled).
+  REFUTER'S EVIDENCE:
+    The checker is right, so I am not refuting it. Block C6 (seat_block_v1.md l.166-174) lists eight readings:
+    PIN-4, PIN-5, PIN-15/16, PIN-22, PIN-21, PIN-19 (with "the flag of record is TRUE"), PIN-13 and PIN-3 ("at
+    m:190's base case with an odd-n split and the sham pooled"). Each one matches the RESULTS.md G-ANL-F0 entry's
+    list "Code's readings the seat may replace" (RESULTS.md l.184-198) and the manifest data/m/gates/G-ANL-F0.json.
+    In that manifest, flag_of_record.value = true. PIN-3's text reads "m:190's base case ... floor(n/2) on map 0 and
+    ceil(n/2) on map 1 ... the sham pooled". PIN-19's text is existence-keyed.
+
+    The block leaves out two things the entry carries:
+    (1) The second item, after PIN-4, at RESULTS.md l.190-191: "m:314's "over all sessions" read as the unit's
+    campaign sessions, excluded included, with G-TIME and qualification sessions tabulated separately (PIN-11)".
+    This matches manifest PIN-11 ("over the unit's campaign sessions, excluded included ... G-TIME and qualification
+    sessions are tabulated separately as m:271's release") and m:314 ("over all sessions including excluded").
+    Searching the 243-line block with /usr/bin/grep finds no "PIN-11", "m:314", "excluded" or "G-TIME" in any
+    section, so PIN-11 is not covered anywhere else.
+    (2) The entry's opening framing at l.184-185: "These are the principal ones. Every PIN in the manifest's
+    43-entry register is Code's, declared for LOCK v0.1, and the seat may strike any." The manifest's pins dict does
+    have 43 entries.
+
+    Without (2), the eight-item C6 reads as a complete list of what the seat may replace. Without (1), the seat
+    never sees the counters-scope reading. Both omissions fall short of the entry.
+  CORRECTION:
+    In C6, insert after the PIN-4 line, matching the entry's order: "- m:314's "over all sessions" read as the
+    unit's campaign sessions, excluded included, with G-TIME and qualification sessions tabulated separately
+    (PIN-11);". Then follow the list (or the header) with: "These are the principal ones. Every PIN in the
+    manifest's 43-entry register is Code's, declared for LOCK v0.1, and the seat may strike any."
+  DISPOSITION: applied.
+
+--- [H1-22] IMPRECISE
+  CLAIM:
+    C8 (l.188): that entry corrects the G-SHAPE-F0 entry's mention of an "11:38 UTC run of record".
+  REFUTER'S EVIDENCE:
+    The substance of the claim is right. The G-ANL-F0 entry (RESULTS.md l.299-301, under "Committed texts this entry
+    corrects, flagged and not changed") says the G-SHAPE-F0 entry, committed in f23b444, gives G-ANL-F0's "run of
+    record was made at 11:38 UTC". It also says the G-SHAPE-F0 values-check raw (V13) repeats this and names
+    manifest ea985c11…. It then corrects both: that run, on 64df36b, was set aside, and the run of record is the
+    12:12:52 UTC run on b62af85 (manifest 9bea8339…).
+
+    The problem is the quotation. The block puts the phrase "11:38 UTC run of record" in quotation marks, and that
+    phrase is not in any source. The G-SHAPE-F0 entry (RESULTS.md l.530, the same at f23b444:RESULTS.md l.246) reads
+    "its run of record was made at 11:38 UTC". The values-check raw (l.1077) and the G-ANL-F0 entry's own quotation
+    use the same wording. A paraphrase in quotation marks misquotes a committed text, so the checker's IMPRECISE
+    verdict stands.
+
+    The checker's replacement is accurate. The words it quotes are a verbatim substring of l.530, and its time,
+    commit and set-aside details match l.51-58 and l.301.
+  CORRECTION:
+    That entry also corrects the G-SHAPE-F0 entry's statement that G-ANL-F0's "run of record was made at 11:38 UTC".
+    That run, on `64df36b`, was set aside; the run of record is the 12:12:52 UTC run on `b62af85`.
+  DISPOSITION: applied.
+
+--- [H1-30] IMPRECISE
+  CLAIM:
+    E1 (l.217-220): 'Ruling (h)'s two extensions, as Code built them'. A forced-phase hair trigger or G-VER STOP on
+    the contrast session keeps its class (Code's reading of m:318 exception (1)), and (h) also applies to the
+    stripped read with only {phase, ri, n, text} per forced round.
+  REFUTER'S EVIDENCE:
+    The block's E1 (seat_block_v1.md l.217-220) says: "Ruling (h)'s two extensions, as Code built them ... a forced-
+    phase hair trigger or G-VER STOP on the contrast session keeps its class. That is Code's reading of m:318
+    exception (1). (h) also applies to the stripped read: per forced round, only {phase, ri, n, text}." The record
+    is the dispositions entry (RESULTS.md l.1126-1189, commit 54e41c9).
+
+    1. The first item is not an extension of (h). It is an exception to it. The summary (l.1130-1133) reads "The
+    exception is a forced-phase hair-trigger or G-VER STOP, whose announcement keeps its class as built. That this
+    falls under m:318 exception (1) is Code's reading, not the ruling's words; it is flagged for the seat. Code also
+    extended (h) to the stripped read". The as-built bullet (l.1181-1186) calls it "Kept as built, as m:318
+    exception (1) adjudications ... Flagged for the seat with (h)'s carve-out above". Only the stripped-read item is
+    an extension. Calling both "extensions" misdescribes the first.
+
+    2. The block leaves out the consequence the seat is being asked to accept. Per l.1183-1185: "The report's counts
+    still place the fired round as the last one generated, so at a forced hair stop the report carries both the
+    class and the position. The fired round's text also stands in the stripped read under `reports/`". Ruling (h)
+    (l.1154-1156, quoted) requires "no class and no round position". Nothing else in the block mentions position or
+    carve-out (grep of the block: only l.217-220 mention (h)).
+
+    3. The checker's own correction overreaches in one place. It says the report carries class and position for "a
+    forced-phase hair trigger or G-VER STOP". The entry says this only "at a forced hair stop". The correction also
+    drops the fired round's text standing in the stripped read, which the entry flags as part of the same item.
+
+    m:318 exception (1) does cover "the transcripts an adjudication requires (a fired hair trigger ...)". Calling
+    this "Code's reading" is accurate.
+  CORRECTION:
+    **E1. Ruling (h): the exception Code kept as built, and Code's extension** (dispositions entry, `54e41c9`; both
+    flagged for the seat):
+    - At a G-TIME stage, a hair trigger or G-VER failure in the contrast session's forced phase is announced by its
+    class (or the harness class), never by its round or n.
+      - The report's counts still place the fired round as the last one generated. So at a forced hair stop the
+    report carries both the class and the round position, which (h) excludes.
+      - The fired round's text also stays in the stripped read.
+      - That this falls under m:318 exception (1) is Code's reading, not the ruling's words.
+    - Code extended (h) to the stripped read: per forced round it keeps only {phase, ri, n, text}.
+  DISPOSITION: applied.
+
+--- [H1-34] IMPRECISE
+  CLAIM:
+    E header (l.215): the items in E are 'Carried from earlier steps, needed by LOCK v0.1 at the latest'.
+  REFUTER'S EVIDENCE:
+    The checker is right, and I did not refute it. Line 215 of the block reads "## E. Carried from earlier steps,
+    needed by LOCK v0.1 at the latest". None of the sources for E1–E4 sets that deadline.
+
+    - **E1, the dispositions entry (`54e41c9`, RESULTS.md:1126–1256).** The m:318 exception-(1) reading is "flagged
+    for the seat". So is the extension to the stripped read ("PIN, flagged for the seat"). Neither gives a due
+    point.
+    - **E2 and E4, the G-PORT entry (`988e5df`, RESULTS.md:937–1124).** The 25 differences plus 2 borderline are
+    added by m:267 "to Appendix D through this entry; the seat may adjudicate any of them". "May" makes the
+    adjudication optional, so "needed" overstates it. m:267 calls Appendix D "Disclosures for the paper". The
+    paper's hash enters at LOCK v1.0 (m:358 step 15), not at v0.1.
+    - **E3, the same entry.** The four notes are headed "For the seat (observations, not differences)", again with
+    no deadline.
+    - **m:279.** LOCK v0.1's contents list includes "Port acceptance", which is G-PORT's PASS. It does not list the
+    adjudication of its differences or seat notes.
+    - **m:358.** The step list sets no deadline for any of them.
+    - **The build inputs (`results/raw/2026-10-10_m-steps7-8_build-inputs.md:111`).** They define the consolidated
+    block as PIN-8/9/17, G-SHAPE's PIN-S3/S5/S6, G-CAL's owed items and the third order question. They say nothing
+    about the G-PORT items or ruling (h).
+    - **The `2c50e03` entry.** It lists G-CAL's owed items only.
+
+    So LOCK v0.1 as the deadline is Code's own scheduling, stated in the header as a fact about the items. For E1 it
+    is defensible: `stages.py` and `readrule.py` are in the package the lock records, and (h) first applies at
+    G-TIME-F0, step 10. For E2 and E4 it runs against the sources, which leave adjudication optional and tie
+    Appendix D to the paper. The intro, lines 5–6 ("the items carried from earlier steps that LOCK-m-F0 v0.1
+    needs"), repeats the same framing.
+
+    I checked the checker's correction and it is accurate: the items are flagged for the seat and no entry sets a
+    deadline. It leaves out that the seat's adjudication of G-PORT's differences (E2, E4) is optional by the
+    source's own words, which the wording below adds.
+  CORRECTION:
+    ## E. Carried from earlier steps, flagged for the seat (no source sets a deadline, and G-PORT's entry says the
+    seat "may adjudicate any of them"; Code proposes LOCK v0.1 as the latest point)
+
+    The intro (l.5–6) needs the matching change: "...together with the items carried from earlier steps that are
+    still open for the seat (section E; Code proposes LOCK v0.1 as the latest point for them)."
+  DISPOSITION: applied.
+
+--- [H1-37] FAILS
+  CLAIM:
+    Completeness, section E: the block says it collects the items carried from earlier steps that LOCK-m-F0 v0.1
+    needs.
+  REFUTER'S EVIDENCE:
+    The claim fails. The block says it collects "the items carried from earlier steps that LOCK-m-F0 v0.1 needs"
+    (block l.5-6). Its section E lists only E1-E4: the 54e41c9 extensions, G-PORT's two borderline clauses, its four
+    notes and its 25 differences. The only step-3 item anywhere in the block is note 55, in C7 (block l.177).
+
+    **What step 3 left for the seat.** The step-3 entry (RESULTS.md l.1574) carries "Dated notes (2026-10-06; minor-
+    only, for the design seat)" (l.1823), N1-N9, plus the 133 items in
+    results/raw/2026-10-06_m-v1.11_step3_notes.md. The seat has ruled on only one of them, in the 54e41c9 routing
+    (l.1161): at G-TIME-OLMo the STOP governs. No later entry (step-4 build, G-PORT, G-CAL, read of record,
+    G-SHAPE-F0, G-ANL-F0) dispositions any other. A grep finds only note 55 at l.209 and in m_analyze.py:479.
+
+    Three of these items bear directly on what LOCK-m-F0 v0.1 contains:
+
+    1. **Build pin 3** (l.1911-1912 and l.1918-1919; the checker's "l.1913-1917" is off). The step-3 entry says pin
+    3 "is declared at each unit's v0.1. The seat may direct otherwise", and the pin is the cross-template launch
+    order (notes #69, D8C1.38, contested, addressed "→ §3.1 LOCK-m-F0 v0.1 (m:279)"). m:279 lists "the gate-stage
+    launch order" among LOCK v0.1's contents. Code's default is built at valence_core/m/schedule.py:399, as a PIN in
+    gate_launch_order: strict rotation in §2.4's table order, contrast template first.
+
+    2. **Note #25.** It covers m:176's "the renders' sha256". m:176 places that sha256 in LOCK-m-F0 v0.1's
+    Artifacts, and the note says "Pinning f0's form, or the stated serialization, would close it". The proposal text
+    still states no serialization. The build does pin one: gcal.py:340-341 and its self-test at :1110 take the
+    sha256 of the UTF-8 newline-joined renders, which is f0's form per corr.renders_sha (f0_calibrate.py:118-121).
+    So "serialization unpinned", unqualified, is stale.
+
+    3. **N9's D1.22** (l.1900-1902). Condition (2)'s k and n_eligible are undefined for f1's Bernoulli corruptor at
+    G-CAL's 0.12 replay. The note adds: "The outcome is the same under every reading, and the item has never been
+    dispositioned". m:176 also puts this 0.12 artifact in LOCK v0.1. Code's reading is a PIN at corr.py:325-327:
+    changed ≤ floor(n_eligible/2), with n_eligible under f1's own rule. G-CAL_model-free.json gives n_hits 32,
+    n_changed 31 and n_cond2 16/16.
+
+    **What the checker's correction lacks.** Its three items are right, but it leaves out what the block's own
+    format requires of each item: Code's default or reading, and whether it blocks LOCK v0.1. The source's label is
+    minor-only, with nothing blocking under any verdict. It also states #25's serialization as unpinned without
+    saying the build pinned it.
+  CORRECTION:
+    Add to section E:
+
+    "**E5. The step-3 dated notes** (the `05c4636` entry's 'Dated notes (2026-10-06; minor-only, for the design
+    seat)', N1–N9, and every item in `results/raw/2026-10-06_m-v1.11_step3_notes.md`). The seat has ruled on one (at
+    G-TIME-OLMo the STOP governs, `54e41c9`), and C7 carries note 55. Three bear on what LOCK-m-F0 v0.1 contains
+    (m:279; m:176's Artifacts). None blocks LOCK v0.1: the check graded them minor-only, nothing blocking under any
+    verdict.
+    - **Build pin 3** (notes #69, D8C1.38, contested): the cross-template launch order at multi-template gate stages
+    (G-TIME-F0's 2 templates; G-F0m-Qwen's 16 + 8). It is declared at each unit's v0.1, and 'The seat may direct
+    otherwise.' Code's default, built at step 4 as a PIN (`schedule.py`, `gate_launch_order`): strict rotation in
+    §2.4's table order, contrast template first.
+    - **Notes #25:** m:176's 'the renders' sha256', a LOCK v0.1 artifact, has no stated serialization. Code's
+    default, as built (`gcal.py`): sha256 of the UTF-8 newline-joined renders, f0's form
+    (`f0_calibrate.py:118-121`), giving `a04f67b0…4372`. LOCK v0.1 states it.
+    - **N9's D1.22:** condition (2)'s k and n_eligible are undefined for f1's Bernoulli corruptor at G-CAL's 0.12
+    replay (drawn 32 against changed 31). The note says 'The outcome is the same under every reading, and the item
+    has never been dispositioned.' Code's reading (`corr.py` PIN): changed ≤ floor(n_eligible/2), with n_eligible
+    under f1's own rule (operands included), giving 16/16 in `G-CAL_model-free.json`."
+  DISPOSITION: applied.
+
+--- [H1-38] FAILS
+  CLAIM:
+    Completeness, section A: the block says it collects every question G-CAL left for the seat.
+  REFUTER'S EVIDENCE:
+    I re-checked this myself and the checker's FAILS holds. The block says at seat_block_v1.md lines 5–6 that it
+    "collects in one place every question G-CAL (step 6) ... left for the seat", and section A lists the read-of-
+    record entry (`2c50e03`) as a source. That entry, at HEAD lines 563–564 and 583–584 of RESULTS.md (lines 56 and
+    76 of `git show 2c50e03:RESULTS.md`, same text), leaves two questions to the seat:
+
+    1. "How the two bear on each other is the seat's to say." The two are the 2026-10-08 `head -30` batch listing
+    and the 2026-10-04 exposure, where 13 of the 16 renders of record appear byte-identical in STOP-5 §F, each
+    beside its clean task and gold.
+    2. "Whether the entry or its raws had been opened before the lines were written is a question for the seat. Code
+    does not weigh it." The entry here is the G-CAL entry `cf8eb5b`. The seat's disclosure
+    (data/m/gates/G-CAL_seat_read_of_record.md, line 9) says only "before section B or anything after it was
+    opened".
+
+    Neither question has been answered: nothing later in RESULTS.md (f23b444, b4d7f13) mentions either one. A search
+    of the block for "expos", "disclos", "opened", "batch", "2026-10-04", "STOP-5", "head -30" and "bear on" finds
+    nothing. A1–A8 cover the 128-generation read, the order rulings, `disown`, O1–O4, the label slip and the seat's
+    read notes, but not these two questions.
+
+    The checker's proposed A9 is accurate in substance but needs one fix. The block's own contract (lines 7–11) says
+    every item names whether it blocks, and the proposed A9 has no blocking label. The source does not list either
+    question among what G-CAL waits on: it waits only on the 128-generation read and the order rulings. It also says
+    "Whether any flagged or optional item holds the close is the seat's to say" (RESULTS.md l.628). So the right
+    label follows A5's form: blocking is the seat's to say. The seat's own view on the batch exposure alone is on
+    record ("does not bear on recoverability, which is the condition"). It is worth recording so the seat sees that
+    only the cross-bearing question is still open.
+  CORRECTION:
+    Add to section A:
+
+    "**A9. Two questions the read-of-record entry (`2c50e03`) leaves to the seat.**
+    - Blocking: the seat's to say. The entry does not list either among what G-CAL waits on.
+    - Whether the G-CAL entry (`cf8eb5b`) or its raws had been opened before the read's per-item lines were written.
+    The seat's disclosure says the lines were committed "before section B or anything after it was opened". It does
+    not name the entry or the other files that entry asked the seat not to open first.
+    - How the 2026-10-04 exposure and the 2026-10-08 batch exposure bear on each other. On 2026-10-04, 13 of the 16
+    renders of record appeared together, each beside its clean task and gold, in STOP-5 §F. The 2026-10-08 exposure
+    is the `head -30` listing of the request. Only the seat's view on the batch exposure alone is on record: it
+    "does not bear on recoverability, which is the condition".
+    - Code records both and weighs neither."
+  DISPOSITION: applied.
+
+--- [H1-39] IMPRECISE
+  CLAIM:
+    Completeness, E4: G-PORT's open items are the 25 differences plus 2 borderline.
+  REFUTER'S EVIDENCE:
+    The G-PORT entry (RESULTS.md 937–1124, commit 988e5df) sorts its items into four groups. A1–A25 are the
+    differences "beyond §2.7's fourteen". B1–B2 are borderline. C1–C9 are "Covered by §2.7, with a consequence the
+    seat may want stated under the item" (l.1073). The fourth group, at l.1095, is the "For the seat" observations.
+    The block carries three of these. E4 covers the 25+2 (its sentence "m:267 adds them to Appendix D … the seat may
+    adjudicate any of them" matches the entry's header). E2 covers B1/B2. E3 covers the four seat notes.
+
+    The block never mentions G-PORT's C1–C9. A grep of seat_block_v1.md for "s48", "306", "corrupt()" and the
+    group's own header returns nothing. Its only "C1"–"C5" labels are its own section C (the G-ANL PINs).
+
+    No later entry closes or carries the C group. The dispositions entry 54e41c9 was committed 23:37:28, just before
+    G-PORT at 23:38:48. Lines 1–936 of RESULTS.md (G-CAL cf8eb5b, the seat's read 2c50e03, G-SHAPE-F0, G-ANL-F0)
+    mention only G-PORT's A5 and its package sha. The build-inputs raw and m_analyze.py mention only A5.
+
+    The omission also leaves E3 incomplete. Its fourth note (the "unaffected" phrasing) rests on "given A1, C1 and
+    C2" (l.1102–1103), and C1 and C2 appear nowhere in the block. The C group is an open seat-facing option, at the
+    same tier as "the seat may adjudicate any of them". So the checker's point stands: E4 and section E, which
+    carries G-PORT, are incomplete.
+  CORRECTION:
+    Add after E4: "**E5. G-PORT's C1–C9, 'Covered by §2.7, with a consequence the seat may want stated under the
+    item'** (G-PORT entry, `988e5df`). These sit within §2.7's fourteen, so they are not in E4's count. For example,
+    C1 (under (3)): f1's corrupted label delivered byte-clean text in 40 of 306 Q rounds, which bears on A0's
+    comparison with f1's primary. C2 (under (6)): m's audit ends f1's s48 and s25 at the forced phase, where f1
+    continued. E3's fourth note rests on C1 and C2."
+  DISPOSITION: applied.
+
+============================================================ REFUTED FLAGS
+--- [H0-37]
+    L68-70: O2, two graded hits Code reads as not answering: item 7 seed 3 ('both 1 kilogram') and item 9 seed 0
+    (`miyms` read as minutes).
+  CHECKER:
+    Raw 2(b) lists 'CORR_corrupted 7 3' and 'CORR_corrupted 9 0'. The G-CAL entry: "both on the corrupted pool". The
+    block omits the pool, so 'item 7, seed 3' could also point to the clean-pool record in section 3, which the seat
+    reads.
+  REFUTER:
+    Every fact in block L68-70 matches its sources.
+
+    - **The two records.** Raw 2026-10-08_m-gcal_completability_read.txt section 2(b) (L93-95) lists the two graded
+    hits Code reads as not answering the task. They are CORR_corrupted 7 3, text "...are both 1 kilogram in weight."
+    (also at section 3 L436-437), and CORR_corrupted 9 0, text "90 minutes is 1.5 hours. So 45 minutes is..." on the
+    render "Comgute 90 miyms 45." (L451-452). That is the `miyms`-as-minutes reading.
+    - **Matches the G-CAL entry.** RESULTS.md L851-855 has the same O2 content.
+    - **The checker's ambiguity does not hold.**
+      - The block's quote "both 1 kilogram" occurs only in the corrupted record. The clean item 7 seed 3 generation
+    is "A kilogram of iron is heavier than half a kilogram of feathers because 1 kg > 0.5 kg." (raw L244-245).
+      - `miyms` occurs only in the corrupted render. The clean item 9 task is "Compute 90 minus 45." (L259-269), and
+    all four clean answers are real answers.
+      - So neither identifier can point to a clean-pool record in section 3.
+      - The block's own L75-76 ("the two hits removed only: corrupted 46/64", i.e. 48-2) also places both hits on
+    the corrupted pool.
+    - **Same framing in the seat-facing entry.** The routing entry that follows the read of record states O2 without
+    the pool too: RESULTS.md L622, "item 7 seed 3, and item 9 seed 0, which reads `miyms` as minutes".
+
+    Leaving out "both on the corrupted pool" shortens the wording without making it ambiguous. It is not a real
+    defect.
+
+--- [H1-05]
+    C header (l.128): 'C1–C5 block LOCK v0.1, which hashes the analyzer.'
+  CHECKER:
+    The manifest's seat_routed field and SEAT_ROUTED (m_analyze.py:2603) mark only PIN-5/8/9/17 (C1–C4) 'blocking
+    LOCK v0.1, not step 8'. PIN-42's own text reads 'for the seat's confirmation at LOCK v0.1'. For PIN-43's date
+    question the entry (l.37-38, 181-183) says only 'it is the seat's to say' and attaches no blocking label.
+    Calling C5 blocking is Code's own escalation, presented as if it came from the source.
+  REFUTER:
+    The checker is right that the manifest's `seat_routed` field (`data/m/gates/G-ANL-F0.json`; SEAT_ROUTED at
+    scripts/m_analyze.py:2603) uses the literal words "blocking LOCK v0.1, not step 8" only for PIN-5/8/9/17. But
+    the block does not claim otherwise: its Sources line (block l.133-134) gives that manifest label to C1-C4 only.
+
+    The sources do make C5 blocking, in their own terms:
+    (1) The build spec defines "blocking LOCK v0.1" as "awaits the seat's ruling before LOCK v0.1 hashes the
+    analyzer". See results/raw/2026-10-10_m-steps7-8_build-inputs.md l.45: "**Seat-routed defaults (blocking LOCK
+    v0.1, NOT step 8).** ... mark it with a PIN that says it awaits the seat's ruling before LOCK v0.1 hashes the
+    analyzer". l.314 uses the same equation for G-SHAPE.
+    (2) The G-ANL-F0 entry's Seat items (RESULTS.md l.35-36) put PIN-42 at exactly that status: "Four of Code's
+    defaults ... await the seat's ruling before LOCK-m-F0 v0.1 hashes the analyzer. Code-added PIN-42 awaits the
+    seat's confirmation there too."
+    (3) The b4d7f13 commit message, in git log, does the same for both bindings: "Four of Code's defaults (PIN-5,
+    PIN-8, PIN-9, PIN-17) and the Code-added PIN-42/43 await the seat before LOCK-m-F0 v0.1 hashes the analyzer."
+    (4) In the entry's detail section, PIN-42 and PIN-43 sit under "Code-added bindings", inside "For the seat,
+    before LOCK-m-F0 v0.1 hashes the analyzer". They are not in the separate "Open, not blocking LOCK v0.1" list.
+    The entry's order paragraph also says "LOCK-m-F0 v0.1 (step 9) waits on G-CAL closing, on the seat's three order
+    rulings ..., and on the rulings above."
+
+    So the checker's premise that the entry "attaches no blocking label" to PIN-43 is wrong: the commit message and
+    the entry's structure give it the same pre-lock status as PIN-42 and C1-C4. Calling C5 blocking repeats the
+    source; it is not Code escalating on its own. The header's "which hashes the analyzer" also matches the source's
+    own phrase.
+
+============================================================ UNCHECKABLE
+============================================================ VALUES LENS
+--- V1 [adjudication / label-mismatch]
+  QUOTE:
+    G-CAL closes on A1–A4; LOCK v0.1 needs G-CAL closed.
+  PROBLEM:
+    Code sets G-CAL's closing conditions itself, and mislabels them. The read-of-record entry (2c50e03) names what
+    G-CAL still owes: the read of the 128 generations and the two order rulings, which are A1–A3. It then says
+    "Whether any flagged or optional item holds the close is the seat's to say", which covers A5 and A6. A4, the
+    third order question, is labelled in the block's own A4 "Blocking: yes, for LOCK v0.1", not as blocking G-CAL's
+    close. The header both adds A4 to the close and implies A5 and A6 cannot hold it.
+  CORRECTION:
+    ## A. G-CAL (step 6). G-CAL's close waits on A1–A3, the items the read-of-record entry (`2c50e03`) lists as
+    owed. That entry leaves it to the seat whether A5 or A6 also holds the close. A4 blocks LOCK v0.1. LOCK v0.1
+    needs G-CAL closed.
+  DISPOSITION: applied.
+
+--- V2 [missing-disclosure (Code acted on a seat-routed item)]
+  QUOTE:
+    **PIN-43:** every declared date is an ASCII, real calendar date.
+  PROBLEM:
+    C5 leaves out the process departure that the G-ANL-F0 entry lists under its own seat items. The round-3 fixer
+    and confirmer routed the date defects "for the seat", but Code fixed them itself as Code-added PIN-43. Code then
+    fixed the follow-up verifier's gap "in its own tool rather than routing it" (b62af85). This is the one place in
+    step 8 where Code acted on something reviewers had sent to the seat, and the block does not put it to the seat.
+  CORRECTION:
+    Add under PIN-43: "Code fixed these date defects itself, although the round-3 fixer and confirmer had routed
+    them 'for the seat'. It also fixed the follow-up verifier's gap (`b62af85`) in its own tool rather than routing
+    it (G-ANL-F0 entry). Whether those fixes were Code's to make is the seat's to rule."
+  DISPOSITION: applied.
+
+--- V3 [adjudication / overclaim]
+  QUOTE:
+    supersession governs committed artifacts only.
+  PROBLEM:
+    This states Code's reading as if it were the rule. PIN-37's register text says an artifact that must be replaced
+    "is moved aside by hand with `git mv` to a dated superseded name on the seat's ruling". It sets no committed-
+    only limit. Code relies on that limit (plus the G-PORT precedent) to justify setting the first manifest aside
+    without a seat ruling, so the reading should be put to the seat, not asserted.
+  CORRECTION:
+    "Code read PIN-37's `git mv` supersession as covering committed artifacts only (G-PORT's precedent); PIN-37's
+    text states no such limit. Whether this set-aside needed the seat's ruling is the seat's to say."
+  DISPOSITION: applied.
+
+--- V4 [missing-disclosure]
+  QUOTE:
+    a forced-phase hair trigger or G-VER STOP on the contrast session keeps its class.
+  PROBLEM:
+    E1 leaves out the consequence the dispositions entry (54e41c9) flagged with this carve-out. The report's counts
+    still place the fired round as the last one generated, so a forced hair stop puts both the class and the round
+    position in the report. Ruling (h) withholds exactly that pair ("no class and no round position"). The fired
+    round's text also stays in the stripped read. Without this, the seat cannot weigh the extension against its own
+    ruling.
+  CORRECTION:
+    Add: "The report's counts still place the fired round as the last one generated, so at a forced hair stop the
+    report carries both the class and the round position, which ruling (h) withholds. The fired round's text also
+    stays in the stripped read under `reports/` (dispositions entry, `54e41c9`)."
+  DISPOSITION: applied.
+
+--- V5 [missing-disclosure (inconsistent record)]
+  QUOTE:
+    Blocking: the seat's to say. The G-CAL entry did not list it among what G-CAL waits on.
+  PROBLEM:
+    This follows 2c50e03 but does not disclose that two committed texts say otherwise. The G-SHAPE-F0 entry
+    (f23b444) says "Still owed for G-CAL's close (the `2c50e03` entry): ... and the unanswered `disown`". The build-
+    inputs raw's [SEAT] and [PI] items also list the disown among "G-CAL's closing items". A reader of the sources
+    meets two records that disagree, and the block neither reconciles them nor flags the discrepancy.
+  CORRECTION:
+    Add: "The G-SHAPE-F0 entry (`f23b444`) and the build-inputs raw list the `disown` as 'still owed for G-CAL's
+    close', citing `2c50e03`, which did not. Flagged, not changed."
+  DISPOSITION: applied.
+
+--- V6 [label-mismatch]
+  QUOTE:
+    C1–C5 block LOCK v0.1, which hashes the analyzer.
+  PROBLEM:
+    The source marks only C1–C4. The manifest's `seat_routed` block marks PIN-5, PIN-8, PIN-9 and PIN-17 "blocking
+    LOCK v0.1, not step 8". PIN-42's own text says it is "for the seat's confirmation at LOCK v0.1". For PIN-43, the
+    entry says only that what the date means is "the seat's to say" and gives it no blocking label. Code has
+    assigned C5 a blocking status no source gives it.
+  CORRECTION:
+    "C1–C4 block LOCK v0.1, which hashes the analyzer (the manifest's `seat_routed` block). C5: PIN-42 awaits the
+    seat's confirmation at LOCK v0.1, per its register text. Whether PIN-43's open question blocks the lock is the
+    seat's to say."
+  DISPOSITION: applied.
+
+--- V7 [overclaim]
+  QUOTE:
+    has been adjudicated by Code.
+  PROBLEM:
+    This overclaims. The block itself records several decisions Code made on its own reading without a seat ruling:
+    the order departures in A2 ("Code applied the reading without putting it to the seat") and A3, the C8 set-aside,
+    and the PIN-43 fixes (see the C5 finding). Those items are now for the seat, but they have already been acted
+    on.
+  CORRECTION:
+    "Code adjudicates nothing in this block. Where Code earlier acted on its own reading without a seat ruling (A2,
+    A3, C5's PIN-43 fixes, C8), the item says so and asks for the seat's ruling."
+  DISPOSITION: applied.
+
+--- V8 [overclaim (completeness)]
+  QUOTE:
+    It collects in one place every question G-CAL (step 6), G-SHAPE-F0 (step 7) and G-ANL-F0
+  PROBLEM:
+    "Every" is not true. The block omits questions these entries left for the seat: 2c50e03's open questions on the
+    read's conditions; PIN-11 from the G-ANL-F0 entry's list of readings; the PIN-43 routing departure; the class-
+    and-position consequence in E1; G-PORT's C1–C9; and step-3 notes bearing on the calibration artifacts (each in
+    its own finding).
+  CORRECTION:
+    "It collects the questions G-CAL (step 6), G-SHAPE-F0 (step 7) and G-ANL-F0 (step 8) left for the seat ...", and
+    add the omitted items listed in the other findings.
+  DISPOSITION: applied.
+
+--- V9 [missing-disclosure (completeness)]
+  QUOTE:
+    The seat has already made the condition-(3) legibility read (`2c50e03`).
+  PROBLEM:
+    The read-of-record entry left two questions about the read's conditions explicitly with the seat, and the block
+    omits both. (i) "Whether the entry or its raws had been opened before the lines were written is a question for
+    the seat": the disclosure's "anything after it" does not name cf8eb5b or its files. (ii) How the 2026-10-08
+    batch exposure and the 2026-10-04 exposure of 13 renders with their golds "bear on each other is the seat's to
+    say".
+  CORRECTION:
+    Add: "Two questions from that entry stay open for the seat. First, whether the G-CAL entry (`cf8eb5b`) or its
+    raws had been opened before the per-item lines were written; the disclosure's 'anything after it' does not name
+    them. Second, how the 2026-10-08 batch exposure bears on the 2026-10-04 exposure of 13 renders beside their
+    golds."
+  DISPOSITION: applied.
+
+--- V10 [missing-disclosure / label-mismatch]
+  QUOTE:
+    **C6. Readings the seat may replace** (not blocking unless the seat says so):
+  PROBLEM:
+    There are three problems here. (1) The list drops PIN-11, which the G-ANL-F0 entry lists: m:314's "over all
+    sessions" read as the unit's campaign sessions, excluded ones included, with G-TIME and qualification sessions
+    tabulated separately. (2) It drops the entry's statement that every PIN in the 43-entry register is Code's and
+    the seat may strike any. (3) The "not blocking" label is Code's own. The entry has LOCK v0.1 wait "on the
+    rulings above", and any replacement changes the analyzer's sha256, so the window to replace these closes when
+    LOCK v0.1 hashes the analyzer.
+  CORRECTION:
+    "**C6. Code's readings the seat may replace.** Every PIN in the manifest's 43-entry register is Code's, and the
+    seat may strike any. The principal ones: ... m:314's 'over all sessions' read as the unit's campaign sessions,
+    excluded ones included, with G-TIME and qualification sessions tabulated separately (PIN-11); ... A replacement
+    changes the analyzer's sha256, so it must land before LOCK v0.1 hashes the analyzer. Whether LOCK v0.1 waits on
+    these is the seat's to say."
+  DISPOSITION: applied.
+
+--- V11 [missing-disclosure]
+  QUOTE:
+    The first launch (04:41:33 UTC, 2026-10-08) was refused by the preflight.
+  PROBLEM:
+    A2 leaves out facts from the G-CAL entry that bear directly on the order ruling. (1) The first launch came
+    before the read request was committed (bab921c) or sent to the PI. (2) Code's 04:42:06 UTC message to the PI did
+    not name m:358's order, and the PI's "Kernel's shut down, go ahead with completability" (05:17:44 UTC) came
+    before the run of record. (3) Code's own G-PORT entry had listed the read, on Code's ping, before
+    completability. (4) Nothing in the tooling records or gates (3) before completability; this is the build
+    review's open minor finding.
+  CORRECTION:
+    Add: "- The first launch also came before the read request was committed (`bab921c`) or sent to the PI. - Code's
+    04:42:06 UTC message to the PI did not name m:358's order; the PI's 'Kernel's shut down, go ahead with
+    completability' (05:17:44 UTC) preceded the run of record. - Code's G-PORT entry had listed the read (on Code's
+    ping) before completability. - Nothing in the tooling records or gates (3) before completability (the build
+    review's open minor finding)."
+  DISPOSITION: applied.
+
+--- V12 [misattribution]
+  QUOTE:
+    Also, Layer C: segment + gold must fire on every placement.
+  PROBLEM:
+    This puts Layer C under B2 (PIN-S5). Layer C is PIN-S6: gshape.py:815 reads "PIN-S6 ... Layer C is ONE scope-
+    widened control", and the G-SHAPE-F0 entry reads "Layer C (PIN-S6)". The seat would be answering the wrong PIN.
+  CORRECTION:
+    Delete it from B2 and add to B1: "- Layer C (also PIN-S6): segment + gold, scored as the response, must fire on
+    every placement or the gate STOPs. It fired 2,816/2,816 per unit."
+  DISPOSITION: applied.
+
+--- V13 [misstatement]
+  QUOTE:
+    Under all four post-hoc re-gradings, condition (4) still passes.
+  PROBLEM:
+    Section 2(c) of the read raw has four readings, and the first is the grader of record, which is not a post-hoc
+    re-grading. Only three are re-gradings.
+  CORRECTION:
+    "Under all four readings (the grader of record and three post-hoc re-gradings), condition (4) passes."
+  DISPOSITION: applied.
+
+--- V14 [ambiguous / label-mismatch]
+  QUOTE:
+    whether it blocks LOCK v0.1.
+  PROBLEM:
+    The intro promises a blocking label for every item, but A7, A8, B3, C8, C9, D1–D3, E1–E4 and F1–F2 have none.
+    For B3 the gap matters: the G-SHAPE-F0 status line says LOCK-m-F0 v0.1 "waits on it, and on the seat's answer to
+    the readings flagged below". Replacing any B3 reading also edits gshape.py, which moves package_sha256 and re-
+    runs G-SHAPE-F0, so it has to happen before the lock.
+  CORRECTION:
+    "- whether it blocks LOCK v0.1, where its source says so. Items with no Blocking line have no label in their
+    source. For B3, the G-SHAPE-F0 status line has LOCK v0.1 wait 'on the seat's answer to the readings flagged
+    below'; a replaced reading edits gshape.py, moves package_sha256 and re-runs G-SHAPE-F0 before the lock."
+  DISPOSITION: applied.
+
+--- V15 [missing-disclosure (completeness)]
+  QUOTE:
+    **E4. G-PORT's 25 differences, plus 2 borderline, beyond §2.7's fourteen.**
+  PROBLEM:
+    Section E leaves out the G-PORT entry's C1–C9: items "Covered by §2.7, with a consequence the seat may want
+    stated under the item". Among them are C1, f1's byte-clean corrupted rounds (40 of 306), which "bears on A0's
+    comparison with f1's primary", and C2, m's audit ending f1 s48 and s25 at the forced phase.
+  CORRECTION:
+    Add "**E5. G-PORT's C1–C9**, covered by §2.7 'with a consequence the seat may want stated under the item'
+    (G-PORT entry, `988e5df`). They include C1, f1's byte-clean corrupted rounds (40 of 306), which bears on A0's
+    comparison with f1's primary, and C2, m's audit ending f1's s48 and s25 at the forced phase."
+  DISPOSITION: applied.
+
+--- V16 [missing-disclosure]
+  QUOTE:
+    If a G-CAL ruling re-specifies the renders, G-SHAPE-F0 re-runs after an edit to its pinned renders sha256.
+  PROBLEM:
+    A4 gives the re-specification consequence for G-SHAPE-F0 only. The G-ANL-F0 entry says such a re-specification
+    also changes G-ANL-F0's flag source (`G-CAL_model-free.json`, which holds the renders and whose sha256 is in its
+    manifest). Its re-run bytes would then differ, and its manifest would be superseded.
+  CORRECTION:
+    Add: "G-ANL-F0's flag source, `G-CAL_model-free.json`, holds the renders, so its sha256 changes too. G-ANL-F0's
+    re-run bytes then differ, and its manifest is superseded by hand `git mv` (G-ANL-F0 entry)."
+  DISPOSITION: applied.
+
+--- V17 [missing-disclosure (completeness)]
+  QUOTE:
+    ## E. Carried from earlier steps, needed by LOCK v0.1 at the latest
+  PROBLEM:
+    Section E cites step-3 notes elsewhere (note 55 in C7) but leaves out two that bear on LOCK v0.1's calibration
+    artifacts. N9 D1.22: condition (2)'s k and n_eligible are undefined for f1's Bernoulli corruptor at the 0.12
+    replay (32 drawn against 31 changed), and the note says the item "has never been dispositioned". Notes #25: the
+    renders' sha256 in m:176 and m:302 has no stated serialization (gcal.py hashes the newline-joined renders).
+  CORRECTION:
+    Add "**E6. Step-3 notes bearing on LOCK v0.1's calibration artifacts** (`05c4636`, notes raw). N9 D1.22:
+    condition (2)'s k and n_eligible are undefined for f1's corruptor at the 0.12 replay; the note says it was never
+    dispositioned, and the outcome is the same under every reading. Note #25: the renders' sha256 has no stated
+    serialization (gcal.py hashes the newline-joined renders)."
+  DISPOSITION: applied.
+
+--- V18 [ambiguous]
+  QUOTE:
+    A ruling that changes any of these changes the analyzer's sha256.
+  PROBLEM:
+    The scope is ambiguous. In the section intro, "these" reads as C1–C9, but not every C7 ruling changes the
+    analyzer. The Clock's boundary-day comparison is a declared input, and per the build inputs the A5 column ruling
+    "changes only which column the entry quotes".
+  CORRECTION:
+    "A ruling that changes any of C1–C6 changes the analyzer's sha256 ... C7's rulings need not: the boundary-day
+    comparison is a declared input, and A5's ruling changes only which column the entry quotes."
+  DISPOSITION: applied.
+
+--- V19 [misstatement]
+  QUOTE:
+    The one dynamic check lives in the self-test.
+  PROBLEM:
+    This understates the source. The G-SHAPE-F0 entry gives the dynamic half as six existing runner checks (named in
+    `runner_dynamic_evidence`) plus one new gshape check, which is the only one asserting what classify receives.
+  CORRECTION:
+    "The dynamic half lives in the m self-test, never on a run path: six existing runner checks and one new gshape
+    check, the only one asserting what classify receives."
+  DISPOSITION: applied.
+
+--- V20 [missing-disclosure]
+  QUOTE:
+    The one-process check flags any process run from the `jlens-qwen36` venv, including the audit session's
+  PROBLEM:
+    F1 proposes launching "when the audit session is idle" but leaves out the G-CAL entry's disclosure that the
+    check runs at launch only. During completability the audit session kept working (its N13 raws were written at
+    05:44:45 UTC), and whether a flagged process ran during the generations was not checked.
+  CORRECTION:
+    Add: "- The check runs at launch only. During completability the audit session kept working (N13 raws at
+    05:44:45 UTC), and whether a flagged process ran during the generations was not checked (G-CAL entry)."
+  DISPOSITION: applied.
+
+--- V21 [misstates-seat]
+  QUOTE:
+    the render words keep 4–6 of "Compute"'s 7 letters, not only the initial.
+  PROBLEM:
+    This misstates the seat's text. The seat's note says the six words "share with 'Compute' only the initial letter
+    and the length", not only the initial.
+  CORRECTION:
+    "the render words keep 4, 5, 4, 6, 4 and 5 of 'Compute''s 7 letters in place (items 0, 3, 6, 9, 12, 14), where
+    the seat's note says they share 'only the initial letter and the length'."
+  DISPOSITION: applied.
+
+--- V22 [ambiguous]
+  QUOTE:
+    m:324's C3 list names only
+  PROBLEM:
+    "C3" is a label from the build spec (build-inputs §4.4, "NOT-RUN by C3") and is not defined in the block. It
+    also collides with the block's own item C3 (PIN-9), so a reader may take it as a cross-reference.
+  CORRECTION:
+    "m:324's no-first-read clause ('locked and produces no session reaching a first read before …') names only"
+  DISPOSITION: applied.
+
+--- V23 [misattribution]
+  QUOTE:
+    m:176 attributes it to f0 (calib2), measured on the renders f1's
+  PROBLEM:
+    The sentence attributes the provenance of the renders to m:176. m:176 gives only "its 0.12 figure of record is
+    +.078, calib2, pools 8547d9a11ba55b95, data/f/calib.json". The statement that calib2's renders were byte-
+    identical to f1's corruptor's at 0.12 comes from the G-CAL entry.
+  CORRECTION:
+    "m:176 gives it as calib2's figure (f0's calibration, data/f/calib.json). The G-CAL entry (`cf8eb5b`) adds that
+    calib2's renders were byte-identical to those f1's corruptor gives at 0.12."
+  DISPOSITION: applied.
+
+============================================================ ALL CLAIMS
+[H0-01] VERIFIED -> VERIFIED: L1: LOCK-m-F0 v0.1 is PROPOSAL-m v1.11 §8 step 9.
+[H0-02] VERIFIED -> VERIFIED: L3: HEAD b4d7f13.
+[H0-03] FAILS -> FAILS: L5-6: the block collects in one place every question G-CAL (step 6), G-SHAPE-F0 (step 7) and G-ANL-F0 (step 8) left for the seat.
+[H0-04] IMPRECISE -> IMPRECISE: L6-7: "Nothing here has been adjudicated by Code."
+[H0-05] IMPRECISE -> IMPRECISE: L7-11: each item names where it is recorded, Code's default or reading, and whether it blocks LOCK v0.1.
+[H0-06] VERIFIED -> VERIFIED: L13: steps 7 and 8 have run, both PASS.
+[H0-07] VERIFIED -> VERIFIED: L13: LOCK v0.1 is not drafted.
+[H0-08] VERIFIED -> VERIFIED: L16: the seat has already made the condition-(3) legibility read (2c50e03).
+[H0-09] IMPRECISE -> IMPRECISE: L16-17: everything below may be read in any order; A1 (the read of the 128 generations) is not blinded.
+[H0-10] FAILS -> FAILS: L21: "G-CAL closes on A1–A4; LOCK v0.1 needs G-CAL closed."
+[H0-11] VERIFIED -> VERIFIED: L23-26: sources are the G-CAL entry (cf8eb5b), the read-of-record entry (2c50e03) and results/raw/2026-10-08_m-gcal_completability_read.txt.
+[H0-12] VERIFIED -> VERIFIED: L28: A1 cites m:271, "read by the seat at the stage".
+[H0-13] VERIFIED -> VERIFIED: L29: A1 blocks G-CAL's close.
+[H0-14] VERIFIED -> VERIFIED: L30: the read raw's section 3 lists every generation: pool, item, seed, graded hit or miss, task as served, text.
+[H0-15] VERIFIED -> VERIFIED: L31: the raw's section 2 is Code's tally, descriptive only.
+[H0-16] VERIFIED -> VERIFIED: L33: completability ran before the seat's read of record; m:358 lists the read first.
+[H0-17] VERIFIED -> VERIFIED: L34: A2 blocks G-CAL's close.
+[H0-18] VERIFIED -> VERIFIED: L36-37: Code launched completability under 'Go for step 6', on its reading that m:358 fixes no order after the 0.12 replay.
+[H0-19] IMPRECISE -> IMPRECISE: L38: the first launch (04:41:33 UTC, 2026-10-08) was refused by the preflight.
+[H0-20] VERIFIED -> VERIFIED: L38-39: the run of record (05:39–05:46 UTC) preceded the read.
+[H0-21] VERIFIED -> VERIFIED: L40-41: the build review's disposition of spec finding #1 made the same call and declined the order half of that finding's fix.
+[H0-22] VERIFIED -> VERIFIED: L42: Code applied the reading without putting it to the seat.
+[H0-23] VERIFIED -> VERIFIED: L44: the roster assertion, listed last in m:358, was computed in the model-free half.
+[H0-24] VERIFIED -> VERIFIED: L45: A3 blocks G-CAL's close.
+[H0-25] VERIFIED -> VERIFIED: L46: the early roster assertion was Code's build-time choice, since it needs no model.
+[H0-26] VERIFIED -> VERIFIED: L48: steps 7 and 8 were built and run before G-CAL closed, on the PI's 'Go for steps 7 and 8', 2026-10-10.
+[H0-27] VERIFIED -> VERIFIED: L49: A4 blocks LOCK v0.1.
+[H0-28] VERIFIED -> VERIFIED: L50-51: G-SHAPE-F0's G-CAL inputs are the renders of record and the records that bind them; G-ANL-F0's is the flag's source, which carries no pick.
+[H0-29] VERIFIED -> VERIFIED: L52-53: if they must follow G-CAL's close, each re-runs, byte-identical only if its recorded inputs are unchanged.
+[H0-30] IMPRECISE -> IMPRECISE: L54-55: if a G-CAL ruling re-specifies the renders, G-SHAPE-F0 re-runs after an edit to its pinned renders sha256, a package change, and the re-run is not byte-identical.
+[H0-31] VERIFIED -> VERIFIED: L56: supersession of either artifact is by hand `git mv`, on the seat's ruling.
+[H0-32] VERIFIED -> VERIFIED: L58-59: the completability run was launched without `disown`; m:267's checklist says `nohup caffeinate -is … & disown`.
+[H0-33] IMPRECISE -> IMPRECISE: L60: A5 blocking is 'the seat's to say'; the G-CAL entry did not list it among what G-CAL waits on.
+[H0-34] VERIFIED -> VERIFIED: L61-62: Code's reading is that it changes nothing, since the launching shell was non-interactive (no hangup sent) and nohup ignores one anyway.
+[H0-35] VERIFIED -> VERIFIED: L64: A6 is optional (the G-CAL entry's O1–O4); whether any bears on (3), (4) or the renders is the seat's.
+[H0-36] VERIFIED -> VERIFIED: L66-67: O1, 7 of item 15's 8 generations answer `close`; the gold list is {closed, shut}; f0's grader, ported verbatim, grades all 7 as misses.
+[H0-37] IMPRECISE -> VERIFIED: L68-70: O2, two graded hits Code reads as not answering: item 7 seed 3 ('both 1 kilogram') and item 9 seed 0 (`miyms` read as minutes).
+[H0-38] VERIFIED -> VERIFIED: L71: items 7 and 9 are the only items whose gold appears in the task text, so a restatement of the task hits.
+[H0-39] VERIFIED -> VERIFIED: L72: seeds 0 and 1 of item 9 both read `miyms` as minutes.
+[H0-40] VERIFIED -> VERIFIED: L73: O3, item 2 corrupted 0/4 (`thiru`).
+[H0-41] VERIFIED -> VERIFIED: L74: O4, one generation is the whole line '=== End of evaluation session ==='.
+[H0-42] IMPRECISE -> IMPRECISE: L75: "Under all four post-hoc re-gradings, condition (4) still passes."
+[H0-43] VERIFIED -> VERIFIED: L75-76: the tightest is the two hits removed only: corrupted 46/64, which clears the absolute bar by one hit.
+[H0-44] VERIFIED -> VERIFIED: L77-78: whether to adopt any of O1–O4 or the corruption-mirroring tally as pre-declared counters for G-CAL-OLMo (rule 23); Code adopts none.
+[H0-45] VERIFIED -> VERIFIED: L80-82: the completability artifact's field `f1_012_of_record` and its stdout line call +.078 'f1's 0.12 figure of record'; m:176 attributes it to f0 (calib2), measured on the renders f1's corruptor gives.
+[H0-46] VERIFIED -> VERIFIED: L83: the label slip is flagged, not changed.
+[H0-47] VERIFIED -> VERIFIED: L85-87: Code recorded two factual notes: the '0.12 walk' gives the same words as 0.15 for the six Compute items; the render words keep 4–6 of 'Compute''s 7 letters, not only the initial.
+[H0-48] VERIFIED -> VERIFIED: L89-90: Code will draft, for LOCK v0.1's calibration artifacts, the sentence on the operand exclusion that the seat suggested, and flag it at the lock.
+[H0-49] VERIFIED -> VERIFIED: L92: PIN-S5 and PIN-S6 block LOCK v0.1 (the critic's route); the rest are readings to confirm or replace.
+[H0-50] VERIFIED -> VERIFIED: L94-97: sources are the G-SHAPE-F0 entry (f23b444), the build (d092078) and the build-inputs raw.
+[H0-51] VERIFIED -> VERIFIED: L99-101: B1 is PIN-S6, 'the render itself' (m:277), blocking; the PASS rests on reading it as the render placed in the segment.
+[H0-52] VERIFIED -> VERIFIED: L102-103: read as render scored as the response, Qwen fires 256/2,816, the v5 `content:task_echo` advisory on items 2 and 8; PIN-S3's strict predicate counts those as fires, so the verdict would be STOP.
+[H0-53] VERIFIED -> VERIFIED: L104: OLMo fires 0.
+[H0-54] VERIFIED -> VERIFIED: L106-108: B2 is PIN-S5, Layer S, a syntactic runner-scope check beyond m:277's letter, blocking; R1–R6 apply to the two runners' classify calls, R7 to every SessionLog method, R8 package-wide.
+[H0-55] VERIFIED -> VERIFIED: L109-110: R4 is stricter than the build spec's: each history append must sit after the classify that scored it, once per call site.
+[H0-56] IMPRECISE -> IMPRECISE: L111: "The one dynamic check lives in the self-test."
+[H0-57] IMPRECISE -> IMPRECISE: L112: under B2 (PIN-S5): "Also, Layer C: segment + gold must fire on every placement."
+[H0-58] VERIFIED -> VERIFIED: L115: the fire predicate (PIN-S3) is the strict reading, any of 12 fields.
+[H0-59] VERIFIED -> VERIFIED: L116-122: enumeration (PIN-S1, PIN-S2): 22 render–gold pairs × 4 templates × 16 contrast banners × 2 phases; golds verbatim and unframed; sham banners, clean text and menus out; n = t + 1 forced, t + 5 free; each placement scored as a first round (`earlier` empty), so history-dependent classes such 
+[H1-01] VERIFIED -> VERIFIED: B3 (l.121-122): each placement is scored as a first round (`earlier` empty), so history-dependent classes such as `stuck_attractor` are not exercised.
+[H1-02] VERIFIED -> VERIFIED: B3 (l.123-124): PIN-S4 reads the stack as each substrate's own; the OLMo tokenizer-side ban-id assertion is left to the box (LOCK-m-OLMo-{ckpt} v0.1).
+[H1-03] VERIFIED -> VERIFIED: B3 (l.125): the committed-sources precondition binds the canonical run only.
+[H1-04] VERIFIED -> VERIFIED: B3 (l.126): a renders-sha mismatch is a STOP.
+[H1-05] IMPRECISE -> VERIFIED: C header (l.128): 'C1–C5 block LOCK v0.1, which hashes the analyzer.'
+[H1-06] VERIFIED -> VERIFIED: C sources (l.131-132): G-ANL-F0 entry `b4d7f13`; analyzer built `64df36b`, amended `b62af85`, sha256 `24d44a3c…`.
+[H1-07] VERIFIED -> VERIFIED: C sources (l.133): manifest `data/m/gates/G-ANL-F0.json` has sha256 `9bea8339…`.
+[H1-08] IMPRECISE -> IMPRECISE: C sources (l.133-134): the manifest's 'register marks each of C1–C4 "blocking LOCK v0.1, not step 8"'.
+[H1-09] VERIFIED -> VERIFIED: l.136-137: a ruling that changes any of these changes the analyzer's sha256; G-ANL-F0 is then rebuilt and re-run, and its manifest superseded.
+[H1-10] VERIFIED -> VERIFIED: C1 (l.139-140): PIN-5 asks whether m:324's list of Clock causes is exhaustive. Code's default is the residual cause `clock:not-locked:<stage>`, a gate that had not reached its end.
+[H1-11] VERIFIED -> VERIFIED: C2 (l.142-146): m:271 says a hair-trigger fire 'stops the stage'; m:330 says 'A fired bar pauses'; m:324 names only 'a PI stop, a G-VER STOP, or its cap'. Default: refused unless a declared PI-stop record bound to the checkpoint's sha256 is supplied; with one, m:324's PI-stop rule applies.
+[H1-12] IMPRECISE -> IMPRECISE: C2 (l.144): 'm:324's C3 list'.
+[H1-13] VERIFIED -> VERIFIED: C3 (l.148-151): PIN-9. m:330 says 'pauses are not verdicts'; m:316 says a guard fire 'never changes a verdict'. Default: VERDICTS refuses; the seat's adjudication enters as a declared `--adjudication` file bound to the checkpoint.
+[H1-14] VERIFIED -> VERIFIED: C4 (l.153-156): PIN-17. §8.1 has one clause per control with a v1 coordinate (A0, A0-OLMo-sft/-dpo/-instruct); A1 belongs to §8.2, 'open' at v1; to be re-verified against the placed preprint at LOCK v1.0.
+[H1-15] VERIFIED -> VERIFIED: C5 (l.159-160): PIN-42. `not-run` and `posting` refuse unless the analyzer is committed and the proposal is v1.11, and record the analyzer, package and closure shas; this is a binding the spec does not state.
+[H1-16] VERIFIED -> VERIFIED: C5 (l.161-164): PIN-43. Every declared date is an ASCII, real calendar date. It narrows one input: a no-first-read NOT-RUN in `--olmo-states` must carry a real date, though the unit's own NOT-RUN output has none. What that date means is not stated anywhere.
+[H1-17] IMPRECISE -> IMPRECISE: C5 as a whole presents PIN-43 for the seat's confirmation, without saying how the defects were handled.
+[H1-18] IMPRECISE -> IMPRECISE: C6 (l.166-174) lists the readings the seat may replace: PIN-4, PIN-5, PIN-15/16, PIN-22, PIN-21, PIN-19 (flag of record TRUE), PIN-13, PIN-3 (m:190 base case, odd-n split, sham pooled).
+[H1-19] VERIFIED -> VERIFIED: C7 (l.176-182) lists four open items, each due by its own stage and not blocking LOCK v0.1: the Clock boundary day (step-3 note 55; a declared input) by the first Clock date; the 7-vs-1 column (G-PORT A5; interim PIN-12 `sessions_excluded_any_phase`) before step 17's entry; G-ANL-F3 versioning (m:29
+[H1-20] VERIFIED -> VERIFIED: C8 (l.184-186): the first manifest run ran on `64df36b` (`ea985c11…`). Code set it aside uncommitted, without a seat ruling, when the verification of Code's closing edit found the gap `b62af85` closes. PIN-37's `git mv` supersession governs committed artifacts only.
+[H1-21] VERIFIED -> VERIFIED: C8 (l.187): the set-aside run is recorded in the G-ANL-F0 entry for the seat.
+[H1-22] IMPRECISE -> IMPRECISE: C8 (l.188): that entry corrects the G-SHAPE-F0 entry's mention of an "11:38 UTC run of record".
+[H1-23] VERIFIED -> VERIFIED: C9 (l.190-192): `stages.py` has no path for recording a seat adjudication of a fired end look on a terminal campaign; no end look is evaluated on a STOP-ended campaign.
+[H1-24] VERIFIED -> VERIFIED: D1 (l.197-200): G-PORT `96fbcacf…` (package at 54e41c9); G-CAL `4b49658739523c60…` (c75d4d8); G-SHAPE-F0 and G-ANL-F0 `06ab1430…` (package at d092078); 64df36b and b62af85 touch nothing under valence_core/.
+[H1-25] VERIFIED -> VERIFIED: D1 (l.201-202): `54e41c9..c75d4d8 -- valence_core/m` adds gcal.py and edits __init__.py; `c75d4d8..d092078 -- valence_core/m` adds gshape.py alone.
+[H1-26] VERIFIED -> VERIFIED: D2 (l.204-205): `analyzer_sha256` is optional in the stages' identity_extra today, and nothing checks `package_sha256` against the lock at stage start.
+[H1-27] VERIFIED -> VERIFIED: D2 (l.206-208): the change is in stages.py, so it moves package_sha256. stages.py is not in G-SHAPE-F0's scoring-stack map, so G-SHAPE-F0 does not re-run, but the lock states the new package.
+[H1-28] VERIFIED -> VERIFIED: D2 (l.209-211): the change would move the package hash the G-ANL-F0 manifest records (`06ab1430…`), and G-ANL-F0's battery exercises `stages` on the verdict path. Re-run with supersession by hand `git mv`, or the lock states the diff: the seat's choice.
+[H1-29] VERIFIED -> VERIFIED: D3 (l.213): compare G-SHAPE-F0's sources map with the lock's tree (its PIN-S10); any difference re-runs G-SHAPE-F0 first.
+[H1-30] IMPRECISE -> IMPRECISE: E1 (l.217-220): 'Ruling (h)'s two extensions, as Code built them'. A forced-phase hair trigger or G-VER STOP on the contrast session keeps its class (Code's reading of m:318 exception (1)), and (h) also applies to the stripped read with only {phase, ri, n, text} per forced round.
+[H1-31] VERIFIED -> VERIFIED: E2 (l.222-224): G-PORT's two borderline clauses (988e5df). B1: extend (14) to 'no encode limit on either path'. B2: a clause stating that sham s no longer shares contrast s's cell (a consequence of (8)).
+[H1-32] VERIFIED -> VERIFIED: E3 (l.226-230): G-PORT's four seat notes are m:261's 'rule of record' vs m:308's domain; m:271's free-round v2 rule vs the scaffold hair trigger; m:172's no-confound claim vs π; the 'unaffected' phrasing in (12) and (14).
+[H1-33] VERIFIED -> VERIFIED: E4 (l.232-233): G-PORT's 25 differences plus 2 borderline beyond §2.7's fourteen; m:267 adds them to Appendix D through the G-PORT entry; the seat may adjudicate any of them.
+[H1-34] IMPRECISE -> IMPRECISE: E header (l.215): the items in E are 'Carried from earlier steps, needed by LOCK v0.1 at the latest'.
+[H1-35] VERIFIED -> VERIFIED: F1 (l.237-240): the one-process check flags any process run from the jlens-qwen36 venv, including the audit session's model-free jobs, and held up completability by about 20 minutes. G-TIME-F0 is step 10, the next Qwen run.
+[H1-36] VERIFIED -> VERIFIED: F2 (l.242-243): the OLMo track (from step 9, when a box exists) needs the PI's go for a pod start and the runpod MCP re-authorised (currently needs authorising through /mcp).
+[H1-37] FAILS -> FAILS: Completeness, section E: the block says it collects the items carried from earlier steps that LOCK-m-F0 v0.1 needs.
+[H1-38] FAILS -> FAILS: Completeness, section A: the block says it collects every question G-CAL left for the seat.
+[H1-39] IMPRECISE -> IMPRECISE: Completeness, E4: G-PORT's open items are the 25 differences plus 2 borderline.
+
+####################################################################################################
+PASS 2: claims 128, verified 114, confirmed corrections 13, refuted flags 1, uncheckable 0, values findings 12
+####################################################################################################
+============================================================ CONFIRMED CORRECTIONS
+--- [H0-04] IMPRECISE
+  CLAIM:
+    L10: section E's carried items have no deadline set by any source; Code proposes LOCK v0.1 as the latest point
+  REFUTER'S EVIDENCE:
+    The checker is right. "No source sets them a deadline" is too broad, because one of section E's items has its
+    point fixed by its sources:
+    - RESULTS.md:1911-1912 and 1918-1919 are the `05c4636` entry, confirmed by git blame and by the commit message
+    ("cross-template launch order at v0.1"). It says "Code declares each at step 4's build, before any data; pin 3
+    is declared at each unit's v0.1. The seat may direct otherwise." It also says the cross-template launch order
+    "is declared at each unit's v0.1 (D8C1.38, contested)."
+    - Step-3 note #69 (results/raw/2026-10-06_m-v1.11_step3_notes.md:79) says the order across templates is "still
+    undeclared, which Code can declare at v0.1."
+    - m:279 lists "the gate-stage launch order (§2.1's table order)" among the contents of LOCK-m-F0 v0.1.
+    - schedule.py:399 carries the pin as "PIN (Code, declared at LOCK v0.1)".
+
+    So any direction from the seat on pin 3 has to arrive by the v0.1 that declares it. LOCK v0.1 is set by the
+    source here, not proposed by Code. The block contradicts itself: E6 (seat_block_v2.md) repeats "It is declared
+    at each unit's v0.1" and says three notes "bear on what LOCK-m-F0 v0.1 contains (m:279; m:176's Artifacts)".
+
+    No other E item has a deadline:
+    - E1 (dispositions entry, `54e41c9`, RESULTS.md:1128-1133 and 1180-1186) is "flagged for the seat", with no
+    timing.
+    - E2 to E5 (the G-PORT entry, `988e5df`, RESULTS.md:937-1125) say only "the seat may adjudicate any of them".
+    - Notes #25 and N9's D1.22 concern artifacts that m:176 places in LOCK v0.1 (the renders' sha256 and the 0.12
+    replay). But both were computed at G-CAL and are of record from then on, and neither note sets a deadline: #25
+    says "Carry as a dated note", and D1.22 says it "has never been dispositioned".
+    - The G-ANL-F0 entry's "Open, not blocking LOCK v0.1 (each due by its own stage)" list (RESULTS.md:185-190)
+    concerns step-3 note 55 and items outside E. The block puts note 55 under C7, not E.
+
+    The checker's correction is accurate. It needs only a small rewording so it is clear that the exception is pin
+    3's declaration point.
+  CORRECTION:
+    - the items carried from earlier steps that are still open for the seat (section E). Their sources set them no
+    deadline, except build pin 3 (E6): the cross-template launch order "is declared at each unit's v0.1"
+    (`05c4636`), and m:279 puts the gate-stage launch order in LOCK-m-F0 v0.1. For the rest, Code proposes LOCK v0.1
+    as the latest point.
+  DISPOSITION: applied.
+
+--- [H0-06] IMPRECISE
+  CLAIM:
+    L14-18: the items where Code has already acted on its own reading without a seat ruling are A2, A3, C5's PIN-43
+    and C8
+  REFUTER'S EVIDENCE:
+    The block calls the L14-18 list "The items where that happened", meaning items where Code acted on its own
+    reading without a seat ruling. The list leaves out E1, which meets the block's own test at L13-14 ("the item
+    says so").
+
+    What the dispositions entry `54e41c9` records:
+    - **The exception kept as built.** RESULTS.md:1128-1133 says ruling (h) is implemented except for "a forced-
+    phase hair-trigger or G-VER STOP, whose announcement keeps its class as built. That this falls under m:318
+    exception (1) is Code's reading, not the ruling's words; it is flagged for the seat."
+      - :1180-1186 adds "Kept as built, as m:318 exception (1) adjudications ... Flagged for the seat."
+      - The seat's ruling (h), quoted at :1153-1155, says "no class and no round position" at any G-TIME stage. So
+    Code's act runs against the ruling's literal words, on Code's own reading of m:318. That is the same kind of act
+    as A2, where Code read m:358 as fixing no order.
+    - **The extension.** :1133 says "Code also extended (h) to the stripped read". :1172 says "Code's extension of
+    (h) to the stripped read, PIN, flagged for the seat."
+    - **Still unruled.**
+      - In RESULTS.md lines 1-1125 (every later entry: G-PORT, G-CAL, the read of record 2c50e03, G-SHAPE-F0,
+    G-ANL-F0), the only mention of (h) is :983. It is in the G-PORT entry and says "(ruling (h)) was not compared
+    with f1", which is not a ruling.
+      - None of the later raws checked (the build-inputs raw, the completability read raw) rules on it.
+    - **The block's own text.** E1 (block L317-327) says "Code's reading, not the ruling's words" and "Code extended
+    (h)".
+
+    The four items the claim does list are correct as described: A2/A3 against m:358's order, C5's PIN-43, and C8.
+
+    Not added, on purpose:
+    - **B's PIN-S readings, C5's PIN-42 and C6's PINs.** These were built as defaults by the route the critic set in
+    the build-inputs raw (:45, :91, :110-112: build defaults now, send them to the seat before step 9). They belong
+    to the block's other category, "Code's default or reading".
+    - **A5's missing `disown`.** This was a launch slip that Code read afterwards as harmless (RESULTS.md:796-798).
+    It was not an act taken on a reading.
+
+    One small fault in the checker's evidence: it says "no later RESULTS entry mentions ruling (h)", but :983 does
+    mention it, without ruling. The conclusion still holds.
+  CORRECTION:
+    The items where that happened:
+
+    - A2 and A3, the two departures from m:358's order;
+    - C5's PIN-43, date defects that the round-3 reviewers had routed "for the seat" and Code fixed itself;
+    - C8, the first G-ANL-F0 manifest, set aside uncommitted;
+    - E1, ruling (h): the exception Code kept as built on its reading of m:318 exception (1), and Code's extension
+    of (h) to the stripped read (`54e41c9`).
+  DISPOSITION: applied.
+
+--- [H0-09] IMPRECISE
+  CLAIM:
+    L20-22: a blocking status appears only where its source sets one, and items with no 'Blocking' line have no
+    label in their source
+  REFUTER'S EVIDENCE:
+    The checker is right that L20-22 is imprecise and right about A9 and B3. Its correction is incomplete, though,
+    because it would leave L21 false for items in section C.
+
+    (1) A9 (L141) has a line, "Blocking: the seat's to say", that no source sets. Only 2c50e03 raises its two
+    questions, in the "Reading conditions" part: "is a question for the seat" and "How the two bear on each other is
+    the seat's to say". Its sentence "Whether any flagged or optional item holds the close is the seat's to say"
+    sits under "G-CAL now", and there "flagged" means the disown item and "optional" means O1-O4. A9's questions are
+    neither. Nothing about them appears in f23b444, b4d7f13, the build-inputs raw or the followup raw (grep for
+    "exposure" finds nothing). L46's "(A5, A6, A9)" makes the same overreach.
+
+    (2) B3 has no Blocking line. The G-SHAPE-F0 status line (RESULTS L324-325) makes LOCK v0.1 wait "on the seat's
+    answer to the readings flagged below". The build inputs (L933, L938) declare the PINs at LOCK v0.1. L24's bullet
+    discloses this.
+
+    (3) The checker missed this one. Section C has items with no "Blocking" line whose sources do label them:
+    - C1-C4: the manifest's seat_routed marks PIN-5, PIN-8, PIN-9 and PIN-17 "blocking LOCK v0.1, not step 8"
+    (checked in data/m/gates/G-ANL-F0.json, and also at build-inputs L45).
+    - C5's PIN-42: its register text reads "for the seat's confirmation at LOCK v0.1".
+    - C7: the G-ANL-F0 entry heads the list "Open, not blocking LOCK v0.1 (each due by its own stage)", and build-
+    inputs L49 has "non-blocking for step 8".
+
+    The block carries these labels in section C's opening lines (L196-197) and in C7's heading (L265), not in
+    Blocking lines. So L21's "Items with no 'Blocking' line have no label in their source" is literally false for
+    C1-C4, C5's PIN-42 and C7. L22 would then put whether C1-C4 hold the lock with the seat, which contradicts L196,
+    "C1-C4 block LOCK v0.1".
+
+    Every other label is sourced: A1-A3 (2c50e03, "Still owed by the seat for G-CAL to close"), A4 (b4d7f13, "LOCK-
+    m-F0 v0.1 (step 9) waits on ... the seat's three order rulings (...; steps 7-8 before the close)"), A5 and A6
+    (2c50e03), and B1 and B2 (the f23b444 status line, and build-inputs L314 "blocking LOCK v0.1, not step 7").
+  CORRECTION:
+    Replace L20-24 with:
+
+    "**How items are labelled.** Each item gives Code's default or reading, where there is one. A blocking status
+    appears only where its source sets one, either in the item's "Blocking" line or in its section's opening lines
+    or heading: B1-B2 (section B), C1-C4 and C5's PIN-42 (section C), and C7, which its source marks not blocking.
+    An item with a status in neither place has no label in its source, and whether it holds the lock is the seat's
+    to say. There is one exception:
+
+    - B3: the G-SHAPE-F0 entry's status line has LOCK v0.1 wait "on the seat's answer to the readings flagged
+    below". A replaced reading edits gshape.py, moves `package_sha256` and re-runs G-SHAPE-F0 before the lock."
+
+    Also, per H0-68: delete A9's "Blocking: the seat's to say." and keep its second sentence as a plain bullet ("The
+    entry does not list either among what G-CAL waits on."). At L46, change "(A5, A6, A9)" to "(A5, A6)".
+  DISPOSITION: applied.
+
+--- [H0-18] IMPRECISE
+  CLAIM:
+    L46: 2c50e03 leaves it to the seat whether a flagged or optional item (A5, A6, A9) also holds the close
+  REFUTER'S EVIDENCE:
+    The checker is right, and I confirmed it independently. In RESULTS.md, the read-of-record entry (2c50e03) ends
+    its "G-CAL now" list (:613-628) with the sentence "Whether any flagged or optional item holds the close is the
+    seat's to say" (:627-628). That list sorts G-CAL's items into three groups:
+    - **Owed (:615-617):** the read of the 128 generations and the rulings on the two order departures. These are
+    A1-A3.
+    - **Flagged (:618-619):** only the missing `disown` ("Flagged for the seat in the G-CAL entry and still
+    unanswered: the missing `disown`"). This is A5.
+    - **Optional (:620-626):** O1-O4 and the candidate counters for G-CAL-OLMo. This is A6.
+
+    A9's two questions do not appear in that list. They sit under "Reading conditions, as the seat discloses them"
+    (:559 onward):
+    - **Opened-before question:** "a question for the seat. Code does not weigh it" (:583-584).
+    - **Two exposures question:** "How the two bear on each other is the seat's to say" (:564).
+
+    The entry never calls either one flagged or optional, and never connects either one to the close. The commit
+    message of 2c50e03 agrees. It says the reading conditions "are recorded ... Code does not weigh them". Its list
+    of what is still owed names only the generations read, the two order rulings, "the missing disown flagged and
+    unanswered", and the steps 7-8 order question. So the "flagged or optional" sentence covers A5 and A6, not A9.
+    Block L46's "(A5, A6, A9)" credits the entry with a statement about A9 that it does not make. A9's own Blocking
+    line (block L141: "the seat's to say. The entry does not list either among what G-CAL waits on") is correct and
+    matches the corrected wording.
+
+    One fix to the checker's wording: "bear on the close" is ambiguous, because the second A9 question is itself
+    about how two exposures "bear on" each other. The replacement below says "hold the close", the term L46 and the
+    source sentence use.
+  CORRECTION:
+    That entry leaves it to the seat whether a flagged or optional item (A5, A6) also holds the close. It puts A9's
+    two questions to the seat, but does not say whether either holds the close.
+  DISPOSITION: applied.
+
+--- [H0-25] IMPRECISE
+  CLAIM:
+    L59: '(m:358 lists the read first)'
+  REFUTER'S EVIDENCE:
+    The checker is right; I re-checked it myself. m:358 reads: "6. G-CAL: the 0.12 replay first; the renders of
+    record and their sha; the seat's read; completability; roster assertion." The proposal itself uses the word
+    "first" for the 0.12 replay, and it lists the seat's read third. So the parenthetical "(m:358 lists the read
+    first)" says something the line does not say. The only true ordering fact is that the read comes before
+    completability. The sources word it that way: the G-CAL entry cf8eb5b (RESULTS.md:898) says "m:358 lists the
+    seat's read before completability, and the roster assertion last." The A2 ruling is still correct that
+    completability ran before the read and that this departs from m:358's order. Only the parenthetical is
+    imprecise.
+  CORRECTION:
+    **A2. Ruling: completability ran before the seat's read of record** (m:358 lists the seat's read before
+    completability).
+  DISPOSITION: applied.
+
+--- [H0-50] IMPRECISE
+  CLAIM:
+    L100: the build-inputs raw lists the disown among 'G-CAL's closing items'
+  REFUTER'S EVIDENCE:
+    The quoted words are accurate. results/raw/2026-10-10_m-steps7-8_build-inputs.md:1008 sits in the spec_gshape.md
+    section (header at :375; the next header, spec_ganl.md, is at :1012). It reads: "[SEAT] The seat still owes
+    G-CAL's closing items: the read of the 128 generations (m:271), rulings on the two m:358 order departures, and
+    the unanswered 'disown'." But the same item's answer ends: "These items do block LOCK-m-F0 v0.1 (m:279
+    'calibration (§2.3 artifacts)'). Route them to the seat in one block before step 9". So that source puts a LOCK-
+    blocking label on the disown as well. decisions_gshape.md (:8-37), which overrides the spec where they differ,
+    does not override this item.
+
+    The block's A5 line says "Blocking: the seat's to say", and its "record disagrees" paragraph cites the build-
+    inputs raw only as listing the disown among closing items. It leaves out that raw's explicit statement that
+    these items block LOCK. That matters by the block's own rule ("A blocking status appears only where its source
+    sets one"). It also matters because the block's A4 ("Blocking: yes, for LOCK v0.1") carries a label from the
+    same family of sources, while A5 does not.
+
+    The rest of the raw agrees with the checker. :931 lists "the missing `disown`" under "Still open". :1845, a [PI]
+    item, says the 2c50e03 entry "lists the seat's owed items: ... the unanswered `disown`". The RESULTS entries do
+    not set this label: the G-SHAPE-F0 entry (RESULTS:515-516) lists the disown under "Still owed for G-CAL's
+    close", and the G-ANL-F0 entry (RESULTS:230-231) says LOCK v0.1 waits on "G-CAL closing" and the three order
+    rulings but does not name the disown. So the build-inputs raw is the source that labels it explicitly. The claim
+    is literally true but leaves out a blocking label that is material here.
+  CORRECTION:
+    and the build-inputs raw (spec_gshape.md's [SEAT] item, line 1008) lists it among "G-CAL's closing items", and
+    that item's answer says "These items do block LOCK-m-F0 v0.1".
+  DISPOSITION: applied.
+
+--- [H0-68] IMPRECISE
+  CLAIM:
+    L141: A9 is labelled 'Blocking: the seat's to say'
+  REFUTER'S EVIDENCE:
+    I checked this independently, and the checker is right. L141 gives A9 a "Blocking:" line, but none of the
+    sources sets a blocking status for either of A9's questions.
+
+    1. **The `2c50e03` entry** (RESULTS.md:532-641) raises both questions only on their substance:
+       - :583-584: "Whether the entry or its raws had been opened before the lines were written is a question for
+    the seat. Code does not weigh it."
+       - :564: "How the two bear on each other is the seat's to say."
+       - Neither appears in what G-CAL waits on: not in the header at :536-537, and not in the "Still owed by the
+    seat for G-CAL to close" list at :615-617.
+       - The sentence at :627-628, "Whether any flagged or optional item holds the close is the seat's to say",
+    closes the "G-CAL now" list. In that list, "flagged" means the item "Flagged for the seat in the G-CAL entry",
+    which is the missing `disown` (:618), and "optional" means O1-O4 (:620-626). A9's questions come from `2c50e03`
+    itself, not from the G-CAL entry, so that sentence does not cover them.
+    2. **Later sources don't label them either:**
+       - The G-SHAPE-F0 entry's still-owed list (RESULTS.md:515-517) names the 128-generation read, the two order
+    departures, `disown` and O2/O3.
+       - The G-ANL-F0 entry (:230-231) names G-CAL's close and the three order rulings.
+       - The build-inputs raw (:1008) names the 128-generation read, the order departures, `disown` and the third
+    order question.
+       - None of them mentions the read-provenance question or the two exposures.
+    3. **The block's own rule** (L20-22) says a blocking status appears only where its source sets one, and that an
+    item with no source label gets no "Blocking" line. Section C follows that rule: C5's open question, C6 and C8
+    have no label in their sources and say "whether this blocks the lock is the seat's to say" in prose, with no
+    "Blocking:" line. A5 and A6 can keep their "Blocking: the seat's to say" lines because :627-628 covers them. A9
+    has no such source. The second half of L141 ("The entry does not list either among what G-CAL waits on") is
+    true, but it reports that the source is silent; it does not set a status.
+
+    What L141 says is true in substance: whether A9 holds the close is the seat's to say. But its form tells the
+    reader that a source labels A9, and none does. That makes it imprecise, not false.
+
+    L45, "a flagged or optional item (A5, A6, A9)", maps A9 onto the :627-628 sentence in the same way and has the
+    same defect.
+  CORRECTION:
+    Replace L141 with:
+    "- No blocking status in the source. The entry puts both questions to the seat ("a question for the seat"; "the
+    seat's to say") and does not list either among what G-CAL waits on. Whether either holds G-CAL's close or the
+    lock is the seat's to say."
+
+    To keep L45 consistent, change "(A5, A6, A9)" to "(A5, A6)" and add after it: "A9's two questions have no label
+    in that entry; whether they hold the close is the seat's to say."
+
+    I checked the quoted phrases against RESULTS.md:583-584 and :564. I also checked that neither question appears
+    at :536-537 or :615-617.
+  DISPOSITION: applied.
+
+--- [H0-82] IMPRECISE
+  CLAIM:
+    L189-190: PIN-S4 is each substrate's own stack, with the OLMo tokenizer-side ban-id assertion left to the box
+    (LOCK-m-OLMo-{ckpt} v0.1)
+  REFUTER'S EVIDENCE:
+    The block (seat_block_v2.md:189-190, under B3 "Readings to confirm or replace") says only: "PIN-S4: each
+    substrate's own stack. The OLMo tokenizer-side ban-id assertion is left to the box (LOCK-m-OLMo-{ckpt} v0.1)."
+    No other line of the 377-line block mentions PIN-S4, cross-substrate placement, ban ids, the e2a file or a
+    tokenizer.
+
+    The source of record is the f23b444 entry, RESULTS.md:402-413. It reads m:277's "the full scoring stack of both
+    substrates" as "each substrate's own stack as its startup builds it, without the adapter-dependent ban-id
+    halves; there is no cross-substrate placement". It adds that "Qwen's scaffold set is asserted against the e2a
+    ban-list file, not a tokenizer". The code PIN says the same: gshape.py:424-433, and qwen_stack's docstring reads
+    "minus the live-tokenizer half".
+
+    So the reading drops the tokenizer-side ban-id half on both substrates, not only on OLMo. The block names only
+    the OLMo half, which suggests Qwen's stack is complete. It also leaves out the no-cross-substrate-placement
+    clause.
+
+    This exact compression was already flagged once. The G-SHAPE values check, V4 [missing-disclosure]
+    (results/raw/2026-10-10_m-gshape-f0_valuescheck.txt:375-394, disposition "applied"), quoted "the OLMo ban-id
+    half left to the box". It required the seat list to carry the core reading, including the Qwen e2a-file
+    assertion and no cross-substrate placement. The build review's spec-fidelity finding on PIN-S4 (gshape-
+    build_review.txt:223-282) had said to repeat it in the entry.
+
+    RESULTS.md:498 does keep the short phrase "PIN-S4's own-stack reading". There, though, it points back to the
+    full body text at :402-413 in the same entry. The standalone block has no such text, so the seat would be asked
+    to confirm a reading it never sees in full.
+
+    The checker's facts check out: m:277 contains "the full scoring stack of both substrates", and m:302 names LOCK-
+    m-OLMo-{ckpt} v0.1 with "the OLMo scaffold set's assertion". The checker's correction is right. It only leaves
+    out the m:277 anchor for the phrase being read.
+  CORRECTION:
+    - **PIN-S4:** m:277's "the full scoring stack of both substrates" is read as each substrate's own stack as its
+    startup builds it, without the adapter-dependent ban-id halves, with no cross-substrate placement. Qwen's
+    scaffold set is asserted against the e2a ban-list file, not a tokenizer. The OLMo tokenizer-side ban-id
+    assertion is left to the box (LOCK-m-OLMo-{ckpt} v0.1, m:302).
+  DISPOSITION: applied.
+
+--- [H2-07] IMPRECISE
+  CLAIM:
+    L200-201: C7's rulings need not change the analyzer: the boundary-day comparison is a declared input, and 'A5's
+    column ruling changes only which column the entry quotes'.
+  REFUTER'S EVIDENCE:
+    The claim at seat_block_v2.md L199-201 is not right as written, so the checker is not refuted. There are three
+    problems.
+
+    (1) The label is ambiguous. Section A of this block has its own A5 at L95: "A5. Flag: completability was
+    launched without `disown`." The column question is G-PORT A5, and C7 (L269) and RESULTS.md:210 both label it
+    "(G-PORT A5; ...)". A bare "A5's column ruling" in section C therefore points the reader at the wrong item.
+
+    (2) The sentence says "C7's rulings" in general, but C7 has four items (L265-273):
+    - the boundary-day comparison;
+    - the G-PORT A5 column;
+    - G-ANL-F3's versioning (PIN-14);
+    - the posting's pass bar.
+
+    The sentence gives reasons for only the first two. Both reasons are sourced:
+    - the boundary-day comparison: m_analyze.py:474-479 (PIN-6, "clock_passed ... recorded as given ... the seat's,
+    step-3 note 55") and build-inputs raw ("The analyzer takes the Clock outcome as a declared input");
+    - the column: build-inputs raw ("The seat's ruling on A5 ... changes only which column the entry quotes").
+
+    The posting bar has partial support. Build-inputs raw says "Not blocking for G-ANL-F0: the analyzer accepts any
+    table kind and reports the enumeration."
+
+    (3) Nothing in the sources says G-ANL-F3's versioning leaves the analyzer unchanged. Build-inputs raw only asks
+    the seat "to confirm this [PIN-14], or to choose a new file for G-ANL-F3. Not blocking for step 8." PIN-14's
+    text (m_analyze.py:2488-2492) and RESULTS.md:157-162 say the worktree path is "declared, not implemented at step
+    8, so the analyzer refuses any such run", and they call G-ANL-F3's versioning "the seat's". Read universally,
+    "need not change it" is unsupported for this item.
+
+    The checker's correction fixes the label and adds the posting bar, but it keeps the universal "C7's rulings need
+    not change it" without covering G-ANL-F3's versioning. That leaves the same gap.
+  CORRECTION:
+    Three of C7's four rulings need not change it: the boundary-day comparison is a declared input; a ruling on
+    G-PORT A5's column changes only which column the entry quotes; and the analyzer accepts any table kind and
+    reports the enumeration that the posting's pass bar would judge. The fourth, G-ANL-F3's versioning, is the
+    seat's to settle before step 19, by confirming PIN-14 or by choosing a new file for G-ANL-F3.
+  DISPOSITION: applied.
+
+--- [H2-15] IMPRECISE
+  CLAIM:
+    C5 (L241-242): Code also fixed, in its own tool, 'the gap the follow-up verifier flagged "for Code and the
+    seat": the --olmo-states date (b62af85)'.
+  REFUTER'S EVIDENCE:
+    I agree with the checker; the claim is not refuted. The phrase "for Code and the seat" appears only in report 1
+    of results/raw/2026-10-10_m-ganl-f0-followup_review.txt, the verifier's report on Code's closing edit 64df36b.
+    L93 reads: "Separately, the olmo-states NOT-RUN date gap and the two battery-strength gaps are flagged for Code
+    and the seat." That flag covers three items:
+    1. The `_validate_olmo_states` date gap (L46-51).
+    2. The basic and week forms, with the suggestion to add "20261030" and "2026-W44-5" to `unreal` (L84).
+    3. The non-leap 02-29, with the suggestion to add "2026-02-29" (L85).
+
+    Code's follow-up (1) (L100-106) fixed all three without the seat. It added the `_iso_date` check in the NOT-RUN
+    branch, and `unreal` gained "20261030", "2026-W44-5", "2026-02-29" and "1900-02-29". The b62af85 diff of
+    scripts/m_analyze.py confirms both: `+ if not _iso_date(d["date"])` and `+ "20261030", "2026-W44-5",
+    "2026-02-29", "1900-02-29")`. The b62af85 commit body also says Code "added the verifier's battery strings".
+
+    The claim has two defects:
+    - **It counts one item, not three.** It says "the gap" (singular), when the quoted flag covered three items.
+    Code also acted on the two battery gaps without the seat.
+    - **It credits the wrong report.** It attributes the flag to "the follow-up verifier". Report 3 (L114-165), the
+    verification of the follow-up, does not say "for Code and the seat". It sends only a "narrowing for the seat"
+    (L132), and calls its own battery gaps "minor, non-blocking". The block itself credits the right report at
+    L276-277 (C8: "the verification of Code's closing edit found the gap"), so C5 contradicts it.
+
+    Code's follow-up (2) (L168-176) closed two more battery gaps from report 3. That report did not route them to
+    the seat, so the replacement does not need to name them.
+  CORRECTION:
+    Code also fixed, in its own tool, all three items that the verifier of its closing edit flagged "for Code and
+    the seat":
+    - the `--olmo-states` NOT-RUN date gap;
+    - the basic and week forms, with `20261030` and `2026-W44-5` added to the battery;
+    - the non-leap 02-29, with `2026-02-29` added to the battery.
+
+    These fixes are in `b62af85`.
+  DISPOSITION: applied.
+
+--- [H2-16] IMPRECISE
+  CLAIM:
+    C5 (L244-246): the open question — a no-first-read NOT-RUN declared in --olmo-states must now carry a real date
+    though the unit's NOT-RUN output has none; what that date means is not stated, and 'whether this blocks the lock
+    is the seat's to say'.
+  REFUTER'S EVIDENCE:
+    The facts in C5 (block L244-246) are correct. The follow-up review raw at line 132 (committed at b62af85) says
+    that a no-first-read OLMo unit's NOT-RUN output from `verdicts` has no date. It says such a unit could
+    previously be declared in --olmo-states with "date": null and must now carry a real date. It adds that "nothing
+    says what that date means for a no-first-read cause". The G-ANL-F0 entry in RESULTS.md (b4d7f13, about lines
+    181-183) says the same and ends "The verifier flagged this, and it is the seat's to say". Code's follow-up (2),
+    at raw lines 175-176, routes the note "to the seat with PIN-43".
+
+    The checker's objection holds, though. The verbatim verifier report in that raw file labels the item: "One
+    narrowing for the seat to know about (non-blocking, not a defect under PIN-43 as now worded)". The block's own
+    rule (L20-22) says a blocking status appears only where the source sets one, and that items without a label have
+    none in their source. Because C5 drops the source's label and says only "whether this blocks the lock is the
+    seat's to say", it reads as though the source were silent, which it is not.
+
+    No other source labels this item. The manifest's PIN-43 register text and the analyzer comment
+    (m_analyze.py:435, :2598) are silent on it, and the RESULTS entry also omits the label. So the verifier's label
+    is the only one the block can carry.
+
+    One more point: the verifier does not say what the item does not block. It wrote the label while verifying the
+    step-8 follow-up, whose verdict was CLEAN, so the label does not decide LOCK v0.1. Passing the lock question to
+    the seat after quoting the label is therefore correct, not an adjudication by Code. The checker's correction is
+    right in substance but leaves that scope gap implicit. The replacement below states it and cites the file by its
+    path.
+  CORRECTION:
+    **One open question.** PIN-43 narrows one input: a no-first-read NOT-RUN declared in `--olmo-states` must now
+    carry a real date, though the unit's own NOT-RUN output has none. What that date means for that cause is not
+    stated. The follow-up verifier calls it "non-blocking, not a defect under PIN-43 as now worded"
+    (`results/raw/2026-10-10_m-ganl-f0-followup_review.txt`), without naming what it does not block; whether it
+    holds LOCK v0.1 is the seat's to say.
+  DISPOSITION: applied.
+
+--- [H2-25] IMPRECISE
+  CLAIM:
+    D1 (L290-301) as the complete statement of what LOCK v0.1 should state about gate provenance (package hashes and
+    the diffs).
+  REFUTER'S EVIDENCE:
+    D1's own facts check out against the gate files and git:
+    - The package hashes match: Q-F0_G-PORT.json is `96fbcacf…`, the G-CAL files are `4b49658739523c60…`, and
+    G-SHAPE-F0.json and G-ANL-F0.json are `06ab1430…`.
+    - The diffs match: `54e41c9..c75d4d8 -- valence_core/m` is `gcal.py` plus `__init__.py`, `c75d4d8..d092078` is
+    `gshape.py` alone, and `d092078..HEAD -- valence_core` is empty.
+
+    D1 is still not the whole of what the sources say LOCK v0.1 should state.
+
+    1. **The closure is missing, from D1 and from the rest of the block.** The critic's correction "[LOCK-m-F0 v0.1
+    hazard, spanning both specs]" (build-inputs raw, around L364-367; routed "List it in the consolidated seat
+    block") lists three things LOCK v0.1 should state:
+       - each gate artifact's package_sha256;
+       - the mechanical `git diff --stat c75d4d8..<lock commit> -- valence_core/m`, which "must show only gshape.py
+    ... and no SCORING_STACK_FILES";
+       - "G-ANL's closure from the first correction".
+
+       The first correction (around L85-87) says: "Record it in G-ANL-F0.json and carry it in LOCK v0.1 and in each
+    LOCK v1.0." G-ANL-F0.json records `closure_sha256` `a3bc7bb9df3d8361…`: 15 modules plus
+    `data/olmo/a1_repair_roster.json`. PIN-1 refuses a VERDICTS run whose closure sha256 is not named in its lock. A
+    grep of the block finds "closure" only at L235 (C5 PIN-42, about recording shas), never as something the lock
+    states.
+
+    2. **The no-SCORING_STACK_FILES condition is covered, by D3 rather than D1.** D3 reads: "Compare G-SHAPE-F0's
+    sources map with the lock's tree (its PIN-S10). Any difference re-runs G-SHAPE-F0 first." That comparison is at
+    least as strong as the critic's path-limited diff condition. Today it holds: `git diff c75d4d8..HEAD` over the
+    scoring-stack paths touches only `gshape.py` and `scripts/m_sessions.py`, which are TOOLING_FILES.
+
+    The checker's correction is therefore partly off:
+    - Adding the scoring-stack condition to D1 would duplicate D3.
+    - Its wording, "the diff from c75d4d8 to the lock commit must touch no G-SHAPE-F0 scoring-stack file", widens
+    the critic's `-- valence_core/m` diff to the whole repository but is still credited to the critic.
+    - It quietly drops the critic's "only gshape.py". Dropping it is defensible, because D2's proposed `stages.py`
+    edit would break that condition, but the correction does not say so.
+  CORRECTION:
+    Add to D1: "LOCK v0.1 also states G-ANL-F0's import closure outside the package: `closure_sha256` `a3bc7bb9…` in
+    `G-ANL-F0.json`, covering 15 modules and one data file (PIN-1). This is the third item of the critic's LOCK-
+    hazard correction (build-inputs raw), carried from its first correction, which puts the closure in LOCK v0.1 and
+    in each LOCK v1.0. The same correction requires `git diff --stat c75d4d8..<lock commit> -- valence_core/m` to
+    show no SCORING_STACK_FILES; D3's sources-map comparison carries that condition."
+  DISPOSITION: applied.
+
+--- [H2-35] IMPRECISE
+  CLAIM:
+    E5 (L350): 'E3's fourth note rests on C1 and C2.'
+  REFUTER'S EVIDENCE:
+    The G-PORT entry is at RESULTS.md:1102-1106, and the same text is in the committed 988e5df:RESULTS.md at line
+    192. Its fourth "For the seat" note (the "unaffected" phrasing in (12) and (14)) ends: "the phrase should not
+    read as unaffected overall, given A1, C1 and C2." Here A1 is G-PORT's "A1. The primary's domain"
+    (RESULTS.md:991-999). It is the first of the A1-A25 "Beyond §2.7's fourteen" items, so it is one of E4's 25
+    differences. The block's line 350, "E3's fourth note rests on C1 and C2.", leaves A1 out, so the checker is
+    right. One more point: the block uses the label "A1" for a different item, the seat's read of the 128
+    completability generations (block lines 32, 36, 45 and 53). A replacement that says only "A1" would therefore be
+    ambiguous and needs to name G-PORT's A1.
+  CORRECTION:
+    E3's fourth note rests on C1 and C2, and also on G-PORT's A1 (the primary's domain, one of E4's 25). In the
+    G-PORT entry's words, the phrase "should not read as unaffected overall, given A1, C1 and C2".
+  DISPOSITION: applied.
+
+============================================================ REFUTED FLAGS
+--- [H0-52]
+    L107: A6's blocking status is the seat's to say, quoting 2c50e03
+  CHECKER:
+    The quote matches RESULTS.md:627, and O1-O4 are 'optional' there. But, as with A5, a build input disagrees and
+    the block discloses it only for A5. The critic's evidence line (build-inputs.md:347) says '[C] The 2c50e03 entry
+    lists what is still owed: the read of the 128 generations, and O3'. Its hazard list (:337) treats 'O2/O3' as
+    able to re-specify the renders.
+  REFUTER:
+    L107 is accurate. The quote matches the 2c50e03 entry word for word: RESULTS.md:627-628, which is line 119 of
+    `git show 2c50e03:RESULTS.md`; only the line wrap differs. The label also matches its source. 2c50e03 puts O1-O4
+    under "Optional, as the G-CAL entry put them ("if it chooses")" (RESULTS.md:620). It lists as owed only the
+    128-generation read and the two order rulings (:615), and keeps the disown apart (:618).
+
+    No entry of record disagrees:
+    - The G-CAL entry, cf8eb5b (RESULTS.md:933), has "if it chooses, O1-O4".
+    - G-SHAPE-F0, f23b444 (RESULTS.md:515-517), lists as owed the read, the rulings and the disown, then says
+    "Whether O2/O3 bear on (3) or (4), and so on the renders, is the seat's to say." That is the same status the
+    block gives at L107-108.
+    - G-ANL-F0, b4d7f13, lists no O-item as owed.
+
+    The checker's precedent does not carry over. A5's disclosure was needed because an entry of record (f23b444),
+    and the build-inputs raw's own [SEAT] routing line (:1008), put the disown among the owed items.
+
+    For O3 the build-inputs raw is against the checker:
+    - Its routing and summary lines (:386, :931, :1008, :1845) all list the owed items without O3.
+    - The hazard at :340 ("G-CAL's owed 128-generation read, or O2/O3, re-specifies the renders") separates O2/O3
+    from the owed read. It says only that they could re-specify the renders, and L108 already carries that.
+
+    The only discordant text is :347. It is a misquote of 2c50e03 in the evidence line of a critic finding about a
+    different matter: write-once supersession, routed "PIN, plus notice to the SEAT". The raw's own dispositions and
+    f23b444 both contradict it. It is a slip inside a build input, not a source that gives A6 a different blocking
+    status. So L107's label and quote are neither wrong nor imprecise.
+
+============================================================ UNCHECKABLE
+============================================================ VALUES LENS
+--- V1 [label-mismatch]
+  QUOTE:
+    and the build-inputs raw lists it among "G-CAL's closing items". Flagged, not changed; which holds is
+  PROBLEM:
+    The build-inputs raw does more than list the disown among the closing items. Line 1008 (spec_gshape.md's open
+    questions) names the 128-generation read, the two order rulings "and the unanswered 'disown'", then says: "These
+    items do block LOCK-m-F0 v0.1 (m:279 'calibration (§2.3 artifacts)')". So one source does give the disown a
+    blocking label. The block's own rule is that a blocking status appears where its source sets one. A5 instead
+    says "Blocking: the seat's to say", and its account of the disagreement leaves out the one source that sets a
+    label.
+  CORRECTION:
+    "...and the build-inputs raw (spec_gshape.md's open questions, :1008) lists it among "G-CAL's closing items" and
+    says "These items do block LOCK-m-F0 v0.1". The G-CAL entry and `2c50e03` set no such label. Flagged, not
+    changed; which holds is the seat's." Change A5's label line to: "Blocking: the sources disagree. The build spec
+    (build-inputs raw:1008) says it blocks LOCK v0.1; the G-CAL entry and `2c50e03` do not list it among what G-CAL
+    waits on. Which holds is the seat's."
+  DISPOSITION: applied.
+
+--- V2 [completeness]
+  QUOTE:
+    C8, the first G-ANL-F0 manifest, set aside uncommitted.
+  PROBLEM:
+    The list under "The items where that happened" reads as complete, but it leaves out E1. The dispositions entry
+    (54e41c9) records two things Code did without a seat ruling. First, it kept the forced-phase hair-trigger/G-VER
+    STOP announcing its class, as its own reading of m:318 exception (1): "Code's reading, not the ruling's words".
+    Second, it extended ruling (h) to the stripped read. Both are built in readrule.py and stages.py, and both are
+    flagged for the seat. B2's R4 is the same kind of case: per the G-SHAPE-F0 entry, "Code accepted [it] as built
+    and flagged [it] for the seat".
+  CORRECTION:
+    Add to the list: "- E1, ruling (h): the forced-phase STOP exception, kept as built on Code's reading of m:318
+    exception (1), and Code's extension of (h) to the stripped read, both applied at `54e41c9`; - B2's R4, stricter
+    than the build spec, accepted as built."
+  DISPOSITION: applied.
+
+--- V3 [label-mismatch]
+  QUOTE:
+    whether this blocks the lock is the seat's to say.
+  PROBLEM:
+    The source does set a label. The follow-up verifier who raised this narrowing called it "(non-blocking, not a
+    defect under PIN-43 as now worded)" (results/raw/2026-10-10_m-ganl-f0-followup_review.txt:132). The G-ANL-F0
+    entry also files it under "For the seat, before LOCK-m-F0 v0.1 hashes the analyzer". C5 reports neither, which
+    breaks the block's rule that a blocking status follows its source.
+  CORRECTION:
+    "The follow-up verifier called it "non-blocking, not a defect under PIN-43 as now worded"; the G-ANL-F0 entry
+    lists it under "For the seat, before LOCK-m-F0 v0.1 hashes the analyzer". Whether it holds the lock is the
+    seat's to say."
+  DISPOSITION: applied.
+
+--- V4 [label-mismatch]
+  QUOTE:
+    Items with no "Blocking" line have no label in their source
+  PROBLEM:
+    This is false for C1–C4 and for B3. C1–C4 have no "Blocking" line, yet C's opening labels them through the
+    manifest's seat_routed text, "blocking LOCK v0.1, not step 8". B3 has no Blocking line, yet the next bullet says
+    its source, the G-SHAPE-F0 entry's status line, has LOCK v0.1 wait "on the seat's answer to the readings flagged
+    below". B's opening, "The rest are readings to confirm or replace", then reads as if B3 does not hold the lock.
+  CORRECTION:
+    "Items with neither a "Blocking" line nor a label in their section's opening have no label in their source, and
+    whether they hold the lock is the seat's to say." Give B3 the line: "Blocking: for LOCK v0.1, per the G-SHAPE-F0
+    entry's status line ("LOCK-m-F0 v0.1 waits ... on the seat's answer to the readings flagged below"); the
+    critic's route named only PIN-S5 and PIN-S6."
+  DISPOSITION: applied.
+
+--- V5 [completeness]
+  QUOTE:
+    Whether LOCK v0.1 waits on these is the seat's to say.
+  PROBLEM:
+    C6 copies its list from the G-ANL-F0 entry (b4d7f13). That entry puts these readings under "For the seat, before
+    LOCK-m-F0 v0.1 hashes the analyzer" and closes the section with: "LOCK-m-F0 v0.1 (step 9) waits on G-CAL
+    closing, on the seat's three order rulings (...), and on the rulings above." The block leaves out this sentence
+    of the source on what holds the lock.
+  CORRECTION:
+    "The G-ANL-F0 entry lists them under "For the seat, before LOCK-m-F0 v0.1 hashes the analyzer" and says LOCK
+    v0.1 waits "on the rulings above", without saying which. Whether LOCK v0.1 waits on a reading the seat has not
+    struck is the seat's to say."
+  DISPOSITION: applied.
+
+--- V6 [misstates-source]
+  QUOTE:
+    seat's note says they share "only the initial letter and the length".
+  PROBLEM:
+    This leaves out part of the seat's text. The same note (data/m/gates/G-CAL_seat_read_of_record.md:36) goes on:
+    "The 0.12 walk at k = 3 on a seven-letter word leaves four of seven letters". The read-of-record entry's own
+    factual note adds: "'Four of seven letters' holds for items 0, 6 and 12." As written, the block makes the seat's
+    note look simply wrong.
+  CORRECTION:
+    "The seat's note says they share "only the initial letter and the length", and also that the walk "leaves four
+    of seven letters"; the latter holds for items 0, 6 and 12."
+  DISPOSITION: applied.
+
+--- V7 [overclaim]
+  QUOTE:
+    C7's rulings need not change it: the boundary-day comparison is a declared
+  PROBLEM:
+    This claims all four of C7's rulings leave the analyzer unchanged, but gives reasons for only two. For
+    G-ANL-F3's versioning, PIN-14's worktree path is "declared, not implemented at step 8, so the analyzer refuses
+    any such run". A ruling that confirms PIN-14 may require implementing that path in m_analyze.py, which the build
+    spec routes to the seat for that reason. Nothing shows that ruling, or the posting re-run's pass bar, leaves the
+    analyzer's sha256 unchanged.
+  CORRECTION:
+    "The first two of C7's rulings need not change it: the boundary-day comparison is a declared input, and A5's
+    column ruling changes only which column the entry quotes. Whether the G-ANL-F3 versioning ruling (PIN-14's
+    worktree path is declared, not implemented) or the posting re-run's pass bar would change it depends on the
+    ruling."
+  DISPOSITION: applied.
+
+--- V8 [completeness]
+  QUOTE:
+    State each gate artifact's package hash and the diffs between them.
+  PROBLEM:
+    The critic's LOCK v0.1 item (build-inputs raw:356-371) was routed "PIN for the lock build. List it in the
+    consolidated seat block". Its correction has the lock state three things: each artifact's package_sha256, the
+    mechanical diff, and "G-ANL's closure from the first correction". That first correction says "carry it in LOCK
+    v0.1". D1 states only the first two and drops the import closure, which PIN-1 makes part of the analyzer's
+    binding. G-SHAPE-F0 also records its own closure.
+  CORRECTION:
+    Add to D1: "and each artifact's import closure outside the package (G-ANL-F0 `a3bc7bb9…`, PIN-1; G-SHAPE-F0
+    `23abe773…`), as the critic's route lists."
+  DISPOSITION: applied.
+
+--- V9 [misstates-source]
+  QUOTE:
+    E3's fourth note rests on C1 and C2.
+  PROBLEM:
+    This drops one of the note's grounds. The G-PORT entry's fourth seat note ends "the phrase should not read as
+    unaffected overall, given A1, C1 and C2". A1, the change in the primary's domain, is the first of the three.
+  CORRECTION:
+    "E3's fourth note rests on A1 (one of E4's differences), C1 and C2."
+  DISPOSITION: applied.
+
+--- V10 [ambiguous-wording]
+  QUOTE:
+    No source sets them a deadline;
+  PROBLEM:
+    E6 contradicts this. E6 says three of its items "bear on what LOCK-m-F0 v0.1 contains (m:279; m:176's
+    Artifacts)". m:176 places its artifacts "in LOCK-m-F0 v0.1", and build pin 3 "is declared at each unit's v0.1".
+  CORRECTION:
+    "No source sets a date for most of them, though three of E6's items bear on what LOCK v0.1 contains (m:279;
+    m:176's Artifacts; build pin 3 is declared at each unit's v0.1). Code proposes LOCK v0.1 as the latest point for
+    all."
+  DISPOSITION: applied.
+
+--- V11 [misstates-source]
+  QUOTE:
+    That entry leaves it to the seat whether a flagged or optional item (A5, A6, A9) also holds the close.
+  PROBLEM:
+    In 2c50e03, "Whether any flagged or optional item holds the close is the seat's to say" follows its list of the
+    flagged `disown` and the optional O1–O4. A9's two questions sit elsewhere in that entry, under "Reading
+    conditions", and are not called flagged or optional items. Attaching A9 to the sentence stretches the source. A9
+    itself correctly says the entry does not list them among what G-CAL waits on.
+  CORRECTION:
+    "That entry leaves it to the seat whether a flagged or optional item (A5, A6) also holds the close. It raises
+    A9's two questions separately, without saying whether they hold it."
+  DISPOSITION: applied.
+
+--- V12 [misstates-source]
+  QUOTE:
+    (m:358 lists the read first)
+  PROBLEM:
+    m:358's step 6 reads "the 0.12 replay first; the renders of record and their sha; the seat's read;
+    completability; roster assertion". The read is listed before completability, not first.
+  CORRECTION:
+    "(m:358 lists the read before completability)"
+  DISPOSITION: applied.
+
+============================================================ ALL CLAIMS
+[H0-01] VERIFIED -> VERIFIED: L1: the block comes before LOCK-m-F0 v0.1, which is PROPOSAL-m v1.11 §8 step 9
+[H0-02] VERIFIED -> VERIFIED: L3: HEAD is b4d7f13
+[H0-03] VERIFIED -> VERIFIED: L9: G-CAL is step 6, G-SHAPE-F0 step 7 and G-ANL-F0 step 8
+[H0-04] IMPRECISE -> IMPRECISE: L10: section E's carried items have no deadline set by any source; Code proposes LOCK v0.1 as the latest point
+[H0-05] VERIFIED -> VERIFIED: L13: Code adjudicates none of the questions; every ruling is the seat's
+[H0-06] IMPRECISE -> IMPRECISE: L14-18: the items where Code has already acted on its own reading without a seat ruling are A2, A3, C5's PIN-43 and C8
+[H0-07] VERIFIED -> VERIFIED: L17: the round-3 reviewers routed the PIN-43 date defects 'for the seat', and Code fixed them itself
+[H0-08] VERIFIED -> VERIFIED: L18: C8, the first G-ANL-F0 manifest, was set aside uncommitted
+[H0-09] IMPRECISE -> IMPRECISE: L20-22: a blocking status appears only where its source sets one, and items with no 'Blocking' line have no label in their source
+[H0-10] VERIFIED -> VERIFIED: L24: the G-SHAPE-F0 entry's status line has LOCK v0.1 wait 'on the seat's answer to the readings flagged below'
+[H0-11] VERIFIED -> VERIFIED: L25: a replaced reading edits gshape.py, moves package_sha256 and re-runs G-SHAPE-F0 before the lock
+[H0-12] VERIFIED -> VERIFIED: L27: steps 7 and 8 have run, both PASS
+[H0-13] VERIFIED -> VERIFIED: L27: LOCK v0.1 is not drafted
+[H0-14] VERIFIED -> VERIFIED: L29-30: the seat has made the condition-(3) read (2c50e03), item 1 of the G-CAL entry's 'Next, in this order'
+[H0-15] VERIFIED -> VERIFIED: L32-34: in that list, item 2 is the read of the 128 generations, and item 3 is the rulings on the two order departures plus, if the seat chooses, O1-O4 and the candidate counters
+[H0-16] VERIFIED -> VERIFIED: L36: m:271 has the seat read G-CAL's generations at the stage, and they carry no pick
+[H0-17] VERIFIED -> VERIFIED: L45: G-CAL's close waits on A1-A3, the items 2c50e03 lists as owed
+[H0-18] IMPRECISE -> IMPRECISE: L46: 2c50e03 leaves it to the seat whether a flagged or optional item (A5, A6, A9) also holds the close
+[H0-19] VERIFIED -> VERIFIED: L47: A4 blocks LOCK v0.1
+[H0-20] VERIFIED -> VERIFIED: L48: LOCK v0.1 needs G-CAL closed
+[H0-21] VERIFIED -> VERIFIED: L53: A1 quotes m:271's 'read by the seat at the stage'
+[H0-22] VERIFIED -> VERIFIED: L55: A1 blocks G-CAL's close
+[H0-23] VERIFIED -> VERIFIED: L56: the read raw's section 3 lists every generation with pool, item, seed, graded hit or miss, task as served and text
+[H0-24] VERIFIED -> VERIFIED: L57: section 2 is Code's tally, descriptive only
+[H0-25] IMPRECISE -> IMPRECISE: L59: '(m:358 lists the read first)'
+[H0-26] VERIFIED -> VERIFIED: L61: A2 blocks G-CAL's close
+[H0-27] VERIFIED -> VERIFIED: L62-63: Code launched under 'Go for step 6' on its reading that m:358 fixes no order after the 0.12 replay, and applied that reading without putting it to the seat
+[H0-28] VERIFIED -> VERIFIED: L64-65: the build review's disposition of spec finding #1 made the same call and declined the order half of the fix
+[H0-29] VERIFIED -> VERIFIED: L66: Code's G-PORT entry had listed the read ('on Code's ping') before completability
+[H0-30] VERIFIED -> VERIFIED: L67: nothing in the tooling records or gates (3) before completability (the build review's open minor finding)
+[H0-31] VERIFIED -> VERIFIED: L68: the first launch was at 04:41:33 UTC on 2026-10-08
+[H0-32] VERIFIED -> VERIFIED: L69-70: the first launch came before bab921c (04:41:55 UTC), which carried the read request, so before the request was sent to the PI or reached the seat
+[H0-33] VERIFIED -> VERIFIED: L71: the preflight refused the launch because a Jupyter kernel was running (m:267's one-process item)
+[H0-34] VERIFIED -> VERIFIED: L72: Code's 04:42:06 UTC message to the PI did not name m:358's order
+[H0-35] VERIFIED -> VERIFIED: L72-73: the PI's 'Kernel's shut down, go ahead with completability' (05:17:44 UTC) preceded the run of record
+[H0-36] VERIFIED -> VERIFIED: L74: the run of record (05:39-05:46 UTC) preceded the read
+[H0-37] VERIFIED -> VERIFIED: L76: the roster assertion was computed in the model-free half, and m:358 lists it last
+[H0-38] VERIFIED -> VERIFIED: L78: A3 blocks G-CAL's close
+[H0-39] VERIFIED -> VERIFIED: L79: placing the roster assertion was Code's build-time choice, since the assertion needs no model
+[H0-40] VERIFIED -> VERIFIED: L81: the PI's 'Go for steps 7 and 8' is dated 2026-10-10
+[H0-41] VERIFIED -> VERIFIED: L83: A4 blocks LOCK v0.1
+[H0-42] VERIFIED -> VERIFIED: L84-85: G-SHAPE-F0's G-CAL inputs are the renders of record and the records that bind them; G-ANL-F0's is the flag source G-CAL_model-free.json, which carries no pick
+[H0-43] VERIFIED -> VERIFIED: L86-87: if the ruling is only that steps 7-8 follow the close, each re-runs, byte-identically only if the recorded inputs are unchanged
+[H0-44] VERIFIED -> VERIFIED: L89-90: on re-specified renders, G-SHAPE-F0 re-runs after an edit to gshape.py's pinned renders sha256, which is a package change, so the re-run is not byte-identical
+[H0-45] VERIFIED -> VERIFIED: L91-92: the same edit moves the package_sha256 G-ANL-F0's manifest records (06ab1430…), and re-specified renders change its flag source, so a G-ANL-F0 re-run is not byte-identical either
+[H0-46] VERIFIED -> VERIFIED: L93: either artifact is superseded by hand git mv on the seat's ruling (PIN-37, PIN-S9)
+[H0-47] VERIFIED -> VERIFIED: L95: m:267's checklist says `nohup caffeinate -is … & disown`
+[H0-48] VERIFIED -> VERIFIED: L97: A5's blocking status is the seat's to say
+[H0-49] VERIFIED -> VERIFIED: L98-99: the G-CAL entry did not list the disown among what G-CAL waits on, and 2c50e03 kept it apart from the owed items, but f23b444, citing 2c50e03, lists it under 'Still owed for G-CAL's close'
+[H0-50] IMPRECISE -> IMPRECISE: L100: the build-inputs raw lists the disown among 'G-CAL's closing items'
+[H0-51] VERIFIED -> VERIFIED: L102-103: Code's reading is that the disown changes nothing, because the shell was non-interactive and nohup ignores a hangup
+[H0-52] IMPRECISE -> VERIFIED: L107: A6's blocking status is the seat's to say, quoting 2c50e03
+[H0-53] VERIFIED -> VERIFIED: L109: the read of record does not mention O2 or O3, and whether its PASS covers them is the seat's to say
+[H0-54] VERIFIED -> VERIFIED: L110-111: in O1, 7 of item 15's 8 generations answer close; the gold list is {closed, shut}, so the verbatim-ported grader grades all 7 as misses
+[H0-55] VERIFIED -> VERIFIED: L112-114: O2 is item 7 seed 3 ('both 1 kilogram') and item 9 seed 0 (miyms read as minutes); seed 1 reads it the same way and is a miss
+[H0-56] VERIFIED -> VERIFIED: L116: items 7 and 9 are the only items whose gold appears in the task text, so a restatement hits
+[H0-57] VERIFIED -> VERIFIED: L117: O3 is item 2 corrupted at 0/4 (thiru)
+[H0-58] VERIFIED -> VERIFIED: L118: O4 is one generation that is the whole line '=== End of evaluation session ==='
+[H0-59] VERIFIED -> VERIFIED: L119-120: condition (4) passes under all four readings; the tightest is two hits removed, corrupted 46/64, one hit above the absolute bar
+[H0-60] VERIFIED -> VERIFIED: L121-122: whether to adopt O1-O4 or the corruption-mirroring tally as G-CAL-OLMo counters (rule 23) is for the seat; Code adopts none
+[H0-61] VERIFIED -> VERIFIED: L126: the completability artifact's field f1_012_of_record and its stdout line call +.078 'f1's 0.12 figure of record'
+[H0-62] VERIFIED -> VERIFIED: L127: m:176 gives +.078 as calib2's figure (f0's calibration, data/f/calib.json)
+[H0-63] VERIFIED -> VERIFIED: L127-128: the G-CAL entry adds that calib2's renders were byte-identical to those f1's corruptor gives at 0.12
+[H0-64] VERIFIED -> VERIFIED: L133: the seat's '0.12 walk' gives the same words as 0.15 for the six 'Compute' items, with k = 3 at either rate
+[H0-65] VERIFIED -> VERIFIED: L134-135: the six render words keep 4, 5, 4, 6, 4 and 5 of Compute's 7 letters in place, and the seat's note says they share 'only the initial letter and the length'
+[H0-66] VERIFIED -> VERIFIED: L136-137: Code will draft the seat's suggested operand-exclusion sentence for LOCK v0.1's calibration artifacts and flag it at the lock
+[H0-67] VERIFIED -> VERIFIED: L141: A9's two questions are not listed in 2c50e03 among what G-CAL waits on
+[H0-68] IMPRECISE -> IMPRECISE: L141: A9 is labelled 'Blocking: the seat's to say'
+[H0-69] VERIFIED -> VERIFIED: L142-144: the seat's disclosure says the lines were committed 'before section B or anything after it was opened' and does not name the entry or the other files the entry asked the seat not to open
+[H0-70] VERIFIED -> VERIFIED: L146-147: on 2026-10-04, 13 of the 16 renders appeared together with clean task and gold in STOP-5 §F; items 5, 11 and 15 are in STOP-6 §E, and m:176 quotes them with their golds
+[H0-71] VERIFIED -> VERIFIED: L148: the 2026-10-08 batch exposure was a head -30 listing of the request
+[H0-72] VERIFIED -> VERIFIED: L149-150: only the seat's view on the batch exposure is on record, namely that it 'does not bear on recoverability, which is the condition'
+[H0-73] VERIFIED -> VERIFIED: L155: PIN-S5 and PIN-S6 block LOCK v0.1 by the critic's route
+[H0-74] VERIFIED -> VERIFIED: L162-163: B1 (PIN-S6) is blocking, and the PASS rests on reading 'the render itself' as the render placed in the segment
+[H0-75] VERIFIED -> VERIFIED: L164-166: under the other reading, Qwen fires 256/2,816 (the v5 content:task_echo advisory, items 2 and 8), which PIN-S3 counts as fires, so the verdict would be STOP; OLMo fires 0
+[H0-76] VERIFIED -> VERIFIED: L167-168: Layer C, one seg+gold control, must fire on every placement or the gate STOPs; it is instrument validity, not an m:277 criterion; it fired 2,816/2,816 per unit
+[H0-77] VERIFIED -> VERIFIED: L172-173: B2 (PIN-S5) is blocking; R1-R6 apply to the two runners' classify calls, R7 to every SessionLog method and R8 package-wide
+[H0-78] VERIFIED -> VERIFIED: L174-175: R4 is stricter than the build spec's, requiring each history append after its classify, once per call site
+[H0-79] VERIFIED -> VERIFIED: L176-177: the dynamic half is six existing runner checks named in runner_dynamic_evidence plus one new gshape check, the only one asserting what classify receives
+[H0-80] VERIFIED -> VERIFIED: L181: the fire predicate (PIN-S3) is the strict reading, any of 12 fields
+[H0-81] VERIFIED -> VERIFIED: L182-188: the enumeration (PIN-S1, PIN-S2) is 22 pairs × 4 templates × 16 contrast banners × 2 phases, golds verbatim and unframed, sham/clean/menus excluded, n = t+1 forced and t+5 free, earlier empty so stuck_attractor is not exercised
+[H0-82] IMPRECISE -> IMPRECISE: L189-190: PIN-S4 is each substrate's own stack, with the OLMo tokenizer-side ban-id assertion left to the box (LOCK-m-OLMo-{ckpt} v0.1)
+[H0-83] VERIFIED -> VERIFIED: L191: the committed-sources precondition binds the canonical run only
+[H0-84] VERIFIED -> VERIFIED: L192: a renders-sha mismatch is a STOP
+[H2-01] VERIFIED -> VERIFIED: B3 (L189-190): PIN-S4 reads the scoring stack as each substrate's own stack; the OLMo tokenizer-side ban-id assertion is left to the box (LOCK-m-OLMo-{ckpt} v0.1).
+[H2-02] VERIFIED -> VERIFIED: B3 (L191): the committed-sources precondition binds the canonical run only.
+[H2-03] VERIFIED -> VERIFIED: B3 (L192): a renders-sha mismatch is a STOP.
+[H2-04] VERIFIED -> VERIFIED: C intro (L196): C1-C4 block LOCK v0.1, which hashes the analyzer; the manifest's seat_routed list marks each 'blocking LOCK v0.1, not step 8'.
+[H2-05] VERIFIED -> VERIFIED: C intro (L197): PIN-42 (C5) awaits the seat's confirmation at LOCK v0.1, per its register text.
+[H2-06] VERIFIED -> VERIFIED: L199-200: a ruling that changes any of C1-C6 changes the analyzer's sha256; G-ANL-F0 is then rebuilt and re-run, and its manifest superseded.
+[H2-07] IMPRECISE -> IMPRECISE: L200-201: C7's rulings need not change the analyzer: the boundary-day comparison is a declared input, and 'A5's column ruling changes only which column the entry quotes'.
+[H2-08] VERIFIED -> VERIFIED: C sources (L205-207): G-ANL-F0 entry b4d7f13; analyzer built at 64df36b, amended at b62af85, sha256 24d44a3c…; manifest data/m/gates/G-ANL-F0.json sha256 9bea8339….
+[H2-09] VERIFIED -> VERIFIED: C1 (L209-211): PIN-5 asks whether m:324's list of Clock causes is exhaustive; Code's default is the residual cause clock:not-locked:<stage> for a gate that had not reached its end by the Clock.
+[H2-10] VERIFIED -> VERIFIED: C2 (L213-218): m:271 says a hair-trigger fire 'stops the stage'; m:330 'A fired bar pauses'; m:324's no-first-read clause names only 'a PI stop, a G-VER STOP, or its cap'; default refuses unless a declared PI-stop record bound to the checkpoint's sha256 is supplied, then m:324's PI-stop rule applies
+[H2-11] VERIFIED -> VERIFIED: C3 (L220-224): m:330 'pauses are not verdicts'; m:316 a guard fire 'never changes a verdict'; default refuses; adjudication enters as a declared --adjudication file bound to the checkpoint.
+[H2-12] VERIFIED -> VERIFIED: C4 (L226-230): PIN-17 default: one §8.1 clause per control with a v1 coordinate (A0, A0-OLMo-sft/-dpo/-instruct); A1 belongs to §8.2, 'open' at v1; re-verified against the placed preprint at LOCK v1.0.
+[H2-13] VERIFIED -> VERIFIED: C5 PIN-42 (L234-236): not-run and posting refuse unless the analyzer is committed and the proposal is v1.11, recording analyzer, package and closure shas; a binding the spec does not state; awaits seat confirmation at LOCK v0.1.
+[H2-14] VERIFIED -> VERIFIED: C5 PIN-43 (L237-240): every declared date is an ASCII real calendar date; Code fixed the defects itself although the round-3 fixer and confirmer had routed them 'for the seat': \d accepted non-ASCII digits and impossible days such as 2026-02-30, and a NOT-RUN record's date went unchecked when its ca
+[H2-15] IMPRECISE -> IMPRECISE: C5 (L241-242): Code also fixed, in its own tool, 'the gap the follow-up verifier flagged "for Code and the seat": the --olmo-states date (b62af85)'.
+[H2-16] IMPRECISE -> IMPRECISE: C5 (L244-246): the open question — a no-first-read NOT-RUN declared in --olmo-states must now carry a real date though the unit's NOT-RUN output has none; what that date means is not stated, and 'whether this blocks the lock is the seat's to say'.
+[H2-17] VERIFIED -> VERIFIED: C6 (L250-251): every PIN in the manifest's 43-entry register is Code's, declared for LOCK v0.1, and the seat may strike any; a replacement must land before LOCK v0.1 hashes the analyzer.
+[H2-18] VERIFIED -> VERIFIED: C6 list (L254-263): PIN-4 clause order/wording; PIN-11 m:314 'over all sessions' as campaign sessions incl. excluded, G-TIME and qualification separate; PIN-5 phrases/precedence; PIN-15/16; PIN-22 S1 as Answered under (a); PIN-21 (c) two-sided on m:349's 'iff'; PIN-19 (flag of record TRUE); PIN-13 s
+[H2-19] VERIFIED -> VERIFIED: C7 (L265-272): boundary-day comparison (step-3 note 55; declared input) due by the first Clock date; G-PORT A5 column (interim PIN-12 adds sessions_excluded_any_phase) due before step 17's entry; G-ANL-F3 versioning (m:291 '`m_analyze.py` extended'; PIN-14) due before step 19; posting re-run pass ba
+[H2-20] VERIFIED -> VERIFIED: C8 (L276-277): the first manifest run was on 64df36b (ea985c11…), set aside uncommitted when the verification of Code's closing edit found the gap b62af85 closes.
+[H2-21] VERIFIED -> VERIFIED: C8 (L278-279): Code read PIN-37's git mv supersession as covering committed artifacts only (G-PORT's precedent); PIN-37's text states no such limit.
+[H2-22] VERIFIED -> VERIFIED: C8 (L280-281): the G-ANL-F0 entry corrects the G-SHAPE-F0 entry's 'run of record was made at 11:38 UTC'; the run of record is the 12:12:52 UTC run on b62af85.
+[H2-23] VERIFIED -> VERIFIED: C9 (L285-286): stages.py has no path for recording a seat adjudication of a fired end look on a terminal campaign; no end look is evaluated on a STOP-ended campaign.
+[H2-24] VERIFIED -> VERIFIED: D1 table (L292-296): G-PORT 96fbcacf… at 54e41c9; G-CAL 4b49658739523c60… at c75d4d8; G-SHAPE-F0 and G-ANL-F0 06ab1430… at d092078.
+[H2-25] IMPRECISE -> IMPRECISE: D1 (L290-301) as the complete statement of what LOCK v0.1 should state about gate provenance (package hashes and the diffs).
+[H2-26] VERIFIED -> VERIFIED: D1 (L298-301): 64df36b and b62af85 touch nothing under valence_core/; 54e41c9..c75d4d8 -- valence_core/m: gcal.py added, __init__.py edited; c75d4d8..d092078: gshape.py alone.
+[H2-27] VERIFIED -> VERIFIED: D2 (L303-306): today analyzer_sha256 is optional and nothing checks package_sha256 against the lock at stage start; the change lands in stages.py and so moves package_sha256.
+[H2-28] VERIFIED -> VERIFIED: D2 (L307-311): stages.py is not in G-SHAPE-F0's scoring-stack map, so it does not re-run but the lock states the new package; for G-ANL-F0 the change moves its recorded 06ab1430… and its battery exercises stages on the verdict path; re-run plus git mv supersession, or the lock states the diff — the 
+[H2-29] VERIFIED -> VERIFIED: D3 (L313): compare G-SHAPE-F0's sources map with the lock's tree (PIN-S10); any difference re-runs G-SHAPE-F0 first.
+[H2-30] VERIFIED -> VERIFIED: E1 (L317-326): ruling (h)'s exception — a forced-phase hair trigger or G-VER failure announced by class, never round or n; report counts still place the fired round last, so a forced hair stop carries class and position, which (h) withholds; text stays in the stripped read under reports/; m:318 exce
+[H2-31] VERIFIED -> VERIFIED: E2 (L328-331): G-PORT's borderline B1 (extend (14) to 'no encode limit on either path') and B2 (sham s no longer shares contrast s's cell, a consequence of (8) that nothing states), 988e5df.
+[H2-32] VERIFIED -> VERIFIED: E3 (L333-338): G-PORT's four seat notes — m:261 vs m:308; m:271's free-round v2 rule vs scaffold hair trigger; m:172 no-confound vs π; 'unaffected' in (12) and (14).
+[H2-33] VERIFIED -> VERIFIED: E4 (L340-341): 25 differences plus 2 borderline beyond §2.7's fourteen; m:267 adds them to Appendix D through the G-PORT entry; the seat may adjudicate any.
+[H2-34] VERIFIED -> VERIFIED: E5 (L343-349): C1-C9 quoted heading; within §2.7's fourteen; C1 (under (3)) byte-clean text in 40 of 306 Q rounds, bearing on A0's comparison with f1's primary; C2 (under (6)) m's audit ends s48 and s25 at the forced phase where f1 continued.
+[H2-35] IMPRECISE -> IMPRECISE: E5 (L350): 'E3's fourth note rests on C1 and C2.'
+[H2-36] VERIFIED -> VERIFIED: E6 (L352-353): the 05c4636 entry's 'Dated notes (2026-10-06; minor-only, for the design seat)', N1-N9, and the items in results/raw/2026-10-06_m-v1.11_step3_notes.md.
+[H2-37] VERIFIED -> VERIFIED: E6 (L355): the seat has ruled on one (at G-TIME-OLMo the STOP governs, 54e41c9); C7 carries note 55.
+[H2-38] VERIFIED -> VERIFIED: E6 (L356-359): three notes bear on LOCK-m-F0 v0.1's contents (m:279; m:176's Artifacts); build pin 3 (notes #69, D8C1.38, contested) — cross-template launch order declared at each unit's v0.1, 'The seat may direct otherwise'; Code's default in schedule.py gate_launch_order: strict rotation in §2.4's
+[H2-39] VERIFIED -> VERIFIED: E6 (L360-361): notes #25 — m:176's 'the renders' sha256' has no stated serialization; Code's default in gcal.py is sha256 of the UTF-8 newline-joined renders, giving a04f67b0…4372.
+[H2-40] VERIFIED -> VERIFIED: E6 (L362-364): N9's D1.22 — condition (2)'s k and n_eligible undefined for f1's Bernoulli corruptor at G-CAL's 0.12 replay (32 drawn against 31 changed); 'has never been dispositioned'; same outcome under every reading.
+[H2-41] VERIFIED -> VERIFIED: F1 (L368-371): G-TIME-F0 is step 10, the next Qwen run; the one-process check flags any process run from the jlens-qwen36 venv, including the audit session's model-free jobs; it held up completability by about 20 minutes.
+[H2-42] VERIFIED -> VERIFIED: F1 (L372-373): the check runs at launch only; the audit session's N13 raws were written at 05:44:45 UTC during completability; whether a flagged process ran during the generations was not checked.
+[H2-43] VERIFIED -> VERIFIED: F1 (L374): Code's default — leave the check as it is and launch Qwen stages when the audit session is idle.
+[H2-44] VERIFIED -> VERIFIED: F2 (L376-377): the OLMo track runs from step 9 when a box exists, needs the PI's go for a pod start and runpod MCP re-authorisation, which currently needs authorising through /mcp.
