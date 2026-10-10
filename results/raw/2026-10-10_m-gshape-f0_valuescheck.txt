@@ -1,0 +1,1163 @@
+# G-SHAPE-F0 entry (2026-10-10) -- values-check, both passes (before commit). Written by Code 2026-10-10 11:56:24 UTC (date -u).
+# Each pass: two verifiers (one per half of the entry) extract and check every atomic claim against the artifact, the raws, the code and the
+# proposal; a STRICT refuter on every FAILS/IMPRECISE; a values lens. All agents read-only; no model or tokenizer loaded (instructed; none reported one).
+# Code's disposition: every confirmed correction and every values finding of both passes applied (pass 1's to the second draft, pass 2's to the third,
+# the one committed). Pass 1's rule-27 finding (the build spec and Code's decisions only in scratch) was met by committing them verbatim as
+# results/raw/2026-10-10_m-steps7-8_build-inputs.md with this entry. Code checked the new factual claims it relied on itself (the valence_core/m
+# diffs 54e41c9..c75d4d8 and c75d4d8..d092078; 64df36b's files; the 6 driver checks; score()'s empty `earlier`; the stale '5' in the review raw).
+
+####################################################################################################
+PASS 1: claims 101, verified 88, confirmed corrections 8, refuted flags 1, uncheckable 4, values findings 17
+####################################################################################################
+============================================================ CONFIRMED CORRECTIONS
+--- [H0-31] IMPRECISE
+  CLAIM:
+    Placements per unit = 16 renders × 4 ROUND_TEMPLATES × 16 contrast banners × 22 stored gold variants × both
+    phases = 2,816 (l.29-31).
+  REFUTER'S EVIDENCE:
+    The claim (entry_gshape_v1.md l.29-31) gives five factors: 16 renders × 4 ROUND_TEMPLATES × 16 banners × 22 gold
+    variants × both phases. That product is 16×4×16×22×2 = 45,056, not 2,816. The total 2,816 is correct, but the
+    factors don't produce it. In valence_core/m/gshape.py, placements() (l.753-783) loops `for i, render in
+    enumerate(renders): for gi, g in enumerate(pool[i]["gold"])`, so each render is paired only with its own item's
+    golds. N_PER_UNIT (l.85) = N_BANNERS × N_TEMPLATES × N_GOLD_VARIANTS × len(PHASES) = 16×4×22×2. It has no
+    separate ×16 for renders. expected_keys (l.786-792) builds the same nested product. The pool is CORR_clean
+    (scaffold.pool_and_renders docstring, scaffold.py:217). I read data/f/pools.json directly: CORR_clean gold
+    counts per item are [1,2,1,2,2,1,1,1,1,1,2,1,1,2,1,2], which sum to 22. These match G-CAL_model-free.json
+    renders_of_record.items[i].gold for all 16 items. The python check gives 22×4×16×2 = 2816 against 16×4×16×22×2 =
+    45056. The artifact agrees: G-SHAPE-F0.json gives inputs.golds {n_items 16, n_variants 22}, grid coverage
+    {renders 16, templates 4, banners 16, gold_variants 22, phases 2}, each control n = 2816, and grid_total 11264 =
+    4×2816. Every stated factor is individually true; the error is only in writing the gold count as an independent
+    ×22. So IMPRECISE, not FAILS. The same compressed wording appears in gshape.py's docstring (l.11-15) and in the
+    PIN-S1 comment (l.757-760).
+  CORRECTION:
+    **Placements per unit.** Each of the 16 renders of record is paired with each of its own item's stored gold
+    variants (22 render–gold pairs over the 16 items, 1 or 2 golds per item from CORR_clean; each gold verbatim and
+    unframed). Those pairs run × the 4 `ROUND_TEMPLATES` × the 16 contrast banners (4 pairs × 2 maps × 2 clauses) ×
+    both phases: 22 × 4 × 16 × 2 = 2,816 per unit.
+  DISPOSITION: applied.
+
+--- [H0-47] IMPRECISE
+  CLAIM:
+    The only per-checkpoint input is the `data/olmo/scaffold_{ckpt}.json` string check, equal on all three
+    (l.54-55).
+  REFUTER'S EVIDENCE:
+    I checked this independently, and the checker's finding holds.
+
+    - **What the code does.** In `valence_core/m/gshape.py`, `_olmo_files()` (l.461-469) reads two files for each
+    checkpoint: `ban_strings` from `data/olmo/scaffold_{ck}.json` and `ban_list` from
+    `data/olmo/b3_screen_{ck}.json`.
+    - **Two STOP checks, not one.** `olmo_stack()` (l.481-487) first raises GshapeStop if the scaffold strings are
+    not OLMo's six. It then runs a second STOP check: `bad = sorted(ck for ck, v in b3.items() if v !=
+    B3_BAN_LIST)`, which raises "b3_screen ban_list of {bad} is not {B3_BAN_LIST}". `B3_BAN_LIST` is `{n_ids: 9,
+    sha16: 2dd86a453a2275ef}` (l.118, from audit.py l.62-63).
+    - **What the artifact records.** In `data/m/gates/G-SHAPE-F0.json`, `stacks.olmo` holds both
+    `scaffold_strings_checked` (all three "equal") and `ban_ids.{sft,dpo,instruct}`, each `{n_ids 9, sha16
+    2dd86a453a2275ef}`. `provenance.sources` lists all three `b3_screen` files. The verdict is PASS (run raw l.18),
+    so both checks passed on all three checkpoints.
+    - **The files on disk.** I read them directly. Each `b3_screen` `ban_list` is `{n_ids 9, sha16
+    2dd86a453a2275ef}`, and each `scaffold` file has the same six strings.
+    - **Where the wrong wording came from.** The claim repeats the PIN-S4 comment in the code (l.476-478),
+    critic.md:221 and decisions_gshape.md item 3. The code does more than that wording says. The "not exercised"
+    caveat covers only the tokenizer-side assertion of the ids, which runs on the box. The file-level `ban_list`
+    record is still asserted for each checkpoint as a STOP precondition.
+    - **Neither file feeds the scoring.** The stack is `_audit.OLMoTaskRoundAudit()` with its defaults, so it uses
+    audit.py's constants (`OLMO_AUDIT`, `OLMO_SCAFFOLD_STRINGS`). The file contents are only compared against those
+    constants, and the ban ids are not used anywhere in G-SHAPE.
+    - **Small fix to the checker's wording.** I added the `data/olmo/` prefix to the `b3_screen` path and said that
+    both checks are STOP preconditions.
+  CORRECTION:
+    The only per-checkpoint inputs are two file checks, both STOP preconditions and both equal on all three
+    checkpoints. One checks the ban strings in `data/olmo/scaffold_{ckpt}.json` against OLMo's six. The other checks
+    the `ban_list` record in `data/olmo/b3_screen_{ckpt}.json` against `{n_ids 9, sha16 2dd86a453a2275ef}`. Neither
+    file's contents feed the scoring, because the OLMo stack is built from audit.py's constants.
+  DISPOSITION: applied.
+
+--- [H1-19] FAILS
+  CLAIM:
+    (l.80-81) In scripts/m_sessions.py: gshape [--out DIR], the MODULES entry and 5 driver checks.
+  REFUTER'S EVIDENCE:
+    I checked this independently and the checker is right. d092078's diff to scripts/m_sessions.py adds exactly 6
+    gshape chk() calls to _selftest:
+    (1) the temp-dir run and its identical re-run;
+    (2) the refusals plus the never-overwrite case;
+    (3) the exit-code mapping;
+    (4) the post-commit simulation with a planted driver that drops --out (V18);
+    (5) MODULES registration after gcal;
+    (6) the canonical G-SHAPE paths unchanged.
+    The working tree agrees: /usr/bin/grep -c 'chk("m_sessions: gshape|chk("m_sessions: the gshape'
+    scripts/m_sessions.py returns 6. HEAD 64df36b does not touch m_sessions.py, and the working tree has no diff for
+    it.
+
+    results/raw/2026-10-10_m-gshape-build_selftest.txt shows these six checks at lines 735-740, all PASS, and ends
+    with "744/744 m selftest checks pass". The sum works: the previous selftest of record, results/raw/2026-10-08_m-
+    gcal-build_selftest.txt, reads "706/706", and the gshape module adds 32 lines starting "[PASS] gshape". 706 + 32
+    + 6 = 744. With 5 it would be 743.
+
+    The "5" comes from an earlier stage of the build:
+    - review raw l.2 and l.28 say "5 driver checks";
+    - l.810 gives "706 before + 21 gshape._selftest checks + 5 driver checks = 732", the first-round count;
+    - l.1703 records the round-3 fix as "New m_sessions check: the same post-commit simulation with a driver that
+    drops `--out` (V18)", which makes six.
+    The commit message's "5 driver checks" therefore predates round 3. The rest of the claim is correct: the `gshape
+    [--out DIR]` subcommand and the MODULES entry ("gcal", "gshape").
+  CORRECTION:
+    New `valence_core/m/gshape.py`; in `scripts/m_sessions.py`, `gshape [--out DIR]`, the MODULES entry and 6 driver
+    checks. `valence_core/m/__init__.py` is unedited.
+  DISPOSITION: applied.
+
+--- [H1-23] IMPRECISE
+  CLAIM:
+    (l.88-89) Three lenses (spec fidelity; harness and safety; tests) put each finding to a strict refuter: 16
+    findings, 3 refuted, 13 confirmed and fixed.
+  REFUTER'S EVIDENCE:
+    I checked this myself against results/raw/2026-10-10_m-gshape-build_review.txt.
+
+    - **Lens counts.** The three lens headers report 6 findings (spec-fidelity), 3 (harness-safety) and 7 (tests),
+    so 16 in all, with 16 '--- ' finding headers.
+    - **Refuted vs confirmed.** grep counts 3 'refuted=True' (lines 295, 360, 587) and 13 'refuted=False'. So "16
+    findings, 3 refuted, 13 confirmed" is correct.
+    - **The fix report covers only 12.** It opens (l.1287): "All 12 confirmed findings are fixed in the working
+    tree". Its Findings 1-12 map one-to-one onto the confirmed findings at l.148, 223, 426, 498, 669, 748, 852, 914,
+    983, 1039, 1154 and 1219.
+    - **One confirmed finding was left out.** l.1087, "tests: Five input-binding checks have no must-fail case"
+    (refuter: refuted=False, minor), appears nowhere in that report. The independent verifier also checks only "All
+    12 fixes" (l.1401) and lists those exact gaps as test-gap survivors I02/I03/I04/I05/I12 and as residual defect 5
+    (l.1525).
+    - **It was closed in round 2.** Code's round-2 decision 12 (l.1539) asks for "must-fail cases for the listed
+    input checks". The round-2 fix report marks I02, I03, I04, I05 and I12 CLOSED (l.1560-1566) and residual 5
+    CLOSED (l.1581). The round-2 re-verification confirms that residuals 1-8 are closed (l.1609).
+    - **The cases are in the committed code.** gshape.py at d092078, unmodified in the working tree, has the cases:
+    "completability of another schema" (2307), "seat read with two renders_sha256 lines" (2312), "G-CAL condition
+    (2) not PASS" (2337), "renders that reproduce but do not hash to the pin" (2347), "a clean task equal to another
+    item's" (2350) and "a gold variant duplicated across items" (2354).
+
+    So all 13 confirmed findings did end up fixed, but not in the review's fix pass. That pass fixed 12. The entry's
+    "13 confirmed and fixed", under the Review bullet, contradicts the "12" in the raw it cites, and it hides that a
+    confirmed finding slipped through the fix pass. The checker's IMPRECISE verdict holds, and its correction is
+    accurate.
+  CORRECTION:
+    Three lenses (spec fidelity; harness and safety; tests) put each finding to a strict refuter: 16 findings, 3
+    refuted, 13 confirmed. The fix pass fixed 12. The thirteenth (five input-binding checks with no must-fail case)
+    was missed there. It was carried as the verifier's residual 5 and closed in round 2.
+  DISPOSITION: applied.
+
+--- [H1-27] IMPRECISE
+  CLAIM:
+    (l.94) Round 3 closed the verifier's last findings.
+  REFUTER'S EVIDENCE:
+    I checked the committed raw results/raw/2026-10-10_m-gshape-build_review.txt (from d092078). Its section "(4)
+    Findings" in the round-2 re-verification lists three findings: F1 (new, Low), F2 ("flag, carried from the fix
+    report: R4 as built ... is stricter than spec §8's R4") and F3 (info). Its survivor table also lists Low or
+    very-low gaps: V11, V12, V13, V15 and V16. V14 was caught, so it is not a gap.
+
+    The round-3 fix report says "F1, F3, V11, V12, V13, V15 and V16 are all closed", and adds: "Note: F2 (R4 order
+    is stricter than spec §8) is still open as a flag for Code; I did not change it." The round-3 confirmation
+    repeats this: "F2 (R4 order rule stricter than spec §8) is still open for Code." Code's closing note says F2 "is
+    accepted as built ... it is a Code reading, flagged for the seat with the other Layer S rules (PIN-S5)."
+
+    So round 3 did not close all of the verifier's last findings, because F2 stayed open. The round-3 confirmation
+    also raised new notes (the report gap and H2) that were not closed. The checker's verdict stands.
+
+    The checker's correction has two small problems. "The V11–V16 gaps" takes in V14, which was caught and was never
+    a gap. And "closed the verifier's last findings (F1, F3 ...)" followed by "F2 was left" contradicts itself,
+    since F2 was one of those findings.
+  CORRECTION:
+    Round 3 closed the round-2 verifier's findings F1 and F3 and its Low gaps V11–V13, V15 and V16. Its F2, R4's
+    order rule (stricter than spec §8), stayed open. Code accepted it as built and flagged it for the seat.
+  DISPOSITION: applied.
+
+--- [H1-28] FAILS
+  CLAIM:
+    (l.94-95) The self-test is sandboxed, so no regression can write data/m from inside it.
+  REFUTER'S EVIDENCE:
+    The checker is right. The sentence "no regression can write data/m from inside it" overstates what the sandbox
+    does.
+
+    1. The code (valence_core/m/gshape.py:1652-1677, committed in d092078). `_selftest_sandbox` does two things: it
+    points `GATES_DIR` and `guard.GATES_DIR` at a temp dir, and it patches only `mod._write_once_text` with a
+    `guarded` wrapper. That wrapper refuses paths under `resume.CANONICAL_ROOTS` (data/m, /workspace/models,
+    data/olmo). Nothing intercepts a raw `Path.write_text` or `open()`. The docstring claims that "no regression ...
+    can write a canonical path from inside a self-test". That claim is the docstring's own; the code does not
+    support it.
+
+    2. The empirical probe (round3/iv/pciv.py:52-55). Mutant H2 hard-codes `REPO/"data"/"m"/"gates"/ARTIFACT_NAME`
+    and calls `path.write_text(...)` in place of `_write_once_text`. pciv_log.txt:6 records the result: `726/744 ...
+    rc=1 new_in_gates=['G-SHAPE-F0.json'] datam_changed=['data/m/gates/G-SHAPE-F0.json'] gshape_fails=11 fails=18`.
+    So the canonical file was written (in the clone), and the self-test then failed with 18 FAILs.
+
+    3. The committed record. results/raw/2026-10-10_m-gshape-build_review.txt:1808 (the verifier's H2 note) says the
+    tripwire "guards only `_write_once_text`". Lines 1826-1827 (Code's closing note) say a raw `Path.write_text`
+    regression "would write it, and the self-test would then fail loudly (18 FAILs in the probe)".
+
+    The checker's correction is accurate. "Under data/m" is a true subset of the protected roots. The sandbox covers
+    gshape's self-test and m_sessions' gshape `main()` calls (m_sessions.py:2353, 2397, 2447).
+  CORRECTION:
+    Round 3 closed the verifier's last findings. The self-test runs in a sandbox: `GATES_DIR` points at a temp dir,
+    and any write through `_write_once_text` under `data/m` is refused. A regression that writes the canonical path
+    with a raw `Path.write_text` would still write it, but the self-test would then fail loudly (18 FAILs in the
+    probe; H2, Code's closing note). The import closure is recorded and checked.
+  DISPOSITION: applied.
+
+--- [H1-33] IMPRECISE
+  CLAIM:
+    (l.97-98) 7 were not applicable (their text moved; ported forms caught).
+  REFUTER'S EVIDENCE:
+    The checker is right, so I am not refuting it. The round-3 independent confirmation in results/raw/2026-10-10_m-
+    gshape-build_review.txt (around l.1760-1765) gives "140 mutants: 117 caught, 16 survived, 7 not applicable". It
+    says they were "Not applicable, because round 3 rewrote their text: A03, D01, N01, N03, V05, V15, V16" and "I
+    ported A03, D01, N01 and N03 to the new text as A03n, D01n, N01n and N03n. All four are caught." The round-3 set
+    lists "all caught except V05n, V06 ... and V16c, which are equivalent". The survivors list counts V05n among the
+    8 equivalents. The fixer's report calls V05n "the V05 analogue".
+
+    The confirmer's log, scratchpad/step7/round3/iv/ivrun_log.txt, agrees. All seven rows read NOT-APPLICABLE
+    because each anchor "occurs 0x". A03n, D01n, N01n and N03n are CAUGHT.
+    V05n_drift_without_package_committed_problems is SURVIVED (744/744). V15n and V15n2 are CAUGHT. V16a and V16b
+    are CAUGHT, while V16c and IV16f are SURVIVED.
+
+    I also checked the anchors myself. All five distinct anchor strings (N03 and V05 share one) are present in the
+    pre-round-3 copy, round3/gshape.py.orig. None of them appears in d092078's gshape.py or m_sessions.py. So round
+    3 did rewrite the text; the raw's word is "rewrote", and "moved" is the entry's loose paraphrase.
+
+    The parenthetical "ported forms caught" is attached to all 7 and does not hold for all of them. The analogue of
+    V05, V05n, survives as an equivalent and is one of the entry's own "8 equivalents". The bare count of 7 is
+    correct, which is why IMPRECISE fits better than FAILS.
+  CORRECTION:
+    7 were not applicable (round 3 rewrote their text); the confirmer's ports of four of them (A03n, D01n, N01n,
+    N03n) were caught, and V05's analogue V05n is one of the 8 equivalents.
+  DISPOSITION: applied.
+
+--- [H1-45] IMPRECISE
+  CLAIM:
+    (l.113) Its only G-CAL input is the renders of record, which G-CAL's conditions fix.
+  REFUTER'S EVIDENCE:
+    The checker was right. `inputs_of_record` (valence_core/m/gshape.py:507-645) reads three committed G-CAL files,
+    not one.
+    (a) `MODEL_FREE_REL` (data/m/gates/G-CAL_model-free.json). It checks the schema, that
+    `provenance.proposal_sha256` equals the committed proposal blob, that `renders_of_record.renders_sha256` is the
+    pin, and that conditions "1" and "2" are both PASS. It takes the renders from
+    `renders_of_record.items[i].render`. It checks `provenance.pool_sha16` against the served pool, and
+    `provenance.pools_file_sha256` against the pools file's own hash.
+    (b) `COMPLETABILITY_REL` (G-CAL_completability_qwen.json): the schema must be `ART_SCHEMA`, the verdict PASS,
+    and `identity.renders_sha256` the pin.
+    (c) `SEAT_READ_REL` (G-CAL_seat_read_of_record.md): it must carry exactly one `renders_sha256:` line, citing the
+    pin.
+    The artifact records the sha256 of all three files in `inputs.gcal_model_free`, `inputs.gcal_completability`
+    (with its verdict) and `inputs.seat_read` (with the cited sha), plus `pools_file_sha256_gcal_provenance`. Line 6
+    of the run raw prints the G-CAL model-free sha256 `aad8096a…`.
+    So the renders are the only G-CAL bytes it scores, but they are not its only G-CAL input. This matters for the
+    next sentence, "A re-run on unchanged inputs is byte-identical". Byte-identity also requires all three G-CAL
+    files to be unchanged, because their hashes are written into the artifact.
+    "Which G-CAL's conditions fix" is also loose. The renders come from the m:176 corruptor and G-CAL records them
+    (m:358 step 6). Conditions (1)-(4) are pass/fail gates, and failing (3) or (4) means "STOP and re-specify". All
+    four pass on Qwen (RESULTS.md, 2026-10-10 entry), so the renders stand, but the conditions do not produce them.
+    The checker's own correction is close, with two faults. It leaves out that the three files' sha256s are
+    recorded. And it calls every precondition "binding those renders", which the proposal-sha check is not: that
+    check binds G-CAL's record to the governing proposal.
+  CORRECTION:
+    It reads three committed G-CAL files: the model-free artifact, the completability artifact and the seat's read.
+    It records each file's sha256. The only G-CAL bytes it scores are the renders of record, which G-CAL's passed
+    conditions (1)–(4) leave standing. Everything else it reads from those files is a precondition it asserts:
+    - conditions (1)–(2) PASS;
+    - the completability artifact's schema, its PASS verdict and its identity renders sha256;
+    - the renders sha256 the seat's read cites;
+    - G-CAL's recorded proposal sha256, pool sha16 and pools-file sha256.
+  DISPOSITION: applied.
+
+============================================================ REFUTED FLAGS
+--- [H0-15]
+    The stamp was 'verified at write time' and taken at the 'first write' (l.15).
+  CHECKER:
+    The draft's earliest file, scratchpad/step7/entry_gshape.md, has birth time 2026-10-10T07:34:29-0400 (11:34:29
+    UTC). entry_gshape_v1.md is an identical copy born 11:34:42 UTC. No earlier entry file exists in the scratchpad
+    after 07:33. So the stamp (11:33:55 UTC) was taken 34 s before the entry's first write, not at it. The previous
+    entry states the same kind of gap explicitly ('16 s before this entry's first write').
+  REFUTER:
+    I checked the session transcript, ~/.claude/projects/-Users-jasondwyer-Documents-code-jspace-
+    lab/adb70afc-5886-490b-a675-abb30f8c425f.jsonl.
+    (1) Line 6737 is Code's text "Writing the G-SHAPE-F0 entry." The next tool call, line 6738 at 11:33:55.470Z,
+    runs `date -u` first. Its result, line 6739, is "Sat Oct 10 11:33:55 UTC 2026", so the stamp value is exact.
+    (2) There is no other tool call between that and the Write of scratchpad/step7/entry_gshape.md at line 6749,
+    11:34:29.620Z. That Write is the entry's first write; the file's birth time is 07:34:29 -0400.
+    entry_gshape_v1.md is a cp copy made at 11:34:42 and is byte-identical (cmp). The gap of about 34 s is the time
+    spent composing the entry.
+    (3) In this repo, "Stamp verified at write time: `date -u` → X, first write" means the `date -u` taken in the
+    writing step, as distinct from later values-check corrections. It does not claim the stamp and the write share
+    the same second. RESULTS.md:164 is the committed G-CAL entry of 2026-10-08. It uses the same wording, "first
+    write". In this same session its stamp result came at 06:13:48.966Z (line 5356) and its first Write at
+    06:14:33.765Z (line 5367), a 45 s gap. That gap is larger than this one, and that entry passed two values-
+    checks.
+    (4) The checker's precedent, RESULTS.md:32-33 ("16 s before this entry's first write"), is a different case.
+    There the stamp was "taken with the check raw's first version", a separate action, so the gap needed explaining.
+    Here the stamp was taken as the entry's own writing step.
+    (5) The user's stamps memory, dates-and-stamps-convention.md, says: "Don't raise findings about ... times of
+    day". A seconds-level gap between a write-step stamp and the Write call is that kind of clock nit.
+    The claim is right under the repo's established convention, and every fact in it checks out.
+
+============================================================ UNCHECKABLE
+--- [H0-14]
+    The stamp value: `date -u` → Sat Oct 10 11:33:55 UTC 2026 (l.15).
+  WHY:
+    The date -u output is recorded nowhere else. It is consistent with the record: after the run finished (raw '#
+    finished 2026-10-10 11:33:32 UTC') and before the entry file's first write (entry_gshape.md born 07:34:29 -0400
+    = 11:34:29 UTC).
+  DISPOSITION: a plan, a projection or the commit to come; noted.
+
+--- [H1-37]
+    (l.101-102) Also carried into the consolidated Code→seat block before step 9.
+  WHY:
+    This is a future intent. m:358 confirms step 9 is 'Commit LOCK-m-F0 v0.1', but no consolidated block exists yet
+    to check against.
+  DISPOSITION: a plan, a projection or the commit to come; noted.
+
+--- [H1-47]
+    (l.114-115) A seat ruling that it must follow G-CAL's close costs one re-run.
+  WHY:
+    This is a projection. It fits the PIN-S9 supersession rule, although that rule also needs a hand git mv and a
+    recording entry besides the re-run.
+  DISPOSITION: a plan, a projection or the commit to come; noted.
+
+--- [H1-49]
+    (l.118-119) Committed: the entry; the artifact; the run raw; and this entry's values-check raw.
+  WHY:
+    This describes the commit still to come. data/m/gates/G-SHAPE-F0.json and results/raw/2026-10-10_m-gshape-f0.txt
+    exist and are untracked, as expected before this commit. Per instructions, the values-check raw's absence is not
+    flagged.
+  DISPOSITION: a plan, a projection or the commit to come; noted.
+
+============================================================ VALUES LENS
+--- V1 [overclaim]
+  QUOTE:
+    The self-test is sandboxed, so no regression can write
+  PROBLEM:
+    Overclaim, and the committed review raw says otherwise. The round-3 independent confirmation's H2 probe found
+    that a regression which hard-codes `data/m/gates` and writes with a raw `Path.write_text` does write the
+    canonical file. The sandbox tripwire guards only `_write_once_text`. Code's own closing note in
+    `results/raw/2026-10-10_m-gshape-build_review.txt` records this: "a regression writing the canonical path with a
+    raw Path.write_text would write it, and the self-test would then fail loudly (18 FAILs in the probe)".
+  CORRECTION:
+    Replace the sentence and its continuation with: "The self-test runs in a sandbox that points `GATES_DIR` at a
+    temp dir and refuses writes under `data/m` made through `_write_once_text`. A regression that hard-codes the
+    canonical path and writes with a raw `Path.write_text` would still write it; the self-test then fails loudly
+    (H2: 18 FAILs in the probe; Code's closing note). The import closure is recorded and checked."
+  DISPOSITION: applied.
+
+--- V2 [values]
+  QUOTE:
+    The 16 renders of record × the 4 `ROUND_TEMPLATES` × the 16 contrast banners
+  PROBLEM:
+    The arithmetic is wrong as written. The bullet continues "× the 22 stored gold variants … × both phases. That is
+    2,816 per unit", but 16 × 4 × 16 × 22 × 2 = 45,056. Renders and gold variants are not independent factors. Each
+    render is paired only with its own item's gold variants, so there are 22 (item, gold) pairs over the 16 items
+    (the artifact's `coverage.gold_variants` = 22 counts (item, gold) pairs). The code has `N_PER_UNIT = N_BANNERS *
+    N_TEMPLATES * N_GOLD_VARIANTS * len(PHASES)` = 16 × 4 × 22 × 2 = 2,816, with no renders factor.
+  CORRECTION:
+    "**Placements per unit.** Each of the 16 renders of record with its own item's stored gold variants, verbatim
+    and unframed (22 render–gold pairs over the 16 items) × the 4 `ROUND_TEMPLATES` × the 16 contrast banners (4
+    pairs × 2 maps × 2 clauses) × both phases: 22 × 4 × 16 × 2 = 2,816 per unit."
+  DISPOSITION: applied.
+
+--- V3 [seat-reading-not-flagged]
+  QUOTE:
+    **Render as the response** (reported only, not a criterion)
+  PROBLEM:
+    m:277 asserts that "no class fires on harness bytes or the render itself". Render-as-response is the only
+    measurement in the artifact where a class fired on the render's bytes: Qwen 256/2,816, v5 `content:task_echo`.
+    Classing it as reported-only is Code's reading (decisions item 1; the PIN-S6 comment at gshape.py:815). The
+    entry states it as settled fact and leaves it out of the "For the seat" list, which gives Layer C only as
+    seg+gold. If the seat reads "the render itself" literally, these 256 fires bear on the verdict.
+  CORRECTION:
+    "**Render as the response** (reported only, not a criterion: Code's reading, PIN-S6, flagged for the seat.
+    m:277's 'the render itself' is read as the render placed in the segment, not the render scored as a response,
+    which Layer S finds no production runner does.)" Add to the "Code's readings" list: "render-as-response reported
+    only (Qwen 256/2,816 task_echo on items 2 and 8; OLMo's stack takes no render input, so its 0 is structural)".
+  DISPOSITION: applied.
+
+--- V4 [missing-disclosure]
+  QUOTE:
+    the OLMo ban-id half left to the box.
+  PROBLEM:
+    The "Code's readings" list for the seat leaves out PIN-S4's core reading. m:277's "the full scoring stack of
+    both substrates" is read as each substrate's own stack as its startup builds it, without the adapter-dependent
+    ban-id halves (Qwen's scaffold set is asserted against the e2a ban-list file, not a tokenizer), with no cross-
+    substrate placement (gshape.py:424-433). The spec-fidelity review finding on PIN-S4 (not refuted) said "Repeat
+    it in the entry". Its refuter lowered the severity only because "the seat would still see the full PIN-S4" in
+    the entry. The entry's PIN-S4 bullet repeats exactly the gap that finding named: OLMo identity and the ban-id
+    half only. The builder's report also flagged two more items for the seat before LOCK v0.1, and the entry drops
+    both without saying Code resolved them: the canonical-only scope of the committed-sources check (decision 10),
+    and the STOP/refusal split (decision 2 over spec §4.6–4.7).
+  CORRECTION:
+    Add to the "Code's readings" list: "PIN-S4: m:277's 'full scoring stack of both substrates' read as each
+    substrate's own stack as its startup builds it, without the adapter-dependent ban-id halves (Qwen's scaffold set
+    asserted against the e2a ban-list file, not a tokenizer); no cross-substrate placement. Also: the committed-
+    sources precondition binds the canonical run only (decision 10); a renders-sha mismatch in the completability
+    identity or the seat read is a STOP, not the build spec's refusal (decision 2)."
+  DISPOSITION: applied.
+
+--- V5 [misstatement-and-adjudication]
+  QUOTE:
+    Its only G-CAL input is the renders of record, which G-CAL's conditions fix.
+  PROBLEM:
+    This misstates the inputs and quietly settles something that belongs to the seat. (a) The gate reads more from
+    G-CAL than the renders, and STOPs or refuses on these other reads too: G-CAL's conditions (1)–(2), the
+    completability artifact (schema, PASS, identity renders sha), the seat read's cited line, and G-CAL's recorded
+    pools sha (artifact `inputs`). (b) G-CAL is open. The read-of-record entry says "Whether any flagged or optional
+    item holds the close is the seat's to say", and the critic named the owed 128-generation read and O2/O3 as able
+    to re-specify the renders. If they do, the following "A re-run on unchanged inputs is byte-identical" does not
+    apply.
+  CORRECTION:
+    "Its G-CAL inputs are the renders of record and the G-CAL records that bind them: conditions (1)–(2), the
+    completability artifact's PASS and identity, the seat read's cited sha and the pools sha. The renders stand on
+    (1)–(4)'s PASS. G-CAL's owed items are the seat's. If any of them re-specifies the renders, G-SHAPE-F0 re-runs
+    on the new renders (not byte-identical) and this artifact is superseded by the hand procedure below."
+  DISPOSITION: applied.
+
+--- V6 [missing-disclosure]
+  QUOTE:
+    Template shape is clean.
+  PROBLEM:
+    This is ambiguous, and the entry never says what the gate does not test. m:56 and m:264 make G-SHAPE "a plumbing
+    check only": rule 28(c)'s item-shape half is met by the qualification stages' contrast sessions, and harness-
+    byte correctness is G-VER's (`template_breakage`, m:271). Here "template shape" is only a format check: each
+    `ROUND_TEMPLATES` entry at n 1–10, every render and 12 labels gives [bracketed header, `Task: ` + render,
+    `Response:`]. A reader can take it for rule 28(c) or G-VER. m:277 says "It tests scoring scope, nothing else",
+    and Code's own build spec (§13) required a "What it does not test" block, which the entry lacks.
+  CORRECTION:
+    "Template shape is clean (a format check: each `ROUND_TEMPLATES` entry, at n 1–10, with every render and each of
+    12 labels, formats to [bracketed header, `Task: ` + render, `Response:`])." Add a bullet: "**What it does not
+    test** (m:277, 'nothing else'; m:264, 'a plumbing check only'): item shape (rule 28(c)'s item-shape half, met by
+    the qualification stages' contrast sessions, m:56, m:264); harness-byte correctness (G-VER, `template_breakage`,
+    m:271); the OLMo ban ids (box); menus."
+  DISPOSITION: applied.
+
+--- V7 [overclaim]
+  QUOTE:
+    The static runner-scope check is clean: the production runners hand the classifier the generation
+  PROBLEM:
+    Overclaim. The sentence ends "alone." Layer S is a syntactic AST check of named forms; the R7 PIN wording says
+    it is "a syntactic check of these forms, not proof against every rewrite". A clean result means no rule fired.
+    It is not proof of runner behaviour. "Alone" is also inaccurate: classify is handed `earlier` (prior
+    generations), item, own_pair, echo_lines and phase as well as the scored text. The property checked is that the
+    scored text is the generation's, never the segment, banner or render.
+  CORRECTION:
+    "The static runner-scope check (Layer S, syntactic rules R1–R8) finds no problem: at every production classify
+    call site and in `SessionLog.add_round`, the scored text is the generation's, never the segment, banner or
+    render."
+  DISPOSITION: applied.
+
+--- V8 [missing-disclosure]
+  QUOTE:
+    `c75d4d8..<lock commit> -- valence_core/m`, which is `gshape.py` alone.
+  PROBLEM:
+    Incomplete, and partly predicts a future commit. (a) The entry names three package hashes, but this diff bridges
+    only G-CAL (4b49…, built at c75d4d8) to G-SHAPE-F0. G-PORT's `96fbcacf…` is 54e41c9's package, and `git diff
+    54e41c9..c75d4d8 -- valence_core/m` adds `gcal.py` and edits `__init__.py`; the entry does not state this. (b)
+    No lock commit exists yet. The diff is `gshape.py` alone at d092078 only. The companion clause "the step-8 build
+    edits nothing under `valence_core/`" describes uncommitted work: it is Code's step-8 decision 1, not an
+    observation. The critic also routed a possible step-9 `stages.py` wiring change, which would add to the diff.
+  CORRECTION:
+    "So LOCK v0.1 should state each gate artifact's package hash and the mechanical diffs between them:
+    `54e41c9..c75d4d8 -- valence_core/m` (G-PORT → G-CAL: `gcal.py` added, `__init__.py` edited) and `c75d4d8..<lock
+    commit> -- valence_core/m` (G-CAL → G-SHAPE-F0: at `d092078`, `gshape.py` alone; any package edit before the
+    lock adds to it)." Change the earlier clause to: "…and the step-8 build, by Code's step-8 decisions, edits
+    nothing under `valence_core/` (none in the tree at this commit)."
+  DISPOSITION: applied.
+
+--- V9 [rule-compliance]
+  QUOTE:
+    Code's decisions fixed:
+  PROBLEM:
+    Rule 27 ("the repo, not any machine, is the record"). The committed review raw's header says "Code's decisions
+    in the entry", and the raw cites "decisions item 1…9" and "spec §8's R4" throughout. The entry gives only a
+    four-item summary. Decisions 1–9 and the build spec exist only in scratch
+    (`…/scratchpad/step78/decisions_gshape.md`, `spec_gshape.md`), and the build spec is where the PIN-S wordings
+    and R1–R8 originate. "Rule R4 is stricter than the build spec's" therefore points at a document a reader of the
+    repo cannot open. The review raw appends only round-2 decisions 10–12.
+  CORRECTION:
+    Carry decisions 1–9 verbatim in the entry, as the review raw's header promises. Alternatively, commit
+    `decisions_gshape.md` and `spec_gshape.md` as a raw (e.g. `results/raw/2026-10-10_m-gshape-
+    build_decisions.txt`), link it here, and cite its §8 where "the build spec's" R4 is invoked.
+  DISPOSITION: applied.
+
+--- V10 [overclaim]
+  QUOTE:
+    It proves the stack can fire.
+  PROBLEM:
+    Overclaim. The same claim appears at the top ("so the stack can fire"). Per the review raw's own_pair finding,
+    seg+gold fires through the header's frame class. The artifact shows it firing on Qwen's claim, v3.exclusion,
+    lexical_raw, degeneracy, ends and strict fields, and on OLMo's the same minus v3.exclusion. It shows nothing for
+    advisory, echo_line, scaffold or termination. That every one of the 12 fields can fire is a self-test check
+    (Qwen stack), not in the artifact.
+  CORRECTION:
+    "It shows the stack fires when the segment's harness bytes are scored (Qwen: claim, v3 exclusion, raw lexical,
+    degeneracy, end rule, strict; OLMo: the same less v3 exclusion). That each of the 12 fields can fire is a self-
+    test check, not in the artifact."
+  DISPOSITION: applied.
+
+--- V11 [ambiguous]
+  QUOTE:
+    11,264 placements across Q-F0 and the three OLMo checkpoints
+  PROBLEM:
+    The headline counts four grids as if they were independent, and states PASS without qualification. The three
+    OLMo grids are one computation on byte-identical inputs; the critic's correction was "In the entry, say it is
+    one OLMo computation". The PASS also rests on Code's readings of m:277 that go to the seat before LOCK v0.1: the
+    enumeration scope, PIN-S4's own-stack reading, and render-as-response as not a criterion. A broader reading of
+    the latter would make Qwen fire.
+  CORRECTION:
+    "…11,264 placements (2,816 on Qwen; one OLMo computation of 2,816, run for each of the three checkpoints on
+    byte-identical inputs)…" and end the headline: "…no class fired on any placement, under Code's readings of m:277
+    (PIN-S1–S7), flagged for the seat before LOCK-m-F0 v0.1."
+  DISPOSITION: applied.
+
+--- V12 [ambiguous]
+  QUOTE:
+    It is six existing runner checks,
+  PROBLEM:
+    This is ambiguous and conflicts with the source. Per the artifact's `runner_dynamic_evidence`, four of the six
+    evidence "classify outcomes" and two only "render placed in situ". The refuter found the latter two pass under a
+    scoring-scope mutation. Only the new gshape check asserts what classify receives. Code's decisions item 1 also
+    asked the entry, not just the artifact, to name the checks.
+  CORRECTION:
+    "It is six existing runner checks (four on classify outcomes, two showing the render placed in situ; named in
+    the artifact's `runner_dynamic_evidence`) plus one new gshape check, the only one that asserts what classify
+    receives: the runners hand classify the generation's text, across every scripted session on both substrates."
+  DISPOSITION: applied.
+
+--- V13 [missing-disclosure]
+  QUOTE:
+    16 findings, 3 refuted, 13 confirmed and fixed.
+  PROBLEM:
+    Missing disclosure against the review raw. Its first fix report says "All 12 confirmed findings are fixed". The
+    13th confirmed finding (tests lens, "Five input-binding checks have no must-fail case") was not fixed in that
+    round. It was closed only in round 2, through the verifier's I02–I05 and I12 survivors. A reader checking the
+    raw finds 12, not 13.
+  CORRECTION:
+    "16 findings, 3 refuted, 13 confirmed: 12 fixed in the first fix round, the 13th (five input-binding checks
+    without a must-fail case) in round 2."
+  DISPOSITION: applied.
+
+--- V14 [values]
+  QUOTE:
+    7 were not applicable (their text moved; ported forms
+  PROBLEM:
+    This misstates the round-3 confirmation. The sentence continues "caught)." The confirmer ported only four of the
+    seven (A03n, D01n, N01n, N03n), and all four were caught. V05's analogue V05n survived and is one of the 8
+    equivalents. V15 and V16 were replaced by the fixer's forms: V15n, V15n2, V16a and V16b were caught, and V16c is
+    equivalent. So not every ported form was caught.
+  CORRECTION:
+    "7 were not applicable because round 3 rewrote their text. Four (A03, D01, N01, N03) were ported and caught;
+    V05's analogue V05n is one of the 8 equivalents; V15's and V16's rewritten forms were caught, except V16c, also
+    equivalent."
+  DISPOSITION: applied.
+
+--- V15 [values]
+  QUOTE:
+    per-checkpoint input is the `data/olmo/scaffold_{ckpt}.json` string check, equal on all three.
+  PROBLEM:
+    Inaccurate. gshape also reads each checkpoint's `data/olmo/b3_screen_{ckpt}.json` ban_list and STOPs unless it
+    equals {9 ids, sha16 2dd86a453a2275ef} (gshape.py:462-487). The "recorded" ban-id half that the next sentence
+    describes comes from those three files, and the round-2 self-test plants a changed `b3_screen_instruct.json` as
+    a STOP case.
+  CORRECTION:
+    "…the only per-checkpoint inputs are each checkpoint's `data/olmo/scaffold_{ckpt}.json` string check and its
+    `b3_screen_{ckpt}.json` ban_list record, equal on all three."
+  DISPOSITION: applied.
+
+--- V16 [misstates-source]
+  QUOTE:
+    **Excluded:** menus and sham banners, which never carry a render (m:172).
+  PROBLEM:
+    This attributes more to m:172 than it says. m:172 supports the sham half ("Sham arms serve `CORR_clean` to both
+    labels"). It does not say menus carry no render; menus have no Task line (`MENU_TEMPLATES`). Code's build spec
+    gave the two reasons separately.
+  CORRECTION:
+    "**Excluded:** menus, which have no Task line, and sham banners, whose arms serve `CORR_clean` to both labels
+    (m:172)."
+  DISPOSITION: applied.
+
+--- V17 [ambiguous]
+  QUOTE:
+    at n = t + 1 forced and t + 5 free.
+  PROBLEM:
+    Ambiguous: `t` is never defined in the entry. In gshape.py's PIN-S1, `t` is the template index 0–3, and the
+    forced round and the chosen free round share t's template. The PIN also says n never enters classify, which
+    bears on whether this choice matters.
+  CORRECTION:
+    "…at n = t + 1 forced and t + 5 free, where t is the template's index (0–3) and the forced round and the chosen
+    free round share a template; n never enters classify, and the shape check covers n 1–10."
+  DISPOSITION: applied.
+
+============================================================ ALL CLAIMS
+[H0-01] VERIFIED -> VERIFIED: Entry date 2026-10-10 (l.1).
+[H0-02] VERIFIED -> VERIFIED: G-SHAPE-F0 is PROPOSAL-m v1.11 §8 step 7, with its criterion at m:277 (l.1).
+[H0-03] VERIFIED -> VERIFIED: The PI's go was "Go for steps 7 and 8" (l.1).
+[H0-04] VERIFIED -> VERIFIED: G-SHAPE-F0 verdict is PASS (l.1).
+[H0-05] VERIFIED -> VERIFIED: Each of the 16 renders of record was placed inside each round template, beside its bracketed header, with a clean gold as the response (l.2-3).
+[H0-06] VERIFIED -> VERIFIED: There were 11,264 placements across Q-F0 and the three OLMo checkpoints (l.3).
+[H0-07] VERIFIED -> VERIFIED: Each placement went through its substrate's full scoring stack, and no class fired on any placement (l.3-4).
+[H0-08] VERIFIED -> VERIFIED: The required control (segment + gold scored as the response) fired on every placement, so the stack can fire (l.6-7).
+[H0-09] VERIFIED -> VERIFIED: The three OLMo grids are identical (l.8).
+[H0-10] VERIFIED -> VERIFIED: Template shape is clean (l.9).
+[H0-11] VERIFIED -> VERIFIED: The static runner-scope check is clean: the production runners hand the classifier the generation alone (l.10-11).
+[H0-12] VERIFIED -> VERIFIED: Model-free; nothing on the box; the k arc untouched (l.12).
+[H0-13] VERIFIED -> VERIFIED: G-CAL (step 6) is still open, and LOCK-m-F0 v0.1 waits on it (l.12-13).
+[H0-14] UNCHECKABLE -> UNCHECKABLE: The stamp value: `date -u` → Sat Oct 10 11:33:55 UTC 2026 (l.15).
+[H0-15] IMPRECISE -> VERIFIED: The stamp was 'verified at write time' and taken at the 'first write' (l.15).
+[H0-16] VERIFIED -> VERIFIED: The run raw is results/raw/2026-10-10_m-gshape-f0.txt and the artifact is data/m/gates/G-SHAPE-F0.json (l.17-18).
+[H0-17] VERIFIED -> VERIFIED: The artifact's sha256 is `086d812f…6318556` (l.18).
+[H0-18] VERIFIED -> VERIFIED: `scripts/m_sessions.py gshape` ran at HEAD `d092078`, the build commit (l.19).
+[H0-19] VERIFIED -> VERIFIED: The run took 11:33:27–11:33:32 UTC and exited 0 (l.19).
+[H0-20] VERIFIED -> VERIFIED: The raw shows the INVOCATION line twice, once echoed by Code's wrapper and once printed by the driver (l.20).
+[H0-21] VERIFIED -> VERIFIED: Per unit (Q-F0, OLMo-sft, OLMo-dpo, OLMo-instruct): 2,816 placements, 0 fired (l.21).
+[H0-22] VERIFIED -> VERIFIED: The required control (segment + gold) fired 2,816/2,816 per unit (l.21-22).
+[H0-23] VERIFIED -> VERIFIED: Render-as-response is reported only, not a criterion (l.23).
+[H0-24] VERIFIED -> VERIFIED: Render-as-response fired Q-F0 256/2,816 and each OLMo unit 0/2,816 (l.23-24).
+[H0-25] VERIFIED -> VERIFIED: All 256 are the v5 advisory `content:task_echo`, on items 2 and 8 only (l.24).
+[H0-26] VERIFIED -> VERIFIED: The OLMo grids are identical across the three checkpoints, with one `rows_sha256` `bf4e9c23…` (l.25).
+[H0-27] VERIFIED -> VERIFIED: Template shape: 0 problems over n 1–10 and 12 labels (l.26).
+[H0-28] VERIFIED -> VERIFIED: Layer S: 0 problems under rules R1–R8 (l.26).
+[H0-29] VERIFIED -> VERIFIED: Verdict PASS, `stop_reasons` [] (l.27).
+[H0-30] VERIFIED -> VERIFIED: The enumeration is Code's readings of m:277, declared as PINs S1–S3 (l.28).
+[H0-31] IMPRECISE -> IMPRECISE: Placements per unit = 16 renders × 4 ROUND_TEMPLATES × 16 contrast banners × 22 stored gold variants × both phases = 2,816 (l.29-31).
+[H0-32] VERIFIED -> VERIFIED: The 16 contrast banners are 4 pairs × 2 maps × 2 clauses (l.29-30).
+[H0-33] VERIFIED -> VERIFIED: The gold variants are used verbatim and unframed (l.30).
+[H0-34] VERIFIED -> VERIFIED: The render sits under the Q-role label, at n = t + 1 forced and t + 5 free (l.32).
+[H0-35] VERIFIED -> VERIFIED: Excluded: menus and sham banners, which never carry a render (m:172) (l.33).
+[H0-36] VERIFIED -> VERIFIED: Clean-text placements are also excluded, because m:277 names "every corrupted render" (l.33-34).
+[H0-37] VERIFIED -> VERIFIED: F0m-OLMo uses the same `ROUND_TEMPLATES` objects: b3 imports them, and m's `scaffold._round` formats them on both substrates (l.35-36).
+[H0-38] VERIFIED -> VERIFIED: The fire predicate is the strict reading: a placement fires if any of 12 fields fires (claim, advisory, v3 exclusion, v3 content label, v3 advisory, echo line, raw lexical, scaffold, degeneracy, end rule, strict scope, termination), and any fire is a STOP (l.37-39).
+[H0-39] VERIFIED -> VERIFIED: Layer S (PIN-S5) is a static check of the production scoring call sites, a reading beyond m:277's letter that is flagged for the seat (l.40-41).
+[H0-40] VERIFIED -> VERIFIED: Scoring the render as the response fires 0/2,816 on OLMo, so a runner that did so would pass Layer A there (l.42-43).
+[H0-41] VERIFIED -> VERIFIED: The static check requires each of `run_session_qwen`'s and `run_session_olmo`'s classify calls, and `SessionLog.add_round`, to be handed the generation's text, never the segment, banner or render (rules R1–R8) (l.44-46).
+[H0-42] VERIFIED -> VERIFIED: Rule R4 is stricter than the build spec's: each history append must sit after the classify that scored its generation, exactly once per call site (l.47-48).
+[H0-43] VERIFIED -> VERIFIED: The dynamic half is in the m self-test, never on a run path (l.49).
+[H0-44] VERIFIED -> VERIFIED: The dynamic half is six existing runner checks, cited by name in the artifact, plus one new gshape check that the runners hand classify the generation's text across every scripted session on both substrates (l.49-51).
+[H0-45] VERIFIED -> VERIFIED: Layer C (PIN-S6) is one scope-widened control, segment + gold, which must fire on every placement or the gate STOPs; it proves the stack can fire (l.52-53).
+[H0-46] VERIFIED -> VERIFIED: OLMo (PIN-S4): the three checkpoints are one computation on byte-identical inputs (l.54).
+[H0-47] IMPRECISE -> IMPRECISE: The only per-checkpoint input is the `data/olmo/scaffold_{ckpt}.json` string check, equal on all three (l.54-55).
+[H0-48] VERIFIED -> VERIFIED: The ban-id half of m:262's startup assertion needs the OLMo tokenizer; it is recorded (9 ids, sha16 `2dd86a453a2275ef`) and not exercised here (l.55-57).
+[H0-49] VERIFIED -> VERIFIED: `olmo_startup` asserts the ban-id half on the box (LOCK-m-OLMo-{ckpt} v0.1, m:302) (l.57-58).
+[H0-50] VERIFIED -> VERIFIED: Inputs bound (PIN-S7): the renders are read from the committed `G-CAL_model-free.json` and asserted equal to `scaffold.pool_and_renders()` (l.59-60).
+[H1-01] VERIFIED -> VERIFIED: (l.60) The renders are read from the committed G-CAL_model-free.json.
+[H1-02] VERIFIED -> VERIFIED: (l.60-61) The renders are asserted equal to scaffold.pool_and_renders().
+[H1-03] VERIFIED -> VERIFIED: (l.61) The renders are asserted equal to the pinned sha256 a04f67b0…4372.
+[H1-04] VERIFIED -> VERIFIED: (l.61-62) The renders are asserted equal to the completability identity (verdict PASS).
+[H1-05] VERIFIED -> VERIFIED: (l.62) The renders are asserted equal to the seat read's cited line.
+[H1-06] VERIFIED -> VERIFIED: (l.62-63) The renders are never computed as G-SHAPE's own (RESULTS.md@e60b633:919–920).
+[H1-07] VERIFIED -> VERIFIED: (l.64) The pools file's sha256 (8547d9a1…) is hashed directly and asserted equal to G-CAL's recorded value.
+[H1-08] VERIFIED -> VERIFIED: (l.65) The proposal sha256 is v1.11's (42ab36ec…).
+[H1-09] VERIFIED -> VERIFIED: (l.67) package_sha256 is 06ab1430de9c5ca0….
+[H1-10] VERIFIED -> VERIFIED: (l.68-69) A sources map of 28 files has digest ee16e16b…: 26 scoring-stack files, including the three b3_screen files, and the 2 tooling files.
+[H1-11] VERIFIED -> VERIFIED: (l.70-71) The import closure outside the package has 14 files, digest 23abe773…: the valence_core modules the gate loads, among them e2d/audit_v3.py, content classes v4/v5 and session_e2a.py.
+[H1-12] VERIFIED -> VERIFIED: (l.72-73) The canonical run refused unless every one of those files, and every valence_core/m file, was committed at HEAD and unedited.
+[H1-13] VERIFIED -> VERIFIED: (l.73) It checked before scoring and again before the write.
+[H1-14] VERIFIED -> VERIFIED: (l.73-74) The raw records "sources committed at HEAD: yes".
+[H1-15] VERIFIED -> VERIFIED: (l.75) The artifact is write-once, with no timestamp and no HEAD.
+[H1-16] VERIFIED -> VERIFIED: (l.75-76) It matches the m self-test of record at the same package hash, sources digest and closure digest (_selftest raw).
+[H1-17] VERIFIED -> VERIFIED: (l.77-79) The build is d092078 with raws _review, _selftest and _sitecheck.
+[H1-18] VERIFIED -> VERIFIED: (l.80) New valence_core/m/gshape.py.
+[H1-19] FAILS -> FAILS: (l.80-81) In scripts/m_sessions.py: gshape [--out DIR], the MODULES entry and 5 driver checks.
+[H1-20] VERIFIED -> VERIFIED: (l.81) valence_core/m/__init__.py is unedited.
+[H1-21] VERIFIED -> VERIFIED: (l.82-83) An understand workflow (five readers, two synthesizers, a completeness critic) produced the build spec.
+[H1-22] VERIFIED -> VERIFIED: (l.83-87) Code's decisions fixed the layers (A, S, and C trimmed to one control; a runner-on-test-doubles layer dropped), the input bindings, the committed-sources precondition, and the write-once and supersession rule.
+[H1-23] IMPRECISE -> IMPRECISE: (l.88-89) Three lenses (spec fidelity; harness and safety; tests) put each finding to a strict refuter: 16 findings, 3 refuted, 13 confirmed and fixed.
+[H1-24] VERIFIED -> VERIFIED: (l.90-91) An independent verifier ran the full m self-test per mutant in clones of a scratch replica.
+[H1-25] VERIFIED -> VERIFIED: (l.91) Two further fix-and-verify rounds followed.
+[H1-26] VERIFIED -> VERIFIED: (l.92-93) Code's round-2 decisions extended the canonical precondition to every valence_core/m file and required that a scoring-stack edit no longer break the pre-commit self-test.
+[H1-27] IMPRECISE -> IMPRECISE: (l.94) Round 3 closed the verifier's last findings.
+[H1-28] FAILS -> FAILS: (l.94-95) The self-test is sandboxed, so no regression can write data/m from inside it.
+[H1-29] VERIFIED -> VERIFIED: (l.95) The import closure is recorded and checked.
+[H1-30] VERIFIED -> VERIFIED: (l.96) The final confirmation was CLEAN.
+[H1-31] VERIFIED -> VERIFIED: (l.96) Of 140 mutants, 117 were caught.
+[H1-32] VERIFIED -> VERIFIED: (l.96-97) The 16 survivors are 8 must-pass workflow probes and 8 equivalents.
+[H1-33] IMPRECISE -> IMPRECISE: (l.97-98) 7 were not applicable (their text moved; ported forms caught).
+[H1-34] VERIFIED -> VERIFIED: (l.99) m self-test 744/744 (706 before).
+[H1-35] VERIFIED -> VERIFIED: (l.99) Site check 8/8.
+[H1-36] VERIFIED -> VERIFIED: (l.99-100) Self-test time rises from about 1 min to about 2 min.
+[H1-37] UNCHECKABLE -> UNCHECKABLE: (l.101-102) Also carried into the consolidated Code→seat block before step 9.
+[H1-38] VERIFIED -> VERIFIED: (l.103-105) Code's readings: Layer S and Layer C beyond m:277's letter; R4's stricter order rule; the strict fire predicate; the enumeration's scope (all gold variants, all contrast banners, both phases; clean text and menus out); the OLMo ban-id half left to the box.
+[H1-39] VERIFIED -> VERIFIED: (l.107) G-PORT's artifact records 96fbcacf….
+[H1-40] VERIFIED -> VERIFIED: (l.107) G-CAL's records 4b49658739523c60….
+[H1-41] VERIFIED -> VERIFIED: (l.108) G-SHAPE-F0's is 06ab1430….
+[H1-42] VERIFIED -> VERIFIED: (l.108) The step-8 build edits nothing under valence_core/.
+[H1-43] VERIFIED -> VERIFIED: (l.109-110) The mechanical diff c75d4d8..<lock commit> -- valence_core/m is gshape.py alone.
+[H1-44] VERIFIED -> VERIFIED: (l.111-112) G-SHAPE-F0 ran while G-CAL is still open, on the PI's word (the third order question of the read-of-record entry).
+[H1-45] IMPRECISE -> IMPRECISE: (l.113) Its only G-CAL input is the renders of record, which G-CAL's conditions fix.
+[H1-46] VERIFIED -> VERIFIED: (l.114) A re-run on unchanged inputs is byte-identical.
+[H1-47] UNCHECKABLE -> UNCHECKABLE: (l.114-115) A seat ruling that it must follow G-CAL's close costs one re-run.
+[H1-48] VERIFIED -> VERIFIED: (l.116-117) Supersession is by hand only, on the seat's ruling: the old artifact is moved with git mv to a dated name recorded in an entry, and the re-run writes the canonical name.
+[H1-49] UNCHECKABLE -> UNCHECKABLE: (l.118-119) Committed: the entry; the artifact; the run raw; and this entry's values-check raw.
+[H1-50] VERIFIED -> VERIFIED: (l.119-120) The build and its three raws are in d092078.
+[H1-51] VERIFIED -> VERIFIED: (l.120) Next: step 8, G-ANL-F0.
+
+####################################################################################################
+PASS 2: claims 82, verified 75, confirmed corrections 5, refuted flags 0, uncheckable 2, values findings 13
+####################################################################################################
+============================================================ CONFIRMED CORRECTIONS
+--- [H0-20] IMPRECISE
+  CLAIM:
+    L25-26: OLMo's 0 is structural, since its stack takes no render input
+  REFUTER'S EVIDENCE:
+    The checker is right, and I confirmed it against the code myself.
+
+    - **How the control is scored.** In valence_core/m/gshape.py, the render-as-response control (`_render_alone`,
+    CONTROL_TEXTS) goes through `score()`. On OLMo that call is `stack.classify(text, own_pair=(P,Q),
+    echo_lines=..., phase=...)`, so the render really is handed to OLMo's stack as the response text.
+    - **What OLMo's classifier runs on that text.** `OLMoTaskRoundAudit.classify` (valence_core/m/audit.py:476-500)
+    runs four checks on whatever text it gets:
+      - `self.spec.check(text)`, which is b3's AuditSpec. It fires on: empty text; the ban strings; the frame
+    fragments "Task:", "Response:" and "[round"; and the junk regexes `(\b\w+\b)(\s+\1){3,}` and `(.{6,}?)\1{3,}`.
+      - `harness_echo(text, echo_lines)`.
+      - `lexical_hit(text, own_pair)`.
+      - `_scaffold_hits` on the six scaffold strings.
+    - **Fields applied on top.** `round_fires` (gshape.py:650-713) then adds degeneracy, ends, strict and
+    termination (`_sc.termination(text, rx)`).
+    - **So the zero depends on content.** All of these are content tests. A corrupted render that contained "Task:",
+    repeated a word four times, or included an own-pair tag would fire.
+    - **The recorded result.** OLMo's render-as-response 0/2,816 is in the artifact for each of OLMo-
+    sft/dpo/instruct (`n_fired` 0, `fired_fields` []). It is an observed result on these 16 renders. It is not
+    guaranteed by construction.
+    - **The narrower true statement.** OLMo's stack takes no render input, so it has no class that compares a
+    response with the render. On Qwen, v5 `task_echo` does that comparison (contentclass_v5.py:124,
+    `is_task_echo_v4(text, task_text)`), and it accounts for Q-F0's 256 fires on items 2 and 8. This matches the PIN
+    at gshape.py:815-821: "OLMo's stack takes no render input, which is why Layer S, not Layer A, is what covers a
+    runner that scored the render". That PIN does not call the zero structural.
+    - **Problems with the checker's own correction.**
+      - "expected rather than evidence" adds a judgment that no source states.
+      - "its other classes do not fire on these 16 renders" is loose. The fire predicate counts 12 fields, not just
+    the three OLMo claim classes. Each placement is also scored with its own pair, echo lines and phase, so
+    "placements" is the right unit, not "renders".
+  CORRECTION:
+    OLMo's 0 is not structural: its stack takes no render input, so it has no class that compares a response with
+    the render (Qwen's v5 task_echo does), and its other checks, which run on whatever text they are given, did not
+    fire on any of the 2,816 placements of these 16 renders.
+  DISPOSITION: applied.
+
+--- [H0-34] IMPRECISE
+  CLAIM:
+    L59-60: the artifact carries a syntactic check of run_session_qwen's and run_session_olmo's classify calls and
+    of SessionLog.add_round, rules R1–R8
+  REFUTER'S EVIDENCE:
+    valence_core/m/gshape.py: R1–R6 sit in the per-runner check (line 1020, "R1-R6 on one runner"), which covers
+    run_session_qwen and run_session_olmo. R7, in `_add_round_problems` (line 1182), checks add_round's record
+    literal. Then, at lines 1237–1238, it runs `_rounds_rewrites` on every SessionLog method; that function's
+    docstring opens "R7, SessionLog-wide (every method of the class)". R8, in `_classify_refs_outside` (line 1312),
+    is not a check of the named sites. At lines 1386–1388 it runs over every parsed `valence_core/m/*.py` file
+    except gshape.py and reports any classify reference outside a `_selftest` body and outside the two session
+    functions. The artifact data/m/gates/G-SHAPE-F0.json has layer_s.r8_scope = '17 files of valence_core/m/*.py
+    (gshape.py exempt; _selftest bodies exempt)'. layer_s.files hashes only runner_olmo.py, runner_qwen.py and
+    scaffold.py. So the claim gives R1–R8 too narrow a scope: R7 is class-wide and R8 is package-wide. The module's
+    own docstring (gshape.py:21–24) uses the same loose wording. The checker's correction has its own error. It says
+    R8 covers "the 17 other package files", but `ls valence_core/m/*.py` lists 18 files, and the 17 are every file
+    except gshape.py. They include runner_qwen.py, runner_olmo.py and scaffold.py, which R8 scans for classify
+    references outside the session functions. So they are not "other" than the files that hold the named sites. The
+    checker's wording also leaves out that R7 covers the other SessionLog methods.
+  CORRECTION:
+    So the artifact carries a syntactic check of `run_session_qwen`'s and `run_session_olmo`'s classify calls (rules
+    R1–R6), and of `SessionLog.add_round` and every other `SessionLog` method (R7). It also carries a package-wide
+    rule, R8: no other classify reference may appear in the 17 files of `valence_core/m/*.py` (`gshape.py` exempt;
+    `_selftest` bodies exempt).
+  DISPOSITION: applied.
+
+--- [H0-35] IMPRECISE
+  CLAIM:
+    L61-62: Classify is also handed `earlier`, the item, the own pair, the echo lines and the phase
+  REFUTER'S EVIDENCE:
+    The draft's L61-62 sentence sits under "a syntactic check of `run_session_qwen`'s and `run_session_olmo`'s
+    classify calls", so it reads as covering both substrates. It is wrong on both substrates.
+
+    The code:
+    - valence_core/m/gshape.py:1114-1115 (inside _runner_problems) sets the required keyword set. For Qwen it is
+    {"render","item","earlier","own_pair","echo_lines","phase"}. For OLMo it is {"own_pair","echo_lines","phase"},
+    and that set must match exactly.
+    - gshape.py:1119-1125 checks three things, on Qwen only: render is <S>.task_text, item is <S>.item, and earlier
+    is the session's earlier list.
+    - gshape.py:1126-1127 (R5) checks own_pair and echo_lines on both substrates. R3 (gshape.py:1100-1112) checks
+    phase against the scaffold method on both.
+
+    The runners match this:
+    - runner_qwen.py:161 and :192 pass render=spec.task_text, item=spec.item and earlier=earlier.
+    - runner_olmo.py:139 and :166 pass only own_pair, echo_lines and phase.
+    - OLMo's classify signature (audit.py:476) takes no render, item or earlier.
+
+    So the draft has two errors:
+    - It says OLMo's classify is handed `earlier` and the item. It is not, and Layer S checks that it is not.
+    - It leaves out that Qwen's classify is handed the render, which R4 checks. The omission comes right after
+    "never the segment, banner or render", so a reader could conclude classify never gets the render at all. In fact
+    only the scored text must not be the render.
+
+    The checker's correction is accurate. One small change: scaffold.py:87 defines task_text as "as delivered (clean
+    text or the render)". On P rounds and sham rounds, the `render` keyword therefore carries clean task text, not a
+    render. The wording below names the keyword instead of calling its value "the render".
+  CORRECTION:
+    Classify's other arguments are checked too. On Qwen these are `render`, which must be the round's task text as
+    delivered (`task_text`), plus the item and `earlier`. On both substrates they are the own pair, the echo lines
+    and the phase. OLMo's classify gets no render, item or `earlier`, and Layer S checks that its keyword set is
+    exactly those three.
+  DISPOSITION: applied.
+
+--- [H2-21] IMPRECISE
+  CLAIM:
+    (l.134-135) The self-test runs in a sandbox: GATES_DIR points at a temp dir, and writes under data/m made
+    through _write_once_text are refused
+  REFUTER'S EVIDENCE:
+    The checker's verdict is right; its correction claims too much.
+
+    1. **What the sandbox covers.** `_selftest_sandbox` (gshape.py:1652-1677) patches gshape's `GATES_DIR` and
+    `guard.GATES_DIR` to a temp dir. It also wraps gshape's `_write_once_text` so that any path under
+    `resume.CANONICAL_ROOTS` (`data/m`, `/workspace/models`, `data/olmo`) is refused. Only `gshape._selftest` enters
+    it (gshape.py:1773, wrapping `_selftest_body`).
+       - `run_selftest` (m_sessions.py:2556-2575) runs every MODULES entry's `_selftest` and then the driver's
+    `_selftest`. The other modules' self-tests and the driver's non-gshape checks never run inside it.
+       - Every other use of "self-test" in the draft means the full m self-test (l.66, 74, 112, 129, 132, 145, and
+    l.136's "18 FAILs"). So "The self-test runs in a sandbox" reads as the whole m self-test, which overstates it.
+       - The source, round-3 fix report (`_review` raw l.1699), says "All of gshape's self-test now runs inside a
+    new sandbox". It scopes the driver side to "the main(["gshape","--out",...]) calls (rc_h1, rc_h2, rc_h8)"
+    (l.1701).
+       - Within that scope, the claim's mechanism is correct: `GATES_DIR` is a temp dir, and `_write_once_text`
+    writes under `data/m` are refused. Naming only `data/m` leaves out two of the three protected roots, but it is
+    not false.
+
+    2. **Why the checker's correction fails.** It says "the driver's gshape calls" run in the sandbox, and not all
+    of them do.
+       - **Inside the sandbox:** only rc_h1/rc_h2 (m_sessions.py:2353), rc_h8 (2397) and the V18 run rc_pc (2447).
+       - **The five must-refuse `main()` cases** (2389) run under `patched(gshape, "_write_once_text", h_no_write)`
+    and `patched(gshape, "GATES_DIR", h_canon)`. That is a sentinel, not `_selftest_sandbox`, and `guard.GATES_DIR`
+    is not patched.
+       - **The exit-code calls** `capture(run_gshape, hdir)` (2418-2425) and the STOP-verdict call (2428-2430) run
+    with `gshape.write` replaced, and `GATES_DIR` is not patched at all. For these, "GATES_DIR points at a temp dir"
+    is false.
+       - **What is true:** every driver gshape invocation that can write runs inside the sandbox. The code's own
+    comment at m_sessions.py:2345 says exactly that: "every invocation here that can write runs inside gshape's
+    self-test sandbox". This holds because `run_gshape` (m_sessions.py:348) writes only through `gshape.write`,
+    which the non-sandboxed cases replace or stub.
+  CORRECTION:
+    gshape's self-test runs in a sandbox, and so does every driver gshape run that can write: `GATES_DIR` points at
+    a temp dir, and writes under `data/m` made through `_write_once_text` are refused.
+  DISPOSITION: applied.
+
+--- [H2-26] IMPRECISE
+  CLAIM:
+    (l.147-148) Committed texts this entry corrects: d092078's message says "5 driver checks"; there are 6, the
+    sixth added in round 3
+  REFUTER'S EVIDENCE:
+    I checked this myself and the checker is right: the claim is true, but its list of corrections is incomplete.
+
+    (1) What the draft gets right. The `d092078` message says "scripts/m_sessions.py: gshape [--out DIR], MODULES, 5
+    driver checks". The committed `_selftest` raw has 744 [PASS] lines. Of these, 32 are "[PASS] gshape:"
+    (l.614-645) and 6 are m_sessions gshape checks (l.735-740), so 744 − 38 = 706, matching the baseline. The sixth
+    check (l.738, V18) was added in round 3: the ROUND 3 FIX REPORT (verbatim) at `_review` l.1703 says "New
+    m_sessions check: ... a driver that drops `--out` (V18)". Round 2 had 5: l.1544 says "the 5 m_sessions gshape
+    checks are unchanged in number" (706 + 29 + 5 = 740).
+
+    (2) What the draft leaves out. Running `git grep` on HEAD finds the same wrong count in two more committed
+    texts:
+    - `_review` raw l.2, Code's own compile header: "(the gshape subcommand, MODULES, 5 driver checks)".
+    - `_review` raw l.1753, inside "ROUND 3 -- INDEPENDENT CONFIRMATION (verbatim)": "32 gshape checks and 5
+    m_sessions gshape checks pass in each run". Since 706 + 32 + 5 = 743, not 744, this is wrong too.
+
+    The other mentions of 5 (l.28, 810, 818, 1396, 1544, 1618) were correct for their rounds, so they need no
+    correction. No other committed file repeats the error: not `m_sessions.py`, `gshape.py`, the `_sitecheck` raw,
+    the build-inputs file or `64df36b`. The draft's only list (l.147-148) names just the commit message.
+
+    (3) A refinement to the checker's wording. A grep for "[PASS] m_sessions: gshape" returns 5, because l.740
+    begins "m_sessions: the gshape checks left...". So the confirmation's 5 probably comes from a pattern count, not
+    from a stale pre-round-3 count like the commit message's. Calling it "the same miscount" would imply the same
+    cause. The replacement below says only that it also gives 5.
+  CORRECTION:
+    **Committed texts this entry corrects, flagged and not changed.** `d092078`'s message and the `_review` raw's
+    header (its line 2) say "5 driver checks"; there are 6, the sixth (V18) added in round 3. The round-3
+    confirmation (verbatim, `_review` line 1753) also says "5 m_sessions gshape checks"; the self-test of record has
+    706 + 32 + 6 = 744.
+  DISPOSITION: applied.
+
+============================================================ REFUTED FLAGS
+============================================================ UNCHECKABLE
+--- [H0-13]
+    L13: date -u stamp Sat Oct 10 11:33:55 UTC 2026 at the entry's first write
+  WHY:
+    No record of the write-time stamp. It is consistent with the run ending at 11:33:32 UTC and with
+    entry_gshape_v1.md's mtime of 07:34:42 local (11:34:42 UTC).
+  DISPOSITION: a plan, a projection or the commit to come; noted.
+
+--- [H2-27]
+    (l.149-150) The seat items are also carried into the consolidated Code→seat block before step 9
+  WHY:
+    A forward-looking plan. It is consistent with the critic's routes ('notice to the SEAT in the consolidated
+    block', 'List it in the consolidated seat block', build-inputs l.354 and l.371), but no such block exists yet.
+  DISPOSITION: a plan, a projection or the commit to come; noted.
+
+============================================================ VALUES LENS
+--- V1 [overclaim / missing disclosure]
+  QUOTE:
+    substrate's scoring stack, under Code's readings of m:277 (PIN-S1–S7), which are flagged for the seat
+  PROBLEM:
+    The headline PASS depends on one of these readings, and the headline does not say which. The artifact's
+    controls.Q-F0.render-as-response fires 256/2,816 with fields [advisory, v3.content_label, v3.advisory]. Under
+    PIN-S3's strict predicate those are fires. If the seat reads m:277's "the render itself" as the render scored as
+    the response, which the body names as the alternative reading, the Q-F0 verdict is STOP fire:Q-F0. The body
+    calls the 256 "reported only" but never says it would flip the verdict. Choosing the reading that yields PASS
+    without stating that is close to Code deciding what the criterion is.
+  CORRECTION:
+    Add to the headline, after "...before LOCK-m-F0 v0.1.": "The PASS rests on PIN-S6's reading of m:277's 'the
+    render itself' as the render placed in the segment. Read instead as the render scored as the response, Qwen
+    fires 256/2,816 (the v5 `task_echo` advisory, items 2 and 8), which PIN-S3's strict predicate counts as fires: a
+    STOP. OLMo fires 0. Which reading holds is the seat's."
+  DISPOSITION: applied.
+
+--- V2 [missing disclosure / misstatement]
+  QUOTE:
+    Classify is also handed `earlier`, the item, the own pair, the echo lines
+  PROBLEM:
+    The list leaves out the render. On Qwen, classify is handed the render as delivered: runner_qwen.py:161/:192
+    pass `render=spec.task_text`, Layer S's R4 requires `render=<S>.task_text`, and m:261 says audit v3's task_text
+    "is the render as delivered". Next to "never the segment, banner or render", the sentence suggests the render
+    never reaches classify. In fact the render is exactly the input v5 `task_echo` compares against, which is how
+    the 256 render-as-response fires arise.
+  CORRECTION:
+    Classify is also handed, on Qwen, the render as delivered as context (`render=spec.task_text`, which R4
+    requires; m:261), `earlier` and the item; on both substrates, the own pair, the echo lines and the phase. The
+    render is never the scored text.
+  DISPOSITION: applied.
+
+--- V3 [overclaim]
+  QUOTE:
+    the scored text is the generation's, never the segment, banner or render.
+  PROBLEM:
+    The headline bullet ("At every production classify call site, the scored text is ...") states as fact what Layer
+    S only checks syntactically. The body says Layer S "is a check of named forms, not proof against every rewrite",
+    and gshape.py's R7 PIN says the same. Its coverage is also bounded: four call sites in two runners, and R8 scans
+    only valence_core/m/*.py. The headline drops both qualifications.
+  CORRECTION:
+    At each of the four production classify call sites (run_session_qwen's and run_session_olmo's; R8 finds no other
+    in valence_core/m), the scored text has the declared form, the round's generation `.text`, never the segment,
+    banner or render. This is a syntactic check of named forms, not a proof against every rewrite.
+  DISPOSITION: applied.
+
+--- V4 [overclaim]
+  QUOTE:
+    A ruling only that it must follow G-CAL's close costs one byte-identical re-run.
+  PROBLEM:
+    The re-run is byte-identical only if every recorded input is unchanged at that point: package_sha256, the
+    sources map (including the tooling file scripts/m_sessions.py), the import closure, the proposal sha256 and the
+    three G-CAL files' sha256 are all in the artifact. The critic's correction this rests on said "on unchanged
+    inputs", and the draft drops that qualifier. If any of these is edited before the re-run, the new artifact
+    differs, write-once refuses it, and supersession then needs the seat's ruling.
+  CORRECTION:
+    A ruling only that it must follow G-CAL's close costs one re-run. That re-run is byte-identical only if its
+    recorded inputs are unchanged then: the m package, the sources map (scoring stack and tooling), the import
+    closure, the proposal and the three G-CAL files. Any change makes the bytes differ, which write-once refuses
+    until supersession on the seat's ruling.
+  DISPOSITION: applied.
+
+--- V5 [missing disclosure]
+  QUOTE:
+    there are 6, the sixth added in round 3.
+  PROBLEM:
+    The corrections list is incomplete. The same stale count appears in two committed places in d092078's review
+    raw. Its header (line 2) reads "the gshape subcommand, MODULES, 5 driver checks". The round-3 confirmation (line
+    1753) reads "32 gshape checks and 5 m_sessions gshape checks pass in each run", which sums to 706 + 37 = 743,
+    not the 744 it reports. The self-test raw lists 6 m_sessions gshape checks (lines 735–740).
+  CORRECTION:
+    …there are 6, the sixth added in round 3. The same stale count stands in d092078's review raw: its header (line
+    2, "5 driver checks") and the round-3 confirmation (line 1753, "32 gshape checks and 5 m_sessions gshape
+    checks", which sums to 743, not its 744). The self-test raw lists the 6 (lines 735–740).
+  DISPOSITION: applied.
+
+--- V6 [missing disclosure]
+  QUOTE:
+    The step-8 build commit `64df36b` touches nothing under `valence_core/`.
+  PROBLEM:
+    PIN-S10's operative clause is never stated. gshape.py's sources_map PIN says "LOCK v0.1 compares this map with
+    its own tree, and any difference re-runs G-SHAPE-F0 first". The Provenance (PIN-S10) section and the
+    package_sha256 item cover only package-hash diffs. A change to a scoring-stack data file or to
+    scripts/m_sessions.py would not appear in the valence_core/m diffs, yet it forces a re-run. "Nothing under
+    valence_core/" is also the wrong test for this artifact; the relevant scope is the sources map plus the import
+    closure.
+  CORRECTION:
+    The step-8 build commit `64df36b` touches no file of this artifact's sources map or import closure (its files
+    are scripts/m_analyze.py, the placeholder sentence table and three raws). PIN-S10: LOCK v0.1 compares the
+    artifact's sources map with its own tree, and any difference re-runs G-SHAPE-F0 first (write-once, so
+    supersession on the seat's ruling).
+  DISPOSITION: applied.
+
+--- V7 [missing disclosure / ambiguity]
+  QUOTE:
+    If any owed item re-specifies the renders, G-SHAPE-F0 re-runs on the new renders, not byte-identically,
+  PROBLEM:
+    This understates the cost. The renders sha256 is a pinned constant in the m package (`RENDERS_SHA256_OF_RECORD`
+    in valence_core/m/gshape.py). New renders STOP the precondition until gshape.py is edited, and that edit moves
+    package_sha256 again and adds to the diffs the lock must state. The clause "and this artifact is superseded"
+    also reads as automatic, while the next bullet says supersession is by hand, on the seat's ruling.
+  CORRECTION:
+    If any owed item re-specifies the renders, G-SHAPE-F0 would re-run on the new renders only after an edit to
+    gshape.py's pinned renders sha256 (`RENDERS_SHA256_OF_RECORD`, a package change that moves package_sha256
+    again). The re-run is not byte-identical, and this artifact would be superseded on the seat's ruling.
+  DISPOSITION: applied.
+
+--- V8 [missing disclosure]
+  QUOTE:
+    corrections and Code's decisions verbatim in
+  PROBLEM:
+    Not disclosed: the build-inputs raw was compiled at 11:44:12 UTC, after both runs of record, and enters the repo
+    only with this entry. d092078's committed review raw and gshape.py's PINs cite these files by scratch name and
+    line number (e.g. "spec_gshape.md:346-380", "critic.md:242", "decisions item 2", "critic G-SHAPE item 4"). From
+    d092078 until this commit, the record cited inputs it did not hold. The raw's own header invokes rule 27 for
+    exactly this. Also not disclosed: the cited line numbers are each scratch file's own, not the raw's, and the
+    five readers' reports are not reproduced.
+  CORRECTION:
+    …verbatim in [`_build-inputs`] (compiled 11:44:12 UTC and committed only with this entry; d092078's review raw
+    and gshape.py's PINs cite these files by their scratch names and line numbers, which are each file's own, its
+    sha256 heading its section; the five readers' reports are not reproduced).
+  DISPOSITION: applied.
+
+--- V9 [ambiguity]
+  QUOTE:
+    LOCK-m-F0 v0.1 waits on it.
+  PROBLEM:
+    This is ambiguous about what holds the lock. The critic's route for PIN-S5 and PIN-S6, which outranks the spec
+    under Code's stated precedence, was "must reach the seat before LOCK v0.1 (blocking LOCK v0.1, not step 7)". The
+    Status line names only G-CAL. "For the seat, before LOCK-m-F0 v0.1" further down can be read as a delivery time
+    rather than a hold.
+  CORRECTION:
+    LOCK-m-F0 v0.1 waits on it, and on the seat's answer to the readings flagged below (PIN-S5 and PIN-S6 block LOCK
+    v0.1 per the critic's route; they did not block step 7).
+  DISPOSITION: applied.
+
+--- V10 [Code adjudicating / missing disclosure]
+  QUOTE:
+    renders stand on conditions (1)–(4)'s PASS, and G-CAL's owed items are the seat's.
+  PROBLEM:
+    Two problems. First, (1)–(4) passed on Qwen only; G-CAL-OLMo's condition (4) has not run. Second, "stand" reads
+    as Code settling the renders, but the 2c50e03 entry leaves open whether O2/O3 bear on (3) or (4), and "Whether
+    its PASS covers them is the seat's to say". The owed items are not named either. The build spec's [SEAT] routing
+    said to repeat them in this entry.
+  CORRECTION:
+    The renders of record are those on which G-CAL's conditions (1)–(4) passed on Qwen (G-CAL-OLMo's condition (4)
+    has not run). Still owed for G-CAL's close (2c50e03 entry): the seat's read of the 128 generations, its rulings
+    on the two order departures, and the unanswered `disown`. Whether O2/O3 bear on (3) or (4), and so on the
+    renders, is the seat's to say.
+  DISPOSITION: applied.
+
+--- V11 [missing disclosure]
+  QUOTE:
+    The forced round and the chosen free round share a template, and n never
+  PROBLEM:
+    An undisclosed Code reading: each placement is scored with `earlier` empty. score()'s docstring says "with
+    earlier empty", and spec §5 passes `earlier=()`. So history-dependent content classes (v4's stuck_attractor)
+    cannot fire in Layer A. The headline's "No class fired on any placement" does not say this, and it is not among
+    the readings listed for the seat.
+  CORRECTION:
+    …and n never enters classify. Each placement is scored as its runner calls the stack, but as a first round
+    (`earlier` empty; score(), spec §5). So history-dependent content classes (v4 stuck_attractor) are not exercised
+    by Layer A. This is Code's reading.
+  DISPOSITION: applied.
+
+--- V12 [missing disclosure]
+  QUOTE:
+    the enumeration's scope: all gold variants, all contrast banners, both phases; clean text and menus out;
+  PROBLEM:
+    The headline says Code's readings PIN-S1–S7 "are flagged for the seat", but the consolidated seat list leaves
+    several out. Missing are PIN-S2 (each gold verbatim and unframed), PIN-S1's n positions (t + 1 / t + 5, with
+    forced and chosen free rounds sharing a template), the exclusion of sham banners (only implied by "all contrast
+    banners") and the empty-`earlier` scoring.
+  CORRECTION:
+    the enumeration (PIN-S1, PIN-S2): all gold variants, verbatim and unframed; all contrast banners, sham banners
+    out; both phases at n = t + 1 forced and t + 5 free; each placement scored as a first round (`earlier` empty);
+    clean text and menus out;
+  DISPOSITION: applied.
+
+--- V13 [ambiguity]
+  QUOTE:
+    Next: step 8, G-ANL-F0, built at `64df36b`.
+  PROBLEM:
+    G-ANL-F0's run of record has already been made: results/raw/2026-10-10_m-ganl-f0.txt shows 11:38:18–11:38:28 UTC
+    at HEAD 64df36b, and data/m/gates/G-ANL-F0.json was written (sha256 ea985c11…). Both are uncommitted. "Next:
+    step 8 … built" reads as if step 8 has not run.
+  CORRECTION:
+    Next: step 8's entry, G-ANL-F0 (built at `64df36b`; its run of record was made at 11:38 UTC, after this one, and
+    goes to its own entry).
+  DISPOSITION: applied.
+
+============================================================ ALL CLAIMS
+[H0-01] VERIFIED -> VERIFIED: L1: dated 2026-10-10; title cites 'PROPOSAL-m v1.11 §8 step 7, m:277'
+[H0-02] VERIFIED -> VERIFIED: L1: the PI's go was "Go for steps 7 and 8"
+[H0-03] VERIFIED -> VERIFIED: L1: G-SHAPE-F0 verdict PASS
+[H0-04] VERIFIED -> VERIFIED: L2-3: every render of record placed inside each round template beside its bracketed header, a clean gold as the response
+[H0-05] VERIFIED -> VERIFIED: L3: 11,264 placements: 2,816 on Qwen and 2,816 for each of the three OLMo checkpoints
+[H0-06] VERIFIED -> VERIFIED: L3-4: one OLMo computation run for each checkpoint on byte-identical inputs
+[H0-07] VERIFIED -> VERIFIED: L4-5: no class fired on any placement through its substrate's scoring stack
+[H0-08] VERIFIED -> VERIFIED: L5: under Code's readings of m:277 (PIN-S1–S7)
+[H0-09] VERIFIED -> VERIFIED: L7: the required control, segment + gold, fired on every placement
+[H0-10] VERIFIED -> VERIFIED: L8-9: Layer S finds no problem; at every production classify call site the scored text is the generation's, never the segment, banner or render
+[H0-11] VERIFIED -> VERIFIED: L10: model-free; nothing on the box; the k arc untouched
+[H0-12] VERIFIED -> VERIFIED: L10-11: G-CAL (step 6) is still open, and LOCK-m-F0 v0.1 waits on it
+[H0-13] UNCHECKABLE -> UNCHECKABLE: L13: date -u stamp Sat Oct 10 11:33:55 UTC 2026 at the entry's first write
+[H0-14] VERIFIED -> VERIFIED: L16-17: run raw results/raw/2026-10-10_m-gshape-f0.txt; artifact data/m/gates/G-SHAPE-F0.json, sha256 086d812f…6318556
+[H0-15] VERIFIED -> VERIFIED: L18: scripts/m_sessions.py gshape ran at HEAD d092078 (the build commit), 11:33:27–11:33:32 UTC, exit 0
+[H0-16] VERIFIED -> VERIFIED: L19: the raw shows the INVOCATION line twice; the driver prints it
+[H0-17] VERIFIED -> VERIFIED: L20-21: per unit (Q-F0, OLMo-sft, OLMo-dpo, OLMo-instruct) 2,816 placements, 0 fired; seg+gold fired 2,816/2,816
+[H0-18] VERIFIED -> VERIFIED: L22-23: render-as-response Q-F0 256/2,816, all the v5 advisory content:task_echo, on items 2 and 8 only; each OLMo unit 0/2,816; reported only, not a criterion
+[H0-19] VERIFIED -> VERIFIED: L23-25: Code's reading (PIN-S6, flagged): 'the render itself' means the render placed in the segment, not the render scored as a response, which Layer S finds no production runner does
+[H0-20] IMPRECISE -> IMPRECISE: L25-26: OLMo's 0 is structural, since its stack takes no render input
+[H0-21] VERIFIED -> VERIFIED: L28: the OLMo grids are identical across the three checkpoints (one rows_sha256, bf4e9c23…)
+[H0-22] VERIFIED -> VERIFIED: L29-30: template shape 0 problems; each ROUND_TEMPLATES entry at n 1–10, every render, each of 12 labels formats to [bracketed header, 'Task: ' + render, 'Response:']
+[H0-23] VERIFIED -> VERIFIED: L31: Layer S 0 problems under rules R1–R8
+[H0-24] VERIFIED -> VERIFIED: L32: verdict PASS, stop_reasons []
+[H0-25] VERIFIED -> VERIFIED: L34-36: each render paired with its own item's stored gold variants, verbatim and unframed: 22 render–gold pairs over 16 items, 1 or 2 golds each, from CORR_clean
+[H0-26] VERIFIED -> VERIFIED: L36-37: × 4 ROUND_TEMPLATES × 16 contrast banners (4 pairs × 2 maps × 2 clauses) × both phases: 22 × 4 × 16 × 2 = 2,816 per unit
+[H0-27] VERIFIED -> VERIFIED: L38-40: render under the Q-role label at n = t+1 forced, t+5 free (t the template index 0–3); the forced round and the chosen free round share a template; n never enters classify
+[H0-28] VERIFIED -> VERIFIED: L41-42: excluded are menus (no Task line), sham banners (arms serve CORR_clean to both labels, m:172) and clean-text placements (m:277 names 'every corrupted render')
+[H0-29] VERIFIED -> VERIFIED: L43-44: F0m-OLMo uses the same ROUND_TEMPLATES objects; b3 imports them; m's scaffold._round formats them on both substrates
+[H0-30] VERIFIED -> VERIFIED: L45-47: a placement fires if any of 12 fields fires (claim … termination); any fire is a STOP
+[H0-31] VERIFIED -> VERIFIED: L48-49: quotes m:277 'It tests scoring scope, nothing else' and m:264 'a plumbing check only'
+[H0-32] VERIFIED -> VERIFIED: L50-54: not tested: item shape (rule 28(c)'s item-shape half, met by qualification contrast sessions; m:56, m:264); harness-byte correctness (G-VER template_breakage, m:271); OLMo ban ids (box); menus
+[H0-33] VERIFIED -> VERIFIED: L56-58: a classifier walk alone cannot see a runner that scores the render or harness bytes; render-as-response fires 0/2,816 on OLMo, so such a runner would pass Layer A there
+[H0-34] IMPRECISE -> IMPRECISE: L59-60: the artifact carries a syntactic check of run_session_qwen's and run_session_olmo's classify calls and of SessionLog.add_round, rules R1–R8
+[H0-35] IMPRECISE -> IMPRECISE: L61-62: Classify is also handed `earlier`, the item, the own pair, the echo lines and the phase
+[H0-36] VERIFIED -> VERIFIED: L63: it is a check of named forms, not proof against every rewrite
+[H0-37] VERIFIED -> VERIFIED: L64-65: R4 is stricter than the build spec's: each history append must sit after the classify that scored its generation, exactly once per call site
+[H0-38] VERIFIED -> VERIFIED: L66-68: the dynamic half is in the m self-test, never on a run path: six existing runner checks named in runner_dynamic_evidence, four on classify outcomes and two showing the render placed in situ
+[H0-39] VERIFIED -> VERIFIED: L68-70: one new gshape check, the only one asserting what classify receives: the runners hand classify the generation's text, across every scripted session on both substrates
+[H0-40] VERIFIED -> VERIFIED: L71-72: Layer C (PIN-S6): one scope-widened control, seg+gold, must fire on every placement or the gate STOPs; it shows the stack fires when the segment's harness bytes are scored
+[H0-41] VERIFIED -> VERIFIED: L73-74: seg+gold fires claim, v3 exclusion, raw lexical, degeneracy, the end rule and strict on Qwen; the same less v3 exclusion on OLMo
+[H0-42] VERIFIED -> VERIFIED: L74: that each of the 12 fields can fire is a self-test check, not in the artifact
+[H0-43] VERIFIED -> VERIFIED: L75-77: PIN-S4 reads m:277's 'the full scoring stack of both substrates' as each substrate's own stack as its startup builds it, without the adapter-dependent ban-id halves; no cross-substrate placement
+[H0-44] VERIFIED -> VERIFIED: L79-83: the only per-checkpoint inputs are two file checks, both STOP preconditions and both equal on all three: scaffold_{ckpt}.json ban strings vs OLMo's six; b3_screen_{ckpt}.json ban_list vs {9 ids, sha16 2dd86a453a2275ef}
+[H0-45] VERIFIED -> VERIFIED: L84: neither file feeds the scoring, which uses audit.py's constants
+[H0-46] VERIFIED -> VERIFIED: L85-86: the tokenizer-side ban-id assertion of m:262 is not exercised here; olmo_startup asserts it on the box (LOCK-m-OLMo-{ckpt} v0.1, m:302)
+[H0-47] VERIFIED -> VERIFIED: L87: Qwen's scaffold set is asserted against the e2a ban-list file, not a tokenizer
+[H0-48] VERIFIED -> VERIFIED: L88-89: it reads three committed G-CAL files (model-free artifact, completability artifact, seat's read) and records each file's sha256
+[H2-01] VERIFIED -> VERIFIED: (l.89-90) G-SHAPE-F0 reads three committed G-CAL files (model-free artifact, completability artifact, seat's read) and records each file's sha256
+[H2-02] VERIFIED -> VERIFIED: (l.91-93) The only G-CAL bytes scored are the renders of record, asserted equal to scaffold.pool_and_renders() and to pinned sha256 a04f67b0…4372, never computed as G-SHAPE's own (RESULTS.md@e60b633:919-920)
+[H2-03] VERIFIED -> VERIFIED: (l.95) Precondition: G-CAL conditions (1)-(2) PASS
+[H2-04] VERIFIED -> VERIFIED: (l.96) Precondition: completability artifact's schema, PASS verdict and identity renders sha256
+[H2-05] VERIFIED -> VERIFIED: (l.97) Precondition: the renders sha256 the seat's read cites
+[H2-06] VERIFIED -> VERIFIED: (l.98) Precondition: G-CAL's recorded proposal sha256 and pool sha16
+[H2-07] VERIFIED -> VERIFIED: (l.99) The pools file's sha256 (8547d9a1…) is hashed directly and asserted equal to G-CAL's recorded value
+[H2-08] VERIFIED -> VERIFIED: (l.100-101) A renders-sha mismatch in the completability identity or the seat's read is a STOP, not the build spec's refusal (Code's decision 2)
+[H2-09] VERIFIED -> VERIFIED: (l.103) package_sha256 is 06ab1430de9c5ca0…
+[H2-10] VERIFIED -> VERIFIED: (l.104-105) Sources map: 28 files, digest ee16e16b…; 26 scoring-stack files including the three b3_screen files, plus 2 tooling files
+[H2-11] VERIFIED -> VERIFIED: (l.106-107) Import closure outside the package: 14 files, digest 23abe773…; includes e2d/audit_v3.py, content classes v4/v5, session_e2a.py
+[H2-12] VERIFIED -> VERIFIED: (l.108-111) The canonical run refused unless every one of those files and every valence_core/m file was committed at HEAD and unedited; it checked before scoring and again before the write; the raw records "sources committed at HEAD: yes"; --out runs skip it and say so (Code's decision 10)
+[H2-13] VERIFIED -> VERIFIED: (l.112) The artifact is write-once, with no timestamp and no HEAD
+[H2-14] VERIFIED -> VERIFIED: (l.112-113) The artifact matches the m self-test of record at the same package hash, sources digest and closure digest (_selftest raw)
+[H2-15] VERIFIED -> VERIFIED: (l.114-118) The build is d092078 with its _review, _selftest and _sitecheck raws; the build spec, critic's corrections and Code's decisions are verbatim in _build-inputs
+[H2-16] VERIFIED -> VERIFIED: (l.119-120) New gshape.py; in m_sessions.py: gshape [--out DIR], the MODULES entry and 6 driver checks; __init__.py unedited
+[H2-17] VERIFIED -> VERIFIED: (l.121-124) An understand workflow (five readers, two synthesizers, a completeness critic) produced the spec; Code's decisions 1-9 fixed the layers (A, S, C trimmed to one control; runner-on-doubles layer dropped), the input bindings, the committed-sources precondition and the write-once/supersessio
+[H2-18] VERIFIED -> VERIFIED: (l.125-128) Three lenses with a strict refuter: 16 findings, 3 refuted, 13 confirmed; the first fix round fixed 12; the 13th (five input-binding checks with no must-fail case) was missed, carried as the verifier's residual 5, closed in round 2
+[H2-19] VERIFIED -> VERIFIED: (l.129-132) An independent verifier ran the full m self-test per mutant in clones of a scratch replica; two further fix-and-verify rounds; round-2 decisions 10-12 extended the canonical precondition to every valence_core/m file and required the pre-commit self-test to survive scoring-stack edits
+[H2-20] VERIFIED -> VERIFIED: (l.133) Round 3 closed the round-2 verifier's F1 and F3 and its Low gaps V11-V13, V15 and V16
+[H2-21] IMPRECISE -> IMPRECISE: (l.134-135) The self-test runs in a sandbox: GATES_DIR points at a temp dir, and writes under data/m made through _write_once_text are refused
+[H2-22] VERIFIED -> VERIFIED: (l.135-137) A regression that hard-codes the canonical path and writes with a raw Path.write_text would still write it; the self-test then fails loudly (H2, 18 FAILs in the probe; Code's closing note)
+[H2-23] VERIFIED -> VERIFIED: (l.138-139) The import closure is recorded and checked; F2 (R4's stricter order rule) Code accepted as built and flagged for the seat
+[H2-24] VERIFIED -> VERIFIED: (l.140-144) Final confirmation CLEAN: 140 mutants, 117 caught; 16 survivors = 8 must-pass workflow probes + 8 equivalents; 7 not applicable (A03, D01, N01, N03 ported and caught; V05n among the equivalents; V15/V16 rewritten forms caught except V16c, equivalent)
+[H2-25] VERIFIED -> VERIFIED: (l.145-146) m self-test 744/744 (706 before); site check 8/8; self-test time about 1 min to about 2 min
+[H2-26] IMPRECISE -> IMPRECISE: (l.147-148) Committed texts this entry corrects: d092078's message says "5 driver checks"; there are 6, the sixth added in round 3
+[H2-27] UNCHECKABLE -> UNCHECKABLE: (l.149-150) The seat items are also carried into the consolidated Code→seat block before step 9
+[H2-28] VERIFIED -> VERIFIED: (l.151-159) Code's readings for the seat: Layer S/C beyond m:277, R4 stricter; render-as-response reported only (Qwen 256/2,816 task_echo on items 2 and 8); strict fire predicate; enumeration scope; PIN-S4 own-stack with the ban-id half to the box; committed-sources precondition canonical-only; rend
+[H2-29] VERIFIED -> VERIFIED: (l.160-161) package_sha256 moved: G-PORT records 96fbcacf… (54e41c9), G-CAL 4b49658739523c60… (c75d4d8), G-SHAPE-F0 06ab1430… (d092078)
+[H2-30] VERIFIED -> VERIFIED: (l.163-164) 54e41c9..c75d4d8 -- valence_core/m: gcal.py added, __init__.py edited; c75d4d8..d092078 -- valence_core/m: gshape.py alone
+[H2-31] VERIFIED -> VERIFIED: (l.166) The step-8 build commit 64df36b touches nothing under valence_core/
+[H2-32] VERIFIED -> VERIFIED: (l.168-171) G-SHAPE-F0 ran while G-CAL is still open, on the PI's word: the third order question of the read-of-record entry; the renders stand on conditions (1)-(4)'s PASS; G-CAL's owed items are the seat's
+[H2-33] VERIFIED -> VERIFIED: (l.172-176) If an owed item re-specifies the renders, G-SHAPE-F0 re-runs non-byte-identically and is superseded; a ruling only on order costs one byte-identical re-run; supersession is by hand on the seat's ruling, git mv to a dated name recorded in an entry, the re-run writing the canonical name
+[H2-34] VERIFIED -> VERIFIED: (l.177-179) Committed: entry, artifact, run raw, build-inputs raw (shared with G-ANL-F0), values-check raw; the build and its three raws are in d092078; next: step 8, G-ANL-F0, built at 64df36b

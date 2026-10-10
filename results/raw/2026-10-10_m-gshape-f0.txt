@@ -1,0 +1,21 @@
+# G-SHAPE-F0 (PROPOSAL-m v1.11 §8 step 7, m:277) -- the gate of record on the committed build; model-free (no model or tokenizer).
+# Code stamp: 2026-10-10 11:33:27 UTC (date -u); HEAD d092078 (the G-SHAPE-F0 build commit).
+
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/m_sessions.py gshape
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/m_sessions.py gshape
+G-SHAPE-F0 inputs: renders sha256 a04f67b0e5105a0514a0f33e64a4545ef3a3a3c75cece320d78434e853cd4372; G-CAL model-free sha256 aad8096a6aa90ebb6e4bd476e47a9cb40d50e666c1801270031b899abc1834af; proposal sha256 42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b
+G-SHAPE-F0 provenance: package sha256 06ab1430de9c5ca0fc9483431caba64ee436a1b69709dd1577f4a50cfedcfef8; sources digest ee16e16b203a4c2da78696908a98aa61af0f08439549a20d607c05b5fa8b316b (28 files); import closure digest 23abe773f751bb197ab329beaf41082da04218e2ad285dd921228642d049eec4 (14 files outside valence_core/m); sources committed at HEAD: yes (checked with every m package file and the import closure: canonical run, before scoring and again before the write)
+G-SHAPE-F0 grid Q-F0: 2816 placements, 0 fired
+G-SHAPE-F0 controls Q-F0: render-as-response 256/2816 (reported); seg+gold 2816/2816 (required)
+G-SHAPE-F0 grid OLMo-sft: 2816 placements, 0 fired
+G-SHAPE-F0 controls OLMo-sft: render-as-response 0/2816 (reported); seg+gold 2816/2816 (required)
+G-SHAPE-F0 grid OLMo-dpo: 2816 placements, 0 fired
+G-SHAPE-F0 controls OLMo-dpo: render-as-response 0/2816 (reported); seg+gold 2816/2816 (required)
+G-SHAPE-F0 grid OLMo-instruct: 2816 placements, 0 fired
+G-SHAPE-F0 controls OLMo-instruct: render-as-response 0/2816 (reported); seg+gold 2816/2816 (required)
+G-SHAPE-F0 OLMo grids identical across the three checkpoints: yes
+G-SHAPE-F0 template shape: clean; runner scope (static): clean
+G-SHAPE-F0 verdict PASS
+G-SHAPE-F0 artifact: /Users/jasondwyer/Documents/code/jspace-lab/data/m/gates/G-SHAPE-F0.json (written)
+EXIT=0
+# finished 2026-10-10 11:33:32 UTC
