@@ -1,0 +1,176 @@
+# G-ANL-F0 (PROPOSAL-m v1.11 §8 step 8) -- verification of Code's closing edit (PIN-43, in 64df36b) and the follow-up it led to.
+# Compiled by Code 2026-10-10 12:12:45 UTC (date -u). One independent verifier (read-only; scratch copies only; no model or tokenizer), two reports, verbatim
+# below; Code's follow-up edits and Code's own mutation checks between them. The follow-up is committed with this raw; it moves the analyzer from
+# 95f5fe33... (64df36b) to 24d44a3c... . The first manifest run on 64df36b (data/m/gates/G-ANL-F0.json sha256 ea985c11..., run raw sha256
+# 1e8276fb...) was set aside uncommitted when the first report found the gap (G-PORT's precedent), and the manifest of record is re-run on the
+# follow-up's commit.
+
+====================================================================================================
+1. VERIFIER'S REPORT ON CODE'S CLOSING EDIT (verbatim)
+====================================================================================================
+  ## Verification of Code's closing date edit to scripts/m_analyze.py (64df36b, sha256 95f5fe33…a7c9)
+
+  I worked read-only on the repo. Scratch files are in `/private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step8/closing_verify/`.
+
+  **1. Diff (pre-edit 8309f72d… vs committed 95f5fe33…).** There are 8 hunks and all of them are declared:
+  - the `_iso_date` helper with its PIN-43 comment;
+  - its use at the three call sites: `not_run_reason` (Clock date), `pending_state` and `validate_decisions`;
+  - the new date check in `validate_not_run_record`, placed after `not_run_reason`;
+  - the PIN-43 register entry;
+  - `EXPECTED_CHECKS` 373 -> 375;
+  - the coverage ids `DATE-ISO-REAL` and `NR-RECORD-DATE` added to `_REQUIRED` (the selftest reports "386 required ids");
+  - the two battery checks.
+
+  No other hunk.
+
+  **2. Correctness.**
+  - **`_iso_date` against an independent oracle:** I checked 157,708 cases against an oracle that accepts ASCII digits only, years 0001–9999 and the Gregorian leap rule. There were 0 mismatches.
+    - The grid covered 12 years (0000, 0001, 1600, 1900, 2000, 2023, 2024, 2026, 2027, 2100, 2400, 9999) × months 00–99 × days 00–99. It accepted 4,019 = 11×365+4.
+    - Every real date from 1999 to 2101 is accepted.
+    - Refused:
+      - non-ASCII digits (full-width, Arabic-Indic, Devanagari, math-bold) at every digit position;
+      - Unicode dashes and `/` or `.` separators;
+      - leading or trailing space, `\n`, NUL, BOM or ZWSP;
+      - the basic form `20261030` and the week form `2026-W44-5`;
+      - a trailing `T00:00` or `Z`.
+    - Non-strings (None, int, float, bytes, bytearray, date, list, tuple, dict, bool, object) return False without raising. The return value is always a bool.
+  - **Nothing valid is newly refused.** The accepted set is strictly narrower than the old `\d` regex's. The only newly refused inputs are non-ASCII digits and impossible dates (year 0000 included). Valid dates refused that were accepted before: 0.
+  - **Every caller and date flow checked:**
+    - `not_run_reason` at L514, L520, L631 (no-first-read, no date) and L1857;
+    - `pending_state` at L604 and L2302 (crosscheck for the tuple and the olmo-states PENDING);
+    - `validate_decisions` at L523 and L589, reached from `run_verdicts` at L1903;
+    - `validate_not_run_record` at L601 and L2249 (`run_not_run`).
+    - Every battery fixture date is a real ASCII date: CLOCK_DATE 2026-10-30, 2026-10-20/21/22/29, 2026-11-02, 2026-12-01/02, 2027-01-10.
+    - No committed `data/m` file carries a date. Nothing else imports these validators; `stages.py` and `gcal.py` only reference the analyzer's path.
+  - **`validate_not_run_record` now checks the date for every cause.** For the five Clock causes with `{date}` in their phrase, `not_run_reason` checks it. For the five without (dose-not-completable, the three no-first-read causes, pending-closed-at-v2), the new check does. Unknown causes are refused earlier by `parse_cause`.
+  - **Residual gap (flagged, not applied; it predates the edit and is outside its declared scope, but it is the same defect class):**
+    - Where: `_validate_olmo_states` (m_analyze.py L1854–1857). It checks a declared `--olmo-states` NOT-RUN state's date only through `not_run_reason`.
+    - Effect: on a scratch copy with cause dose-not-completable, it accepted the dates `None`, `''`, `2026-02-30`, full-width digits and `12345`. These are carried verbatim into Q-F0_VERDICTS.json `olmo_states_declared` (L2099).
+    - `crosscheck_coordinate` compares only the reason against the unit's NOT-RUN output, never the date.
+    - PIN-43's three-item list doesn't name this date, so "every declared date" says more than the code enforces.
+    - Fix: one `_iso_date` check in that branch, plus a battery check.
+
+  **3. Selftest, run twice from the repo root.** Both runs: `375/375 m_analyze battery checks pass`, "coverage: every one of the 386 required ids reached", "check count 375 == EXPECTED_CHECKS 375". rc=0 both times. The two outputs are byte-identical (sha256 7393fa53…7e03).
+
+  **4. Mutation probes** (scratch copies, REPO pinned). The control scored 375/375.
+
+  Caught (14 of 21):
+
+  | Mutant | Result |
+  |---|---|
+  | fromisoformat dropped | 372/375 |
+  | NOT-RUN record check dropped | 373 |
+  | None accepted | 370 |
+  | pending call site reverted to `\d` | 373 |
+  | decisions call site reverted to `\d` | 373 |
+  | Clock-date call site reverted to `\d` | 373 |
+  | except-branch returns True | 372 |
+  | `''` accepted | 372 |
+  | record check only for None | 373 |
+  | battery expectation flipped | 373 |
+  | EXPECTED_CHECKS set to 374 | 374/375 |
+  | cover ids dropped | the group raises KeyError |
+  | PIN-43 register entry deleted | 373 (STR-PIN-COMMENTS) |
+  | PIN-43 site comment deleted | 373 (STR-PIN-COMMENTS) |
+
+  Survived (7 of 21):
+  - **Equivalent:**
+    - `[0-9]` -> `\d`: on Py 3.12, `date.fromisoformat` refuses non-ASCII digits (verified). This matches Code's own note.
+    - `re.match` instead of `fullmatch`: `fromisoformat` requires length 7, 8 or 10, so any extra characters are refused (verified).
+    - Record check moved before `not_run_reason`: it still refuses; only the error message differs.
+    - `isinstance` dropped (`str(d)` fed to the regex): no JSON-derived non-string stringifies to YYYY-MM-DD.
+    - Removing the full-width case from the battery fixture is a test weakening itself, which no test can catch.
+  - **Gaps in battery strength (non-blocking):**
+    - Deleting the ASCII regex entirely survives. `fromisoformat` alone accepts `20261030`, `2026-W44-5` and `2026W445`, and the mutant accepted a dose-not-completable NOT-RUN record dated `20261030`. The committed code refuses all of these, but the battery has no basic-form or week-date string (only the int 20261102). Suggest adding `"20261030"` and `"2026-W44-5"` to `unreal`.
+    - A hand-rolled day check with February fixed at 29 survives, because no non-leap 02-29 is refused in the battery. The committed code is correct (it refuses 1900-, 2026- and 2100-02-29). Suggest adding `"2026-02-29"`.
+
+  **5. Repo state.**
+  - `scripts/m_analyze.py` is unchanged (95f5fe…).
+  - All 35 `data/m` sha256s are identical before and after.
+  - I made no commits and loaded no model or tokenizer: STR-NO-HEAVY passes, and my probes found no heavy modules loaded.
+  - `git status` did change during my run, but only because a parallel session committed f23b444 (G-SHAPE-F0, 07:56:38 -0400). That commit tracked the previously untracked `data/m/gates/G-SHAPE-F0.json` and two results/raw files and touched `RESULTS.md`. None of it was my work.
+
+  VERDICT: CLEAN (the edit as scoped). Separately, the olmo-states NOT-RUN date gap and the two battery-strength gaps are flagged for Code and the seat.
+
+  [Code's note: f23b444 is this session's own G-SHAPE-F0 entry commit, not a parallel session's.]
+
+====================================================================================================
+2. CODE'S FOLLOW-UP (1)
+====================================================================================================
+  Code fixed the residual gap rather than routing it: it is the same input-validation defect class PIN-43 addresses, in Code's own tool.
+  - `_validate_olmo_states`' NOT-RUN branch checks the declared date with `_iso_date` whatever the cause, after `not_run_reason` and before
+    the cross-check (ValueError -> the verdicts caller's AnlRefusal "--olmo-states: ...").
+  - PIN-43's comment and register text name the declared OLMo NOT-RUN state's date and the basic and week forms.
+  - DATE-ISO-REAL's `unreal` gains "20261030", "2026-W44-5", "2026-02-29", "1900-02-29"; its label reworded.
+  - New battery check OLMO-STATES-DATE (a declared dose-not-completable state dated None, '', 2026-02-30, full-width digits, 20261030 or 12345
+    refused; dated 2026-10-30 accepted and carried); coverage id added; EXPECTED_CHECKS 375 -> 376.
+  Battery 376/376 twice, byte-identical. Code's mutation check on scratch copies (REPO pinned): control 376/376; the new check dropped 374/376;
+  the ASCII regex dropped (fromisoformat only) 373/376 -- now caught by the basic and week forms; fromisoformat dropped 372/376; the NOT-RUN
+  record check dropped 374/376. Site check 9/9 (12:05:59 UTC).
+
+====================================================================================================
+3. VERIFIER'S REPORT ON THE FOLLOW-UP (verbatim)
+====================================================================================================
+  ## Follow-up delta verification: working-tree scripts/m_analyze.py (sha256 b6c7dd35…d279) vs 64df36b (95f5fe33…)
+
+  The follow-up is correct, adds nothing beyond the four declared items, and the battery passes 376/376 twice. I worked read-only; scratch files are in `…/step8/closing_verify/followup/`.
+
+  **1. Diff.** There are 8 hunks, all declared:
+  - **(1) The new check.** `_validate_olmo_states`' NOT-RUN branch (L1859–1860) gains `_iso_date(d["date"])`, placed after `not_run_reason` and before `crosscheck_coordinate`. It raises ValueError, which `run_verdicts` (L1939–1943) turns into `AnlRefusal("REFUSED: --olmo-states: …")`. That happens before the campaign checkpoint is read (V2).
+  - **(2) PIN-43 text.** The comment and the register entry now name the OLMo NOT-RUN state's date and the basic/week forms. This was 2 hunks.
+  - **(3) Battery `unreal` tuple.** It gains `20261030`, `2026-W44-5`, `2026-02-29` and `1900-02-29`, and the DATE-ISO-REAL label is reworded. This was 2 hunks.
+  - **(4) New battery check OLMO-STATES-DATE.** Its coverage id is added (387 required ids), and EXPECTED_CHECKS goes from 375 to 376. This was 3 hunks.
+  - The only other change is the existing `_bt_olmo_outputs` fixture helper, which is used unchanged.
+
+  **2. Correctness, both directions.** I probed `_validate_olmo_states` on a REPO-pinned copy of the working tree. Each run used a declared OLMo-dpo NOT-RUN state, nine causes, and a matching `OLMo-dpo_NOT-RUN.json` in the output directory.
+  - The nine causes were dose-not-completable, the three no-first-read causes, clock:pi-declined, clock:no-box, clock:k-zero, clock:gate-stopped:G-CAL and clock:not-locked:G-SHAPE-F0.
+  - **Real dates are accepted for every cause, and the date is carried into the declaration.** The dates tried were 2026-10-30, 2026-10-29, 2026-11-02, 2024-02-29, 2000-02-29 and 2027-01-10.
+  - **Bad dates are refused with ValueError for every cause.** The values tried were None, `''`, 2026-02-30, 2026-02-29, 20261030, 2026-W44-5, full-width digits, 12345 and a trailing space.
+  - At 64df36b, the same bad dates were accepted for dose-not-completable and all three no-first-read causes. The gap is closed.
+  - **Nothing valid is newly refused.** `_iso_date` accepts every real ASCII date. The battery's own V10 path (`--olmo-states` with dose-not-completable at CLOCK_DATE) still passes. No other path changed.
+
+  One narrowing for the seat to know about (non-blocking, not a defect under PIN-43 as now worded): an OLMo unit that is NOT-RUN by a no-first-read cause gets its NOT-RUN output from `verdicts`, and that output has no date. Declaring it in `--olmo-states` could previously carry `"date": null`; now it must carry a real date. The schema already required the date key, but nothing says what that date means for a no-first-read cause.
+
+  **3. Battery, run twice.** Both runs: 376/376, coverage 387/387, check count 376 == EXPECTED_CHECKS 376, rc=0, 0 FAIL lines. The two outputs are byte-identical (sha256 94c07246f089…).
+
+  **4. Mutants** (scratch copies of the working tree, REPO pinned). The control passed 376/376. Six of the 13 were caught.
+
+  | Mutant | Result |
+  |---|---|
+  | New check dropped | caught, 374/376 (OLMO-STATES-DATE) |
+  | New check accepts None | caught, 374 |
+  | fromisoformat only (ASCII regex dropped) | caught, 373 (DATE-ISO-REAL and OLMO-STATES-DATE) |
+  | fromisoformat only, with 20261030 and 2026-W44-5 also removed from `unreal` | caught, 374 (OLMO-STATES-DATE's 20261030) |
+  | Hand-written day check with February always 29 | caught, 374 |
+  | Hand-written leap rule y%4 only | caught, 374 (by 1900-02-29) |
+  | New check dropped and its cover id dropped | caught, 375/376 |
+
+  Survivors:
+  - **Equivalent:**
+    - New check moved before `not_run_reason`: the outcome is still a refusal; only the message differs.
+    - New check moved after `crosscheck_coordinate`: either refusal still fires.
+  - **Test weakening, which no test can catch:**
+    - `20261030` dropped from `unreal`.
+    - Leap rule y%4 only, with `1900-02-29` also dropped: this shows 1900-02-29 is the string that guards the century rule.
+  - **Battery-strength gaps (minor, non-blocking):**
+    - The new check restricted to dose-not-completable survives. The mutant accepts None, `''`, 2026-02-30 and so on for all three no-first-read causes (probe confirmed). The "whatever the cause" claim is pinned only for dose-not-completable. Adding one no-first-read case to `os_bad` would cover it, and needs no new fixture because the check fires before the cross-check.
+    - A hand-written leap rule missing the /400 rule survives, because no 2000-02-29 acceptance case exists. This only matters for a reimplementation; fromisoformat is correct here.
+
+  **5. Repo state.**
+  - git status is identical before and after. HEAD is still f23b444, and `scripts/m_analyze.py` is still b6c7dd35….
+  - All 34 `data/m` sha256s are unchanged. G-ANL-F0.json is absent, as expected; Code moved it aside.
+  - I made no commits and loaded no model.
+  - 40 gitignored files under `data/k/_synthetic/` were rewritten at 08:03:30–39. That was after my baseline but before my first selftest started (~08:04:14), while I was running only diff and grep. `m_analyze.py` has no reference to `data/k`, so these came from a parallel session, not from this verification.
+
+  VERDICT: CLEAN
+
+====================================================================================================
+4. CODE'S FOLLOW-UP (2), closing the two battery-strength gaps
+====================================================================================================
+  - DATE-ISO-REAL's `real` gains 2000-02-29 (the /400 rule) and its label names it.
+  - OLMO-STATES-DATE adds a no-first-read:cap declared state dated None or 2026-02-30 (refused; 8 refusal cases in all) and its label names it.
+  EXPECTED_CHECKS unchanged at 376. Battery 376/376 twice, byte-identical. Code's mutation check (REPO pinned): control 376/376; the new check
+  restricted to dose-not-completable -> caught (374/376: the no-first-read case reaches the cross-check, whose AnlRefusal ends the group);
+  a hand-written leap rule without the /400 clause -> caught (371/374). Final analyzer sha256 24d44a3c61b06dd3a5e116e2edf59268174ca4e65e9b9960b20873b9d31327fa.
+  The verifier's narrowing note (a no-first-read NOT-RUN declared in --olmo-states must now carry a real date, whose meaning for that cause
+  nothing states) goes to the seat with PIN-43.

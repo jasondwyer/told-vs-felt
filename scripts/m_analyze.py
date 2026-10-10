@@ -432,11 +432,12 @@ def parse_cause(code: str) -> tuple[str, str | None]:
     return code, None
 
 
-# PIN (Code, declared at LOCK v0.1): PIN-43 -- every declared date (a NOT-RUN record's, a PENDING
-# declaration's Clock comparison, a decision's) is an ASCII YYYY-MM-DD that is a real calendar date
-# (datetime.date.fromisoformat accepts it): non-ASCII digits and impossible days (2026-02-30) refuse,
-# and a NOT-RUN record's date is checked whatever its cause, since it is carried into {U}_NOT-RUN.json
-# even where the reason phrase has no {date} (dose-not-completable).
+# PIN (Code, declared at LOCK v0.1): PIN-43 -- every declared date (a NOT-RUN record's, a declared
+# OLMo NOT-RUN state's in --olmo-states, a PENDING declaration's Clock comparison, a decision's) is an
+# ASCII YYYY-MM-DD that is a real calendar date (datetime.date.fromisoformat accepts it): non-ASCII
+# digits, the basic and week forms (20261030, 2026-W44-5) and impossible days (2026-02-30, 2026-02-29)
+# refuse; a NOT-RUN record's and a declared NOT-RUN state's date are checked whatever the cause, since
+# each is carried into an output even where the reason phrase has no {date} (dose-not-completable).
 def _iso_date(d: Any) -> bool:
     if not (isinstance(d, str) and re.fullmatch(r"[0-9]{4}-[0-9]{2}-[0-9]{2}", d)):
         return False
@@ -1855,6 +1856,8 @@ def _validate_olmo_states(doc: Any, out_dir: Path) -> tuple[dict, dict, dict]:
             if sorted(d) != ["cause", "date", "state"]:
                 raise ValueError(f"{u}: a NOT-RUN state is {{state, cause, date}}")
             reasons[u] = not_run_reason(u, d["cause"], d["date"])
+            if not _iso_date(d["date"]):            # PIN-43: whatever the cause (dose-not-completable's phrase has no date)
+                raise ValueError(f"{u}: a NOT-RUN state's date must be a real YYYY-MM-DD date: {d['date']!r}")
         elif sorted(d) != ["state"]:
             raise ValueError(f"{u}: an outcome state is {{state}}")
         crosscheck_coordinate(u, d["state"], reasons.get(u), pend, out_dir)
@@ -2592,9 +2595,10 @@ PINS = {
               "analyzer_sha256, package_sha256 and closure_sha256 in {U}_NOT-RUN.json / "
               "POSTING-v1_outputs.*.json (rule 27). Code-added at step 8 (a binding the spec does not "
               "state); for the seat's confirmation at LOCK v0.1.",
-    "PIN-43": "every declared date (a NOT-RUN record's, a PENDING declaration's Clock comparison, a "
-              "decision's) is an ASCII YYYY-MM-DD that is a real calendar date (non-ASCII digits and "
-              "impossible days refuse); a NOT-RUN record's date is checked whatever its cause.",
+    "PIN-43": "every declared date (a NOT-RUN record's, a declared OLMo NOT-RUN state's, a PENDING "
+              "declaration's Clock comparison, a decision's) is an ASCII YYYY-MM-DD that is a real calendar "
+              "date (non-ASCII digits, the basic and week forms and impossible days refuse); a NOT-RUN "
+              "record's and a declared NOT-RUN state's date are checked whatever the cause.",
 }
 SEAT_ROUTED = {"PIN-5": "clock:not-locked (the residual Clock cause) awaits the seat's ruling on whether m:324's "
                         "parenthetical is exhaustive -- blocking LOCK v0.1, not step 8",
@@ -2605,7 +2609,7 @@ SEAT_ROUTED = {"PIN-5": "clock:not-locked (the residual Clock cause) awaits the 
 # =============================================================================================
 # THE BATTERY (m:278). Selftest-only helpers carry the `_bt` prefix.
 # =============================================================================================
-EXPECTED_CHECKS = 375        # the battery's fixed check list (any skip or addition changes it)
+EXPECTED_CHECKS = 376        # the battery's fixed check list (any skip or addition changes it)
 
 # PIN (Code, declared at LOCK v0.1): PIN-24 -- the battery reaches every per-arm outcome per unit, the
 # full 5 x 6^3 product under both flag values (the flag an input, not a coordinate; 'clock:pi-declined'
@@ -2639,7 +2643,7 @@ _REQUIRED += ["NR-REFUSE-no-box-Q-F0", "NR-REFUSE-dose-Q-F0", "NR-REFUSE-unknown
               "PEND-QF0-REFUSED", "PEND-VERDICTS-CARRIES", "DEC-CARRIED", "DEC-MISSING-REFUSED", "DEC-QF3-PENDING",
               "PEND-DATE", "PEND-DATE-RECORDED", "DEC-UNIT-DATE",
               "PEND-DATE-TRAILING", "PEND-DATE-CLOCK-FALSE", "PEND-EXTRA-KEYS", "DEC-DATE-TRAILING",
-              "DATE-ISO-REAL", "NR-RECORD-DATE",
+              "DATE-ISO-REAL", "NR-RECORD-DATE", "OLMO-STATES-DATE",
               "NR-STOP-ROUTING", "NR-GATE-STOPPED-GID-Q-F0", "NR-GATE-STOPPED-GCAL-OLMO", "ROWS-EQ-LABELSET"]
 _REQUIRED += [f"TUP-T{i}-{f}" for i in range(1, 11) for f in ("T", "F")] + ["TUP-REASONS-DISTINCT"]
 _REQUIRED += [f"ENUM-{r[0]}-{f}" for r in PLACEHOLDER_SPEC for f in ("T", "F")]
@@ -3359,8 +3363,9 @@ def _bt_notrun(B: _Battery) -> None:
           cover=["DEC-DATE-TRAILING"])
     # PIN-43: dates are ASCII and real calendar dates, in all three validators; a NOT-RUN record's date is checked
     # whatever its cause (dose-not-completable's phrase has no {date})
-    unreal = ("\uff12\uff10\uff12\uff16-\uff11\uff11-\uff10\uff12", "2026-02-30", "2026-13-01", "2026-00-10")
-    real = ("2026-02-28", "2024-02-29", "2026-10-30")
+    unreal = ("\uff12\uff10\uff12\uff16-\uff11\uff11-\uff10\uff12", "2026-02-30", "2026-13-01", "2026-00-10",
+              "20261030", "2026-W44-5", "2026-02-29", "1900-02-29")
+    real = ("2026-02-28", "2024-02-29", "2000-02-29", "2026-10-30")
     pend_ok = {"state": "PENDING", "substate": "locked-running", "clock_passed": False}
     u_pend = [_bt_raises(lambda d=d: pending_state("OLMo-dpo", {**pend_ok, "date": d}, verdicts_exists=False,
                                                    notrun_exists=False))[0] for d in unreal]
@@ -3369,9 +3374,10 @@ def _bt_notrun(B: _Battery) -> None:
     u_dec = [_bt_raises(lambda d=d: validate_decisions([{**dd[0], "date": d}], "OLMo-dpo"))[0] for d in unreal]
     a_dec = [validate_decisions([{**dd[0], "date": d}], "OLMo-dpo")[0]["date"] for d in real]
     u_why = [_bt_raises(lambda d=d: not_run_reason("Q-F0", "clock:pi-declined", d))[0] for d in unreal]
-    B.chk("dates (PIN-43): full-width digits and impossible days (02-30, month 13, month 00) are refused by the "
-          "PENDING, decision and Clock-date validators; 2026-02-28, the leap day 2024-02-29 and 2026-10-30 are accepted",
-          all(u_pend) and all(u_dec) and all(u_why) and a_pend == ["locked-running"] * 3 and a_dec == list(real),
+    B.chk("dates (PIN-43): full-width digits, the basic and week forms (20261030, 2026-W44-5) and impossible days "
+          "(02-30, the non-leap 2026-02-29 and 1900-02-29, month 13, month 00) are refused by the PENDING, decision and "
+          "Clock-date validators; 2026-02-28, the leap days 2024-02-29 and 2000-02-29 and 2026-10-30 are accepted",
+          all(u_pend) and all(u_dec) and all(u_why) and a_pend == ["locked-running"] * 4 and a_dec == list(real),
           (u_pend, u_dec, u_why, a_pend, a_dec), cover=["DATE-ISO-REAL"])
     nr_bad = [_bt_raises(lambda d=d: validate_not_run_record({**rec("OLMo-dpo", "dose-not-completable"),
                                                               "date": d}))[0] for d in (None, "2026-02-30", "")]
@@ -3379,6 +3385,29 @@ def _bt_notrun(B: _Battery) -> None:
     B.chk("NOT-RUN record (PIN-43): a dose-not-completable record dated None, 2026-02-30 or '' is refused although its "
           "reason phrase has no {date}; dated 2026-10-30 it is accepted and the date is carried",
           all(nr_bad) and nr_ok["date"] == "2026-10-30", (nr_bad, nr_ok["date"]), cover=["NR-RECORD-DATE"])
+    # PIN-43: a declared OLMo NOT-RUN state in --olmo-states is date-checked whatever its cause (its date is carried
+    # into Q-F0's VERDICTS olmo_states_declared)
+    with tempfile.TemporaryDirectory() as td_:
+        od_ = Path(td_)
+        _bt_olmo_outputs(od_)
+        def ost(d, cause="dose-not-completable"):
+            return {"schema": OLMO_STATES_SCHEMA, "states": {
+                "OLMo-sft": {"state": "PENDING", "substate": "locked-running", "clock_passed": False,
+                             "date": CLOCK_DATE},
+                "OLMo-dpo": {"state": "NOT-RUN", "cause": cause, "date": d},
+                "OLMo-instruct": {"state": "DEAD"}}}
+        os_bad = [_bt_raises(lambda d=d: _validate_olmo_states(ost(d), od_))[0]
+                  for d in (None, "", "2026-02-30", "\uff12\uff10\uff12\uff16-\uff11\uff10-\uff13\uff10", "20261030", 12345)]
+        # whatever the cause: a no-first-read cause (no {date} in its phrase either) refuses a bad date too; the date
+        # check fires before the cross-check against the unit's NOT-RUN output
+        os_bad += [_bt_raises(lambda d=d: _validate_olmo_states(ost(d, "no-first-read:cap"), od_))[0]
+                   for d in (None, "2026-02-30")]
+        os_ok = _validate_olmo_states(ost(CLOCK_DATE), od_)
+    B.chk("OLMo states (PIN-43): a declared dose-not-completable NOT-RUN state dated None, '', 2026-02-30, full-width "
+          "digits, 20261030 or 12345 is refused although its reason phrase has no {date}, and so is a no-first-read:cap "
+          "state dated None or 2026-02-30; dated 2026-10-30 it is accepted and the date is carried in the declaration",
+          all(os_bad) and len(os_bad) == 8 and os_ok[2]["OLMo-dpo"]["date"] == CLOCK_DATE and os_ok[0]["OLMo-dpo"] == "NOT-RUN",
+          (os_bad, os_ok[2]["OLMo-dpo"]), cover=["OLMO-STATES-DATE"])
 
 
 def _bt_posting_call(d: Path, U: str, reason: str) -> None:
