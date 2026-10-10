@@ -350,8 +350,8 @@ def power_block(n_realised0: int, n_realised1: int, mS: int) -> dict:
 
 # --- NOT-RUN causes (PIN-5), PENDING (PIN-6) -------------------------------------------------------
 # PIN (Code, declared at LOCK v0.1): PIN-5 -- the cause codes, their cites and the reason phrases a
-# label prints after "was not run: " (Code-authored; the seat may author them, the PI rewrites them
-# at posting). The record names one primary cause (the earliest in time) and lists the others in
+# label prints after "was not run: " (Code-authored, accepted with their precedence by the seat, C6,
+# 2026-10-10; the PI rewrites them at posting). The record names one primary cause (the earliest in time) and lists the others in
 # `also`; the label prints the primary. The <stage> of clock:gate-stopped / clock:not-locked is one
 # of gate_stop_stages(unit): every gate that precedes the unit's LOCK v1.0 and can end in a STOP --
 # G-ID-F0m included (its divergence verdict sends Q-F0 uncached, m:281, but a hair-trigger fire or a
@@ -2007,8 +2007,9 @@ def run_verdicts(inp: VerdictInputs, env: Env) -> tuple[str, list[str], list[Pat
         # supplied as a declared file naming the unit, the checkpoint's sha256 and the pause; its path
         # and sha256 are recorded. Code never self-adjudicates. The seat's C9(i): the adjudication of a
         # fired end look on a terminal campaign enters as this declared --adjudication file; stages.py
-        # need not record it. Code's reading, flagged for the seat: a pause raised at a STOP (the end
-        # look of the seat's C9(ii)) is the campaign's last pause, so C3's route covers it too.
+        # need not record it. Code's reading, flagged for the seat: a pause raised at a STOP (when the
+        # end look the seat's C9(ii) orders there fires; the pause is Code's application of m:330) is the
+        # campaign's last pause, so C3's route covers it too.
         last = pauses[-1]
         ok = (isinstance(adj_doc, Mapping) and adj_doc.get("schema") == ADJ_SCHEMA and adj_doc.get("unit") == U
               and adj_doc.get("campaign_sha256") == csha
@@ -2457,8 +2458,8 @@ PINS = {
              "beside -- only when an arm is below its floor, m:247). Attained power is always in the VERDICTS "
              "output (m:190). The absolute guard prints 'fired / not fired (binding)' on Qwen and "
              "'P <= alpha / P > alpha (reported only)' on OLMo.",
-    "PIN-5": "NOT-RUN cause codes and reason phrases as NOT_RUN_CAUSES tables them (Code-authored; the "
-             "seat may author them; the PI rewrites at posting). The record names one primary cause "
+    "PIN-5": "NOT-RUN cause codes and reason phrases as NOT_RUN_CAUSES tables them (Code-authored, "
+             "accepted with their precedence by the seat, C6, 2026-10-10; the PI rewrites at posting). The record names one primary cause "
              "(the earliest) and lists the others in `also`; the label prints the primary. The <stage> "
              "of clock:gate-stopped and clock:not-locked is one of gate_stop_stages(unit): Q-F0 G-PORT, "
              "G-CAL, G-SHAPE-F0, G-ANL-F0, G-TIME-F0, G-ID-F0m, G-F0m-Qwen (G-ID-F0m's divergence only "
@@ -2502,8 +2503,8 @@ PINS = {
              "launch count), its path and sha256 recorded. Code never self-adjudicates. The seat's C9(i): "
              "the adjudication of a fired end look on a terminal campaign enters as that declared "
              "--adjudication file; stages.py need not record it. Code's reading, flagged for the seat: a "
-             "pause raised at a STOP (the end look of the seat's C9(ii)) is the campaign's last pause, so "
-             "C3's route covers it too.",
+             "pause raised at a STOP (when the end look the seat's C9(ii) orders there fires; the pause is "
+             "Code's application of m:330) is the campaign's last pause, so C3's route covers it too.",
     "PIN-10": "The seat's C9(ii) (2026-10-10; m:330's 'at the end' includes an end by STOP): 'the unit's "
               "last look' = campaign.end_look, which stages evaluates and records at COMPLETE, CAP, PI-STOP "
               "and at the STOP point alike; at a STOP the sentence names it as the STOP's ('the end look at "
@@ -2511,7 +2512,8 @@ PINS = {
               "look is the cadence look recorded at N). A STOP-ended campaign with a launch recorded and no "
               "end look is a structural refusal at V2, before V3 releases anything (not written by the "
               "lock's package); with no launch recorded, 'no look reached'. A fired end look at a STOP is a "
-              "pause and takes PIN-9's path (Code's reading of C3, flagged for the seat; see PIN-9). Guard "
+              "pause (m:330's 'A fired bar pauses', Code's application) and takes PIN-9's path (Code's "
+              "reading of C3, flagged for the seat; see PIN-9). Guard "
               "results are selected by the unit's declared guard bars. "
               "No end-of-data guard is recomputed in the analyzer. Neither moves a verdict (m:316).",
     "PIN-11": "Counters are declared as m:314's two lists in full (verified verbatim against m:314 and "
@@ -2655,8 +2657,8 @@ PINS = {
 SEAT_ROUTED = {"PIN-5": "routed before LOCK v0.1; ruled by the seat (C1, 2026-10-10): confirmed -- m:324's "
                         "parenthetical ends 'or any reason'; clock:not-locked:<stage> reads that clause",
                "PIN-8": "routed before LOCK v0.1; ruled by the seat (C2, 2026-10-10): confirmed",
-               "PIN-9": "routed before LOCK v0.1; ruled by the seat (C3, 2026-10-10): confirmed; C9(i) for the "
-                        "end look on a terminal campaign",
+               "PIN-9": "routed before LOCK v0.1; ruled by the seat (C3, 2026-10-10): confirmed; C9(i) for a fired "
+                        "end look's adjudication on a terminal campaign",
                "PIN-17": "routed before LOCK v0.1; ruled by the seat (C4, 2026-10-10): confirmed"}
 
 
@@ -4765,7 +4767,8 @@ def _bt_reader(B: _Battery) -> None:
                   and "the guard at the unit's last look (the end look at the STOP (at 4 launches)): Fisher"
                   in dg1.get("sentence", ""), (vg1[1][:30], gl1.get("label")), cover=["C3-GVER-DATA"])
             # past the first cadence look (40 launches): COMPLETE at 42 -> the end look is the last look;
-            # a G-VER STOP at launch 41 -> the end look at the STOP IS look 1 at 40 (the seat's C9(ii))
+            # a G-VER STOP at launch 41 -> the end look at the STOP IS look 1 at 40 (Code's application of the
+            # seat's C9(ii))
             r_lk = C.root("look-end")
             res_lk, _ = C.run("Q-F0", r_lk, C.adapter("Q-F0", {"A0": 21, "A0s": 21}), {"A0": 21, "A0s": 21})
             v_lk = V("Q-F0", Path(res_lk["checkpoint"]), "look-end")
@@ -4794,7 +4797,7 @@ def _bt_reader(B: _Battery) -> None:
                   and "(the end look at 42 launches)" in d_lk.get("sentence", ""), (v_lk[1][:30], g_lk.get("label")),
                   cover=["C3-LASTLOOK-END-WINS"])
             B.chk("last look: a G-VER STOP at launch 41 after look 1 at 40 -> the end look at the STOP IS look 1 "
-                  "(end_is_look 1, no new pause; the seat's C9(ii)), named 'look 1 at 40 launches, the end look at the "
+                  "(end_is_look 1, no new pause: Code's application of the seat's C9(ii)), named 'look 1 at 40 launches, the end look at the "
                   "STOP' in the guard and the sentence; guard_at_last_look's cadence fallback keeps its label (a second "
                   "cadence look at 80, no end look: 'look 2 at 80 launches, the last cadence look')",
                   v_ls[0] == "ok" and res_ls["status"] == "STOP"
@@ -4826,7 +4829,7 @@ def _bt_reader(B: _Battery) -> None:
                   and g_lp.get("label") == "the end look at the STOP (at 41 launches)"
                   and "(the end look at the STOP (at 41 launches))" in d_lp.get("sentence", ""),
                   (v_lp[1][:30], res_lp["status"], g_lp.get("label")), cover=["C3-LASTLOOK-STOP-PAST-CADENCE"])
-            # the seat's C9(ii) at V2: a STOP-ended campaign with a launch recorded and no end look is refused
+            # Code's guard for the seat's C9(ii), at V2: a STOP-ended campaign with a launch recorded and no end look is refused
             # before V3 releases anything (readrule.release_full not called, nothing written); with the end look
             # (as stages writes it) it is analyzed, and a STOP with no launch recorded carries none and is analyzed
             # (C3-GVER-ZERO)
@@ -4849,7 +4852,7 @@ def _bt_reader(B: _Battery) -> None:
                                          "no-end-look-5")}
                 n_rel_n = len(rel_n)
             ckg0 = json.loads(Path(res_g0["checkpoint"]).read_text())
-            B.chk("refused at V2 (the seat's C9(ii)): a STOP-ended campaign with launches recorded and no end look (its "
+            B.chk("refused at V2 (Code's guard for the seat's C9(ii)): a STOP-ended campaign with launches recorded and no end look (its "
                   "end look removed: the G-VER STOPs at 41 and at 5) -- 'records no end look at its STOP', before V3 "
                   "releases any record, nothing written; with its end look each is analyzed (C3-LASTLOOK-STOP-ENDISLOOK, "
                   "C3-GVER-DATA); a G-VER STOP with no launch recorded has no end look and is analyzed (NOT-RUN)",
@@ -5038,7 +5041,7 @@ def _bt_reader(B: _Battery) -> None:
                 return real_rel_n(recs)
             with _bt_patched(readrule, "release_full", count_rel_h):
                 v_hne = V("Q-F0", cp_hne, "hair-no-end-look", pi_stop=pis_hne)
-            B.chk("refused at V2 (the seat's C9(ii)), whatever the STOP's bar: the hair-trigger STOP at launch 3 with its "
+            B.chk("refused at V2 (Code's guard for the seat's C9(ii)), whatever the STOP's bar: the hair-trigger STOP at launch 3 with its "
                   "end look removed, offered with a PI-stop record bound to that checkpoint -- 'records no end look at "
                   "its STOP', before V3 releases any record, nothing written; with its end look it is analyzed "
                   "(C3-HAIR-DISP)",

@@ -27,7 +27,9 @@ renders' sha16 (the renders of record) and, on a non-stub adapter, the lock's an
 proposal's repo-relative files -- each COMMITTED at HEAD as a regular blob whose bytes
 are the working tree's and hash to the identity's value (findings R4, R11; pure object
 reads, never ``git diff``) -- and, on a non-stub adapter, the analyzer's and the
-package's sha256 (``analyzer_sha256``, ``package_sha256``; the seat's D2, 2026-10-10):
+package's sha256 (``analyzer_sha256``, ``package_sha256``; both required on a non-stub run
+and the package hash checked against the lock at stage start: the seat's D2, 2026-10-10;
+the analyzer's half of the check is Code's, finding R8 and the analyzer's PIN-14 precedent):
 the analyzer's bytes hash to the first, the package this process hashes
 (``resume.package_sha256``) is the second, and the committed lock's text names both;
 the prior stage's persisted end licenses this one (§8's order, m:280-302) under the
@@ -536,9 +538,11 @@ def licence_problems(extra: Mapping[str, Any], *, repo: str | os.PathLike = REPO
     analyzer's bytes hash to identity_extra's ``analyzer_sha256`` (finding R8); (e) the
     package this process hashes, ``resume.package_sha256()`` computed here, is
     identity_extra's ``package_sha256``; (f) the committed lock's bytes -- those (c) read
-    -- name both 64-hex strings verbatim (the analyzer's PIN-14 precedent). (d)-(f) are the
-    seat's D2 (2026-10-10): both keys are required on a non-stub run, so an absent or
-    malformed one is a problem here, never a KeyError or a silent pass. git runs
+    -- name both 64-hex strings verbatim (the analyzer's PIN-14 precedent). The seat's D2
+    (2026-10-10) requires both keys on a non-stub run and the package hash checked against the
+    lock at stage start ((e), and (f) for the package); (d) (finding R8) and (f)'s analyzer half
+    (the PIN-14 precedent) are Code's. An absent or malformed key is a problem here, never a
+    KeyError or a silent pass. git runs
     read-only: object reads only (``_committed``), never diff.
     """
     probs: list[str] = []
@@ -599,13 +603,15 @@ def licence_problems(extra: Mapping[str, Any], *, repo: str | os.PathLike = REPO
         for k, v in have.items():
             if v not in ltext:
                 probs.append(f"lock {extra.get('lock_file')}: its committed text does not name "
-                             f"identity_extra's {k} {v[:16]}... (the seat's D2; the analyzer's PIN-14)")
+                             f"identity_extra's {k} {v[:16]}... (the package: the seat's D2; the analyzer: "
+                             f"Code's, after the analyzer's PIN-14)")
     return probs
 
 
 def _licence(adapter, extra: Mapping[str, Any], name: str) -> None:
     """Refuse a non-stub stage whose proposal or lock is not the committed file it names, or
-    whose analyzer or package is not the one the identity and the lock name (the seat's D2);
+    whose analyzer or package is not the one the identity and the lock name (the seat's D2 for
+    the package; the analyzer's half Code's, finding R8 / PIN-14);
     licensed, print the LICENCE line, each clause scoped to what was checked."""
     if _is_stub(adapter):
         return
@@ -988,8 +994,9 @@ def _extra(identity_extra: Mapping[str, Any], *, stage: str, sub: str, stub: boo
     with ``governing_sections_identical`` and records at the lock -- ``accepted_proposals``'s
     PIN); ``analyzer_sha256`` and ``package_sha256`` -- the analyzer's and the m package's
     sha256 the lock pins (64 lower-case hex), REQUIRED on a non-stub adapter, as the files
-    are (the seat's D2, 2026-10-10: the licence checks the analyzer's bytes, the package
-    this process hashes, and the lock's text naming both, finding R8); on the stub each is
+    are (the seat's D2, 2026-10-10: both required, the package hash checked against the lock
+    at stage start; the licence also checks the analyzer's bytes, finding R8, and the lock's
+    text naming the analyzer's hash, the analyzer's PIN-14 precedent); on the stub each is
     optional and form-checked when given.
     """
     gid = stage == "id"
@@ -1964,8 +1971,8 @@ def campaign_look(unit: str, records: Sequence[Mapping], look: Any) -> dict:
     # Reported beside (m:330 "reported on its contrast arms"): the contrast arm's
     # FORCED-round degeneracy only.
     # PIN (Code, declared at LOCK v0.1): its free-round events stay withheld at looks as
-    # at gate stages (m:271: a free round's class sits on the pick) -- flagged for the
-    # seat: whether m:271's withholding extends to campaign looks.
+    # at gate stages (m:271: a free round's class sits on the pick) -- build flag (d),
+    # accepted as built in the seat's dispositions of 2026-10-06 (54e41c9).
     forced = [x for r in con for x in r["rounds"] if x["phase"] == "forced"]
     kf = sum((x["audit"] or {}).get("claim") in _bars.DEGEN_CLAIMS[con[0]["substrate"]]
              for x in forced) if con else 0
@@ -2229,18 +2236,18 @@ def _campaign_end(unit: str, name: str, ckpt: Mapping, status: str | None, hit: 
             terminal["text"] = pi
         last_look = ckpt["looks"][-1] if ckpt["looks"] else None
         if n % LOOK_EVERY == 0 and last_look is not None and last_look["at_launches"] == n:
-            # PIN (Code, declared at LOCK v0.1; the seat's C9(ii), 2026-10-10; m:330): Looks =
-            # ceil(total launches / 40): when the campaign ends on a multiple of 40 the look
-            # recorded there IS the end look -- no new evaluation, no new pause (its pause, if
-            # it fired, was the seat's to adjudicate already). The end by STOP takes the same
-            # rule (_stop_end_look).
+            # PIN (Code, declared at LOCK v0.1; m:330): Looks = ceil(total launches / 40):
+            # when the campaign ends on a multiple of 40 the look recorded there IS the end look
+            # -- no new evaluation, no new pause (its pause, if it fired, was the seat's to
+            # adjudicate already). The end by STOP takes the same rule (_stop_end_look: Code's
+            # application to the end look the seat's C9(ii), 2026-10-10, orders at the STOP point).
             end_look = {**copy.deepcopy(last_look["result"]), "end_is_look": last_look["result"]["look"]}
         else:
-            # PIN (Code, declared at LOCK v0.1; the seat's C9(ii), 2026-10-10; m:330): otherwise
-            # the end look is evaluated once ("and at the end"); a fired end look pauses the
-            # unit before its analysis (status PAUSE; the terminal state stands) -- at
-            # COMPLETE, CAP and a PI stop alike, and at a STOP (_stop_end_look), where the
-            # status stays STOP.
+            # PIN (Code, declared at LOCK v0.1; m:330): otherwise the end look is evaluated
+            # once ("and at the end"); a fired end look pauses the unit before its analysis
+            # (status PAUSE; the terminal state stands) -- at COMPLETE, CAP and a PI stop alike,
+            # and at a STOP (_stop_end_look; the end look there is the seat's C9(ii), 2026-10-10,
+            # its pause Code's application of m:330), where the status stays STOP.
             end_look = campaign_look(unit, records, "end")
             if end_look["fired"]:
                 pause = {"at_launches": n, "kind": "end_look", "look": "end",
@@ -2281,7 +2288,9 @@ def _stop_end_look(unit: str, ckpt: Mapping, hit: Mapping) -> tuple[dict | None,
     # launch, so no new pause; after a hair trigger at the launch that reached n the hit
     # pre-empted both its announcement and its pause, so its pause (kind "look", look k) is
     # raised here if it fired. Otherwise the end look is evaluated once (campaign_look(...,
-    # "end")) and, if it fired, raises an "end_look" pause. The status stays STOP and the stop
+    # "end")) and, if it fired, raises an "end_look" pause (the pause is m:330's "A fired bar
+    # pauses", applied by Code; C9(ii)'s words order the evaluation and record). The status
+    # stays STOP and the stop
     # block is unchanged. A pause raised here is never adjudicated through stages -- the
     # stopped checkpoint is ended (resume.refuse_ended) -- its adjudication enters VERDICTS as
     # the declared --adjudication file: C3's route for the campaign's last pause (the seat's C9(i)
@@ -2531,7 +2540,9 @@ def _campaign_events(ckpt: Mapping, hit: Mapping | None) -> list[dict]:
     """The campaign's adjudication events, rebuilt from its state: one per pause (counts
     only -- a look's or the end look's results and arm counts, or an exhausted arm's
     counts), and the hair-trigger / G-VER stop's fired round when there is one -- a pause
-    raised at the STOP point (the seat's C9(ii)) gives its PAUSE event before the STOP's."""
+    raised at the STOP point (the end look there is the seat's C9(ii); that a fired one pauses
+    is Code's application of m:330's "A fired bar pauses") gives its PAUSE event before the
+    STOP's."""
     camp, records = ckpt["campaign"], ckpt["sessions"]
     fl = camp["floors"]
     looks = {lk["result"]["look"]: lk["result"] for lk in ckpt["looks"]}
@@ -3421,7 +3432,7 @@ def _selftest(chk) -> None:
         want_d2[f"the lock names only the {k_} sha's 16-hex prefix ({nm_})"] = \
             f"does not name identity_extra's {k_}_sha256"
     d2_lic_bad = [k for k, w in want_d2.items() if not (len(d2[k]) == 1 and w in d2[k][0])]
-    chk("stages: the seat's D2 at stage start -- licence_problems passes the analyzer's bytes at analyzer_sha256, "
+    chk("stages: the seat's D2 at stage start (the analyzer's half Code's, finding R8 / PIN-14) -- licence_problems passes the analyzer's bytes at analyzer_sha256, "
         "the package this process hashes at package_sha256 and a lock whose committed text names both; it names "
         "exactly one problem (a string, never a KeyError) for each alone: analyzer_sha256 absent, package_sha256 "
         "absent or malformed, an analyzer mismatch, a package mismatch (offered, or the package hashed at check "
@@ -3940,7 +3951,7 @@ def _selftest(chk) -> None:
                    and "RE-FINISH campaign-Q-F0" in a_re["txt"]
                    and announced9(a_re["txt"]) == announced9(a_ref["txt"])
                    and _resume.same_json(a_re["ck"]["campaign"]["end_look"], el_a))
-        chk("stages: C9(ii) -- a hair-trigger STOP at launch 4 (not a multiple of 40) records the end look 'end' at 4 "
+        chk("stages: C9(ii) as built (Code's applications included) -- a hair-trigger STOP at launch 4 (not a multiple of 40) records the end look 'end' at 4 "
             "launches (no pause: silent), its three bar messages announced right after the STOP lines; the report "
             "carries it (looks counted 1); killed with that end pending, the re-finish launches nothing and prints "
             "exactly the uninterrupted run's lines", ok_a and ok_a_re,
@@ -3975,7 +3986,7 @@ def _selftest(chk) -> None:
         ok_b_ref = (isinstance(b_adj["exc"], SystemExit) and "STAGE ENDED" in str(b_adj["exc"])
                     and "(STOP" in str(b_adj["exc"]) and not b_adj["ad"].calls and cp_b.read_bytes() == bytes_b
                     and (r_b / "reports" / "Q-F0_campaign_report.json").read_bytes() == rep_bytes_b)
-        chk("stages: C9(ii) -- a hair-trigger STOP on launch 40 whose look 1 fires: the end look IS look 1 (end_is_look "
+        chk("stages: C9(ii) as built (Code's applications included) -- a hair-trigger STOP on launch 40 whose look 1 fires: the end look IS look 1 (end_is_look "
             "1), its pause {kind look, look 1} appended unadjudicated (excerpt: the PAUSE event before the STOP event), "
             "look 1's bar messages announced once, after the STOP lines; the stopped campaign re-invoked with an "
             "adjudication is refused (STAGE ENDED, STOP), nothing launched, checkpoint and report unchanged -- the "
@@ -4001,7 +4012,7 @@ def _selftest(chk) -> None:
                 + ["END LOOK campaign-Q-F0: the end look is look 1 (at 40 launches)"]
                 and "look=1" not in c2["txt"] and c2["rep"].get("looks_count") == 1
                 and [(e["event"], e["kind"]) for e in c2["ev"]] == [("PAUSE", "look"), ("STOP", "harness")])
-        chk("stages: C9(ii) -- a G-VER STOP at launch 41, after look 1 at 40 fired and was adjudicated: the end look IS "
+        chk("stages: C9(ii) as built (Code's applications included) -- a G-VER STOP at launch 41, after look 1 at 40 fired and was adjudicated: the end look IS "
             "look 1 (end_is_look 1, at 40 -- the quarantined record not counted), no new pause, and the END LOOK line "
             "follows the STOP lines (look 1's messages not re-announced)", ok_c,
             (c2["res"] and c2["res"]["status"], announced9(c2["txt"])[-1:]))
@@ -4013,7 +4024,7 @@ def _selftest(chk) -> None:
                 and d["ck"]["campaign"]["end_look"] is None and d["ck"]["campaign"]["pauses"] == []
                 and announced9(d["txt"]) == stop_lines9(d["ck"]) and d["rep"].get("end_look") is None
                 and d["rep"].get("looks_count") == 0)
-        chk("stages: C9(ii) -- a G-VER STOP at the first launch records no end look (end_look None, no pause, looks "
+        chk("stages: C9(ii) as built (Code's applications included) -- a G-VER STOP at the first launch records no end look (end_look None, no pause, looks "
             "counted 0) and announces the STOP lines only", ok_d, (d["res"] and d["res"]["status"], announced9(d["txt"])))
 
         # (e) a contrast session's FREE-phase hair trigger (blinded, m:318 exception (1)) at launch 7, after 3/3
@@ -4077,7 +4088,7 @@ def _selftest(chk) -> None:
                    and e_re["exc"] is None and e_re["res"]["status"] == "STOP" and not e_re["ad"].calls
                    and announced9(e_re["txt"]) == announced9(e_ref["txt"])
                    and not any(w in e_re["txt"].lower() for w in cls9))
-        chk("stages: C9(ii) -- a contrast free-phase hair-trigger STOP (blinded) at launch 7 after 3 pre-pick exclusions "
+        chk("stages: C9(ii) as built (Code's applications included) -- a contrast free-phase hair-trigger STOP (blinded) at launch 7 after 3 pre-pick exclusions "
             "on the contrast arm: the end look at 7 fires and its end_look pause is appended unadjudicated (excerpt: "
             "PAUSE then STOP; the pending end's fired = the hit's bar + the pause's bars); stdout from the stopped "
             "session's line to the STAGE line is exactly the phase-only STOP line then the end look's messages (no "
@@ -4098,7 +4109,7 @@ def _selftest(chk) -> None:
         with patched(me, "campaign_look", planted9):
             e_pl = camp9(r_ep, rule_e(7))
         ck_pl = json.loads((r_ep / "ckpt" / "Q-F0_campaign.json").read_text(encoding="utf-8"))
-        chk("stages: C9(ii) -- _campaign_outputs' pick-free assertion runs over the report that carries the end look at "
+        chk("stages: C9(ii) as built (Code's applications included) -- _campaign_outputs' pick-free assertion runs over the report that carries the end look at "
             "a STOP: a roster label planted in that end look refuses the finish (ValueError) before any write of the "
             "end or an output; unplanted, the same run finishes (above)",
             isinstance(e_pl["exc"], ValueError) and "roster label" in str(e_pl["exc"])
@@ -4138,7 +4149,7 @@ def _selftest(chk) -> None:
                    and f_re["exc"] is None and f_re["res"]["status"] == "STOP" and not f_re["ad"].calls
                    and "RE-FINISH campaign-Q-F0" in f_re["txt"] and announced9(f_re["txt"]) == announced9(f_ref["txt"])
                    and f_re["ck"]["campaign"]["pauses"] == [] and _resume.same_json(end_look9(f_re["ck"]), el_f))
-        chk("stages: C9(ii) -- a hair-trigger STOP on launch 40 whose look 1 is silent ((b)'s silent variant): the end "
+        chk("stages: C9(ii) as built (Code's applications included) -- a hair-trigger STOP on launch 40 whose look 1 is silent ((b)'s silent variant): the end "
             "look IS look 1 (end_is_look 1), no pause appended (excerpt: the STOP event only), look 1's three bar "
             "messages announced once, right after the STOP lines, and no END LOOK line; killed with that end pending, "
             "the re-finish launches nothing and prints exactly the same lines", ok_f and ok_f_re,
@@ -4157,7 +4168,7 @@ def _selftest(chk) -> None:
                 and sum("look=1" in ln for ln in g9["txt"].splitlines()) == 3
                 and [(e["event"], e["kind"]) for e in g9["ev"]] == [("STOP", "harness")]
                 and g9["rep"].get("looks_count") == 1)
-        chk("stages: C9(ii) -- a G-VER STOP at launch 41 after a silent look 1 at 40 ((c)'s silent variant): the end "
+        chk("stages: C9(ii) as built (Code's applications included) -- a G-VER STOP at launch 41 after a silent look 1 at 40 ((c)'s silent variant): the end "
             "look IS look 1 (end_is_look 1, at 40), no pause, look 1's messages printed once (at its launch) and the "
             "END LOOK line alone after the STOP lines", ok_g,
             (g9["res"] and g9["res"]["status"], announced9(g9["txt"])[-1:]))
@@ -4177,7 +4188,7 @@ def _selftest(chk) -> None:
                 and sum("look=1" in ln for ln in h9["txt"].splitlines()) == 3 and "END LOOK" not in h9["txt"]
                 and h9["rep"].get("end_look") == el_h and h9["rep"].get("looks_count") == 2
                 and [e["event"] for e in h9["ev"]] == ["STOP"])
-        chk("stages: C9(ii) -- a hair-trigger STOP at launch 42, past look 1 at 40 (not a multiple of 40): the end look "
+        chk("stages: C9(ii) as built (Code's applications included) -- a hair-trigger STOP at launch 42, past look 1 at 40 (not a multiple of 40): the end look "
             "is evaluated at the STOP point (look 'end' at 42, no end_is_look -- look 1 is not reused), its three "
             "messages after the STOP lines (look 1's printed once, at 40), the report counting 2 looks", ok_h,
             (h9["res"] and h9["res"]["status"], el_h.get("look"), el_h.get("at_launches")))
@@ -4215,7 +4226,7 @@ def _selftest(chk) -> None:
         ok_i_re = (i_re["exc"] is None and i_re["res"]["status"] == "STOP" and not i_re["ad"].calls
                    and announced9(i_re["txt"]) == announced9(i_ref["txt"])
                    and i_re["ck"]["campaign"]["pauses"] == i_ref["ck"]["campaign"]["pauses"])
-        chk("stages: C9(ii) -- a G-VER STOP at launch 7 whose end look, evaluated fresh at 6 launches, fires: its "
+        chk("stages: C9(ii) as built (Code's applications included) -- a G-VER STOP at launch 7 whose end look, evaluated fresh at 6 launches, fires: its "
             "end_look pause {end_look, 6} appended unadjudicated (excerpt: PAUSE then STOP; the pending end's fired = "
             "the G-VER bar + the pause's bars), the end look's messages after the STOP lines; killed with that end "
             "pending (resume accepts it), the re-finish prints the same lines", ok_i and ok_i_pe and ok_i_re,
@@ -4266,13 +4277,15 @@ def _selftest(chk) -> None:
                 and not_applied9(j_look, None)
                 and [(p["kind"], p["adjudication"]) for p in j_look["ck"]["campaign"]["pauses"]] == [("look", None)])
         chk("stages: a re-finish offered a ruling refuses NOT APPLIED, and where the end it re-finished leaves the "
-            "campaign ended -- a STOP whose end look fired, a COMPLETE whose end look fired (the seat's C9(i)) -- the "
+            "campaign ended -- a STOP whose end look fired (Code's reading of C3), a COMPLETE whose end look fired (the "
+            "seat's C9(i)) -- the "
             "refusal names the end and points the ruling to VERDICTS' declared --adjudication file, never 'offer it "
             "again' (offered again, it is refused as ended, nothing launched, the checkpoint unchanged); a look pause "
             "(not ended) keeps 'offer it again'", ok_j,
             (str(j_stop["exc"])[:60], str(j_term["exc"])[:60], str(j_look["exc"])[-60:]))
 
-    # the seat's D2 in the G-ID and campaign drivers: the licence precedes the first write. A simulated non-stub
+    # the seat's D2 (the analyzer's half Code's) in the G-ID and campaign drivers: the licence precedes the first
+    # write. A simulated non-stub
     # run (the G-TIME end-to-end harness's patches and its committed lock, a model adapter's provenance, a real
     # prior ended PASS under this run's proposal -- so that, the licence aside, the run would go on to write)
     # whose package_sha256 is not this process's package, or whose lock text does not name the analyzer sha, is
@@ -4370,14 +4383,14 @@ def _selftest(chk) -> None:
                     lic_d[drv_nm][nm] = (
                         f"LICENCE REFUSED ({sname})" in msg and problem in msg
                         and not ad_d.calls and not written and tree_d(out_d) == before)
-    chk("stages: the seat's D2 in the G-ID driver -- the licence precedes the first write: a simulated non-stub "
+    chk("stages: the seat's D2 (the analyzer's half Code's) in the G-ID driver -- the licence precedes the first write: a simulated non-stub "
         "G-ID-F0m (a real G-TIME prior) whose package_sha256 is not this process's package, or whose lock text does "
         "not name the analyzer sha, is refused LICENCE REFUSED naming the problem before any write or generation "
         "(no checkpoint, report, reads, G-ID artifact or excerpt; the out root unchanged; no generate call); with "
         "everything matching it prints the LICENCE line (the analyzer's and the package's sha16) once, launches, "
         "writes the checkpoint recording both hashes, the report and the artifact",
         len(lic_d["G-ID"]) == len(lic_runs) and all(lic_d["G-ID"].values()), lic_d["G-ID"])
-    chk("stages: the seat's D2 in the campaign driver -- the licence precedes the first write: a simulated "
+    chk("stages: the seat's D2 (the analyzer's half Code's) in the campaign driver -- the licence precedes the first write: a simulated "
         "non-stub campaign-Q-F0 (a real qualification prior) whose package_sha256 is not this process's package, "
         "or whose lock text does not name the analyzer sha, is refused LICENCE REFUSED naming the problem before "
         "any write or generation (no checkpoint, report, reads or excerpt; the out root unchanged; no generate "
