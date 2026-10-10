@@ -2284,7 +2284,9 @@ def _stop_end_look(unit: str, ckpt: Mapping, hit: Mapping) -> tuple[dict | None,
     # "end")) and, if it fired, raises an "end_look" pause. The status stays STOP and the stop
     # block is unchanged. A pause raised here is never adjudicated through stages -- the
     # stopped checkpoint is ended (resume.refuse_ended) -- its adjudication enters VERDICTS as
-    # the declared --adjudication file (the seat's C9(i), C3). campaign_look is pick-free by
+    # the declared --adjudication file: C3's route for the campaign's last pause (the seat's C9(i)
+    # names that file for a fired end look on a terminal campaign; its use for a pause raised at a
+    # STOP is Code's reading, flagged for the seat). campaign_look is pick-free by
     # construction (sham-arm degeneracy, pooled pre-pick (forced-phase) exclusion counts, the
     # contrast arm's forced-round degeneracy, first-read flags): nothing in it reads a contrast
     # session's free rounds or its free-phase events, so a contrast free-phase trigger's
@@ -2477,7 +2479,8 @@ def _refinish_campaign(unit: str, name: str, ckpt: dict, cpath: Path, paths: Map
     # non-zero (NOT APPLIED); the ruling is offered again on the next invocation -- unless
     # the re-finished end leaves the campaign ended (its stop or terminal state persisted:
     # resume.ended_status non-None), which stages never resumes (resume.refuse_ended).
-    # PIN (Code, declared at LOCK v0.1; the seat's C9(i), C3 and C2, 2026-10-10): there the
+    # PIN (Code, declared at LOCK v0.1; the seat's C3 and C2, and C9(i) for a terminal campaign,
+    # 2026-10-10; a STOP's pause by Code's reading of C3, flagged for the seat): there the
     # refusal does not say "offer it again" -- a ruling on the ended campaign's pause enters
     # VERDICTS as the declared --adjudication file, a PI's stop on a hair trigger as the
     # declared --pi-stop record; stages records neither.
@@ -2498,7 +2501,8 @@ def _refinish_campaign(unit: str, name: str, ckpt: dict, cpath: Path, paths: Map
                          f"applied, and cannot be through stages: that end leaves the campaign ended "
                          f"({ended}), never resumed (resume.refuse_ended) -- a ruling on a pause it "
                          f"carries enters VERDICTS as the declared --adjudication file, a PI's stop on a hair "
-                         f"trigger as the declared --pi-stop record (the seat's C9(i), C3, C2)")
+                         f"trigger as the declared --pi-stop record (the seat's C3 and C2; C9(i) for a terminal "
+                         f"campaign)")
     if skipped:
         raise SystemExit(f"NOT APPLIED ({name}): this invocation re-finished the end pending at "
                          f"{cpath} ({pending['status']}); {' and '.join(skipped)} it offered was not "
@@ -3975,7 +3979,8 @@ def _selftest(chk) -> None:
             "1), its pause {kind look, look 1} appended unadjudicated (excerpt: the PAUSE event before the STOP event), "
             "look 1's bar messages announced once, after the STOP lines; the stopped campaign re-invoked with an "
             "adjudication is refused (STAGE ENDED, STOP), nothing launched, checkpoint and report unchanged -- the "
-            "pause's ruling enters VERDICTS as the declared --adjudication file (the seat's C9(i))",
+            "pause's ruling enters VERDICTS as the declared --adjudication file (C3's route; Code's reading for a "
+            "STOP, flagged)",
             ok_b and ok_b_ref, (b["res"] and b["res"]["status"], ann_b[2:3], ok_b_ref))
 
         # (c) a G-VER STOP right after look 1 at 40 (fired, PAUSE, adjudicated): the end look IS look 1, no new

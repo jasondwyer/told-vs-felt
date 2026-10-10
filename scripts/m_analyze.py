@@ -483,7 +483,7 @@ def pending_state(unit: str, decl: Mapping, *, verdicts_exists: bool, notrun_exi
     # m:347), refused for unlocked-before-D_O with clock_passed true (that unit is NOT-RUN by its
     # Clock), and refused where the unit's VERDICTS or NOT-RUN output exists. The Clock comparison
     # is the declared clock_passed beside the declared date it was made on (YYYY-MM-DD), both
-    # recorded as given. The boundary-day comparison is confirmed by the seat (C7, 2026-10-10): a
+    # recorded as given. The boundary-day comparison is settled by the seat (C7, 2026-10-10): a
     # unit's LOCK v1.0 is "committed by its Clock date" iff the commit's committer date, in UTC, falls
     # on or before the Clock date (the day inclusive, to 23:59:59 UTC); it remains a declared input,
     # so no date-vs-D_O consistency is imposed here.
@@ -929,8 +929,9 @@ PER_PROPERTY_REFERENCE = ("f1 CORR's 7-vs-1 anomaly (archive:91-93) is the refer
 def per_property_table(records: Sequence[Mapping], unit: str) -> dict:
     """m:314's per-property exclusion table, per arm x property (clean, corrupted)."""
     # PIN (Code, declared at LOCK v0.1): PIN-12 -- round columns key on round.property; the session
-    # columns key on the property of the round that set the session's exclusion. Confirmed by the
-    # seat (C7, 2026-10-10; G-PORT A5): f1's 7-vs-1 refers to the pre-pick column
+    # columns key on the property of the round that set the session's exclusion. Settled by the seat
+    # (C7, 2026-10-10; G-PORT A5), where the interim text had named sessions_excluded_any_phase the
+    # like-for-like column: f1's 7-vs-1 refers to the pre-pick column
     # (sessions_excluded_prepick, sessions excluded before the first read, by property);
     # sessions_excluded_any_phase is reported beside it -- fixed, no longer interim. The sham's
     # corrupted column is asserted zero.
@@ -2002,12 +2003,12 @@ def run_verdicts(inp: VerdictInputs, env: Env) -> tuple[str, list[str], list[Pat
     used_adj = None
     if pauses and pauses[-1].get("adjudication") is None:
         # PIN (Code, declared at LOCK v0.1): PIN-9 -- confirmed by the seat (C3, 2026-10-10): VERDICTS
-        # refuses while the campaign's last pause is unadjudicated (a fired end look on a terminal
-        # campaign, or one at a STOP, included) unless the seat's adjudication is supplied as a declared
-        # file naming the unit, the checkpoint's sha256 and the pause; its path and sha256 are recorded.
-        # Code never self-adjudicates. The seat's C9(i): the adjudication of a fired end look on a
-        # terminal (or stopped) campaign enters as this declared --adjudication file; stages.py need
-        # not record it.
+        # refuses while the campaign's last pause is unadjudicated unless the seat's adjudication is
+        # supplied as a declared file naming the unit, the checkpoint's sha256 and the pause; its path
+        # and sha256 are recorded. Code never self-adjudicates. The seat's C9(i): the adjudication of a
+        # fired end look on a terminal campaign enters as this declared --adjudication file; stages.py
+        # need not record it. Code's reading, flagged for the seat: a pause raised at a STOP (the end
+        # look of the seat's C9(ii)) is the campaign's last pause, so C3's route covers it too.
         last = pauses[-1]
         ok = (isinstance(adj_doc, Mapping) and adj_doc.get("schema") == ADJ_SCHEMA and adj_doc.get("unit") == U
               and adj_doc.get("campaign_sha256") == csha
@@ -2475,7 +2476,7 @@ PINS = {
              "unlocked-before-D_O, refused where a VERDICTS or NOT-RUN output exists. clock_passed and "
              "the date the comparison was made on (YYYY-MM-DD) are recorded as given -- in the posting "
              "output's pending block and in Q-F0's VERDICTS (olmo_states_declared). The boundary-day "
-             "comparison is confirmed by the seat (C7, 2026-10-10): a unit's LOCK v1.0 is 'committed by "
+             "comparison is settled by the seat (C7, 2026-10-10): a unit's LOCK v1.0 is 'committed by "
              "its Clock date' iff the commit's committer date, in UTC, falls on or before the Clock date "
              "(the day inclusive, to 23:59:59 UTC); it remains a declared input.",
     "PIN-7": "VERDICTS reads one unit's declared campaign, G-TIME and qualification checkpoints after "
@@ -2496,12 +2497,13 @@ PINS = {
              "instead resume is for the adjudication, if one arises; nothing is built for it. A G-VER "
              "STOP is a PI stop by m:284.",
     "PIN-9": "Confirmed by the seat (C3, 2026-10-10): VERDICTS refuses while the campaign's last pause is "
-             "unadjudicated (a fired end look on a terminal campaign, or one at a STOP, included); the "
-             "seat's adjudication enters as a declared --adjudication file (m-verdicts-adjudication-v1 "
-             "naming the unit, the checkpoint's sha256 and the pause's kind and launch count), its path "
-             "and sha256 recorded. Code never self-adjudicates. The seat's C9(i): the adjudication of a "
-             "fired end look on a terminal (or stopped) campaign enters as that declared --adjudication "
-             "file; stages.py need not record it.",
+             "unadjudicated; the seat's adjudication enters as a declared --adjudication file "
+             "(m-verdicts-adjudication-v1 naming the unit, the checkpoint's sha256 and the pause's kind and "
+             "launch count), its path and sha256 recorded. Code never self-adjudicates. The seat's C9(i): "
+             "the adjudication of a fired end look on a terminal campaign enters as that declared "
+             "--adjudication file; stages.py need not record it. Code's reading, flagged for the seat: a "
+             "pause raised at a STOP (the end look of the seat's C9(ii)) is the campaign's last pause, so "
+             "C3's route covers it too.",
     "PIN-10": "The seat's C9(ii) (2026-10-10; m:330's 'at the end' includes an end by STOP): 'the unit's "
               "last look' = campaign.end_look, which stages evaluates and records at COMPLETE, CAP, PI-STOP "
               "and at the STOP point alike; at a STOP the sentence names it as the STOP's ('the end look at "
@@ -2518,8 +2520,9 @@ PINS = {
               "property they equal audit.tally); G-TIME and qualification sessions are tabulated "
               "separately as m:271's release.",
     "PIN-12": "Property keys: round counters by round.property; session counters by the excluding "
-              "round's property; read counters by arm and read position (no property). Confirmed by the "
-              "seat (C7, 2026-10-10; G-PORT A5): f1's 7-vs-1 refers to the per-property table's pre-pick "
+              "round's property; read counters by arm and read position (no property). Settled by the seat "
+              "(C7, 2026-10-10; G-PORT A5), where the interim text had named sessions_excluded_any_phase "
+              "the like-for-like column: f1's 7-vs-1 refers to the per-property table's pre-pick "
               "column (sessions excluded before the first read, by property); sessions_excluded_any_phase "
               "is reported beside it -- fixed, no longer interim. Whole-session validity: lenient = "
               "complete, no exclusion, no hair trigger; strict adds no claim in any round.",
