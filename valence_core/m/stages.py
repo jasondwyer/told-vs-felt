@@ -8,8 +8,9 @@ uncached) and the qualification stage (G-F0m-Qwen, m:283; G-F0m-OLMo-{ckpt}, m:3
 uncached then cached, 2/2 byte-identical complete pairs); ``run_campaign`` runs a
 unit's campaign (m:192, m:247, m:330: strict-rotation interleave, per-arm stop at floor
 on DOMAIN sessions -- L is a projection, not a bound -- looks every 40 launches and at
-the end, the hour cap and a PI stop terminal). The campaign is built and self-tested on
-the scripted stub only; it is not run at step 4.
+the end, an end by STOP included (the seat's C9(ii), 2026-10-10), the hour cap and a PI
+stop terminal). The campaign is built and self-tested on the scripted stub only; it is
+not run at step 4.
 
 AT EVERY STAGE START, BEFORE ANY SESSION. The checkpoint path is under
 ``<out_root>/ckpt/`` (the -diff rule) and names no roster word; a non-stub adapter
@@ -25,8 +26,12 @@ lock's hash (never "pre-lock": every stage here follows its lock), this document
 renders' sha16 (the renders of record) and, on a non-stub adapter, the lock's and the
 proposal's repo-relative files -- each COMMITTED at HEAD as a regular blob whose bytes
 are the working tree's and hash to the identity's value (findings R4, R11; pure object
-reads, never ``git diff``); the prior stage's persisted end licenses this one (§8's
-order, m:280-302) under the same proposal or one the lock re-adopts
+reads, never ``git diff``) -- and, on a non-stub adapter, the analyzer's and the
+package's sha256 (``analyzer_sha256``, ``package_sha256``; the seat's D2, 2026-10-10):
+the analyzer's bytes hash to the first, the package this process hashes
+(``resume.package_sha256``) is the second, and the committed lock's text names both;
+the prior stage's persisted end licenses this one (§8's order, m:280-302) under the
+same proposal or one the lock re-adopts
 (``prior_proposal_sha256s``), and so must the unit's G-ID artifact wherever it gives
 the path; a non-stub stage takes no prior or artifact written on the stub; the path the
 G-ID licence gives on THIS backend must be the locked one. Then the adapter's
@@ -527,14 +532,20 @@ def licence_problems(extra: Mapping[str, Any], *, repo: str | os.PathLike = REPO
     ``proposal_file`` -- the file banner.spec_problems and the gate line read -- is
     committed at HEAD with the working tree's bytes, and its sha256 is
     ``proposal_sha256`` (finding N2: the document read is the document the identity
-    names); (c) ``lock_file`` likewise against ``lock_sha256`` (finding 39); (d) when
-    identity_extra pins ``analyzer_sha256``, the analyzer's bytes hash to it (finding
-    R8). git runs read-only: object reads only (``_committed``), never diff.
+    names); (c) ``lock_file`` likewise against ``lock_sha256`` (finding 39); (d) the
+    analyzer's bytes hash to identity_extra's ``analyzer_sha256`` (finding R8); (e) the
+    package this process hashes, ``resume.package_sha256()`` computed here, is
+    identity_extra's ``package_sha256``; (f) the committed lock's bytes -- those (c) read
+    -- name both 64-hex strings verbatim (the analyzer's PIN-14 precedent). (d)-(f) are the
+    seat's D2 (2026-10-10): both keys are required on a non-stub run, so an absent or
+    malformed one is a problem here, never a KeyError or a silent pass. git runs
+    read-only: object reads only (``_committed``), never diff.
     """
     probs: list[str] = []
     if _git_head(repo) == "unknown":
         probs.append("HEAD unknown (git rev-parse --verify HEAD failed): nothing is licensed "
                      "without the commit the files are read at")
+    lock_data: bytes | None = None
     for what, rel, want in (("proposal", extra.get("proposal_file"), extra.get("proposal_sha256")),
                             ("lock", extra.get("lock_file"), extra.get("lock_sha256"))):
         if rel is None:
@@ -545,35 +556,76 @@ def licence_problems(extra: Mapping[str, Any], *, repo: str | os.PathLike = REPO
         probs += [f"{what} {x}" for x in cp]
         if data is None:
             continue
+        if what == "lock":
+            lock_data = data
         sha = hashlib.sha256(data).hexdigest()
         if sha != want:
             probs.append(f"{what} {rel}: sha256 {sha[:16]}... is not identity_extra's "
                          f"{str(want)[:16]}...")
-    want_ana = extra.get("analyzer_sha256")
-    if want_ana is not None:
+    # PIN (Code, declared at LOCK v0.1; the seat's D2, 2026-10-10): "analyzer_sha256 and
+    # package_sha256 are required in the stages' identity_extra on non-stub runs, and the
+    # package hash is checked against the lock at stage start." (d) the analyzer's bytes
+    # against analyzer_sha256; (e) resume.package_sha256() -- the m package's sources as this
+    # process hashes them, read at check time -- against package_sha256; (f) the lock's
+    # committed bytes (decoded UTF-8, errors replaced, as the analyzer reads them) contain
+    # both 64-hex strings verbatim. A key absent or not 64 lower-case hex is one problem
+    # naming it; (f) is checked only for a well-formed key and a committed lock (an absent
+    # key or an uncommitted lock is already its own problem).
+    have: dict[str, str] = {}
+    for k in ("analyzer_sha256", "package_sha256"):
+        v = extra.get(k)
+        if type(v) is str and _HEX64.match(v):
+            have[k] = v
+        else:
+            probs.append(f"{k}: identity_extra carries none (or not 64 lower-case hex: {v!r}); it is "
+                         f"required on a non-stub run (the seat's D2)")
+    if "analyzer_sha256" in have:
         try:
             got = hashlib.sha256(Path(ANALYZER_PATH).read_bytes()).hexdigest()
         except OSError:
             got = None
-        if got != want_ana:
+        if got != have["analyzer_sha256"]:
             probs.append(f"analyzer {_rel(ANALYZER_PATH, REPO)}: sha256 "
                          f"{(got or 'ABSENT')[:16]}... is not identity_extra's analyzer_sha256 "
-                         f"{want_ana[:16]}...")
+                         f"{have['analyzer_sha256'][:16]}...")
+    if "package_sha256" in have:
+        got_pkg = _resume.package_sha256()
+        if got_pkg != have["package_sha256"]:
+            probs.append(f"package valence_core/m: sha256 {got_pkg[:16]}... (resume.package_sha256, "
+                         f"computed now) is not identity_extra's package_sha256 "
+                         f"{have['package_sha256'][:16]}... (the seat's D2)")
+    if lock_data is not None:
+        ltext = lock_data.decode("utf-8", "replace")
+        for k, v in have.items():
+            if v not in ltext:
+                probs.append(f"lock {extra.get('lock_file')}: its committed text does not name "
+                             f"identity_extra's {k} {v[:16]}... (the seat's D2; the analyzer's PIN-14)")
     return probs
 
 
 def _licence(adapter, extra: Mapping[str, Any], name: str) -> None:
-    """Refuse a non-stub stage whose proposal or lock is not the committed file it names."""
+    """Refuse a non-stub stage whose proposal or lock is not the committed file it names, or
+    whose analyzer or package is not the one the identity and the lock name (the seat's D2);
+    licensed, print the LICENCE line, each clause scoped to what was checked."""
     if _is_stub(adapter):
         return
     probs = licence_problems(extra)
     if probs:
         raise SystemExit(f"LICENCE REFUSED ({name}): {probs} -- nothing runs before the document "
                          f"and the lock are committed with the hashes the identity names (trap 32)")
+    # PIN (Code, declared at LOCK v0.1; the seat's D2, 2026-10-10): the LICENCE line names the
+    # package's sha16 after the analyzer's -- both always present here (licence_problems
+    # refuses a non-stub run without them) -- and each clause claims only what licence_problems
+    # checked: the proposal and the lock "committed at HEAD, working tree identical" (b), (c);
+    # the analyzer and the package as the hashes identity_extra and the lock's committed text
+    # name, hashed from the working tree at stage start (d)-(f). No stage-start check reads
+    # the analyzer or valence_core/m/*.py from git (the Qwen laptop preflight checks the
+    # analyzer's commit, _laptop_preflight), so the line never says they are committed.
     print(f"LICENCE {name}: proposal {extra['proposal_file']} {extra['proposal_sha256'][:16]}, lock "
-          f"{extra['lock_file']} {extra['lock_sha256'][:16]}"
-          + (f", analyzer {extra['analyzer_sha256'][:16]}" if extra.get("analyzer_sha256") else "")
-          + f": committed at HEAD {_git_head()}, working tree identical", flush=True)
+          f"{extra['lock_file']} {extra['lock_sha256'][:16]}: committed at HEAD {_git_head()}, working "
+          f"tree identical; analyzer {extra['analyzer_sha256'][:16]} and package "
+          f"{extra['package_sha256'][:16]}: the hashes identity_extra and the lock name, hashed from "
+          f"the working tree at stage start", flush=True)
 
 
 # --- the prior stage --------------------------------------------------------------
@@ -796,15 +848,17 @@ def prior_gate(unit: str, stage: str, prior_ckpt: str | os.PathLike | None,
     return {"checkpoint": _rel(p, REPO), "stage": want, "status": status, "adjudication": adj}
 
 
-LICENCE_KEYS = ("analyzer_sha256", "lock_file", "prior_proposal_sha256s", "proposal_file")
+LICENCE_KEYS = ("analyzer_sha256", "lock_file", "package_sha256", "prior_proposal_sha256s",
+                "proposal_file")
 
 
 def _record_licence(ckpt: dict, extra: Mapping[str, Any], where: Path) -> None:
-    # PIN (Code, declared at LOCK v0.1; findings R8, R11): the files and earlier-proposal
-    # list that licensed the stage -- proposal_file, lock_file, prior_proposal_sha256s
-    # (the governing lock's re-adoption list) and analyzer_sha256 -- are recorded in the
-    # checkpoint (``licence``) at its first write; a resume or a re-finish offering
-    # different ones is refused, as a different prior is.
+    # PIN (Code, declared at LOCK v0.1; findings R8, R11; the seat's D2, 2026-10-10): the
+    # files, hashes and earlier-proposal list that licensed the stage -- proposal_file,
+    # lock_file, prior_proposal_sha256s (the governing lock's re-adoption list),
+    # analyzer_sha256 and package_sha256 -- are recorded in the checkpoint (``licence``) at
+    # its first write; a resume or a re-finish offering different ones is refused, as a
+    # different prior is.
     want = {k: copy.deepcopy(extra.get(k)) for k in LICENCE_KEYS}
     have = ckpt.get("licence")
     if have is None:
@@ -896,7 +950,11 @@ def _startup(adapter, unit: str) -> tuple[Any, str, str]:
     return st, audit_sha, ban_sha
 
 
-_OPTIONAL_EXTRA = ("lock_file", "proposal_file", "prior_proposal_sha256s", "analyzer_sha256")
+# PIN (Code, declared at LOCK v0.1; the seat's D2, 2026-10-10): optional on the stub only --
+# lock_file, proposal_file, analyzer_sha256 and package_sha256 are REQUIRED on a non-stub run
+# (``_extra``); prior_proposal_sha256s stays optional everywhere.
+_OPTIONAL_EXTRA = ("lock_file", "proposal_file", "prior_proposal_sha256s", "analyzer_sha256",
+                   "package_sha256")
 
 
 def _repo_rel_ok(v: Any) -> bool:
@@ -909,7 +967,8 @@ def _repo_rel_ok(v: Any) -> bool:
 def _extra(identity_extra: Mapping[str, Any], *, stage: str, sub: str, stub: bool = True) -> dict:
     """The values a stage cannot derive, validated.
 
-    PIN (Code, declared at LOCK v0.1): identity_extra carries {lock_sha256,
+    PIN (Code, declared at LOCK v0.1; the seat's D2, 2026-10-10, for the two sha256 keys):
+    identity_extra carries {lock_sha256,
     proposal_sha256, locked_path, renders_sha16}: the governing lock's sha256 and this
     document's (64 lower-case hex; "pre-lock" is refused -- G-TIME and G-ID follow LOCK
     v0.1, qualification v0.2, the campaign v1.0, m:279-286, m:302), the path the lock
@@ -927,8 +986,11 @@ def _extra(identity_extra: Mapping[str, Any], *, stage: str, sub: str, stub: boo
     (finding R11; approved by the seat's ruling (n): a stage is re-adopted only where its
     governing proposal sections are byte-identical between the versions, which Code checks
     with ``governing_sections_identical`` and records at the lock -- ``accepted_proposals``'s
-    PIN); ``analyzer_sha256`` -- the analyzer's sha256 the lock pins: when given
-    on a non-stub run, the analyzer's bytes must hash to it (finding R8).
+    PIN); ``analyzer_sha256`` and ``package_sha256`` -- the analyzer's and the m package's
+    sha256 the lock pins (64 lower-case hex), REQUIRED on a non-stub adapter, as the files
+    are (the seat's D2, 2026-10-10: the licence checks the analyzer's bytes, the package
+    this process hashes, and the lock's text naming both, finding R8); on the stub each is
+    optional and form-checked when given.
     """
     gid = stage == "id"
     want = ("lock_sha256", "proposal_sha256", "renders_sha16") + (() if gid else ("locked_path",))
@@ -963,10 +1025,19 @@ def _extra(identity_extra: Mapping[str, Any], *, stage: str, sub: str, stub: boo
                          f"none of them this run's proposal_sha256; got {pp!r}")
     # PIN (Code, declared at LOCK v0.1; finding R11): recorded sorted (the lock names a set).
     out["prior_proposal_sha256s"] = sorted(pp)
-    ana = identity_extra.get("analyzer_sha256")
-    if ana is not None and (type(ana) is not str or not _HEX64.match(ana)):
-        raise ValueError(f"analyzer_sha256 must be a sha256 hex digest, got {ana!r}")
-    out["analyzer_sha256"] = ana
+    # PIN (Code, declared at LOCK v0.1; the seat's D2, 2026-10-10): on a non-stub run
+    # analyzer_sha256 and package_sha256 are required, exactly as lock_file and proposal_file
+    # are -- an absent one is a ValueError here, before anything else at stage start; given,
+    # each must be 64 lower-case hex (stub or not); on the stub an absent one is recorded None.
+    for k in ("analyzer_sha256", "package_sha256"):
+        v = identity_extra.get(k)
+        if v is None:
+            if not stub:
+                raise ValueError(f"identity_extra must carry {k} on a non-stub run (the seat's D2, "
+                                 f"2026-10-10): the licence checks it at stage start")
+        elif type(v) is not str or not _HEX64.match(v):
+            raise ValueError(f"{k} must be a sha256 hex digest (64 lower-case hex), got {v!r}")
+        out[k] = v
     if type(out["renders_sha16"]) is not str or not _HEX16.match(out["renders_sha16"]):
         raise ValueError("renders_sha16 must be 16 lower-case hex")
     if not gid:
@@ -2134,16 +2205,21 @@ def _paused_unadjudicated(cpath: Path) -> bool:
 
 def _campaign_end(unit: str, name: str, ckpt: Mapping, status: str | None, hit: Mapping | None,
                   pause: Mapping | None, pi: str | None) -> tuple[dict, list[str]]:
-    """(the pending end, stdout lines) of a campaign invocation's end -- a hit (STOP), a
-    pause (a look, an exhausted schedule) or a terminal state with its end look."""
+    """(the pending end, stdout lines) of a campaign invocation's end -- a hit (STOP) with
+    its end look at the STOP point, a pause (a look, an exhausted schedule) or a terminal
+    state with its end look."""
     camp, records = ckpt["campaign"], ckpt["sessions"]
     stop = terminal = end_look = None
     fired: list[str] = []
     lines: list[str] = []
     pause = copy.deepcopy(pause)
     if hit is not None:
-        lines, blinded = announce_stop(unit, "campaign", hit)
-        stop, fired, status, pause = _stop_record(hit, blinded), [hit["bar"]], "STOP", None
+        _, blinded = announce_stop(unit, "campaign", hit)
+        stop, status = _stop_record(hit, blinded), "STOP"
+        end_look, pause = _stop_end_look(unit, ckpt, hit)
+        fired = [hit["bar"]] + list((pause or {}).get("bars") or [])
+        # the finish and a re-finish announce the STOP's end from one source (_stop_lines)
+        lines = _stop_lines(unit, name, ckpt, hit, end_look, pause)
     elif status in TERMINAL:
         n = len(records)
         if n == 0:
@@ -2153,16 +2229,18 @@ def _campaign_end(unit: str, name: str, ckpt: Mapping, status: str | None, hit: 
             terminal["text"] = pi
         last_look = ckpt["looks"][-1] if ckpt["looks"] else None
         if n % LOOK_EVERY == 0 and last_look is not None and last_look["at_launches"] == n:
-            # PIN (Code, declared at LOCK v0.1): Looks = ceil(total launches / 40) (m:330):
-            # when the campaign ends on a multiple of 40 the look recorded there IS the
-            # end look -- no new evaluation, no new pause (its pause, if it fired, was the
-            # seat's to adjudicate already).
+            # PIN (Code, declared at LOCK v0.1; the seat's C9(ii), 2026-10-10; m:330): Looks =
+            # ceil(total launches / 40): when the campaign ends on a multiple of 40 the look
+            # recorded there IS the end look -- no new evaluation, no new pause (its pause, if
+            # it fired, was the seat's to adjudicate already). The end by STOP takes the same
+            # rule (_stop_end_look).
             end_look = {**copy.deepcopy(last_look["result"]), "end_is_look": last_look["result"]["look"]}
         else:
-            # PIN (Code, declared at LOCK v0.1): otherwise the end look is evaluated once
-            # (m:330 "and at the end"); a fired end look pauses the unit before its
-            # analysis (status PAUSE; the terminal state stands) -- at COMPLETE, CAP and
-            # a PI stop alike.
+            # PIN (Code, declared at LOCK v0.1; the seat's C9(ii), 2026-10-10; m:330): otherwise
+            # the end look is evaluated once ("and at the end"); a fired end look pauses the
+            # unit before its analysis (status PAUSE; the terminal state stands) -- at
+            # COMPLETE, CAP and a PI stop alike, and at a STOP (_stop_end_look), where the
+            # status stays STOP.
             end_look = campaign_look(unit, records, "end")
             if end_look["fired"]:
                 pause = {"at_launches": n, "kind": "end_look", "look": "end",
@@ -2178,6 +2256,82 @@ def _campaign_end(unit: str, name: str, ckpt: Mapping, status: str | None, hit: 
         raise AssertionError(f"a campaign invocation ended without an end ({status!r})")
     return ({"status": status, "fired": fired, "stop": stop, "terminal": terminal,
              "end_look": end_look, "pause": pause}, lines)
+
+
+def _is_gver(hit: Mapping) -> bool:
+    """A G-VER failure's hit (its record quarantined, never a session), not a hair trigger's."""
+    return hit["bar"] in (_verify.MISMATCH, _verify.BREAK)
+
+
+def _stop_end_look(unit: str, ckpt: Mapping, hit: Mapping) -> tuple[dict | None, dict | None]:
+    """(the end look, the pause it raises or None) at a campaign STOP: the bars' cumulative
+    counts evaluated at the STOP point as the campaign's last look (m:330; the seat's C9(ii),
+    2026-10-10). Called once, at the finish (_campaign_end): the end look and pause it returns
+    go into the pending end, and a re-finish never calls it again -- _refinish_campaign reuses
+    the persisted end_pending block as it stands and re-derives only the lines (_stop_lines)
+    and the outputs from it."""
+    # PIN (Code, declared at LOCK v0.1; the seat's C9(ii), 2026-10-10; m:330): m:330's "at the
+    # end" includes an end by STOP, so the end look is evaluated over the n = len(sessions)
+    # launches recorded at the STOP point -- a hair trigger's session is recorded (with the
+    # cadence look due at its launch), a G-VER failure's record is quarantined in the stop
+    # block and never counted. n = 0 (a G-VER STOP at the first launch): no look (None). n a
+    # multiple of 40 with the look recorded at n: that look IS the end look ({**result,
+    # end_is_look: k}, as the terminal branch builds it) -- after a G-VER STOP it was announced
+    # at the launch that reached n and any pause it raised was adjudicated before the next
+    # launch, so no new pause; after a hair trigger at the launch that reached n the hit
+    # pre-empted both its announcement and its pause, so its pause (kind "look", look k) is
+    # raised here if it fired. Otherwise the end look is evaluated once (campaign_look(...,
+    # "end")) and, if it fired, raises an "end_look" pause. The status stays STOP and the stop
+    # block is unchanged. A pause raised here is never adjudicated through stages -- the
+    # stopped checkpoint is ended (resume.refuse_ended) -- its adjudication enters VERDICTS as
+    # the declared --adjudication file (the seat's C9(i), C3). campaign_look is pick-free by
+    # construction (sham-arm degeneracy, pooled pre-pick (forced-phase) exclusion counts, the
+    # contrast arm's forced-round degeneracy, first-read flags): nothing in it reads a contrast
+    # session's free rounds or its free-phase events, so a contrast free-phase trigger's
+    # withheld class reaches the end look nowhere (m:318 exception (1); ruling (h)).
+    records = ckpt["sessions"]
+    n = len(records)
+    gver = _is_gver(hit)
+    ids = [(r["template"], r["s"]) for r in records]
+    if gver and (hit["template"], hit["s"]) in ids:
+        raise AssertionError("a G-VER STOP's record is quarantined in the stop block, never a session")
+    if not gver and (not ids or ids[-1] != (hit["template"], hit["s"])):
+        raise AssertionError("a hair-trigger STOP's session is the last one recorded")
+    if n == 0:
+        return None, None
+    last_look = ckpt["looks"][-1] if ckpt["looks"] else None
+    if n % LOOK_EVERY == 0 and last_look is not None and last_look["at_launches"] == n:
+        res = last_look["result"]
+        end_look = {**copy.deepcopy(res), "end_is_look": res["look"]}
+        if gver or not res["fired"]:
+            return end_look, None
+        return end_look, {"at_launches": n, "kind": "look", "look": res["look"],
+                          "bars": [r["name"] for r in res["results"] if r["fired"]], "adjudication": None}
+    end_look = campaign_look(unit, records, "end")
+    if not end_look["fired"]:
+        return end_look, None
+    return end_look, {"at_launches": n, "kind": "end_look", "look": "end",
+                      "bars": [r["name"] for r in end_look["results"] if r["fired"]], "adjudication": None}
+
+
+def _stop_lines(unit: str, name: str, ckpt: Mapping, hit: Mapping, end_look: Mapping | None,
+                pause: Mapping | None) -> list[str]:
+    """The stdout lines that announce a campaign STOP's end, from the hit and the pending end's
+    end look and pause (and the checkpoint), so the finish and a re-finish print the same lines:
+    the STOP's announcement (announce_stop), then its end look's."""
+    # PIN (Code, declared at LOCK v0.1; the seat's C9(ii), 2026-10-10): the end look's lines
+    # follow the STOP's: the END LOOK line where the end look is the look a G-VER STOP's last
+    # recorded launch already announced (never its messages again, as at a terminal end on a
+    # multiple of 40); otherwise the end look's bar messages -- a look the hair trigger
+    # pre-empted, or the end look evaluated at the STOP -- printed once, a fired one included.
+    lines = list(announce_stop(unit, "campaign", hit)[0])
+    if end_look is None:
+        return lines
+    if "end_is_look" in end_look and _is_gver(hit):
+        if pause is not None:
+            raise AssertionError("a G-VER STOP raises no pause on a look already announced")
+        return lines + _pause_lines(name, ckpt, None, end_look)
+    return lines + [r["message"] for r in end_look["results"]]
 
 
 def _camp_n(ckpt: Mapping, arm: str) -> int:
@@ -2315,19 +2469,36 @@ def _refinish_campaign(unit: str, name: str, ckpt: dict, cpath: Path, paths: Map
     """Re-finish a campaign's pending end (finding R1): nothing launches. A ruling this
     invocation offers (the seat's adjudication, a PI stop the checkpoint does not record)
     is NOT applied to an end it has not yet shown: the re-finish completes, then the
-    invocation refuses, naming what it did not apply."""
+    invocation refuses, naming what it did not apply -- and, where the end it re-finished
+    leaves the campaign ended (a STOP, or a terminal state beside a fired end look's pause),
+    where that ruling enters instead."""
     # PIN (Code, declared at LOCK v0.1; finding R1): "re-finish-only at any invocation" --
     # an invocation offering a ruling re-finishes the pending end first and then exits
-    # non-zero (NOT APPLIED); the ruling is offered again on the next invocation.
+    # non-zero (NOT APPLIED); the ruling is offered again on the next invocation -- unless
+    # the re-finished end leaves the campaign ended (its stop or terminal state persisted:
+    # resume.ended_status non-None), which stages never resumes (resume.refuse_ended).
+    # PIN (Code, declared at LOCK v0.1; the seat's C9(i), C3 and C2, 2026-10-10): there the
+    # refusal does not say "offer it again" -- a ruling on the ended campaign's pause enters
+    # VERDICTS as the declared --adjudication file, a PI's stop on a hair trigger as the
+    # declared --pi-stop record; stages records neither.
     _append_provenance(ckpt, prov)
     _resume.write_checkpoint(cpath, ckpt)
     print(_refinish_line(name, pending["status"], cpath), flush=True)
     hit = _hit_from_stop(pending["stop"])
-    lines = (announce_stop(unit, "campaign", hit)[0] if hit is not None
-             else _pause_lines(name, ckpt, pending.get("pause"), pending.get("end_look")))
+    lines = (_stop_lines(unit, name, ckpt, hit, pending.get("end_look"), pending.get("pause"))
+             if hit is not None else _pause_lines(name, ckpt, pending.get("pause"), pending.get("end_look")))
     res = _complete_campaign(unit, name, ckpt, cpath, paths, pending, hit, lines)
     skipped = [w for w, v in (("the seat's adjudication", adjudication), ("the PI's stop", pi_stop))
                if v is not None]
+    ended = ("STOP" if pending.get("stop") is not None
+             else (pending.get("terminal") or {}).get("status"))
+    if skipped and ended is not None:
+        raise SystemExit(f"NOT APPLIED ({name}): this invocation re-finished the end pending at "
+                         f"{cpath} ({pending['status']}); {' and '.join(skipped)} it offered was not "
+                         f"applied, and cannot be through stages: that end leaves the campaign ended "
+                         f"({ended}), never resumed (resume.refuse_ended) -- a ruling on a pause it "
+                         f"carries enters VERDICTS as the declared --adjudication file, a PI's stop on a hair "
+                         f"trigger as the declared --pi-stop record (the seat's C9(i), C3, C2)")
     if skipped:
         raise SystemExit(f"NOT APPLIED ({name}): this invocation re-finished the end pending at "
                          f"{cpath} ({pending['status']}); {' and '.join(skipped)} it offered was not "
@@ -2355,7 +2526,8 @@ def _show_pause(unit: str, name: str, ckpt: Mapping, cpath: Path, paths: Mapping
 def _campaign_events(ckpt: Mapping, hit: Mapping | None) -> list[dict]:
     """The campaign's adjudication events, rebuilt from its state: one per pause (counts
     only -- a look's or the end look's results and arm counts, or an exhausted arm's
-    counts), and the hair-trigger / G-VER stop's fired round when there is one."""
+    counts), and the hair-trigger / G-VER stop's fired round when there is one -- a pause
+    raised at the STOP point (the seat's C9(ii)) gives its PAUSE event before the STOP's."""
     camp, records = ckpt["campaign"], ckpt["sessions"]
     fl = camp["floors"]
     looks = {lk["result"]["look"]: lk["result"] for lk in ckpt["looks"]}
@@ -2548,6 +2720,7 @@ def _selftest(chk) -> None:
         "its own proposal as a prior": (lambda: _extra(xtra(prior_proposal_sha256s=["2" * 64]), stage="qual",
                                                        sub="qwen")),
         "an analyzer sha of 16 hex": (lambda: _extra(xtra(analyzer_sha256="a" * 16), stage="qual", sub="qwen")),
+        "a package sha of 16 hex": (lambda: _extra(xtra(package_sha256="b" * 16), stage="qual", sub="qwen")),
         "a proposal file walking out": (lambda: _extra(xtra(proposal_file="../P.md"), stage="qual", sub="qwen")),
         "an absolute proposal file": (lambda: _extra(xtra(proposal_file="/P.md"), stage="qual", sub="qwen")),
         "no proposal file, non-stub": (lambda: _extra(xtra(lock_file="L.md"), stage="qual", sub="qwen",
@@ -2555,20 +2728,58 @@ def _selftest(chk) -> None:
     })
     let = [nm for nm, fn in bad_extra.items() if not refuses(fn, exc=ValueError)]
     defaults = {"lock_file": None, "proposal_file": PROPOSAL_REL, "prior_proposal_sha256s": [],
-                "analyzer_sha256": None}
+                "analyzer_sha256": None, "package_sha256": None}
     good = (_extra(xtra("cached"), stage="qual", sub="qwen")["locked_path"] == "cached"
             and _extra(xtra(None), stage="id", sub="qwen") == {**{k: v for k, v in xtra().items()
                                                                   if k != "locked_path"}, **defaults}
             and _extra(xtra(), stage="campaign", sub="olmo")["locked_path"] == "uncached"
             and _extra(xtra(prior_proposal_sha256s=("9" * 64, "8" * 64), analyzer_sha256="a" * 64,
-                            proposal_file="archive/P.md"), stage="qual", sub="qwen")
+                            package_sha256="b" * 64, proposal_file="archive/P.md"), stage="qual", sub="qwen")
             == {**xtra(), "lock_file": None, "proposal_file": "archive/P.md",
-                "prior_proposal_sha256s": ["8" * 64, "9" * 64], "analyzer_sha256": "a" * 64})
+                "prior_proposal_sha256s": ["8" * 64, "9" * 64], "analyzer_sha256": "a" * 64,
+                "package_sha256": "b" * 64})
     chk(f"stages: identity_extra is lock/proposal (64 hex, 'pre-lock' refused), locked_path and "
         f"renders_sha16 (G-ID: no locked_path) plus the optional lock_file / proposal_file (proposal_file "
         f"REQUIRED on a non-stub run, the v1_11 default on the stub only), prior_proposal_sha256s (distinct, "
-        f"never its own; recorded sorted) and analyzer_sha256 -- {len(bad_extra)} malformed refused, valid "
-        f"accepted", not let and good, let)
+        f"never its own; recorded sorted), analyzer_sha256 and package_sha256 -- {len(bad_extra)} malformed "
+        f"refused, valid accepted", not let and good, let)
+    # the seat's D2 (2026-10-10): analyzer_sha256 and package_sha256 REQUIRED on a non-stub run, as the
+    # files are; optional (None) on the stub, form-checked wherever given
+    d2_full = xtra(proposal_file=PROPOSAL_REL, lock_file="locks/L.md", analyzer_sha256="a" * 64,
+                   package_sha256="b" * 64)
+    d2_bad = {"no analyzer_sha256": ({k: v for k, v in d2_full.items() if k != "analyzer_sha256"},
+                                     "must carry analyzer_sha256"),
+              "no package_sha256": ({k: v for k, v in d2_full.items() if k != "package_sha256"},
+                                    "must carry package_sha256"),
+              "neither": ({k: v for k, v in d2_full.items() if k not in ("analyzer_sha256", "package_sha256")},
+                          "must carry analyzer_sha256"),
+              "an upper-case analyzer sha": ({**d2_full, "analyzer_sha256": "A" * 64}, "analyzer_sha256 must be"),
+              "a package sha of 63 hex": ({**d2_full, "package_sha256": "b" * 63}, "package_sha256 must be"),
+              "a non-str package sha": ({**d2_full, "package_sha256": 7}, "package_sha256 must be"),
+              "a non-hex analyzer sha": ({**d2_full, "analyzer_sha256": "g" * 64}, "analyzer_sha256 must be"),
+              # 64 characters that are not 64 lower-case hex, for the package key as for the analyzer's
+              "a non-hex package sha": ({**d2_full, "package_sha256": "g" * 64}, "package_sha256 must be"),
+              "an upper-case package sha": ({**d2_full, "package_sha256": "B" * 64}, "package_sha256 must be")}
+    d2_let = [nm for nm, (x_, nd) in d2_bad.items()
+              if not refuses(lambda x_=x_: _extra(x_, stage="time", sub="qwen", stub=False), exc=ValueError,
+                             needle=nd)]
+    d2_stub_absent = _extra({k: v for k, v in d2_full.items() if k not in ("analyzer_sha256", "package_sha256")},
+                            stage="time", sub="qwen", stub=True)
+    d2_stub_cases = ("a non-hex analyzer sha", "an upper-case analyzer sha", "a non-hex package sha",
+                     "an upper-case package sha", "a package sha of 63 hex")
+    d2_stub_bad = [nm for nm in d2_stub_cases
+                   if not refuses(lambda nm=nm: _extra(d2_bad[nm][0], stage="time", sub="qwen", stub=True),
+                                  exc=ValueError, needle=d2_bad[nm][1])]
+    d2_ok = _extra(d2_full, stage="time", sub="qwen", stub=False)
+    chk(f"stages: the seat's D2 -- on a non-stub run identity_extra must carry analyzer_sha256 and "
+        f"package_sha256 (each absent, both absent, and {len(d2_bad) - 3} malformed forms refused, ValueError "
+        f"naming the key; for each key, 64 characters that are not lower-case hex -- 'g'*64 and upper-case "
+        f"hex -- among them); both given are accepted and carried; on the stub both may be absent (None) and a "
+        f"malformed one is still refused ({len(d2_stub_cases)} forms, those 64-character ones for both keys)",
+        not d2_let and not d2_stub_bad and d2_ok["analyzer_sha256"] == "a" * 64
+        and d2_ok["package_sha256"] == "b" * 64
+        and (d2_stub_absent["analyzer_sha256"], d2_stub_absent["package_sha256"]) == (None, None),
+        (d2_let, d2_stub_bad))
     chk("stages: the renders sha16 must be the renders of record built here (a mismatch refuses)",
         refuses(lambda: _renders_of_record(xtra(renders_sha16="0" * 16), "G-TIME-F0"),
                 needle="RENDERS MISMATCH")
@@ -3009,7 +3220,9 @@ def _selftest(chk) -> None:
                 patched(sys.modules[__name__], "DEFAULT_OUT", outs_["preflight"]):
             starts["preflight"] = (refused_start(lambda: run_time(None, outs_["preflight"], adapter=ad2,
                                                                   identity_extra=xtra(proposal_file=PROPOSAL_REL,
-                                                                                      lock_file="CLAUDE.md")),
+                                                                                      lock_file="CLAUDE.md",
+                                                                                      analyzer_sha256="a" * 64,
+                                                                                      package_sha256="b" * 64)),
                                                  "LAPTOP PREFLIGHT REFUSES")
                                    and calls == [1] and not ad2.calls
                                    and not (outs_["preflight"] / "ckpt").exists())
@@ -3080,7 +3293,9 @@ def _selftest(chk) -> None:
             adn = testing.ScriptedAdapter()
             g_run = (refused_start(lambda: run_time(None, out_n, adapter=adn,
                                                     identity_extra=xtra(proposal_file=PROPOSAL_REL,
-                                                                        lock_file="CLAUDE.md")),
+                                                                        lock_file="CLAUDE.md",
+                                                                        analyzer_sha256="a" * 64,
+                                                                        package_sha256="b" * 64)),
                                    "OUT ROOT REFUSED")
                      and not adn.calls and not (out_n / "ckpt").exists())
         g_stub = _out_root_guard(testing.ScriptedAdapter(), out_n) is None
@@ -3093,10 +3308,12 @@ def _selftest(chk) -> None:
               "a roster word": "LOCK-m-prism.md", "not a str": 7, "empty": ""}
     let = [nm for nm, v in lf_bad.items()
            if not refuses(lambda v=v: _extra(xtra(lock_file=v), stage="time", sub="qwen"), exc=ValueError)]
-    lf_ok = (_extra(xtra(lock_file="locks/LOCK-m-F0-v0.1.md", proposal_file=PROPOSAL_REL), stage="time",
-                    sub="qwen", stub=False)["lock_file"] == "locks/LOCK-m-F0-v0.1.md"
+    lf_ok = (_extra(xtra(lock_file="locks/LOCK-m-F0-v0.1.md", proposal_file=PROPOSAL_REL, analyzer_sha256="a" * 64,
+                         package_sha256="b" * 64), stage="time", sub="qwen", stub=False)["lock_file"]
+             == "locks/LOCK-m-F0-v0.1.md"
              and _extra(xtra(), stage="time", sub="qwen", stub=True)["lock_file"] is None
-             and refuses(lambda: _extra(xtra(proposal_file=PROPOSAL_REL), stage="time", sub="qwen", stub=False),
+             and refuses(lambda: _extra(xtra(proposal_file=PROPOSAL_REL, analyzer_sha256="a" * 64,
+                                             package_sha256="b" * 64), stage="time", sub="qwen", stub=False),
                          exc=ValueError, needle="lock_file"))
     chk(f"stages: identity_extra's lock_file is required on a non-stub run, optional on the stub, and "
         f"refused in {len(lf_bad)} malformed forms", not let and lf_ok, let)
@@ -3107,20 +3324,53 @@ def _selftest(chk) -> None:
         rp = Path(td)
         (rp / "P.md").write_text("proposal\n", encoding="utf-8")
         (rp / "locks").mkdir()
-        (rp / "locks" / "L.md").write_text("lock\n", encoding="utf-8")
-        (rp / "locks" / "real.md").write_text("lock\n", encoding="utf-8")
-        (rp / "locks" / "W.md").symlink_to(rp / "locks" / "real.md")
         (rp / "A.py").write_text("# analyzer\n", encoding="utf-8")
         psha = hashlib.sha256(b"proposal\n").hexdigest()
-        lsha = hashlib.sha256(b"lock\n").hexdigest()
         asha = hashlib.sha256(b"# analyzer\n").hexdigest()
+        pkg = _resume.package_sha256()
+        # the lock's text names the analyzer's and the package's sha256 (the seat's D2); the
+        # isolating locks below each name exactly what their one case needs
+        lock_bodies = {"L": f"lock\nanalyzer {asha}\npackage {pkg}\n",
+                       "noana": f"lock\npackage {pkg}\n", "nopkg": f"lock\nanalyzer {asha}\n",
+                       "ana3": f"lock\nanalyzer {'3' * 64}\npackage {pkg}\n",
+                       "pkg3": f"lock\nanalyzer {asha}\npackage {'3' * 64}\n",
+                       # (f) is verbatim 64-hex: a lock abbreviating a sha to its 16-hex prefix (plain, or
+                       # with the '…' this repo's documents use) does not name it
+                       "ana16": f"lock\nanalyzer {asha[:16]}\npackage {pkg}\n",
+                       "ana16e": f"lock\nanalyzer {asha[:16]}…\npackage {pkg}\n",
+                       "pkg16": f"lock\nanalyzer {asha}\npackage {pkg[:16]}\n",
+                       "pkg16e": f"lock\nanalyzer {asha}\npackage {pkg[:16]}…\n"}
+        for nm_, body_ in lock_bodies.items():
+            (rp / "locks" / f"{nm_}.md").write_text(body_, encoding="utf-8")
+        (rp / "locks" / "real.md").write_text(lock_bodies["L"], encoding="utf-8")
+        (rp / "locks" / "W.md").symlink_to(rp / "locks" / "real.md")
+        lsha = hashlib.sha256(lock_bodies["L"].encode("utf-8")).hexdigest()
         good_x = {"proposal_file": "P.md", "proposal_sha256": psha, "lock_sha256": lsha,
-                  "lock_file": "locks/L.md"}
+                  "lock_file": "locks/L.md", "analyzer_sha256": asha, "package_sha256": pkg}
+
+        def with_lock(nm_: str, **over) -> dict:
+            return {**good_x, "lock_file": f"locks/{nm_}.md",
+                    "lock_sha256": hashlib.sha256(lock_bodies[nm_].encode("utf-8")).hexdigest(), **over}
         lic = {}
+        d2 = {}
         git_calls.clear()
         with patched(me, "_git", fake_git()), patched(me, "ANALYZER_PATH", rp / "A.py"):
             lic["clean"] = licence_problems(good_x, repo=rp)
-            lic["clean, analyzer pinned"] = licence_problems({**good_x, "analyzer_sha256": asha}, repo=rp)
+            d2["no analyzer sha"] = licence_problems({k: v for k, v in good_x.items() if k != "analyzer_sha256"},
+                                                     repo=rp)
+            d2["no package sha"] = licence_problems({k: v for k, v in good_x.items() if k != "package_sha256"},
+                                                    repo=rp)
+            d2["a malformed package sha"] = licence_problems({**good_x, "package_sha256": "x"}, repo=rp)
+            d2["analyzer mismatch"] = licence_problems(with_lock("ana3", analyzer_sha256="3" * 64), repo=rp)
+            d2["package mismatch"] = licence_problems(with_lock("pkg3", package_sha256="3" * 64), repo=rp)
+            with patched(_resume, "package_sha256", lambda: "5" * 64):
+                d2["the package moved (hashed at check time)"] = licence_problems(good_x, repo=rp)
+            d2["the lock names no analyzer sha"] = licence_problems(with_lock("noana"), repo=rp)
+            d2["the lock names no package sha"] = licence_problems(with_lock("nopkg"), repo=rp)
+            for nm_, k_ in (("ana16", "analyzer"), ("ana16e", "analyzer"), ("pkg16", "package"),
+                            ("pkg16e", "package")):
+                d2[f"the lock names only the {k_} sha's 16-hex prefix ({nm_})"] = licence_problems(
+                    with_lock(nm_), repo=rp)
             lic["proposal sha"] = licence_problems({**good_x, "proposal_sha256": "2" * 64}, repo=rp)
             lic["lock sha"] = licence_problems({**good_x, "lock_sha256": "1" * 64}, repo=rp)
             lic["analyzer sha"] = licence_problems({**good_x, "analyzer_sha256": "3" * 64}, repo=rp)
@@ -3145,8 +3395,7 @@ def _selftest(chk) -> None:
                 "lock a symlink at HEAD": "locks/L.md: a symlink at HEAD",
                 "lock edited after its commit": "working-tree bytes are not HEAD's blob",
                 "lock a tree at HEAD": "not a regular file at HEAD", "HEAD unknown": "HEAD unknown"}
-    lic_ok = (lic["clean"] == [] and lic["clean, analyzer pinned"] == []
-              and all(any(w in x for x in lic[k]) for k, w in want_lic.items()))
+    lic_ok = (lic["clean"] == [] and all(any(w in x for x in lic[k]) for k, w in want_lic.items()))
     chk("stages: the licence by file passes a proposal and lock committed at HEAD as regular blobs whose "
         "bytes are the working tree's and hash to the identity's values (and an analyzer at its pinned "
         "sha256), and names each defect: a sha mismatch (proposal, lock, analyzer), no file named, a file "
@@ -3156,44 +3405,105 @@ def _selftest(chk) -> None:
         and ("ls-tree", "-z", "HEAD", "--", "P.md") in git_calls
         and all(c[0] in ("cat-file", "ls-tree", "rev-parse") for c in git_calls),
         {k: v[:1] for k, v in lic.items()})
+    want_d2 = {"no analyzer sha": "analyzer_sha256: identity_extra carries none",
+               "no package sha": "package_sha256: identity_extra carries none",
+               "a malformed package sha": "package_sha256: identity_extra carries none (or not 64",
+               "analyzer mismatch": "is not identity_extra's analyzer_sha256",
+               "package mismatch": "is not identity_extra's package_sha256",
+               "the package moved (hashed at check time)": "is not identity_extra's package_sha256",
+               "the lock names no analyzer sha": "does not name identity_extra's analyzer_sha256",
+               "the lock names no package sha": "does not name identity_extra's package_sha256"}
+    for nm_, k_ in (("ana16", "analyzer"), ("ana16e", "analyzer"), ("pkg16", "package"), ("pkg16e", "package")):
+        want_d2[f"the lock names only the {k_} sha's 16-hex prefix ({nm_})"] = \
+            f"does not name identity_extra's {k_}_sha256"
+    d2_lic_bad = [k for k, w in want_d2.items() if not (len(d2[k]) == 1 and w in d2[k][0])]
+    chk("stages: the seat's D2 at stage start -- licence_problems passes the analyzer's bytes at analyzer_sha256, "
+        "the package this process hashes at package_sha256 and a lock whose committed text names both; it names "
+        "exactly one problem (a string, never a KeyError) for each alone: analyzer_sha256 absent, package_sha256 "
+        "absent or malformed, an analyzer mismatch, a package mismatch (offered, or the package hashed at check "
+        "time moved), a lock text not naming the analyzer sha, not naming the package sha -- and (f) is verbatim "
+        "64-hex: a lock naming only a sha's 16-hex prefix, plain or with '…', does not name it (each key alone)",
+        lic["clean"] == [] and not d2_lic_bad, {k: d2[k][:1] for k in d2_lic_bad} or len(d2))
 
     # the licence and the out root on a (simulated) non-stub run, end to end
     real_psha = hashlib.sha256(PROPOSAL_PATH.read_bytes()).hexdigest()
-    lock_rel = "FINDINGS-4.md"                 # a repo file stands in for the lock
-    real_lsha = hashlib.sha256((REPO / lock_rel).read_bytes()).hexdigest()
+    lock_rel = "FINDINGS-4.md"                 # a repo path stands in for the lock
+    real_asha = hashlib.sha256(ana_in.read_bytes()).hexdigest()
+    pkg_now = _resume.package_sha256()
+
+    def lock_naming(*shas: str) -> bytes:
+        return ("LOCK (selftest stand-in) " + " ".join(shas) + "\n").encode("utf-8")
+
+    def committed_lock(body: bytes):
+        # selftest only: the lock path's committed bytes are ``body`` (a lock whose text names the
+        # analyzer's and the package's sha256 cannot be a file of this tree); every other path goes
+        # through the real _committed (on fake_git)
+        real_c = _committed
+
+        def c(rel, repo=REPO):
+            return ([], body) if rel == lock_rel else real_c(rel, repo)
+        return c
+    lock_both = lock_naming(real_asha, pkg_now)
+    real_lsha = hashlib.sha256(lock_both).hexdigest()
     real_x = xtra(proposal_sha256=real_psha, lock_sha256=real_lsha, lock_file=lock_rel,
-                  proposal_file=PROPOSAL_REL)
+                  proposal_file=PROPOSAL_REL, analyzer_sha256=real_asha, package_sha256=pkg_now)
+    lock_nopkg = lock_naming(real_asha)
+    lock_pkg5 = lock_naming(real_asha, "5" * 64)
     nonstub = {}
     with tempfile.TemporaryDirectory() as td:
-        for nm, x, gitf, needle in (
-                ("licensed", real_x, fake_git(), None),
-                ("proposal sha", {**real_x, "proposal_sha256": "2" * 64}, fake_git(), "LICENCE REFUSED"),
-                ("lock edited", real_x, fake_git(blobs={lock_rel: b"an earlier lock\n"}), "LICENCE REFUSED"),
-                ("proposal not committed", real_x, fake_git(missing=(PROPOSAL_REL,)), "LICENCE REFUSED"),
-                ("no lock file", {k: v for k, v in real_x.items() if k != "lock_file"}, fake_git(), "lock_file"),
+        for nm, x, gitf, body, needle in (
+                ("licensed", real_x, fake_git(), lock_both, None),
+                ("proposal sha", {**real_x, "proposal_sha256": "2" * 64}, fake_git(), lock_both, "LICENCE REFUSED"),
+                ("lock edited", real_x, fake_git(blobs={lock_rel: b"an earlier lock\n"}), None, "LICENCE REFUSED"),
+                ("proposal not committed", real_x, fake_git(missing=(PROPOSAL_REL,)), lock_both, "LICENCE REFUSED"),
+                ("no lock file", {k: v for k, v in real_x.items() if k != "lock_file"}, fake_git(), lock_both,
+                 "lock_file"),
                 ("no proposal file", {k: v for k, v in real_x.items() if k != "proposal_file"}, fake_git(),
-                 "proposal_file")):
-            out_l = _resume.refuse_canonical_out(Path(td) / nm.replace(" ", "_") / "m")
+                 lock_both, "proposal_file"),
+                ("no analyzer sha", {k: v for k, v in real_x.items() if k != "analyzer_sha256"}, fake_git(),
+                 lock_both, "must carry analyzer_sha256"),
+                ("no package sha", {k: v for k, v in real_x.items() if k != "package_sha256"}, fake_git(),
+                 lock_both, "must carry package_sha256"),
+                ("the lock names no package sha", {**real_x, "lock_sha256": hashlib.sha256(lock_nopkg).hexdigest()},
+                 fake_git(), lock_nopkg, "does not name identity_extra's package_sha256"),
+                ("a package that is not this process's", {**real_x, "package_sha256": "5" * 64,
+                                                          "lock_sha256": hashlib.sha256(lock_pkg5).hexdigest()},
+                 fake_git(), lock_pkg5, "is not identity_extra's package_sha256")):
+            out_l = _resume.refuse_canonical_out(Path(td) / nm.replace(" ", "_").replace("'", "") / "m")
             adl = testing.ScriptedAdapter()
-            with patched(me, "_is_stub", lambda adapter: False), patched(me, "DEFAULT_OUT", out_l), \
-                    patched(me, "ANALYZER_PATH", ana_in), \
-                    patched(guard, "preflight_laptop", fake_preflight([])), patched(me, "_git", gitf):
+            with contextlib.ExitStack() as st_l:
+                for mod_, attr_, val_ in ((me, "_is_stub", lambda adapter: False), (me, "DEFAULT_OUT", out_l),
+                                          (me, "ANALYZER_PATH", ana_in), (guard, "preflight_laptop", fake_preflight([])),
+                                          (me, "_git", gitf)):
+                    st_l.enter_context(patched(mod_, attr_, val_))
+                if body is not None:
+                    st_l.enter_context(patched(me, "_committed", committed_lock(body)))
                 if needle is None:
                     res_l, txt_l, _ = run_time(None, out_l, adapter=adl, identity_extra=x)
                     ck_l = json.loads(res_l["checkpoint"].read_text())
                     nonstub[nm] = (res_l["status"] == "PASS" and len(adl.calls) == 20
                                    and f"LICENCE G-TIME-F0: proposal {PROPOSAL_REL} {real_psha[:16]}" in txt_l
-                                   and f"committed at HEAD {'ab' * 20}" in txt_l
+                                   and f"lock {lock_rel} {real_lsha[:16]}: committed at HEAD {'ab' * 20}, working "
+                                       f"tree identical; analyzer {real_asha[:16]} and package {pkg_now[:16]}: "
+                                       f"the hashes identity_extra and the lock name, hashed from the working tree "
+                                       f"at stage start" in txt_l
+                                   and f"package {pkg_now[:16]}: committed" not in txt_l
+                                   and txt_l.count("committed at HEAD") == 1
                                    and ck_l["licence"] == {"proposal_file": PROPOSAL_REL, "lock_file": lock_rel,
-                                                           "prior_proposal_sha256s": [], "analyzer_sha256": None})
+                                                           "prior_proposal_sha256s": [], "analyzer_sha256": real_asha,
+                                                           "package_sha256": pkg_now})
                 else:
                     nonstub[nm] = (refused_start(lambda: run_time(None, out_l, adapter=adl, identity_extra=x),
                                                  needle)
                                    and not adl.calls and not (out_l / "ckpt").exists())
-    chk("stages: on a non-stub run the licence by file admits the committed proposal and lock (the LICENCE "
-        "line names the proposal file the identity names and HEAD; the checkpoint records the licence) and "
-        "refuses, before any generation or write, a proposal sha256 that is not the file's, a lock edited "
-        "after its commit, a proposal not committed, and a missing lock_file or proposal_file",
+    chk("stages: on a non-stub run the licence admits the committed proposal and lock, the analyzer and the package "
+        "the lock names (the LICENCE line names the proposal file, the analyzer's and the package's sha16 and HEAD, "
+        "and claims 'committed at HEAD, working tree identical' for the proposal and the lock only -- the analyzer "
+        "and the package as the hashes the identity and the lock name; the checkpoint records the licence, both "
+        "hashes included) and refuses, before any generation or write, a "
+        "proposal sha256 that is not the file's, a lock edited after its commit, a proposal not committed, a missing "
+        "lock_file, proposal_file, analyzer_sha256 or package_sha256, a lock whose text does not name the package "
+        "sha, and a package_sha256 that is not this process's package (the seat's D2)",
         all(nonstub.values()), nonstub)
     # the stub's proposal file is identity_extra's too (finding R11): an absent one refuses the start
     with tempfile.TemporaryDirectory() as td:
@@ -3207,15 +3517,22 @@ def _selftest(chk) -> None:
         "absent one is refused at start (STARTUP CHECKS FAIL naming it), nothing generated or written",
         r11)
     rl: dict = {}
-    lx = _extra(xtra(prior_proposal_sha256s=["9" * 64]), stage="time", sub="qwen")
+    lx = _extra(xtra(prior_proposal_sha256s=["9" * 64], analyzer_sha256="a" * 64, package_sha256="b" * 64),
+                stage="time", sub="qwen")
     _record_licence(rl, lx, Path("q.json"))
     _record_licence(rl, dict(lx), Path("q.json"))
-    chk("stages: the licence (proposal file, lock file, the lock's re-adopted proposals, analyzer pin) is "
-        "recorded once; the same one continues, a different re-adoption list or proposal file is refused",
-        rl["licence"]["prior_proposal_sha256s"] == ["9" * 64]
+    chk("stages: the licence (proposal file, lock file, the lock's re-adopted proposals, analyzer and package "
+        "sha256) is recorded once; the same one continues; a different re-adoption list, proposal file, analyzer "
+        "sha or package sha (the seat's D2) is refused",
+        rl["licence"]["prior_proposal_sha256s"] == ["9" * 64] and rl["licence"].get("package_sha256") == "b" * 64
+        and tuple(sorted(rl["licence"])) == LICENCE_KEYS
         and refuses(lambda: _record_licence(rl, {**lx, "prior_proposal_sha256s": []}, Path("q.json")),
                     needle="CHECKPOINT MISMATCH")
         and refuses(lambda: _record_licence(rl, {**lx, "proposal_file": "archive/P.md"}, Path("q.json")),
+                    needle="CHECKPOINT MISMATCH")
+        and refuses(lambda: _record_licence(rl, {**lx, "analyzer_sha256": "c" * 64}, Path("q.json")),
+                    needle="CHECKPOINT MISMATCH")
+        and refuses(lambda: _record_licence(rl, {**lx, "package_sha256": "c" * 64}, Path("q.json")),
                     needle="CHECKPOINT MISMATCH"), rl.get("licence"))
 
     # the prior stage: same proposal (or one the lock re-adopts); a non-stub run takes no
@@ -3342,7 +3659,7 @@ def _selftest(chk) -> None:
             return pth
         real_rec = {"adapter": "qwen_mlx", "apparatus": "mlx", "platform": "selftest"}
         gid_x = xtra(None, proposal_sha256=real_psha, lock_sha256=real_lsha, lock_file=lock_rel,
-                     proposal_file=PROPOSAL_REL)
+                     proposal_file=PROPOSAL_REL, analyzer_sha256=real_asha, package_sha256=pkg_now)
         for nm, prior_p, nonstub_run, x, needle in (
                 ("non-stub run, stub prior", time_prior("stub", real_psha, testing.ScriptedAdapter().provenance()),
                  True, gid_x, "PRIOR STAGE ON THE STUB"),
@@ -3363,7 +3680,7 @@ def _selftest(chk) -> None:
                     for mod, attr, val in ((me, "_is_stub", lambda adapter: False), (me, "DEFAULT_OUT", out_g),
                                            (me, "ANALYZER_PATH", ana_in),
                                            (guard, "preflight_laptop", fake_preflight([])),
-                                           (me, "_git", fake_git())):
+                                           (me, "_git", fake_git()), (me, "_committed", committed_lock(lock_both))):
                         stack.enter_context(patched(mod, attr, val))
                 if needle is None:
                     res_g, _, _ = run_gid(out_g, prior_p, adapter=adg, identity_extra=x)
@@ -3517,6 +3834,551 @@ def _selftest(chk) -> None:
         "not counts only or a contrast read carrying a class, round label, exclusion or domain field; it is "
         "silent on the counts-only form (sham classes beside), on a stage with no records, on OLMo",
         not tc_fired and not tc_silent, (tc_fired, tc_silent))
+
+    # the seat's C9(ii) (2026-10-10; m:330): a campaign ended by STOP evaluates and records the bars'
+    # cumulative counts at the STOP point as its last look; stub campaigns through run_campaign
+    CC9 = {"A0": 64, "A0s": 32}                    # the launch-count projection; the cells the stub serves
+    CF9 = {"A0": 24, "A0s": 20}
+    roster9 = _schedule.roster_for("Q-F0")
+    cells9: dict = {}
+    for t9, m9 in CC9.items():
+        cs9 = _schedule.campaign_schedule("Q-F0", t9, roster9, -(-m9 // _schedule.UNIT_SIZE))[:m9]
+        cells9.update({(t9, s9): c9 for s9, c9 in enumerate(cs9)})
+    real_run9 = run_session_qwen
+
+    def tamper9(tpl: str, s_: int):
+        # selftest only: the record of (tpl, s_) is edited after the runner returns, so G-VER fails it
+        def tampered(adapter, sc, audit_, ban_ids, *, path_cached, term_rx):
+            rec = real_run9(adapter, sc, audit_, ban_ids, path_cached=path_cached, term_rx=term_rx)
+            if sc.template == tpl and sc.s == s_:
+                rec["rounds"][0]["text"] += " x"
+            return rec
+        return tampered
+
+    @contextlib.contextmanager
+    def kill9():
+        # selftest only: the finish's first output write dies -- the end is pending on disk, nothing printed
+        real_w = _write_json
+        state = {"n": 0}
+
+        def w(path, obj):
+            if state["n"] == 0:
+                state["n"] += 1
+                raise _Interrupt("selftest: killed with the end pending, before any output")
+            real_w(path, obj)
+        with patched(me, "_write_json", w):
+            yield
+
+    def announced9(text: str) -> list[str]:
+        return [ln for ln in text.splitlines() if ln.startswith(("BAR ", "STOP ", "PAUSE ", "END LOOK "))]
+
+    with tempfile.TemporaryDirectory() as td9, patched(guard, "GATES_DIR", Path(td9) / "no-gates"):
+        def root9(name: str) -> Path:
+            r = _resume.refuse_canonical_out(Path(td9) / name / "m")
+            _schedule.write_schedule_files(r / "schedules")
+            tpls = list(keys.templates("Q-F0"))
+            ident = _resume.Identity(unit="Q-F0", stage="qual", template_set=tpls, lock_sha256="1" * 64,
+                                     schedule_sha256="3" * 64, path="uncached", hour_cap=None,
+                                     n={t: 1 for t in tpls}, audit_v2_sha16="4" * 16, ban_sha="5" * 16,
+                                     backend_identifier="6" * 16, proposal_sha256="2" * 64)
+            pr = r / "ckpt" / "Q-F0_qualprior.json"
+            pr.parent.mkdir(parents=True, exist_ok=True)
+            ck_ = _resume.load_or_init(pr, ident, False)
+            _record_stage_end(ck_, "PASS", [])
+            _resume.write_checkpoint(pr, ck_)
+            return r
+
+        def camp9(root: Path, rule=None, floors=CF9, **kw):
+            ad = testing.ScriptedAdapter()
+            ad.load(_script_policy("Q-F0", "campaign", cells9, rule), None)
+            buf = io.StringIO()
+            res = exc = None
+            with contextlib.redirect_stdout(buf):
+                try:
+                    res = run_campaign(ad, unit="Q-F0", floors=floors, launch_counts=CC9, hour_cap=10.0,
+                                       prior_ckpt=root / "ckpt" / "Q-F0_qualprior.json", identity_extra=xtra(),
+                                       substrate="qwen", out_root=root, **kw)
+                except (SystemExit, _Interrupt, ValueError) as e:
+                    exc = e
+            cp_ = root / "ckpt" / "Q-F0_campaign.json"
+            ck_ = json.loads(cp_.read_text(encoding="utf-8")) if cp_.is_file() else {}
+            rp_ = root / "reports" / "Q-F0_campaign_report.json"
+            rep_ = json.loads(rp_.read_text(encoding="utf-8")) if rp_.is_file() else {}
+            ap_ = root / "ckpt" / "Q-F0_campaign_adjudication.json"
+            ev_ = json.loads(ap_.read_text(encoding="utf-8"))["events"] if ap_.is_file() else []
+            return {"res": res, "exc": exc, "txt": buf.getvalue(), "ad": ad, "ck": ck_, "rep": rep_, "ev": ev_}
+
+        def stop_lines9(ck_: Mapping) -> list[str]:
+            return announce_stop("Q-F0", "campaign", _hit_from_stop(ck_["stop"]))[0]
+
+        # (a) a hair trigger on a sham session at launch 4 (not a multiple of 40): the end look "end" at 4,
+        # its messages after the STOP lines; killed with the end pending, the re-finish prints the same lines
+        rule_a = lambda t, s, n, c: "<|im_end|>" if (t == "A0s" and s == 1 and n == 7) else None   # noqa: E731
+        a_ref = camp9(root9("c9_a_ref"), rule_a)
+        r_ak = root9("c9_a_kill")
+        with kill9():
+            a_kill = camp9(r_ak, rule_a)
+        mid_a = json.loads((r_ak / "ckpt" / "Q-F0_campaign.json").read_text(encoding="utf-8"))
+        a_re = camp9(r_ak, rule_a)
+        el_a = a_ref["ck"].get("campaign", {}).get("end_look") or {}
+        ok_a = (a_ref["exc"] is None and a_ref["res"]["status"] == "STOP" and len(a_ref["ck"]["sessions"]) == 4
+                and el_a.get("look") == "end" and el_a.get("at_launches") == 4 and "end_is_look" not in el_a
+                and a_ref["ck"]["campaign"]["pauses"] == [] and a_ref["ck"]["looks"] == []
+                and announced9(a_ref["txt"]) == stop_lines9(a_ref["ck"]) + [r["message"] for r in el_a["results"]]
+                and len(el_a["results"]) == 3 and all("look=end" in r["message"] for r in el_a["results"])
+                and a_ref["rep"].get("end_look") == el_a and a_ref["rep"].get("looks_count") == 1
+                and a_ref["rep"].get("status") == "STOP"
+                and [e["event"] for e in a_ref["ev"]] == ["STOP"])
+        ok_a_re = (isinstance(a_kill["exc"], _Interrupt) and announced9(a_kill["txt"]) == []
+                   and (mid_a.get("end_pending") or {}).get("status") == "STOP"
+                   and isinstance(mid_a["end_pending"].get("end_look"), dict)
+                   and a_re["exc"] is None and a_re["res"]["status"] == "STOP" and not a_re["ad"].calls
+                   and "RE-FINISH campaign-Q-F0" in a_re["txt"]
+                   and announced9(a_re["txt"]) == announced9(a_ref["txt"])
+                   and _resume.same_json(a_re["ck"]["campaign"]["end_look"], el_a))
+        chk("stages: C9(ii) -- a hair-trigger STOP at launch 4 (not a multiple of 40) records the end look 'end' at 4 "
+            "launches (no pause: silent), its three bar messages announced right after the STOP lines; the report "
+            "carries it (looks counted 1); killed with that end pending, the re-finish launches nothing and prints "
+            "exactly the uninterrupted run's lines", ok_a and ok_a_re,
+            (a_ref["res"] and a_ref["res"]["status"], announced9(a_ref["txt"])[:3], ok_a_re))
+
+        # (b) a hair trigger at launch 40, on the session whose look 1 fires: the look never announced before the
+        # hit -- the end look IS look 1, its pause (kind look, look 1) appended unadjudicated, its messages once
+        rule_b = lambda t, s, n, c: ("<|im_end|>" if (t == "A0s" and s == 19 and n == 7)        # noqa: E731
+                                     else "Config choice one." if (t == "A0s" and n == 6) else None)
+        r_b = root9("c9_b")
+        b = camp9(r_b, rule_b)
+        lk_b = b["ck"]["looks"][0]["result"] if b["ck"].get("looks") else {}
+        el_b = (b["ck"].get("campaign") or {}).get("end_look") or {}
+        ann_b = announced9(b["txt"])
+        sl_b = stop_lines9(b["ck"]) if b["ck"].get("stop") else []
+        ok_b = (b["exc"] is None and b["res"]["status"] == "STOP" and len(b["ck"]["sessions"]) == 40
+                and lk_b.get("fired") is True and el_b.get("end_is_look") == 1 and el_b.get("at_launches") == 40
+                and b["ck"]["campaign"]["pauses"] == [{"at_launches": 40, "kind": "look", "look": 1,
+                                                       "bars": [r["name"] for r in lk_b["results"] if r["fired"]],
+                                                       "adjudication": None}]
+                and ann_b == sl_b + [r["message"] for r in lk_b["results"]]
+                and sum("look=1" in ln for ln in b["txt"].splitlines()) == len(lk_b["results"])
+                and [(e["event"], e["kind"], e["at_launches"]) for e in b["ev"]]
+                == [("PAUSE", "look", 40), ("STOP", "hair_trigger", 40)] and b["ev"][0]["counts"] == lk_b
+                and b["rep"].get("looks_count") == 1
+                and b["rep"].get("pauses") == [{"kind": "look", "at_launches": 40, "adjudicated": False,
+                                                "adjudication_sha16": None}])
+        cp_b = r_b / "ckpt" / "Q-F0_campaign.json"
+        bytes_b = cp_b.read_bytes()
+        rep_bytes_b = (r_b / "reports" / "Q-F0_campaign_report.json").read_bytes()
+        b_adj = camp9(r_b, rule_b, resume=True, adjudication="selftest: the seat's ruling on look 1")
+        ok_b_ref = (isinstance(b_adj["exc"], SystemExit) and "STAGE ENDED" in str(b_adj["exc"])
+                    and "(STOP" in str(b_adj["exc"]) and not b_adj["ad"].calls and cp_b.read_bytes() == bytes_b
+                    and (r_b / "reports" / "Q-F0_campaign_report.json").read_bytes() == rep_bytes_b)
+        chk("stages: C9(ii) -- a hair-trigger STOP on launch 40 whose look 1 fires: the end look IS look 1 (end_is_look "
+            "1), its pause {kind look, look 1} appended unadjudicated (excerpt: the PAUSE event before the STOP event), "
+            "look 1's bar messages announced once, after the STOP lines; the stopped campaign re-invoked with an "
+            "adjudication is refused (STAGE ENDED, STOP), nothing launched, checkpoint and report unchanged -- the "
+            "pause's ruling enters VERDICTS as the declared --adjudication file (the seat's C9(i))",
+            ok_b and ok_b_ref, (b["res"] and b["res"]["status"], ann_b[2:3], ok_b_ref))
+
+        # (c) a G-VER STOP right after look 1 at 40 (fired, PAUSE, adjudicated): the end look IS look 1, no new
+        # pause, and the END LOOK line after the STOP lines (look 1's messages never re-announced)
+        rule_c = lambda t, s, n, c: "Config choice one." if (t == "A0s" and n == 6) else None     # noqa: E731
+        r_c = root9("c9_c")
+        c1 = camp9(r_c, rule_c)
+        with patched(me, "run_session_qwen", tamper9("A0", 20)):
+            c2 = camp9(r_c, rule_c, resume=True, adjudication="selftest: continue")
+        el_c = (c2["ck"].get("campaign") or {}).get("end_look") or {}
+        ok_c = (c1["res"] is not None and c1["res"]["status"] == "PAUSE" and c2["exc"] is None
+                and c2["res"]["status"] == "STOP" and len(c2["ck"]["sessions"]) == 40
+                and c2["ck"]["stop"]["bar"] == _verify.BREAK and el_c.get("end_is_look") == 1
+                and el_c.get("at_launches") == 40
+                and [(p["kind"], p["at_launches"], p["adjudication"]) for p in c2["ck"]["campaign"]["pauses"]]
+                == [("look", 40, "selftest: continue")]
+                and announced9(c2["txt"]) == stop_lines9(c2["ck"])
+                + ["END LOOK campaign-Q-F0: the end look is look 1 (at 40 launches)"]
+                and "look=1" not in c2["txt"] and c2["rep"].get("looks_count") == 1
+                and [(e["event"], e["kind"]) for e in c2["ev"]] == [("PAUSE", "look"), ("STOP", "harness")])
+        chk("stages: C9(ii) -- a G-VER STOP at launch 41, after look 1 at 40 fired and was adjudicated: the end look IS "
+            "look 1 (end_is_look 1, at 40 -- the quarantined record not counted), no new pause, and the END LOOK line "
+            "follows the STOP lines (look 1's messages not re-announced)", ok_c,
+            (c2["res"] and c2["res"]["status"], announced9(c2["txt"])[-1:]))
+
+        # (d) a G-VER STOP at the first launch: no session recorded, no look -- end_look None
+        with patched(me, "run_session_qwen", tamper9("A0", 0)):
+            d = camp9(root9("c9_d"), None, floors={"A0": 2, "A0s": 2})
+        ok_d = (d["exc"] is None and d["res"]["status"] == "STOP" and d["ck"]["sessions"] == []
+                and d["ck"]["campaign"]["end_look"] is None and d["ck"]["campaign"]["pauses"] == []
+                and announced9(d["txt"]) == stop_lines9(d["ck"]) and d["rep"].get("end_look") is None
+                and d["rep"].get("looks_count") == 0)
+        chk("stages: C9(ii) -- a G-VER STOP at the first launch records no end look (end_look None, no pause, looks "
+            "counted 0) and announces the STOP lines only", ok_d, (d["res"] and d["res"]["status"], announced9(d["txt"])))
+
+        # (e) a contrast session's FREE-phase hair trigger (blinded, m:318 exception (1)) at launch 7, after 3/3
+        # forced-phase (pre-pick) exclusions on the contrast arm: the end look at 7 is present and fires (the .20
+        # absolute guard, binding on Qwen) -- pick-free, the withheld class in no stdout line, report or end-look
+        # event; it does not depend on the stopped session's free rounds (the trigger at round 9 gives the same)
+        def rule_e(n_hit: int):
+            return lambda t, s, n, c: ("<|im_end|>" if (t == "A0" and s == 3 and n == n_hit)     # noqa: E731
+                                       else "Config choice one." if (t == "A0" and s < 3 and n == 1) else None)
+        cls9 = ("scaffold", "absorption")
+        e_ref = camp9(root9("c9_e_ref"), rule_e(7))
+        e_9 = camp9(root9("c9_e_9"), rule_e(9))
+        r_ek = root9("c9_e_kill")
+        with kill9():
+            e_kill = camp9(r_ek, rule_e(7))
+        mid_e = json.loads((r_ek / "ckpt" / "Q-F0_campaign.json").read_text(encoding="utf-8"))
+        mid_e_ok = True
+        try:
+            _resume.read_checkpoint(r_ek / "ckpt" / "Q-F0_campaign.json")
+        except SystemExit:
+            mid_e_ok = False
+        e_re = camp9(r_ek, rule_e(7))
+        el_e = (e_ref["ck"].get("campaign") or {}).get("end_look") or {}
+        pz_e = e_ref["ck"]["campaign"]["pauses"] if e_ref["ck"] else []
+        ev_e = e_ref["ev"]
+
+        def after_session9(text: str, sess: str) -> list[str]:
+            # every stdout line, unfiltered, between the stopped session's own line and the STAGE line
+            ls_ = text.splitlines()
+            i0 = max((i for i, ln in enumerate(ls_) if ln.startswith(sess)), default=None)
+            i1 = next((i for i, ln in enumerate(ls_) if ln.startswith("STAGE ")), None)
+            return ls_[i0 + 1:i1] if i0 is not None and i1 is not None and i0 < i1 else ["<no session/STAGE line>"]
+
+        def stdout9(text: str, root_name: str) -> list[str]:
+            # the run's whole stdout, its out root's name normalised and the stamped PROVENANCE line dropped
+            return [ln.replace(root_name, "<root>") for ln in text.splitlines() if not ln.startswith("PROVENANCE")]
+        ok_e = (e_ref["exc"] is None and e_ref["res"]["status"] == "STOP" and len(e_ref["ck"]["sessions"]) == 7
+                and e_ref["ck"]["stop"]["blinded"]["bar"] == WITHHELD_CLASS
+                and el_e.get("look") == "end" and el_e.get("at_launches") == 7 and el_e.get("fired") is True
+                and pz_e == [{"at_launches": 7, "kind": "end_look", "look": "end",
+                              "bars": [r["name"] for r in el_e["results"] if r["fired"]], "adjudication": None}]
+                and announced9(e_ref["txt"]) == stop_lines9(e_ref["ck"]) + [r["message"] for r in el_e["results"]]
+                and after_session9(e_ref["txt"], "campaign A0 s=3 ")
+                == stop_lines9(e_ref["ck"]) + [r["message"] for r in el_e["results"]]
+                and "free phase of a contrast session (A0 s=3)" in e_ref["txt"]
+                and not any(w in e_ref["txt"].lower() for w in cls9)
+                and not any(w in json.dumps(e_ref["rep"]).lower() for w in cls9) and e_ref["rep"].get("end_look") == el_e
+                and [(e["event"], e["kind"]) for e in ev_e] == [("PAUSE", "end_look"), ("STOP", "hair_trigger")]
+                and ev_e[0]["counts"] == el_e and not any(w in json.dumps(ev_e[:-1]).lower() for w in cls9)
+                and not _ROSTER_RX.search(json.dumps(el_e)) and not _ROSTER_RX.search(json.dumps(ev_e[:-1]))
+                and e_9["exc"] is None and e_9["res"]["status"] == "STOP"
+                and _resume.same_json(e_9["ck"]["campaign"]["end_look"], el_e)
+                and stdout9(e_9["txt"], "c9_e_9") == stdout9(e_ref["txt"], "c9_e_ref")
+                and len(e_9["ck"]["sessions"][-1]["rounds"]) != len(e_ref["ck"]["sessions"][-1]["rounds"]))
+        ok_e_re = (isinstance(e_kill["exc"], _Interrupt) and announced9(e_kill["txt"]) == [] and mid_e_ok
+                   and _resume._pending_problem(mid_e, "campaign") is None
+                   and (mid_e.get("end_pending") or {}).get("status") == "STOP"
+                   and isinstance(mid_e["end_pending"].get("pause"), dict)
+                   and mid_e["end_pending"]["fired"]
+                   == [mid_e["end_pending"]["stop"]["bar"]] + list(mid_e["end_pending"]["pause"]["bars"])
+                   and e_re["exc"] is None and e_re["res"]["status"] == "STOP" and not e_re["ad"].calls
+                   and announced9(e_re["txt"]) == announced9(e_ref["txt"])
+                   and not any(w in e_re["txt"].lower() for w in cls9))
+        chk("stages: C9(ii) -- a contrast free-phase hair-trigger STOP (blinded) at launch 7 after 3 pre-pick exclusions "
+            "on the contrast arm: the end look at 7 fires and its end_look pause is appended unadjudicated (excerpt: "
+            "PAUSE then STOP; the pending end's fired = the hit's bar + the pause's bars); stdout from the stopped "
+            "session's line to the STAGE line is exactly the phase-only STOP line then the end look's messages (no "
+            "prefix filter), and the withheld class appears, in any case, in no stdout line, nor in the report, nor in "
+            "any excerpt event but the STOP's own (m:318 exception (1)); the end look is roster-free and identical, and "
+            "the whole stdout byte-identical (paths normalised, PROVENANCE dropped), when the trigger fires at round 9 "
+            "instead of 7 (it reads and prints no free-phase event); killed with that end pending (resume accepts it: "
+            "STOP, end look and pause dicts) the re-finish prints the same lines", ok_e and ok_e_re,
+            (e_ref["res"] and e_ref["res"]["status"], announced9(e_ref["txt"])[:1], ok_e_re))
+        # the pick-free assertion covers the end look at a STOP: a roster word planted in it refuses the finish
+        real_cl9 = campaign_look
+        word9 = roster9[0][0]
+
+        def planted9(unit, records, look):
+            out = real_cl9(unit, records, look)
+            return {**out, "planted": word9} if look == "end" else out
+        r_ep = root9("c9_e_plant")
+        with patched(me, "campaign_look", planted9):
+            e_pl = camp9(r_ep, rule_e(7))
+        ck_pl = json.loads((r_ep / "ckpt" / "Q-F0_campaign.json").read_text(encoding="utf-8"))
+        chk("stages: C9(ii) -- _campaign_outputs' pick-free assertion runs over the report that carries the end look at "
+            "a STOP: a roster label planted in that end look refuses the finish (ValueError) before any write of the "
+            "end or an output; unplanted, the same run finishes (above)",
+            isinstance(e_pl["exc"], ValueError) and "roster label" in str(e_pl["exc"])
+            and "end_pending" not in ck_pl and ck_pl.get("stop") is None
+            and not (r_ep / "reports" / "Q-F0_campaign_report.json").exists()
+            and not (r_ep / "ckpt" / "Q-F0_campaign_adjudication.json").exists() and ok_e,
+            type(e_pl["exc"]).__name__)
+
+        def msgs9(look: Mapping) -> list[str]:
+            return [r["message"] for r in look.get("results") or []]
+
+        def look1_9(ck_: Mapping) -> dict:
+            return ck_["looks"][0]["result"] if ck_.get("looks") else {}
+
+        def end_look9(ck_: Mapping) -> dict:
+            return (ck_.get("campaign") or {}).get("end_look") or {}
+        end_line9 = "END LOOK campaign-Q-F0: the end look is look 1 (at 40 launches)"
+
+        # (f) (b)'s silent variant: a hair trigger at launch 40 on a session whose look 1 is SILENT -- the end look
+        # IS look 1, no pause; look 1 (never announced before the hit) has its three messages after the STOP lines,
+        # once, and no END LOOK line; killed with that end pending, the re-finish prints the same lines
+        rule_f = lambda t, s, n, c: "<|im_end|>" if (t == "A0s" and s == 19 and n == 7) else None   # noqa: E731
+        f_ref = camp9(root9("c9_f_ref"), rule_f)
+        r_fk = root9("c9_f_kill")
+        with kill9():
+            f_kill = camp9(r_fk, rule_f)
+        f_re = camp9(r_fk, rule_f)
+        lk_f, el_f = look1_9(f_ref["ck"]), end_look9(f_ref["ck"])
+        ok_f = (f_ref["exc"] is None and f_ref["res"]["status"] == "STOP" and len(f_ref["ck"]["sessions"]) == 40
+                and lk_f.get("fired") is False and el_f.get("end_is_look") == 1 and el_f.get("at_launches") == 40
+                and f_ref["ck"]["campaign"]["pauses"] == [] and len(msgs9(lk_f)) == 3
+                and announced9(f_ref["txt"]) == stop_lines9(f_ref["ck"]) + msgs9(lk_f)
+                and sum("look=1" in ln for ln in f_ref["txt"].splitlines()) == 3 and "END LOOK" not in f_ref["txt"]
+                and [e["event"] for e in f_ref["ev"]] == ["STOP"] and f_ref["rep"].get("pauses") == []
+                and f_ref["rep"].get("looks_count") == 1)
+        ok_f_re = (isinstance(f_kill["exc"], _Interrupt) and announced9(f_kill["txt"]) == []
+                   and f_re["exc"] is None and f_re["res"]["status"] == "STOP" and not f_re["ad"].calls
+                   and "RE-FINISH campaign-Q-F0" in f_re["txt"] and announced9(f_re["txt"]) == announced9(f_ref["txt"])
+                   and f_re["ck"]["campaign"]["pauses"] == [] and _resume.same_json(end_look9(f_re["ck"]), el_f))
+        chk("stages: C9(ii) -- a hair-trigger STOP on launch 40 whose look 1 is silent ((b)'s silent variant): the end "
+            "look IS look 1 (end_is_look 1), no pause appended (excerpt: the STOP event only), look 1's three bar "
+            "messages announced once, right after the STOP lines, and no END LOOK line; killed with that end pending, "
+            "the re-finish launches nothing and prints exactly the same lines", ok_f and ok_f_re,
+            (f_ref["res"] and f_ref["res"]["status"], announced9(f_ref["txt"])[-1:], ok_f_re))
+
+        # (g) (c)'s silent variant: a G-VER STOP at launch 41 after a SILENT look 1 at 40 -- look 1 announced at its
+        # launch, the end look IS look 1, no pause, and the END LOOK line alone after the STOP lines
+        with patched(me, "run_session_qwen", tamper9("A0", 20)):
+            g9 = camp9(root9("c9_g"), None)
+        lk_g, el_g = look1_9(g9["ck"]), end_look9(g9["ck"])
+        ok_g = (g9["exc"] is None and g9["res"]["status"] == "STOP" and len(g9["ck"]["sessions"]) == 40
+                and (g9["ck"].get("stop") or {}).get("bar") == _verify.BREAK and lk_g.get("fired") is False
+                and el_g.get("end_is_look") == 1 and el_g.get("at_launches") == 40
+                and g9["ck"]["campaign"]["pauses"] == [] and len(msgs9(lk_g)) == 3
+                and announced9(g9["txt"]) == msgs9(lk_g) + stop_lines9(g9["ck"]) + [end_line9]
+                and sum("look=1" in ln for ln in g9["txt"].splitlines()) == 3
+                and [(e["event"], e["kind"]) for e in g9["ev"]] == [("STOP", "harness")]
+                and g9["rep"].get("looks_count") == 1)
+        chk("stages: C9(ii) -- a G-VER STOP at launch 41 after a silent look 1 at 40 ((c)'s silent variant): the end "
+            "look IS look 1 (end_is_look 1, at 40), no pause, look 1's messages printed once (at its launch) and the "
+            "END LOOK line alone after the STOP lines", ok_g,
+            (g9["res"] and g9["res"]["status"], announced9(g9["txt"])[-1:]))
+
+        # (h) a STOP past a cadence look, on a launch count that is not a multiple of 40: a hair trigger at launch 42
+        # (A0 s=21, after the sham arm's floor) -- the end look is evaluated at 42 ('end'), never look 1 at 40 reused
+        rule_h = lambda t, s, n, c: "<|im_end|>" if (t == "A0" and s == 21 and n == 7) else None    # noqa: E731
+        h9 = camp9(root9("c9_h"), rule_h)
+        lk_h, el_h = look1_9(h9["ck"]), end_look9(h9["ck"])
+        ok_h = (h9["exc"] is None and h9["res"]["status"] == "STOP" and len(h9["ck"]["sessions"]) == 42
+                and [lk["at_launches"] for lk in h9["ck"].get("looks") or []] == [40]
+                and el_h.get("look") == "end" and el_h.get("at_launches") == 42 and "end_is_look" not in el_h
+                and h9["ck"]["campaign"]["pauses"] == [] and len(msgs9(el_h)) == 3
+                and announced9(h9["txt"]) == msgs9(lk_h) + stop_lines9(h9["ck"]) + msgs9(el_h)
+                and all("look=end" in m_ for m_ in msgs9(el_h))
+                and sum("look=end" in ln for ln in h9["txt"].splitlines()) == 3
+                and sum("look=1" in ln for ln in h9["txt"].splitlines()) == 3 and "END LOOK" not in h9["txt"]
+                and h9["rep"].get("end_look") == el_h and h9["rep"].get("looks_count") == 2
+                and [e["event"] for e in h9["ev"]] == ["STOP"])
+        chk("stages: C9(ii) -- a hair-trigger STOP at launch 42, past look 1 at 40 (not a multiple of 40): the end look "
+            "is evaluated at the STOP point (look 'end' at 42, no end_is_look -- look 1 is not reused), its three "
+            "messages after the STOP lines (look 1's printed once, at 40), the report counting 2 looks", ok_h,
+            (h9["res"] and h9["res"]["status"], el_h.get("look"), el_h.get("at_launches")))
+
+        # (i) a G-VER STOP whose freshly evaluated end look FIRES: A0 s=3's record quarantined at launch 7 after 3/3
+        # forced-phase exclusions on the contrast arm -- the end look at 6 fires, its end_look pause appended
+        # unadjudicated (the analyzer's PIN-9 then requires the seat's --adjudication), fired = the G-VER bar + the
+        # pause's bars; killed with that end pending, the re-finish prints the same lines
+        rule_i = lambda t, s, n, c: "Config choice one." if (t == "A0" and s < 3 and n == 1) else None  # noqa: E731
+        with patched(me, "run_session_qwen", tamper9("A0", 3)):
+            i_ref = camp9(root9("c9_i_ref"), rule_i)
+        r_ik = root9("c9_i_kill")
+        with patched(me, "run_session_qwen", tamper9("A0", 3)), kill9():
+            i_kill = camp9(r_ik, rule_i)
+        mid_i = json.loads((r_ik / "ckpt" / "Q-F0_campaign.json").read_text(encoding="utf-8"))
+        el_i = end_look9(i_ref["ck"])
+        bars_i = [r["name"] for r in el_i.get("results") or [] if r["fired"]]
+        pe_i = mid_i.get("end_pending") or {}
+        ok_i = (i_ref["exc"] is None and i_ref["res"]["status"] == "STOP" and len(i_ref["ck"]["sessions"]) == 6
+                and (i_ref["ck"].get("stop") or {}).get("bar") == _verify.BREAK and i_ref["ck"]["looks"] == []
+                and el_i.get("look") == "end" and el_i.get("at_launches") == 6 and el_i.get("fired") is True
+                and "end_is_look" not in el_i and bars_i
+                and i_ref["ck"]["campaign"]["pauses"] == [{"at_launches": 6, "kind": "end_look", "look": "end",
+                                                           "bars": bars_i, "adjudication": None}]
+                and announced9(i_ref["txt"]) == stop_lines9(i_ref["ck"]) + msgs9(el_i)
+                and [(e["event"], e["kind"], e["at_launches"]) for e in i_ref["ev"]]
+                == [("PAUSE", "end_look", 6), ("STOP", "harness", 6)] and i_ref["ev"][0]["counts"] == el_i
+                and i_ref["rep"].get("pauses") == [{"kind": "end_look", "at_launches": 6, "adjudicated": False,
+                                                    "adjudication_sha16": None}]
+                and i_ref["rep"].get("looks_count") == 1)
+        ok_i_pe = (isinstance(i_kill["exc"], _Interrupt) and announced9(i_kill["txt"]) == []
+                   and _resume._pending_problem(mid_i, "campaign") is None and pe_i.get("status") == "STOP"
+                   and pe_i.get("fired") == [_verify.BREAK] + bars_i and isinstance(pe_i.get("pause"), dict))
+        i_re = camp9(r_ik, rule_i)
+        ok_i_re = (i_re["exc"] is None and i_re["res"]["status"] == "STOP" and not i_re["ad"].calls
+                   and announced9(i_re["txt"]) == announced9(i_ref["txt"])
+                   and i_re["ck"]["campaign"]["pauses"] == i_ref["ck"]["campaign"]["pauses"])
+        chk("stages: C9(ii) -- a G-VER STOP at launch 7 whose end look, evaluated fresh at 6 launches, fires: its "
+            "end_look pause {end_look, 6} appended unadjudicated (excerpt: PAUSE then STOP; the pending end's fired = "
+            "the G-VER bar + the pause's bars), the end look's messages after the STOP lines; killed with that end "
+            "pending (resume accepts it), the re-finish prints the same lines", ok_i and ok_i_pe and ok_i_re,
+            (i_ref["res"] and i_ref["res"]["status"], bars_i, ok_i_pe, ok_i_re))
+
+        # (j) NOT APPLIED names where a ruling goes when the re-finished end leaves the campaign ENDED: a STOP whose
+        # end look fired ((i), killed again), and a COMPLETE campaign whose end look fired (status PAUSE, the
+        # terminal state standing; the seat's C9(i)) -- each re-finished with an adjudication offered: NOT APPLIED,
+        # pointing to VERDICTS' --adjudication file, never 'offer it again'; offered again, refused as ended. A
+        # look pause (not ended) keeps 'offer it again'.
+        adj9 = "selftest: the seat's ruling on the pause"
+        r_jk = root9("c9_j_stop")
+        with patched(me, "run_session_qwen", tamper9("A0", 3)), kill9():
+            camp9(r_jk, rule_i)
+        j_stop = camp9(r_jk, rule_i, resume=True, adjudication=adj9)
+        cp_jk = r_jk / "ckpt" / "Q-F0_campaign.json"
+        bytes_jk = cp_jk.read_bytes()
+        j_stop2 = camp9(r_jk, rule_i, resume=True, adjudication=adj9)
+        fl_j = {"A0": 1, "A0s": 1}
+        r_jt = root9("c9_j_term")
+        with kill9():
+            camp9(r_jt, rule_i, floors=fl_j)
+        j_term = camp9(r_jt, rule_i, floors=fl_j, resume=True, adjudication=adj9)
+        ck_jt = json.loads((r_jt / "ckpt" / "Q-F0_campaign.json").read_text(encoding="utf-8"))
+        j_term2 = camp9(r_jt, rule_i, floors=fl_j, resume=True, adjudication=adj9)
+        r_jl = root9("c9_j_look")
+        with kill9():
+            camp9(r_jl, rule_c)
+        j_look = camp9(r_jl, rule_c, resume=True, adjudication=adj9)
+
+        def not_applied9(res_: Mapping, ended_: str | None) -> bool:
+            e_ = res_["exc"]
+            if not (isinstance(e_, SystemExit) and "NOT APPLIED" in str(e_) and not res_["ad"].calls):
+                return False
+            if ended_ is None:
+                return "offer it again" in str(e_) and "--adjudication file" not in str(e_)
+            return ("offer it again" not in str(e_) and f"leaves the campaign ended ({ended_})" in str(e_)
+                    and "enters VERDICTS as the declared --adjudication file" in str(e_))
+        ok_j = (not_applied9(j_stop, "STOP") and "end_pending" not in j_stop["ck"]
+                and [(p["kind"], p["adjudication"]) for p in j_stop["ck"]["campaign"]["pauses"]] == [("end_look", None)]
+                and isinstance(j_stop2["exc"], SystemExit) and "STAGE ENDED" in str(j_stop2["exc"])
+                and not j_stop2["ad"].calls and cp_jk.read_bytes() == bytes_jk
+                and not_applied9(j_term, "COMPLETE") and "end_pending" not in ck_jt
+                and (ck_jt["campaign"].get("terminal") or {}).get("status") == "COMPLETE"
+                and [(p["kind"], p["adjudication"]) for p in ck_jt["campaign"]["pauses"]] == [("end_look", None)]
+                and isinstance(j_term2["exc"], SystemExit) and "CAMPAIGN ENDED" in str(j_term2["exc"])
+                and not j_term2["ad"].calls
+                and not_applied9(j_look, None)
+                and [(p["kind"], p["adjudication"]) for p in j_look["ck"]["campaign"]["pauses"]] == [("look", None)])
+        chk("stages: a re-finish offered a ruling refuses NOT APPLIED, and where the end it re-finished leaves the "
+            "campaign ended -- a STOP whose end look fired, a COMPLETE whose end look fired (the seat's C9(i)) -- the "
+            "refusal names the end and points the ruling to VERDICTS' declared --adjudication file, never 'offer it "
+            "again' (offered again, it is refused as ended, nothing launched, the checkpoint unchanged); a look pause "
+            "(not ended) keeps 'offer it again'", ok_j,
+            (str(j_stop["exc"])[:60], str(j_term["exc"])[:60], str(j_look["exc"])[-60:]))
+
+    # the seat's D2 in the G-ID and campaign drivers: the licence precedes the first write. A simulated non-stub
+    # run (the G-TIME end-to-end harness's patches and its committed lock, a model adapter's provenance, a real
+    # prior ended PASS under this run's proposal -- so that, the licence aside, the run would go on to write)
+    # whose package_sha256 is not this process's package, or whose lock text does not name the analyzer sha, is
+    # refused LICENCE REFUSED before any write or generation; the same run with everything matching prints the
+    # LICENCE line and goes on to launch and write
+    lock_noana = lock_naming(pkg_now)
+    lic_runs = {   # name -> (identity_extra overrides, the lock's committed bytes, the problem named; None: licensed)
+        "licensed": ({}, lock_both, None),
+        "a package_sha256 not this process's": (
+            {"package_sha256": "5" * 64, "lock_sha256": hashlib.sha256(lock_pkg5).hexdigest()}, lock_pkg5,
+            "is not identity_extra's package_sha256"),
+        "a lock text not naming the analyzer sha": (
+            {"lock_sha256": hashlib.sha256(lock_noana).hexdigest()}, lock_noana,
+            "does not name identity_extra's analyzer_sha256")}
+
+    def real_prior_d(pth: Path, stage: str) -> Path:
+        # the prior stage ended PASS under this run's proposal, written by a model adapter (prior_gate admits it
+        # for a non-stub run); kept outside the out root
+        tpls = list(keys.templates("Q-F0"))
+        ident = _resume.Identity(unit="Q-F0", stage=stage, template_set=tpls, lock_sha256="1" * 64,
+                                 schedule_sha256="3" * 64, path="uncached", hour_cap=None,
+                                 n={t: 1 for t in tpls}, audit_v2_sha16="4" * 16, ban_sha="5" * 16,
+                                 backend_identifier="6" * 16, proposal_sha256=real_psha)
+        pth.parent.mkdir(parents=True, exist_ok=True)
+        ck_ = _resume.load_or_init(pth, ident, False)
+        _resume.append_provenance(ck_, {"adapter": "qwen_mlx", "apparatus": "mlx", "platform": "selftest"},
+                                  stamp="2026-10-06T00:00:00Z")
+        _record_stage_end(ck_, "PASS", [])
+        _resume.write_checkpoint(pth, ck_)
+        return pth
+
+    def tree_d(root: Path) -> dict:
+        # every path under the out root, with a file's bytes
+        return {p.relative_to(root).as_posix(): (p.read_bytes() if p.is_file() else None)
+                for p in sorted(root.rglob("*"))}
+
+    def camp_d(root: Path, prior: Path, adapter, x: Mapping) -> tuple[dict, str, Any]:
+        adapter.load(_script_policy("Q-F0", "campaign", cells9, None), None)
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            res = run_campaign(adapter, unit="Q-F0", floors={"A0": 1, "A0s": 1}, launch_counts=CC9, hour_cap=10.0,
+                               prior_ckpt=prior, identity_extra=x, substrate="qwen", out_root=root)
+        return res, buf.getvalue(), adapter
+
+    lic_d: dict[str, dict] = {"G-ID": {}, "campaign": {}}
+    with tempfile.TemporaryDirectory() as td:
+        td = Path(td)
+        for drv_nm, stage_, base_x in (("G-ID", "id", gid_x), ("campaign", "campaign", real_x)):
+            sname = stage_name("Q-F0", stage_)
+            for nm, (over, body, problem) in lic_runs.items():
+                tag = f"{drv_nm}_{nm}".replace(" ", "_").replace("'", "")
+                out_d = _resume.refuse_canonical_out(td / tag / "m")
+                _schedule.write_schedule_files(out_d / "schedules")
+                prior_d = real_prior_d(td / "priors" / f"{tag}.json", PRIOR_STAGE[stage_])
+                x_d = {**base_x, **over}
+                ad_d = testing.ScriptedAdapter()
+                # a provenance record without the stub's tag, as a model adapter's
+                ad_d.provenance = (lambda rp_=ad_d.provenance: {**rp_(), "adapter": "qwen_mlx", "apparatus": "mlx"})
+                pths = for_checkpoint(out_paths("Q-F0", stage_, out_d), out_d / "ckpt" / f"Q-F0_{stage_}.json")
+                before = tree_d(out_d)
+                res_d = exc_d = None
+                txt_d = ""
+                with contextlib.ExitStack() as st_d:
+                    for mod_, attr_, val_ in ((me, "_is_stub", lambda adapter: False), (me, "DEFAULT_OUT", out_d),
+                                              (me, "ANALYZER_PATH", ana_in),
+                                              (guard, "preflight_laptop", fake_preflight([])),
+                                              (me, "_git", fake_git()), (me, "_committed", committed_lock(body)),
+                                              (guard, "GATES_DIR", out_d / "gates")):
+                        st_d.enter_context(patched(mod_, attr_, val_))
+                    gid_art = guard.gid_artifact_path("Q-F0")
+                    try:
+                        if drv_nm == "G-ID":
+                            res_d, txt_d, _ = run_gid(out_d, prior_d, adapter=ad_d, identity_extra=x_d)
+                        else:
+                            res_d, txt_d, _ = camp_d(out_d, prior_d, ad_d, x_d)
+                    except (SystemExit, ValueError, _Interrupt) as e:
+                        exc_d = e
+                written = [p.name for p in (pths["ckpt"], pths["report"], pths["reads"],
+                                            adjudication_path(pths["ckpt"]), gid_art) if p.exists()]
+                if problem is None:
+                    ck_d = json.loads(pths["ckpt"].read_text(encoding="utf-8")) if pths["ckpt"].is_file() else {}
+                    lic_lines = [ln for ln in txt_d.splitlines() if ln.startswith("LICENCE ")]
+                    lic_d[drv_nm][nm] = (
+                        exc_d is None and res_d is not None and len(ad_d.calls) > 0
+                        and len(lic_lines) == 1
+                        and lic_lines[0].startswith(f"LICENCE {sname}: proposal {PROPOSAL_REL} {real_psha[:16]}, "
+                                                    f"lock {lock_rel} {real_lsha[:16]}: committed at HEAD ")
+                        and f"analyzer {real_asha[:16]} and package {pkg_now[:16]}: the hashes" in lic_lines[0]
+                        and (ck_d.get("licence") or {}).get("package_sha256") == pkg_now
+                        and (ck_d.get("licence") or {}).get("analyzer_sha256") == real_asha
+                        and pths["ckpt"].name in written and pths["report"].name in written
+                        and (gid_art.name in written) is (drv_nm == "G-ID"))
+                else:
+                    msg = str(exc_d) if isinstance(exc_d, SystemExit) else ""
+                    lic_d[drv_nm][nm] = (
+                        f"LICENCE REFUSED ({sname})" in msg and problem in msg
+                        and not ad_d.calls and not written and tree_d(out_d) == before)
+    chk("stages: the seat's D2 in the G-ID driver -- the licence precedes the first write: a simulated non-stub "
+        "G-ID-F0m (a real G-TIME prior) whose package_sha256 is not this process's package, or whose lock text does "
+        "not name the analyzer sha, is refused LICENCE REFUSED naming the problem before any write or generation "
+        "(no checkpoint, report, reads, G-ID artifact or excerpt; the out root unchanged; no generate call); with "
+        "everything matching it prints the LICENCE line (the analyzer's and the package's sha16) once, launches, "
+        "writes the checkpoint recording both hashes, the report and the artifact",
+        len(lic_d["G-ID"]) == len(lic_runs) and all(lic_d["G-ID"].values()), lic_d["G-ID"])
+    chk("stages: the seat's D2 in the campaign driver -- the licence precedes the first write: a simulated "
+        "non-stub campaign-Q-F0 (a real qualification prior) whose package_sha256 is not this process's package, "
+        "or whose lock text does not name the analyzer sha, is refused LICENCE REFUSED naming the problem before "
+        "any write or generation (no checkpoint, report, reads or excerpt; the out root unchanged; no generate "
+        "call); with everything matching it prints the LICENCE line (the analyzer's and the package's sha16) "
+        "once, launches, writes the checkpoint recording both hashes and the report",
+        len(lic_d["campaign"]) == len(lic_runs) and all(lic_d["campaign"].values()), lic_d["campaign"])
 
     # the call-site guard holds over this file, and fires on a smuggled copy
     src = Path(__file__).read_text(encoding="utf-8")

@@ -1,0 +1,1710 @@
+# The D2 + C9(ii) edit (the design seat's rulings of 2026-10-10, results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1.md, D2 and C9) -- build, review, fix, verification and Code's closing round. Written by Code 2026-10-10 19:13:06 UTC (date -u).
+# Two workflows. (1) m-d2-c9-build: one builder; three read-only review lenses (spec-and-binding, campaign-state, blinding-and-tests), a STRICT refuter on every finding; one fix agent on the confirmed findings; one independent verifier with mutation probes on scratch copies. (2) m-d2-c9-closing (Code's closing round on the verifier's residuals S18-S20 and two nits): one fix agent, one independent verifier.
+# Every agent: edits only to valence_core/m/stages.py and scripts/m_analyze.py; no git writes; nothing written under data/m/; no model or tokenizer loaded (instructed; the verifiers checked no heavy module was imported). Reports below verbatim (agent text), line-wrapped.
+
+====================================================================================================
+1. THE BUILD SPEC (Code's; verbatim)
+====================================================================================================
+# The D2 + C9(ii) edit -- the one edit the design seat ordered before LOCK-m-F0 v0.1 (PROPOSAL-m v1.11 §8 step 9)
+
+Governing texts (read both in full before acting):
+- the seat's rulings: `results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1.md` -- D2, C9 (i) and (ii), D3, C1-C7;
+- Code's block they answer: `results/raw/2026-10-10_m-code-to-design_pre-LOCK-v0.1.md` -- C9, D1-D3.
+
+The seat's words, verbatim:
+- D2: "Accepted: `analyzer_sha256` and `package_sha256` are required in the stages' `identity_extra` on non-stub runs, and the package hash is checked against the lock at stage start. The edit to `stages.py` also closes C9(ii) (the end look at a STOP); if C9(ii) touches the analyzer's sentence, that edit lands in the same round. G-ANL-F0 is then rebuilt and re-run on the new package and analyzer (model-free), and its manifest superseded by hand `git mv` (PIN-37, PIN-S9); the lock hashes the re-run's manifest and analyzer. One round, before LOCK v0.1."
+- C9: "(i) The adjudication of a fired end look on a terminal campaign enters as the declared `--adjudication` file (C3); `stages.py` need not record it. (ii) Is a defect: m:330's 'at the end' includes an end by STOP, so the bars' cumulative counts are evaluated and recorded at the STOP point as the campaign's last look, and the verdict sentence names that look. Fixed in the same edit as D2, below."
+- D3: "`stages.py` is not in its [G-SHAPE-F0's] scoring-stack map, so the D2 edit does not re-run it and the lock states that diff; any other difference re-runs G-SHAPE-F0 first."
+
+## 0. Scope -- files
+
+You may edit exactly two files: `valence_core/m/stages.py` and `scripts/m_analyze.py`.
+
+- NOT `scripts/m_sessions.py` and NOT `valence_core/m/gshape.py`: both are G-SHAPE-F0's TOOLING_FILES, and any change to them (or to a SCORING_STACK_FILES entry) forces a G-SHAPE-F0 re-run under D3. If an EXISTING m_sessions.py check fails because of the intended behaviour change, do not edit m_sessions.py: report the check, its line, and why it fails, and stop there for that item.
+- NOT `valence_core/m/resume.py`, `bars.py`, `testing.py` or any other file. If the change seems to need one, report why instead.
+- New self-test checks go in `stages._selftest` (unit-level) and in the analyzer battery (`m_analyze.py`, whose `_bt_*` harness already runs stub campaigns through the production writer `stages.run_campaign`, ~m_analyze.py:4204).
+
+## 1. D2 (stages.py)
+
+1. `identity_extra` gains the optional key `package_sha256` (64 lower-case hex). On a NON-STUB run both `analyzer_sha256` and `package_sha256` are REQUIRED: `_extra(..., stub=False)` raises ValueError when either is absent, exactly as it does for `lock_file` / `proposal_file` (cite "the seat's D2"). On the stub both stay optional and are validated as 64-hex when given.
+2. The check at stage start, in `licence_problems` (non-stub only; run by `_licensed` before any session or write -- confirm and report the call order for every stage kind: G-TIME, G-ID, qualification, campaign, and a re-finish):
+   - (d) existing: the analyzer's bytes hash to `analyzer_sha256` -- now always present on a non-stub run; an absent key passed directly to `licence_problems` is a problem string, never a KeyError or a silent pass;
+   - (e) NEW: `_resume.package_sha256()`, computed at check time, equals identity_extra's `package_sha256`; absent -> a problem;
+   - (f) NEW: the committed lock file's text names both `analyzer_sha256` and `package_sha256` verbatim (the 64-hex strings appear in the lock's committed bytes) -- the analyzer's own PIN-14 precedent (`m_analyze.py`, "the lock text names the analyzer's sha256, package_sha256 and the closure sha256 ... each asserted here"). Reuse the lock bytes the function already reads via `_committed`.
+   Any problem -> the existing `LICENCE REFUSED` SystemExit before any session.
+3. `LICENCE_KEYS` gains `"package_sha256"`: recorded in the checkpoint's `licence` at its first write; a resume or re-finish offering a different one is refused, as for the other keys. The `_licence` print line names the package hash (16 hex) after the analyzer's.
+4. Docstrings and PINs: the module docstring's identity_extra sentence (~line 23-25), `_extra`'s docstring and PIN, `licence_problems`' docstring, `_OPTIONAL_EXTRA`; every PIN comment in the form "# PIN (Code, declared at LOCK v0.1; the seat's D2, 2026-10-10): ...".
+5. Self-tests (both directions, each mutation-sensitive): non-stub `_extra` refuses a missing `analyzer_sha256`, a missing `package_sha256`, and a non-hex value of each; the stub accepts both absent; `licence_problems` flags a package mismatch, an analyzer mismatch, and a lock text that does not name the analyzer sha / the package sha (each separately), and returns [] when everything holds -- use a temp git repo the way the existing licence checks in `stages._selftest` do; a checkpoint licensed with one `package_sha256` refuses a resume offering another.
+
+## 2. C9(ii) in stages.py -- the end look at a STOP
+
+Read `run_campaign`'s loop (~2059-2115), `_campaign_end` (~2135), `_pause_lines`, `_refinish_campaign` (~2313), `_campaign_report`, `_campaign_events`, `_campaign_outputs` and `resume.apply_end` / `_pending_problem` first.
+
+Facts to confirm in the code (report any that are false; do not build on a false one):
+- a hair-trigger STOP's session IS recorded (`record_session`) before `_hair_hit`, together with the cadence look at that launch when the launch count is a multiple of 40 -- but that look is neither announced nor turned into a pause when it fired, because the hit pre-empts both;
+- a G-VER STOP's record is NOT recorded (it is quarantined into the stop block);
+- so at a STOP, `n = len(ckpt["sessions"])` is the launches recorded at the STOP point.
+
+The build, in `_campaign_end`'s hit branch:
+- `n == 0` (a G-VER STOP at the first launch): `end_look = None` (no look; the analyzer reports "no look reached").
+- `n % LOOK_EVERY == 0` and the last recorded look is at n: the end look IS that look (`{**look result, "end_is_look": k}`, as the terminal branch builds it). Two cases:
+  - (a) G-VER STOP: that look was evaluated and announced at the launch that reached n, and any pause it raised was adjudicated before the campaign launched again -> no new pause; the end's lines add the terminal branch's "END LOOK ..." line after the STOP lines.
+  - (b) hair-trigger STOP on the launch that reached n: that look was never announced -> its bar messages are the end's lines after the STOP lines; if it fired, the pause it would have raised is appended: `{"at_launches": n, "kind": "look", "look": k, "bars": [...], "adjudication": None}`.
+- otherwise: `end_look = campaign_look(unit, records, "end")`; its bar messages follow the STOP lines; if it fired, a pause `{"at_launches": n, "kind": "end_look", "look": "end", "bars": [...], "adjudication": None}` is appended.
+- The status stays "STOP", the stop block is unchanged, `fired` = [the hit's bar] + the pause's bars (if any). `resume._pending_problem` must accept this pending end unchanged (it should: end_look and pause are dicts or None under STOP) -- confirm by test.
+- One helper builds the STOP end's lines from (hit, the pending end's end_look and pause, the checkpoint) and is used by BOTH the finish and `_refinish_campaign`, so a killed-and-re-finished STOP prints exactly the uninterrupted run's announcement (m_sessions' LW_CASES "a hair-trigger STOP" check must still pass unchanged).
+- A STOP-ended campaign carrying an unadjudicated pause is NOT resumable: `refuse_ended` / `_refuse_stopped` refuse it before `_show_pause` or any adjudication path; the pause's adjudication enters only as the analyzer's `--adjudication` file (seat C9(i), C3). Confirm by test that a re-invocation with `adjudication=` on such a checkpoint is refused and changes nothing.
+- Blinding (m:318 exception (1); the dispositions entry's ruling (h), `54e41c9`): a contrast session's free-phase hair trigger is announced by phase alone, its class withheld. The end look at that STOP must reveal no class, round, n or pick. `campaign_look` is pick-free by construction (sham-arm degeneracy; pooled pre-pick exclusion counts; the contrast arm's FORCED-round degeneracy only; first-read flags). Verify that nothing in the end look depends on the withheld free-phase event (e.g. the stopped session's free rounds or its exclusion class), and that `_campaign_outputs`' pick-free assertion runs over the report and excerpt that now carry the end look. Show it by a test on a free-phase blinded STOP: the end look is present; the withheld class string appears in no stdout line, report or excerpt.
+- `_campaign_report`: `end_look` is non-None at a STOP with launches; `looks_count` counts it as the terminal branch does (an `end_is_look` end adds nothing). `_campaign_events`: a pause appended at the STOP gives its PAUSE event before the STOP event.
+- PIN comments: rewrite the terminal branch's and the STOP branch's PINs to cite "the seat's C9(ii), 2026-10-10" and m:330.
+- Tests (stages._selftest or the analyzer battery's stub-campaign harness, both directions): hair STOP at a launch count that is not a multiple of 40 -> end look "end" at n recorded, its lines after the STOP lines, a killed-and-re-finished run prints the same lines; hair STOP at launch 40 with look 1 fired -> pause kind "look", look 1, unadjudicated, look 1's messages announced once; G-VER STOP right after look 1 at 40 -> `end_is_look` 1, no new pause, the END LOOK line; G-VER STOP at the first launch -> end_look None; a free-phase blinded STOP -> end look present, pick-free, class withheld everywhere. Use whatever stub rules exist (testing.py, the battery's helpers); if a case cannot be built without editing testing.py or m_sessions.py, say which and why.
+
+## 3. C9(ii) in scripts/m_analyze.py -- the sentence names that look
+
+- `guard_at_last_look`: the last look is `campaign.end_look` whenever present -- now at COMPLETE, CAP, PI-STOP and STOP alike. At a STOP the label names it as the STOP's: "the end look at the STOP (at N launches)", or for an `end_is_look` end "look k at N launches, the end look at the STOP"; otherwise the labels are unchanged. Remove `stop_no_end_look` (replace it with `"at_stop": ended == "STOP"` if a field is useful) and update every use, every schema/register mention and every battery check that reads it.
+- A STOP-ended campaign with at least one launch and no `end_look` is a STRUCTURAL REFUSAL at V2, before V3 releases anything: "REFUSED: a STOP-ended campaign records no end look at its STOP (the seat's C9(ii)) -- not written by the lock's package". With zero launches the guard reads "no look reached" as now.
+- A STOP whose end look fired (its pause appended unadjudicated) goes through PIN-9's existing path: refused without `--adjudication` naming that pause {kind, at_launches}; analyzed with it, its path and sha256 recorded. Both directions in the battery. (A hair-trigger STOP still also needs PIN-8's PI-stop record: test the hair STOP + fired end look case with both files, and with each missing.)
+- PIN-10's register text and inline PIN: rewritten to the seat's C9(ii) (the end look is evaluated at the STOP point by stages; no end-of-data recomputation in the analyzer).
+- The battery's existing checks that encode the old behaviour (e.g. "C3-LASTLOOK-STOP-CADENCE"; "a G-VER STOP at launch 41 -> look 1 at 40, the last cadence look (no end look on a STOP)"; `stop_no_end_look` True; the `_GUARD_*` sentence fixtures) are rewritten to the new behaviour. `EXPECTED_CHECKS` (376) and the coverage ids change accordingly: report old -> new and list every check added, changed or removed, with why.
+
+## 4. PIN-register TEXT updates in scripts/m_analyze.py (text only -- no logic change)
+
+The seat ruled on these on 2026-10-10 (design->Code block, section C). Wherever a PIN text (register dict or inline "# PIN" comment) says "conservative default awaiting the seat's ruling before LOCK v0.1", "build gap", "interim" or "flagged" for an item now ruled, rewrite it to record the ruling as "confirmed by the seat (<item>, 2026-10-10)" plus the ruling's substance in a few words:
+- PIN-5: C1 confirmed (m:324's parenthetical ends "or any reason"; `clock:not-locked:<stage>` is a reading of that clause);
+- PIN-8: C2 confirmed (m:316's path applied to the hair triggers; whether an adjudicated fire may resume is for the adjudication, nothing built);
+- PIN-9: C3 confirmed; and the "build gap: stages.py records no ruling on a terminal campaign" becomes C9(i): the adjudication enters as the declared --adjudication file; stages.py need not record it;
+- PIN-17: C4 confirmed (re-verified against the placed preprint at LOCK v1.0);
+- PIN-42 and PIN-43: C5 confirmed; PIN-43 adds the date's meaning for a no-first-read NOT-RUN declared in --olmo-states: "the calendar date of the terminal event that made the NOT-RUN final -- the PI stop, the G-VER STOP, or the day the cap was reached -- as that unit's entry records it; where the unit's own output carries no date, the declarer supplies the entry's";
+- PIN-12: C7 -- f1's 7-vs-1 refers to the pre-pick column; `sessions_excluded_any_phase` is reported beside it; fixed, no longer interim;
+- the Clock boundary-day comparison (wherever its PIN sits): C7 -- a unit's LOCK v1.0 is "committed by its Clock date" iff the commit's committer date, in UTC, falls on or before the Clock date (inclusive, to 23:59:59 UTC); it remains a declared input;
+- PIN-14: C7 -- G-ANL-F3's versioning deferred to before step 19;
+- PIN-3: C6 -- accepted as the declared base-case computation, re-derived at G-PWR (step 15), where the realised-n figure becomes the figure of record (m:190).
+- C7's posting pass bar: do NOT change the posting command. Report whether its current behaviour matches the seat's bar ("PASS iff, on the posted text, the analyzer's enumeration under (a), (b) and (c) is empty ... and the dose note is present iff the flag"), as a finding for Code only.
+List every PIN text you changed (id, old gist -> new gist). Change no code path for section 4.
+
+## 5. Hard rules
+
+- No git commits, adds, stashes, checkouts, resets or worktrees. Never run git inside `jlens-qwen36/`.
+- Never touch the parallel audit session's files: `scripts/audit_note_*`, `results/raw/*note-*`, `README-NOTE.md`, `RESEARCH-NOTE-*`, `AUDIT-note-*`, `LICENS*`, root `*.svg`. Never touch `ADDENDUM-k1.md`.
+- Never write under `data/m/` (the canonical G-ANL-F0 run and the manifest's supersession are Code's, after the build commit). Run the analyzer only as `--selftest` or `ganl --out <scratch dir>`.
+- No model or tokenizer loads.
+- Interpreter: `/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python`. Run scratch scripts with `-I` from a scratch directory (a stray module named like a stdlib module in a scratch dir has shadowed the stdlib before). Mutation probes only on scratch copies, never in the repo tree; scratch copies that import `valence_core` must put the REPO root on sys.path explicitly.
+- The Bash tool's `grep` is ugrep: use `/usr/bin/grep`. Gate on each suite's summary line, never on `$?` after a pipe.
+- Suites to run and report (summary lines): `python scripts/m_sessions.py --selftest` (744/744 before this edit) and `python scripts/m_analyze.py --selftest` (376/376 before). Also check D3: `gshape.sources_map()` must still equal the `sources` and `tooling` maps in `data/m/gates/G-SHAPE-F0.json`'s provenance (read-only).
+
+====================================================================================================
+2. BUILDER'S REPORT
+====================================================================================================
+Builder's report: the D2 + C9(ii) edit is done in `valence_core/m/stages.py` and `scripts/m_analyze.py` only. Both
+suites pass twice, `ganl --out` wrote a manifest (exit 0), and D3 holds. Nothing was committed, nothing was written
+under `data/m/`, and no model was loaded. `paper_analysis.ipynb` was already modified before I started.
+
+## Changes in `valence_core/m/stages.py`
+
+- **Module docstring:** the campaign summary now says the end look includes an end by STOP (C9(ii)). The
+`identity_extra` sentence now covers `analyzer_sha256` and `package_sha256` (D2).
+- **`licence_problems` (528):** docstring rewritten for checks (a)–(f). It keeps the lock bytes that `_committed`
+already reads.
+  - (d): `analyzer_sha256` is always checked. An absent or non-64-hex value is one problem string, never a KeyError.
+  - (e): `_resume.package_sha256()` is computed at check time and compared with `package_sha256`. Absent means a
+problem.
+  - (f): the committed lock text must contain both 64-hex strings verbatim. It is checked only for a well-formed key
+and a committed lock.
+- **`_licence` (606):** the LICENCE line now always names `analyzer <sha16>, package <sha16>`.
+- **`LICENCE_KEYS` (844):** gains `package_sha256`. The `_record_licence` PIN text is updated to match.
+- **`_OPTIONAL_EXTRA` (949):** gains `package_sha256`, with a new PIN saying the keys are optional on the stub only.
+- **`_extra` (960):** docstring and PIN updated. On a non-stub run both keys are required ("identity_extra must
+carry {k} on a non-stub run (the seat's D2, 2026-10-10)"). On the stub an absent key is recorded as None. A given
+value must be 64 lower-case hex in either case.
+- **`_campaign_end` (2199):** the STOP branch now:
+  - calls `_stop_end_look`;
+  - sets `fired` = the hit's bar + the pause's bars;
+  - builds its lines with `_stop_lines`.
+  The two terminal-branch PINs now cite the seat's C9(ii), 2026-10-10 and m:330.
+- **New `_is_gver` (2254):** tells a G-VER hit from a hair-trigger hit by bar class.
+- **New `_stop_end_look` (2259):** implements the spec's cases as written.
+  - n = 0 gives no end look.
+  - n a multiple of 40 with the look recorded at n gives `{**result, end_is_look: k}`. After a G-VER STOP there is
+no new pause. After a hair trigger, a fired look appends the pause `{kind "look", look k}`.
+  - Otherwise `campaign_look(..., "end")`; if it fires, an `end_look` pause is appended.
+  - It asserts that a G-VER record is never a session and that a hair-trigger session is the last one recorded.
+- **New `_stop_lines` (2308):** the one helper both the finish and the re-finish use. It prints the STOP lines, then
+either the END LOOK line (G-VER with `end_is_look`) or the end look's bar messages.
+- **`_refinish_campaign` (2458):** STOP lines now come from `_stop_lines`. The `_campaign_events` docstring notes
+that a pause raised at the STOP point comes before the STOP event.
+- **Existing checks in `_selftest` updated for D2 (no change in check count):**
+  - the `identity_extra` check gains a malformed `package_sha256` case and the new defaults;
+  - the preflight and out-root start tests and the `lock_file` test now pass both keys;
+  - the licence-by-file test uses a temp repo whose lock bodies name the hashes;
+  - the non-stub end-to-end test and the G-ID driver test serve the stand-in lock's committed bytes through a
+patched `_committed` (self-test only);
+  - the `_record_licence` check adds analyzer and package mismatches.
+- **8 new checks in `_selftest`:**
+  - D2 `_extra`, both directions.
+  - D2 `licence_problems`: exactly one problem for each case alone (analyzer absent; package absent or malformed;
+analyzer mismatch; package mismatch, offered or moved at check time; lock not naming the analyzer sha; lock not
+naming the package sha). Clean gives [].
+  - C9 (a) hair STOP at launch 4: end look at 4; killed and re-finished, it prints the same lines.
+  - C9 (b) hair STOP at launch 40 with look 1 fired: pause {look, 1} unadjudicated, look 1's messages printed once;
+a re-invocation with `adjudication=` is refused (STAGE ENDED) and changes nothing.
+  - C9 (c) G-VER STOP at launch 41 after look 1 fired and was adjudicated: `end_is_look` 1, no new pause, END LOOK
+line.
+  - C9 (d) G-VER STOP at the first launch: `end_look` None.
+  - C9 (e) blinded free-phase STOP at launch 7 whose end look fires: pause appended, class withheld, end look
+identical whether the trigger is at round 7 or 9; killed and re-finished, `_pending_problem` accepts the pending end
+and `fired` is the hit's bar plus the pause's bars.
+  - A roster word planted in the end look makes the finish refuse (ValueError) before any write.
+
+## Changes in `scripts/m_analyze.py`
+
+- **`guard_at_last_look`:** the end look is used whenever present. At a STOP the labels are "the end look at the
+STOP (at N launches)" and "look k at N launches, the end look at the STOP"; other labels are unchanged.
+`stop_no_end_look` is replaced by `at_stop`.
+- **`run_verdicts`:** new V2 structural refusal for a STOP with sessions and no end look: "REFUSED: a STOP-ended
+campaign records no end look at its STOP (the seat's C9(ii)) -- not written by the lock's package". The PIN-9 and
+PIN-8 inline texts are rewritten.
+- **Text only (section 4):** the PIN register texts and inline PINs listed below, plus the extra text changes listed
+under Deviations.
+- **`EXPECTED_CHECKS`, coverage ids and battery checks:** updated as listed below.
+
+## Suite summary lines
+
+- `m_sessions.py --selftest`: `752/752 m selftest checks pass`, twice. It was 744; the 8 new stages checks account
+for the difference, and no existing `m_sessions` check failed.
+- `m_analyze.py --selftest`: `379/379 m_analyze battery checks pass`, twice.
+- `ganl --out`, exit 0: `G-ANL-F0: written: .../scratchpad/step9/agents/builder/ganl_final/G-ANL-F0.json (sha256
+287fa027a4f93d4efc0504e79b26d72bce21207e4b6bc6260c0a867bf5121a76)`.
+  - analyzer `24b858c019f5155f83ddd95e4d27e3cd0b74382f309d16724bffdd6875c784a1`
+  - package `8692f47c7650daa815e280b8d91b21781a1dcebd859212768860f2b43552a659`
+  - closure `a3bc7bb9…` unchanged
+  - `outputs_sha256` and tallies unchanged from the manifest of record
+  - `stages.py` sha256 `9194ebc0d6947f4c499bf58ccab91916e0c5fa05eeb6c679e8fe1e4babc09c73`
+
+## EXPECTED_CHECKS 376 → 379; coverage ids 387 → 390
+
+- **Changed, C3-GVER-DATA:** was "no look reached" with `stop_no_end_look` True. It now names "the end look at the
+STOP (at 4 launches)" in the guard and the sentence, with `at_stop` True.
+- **Changed, C3-LASTLOOK-END-WINS:** adds `at_stop` False.
+- **Changed and renamed, C3-LASTLOOK-STOP-CADENCE → C3-LASTLOOK-STOP-ENDISLOOK:** the G-VER STOP at 41 now gives
+`end_is_look` 1 with no pause, labelled "look 1 at 40 launches, the end look at the STOP". The cadence-fallback
+label is still checked by a direct call.
+- **Fixtures only (no count change):** `_GUARD_Q` and the s_ns guard switch `stop_no_end_look` to `at_stop`.
+- **Added:**
+  - C3-STOP-NO-ENDLOOK-REFUSED: the V2 refusal on two mutated STOPs, with no `release_full` call and nothing
+written; the zero-launch STOP is still analyzed.
+  - C3-HAIR-ENDLOOK-LABEL.
+  - C3-HAIR-ENDLOOK-PAUSE: a hair STOP whose end look fired is refused with neither file, with `--pi-stop` only
+(PIN-9) and with `--adjudication` only (PIN-8); with both it is analyzed and both are recorded.
+- **Removed:** none.
+
+Mutation probes on scratch copies were all caught: 17 mutants in `stages.py` and 9 across the analyzer and the
+production writer.
+
+## PIN texts changed (old gist → new gist)
+
+**`stages.py`**
+- `licence_problems` (new): checks (d)–(f) at stage start under D2.
+- `_licence` (new): the LICENCE line names the package hash.
+- `_record_licence`: recorded the files and analyzer → also records `package_sha256` (D2).
+- `_OPTIONAL_EXTRA` (new): the keys are optional on the stub only.
+- `_extra` docstring PIN: analyzer checked "when given" → both keys required on non-stub runs (D2).
+- `_extra` inline (new): required on non-stub runs, 64-hex when given.
+- Terminal branch, the end look on a multiple of 40: now cites C9(ii)/m:330, and an end by STOP takes the same rule.
+- Terminal branch, the end look evaluated once: now cites C9(ii)/m:330, and covers a STOP, whose status stays STOP.
+- `_stop_end_look` (new) and `_stop_lines` (new).
+
+**`m_analyze.py`** (register text and inline comment unless noted)
+- PIN-3: base-case computation → also accepted by the seat (C6), re-derived at G-PWR (step 15), where the realised-n
+figure becomes the figure of record.
+- PIN-5: default awaiting a ruling → confirmed (C1): m:324 ends "or any reason"; `clock:not-locked` reads that
+clause.
+- PIN-6: boundary day "the seat's, non-blocking" → confirmed (C7): committer date in UTC, on or before the Clock
+date, inclusive to 23:59:59 UTC; a declared input.
+- PIN-8: default awaiting a ruling → confirmed (C2): m:316's path applied to hair triggers; nothing built for
+resuming.
+- PIN-9: default awaiting a ruling, plus a build gap → confirmed (C3); C9(i): the adjudication enters as the
+`--adjudication` file, which stages need not record; now includes a pause raised at a STOP.
+- PIN-10 (plus a new V2 site): end look else cadence, with STOP a build gap → C9(ii): the end look at every end,
+named as the STOP's at a STOP; refused at V2 when missing; a fired one takes PIN-9.
+- PIN-12: interim column awaiting the A5 ruling → confirmed (C7): f1's 7-vs-1 refers to the pre-pick column; the
+any-phase column is reported beside it.
+- PIN-14: G-ANL-F3's versioning "is the seat's" → deferred to before step 19 (C7).
+- PIN-17: default awaiting a ruling → confirmed (C4).
+- PIN-42: "for the seat's confirmation" → confirmed (C5).
+- PIN-43: adds confirmed (C5), the fixes ratified, and the date meaning for a no-first-read NOT-RUN in
+`--olmo-states`.
+
+## Facts to confirm (section 2)
+
+1. **A hair-trigger session is recorded before `_hair_hit`, with the cadence look, and that look is neither
+announced nor paused: true.** The look is built and recorded at 2149–2150 and `_hair_hit` runs at 2153. The pause is
+built only under `if hit is None` (2154–2161). `if hit is not None: break` at 2164 comes before the look messages
+are printed (2165–2177).
+2. **A G-VER record is not recorded: true.** At 2142–2147 the problems lead to `_verify_hit` and `break` before
+`record_session`; the record is kept in the stop block.
+3. **n = `len(sessions)` is the launches recorded at the STOP point: true.** The quarantined G-VER launch is counted
+only in provenance.
+4. **`_pending_problem` accepts the new pending end: true.** `resume.py` 592–618 checks only keys and types; test
+(e) confirms it.
+5. **A STOP-ended campaign with an unadjudicated pause cannot be resumed: true.** `refuse_ended` runs in `_begin`
+(1113, reached from run_campaign at 2025), before `show` (2057), `_show_pause` and the adjudication branch. Test (b)
+confirms it.
+6. **`campaign_look` reads no free-phase event: true.** A free-phase scaffold hit leaves `exclusion` None and keeps
+`domain`. The test where the trigger moves from round 7 to round 9 gives an identical end look.
+7. **"`_campaign_outputs`' pick-free assertion runs over the report and excerpt": partly false.** It runs over the
+report only (2409). The excerpt is pick-bearing by design. I changed nothing for this; see Deviations.
+
+## Stage-start call order (section 1.2)
+
+- **G-TIME / qualification (`run_gate_stage`):** `_extra` (1456) → `_begin` (1457: stub guard, out root, pod,
+`refuse_ended`, provenance, startup checks, laptop preflight and gate line) → `_licensed` (1458: `_licence` →
+`licence_problems` (a)–(f), then `prior_gate`) → renders and schedules → `_startup` → `load_or_init` (1480) →
+`_record_licence` (1487) → first write.
+- **G-ID (`run_gid_pair`):** `_extra` (1712) → `_begin` (1713) → artifact-exists refusal → `_licensed` (1722) →
+`load_or_init` (1730) → `_record_licence` (1733).
+- **Campaign (`run_campaign`):** `_extra` (2022) → `_begin` (2025) → `_licensed` (2026) → `load_or_init` (2058) →
+`_record_licence` (2061).
+- **Re-finish:** in every driver the pending end is found only after `_licensed` and `_record_licence` (the campaign
+reaches `_refinish_campaign` at 2086), so a re-finish is licensed too.
+- In no driver does a session or a file write happen before `_licensed`.
+
+## Deviations from the spec
+
+1. **Excerpt test:** the excerpt's STOP event names the class by design (`_hit_event`, m:318 exception (1)). The
+test therefore asserts the class is absent from stdout, the report and every excerpt event except the STOP's own,
+and that the end look is roster-free.
+2. **Text-only edits beyond section 4's list**, each recording a ruling:
+   - `SEAT_ROUTED` values: "blocking LOCK v0.1" → "ruled by the seat (Cn)".
+   - `PER_PROPERTY_REFERENCE`, which is VERDICTS output: it said "compare sessions_excluded_any_phase … A5 open",
+which contradicts C7.
+   - The `clock:not-locked` cite: "seat-routed" → "the seat's C1".
+   - `unit_state`'s message: "the seat's ruling pending" → "the seat's C2".
+   Any of these is a one-line revert if Code prefers.
+3. **Inline PIN prefix:** the analyzer's inline PINs keep the `# PIN (Code, declared at LOCK v0.1): PIN-n` prefix,
+because the STR-PIN-COMMENTS regex requires it. The ruling is recorded in the body.
+4. **Patched `_committed`:** the non-stub end-to-end tests serve the lock bytes through a patched `_committed`,
+because no file in the tree can name the current package hash.
+
+## Flags for Code or the seat
+
+- **Posting pass bar (section 4, for Code only; the posting command is unchanged):**
+  - What matches: on a posted-kind table, `posting` computes the same (a)/(b)/(c) enumeration and lists each residue
+by row id and location. Because (c) is two-sided (PIN-21), an empty enumeration is exactly the seat's condition,
+including "dose note present iff flag".
+  - It does not render PASS/FAIL against the bar. It exits 0 and prints "N enumerated rows" whatever the residue.
+  - The (a)/(b) result depends on the posted table's declared `null_cells` and `thesis` classification, not on
+reading the posted text.
+  - Nothing compares the re-run with "the VERDICTS enumeration with the PI's rewrites applied".
+- **D3:** `gshape.sources_map()` equals both the `sources` and the `tooling` maps in the G-SHAPE-F0 provenance (26 +
+2 entries; `sources_digest` equal), and `stages.py` is in neither. The package moved from `06ab1430…` to
+`8692f47c…`; the lock states that diff.
+- **LOCK v0.1 is now a precondition for every non-stub stage:** its text must name both 64-hex strings verbatim, and
+every non-stub `identity_extra` (G-TIME-F0 first) must carry both keys.
+- **Canonical run:** a canonical `ganl` on committed blobs identical to these working-tree bytes should reproduce
+sha256 `287fa027…`. The manifest records no timestamp, HEAD or output path.
+- **Stale "flagged" PIN in `stages.py`:** the `campaign_look` PIN still says "flagged for the seat: whether m:271's
+withholding extends to campaign looks". It is outside section 4's analyzer scope and I did not edit it.
+- **Behaviour now visible:** at a STOP with `end_is_look`, `every_look` lists look k and "end" with the same counts,
+as already happens at a terminal end on a multiple of 40. `guard_at_last_look`'s cadence fallback can no longer be
+reached from VERDICTS; it is kept and tested by a direct call.
+
+Files are in
+`/private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step9/agents/builder/`:
+- `final_sessions_1.txt`, `final_sessions_2.txt`
+- `final_analyze_1.txt`, `final_analyze_2.txt`
+- `ganl_final/G-ANL-F0.json`
+- `d3_check.py`
+- `mut/`
+- `stages.py.orig`, `m_analyze.py.orig`
+
+====================================================================================================
+3. REVIEW: three lenses, a strict refuter on every finding (12 findings; 11 confirmed, 1 refuted)
+====================================================================================================
+
+--- LENS spec-and-binding
+  COVERED:
+    Lens: spec-and-binding. Read in full: the build spec (spec_d2.md), the seat's rulings (all of sections A to E, with
+    C, C9 and D1 to D3 read closely), and Code's block (C1 to C9, D1 to D3). Read the whole working-tree diff of
+    valence_core/m/stages.py and scripts/m_analyze.py, plus the surrounding code: _begin, _licensed, _licence,
+    licence_problems, _committed, _extra, _record_licence, run_gate_stage, run_gid_pair and run_campaign (start and
+    loop), _campaign_end, _stop_end_look, _stop_lines, _pause_lines, _campaign_report, _campaign_outputs,
+    _complete_campaign, _refinish_campaign, _campaign_events, _hit_event, campaign_look, _read_flags, resume.apply_end,
+    _pending_problem, ended_status, refuse_ended, and package_sha256. In the analyzer: guard_at_last_look, run_verdicts
+    V1 to V3, enumeration and run_posting.
+    
+    Scope: git status and git diff --stat show only the two allowed files modified. paper_analysis.ipynb and the
+    untracked files were already in the session-start snapshot. No file under data/m is newer than the spec.
+    m_sessions.py, gshape.py, resume.py, bars.py and testing.py are untouched.
+    
+    D2:
+    - Every stage kind calls _extra with stub=_is_stub(adapter), then _begin, then _licensed, then load_or_init, then
+    _record_licence, and only then writes or reaches a pending re-finish. This holds for G-TIME and qualification
+    (run_gate_stage 1456-1487), G-ID (1712-1733) and the campaign (2022-2061, re-finish at 2086).
+    - _begin's helpers do not write (no mkdir, write or open).
+    - Probed _extra on time, id, qual and campaign, on both qwen and olmo, with stub=False: each missing key, and an
+    explicit None, is refused. On the stub both keys come back None.
+    - licence_problems returns problem strings, with no exception, for absent, None, int and upper-case values.
+    - package_sha256 is the same function the analyzer uses (resume.package_sha256_of).
+    - LICENCE_KEYS recording and resume refusal are as specified. The stub path skips the licence.
+    
+    C9(ii): checked against the spec case by case: n = 0, a multiple of 40 after a G-VER STOP and after a hair trigger,
+    and otherwise. Also checked: status stays STOP, fired = the hit's bar plus the pause's bars, one line helper shared
+    by the finish and the re-finish, a PAUSE event coming before the STOP event, and looks_count. My own probe moved a
+    blinded contrast free-phase trigger across rounds 5 to 10: the end look and its stdout are byte-identical in every
+    case.
+    
+    Analyzer:
+    - The new labels match the spec.
+    - stop_no_end_look is gone from the code, the schema, the register and the battery (only a historical review raw
+    still mentions it).
+    - The V2 refusal sits before release_full. PIN-9 then PIN-8 ordering is confirmed.
+    - Coverage ids went from 387 to 390 (C3-LASTLOOK-STOP-CADENCE renamed; three new ids added). EXPECTED_CHECKS went
+    from 376 to 379.
+    
+    Section 4: every PIN text and SEAT_ROUTED entry was compared with C1 to C7 and C9(i); no stale 'awaiting', 'build
+    gap', 'interim' or 'flagged' wording remains in the analyzer. The G-ANL-F0 re-run manifest differs from the manifest
+    of record only in the analyzer and package hashes, the battery counts and coverage, the PIN and seat_routed texts,
+    and the clock:not-locked cite. The builder's posting-bar description is accurate: table_problems requires an
+    f1-corr-line row, so an empty enumeration does match the seat's bar.
+    
+    D3: gshape.sources_map() equals the G-SHAPE-F0 provenance sources (26) and tooling (2) maps, sources_digest is
+    equal, and stages.py is in neither.
+    
+    Suites, run in-tree, with git status unchanged afterwards: 752/752 m selftest checks and 379/379 m_analyze battery
+    checks. The working-tree hashes match the builder's report: stages 9194ebc0..., analyzer 24b858c0..., package
+    8692f47c....
+    
+    No defect found in conformance to D2, C9(ii) or D3. Three lower-severity findings follow.
+  * [minor -> refuter: CONFIRMED, minor] The LICENCE line claims the analyzer and package are committed at HEAD, which nothing checks
+    LOCATION:
+      valence_core/m/stages.py:618-620 (_licence) with licence_problems 528-608
+    CLAIM:
+      The line now always prints 'proposal ..., lock ..., analyzer <a16>, package <p16>: committed at HEAD <head>, working
+      tree identical'. licence_problems checks the committed state of the proposal and lock only (via _committed). (d) and
+      (e) hash working-tree bytes. No stage-start check ever reads valence_core/m/*.py from git. The analyzer is checked
+      against git only by the Qwen laptop preflight, which returns early on OLMo.
+    FAILURE SCENARIO:
+      The lock is committed at L and names package P1. A later commit C2 edits valence_core/m/stages.py. The operator
+      restores the locked bytes in the working tree (git checkout L -- valence_core/m) and launches G-TIME-F0 at HEAD C2.
+      (e) and (f) pass, because the working tree hashes to P1 and the lock names P1. The raw stdout then records 'package
+      <P1[:16]>: committed at HEAD C2, working tree identical', which is false: C2's tree does not hold the package that
+      ran. On the box, every OLMo stage prints the same claim for the analyzer, whose committed state no stage-start check
+      reads.
+    EVIDENCE:
+      stages.py:618-620 prints the analyzer and package before the shared ': committed at HEAD {_git_head()}, working tree
+      identical' suffix. licence_problems calls _committed only for proposal_file and lock_file (the for-loop at 553-565).
+      (d) reads ANALYZER_PATH from the working tree and (e) calls _resume.package_sha256(), which hashes the working-tree
+      valence_core/m/*.py (resume.py:296-328). _laptop_preflight (stages.py:496-525) returns False for OLMo or the stub
+      before its analyzer _committed check.
+    PROPOSED FIX:
+      Choose one: (a) in licence_problems, add a _committed check for ANALYZER_PATH's repo-relative path and for each
+      valence_core/m/*.py, so the line's claim is checked; or (b) scope the suffix to the files it covers, e.g. 'proposal
+      P p16, lock L l16: committed at HEAD H, working tree identical; analyzer a16 and package p16: the hashes the lock
+      names'. Update the _licence PIN to match.
+    REFUTER:
+      I could not refute this. I reproduced it.
+      
+      Code check (read-only):
+      - `licence_problems` (stages.py:528-603) calls `_committed` for `proposal_file` and `lock_file` only, in the loop at
+      553-565.
+      - (d) hashes the working-tree bytes at `ANALYZER_PATH`.
+      - (e) calls `_resume.package_sha256()`, which globs and hashes the working-tree `valence_core/m/*.py`
+      (resume.py:296-328) and never reads git.
+      - (f) only checks that the committed lock text contains the two hex strings.
+      - `_laptop_preflight` (496-525) is the only stage-start check of the analyzer's committed state. It returns False
+      for OLMo and for the stub before that check runs, and it never checks the package.
+      - `_licence` (618-621) still prints the analyzer and package hashes before the shared suffix ': committed at HEAD
+      {head}, working tree identical'.
+      
+      Probe (scratch dir agents/refuter-licence-line/probe.py, run with `python -I`, repo untouched):
+      - In a temp git repo I committed only P.md and L.md. L.md names the sha of an uncommitted A.py and the real package
+      sha. The package is not in that repo at all.
+      - With `ANALYZER_PATH` pointed at the uncommitted A.py, `licence_problems` returned [] and `_committed('A.py')`
+      reported "not committed at HEAD".
+      - `_licence` with a non-stub adapter then printed "LICENCE PROBE: proposal ..., lock ..., analyzer 60a7059539ba6ef0,
+      package 8692f47c7650daa8: committed at HEAD a8b4644..., working tree identical". That claim is false for both the
+      analyzer and the package.
+      
+      Why the spec and rulings don't excuse it:
+      - The seat's D2 asks only that both keys be required and the package hash be checked against the lock. That is what
+      (d)-(f) do, so the checks conform.
+      - Spec §1.3 says only "names the package hash (16 hex) after the analyzer's". It says nothing about putting the
+      package under the 'committed at HEAD, working tree identical' suffix, and no ruling says the package is checked for
+      committed state.
+      - The line's own docstring scopes "committed" to the proposal and lock ("whose analyzer or package is not the one
+      the identity and the lock name"), but the printed record, which is the raw-stdout evidence under rule 27, reads as
+      covering all four.
+      
+      Mitigations, which bear on severity only:
+      - The analyzer half is pre-existing. The HEAD version already placed the analyzer, when given, before the same
+      suffix. The build makes it unconditional on non-stub runs and adds the package, which is new.
+      - The licensing checks themselves are as the seat ordered. Only the provenance line overstates what was checked.
+      - The scenario takes an unusual operator state, such as locked bytes restored over a later HEAD, or a lock committed
+      by pathspec ahead of its package.
+      - The time/id/qual/campaign drivers are not wired yet.
+      
+      The fix the finding proposes is sound: either add `_committed` checks, or scope the suffix to the proposal and lock.
+      Minor is the right severity.
+  * [minor -> refuter: REFUTED, none] Check (f) passes for any hash the lock text mentions, not only the lock's package of record
+    LOCATION:
+      valence_core/m/stages.py:602-607 (licence_problems check (f))
+    CLAIM:
+      Check (f) is the bare substring test 'v not in ltext'. Under the seat's D1, locks must state several package hashes
+      in full: each gate artifact's package_sha256 and the diffs between them. So 'the lock text contains this hash' does
+      not show 'this is the lock's package of record'. This is the form the spec prescribes (the analyzer's PIN-14
+      precedent), and it is harmless for LOCK v0.1: the extra hashes it lists (G-PORT 96fbcacf, G-CAL 4b496587,
+      G-SHAPE/G-ANL 06ab1430) belong to pre-D2 packages, which carry no check. Later locks are different.
+    FAILURE SCENARIO:
+      LOCK v0.2 (qualification) or LOCK v1.0 (campaign) restates LOCK v0.1's package 8692f47c... in its D1-style history
+      table. A box whose valence_core/m still holds the v0.1 bytes launches with identity_extra.package_sha256 filled from
+      the process's own resume.package_sha256(). (e) passes (computed equals offered) and (f) passes (the history table
+      names it). The stage runs on the superseded package, prints a clean LICENCE line, and records the stale package in
+      its identity. VERDICTS does not compare identity.package_sha256 with the lock, and its own PIN-14 check is the same
+      substring test.
+    EVIDENCE:
+      stages.py:602-607: 'for k, v in have.items(): if v not in ltext: probs.append(...)'. m_analyze.py:1913-1923 uses the
+      same 'val not in ltext' test. The seat's D1 says 'the lock states each gate artifact's package_sha256, the diffs
+      between them'.
+    PROPOSED FIX:
+      Not required by the spec as written; flag to Code for the lock-drafting step. Declare one line form for the hashes
+      of record in every lock (e.g. 'package_sha256 of record: <hex>', 'analyzer_sha256 of record: <hex>') and have (f)
+      and the analyzer's PIN-14 match that line. Alternatively, have each lock write historical package hashes in
+      truncated form only, and state that convention in the lock.
+    REFUTER:
+      The code is as the finding describes, but under the spec this is the intended behaviour, so it is not a defect in
+      the D2 + C9(ii) build.
+      
+      1. **The spec prescribes this exact form.** spec_d2.md §1.2(f) says check (f) passes when "the committed lock file's
+      text names both analyzer_sha256 and package_sha256 verbatim (the 64-hex strings appear in the lock's committed
+      bytes) -- the analyzer's own PIN-14 precedent", and says to reuse the bytes `_committed` already reads.
+         - stages.py:602-607 does exactly that: it decodes `lock_data`, the bytes check (c) read, and tests `v not in
+      ltext` for each well-formed key.
+         - The analyzer's PIN-14 check (m_analyze.py, inside the V1 refusal block) is the same `val not in ltext` test,
+      which is the precedent the spec named.
+         - The finding itself concedes "This is the form the spec prescribes" and that its fix is "Not required by the
+      spec as written".
+      
+      2. **The finding misreads D1.** It says D1 requires locks to "state several package hashes in full". The seat's D1
+      says only "the lock states each gate artifact's package_sha256, the diffs between them". It sets no length. Code's
+      own D1 table, the one the seat accepted, writes those hashes truncated: `96fbcacf…`, `4b49658739523c60…`,
+      `06ab1430…` (2026-10-10_m-code-to-design_pre-LOCK-v0.1.md, section D1). A truncated entry can never pass a 64-hex
+      substring test, so D1 creates no false pass. As the finding also concedes, for LOCK v0.1 every extra hash belongs to
+      a pre-D2 package.
+      
+      3. **The failure scenario is hypothetical and outside this build's scope.**
+         - It needs a future LOCK v0.2 or v1.0 to restate v0.1's package (now `8692f47c7650daa8…`, computed read-only) as
+      a full 64-hex string. No LOCK-m file exists yet (the root holds only LOCK-g.md and LOCK-h.md), and what those locks
+      say is decided when they are drafted.
+         - It also needs a launcher that fills `identity_extra.package_sha256` from the process's own
+      `resume.package_sha256()`. No such launcher exists. The only `identity_extra` producers are the self-test harnesses
+      (m_sessions.py:566/1082, m_analyze.py:4305/4317). A launcher that took the value from the lock's package of record
+      would be caught by check (e).
+      
+      What survives is a reasonable note for whoever drafts the later locks (Code): either give the hashes of record a
+      single declared line form, or write historical hashes truncated. That belongs in the lock-drafting step, as the
+      finding's own "fix" says, not in this build.
+  * [nit -> refuter: CONFIRMED, nit] After re-finishing a stopped campaign, the refusal says to offer the adjudication again, which can never be applied there
+    LOCATION:
+      valence_core/m/stages.py:2473-2481 (_refinish_campaign NOT APPLIED message)
+    CLAIM:
+      Since C9(ii), a STOP can carry an unadjudicated pause (its end look fired). If the finish is killed and the campaign
+      is re-invoked with adjudication=, the re-finish completes and exits with 'NOT APPLIED ... the seat's adjudication it
+      offered was not applied -- offer it again'. The next invocation is refused with STAGE ENDED (STOP). Under C9(i) and
+      C3, that ruling enters only as the analyzer's --adjudication file. The message predates this edit, but before C9(ii)
+      a STOP had no pause for a ruling to target.
+    FAILURE SCENARIO:
+      The finish of a blinded free-phase STOP whose end look fired is killed with the end pending. The PI offers the
+      seat's ruling on the end-look pause through run_campaign(adjudication=...). It gets 'offer it again', offers it
+      again, and gets 'STAGE ENDED ... a resume never lifts a STOP'. The ruling is never recorded on the stages side, and
+      nothing in the message points to the analyzer's --adjudication route.
+    EVIDENCE:
+      Scratch probe (probes/probe_notapplied.py; test (e)'s rule, finish killed at the first output write): run 2 with
+      adjudication= returned SystemExit 'NOT APPLIED (campaign-Q-F0): this invocation re-finished the end pending at
+      .../Q-F0_campaign.json (STOP); the seat's adjudication it offered was not applied -- offer it again ...'. Run 3 with
+      adjudication= returned SystemExit 'STAGE ENDED at ... (STOP: ...): a resume never lifts a STOP ...'.
+    PROPOSED FIX:
+      In _refinish_campaign, when pending['status'] == 'STOP', end the message with 'a STOP is never resumed; the seat's
+      ruling on its pause enters VERDICTS as the declared --adjudication file (the seat's C9(i), C3)' instead of 'offer it
+      again'. Keep the current wording for PAUSE and terminal ends.
+    REFUTER:
+      I reproduced the finding, but the reviewer overstates it. It is a wording problem in one message, the build did not
+      introduce it, and the proposed fix leaves the same problem in place for terminal ends.
+      
+      **Reproduction.** I ran the reviewer's stub probe from my scratch dir (`agents/refuter-notapplied`, using `python
+      -I`). It only touches a tempdir and loads no model.
+      - Run 2 (`adjudication=`) on the pending STOP: "NOT APPLIED ... (STOP); the seat's adjudication it offered was not
+      applied -- offer it again".
+      - Run 3, offering it again: "STAGE ENDED ... (STOP: ... its class is withheld (m:318 exception (1))): a resume never
+      lifts a STOP -- the seat adjudicates and re-specifies (m:271)".
+      
+      So the advice "offer it again" leads straight to a refusal.
+      
+      **The behaviour itself is what the rulings intend.**
+      - Seat C9(i)/C3 say the ruling on a fired end look enters only as the analyzer's `--adjudication` file, and
+      `stages.py` need not record it. The re-finish does exactly that: it completes the pending end (finding R1), applies
+      nothing, exits non-zero and records nothing wrong.
+      - The build's own PIN in `_stop_end_look` (stages.py ~2277) already says a pause raised at a STOP enters VERDICTS
+      through `--adjudication`.
+      - Only the advisory clause "offer it again" is wrong. No rule or ruling makes that wording intended, so I can't
+      refute the finding outright.
+      
+      **Why it is overstated.**
+      1. **Not new.** The message at `_refinish_campaign` is byte-identical at HEAD (`git show
+      HEAD:valence_core/m/stages.py`, lines 2329-2335); the D2 + C9(ii) diff does not touch it. At HEAD it already misled
+      in two cases:
+         - any ruling (adjudication or `pi_stop`) offered while a STOP was pending;
+         - C9(i)'s own case. HEAD's terminal branch (HEAD lines 2161-2171) turns a fired end look into a pending end with
+      status PAUSE while the terminal state stands. Re-finishing that with `adjudication=` prints "offer it again", and
+      the next invocation is refused by `resume.refuse_ended` with "CAMPAIGN ENDED ... terminal (m:247)".
+      
+         So the claim that only C9(ii) made the message wrong is false. C9(i) is that exact terminal-PAUSE case, and the
+      seat ruled on it without ordering a change to this message.
+      2. **The proposed fix is inconsistent.** It says to keep the current wording for "PAUSE and terminal ends". A
+      pending PAUSE whose terminal state is set is the C9(i) case and would still say "offer it again". A correct fix
+      would branch on whether the pending end makes the checkpoint ended (a stop, or a terminal state), not on `status ==
+      "STOP"` alone.
+      3. **Out of the build's scope.** The spec lists every required change to `stages.py`, and this message is not among
+      them. The only related requirement is that re-invoking an *ended* STOP checkpoint with `adjudication=` is refused
+      and changes nothing, and that holds (run 3).
+      
+      At most this is a pre-existing nit: worth fixing in the wording for both STOP and terminal-PAUSE ends, but not a
+      defect introduced by D2 + C9(ii).
+
+--- LENS campaign-state
+  COVERED:
+    Read the spec, the seat's C1–C9/D2/D3 rulings, Code's C9/D1–D3 block, and both working-tree diffs in full. Also read
+    run_campaign's loop, _campaign_end, _stop_end_look, _stop_lines, _pause_lines, _refinish_campaign,
+    _complete_campaign/_pend, _campaign_report, _campaign_events, _campaign_outputs, announce_stop/_hit_from_stop, and
+    resume._check_state/_pending_problem/apply_end/refuse_ended/load_or_init/record_session. On the analyzer side:
+    run_verdicts V0–V7, guard_at_last_look and every_look.
+    
+    Real stub checkpoints were built through stages.run_campaign in scratch
+    (/private/tmp/.../step9/agents/campaign-state/runs, abase), with the repo only read.
+    
+    **STOP cases, all behaving as the spec and C9(ii) require:**
+    - Hair STOP at launch 4 (not a multiple of 40).
+    - Hair STOP at 40 with look 1 silent: end_is_look 1, no pause, look 1's messages printed once after the STOP lines.
+    - Hair STOP at 40 with look 1 fired: pause {look, 1} unadjudicated.
+    - Hair STOP at 80 with look 1 fired and adjudicated, then look 2 fired: pauses [look1 adjudicated, look2
+    unadjudicated]; events PAUSE, PAUSE, STOP; looks_count 2.
+    - G-VER STOP at launch 40 (n=39, end look 'end').
+    - G-VER STOP at 41 after a silent look 1 (END LOOK line) and after a fired-and-adjudicated look 1.
+    - G-VER STOP at the first launch (end_look None).
+    - G-VER STOP at launch 7 whose fresh end look fires: pause {end_look, 6}.
+    - STOPs at launches 1–2 with an empty arm: no crash.
+    - Contrast free-phase blinded STOPs on Qwen (trigger at rounds 5, 6, 7, 10) and on OLMo (rounds 5, 6, 8, 10): the
+    end look is byte-identical whatever the round, the session's exclusion has phase free (not pre-pick), and no class
+    appears.
+    
+    **Kill and re-finish:** six scenarios (hair@4, hair@40 fired, G-VER@41, G-VER@0, blinded@7 with fired end look,
+    hair@40 silent), each killed at three points (first output write, second output write, persist_end) and re-finished.
+    With timing and stamps made deterministic, stdout lines, report bytes and excerpt bytes were identical to the
+    uninterrupted run. The checkpoint differed only in the prior path and in provenance/state.
+    
+    **Stopped campaigns cannot be reopened:** re-invoking a stopped campaign with adjudication=, with pi_stop=, or plain
+    is refused (STAGE ENDED) with zero generate calls.
+    
+    **Analyzer on these checkpoints:**
+    - Hair@40 with fired look: refused with neither file, with --pi-stop only, with --adjudication only, and with an
+    adjudication naming the wrong kind. Analyzed with both; the guard label reads 'look 1 at 40 launches, the end look
+    at the STOP'.
+    - G-VER with a fired fresh end look: refused without --adjudication; analyzed with it; --pi-stop refused as surplus.
+    
+    **Mutation probes:** run on scratch copies of stages.py against stages._selftest (56 checks), the m_sessions
+    integration selftest (104), the full m selftest (752, for the most important mutant) and the analyzer battery (379).
+    
+    The production logic in this lens is correct. The findings below are test gaps (mutants that survive every suite)
+    plus one docstring inaccuracy.
+  * [minor -> refuter: CONFIRMED, minor] No test covers a G-VER STOP whose fresh end look fires, so the pause that the analyzer's PIN-9 gate depends on is unpinned
+    LOCATION:
+      valence_core/m/stages.py:2301-2305 (_stop_end_look, fresh end-look branch on a G-VER STOP); tests: stages._selftest
+      C9(ii) block ~3783-3952 and the m_analyze.py battery (_bt_reader)
+    CLAIM:
+      The code is correct today: a G-VER STOP at a non-multiple of 40 whose end look fires appends {kind end_look, look
+      end} and VERDICTS refuses without --adjudication. But no test in any suite builds this case. Every
+      fired-end-look-at-a-STOP test is a hair trigger (stages case (e); analyzer C3-HAIR-ENDLOOK-PAUSE), and every G-VER
+      STOP test has a silent or end_is_look end. A regression that drops the G-VER pause passes everything. The analyzer
+      has no check of its own here: PIN-9 looks only at pauses[-1].
+    FAILURE SCENARIO:
+      Mutant `if not end_look["fired"]:` -> `if gver or not end_look["fired"]:` at stages.py:2302. Scenario: Q-F0,
+      contrast A0 s=0..2 each excluded at forced round 1, then G-VER fails on A0 s=3 (launch 7). The STOP is written with
+      end_look.fired True and pauses []. VERDICTS then runs with no --adjudication and writes Q-F0_VERDICTS.json. That is
+      an analysis past a fired guard the seat never adjudicated, contrary to C9(ii) ('if it fired, a pause ... is
+      appended') and C3.
+    EVIDENCE:
+      Scratch mutant runs: stages._selftest 0/56 fail, m_sessions integration 0/104 fail, full m selftest '752/752 m
+      selftest checks pass', analyzer battery 0/379 fail. Under the mutant, probe a2m.py printed 'MUTANT: status STOP end
+      look fired True pauses []' then 'VERDICTS with no --adjudication: ok written'. The real code (probe a2.py) gives
+      pauses [{at_launches 6, kind end_look, bars [fisher, abs]}], 'neither refused ... (PIN-9)', 'adj ok', and 'adj+pis
+      refused: --pi-stop given but the campaign did not end on a hair-trigger STOP'.
+    PROPOSED FIX:
+      Add a stages._selftest C9 case: G-VER tamper on A0 s=3 after three forced-phase exclusions on A0 s<3. Assert pause
+      {at_launches 6, kind end_look, look end, bars [...]}, fired = [template_breakage] + bars, PAUSE then STOP events,
+      and the end look's messages after the STOP lines. Add the matching analyzer battery case: refused without
+      --adjudication, analyzed with it, --pi-stop refused. Optionally add a V2 structural assertion: at a STOP, a fired
+      end look must be matched by the last pause {kind end_look (or look k for end_is_look), at_launches}.
+    REFUTER:
+      I reproduced the finding on my own scratch probes and could not refute it. Probes are in
+      .../scratchpad/step9/agents/refuter-campaign-state-gver/probe.py, probe2.py and probe3.py. The mutated stages.py was
+      exec'd in memory with __file__ pointing at the repo path. The repo tree was not touched.
+      
+      1. **The code is correct today.** Scenario: Q-F0 under the stub, A0 s=0..2 excluded at forced round 1, and A0 s=3
+      tampered so G-VER fails at launch 7. Real code gives:
+         - STOP on template_breakage, 6 sessions, looks [].
+         - end_look 'end' at 6, fired (fisher + abs).
+         - pauses = [{at_launches 6, kind end_look, look end, bars [fisher, abs], adjudication None}].
+         - excerpt events PAUSE(end_look, 6) then STOP(harness, 6).
+         - The end look's three BAR lines print after the STOP lines.
+         - A re-invocation with adjudication= is refused (STAGE ENDED); nothing is launched and the checkpoint is
+      unchanged.
+      
+      2. **The mutant survives every suite.** The mutation at stages.py `_stop_end_look`, fresh branch, is `if not
+      end_look["fired"]:` -> `if gver or not end_look["fired"]:`. It copies the sibling end_is_look branch's own `if gver
+      or not res["fired"]`, so it is a plausible copy-paste regression. Under it the same scenario gives pauses [], events
+      [STOP] only and report pauses [], while end_look.fired is still True. Results under the mutant:
+         - stages._selftest: 0 of 56 fail.
+         - analyzer battery: 0 of 379 fail.
+         - full m_sessions run_selftest: '752/752 m selftest checks pass'.
+      
+         As a sanity mutant I used `if True or not ...`. It is caught: 2 of 379 analyzer checks fail
+      (C3-HAIR-ENDLOOK-PAUSE plus coverage) and 2 of 56 stages checks fail (case (e) and the plant check). So the suites
+      do run the mutated module in-process, and only the G-VER-specific drop goes unseen.
+      
+      3. **The coverage claim holds.**
+         - Stages C9 cases (a)–(e): (a) is a silent hair STOP, (b) a hair STOP at 40, (c) a G-VER STOP with end_is_look,
+      (d) a G-VER STOP at launch 1 with None, and (e) a hair STOP with a fired fresh end look.
+         - The analyzer's G-VER cases are gver0 (no launch), gver1 at 4 launches (silent end look) and G-VER at 41
+      (end_is_look). Its only fired-fresh case is the hair STOP at 6 (C3-HAIR-ENDLOOK-PAUSE).
+         - m_sessions' G-VER campaign check (m_sessions.py ~1375) asserts neither end_look nor pauses.
+      
+      4. **The analyzer has no check of its own here.** m_analyze.py ~1993-2018 checks only that a STOP with launches has
+      an end_look, then that pauses[-1] is adjudicated (PIN-9). A G-VER bar needs no PI-stop (PIN-8). So under the mutant
+      VERDICTS would pass without --adjudication, past a fired guard nobody adjudicated.
+      
+      **Why it is not refuted.** Spec §2's test list does not name this exact case. But spec §2's build rule ('if it
+      fired, a pause ... is appended') covers G-VER STOPs. §3 asks for 'A STOP whose end look fired ... refused without
+      --adjudication ...; analyzed with it ... Both directions in the battery'. Its parenthetical says a hair STOP 'still
+      also' needs PIN-8, which treats the adjudication-only path as the primary case, and only a G-VER STOP can exercise
+      that path; the hair case needs both files. Nothing in the spec or the seat's rulings makes leaving this branch
+      unpinned intended.
+      
+      **Severity.** It is a test gap with no behaviour defect, so I keep it at minor. The proposed fix is sound: a
+      stages._selftest case plus an analyzer battery case covering refused without --adjudication, ok with it, and
+      --pi-stop refused.
+  * [minor -> refuter: CONFIRMED, minor] Silent-look cells at a multiple of 40 (hair STOP at 40, G-VER STOP at 41) are untested; three mutants survive
+    LOCATION:
+      valence_core/m/stages.py:2294-2300 (_stop_end_look, end_is_look branch) and 2321-2325 (_stop_lines); tests:
+      stages._selftest C9 block cases (b) and (c)
+    CLAIM:
+      The spec and this lens name the multiple-of-40 cells as look fired or not fired, announced earlier or pre-empted.
+      Tests cover only fired looks: (b) is a hair STOP at 40 with look 1 fired; (c) is a G-VER STOP at 41 after a fired,
+      adjudicated look 1. Analyzer C3-LASTLOOK-STOP-ENDISLOOK uses a silent look but never checks stages' stdout or
+      pauses. The silent variants are pinned by nothing, though the current code handles them correctly: probe p1 (hair@40
+      silent) gives end_is_look 1, pauses [], and look 1's three messages after the STOP lines; probe p9m (G-VER@41
+      silent) gives one END LOOK line and no re-announcement.
+    FAILURE SCENARIO:
+      (i) Mutant `if gver or not res["fired"]` -> `if gver` at 2297: a hair STOP at launch 40 with a silent look 1 writes
+      pause {kind look, look 1, bars [], adjudication None}, and VERDICTS (PIN-9) then demands a seat adjudication of a
+      look that never fired. (ii) Mutant at 2321 adding `or not end_look["fired"]`: the same STOP prints 'END LOOK
+      campaign-Q-F0: the end look is look 1 (at 40 launches)' in place of look 1's results, which were never announced.
+      The look's counts never reach stdout. (iii) Mutant at 2321 adding `and end_look["fired"]`: a G-VER STOP at 41 after
+      a silent look 1 re-prints look 1's messages (6 'look=1' lines instead of 3 plus END LOOK).
+    EVIDENCE:
+      Scratch mutants silent_hair40_pause and silent_hair40_endlook_line each fail 0/56 in stages._selftest, 0/104 in the
+      m_sessions integration selftest and 0/379 in the analyzer battery. gver_silent_reannounce fails 0/56, 0/104 and
+      0/379. Under the mutants, probe p1m.py printed "pauses [{'adjudication': None, 'at_launches': 40, 'bars': [],
+      'kind': 'look', 'look': 1}]" for (i), and the END LOOK line replacing the three BAR look=1 lines for (ii). Probe
+      p9m.py printed 'look=1 lines printed: 6 | END LOOK lines: 0' for (iii) against '3 | 1' on the real code.
+    PROPOSED FIX:
+      Add two stages._selftest C9 cases. First, a hair STOP on A0s s=19 at launch 40 with no degeneracy: assert
+      end_is_look 1, pauses [], and announced lines == STOP lines + look 1's messages (and the same after kill and
+      re-finish). Second, a G-VER tamper on A0 s=20 with a silent look 1: assert pauses [] and announced lines == STOP
+      lines + the single END LOOK line, with look 1's messages appearing exactly once in the run's stdout.
+    REFUTER:
+      I reproduced the claim myself, using my own mutation runner and probes on scratch copies (in
+      .../scratchpad/step9/agents/refuter-silentlook/). The repo tree was not touched. As the reviewer says, the code in
+      valence_core/m/stages.py (_stop_end_look at about line 2294 and _stop_lines at about line 2321) is correct. The
+      defect is a test-coverage gap only, so minor is the right severity.
+      
+      How I checked:
+      1. I applied the three mutants exactly as stated and injected each one as valence_core.m.stages. Results:
+         - stages._selftest: every mutant passes 56/56.
+         - m_sessions._selftest (the driver integration checks): every mutant passes 104/104.
+         - m_analyze battery: every mutant passes 379/379.
+         - Baseline: the same counts, all passing.
+         - Control mutant (`if gver or not res["fired"]` changed to `if not res["fired"]`): killed. It raises "a G-VER
+      STOP raises no pause on a look already announced" in test (c). So the runner really does run the mutated module.
+      2. Probes:
+         - Real code, hair STOP at A0s s=19 on launch 40 with a silent look 1: STOP, 40 sessions, end_is_look 1, pauses
+      [], events [STOP]. Stdout is the STOP lines followed by look 1's three BAR messages.
+         - Real code, G-VER STOP at 41 (tamper A0 s=20) with a silent look 1: 3 look=1 lines and 1 END LOOK line.
+         - Mutant A: pauses [{at_launches 40, kind look, look 1, bars [], adjudication None}] and a PAUSE event before the
+      STOP. m_analyze.py about line 2003 (PIN-9) refuses any unadjudicated last pause, so VERDICTS would demand a ruling
+      on a look that never fired.
+         - Mutant B: the three BAR look=1 lines are replaced by "END LOOK campaign-Q-F0: the end look is look 1 (at 40
+      launches)", so look 1's counts are never announced.
+         - Mutant C: 6 look=1 lines and 0 END LOOK lines (a re-announcement).
+      
+      Why the spec does not make the gap intended:
+      - §2 build (b) states the conditional "if it fired, the pause ... is appended". The not-fired direction is therefore
+      specified behaviour.
+      - The tests are required "both directions", and the repo's convention is mutation-sensitive tests.
+      - The listed case (c) does not fix whether look 1 is fired or silent.
+      - The build tests only the fired direction of the hair-at-40 branch (case (b), about stages.py:3900). It tests the
+      G-VER-at-40/41 branch only with a fired, adjudicated look (case (c)). The silent hair-at-40 cell is arguably the
+      commoner real case, since bars rarely fire.
+      
+      One small overstatement in the evidence: the analyzer check C3-LASTLOOK-STOP-ENDISLOOK (m_analyze.py about line
+      4785) does assert `ck_ls["campaign"]["pauses"] == []` on the silent G-VER@41 run. It does not check stdout, though,
+      and none of the three mutants changes the G-VER@41 pauses, so the conclusion stands.
+      
+      Why not more than minor: the code is correct today, and the regressions these mutants stand for are either fail-safe
+      (a spurious PIN-9 refusal) or affect only stdout announcements. The counts stay in the checkpoint and the report.
+      
+      The proposed fix stays within the spec's scope. Both cases go in stages._selftest:
+      - a hair STOP on A0s s=19 with no degeneracy, also run killed and then re-finished;
+      - a G-VER tamper on A0 s=20 with a silent look 1, asserting the announced lines.
+  * [nit -> refuter: CONFIRMED, nit] The _stop_end_look docstring says a re-finish re-derives the pending end look; no re-finish ever calls it
+    LOCATION:
+      valence_core/m/stages.py:2259-2263 (_stop_end_look docstring)
+    CLAIM:
+      The docstring says _stop_end_look is 'A pure function of the checkpoint's sessions and looks and the hit, so a
+      re-finish re-derives exactly the end it recorded as pending.' In fact _refinish_campaign passes the on-disk
+      end_pending block to _complete_campaign. In _pend, have is that same block, so same_json(have, pending) compares it
+      with itself. Nothing on the re-finish path recomputes the end look or the pause from the sessions.
+    FAILURE SCENARIO:
+      A reader or auditor relies on the docstring and believes a re-finish validates a pending STOP's end_look and pause
+      against its sessions. A pending block that disagrees with its sessions is re-finished as it stands and printed
+      through _stop_lines, with no END PENDING MISMATCH. Examples: a hand-edited pending end, or a mutated writer whose
+      pending end_look is None at n > 0 under the same package hash. (A pending block from another package is already
+      refused by load_or_init's identity diff.)
+    EVIDENCE:
+      stages.py:2470-2473: `hit = _hit_from_stop(pending["stop"])` and `lines = _stop_lines(..., pending.get("end_look"),
+      pending.get("pause"))`, then `_complete_campaign(..., pending, ...)`. In _pend (1263-1270), `have =
+      _resume.pending_end(ckpt)` is the same dict as `pending`, so the mismatch branch cannot fire on a re-finish.
+    PROPOSED FIX:
+      Reword the docstring: the end look is computed once, at the finish; a re-finish reuses the persisted pending block
+      and re-derives only the lines, through _stop_lines, and the outputs. Alternatively, make it true: have
+      _refinish_campaign recompute _stop_end_look(unit, ckpt, hit) and refuse with END PENDING MISMATCH if it differs from
+      pending's end_look or pause.
+    REFUTER:
+      I could not refute this. The claim checks out against the uncommitted code. In valence_core/m/stages.py,
+      _stop_end_look (new in this diff, docstring at 2259-2263) has one call site, line 2212, inside _campaign_end.
+      _campaign_end has one caller, line 2178, which is run_campaign's launch path after the loop. _refinish_campaign
+      (2458-2480) never calls _stop_end_look or campaign_look. It takes pending["end_look"] and pending.get("pause")
+      straight from the on-disk end_pending block, feeds them to _stop_lines to rebuild the lines only, and passes that
+      same `pending` to _complete_campaign. Inside _pend, `have = _resume.pending_end(ckpt)` is that same on-disk block,
+      so `same_json(have, pending)` compares the block with itself and END PENDING MISMATCH cannot fire on a campaign
+      re-finish. resume._pending_problem (resume.py:592-618) only checks structure: end_look and pause must each be a dict
+      or None. Nothing checks them against the sessions. The gate stages are different. _finish_gate there does re-derive
+      the end from the sessions and the persisted hit, which is where _pend's comparison means something. The campaign
+      path has never done that, before or after this edit. The only way to get a recomputation is a kill before
+      _write_pending: the hit's session was never written, so the next invocation re-launches it. That is a re-run, not a
+      "re-finish" in the codebase's sense (an end pending on disk, nothing launches). The spec (section 2, "One helper
+      builds the STOP end's lines from (hit, the pending end's end_look and pause, the checkpoint) and is used by BOTH the
+      finish and `_refinish_campaign`") makes reusing the persisted pending block the intended behaviour. So the code is
+      correct and only the new docstring's sentence "so a re-finish re-derives exactly the end it recorded as pending" is
+      wrong. The fix is to reword the docstring: the end look is computed once at the finish, and a re-finish reuses the
+      persisted block and rebuilds only its lines via _stop_lines. This is a documentation inaccuracy with no behavioural
+      effect, so nit is the right severity. The spec's intent does not make the docstring true.
+
+--- LENS blinding-and-tests
+  COVERED:
+    Read in full: the spec (spec_d2.md), the seat's rulings C1–C9 and D1–D3, Code's C9 and D1–D3, and both working-tree
+    diffs (stages.py 956 lines, m_analyze.py 582 lines). Also read the code paths these depend on: run_campaign's loop,
+    _campaign_end, _stop_end_look, _stop_lines, _pause_lines, _campaign_report, _campaign_outputs, _campaign_events and
+    _refinish_campaign; announce_stop, _hair_hit, _verify_hit, _hit_event and _stop_record; campaign_look, _read_flags
+    and _prepick; bars.stage_end_eval (sham-only); scaffold.SessionLog.record (domain depends on the forced phase only);
+    both runners' free-phase paths; resume.refuse_ended and _ended_message.
+    
+    (1) BLINDING. No leak found.
+    - By reading: campaign_look reads only sham rounds, forced-phase exclusions, domain (forced-only), the contrast
+    arm's first read and the contrast arm's forced rounds. A contrast free-phase trigger session is always domain with
+    exclusion phase not "forced", so nothing in the end look depends on its free rounds, class or round.
+    - _stop_lines prints only announce_stop's phase-only line plus the end look's bar messages (or the END LOOK line).
+    The report and the excerpt's PAUSE event carry the same pick-free end-look dict. In case (b), the look at 40 was
+    already in the pre-edit report's `looks`, so printing it now adds nothing.
+    - Probe (mut/probe_blind.py, real code): blinded contrast free-phase STOP at launch 7, with the trigger at free
+    round n=5, 7, 9 and 10, and with extra text in the triggering round. Stdout (paths normalised), the report
+    (provenance and timing removed) and the non-STOP excerpt events were byte-identical across all variants; the only
+    difference was the provenance timestamp. The new stdout adds three look=end BAR lines after the phase-only STOP
+    line, and they contain no class, round, n or pick.
+    
+    (2) TEST STRENGTH.
+    - Counts: EXPECTED_CHECKS 376 → 379 equals the executed B.chk count. Coverage ids go 387 → 390: one renamed
+    (STOP-CADENCE → STOP-ENDISLOOK), three added, none duplicated. stages selftest checks go 48 → 56; m_sessions 744 →
+    752.
+    - No old check was weakened. The rewrites keep or strengthen their assertions, the cadence-fallback label is still
+    asserted by a direct call, and the `_GUARD_*` key swap is inert (no reader). One small loss: the lock's
+    committed-blob read in the non-stub run_time licensed case is now stubbed via `_committed`, but the temp-repo
+    licence test and the 'lock edited' case still exercise it.
+    - Assertions: the stages-side AssertionErrors in _stop_end_look and _stop_lines are invariant guards that cannot be
+    reached by construction. No test-side condition is vacuous.
+    - Mutation probes ran on scratch copies only (mut/*.py, outputs in mut/out/). The harness was validated against
+    mutants known to be killed in all three suites.
+      - 17 new stages mutants ran through stages._selftest. 11 were killed, including blinding leaks into the end look,
+    leaks of the round into the end look, event order, finish lines, the hair pause kind, the end look dropping the
+    stopped session, contrast reads over all reads, form-checking only on the stub, and `_record_licence` without the
+    package.
+      - 6 stages mutants survived. All 6 also survive the analyzer battery and the full m_sessions selftest:
+    endislook_any_look, hair_unfired_endline, hair_unfired_silent, licence_f_prefix16, leak_round_unprefixed_line,
+    leak_class_unprefixed_line.
+      - 6 analyzer mutants: 3 killed (the V2 refusal needing looks, the end_is_look label at a STOP, and the none
+    baseline), 3 survived (v2_refusal_gver_only, at_stop_not_complete, pin9_skips_look_pause_at_stop).
+    - The current code is correct in every surviving case. Probe mut/probe_cases.py shows the real code at a hair STOP
+    at launch 42 gives end look 'end' at 42, and a silent look 1 at a hair STOP at 40 prints its three messages. The
+    findings below are test gaps in new behaviour, not wrong output today.
+    
+    Nothing was written in the repo, nothing under data/m/, no git command beyond read-only show/diff/status, and no
+    model was loaded. Scratch:
+    /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step9/agents/blinding-and-tests/
+  * [substantive -> refuter: CONFIRMED, substantive] No test reaches a STOP past a cadence look that is not on a multiple of 40
+    LOCATION:
+      valence_core/m/stages.py:2294 (_stop_end_look's end_is_look guard); tests at stages.py:3862-3961 and m_analyze.py
+      battery C3-*
+    CLAIM:
+      The C9(ii) branch for a STOP after a cadence look at a non-multiple of 40 (evaluate the end look at n; do not reuse
+      the last cadence look) is not exercised by any suite. Every STOP test sits at n=0, 3, 4, 5, 6, 7 (no looks) or
+      exactly 40. A mutant that drops the n%40 / at_launches==n guard survives all three suites.
+    FAILURE SCENARIO:
+      Mutant 'endislook_any_look' changes `if n % LOOK_EVERY == 0 and last_look is not None and last_look["at_launches"]
+      == n:` to `if last_look is not None:`. A hair-trigger STOP at launch 42, after a silent look 1 at 40, then records
+      end_look = look 1 (end_is_look 1, at_launches 40) instead of look 'end' at 42. The two later launches are never
+      evaluated, and VERDICTS would name 'look 1 at 40 launches, the end look at the STOP'. This is the C9(ii) defect
+      again, for most STOP positions in a 160–320-launch campaign. stages selftest passes 56/56, m_sessions 752/752, and
+      the analyzer battery 379/379.
+    EVIDENCE:
+      mut/out/stages mutant run: 'MUTANT endislook_any_look: 0 of 56 checks fail'.
+      mut/out/both_endislook_any_look_analyze.txt: 379/379. mut/out/both_endislook_any_look_sessions.txt: 752/752.
+      mut/probe_cases.py on the real code: 'status STOP, sessions 42, looks [40], end_look look=end at=42'. On the mutant:
+      'end_look look=1 at=40 end_is_look=1'.
+    PROPOSED FIX:
+      Add a stages._selftest case, for example a hair STOP at A0 s=21 (launch 42, after the A0s floor) or a G-VER STOP at
+      launch 43. Assert look=='end', at_launches==n, no end_is_look, and the lines after the STOP lines. Optionally add a
+      battery label check ('the end look at the STOP (at 42 launches)'). EXPECTED_CHECKS and the coverage ids move with
+      it.
+    REFUTER:
+      I could not refute the claim: I reproduced every part of it, read-only, using only scratch copies.
+      
+      **The guard and which tests reach it**
+      - The guard is at stages.py:2294 in `_stop_end_look`: `if n % LOOK_EVERY == 0 and last_look is not None and
+      last_look["at_launches"] == n:`. The terminal branch has the same condition at :2224.
+      - The C9(ii) tests in `stages._selftest` stop at these points:
+        - (a) a hair STOP at n=4, with no looks;
+        - (b) a hair STOP at n=40;
+        - (c) a G-VER STOP at launch 41, which records n=40 because the quarantined record is not counted;
+        - (d) n=0;
+        - (e) a blinded free-phase STOP at n=7, with no looks.
+      - The analyzer battery's STOP campaigns sit at n=3, 4, 6 and 40 (the G-VER STOP at 41).
+      - The STOP case in m_sessions (`rhc`, A0 s=1) is around launch 3.
+      - So no suite builds a STOP after a recorded cadence look at an n that is not a multiple of 40. That is the only
+      domain where the "reuse the last cadence look" form differs from "evaluate at n".
+      
+      **Mutant runs**
+      The mutant replaces the guard with `if last_look is not None:`, only in `_stop_end_look`, on my own scratch copy in
+      `agents/refuter-endislook-coverage`:
+      - stages `_selftest`: 56/56 pass, on both the real copy and the mutant;
+      - the analyzer battery run against the mutant: 379/379;
+      - `m_sessions.run_selftest` against the mutant: 752/752.
+      
+      **Probe: hair STOP at A0 s=21, contrast free phase**
+      - Real code: STOP, 42 sessions, looks [40], `end_look` look=end at=42. Its look=end messages follow the STOP line.
+      - Mutant: `end_look` look=1 at=40 with `end_is_look` 1. Look 1's messages are printed again after the STOP line, and
+      launches 41–42 are never evaluated.
+      - The analyzer's V2 check (m_analyze.py ~1993) only requires that some `end_look` exists at a STOP with launches. It
+      does not check `end_look.at_launches == len(sessions)`, so nothing downstream catches the mutant's output either.
+      
+      **Why this is not refuted by the spec**
+      - The spec's §2 test list says "hair STOP at a launch count that is not a multiple of 40". Case (a) at n=4 meets
+      that literally, so the builder did satisfy the letter of the list.
+      - But n=4 comes before any cadence look. It can only tell "end look present" apart from "no end look". It cannot
+      tell the C9(ii) fix apart from a regression to the old meaning (the verdict names the last cadence look at a STOP).
+      For STOPs past look 1, that regression is exactly the defect the seat ruled on.
+      - Neither the spec nor the seat's rulings make the untested branch intended behaviour.
+      
+      **Severity**
+      The production code is correct, so this is a test gap, not wrong behaviour. I still rate it substantive: the branch
+      that distinguishes the fix from the defect has no committed check, and that holds for most STOP positions in a
+      160–320-launch campaign. The package and battery are about to be locked and re-run as G-ANL-F0's manifest of record,
+      so any later edit to `stages.py` could bring the defect back undetected.
+      
+      **Suggested fix (stages selftest only)**
+      Add a case like the probe above: a hair STOP at A0 s=21, launch 42. Assert look=='end', at_launches==42, no
+      `end_is_look`, and look=end lines after the STOP lines. Optionally also add a G-VER STOP at launch 43 and the
+      battery label check. `EXPECTED_CHECKS` and the coverage ids would change with it.
+  * [minor -> refuter: CONFIRMED, minor] A hair STOP on a multiple of 40 whose look is silent is untested
+    LOCATION:
+      valence_core/m/stages.py:2321 (_stop_lines) / test (b) at stages.py:3893
+    CLAIM:
+      The spec's case (b) says the pre-empted look's bar messages are the end's lines whether or not the look fired. Test
+      (b) covers only the fired look. Two mutants that mishandle the silent look survive every suite.
+    FAILURE SCENARIO:
+      Mutant 'hair_unfired_endline' changes the condition to `(_is_gver(hit) or pause is None)`. A hair STOP at launch 40
+      with a silent look 1 then prints 'END LOOK campaign-Q-F0: the end look is look 1 (at 40 launches)', which wrongly
+      says the look was already announced, and look 1's three BAR messages never reach stdout. Mutant
+      'hair_unfired_silent' prints nothing after the STOP lines. Both pass stages 56/56, the analyzer 379/379 and
+      m_sessions 752/752.
+    EVIDENCE:
+      mut/out/hair_unfired_endline.txt, mut/out/hair_unfired_silent.txt and
+      mut/out/both_hair_unfired_*_{analyze,sessions}.txt: 0 failures each. mut/probe_cases.py: the real code prints 'STOP
+      ...(A0s s=19)...' then three 'BAR ... look=1' lines; the endline mutant prints 'END LOOK campaign-Q-F0: the end look
+      is look 1 (at 40 launches)' in their place.
+    PROPOSED FIX:
+      Add the silent variant of test (b): the same run without the A0s n=6 degeneracy rule. Assert announced == STOP lines
+      + look 1's three messages, pauses == [], and end_is_look 1.
+    REFUTER:
+      I reproduced the finding and could not refute it. All work was on scratch copies under
+      /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step9/agents/refuter-silentlook-b;
+      the repo was not changed. The reviewer's stages_none.py matches the current
+      /Users/jasondwyer/Documents/code/jspace-lab/valence_core/m/stages.py byte for byte.
+      
+      1. The real code does what the spec asks. For a hair STOP at launch 40 (A0s s=19) with a silent look 1,
+      `_end_look_at_stop` returns (look 1 with end_is_look 1, no pause). `_stop_lines` then prints the 2 STOP lines
+      followed by look 1's three 'BAR ... silent ... look=1' messages. This is spec §2 case (b): the look was never
+      announced, so its bar messages are the end's lines, fired or not. The normal path also announces silent cadence
+      looks (m_sessions.py ~1835 checks look 1's silent messages after 'campaign A0s s=19 valid'). So printing them here
+      is the consistent behaviour, and nothing in the spec or rulings makes the silent case an exception.
+      
+      2. Both mutants break that case. With 'endline' (`and (_is_gver(hit) or pause is None)`), the silent look prints
+      'END LOOK campaign-Q-F0: the end look is look 1 (at 40 launches)' and look 1's messages never appear. With 'silent'
+      (return the STOP lines only when pause is None), nothing follows the STOP lines. In the fired-look case both mutants
+      print the same as the real code, which is why test (b) cannot tell them apart.
+      
+      3. Both mutants survive every suite, as the finding says:
+         - stages._selftest: 56/56 for each;
+         - m_analyze battery: 379/379 for each;
+         - m_sessions run_selftest: 752/752 for each.
+      
+      4. Nothing else covers this case:
+         - stages test (a) is a hair STOP at launch 4 (not a multiple of 40);
+         - stages test (b) has look 1 fired;
+         - stages test (c) is a G-VER STOP;
+         - the analyzer battery's hair STOPs are at launches 3 and 6;
+         - m_sessions' hair STOP (rhc, A0 s=1) is at an early launch, in both LW_CASES and R1_CASES.
+      
+      The only point in the build's favour is that the spec's list of required tests names only the fired variant of (b).
+      But the specified behaviour covers both variants, and the repo standard is mutation-sensitive tests in both
+      directions, so this is a real gap.
+      
+      It is minor because the checkpoint, report and analyzer outputs are the same under both mutants; only the STOP's
+      stdout announcement goes wrong.
+      
+      The fix stands: add the silent variant of test (b), i.e. rule_b without the A0s n==6 degeneracy rule. Assert:
+      - announced lines == STOP lines + look 1's three messages;
+      - pauses == [];
+      - end_look end_is_look == 1;
+      - no 'END LOOK' line.
+  * [minor -> refuter: CONFIRMED, minor] (f) 'verbatim 64-hex' is not distinguished from a 16-hex prefix
+    LOCATION:
+      valence_core/m/stages.py:600 (licence_problems (f)); test lock bodies at stages.py:3301
+    CLAIM:
+      The D2 tests use lock texts that name each sha either in full or not at all, so a (f) that accepts a lock naming
+      only the sha16 survives. Lock documents in this repo routinely abbreviate hashes to 16 hex plus '…' (for example
+      D1's `4b49658739523c60…`).
+    FAILURE SCENARIO:
+      Mutant 'licence_f_prefix16' changes `if v not in ltext` to `if v[:16] not in ltext`. A LOCK v0.1 that names
+      `8692f47c7650daa8…` and `24b858c019f5155f…` instead of the full hashes would license every non-stub stage. All
+      suites pass.
+    EVIDENCE:
+      mut/out/licence_f_prefix16.txt: 0 of 56 fail. mut/out/both_licence_f_prefix16_{analyze,sessions}.txt: 379/379 and
+      752/752.
+    PROPOSED FIX:
+      Add a lock body that names each sha's 16-hex prefix only (and one with a '…'-abbreviated form) to the D2
+      licence_problems test. Expect exactly one '(f) does not name' problem per key.
+    REFUTER:
+      I reproduced the claim myself; I did not rely on the reviewer's output files. All probes ran on in-memory scratch
+      copies under scratchpad/step9/agents/refuter-licence-f-prefix, and no repo file was touched.
+      
+      1. **The production code is correct.** valence_core/m/stages.py, check (f) in licence_problems, tests `if v not in
+      ltext` against the full 64-hex value. I ran it directly on a lock whose text names only the abbreviated forms
+      `<asha[:16]>…` and `<pkg[:16]>…`. It returns two problems, "does not name identity_extra's analyzer_sha256 …" and "…
+      package_sha256 …". So the current build does not license such a lock.
+      
+      2. **The tests do not pin the "verbatim 64-hex" property.** The D2 lock bodies at stages.py ~3301 are L, noana,
+      nopkg, ana3 and pkg3. The end-to-end bodies built by lock_naming are lock_both, lock_nopkg and lock_pkg5. Every one
+      of them names each sha either in full or not at all.
+         - I installed the mutant `if v[:16] not in ltext` by exec of the edited function source into the module
+      namespace. `stages._selftest` still passed 56/56, the same as the unmutated run (56/56).
+         - On the prefix-only lock, the mutant's licence_problems returns `[]`. A LOCK v0.1 that abbreviates both hashes
+      would therefore pass (f) under the mutant.
+         - Neither scripts/m_analyze.py nor scripts/m_sessions.py references licence_problems or the "does not name"
+      string. Their batteries cannot catch the mutant, which matches the reviewer's 379/379 and 752/752.
+      
+      3. **The spec makes the property intended, and the tests required to cover it.** Spec §1.2(f) says the lock names
+      both shas "verbatim (the 64-hex strings appear in the lock's committed bytes)". §1.5 requires the self-tests to be
+      "both directions, each mutation-sensitive", and it lists "a lock text that does not name the analyzer sha / the
+      package sha". A test that cannot tell a full-hash match from a 16-hex-prefix match does not test "verbatim". This
+      mutation is realistic, because repo documents routinely abbreviate hashes to 16 hex plus "…".
+      
+      The defect is a test-coverage gap only; no runtime behaviour is wrong. That fits "minor".
+      
+      **Fix:** add lock bodies to the D2 licence_problems test that name each sha's 16-hex prefix only, one plain and one
+      with "…". Expect exactly one "does not name identity_extra's <key>" problem per key.
+  * [minor -> refuter: CONFIRMED, minor] Analyzer STOP checks cover only G-VER STOPs and end_look-kind pauses
+    LOCATION:
+      scripts/m_analyze.py:1993 (V2 refusal) and :2003 (PIN-9); battery C3-STOP-NO-ENDLOOK-REFUSED at m_analyze.py:4817
+    CLAIM:
+      C3-STOP-NO-ENDLOOK-REFUSED removes the end look only from G-VER STOPs (at 41 and at 5), and every STOP-time pause
+      routed through PIN-9 in the battery has kind 'end_look'. Two analyzer mutants survive: one exempts hair-trigger
+      STOPs from the V2 refusal, and one skips PIN-9 for a 'look'-kind pause at a STOP (case (b): hair STOP at 40, look 1
+      fired).
+    FAILURE SCENARIO:
+      In mutant 'v2_refusal_gver_only', a scaffold_absorption STOP checkpoint with sessions and no end_look, offered with
+      a PI-stop record, is analyzed through the cadence fallback or 'no look reached' instead of refused 'records no end
+      look at its STOP'. In mutant 'pin9_skips_look_pause_at_stop', a hair STOP at 40 whose look 1 fired is analyzed on
+      the PI-stop record alone, without the seat's adjudication of pause {look, 40}. The battery passes 379/379 under
+      both.
+    EVIDENCE:
+      mut/out/an_v2_refusal_gver_only.txt: '0 FAIL lines; 379/379'. Running mutate_analyze.py on
+      pin9_skips_look_pause_at_stop: '0 FAIL lines; 379/379'.
+    PROPOSED FIX:
+      Add the hair STOP checkpoint (cp_h, with its PI-stop record) with end_look removed to v_nel and expect the V2
+      refusal. Add a battery run of a hair STOP at launch 40 whose look 1 fires, and expect refusal without an
+      adjudication naming {look, 40}.
+    REFUTER:
+      I reproduced the claim on scratch copies. The repo was not touched, and my mutation runner and probe are in
+      agents/refuter-stopchecks/.
+      
+      1. Both mutants survive the uncommitted battery. With no mutant the battery gives 379/379. Mutant
+      `v2_refusal_gver_only` also gives 379/379. It adds `and (ck.get("stop") or {}).get("bar") != "scaffold_absorption"`
+      to the V2 refusal at scripts/m_analyze.py:1993. Mutant `pin9_skips_look_pause_at_stop` also gives 379/379. It adds
+      `and not (ended == "STOP" and pauses[-1].get("kind") == "look")` to the PIN-9 guard at :2003.
+      
+      2. The mutants really change the analyzer's output. I put a probe into scratch copies of the battery, right after
+      C3-HAIR-ENDLOOK-PAUSE.
+         - First mutant: I removed the end look from the hair STOP checkpoint cp_h (3 launches) and offered it with a
+      matching PI-stop record. The current code refuses it with "records no end look at its STOP (the seat's C9(ii))". The
+      mutant analyzes it and writes outputs.
+         - Second mutant: I ran a hair STOP at launch 40 with stages' own case-(b) rule. stages records the pause
+      [('look', 40, 1, None)], end_is_look 1, bar scaffold_absorption.
+           - Current code: with the PI-stop record only, refused by PIN-9; with the PI-stop record and an adjudication
+      naming {look, 40}, analyzed.
+           - Mutant: with the PI-stop record only, analyzed with no adjudication by the seat; with both files, refused
+      ("--adjudication given but the last pause is adjudicated").
+         - My probe broke later battery checks by reusing names in the shared scope. Every probe line printed before that,
+      so the results above stand.
+      
+      3. The battery cannot catch either mutant:
+         - C3-STOP-NO-ENDLOOK-REFUSED (around :4817) removes the end look only from the G-VER STOPs at 41 and at 5.
+         - Every STOP-time PIN-9 check in the battery uses an end_look-kind pause: C3-HAIR-ENDLOOK-PAUSE at launch 6.
+         - Case (b) (hair STOP at 40, look 1 fired, pause kind "look") is tested only in stages._selftest (stages.py
+      around :3895-3927). That test checks the checkpoint and the refused stages re-invocation. It never runs the
+      checkpoint through the analyzer's PIN-9 and PIN-8 paths.
+      
+      4. Neither the spec nor the seat's rulings make this gap intended. spec §3 requires that "A STOP whose end look
+      fired (its pause appended unadjudicated) goes through PIN-9's existing path ... Both directions in the battery." In
+      case (b) the end look is look 1 and it fired, so that sentence covers it too, and §2 names case (b) explicitly. §3
+      also makes the V2 refusal apply to any STOP-ended campaign with a launch, whatever its bar, and the battery
+      exercises only the G-VER bars. §1.5 sets the repo's standard that tests be mutation-sensitive.
+      
+      The production code itself is correct: the V2 refusal ignores the bar and PIN-9 ignores the pause kind. So this is a
+      test-sensitivity gap, not a behaviour bug, and "minor" is the right severity. The reviewer's fix (add cp_h without
+      its end look, plus its PI-stop record, to v_nel; and add a battery run of case (b) through PIN-9 and PIN-8 in both
+      directions) is appropriate. It would raise EXPECTED_CHECKS and the coverage ids.
+  * [minor -> refuter: CONFIRMED, minor] The non-STOP side of the at-STOP label is checked only at COMPLETE
+    LOCATION:
+      scripts/m_analyze.py:1036 (at_stop = ended == "STOP"); battery label checks at m_analyze.py:4784
+    CLAIM:
+      The only negative check of the new STOP-specific label is COMPLETE at 42. The CAP run the battery analyzes
+      (C3-CAP-SHAM-ONLY) has its label and sentence unchecked, and there is no PI-STOP run with launches, so widening
+      at_stop beyond STOP survives.
+    FAILURE SCENARIO:
+      Mutant 'at_stop_not_complete' sets `at_stop = ended != "COMPLETE"`. A CAP or PI-STOP campaign's VERDICTS sentence
+      then reads 'the guard at the unit's last look (the end look at the STOP (at N launches))' with at_stop True. The
+      battery passes 379/379.
+    EVIDENCE:
+      mut/out/an_at_stop_not_complete.txt: '0 FAIL lines; 379/379 m_analyze battery checks pass'.
+    PROPOSED FIX:
+      In C3-CAP-SHAM-ONLY (or a PI-STOP-with-launches run), assert guard_last_look.label == 'the end look at N launches'
+      and at_stop False.
+    REFUTER:
+      I reproduced the finding on my own and could not refute it.
+      
+      1. The code. `scripts/m_analyze.py:1036` sets `at_stop = ended == "STOP"`. When `campaign.end_look` is present,
+      `guard_at_last_look` now picks the label from `ended`: "the end look at the STOP (at N launches)" or "look k at N
+      launches, the end look at the STOP" at a STOP, and the old labels otherwise. At HEAD the label did not depend on
+      `ended` when an end look was present. The edit therefore adds a new dependency, and the spec (section 3) requires
+      "otherwise the labels are unchanged" for COMPLETE, CAP and PI-STOP.
+      
+      2. CAP campaigns do carry an end look. `stages._campaign_end`'s terminal branch (around line 2216) evaluates
+      `end_look` for every TERMINAL status, including CAP and PI-STOP. So a mutant that sets at_stop True on CAP would
+      print the STOP label in the CAP campaign's VERDICTS sentence. That sentence includes the guard clause even when the
+      contrast arm has no read (`want_nc` in `_bt_sentences`).
+      
+      3. Battery coverage. The only check that asserts `at_stop is False` or a non-STOP end-look label on a real run is
+      the COMPLETE-at-42 check (C3-LASTLOOK-END-WINS, around line 4784). The `_GUARD_Q` fixture sets `at_stop: False` by
+      hand and never calls `guard_at_last_look`. C3-CAP-SHAM-ONLY (around line 5030) asserts only the status, `noread ==
+      "contrast-empty"` and the phrase "no read obtained". It does not check the guard label or `at_stop`. pistop0 is a
+      NOT-RUN (no first read), so it writes no VERDICTS and no label. No other suite (`m_sessions`, `valence_core/m/*`)
+      runs `guard_at_last_look`.
+      
+      4. Independent mutant run. I ran it on a scratch copy; the repo was untouched. Runner:
+      `.../step9/agents/refuter-atstop-label/run_mut.py`, executed with `-I` and the repo root on `sys.path`. Replacing
+      line 1036 with `at_stop = ended != "COMPLETE"` gives "MUT ne_complete: 0 FAIL; 379/379 m_analyze battery checks
+      pass". That matches the reviewer's `out/an_at_stop_not_complete.txt`.
+      
+      Nothing in the spec or the seat's rulings makes this behaviour intended. The spec explicitly keeps the non-STOP
+      labels unchanged and asks for tests in both directions. The production code is correct, so this is a test-coverage
+      gap and not a wrong output today. Minor is the right severity.
+      
+      The suggested fix holds. In C3-CAP-SHAM-ONLY, assert `guard_last_look.at_stop is False` and `label == f"the end look
+      at {n} launches"` (or the `end_is_look` form), plus the sentence substring. A PI-STOP run with a first read would
+      also cover the PI-STOP side. Adding these checks changes `EXPECTED_CHECKS`, or the asserts can go into the existing
+      check.
+  * [minor -> refuter: CONFIRMED, minor] Test (e) does not check stdout for the withheld round or n
+    LOCATION:
+      valence_core/m/stages.py:3985-4016 (test (e), the blinded free-phase STOP)
+    CLAIM:
+      Test (e) compares only lines with the 'BAR '/'STOP '/'PAUSE '/'END LOOK ' prefixes, and scans the whole of stdout
+      for lower-case class substrings. Round-independence is checked on the end-look dict only, never on stdout. A line
+      added by _stop_lines after the phase-only STOP line that leaks the fired round's n (withheld by m:318 exception (1)
+      and _hair_hit's PIN) passes every suite. The real code does not leak.
+    FAILURE SCENARIO:
+      Mutant 'leak_round_unprefixed_line' appends '  (fired at round n=7)' to _stop_lines' output when hit['round'] is
+      set. The blinded contrast free-phase STOP then prints the withheld round on stdout, and stages passes 56/56, the
+      analyzer 379/379 and m_sessions 752/752. 'leak_class_unprefixed_line', which prints the class upper-cased, also
+      survives.
+    EVIDENCE:
+      mut/out/leak_round_unprefixed_line.txt: 0 of 56 fail.
+      mut/out/both_leak_round_unprefixed_line_{analyze,sessions}.txt: 379/379 and 752/752. Same for
+      leak_class_unprefixed_line. mut/probe_blind.py shows the real code's stdout is identical for triggers at n=5, 7, 9
+      and 10.
+    PROPOSED FIX:
+      In test (e), assert that the lines between the stopped session's line and the STAGE line are exactly stop_lines9
+      plus the end look's messages, with no prefix filter. Also compare e_ref's and e_9's full stdout (paths normalised,
+      PROVENANCE line dropped), and make the class scan case-insensitive.
+    REFUTER:
+      I reproduced the finding. Nothing was run in the repo tree. My probes are scratch copies in
+      /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step9/agents/refuter-blinding-e
+      (mut.py, probe.py, src/).
+      
+      What the test checks: test (e) at valence_core/m/stages.py:3985-4016 compares stdout only through `announced9`,
+      which keeps the lines that start with "BAR ", "STOP ", "PAUSE " or "END LOOK " (stages.py:3820-3821). Its other
+      stdout check is a case-sensitive scan for the substrings ("scaffold", "absorption"). It tests round-independence
+      only on the end-look dict (`same_json(e_9 end_look, el_e)`). It never compares the stdout of e_ref with that of e_9.
+      
+      What I ran:
+      - I appended an unprefixed line `f"  (fired at round n={hit['round']['n']})"` to the final return of `_stop_lines`
+      (stages.py:2308-2327). `stages._selftest` still passes 56/56. A bare `n=<k>` line and an upper-cased class line also
+      pass 56/56.
+      - My probe runs the blinded free-phase STOP campaign (trigger at A0 s=3, round n=7 vs n=9). With the round mutant,
+      stdout carries "  (fired at round n=7)" right after the end look's BAR lines, and the only difference between the
+      n=7 and n=9 runs is that line. So the mutation is reached and it leaks the withheld round.
+      - With the real code, stdout for n=7 and n=9 is identical once paths are normalised. The build itself does not leak.
+      - The reviewer's out/ files show the same mutants passing the analyzer battery (379/379) and m_sessions (752/752).
+      That fits, because the analyzer never reads stdout, and the m_sessions kill/re-finish check compares two runs that
+      both go through the mutated `_stop_lines`.
+      
+      Why the spec and rulings do not make this intended:
+      - The spec says "The end look at that STOP must reveal no class, round, n or pick."
+      - `_hair_hit`'s PIN says the fired round's phase and n "are never printed", per m:318 exception (1).
+      - The check's own description says "stdout is the phase-only STOP line then the end look's messages". The prefix
+      filter does not test that, so the check claims more than it verifies.
+      
+      Partial mitigation: the spec's explicit test demand is that "the withheld class string appears in no stdout line,
+      report or excerpt". The test meets that literally: the bar name is scaffold_absorption, and an unprefixed lower-case
+      leak is caught by the whole-stdout scan. So the upper-cased-class half of the finding is contrived and overstated.
+      The round/n half stands: no suite catches a round leak added to the new `_stop_lines` output, and blinding is a
+      first-order concern here.
+      
+      Severity is minor: the gap is only in the tests, the production behaviour is correct, and the proposed fix is cheap.
+      That fix is a full-stdout comparison of e_ref and e_9 (paths normalised, PROVENANCE line dropped), or no prefix
+      filter on the lines between the session line and STAGE.
+
+====================================================================================================
+4. FIX REPORT
+====================================================================================================
+FIX REPORT: the D2 + C9(ii) review findings (working tree only; nothing committed)
+
+All 11 confirmed findings are fixed. No finding conflicts with the spec or the seat's rulings, and none needed a
+file outside the two. Only `valence_core/m/stages.py` and `scripts/m_analyze.py` changed. `paper_analysis.ipynb` was
+already modified before I started and I did not touch it.
+
+For each test-gap finding I ran the mutant on an in-memory scratch copy, never in the repo. Each mutant passed the
+self-test before these fixes; now it fails the check named.
+
+1. LICENCE line claims the analyzer and package are committed at HEAD (minor): FIXED, by option (b).
+   - The line now reads: "LICENCE …: proposal P p16, lock L l16: committed at HEAD H, working tree identical;
+analyzer a16 and package k16: the hashes identity_extra and the lock name, hashed from the working tree at stage
+start".
+   - The `_licence` docstring and PIN are rewritten to say each clause claims only what `licence_problems` checked.
+   - I did not take option (a). It would add a requirement, that the analyzer and package be committed at HEAD,
+which the seat's D2 did not order.
+   - Check: the existing end-to-end non-stub licence check now asserts the new line, that no "package …: committed"
+text appears, and that "committed at HEAD" occurs exactly once. Mutant (the old line restored) fails it.
+
+2. After re-finishing a stopped campaign, NOT APPLIED says "offer it again" (nit): FIXED in `_refinish_campaign`.
+   - I used the refuter's corrected branch, not the original proposal. The test is whether the re-finished end
+leaves the campaign ended, meaning `pending.stop` is set or `pending.terminal` is set.
+   - In that case the refusal names the end ("leaves the campaign ended (STOP|COMPLETE…)") and says a ruling enters
+VERDICTS as the declared `--adjudication` file, and a PI's stop on a hair trigger as `--pi-stop` (the seat's C9(i),
+C3, C2). It no longer says "offer it again".
+   - A look pause or exhausted schedule that is not ended keeps the old wording, so m_sessions' r6 check still
+passes. The PINs and docstring are updated.
+   - Check: new stages check "a re-finish offered a ruling refuses NOT APPLIED …". It covers a killed STOP whose end
+look fired, and a killed COMPLETE whose end look fired (the C9(i) terminal PAUSE). Each gets the new wording, and
+the next invocation is refused (STAGE ENDED / CAMPAIGN ENDED) with nothing launched and the checkpoint unchanged. A
+killed look pause keeps "offer it again". Mutant (always "offer it again") fails it.
+
+3. No test of a G-VER STOP whose freshly evaluated end look fires (minor): FIXED.
+   - New stages case (i): A0 s=3 is quarantined at launch 7 after 3/3 forced exclusions. It asserts:
+     - the pause is {6, end_look, end, bars, unadjudicated};
+     - the pending end's `fired` is [template_breakage] plus the pause's bars;
+     - events are PAUSE then STOP;
+     - the end look's messages follow the STOP lines;
+     - `_pending_problem` is None;
+     - a kill then re-finish prints the same lines.
+   - New battery check C3-GVER-ENDLOOK-PAUSE, on the same scenario through the production writer:
+     - with no seat input, refused (PIN-9);
+     - with a PI-stop record only, refused (PIN-9);
+     - with the adjudication alone, analyzed, its sha recorded and no PI-stop record; the label is "the end look at
+the STOP (at 6 launches)" and both guards fired;
+     - with both files, refused as a surplus `--pi-stop`.
+   - Mutant (`if gver or not end_look["fired"]`) fails 2 stages checks and C3-GVER-ENDLOOK-PAUSE.
+   - Not applied: the optional analyzer V2 rule that a fired end look at a STOP must be matched by the last pause.
+It would be a new refusal the spec and rulings do not order; I leave it to Code as a candidate.
+
+4. Silent-look cells at a multiple of 40 are untested (minor): FIXED.
+   - New stages case (f): a hair STOP at launch 40 with a silent look 1. It asserts end_is_look 1, pauses [], the
+STOP lines followed by look 1's three messages printed once, no END LOOK line, events [STOP] and looks_count 1. A
+kill then re-finish prints the same lines.
+   - New stages case (g): a G-VER STOP at launch 41 after a silent look 1. It asserts pauses [], look 1's messages
+printed once at launch 40, then the STOP lines and the single END LOOK line.
+   - Mutants: a pause raised on a silent look, and an END LOOK line on a silent look, each fail (f). Re-announcing
+look 1 after a G-VER STOP fails (c) and (g).
+
+5. `_stop_end_look`'s docstring says a re-finish re-derives the end look (nit): FIXED by rewording. The end look is
+computed once, at the finish. A re-finish reuses the stored `end_pending` block and rebuilds only the lines and
+outputs. There is no behaviour change, so no check.
+
+6. No test reaches a STOP past a cadence look on a launch count that is not a multiple of 40 (substantive): FIXED.
+   - New stages case (h): a hair STOP at launch 42 (A0 s=21, after the sham floor). It asserts looks [40], the end
+look is "end" at 42 with no end_is_look, its three look=end messages follow the STOP lines, look 1's messages are
+printed once, and looks_count is 2.
+   - New battery check C3-LASTLOOK-STOP-PAST-CADENCE: a G-VER STOP at launch 42 (A0s s=20; 41 recorded) gets an end
+look "end" at 41, labelled "the end look at the STOP (at 41 launches)" in the guard and the sentence.
+   - Mutant (the guard reduced to `if last_look is not None:`) fails (h) and the battery check.
+
+7. A hair STOP at 40 with a silent look is untested (minor): FIXED by case (f) above, which is exactly the silent
+variant of (b). Both refuter mutants (an END LOOK line on a silent look; STOP lines only when no pause) fail (f).
+
+8. Check (f) does not tell a full 64-hex sha from a 16-hex prefix (minor): FIXED.
+   - Four lock bodies are added to the D2 `licence_problems` test, each naming one sha by its 16-hex prefix only:
+ana16, ana16e (with "…"), pkg16, pkg16e.
+   - Each must give exactly one "does not name identity_extra's <key>_sha256" problem. The existing D2 check is
+extended, so the check count does not change.
+   - Mutant (`if v[:16] not in ltext`) fails it.
+
+9. Analyzer STOP checks cover only G-VER STOPs and end_look-kind pauses (minor): FIXED with two new battery checks.
+   - C3-STOP-NO-ENDLOOK-HAIR-REFUSED: the hair STOP `cp_h` with its end look removed, offered with a PI-stop record
+bound to that copy. It is refused at V2 with "records no end look at its STOP", `release_full` is never called, and
+nothing is written.
+   - C3-HAIR-LOOK40-PAUSE: stages' case (b) run through the battery (a hair STOP at 40 whose look 1 fires; pause
+{look, 40}).
+     - Refused with no seat input, with the PI-stop record only, and with an adjudication naming {end_look, 40}
+(PIN-9).
+     - Refused with the adjudication only (PIN-8).
+     - Analyzed with both, each sha recorded, labelled "look 1 at 40 launches, the end look at the STOP".
+   - Mutant `v2_refusal_gver_only` fails the first check. Mutant `pin9_skips_look_pause_at_stop` fails the second.
+
+10. The non-STOP side of the at-STOP label is checked only at COMPLETE (minor): FIXED.
+    - C3-CAP-SHAM-ONLY is extended: guard source end_look, `at_stop` False, the label "the end look at N launches"
+in the guard and the sentence, and no "at the STOP" text.
+    - New battery check C3-PISTOP-DATA-LABEL: a PI-STOP after first reads (the 4th launch interrupted, then the PI's
+stop). It is analyzed with `at_stop` False and the unchanged label.
+    - Mutants on `at_stop`: `ended != "COMPLETE"` fails both checks; `ended in ("STOP","PI-STOP")` fails the PI-STOP
+check; `ended in ("STOP","CAP")` fails the CAP check.
+
+11. Test (e) does not check stdout for the withheld round or n (minor): FIXED.
+    - Test (e) now requires the unfiltered lines between the stopped session's line and the STAGE line to equal the
+STOP lines plus the end look's messages.
+    - It also requires the whole stdout of the round-7 and round-9 runs to be identical, with out-root names
+normalised and the PROVENANCE line dropped.
+    - The class scans are now case-insensitive, over stdout, the report, the excerpt events and the re-finish
+stdout.
+    - Mutant (an unprefixed "(fired at round n=…)" line appended in `_stop_lines`) fails (e) and the plant check
+that depends on it.
+
+SUITES (final tree, each run twice in sequence):
+- `scripts/m_sessions.py --selftest`: "757/757 m selftest checks pass" both runs. The builder's tree had 752;
+HEAD-era 744. `stages._selftest` went 56 → 61, from new checks (f), (g), (h), (i) and the NOT APPLIED check. The
+LW_CASES hair-trigger STOP check still passes unchanged.
+- `scripts/m_analyze.py --selftest`: "384/384 m_analyze battery checks pass" both runs; coverage "every one of the
+395 required ids reached".
+- D3 (read-only): `gshape.sources_map()` still equals the `sources` and `tooling` maps in
+`data/m/gates/G-SHAPE-F0.json`'s provenance.
+
+EXPECTED_CHECKS: 379 → 384 (HEAD was 376). The five checks added are C3-GVER-ENDLOOK-PAUSE, C3-HAIR-LOOK40-PAUSE,
+C3-STOP-NO-ENDLOOK-HAIR-REFUSED, C3-LASTLOOK-STOP-PAST-CADENCE and C3-PISTOP-DATA-LABEL. Each also adds its coverage
+id (390 → 395). C3-CAP-SHAM-ONLY is extended under the same id.
+
+Mutation runners and probes are in
+`/private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step9/agents/fixer/probe/`
+(`mut_stages.py`, `mut_an.py`, `h9.py`). Suite stdout is in
+`/private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step9/agents/fixer/`
+(`sess_1.txt`, `sess_2.txt`, `an_1.txt`, `an_2.txt`).
+
+====================================================================================================
+5. INDEPENDENT VERIFICATION
+====================================================================================================
+**Verification report: D2 + C9(ii) build after fixes (working tree only; nothing committed)**
+
+**Verdict:** the build passes. Every item in spec sections 1–4 is met. The 11 fixes are present and tested. Mutation
+testing caught 65 of 74 mutants: 3 survivors are test gaps (minor) and 6 are equivalent. I found no residual defect
+above minor.
+
+**(1) Suites, each run twice in sequence**
+- `scripts/m_sessions.py --selftest`: "757/757 m selftest checks pass" both runs, about 138 s each. A third,
+in-process run also gave 757/757.
+- `scripts/m_analyze.py --selftest`: "384/384 m_analyze battery checks pass" both runs, about 13 s each. All 395
+coverage ids were reached and the count equals `EXPECTED_CHECKS` (384). The two outputs are byte-identical.
+- m_sessions' existing LW_CASES checks (including the hair-trigger STOP re-finish) pass, and `m_sessions.py` is
+unmodified.
+
+**(2) The 11 fixes: all present and tested**
+- 1, LICENCE line: present. The end-to-end non-stub check asserts the new line, that no "package …: committed"
+appears, and that "committed at HEAD" appears once.
+- 2, NOT APPLIED wording: check (j) covers the STOP and COMPLETE ends and keeps "offer it again" for a look pause.
+- 3, G-VER STOP whose fresh end look fires: case (i) and C3-GVER-ENDLOOK-PAUSE.
+- 4 and 7, silent looks: cases (f) and (g).
+- 5, docstring: reworded; no behaviour change.
+- 6, STOP past a cadence look: case (h) and C3-LASTLOOK-STOP-PAST-CADENCE.
+- 8, 16-hex prefixes in the lock text: the four prefix lock bodies are in the D2 `licence_problems` check.
+- 9, analyzer STOP checks: C3-STOP-NO-ENDLOOK-HAIR-REFUSED and C3-HAIR-LOOK40-PAUSE.
+- 10, labels off a STOP: C3-CAP-SHAM-ONLY extended, plus C3-PISTOP-DATA-LABEL.
+- 11, test (e) stdout: the unfiltered tail, whole-stdout identity at round 7 vs round 9, and case-insensitive class
+scans.
+- `stages._selftest` now has 61 checks.
+
+**(3) Mutation probes**
+Mutants were run in memory on scratch copies, never in the repo. Each stages mutant ran against `stages._selftest`
+and the analyzer battery; each analyzer mutant ran against the battery. 74 mutants in total (56 in stages, 18 in the
+analyzer); 65 caught, 9 survived.
+
+Caught:
+- **D2 (S01–S17, S49):** each required key, the hex check, absent-key handling, checks (d), (e) and (f), (f) on a
+prefix or reading the wrong file, `LICENCE_KEYS`, the LICENCE line, the refusal itself, G-TIME licence-after-write,
+and `_record_licence` ignoring the package hash.
+- **C9(ii) in stages (S21, S23–S54, S48):** every STOP case in spec section 2, the shared lines helper, the pause
+(kind, bars, `at_launches`), `fired`, status, report `looks_count`, event order and the PAUSE event's counts, the
+re-finish lines, NOT APPLIED, the report's pick-free assertion, and blinding leaks (class in the end look, round n
+in stdout).
+- **Analyzer (A01–A16):** the V2 refusal (removed, G-VER only, also refusing zero-launch STOPs, moved after release,
+over-refusing `end_is_look`), every at-STOP label and `at_stop` variant, preferring the cadence look, PIN-9 skipped
+at a STOP or ignoring the pause kind, PIN-8 skipped when paused, and a surplus `--pi-stop` allowed.
+- **Rewritten battery checks:** every one fails under at least one mutant. C3-GVER-DATA under A05, A09, S34 and S48.
+C3-LASTLOOK-END-WINS under A10. C3-LASTLOOK-STOP-ENDISLOOK under A08, A10, A16 and S48. C3-CAP-SHAM-ONLY under A07.
+Each of the 8 new battery ids is also caught.
+
+Survivors that are test gaps (minor):
+- **S18:** G-ID licence check moved after the first write.
+- **S19:** campaign licence check moved after the first write.
+- **S20:** campaign licence check removed.
+- No test reaches a licence refusal through `run_gid_pair` or `run_campaign` with a simulated non-stub adapter. Only
+G-TIME is tested end to end (S17 is caught). The call order is correct by reading.
+
+Survivors that are equivalent:
+- **S22** (drop `n % 40 == 0`): `resume._check_state` only allows looks at 40·(i+1) launches, so a look at n already
+implies a multiple of 40.
+- **S47** (drop `refuse_ended` from `_begin`): `load_or_init` calls `refuse_ended` itself. The refusal is the same
+STAGE ENDED message, still before `_show_pause` or the adjudication path, with no launch and no write.
+- **S55** (decode the lock as ASCII instead of UTF-8): 64-hex strings are ASCII and both decoders keep ASCII bytes
+intact.
+- **S56** (no deepcopy for the `end_is_look` end look): `set_end_pending` puts the pending end through JSON, which
+breaks any aliasing.
+- **A17** (V2 refusal moved after PIN-8/PIN-9): it is still at V2, before V3. The spec does not fix the order within
+V2.
+- **A18** (label uses `el['look']`): it equals `el['end_is_look']` by construction.
+
+**(4) Spec sections 1–4, item by item**
+- **§1 D2: met.**
+  - Items 1–5 hold.
+  - Stage-start order, confirmed by reading:
+    - G-TIME and qualification: `_extra` (1463) → `_begin` (1464) → `_licensed` (1465) → `_startup` (1478) →
+`load_or_init` (1487) → `_record_licence` (1494) → first write (1497).
+    - G-ID: 1719 → 1720 → artifact-exists refusal (1727) → `_licensed` (1729) → `load_or_init` (1737) →
+`_record_licence` (1740).
+    - Campaign: 2029 → 2032 → `_licensed` (2033) → `load_or_init` (2065) → `_record_licence` (2068) → re-finish
+(2093).
+    - A re-finish is always licensed first, and no session or write happens before `_licensed`.
+  - Nit: `_extra` has no case with a 64-character non-hex `package_sha256`. The analyzer key's code path is shared,
+and S03/S04 are caught.
+- **§2 C9(ii) in stages: met.**
+  - Facts 1–3 are confirmed in `run_campaign`.
+  - The builder's fact 7 is correctly reported as partly false: `_assert_pick_free` runs on the report only. The
+excerpt's PAUSE event carries the same end-look dict the report does.
+  - The deviation on the excerpt's STOP event naming the class is justified: `_hit_event` has always done this,
+under m:318 exception (1).
+  - Blinding holds. Each free round takes its read before generating, the contrast arm uses only first reads and
+forced-round degeneracy, and the pre-pick count is forced-phase only. So nothing in the end look depends on the
+free-phase trigger.
+- **§3 analyzer: met.**
+  - `stop_no_end_look` remains only in a historical file, `results/raw/2026-10-10_m-ganl-f0-build_review.txt`.
+  - The V2 refusal text is exactly as specified and is decided before V3.
+  - PIN-9 and PIN-8 are tested at a STOP in both directions.
+- **§4 PIN texts: met.**
+  - The register PINs whose text changed are PIN-3, 5, 6, 8, 9, 10, 12, 14, 17, 42 and 43; the inline comments are
+updated too.
+  - Text-only extras: `SEAT_ROUTED`, `PER_PROPERTY_REFERENCE`, the clock:not-locked cite (this changes the
+manifest's `not_run_vocabulary`), and `unit_state`'s message. All record rulings.
+  - Posting bar: confirmed that `posting` prints "N enumerated rows" and exits 0 whatever the residue. It renders no
+PASS/FAIL against the seat's bar (a finding for Code only).
+
+**(5) Scope checks**
+- `git status`: only `stages.py` and `m_analyze.py` are modified, plus `paper_analysis.ipynb`, which was already
+modified before this work. The untracked list is identical to the session-start snapshot.
+- The only repo file touched during verification is a gitignored bytecode cache,
+`scripts/__pycache__/m_analyze.cpython-312.pyc`.
+- Current file hashes:
+  - `stages.py`: d0af0f1e45254926175049605ce257e0b781635de451384913148261ce54b844
+  - `m_analyze.py`: 36ccef7dcfe1129f71d66885ffbd8fbfa2affe0023fbfafbf97342eafc78edee
+- `data/m/`: the sha256 list of all 35 files is identical before and after, and equals HEAD.
+- D3 holds:
+  - `sources_map()` sources equal the G-SHAPE-F0 artifact's (26 of 26).
+  - tooling equal (2 of 2).
+  - `sources_digest` ee16e16b… equal.
+  - `stages.py` appears in neither map.
+- No model or tokenizer was loaded: after the in-process battery, `stages._selftest` and the full `m_sessions`
+selftest, no mlx, torch, transformers, tokenizers or safetensors module was imported.
+
+**(6) `ganl --out` twice**
+- Both runs exited 0, and the two manifests are byte-identical: sha256
+6f0784550047aba49181f6493d9ef5737902ba38d448f261475e8bd47ccddae0.
+- analyzer 36ccef7d…edee; package f7e8aaa62b8c3f091fd370f51b2d95a24e77f70c29a9478b6937fdfac3b92f21.
+- Unchanged from the manifest of record: closure a3bc7bb9…, `outputs_sha256` 83df98b1…, and the tallies.
+- Changed from the manifest of record:
+  - battery checks 376 → 384;
+  - coverage ids 387 → 395 (C3-LASTLOOK-STOP-CADENCE removed, 9 added);
+  - PINs: the 11 register entries listed under §4;
+  - `seat_routed`;
+  - the clock:not-locked cite.
+
+**Residual defects and gaps**
+1. **Test gap (minor):** no licence-refusal or ordering test for the G-ID and campaign drivers (S18–S20).
+2. **Candidate (minor; also flagged by the fixer):** VERDICTS never checks that a fired end look is matched by a
+pause, at a STOP or at a terminal end. A hand-edited checkpoint could be analyzed without the seat's adjudication.
+This is the analyzer's existing posture and the spec does not order a fix.
+3. **Nit:** a stale battery comment at `m_analyze.py:3318`, "(the convention is the seat's)", now settled by the
+seat's C7. It is not a PIN text.
+4. **Nit:** the `_extra` test lacks a 64-character non-hex package case (see §1).
+5. **Carried flag:** the `campaign_look` PIN in `stages.py` still says "flagged for the seat" about withholding at
+campaign looks. The seat's rulings do not address it explicitly.
+
+Files are in
+`/private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step9/agents/verifier/`:
+- `sess_1.txt`, `sess_2.txt`, `an_1.txt`, `an_2.txt`
+- `ganl1/G-ANL-F0.json`, `ganl2/G-ANL-F0.json`
+- `datam_before.sha`, `datam_after.sha`
+- `probe/vmut.py`, `probe/vmut_extra.py`, `probe/out_*.txt`, `probe/out2_*.txt`, `probe/msmods.out`
+
+====================================================================================================
+6. CODE'S CLOSING ROUND -- FIX (residuals S18-S20; the 64-char non-hex package key; a stale comment)
+====================================================================================================
+All three items are done. Only `valence_core/m/stages.py` and `scripts/m_analyze.py` changed. Both suites passed
+twice, every mutant was caught by a named check, and `EXPECTED_CHECKS` stays at 384.
+
+**Item 1: licence refusal through G-ID and the campaign (gap S18–S20)**
+
+I added two checks to `stages._selftest`, after the C9(ii) block:
+- "stages: the seat's D2 in the G-ID driver -- the licence precedes the first write: …"
+- "stages: the seat's D2 in the campaign driver -- the licence precedes the first write: …"
+
+Setup for both:
+- They reuse the non-stub G-TIME harness's patches unchanged: `_is_stub`→False, `DEFAULT_OUT`, `ANALYZER_PATH`,
+`guard.preflight_laptop`, `_git`=`fake_git()` and the patched `_committed`=`committed_lock(body)`. They add
+`guard.GATES_DIR` set to the out root's `gates/`.
+- The adapter reports a model adapter's provenance.
+- Each run gets a real prior ended PASS under this run's proposal (G-TIME for G-ID, qualification for the campaign).
+Without the licence check, the run would go on to write, so the no-write assertions are not vacuous.
+
+Three runs per driver:
+- **Package mismatch:** `package_sha256` is `'5'*64` and the lock names it. Only check (e) fails.
+- **Lock does not name the analyzer:** the lock names only the package sha. Only check (f) fails for the analyzer.
+  - In both refusal cases the run must raise SystemExit containing `LICENCE REFUSED (<stage name>)` and the specific
+problem. It must create no checkpoint, report, reads, excerpt or G-ID artifact, and make no generate call. A
+snapshot of every path and its bytes under the out root must be unchanged.
+- **Everything matching:** no exception, exactly one LICENCE line naming the proposal, the lock, and the analyzer's
+and package's sha16. The adapter is called. The checkpoint's `licence` records both hashes. Checkpoint and report
+are written, and the G-ID artifact exists only for G-ID.
+
+**Item 2: 64-character non-hex `package_sha256`**
+
+The existing D2 `_extra` check gains two non-stub cases: `"a non-hex package sha"` (`'g'*64`) and `"an upper-case
+package sha"` (`'B'*64`). The stub list now covers both 64-character forms for both keys (non-hex and upper-case),
+plus the 63-hex package case. The check's label is updated to say so.
+
+**Item 3: stale comment at `m_analyze.py:3318`**
+
+"(the convention is the seat's)" is replaced with the C7 ruling, in the wording PIN-6 uses: the boundary day counts
+as on or before the Clock date (inclusive, to 23:59:59 UTC), and it stays a declared input. This is a comment change
+only, but it still changes the analyzer's sha256.
+
+**Mutants** (run on scratch copies; `stages._selftest` now has 63 checks, up from 61)
+
+| Mutant | Result | Caught by |
+|---|---|---|
+| S18: G-ID licence moved after the first write | CAUGHT | G-ID check. Both refusal cases still raise LICENCE
+REFUSED but `Q-F0_id.json` was written and the out root changed; the matching run still passes. |
+| S19: campaign licence moved after the first write | CAUGHT | Campaign check. Same pattern: `Q-F0_campaign.json`
+written, out root changed. |
+| S20: campaign licence removed | CAUGHT | Campaign check. All three runs fail: no refusal, generate calls made,
+checkpoint and report written, no LICENCE line. |
+| S17: G-TIME licence after the first write (control) | CAUGHT | The existing G-TIME non-stub check, as before. |
+| X01: package key checked for length only | CAUGHT | The `_extra` check's new non-hex and upper-case package cases,
+on both stub and non-stub. Survives on the version before this round. |
+| X02: package key length-only on the stub only | CAUGHT | The `_extra` check's stub cases. Survives on the version
+before this round. |
+| X03: analyzer key case-insensitive on the stub | CAUGHT | The `_extra` check's stub upper-case analyzer case.
+Survives on the version before this round. |
+| BASE (no mutation) | clean | 0 failures of 63. |
+
+**Suites** (each run twice, from the repo root)
+- `scripts/m_sessions.py --selftest`: run 1 "759/759 m selftest checks pass" (about 140 s); run 2 "759/759 m
+selftest checks pass". The two new checks account for 757 → 759.
+- `scripts/m_analyze.py --selftest`: both runs "384/384 m_analyze battery checks pass", with "[PASS] check count 384
+== EXPECTED_CHECKS 384". The two outputs are byte-identical.
+
+**Scope checks**
+- `git status` is the same as at the start of this round.
+- The sha256 of all 35 files under `data/m/` is unchanged and equals HEAD.
+- D3: `sources_map()` still equals G-SHAPE-F0's provenance (sources 26/26, tooling 2/2), and `stages.py` is in
+neither map.
+- No heavy modules loaded. No git writes.
+
+**New hashes** (relevant to the G-ANL-F0 rebuild and the lock)
+- `stages.py`: 850a0ea96732734f3833cc73f37044336407485a95fdc7b0c4ec31affd7013c1 (was d0af0f1e…)
+- `m_analyze.py`: ac637232ac5feebbad303c55706a3c513f5f34d072e9bf53130e616e1d9bd886 (was 36ccef7d…)
+
+Files are in
+/private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step9/agents2/closer/:
+- suite outputs: `sess_1.txt`, `sess_2.txt`, `an_1.txt`, `an_2.txt`
+- mutant runners: `cmut.py`, `xmut.py`, `diag.py`
+- mutant outputs: `fin_*.txt`, `finx_*.txt`
+- D3 script: `d3.py`
+- `data/m` hashes: `datam_before.sha`, `datam_after.sha`
+- files as they were before this round: `orig/`
+
+====================================================================================================
+7. CODE'S CLOSING ROUND -- INDEPENDENT VERIFICATION
+====================================================================================================
+**Verification report: the closing round of the D2 + C9(ii) build (working tree only; nothing committed)**
+
+**Verdict: the round passes.** All three items are present, tested and mutation-sensitive. Both suites passed twice.
+S18, S19 and S20 are caught by the new checks. Across 54 mutants of my own, 50 were caught and 4 survived: 3 are
+test gaps (minor or nit) and 1 is equivalent. I found no code defect above nit.
+
+**(1) Suites, each run twice from the repo root**
+- `scripts/m_sessions.py --selftest`: "759/759 m selftest checks pass" on both runs (139 s and 137 s). The two
+outputs differ only in timestamps and temp paths.
+- `scripts/m_analyze.py --selftest`: "384/384 m_analyze battery checks pass" on both runs, with "check count 384 ==
+EXPECTED_CHECKS 384" and all 395 coverage ids reached. The two outputs are byte-identical.
+- `stages._selftest` on its own: 63/63, up from 61.
+- An in-process run of `stages._selftest` plus the battery loaded no mlx, torch, transformers, tokenizers,
+safetensors or huggingface_hub module.
+
+**(2) The three items**
+1. **Licence refusal through G-ID and the campaign: present** (`stages.py` ~4270–4382).
+   - Each driver has three runs: the package sha set to `'5'*64`, a lock text that does not name the analyzer sha,
+and everything matching.
+   - The refusal runs assert all of the following: `LICENCE REFUSED (<stage>)` with the problem named; no generate
+call; no checkpoint, report, reads, excerpt or G-ID artifact; and an unchanged byte snapshot of the out root.
+   - The matching run asserts one LICENCE line naming both sha16s, both hashes recorded in the checkpoint, and the
+outputs written.
+   - The priors are real ended PASS checkpoints, so the refusal checks are not vacuous: S20 fails all three runs.
+2. **64-character non-hex package sha: present.** The `_extra` cases `'g'*64` and `'B'*64` exist. The stub list has
+5 forms, covering both 64-character forms for both keys. My mutants D03 (the package key case-insensitive), D17 (the
+package key admits `g`) and D18 (length-only on the stub) are each caught.
+3. **Stale comment at `m_analyze.py:3318`: fixed.** It now states the C7 ruling in PIN-6's wording, and it is a
+comment-only change.
+
+**(3) Mutation probes**
+Every mutant ran on a mutated scratch copy, exec'd in memory and never written to the repo. Stages mutants ran
+through `stages._selftest`. The 4 survivors also ran through the analyzer battery and the full m_sessions selftest,
+and survived all three.
+
+| Group | Mutants | Result |
+|---|---|---|
+| S18, S19, S20 | G-ID licence moved after the first write; campaign licence moved after the first write; campaign
+licence removed | All 3 CAUGHT by the new G-ID / campaign checks. S20 fails all three runs. |
+| D2 | D01–D09, D12–D18 (16 mutants) | All CAUGHT. They cover: each key required in `_extra`; an absent key passing
+silently in `licence_problems`; (e) removed; (e) hashed at import rather than at check time; (f) checking only the
+analyzer or only the package; `LICENCE_KEYS` without the package; the LICENCE line naming the analyzer twice or a
+12-hex package; `_record_licence` ignoring the package; problems filtered; the form checks. |
+| C9(ii) in stages | C01–C16, C19, C21, C22 (19 mutants) | All CAUGHT. They cover: n=0 evaluating a look; a hair
+STOP at 40 with no pause; a G-VER STOP at 40 raising a new pause; the pause's kind and `at_launches`; a fresh end
+look that never pauses; no `end_is_look` reuse; the order inside the lines helper; the END LOOK line for G-VER vs
+hair; a re-finish printing only the STOP lines; the finish using `_pause_lines`; `fired` without the pause's bars;
+`looks_count`; the STOP event placed before the PAUSE event; the blinding leak (`stop_bar` in the end look); the
+stopped session dropped; status PAUSE at a STOP. |
+| Analyzer | A01–A03, A05–A13 (12 mutants) | All CAUGHT. They cover: the V2 refusal removed, also refusing
+zero-launch STOPs, or G-VER only; both at-STOP labels; `at_stop` including PI-STOP; the cadence look preferred at a
+STOP; PIN-9 skipped at a STOP; the pause binding ignoring kind, or ignoring `at_launches`; PIN-8 waived by an
+adjudication; a surplus `--pi-stop` allowed at a STOP. |
+
+Survivors:
+- **S21 (test gap, minor):** the campaign licence moved past the re-finish branch, so the re-finish at line 2093
+runs unlicensed.
+- **S22 (test gap, minor):** the campaign licence moved past `_show_pause`, so a shown pause writes its report and
+excerpt unlicensed.
+  - In both, the current code is correct by reading: `_licensed` at 2033 comes before both paths.
+  - Neither mutant is equivalent. `_record_licence` and the identity check do not cover an analyzer or proposal file
+that changed while the offered hashes stayed the same; only checks (b) and (d) catch that.
+  - The new checks cover the fresh-launch path only. For G-TIME and G-ID the pending branch comes after the first
+write, so S17 and S18 already cover their re-finish.
+- **D10 (test gap, nit):** check (f) weakened to `v[:32] in ltext` survives. The "verbatim 64-hex" check is only
+tested with 16-hex prefixes.
+- **C20 (equivalent):** removing the assertion that "a G-VER record is never a session" makes no difference, because
+no production path can reach it.
+
+**(4) Scope**
+- `git status` is identical to the session start. The tracked modified files are `stages.py`, `m_analyze.py` and
+`paper_analysis.ipynb`, which was already modified before this work. The untracked list is unchanged.
+- No repo file outside `.git` and `jlens-qwen36` changed during my verification.
+- `data/m/`: the sha256 list of all 35 files is unchanged and equals HEAD's blobs.
+- D3: `sources_map()` equals the G-SHAPE-F0 artifact's maps (sources 26/26, tooling 2/2) and `sources_digest`
+matches. Neither `stages.py` nor `m_analyze.py` is in either map.
+
+**(5) `ganl --out` (scratch dir), run twice**
+- Both runs exited 0, and the manifests are byte-identical.
+
+| Value | sha256 |
+|---|---|
+| Manifest | `fd55c71351a5a98bb10e5aa42d3b21e8e8efde1fb1afa4c503610a637ecbbbf7` |
+| Analyzer | `ac637232ac5feebbad303c55706a3c513f5f34d072e9bf53130e616e1d9bd886` |
+| `package_sha256` | `750b24edf6dfe2237ad012d30f8aa4afc50c9c272a859064beb4bf945ea72afb` |
+| Closure | `a3bc7bb9df3d8361bfa803238e61a61a7eef76a6d839540413e53cd7919cb22b` (equals the manifest of record) |
+| `outputs_sha256` | `83df98b12a27be8e4cd6abee6db7145599774d68ed7bb9b2675fa674de3b813c` (equals the manifest of
+record) |
+
+- Battery: 384/384, `expected_checks` 384, 395 coverage ids.
+- Against the previous verifier's manifest, only `analyzer` and `package_sha256` differ.
+- Against the manifest of record, these differ: analyzer, battery counts and coverage, `not_run_vocabulary`,
+`package_sha256`, `seat_routed`, and PINs 3, 5, 6, 8, 9, 10, 12, 14, 17, 42 and 43.
+
+**File hashes:**
+- `stages.py`: `850a0ea96732734f3833cc73f37044336407485a95fdc7b0c4ec31affd7013c1`
+- `m_analyze.py`: `ac637232ac5feebbad303c55706a3c513f5f34d072e9bf53130e616e1d9bd886`
+
+Both match the fix report.
+
+**Residual defects and gaps**
+1. **Test gap (minor):** S21 and S22. No test reaches a licence refusal on a campaign re-finish or on a shown pause.
+The order is correct by reading.
+2. **Test gap (nit):** D10. The "verbatim 64-hex" claim of check (f) is tested only against 16-hex prefixes.
+3. **Nit, pre-existing pattern:** `_HEX64 = ^[0-9a-f]{64}$` used with `.match` accepts a trailing `"\n"`. On the
+stub, `_extra` accepts `'a'*64+'\n'` for the new keys. On a non-stub run the equality checks (d) and (e) still
+refuse it. The same regex serves `lock_sha256` and `proposal_sha256`, and `resume.py` has its own copy.
+4. **Wording nit:** `resume.package_sha256` is cached once per process (`lru_cache`). "Computed at check time / now"
+therefore means the first call in the process, which is consistent with that function's own PIN.
+5. **Carried candidate (minor):** VERDICTS checks neither that a fired end look has a matching pause nor that
+`end_look.at_launches` equals the launches recorded at the STOP. A hand-edited checkpoint would pass.
+6. **Carried flag:** the `campaign_look` PIN in `stages.py` still says "flagged for the seat" about withholding at
+campaign looks.
+
+Files are in
+`/private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step9/agents2/verifier/`:
+- suite outputs: `sess_1.txt`, `sess_2.txt`, `an_1.txt`, `an_2.txt`, `suites.log`
+- manifests: `ganl1/G-ANL-F0.json`, `ganl2/G-ANL-F0.json`
+- scope: `gitstatus_before.txt`, `gitstatus_after.txt`, `datam_before.sha`, `datam_after.sha`
+- D3 script: `d3/d3v.py`; heavy-module check: `mods/mods.py`
+- mutants: runner `mut/vmut2.py`, mutated copies `mut/src/`, outputs `mut/out/*.txt`

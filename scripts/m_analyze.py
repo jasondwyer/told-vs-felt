@@ -332,6 +332,9 @@ def power_block(n_realised0: int, n_realised1: int, mS: int) -> dict:
     # PIN (Code, declared at LOCK v0.1): PIN-3 -- the figure of record splits the realised domain
     # n as floor(n/2) on map 0 and ceil(n/2) on map 1 (m:190: "each arm split n/2 per map"), the
     # sham pooled at its realised domain m; the realised map split is reported beside, labelled.
+    # Accepted by the seat (C6, 2026-10-10) as the declared base-case computation, re-derived at G-PWR
+    # (step 15) with the planned floors, where the realised-n figure becomes the figure of record
+    # (m:190).
     n = n_realised0 + n_realised1
     rec = power_exact(n // 2, n - n // 2, mS)
     real = power_exact(n_realised0, n_realised1, mS)
@@ -355,9 +358,9 @@ def power_block(n_realised0: int, n_realised1: int, mS: int) -> dict:
 # G-VER failure there stops the stage, m:271, m:284), and G-CAL on every unit (it serves all units,
 # m:176, m:276; the OLMo track starts at step 9, after it, m:300, m:358). clock:not-locked is the
 # residual Clock cause (m:347 is unconditional): a Clock miss whose blocking stage had not reached
-# its end (a pause awaiting the seat's adjudication, m:302; a gate still open) -- conservative
-# default awaiting the seat's ruling on whether m:324's parenthetical is exhaustive, before LOCK
-# v0.1 hashes the analyzer.
+# its end (a pause awaiting the seat's adjudication, m:302; a gate still open) -- confirmed by the
+# seat (C1, 2026-10-10): m:324's parenthetical ends "or any reason", so its list is not exhaustive by
+# its own words, and clock:not-locked:<stage> is a reading of that clause, not an addition to it.
 NOT_RUN_CAUSES: dict[str, dict] = {
     "clock:no-box": {"cite": "m:324 (no box; ...)", "units": "olmo",
                      "phrase": "no box before its Clock date ({date})"},
@@ -369,7 +372,8 @@ NOT_RUN_CAUSES: dict[str, dict] = {
                                      "Clock date ({date})"},
     "clock:not-locked": {"cite": "m:347 A Q-F0 not locked by D1 / a checkpoint not locked by D_O is "
                                  "NOT-RUN; m:302 a pause -> the seat's adjudication (residual: the "
-                                 "blocking stage had not reached its end; seat-routed)",
+                                 "blocking stage had not reached its end; m:324's 'or any reason', the "
+                                 "seat's C1)",
                          "units": "both", "param": "stage",
                          "phrase": "{stage} had not reached its end and no LOCK v1.0 was committed by "
                                    "its Clock date ({date})"},
@@ -438,6 +442,10 @@ def parse_cause(code: str) -> tuple[str, str | None]:
 # digits, the basic and week forms (20261030, 2026-W44-5) and impossible days (2026-02-30, 2026-02-29)
 # refuse; a NOT-RUN record's and a declared NOT-RUN state's date are checked whatever the cause, since
 # each is carried into an output even where the reason phrase has no {date} (dose-not-completable).
+# Confirmed by the seat (C5, 2026-10-10), the fixes ratified; for a no-first-read NOT-RUN declared in
+# --olmo-states the date is the calendar date of the terminal event that made the NOT-RUN final -- the
+# PI stop, the G-VER STOP, or the day the cap was reached -- as that unit's entry records it; where the
+# unit's own output carries no date, the declarer supplies the entry's.
 def _iso_date(d: Any) -> bool:
     if not (isinstance(d, str) and re.fullmatch(r"[0-9]{4}-[0-9]{2}-[0-9]{2}", d)):
         return False
@@ -475,8 +483,10 @@ def pending_state(unit: str, decl: Mapping, *, verdicts_exists: bool, notrun_exi
     # m:347), refused for unlocked-before-D_O with clock_passed true (that unit is NOT-RUN by its
     # Clock), and refused where the unit's VERDICTS or NOT-RUN output exists. The Clock comparison
     # is the declared clock_passed beside the declared date it was made on (YYYY-MM-DD), both
-    # recorded as given (the boundary-day convention -- which clock and which date decide -- is the
-    # seat's, step-3 note 55; non-blocking for step 8, so no date-vs-D_O consistency is imposed).
+    # recorded as given. The boundary-day comparison is confirmed by the seat (C7, 2026-10-10): a
+    # unit's LOCK v1.0 is "committed by its Clock date" iff the commit's committer date, in UTC, falls
+    # on or before the Clock date (the day inclusive, to 23:59:59 UTC); it remains a declared input,
+    # so no date-vs-D_O consistency is imposed here.
     if unit == "Q-F0":
         raise ValueError("Q-F0 is never PENDING at a v1 posting (m:349, m:347)")
     _ckpt(unit)
@@ -617,7 +627,7 @@ def unit_state(unit: str, ev: Mapping) -> tuple[str, Any]:
             if not ev.get("pi_stop_record"):
                 raise AnlRefusal("REFUSED: the campaign ended on a scaffold_absorption hair-trigger "
                                  "STOP; it is analyzed only on a declared PI-stop record (--pi-stop; "
-                                 "PIN-8, the seat's ruling pending)")
+                                 "PIN-8, the seat's C2)")
         else:
             raise AnlRefusal(f"REFUSED: a campaign STOP on bar {bar!r} is neither G-VER nor a "
                              f"scaffold_absorption hair trigger")
@@ -910,19 +920,20 @@ def counters_json(dc: _session.DescriptiveCounters, den: Mapping, sub: str) -> d
             "not_tabulated": [d.name for d in COUNTERS[sub] if d.q_f3_only]}
 
 
-PER_PROPERTY_REFERENCE = ("f1 CORR's 7-vs-1 anomaly (archive:91-93) is the reference (m:314); its unit "
-                          "is whole-session exclusions in any phase under f1's audit -- compare "
-                          "sessions_excluded_any_phase; sessions_excluded_prepick is m's pre-pick "
-                          "column (G-PORT A5 open: the seat rules which column the entry quotes)")
+PER_PROPERTY_REFERENCE = ("f1 CORR's 7-vs-1 anomaly (archive:91-93) is the reference (m:314); the column it "
+                          "refers to is sessions_excluded_prepick, m's pre-pick column (sessions excluded "
+                          "before the first read, by property; the seat's C7 on G-PORT A5, 2026-10-10); "
+                          "sessions_excluded_any_phase is reported beside it")
 
 
 def per_property_table(records: Sequence[Mapping], unit: str) -> dict:
     """m:314's per-property exclusion table, per arm x property (clean, corrupted)."""
     # PIN (Code, declared at LOCK v0.1): PIN-12 -- round columns key on round.property; the session
-    # columns key on the property of the round that set the session's exclusion; the interim column
-    # sessions_excluded_any_phase is the like-for-like column for f1's whole-session 7-vs-1
-    # (awaiting the seat's ruling on G-PORT A5), beside the pre-pick column. The sham's corrupted
-    # column is asserted zero.
+    # columns key on the property of the round that set the session's exclusion. Confirmed by the
+    # seat (C7, 2026-10-10; G-PORT A5): f1's 7-vs-1 refers to the pre-pick column
+    # (sessions_excluded_prepick, sessions excluded before the first read, by property);
+    # sessions_excluded_any_phase is reported beside it -- fixed, no longer interim. The sham's
+    # corrupted column is asserted zero.
     sub = _sub(unit)
     classes = audit.QWEN_CLAIMS if sub == "qwen" else audit.OLMO_CLAIMS
     tab: dict = {}
@@ -1012,25 +1023,33 @@ def _guard_pair(look: Mapping, unit: str) -> dict:
 
 def guard_at_last_look(ck: Mapping, unit: str, ended: str) -> dict:
     """'The unit's last look' (m:326) and its guard results; nothing recomputed (PIN-10)."""
-    # PIN (Code, declared at LOCK v0.1): PIN-10 -- the last look is campaign.end_look if present,
-    # else the last cadence look of ckpt.looks (a STOP-ended campaign has no end look: stages
-    # evaluates none on a hit -- a build gap flagged to the seat, not patched here), else 'no look
-    # reached'. No end-of-data guard is recomputed; neither result moves a verdict (m:316).
+    # PIN (Code, declared at LOCK v0.1): PIN-10 -- the seat's C9(ii) (2026-10-10; m:330's "at the end"
+    # includes an end by STOP): the last look is campaign.end_look whenever present -- stages evaluates
+    # and records it at COMPLETE, CAP, PI-STOP and at the STOP point alike -- and the sentence names it,
+    # at a STOP as the STOP's ("the end look at the STOP (at N launches)", or "look k at N launches, the
+    # end look at the STOP" where the end look is the cadence look recorded at N). A STOP-ended campaign
+    # with a launch recorded and no end look is refused at V2 (run_verdicts), so the cadence fallback
+    # below serves no VERDICTS run; with no launch recorded there is no look ('no look reached'). No
+    # end-of-data guard is recomputed here; neither result moves a verdict (m:316).
     camp = ck.get("campaign") or {}
     el = camp.get("end_look")
+    at_stop = ended == "STOP"
     if el:
         at = el["at_launches"]
-        label = (f"look {el['end_is_look']} at {at} launches, the end look" if "end_is_look" in el
-                 else f"the end look at {at} launches")
-        return {"reached": True, "label": label, "source": "end_look", "stop_no_end_look": False,
+        if at_stop:
+            label = (f"look {el['end_is_look']} at {at} launches, the end look at the STOP" if "end_is_look" in el
+                     else f"the end look at the STOP (at {at} launches)")
+        else:
+            label = (f"look {el['end_is_look']} at {at} launches, the end look" if "end_is_look" in el
+                     else f"the end look at {at} launches")
+        return {"reached": True, "label": label, "source": "end_look", "at_stop": at_stop,
                 **_guard_pair(el, unit)}
     if ck.get("looks"):
         lk = ck["looks"][-1]["result"]
         return {"reached": True, "source": "cadence",
                 "label": f"look {lk['look']} at {lk['at_launches']} launches, the last cadence look",
-                "stop_no_end_look": ended == "STOP", **_guard_pair(lk, unit)}
-    return {"reached": False, "label": "no look reached", "source": None,
-            "stop_no_end_look": ended == "STOP"}
+                "at_stop": at_stop, **_guard_pair(lk, unit)}
+    return {"reached": False, "label": "no look reached", "source": None, "at_stop": at_stop}
 
 
 def every_look(ck: Mapping, unit: str) -> list[dict]:
@@ -1341,10 +1360,9 @@ def abstract_clause(t) -> str:
 
 def s81_text(t) -> str:
     """Step 7's §8.1 status text (m:343)."""
-    # PIN (Code, declared at LOCK v0.1): PIN-17 -- conservative default awaiting the seat's ruling
-    # before LOCK v0.1: one clause per control with a v1 coordinate (A0, A0-OLMo-sft/-dpo/-instruct)
-    # with m:343's tokens; Q-F3's A1 belongs to §8.2, 'open' at v1; re-verified against the placed
-    # preprint at LOCK v1.0.
+    # PIN (Code, declared at LOCK v0.1): PIN-17 -- confirmed by the seat (C4, 2026-10-10): one clause
+    # per control with a v1 coordinate (A0, A0-OLMo-sft/-dpo/-instruct) with m:343's tokens; Q-F3's A1
+    # belongs to §8.2, 'open' at v1; re-verified against the placed preprint at LOCK v1.0.
     tt = check_tuple(t)
     return "; ".join(f"{name}: {S81_TOKEN[x]}" for (name, _), x in zip(S81_CONTROLS, tt))
 
@@ -1899,7 +1917,8 @@ def run_verdicts(inp: VerdictInputs, env: Env) -> tuple[str, list[str], list[Pat
         # closure sha256 (PIN-1), each asserted here. When HEAD's three equal the lock's, VERDICTS
         # runs at HEAD with no worktree; otherwise from a worktree of the lock commit with every data
         # input and output passed as an absolute path into the main tree, on the PI's word for the
-        # worktree (git writes; not implemented at step 8).
+        # worktree (git writes; not implemented at step 8). G-ANL-F3's versioning (m:291) is deferred
+        # by the seat to before step 19 (C7, 2026-10-10).
         if val not in ltext:
             raise AnlRefusal(f"REFUSED: the lock does not name this run's {what} (PIN-14, PIN-1)")
     try:
@@ -1971,14 +1990,24 @@ def run_verdicts(inp: VerdictInputs, env: Env) -> tuple[str, list[str], list[Pat
         raise AnlRefusal(f"REFUSED: the campaign has not ended (status {ended!r}); VERDICTS waits for its "
                          f"terminal state (m:247)")
     camp = ck.get("campaign") or {}
+    if ended == "STOP" and ck["sessions"] and not camp.get("end_look"):
+        # PIN (Code, declared at LOCK v0.1): PIN-10 -- the seat's C9(ii) (2026-10-10): a STOP-ended
+        # campaign with at least one launch recorded carries its end look, evaluated and recorded by
+        # stages at the STOP point; one without it was not written by the lock's package -- a
+        # structural refusal here at V2, before V3 releases any record. With no launch recorded (a
+        # G-VER STOP at the first launch) there is no look to carry.
+        raise AnlRefusal("REFUSED: a STOP-ended campaign records no end look at its STOP (the seat's C9(ii)) -- "
+                         "not written by the lock's package")
     pauses = camp.get("pauses") or []
     used_adj = None
     if pauses and pauses[-1].get("adjudication") is None:
-        # PIN (Code, declared at LOCK v0.1): PIN-9 -- conservative default awaiting the seat's ruling
-        # before LOCK v0.1: an unadjudicated last pause (a fired end look on a terminal campaign
-        # included) is refused unless the seat's adjudication is supplied as a declared file naming
-        # the unit, the checkpoint's sha256 and the pause; its path and sha256 are recorded. Code
-        # never self-adjudicates. Build gap: stages.py records no ruling on a terminal campaign.
+        # PIN (Code, declared at LOCK v0.1): PIN-9 -- confirmed by the seat (C3, 2026-10-10): VERDICTS
+        # refuses while the campaign's last pause is unadjudicated (a fired end look on a terminal
+        # campaign, or one at a STOP, included) unless the seat's adjudication is supplied as a declared
+        # file naming the unit, the checkpoint's sha256 and the pause; its path and sha256 are recorded.
+        # Code never self-adjudicates. The seat's C9(i): the adjudication of a fired end look on a
+        # terminal (or stopped) campaign enters as this declared --adjudication file; stages.py need
+        # not record it.
         last = pauses[-1]
         ok = (isinstance(adj_doc, Mapping) and adj_doc.get("schema") == ADJ_SCHEMA and adj_doc.get("unit") == U
               and adj_doc.get("campaign_sha256") == csha
@@ -1994,10 +2023,12 @@ def run_verdicts(inp: VerdictInputs, env: Env) -> tuple[str, list[str], list[Pat
     stop_bar = stop.get("bar") if isinstance(stop, Mapping) else None
     used_pis = None
     if ended == "STOP" and stop_bar == HAIR_BAR:
-        # PIN (Code, declared at LOCK v0.1): PIN-8 -- conservative default awaiting the seat's ruling
-        # before LOCK v0.1: a scaffold_absorption hair-trigger STOP is analyzed only on a declared
+        # PIN (Code, declared at LOCK v0.1): PIN-8 -- confirmed by the seat (C2, 2026-10-10; m:316's
+        # path -- an adjudication "may end in a PI stop (terminal, analyzed as obtained)" -- applied to
+        # the hair triggers): a scaffold_absorption hair-trigger STOP is analyzed only on a declared
         # PI-stop record naming the unit and the checkpoint's sha256 (path and sha256 recorded); it
-        # then follows m:324's PI-stop rule. A G-VER STOP is a PI stop by m:284.
+        # then follows m:324's PI-stop rule. Whether an adjudicated fire may instead resume is for the
+        # adjudication, if one arises; nothing is built for it. A G-VER STOP is a PI stop by m:284.
         ok = (isinstance(pis_doc, Mapping) and pis_doc.get("schema") == PI_STOP_SCHEMA
               and pis_doc.get("unit") == U and pis_doc.get("campaign_sha256") == csha
               and pis_doc.get("bar") == HAIR_BAR and isinstance(pis_doc.get("text"), str)
@@ -2226,6 +2257,7 @@ def analyzer_binding(env: Env) -> dict:
     # the proposal is the pinned v1.11 and this file is committed at HEAD with identical working-tree
     # bytes, and record analyzer_sha256, package_sha256 and closure_sha256 in {U}_NOT-RUN.json and
     # POSTING-v1_outputs.*.json, so each output names the verdict logic that wrote it (rule 27).
+    # Code-added at step 8; confirmed by the seat (C5, 2026-10-10).
     pbytes = _read_bytes(env.proposal_path, "the proposal")
     if _sha256_bytes(pbytes) != PROPOSAL_SHA256:
         raise AnlRefusal("REFUSED: the proposal's sha256 is not the pinned v1.11's (PIN-31)")
@@ -2414,7 +2446,9 @@ PINS = {
              "m:190's base case at the realised n: the arm's realised domain n split floor(n/2) on map 0 "
              "and ceil(n/2) on map 1 at clean share .70, the sham pooled at its realised domain m at .5. "
              "The figure at the realised map split is reported beside, labelled. Both are 0 when a map "
-             "or the sham is empty. Descriptive only.",
+             "or the sham is empty. Descriptive only. Accepted by the seat (C6, 2026-10-10) as the "
+             "declared base-case computation, re-derived at G-PWR (step 15) with the planned floors, where "
+             "the realised-n figure becomes the figure of record (m:190).",
     "PIN-4": "The verdict sentence is the clauses of SENTENCE_TEMPLATES in order (state or 'no read "
              "obtained' with its sub-reason; counts per map; P, Delta_c, CP CI; E and P_arm - P_sham; "
              "both one-sided p's; REVERSE's phrase; pre-pick rates of arm and sham; the guard at the "
@@ -2431,16 +2465,19 @@ PINS = {
              "m:284); OLMo-c G-CAL (it serves all units, m:176, m:276; the OLMo track starts at step 9, "
              "m:300, m:358), G-SHAPE-F0, G-ANL-F0, G-TIME-OLMo-c, G-F0m-OLMo-c. clock:not-locked is the "
              "residual Clock cause (m:347 is unconditional): the blocking stage had not reached its end "
-             "(a pause awaiting the seat's adjudication, m:302; a gate still open) -- conservative "
-             "default awaiting the seat's ruling, before LOCK v0.1, on whether m:324's parenthetical is "
-             "exhaustive.",
+             "(a pause awaiting the seat's adjudication, m:302; a gate still open) -- confirmed by the "
+             "seat (C1, 2026-10-10): m:324's parenthetical ends 'or any reason', so its list is not "
+             "exhaustive by its own words; clock:not-locked:<stage> is a reading of that clause, not an "
+             "addition to it.",
     "PIN-6": "PENDING is a declared input {state, substate, clock_passed, date}, substate in "
              "{unlocked-before-D_O, locked-running, restarting-after-box-change, "
              "awaiting-verdicts-session}; refused for Q-F0, refused with clock_passed for "
              "unlocked-before-D_O, refused where a VERDICTS or NOT-RUN output exists. clock_passed and "
              "the date the comparison was made on (YYYY-MM-DD) are recorded as given -- in the posting "
-             "output's pending block and in Q-F0's VERDICTS (olmo_states_declared); the boundary-day "
-             "convention is the seat's (non-blocking for step 8).",
+             "output's pending block and in Q-F0's VERDICTS (olmo_states_declared). The boundary-day "
+             "comparison is confirmed by the seat (C7, 2026-10-10): a unit's LOCK v1.0 is 'committed by "
+             "its Clock date' iff the commit's committer date, in UTC, falls on or before the Clock date "
+             "(the day inclusive, to 23:59:59 UTC); it remains a declared input.",
     "PIN-7": "VERDICTS reads one unit's declared campaign, G-TIME and qualification checkpoints after "
              "refusals decided before any pick is read (unit; pinned proposal; this file and the lock "
              "committed at HEAD; analyzer, package and closure sha256s named in the lock; the decisions "
@@ -2450,23 +2487,30 @@ PINS = {
              "splice is refused at write time by resume -- and no stub provenance). It calls "
              "readrule.release_full, writes once, and prints after writing. A unit NOT-RUN by §5's "
              "no-first-read cause gets {U}_NOT-RUN.json from this command.",
-    "PIN-8": "Conservative default, awaiting the seat's ruling before LOCK v0.1 hashes the analyzer: a "
-             "campaign ended by a scaffold_absorption hair-trigger STOP is refused unless a declared "
-             "PI-stop record (m-pi-stop-record-v1 naming the unit and the campaign checkpoint's sha256; "
-             "path and sha256 recorded) is supplied; with it, m:324's PI-stop rule applies (no first "
-             "read: NOT-RUN no-first-read:pi-stop; otherwise analyzed as obtained). A G-VER STOP is a PI "
-             "stop by m:284.",
-    "PIN-9": "Conservative default, awaiting the seat's ruling before LOCK v0.1: VERDICTS refuses while "
-             "the campaign's last pause is unadjudicated (a fired end look on a terminal campaign "
-             "included); the seat's adjudication enters as a declared --adjudication file "
-             "(m-verdicts-adjudication-v1 naming the unit, the checkpoint's sha256 and the pause's kind "
-             "and launch count), its path and sha256 recorded. Code never self-adjudicates. Build gap, "
-             "flagged: stages.py has no path that records the seat's ruling on a terminal campaign.",
-    "PIN-10": "'The unit's last look' = campaign.end_look if present, else the last cadence look of "
-              "ckpt.looks (a STOP-ended campaign has no end look -- the missing end look on STOP is a "
-              "build gap flagged to the seat, not patched here), else 'no look reached'. Guard results "
-              "are selected by the unit's declared guard bars. No end-of-data guard is recomputed. "
-              "Neither moves a verdict (m:316).",
+    "PIN-8": "Confirmed by the seat (C2, 2026-10-10; m:316's path -- an adjudication 'may end in a PI "
+             "stop (terminal, analyzed as obtained)' -- applied to the hair triggers): a campaign ended by "
+             "a scaffold_absorption hair-trigger STOP is refused unless a declared PI-stop record "
+             "(m-pi-stop-record-v1 naming the unit and the campaign checkpoint's sha256; path and sha256 "
+             "recorded) is supplied; with it, m:324's PI-stop rule applies (no first read: NOT-RUN "
+             "no-first-read:pi-stop; otherwise analyzed as obtained). Whether an adjudicated fire may "
+             "instead resume is for the adjudication, if one arises; nothing is built for it. A G-VER "
+             "STOP is a PI stop by m:284.",
+    "PIN-9": "Confirmed by the seat (C3, 2026-10-10): VERDICTS refuses while the campaign's last pause is "
+             "unadjudicated (a fired end look on a terminal campaign, or one at a STOP, included); the "
+             "seat's adjudication enters as a declared --adjudication file (m-verdicts-adjudication-v1 "
+             "naming the unit, the checkpoint's sha256 and the pause's kind and launch count), its path "
+             "and sha256 recorded. Code never self-adjudicates. The seat's C9(i): the adjudication of a "
+             "fired end look on a terminal (or stopped) campaign enters as that declared --adjudication "
+             "file; stages.py need not record it.",
+    "PIN-10": "The seat's C9(ii) (2026-10-10; m:330's 'at the end' includes an end by STOP): 'the unit's "
+              "last look' = campaign.end_look, which stages evaluates and records at COMPLETE, CAP, PI-STOP "
+              "and at the STOP point alike; at a STOP the sentence names it as the STOP's ('the end look at "
+              "the STOP (at N launches)', or 'look k at N launches, the end look at the STOP' where the end "
+              "look is the cadence look recorded at N). A STOP-ended campaign with a launch recorded and no "
+              "end look is a structural refusal at V2, before V3 releases anything (not written by the "
+              "lock's package); with no launch recorded, 'no look reached'. A fired end look at a STOP is a "
+              "pause and takes PIN-9's path. Guard results are selected by the unit's declared guard bars. "
+              "No end-of-data guard is recomputed in the analyzer. Neither moves a verdict (m:316).",
     "PIN-11": "Counters are declared as m:314's two lists in full (verified verbatim against m:314 and "
               "against audit.DECLARED_COUNTERS_* plus the [Q-F3] entry); the [Q-F3] counter is declared, "
               "scoped to Q-F3, not tabulated at Q-F0. The counters of record are over the unit's "
@@ -2474,11 +2518,11 @@ PINS = {
               "property they equal audit.tally); G-TIME and qualification sessions are tabulated "
               "separately as m:271's release.",
     "PIN-12": "Property keys: round counters by round.property; session counters by the excluding "
-              "round's property; read counters by arm and read position (no property). The per-property "
-              "table adds sessions_excluded_any_phase as the interim like-for-like column for f1's "
-              "whole-session 7-vs-1 beside the pre-pick column, awaiting the seat's ruling on G-PORT A5; "
-              "whole-session validity: lenient = complete, no exclusion, no hair trigger; strict adds no "
-              "claim in any round.",
+              "round's property; read counters by arm and read position (no property). Confirmed by the "
+              "seat (C7, 2026-10-10; G-PORT A5): f1's 7-vs-1 refers to the per-property table's pre-pick "
+              "column (sessions excluded before the first read, by property); sessions_excluded_any_phase "
+              "is reported beside it -- fixed, no longer interim. Whole-session validity: lenient = "
+              "complete, no exclusion, no hair trigger; strict adds no claim in any round.",
     "PIN-13": "Secondaries (a), (b), (d) and (e) are built now (m:312, pre-registered), in a separate "
               "{unit}_secondary.json, with the 20-event floor and count-only below it. 'Valid through "
               "position p' = the choice at p was made and no exclusion-bearing event preceded it. (d)'s "
@@ -2489,15 +2533,15 @@ PINS = {
               "names the analyzer's sha256, package_sha256 and the closure sha256, each asserted. When "
               "HEAD's three equal the lock's, VERDICTS runs at HEAD with no worktree; otherwise from a "
               "worktree of the lock commit with every data input and output passed as an absolute path "
-              "into the main tree, and only on the PI's word for the worktree (not implemented at step 8; "
-              "G-ANL-F3's versioning is the seat's).",
+              "into the main tree, and only on the PI's word for the worktree (not implemented at step 8). "
+              "G-ANL-F3's versioning (m:291) is deferred by the seat to before step 19 (C7, 2026-10-10).",
     "PIN-15": "Label slots: the outcome as the §5 state word; the reason as the PIN-5 phrase; one bracket "
               "alternative, plain text.",
     "PIN-16": "'[passing stages]' = 'the {A} stage' or 'the {A} or {B} stage', in lineage order, with names "
               "as m:338 spells them (SFT, DPO, instruct).",
-    "PIN-17": "Conservative default, awaiting the seat's ruling before LOCK v0.1: §8.1 text = one clause "
-              "per control with a v1 coordinate (A0, A0-OLMo-sft/-dpo/-instruct) with m:343's tokens; A1 "
-              "belongs to §8.2, 'open' at v1; re-verified against the placed preprint at LOCK v1.0.",
+    "PIN-17": "Confirmed by the seat (C4, 2026-10-10): §8.1 text = one clause per control with a v1 "
+              "coordinate (A0, A0-OLMo-sft/-dpo/-instruct) with m:343's tokens; A1 belongs to §8.2, 'open' "
+              "at v1; re-verified against the placed preprint at LOCK v1.0.",
     "PIN-18": "The ceiling output is its name and its m:334 title, verbatim.",
     "PIN-19": "Flag of record TRUE iff data/m/gates/G-CAL_model-free.json is committed at HEAD and identical "
               "in the working tree, has schema m-gcal-model-free-v1, and carries an f1_012 block; "
@@ -2594,22 +2638,28 @@ PINS = {
               "v1.11 and this file is committed at HEAD with identical working-tree bytes, and records "
               "analyzer_sha256, package_sha256 and closure_sha256 in {U}_NOT-RUN.json / "
               "POSTING-v1_outputs.*.json (rule 27). Code-added at step 8 (a binding the spec does not "
-              "state); for the seat's confirmation at LOCK v0.1.",
+              "state); confirmed by the seat (C5, 2026-10-10).",
     "PIN-43": "every declared date (a NOT-RUN record's, a declared OLMo NOT-RUN state's, a PENDING "
               "declaration's Clock comparison, a decision's) is an ASCII YYYY-MM-DD that is a real calendar "
               "date (non-ASCII digits, the basic and week forms and impossible days refuse); a NOT-RUN "
-              "record's and a declared NOT-RUN state's date are checked whatever the cause.",
+              "record's and a declared NOT-RUN state's date are checked whatever the cause. Confirmed by "
+              "the seat (C5, 2026-10-10), Code's fixes ratified. For a no-first-read NOT-RUN declared in "
+              "--olmo-states the date is the calendar date of the terminal event that made the NOT-RUN "
+              "final -- the PI stop, the G-VER STOP, or the day the cap was reached -- as that unit's entry "
+              "records it; where the unit's own output carries no date, the declarer supplies the entry's.",
 }
-SEAT_ROUTED = {"PIN-5": "clock:not-locked (the residual Clock cause) awaits the seat's ruling on whether m:324's "
-                        "parenthetical is exhaustive -- blocking LOCK v0.1, not step 8",
-               "PIN-8": "blocking LOCK v0.1, not step 8", "PIN-9": "blocking LOCK v0.1, not step 8",
-               "PIN-17": "blocking LOCK v0.1, not step 8"}
+SEAT_ROUTED = {"PIN-5": "routed before LOCK v0.1; ruled by the seat (C1, 2026-10-10): confirmed -- m:324's "
+                        "parenthetical ends 'or any reason'; clock:not-locked:<stage> reads that clause",
+               "PIN-8": "routed before LOCK v0.1; ruled by the seat (C2, 2026-10-10): confirmed",
+               "PIN-9": "routed before LOCK v0.1; ruled by the seat (C3, 2026-10-10): confirmed; C9(i) for the "
+                        "end look on a terminal campaign",
+               "PIN-17": "routed before LOCK v0.1; ruled by the seat (C4, 2026-10-10): confirmed"}
 
 
 # =============================================================================================
 # THE BATTERY (m:278). Selftest-only helpers carry the `_bt` prefix.
 # =============================================================================================
-EXPECTED_CHECKS = 376        # the battery's fixed check list (any skip or addition changes it)
+EXPECTED_CHECKS = 384        # the battery's fixed check list (any skip or addition changes it)
 
 # PIN (Code, declared at LOCK v0.1): PIN-24 -- the battery reaches every per-arm outcome per unit, the
 # full 5 x 6^3 product under both flag values (the flag an input, not a coordinate; 'clock:pi-declined'
@@ -2660,7 +2710,9 @@ _REQUIRED += ["SEC-FLOOR-19-20", "SEC-B-CONTRAST-ONLY", "SEC-D-SHAM-COUNT-ONLY",
 _REQUIRED += ["C3-CAP-ZERO", "C3-PISTOP-ZERO", "C3-GVER-ZERO", "C3-GVER-DATA", "C3-HAIR-NODISP",
               "C3-HAIR-DISP", "C3-CAP-SHAM-ONLY", "C3-COMPLETE", "C3-COMPLETE-BELOW-FLOOR",
               "C3-COMPLETE-EMPTY", "C3-OLMO-COMPLETE", "C3-ENDLOOK-PAUSE", "C3-LASTLOOK-END-WINS",
-              "C3-LASTLOOK-STOP-CADENCE", "C3-COUNTS-INDEPENDENT"]
+              "C3-LASTLOOK-STOP-ENDISLOOK", "C3-COUNTS-INDEPENDENT", "C3-STOP-NO-ENDLOOK-REFUSED",
+              "C3-HAIR-ENDLOOK-LABEL", "C3-HAIR-ENDLOOK-PAUSE", "C3-GVER-ENDLOOK-PAUSE", "C3-HAIR-LOOK40-PAUSE",
+              "C3-STOP-NO-ENDLOOK-HAIR-REFUSED", "C3-LASTLOOK-STOP-PAST-CADENCE", "C3-PISTOP-DATA-LABEL"]
 _REQUIRED += [f"REF-{x}" for x in ("NOT-ENDED", "END-PENDING", "UNADJUDICATED", "OTHER-UNIT", "STAGE",
                                    "LOCK-SHA", "ANALYZER-NOT-IN-LOCK", "PACKAGE-NOT-IN-LOCK",
                                    "CLOSURE-NOT-IN-LOCK", "TABLE-NOT-IN-LOCK", "PREPRINT-NOT-IN-LOCK",
@@ -3060,7 +3112,7 @@ def _bt_power(B: _Battery) -> None:
 
 
 _GUARD_Q = {"reached": True, "label": "the end look at 112 launches", "source": "end_look",
-            "stop_no_end_look": False,
+            "at_stop": False,
             "fisher": {"name": "f", "p": "1/2", "fired": False, "binding": True},
             "abs": {"name": "a", "p": "1/100", "fired": True, "exceeds": True, "binding": True}}
 _GUARD_O = {**_GUARD_Q, "abs": {"name": "a", "p": "1/100", "fired": False, "exceeds": True, "binding": False}}
@@ -3115,7 +3167,7 @@ def _bt_sentences(B: _Battery) -> None:
           "shortfall and power", s_nc == want_nc, s_nc if s_nc != want_nc else "",
           cover=["SENT-NOREAD-CONTRAST", "SENT-FLOOR-PRESENT"])
     s_ns, _ = S("Q-F0", 40, 28, 40, 28, 0, 0, guard={"reached": False, "label": "no look reached",
-                                                     "source": None, "stop_no_end_look": True},
+                                                     "source": None, "at_stop": True},
                 floors={"A0": 80, "A0s": 32})
     B.chk("sentence no read (sham empty): 'its sham A0s has no domain session, so E is undefined'; 'no look "
           "reached'", s_ns.startswith("A0 (Q-F0): INDETERMINATE, no read obtained (its sham A0s has no domain "
@@ -3263,7 +3315,10 @@ def _bt_notrun(B: _Battery) -> None:
           _bt_raises(lambda: pending_state("Q-F0", ok_, verdicts_exists=False, notrun_exists=False))[0],
           cover=["PEND-QF0-REFUSED"])
     # the Clock comparison's date beside clock_passed (decision 2): required, YYYY-MM-DD, and recorded
-    # as given on either side of D_O and on the boundary day (the convention is the seat's)
+    # as given on either side of D_O and on the boundary day -- the boundary-day comparison is confirmed
+    # by the seat (C7, 2026-10-10): committed by the Clock date iff the commit's committer date, in UTC,
+    # falls on or before it (the day inclusive, to 23:59:59 UTC); it remains a declared input, so no
+    # date-vs-D_O consistency is imposed (PIN-6)
     no_date = {k_: v for k_, v in ok_.items() if k_ != "date"}
     bad_dates = [_bt_raises(lambda d=d: pending_state("OLMo-dpo", {**ok_, "date": d}, verdicts_exists=False,
                                                       notrun_exists=False))[0]
@@ -4695,14 +4750,18 @@ def _bt_reader(B: _Battery) -> None:
             dg1 = json.loads((base / "out" / "gver1" / "Q-F0_VERDICTS.json").read_text()) if vg1[0] == "ok" else {}
             ckg1 = json.loads(Path(res_g1["checkpoint"]).read_text())
             gl1 = dg1.get("guard_last_look") or {}
-            B.chk("C3: a G-VER STOP after domain sessions -> analyzed as obtained (a PI stop by m:284); no cadence "
-                  "look on disk (8 launches) -> 'no look reached' in the guard and the sentence, the missing end "
-                  "look on STOP flagged", res_g1["status"] == "STOP" and vg1[0] == "ok" and not ckg1["looks"]
-                  and gl1.get("label") == "no look reached" and gl1.get("stop_no_end_look") is True
-                  and "the guard at the unit's last look: no look reached" in dg1.get("sentence", ""),
-                  (vg1[1][:30], gl1.get("label")), cover=["C3-GVER-DATA"])
+            el1 = (ckg1.get("campaign") or {}).get("end_look") or {}
+            B.chk("C3: a G-VER STOP after domain sessions (launch 5 quarantined; 4 recorded, no cadence look) -> "
+                  "analyzed as obtained (a PI stop by m:284); its end look, evaluated by stages at the STOP point (the "
+                  "seat's C9(ii)), is the last look, named in the guard and the sentence as 'the end look at the STOP "
+                  "(at 4 launches)'", res_g1["status"] == "STOP" and vg1[0] == "ok" and not ckg1["looks"]
+                  and len(ckg1["sessions"]) == 4 and el1.get("look") == "end" and el1.get("at_launches") == 4
+                  and gl1.get("source") == "end_look" and gl1.get("at_stop") is True
+                  and gl1.get("label") == "the end look at the STOP (at 4 launches)"
+                  and "the guard at the unit's last look (the end look at the STOP (at 4 launches)): Fisher"
+                  in dg1.get("sentence", ""), (vg1[1][:30], gl1.get("label")), cover=["C3-GVER-DATA"])
             # past the first cadence look (40 launches): COMPLETE at 42 -> the end look is the last look;
-            # a G-VER STOP at launch 41 -> look 1 at 40, the last cadence look (no end look on a STOP)
+            # a G-VER STOP at launch 41 -> the end look at the STOP IS look 1 at 40 (the seat's C9(ii))
             r_lk = C.root("look-end")
             res_lk, _ = C.run("Q-F0", r_lk, C.adapter("Q-F0", {"A0": 21, "A0s": 21}), {"A0": 21, "A0s": 21})
             v_lk = V("Q-F0", Path(res_lk["checkpoint"]), "look-end")
@@ -4715,27 +4774,87 @@ def _bt_reader(B: _Battery) -> None:
             d_ls = json.loads((base / "out" / "look-stop" / "Q-F0_VERDICTS.json").read_text()) if v_ls[0] == "ok" else {}
             ck_ls = json.loads(Path(res_ls["checkpoint"]).read_text())
             g_lk, g_ls = d_lk.get("guard_last_look") or {}, d_ls.get("guard_last_look") or {}
-            ck2 = copy.deepcopy(ck_ls)                     # a second cadence look (at 80), production-shaped
-            if ck2["looks"]:
+            ck2 = copy.deepcopy(ck_ls)                     # a second cadence look (at 80), production-shaped,
+            if ck2["looks"]:                               # and no end look: the cadence fallback's label
                 lk2 = copy.deepcopy(ck2["looks"][-1])
                 lk2.update(look_index=1, at_launches=80)
                 lk2["result"].update(look=2, at_launches=80)
                 ck2["looks"].append(lk2)
+            ck2["campaign"]["end_look"] = None
             g2 = guard_at_last_look(ck2, "Q-F0", "STOP")
+            el_ls = (ck_ls.get("campaign") or {}).get("end_look") or {}
             B.chk("last look: COMPLETE at 42 launches with look 1 at 40 on disk -> the end look (at 42) is named, not "
-                  "the cadence look", v_lk[0] == "ok" and [lk["at_launches"] for lk in ck_lk["looks"]] == [40]
-                  and g_lk.get("source") == "end_look" and g_lk.get("label") == "the end look at 42 launches"
+                  "the cadence look (not at a STOP)", v_lk[0] == "ok" and [lk["at_launches"] for lk in ck_lk["looks"]]
+                  == [40] and g_lk.get("source") == "end_look" and g_lk.get("label") == "the end look at 42 launches"
+                  and g_lk.get("at_stop") is False
                   and "(the end look at 42 launches)" in d_lk.get("sentence", ""), (v_lk[1][:30], g_lk.get("label")),
                   cover=["C3-LASTLOOK-END-WINS"])
-            B.chk("last look: a G-VER STOP after look 1 at 40 (no end look on a STOP) -> 'look 1 at 40 launches, the "
-                  "last cadence look' named, the missing end look flagged; with a second cadence look added (80) the "
-                  "last one is named", v_ls[0] == "ok" and res_ls["status"] == "STOP"
-                  and [lk["at_launches"] for lk in ck_ls["looks"]] == [40] and g_ls.get("source") == "cadence"
-                  and g_ls.get("label") == "look 1 at 40 launches, the last cadence look"
-                  and g_ls.get("stop_no_end_look") is True
-                  and "(look 1 at 40 launches, the last cadence look)" in d_ls.get("sentence", "")
-                  and g2["label"] == "look 2 at 80 launches, the last cadence look",
-                  (v_ls[1][:30], res_ls["status"], g_ls.get("label")), cover=["C3-LASTLOOK-STOP-CADENCE"])
+            B.chk("last look: a G-VER STOP at launch 41 after look 1 at 40 -> the end look at the STOP IS look 1 "
+                  "(end_is_look 1, no new pause; the seat's C9(ii)), named 'look 1 at 40 launches, the end look at the "
+                  "STOP' in the guard and the sentence; guard_at_last_look's cadence fallback keeps its label (a second "
+                  "cadence look at 80, no end look: 'look 2 at 80 launches, the last cadence look')",
+                  v_ls[0] == "ok" and res_ls["status"] == "STOP"
+                  and [lk["at_launches"] for lk in ck_ls["looks"]] == [40] and el_ls.get("end_is_look") == 1
+                  and el_ls.get("at_launches") == 40 and ck_ls["campaign"]["pauses"] == []
+                  and g_ls.get("source") == "end_look" and g_ls.get("at_stop") is True
+                  and g_ls.get("label") == "look 1 at 40 launches, the end look at the STOP"
+                  and "(look 1 at 40 launches, the end look at the STOP)" in d_ls.get("sentence", "")
+                  and g2["label"] == "look 2 at 80 launches, the last cadence look" and g2["source"] == "cadence",
+                  (v_ls[1][:30], res_ls["status"], g_ls.get("label")), cover=["C3-LASTLOOK-STOP-ENDISLOOK"])
+            # a STOP past a cadence look on a launch count that is not a multiple of 40: a G-VER STOP at launch 42
+            # (A0s s=20 quarantined; 41 recorded) after look 1 at 40 -> the end look evaluated at the STOP point (at
+            # 41), not look 1 reused; named 'the end look at the STOP (at 41 launches)'
+            r_lp = C.root("look-past")
+            with _bt_patched(stages, "run_session_qwen", tamper_at("A0s", 20)):
+                res_lp, _ = C.run("Q-F0", r_lp, C.adapter("Q-F0", {"A0": 21, "A0s": 21}), {"A0": 21, "A0s": 21})
+            v_lp = V("Q-F0", Path(res_lp["checkpoint"]), "look-past")
+            d_lp = json.loads((base / "out" / "look-past" / "Q-F0_VERDICTS.json").read_text()) if v_lp[0] == "ok" else {}
+            ck_lp = json.loads(Path(res_lp["checkpoint"]).read_text())
+            g_lp = d_lp.get("guard_last_look") or {}
+            el_lp = (ck_lp.get("campaign") or {}).get("end_look") or {}
+            B.chk("last look: a G-VER STOP at launch 42 (41 recorded) past look 1 at 40 -> the end look evaluated at the "
+                  "STOP point (look 'end' at 41, no end_is_look; look 1 not reused -- the seat's C9(ii)), named 'the end "
+                  "look at the STOP (at 41 launches)' in the guard and the sentence",
+                  v_lp[0] == "ok" and res_lp["status"] == "STOP" and len(ck_lp["sessions"]) == 41
+                  and [lk["at_launches"] for lk in ck_lp["looks"]] == [40] and el_lp.get("look") == "end"
+                  and el_lp.get("at_launches") == 41 and "end_is_look" not in el_lp and ck_lp["campaign"]["pauses"] == []
+                  and g_lp.get("source") == "end_look" and g_lp.get("at_stop") is True
+                  and g_lp.get("label") == "the end look at the STOP (at 41 launches)"
+                  and "(the end look at the STOP (at 41 launches))" in d_lp.get("sentence", ""),
+                  (v_lp[1][:30], res_lp["status"], g_lp.get("label")), cover=["C3-LASTLOOK-STOP-PAST-CADENCE"])
+            # the seat's C9(ii) at V2: a STOP-ended campaign with a launch recorded and no end look is refused
+            # before V3 releases anything (readrule.release_full not called, nothing written); with the end look
+            # (as stages writes it) it is analyzed, and a STOP with no launch recorded carries none and is analyzed
+            # (C3-GVER-ZERO)
+            def no_end_look(src: Path, name: str) -> Path:
+                ck_ = json.loads(Path(src).read_text())
+                ck_["campaign"]["end_look"] = None
+                p_ = Path(src).parent / f"{name}.json"
+                p_.write_text(json.dumps(ck_))
+                return p_
+            rel_n: list = []
+            real_rel_n = readrule.release_full
+
+            def count_rel_n(recs):
+                rel_n.append(len(recs))
+                return real_rel_n(recs)
+            with _bt_patched(readrule, "release_full", count_rel_n):
+                v_nel = {"G-VER at 41": V("Q-F0", no_end_look(Path(res_ls["checkpoint"]), "no-end-look-41"),
+                                          "no-end-look-41"),
+                         "G-VER at 5": V("Q-F0", no_end_look(Path(res_g1["checkpoint"]), "no-end-look-5"),
+                                         "no-end-look-5")}
+                n_rel_n = len(rel_n)
+            ckg0 = json.loads(Path(res_g0["checkpoint"]).read_text())
+            B.chk("refused at V2 (the seat's C9(ii)): a STOP-ended campaign with launches recorded and no end look (its "
+                  "end look removed: the G-VER STOPs at 41 and at 5) -- 'records no end look at its STOP', before V3 "
+                  "releases any record, nothing written; with its end look each is analyzed (C3-LASTLOOK-STOP-ENDISLOOK, "
+                  "C3-GVER-DATA); a G-VER STOP with no launch recorded has no end look and is analyzed (NOT-RUN)",
+                  all(r_[0] == "refused" and "records no end look at its STOP (the seat's C9(ii))" in r_[1]
+                      for r_ in v_nel.values()) and n_rel_n == 0
+                  and not any(any((base / "out" / n_).glob("Q-F0_*")) for n_ in ("no-end-look-41", "no-end-look-5"))
+                  and v_ls[0] == "ok" and vg1[0] == "ok" and ckg0["sessions"] == []
+                  and ckg0["campaign"]["end_look"] is None and vg0[0] == "ok",
+                  ({k_: r_[0] for k_, r_ in v_nel.items()}, n_rel_n), cover=["C3-STOP-NO-ENDLOOK-REFUSED"])
             # hair-trigger STOP: refused without a PI-stop record, analyzed with one
             r_h = C.root("hair")
             rh = lambda t, s, n, c: "<|im_end|>" if (t == "A0" and s == 1 and n == 7) else None
@@ -4753,6 +4872,20 @@ def _bt_reader(B: _Battery) -> None:
             B.chk("C3: the same STOP with a declared PI-stop record -> analyzed as obtained (path and sha recorded)",
                   vh2[0] == "ok" and json.loads((base / "out" / "hair2" / "Q-F0_VERDICTS.json").read_text())
                   ["pi_stop_record"]["sha256"] == _sha256_bytes(pis.read_bytes()), vh2[1][:50], cover=["C3-HAIR-DISP"])
+            # the seat's C9(ii): the hair-trigger STOP (contrast free phase, launch 3) carries its end look at the
+            # STOP point, and the sentence names it as the STOP's
+            ck_h = json.loads(cp_h.read_text())
+            dh2 = json.loads((base / "out" / "hair2" / "Q-F0_VERDICTS.json").read_text()) if vh2[0] == "ok" else {}
+            gh2 = dh2.get("guard_last_look") or {}
+            B.chk("C3: the hair-trigger STOP at launch 3 records its end look at the STOP point (look 'end' at 3, "
+                  "silent, no pause); VERDICTS names it 'the end look at the STOP (at 3 launches)' in the guard and the "
+                  "sentence (the seat's C9(ii))", vh2[0] == "ok" and len(ck_h["sessions"]) == 3
+                  and (ck_h["campaign"]["end_look"] or {}).get("look") == "end"
+                  and ck_h["campaign"]["end_look"]["at_launches"] == 3 and ck_h["campaign"]["pauses"] == []
+                  and gh2.get("source") == "end_look" and gh2.get("at_stop") is True
+                  and gh2.get("label") == "the end look at the STOP (at 3 launches)"
+                  and "(the end look at the STOP (at 3 launches))" in dh2.get("sentence", ""),
+                  (vh2[1][:30], gh2.get("label")), cover=["C3-HAIR-ENDLOOK-LABEL"])
             # the declared seat inputs bind (PIN-8, PIN-9): an adjudication or PI-stop record is for THIS unit,
             # THIS checkpoint (its sha256) and THIS pause / bar -- each field alone refuses; the exact one is
             # accepted (C3-ENDLOOK-PAUSE, C3-HAIR-DISP)
@@ -4762,6 +4895,153 @@ def _bt_reader(B: _Battery) -> None:
                 p = base / f"{name}.json"
                 p.write_text(json.dumps({**doc0, **over}))
                 return p
+            # a hair-trigger STOP whose end look FIRES (3/3 contrast pre-pick exclusions against 0/3 on the sham, at
+            # launch 6): its end_look pause is appended unadjudicated, so PIN-9's path applies beside PIN-8's -- the
+            # seat's adjudication (naming that pause) AND the PI-stop record are each required: refused with
+            # neither, with the PI-stop record only (PIN-9), with the adjudication only (PIN-8); analyzed with both,
+            # both recorded (path and sha256)
+            r_hf = C.root("hair-endlook")
+            rhf = lambda t, s, n, c: ("<|im_end|>" if (t == "A0s" and s == 2 and n == 7)       # noqa: E731
+                                      else "Config choice one." if (t == "A0" and s < 3 and n == 1) else None)
+            res_hf, _ = C.run("Q-F0", r_hf, C.adapter("Q-F0", {"A0": 4, "A0s": 4}, rhf), {"A0": 4, "A0s": 4})
+            cp_hf = Path(res_hf["checkpoint"])
+            ck_hf = json.loads(cp_hf.read_text())
+            pz_hf = (ck_hf.get("campaign") or {}).get("pauses") or [{}]
+            sha_hf = _sha256_bytes(cp_hf.read_bytes())
+            adj_hf = seat_variant(adj_doc0, "adj-hair-endlook", campaign_sha256=sha_hf,
+                                  pause={"kind": pz_hf[-1].get("kind"), "at_launches": pz_hf[-1].get("at_launches")})
+            pis_hf = seat_variant(pis_doc0, "pis-hair-endlook", campaign_sha256=sha_hf)
+            v_hf = {"neither": V("Q-F0", cp_hf, "hf-neither"),
+                    "pi-stop only": V("Q-F0", cp_hf, "hf-pis", pi_stop=pis_hf),
+                    "adjudication only": V("Q-F0", cp_hf, "hf-adj", adjudication=adj_hf),
+                    "both": V("Q-F0", cp_hf, "hf-both", adjudication=adj_hf, pi_stop=pis_hf)}
+            d_hf = (json.loads((base / "out" / "hf-both" / "Q-F0_VERDICTS.json").read_text())
+                    if v_hf["both"][0] == "ok" else {})
+            g_hf = d_hf.get("guard_last_look") or {}
+            B.chk("C3: a hair-trigger STOP at launch 6 whose end look fires (the .20 absolute guard, binding on Qwen): the "
+                  "end_look pause {end_look, 6} is unadjudicated -- refused with neither seat input and with the PI-stop "
+                  "record only (PIN-9), with the adjudication only (PIN-8); analyzed with both, each recorded with its "
+                  "path and sha256, the guard at 'the end look at the STOP (at 6 launches)', fired",
+                  res_hf["status"] == "STOP" and len(ck_hf["sessions"]) == 6
+                  and pz_hf == [{"at_launches": 6, "kind": "end_look", "look": "end",
+                                 "bars": [r_["name"] for r_ in ck_hf["campaign"]["end_look"]["results"] if r_["fired"]],
+                                 "adjudication": None}]
+                  and v_hf["neither"][0] == v_hf["pi-stop only"][0] == "refused"
+                  and all("last pause is unadjudicated" in v_hf[k_][1] for k_ in ("neither", "pi-stop only"))
+                  and v_hf["adjudication only"][0] == "refused" and "PI-stop record" in v_hf["adjudication only"][1]
+                  and v_hf["both"][0] == "ok"
+                  and (d_hf.get("adjudication") or {}).get("sha256") == _sha256_bytes(adj_hf.read_bytes())
+                  and (d_hf.get("pi_stop_record") or {}).get("sha256") == _sha256_bytes(pis_hf.read_bytes())
+                  and g_hf.get("label") == "the end look at the STOP (at 6 launches)" and g_hf.get("at_stop") is True
+                  and (g_hf.get("abs") or {}).get("fired") is True
+                  and "(the end look at the STOP (at 6 launches))" in d_hf.get("sentence", ""),
+                  ({k_: r_[0] for k_, r_ in v_hf.items()}, g_hf.get("label")), cover=["C3-HAIR-ENDLOOK-PAUSE"])
+            # a G-VER STOP whose freshly evaluated end look FIRES (A0 s=3 quarantined at launch 7 after 3/3 contrast
+            # pre-pick exclusions against 0/3 on the sham): its end_look pause {end_look, 6} is unadjudicated and a
+            # G-VER STOP needs no PI-stop record (PIN-8 is the hair triggers'), so PIN-9's path is the only seat
+            # input -- refused with neither and with a PI-stop record only (PIN-9); analyzed with the adjudication
+            # alone, recorded with its path and sha256; refused with both (a surplus --pi-stop)
+            r_ge = C.root("gver-endlook")
+            rge = lambda t, s, n, c: "Config choice one." if (t == "A0" and s < 3 and n == 1) else None   # noqa: E731
+            with _bt_patched(stages, "run_session_qwen", tamper_at("A0", 3)):
+                res_ge, _ = C.run("Q-F0", r_ge, C.adapter("Q-F0", {"A0": 4, "A0s": 4}, rge), {"A0": 4, "A0s": 4})
+            cp_ge = Path(res_ge["checkpoint"])
+            ck_ge = json.loads(cp_ge.read_text())
+            pz_ge = (ck_ge.get("campaign") or {}).get("pauses") or [{}]
+            sha_ge = _sha256_bytes(cp_ge.read_bytes())
+            adj_ge = seat_variant(adj_doc0, "adj-gver-endlook", campaign_sha256=sha_ge,
+                                  pause={"kind": pz_ge[-1].get("kind"), "at_launches": pz_ge[-1].get("at_launches")})
+            pis_ge = seat_variant(pis_doc0, "pis-gver-endlook", campaign_sha256=sha_ge)
+            v_ge = {"neither": V("Q-F0", cp_ge, "ge-neither"),
+                    "pi-stop only": V("Q-F0", cp_ge, "ge-pis", pi_stop=pis_ge),
+                    "adjudication": V("Q-F0", cp_ge, "ge-adj", adjudication=adj_ge),
+                    "both": V("Q-F0", cp_ge, "ge-both", adjudication=adj_ge, pi_stop=pis_ge)}
+            d_ge = (json.loads((base / "out" / "ge-adj" / "Q-F0_VERDICTS.json").read_text())
+                    if v_ge["adjudication"][0] == "ok" else {})
+            g_ge = d_ge.get("guard_last_look") or {}
+            B.chk("C3: a G-VER STOP at launch 7 whose end look, evaluated fresh at 6 launches, fires: the end_look pause "
+                  "{end_look, 6} is unadjudicated -- refused with no seat input and with a PI-stop record only (PIN-9); "
+                  "analyzed with the seat's adjudication alone (path and sha256 recorded, no PI-stop record), the guard "
+                  "at 'the end look at the STOP (at 6 launches)', fired; with both, the --pi-stop is surplus (refused)",
+                  res_ge["status"] == "STOP" and (ck_ge.get("stop") or {}).get("bar") != HAIR_BAR
+                  and len(ck_ge["sessions"]) == 6
+                  and pz_ge == [{"at_launches": 6, "kind": "end_look", "look": "end",
+                                 "bars": [r_["name"] for r_ in ck_ge["campaign"]["end_look"]["results"] if r_["fired"]],
+                                 "adjudication": None}]
+                  and v_ge["neither"][0] == v_ge["pi-stop only"][0] == "refused"
+                  and all("last pause is unadjudicated" in v_ge[k_][1] for k_ in ("neither", "pi-stop only"))
+                  and v_ge["adjudication"][0] == "ok"
+                  and (d_ge.get("adjudication") or {}).get("sha256") == _sha256_bytes(adj_ge.read_bytes())
+                  and d_ge.get("pi_stop_record") is None
+                  and g_ge.get("label") == "the end look at the STOP (at 6 launches)" and g_ge.get("at_stop") is True
+                  and (g_ge.get("abs") or {}).get("fired") is True and (g_ge.get("fisher") or {}).get("fired") is True
+                  and "(the end look at the STOP (at 6 launches))" in d_ge.get("sentence", "")
+                  and v_ge["both"][0] == "refused" and "--pi-stop given" in v_ge["both"][1],
+                  ({k_: r_[0] for k_, r_ in v_ge.items()}, g_ge.get("label")), cover=["C3-GVER-ENDLOOK-PAUSE"])
+            # stages' case (b): a hair-trigger STOP on launch 40 whose look 1 fires -- the end look IS look 1 and the
+            # pause it raised at the STOP is kind 'look' {look, 40}: PIN-9 and PIN-8 each apply -- refused with
+            # neither, with the PI-stop record only (PIN-9), with the PI-stop record and an adjudication naming
+            # {end_look, 40} (the wrong kind; PIN-9), with the adjudication only (PIN-8); analyzed with both, named
+            # 'look 1 at 40 launches, the end look at the STOP'
+            r_hl = C.root("hair-look40")
+            rhl = lambda t, s, n, c: ("<|im_end|>" if (t == "A0s" and s == 19 and n == 7)      # noqa: E731
+                                      else "Config choice one." if (t == "A0s" and n == 6) else None)
+            res_hl, _ = C.run("Q-F0", r_hl, C.adapter("Q-F0", {"A0": 21, "A0s": 21}, rhl), {"A0": 21, "A0s": 21})
+            cp_hl = Path(res_hl["checkpoint"])
+            ck_hl = json.loads(cp_hl.read_text())
+            pz_hl = (ck_hl.get("campaign") or {}).get("pauses") or [{}]
+            lk_hl = ck_hl["looks"][0]["result"] if ck_hl.get("looks") else {}
+            sha_hl = _sha256_bytes(cp_hl.read_bytes())
+            adj_hl = seat_variant(adj_doc0, "adj-hair-look40", campaign_sha256=sha_hl,
+                                  pause={"kind": "look", "at_launches": 40})
+            adj_hl_k = seat_variant(adj_doc0, "adj-hair-look40-kind", campaign_sha256=sha_hl,
+                                    pause={"kind": "end_look", "at_launches": 40})
+            pis_hl = seat_variant(pis_doc0, "pis-hair-look40", campaign_sha256=sha_hl)
+            v_hl = {"neither": V("Q-F0", cp_hl, "hl-neither"),
+                    "pi-stop only": V("Q-F0", cp_hl, "hl-pis", pi_stop=pis_hl),
+                    "wrong kind": V("Q-F0", cp_hl, "hl-kind", adjudication=adj_hl_k, pi_stop=pis_hl),
+                    "adjudication only": V("Q-F0", cp_hl, "hl-adj", adjudication=adj_hl),
+                    "both": V("Q-F0", cp_hl, "hl-both", adjudication=adj_hl, pi_stop=pis_hl)}
+            d_hl = (json.loads((base / "out" / "hl-both" / "Q-F0_VERDICTS.json").read_text())
+                    if v_hl["both"][0] == "ok" else {})
+            g_hl = d_hl.get("guard_last_look") or {}
+            B.chk("C3: a hair-trigger STOP on launch 40 whose look 1 fires (stages' case (b)): the pause {look, 40} is "
+                  "unadjudicated -- refused with neither seat input, with the PI-stop record only and with an "
+                  "adjudication naming {end_look, 40} (PIN-9), with the adjudication only (PIN-8); analyzed with both, "
+                  "each recorded, the guard at 'look 1 at 40 launches, the end look at the STOP'",
+                  res_hl["status"] == "STOP" and len(ck_hl["sessions"]) == 40 and lk_hl.get("fired") is True
+                  and (ck_hl["campaign"].get("end_look") or {}).get("end_is_look") == 1
+                  and pz_hl == [{"at_launches": 40, "kind": "look", "look": 1,
+                                 "bars": [r_["name"] for r_ in lk_hl["results"] if r_["fired"]], "adjudication": None}]
+                  and all(v_hl[k_][0] == "refused" and "last pause is unadjudicated" in v_hl[k_][1]
+                          for k_ in ("neither", "pi-stop only", "wrong kind"))
+                  and v_hl["adjudication only"][0] == "refused" and "PI-stop record" in v_hl["adjudication only"][1]
+                  and v_hl["both"][0] == "ok"
+                  and (d_hl.get("adjudication") or {}).get("sha256") == _sha256_bytes(adj_hl.read_bytes())
+                  and (d_hl.get("pi_stop_record") or {}).get("sha256") == _sha256_bytes(pis_hl.read_bytes())
+                  and g_hl.get("label") == "look 1 at 40 launches, the end look at the STOP" and g_hl.get("at_stop") is True
+                  and "(look 1 at 40 launches, the end look at the STOP)" in d_hl.get("sentence", ""),
+                  ({k_: r_[0] for k_, r_ in v_hl.items()}, g_hl.get("label")), cover=["C3-HAIR-LOOK40-PAUSE"])
+            # the V2 refusal is bar-agnostic: the hair-trigger STOP at launch 3 with its end look removed,
+            # offered with a PI-stop record bound to that copy (PIN-8 satisfied), is refused at V2 before V3
+            # releases any record; with its end look it is analyzed (C3-HAIR-DISP)
+            cp_hne = no_end_look(cp_h, "hair-no-end-look")
+            pis_hne = seat_variant(pis_doc0, "pis-hair-no-end-look", campaign_sha256=_sha256_bytes(cp_hne.read_bytes()))
+            rel_h: list = []
+
+            def count_rel_h(recs):
+                rel_h.append(len(recs))
+                return real_rel_n(recs)
+            with _bt_patched(readrule, "release_full", count_rel_h):
+                v_hne = V("Q-F0", cp_hne, "hair-no-end-look", pi_stop=pis_hne)
+            B.chk("refused at V2 (the seat's C9(ii)), whatever the STOP's bar: the hair-trigger STOP at launch 3 with its "
+                  "end look removed, offered with a PI-stop record bound to that checkpoint -- 'records no end look at "
+                  "its STOP', before V3 releases any record, nothing written; with its end look it is analyzed "
+                  "(C3-HAIR-DISP)",
+                  v_hne[0] == "refused" and "records no end look at its STOP (the seat's C9(ii))" in v_hne[1]
+                  and rel_h == [] and not any((base / "out" / "hair-no-end-look").glob("Q-F0_*"))
+                  and (ck_h.get("stop") or {}).get("bar") == HAIR_BAR and vh2[0] == "ok",
+                  (v_hne[0], v_hne[1][:60], len(rel_h)), cover=["C3-STOP-NO-ENDLOOK-HAIR-REFUSED"])
             adj_bad = {"sha": {"campaign_sha256": _sha256_bytes(cp.read_bytes())},
                        "pause": {"pause": {**adj_doc0["pause"], "at_launches": (adj_doc0["pause"]["at_launches"] or 0) + 1}},
                        "kind": {"pause": {**adj_doc0["pause"], "kind": "battery-other-kind"}},
@@ -4875,10 +5155,42 @@ def _bt_reader(B: _Battery) -> None:
                               cap=0.25 / 3600)
             vcs = V("Q-F0", Path(res_cs["checkpoint"]), "capsham")
             dcs = json.loads((base / "out" / "capsham" / "Q-F0_VERDICTS.json").read_text()) if vcs[0] == "ok" else {}
+            # the at-STOP label is the STOP's alone: at CAP the end look keeps its unchanged label (not 'at the STOP')
+            n_cs = len(json.loads(Path(res_cs["checkpoint"]).read_text())["sessions"])
+            gcs = dcs.get("guard_last_look") or {}
             B.chk("C3: CAP with the sham the only domain arm -> analyzed; the contrast arm INDETERMINATE, no read "
-                  "obtained (contrast-empty)", res_cs["status"] == "CAP" and dcs.get("arm", {}).get("noread")
-                  == "contrast-empty" and "no read obtained" in dcs.get("sentence", ""),
-                  (res_cs["status"], dcs.get("arm", {}).get("noread")), cover=["C3-CAP-SHAM-ONLY"])
+                  "obtained (contrast-empty); the guard names the end look 'the end look at N launches' (at_stop False: "
+                  "a CAP is not a STOP) in the guard and the sentence",
+                  res_cs["status"] == "CAP" and dcs.get("arm", {}).get("noread")
+                  == "contrast-empty" and "no read obtained" in dcs.get("sentence", "")
+                  and gcs.get("source") == "end_look" and gcs.get("at_stop") is False
+                  and gcs.get("label") == f"the end look at {n_cs} launches"
+                  and f"(the end look at {n_cs} launches)" in dcs.get("sentence", "") and "at the STOP" not in
+                  dcs.get("sentence", ""), (res_cs["status"], dcs.get("arm", {}).get("noread"), gcs.get("label")),
+                  cover=["C3-CAP-SHAM-ONLY"])
+            # a PI-STOP after first reads (3 launches; the 4th interrupted, then the PI's stop): analyzed as obtained
+            # (m:324); its end look keeps the unchanged label (at_stop False: a PI stop is not a STOP)
+            r_pd = C.root("pistop-data")
+            cut_pd = lambda t, s, n, c: t == "A0s" and s == 1 and n == 1                          # noqa: E731
+            C.run("Q-F0", r_pd, C.adapter("Q-F0", {"A0": 2, "A0s": 2}, None, cut_pd), {"A0": 2, "A0s": 2})
+            res_pd, _ = C.run("Q-F0", r_pd, C.adapter("Q-F0", {"A0": 2, "A0s": 2}), {"A0": 2, "A0s": 2},
+                              resume=True, pi_stop="PI: stop after first reads (battery)")
+            cp_pd = r_pd / "ckpt" / "Q-F0_campaign.json"
+            ck_pd = json.loads(cp_pd.read_text()) if cp_pd.is_file() else {}
+            n_pd = len(ck_pd.get("sessions") or [])
+            v_pd = V("Q-F0", cp_pd, "pistop-data")
+            d_pd = json.loads((base / "out" / "pistop-data" / "Q-F0_VERDICTS.json").read_text()) if v_pd[0] == "ok" else {}
+            g_pd = d_pd.get("guard_last_look") or {}
+            B.chk("C3: a PI-STOP after first reads -> analyzed as obtained; the guard names its end look 'the end look at "
+                  "N launches' (at_stop False: a PI stop is not a STOP) in the guard and the sentence",
+                  res_pd is not None and res_pd["status"] == "PI-STOP" and n_pd >= 2 and v_pd[0] == "ok"
+                  and d_pd.get("arm", {}).get("state") in ARM_STATES
+                  and g_pd.get("source") == "end_look" and g_pd.get("at_stop") is False
+                  and g_pd.get("label") == f"the end look at {n_pd} launches"
+                  and f"(the end look at {n_pd} launches)" in d_pd.get("sentence", "")
+                  and "at the STOP" not in d_pd.get("sentence", ""),
+                  ((res_pd or {}).get("status"), n_pd, v_pd[1][:40] if v_pd[0] != "ok" else g_pd.get("label")),
+                  cover=["C3-PISTOP-DATA-LABEL"])
             # COMPLETE with an arm below floor; COMPLETE with an empty domain
             vbf = V("Q-F0", mutated("below-floor", lambda ck: ck["campaign"].__setitem__("floors", {"A0": 9, "A0s": 3})),
                     "below-floor")
