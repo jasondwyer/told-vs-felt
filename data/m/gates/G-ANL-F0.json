@@ -1,12 +1,12 @@
 {
  "analyzer": {
   "path": "scripts/m_analyze.py",
-  "sha16": "24d44a3c61b06dd3",
-  "sha256": "24d44a3c61b06dd3a5e116e2edf59268174ca4e65e9b9960b20873b9d31327fa"
+  "sha16": "66fb521488db41e7",
+  "sha256": "66fb521488db41e71cc65e844e17c7ee77e0a4a318a55314ef1afb8ffef67d5e"
  },
  "battery": {
-  "checks_pass": 376,
-  "checks_total": 376,
+  "checks_pass": 384,
+  "checks_total": 384,
   "coverage_ids": [
    "ARM-BOTHEMPTY-RAISES",
    "BND-DEAD-80",
@@ -33,13 +33,21 @@
    "C3-COUNTS-INDEPENDENT",
    "C3-ENDLOOK-PAUSE",
    "C3-GVER-DATA",
+   "C3-GVER-ENDLOOK-PAUSE",
    "C3-GVER-ZERO",
    "C3-HAIR-DISP",
+   "C3-HAIR-ENDLOOK-LABEL",
+   "C3-HAIR-ENDLOOK-PAUSE",
+   "C3-HAIR-LOOK40-PAUSE",
    "C3-HAIR-NODISP",
    "C3-LASTLOOK-END-WINS",
-   "C3-LASTLOOK-STOP-CADENCE",
+   "C3-LASTLOOK-STOP-ENDISLOOK",
+   "C3-LASTLOOK-STOP-PAST-CADENCE",
    "C3-OLMO-COMPLETE",
+   "C3-PISTOP-DATA-LABEL",
    "C3-PISTOP-ZERO",
+   "C3-STOP-NO-ENDLOOK-HAIR-REFUSED",
+   "C3-STOP-NO-ENDLOOK-REFUSED",
    "CMD-EXCLUSIVE-WRITE",
    "CMD-NOTRUN",
    "CMD-NOTRUN-DECISIONS",
@@ -397,7 +405,7 @@
    "TUP-T9-T"
   ],
   "evaluations": 2160,
-  "expected_checks": 376,
+  "expected_checks": 384,
   "outputs_form": "sha256 over the lines json.dumps({t, flag, outputs}, sort_keys, ensure_ascii False, compact) + newline, flag True then False, t in itertools.product(Q5, O6, O6, O6) order; regenerable byte-identically (not committed)",
   "outputs_sha256": "83df98b12a27be8e4cd6abee6db7145599774d68ed7bb9b2675fa674de3b813c",
   "tallies": {
@@ -1118,7 +1126,7 @@
    "units": "olmo"
   },
   "clock:not-locked": {
-   "cite": "m:347 A Q-F0 not locked by D1 / a checkpoint not locked by D_O is NOT-RUN; m:302 a pause -> the seat's adjudication (residual: the blocking stage had not reached its end; seat-routed)",
+   "cite": "m:347 A Q-F0 not locked by D1 / a checkpoint not locked by D_O is NOT-RUN; m:302 a pause -> the seat's adjudication (residual: the blocking stage had not reached its end; m:324's 'or any reason', the seat's C1)",
    "param": "stage",
    "phrase": "{stage} had not reached its end and no LOCK v1.0 was committed by its Clock date ({date})",
    "units": "both"
@@ -1155,7 +1163,7 @@
    "v2_only": true
   }
  },
- "package_sha256": "06ab1430de9c5ca0fc9483431caba64ee436a1b69709dd1577f4a50cfedcfef8",
+ "package_sha256": "5f646db6e82c5561ff8a425e91beb5454068a381564894e93d19b9165459d771",
  "pending_substates": [
   "unlocked-before-D_O",
   "locked-running",
@@ -1164,14 +1172,14 @@
  ],
  "pins": {
   "PIN-1": "The analyzer of m:278 is the single file scripts/m_analyze.py: every outcome, unit-state, sentence, counter, secondary and posting computation lives in it. The analyzer's sha256, package_sha256 and the import closure outside the package together bind the verdict logic: the closure is computed mechanically in a fresh interpreter that imports this file and the declared lazy verdict-path module (valence_core.m.stages) -- sha256 of __file__ of every loaded valence_core.* module outside valence_core/m, plus every repository data file opened during those imports -- recorded in G-ANL-F0.json with its sha256; a VERDICTS run whose closure sha256 is not named in its lock is refused (exit 2). stages is imported lazily on the verdict path; guard, testing, corr, scaffold and schedule in the battery only. The gate-line files (the proposal, CLAUDE.md, this file) are logged by stages.gate_line, not bound by the closure. Step 8 edits nothing under valence_core/.",
-  "PIN-10": "'The unit's last look' = campaign.end_look if present, else the last cadence look of ckpt.looks (a STOP-ended campaign has no end look -- the missing end look on STOP is a build gap flagged to the seat, not patched here), else 'no look reached'. Guard results are selected by the unit's declared guard bars. No end-of-data guard is recomputed. Neither moves a verdict (m:316).",
+  "PIN-10": "The seat's C9(ii) (2026-10-10; m:330's 'at the end' includes an end by STOP): 'the unit's last look' = campaign.end_look, which stages evaluates and records at COMPLETE, CAP, PI-STOP and at the STOP point alike; at a STOP the sentence names it as the STOP's ('the end look at the STOP (at N launches)', or 'look k at N launches, the end look at the STOP' where the end look is the cadence look recorded at N). A STOP-ended campaign with a launch recorded and no end look is a structural refusal at V2, before V3 releases anything (not written by the lock's package); with no launch recorded, 'no look reached'. A fired end look at a STOP is a pause (m:330's 'A fired bar pauses', Code's application) and takes PIN-9's path (Code's reading of C3, flagged for the seat; see PIN-9). Guard results are selected by the unit's declared guard bars. No end-of-data guard is recomputed in the analyzer. Neither moves a verdict (m:316).",
   "PIN-11": "Counters are declared as m:314's two lists in full (verified verbatim against m:314 and against audit.DECLARED_COUNTERS_* plus the [Q-F3] entry); the [Q-F3] counter is declared, scoped to Q-F3, not tabulated at Q-F0. The counters of record are over the unit's campaign sessions, excluded included, mirroring audit.tally's claim logic (summed over property they equal audit.tally); G-TIME and qualification sessions are tabulated separately as m:271's release.",
-  "PIN-12": "Property keys: round counters by round.property; session counters by the excluding round's property; read counters by arm and read position (no property). The per-property table adds sessions_excluded_any_phase as the interim like-for-like column for f1's whole-session 7-vs-1 beside the pre-pick column, awaiting the seat's ruling on G-PORT A5; whole-session validity: lenient = complete, no exclusion, no hair trigger; strict adds no claim in any round.",
+  "PIN-12": "Property keys: round counters by round.property; session counters by the excluding round's property; read counters by arm and read position (no property). Settled by the seat (C7, 2026-10-10; G-PORT A5), where the interim text had named sessions_excluded_any_phase the like-for-like column: f1's 7-vs-1 refers to the per-property table's pre-pick column (sessions excluded before the first read, by property); sessions_excluded_any_phase is reported beside it -- fixed, no longer interim. Whole-session validity: lenient = complete, no exclusion, no hair trigger; strict adds no claim in any round.",
   "PIN-13": "Secondaries (a), (b), (d) and (e) are built now (m:312, pre-registered), in a separate {unit}_secondary.json, with the 20-event floor and count-only below it. 'Valid through position p' = the choice at p was made and no exclusion-bearing event preceded it. (d)'s habit identity is habit.break_rates(<the arm's domain sessions>) (no `arm` key; frame()'s e2d powered-effect block omitted), b+, bs and the weighted form recomputed in Fractions; the weighted form + 1/2 equals the arm's P exactly.",
-  "PIN-14": "The analyzer of record for a unit is the blob hashed in that unit's LOCK v1.0; the lock names the analyzer's sha256, package_sha256 and the closure sha256, each asserted. When HEAD's three equal the lock's, VERDICTS runs at HEAD with no worktree; otherwise from a worktree of the lock commit with every data input and output passed as an absolute path into the main tree, and only on the PI's word for the worktree (not implemented at step 8; G-ANL-F3's versioning is the seat's).",
+  "PIN-14": "The analyzer of record for a unit is the blob hashed in that unit's LOCK v1.0; the lock names the analyzer's sha256, package_sha256 and the closure sha256, each asserted. When HEAD's three equal the lock's, VERDICTS runs at HEAD with no worktree; otherwise from a worktree of the lock commit with every data input and output passed as an absolute path into the main tree, and only on the PI's word for the worktree (not implemented at step 8). G-ANL-F3's versioning (m:291) is deferred by the seat to before step 19 (C7, 2026-10-10).",
   "PIN-15": "Label slots: the outcome as the §5 state word; the reason as the PIN-5 phrase; one bracket alternative, plain text.",
   "PIN-16": "'[passing stages]' = 'the {A} stage' or 'the {A} or {B} stage', in lineage order, with names as m:338 spells them (SFT, DPO, instruct).",
-  "PIN-17": "Conservative default, awaiting the seat's ruling before LOCK v0.1: §8.1 text = one clause per control with a v1 coordinate (A0, A0-OLMo-sft/-dpo/-instruct) with m:343's tokens; A1 belongs to §8.2, 'open' at v1; re-verified against the placed preprint at LOCK v1.0.",
+  "PIN-17": "Confirmed by the seat (C4, 2026-10-10): §8.1 text = one clause per control with a v1 coordinate (A0, A0-OLMo-sft/-dpo/-instruct) with m:343's tokens; A1 belongs to §8.2, 'open' at v1; re-verified against the placed preprint at LOCK v1.0.",
   "PIN-18": "The ceiling output is its name and its m:334 title, verbatim.",
   "PIN-19": "Flag of record TRUE iff data/m/gates/G-CAL_model-free.json is committed at HEAD and identical in the working tree, has schema m-gcal-model-free-v1, and carries an f1_012 block; existence-keyed; renders_sha_matches_calib recorded beside, not part of the flag. The battery runs both values.",
   "PIN-2": "Every decision is exact (Fraction); floats are refused. (iii) is P <= alpha, which equals P < alpha because a dyadic P never equals 1/100 (asserted at n = 80, 96, 213). DEAD iff k < n and P(Bin(n, 13/20) <= k) < 1/40, the exact form of 'CI upper bound on Delta_c < +0.15' (strict; k = n is never DEAD). Displayed Clopper-Pearson bounds are exact bisection on Fractions to width < 1e-8, printed half-up to 4 places, and never decide.",
@@ -1185,7 +1193,7 @@
   "PIN-27": "The abstract clause is emitted verbatim even where its host sentence is enumerated under (a); the entry notes that it can dangle.",
   "PIN-28": "The analyzer runs guard.check_call_sites and the forbidden-literal grep over itself in its battery, both directions.",
   "PIN-29": "During --selftest and ganl, an open hook (builtins.open, io.open, Path.open/read_bytes/read_text) refuses any path under data/m/ckpt, data/m/reports, data/m/verdicts or results/raw; the no-canonical-write snapshot hashes data/m files outside those directories and takes only os.stat of files inside them (never their bytes).",
-  "PIN-3": "Attained power of record = P(PASS under (i)-(iii) at alpha .01), enumerated exactly at m:190's base case at the realised n: the arm's realised domain n split floor(n/2) on map 0 and ceil(n/2) on map 1 at clean share .70, the sham pooled at its realised domain m at .5. The figure at the realised map split is reported beside, labelled. Both are 0 when a map or the sham is empty. Descriptive only.",
+  "PIN-3": "Attained power of record = P(PASS under (i)-(iii) at alpha .01), enumerated exactly at m:190's base case at the realised n: the arm's realised domain n split floor(n/2) on map 0 and ceil(n/2) on map 1 at clean share .70, the sham pooled at its realised domain m at .5. The figure at the realised map split is reported beside, labelled. Both are 0 when a map or the sham is empty. Descriptive only. Accepted by the seat (C6, 2026-10-10) as the declared base-case computation, re-derived at G-PWR (step 15) with the planned floors, where the realised-n figure becomes the figure of record (m:190).",
   "PIN-30": "STUB_MARK provenance is accepted only by the battery's internal path. The CLI refuses it.",
   "PIN-31": "The proposal sha256 is pinned in the analyzer. Every m-verbatim constant is verified against the proposal file at run time.",
   "PIN-32": "VERDICTS and NOT-RUN outputs carry the G-TIME and qualification contrast first picks (by role) and the released free-round events from {unit}_time.json and {unit}_qual.json, tabulated beside, never merged into the counters of record. G-ID sessions are not re-reported.",
@@ -1199,13 +1207,13 @@
   "PIN-4": "The verdict sentence is the clauses of SENTENCE_TEMPLATES in order (state or 'no read obtained' with its sub-reason; counts per map; P, Delta_c, CP CI; E and P_arm - P_sham; both one-sided p's; REVERSE's phrase; pre-pick rates of arm and sham; the guard at the unit's last look; shortfall and attained power -- the figure of record, the realised-split figure beside -- only when an arm is below its floor, m:247). Attained power is always in the VERDICTS output (m:190). The absolute guard prints 'fired / not fired (binding)' on Qwen and 'P <= alpha / P > alpha (reported only)' on OLMo.",
   "PIN-40": "LOCK-m-F0 v1.0 hashes the sentence table of record and the preprint of record (m:286): Q-F0's VERDICTS refuses unless the lock text names the table's sha256 and its preprint's sha256. The posting's of-record table, when a Q-F0 output of `verdicts` records one (its VERDICTS, or a locked unit's no-first-read NOT-RUN), must be that table (and so the lock's); on Q-F0's Clock NOT-RUN path the table of record is built at the posting (m:278, m:286) and no lock binds it; a posted-kind table (the re-run on the posted text) is hashed by no lock.",
   "PIN-41": "m:324's exclusivity is enforced at write time: `verdicts` never writes {U}_VERDICTS.json beside an existing {U}_NOT-RUN.json nor {U}_NOT-RUN.json beside an existing {U}_VERDICTS.json / _secondary.json, and `not-run` never writes beside an existing {U}_VERDICTS.json (exit 2, nothing written); the posting refuses a unit carrying both.",
-  "PIN-42": "`not-run` and `posting` bind their outputs as `verdicts` does short of a lock (neither has one): each refuses (exit 2, before any input is read) unless the proposal is the pinned v1.11 and this file is committed at HEAD with identical working-tree bytes, and records analyzer_sha256, package_sha256 and closure_sha256 in {U}_NOT-RUN.json / POSTING-v1_outputs.*.json (rule 27). Code-added at step 8 (a binding the spec does not state); for the seat's confirmation at LOCK v0.1.",
-  "PIN-43": "every declared date (a NOT-RUN record's, a declared OLMo NOT-RUN state's, a PENDING declaration's Clock comparison, a decision's) is an ASCII YYYY-MM-DD that is a real calendar date (non-ASCII digits, the basic and week forms and impossible days refuse); a NOT-RUN record's and a declared NOT-RUN state's date are checked whatever the cause.",
-  "PIN-5": "NOT-RUN cause codes and reason phrases as NOT_RUN_CAUSES tables them (Code-authored; the seat may author them; the PI rewrites at posting). The record names one primary cause (the earliest) and lists the others in `also`; the label prints the primary. The <stage> of clock:gate-stopped and clock:not-locked is one of gate_stop_stages(unit): Q-F0 G-PORT, G-CAL, G-SHAPE-F0, G-ANL-F0, G-TIME-F0, G-ID-F0m, G-F0m-Qwen (G-ID-F0m's divergence only sends Q-F0 uncached, m:281, but a hair-trigger fire or a G-VER failure stops it, m:271, m:284); OLMo-c G-CAL (it serves all units, m:176, m:276; the OLMo track starts at step 9, m:300, m:358), G-SHAPE-F0, G-ANL-F0, G-TIME-OLMo-c, G-F0m-OLMo-c. clock:not-locked is the residual Clock cause (m:347 is unconditional): the blocking stage had not reached its end (a pause awaiting the seat's adjudication, m:302; a gate still open) -- conservative default awaiting the seat's ruling, before LOCK v0.1, on whether m:324's parenthetical is exhaustive.",
-  "PIN-6": "PENDING is a declared input {state, substate, clock_passed, date}, substate in {unlocked-before-D_O, locked-running, restarting-after-box-change, awaiting-verdicts-session}; refused for Q-F0, refused with clock_passed for unlocked-before-D_O, refused where a VERDICTS or NOT-RUN output exists. clock_passed and the date the comparison was made on (YYYY-MM-DD) are recorded as given -- in the posting output's pending block and in Q-F0's VERDICTS (olmo_states_declared); the boundary-day convention is the seat's (non-blocking for step 8).",
+  "PIN-42": "`not-run` and `posting` bind their outputs as `verdicts` does short of a lock (neither has one): each refuses (exit 2, before any input is read) unless the proposal is the pinned v1.11 and this file is committed at HEAD with identical working-tree bytes, and records analyzer_sha256, package_sha256 and closure_sha256 in {U}_NOT-RUN.json / POSTING-v1_outputs.*.json (rule 27). Code-added at step 8 (a binding the spec does not state); confirmed by the seat (C5, 2026-10-10).",
+  "PIN-43": "every declared date (a NOT-RUN record's, a declared OLMo NOT-RUN state's, a PENDING declaration's Clock comparison, a decision's) is an ASCII YYYY-MM-DD that is a real calendar date (non-ASCII digits, the basic and week forms and impossible days refuse); a NOT-RUN record's and a declared NOT-RUN state's date are checked whatever the cause. Confirmed by the seat (C5, 2026-10-10), Code's fixes ratified. For a no-first-read NOT-RUN declared in --olmo-states the date is the calendar date of the terminal event that made the NOT-RUN final -- the PI stop, the G-VER STOP, or the day the cap was reached -- as that unit's entry records it; where the unit's own output carries no date, the declarer supplies the entry's.",
+  "PIN-5": "NOT-RUN cause codes and reason phrases as NOT_RUN_CAUSES tables them (Code-authored, accepted with their precedence by the seat, C6, 2026-10-10; the PI rewrites at posting). The record names one primary cause (the earliest) and lists the others in `also`; the label prints the primary. The <stage> of clock:gate-stopped and clock:not-locked is one of gate_stop_stages(unit): Q-F0 G-PORT, G-CAL, G-SHAPE-F0, G-ANL-F0, G-TIME-F0, G-ID-F0m, G-F0m-Qwen (G-ID-F0m's divergence only sends Q-F0 uncached, m:281, but a hair-trigger fire or a G-VER failure stops it, m:271, m:284); OLMo-c G-CAL (it serves all units, m:176, m:276; the OLMo track starts at step 9, m:300, m:358), G-SHAPE-F0, G-ANL-F0, G-TIME-OLMo-c, G-F0m-OLMo-c. clock:not-locked is the residual Clock cause (m:347 is unconditional): the blocking stage had not reached its end (a pause awaiting the seat's adjudication, m:302; a gate still open) -- confirmed by the seat (C1, 2026-10-10): m:324's parenthetical ends 'or any reason', so its list is not exhaustive by its own words; clock:not-locked:<stage> is a reading of that clause, not an addition to it.",
+  "PIN-6": "PENDING is a declared input {state, substate, clock_passed, date}, substate in {unlocked-before-D_O, locked-running, restarting-after-box-change, awaiting-verdicts-session}; refused for Q-F0, refused with clock_passed for unlocked-before-D_O, refused where a VERDICTS or NOT-RUN output exists. clock_passed and the date the comparison was made on (YYYY-MM-DD) are recorded as given -- in the posting output's pending block and in Q-F0's VERDICTS (olmo_states_declared). The boundary-day comparison is settled by the seat (C7, 2026-10-10): a unit's LOCK v1.0 is 'committed by its Clock date' iff the commit's committer date, in UTC, falls on or before the Clock date (the day inclusive, to 23:59:59 UTC); it remains a declared input.",
   "PIN-7": "VERDICTS reads one unit's declared campaign, G-TIME and qualification checkpoints after refusals decided before any pick is read (unit; pinned proposal; this file and the lock committed at HEAD; analyzer, package and closure sha256s named in the lock; the decisions input; Q-F0's table of record and OLMo states), then on structure (ended, no end pending, an adjudicated last pause, a G-VER or PI-stop-disposed STOP, the lock's sha, floors recorded for both arms, one backend identifier across launching invocations, an OLMo identity carrying its pod id -- a pod splice is refused at write time by resume -- and no stub provenance). It calls readrule.release_full, writes once, and prints after writing. A unit NOT-RUN by §5's no-first-read cause gets {U}_NOT-RUN.json from this command.",
-  "PIN-8": "Conservative default, awaiting the seat's ruling before LOCK v0.1 hashes the analyzer: a campaign ended by a scaffold_absorption hair-trigger STOP is refused unless a declared PI-stop record (m-pi-stop-record-v1 naming the unit and the campaign checkpoint's sha256; path and sha256 recorded) is supplied; with it, m:324's PI-stop rule applies (no first read: NOT-RUN no-first-read:pi-stop; otherwise analyzed as obtained). A G-VER STOP is a PI stop by m:284.",
-  "PIN-9": "Conservative default, awaiting the seat's ruling before LOCK v0.1: VERDICTS refuses while the campaign's last pause is unadjudicated (a fired end look on a terminal campaign included); the seat's adjudication enters as a declared --adjudication file (m-verdicts-adjudication-v1 naming the unit, the checkpoint's sha256 and the pause's kind and launch count), its path and sha256 recorded. Code never self-adjudicates. Build gap, flagged: stages.py has no path that records the seat's ruling on a terminal campaign."
+  "PIN-8": "Confirmed by the seat (C2, 2026-10-10; m:316's path -- an adjudication 'may end in a PI stop (terminal, analyzed as obtained)' -- applied to the hair triggers): a campaign ended by a scaffold_absorption hair-trigger STOP is refused unless a declared PI-stop record (m-pi-stop-record-v1 naming the unit and the campaign checkpoint's sha256; path and sha256 recorded) is supplied; with it, m:324's PI-stop rule applies (no first read: NOT-RUN no-first-read:pi-stop; otherwise analyzed as obtained). Whether an adjudicated fire may instead resume is for the adjudication, if one arises; nothing is built for it. A G-VER STOP is a PI stop by m:284.",
+  "PIN-9": "Confirmed by the seat (C3, 2026-10-10): VERDICTS refuses while the campaign's last pause is unadjudicated; the seat's adjudication enters as a declared --adjudication file (m-verdicts-adjudication-v1 naming the unit, the checkpoint's sha256 and the pause's kind and launch count), its path and sha256 recorded. Code never self-adjudicates. The seat's C9(i): the adjudication of a fired end look on a terminal campaign enters as that declared --adjudication file; stages.py need not record it. Code's reading, flagged for the seat: a pause raised at a STOP (when the end look the seat's C9(ii) orders there fires; the pause is Code's application of m:330) is the campaign's last pause, so C3's route covers it too."
  },
  "placeholder": {
   "path": "data/m/gates/m_posting_sentences.placeholder.json",
@@ -1217,10 +1225,10 @@
  },
  "schema": "m-ganl-f0-v1",
  "seat_routed": {
-  "PIN-17": "blocking LOCK v0.1, not step 8",
-  "PIN-5": "clock:not-locked (the residual Clock cause) awaits the seat's ruling on whether m:324's parenthetical is exhaustive -- blocking LOCK v0.1, not step 8",
-  "PIN-8": "blocking LOCK v0.1, not step 8",
-  "PIN-9": "blocking LOCK v0.1, not step 8"
+  "PIN-17": "routed before LOCK v0.1; ruled by the seat (C4, 2026-10-10): confirmed",
+  "PIN-5": "routed before LOCK v0.1; ruled by the seat (C1, 2026-10-10): confirmed -- m:324's parenthetical ends 'or any reason'; clock:not-locked:<stage> reads that clause",
+  "PIN-8": "routed before LOCK v0.1; ruled by the seat (C2, 2026-10-10): confirmed",
+  "PIN-9": "routed before LOCK v0.1; ruled by the seat (C3, 2026-10-10): confirmed; C9(i) for a fired end look's adjudication on a terminal campaign"
  },
  "spec": "PROPOSAL-m v1.11 §3.1 m:278; §8 step 8 m:358",
  "stage": "G-ANL-F0",

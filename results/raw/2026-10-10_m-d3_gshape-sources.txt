@@ -1,0 +1,89 @@
+# D3 (the design seat's ruling, 2026-10-10): G-SHAPE-F0's sources map compared with the tree after the D2 + C9(ii) edit and Code's three text-only follow-ups (PIN-S10), and the valence_core/m diff since the G-SHAPE-F0 build. Read-only; no model or tokenizer.
+# Code stamp: 2026-10-10 20:27:25 UTC (date -u); HEAD b7737ef (the third follow-up; the build is b8aa706, the follow-ups 185deb0, 97d70bd, b7737ef). Earlier runs of this check at b8aa706, 185deb0 and 97d70bd also gave 10/10 (not kept: superseded by this one).
+# Beside the script: git diff --name-status d092078 HEAD -- valence_core (the whole package tree, for G-SHAPE-F0's import closure outside valence_core/m): M valence_core/m/stages.py;
+# Also beside the script, for G-SHAPE-F0's import set (gshape imports stages): import-line changes in git diff d092078 HEAD -- valence_core/m/stages.py, lines matching ^[-+][[:space:]]*(import|from)[[:space:]] : 0 (run by Code before commit, HEAD b7737ef).
+
+=== 1. Script (verbatim; Code's scratchpad step9/d3_check.py, not committed) ===
+"""D3 (the seat's ruling, 2026-10-10): G-SHAPE-F0's sources map compared with the tree (PIN-S10).
+
+Read-only. Compares data/m/gates/G-SHAPE-F0.json's provenance `sources` and `tooling` maps with
+(1) gshape.sources_map() (working-tree bytes) and (2) gshape.committed_sources() (the committed blobs at
+HEAD, and whether each is identical in the working tree); lists the m package's files whose bytes differ
+between the G-SHAPE-F0 build (d092078) and HEAD; and prints the package_sha256 of each. No model or
+tokenizer.
+"""
+import hashlib
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+REPO = Path("/Users/jasondwyer/Documents/code/jspace-lab")
+sys.path.insert(0, str(REPO))
+from valence_core.m import gshape, resume  # noqa: E402
+
+ok_all = []
+
+
+def chk(name, ok, got=""):
+    ok_all.append(bool(ok))
+    print(f"  [{'PASS' if ok else 'FAIL'}] {name}   {got}")
+
+
+def git(*a):
+    return subprocess.run(["git", "--no-optional-locks", "-C", str(REPO), *a], check=True,
+                          capture_output=True, text=True).stdout
+
+
+art_p = REPO / "data/m/gates/G-SHAPE-F0.json"
+art_b = art_p.read_bytes()
+prov = json.loads(art_b)["provenance"]
+print(f"HEAD {git('rev-parse', 'HEAD').strip()}")
+print(f"G-SHAPE-F0 artifact sha256 {hashlib.sha256(art_b).hexdigest()}")
+print(f"G-SHAPE-F0 artifact package_sha256 {prov['package_sha256']}")
+print(f"package_sha256 now (resume.package_sha256, working tree) {resume.package_sha256()}")
+
+wt = gshape.sources_map()
+probs, cm = gshape.committed_sources()
+for part in ("sources", "tooling"):
+    a, w, c = prov[part], wt[part], cm[part]
+    diff_w = sorted(k for k in set(a) | set(w) if a.get(k) != w.get(k))
+    diff_c = sorted(k for k in set(a) | set(c) if a.get(k) != c.get(k))
+    chk(f"{part}: {len(a)} files in the artifact's map; working tree identical", not diff_w, diff_w)
+    chk(f"{part}: committed blobs at HEAD identical to the artifact's map", not diff_c, diff_c)
+chk("every map file committed at HEAD with the working tree's bytes (gshape.committed_sources)", not probs, probs[:3])
+chk("sources digest equals the artifact's", gshape.sources_digest(wt) == gshape.sources_digest(
+    {"sources": prov["sources"], "tooling": prov["tooling"]}), gshape.sources_digest(wt))
+in_maps = set(prov["sources"]) | set(prov["tooling"])
+chk("valence_core/m/stages.py is in neither map (D3: the D2 edit does not re-run G-SHAPE-F0)",
+    "valence_core/m/stages.py" not in in_maps)
+chk("scripts/m_analyze.py is in neither map", "scripts/m_analyze.py" not in in_maps)
+changed = [ln for ln in git("diff", "--name-status", "d092078", "HEAD", "--", "valence_core/m").splitlines() if ln]
+print(f"valence_core/m changes d092078..HEAD: {changed}")
+chk("valence_core/m diff d092078..HEAD is stages.py alone (the lock states it, D1/D3)",
+    changed == ["M\tvalence_core/m/stages.py"], changed)
+chk("no SCORING_STACK_FILES entry in that diff (critic's LOCK hazard condition, D1)",
+    not any(ln.split("\t", 1)[1] in gshape.SCORING_STACK_FILES for ln in changed))
+n = len(ok_all)
+print(f"  {sum(ok_all)}/{n} D3 checks hold")
+sys.exit(0 if all(ok_all) else 1)
+
+=== 2. Output ===
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python -I d3_check.py (cwd: Code's scratchpad step9/)
+HEAD b7737ef033214da0e4cfd1f963381a268bb639b9
+G-SHAPE-F0 artifact sha256 086d812fdce08f15e9661ad86852ec24582f2618679b990d825bd14e36318556
+G-SHAPE-F0 artifact package_sha256 06ab1430de9c5ca0fc9483431caba64ee436a1b69709dd1577f4a50cfedcfef8
+package_sha256 now (resume.package_sha256, working tree) 5f646db6e82c5561ff8a425e91beb5454068a381564894e93d19b9165459d771
+  [PASS] sources: 26 files in the artifact's map; working tree identical   []
+  [PASS] sources: committed blobs at HEAD identical to the artifact's map   []
+  [PASS] tooling: 2 files in the artifact's map; working tree identical   []
+  [PASS] tooling: committed blobs at HEAD identical to the artifact's map   []
+  [PASS] every map file committed at HEAD with the working tree's bytes (gshape.committed_sources)   []
+  [PASS] sources digest equals the artifact's   ee16e16b203a4c2da78696908a98aa61af0f08439549a20d607c05b5fa8b316b
+  [PASS] valence_core/m/stages.py is in neither map (D3: the D2 edit does not re-run G-SHAPE-F0)   
+  [PASS] scripts/m_analyze.py is in neither map   
+valence_core/m changes d092078..HEAD: ['M\tvalence_core/m/stages.py']
+  [PASS] valence_core/m diff d092078..HEAD is stages.py alone (the lock states it, D1/D3)   ['M\tvalence_core/m/stages.py']
+  [PASS] no SCORING_STACK_FILES entry in that diff (critic's LOCK hazard condition, D1)   
+  10/10 D3 checks hold
+EXIT=0

@@ -21,6 +21,389 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-10-10 — **THE D2 + C9(ii) EDIT AND THE G-ANL-F0 RE-RUN (PROPOSAL-m v1.11 §8 step 9's one ordered edit;
+  the design seat's rulings of 2026-10-10, D2, C9 and D3, routed by the PI). The edit is built at `b8aa706`,
+  with three text-only follow-ups by Code at `185deb0`, `97d70bd` and `b7737ef`. G-ANL-F0's manifest of record is
+  re-run on `b7737ef`: PASS, 384/384, sha256 `05132089…fe9b`. The earlier manifest (`9bea8339…7904`) is moved by
+  hand with `git mv` to `G-ANL-F0.superseded-2026-10-10.json` (PIN-37). Three earlier re-runs, one on each of
+  `b8aa706`, `185deb0` and `97d70bd`, were set aside uncommitted. D3's comparison holds at `b7737ef`, so
+  G-SHAPE-F0 does not re-run on the D2 edit. Model-free throughout; nothing run on a model.**
+
+  **LOCK-m-F0 v0.1 (m:279) is next, on the PI's word. As D2 orders, it hashes the re-run's manifest
+  (`05132089…fe9b`) and analyzer (`66fb5214…7d5e`). It must also name the analyzer sha256 and `package_sha256`
+  (`5f646db6…d771`) verbatim, because every non-stub stage now checks both against the lock at its start.
+  Three items go to the seat through the PI ([block](results/raw/2026-10-10_m-code-to-design_pre-LOCK-v0.1_round2.md)),
+  each with what Code does without an answer.** (Stamp verified at write time: `date -u` → **Sat Oct 10
+  19:21:30 UTC 2026**, first write; rewritten after its first values-check pass, corrected on its second,
+  third and fourth, and updated for Code's third follow-up, last at **20:47:04 UTC**.)
+
+  - **What the seat ordered** ([rulings](results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1.md), D2, C9,
+    D3; committed with G-CAL's close, `8402174`):
+    - D2: "`analyzer_sha256` and `package_sha256` are required in the stages' `identity_extra` on non-stub
+      runs, and the package hash is checked against the lock at stage start". For the analyzer it names one
+      edit, conditionally: "if C9(ii) touches the analyzer's sentence, that edit lands in the same round".
+    - C9(ii), verbatim:
+
+      > m:330's "at the end" includes an end by STOP, so the bars' cumulative counts are evaluated and
+      > recorded at the STOP point as the campaign's last look, and the verdict sentence names that look.
+
+    - Then "G-ANL-F0 is then rebuilt and re-run on the new package and analyzer (model-free), and its manifest
+      superseded by hand `git mv` (PIN-37, PIN-S9); the lock hashes the re-run's manifest and analyzer. One
+      round, before LOCK v0.1."
+    - D3: "G-SHAPE-F0's sources map is compared with the lock's tree (PIN-S10). `stages.py` is not in its
+      scoring-stack map, so the D2 edit does not re-run it and the lock states that diff; any other difference
+      re-runs G-SHAPE-F0 first."
+  - **The edit** (`b8aa706`, with the three follow-ups below; `valence_core/m/stages.py` and
+    `scripts/m_analyze.py` only; `m_sessions.py` and `gshape.py`, G-SHAPE-F0's tooling files, unchanged):
+    - **D2, in `stages.py`.**
+      - On a non-stub run `identity_extra` must carry both `analyzer_sha256` and `package_sha256`. On the stub
+        both are optional, and either must be 64 lower-case hex when given.
+      - The licence by file runs at every stage's start, before any session or write: G-TIME, G-ID,
+        qualification, the campaign, and a re-finish. Before the edit it checked the analyzer's bytes against
+        `analyzer_sha256` only when that key was given. Now an absent or malformed key is itself a problem, and
+        for well-formed keys it checks:
+        - (d) that the analyzer's bytes hash to `analyzer_sha256` (the existing check, finding R8, no longer
+          conditional);
+        - (e) that `resume.package_sha256()` equals `package_sha256` (new; D2's);
+        - (f) that the committed lock's text names both 64-hex strings verbatim (new; D2's for the package,
+          Code's for the analyzer, after the analyzer's PIN-14).
+      - `package_sha256` joins `LICENCE_KEYS`: it is recorded in the checkpoint, and a resume offering another
+        is refused.
+      - The LICENCE line names both hashes by their sha16, and claims for them only what was checked.
+    - **C9(ii), in `stages.py`.** At a campaign STOP the end look is taken over the launches recorded at the
+      STOP point. A hair trigger's session is recorded; a G-VER failure's record is quarantined and not
+      counted.
+      - With no launch recorded there is no look.
+      - When the count is a multiple of 40, the look recorded there is the end look (`end_is_look`), as at a
+        terminal end (Code's application).
+        - After a G-VER STOP it was already announced, and any pause it raised was adjudicated.
+        - After a hair trigger, the trigger had pre-empted that look's announcement and its pause: its messages
+          are printed now, and if it fired, its pause (kind `look`) is raised.
+      - Otherwise a fresh end look is evaluated, and if it fired an `end_look` pause is raised. C9(ii)'s words
+        order the look evaluated, recorded and named; the pause is Code's application of m:330's "A fired bar
+        pauses".
+      - The status stays STOP. One helper prints the STOP's lines for both the finish and a re-finish.
+      - `stages` never resumes a stopped campaign (`resume.refuse_ended`). So, as built, a ruling on a pause
+        raised at a STOP can enter only through the analyzer's `--adjudication` file. That is C3's route for an
+        unadjudicated last pause. C9(i) names the file for a fired end look on a terminal campaign; its use for
+        a STOP is Code's reading (block item 2).
+      - The end look is pick-free by construction, so a contrast free-phase trigger's withheld class (m:318
+        exception (1); ruling (h), as the code's PIN cites) reaches it nowhere.
+        - A test moving the trigger from round 7 to round 9 gives the same end look and the same stdout
+          (out-root names normalised, the PROVENANCE line dropped).
+        - The withheld class appears in no stdout line (the STOP line is phase-only) and in no report. Among
+          the excerpt's events it appears only in the STOP event (m:318 exception (1)).
+      - The re-finish's NOT APPLIED refusal (from a review nit) changed.
+        - Where the re-finished end leaves the campaign ended, it now names the declared `--adjudication` and
+          `--pi-stop` routes instead of "offer it again". That covers a STOP, or a terminal state (COMPLETE,
+          CAP or a PI stop) whether or not a fired end look's pause stands beside it.
+        - A pause that does not end the campaign (a look pause or an exhausted schedule) keeps the old
+          wording.
+    - **C9(ii), in the analyzer.**
+      - The sentence names the end look wherever one exists. At a STOP it reads "the end look at the STOP (at
+        N launches)", or "look k at N launches, the end look at the STOP".
+      - A STOP-ended campaign with a launch recorded and no end look is refused at V2: "not written by the
+        lock's package". This is Code's guard for C9(ii).
+      - A fired end look at a STOP takes PIN-9's `--adjudication` path (Code's reading of C3, block item 2).
+        A hair-trigger STOP also still needs PIN-8's PI-stop record. Both directions are in the battery.
+      - `stop_no_end_look` is replaced by `at_stop`. PIN-10's register text and its inline PIN are rewritten
+        to C9(ii), and a second inline PIN-10 marks the new V2 refusal.
+    - **Text only, in the analyzer: its PIN texts now record the seat's rulings.**
+      - The PINs: PIN-3 (C6), PIN-5 (C1, C6), PIN-6 (C7's boundary day), PIN-8 (C2), PIN-9 (C3, C9(i)),
+        PIN-12 (C7's column), PIN-14 (C7's deferral), PIN-17 (C4), PIN-42 and PIN-43 (C5, with the NOT-RUN
+        date's meaning).
+      - Also changed: `SEAT_ROUTED`, `PER_PROPERTY_REFERENCE` (VERDICTS output text that contradicted C7),
+        one vocabulary `cite`, and one refusal message. No logic changed for these.
+      - These text edits were not ordered. The seat's D2 names one analyzer edit for this round, and it is
+        conditional: "if C9(ii) touches the analyzer's sentence, that edit lands in the same round". Code made
+        them because the analyzer was moving anyway. They are paraphrases of the seat's rulings in the bytes
+        LOCK v0.1 hashes, listed here for the seat to check.
+    - **Code's three text-only follow-ups**: the first two after this entry's first and second values-check
+      passes found texts crediting the seat with more than its words, the third after Code's own sweep for such
+      texts.
+      - **`185deb0`**, after pass 1.
+        - At `b8aa706`, PIN-9 and four `stages.py` texts credited the seat with routing a STOP's pause through
+          `--adjudication`. Two comments and the re-finish refusal message cited C9(i) and C3; the re-finish
+          PIN comment and the message also cited C2, for the PI-stop record. One self-test label cited C9(i)
+          alone. PIN-9 also said C9(i) covers a "terminal (or stopped)" campaign. The extension is Code's.
+        - PIN-9, the two comments and the label now say so. The refusal message dropped C9(i) for a STOP.
+        - PIN-6 said "is confirmed by the seat (C7, 2026-10-10)" and PIN-12 "Confirmed by the seat (C7,
+          2026-10-10; G-PORT A5)". Neither ruling confirmed a reading of Code's: C7 settled what Code had left
+          open, and for PIN-12 it fixed the pre-pick column where the interim text had named the any-phase
+          column like-for-like. Both now say "settled".
+      - **`97d70bd`**, after pass 2: three residues of the same kind.
+        - PIN-10's register text now marks the STOP route as Code's reading. It had read "A fired end look at
+          a STOP is a pause and takes PIN-9's path" under a "The seat's C9(ii)" heading.
+        - The NOT APPLIED refusal message now ends "for a STOP's pause, Code's reading of C3, flagged for the
+          seat".
+        - One battery comment now says the seat "settled" C7.
+        - On the count of texts. `185deb0`'s commit message ("PIN-9 and three stages.py texts no longer
+          attribute … to the seat") was right, because the refusal message still credited "the seat's C3" for
+          a STOP until `97d70bd`. Its site-check raw's header undercounts the texts that cited C9(i) (four).
+          `97d70bd`'s commit message calls the "three" an error; it was one only for the header.
+      - **`b7737ef`**, after a read-only sweep of the seat citations in the two files.
+        - The pause at a STOP, as Code's application of m:330 and not C9(ii)'s words, is now so marked in the
+          `_campaign_events` docstring, the terminal branch's second PIN, the `_stop_end_look` PIN, PIN-9
+          (register and inline) and PIN-10's register text. The terminal branch's first PIN now marks the
+          end-look reuse at a STOP as Code's application. (`b7737ef`'s commit message says "PIN-9/PIN-10
+          (register and inline)"; the two inline PIN-10s were not changed.)
+        - The analyzer half of the stage-start check, as Code's (finding R8; PIN-14's precedent) and not
+          D2's, is now so marked in the module docstring, `licence_problems`' docstring, `_licence`, `_extra`, the
+          refusal message's citation and three self-test labels.
+        - In the battery, one comment and one label call the end-look reuse Code's application, and one comment
+          and two labels call the V2 refusal Code's guard. One stages label separates the STOP case (Code's
+          reading of C3) from C9(i)'s terminal case. `SEAT_ROUTED`'s PIN-9 now names
+          C9(i)'s subject, a fired end look's adjudication. PIN-5 now records C6's acceptance of its phrases
+          and precedence. Ten C9(ii) self-test labels read "as built (Code's applications included)".
+        - It also fixed one stale text: `campaign_look`'s PIN said "flagged for the seat", but that question
+          was build flag (d), accepted as built in the seat's dispositions of 2026-10-06 (`54e41c9`).
+        - **The sweep did not reach every text.** Citations of the kind it targeted still stand at `b7737ef`,
+          among them:
+          - in the analyzer, the V2 refusal's message ("(the seat's C9(ii))"), and PIN-10's register text and
+            both its inline PINs (`guard_at_last_look`, `run_verdicts`), which state the V2 refusal and the
+            end-look reuse under "The seat's C9(ii)" unmarked;
+          - in `stages.py`, the `_stop_end_look` PIN's header, which cites C9(ii) over the reuse and the
+            pre-empted look's pause; the `_stop_lines` PIN, headed C9(ii), over stdout ordering; the inline PIN
+            in `licence_problems` and the LICENCE-line PIN, headed "the seat's D2", over (d)–(f) together; and
+            one self-test comment and one label that put the analyzer half under D2.
+
+          They are flagged here and in the block (item 2), not changed: changing them moves the analyzer and the
+          package and re-runs G-ANL-F0. The block proposes making any such change in the same round as whatever
+          the seat's answers require, so that the hashes move once.
+      - No logic changed in any of the three. After each, the m self-test was 759/759, the battery 384/384 and
+        the site check 9/9 ([`_followup_sitecheck`](results/raw/2026-10-10_m-d2-c9-followup_sitecheck.txt),
+        [`_followup2_sitecheck`](results/raw/2026-10-10_m-d2-c9-followup2_sitecheck.txt),
+        [`_followup3_sitecheck`](results/raw/2026-10-10_m-d2-c9-followup3_sitecheck.txt)).
+      - **Commit messages this entry corrects** (git history is not rewritten):
+        - `b8aa706`'s attributes the route to C9(i) ("A fired end look at a STOP takes PIN-9's --adjudication
+          path (C9(i))"), and its "C9(ii):" paragraph lists the pause a fired look raises at a STOP, which is
+          Code's application of m:330;
+        - `185deb0`'s and `97d70bd`'s each say "the re-run of record follows on this commit"; it followed on
+          `b7737ef`.
+  - **Review and verification of `b8aa706`** ([`_build_review`](results/raw/2026-10-10_m-d2-c9-build_review.txt):
+    the spec, every report and every finding verbatim).
+    - **Review.** A builder, then three read-only lenses (spec and binding; campaign state; blinding and
+      tests), with a strict refuter on every finding.
+      - 12 findings. 11 were confirmed: 1 substantive (no test reached a STOP past a cadence look off a
+        multiple of 40), 8 minor and 2 nits. A fix agent fixed all 11.
+      - 1 was refuted: that check (f) passes any full 64-hex hash the lock text contains.
+        - The finding's own scenario is LOCK v0.2 or v1.0. The finding itself calls the substring test
+          harmless for LOCK v0.1, whose extra hashes then all belonged to pre-D2 packages.
+        - The refuter agrees on LOCK v0.1, and leaves a note for whoever drafts the later locks: declare one
+          line form for the hashes of record, or write historical hashes truncated.
+        - The follow-ups have since ended the premise: the set-aside re-runs' packages (on `b8aa706`,
+          `185deb0` and `97d70bd`) carry D2's checks. So Code applies the second form to LOCK v0.1 too (Next).
+          The analyzer's PIN-14 check is the same kind of substring test, and it covers the analyzer's hash
+          too.
+    - **Verification.** An independent verifier caught 65 of 74 mutants (on scratch copies). 6 survivors were
+      equivalent and 3 were test gaps (S18–S20: the G-ID and campaign licence moved after the first write, or
+      removed from the campaign).
+    - **Code's closing round.** It added the G-ID and campaign licence-refusal checks (S18–S20 are now
+      caught), and two 64-character package cases that are not lower-case hex (`'g'*64` and upper-case
+      `'B'*64`), with the stub cases covering both forms for both keys. It also reworded a comment to C7.
+      - Its verifier caught 50 of 54 further mutants. One survivor is equivalent.
+      - **Three survivors are left, disclosed:**
+        - the closing verifier's S21 and S22, not the first verifier's mutants of those names (minor: no test
+          reaches a licence refusal on a campaign re-finish or on a shown pause; the order is correct by
+          reading);
+        - D10 (a nit: check (f) is tested against 16-hex prefixes, not 32).
+    - **Nits left as found:**
+      - `_HEX64` with `.match` accepts a trailing newline on the stub. Non-stub equality refuses it. This is
+        the module's existing pattern for every hex key.
+      - `resume.package_sha256()` is cached per process, so "computed at check time" means the first call in
+        the process.
+    - **Suites.**
+      - The m self-test went from 744 to 759/759.
+        - Stages' own checks went from 48 to 63: fifteen new, four for D2, ten for C9(ii)'s end look at a
+          STOP, and one for the NOT APPLIED wording.
+        - Eight existing stages checks were changed for D2, none removed: the identity_extra check, the
+          preflight and out-root start tests, the lock_file test, the licence-by-file test, the non-stub LICENCE
+          line, the G-ID driver test and the licence record (the builder's report lists them).
+        - No existing `m_sessions.py` check failed.
+      - The analyzer battery went from 376 to 384/384, with 387 → 395 coverage ids. One check was renamed and
+        rewritten (C3-LASTLOOK-STOP-CADENCE → C3-LASTLOOK-STOP-ENDISLOOK), one was rewritten (C3-GVER-DATA),
+        two were extended (C3-LASTLOOK-END-WINS, C3-CAP-SHAM-ONLY) and eight were added. Every change is listed in the review raw. The battery's "C3-" ids name m:324's
+        no-first-read cause, not the seat's C3.
+      - Site check 9/9 ([`_build_sitecheck`](results/raw/2026-10-10_m-d2-c9-build_sitecheck.txt)). Full
+        self-test output: [`_build_selftest`](results/raw/2026-10-10_m-d2-c9-build_selftest.txt).
+    - No agent wrote under `data/m/` (sha256 lists before and after), and no model was loaded. The site
+      check's `recon_echo` suite loads the Qwen tokenizer, not a model, as at every site check.
+  - **D3** ([`_d3_gshape-sources`](results/raw/2026-10-10_m-d3_gshape-sources.txt), 10/10 at `b7737ef`).
+    - G-SHAPE-F0's sources map (26 files) and tooling map (2) equal both the working tree and the committed
+      blobs, with sources digest `ee16e16b…`. `stages.py` and `m_analyze.py` are in neither map.
+    - The `valence_core` diff from G-SHAPE-F0's build (`d092078`) to `b7737ef` is `valence_core/m/stages.py`
+      alone (the raw records both the `valence_core/m` diff, in its script, and the whole-`valence_core`
+      diff, in its header), and it touches no SCORING_STACK_FILES entry.
+    - So G-SHAPE-F0 does not re-run on the D2 edit. D3's comparison "with the lock's tree" is made again at the
+      lock's commit, and any other difference then re-runs G-SHAPE-F0 first.
+  - **G-ANL-F0's re-run of record** ([`_ganl-f0-rerun`](results/raw/2026-10-10_m-ganl-f0-rerun.txt), four
+    sections).
+    - The earlier manifest of record (`9bea8339…7904`, written on `b62af85`) was moved by hand with `git mv` to
+      [`G-ANL-F0.superseded-2026-10-10.json`](data/m/gates/G-ANL-F0.superseded-2026-10-10.json), on the seat's
+      D2, before the first re-run. The move was then unstaged while this entry was checked, and is committed
+      with it.
+    - **Set aside, disclosed (C8's rule).** Each follow-up moved the analyzer and the package after a re-run,
+      so none of these manifests was committed. Under C8 they are discarded, not superseded. Copies sit in
+      Code's session scratchpad (temporary, outside the repo), and each run's raw section stays in the re-run
+      raw.
+      - On `b8aa706`, finished at 19:18:55 UTC: sha256 `fd55c71351a5a98bb10e5aa42d3b21e8e8efde1fb1afa4c503610a637ecbbbf7`.
+      - On `185deb0`, finished at 19:40:49 UTC: sha256 `c84a052bb1c778601bbd93943691c71625a32ebdeadcbb6dbe3f6d57eb7916e0`.
+      - On `97d70bd`, finished at 20:00:07 UTC: sha256 `8bade692b47d50c9a9f7ccfc77a01a524d875ce121b7fa1b343673b6eb7ea576`.
+      - A second run of each reported "identical".
+    - **The run of record**, on `b7737ef` (finished at 20:27:12 UTC): 384/384, written as
+      [`G-ANL-F0.json`](data/m/gates/G-ANL-F0.json), sha256
+      `05132089fd6b8c177df47e4d5ff7f77a6f1b47e9ef63568d25c07ceffe7afe9b`. A second run reported "identical".
+    - **Unchanged from the superseded manifest:**
+      - `outputs_sha256` `83df98b1…` (2,160 evaluations, 19,440 assertions);
+      - every tally;
+      - the closure `a3bc7bb9…`, recomputed by the run;
+      - the flag of record, TRUE, from `G-CAL_model-free.json`.
+    - **Changed:**
+      - the analyzer, `24d44a3c…` → `66fb521488db41e71cc65e844e17c7ee77e0a4a318a55314ef1afb8ffef67d5e`;
+      - `package_sha256`, `06ab1430…` → `5f646db6e82c5561ff8a425e91beb5454068a381564894e93d19b9165459d771`;
+      - the battery, 376 → 384 checks and 387 → 395 coverage ids;
+      - the PIN texts listed above, `seat_routed`, and the `clock:not-locked` cite in `not_run_vocabulary`.
+  - **For LOCK v0.1's D1 statement: the package at each gate artifact.**
+    - D1 was accepted: Code's pre-LOCK table, with G-SHAPE-F0 and G-ANL-F0 together at `06ab1430…`, to which
+      the seat added a third diff, "the D2 edit below between those and the lock's".
+    - The table is Code's update of it after G-ANL-F0's re-run, for the lock to state.
+
+    | Gate artifact | `package_sha256` | Package at |
+    |---|---|---|
+    | G-PORT | `96fbcacf…` | `54e41c9` |
+    | G-CAL (model-free; completability) | `4b49658739523c60…` | `c75d4d8` |
+    | G-SHAPE-F0 | `06ab1430…` | `d092078` |
+    | G-ANL-F0 (re-run of record) | `5f646db6…d771` | `b7737ef` |
+
+    - The diffs are: `gcal.py` added and `__init__.py` edited (`54e41c9..c75d4d8`); `gshape.py` alone
+      (`c75d4d8..d092078`); `stages.py` alone (`d092078..b7737ef`, through `b8aa706`, `185deb0` and
+      `97d70bd`).
+    - The import closures:
+      - G-ANL-F0's `a3bc7bb9…` is recomputed unchanged by the re-run.
+      - G-SHAPE-F0's `23abe773…` covers the modules loaded outside `valence_core/m`, and was not recomputed.
+        - Its 14 files are unchanged. The D3 raw's header records `git diff --name-status d092078 HEAD --
+          valence_core` (HEAD `b7737ef`) as `M valence_core/m/stages.py` alone.
+        - The set is unchanged too. The `stages.py` diff adds or removes no import line, a check Code ran and
+          recorded in the same header.
+  - **The seat's other rulings (sections B–E), as the G-CAL close entry said they would be recorded here.**
+    - **B (G-SHAPE-F0).**
+      - B1: PIN-S6 confirmed. "The render itself" (m:277) is the render placed in the segment as task text,
+        beside its bracketed header. Layer C stands as instrument validity. The other reading is recorded with
+        its result: on Qwen, 256 of 2,816 fire, on the v5 `content:task_echo` advisory, items 2 and 8.
+      - B2: PIN-S5 (Layer S) confirmed as built, R4's stricter form included. Layers S and C are Code's
+        additions beyond m:277's letter, and "a future failure of either is a build defect that STOPs the gate
+        for repair, not an m:277 finding that re-specifies anything. State that in the artifact's register."
+      - B3: every reading confirmed. Each placement is scored as a first round, so history-dependent classes
+        are not exercised: "a known limit, stated in the register".
+      - **Code's reading (block item 1).**
+        - The G-SHAPE-F0 artifact is write-once and carries no PIN register. PIN-S1–S10 are "declared at LOCK
+          v0.1".
+        - Code reads B2's "the artifact's register" and B3's "the register" as the lock's G-SHAPE-F0 register:
+          LOCK v0.1 would state both, with no edit to `gshape.py` and no re-run.
+        - On the other reading `gshape.py` (a G-SHAPE-F0 tooling file) is edited. The package moves, and
+          G-SHAPE-F0 re-runs first (D3). Whether G-ANL-F0 also re-runs, or the lock states that diff, would be
+          the seat's to say.
+        - Code has acted on neither.
+    - **C (G-ANL-F0).**
+      - C1–C5 confirmed PIN-5, -8, -9, -17, -42 and -43. In C5 the seat ratifies Code's PIN-43 fixes as
+        "Code's to make".
+      - C6: none of Code's readings struck. The 43-entry register is declared in LOCK v0.1 as Code's, "each
+        entry strikable until LOCK v1.0".
+      - C7 settles three items: the Clock's boundary day, f1's 7-vs-1 column, and the posting re-run's pass
+        bar. It defers G-ANL-F3's versioning to before step 19.
+      - C8: no ruling was needed for step 8's set-aside first manifest run (`ea985c11…`, on `64df36b`).
+        - An uncommitted run that never became an artifact of record is discarded, not superseded.
+        - Its disclosure in the G-ANL-F0 entry (`b4d7f13`) suffices.
+        - Rule going forward: a discarded gate run is disclosed in the entry with its stamp and sha, as this
+          entry does for its three.
+      - C9(i): recorded in PIN-9. `stages.py` does not record the adjudication, as C9(i) allows ("`stages.py`
+        need not record it"); its re-finish refusal names the declared `--adjudication` route (above). C9(ii):
+        as built above.
+      - **The posting command against C7's bar** (block item 3).
+        - It computes the analyzer's §7.5 enumeration under (a), (b) and (c) (m:349), the one C7's bar names,
+          and lists any residue by row id and location.
+        - The builder and the spec-and-binding lens found that an empty enumeration is exactly C7's condition,
+          the dose note's presence iff the flag included, since (c) is two-sided (PIN-21) and `table_problems`
+          requires an f1-corr-line row.
+        - It renders no PASS/FAIL against the bar: it exits 0 and prints "N enumerated rows" whatever the
+          residue.
+        - The (a)/(b) result rests on the posted table's declared `null_cells` and `thesis` classification, not
+          on a reading of the posted text. Nothing compares the re-run with C7's enumeration of record, "the
+          VERDICTS one with the PI's rewrites applied".
+    - **D (LOCK v0.1's wiring).** D1 accepted (above). This round did D2's edit, G-ANL-F0's re-run with the
+      earlier manifest superseded, and D3's comparison at `b7737ef`. The lock's own parts belong to LOCK v0.1:
+      hashing the re-run's manifest and analyzer (D2), comparing the sources map with its own tree (D3), and
+      stating the `stages.py` diff (D1, D3).
+    - **E (carried items).**
+      - E1: ruling (h)'s exception and Code's extension to the stripped read, both accepted as the seat's.
+      - E2: G-PORT's two borderline clauses accepted for Appendix D, as clauses on the named items.
+      - E3: the four seat notes resolved for the lock and Appendix D.
+      - E4: the 25 + 2 differences enter Appendix D, adjudicated at its drafting if at all, not at the lock.
+      - E5: G-PORT's C1–C9 consequences accepted as E3(4) states. G-PORT's C2 (m's audit ends f1's s48 and s25
+        at the forced phase, where f1 continued) is stated under (6) in Appendix D.
+      - E6: build pin 3 (strict rotation, contrast template first) and notes #25 (the renders' sha256
+        serialization) are confirmed, each declared at LOCK v0.1; N9's D1.22 is dispositioned and closed.
+  - **To the seat through the PI** (the [block](results/raw/2026-10-10_m-code-to-design_pre-LOCK-v0.1_round2.md)).
+    - The rulings order two things before the lock: G-CAL's close entry (`8402174`), and this round (D2's edit
+      with C9(ii), G-ANL-F0's re-run and supersession, D3's comparison). Both are done with this entry.
+    - Beyond those, the seat set no precondition for LOCK v0.1 other than the PI's word: "LOCK v0.1 is then
+      Code's to draft and commit on the PI's word". So Code proposes that none of these items holds the lock.
+      Each says what Code does without an answer.
+    - Whether C6's "does not wait on any reading the seat has not struck" reaches item 2, a reading made after
+      C6, is the seat's to say. The PI may also wait for the answers.
+    - An answer after the lock that goes against a default moves a hash the lock names: the package's for
+      items 1 and 2, the analyzer's for items 2 and 3. Every non-stub stage then refuses until a lock revision
+      names the new one. For the package the refusal is D2's check; for the analyzer it is Code's check
+      (finding R8, after the analyzer's PIN-14).
+
+    1. B2's "the artifact's register" and B3's "the register" (Code's reading above; not acted on). Without
+       an answer, LOCK v0.1 states both in its G-SHAPE-F0 register, marked as Code's reading.
+    2. A pause raised at a STOP, and its route through `--adjudication`: Code's application of m:330 and its
+       reading of C3, already built (above). The V2 refusal, also built and unordered, goes with it, as do the
+       texts the sweep did not reach. Without an answer, all stand as built, declared at LOCK v0.1 as they are,
+       the reading flagged.
+    3. Three analyzer edits the seat did not order. Without an answer Code builds none of them.
+       - **C7's posting bar** (above). Whether and when it is built is the seat's to say. Until then, at the
+         posting each row the command lists as residue is rewritten before posting, as C7 orders for residue
+         ("any residue is listed by sentence and rewritten before posting"). The command's "N enumerated rows"
+         is not itself C7's PASS. How the two gaps above are met at the posting is the seat's to say.
+       - **A matched pause:** a check that a fired end look is matched by a pause. This was the campaign-state
+         lens's optional fix; the fixer left it to Code, and both verifiers carried it.
+       - **The end look's launch count:** a check that `end_look.at_launches` equals the launches recorded at
+         the STOP. A refuter raised it in the blinding-and-tests lens, and the closing verifier carried it.
+
+       VERDICTS would accept a hand-edited checkpoint that breaks either invariant; checkpoints written by
+       `stages` keep both. Built before the lock, any of the three edits moves the analyzer, re-runs G-ANL-F0
+       and supersedes `05132089…fe9b` once more. Built after, it does the same, and every non-stub stage refuses
+       until a lock revision names the new analyzer (the analyzer half of the stage-start check: Code's,
+       finding R8 and PIN-14's precedent; not D2's).
+    - Code does not make note 126 of the step-3 notes (withholding at campaign looks) an item. Code reads its
+      question as build flag (d)'s, which the seat accepted as built (`54e41c9`; `b7737ef` records that
+      acceptance in the `campaign_look` PIN), and reads that acceptance as covering the note. The block says
+      so, and the seat may say otherwise.
+  - **Next.**
+    - LOCK-m-F0 v0.1 on the PI's word. The seat's answers to the block apply where they are in; otherwise each
+      item's default does. Beside m:279's own contents (the placeholder sentence table's hash among them), the
+      lock carries:
+      - D2's hashes of the re-run's manifest (`05132089…fe9b`) and analyzer.
+      - The analyzer sha256 and `package_sha256` verbatim. Every other package and analyzer hash is truncated,
+        because check (f) and PIN-14 test both keys by substring. That covers the superseded analyzer
+        `24d44a3c…` and the set-aside runs' analyzer and package hashes.
+      - C5's date meaning; C7's three settled inputs; E1–E3; E6.
+      - D1's table and diffs.
+      - The calibration artifacts (A1, A7, A8, A9).
+      - The 43-entry register as Code's readings.
+      - PIN-S1–S10 as `gshape.py` declares them (B1–B3 confirm PIN-S1–S6 and the other readings Code's block
+        listed under B3; D2 and D3 cite PIN-S9 and PIN-S10), with the e2a ban-list file's sha256, which B3
+        says LOCK v0.1 pins (m:261, m:279).
+      - The G-SHAPE-F0 register statements, where the answer to item 1 (or its default) puts them.
+    - Then step 10, G-TIME-F0, on the PI's word, launched only when the audit session is idle (F1).
+  - Committed: this entry; the re-run's manifest and the superseded one (the `git mv`); the re-run raw; the D3
+    raw; the block; and the values-check raw for the entry and the block
+    ([`_d2-c9_valuescheck`](results/raw/2026-10-10_m-d2-c9_valuescheck.txt)).
+    - The build and its three raws are in `b8aa706`.
+    - The follow-ups and their site-check raws are in `185deb0`, `97d70bd` and `b7737ef`.
+
 - 2026-10-10 — **G-CAL CLOSES (PROPOSAL-m v1.11 §8 step 6, m:176; the design seat's rulings of 2026-10-10,
   routed by the PI). Conditions (1)–(4) pass on Qwen, with the renders of record unchanged (`a04f67b0…4372`)
   and no re-specification. The seat read the 128 completability generations (m:271) and kept condition (4)'s
