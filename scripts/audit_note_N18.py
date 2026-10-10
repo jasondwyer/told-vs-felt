@@ -8,7 +8,7 @@ sha and the N13 table's shas. This script writes that JSON and a short .md besid
   - the tag name (the PI's routing of 2026-10-09, item 7) and the self-reference statement:
     the tag goes on the commit that adds this manifest, so that commit's hash cannot be
     inside it; it is to be recorded after tagging;
-  - the note and its two SVGs, each sha256 asserted against the routed value;
+  - the note and its SVGs, each sha256 asserted against the routed value;
   - the commit N1 final names as the one at which the last of the note's figures entered
     the record, read from the N1 final ledger JSON and checked against its md;
   - every row of the N13 provenance table (results/raw/2026-10-08_note-N13-provenance.json
@@ -21,6 +21,14 @@ sha and the N13 table's shas. This script writes that JSON and a short .md besid
     scripts/audit_note_*.py at the time of the run (this script's own two outputs excluded);
   - the re-run triggers: what must not change between this run and the tag commit
     (the note, the SVGs, the preprint including the arrival of patch v6, any listed file).
+
+Round 2 (2026-10-10, after the PI's rulings of 2026-10-09): the note is v0.4 and the SVGs are
+the Digest seat's three 2026-10-09 renders (F1a, F1b, F2), which replace v0.3 and the two
+2026-10-06 SVGs at the PI's routing; the N1 ledger read is N1 round 8's
+(results/raw/2026-10-09_note-N1-v0_4-claims-ledger.json); the file list also names e2a's
+correction of record beside its analysis (data/e2a/analysis.correction-of-record.json). The
+PI routed the note's full sha256; no sha256 was routed for the SVGs, so their expected values are
+the full sha256s of the copies Code placed at root on 2026-10-09, which N1 round 8 records.
 
 Read-only: it reads files and runs read-only git commands (rev-parse, symbolic-ref, ls-tree,
 show, cat-file -e, merge-base --is-ancestor) and `date -u` for the stamp. It writes only its
@@ -67,20 +75,27 @@ TAG = "note-2026-10-v1"
 TAG_SOURCE = ("the PI's routing of 2026-10-09, item (7), as routed to Code: tag name note-2026-10-v1, placed on the "
               "final audit commit after N1 and N18; the block leaves the name to the PI and suggests it at "
               "AUDIT-note-release-v1_2.md@bbc9ffe:14")
-NOTE = "RESEARCH-NOTE-v0_3-draft.md"
-SVGS = ["2026-10-06_F1b_five-link-panels.svg", "2026-10-06_F2_macar-lineage-roc_post.svg"]
+NOTE = "RESEARCH-NOTE-v0_4-draft.md"
+SVGS = ["2026-10-09_F1a_headline-strip.svg", "2026-10-09_F1b_five-link-panels.svg",
+        "2026-10-09_F2_macar-lineage-roc_post.svg"]
 # Routed values, abbreviated as routed. The note's is the PI's routing to this part ("5a34309f...71"); the
 # SVGs' are the routed values the N1 final ledger records (note_rows_final.files[].routed), checked below.
 ROUTED = {
-    NOTE: ("5a34309f", "71", "the PI's routing of 2026-10-09 as routed to this part"),
-    SVGS[0]: ("192250ca", "0afd", "the routed value recorded in the N1 final ledger (note_rows_final.files[].routed)"),
-    SVGS[1]: ("5e4fc91c", "1fef", "the routed value recorded in the N1 final ledger (note_rows_final.files[].routed)"),
+    NOTE: ("c4a05c781113cb2eceea0404d93ae723cc8dd32c2d8793d53cdb6067ee4ba9bc", "",
+           "the PI's routing of 2026-10-09 (rulings), which gives the note's full sha256"),
+    SVGS[0]: ("4e4cbbb1f8a31485d767c5f620614c90e1e88c6fc7b4985a805485a87eea0e2e", "",
+              "no sha256 routed: the full sha256 of Code's copy from the Digest seat's folder (2026-10-09), as N1 round 8 records it"),
+    SVGS[1]: ("25e0dd99a685a0c13e7d47c85a4e7200d05caf44f600b45518c5bbcc6614915c", "",
+              "no sha256 routed: the full sha256 of Code's copy from the Digest seat's folder (2026-10-09), as N1 round 8 records it"),
+    SVGS[2]: ("e2a38e74711e6da6ba7480f8425a1fb18b3ed074a7bf1ed38b5ac66c6fc17824", "",
+              "no sha256 routed: the full sha256 of Code's copy from the Digest seat's folder (2026-10-09), as N1 round 8 records it"),
 }
-LEDGER = "results/raw/2026-10-09_note-N1-claims-ledger-final.json"
+LEDGER = "results/raw/2026-10-09_note-N1-v0_4-claims-ledger.json"
 N13_JSON = "results/raw/2026-10-08_note-N13-provenance.json"
 PREPRINT = "PREPRINT-v1_0-draft.md"
 PREPRINT_REF = ("d6431e97", "222b8")  # block :21, "post-patch-v4 copy, sha `d6431e97…222b8`"
-NAMED_FILES = ["README-NOTE.md", "LICENSE", "LICENSE-CC-BY-4.0", "LICENSING.md"]
+NAMED_FILES = ["README-NOTE.md", "LICENSE", "LICENSE-CC-BY-4.0", "LICENSING.md",
+               "data/e2a/analysis.correction-of-record.json"]
 WAIT_FILES = ["README-NOTE.md", "results/raw/2026-10-08_note-N12-scrub.md"]
 DEFAULT_OUT = "results/raw/2026-10-09_note-release-manifest.json"
 
@@ -198,7 +213,8 @@ def build(a, stamp):
             ok, how, routed = sha == expect[p], "full value supplied with --expect", expect[p]
         else:
             need(p in ROUTED, "no routed sha256 for %s; pass --expect %s=<sha256>" % (p, p))
-            ok, how, routed = matches_routed(sha, ROUTED[p]), ROUTED[p][2], "%s...%s" % ROUTED[p][:2]
+            ok, how = matches_routed(sha, ROUTED[p]), ROUTED[p][2]
+            routed = ROUTED[p][0] if not ROUTED[p][1] else "%s...%s" % ROUTED[p][:2]   # a full routed value prints whole
         need(ok, "%s sha256 %s does not match the expected %s (%s)" % (p, sha, routed, how))
         e = file_entry(p, nb, "note" if p == a.note else "svg")
         e.update({"expected": routed, "expected_source": how, "assert": "PASS"})
@@ -219,7 +235,7 @@ def build(a, stamp):
     for f in led["note_rows_final"]["files"]:
         if f["path"] in ROUTED and f["path"] not in expect:
             r = ROUTED[f["path"]]
-            need(f["routed"] in ("%s...%s" % r[:2],) or matches_routed(f["routed"], r),
+            need(f["routed"] in ("%s...%s" % r[:2], r[0]) or matches_routed(f["routed"], r),
                  "N1's routed value for %s (%s) differs from this script's (%s...%s)" % ((f["path"], f["routed"]) + r[:2]))
     rows_sha = sha256_file(abs_(ff["rows_file"]))
     need(rows_sha == ff["rows_file_sha256"], "%s changed since N1 final read it" % ff["rows_file"])
@@ -242,7 +258,7 @@ def build(a, stamp):
         "figures_commit": figs["commit"], "figures_commit_date": figs["date"],
         "figures_commit_set_by_rows": figs["rows"],
         "figures_commit_basis": ("N1 final, note_rows_final.tag.including_audit_raws (the note carries computed-new "
-                                 "figures and figures whose only carrier is N19's raw); stated plainly at %s:%d (the file as read at this run)" % (led_md, plain_line)),
+                                 "figures and figures whose only carrier is an audit raw: N19's, N2 round 6's); stated plainly at %s:%d (the file as read at this run)" % (led_md, plain_line)),
         "record_sources_only_candidate": tag["record_sources_only"]["commit"],
         "record_sources_only_candidate_date": tag["record_sources_only"]["date"],
         "figures_commit_is_ancestor_of_head_at_this_run": anc == 0,
@@ -405,7 +421,7 @@ def build(a, stamp):
                        "of them at the sha256 recorded here. If any trigger below fires after this run and before the "
                        "tag commit, the named items must be re-run, N18 last."),
         "rerun_triggers": [
-            {"trigger": ("the note or either SVG changes (including the [REPO LINK] replacement or a footer added to "
+            {"trigger": ("the note or any SVG changes (including the [REPO LINK] replacement or a footer added to "
                          "the file)"),
              "rerun": "N1, then N18"},
             {"trigger": ("patch v6 arrives, or PREPRINT-v1_0-draft.md otherwise changes (the PI's routing of "
@@ -425,7 +441,8 @@ def build(a, stamp):
         "preprint": preprint,
         "wait_check": waits,
         "files": {
-            "rule": ("README-NOTE.md, LICENSE, LICENSE-CC-BY-4.0, LICENSING.md, the N1 final ledger md/json, every "
+            "rule": ("README-NOTE.md, LICENSE, LICENSE-CC-BY-4.0, LICENSING.md, data/e2a/analysis.correction-of-record.json, "
+                     "the N1 final ledger md/json, every "
                      "results/raw/*_note-* file and every scripts/audit_note_*.py on disk at this run, sorted by path; "
                      "this script's own two outputs and any results/raw/*_note-release-manifest.json/.md are excluded "
                      "(a file cannot carry its own hash). tracked_at_head "
@@ -478,8 +495,8 @@ def render_md(m):
     w("")
     if not all(e["tracked_at_head"] for e in [m["note"]] + m["svgs"]):
         w("- Untracked at this run. N1 final's first condition on the tag (§9g) is that the tag commit contains the "
-          "note and both SVGs.")
-    w("- If the note or either SVG changes before the tag commit, N1 and then N18 must be re-run (see "
+          "note and all %d SVGs." % len(m["svgs"]))
+    w("- If the note or any SVG changes before the tag commit, N1 and then N18 must be re-run (see "
       "\"Before the tag commit\" below).")
     w("- %s" % m["footer_note"])
     w("- N1 final (`%s`, run at HEAD `%s`) covers exactly these three sha256s and is not provisional; its note-rows file "

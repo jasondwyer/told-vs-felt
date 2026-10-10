@@ -25,7 +25,13 @@ commit could add (names and tracked status only; no untracked document is opened
 files' hashes. The PI's routing of 2026-10-09 is
 recorded as routed to this part (quoted in substance); where a committed raw or commit message
 records part of it, the fragment is asserted present and located; where none does, the index says
-so. Every figure the index summarizes in its own words is read from a located line by pattern or
+so. Item 4 of the PI's rulings of 2026-10-09 (the second routing: the N12(i) STOP resolved) is
+recorded the same way: its figures are cross-checked against the committed raws, HEAD's tracked
+files and commit messages are searched for a committed record of it (none before the commit that
+adds this version; the index says so, or locates the records a later run finds), every line of the
+index's own text that said (i) was pending now says it is resolved by that ruling (asserted: no
+such phrase survives outside a verbatim quote of a raw), and the raws' own pending lines are quoted
+unchanged as history. Every figure the index summarizes in its own words is read from a located line by pattern or
 asserted present in the line it cites; a mismatch stops the script before it writes.
 README-NOTE.md is a sibling part's file: the index names it and does not restate or fingerprint it.
 
@@ -79,7 +85,9 @@ PW_SCRIPT = 'scripts/audit_note_N12_password.py'
 LIC_FILES = ['LICENSE', 'LICENSE-CC-BY-4.0', 'LICENSING.md']
 README_NOTE = 'README-NOTE.md'
 LEDGER = ['results/raw/2026-10-08_note-N1-claims-ledger.md', 'results/raw/2026-10-08_note-N1-claims-ledger.json',
-          'results/raw/2026-10-09_note-N1-claims-ledger-final.md', 'results/raw/2026-10-09_note-N1-claims-ledger-final.json']
+          'results/raw/2026-10-09_note-N1-claims-ledger-final.md', 'results/raw/2026-10-09_note-N1-claims-ledger-final.json',
+          'results/raw/2026-10-09_note-N1-v0_4-claims-ledger.md', 'results/raw/2026-10-09_note-N1-v0_4-claims-ledger.json']
+DEFAULT_OUT = 'results/raw/2026-10-08_note-N12-scrub.md'
 CITE_NEEDLE = '_note-N12-scrub'   # how a file would name this index
 LORA_FORM = 'zebr...20:c63d5fbd'   # the content raw's redacted form (content md :27); asserted there, not printed
 # the licenses script's own license-file rule (scripts/audit_note_N12_licenses.py, section 5), asserted verbatim there
@@ -100,6 +108,36 @@ D4_KEEP_OUT = [('the design-seat handoffs', 'HANDOFF-*-design.md'),
 G3_COMMITTED = 'ADDENDUM-g3-b2r-v1.2.md'
 PREPRINT = 'PREPRINT-v1_0-draft.md'
 TAG = 'note-2026-10-v1'
+
+# ---------- the PI's rulings of 2026-10-09 (the second routing), item 4, as routed to this part (quoted in substance) ----------
+RULINGS = "the PI's rulings of 2026-10-09"
+R4 = {'scanner': 'gitleaks 8.30.1', 'findings': 4, 'true_secret_candidates': 0}
+R4_SUBSTANCE = ("the N12(i) STOP (block :77) is resolved: %s over all history returned %d findings, all false positives under "
+                "fingerprint-keyed triage; Code's own scans found %d true-secret candidates; the PI accepts Code's scans as the "
+                "resolution of the literal grep rule, which was over-written; D1 stands (history as is)") % (
+    R4['scanner'], R4['findings'], R4['true_secret_candidates'])
+# read back from the composed text for the section-12 cross-check (the recording, not the constant, is checked)
+R4_RX = re.compile(r"(gitleaks [0-9.]+) over all history returned (\d+) findings, all false positives under fingerprint-keyed "
+                   r"triage; Code's own scans found (\d+) true-secret candidates;")
+R4_NEEDLE = 'rulings of 2026-10-09'   # how a committed record of the rulings would name them (case-insensitive)
+R4_MARK = 'N12(i)'                    # ... and of this item
+# working-tree audit outputs named in the routing that record item 4 (cited by content while untracked or changed)
+R4_WT = ['results/raw/2026-10-09_note-N1-v0_4-claims-ledger.md']
+# the N1 v0.4 ledger's own label for the ruling (asserted on the line it is cited from; its other R4 lines are then listed)
+R4_LABEL = 'R4, the N12(i) STOP resolved'
+# the first of the tag conditions the N1 v0.4 ledger's 9g leaves to the PI (located by content in R4_WT[0])
+N1_9G_FRAG = "Conditions that are the PI's to keep: (1) the tag commit also contains the note and the three SVGs"
+# the PI's rulings of 2026-10-09 (their other lines): note v0.4 and the 2026-10-09 SVGs replace v0.3 and the 2026-10-06 SVGs at root
+SUPERSEDED = ['RESEARCH-NOTE-v0_3-draft.md', '2026-10-06_F1b_five-link-panels.svg', '2026-10-06_F2_macar-lineage-roc_post.svg']
+REPLACING = ['RESEARCH-NOTE-v0_4-draft.md', '2026-10-09_F1a_headline-strip.svg', '2026-10-09_F1b_five-link-panels.svg',
+             '2026-10-09_F2_macar-lineage-roc_post.svg']
+# a later commit's message on what README-NOTE.md carries of D1-D4 (asserted under that message's README-NOTE.md bullet)
+README_D_FRAG = 'N12 (i) and (iii) and D1-D4 as routed'
+# a later commit's message recording a password scan over its own files (one sentence, carried verbatim)
+PW_AFTER_RX = re.compile(r"[A-Z][^.\n]*\bpassword\b[^.\n]*\bscans? over\b[^.\n]*\.")
+# the index's own words that said (i) was pending; none may survive outside a verbatim quote of a raw
+R4_FORBIDDEN = ['STOP pending', 'stands until the PI resolves', 'does not resolve (i)', "(i)'s resolution by the PI",
+                "remains the PI's act", 'does not pass at this index', 'STOP open', 'until the PI resolves']
 
 
 def git(*args, binary=False, ok=(0,), inp=None):
@@ -324,7 +362,7 @@ def main():
     ap.add_argument('--preflip', default='02b6a61', help='commit holding the pre-flip part raw')
     ap.add_argument('--routing', default='e0fd85c', help="commit holding the 2026-10-09 part raws and the LICENSE files")
     ap.add_argument('--pin', default='bbc9ffe', help='record pin for block locators')
-    ap.add_argument('--out', default='results/raw/2026-10-08_note-N12-scrub.md')
+    ap.add_argument('--out', default=DEFAULT_OUT)
     a = ap.parse_args()
 
     stamp = subprocess.run(['date', '-u'], capture_output=True, text=True).stdout.strip()
@@ -363,6 +401,9 @@ def main():
     assert blk.line(b['s6_body']).startswith('A short file at the tag, `README-NOTE.md`')
     blk.need(b['iii'], 'Not a release blocker', 'If present anywhere, report the file and commit')
     blk.need(b['i'], 'Any hit in history is a STOP on the release: history rewriting is a PI decision.')
+    # the literal grep rule the PI's rulings of 2026-10-09, item 4, name: block :77's fallback grep
+    R4_GREP = "otherwise `git log -p --all | grep -nEi"
+    blk.need(b['i'], R4_GREP)
     b['s7_body'] = blk.find(lambda s: 'it does not decide the tag name, the release date or history rewriting' in s,
                             'block s7 body', start=b['s7'])
     block_pass = blk.line(b['pass'])
@@ -561,7 +602,13 @@ def main():
     for k, src in (('i', i_line), ('ii', ii_line), ('iv', l_line), ('v', v_line), ('vi', c_line), ('gl', gl_out),
                    ('iii_a', PW.line(pw['absent'])), ('iii_p', PW.line(pw['present']))):
         assert short[k] in src, 'carried excerpt not verbatim: ' + k
+    # the history raw's own pass/STOP line, as written at its commit (history; the PI's rulings of 2026-10-09, item 4, answer it)
     i_stop = "STOP pending the PI's resolution" in i_line
+    H.need(h['i_pass'], "the fallback returns %d hit lines, so (i) is not 'no hits'" % hj['fallback']['hit_lines'],
+           "The block's pass is '(i) no hits, or hits resolved by the PI'; resolving them is the PI's decision, not Code's.")
+    H.need(h['s_i'], 'TRUE-SECRET-CANDIDATE 0; UNTRIAGED 0.')
+    H.need(h['i_pass'], "0 TRUE-SECRET-CANDIDATE among the fallback's hits",
+           'and 0 among the precise-pattern, in-context and context-free high-entropy hits')
     iv_ok = l_line.startswith('**(iv) licenses recorded**') and lj.get('pass_line') == '(iv) licenses recorded'
     v_ok = 'PASS' in v_line and 'nothing over 100 MB untreated' in v_line
 
@@ -594,6 +641,8 @@ def main():
     gl_leaks = int(G.num(g['leaks'], r'leaks found: (\d+)'))
     gl_commits = int(G.num(g['commits'], r'INF (\d+) commits scanned'))
     gl_o = {k: int(G.num(g['o1'], r'%s: (\d+)\.' % k)) for k in ('Findings', 'TRUE-SECRET', 'FALSE-POSITIVE', 'UNTRIAGED')}
+    gl_scanner = G.num(g['cmd'], r'^- (gitleaks [0-9.]+) \(installed by the PI\)')
+    G.need(g['o3'], "Resolving (i) remains the PI's act; this raw is the triage it rests on.")
 
     # ---------- the routing commit's message (a record of the PI's routing, as Code applied it) ----------
     ro_msg = git('log', '-1', '--format=%B', roc)
@@ -974,6 +1023,92 @@ def main():
     users_hist = set(hj['users_paths_at_head'])
     users_new = [p for p in users_now if p not in users_hist]
 
+    # the commits after the gitleaks run: which messages record a per-file gitleaks pass over the commit's files
+    # (computed-new; each sentence carried verbatim, beside the number of files the commit changes)
+    gl_after = []
+    gl_msgs = {}
+    for c in since_gl:
+        msg_c = git('log', '-1', '--format=%B', c)
+        gl_msgs[c] = msg_c
+        sents = re.findall(r"[A-Z][^.\n]*per-file gitleaks[^.\n]*\.", msg_c)
+        nf = len([p for p in git('diff-tree', '--no-commit-id', '--name-only', '-r', c).split('\n') if p])
+        gl_after.append((c, sents, nf))
+    gl_after_pass = [x for x in gl_after if x[1]]
+    gl_after_none = [x for x in gl_after if not x[1]]
+    if roc in since_gl and not any(c == roc and RO_PERFILE in s for c, s, _ in gl_after_pass):
+        raise SystemExit("the routing commit's per-file gitleaks pass is not among the sentences found")
+    # the commits after the routing commit: which messages record a password scan over the commit's own files
+    # (computed-new; each sentence carried verbatim, beside the number of files the commit changes)
+    if roc not in since_gl:
+        raise SystemExit('the routing commit is not after the gitleaks run on HEAD')
+    after_ro = since_gl[since_gl.index(roc) + 1:]
+    pw_after = [(c, PW_AFTER_RX.findall(gl_msgs[c]), nf) for c, _, nf in gl_after if c in after_ro]
+    pw_after_rec = [x for x in pw_after if x[1]]
+    pw_after_none = [x for x in pw_after if not x[1]]
+    # a later commit's message on what README-NOTE.md carries of D1-D4 (for D3's record column; README-NOTE.md is not read)
+    d3_msg = []
+    for c in since_gl:
+        at = gl_msgs[c].find(README_D_FRAG)
+        if at < 0:
+            continue
+        rn_at = gl_msgs[c].rfind('\n- ' + README_NOTE, 0, at)
+        if rn_at < 0 or '\n- ' in gl_msgs[c][rn_at + 3:at]:
+            raise SystemExit('commit %s: %r is not under its README-NOTE.md bullet' % (c[:7], README_D_FRAG))
+        d3_msg.append(c)
+
+    # ---------- the PI's rulings of 2026-10-09, item 4: a committed record of it at HEAD? (computed-new) ----------
+    own_out = os.path.relpath(os.path.abspath(os.path.join(REPO, a.out)), REPO)
+    r4_files = [ln.split(':', 1)[1] for ln in git('grep', '-l', '-i', '-F', '-e', R4_NEEDLE, head, '--', ok=(0, 1)).split('\n') if ln]
+    r4_recs = []   # (path, commit that last changed it, line): a tracked line naming both the rulings and N12(i)
+    for p in r4_files:
+        if p in (own_out, DEFAULT_OUT):
+            continue   # this index's own earlier version, not a record of the ruling
+        last = git('log', '-1', '--format=%H', head, '--', p).strip()
+        for i, ln in enumerate(git('show', '%s:%s' % (head, p)).split('\n'), 1):
+            if R4_NEEDLE in ln.lower() and R4_MARK in ln:
+                r4_recs.append((p, last, i))
+    r4_msgs = git('log', '-i', '-F', '--grep=' + R4_NEEDLE, '--format=%H', head).split()
+    r4_msgs_n12 = [c for c in r4_msgs if R4_MARK in git('log', '-1', '--format=%B', c)]
+    r4_wt = []    # (path, sha256 at this run, tracked?, lines): working-tree outputs that record it while untracked or changed
+    for p in R4_WT:
+        fp_ = os.path.join(REPO, p)
+        if not os.path.exists(fp_):
+            continue
+        wb = open(fp_, 'rb').read()
+        trk = tracked_at(head, p)
+        if trk and git('show', '%s:%s' % (head, p), binary=True) == wb:
+            continue   # committed as it stands: found above if it records the ruling
+        wl = wb.decode('utf-8', errors='replace').split('\n')
+        lns = [i for i, ln in enumerate(wl, 1) if R4_NEEDLE in ln.lower() and R4_MARK in ln]
+        if lns:
+            # the file's own label for the ruling, on one of those lines; then its other lines naming R4 with N12(i)
+            lab = [i for i in lns if R4_LABEL in wl[i - 1]]
+            more = [i for i, ln in enumerate(wl, 1) if i not in lns and re.search(r'\bR4\b', ln) and R4_MARK in ln] if lab else []
+            r4_wt.append((p, sha256b(wb), trk, lns, lab, more))
+    # the N1 v0.4 ledger's 9g, condition (1): whether the tag commit holds the note and the three SVGs (the PI's)
+    n1_9g = None
+    fp_ = os.path.join(REPO, R4_WT[0])
+    if os.path.exists(fp_):
+        wb = open(fp_, 'rb').read()
+        hit = [i for i, ln in enumerate(wb.decode('utf-8', errors='replace').split('\n'), 1) if N1_9G_FRAG in ln]
+        if len(hit) == 1:
+            if tracked_at(head, R4_WT[0]) and git('show', '%s:%s' % (head, R4_WT[0]), binary=True) == wb:
+                n1_9g = '`%s@%s:%d`' % (R4_WT[0], head[:7], hit[0])
+            else:
+                n1_9g = '`%s` (%s at this run, sha256 `%s`), its line %d by content' % (
+                    R4_WT[0], 'tracked, changed since HEAD' if tracked_at(head, R4_WT[0]) else 'untracked', sha256b(wb), hit[0])
+    # section 10, item 4: which of the untracked files the rulings supersede at root, and which replace them (names only)
+    sup = [p for p in SUPERSEDED if p in untr_other]
+    rep = [p for p in REPLACING if p in untr_other]
+    sup_txt = ''
+    if sup or rep:
+        sup_txt = ' [index note: %s; whether the tag commit holds note v0.4 and the three 2026-10-09 SVGs (%s; untracked at this run: %d of %d) is the PI\'s, still open as routed%s.]' % (
+            ('of these, %s %s superseded at root by note v0.4 and the 2026-10-09 SVGs under %s (header)' % (
+                ', '.join('`%s`' % p for p in sup), 'is' if len(sup) == 1 else 'are', RULINGS)) if sup
+            else 'none of the files %s supersedes is on disk untracked' % RULINGS,
+            ', '.join('`%s`' % p for p in REPLACING), len(rep), len(REPLACING),
+            (': the first of the conditions the N1 v0.4 claims ledger\'s 9g leaves to the PI, %s' % n1_9g) if n1_9g else '')
+
     # ---------- sensitive values: resolve in memory ----------
     forms = list(pp['known_values'].keys())
     labels = {f: pp['known_values'][f][0] for f in forms}
@@ -1132,6 +1267,13 @@ def main():
         else:
             cites.append('`%s` absent' % p)
 
+    # the ruling's committed-record status, in the index's words (computed-new; section 2b gives the search)
+    if r4_recs or r4_msgs_n12:
+        r4_short = 'Committed records of it at HEAD `%s`: %d tracked line(s) and %d commit message(s) (section 2b).' % (
+            head[:10], len(r4_recs), len(r4_msgs_n12))
+    else:
+        r4_short = 'No committed raw or commit message carries it before this commit (computed-new at HEAD `%s`, section 2b).' % head[:10]
+
     # ---------- compose ----------
     me = os.path.relpath(os.path.abspath(__file__), REPO)
     my_sha = sha256b(open(os.path.abspath(__file__), 'rb').read())
@@ -1155,10 +1297,12 @@ def main():
         BLOCK, P, b['n12'], b['pass'], BLOCK, P, b['out'], H.loc(h['referent']), L.loc(lc['part']), CITE_NEEDLE, '; '.join(cites),
         README_NOTE, rn_desc))
     w("- The PI's routing of %s, recorded here as it was routed to this part (quoted in substance): (1) the continuity password was supplied out of band and searched (sub-item (iii)); (3) the PI ran gitleaks over all history (sub-item (i)); (4) D1 leave history as is, D2 closed with no match, D3 leave; (5) D4 as routed (section 9); (6) LICENSE: Apache-2.0 for code, CC BY 4.0 for documents and data; (7) the tag `%s`, on the final audit commit after N1 and N18; (9) the GitHub repository has no associated Projects. Items (2) and (8) concern other parts. Where a committed raw or commit message records part of it, the locator is given and the fragment is asserted present; where none does, this index says so." % (ROUTING, TAG))
+    w("- %s (the second routing), item 4, recorded here the same way, as it was routed to this part (quoted in substance): %s. %s Items 1-3 and the rulings' other lines (note v0.4 and the 2026-10-09 F1a, F1b and F2 SVGs in place of v0.3 and the 2026-10-06 SVGs, with N1 and N18 re-run on them; N4's correction of record and the control arms' Wilson intervals) concern other parts; the tag still waits on patch v6 (section 10, item 7). Section 2b gives the record the ruling rests on, the search for a committed record of it, and what it does not name." % (
+        RULINGS[0].upper() + RULINGS[1:], R4_SUBSTANCE, r4_short))
     w('- Script: `%s`, sha256 `%s`. Interpreter: `%s` (Python %s; stdlib only). Command: `jlens-qwen36/.venv/bin/python %s` (from the repository root).' % (
         me, my_sha, sys.executable, sys.version.split()[0], me))
     w('- Read-only: `git rev-parse / show / ls-tree / ls-files / log / diff / diff-tree / grep / rev-list / cat-file / for-each-ref / merge-base`. No part script was run and nothing was re-scanned; the part raws are the record and this file indexes them. No git command ran inside `jlens-qwen36/`. The untracked design-seat documents were not opened (names and git tracked status only). Nothing installed, downloaded or inferred. Writes: this file only.')
-    w("- Statuses. Each sub-item's outcome is carried from its part raw unchanged, with its cause, and quoted verbatim from the line located by content; this index upgrades none. Its own computations carry `computed-new` (the md and JSON of a part agree, a recount agrees with the figure it checks, a coverage count, the D1 carrier spread or the D4 staging state of section 9) or `discrepant` (they disagree); none of them reproduces a part's scan. Text this index summarizes in its own words (the routing, the D1-D4 table, the PI items, the pre-flip checklist) is checked by the script before it writes: each figure is read from the cited line by pattern or asserted present in it.")
+    w("- Statuses. Each sub-item's outcome is carried from its part raw unchanged, with its cause, and quoted verbatim from the line located by content; this index upgrades none. Its own computations carry `computed-new` (the md and JSON of a part agree, a recount agrees with the figure it checks, a coverage count, the D1 carrier spread or the D4 staging state of section 9) or `discrepant` (they disagree); none of them reproduces a part's scan. Text this index summarizes in its own words (the routing, the PI's rulings of 2026-10-09, item 4, the D1-D4 table, the PI items, the pre-flip checklist) is checked by the script before it writes: each figure is read from the cited line by pattern or asserted present in it.")
     w(REDACTION_SLOT)
     w('')
 
@@ -1171,8 +1315,8 @@ def main():
     w('')
     w('| sub-item | gates N12? (block :%d) | part raw | outcome, as the part raw states it (verbatim excerpt) | locator |' % b['pass'])
     w('|---|---|---|---|---|')
-    w('| (i) secrets, full history | yes | history (the fallback and Code\'s scans) + gitleaks (the block\'s primary scanner) | %s. gitleaks: %s | %s; %s |' % (
-        short['i'], short['gl'], H.loc(h['i_pass']), G.loc(g['o1'])))
+    w('| (i) secrets, full history | yes | history (the fallback and Code\'s scans) + gitleaks (the block\'s primary scanner) | %s. gitleaks: %s [index note: the STOP is resolved by %s, item 4 (section 2b); the raws\' lines are history and unchanged] | %s; %s; %s, item 4 |' % (
+        short['i'], short['gl'], RULINGS, H.loc(h['i_pass']), G.loc(g['o1']), RULINGS))
     w('| (ii) identifiers | no (a list) | history | %s | %s |' % (short['ii'], H.loc(h['s_ii'])))
     w('| (iii) continuity password | no ("Not a release blocker", block :%d) | password | %s %s | %s; %s |' % (
         b['iii'], short['iii_a'], short['iii_p'], PW.loc(pw['absent']), PW.loc(pw['present'])))
@@ -1185,9 +1329,9 @@ def main():
     w('')
     w('**Each sub-item, as of this index:**')
     w('')
-    w('- (i): gitleaks %d findings, all %s under Code\'s fingerprint-keyed triage (TRUE-SECRET %d, UNTRIAGED %d; %s); trufflehog not run (not installed, %s). The block\'s literal STOP stands until the PI resolves it (block :%d; %s).' % (
+    w('- (i): gitleaks %d findings, all %s under Code\'s fingerprint-keyed triage (TRUE-SECRET %d, UNTRIAGED %d; %s); trufflehog not run (not installed, %s). The block\'s literal STOP (block :%d; %s) is **resolved by %s, item 4**: the PI accepts Code\'s scans as the resolution of the literal grep rule, which the ruling calls over-written; the %d gitleaks findings are all false positives; D1 stands (history as is) (section 2b).' % (
         gl_o['Findings'], 'FALSE-POSITIVE' if gl_o['FALSE-POSITIVE'] == gl_o['Findings'] else 'NOT FALSE-POSITIVE', gl_o['TRUE-SECRET'], gl_o['UNTRIAGED'],
-        G.loc(g['o1']), G.loc(g['o3']), b['i'], H.loc(h['i_pass'])))
+        G.loc(g['o1']), G.loc(g['o3']), b['i'], H.loc(h['i_pass']), RULINGS, gl_o['Findings']))
     w('- (ii): a list, unchanged in kind; the history raw regenerated at `%s` (scan of `%s`) carries it (%s).' % (Hs, h_scan[:10], H.loc(h['s_ii'])))
     w('- (iii): absent from history at the search\'s ref `%s` (%s); the %d files the routing commit `%s` added after it are not in the history it read (section 1, scope in time). Present only in %d untracked `HANDOFF-*-design.md` files (%s), which the PI keeps out of the repository (D4). Not a release blocker (block :%d).' % (
         pw_ref[:10], PW.loc(pw['ref']), len(ro_files), Rs, pw_with, PW.loc(pw_files[0][1], pw_files[-1][1]), b['iii']))
@@ -1198,15 +1342,15 @@ def main():
     w('- (vii): `README-NOTE.md`, %s; the README part\'s file (section 8).' % rn_desc)
     w('')
     if i_stop and iv_ok and v_ok:
-        w('**N12 overall (computed from the three gating lines above):** (i) STOP pending the PI; (iv) licenses recorded; (v) nothing over 100 MB untreated. N12 therefore does not pass at this index, and the block\'s *"On fail: STOP on the release; fallback paragraph"* (`%s@%s:%d`) currently applies; of the three gating lines, (i) is the one not met. (i)\'s pass is "(i) no hits, or hits resolved by the PI". The record for (i) now has two parts. The fallback and Code\'s scans (the history raw at `%s`, a scan of `%s`): %s hit lines, %d TRUE-SECRET-CANDIDATE, %d UNTRIAGED (%s, %s). The block\'s primary scanner, gitleaks, which the history raw says supersedes the fallback for (i) (%s): %d findings, %d TRUE-SECRET, %d UNTRIAGED (%s). The gitleaks raw says "Resolving (i) remains the PI\'s act" (%s). The PI\'s routing of %s leaves history as is (D1) and, as routed to this part, does not resolve (i).' % (
-            BLOCK, P, b['pass'], Hs, h_scan[:10], '{:,}'.format(hits_n), tsc, untri, H.loc(h['i_pass']), H.loc(h['s_i']), H.loc(h['pf4']),
-            gl_o['Findings'], gl_o['TRUE-SECRET'], gl_o['UNTRIAGED'], G.loc(g['o1']), G.loc(g['o3']), ROUTING))
+        w('**N12 overall (computed from the three gating lines above):** (i) hits resolved by the PI (%s, item 4; section 2b); (iv) licenses recorded; (v) nothing over 100 MB untreated. Each gating line of the block\'s pass condition (`%s@%s:%d`) is met on the record as carried, so the block\'s *"On fail: STOP on the release; fallback paragraph"* does not apply at this index. (i)\'s pass is "(i) no hits, or hits resolved by the PI", and the record for (i) has two parts. The fallback and Code\'s scans (the history raw at `%s`, a scan of `%s`): %s hit lines, %d TRUE-SECRET-CANDIDATE, %d UNTRIAGED (%s, %s). The block\'s primary scanner, gitleaks, which the history raw says supersedes the fallback for (i) (%s): %d findings, %d TRUE-SECRET, %d UNTRIAGED (%s). Both raws left the resolution to the PI (%s; %s), and %s, item 4, resolves (i) on that record: it accepts Code\'s scans as the resolution of the literal grep rule, which it calls over-written, and D1 stands (history as is). The raws\' own lines are history and are quoted unchanged below; this index carries the ruling as the PI\'s and upgrades no raw.' % (
+            RULINGS, BLOCK, P, b['pass'], Hs, h_scan[:10], '{:,}'.format(hits_n), tsc, untri, H.loc(h['i_pass']), H.loc(h['s_i']), H.loc(h['pf4']),
+            gl_o['Findings'], gl_o['TRUE-SECRET'], gl_o['UNTRIAGED'], G.loc(g['o1']), H.loc(h['i_pass']), G.loc(g['o3']), RULINGS))
         w('')
-        w('Resolving (i) alone does not make N12 pass at the release commit. (iv) and (v) are carried as their parts read them, at %s; N12 passes at the release commit only if the PI resolves (i) and the pre-flip re-runs (section 10, item 3) again print "(iv) licenses recorded" and the (v) PASS. The licenses script prints its pass line only when all of its gates hold, among them "%s" and "%s" (%s, %s); otherwise it prints "(iv) NOT recorded" (%s). The licenses part projects that these two gates fail at that re-run until the ids and hosts in this audit\'s own files are classified (section 5).' % (
+        w('N12 at the release commit. (iv) and (v) are carried as their parts read them, at %s; N12 passes at the release commit only if the pre-flip re-runs (section 10, item 3) again print "(iv) licenses recorded" and the (v) PASS. The licenses script prints its pass line only when all of its gates hold, among them "%s" and "%s" (%s, %s); otherwise it prints "(iv) NOT recorded" (%s). The licenses part projects that these two gates fail at that re-run until the ids and hosts in this audit\'s own files are classified (section 5). For (i), the ruling as routed to this part names the record above; it does not say whether it also covers the fallback\'s hits at the history script\'s release-commit re-run (section 10, item 3) or the commits after `%s` (section 10, item 5).' % (
             ('`%s`' % l_scan[:10]) if l_scan == h_scan else '`%s` ((iv)) and `%s` ((v))' % (l_scan[:10], h_scan[:10]),
-            sweep_gates[0], sweep_gates[1], LS.loc(ls_gate[0]), LS.loc(ls_gate[1]), LS.loc(ls_fail)))
+            sweep_gates[0], sweep_gates[1], LS.loc(ls_gate[0]), LS.loc(ls_gate[1]), LS.loc(ls_fail), gl_head[:7]))
     else:
-        w('**N12 overall:** the carried lines do not match the expected pattern ((i) STOP pending=%s, (iv) recorded=%s, (v) PASS=%s); read the part raws.' % (i_stop, iv_ok, v_ok))
+        w('**N12 overall:** the carried lines do not match the expected pattern ((i) the history raw\'s pass/STOP line as expected=%s, (iv) recorded=%s, (v) PASS=%s); read the part raws.' % (i_stop, iv_ok, v_ok))
     w('')
 
     # 1. part raws
@@ -1235,9 +1379,9 @@ def main():
     w('Part scripts at their commits: %s. The history, content, pre-flip, gitleaks and password raws each record their script\'s sha256; %s. %s' % (
         '; '.join('`%s` @`%s` `%s`' % (sp, s_[1], s_[0]) for sp, s_ in scr.items()), sc_txt, lic_txt))
     w('')
-    w('Scope in time. The history raw read `%s`; the licenses part `%s`; the content part `%s`; the pre-flip reads `%s`; gitleaks and the password search `%s`. Commits now on HEAD after `%s`: %d (%s), which the history scan does not cover (section 11 checks what they changed). Commits after `%s`: %d (%s), which no gitleaks run recorded here covers beyond the routing commit\'s per-file pass (section 2a). The password search\'s ref is %s`%s` (%s): none of the %d files the routing commit `%s` added is in the history it read. Its (4) also read every untracked, not-ignored file at its run (%s), but the raw counts those (%d) and itemizes only the %d with it, so which of the %d it read is not recorded. For the %d `archive/PROPOSAL-m-gating-campaign-v1_*.md` files the routing commit also records its pre-commit screen ("the password absent", %s); for the other %d nothing further is recorded here. Commits after `%s`: %d, outside the content review\'s tree (section 7).' % (
+    w('Scope in time. The history raw read `%s`; the licenses part `%s`; the content part `%s`; the pre-flip reads `%s`; gitleaks and the password search `%s`. Commits now on HEAD after `%s`: %d (%s), which the history scan does not cover (section 11 checks what they changed). Commits after `%s`: %d (%s), which no gitleaks run recorded here covers beyond the per-file passes that %d of their messages record over the commit\'s own files (section 2a). The password search\'s ref is %s`%s` (%s): none of the %d files the routing commit `%s` added is in the history it read. Its (4) also read every untracked, not-ignored file at its run (%s), but the raw counts those (%d) and itemizes only the %d with it, so which of the %d it read is not recorded. For the %d `archive/PROPOSAL-m-gating-campaign-v1_*.md` files the routing commit also records its pre-commit screen ("the password absent", %s); for the other %d nothing further is recorded here. Commits after `%s`: %d, outside the content review\'s tree (section 7).' % (
         h_scan[:10], l_scan[:10], c_scan[:10], pf_head[:10], gl_head[:10], h_scan[:10], len(since_hist), ', '.join('`%s`' % c[:10] for c in since_hist) or 'none',
-        gl_head[:10], len(since_gl), ', '.join('`%s`' % c[:10] for c in since_gl) or 'none',
+        gl_head[:10], len(since_gl), ', '.join('`%s`' % c[:10] for c in since_gl) or 'none', len(gl_after_pass),
         'the same ' if pw_ref == gl_head else '', pw_ref[:10], PW.loc(pw['ref']), len(ro_files), Rs, PWS.loc(pws_scope, pws_scope + 1),
         pw_untr, pw_with, len(ro_files), len(ro_pm), ro_loc, len(ro_rest),
         c_scan[:10], len(since_pin)))
@@ -1253,6 +1397,8 @@ def main():
     w('Summary line, verbatim (%s):' % H.loc(h['s_i']))
     w('')
     q(H.line(h['s_i']), H.loc(h['s_i']))
+    w('')
+    w('These two lines are the history raw\'s own words at `%s` and are history, quoted unchanged: the STOP they state is resolved by %s, item 4 (section 2b).' % (Hs, RULINGS))
     w('')
     w('- Section: %s. At the history run the block\'s primary scanners had not been run: %s (installable via Homebrew, not installed without the PI\'s word). The history raw labels running the fallback in their place a deviation from block :77, verbatim (%s): "%s" Since then the PI installed and ran gitleaks (section 2a); trufflehog was not run.' % (
         H.loc(h['i']), H.loc(h['scanners']), H.loc(h['scanners']), deviation))
@@ -1279,10 +1425,49 @@ def main():
     for n in (g['o1'], g['o2'], g['o3']):
         q(G.line(n), G.loc(n))
     w('')
+    w('- The raw\'s "Resolving (i) remains the PI\'s act" (%s) stays as the raw\'s own words: the raw is history and is not edited. %s, item 4, answers it (section 2b).' % (
+        G.loc(g['o3']), RULINGS[0].upper() + RULINGS[1:]))
     w('- The verdicts are keyed by gitleaks fingerprint (commit:file:rule:line) in the committed script\'s triage table (%s, %d keys); each of the %d rows matches exactly one key with the same verdict: %s (section 12).' % (
         GS.loc(gs_tri, gs_end), len(fp_keys), len(gl_rows), yn(gl_matched == len(gl_rows))))
-    w('- The commits after `%s`: the routing commit `%s` records, verbatim, "%s" (%s); a commit after it has no gitleaks run recorded here (section 1, scope in time). Whether that per-file pass stands in for a gitleaks run over the commits after `%s` is not settled by the routing as it reached this part (section 10, item 5).' % (
-        gl_head[:7], Rs, RO_PERFILE, ro_loc, gl_head[:7]))
+    w('- The commits after `%s` (computed-new): %d (section 1, scope in time). %d of their messages record a per-file gitleaks pass over the commit\'s own files, verbatim, each beside the number of files the commit changes (`git diff-tree -r`): %s. The other %d record none (%s). No gitleaks run over the commits after `%s` is recorded here. Whether those per-file passes stand in for one is settled neither by the routing nor by %s, item 4, as they reached this part (section 10, item 5).' % (
+        gl_head[:7], len(gl_after), len(gl_after_pass),
+        '; '.join('`%s` "%s" (`git show -s %s` (commit message); %d files)' % (c[:7], ' '.join(s), c[:7], nf) for c, s, nf in gl_after_pass) or 'none',
+        len(gl_after_none), ', '.join('`%s`' % c[:7] for c, _, _ in gl_after_none) or 'none', gl_head[:7], RULINGS))
+    w('')
+
+    # 2b. the PI's rulings of 2026-10-09, item 4
+    w('### 2b. (i) resolved: %s, item 4' % RULINGS)
+    w('')
+    w('- As routed to this part (quoted in substance): %s.' % R4_SUBSTANCE)
+    if r4_recs or r4_msgs_n12:
+        rec_txt = 'Committed records of it at HEAD `%s` (computed-new; a tracked line naming both "%s" and `%s`, found by content, this index\'s own earlier version left out): %s; commit messages naming both: %s.' % (
+            head[:10], R4_NEEDLE, R4_MARK, '; '.join('`%s@%s:%d`' % (p, c[:7], i) for p, c, i in r4_recs) or 'none',
+            ', '.join('`git show -s %s` (commit message)' % c[:7] for c in r4_msgs_n12) or 'none')
+    else:
+        rec_txt = 'Committed record: none. No committed raw or commit message carries this ruling before this commit (computed-new at HEAD `%s`: tracked files with a line naming both "%s" and `%s`, this index\'s own earlier version left out: %d; commit messages reachable from HEAD naming "%s": %d (%s), of which naming `%s` as well: %d). It is recorded here as routed.' % (
+            head[:10], R4_NEEDLE, R4_MARK, len(r4_recs), R4_NEEDLE, len(r4_msgs), ', '.join('`%s`' % c[:7] for c in r4_msgs) or 'none', R4_MARK, len(r4_msgs_n12))
+    wt_txt = ''
+    if r4_wt:
+        wt_txt = ' In the working tree, %s.' % '; '.join(
+            '`%s` (%s at this run, sha256 `%s`) records it on the line(s) naming both "%s" and `%s`: %s%s' % (
+                p, 'tracked, changed since HEAD' if trk else 'untracked', s_, R4_NEEDLE, R4_MARK, ', '.join(map(str, lns)),
+                ('; it labels the ruling R4 ("%s", line %s), and names `R4` with `%s` on %d further line(s): %s' % (
+                    R4_LABEL, ', '.join(map(str, lab)), R4_MARK, len(more), ', '.join(map(str, more)) or 'none')) if lab else '')
+            for p, s_, trk, lns, lab, more in r4_wt)
+    w('- %s%s' % (rec_txt, wt_txt))
+    w('- What it rests on, in the record (each figure read from the cited line):')
+    w('  - The literal grep rule: block :%d\'s fallback (%s), under which "Any hit in history is a STOP on the release" (`%s@%s:%d`). The history raw\'s pass/STOP line puts (i) at STOP on that text because "the fallback returns %d hit lines, so (i) is not \'no hits\'" (%s). The ruling accepts Code\'s scans as the resolution of that rule and calls the rule over-written.' % (
+        b['i'], '`git log -p --all | grep -nEi ...`', BLOCK, P, b['i'], hits_n, H.loc(h['i_pass'])))
+    w('  - Code\'s own scans: TRUE-SECRET-CANDIDATE %d and UNTRIAGED %d over the fallback\'s hits and the precise-pattern and high-entropy scans (%s, %s); Code\'s gitleaks triage: TRUE-SECRET %d, UNTRIAGED %d (%s).' % (
+        tsc, untri, H.loc(h['s_i']), H.loc(h['i_pass']), gl_o['TRUE-SECRET'], gl_o['UNTRIAGED'], G.loc(g['o1'])))
+    w('  - %s over every ref at its run (`--log-opts=--all`, %s; HEAD `%s`, %s; %d commits scanned, %s): %d findings, FALSE-POSITIVE %d, each row matched to one fingerprint key of the committed script\'s triage table with the same verdict: %s (section 2a; %s).' % (
+        gl_scanner, G.loc(g['cmd']), gl_head[:10], G.loc(g['head']), gl_commits, G.loc(g['commits']), gl_o['Findings'], gl_o['FALSE-POSITIVE'],
+        yn(gl_matched == len(gl_rows)), G.loc(g['o1'])))
+    w('  - D1 stands (history as is): block :%d\'s "history rewriting is a PI decision", decided as the first routing decided it (section 9, D1).' % b['i'])
+    w('- The raws are history and are not edited: the history raw\'s pass/STOP line and summary line still read "STOP pending the PI\'s resolution" (%s, %s), and the gitleaks raw\'s "Resolving (i) remains the PI\'s act" stays as its own words (%s); the ruling answers them. Section 12 checks the ruling\'s figures, as recorded here, against those raws.' % (
+        H.loc(h['i_pass']), H.loc(h['s_i']), G.loc(g['o3'])))
+    w('- Not named by the ruling, as routed to this part: trufflehog (not run, not installed, %s); the commits after `%s` (section 2a; section 10, item 5); and whether the fallback\'s hits at the history script\'s release-commit re-run (section 10, item 3) are resolved the same way.' % (
+        G.loc(g['o3']), gl_head[:7]))
     w('')
 
     # 3. (ii)
@@ -1329,8 +1514,12 @@ def main():
         pw_with, PW.loc(pw_files[0][1], pw_files[-1][1]), head[:10], sum(1 for _, t, _ in pw_now if t), len(pw_now),
         sum(1 for _, _, e in pw_now if e), len(pw_now)))
     w('- Block :%d asks that a hit be reported with "the file and commit" if present anywhere, and leaves rotating or retiring the password to the PI in that case; the raw finds it in no commit reachable at its ref and says the condition does not arise for the history, so no commit is reported. The routing as it reached this part says nothing further on it.' % b['iii'])
-    w('- Time bound: the search read history at `%s` (%s). The %d files the routing commit `%s` added after it are not in that history; whether its scan of the untracked files at its run read any of them is not recorded (section 1, scope in time). The commit\'s message records a pre-commit screen of its %d `archive/PROPOSAL-m-gating-campaign-v1_*.md` files with "the password absent" (%s); for its other %d files, and for any later commit, nothing further is recorded here. Whether the password search is repeated at the release commit is not routed to this part.' % (
-        pw_ref[:10], PW.loc(pw['ref']), len(ro_files), Rs, len(ro_pm), ro_loc, len(ro_rest)))
+    w('- Time bound: the search read history at `%s` (%s). The %d files the routing commit `%s` added after it are not in that history; whether its scan of the untracked files at its run read any of them is not recorded (section 1, scope in time). The commit\'s message records a pre-commit screen of its %d `archive/PROPOSAL-m-gating-campaign-v1_*.md` files with "the password absent" (%s); for its other %d files nothing further is recorded here. Of the %d commits on HEAD after `%s` (computed-new), %s Whether the password search is repeated at the release commit is not routed to this part.' % (
+        pw_ref[:10], PW.loc(pw['ref']), len(ro_files), Rs, len(ro_pm), ro_loc, len(ro_rest), len(pw_after), Rs,
+        ('%d record in their messages a password scan over the commit\'s own files, verbatim, each beside the number of files the commit changes (`git diff-tree -r`): %s (section 2a); the other %d record none (%s).' % (
+            len(pw_after_rec), '; '.join('`%s` "%s" (`git show -s %s` (commit message); %d files)' % (c[:7], ' '.join(s), c[:7], nf) for c, s, nf in pw_after_rec),
+            len(pw_after_none), ', '.join('`%s`' % c[:7] for c, _, _ in pw_after_none) or 'none')) if pw_after_rec
+        else 'none records a password scan in its message.'))
     w('- Earlier records: the history raw\'s pass-phrase class (%s) and its `continuity` counts (%s, %s); the content review\'s D2 and flag F44 (%s, %s) and its hand-off for (iii) (%s). D2 is closed by the PI: no match (%s; %s).' % (
         H.loc(h['passphrase']), H.loc(h['continuity_md']), H.loc(h['continuity']), C.loc(cc['d2']), C.loc(cc['s52']), C.loc(cc['h_iii']),
         PW.loc(pw['d2']), ro_loc))
@@ -1450,17 +1639,22 @@ def main():
     pod2_txt = ('the second pod id is at HEAD in %s only' % ', '.join('`%s`' % p for p in pod2_head)) if pod2_head \
         else 'the second pod id is in no tracked file at HEAD'
     other_head = sorted(p for p in h_all if d1_cat(p) in ('code', 'other'))
-    w('| D1 | The RunPod pod id, network-volume id and volume display name of the Phase-2 box (account-resource identifiers, not credentials). The content review\'s counts are at `%s`, the tree it read (%s): %d tracked HANDOFFs, %d tracked raws and %d commit messages (%s), with RESULTS.md and a code test fixture outside its scope (%s). At HEAD `%s` (computed-new, this run, the content review\'s three values plus the history raw\'s second pod id): %d HANDOFFs, %d raws, %s, %d code file(s), %d other file(s) and %d commit messages; %s (%s). The spread at both commits is below the table. The record calls the pod stopped and parked, not terminated. | (a) accept publication, optionally terminating the pod and settling the volume so the ids are inert; (b) redact the HEAD copies (history keeps them) [index note: the content review\'s D1 names three values, so (b) removes the second pod id only if the PI\'s decision names it too]; (c) rewrite history (the PI\'s call). Separately: the `resume.py` test fixture regenerates the pod id into new self-test raws; replacing it is a code change this block forbids, a PI or design-seat decision. | **Leave history as is** (so (c) is not taken). As routed to this part, the routing says nothing on (a)\'s pod and volume, (b)\'s HEAD copies or the fixture. Under D4, `%s` was committed at `%s` and carries the network-volume id %d time(s) (section 12); it is counted under "other" at HEAD. | The gitleaks raw: "the PI\'s D1 routing (2026-10-09) is to leave history as is" (%s); the routing commit: "the PI\'s D1 is to leave it", of that file (%s). | %s; %s; %s; %s; %s |' % (
+    w('| D1 | The RunPod pod id, network-volume id and volume display name of the Phase-2 box (account-resource identifiers, not credentials). The content review\'s counts are at `%s`, the tree it read (%s): %d tracked HANDOFFs, %d tracked raws and %d commit messages (%s), with RESULTS.md and a code test fixture outside its scope (%s). At HEAD `%s` (computed-new, this run, the content review\'s three values plus the history raw\'s second pod id): %d HANDOFFs, %d raws, %s, %d code file(s), %d other file(s) and %d commit messages; %s (%s). The spread at both commits is below the table. The record calls the pod stopped and parked, not terminated. | (a) accept publication, optionally terminating the pod and settling the volume so the ids are inert; (b) redact the HEAD copies (history keeps them) [index note: the content review\'s D1 names three values, so (b) removes the second pod id only if the PI\'s decision names it too]; (c) rewrite history (the PI\'s call). Separately: the `resume.py` test fixture regenerates the pod id into new self-test raws; replacing it is a code change this block forbids, a PI or design-seat decision. | **Leave history as is** (so (c) is not taken). As routed to this part, the routing says nothing on (a)\'s pod and volume, (b)\'s HEAD copies or the fixture. Under D4, `%s` was committed at `%s` and carries the network-volume id %d time(s) (section 12); it is counted under "other" at HEAD. %s, item 4, restates the decision: D1 stands (history as is) (section 2b). | The gitleaks raw: "the PI\'s D1 routing (2026-10-09) is to leave history as is" (%s); the routing commit: "the PI\'s D1 is to leave it", of that file (%s). The rulings\' restatement: section 2b. | %s; %s; %s; %s; %s |' % (
         c_scan[:10], C.loc(cc['head']), d1_hand, d1_raws, d1_msgs, C.loc(c_bul[0]), C.loc(d1_spread),
         head[:10], h_cat['HANDOFF'], h_cat['raw'], 'RESULTS.md' if h_cat['RESULTS.md'] else 'not RESULTS.md', h_cat['code'], h_cat['other'], len(h_msgs),
         pod2_txt, H.loc(d1_info[pod2[0]]['row']),
-        v13, Rs, v13_occ, G.loc(g['o3']), ro_loc,
+        v13, Rs, v13_occ, RULINGS[0].upper() + RULINGS[1:], G.loc(g['o3']), ro_loc,
         C.loc(cc['d1'], cc['d2'] - 1), C.loc(cc['s4']), C.loc(cc['d1rec'], cc['d1rec'] + 3), C.loc(cc['fixture']),
         H.loc(d1_info[d1_order[0]]['row'], d1_info[d1_order[-1]]['row'])))
     w('| D2 | The LoRA overfit phrase (redacted at %s): the synthetic target of a LoRA overfit test, not a credential. | The PI compares it with the continuity password out of band (N12(iii)); a match means the password is already in history, and the PI rotates or retires it. | **Closed, no match.** The (iii) search, independent of that comparison, finds the password in no commit reachable at its ref `%s` (section 4). | The password raw: "%s" (%s); the routing commit: "D2 (the LoRA phrase) is closed by the PI: no match." (%s). | %s; %s; %s |' % (
         C.loc(cc['d2']), pw_ref[:10], PW.line(pw['d2']).split('. ')[0] + '.', PW.loc(pw['d2']), ro_loc, C.loc(cc['d2'], cc['d3'] - 1), C.loc(cc['f44']), H.loc(pp_lora)))
-    w('| D3 | Commit metadata: %d commits with `.local` e-mail domains (%d of them use the laptop\'s hostname as the domain, per the history raw; the other %d use a domain the history reviewer reads as a placeholder rather than a machine name); %d commits with a claude.ai session-link trailer; the same %d SSH-signed, embedding a public key. Low sensitivity. | Only a history rewrite changes the objects (`.mailmap` changes the display only), or accept. | **Leave.** | None found: no committed raw or commit message this index reads records D3\'s routing. | %s; %s; %s; %s |' % (
-        d3_local, d3_host, d3_local - d3_host, d3_sess, d3_sig, C.loc(cc['d3'], cc['d4'] - 1), C.loc(cc['f46']), H.loc(h['s_ii']), H.loc(h['identities'])))
+    w('| D3 | Commit metadata: %d commits with `.local` e-mail domains (%d of them use the laptop\'s hostname as the domain, per the history raw; the other %d use a domain the history reviewer reads as a placeholder rather than a machine name); %d commits with a claude.ai session-link trailer; the same %d SSH-signed, embedding a public key. Low sensitivity. | Only a history rewrite changes the objects (`.mailmap` changes the display only), or accept. | **Leave.** | %s | %s; %s; %s; %s |' % (
+        d3_local, d3_host, d3_local - d3_host, d3_sess, d3_sig,
+        ('In the part raws and the routing commit\'s message: none. %s; `%s`, the README part\'s file (%s), is not read here, so whether it records D3 is not checked by this index.' % (
+            '; '.join('`%s`\'s message lists among `%s`\'s contents "%s" (`git show -s %s` (commit message))' % (c[:7], README_NOTE, README_D_FRAG, c[:7]) for c in d3_msg),
+            README_NOTE, ('tracked since `%s`' % rn_added) if rn_tracked else 'not tracked at HEAD'))
+        if d3_msg else 'None found: no committed raw or commit message this index reads records D3\'s routing.',
+        C.loc(cc['d3'], cc['d4'] - 1), C.loc(cc['f46']), H.loc(h['s_ii']), H.loc(h['identities'])))
     keep_txt = '; '.join('%s (`%s`): %d on disk' % (desc, pat, len(rows)) for desc, pat, rows in d4k)
     w('| D4 | Release staging: %s untracked, not-gitignored design-seat documents (%s with not-for-the-repo headers; none of them in any commit) and %d other untracked root/archive files sat in the checkout at the content review. At the history run\'s snapshot, %d of the PI\'s untracked documents carried a D1 identifier (%s). | Stage the release and tag commits by explicit path and check `git diff --cached --name-status`; or move or gitignore the design documents (a PI or design-seat call). No history action. | **As routed:** commit `archive/PROPOSAL-m-gating-campaign-v1_2` through `v1_10`; do not commit the design-seat handoffs, the design-to-Code decisions file, the superseded ADDENDUM-g3-b2r drafts, ADDENDUM-k1 or the archive/PREPRINT pre-patch copies; `README-NOTE.md` states in one line that the design-seat handoffs are held for a separate write-up on the workflow; commit `%s` at the tag after patch v6 is applied (patch v6 is not yet on the machine). | The routing commit (%s): the nine files "committed unmodified" and the do-not-commit list, with "PREPRINT-v1_0-draft.md waits for patch v6". The README line: none checked here. | %s; %s; %s; %s; %s |' % (
         d4_docs.lower(), d4_hdr.lower(), d4_other, len(pi_d1), ', '.join('`%s`' % f for f, _ in pi_d1), PREPRINT, ro_loc,
@@ -1514,8 +1708,8 @@ def main():
     w('')
     w('Other PI items the part raws carry:')
     w('')
-    w('- (i): the block\'s literal STOP (block :%d) stands until the PI resolves it; the record it rests on is in section 2 (the fallback\'s %s hit lines, triaged, %s; gitleaks\' %d findings, all triaged FALSE-POSITIVE, %s).' % (
-        b['i'], '{:,}'.format(hits_n), H.loc(h['i_pass']), gl_o['Findings'], G.loc(g['o1'])))
+    w('- (i): the block\'s literal STOP (block :%d) is resolved by %s, item 4 (section 2b), on the record in section 2 (the fallback\'s %s hit lines, triaged, %s; gitleaks\' %d findings, all triaged FALSE-POSITIVE, %s). What the ruling does not name (trufflehog, the commits after `%s`, the release-commit re-run) is listed in section 2b and carried in section 10, items 3 and 5.' % (
+        b['i'], RULINGS, '{:,}'.format(hits_n), H.loc(h['i_pass']), gl_o['Findings'], G.loc(g['o1']), gl_head[:7]))
     w('- (iv): the licenses re-run at the release commit, and the licenses script\'s fixed no-license text (section 5); the Macar source, the word lists and the Global Workspace paper\'s license as the licenses raw states them (%s, %s).' % (
         L.loc(lc['it1']), L.loc(lc['it7'])))
     w('- (ii): the stale statements that the repository is private (%s).' % C.loc(cc['stale']))
@@ -1540,20 +1734,21 @@ def main():
         CON_JSON, CS.loc(out_defaults['content'][0]), CS.loc(cs_nooverwrite),
         HIST_MD, HIST_JSON, HS.loc(out_defaults['history'][0]), HS.loc(out_defaults['history'][1]),
         HS.loc(hs_rawonly), HS.loc(hs_ownonly), LS.loc(ls_histraw)))
-    w('4. **Review untracked files before any commit adds them** -- pre-flip raw at `%s`: "%s" (%s). **ROUTED (D4), as to which files:** which untracked files are committed and which are not is settled by the routing (section 9, with the staging state at HEAD); stage by explicit path (D4, %s). The routing does not waive the review: the content review left the untracked root and archive files unreviewed and asks, verbatim, "review them before any commit that would add them" (%s). For the %d `archive/PROPOSAL-m-gating-campaign-v1_*.md` files committed at `%s`, the routing commit records a pre-commit screen, verbatim: "%s" (%s); this index carries that record and does not review the files itself. At the history run\'s snapshot, %d of the PI\'s %d untracked or modified documents carried a D1 identifier (%s; rows %s); of them, `%s` is now committed per D4 and the rest are on the do-not-commit list. **REMAINS:** the review, before the commit that adds it, of each untracked file a later commit adds: `%s` after patch v6 is applied (item 6), and any other; untracked, not-ignored files on disk at this run outside the do-not-commit list and other than `%s` (computed-new; names only, none opened): %d%s. The history re-run of item 3 must also run with every such file of the end commit in place.' % (
+    w('4. **Review untracked files before any commit adds them** -- pre-flip raw at `%s`: "%s" (%s). **ROUTED (D4), as to which files:** which untracked files are committed and which are not is settled by the routing (section 9, with the staging state at HEAD); stage by explicit path (D4, %s). The routing does not waive the review: the content review left the untracked root and archive files unreviewed and asks, verbatim, "review them before any commit that would add them" (%s). For the %d `archive/PROPOSAL-m-gating-campaign-v1_*.md` files committed at `%s`, the routing commit records a pre-commit screen, verbatim: "%s" (%s); this index carries that record and does not review the files itself. At the history run\'s snapshot, %d of the PI\'s %d untracked or modified documents carried a D1 identifier (%s; rows %s); of them, `%s` is now committed per D4 and the rest are on the do-not-commit list. **REMAINS:** the review, before the commit that adds it, of each untracked file a later commit adds: `%s` after patch v6 is applied (item 6), and any other; untracked, not-ignored files on disk at this run outside the do-not-commit list and other than `%s` (computed-new; names only, none opened): %d%s.%s The history re-run of item 3 must also run with every such file of the end commit in place.' % (
         pf_head[:7], pfj['remaining'][3]['status'], PF.loc(pf_rem[4]), C.loc(cc['d4rec']), C.loc(cc['untracked']),
         len(ro_pm), Rs, RO_SCREEN, ro_loc, len(pi_d1), pi_n_scanned, H.loc(h['pre_pi']),
         H.loc(*pi_rows_span) if pi_rows_span else 'none', v13, PREPRINT, PREPRINT, len(untr_other),
-        (' (%s)' % ', '.join('`%s`' % p_ for p_ in untr_other)) if untr_other else ''))
-    w('5. **The block\'s primary scanners** -- pre-flip raw at `%s`: "%s" (%s). **DONE at `%s`, interim (gitleaks):** installed and run by the PI, run again and triaged by Code over the history reachable at `%s`, %d findings, all FALSE-POSITIVE, 0 untriaged (section 2a). trufflehog, which the history raw\'s step also names: not run (not installed, %s). The history raw\'s step runs the scanners "over the repository at the release commit" (%s); the commits after `%s` are covered by gitleaks only as far as the routing commit\'s per-file pass over its own %d files (section 2a). **REMAINS:** a gitleaks run covering the commits after `%s` (at the release commit, as the step has it), or the PI\'s word that the per-file pass suffices; and the PI\'s word on trufflehog, which the routing as it reached this part does not name.' % (
-        pf_head[:7], pfj['remaining'][4]['status'], PF.loc(pf_rem[5]), gl_head[:7], gl_head[:10], gl_o['Findings'], G.loc(g['o3']), H.loc(h['pf4']), gl_head[:7], len(ro_files), gl_head[:7]))
+        (' (%s)' % ', '.join('`%s`' % p_ for p_ in untr_other)) if untr_other else '', sup_txt))
+    w('5. **The block\'s primary scanners** -- pre-flip raw at `%s`: "%s" (%s). **DONE at `%s`, interim (gitleaks):** installed and run by the PI, run again and triaged by Code over every ref at its run (`--log-opts=--all`, %s; HEAD `%s`; %d commits scanned, %s), %d findings, all FALSE-POSITIVE, 0 untriaged (section 2a). trufflehog, which the history raw\'s step also names: not run (not installed, %s). The history raw\'s step runs the scanners "over the repository at the release commit" (%s); the %d commits after `%s` are covered by gitleaks only as far as the per-file passes that %d of their messages record over the commit\'s own files (section 2a). %s, item 4, resolves (i) on the gitleaks run at `%s` and Code\'s scans (section 2b) and names neither the later commits nor trufflehog. **REMAINS:** a gitleaks run covering the commits after `%s` (at the release commit, as the step has it), or the PI\'s word that the per-file passes suffice; and the PI\'s word on trufflehog, which neither the routing nor the rulings, as they reached this part, name.' % (
+        pf_head[:7], pfj['remaining'][4]['status'], PF.loc(pf_rem[5]), gl_head[:7], G.loc(g['cmd']), gl_head[:10], gl_commits, G.loc(g['commits']), gl_o['Findings'], G.loc(g['o3']), H.loc(h['pf4']),
+        len(gl_after), gl_head[:7], len(gl_after_pass), RULINGS[0].upper() + RULINGS[1:], gl_head[:7], gl_head[:7]))
     w('6. **Patch v6** -- **REMAINS.** As routed, `%s` is committed at the tag after patch v6 is applied, and patch v6 is not yet on the machine; the routing commit records that it "waits for patch v6" (%s). At this run: on disk %s, tracked %s.' % (
         PREPRINT, ro_loc, yn(pre_exists), yn(pre_tracked)))
-    w('7. **The tag** -- **REMAINS.** As routed, the tag is `%s`, placed on the final audit commit after N1 and N18 (the block leaves the tag name to the PI, `%s@%s:%d`). At this run the tag exists: %s.' % (
-        TAG, BLOCK, P, b['s7_body'], yn(tag_exists)))
+    w('7. **The tag** -- **REMAINS.** As routed, the tag is `%s`, placed on the final audit commit after N1 and N18 (the block leaves the tag name to the PI, `%s@%s:%d`), and %s restate that the tag still waits on patch v6. At this run the tag exists: %s.' % (
+        TAG, BLOCK, P, b['s7_body'], RULINGS, yn(tag_exists)))
     w('')
-    w('**Done:** items 1 and 2 at `%s`, interim; Projects (none, per the PI); item 5\'s gitleaks at `%s`, interim (the PI and Code); for item 4, the pre-commit screen of the %d PROPOSAL-m files, as the routing commit records it. **Remains:** the release-commit re-runs of the history, content and licenses scripts (item 3); the final `git ls-remote origin` and the surface repeat just before the flip (items 1 and 2); the review of each untracked file before the commit that adds it, `%s` after patch v6 among them (item 4); gitleaks over the commits after `%s`, or the PI\'s word that the routing commit\'s per-file pass suffices, and the PI\'s word on trufflehog (item 5); patch v6 and the preprint commit (item 6); the tag (item 7); and (i)\'s resolution by the PI (section 0).' % (
-        pf_head[:7], gl_head[:7], len(ro_pm), PREPRINT, gl_head[:7]))
+    w('**Done:** items 1 and 2 at `%s`, interim; Projects (none, per the PI); item 5\'s gitleaks at `%s`, interim (the PI and Code); for item 4, the pre-commit screen of the %d PROPOSAL-m files, as the routing commit records it; and (i)\'s STOP, resolved by %s, item 4 (section 2b). **Remains:** the release-commit re-runs of the history, content and licenses scripts (item 3); the final `git ls-remote origin` and the surface repeat just before the flip (items 1 and 2); the review of each untracked file before the commit that adds it, `%s` after patch v6 among them (item 4); gitleaks over the commits after `%s`, or the PI\'s word that the per-file passes their messages record suffice, and the PI\'s word on trufflehog (item 5); patch v6 and the preprint commit (item 6); the tag (item 7).' % (
+        pf_head[:7], gl_head[:7], len(ro_pm), RULINGS, PREPRINT, gl_head[:7]))
     w('')
 
     # 11. coverage / delta
@@ -1572,8 +1767,38 @@ def main():
         w('- `%s` is the D4 commit the routing commit names, carrying the network-volume id the PI\'s D1 leaves (section 9).' % v13)
     w('')
 
+    # ---------- the PI's rulings of 2026-10-09, item 4: the recording, asserted on the composed text ----------
+    r4_head = [ln for ln in o if ln.startswith('- %s (the second routing), item 4, recorded here' % (RULINGS[0].upper() + RULINGS[1:]))]
+    r4_2b = [i for i, ln in enumerate(o) if ln == '### 2b. (i) resolved: %s, item 4' % RULINGS]
+    r4_row = [ln for ln in o if ln.startswith('| (i) secrets, full history |') and ('the STOP is resolved by %s, item 4' % RULINGS) in ln]
+    if len(r4_head) != 1 or len(r4_2b) != 1 or len(r4_row) != 1 or \
+            ('- As routed to this part (quoted in substance): %s.' % R4_SUBSTANCE) not in o[r4_2b[0]:]:
+        raise SystemExit("the PI's rulings of 2026-10-09, item 4: not recorded in the header, section 2b and section 0's table")
+    mm = R4_RX.search(r4_head[0])
+    if not mm:
+        raise SystemExit("the PI's rulings of 2026-10-09, item 4: the recorded figures are not readable from the header line")
+    # no line of the index's own text may still say that (i) is pending; verbatim quotes of the raws are exempt
+    r4_quoted = [short['i'], '"STOP pending the PI\'s resolution"', '"Resolving (i) remains the PI\'s act"']
+    for k_, ln in enumerate(o, 1):
+        if ln.startswith('> ') or ln == REDACTION_SLOT:
+            continue
+        s_ = ln
+        for qt in r4_quoted:
+            s_ = s_.replace(qt, '')
+        for fb in R4_FORBIDDEN:
+            if fb in s_:
+                raise SystemExit('composed line %d still says (i) is pending (%r) outside a verbatim quote' % (k_, fb))
+    # the ruling keeps two figures apart: gitleaks' findings, "all false positives" (so TRUE-SECRET 0 in the gitleaks
+    # triage), and "Code's own scans found 0 true-secret candidates" (the history raw's TRUE-SECRET-CANDIDATE alone)
+    xadd("(i) %s, item 4, as recorded here: scanner; gitleaks findings / FALSE-POSITIVE / TRUE-SECRET (the ruling's \"all false positives\"); Code's own scans' true-secret candidates (the history raw's TRUE-SECRET-CANDIDATE)" % RULINGS,
+         '%s; %d / %d / %d; %d' % (mm.group(1), int(mm.group(2)), int(mm.group(2)), 0, int(mm.group(3))),
+         '%s; %d / %d / %d; %d' % (gl_scanner, gl_o['Findings'], gl_o['FALSE-POSITIVE'], gl_o['TRUE-SECRET'], tsc),
+         "this index's header line and section 2b (the routing; no committed record before this commit)" if not (r4_recs or r4_msgs_n12)
+         else "this index's header line and section 2b (committed records: section 2b)",
+         '(%s; %s; %s)' % (G.loc(g['cmd']).strip('`'), G.loc(g['o1']).strip('`'), H.loc(h['s_i']).strip('`')))
+
     # 12. cross-checks
-    w('## 12. Index cross-checks (computed-new: each part\'s md against its own JSON, a committed file, or a recount at the commit the part read)')
+    w('## 12. Index cross-checks (computed-new: each part\'s md against its own JSON, a committed file, or a recount at the commit the part read; the last row, %s, item 4, as this index records it, against the committed raws)' % RULINGS)
     w('')
     w('| figure | md | JSON / committed / recount | md locator | JSON field or source | status |')
     w('|---|---|---|---|---|---|')
