@@ -1,0 +1,1827 @@
+# m package -- the G-SHAPE-F0 tooling (PROPOSAL-m v1.11 §8 step 7): build, adversarial review, fixes and verification.
+# Compiled by Code 2026-10-10 11:28:18 UTC (date -u). valence_core/m/gshape.py (new) and scripts/m_sessions.py (the gshape subcommand, MODULES, 5 driver checks).
+# Process: an understand workflow (five readers, two synthesizers, a completeness critic; Code's decisions in the entry); one implementing agent; three
+# review lenses (spec fidelity; harness and safety; tests), each finding put to a STRICT refuter; a fix agent; an independent verifier with mutation
+# probes (full m self-test per mutant, in APFS clones of a scratch replica); round 2 (Code's decisions 10-12; fix; re-verify); round 3 (F1, F3 and the
+# remaining Low gaps; confirm). No model or tokenizer loaded by any agent; no commits by any agent; mutation probes on scratch replicas only.
+
+====================================================================================================
+BUILDER'S REPORT (verbatim)
+====================================================================================================
+  # G-SHAPE-F0 (step 7) builder's report
+  
+  The gate is built and passes on a temp directory: PASS, 11,264 placements, 0 fired. The m self-test passes 732/732 on two consecutive runs (it was 706/706 before). Nothing is committed and nothing was written under `data/m`. The canonical run was not attempted.
+  
+  ## What I built
+  
+  **`/Users/jasondwyer/Documents/code/jspace-lab/valence_core/m/gshape.py`** (new, 1,894 lines, sha256 `abfe5d31…7099`)
+  - **Inputs and preconditions:** `inputs_of_record(canonical=…)` runs every precondition in order, and the canonical-only sources check `sources_committed_problems()`. `criterion_problems` checks the governing text. `sources_map` and `sources_digest` hash the source files.
+  - **Stacks:** `qwen_stack(pool)`, `olmo_stack()` and `olmo_scaffold_string_problems`.
+  - **Layer A:** `Placement`, `placements()`, `expected_keys()`, `score()` and `round_n()`.
+  - **Fire predicate:** `round_fires()`, built from a table `FIRE_TESTS` whose names equal `ROUND_FIRE_FIELDS`.
+  - **Layers A and C together:** `grid()`. It also checks each placement as placed: the segment must read [bracketed header, `Task: ` + the i-th render, `Response:`] and the gold must be the stored variant.
+  - **Shape and Layer S:** `template_shape_problems()`, and `runner_scope_problems()` for Layer S rules R1–R8.
+  - **Verdict and output:** `evaluate()` builds the artifact and verdict. `write()` writes once. `summary_lines()` gives the driver's stdout. `canonical_snapshot()` supports the no-write checks.
+  - `_selftest(chk)` adds 21 checks.
+  
+  **`/Users/jasondwyer/Documents/code/jspace-lab/scripts/m_sessions.py`** (+121 / −2, sha256 `c187dcc9…71c9`)
+  - `"gshape"` added to `MODULES` after `"gcal"`, plus `run_gshape(out)`, a `gshape [--out DIR]` subcommand, a docstring section and 5 driver checks.
+  - **Driver checks:** a temp run then an identical re-run, with stdout clean of labels; 6 refusals; the exit-code mapping; `"gshape" in MODULES`; the canonical snapshot is unchanged.
+  - No `__init__.py` edit, so the step-7 change inside `valence_core/m` is `gshape.py` alone. No declared input files were needed.
+  
+  ## Self-test
+  - **Run A:** `732/732 m selftest checks pass` (1:47.66).
+  - **Run B:** `732/732 m selftest checks pass` (1:44.97). Baseline was 706/706 in 1:00.
+  - Both runs print `package_sha256 9451fb2267c675a6cbee55d7d20ac5e9a1db6915f8961202e8aa2cb9489ed2a3 sources_digest b424ed1e3ef8f4665a53d75a6f6dd37389c8314dd5b652f4eec14df74621dc3c`.
+  - **Mutation probes.** I also ran 13 in-memory mutation probes of `gshape`, monkeypatched and never touching the repo. Each one fails at least one self-test check.
+    - That pass caught a weakness: the refusal cases only checked that a refusal happened. Every refusal and STOP case now also checks its own message.
+  
+  ## Temp-dir run
+  `scripts/m_sessions.py gshape --out <scratch>/step7/gshape_tmp`:
+  - exit 0, verdict PASS.
+  - Each unit: 2816 placements, 0 fired; seg+gold 2816/2816.
+  - render-as-response: Q-F0 256/2816, each OLMo unit 0/2816.
+  - The three OLMo grids are identical; template shape and runner scope are clean.
+  - The stdout says "sources committed at HEAD: not checked (--out test directory)".
+  - A re-run reports "identical". The artifact's sha256 at this tree is `47dc25d1…0759` (not the run of record).
+  
+  ## PINs (one line each)
+  1. **Dynamic evidence (PIN-S5):** eight existing runner self-test checks plus one new gshape check are the runner half; the self-test confirms each cited check name exists.
+  2. **Outcomes (PIN-S8):** refusal = an input missing or in the wrong state; precondition STOP = a pinned figure that does not reproduce; STOP verdict = artifact written with its evidence, exit 4, escalated.
+  3. **Sources map (PIN-S10):** sha256 of every scoring-stack and tooling file, including the three b3_screen files; LOCK v0.1 compares this map, and any difference re-runs G-SHAPE first.
+  4. **OLMo (PIN-S4):** the three units are one computation run three times; the only per-checkpoint input is the scaffold string check; the ban-id half (sha16 `2dd86a45…`, 9 ids) is recorded, not exercised (box, m:302).
+  5. **Renders (PIN-S7):** read from G-CAL's committed record and asserted equal to `pool_and_renders()`, the pin, the completability identity and the seat read; never computed as G-SHAPE's own (RESULTS.md@e60b633:919–920).
+  6. **Committed-sources precondition:** binds the canonical run only; `--out` runs skip it and the driver says which case applied.
+  7. **Completability and seat read:** absent, uncommitted, other schema, non-PASS, or no sha line is a refusal; a renders sha that differs from the pin is a STOP (decisions item 2).
+  8. **Fire (PIN-S3):** strict reading; any `ROUND_FIRE_FIELDS` field firing is a STOP.
+  9. **n (PIN-S1):** n = t+1 at forced and t+5 at free; the shape check covers n 1..10.
+  10. **Enumeration (PIN-S1):** 16 renders × 4 templates × 16 contrast banners × 22 golds × 2 phases = 2,816 per unit, 11,264 in all; menus and sham banners excluded.
+  11. **Gold (PIN-S2):** each stored gold verbatim, unframed.
+  12. **Controls (PIN-S6, trimmed):** seg+gold must fire on 100% of placements or STOP; render-as-response is reported only.
+  13. **Checked as placed:** every placement is checked as placed; a misplacement is a `shape` STOP.
+  14. **Rows digest:** each row is the key without its unit, the scored text, its fire fields, its RoundAudit and the control fire fields; the three OLMo `rows_sha256` must be equal.
+  15. **Layer S rules (PIN-S5):** R1–R8 as written in `runner_scope_problems`.
+  16. **Write-once (PIN-S9):** no timestamp and no HEAD in the artifact; supersession only by a hand `git mv` to a dated name on the seat's ruling; a re-run on unchanged inputs is byte-identical.
+  17. **Paths (PIN-S8/S9):** canonical path is `GATES_DIR/G-SHAPE-F0.json`; `--out` goes through `refuse_canonical_out`; an empty `--out` is refused; any seam refuses the canonical path.
+  18. **Snapshot:** gcal's snapshot rule for the `G-SHAPE*` paths.
+  19. **Driver:** `run_gshape` exit mapping is 2 / 4 / 4 / verdict.
+  
+  ## Deviations, with reasons
+  - **Committed-sources refusal is canonical-only.** Otherwise the pre-commit self-test, and any temp run before the tooling commit, would refuse because `gshape.py` is not yet committed. Decisions item 4 has no such scope; please confirm.
+  - **Completability and seat-read sha mismatches are STOPs, not refusals.** I read decisions item 2's "STOP on any mismatch" as overriding spec §4.6–4.7. I also added a schema check on the completability artifact (a refusal).
+  - **I added one dynamic runner-identity check.** No existing check asserts what text classify receives; the cited runner checks assert outcomes only. The new check:
+    - reuses testing's existing cases, with no new keys or gold oracle;
+    - records classify's arguments through subclassed audits;
+    - asserts identity across all 45 scripted sessions (321 rounds);
+    - catches each of 6 mutated runner copies.
+  - **Layer S is tighter than spec §8:**
+    - R3 ties each phase literal to `sc.forced` / `sc.chosen`, because "one each" cannot detect a swap.
+    - Keyword sets must be exact.
+    - R7 also checks `ra.as_dict()` and the append to `self.rounds`.
+    - R8 counts any `.classify` reference, so aliases are caught too.
+  - **Speed:** some self-test variants run on two units (Q-F0 and OLMo-sft), not four.
+  - **Extra artifact fields:** `n_misplaced`, `olmo_rows_sha256`, `stop_reason_forms`, `runner_dynamic_evidence`, and the pools file sha256 computed now alongside G-CAL's recorded value.
+  - **Stdout:** package sha256 moved to its own "provenance" line with the sources digest and the committed-check status; an OLMo-identity line was added.
+  
+  ## Flags for Code and the seat
+  - **`package_sha256` moves** from `4b4965…02ac`. G-PORT and G-CAL can no longer re-derive "identical" at HEAD.
+  - **Self-test time** rises from about 60 s to about 105 s per run.
+  - **The sources map is not the full import closure.** It omits `valence_core/stats.py`, the package `__init__` files, and e2d runner/readout, which are imported but not scoring code.
+  - **For the seat before LOCK v0.1:** PIN-S3, S5 and S6, plus the canonical-only scope and the STOP/refusal split above.
+  - **Concurrent G-ANL build:** `scripts/m_analyze.py` and `data/m/gates/m_posting_sentences.placeholder.json` now exist in the tree. I did not touch them. `m_analyze.py` is outside Layer S's R8 scan, the call-site guard and the forbidden-string check.
+  - **Run of record:** it refuses (exit 2) unless it runs at the tooling commit with every file in the sources map unedited. Its stdout line "G-SHAPE-F0 provenance: package sha256 … sources digest …" pairs it with the self-test raw.
+====================================================================================================
+REVIEW LENS spec-fidelity -- 6 finding(s)
+====================================================================================================
+COVERED:
+  Spec-fidelity review of the uncommitted step-7 build (valence_core/m/gshape.py sha256 abfe5d31…7099;
+  scripts/m_sessions.py diff, c187dcc9…71c9) against m:277, m:56, m:159, m:172, m:174, m:261, m:262, m:264, m:271
+  and m:279 (all read verbatim), the decisions file, the G-SHAPE items in critic.md, and spec_gshape.md. The repo
+  was only read, never written. My probes ran from …/scratchpad/step7/review_spec/ (closure.py, opens.py,
+  layer_s_probe.py, canon_probe.py, det_probe.py). `git status` and both file hashes were unchanged afterwards.
+
+  **Enumeration: faithful.**
+  - Renders are read from the committed G-CAL record. Templates are ROUND_TEMPLATES[0..3]; I confirmed b3 imports
+  the same objects (box_b3_sessions.py:65-66).
+  - Each unit gets its 16 contrast banners: build_banner, pair×map×clause, with mp=0 giving P the pair's first label
+  (m:159).
+  - The 22 golds are used verbatim, in both phases, with the render under the Q label. n = t+1 forced and t+5 free.
+  - Four units, 2,816 placements each. expected_keys gives an exact product check.
+  - score() calls each stack exactly as runner_qwen.py:161/192 and runner_olmo.py:139/166 do.
+
+  **Fire predicate.** I checked it against every RoundAudit field and every AuditV3Result field (exclusion,
+  advisory, content_label), plus degeneracy, ends, strict and termination. It is complete.
+
+  **Production scoring sites.**
+  - I grepped valence_core/ and scripts/. The only classify calls are the four runner sites, test bodies, and
+  scripts/e2d_contentclass_screen.py, which is not m.
+  - stages.py:1093/1098 reaches the scorer only through the two runners. verify, readrule and bars consume claims or
+  stored text and never re-score.
+  - So Layer S's R1-R8 scope covers every production call site. The one gap is R7 (finding 1).
+
+  **Layer C.** Matches the decisions: seg+gold must fire on 100%, and render-as-response is reported only.
+
+  **OLMo.**
+  - Banner, roster and stack take no checkpoint, so the three units are one computation.
+  - olmo_grids_identical produces a STOP when false.
+  - The scaffold strings are checked per checkpoint. The ban ids are recorded, not exercised.
+
+  **Input bindings.**
+  - Renders sha, completability identity, seat line and pool_sha16 all STOP on mismatch.
+  - The RESULTS.md@e60b633:919-920 citation is correct (checked with git show).
+  - Probe with GATES_DIR redirected to scratch: the canonical refusal fires and nothing is written.
+
+  **Verdict, exit codes and schema.**
+  - Exit mapping matches decisions item 8 (driver and self-test).
+  - The artifact has every field in spec §10; the extra fields are harmless.
+  - The artifact is deterministic across processes: PYTHONHASHSEED 1 and 987 give the same sha256, equal to the
+  builder's 47dc25d1…0759.
+  - .gitignore:235 admits the canonical path.
+  - No __init__.py edit.
+
+  **Sources map.** It covers every data file the gate opens (traced). Valence_core modules outside the map and
+  outside the package are non-scoring (traced).
+
+  The builder's other flagged deviations are within what the decisions allow: the canonical-only scope, the
+  STOP/refusal split, the one added dynamic check (no existing check covers the render case), and the tighter Layer
+  S.
+--- spec-fidelity: Layer S R7 misses record rewrites made through r.update(...), r.__setitem__ or SessionLog.record()
+    finder: minor  strict refuter: refuted=False severity=nit  location: valence_core/m/gshape.py:934-977 (_add_round_problems, R7); the record-rewrite guard is at :969-972
+    CLAIM:
+      Decisions item 1 says Layer S "must be mutation-sensitive". The PIN states that R7 guarantees add_round
+      records termination(g.text, term_rx) and str(g.text). But R7 only catches the dict literal and `r[...] =`
+      stores inside add_round. A scope widening placed anywhere else passes R7, Layer A, Layer C and every dynamic
+      check.
+    FAILURE SCENARIO:
+      An edit to scaffold.py adds `r.update(termination=termination(spec.seg + g.text, term_rx))` before
+      `self.rounds.append(r)` in add_round. That puts the termination counter on harness bytes plus generation.
+      - runner_scope_problems() returns [] and the verdict is PASS.
+      - Layer A calls _sc.termination on the gold directly, so it is blind to this.
+      - No termination pattern matches a segment (f_termination_patterns.json), so no dynamic check changes.
+      The same holds for a loop in record() that rewrites each round's termination or text.
+    EVIDENCE:
+      [C] layer_s_probe.py ran on in-memory copies of the package sources (base problems = []). Four mutations each
+      returned problems == [] ("NOT CAUGHT"):
+      - `r.update(termination=termination(spec.seg + g.text, term_rx))`
+      - `r.update(text=spec.seg + str(g.text))`
+      - `r.__setitem__("termination", termination(spec.seg + g.text, term_rx))`
+      - a `for _r in self.rounds: _r["termination"] = termination(self.tb.text, ())` loop inserted in record()
+      The guard at :969-972 matches only `ast.Subscript` stores whose value is the name `r`.
+    FIX:
+      Extend R7 so the round record r is never rewritten after its literal, in add_round or anywhere else in
+      SessionLog:
+      - after the binding, allow only `self.rounds.append(r)` and `return r` as uses of `r` in add_round;
+      - in other SessionLog methods, refuse any Store/Del subscript or `.update`/`.__setitem__`/`.setdefault`/`.pop`
+      call on `self.rounds`, or on an element of it, for the keys text, termination and audit.
+      Add the r.update and record()-rewrite mutations to the self-test's s_muts list (each caught by R7).
+    REFUTER:
+      Partly reproduced and partly overstated. What is left is a small hardening gap, not a spec-fidelity defect, so
+      the severity drops from minor to nit.
+
+      **What reproduces.** I re-ran review_spec/layer_s_probe.py on in-memory source copies. All four mutations
+      return problems == [] (base also []):
+      - `r.update(termination=...)`
+      - `r.update(text=...)`
+      - `r.__setitem__(...)`
+      - the record() loop
+
+      The guard after the literal (gshape.py:969-972) matches only `ast.Subscript` Store/Del on the name `r`. So
+      inside add_round, a method-call rewrite of the termination field gets past R7. This is a gap in a guard the
+      build added on its own initiative. It also makes the PIN wording at :1015-1016 ("R7: add_round records ...
+      termination(g.text, term_rx)") slightly too strong.
+
+      **Where it is overstated.**
+      1. **"Passes every dynamic check" is false for the text variant.** The self-test's runner-identity check
+      (gshape.py:1784, part of `identity_problems`) requires `text == script[j] == r["text"]`. `rec["rounds"]` is a
+      JSON copy of `SessionLog.rounds` (scaffold.py:441-447). My in-process probe (scratch
+      `step7/refute_r7_probe.py`, add_round monkeypatched, scripted adapters, no model imports) shows
+      `r.update(text=spec.seg + str(g.text))` changes `r["text"]` on 10/10 rounds for both Qwen and OLMo. So the
+      self-test would FAIL. Decision 5 pairs the run of record with a self-test pass at the same package_sha256, so
+      this mutation cannot reach a run of record.
+      2. **The record() loop is outside R7's defined scope.** Spec §8 puts R7 "Inside `SessionLog.add_round`". The
+      spec never asks Layer S to police other SessionLog methods.
+      3. **The one variant that really goes uncaught is inert and non-gating.** That is the termination rewrite
+      inside add_round. Over all 321 scripted rounds in testing.CASES_QWEN/OLMO, `termination(seg + text)` never
+      differs from `termination(text)`, and the patched run changes termination on 0 rounds. The patterns are
+      declared "descriptive, non-gating" (scaffold.py:296).
+      4. **The spec and Code's decisions are met as written.**
+         - Spec R7 asks only that the record literal's "text" and "termination" values be `str(g.text)` and
+      `termination(g.text, term_rx)`; the build checks both, plus audit.
+         - Spec §9 lists twelve mutations Layer S must catch, including "termination(spec.seg + g.text, ...) in
+      add_round" in its literal form. All are caught: the self-test asserts caught == 15 ⊇ the spec's twelve.
+         - Decision 1 defines mutation-sensitivity as "the self-test proves each scope mutation is caught", and that
+      holds.
+
+      **The fix is not complete either.** No static pattern check can be complete. R7 would still miss aliasing,
+      `dict.update(r, ...)`, shadowing `termination` or `str` at module level, or editing the body of
+      `termination()`. The proposed fix closes a few more syntactic forms, not the whole class.
+
+      **Residual.** Rejecting `.update`, `.__setitem__` and `.setdefault` calls on `r` inside add_round (one line),
+      or softening the PIN wording, is a reasonable nit-level hardening. It is not a defect the spec or decisions
+      require fixing.
+
+--- spec-fidelity: PIN-S4's reading of "the full scoring stack of both substrates" is not declared in code; only its OLMo-identity and ban-id halves are
+    finder: minor  strict refuter: refuted=False severity=minor  location: valence_core/m/gshape.py:245-309 (qwen_stack / olmo_stack; the only PIN-S4 comment is at :286-291)
+    CLAIM:
+      Repo convention, and spec §14 via decisions item 9, put every reading Code declares into a `# PIN (Code,
+      declared at LOCK v0.1)` comment. LOCK v0.1 carries those PINs. The PIN-S4 comment at :286 covers only
+      checkpoint-independence and the OLMo ban ids. Spec §14 PIN-S4's core reading of m:277 has no PIN:
+      - each substrate's own stack as its startup builds it;
+      - Qwen = qwen_audit_of_record + QwenTaskRoundAudit over the pool of record, with the scaffold set asserted
+      against the e2a file's ids and strings by assert_qwen_scaffold (not against a live tokenizer);
+      - both stacks include the termination counter and the end rules;
+      - no cross-substrate placement.
+    FAILURE SCENARIO:
+      At LOCK v0.1 the seat reads the PINs to see how m:277 was interpreted. Nothing declares that "both substrates"
+      was read as each substrate scoring only its own units, with Qwen units never on the OLMo stack and vice versa.
+      Nothing says the Qwen ban-id half was checked against the frozen file rather than a tokenizer. A seat that
+      read m:277 as "every placement through both stacks" finds no declared departure. The reading is visible only
+      in a docstring at :247.
+    EVIDENCE:
+      [C] `/usr/bin/grep -n PIN valence_core/m/gshape.py` lists PIN-S1, S2, S3, S5, S6, S7, S8, S9 and S10. PIN-S4
+      appears only at :245 (a section header) and :286-291 (OLMo identity and ban ids). `grep 'cross-substrate\|own
+      stack'` finds no match. Spec §14 PIN-S4 lists the six bullets above. Decisions item 3 replaces only the OLMo
+      per-checkpoint part.
+    FIX:
+      Add one PIN comment above qwen_stack carrying spec §14 PIN-S4 as written:
+      - the own-stack reading;
+      - the Qwen composition and assert_qwen_scaffold on the e2a file's ids and strings;
+      - termination and end rules on both substrates;
+      - "No cross-substrate placement".
+      Keep the existing OLMo-identity PIN. Repeat it in the entry.
+    REFUTER:
+      I reproduced the finding. Running `/usr/bin/grep -n PIN valence_core/m/gshape.py` on the uncommitted file
+      returns PIN comments for S1, S2, S3, S5, S6, S7, S8, S9 and S10. PIN-S4 appears in only two places:
+      - the section header at :245 ("# --- the two stacks (PIN-S4)");
+      - the PIN comment at :286-291 inside olmo_stack.
+
+      That comment covers only two things: the OLMo stack takes no checkpoint (critic item 3 / decisions item 3),
+      and the OLMo ban-id half (sha16 2dd86a453a2275ef) is recorded, not exercised.
+
+      Spec §14 says of every PIN wording: "Each goes into the code as `# PIN (Code, declared at LOCK v0.1): …` and
+      is repeated in the entry." Decisions item 9 keeps PIN-S1..S12 as the spec states them, except where replaced.
+      Decisions item 3 replaces only the OLMo per-checkpoint part. So the rest of PIN-S4 still has to be declared in
+      code, and these parts are not:
+      - the "each substrate's own stack as its startup builds it, without the adapter-dependent ban-id halves"
+      reading of m:277's "full scoring stack of both substrates";
+      - the Qwen composition (qwen_audit_of_record + QwenTaskRoundAudit over the pool of record, scaffold asserted
+      by assert_qwen_scaffold against the e2a file);
+      - "Both: the termination counter and the end rules";
+      - "No cross-substrate placement".
+
+      Some of this survives elsewhere, but not as a PIN declaration:
+      - the qwen_stack docstring (:247-248);
+      - module docstring line 16 ("each gold scored by that substrate's stack");
+      - the PIN-S3 comment, which lists the end rule and the termination counter as fire fields;
+      - grid's stack selection by _substrate(unit) at :618.
+
+      A case-insensitive grep for "own stack" finds nothing. "Cross-substrate" appears nowhere in a declaration.
+
+      The failure scenario is somewhat overstated. Spec §13 has the entry carry "Every PIN-S1 to S12 with its
+      wording (§14)". The PINs LOCK v0.1 carries come from that entry, which is not yet written, so the seat would
+      still see the full PIN-S4 there. The gap is also documentation only: it has no runtime or verdict effect, and
+      the stack records in the artifact (stacks.qwen / stacks.olmo, with term_sha16, end_rule and
+      scaffold_assertion) show the composition actually used.
+
+      Even so, the code fails the spec's explicit "each goes into the code" rule for one of the PINs it carries.
+      That is a real spec-fidelity defect. Minor is the right severity: one comment is missing, and its own-stack
+      and no-cross-substrate reading is not declared in code.
+
+      File: /Users/jasondwyer/Documents/code/jspace-lab/valence_core/m/gshape.py (:245-309). Spec:
+      /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-
+      lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step78/spec_gshape.md §14 (PIN-S4 bullets) and §4 step 10.
+
+--- spec-fidelity: PIN-S10 as written re-runs G-SHAPE on any TOOLING_FILES edit; spec §12 compares provenance.sources only, and it omits "Step 8 edits no scoring-stack file"
+    finder: minor  strict refuter: refuted=True severity=nit  location: valence_core/m/gshape.py:215-218 (sources_map PIN-S10); :1099-1100 (provenance.sources_digest)
+    CLAIM:
+      The PIN says LOCK v0.1 compares "this map" and that any difference re-runs G-SHAPE-F0 first. sources_map()
+      returns both sources and tooling, so an edit to scripts/m_sessions.py or gshape.py alone forces a re-run.
+      - Spec §12 (PIN-S10) reads: "LOCK v0.1 compares the artifact's provenance.sources with its own tree".
+      - The critic's routing item (c) reads: "only edits to SCORING_STACK_FILES force a re-run".
+      - Spec PIN-S10's third clause ("Step 8 edits no scoring-stack file") is dropped.
+    FAILURE SCENARIO:
+      A step-9 LOCK build adds a driver line to scripts/m_sessions.py; no scoring file changes.
+      - Under the PIN as declared, LOCK v0.1 must re-run G-SHAPE-F0.
+      - The re-run's tooling sha, package sha and sources_digest differ, so the bytes differ.
+      - The write-once rule then refuses (exit 2), and the lock waits on a seat-ruled supersession (git mv) for a
+      change that cannot affect scoring scope.
+    EVIDENCE:
+      [S] spec_gshape.md §12: "LOCK v0.1 compares the artifact's `provenance.sources` with its own tree." critic.md
+      G-ANL item (c): "A package edit outside SCORING_STACK_FILES does not re-run G-SHAPE."
+      [C] gshape.py:217-218: "LOCK v0.1 compares this map with its own tree, and any difference re-runs G-SHAPE-F0
+      first".
+      [C] sources_map() at :219-226 returns {"sources":…, "tooling":…}, and sources_digest at :229-231 hashes both.
+    FIX:
+      Reword the PIN:
+      - LOCK v0.1 compares provenance.sources (SCORING_STACK_FILES); any difference there re-runs G-SHAPE-F0 first.
+      - provenance.tooling and package_sha256 are recorded and stated in the lock with their mechanical diff,
+      without forcing a re-run.
+      - Step 8 edits no scoring-stack file.
+      If Code wants tooling included, declare that explicitly as a departure from §12 and add it to the seat block.
+    REFUTER:
+      The reviewer's facts check out, but they do not make this a defect under the spec and Code's decisions.
+
+      What checks out [C]:
+      - gshape.py:215-218 reads "LOCK v0.1 compares this map with its own tree, and any difference re-runs
+      G-SHAPE-F0 first".
+      - sources_map() (:219-226) returns {sources, tooling}, and sources_digest (:229-231) hashes both.
+      - Spec §12 says "provenance.sources", and the third PIN-S10 clause is not in the comment.
+
+      Why it is not a defect:
+      1. The PIN restates spec PIN-S10 itself. Spec §14 has three bullets. The first says the artifact "records
+      sha256 for every SCORING_STACK_FILES and TOOLING_FILES entry". The second reads verbatim: "LOCK v0.1 compares
+      the sources map. Any difference re-runs G-SHAPE-F0 first." The spec's OPEN item says the same: "LOCK v0.1
+      compares the sources map".
+      2. Code's decisions use "sources map" for the combined map, and they outrank the spec. Decision 5 says "the
+      digest of the SCORING_STACK_FILES/TOOLING_FILES sources map". Decision 4 makes both file sets preconditions.
+      Under that usage, "this map" (sources plus tooling) is the intended reading. §12's "provenance.sources" is the
+      spec's own inconsistency with its PIN-S10, and the build followed the PIN text the decisions endorse.
+      3. The critic's sentence the reviewer relies on comes from the wrong item. "Only edits to SCORING_STACK_FILES
+      force a re-run" is item (c) of a G-ANL-F0 item. Its correction tells G-ANL to align its wording with PIN-S10;
+      it does not ask G-SHAPE to change. The task scopes critic input to items tagged for G-SHAPE-F0, and no
+      G-SHAPE-tagged item addresses the re-run trigger.
+      4. Step 8 cannot trigger this. spec_ganl.md:21/55 and decisions_ganl's hard rules forbid step 8 from editing
+      valence_core/ or scripts/m_sessions.py. So the trigger in the next step is unreachable.
+      5. The failure scenario is hypothetical. It needs a step-9 LOCK build to edit m_sessions.py, and LOCK v0.1 is
+      out of scope here (spec §16). The PIN is "declared at LOCK v0.1", so the seat sees and can rule on it at the
+      lock.
+      6. Re-running on a tooling edit is the conservative choice, not an error. TOOLING_FILES includes gshape.py
+      itself. The reviewer's fix would let the lock bind a gate implementation that never produced the artifact. The
+      resulting write-once refusal and seat-ruled git mv is decision 7's declared supersession path, not an
+      accident.
+      7. The dropped "Step 8 edits no scoring-stack file" clause is a constraint on step 8. It is carried in the
+      G-ANL spec and decisions. Leaving it out of a gshape.py code comment changes no behavior.
+
+      What remains, at most a nit: the comment could name both halves explicitly ("sources and tooling") and note
+      the §12 wording difference in the build report or seat block. Then the lock author does not have to resolve
+      the spec's internal inconsistency themselves.
+
+--- spec-fidelity: The artifact does not record whether the committed-sources precondition ran: --out and canonical artifacts are byte-identical by design
+    finder: minor  strict refuter: refuted=True severity=nit  location: valence_core/m/gshape.py:335-345 (canonical-only committed-sources check); :1099-1102 (provenance); self-test :1650-1652
+    CLAIM:
+      Decisions item 4 requires a refusal unless every SCORING_STACK_FILES / TOOLING_FILES file is committed at HEAD
+      and identical. The critic's stated purpose is that "the artifact could record working-tree shas that are not
+      committed blobs". The build runs the check only on the canonical path and records nothing about it in the
+      artifact. The self-test asserts that the canonical and --out artifacts are equal. So the artifact cannot
+      attest rule-27 provenance; only the stdout line can.
+    FAILURE SCENARIO:
+      Code runs `m_sessions.py gshape --out D` on a tree where audit.py is edited but not committed (permitted; no
+      refusal). The artifact's provenance.sources holds the working-tree sha of audit.py, a blob that exists in no
+      commit. Nothing distinguishes this file from a canonical artifact. If it reaches data/m/gates by hand during a
+      supersession, the record carries uncommitted-source shas, which is the critic's failure mode, undetectable
+      from the artifact alone.
+    EVIDENCE:
+      [C] gshape.py:340 `if canonical:` gates sources_committed_problems().
+      [C] The self-test at :1651 asserts `r_can["artifact"] == a` and `r_out["artifact"] == a` (the canonical
+      artifact equals the --out one).
+      [C] The provenance keys at :1099-1102 have no committed-check field.
+      [C] canon_probe.py, with GATES_DIR redirected to scratch: a canonical write(None) refuses (gshape.py
+      untracked, m_sessions.py edited). A --out run of the same tree succeeds (the builder's gshape_tmp, sha
+      47dc25d1…0759).
+    FIX:
+      Record the case in provenance, e.g. `"sources_committed_at_head": "checked" | "not checked (--out test run)"`,
+      and have the self-test compare canonical against --out on everything but that key. The alternative is to apply
+      the check unconditionally and have the pre-commit self-test and driver integration patch stages._committed, as
+      self-test #6 already does. Either way, report the scoping to the seat block as the builder flagged.
+    REFUTER:
+      The reviewer's observations are accurate. The check runs only when `canonical` is true (gshape.py:340), the
+      provenance at :1099-1102 has no committed-check field, and self-test #6 (:1650-1652) asserts that
+      r_can["artifact"] == a == r_out["artifact"]. Calling this a defect does not hold up against the spec, the
+      decisions or the critic.
+
+      1. Nothing requires the field. Spec §10's artifact schema (spec_gshape.md:346-380) lists the provenance keys
+      as package_sha256, sources, tooling, proposal_file, proposal_sha256 and numpy. It has no committed-check
+      field. The decisions make item 4 a precondition: refuse, exit 2, write nothing. The critic's correction
+      (critic.md:254) is the same refusal. Decision 7 requires no HEAD in the artifact and byte-identical re-runs on
+      unchanged inputs. A canonical-vs-test field would put a run-path fact into the artifact that no governing
+      document asked for.
+
+      2. The critic's failure mode concerns the artifact of record, and the build closes it. Only write(None) can
+      produce data/m/gates/G-SHAPE-F0.json, and that path always runs sources_committed_problems(). An --out run
+      cannot land under data/m: resume.refuse_canonical_out (resume.py:1001-1017) refuses any path under a canonical
+      root. Its stated reason is that "A synthetic run must not be storable where a measurement is stored."
+
+      3. The failure scenario needs an unsanctioned step: someone copying an --out artifact into data/m/gates by
+      hand. Decision 7 and the PIN at gshape.py:1160-1166 sanction only one supersession procedure. The old
+      canonical artifact is moved with `git mv` to a dated name, and the re-run writes the canonical name through
+      the checked path. Hand-placing a file outside the tool would defeat any provenance field, the proposed one
+      included.
+
+      4. The scoping is required by the spec's order and matches the sibling build. Spec §12 runs the self-test at
+      step 2, before the tooling commit at step 3. TOOLING_FILES contains gshape.py, which is untracked now, and
+      m_sessions.py, which is edited. An unconditional check would refuse self-test #1's required temp --out PASS
+      (spec §11 #1). G-ANL's PIN-39 (m_analyze.py:2465-2468) has the same convention, word for word: "a --out test
+      directory is exempt." Its artifact records no such field either.
+
+      5. Rule 27 is about the repo, not one file. The run raw of record is tee'd and committed (spec §12 steps 4 and
+      6). It carries summary_lines' line "sources committed at HEAD: yes (checked: canonical run)" together with the
+      artifact path. provenance.sources also records the sha256 of every file, so anyone can check those values
+      against the committed blobs. LOCK v0.1 does exactly that: it compares provenance.sources with its own tree
+      (PIN-S10; spec §12). Any sha that is not a committed blob there forces a re-run. If the bytes were later
+      committed, the shas are committed blobs and nothing is lost.
+
+      What remains is an optional hardening suggestion (a provenance tag). It is not a departure from the spec or
+      the decisions, so this is a nit at most.
+
+--- spec-fidelity: Two of the eight cited runner checks do not involve classify, so they are not evidence for the runner half of scoring scope
+    finder: nit  strict refuter: refuted=False severity=nit  location: valence_core/m/gshape.py:121-138 (RUNNER_DYNAMIC_EVIDENCE, entries at :128-129 and :136-137); artifact runner_dynamic_evidence.existing_checks
+    CLAIM:
+      Decisions item 1 asks for the existing runner self-test checks "that exercise classify on generated text". Two
+      cited checks compare the adapter's generate calls with the transcript pieces, and menu/pick context with the
+      prefix. They never look at what classify receives, or at any audit field. They would pass unchanged under a
+      runner that scored `spec.seg + g.text`. Citing them in the write-once artifact as dynamic scoring-scope
+      evidence overstates it (ledger 30: name what contains the thing checked).
+    FAILURE SCENARIO:
+      Under a mutation `audit.classify(spec.seg + g.text, …)`:
+      - runner_qwen's "the adapter saw injections=() and cached=False … prefix = transcript so far" still passes. It
+      checks len(calls) == len(rounds) and prefix/segment per round, and both hold for sessions that end at round 1.
+      - runner_olmo's "context rule -- menus and pick lines reach the chosen round's prefix only…" still passes.
+      The artifact nonetheless lists both as evidence that the runners hand classify the generation text.
+    EVIDENCE:
+      [C] runner_qwen.py:412-426: the calls_ok body reads only calls[*] (injections, cached, temp, max_tokens,
+      ban_ids, prefix, segment, seed) against r["pieces"]/r["transcript"], and no audit field.
+      [C] runner_olmo.py:335: the context-rule check concerns the menu/pick placement in prefixes and transcript.
+      [S] decisions_gshape.md item 1: "the existing runner self-test checks that exercise classify on generated
+      text".
+    FIX:
+      Trim RUNNER_DYNAMIC_EVIDENCE to the checks whose outcomes depend on classification, or on the corrupted render
+      placed in situ: the two "scripted sessions reach their declared outcomes" checks, the two "clean sessions"
+      checks, and the two "contrast Q delivers the render" checks. Or keep the other two under a separately labelled
+      "generation-side context" list. Update the count in the self-test check at :1836.
+    REFUTER:
+      I could not refute this finding. I reproduced it.
+
+      **What the code does**
+      - `RUNNER_DYNAMIC_EVIDENCE` (valence_core/m/gshape.py:121-138) lists 8 existing runner checks. The artifact
+      copies them into `runner_dynamic_evidence.existing_checks` (gshape.py:1140-1144), and the PIN at :115-120
+      calls them "the dynamic evidence for the runner half of scoring scope".
+      - Decisions item 1 says to cite "the existing runner self-test checks that exercise classify on generated
+      text".
+      - Two of the cited checks never read an audit field or anything classify returns:
+        - runner_qwen.py:412-426 ("the adapter saw injections=() ...") compares only the `calls[*]` fields
+      (injections, cached, temp, max_tokens, ban_ids, prefix, segment, seed) against `r["transcript"]` and
+      `r["pieces"]`.
+        - runner_olmo.py:323-336 ("context rule -- menus and pick lines ...") checks only where menus and pick lines
+      sit in the prefix and the transcript.
+
+      **Probe**
+      - Location: scratch, step7/refute_dyn/probe.py. The repo tree was untouched and no bytecode was written.
+      - Mutation: the runner source was exec'd in memory with both classify call sites per runner changed to
+      `audit.classify(spec.seg + g.text, ...)`.
+      - `run_case`'s unused-script assertion was relaxed so every check is evaluated on its own.
+      - Baseline (unmutated): every runner_qwen and runner_olmo check passes.
+      - Under the mutation:
+        - Fail on both substrates: "scripted sessions reach their declared outcomes" and "clean sessions".
+        - Still pass:
+          - runner_qwen: "the adapter saw injections=() and cached=False ..."
+          - runner_olmo: "context rule -- menus and pick lines reach the chosen round's prefix only ..."
+      - So both named checks are blind to scoring-scope mutations. Citing them as dynamic evidence for "the runners
+      hand classify the generation text" overstates what they show.
+
+      **Mitigations (they keep the severity at nit; they do not refute the finding)**
+      1. The real assertion of the runner-identity property is the new `RUNNER_IDENTITY_CHECK`, which carries six
+      caught mutants. The artifact's core evidence is intact; the two extra citations only pad it.
+      2. Without the relaxation, a seg+text mutation leaves scripted texts unused, so `testing.run_case` would raise
+      and the whole runner `_selftest` would fail. That means the "still passes" scenario is hypothetical under the
+      real harness. The point about what each check asserts still stands.
+      3. The proposed fix keeps the two "contrast Q delivers the render" checks, which I found also pass under the
+      mutation. Keeping them is defensible: the critic itself cited runner_qwen.py:409 as part of the in-situ
+      dynamic case (a corrupted render next to a clean response, with no fire). Their role is to show the render is
+      placed, not to show what classify scores.
+
+      **Fix**
+      - Trim the two checks, or move them to a separately labelled list.
+      - Update the `len(RUNNER_DYNAMIC_EVIDENCE) == 8` assertion at gshape.py:1836.
+
+      The fix is cheap and should land before Code's run of record, because the artifact is write-once.
+
+--- spec-fidelity: The MODULES registration check claims "a MODULES copy without it fails this check", but its third conjunct is a tautology and no copy is ever tested
+    finder: nit  strict refuter: refuted=False severity=nit  location: scripts/m_sessions.py:2396-2399 (MODULES registration check)
+    CLAIM:
+      `"gshape" not in tuple(m for m in MODULES if m != "gshape")` is always True. The check's name asserts the
+      planted-defect direction, but no copy of MODULES without gshape is ever built. The both-directions convention
+      of spec §11.2 is claimed but not exercised. The `"gshape" in MODULES` conjunct does still fail if gshape is
+      removed.
+    FAILURE SCENARIO:
+      A reader of the self-test raw takes the line as showing that the planted case (MODULES without gshape) was run
+      and detected. No such case runs. Replacing the conjunct with any always-true expression leaves the check
+      passing.
+    EVIDENCE:
+      [C] m_sessions.py:2399: `and "gshape" not in tuple(m for m in MODULES if m != "gshape"))`. The generator
+      filters out "gshape", so the membership test is False and its negation always True.
+    FIX:
+      Build the planted copy explicitly, e.g. `bad = tuple(m for m in MODULES if m != "gshape")`, and assert that
+      the same predicate used for the real case (`"gshape" in X and X.index("gshape") > X.index("gcal")`) is False
+      for `bad`. Or drop the clause from the check's name.
+    REFUTER:
+      I reproduced the finding and could not refute it.
+
+      **The conjunct is always True.** /Users/jasondwyer/Documents/code/jspace-lab/scripts/m_sessions.py:2399 reads
+      `and "gshape" not in tuple(m for m in MODULES if m != "gshape")`. I evaluated it with the project interpreter
+      on a scratch probe against four tuples: ('a','gcal','gshape'), ('a','gcal'), ('gshape','gcal') and (). It
+      returned True every time. The generator removes "gshape", so this conjunct can never fail, and no MODULES copy
+      without gshape is ever built or tested.
+
+      **What the check name claims.** At m_sessions.py:2396-2397 it says "a MODULES copy without it fails this
+      check". Read as a counterfactual, that is literally true, but only through the first conjunct (`"gshape" in
+      MODULES` would be False). The third conjunct appears to exercise the planted case and does not. Replacing it
+      with any always-True expression leaves the check unchanged.
+
+      **Neither the spec nor the decisions excuse it.**
+      - spec_gshape.md §11.2 (line 404) says "Every check runs in both directions: the real case passes and a
+      planted defect fires."
+      - Spec PIN-S12 (line 504) required a planted copy of MODULES that is missing a module.
+      - critic.md:242 replaced PIN-S12 with `"gshape" in MODULES`, and decisions_gshape.md item 6 adopts that
+      ("`\"gshape\" in MODULES` or the equivalent"). That narrows the predicate. It does not license a tautology
+      that appears to cover the planted direction.
+      - Decision 9 keeps the rest of the spec in force, including §11.2's both-directions rule.
+
+      A plain membership assertion on a constant tuple arguably needs no planted case. That would justify dropping
+      the clause from the name, not keeping dead code that looks like a planted-defect test.
+
+      **Impact is cosmetic.** The real registration is checked correctly: MODULES at line 101-102 ends with "gcal",
+      "gshape", and the first two conjuncts do fail if gshape is removed or moved before gcal. The self-test raw is
+      misleading, but no defect gets past the check. Nit severity, as the reviewer stated.
+
+      **Fix.** Either build `bad = tuple(m for m in MODULES if m != "gshape")` and assert the real predicate is
+      False on it, or drop the planted-copy clause from the check name.
+
+====================================================================================================
+REVIEW LENS harness-safety -- 3 finding(s)
+====================================================================================================
+COVERED:
+  Read decisions_gshape.md, the four critic items tagged G-SHAPE-F0 and spec_gshape.md §§3–14. Read all of
+  valence_core/m/gshape.py (sha abfe5d31…7099), the scripts/m_sessions.py diff (sha c187dcc9…71c9), and the helpers
+  gshape relies on: resume.refuse_canonical_out, package_sha256(_of), json_text, _fsync_dir and CANONICAL_ROOTS;
+  stages._committed; gcal._write_once_text, canonical_files, _path_state and snapshot_changes; the gcal and gport
+  driver branches.
+
+  Checked:
+  - refusal vs STOP placement and ordering in inputs_of_record;
+  - the canonical-only committed-sources precondition;
+  - write() path selection: canonical vs --out, blank --out, seams refusing the canonical path, a symlink at the
+  artifact path;
+  - write-once (identical, different, link) and the .tmp handling;
+  - the driver's argument refusals and exit-code mapping, compared with gcal and gport (they match);
+  - the self-test's pairing line (present in selftest_A.txt line 611);
+  - the canonical snapshot glob;
+  - no bare asserts on the run path.
+
+  Probes (scratch …/scratchpad/step7/hs/, run with -B):
+  1. probe_io.py: an audit-hook run of gshape.write(--out scratch). Result: PASS in 1.4 s; no torch, mlx or
+  transformers loaded; the only writes were mkdir, the .tmp file and the rename inside --out; the git calls were
+  read-only (cat-file, ls-tree). Every data file read is either in SCORING_STACK_FILES or read through _committed.
+  Repo modules executed but in no hash: valence_core/__init__.py, adapters/*, e2d/__init__.py, e2d/runner.py,
+  readout.py and stats.py. None of them is scoring code, so the builder's flag stands as written.
+  2. probe_selftest_io.py: gshape._selftest alone gives 21/21 in 37.5 s, with no writes outside temp dirs and no
+  heavy modules.
+  3. probe_canon.py: a canonical write(None) in a `git clone -s --no-checkout` scratch clone at 2c50e03. The two
+  tooling files were copied in and treated as committed by substituting their working-tree bytes in
+  stages._committed, as the builder's self-test section 6 does. GATES_DIR was patched to a scratch dir. Variants:
+  clean, uncommitted package edit, untracked package .py, and an edit made mid-run.
+  4. probe_tmplink.py: a symlink at the .tmp name.
+
+  No git command ran in the repo except status, diff, log, ls-tree and count-objects. Not covered: the content
+  correctness of Layer A, S and C (other lenses), and G-ANL's files.
+--- harness-safety: Canonical run records a package_sha256 of an uncommitted tree while reporting 'committed: yes'
+    finder: substantive  strict refuter: refuted=True severity=nit  location: valence_core/m/gshape.py:234-242 (sources_committed_problems), :340-345 (canonical precondition), :1099 (provenance.package_sha256), :1241-1243 (stdout 'sources committed at HEAD: yes')
+    CLAIM:
+      The canonical precondition checks only SCORING_STACK_FILES + TOOLING_FILES. package_sha256 covers every
+      valence_core/m/*.py in the working tree, so it also covers 9 package files that are never committed-checked:
+      __init__, bars, gcal, guard, readrule, resume, stages, testing and verify. It also covers any untracked *.py
+      dropped into the package. Several of those files decide what the gate checks and writes: stages._committed is
+      the precondition itself; resume.json_text gives the artifact bytes and resume.refuse_canonical_out the path
+      refusal; guard.GATES_DIR is the canonical path; gcal holds the G-CAL schema constants. The run of record can
+      therefore pass, write data/m/gates/G-SHAPE-F0.json with a package_sha256 that no commit carries, and print
+      'sources committed at HEAD: yes (checked: canonical run)' on the same line as that hash. This is the hazard
+      behind critic G-SHAPE item 4 (rule 27, 'the repo, not any machine, is the record'). Decisions item 4's file
+      list closes it for the scoring files only.
+    FAILURE SCENARIO:
+      The G-ANL build, or the PI's parallel session, has an uncommitted edit to valence_core/m/stages.py or
+      resume.py in the shared tree. spec_ganl's SEAT item expects a stages.py change that 'must land before
+      G-SHAPE-F0's run of record'. Code then runs `m_sessions.py gshape` at the tooling commit. The run is not
+      refused: it writes the canonical artifact (PASS) with a package_sha256 matching no commit, and stdout says the
+      sources are committed. LOCK v0.1 is to state each gate artifact's package_sha256 (critic LOCK item), so it
+      would lock a value nobody can re-derive from the repo.
+    EVIDENCE:
+      [C] Probe hs/probe_canon.py in a scratch shared clone, canonical write(None), GATES_DIR → scratch:
+      - clean: recorded package_sha256 9451fb22… equals the committed state (+ gshape.py).
+      - one comment line appended to valence_core/m/resume.py (git status ' M'): canonical True, written, PASS;
+      recorded package_sha256 cc04d406… ≠ 9451fb22…; stdout 'sources committed at HEAD: yes (checked: canonical
+      run)'.
+      - untracked valence_core/m/zz_probe.py: canonical PASS; recorded package_sha256 71158461….
+      [C] Package files in package_sha256 but outside the committed check:
+      ['__init__.py','bars.py','gcal.py','guard.py','readrule.py','resume.py','stages.py','testing.py','verify.py'].
+    FIX:
+      On the canonical run, extend sources_committed_problems to every valence_core/m/*.py from PACKAGE_DIR.glob,
+      deduplicated with the two declared tuples. stages._committed already refuses a path not at HEAD, so an
+      untracked .py is refused too. Alternatively, refuse unless package_sha256() equals the same hash computed over
+      HEAD's blobs. Add self-test plants for an uncommitted non-scoring package file (e.g. resume.py) and an
+      untracked package .py. Reword the stdout line to name what was checked: the scoring stack, the tooling and the
+      m package.
+    REFUTER:
+      The finding is refuted. The mechanism it describes is real, but the build does exactly what Code's decisions
+      specify, and that scope was chosen on purpose.
+
+      **The mechanism reproduces (read-only, no probe needed).**
+      - `sources_committed_problems` (gshape.py:234-242) checks only `SCORING_STACK_FILES + TOOLING_FILES`.
+      - `package_sha256` (resume.py:296-328) hashes every `valence_core/m/*.py` in the working tree.
+      - The nine package files outside the check are `__init__`, bars, gcal, guard, readrule, resume, stages,
+      testing and verify. That list is correct.
+      - So an uncommitted edit to one of them, or an untracked package `.py`, reaches the artifact's
+      `package_sha256` on a canonical run that is not refused.
+
+      **Why it is not a defect.**
+      1. **Decisions item 4 sets the scope**, and the decisions override the spec. The canonical run must refuse
+      "unless every file in SCORING_STACK_FILES and TOOLING_FILES is committed at HEAD and identical in the working
+      tree". The code implements that exactly, the PIN at gshape.py:335-338 says so, and self-test §6 proves it. The
+      finding concedes that item 4's file list "closes it for the scoring files only", so what it asks for goes
+      beyond the decisions.
+      2. **The design states that package edits outside the scoring stack do not bind G-SHAPE.**
+         - Spec PIN-S10: `package_sha256` covers only `m/*.py`, so the binding comparison LOCK v0.1 makes is the
+      sources map, and "any difference re-runs G-SHAPE".
+         - Critic G-ANL item (c): "A package edit outside SCORING_STACK_FILES does not re-run G-SHAPE. LOCK v0.1
+      states each gate artifact's package_sha256 and the mechanical diff between them."
+         - Spec §12 step 4 likewise requires "a clean tree for every file in SCORING_STACK_FILES and TOOLING_FILES",
+      not for the whole package.
+      3. **The precedent gates check less.**
+         - G-CAL (gcal.py:429) records `package_sha256` and commit-checks only the proposal and CLAUDE.md.
+         - G-PORT (m_sessions.py:219) records it with no commit check at all.
+         - G-SHAPE is stricter than both.
+      4. **The artifact never says the package is committed.** It records `package_sha256` as an identity value, the
+      same way G-CAL and G-PORT do.
+      5. **The stdout line is accurate in this module's vocabulary.** It reads "sources digest Y (N files); sources
+      committed at HEAD: yes", and "sources" is the sources map, the N files just counted.
+      6. **The finding's scenario has procedural guards in the spec and decisions.**
+         - §12 step 1 is `git status`/`git diff` first, which would show ` M valence_core/m/stages.py`.
+         - Spec step 3 has the tooling commit carry the `package_sha256` the run will record.
+         - Decisions item 5 pairs the self-test raw's printed `package_sha256` with the run raw's. A drift after the
+      self-test shows as a mismatch.
+         - The values-check passes and LOCK v0.1's mechanical `git diff --stat` of `valence_core/m` also cover it.
+
+      **What remains.** Widening the check to all of `PACKAGE_DIR/*.py` is a reasonable hardening for the seat or
+      Code to consider. So is rewording stdout to name exactly what was checked. Neither is a defect under the
+      governing decisions. Severity is a nit (wording and clarity only).
+
+      Files: valence_core/m/gshape.py (lines 234-242, 335-345, 1099, 1241-1243) and valence_core/m/resume.py
+      (296-328).
+
+--- harness-safety: Sources map and package hash are re-read from the working tree after the committed check, not from the checked bytes
+    finder: minor  strict refuter: refuted=False severity=minor  location: valence_core/m/gshape.py:1098-1101 (sources_map() and package_sha256() read after scoring), :213-226 (sources_map reads working-tree bytes)
+    CLAIM:
+      The committed check runs at the start of inputs_of_record. The recorded provenance (sources, tooling,
+      sources_digest, package_sha256) is computed later, at the end of evaluate(), from a fresh working-tree read.
+      package_sha256 is lru_cached, but its first call in a driver run is this late one. Nothing ties the recorded
+      shas to the bytes that passed the check, or to the module code imported before it. An edit in that window
+      lands in the artifact as a non-committed sha, while stdout still says the sources were committed.
+    FAILURE SCENARIO:
+      A parallel session saves valence_core/m/audit.py (or any scoring-stack file) during the run of record, after
+      the precondition passed and before evaluate() hashes. The artifact's
+      provenance.sources['valence_core/m/audit.py'] is then the edited file's sha, not HEAD's blob, although the
+      scoring ran on the module imported earlier. The canonical artifact is written once with that map, and LOCK
+      v0.1 compares against it. The window is about 1.4 s on this laptop, so this is unlikely, but the shared tree
+      is a documented condition.
+    EVIDENCE:
+      [C] hs/probe_canon.py 'toctou' variant: gshape.grid wrapped to append a comment to
+      clone/valence_core/m/audit.py after scoring. Result: canonical True, written, PASS; 'recorded audit.py sha ==
+      HEAD blob sha? False'; sources digest e12ca44e… instead of b424ed1e…; stdout 'sources committed at HEAD: yes
+      (checked: canonical run)'.
+    FIX:
+      On the canonical run, have sources_committed_problems return the committed bytes and build
+      provenance.sources/tooling from those hashes. Compute package_sha256 before scoring, then re-hash, or re-run
+      the committed check, just before _write_once_text, and refuse (exit 2, nothing written) on any drift.
+    REFUTER:
+      I could not refute the mechanism. It is real and I reproduced it. Its impact is somewhat overstated, because
+      the run-of-record procedure would expose the drift before anyone relied on it.
+
+      How the code behaves (valence_core/m/gshape.py, working tree):
+      - `inputs_of_record` (canonical=True) calls `sources_committed_problems()` at about lines 340-345. That runs
+      `stages._committed` per file and throws the bytes away.
+      - `evaluate()` scores first, via `grid` and `runner_scope_problems`. Only after that, at lines 1098-1101, does
+      it call `sources_map()`, which re-reads the working-tree bytes (lines 213-226; its docstring says "working-
+      tree bytes"). It also calls `resume.package_sha256()`. That function is `lru_cache`d, but on the canonical
+      path this is its first call.
+      - `summary_lines` prints "sources committed at HEAD: yes (checked: canonical run)" for any canonical run.
+      - So the recorded shas are tied only by timing to the bytes that passed the check. The PIN at lines 335-339
+      says "so the artifact's sources map names committed blobs only", and the code does not enforce that across the
+      window.
+
+      [C] Reproduction: I ran the reviewer's `probe_canon.py` on my own copy of the scratch clone, at
+      `step7/refute_toctou/clone` (HEAD 2c50e03; gshape.py and m_sessions.py byte-identical to the working tree).
+      - **clean variant:** recorded audit.py sha equals the HEAD blob; package sha is 9451fb22…; sources digest is
+      b424ed1e….
+      - **toctou variant** (audit.py edited after `grid`):
+        - The run is canonical, the artifact is written, and the verdict is PASS.
+        - The recorded package sha moves to e12e01f4… and the sources digest to e12ca44e….
+        - "recorded audit.py sha == HEAD blob sha? False".
+        - stdout still says "committed at HEAD: yes".
+        - Wall time for the whole process was about 2.3 s.
+
+      Nothing in the spec or Code's decisions makes this intended:
+      - Decision 4 only asks for a refusal unless the files are committed and unedited.
+      - The critic's item says the purpose of that refusal is that the artifact never records working-tree shas that
+      are not committed blobs. The TOCTOU breaks that purpose.
+
+      Why it is overstated, and why it is no worse than minor:
+      - **It needs a concurrent writer to a scoring-stack, tooling or package file within a ~2 s window.** PIN-S10
+      says step 8 edits no SCORING_STACK_FILES file, and the parallel PI session works on note-release files. The
+      window is only reachable if one of those lanes is broken.
+      - **Drift would show up downstream rather than silently.**
+        - Decision 5 has the self-test print package_sha256 and the sources digest (gshape `_selftest`, lines
+      1369-1376). §12 runs the self-test at the tooling commit, and two values-check passes then pair its digest
+      with the run's. A drifted digest or package sha would fail that pairing.
+        - LOCK v0.1 compares `provenance.sources` with its own tree. An edit that is never committed would show up
+      there as a mismatch, so G-SHAPE-F0 would be re-run.
+        - §12 also starts the commit step with `git status`, which would show the dirty file.
+      - **The silent mis-binding the finding implies needs a lot to line up:**
+        - the mid-run edit is later committed;
+        - the self-test is re-run after that edit;
+        - both values-check passes miss it.
+      - **The real cost of a hit:** a write-once canonical artifact with drifted provenance can only be replaced by
+      a hand `git mv` on the seat's ruling.
+
+      The suggested fix is cheap and correct: re-run `sources_committed_problems` and recompute the map and package
+      sha just before `_write_once_text`, then refuse with exit 2 on any drift. Alternatively, hash the checked
+      committed bytes. Either way the PIN's claim becomes true inside the process, so it no longer rests on
+      procedure alone.
+
+--- harness-safety: Write-once follows a symlink at G-SHAPE-F0.json.tmp, contrary to PIN-S9's 'never through a symlink'
+    finder: minor  strict refuter: refuted=False severity=nit  location: valence_core/m/gshape.py:1179-1185 (_write_once_text temp file); PIN text :1161-1166; write() :1222 checks only the artifact path
+    CLAIM:
+      _write_once_text opens `p.name + '.tmp'` with open(tmp, 'w'), which follows a symlink, and then os.replace
+      moves that symlink onto the artifact path. A symlink at the .tmp name therefore makes the gate overwrite the
+      link's target, which can be any file, inside or outside the repo. The canonical artifact path ends up a
+      symlink. Neither write() nor _write_once_text checks the .tmp name. The PIN declares the write is 'never
+      through a symlink'. The code is a copy of gcal._write_once_text (gcal.py:226-232), so the hazard is inherited.
+    FAILURE SCENARIO:
+      A stale or planted data/m/gates/G-SHAPE-F0.json.tmp symlink points at data/m/gates/G-CAL_model-free.json (or
+      any file). The canonical run 'writes' G-SHAPE-F0.json: G-CAL's committed artifact is overwritten with the
+      G-SHAPE JSON, and G-SHAPE-F0.json becomes a symlink to it. The run reports '(written)', exit 0. Later runs
+      refuse because the artifact path is now a link.
+    EVIDENCE:
+      [C] hs/probe_tmplink.py, --out scratch dir with gates/G-SHAPE-F0.json.tmp → victim_G-CAL_model-free.json
+      ('VICTIM BYTES'). Result: write → written PASS; 'artifact path is symlink: True -> …/victim_G-CAL_model-
+      free.json'; victim now holds the 15,532-byte artifact JSON. A re-run raises GshapeRefusal ('the artifact path
+      … is a symlink').
+    FIX:
+      Create the temp file with os.open(tmp, O_WRONLY|O_CREAT|O_EXCL|O_NOFOLLOW, 0o644), or use
+      tempfile.mkstemp(dir=p.parent). If the .tmp name already exists as a symlink or non-file, raise GshapeRefusal
+      before evaluating. Add a self-test case with a symlink at the .tmp name. gcal._write_once_text has the same
+      latent defect; flag it for a separate change rather than editing gcal.py in step 7.
+    REFUTER:
+      I reproduced the mechanism, so I can't refute it, but the reviewer overstates the scenario and the severity.
+
+      How I reproduced it: in scratch at step7/refute_tmplink/p.py I put a symlink at gates/G-SHAPE-F0.json.tmp
+      pointing to victim.json and called gshape._write_once_text. It returned 'written'. The artifact path became a
+      symlink, and victim.json now holds the new bytes. No heavy modules were loaded. The cause is in
+      gshape.py:1179-1183: open(tmp, 'w') follows the link, then os.replace moves the link onto the artifact path.
+      write() checks only path.is_symlink() (:1222), and _write_once_text checks only p.
+
+      Why it is not intended: spec §10 (PIN-S9) lists "it never writes through a symlink" as one of the write-once
+      rules. The PIN docstring repeats it at :1163. The .tmp write breaks that literally, so the PIN claims an
+      invariant the code does not hold.
+
+      Why it is overstated:
+      (1) The spec also tells the build to re-implement "gcal's `_write_once_text` rule" (§10). The decisions (item
+      7) say "gcal/gport conventions". The same .tmp pattern runs through the repo: gcal.py:223,
+      resume.atomic_write_json:190, schedule.py:611. The spec's concrete test of the symlink rule (§ self-test 11:
+      "A symlink at the path → refusal") covers the artifact path, and the build passes it (gshape.py:1862-1874).
+      Read that way, the build meets the spec as specified and tested; the gap is the broad PIN wording.
+      (2) The "stale symlink" case cannot happen through this code. It only ever creates a regular file at .tmp, and
+      a regular file left by a SIGKILL is harmlessly truncated by open('w'). The .tmp name is also gitignored
+      (.gitignore:234 `/data/m/gates/*`; only *.json is re-admitted), so a checkout cannot plant it. The only
+      trigger is someone deliberately running `ln -s` in the working tree. Anyone who can do that can already
+      overwrite the G-CAL artifact directly, so no trust boundary is crossed.
+
+      What is left is a hardening and wording mismatch, not a realistic harness-safety failure. Narrowing the PIN
+      wording or using O_CREAT|O_EXCL|O_NOFOLLOW / mkstemp would both close it; the same latent pattern in gcal.py
+      should be handled separately. Severity: nit, not minor.
+
+====================================================================================================
+REVIEW LENS tests -- 7 finding(s)
+====================================================================================================
+COVERED:
+  The self-test lacks a must-fail case for 24 of the gate's assertions. Each was shown non-equivalent: the real gate
+  STOPs or refuses, and the mutant proceeds, usually to PASS. Two are substantive: the Layer S → verdict link (V2)
+  and the TOOLING half of the committed-sources refusal (I5). The checks themselves are correct today; nothing
+  proves they stay wired.
+
+  **Self-test totals, note and registration: all correct.**
+  - The count is 706 before + 21 `gshape._selftest` checks + 5 driver checks = 732. `baseline_selftest.txt` shows
+  706/706; `selftest_A.txt` and `selftest_B.txt` show 732/732.
+  - `"gshape"` is in MODULES after `"gcal"`. Its 21 checks print at `selftest_A.txt` lines 610–630, and the driver
+  checks at 720–724.
+  - Check 2's note prints `package_sha256 9451fb22…` and `sources_digest b424ed1e…`. These are the same two
+  quantities `summary_lines` prints on the run of record, so the pairing reads off the raws.
+  - I re-hashed `gshape.py` (abfe5d31…7099) and `m_sessions.py` (c187dcc9…71c9); both match the builder's report.
+
+  **Both-directions audit.** I read every `chk` in `gshape._selftest` and the 5 driver checks against every verdict,
+  precondition and Layer S / Layer C assertion in `gshape.py`.
+
+  **Mutation probes.**
+  - 42 source-level mutants of `gshape.py`, applied in memory inside a scratch clone of HEAD 2c50e03 with the two
+  build files copied in. Each ran the full `gshape._selftest`; baseline 21/21 clean in 30 s.
+  - Result: 14 caught, 28 survived.
+  - V7, V10 and V11 were caught only because the audit classes reject a malformed echo set, not by any self-test
+  design.
+  - 4 survivors are equivalent or redundant:
+    - V3 (render misplacement sub-check): a Qwen render error is caught by the render-as-response 256 and items [2,
+  8] assertion; OLMo has no render input.
+    - V4 (gold misplacement sub-check): redundant with the coverage keys, which carry the gold.
+    - I9 (items structure): redundant with the renders == `pool_and_renders()` check.
+    - V9 (OLMo phase fixed): OLMo's phase is only recorded, and on Qwen claim and strict do not depend on phase.
+  - The other 24 are non-equivalent and are grouped into the 7 findings below.
+
+  **Concrete demos and Layer S probes.**
+  - Real gate vs mutant on one concrete defect each, for V1, V2, C1, I1, I2, I3, I5, I6 and V8.
+  - 14 crafted production-source violations, one per Layer S sub-rule the self-test never mutates. The real gate
+  catches each under its own rule, so those sub-checks work today; they are unguarded, not broken.
+
+  **Not covered.** No `m_sessions.py` driver mutants were run (driver exit codes and refusals were read, not
+  mutated). No model, tokenizer or box anything.
+
+  **Repo untouched.** `git status` is unchanged; nothing was written under `data/m`.
+
+  **Artifacts** (all under `/private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-
+  lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step7/review_tests/`):
+  - `mutants.py` and `run_mutant.py`: the 42 mutants and the per-mutant runner;
+  - `run_all.py`: the parallel driver;
+  - `results1.txt` and `out_*.txt`: per-mutant results;
+  - `demo.py` and `demo2.py`: the failure scenarios;
+  - `repo/`: the scratch clone.
+--- tests: A Layer S problem reaching the verdict is never tested
+    finder: substantive  strict refuter: refuted=False severity=minor  location: valence_core/m/gshape.py:1076-1077 (_stop_reasons) and :1716-1741 (self-test Layer S block); evaluate's `sources` seam at :1084
+    CLAIM:
+      Layer S is the artifact's only runner-half evidence. The self-test calls runner_scope_problems() directly on
+      its 15 mutations, but never runs evaluate(sources=...), so nothing checks that a Layer S problem turns the
+      verdict into STOP 'scope-static'. The `sources` seam exists for exactly this and is never used.
+    FAILURE SCENARIO:
+      A refactor drops or inverts `if layer_s['problems']: reasons.add('scope-static')`. The run of record then
+      writes PASS with Layer S problems listed in the artifact, and the m self-test stays 732/732.
+    EVIDENCE:
+      [C] Mutant V2 (`if layer_s["problems"]:` → `if False:`) SURVIVED all 21 gshape checks. Demo: evaluate(inputs,
+      sources={runner_qwen scoring `spec.seg + g.text`}, units=('Q-F0',)). The real gate returns STOP including
+      'scope-static' with 2 Layer S problems. The mutant leaves 'scope-static' out (the same 2 problems are listed),
+      so with all four units its verdict is PASS. A search of _selftest finds no `sources=` argument to
+      evaluate/write.
+    FIX:
+      In the Layer S check, add evaluate(inputs=ins, units=pair, sources={**src0, RQ_: <one already-caught
+      mutation>}) and assert verdict STOP with 'scope-static' in stop_reasons. Also assert the clean sources=src0
+      run does not carry it.
+    REFUTER:
+      I could not refute it. Every factual part of the finding reproduces, but I rate it minor rather than
+      substantive.
+
+      Reproduced [C] with probes in scratch/step7/refute_layerS/probe.py. The probes ran out of the tree with
+      `python -I`; the only change was an in-memory swap of `gshape._stop_reasons`.
+
+      (1) No self-test call ever sets `sources=`. `/usr/bin/grep` finds `sources=` only in `evaluate`'s signature
+      and its `runner_scope_problems(sources)` call. The Layer S block (gshape.py:1690-1741) calls
+      `runner_scope_problems({**src0, rel: mt})` directly on all 15 mutations. The m_sessions gshape checks
+      (m_sessions.py:2336-2400) only run the clean gate and patch `write`. Every other STOP code does reach the
+      verdict through `evaluate`, so `scope-static` is the only code with no verdict-level test:
+      - `fire` at :1477-1489
+      - `control-silent` at :1490-1495
+      - `coverage` at :1505-1512
+      - `olmo-grids-differ` at :1517-1522
+      - `shape` at :1663-1680
+
+      (2) The mutant survives. I replaced `if layer_s["problems"]:` with `if False:` (gshape.py:1076) and ran
+      `gshape._selftest` under it: 21/21 checks pass in 31.8 s.
+
+      (3) The demo reproduces. On the inputs of record, with all four units, `sources={**_package_sources(),
+      runner_qwen: 'audit.classify(spec.seg + g.text, render='}`:
+      - The real gate returns STOP `['scope-static']`, with problems R2 at runner_qwen.py:161 and R3.
+      - The mutant returns PASS with `stop_reasons []`, yet the same 2 problems are listed in `layer_s`.
+      - The clean `sources` run is PASS `[]` under both versions.
+
+      Why this is a defect and not intended: spec §8 says the `sources` seam exists "for the self-test only", but
+      the self-test never uses it. §11.2 says every check runs "in both directions". §9 and decision 8 make
+      `runner_scope_problems == []` one of the PASS conjuncts, and decision 8 makes a Layer S problem a STOP with
+      exit code 4. No decision rules this test out.
+
+      Why minor rather than substantive:
+      - The letter of spec §11.2 item 9 and decision 1 is met. Both ask that "each scope mutation is caught", and
+      the self-test proves that at `runner_scope_problems`.
+      - The production wiring is correct today. The failure needs a future regression.
+      - If that regression happened, `summary_lines` would still print "runner scope (static): 2 problems" next to
+      "verdict PASS" in the run raw. That contradiction is visible under rule 25 (read every transcript in full).
+
+      It remains a real gap in mutation coverage on the verdict that LOCK v0.1 consumes. The fix costs one check and
+      should be applied: `evaluate(inputs=ins, units=pair, sources={**src0, RQ_: <a caught mutation>})` must give
+      STOP with `'scope-static'` in `stop_reasons`, and the clean `src0` run must not.
+
+--- tests: The committed-sources refusal's TOOLING half has no must-refuse case
+    finder: substantive  strict refuter: refuted=False severity=minor  location: valence_core/m/gshape.py:238 (sources_committed_problems loop); self-test check at :1632-1652
+    CLAIM:
+      Decisions item 4 requires the canonical run to refuse unless every SCORING_STACK_FILES and TOOLING_FILES entry
+      is committed and unedited. The self-test plants only SCORING_STACK_FILES[0] as uncommitted, so the TOOLING
+      half (gshape.py, m_sessions.py) is unguarded.
+    FAILURE SCENARIO:
+      An edit narrows the loop to SCORING_STACK_FILES. The run of record then proceeds with an uncommitted or edited
+      gshape.py or m_sessions.py. The artifact's provenance.tooling records a working-tree blob, and stdout still
+      says 'sources committed at HEAD: yes (checked: canonical run)'. The self-test passes.
+    EVIDENCE:
+      [C] Mutant I5 (`for rel in SCORING_STACK_FILES + TOOLING_FILES:` → `for rel in SCORING_STACK_FILES:`)
+      SURVIVED. Demo: a canonical write(None) with GATES_DIR patched to a temp dir and only gshape.py planted as
+      uncommitted. The real gate gives GshapeRefusal 'must be committed at HEAD'. The mutant returns how='written',
+      canonical=True, verdict PASS, with provenance.tooling['valence_core/m/gshape.py'] = abfe5d319533… (the
+      working-tree file).
+    FIX:
+      Add a second planted case with a TOOLING_FILES entry (gshape.py) uncommitted. Assert a GshapeRefusal whose
+      message names that file, and that nothing is written.
+    REFUTER:
+      I reproduced the finding. I could not refute it.
+
+      **What the rules require.** Decisions item 4 says the run must refuse (exit 2, nothing written) unless every
+      SCORING_STACK_FILES entry and every TOOLING_FILES entry is committed at HEAD and identical in the working
+      tree. The critic's G-SHAPE correction says the same. Nothing in the spec or decisions exempts the tooling half
+      from that refusal or from its test.
+
+      **The production code is correct today.** sources_committed_problems at gshape.py:234-243 loops over
+      `SCORING_STACK_FILES + TOOLING_FILES`. evaluate calls it at :340-345 when canonical is set.
+
+      **The self-test covers only half.** Check 6 is at gshape.py:1631-1652. It plants every TOOLING_FILES entry as
+      committed, using its working-tree bytes. It plants only SCORING_STACK_FILES[0] as uncommitted. The check's
+      text claims "every SCORING_STACK_FILES and TOOLING_FILES entry", but only one half is exercised.
+
+      **Mutant run [C].** I patched `gshape.sources_committed_problems` in memory to loop over SCORING_STACK_FILES
+      only. The repo was untouched; the probe is at scratchpad/step7/refute_i5/probe.py. I then ran
+      gshape._selftest:
+      - real code: 21 checks, 0 fail
+      - I5 mutant: 21 checks, 0 fail
+
+      The mutant survives.
+
+      **No other check catches it.** The m_sessions.py gshape checks (:2336-2403) use only `--out` test directories,
+      where the gate is not checked. I found no other reference to the gate or to TOOLING_FILES in
+      scripts/m_sessions.py or valence_core/.
+
+      **Demo [C]** (scratchpad/step7/refute_i5/demo.py). This was a canonical write(None) with GATES_DIR patched to
+      a temp dir. m_sessions.py was planted as committed with its current bytes, and gshape.py was planted as
+      uncommitted.
+      - Real gate: GshapeRefusal, "...must be committed at HEAD and unedited ... ['valence_core/m/gshape.py: not
+      committed".
+      - Mutant: how=written, canonical=True, verdict PASS, provenance.tooling gshape.py = abfe5d3195332650 (the
+      working-tree blob).
+
+      This matches the reviewer's evidence exactly.
+
+      **Why minor rather than substantive.** The gate itself is correct now. The defect is a coverage gap: a future
+      regression that narrows the loop would go undetected. LOCK v0.1's planned comparison of the artifact's sources
+      map against its own tree partly mitigates this, because a tooling blob that is never committed would show up
+      as a mismatch there.
+
+      The gap is still real, for two reasons:
+      - The tooling half is exactly what is uncommitted at build time (gshape.py is untracked and m_sessions.py is
+      modified).
+      - The check text says both halves are covered when only one is.
+
+      The reviewer's fix is right: add a second plant with a TOOLING_FILES entry (gshape.py) as None, and assert a
+      GshapeRefusal whose message names that file, with nothing written.
+
+--- tests: The control's 100% bound is tested only with a fully silent control
+    finder: minor  strict refuter: refuted=False severity=minor  location: valence_core/m/gshape.py:1072 (control bound); self-test at :1490-1495
+    CLAIM:
+      Decisions item 1 makes seg+gold firing on 100% of placements a STOP criterion. The only negative case is a
+      control that fires 0/2,816, so the gate's `n_fired != n` is indistinguishable from a weaker `n_fired == 0`.
+    FAILURE SCENARIO:
+      A stack change leaves the header's frame class unfired on one template, so seg+gold fires 2,112/2,816. With
+      the bound weakened by a later edit, the gate PASSes with a partly blind control, and the self-test stays
+      green.
+    EVIDENCE:
+      [C] Mutant C1 (`cu[c]["n_fired"] != cu[c]["n"]` → `cu[c]["n_fired"] == 0`) SURVIVED. Demo with a controls seam
+      where seg+gold scores the gold alone on t == 3 (2112/2816): the real gate gives STOP 'control-
+      silent:Q-F0:seg+gold'; the mutant gives no control-silent reason.
+    FIX:
+      Add a partly silent control case (for example seg+gold silent on one template) and assert control-
+      silent:<unit>:seg+gold with n_fired 2,112.
+    REFUTER:
+      I reproduced the gap independently and could not refute it.
+
+      How I checked: I ran an in-memory probe that never touched the repo (/private/tmp/claude-501/-Users-
+      jasondwyer-Documents-code-jspace-
+      lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step7/refute_ctlbound/probe.py). It patches
+      `G._stop_reasons` so that a `control-silent:<unit>:<c>` reason survives only when `n == 0 or n_fired == 0`.
+      That makes it behave exactly like the reviewer's C1 mutant, which swaps `cu[c]["n_fired"] != cu[c]["n"]` for
+      `== 0` at gshape.py:1072.
+
+      What I found:
+      - **The self-test does not notice.** With the mutant in place, `gshape._selftest` runs all 21 checks and none
+      fail.
+      - **No other test covers it.** Outside gshape.py, the only check that exercises gshape is the `gshape`
+      subcommand check in m_sessions.py (around line 2336). It runs on the real inputs, where seg+gold fires
+      2,816/2,816, so the real gate and the mutant give the same result there.
+      - **The demo backs the claim.** I used a controls seam in which seg+gold scores the gold alone when `pl.t ==
+      3`:
+        - Real gate: STOP, with `control-silent:<u>:seg+gold` on all four units. Each unit's control fires
+      2,112/2,816. In my probe all four units were affected, not only Q-F0, but the conclusion is the same.
+        - Mutant: PASS, with `[]`.
+
+      The only negative case is at gshape.py:1490-1495, a control silent on every placement (0/2,816). The self-test
+      therefore cannot tell the declared bound (fire on 100% of placements) from a weaker one (fire at least once).
+
+      Why the claim stands:
+      - Decisions item 1 makes "must fire on 100% of its placements, else STOP" the Layer C criterion. The
+      decisions' precedence rule says this item overrides the spec.
+      - Spec self-test item 5 asks only for the fully silent case. That is a minimum, not a statement that a partly
+      silent case is meant to go untested.
+      - Nothing in the spec, the decisions or the critic's G-SHAPE items makes the weaker coverage deliberate.
+
+      Why the severity is minor and not higher:
+      - The gate code itself is correct. Line 1072 enforces the 100% bound, and the artifact of record would be
+      right today.
+      - The risk is a self-test that is not sensitive to this mutation. A later edit could weaken the bound without
+      the 706/706 suite noticing, and a partly blind control would then PASS.
+      - The suggested fix is cheap: a partly silent case that asserts `control-silent:<u>:seg+gold` with `n_fired`
+      2,112.
+
+--- tests: The exact-coverage verdict term is untested: every coverage case also changes n
+    finder: minor  strict refuter: refuted=False severity=minor  location: valence_core/m/gshape.py:1067 (coverage → verdict); self-test coverage cases at :1496-1516
+    CLAIM:
+      Every coverage case (a render, template, phase, gold or banner dropped; a duplicate template; units left out)
+      changes n. No case keeps n = 2,816 with the wrong keys, so `not gu['coverage']['exact']`, the only guard
+      against a same-count wrong enumeration, has no must-fail case.
+    FAILURE SCENARIO:
+      placements() enumerates phase 'forced' twice: n = 2,816 per unit, but no free-phase placement exists. The real
+      gate STOPs on coverage. With the exact term removed it PASSes, and the self-test passes too.
+    EVIDENCE:
+      [C] Mutant V1 (`... or not gu["coverage"]["exact"]` removed) SURVIVED. Demo with placements' `for phase in
+      PHASES:` → `("forced", "forced")` and expected_keys untouched: n = [2816]*4, exact = [False]*4, phases =
+      [1]*4. The real gate gives STOP coverage on all four units; the V1 mutant gives PASS.
+    FIX:
+      Add a same-count, wrong-key case, for example by patching `placements` the way clean_in_segment already does
+      so it yields the forced phase twice. Assert STOP coverage:<unit> with grid n == 2,816.
+    REFUTER:
+      I could not refute this finding. I reproduced it on a scratch probe, monkeypatching in-process only, with no
+      repo files touched.
+
+      Code: _stop_reasons (gshape.py:1067) adds coverage:<unit> when `gu["n"] != N_PER_UNIT or not
+      gu["coverage"]["exact"]`. The self-test coverage check (:1496-1516) lists six cases: render, template, phase,
+      gold variant or banner dropped, plus a duplicate template, and also units left out. For each case the pass
+      condition itself requires `x["grid"][u]["n"] != N_PER_UNIT` for both scored units. So the n term alone
+      produces every coverage STOP the test expects, and the exact term is never the deciding term.
+
+      The only other place that looks at `exact` is the canonical-PASS assertion at :1355. It checks that exact is
+      True, so it cannot catch exact being dropped from the verdict. The x_mis case (clean_in_segment) keeps the
+      keys exact.
+
+      Probe: I patched placements to enumerate PHASES = ("forced", "forced") over (Q-F0, OLMo-sft). Result:
+      - Both units have n = 2816, phases = 1, exact = False.
+      - The real _stop_reasons gives coverage on all four units.
+      - A mutant without the exact term gives only coverage:OLMo-dpo and coverage:OLMo-instruct, the units left out.
+      The two scored units pass.
+
+      So the exact term is the only guard against a same-count enumeration with wrong keys, and nothing tests it.
+
+      Mitigations, which keep this at minor:
+      - Spec §6 asks only for the six drop cases (render, template, phase, unit, gold, banner). The build covers all
+      of them and adds a duplicate-template case, so the spec's letter is met.
+      - The production code is correct. This is a gap in test coverage only.
+      - Reaching the gap needs a bug in placements itself.
+
+      Still, the check's own label says "coverage is the exact product per unit". That claims more than the test
+      proves, and the fix is cheap: mirror clean_in_segment and assert STOP coverage with n == 2816. The finding is
+      accurate and correctly rated minor.
+
+--- tests: Five input-binding checks have no must-fail case
+    finder: minor  strict refuter: refuted=False severity=minor  location: valence_core/m/gshape.py:361 (condition 2), :370 (completability schema), :395 (renders sha vs pin), :402-407 (32 distinct texts / 22 distinct golds), :314-315 (seat read single line); case lists at :1558-1598
+    CLAIM:
+      Five preconditions in inputs_of_record have no must-fail case:
+      - G-CAL condition (2);
+      - the completability schema;
+      - the recorded renders' own sha256 against the pin (decisions item 2: 'STOP on any mismatch');
+      - the 32-distinct-texts and 22-distinct-golds check;
+      - the seat read's 'exactly one renders_sha256 line' rule.
+      The check names say 'each for its own reason', but these reasons are never exercised.
+    FAILURE SCENARIO:
+      Any of these checks can be deleted or weakened and the self-test stays green. The gate then proceeds to
+      scoring on, for example, a G-CAL artifact whose condition (2) FAILed, a completability file of another schema,
+      a seat read citing two different renders shas, or renders whose bytes no longer hash to a04f67b0… (when
+      pool_and_renders() moved together with them).
+    EVIDENCE:
+      [C] Mutants I1, I2, I3, I4 and I6 all SURVIVED. Demos, real gate vs mutant:
+      - condition (2) FAIL planted: GshapeStop vs proceeds;
+      - completability schema changed: GshapeRefusal vs proceeds;
+      - seat read with a second, different renders_sha256 line: GshapeRefusal vs proceeds;
+      - items and pool_and_renders() both altered by one byte, G-CAL's renders_sha256 field left at the pin:
+      GshapeStop 'do not hash to the renders of record' vs proceeds (b7da4870… against pin a04f67b0…).
+    FIX:
+      Add stop_cases for condition (2) FAIL, for renders that equal pool_and_renders() but miss the pin (patch both
+      together), and for a pool with a duplicated gold variant. Add refusal_cases for a completability file of
+      another schema and a seat read with two renders_sha256 lines.
+    REFUTER:
+      I could not refute this. I checked it against the uncommitted /Users/jasondwyer/Documents/code/jspace-
+      lab/valence_core/m/gshape.py.
+
+      The self-test plants exactly these input defects:
+      - **refusal_cases (9):** proposal uncommitted; proposal with one word mutated; model-free artifact absent;
+      model-free of another schema; proposal sha different from G-CAL's; completability FAIL; completability absent;
+      seat read with no line; seat read absent.
+      - **stop_cases (6):** one render off by one byte; G-CAL renders_sha256 field set to 0s; condition (1) FAIL;
+      pool_sha16 set to 0s; completability identity sha set to 0s; seat read citing another sha.
+      - **patch_stops (6):** numpy stream, banners, v2 sha16, term sha16, OLMo scaffold strings, b3 ban_list.
+
+      None of the 21 cases reaches the five checks the finding names. A grep of gshape.py and scripts/m_sessions.py
+      for `_seat_renders_sha`, `N_GOLD_VARIANTS`, `conditions`, `2 * N_ITEMS` and `do not hash` finds no other test
+      of them either.
+
+      1. **Condition (2), :361.** The gate loops over `("1","2")`, but only condition (1) is planted. Narrowing the
+      tuple to `("1",)` would survive.
+      2. **Completability schema, :370.** Only verdict=FAIL and an absent file are planted. Dropping the schema
+      conjunct would survive.
+      3. **Renders sha256 against the pin, :395.** The one-byte case STOPs earlier, at :393 (renders !=
+      pool_and_renders()). So :395 runs only when the record and the computed renders change together, and no case
+      plants that. Deleting :395 would survive. This is the "assert their sha256 is a04f67b0… / STOP on any
+      mismatch" that decisions item 2 asks for.
+      4. **32 distinct texts / 22 distinct golds, :402-407.** Nothing is planted at all.
+      5. **Seat read, :314-315.** Only the zero-hits case is planted. With two lines, the gate refuses (len != 1),
+      but a mutant `hits[0] if hits else None` would pass whenever the first line is the pin.
+
+      Neither the spec nor the decisions makes the gap intentional. Spec §11.2 opens with "Every check runs in both
+      directions: the real case passes and a planted defect fires." Its item 7 list is a minimum that the build
+      already exceeds, and it gives no exemption for these preconditions. Repo practice also asks for mutation
+      sensitivity (predicate fields, Layer S).
+
+      One part of the claim is overstated. The chk() names say "each for its own reason" only of the defects they
+      list, and they list "condition (1)", not (2). So the names do not misdescribe their scope. That does not
+      change the substance: five gate preconditions that refuse or STOP have no must-fail case, and deleting or
+      weakening any of them leaves the self-test green.
+
+      The gate itself behaves correctly on real inputs. This is a gap in test coverage, not a wrong verdict, so the
+      severity is minor.
+
+--- tests: 14 Layer S sub-rules have no must-fail mutation
+    finder: minor  strict refuter: refuted=False severity=nit  location: valence_core/m/gshape.py:806-812, 820-823, 828-832, 868-869, 874-875, 893, 899, 901, 915-917, 925-930, 948-950, 966-976; self-test s_muts at :1693-1741
+    CLAIM:
+      Decisions item 1 requires Layer S to be mutation-sensitive, but the 15 self-test mutations exercise only part
+      of R1–R8. These sub-checks have no case:
+      - R1: the signature and parameter-rebinding checks;
+      - R2: spec rebound between generate and classify, and injections=();
+      - R4: the exact keyword set, item=S.item, earlier=earlier, earlier bound once to [], and the earlier use
+      count;
+      - R5: the own binding;
+      - R6: the log binding;
+      - R7: parameter rebinding, ra.as_dict(), r[...] rewrites, and append(r).
+      Aside: the G half of R2's 'rebound between' test is dead by construction. gi is the nearest statement binding
+      G, so nothing in L[gi+1:k] can bind G; only the S half is live.
+    FAILURE SCENARIO:
+      A refactor disables, say, R7's as_dict check or R2's spec-rebinding check, and the self-test stays green. A
+      runner edit that rebinds `spec` between generate and classify (so render= is another round's), or records `{}`
+      as the audit, then passes Layer S on the run of record.
+    EVIDENCE:
+      [C] Mutants S1–S13 and S16 SURVIVED. S14 (R8 scope), S15 (R3 per-call) and S17 (R5 echo) were caught. [C] 14
+      crafted production-source violations, one per uncovered sub-rule, are each caught by the REAL gate under their
+      own rule (for example 'R2 … g or spec is rebound between generate and classify', 'R7 … the record's audit is
+      not ra.as_dict()', 'R4 … earlier is not bound once to an empty list'). So the checks work today; they are just
+      unguarded.
+    FIX:
+      Add the 14 crafted mutations from demo.py §1 (the review_tests folder named in covered) to s_muts, each with
+      its expected rule prefix. Update the count of 15 accordingly.
+    REFUTER:
+      The fact holds, but it is overstated as a breach of decisions item 1. It is a test-hardening gap, not a defect
+      against the spec.
+
+      What reproduces [C]: I wrote my own probe, scratchpad/step7/refute_smuts/probe.py. It runs only the self-
+      test's section 8 (Layer S, gshape.py:1688-1741), lifted verbatim from the scratch clone (byte-identical to the
+      repo's gshape.py and runner/scaffold/banner files). I ran it against each S-mutant in review_tests/mutants.py.
+      - Real gate: section 8 passes, 15/15 caught.
+      - S1-S13 and S16 SURVIVE. These cover R1 param rebinding, R2 rebound-between and injections=(), R4 keyword
+      set, item, earlier kw, earlier=[] once and earlier use count, R5 own, R6 log, and R7 as_dict, r[...] rewrites,
+      append(r) and param rebinding.
+      - S14 (R8), S15 (R3) and S17 (R5 echo) are caught.
+      - The R1 signature check is also never mutated.
+      - The aside is correct: gi is the nearest j<k with _binds(L[j], G), so `_binds(s, G)` over L[gi+1:k] is always
+      False. It is a dead conjunct, but harmless.
+
+      Why it is overstated:
+      1. Spec item 9 (spec_gshape.md:456-468) lists the exact mutation set the self-test must catch. All 12 are in
+      s_muts (gshape.py:1693-1714), plus 3 extras: str(seg+text) recorded, the other substrate's echo set, and OLMo
+      seg+text.
+      2. Decisions item 1 defines mutation-sensitivity in its own parenthetical: "the self-test proves each scope
+      mutation is caught". That is met for the declared set. Neither document asks for one must-fail mutation per
+      sub-check.
+      3. About 9 of the 14 unguarded sub-checks are Code's hardening beyond spec §8's R-text: the signature,
+      add_round param rebinding, log binding, ra.as_dict, r rewrites, append(r), the exact keyword set, earlier=[]
+      once and the earlier use count. Several are not scoring-scope at all (as_dict, log substrate tag, signature).
+      Only R2 injections=(), R2 S-rebinding, R4 item and earlier=earlier, and R5 own are spec-stated rules without a
+      dedicated mutation.
+      4. The failure scenario needs two edits: a future regression in gshape.py's checks AND an offending runner
+      edit. Today the reviewer's own 14 crafted violations are all caught by the real gate. gshape.py is a TOOLING
+      file. The canonical run refuses unless it is committed and clean, and package_sha256 plus the sources-map
+      digest pair the run of record with its self-test pass (decision 5). So a post-build weakening of a check shows
+      up as a diff of a hashed, frozen tool, not a silent false PASS.
+
+      Residual: adding the crafted mutations to s_muts is cheap and worth doing. Priority goes to the spec-stated
+      ones: injections=(), spec rebound between generate and classify, item, the earlier kw and own. That is a nit,
+      not a minor defect.
+
+--- tests: Layer A's own_pair plumbing is not pinned: the only control fires on the header's frame class
+    finder: minor  strict refuter: refuted=False severity=minor  location: valence_core/m/gshape.py:577 (score(), Qwen own_pair); self-test gate check at :1350-1362
+    CLAIM:
+      seg+gold fires through the header's frame class, which needs none of the round's arguments. No assertion
+      checks that score() passes the round's own pair: the controls' fired_fields (Qwen's include lexical_raw, which
+      depends on own_pair) are recorded but never asserted, and no scorer depends on the label.
+    FAILURE SCENARIO:
+      score() passes the wrong own_pair to the Qwen stack. A gold containing the round's own label, a lexical claim
+      m:277 must report, would then not fire on Q-F0. The gate PASSes and the self-test stays green.
+    EVIDENCE:
+      [C] Mutant V8 (Qwen own_pair=(pl.P, pl.Q) → ("zz1", "zz2")) SURVIVED. Q-F0 seg+gold fired_fields drop from
+      [claim, v3.exclusion, lexical_raw, degeneracy, ends, strict] to [claim, v3.exclusion, degeneracy, ends,
+      strict]. A scorer gold + ' ' + Q fires 2,816/2,816 on Q-F0 under the real gate and 0 under the mutant; OLMo-
+      sft is 2,816 under both.
+    FIX:
+      Either:
+      - in the gate check, assert each unit's seg+gold fired_fields (Qwen includes lexical_raw and v3.exclusion;
+      OLMo includes lexical_raw); or
+      - add scorer=lambda pl: pl.gold + ' ' + pl.Q to the scope-widened scorer check, expecting n_fired 2,816 per
+      unit.
+    REFUTER:
+      I reproduced the finding on the reviewer's scratch clone. Its gshape.py is byte-identical to the working tree,
+      and nothing in the repo was touched.
+
+      1) The mutant survives. I ran run_mutant.py V8, which changes score()'s Qwen own_pair to ("zz1","zz2").
+      Result: SURVIVED, 21 checks, 0 fails.
+
+      2) The figures match the claim (my probe is in step7/refute_ownpair/probe.py).
+         - Real code:
+           - verdict PASS;
+           - Q-F0 seg+gold fires 2,816/2,816 with fired_fields [claim, v3.exclusion, lexical_raw, degeneracy, ends,
+      strict];
+           - a gold+' '+Q scorer fires [2816, 2816, 2816, 2816].
+         - Qwen mutant:
+           - verdict still PASS;
+           - seg+gold still fires 2,816, but lexical_raw drops out of fired_fields;
+           - Q-F0 rows_sha256 changes from 5753aa… to b246a7…;
+           - gold+' '+Q fires [0, 2816, 2816, 2816].
+         - The OLMo branch of score() has the same gap. Changing its own_pair also leaves the verdict PASS and the
+      OLMo grids identical, and lexical_raw drops from all three OLMo units' fired_fields.
+
+      3) No check pins it.
+         - The gate check (gshape.py:1350-1362) asserts n_fired and render-as-response, but not fired_fields.
+         - The scope-widened scorers (seg+gold, banner+seg+gold) fire through the header's frame class whatever the
+      pair.
+         - The "own label (lexical)" probes in check 3 call classify directly (qf/of), not through score().
+         - RUNNER_IDENTITY_CHECK checks the runners' own_pair, not gshape.score().
+         - The driver's gshape integration checks look only at exit codes and stdout.
+
+      4) The spec and decisions do not make this intended.
+         - Decision 1 trims the artifact's required controls to seg+gold. It says nothing to exempt score()'s
+      plumbing from the self-test.
+         - Spec §11.2 asks every check to be mutation-sensitive, and the module docstring says each gold is scored
+      "exactly as its runner calls it".
+         - The proposed fix is self-test-only. It leaves the artifact and the verdict logic alone, so it does not
+      conflict with the decisions.
+
+      5) Why minor and not more: the failure scenario overstates the risk.
+         - The golds of record are pinned (pool sha16) and contain no roster label. A wrong own_pair therefore
+      cannot change the verdict on the inputs of record; the gate PASSes correctly either way.
+         - score() is correct today.
+         - The real defect is regression sensitivity. A mis-plumbed score() would quietly weaken m:261's own-pair
+      lexical class in Layer A. It would also change the artifact's rows_sha256 and seg+gold fired_fields, and still
+      go undetected.
+
+====================================================================================================
+FIX REPORT (verbatim)
+====================================================================================================
+  All 12 confirmed findings are fixed in the working tree, and none conflicts with the decisions file. `jlens-qwen36/.venv/bin/python scripts/m_sessions.py --selftest`, run twice from the repo root, gave `735/735 m selftest checks pass` both times (exit 0, no `[FAIL]` lines, 2:05 and 2:02). That is up from 732; the gshape block goes from 21 to 24 checks. Nothing was committed and nothing was written under `data/m/gates`.
+  
+  To show that each new or tightened check fails without its fix, I ran 30 in-memory mutants of the working-tree `gshape.py` (the file itself was never edited). Each mutant either reverts one fix or switches off one gate term. All 30 are caught by the intended check.
+  
+  **Finding 1 — R7 misses record rewrites (nit): FIXED.**
+  - The change:
+    - In `add_round`, after the record literal, `r` may only be appended by `self.rounds.append(r)` and returned. Any other use is now an R7 problem, which catches `r.update`, `r.__setitem__`, aliases and `{**r}`.
+    - A new `_rounds_rewrites` check runs over every `SessionLog` method. It refuses:
+      - a subscript store or delete, or an `update` / `__setitem__` / `setdefault` / `pop` / `__delitem__` call, on a round record for the text, termination or audit keys. A round record is `self.rounds[...]`, or a name bound by iterating or indexing it, or a plain alias of it.
+      - any list change to `self.rounds` other than add_round's `append(r)`;
+      - rebinding `self.rounds` outside `__init__`.
+  - The R7 PIN wording now says this is a syntactic check of these forms, not proof against every rewrite.
+  - The check: four mutations were added to the Layer S self-test (`r.update`, `r.__setitem__`, a `record()` loop rewrite, a `record()` update by index), plus "the round never appended".
+  - Evidence: with the old R7 restored, the Layer S check fails on exactly those four.
+  
+  **Finding 2 — PIN-S4 not declared in code (minor): FIXED.**
+  - The change: a `# PIN (Code, declared at LOCK v0.1; PIN-S4)` comment now sits above `qwen_stack`, carrying spec §14's PIN-S4 as written: the own-stack reading, the Qwen composition with `assert_qwen_scaffold` on the e2a file, the termination counter and end rules on both substrates, the OLMo ban ids recorded but not exercised, and "No cross-substrate placement". The existing OLMo PIN is kept.
+  - The check: a new check, "every PIN-S reading Code's decisions keep (S1-S10…)". It requires S1 to S10 to be declared in PIN comments, the PIN-S4 phrases to be present, and a copy with the sentence removed to be detected.
+  - Evidence: the mutant with the comment removed is caught.
+  - Still owed: repeating PIN-S4 in the entry is Code's job, since the entry is not written yet.
+  
+  **Finding 3 — two cited runner checks don't involve classify (nit): FIXED.**
+  - The change: `RUNNER_DYNAMIC_EVIDENCE` is cut to 6 entries, each labelled with what it shows: 4 "classify outcomes" and 2 "render placed in situ". The two checks that only cover generation-side context move to a new `RUNNER_NOT_EVIDENCE` list and are not cited. The artifact's `existing_checks` now carry an `evidences` field.
+  - The check: check 10 now asserts 6 entries, the 4/2 split, that the two excluded checks exist and are not cited, and that the artifact lists exactly these 6.
+  - Evidence: the mutant that re-adds the two is caught.
+  
+  **Finding 4 — the MODULES check's third conjunct is a tautology (nit): FIXED** in `scripts/m_sessions.py`.
+  - The change: one predicate (`gshape_registered`) is now tested on the real `MODULES` (must be True), on a planted copy without gshape (must be False), and on a copy with gshape before gcal (must be False). The check name is reworded to match.
+  - No separate mutant was run: the new check is itself the planted-defect test. A predicate weakened to `"gshape" in mods` returns True on the gshape-before-gcal copy, so this check would fail.
+  
+  **Finding 5 — provenance re-read after the committed check (minor): FIXED.**
+  - The change:
+    - The new `committed_sources()` returns the problems together with the sha256 of the committed bytes that passed the check.
+    - On the canonical run, `inputs_of_record` takes the sources map from those bytes and takes `package_sha256` at the same moment. It refuses if a fresh, uncached `package_sha256_of` differs from the cached value.
+    - `evaluate` records `ins["sources_map"]` and `ins["package_sha256"]`.
+    - `write()` runs the new `provenance_drift()` just before the write: the committed check again, the map compared, and a fresh package re-hash. Any drift is a `GshapeRefusal` (exit 2, nothing written, verdict not recorded). There is a new PIN.
+  - The canonical summary line now reads "checked: canonical run, before scoring and again before the write".
+  - The check: new check 6b. A scoring-stack file edited after scoring, an m package file edited after scoring, and a package that re-hashes differently at the precondition each refuse with nothing written. A planted committed blob that differs from the working tree is what the artifact records.
+  - Evidence: the mutant restoring the old late working-tree read fails all four cases.
+  
+  **Finding 6 — write-once follows a symlink at `G-SHAPE-F0.json.tmp` (nit): FIXED.**
+  - The change:
+    - `write()` refuses before evaluating if the `.tmp` name is a symlink or not a regular file.
+    - `_write_once_text` opens the temp file with `O_WRONLY|O_CREAT|O_TRUNC|O_NOFOLLOW`, so a link planted after that check fails the open and is refused.
+    - A stale regular `.tmp` from a killed run is still truncated, as before.
+    - The PIN-S9 wording is updated.
+  - The check: the write-once check now covers a symlink at `.tmp` through `write()`, a symlink at `.tmp` through `_write_once_text` directly, and the stale-file case. In both symlink cases the link's target is untouched and no artifact is written.
+  - Evidence: the mutant that follows links is caught.
+  - Flagged, not changed: `gcal._write_once_text`, `resume.atomic_write_json` and `schedule.py` use the same `.tmp` pattern. They should be fixed in a separate change, not in step 7.
+  
+  **Finding 7 — a Layer S problem reaching the verdict is never tested (minor): FIXED.**
+  - The check: a new check runs `evaluate(sources=…)` on a runner source that scores `spec.seg + g.text`. The verdict must be STOP with exactly `scope-static` plus coverage for the units left out. The same call on the real package sources must not carry `scope-static`.
+  - Evidence: the mutant with `if False:` in place of the Layer S verdict term is caught.
+  
+  **Finding 8 — the TOOLING half of the committed-sources refusal has no must-refuse case (minor): FIXED.**
+  - The check: check 6 now plants `gshape.py` uncommitted, then `m_sessions.py` uncommitted. Each must refuse with a message naming that file, with nothing written.
+  - Evidence: the mutant that hashes the tooling files without checking them is caught.
+  
+  **Finding 9 — the control's 100% bound is tested only with a fully silent control (minor): FIXED.**
+  - The check: the silent-control check adds a seg+gold control that is silent on template 3 only. Q-F0 and OLMo-sft must each STOP `control-silent:<unit>:seg+gold` at 2,112/2,816.
+  - Evidence: the mutant with `n_fired == 0` in place of `n_fired != n` is caught.
+  
+  **Finding 10 — the exact-coverage term is untested (minor): FIXED.**
+  - The check: the coverage check adds a same-count case with the wrong keys. Each forced placement is yielded twice and no free one, so n stays 2,816 with `exact` False and nothing misplaced; the gate must STOP coverage on the scored units.
+  - Evidence: the mutant that drops the `exact` term is caught.
+  
+  **Finding 11 — 14 Layer S sub-rules have no must-fail mutation (nit): FIXED.**
+  - The change: the 14 crafted mutations from the reviewer's `demo.py` §1 are added to the Layer S self-test, plus an R1 signature mutation, each with its expected rule. Together with findings 1's additions, the total is 15 + 15 + 5 = 35, with every rule from R1 to R8 represented.
+  - The R2 "rebound between" test's G conjunct, which could never be true, was removed; only the S conjunct remains.
+  - Evidence: 19 mutants, each switching off one sub-check, are all caught: S1, the R1 signature check (S1b), S2–S8, S10–S17, and the new R7 sub-rules (S18, S19).
+  
+  **Finding 12 — `score()`'s own_pair plumbing is not pinned (minor): FIXED.**
+  - The change: check 1 now asserts each unit's seg+gold `fired_fields` exactly. Qwen must be [claim, v3.exclusion, lexical_raw, degeneracy, ends, strict]; OLMo must be [claim, lexical_raw, degeneracy, ends, strict]. The scope-widened check adds two scorers, gold + " " + Q and gold + " " + P. Each must fire 2,816/2,816 per unit, with lexical_raw on every listed fire.
+  - Evidence: the wrong-own_pair mutants are caught, both the Qwen one (V8) and an OLMo one. Under the Qwen mutant the gold+label scorers fire [0, 2816, 2816, 2816].
+  
+  **Provenance of the two self-test passes:**
+  - package_sha256 is `bbf68294e627f31157417f00d74f130d2ec549433bce2bd8d546e718284a2a8e`
+  - sources_digest is `83b3e62d2e5c7550dceec5df2689d44bff053b3b72884b9c7c01fb196ab4e727`
+  - `gshape.py` sha256 is `dba2cdd4…8283`
+  - `m_sessions.py` sha256 is `49484a21…54ad`
+  
+  Two changes alter what the artifact contains: each `existing_checks` entry gains an `evidences` field and there are 6 entries, and the canonical run's provenance now comes from the committed blobs.
+  
+  Files are in /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step7/fix:
+  - selftest_run1.txt
+  - selftest_run2.txt
+  - muts.py
+  - mut_run.py
+  - mut/out_*.txt
+  - gshape_before.py
+  - m_sessions_before.py
+  
+  Edited files:
+  - /Users/jasondwyer/Documents/code/jspace-lab/valence_core/m/gshape.py
+  - /Users/jasondwyer/Documents/code/jspace-lab/scripts/m_sessions.py
+====================================================================================================
+INDEPENDENT VERIFICATION (verbatim)
+====================================================================================================
+  **G-SHAPE-F0 (step 7) verification report**
+  
+  **Bottom line:** every fix in the fix report is present and tested, and nothing changed on disk. The self-test passes 735/735 on both runs. One medium-severity defect remains: since the canonical-run fixes, the m self-test fails before commit whenever any scoring-stack file is edited, even with a comment. 38 of 64 mutants were caught; 17 of the 26 survivors are test gaps, all low severity except one.
+  
+  ### (1) Self-test, run twice from the repo root
+  | Run | Summary line | Time | Exit | [FAIL] lines |
+  |---|---|---|---|---|
+  | 1 | `735/735 m selftest checks pass` | 2:03.58 | 0 | 0 |
+  | 2 | `735/735 m selftest checks pass` | 2:06.01 | 0 | 0 |
+  
+  - Both runs print `package_sha256 bbf68294e627f31157417f00d74f130d2ec549433bce2bd8d546e718284a2a8e` and `sources_digest 83b3e62d2e5c7550dceec5df2689d44bff053b3b72884b9c7c01fb196ab4e727`. Both match the fix report.
+  - The check counts add up: 24 gshape checks plus 5 m_sessions gshape checks, all PASS (706 + 29 = 735).
+  - Raws:
+    - `/private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step7/verify_selftest_1.txt`
+    - `/private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step7/verify_selftest_2.txt`
+  
+  ### (2) The fix report, item by item
+  All 12 fixes are present in the working tree and each has a check that runs and passes.
+  
+  | Finding | Where the fix is | Its check |
+  |---|---|---|
+  | F1 | R7 restricts `r` after the record literal; `_rounds_rewrites` | Layer S mutations for `r.update`, `r.__setitem__`, the `record()` loop rewrite, the update by index, and "never appended" |
+  | F2 | PIN-S4 comment above `qwen_stack` | check 11b: S1–S10 declared, the PIN-S4 phrases present, a copy without the sentence detected |
+  | F3 | `RUNNER_DYNAMIC_EVIDENCE` has 6 entries (4 / 2) and `RUNNER_NOT_EVIDENCE` has 2 | check 10 |
+  
+  For F3 I also confirmed that all six cited runner checks exist and PASS in run 1.
+  
+  | Finding | Where the fix is | Its check |
+  |---|---|---|
+  | F4 | the `gshape_registered` predicate | the planted MODULES copies |
+  | F5 | `committed_sources`, the canonical package re-hash, `provenance_drift` | check 6b, 4 cases |
+  | F6 | `.tmp` pre-check and `O_NOFOLLOW` | check 12 |
+  | F7 | — | the Layer-S → verdict check |
+  | F8 | — | `tool_ref` |
+  | F9 | — | the 2,112/2,816 partial control |
+  | F10 | — | the forced-twice case |
+  | F11 | 35 Layer S mutations covering R1–R8; R2's G conjunct removed | the Layer S check |
+  | F12 | — | exact seg+gold fields, and the gold + " " + Q and gold + " " + P scorers |
+  
+  `RESULTS.md@e60b633:919–920` holds the cited text; I read it from the scratch replica with `git show`.
+  
+  ### (3) Mutation probes
+  **Method.**
+  - I built a scratch replica of the repo (working tree plus a copied `.git`; it leaves out `jlens-qwen36`, which is symlinked, and the uncommitted bulk files under `data/echo` and `data/k`).
+  - The unmutated replica gives 735/735 with the same provenance hashes as the repo.
+  - Each mutant ran the full m self-test in its own APFS clone of the replica. Every run showed the mutant's own `package_sha256`, so the mutated code was what ran.
+  - **Result: 64 mutants, 38 caught, 26 survived.** One extra probe (X01, a comment-only edit, not a defect) is under the residual defects.
+  
+  **Caught (38):**
+  - Criterion: C01, C02, C06, C08, C10–C14, C16–C19.
+  - Inputs: I01, I06, I08, I10, I11.
+  - Refusals and STOPs: R01, R03–R11.
+  - Artifact: A05, A08.
+  - Decisions-file items: D02, D03, D06, D07, D09.
+  - Production runner code: P01–P03.
+  
+  Three of these were caught only because the self-test checks the refusal or STOP message text: I01, R01 and R04.
+  
+  **Survivors that are equivalent (7):**
+  - **C04** (the termination field computed on the gold, not the scored text): the scored text is the gold whenever no scorer is substituted, and the canonical run refuses any substitution.
+  - **C07** (OLMo own pair reversed): `lexical_hit` returns the first label it finds, so the set of fired fields is the same. Only the recorded label differs, and only when both labels appear, which never happens in the real grid.
+  - **C09** (coverage compared as key sets): together with the `n == 2816` check, equal key sets force every count to be exactly 1.
+  - **I13** (duplicate-string check dropped): sorted equality with six distinct strings already rules out duplicates.
+  - **R02** and **D05** (blank `--out` checks weakened): `resume.refuse_canonical_out` already refuses a blank path with its own `strip()`.
+  - **A03** (sources digest from the working tree): at the run of record the committed bytes equal the working tree, and any drift is refused.
+  
+  **Survivors the self-test cannot check (2):**
+  - **D01** (the check note without the two hashes): I confirmed the raws do print both hashes.
+  - **D08** (the supersession wording removed from the PIN): this is documentation only.
+  
+  **Survivors that are test gaps (17):**
+  
+  | Mutant | What no test exercises | Severity |
+  |---|---|---|
+  | C03 | The grid only counts a placement as fired when more than one field fires | low–medium |
+  
+  For C03 I showed a real check would catch it: scoring the gold plus ". End of session." fires termination alone on 2,816/2,816 per unit.
+  
+  | Mutant | What no test exercises | Severity |
+  |---|---|---|
+  | C05 | `score()` passes item i+1 on Qwen | low |
+  
+  For C05, scoring another item's clean task fires 1,920 on Qwen with the real code and 0 under the mutant, so a check is easy to add.
+  
+  | Mutant | What no test exercises | Severity |
+  |---|---|---|
+  | C15 | A classify call on a generation bound outside its block: the mutant crashes with AttributeError instead of reporting R2 | low |
+  | C20 | The shape check limited to n 1..4 (the as-placed check still covers the n values actually placed) | very low |
+  | I02 | The renders' own sha256 check dropped | low |
+  | I03 | G-CAL condition (2) not checked | low |
+  | I04 | The completability schema refusal (Code added it without a must-refuse case) | low |
+  | I05 | A seat read with two `renders_sha256` lines | low |
+  | I07 | `assert_qwen_scaffold` skipped | low–medium |
+  | I09 | Each checkpoint's scaffold file actually read | low |
+  | I12 | The 32-distinct-texts check | low |
+  | A01, A02, A04, A06, A07 | Wrong values in the artifact's `inputs` / `stacks` blocks, the `required` flags, or `placements_sha256` | low |
+  | D04 | The driver's refusal of a top-level `--out` with `gshape` | low–medium |
+  
+  For I07: the string half is also enforced by the `QwenTaskRoundAudit` constructor, but the ids half is checked only in `assert_qwen_scaffold`.
+  
+  For D04: the check passes before commit only because the canonical run then refuses on the uncommitted `gshape.py`.
+  
+  Mutation files:
+  - `/private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step7/verify/vmuts.py`
+  - `/private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step7/verify/vrun.py`
+  - `/private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step7/verify/out/` (`summary.tsv`, plus `<id>.txt` and `<id>.full.txt` per mutant)
+  - The probes `probe_single.py` and `probe_p02.py` are in the same `verify/` directory.
+  
+  ### (4) The decisions file, item by item
+  1. **Met.** Layers A, C (seg+gold only, 100% or STOP) and S are in the artifact; Layer B is gone from both the artifact and the self-test. The one runner-identity check is justified and reported, and the six cited runner checks exist and pass.
+  2. **Met.** The renders are read from the committed `G-CAL_model-free.json` and asserted equal to `pool_and_renders()`. The pin `a04f67b0…` is checked against the artifact, the completability identity and the seat read's line, and any mismatch is a STOP. The cite is correct.
+  3. **Met.** The artifact keeps a record per unit plus `olmo_grids_identical` and `olmo_rows_sha256`, and STOPs with `olmo-grids-differ` if the three differ. Each checkpoint's scaffold string check is run, and the ban ids are recorded but not exercised.
+  4. **Met, with the builder's flagged deviation.** The committed-sources refusal applies to the canonical run only; `--out` runs skip it. The three `b3_screen` files are in the sources map (26 files, asserted).
+  5. **Met.** I checked this by reading the raws; the self-test cannot check it (D01).
+  6. **Met.** `__init__.py` is not edited, and gshape is in `MODULES` after `"gcal"`.
+  7. **Met.** The artifact is write-once with no timestamp and no HEAD (the D09 mutant is caught), and the supersession PIN is declared.
+  8. **Met.** Exit codes are 0 / 2 / 4, a STOP verdict is written with its evidence, and a precondition STOP writes nothing.
+  9. **Met, with flagged deviations:** the stdout layout, the extra artifact fields, and stricter Layer S rules. One small note: `gshape.py` imports `runner_olmo` at module level, which is not in the spec's import list. It is harmless, since `stages` already imports it.
+  - The hard rules were obeyed.
+  
+  **Unmet items: none.** Item 4's canonical-only scope still needs Code's or the seat's confirmation.
+  
+  ### (5) Integrity
+  - **`data/m`:** the sha256 lists before and after are identical (33 files). Snapshots: `.../step7/verify_datam_before.txt` and `.../step7/verify_datam_after.txt`.
+  - **`git status`:** identical before and after.
+    - HEAD is still `2c50e03`, the stash list is empty, and `valence_core/m/__init__.py` is unchanged.
+    - The build files are unchanged: `gshape.py` is `dba2cdd4…8283` and `m_sessions.py` is `49484a21…54ad`.
+    - No `G-SHAPE*` file exists under `data/m/gates`.
+  - **Other changes in the tree** existed before this verification and are not step 7's:
+    - `paper_analysis.ipynb` and the root SVGs and docs belong to the parallel session.
+    - `scripts/m_analyze.py` and the placeholder JSON belong to G-ANL.
+  - **No model or tokenizer was loaded.** The gshape import check (no torch / mlx / mlx_lm / transformers, insulation holds) passes in both runs. `gshape.py` has no such imports and makes no generate or forward calls. The mutant runs were self-tests only.
+  
+  ### Residual defects
+  1. **MEDIUM — the m self-test fails pre-commit whenever a scoring-stack file is edited.**
+     - **Mechanism:** the positive case of gshape check 6 (`r_can = write(None)`) marks only the two tooling files as committed. The other 26 scoring-stack files go through real git.
+     - **Effect:** probe X01, a comment-only edit to `keys.py`, gives **722/723**. The gshape block aborts with "_selftest raised GshapeRefusal: … must be committed at HEAD …", and its later checks never run.
+     - **Why it matters:** it fails closed, but any future change to one of the 26 files, or a concurrent edit to one in this shared tree, can no longer get the "self-test N/N, then commit" result the workflow requires.
+     - **Fix:** mark the working-tree bytes of every listed file as committed for that case, as check 6b already does.
+  2. **LOW–MEDIUM — no test feeds the grid a fire on a single field (C03).** A termination-only scorer is a ready-made must-fire check.
+  3. **LOW — some negative tests run against the real `data/m/gates` (check 12's seamed `write(None)`; the driver's top-level `--out` case).** Before commit they pass partly because the canonical run refuses on the uncommitted `gshape.py` (which is why D04 survives). After the build commit, a regression there would write `data/m/gates/G-SHAPE-F0.json` from inside the self-test before the snapshot check flags it.
+  4. **LOW — most of the artifact's `inputs` / `stacks` content is never checked by any test** (A01, A02, A04, A06, A07). A wrong hash in the artifact of record would pass.
+  5. **LOW — the input checks listed above have no must-fail case:** condition (2), the completability schema, the seat line count, the Qwen scaffold assertion, the renders' own sha256, the 32-distinct check, and each checkpoint's file reads. The `item` argument in `score()` is also unpinned.
+  6. **NIT — one failure hides the rest.** Several `write()` calls in the self-test are not wrapped in `raised()`. So one failure aborts the remaining gshape checks; R05, R06, R08, R09 and D09 show totals of 724 or 712 instead of 735.
+  7. **INFO — Layer S does not check the order of `earlier.append` relative to the classify call.** In P02, Layer S reports nothing; the runner self-tests catch it.
+  8. **INFO — the canonical committed-files check covers only the listed 26 + 2 files, not the whole m package.** For example, `stages._committed` itself, `resume` or `guard` could be edited and uncommitted at the run of record. `package_sha256` records that, so catching it depends on the entry pairing the run with the self-test.
+  
+  The scratch replica (589 MB, including a copy of `.git`) is at `/private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step7/verify/repo`.
+====================================================================================================
+CODE'S ROUND-2 DECISIONS (appended to the decisions file)
+====================================================================================================
+  ## Round-2 additions (Code, after the first verification)
+  10. Confirmed: the committed-sources refusal binds the canonical run only; `--out` runs skip it and say so (gcal's precedent).
+  11. Extend the canonical run's committed-sources precondition to EVERY file of the m package (`valence_core/m/*.py`, the files `package_sha256` covers), in addition to SCORING_STACK_FILES and TOOLING_FILES: the run of record must not record a package hash of an uncommitted tree.
+  12. Close the verifier's residual defects 1–6 (the self-test must pass pre-commit when any scoring-stack file has an uncommitted edit; a single-field fire check, e.g. a termination-only scorer; no negative test may be able to write the real `data/m/gates` — route them through temp canonical dirs; artifact `inputs`/`stacks` values checked; must-fail cases for the listed input checks and `score()`'s item argument; wrap every self-test `write()` so one failure cannot hide the rest), and its non-equivalent mutation survivors.
+  
+====================================================================================================
+ROUND 2 -- FIX REPORT (verbatim)
+====================================================================================================
+  **G-SHAPE-F0 round 2: fix report.** Every item in the verification report is closed. The self-test passes on both runs from the repo root: **`740/740 m selftest checks pass`**, rc=0, 0 FAIL lines, about 2:00 each. Both runs print `package_sha256 fc10d3f5e7c3931e45cb35ccdd93bcccd9b5460b1fc69b663b4888ce7a2db550` and `sources_digest 02d86eac13344cd38763aba345623266e5db5386e5378e9a4f575acbd4bcb272`. The count is the previous 735, plus 5 new gshape checks (29 now, was 24); the 5 m_sessions gshape checks are unchanged in number.
+  
+  **Mutation re-run.** I refreshed the replica from the working tree and ran 74 mutants: the verifier's 65 (two adapted to moved text, I09 and R08), 7 new probes N01–N07, and the workflow probes X02 and X03.
+  - 68 of the 74 are caught. All 17 test-gap survivors are now caught, and so are D01, D08, C04, A03, R02 and D05.
+  - 3 survive: C07, C09 and I13, which the verifier classed as equivalent.
+  - X01 (`keys.py`), X02 (`stages.py`) and X03 (`session.py`) are comment-only edits and each passes 740/740, as it should.
+  - The unmutated replica gives 740/740.
+  - After two last edits I refreshed the replica again and re-ran the baseline plus the section-5 mutants (I02, I03, I05, I09, I12, N05). The baseline passes 740/740 and every mutant is still caught.
+  
+  ### Survivors that were test gaps
+  | Item | Status | Check that kills it |
+  |---|---|---|
+  | C03 (single-field fire) | CLOSED | gshape 4a(2): "a fire on ONE field is a fire". The gold plus ". End of session." fires termination alone on 2,816/2,816 on Q-F0 and OLMo. It also kills C04. |
+  | C05 (`score()` item) | CLOSED | gshape 3b, both directions. The next item's clean task raises wrong_task on items (0,1,2,3,4,6,7,9,10,12,14), and the grid fires 1,920. An item's own task never raises it. |
+  | C15 | CLOSED | gshape 8, new mutation "the scored generation bound outside its block" (R2). A crash now counts as not caught. |
+  | C20 | CLOSED | gshape 7, new template `{n!s:.1}`. It fails only at n=10; the as-placed check sees 0 misplaced. |
+  | I02 | CLOSED | gshape 5 stops: "renders that reproduce but do not hash to the pin" |
+  | I03 | CLOSED | gshape 5 stops: "G-CAL condition (2) not PASS" |
+  | I04 | CLOSED | gshape 5 refusals: "completability of another schema (verdict PASS)" |
+  | I05 | CLOSED | gshape 5 refusals: "seat read with two renders_sha256 lines" |
+  | I07 | CLOSED | gshape 5 stop "the Qwen scaffold assertion failing", plus a new spy check (call args = the e2a file's ids/strings and the stack's own audit3), plus 1b |
+  | I09 | CLOSED | gshape 5 stops. New `OLMO_DIR`, read at call time. A planted copy with `scaffold_dpo.json` changed, and one with `b3_screen_instruct.json` changed, both STOP. |
+  | I12 | CLOSED | gshape 5 stops: a clean task duplicated; a gold variant duplicated |
+  | A01, A02, A04, A06, A07 | CLOSED | gshape 1b "the artifact's record". Every inputs, stacks, grid and controls value is checked against values computed independently. |
+  | D04 | CLOSED | m_sessions gshape refusal check: each case's own driver message, with a write sentinel and a temp `GATES_DIR`. It also kills D05. |
+  | D01, D08 (listed as not checkable) | CLOSED | gshape 11b(2) reads the provenance check's note arguments from the source. 11b(1) now requires the PIN-S9 supersession wording. |
+  
+  ### Decision items
+  - **10: CLOSED.** It was already implemented; the `--out` summary line still says "not checked (--out test directory)".
+  - **11: CLOSED.** The canonical run now refuses unless every `valence_core/m/*.py` file is also committed and unedited (new functions `package_files` and `committed_package`). It also requires the hash of the committed package files (`package_sha256_of_blobs`) to equal `package_sha256`. The pre-write drift re-check now covers the package files too. Checks gshape 6 (stages.py uncommitted, and a committed package file that differs from the working tree) and 6b (a package-only file drifting). New probes N01, N02, N03 and N06 are caught.
+  - **12: CLOSED** (see residual defects 1–6 below).
+  
+  ### Residual defects
+  1. **CLOSED.** Every canonical positive case now plants the working-tree bytes of all listed files and all package files as committed. X01, X02 and X03 each give 740/740.
+  2. **CLOSED.** Same as C03 above.
+  3. **CLOSED.** The gshape 12 must-refuse cases and the m_sessions driver refusals now run with `_write_once_text` replaced by a sentinel and `GATES_DIR` pointed at a temp dir. Both checks assert that nothing reached the sentinel.
+  4. **CLOSED.** Check gshape 1b.
+  5. **CLOSED.** The section 5 cases above, plus 3b.
+  6. **CLOSED.** Every section now runs under a guard that declares its check count, and every `write()` goes through `attempt()` or `raised()`. Under the P02, P03, N03, N06, R06 and D09 mutants the gshape total stays at 29.
+  7. **CLOSED, implemented as a binding defect.** Layer S R4 now also requires each `earlier.append(G.text)` to sit after the classify that scored G, in the same block, exactly once per call site. The artifact now STOPs scope-static on P02. Two new Layer S mutations; the count goes from 35 to 38. **Flag for Code:** this is stricter than spec §8's R4.
+  8. **CLOSED** by item 11.
+  
+  ### Other flags for Code
+  - The artifact's content and schema are unchanged.
+  - The canonical refusal message and the canonical summary line now mention the m package.
+  - `inputs_of_record` now returns `package_committed`.
+  - The canonical run makes about 54 more git calls, twice (before scoring and before the write).
+  
+  No commits, adds or stashes; HEAD is still 2c50e03, and `__init__.py` and `m_analyze.py` are untouched. The `data/m` sha256 list and `git status` are identical before and after, and no G-SHAPE file exists under `data/m/gates`.
+  
+  Files are in /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step7/round2:
+  - `selftest_final_1.txt`
+  - `selftest_final_2.txt`
+  - `r2muts.py`
+  - `r2run.py`
+  - `out/summary_pass1.tsv` (all 74 mutants plus the baseline)
+  - `out/summary.tsv` (pass 1 plus the post-edit re-run)
+  - `r2run_pass2.txt`
+  
+  The edited code:
+  - /Users/jasondwyer/Documents/code/jspace-lab/valence_core/m/gshape.py (sha256 e7886dc6…cbf72)
+  - /Users/jasondwyer/Documents/code/jspace-lab/scripts/m_sessions.py (sha256 4a024b0c…12252)
+====================================================================================================
+ROUND 2 -- INDEPENDENT RE-VERIFICATION (verbatim)
+====================================================================================================
+  **G-SHAPE-F0 re-verification, round 1: CLEAN.** The round-2 fixes hold. No surviving mutant is above Low severity, and residual defects 1–8 from the previous report are all closed. There is one new Low finding (F1 below), which I'm flagging for Code.
+  
+  ### (1) Self-test, run twice from the repo root
+  | Run | Summary | Exit | [FAIL] lines | Time |
+  |---|---|---|---|---|
+  | 1 | `740/740 m selftest checks pass` | 0 | 0 | 1:53.6 |
+  | 2 | `740/740 m selftest checks pass` | 0 | 0 | 1:55.8 |
+  
+  - Both runs print `package_sha256 fc10d3f5e7c3931e45cb35ccdd93bcccd9b5460b1fc69b663b4888ce7a2db550` and `sources_digest 02d86eac13344cd38763aba345623266e5db5386e5378e9a4f575acbd4bcb272`, the same as the fix report.
+  - 29 gshape checks and 5 m_sessions gshape checks pass in both runs, and the two runs' check lines are identical.
+  - The build files hash to `e7886dc6…cbf72` (`gshape.py`) and `4a024b0c…12252` (`m_sessions.py`), as the fix report says.
+  
+  ### (2) Mutation testing
+  I refreshed the replica from the working tree first. Only `scripts/m_analyze.py` differed, from the concurrent G-ANL round. Each mutant ran the full m self-test in its own APFS clone. Every run printed its clone's own `package_sha256`; the three that print none (D01, D02, V17) are the expected exceptions. In every clone, `data/m` was unchanged.
+  
+  - **Unmutated replica:** 740/740.
+  - **Previous set (71 defect mutants):** 68 caught. C07, C09 and I13 survive, and I re-confirmed each as equivalent:
+    - **C07:** `lexical_hit` fires `lexical_raw` whichever order the pair is in. Only the recorded label differs, and only when both labels appear, which never happens in the grid.
+    - **C09:** comparing key sets is the same as comparing counts here. The `n != 2816` STOP holds, and all 2,816 expected keys are distinct.
+    - **I13:** `OLMO_SCAFFOLD_STRINGS` holds six distinct strings, so sorted equality already rules out duplicates.
+  - **Workflow probes (not defects):** each of these passes 740/740, so residual 1 is closed for package-only files and new files too:
+    - X01–X03, comment-only edits to `keys.py`, `stages.py` and `session.py`.
+    - W01, a comment in `resume.py`.
+    - W02, a new untracked `valence_core/m/*.py` file.
+  
+  **New mutants aimed at the round-2 code: 20, of which 13 are caught.**
+  
+  Caught:
+  - **V01:** the blob-hash formula without the length.
+  - **V02:** committed blobs read from the working tree.
+  - **V03:** `committed_package` problems dropped.
+  - **V04:** `package_committed` recorded as `{}`.
+  - **V07:** the drift compare done on the working tree.
+  - **V08:** `OLMO_DIR` ignored.
+  - **V09:** `assert_qwen_scaffold` called without `audit3`.
+  - **V10:** the R4 order rule accepts an append before its classify.
+  - **V14:** the R4 count loop dropped.
+  - **V17:** `write()` ignores `--out`.
+  - **V18:** the driver drops `--out`.
+  - **PR1:** the free-round `g` rebound before its append.
+  - **PR2:** the free-round append removed.
+  
+  PR1 and PR2 are caught both statically (scope-static) and dynamically.
+  
+  Two higher-order probes were also caught. Each removes an R4-order rule and adds the runner defect that rule exists for:
+  - **HO1 (V11 + PR1):** caught by the runner tests and gshape check 9.
+  - **HO2 (V13 + PR2):** caught by `runner_qwen`'s stuck_attractor check and gshape check 9.
+  
+  | Survivor | What it changes | Class |
+  |---|---|---|
+  | V05 | Drift check without `committed_package`'s problems | Equivalent. Any file it would flag is missing from `pblobs`, so the per-file compare flags it. A new file is caught by the fresh package re-hash. |
+  | V06 | Drift compares only the files recorded at the precondition | Equivalent. A file added later is caught by the fresh re-hash. |
+  | V11 | R4 order: the "generation not rebound" part removed | Gap, Low. No Layer S mutation rebinds `g` between classify and append. The real defect (PR1) is caught dynamically (HO1). |
+  | V12 | R4 order: the generation-name match removed | Gap, Low. Both call sites name the generation `g`, so the check only matters in a runner with two generation names, and no mutation tests that. |
+  | V13 | R4 order: zero appends after a classify allowed | Gap, Low. No Layer S mutation removes an append. PR2 is caught dynamically (HO2). |
+  | V15 | Canonical summary line reverted to the old wording | Gap, very low. It is stdout only, and only the `--out` wording is tested. |
+  | V16 | `inputs.pools_file_sha256` recorded from G-CAL's provenance instead of hashed | Gap, very low. The two values are equal on the inputs of record, and the real hash is also in `provenance.sources`. |
+  
+  ### (3) Integrity
+  - `git status --porcelain` is identical before and after, HEAD is still `2c50e03`, and the stash list is empty.
+  - The 33-file `data/m` sha256 list is identical before and after, and no `G-SHAPE*` file exists in `data/m/gates`.
+  - The `valence_core/m/*.py`, `m_sessions.py` and `m_analyze.py` hashes are unchanged across my runs; `__init__.py` is untouched.
+  - The probe file `zz_rv1_probe.py` exists only in a deleted scratch clone.
+  - No model or tokenizer was loaded: the gshape check for no torch / mlx / mlx_lm / transformers and `assert_insulated` passes in both runs. I made no commits, adds or stashes.
+  
+  ### (4) Findings
+  - **F1 (new, Low):** the positive `--out` cases still use the real `GATES_DIR`. This is gshape check 1's `write(out)` and the m_sessions `main(["gshape","--out",…])` calls.
+    - **Probe:** I simulated the state after the build commit in scratch clones, with no git writes: the clone's `stages._committed` was set to treat every file as committed. A committed V17 or V18 regression then wrote `data/m/gates/G-SHAPE-F0.json` from inside the self-test. The run still fails (rc=1).
+    - **Already in place:** before a commit the canonical precondition refuses, and nothing is written.
+    - **Scope:** decision 12 covers "negative tests" only, so I count this as new rather than an open residual.
+    - **Fix:** patch `GATES_DIR` to a temp dir for those cases as well.
+  - **F2 (flag, carried from the fix report):** R4 as built requires each append to come after its classify, exactly once per call site. That is stricter than spec §8's R4. Layer S returns [] on the current sources, so it raises nothing on them.
+  - **F3 (info):** `gshape` imports 7 repo modules that the canonical committed check does not cover. They are `valence_core/__init__.py`, `adapters/__init__.py`, `adapters/base.py`, `e2d/__init__.py`, `e2d/runner.py`, `readout.py` and `stats.py`. This predates round 2 and is outside item 11. I did not check whether any of them is on the scoring path.
+  
+  **Verdict: CLEAN.** No non-equivalent survivor is above Low (V11, V12, V13, V15 and V16 are Low or very low), and residual defects 1–8 are closed. F1 is a new Low finding for Code's call.
+  
+  Files are in /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step7/round2/rv1:
+  - `selftest_1.txt`, `selftest_2.txt`
+  - `rv1muts.py`, `rv1run.py`, `refresh.py`, `postcommit_probe.py`
+  - `out/summary.tsv`, plus `out/<id>.txt` and `out/<id>.full.txt` per mutant
+  - `out/PC_*.txt`, `postcommit_log.txt`, `ho_log.txt`
+  - `gitstatus_before.txt` / `gitstatus_after.txt`, `datam_before.txt` / `datam_after.txt`, `files_before.txt` / `files_after.txt`
+====================================================================================================
+ROUND 3 -- FIX REPORT (verbatim)
+====================================================================================================
+  F1, F3, V11, V12, V13, V15 and V16 are all closed. The full m self-test passes twice (744/744), and the temp-dir gshape run is PASS. I made no commits, adds or stashes, and nothing was written under `data/m`.
+  
+  **Per item**
+  
+  - **F1: CLOSED.**
+    - All of gshape's self-test now runs inside a new sandbox, `_selftest_sandbox`. While it is active, `GATES_DIR` and `guard.GATES_DIR` point at a temp dir, and any write under `resume.CANONICAL_ROOTS` (`data/m`, `/workspace/models`, `data/olmo`) is refused.
+    - If the sandbox is not active, the self-test raises before running any case.
+    - In m_sessions, the `main(["gshape","--out",...])` calls (rc_h1, rc_h2, rc_h8) run inside the sandbox and only run if it is active.
+    - New check 12b simulates the post-commit state the way `postcommit_probe.py` does, with no git writes. A copy of gshape whose `write()` ignores `--out` (V17) writes to the sandbox dir, not to `--out` or the real `data/m/gates`. A copy with the path hard-coded under a protected root is refused. The real G-SHAPE paths are byte-identical before and after.
+    - New m_sessions check: the same post-commit simulation with a driver that drops `--out` (V18). The canonical run writes inside the sandbox, nothing lands under `--out`, and the real paths are unchanged.
+    - Probe re-run in scratch clones, post-commit: baseline, V17, V18, V17+V18 and a write hard-coded to `data/m/gates`. All left `data/m` unchanged (no new file, no changed hashes); every mutant fails the self-test.
+  - **F3: CLOSED.**
+    - The artifact's `provenance` now records `import_closure` (14 files: the 7 F3 modules plus the 7 scoring-stack modules), its digest and its scope.
+    - The canonical precondition refuses (exit 2) if any closure file is uncommitted or differs from HEAD, or if a loaded `valence_core` module's file is outside the repo. The check before the write treats a module loaded after the precondition as drift and refuses.
+    - Tested both ways: refusals for an uncommitted file, a file differing from HEAD, and an outside-repo module. Passes when every file is committed, and the recorded closure is the checked committed bytes. Refusals also cover a closure file edited after scoring and a module loaded late (inside or outside the repo).
+    - The artifact stays deterministic: sorted map, a re-run gives "identical", and the canonical artifact equals the `--out` one. The closure digest is the same in the self-test and in the driver run (23abe773…).
+    - 11 F3 mutants: all caught.
+  - **V11, V12, V13: CLOSED.** Three Layer S mutations were added (41 in total): `g` rebound between classify and append; the free round's generation under a second name `g2`; the forced append removed. Each mutant fails the Layer S check.
+  - **V15: CLOSED.** The canonical and `--out` summary lines are asserted word for word, in gshape check 6, gshape check 1 and the m_sessions V18 check. The old V15 mutation no longer applies; its rewritten forms (V15n, V15n2) are caught.
+  - **V16: CLOSED.** `inputs_of_record` hashes the pools file directly and STOPs (exit 4, no artifact) unless the hash equals G-CAL's recorded `pools_file_sha256`. Both values are recorded. Two new STOP cases cover it (19 in total): G-CAL's recorded value altered, and the pools file one byte longer. V16a (value taken from G-CAL instead of hashed) and V16b (assertion dropped) are caught. V16c, recording G-CAL's value after the assertion, survives; it is equivalent because the two values are asserted equal.
+  
+  **Mutation pass on the final code:** I ran 42 mutants plus the 5 post-commit probes on a refreshed replica. Every mutant is caught except three equivalent survivors: V06, V05n (the V05 analogue) and V16c. Three old forms (V05, V15, V16) no longer apply to the new text. `data/m` was unchanged in every clone.
+  
+  **Self-test, run twice from the repo root:**
+  - `744/744 m selftest checks pass`, exit 0, both runs. The only difference between runs is timestamped resume lines.
+  - Both print `package_sha256 06ab1430de9c5ca0fc9483431caba64ee436a1b69709dd1577f4a50cfedcfef8`, `sources_digest ee16e16b203a4c2da78696908a98aa61af0f08439549a20d607c05b5fa8b316b` and `import_closure_digest 23abe773f751bb197ab329beaf41082da04218e2ad285dd921228642d049eec4`. The third note is new; check 11b was updated to expect it.
+  - Build files: `gshape.py` 257e02f4…a13c, `m_sessions.py` 54fc8a07…059f.
+  
+  **Temp-dir gshape run** (`m_sessions.py gshape --out <scratch>/gshape_run`):
+  - Exit 0, verdict PASS, no stop reasons.
+  - 2,816 placements per unit (11,264 in all), 0 fired.
+  - seg+gold fired on 2,816/2,816 for every unit. render-as-response (reported only): Qwen 256, OLMo 0.
+  - The three OLMo grids are identical; template shape and runner scope are clean.
+  - The closure has 14 files; the pools file's hash equals G-CAL's recorded value (8547d9a1…).
+  - A second run gave "identical". Artifact sha256 086d812f….
+  
+  **Integrity:** HEAD is still 2c50e03, the stash list is empty, the `data/m` hashes (33 files) are unchanged and there is no G-SHAPE file in `data/m/gates`. In `valence_core/m/`, only `gshape.py` changed; `m_analyze.py` and `__init__.py` are untouched. `scripts/audit_note_N18.py` changed during the session; that is the parallel session's file, not mine.
+  
+  **Note:** F2 (R4 order is stricter than spec §8) is still open as a flag for Code; I did not change it.
+  
+  Files are in `/private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step7/round3/`:
+  - `selftest_final_1.txt`, `selftest_final_2.txt`
+  - `r3muts.py`, `r3run.py`, `pc3.py`, `refresh3.py`
+  - `r3run_log.txt`, `pc3_log.txt`, `out/` (pass 1 in `out_pass1/`)
+  - `gshape_run/G-SHAPE-F0.json`, `gshape_run_stdout.txt`
+  - before/after snapshots: `gitstatus_*`, `datam_*`, `head_*`, `stash_*`
+  
+  Changed repo files:
+  - `/Users/jasondwyer/Documents/code/jspace-lab/valence_core/m/gshape.py`
+  - `/Users/jasondwyer/Documents/code/jspace-lab/scripts/m_sessions.py` (gshape parts only)
+====================================================================================================
+ROUND 3 -- INDEPENDENT CONFIRMATION (verbatim)
+====================================================================================================
+  **Verdict: CLEAN.** I found no non-equivalent survivor. F1, F3, V11, V12, V13, V15 and V16 all hold under independent mutants and probes, and the repo is unchanged. The run surfaced two notes and one report gap, listed under (5).
+  
+  **(1) Self-test, run twice from the repo root**
+  - Run 1: `744/744 m selftest checks pass`, exit 0, 0 FAIL, 124.1 s.
+  - Run 2: `744/744 m selftest checks pass`, exit 0, 0 FAIL, 124.2 s.
+  - Both runs print `package_sha256 06ab1430de9c5ca0fc9483431caba64ee436a1b69709dd1577f4a50cfedcfef8`, `sources_digest ee16e16b203a4c2da78696908a98aa61af0f08439549a20d607c05b5fa8b316b` and `import_closure_digest 23abe773f751bb197ab329beaf41082da04218e2ad285dd921228642d049eec4`.
+  - 32 gshape checks and 5 m_sessions gshape checks pass in each run. The two runs differ only in temp paths, timestamps and timing figures.
+  - The check for no torch/mlx/mlx_lm/transformers passes. A separate driver run of `gshape --out` loaded no heavy modules either.
+  - Build files: `gshape.py` 257e02f4…a13c, `m_sessions.py` 54fc8a07…059f. Since the round-2 verification these are the only changes. Every m_sessions hunk against HEAD is gshape-related.
+  
+  **(2) Mutation testing**
+  - I cloned a fresh replica from the fixer's and refreshed it. All 805 tracked and untracked files are byte-identical to the working tree.
+  - Each mutant ran the full m self-test in its own APFS clone, 10 at a time.
+  - **140 mutants: 117 caught, 16 survived, 7 not applicable. `data/m` was unchanged in every clone.**
+  - **Full rv1 set (99):**
+    - Caught: every defect mutant, including V01–V04, V07–V14, V17, V18, PR1, PR2, HO1 and HO2.
+    - Not applicable, because round 3 rewrote their text: A03, D01, N01, N03, V05, V15, V16.
+    - I ported A03, D01, N01 and N03 to the new text as A03n, D01n, N01n and N03n. All four are caught.
+  - **Round-3 set (20):** all caught except V05n, V06 (an rv1 mutant carried into round 3) and V16c, which are equivalent.
+  - **Targeted, in the fixer's forms:** V11, V12, V13, V15n, V15n2, V16a and V16b are caught.
+  - **My own forms, all caught:**
+    - V11: IV11b, the rebind window made empty.
+    - V12: IV12b, the name match widened to any scored generation.
+    - V13: IV13b allows duplicate appends; IV13c makes the count saturate at 1.
+    - V15: IV15c swaps the two wordings; IV15d changes one word; IV15e makes the file count off by one.
+    - V16: IV16d raises a Refusal instead of a STOP; IV16e never reads G-CAL's record.
+    - F3: IVF3l drops the per-file problems in `committed_closure`; IVF3m turns off the drift sha compare; IVF3n narrows the closure to `e2d`.
+    - F1: IVS4 makes the sandbox protect only `/workspace/models`.
+  - **Survivors:**
+    - 8 workflow probes that must pass, and do pass 744/744: Z00, X01–X03, W01, W02, and my two new comment-only edits to import-closure files, IVW03 (`stats.py`) and IVW04 (`adapters/base.py`).
+    - 8 equivalent:
+      - C07, C09 and I13: the rv1 equivalents.
+      - V05n and V06: any drift they would miss is caught by the per-file compare or by the fresh package re-hash.
+      - V16c and IV16f: the two pools values are asserted equal before any artifact is written.
+      - IVF3o: its branch is unreachable, because the canonical `ins` always comes from `inputs_of_record`, which always records a closure map.
+  
+  **Post-commit F1 probe** (`postcommit_probe.py` style: every file simulated as committed, no git writes)
+  - Baseline: only the 7 non-gshape failures that the simulation itself causes, the same 7 as in the fixer's baseline.
+  - V17, V18, V17+V18, H1 (path hard-coded under `data/m/gates`) and H3 (V18 + H1): each is caught (4–14 gshape FAILs). No new file appears in the clone's `data/m/gates`, and `data/m` is unchanged.
+  
+  **F3 probe** (fresh process, scratch clones; the build commit simulated for `gshape.py` and `m_sessions.py` only; every other file checked against HEAD with real read-only git)
+  - **P0, no edits:** the canonical run passes with exit 0 and writes the artifact. A re-run reports "identical".
+    - `import_closure` has 14 entries, sorted, each equal to the sha256 of its HEAD blob.
+    - The closure digest is 23abe773…, and it recomputes.
+    - The pools file hash equals G-CAL's recorded value (8547d9a1…).
+    - Artifact sha256 is 086d812f…, byte-equal to the `--out` artifact.
+    - This also shows there is no lazy-import drift on the run of record.
+  - **P1–P4 and P6, an uncommitted edit to one closure file** (`stats.py`, `adapters/base.py`, `valence_core/__init__.py`, `e2d/runner.py`, `session.py`):
+    - The canonical run refuses with exit 2, naming that file, and nothing is written.
+    - The `--out` run passes and records the edited working-tree hash.
+  - **P5, a module imported inside `evaluate()`:** refused with exit 2 at the pre-write drift check ("valence_core/e2d/marks.py: entered the import closure since the precondition"). Nothing is written.
+  
+  **(3) Integrity**
+  - `git status --porcelain`, HEAD (2c50e03), the empty stash list, the 33-file `data/m` sha256 list and the hashes of `valence_core/m/*.py` and `scripts/m_*.py` are all identical before and after.
+  - There is no G-SHAPE file in `data/m/gates`.
+  - No model or tokenizer was loaded, and I made no commits, adds or stashes.
+  
+  **(4) Verdict: CLEAN**
+  
+  **(5) Notes**
+  - **Report gap:** the fix report names only V05, V15 and V16 as no longer applying. A03, D01, N01 and N03 also stopped applying, because the round-3 mutation pass re-ran only part of the rv1 set. Their ports are all caught.
+  - **H2 boundary probe (info, outside F1's scope):** a regression that both hard-codes `data/m/gates` and writes with a raw `Path.write_text` does write the canonical file. The self-test then fails loudly (18 FAILs). The sandbox's tripwire guards only `_write_once_text`, so "any write under CANONICAL_ROOTS is refused" holds only for writes made through that helper.
+  - **F2** (R4 order rule stricter than spec §8) is still open for Code.
+  
+  Files are in `/private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/step7/round3/iv/`:
+  - Self-test outputs: `selftest_1.txt`, `selftest_2.txt`
+  - Mutation harness and results: `ivmuts.py`, `ivrun.py`, `ivrun_log.txt` (= `out/summary_all.tsv`), `out/<id>.txt` and `out/<id>.full.txt`
+  - Post-commit probe: `pciv.py`, `pciv_log.txt`, `out/PCIV_*`
+  - F3 probe: `f3wrap.py`, `f3probe.py`, `f3probe_log.txt`, `f3out/`
+  - `heavycheck.py`, `refresh_iv.py`
+  - Before/after snapshots: `gitstatus_*`, `head_*`, `stash_*`, `datam_*`, `files_*`
+====================================================================================================
+CODE'S CLOSING NOTE
+====================================================================================================
+  Code read evaluate() (the artifact and verdict), the write-once path (_write_once_text: identical bytes accepted, anything
+  else refused, atomic, never through a symlink, O_NOFOLLOW on the temp name) and the stop-reason forms; no edit.
+  F2 (Layer S rule R4 requires each history append to sit after the classify that scored its generation, exactly once per call
+  site -- stricter than spec §8's R4) is accepted as built: it returns [] on the current sources and catches the P02/PR1/PR2
+  runner defects statically; it is a Code reading, flagged for the seat with the other Layer S rules (PIN-S5).
+  H2 (info): the self-test sandbox's tripwire guards writes made through _write_once_text; a regression writing the canonical
+  path with a raw Path.write_text would write it, and the self-test would then fail loudly (18 FAILs in the probe).

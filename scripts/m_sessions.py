@@ -61,6 +61,20 @@
                       selftest's (a scripted stub) and is refused on the Qwen path.
                       Both gcal commands map any other SystemExit (a corr STOP, the insulation
                       guard's, the loader's) to 4 with its message.
+  gshape [--out DIR]  G-SHAPE-F0 (§8 step 7, m:277), model-free: the 16 renders of record (read
+                      from G-CAL's committed model-free artifact) placed in ROUND_TEMPLATES beside
+                      their bracketed headers under each unit's 16 contrast banners, every stored
+                      gold as the response, both phases, through each substrate's scoring stack
+                      (Layer A, 2,816 per unit); the seg+gold control per placement (Layer C); the
+                      static check of the four runner classify sites and add_round (Layer S).
+                      Prints counts and hashes only; writes data/m/gates/G-SHAPE-F0.json once
+                      (a STOP verdict too, with its evidence). The canonical run refuses unless
+                      the scoring stack, the tooling, every valence_core/m/*.py file and every
+                      other valence_core module the run loads (the import closure, recorded in
+                      the artifact) are committed at HEAD and unedited (--out runs do not
+                      check it). Exit 0
+                      PASS (written or identical), 2 refused, 4 STOP (a STOP verdict, or a
+                      precondition STOP with no artifact). --out DIR as gport's.
   time|id|qual|campaign --unit U
                       wired to argparse only: each refuses (exit 2) "not licensed until
                       step N" -- §8's step for that stage and unit (m:358). Nothing here
@@ -88,7 +102,7 @@ if str(REPO) not in sys.path:
     sys.path.insert(0, str(REPO))
 
 MODULES = ("keys", "corr", "banner", "schedule", "bars", "audit", "guard", "resume", "readrule",
-           "testing", "scaffold", "runner_qwen", "runner_olmo", "verify", "stages", "gcal")
+           "testing", "scaffold", "runner_qwen", "runner_olmo", "verify", "stages", "gcal", "gshape")
 SCHED_DIR = REPO / "data" / "m" / "schedules"
 UNITS = ("Q-F0", "OLMo-sft", "OLMo-dpo", "OLMo-instruct", "Q-F3")
 STAGE_CMDS = ("time", "id", "qual", "campaign")
@@ -328,6 +342,31 @@ def run_gcal_completability(out: Path | None, resume_run: bool, proposal_file: s
         print(f"STOP: {e}", file=sys.stderr, flush=True)
         return 4
     return GCAL_EXIT[res["verdict"]]
+
+
+# --- G-SHAPE-F0 (§8 step 7, m:277) -----------------------------------------------------------
+def run_gshape(out: Path | None = None) -> int:
+    """G-SHAPE-F0: the model-free scoring-scope gate; 0 PASS, 2 refused, 4 STOP.
+
+    PIN (Code, declared at LOCK v0.1; PIN-S8): GshapeRefusal -> 2 (nothing written); GshapeStop
+    -> 4 (a precondition STOP, no artifact); any other SystemExit reaching the driver -> 4 with its
+    message (gcal's PIN); a STOP verdict is written with its evidence and exits 4 (G-PORT's
+    precedent). Code escalates a STOP to the seat and never self-adjudicates."""
+    from valence_core.m import gshape
+    try:
+        res = gshape.write(out)
+    except gshape.GshapeRefusal as e:
+        print(f"REFUSED: {e}", file=sys.stderr, flush=True)
+        return 2
+    except gshape.GshapeStop as e:
+        print(f"STOP: {e}", file=sys.stderr, flush=True)
+        return 4
+    except SystemExit as e:
+        print(f"STOP: {e}", file=sys.stderr, flush=True)
+        return 4
+    for line in gshape.summary_lines(res):
+        print(line, flush=True)
+    return gshape.EXIT[res["artifact"]["verdict"]]
 
 
 # --- self-test ---------------------------------------------------------------------------
@@ -2297,6 +2336,157 @@ def _selftest(chk) -> None:
             gcal.snapshot_changes(gsnap0, gcal.canonical_snapshot()) == [],
             gcal.snapshot_changes(gsnap0, gcal.canonical_snapshot()))
 
+        # --- G-SHAPE-F0 (step 7, m:277): the gshape subcommand, on test directories only ------
+        from valence_core.m import gshape
+        # each canonical G-SHAPE path's bytes (or its absence) before these checks; compared after
+        hsnap0 = gshape.canonical_snapshot()
+        hdir = resume.refuse_canonical_out(base / "gshape")
+        hp = hdir / gshape.ARTIFACT_NAME
+        # (re-verification round 1, F1) every invocation here that can write runs inside gshape's
+        # self-test sandbox: gshape.GATES_DIR and guard.GATES_DIR a temp dir and the write refusing
+        # every canonical root, so no regression (a driver that drops --out, a write that ignores it)
+        # can write data/m/gates from this self-test, before the build commit or after it
+        def h_sandboxed(sb: Path) -> bool:
+            # nothing that can write runs unless the sandbox is active (a broken one fails the check)
+            return Path(gshape.GATES_DIR) == sb == Path(guard.GATES_DIR) and sb != REPO / "data" / "m" / "gates"
+
+        with gshape._selftest_sandbox() as h_sb1, contextlib.redirect_stderr(io.StringIO()):
+            h_in1 = h_sandboxed(h_sb1)
+            rc_h1, _, txt_h1 = capture(main, ["gshape", "--out", str(hdir)]) if h_in1 else (None, None, "")
+            rc_h2, _, txt_h2 = capture(main, ["gshape", "--out", str(hdir)]) if h_in1 else (None, None, "")
+            h_sb1_empty = h_in1 and not h_sb1.exists()
+        art_h = json.loads(hp.read_text(encoding="utf-8")) if hp.is_file() else {}
+        want_h = (gshape.summary_lines({"artifact": art_h, "path": hp, "how": "written", "canonical": False})
+                  if art_h else ["(no artifact)"])
+        chk("m_sessions: gshape (G-SHAPE-F0, m:277) on a temp dir -- exit 0, the artifact written with verdict "
+            "PASS; stdout is INVOCATION then exactly gshape.summary_lines (counts and hashes only, the sources "
+            "check 'not checked (--out test directory)'); a re-run finds it identical (exit 0); no roster "
+            "label, pick or menu text; both run inside gshape's self-test sandbox, whose canonical dir nothing "
+            "reaches",
+            rc_h1 == 0 and art_h.get("verdict") == "PASS" and txt_h1.splitlines()[1:] == want_h
+            and "G-SHAPE-F0 verdict PASS" in txt_h1.splitlines()
+            and "sources committed at HEAD: not checked (--out test directory)" in txt_h1
+            and rc_h2 == 0 and (txt_h2.splitlines() or [""])[-1] == f"G-SHAPE-F0 artifact: {hp} (identical)"
+            and stdout_problems(txt_h1 + txt_h2) == [] and h_sb1_empty, (rc_h1, rc_h2, txt_h1.splitlines()[-2:]))
+        # the must-refuse invocations run with gshape's write replaced by a sentinel and its canonical
+        # directory pointed at a temp dir (verification round 2, residual 3): a regression in the
+        # driver's refusals is a FAIL here, never a write under data/m/gates
+        h_reached: list = []
+
+        def h_no_write(path, text):
+            h_reached.append(str(path))
+            raise gshape.GshapeRefusal(f"G-SHAPE-F0 selftest sentinel: a must-refuse case reached the write ({path})")
+
+        h_canon = base / "gs_canon"
+        drv_combo = "refused: gshape takes no --selftest / --build-schedules / top-level --out"
+        drv_blank = "refused: gshape --out: an empty path is refused"
+        h_cases = (("--out under data/m", ["gshape", "--out", str(REPO / "data" / "m" / "gates")], "SELFTEST REFUSED"),
+                   ("a blank --out (the driver's own refusal)", ["gshape", "--out", "  "], drv_blank),
+                   ("--selftest with gshape", ["--selftest", "gshape", "--out", str(base / "gs_combo")], drv_combo),
+                   ("--build-schedules with gshape", ["--build-schedules", "gshape", "--out", str(base / "gs_combo")],
+                    drv_combo),
+                   ("a top-level --out with gshape", ["--out", str(base / "gs_combo"), "gshape"], drv_combo))
+        h_res = {}
+        with patched(gshape, "_write_once_text", h_no_write), patched(gshape, "GATES_DIR", h_canon):
+            for nm, argv_h, needle in h_cases:
+                err_1 = io.StringIO()
+                with contextlib.redirect_stderr(err_1):
+                    rc_1, _, _ = capture(main, argv_h)
+                h_res[nm] = (rc_1, needle in err_1.getvalue(), _short(err_1.getvalue(), 100))
+        err_h = io.StringIO()
+        with gshape._selftest_sandbox() as h_sb8, contextlib.redirect_stderr(err_h):
+            if hp.is_file():
+                hp.write_text(hp.read_text(encoding="utf-8") + " ", encoding="utf-8")
+            tampered_h = hp.read_bytes() if hp.is_file() else b""
+            rc_h8, _, _ = capture(main, ["gshape", "--out", str(hdir)]) if h_sandboxed(h_sb8) else (None, None, "")
+        bad_h = {k: v for k, v in h_res.items() if v[:2] != (2, True)}
+        chk("m_sessions: gshape refuses (exit 2) --out under data/m, a blank --out (the driver's own message), and "
+            "a combined --selftest / --build-schedules / top-level --out (the driver's own message, each case on "
+            "its own), before anything is written -- run with gshape's write replaced by a sentinel and GATES_DIR "
+            "a temp dir, which none reaches; a differing artifact at the path is never overwritten (exit 2, 'not "
+            "recorded', the file left as it was)",
+            not bad_h and len(h_res) == 5 and h_reached == [] and not h_canon.exists()
+            and not (base / "gs_combo").exists() and rc_h8 == 2 and tampered_h != b""
+            and hp.read_bytes() == tampered_h and "is not recorded" in err_h.getvalue(), bad_h or rc_h8, h_reached[:2])
+
+        def raise_(exc):
+            def f(*a, **kw):
+                raise exc
+            return f
+
+        maps_h = {}
+        for nm, exc in (("GshapeRefusal", gshape.GshapeRefusal("G-SHAPE-F0 REFUSED (selftest)")),
+                        ("GshapeStop", gshape.GshapeStop("G-SHAPE-F0 STOP (selftest)")),
+                        ("CorrStop", corr.CorrStop("CORR STOP (selftest)")),
+                        ("SystemExit", SystemExit("a plain SystemExit (selftest)"))):
+            with patched(gshape, "write", raise_(exc)), contextlib.redirect_stderr(io.StringIO()):
+                maps_h[nm] = capture(run_gshape, hdir)[0]
+        stop_res = {"artifact": {**art_h, "verdict": "STOP", "stop_reasons": ["fire:Q-F0"]}, "path": hp,
+                    "how": "written", "canonical": False}
+        with patched(gshape, "write", lambda out=None, **kw: stop_res):
+            # (no artifact above -- a FAIL there -- leaves this case unrun, never raising past the later checks)
+            rc_hs, _, txt_hs = capture(run_gshape, hdir) if art_h else (None, None, "")
+        chk("m_sessions: gshape's exit codes -- GshapeRefusal 2, GshapeStop 4, any other SystemExit (a corr "
+            "STOP, a plain one) 4; a STOP verdict prints 'G-SHAPE-F0 verdict STOP <reasons>' and exits 4",
+            maps_h == {"GshapeRefusal": 2, "GshapeStop": 4, "CorrStop": 4, "SystemExit": 4} and rc_hs == 4
+            and "G-SHAPE-F0 verdict STOP fire:Q-F0" in txt_hs.splitlines(), (maps_h, rc_hs))
+
+        # (F1) the post-commit state simulated as the verifier's postcommit_probe.py does (every file
+        # reported committed with the working tree's bytes; no git writes) and a planted driver
+        # regression that drops --out (the verifier's V18): inside the sandbox the canonical write
+        # lands in the sandbox's GATES_DIR -- never data/m/gates, never --out
+        def committed_as_tree(rel, repo=REPO):
+            p_ = Path(repo) / rel
+            if p_.is_file() and not p_.is_symlink():
+                return [], p_.read_bytes()
+            return [f"{rel}: absent (selftest post-commit simulation)"], None
+
+        real_gw = gshape.write
+        hdir_pc = resume.refuse_canonical_out(base / "gshape_pc")
+        hsnap_pc = gshape.canonical_snapshot()
+        with gshape._selftest_sandbox() as h_sb2, patched(stages, "_committed", committed_as_tree), \
+                patched(gshape, "write", lambda out=None, **kw: real_gw(None, **kw)), \
+                contextlib.redirect_stderr(io.StringIO()):
+            rc_pc, _, txt_pc = (capture(main, ["gshape", "--out", str(hdir_pc)]) if h_sandboxed(h_sb2)
+                                else (None, None, ""))
+            hsb2_art = h_sb2 / gshape.ARTIFACT_NAME
+            art_pc = json.loads(hsb2_art.read_text(encoding="utf-8")) if hsb2_art.is_file() else {}
+            want_last = f"G-SHAPE-F0 artifact: {hsb2_art} (written)"
+        pv_pc = art_pc.get("provenance") or {}
+        want_can = (f"G-SHAPE-F0 provenance: package sha256 {pv_pc.get('package_sha256')}; sources digest "
+                    f"{pv_pc.get('sources_digest')} (28 files); import closure digest "
+                    f"{pv_pc.get('import_closure_digest')} ({len(pv_pc.get('import_closure') or {})} files outside "
+                    f"valence_core/m); sources committed at HEAD: yes (checked with every m package file and the "
+                    f"import closure: canonical run, before scoring and again before the write)")
+        lines_pc = txt_pc.splitlines()
+        chk("m_sessions: gshape after the build commit (simulated: every file reported committed with the working "
+            "tree's bytes, no git writes) under a planted driver regression that drops --out (V18) -- the "
+            "canonical run writes inside gshape's self-test sandbox (exit 0, the same PASS artifact as the --out "
+            "run), nothing under --out, and every real data/m/gates G-SHAPE path is unchanged; its provenance "
+            "line is, word for word, the canonical one ('... sources committed at HEAD: yes (checked with every "
+            "m package file and the import closure: canonical run, before scoring and again before the write)')",
+            rc_pc == 0 and art_pc == art_h and art_pc.get("verdict") == "PASS" and len(lines_pc) > 2
+            and lines_pc[2] == want_can and lines_pc[-1] == want_last
+            and not (hdir_pc / gshape.ARTIFACT_NAME).exists()
+            and gcal.snapshot_changes(hsnap_pc, gshape.canonical_snapshot()) == []
+            and stdout_problems(txt_pc) == [], (rc_pc, lines_pc[2][-100:] if len(lines_pc) > 2 else lines_pc))
+
+        def gshape_registered(mods) -> bool:
+            return "gshape" in mods and "gcal" in mods and mods.index("gshape") > mods.index("gcal")
+
+        mods_without = tuple(m for m in MODULES if m != "gshape")
+        mods_before = tuple(m for m in mods_without if m != "gcal") + ("gshape", "gcal")
+        chk("m_sessions: gshape is registered in MODULES after gcal, so its _selftest runs here (critic: "
+            "'\"gshape\" in MODULES'); the same predicate fails on a planted MODULES copy without gshape and "
+            "on one with gshape before gcal",
+            gshape_registered(MODULES) and not gshape_registered(mods_without)
+            and not gshape_registered(mods_before) and len(mods_without) == len(MODULES) - 1,
+            (gshape_registered(mods_without), gshape_registered(mods_before)))
+        chk("m_sessions: the gshape checks left every canonical G-SHAPE path under data/m/gates as they found "
+            "it (bytes or absence, snapshotted before and compared after)",
+            gcal.snapshot_changes(hsnap0, gshape.canonical_snapshot()) == [],
+            gcal.snapshot_changes(hsnap0, gshape.canonical_snapshot()))
+
         # --- stdout hygiene over every integration run --------------------------------------
         probs = [p for o in outs for p in stdout_problems(o)]
         chk(f"m_sessions: stdout of {len(outs)} integration runs carries no roster label, pick line or "
@@ -2390,7 +2580,8 @@ def run_selftest() -> int:
 def main(argv: list[str] | None = None) -> int:
     shown = sys.argv if argv is None else [sys.argv[0]] + list(argv)
     print("INVOCATION: " + " ".join([sys.executable] + shown), flush=True)
-    ap = argparse.ArgumentParser(description="PROPOSAL-m driver (self-test, schedules, G-PORT, G-CAL)")
+    ap = argparse.ArgumentParser(description="PROPOSAL-m driver (self-test, schedules, G-PORT, G-CAL, "
+                                             "G-SHAPE-F0)")
     ap.add_argument("--selftest", action="store_true", help="model-free self-test of the m package")
     ap.add_argument("--build-schedules", action="store_true",
                     help="write the schedule files + manifest (default data/m/schedules)")
@@ -2414,7 +2605,20 @@ def main(argv: list[str] | None = None) -> int:
     gcp.add_argument("--resume", action="store_true", help="continue the checkpoint (skip-only)")
     gcp.add_argument("--proposal-file", dest="proposal_file", required=True,
                      help="the governing proposal, committed at HEAD (its sha256 is G-CAL's identity)")
+    gsh = sub.add_parser("gshape", help="G-SHAPE-F0 (step 7, m:277): scoring-scope plumbing, model-free")
+    gsh.add_argument("--out", dest="gshape_out", default=None,
+                     help="a test directory for the artifact (refused under data/m); default data/m/gates")
     args = ap.parse_args(argv)
+    if args.cmd == "gshape":
+        if args.selftest or args.build_schedules or args.out is not None:
+            print("refused: gshape takes no --selftest / --build-schedules / top-level --out (its own --out "
+                  "follows the subcommand)", file=sys.stderr)
+            return 2
+        if args.gshape_out is not None and not args.gshape_out.strip():
+            print("refused: gshape --out: an empty path is refused (it would write into the working "
+                  "directory)", file=sys.stderr)
+            return 2
+        return run_gshape(Path(args.gshape_out) if args.gshape_out is not None else None)
     if args.cmd == "gcal":
         if args.selftest or args.build_schedules or args.out is not None:
             print("refused: gcal takes no --selftest / --build-schedules / top-level --out (its own --out "
