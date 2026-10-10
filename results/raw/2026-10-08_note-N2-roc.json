@@ -8,7 +8,7 @@
  "record_commit": "bbc9ffe72fb8a942431c9bf2622a36e581fdf93c",
  "script": {
   "path": "scripts/audit_note_N2.py",
-  "sha256": "7493e3b26cade559a37f9919df8ca58a0eb280eb2751beaa79e1d3b4d0b0988e"
+  "sha256": "18fba3fff36c6a432bb56aa9ca0bb5d0c23cf0b17638adfd46b849caf98e1565"
  },
  "n2vi_json": {
   "path": "results/raw/2026-10-08_note-N2vi-source.json",
@@ -789,6 +789,60 @@
    "note": "ASSUMPTION: 100000/10000: 50 concepts, pooled over 20 configurations"
   }
  ],
+ "theirs_ablation_uncorrected": {
+  "definition": "dprime_uncorrected = z(H) - z(FA) on the reported rates; no correction; undefined where a rate is 0 or 1; no p (no n)",
+  "routing": "PI routing of 2026-10-09, item 2",
+  "rows": [
+   {
+    "dataset": "theirs",
+    "model": "Gemma-3-27B",
+    "condition": "refusal direction intact (the pre-ablation baseline)",
+    "hit_rate": 0.108,
+    "fa_rate": 0.0,
+    "record_text": {
+     "hits": "10.8%",
+     "false_alarms": "0%"
+    },
+    "n_signal": null,
+    "n_noise": null,
+    "n_note": "no n in the record line; per the PI's routing of 2026-10-09 the source states none",
+    "dprime_uncorrected": null,
+    "dprime_uncorrected_note": "undefined: z(0) is minus infinity, and the routing applies no correction",
+    "correction": "none",
+    "fisher_p_one_sided": null,
+    "p_note": "no p: no n is stated",
+    "status": {
+     "rates": "log-only",
+     "dprime_uncorrected": "computed-new"
+    },
+    "source": "RESULTS.md@bbc9ffe:7487-7488 (record prose: 'Their README quotes ...'); model and direction as named in the PI's routing of 2026-10-09, item 2 (the record line names neither)"
+   },
+   {
+    "dataset": "theirs",
+    "model": "Gemma-3-27B",
+    "condition": "refusal direction ablated (abliterated)",
+    "hit_rate": 0.638,
+    "fa_rate": 0.073,
+    "record_text": {
+     "hits": "63.8%",
+     "false_alarms": "7.3%"
+    },
+    "n_signal": null,
+    "n_noise": null,
+    "n_note": "no n in the record line; per the PI's routing of 2026-10-09 the source states none",
+    "dprime_uncorrected": 1.8069243309142637,
+    "dprime_uncorrected_note": null,
+    "correction": "none",
+    "fisher_p_one_sided": null,
+    "p_note": "no p: no n is stated",
+    "status": {
+     "rates": "log-only",
+     "dprime_uncorrected": "computed-new"
+    },
+    "source": "RESULTS.md@bbc9ffe:7487-7488 (record prose: 'Their README quotes ...'); model and direction as named in the PI's routing of 2026-10-09, item 2 (the record line names neither)"
+   }
+  ]
+ },
  "bounds": {
   "0_of_43": {
    "one_sided_95_upper": 0.06729675341386787,
@@ -1810,6 +1864,30 @@
    "source": "data/olmo/b2r_explore_sft.json + data/configs/scorer_v3_spec.json:regression_cases",
    "status": "computed-new",
    "note": "FLAG-3's SFT controls [16, 76] are among the 9 exploration FAs (replays); the record never applied FLAG-3 to section 3; the values of record stay uncorrected; two hits are degenerate on Code's read, not audit-flagged (the record's degenerate is AUDIT.check, scripts/box_b2r_campaign.py@bbc9ffe:188-190): 14, 35; two more (48, 74) open with a coherent assertion and then flood the concept word (all 12 read in full)"
+  },
+  {
+   "figure": "theirs ablation rates, refusal direction intact: hits 10.8%, false alarms 0%",
+   "named_in": "RESULTS.md@bbc9ffe:7487-7488",
+   "printed": "hits 0.108, false alarms 0.000 (rates only; no n)",
+   "source": "RESULTS.md@bbc9ffe:7487-7488",
+   "status": "log-only",
+   "note": "record prose quoting the source's README; model and direction as the PI's routing of 2026-10-09 names them"
+  },
+  {
+   "figure": "theirs ablation rates, refusal direction ablated: hits 63.8%, false alarms 7.3%",
+   "named_in": "RESULTS.md@bbc9ffe:7488",
+   "printed": "hits 0.638, false alarms 0.073 (rates only; no n)",
+   "source": "RESULTS.md@bbc9ffe:7487-7488",
+   "status": "log-only",
+   "note": "record prose quoting the source's README; model and direction as the PI's routing of 2026-10-09 names them"
+  },
+  {
+   "figure": "theirs ablation d' \u2248 1.8 (refusal direction ablated; uncorrected)",
+   "named_in": "computed-new",
+   "printed": "+1.8069 = z(0.638) - z(0.073), uncorrected; no n, no correction, no p",
+   "source": "RESULTS.md@bbc9ffe:7487-7488 (the rates) + section 5(f) (the arithmetic)",
+   "status": "computed-new",
+   "note": "the PI's routing of 2026-10-09, item 2; with the direction intact (FA 0) the uncorrected d' is undefined"
   }
  ],
  "stops": [
@@ -2040,7 +2118,7 @@
    "verdict": "imprecise",
    "finding": "Rows 21 and 33 carry 'discrepant' for (ii)/(iv) pass-condition outcomes; neither note nor section 10 says that N1's discrepant clause (block :23) does not attach, so an N1 builder could raise a STOP the block does not license.",
    "disposition": "fixed",
-   "detail": "Confirmed: block :23 (anchored: 'is a STOP on that item if it is not') governs figures in the note; rows 21 and 33 are outcomes of the (ii) and (iv) pass conditions (block :31, :33), whose consequences block :36 fixes (the (ii) STOP; none for (iv)). Both notes, and so the ROC JSON figure notes (the same objects), now carry the fix's wording. Extended: section 10's (ii) and (iv) lines say the same. The checker's mechanical ledger check holds on this run (57 rows, 7 cells each, status and named-in equal to the ROC JSON figures): YES."
+   "detail": "Confirmed: block :23 (anchored: 'is a STOP on that item if it is not') governs figures in the note; rows 21 and 33 are outcomes of the (ii) and (iv) pass conditions (block :31, :33), whose consequences block :36 fixes (the (ii) STOP; none for (iv)). Both notes, and so the ROC JSON figure notes (the same objects), now carry the fix's wording. Extended: section 10's (ii) and (iv) lines say the same. The checker's mechanical ledger check holds on this run (60 rows, 7 cells each, status and named-in equal to the ROC JSON figures): YES."
   },
   {
    "n": 5,

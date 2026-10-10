@@ -1,0 +1,127 @@
+{
+ "what": "e2a primary: the correction of record (audit v2). data/e2a/analysis.json beside this file is the frozen-audit analysis as published (55/102) and is left unmodified.",
+ "status": {
+  "k_plus_pole_first_pick, n_valid, delta_first, binom_p_one_sided": "reproduced: the record's analyzer (scripts/e2a_recount.py) over committed artifacts",
+  "computed_new.wilson95_share, computed_new.wilson95_delta_first": "computed-new: 95% Wilson score intervals; the record names no interval method"
+ },
+ "of_record": {
+  "audit": "v2 (data/configs/e2b_audit_v2.json)",
+  "reward": {
+   "k_plus_pole_first_pick": 54,
+   "n_valid": 101,
+   "delta_first": 0.0347,
+   "binom_p_one_sided": 0.27535,
+   "computed_new": {
+    "wilson95_share": [
+     0.4378967072526264,
+     0.6288707726998587
+    ],
+    "wilson95_delta_first": [
+     -0.062103292747373584,
+     0.1288707726998587
+    ]
+   }
+  },
+  "why": "audit v2 excludes one more reward session (s1), on a defect class the frozen audit fragments missed; the control arms are unchanged",
+  "record": "archive/RESULTS-cycles3-4.md@bbc9ffe:3-12 (the correction of record)"
+ },
+ "as_published": {
+  "audit": "frozen (the rule at run time; data/e2a/analysis.json)",
+  "reward": {
+   "k_plus_pole_first_pick": 55,
+   "n_valid": 102,
+   "delta_first": 0.0392,
+   "binom_p_one_sided": 0.24422,
+   "computed_new": {
+    "wilson95_share": [
+     0.44281961379120005,
+     0.632765134275744
+    ],
+    "wilson95_delta_first": [
+     -0.05718038620879995,
+     0.132765134275744
+    ]
+   }
+  },
+  "interval_note": "The record prints the approach-probability interval for 55/102 as about .44-.64 and names no method (FINDINGS-3.md@bbc9ffe:95). Clopper-Pearson and Wald reproduce it at two decimals; Wilson gives [.44, .63] (results/raw/2026-10-08_note-N4-e2a.md@09c3a8c:403). The Wilson intervals here are computed new, at the PI's routing, and are not the record's."
+ },
+ "control_arms": {
+  "sham": {
+   "k_plus_pole_first_pick": 19,
+   "n_valid": 37,
+   "delta_first": 0.0135,
+   "binom_p_one_sided": 0.5,
+   "computed_new": {
+    "wilson95_share": [
+     0.35894896665618803,
+     0.6655359569698336
+    ],
+    "wilson95_delta_first": [
+     -0.14105103334381197,
+     0.1655359569698336
+    ]
+   }
+  },
+  "random1": {
+   "k_plus_pole_first_pick": 15,
+   "n_valid": 23,
+   "delta_first": 0.1522,
+   "binom_p_one_sided": 0.10502,
+   "computed_new": {
+    "wilson95_share": [
+     0.4489033537726301,
+     0.8118872406120226
+    ],
+    "wilson95_delta_first": [
+     -0.051096646227369924,
+     0.31188724061202255
+    ]
+   }
+  },
+  "random2": {
+   "k_plus_pole_first_pick": 12,
+   "n_valid": 22,
+   "delta_first": 0.0455,
+   "binom_p_one_sided": 0.41591,
+   "computed_new": {
+    "wilson95_share": [
+     0.34659795320734954,
+     0.7307970581918668
+    ],
+    "wilson95_delta_first": [
+     -0.15340204679265046,
+     0.2307970581918668
+    ]
+   }
+  }
+ },
+ "definitions": {
+  "delta_first": "k/n - 1/2, k = valid sessions whose first free pick was the +pole label, n = valid sessions of the arm (scripts/e2a_recount.py primary(); extended here to the control arms and asserted equal to data/e2a/analysis.json for all four arms under the frozen audit)",
+  "binom_p_one_sided": "exact one-sided binomial P(X >= k | n, 1/2), 5 decimals (the record's rounding)",
+  "wilson95": "95% two-sided Wilson score interval on the share k/n; the delta_first form subtracts 1/2"
+ },
+ "provenance": {
+  "script": {
+   "path": "scripts/audit_note_N4_record.py",
+   "sha256": "556a15d72126873d910ee08618645affec7e5b5b44a503a3c186c36ca1804de0"
+  },
+  "audit_raw_of_this_file": "results/raw/2026-10-09_note-N4-correction.md (written by the same run, committed with this file)",
+  "record_pin": "bbc9ffe72fb8a942431c9bf2622a36e581fdf93c",
+  "inputs_sha256_at_pin": {
+   "scripts/e2a_recount.py": "d58a889c7736c4a385d7098546b815666eb5426712a83f94414f135339270107",
+   "data/e2a/sessions.jsonl": "58a7949fc0e98e714b4f96070d4b2ba945c47df85a992e7f617f39c6197bd24e",
+   "data/configs/e2b_audit_v2.json": "e89e4cd0cae31671a872f36d0cd0c34bcfc63b2d78cce366f172a8fabb453da2",
+   "data/e2a/analysis.json": "79cd53c0adf55878628d38a5a00e4045d2a216d28b1f0b2ed90b2304920dd52e"
+  },
+  "repository_modules_imported_equal_to_pin": [
+   "scripts/e2a_recount.py",
+   "valence_core/__init__.py",
+   "valence_core/adapters/__init__.py",
+   "valence_core/adapters/base.py",
+   "valence_core/session.py",
+   "valence_core/stats.py"
+  ],
+  "item_raw": "results/raw/2026-10-08_note-N4-e2a.md@09c3a8c:119 (audit v2), :362 (the 54/101 row), :210 (its Wilson interval), :403 (the record's interval and its method)",
+  "routing": "PI routing of 2026-10-09 (the Digest seat's FLAG I and FLAG B)"
+ }
+}

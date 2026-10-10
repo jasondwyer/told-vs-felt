@@ -41,6 +41,14 @@ read on the restricted set needs no tokenizer and is computed outside the
 emulation; the working-tree inputs are listed in full, with the preprint's
 sha256 printed; ledger rows 22 and 23 carry the SFT disclosure too.
 
+Round 6 (the PI's routing of 2026-10-09, item 2): section 5(f) adds the source's
+refusal-direction ablation rates (Gemma-3-27B; hits 10.8% -> 63.8%, false alarms
+0% -> 7.3%; log-only record prose, no n) as their own rows, with the uncorrected
+d' = z(H) - z(FA), no correction and no p (JSON: theirs_ablation_uncorrected).
+Nothing else changes: the earlier sections regenerate byte for byte, except
+pass 3 item 4's live row count (57 -> 60); pass 2 item 9 keeps the 57 rows the
+ledger had at pass 2.
+
 Writes the raw (--out) and the ROC JSON for the Draftsman seat (--json-out).
 Both default to results/raw/; a checker can regenerate into scratch.
 
@@ -2559,6 +2567,71 @@ def main() -> int:
                         f"({', '.join(map(str, exp_flood))}) open with a coherent assertion and then flood the concept "
                         f"word (all 12 read in full)", named="computed-new")
 
+    # =================================================== section 5(f): the source's ablation rates (round 6)
+    # The PI's routing of 2026-10-09, item 2: the Gemma-3-27B refusal-ablation rates from Macar et al. as their own
+    # rows, with the uncorrected d' = z(H) - z(FA), no correction and no p. The rates are log-only (record prose
+    # quoting the source's README; no n); the d' is computed-new.
+    abl_l1 = anchor("RESULTS.md", 7487, "Their README quotes **10.8%** as the pre-abliteration baseline detection")
+    abl_l2 = anchor("RESULTS.md", 7488, "rate (rising to 63.8% abliterated, FA 0% → 7.3%).")
+    abl_src = loc("RESULTS.md", abl_l1, abl_l2)
+    abl_rows = []
+    for cond, h_, fa_, h_txt, fa_txt in (("refusal direction intact (the pre-ablation baseline)", Fraction("0.108"),
+                                          Fraction(0), "10.8%", "0%"),
+                                         ("refusal direction ablated (abliterated)", Fraction("0.638"),
+                                          Fraction("0.073"), "63.8%", "7.3%")):
+        dp = (Z(float(h_)) - Z(float(fa_))) if 0 < h_ < 1 and 0 < fa_ < 1 else None
+        abl_rows.append({
+            "dataset": "theirs", "model": "Gemma-3-27B", "condition": cond,
+            "hit_rate": float(h_), "fa_rate": float(fa_), "record_text": {"hits": h_txt, "false_alarms": fa_txt},
+            "n_signal": None, "n_noise": None,
+            "n_note": "no n in the record line; per the PI's routing of 2026-10-09 the source states none",
+            "dprime_uncorrected": dp,
+            "dprime_uncorrected_note": (None if dp is not None else
+                                        "undefined: z(0) is minus infinity, and the routing applies no correction"),
+            "correction": "none", "fisher_p_one_sided": None, "p_note": "no p: no n is stated",
+            "status": {"rates": "log-only", "dprime_uncorrected": "computed-new"},
+            "source": f"{abl_src} (record prose: 'Their README quotes ...'); model and direction as named in the PI's "
+                      f"routing of 2026-10-09, item 2 (the record line names neither)"})
+    abl_on = abl_rows[1]
+    w("### 5(f) The source's refusal-direction ablation (the PI's routing of 2026-10-09; uncorrected d', no correction, no p)")
+    w("")
+    w(f"The PI's routing of 2026-10-09 (item 2) adds the Gemma-3-27B refusal-ablation rates from Macar et al. as their "
+      f"own rows, with the uncorrected d' = z(H) - z(FA), no correction and no p. The rates are log-only: record prose "
+      f"at {abl_src} quoting the source's README ('{abl_on['record_text']['hits']}' hits and "
+      f"'{abl_on['record_text']['false_alarms']}' false alarms with the direction ablated; "
+      f"'{abl_rows[0]['record_text']['hits']}' and '{abl_rows[0]['record_text']['false_alarms']}' before). The record line names neither the model nor the direction; both are as "
+      f"the routing names them. The record line gives no n, and per the routing the source states none, so no p is "
+      f"given and the 5(b) n-sensitivity is not applied.")
+    w("")
+    w("| condition | hits | false alarms | n | d' = z(H) - z(FA), uncorrected | p |")
+    w("|---|---|---|---|---|---|")
+    for r_ in abl_rows:
+        w(f"| {r_['condition']} | {r_['hit_rate']:.3f} | {r_['fa_rate']:.3f} | not stated | "
+          f"{'undefined (FA = 0; no correction applied)' if r_['dprime_uncorrected'] is None else format(r_['dprime_uncorrected'], '+.4f')} | "
+          f"none |")
+    w("")
+    w(f"With the direction ablated, d' = z(0.638) - z(0.073) = {Z(0.638):+.4f} - ({Z(0.073):+.4f}) = "
+      f"{abl_on['dprime_uncorrected']:+.4f}, which is the note's 'd' ≈ 1.8' (computed-new, uncorrected). The "
+      f"uncorrected value needs no n. It does not stand on the same footing as section 5's lineage points at DPO and "
+      f"instruct, where FA = 0: there the uncorrected d' is undefined, and the log-linear d' is driven by the "
+      f"assumed N_n (section 5).")
+    w("")
+    # the three rows join the figure list after every earlier figure (section 0 keeps its numbering)
+    abl_figs = []
+    abl_figs.append(lambda: fig("theirs ablation rates, refusal direction intact: hits 10.8%, false alarms 0%",
+        "hits 0.108, false alarms 0.000 (rates only; no n)", abl_src, "log-only",
+        "record prose quoting the source's README; model and direction as the PI's routing of 2026-10-09 names them",
+        named=loc("RESULTS.md", abl_l1, abl_l2)))
+    abl_figs.append(lambda: fig("theirs ablation rates, refusal direction ablated: hits 63.8%, false alarms 7.3%",
+        "hits 0.638, false alarms 0.073 (rates only; no n)", abl_src, "log-only",
+        "record prose quoting the source's README; model and direction as the PI's routing of 2026-10-09 names them",
+        named=f"RESULTS.md@{P}:{abl_l2}"))
+    abl_figs.append(lambda: fig("theirs ablation d' ≈ 1.8 (refusal direction ablated; uncorrected)",
+        f"{abl_on['dprime_uncorrected']:+.4f} = z(0.638) - z(0.073), uncorrected; no n, no correction, no p",
+        f"{abl_src} (the rates) + section 5(f) (the arithmetic)", "computed-new",
+        "the PI's routing of 2026-10-09, item 2; with the direction intact (FA 0) the uncorrected d' is undefined",
+        named="computed-new"))
+
     # =================================================== section 6 analyzers
     w("## 6. The record's analyzers re-run on the committed artifacts")
     w("")
@@ -2977,6 +3050,8 @@ def main() -> int:
     w("")
 
     # =================================================== status table at top
+    for f_abl in abl_figs:          # round 6: section 5(f)'s rows, last
+        f_abl()
     status_md = ["## 0. Per-figure status (for N1's ledger)", "",
                  "Status vocabulary: reproduced | log-only | not found | discrepant | computed-new. 'reproduced' = this "
                  "script computes and prints it from committed artifacts; 'log-only' = only record prose states it, pinned "
@@ -3270,6 +3345,12 @@ def main() -> int:
         "points": points,
         "greedy": greedy,
         "theirs_n_sensitivity": sens_rows,
+        # round 6 (the PI's routing of 2026-10-09, item 2): section 5(f)
+        "theirs_ablation_uncorrected": {
+            "definition": "dprime_uncorrected = z(H) - z(FA) on the reported rates; no correction; undefined where a "
+                          "rate is 0 or 1; no p (no n)",
+            "routing": "PI routing of 2026-10-09, item 2",
+            "rows": abl_rows},
         "bounds": bounds,
         "design_seat_check": seat_out,
         "cap_emulation_post_hoc_approximate": emu,
