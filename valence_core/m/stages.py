@@ -2502,7 +2502,7 @@ def _refinish_campaign(unit: str, name: str, ckpt: dict, cpath: Path, paths: Map
                          f"({ended}), never resumed (resume.refuse_ended) -- a ruling on a pause it "
                          f"carries enters VERDICTS as the declared --adjudication file, a PI's stop on a hair "
                          f"trigger as the declared --pi-stop record (the seat's C3 and C2; C9(i) for a terminal "
-                         f"campaign)")
+                         f"campaign; for a STOP's pause, Code's reading of C3, flagged for the seat)")
     if skipped:
         raise SystemExit(f"NOT APPLIED ({name}): this invocation re-finished the end pending at "
                          f"{cpath} ({pending['status']}); {' and '.join(skipped)} it offered was not "

@@ -2511,7 +2511,8 @@ PINS = {
               "look is the cadence look recorded at N). A STOP-ended campaign with a launch recorded and no "
               "end look is a structural refusal at V2, before V3 releases anything (not written by the "
               "lock's package); with no launch recorded, 'no look reached'. A fired end look at a STOP is a "
-              "pause and takes PIN-9's path. Guard results are selected by the unit's declared guard bars. "
+              "pause and takes PIN-9's path (Code's reading of C3, flagged for the seat; see PIN-9). Guard "
+              "results are selected by the unit's declared guard bars. "
               "No end-of-data guard is recomputed in the analyzer. Neither moves a verdict (m:316).",
     "PIN-11": "Counters are declared as m:314's two lists in full (verified verbatim against m:314 and "
               "against audit.DECLARED_COUNTERS_* plus the [Q-F3] entry); the [Q-F3] counter is declared, "
@@ -3318,7 +3319,7 @@ def _bt_notrun(B: _Battery) -> None:
           _bt_raises(lambda: pending_state("Q-F0", ok_, verdicts_exists=False, notrun_exists=False))[0],
           cover=["PEND-QF0-REFUSED"])
     # the Clock comparison's date beside clock_passed (decision 2): required, YYYY-MM-DD, and recorded
-    # as given on either side of D_O and on the boundary day -- the boundary-day comparison is confirmed
+    # as given on either side of D_O and on the boundary day -- the boundary-day comparison is settled
     # by the seat (C7, 2026-10-10): committed by the Clock date iff the commit's committer date, in UTC,
     # falls on or before it (the day inclusive, to 23:59:59 UTC); it remains a declared input, so no
     # date-vs-D_O consistency is imposed (PIN-6)
