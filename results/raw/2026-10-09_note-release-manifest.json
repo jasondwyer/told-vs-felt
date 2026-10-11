@@ -1,8 +1,8 @@
 {
  "item": "N18",
  "title": "release manifest (hashes for the note)",
- "code_stamp_utc": "2026-10-10 14:29:53 UTC",
- "head_at_run": "ea47e89aba16e6fe967d341be45289a505027aba",
+ "code_stamp_utc": "2026-10-11 10:22:06 UTC",
+ "head_at_run": "84801cb5fad5f7bf06b5213fdb8bf9a55e369d6b",
  "branch_at_run": "main",
  "block": "AUDIT-note-release-v1_2.md",
  "block_sha256": "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841",
@@ -14,10 +14,10 @@
   133
  ],
  "script": "scripts/audit_note_N18.py",
- "script_sha256": "47bcefb66f909b7af59be7416c3af42860bbd1ac810186d6e6ad565918c2f934",
+ "script_sha256": "fe504d250c6a5e73d872a9f13fb674fd31704d4d80004b8eb78654b8fb895126",
  "interpreter": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python",
  "python": "3.12.9",
- "command": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/audit_note_N18.py",
+ "command": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/audit_note_N18.py --preprint-pi-confirmed 0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22",
  "tag": {
   "name": "note-2026-10-v1",
   "source": "the PI's routing of 2026-10-09, item (7), as routed to Code: tag name note-2026-10-v1, placed on the final audit commit after N1 and N18; the block leaves the name to the PI and suggests it at AUDIT-note-release-v1_2.md@bbc9ffe:14",
@@ -27,51 +27,51 @@
   },
   "commit": null,
   "commit_statement": "The tag is placed on the commit that adds this manifest. A commit's hash is computed over a tree that contains this file, so the hash cannot be written inside it (self-reference). It is to be recorded after tagging: in the note's footer (block :133; the footer is the design seat's) and in a post-tag raw (the procedure routed to Code for this part; neither the block nor the PI's routing names that raw).",
-  "expected_parent_note": "HEAD at this run is ea47e89aba16e6fe967d341be45289a505027aba; the tag commit descends from it if the manifest is committed on top of it, which this script does not check."
+  "expected_parent_note": "HEAD at this run is 84801cb5fad5f7bf06b5213fdb8bf9a55e369d6b; the tag commit descends from it if the manifest is committed on top of it, which this script does not check."
  },
  "note": {
-  "path": "RESEARCH-NOTE-v0_4-draft.md",
+  "path": "RESEARCH-NOTE-v0_5-draft.md",
   "category": "note",
-  "sha256": "c4a05c781113cb2eceea0404d93ae723cc8dd32c2d8793d53cdb6067ee4ba9bc",
-  "bytes": 59116,
+  "sha256": "4c2810e1f2be012e2a419d9ef3a154c0e1f4abb5dde5caac067d9ec361e4ce5b",
+  "bytes": 62532,
   "tracked_at_head": false,
   "equal_to_head": null,
-  "expected": "c4a05c781113cb2eceea0404d93ae723cc8dd32c2d8793d53cdb6067ee4ba9bc",
-  "expected_source": "the PI's routing of 2026-10-09 (rulings), which gives the note's full sha256",
+  "expected": "4c2810e1f2be012e2a419d9ef3a154c0e1f4abb5dde5caac067d9ec361e4ce5b",
+  "expected_source": "the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256",
   "assert": "PASS"
  },
  "svgs": [
   {
-   "path": "2026-10-09_F1a_headline-strip.svg",
+   "path": "2026-10-10_F1a_headline-strip.svg",
    "category": "svg",
-   "sha256": "4e4cbbb1f8a31485d767c5f620614c90e1e88c6fc7b4985a805485a87eea0e2e",
-   "bytes": 18374,
+   "sha256": "6ffad6cd971aabdc70d7b684a6408988c9a05e5445125d3ce61a78557405cee6",
+   "bytes": 19062,
    "tracked_at_head": false,
    "equal_to_head": null,
-   "expected": "4e4cbbb1f8a31485d767c5f620614c90e1e88c6fc7b4985a805485a87eea0e2e",
-   "expected_source": "no sha256 routed: the full sha256 of Code's copy from the Digest seat's folder (2026-10-09), as N1 round 8 records it",
+   "expected": "6ffad6cd971aabdc70d7b684a6408988c9a05e5445125d3ce61a78557405cee6",
+   "expected_source": "the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256",
    "assert": "PASS"
   },
   {
-   "path": "2026-10-09_F1b_five-link-panels.svg",
+   "path": "2026-10-10_F1b_five-link-panels.svg",
    "category": "svg",
-   "sha256": "25e0dd99a685a0c13e7d47c85a4e7200d05caf44f600b45518c5bbcc6614915c",
-   "bytes": 89012,
+   "sha256": "6fcb060f6a2cf2c0ce1f5374c3267c5cec67304994a9967e49a2afaffcf6113e",
+   "bytes": 93477,
    "tracked_at_head": false,
    "equal_to_head": null,
-   "expected": "25e0dd99a685a0c13e7d47c85a4e7200d05caf44f600b45518c5bbcc6614915c",
-   "expected_source": "no sha256 routed: the full sha256 of Code's copy from the Digest seat's folder (2026-10-09), as N1 round 8 records it",
+   "expected": "6fcb060f6a2cf2c0ce1f5374c3267c5cec67304994a9967e49a2afaffcf6113e",
+   "expected_source": "the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256",
    "assert": "PASS"
   },
   {
-   "path": "2026-10-09_F2_macar-lineage-roc_post.svg",
+   "path": "2026-10-10_F2_macar-lineage-roc_post.svg",
    "category": "svg",
-   "sha256": "e2a38e74711e6da6ba7480f8425a1fb18b3ed074a7bf1ed38b5ac66c6fc17824",
-   "bytes": 64143,
+   "sha256": "81b13e805e64e6a9534e65e6dfeb50d6c6a65cf3d8b02b9cb3a1e36852e5ac4e",
+   "bytes": 65809,
    "tracked_at_head": false,
    "equal_to_head": null,
-   "expected": "e2a38e74711e6da6ba7480f8425a1fb18b3ed074a7bf1ed38b5ac66c6fc17824",
-   "expected_source": "no sha256 routed: the full sha256 of Code's copy from the Digest seat's folder (2026-10-09), as N1 round 8 records it",
+   "expected": "81b13e805e64e6a9534e65e6dfeb50d6c6a65cf3d8b02b9cb3a1e36852e5ac4e",
+   "expected_source": "the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256",
    "assert": "PASS"
   }
  ],
@@ -92,29 +92,28 @@
  ],
  "footer_note": "The block puts the note's sha256 in the note's footer (:133). A footer inside the hashed file changes that file's sha256, so the footer cannot state the hash of the file that contains it; how the footer and the repository copy relate is the design seat's to settle.",
  "n1": {
-  "ledger_json": "results/raw/2026-10-09_note-N1-v0_4-claims-ledger.json",
-  "ledger_md": "results/raw/2026-10-09_note-N1-v0_4-claims-ledger.md",
-  "ledger_head_at_run": "ea47e89aba16e6fe967d341be45289a505027aba",
-  "ledger_code_stamp_utc": "Sat Oct 10 13:34:52 UTC 2026",
+  "ledger_json": "results/raw/2026-10-10_note-N1-v0_5-claims-ledger.json",
+  "ledger_md": "results/raw/2026-10-10_note-N1-v0_5-claims-ledger.md",
+  "ledger_head_at_run": "84801cb5fad5f7bf06b5213fdb8bf9a55e369d6b",
+  "ledger_code_stamp_utc": "Sun Oct 11 09:29:01 UTC 2026",
   "provisional": false,
   "covers_note_sha256_of_this_run": true,
   "covers_svg_sha256s_of_this_run": true,
-  "note_rows_file": "results/raw/2026-10-09_note-N1-v0_4-note-rows.json",
-  "note_rows_file_sha256": "e3d4f083aad815f53efdfefb045f2561ca4f9528305f21ee384deb73942b2c21",
-  "figures_commit": "e60b633142f0ff5ec574da022a7117d18711e32b",
-  "figures_commit_date": "2026-10-09T21:04:01-04:00",
+  "note_rows_file": "results/raw/2026-10-10_note-N1-v0_5-note-rows.json",
+  "note_rows_file_sha256": "0af1e9fe6967553d42338abcd1bbcc69f16f90f11008323f96f967acf548da61",
+  "figures_commit": "fd2b1364dea83a3433791cf4a751f05966f9aaf5",
+  "figures_commit_date": "2026-10-10T10:30:53-04:00",
   "figures_commit_set_by_rows": [
-   "S1#173",
-   "S5#72",
-   "S5#77"
+   "S1#236",
+   "S1#237"
   ],
-  "figures_commit_basis": "N1 final, note_rows_final.tag.including_audit_raws (the note carries computed-new figures and figures whose only carrier is an audit raw: N19's, N2 round 6's); stated plainly at results/raw/2026-10-09_note-N1-v0_4-claims-ledger.md:2028 (the file as read at this run)",
+  "figures_commit_basis": "N1 final, note_rows_final.tag.including_audit_raws (the note carries computed-new figures and figures whose only carrier is an audit raw: N19's, N2 round 6's); stated plainly at results/raw/2026-10-10_note-N1-v0_5-claims-ledger.md:2075 (the file as read at this run)",
   "record_sources_only_candidate": "05c4636d0e3f7a177f3a894e0eccdb61623eff71",
   "record_sources_only_candidate_date": "2026-10-06T00:42:09-04:00",
   "figures_commit_is_ancestor_of_head_at_this_run": true,
   "n1_script": "scripts/audit_note_N1.py",
-  "n1_script_sha256_in_ledger": "52bfd8d4dff336702ba85c743f80fda26113565e584d37d5bf9a6d3e448af9f3",
-  "n1_script_sha256_now": "52bfd8d4dff336702ba85c743f80fda26113565e584d37d5bf9a6d3e448af9f3",
+  "n1_script_sha256_in_ledger": "0c5a98f04b33221d31b3db1c46a6f3eeae8b69fe425d018acf6e1a145a942400",
+  "n1_script_sha256_now": "0c5a98f04b33221d31b3db1c46a6f3eeae8b69fe425d018acf6e1a145a942400",
   "n1_script_unchanged_since_ledger": true
  },
  "n13": {
@@ -495,11 +494,11 @@
  },
  "preprint": {
   "path": "PREPRINT-v1_0-draft.md",
-  "status": "pending patch v6",
-  "sha256": null,
-  "on_disk_matches_block_reference": true,
+  "status": "post-patch-v6, as confirmed by the PI (confirmation supplied to this run with --preprint-pi-confirmed; see pi_confirmation)",
+  "sha256": "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22",
+  "on_disk_matches_block_reference": false,
   "block_reference": "d6431e97…222b8 (post-patch-v4 copy), AUDIT-note-release-v1_2.md@bbc9ffe:21",
-  "pi_confirmation": null,
+  "pi_confirmation": "the full sha256 was supplied on the command line as the PI's confirmation that this file is the post-v6 preprint; the script asserted it equals the file on disk and cannot see the confirmation itself (the command is recorded in `command`)",
   "tracked_at_head": false,
   "routing": "the PI's routing of 2026-10-09, item (5), as routed to Code: PREPRINT-v1_0-draft.md is committed at the tag after patch v6 is applied",
   "rerun_trigger": "If patch v6 arrives, or the file otherwise changes, after this run and before the tag commit, N18 must be re-run: this section describes the file as found at this run, and the tag commit is to hold the post-v6 file."
@@ -507,9 +506,9 @@
  "wait_check": [
   {
    "path": "README-NOTE.md",
-   "mtime_utc": "2026-10-10T14:29:44Z",
-   "mtime_local_date": "2026-10-10",
-   "local_date_at_run": "2026-10-10",
+   "mtime_utc": "2026-10-11T10:21:58Z",
+   "mtime_local_date": "2026-10-11",
+   "local_date_at_run": "2026-10-11",
    "modified_today": true,
    "reading": "modified today; hashed as it stood at this run"
   },
@@ -517,9 +516,9 @@
    "path": "results/raw/2026-10-08_note-N12-scrub.md",
    "mtime_utc": "2026-10-10T14:19:32Z",
    "mtime_local_date": "2026-10-10",
-   "local_date_at_run": "2026-10-10",
-   "modified_today": true,
-   "reading": "modified today; hashed as it stood at this run"
+   "local_date_at_run": "2026-10-11",
+   "modified_today": false,
+   "reading": "not modified today; read as found"
   }
  ],
  "files": {
@@ -528,11 +527,11 @@
    "results/raw/2026-10-09_note-release-manifest.json",
    "results/raw/2026-10-09_note-release-manifest.md"
   ],
-  "n_files": 90,
-  "sha256sum_list_sha256": "cfe226464100f2d1dac23e3d33b5858a8626da17209ef2a645c9c2c4c856f48e",
+  "n_files": 94,
+  "sha256sum_list_sha256": "7e24aee6eba61eed3165b619b6bb55e715ee8fbb4d36a44b6aa54f01605f6217",
   "sha256sum_list_recipe": "sha256 of the lines '<sha256>  <path>\\n' over files.list in its order (sorted by path); equal to piping `shasum -a 256 <the paths in that order>` into `shasum -a 256`",
-  "n_tracked_at_head": 86,
-  "n_equal_to_head": 81,
+  "n_tracked_at_head": 90,
+  "n_equal_to_head": 85,
   "list": [
    {
     "path": "LICENSE",
@@ -561,8 +560,8 @@
    {
     "path": "README-NOTE.md",
     "category": "named",
-    "sha256": "83b54784086d327131198d6ef0d12b5b2f1a5da69aaca2083d58b079d468043b",
-    "bytes": 77838,
+    "sha256": "603f7294cf31203703d9d6b48e20c245baf100f17bad7d9d511124881e9f6511",
+    "bytes": 99393,
     "tracked_at_head": true,
     "equal_to_head": false
    },
@@ -676,7 +675,7 @@
     "sha256": "e46425c9d119e3824ccd73bdae8947871fd5d8972116a1a6c04e8f497f84d968",
     "bytes": 93184,
     "tracked_at_head": true,
-    "equal_to_head": false
+    "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-08_note-N13-provenance.json",
@@ -729,8 +728,8 @@
    {
     "path": "results/raw/2026-10-08_note-N17-numerics.md",
     "category": "audit raw",
-    "sha256": "153b9a2acd6ce244d7f8990cfb2cffceaf54d8b4a50ce61bb2fe3fe4f7abb9af",
-    "bytes": 97933,
+    "sha256": "e716491fc162e8699a36e8e05ee191257aaf4a48046ac66b4d68bef4d8850ee8",
+    "bytes": 103503,
     "tracked_at_head": true,
     "equal_to_head": true
    },
@@ -801,80 +800,80 @@
    {
     "path": "results/raw/2026-10-08_note-N4-e2a.json",
     "category": "audit raw",
-    "sha256": "e38076b5f2354a615440ec0deff9333bf32a1230c25c7782104c69d73f45b902",
-    "bytes": 61898,
+    "sha256": "5034109aa55c7dd33bdef9ffbc19a2f94eafcf2f289027140d764cfbca9e560c",
+    "bytes": 70899,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-08_note-N4-e2a.md",
     "category": "audit raw",
-    "sha256": "12ddec97824a85eaddea318a9be7d22f0a34c2495a5ba5c70dffc24b197916af",
-    "bytes": 97201,
+    "sha256": "4ab5d2d9c001679158d577e57c07c814d689dfeca80c2533fe7822bbc70fa2ce",
+    "bytes": 106490,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-08_note-N5-f1.json",
     "category": "audit raw",
-    "sha256": "507e581a818b0a97b4b9a0bf19feeb4ca0223550a842379cd77aebec061f0b93",
-    "bytes": 42370,
+    "sha256": "7786310fc996f1995a8f5ad2efcb0ceafec2dc4b08defc4315ae03dbfde5338b",
+    "bytes": 54107,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-08_note-N5-f1.md",
     "category": "audit raw",
-    "sha256": "1ccbf632c4c93600e23f591700123f425bbfcc8c0e39ebc3f4a040a810996a41",
-    "bytes": 58561,
+    "sha256": "2dca65c64da246197b84f91cd1f4ec5366d3f970b7f786a7bb7078a9b4c91d8b",
+    "bytes": 68004,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-08_note-N6-e2b.json",
     "category": "audit raw",
-    "sha256": "6b3172c69f2a179c52873781fae9c21b4fb94b1b3910a611a860eeef8287002a",
-    "bytes": 60908,
+    "sha256": "e0f0547672c51dc9a5d9b0fab48b927ad9dfa9b27e3090bc1a1af0c44d5bd99b",
+    "bytes": 64736,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-08_note-N6-e2b.md",
     "category": "audit raw",
-    "sha256": "505eed7c93e6d988e051a71494b138e6a8f40de57d5710e6a3ab5a60df542f6c",
-    "bytes": 75411,
+    "sha256": "325c4d03e3561fe3a4373d5e004ae8e7a748b8f71b512250c32238a9daf9bb8b",
+    "bytes": 79716,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-08_note-N7-olmo.json",
     "category": "audit raw",
-    "sha256": "f5c2cc80d3184cef58a478a10cd6cbae6088f5b39f4c25cfd30f230b0f05367a",
-    "bytes": 134536,
+    "sha256": "1bdb1328208fcbfb49c3c1aab89bec451e8ce9b27d4af1cf10f94e224919082d",
+    "bytes": 139508,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-08_note-N7-olmo.md",
     "category": "audit raw",
-    "sha256": "477113fe973c161fe2cd54239b5b997e793085bfa3dd647f5da94eece860d3d5",
-    "bytes": 72403,
+    "sha256": "0c021b6096f269a8ad2670c0cbf2808a6633fd4c6b9719b4457fc1d2a008b17f",
+    "bytes": 76092,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-08_note-N8-link2.json",
     "category": "audit raw",
-    "sha256": "63753f7636a730fb82cf504d1e9d9ffd488c5a3a90e6358be85e487ccbfa90b7",
-    "bytes": 111582,
+    "sha256": "e3a0b88694b662fb7a0739b666ceb0a5a8a2bf1ff8dc6e81540671440be79313",
+    "bytes": 155128,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-08_note-N8-link2.md",
     "category": "audit raw",
-    "sha256": "919a8a4a0662cadef51fe76f0f1db77b40415614b3e39a338e20644fe5293bc6",
-    "bytes": 97196,
+    "sha256": "b683e2783228e8f5b6f422ad189f60c9d26c25db7e2f6e1a2bc093ed2fe539aa",
+    "bytes": 107482,
     "tracked_at_head": true,
     "equal_to_head": true
    },
@@ -952,27 +951,27 @@
    },
    {
     "path": "results/raw/2026-10-09_note-N1-v0_4-claims-ledger.json",
-    "category": "N1 final ledger",
+    "category": "audit raw",
     "sha256": "5f541463bad2311538eb07f8fe5047b31aa430afdac31f8dda5026a98d37ebff",
     "bytes": 5370819,
-    "tracked_at_head": false,
-    "equal_to_head": null
+    "tracked_at_head": true,
+    "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-09_note-N1-v0_4-claims-ledger.md",
-    "category": "N1 final ledger",
+    "category": "audit raw",
     "sha256": "e5cb92c00dd2fc502822f593ddf0d49f2f33d348aef7893c0240237878eef1fb",
     "bytes": 938798,
-    "tracked_at_head": false,
-    "equal_to_head": null
+    "tracked_at_head": true,
+    "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-09_note-N1-v0_4-note-rows.json",
     "category": "audit raw",
     "sha256": "e3d4f083aad815f53efdfefb045f2561ca4f9528305f21ee384deb73942b2c21",
     "bytes": 1230258,
-    "tracked_at_head": false,
-    "equal_to_head": null
+    "tracked_at_head": true,
+    "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-09_note-N12-gitleaks.md",
@@ -1027,14 +1026,46 @@
     "category": "audit raw",
     "sha256": "9f8a49fa9df6809a246be4fb3a1ca103b8ea1b51d7615f2c3677234f19a117d6",
     "bytes": 8865,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-10-10_note-N1-v0_5-claims-ledger.json",
+    "category": "N1 final ledger",
+    "sha256": "6593efeee5eafc52aaa851aa7e79ffc99ba008d6be7a0315c90b9a320b57fe58",
+    "bytes": 6828519,
+    "tracked_at_head": false,
+    "equal_to_head": null
+   },
+   {
+    "path": "results/raw/2026-10-10_note-N1-v0_5-claims-ledger.md",
+    "category": "N1 final ledger",
+    "sha256": "b52c78bbd456f3a8ed5f752e87b969c4b4bdc0fbc458462e4a132e3b9983e823",
+    "bytes": 1012183,
+    "tracked_at_head": false,
+    "equal_to_head": null
+   },
+   {
+    "path": "results/raw/2026-10-10_note-N1-v0_5-note-rows.json",
+    "category": "audit raw",
+    "sha256": "0af1e9fe6967553d42338abcd1bbcc69f16f90f11008323f96f967acf548da61",
+    "bytes": 2019965,
+    "tracked_at_head": false,
+    "equal_to_head": null
+   },
+   {
+    "path": "results/raw/2026-10-11_note-N1-v0_5_valuescheck.md",
+    "category": "audit raw",
+    "sha256": "bb401e93ea3cd17b3692323f45f701545d97d47386c871d282407dab701d1794",
+    "bytes": 7266,
     "tracked_at_head": false,
     "equal_to_head": null
    },
    {
     "path": "scripts/audit_note_N1.py",
     "category": "audit script",
-    "sha256": "52bfd8d4dff336702ba85c743f80fda26113565e584d37d5bf9a6d3e448af9f3",
-    "bytes": 787172,
+    "sha256": "0c5a98f04b33221d31b3db1c46a6f3eeae8b69fe425d018acf6e1a145a942400",
+    "bytes": 1080076,
     "tracked_at_head": true,
     "equal_to_head": false
    },
@@ -1057,10 +1088,10 @@
    {
     "path": "scripts/audit_note_N12_content.py",
     "category": "audit script",
-    "sha256": "98a126aa14d137c027d65bf908bdccab83627c82b414e79f2ca60a501248411a",
-    "bytes": 48873,
+    "sha256": "9b11e7101bd6d0f3282a053bbc8a201c83e4eab9a3a2279a0c66059f36e28f05",
+    "bytes": 55251,
     "tracked_at_head": true,
-    "equal_to_head": true
+    "equal_to_head": false
    },
    {
     "path": "scripts/audit_note_N12_gitleaks.py",
@@ -1073,10 +1104,10 @@
    {
     "path": "scripts/audit_note_N12_history.py",
     "category": "audit script",
-    "sha256": "95178234c12cd0c285ae94003445a1246ce709b56743b4ab04a751555373dc14",
-    "bytes": 390074,
+    "sha256": "ea7bef25c914e6ba20c74ec64568533b1419db5f580b90797a0d9962a306da59",
+    "bytes": 404575,
     "tracked_at_head": true,
-    "equal_to_head": true
+    "equal_to_head": false
    },
    {
     "path": "scripts/audit_note_N12_licenses.py",
@@ -1108,7 +1139,7 @@
     "sha256": "bdef4095c4d8e01c5d590497b92c18be39062ce39bf040ee37f6cda408f81744",
     "bytes": 162152,
     "tracked_at_head": true,
-    "equal_to_head": false
+    "equal_to_head": true
    },
    {
     "path": "scripts/audit_note_N13.py",
@@ -1137,16 +1168,16 @@
    {
     "path": "scripts/audit_note_N17.py",
     "category": "audit script",
-    "sha256": "41b143754436051d18696e42abee815161b484c794e27e4b76deafc1f44196fe",
-    "bytes": 132913,
+    "sha256": "42a174413ea8b34bdf09c40f7f944a58a98c54859a8ee4261afdd88c7f99554b",
+    "bytes": 146669,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "scripts/audit_note_N18.py",
     "category": "audit script",
-    "sha256": "47bcefb66f909b7af59be7416c3af42860bbd1ac810186d6e6ad565918c2f934",
-    "bytes": 35445,
+    "sha256": "fe504d250c6a5e73d872a9f13fb674fd31704d4d80004b8eb78654b8fb895126",
+    "bytes": 35926,
     "tracked_at_head": true,
     "equal_to_head": false
    },
@@ -1193,8 +1224,8 @@
    {
     "path": "scripts/audit_note_N4.py",
     "category": "audit script",
-    "sha256": "7236277c0dfeb85fac69720c5638137532a9bb7d6386d9f70f7d17b8ffc53080",
-    "bytes": 171708,
+    "sha256": "109d54e00dc2e55d2e42a7397421fe864efc3aec97e65d9ab6b4361bdb51d670",
+    "bytes": 195033,
     "tracked_at_head": true,
     "equal_to_head": true
    },
@@ -1209,32 +1240,32 @@
    {
     "path": "scripts/audit_note_N5.py",
     "category": "audit script",
-    "sha256": "e5ed5007185d84a3e93dd6bfe8436cecdc89122095ba567615ea4b6e98c7192b",
-    "bytes": 113264,
+    "sha256": "8bad395c4be1bcc34baf0c4ebc97e5021b8a9424f93aabe8e003702b4d1372a9",
+    "bytes": 138146,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "scripts/audit_note_N6.py",
     "category": "audit script",
-    "sha256": "fbd0735a7d3167e43c3b82b52a7ffd8c6e82e57b3e5a23383d9a80c5826565ef",
-    "bytes": 137869,
+    "sha256": "07e933d550b32002964afa81b70b35c126e369353bc54597a5b1ed79a0d85404",
+    "bytes": 151408,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "scripts/audit_note_N7.py",
     "category": "audit script",
-    "sha256": "5a7db7caa58cc226a8955d0042aef96ffbea6ef6b1bb8a0a66f94b7da7f4ca87",
-    "bytes": 143282,
+    "sha256": "f7838b7ee09f48de0aaf8f0b43448f078c0c7cb686c3bba3d670cdd7fe13a98a",
+    "bytes": 154655,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "scripts/audit_note_N8.py",
     "category": "audit script",
-    "sha256": "e55a1ab2aa249e7e75ae2e7b9d59f12885531e5851d4e0edfbe4f55d4d85b525",
-    "bytes": 142022,
+    "sha256": "8c8f34b19d951f5d59be705355a9423d6e5f2769f4ce0087858197cf21091efd",
+    "bytes": 155265,
     "tracked_at_head": true,
     "equal_to_head": true
    },

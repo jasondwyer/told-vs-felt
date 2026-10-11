@@ -30,6 +30,13 @@ correction of record beside its analysis (data/e2a/analysis.correction-of-record
 PI routed the note's full sha256; no sha256 was routed for the SVGs, so their expected values are
 the full sha256s of the copies Code placed at root on 2026-10-09, which N1 round 8 records.
 
+Round 3 (2026-10-11, N1 round 9): the note is v0.5 and the SVGs are the Digest seat's
+2026-10-10 renders, which replace the 2026-10-09 ones; the PI routed all four full sha256s on
+2026-10-10. The N1 ledger read is round 9's (results/raw/2026-10-10_note-N1-v0_5-claims-ledger.json).
+Patch v6 is applied: the PI's ruling 9 of 2026-10-10 (as corrected) names the preprint's sha256
+0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22, passed as --preprint-pi-confirmed.
+Each render carries a C2PA content-credentials element; this script hashes the files whole.
+
 Read-only: it reads files and runs read-only git commands (rev-parse, symbolic-ref, ls-tree,
 show, cat-file -e, merge-base --is-ancestor) and `date -u` for the stamp. It writes only its
 two outputs. Exit codes:
@@ -75,22 +82,22 @@ TAG = "note-2026-10-v1"
 TAG_SOURCE = ("the PI's routing of 2026-10-09, item (7), as routed to Code: tag name note-2026-10-v1, placed on the "
               "final audit commit after N1 and N18; the block leaves the name to the PI and suggests it at "
               "AUDIT-note-release-v1_2.md@bbc9ffe:14")
-NOTE = "RESEARCH-NOTE-v0_4-draft.md"
-SVGS = ["2026-10-09_F1a_headline-strip.svg", "2026-10-09_F1b_five-link-panels.svg",
-        "2026-10-09_F2_macar-lineage-roc_post.svg"]
+NOTE = "RESEARCH-NOTE-v0_5-draft.md"
+SVGS = ["2026-10-10_F1a_headline-strip.svg", "2026-10-10_F1b_five-link-panels.svg",
+        "2026-10-10_F2_macar-lineage-roc_post.svg"]
 # Routed values, abbreviated as routed. The note's is the PI's routing to this part ("5a34309f...71"); the
 # SVGs' are the routed values the N1 final ledger records (note_rows_final.files[].routed), checked below.
 ROUTED = {
-    NOTE: ("c4a05c781113cb2eceea0404d93ae723cc8dd32c2d8793d53cdb6067ee4ba9bc", "",
-           "the PI's routing of 2026-10-09 (rulings), which gives the note's full sha256"),
-    SVGS[0]: ("4e4cbbb1f8a31485d767c5f620614c90e1e88c6fc7b4985a805485a87eea0e2e", "",
-              "no sha256 routed: the full sha256 of Code's copy from the Digest seat's folder (2026-10-09), as N1 round 8 records it"),
-    SVGS[1]: ("25e0dd99a685a0c13e7d47c85a4e7200d05caf44f600b45518c5bbcc6614915c", "",
-              "no sha256 routed: the full sha256 of Code's copy from the Digest seat's folder (2026-10-09), as N1 round 8 records it"),
-    SVGS[2]: ("e2a38e74711e6da6ba7480f8425a1fb18b3ed074a7bf1ed38b5ac66c6fc17824", "",
-              "no sha256 routed: the full sha256 of Code's copy from the Digest seat's folder (2026-10-09), as N1 round 8 records it"),
+    NOTE: ("4c2810e1f2be012e2a419d9ef3a154c0e1f4abb5dde5caac067d9ec361e4ce5b", "",
+           "the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256"),
+    SVGS[0]: ("6ffad6cd971aabdc70d7b684a6408988c9a05e5445125d3ce61a78557405cee6", "",
+              "the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256"),
+    SVGS[1]: ("6fcb060f6a2cf2c0ce1f5374c3267c5cec67304994a9967e49a2afaffcf6113e", "",
+              "the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256"),
+    SVGS[2]: ("81b13e805e64e6a9534e65e6dfeb50d6c6a65cf3d8b02b9cb3a1e36852e5ac4e", "",
+              "the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256"),
 }
-LEDGER = "results/raw/2026-10-09_note-N1-v0_4-claims-ledger.json"
+LEDGER = "results/raw/2026-10-10_note-N1-v0_5-claims-ledger.json"
 N13_JSON = "results/raw/2026-10-08_note-N13-provenance.json"
 PREPRINT = "PREPRINT-v1_0-draft.md"
 PREPRINT_REF = ("d6431e97", "222b8")  # block :21, "post-patch-v4 copy, sha `d6431e97…222b8`"

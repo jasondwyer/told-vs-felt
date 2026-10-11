@@ -1,8 +1,8 @@
 # AUDIT-note-release v1.2 -- N18: release manifest (hashes for the note)
 
-- Code stamp: 2026-10-10 14:29:53 UTC (date -u); HEAD at run `ea47e89aba16e6fe967d341be45289a505027aba` (branch main)
+- Code stamp: 2026-10-11 10:22:06 UTC (date -u); HEAD at run `84801cb5fad5f7bf06b5213fdb8bf9a55e369d6b` (branch main)
 - Block `AUDIT-note-release-v1_2.md` sha256 `8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841` (matches the routed 8cd8a9ac...3841; equal to its committed version at `bbc9ffe`); N18 is block :132-133
-- Script `scripts/audit_note_N18.py` sha256 `47bcefb66f909b7af59be7416c3af42860bbd1ac810186d6e6ad565918c2f934`; interpreter /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python (Python 3.12.9)
+- Script `scripts/audit_note_N18.py` sha256 `fe504d250c6a5e73d872a9f13fb674fd31704d4d80004b8eb78654b8fb895126`; interpreter /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python (Python 3.12.9)
 - The JSON beside this file is the manifest; this file summarises it.
 
 ## Tag
@@ -15,21 +15,22 @@
 
 | file | sha256 | asserted against | tracked at HEAD |
 |---|---|---|---|
-| `RESEARCH-NOTE-v0_4-draft.md` | `c4a05c781113cb2eceea0404d93ae723cc8dd32c2d8793d53cdb6067ee4ba9bc` | c4a05c781113cb2eceea0404d93ae723cc8dd32c2d8793d53cdb6067ee4ba9bc (the PI's routing of 2026-10-09 (rulings), which gives the note's full sha256): PASS | no (untracked) |
-| `2026-10-09_F1a_headline-strip.svg` | `4e4cbbb1f8a31485d767c5f620614c90e1e88c6fc7b4985a805485a87eea0e2e` | 4e4cbbb1f8a31485d767c5f620614c90e1e88c6fc7b4985a805485a87eea0e2e (no sha256 routed: the full sha256 of Code's copy from the Digest seat's folder (2026-10-09), as N1 round 8 records it): PASS | no (untracked) |
-| `2026-10-09_F1b_five-link-panels.svg` | `25e0dd99a685a0c13e7d47c85a4e7200d05caf44f600b45518c5bbcc6614915c` | 25e0dd99a685a0c13e7d47c85a4e7200d05caf44f600b45518c5bbcc6614915c (no sha256 routed: the full sha256 of Code's copy from the Digest seat's folder (2026-10-09), as N1 round 8 records it): PASS | no (untracked) |
-| `2026-10-09_F2_macar-lineage-roc_post.svg` | `e2a38e74711e6da6ba7480f8425a1fb18b3ed074a7bf1ed38b5ac66c6fc17824` | e2a38e74711e6da6ba7480f8425a1fb18b3ed074a7bf1ed38b5ac66c6fc17824 (no sha256 routed: the full sha256 of Code's copy from the Digest seat's folder (2026-10-09), as N1 round 8 records it): PASS | no (untracked) |
+| `RESEARCH-NOTE-v0_5-draft.md` | `4c2810e1f2be012e2a419d9ef3a154c0e1f4abb5dde5caac067d9ec361e4ce5b` | 4c2810e1f2be012e2a419d9ef3a154c0e1f4abb5dde5caac067d9ec361e4ce5b (the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256): PASS | no (untracked) |
+| `2026-10-10_F1a_headline-strip.svg` | `6ffad6cd971aabdc70d7b684a6408988c9a05e5445125d3ce61a78557405cee6` | 6ffad6cd971aabdc70d7b684a6408988c9a05e5445125d3ce61a78557405cee6 (the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256): PASS | no (untracked) |
+| `2026-10-10_F1b_five-link-panels.svg` | `6fcb060f6a2cf2c0ce1f5374c3267c5cec67304994a9967e49a2afaffcf6113e` | 6fcb060f6a2cf2c0ce1f5374c3267c5cec67304994a9967e49a2afaffcf6113e (the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256): PASS | no (untracked) |
+| `2026-10-10_F2_macar-lineage-roc_post.svg` | `81b13e805e64e6a9534e65e6dfeb50d6c6a65cf3d8b02b9cb3a1e36852e5ac4e` | 81b13e805e64e6a9534e65e6dfeb50d6c6a65cf3d8b02b9cb3a1e36852e5ac4e (the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256): PASS | no (untracked) |
 
 - Untracked at this run. N1 final's first condition on the tag (§9g) is that the tag commit contains the note and all 3 SVGs.
 - If the note or any SVG changes before the tag commit, N1 and then N18 must be re-run (see "Before the tag commit" below).
 - The block puts the note's sha256 in the note's footer (:133). A footer inside the hashed file changes that file's sha256, so the footer cannot state the hash of the file that contains it; how the footer and the repository copy relate is the design seat's to settle.
-- N1 final (`results/raw/2026-10-09_note-N1-v0_4-claims-ledger.json`, run at HEAD `ea47e89aba16`) covers exactly these three sha256s and is not provisional; its note-rows file `results/raw/2026-10-09_note-N1-v0_4-note-rows.json` is unchanged since (sha256 `e3d4f083aad815f53efdfefb045f2561ca4f9528305f21ee384deb73942b2c21`).
-- **Figures commit (N1 final):** `e60b633142f0ff5ec574da022a7117d18711e32b` (2026-10-09T21:04:01-04:00), set by S1#173, S5#72, S5#77. Basis: N1 final, note_rows_final.tag.including_audit_raws (the note carries computed-new figures and figures whose only carrier is an audit raw: N19's, N2 round 6's); stated plainly at results/raw/2026-10-09_note-N1-v0_4-claims-ledger.md:2028 (the file as read at this run). Ancestor of HEAD at this run: yes. N1's record-sources-only candidate, as N1 states it: `05c4636` (2026-10-06T00:42:09-04:00).
-- The N1 script's sha256 now equals the one the ledger records (`52bfd8d4dff33670`).
+- N1 final (`results/raw/2026-10-10_note-N1-v0_5-claims-ledger.json`, run at HEAD `84801cb5fad5`) covers exactly these three sha256s and is not provisional; its note-rows file `results/raw/2026-10-10_note-N1-v0_5-note-rows.json` is unchanged since (sha256 `0af1e9fe6967553d42338abcd1bbcc69f16f90f11008323f96f967acf548da61`).
+- **Figures commit (N1 final):** `fd2b1364dea83a3433791cf4a751f05966f9aaf5` (2026-10-10T10:30:53-04:00), set by S1#236, S1#237. Basis: N1 final, note_rows_final.tag.including_audit_raws (the note carries computed-new figures and figures whose only carrier is an audit raw: N19's, N2 round 6's); stated plainly at results/raw/2026-10-10_note-N1-v0_5-claims-ledger.md:2075 (the file as read at this run). Ancestor of HEAD at this run: yes. N1's record-sources-only candidate, as N1 states it: `05c4636` (2026-10-06T00:42:09-04:00).
+- The N1 script's sha256 now equals the one the ledger records (`0c5a98f04b33221d`).
 
 ## Preprint
 
-- `PREPRINT-v1_0-draft.md`: **pending patch v6** (sha256 null). The file on disk equals the block's reference d6431e97…222b8 (post-patch-v4 copy), AUDIT-note-release-v1_2.md@bbc9ffe:21.
+- `PREPRINT-v1_0-draft.md`: sha256 `0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22`; post-patch-v6, as confirmed by the PI (confirmation supplied to this run with --preprint-pi-confirmed; see pi_confirmation) (reference d6431e97…222b8 (post-patch-v4 copy), AUDIT-note-release-v1_2.md@bbc9ffe:21).
+- PI confirmation: the full sha256 was supplied on the command line as the PI's confirmation that this file is the post-v6 preprint; the script asserted it equals the file on disk and cannot see the confirmation itself (the command is recorded in `command`).
 - Routing: the PI's routing of 2026-10-09, item (5), as routed to Code: PREPRINT-v1_0-draft.md is committed at the tag after patch v6 is applied. If patch v6 arrives, or the file otherwise changes, after this run and before the tag commit, N18 must be re-run: this section describes the file as found at this run, and the tag commit is to hold the post-v6 file.
 
 ## N13 provenance table: version content sha256 per row
@@ -66,11 +67,11 @@ Read from `results/raw/2026-10-08_note-N13-provenance.json@09c3a8c` (sha256 `fad
 
 ## Files at this run
 
-- Wait check: `README-NOTE.md` last modified 2026-10-10T14:29:44Z (local date 2026-10-10; today 2026-10-10): modified today; hashed as it stood at this run.
-- Wait check: `results/raw/2026-10-08_note-N12-scrub.md` last modified 2026-10-10T14:19:32Z (local date 2026-10-10; today 2026-10-10): modified today; hashed as it stood at this run.
-- 90 files (README-NOTE.md, LICENSE, LICENSE-CC-BY-4.0, LICENSING.md, data/e2a/analysis.correction-of-record.json, the N1 final ledger md/json, every results/raw/*_note-* file and every scripts/audit_note_*.py on disk at this run, sorted by path; this script's own two outputs and any results/raw/*_note-release-manifest.json/.md are excluded (a file cannot carry its own hash). tracked_at_head and equal_to_head compare the working file's git blob id with HEAD's.). Excluded: `results/raw/2026-10-09_note-release-manifest.json`, `results/raw/2026-10-09_note-release-manifest.md`.
-- Digest of the list: `cfe226464100f2d1dac23e3d33b5858a8626da17209ef2a645c9c2c4c856f48e` (sha256 of the lines '<sha256>  <path>\n' over files.list in its order (sorted by path); equal to piping `shasum -a 256 <the paths in that order>` into `shasum -a 256`).
-- Tracked at HEAD: 86 of 90; equal to HEAD: 81. Files untracked or changed since HEAD are hashed as they stand; any change to a listed file before the tag commit requires a re-run.
+- Wait check: `README-NOTE.md` last modified 2026-10-11T10:21:58Z (local date 2026-10-11; today 2026-10-11): modified today; hashed as it stood at this run.
+- Wait check: `results/raw/2026-10-08_note-N12-scrub.md` last modified 2026-10-10T14:19:32Z (local date 2026-10-10; today 2026-10-11): not modified today; read as found.
+- 94 files (README-NOTE.md, LICENSE, LICENSE-CC-BY-4.0, LICENSING.md, data/e2a/analysis.correction-of-record.json, the N1 final ledger md/json, every results/raw/*_note-* file and every scripts/audit_note_*.py on disk at this run, sorted by path; this script's own two outputs and any results/raw/*_note-release-manifest.json/.md are excluded (a file cannot carry its own hash). tracked_at_head and equal_to_head compare the working file's git blob id with HEAD's.). Excluded: `results/raw/2026-10-09_note-release-manifest.json`, `results/raw/2026-10-09_note-release-manifest.md`.
+- Digest of the list: `7e24aee6eba61eed3165b619b6bb55e715ee8fbb4d36a44b6aa54f01605f6217` (sha256 of the lines '<sha256>  <path>\n' over files.list in its order (sorted by path); equal to piping `shasum -a 256 <the paths in that order>` into `shasum -a 256`).
+- Tracked at HEAD: 90 of 94; equal to HEAD: 85. Files untracked or changed since HEAD are hashed as they stand; any change to a listed file before the tag commit requires a re-run.
 
 The named files and N1's final outputs, and every listed file that is untracked or differs from HEAD (the full list with sha256s is in the JSON, `files.list`):
 
@@ -79,17 +80,17 @@ The named files and N1's final outputs, and every listed file that is untracked 
 | `LICENSE` | `cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30` | equal |
 | `LICENSE-CC-BY-4.0` | `cce5d01fa4a83b794271bd2c28cffdf99afd43c803e6ddefddae39b591ea7448` | equal |
 | `LICENSING.md` | `6d4d012a04f543c148f909019d79c61ba854100c32a4d1e0893bc955f4a4e441` | equal |
-| `README-NOTE.md` | `83b54784086d327131198d6ef0d12b5b2f1a5da69aaca2083d58b079d468043b` | modified |
+| `README-NOTE.md` | `603f7294cf31203703d9d6b48e20c245baf100f17bad7d9d511124881e9f6511` | modified |
 | `data/e2a/analysis.correction-of-record.json` | `1c2727f9759d3b477aa86bff0fc580345f1a034543e7cf706edfff874e192bb4` | equal |
-| `results/raw/2026-10-08_note-N12-scrub.md` | `e46425c9d119e3824ccd73bdae8947871fd5d8972116a1a6c04e8f497f84d968` | modified |
 | `results/raw/2026-10-09_note-N1-note-rows.json` | `5f8f76cd5b4e18bff19c9419044734eff3aab22bce86d005438fd56e2e01f6ce` | equal |
-| `results/raw/2026-10-09_note-N1-v0_4-claims-ledger.json` | `5f541463bad2311538eb07f8fe5047b31aa430afdac31f8dda5026a98d37ebff` | untracked |
-| `results/raw/2026-10-09_note-N1-v0_4-claims-ledger.md` | `e5cb92c00dd2fc502822f593ddf0d49f2f33d348aef7893c0240237878eef1fb` | untracked |
-| `results/raw/2026-10-09_note-N1-v0_4-note-rows.json` | `e3d4f083aad815f53efdfefb045f2561ca4f9528305f21ee384deb73942b2c21` | untracked |
-| `results/raw/2026-10-10_note-N1-v0_4_valuescheck.md` | `9f8a49fa9df6809a246be4fb3a1ca103b8ea1b51d7615f2c3677234f19a117d6` | untracked |
-| `scripts/audit_note_N1.py` | `52bfd8d4dff336702ba85c743f80fda26113565e584d37d5bf9a6d3e448af9f3` | modified |
-| `scripts/audit_note_N12_scrub.py` | `bdef4095c4d8e01c5d590497b92c18be39062ce39bf040ee37f6cda408f81744` | modified |
-| `scripts/audit_note_N18.py` | `47bcefb66f909b7af59be7416c3af42860bbd1ac810186d6e6ad565918c2f934` | modified |
+| `results/raw/2026-10-10_note-N1-v0_5-claims-ledger.json` | `6593efeee5eafc52aaa851aa7e79ffc99ba008d6be7a0315c90b9a320b57fe58` | untracked |
+| `results/raw/2026-10-10_note-N1-v0_5-claims-ledger.md` | `b52c78bbd456f3a8ed5f752e87b969c4b4bdc0fbc458462e4a132e3b9983e823` | untracked |
+| `results/raw/2026-10-10_note-N1-v0_5-note-rows.json` | `0af1e9fe6967553d42338abcd1bbcc69f16f90f11008323f96f967acf548da61` | untracked |
+| `results/raw/2026-10-11_note-N1-v0_5_valuescheck.md` | `bb401e93ea3cd17b3692323f45f701545d97d47386c871d282407dab701d1794` | untracked |
+| `scripts/audit_note_N1.py` | `0c5a98f04b33221d31b3db1c46a6f3eeae8b69fe425d018acf6e1a145a942400` | modified |
+| `scripts/audit_note_N12_content.py` | `9b11e7101bd6d0f3282a053bbc8a201c83e4eab9a3a2279a0c66059f36e28f05` | modified |
+| `scripts/audit_note_N12_history.py` | `ea7bef25c914e6ba20c74ec64568533b1419db5f580b90797a0d9962a306da59` | modified |
+| `scripts/audit_note_N18.py` | `fe504d250c6a5e73d872a9f13fb674fd31704d4d80004b8eb78654b8fb895126` | modified |
 
 ## Before the tag commit
 
