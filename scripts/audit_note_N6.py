@@ -23,6 +23,30 @@ Usage (from anywhere):
 
 Deterministic apart from the run-metadata lines (stamp, HEAD at run time,
 command line). No randomness is used anywhere.
+
+Round 9 preparation (2026-10-10): re-pointed at the preprint of record, the
+patch-v6 text PREPRINT-v1_0-draft.md at sha256 0f4ba501...16c22 (the PI's
+ruling 9 of 2026-10-10, as corrected). The block's d6431e97...222b8 is
+recorded as the audited, superseded text, archived untracked at
+archive/PREPRINT-v1_0-draft.pre-patch-v6.md (out of the release; never
+required -- read, if present, only to verify the quoted old :111 line). The
+:176 needle re-anchors on the patched text; the :111 needle no longer matches
+(patch v6 rewrote that sentence), and the failed check is recorded in §6 as a
+finding on the patch for the design seat, not a STOP. The first pass changed
+only preprint-tied text. Fix round (2026-10-10): the patch-v6 wording (§6 heading, the finding,
+the re-anchor line) is printed only when the working-tree sha256 equals the
+text of record, and the rewrite branch fires only when the old needle is absent;
+the finding checks each clause of the new sentence (phrase present, and the
+computed fact it states); a locator-mismatch list now ends with a full stop.
+Second fix round (2026-10-10): the preprint's sha256 is asserted equal to the
+text of record in §0, before anything is written (as N5, N7 and N17 do): any
+other text exits non-zero with a 'refusing: ... MISMATCH' line and writes
+nothing, so a MISMATCH is never credited to 0f4ba501 and never leaves a raw;
+the §0 scope clause names both audited-text :111 locators (§6 and the Figures
+row, the latter now derived from the committed raw's locator); the gloss
+bullet notes that patch v6 rewrites the sentence; the --json-out-following raw
+path of the first fix round is reverted (no effect on the default-path run of
+record, and not tied to the preprint).
 """
 from __future__ import annotations
 
@@ -38,6 +62,7 @@ import inspect
 import json
 import math
 import os
+import re
 import shlex
 import subprocess
 from fractions import Fraction
@@ -47,9 +72,22 @@ PIN = "bbc9ffe"
 BLOCK = "AUDIT-note-release-v1_2.md"
 BLOCK_SHA = "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841"
 PREPRINT = "PREPRINT-v1_0-draft.md"
-PREPRINT_SHA = "d6431e97d35e5914574ff9884c0e64463a7baf1cf9d279f27ed45a683a6222b8"
+# Round 9: the preprint of record is the patch-v6 text (the PI's ruling 9 of 2026-10-10, as corrected).
+PREPRINT_SHA = "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22"
+PREPRINT_RULING = "the PI's ruling 9 of 2026-10-10, as corrected"
+# The block's reference: the audited, superseded text (archived untracked; out of the release; never required).
+PREPRINT_AUDITED_SHA = "d6431e97d35e5914574ff9884c0e64463a7baf1cf9d279f27ed45a683a6222b8"
+PREPRINT_AUDITED_ARCHIVE = "archive/PREPRINT-v1_0-draft.pre-patch-v6.md"
 DEF_OUT = "results/raw/2026-10-08_note-N6-e2b.md"
 DEF_JSON = "results/raw/2026-10-08_note-N6-e2b.json"
+RAW_COMMIT = "09c3a8c"   # the commit of this item's raw over the audited text (DEF_OUT, DEF_JSON)
+PRE111_NEEDLE = "(π̂_d = 0.0172 against a 0.0735 bar)"   # the audited text's :111 needle
+# The audited text's :111, verbatim: the sentence patch v6 rewrote (its needle and gloss are in the raw at RAW_COMMIT).
+PRE111_AUDITED = ("**State-present choice.** For the present-tense cell, in which the state must be live at the "
+                  "decision, the read is made with the vector on but only after leakage certification: a "
+                  "pre-registered bound on the direct displacement of label logits by the vector (π̂_d = 0.0172 "
+                  "against a 0.0735 bar), and counterbalanced maps that turn any residual direct push into noise "
+                  "rather than signal.")
 QUARANTINED = "valence_core.e2b.statepresent"
 # Round 2: the pass-2 run whose Pass-1 comparison paragraph is quoted verbatim in the Values-check
 # (that run took --compare-json <session scratch>/builder_N6.json; neither file is in the repository).
@@ -425,10 +463,25 @@ def main() -> int:
     pre_sha = sha256_bytes(pre_bytes)
     pre_text = pre_bytes.decode("utf-8")
     tracked_pre = git("ls-tree", PIN, PREPRINT).stdout.decode().strip() != ""
+    pre_match = pre_sha == PREPRINT_SHA
+    if not pre_match:   # round 9: asserted in full, before anything is written (as N5, N7, N17)
+        raise SystemExit(f"refusing: `{PREPRINT}` sha256 {pre_sha} is not the preprint of record "
+                         f"{PREPRINT_SHA} ({PREPRINT_RULING}); MISMATCH: the working-tree file is not "
+                         "credited to the text of record, and nothing is written")
+    # Past the gate pre_match is True; the pre_match conditions below are kept as guards.
+    # the rewrite branch: the working tree IS the text of record and the audited needle is absent from it
+    pre111_patched = pre_match and lines_with(pre_text, PRE111_NEEDLE) == []
     P(f"- `{PREPRINT}` (root, {'tracked' if tracked_pre else 'UNTRACKED: absent from any clone'}) "
-      f"sha256 `{pre_sha}` ({'MATCH' if pre_sha == PREPRINT_SHA else 'MISMATCH'} vs the block's "
-      "d6431e97...222b8). Its locators below are working-tree lines of that file.")
-    J["preprint"] = {"sha256": pre_sha, "match": pre_sha == PREPRINT_SHA, "tracked": tracked_pre}
+      f"sha256 `{pre_sha}` ({'MATCH' if pre_match else 'MISMATCH'} vs the preprint of "
+      f"record {PREPRINT_SHA[:8]}...{PREPRINT_SHA[-5:]}, patch v6, {PREPRINT_RULING}; the block's "
+      f"{PREPRINT_AUDITED_SHA[:8]}...{PREPRINT_AUDITED_SHA[-5:]} is the audited, superseded text, archived "
+      f"untracked at {PREPRINT_AUDITED_ARCHIVE} and not required here). Its locators below are "
+      "working-tree lines of that file"
+      + (f", except the audited-text :111 locators (§6 and the Figures row), which are read from this "
+         f"item's committed raw {DEF_JSON}@{RAW_COMMIT}." if pre111_patched else "."))
+    J["preprint"] = {"sha256": pre_sha, "match": pre_match, "tracked": tracked_pre,
+                     "of_record_sha256": PREPRINT_SHA, "of_record_ruling": PREPRINT_RULING,
+                     "audited_sha256": PREPRINT_AUDITED_SHA, "audited_archive": PREPRINT_AUDITED_ARCHIVE}
     P("")
 
     # provenance order (read-only git)
@@ -1654,27 +1707,121 @@ def main() -> int:
                  "not code. None is a STOP; the README can say exactly this.")
 
     # ------------------------------------------------- §6 preprint --
-    P("## 6. The preprint's two e2b sentences (post-patch-v4 copy, untracked)")
+    P("## 6. The preprint's two e2b sentences ("
+      + ("patch-v6 text of record, untracked)" if pre_match else
+         f"working-tree copy, untracked, sha256 {pre_sha[:8]}...{pre_sha[-5:]}: MISMATCH vs the patch-v6 "
+         "text of record)"))
     P("")
-    l111 = loc(PREPRINT, "(π̂_d = 0.0172 against a 0.0735 bar)", "PRE.111", text=pre_text, tag="wt")
+    l111 = loc(PREPRINT, PRE111_NEEDLE, "PRE.111", text=pre_text, tag="wt")
     l176 = loc(PREPRINT, "Δ_first = −0.0104 (47/96; shadow passes 48/96 exactly)", "PRE.176",
                text=pre_text, tag="wt")
+    # Round 9: the audited text's locators, as this item's committed raw recorded them (read-only git).
+    raw_js = json.loads(git("show", f"{RAW_COMMIT}:{DEF_JSON}").stdout.decode("utf-8"))
+    raw_md = git("show", f"{RAW_COMMIT}:{DEF_OUT}").stdout.decode("utf-8")
+    aud_loc = {k_: raw_js["locators"][k_]["lines"] for k_ in ("PRE.111", "PRE.176")}
+    aud_short = f"{PREPRINT_AUDITED_SHA[:8]}...{PREPRINT_AUDITED_SHA[-5:]}"
+    rec_short = f"{PREPRINT_SHA[:8]}...{PREPRINT_SHA[-5:]}"
+    pre_lines = pre_text.split("\n")
+    q176 = "Δ_first = −0.0104 (47/96; shadow passes 48/96 exactly), null on all three conjuncts"
+    # written only on a MATCH (the §0 gate refuses any other text), so 'patched' names the text of record
+    J["preprint"]["reanchored"] = {
+        "PRE.176": {"audited_lines": aud_loc["PRE.176"], "patched_lines": LOCATORS["PRE.176"]["lines"],
+                    "quoted_phrase_in_patched_line": LOCATORS["PRE.176"]["ok"]
+                    and q176 in pre_lines[LOCATORS["PRE.176"]["lines"][0] - 1]}}
     P(f"- {l176}: \"Δ_first = −0.0104 (47/96; shadow passes 48/96 exactly), null on all three "
       "conjuncts\" -- every number reproduces (§2b, §2c); 'null on all three conjuncts' holds under "
       "the operative LOCK-h v2.0 envelope (|·|), and under PROPOSAL-h's literal signed wording (i) "
       f"would pass ({c1_signed}) while the verdict stays {verdict} (§2a).")
+    assert pre111_patched == (pre_match and LOCATORS["PRE.111"]["lines"] == [])   # same test as §0
+    l111_wt = l111
+    if pre111_patched:   # the audited sentence, located as the committed raw located it
+        l111 = (f"{PREPRINT}:" + ",".join(map(str, aud_loc["PRE.111"]))
+                + f" (audited text {aud_short}, superseded; locator from {DEF_JSON}@{RAW_COMMIT})")
+        LOCATORS["PRE.111"]["note"] = ("the audited text's needle, absent from the patch-v6 text of record: "
+                                       "a finding on the patch (§6; /preprint/patch_findings), not a "
+                                       "locator defect; the sentence re-anchors as PRE.111.v6")
     P(f"- {l111}: the numbers reproduce (π̂_d = 0.0172, bar 0.0735), but the gloss \"a "
       "pre-registered bound on the direct displacement of label logits by the vector\" is not "
       "what the record measures: π̂_d is a pick-discordance rate (state-present pick ≠ shadow "
       "pick over the same prefix), and the pre-registered bound (0.0735) is on the +tag-"
       "directional leak L, which π̂_d bounds through |L| ≤ π̂_d. The probability displacement "
       "(`d_p_a`, `d_label_mass`) is recorded per read but is descriptive, not the certified "
-      "quantity. Replace the gloss with §3b's short form. A definition error, not a transcription "
-      "of a number.")
+      "quantity. Replace the gloss with §3b's short form"
+      + (" (patch v6 rewrites this sentence: the finding on the patch below; whether the rewrite "
+         "discharges this is the design seat's and N1's call)" if pre111_patched else "")
+      + ". A definition error, not a transcription of a number.")
+    PATCH_F: list[dict] = []
+    if pre111_patched:   # round 9: the failed check is a finding on the patch (ruling 9), not a STOP
+        n_old = aud_loc["PRE.111"][0]
+        l111v6 = loc(PREPRINT, "π̂_d = 0.0172 (11 of 640 paired reads)", "PRE.111.v6", text=pre_text, tag="wt")
+        new_ln = LOCATORS["PRE.111.v6"]["lines"]
+        new_line = pre_lines[new_ln[0] - 1] if len(new_ln) == 1 else None
+        gloss = "a pre-registered bound on the direct displacement of label logits by the vector"
+        prov = {"raw_audited_sha_match": raw_js["preprint"]["sha256"] == PREPRINT_AUDITED_SHA
+                and raw_js["preprint"]["match"] is True,
+                "raw_needle_in_old_line": raw_js["locators"]["PRE.111"]["needle"] in PRE111_AUDITED,
+                "raw_md_gloss_in_old_line": f"the gloss \"{gloss}\"" in raw_md and gloss in PRE111_AUDITED}
+        arch = os.path.join(REPO, PREPRINT_AUDITED_ARCHIVE)
+        if os.path.exists(arch):   # optional; never required
+            with open(arch, "rb") as fh:
+                arch_b = fh.read()
+            prov["archive_sha_match"] = sha256_bytes(arch_b) == PREPRINT_AUDITED_SHA
+            prov["archive_line_equal"] = (prov["archive_sha_match"] and
+                                          arch_b.decode("utf-8").split("\n")[n_old - 1] == PRE111_AUDITED)
+        else:
+            prov["archive_sha_match"] = prov["archive_line_equal"] = "not checked (archived copy absent)"
+        chk = None
+        pi_in = -bar < pil and pih < bar
+        cp_level = round(100 * inspect.signature(clopper_pearson).parameters["conf"].default)
+        if new_line is not None:
+            nums_ = lambda s_: list(dict.fromkeys(re.findall(r"\d+(?:\.\d+)?", s_)))
+            new_nums = [x_ for x_ in nums_(new_line) if x_ not in nums_(PRE111_AUDITED)]
+            ph_in = f"exact 95% interval lies inside the pre-registered ±{bar}"
+            ph_van = "a vanilla read of the byte-identical prefix"
+            chk = {"π̂_d = 0.0172 equals the reproduced value": f"π̂_d = {float(pi):.4f}" in new_line,
+                   "'11 of 640 paired reads' equals n_d/N": f"({nd} of {N} paired reads)" in new_line,
+                   "'±0.0735' equals the bar": f"±{bar}" in new_line,
+                   f"phrase '{ph_in}' present": ph_in in new_line,
+                   f"computed: the mapped exact 95% CI on L, [{L_lo:+.5f}, {L_hi:+.5f}], inside ±{bar}": inside,
+                   f"computed: π̂_d's exact 95% CI, [{pil:.4f}, {pih:.4f}], inside ±{bar} ('whose' may "
+                   "attach to the rate rather than to L)": pi_in,
+                   "phrase 'bounds the directional leak' present": "bounds the directional leak" in new_line,
+                   f"computed: |L̂| = {abs(float(Lh)):.5f} ≤ π̂_d = {float(pi):.4f}": abs(Lh) <= pi,
+                   f"phrase '{ph_van}' present, as in §3b's short form": ph_van in new_line and ph_van in short,
+                   "'pick-discordance rate' present": "pick-discordance rate" in new_line,
+                   "the logit-displacement gloss absent": "displacement of label logits" not in new_line,
+                   f"numbers new to the line {new_nums} are n_d = {nd}, N = {N} and the exact interval's "
+                   f"level {cp_level} (Clopper–Pearson conf default)": new_nums == [str(nd), str(N), str(cp_level)]}
+        PATCH_F.append({"check": "PRE.111", "needle": LOCATORS["PRE.111"]["needle"],
+                        "routing": f"a finding on the patch for the design seat ({PREPRINT_RULING}); not a STOP",
+                        "old": {"sha256": PREPRINT_AUDITED_SHA, "line": n_old, "text": PRE111_AUDITED},
+                        "new": {"sha256": pre_sha, "locator": l111v6, "text": new_line},
+                        "old_line_provenance": prov, "new_line_checks": chk})
+        P(f"- **Finding on the patch** ({PREPRINT_RULING}; for the design seat; not a STOP): the audited "
+          f":{n_old} needle \"{LOCATORS['PRE.111']['needle']}\" is not found in the patched text "
+          f"({l111_wt}): patch v6 rewrote the sentence, which re-anchors at {l111v6} "
+          f"(same line, new sentence). Old (audited text, sha256 {aud_short}, :{n_old}): "
+          f"\"{PRE111_AUDITED}\" New (patched text, sha256 {pre_sha[:8]}...{pre_sha[-5:]}, :{','.join(map(str, new_ln))}): "
+          f"\"{new_line}\" The new sentence against this run's reproduced values (§3a): "
+          + ("; ".join(f"{k_}: {v_}" for k_, v_ in chk.items()) if chk else "not checked (no unique re-anchor)")
+          + ((". Either reading of 'whose' (the directional leak L, as §3b's short form has it, or the rate "
+              "π̂_d) is true by the computed intervals; every number new to the line is a reproduced one"
+              if all(chk.values()) else ". At least one check above is False: the sentence is not "
+              "fully supported by this run's values") if chk else "")
+          + f". Old line's provenance: {DEF_JSON}@{RAW_COMMIT} records the audited sha with MATCH "
+          f"({prov['raw_audited_sha_match']}) and this needle at :{n_old} (needle in the old line: "
+          f"{prov['raw_needle_in_old_line']}); {DEF_OUT}@{RAW_COMMIT} quotes the gloss (in the old line: "
+          f"{prov['raw_md_gloss_in_old_line']}); byte-equal to :{n_old} of the archived copy: "
+          f"{prov['archive_line_equal']}. The Figures row for the gloss is the audited text's and keeps its "
+          "status, carried unchanged; whether the patched sentence discharges it is the design seat's and "
+          "N1's call.")
+    J["preprint"]["patch_findings"] = PATCH_F
     P("")
-    NOTES.append("Preprint :111 glosses π̂_d as 'a pre-registered bound on the direct displacement of "
+    NOTES.append("Preprint :111 " + (f"(the audited text, sha256 {aud_short}) " if pre111_patched else "")
+                 + "glosses π̂_d as 'a pre-registered bound on the direct displacement of "
                  "label logits'; the record's π̂_d is a pick-discordance rate and the bar bounds L. Numbers "
-                 "reproduce; the gloss is the discrepancy (definition, not transcription).")
+                 "reproduce; the gloss is the discrepancy (definition, not transcription)."
+                 + (" Patch v6 rewrites the line: a finding on the patch (§6)." if pre111_patched else ""))
 
     # ------------------------------------------------- figures --
     P("## Figures (as the block writes them)")
@@ -1753,11 +1900,18 @@ def main() -> int:
         "(11/640, b 6 / c 5, the mapped CI, the bar) is reproduced in its own row; short and long "
         "forms of the sentence in §3b")
     fig("preprint :111 gloss 'direct displacement of label logits'", "π̂_d is a pick-discordance rate, not a logit displacement",
-        "PREPRINT-v1_0-draft.md:111 (untracked, sha d6431e97...)", "discrepant",
+        # round 9: when patched, the line is the audited text's, as the committed raw located it (§0)
+        (f"PREPRINT-v1_0-draft.md:{','.join(map(str, aud_loc['PRE.111']))} (untracked, sha d6431e97...)"
+         f" as audited (superseded; patch v6, sha {rec_short}, rewrites "
+         f":{','.join(map(str, aud_loc['PRE.111']))}: §6)" if pre111_patched
+         else "PREPRINT-v1_0-draft.md:111 (untracked, sha d6431e97...)"),
+        "discrepant",
         "values reproduced (π̂_d 0.0172 and bar 0.0735, rows above); the gloss is discrepant -- a "
         "definition error, not a transcription; no number in this row is discrepant. For N1 "
         "(block :23): a sentence correction; replace the gloss with §3b's short form. Routing is "
-        "N1's and the design seat's; N6 raises no STOP")
+        "N1's and the design seat's; N6 raises no STOP"
+        + ("; the status is the audited text's, carried unchanged; the rewrite is a finding on the patch "
+           "for the design seat (§6)" if pre111_patched else ""))
     fig("verdict in-campaign leak: half-gap +0.00198 = 2.7% of bar; flip rate 0.0191",
         f"{mk_hg[0]:+.5f} ({pct(mk_hg[0], bar)}); {mk_bc[1]}/{mk_bc[0]} = {mk_bc[1] / mk_bc[0]:.4f}",
         "verdict_analysis.json descriptives.marker_leak", "reproduced" if vl_ok else "discrepant",
@@ -1797,7 +1951,15 @@ def main() -> int:
     P(f"{len(LOCATORS)} needles searched in pinned blobs (preprint: working tree); "
       f"{len(LOCATORS) - len(bad_loc)} matched their expected count"
       + ("." if not bad_loc else "; mismatches: " + "; ".join(
-          f"{k} expected {v['expect']} got {v['lines']}" for k, v in bad_loc.items())))
+          f"{k} expected {v['expect']} got {v['lines']}" for k, v in bad_loc.items()))
+      + (" (PRE.111 is the audited text's needle, gone from the patched text: a finding on the patch, "
+         "§6, not a locator defect; the sentence re-anchors as PRE.111.v6)." if pre111_patched
+         else ("." if bad_loc else ""))
+      + (" Preprint re-anchored to the patched text" if pre_match else
+         " Preprint working-tree copy (MISMATCH vs the patch-v6 text of record)")
+      + f": PRE.176 at :"
+        f"{','.join(map(str, LOCATORS['PRE.176']['lines']))} (audited :"
+        f"{','.join(map(str, aud_loc['PRE.176']))}, from {DEF_JSON}@{RAW_COMMIT}).")
     P("")
     P("## STOPs")
     P("")
@@ -1808,8 +1970,9 @@ def main() -> int:
         n_disc = sum(1 for r_ in FIG if r_["status"] == "discrepant")
         P("None raised by N6. Every figure the block names reproduces from committed JSON; no "
           "reproduction needed an analyzer change. "
-          f"{n_disc} Figures rows carry status 'discrepant' (the preprint :111 gloss; the leak-family "
-          "characterisation): in both, every number reproduces and the discrepancy is a gloss or a "
+          f"{n_disc} Figures rows carry status 'discrepant' (the preprint :111 gloss"
+          + (" (the audited text's; patch v6 rewrites the line, §6)" if pre111_patched else "")
+          + "; the leak-family characterisation): in both, every number reproduces and the discrepancy is a gloss or a "
           "characterisation, not a transcription of a number. Block :23 routes a non-transcription "
           "'discrepant' figure to a STOP on that item at N1; whether these two rows (no number "
           "discrepant) are figure STOPs or sentence corrections is N1's and the design seat's call, "
@@ -2075,7 +2238,9 @@ def main() -> int:
     with open(out_js, "w", encoding="utf-8") as fh:
         json.dump(J, fh, indent=1, ensure_ascii=False, default=str)
     print(f"wrote {os.path.relpath(out_md, REPO)} and {os.path.relpath(out_js, REPO)}; "
-          f"stops {len(STOPS)}; locator mismatches {len(bad_loc)}")
+          f"stops {len(STOPS)}; locator mismatches {len(bad_loc)}"
+          + (" (PRE.111: the audited text's needle, a finding on the patch, §6; not a STOP)"
+             if pre111_patched else ""))
     return 0
 
 

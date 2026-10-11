@@ -40,6 +40,21 @@ Usage (from anywhere):
 
 Deterministic apart from the run-metadata lines (stamp, HEAD at run time,
 command line, wall-clock). No randomness is used anywhere.
+
+Round 9 (2026-10-10; Tier 1, before N1 round 9): re-pointed at the patched
+preprint per the PI's ruling 9 of 2026-10-10, as corrected. The preprint of
+record is PREPRINT-v1_0-draft.md at sha256 0f4ba501...16c22 (patch v6),
+asserted where the block's d6431e97...222b8 was; that value is recorded as the
+audited, superseded text, archived untracked at
+archive/PREPRINT-v1_0-draft.pre-patch-v6.md (out of the release; this script
+never reads or requires it). Every preprint locator, quoted preprint
+sentence and figure label taken from the preprint's words is re-anchored on
+the patched text and tabulated against its round-1 line, and every preprint
+line or section number written into this raw's text is checked (section
+'Preprint of record (round 9)', appended at the end of the raw so that every
+round-1 line keeps its number); a sentence no longer found is recorded there
+once, as a finding on the patch for the design seat, not a STOP. Nothing not
+tied to the preprint changed.
 """
 from __future__ import annotations
 
@@ -64,7 +79,50 @@ PIN = "bbc9ffe"
 BLOCK = "AUDIT-note-release-v1_2.md"
 BLOCK_SHA = "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841"
 PREPRINT = "PREPRINT-v1_0-draft.md"     # untracked; sha-checked, working tree
-PREPRINT_SHA = "d6431e97d35e5914574ff9884c0e64463a7baf1cf9d279f27ed45a683a6222b8"
+# Round 9: the preprint of record is the patched text (patch v6), the PI's ruling 9 of
+# 2026-10-10 as corrected. The block's d6431e97...222b8 is the audited, superseded text,
+# archived untracked at PREPRINT_ARCHIVED; recorded, never read or required.
+PREPRINT_SHA = "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22"
+PREPRINT_SHA_AUDITED = "d6431e97d35e5914574ff9884c0e64463a7baf1cf9d279f27ed45a683a6222b8"
+PREPRINT_ARCHIVED = "archive/PREPRINT-v1_0-draft.pre-patch-v6.md"
+PREPRINT_RULING = "the PI's ruling 9 of 2026-10-10, as corrected"
+# Every preprint sentence this script locates (loc), quotes, or takes a figure label's words
+# from ("label"), with its round-1 line on the audited text as the committed round-1 raw
+# cites it (09c3a8c:results/raw/2026-10-08_note-N7-olmo.md; () = no line locator there).
+PREPRINT_R1 = {
+    "rises across the lineage (+0.78 base": ("located", (101,)),
+    "(G_c: +0.78 → +1.03 → +1.53 → +1.56)": ("located", (129,)),
+    "the base model passes at layer 60": ("located", (129,)),
+    "Sham contrasts are exactly zero at every stage": ("located", (129,)),
+    "about five times larger at base": ("located", (129,)),
+    "The registered criterion was a conjunction of envelope conditions": ("located", (127,)),
+    "Per-stage minimum effective doses qualify at f = 0.05 (base, L60)": ("located", (139,)),
+    "[TAB 2: every cell": ("located", (170,)),
+    "Four nulls; zero confirmatory triggers": ("located", (184,)),
+    "In the OLMo DPO screen one map returned +0.1667": ("located", (190,)),
+    "feedback-driven training sharpens the marking of evaluation": ("located", (244,)),
+    "in direction units": ("quoted", (101, 129)),
+    "the direction's separation of praise from criticism contexts": ("quoted", (127,)),
+    "sharpens the marking it inherits": ("quoted", (129,)),
+    "feedback-driven training sharpens the marking of evaluation (G_c rises monotonically)":
+        ("quoted", (244,)),
+    "TAB 2 carries the per-stage figures": ("quoted", ()),
+    "ratio of steering displacement to natural contrast": ("label", ()),   # cited by §5.1
+    "All four stages pass the conjunction": ("label", ()),
+    "doses of 1.0 or below": ("label", ()),
+}
+# Preprint line or section numbers written as literals into this raw's text:
+# (as written, where, sentence it names, lines | section number).
+PREPRINT_HARD = (
+    ("§5.1", "figure label 'ratio of steering displacement to natural contrast ~5x larger at "
+     "base (preprint §5.1)'", "ratio of steering displacement to natural contrast", "5.1"),
+    (":244", "Values-check pass 1 #9: 'PREPRINT :244 missing from the 'sharpens' note'",
+     "feedback-driven training sharpens the marking of evaluation", (244,)),
+    (":129/:244", "Values-check pass 2 #1: ':129/:244's 'sharpens the marking''",
+     "sharpens the marking", (129, 244)),
+)
+PRE_SEEN: dict[str, list[int]] = {}      # round 9: sentence -> its lines in the patched text
+PRE_FINDINGS: list[dict] = []            # round 9: sentences not found (findings on the patch)
 DEF_OUT = "results/raw/2026-10-08_note-N7-olmo.md"
 DEF_JSON = "results/raw/2026-10-08_note-N7-olmo.json"
 STAGES = ("base", "sft", "dpo", "instruct")
@@ -136,12 +194,36 @@ def loc(path: str, needle: str, working_tree: bool = False, extra: int = 0) -> s
     else:
         text = pinned_text(path)
     hits = [i for i, l in enumerate(lines_of(text), 1) if needle in l]
+    if working_tree and path == PREPRINT:      # round 9: never a STOP on the preprint
+        PRE_SEEN.setdefault(needle, hits)
+        if not hits:
+            return preprint_finding(needle, lines_of(text))
     if not hits:
         raise SystemExit(f"LOCATOR NOT FOUND: {needle!r} in {path}")
     tag = f"{path}{'' if working_tree else '@' + PIN}:{hits[0]}"
     if extra:
         tag += f"-{hits[0] + extra}"
     return tag if len(hits) == 1 else tag + f" (+{len(hits) - 1} more)"
+
+
+def preprint_finding(needle: str, plines: list[str]) -> str:
+    """Round 9 (ruling 9): a preprint sentence this script checks is not on the patched
+    text. Recorded as a finding on the patch (old line: round-1 locator on the audited
+    text, with the sentence as checked; new line: the patched text at that line number),
+    routed to the design seat; the run continues. A sentence checked more than once is
+    recorded once (its existing P-number is returned)."""
+    for i, p in enumerate(PRE_FINDINGS, 1):
+        if p["sentence_as_checked"] == needle:
+            return f"{PREPRINT}:NOT FOUND (round 9 finding on the patch P{i})"
+    r1 = PREPRINT_R1.get(needle, ("unlisted", ()))[1]
+    PRE_FINDINGS.append({
+        "sentence_as_checked": needle,
+        "old": {"sha256": PREPRINT_SHA_AUDITED, "round1_lines": list(r1)},
+        "new": {"sha256": PREPRINT_SHA,
+                "line_text_at_round1_lines": {str(n): plines[n - 1] for n in r1
+                                              if n <= len(plines)}},
+        "routed_to": "the design seat (a finding on the patch; " + PREPRINT_RULING + ")"})
+    return f"{PREPRINT}:NOT FOUND (round 9 finding on the patch P{len(PRE_FINDINGS)})"
 
 
 def cell(s) -> str:
@@ -419,7 +501,11 @@ def main() -> int:
       "computed-new (a computation the block asks for that the record does not hold). "
       f"Locators are `path@{PIN}:line` as in `git show {PIN}:<path>`; the preprint is untracked "
       f"and is cited from the working tree at sha256 `{PREPRINT_SHA[:8]}...{PREPRINT_SHA[-5:]}`"
-      f" (verified; tracked: {'yes' if tracked_pre else 'NO'}).")
+      f" (verified; tracked: {'yes' if tracked_pre else 'NO'})."
+      f" Round 9: that is the preprint of record, {PREPRINT_RULING} (patch v6); the block's "
+      f"`{PREPRINT_SHA_AUDITED[:8]}...{PREPRINT_SHA_AUDITED[-5:]}` is the audited, superseded "
+      f"text, archived untracked at `{PREPRINT_ARCHIVED}` (out of the release; not read); see "
+      "'Preprint of record (round 9)' at the end of this raw.")
     w("")
     J["header"] = {"stamp": stamp, "head": head, "pin": pin_full,
                    "block_sha256": block_sha_pin,
@@ -428,7 +514,10 @@ def main() -> int:
                    "script_sha256": script_sha, "interpreter": sys.executable,
                    "python": platform.python_version(), "numpy": np.__version__,
                    "command": cmd, "cwd_at_run": run_cwd, "preprint_sha256": pre_sha,
-                   "preprint_tracked": bool(tracked_pre)}
+                   "preprint_tracked": bool(tracked_pre),
+                   "preprint_ruling": PREPRINT_RULING,
+                   "preprint_sha256_audited_superseded": PREPRINT_SHA_AUDITED,
+                   "preprint_audited_archived_untracked": PREPRINT_ARCHIVED}
 
     # ------------------------------------------------------- referents --
     w("## 0. Referents and integrity")
@@ -2129,6 +2218,96 @@ def main() -> int:
         w(f"| {i} | {cell(f_)} | {d_} | {cell(x_)} |")
     w("")
     J["values_check_pass2"] = [{"finding": f_, "disposition": d_, "detail": x_} for f_, d_, x_ in VC2]
+
+    # ------------------------------------- round 9: preprint of record --
+    # Appended after every round-1 section, so each round-1 line keeps its line number.
+    with open(os.path.join(REPO, PREPRINT), encoding="utf-8") as f:
+        plines = lines_of(f.read())
+    for q_, (kind_, _) in PREPRINT_R1.items():      # quoted/label sentences: checked here, non-fatally
+        if kind_ != "located" and q_ not in PRE_SEEN:
+            PRE_SEEN[q_] = [i for i, l in enumerate(plines, 1) if q_ in l]
+            if not PRE_SEEN[q_]:
+                preprint_finding(q_, plines)
+    assert set(PRE_SEEN) == set(PREPRINT_R1), sorted(set(PRE_SEEN) ^ set(PREPRINT_R1))
+    reanchor = []
+    for q_, (kind_, r1_) in PREPRINT_R1.items():
+        h_ = PRE_SEEN[q_]
+        if not h_:
+            res_ = "NOT FOUND: finding on the patch"
+        elif not r1_:
+            res_ = "found (no round-1 locator)"
+        elif kind_ == "located":
+            res_ = "same line" if h_[0] == r1_[0] else f"re-anchored :{r1_[0]} -> :{h_[0]}"
+        else:
+            res_ = "same line(s)" if set(r1_) <= set(h_) else f"re-anchored {list(r1_)} -> {h_}"
+        reanchor.append({"sentence": q_, "kind": kind_, "round1_lines": list(r1_),
+                         "patched_lines": h_, "result": res_})
+    heads_ = [i for i, l in enumerate(plines, 1) if l.startswith("#")]
+    hard = []
+    for as_, where_, q_, want_ in PREPRINT_HARD:
+        # each sentence named here is inside a PREPRINT_R1 sentence, so its absence is
+        # already a finding on the patch above; this check is about the written number
+        assert any(q_ in k_ for k_ in PREPRINT_R1), q_
+        h_ = [i for i, l in enumerate(plines, 1) if q_ in l]
+        if isinstance(want_, str):                   # a section number
+            sec_ = {i: max([j for j in heads_ if j < i], default=0) for i in h_}
+            ok_ = bool(h_) and all(j and plines[j - 1].lstrip("#").strip().startswith(want_ + " ")
+                                   for j in sec_.values())
+            got_ = ("; ".join(f":{i} under :{j} {plines[j - 1].strip()!r}" for i, j in sec_.items())
+                    if h_ else "none")
+        else:                                        # line numbers
+            ok_ = bool(h_) and set(want_) <= set(h_)
+            got_ = ", ".join(map(str, h_)) or "none"
+        # a number that fails because a sentence it names is gone is that finding, not a move
+        rel_ = [f"P{i}" for i, p_ in enumerate(PRE_FINDINGS, 1)
+                if not ok_ and q_ in p_["sentence_as_checked"]]
+        hard.append({"as_written": as_, "where": where_, "sentence": q_,
+                     "expected": want_ if isinstance(want_, str) else list(want_),
+                     "patched": got_, "holds": True if ok_ else (None if rel_ else False),
+                     "findings_on_the_patch": rel_})
+    w("## Preprint of record (round 9)")
+    w("")
+    w(f"Re-pointed per {PREPRINT_RULING}: `{PREPRINT}` at sha256 `{PREPRINT_SHA}` (patch v6) "
+      f"replaces the audited text `{PREPRINT_SHA_AUDITED[:8]}...{PREPRINT_SHA_AUDITED[-5:]}` "
+      f"(archived untracked at `{PREPRINT_ARCHIVED}`; not read). This section is appended after "
+      "every round-1 section, so every line above keeps its round-1 line number. The first table "
+      "lists every preprint sentence this raw locates, quotes, or takes a figure label's words "
+      "from, against its line in the committed round-1 raw "
+      "(`09c3a8c:results/raw/2026-10-08_note-N7-olmo.md`); the second checks every preprint line "
+      "or section number written as a literal into this raw's text. A sentence not found on the "
+      "patched text is a finding on the patch, routed to the design seat; it is not a STOP and "
+      "changes no status above.")
+    w("")
+    w("| sentence (as checked) | use | round-1 line (audited text) | patched-text line(s) | result |")
+    w("|---|---|---|---|---|")
+    for r_ in reanchor:
+        w(f"| {cell(r_['sentence'])} | {r_['kind']} | "
+          f"{', '.join(map(str, r_['round1_lines'])) or 'none cited'} | "
+          f"{', '.join(map(str, r_['patched_lines'])) or 'none'} | {r_['result']} |")
+    w("")
+    w("| as written | where in this raw | sentence it names | patched text | holds |")
+    w("|---|---|---|---|---|")
+    for r_ in hard:
+        w(f"| {cell(r_['as_written'])} | {cell(r_['where'])} | {cell(r_['sentence'])} | "
+          f"{cell(r_['patched'])} | "
+          + ("yes" if r_["holds"] else "NO (the written number needs re-anchoring)"
+             if r_["holds"] is False else "not decidable: a sentence it names is a finding on "
+             "the patch (" + ", ".join(r_["findings_on_the_patch"]) + ")") + " |")
+    w("")
+    w(f"Findings on the patch: {len(PRE_FINDINGS)}"
+      + ("." if not PRE_FINDINGS else ":"))
+    for i, p_ in enumerate(PRE_FINDINGS, 1):
+        w(f"- P{i}. {p_['sentence_as_checked']!r}: old (audited text) line(s) "
+          f"{p_['old']['round1_lines'] or 'none cited'}; new (patched text) at those lines: "
+          + ("; ".join(f":{k_} {v_!r}" for k_, v_ in p_['new']['line_text_at_round1_lines'].items())
+             or "n/a") + f". Routed to {p_['routed_to']}.")
+    w("")
+    w(f"Written preprint numbers that no longer hold: {sum(r_['holds'] is False for r_ in hard)}.")
+    w("")
+    J["preprint_reanchor_round9"] = reanchor
+    J["preprint_hardcoded_round9"] = hard
+    J["preprint_patch_findings_round9"] = PRE_FINDINGS
+
     J["wall_clock_s"] = time.time() - t_start
 
     out_md = os.path.join(REPO, args.out) if not os.path.isabs(args.out) else args.out

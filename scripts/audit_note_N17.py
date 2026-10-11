@@ -21,6 +21,25 @@ Sources, in four classes, kept apart everywhere in the output:
 
 No model inference; nothing imported from mlx or from the clone; no write
 anywhere except --out (and --json-out if given).
+
+Round 9 (2026-10-10; the PI's ruling 9 of 2026-10-10, as corrected): the
+preprint of record is PREPRINT-v1_0-draft.md (root, untracked; committed at
+the tag) at sha256 0f4ba501...6c22 (patch v6). The block's reference,
+d6431e97...222b8 (AUDIT-note-release-v1_2.md:21), is the audited, superseded
+text, archived untracked at archive/PREPRINT-v1_0-draft.pre-patch-v6.md; that
+copy is read only if present (to quote an audited line beside its patched
+one) and is never required. Section 2a asserts the full sha256 equal to
+ruling 9's value before anything is written (a different or absent root text
+refuses the run), and its 'Qwen ran at' lookup no longer raises when the
+sentence is gone (section 12 records it). Section 5's earlier-wording source
+is chosen from the archived drafts only, never from the preprint of record.
+Section 12 re-runs every check this script makes of a preprint sentence on
+the patched text, anchoring the audited side on this item's raw as committed
+at 09c3a8c (P-b and P-c by a full scan of the archived copy when it is
+present and matches the block's reference); a check that fails there is a
+finding on the patch for the design seat, not a STOP; section 12 ends with
+its own locator self-check. --json-out gains one key, preprint_round9.
+Nothing else changed.
 """
 from __future__ import annotations
 
@@ -42,7 +61,13 @@ PIN = "bbc9ffe"
 BLOCK = "AUDIT-note-release-v1_2.md"
 BLOCK_SHA_ROUTED = "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841"
 PREPRINT = "PREPRINT-v1_0-draft.md"           # untracked; read from disk
+# Round 9: the preprint of record (the PI's ruling 9 of 2026-10-10, as corrected).
+PREPRINT_SHA = "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22"
+# The block's reference (:21, `d6431e97…222b8`): the audited, superseded text.
 PREPRINT_SHA_BLOCK_PREFIX = "d6431e97"
+PREPRINT_SHA_BLOCK_SUFFIX = "222b8"
+PREPRINT_AUDITED = "archive/PREPRINT-v1_0-draft.pre-patch-v6.md"  # untracked; optional
+RAW_AUDITED = ("results/raw/2026-10-08_note-N17-numerics.md", "09c3a8c")  # this item's raw as committed
 OUT_DEFAULT = "results/raw/2026-10-08_note-N17-numerics.md"
 CLONE = os.path.join(REPO, "jlens-qwen36")
 HF_REPO_DIR = os.path.expanduser(
@@ -619,19 +644,29 @@ def main() -> int:
     a8 = find("CLAUDE.md", "`mlx-community/Qwen3.6-27B-4bit` via `jlens-qwen36` (gitignored,")
     w(f"- {loc('CLAUDE.md', a8, a8 + 1)}: \"{q(text_span('CLAUDE.md', a8, a8 + 1))}\"")
     pp = os.path.join(REPO, PREPRINT)
+    psha = sha256_file(pp) if os.path.exists(pp) else None
+    if psha != PREPRINT_SHA:  # round 9: asserted in full, before anything is written
+        raise SystemExit(f"refusing: `{PREPRINT}` sha256 {psha} is not the preprint of record "
+                         f"{PREPRINT_SHA} (the PI's ruling 9 of 2026-10-10, as corrected)")
     if os.path.exists(pp):
-        psha = sha256_file(pp)
         l262 = ffind(pp, "Qwen ran at 4-bit precision with a custom kernel patch") \
             if any("Qwen ran at 4-bit precision with a custom kernel patch" in x
                    for x in file_lines(pp)) else None
         if l262 is None:
             # the sentence wraps in the file; anchor on its start
-            l262 = ffind(pp, "Qwen ran at")
-        txt = " ".join(file_lines(pp)[l262 - 1:l262 + 2])
+            try:
+                l262 = ffind(pp, "Qwen ran at")
+            except LookupError:  # round 9: a finding on the patch (section 12), not a stop
+                l262 = None
+        txt = " ".join(file_lines(pp)[l262 - 1:l262 + 2]) if l262 else ""
         m = re.search(r"Qwen ran at.*?first external-validity step\.", " ".join(txt.split()))
-        w(f"- `{PREPRINT}` (UNTRACKED; sha256 `{psha[:16]}...`, block's prefix "
-          f"{PREPRINT_SHA_BLOCK_PREFIX}: {'MATCH' if psha.startswith(PREPRINT_SHA_BLOCK_PREFIX) else 'MISMATCH'}) "
-          f":{l262}: \"{m.group(0) if m else q(txt)}\"")
+        w(f"- `{PREPRINT}` (UNTRACKED; sha256 `{psha[:16]}...`; the PI's ruling 9 of 2026-10-10, "
+          f"as corrected, {PREPRINT_SHA[:8]}…{PREPRINT_SHA[-4:]}: "
+          f"{'MATCH' if psha == PREPRINT_SHA else 'MISMATCH'} (full sha256, asserted); the block's "
+          f"{PREPRINT_SHA_BLOCK_PREFIX}…{PREPRINT_SHA_BLOCK_SUFFIX} is the audited, superseded text, "
+          f"archived untracked at `{PREPRINT_AUDITED}`; section 12) "
+          + (f":{l262}: \"{m.group(0) if m else q(txt)}\"" if l262 else
+             ": the sentence 'Qwen ran at ...' is not on the patched text (section 12)"))
     w("")
     # values-check finding 8: the one mechanical statement vs the d788bc3 code
     CGp = os.path.join(CLONE, "jlens_qwen", "custom_gdn_patch.py")
@@ -1438,7 +1473,7 @@ def main() -> int:
         um = [i for i, x in enumerate(fl_, start=1) if "untouched model" in x.lower()]
         rf = [i for i, x in enumerate(fl_, start=1) if "verified by an identical re-forward of the choice computation" in x]
         pre_rows.append((rel, sha256_file(f)[:16], tracked, um, rf))
-        if um and um_src is None:
+        if um and um_src is None and rel != PREPRINT:  # round 9: archived drafts only
             m_ = re.search(r"verified against an untouched model[^:]*:[^.]*\.", fl_[um[0] - 1])
             n_ = re.search(r"(\d+) distinct verified forward passes", fl_[um[0] - 1])
             um_src = (rel, um[0], m_.group(0) if m_ else q(fl_[um[0] - 1], 300),
@@ -2034,6 +2069,180 @@ def main() -> int:
       f"{bad_quote if bad_quote else 'none'}.")
     w("")
 
+    # ------------------- 12. round 9: the preprint of record (ruling 9, as corrected)
+    # Every check this script makes of a preprint sentence, re-run on the patched
+    # text. The audited side is anchored on this item's raw as committed (R0@R0c);
+    # the archived audited copy is read only if present and matching the block's
+    # reference (P-b/P-c full scan; quoted beside the patched lines). A failed
+    # check is a finding on the patch, never a STOP.
+    R0, R0c = RAW_AUDITED
+    nrm = lambda s: " ".join(s.split())  # noqa: E731
+    ints = lambda s: [int(x) for x in s.replace(" ", "").split(",") if x]  # noqa: E731
+    b21 = find(BLOCK, f"sha `{PREPRINT_SHA_BLOCK_PREFIX}")
+    mb = re.search(r"`" + re.escape(PREPRINT) + r"` at root \([^)]*\)", lines_of(BLOCK)[b21 - 1])
+    r90 = find(R0, f"- `{PREPRINT}` (UNTRACKED; sha256 `", commit=R0c)
+    r235 = find(R0, "- Where the phrase comes from (files on disk, not record):", commit=R0c)
+    m90 = re.search(r"sha256 `([0-9a-f]{16})\.\.\.`.*?\) :(\d+): \"(.*)\"$", lines_of(R0, R0c)[r90 - 1])
+    m235 = re.search(r"\('" + re.escape(PREPRINT) + r"', '([0-9a-f]{16})', (?:True|False), "
+                     r"\[([0-9, ]*)\], \[([0-9, ]*)\]\)", lines_of(R0, R0c)[r235 - 1])
+    pl = file_lines(pp) if os.path.exists(pp) else []
+    psha_ = sha256_file(pp) if pl else None
+    apath = os.path.join(REPO, PREPRINT_AUDITED)
+    asha = sha256_file(apath) if os.path.exists(apath) else None
+    al = file_lines(apath) if (asha and asha.startswith(PREPRINT_SHA_BLOCK_PREFIX)
+                               and asha.endswith(PREPRINT_SHA_BLOCK_SUFFIX)) else None
+    s12 = len(out)  # section 12's own locator self-check starts here
+    w("## 12. Round 9: the preprint of record (the PI's ruling 9 of 2026-10-10, as corrected)")
+    w("")
+    w(f"- Preprint of record: `{PREPRINT}` (UNTRACKED here; committed at the tag per the ruling) "
+      f"sha256 `{psha_}`: {'MATCH' if psha_ == PREPRINT_SHA else 'MISMATCH'} vs the ruling's "
+      f"`{PREPRINT_SHA}` (asserted in section 2a); {len(pl) - (pl[-1:] == [''])} lines.")
+    w(f"- Audited, superseded text: the block's reference, {loc(BLOCK, b21)}: "
+      f"\"{mb.group(0) if mb else '?'}\"; this item's raw as committed printed its sha256 prefix "
+      f"`{m90.group(1)}` ({loc(R0, r90, commit=R0c)}). Archived untracked at `{PREPRINT_AUDITED}`, out "
+      "of the release, never required: "
+      + (f"present, sha256 `{asha[:16]}...`, "
+         + ("matching the block's reference; its lines are quoted below beside the patched ones."
+            if al else "NOT matching the block's reference; not used.") if asha else "absent; not used."))
+    w("")
+    old_l, old_s = int(m90.group(2)), m90.group(3)
+    head_ = nrm(old_s)[:40]
+    cand = [i for i, x in enumerate(pl, start=1) if head_ in nrm(x)]
+    new_l = cand[0] if cand else None
+    same_s = bool(new_l) and nrm(old_s) in nrm(" ".join(pl[new_l - 1:new_l + 2]))
+
+    def lines_with(ls, needle, ci=False):
+        return [i for i, x in enumerate(ls, start=1)
+                if (needle.lower() in x.lower() if ci else needle in x)]
+
+    def verdict(old, new):
+        if old == new:
+            return "unchanged"
+        if len(old) == len(new) and new:
+            return "re-anchored " + ", ".join(f":{a} -> :{b}" for a, b in zip(old, new))
+        return "changed by the patch"
+
+    checks = []  # (id, phrase, where used here, audited lines, audited source, patched lines, result)
+    checks.append(("P-a", "the limitations sentence 'Qwen ran at ... first external-validity step.'",
+                   "section 2a (quoted)", [old_l], loc(R0, r90, commit=R0c), [new_l] if same_s else [],
+                   ("unchanged" if new_l == old_l else f"re-anchored :{old_l} -> :{new_l}") if same_s
+                   else "changed by the patch"))
+    for cid, phr, used in [("P-b", "custom kernel patch", "section 2a (closing sentence), F2"),
+                           ("P-c", "deterministic sub-0.05-cosine label geometry", "section 4 (Reading), F3")]:
+        nl_ = lines_with(pl, phr)
+        if al:  # full scan of the audited text itself
+            ol_, src_ = lines_with(al, phr), f"full scan of `{PREPRINT_AUDITED}`, matching the block's reference"
+        else:   # inferred from the raw's quoted sentence
+            ol_ = [old_l] if phr in old_s else []
+            src_ = f"{loc(R0, r90, commit=R0c)} (within the quoted :{old_l} sentence)"
+        checks.append((cid, phr, used, ol_, src_, nl_, verdict(ol_, nl_)))
+    for cid, phr, used, grp, ci in [
+            ("P-d", "verified by an identical re-forward of the choice computation",
+             "section 5, F6 (the recommended wording, at its patched line)", 3, False),
+            ("P-e", "untouched model",
+             "section 5 and the figure row (which describe it as the preprint's earlier wording, "
+             "replaced at patch v3), F6",
+             2, True)]:
+        ol_ = ints(m235.group(grp)) if m235 else []
+        nl_ = lines_with(pl, phr, ci)
+        checks.append((cid, phr, used, ol_, f"{loc(R0, r235, commit=R0c)} (row `{PREPRINT}`, "
+                       f"`{m235.group(1) if m235 else '?'}`)", nl_, verdict(ol_, nl_)))
+    w("Every check this script makes of a preprint sentence, audited text (as this item's raw "
+      "recorded it; P-b and P-c by a full scan of the archived copy when it is present and matching, "
+      "else from the raw's quoted sentence) vs the patched text (this run):")
+    w("")
+    w("| # | sentence / phrase | used in this raw | audited lines (source) | patched lines | result |")
+    w("|---|---|---|---|---|---|")
+    for c_ in checks:
+        w(f"| {c_[0]} | {cell(c_[1])} | {cell(c_[2])} | {c_[3]} ({cell(c_[4])}) | {c_[5]} | {c_[6]} |")
+    w("")
+    pfind = []
+    for c_ in checks:
+        if c_[6] != "changed by the patch":
+            continue
+        ls_ = sorted(set(c_[3]) ^ set(c_[5])) or [old_l]
+        pairs_ = []
+        for L in ls_:
+            o_ = (f"audited :{L} (archived copy): \"{nrm(al[L - 1])}\"" if al and L <= len(al)
+                  else f"audited :{L}: not quoted in {R0}@{R0c} and the archived copy is not available")
+            n_ = (f"patched :{L}: \"{nrm(pl[L - 1])}\"" if L <= len(pl) else f"patched :{L}: past end of file")
+            pairs_.append(f"{o_}; {n_}")
+        pfind.append(dict(id=f"P{len(pfind) + 1}", check=c_[0], phrase=c_[1], used=c_[2],
+                          audited=c_[3], patched=c_[5], lines=pairs_))
+    w("Findings on the patch, for the design seat (the PI's ruling 9 of 2026-10-10: a check of a "
+      "preprint sentence that fails on the patched text is a finding on the patch, not a STOP): "
+      + ("none." if not pfind else f"{len(pfind)}."))
+    for f_ in pfind:
+        extra = ""
+        if f_["check"] == "P-e":
+            pd_ = next(c_ for c_ in checks if c_[0] == "P-d")[5]
+            if f_["patched"] and all(L in pd_ and re.search(r"re-forward\w* on an untouched model",
+                                                             pl[L - 1], re.I) for L in f_["patched"]):
+                extra = (f" Code's reading of patched {', '.join(f':{L}' for L in f_['patched'])}, offered "
+                         "because each such line also carries P-d's phrase and uses this one as "
+                         "'re-forwarded on an untouched model': section 5's reading of the phrase applies "
+                         "unchanged, the choice-read re-forward identity (same weights, 4-bit quantization "
+                         "and port patch, no vector, the forward compared with itself), not a different or "
+                         "unpatched model; the patch-v3 wording F6 recommends is still on the same line (P-d).")
+            else:
+                extra = (" Not every patched line with the phrase also carries P-d's phrase and uses this "
+                         "one as 're-forwarded on an untouched model'; no reading of the patched wording is "
+                         "offered here.")
+        w(f"- {f_['id']} ({f_['check']}, '{f_['phrase']}'; bears on {f_['used']}). Audited lines "
+          f"{f_['audited']}, patched lines {f_['patched']}.{extra} "
+          + " | ".join(f_["lines"]))
+    w("")
+    w(f"Round-9 preprint checks: {len(checks)}; "
+      f"unchanged {sum(c_[6] == 'unchanged' for c_ in checks)}, "
+      f"re-anchored {sum(c_[6].startswith('re-anchored') for c_ in checks)}, "
+      f"changed by the patch {sum(c_[6] == 'changed by the patch' for c_ in checks)}. "
+      "In sections 1-11 the preprint of record supplies only the 2a quote, its row in the drafts "
+      "listing (section 5; 11b row 2) and F6's locator; no figure value, status or count is "
+      "computed from it. Section 5's earlier-wording source is chosen from the archived drafts only "
+      "(round 9): "
+      + (f"`{um_src[0]}`:{um_src[1]}." if um_src else
+         "none on disk carries the phrase, so section 5 names no earlier-wording source."))
+    w("")
+    assert um_src is None or um_src[0] != PREPRINT
+    # section 12's own locator self-check (the 0-11b self-check above does not cover it)
+    body12 = "\n".join(out[s12:])
+    n12, r12, q12, nq12 = 0, [], [], 0
+    for m in re.finditer(r"([A-Za-z0-9_./\-]+\.(?:md|txt|py|json|jsonl))@(" + PIN + "|" + R0c +
+                         r"):(\d+)(?:-(\d+))?", body12):
+        path_, c12, a_, b_ = m.group(1), m.group(2), int(m.group(3)), int(m.group(4) or m.group(3))
+        n12 += 1
+        try:
+            ls_ = lines_of(path_, c12)
+        except Exception:
+            r12.append(m.group(0))
+            continue
+        if not (1 <= a_ <= b_ <= len(ls_)):
+            r12.append(m.group(0))
+            continue
+        tail = body12[m.end():m.end() + 4]
+        if tail[:3] in (': "', ": `"):
+            qc = tail[2]
+            qs = body12[m.end() + 3:m.end() + 3 + 400].split(qc, 1)[0].split("...", 1)[0]
+            qs = " ".join(qs.split())[:50]
+            if qs:
+                nq12 += 1
+                if qs not in " ".join(" ".join(ls_[a_ - 1:b_]).split()):
+                    q12.append(m.group(0))
+    w(f"Section-12 locator self-check (this run): {n12} pinned locators `path@{PIN}:a[-b]` or "
+      f"`path@{R0c}:a[-b]`; out of range: {r12 if r12 else 'none'}; {nq12} quotes that directly "
+      f"follow a locator, each prefix-matched (first 50 normalized characters) against the pinned "
+      f"lines: mismatches {q12 if q12 else 'none'}.")
+    w("")
+    p9 = dict(preprint=PREPRINT, sha256=psha_, ruling9_sha256=PREPRINT_SHA,
+              match=psha_ == PREPRINT_SHA,
+              audited_ref=f"{PREPRINT_SHA_BLOCK_PREFIX}…{PREPRINT_SHA_BLOCK_SUFFIX}",
+              audited_archive=PREPRINT_AUDITED, audited_archive_used=bool(al),
+              checks=[dict(zip(("id", "phrase", "used", "audited", "audited_source", "patched",
+                                "result"), c_)) for c_ in checks],
+              findings_on_patch=pfind,
+              earlier_wording_source=(list(um_src[:2]) if um_src else None),
+              selfcheck=dict(locators=n12, out_of_range=r12, quotes=nq12, mismatches=q12))
+
     text = "\n".join(out)
 
     def allowed(p: str) -> bool:
@@ -2057,7 +2266,8 @@ def main() -> int:
             raise SystemExit("refusing: inside the repository --json-out must be under results/raw/")
         with open(jp, "w", encoding="utf-8") as fh:
             json.dump(dict(item="N17", pin=PIN, figures=figs, flags=notes,
-                           paragraph=para, clause_map=clause_map), fh, indent=1)
+                           paragraph=para, clause_map=clause_map,
+                           preprint_round9=p9), fh, indent=1)
     shown = os.path.relpath(outp, REPO) if os.path.realpath(outp).startswith(os.path.realpath(REPO) + os.sep) else outp
     print(f"wrote {shown} ({len(text.splitlines())} lines); "
           f"figures {counts}")

@@ -2,18 +2,27 @@
  "item": "N5",
  "pin": "bbc9ffe72fb8a942431c9bf2622a36e581fdf93c",
  "header": {
-  "stamp": "Thu Oct  8 11:21:25 UTC 2026",
-  "head": "cf8eb5b9dd4e117934627242a3aea5bdf4ae4b55",
+  "stamp": "Sun Oct 11 05:45:49 UTC 2026",
+  "head": "e3bef6f09f48e75a4be141483b5700b095da35d4",
   "block_sha256": "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841",
   "script": "scripts/audit_note_N5.py",
-  "script_sha256": "e5ed5007185d84a3e93dd6bfe8436cecdc89122095ba567615ea4b6e98c7192b",
+  "script_sha256": "8bad395c4be1bcc34baf0c4ebc97e5021b8a9424f93aabe8e003702b4d1372a9",
   "interpreter": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python",
   "python": "3.12.9",
   "numpy": "2.5.1",
   "command": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/audit_note_N5.py",
   "preprint": "PREPRINT-v1_0-draft.md",
-  "preprint_sha256_computed": "d6431e97d35e5914574ff9884c0e64463a7baf1cf9d279f27ed45a683a6222b8",
-  "preprint_matches_block": true
+  "preprint_sha256_computed": "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22",
+  "preprint_matches_block": false,
+  "preprint_sha256_of_record": "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22",
+  "preprint_matches_record": true,
+  "preprint_of_record_ruling": "the PI's ruling 9 of 2026-10-10, as corrected",
+  "preprint_audited": {
+   "block_abbrev": "d6431e97…222b8",
+   "archived_untracked": "archive/PREPRINT-v1_0-draft.pre-patch-v6.md",
+   "superseded_by": "patch v6",
+   "required": false
+  }
  },
  "integrity": {
   "data/f/sessions.jsonl": {
@@ -873,7 +882,7 @@
    "severity": "minor",
    "finding": "The preprint's sha256 was printed from a constant, never hashed",
    "disposition": "fixed",
-   "evidence": "The working-tree file is now hashed at run time: sha256 d6431e97d35e5914574ff9884c0e64463a7baf1cf9d279f27ed45a683a6222b8; asserted against the block's d6431e97…222b8 before line 182 is quoted (MATCH); header line added; the constant is gone."
+   "evidence": "The working-tree file is now hashed at run time: sha256 0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22; asserted against the preprint of record 0f4ba501…16c22 (the PI's ruling 9 of 2026-10-10, as corrected; v1-v3 asserted the block's d6431e97…222b8, the audited text) before line 182 is quoted (MATCH); header line added; the sha256 printed as the file's is the run-time hash; the one full-sha constant is ruling 9's value of record, the assert target, printed only as that value."
   },
   {
    "id": "8",
@@ -1138,10 +1147,228 @@
   },
   {
    "figure": "preprint 'at a dose a later calibration (§8.1) found below its visibility criterion'",
-   "value": "4/16 items meet m's ≥3-letter floor at 0.12; at the pin the support was a model-free replay of f1's corruptor (v1.7 referent check, G-PORT C1), not a calibration and not a measurement on the model; G-CAL's artifact is post-pin; the byte-clean delivery is omitted",
-   "source": "PREPRINT-v1_0-draft.md:182 (working tree, untracked; sha256 d6431e97...6222b8, computed at run time, MATCH vs the block's d6431e97…222b8)",
+   "value": "4/16 items meet m's ≥3-letter floor at 0.12; at the pin the support was a model-free replay of f1's corruptor (v1.7 referent check, G-PORT C1), not a calibration and not a measurement on the model; G-CAL's artifact is post-pin; the byte-clean delivery, omitted in the audited text, is carried by the patched text (a finding on the patch; closing section)",
+   "source": "PREPRINT-v1_0-draft.md:182 (working tree, untracked; sha256 0f4ba501...f16c22, computed at run time, MATCH vs the preprint of record 0f4ba501…16c22, the PI's ruling 9 of 2026-10-10, as corrected)",
    "status": "discrepant",
-   "note": "wording, not a number: the clause attributes the finding to a calibration (§8.1) whose artifact did not exist at the pin (G-CAL's 0.12 artifact first at bab921c); the substance (12/16 items below the floor; 40/306 byte-clean Q rounds) was on record through model-free replays of f1's corruptor (v1.7 referent check, whose checker note G6a.11 says 'the computation supports the note's substance', results/raw/2026-10-04_m-v1.7_referent_check.txt@bbc9ffe:5570-5572; G-PORT C1, RESULTS.md@bbc9ffe:161-165); the clause omits the byte-clean delivery; suggested replacement in §7d; whether PROPOSAL-m's posting flag is set is not N5's call"
+   "note": "wording, not a number: the clause attributes the finding to a calibration (§8.1) whose artifact did not exist at the pin (G-CAL's 0.12 artifact first at bab921c); the substance (12/16 items below the floor; 40/306 byte-clean Q rounds) was on record through model-free replays of f1's corruptor (v1.7 referent check, whose checker note G6a.11 says 'the computation supports the note's substance', results/raw/2026-10-04_m-v1.7_referent_check.txt@bbc9ffe:5570-5572; G-PORT C1, RESULTS.md@bbc9ffe:161-165); the audited clause omitted the byte-clean delivery, which the patched text carries (a finding on the patch; closing section); suggested replacement in §7d; whether PROPOSAL-m's posting flag is set is not N5's call"
   }
- ]
+ ],
+ "round9_preprint": {
+  "ruling": "the PI's ruling 9 of 2026-10-10, as corrected",
+  "preprint": "PREPRINT-v1_0-draft.md",
+  "sha256": "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22",
+  "sha256_of_record": "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22",
+  "match": true,
+  "audited": {
+   "block_abbrev": "d6431e97…222b8",
+   "archived_untracked": "archive/PREPRINT-v1_0-draft.pre-patch-v6.md",
+   "archived_copy": "present, sha256 `d6431e97d35e5914574ff9884c0e64463a7baf1cf9d279f27ed45a683a6222b8` (the block's d6431e97…222b8: MATCH); read only to verify this script's constants: audited-line sha256s equal True, audited sentence(s) verbatim on their line True",
+   "required": false
+  },
+  "anchors": [
+   {
+    "needle": "generic length-preference deflation was tested and failed",
+    "audited_line": 182,
+    "patched_line": 182,
+    "line_identical": false
+   },
+   {
+    "needle": "session-termination attempts occur at about 1% of rounds",
+    "audited_line": 182,
+    "patched_line": 182,
+    "line_identical": false
+   },
+   {
+    "needle": "Menu behavior is exploration-dominant in every arm",
+    "audited_line": 182,
+    "patched_line": 182,
+    "line_identical": false
+   },
+   {
+    "needle": "found below its visibility criterion",
+    "audited_line": 182,
+    "patched_line": 182,
+    "line_identical": false
+   },
+   {
+    "needle": "**8.1 The gating campaign",
+    "audited_line": 268,
+    "patched_line": 268,
+    "line_identical": true
+   }
+  ],
+  "v3_printed_at": {
+   "182": {
+    "PREPRINT-v1_0-draft.md:182": [
+     121,
+     152,
+     194,
+     214,
+     217,
+     219,
+     227,
+     235,
+     263
+    ],
+    "Preprint line 182": [
+     233
+    ],
+    "line 182 is quoted": [
+     249
+    ]
+   },
+   "268": {
+    "PREPRINT-v1_0-draft.md:268": [
+     194
+    ],
+    "Preprint line 268": [],
+    "line 268 is quoted": []
+   }
+  },
+  "v3_quoted_g6a11_locator": {
+   "root:182": [
+    194,
+    244
+   ]
+  },
+  "v3_round_counts_not_locators": {
+   "182": [
+    180,
+    181,
+    226
+   ],
+   "268": []
+  },
+  "quotes": [
+   {
+    "phrase": "length-preference",
+    "anchor": "generic length-preference deflation was tested and failed",
+    "patched_line": 182,
+    "on_audited": true,
+    "on_patched": true
+   },
+   {
+    "phrase": "uniformly across arms including sham",
+    "anchor": "session-termination attempts occur at about 1% of rounds",
+    "patched_line": 182,
+    "on_audited": true,
+    "on_patched": true
+   },
+   {
+    "phrase": "about 1% of rounds, uniformly across arms",
+    "anchor": "session-termination attempts occur at about 1% of rounds",
+    "patched_line": 182,
+    "on_audited": true,
+    "on_patched": true
+   },
+   {
+    "phrase": "session share ≈ .50",
+    "anchor": "Menu behavior is exploration-dominant in every arm",
+    "patched_line": 182,
+    "on_audited": true,
+    "on_patched": true
+   },
+   {
+    "phrase": "no evaluation-seeking against a predominantly positive feedback stream",
+    "anchor": "Menu behavior is exploration-dominant in every arm",
+    "patched_line": 182,
+    "on_audited": true,
+    "on_patched": true
+   },
+   {
+    "phrase": "at a dose a later calibration (§8.1) found below its visibility criterion",
+    "anchor": "found below its visibility criterion",
+    "patched_line": 182,
+    "on_audited": true,
+    "on_patched": true
+   },
+   {
+    "phrase": "**8.1 The gating campaign",
+    "anchor": "**8.1 The gating campaign",
+    "patched_line": 268,
+    "on_audited": true,
+    "on_patched": true
+   }
+  ],
+  "claims": [
+   {
+    "claim": "the CORR dose clause omits the byte-clean delivery",
+    "where": "§7d (iii); the dose row's value and note",
+    "anchor": "found below its visibility criterion",
+    "patched_line": 182,
+    "held_on_audited": true,
+    "holds_on_patched": false
+   },
+   {
+    "claim": "the CORR dose clause attributes the finding to a calibration (§8.1)",
+    "where": "§7d (i); the dose row's note; Note 1",
+    "anchor": "found below its visibility criterion",
+    "patched_line": 182,
+    "held_on_audited": true,
+    "holds_on_patched": true
+   },
+   {
+    "claim": "the CORR dose clause's criterion is the later calibration's ('its visibility criterion'), which §7d (ii) finds is m's, not f1's",
+    "where": "§7d (ii)",
+    "anchor": "found below its visibility criterion",
+    "patched_line": 182,
+    "held_on_audited": true,
+    "holds_on_patched": true
+   },
+   {
+    "claim": "the CORR dose clause keeps 'a later calibration' without citing G-CAL's artifact or calling it a replay",
+    "where": "§7d (the proposed wording's paragraph)",
+    "anchor": "found below its visibility criterion",
+    "patched_line": 182,
+    "held_on_audited": true,
+    "holds_on_patched": true
+   },
+   {
+    "claim": "the length-preference phrase is unsigned",
+    "where": "§3a; the length-test row; Note 5",
+    "anchor": "generic length-preference deflation was tested and failed",
+    "patched_line": 182,
+    "held_on_audited": true,
+    "holds_on_patched": true
+   },
+   {
+    "claim": "'session share ≈ .50' in every arm, neither the range nor FDBK named",
+    "where": "§5; Note 3",
+    "anchor": "Menu behavior is exploration-dominant in every arm",
+    "patched_line": 182,
+    "held_on_audited": true,
+    "holds_on_patched": true
+   },
+   {
+    "claim": "the FDBK clause 'no evaluation-seeking against a predominantly positive feedback stream' is a first-choice statement and does not say so",
+    "where": "§5; Note 3",
+    "anchor": "Menu behavior is exploration-dominant in every arm",
+    "patched_line": 182,
+    "held_on_audited": true,
+    "holds_on_patched": true
+   },
+   {
+    "claim": "'uniformly across arms', not 'no detectable heterogeneity'",
+    "where": "§4; the homogeneity row; Note 3",
+    "anchor": "session-termination attempts occur at about 1% of rounds",
+    "patched_line": 182,
+    "held_on_audited": true,
+    "holds_on_patched": true
+   }
+  ],
+  "findings_on_the_patch": [
+   {
+    "id": "P9-1",
+    "patched_line": 182,
+    "audited_line": 182,
+    "old": "Clean versus seeded character corruption, 0.000 exactly, with maps +.121 and −.130 cancelling (§5.6), at a dose a later calibration (§8.1) found below its visibility criterion.",
+    "new": "Clean versus seeded character corruption, 0.000 exactly, with maps +.121 and −.130 cancelling (§5.6); at the dose used the corruption did not always land — 40 of 306 corrupted-condition rounds were byte-clean, and 16 of the 56 valid sessions saw one clean round under the corrupted label before their first pick — so the contrast ran weaker than nominal, which the gating campaign’s dose calibration corrects, at a dose a later calibration (§8.1) found below its visibility criterion.",
+    "checks_failed": [
+     "the CORR dose clause omits the byte-clean delivery"
+    ],
+    "phrases_absent": [],
+    "text": "**P9-1 (line 182; audited line 182).** The patch changes one sentence of the line; the rest of the line is byte-identical to the audited line (the audited sentence substituted back reproduces the audited line's sha256 `c8b9645e47aeb93f`). Old (audited text d6431e97…222b8, line 182): 'Clean versus seeded character corruption, 0.000 exactly, with maps +.121 and −.130 cancelling (§5.6), at a dose a later calibration (§8.1) found below its visibility criterion.' New (patched text 0f4ba501…16c22, line 182): 'Clean versus seeded character corruption, 0.000 exactly, with maps +.121 and −.130 cancelling (§5.6); at the dose used the corruption did not always land — 40 of 306 corrupted-condition rounds were byte-clean, and 16 of the 56 valid sessions saw one clean round under the corrupted label before their first pick — so the contrast ran weaker than nominal, which the gating campaign’s dose calibration corrects, at a dose a later calibration (§8.1) found below its visibility criterion.' Checks of this raw that fail on the patched text: the CORR dose clause omits the byte-clean delivery (§7d (iii); the dose row's value and note); quoted phrases absent from the patched line: none. The patched sentence carries the byte-clean delivery that §7d (iii) and the dose row found omitted; '40 of 306' on the patched line: True (this run: 40/306 byte-clean Q rounds over all 64 CORR sessions, excluded ones included (§7c)); '16 of the 56 valid sessions' on the patched line: True (this run: 16/56 valid CORR sessions with one byte-clean pre-pick Q round (§7c)). Claims about this line that still hold: the CORR dose clause attributes the finding to a calibration (§8.1) (§7d (i); the dose row's note; Note 1); the CORR dose clause's criterion is the later calibration's ('its visibility criterion'), which §7d (ii) finds is m's, not f1's (§7d (ii)); the CORR dose clause keeps 'a later calibration' without citing G-CAL's artifact or calling it a replay (§7d (the proposed wording's paragraph)); the length-preference phrase is unsigned (§3a; the length-test row; Note 5); 'session share ≈ .50' in every arm, neither the range nor FDBK named (§5; Note 3); the FDBK clause 'no evaluation-seeking against a predominantly positive feedback stream' is a first-choice statement and does not say so (§5; Note 3); 'uniformly across arms', not 'no detectable heterogeneity' (§4; the homogeneity row; Note 3). Observations for the design seat: (1) The patched sentence does not name the 306's domain (all 64 CORR sessions, excluded ones included), which §7d's proposed wording names. (2) The inserted text precedes the audited clause, which is kept, so the sentence names the dose twice ('at the dose used', 'at a dose a later calibration (§8.1) found below its visibility criterion'). (3) It adds 'which the gating campaign’s dose calibration corrects', a second, present-tense calibration attribution beside the kept 'a later calibration (§8.1)': the attribution §7d (i) flags (the dose row: at the pin the support was a model-free replay of f1's corruptor, not a calibration), now made twice. Whether the campaign corrects the dose is PROPOSAL-m's question, which N5 does not adjudicate. (4) 'so the contrast ran weaker than nominal' is an inference from the delivery: as a statement about delivery it is what §7c's counts show (fewer corrupted deliveries than nominal), but read as an effect on the 0.000 contrast it would rest on §7c's post-hoc splits, which N5 holds descriptive only, carrying no weight either way (§7d). (5) The kept clause 'at a dose a later calibration (§8.1) found below its visibility criterion' now follows 'corrects', so it attaches ambiguously: to the correcting calibration, or, as in the audited text, to the 0.000 contrast. The dose row keeps its status (discrepant): statuses are carried, never upgraded; whether the patch discharges it is the design seat's and the PI's."
+   }
+  ]
+ }
 }

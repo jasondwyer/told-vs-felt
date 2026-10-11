@@ -2,8 +2,8 @@
  "item": "N7",
  "title": "OLMo Q1/Q3 and dose ladder",
  "header": {
-  "stamp": "Thu Oct  8 11:26:34 UTC 2026",
-  "head": "cf8eb5b9dd4e117934627242a3aea5bdf4ae4b55",
+  "stamp": "Sun Oct 11 05:45:53 UTC 2026",
+  "head": "e3bef6f09f48e75a4be141483b5700b095da35d4",
   "pin": "bbc9ffe72fb8a942431c9bf2622a36e581fdf93c",
   "block_sha256": "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841",
   "block_match": true,
@@ -12,14 +12,17 @@
    104
   ],
   "script": "scripts/audit_note_N7.py",
-  "script_sha256": "5a7db7caa58cc226a8955d0042aef96ffbea6ef6b1bb8a0a66f94b7da7f4ca87",
+  "script_sha256": "f7838b7ee09f48de0aaf8f0b43448f078c0c7cb686c3bba3d670cdd7fe13a98a",
   "interpreter": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python",
   "python": "3.12.9",
   "numpy": "2.5.1",
   "command": "cd /Users/jasondwyer/Documents/code/jspace-lab && /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python /Users/jasondwyer/Documents/code/jspace-lab/scripts/audit_note_N7.py",
   "cwd_at_run": "/Users/jasondwyer/Documents/code/jspace-lab",
-  "preprint_sha256": "d6431e97d35e5914574ff9884c0e64463a7baf1cf9d279f27ed45a683a6222b8",
-  "preprint_tracked": false
+  "preprint_sha256": "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22",
+  "preprint_tracked": false,
+  "preprint_ruling": "the PI's ruling 9 of 2026-10-10, as corrected",
+  "preprint_sha256_audited_superseded": "d6431e97d35e5914574ff9884c0e64463a7baf1cf9d279f27ed45a683a6222b8",
+  "preprint_audited_archived_untracked": "archive/PREPRINT-v1_0-draft.pre-patch-v6.md"
  },
  "artifacts": {
   "data/olmo/a4_instrument_base.json": "bdc5c870f320d1c9ae267e5e7213d3abe00f35543b7fd9edbbefbc534698bb4d",
@@ -3763,5 +3766,245 @@
    "detail": "Lexical counter recounted from the session records (rounds + choices with a `lexical` hit, every session, all arms, excluded included): base 5, sft 14, dpo 10, instruct 8, equal to `counters.lexical.total` (asserted). The domain clause is added to 4e. 4d now names the two-sided p as 2 x the smaller tail, capped at 1, and asserts that it equals the sum of the probabilities of outcomes no more likely than the observed one at every stage (true at p = 1/2). No value changes."
   }
  ],
- "wall_clock_s": 16.238484144210815
+ "preprint_reanchor_round9": [
+  {
+   "sentence": "rises across the lineage (+0.78 base",
+   "kind": "located",
+   "round1_lines": [
+    101
+   ],
+   "patched_lines": [
+    101
+   ],
+   "result": "same line"
+  },
+  {
+   "sentence": "(G_c: +0.78 \u2192 +1.03 \u2192 +1.53 \u2192 +1.56)",
+   "kind": "located",
+   "round1_lines": [
+    129
+   ],
+   "patched_lines": [
+    129
+   ],
+   "result": "same line"
+  },
+  {
+   "sentence": "the base model passes at layer 60",
+   "kind": "located",
+   "round1_lines": [
+    129
+   ],
+   "patched_lines": [
+    129
+   ],
+   "result": "same line"
+  },
+  {
+   "sentence": "Sham contrasts are exactly zero at every stage",
+   "kind": "located",
+   "round1_lines": [
+    129
+   ],
+   "patched_lines": [
+    129
+   ],
+   "result": "same line"
+  },
+  {
+   "sentence": "about five times larger at base",
+   "kind": "located",
+   "round1_lines": [
+    129
+   ],
+   "patched_lines": [
+    129
+   ],
+   "result": "same line"
+  },
+  {
+   "sentence": "The registered criterion was a conjunction of envelope conditions",
+   "kind": "located",
+   "round1_lines": [
+    127
+   ],
+   "patched_lines": [
+    127
+   ],
+   "result": "same line"
+  },
+  {
+   "sentence": "Per-stage minimum effective doses qualify at f = 0.05 (base, L60)",
+   "kind": "located",
+   "round1_lines": [
+    139
+   ],
+   "patched_lines": [
+    139
+   ],
+   "result": "same line"
+  },
+  {
+   "sentence": "[TAB 2: every cell",
+   "kind": "located",
+   "round1_lines": [
+    170
+   ],
+   "patched_lines": [
+    170
+   ],
+   "result": "same line"
+  },
+  {
+   "sentence": "Four nulls; zero confirmatory triggers",
+   "kind": "located",
+   "round1_lines": [
+    184
+   ],
+   "patched_lines": [
+    184
+   ],
+   "result": "same line"
+  },
+  {
+   "sentence": "In the OLMo DPO screen one map returned +0.1667",
+   "kind": "located",
+   "round1_lines": [
+    190
+   ],
+   "patched_lines": [
+    190
+   ],
+   "result": "same line"
+  },
+  {
+   "sentence": "feedback-driven training sharpens the marking of evaluation",
+   "kind": "located",
+   "round1_lines": [
+    244
+   ],
+   "patched_lines": [
+    244
+   ],
+   "result": "same line"
+  },
+  {
+   "sentence": "in direction units",
+   "kind": "quoted",
+   "round1_lines": [
+    101,
+    129
+   ],
+   "patched_lines": [
+    101,
+    129
+   ],
+   "result": "same line(s)"
+  },
+  {
+   "sentence": "the direction's separation of praise from criticism contexts",
+   "kind": "quoted",
+   "round1_lines": [
+    127
+   ],
+   "patched_lines": [
+    127
+   ],
+   "result": "same line(s)"
+  },
+  {
+   "sentence": "sharpens the marking it inherits",
+   "kind": "quoted",
+   "round1_lines": [
+    129
+   ],
+   "patched_lines": [
+    129
+   ],
+   "result": "same line(s)"
+  },
+  {
+   "sentence": "feedback-driven training sharpens the marking of evaluation (G_c rises monotonically)",
+   "kind": "quoted",
+   "round1_lines": [
+    244
+   ],
+   "patched_lines": [
+    244
+   ],
+   "result": "same line(s)"
+  },
+  {
+   "sentence": "TAB 2 carries the per-stage figures",
+   "kind": "quoted",
+   "round1_lines": [],
+   "patched_lines": [
+    184
+   ],
+   "result": "found (no round-1 locator)"
+  },
+  {
+   "sentence": "ratio of steering displacement to natural contrast",
+   "kind": "label",
+   "round1_lines": [],
+   "patched_lines": [
+    129
+   ],
+   "result": "found (no round-1 locator)"
+  },
+  {
+   "sentence": "All four stages pass the conjunction",
+   "kind": "label",
+   "round1_lines": [],
+   "patched_lines": [
+    129
+   ],
+   "result": "found (no round-1 locator)"
+  },
+  {
+   "sentence": "doses of 1.0 or below",
+   "kind": "label",
+   "round1_lines": [],
+   "patched_lines": [
+    139
+   ],
+   "result": "found (no round-1 locator)"
+  }
+ ],
+ "preprint_hardcoded_round9": [
+  {
+   "as_written": "\u00a75.1",
+   "where": "figure label 'ratio of steering displacement to natural contrast ~5x larger at base (preprint \u00a75.1)'",
+   "sentence": "ratio of steering displacement to natural contrast",
+   "expected": "5.1",
+   "patched": ":129 under :125 '### 5.1 Link 1 \u2014 Marked before feedback training'",
+   "holds": true,
+   "findings_on_the_patch": []
+  },
+  {
+   "as_written": ":244",
+   "where": "Values-check pass 1 #9: 'PREPRINT :244 missing from the 'sharpens' note'",
+   "sentence": "feedback-driven training sharpens the marking of evaluation",
+   "expected": [
+    244
+   ],
+   "patched": "244",
+   "holds": true,
+   "findings_on_the_patch": []
+  },
+  {
+   "as_written": ":129/:244",
+   "where": "Values-check pass 2 #1: ':129/:244's 'sharpens the marking''",
+   "sentence": "sharpens the marking",
+   "expected": [
+    129,
+    244
+   ],
+   "patched": "129, 244",
+   "holds": true,
+   "findings_on_the_patch": []
+  }
+ ],
+ "preprint_patch_findings_round9": [],
+ "wall_clock_s": 14.422194957733154
 }

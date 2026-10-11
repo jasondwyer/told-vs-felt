@@ -39,6 +39,23 @@ READ-ONLY ON THE RECORD. What this script does, in order:
      out) with the committed outputs at --compare-rev (default 09c3a8c),
      read with `git show`; each differing md line and JSON leaf is classed.
 
+Round 9 (2026-10-10): the preprint of record is re-pointed at the patched text,
+the PI's ruling 9 of 2026-10-10 as corrected: PREPRINT-v1_0-draft.md at sha256
+0f4ba501...16c22 (patch v6 applied). The block's d6431e97...222b8 is recorded as
+the audited, superseded text, archived untracked at
+archive/PREPRINT-v1_0-draft.pre-patch-v6.md (out of the release, D4); that copy
+is never opened or required. Every preprint sentence the script locates or
+quotes is checked on the patched text in §0; a sentence not found there no
+longer stops the run (loc() used to raise): it is recorded as a finding on the
+patch for the design seat (ruling 9), with its line in the audited text and the
+patched text's line of the same number. If the root preprint's sha256 is not the
+preprint of record's, §0's sha line says STOP, the comparison classes the
+preprint lines UNEXPECTED, and the script exits 3 after writing its outputs.
+Note 6's quote of preprint line 141 now runs through '0.30)' (it closed a
+parenthesis the text does not close there). The closing comparison classes the
+preprint-identity changes, the new §0 lines and note 6's quote. Nothing else
+changed.
+
 No model is loaded; no inference. Exact tests are stdlib (math.comb). numpy is
 used for array geometry (npz) and is the record's own dependency. Outputs: the
 two files named by --out and --json-out, nothing else in the repository.
@@ -79,7 +96,37 @@ PIN = "bbc9ffe"
 BLOCK = "AUDIT-note-release-v1_2.md"
 BLOCK_SHA = "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841"
 PREPRINT = "PREPRINT-v1_0-draft.md"          # untracked; sha-pinned below
-PREPRINT_SHA = "d6431e97d35e5914574ff9884c0e64463a7baf1cf9d279f27ed45a683a6222b8"
+# Round 9 (2026-10-10): the preprint of record is the patched text (patch v6),
+# the PI's ruling 9 of 2026-10-10 as corrected. The block's reference is the
+# audited, superseded text, archived untracked (out of the release, D4); never
+# opened or required here.
+PREPRINT_SHA = "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22"
+PREPRINT_SHA_AUDITED = "d6431e97d35e5914574ff9884c0e64463a7baf1cf9d279f27ed45a683a6222b8"
+PREPRINT_AUDITED_COPY = "archive/PREPRINT-v1_0-draft.pre-patch-v6.md"
+PREPRINT_RULING = "the PI's ruling 9 of 2026-10-10, as corrected"
+# Every preprint sentence this script locates (loc(PREPRINT, ...)) or quotes, with
+# the line it stood on in the audited text (d6431e97...222b8): for a locator, the
+# line the committed raw at 02b6a61 printed; for a quote only, the line of the
+# archived audited copy (sha-checked) read once when this list was made.
+PREPRINT_SENTENCES = (
+    ("define the evaluative direction", 101, "locator"),
+    ("‖d‖/R ≈ 0.16 at every layer", 101, "locator"),
+    ("up to 0.52", 101, "quoted"),
+    ("on the remaining probes", 135, "locator"),
+    ("9/12 and 10/12 on the remaining probes", 135, "quoted"),
+    ("(G = 0.316) by roughly two-fold", 135, "locator"),
+    ("exceeds the natural praise–criticism gap on that instrument (G = 0.316) by "
+     "roughly two-fold", 135, "quoted"),
+    ("a clean overdose regime at f = .40", 135, "locator"),
+    ("a clean overdose regime at f = .40, where both poles read as post-criticism", 135,
+     "quoted"),
+    ("self-indexed 0.83–0.88", 137, "locator"),
+    ("**Purity is not potency.**", 137, "locator"),
+    ("coherence degrades monotonically", 141, "locator"),
+    ("coherence degrades monotonically (audit-flagged rounds .000/.023/.047 across "
+     "0.10/0.20/0.30)", 141, "quoted"),
+    ("the marker imprint falls to about a quarter of its short-context value", 141, "quoted"),
+)
 DEF_OUT = "results/raw/2026-10-08_note-N8-link2.md"
 DEF_JSON = "results/raw/2026-10-08_note-N8-link2.json"
 # No fixed default scratch (portability fix, 2026-10-08): without --scratch,
@@ -151,6 +198,12 @@ def loc(path: str, needle: str, working_tree: bool = False) -> str:
         text = pinned_text(path)
         tag = f"{path}@{PIN}"
     hits = lines_with(text, needle)
+    if not hits and working_tree and path == PREPRINT:
+        # round 9 (ruling 9): not a stop; §0's sentence check records the finding
+        # (a finding on the patch only when the text read is the preprint of record)
+        return (f"{tag}:NOT FOUND (" + ("finding on the patch" if sha256_bytes(text.encode())
+                                         == PREPRINT_SHA else "not the preprint of record")
+                + ", §0)")
     if not hits:
         raise SystemExit(f"anchor not found in {tag}: {needle!r}")
     s = f"{tag}:{hits[0]}"
@@ -420,8 +473,47 @@ def head_norm(s: str, heads: set[str]) -> str:
     return s
 
 
+PRE_CLASS = f"preprint of record re-pointed to the patched text ({PREPRINT_RULING})"
+NEW_R9 = "new in this version (round 9: preprint sentences checked on the patched text)"
+# round 9: note 6's quote of preprint line 141, before and after it ran through '0.30)'
+NOTE6_OLD = "'coherence degrades monotonically (audit-flagged rounds .000/.023/.047)'"
+NOTE6_NEW = ("'coherence degrades monotonically (audit-flagged rounds .000/.023/.047 across "
+             "0.10/0.20/0.30)'")
+NOTE6_CLASS = ("note 6's quote of preprint line 141 now runs through '0.30)' (round 9; it "
+               "closed a parenthesis the text does not close there)")
+
+
+def pre_norm(s: str) -> str:
+    """The patched and the audited preprint sha (full and 8-character forms) -> <PREPRINT>."""
+    for h in (PREPRINT_SHA, PREPRINT_SHA_AUDITED, PREPRINT_SHA[:8], PREPRINT_SHA_AUDITED[:8]):
+        s = s.replace(h, "<PREPRINT>")
+    return s
+
+
+def note6_cls(o_, n_):
+    """NOTE6_CLASS (with PRE_CLASS when the preprint sha moved too) if undoing note 6's
+    quote change, and normalising the preprint sha, makes the two values equal."""
+    def u(v):
+        return (v.replace(NOTE6_NEW, NOTE6_OLD) if isinstance(v, str) else
+                [x.replace(NOTE6_NEW, NOTE6_OLD) if isinstance(x, str) else x for x in v]
+                if isinstance(v, list) else v)
+    def pn(v):
+        return (pre_norm(v) if isinstance(v, str) else
+                [pre_norm(x) if isinstance(x, str) else x for x in v]
+                if isinstance(v, list) else v)
+    un = u(n_)
+    if un == n_:
+        return None
+    if un == o_:
+        return NOTE6_CLASS
+    if pn(un) == pn(o_):
+        return NOTE6_CLASS + "; " + PRE_CLASS
+    return None
+
+
 # md line prefixes / JSON paths of the run-dependent outputs, with their class
 MD_CLASSES = (
+    (f"- `{PREPRINT}` (untracked) sha256", PRE_CLASS),
     ("- Code stamp:", "stamp"),
     ("- Script:", "script sha256"),
     ("- Command:", "command echo (with --scratch given, it carried the work root)"),
@@ -441,6 +533,7 @@ NEW_ATTR = "new in this version (attribution of the list, values-check round 3)"
 JSON_NEW_PREFIXES = {
     "values_check_round3": NEW_R3,
     "integrity.tracked_files_differing_from_pin_attribution": NEW_ATTR,
+    "integrity.preprint_of_record": NEW_R9,
 }
 MD_SIDE = ("    repository side effects:",
            "working-tree state: counts of untracked / ignored paths (machine state)")
@@ -453,9 +546,22 @@ JSON_CLASSES = {
     "suite.head_at_wt_run_end": "HEAD (the source repository's HEAD moved)",
     "integrity.tracked_files_differing_from_pin":
         "tracked files differing from the pin (moves with HEAD and the working tree)",
+    "integrity.preprint_sha256": PRE_CLASS,
 }
 HEAD_CLASS = "HEAD (the source repository's HEAD moved)"
 UNEXPECTED = "UNEXPECTED"
+PRE_UNEXPECTED = (UNEXPECTED + " (would be: " + PRE_CLASS + "; but the root preprint's "
+                  "sha256 is not the preprint of record's)")
+
+
+def pre_gate(rows: list[dict], pre_ok: bool) -> list[dict]:
+    """Round 9: the preprint re-point class holds only when the measured sha256 of
+    the root preprint is the preprint of record's; otherwise the row is UNEXPECTED."""
+    if not pre_ok:
+        for r in rows:
+            if PRE_CLASS in r["class"]:
+                r["class"] = PRE_UNEXPECTED
+    return rows
 
 
 def compare_md(old: list[str], new: list[str], heads: set[str],
@@ -470,15 +576,20 @@ def compare_md(old: list[str], new: list[str], heads: set[str],
         return None
     rows = []
     # aligned on HEAD-normalised lines (values-check round 3: once round 3's
-    # block is inserted, 'HEAD at run end' no longer pairs by position)
-    sm = difflib.SequenceMatcher(None, [head_norm(x, heads) for x in old],
-                                 [head_norm(x, heads) for x in new], autojunk=False)
+    # block is inserted, 'HEAD at run end' no longer pairs by position), and
+    # since round 9 on preprint-sha-normalised lines too
+    sm = difflib.SequenceMatcher(None, [pre_norm(head_norm(x, heads)) for x in old],
+                                 [pre_norm(head_norm(x, heads)) for x in new],
+                                 autojunk=False)
     for tag, i1, i2, j1, j2 in sm.get_opcodes():
         if tag == "equal":
             for k in range(i2 - i1):
-                if old[i1 + k] != new[j1 + k]:
+                o_, n_ = old[i1 + k], new[j1 + k]
+                if o_ != n_:
                     rows.append({"line_new": j1 + k + 1, "line_old": i1 + k + 1,
-                                 "class": HEAD_CLASS})
+                                 "class": HEAD_CLASS if head_norm(o_, heads) ==
+                                 head_norm(n_, heads) else PRE_CLASS if pre_norm(o_) ==
+                                 pre_norm(n_) else HEAD_CLASS + "; " + PRE_CLASS})
             continue
         if tag == "replace" and i2 - i1 == j2 - j1:
             for k in range(i2 - i1):
@@ -498,7 +609,39 @@ def compare_md(old: list[str], new: list[str], heads: set[str],
                     cls = MD_SIDE[1]
                 if cls is None and head_norm(o_, heads) == head_norm(n_, heads):
                     cls = HEAD_CLASS
+                if cls is None and pre_norm(o_) == pre_norm(n_):
+                    cls = PRE_CLASS
+                if cls is None:
+                    cls = note6_cls(o_, n_)
                 rows.append({"line_new": j1 + k + 1, "line_old": i1 + k + 1,
+                             "class": cls or UNEXPECTED})
+            continue
+        js = [j for j in range(j1, j2) if not in_new(j)]
+        if tag == "replace" and len(js) == i2 - i1:
+            # round 9: §0's round-9 lines sit next to the per-run lines (tracked
+            # files differing, attribution sentence), which makes that replace block
+            # unequal; the new lines are classed as new, and the remaining lines are
+            # paired in order under the same rules as the equal-size branch above
+            pair = dict(zip(js, range(i1, i2)))
+            for j in range(j1, j2):
+                if j not in pair:
+                    rows.append({"line_new": j + 1, "line_old": None, "class": in_new(j)})
+                    continue
+                o_, n_ = old[pair[j]], new[j]
+                cls = next((c for p, c in MD_CLASSES
+                            if o_.startswith(p) and n_.startswith(p)), None)
+                if cls is None:
+                    cls = next((c for po, pn, c in MD_PAIR_CLASSES
+                                if o_.startswith(po) and n_.startswith(pn)), None)
+                if cls is None and o_.startswith(MD_SIDE[0]) and n_.startswith(MD_SIDE[0]):
+                    cls = MD_SIDE[1]
+                if cls is None and head_norm(o_, heads) == head_norm(n_, heads):
+                    cls = HEAD_CLASS
+                if cls is None and pre_norm(o_) == pre_norm(n_):
+                    cls = PRE_CLASS
+                if cls is None:
+                    cls = note6_cls(o_, n_)
+                rows.append({"line_new": j + 1, "line_old": pair[j] + 1,
                              "class": cls or UNEXPECTED})
             continue
         for i in range(i1, i2):
@@ -527,6 +670,14 @@ def compare_json(old, new, heads: set[str]) -> list[dict]:
         if (cls is None and isinstance(fo[k], str) and isinstance(fn[k], str)
                 and head_norm(fo[k], heads) == head_norm(fn[k], heads)):
             cls = HEAD_CLASS
+        def _pn(v):
+            return (pre_norm(v) if isinstance(v, str) else
+                    [pre_norm(x) if isinstance(x, str) else x for x in v]
+                    if isinstance(v, list) else v)
+        if cls is None and _pn(fo[k]) == _pn(fn[k]):
+            cls = PRE_CLASS
+        if cls is None:
+            cls = note6_cls(fo[k], fn[k])
         rows.append({"path": k, "class": cls or UNEXPECTED})
     return rows
 
@@ -623,8 +774,21 @@ def main() -> int:
     with open(os.path.join(REPO, PREPRINT), "rb") as f:
         pre_b = f.read()
     pre_sha = sha256_bytes(pre_b)
+    pre_match = pre_sha == PREPRINT_SHA
     P(f"- `{PREPRINT}` (untracked) sha256 `{pre_sha}`: "
-      f"{'MATCH' if pre_sha == PREPRINT_SHA else 'MISMATCH'} vs the block's d6431e97...222b8")
+      f"{'MATCH' if pre_match else 'MISMATCH'} vs the preprint of record "
+      f"{PREPRINT_SHA[:8]}...{PREPRINT_SHA[-5:]}, the patched text (patch v6; {PREPRINT_RULING}). "
+      f"The block's {PREPRINT_SHA_AUDITED[:8]}...{PREPRINT_SHA_AUDITED[-5:]} is the audited, "
+      f"superseded text, archived untracked at `{PREPRINT_AUDITED_COPY}` (out of the release; "
+      "not opened or required here)" + ("" if pre_match else
+      " -- STOP (integrity): the root preprint is not the preprint of record; this run's "
+      "preprint locators and §0's sentence check read a different text, nothing below is a "
+      "check of patch v6, the comparison classes the preprint lines UNEXPECTED, and the "
+      "script exits 3 after writing its outputs"))
+    if not pre_match:
+        print(f"[STOP: {PREPRINT} sha256 {pre_sha[:8]}... is not the preprint of record "
+              f"{PREPRINT_SHA[:8]}...{PREPRINT_SHA[-5:]}; outputs are written, exit 3]",
+              file=sys.stderr)
     imported = ["valence_core/__init__.py", "valence_core/adapters/__init__.py",
                 "valence_core/adapters/base.py", "valence_core/readout.py",
                 "valence_core/regression/__init__.py",
@@ -676,6 +840,57 @@ def main() -> int:
       "not computed here. Run (b) below runs the suite on the pin's own tree, where none of "
       "these changes exists.")
     P("")
+    # Round 9 (ruling 9): every preprint sentence this script locates or quotes,
+    # checked on the patched text; one not found is a finding on the patch for
+    # the design seat, never a stop (a finding on the patch only when the root
+    # preprint is the preprint of record; otherwise §0's sha line says STOP).
+    pre_lines = pre_b.decode("utf-8").split("\n")
+    pre_rows, pre_find = [], []
+    for s_, old_ln, use in PREPRINT_SENTENCES:
+        hits = lines_with("\n".join(pre_lines), s_)
+        pre_rows.append({"sentence": s_, "use": use, "audited_line": old_ln,
+                         "patched_lines": hits,
+                         "state": ("same line" if hits and hits[0] == old_ln else
+                                   "re-anchored" if hits else "NOT FOUND")})
+        if not hits:
+            pre_find.append({"sentence": s_, "use": use,
+                             "old": f"{PREPRINT}@{PREPRINT_SHA_AUDITED[:8]}:{old_ln}",
+                             "new": f"{PREPRINT}@{pre_sha[:8]}:{old_ln}",
+                             "new_line_text": (pre_lines[old_ln - 1]
+                                               if old_ln <= len(pre_lines) else None)})
+    J["integrity"]["preprint_of_record"] = {
+        "ruling": PREPRINT_RULING, "sha256": PREPRINT_SHA,
+        "measured_sha256": pre_sha, "match": pre_match,
+        "audited_superseded_sha256": PREPRINT_SHA_AUDITED,
+        "audited_copy_untracked_not_opened": PREPRINT_AUDITED_COPY,
+        "sentences": pre_rows,
+        "findings_on_the_patch": pre_find if pre_match else [],
+        "not_found_on_a_text_not_of_record": [] if pre_match else pre_find}
+    r9_start = len(L)
+    P(f"- Round 9 ({PREPRINT_RULING}): the {len(pre_rows)} preprint sentences this script "
+      "locates or quotes, checked on the patched text: " +
+      f"{sum(r['state'] == 'same line' for r in pre_rows)} on the line they stood on in the "
+      f"audited text, {sum(r['state'] == 're-anchored' for r in pre_rows)} re-anchored, "
+      f"{len(pre_find)} not found (" + "; ".join(
+          f"'{r['sentence']}' :{r['audited_line']}->" +
+          (",".join(map(str, r['patched_lines'])) or "none") for r in pre_rows) + ").")
+    if pre_find and not pre_match:
+        P("  Not found on this text, which is not the preprint of record (not findings on the "
+          "patch; see the STOP on §0's sha line): " + "; ".join(
+            f"'{f_['sentence']}' ({f_['use']}) stood at {f_['old']}; line {f_['new']} reads: "
+            f"'{cell(f_['new_line_text'])}'" for f_ in pre_find) + ".")
+    elif pre_find:
+        P("  Findings on the patch, for the design seat (ruling 9; not a STOP): " + "; ".join(
+            f"'{f_['sentence']}' ({f_['use']}) stood at {f_['old']} and is not in the patched "
+            f"text; its line {f_['new']} now reads: '{cell(f_['new_line_text'])}'"
+            for f_ in pre_find) + ".")
+    elif pre_match:
+        P("  Findings on the patch (ruling 9): none.")
+    else:
+        P("  Not found on this text: none (it is not the preprint of record; see the STOP on "
+          "§0's sha line).")
+    P("")
+    r9_end = len(L)
 
     # ------------------------------------------------------------ suite runs
     P("## 1. The model-free regression suite")
@@ -1797,7 +2012,7 @@ def main() -> int:
         "(all displacement reads as criticism' (" + L_f3_od + "); at 4× the selected frac 0.10, "
         "i.e. f = .40, Δ+ is still positive at " + " and ".join(f"L{c['layer']}" for c in od if c["dpos"] > 0) + " (above).",
         "Wording (" + loc(PREPRINT, "coherence degrades monotonically", True) + "): 'coherence "
-        "degrades monotonically (audit-flagged rounds .000/.023/.047)' -- the "
+        "degrades monotonically (audit-flagged rounds .000/.023/.047 across 0.10/0.20/0.30)' -- the "
         "figures reproduce; 'monotonically' is the values-check's flagged gloss (of the four dose "
         "steps only read .10->.20 is resolved, one-sided Fisher p = "
         f"{steps['read .10->.20']['one_sided_greater']:.4f}; the R arm degrades at "
@@ -2167,9 +2382,11 @@ def main() -> int:
                   J["suite"].get("head_at_wt_run_end")):
             if isinstance(h, str) and re.fullmatch(r"[0-9a-f]{40}", h):
                 heads |= {h, h[:7]}
-        md_rows = compare_md(old_md, L, heads, new_ranges=[(r3_start, r3_end, NEW_R3)])
+        md_rows = pre_gate(compare_md(old_md, L, heads,
+                                      new_ranges=[(r3_start, r3_end, NEW_R3),
+                                                  (r9_start, r9_end, NEW_R9)]), pre_match)
         new_js = json.loads(json.dumps(J, default=float, ensure_ascii=False))
-        js_rows = compare_json(old_js, new_js, heads)
+        js_rows = pre_gate(compare_json(old_js, new_js, heads), pre_match)
         o_tr = old_js.get("integrity", {}).get("tracked_files_differing_from_pin") or []
         n_tr = J["integrity"]["tracked_files_differing_from_pin"]
         added, removed = sorted(set(n_tr) - set(o_tr)), sorted(set(o_tr) - set(n_tr))
@@ -2210,7 +2427,8 @@ def main() -> int:
                               if r["class"].startswith(UNEXPECTED))})
     sec = []
     S_ = sec.append
-    S_("## Portability fix and interim re-run (2026-10-08)")
+    S_("## Portability fix and interim re-run (2026-10-08), with the round-9 preprint "
+       "re-point (2026-10-10)")
     S_("")
     S_(f"- Fix: at `{COMPARE_REV}` the `--scratch` default was a fixed path in the builder's "
        "session scratch directory, which exists on one machine only (the committed run passed "
@@ -2222,7 +2440,14 @@ def main() -> int:
        f"`{PREPRINT}` stops the run before anything is made; the line below records whether "
        "`--scratch` existed. Nothing else above this section is computed differently; round 3, "
        "this section and the JSON's \"values_check_round3\", \"portability\" and "
-       "integrity.tracked_files_differing_from_pin_attribution keys are new.")
+       "integrity.tracked_files_differing_from_pin_attribution keys are new. Round 9 "
+       f"(2026-10-10): the preprint of record is the patched text ({PREPRINT_RULING}); §0's "
+       "preprint line, its sentence check and the JSON's integrity.preprint_of_record key "
+       "are new or re-worded, and the comparison below classes them; a preprint locator "
+       "whose sentence is missing now reads ':NOT FOUND (..., §0)' where it used to stop the "
+       "run; a root preprint whose sha256 is not the preprint of record's makes §0's sha "
+       "line say STOP, its preprint lines UNEXPECTED below, and the exit status 3 (after the "
+       "outputs are written); note 6's quote of preprint line 141 runs through '0.30)'.")
     S_(f"- Still needed off this laptop: the untracked `{PREPRINT}` (sha256 "
        f"{PREPRINT_SHA[:8]}...{PREPRINT_SHA[-5:]}) at the repository root, which a fresh clone does "
        "not carry unless the PI commits it (README-NOTE.md's dependency list asks for that); "
@@ -2308,7 +2533,7 @@ def main() -> int:
         json.dump(J, f, indent=1, default=float, ensure_ascii=False)
         f.write("\n")
     print(f"wrote {os.path.relpath(out, REPO)} and {os.path.relpath(jout, REPO)}")
-    return 0
+    return 0 if pre_match else 3
 
 
 if __name__ == "__main__":

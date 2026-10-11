@@ -36,6 +36,20 @@ termination figure split into an overall row and a by-arm row; FDBK called the
 largest deviation, not the exception; the first-smoke read scoped to the v1
 pools; five locators re-anchored. The round-2 rows follow round 1's in the
 Values-check section.
+
+v4 (audit round 9, 2026-10-10; the PI's ruling 9 of 2026-10-10, as corrected;
+preprint handling only): the preprint of record is the patch-v6 text,
+PREPRINT-v1_0-draft.md at sha256 0f4ba501...16c22, asserted in full where v1-v3
+asserted the block's d6431e97...222b8. That abbreviation is recorded as the
+audited, superseded text, archived untracked (out of the release) at
+archive/PREPRINT-v1_0-draft.pre-patch-v6.md, which is never required: if present
+it is read only to verify the audited-line constants below. Every preprint
+locator is re-anchored by text on the patched file, and every phrase this raw
+quotes from the preprint, and every claim it makes about a preprint sentence
+(swept from every v3 line that names the preprint or one of its lines), is
+checked there; a check that fails does not stop the script, it is recorded
+in the raw's closing 'Round 9' section as a finding on the patch for the design
+seat, with the old and the new text. Nothing not tied to the preprint changed.
 """
 from __future__ import annotations
 
@@ -61,11 +75,48 @@ PIN = "bbc9ffe"
 POST_PIN_GCAL = "bab921c"   # read-only comparison; after the pin
 BLOCK = "AUDIT-note-release-v1_2.md"
 BLOCK_SHA = "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841"
-PREPRINT = "PREPRINT-v1_0-draft.md"           # untracked; working tree only
+PREPRINT = "PREPRINT-v1_0-draft.md"           # untracked; working tree only (committed at the tag)
+# Round 9: the preprint of record (the PI's ruling 9 of 2026-10-10, as
+# corrected); the working-tree file is hashed at run time and asserted equal to
+# it before any of its lines is quoted.
+PREPRINT_SHA = "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22"
+PREPRINT_RULING = "the PI's ruling 9 of 2026-10-10, as corrected"
 # The block's own abbreviation of the post-patch-v4 root copy's sha256
-# (AUDIT-note-release-v1_2.md:21, `d6431e97…222b8`); the working-tree file is
-# hashed at run time and asserted against it before any of its lines is quoted.
+# (AUDIT-note-release-v1_2.md:21, `d6431e97…222b8`): the audited text, which v1-v3
+# asserted; superseded by patch v6, archived untracked (out of the release) at
+# PREPRINT_AUDITED; recorded, never required.
 PREPRINT_SHA_BLOCK = ("d6431e97", "222b8")
+PREPRINT_AUDITED = "archive/PREPRINT-v1_0-draft.pre-patch-v6.md"
+AUDIT_REV = "09c3a8c"                          # this item's committed raw (v3)
+# Round 9: the preprint anchors v3 located, with the audited line it printed for
+# each (N5 @09c3a8c); sha256 of each audited line (text split on '\n', no
+# newline); the audited sentence the patch changed, verbatim. The constants are
+# verified against PREPRINT_AUDITED when that copy is present and matches the block.
+PP_ANCHORS = {
+    "generic length-preference deflation was tested and failed": 182,
+    "session-termination attempts occur at about 1% of rounds": 182,
+    "Menu behavior is exploration-dominant in every arm": 182,
+    "found below its visibility criterion": 182,
+    "**8.1 The gating campaign": 268,
+}
+PP_AUDITED_LINE_SHA = {182: "c8b9645e47aeb93f9b89409edc00f4f3e049dbab8ba271c4c8c959f29eb64a06",
+                       268: "42231fc69e8990f3516f44ea130dd0cc5bfe1184deebe9ae4f04852a1a22a09d"}
+PP_AUDITED_SENTENCES = [  # (audited line, start needle, end needle, audited sentence)
+    (182, "Clean versus seeded character corruption", "found below its visibility criterion.",
+     "Clean versus seeded character corruption, 0.000 exactly, with maps +.121 and −.130 "
+     "cancelling (§5.6), at a dose a later calibration (§8.1) found below its visibility criterion."),
+]
+PP_QUOTES = [  # (anchor, the phrase this raw quotes from the preprint)
+    ("generic length-preference deflation was tested and failed", "length-preference"),
+    ("session-termination attempts occur at about 1% of rounds", "uniformly across arms including sham"),
+    ("session-termination attempts occur at about 1% of rounds", "about 1% of rounds, uniformly across arms"),
+    ("Menu behavior is exploration-dominant in every arm", "session share ≈ .50"),
+    ("Menu behavior is exploration-dominant in every arm",
+     "no evaluation-seeking against a predominantly positive feedback stream"),
+    ("found below its visibility criterion",
+     "at a dose a later calibration (§8.1) found below its visibility criterion"),
+    ("**8.1 The gating campaign", "**8.1 The gating campaign"),
+]
 CLONE = "jlens-qwen36"                        # gitignored; read only, never git
 F_SESS = f"{CLONE}/scripts/f_sessions.py"
 F_POST = f"{CLONE}/scripts/f_postscreen_descriptive.py"
@@ -458,22 +509,37 @@ def main() -> None:
           "Status vocabulary: reproduced (this script computes the figure from committed JSON/JSONL and prints it) | log-only (prose only; pinned locator) | not found | discrepant | computed-new (a computation the record does not contain). Locators are `path@bbc9ffe:line` as `git show bbc9ffe:<path>` numbers them. Every rate names its domain; every p its test and sidedness.",
           ""]
     assert blk_sha == BLOCK_SHA, "block sha mismatch"
-    # the working-tree preprint (untracked): hash it before quoting it
+    # the working-tree preprint (untracked; committed at the tag): hash it before
+    # quoting it; round 9: asserted equal to the preprint of record (ruling 9)
     with open(os.path.join(REPO, PREPRINT), "rb") as f:
         pp_bytes = f.read()
     pp_sha = sha256_bytes(pp_bytes)
     pp_text = pp_bytes.decode("utf-8")
-    pp_match = pp_sha.startswith(PREPRINT_SHA_BLOCK[0]) and pp_sha.endswith(PREPRINT_SHA_BLOCK[1])
-    assert pp_match, f"{PREPRINT} sha256 {pp_sha} != block's {PREPRINT_SHA_BLOCK}"
-    pp_tag = f"{PREPRINT} (working tree, untracked; sha256 {pp_sha[:8]}...{pp_sha[-6:]}, computed at run time, MATCH vs the block's d6431e97…222b8)"
-    L.insert(-3, f"- Preprint quoted below: `{PREPRINT}` (root, untracked) sha256 `{pp_sha}` computed at run time; block (line {lines_with(blk.decode(), 'd6431e97')[0]}) gives `d6431e97…222b8`: {'MATCH' if pp_match else 'MISMATCH'}")
+    pp_lines = pp_text.split("\n")
+    pp_match = pp_sha == PREPRINT_SHA
+    pp_match_block = pp_sha.startswith(PREPRINT_SHA_BLOCK[0]) and pp_sha.endswith(PREPRINT_SHA_BLOCK[1])
+    assert pp_match, f"{PREPRINT} sha256 {pp_sha} != the preprint of record {PREPRINT_SHA} ({PREPRINT_RULING})"
+    PP_REC = f"{PREPRINT_SHA[:8]}…{PREPRINT_SHA[-5:]}"
+    pp_tag = f"{PREPRINT} (working tree, untracked; sha256 {pp_sha[:8]}...{pp_sha[-6:]}, computed at run time, MATCH vs the preprint of record {PP_REC}, {PREPRINT_RULING})"
+    L.insert(-3, f"- Preprint quoted below: `{PREPRINT}` (root, untracked; committed at the tag) sha256 `{pp_sha}` computed at run time; the preprint of record ({PREPRINT_RULING}) is `{PP_REC}`: {'MATCH' if pp_match else 'MISMATCH'}. The block (line {lines_with(blk.decode(), 'd6431e97')[0]}) gives `d6431e97…222b8`: the audited text, superseded by patch v6, archived untracked (out of the release; not required); see Round 9 at the end of this raw")
+
+    def pp_n(needle: str):
+        """Round 9: the line of `needle` on the patched preprint; a missing anchor
+        does not stop the script (it is a finding on the patch, Round 9)."""
+        hits = lines_with(pp_text, needle)
+        return hits[0] if hits else "? (not found on the patched text; Round 9)"
     J["header"] = {"stamp": stamp, "head": head, "block_sha256": blk_sha,
                    "script": script_rel, "script_sha256": script_sha,
                    "interpreter": sys.executable,
                    "python": platform.python_version(), "numpy": np_ver,
                    "command": cmd, "preprint": PREPRINT,
                    "preprint_sha256_computed": pp_sha,
-                   "preprint_matches_block": pp_match}
+                   "preprint_matches_block": pp_match_block,
+                   "preprint_sha256_of_record": PREPRINT_SHA,
+                   "preprint_matches_record": pp_match,
+                   "preprint_of_record_ruling": PREPRINT_RULING,
+                   "preprint_audited": {"block_abbrev": "d6431e97…222b8", "archived_untracked": PREPRINT_AUDITED,
+                                        "superseded_by": "patch v6", "required": False}}
 
     # ------------------------------------------------------ 0. integrity --
     L += ["## 0. Referents and integrity", ""]
@@ -685,7 +751,7 @@ def main() -> None:
     LOC_BREV_ARCH = loc(ARCH, "**brevity-tracking is", "length preference**")
     LOC_F4_S6 = loc('FINDINGS-4.md', '**6. The DIFF residual, recorded with its deflations tested.**', 'directionally consistent with toward-hard')
     LOC_F4_BREV = loc('FINDINGS-4.md', 'a generic brevity preference could', 'mimic it.')
-    pp_lenpref = f"{PREPRINT}:{lines_with(pp_text, 'generic length-preference deflation was tested and failed')[0]}"
+    pp_lenpref = f"{PREPRINT}:{pp_n('generic length-preference deflation was tested and failed')}"
     assert hard_longer > easy_longer and task_len["DIFF_hard"] > task_len["DIFF_easy"]
     L += ["### 3a. DIFF: the length-preference deflation test (POST-HOC, labeled in the record)", "",
           f"Record: {pstart}; analyzer {ports['postscreen features']}. Feature: for each valid session with a first pick (n = {len(vpost)}), the mean forced-round response length in tokens (`n_tok`, forced phase = first four rounds) per config; statistic = share of first free choices that went to the config with the SHORTER mean length, ties dropped; exact binomial against ½, two-sided. A generic length preference (here toward longer rounds, since hard rounds were the longer ones in {hard_longer}/{len(dsess)} DIFF sessions) would mimic a toward-hard lean if it were general; the two-sided test asks whether any length preference is general.",
@@ -812,7 +878,7 @@ def main() -> None:
     LOC_TSHAM = loc(ARCH, 'NOV-Q total 3 vs NOV-P 3')
     LOC_T33_F4 = loc('FINDINGS-4.md', '33 attempts', '~1.0% of rounds')
     LOC_ANRAW = loc('results/raw/2026-08-10_f_analysis.txt', 'termination attempts')
-    pp_term = f"{PREPRINT}:{lines_with(pp_text, 'session-termination attempts occur at about 1% of rounds')[0]}"
+    pp_term = f"{PREPRINT}:{pp_n('session-termination attempts occur at about 1% of rounds')}"
     rates = {a: per_arm_t[a] / per_arm_n[a] for a in ARMS}
     sham_vs_overall = rates["sham"] / (tot_t / tot_n)
     L += ["## 4. Termination attempts by arm (pre-declared descriptive counter)", "",
@@ -864,7 +930,7 @@ def main() -> None:
     # ------------------------------------------------ 5. exploration share --
     LOC_SHARE_F4 = loc('FINDINGS-4.md', 'Session share ≈ .50', 'in every arm (e2a')
     e2a_loc = loc(f"{CLONE}/scripts/e2a_sessions.py", 'share = float(np.mean([c[', where="clone")
-    pp_main = lines_with(pp_text, 'Menu behavior is exploration-dominant in every arm')[0]
+    pp_main = pp_n('Menu behavior is exploration-dominant in every arm')
     L += ["## 5. Exploration share by arm (session share)", "",
           f"The record states 'Session share ≈ .50 in every arm' for f1 ({LOC_SHARE_F4}) with no f1 artifact field and no f1 analyzer line computing it (`screen_analysis.json` has no share; `analyze()` computes none). Code computes it under e2a's definition, the precedent the sentence cites ('e2a's alternation finding'): e2a's `share_all_choices` = share of ALL free picks, over valid sessions, on one fixed label ({e2a_loc}); here the fixed label is P. Alternation = share of consecutive free picks (pick j vs j+1) that switch config; break = first free pick differs from the last forced round's config.",
           "",
@@ -1091,8 +1157,22 @@ def main() -> None:
                 e_["q_rounds_within_6_letters_of_a_v2_clean_item"] += int(any(len(c) == len(t) and hamming(t, c) <= 6 for c in clean))
     _s1 = smoke_corr["first smoke (1000-series)"]
     assert _s1["verbatim_in_v2_pools"] == 0 and smoke_corr["later smokes (1100-series)"]["verbatim_in_v2_pools"] > 0
-    pp_dose = f"{PREPRINT}:{lines_with(pp_text, 'found below its visibility criterion')[0]}"
-    pp_81 = f"{PREPRINT}:{lines_with(pp_text, '**8.1 The gating campaign')[0]}"
+    pp_dose = f"{PREPRINT}:{pp_n('found below its visibility criterion')}"
+    pp_81 = f"{PREPRINT}:{pp_n('**8.1 The gating campaign')}"
+    # round 9: v3's claim (iii) -- the dose clause omits the byte-clean delivery --
+    # checked on the patched text; where it fails, §7d and the dose row say so and
+    # the Round 9 section records the change as a finding on the patch (no digits
+    # are added to the row's value or note: N1 reads figures from them)
+    def omits_byteclean(line: str) -> bool:
+        return f"{len(clean_q)} of {n_q}" not in line and "byte-clean" not in line
+    _dl = pp_n('found below its visibility criterion')
+    pp_carries_bc = isinstance(_dl, int) and not omits_byteclean(pp_lines[_dl - 1])
+    pp_iii = ("(iii) It omits the byte-clean delivery, the concrete consequence for the primary." if not pp_carries_bc else
+              f"(iii) The audited text (d6431e97…222b8) omitted the byte-clean delivery, the concrete consequence for the primary; the patched text carries it ({pp_dose}; Round 9: a finding on the patch).")
+    pp_bc_value = ("the byte-clean delivery is omitted" if not pp_carries_bc else
+                   "the byte-clean delivery, omitted in the audited text, is carried by the patched text (a finding on the patch; closing section)")
+    pp_bc_note = ("the clause omits the byte-clean delivery" if not pp_carries_bc else
+                  "the audited clause omitted the byte-clean delivery, which the patched text carries (a finding on the patch; closing section)")
     gcal_at_pin = git("rev-parse", "--verify", "-q", f"{PIN}:data/m/gates/G-CAL_model-free.json", rev_ok=True).decode().strip()
     # covariate tie (values-check finding 9): accuracy on Q rounds that carried corruption
     d_pooled = cp[0] / cp[1] - cq[0] / cq[1]
@@ -1127,7 +1207,7 @@ def main() -> None:
           "### 7d. Answer", "",
           f"**Yes -- there is a known artifact at the 0.12 dose, and the note should disclose it; it is not in the f1-era record.** The cycle-4 record identified no dose defect (its CORR caveats are the vanished in-session accuracy delta and a post-hoc exclusion anomaly). The record at the pin (Phase 2, 2026-10-04 and 2026-10-07, both before {PIN}) documents, and this item reproduces from `data/f/sessions.jsonl` and `data/f/pools.json`, that f1's corruptor at rate .12 left items 1 and 12 unchanged: across all 64 CORR sessions (excluded ones included), {len(clean_q)} of {n_q} corrupted-label rounds delivered the clean text verbatim; in the primary's domain (the 56 valid sessions behind 28/56 = 0.000), {len(one_clean_valid)} sessions saw only one corrupted task, not two, before the first choice ({clean_pre[1]} of the {len(reached)} sessions that reached the first choice, m's domain). Across the 16 items the corruptor changed {sum(changed_r)} letters (median {statistics.median(changed_r):g} per item); only {len(ge3)} of 16 items reach the three-letter floor PROPOSAL-m later adopted as its visibility criterion.",
           "",
-          f"The preprint's clause -- 'at a dose a later calibration (§8.1) found below its visibility criterion' ({pp_dose}, working tree, untracked; §8.1 is the PROPOSAL-m gating campaign, {pp_81}) -- needs more than a gloss. (i) It attributed the finding to a calibration (§8.1) whose artifact did not exist at the pin. The substance ({16 - len(ge3)}/16 items below the floor; {len(clean_q)}/{n_q} byte-clean Q rounds) was on record through model-free replays of f1's corruptor (v1.7 referent check 2026-10-04; G-PORT C1). [Locators: `data/m/gates/G-CAL_model-free.json` is {'tracked' if gcal_at_pin else 'absent'} at {PIN} and first exists at {POST_PIN_GCAL}, after the pin; the v1.7 replay {LOC_V17_REPLAY}; G-PORT C1 {LOC_C1}; the v1.7 checker note G6a.11 ({LOC_G6A11}) says 'the computation supports the note's substance' and that root:182 states 'found' ahead of its record because no G-CAL artifact existed yet ({LOC_G6A11_SUBST}).] (ii) The floor is m's criterion, not f1's (f1 pre-registered a deterministic, sha-pinned corruption with its accuracy delta as a covariate, {loc('PROPOSAL-f-natural-reinforcer-screen.md', '| 4 | CORR |')}). (iii) It omits the byte-clean delivery, the concrete consequence for the primary.",
+          f"The preprint's clause -- 'at a dose a later calibration (§8.1) found below its visibility criterion' ({pp_dose}, working tree, untracked; §8.1 is the PROPOSAL-m gating campaign, {pp_81}) -- needs more than a gloss. (i) It attributed the finding to a calibration (§8.1) whose artifact did not exist at the pin. The substance ({16 - len(ge3)}/16 items below the floor; {len(clean_q)}/{n_q} byte-clean Q rounds) was on record through model-free replays of f1's corruptor (v1.7 referent check 2026-10-04; G-PORT C1). [Locators: `data/m/gates/G-CAL_model-free.json` is {'tracked' if gcal_at_pin else 'absent'} at {PIN} and first exists at {POST_PIN_GCAL}, after the pin; the v1.7 replay {LOC_V17_REPLAY}; G-PORT C1 {LOC_C1}; the v1.7 checker note G6a.11 ({LOC_G6A11}) says 'the computation supports the note's substance' and that root:182 states 'found' ahead of its record because no G-CAL artifact existed yet ({LOC_G6A11_SUBST}).] (ii) The floor is m's criterion, not f1's (f1 pre-registered a deterministic, sha-pinned corruption with its accuracy delta as a covariate, {loc('PROPOSAL-f-natural-reinforcer-screen.md', '| 4 | CORR |')}). {pp_iii}",
           "",
           f"A wording the record supports (a proposal for the design seat; domains named): 'at a corruption rate (.12) at which 2 of 16 items rendered unchanged -- {len(clean_q)} of {n_q} corrupted-label rounds across all 64 CORR sessions delivered clean text, and {len(one_clean_valid)} of the 56 valid sessions saw one corrupted task rather than two before the first choice -- and {16 - len(ge3)} of 16 items fell below the three-letter floor of the later campaign.' If the note keeps 'a later calibration', it should cite G-CAL's artifact ({POST_PIN_GCAL}, post-pin) and say it is a replay of the corruptor, not a measurement on the model. The post-hoc splits in 7c are descriptive only and carry no weight either way.",
           ""]
@@ -1138,9 +1218,9 @@ def main() -> None:
         "data/f/sessions.jsonl (CORR transcripts' Task lines) + data/f/pools.json CORR_clean; replay validated by data/f/calib.json corr_sha", "reproduced",
         "first on record at " + loc('results/raw/2026-10-04_m-v1.7_referent_check.txt', 'For the 31 I replayed f1', 'preprint' + chr(39) + 's dose note rests on (G6a.11)') + " and RESULTS.md@bbc9ffe G-PORT C1 (" + loc('RESULTS.md', 'C1, under (3).', 'This bears on A0' + chr(39) + 's comparison with f1' + chr(39) + 's primary.') + "); post-pin G-CAL artifact (bab921c) agrees; the f1-era record (archive) has no dose defect")
     fig("preprint 'at a dose a later calibration (§8.1) found below its visibility criterion'",
-        f"{len(ge3)}/16 items meet m's ≥3-letter floor at 0.12; at the pin the support was a model-free replay of f1's corruptor (v1.7 referent check, G-PORT C1), not a calibration and not a measurement on the model; G-CAL's artifact is post-pin; the byte-clean delivery is omitted",
+        f"{len(ge3)}/16 items meet m's ≥3-letter floor at 0.12; at the pin the support was a model-free replay of f1's corruptor (v1.7 referent check, G-PORT C1), not a calibration and not a measurement on the model; G-CAL's artifact is post-pin; {pp_bc_value}",
         pp_tag.replace(PREPRINT, pp_dose), "discrepant",
-        f"wording, not a number: the clause attributes the finding to a calibration (§8.1) whose artifact did not exist at the pin (G-CAL's 0.12 artifact first at {POST_PIN_GCAL}); the substance ({16 - len(ge3)}/16 items below the floor; {len(clean_q)}/{n_q} byte-clean Q rounds) was on record through model-free replays of f1's corruptor (v1.7 referent check, whose checker note G6a.11 says 'the computation supports the note's substance', {LOC_G6A11_SUBST}; G-PORT C1, {LOC_C1}); the clause omits the byte-clean delivery; suggested replacement in §7d; whether PROPOSAL-m's posting flag is set is not N5's call")
+        f"wording, not a number: the clause attributes the finding to a calibration (§8.1) whose artifact did not exist at the pin (G-CAL's 0.12 artifact first at {POST_PIN_GCAL}); the substance ({16 - len(ge3)}/16 items below the floor; {len(clean_q)}/{n_q} byte-clean Q rounds) was on record through model-free replays of f1's corruptor (v1.7 referent check, whose checker note G6a.11 says 'the computation supports the note's substance', {LOC_G6A11_SUBST}; G-PORT C1, {LOC_C1}); {pp_bc_note}; suggested replacement in §7d; whether PROPOSAL-m's posting flag is set is not N5's call")
     J["corr_dose"] = {"q_rounds": n_q, "q_forced": len(f_q), "q_free": len(fr_q),
                       "byte_clean_q": len(clean_q), "byte_clean_forced": len(clean_f),
                       "byte_clean_free": len(clean_fr), "byte_clean_by_item": dict(by_item_clean),
@@ -1194,7 +1274,7 @@ def main() -> None:
         ("6", "minor", "CORR covariate row: the cycle-4 record itself logs +.078 for the run's pools (f0 v2 entry, :258), which v1 did not cite", "fixed",
          f"'CORR delta +.078 covariate' at {LOC_078}; v1's +.094 at {LOC_094_V1}; both now cited in §1, §6 and the covariate row (the transcription inference is unchanged and stronger)."),
         ("7", "minor", "The preprint's sha256 was printed from a constant, never hashed", "fixed",
-         f"The working-tree file is now hashed at run time: sha256 {pp_sha}; asserted against the block's d6431e97…222b8 before line {lines_with(pp_text, 'found below its visibility criterion')[0]} is quoted (MATCH); header line added; the constant is gone."),
+         f"The working-tree file is now hashed at run time: sha256 {pp_sha}; asserted against the preprint of record {PP_REC} ({PREPRINT_RULING}; v1-v3 asserted the block's d6431e97…222b8, the audited text) before line {pp_n('found below its visibility criterion')} is quoted (MATCH); header line added; the sha256 printed as the file's is the run-time hash; the one full-sha constant is ruling 9's value of record, the assert target, printed only as that value."),
         ("8", "minor", "Termination '≈ 1% by arm': by arm 0.79%-1.99%, sham's 2.0% double the stated rate; the note's sentence should rest on the overall rate", "fixed",
          f"Per arm {', '.join(f'{a_} {per_arm_t[a_]}/{per_arm_n[a_]}' for a_ in ARMS)}; sham {100 * rates['sham']:.2f}% is double the record's stated ≈ 1.0% but {sham_vs_overall:.2f}× the overall {100 * tot_t / tot_n:.2f}% (the raw says both); homogeneity p = {p_hom:.4f} over {n_tables} tables (unchanged). §4 and the row now say the 1% is overall and give a wording, using 'no detectable heterogeneity' rather than the checker's 'no heterogeneity' (a p of {p_hom:.2f} shows absence of evidence, not uniformity). [The row is split in round 2, row R2-3.]"),
         ("9", "minor", "§7c/§7d: the byte-clean rounds' bearing on the record's 'vanished' / 'visible but costless' reading was not drawn", "fixed",
@@ -1245,6 +1325,241 @@ def main() -> None:
     J["values_check"] = [{"id": n_, "severity": sev, "finding": fd, "disposition": disp, "evidence": ev}
                          for (n_, sev, fd, disp, ev) in vc]
     J["figures"] = FIG
+
+    # ------------------------------------------- round 9: the patched preprint --
+    # The PI's ruling 9 of 2026-10-10, as corrected. Every anchor, quoted phrase
+    # and claim about a preprint sentence is checked on the patched text; a check
+    # that fails is a finding on the patch for the design seat, recorded, never
+    # raised. Only the constants' own consistency with the archived audited text
+    # (when present) is asserted: a mismatch there is a defect of this script.
+    aud_raw = git("show", f"{AUDIT_REV}:{DEF_OUT}").decode()
+    arch_lines, arch_note = None, "absent at run time; the audited-line constants are not re-verified"
+    if os.path.exists(os.path.join(REPO, PREPRINT_AUDITED)):
+        with open(os.path.join(REPO, PREPRINT_AUDITED), "rb") as f:
+            a_b = f.read()
+        a_sha = sha256_bytes(a_b)
+        if a_sha.startswith(PREPRINT_SHA_BLOCK[0]) and a_sha.endswith(PREPRINT_SHA_BLOCK[1]):
+            arch_lines = a_b.decode("utf-8").split("\n")
+            ok_l = all(sha256_bytes(arch_lines[n_ - 1].encode()) == h_ for n_, h_ in PP_AUDITED_LINE_SHA.items())
+            ok_s = all(s_ in arch_lines[n_ - 1] for (n_, _, _, s_) in PP_AUDITED_SENTENCES)
+            assert ok_l and ok_s, "audited-line constants disagree with the archived audited text"
+            arch_note = (f"present, sha256 `{a_sha}` (the block's d6431e97…222b8: MATCH); read only to verify this "
+                         f"script's constants: audited-line sha256s equal {ok_l}, audited sentence(s) verbatim on their line {ok_s}")
+        else:
+            arch_note = f"present, sha256 `{a_sha}`, not the block's d6431e97…222b8; not used"
+
+    def audited_from(n_aud: int, line: str):
+        """The audited line n_aud rebuilt from its patched counterpart: identical,
+        or one registered audited sentence substituted back; sha256-verified.
+        Returns (text or None, (old sentence, new sentence) or None)."""
+        if sha256_bytes(line.encode()) == PP_AUDITED_LINE_SHA[n_aud]:
+            return line, None
+        for (n_, a_, e_, s_) in PP_AUDITED_SENTENCES:
+            if n_ == n_aud and a_ in line and e_ in line[line.index(a_):]:
+                i_ = line.index(a_)
+                j_ = line.index(e_, i_) + len(e_)
+                rb_ = line[:i_] + s_ + line[j_:]
+                if sha256_bytes(rb_.encode()) == PP_AUDITED_LINE_SHA[n_aud]:
+                    return rb_, (s_, line[i_:j_])
+        return None, None
+
+    r9_anchor, r9_line, r9_aud, r9_chg = [], {}, {}, {}
+    for nd, n_aud in PP_ANCHORS.items():
+        n_new = pp_n(nd)
+        found = isinstance(n_new, int)
+        if found and n_aud not in r9_line:
+            r9_line[n_aud] = n_new
+            r9_aud[n_aud], r9_chg[n_aud] = audited_from(n_aud, pp_lines[n_new - 1])
+        r9_anchor.append({"needle": nd, "audited_line": n_aud, "patched_line": n_new if found else None,
+                          "line_identical": (found and sha256_bytes(pp_lines[n_new - 1].encode()) == PP_AUDITED_LINE_SHA[n_aud])})
+    # every form in which v3 printed a preprint line number: `path:N`, 'Preprint
+    # line N' (Note 3) and 'line N is quoted' (values-check row 7). 'root:N' is
+    # the v1.7 checker note G6a.11's own locator, quoted from the record, not one
+    # of this raw's anchors. Any other occurrence of the number in v3 must be a
+    # round count ('free N', '/N'); anything else means this sweep missed a form.
+    PRINT_FORMS = (f"{PREPRINT}:{{n}}", "Preprint line {n}", "line {n} is quoted")
+    printed_at, quoted_root, round_counts = {}, {}, {}
+    for n_ in sorted(set(PP_ANCHORS.values())):
+        printed_at[n_] = {f_.format(n=n_): lines_with(aud_raw, f_.format(n=n_)) for f_ in PRINT_FORMS}
+        quoted_root[n_] = lines_with(aud_raw, f"root:{n_}")
+        round_counts[n_] = []
+        for i_, l_ in enumerate(aud_raw.split("\n"), start=1):
+            for f_ in PRINT_FORMS + ("root:{n}",):
+                l_ = l_.replace(f_.format(n=n_), "")
+            if re.search(rf"(?:free |/){n_}(?![0-9A-Za-z])", l_):
+                round_counts[n_].append(i_)
+                l_ = re.sub(rf"(?:free |/){n_}(?![0-9A-Za-z])", "", l_)
+            assert not re.search(rf"(?<![0-9A-Za-z.]){n_}(?![0-9A-Za-z])", l_), \
+                f"v3 raw line {i_}: preprint line {n_} in a form this sweep does not list"
+
+    def on_line(nd: str, fn):
+        """(on the audited line, on the patched line) for a check over the anchor's line."""
+        n_new, n_aud = pp_n(nd), PP_ANCHORS[nd]
+        new_ = fn(pp_lines[n_new - 1]) if isinstance(n_new, int) else None
+        aud_ = fn(r9_aud[n_aud]) if r9_aud.get(n_aud) is not None else None
+        return aud_, new_
+
+    r9_quote = []
+    for nd, ph in PP_QUOTES:
+        a_, n_ = on_line(nd, lambda t, ph=ph: ph in t)
+        r9_quote.append({"phrase": ph, "anchor": nd, "patched_line": pp_n(nd), "on_audited": a_, "on_patched": n_})
+    def sent(t: str, ph: str):
+        """The sentence of line t that carries ph (split after '.' + whitespace), or ''."""
+        return next((s_ for s_ in re.split(r"(?<=\.)\s+", t) if ph in s_), "")
+
+    _dose_s = "found below its visibility criterion"
+    _fdbk_s = "no evaluation-seeking against a predominantly positive feedback stream"
+    claims = [
+        ("§7d (iii); the dose row's value and note", "the CORR dose clause omits the byte-clean delivery",
+         "found below its visibility criterion", omits_byteclean),
+        ("§7d (i); the dose row's note; Note 1", "the CORR dose clause attributes the finding to a calibration (§8.1)",
+         "found below its visibility criterion", lambda t: "a later calibration (§8.1)" in t),
+        ("§7d (ii)", "the CORR dose clause's criterion is the later calibration's ('its visibility criterion'), which §7d (ii) finds is m's, not f1's",
+         "found below its visibility criterion",
+         lambda t: "a later calibration" in sent(t, _dose_s) and "its visibility criterion" in sent(t, _dose_s)),
+        ("§7d (the proposed wording's paragraph)", "the CORR dose clause keeps 'a later calibration' without citing G-CAL's artifact or calling it a replay",
+         "found below its visibility criterion",
+         lambda t: "a later calibration" in sent(t, _dose_s) and not any(w in sent(t, _dose_s) for w in ("G-CAL", POST_PIN_GCAL, "replay"))),
+        ("§3a; the length-test row; Note 5", "the length-preference phrase is unsigned",
+         "generic length-preference deflation was tested and failed",
+         lambda t: "length-preference" in t and not any(w in t for w in ("brevity", "shorter", "longer"))),
+        ("§5; Note 3", "'session share ≈ .50' in every arm, neither the range nor FDBK named",
+         "Menu behavior is exploration-dominant in every arm",
+         lambda t: "session share ≈ .50" in t and "FDBK" not in t),
+        ("§5; Note 3", "the FDBK clause 'no evaluation-seeking against a predominantly positive feedback stream' is a first-choice statement and does not say so",
+         "Menu behavior is exploration-dominant in every arm",
+         lambda t: _fdbk_s in sent(t, _fdbk_s) and not any(w in sent(t, _fdbk_s).lower() for w in ("first choice", "first-choice", "first pick", "first-pick", "first free"))),
+        ("§4; the homogeneity row; Note 3", "'uniformly across arms', not 'no detectable heterogeneity'",
+         "session-termination attempts occur at about 1% of rounds",
+         lambda t: "uniformly across arms" in t and "no detectable heterogeneity" not in t),
+    ]
+    r9_claim = []
+    for where_, cl, nd, fn in claims:
+        a_, n_ = on_line(nd, fn)
+        r9_claim.append({"claim": cl, "where": where_, "anchor": nd, "patched_line": pp_n(nd),
+                         "held_on_audited": a_, "holds_on_patched": n_})
+
+    # findings: one per changed audited line (with the checks that now fail on
+    # it), then any failing check or missing anchor not already covered
+    r9_find, covered, fid_of = [], set(), {}
+    for n_aud in sorted(r9_line):
+        n_new = r9_line[n_aud]
+        if sha256_bytes(pp_lines[n_new - 1].encode()) == PP_AUDITED_LINE_SHA[n_aud]:
+            continue
+        fails = [c_ for c_ in r9_claim if PP_ANCHORS[c_["anchor"]] == n_aud and c_["holds_on_patched"] is not True]
+        qfails = [q_ for q_ in r9_quote if PP_ANCHORS[q_["anchor"]] == n_aud and q_["on_patched"] is not True]
+        covered |= {id(x_) for x_ in fails + qfails}
+        fid = f"P9-{len(r9_find) + 1}"
+        chg = r9_chg[n_aud]
+        if chg is not None:
+            old_s, new_s = chg
+            txt = (f"**{fid} (line {n_new}; audited line {n_aud}).** The patch changes one sentence of the line; the rest "
+                   f"of the line is byte-identical to the audited line (the audited sentence substituted back reproduces "
+                   f"the audited line's sha256 `{PP_AUDITED_LINE_SHA[n_aud][:16]}`). Old (audited text d6431e97…222b8, "
+                   f"line {n_aud}): '{old_s}' New (patched text {pp_sha[:8]}…{pp_sha[-5:]}, line {n_new}): '{new_s}'")
+        else:
+            old_s, new_s = (arch_lines[n_aud - 1] if arch_lines else None), pp_lines[n_new - 1]
+            txt = (f"**{fid} (line {n_new}; audited line {n_aud}).** The line differs from the audited line outside the "
+                   f"sentence(s) this script registers. Old (audited text, line {n_aud}): "
+                   + (f"'{old_s}'" if old_s else "not available (archived copy absent; never required)")
+                   + f" New (patched text {pp_sha[:8]}…{pp_sha[-5:]}, line {n_new}): '{new_s}'")
+        txt += (" Checks of this raw that fail on the patched text: "
+                + ("; ".join(f"{c_['claim']} ({c_['where']})" for c_ in fails) or "none")
+                + "; quoted phrases absent from the patched line: "
+                + ("; ".join(f"'{q_['phrase']}'" for q_ in qfails) or "none") + ".")
+        if chg is not None and any(c_["claim"].startswith("the CORR dose clause omits") for c_ in fails):
+            bc_figs = [(f"{len(clean_q)} of {n_q}", f"{len(clean_q)}/{n_q} byte-clean Q rounds over all 64 CORR sessions, excluded ones included (§7c)"),
+                       (f"{len(one_clean_valid)} of the {vby['CORR']} valid sessions",
+                        f"{len(one_clean_valid)}/{vby['CORR']} valid CORR sessions with one byte-clean pre-pick Q round (§7c)")]
+            txt += (" The patched sentence carries the byte-clean delivery that §7d (iii) and the dose row found omitted; "
+                    + "; ".join(f"'{s_}' on the patched line: {s_ in new_s} (this run: {d_})" for s_, d_ in bc_figs) + ".")
+            held = [c_ for c_ in r9_claim if PP_ANCHORS[c_["anchor"]] == n_aud and c_["holds_on_patched"] is True]
+            txt += (" Claims about this line that still hold: "
+                    + "; ".join(f"{c_['claim']} ({c_['where']})" for c_ in held) + ".")
+            obs = []
+            if "64" not in new_s:
+                obs.append("the patched sentence does not name the 306's domain (all 64 CORR sessions, excluded ones included), which §7d's proposed wording names")
+            if new_s.count("dose") >= 2 and "a later calibration (§8.1)" in new_s:
+                obs.append("the inserted text precedes the audited clause, which is kept, so the sentence names the dose twice ('at the dose used', 'at a dose a later calibration (§8.1) found below its visibility criterion')")
+            m_ = re.search(r"which the gating campaign\S* dose calibration corrects", new_s)
+            if m_:
+                obs.append(f"it adds '{m_.group(0)}', a second, present-tense calibration attribution beside the kept "
+                           "'a later calibration (§8.1)': the attribution §7d (i) flags (the dose row: at the pin the "
+                           "support was a model-free replay of f1's corruptor, not a calibration), now made twice. Whether "
+                           "the campaign corrects the dose is PROPOSAL-m's question, which N5 does not adjudicate")
+            if "so the contrast ran weaker than nominal" in new_s:
+                obs.append("'so the contrast ran weaker than nominal' is an inference from the delivery: as a statement "
+                           "about delivery it is what §7c's counts show (fewer corrupted deliveries than nominal), but read "
+                           "as an effect on the 0.000 contrast it would rest on §7c's post-hoc splits, which N5 holds "
+                           "descriptive only, carrying no weight either way (§7d)")
+            if m_ and "corrects, at a dose a later calibration (§8.1)" in new_s:
+                obs.append("the kept clause 'at a dose a later calibration (§8.1) found below its visibility criterion' now "
+                           "follows 'corrects', so it attaches ambiguously: to the correcting calibration, or, as in the "
+                           "audited text, to the 0.000 contrast")
+            if obs:
+                txt += " Observations for the design seat: " + " ".join(f"({k_}) {o_[0].upper() + o_[1:]}." for k_, o_ in enumerate(obs, start=1))
+            txt += (" The dose row keeps its status (discrepant): statuses are carried, never upgraded; whether the patch "
+                    "discharges it is the design seat's and the PI's.")
+        fid_of[n_aud] = (fid, chg is not None)
+        r9_find.append({"id": fid, "patched_line": n_new, "audited_line": n_aud, "old": old_s, "new": new_s,
+                        "checks_failed": [c_["claim"] for c_ in fails], "phrases_absent": [q_["phrase"] for q_ in qfails],
+                        "text": txt})
+    for x_ in [a_ for a_ in r9_anchor if a_["patched_line"] is None]:
+        fid = f"P9-{len(r9_find) + 1}"
+        r9_find.append({"id": fid, "anchor_missing": x_["needle"], "audited_line": x_["audited_line"],
+                        "text": f"**{fid}.** Anchor '{x_['needle']}' (audited line {x_['audited_line']}) is not on the patched text; the locators that use it print '?'."})
+    for x_ in [c_ for c_ in r9_claim + r9_quote if id(c_) not in covered
+               and (c_.get("holds_on_patched", c_.get("on_patched")) is not True)]:
+        fid = f"P9-{len(r9_find) + 1}"
+        what_ = x_.get("claim") or f"phrase '{x_['phrase']}' on its anchor line"
+        r9_find.append({"id": fid, "check": what_, "patched_line": x_["patched_line"],
+                        "text": f"**{fid}.** '{what_}' does not hold on the patched text (line {x_['patched_line']})."})
+
+    L += ["## Round 9 (2026-10-10): the preprint of record re-pointed (" + PREPRINT_RULING + ")", "",
+          f"- Preprint of record: `{PREPRINT}` (root, untracked; committed at the tag) sha256 `{pp_sha}`, computed at run time; ruling 9 gives `{PP_REC}`: {'MATCH' if pp_match else 'MISMATCH'}. v1-v3 of this raw quoted the audited text, the block's `d6431e97…222b8` ({BLOCK}@{PIN}:{lines_with(blk.decode(), 'd6431e97')[0]}), superseded by patch v6 and archived untracked at `{PREPRINT_AUDITED}`, out of the release; it is not required. Archived copy: {arch_note}.",
+          "- Scope: the preprint handling only. Every other section above is computed as in v3 from the record at the pin, and no status changed (statuses are carried, never upgraded). A check below that fails on the patched text is a finding on the patch for the design seat (ruling 9), not a STOP.",
+          "",
+          "### Anchors, re-anchored on the patched text", "",
+          "| anchor (needle) | audited line (v3) | patched line | patched line vs the audited line |",
+          "|---|---|---|---|"]
+    for a_ in r9_anchor:
+        L.append(f"| {cell(a_['needle'])} | {a_['audited_line']} | {a_['patched_line'] if a_['patched_line'] else 'not found'} | "
+                 + ("identical (sha256) |" if a_["line_identical"] else
+                    f"changed by the patch{' in one sentence, the rest byte-identical' if fid_of.get(a_['audited_line'], ('', False))[1] else ''} ({fid_of.get(a_['audited_line'], ('findings below',))[0]}) |"))
+    def _on(v_):
+        return f"line{'s' if len(v_) != 1 else ''} {', '.join(map(str, v_))}"
+    L += ["", "v3 printed the preprint's line numbers at `" + DEF_OUT + "@" + AUDIT_REV + "` in these forms, each now "
+          "computed from its anchor's patched line (the table above): "
+          + "; ".join(f"`{fm_}` on {_on(v_)}" for n_ in printed_at for fm_, v_ in printed_at[n_].items() if v_) + ". "
+          + ("; ".join(f"'root:{n_}' on {_on(v_)}" for n_, v_ in quoted_root.items() if v_)
+             + f" is the v1.7 checker note G6a.11's own locator ({LOC_G6A11}), quoted from the record, not one of this raw's anchors, so it is not re-anchored. "
+             if any(quoted_root.values()) else "")
+          + "Every other occurrence of these numbers in v3 is a round count, not a locator: "
+          + ("; ".join(f"{n_} on {_on(v_)}" for n_, v_ in round_counts.items() if v_) or "none") + ".", "",
+          "### Phrases this raw quotes from the preprint", "",
+          "| phrase | patched line | on the audited line | on the patched line |",
+          "|---|---|---|---|"]
+    for q_ in r9_quote:
+        L.append(f"| {cell(q_['phrase'])} | {q_['patched_line']} | {q_['on_audited']} | {q_['on_patched']} |")
+    L += ["", "### Claims this raw makes about preprint sentences", "",
+          "Swept from every v3 line that names the preprint or one of its lines (the forms above).", "",
+          "| claim | where in this raw | patched line | held on the audited text | holds on the patched text |",
+          "|---|---|---|---|---|"]
+    for c_ in r9_claim:
+        L.append(f"| {cell(c_['claim'])} | {cell(c_['where'])} | {c_['patched_line']} | {c_['held_on_audited']} | {c_['holds_on_patched']} |")
+    L += ["", "### Findings on the patch (for the design seat; ruling 9; not a STOP)", ""]
+    for f_ in r9_find:
+        L += [f_["text"], ""]
+    if not r9_find:
+        L += ["None: every anchor, quoted phrase and claim holds on the patched text.", ""]
+    J["round9_preprint"] = {"ruling": PREPRINT_RULING, "preprint": PREPRINT, "sha256": pp_sha,
+                            "sha256_of_record": PREPRINT_SHA, "match": pp_match,
+                            "audited": {"block_abbrev": "d6431e97…222b8", "archived_untracked": PREPRINT_AUDITED,
+                                        "archived_copy": arch_note, "required": False},
+                            "anchors": r9_anchor, "v3_printed_at": {str(k_): v_ for k_, v_ in printed_at.items()},
+                            "v3_quoted_g6a11_locator": {f"root:{k_}": v_ for k_, v_ in quoted_root.items() if v_},
+                            "v3_round_counts_not_locators": {str(k_): v_ for k_, v_ in round_counts.items()},
+                            "quotes": r9_quote, "claims": r9_claim, "findings_on_the_patch": r9_find}
 
     os.makedirs(os.path.dirname(out_md), exist_ok=True)
     with open(out_md, "w", encoding="utf-8") as f:

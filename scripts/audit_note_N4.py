@@ -17,6 +17,23 @@ Usage (from anywhere):
 
 Deterministic apart from the run-metadata lines (stamp, HEAD at run time,
 command line). No randomness is used anywhere.
+
+Round 9 (2026-10-10, Tier 1, before N1's round 9): re-pointed at the patched
+preprint under the PI's ruling 9 of 2026-10-10, as corrected. The preprint of
+record is PREPRINT-v1_0-draft.md at sha256 0f4ba501...6c22 (patch v6), asserted
+in full before anything is written: any other text stops the run. The
+block's d6431e97...222b8 is the audited, superseded text, archived untracked at
+archive/PREPRINT-v1_0-draft.pre-patch-v6.md and never required here. Preprint
+locators are found by anchor text in the patched file. A check of a preprint
+sentence that fails on the patched text is not a STOP: it is a finding on the
+patch for the design seat (section "Findings on the patch"), quoting the old
+line from the committed raw of record (RAW_REC) and the new line from the
+patched file, with the figures the patched lines print parsed and compared with
+this run's values at their printed precision. Every preprint sentence the
+script quotes or characterizes is located by text: the e2a primary and footnote
+1, the 'break rate' habit sentence, the interval, the power sentence (ii), the
+:109 verification sentence and the :262 disclosure. Nothing that does not read
+the preprint is changed.
 """
 from __future__ import annotations
 
@@ -41,7 +58,15 @@ PIN = "bbc9ffe"
 BLOCK = "AUDIT-note-release-v1_2.md"
 BLOCK_SHA = "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841"
 PREPRINT = "PREPRINT-v1_0-draft.md"
-PREPRINT_SHA = "d6431e97d35e5914574ff9884c0e64463a7baf1cf9d279f27ed45a683a6222b8"
+# round 9: the preprint of record, patch v6 (the PI's ruling 9 of 2026-10-10, as corrected)
+PREPRINT_SHA = "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22"
+# the block's referent, audited through round 8: superseded; archived untracked, never required
+PREPRINT_SHA_AUDITED = "d6431e97d35e5914574ff9884c0e64463a7baf1cf9d279f27ed45a683a6222b8"
+PREPRINT_AUDITED_ARCHIVE = "archive/PREPRINT-v1_0-draft.pre-patch-v6.md"
+# the committed raw of record that quotes the audited text: a finding's old line is read from it
+RAW_REC = ("09c3a8c", "results/raw/2026-10-08_note-N4-e2a.md")
+# the committed e2a correction-of-record artifact (computed-new Wilson intervals) and its raw, read at their commit
+COR_REC = ("e60b633", "data/e2a/analysis.correction-of-record.json", "results/raw/2026-10-09_note-N4-correction.md")
 CLONE = "jlens-qwen36"          # gitignored third-party clone: read only, never git
 DEF_OUT = "results/raw/2026-10-08_note-N4-e2a.md"
 DEF_JSON = "results/raw/2026-10-08_note-N4-e2a.json"
@@ -254,6 +279,34 @@ def fig(figure, reproduced, source, status, named_in="", note=""):
                  "status": status, "note": note})
 
 
+PATCH: list[dict] = []   # round 9, ruling 9: findings on the patch (design seat), never STOPs
+
+
+def rec_line(needle: str, upto: str | None = None) -> dict:
+    """The first line of the committed raw of record carrying `needle`, cut after `upto` if given."""
+    t = git("show", f"{RAW_REC[0]}:{RAW_REC[1]}").decode("utf-8")
+    h = lines_with(t, needle)
+    assert h, needle
+    s = t.split("\n")[h[0] - 1].strip()
+    return {"locator": f"{RAW_REC[1]}@{RAW_REC[0]}:{h[0]}", "quote": s[:s.index(upto) + len(upto)] if upto else s}
+
+
+def patch_finding(check: str, old: list[dict], new: list[dict], values: str, figures: str = "") -> str:
+    """Record a preprint-sentence check that fails on the patched text; returns its id. `figures` states,
+    computed, whether the figures the patched lines print equal this run's values at their printed precision."""
+    PATCH.append({"id": f"PF-{len(PATCH) + 1}", "check": check, "result": "FAILS on the patched text",
+                  "old": old, "new": new, "record_values_this_run": values,
+                  "patched_figures_vs_this_run": figures})
+    return PATCH[-1]["id"]
+
+
+def eq_printed(printed: str, value: float) -> bool:
+    """True iff `value` rounds to the printed decimal (e.g. '+0.035', '.275', '−0.03') at its printed precision."""
+    s = printed.replace("−", "-").replace("+", "")
+    nd = len(s.split(".")[1]) if "." in s else 0
+    return round(value, nd) == float(s)
+
+
 def r4(x: float) -> float:
     return round(x, 4)
 
@@ -354,9 +407,19 @@ def main() -> None:
     o()
     pre_path = os.path.join(REPO, PREPRINT)
     pre_sha = sha256_file(pre_path)
+    if pre_sha != PREPRINT_SHA:  # round 9: asserted in full, before anything is written (as N5, N7, N17)
+        raise SystemExit(f"{PREPRINT} sha256 {pre_sha} != the preprint of record {PREPRINT_SHA} "
+                         f"(the PI's ruling 9 of 2026-10-10, as corrected)")
     tracked_pre = bool(git("ls-files", "--", PREPRINT).strip())
+    aud_fp = os.path.join(REPO, PREPRINT_AUDITED_ARCHIVE)
+    aud_st = (("present, sha256 " + ("MATCH" if sha256_file(aud_fp) == PREPRINT_SHA_AUDITED else "MISMATCH"))
+              if os.path.exists(aud_fp) else "absent")
     o(f"- `{PREPRINT}` (root, {'tracked' if tracked_pre else 'UNTRACKED: absent from any clone'}) "
-      f"sha256 `{pre_sha}` ({'MATCH' if pre_sha == PREPRINT_SHA else 'MISMATCH'} vs the block's d6431e97...222b8)")
+      f"sha256 `{pre_sha}` ({'MATCH' if pre_sha == PREPRINT_SHA else 'MISMATCH'} vs {PREPRINT_SHA[:8]}...{PREPRINT_SHA[-4:]}, the preprint of "
+      f"record: patch v6, the PI's ruling 9 of 2026-10-10, as corrected). The block's "
+      f"{PREPRINT_SHA_AUDITED[:8]}...{PREPRINT_SHA_AUDITED[-5:]} is the audited, "
+      f"superseded text, archived untracked at `{PREPRINT_AUDITED_ARCHIVE}` (not required here; {aud_st}); its lines "
+      f"are quoted from the raw of record `{RAW_REC[1]}`@{RAW_REC[0]}.")
     # the review cards (block :54, :59-60): the design handoffs that number them are untracked root files
     HAND = {}
     for hp_ in ("HANDOFF-2026-09-04-design.md", "HANDOFF-2026-09-13-design.md"):
@@ -643,7 +706,8 @@ def main() -> None:
     pf_loc = loc("results/raw/2026-10-08_note-preflight.md", "| `PREPRINT-v1_1-draft.md` | MISSING")
     pf_rn = loc("results/raw/2026-10-08_note-preflight.md", "| `RESEARCH-NOTE-v0_2-draft.md` | MISSING")
     pf_both = f"{pf_rn.split(':')[0]}:{pf_rn.split(':')[-1]} (RESEARCH-NOTE v0.2), :{pf_loc.split(':')[-1]} (v1.1)"
-    # the other preprint copies on this machine (untracked; read only): the pre-patch v2/v3/v4 under archive/
+    # the other preprint copies on this machine (untracked; read only): the pre-patch v2/v3/v4 under archive/, and
+    # (round 9) the pre-patch v6 copy, the audited text, when present
     prepatch = sorted(os.path.relpath(os.path.join(REPO, "archive", fn), REPO)
                       for fn in os.listdir(os.path.join(REPO, "archive"))
                       if fn.startswith("PREPRINT-v1_0-draft.pre-patch-") and fn.endswith(".md"))
@@ -661,16 +725,23 @@ def main() -> None:
                         f"'54 of 101 valid sessions' {v['54 of 101 valid sessions'] or 'NO MATCH'}, 'half the "
                         f"difference' {v['half the difference'] or 'NO MATCH'}, '55 of 102' at {v['55 of 102']}, "
                         f"'54 of 101' at {v['54 of 101']}" for p, v in pp_hits.items())
+    pp_short = "/".join(p.rsplit('-', 1)[-1].replace('.md', '') for p in pp_hits)
     app_planned = pre_hits("*Appendices (planned):")
-    app_refs = {L_: sorted(set(re.findall(r"Appendix ([A-Z])", pl[L_ - 1]))) for L_ in pre_hits("Appendix ")}
+    # round 9: 'Appendix X of <work>' cites another work's appendix (patched :162, arXiv:2603.21396), not this preprint's
+    app_refs = {L_: sorted(set(re.findall(r"Appendix ([A-Z])\b(?! of )", pl[L_ - 1]))) for L_ in pre_hits("Appendix ")}
+    app_ext = [L_ for L_ in app_refs if re.search(r"Appendix [A-Z] of ", pl[L_ - 1])]
+    # a line whose only appendix citations are another work's is not counted; any other line stays as at HEAD
+    app_refs = {L_: v for L_, v in app_refs.items() if v or L_ not in app_ext}
     app_refs_s = "; ".join(":%d: Appendix %s" % (k, ", ".join(v)) for k, v in app_refs.items())
     heads = [i for i, l in enumerate(pl, 1) if l.startswith("#")]
     has_app_heading = any("Appendix" in pl[i - 1] for i in heads)
-    o(f"- Scope of this check: of the block's preprint referents only `{PREPRINT}` (root, the block's post-patch-v4 "
-      f"copy) is on this machine. `PREPRINT-v1_1-draft.md`, the block's 'project copy' ({v11_loc}), is absent "
+    o(f"- Scope of this check: of the block's preprint referents only `{PREPRINT}` (root, the preprint of record: "
+      f"patch v6, sha256 {pre_sha[:8]}..., which replaced the block's post-patch-v4 copy {PREPRINT_SHA_AUDITED[:8]}..., "
+      f"the audited text) is on this machine. `PREPRINT-v1_1-draft.md`, the block's 'project copy' ({v11_loc}), is absent "
       f"(files found by that name under the repo, clone and .git excluded: {v11 if v11 else 'none'}), and so is "
       f"RESEARCH-NOTE v0.2 (preflight {pf_both}); a sentence the block attributes to 'the preprint' may live in "
-      f"either and cannot be checked here. Three earlier copies of v1.0 are also on this machine and were searched "
+      f"either and cannot be checked here. {('One', 'Two', 'Three', 'Four', 'Five', 'Six')[len(pp_hits) - 1] if 1 <= len(pp_hits) <= 6 else len(pp_hits)} "
+      f"earlier copies of v1.0 are also on this machine and were searched "
       f"for both phrases: {pp_desc}.")
     o(f"- `{PREPRINT}` cites appendices by letter ({app_refs_s}) but carries no appendix text: no heading names an "
       f"appendix ({'one does' if has_app_heading else 'none of its ' + str(len(heads)) + ' headings'}), its last "
@@ -678,20 +749,23 @@ def main() -> None:
       f"begins '*Appendices (planned):'. So the preprint's own statements of the identity (Appendix C, cited at "
       f":{','.join(str(k) for k, v in app_refs.items() if 'C' in v)}) and of the cached-generation disclosure "
       f"(Appendix D, which :{','.join(str(k) for k, v in app_refs.items() if 'D' in v and 'cached path' in pl[k - 1])} "
-      f"cites for it) cannot be checked.")
+      f"cites for it) cannot be checked."
+      + (f" Not counted: another work's appendix ('Appendix X of ...') at :{','.join(map(str, app_ext))}." if app_ext else ""))
     h54v = pre_hits("54 of 101 valid sessions")
     h54 = pre_hits("54 of 101")
     h55 = pre_hits("55 of 102 valid sessions")
+    h55r = h55 or pre_hits("55 of 102")   # round 9: the audited anchor is gone from the patched text; re-anchored
     hhalf = pre_hits("half the difference")
     hbreak = pre_hits("break rate")
     o(f"- grep `{PREPRINT}` (sha256 {pre_sha[:16]}): '54 of 101 valid sessions' → "
-      f"{h54v if h54v else 'NO MATCH'}; '54 of 101' → lines {h54}; '55 of 102 valid sessions' → lines {h55}; "
+      f"{h54v if h54v else 'NO MATCH'}; '54 of 101' → lines {h54}; '55 of 102 valid sessions' → lines {h55}"
+      + ("" if h55 else f" ('55 of 102' → lines {h55r})") + "; "
       f"'half the difference' → {hhalf if hhalf else 'NO MATCH'}; 'break rate' → lines {hbreak}.")
-    for n_ in sorted(set(h54 + h55)):
+    for n_ in sorted(set(h54 + h55r)):
         txt = pl[n_ - 1]
         if n_ in h54:
             o(f"  - :{n_}: \"{sentence_at(txt, '54 of 101')}\"")
-        if n_ in h55:
+        if n_ in h55r:
             o(f"  - :{n_}: \"{sentence_at(txt, '55 of 102')}\"")
     for n_ in hbreak:
         o(f"  - :{n_}: \"{sentence_at(pl[n_ - 1], 'break rate')}\"")
@@ -707,12 +781,63 @@ def main() -> None:
              and round(rc.binom_p_one_sided(kv, nv), nd_p) == pre_fp)
     corr_loc = loc('archive/RESULTS-cycles3-4.md', '> **CORRECTION (2026-08-21',
                    'below are unmodified; this addendum is the correction of record.')
-    o(f"**'54 of 101'.** `{PREPRINT}` does not say '54 of 101 valid sessions'; it carries {rec['reward']['k']} of "
-      f"{rec['reward']['n']} as the published primary (:{h55[0] if h55 else '?'}) and 54 of 101 in footnote 1 "
-      f"(:{h54[0] if h54 else '?'}) with its own Δ = {fn_d.group(1) if fn_d else '?'} and p = "
-      f"{fn_d.group(2) if fn_d else '?'}. Those reproduce from the record's analyzer under audit v2: {kv}/{nv}, "
-      f"Δ_first = {kv / nv - 0.5:+.4f}, p = {rc.binom_p_one_sided(kv, nv):.5f} (equal to the footnote at its "
-      f"printed precision: {'YES' if fn_ok else 'NO'}). It is not a transcription error and is not meant to "
+    # round 9 (ruling 9): a failed footnote check on the patched text is a finding on the patch, not a STOP
+    aud_form = bool(h55) and fn_d is not None   # the audited layout: primary 55/102, footnote 54/101 with Δ and p
+    h54s, h55s = ",".join(map(str, h54)) or "?", ",".join(map(str, h55r)) or "?"
+    def pq(n_, nd_):
+        l_ = pl[n_ - 1]
+        return {"locator": f"{PREPRINT}:{n_}", "quote": l_ if len(l_) <= 600 else sentence_at(l_, nd_, 2000)}
+    # round 9, fix round: the figures the patched lines print, parsed and compared (whatever the layout)
+    def fig_at(n_, X):
+        l_ = pl[n_ - 1]
+        m_d = (re.search(r"([+−-]\d*\.\d+) \(" + re.escape(X), l_)
+               or re.search(re.escape(X) + r"[^Δ]{0,20}Δ = ([+−-]\d*\.\d+)", l_))
+        m_p = re.compile(r"\bp = (\d*\.\d+)").search(l_, l_.find(X))
+        return (m_d.group(1) if m_d else None), (m_p.group(1) if m_p else None)
+    fig_cmp, fig_all = [], True
+    for X, hs, dv, pv in ((f"{kv} of {nv}", h54, kv / nv - 0.5, rc.binom_p_one_sided(kv, nv)),
+                          (f"{rec['reward']['k']} of {rec['reward']['n']}", h55r, A['reward']['delta_first'],
+                           A['reward']['binom_p_one_sided'])):
+        d_, p_ = fig_at(hs[0], X) if hs else (None, None)
+        ok_ = d_ is not None and p_ is not None and eq_printed(d_, dv) and eq_printed(p_, pv)
+        fig_all = fig_all and ok_
+        fig_cmp.append(f"{X} at :{hs[0] if hs else '?'}: Δ = {d_ or 'NOT PARSED'} vs {dv:+.4f}, p = "
+                       f"{p_ or 'NOT PARSED'} vs {pv:.5f} ({'equal' if ok_ else 'NOT equal'})")
+    on_fn = lambda hs: bool(hs) and pl[hs[0] - 1].startswith("¹")
+    lay_ = (f"the correction of record ({kv} of {nv}) is the primary and the verdict as published "
+            f"({rec['reward']['k']} of {rec['reward']['n']}) is footnote 1, the reverse of the audited text"
+            if on_fn(h55r) and not on_fn(h54) else
+            f"{kv} of {nv} on a footnote line: {'yes' if on_fn(h54) else 'no'}; {rec['reward']['k']} of "
+            f"{rec['reward']['n']} on a footnote line: {'yes' if on_fn(h55r) else 'no'}")
+    pf1_figs = (f"figures on the patched lines equal the record at their printed precision: "
+                f"{'YES' if fig_all else 'NO'} ({'; '.join(fig_cmp)}); layout: {lay_}")
+    pf1 = None if (aud_form and fn_ok) else patch_finding(
+        "N4(i-e): the e2a primary is found by '55 of 102 valid sessions', and footnote 1 (the line carrying "
+        "'54 of 101') reads '54 of 101, Δ = …, p = …' equal to the audit-v2 recount at its printed precision",
+        [rec_line("Reward Δ = +0.039 (55 of 102 valid sessions)"), rec_line("¹ A later audit excluded one session")],
+        [pq(n_, "54 of 101") for n_ in h54] + [pq(n_, "55 of 102") for n_ in h55r if n_ not in h54],
+        f"audit-v2 recount (scripts/e2a_recount.py) {kv}/{nv}, Δ_first = {kv / nv - 0.5:+.4f}, one-sided exact "
+        f"binomial p = {rc.binom_p_one_sided(kv, nv):.5f}; as published (data/e2a/analysis.json) {rec['reward']['k']}/"
+        f"{rec['reward']['n']}, Δ_first = {A['reward']['delta_first']:+.4f}, p = {A['reward']['binom_p_one_sided']:.5f}",
+        pf1_figs)
+    if aud_form:
+        carries = (f"it carries {rec['reward']['k']} of {rec['reward']['n']} as the published primary (:{h55[0]}) and "
+                   f"54 of 101 in footnote 1 (:{h54[0] if h54 else '?'}) with its own Δ = {fn_d.group(1)} and p = "
+                   f"{fn_d.group(2)}. Those reproduce from the record's analyzer under audit v2: {kv}/{nv}, "
+                   f"Δ_first = {kv / nv - 0.5:+.4f}, p = {rc.binom_p_one_sided(kv, nv):.5f} (equal to the footnote at "
+                   f"its printed precision: {'YES' if fn_ok else 'NO; finding on the patch ' + pf1 + ', below'})")
+    else:
+        # recheck fix: name the conjunct(s) that actually fail (aud_form False: the primary anchor and/or the footnote form)
+        why_ = " and ".join(w_ for w_ in (
+            None if h55 else "the primary anchor '55 of 102 valid sessions' is absent",
+            None if fn_ok else ("the footnote form '54 of 101, Δ = …, p = …' is absent" if fn_d is None else
+                                "the footnote check fails")) if w_)
+        carries = (f"on this patched text '54 of 101' is at :{h54s} and '55 of 102' at :{h55s}, and the check fails "
+                   f"({why_}; finding on the patch {pf1}, below; the figures those lines print equal the record at "
+                   f"their printed precision: {'YES' if fig_all else 'NO'}). The record's analyzer under audit v2 gives {kv}/{nv}, "
+                   f"Δ_first = {kv / nv - 0.5:+.4f}, p = {rc.binom_p_one_sided(kv, nv):.5f}")
+    vs_ = pre_hits("valid sessions")
+    o(f"**'54 of 101'.** `{PREPRINT}` does not say '54 of 101 valid sessions'; {carries}. It is not a transcription error and is not meant to "
       f"reproduce {A['reward']['delta_first']:+.3f} or {A['reward']['binom_p_one_sided']:.3f}: it is the later "
       f"audit's recount (one more reward session, s{', s'.join(map(str, extra))}, excluded on a banner-terminator "
       f"round the frozen fragments missed), recorded as the correction of record ({corr_loc}). Under no "
@@ -722,27 +847,35 @@ def main() -> None:
       f"{'/'.join(p.rsplit('-', 1)[-1].replace('.md', '') for p in pp_hits)} copies: "
       f"{'none carries it' if pp_none else 'SEE ABOVE'}); `PREPRINT-v1_1-draft.md` (the block's project copy) and "
       f"RESEARCH-NOTE v0.2 are absent ({pf_both}), so its source cannot be checked here. In `{PREPRINT}` the "
-      f"phrase 'valid sessions' attaches to {rec['reward']['k']} of {rec['reward']['n']}.")
-    if not fn_ok:
-        STOPS.append({"subitem": "N4(i) preprint footnote 1",
-                      "discrepancy": f"footnote values do not equal the v2 recount at printed precision: {fn_txt[:200]}",
-                      "suspected_cause": "transcription"})
+      f"phrase 'valid sessions' attaches to "
+      + (f"{rec['reward']['k']} of {rec['reward']['n']}." if h55 else f"neither figure (its lines: {vs_})."))
     NOTES.append(f"'54 of 101 valid sessions' is not in {PREPRINT} (sha {pre_sha[:8]}...). That file has "
-                 f"{rec['reward']['k']} of {rec['reward']['n']} valid sessions at :{h55[0] if h55 else '?'} and "
-                 f"'54 of 101, Δ = {fn_d.group(1) if fn_d else '?'}, p = {fn_d.group(2) if fn_d else '?'}' as "
-                 f"footnote 1 at :{h54[0] if h54 else '?'} -- the audit-v2 recount ({corr_loc}, the correction of "
+                 + (f"{rec['reward']['k']} of {rec['reward']['n']} valid sessions at :{h55[0]} and "
+                    f"'54 of 101, Δ = {fn_d.group(1)}, p = {fn_d.group(2)}' as footnote 1 at :{h54[0] if h54 else '?'}"
+                    if aud_form else f"54 of 101 at :{h54s} (and 55 of 102 at :{h55s}; finding on the patch {pf1})")
+                 + f" -- the audit-v2 recount ({corr_loc}, the correction of "
                  f"record), reproduced here by scripts/e2a_recount.py. Not a transcription error. The quotation is "
                  f"also absent from the untracked pre-patch copies {', '.join(pp_hits)} "
                  f"({'none carries it' if pp_none else 'SEE (i-e)'}). Its source is not on this machine: "
                  f"PREPRINT-v1_1-draft.md (the block's project copy, {v11_loc}) and RESEARCH-NOTE v0.2 are both "
                  f"absent ({pf_both}); either may carry the sentence.")
     o()
+    # round 9, fix round: the 'break rate' sentence this paragraph and the habit reading describe, located by text
+    HB_Q = ("within an arm", "weighted by which label the habit leads toward", "Appendix C")
+    hb_ok = bool(hbreak) and all(q_ in pl[hbreak[0] - 1] for q_ in HB_Q)
+    pf_hb = None if hb_ok else patch_finding(
+        "N4(i-e): the preprint's 'break rate' sentence is a within-arm decomposition ('within an arm ... weighted by "
+        "which label the habit leads toward') with a pointer to Appendix C",
+        [rec_line("the first-choice share decomposes into the habit's break rate weighted by which label")],
+        [pq(n_, "break rate") for n_ in hbreak],
+        "the identity of record, valence_core/e2d/habit.py (quoted in (i-e)): within ONE arm, weighted by forced-end pole")
     # habit identity
     o("**'Δ_first is half the difference between the state and sham arms' break rates'.** That "
       f"sentence is not in `{PREPRINT}` either (no match for 'half the difference'), nor in the pre-patch copies "
       f"({'none carries it' if pp_none else 'SEE ABOVE'}); v1.1 and RESEARCH-NOTE v0.2 are absent. That file's "
       f"sentence (:{hbreak[0] if hbreak else '?'}) is a within-arm decomposition with a pointer to "
-      "Appendix C. The identity of record is in `valence_core/e2d/habit.py`:")
+      "Appendix C" + ("" if hb_ok else f" in the audited text (not on the patched text: finding on the patch {pf_hb}, below)")
+      + ". The identity of record is in `valence_core/e2d/habit.py`:")
     o()
     o("```")
     for q in quote_lines("valence_core/e2d/habit.py", [
@@ -818,9 +951,10 @@ def main() -> None:
       f"'sham label' naming (the non-+ label within the arm) is a likely origin of a between-arms misreading. "
       f"habit.py calls the decomposition algebra, not a finding, and the motivating e2a rates post-hoc (rule 11, "
       f"{hab37}). The preprint's :{hbreak[0] if hbreak else '?'} wording ('within an arm ... weighted by which "
-      f"label the habit leads toward') matches the weighted form.")
+      f"label the habit leads toward') matches the weighted form"
+      + ("." if hb_ok else f" in the audited text (finding on the patch {pf_hb}, below)."))
     NOTES.append("'Δ_first is half the difference between the state and sham arms' break rates' is not in "
-                 f"{PREPRINT} nor in the pre-patch v2/v3/v4 copies (no 'half the difference'; PREPRINT-v1_1-draft.md "
+                 f"{PREPRINT} nor in the pre-patch {pp_short} copies (no 'half the difference'; PREPRINT-v1_1-draft.md "
                  f"and RESEARCH-NOTE v0.2, where it may live, are absent, {pf_both}). The "
                  f"record's identity ({loc('valence_core/e2d/habit.py', 'b+  = break rate in sessions where the habit leads AWAY', 'P(+) = n+/N * b+ + ns/N * (1 - bs).')}) is "
                  "WITHIN an arm, split by forced-end pole; ½(b+ − bs) is exact only at forced-end balance (reward "
@@ -866,8 +1000,57 @@ def main() -> None:
     wi, cp_, wd = ivs["55/102 Wilson score"], ivs["55/102 Clopper-Pearson exact"], ivs["55/102 Wald"]
     def iv2(x):
         return f"[{x[0]:.2f}, {x[1]:.2f}]"
+    # round 9 (ruling 9): the preprint's interval sentence, found by its text; re-anchored if the patch reworded it
+    IV_Q = "P(approach) ∈ ≈ [.44, .64]"
+    h_iv = pre_hits(IV_Q)
+    h_ivr = h_iv or pre_hits("interval on the approach probability")
+    # fix round: the interval the patched line prints, parsed and matched against this run's intervals at its precision
+    iv_l = sentence_at(pl[h_ivr[0] - 1], "approach probability", 2000) if h_ivr else ""
+    iv_m = re.search(r"\[(\d*\.\d+), (\d*\.\d+)\]", iv_l)
+    if iv_m:
+        iv_eq = [k_ for k_, v_ in ivs.items() if eq_printed(iv_m.group(1), v_[0]) and eq_printed(iv_m.group(2), v_[1])]
+        iv_meth = [m_ for m_ in ("Wilson", "Clopper", "Wald", "exact") if m_ in iv_l]
+        # recheck fix: the committed computed-new Wilson intervals (the artifact patched footnote 1 cites), read at
+        # their commit and compared with the patched interval at its printed precision and with this run's Wilson
+        cor_ = json.loads(git("show", f"{COR_REC[0]}:{COR_REC[1]}").decode("utf-8"))
+        cor_raw = git("show", f"{COR_REC[0]}:{COR_REC[2]}").decode("utf-8")
+        cor_st = [v_ for k_, v_ in cor_["status"].items() if "computed_new.wilson95_share" in k_]
+        cor_st = cor_st[0].split(":")[0] if cor_st else "NOT FOUND"
+        cor_2b = lines_with(cor_raw, "### 2(b) Wilson 95% intervals")
+        cor_cited = pre_hits(COR_REC[1])
+        cor_cmp = []
+        for key_, (k_, n_), row_ in (("of_record", (kv, nv), "| reward (of record) | "),
+                                     ("as_published", (rec['reward']['k'], rec['reward']['n']), "| reward (as published) | ")):
+            r_ = cor_[key_]["reward"]
+            assert (r_["k_plus_pole_first_pick"], r_["n_valid"]) == (k_, n_), (key_, r_, k_, n_)
+            w_ = r_["computed_new"]["wilson95_share"]
+            hr_ = lines_with(cor_raw, f"{row_}{k_}/{n_} | [")
+            eq_p = eq_printed(iv_m.group(1), w_[0]) and eq_printed(iv_m.group(2), w_[1])
+            eq_r = all(abs(a_ - b_) < 1e-12 for a_, b_ in zip(w_, wilson(k_, n_)))
+            cor_cmp.append(f"{k_}/{n_} ({key_}.reward.computed_new.wilson95_share) [{w_[0]:.4f}, {w_[1]:.4f}] "
+                           f"(raw :{hr_[0] if hr_ else '?'}; equal to this run's Wilson on {k_}/{n_}: "
+                           f"{'YES' if eq_r else 'NO'}): the patched interval equals it at its printed precision: "
+                           f"{'YES' if eq_p else 'NO'}")
+        cor_s = (f"the committed computed-new Wilson 95% intervals on the share, `{COR_REC[1]}`@{COR_REC[0]} (status in "
+                 f"that file: {cor_st}; cited by the patched text at :{','.join(map(str, cor_cited)) or 'NONE'}; its "
+                 f"raw `{COR_REC[2]}`@{COR_REC[0]} §2(b) at :{cor_2b[0] if cor_2b else '?'}): " + "; ".join(cor_cmp))
+        iv_figs = (f"the patched interval [{iv_m.group(1)}, {iv_m.group(2)}] equals at its printed precision: "
+                   f"{'; '.join(iv_eq) if iv_eq else 'none of them'}; and does not equal: "
+                   f"{'; '.join(k_ for k_ in ivs if k_ not in iv_eq) or 'none'}; the record figure .44–.64 ({f3}): "
+                   f"{'equal' if (iv_m.group(1), iv_m.group(2)) == ('.44', '.64') else 'NOT equal'}; {cor_s}; "
+                   f"method named in the patched sentence: {', '.join(iv_meth) if iv_meth else 'none'}")
+    else:
+        iv_figs = "no bracketed interval parsed on the patched line"
+    pf_iv = None if h_iv else patch_finding(
+        f"N4(i-f): the preprint states the approach-probability interval as '{IV_Q}'",
+        [rec_line("Power excludes medium-and-larger effects (P(approach) ∈ ≈ [.44, .64])")],
+        [pq(n_, "approach probability") for n_ in h_ivr],
+        "95% two-sided intervals, this run's (i-f) table at 2 dp: " + "; ".join(f"{k_} {iv2(v_)}" for k_, v_ in ivs.items())
+        + f"; the record figure: {f3} ('P(+) interval ≈ .44–.64')", iv_figs)
+    iv_at = (f":{h_iv[0]}" if h_iv else
+             f":{','.join(map(str, h_ivr)) or '?'}, which no longer carries '{IV_Q}' (finding on the patch {pf_iv}, below)")
     o(f"- The record states the interval without a method: {f3} ('P(+) interval ≈ .44–.64'); preprint "
-      f":{h55[0] if h55 else '?'} ('P(approach) ∈ ≈ [.44, .64]'). Search run here (git grep -F at the pin over "
+      + (f"{iv_at} ('{IV_Q}')" if h_iv else iv_at) + ". Search run here (git grep -F at the pin over "
       f"*.md and *.txt, the block and the 2026-10-08 raws excluded): lines carrying both '.44' and '.64': "
       f"{both_loc} (read: only the {f3.split('@')[0]} line states this interval; the others carry other numbers "
       f"that contain the digit strings); lines naming Wilson, Clopper or Wald beside "
@@ -883,7 +1066,7 @@ def main() -> None:
       f"block's method attribution (Wilson) is the design seat's and does not.")
     NOTES.append(f"The approach-probability interval ≈ [.44, .64] (a record figure, reproduced at 2 dp under "
                  f"Clopper-Pearson and Wald) has no stated method in the record ({f3}; "
-                 f"preprint :{h55[0] if h55 else '?'}). Wilson 95% on {rec['reward']['k']}/{rec['reward']['n']} = "
+                 f"preprint {iv_at}). Wilson 95% on {rec['reward']['k']}/{rec['reward']['n']} = "
                  f"[{wi[0]:.4f}, {wi[1]:.4f}] -> {iv2(wi)} (the design seat's guess"
                  f"{' does not reproduce .64' if iv2(wi) != '[0.44, 0.64]' else ' reproduces it'}); Clopper-Pearson "
                  f"[{cp_[0]:.4f}, {cp_[1]:.4f}] -> {iv2(cp_)}; Wald [{wd[0]:.4f}, {wd[1]:.4f}] -> {iv2(wd)}.")
@@ -964,17 +1147,23 @@ def main() -> None:
         (f"the design seat's arithmetic, not a record figure (a note under block :3, not an (i) STOP under :62; "
          f"the record's figures reproduce): reward {rw_st:+.4f} = (2·{rw_kb[0]}−{rw_n})/{rw_n}; the stored p and the code disambiguate"
          if rw_kb else "the design seat's arithmetic, not a record figure"))
-    pp_short = "/".join(p.rsplit('-', 1)[-1].replace('.md', '') for p in pp_hits)
     fig("preprint quotation '54 of 101 valid sessions' (the sentence as the block quotes it)",
         f"no match in {PREPRINT} nor in the pre-patch {pp_short} copies",
         f"grep of {PREPRINT} (sha256 {pre_sha[:16]}) and {', '.join(pp_hits)}; PREPRINT-v1_1-draft.md and "
         f"RESEARCH-NOTE v0.2 absent ({pf_both})", "not found", "N4(i)",
-        "the quotation only; the figure it carries reproduces (next row); v1.0 has 'valid sessions' on 55 of 102")
-    fig(f"preprint footnote 1 (:{h54[0] if h54 else '?'}): '54 of 101, Δ = {fn_d.group(1) if fn_d else '?'}, p = {fn_d.group(2) if fn_d else '?'}'",
+        "the quotation only; the figure it carries reproduces (next row); "
+        + ("v1.0 has 'valid sessions' on 55 of 102" if h55 else
+           f"the patched v1.0 has 'valid sessions' on neither figure (finding on the patch {pf1})"))
+    # round 9: when the patched text lacks the footnote form, the row keeps its label of record (the audited text)
+    fn_rec = None if fn_d else rec_line("| preprint footnote 1 (")
+    fig(f"preprint footnote 1 (:{h54[0] if h54 else '?'}): '54 of 101, Δ = {fn_d.group(1)}, p = {fn_d.group(2)}'"
+        if fn_d else fn_rec["quote"].split(" | ")[0][2:],
         f"audit-v2 recount {kv}/{nv}, Δ_first = {kv / nv - 0.5:+.4f}, one-sided exact binomial p = {rc.binom_p_one_sided(kv, nv):.5f} "
-        f"(equal at printed precision: {'YES' if fn_ok else 'NO'})",
+        + (f"(equal at printed precision: {'YES' if fn_ok else 'NO; finding on the patch ' + pf1})" if fn_d else
+           f"(the footnote form is not on the patched text: finding on the patch {pf1})"),
         "scripts/e2a_recount.py primary(V2) over data/e2a/sessions.jsonl + data/configs/e2b_audit_v2.json", "reproduced", "N4(i)",
-        f"a different n the record explains ({corr_loc}), not a transcription error")
+        f"a different n the record explains ({corr_loc}), not a transcription error"
+        + ("" if fn_d else f"; label as in the raw of record ({fn_rec['locator']}), the audited text"))
     fig("preprint quotation 'Δ_first is half the difference between the state and sham arms' break rates'",
         f"no match for 'half the difference' in {PREPRINT} nor in the pre-patch {pp_short} copies",
         f"grep of {PREPRINT} and {', '.join(pp_hits)}; v1.1 and RESEARCH-NOTE v0.2 absent ({pf_both})", "not found", "N4(i)",
@@ -1179,6 +1368,40 @@ def main() -> None:
     o(f"- The joint rows assume no map-level label/order artifact; the record shows one in sham (map A "
       f"{sham_maps[0]:+.4f}, map B {sham_maps[1]:+.4f}), which would lower conjunct (2)'s power further.")
     o()
+    # round 9, fix round (ruling 9): the preprint's power sentence the Reading characterizes, located by text
+    PW_Q = "Power excludes medium-and-larger effects"
+    h_pw = pre_hits(PW_Q)
+    h_pwr = h_pw or pre_hits("registered test detects")
+    pw_old = rec_line("Power excludes medium-and-larger effects (P(approach)")
+    pw_l = sentence_at(pl[h_pwr[0] - 1], "registered test detects", 2000) if h_pwr else ""
+    pw_m = re.search(r"shift of ([+−-]\d*\.\d+) at (\d+)% power", pw_l)
+    pw_r = re.search(r"pass rule about ([+−-]\d*\.\d+) to ([+−-]\d*\.\d+)", pw_l)
+    jr_ = sorted((jres["101 signed"]["delta_star"], jres["101 |·|"]["delta_star"]))
+    if pw_m and pw_r:
+        pw_ok = (eq_printed(pw_m.group(1), mde[101]["delta_star"]) and int(pw_m.group(2)) == 80
+                 and eq_printed(pw_r.group(1), jr_[0]) and eq_printed(pw_r.group(2), jr_[1]))
+        pw_figs = (f"figures on the patched sentence equal this run's n = 101 values at their printed precision: "
+                   f"{'YES' if pw_ok else 'NO'} (first-choice shift {pw_m.group(1)} at {pw_m.group(2)}% power vs the "
+                   f"registered-test MDE δ* = {mde[101]['delta_star']:+.4f} at power .80; pass rule {pw_r.group(1)} to "
+                   f"{pw_r.group(2)} vs the joint δ* {jr_[0]:+.4f} (signed) to {jr_[1]:+.4f} (|·|))")
+    else:
+        pw_figs = "the patched power figures were not parsed"
+    pf_pw = None if h_pw else patch_finding(
+        f"N4(ii): the preprint reads '{PW_Q}' (the sentence (ii)'s Reading calls a confidence-interval statement)",
+        [pw_old], [pq(n_, "registered test detects") for n_ in h_pwr],
+        f"registered-test MDE (computed-new, (ii)) at n = 101 δ* = {mde[101]['delta_star']:+.4f}, at n = 102 "
+        f"{mde[102]['delta_star']:+.4f}; the pass rule jointly at n = 101: signed {jres['101 signed']['delta_star']:+.4f}, "
+        f"|·| {jres['101 |·|']['delta_star']:+.4f}; the record's own statement: "
+        f"{loc('FINDINGS-3.md', 'Medium-and-larger effects excluded', '(P(+) interval ≈ .44–.64); small effects survive.')}"
+        f" ('Medium-and-larger effects excluded (P(+) interval ≈ .44–.64)')", pw_figs)
+    pw_read = ("'Power excludes medium-and-larger effects' is a confidence-interval statement in the record; the MDE "
+               "above is the power statement." if h_pw else
+               f"'{PW_Q}' was the audited preprint's wording (its :172 as the raw of record quotes it, "
+               f"{pw_old['locator']}), a confidence-interval statement; the record's own is "
+               f"{loc('FINDINGS-3.md', 'Medium-and-larger effects excluded', '(P(+) interval ≈ .44–.64); small effects survive.')} "
+               f"('Medium-and-larger effects excluded (P(+) interval ≈ .44–.64)'). The patched preprint replaces it with "
+               f"a power statement (:{','.join(map(str, h_pwr)) or '?'}; finding on the patch {pf_pw}, below); the MDE "
+               f"above is the power statement.")
     o(f"**Reading.** At the registered test the first-choice MDE (80% power, one-sided exact α = .05) is "
       f"δ = {mde[101]['delta_star']:+.3f} at n = 101 (P(+) = {mde[101]['p_star']:.3f}). The sham-envelope "
       f"criterion is a different bar: unconditionally (E1) it needs δ ≈ "
@@ -1187,8 +1410,7 @@ def main() -> None:
       f"the realized envelope {obs_env:.4f} (E2) it needs δ = {envres['E2 n=101']['delta_star']:+.3f} either way. "
       f"The pass rule as a whole needs δ ≈ {jres['101 signed']['delta_star']:+.3f} (signed) or ≈ "
       f"{jres['101 |·|']['delta_star']:+.3f} (|·|) at n = 101. Which reading the note uses is the PI's or the "
-      f"design seat's call (Items for the PI). 'Power excludes medium-and-larger effects' is a confidence-interval "
-      f"statement in the record; the MDE above is the power statement.")
+      f"design seat's call (Items for the PI). " + pw_read)
     o()
     fig("MDE at n = 101, α as pre-registered, power .80, registered test", f"c = {mde[101]['c']}, p* = {mde[101]['p_star']:.5f}, δ* = {mde[101]['delta_star']:+.4f}",
         f"computed from the registered test ({crit})", "computed-new", "N4(ii)", "one-sided exact binomial α = .05")
@@ -1330,13 +1552,48 @@ def main() -> None:
       f"correction {loc('RESULTS.md', 'holds 360 rows over 311 distinct (arm, session, choice) keys', 'non-null `verify_kl` in the session rows. Nothing about the assertion')} "
       f"and {loc('RESULTS.md', '`data/e2a/g3prime_kl.jsonl` holds 360 rows but 311 distinct (arm,', 'verified reads.')}.")
     hp109 = lines_with(pre, "311 distinct verified forward passes")
+    hp109r = hp109 or lines_with(pre, "311 distinct verified")   # round 9: re-anchored if the patch reworded it
     bar_loc = loc("valence_core/readout.py", "# g3' clause 1 was stated as <= 1e-6 in e2a; the v3 session harness hardened",
                   "VERIFY_KL_BAR_E2A = 1e-6")
     skl_loc = loc("valence_core/readout.py", "def symmetric_kl(p: np.ndarray, q: np.ndarray) -> float:",
                   "return max(kl(p, q), kl(q, p))")
     c1_loc = loc("archive/RESULTS-cycles3-4.md", "KL(choice forward ‖ vanilla forward, same text) ≤ 1e-6;")
-    o(f"- Preprint :{hp109[0] if hp109 else '?'} reads '{len(cnt)} distinct verified forward passes at symmetric KL "
-      f"≤ 10⁻⁶, one in every four choice reads'. The 'one in every four' belongs to {len(full_ver)}/{len(full_all)}; "
+    q109 = f"{len(cnt)} distinct verified forward passes at symmetric KL ≤ 10⁻⁶, one in every four choice reads"
+    # fix round: the figures the patched :109 sentence prints, parsed and compared with this run's values
+    l109 = pl[hp109r[0] - 1] if hp109r else ""
+    SUP = str.maketrans("⁰¹²³⁴⁵⁶⁷⁸⁹", "0123456789")
+    bar_v = float(re.search(r"^VERIFY_KL_BAR_E2A = (\S+)", pinned_text("valence_core/readout.py"), re.M).group(1))
+    kl_vals = sorted(set(d["kl"] for d in L) | set(c["verify_kl"] for r in S for c in r["choices"]
+                                                    if c.get("verify_kl") is not None))
+    m_a = re.search(r"(\d[\d,]*) of the (\d[\d,]*) choice reads \(every fourth\)", l109)
+    m_k = re.search(r"KL = (\d+(?:\.\d+)?) exactly", l109)
+    m_b = re.search(r"10⁻([⁰¹²³⁴⁵⁶⁷⁸⁹]+) bound", l109)
+    m_n = re.search(r"(\d[\d,]*) distinct verified reads counting the (\w+) smoke runs", l109)
+    n_smk = sum(1 for x_ in (s3only, s2only) if x_)
+    WORDN = {"one": 1, "two": 2, "three": 3}
+    if m_a and m_k and m_b and m_n:
+        ok109 = (int(m_a.group(1).replace(",", "")) == len(full_ver) and int(m_a.group(2).replace(",", "")) == len(full_all)
+                 and cadence == len(full_all) and kl_vals == [float(m_k.group(1))]
+                 and 10.0 ** -int(m_b.group(1).translate(SUP)) == bar_v
+                 and int(m_n.group(1).replace(",", "")) == len(cnt) and WORDN.get(m_n.group(2)) == n_smk)
+        figs109 = (f"figures on the patched sentence equal this run's values: {'YES' if ok109 else 'NO'} "
+                   f"({m_a.group(1)} of the {m_a.group(2)} choice reads (every fourth) vs {len(full_ver)}/{len(full_all)} "
+                   f"verified, cadence (6·s + c) mod 4 = 0 on {cadence}/{len(full_all)}; KL = {m_k.group(1)} vs stored "
+                   f"values {kl_vals}; bound 10⁻{m_b.group(1)} vs `VERIFY_KL_BAR_E2A` = {bar_v:g}; {m_n.group(1)} "
+                   f"distinct counting the {m_n.group(2)} smoke runs vs {len(cnt)} ledger keys over {n_smk} smoke "
+                   f"runs with keys beyond the run's)")
+    else:
+        figs109 = "the patched figures were not parsed"
+    pf_109 = None if hp109 else patch_finding(
+        f"N4(iii): the preprint reads '{q109}'",
+        [rec_line("- Preprint :109 reads '311 distinct verified forward passes", upto="one in every four choice reads'.")],
+        [pq(n_, "311 distinct verified") for n_ in hp109r],
+        f"the run verified {len(full_ver)} of its {len(full_all):,} choice forwards (every fourth), all at KL = 0.0 "
+        f"against a bar of 1e-6; the ledger holds {len(cnt)} distinct keys = {len(fv)} run + {len(s3only)} smoke3-only "
+        f"+ {len(s2only)} smoke2-only", figs109)
+    o((f"- Preprint :{hp109[0]} reads '{q109}'." if hp109 else
+       f"- Preprint :{','.join(map(str, hp109r)) or '?'} no longer reads '{q109}' (finding on the patch {pf_109}, below).")
+      + f" The 'one in every four' belongs to {len(full_ver)}/{len(full_all)}; "
       f"{len(cnt)} also counts {len(s3only) + len(s2only)} smoke keys. Every stored value is exactly 0.0, against a "
       f"declared bar of 1e-6: the g3′ clause-1 bar ({c1_loc}), carried in the port as `VERIFY_KL_BAR_E2A` "
       f"({bar_loc}); KL = max of the two directions ({skl_loc}; clone `jlens_qwen/e2a.py` `verify_kl = max(k1, k2)`). "
@@ -1391,10 +1648,10 @@ def main() -> None:
     fig("360 (earlier count)", f"{len(L)} rows = {n2} smoke2 + {len(smoke_keys)} smoke3 + {len(full_ver)} run; "
         f"{dup_rows} duplicate rows over {len(dup)} keys",
         f"data/e2a/g3prime_kl.jsonl rows; {loc('archive/RESULTS-cycles3-4.md', 'g3′ clause 1 final ledger 360/360 choice forwards at KL = 0.0')}", "reproduced", "N4(iii)")
-    fig(f"one in every four choice reads (preprint :{hp109[0] if hp109 else '?'})",
+    fig(f"one in every four choice reads (preprint :{hp109r[0] if hp109r else '?'})",
         f"{len(full_ver)}/{len(full_all)} = {len(full_ver) / len(full_all):.4f}",
         "data/e2a/sessions.jsonl choices[].verify_kl non-null", "reproduced", "N4(iii)",
-        f"applies to {len(full_ver)}, not to {len(cnt)}")
+        f"applies to {len(full_ver)}, not to {len(cnt)}" + (f" (the patched sentence: finding on the patch {pf_109})" if pf_109 else ""))
     fig(f"rule-26 recheck {r26['verify_kl_nonzero']} nonzero, {r26['picks']} picks",
         "not recomputed (needs the model); values read from the raw", rr, "log-only", "N4(iii)/(iv)")
 
@@ -1493,6 +1750,16 @@ def main() -> None:
       f"identity is measured separately (T-step gate):")
     o()
     hp262 = lines_with(pre, "licensed for first-token identity only")
+    # round 9, fix round: the disclosure's scope, which (iv) and the PI items read 'as worded', located by text
+    S262 = ("Generation on the Qwen self-administration and present-tense cells ran on a cached path", "Appendix D")
+    ok262 = bool(hp262) and all(q_ in sentence_at(pl[hp262[0] - 1], "licensed for first-token identity only", 2000)
+                                for q_ in S262)
+    pf_262 = None if ok262 else patch_finding(
+        f"N4(iv): the preprint's disclosure reads '{S262[0]} licensed for first-token identity only', pointing to "
+        f"{S262[1]}", [rec_line('- Preprint :262: "Generation on the Qwen')],
+        [pq(n_, "licensed for first-token identity only") for n_ in (hp262 or lines_with(pre, "cached path"))],
+        "the cached cells of record are listed in (iv)")
+    sc262 = "" if ok262 else f" (the audited text's wording; finding on the patch {pf_262}, below)"
     if hp262:
         o(f"- Preprint :{hp262[0]}: \"{sentence_at(pl[hp262[0] - 1], 'licensed for first-token identity only')}\"")
         o()
@@ -1691,7 +1958,7 @@ def main() -> None:
       f"{'; '.join(q.split(': ', 1)[0] for q in f1q)}. The first-token licence question (steered cached vs uncached) "
       f"does not arise there; the record holds no dose-0 identity check "
       f"({loc('RESULTS.md', 'cached path would need its own gate (the g1 artifact has no frac-0 row;')}). Outside the "
-      f"preprint's disclosure scope as worded; listed for completeness.")
+      f"preprint's disclosure scope as worded{sc262}; listed for completeness.")
     o()
     o("**The choice reads: separate forwards; path independence is a code argument.**")
     o()
@@ -1893,7 +2160,7 @@ def main() -> None:
         "reproduced", "N4(iv)", f"e2d D1 uncached is log-only ({d1loc})")
     fig("cells generated on the cached path: f1 (vanilla, no state)", "cached vanilla",
         f"{pf}; results/raw/2026-08-10_f_ndecl.txt@{PIN}:{','.join(map(str, f_nd))}", "log-only", "N4(iv)",
-        "outside the preprint's disclosure scope as worded")
+        "outside the preprint's disclosure scope as worded" + sc262)
     fig("first-token licence (g1): max KL 7.11e-4 / 7.39e-4, bar 1e-3, no position dimension",
         f"{g1_kl01:.4e} / {g1_kl02:.4e}; rows keyed {sorted(set(k for r in g1_rows01 for k in r))}",
         "data/e2a/g1_kernel_gate.json results, rows", "reproduced", "N4(iv)",
@@ -2018,7 +2285,7 @@ def main() -> None:
         f"{iv2(cp_)}, Wald {iv2(wd)}, Wilson {iv2(wi)}).",
         f"Whether the note carries {len(cnt)} (ledger distinct keys, incl. {len(s3only) + len(s2only)} smoke keys) or "
         f"{len(full_ver)} of {len(full_all):,} (the run's own every-fourth verifications) beside 'one in every four'.",
-        "Whether the disclosure names f1's cached vanilla generation (outside the preprint's stated scope).",
+        f"Whether the disclosure names f1's cached vanilla generation (outside the preprint's stated scope{sc262}).",
         f"The g3′ amendment's basis clause ({cfb}: 'the g1 fallback locked all generation to the uncached positional "
         f"path') and its counterfactual ({cf}) after the cached unlock: design seat/PI to say whether either needs a line "
         f"in Appendix D.",
@@ -2246,6 +2513,25 @@ def main() -> None:
     for a_, b_, c_ in VC4:
         o(f"| {cell(a_.split(' ', 1)[0])} | {cell(a_.split(' ', 1)[1])} | {b_} | {cell(c_)} |")
     o()
+    # round 9 (ruling 9): the failed preprint checks, for the design seat
+    o("## Findings on the patch (the PI's ruling 9 of 2026-10-10, as corrected; for the design seat, not STOPs)")
+    o()
+    o(f"Each is a check of a preprint sentence that fails on the patched text (`{PREPRINT}`, sha256 {pre_sha[:8]}...). "
+      f"The old line is the audited text ({PREPRINT_SHA_AUDITED[:8]}...) as the raw of record quotes it; the new line is "
+      f"the patched file's. A check that holds is not listed.")
+    o()
+    if not PATCH:
+        o("- None.")
+    for pf_ in PATCH:
+        o(f"- **{pf_['id']}** {pf_['result']}. Check: {pf_['check']}.")
+        for x_ in pf_["old"]:
+            o(f"  - old ({x_['locator']}): {x_['quote']}")
+        for x_ in pf_["new"]:
+            o(f"  - new ({x_['locator']}): \"{x_['quote']}\"")
+        o(f"  - record values, this run: {pf_['record_values_this_run']}")
+        if pf_["patched_figures_vs_this_run"]:
+            o(f"  - {pf_['patched_figures_vs_this_run']}")
+    o()
     o("## git status (non-audit, non-m changes)  [run metadata: reflects the working tree at run time]")
     o()
     st_ = git("status", "--porcelain").decode().splitlines()
@@ -2313,7 +2599,13 @@ def main() -> None:
                                    "f010_divergent_index": d0_idx, "f010_first_char_shared": d0_first_char_shared,
                                    "token_ids_stored": ids_stored},
          "review_cards": {"card9_handoff": c9_loc, "card9_text_found": c9_ok, "card10_handoff": c10_loc,
-                          "card10_text_found": c10_ok, "card8_handoff": c8_h04, "block_lines": [blk54, blk59, blk60]}}
+                          "card10_text_found": c10_ok, "card8_handoff": c8_h04, "block_lines": [blk54, blk59, blk60]},
+         "preprint_of_record": {"path": PREPRINT, "sha256": pre_sha, "match": pre_sha == PREPRINT_SHA,
+                                "ruling": "the PI's ruling 9 of 2026-10-10, as corrected",
+                                "audited_superseded_sha256": PREPRINT_SHA_AUDITED,
+                                "audited_archive": PREPRINT_AUDITED_ARCHIVE, "audited_archive_status": aud_st,
+                                "raw_of_record": f"{RAW_REC[1]}@{RAW_REC[0]}"},
+         "patch_findings": PATCH}
     with open(out_js, "w", encoding="utf-8") as f:
         json.dump(J, f, indent=1, ensure_ascii=False, default=list)
         f.write("\n")
