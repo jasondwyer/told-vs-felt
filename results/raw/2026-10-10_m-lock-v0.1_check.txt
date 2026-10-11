@@ -1,0 +1,534 @@
+# LOCK-m-F0 v0.1 -- Code's mechanical check of the lock's text before its commit (read-only; no model or tokenizer).
+# Code stamp: 2026-10-11 04:28:03 UTC (date -u); HEAD 9bf36ad; the lock LOCK-m-F0.md (sha256 1a043c287da1f01a0c72b347f3170e499eeef17a63aea603adc02d110dc38b6b), uncommitted, byte-identical to the draft checked (the text after Code's last edits; review raw sections 8-9).
+# Checks: (1) the binding hashes in full; (2) no other analyzer/package sha256 in full (truncation rule); (3) every other 64-hex string matches a file or a derived value the script recomputes; (4) stages.licence_problems returns [] for a non-stub identity_extra naming this file, with stages._committed patched to serve the lock's bytes (the lock is not yet committed), plus negative controls and the analyzer's PIN-14 emulation; (5) no [UNRESOLVED] marker. After the commit Code re-runs (4) unpatched on the committed file (the step-10 entry records it).
+
+=== 1. Script (verbatim; Code's scratchpad step9/lock/check_lock.py, not committed) ===
+#!/usr/bin/env python3
+"""Mechanical checks on the LOCK-m-F0 v0.1 draft (read-only on the repo).
+
+Run: <venv python> -I -B check_lock.py [draft_path]
+
+(1) the binding hashes appear in full; (2) no other analyzer or package sha256 appears in full;
+(3) every other 64-hex string equals the sha256 of the file it is attributed to (nearest path
+mention in its paragraph), or a derived value recomputed here; unmatched ones reported;
+(4) stages.licence_problems returns [] with stages._committed patched to serve the draft as
+LOCK-m-F0.md (real committed bytes otherwise), plus negative controls; (5) [UNRESOLVED markers
+reported. Extra, report-only: commit ids resolve and are recorded in lock section 12; "lock §N"
+cross-references resolve; truncated hash prefixes resolve; no stray 17-63 hex runs.
+"""
+import sys
+
+sys.dont_write_bytecode = True
+import hashlib
+import json
+import re
+import subprocess
+from pathlib import Path
+from unittest import mock
+
+REPO = Path("/Users/jasondwyer/Documents/code/jspace-lab")
+HERE = Path(__file__).resolve().parent
+DRAFT = Path(sys.argv[1]) if len(sys.argv) > 1 else HERE / "draft_lock.md"
+SET_ASIDE = HERE.parent / "set_aside"
+sys.path.insert(0, str(REPO))
+
+from valence_core.m import banner, gshape, resume, stages  # noqa: E402
+from valence_core import session_e2a  # noqa: E402
+from valence_core.e2d import config as e2d_config  # noqa: E402
+
+FAILS: list[str] = []
+NOTES: list[str] = []
+
+
+def fail(msg):
+    FAILS.append(msg)
+    print("  FAIL:", msg)
+
+
+def note(msg):
+    NOTES.append(msg)
+    print("  NOTE:", msg)
+
+
+def sha(b: bytes) -> str:
+    return hashlib.sha256(b).hexdigest()
+
+
+def fsha(rel) -> str:
+    return sha((REPO / rel).read_bytes())
+
+
+def git(*args, binary=False):
+    r = subprocess.run(["git", "-C", str(REPO), *args], capture_output=True)
+    if r.returncode != 0:
+        raise RuntimeError(f"git {args}: {r.stderr.decode()[:200]}")
+    return r.stdout if binary else r.stdout.decode()
+
+
+def blob(commit, rel) -> bytes:
+    return git("show", f"{commit}:{rel}", binary=True)
+
+
+def package_at(commit) -> str:
+    """resume.package_sha256_of's rule over valence_core/m/*.py (top level) at a commit's blobs."""
+    out = git("ls-tree", "-z", commit, "valence_core/m/")
+    entries = []
+    for ent in out.split("\0"):
+        if not ent:
+            continue
+        meta, path = ent.split("\t", 1)
+        if meta.split()[1] == "blob" and path.endswith(".py") and path.count("/") == 2:
+            entries.append((path, blob(commit, path)))
+    h = hashlib.sha256()
+    for rel, data in sorted(entries):
+        h.update(f"{rel}\n{len(data)}\n".encode("utf-8"))
+        h.update(data)
+    return h.hexdigest()
+
+
+text = DRAFT.read_text(encoding="utf-8")
+dbytes = DRAFT.read_bytes()
+lines = text.split("\n")
+HEX64 = re.compile(r"(?<![0-9a-f])[0-9a-f]{64}(?![0-9a-f])")
+print(f"draft: {DRAFT} ({len(lines) - (1 if text.endswith(chr(10)) else 0)} lines, sha256 {sha(dbytes)})")
+
+# ------------------------------------------------------------------------------------------
+print("\n(1) binding hashes in full")
+manifest = json.loads((REPO / "data/m/gates/G-ANL-F0.json").read_text())
+closure_calc = sha(json.dumps(manifest["closure"], sort_keys=True, separators=(",", ":")).encode())
+REQUIRED = {
+    "proposal": ("PROPOSAL-m-gating-campaign-v1_11.md", fsha("PROPOSAL-m-gating-campaign-v1_11.md"),
+                 "42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b"),
+    "analyzer": ("scripts/m_analyze.py", fsha("scripts/m_analyze.py"),
+                 "66fb521488db41e71cc65e844e17c7ee77e0a4a318a55314ef1afb8ffef67d5e"),
+    "package": ("resume.package_sha256()", resume.package_sha256(),
+                "5f646db6e82c5561ff8a425e91beb5454068a381564894e93d19b9165459d771"),
+    "closure": ("G-ANL-F0.json closure (compact sort-keyed JSON)", closure_calc,
+                "a3bc7bb9df3d8361bfa803238e61a61a7eef76a6d839540413e53cd7919cb22b"),
+    "manifest": ("data/m/gates/G-ANL-F0.json", fsha("data/m/gates/G-ANL-F0.json"),
+                 "05132089fd6b8c177df47e4d5ff7f77a6f1b47e9ef63568d25c07ceffe7afe9b"),
+    "placeholder": ("data/m/gates/m_posting_sentences.placeholder.json",
+                    fsha("data/m/gates/m_posting_sentences.placeholder.json"),
+                    "b1cce4f844f78e45ab2a8465699fb70a96321a21415abd66f6bad6fd1dae4a0b"),
+    "pin_index": ("results/raw/2026-10-10_m-lock-v0.1_pin-index.txt",
+                  fsha("results/raw/2026-10-10_m-lock-v0.1_pin-index.txt"),
+                  "915245b5d69f1907928c98a1c184aca3a91e0351b0c5361da98b8f8382dfd2ce"),
+}
+# cross-checks of the computed values against independent sources
+assert sha(blob("HEAD", "scripts/m_analyze.py")) == REQUIRED["analyzer"][1], "analyzer: tree != HEAD blob"
+assert package_at("HEAD") == REQUIRED["package"][1], "package: blobs at HEAD != resume.package_sha256()"
+assert manifest["closure_sha256"] == closure_calc, "closure: recomputed != manifest field"
+assert manifest["analyzer"]["sha256"] == REQUIRED["analyzer"][1], "manifest analyzer field != analyzer"
+assert manifest["package_sha256"] == REQUIRED["package"][1], "manifest package field != package"
+for name, (src, got, spec) in REQUIRED.items():
+    ok_spec = got == spec
+    n = text.count(got)
+    status = "ok" if (ok_spec and n >= 1) else "FAIL"
+    print(f"  {status}: {name:12s} {got}  (computed from {src}; equals spec: {ok_spec}; in draft x{n})")
+    if not ok_spec:
+        fail(f"{name}: computed {got} differs from the spec's {spec}")
+    if n == 0:
+        fail(f"{name}: {got} not in the draft in full")
+REQ_VALUES = {v[1] for v in REQUIRED.values()}
+
+# ------------------------------------------------------------------------------------------
+print("\n(2) no other analyzer or package sha256 in full")
+FORBIDDEN: dict[str, str] = {}
+for c in git("log", "--format=%H", "--", "scripts/m_analyze.py").split():
+    FORBIDDEN.setdefault(sha(blob(c, "scripts/m_analyze.py")), f"analyzer at {c[:7]}")
+for c in git("log", "--format=%H", "--", "valence_core/m").split():
+    FORBIDDEN.setdefault(package_at(c), f"package at {c[:7]}")
+art_fields = [
+    ("data/m/gates/Q-F0_G-PORT.json", ["package_sha256"]),
+    ("data/m/gates/G-CAL_model-free.json", ["provenance", "package_sha256"]),
+    ("data/m/gates/G-CAL_completability_qwen.json", ["identity", "package_sha256"]),
+    ("data/m/gates/G-SHAPE-F0.json", ["provenance", "package_sha256"]),
+    ("data/m/gates/G-ANL-F0.superseded-2026-10-10.json", ["package_sha256"]),
+    ("data/m/gates/G-ANL-F0.superseded-2026-10-10.json", ["analyzer", "sha256"]),
+]
+for rel, keys in art_fields:
+    o = json.loads((REPO / rel).read_text())
+    for k in keys:
+        o = o[k]
+    FORBIDDEN.setdefault(o, f"{'.'.join(keys)} of {Path(rel).name}")
+for p in sorted(SET_ASIDE.glob("*.json")):
+    o = json.loads(p.read_text())
+    FORBIDDEN.setdefault(o["package_sha256"], f"package_sha256 of set-aside {p.name}")
+    FORBIDDEN.setdefault(o["analyzer"]["sha256"], f"analyzer of set-aside {p.name}")
+for v in REQ_VALUES:
+    FORBIDDEN.pop(v, None)  # the hashes of record are not forbidden
+NAMED = ["24d44a3c", "96fbcacf", "4b496587", "06ab1430", "ac637232", "750b24ed", "0da9115b", "12652f39",
+         "8e709582", "19edfcd0"]
+for pfx in NAMED:
+    hits = [v for v in FORBIDDEN if v.startswith(pfx)]
+    if len(hits) != 1:
+        fail(f"named historical hash {pfx}… resolves to {len(hits)} forbidden values")
+    else:
+        print(f"  named {pfx}… -> {hits[0]} ({FORBIDDEN[hits[0]]})")
+print(f"  forbidden set: {len(FORBIDDEN)} historical analyzer/package values "
+      f"(every m_analyze.py blob and every valence_core/m package in git history, artifact and set-aside fields)")
+found = sorted({m.group(0) for m in HEX64.finditer(text)} & set(FORBIDDEN))
+for v in found:
+    fail(f"historical {FORBIDDEN[v]} appears in full: {v}")
+long_partial = []
+for m in re.finditer(r"(?<![0-9a-f])[0-9a-f]{17,63}(?![0-9a-f])", text):
+    for v, what in FORBIDDEN.items():
+        if v.startswith(m.group(0)):
+            long_partial.append((m.group(0), what))
+for s, what in long_partial:
+    fail(f"historical {what} written with more than 16 hex: {s}")
+if not found and not long_partial:
+    print("  ok: none of them appears in full or with more than 16 hex")
+
+# ------------------------------------------------------------------------------------------
+print("\n(3) every other 64-hex string against the file it is attributed to")
+DERIVED: dict[str, str] = {}
+mf = json.loads((REPO / "data/m/gates/G-CAL_model-free.json").read_text())
+renders = [it["render"] for it in mf["renders_of_record"]["items"]]
+DERIVED[sha("\n".join(renders).encode("utf-8"))] = "renders of record (UTF-8, newline-joined, item order)"
+DERIVED[closure_calc] = "closure_sha256 (recomputed)"
+gs = json.loads((REPO / "data/m/gates/G-SHAPE-F0.json").read_text())
+prov = gs["provenance"]
+sd = gshape.sources_digest({"sources": prov["sources"], "tooling": prov["tooling"]})
+if sd == prov["sources_digest"]:
+    DERIVED[sd] = "G-SHAPE-F0 sources digest (recomputed from the artifact's maps)"
+csrc_probs, csrc = gshape.committed_sources()
+sd_tree = gshape.sources_digest({"sources": csrc.get("sources", {}), "tooling": csrc.get("tooling", {})}) \
+    if isinstance(csrc, dict) and "sources" in csrc else None
+print(f"  G-SHAPE-F0 sources digest: artifact {prov['sources_digest'][:16]}…, recomputed from the artifact's "
+      f"maps {sd[:16]}…, from HEAD via committed_sources() {(sd_tree or 'n/a')[:16]}… "
+      f"(problems: {csrc_probs})")
+DERIVED.setdefault(manifest["battery"]["outputs_sha256"], "G-ANL-F0 battery.outputs_sha256 (manifest field)")
+# per-stage schedule_sha256 in stages._schedules_sha's form, from the committed schedule files
+sched_dir = REPO / "data/m/schedules"
+smf = json.loads((sched_dir / "manifest.json").read_text())
+STAGE_FILES = {"G-TIME-F0": ["Q-F0_time_A0.json", "Q-F0_time_A0s.json"], "G-ID-F0m": ["Q-F0_id_A0s.json"],
+               "G-F0m-Qwen": ["Q-F0_qual_A0.json", "Q-F0_qual_A0s.json"],
+               "campaign": ["Q-F0_campaign_A0.json", "Q-F0_campaign_A0s.json"]}
+for st, files in STAGE_FILES.items():
+    scheds = {f: {"name": f, "sha256": sha((sched_dir / f).read_bytes())} for f in files}
+    DERIVED[stages._schedules_sha(scheds)] = f"schedule_sha256 of {st} (stages._schedules_sha form)"
+# banner literals and digests
+SB = session_e2a.SESSION_BANNER
+for nm, lit in [("SESSION_BANNER", SB), ("COMMON", banner.COMMON), ("TOLD_MAP[0]", banner.TOLD_MAP[0]),
+                ("TOLD_MAP[1]", banner.TOLD_MAP[1]), ("TOLD_MAP_SHAM[0]", banner.TOLD_MAP_SHAM[0]),
+                ("TOLD_MAP_SHAM[1]", banner.TOLD_MAP_SHAM[1])]:
+    DERIVED[sha(lit.encode("utf-8"))] = f"banner literal {nm} (UTF-8)"
+hs = gshape._json_sha256(list(banner.HARNESS_STRINGS_QF0))
+if hs == gs["inputs"]["harness_strings_sha256"]:
+    DERIVED[hs] = "HARNESS_STRINGS_QF0 json_text sha256 (= G-SHAPE-F0 inputs.harness_strings_sha256)"
+else:
+    note(f"HARNESS_STRINGS_QF0 recomputed {hs[:16]}… != G-SHAPE-F0's {gs['inputs']['harness_strings_sha256'][:16]}…")
+cat = []
+for tmpl in ("A0", "A0s"):
+    for a, b in e2d_config.ROSTER:
+        for P, Q in ((a, b), (b, a)):
+            for clause in (0, 1):
+                cat.append(banner.build_banner(tmpl, P, Q, clause)[0])
+DERIVED[sha("".join(cat).encode("utf-8"))] = (f"concatenation of Q-F0's {len(cat)} banners "
+                                               f"({len(set(cat))} distinct; template, pair, map, clause order)")
+
+PATH_RE = re.compile(r"`([^`\s]+?\.(?:json|jsonl|py|md|txt))(?::[0-9][0-9,–:-]*)?`")
+SEARCH_DIRS = ["", "data/m/gates", "data/m/schedules", "data/m/ckpt", "data/configs", "data/f", "results/raw",
+               "scripts", "valence_core/m", "valence_core", "valence_core/e2d", "valence_core/adapters"]
+
+
+def resolve(tok):
+    p = REPO / tok
+    if p.is_file():
+        return tok
+    hits = [f"{d}/{Path(tok).name}".lstrip("/") for d in SEARCH_DIRS if (REPO / d / Path(tok).name).is_file()]
+    return hits[0] if len(hits) == 1 else None
+
+
+# paragraph spans (blocks between blank lines)
+offs, pos = [], 0
+for ln in lines:
+    offs.append(pos)
+    pos += len(ln) + 1
+para_bounds, start = [], 0
+for i, ln in enumerate(lines):
+    if not ln.strip():
+        para_bounds.append((offs[start], offs[i]))
+        start = i + 1
+if start < len(lines):
+    para_bounds.append((offs[start], len(text)))
+
+
+def para_of(p):
+    for a, b in para_bounds:
+        if a <= p < b:
+            return a, b
+    return 0, len(text)
+
+
+def line_no(p):
+    lo = 0
+    for i, o in enumerate(offs):
+        if o <= p:
+            lo = i
+        else:
+            break
+    return lo + 1
+
+
+matched = unmatched = 0
+seen = set()
+for m in HEX64.finditer(text):
+    v, p = m.group(0), m.start()
+    if v in REQ_VALUES:
+        continue
+    a, b = para_of(p)
+    cands = []
+    befores = [pm for pm in PATH_RE.finditer(text, a, p)]
+    if befores:
+        cands.append(befores[-1])
+    others = sorted(PATH_RE.finditer(text, a, b), key=lambda pm: abs(pm.start() - p))
+    cands += [pm for pm in others if pm not in cands]
+    how = None
+    for i, pm in enumerate(cands):
+        rel = resolve(pm.group(1))
+        if rel and fsha(rel) == v:
+            how = f"sha256 of {rel}" + ("" if i == 0 else " (not the nearest preceding path)")
+            break
+    if how is None and v in DERIVED:
+        how = f"derived: {DERIVED[v]}"
+    key = (v, how)
+    if how is None:
+        unmatched += 1
+        near = cands[0].group(1) if cands else "no path in paragraph"
+        note(f"line {line_no(p)}: {v} UNMATCHED (nearest path: {near})")
+    else:
+        matched += 1
+        if key not in seen:
+            print(f"  ok line {line_no(p):4d}: {v[:16]}… = {how}")
+        seen.add(key)
+print(f"  {matched} matched, {unmatched} unmatched (64-hex strings other than the check-(1) hashes)")
+if unmatched:
+    fail(f"{unmatched} 64-hex strings unmatched (listed above for review)")
+
+# ------------------------------------------------------------------------------------------
+print("\n(4) stages.licence_problems with LOCK-m-F0.md served from the draft")
+real_committed = stages._committed
+
+
+def run_licence(lock_bytes, **over):
+    def fake(rel, repo=stages.REPO):
+        if rel == "LOCK-m-F0.md":
+            return [], lock_bytes
+        return real_committed(rel, repo)
+    extra = {"proposal_file": "PROPOSAL-m-gating-campaign-v1_11.md", "proposal_sha256": REQUIRED["proposal"][1],
+             "lock_file": "LOCK-m-F0.md", "lock_sha256": sha(lock_bytes),
+             "analyzer_sha256": REQUIRED["analyzer"][1], "package_sha256": REQUIRED["package"][1]}
+    extra.update(over)
+    with mock.patch.object(stages, "_committed", side_effect=fake) as mk:
+        probs = stages.licence_problems(extra)
+        calls = [c.args[0] for c in mk.call_args_list]
+    return probs, calls
+
+
+probs, calls = run_licence(dbytes)
+print(f"  licence_problems(draft) = {probs}  (_committed called for {calls})")
+if probs:
+    fail(f"licence_problems on the draft: {probs}")
+# negative controls: the check must be live
+A, P = REQUIRED["analyzer"][1], REQUIRED["package"][1]
+for label, lb, over, want in [
+    ("analyzer hash truncated in the lock text", dbytes.replace(A.encode(), (A[:16] + "…").encode()), {},
+     "analyzer_sha256"),
+    ("package hash truncated in the lock text", dbytes.replace(P.encode(), (P[:16] + "…").encode()), {},
+     "package_sha256"),
+    ("lock_sha256 not the served bytes", dbytes, {"lock_sha256": "0" * 64}, "lock LOCK-m-F0.md: sha256"),
+    ("historical analyzer offered", dbytes,
+     {"analyzer_sha256": next(v for v in FORBIDDEN if v.startswith("24d44a3c"))}, "analyzer scripts/m_analyze.py"),
+]:
+    pr, _ = run_licence(lb, **over)
+    live = any(want in x for x in pr)
+    print(f"  negative control ({label}): {'refused as expected' if live else 'NOT REFUSED'} -> {pr}")
+    if not live:
+        fail(f"negative control not refused: {label}")
+# the analyzer's PIN-14 test, emulated: the three values as substrings of the lock text
+ltext = dbytes.decode("utf-8", "replace")
+pin14 = all(x in ltext for x in (A, P, REQUIRED["closure"][1]))
+print(f"  PIN-14 emulation (analyzer, package, closure substrings of the lock text): {pin14}")
+if not pin14:
+    fail("PIN-14 emulation fails")
+
+# ------------------------------------------------------------------------------------------
+print("\n(5) [UNRESOLVED markers (reported, not failed)")
+unres = [(i + 1, ln.strip()) for i, ln in enumerate(lines) if "[UNRESOLVED" in ln]
+for i, ln in unres:
+    print(f"  line {i}: {ln[:160]}")
+print(f"  {len(unres)} marker line(s)")
+
+# ------------------------------------------------------------------------------------------
+print("\n(extra) report-only consistency checks")
+sec12 = text[text.index("## 12. Record"):]
+c7 = sorted(set(re.findall(r"`([0-9a-f]{7})`", text)))
+c40 = sorted(set(re.findall(r"`([0-9a-f]{40})`", text)))
+bad = []
+for c in c7 + c40:
+    try:
+        git("rev-parse", "--verify", "--quiet", f"{c}^{{commit}}")
+    except RuntimeError:
+        bad.append(c)
+missing12 = [c for c in c7 if c not in sec12]
+print(f"  commit ids: {len(c7)} short, {len(c40)} full; unresolvable: {bad or 'none'}; "
+      f"short ids not recorded in lock §12: {missing12 or 'none'}")
+if bad:
+    note(f"unresolvable commit ids: {bad}")
+if missing12:
+    note(f"short commit ids not in lock §12: {missing12}")
+heads = set()
+for ln in lines:
+    mh = re.match(r"^#{2,3} (\d+(?:\.\d+)?)\.? ", ln)
+    if mh:
+        heads.add(mh.group(1))
+xrefs = set()
+for mx in re.finditer(r"lock §§?([0-9.,\s–and]+)", text, re.I):
+    for t in re.findall(r"\d+(?:\.\d+)?", mx.group(1)):
+        xrefs.add(t.rstrip("."))
+badx = sorted(x for x in xrefs if x not in heads)
+print(f"  'lock §N' cross-references: {len(xrefs)} distinct targets; unresolved: {badx or 'none'}")
+if badx:
+    note(f"unresolved lock § targets: {badx}")
+KNOWN = set(HEX64.findall(text)) | set(FORBIDDEN) | set(DERIVED) | REQ_VALUES
+for rel in ["data/m/gates/G-SHAPE-F0.json", "data/m/gates/G-CAL_completability_qwen.json",
+            "data/m/gates/G-CAL_model-free.json", "data/m/gates/G-ANL-F0.json",
+            "results/raw/2026-10-10_m-lock-v0.1_pin-index.txt"]:
+    KNOWN |= set(HEX64.findall((REPO / rel).read_text(errors="replace")))
+for rel in ["data/f/pools.json", "data/f/sessions.jsonl", "data/m/gates/G-ANL-F0.superseded-2026-10-10.json"]:
+    KNOWN.add(fsha(rel))
+unk = []
+for mt in re.finditer(r"(?<![0-9a-f])([0-9a-f]{8,16})…([0-9a-f]{3,8})?(?![0-9a-f])", text):
+    pfx, sfx = mt.group(1), mt.group(2) or ""
+    if not any(k.startswith(pfx) and k.endswith(sfx) for k in KNOWN):
+        unk.append(f"{pfx}…{sfx} (line {line_no(mt.start())})")
+print(f"  truncated hash citations not resolvable from the repo files the check reads: {unk or 'none'}")
+if unk:
+    note(f"truncated citations not resolved: {unk}")
+stray = [mm.group(0) for mm in re.finditer(r"(?<![0-9a-f])[0-9a-f]{17,63}(?![0-9a-f])", text)
+         if len(mm.group(0)) != 40]
+print(f"  hex runs of 17-63 characters (other than 40-hex commit ids): {stray or 'none'}")
+if stray:
+    note(f"stray hex runs: {stray}")
+
+# ------------------------------------------------------------------------------------------
+print("\nSUMMARY")
+print(f"  checks (1)-(4): {'PASS' if not FAILS else 'FAIL'}; failures {len(FAILS)}; notes {len(NOTES)}; "
+      f"[UNRESOLVED marker lines: {len(unres)}")
+for f in FAILS:
+    print("  -", f)
+sys.exit(1 if FAILS else 0)
+
+=== 2. Output ===
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python -I check_lock.py LOCK-m-F0.md (cwd: the repo root)
+draft: LOCK-m-F0.md (1635 lines, sha256 1a043c287da1f01a0c72b347f3170e499eeef17a63aea603adc02d110dc38b6b)
+
+(1) binding hashes in full
+  ok: proposal     42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b  (computed from PROPOSAL-m-gating-campaign-v1_11.md; equals spec: True; in draft x1)
+  ok: analyzer     66fb521488db41e71cc65e844e17c7ee77e0a4a318a55314ef1afb8ffef67d5e  (computed from scripts/m_analyze.py; equals spec: True; in draft x2)
+  ok: package      5f646db6e82c5561ff8a425e91beb5454068a381564894e93d19b9165459d771  (computed from resume.package_sha256(); equals spec: True; in draft x2)
+  ok: closure      a3bc7bb9df3d8361bfa803238e61a61a7eef76a6d839540413e53cd7919cb22b  (computed from G-ANL-F0.json closure (compact sort-keyed JSON); equals spec: True; in draft x2)
+  ok: manifest     05132089fd6b8c177df47e4d5ff7f77a6f1b47e9ef63568d25c07ceffe7afe9b  (computed from data/m/gates/G-ANL-F0.json; equals spec: True; in draft x2)
+  ok: placeholder  b1cce4f844f78e45ab2a8465699fb70a96321a21415abd66f6bad6fd1dae4a0b  (computed from data/m/gates/m_posting_sentences.placeholder.json; equals spec: True; in draft x2)
+  ok: pin_index    915245b5d69f1907928c98a1c184aca3a91e0351b0c5361da98b8f8382dfd2ce  (computed from results/raw/2026-10-10_m-lock-v0.1_pin-index.txt; equals spec: True; in draft x1)
+
+(2) no other analyzer or package sha256 in full
+  named 24d44a3c… -> 24d44a3c61b06dd3a5e116e2edf59268174ca4e65e9b9960b20873b9d31327fa (analyzer at b62af85)
+  named 96fbcacf… -> 96fbcacfb6c18903a0e893906441720443be5a278c28da4ae7edd8721a199808 (package at 54e41c9)
+  named 4b496587… -> 4b49658739523c60951910dd80c04983fbc01cf8e7abc351be6baadec84202ac (package at c75d4d8)
+  named 06ab1430… -> 06ab1430de9c5ca0fc9483431caba64ee436a1b69709dd1577f4a50cfedcfef8 (package at d092078)
+  named ac637232… -> ac637232ac5feebbad303c55706a3c513f5f34d072e9bf53130e616e1d9bd886 (analyzer at b8aa706)
+  named 750b24ed… -> 750b24edf6dfe2237ad012d30f8aa4afc50c9c272a859064beb4bf945ea72afb (package at b8aa706)
+  named 0da9115b… -> 0da9115b6d8e48d095324fe76e1482f74bc32ab63745fe88bd14e27c2fd7bf0f (analyzer at 185deb0)
+  named 12652f39… -> 12652f3967ceead289ebb388a27fd84c13cea37f040c3765791fc4a89fe5f88f (package at 185deb0)
+  named 8e709582… -> 8e709582ded2a893a7d4a002d087716aee901e72b4d4177cc3c14e6727e3473b (analyzer at 97d70bd)
+  named 19edfcd0… -> 19edfcd0fc20d356833c00e3d387d5918c70c987975a950a719c654d48cd8d23 (package at 97d70bd)
+  forbidden set: 12 historical analyzer/package values (every m_analyze.py blob and every valence_core/m package in git history, artifact and set-aside fields)
+  ok: none of them appears in full or with more than 16 hex
+
+(3) every other 64-hex string against the file it is attributed to
+  G-SHAPE-F0 sources digest: artifact ee16e16b203a4c2d…, recomputed from the artifact's maps ee16e16b203a4c2d…, from HEAD via committed_sources() ee16e16b203a4c2d… (problems: [])
+  ok line  148: 137e7010a7ca344f… = sha256 of data/m/gates/Q-F0_G-PORT.json
+  ok line  149: aad8096a6aa90ebb… = sha256 of data/m/gates/G-CAL_model-free.json
+  ok line  150: 46afd36488e5d9d5… = sha256 of data/m/gates/G-CAL_completability_qwen.json
+  ok line  151: 9214718365c0226d… = sha256 of data/m/ckpt/G-CAL_qwen.json
+  ok line  152: 39990bae8481ee31… = sha256 of data/m/gates/G-CAL_seat_read_of_record.md
+  ok line  153: a04f67b0e5105a05… = derived: renders of record (UTF-8, newline-joined, item order)
+  ok line  154: 086d812fdce08f15… = sha256 of data/m/gates/G-SHAPE-F0.json
+  ok line  155: 9a2f0744f81ac930… = sha256 of data/configs/e2a_ban_list.json
+  ok line  156: 8c89636addb846c8… = sha256 of data/m/schedules/manifest.json
+  ok line  204: d49913e5ffdfb935… = sha256 of data/f/sessions.jsonl
+  ok line  348: 063d19992f8157e4… = sha256 of data/m/gates/G-CAL_seat_read_request.md
+  ok line  355: 55e5f75fb9c5bbf4… = sha256 of data/f/calib.json
+  ok line  448: 8547d9a11ba55b95… = sha256 of data/f/pools.json
+  ok line  723: ee16e16b203a4c2d… = derived: G-SHAPE-F0 sources digest (recomputed from the artifact's maps)
+  ok line  825: 54fc8a07be13faa0… = sha256 of scripts/m_sessions.py
+  ok line  852: c80d2e220495813a… = sha256 of scripts/box_selftest_stub.py (not the nearest preceding path)
+  ok line  856: a3fc7b4574917523… = sha256 of valence_core/adapters/qwen_mlx.py
+  ok line  888: a573faf31ce52d76… = sha256 of data/m/schedules/Q-F0_campaign_A0.json
+  ok line  890: 38ab22677650e82a… = sha256 of data/m/schedules/Q-F0_campaign_A0s.json
+  ok line  892: bd873fdbd6f8a8c5… = sha256 of data/m/schedules/Q-F0_time_A0.json
+  ok line  894: 7e900e3c1326ecb2… = sha256 of data/m/schedules/Q-F0_time_A0s.json
+  ok line  896: 61b734e3947b4a4d… = sha256 of data/m/schedules/Q-F0_id_A0s.json
+  ok line  898: 201a3081fc6dfa0b… = sha256 of data/m/schedules/Q-F0_qual_A0.json
+  ok line  901: 4d16c201f2bb7de3… = sha256 of data/m/schedules/Q-F0_qual_A0s.json
+  ok line  907: 822a2eb12a6bd546… = derived: schedule_sha256 of G-TIME-F0 (stages._schedules_sha form)
+  ok line  908: 9743f175d8037b37… = derived: schedule_sha256 of G-ID-F0m (stages._schedules_sha form)
+  ok line  909: 504dd516f35aec91… = derived: schedule_sha256 of G-F0m-Qwen (stages._schedules_sha form)
+  ok line  910: c4626cc01060529a… = derived: schedule_sha256 of campaign (stages._schedules_sha form)
+  ok line  971: 6124c724758f6110… = derived: banner literal SESSION_BANNER (UTF-8)
+  ok line  973: 5d915bd852b5d598… = derived: banner literal COMMON (UTF-8)
+  ok line  974: 6bfc495be9b72cbf… = derived: banner literal TOLD_MAP[0] (UTF-8)
+  ok line  975: a6fe3b799dc62012… = derived: banner literal TOLD_MAP[1] (UTF-8)
+  ok line  976: 5bdf99055b93792f… = derived: banner literal TOLD_MAP_SHAM[0] (UTF-8)
+  ok line  977: a8b3befdfde53cbc… = derived: banner literal TOLD_MAP_SHAM[1] (UTF-8)
+  ok line  983: d1856e3caeeb5fa3… = derived: HARNESS_STRINGS_QF0 json_text sha256 (= G-SHAPE-F0 inputs.harness_strings_sha256)
+  ok line  993: 968e99a15f526add… = derived: concatenation of Q-F0's 32 banners (24 distinct; template, pair, map, clause order)
+  ok line 1186: 9bea83399ac698ef… = sha256 of data/m/gates/G-ANL-F0.superseded-2026-10-10.json
+  ok line 1190: 83df98b12a27be8e… = derived: G-ANL-F0 battery.outputs_sha256 (manifest field)
+  ok line 1573: b4c69f5dd6c0bf6f… = sha256 of results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1.md
+  ok line 1574: 0e694e0a2b082523… = sha256 of results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1_round2.md
+  ok line 1575: fd010a667ffa47ee… = sha256 of results/raw/2026-10-10_m-code-to-design_pre-LOCK-v0.1.md
+  ok line 1576: 49d756f95c152e82… = sha256 of results/raw/2026-10-10_m-code-to-design_pre-LOCK-v0.1_round2.md
+  ok line 1583: f9ef4347e3f52f0e… = sha256 of results/raw/2026-10-04_m-v1.7_code-to-design_STOP.md
+  ok line 1584: 5e4616d432806d14… = sha256 of results/raw/2026-10-04_m-v1.8_code-to-design_STOP.md
+  ok line 1585: 395c197f9fb5b60d… = sha256 of results/raw/2026-10-06_m-v1.11_step3_notes.md
+  ok line 1586: c399af610bfe99cb… = sha256 of results/raw/2026-10-06_m-build_pins.txt
+  ok line 1587: 98854245edf25501… = sha256 of results/raw/2026-10-07_m-gport.txt
+  ok line 1588: b9cd12c778706ba1… = sha256 of results/raw/2026-10-08_m-gcal_model-free.txt
+  ok line 1589: 0f3ac4fdb723ccaa… = sha256 of results/raw/2026-10-08_m-gcal_completability_qwen.txt
+  ok line 1590: 176c249737827049… = sha256 of results/raw/2026-10-08_m-gcal_completability_read.txt
+  ok line 1591: 57ce81f6437d3781… = sha256 of results/raw/2026-10-10_m-gcal_seat-read_check.txt
+  ok line 1592: 879e1699aa7ecbcb… = sha256 of results/raw/2026-10-10_m-gcal_close_check.txt
+  ok line 1593: 38ddccaec18c2a6d… = sha256 of results/raw/2026-10-10_m-gshape-f0.txt
+  ok line 1594: d099c743d72f0a51… = sha256 of results/raw/2026-10-10_m-steps7-8_build-inputs.md
+  ok line 1595: d8f331ca0ae166e9… = sha256 of results/raw/2026-10-10_m-d3_gshape-sources.txt
+  ok line 1596: 0f4b625a9b70cc30… = sha256 of results/raw/2026-10-10_m-lock-v0.1_d3.txt
+  ok line 1597: 6b7ca0d73d5605f5… = sha256 of results/raw/2026-10-10_m-d2-c9-build_review.txt
+  ok line 1598: 9e8085ec0dcd4d21… = sha256 of results/raw/2026-10-10_m-d2-c9_valuescheck.txt
+  ok line 1599: 7690a610049f04d1… = sha256 of results/raw/2026-10-10_m-ganl-f0-rerun.txt
+  59 matched, 0 unmatched (64-hex strings other than the check-(1) hashes)
+
+(4) stages.licence_problems with LOCK-m-F0.md served from the draft
+  licence_problems(draft) = []  (_committed called for ['PROPOSAL-m-gating-campaign-v1_11.md', 'LOCK-m-F0.md'])
+  negative control (analyzer hash truncated in the lock text): refused as expected -> ["lock LOCK-m-F0.md: its committed text does not name identity_extra's analyzer_sha256 66fb521488db41e7... (the package: the seat's D2; the analyzer: Code's, after the analyzer's PIN-14)"]
+  negative control (package hash truncated in the lock text): refused as expected -> ["lock LOCK-m-F0.md: its committed text does not name identity_extra's package_sha256 5f646db6e82c5561... (the package: the seat's D2; the analyzer: Code's, after the analyzer's PIN-14)"]
+  negative control (lock_sha256 not the served bytes): refused as expected -> ["lock LOCK-m-F0.md: sha256 1a043c287da1f01a... is not identity_extra's 0000000000000000..."]
+  negative control (historical analyzer offered): refused as expected -> ["analyzer scripts/m_analyze.py: sha256 66fb521488db41e7... is not identity_extra's analyzer_sha256 24d44a3c61b06dd3...", "lock LOCK-m-F0.md: its committed text does not name identity_extra's analyzer_sha256 24d44a3c61b06dd3... (the package: the seat's D2; the analyzer: Code's, after the analyzer's PIN-14)"]
+  PIN-14 emulation (analyzer, package, closure substrings of the lock text): True
+
+(5) [UNRESOLVED markers (reported, not failed)
+  0 marker line(s)
+
+(extra) report-only consistency checks
+  commit ids: 26 short, 26 full; unresolvable: none; short ids not recorded in lock §12: none
+  'lock §N' cross-references: 34 distinct targets; unresolved: none
+  truncated hash citations not resolvable from the repo files the check reads: ['ea985c11… (line 1186)']
+  NOTE: truncated citations not resolved: ['ea985c11… (line 1186)']
+  hex runs of 17-63 characters (other than 40-hex commit ids): none
+
+SUMMARY
+  checks (1)-(4): PASS; failures 0; notes 1; [UNRESOLVED marker lines: 0
+EXIT=0

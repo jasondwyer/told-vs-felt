@@ -1,0 +1,1735 @@
+# The LOCK-m-F0 v0.1 RESULTS entry -- values-check, both passes (before commit). Written by Code 2026-10-11 04:29:02 UTC (date -u).
+# Each pass: two verifiers (one per half of the entry) extract and check every atomic claim; a STRICT refuter on every FAILS/IMPRECISE; a values lens.
+# All agents read-only; no model or tokenizer loaded (instructed). Code's disposition: every confirmed correction and every values finding of both passes applied.
+# Three findings bore on the lock's own text, and Code fixed them in the lock before its commit, re-running check_lock.py each time:
+#  - pass 1: a fifth new Code item (the PENDING clause read as OLMo's);
+#  - pass 2: a sixth new Code item (R1 A4/A2 applied to a post-lock driver edit), 'Code's choice' at readrule.py:150 reworded, and v0.2's form put to the seat.
+# The lock's sha256 moved 6a51de11... -> 136cbdcb... -> 1a043c28... (review raw sections 8-9).
+
+####################################################################################################
+PASS 1: claims 109, verified 89, confirmed corrections 17, refuted flags 0, uncheckable 3, values findings 20
+####################################################################################################
+============================================================ CONFIRMED CORRECTIONS
+--- [H0-12] IMPRECISE
+  CLAIM:
+    Every non-stub stage now licenses against it
+  REFUTER'S EVIDENCE:
+    The claim is entry_lock.md line 7, "Every non-stub stage now licenses against it.", where "it" is LOCK-m-F0.md v0.1
+    (sha256 6a51de11…227d, which I re-hashed and confirmed). Its scope is too wide.
+    
+    (1) Nothing in the code ties stages to this file. In stages.py at HEAD 9bf36ad, `licence_problems` (:530–608) checks
+    whichever `lock_file`/`lock_sha256` a stage's `identity_extra` names. `_extra` (:973ff) also accepts sub "olmo", so
+    OLMo stages are non-stub stages too.
+    
+    (2) The `_extra` PIN (:976–980) says "G-TIME and G-ID follow LOCK v0.1, qualification v0.2, the campaign v1.0,
+    m:279-286, m:302". The proposal's step list (m:358) matches: step 10 is G-TIME-F0, 12 G-ID-F0m, 13 v0.2, 14
+    G-F0m-Qwen, 15 v1.0, 16 campaign.
+    
+    (3) The lock's own §0 says the same. Line 59: "G-TIME-F0 (step 10, m:280) and G-ID-F0m (step 12, m:281) run under
+    it". Line 67: "Each OLMo checkpoint has its own `LOCK-m-OLMo-{ckpt} v0.1` (m:302). This file does not cover them."
+    m:302 confirms the OLMo locks, and m:359 gives Q-F3 its own LOCK-m-F3.
+    
+    (4) The lock's actual universal is about running the licence, not this file. Line 162 reads "Every non-stub stage
+    runs the licence at its start ... G-TIME, G-ID, qualification, the campaign, and a re-finish". The entry turned that
+    into a claim that every stage licenses against this file.
+    
+    The core point holds: a non-stub stage's identity names the lock, and this lock makes the licence passable for
+    G-TIME-F0 and G-ID-F0m. The universal does not.
+    
+    The checker's correction is close but not exact. "A non-stub Q-F0 stage ... can now pass" includes Q-F0
+    qualification and the campaign, which follow v0.2 and v1.0. The licence code would technically pass them under v0.1,
+    because it has no version check, but the record does not govern them by v0.1. Passing also needs the analyzer and
+    package hashes to match.
+  CORRECTION:
+    G-TIME-F0 (step 10) and G-ID-F0m (step 12) run under it: each names this file and its sha256 in its
+    `identity_extra`, and the licence by file checks both at stage start (lock §§0–1). Qualification follows v0.2 and
+    the campaign v1.0; each OLMo checkpoint has its own lock, which this file does not cover.
+--- [H0-19] IMPRECISE
+  CLAIM:
+    (chat, 2026-10-10, verbatim; not otherwise in the repo)
+  REFUTER'S EVIDENCE:
+    The checker is right that the claim is imprecise; its correction misses one file.
+    
+    - The quote is character-exact. entry_lock.md:17-21 matches the PI's chat message as given, apart from line wraps.
+    The whole message appears nowhere else: git grep at HEAD 9bf36ad finds none of these fragments in the tracked tree:
+    "Routed from the design seat", "Commit by explicit path", "All three items on your defaults", "no hash moves", "Go
+    for step 9", "Then step 10 on my word". RESULTS.md and the R1 and R2 rulings files don't contain them either.
+    - Parts of the message are in the repo, though, so "not otherwise in the repo" is literally false:
+      - 9bf36ad's commit message says: Code now drafts and commits LOCK-m-F0 v0.1 on the PI's word ("Go for step 9").
+    This is the only hit in `git log --all`.
+      - The entry's own Committed: line (entry_lock.md:157) commits LOCK-m-F0.md (sha256 6a51de11...227d, confirmed) and
+    the review raw together with the entry. LOCK-m-F0.md:7-9 quotes "Go for step 9: draft and commit LOCK-m-F0 v0.1.
+    Then step 10 on my word." and "All three items on your defaults; no hash moves.", and notes that 9bf36ad's message
+    quotes "Go for step 9". LOCK-m-F0.md:1462 and :1489 quote "Then step 10 on my word." again.
+      - results/raw/2026-10-10_m-lock-v0.1_review.txt:206-207 quotes the same two sentences, and lines 16, 4028 and 4029
+    quote them as well. Line 207 also says, as of before the commit: In the repo, only 9bf36ad's commit message carries
+    them, and only as "Go for step 9".
+    - The check, D3 and PIN-index raws contain none of these fragments.
+    
+    The checker's correction names only 9bf36ad's message and the lock. The review raw, committed in the same commit,
+    also quotes two of the message's sentences, so the correction should name it too.
+  CORRECTION:
+    (chat, 2026-10-10, verbatim; in full nowhere else in the repo — `9bf36ad`'s message, the lock and the review raw
+    quote parts of it)
+--- [H0-22] IMPRECISE
+  CLAIM:
+    R2 item 2: the pause at a STOP, its --adjudication route and the V2 refusal are "accepted as built, post hoc, and
+    made the seat's"
+  REFUTER'S EVIDENCE:
+    The R2 file is results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1_round2.md. Its sha256 is
+    0e694e0a2b0825230e5307391d6e6eb55000e543e1ba1c3aac385a6e6b1425ae, the same in the working tree and at 9bf36ad. Line
+    13 reads, with a capital A and a straight apostrophe: "Accepted as built, post hoc, and made the seat's by this
+    ruling:". I dumped the bytes of entry_lock.md lines 25–26: the quote opens with a lowercase a ("accepted as built,
+    post hoc, and made the seat's"), so it is not character-exact. Apart from that the claim is right, and cutting the
+    quote before "by this ruling" is a fair truncation.
+    
+    - **What was accepted:** R2 §2's three bullets cover exactly what the entry names: the pause at a STOP (kinds
+    end_look and look), the `--adjudication` route, and the V2 refusal.
+    - **"The texts that attribute them stand":** this paraphrases R2's "so none is amended" correctly.
+    - **Case elsewhere in the entry:** other quotes keep the source's case. Item 3 quotes "None before LOCK v0.1" with
+    its capital N, so the lowercase here breaks the entry's own convention.
+    - **The lock:** LOCK-m-F0.md:1153 quotes it correctly as "Accepted as built, post hoc, and made the seat's by this
+    ruling:".
+    
+    The checker's correction is accurate. Its quoted string appears exactly once in R2, and its byte pattern matches,
+    apostrophe included.
+  CORRECTION:
+    - item 2: the pause at a STOP, its `--adjudication` route and the V2 refusal: "Accepted as built, post hoc, and made
+    the seat's by this ruling", and the texts that attribute them stand;
+--- [H0-29] FAILS
+  CLAIM:
+    §1 carries the truncation rule (Check (f) and PIN-14 are substring tests, so every other analyzer or package hash is
+    written as at most 16 hex plus "…")
+  REFUTER'S EVIDENCE:
+    I checked LOCK-m-F0.md directly (sha256 6a51de11972aaf2a5367f9ec1368ae38a539f1d33b5ecfa3fe47f0ac8d33227d, matching
+    the entry). The checker is right about where the rule sits.
+    
+    - **Where the rule is.** The truncation rule is in lock §0 ("## 0. Header and status", line 3). It sits in the
+    bullet "**Conventions of this file** (Code's form)", sub-item "*Truncation.*" (lines 108–122). The rule itself
+    reads: "Every other analyzer or package sha256, whether superseded, historical or set aside, is written as at most
+    its first 16 hex followed by "…"."
+    - **What §1 holds.** Lock §1 ("## 1. Binding identity and the licence by file", lines 124–191) has four parts: the
+    hashes of record, the licence by file (R1 D2) with checks (a)–(f), the analyzer's PIN-14, and Consequence. None of
+    them states a truncation rule. The closest sentence is PIN-14's "This file names all three in full, above."
+    - **The rule's content is accurate.**
+      - Check (f) is a substring test: at 9bf36ad, stages.py:601–607 runs `if v not in ltext`.
+      - PIN-14 is a substring test: m_analyze.py:1910–1924 runs `if val not in ltext` over the analyzer sha256,
+    package_sha256 and closure sha256.
+      - So the entry's paraphrase is right in substance. Only the section is wrong.
+    - **The checker's correction needs fixing.** Its "§0, the header: …" leaves a literal ellipsis where text should go,
+    so it cannot be pasted as written. The lock's own heading is "Header and status", not "the header". The entry's list
+    ("What the lock carries", entry line 31) currently has no §0 item, so the rule needs a new §0 bullet placed before
+    §1.
+  CORRECTION:
+    Replace the entry's §1 bullet (entry lines 32–37) with these two bullets, with the §0 bullet first:
+    
+        - §0, header and status: among its conventions, the truncation rule. Check (f) and PIN-14 are substring
+          tests, so every other analyzer or package hash is written as at most 16 hex plus "…".
+        - §1, the binding identity:
+          - the hashes of record;
+          - the licence by file, checks (a)–(f);
+          - the analyzer's PIN-14.
+--- [H0-43] IMPRECISE
+  CLAIM:
+    §9: the 43-entry register as Code's readings, strikable until LOCK v1.0 (C6)
+  REFUTER'S EVIDENCE:
+    The checker was right, so I am not refuting it. The lock on disk hashes to
+    6a51de11972aaf2a5367f9ec1368ae38a539f1d33b5ecfa3fe47f0ac8d33227d. Line 1198 of §9.3 reads: "**Declared here: PIN-1
+    to PIN-43, Code's readings, each strikable until LOCK v1.0.** Except, as at lock §10, what R2 2 made the seat's:
+    within PIN-9 the pause raised at a STOP and its route, and within PIN-10 that pause, the end look's reuse of the
+    cadence look recorded at N (a multiple of 40), its route, and the V2 refusal (the table below). The rest of each
+    entry is declared on C6's terms."
+    
+    The §9.3 table says the same thing. Row 9 reads "STOP pause and route: round-2 item 2". Row 10 reads "pause, reuse,
+    route and V2 refusal: round-2 item 2". Round-2 item 2 itself (sha256 0e694e0a…25ae, matching the PI's hash) says
+    "Accepted as built, post hoc, and made the seat's by this ruling". It covers the pause and the reuse (bullet 1), the
+    --adjudication route (bullet 2) and the V2 refusal, "declared under PIN-10" (bullet 3).
+    
+    So the lock does not declare the whole register as Code's readings. Entry line 65 ("the 43-entry register as Code's
+    readings, strikable until LOCK v1.0 (C6)") leaves out that exception. That credits Code with the parts of PIN-9 and
+    PIN-10 that are now the seat's, and calls them strikable at Code's cost. The entry also treats the two cases
+    differently. For the PIN index, line 80 does state the exceptions ("The exceptions are the sites the seat has made
+    its own (R1 E1; R2 item 2)"). For the register it does not. The heading "9.3 The 43-entry register, as Code's
+    readings" is a heading, not the declaration. The added clause "strikable until LOCK v1.0 (C6)" comes from the
+    declaration sentence, and the lock qualifies that sentence immediately.
+    
+    I also checked that the exception covers only PIN-9 and PIN-10. The other thing round-2 item 2 made the seat's is
+    the analyzer half of the stage-start check. That is the licence checks (d) and (f) in stages.py (lock §1, lines
+    174–181; index sites P196/P197/P209), not an analyzer PIN. PIN-14, at m_analyze.py:2538, is not listed as an
+    exception in §9.3. The proposed correction therefore matches the lock exactly, and "round-2 item 2" is the form the
+    entry already uses at line 61.
+  CORRECTION:
+    the 43-entry register as Code's readings, strikable until LOCK v1.0 (C6), except the parts of PIN-9 and PIN-10 that
+    round-2 item 2 made the seat's;
+--- [H0-45] IMPRECISE
+  CLAIM:
+    §10: R1 D1's table and diffs (the historical package hashes truncated), the import closures, and the
+    SCORING_STACK_FILES condition
+  REFUTER'S EVIDENCE:
+    The claim is the entry's §10 sub-bullet at entry_lock.md:69–70. The checker's verdict stands, and the claim was not
+    right as worded.
+    
+    (1) R1 D1 has no table. Its text, at results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1.md:90, is one prose
+    sentence: "Accepted: the lock states each gate artifact's `package_sha256`, the diffs between them (...), the import
+    closures (...), and the condition that ...". The table is Code's. It sits in Code's round-1 block,
+    results/raw/2026-10-10_m-code-to-design_pre-LOCK-v0.1.md:322–326, under "D1. ... Code's proposals, for the seat's
+    word". The lock says so itself at LOCK-m-F0.md:1297–1299: "The table is Code's update of the table in its round-1
+    block's D1 (...), which R1 D1 accepted ... Code adds the rows for G-CAL completability, the superseded manifest and
+    this lock." Calling it "R1 D1's table" therefore credits the seat with a table that is Code's. That is the
+    attribution error the D2 round's follow-ups (b7737ef, "crediting the seat with more than its words") were written to
+    remove.
+    
+    (2) The rest of the claim checks out against lock §10 (LOCK-m-F0.md:1285–1457, sha256 6a51de11...227d):
+    - **Diffs:** present and recomputed. R1 D1 does name the diffs.
+    - **Historical package hashes:** every one is truncated to 8 hex plus '…': 96fbcacf…, 4b496587… (twice), 06ab1430…,
+    750b24ed…, 12652f39…, 19edfcd0…. Only the current re-run's package, 5f646db6…d771, is given in full.
+    - **Import closures:** both present, a3bc7bb9… in full and 23abe773….
+    - **SCORING_STACK_FILES condition:** present, with 26 entries and an empty diff.
+    
+    (3) The entry also leaves out that §10 carries R1 D1 verbatim (LOCK-m-F0.md:1287–1292). I checked that quote
+    programmatically: joined, it is character-exact to R1 line 90 without its "**D1.** " prefix.
+    
+    (4) The checker's correction is accurate, but it attaches "(the historical package hashes truncated)" to "the diffs"
+    alone. Truncated historical hashes also appear in the table, so the replacement below puts the qualifier back over
+    both.
+  CORRECTION:
+    R1 D1 verbatim; Code's package table (its update of the table in its round-1 block's D1, which R1 D1 accepted) and
+    the diffs, the historical package hashes truncated; the import closures; and the SCORING_STACK_FILES condition;
+--- [H2-01] FAILS
+  CLAIM:
+    l.80: "The exceptions are the sites the seat has made its own (R1 E1; R2 item 2)."
+  REFUTER'S EVIDENCE:
+    I re-checked this independently, and the checker's FAILS holds.
+    
+    - **The claim (entry l.80–81).** It reads "The exceptions are the sites the seat has made its own (R1 E1; R2 item
+    2). Lock §10 names them, and the index's header says so."
+    - **The PIN index header (lines 8–10; file sha256 915245b5…d2ce verified).** It reads "except the readings the seat
+    has made its own (ruling (h)'s exception and its extension, R1 E1; the pause at a STOP, its route, the V2 refusal
+    and the analyzer half of the stage-start check, R2 item 2): LOCK-m-F0 v0.1 section 10 names the sites that carry
+    them." The header names readings, not sites. So the entry's "the index's header says so" credits the header with a
+    statement it does not make.
+    - **Lock §10 Status (LOCK-m-F0.md:1388–1390; file sha256 6a51de11…227d verified).** It reads "Except the readings R1
+    E1 and R2 2 made the seat's in those words: they are the seat's wherever an indexed site carries them, not Code's
+    readings strikable at Code's cost; the rest of each such site stays on the terms above." Lock §9.3 (line 1198)
+    follows the same pattern: "within PIN-9 the pause raised at a STOP and its route ... The rest of each entry is
+    declared on C6's terms."
+    - **The review raw (lines 2475–2476).** The refuter says "Sites stay mixed: what those rulings accepted is the
+    seat's, and the rest of each site stays Code's."
+    - **The rulings.** Each one makes specific readings the seat's, not whole sites:
+      - R1 E1 (R1:98): "Both accepted as the seat's."
+      - R2 item 2 (R2:13): "made the seat's by this ruling."
+      - Neither ruling covers the other Code text at those sites, e.g. the remainder of PIN-9 and PIN-10 at P301 and
+    P300.
+    
+    Calling the sites the seat's therefore over-credits the seat with Code's other readings at them. That is the same
+    class of over-credit the entry's next line says the header regeneration was made to correct.
+    
+    The checker's correction also holds up:
+    - "readings" matches both the header and §10.
+    - "the rest of each site that carries one stays on C6's terms as Code extends them" matches §10's "the rest of each
+    such site stays on the terms above". The terms above are C6's terms, which Code extends to the index (§10:1386). The
+    lock itself uses "terms as Code extends them from the register to the index" (LOCK:595).
+    - "Lock §10 names those sites" matches §10's list: P226, P119, P245, P246, P247, P281, P301, P252, P300, P196, P197,
+    P209.
+    - "the index's header says so" now refers only to the header's own "section 10 names the sites that carry them",
+    which it does say.
+  CORRECTION:
+    The exceptions are the readings the seat has made its own (R1 E1; R2 item 2); the rest of each site that carries one
+    stays on C6's terms as Code extends them. Lock §10 names those sites, and the index's header says so.
+--- [H2-11] IMPRECISE
+  CLAIM:
+    l.92: a banner digest and the per-line banner hashes
+  REFUTER'S EVIDENCE:
+    The entry's bullet (l.92) belongs to a list headed "Values Code computed for the lock that no record yet carries are
+    marked as such and listed in lock §11.1". "lock §11.1" is item 1 of §11, since the lock has no §11.1 heading. As
+    written, "the per-line banner hashes" is unqualified, so it covers all six per-line hashes in lock §7,
+    SESSION_BANNER's included. The lock excludes that one hash in both places that matter:
+    - Lock §7 (l.977–978): "These per-line sha256 (other than `SESSION_BANNER`'s, which G-SHAPE-F0 and G-CAL record)
+    were computed by Code for this lock. No record carries them, and no code checks them."
+    - Lock §11 item 1 (l.1471–1472): "the per-line banner sha256 other than `SESSION_BANNER`'s, the banner digest and
+    the Qwen `ban_sha` sha16, lock §7".
+    
+    I checked this against the files myself:
+    - SESSION_BANNER's sha256 6124c724758f…6a30ae is in data/m/gates/G-SHAPE-F0.json,
+    data/m/gates/G-CAL_completability_qwen.json and data/m/ckpt/G-CAL_qwen.json, so a record does carry it.
+    - COMMON's hash 5d915bd8… and the banner digest 968e99a1… appear only in the uncommitted review raw under
+    results/raw. That matches the lock's "no record carries them".
+    
+    The lock file's sha256 is 6a51de11…227d, as stated. The rest of the bullet is fine: "a banner digest" matches lock
+    §7, which describes the digest as Code's own form computed for this lock. The only fault is the missing exclusion of
+    SESSION_BANNER's hash.
+  CORRECTION:
+    a banner digest and the per-line banner hashes other than `SESSION_BANNER`'s;
+--- [H2-24] FAILS
+  CLAIM:
+    l.109-110: For five of them Code decided how; the review raw's section 6 lists the decisions.
+  REFUTER'S EVIDENCE:
+    I checked this myself in results/raw/2026-10-10_m-lock-v0.1_review.txt. Line 4 says "with Code's seven decisions
+    (section 6 below)". Section 6 is headed "6. FINAL CHECK (workflow 2)" at line 3154. Line 3156 lists decisions (1) to
+    (7): (1) the step-10 driver, ADOPT; (2) G-ID bar row 5, ADOPT; (3) C1-C9 Appendix D, ADOPT as a fourth new Code
+    item; (4) PIN-S6, "PIN-S6's reading, confirmed by the seat"; (5) the later-versions form, ADOPT; (6) "the D3 raw
+    named and recorded"; (7) "the PIN index's new sha256 and header reflected in section 10."
+    
+    Section 7, the final fix report (lines 5060-5080), ties each decision to a values finding: "0 (step-10 driver;
+    Decision 1)", "1 (G-ID row 5; Decision 2)", "3 (C1–C9; Decision 3)", "4 (Decision 4)", "5 (Decision 5)" and "12
+    (Decision 6)". Decision 7 is reported on its own line ("Decision 7 (the PIN index)") and belongs to no finding.
+    
+    No confirmed correction is tied to a decision. The "(E4)" that the report mentions under finding 3 comes from that
+    values finding's own correction text, which I confirmed in the values lens at lines 3829-4024.
+    
+    So Code decided how to apply six findings (values findings 0, 1, 3, 4, 5 and 12), not five. Section 6 lists seven
+    decisions. The claim's "five" is wrong, and the checker's FAILS stands.
+    
+    The checker's replacement is also a little loose. Its phrase "decision 7 put the regenerated PIN index into lock
+    §10" is not accurate. In LOCK-m-F0.md the index's sha256 sits in §1's table at line 145. Lock §10 at lines 1346-1358
+    gives the index's file, scope, extraction rules and header terms, and says "sha256 as lock §1". Decision 7's own
+    words are that the new sha256 and header were "reflected in section 10".
+  CORRECTION:
+    For six of them (values findings 0, 1, 3, 4, 5 and 12) Code decided how. The review raw's section 6 lists those
+    decisions (1–6) and a seventh, which reflected the regenerated PIN index's new sha256 and header in lock §10. The
+    main one is the step-10 driver flag above.
+--- [H2-28] IMPRECISE
+  CLAIM:
+    l.114: every other 64-hex value equals the sha256 of the file it is attributed to (59 matched)
+  REFUTER'S EVIDENCE:
+    The check raw (results/raw/2026-10-10_m-lock-v0.1_check.txt) prints 59 "ok line" rows under (3) and the summary line
+    "59 matched, 0 unmatched (64-hex strings other than the check-(1) hashes)". I counted them with /usr/bin/grep: 44
+    rows read "= sha256 of <file>" and 15 read "= derived: …". The script's docstring adds "or a derived value
+    recomputed here". Its header line, which the entry's wording copies, leaves that out.
+    
+    I re-checked this independently. I hashed every file under data/, results/raw/, scripts/ and valence_core/ plus the
+    repo-root files, and scanned LOCK-m-F0.md, whose sha256 is still 6a51de11…227d. The lock has 71 64-hex occurrences
+    (66 distinct). 12 of them are the 7 check-(1) values. The other 59 are all distinct. 44 equal the sha256 of a file
+    in the working tree and 15 match no file. Those 15 sit at lines 151, 721, 905–908, 969, 971–975, 981, 991 and 1188.
+    
+    For those 15 values I reproduced the renders of record (a04f67b0…), the four schedule_sha256 values (822a2eb1…,
+    9743f175…, 504dd516…, c4626cc0…, recomputed from stages._schedules_sha's own rule), the six banner literals
+    (6124c724…, 5d915bd8…, 6bfc495b…, a6fe3b79…, 5bdf9905…, a8b3befd…), the G-SHAPE-F0 sources digest field (ee16e16b…)
+    and the harness-strings field (d1856e3c…). Line 850's c80d2e22… is the sha256 of scripts/box_selftest_stub.py, and
+    the lock's text gives it to the stub.
+    
+    So the claim is imprecise: 15 of the 59 are not file hashes at all.
+    
+    The checker's correction is also slightly wrong. It says every derived value was "recomputed", but G-ANL-F0's
+    battery.outputs_sha256 (line 1188, 83df98b1…) was not. The script adds it with
+    DERIVED.setdefault(manifest["battery"]["outputs_sha256"], …) and labels it "(manifest field)", and the lock's own
+    text says "as the manifest records it (not recomputed for this lock)". So 14 values were recomputed and one was read
+    from the manifest.
+    
+    Also, "the derived value it names" claims more than the script checked. The script only tests whether a value is in
+    its derived set; it never matches the label. By reading the lock, every placement is in fact correctly named, but
+    the check did not establish that.
+  CORRECTION:
+    every other 64-hex value matches (59, 0 unmatched): 44 equal the sha256 of the file each is attributed to, and 15
+    equal a value the script derives. 14 of those are recomputed: the renders of record, the G-SHAPE-F0 sources digest,
+    the four schedule_sha256 values, the six banner literals, the HARNESS_STRINGS_QF0 digest and the 32-banner
+    concatenation. The last one is G-ANL-F0's `battery.outputs_sha256`, which is read from the manifest field (the lock
+    does not recompute it either);
+--- [H2-33] IMPRECISE
+  CLAIM:
+    l.121-122: Code re-runs check (4) unpatched after the commit, on the committed file, and records it in the step-10
+    entry.
+  REFUTER'S EVIDENCE:
+    The checker is right that the two files disagree. I checked this myself; nothing was changed.
+    
+    - **Entry (scratchpad step9/lock/entry_lock.md, l.121–122):** "Code re-runs check (4) unpatched after the commit, on
+    the committed file, and records it in the step-10 entry."
+    - **Check raw (results/raw/2026-10-10_m-lock-v0.1_check.txt, untracked, sha256 3ab6d3d5…03b5), header line 3,
+    checked byte-exact with od:** "After the commit Code re-runs (4) unpatched (the LOCK-m-F0 v0.1 entry records it)."
+    The entry's commit list includes this raw ("the check, D3 and review raws"). Committed as drafted, the two files
+    would name different entries as the place the re-run is recorded.
+    - **Header origin:** no file in the scratchpad contains this header text, so it is Code's prose, not script output.
+    Rewording it alters no script output.
+    - **Where the raw's sha appears:** the lock never names this raw or its sha. A grep of LOCK-m-F0.md for
+    "lock-v0.1_check" and "3ab6d3d5" finds nothing. The entry links the raw without a sha, no other lock-v0.1 raw
+    carries the sha, and the values-check raw does not exist yet. Changing the header therefore moves no hash any text
+    carries. This confirms the checker's "whose sha no lock text carries".
+    - **What does agree:** "re-runs (4) unpatched after the commit" and "on the committed file" match the raw. Unpatched
+    means `stages._committed` serves the real committed bytes.
+    - **Being in the future is not a fault**, as the task says. The only fault is where the result is recorded.
+    - **A second imprecision the checker missed: "check (4)" is ambiguous inside the entry.** The entry's own list of
+    mechanical checks (l.113–119) has five unnumbered bullets. Its fourth bullet is "the analyzer's PIN-14 emulation is
+    True", and its third is licence_problems. In the raw's numbering, (4) is licence_problems with `_committed` patched,
+    plus the negative controls and the PIN-14 emulation. Only the licence_problems part has a patched/unpatched form. A
+    reader who counts the entry's bullets lands on PIN-14, so the sentence should name the check.
+    
+    The checker's two options are both workable, but neither names the check. The replacement below fixes both points.
+  CORRECTION:
+    Make the two files agree, and name the check, before the commit. Use either option; each is checked against the
+    current text of both files.
+    
+    **Option A: change the raw and keep the step-10 entry.**
+    - In results/raw/2026-10-10_m-lock-v0.1_check.txt line 3, replace "(the LOCK-m-F0 v0.1 entry records it)." with
+    "(the step-10 entry records it)." The raw is untracked and its sha appears in no text: not the lock, not the entry,
+    no other raw.
+    - Replace entry l.121–122 with: "Code re-runs check (4), `stages.licence_problems`, with `stages._committed`
+    unpatched, after the commit and on the committed file, and records the result in the step-10 entry."
+    
+    **Option B: keep the raw as it is.**
+    - Replace entry l.121–122 with: "Code re-runs check (4), `stages.licence_problems`, with `stages._committed`
+    unpatched, after the commit and on the committed file. The check raw's header says this entry records the result, so
+    Code adds it here."
+    - This option means amending the entry after it is committed.
+--- [H2-39] IMPRECISE
+  CLAIM:
+    l.128: heading "Flagged for the seat and the PI (in the lock, not settled by it)", which also covers the 'Stale
+    texts left unamended' bullet.
+  REFUTER'S EVIDENCE:
+    The checker is right, and I re-checked it independently. LOCK-m-F0.md (sha256 6a51de11…227d, byte-identical to the
+    scratch draft_lock.md) only puts open questions to the seat in two places:
+    - §11.1: "Flagged for the seat (a question, not a reading)… goes to the seat through the PI with the step-10 word".
+    Code waits "until the seat answers or the PI directs otherwise".
+    - §11.8: "Flagged for v0.2 and v1.0… put to the seat then".
+    
+    The lock never flags the stale texts. It records them as answered:
+    - §1, l.179–181: the five analyzer-half texts "stand unamended, as no hash moves. This lock records that R2 2 makes
+    that half the seat's."
+    - §8.5, l.1165: the eight STOP texts stand unamended, and "this lock records that the flag is answered by item 2".
+    - §8.1, l.1080 (not §8.2, as the checker wrote): build flag (r) is "accepted as built by the seat's dispositions
+    (`54e41c9`). The PIN's "(flagged)" stands unamended".
+    - §8.2, l.1104: row 5 is build flag (e), "accepted as built". "The row text is left as written, because editing it
+    moves `package_sha256`."
+    - §10, l.1431–1432: "E1 settles it. The text is left as written, because editing it moves `package_sha256` (Code's
+    choice)."
+    
+    R2 item 2 itself says "none is amended", and the PI said "no hash moves". So nothing in the stale-texts bullet is
+    open for the seat or the PI. The bullet's own text agrees: "All are answered by round-2 item 2"; "The lock records
+    each answer beside it". Under the heading "Flagged for the seat and the PI", the bullet is misfiled. "Not settled by
+    it" is literally true (they were settled by R2, E1 and the dispositions), but the heading still reads as if they are
+    open.
+    
+    The checker's evidence has two small slips that don't change the verdict:
+    - (r) is in §8.1, not §8.2.
+    - "Code's choice" is the lock's own wording only for readrule.py:150. The other texts stand "as no hash moves", in
+    line with the PI's word and R2's "Nothing here moves a hash."
+    
+    The heading stays right for the first two bullets: bullet 1 goes to the seat through the PI, or waits on the PI's
+    direction, and bullet 2 goes to the seat.
+    
+    A side note outside this claim: the moved bullet's last line, "Round-2 makes any correction a text fix 'at the next
+    hash-moving round'", goes beyond R2. R2's sentence covers only "a misparaphrase found later" in "the analyzer's PIN
+    texts (PIN-3, -5, -6, -8, -9, -12, -14, -17, -42, -43; …)". Most of the stale texts are in stages.py, bars.py and
+    readrule.py, and PIN-10 is not on that list. The lock quotes R2's sentence only at §9.3 (l.1200). That line should
+    get its own check.
+  CORRECTION:
+    Leave l.128 ("**Flagged for the seat and the PI** (in the lock, not settled by it):") as it is, over the "Step 10's
+    driver (lock §11.1)" and "Later versions (lock §11.8)" bullets.
+    
+    Take l.143 out of that group and make it a sibling of l.128, at 2-space indent:
+    "  - **Recorded in the lock, not flagged: stale texts left unamended (no hash moves).**"
+    (The checker's shorter "**Recorded, not flagged: stale texts left unamended (no hash moves).**" is also accurate.)
+    
+    Re-indent its four sub-bullets (l.144–151) two spaces left (6→4, continuation lines 8→6) and leave their text
+    unchanged.
+--- [H2-43] IMPRECISE
+  CLAIM:
+    l.135-136: Launching without that answer would act on "no" before the seat gave it, so Code waits for the seat's
+    answer, or for the PI's direction, with the step-10 word.
+  REFUTER'S EVIDENCE:
+    I re-checked LOCK-m-F0.md §11 item 1 (lines 1499–1509) against entry_lock.md l.135–136 myself, and I agree with the
+    checker. The lock says: "Launching G-TIME-F0 on the edited driver without re-running G-SHAPE-F0 would act on the
+    answer "no" before the seat has given it". It then says: "The question therefore goes to the seat through the PI
+    with the step-10 word. Code does not launch G-TIME-F0 on an edited driver until the seat answers or the PI directs
+    otherwise."
+    
+    The entry's line is off in three ways:
+    (1) "Launching without that answer would act on "no"" leaves out the condition the lock sets: launching on the
+    edited driver without re-running G-SHAPE-F0. A launch that followed a re-run of G-SHAPE-F0 would not act on "no", so
+    the entry says more than the lock does.
+    (2) "with the step-10 word" is attached to Code waiting for the answer or direction. In the lock it is the question
+    that goes to the seat, through the PI, with the step-10 word. The answer does not come with that word.
+    (3) "the PI's direction" is looser than the lock's "the PI directs otherwise".
+    
+    The entry's headline (l.10–12) gets the scope right ("Code does not launch on an edited driver until the seat
+    answers ... or the PI directs otherwise"), which makes l.135–136 inconsistent with the entry's own headline. The
+    checker's replacement matches the lock. The only change I make is to name G-TIME-F0, as the lock does.
+  CORRECTION:
+    Launching G-TIME-F0 on the edited driver without re-running G-SHAPE-F0 would act on "no" before the seat gave it. So
+    the question goes to the seat through the PI with the step-10 word, and Code does not launch G-TIME-F0 on an edited
+    driver until the seat answers or the PI directs otherwise.
+--- [H2-44] IMPRECISE
+  CLAIM:
+    l.138: v0.2 and v1.0 are meant to amend this file and keep the v0.1 text below them.
+  REFUTER'S EVIDENCE:
+    The checker's IMPRECISE verdict stands. LOCK-m-F0.md (sha256 6a51de11...227d, re-hashed and matching) gives the
+    source in §0 ("## 0. Header and status", l.3), at l.63–66: "Code's intended form is that both later versions amend
+    this file and keep the v0.1 text below them as the record, as `LOCK-h.md` keeps its v1.x record. Because that form
+    leaves check (f) and PIN-14 unable to separate a superseded hash from the hash of record, the form, and whether the
+    record below is truncated, stays open until the first revision that moves a hash, and is put to the seat then (lock
+    §11, item 8)." The two later versions are named at l.61–62 as v0.2 (step 13) and v1.0 (step 15). Lock §11 item 8
+    (l.1542) is headed "Flagged for v0.2 and v1.0 (Code's observation; not a reading)" and says "Under the form lock §0
+    intends, they amend this file and keep the v0.1 text below them".
+    
+    The facts in the claim are right: v0.2 and v1.0 amend the file and keep the v0.1 text below it. The attribution is
+    the problem. Entry l.138 says "are meant to" without saying whose intent this is, and the lock states plainly that
+    it is Code's. The entry's own section heading (l.127) says these are flagged items "not settled by it", and l.141
+    says "the file's form are open". Without "Code's", l.138 reads as a settled plan, which conflicts with l.141 and
+    drops the attribution the task asks to be checked (seat vs Code vs PI). The entry also leaves out "as the record".
+    That omission is minor, but adding it makes the wording match §0 exactly. The checker's quote "stays open until the
+    first revision that moves a hash" is character-exact (l.66). Its correction is accurate, and only lacks "as the
+    record".
+  CORRECTION:
+    l.138: "Code's intended form (lock §0) is that v0.2 and v1.0 amend this file and keep the v0.1 text below them as
+    the record."
+--- [H2-46] IMPRECISE
+  CLAIM:
+    l.141-142: The remedy (one declared line form, or truncating the record) and the file's form are open, and go to the
+    seat at the first revision that moves a hash, which is step 15's analyzer round.
+  REFUTER'S EVIDENCE:
+    I checked LOCK-m-F0.md (sha256 6a51de11...227d, unchanged). The claim's first half is right. Lock §11.8
+    (l.1550–1557) gives the refuter's two forms: "a single declared line form for the hashes of record" and "truncating
+    the superseded hashes in the record below". It then says: "The choice, and with it the form lock §0 leaves open,
+    belongs to the drafting of the first revision that moves a hash, and is put to the seat then." Lock §0 (l.64–66)
+    says the same.
+    
+    The added clause "which is step 15's analyzer round" goes further than the lock. The lock mentions step 15 only in a
+    parenthetical example: "Once a revision names a new analyzer or package (R2 3 moves the analyzer at step 15)". It
+    never says step 15 is the first such revision, and it allows for earlier moves:
+    - A step-time edit "under `valence_core/m` would move it [package_sha256] instead, and every non-stub stage would
+    refuse until a lock revision names the new hash" (§11.1).
+    - "A later edit to the package or the analyzer moves a hash this file names" (l.190).
+    - PIN-1..43 stay "strikable until LOCK v1.0". A strike "changes the analyzer's sha256" and "moves a hash the lock
+    names" (l.1198). The seat reads the lock at step 10, so a revision could be needed before step 12.
+    
+    The clause also mixes up the analyzer round with the lock revision. In R2 3, "the edit and the re-run land, the LOCK
+    v1.0 draft names the new analyzer sha256". The revision that moves a hash is the v1.0 draft, not the analyzer round.
+    
+    The checker's correction ("on R2 3's schedule that is LOCK v1.0 at step 15") still says more than the sources do. R2
+    3 schedules only the analyzer edits ("the analyzer moves once more between v0.1 and v1.0"). It says nothing about
+    which revision is the first to move any hash.
+  CORRECTION:
+    The remedy (one declared line form, or truncating the record) and the file's form are open. They are put to the seat
+    at the drafting of the first revision that moves a hash; the lock's instance is R2 3's analyzer round at step 15,
+    whose new sha256 the LOCK v1.0 draft names.
+--- [H2-47] IMPRECISE
+  CLAIM:
+    l.144: Eight texts still call the STOP's pause or its route "Code's reading, flagged".
+  REFUTER'S EVIDENCE:
+    The checker was right, so I am not refuting it. I searched every file under valence_core/m plus scripts/m_analyze.py
+    and scripts/m_sessions.py at 9bf36ad, reading with git show. Exactly eight texts call the STOP's pause or its route
+    Code's reading, which matches the count and line list in lock §8.5 (LOCK-m-F0.md:1170).
+    
+    Only three of the eight contain the quoted phrase character-exact, "Code's reading, flagged for the seat":
+    - m_analyze.py:2010 (the inline PIN-9 comment)
+    - m_analyze.py:2505 (the PIN-9 register text)
+    - stages.py:2298 (the _stop_end_look PIN)
+    
+    The other five are worded differently:
+    - m_analyze.py:2515–2516 joins across a line break as "(Code's reading of C3, flagged for the seat; see PIN-9)".
+    - stages.py:2492 reads "a STOP's pause by Code's reading of C3, flagged for the seat".
+    - stages.py:2514 reads "for a STOP's pause, Code's reading of C3, flagged for the seat".
+    - stages.py:3993–3994 joins as "(C3's route; Code's reading for a STOP, flagged)".
+    - stages.py:4280 reads "(Code's reading of C3)" and has no "flagged" at all.
+    
+    So the entry's quoted phrase "Code's reading, flagged" is not character-exact for five of the eight. One of them
+    never says "flagged". Lock §8.5 itself quotes these as separate wordings and does not merge them under one phrase.
+    
+    The checker's correction holds up. Seven of the eight contain "flagged": :2010, :2505, :2516, :2298, :2492, :2514
+    and :3994. The eighth, :4280, does not. Lock §8.5 quotes each text's wording.
+  CORRECTION:
+    Eight texts still call the STOP's pause or its route Code's reading, seven of them "flagged" (lock §8.5 quotes
+    each).
+--- [H2-52] FAILS
+  CLAIM:
+    l.150-151: Round-2 makes any correction a text fix "at the next hash-moving round".
+  REFUTER'S EVIDENCE:
+    I checked the checker's verdict and agree: the claim is wrong. Round-2 (results/raw/2026-10-10_m-design-to-code_pre-
+    LOCK-v0.1_round2.md, item 2) mentions "the next hash-moving round" in one sentence only, and that sentence covers
+    one class of text: "The unordered paraphrases of the seat's rulings in the analyzer's PIN texts (PIN-3, -5, -6, -8,
+    -9, -12, -14, -17, -42, -43; `SEAT_ROUTED`; `PER_PROPERTY_REFERENCE`; the cite; the refusal message) are accepted as
+    the entry lists them; a misparaphrase found later is a text correction at the next hash-moving round, not a reason
+    to open one."
+    
+    The entry's bullet covers four kinds of stale text:
+    - eight texts calling the STOP's pause or its route Code's reading, flagged. Five are in stages.py, and one is
+    PIN-10, which is not on R2's list.
+    - five stages.py texts calling the analyzer half of the stage-start check Code's.
+    - readrule.py PIN texts about build flag (r) and E1.
+    - bars.py row 5.
+    
+    R2 schedules no correction for any of these. Its only other remark on texts is that texts saying "the seat's
+    C9(ii)/C3/D2" are accurate "so none is amended". I grepped R1, R2, the lock-v0.1 raws, RESULTS.md and LOCK-m-F0.md.
+    No other source states a general "fix at the next hash-moving round" rule.
+    
+    The lock (sha256 6a51de11…227d, confirmed) gives its own reasons:
+    - "stand unamended, as no hash moves" (l.181 and l.1165).
+    - "The PIN's "(flagged)" stands unamended, as no hash moves." (l.1080)
+    - "The row text is left as written, because editing it moves `package_sha256`." (l.1104)
+    - "The text is left as written, because editing it moves `package_sha256` (Code's choice)." (l.1432, readrule.py:150
+    only)
+    
+    So "Round-2 makes any correction…" credits the seat with more than it said.
+    
+    One problem with the checker's correction: it puts "(Code's choice)" on every text. The lock says "Code's choice"
+    only for readrule.py:150. For the others it says "as no hash moves", and that matches the seat's own words "Nothing
+    here moves a hash" (R2 short form) and the PI's "no hash moves". Tagging all of them as Code's choice is an
+    attribution the lock does not make. My wording below follows the lock's reason and keeps R2's quote exact. The
+    quoted fragment "is a text correction at the next hash-moving round" matches R2 character for character.
+  CORRECTION:
+    The lock records each answer beside it and leaves the texts as written, as no hash moves. Round-2 schedules no fix
+    for these texts. Its only rule on later text corrections covers the analyzer's PIN-text paraphrases of the seat's
+    rulings: a misparaphrase found later "is a text correction at the next hash-moving round".
+============================================================ REFUTED FLAGS (the claim stood)
+  (none)
+============================================================ UNCHECKABLE
+--- [H0-03]
+    'COMMITTED' (header status)
+  WHY:
+    Describes the future commit. Per the task it is not failed for that reason. At check time LOCK-m-F0.md is untracked
+    ('?? LOCK-m-F0.md').
+--- [H0-17]
+    Stamp: date -u → Sun Oct 11 03:58:38 UTC 2026, first write
+  WHY:
+    This is Code's own date -u and cannot be checked. It is consistent with the check raw's stamp of 2026-10-11 03:56:51
+    UTC, which is earlier.
+--- [H2-56]
+    l.157-158: Committed: `LOCK-m-F0.md`; the PIN index; the check, D3 and review raws; this entry; and this entry's
+    values-check raw (`_valuescheck`, both passes).
+  WHY:
+    This describes the future commit. The four named raws and the lock exist untracked with the hashes cited, so the
+    list is consistent. One file holding both passes matches the 2026-10-10 practice: d2-c9, gcal_close and gshape-f0
+    each have a single _valuescheck file and no _pass2.
+============================================================ VALUES LENS
+--- (misstates-seat / missing-disclosure)
+  QUOTE:
+    item 2: the pause at a STOP, its `--adjudication` route and the V2 refusal are "accepted as built, post
+            hoc, and made the seat's", and the texts that attribute them stand;
+  PROBLEM:
+    This misstates the seat's text in three ways. (1) The quote is not character-exact: R2 item 2 reads "Accepted as
+    built, post hoc, and made the seat's by this ruling", with a capital A. (2) "the texts that attribute them stand" is
+    ambiguous. R2 says only that texts crediting the seat ("the seat's C9(ii)", "the seat's C3" or "the seat's D2") are
+    "accurate as of today, so none is amended". Those texts also cover the reuse and the analyzer half of the stage-
+    start check. Meanwhile, this entry lists other texts on the same subjects as stale. (3) R2 directs that "the entry
+    and this file record that the attribution became true by ruling, not by the seat's words of this morning". R2's
+    commit 9bf36ad added no RESULTS entry, so this entry is the one that should record that sentence, and it does not.
+    The lock's §8.5 quotes the sentence; the entry omits it.
+  CORRECTION:
+    item 2: the pause at a STOP (the reuse included), its `--adjudication` route and the V2 refusal are "Accepted as
+    built, post hoc, and made the seat's by this ruling". Every text that says "the seat's C9(ii)", "the seat's C3" or
+    "the seat's D2" over them, or over the analyzer half of the stage-start check, is "accurate as of today, so none is
+    amended". As R2 directs, this entry records that "the attribution became true by ruling, not by the seat's words of
+    this morning";
+--- (attribution / overclaim)
+  QUOTE:
+    Round-2 makes any correction a text fix "at the next
+  PROBLEM:
+    This attributes to R2 a ruling it did not make. R2's sentence covers only "The unordered paraphrases of the seat's
+    rulings in the analyzer's PIN texts (PIN-3, -5, ...)": "a misparaphrase found later is a text correction at the next
+    hash-moving round". It does not reach the stale texts listed here: the eight 'Code's reading' texts, the five
+    analyzer-half texts, readrule.py:150 and P123's "flagged", and bars.py's row-5 texts. The lock attributes leaving
+    those unamended to Code: lock §10 E1 says "The text is left as written, because editing it moves `package_sha256`
+    (Code's choice)", and lock §§8.2 (row 5) and 5.2 give the same reason.
+  CORRECTION:
+    Leaving them as written is Code's choice, because any edit moves `package_sha256` or the analyzer's sha256 (lock
+    §§5.2, 8.2, 10). R2's "a text correction at the next hash-moving round" applies to misparaphrases of the seat's
+    rulings in the analyzer's PIN texts.
+--- (overclaim)
+  QUOTE:
+    Every non-stub stage now licenses against it.
+  PROBLEM:
+    This overclaims. By the PIN at stages.py:976–980 and lock §0, "G-TIME and G-ID follow LOCK v0.1, qualification v0.2,
+    the campaign v1.0", so only G-TIME-F0 and G-ID-F0m run under this version. At HEAD the `time`/`id`/`qual`/`campaign`
+    subcommands still refuse, so no stage can run yet. The only licence check so far ran with `stages._committed`
+    patched to serve the uncommitted lock. The unpatched re-run on the committed file comes after the commit.
+  CORRECTION:
+    Once committed, it passes the licence by file for a non-stub stage whose `identity_extra` names it (check (4) before
+    commit, with `_committed` patched; the unpatched re-run follows the commit). G-TIME-F0 and G-ID-F0m run under v0.1,
+    qualification under v0.2 and the campaign under v1.0.
+--- (overclaim / missing-disclosure)
+  QUOTE:
+    every other 64-hex value equals the sha256 of the file it is attributed to (59 matched);
+  PROBLEM:
+    This overstates what check (3) verifies. In the check raw, 15 of the 59 are derived values, not file hashes: the
+    renders of record, the sources digest, four schedule_sha256 values, six banner literals, the HARNESS_STRINGS digest,
+    the banner concatenation and the battery outputs_sha256. The other 44 are file hashes, one of which (lock line 850)
+    matched a path that is "not the nearest preceding path". The review's finding #16 (confirmed, not applied) showed
+    that check (3) does not test attribution: swapping the A0/A0s schedule hashes, TOLD_MAP[0]/[1] or the G-TIME/G-ID
+    schedule_sha256 values still gives PASS. The entry counts #16 only as needing "no change to the lock text", which
+    hides that its stricter check was never built.
+  CORRECTION:
+    every other 64-hex value matched (59): 44 as the sha256 of a file named in its paragraph (one, lock line 850, not
+    the nearest path) and 15 as derived values the script recomputes. The check does not test which label a value sits
+    under: review finding #16 confirmed this, and its stricter check was not applied. Attributions were checked claim by
+    claim in the final check;
+--- (count)
+  QUOTE:
+    For five of them Code decided how;
+  PROBLEM:
+    The count is wrong. Section 6 of the review raw lists seven Code decisions. Decisions 1–6 attach to six values
+    findings (0, 1, 3, 4, 5 and 12, per the final fix report). Decision 7 (the PIN index's new sha256 and header in lock
+    §10) attaches to no finding.
+  CORRECTION:
+    For six of them (values findings 0, 1, 3, 4, 5 and 12) Code decided how. The review raw's section 6 lists Code's
+    seven decisions; the seventh reflects the regenerated PIN index's sha256 and header in lock §10.
+--- (attribution)
+  QUOTE:
+    The exceptions are the sites the seat has made its own (R1 E1; R2 item 2).
+  PROBLEM:
+    This misstates both the lock and the index header. They except the readings the seat made its own, not the sites.
+    The header says "except the readings the seat has made its own ... LOCK-m-F0 v0.1 section 10 names the sites that
+    carry them". Lock §10 says those readings are the seat's "wherever an indexed site carries them ... the rest of each
+    such site stays on the terms above". Calling the whole sites the seat's over-credits the seat, which is the same
+    defect review #24 corrected.
+  CORRECTION:
+    The exceptions are the readings the seat has made its own (R1 E1; R2 item 2). They are the seat's wherever a site
+    carries them, and the rest of each such site stays on C6's terms as Code extends them. Lock §10 names the sites that
+    carry them, and the index's header says so.
+--- (internal-inconsistency)
+  QUOTE:
+    Code re-runs check (4) unpatched after the commit, on the committed file, and records it in the step-10
+  PROBLEM:
+    This contradicts the check raw committed with this entry. Its header says "After the commit Code re-runs (4)
+    unpatched (the LOCK-m-F0 v0.1 entry records it)". One of the two will be wrong on the record.
+  CORRECTION:
+    Before the commit, change the check raw's header to "(the G-TIME-F0 entry, step 10, records it)" so it matches this
+    line. Alternatively keep this line and add: "(the check raw's header names this entry; the step-10 entry is where it
+    is recorded)".
+--- (misstates-lock)
+  QUOTE:
+    the 43-entry register as Code's readings, strikable until LOCK v1.0 (C6);
+  PROBLEM:
+    This omits the exception the lock states. Lock §9.3 declares PIN-1 to PIN-43 as Code's readings "Except, as at lock
+    §10, what R2 2 made the seat's: within PIN-9 the pause raised at a STOP and its route, and within PIN-10 that pause,
+    the end look's reuse ..., its route, and the V2 refusal".
+  CORRECTION:
+    the 43-entry register as Code's readings, strikable until LOCK v1.0 (C6), except what round-2 item 2 made the seat's
+    within PIN-9 and PIN-10 (the pause at a STOP, the reuse, the route and the V2 refusal);
+--- (missing-disclosure)
+  QUOTE:
+    called every PIN Code's strikable reading.
+  PROBLEM:
+    Incomplete account of the defect. Review finding #24 (confirmed, substantive) quotes the first header: "Each PIN is
+    Code's reading, strikable by the seat until LOCK v1.0 at the cost Code states (the seat's C6)". The header had two
+    faults. It labelled as Code's the readings that R1 E1 and R2 2 made the seat's, and it credited the seat's C6 with
+    an extension that the lock calls Code's. The entry discloses only the first.
+  CORRECTION:
+    said of all 313 PINs "Each PIN is Code's reading, strikable by the seat until LOCK v1.0 at the cost Code states (the
+    seat's C6)". It labelled the readings R1 E1 and R2 2 made the seat's as Code's, and it credited the seat's C6 with
+    an extension that is Code's (review finding #24).
+--- (quote-inexact)
+  QUOTE:
+    Eight texts still call the STOP's pause or its route "Code's reading, flagged".
+  PROBLEM:
+    The quoted string is not character-exact for all eight texts. They read "Code's reading, flagged for the seat"
+    (m_analyze.py:2010, :2505; stages.py:2298), "Code's reading of C3, flagged for the seat" (m_analyze.py:2515–2516;
+    stages.py:2492, :2514), "Code's reading for a STOP, flagged" (stages.py:3993–3994), and "(Code's reading of C3)"
+    with no "flagged" at all (stages.py:4280).
+  CORRECTION:
+    Eight texts still call the STOP's pause or its route Code's reading, seven of them flagged for the seat (lock §8.5
+    lists them).
+--- (ambiguous / internal-inconsistency)
+  QUOTE:
+    **Stale texts left unamended (no hash moves).**
+  PROBLEM:
+    This item sits under the heading "Flagged for the seat and the PI (in the lock, not settled by it)", but its own
+    text says "All are answered by round-2 item 2" and "The lock records each answer beside it". The lock records these
+    texts as answered (§8.5: "this lock records that the flag is answered by item 2"), not as open. The heading
+    contradicts the item.
+  CORRECTION:
+    Move this item out of "Flagged for the seat and the PI" into its own bullet: "**Recorded, not amended (no hash
+    moves; Code's choice).**"
+--- (overclaim)
+  QUOTE:
+    which is step 15's analyzer round.
+  PROBLEM:
+    This states a prediction as fact. The lock (§§0, 11.8) says only "the first revision that moves a hash". A C6 strike
+    before v1.0 would move the analyzer sooner (lock §9.6), and so would an edit under valence_core/m at a stage step
+    (lock §11.1). Step 15 is only R2 3's schedule.
+  CORRECTION:
+    the first revision that moves a hash: on R2 3's schedule, step 15's analyzer round, unless a C6 strike or a package
+    edit moves a hash sooner (lock §§9.6, 11.1).
+--- (attribution / ambiguous)
+  QUOTE:
+    v0.2 and v1.0 are meant to amend this file and keep the v0.1 text below them.
+  PROBLEM:
+    The passive "are meant to" reads as a settled design. The lock calls it "Code's intended form" (§0), and that form
+    stays open until the first revision that moves a hash (§11.8).
+  CORRECTION:
+    Code's intended form (lock §0) is that v0.2 and v1.0 amend this file and keep the v0.1 text below them; that form is
+    open.
+--- (ambiguous)
+  QUOTE:
+    so after a revision check (f) and PIN-14 could not tell a superseded hash
+  PROBLEM:
+    Without a comma this misparses as "a revision check (f)". It is also imprecise: only a revision that names a new
+    analyzer or package hash creates the problem (lock §11.8: "Once a revision names a new analyzer or package"). As R2
+    plans v0.2, it moves no hash.
+  CORRECTION:
+    so once a revision names a new analyzer or package hash, check (f) and PIN-14 could not tell a superseded hash
+--- (missing-disclosure)
+  QUOTE:
+    **New in this lock** (lock §0; each marked as Code's, for the seat to read at step 10's ping):
+  PROBLEM:
+    The four items read as exhaustive, but the lock carries at least one more new Code application that §0's list omits.
+    Lock §8.1 says "the PENDING clause is OLMo's (Code's application)". Workflow 1's fix report flagged this under
+    'Other notes' ("Lock §0's list ... does not include it"), and the omission was never resolved. A reader would expect
+    it to be disclosed.
+  CORRECTION:
+    Add after the four items: "Lock §0 lists four. The lock also marks in place one Code application that §0 does not
+    list: that m:271's PENDING clause is OLMo's (lock §8.1; workflow 1's fix report, 'Other notes')."
+--- (misstates-lock)
+  QUOTE:
+    the truncation rule. Check (f) and PIN-14 are substring tests
+  PROBLEM:
+    Wrong section. The truncation rule is in lock §0 ("Conventions of this file", *Truncation.*, lock line 108), not in
+    §1, which has the hashes of record, the licence by file, PIN-14 and the Consequence.
+  CORRECTION:
+    Remove it from the §1 list and add a §0 line: "§0, header and status: the PI's word, the rulings, the four new Code
+    items, and the conventions, among them the truncation rule. Check (f) and PIN-14 are substring tests, so every other
+    analyzer or package hash is written as at most 16 hex plus '…'."
+--- (missing-disclosure)
+  QUOTE:
+    no unresolved markers remain.
+  PROBLEM:
+    Incomplete account of the check. Its SUMMARY reads "failures 0; notes 1". The one report-only note is that the
+    truncated `ea985c11…` at lock line 1184 resolves to no repo file: it is step 8's set-aside manifest, which the
+    record carries only by prefix. A reader of the check raw would expect the entry to mention it.
+  CORRECTION:
+    no unresolved markers remain. One report-only note: the truncated `ea985c11…` (lock §9.1, step 8's set-aside
+    manifest) resolves to no file in the repo, as expected.
+--- (ambiguous)
+  QUOTE:
+    or for the PI's direction, with the step-10 word.
+  PROBLEM:
+    Ambiguous. It is unclear whether "with the step-10 word" goes with the waiting or with the PI's direction. The lock
+    says the question "goes to the seat through the PI with the step-10 word", and that Code does not launch on an
+    edited driver until the seat answers or the PI directs otherwise.
+  CORRECTION:
+    The question goes to the seat through the PI with the step-10 word. Code does not launch on an edited driver until
+    the seat answers or the PI directs otherwise.
+--- (ambiguous)
+  QUOTE:
+    two file hashes outside both maps.
+  PROBLEM:
+    Vague: the entry neither names the files nor says which maps. Lock §5.2 places `qwen_mlx.py` "in neither map" and
+    `box_selftest_stub.py` "in neither closure", and §11.1 names them.
+  CORRECTION:
+    the sha256 of `valence_core/adapters/qwen_mlx.py` and `scripts/box_selftest_stub.py` (lock §5.2).
+--- (missing-disclosure)
+  QUOTE:
+    1 was not applied, because it conflicted with the record
+  PROBLEM:
+    Incomplete. The fix report says #8 was "NOT APPLIED as written", in conflict "with #2 and with the record", and that
+    "Its correct substance, that the record settles the before-commit case, is carried in #2's text."
+  CORRECTION:
+    1 (#8) was not applied as written, because it conflicted with #2 and the record: it would have left the driver's
+    sequencing "Code's to decide". Its correct substance (the record settles the before-commit case) is carried in #2's
+    text.
+============================================================ EVERY CLAIM (id, checker verdict -> final)
+  [H0-01] VERIFIED -> VERIFIED: Entry heading: 2026-10-10; LOCK-m-F0 v0.1 is PROPOSAL-m v1.11 §8 step 9, m:279
+  [H0-02] VERIFIED -> VERIFIED: The lock rests on the PI's word and on the design seat's two rulings of 2026-10-10
+  [H0-03] UNCHECKABLE -> UNCHECKABLE: 'COMMITTED' (header status)
+  [H0-04] VERIFIED -> VERIFIED: Q-F0's first lock is `LOCK-m-F0.md` at the root
+  [H0-05] VERIFIED -> VERIFIED: The lock's sha256 is 6a51de11972aaf2a5367f9ec1368ae38a539f1d33b5ecfa3fe47f0ac8d33227d
+  [H0-06] VERIFIED -> VERIFIED: The lock has 1,627 lines
+  [H0-07] VERIFIED -> VERIFIED: Code drafted it from the record
+  [H0-08] VERIFIED -> VERIFIED: The lock names the analyzer (66fb5214…7d5e) in full
+  [H0-09] VERIFIED -> VERIFIED: The lock names package_sha256 (5f646db6…d771) in full
+  [H0-10] VERIFIED -> VERIFIED: The lock names the analyzer's closure (a3bc7bb9…b22b) in full
+  [H0-11] VERIFIED -> VERIFIED: The lock names no other analyzer or package hash in full
+  [H0-12] IMPRECISE -> IMPRECISE: Every non-stub stage now licenses against it
+  [H0-13] VERIFIED -> VERIFIED: Nothing was run on a model, and no code changed
+  [H0-14] VERIFIED -> VERIFIED: Step 10 (G-TIME-F0) waits on the PI's word
+  [H0-15] VERIFIED -> VERIFIED: The lock flags one question for step 10: wiring the `time` driver edits
+  scripts/m_sessions.py, a G-SHAPE-F0 tooling file
+  [H0-16] VERIFIED -> VERIFIED: Code does not launch on an edited driver until the seat answers whether that re-runs
+  G-SHAPE-F0 (R1 D3), or the PI directs otherwise
+  [H0-17] UNCHECKABLE -> UNCHECKABLE: Stamp: date -u → Sun Oct 11 03:58:38 UTC 2026, first write
+  [H0-18] VERIFIED -> VERIFIED: The PI's chat message, quoted verbatim
+  [H0-19] IMPRECISE -> IMPRECISE: (chat, 2026-10-10, verbatim; not otherwise in the repo)
+  [H0-20] VERIFIED -> VERIFIED: Code committed the round-2 rulings verbatim at 9bf36ad (sha256 0e694e0a…25ae, equal to
+  the PI's)
+  [H0-21] VERIFIED -> VERIFIED: R2 item 1: "the register" is LOCK v0.1's G-SHAPE-F0 register
+  [H0-22] IMPRECISE -> IMPRECISE: R2 item 2: the pause at a STOP, its --adjudication route and the V2 refusal are
+  "accepted as built, post hoc, and made the seat's"
+  [H0-23] VERIFIED -> VERIFIED: R2 item 2: the texts that attribute them stand
+  [H0-24] VERIFIED -> VERIFIED: R2 item 3: the three unordered analyzer edits are built "in one analyzer round at step
+  15", and "None before LOCK v0.1"
+  [H0-25] VERIFIED -> VERIFIED: Note 126 is covered by build flag (d)
+  [H0-26] VERIFIED -> VERIFIED: Round 1 (8402174) had made the lock "Code's to draft and commit on the PI's word"
+  [H0-27] VERIFIED -> VERIFIED: The lock's §0 maps m:279's list to its sections
+  [H0-28] VERIFIED -> VERIFIED: §1 carries the hashes of record, the licence by file with checks (a)–(f), and the
+  analyzer's PIN-14
+  [H0-29] FAILS -> FAILS: §1 carries the truncation rule (Check (f) and PIN-14 are substring tests, so every other
+  analyzer or package hash is written as at most 16 hex plus "…")
+  [H0-30] VERIFIED -> VERIFIED: Check (f) and PIN-14 are substring tests; every other analyzer or package hash is
+  written as at most 16 hex plus "…"
+  [H0-31] VERIFIED -> VERIFIED: §2 carries G-PORT PASS 64/64, what Appendix D carries (E2, E4, E5), and E3's four seat
+  notes with f1's 28/56-vs-30/58 example recounted
+  [H0-32] VERIFIED -> VERIFIED: §3 carries every m:176 artifact: per-item n_eligible, k and changed positions; the
+  renders' sha256 and its serialization (E6); the roster assertion
+  [H0-33] VERIFIED -> VERIFIED: §3: the f1 0.12 replay (31 letters; condition (1) 4/16, (2) 16/16; the 0.12 artifact
+  behind the dose note, flag TRUE)
+  [H0-34] VERIFIED -> VERIFIED: §3: the covariate +.1406 beside f0's calib2 +.078, attributed as A7 rules
+  [H0-35] VERIFIED -> VERIFIED: §3: condition (4) PASS as graded, with the seat's A1 read of the 128 verbatim
+  [H0-36] VERIFIED -> VERIFIED: §3: the read of record as key-known with A9's three exposures and A8's corrections;
+  Code's operand-exclusion draft flagged for the seat
+  [H0-37] VERIFIED -> VERIFIED: §4: G-SHAPE-F0 PASS, 11,264 placements, 0 fired; register PIN-S1–S10 with B1, B2's
+  sentence verbatim and B3's limit (round-2 item 1); and D3
+  [H0-38] VERIFIED -> VERIFIED: §5: the keys of every Q-F0 stage, and module homes
+  [H0-39] VERIFIED -> VERIFIED: §6: the seven Q-F0 schedule files with their sha256, the campaign interleave rule, and
+  the gate-stage launch order (build pin 3, E6)
+  [H0-40] VERIFIED -> VERIFIED: §7: banner bytes, the Qwen scaffold set's sha (the e2a ban list 9a2f0744…, pinned per
+  m:261 and m:279), and the F0m verifier
+  [H0-41] VERIFIED -> VERIFIED: §8: nine bars with class, unit, p0, α, domain and cadence generated from
+  bars.QF0_BARS; m:271's conventions; the session-end rule under scaffold_absorption (E3(2)); the end look at a STOP
+  and round-2 item 2
+  [H0-42] VERIFIED -> VERIFIED: §9: G-ANL-F0's manifest 05132089…fe9b, the placeholder table b1cce4f8…4a0b, the
+  battery 384/384
+  [H0-43] IMPRECISE -> IMPRECISE: §9: the 43-entry register as Code's readings, strikable until LOCK v1.0 (C6)
+  [H0-44] VERIFIED -> VERIFIED: §9: C1–C5, C5's date meaning, C7's three settled inputs and its deferral; round-2 item
+  3, scheduled for step 15
+  [H0-45] IMPRECISE -> IMPRECISE: §10: R1 D1's table and diffs (the historical package hashes truncated), the import
+  closures, and the SCORING_STACK_FILES condition
+  [H0-46] VERIFIED -> VERIFIED: §10: the PIN index the lock declares, with ruling (h), E1 and E6 verbatim
+  [H0-47] VERIFIED -> VERIFIED: §11, what follows. §12, the record.
+  [H0-48] VERIFIED -> VERIFIED: The PIN index sha256 is 915245b5…d2ce
+  [H0-49] VERIFIED -> VERIFIED: The index holds 313 "PIN (Code, declared at LOCK v0.1" sites in 18 files
+  [H0-50] VERIFIED -> VERIFIED: Code extracted them mechanically from the committed blobs at 9bf36ad of
+  valence_core/m/*.py, scripts/m_sessions.py and scripts/m_analyze.py, using the step-4 index's rules
+  [H0-51] VERIFIED -> VERIFIED: The step-4 index had 194 sites
+  [H0-52] VERIFIED -> VERIFIED: The lock declares them on C6's terms
+  [H0-53] VERIFIED -> VERIFIED: Extending C6's terms from the 43-entry register to the index is Code's, and the lock
+  lists this among its new Code items
+  [H2-01] FAILS -> FAILS: l.80: "The exceptions are the sites the seat has made its own (R1 E1; R2 item 2)."
+  [H2-02] VERIFIED -> VERIFIED: l.80-81: Lock §10 names them, and the index's header says so.
+  [H2-03] VERIFIED -> VERIFIED: l.82: Code regenerated the index once before commit, to correct that header.
+  [H2-04] VERIFIED -> VERIFIED: l.82-83: The first version (`33e44f00…`) called every PIN Code's strikable reading.
+  [H2-05] VERIFIED -> VERIFIED: l.83: It [the first version] was never committed.
+  [H2-06] VERIFIED -> VERIFIED: l.84: New in this lock (lock §0; each marked as Code's, for the seat to read at step
+  10's ping).
+  [H2-07] VERIFIED -> VERIFIED: l.85: Code's reading of E5's "Accepted" as admitting the G-PORT entry's C3–C9 to
+  Appendix D under their items.
+  [H2-08] VERIFIED -> VERIFIED: l.86-88: The other three new items are Code's reading of "module homes", the extension
+  of C6's terms to the PIN index, and Code's operand-exclusion sentence (four in all).
+  [H2-09] VERIFIED -> VERIFIED: l.90: Values Code computed for the lock that no record yet carries are marked as such
+  and listed in lock §11.1.
+  [H2-10] VERIFIED -> VERIFIED: l.91: each stage's `schedule_sha256`
+  [H2-11] IMPRECISE -> IMPRECISE: l.92: a banner digest and the per-line banner hashes
+  [H2-12] VERIFIED -> VERIFIED: l.93: the Qwen `ban_sha` sha16 (`a934f1ad2b702245`)
+  [H2-13] VERIFIED -> VERIFIED: l.94: two file hashes outside both maps
+  [H2-14] VERIFIED -> VERIFIED: l.95-96: `_review` holds Code's spec and every report and finding, verbatim.
+  [H2-15] VERIFIED -> VERIFIED: l.97-98: Five section drafters, each computing every value with a tool, then an
+  assembler with a mechanical check script.
+  [H2-16] VERIFIED -> VERIFIED: l.99: Three read-only lenses (completeness, accuracy, attribution), with a strict
+  refuter on every finding.
+  [H2-17] VERIFIED -> VERIFIED: l.100: 33 findings, all confirmed. 28 were applied in full and 2 in part.
+  [H2-18] VERIFIED -> VERIFIED: l.101: 2 needed no change to the lock text.
+  [H2-19] VERIFIED -> VERIFIED: l.102-103: 1 was not applied, because it conflicted with the record: it would have
+  left the driver's sequencing "Code's to decide".
+  [H2-20] VERIFIED -> VERIFIED: l.104-105: Then a final claim-by-claim check in five section chunks, with strict
+  refuters and a values lens.
+  [H2-21] VERIFIED -> VERIFIED: l.106-107: It checked 497 claims: 475 verified, 20 corrections confirmed, 1 flag
+  refuted and 1 claim uncheckable (the PI's chat words).
+  [H2-22] VERIFIED -> VERIFIED: l.108: It made 14 values findings.
+  [H2-23] VERIFIED -> VERIFIED: l.109: All 20 corrections and all 14 values findings are applied.
+  [H2-24] FAILS -> FAILS: l.109-110: For five of them Code decided how; the review raw's section 6 lists the
+  decisions.
+  [H2-25] VERIFIED -> VERIFIED: l.110: The main one is the step-10 driver flag above.
+  [H2-26] VERIFIED -> VERIFIED: l.111-112: `_check` holds the script and its output, run on `LOCK-m-F0.md`.
+  [H2-27] VERIFIED -> VERIFIED: l.113: the binding hashes appear in full, and none of the 12 historical analyzer or
+  package hashes does
+  [H2-28] IMPRECISE -> IMPRECISE: l.114: every other 64-hex value equals the sha256 of the file it is attributed to
+  (59 matched)
+  [H2-29] VERIFIED -> VERIFIED: l.115-116: with `stages._committed` serving the lock's bytes,
+  `stages.licence_problems` returns [] for a non-stub `identity_extra` that names this file.
+  [H2-30] VERIFIED -> VERIFIED: l.116-117: Four negative controls are refused, among them a historical analyzer and a
+  package not named.
+  [H2-31] VERIFIED -> VERIFIED: l.118: the analyzer's PIN-14 emulation is True
+  [H2-32] VERIFIED -> VERIFIED: l.119: no unresolved markers remain.
+  [H2-33] IMPRECISE -> IMPRECISE: l.121-122: Code re-runs check (4) unpatched after the commit, on the committed file,
+  and records it in the step-10 entry.
+  [H2-34] VERIFIED -> VERIFIED: l.123: D3 at the lock's tree (`_d3`, 10/10 at `9bf36ad`).
+  [H2-35] VERIFIED -> VERIFIED: l.124: G-SHAPE-F0's sources (26) and tooling (2) maps equal the tree.
+  [H2-36] VERIFIED -> VERIFIED: l.125: The `valence_core` diff since `d092078` is `stages.py` alone, and it changes no
+  import line.
+  [H2-37] VERIFIED -> VERIFIED: l.126: `scripts/m_sessions.py` and `scripts/m_analyze.py` are unchanged since
+  `b7737ef`.
+  [H2-38] VERIFIED -> VERIFIED: l.127: The lock's commit adds nothing in either map. G-SHAPE-F0 does not re-run, and
+  the lock states the diff.
+  [H2-39] IMPRECISE -> IMPRECISE: l.128: heading "Flagged for the seat and the PI (in the lock, not settled by it)",
+  which also covers the 'Stale texts left unamended' bullet.
+  [H2-40] VERIFIED -> VERIFIED: l.130-131: `scripts/m_sessions.py`'s `time`/`id`/`qual`/`campaign` subcommands still
+  refuse ("not licensed until step {n}"). Wiring them is "a change to the driver at that step" (the step-4 build
+  entry).
+  [H2-41] VERIFIED -> VERIFIED: l.132: That file is in G-SHAPE-F0's tooling map, so the edit leaves the lock's tree.
+  [H2-42] VERIFIED -> VERIFIED: l.133-134: Whether D3's "any other difference re-runs G-SHAPE-F0 first" reaches a
+  post-lock tooling edit is the seat's to say.
+  [H2-43] IMPRECISE -> IMPRECISE: l.135-136: Launching without that answer would act on "no" before the seat gave it,
+  so Code waits for the seat's answer, or for the PI's direction, with the step-10 word.
+  [H2-44] IMPRECISE -> IMPRECISE: l.138: v0.2 and v1.0 are meant to amend this file and keep the v0.1 text below them.
+  [H2-45] VERIFIED -> VERIFIED: l.138-140: That text names the v0.1 analyzer and package in full, so after a revision
+  check (f) and PIN-14 could not tell a superseded hash from the hash of record. Checks (d) and (e) still tie the
+  offered hash to the running bytes.
+  [H2-46] IMPRECISE -> IMPRECISE: l.141-142: The remedy (one declared line form, or truncating the record) and the
+  file's form are open, and go to the seat at the first revision that moves a hash, which is step 15's analyzer round.
+  [H2-47] IMPRECISE -> IMPRECISE: l.144: Eight texts still call the STOP's pause or its route "Code's reading,
+  flagged".
+  [H2-48] VERIFIED -> VERIFIED: l.144-145: Five still call the analyzer half of the stage-start check Code's. All are
+  answered by round-2 item 2.
+  [H2-49] VERIFIED -> VERIFIED: l.146-147: Some PIN texts still say "flagged" on things the seat has accepted: build
+  flag (r) (the dispositions) and E1's extension.
+  [H2-50] VERIFIED -> VERIFIED: l.148-149: Bar row 5's texts (`bars.py`) describe G-ID over complete pairs, while G-ID
+  as built fails on any diverging pair (build flag (e), accepted as built).
+  [H2-51] VERIFIED -> VERIFIED: l.150: The lock records each answer beside it.
+  [H2-52] FAILS -> FAILS: l.150-151: Round-2 makes any correction a text fix "at the next hash-moving round".
+  [H2-53] VERIFIED -> VERIFIED: l.153-154: Step 10, G-TIME-F0 (two uncached sessions, m:280), on the PI's word,
+  launched only when the audit session is idle (F1), and after the driver question above is answered or directed.
+  [H2-54] VERIFIED -> VERIFIED: l.155: Then Code pings the seat with the forced rounds and this lock together.
+  [H2-55] VERIFIED -> VERIFIED: l.156: The OLMo track still waits for a pod go and the runpod MCP's re-authorisation.
+  [H2-56] UNCHECKABLE -> UNCHECKABLE: l.157-158: Committed: `LOCK-m-F0.md`; the PIN index; the check, D3 and review
+  raws; this entry; and this entry's values-check raw (`_valuescheck`, both passes).
+
+####################################################################################################
+PASS 2: claims 139, verified 129, confirmed corrections 8, refuted flags 0, uncheckable 2, values findings 15
+####################################################################################################
+============================================================ CONFIRMED CORRECTIONS
+--- [H0-13] IMPRECISE
+  CLAIM:
+    '...and no other analyzer or package hash.' (l.5–6; the revision dropped the earlier 'in full')
+  REFUTER'S EVIDENCE:
+    The checker's verdict stands: the claim is ambiguous, and one natural reading of it is false.
+    
+    **Entry text.** Lines 5–6 of entry_lock.md now read: "It names in full the analyzer (`66fb5214…7d5e`),
+    `package_sha256` (`5f646db6…d771`) and the analyzer's closure (`a3bc7bb9…b22b`), and no other analyzer or package
+    hash." The earlier draft, entry_lock_v1.md lines 5–6, ended "...and no other analyzer or package hash in full." Pass
+    1 marked that wording VERIFIED (vc_entry_p1.json, H0-11). None of pass 1's 20 values findings asked for "in full" to
+    be dropped.
+    
+    **Lock facts.** LOCK-m-F0.md has sha256 136cbdcb…647b and 1,629 lines. I extracted every 64-hex string in it
+    independently.
+    - The three binding hashes each appear in full twice:
+      - 66fb5214…7d5e at lines 141 and 1176
+      - 5f646db6…d771 at lines 142 and 1309
+      - a3bc7bb9…b22b at lines 143 and 1328
+    - I hashed every blob of scripts/m_analyze.py in git history:
+      - The five historical analyzers are 8e709582 (97d70bd), 0da9115b (185deb0), ac637232 (b8aa706), 24d44a3c (b62af85)
+    and 95f5fe33 (64df36b).
+      - None of them appears in full in the lock.
+    - Check (3) of the check raw attributes all 59 other 64-hex strings to files or derived values, with 0 unmatched.
+    None of them is a package hash. Check (2) prints "ok: none of them appears in full or with more than 16 hex" over 12
+    historical analyzer and package values.
+    - So the version with "in full" is true.
+    
+    **Why the absolute reading is false.** The lock does name other analyzer and package hashes, by 8-hex prefix:
+    - Packages:
+      - 96fbcacf… (lines 203 and 1304)
+      - 4b496587… (lines 356, 1305, 1306 and 1624)
+      - 06ab1430… (lines 613, 1185, 1307, 1308, 1325 and 1622)
+      - 750b24ed…, 12652f39… and 19edfcd0… (line 1322)
+    - Analyzers:
+      - ac637232…, 0da9115b… and 8e709582… (line 1323)
+      - 95f5fe33… (line 1324)
+      - 24d44a3c… (lines 1185, 1308, 1325 and 1620)
+    
+    Lock §10 names these on purpose: R1 D1 and m:279 ask that section to name them. The lock's own §0 Truncation
+    convention keeps the distinction explicit. It says "this file names in full only three hashes of record of those
+    kinds", and every other one is "written as at most its first 16 hex followed by "…"".
+    
+    **Why this is IMPRECISE, not right.** Read with "in full" carried across the "and", the sentence is true. Read
+    without it, it says the lock names no other analyzer or package hash at all, which is false and misstates the lock.
+    A reader of the entry cannot tell which reading is meant, so the claim is not exactly right. The entry's own line
+    133 keeps the qualifier ("none of the 12 historical analyzer or package hashes does"), and dropping it at lines 5–6
+    is what introduced the ambiguity.
+    
+    **The correction is checked.** The prefixes and suffixes are right: 66fb521488db…ef67d5e ends in 7d5e,
+    5f646db6…459d771 ends in d771, and a3bc7bb9…7919cb22b ends in b22b. The restored "in full" makes the sentence exact.
+    
+    **What the correction does not add, and why.** It does not say the others are "cited by prefix". The check's
+    forbidden set has 12 values, but the lock cites only 11 of them by prefix (the 10 in the check's NAMED list plus
+    95f5fe33). A blanket "the others are cited by prefix" could therefore be false for the twelfth.
+  CORRECTION:
+    It names in full the analyzer (`66fb5214…7d5e`), `package_sha256` (`5f646db6…d771`) and the analyzer's closure
+    (`a3bc7bb9…b22b`), and no other analyzer or package hash in full.
+--- [H0-37] IMPRECISE
+  CLAIM:
+    'As R2 directs, this entry records that "the attribution became true by ruling, not by the seat's words of this
+    morning"'
+  REFUTER'S EVIDENCE:
+    The checker is right. I re-checked it independently.
+    
+    The quote is exact. R2 (results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1_round2.md, sha256 0e694e0a…25ae, 37
+    lines) says at l.19: "...accurate as of today, so none is amended; the entry and this file record that the
+    attribution became true by ruling, not by the seat's words of this morning." The quoted substring appears exactly
+    once.
+    
+    "As R2 directs" is the problem. It is Code's framing, and R2 does not support it:
+    - **R2's sentence is a statement, not an order.** It says "the entry and this file record", present tense, and it
+    never names "the entry".
+    - **R2 uses "the entry" only twice, both in l.19.** The other use, "accepted as the entry lists them", can only mean
+    the D2 round's entry. That entry is at RESULTS.md l.24ff, committed at c464482. Its l.114–119 list the
+    PIN-3/-5/-6/-8/-9/-12/-14/-17/-42/-43, `SEAT_ROUTED` and `PER_PROPERTY_REFERENCE` paraphrases "for the seat to
+    check".
+    - **Elsewhere R2 always names that entry in full** ("the D2 round's entry", l.3, l.5, l.36).
+    - **The D2 entry already records the "not by the seat's words" half.** It calls the pause "Code's application of
+    m:330", the route "Code's reading (block item 2)" and the V2 refusal "Code's guard for C9(ii)". So R2's sentence
+    reads naturally as a description: that entry plus this file record the change.
+    - **R2's "What Code does now" (l.34–37) gives two directions.** Neither tells Code to record this sentence in a new
+    entry.
+    
+    Commit 9bf36ad added only the R2 file, no RESULTS entry, and RESULTS.md is unmodified at HEAD. So the entry under
+    check will be the first RESULTS entry since R2. That is true, but it does not make R2's "the entry" mean this entry.
+    
+    "As R2 directs" therefore does two things in Code's words: it decides which entry the seat meant, and it turns the
+    seat's statement into an order to this entry. That is Code settling what belongs to the seat. Pass 1's values
+    finding introduced the phrase; entry_lock_v1.md has no such sentence. The lock (LOCK-m-F0.md, sha256 136cbdcb…647b,
+    l.1166) quotes R2's sentence without the "directs" framing.
+    
+    The underlying fact holds: the entry does record the quoted sentence. So the verdict is IMPRECISE, not FAILS.
+    
+    The checker's own correction is accurate. The one below also says that R2 leaves the entry unnamed, so the reading
+    stays with the seat.
+  CORRECTION:
+    R2 says that "the entry and this file record that the attribution became true by ruling, not by the seat's words of
+    this morning", without naming the entry; this entry, the first since R2, records it.
+--- [H1-22] IMPRECISE
+  CLAIM:
+    l.125-127: for six of them (values findings 0, 1, 3, 4, 5 and 12) Code decided how; the review raw's section 6 lists
+    those decisions and a seventh, which put the regenerated PIN index's sha256 and header into lock §10.
+  REFUTER'S EVIDENCE:
+    The first half of the claim holds. Review raw section 6 (l.3156) lists Code's seven decisions, and section 7 maps
+    Decisions 1-6 to values findings 0, 1, 3, 4, 5 and 12 (l.5060-5074).
+    
+    The second half does not hold. Section 6's Decision 7 reads "(7) the PIN index's new sha256 and header reflected in
+    section 10." In LOCK-m-F0.md (sha256 136cbdcb...647b, 1,629 lines) the full value 915245b5d69f...2ce appears only
+    once, at lock §1 l.146, and that matches the PIN index file's own sha256. Lock §10 never states the value. It says
+    "sha256 as lock §1" twice:
+    - l.1348: "`results/raw/2026-10-10_m-lock-v0.1_pin-index.txt`, sha256 as lock §1, committed with this lock."
+    - l.1361: "Code regenerated it from the blobs with that header, byte-identical (sha256 as lock §1)."
+    
+    Decision 7 did not put the sha256 into §10:
+    - The pre-workflow-2 snapshot draft_lock_wf.md already had "sha256 as lock §1" in §10 (l.1296), with the old hash
+    33e44f00... in §1 (l.134).
+    - Code had moved §1 to 915245b5... before workflow 2 (review raw l.3: "regenerated the PIN index ... (sha256
+    33e44f00... -> 915245b5...) and updated the draft").
+    - Section 7 says what Decision 7 did change: "§10 now gives the header's extraction rules and terms, quoting its
+    exceptions clause and its 'LOCK-m-F0 v0.1 section 10 names the sites that carry them'." In §10 that change added the
+    Extraction/terms sub-bullets and "with that header ... (sha256 as lock §1)" to the regenerated line.
+    
+    So "put the regenerated PIN index's sha256 and header into lock §10" overstates what happened. The header's terms
+    went into §10. The sha256 only appears there as a pointer to §1.
+    
+    The checker's correction is accurate but drops the decision's own "sha256" wording. The replacement below keeps that
+    wording and says where the value actually stands.
+  CORRECTION:
+    For six of them (values findings 0, 1, 3, 4, 5 and 12) Code decided how. The review raw's section 6 lists those
+    decisions and a seventh: that the regenerated PIN index's new sha256 and header be reflected in lock §10. §10 now
+    gives the header's terms and cites the sha256 as lock §1's, the only place the full value appears.
+--- [H1-29] IMPRECISE
+  CLAIM:
+    l.136-137: the final check verified the attributions claim by claim.
+  REFUTER'S EVIDENCE:
+    The checker is right. The final check never saw one of the lock's full hashes, so the claim is IMPRECISE.
+    
+    (1) Review raw §7, the final fix report: "12 (Decision 6) APPLIED … the sha256 appears in full only in §12's new row
+    (0f4b625a… elsewhere)". The same report says "The two new full hashes (the stub and the D3 raw) both match their
+    files". That match was check_lock's, not a final-check claim.
+    
+    (2) In review raw §6 (lines 3154–5035), 0f4b625a has 0 hits. Its only hit in the review raw is l.5076, in §7. Values
+    finding 12 (§6 l.3995, "missing record for a stated check") asks for a §12 row but gives no hash.
+    
+    (3) E-69 verified "§12 raws table: 16 raws". The lock's raws table now has 17 rows; the extra one is the D3 row at
+    LOCK l.1590.
+    
+    (4) Every other full hash is covered:
+    - 915245b5 by A-56.
+    - c80d2e22, the stub's sha, was computed by C-33's refuter (§6 l.3433 and l.3453).
+    - 968e99a1 changed context after the check, but its new label text is the confirmed correction at §6 l.3483.
+    - a3fc7b45 by the claim at l.4540.
+    
+    (5) Diffing the 64-hex values of draft_lock_wf.md against LOCK-m-F0.md adds c80d2e22, 0f4b625a and 915245b5. The fix
+    agent says wf lacks 915245b5, which the checked draft already carried.
+    
+    (6) Check (3) does cover the D3 hash: "ok line 1590: 0f4b625a9b70cc30… = sha256 of results/raw/2026-10-10_m-
+    lock-v0.1_d3.txt". My shasum gives 0f4b625a9b70cc30c57ce4c01f89110d2136a85ab7184950b3ec37f31e77a5ff.
+    
+    (7) LOCK-m-F0.md hashes to 136cbdcb…647b and is byte-identical to the scratchpad draft_lock.md.
+    
+    The checker's correction is accurate, but "which its fix added" uses "its" for two different things, so I have
+    tightened the wording.
+  CORRECTION:
+    The final check verified the attributions claim by claim, except the D3 raw's sha256 (`0f4b625a…`), added when
+    values finding 12 was applied; check (3) matches it to that raw.
+--- [H1-31] IMPRECISE
+  CLAIM:
+    l.139-140: four negative controls are refused, among them a historical analyzer and a package the lock does not
+    name.
+  REFUTER'S EVIDENCE:
+    The four controls are defined in the check script (check raw l.334-349) and their output is at l.516-519. The run
+    was on the current lock: the output reports 136cbdcb9b6f7a1a… as the served bytes' sha256, and `shasum` gives LOCK-
+    m-F0.md = 136cbdcb…647b, 1,629 lines. The review raw (l.655-656, 3135, 5086) also says all four are refused.
+    
+    1. 'analyzer hash truncated in the lock text': the served lock bytes have A replaced by A[:16]+'…'. The offered
+    values are unchanged.
+    2. 'package hash truncated in the lock text': the served lock bytes have P (5f646db6…) replaced by P[:16]+'…'.
+    identity_extra still offers the current bound package P.
+    3. 'lock_sha256 not the served bytes': lock_sha256 = '0'*64.
+    4. 'historical analyzer offered': analyzer_sha256 = 24d44a3c61b06dd3…, the analyzer at b62af85 (check raw l.438). It
+    is refused on both the analyzer-file check and the lock-text check.
+    
+    "A historical analyzer" is right. "A package the lock does not name" is not. In the entry, "the lock" means LOCK-
+    m-F0.md, and that file names 5f646db6… in full (check (1) and the PIN-14 emulation pass). No other package is ever
+    offered. The control offers the bound package against a copy of the lock text with that hash truncated. The wording
+    reverses which side changes, and its parallel with "a historical analyzer offered" suggests a second foreign value
+    was offered. It is true only of the altered copy, which the sentence never mentions. Control 1 also goes
+    unmentioned, though "among them" allows that.
+  CORRECTION:
+    Four negative controls are refused: the analyzer's sha256 and, separately, the package's sha256 truncated to 16 hex
+    plus '…' in the served copy of the lock text; a `lock_sha256` (all zeros) that is not the sha256 of the served
+    bytes; and a historical analyzer (`24d44a3c…`, the analyzer at `b62af85`) offered as `analyzer_sha256`.
+--- [H1-49] IMPRECISE
+  CLAIM:
+    l.167-168: on R2 3's schedule that is step 15's analyzer round, unless a C6 strike or a package edit moves a hash
+    sooner (lock §§9.6, 11.1).
+  REFUTER'S EVIDENCE:
+    The checker is right. In entry l.165-168, "that" refers to "the drafting of the first revision that moves a hash".
+    Lock §11.8 (LOCK-m-F0.md l.1558-1559, sha256 136cbdcb...647b re-hashed) says the same: the choice "belongs to the
+    drafting of the first revision that moves a hash, and is put to the seat then".
+    
+    On R2 3's schedule (R2 l.25, quoted verbatim at lock §9.6 l.1275 and paraphrased at §11.5 l.1534-1535), that
+    revision is LOCK v1.0, and its drafting comes after the analyzer round: "Sequencing at step 15: the edit and the re-
+    run land, the LOCK v1.0 draft names the new analyzer sha256 before G-PWR or any other non-stub stage runs". R2 3's
+    "analyzer round" is the build of the three edits plus the G-ANL-F0 re-run ("All three are built in one analyzer
+    round at step 15"). It is not a lock revision, so the claim names the wrong event, even though both happen at step
+    15.
+    
+    No earlier revision moves a hash on schedule. v0.2 at step 13 is "Path; projections" (lock l.62, l.1517). The
+    step-10 driver edit does not move package_sha256 (§11.1, l.1496-1498).
+    
+    The "unless" clause holds:
+    - §9.6 l.1280: "A strike before LOCK v1.0 (C6) would move it sooner".
+    - §11.1 l.1498-1499: "An edit at that step under `valence_core/m` would move it instead, and every non-stub stage
+    would refuse until a lock revision names the new hash".
+    - §1 l.191 makes the same point for any later package edit.
+    
+    R2's short form ("at the point where a lock revision names it anyway") puts the two events at the same point, but R2
+    3's own sequencing puts the edit and re-run before the draft, so the claim's equation is loose.
+    
+    The checker's correction is close, but "the LOCK v1.0 draft" swaps "drafting" for "draft". My wording below keeps
+    "drafting" and R2 3's order.
+  CORRECTION:
+    On R2 3's schedule that is the drafting of LOCK v1.0 at step 15, which follows that step's analyzer round and names
+    the new analyzer sha256, unless a C6 strike or a package edit moves a hash sooner (lock §§9.6, 11.1).
+--- [H1-50] IMPRECISE
+  CLAIM:
+    l.169-170: no hash moves; leaving the stale texts unamended is Code's choice, because any edit moves package_sha256
+    or the analyzer's sha256 (lock §§5.2, 8.2, 10).
+  REFUTER'S EVIDENCE:
+    The checker is right. I re-checked everything independently, read-only.
+    
+    What holds:
+    - "No hash moves" matches R2's short form ("Nothing here moves a hash.") and the PI's word ("All three items on your
+    defaults; no hash moves.", lock §0 l.8–9).
+    - Editing these texts would move a hash. Lock §5.2 l.791 says "(left as written: editing it moves
+    `package_sha256`)". Lock §8.2 l.1105 says "The row text is left as written, because editing it moves
+    `package_sha256`." Lock §10 l.1433 says "The text is left as written, because editing it moves `package_sha256`
+    (Code's choice)."
+    
+    What fails: "leaving them is Code's choice".
+    1. **R2 fixes the hashes for v0.1.** R2's short form has LOCK v0.1 "hashing the re-run's manifest (`05132089…fe9b`),
+    the analyzer (`66fb5214…7d5e`) and the package (`5f646db6…d771`) verbatim". R2 item 3 adds "None before LOCK v0.1."
+    Every stale text is in the package (stages.py, bars.py, readrule.py, `__init__.py`) or the analyzer (m_analyze.py).
+    Editing any of them before the lock would go against R2 and the PI's word. Leaving them was therefore not Code's
+    free choice. I confirmed the analyzer at HEAD `9bf36ad` hashes to 66fb5214…7d5e, `valence_core/m` and the analyzer
+    are clean in the tree, and lock l.141–142 names both hashes in full.
+    2. **Code itself handed this decision over.** Code's round-2 block (`c464482`), on the texts left at `b7737ef`,
+    says: "Whether to amend them before the lock is the seat's, or the PI's, to say." Its item-2 default is that "PIN-9,
+    PIN-10 and the `stages.py` PINs are declared at LOCK v0.1 as they are". R2 then says "All three items are settled on
+    Code's defaults". So for the eight STOP texts, leaving them is a seat ruling made on Code's default, not Code's
+    choice.
+    3. **The lock does not support the general claim.** It calls this "Code's choice" only once, at §10 l.1433, for
+    readrule.py:150. Elsewhere it says the five analyzer-half texts (§1 l.182), P123's "(flagged)" (§8.1 l.1081) and the
+    eight STOP texts (§8.5 l.1166) "stand unamended, as no hash moves". The entry turns one parenthetical into a rule
+    for the whole set.
+    4. **This came in with pass 1.** The phrase is the correction from a pass-1 values finding (vc_entry_p1.json). Pass
+    1's own H2-52 refuter had warned: "Tagging all of them as Code's choice is an attribution the lock does not make."
+    5. **The cite is incomplete.** Lock §§5.2, 8.2 and 10 mention only `package_sha256`. For the analyzer the source is
+    lock §1 l.191: "A later edit to the package or the analyzer moves a hash this file names." The checker's correction
+    keeps the old cite for both hashes, and it paraphrases R2's "the analyzer … and the package" as "the re-run's
+    analyzer and package".
+    
+    Side note, outside this claim: the lock's own "(Code's choice)" at §10 l.1433 has the same problem, because R2's
+    "verbatim" fixes the package hash for v0.1. Fixing it would change the lock's sha256 (136cbdcb…647b, which I re-
+    hashed and confirmed).
+  CORRECTION:
+    l.169–170: "**Recorded in the lock, not flagged: stale texts left unamended.** No hash moves: R2 has LOCK v0.1 hash
+    the analyzer (`66fb5214…7d5e`) and the package (`5f646db6…d771`) "verbatim" ("Nothing here moves a hash"; the PI:
+    "no hash moves"), and any edit to these texts would move one of them (lock §1: "A later edit to the package or the
+    analyzer moves a hash this file names"; for `package_sha256`, lock §§5.2, 8.2, 10). So they stand as written; lock
+    §10 calls the `readrule.py:150` case "Code's choice"."
+--- [H1-57] IMPRECISE
+  CLAIM:
+    l.178-179: R2's "a text correction at the next hash-moving round" applies only to misparaphrases of the seat's
+    rulings in the analyzer's PIN texts.
+  REFUTER'S EVIDENCE:
+    I checked the claim independently and the checker's verdict holds.
+    
+    **What R2 says.** R2 is at sha256 0e694e0a...25ae, which I confirmed. The phrase "hash-moving" appears once in it,
+    at l.19:
+    
+    "The unordered paraphrases of the seat's rulings in the analyzer's PIN texts (PIN-3, -5, -6, -8, -9, -12, -14, -17,
+    -42, -43; `SEAT_ROUTED`; `PER_PROPERTY_REFERENCE`; the cite; the refusal message) are accepted as the entry lists
+    them; a misparaphrase found later is a text correction at the next hash-moving round, not a reason to open one."
+    
+    The entry's quoted fragment "a text correction at the next hash-moving round" is character-exact and occurs once. R2
+    says the rule of "a misparaphrase found later" among the listed paraphrases. Nowhere does R2 say the rule is limited
+    to that set, or that it excludes any of the stale texts. Its only other remark on texts concerns texts that say "the
+    seat's C9(ii)", "the seat's C3" or "the seat's D2": they are "accurate as of today, so none is amended".
+    
+    **What the lock says.** The lock is at sha256 136cbdcb...647b, which I confirmed. It only quotes the R2 sentence, at
+    §9.3 (l.1201). It makes no claim about the sentence's reach.
+    
+    **Where "only" came from.** Pass 1's values-finding correction read "applies to misparaphrases...". The revision at
+    entry l.178-179 changed it to "applies only to". In context, "only" tells the reader that R2's rule does not reach
+    the texts listed above it. That is a reading of the seat's sentence that the seat did not make.
+    
+    **Why that matters here.** Every stale text in the bullet is in stages.py, readrule.py or bars.py, except three,
+    which are analyzer PIN texts at HEAD 9bf36ad:
+    - m_analyze.py:2010, the inline PIN-9: "Code's reading, flagged for the seat"
+    - m_analyze.py:2505, the PIN-9 register text: the same wording
+    - m_analyze.py:2515-2516, the PIN-10 register text: "(Code's reading of C3, flagged for the seat; see PIN-9)"
+    
+    The two "stages.py" bullets (the five analyzer-half texts at :32, :543-544, :606-607, :614 and :3435) are confirmed
+    by lock l.180-182.
+    
+    PIN-9 is on R2's list. PIN-10 is not. The D2 round entry (RESULTS.md l.112) lists PIN-9 "(C3, C9(i))" among the
+    paraphrases R2 accepted. Whether PIN-9's now-stale "Code's reading, flagged for the seat" clause counts as "a
+    misparaphrase found later" is not settled by R2's words. The claim's "only", read in its context, settles it for the
+    seat.
+    
+    **The checker's evidence** checks out on every point: the quote is exact, the lock has the quote only at §9.3, pass
+    1 said "applies to", PIN-9 is on R2's list and PIN-10 is not.
+    
+    **One weakness in the checker's correction.** It says R2 "does not say whether it reaches the texts above". That is
+    literally true. But it leaves out that the open question concerns the three analyzer texts. The other texts sit
+    outside R2's stated domain, the analyzer's PIN texts. My replacement names the three.
+    
+    **Checks on my replacement.**
+    - "a misparaphrase found later" and "a text correction at the next hash-moving round" each occur exactly once in R2.
+    - The line numbers 2010, 2505 and 2516 were checked with `git show 9bf36ad:scripts/m_analyze.py`. The working tree
+    has no diff for this file.
+    - The lock's §8.5 locates the same three texts the same way.
+  CORRECTION:
+    R2's "a text correction at the next hash-moving round" is said of "a misparaphrase found later" among the
+    paraphrases of the seat's rulings in the analyzer's PIN texts that it lists (PIN-9 among them, PIN-10 not). R2 does
+    not say whether it reaches the stale texts above, three of which are analyzer PIN texts: PIN-9's at
+    m_analyze.py:2010 and :2505, and PIN-10's at :2516.
+============================================================ REFUTED FLAGS (the claim stood)
+  (none)
+============================================================ UNCHECKABLE
+--- [H0-05]
+    Heading status 'COMMITTED'
+  WHY:
+    This describes the coming commit. LOCK-m-F0.md is untracked now (git log on the path is empty). Per the task, this
+    is not failed for being in the future.
+--- [H0-26]
+    Stamp: date -u → Sun Oct 11 03:58:38 UTC 2026, first write
+  WHY:
+    Code's stamp. It is consistent with the record: review raw written 03:57:22 UTC, check raw 04:10:55 UTC, and
+    entry_lock_v1.md mtime 04:11:07 UTC. @@LAST@@ is a placeholder.
+============================================================ VALUES LENS
+--- (missing-disclosure / attribution)
+  QUOTE:
+    **New in this lock** (lock §0; each marked as Code's, for the seat to read at step 10's ping):
+  PROBLEM:
+    The five-item list repeats lock §0 and lock §11 item 1, but it leaves out a sixth Code application that the lock
+    marks in place. In lock §11 item 1, the 'Flagged for the seat' bullet rests the step-10 hold on "R1 A4's and A2's
+    going-forward rules, Code's application". A4's "starts after that gate's close entry, unless the PI's go names the
+    open items and the seat has said they cannot change the step's inputs" and A2's "a reading that departs from a
+    listed order is put to the seat before Code acts on it" are applied there to a driver edit made after the lock. The
+    final fix report says neither rule covers that case ("since neither rule speaks to this case directly"). This is the
+    same class as the PENDING clause that pass 1 caught and Code's last edit added. It came in when the final fix agent
+    applied values finding 0, which was after the final check, so no check has read it. As a result, lock §0's "Each
+    reading in it is one of the following, except the five new Code items" is false, and the bullet's own heading "(a
+    question, not a reading)" contradicts its text. The entry's driver flag ("would act on the answer "no" before the
+    seat gave it") also states the ground without saying it is Code's application.
+  CORRECTION:
+    Either (a) do what was done for the PENDING clause: add "Code's application of R1 A4's and A2's going-forward rules
+    to a driver edit after the lock, the ground for holding step 10 (lock §11, item 1)" to lock §0's list and to lock
+    §11 item 1's list, making six. Re-run check_lock.py, record the edit in the review raw's section 8, add the same
+    item to this list, and change "making five new Code items" to match. Or (b) leave the lock as it is and add after
+    the list: "Lock §0 lists five. The lock also marks in place a sixth Code application that §0's list omits: R1 A4's
+    and A2's going-forward rules applied to a driver edit after the lock, the ground for the step-10 hold (lock §11,
+    item 1). It entered with the final fix agent's application of values finding 0, after the final check." In both
+    cases, append to "would act on the answer "no" before the seat gave it" the words "(Code's application of R1 A4's
+    and A2's going-forward rules, lock §11, item 1)".
+--- (missing-disclosure / ambiguous)
+  QUOTE:
+    five new Code items, and re-ran the check.
+  PROBLEM:
+    This is ambiguous, and it does not say what verified the committed text. Because "the check" follows the 'Final
+    check' bullet, it reads as the claim-by-claim check. Review raw section 8 says only check_lock.py was re-run. More
+    importantly, the final check verified its 497 claims on the draft as it stood before that workflow's own fix agent
+    applied the 20 corrections and 14 values findings (review raw header: "then one fix agent applied every confirmed
+    correction and values finding"). The text that resulted (6a51de11…, then 136cbdcb… after Code's last edit) was
+    checked only by the script and by this entry's values passes. So "All 20 corrections and all 14 values findings are
+    applied" reads as verified, but the applied text was never re-checked claim by claim. The unlisted A4/A2 'Code's
+    application' is fix-agent text that no check read.
+  CORRECTION:
+    Replace "and re-ran the check." with "and re-ran the mechanical check (`check_lock.py`; the check raw)." After "-
+    All 20 corrections and all 14 values findings are applied." add: "The final check verified the draft before these
+    fixes. The fix agent's text (sha256 `6a51de11…`) and Code's last edit were checked only by `check_lock.py` and by
+    this entry's values-check passes, not claim by claim."
+--- (attribution)
+  QUOTE:
+    No hash moves; leaving them is Code's
+  PROBLEM:
+    Leaving these texts unamended at v0.1 was not Code's choice. R2's short form has LOCK v0.1 "drafted and committed on
+    the PI's word as the D2 round's entry describes it — hashing ... the analyzer (`66fb5214…7d5e`) and the package
+    (`5f646db6…d771`) verbatim". R2 3 adds "None before LOCK v0.1", and the PI's word is "no hash moves". Any edit would
+    have moved one of those hashes against both the seat's and the PI's direction. Calling it "Code's choice" gives Code
+    a discretion that the seat and the PI had already settled. It also suggests Code may amend these texts whenever it
+    likes. And no ruling schedules their correction, which the entry does not say. Lock §10 has the same defect at E1:
+    "(Code's choice)".
+  CORRECTION:
+    Replace the sentence with: "No hash moves. R2's short form has the lock hash the analyzer and the package
+    "verbatim", and the PI's word is "no hash moves", so none of these texts could be amended before this commit (any
+    edit moves `package_sha256` or the analyzer's sha256; lock §§5.2, 8.2, 10). No ruling schedules their correction."
+    Flag lock §10's "(Code's choice)" for the same correction.
+--- (code-adjudicating)
+  QUOTE:
+    applies only to misparaphrases of the seat's rulings in the analyzer's PIN texts.
+  PROBLEM:
+    The revision added "only"; pass 1's proposed text did not have it. With it, Code fixes the reach of the seat's
+    sentence. R2's "a misparaphrase found later is a text correction at the next hash-moving round" comes straight after
+    its sentence on the analyzer's PIN-text paraphrases. Whether it also reaches other texts that misstate the seat's
+    rulings is the seat's to say. Together with "Code's choice", this leaves the other stale texts with no route to
+    correction, and Code is the one who decided that.
+  CORRECTION:
+    R2's "a text correction at the next hash-moving round" is said of misparaphrases of the seat's rulings in the
+    analyzer's PIN texts. It does not name the texts above, and when they are corrected is open.
+--- (inaccurate)
+  QUOTE:
+    analyzer and a package the lock does not name.
+  PROBLEM:
+    This misdescribes the controls. The check raw's four negative controls are: (1) the analyzer hash truncated in the
+    lock text, (2) the package hash truncated in the lock text, (3) a lock_sha256 that is not the served bytes, and (4)
+    a historical analyzer (24d44a3c…) offered. No control offers a package the lock does not name. The package control
+    edits the lock text so that the real package goes unnamed. Pairing it with "a historical analyzer" implies a
+    historical-package control that does not exist.
+  CORRECTION:
+    Four negative controls are refused: the analyzer hash, and separately the package hash, truncated in the lock text;
+    a `lock_sha256` that is not the served bytes; and a historical analyzer (`24d44a3c…`) offered. The analyzer's PIN-14
+    emulation is True.
+--- (missing-disclosure / ambiguous)
+  QUOTE:
+    Code's intended form (lock §0) is that v0.2 and v1.0 amend this file and keep the v0.1 text below them.
+  PROBLEM:
+    The entry says the form is open and goes to the seat at the first revision that moves a hash, which on R2 3's
+    schedule is step 15. But v0.2 (step 13, m:282) is drafted and committed before then, and it moves no hash. Neither
+    the entry nor the lock says what form v0.2 takes. If v0.2 amends this file as Code intends, Code's act settles the
+    'open' form before the seat is asked. The v1.0 remedy, which includes "truncating the record", would then edit a
+    file that already holds two versions.
+  CORRECTION:
+    After "That form is open." add: "v0.2 (step 13, m:282) comes before that revision and moves no hash on R2 3's
+    schedule. Neither the lock nor this entry says what form it takes, and drafting it in Code's intended form would
+    settle the open form before the seat is asked. Code flags this for the seat with the lock at step 10's ping."
+--- (missing-disclosure)
+  QUOTE:
+    It was made after this entry's first values-check pass found a Code application
+  PROBLEM:
+    This leaves out that the omission had been found earlier and left unresolved. Workflow 1's fix report ('Other
+    notes') recorded that "the PENDING clause is OLMo's (Code's application)" was missing from §0's list, and neither
+    the final check nor its fix agent acted on it. Review raw section 8 discloses this ("workflow 1's fix report, "Other
+    notes", had noted it"). The entry presents the find as this entry's pass alone.
+  CORRECTION:
+    It was made after this entry's first values-check pass found a Code application that lock §0's list omitted: the
+    PENDING clause read as OLMo's. Workflow 1's fix report had already noted the omission ("Other notes"), and the final
+    check did not act on it.
+--- (missing-disclosure)
+  QUOTE:
+    answers all thirteen.
+  PROBLEM:
+    The count of stale texts reads as complete, but it stops at texts that call the pause or route "Code's reading" and
+    texts that call the analyzer half "Code's". At 9bf36ad, three battery texts in m_analyze.py call the V2 refusal
+    "Code's guard for the seat's C9(ii)" (:4832, :4855, :5044). R2 2 made that refusal the seat's ("accepted, declared
+    under PIN-10"). These are the same class as the five analyzer-half texts, which include a self-test label, yet
+    neither lock §8.5 nor the entry names them. The entry also cites lock §5.2 as a ground without naming §5.2's stale
+    text: `__init__.py`'s module list, which lacks gshape and testing.
+  CORRECTION:
+    After "Round-2 item 2 answers all thirteen." add: "Three battery texts also still call the V2 refusal "Code's guard
+    for the seat's C9(ii)" (`m_analyze.py:4832`, `:4855`, `:5044`); the lock does not list them. `__init__.py`'s step-4
+    module list, without `gshape` and `testing`, also stands (lock §5.2)."
+--- (code-reading)
+  QUOTE:
+    As R2 directs, this entry records that
+  PROBLEM:
+    This is Code's reading of R2. R2 writes "the entry and this file record that the attribution became true by
+    ruling...". In its next sentence it uses "the entry" to mean the D2 round's entry ("accepted as the entry lists
+    them"). It does not say which entry it means, and it is worded as a statement, not a direction to this entry.
+  CORRECTION:
+    R2 says "the entry and this file record that the attribution became true by ruling, not by the seat's words of this
+    morning". No entry came with `9bf36ad`, so this entry records it.
+--- (code-settling-PI's)
+  QUOTE:
+    The question goes to the seat through the
+  PROBLEM:
+    This states as settled a routing that belongs to the PI. The PI said only "Then step 10 on my word." Whether the
+    question reaches the seat with the step-10 word, before it, or not at all because the PI directs otherwise is the
+    PI's call. Code can only ask. The same wording recurs in the 'Flagged' section ("So the question goes to the seat
+    through the PI with the step-10 word").
+  CORRECTION:
+    Code asks the PI to put the question to the seat with the step-10 word, and Code does not launch on an edited driver
+    until the seat answers whether that edit re-runs G-SHAPE-F0 (R1 D3) or the PI directs otherwise. In the Flagged
+    section: "So Code asks the PI to route the question to the seat with the step-10 word, and does not launch on an
+    edited driver until the seat answers or the PI directs otherwise."
+--- (ambiguous)
+  QUOTE:
+    closure (`a3bc7bb9…b22b`), and no other analyzer or package hash.
+  PROBLEM:
+    The revision moved "in full" away from the end of this sentence. It can now be read as saying the lock names no
+    other analyzer or package hash at all. In fact it names ten, truncated, as check (2) lists: 24d44a3c…, 96fbcacf…,
+    4b496587…, 06ab1430…, ac637232…, 750b24ed…, 0da9115b…, 12652f39…, 8e709582… and 19edfcd0….
+  CORRECTION:
+    closure (`a3bc7bb9…b22b`). Every other analyzer or package hash it names (ten) is truncated to at most 16 hex plus
+    "…".
+--- (ambiguous / attribution)
+  QUOTE:
+    Code's package table, its update of the table in its round-1 block's D1, which R1 D1 accepted, with the
+  PROBLEM:
+    "which" can attach to "its update", which would credit the seat with accepting the updated table. R1 D1 accepted the
+    round-1 table (the D2 round entry: "D1 was accepted: Code's pre-LOCK table"). The update, meaning the re-run row and
+    the rows Code added for G-CAL completability, the superseded manifest and this lock, came after that acceptance.
+  CORRECTION:
+    Code's package table: its update, after G-ANL-F0's re-run, of the round-1 D1 table that R1 D1 accepted, with rows
+    Code added and the historical package hashes truncated;
+--- (overclaim)
+  QUOTE:
+    - The `valence_core` diff since `d092078` is `stages.py` alone, and it changes no import line.
+  PROBLEM:
+    This sits under "(10/10 at `9bf36ad`)". But the whole-`valence_core` diff, the import-line count and "unchanged
+    since `b7737ef`" (the next bullet) come from the D3 raw's header, computed beside the script, and are not among its
+    10 checks. The script's own diff check covers `valence_core/m` only.
+  CORRECTION:
+    - The `valence_core` diff since `d092078` is `stages.py` alone, and it changes no import line (the raw's header,
+    computed beside the script; the script's check is on `valence_core/m`). Mark the next bullet "(the raw's header)"
+    too.
+--- (ambiguous)
+  QUOTE:
+    **Step 10's driver (lock §11.1).**
+  PROBLEM:
+    The lock has no §11.1 or §11.8. It cites its own items as "lock §11, item 1" and "lock §11, item 8". In the same
+    entry, "lock §9.6" names a heading, so a reader looking for a heading 11.1 finds none. The entry uses "§11.1" four
+    times and "§11.8" once.
+  CORRECTION:
+    Replace "lock §11.1" with "lock §11, item 1" in all four places ("Lock §11.1 lists", "lock §0 and §11.1", "Step 10's
+    driver (lock §11.1)" and "(lock §§9.6, 11.1)" → "(lock §9.6; lock §11, item 1)"). Replace "lock §11.8" with "lock
+    §11, item 8".
+--- (missing-disclosure)
+  QUOTE:
+    the PIN index the lock declares;
+  PROBLEM:
+    Lock §0 says the PIN index, the proposal's sha256 in §1, and §§11–12 are Code's additions beyond m:279's list and
+    R1's. The entry lists them as the lock's contents without saying so. Declaring 313 readings is the largest scope
+    addition in the lock.
+  CORRECTION:
+    the PIN index the lock declares (Code's addition to m:279's and R1's lists, as lock §0 says; the step-4 build index
+    announced it); and "**§11, what follows; §12, the record** (both Code's additions)."
+============================================================ EVERY CLAIM (id, checker verdict -> final)
+  [H0-01] VERIFIED -> VERIFIED: Entry dated 2026-10-10 (l.1)
+  [H0-02] VERIFIED -> VERIFIED: LOCK-m-F0 v0.1 is PROPOSAL-m v1.11 §8 step 9
+  [H0-03] VERIFIED -> VERIFIED: m:279 is the lock's specification
+  [H0-04] VERIFIED -> VERIFIED: Made on the PI's word, on the design seat's two rulings of 2026-10-10
+  [H0-05] UNCHECKABLE -> UNCHECKABLE: Heading status 'COMMITTED'
+  [H0-06] VERIFIED -> VERIFIED: Q-F0's first lock is LOCK-m-F0.md at the root
+  [H0-07] VERIFIED -> VERIFIED: Lock sha256 136cbdcb9b6f7a1a7566a3888fb9f3b5385dc24a0840394b554236549849647b
+  [H0-08] VERIFIED -> VERIFIED: The lock has 1,629 lines
+  [H0-09] VERIFIED -> VERIFIED: Code drafted it from the record
+  [H0-10] VERIFIED -> VERIFIED: The lock names the analyzer 66fb5214…7d5e in full
+  [H0-11] VERIFIED -> VERIFIED: The lock names package_sha256 5f646db6…d771 in full
+  [H0-12] VERIFIED -> VERIFIED: The lock names the analyzer's closure a3bc7bb9…b22b in full
+  [H0-13] IMPRECISE -> IMPRECISE: '...and no other analyzer or package hash.' (l.5–6; the revision dropped the earlier
+  'in full')
+  [H0-14] VERIFIED -> VERIFIED: G-TIME-F0 (step 10) and G-ID-F0m (step 12) run under it
+  [H0-15] VERIFIED -> VERIFIED: Each names this file and its sha256 in its identity_extra
+  [H0-16] VERIFIED -> VERIFIED: The licence by file checks both at stage start (lock §§0–1)
+  [H0-17] VERIFIED -> VERIFIED: Qualification follows v0.2 and the campaign v1.0
+  [H0-18] VERIFIED -> VERIFIED: Each OLMo checkpoint has its own lock, which this file does not cover
+  [H0-19] VERIFIED -> VERIFIED: Nothing was run on a model, and no code changed
+  [H0-20] VERIFIED -> VERIFIED: Step 10 (G-TIME-F0) waits on the PI's word
+  [H0-21] VERIFIED -> VERIFIED: The lock flags one question for step 10
+  [H0-22] VERIFIED -> VERIFIED: Wiring the `time` driver edits scripts/m_sessions.py
+  [H0-23] VERIFIED -> VERIFIED: scripts/m_sessions.py is a G-SHAPE-F0 tooling file
+  [H0-24] VERIFIED -> VERIFIED: The question goes to the seat through the PI with the step-10 word
+  [H0-25] VERIFIED -> VERIFIED: Code does not launch on an edited driver until the seat answers whether that edit re-
+  runs G-SHAPE-F0 (R1 D3) or the PI directs otherwise
+  [H0-26] UNCHECKABLE -> UNCHECKABLE: Stamp: date -u → Sun Oct 11 03:58:38 UTC 2026, first write
+  [H0-27] VERIFIED -> VERIFIED: The PI's message routing the round-2 rulings, quoted verbatim, dated chat 2026-10-10
+  [H0-28] VERIFIED -> VERIFIED: The message is in full nowhere else in the repo
+  [H0-29] VERIFIED -> VERIFIED: 9bf36ad's message quotes part of the PI's message
+  [H0-30] VERIFIED -> VERIFIED: The lock quotes part of the PI's message
+  [H0-31] VERIFIED -> VERIFIED: The review raw quotes part of the PI's message
+  [H0-32] VERIFIED -> VERIFIED: Code committed the round-2 rulings verbatim at 9bf36ad
+  [H0-33] VERIFIED -> VERIFIED: sha256 0e694e0a…25ae, the PI's figure
+  [H0-34] VERIFIED -> VERIFIED: Item 1: "the register" is LOCK v0.1's G-SHAPE-F0 register
+  [H0-35] VERIFIED -> VERIFIED: Item 2: the pause at a STOP (the reuse included), its --adjudication route and the V2
+  refusal are "Accepted as built, post hoc, and made the seat's by this ruling"
+  [H0-36] VERIFIED -> VERIFIED: Every text saying "the seat's C9(ii)", "the seat's C3" or "the seat's D2" over them,
+  or over the analyzer half of the stage-start check, is "accurate as of today, so none is amended"
+  [H0-37] IMPRECISE -> IMPRECISE: 'As R2 directs, this entry records that "the attribution became true by ruling, not
+  by the seat's words of this morning"'
+  [H0-38] VERIFIED -> VERIFIED: Item 3: the three unordered analyzer edits are built "in one analyzer round at step
+  15"; "None before LOCK v0.1"
+  [H0-39] VERIFIED -> VERIFIED: Note 126 is covered by build flag (d)
+  [H0-40] VERIFIED -> VERIFIED: Round 1 (8402174) had made the lock "Code's to draft and commit on the PI's word"
+  [H0-41] VERIFIED -> VERIFIED: The lock's §0 maps m:279's list onto its sections
+  [H0-42] VERIFIED -> VERIFIED: §0 (header and status) carries the PI's word, the rulings, the five new Code items and
+  the conventions
+  [H0-43] VERIFIED -> VERIFIED: The truncation rule is among §0's conventions: check (f) and PIN-14 are substring
+  tests, so every other analyzer or package hash is written as at most 16 hex plus "…"
+  [H0-44] VERIFIED -> VERIFIED: §1: the hashes of record; the licence by file, checks (a)–(f); the analyzer's PIN-14
+  [H0-45] VERIFIED -> VERIFIED: §2: G-PORT PASS 64/64; what Appendix D carries (E2, E4, E5); E3's four seat notes,
+  with f1's 28/56-vs-30/58 example recounted
+  [H0-46] VERIFIED -> VERIFIED: §3 (every m:176 artifact): per-item n_eligible, k and changed positions; the renders'
+  sha256 and its serialization (E6); the roster assertion
+  [H0-47] VERIFIED -> VERIFIED: §3: the f1 0.12 replay, 31 letters; condition (1) 4/16 and (2) 16/16; the 0.12
+  artifact behind the dose note, flag TRUE
+  [H0-48] VERIFIED -> VERIFIED: §3: the covariate +.1406 beside f0's calib2 +.078, attributed as A7 rules
+  [H0-49] VERIFIED -> VERIFIED: §3: condition (4) PASS as graded, with the seat's A1 read of the 128 verbatim
+  [H0-50] VERIFIED -> VERIFIED: §3: the read of record as key-known, with A9's three exposures and A8's corrections
+  [H0-51] VERIFIED -> VERIFIED: §3: Code's draft of the operand-exclusion sentence, flagged for the seat
+  [H0-52] VERIFIED -> VERIFIED: §4 G-SHAPE-F0: PASS, 11,264 placements, 0 fired
+  [H0-53] VERIFIED -> VERIFIED: §4: the G-SHAPE-F0 register (PIN-S1–S10) with B1, B2's sentence verbatim and B3's
+  limit (round-2 item 1); and D3
+  [H0-54] VERIFIED -> VERIFIED: §5: the keys of every Q-F0 stage, and module homes
+  [H0-55] VERIFIED -> VERIFIED: §6: the seven Q-F0 schedule files with their sha256; the campaign interleave rule; the
+  gate-stage launch order (build pin 3, E6)
+  [H0-56] VERIFIED -> VERIFIED: §7: banner bytes; the Qwen scaffold set's sha (the e2a ban list 9a2f0744…, pinned per
+  m:261 and m:279); the F0m verifier
+  [H0-57] VERIFIED -> VERIFIED: §8: nine bars with class, unit, p0, α, domain and cadence, generated from
+  bars.QF0_BARS
+  [H0-58] VERIFIED -> VERIFIED: §8: m:271's common conventions; the session-end rule under scaffold_absorption
+  (E3(2)); the end look at a STOP, and round-2 item 2
+  [H0-59] VERIFIED -> VERIFIED: §9: G-ANL-F0's manifest 05132089…fe9b and the placeholder table b1cce4f8…4a0b
+  [H0-60] VERIFIED -> VERIFIED: §9: the battery, 384/384
+  [H0-61] VERIFIED -> VERIFIED: §9: the 43-entry register as Code's readings, strikable until LOCK v1.0 (C6), except
+  what round-2 item 2 made the seat's within PIN-9 and PIN-10 (the pause at a STOP, the reuse, the route and the V2
+  refusal)
+  [H0-62] VERIFIED -> VERIFIED: §9: C1–C5, C5's date meaning, C7's three settled inputs and its deferral; round-2 item
+  3, scheduled for step 15
+  [H0-63] VERIFIED -> VERIFIED: §10: R1 D1 verbatim; Code's package table, its update of the table in its round-1
+  block's D1, which R1 D1 accepted, with the historical package hashes truncated
+  [H0-64] VERIFIED -> VERIFIED: §10: the diffs; the import closures; the SCORING_STACK_FILES condition; the PIN index
+  the lock declares; ruling (h), E1 and E6 verbatim
+  [H0-65] VERIFIED -> VERIFIED: §11, what follows; §12, the record
+  [H0-66] VERIFIED -> VERIFIED: PIN index sha256 915245b5…d2ce
+  [H0-67] VERIFIED -> VERIFIED: It holds 313 "PIN (Code, declared at LOCK v0.1" sites in 18 files
+  [H0-68] VERIFIED -> VERIFIED: Code extracted them mechanically from the committed blobs at 9bf36ad of
+  valence_core/m/*.py, scripts/m_sessions.py and scripts/m_analyze.py, by the step-4 index's rules
+  [H0-69] VERIFIED -> VERIFIED: The step-4 index had 194 sites
+  [H0-70] VERIFIED -> VERIFIED: The lock declares them on C6's terms; extending those terms from the 43-entry register
+  to the index is Code's, one of the five new Code items
+  [H0-71] VERIFIED -> VERIFIED: The exceptions are the readings the seat has made its own (R1 E1; R2 item 2)
+  [H0-72] VERIFIED -> VERIFIED: They are the seat's wherever a site carries them; the rest of each such site stays on
+  C6's terms as Code extends them
+  [H0-73] VERIFIED -> VERIFIED: Lock §10 names the sites that carry them, and the index's header says so
+  [H0-74] VERIFIED -> VERIFIED: Code regenerated the index once before commit, to correct its header
+  [H0-75] VERIFIED -> VERIFIED: The first version was 33e44f00…, never committed
+  [H0-76] VERIFIED -> VERIFIED: The first version said of all 313 PINs: "Each PIN is Code's reading, strikable by the
+  seat until LOCK v1.0 at the cost Code states (the seat's C6)"
+  [H0-77] VERIFIED -> VERIFIED: That wording made the readings R1 E1 and R2 2 had made the seat's into Code's, and
+  credited the seat's C6 with an extension that is Code's (review finding #24)
+  [H1-01] VERIFIED -> VERIFIED: l.93: Code regenerated the PIN index once before commit, to correct its header.
+  [H1-02] VERIFIED -> VERIFIED: l.93-94: the first version was `33e44f00…` and was never committed.
+  [H1-03] VERIFIED -> VERIFIED: l.94-95: the first version said of all 313 PINs: "Each PIN is Code's reading,
+  strikable by the seat until LOCK v1.0 at the cost Code states (the seat's C6)".
+  [H1-04] VERIFIED -> VERIFIED: l.95-96: that wording made the readings R1 E1 and R2 2 had made the seat's into
+  Code's, and credited the seat's C6 with an extension that is Code's (review finding #24).
+  [H1-05] VERIFIED -> VERIFIED: l.97: New in this lock (lock §0); each is marked as Code's, for the seat to read at
+  step 10's ping.
+  [H1-06] VERIFIED -> VERIFIED: l.98: Code's reading of E5's "Accepted" as admitting the G-PORT entry's C3–C9 to
+  Appendix D under their items.
+  [H1-07] VERIFIED -> VERIFIED: l.99: Code's reading of "module homes".
+  [H1-08] VERIFIED -> VERIFIED: l.100: the extension of C6's terms to the PIN index.
+  [H1-09] VERIFIED -> VERIFIED: l.101: Code's reading of m:271's PENDING clause as OLMo's (lock §8.1).
+  [H1-10] VERIFIED -> VERIFIED: l.102: Code's operand-exclusion sentence.
+  [H1-11] VERIFIED -> VERIFIED: l.104-108: lock §11.1 lists the values Code computed for the lock that no record yet
+  carries: each stage's schedule_sha256; a banner digest and the per-line banner hashes other than SESSION_BANNER's;
+  the Qwen ban_sha sha16; and the sha256 of qwen_mlx.py and box_selftest_stub.py (lock §5.2).
+  [H1-12] VERIFIED -> VERIFIED: l.107: the Qwen ban_sha sha16 is `a934f1ad2b702245`.
+  [H1-13] VERIFIED -> VERIFIED: l.109-110: the review raw holds Code's spec and every report and finding, verbatim.
+  [H1-14] VERIFIED -> VERIFIED: l.111-112: five section drafters, each computing every value with a tool, then an
+  assembler with a mechanical check script.
+  [H1-15] VERIFIED -> VERIFIED: l.113-114: three read-only lenses (completeness, accuracy, attribution), a strict
+  refuter on every finding; all 33 findings confirmed.
+  [H1-16] VERIFIED -> VERIFIED: l.115: 28 were applied in full, and 2 in part.
+  [H1-17] VERIFIED -> VERIFIED: l.116: 2 needed no change to the lock text.
+  [H1-18] VERIFIED -> VERIFIED: l.117-119: 1 (#8) was not applied as written because it conflicted with #2 and the
+  record: it would have left the driver's sequencing "Code's to decide"; its correct substance (the record settles the
+  before-commit case) is carried in #2's text.
+  [H1-19] VERIFIED -> VERIFIED: l.120-121: final check: an independent claim-by-claim check in five section chunks,
+  with strict refuters and a values lens.
+  [H1-20] VERIFIED -> VERIFIED: l.122-123: 497 claims: 475 verified, 20 corrections confirmed, 1 flag refuted, 1
+  uncheckable (the PI's chat words); plus 14 values findings.
+  [H1-21] VERIFIED -> VERIFIED: l.124: all 20 corrections and all 14 values findings are applied.
+  [H1-22] IMPRECISE -> IMPRECISE: l.125-127: for six of them (values findings 0, 1, 3, 4, 5 and 12) Code decided how;
+  the review raw's section 6 lists those decisions and a seventh, which put the regenerated PIN index's sha256 and
+  header into lock §10.
+  [H1-23] VERIFIED -> VERIFIED: l.127: the main one is the step-10 driver flag above.
+  [H1-24] VERIFIED -> VERIFIED: l.128-130: Code's last edit followed this entry's first values-check pass, which found
+  that lock §0's list omitted a Code application (the PENDING clause read as OLMo's). Code added it to lock §0 and
+  §11.1, making five new Code items, and re-ran the check; the review raw's section 8 records the edit.
+  [H1-25] VERIFIED -> VERIFIED: l.131-132: the check raw holds the script and its output, run on LOCK-m-F0.md.
+  [H1-26] VERIFIED -> VERIFIED: l.133: the binding hashes appear in full, and none of the 12 historical analyzer or
+  package hashes does.
+  [H1-27] VERIFIED -> VERIFIED: l.134-135: every other 64-hex value matched (59, 0 unmatched): 44 as the sha256 of a
+  file named in its paragraph, 15 as values the script derives.
+  [H1-28] VERIFIED -> VERIFIED: l.135-136: the check does not test which label a value sits under; review finding #16
+  confirmed this, and its stricter form was not applied.
+  [H1-29] IMPRECISE -> IMPRECISE: l.136-137: the final check verified the attributions claim by claim.
+  [H1-30] VERIFIED -> VERIFIED: l.138-139: with stages._committed serving the lock's bytes, stages.licence_problems
+  returns [] for a non-stub identity_extra that names this file.
+  [H1-31] IMPRECISE -> IMPRECISE: l.139-140: four negative controls are refused, among them a historical analyzer and
+  a package the lock does not name.
+  [H1-32] VERIFIED -> VERIFIED: l.140: the analyzer's PIN-14 emulation is True.
+  [H1-33] VERIFIED -> VERIFIED: l.141: no unresolved markers remain.
+  [H1-34] VERIFIED -> VERIFIED: l.141-142: one report-only note: the truncated `ea985c11…` (lock §9.1, step 8's set-
+  aside manifest) resolves to no file in the repo, as expected.
+  [H1-35] VERIFIED -> VERIFIED: l.143-144: after the commit, Code re-runs check (4) with _committed unpatched on the
+  committed file and records the result in the step-10 entry.
+  [H1-36] VERIFIED -> VERIFIED: l.145: D3 at the lock's tree: the D3 raw, 10/10 at `9bf36ad`.
+  [H1-37] VERIFIED -> VERIFIED: l.146: G-SHAPE-F0's sources (26) and tooling (2) maps equal the tree.
+  [H1-38] VERIFIED -> VERIFIED: l.147: the valence_core diff since d092078 is stages.py alone, and it changes no
+  import line.
+  [H1-39] VERIFIED -> VERIFIED: l.148: scripts/m_sessions.py and scripts/m_analyze.py are unchanged since b7737ef.
+  [H1-40] VERIFIED -> VERIFIED: l.149: the lock's commit adds nothing in either map; G-SHAPE-F0 does not re-run, and
+  the lock states the diff.
+  [H1-41] VERIFIED -> VERIFIED: l.152-153: m_sessions.py's time, id, qual and campaign subcommands still refuse ("not
+  licensed until step {n}").
+  [H1-42] VERIFIED -> VERIFIED: l.153: wiring them is "a change to the driver at that step" (the step-4 build entry).
+  [H1-43] VERIFIED -> VERIFIED: l.154: that file is in G-SHAPE-F0's tooling map, so the edit moves it off the lock's
+  tree.
+  [H1-44] VERIFIED -> VERIFIED: l.155-156: whether D3's "any other difference re-runs G-SHAPE-F0 first" reaches a
+  tooling edit made after the lock is the seat's to say.
+  [H1-45] VERIFIED -> VERIFIED: l.157-159: launching on the edited driver without re-running G-SHAPE-F0 would act on
+  the answer "no" before the seat gave it; so the question goes to the seat through the PI with the step-10 word, and
+  Code does not launch on an edited driver until the seat answers or the PI directs otherwise.
+  [H1-46] VERIFIED -> VERIFIED: l.161-162: Code's intended form (lock §0) is that v0.2 and v1.0 amend this file and
+  keep the v0.1 text below them; that form is open.
+  [H1-47] VERIFIED -> VERIFIED: l.163-165: the v0.1 text names the v0.1 analyzer and package in full; once a revision
+  names a new analyzer or package hash, check (f) and PIN-14 could not tell a superseded hash from the hash of record;
+  checks (d) and (e) still tie the offered hash to the running bytes.
+  [H1-48] VERIFIED -> VERIFIED: l.166-167: the remedy (one declared line form, or truncating the record) and the
+  file's form go to the seat at the drafting of the first revision that moves a hash.
+  [H1-49] IMPRECISE -> IMPRECISE: l.167-168: on R2 3's schedule that is step 15's analyzer round, unless a C6 strike
+  or a package edit moves a hash sooner (lock §§9.6, 11.1).
+  [H1-50] IMPRECISE -> IMPRECISE: l.169-170: no hash moves; leaving the stale texts unamended is Code's choice,
+  because any edit moves package_sha256 or the analyzer's sha256 (lock §§5.2, 8.2, 10).
+  [H1-51] VERIFIED -> VERIFIED: l.171-172: eight texts still call the STOP's pause or its route Code's reading, seven
+  of them flagged for the seat (lock §8.5 lists them).
+  [H1-52] VERIFIED -> VERIFIED: l.172: five texts still call the analyzer half of the stage-start check Code's.
+  [H1-53] VERIFIED -> VERIFIED: l.172-173: round-2 item 2 answers all thirteen.
+  [H1-54] VERIFIED -> VERIFIED: l.174-175: some PIN texts still say "flagged" on things the seat has accepted: build
+  flag (r) (the dispositions) and E1's extension.
+  [H1-55] VERIFIED -> VERIFIED: l.176-177: bar row 5's texts (bars.py) describe G-ID over complete pairs, while G-ID
+  as built fails on any diverging pair (build flag (e), accepted as built).
+  [H1-56] VERIFIED -> VERIFIED: l.178: the lock records each answer beside the text.
+  [H1-57] IMPRECISE -> IMPRECISE: l.178-179: R2's "a text correction at the next hash-moving round" applies only to
+  misparaphrases of the seat's rulings in the analyzer's PIN texts.
+  [H1-58] VERIFIED -> VERIFIED: l.181: step 10, G-TIME-F0 (two uncached sessions, m:280), on the PI's word.
+  [H1-59] VERIFIED -> VERIFIED: l.181-182: it launches only when the audit session is idle (F1), and only once the
+  driver question above is answered or directed.
+  [H1-60] VERIFIED -> VERIFIED: l.183: then Code pings the seat with the forced rounds and this lock together.
+  [H1-61] VERIFIED -> VERIFIED: l.184: the OLMo track still waits on a pod go and on re-authorising the runpod MCP.
+  [H1-62] VERIFIED -> VERIFIED: l.185-186: committed: LOCK-m-F0.md; the PIN index; the check, D3 and review raws; this
+  entry; and this entry's values-check raw (both passes).
