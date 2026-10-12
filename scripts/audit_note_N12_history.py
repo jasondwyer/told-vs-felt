@@ -732,6 +732,9 @@ TRIAGE16 = {
     # ssh_port `len4:3e1884b5`, Code's triage (release fix round 3, 2026-10-12): results/raw/2026-10-12_note-N12-history-release.md:657
     '3e1884b53656e0d4': ('FALSE-POSITIVE', "the length of the three declared C2PA manifests (C2PA_MANIFESTS), printed inside their redacted forms ('[len N]') on the high-entropy line of this script's own release raw, a line SSH_LINE_RE matches; a length, not a port",
                          True, 'Code, release fix round 3, read in context'),
+    # ssh_port `len4:8fd23811`, Code's triage (after the tag, 2026-10-12): results/raw/2026-10-12_note-N12-gitleaks-release-run1.md:64
+    '8fd238119777a31e': ('FALSE-POSITIVE', "the count of historical versions that gitleaks' first release run scanned as text copies ('their N historical versions as copies'), on its Outcome line, which SSH_LINE_RE matches through the G-PORT file names in its list of paths; a count, not a port",
+                         True, 'Code, after the tag, read in context'),
     # id-shape sweep, Code's triage (round 5): two tokens first committed in 09c3a8c that the pre-flip raw's dump
     # does not print (the dump has no sweep table)
     'a15c50fd9bb3ffdf': ('FALSE-POSITIVE', "a piece of the content script's synthetic self-test fixture (string pieces "

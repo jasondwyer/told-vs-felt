@@ -54,6 +54,10 @@ Writes only --out (default results/raw/2026-10-08_note-N11-smoke.txt). For a
 fixed --ref commit, interpreter and machine state, the raw regenerates
 byte-for-byte apart from the header lines its own header names.
 No model is loaded; nothing is installed or downloaded.
+
+Release (2026-10-12): when --ref names a tag present in the fresh clone that resolves to the
+checked-out commit (the release run, --ref note-2026-10-v1), note 2, the run-identity line and the
+verdict say so instead of 'provisional -- pre-tag'; every other run keeps the earlier wording.
 """
 
 from __future__ import annotations
@@ -2109,6 +2113,11 @@ def main(argv=None):
     o()
     _, tags_s, _ = sh(["git", "-C", clone, "tag", "-l"], env=genv)
     tags = set(x for x in tags_s.splitlines() if x)
+    # Release (2026-10-12): the run is at the release tag when --ref names a tag in the clone that resolves to h
+    ref_is_tag = False
+    if a.ref in tags:
+        _, rt_, _ = sh(["git", "-C", clone, "rev-parse", a.ref + "^{commit}"], env=genv)
+        ref_is_tag = rt_.strip() == h
     o("Tags in the clone: %s" % sorted(tags))
     _, rd, _ = sh(["git", "-C", clone, "show", "%s:README.md" % h], env=genv)
     rdl = rd.splitlines()
@@ -2453,13 +2462,21 @@ def main(argv=None):
          "%s@%s:%s" % (PREFLIGHT, PIN, "-".join(str(i) for i, _ in
                                                   (pfl[:1] + pfl[-1:])))
          if pfl else "?", lin_sent))
-    o("2. The block says 'clone the tag'. No release tag exists yet (its "
-      "name is the PI's; the clone's tags are %s). This run is at --ref = "
-      "%s, cloned from %s. It is therefore provisional. The block's pass is "
-      "evaluated by re-running this script with --ref <tag>, and, once the "
-      "repository is published, --source <published remote URL> (this "
-      "audit makes no network access, so the remote form is not exercised "
-      "here)." % (sorted(tags), h, a.source))
+    if ref_is_tag:
+        o("2. The block says 'clone the tag'. This run clones the release tag "
+          "%s (the PI's name; it resolves to %s), from %s; the clone's tags are "
+          "%s. Once the repository is published, a re-run with --source "
+          "<published remote URL> exercises the remote form (this audit makes "
+          "no network access, so the remote form is not exercised here)."
+          % (a.ref, h, a.source, sorted(tags)))
+    else:
+        o("2. The block says 'clone the tag'. No release tag exists yet (its "
+          "name is the PI's; the clone's tags are %s). This run is at --ref = "
+          "%s, cloned from %s. It is therefore provisional. The block's pass is "
+          "evaluated by re-running this script with --ref <tag>, and, once the "
+          "repository is published, --source <published remote URL> (this "
+          "audit makes no network access, so the remote form is not exercised "
+          "here)." % (sorted(tags), h, a.source))
     o("3. The block asks that no path in the note points outside the clone. "
       "%s is not present at the repository root or in archive/ (this "
       "machine's working tree), so only README.md is checked here." % NOTE
@@ -2772,7 +2789,18 @@ def main(argv=None):
     allok = all(ok for _, ok in pass_conj)
     fixes = [n for n, ok in fix_items if not ok]
     o()
-    if allok:
+    if allok and ref_is_tag:
+        o("N11: PASS at the release tag %s (%s); cloned from %s, not from the "
+          "published remote (the repository is not public at this run); and "
+          "resting on the design seat and the PI accepting N/N (here %d/%d) in "
+          "place of the block's 103/103 (note 1), which is Code's reading, not "
+          "a ruling. The suite prints %d/%d from the fresh clone with no read "
+          "outside the clone apart from the interpreter's own installation and "
+          "its own temp files.%s"
+          % (a.ref, h, a.source, sp[0], sp[1], sp[0], sp[1],
+             "" if not fixes else " README fix required: %s." %
+             "; ".join(fixes)))
+    elif allok:
         o("N11: PASS at %s, provisional -- pre-tag (no release tag exists "
           "yet); cloned from %s, not from the published remote; and resting "
           "on the design seat and the PI accepting N/N (here %d/%d) in place "
@@ -3412,8 +3440,9 @@ def main(argv=None):
                else "no (not made by this run, or --keep)"))
     o("- --ref %s; the source repository's HEAD at run time %s: %s. %s"
       % (h, head, "the same commit" if head == h else "a DIFFERENT commit",
-         "An interim, provisional re-run at the audit's latest commit, before "
-         "the tag; the block's pass is evaluated at --ref <tag> (note 2)."
+         ("The re-run at the release tag %s (note 2)." % a.ref) if ref_is_tag else
+         ("An interim, provisional re-run at the audit's latest commit, before "
+          "the tag; the block's pass is evaluated at --ref <tag> (note 2).")
          if head == h else ""))
     o("- Results here: suite %s; clone exit %d, checkout exit %d, clone "
       "HEAD equals --ref: %s; warning/error lines %d; tree clean after "
@@ -3423,7 +3452,7 @@ def main(argv=None):
       % ("%d/%d" % (sp[0], sp[1]) if sp else "NO SUMMARY", rc, rc2,
          "yes" if head_c == h else "NO", len(warn_lines),
          "yes" if clean_after_checkout else "NO", len({x[2] for x in outside}),
-         len(untr_read), "PASS (provisional)" if allok else "STOP"))
+         len(untr_read), ("PASS (at the release tag)" if ref_is_tag else "PASS (provisional)") if allok else "STOP"))
     if old is None:
         o("- Comparison with the committed raw at %s: not made (not "
           "readable)." % cmp_rev)
