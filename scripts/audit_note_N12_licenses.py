@@ -51,6 +51,37 @@ Outputs: results/raw/2026-10-08_note-N12-licenses.md and .json (the defaults of
 explicitly into DIR under its default basename).
 Usage: jlens-qwen36/.venv/bin/python scripts/audit_note_N12_licenses.py
        [--out MD] [--json-out JSON] [--out-dir DIR]
+
+Release run (the PI's answer of 2026-10-12, "Yes to all five; tag it"): the round-9 rule changes
+(two id entries, two id rules, host rules H1-H4) are applied as confirmed (question 2), and the
+outputs are NEW dated raws; the script refuses to write any path git already tracks:
+    jlens-qwen36/.venv/bin/python -B scripts/audit_note_N12_licenses.py \
+        --out results/raw/2026-10-12_note-N12-licenses-release.md \
+        --json-out results/raw/2026-10-12_note-N12-licenses-release.json
+Every statement about this repository's own license (section 5's statement, the section-6
+row, section 7 item 2, the pass line's clause) is computed from the tree at the commit read
+(root-level license texts identified by their opening lines, and LICENSING.md), not fixed
+text; the section-5 count rule RX_LF is unchanged. A text counts as this repository's license
+only when it is identified by its opening lines AND, where LICENSING.md is tracked, its sha256
+is listed there; any other root-level text goes to the PI to read, with the reason printed.
+The section-5 count lines state RX_LF's scope (exact name, optional alphabetic extension, any
+depth, NOTICE included) and name any root-level license text that rule does not match.
+Release (L3): "this audit's own files" is one rule, RX_AUDIT_FILE: every audit raw
+(results/raw/*_note-*, any date) and every scripts/audit_note_*.py. The round-9 rules (H1-H3, the
+id rules) and section 2f's projection both use it, so the release raws committed after the tag
+are audit files like the 2026-10-08 ones. The confirmed rules are applied as worded, carrier by
+carrier: an id carried only by audit files that is a fragment of a recorded-read URL (WEB_READS),
+cut short by an excerpt window, is a known id (question 2's "fragments of recorded-read URLs");
+the owner part alone of this repository's id stays outside the prefix rule (its confirmed guard);
+a host carried only by audit files is
+classed (H3) when it is a listed host or a listed host cut short by an excerpt window. A
+document's allowed paths (DOC_HOSTS) and the Global Workspace paths are checked against every path
+of the host, as in round 9; a path outside them passes only when this audit's own files alone
+carry it and it is a proper prefix of an allowed path (an excerpt window's cut of it) -- Code's
+narrow reading of the confirmed rules, flagged for the PI. Anything else
+stays UNCLASSIFIED, for the PI (no new rule). Section 2f projects the sweeps over the audit files
+untracked on disk at the run, and a closing self-check projects this run's own two outputs; the
+combined verdict is printed in 2f, section 7 item 8 and the round-4 values-check row.
 """
 from __future__ import annotations
 
@@ -76,6 +107,11 @@ BLOCK_SHA = "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841"
 DEFAULT_MD = os.path.join(REPO, "results/raw/2026-10-08_note-N12-licenses.md")
 DEFAULT_JSON = os.path.join(REPO, "results/raw/2026-10-08_note-N12-licenses.json")
 OUT_MD, OUT_JSON = DEFAULT_MD, DEFAULT_JSON  # resolved from the arguments in main()
+# Release (L3; the rules the PI confirmed on 2026-10-12, question 2, read as worded): this audit's own files --
+# every audit raw (results/raw/*_note-*, any date) and every scripts/audit_note_*.py. One definition, used by the
+# round-9 rules and by section 2f's projection (which before this read only scripts/audit_note_* and the
+# 2026-10-08 raws).
+RX_AUDIT_FILE = re.compile(r"^(?:scripts/audit_note_[^/]*\.py|results/raw/[^/]*_note-[^/]*)$")
 HF_CACHE_QWEN = os.path.expanduser(
     "~/.cache/huggingface/hub/models--mlx-community--Qwen3.6-27B-4bit/refs/main")
 
@@ -795,6 +831,15 @@ def main() -> int:
             OUT_JSON = os.path.abspath(os.path.join(a.out_dir, os.path.basename(DEFAULT_JSON)))
     if OUT_MD == OUT_JSON:
         ap.error("--out and --json-out name the same file")
+    # release (the PI's answer of 2026-10-12): the release run writes NEW dated raws; a path git already tracks
+    # (e.g. this script's committed 2026-10-08 raws, the defaults) is refused, so a committed raw is never overwritten
+    for o_ in (OUT_MD, OUT_JSON):
+        if os.path.realpath(o_).startswith(os.path.realpath(REPO) + os.sep):
+            rel_ = os.path.relpath(os.path.realpath(o_), os.path.realpath(REPO))
+            if subprocess.run(["git", "-C", REPO, "ls-files", "--error-unmatch", "--", rel_],
+                              capture_output=True).returncode == 0:
+                ap.error(f"{rel_} is tracked by git; the release run writes new dated raws (pass --out and "
+                         f"--json-out)")
     stamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
     head = gtext("rev-parse", "HEAD").strip()
     R: dict = {"part": "N12-licenses", "code_stamp_utc": stamp, "commit_read": head,
@@ -886,8 +931,9 @@ def main() -> int:
       f"`results/raw/<date>_note-*`, `AUDIT-note-*`, `README-NOTE.md`): {n_since_audit}. "
       "Every count below is bound to the commit read. HEAD moves while the audit runs, and "
       "the release publishes whatever the refs hold when visibility changes, so this script is "
-      "to be re-run at the final pre-flip commit (the tag commit) and its counts re-checked; the "
-      "N12 scrub raw states that bound.")
+      "to be re-run at the final pre-flip commit (the commit the flip publishes: in the release "
+      "sequence, the post-tag commit that adds the release raws, not the tag commit) and its "
+      "counts re-checked; the N12 scrub raw states that bound.")
     P(f"- Block: `{BLOCK}`, sha256 `{sha256(blk)}`, {len(blk_lines)} lines "
       f"(routed as 8cd8a9ac...3841, 141 lines: {'MATCH' if blk_ok and len(blk_lines) == 141 else 'MISMATCH'})")
     P(f"- Item: N12(iv), block lines 80 (procedure) and 85 (pass: \"(iv) licenses recorded\"); "
@@ -1053,7 +1099,7 @@ def main() -> int:
     S1["trial_question_wrapped_line_pairs_at_locator_commit"] = {"commit": LOC, "pairs": tq_norm_loc}
     # this audit's own working files (untracked at the commit read) that carry the markers
     untracked = gtext("ls-files", "--others", "--exclude-standard", "-z").split("\0")
-    own = sorted(p for p in untracked if re.match(r"(scripts/audit_note_|results/raw/2026-10-08_note-)", p))
+    own = sorted(p for p in untracked if RX_AUDIT_FILE.match(p))
     own_fr, own_tq = [], []
     for p in own:
         try:
@@ -1079,11 +1125,16 @@ def main() -> int:
                      else "")
                   for f in tq_norm)
       + f"), so **{len(tq_files) + len(tq_norm)}** in all. These counts are over tracked files at "
-      f"the commit read. They exclude this audit's own untracked working files, of which "
-      f"{len(own_tq)} carry the trial question and {len(own_fr)} the framing marker at this run "
-      f"(this part's script and raw among them: "
-      f"{all(x in own_tq for x in ('scripts/audit_note_N12_licenses.py', 'results/raw/2026-10-08_note-N12-licenses.md'))}); "
-      f"committing them raises both counts.")
+      f"the commit read. They exclude this audit's own files untracked at the commit read "
+      f"({len(own)}, read from disk), of which {len(own_tq)} carry the trial question and "
+      f"{len(own_fr)} the framing marker at this run; "
+      + "; ".join(f"`{x_}` is " + ((f"tracked at the commit read (counted above: "
+                                    f"{x_ in tq_files or x_ in tq_norm})") if x_ in text else
+                                   (f"untracked (carries the trial question: {x_ in own_tq})" if x_ in own
+                                    else "absent"))
+                  for x_ in ('scripts/audit_note_N12_licenses.py', 'results/raw/2026-10-08_note-N12-licenses.md'))
+      + "; and this run's own two outputs, not on disk while it runs, of which @@L3S1OWN@@ "
+      f"(counted on the text written). Committing any of these raises the counts by as many.")
     P("")
     # tracked code that builds Macar prompts at run time from detection.py's constants
     MACAR_NAMES = {"MACAR_FRAMING", "TRIAL_QUESTION", "ACK", "COMPLETION_TEMPLATE", "build_prompt"}
@@ -2458,17 +2509,84 @@ def main() -> int:
     for b, t in hist_text.items():
         for k in ids_in(t):
             hist_ids[k].append(b)
-    def id_class(k: tuple) -> str:
+    # Round 9 (Code's rule changes; the PI confirmed them on 2026-10-12, "Yes to all five; tag it", question 2): ids the sweep extracts from
+    # this audit's own files once they are tracked. Two explicit entries and two mechanical rules (fragments of the
+    # recorded-read URLs; prefixes of this repository's id); every other id still needs a class.
+    R9_IDS: dict = {}     # id key -> the round-9 rule that classified it (only where the earlier rules did not)
+    R9_HOSTS: dict = {}   # host key -> the round-9 rule (H1-H4) that classified it
+    CLASS_R9 = {
+        "allenai/": ("the owner prefix of the brace list `huggingface.co/allenai/{...}` in this part's OLMo row "
+                     "(each id the list expands to is classified: row: OLMo)"),
+        "jasondwyer/jspace-lab.wiki": ("this repository's wiki (the pre-flip raw's `git ls-remote` probe; not "
+                                       "found); not a material"),
+    }
+    WR_IDS = ids_in(json.dumps(WEB_READS))   # the ids the URL patterns parse out of this part's recorded reads
+    THIS_REPO = "jasondwyer/jspace-lab"
+    THIS_OWNER = THIS_REPO.split("/")[0] + "/"
+    WR_URLS: list = []
+
+    def _wr_urls(o):
+        if isinstance(o, dict):
+            for v_ in o.values():
+                _wr_urls(v_)
+        elif isinstance(o, (list, tuple)):
+            for v_ in o:
+                _wr_urls(v_)
+        elif isinstance(o, str) and re.match(r"https?://", o):
+            WR_URLS.append(o)
+    _wr_urls(WEB_READS)
+    WR_URLS = sorted(set(WR_URLS))
+
+    def audit_only(carriers) -> bool:
+        # release (L3): every carrier is one of this audit's own files (RX_AUDIT_FILE)
+        return bool(carriers) and all(RX_AUDIT_FILE.match(c) for c in carriers)
+
+    def wr_fragment(v: str) -> str | None:
+        # release (L3): the recorded-read URL (WEB_READS) of which v is a path fragment, starting at a '/' of it
+        for u_ in WR_URLS:
+            if ("/" + v) in u_:
+                return u_
+        return None
+
+    def id_class(k: tuple, carriers=None) -> str:
         kind, v = k
         if kind == "arxiv":
             return ARXIV_ROWS.get(v, "cited paper; not a material row (this part did not search "
                                      "the record for passages quoted from it)")
-        return CLASS.get(v) or CLASS_BY_SHA.get(sha256(v.encode())) or "UNCLASSIFIED (Code to review)"
+        c_ = CLASS.get(v) or CLASS_BY_SHA.get(sha256(v.encode()))
+        if c_:
+            return c_
+        if CLASS_R9.get(v):
+            R9_IDS[k] = "id entry (CLASS_R9)"
+            return CLASS_R9[v]
+        if kind == "repo" and k in WR_IDS:
+            R9_IDS[k] = "id rule: a fragment of a recorded-read URL (WEB_READS)"
+            return ("a path fragment of a URL this part read (WEB_READS), which the URL pattern parses as an "
+                    "id; not a repository (the repository read is classified in its own row)")
+        # release (L3): the same rule, as worded ("fragments of recorded-read URLs"), for an id that only this audit's
+        # own files carry and that is a fragment of a recorded-read URL cut short by an excerpt window (e.g. a
+        # 40-character excerpt of the content screen ending inside `.../repos/WeZZard/jlens-qwen36`)
+        if kind == "repo" and audit_only(carriers) and wr_fragment(v):
+            R9_IDS[k] = "id rule: a fragment of a recorded-read URL (WEB_READS), cut short in this audit's own files"
+            return ("a fragment of a URL this part read (WEB_READS), cut short by an excerpt window in this audit's "
+                    "own files, which the URL pattern parses as an id; not a repository (the repository read is "
+                    "classified in its own row)")
+        if kind == "repo" and THIS_REPO.startswith(v) and len(v) > len(THIS_OWNER):
+            R9_IDS[k] = "id rule: a prefix of this repository's id"
+            return "this repository (its URL cut short by an excerpt window); not a material"
+        # release (L3 fix round): the owner part alone (`jasondwyer/`) is NOT classed -- the confirmed rule's guard
+        # (`len(v) > len(THIS_OWNER)`) excludes it, as round 9 wrote it; it goes to the PI below
+        if audit_only(carriers):
+            return ("UNCLASSIFIED (for the PI: carried only by this audit's own files, and no confirmed rule covers "
+                    "it -- not a fragment of this part's recorded-read URLs (WEB_READS), not a prefix of this "
+                    "repository's id longer than its owner part)")
+        return "UNCLASSIFIED (Code to review)"
     SW = []
     for k in sorted(set(head_ids) | set(hist_ids)):
         kind, v = k
         hs = sha256(v.encode())
-        cls = id_class(k)
+        id_carriers = set(head_ids.get(k, [])) | {c_ for b_ in hist_ids.get(k, []) for c_ in hist_blob_paths[b_]}
+        cls = id_class(k, id_carriers)
         shown = redform(v) if (kind == "repo" and v not in CLASS) else v
         if shown != v:
             REDACTED_IDS.append({"where": "section 2f, external-reference sweep",
@@ -2554,10 +2672,14 @@ def main() -> int:
                 "/research/global-workspace", "anthropic.com": "/research/global-workspace"}
     h_head: dict = defaultdict(set)
     h_paths: dict = defaultdict(set)
+    # release (L3): the URL paths each carrier itself carries (HEAD file, or every path of a historical blob), so a
+    # document's allowed paths are checked against that document's own paths, not against another carrier's
+    h_cpaths: dict = defaultdict(lambda: defaultdict(set))
     for p, t in text.items():
         for k, paths in hosts_in(t).items():
             h_head[k].add(p)
             h_paths[k] |= paths
+            h_cpaths[k][p] |= paths
     h_hist: dict = defaultdict(set)
     h_hist_paths: dict = defaultdict(set)
     for b, t in hist_text.items():
@@ -2565,10 +2687,158 @@ def main() -> int:
             h_hist[k].add(b)
             h_hist_paths[k] |= set(hist_blob_paths[b])
             h_paths[k] |= paths
+            for c_ in hist_blob_paths[b]:
+                h_cpaths[k][c_] |= paths
     RX_CLAUDE_LINK = re.compile(r"claude\.ai/", re.I)
     claude_links = (sum(1 for t in text.values() if RX_CLAUDE_LINK.search(t))
                     + sum(1 for t in hist_text.values() if RX_CLAUDE_LINK.search(t)))
-    def host_class(k: tuple, carriers: set, paths: list, n_claude_links: int) -> str:
+    # Round 9 (Code; the PI confirmed them on 2026-10-12, "Yes to all five; tag it", question 2): this audit's own files -- its scripts and its raws -- as carriers. A host or link
+    # that only they carry is named by the audit's scanner tables, fixtures and recorded reads, not by the record.
+    # Release (L3): the audit-file rule is the module-level RX_AUDIT_FILE (every results/raw/*_note-* raw, any date,
+    # and every scripts/audit_note_*.py).
+    claude_links_outside_audit = (
+        sum(1 for p_, t in text.items() if RX_CLAUDE_LINK.search(t) and not RX_AUDIT_FILE.match(p_))
+        + sum(1 for b, t in hist_text.items() if RX_CLAUDE_LINK.search(t)
+              and not all(RX_AUDIT_FILE.match(p_) for p_ in hist_blob_paths[b])))
+    AUDIT_HOSTS = {   # host -> what this audit's own files use it for
+        "%s": "a printf placeholder in a synthetic URL of the content script's self-test fixture",
+        "[ip": "the content screen's own masked-host placeholder ([IP ...]) inside a URL it reports",
+        "claude": "the host fragment of a self-test string the scrub script builds by concatenation",
+        "-8888.proxy.runpod.net": "the synthetic RunPod proxy host of the content script's self-test fixture",
+        "example.org": "the reserved example domain of the content script's self-test fixture e-mail",
+        "e.ai": "the tail of claude.ai cut by a 40-character excerpt window of the content screen",
+        "gmail.com": "an e-mail domain in the content and history scripts' allowlists and domain classes",
+        "users.noreply.github.com": "an e-mail domain in the content script's domain classes",
+        "proxy.runpod.net": "a RunPod host name in this audit's pattern descriptions and class labels",
+        "ssh.runpod.io": "a RunPod host name in this audit's pattern descriptions and class labels",
+        "runpod.io": ("a RunPod host name in this audit's pattern descriptions and class labels, and an entry "
+                      "of the history script's public-host allowlist"),
+        "api.github.com": "the host of URLs this part read (WEB_READS), echoed in this audit's raws",
+        "docs.github.com": "the host of a URL this part read (WEB_READS: GitHub's terms), echoed in this audit's raws",
+        "raw.githubusercontent.com": ("the host of URLs this part and N2(vi) read (the Macar repository's files at "
+                                      "its pin; row: Macar et al. materials), echoed in this audit's raws"),
+        "arxiv.org": ("the Macar et al. paper's arXiv pages (row: Macar et al.), read by this part and N2(vi), and "
+                      "an entry of the history script's public-host allowlist"),
+        "creativecommons.org": ("the CC BY 4.0 deed, the Macar paper's license (a recorded read, WEB_READS), "
+                                "echoed in this audit's raws"),
+        **{h_: "an entry of the history script's public-host allowlist (PUBLIC_HOSTS)" for h_ in (
+            "allenai.org", "claude.com", "colab.research.google.com", "docs.anthropic.com", "docs.python.org",
+            "docs.runpod.io", "doi.org", "download.pytorch.org", "en.wikipedia.org", "matplotlib.org",
+            "nbviewer.org", "openreview.net", "pypi.org", "pytorch.org", "scholar.google.com", "twitter.com",
+            "w3.org", "www.alignmentforum.org", "www.arxiv.org", "www.lesswrong.com", "www.runpod.io",
+            "www.w3.org", "x.com",
+            # release (the PI's answer of 2026-10-12): the three hosts the history script's round-9 triage adds to
+            # its PUBLIC_HOSTS (the Apache-2.0 text's URL host; the SVGs' C2PA and Dublin Core namespace hosts) --
+            # members of this same class, which H3 lists; no new rule
+            "www.apache.org", "c2pa.org", "purl.org",
+            # release (L3): three more entries of the same allowlist, which the Global Workspace row classifies
+            # where the record carries them; listed so that an audit file's echo of them (cut short by an excerpt
+            # window) is explained by H3 carrier by carrier -- members of the same class, no new rule
+            "www.anthropic.com", "anthropic.com", "transformer-circuits.pub")},
+    }
+    # release (L3): every host listed above as "an entry of the history script's public-host allowlist" is checked
+    # against that allowlist as the history script holds it at the commit read (its PUBLIC_HOSTS set literal, read by
+    # AST, never run); an entry the allowlist lacks loses this class (it is then classed by no listed reason)
+    PH_LABEL = "an entry of the history script's public-host allowlist (PUBLIC_HOSTS)"
+    ph_listed = sorted(h_ for h_, why_ in AUDIT_HOSTS.items() if why_ == PH_LABEL)
+    ph_hist: set | None = None
+    try:
+        for n_ in ast.walk(ast.parse(text.get("scripts/audit_note_N12_history.py", ""))):
+            if (isinstance(n_, ast.Assign) and any(isinstance(t_, ast.Name) and t_.id == "PUBLIC_HOSTS"
+                                                   for t_ in n_.targets)
+                    and isinstance(n_.value, ast.Set)):
+                ph_hist = {e_.value for e_ in n_.value.elts if isinstance(e_, ast.Constant)}
+    except SyntaxError:
+        ph_hist = None
+    ph_missing = [h_ for h_ in ph_listed if ph_hist is None or h_ not in ph_hist]
+    for h_ in ph_missing:
+        AUDIT_HOSTS.pop(h_, None)
+    R["audit_hosts_public_allowlist_check"] = {
+        "listed_as_public_allowlist_entries": len(ph_listed),
+        "history_script_allowlist_read": ph_hist is not None,
+        "history_script_allowlist_size": (len(ph_hist) if ph_hist is not None else None),
+        "listed_but_not_in_the_history_allowlist": ph_missing}
+    SVG_HOSTS = {     # host -> what it is in the figure SVGs' headers and metadata (root *.svg carriers)
+        "www.w3.org": "the SVG, XLink and RDF namespace URIs and the SVG 1.1 DTD",
+        "purl.org": "the Dublin Core element namespace and type vocabulary",
+        "creativecommons.org": "the Creative Commons RDF namespace",
+        "c2pa.org": "the C2PA namespace of the content-credentials element",
+        "matplotlib.org": "the generator's credit (Matplotlib) in the dc:creator metadata",
+    }
+    DOC_HOSTS = {     # (host, carrier) -> what a document of the release names it for, with the paths allowed
+        ("creativecommons.org", "README-NOTE.md"): (("/licenses/by/4.0",),
+                                                     "the CC BY 4.0 deed, the repository's document license"),
+    }
+
+    # release (L3): the full hosts whose cut-short forms H3 explains -- the listed hosts (AUDIT_HOSTS, SVG_HOSTS), the
+    # Global Workspace hosts, the two repository hosts and the hosts of the recorded-read URLs
+    CUT_FULL = sorted({h_ for h_ in (set(AUDIT_HOSTS) | set(SVG_HOSTS) | set(GW_PATHS) | {"github.com", "huggingface.co"}
+                                     | {re.sub(r"^https?://([^/]+).*$", r"\1", u_).lower() for u_ in WR_URLS})
+                       if re.fullmatch(r"[a-z0-9-]+(\.[a-z0-9-]+)+", h_)})
+
+    def cut_of(h: str) -> str | None:
+        """Release (L3): the listed full host of which h is a cut-short form (a prefix or a suffix of it, as an excerpt
+        window leaves it), or None."""
+        if len(h) < 4:
+            return None
+        for f_ in CUT_FULL:
+            if f_ != h and (f_.startswith(h) or f_.endswith(h)):
+                return f_
+        return None
+
+    def audit_only_path(x: str, cpaths) -> bool:
+        """Release (L3 fix round): path x of a host is carried only by this audit's own files (RX_AUDIT_FILE)."""
+        if not cpaths:
+            return False
+        cs_ = [c_ for c_, ps_ in cpaths.items() if x in ps_]
+        return bool(cs_) and all(RX_AUDIT_FILE.match(c_) for c_ in cs_)
+
+    def cut_path(x: str, allowed) -> bool:
+        """Release (L3 fix round): x is a proper prefix of an allowed path -- the form an excerpt window leaves when it
+        cuts the allowed URL short. Any other path is not a cut form, whoever carries it."""
+        return bool(x) and any(a_ != x and a_.startswith(x) for a_ in allowed)
+
+    def host_class_r9(h: str, carriers: set, paths: list, cpaths=None) -> str | None:
+        """Round 9 (H3; confirmed by the PI 2026-10-12): the class of a host every carrier of which is explained -- an audit file by
+        AUDIT_HOSTS, a root .svg figure by SVG_HOSTS, a document by DOC_HOSTS (its paths allowed) -- or None.
+        Release (L3): an audit file also explains a listed host cut short by an excerpt window (cut_of). A document's
+        allowed paths are checked against every path of the host, as in round 9; the one addition (L3 fix round,
+        Code's narrow reading, for the PI) is that a path carried only by this audit's own files that is a proper
+        prefix of an allowed path (an excerpt window's cut of it) passes. Any other path fails the check."""
+        why = []
+        for c in sorted(carriers):
+            if RX_AUDIT_FILE.match(c) and (h in AUDIT_HOSTS or h in SVG_HOSTS):
+                r_ = "in this audit's own scripts and raws: " + AUDIT_HOSTS.get(h, "a host this part's SVG_HOSTS table names")
+            elif RX_AUDIT_FILE.match(c) and cut_of(h):
+                r_ = (f"in this audit's own scripts and raws: `{cut_of(h)}` cut short by an excerpt window "
+                      f"(a listed host's cut form)")
+            elif c.endswith(".svg") and "/" not in c and h in SVG_HOSTS:
+                r_ = "in the figure SVGs: " + SVG_HOSTS[h]
+            elif (h, c) in DOC_HOSTS and all(any(x.startswith(a_) for a_ in DOC_HOSTS[(h, c)][0]) or
+                                             (h in SVG_HOSTS and x == "/ns#") or
+                                             (cut_path(x, DOC_HOSTS[(h, c)][0]) and audit_only_path(x, cpaths))
+                                             for x in paths if x):
+                r_ = f"in `{c}`: " + DOC_HOSTS[(h, c)][1]
+                cuts_ = [x for x in paths if x and not any(x.startswith(a_) for a_ in DOC_HOSTS[(h, c)][0])
+                         and not (h in SVG_HOSTS and x == "/ns#")]
+                if cuts_:
+                    R9_HOSTS[("host", h)] = ("H3 with cut paths (Code's narrow reading, for the PI): a path outside "
+                                             "a document's allowed ones is carried only by this audit's own files "
+                                             "and is a proper prefix of an allowed path")
+                    r_ += (" (its allowed path also appears cut short by an excerpt window, only in this audit's "
+                           "own scripts and raws)")
+            else:
+                return None
+            if r_ not in why:
+                why.append(r_)
+        return ("; ".join(why) + "; not a material") if why else None
+    def _h3(k: tuple, c_: str | None) -> str | None:
+        if c_:
+            R9_HOSTS[k] = "H3: a host whose every carrier is explained (audit files by the listed hosts; root "\
+                          "SVGs; a named document with allowed paths)"
+        return c_
+
+    def host_class(k: tuple, carriers: set, paths: list, n_claude_links: int, cpaths=None) -> str:
         kind, h = k
         if kind == "ip":
             return ("IP-literal host (loopback: a local dev-server address in the cycle-1-2 "
@@ -2579,28 +2849,76 @@ def main() -> int:
                     "dotless URL host inside model-generated text (OLMo transcripts under "
                     "data/olmo/); not a material" if carriers and
                     all(c.startswith("data/olmo/") for c in carriers)
-                    else "UNCLASSIFIED dotless URL host (Code to review)")
+                    else (_h3(k, host_class_r9(h, carriers, paths, cpaths)) or "UNCLASSIFIED dotless URL host (Code to review)"))
         if h in ("github.com", "huggingface.co"):
             return "repository URLs: every id is classified in the id table above"
         if h in GW_PATHS:
-            return ("row: the Global Workspace paper (section 2e)" if paths and
-                    all(x.startswith(GW_PATHS[h]) for x in paths)
+            # round 9 (H4; confirmed by the PI 2026-10-12): on transformer-circuits.pub, the Lindsey (2025) page (section 1's row) and the
+            # site's home page (this part's recorded read) beside the Global Workspace paper
+            extra_ = (("/2025/introspection",), ("/",)) if h == "transformer-circuits.pub" else ((), ())
+
+            def gw_ok(x):
+                return x.startswith(GW_PATHS[h]) or x.startswith(extra_[0]) or x in extra_[1]
+            ok_ = bool(paths) and all(gw_ok(x) for x in paths)
+            # release (L3 fix round; Code's narrow reading, for the PI): a path outside the allowed ones passes only
+            # when it is a proper prefix of an allowed path (an excerpt window's cut of the paper's, the Lindsey
+            # page's or the home page's URL) AND only this audit's own files carry it, the host being on H3's list
+            # (an entry of the history script's public-host allowlist). Any other path -- a full URL to another page,
+            # whoever carries it -- leaves the host UNCLASSIFIED, as in round 9.
+            allowed_ = (GW_PATHS[h],) + extra_[0] + extra_[1]
+            out_ = [x for x in paths if not gw_ok(x)]
+            ok_l3 = (not ok_ and h in AUDIT_HOSTS and any(gw_ok(x) for x in paths) and bool(out_)
+                     and all(cut_path(x, allowed_) and audit_only_path(x, cpaths) for x in out_))
+            use_ = [x for x in paths if gw_ok(x)] if ok_l3 else paths
+            if ok_l3:
+                R9_HOSTS[k] = ("H3 with cut paths (Code's narrow reading, for the PI): the paths outside the allowed "
+                               "ones are carried only by this audit's own files and are proper prefixes of an "
+                               "allowed path, the host on H3's list")
+            elif ok_ and not all(x.startswith(GW_PATHS[h]) for x in paths):
+                R9_HOSTS[k] = "H4: transformer-circuits.pub's two allowed paths (the Lindsey page; the home page)"
+            return (("row: the Global Workspace paper (section 2e)"
+                     + ("; row: Lindsey (2025), section 1" if any(x.startswith(extra_[0]) for x in use_) else "")
+                     + ("; the site's home page, a recorded read (WEB_READS)" if any(x in extra_[1] for x in use_)
+                        else "")
+                     + ("; an allowed path cut short by an excerpt window (a proper prefix of it), only in this "
+                        "audit's own scripts and raws: " + AUDIT_HOSTS[h] if ok_l3 else "")) if (ok_ or ok_l3)
                     else "UNCLASSIFIED (a path outside the Global Workspace paper)")
         if h == "claude.ai":
+            if n_claude_links and not claude_links_outside_audit:
+                R9_HOSTS[k] = "H1: claude.ai links counted only outside this audit's own files"
+            # round 9 (H1; confirmed by the PI 2026-10-12): links counted outside this audit's own files, which carry only redacted echoes of
+            # the session link (seven commit trailers, left in history by the PI's D3 routing) and pattern text
             return ("the product name in prose (\"A Claude.ai project instance\"), not a link to "
-                    "material" if not n_claude_links else
+                    "material" + ("; the only claude.ai links are in this audit's own scripts and raws (redacted "
+                                  "echoes of the session link the PI's D3 routing left in the commit trailers, and "
+                                  "scanner pattern text)" if n_claude_links else "")
+                    if not claude_links_outside_audit else
                     "UNCLASSIFIED (a claude.ai link; Code to review)")
         if h in MODEL_OUT_HOSTS:
-            return ("inside model-generated text (OLMo transcripts under data/olmo/); not a "
-                    "material" if carriers and all(c.startswith("data/olmo/") for c in carriers)
+            if (carriers and all(c.startswith("data/olmo/") or RX_AUDIT_FILE.match(c) for c in carriers)
+                    and any(c.startswith("data/olmo/") for c in carriers)
+                    and any(RX_AUDIT_FILE.match(c) for c in carriers)):
+                R9_HOSTS[k] = "H2: a model-output host with audit-file carriers beside the transcripts"
+            # round 9 (H2; confirmed by the PI 2026-10-12): this audit's own files quote them too
+            return ("inside model-generated text (OLMo transcripts under data/olmo/)"
+                    + ("; quoted in this audit's own scripts and raws" if any(RX_AUDIT_FILE.match(c) for c in carriers)
+                       else "") + "; not a material"
+                    if carriers and all(c.startswith("data/olmo/") or RX_AUDIT_FILE.match(c) for c in carriers)
+                    and any(c.startswith("data/olmo/") for c in carriers)
                     else "UNCLASSIFIED (outside the model transcripts)")
+        r9_ = _h3(k, host_class_r9(h, carriers, paths, cpaths))
+        if r9_:
+            return r9_
+        if audit_only(carriers):
+            return ("UNCLASSIFIED (for the PI: carried only by this audit's own files, neither a listed host nor a "
+                    "listed host's cut form)")
         return "UNCLASSIFIED (Code to review)"
     HS = []
     for k in sorted(set(h_head) | set(h_hist)):
         kind, h = k
         carriers = set(h_head.get(k, set())) | h_hist_paths.get(k, set())
         paths = sorted(x for x in h_paths.get(k, set()) if x)
-        cls = host_class(k, carriers, paths, claude_links)
+        cls = host_class(k, carriers, paths, claude_links, h_cpaths.get(k, {}))
         # dotless hosts are printed only when they are a plain word in model text;
         # anything else (e.g. a machine name) is printed redacted
         show = (redform(h) if kind == "ip" or (kind == "dotless" and not (
@@ -2610,6 +2928,15 @@ def main() -> int:
                    "history_only": not h_head.get(k), "paths": ([] if kind == "ip" else paths[:6]),
                    "carrier_paths": sorted(carriers)[:6], "class": cls})
     R["url_host_sweep"] = HS
+    _sw_shown = {(kk, vv): s_["id"] for (kk, vv), s_ in zip(sorted(set(head_ids) | set(hist_ids)), SW)}
+    _hs_shown = {kh: s_["host"] for kh, s_ in zip(sorted(set(h_head) | set(h_hist)), HS)}
+    R9_APPLIED = {
+        "confirmed": "the PI, 2026-10-12, one answer to five questions (\"Yes to all five; tag it\"), question 2",
+        "ids": [{"kind": kk[0], "id": _sw_shown[kk], "rule": r_} for kk, r_ in sorted(R9_IDS.items())
+                if kk in _sw_shown],
+        "hosts": [{"kind": kh[0], "host": _hs_shown[kh], "rule": r_} for kh, r_ in sorted(R9_HOSTS.items())
+                  if kh in _hs_shown and kh[0] != "ip"]}
+    R["round9_rules_applied"] = R9_APPLIED
     n_host_uncl = sum(1 for s in HS if s["class"].startswith("UNCLASSIFIED"))
     ip_rows = [s for s in HS if s["kind"] == "ip"]
     dl_rows = [s for s in HS if s["kind"] == "dotless"]
@@ -2631,6 +2958,16 @@ def main() -> int:
           f"{', '.join(f'`{x}`' for x in s['paths']) if s['host'] not in ('github.com', 'huggingface.co') else '(ids above)'} | "
           f"{', '.join(f'`{x}`' for x in s['carrier_paths'])} | {s['class']} |")
     P("")
+    P(f"**Round-9 rules** (Code's rule changes, confirmed by the PI on 2026-10-12: \"Yes to all five; tag "
+      f"it\", question 2). Rows of the two tables above that only these rules classify at this run: "
+      f"**{len(R9_APPLIED['ids'])}** id(s) ("
+      + "; ".join(f"{r_}: {sum(1 for x in R9_APPLIED['ids'] if x['rule'] == r_)}"
+                  for r_ in sorted({x['rule'] for x in R9_APPLIED['ids']})) + ") and "
+      f"**{len(R9_APPLIED['hosts'])}** host(s) ("
+      + "; ".join(f"{r_.split(':')[0]}: {sum(1 for x in R9_APPLIED['hosts'] if x['rule'] == r_)}"
+                  for r_ in sorted({x['rule'] for x in R9_APPLIED['hosts']})) + "). Each row's class is "
+      "printed in its table; the JSON `round9_rules_applied` lists them with the rule.")
+    P("")
     n_arxiv_host = sum(1 for s in HS if s["host"].endswith("arxiv.org"))
     P(f"Rows with an `arxiv.org` host: {n_arxiv_host}; the record's arXiv references are ids, "
       f"classified in the id table above. A third-party work the record does not name at all is "
@@ -2642,33 +2979,59 @@ def main() -> int:
     # rules are the sweeps' own (ids_in/id_class, hosts_in/host_class); only the carriers
     # change. Hosts and ids found only in other audit items' files are counted, never
     # printed (they can name machines or people).
+    # Release (L3): the audit files projected are RX_AUDIT_FILE's (every results/raw/*_note-* raw, any date, and every
+    # scripts/audit_note_*.py) untracked at the run -- e.g. the release raws the scans before this one wrote -- and this
+    # run's own two outputs, which are not on disk while it runs, are projected by the closing self-check; the
+    # verdicts printed here, in section 7 item 8 and in the round-4 values-check row are the combined ones
+    # (placeholders filled at the end, the self-check iterated to a fixed point).
+    def _rel_out(o_: str) -> str:
+        r_ = os.path.relpath(os.path.realpath(o_), os.path.realpath(REPO))
+        return r_ if not r_.startswith("..") else "results/raw/" + os.path.basename(o_)
+    OUT_MD_C, OUT_JSON_C = _rel_out(OUT_MD), _rel_out(OUT_JSON)
     MINE = {"scripts/audit_note_N12_licenses.py", os.path.relpath(DEFAULT_MD, REPO),
-            os.path.relpath(DEFAULT_JSON, REPO)}
+            os.path.relpath(DEFAULT_JSON, REPO), OUT_MD_C, OUT_JSON_C}
     own_txt: dict = {}
     for p_ in own:
-        if not is_text_path(p_):
+        if not is_text_path(p_) or p_ in (OUT_MD_C, OUT_JSON_C):
             continue
         try:
             own_txt[p_] = open(os.path.join(REPO, p_), encoding="utf-8", errors="replace").read()
         except OSError:
             continue
-    own_ids: dict = defaultdict(set)
-    own_hosts: dict = defaultdict(set)
-    own_hpaths: dict = defaultdict(set)
-    for p_, t_ in own_txt.items():
-        for k in ids_in(t_):
-            own_ids[k].add(p_)
-        for k, pp in hosts_in(t_).items():
-            own_hosts[k].add(p_)
-            own_hpaths[k] |= pp
+
+    def project(extra: dict):
+        """The two sweeps' rules over the tracked carriers plus `extra` (path -> text, as if tracked): the ids and
+        hosts that `extra` carries and the sweeps would leave unclassified, each with the extra paths carrying it."""
+        e_ids: dict = defaultdict(set)
+        e_hosts: dict = defaultdict(set)
+        e_cp: dict = defaultdict(lambda: defaultdict(set))
+        for p_, t_ in extra.items():
+            for k in ids_in(t_):
+                e_ids[k].add(p_)
+            for k, pp in hosts_in(t_).items():
+                e_hosts[k].add(p_)
+                e_cp[k][p_] |= pp
+        n_cl = claude_links + sum(1 for t_ in extra.values() if RX_CLAUDE_LINK.search(t_))
+        u_ids = {}
+        for k, ps in e_ids.items():
+            car = (set(head_ids.get(k, [])) | {c_ for b_ in hist_ids.get(k, []) for c_ in hist_blob_paths[b_]}
+                   | ps)
+            if id_class(k, car).startswith("UNCLASSIFIED"):
+                u_ids[k] = ps
+        u_hosts = {}
+        for k, ps in e_hosts.items():
+            car = set(h_head.get(k, set())) | h_hist_paths.get(k, set()) | ps
+            cp: dict = defaultdict(set)
+            for c_, xs in h_cpaths.get(k, {}).items():
+                cp[c_] |= xs
+            for c_, xs in e_cp[k].items():
+                cp[c_] |= xs
+            pth = sorted(x for x in (h_paths.get(k, set()) | {x for xs in e_cp[k].values() for x in xs}) if x)
+            if host_class(k, car, pth, n_cl, cp).startswith("UNCLASSIFIED"):
+                u_hosts[k] = ps
+        return u_ids, u_hosts
     own_claude = sum(1 for t_ in own_txt.values() if RX_CLAUDE_LINK.search(t_))
-    pj_ids = {k: ps for k, ps in own_ids.items() if id_class(k).startswith("UNCLASSIFIED")}
-    pj_hosts = {}
-    for k, ps in own_hosts.items():
-        car = set(h_head.get(k, set())) | h_hist_paths.get(k, set()) | ps
-        pth = sorted(x for x in (h_paths.get(k, set()) | own_hpaths[k]) if x)
-        if host_class(k, car, pth, claude_links + own_claude).startswith("UNCLASSIFIED"):
-            pj_hosts[k] = ps
+    pj_ids, pj_hosts = project(own_txt)
     pj_mine_hosts = sorted((h if kind == "host" or re.fullmatch(r"[a-z]+", h) else redform(h))
                            + (" (dotless)" if kind == "dotless" else "")
                            for (kind, h), ps in pj_hosts.items() if ps & MINE and kind != "ip")
@@ -2683,23 +3046,35 @@ def main() -> int:
     pj_oth_hosts = sum(1 for (kind, _h), ps in pj_hosts.items() if not ps & MINE and kind != "ip")
     pj_oth_ids = sum(1 for ps in pj_ids.values() if not ps & MINE)
     R["sweeps_projected_over_own_audit_files"] = {
+        "audit_file_rule": RX_AUDIT_FILE.pattern,
         "n_own_untracked": len(own), "n_own_text_read": len(own_txt),
+        "own_untracked_paths": own,
         "unclassified_ids": len(pj_ids), "unclassified_hosts": len(pj_hosts),
+        "unclassified_ids_sha256_8": sorted(sha256(k[1].encode())[:8] for k in pj_ids),
+        "unclassified_hosts_sha256_8": sorted(sha256(k[1].encode())[:8] for k in pj_hosts),
         "ip_literal_hosts": pj_ip, "from_this_part_hosts": pj_mine_hosts,
         "from_this_part_ids_url_fragments": pj_mine_ids,
         "from_this_part_ids_other_count": pj_mine_ids_other,
-        "from_other_audit_files_only": {"hosts": pj_oth_hosts, "ids": pj_oth_ids}}
-    P(f"**Once this audit's own working files are tracked.** They are untracked at the commit "
-      f"read ({len(own)} files; {len(own_txt)} text files read from disk at this run), so "
-      f"neither sweep counts them. Projected over them with the sweeps' own rules (Code's "
-      f"computation, round 4), the id sweep would gain **{len(pj_ids)}** unclassified id(s) and "
+        "from_other_audit_files_only": {"hosts": pj_oth_hosts, "ids": pj_oth_ids},
+        "this_runs_own_outputs": "see self_check (combined verdict: @@L3COMB@@)"}
+    P(f"**Once this audit's own working files are tracked.** This audit's own files (every "
+      f"`results/raw/*_note-*` raw, any date, and every `scripts/audit_note_*.py`) untracked at the "
+      f"commit read: {len(own)} ({len(own_txt)} text files read from disk at this run, this run's own "
+      f"outputs excepted); neither sweep counts them. Projected over them with the sweeps' own rules "
+      f"(Code's computation, round 4), the id sweep would gain **{len(pj_ids)}** unclassified id(s) and "
       f"the host sweep **{len(pj_hosts)}** unclassified host(s) ({pj_ip} IP-literal, counted "
-      f"only), so the pass line's two sweep gates would fail at the pre-flip re-run until each is "
-      f"classified. From this part's own three files: hosts "
+      f"only). This run's own two outputs, not on disk while it runs, are projected by the closing "
+      f"self-check (as `{OUT_MD_C}` and `{OUT_JSON_C}`): @@L3SELF@@ in them. Together: "
+      f"@@L3COMB@@ unclassified@@L3VERDICT_2F@@. Audit raws written after this run (later steps of "
+      f"the release sequence) are in neither projection; the re-run over the commit that tracks them "
+      f"is their check"
+      + ". From this part's own files: hosts "
       + (", ".join(f"`{x}`" for x in pj_mine_hosts) or "none")
       + " (its recorded-read URLs, and rows of the table above whose class holds only while "
-      "every carrier is a model transcript, every path is the Global Workspace paper's, or no "
-      f"file links to claude.ai); ids: {len(pj_mine_ids)} path "
+      "every carrier is a model transcript, every path is an allowed one -- the Global Workspace "
+      "paper's, or on transformer-circuits.pub the Lindsey page's or the home page's, a path outside "
+      "them passing only as a proper prefix of one carried by audit files alone -- or no file "
+      f"outside the audit files links to claude.ai); ids: {len(pj_mine_ids)} path "
       f"fragments of the URLs its recorded reads name, which the URL pattern parses as ids ("
       + (", ".join(f"`{x}`" for x in pj_mine_ids) or "none")
       + f"), and {pj_mine_ids_other} other(s), counted only. From the other audit files only: "
@@ -2877,21 +3252,119 @@ def main() -> int:
     R["repo_license"] = {"license_files_at_commit": lf_head,
                          "license_files_ever_added_any_ref": lf_hist,
                          "readme_license_lines": rd_hits, "refs": refs}
-    P(f"- LICENSE / LICENCE / COPYING / NOTICE files at the commit: **{len(lf_head)}**{(' ' + str(lf_head)) if lf_head else ''}.")
+    # Release preparation (round 1's L check, scrub index section 5's flag): every statement
+    # about THIS repository's own license is computed from the tree at the commit read, never
+    # fixed text. Root-level license texts: a name beginning LICENSE / LICENCE / COPYING with
+    # any suffix (RX_LF, the section-5 count rule above, is unchanged and stays as it was);
+    # each is identified by its opening lines, and LICENSING.md (if tracked) is read for the
+    # line that links each one and that line's bold label.
+    RX_LT = re.compile(r"^(LICEN[CS]E|COPYING)([.-][A-Za-z0-9.-]+)?$", re.I)
+    LT_KINDS = ((("Apache License", "Version 2.0"), "Apache License, Version 2.0"),
+                (("Attribution 4.0 International",), "CC BY 4.0 (Attribution 4.0 International)"))
+    lt_rows = sorted((r for r in tree if r["type"] == "blob" and "/" not in r["path"]
+                      and RX_LT.match(r["path"])), key=lambda r: r["path"])
+    lt_blobs = cat_blobs([r["blob"] for r in lt_rows])
+    lmap_src = text.get("LICENSING.md")
+    lmap_lines = lmap_src.splitlines() if lmap_src is not None else []
+
+    def _first_added(path: str) -> str | None:
+        out = gtext("log", "--all", "--diff-filter=A", "--format=%h", "--", path).split()
+        return out[-1][:7] if out else None
+    lic_texts = []
+    for r in lt_rows:
+        b = lt_blobs[r["blob"]]
+        opening = b[:400].decode("utf-8", "replace")
+        kind = next((lab for needles, lab in LT_KINDS if all(n in opening for n in needles)), None)
+        link_lines = [i for i, l in enumerate(lmap_lines, 1) if f"(./{r['path']})" in l]
+        labels = []
+        for i in link_lines:
+            m = re.match(r"\s*-\s*\*\*(.+?)\*\*", lmap_lines[i - 1])
+            if m:
+                labels.append(m.group(1))
+        lic_texts.append({"path": r["path"], "sha256": sha256(b), "kind": kind,
+                          "first_added": _first_added(r["path"]),
+                          "sha256_listed_in_LICENSING_md": (lmap_src is not None and sha256(b) in lmap_src),
+                          "LICENSING_md_link_lines": link_lines, "LICENSING_md_labels": labels})
+    lmap = None
+    if lmap_src is not None:
+        lmap = {"path": "LICENSING.md", "first_added": _first_added("LICENSING.md"),
+                "third_party_heading_line": next((i for i, l in enumerate(lmap_lines, 1)
+                                                  if re.match(r"#+\s*Third-party material", l)), None)}
+    def _lt_reasons(t: dict) -> list[str]:
+        out = []
+        if not t["kind"]:
+            out.append("not identified by its opening lines")
+        if lmap_src is not None and not t["sha256_listed_in_LICENSING_md"]:
+            out.append("its sha256 is not listed in `LICENSING.md`")
+        return out
+    for t in lic_texts:
+        t["open_reasons"] = _lt_reasons(t)
+    lic_open = [t for t in lic_texts if t["open_reasons"]]
+    repo_licensed = bool(lic_texts) and not lic_open
+    lic_open_s = "; ".join(f"`{t['path']}`: {', '.join(t['open_reasons'])}" for t in lic_open)
+    lt_not_lf = [t["path"] for t in lic_texts if not RX_LF.search(t["path"])]
+    R["repo_license"].update({"root_license_texts": lic_texts, "licensing_map": lmap,
+                              "repo_licensed_at_commit": repo_licensed,
+                              "rule_root_license_texts": RX_LT.pattern,
+                              "rule_repo_licensed": "every root-level license text is identified by "
+                                                    "its opening lines and, where LICENSING.md is "
+                                                    "tracked, its sha256 is listed there",
+                              "root_license_texts_not_matched_by_count_rule": lt_not_lf,
+                              "note": "statements about this repository's license are computed "
+                                      "from these fields at the commit read"})
+
+    def _lt_desc(t: dict) -> str:
+        s = f"`{t['path']}`: {t['kind'] or 'text not identified by its opening lines'}"
+        if t["LICENSING_md_labels"]:
+            s += " (" + ", ".join(f"`LICENSING.md:{i}`" for i in t["LICENSING_md_link_lines"]) + ": " \
+                 + ", ".join(f"**{x}**" for x in t["LICENSING_md_labels"]) + ")"
+        return s
+    lic_summary = "; ".join(_lt_desc(t) for t in lic_texts)
+    lic_added = sorted({t["first_added"] for t in lic_texts if t["first_added"]}
+                       | ({lmap["first_added"]} if lmap and lmap["first_added"] else set()))
+    lic_added_s = ", ".join(f"`{c}`" for c in lic_added) or "no commit found"
+    P(f"- LICENSE / LICENCE / COPYING / NOTICE files at the commit: **{len(lf_head)}**{(' ' + str(lf_head)) if lf_head else ''} "
+      f"(this count's rule: that exact name with an optional alphabetic extension, at any depth"
+      + (f"; {', '.join(f'`{x}`' for x in lt_not_lf)} {'does' if len(lt_not_lf) == 1 else 'do'} not match it "
+         f"and {'is' if len(lt_not_lf) == 1 else 'are'} counted with the root-level license texts below"
+         if lt_not_lf else "") + ").")
     P(f"- Such a file ever added in any commit on any ref ({len(refs)} refs: "
-      f"{', '.join(r.replace('refs/', '') for r in refs)}): **{len(lf_hist)}**.")
+      f"{', '.join(r.replace('refs/', '') for r in refs)}; same rule): **{len(lf_hist)}**.")
     P(f"- `README.md` lines mentioning a license, Macar, Apache, attribution, third-party material, "
       f"WeZZard or copyright: **{len(rd_hits)}**" + (": " + "; ".join(rd_hits) if rd_hits else "."))
     tos = WEB_READS["github_tos"]
-    P("- The repository has **no license**. Without one, the default is that copyright law reserves "
-      "all rights (the task's framing). **[recorded WebFetch read]** "
-      f"`{tos['url']}`, section {tos['result']['section']} (from the WebFetch summary, not "
-      "verbatim): making a repository public grants other GitHub users a licence to view the "
-      "content and to reproduce it on GitHub as its features allow, forking included. Beyond those "
-      "view-and-fork rights, readers would have no grant to reuse the code. The same summary says a "
-      "user posting content they did not create must make sure it is licensed for those uses, "
-      "which bears on the Macar rows (section 7, item 1). Choosing a license, or none, is the PI's "
-      "decision; this audit records the gap.")
+    P(f"- Root-level license texts at the commit (name beginning LICENSE / LICENCE / COPYING, any "
+      f"suffix; identified by their opening lines): **{len(lic_texts)}**"
+      + (": " + "; ".join(_lt_desc(t) + f", sha256 `{t['sha256'][:12]}...`, first added at "
+                         f"`{t['first_added']}`, sha256 listed in `LICENSING.md`: "
+                         f"{t['sha256_listed_in_LICENSING_md']}" for t in lic_texts)
+         if lic_texts else "")
+      + ". `LICENSING.md` at the commit: "
+      + (f"**present** (first added at `{lmap['first_added']}`; its third-party heading: "
+         + (f"`LICENSING.md:{lmap['third_party_heading_line']}`" if lmap['third_party_heading_line'] else "none")
+         + ")" if lmap else "**absent**") + ".")
+    if repo_licensed:
+        P(f"- The repository **carries its own license** at the commit read: {lic_summary}. "
+          f"The files were added at {lic_added_s}. This audit records them and does not judge "
+          "their fit. Third-party material keeps its own terms "
+          "(sections 6 and 7). **[recorded WebFetch read]** "
+          f"`{tos['url']}`, section {tos['result']['section']} (from the WebFetch summary, not "
+          "verbatim): a user posting content they did not create must make sure it is licensed "
+          "for the uses GitHub's features allow, which bears on the Macar rows (section 7, item 1).")
+    elif lic_texts:
+        P(f"- The repository carries root-level license text(s) this part does not record as its "
+          f"license: {lic_open_s} (all root-level texts: {lic_summary}). The PI reads them; this "
+          f"audit records them.")
+    else:
+        P("- The repository has **no license**. Without one, the default is that copyright law reserves "
+          "all rights (the task's framing). **[recorded WebFetch read]** "
+          f"`{tos['url']}`, section {tos['result']['section']} (from the WebFetch summary, not "
+          "verbatim): making a repository public grants other GitHub users a licence to view the "
+          "content and to reproduce it on GitHub as its features allow, forking included. Beyond those "
+          "view-and-fork rights, readers would have no grant to reuse the code. The same summary says a "
+          "user posting content they did not create must make sure it is licensed for those uses, "
+          "which bears on the Macar rows (section 7, item 1). Choosing a license, or none, is the PI's "
+          "decision; this audit records the gap.")
     cfg_main = open(os.path.join(REPO, ".git", "config")).read()
     fetch_specs = re.findall(r"^\s*fetch\s*=\s*(\S+)\s*$", cfg_main, re.M)
     fh = os.path.join(REPO, ".git", "FETCH_HEAD")
@@ -3019,8 +3492,21 @@ def main() -> int:
          "n/a", "model outputs; output terms not read beyond the card license field", "[to confirm] by the PI if wanted",
          "One sentence naming them as model outputs"),
         ("This repository",
-         "root", "the lab", "the tag (PI's)", "**no LICENSE file** (none at HEAD, none ever added)",
-         "**not granted** (default: all rights reserved)", "**PI decides** a license (or none) before the repo goes public"),
+         "root", "the lab", "the tag (PI's)",
+         *((lic_summary + f" (section 5; added at {lic_added_s})",
+            "**yes**, under those licenses; third-party material keeps its own terms (rows above"
+            + (f"; `LICENSING.md:{lmap['third_party_heading_line']}`" if lmap and lmap['third_party_heading_line'] else "")
+            + ")",
+            "Name the license files and `LICENSING.md`")
+           if repo_licensed else
+           ((f"root-level license text(s) for the PI to read: {lic_open_s} (section 5)",
+             "**PI reads them** (section 5)", "**PI decides** what the README says")
+            if lic_texts else
+            (f"**no root-level license text** ({len(lic_texts)} at the commit under section 5's "
+             f"root-level rule; section 5's exact-name count, any depth, NOTICE included: "
+             f"{len(lf_head)} at the commit, {len(lf_hist)} ever added)",
+             "**not granted** (default: all rights reserved)",
+             "**PI decides** a license (or none) before the repo goes public")))),
     ]
     for r in rows:
         P("| " + " | ".join(c.replace("|", "\\|") for c in r) + " |")
@@ -3068,7 +3554,15 @@ def main() -> int:
       f"`{S1['framing_marker_first_commit']}` ({len(fr_hist)} paths ever carried it) and the "
       f"lists since `{S1['data/configs/b2_concepts.json']['first_added']}`, so only a history "
       f"rewrite would take them out of the published record (section 1).")
-    P("2. **The repository has no license.** The PI chooses one, or none, before publication.")
+    if repo_licensed:
+        P(f"2. **The repository's own license is recorded** (section 5): {lic_summary}; added at "
+          f"{lic_added_s}. No license decision is open here (the README action is in section 6's "
+          f"last row); the third-party items (1, 3, 4, 5 and 7) keep their own terms.")
+    elif lic_texts:
+        P(f"2. **The repository carries license text(s) this part does not record as its license** "
+          f"(section 5): {lic_open_s}. The PI reads them before publication.")
+    else:
+        P("2. **The repository has no license.** The PI chooses one, or none, before publication.")
     P(f"3. **jlens-qwen36 is Apache-2.0**; tracked paths under it: {n_tr_head} at HEAD, "
       f"{n_tr_hist} in any commit; {jl_tracked}; copy check: {jl_red}. The public repo depends on it "
       "at run time for the Qwen oracle, and on the lab's untracked additions inside the clone; the "
@@ -3096,9 +3590,10 @@ def main() -> int:
     P(f"8. **Moving HEAD.** These counts are bound to `{head[:7]}` (the record locators are "
       f"pinned to `{LOC[:7]}`); re-run this script at the final pre-flip commit (header). At "
       f"that commit this audit's own files are tracked, and section 2f's projection finds "
-      f"{len(pj_ids)} id(s) and {len(pj_hosts)} host(s) in them that the sweeps would leave "
-      f"unclassified, so the pass line's two sweep gates fail there until each is classified "
-      f"(the PI's or the re-run's call; nothing is changed here).")
+      f"{len(pj_ids)} id(s) and {len(pj_hosts)} host(s) in the audit files on disk at this run, and "
+      f"the closing self-check @@L3SELF@@ in this raw's own text (together @@L3COMB@@), that the "
+      f"sweeps would leave unclassified@@L3VERDICT_8@@ Audit raws written after this run are the "
+      f"re-run's to check.")
     P("")
     P(f"Redactions: **{len(REDACTIONS)} pattern redactions** (redact(): IPv4, tokens, keys)"
       + ("" if not REDACTIONS else " -- " + "; ".join(f"{r['where']} {r['category']} {r['redacted']}" for r in REDACTIONS))
@@ -3140,8 +3635,14 @@ def main() -> int:
           f"{plic} via the paper (the PI accepts that source or not; the text appeared earlier, "
           f"with no license stated, in Lindsey 2025), the two word lists have no "
           f"license found (the README attributes Macar et al. and Lindsey 2025; the PI decides), "
-          f"the Global Workspace paper's license was not read, and the repository has no LICENSE "
-          f"file. jlens-qwen36: {jl_tracked}; copy check: {jl_red}. Macar port: "
+          + (f"and the Global Workspace paper's license was not read. The repository's own "
+             f"license is recorded in section 5 ({lic_summary}). " if repo_licensed else
+             (f"the Global Workspace paper's license was not read, and the repository's "
+              f"root-level license text(s) are for the PI to read (section 5: {lic_open_s}). "
+              if lic_texts else
+              f"the Global Workspace paper's license was not read, and the repository has no "
+              f"LICENSE file. "))
+          + f"jlens-qwen36: {jl_tracked}; copy check: {jl_red}. Macar port: "
           f"{len([n for n in shared_macar if n not in GENERIC_NAMES])} non-generic function names "
           f"shared with their code ({len(shared_macar)} counting generic names: {shared_macar}); "
           f"their stimulus text is carried verbatim. (iv)'s `.npz`-allowlist and model-weights "
@@ -3495,12 +3996,16 @@ def main() -> int:
          "are references neither sweep has classified.",
          f"NOTED, not changed. Section 2f now projects both sweeps over this audit's own working "
          f"files with the sweeps' own rules: {len(pj_ids)} unclassified id(s) and {len(pj_hosts)} "
-         f"unclassified host(s) would appear ({len(pj_mine_hosts)} host(s) and "
-         f"{len(pj_mine_ids) + pj_mine_ids_other} id(s) from this part's three files, the hosts "
+         f"unclassified host(s) would appear in those on disk at this run, and @@L3SELF@@ in this "
+         f"raw's own text (the closing self-check; together @@L3COMB@@) ({len(pj_mine_hosts)} host(s) and "
+         f"{len(pj_mine_ids) + pj_mine_ids_other} id(s) from this part's own files on disk (of the "
+         f"{len(MINE)} paths it counts as its own: this script, its 2026-10-08 raws and this run's two "
+         f"outputs), the hosts "
          f"and {len(pj_mine_ids)} URL-fragment id(s) printed there; "
          f"{pj_oth_hosts} host(s) and {pj_oth_ids} id(s) from the other audit files only, "
-         "counted and not printed), so the gates would fail there until each is classified. "
-         "Classifying the audit's own carriers is left to the re-run or the PI; a failing gate "
+         "counted and not printed)"
+         + "@@L3VERDICT_VC@@"
+         + "Classifying the audit's own carriers is left to the re-run or the PI; a failing gate "
          "there is the gate doing its job. To make the projection share the sweeps' rules, the "
          "id and host classifications were moved into two functions; the classes printed above "
          "are unchanged by that move (this run's tables equal the round-3 run's apart from the "
@@ -3561,15 +4066,109 @@ def main() -> int:
     for a, b, c in VC4:
         P(f"| {a} | {b.replace('|', chr(92) + '|')} | {c.replace('|', chr(92) + '|')} |")
 
+    # ---- release (L3): the self-check -- this run's own two outputs projected as if tracked, with the audit files on
+    # disk (section 2f), by the sweeps' own rules; the placeholders of section 2f, item 8 and the round-4 row are filled
+    # from the combined result, and the rendering is repeated until the result no longer changes (a fixed point)
+    def _fill(t_: str, sc_: dict) -> str:
+        for k_, v_ in sc_["fill"].items():
+            t_ = t_.replace(k_, v_)
+        return t_
+
+    def _sc(u_ids: dict, u_hosts: dict, n_iter: int) -> dict:
+        s_ids = {k: ps for k, ps in u_ids.items() if ps & {OUT_MD_C, OUT_JSON_C}}
+        s_hosts = {k: ps for k, ps in u_hosts.items() if ps & {OUT_MD_C, OUT_JSON_C}}
+        comb = bool(u_ids or u_hosts)
+        # L3 fix round: the failing gate(s) named from the counts -- the id gate only when an id is unclassified, the
+        # host gate only when a host is, both only when both are
+        g_ = [g for g, n in (("the external-reference sweep gate (0 unclassified ids)", len(u_ids)),
+                             ("the URL-host sweep gate (0 unclassified hosts)", len(u_hosts))) if n]
+        gates_ = " and ".join(g_)
+        return {
+            "fill": {
+                "@@L3SELF@@": f"{len(s_ids)} id(s) and {len(s_hosts)} host(s)",
+                "@@L3COMB@@": f"{len(u_ids)} id(s) and {len(u_hosts)} host(s)",
+                "@@L3VERDICT_2F@@": (f", so {gates_} of the pass line would fail at the pre-flip re-run until "
+                                     f"each is classified (for the PI where no confirmed rule covers it); the other "
+                                     f"sweep gate would not fail on these files" if len(g_) == 1 else
+                                     f", so {gates_} of the pass line would fail at the pre-flip re-run until "
+                                     f"each is classified (for the PI where no confirmed rule covers it)" if comb else
+                                     ", so neither sweep gate would fail on these files at the pre-flip re-run"),
+                "@@L3VERDICT_8@@": (f", so {gates_} of the pass line {'fail' if len(g_) > 1 else 'fails'} there "
+                                    f"until each is classified (the PI's or the re-run's call; nothing is changed "
+                                    f"here)." if comb else
+                                    ", so neither sweep gate fails on them there (nothing is changed here)."),
+                "@@L3VERDICT_VC@@": (f", so {gates_} would fail there until each is classified. " if comb else
+                                     ", so neither gate would fail on them there. ")},
+            "json": {
+                "outputs_projected_as": [OUT_MD_C, OUT_JSON_C],
+                "outputs_inside_repository": [not os.path.relpath(os.path.realpath(o_), os.path.realpath(REPO))
+                                              .startswith("..") for o_ in (OUT_MD, OUT_JSON)],
+                "own_outputs_unclassified_ids": len(s_ids), "own_outputs_unclassified_hosts": len(s_hosts),
+                "combined_unclassified_ids": len(u_ids), "combined_unclassified_hosts": len(u_hosts),
+                "combined_unclassified_ids_sha256_8": sorted(sha256(k[1].encode())[:8] for k in u_ids),
+                "combined_unclassified_hosts_sha256_8": sorted(sha256(k[1].encode())[:8] for k in u_hosts),
+                "renderings_to_fixed_point": n_iter}}
+
+    def _render(sc_: dict):
+        tail = ["", "## Self-check: this raw's own text", "",
+                f"This run's two outputs, projected as if tracked as `{OUT_MD_C}` and `{OUT_JSON_C}` (an output "
+                f"outside the repository is projected under `results/raw/` by its basename), together with the "
+                f"{len(own_txt)} audit file(s) on disk that section 2f projects, by the sweeps' own rules: "
+                f"**{sc_['json']['own_outputs_unclassified_ids']}** unclassified id(s) and "
+                f"**{sc_['json']['own_outputs_unclassified_hosts']}** unclassified host(s) carried by this raw's "
+                f"own text; **{sc_['json']['combined_unclassified_ids']}** id(s) and "
+                f"**{sc_['json']['combined_unclassified_hosts']}** host(s) in all"
+                + ("" if not (sc_['json']['combined_unclassified_ids'] or sc_['json']['combined_unclassified_hosts'])
+                   else " (by sha256[:8] only: ids "
+                   + (", ".join(f"`{x}`" for x in sc_['json']['combined_unclassified_ids_sha256_8']) or "none")
+                   + "; hosts "
+                   + (", ".join(f"`{x}`" for x in sc_['json']['combined_unclassified_hosts_sha256_8']) or "none")
+                   + ")")
+                + f". Section 2f, section 7 item 8 and the round-4 values-check row print this combined verdict. "
+                f"The text written is the last text projected, this paragraph included (where the rendering count "
+                f"changes on the last rendering, that rendering is projected once more and must give the same "
+                f"result); it reached a fixed point after {sc_['json']['renderings_to_fixed_point']} rendering(s)."]
+        md_ = _fill("\n".join(L + tail) + "\n", sc_)
+        js_ = _fill(json.dumps({**R, "self_check": sc_["json"], "web_reads_recorded": WEB_READS,
+                                "jlens_upstream_blobs_recorded": JLENS_UPSTREAM_BLOBS}, indent=1,
+                               default=list), sc_)
+        # L3 fix round: section 1's count of this run's own outputs carrying the two markers, on the text written (the
+        # fill text carries neither marker, so the count is stable)
+        o_tq = sum(1 for t_ in (md_, js_) if TQ_MARK in norm_text(t_))
+        o_fr = sum(1 for t_ in (md_, js_) if FR_MARK in norm_text(t_))
+        s1_ = (f"{o_tq} carr{'ies' if o_tq == 1 else 'y'} the trial question and {o_fr} the framing marker")
+        assert TQ_MARK not in s1_ and FR_MARK not in s1_
+        md_, js_ = md_.replace("@@L3S1OWN@@", s1_), js_.replace("@@L3S1OWN@@", s1_)
+        return md_, js_, len(L) + len(tail)
+    sc = _sc({}, {}, 1)
+    for n_it in range(1, 7):
+        md_t, js_t, n_lines = _render(sc)
+        u_i, u_h = project({**own_txt, OUT_MD_C: md_t, OUT_JSON_C: js_t})
+        sc_new = _sc(u_i, u_h, n_it)
+        if {k_: v_ for k_, v_ in sc_new["json"].items() if k_ != "renderings_to_fixed_point"} == \
+                {k_: v_ for k_, v_ in sc["json"].items() if k_ != "renderings_to_fixed_point"} and \
+                sc_new["fill"] == sc["fill"]:
+            if sc["json"]["renderings_to_fixed_point"] != n_it:
+                sc = sc_new
+                md_t, js_t, n_lines = _render(sc)
+                # L3 fix round: the final rendering (its count changed) is projected once more, so the text written
+                # is a text projected; the result must be the same, the count included
+                u_i, u_h = project({**own_txt, OUT_MD_C: md_t, OUT_JSON_C: js_t})
+                if _sc(u_i, u_h, n_it) != sc:
+                    raise SystemExit("self-check: the final rendering projects differently; nothing written")
+            break
+        sc = sc_new
+    else:
+        raise SystemExit("self-check did not reach a fixed point in 6 renderings; nothing written")
+    assert "@@L3" not in md_t and "@@L3" not in js_t
+    R["self_check"] = sc["json"]
     os.makedirs(os.path.dirname(OUT_MD), exist_ok=True)
     os.makedirs(os.path.dirname(OUT_JSON), exist_ok=True)
     with open(OUT_MD, "w") as f:
-        f.write("\n".join(L) + "\n")
+        f.write(md_t)
     with open(OUT_JSON, "w") as f:
-        json.dump({**R, "web_reads_recorded": WEB_READS,
-                   "jlens_upstream_blobs_recorded": JLENS_UPSTREAM_BLOBS}, f, indent=1,
-                  default=list)
-    print(f"wrote {os.path.relpath(OUT_MD, REPO)} ({len(L)} lines) and "
+        f.write(js_t)
+    print(f"wrote {os.path.relpath(OUT_MD, REPO)} ({n_lines} lines) and "
           f"{os.path.relpath(OUT_JSON, REPO)}; pattern redactions {len(REDACTIONS)}, "
           f"redacted ids {len(REDACTED_IDS)}; commit {head[:7]}; pass: {R['pass_line']}")
     return 0

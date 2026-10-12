@@ -23,12 +23,61 @@ No candidate secret, full infrastructure id, IP address, SSH key name or
 fingerprint, non-allowlisted e-mail address, phone number, street address or
 third-party name is written verbatim. Each value is reported as
     first 4 characters + '...' + length + ':' + first 8 hex of its sha256
-and every excerpt (<= 40 characters) is cut from a line in which every such
-span has first been replaced by a placeholder ([EMAIL] [PHONE] [ADDR] [IP]
-[CRED] [ID] [TOK] [NAME] [W]).
+and every excerpt (a window of <= 40 characters) is cut from a line in which
+every such span has first been replaced by a placeholder ([EMAIL] [PHONE]
+[ADDR] [IP] [CRED] [ID] [TOK] [NAME] [W]; round 10: [SCRATCH_PATH]
+[MACOS_TEMP_PATH] [LOCAL_HOME_PATH] [CLAUDE_AI_URL] [TRANSCRIPT_ID] [ID_FLAG];
+a token the window cuts, other than a plain word, is replaced by [CUT]).
 
 Stdlib only. Writes exactly one file (the JSON, refuses to overwrite) and a
 summary to stdout.
+
+Round 9 (2026-10-10): the Digest seat's three filed 2026-10-10 figure SVGs each
+carry a C2PA content-credentials element (<c2pa:manifest>, base64). The PI,
+2026-10-10, verbatim: "declare it ahead of the N12 pre-flip re-scan as a known
+high-entropy false positive". It covers the element of those three renders
+only; the 2026-10-09 renders they replace are not declared. Code's
+implementation, not the PI's words: a hit lying wholly inside the text content
+of a declared <c2pa:manifest>...</c2pa:manifest> element is FALSE-POSITIVE with
+the reason C2PA_REASON, and only there. A declared element is bound to its
+location and to its exact blob (C2PA_MANIFESTS: the object's repository path,
+a root .svg path matched exactly, the blob's length and sha256); the same
+string anywhere else (another path or directory, another element, an edited
+blob) is screened as before. A declared hit keeps its category and redacted
+form, is still covered by the leak guard, and carries verdict/reason/context
+fields; its value's subtype gains the suffix '@c2pa_declared'. Scope is
+unchanged: a root .svg is screened only if it ever becomes a history-only path.
+
+Round 10 (2026-10-12): the excerpt masker also masks, whole, every local scratch
+path, macOS per-user temp path, local home-directory path, claude.ai session URL
+tail and uuid-shaped id (EXCERPT_CLASS_RXS; placeholders [SCRATCH_PATH]
+[MACOS_TEMP_PATH] [LOCAL_HOME_PATH] [CLAUDE_AI_URL] [TRANSCRIPT_ID]), so the
+release JSON quotes none of them where its committed predecessor did. Excerpts
+only: every count, verdict, category, locator and redacted value is unchanged,
+and so is the leak guard.
+
+Round 10, release (2026-10-12): the release JSON is itself screened by the
+history and licenses scans once it is committed, so an excerpt must add no
+value those scans would read as new. Three excerpt-only changes (EXCERPT_* below):
+(a) on a line that names ssh, an identity-file flag is masked together with its
+argument as [ID_FLAG], so no identity-flag pattern reads a placeholder as a file
+name; (b) a token the 40-character window cuts at either end -- a run of
+characters between the delimiters of EXCERPT_PATH_STOP_RX -- is replaced, its
+cut part only, by [CUT] unless the cut part is a plain word (ASCII letters
+only) of a token that holds no host, URL, path or address shape; where the hit
+itself lies in the token cut at the left, the window starts at that token
+instead when the hit is within 30 characters of it; where the window's right
+end cuts a run of characters other than whitespace, a quote, a backtick or
+a closing parenthesis or bracket (tokens joined by angle brackets, braces,
+opening brackets, pipes, commas or semicolons), the run's
+part in the window up to the end of its last token with such a shape is
+replaced by [CUT] too; so no excerpt starts or ends inside a token with a
+host, URL, path or id shape, and none ends inside such a joined run (one can
+start inside a joined run's later token), and a replaced part can lengthen the
+excerpt by at most the placeholder's length at each end; (c) every
+non-printable character is mapped to a space before masking rather than after,
+so the masks read the text the excerpt shows. Counts, verdicts, categories,
+locators, redacted values and the leak guard are unchanged.
 
     jlens-qwen36/.venv/bin/python scripts/audit_note_N12_content.py \
         [--rev HEAD] [--json-out results/raw/2026-10-08_note-N12-content-screen.json]
@@ -51,6 +100,24 @@ BLOCK = "AUDIT-note-release-v1_2.md"
 BLOCK_SHA = "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841"
 DEFAULT_OUT = os.path.join("results", "raw", "2026-10-08_note-N12-content-screen.json")
 EXCERPT_MAX = 40
+# Round 9: the 'method' entries whose text is derived from the screened corpus; every other 'method' entry, and the
+# 'patterns' block, is this script's constant text, which the leak guard does not read (see main()).
+CONTENT_DERIVED_METHOD_KEYS = ("name_allowlist_et_al_detected", "hex_tokens_skipped")
+
+# Round 9 (2026-10-10): the PI's declaration, verbatim in C2PA_REASON, made ahead of the N12 pre-flip re-scan (see the
+# docstring); it covers the element of the three filed 2026-10-10 renders only. Repository path (a root path) ->
+# (length, sha256) of the element's text content, the exact base64 blob. The decode in the reason is Code's.
+C2PA_PI_WORDS = "declare it ahead of the N12 pre-flip re-scan as a known high-entropy false positive"
+C2PA_REASON = ('the PI, 2026-10-10: "' + C2PA_PI_WORDS + '" (it: the C2PA content-credentials element of each filed '
+               "2026-10-10 render); Code's read-only decode, not the PI's words: a base64 JUMBF content-credentials "
+               "manifest, no secret")
+C2PA_CONTEXT = "c2pa_content_credentials_manifest"
+C2PA_ELEMENT_RX = re.compile(r"<c2pa:manifest>([A-Za-z0-9+/=]*)</c2pa:manifest>")
+C2PA_MANIFESTS = {
+    "2026-10-10_F1a_headline-strip.svg": (7684, "da236ea489a9226b5064a30c19e29c83345451a4e2728ef7641fc908fcba349f"),
+    "2026-10-10_F1b_five-link-panels.svg": (7684, "ee0ea5730fa34810d240782be92da1a4977e41bcb1518c01d7e7a86281c581f5"),
+    "2026-10-10_F2_macar-lineage-roc_post.svg": (7684, "f814df3b308262c8e137b825f3e822dbb5c68357eda406f1d7404bb5186c7c9b"),
+}
 
 # E-mail addresses counted separately, never listed as hits (task text).
 EMAIL_ALLOW = {
@@ -208,6 +275,79 @@ INFRA_RXS = [
     ("ssh_identity_flag", re.compile(r"\bssh\b[^\n]*?\s-i\s+(?P<v>\S+)")),
 ]
 
+# Round 10 (2026-10-12): excerpt-only path classes. The standing redaction rules keep local scratch paths, local temp
+# paths, claude.ai session URLs and local transcript ids out of every new public output, and the screened corpus quotes
+# them (committed raws, and this part's own committed 2026-10-08 JSON). Each anchor below marks a path token, which is
+# masked WHOLE in every excerpt -- extended left and right up to a character of EXCERPT_PATH_STOP_RX, trailing '.' and
+# ':' left as punctuation -- by the placeholder naming its class. Excerpts only: no count, verdict, category or locator
+# reads them.
+# (placeholder, anchor, precedence: lower wins where two classes overlap)
+EXCERPT_PATH_STOP_RX = re.compile(r"[\s\"'`<>\\()\[\]{}|,;]")
+EXCERPT_CLASS_RXS = [
+    ("[SCRATCH_PATH]", re.compile(r"/tmp/(?=[^\s\"'`<>\\()\[\]{}|,;])"), -7),           # /private/tmp/..., /tmp/...
+    ("[SCRATCH_PATH]", re.compile(r"(?<![A-Za-z0-9])claude-\d{3,}(?!\d)"), -7),          # the per-uid scratch directory
+    ("[SCRATCH_PATH]", re.compile(r"-Users-"), -7),                                      # the per-user project-slug form
+    ("[MACOS_TEMP_PATH]", re.compile(r"/var/folders/(?=[^\s\"'`<>\\()\[\]{}|,;])"), -6),  # /var/folders/<2>/<per-user>/...
+    ("[LOCAL_HOME_PATH]", re.compile(r"/Users/(?=[A-Za-z0-9_])"), -5),                   # a local home-directory path
+    ("[CLAUDE_AI_URL]", re.compile(r"claude\.ai/code/", I), -4),                         # a session URL and its tail
+    ("[TRANSCRIPT_ID]", re.compile(r"(?<![0-9A-Fa-f])[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                                   r"(?![0-9A-Fa-f])", I), -3),                         # a uuid-shaped id
+]
+
+
+def excerpt_path_token(line, s, e):
+    """Round 10: the whole path token around the anchor [s, e): extended over every character that is not whitespace
+    or one of the delimiters of EXCERPT_PATH_STOP_RX; trailing '.' and ':' are left outside as punctuation."""
+    while s > 0 and not EXCERPT_PATH_STOP_RX.match(line[s - 1]):
+        s -= 1
+    n = len(line)
+    while e < n and not EXCERPT_PATH_STOP_RX.match(line[e]):
+        e += 1
+    while e > s and line[e - 1] in ".:":
+        e -= 1
+    return s, e
+
+
+# Round 10, release (2026-10-12): excerpt-only rules so the release JSON, once committed and screened in its turn by
+# the history and licenses scans, adds no value either reads as new. Not in EXCERPT_CLASS_RXS (the message screen
+# imports that table as path anchors).
+# (a) On a line naming ssh (any case, anywhere), every identity-file flag together with its argument -- a '-i' or
+#     '-I' at the line start or after whitespace, then whitespace and a run of non-space -- is one span, masked as
+#     [ID_FLAG]; lowest precedence, so it absorbs any placeholder inside it. The INFRA identity-flag pattern is
+#     case-sensitive and masked only the argument, leaving the flag before an [ID] placeholder.
+EXCERPT_SSH_WORD_RX = re.compile(r"ssh", I)
+EXCERPT_ID_FLAG_RX = re.compile(r"(?<!\S)-i\s+\S+", I)
+EXCERPT_ID_FLAG = ("[ID_FLAG]", -8)
+# (b) A token the excerpt window cuts at either end (a run of characters other than those of EXCERPT_PATH_STOP_RX,
+#     not inside a placeholder) has its cut part replaced by EXCERPT_CUT_PH, unless the cut part is a plain word
+#     (EXCERPT_PLAIN_WORD_RX) and the whole token has no reference shape (EXCERPT_REF_SHAPE_RX: a scheme separator,
+#     a www label, a dotted name ending in two letters, a slash next to a name character, an at sign). Where the hit
+#     lies in the token cut at the left and starts within EXCERPT_LEFT_SHIFT_MAX characters of it, the window starts
+#     at the token instead, so the hit stays visible where its token fits the window, and the left end is no cut.
+#     Where the window's right end cuts a run (a run of characters other than those of EXCERPT_RUN_STOP_RX:
+#     whitespace, a quote, a backtick, a closing parenthesis or bracket -- the stop class of the history scan's two
+#     path patterns, which read across angle brackets, braces, opening brackets, pipes, commas and semicolons), the
+#     run's part inside the window, from its start (or the window's) to the end of its last token with a reference
+#     shape, is replaced by EXCERPT_CUT_PH as well; so a path joined by those characters is never left with its
+#     anchor visible and its tail cut.
+EXCERPT_CUT_PH = "[CUT]"
+EXCERPT_RUN_STOP_RX = re.compile(r"[\s\"'`)\]]")
+EXCERPT_PLAIN_WORD_RX = re.compile(r"[A-Za-z]+")
+EXCERPT_REF_SHAPE_RX = re.compile(r":/|\bwww\.|[A-Za-z0-9-]\.[A-Za-z]{2}|[A-Za-z0-9_.~%+-]/|/[A-Za-z0-9_.~%+-]|@", I)
+EXCERPT_LEFT_SHIFT_MAX = 30
+
+
+def excerpt_view(line):
+    """Round 10, release: the line as an excerpt shows it -- every non-printable character (tab, CR, the C0/C1
+    controls, non-ASCII spaces) mapped to one space; length and positions unchanged."""
+    return "".join(ch if (ch.isprintable() and ch not in "\r\n") else " " for ch in line)
+
+
+def excerpt_cut_masked(piece, token):
+    """Round 10, release: True if a cut part `piece` of `token` is replaced by EXCERPT_CUT_PH."""
+    return not (EXCERPT_PLAIN_WORD_RX.fullmatch(piece) and not EXCERPT_REF_SHAPE_RX.search(token))
+
+
 # Standard OpenSSH file names under ~/.ssh/ that are not key names; still redacted
 # in hits, but exempt from the leak guard (they are ordinary words found elsewhere).
 STANDARD_SSH_FILES = {"config", "known_hosts", "known_hosts.old", "authorized_keys", "environment", "rc"}
@@ -234,6 +374,26 @@ def sha8(s):
 def redact(v):
     # first 4 characters (fewer for a short value, so the prefix never is the whole value)
     return "%s...%d:%s" % (v[:min(4, len(v) // 2)], len(v), sha8(v))
+
+
+def c2pa_line_spans(path, text):
+    """Round 9: {line number: [(start col, end col)]} of the text content of every DECLARED <c2pa:manifest> element
+    (an .svg whose repository path, matched exactly, is a C2PA_MANIFESTS key -- a root path -- the element's text of
+    that entry's length and sha256), plus the counts of declared and undeclared elements. A declared blob holds no
+    newline, so each span lies on one line."""
+    out, n_decl, n_undecl = defaultdict(list), 0, 0
+    if not (path or "").endswith(".svg") or "<c2pa:manifest>" not in text:
+        return out, 0, 0
+    want = C2PA_MANIFESTS.get(path)
+    for m in C2PA_ELEMENT_RX.finditer(text):
+        blob = m.group(1)
+        if want and (len(blob), hashlib.sha256(blob.encode()).hexdigest()) == want:
+            ls = text.rfind("\n", 0, m.start(1)) + 1
+            out[text.count("\n", 0, m.start(1)) + 1].append((m.start(1) - ls, m.end(1) - ls))
+            n_decl += 1
+        else:
+            n_undecl += 1
+    return out, n_decl, n_undecl
 
 
 def email_domain_class(e):
@@ -315,6 +475,12 @@ def mask_spans(line, name_allow):
         if e > s:
             spans.append((s, e, ph, pr))
 
+    for ph, rx, pr in EXCERPT_CLASS_RXS:   # round 10: whole path tokens, ahead of every other placeholder
+        for m in rx.finditer(line):
+            add(*excerpt_path_token(line, *m.span()), ph, pr)
+    if EXCERPT_SSH_WORD_RX.search(line):   # round 10, release: an identity-file flag with its argument, as one span
+        for m in EXCERPT_ID_FLAG_RX.finditer(line):
+            add(*m.span(), *EXCERPT_ID_FLAG)
     for _, rx in CRED_RXS:
         for m in rx.finditer(line):
             s, e = (m.span("v") if "v" in rx.groupindex and m.group("v") is not None else m.span())
@@ -366,7 +532,7 @@ _MASK_CACHE = {}
 
 
 def excerpt(line, pos, name_allow):
-    line = line.replace("\t", " ")
+    line = excerpt_view(line)   # round 10, release: before masking (was: tabs before, other controls after the cut)
     # name_allow is fixed for a whole run (set once after the et-al pass), so the line alone keys the cache.
     if len(_MASK_CACHE) > 4096:
         _MASK_CACHE.clear()
@@ -375,24 +541,92 @@ def excerpt(line, pos, name_allow):
         merged = mask_spans(line, name_allow)
         _MASK_CACHE[line] = merged
     out = []
+    olen = 0
     cur = 0
     mpos = None
+    ph_spans = []   # round 10, release: each placeholder's [start, end) in the masked line
     for s, e, ph, _ in merged:
         if mpos is None and pos < s:
-            mpos = len("".join(out)) + (pos - cur)
+            mpos = olen + (pos - cur)
         out.append(line[cur:s])
+        olen += s - cur
         if mpos is None and s <= pos < e:
-            mpos = len("".join(out))
+            mpos = olen
         out.append(ph)
+        ph_spans.append((olen, olen + len(ph)))
+        olen += len(ph)
         cur = e
     if mpos is None:
-        mpos = len("".join(out)) + max(0, pos - cur)
+        mpos = olen + max(0, pos - cur)
     out.append(line[cur:])
     masked = "".join(out)
+    n = len(masked)
     start = max(0, mpos - 10)
-    ex = masked[start:start + EXCERPT_MAX]
-    ex = "".join(ch if (ch.isprintable() and ch not in "\r\n") else " " for ch in ex)
-    return ex.strip()
+
+    # round 10, release: tokens cut by the window (see EXCERPT_CUT_PH)
+    def tok(i):
+        return 0 <= i < n and not EXCERPT_PATH_STOP_RX.match(masked[i])
+
+    def cut_at(i):   # True if the boundary before masked[i] splits a token outside every placeholder
+        return tok(i - 1) and tok(i) and not any(a < i < b for a, b in ph_spans)
+
+    def bounds(i):   # the token holding masked[i]
+        s, e = i, i
+        while tok(s - 1):
+            s -= 1
+        while tok(e):
+            e += 1
+        return s, e
+
+    if cut_at(start):
+        ts, te = bounds(start)
+        if te > mpos and mpos - ts <= EXCERPT_LEFT_SHIFT_MAX:
+            start = ts   # the hit lies in this token: start the window at the token
+    end = min(n, start + EXCERPT_MAX)
+    cuts = []   # [start, end) of each cut part replaced by EXCERPT_CUT_PH
+    if cut_at(start):
+        ts, te = bounds(start)
+        x = min(te, end)
+        if excerpt_cut_masked(masked[start:x], masked[ts:te]):
+            cuts.append((start, x))
+    left_end = cuts[0][1] if cuts else start
+    if end < n and cut_at(end):
+        ts, te = bounds(end - 1)
+        y = max(ts, left_end)
+        if y < end and excerpt_cut_masked(masked[y:end], masked[ts:te]):
+            cuts.append((y, end))
+
+    def rtok(i):   # a character of a run (see EXCERPT_RUN_STOP_RX)
+        return 0 <= i < n and not EXCERPT_RUN_STOP_RX.match(masked[i])
+
+    if end < n and rtok(end - 1) and rtok(end):   # the right end cuts a run: mask it up to its last reference token
+        rs = end - 1
+        while rtok(rs - 1):
+            rs -= 1
+        y0 = max(rs, left_end)
+        last, i = None, y0
+        while i < end:
+            if tok(i):
+                ts, te = bounds(i)
+                if EXCERPT_REF_SHAPE_RX.search(masked[ts:te]):
+                    last = min(te, end)
+                i = te
+            else:
+                i += 1
+        if last is not None and y0 < last:
+            cuts.append((y0, last))
+    merged_cuts = []   # disjoint, in order; touching or overlapping cut parts become one [CUT]
+    for a, b in sorted(cuts):
+        if merged_cuts and a <= merged_cuts[-1][1]:
+            merged_cuts[-1] = (merged_cuts[-1][0], max(b, merged_cuts[-1][1]))
+        else:
+            merged_cuts.append((a, b))
+    parts, cur = [], start
+    for a, b in merged_cuts:
+        parts += [masked[cur:a], EXCERPT_CUT_PH]
+        cur = b
+    parts.append(masked[cur:end])
+    return "".join(parts).strip()
 
 
 # ---------------------------- git -------------------------------------------
@@ -427,8 +661,10 @@ class Cat:
 
 # ---------------------------- screening -------------------------------------
 
-def screen_text(text, name_allow):
-    """Return (hits, names, values) for one text. hits: {category: [[line, excerpt, extra]]}."""
+def screen_text(text, name_allow, path=None):
+    """Return (hits, names, values) for one text. hits: {category: [[line, excerpt, extra]]}. path (round 9): the
+    object's locator, for the C2PA declaration."""
+    c2, n_c2_decl, n_c2_undecl = c2pa_line_spans(path, text)
     lines = text.split("\n")
     if lines and lines[-1] == "":
         lines = lines[:-1]
@@ -439,7 +675,17 @@ def screen_text(text, name_allow):
     tier_b_pairs = set()
     forms = defaultdict(Counter)
 
-    def hit(cat, ln, line, pos, extra):
+    def dec(ln, s, e):
+        # round 9: True if [s, e) on line ln lies wholly inside a declared C2PA manifest blob
+        return any(a <= s and e <= b for a, b in c2.get(ln, ()))
+
+    def c2s(sub, d):
+        return sub + "@c2pa_declared" if d else sub
+
+    def hit(cat, ln, line, pos, extra, declared=False):
+        if declared:   # round 9: the declaration's fields; the hit is still recorded and its value still guarded
+            extra = dict(extra, verdict="FALSE-POSITIVE", reason=C2PA_REASON, context=C2PA_CONTEXT)
+            hits["_c2pa_declared"].append([ln, cat])
         hits[cat].append([ln, excerpt(line, pos, name_allow), extra])
 
     for i, line in enumerate(lines):
@@ -454,8 +700,9 @@ def screen_text(text, name_allow):
                 hits["email_allowlisted"].append([ln, key])
             else:
                 cls = "noreply_shaped" if re.match(r"^(?:no-?reply|donotreply)", e, I) else "other"
-                values.append(("email", cls, e, ln))
-                hit("email", ln, line, m.start(), {"class": cls, "redacted": redact(e)})
+                d_ = dec(ln, *m.span())
+                values.append(("email", c2s(cls, d_), e, ln))
+                hit("email", ln, line, m.start(), {"class": cls, "redacted": redact(e)}, d_)
         # phone
         seen = set()
         for sub, rx in PHONE_RXS:
@@ -468,44 +715,48 @@ def screen_text(text, name_allow):
                     continue
                 seen.add(m.span())
                 shape = re.sub(r"\d", "d", v)
-                values.append(("phone", sub, v, ln))
+                d_ = dec(ln, *m.span())
+                values.append(("phone", c2s(sub, d_), v, ln))
                 feat = {"subtype": sub, "shape": shape, "redacted": redact(v)}
                 if re.match(r"^[+-]d\.d", shape):
                     feat["shape_tag"] = "signed_decimal"  # mechanical: '+<digit>.<digits>' is a signed decimal number's shape
-                hit("phone", ln, line, m.start(), feat)
+                hit("phone", ln, line, m.start(), feat, d_)
         # street address
         for sub, rx in ADDR_RXS:
             for m in rx.finditer(line):
                 v = m.group(0)
-                values.append(("street_address", sub, v, ln))
-                hit("street_address", ln, line, m.start(), {"subtype": sub, "redacted": redact(v)})
+                d_ = dec(ln, *m.span())
+                values.append(("street_address", c2s(sub, d_), v, ln))
+                hit("street_address", ln, line, m.start(), {"subtype": sub, "redacted": redact(v)}, d_)
         # IPv4
         for m in IPV4_RX.finditer(line):
             v = m.group(0)
             cls = ipv4_class(v)
-            values.append(("ipv4", cls, v, ln))
-            hit("ipv4", ln, line, m.start(), {"class": cls, "redacted": redact(v)})
+            d_ = dec(ln, *m.span())
+            values.append(("ipv4", c2s(cls, d_), v, ln))
+            hit("ipv4", ln, line, m.start(), {"class": cls, "redacted": redact(v)}, d_)
         # URLs
         for rx in (URL_RX, WWW_RX):
             for m in rx.finditer(line):
                 u = m.group(0).rstrip(".,;:")
                 h = display_host(url_host(u))
-                hit("url", ln, line, m.start(), {"host": h})
+                hit("url", ln, line, m.start(), {"host": h}, dec(ln, m.start(), m.start() + len(u)))
         # confidentiality words
         for sub, rx in CONF_RXS:
             for m in rx.finditer(line):
                 ctx = "path" if (sub == "private" and m.start() > 0 and line[m.start() - 1] == "/") else "text"
                 forms["confidentiality"][m.group(0).lower()] += 1
-                hit("confidentiality", ln, line, m.start(), {"word": sub, "context": ctx})
+                hit("confidentiality", ln, line, m.start(), {"word": sub, "context": ctx}, dec(ln, *m.span()))
         # correspondence markers
         for sub, rx in CORR_RXS:
             for m in rx.finditer(line):
-                hit("correspondence", ln, line, m.start(), {"marker": sub})
+                hit("correspondence", ln, line, m.start(), {"marker": sub}, dec(ln, *m.span()))
         # personal-life markers
         for sub, rx in PERS_RXS:
             for m in rx.finditer(line):
                 forms["personal_life"][m.group(0).lower()] += 1
-                hit("personal_life", ln, line, m.start(), {"marker": sub, "form": m.group(0).lower()})
+                hit("personal_life", ln, line, m.start(), {"marker": sub, "form": m.group(0).lower()},
+                    dec(ln, *m.span()))
         # credential-shaped
         for sub, rx in CRED_RXS:
             for m in rx.finditer(line):
@@ -514,8 +765,9 @@ def screen_text(text, name_allow):
                         "entropy_bits_per_char": round(entropy(v), 2),
                         "has_digit": any(c.isdigit() for c in v),
                         "mixed_case": any(c.isupper() for c in v) and any(c.islower() for c in v)}
-                values.append(("credential", sub, v, ln))
-                hit("credential", ln, line, m.start(), feat)
+                d_ = dec(ln, *m.span("v" if "v" in rx.groupindex else 0))
+                values.append(("credential", c2s(sub, d_), v, ln))
+                hit("credential", ln, line, m.start(), feat, d_)
         for m in GENERIC_TOKEN_RX.finditer(line):
             v = m.group(0)
             if HEX_RX.match(v):
@@ -526,7 +778,8 @@ def screen_text(text, name_allow):
             ent = entropy(v)
             if ent < 3.5:
                 continue
-            values.append(("credential", "generic_high_entropy", v, ln))
+            d_ = dec(ln, *m.span())
+            values.append(("credential", c2s("generic_high_entropy", d_), v, ln))
             pre = line[max(0, m.start() - 40):m.start()]
             post = line[m.end():m.end() + 3]
             ctx = None
@@ -536,16 +789,18 @@ def screen_text(text, name_allow):
                 ctx = "claude_ai_session_url_component"
             hit("credential", ln, line, m.start(), {"subtype": "generic_high_entropy", "context": ctx, "redacted": redact(v),
                                                    "len": len(v), "entropy_bits_per_char": round(ent, 2),
-                                                   "mixed_case": any(c.isupper() for c in v) and any(c.islower() for c in v)})
+                                                   "mixed_case": any(c.isupper() for c in v) and any(c.islower() for c in v)},
+                d_)
         # infrastructure identifiers (supplementary)
         for sub, rx in INFRA_RXS:
             for m in rx.finditer(line):
                 v = m.group("v")
-                values.append(("infra_identifier", sub, v, ln))
+                d_ = dec(ln, *m.span("v"))
+                values.append(("infra_identifier", c2s(sub, d_), v, ln))
                 feat = {"subtype": sub, "redacted": redact(v)}
                 if sub == "ssh_key_path" and v in STANDARD_SSH_FILES:
                     feat["standard_openssh_file"] = True  # e.g. the client config file, not a key name
-                hit("infra_identifier", ln, line, m.start(), feat)
+                hit("infra_identifier", ln, line, m.start(), feat, d_)
         # names (counts only)
         for m in NAME_PAIR_RX.finditer(line):
             a, b = m.group(1), m.group(2)
@@ -567,6 +822,8 @@ def screen_text(text, name_allow):
                         key = {"confidentiality": "word", "personal_life": "marker", "correspondence": "marker"}[cat]
                         hits[cat].append([ln, excerpt(joined, m.start(), name_allow),
                                           {key: sub, "spans_next_line": True}])
+    if n_c2_decl or n_c2_undecl:   # round 9: per-object record of the C2PA elements read
+        hits["_c2pa_elements"].append({"declared": n_c2_decl, "undeclared": n_c2_undecl})
     names = {"tier_a_capitalised_pairs": tier_a,
              "tier_b_given_name_pairs": len(tier_b_lines),
              "tier_b_distinct_pairs": len(tier_b_pairs),
@@ -727,9 +984,14 @@ def main():
     names_tot = Counter()
     by_source = defaultdict(lambda: Counter())
     hex_skipped = 0
+    c2pa_hits = Counter()      # round 9: hits inside a declared C2PA manifest blob, by category
+    c2pa_objects = {}          # round 9: locator -> {"declared": n, "undeclared": n}
     for it in items:
-        hits, names, values, nlines, forms = screen_text(it["text"], name_allow)
+        hits, names, values, nlines, forms = screen_text(it["text"], name_allow, it["locator"])
         hex_skipped += len(hits.pop("_hex_tokens_skipped", []))
+        c2pa_hits.update(c_ for _, c_ in hits.pop("_c2pa_declared", []))
+        for r_ in hits.pop("_c2pa_elements", []):
+            c2pa_objects[it["locator"]] = r_
         for k, v in forms.items():
             word_forms[k].update(v)
         loc = it["locator"]
@@ -814,7 +1076,9 @@ def main():
         },
         "method": {
             "line_split": "on \\n; 'lines' = number of \\n-separated lines (a trailing newline does not add a line)",
-            "excerpt": "<= %d chars of the line after masking every [EMAIL] [PHONE] [ADDR] [IP] [CRED] [ID] [TOK] (alnum/_-+= run >= 20 with a letter and a digit) [NAME] (given-name list word or given-name pair) [W] (one to three words after Dear/Hi/Hello/From:/To:/Cc:/Subject:/Regards/Best,/Cheers,/Thanks, or before wrote:) span; window starts 10 chars before the hit" % EXCERPT_MAX,
+            "excerpt": "<= %d chars of the line after masking every [SCRATCH_PATH] [MACOS_TEMP_PATH] [LOCAL_HOME_PATH] [CLAUDE_AI_URL] [TRANSCRIPT_ID] (round 10: a whole path token, see excerpt_path_classes) [EMAIL] [PHONE] [ADDR] [IP] [CRED] [ID] [TOK] (alnum/_-+= run >= 20 with a letter and a digit) [NAME] (given-name list word or given-name pair) [W] (one to three words after Dear/Hi/Hello/From:/To:/Cc:/Subject:/Regards/Best,/Cheers,/Thanks, or before wrote:) span, and [ID_FLAG] (round 10, release: an identity-file flag with its argument, on a line naming ssh); window starts 10 chars before the hit, or at the hit's own token (see excerpt_release_rules); a cut part of a token at either end of the window is replaced by [CUT] unless it is a plain word, and at the right end a cut run of joined tokens up to its last reference-shaped token" % EXCERPT_MAX,
+            "excerpt_path_classes": "round 10 (2026-10-12), excerpts only: a token holding a local scratch-path anchor (a path under the tmp directory, the per-uid scratch directory name, the per-user project-slug form) is masked whole as [SCRATCH_PATH]; a macOS per-user temp path under the folders directory as [MACOS_TEMP_PATH]; a local home-directory path as [LOCAL_HOME_PATH] (added because masking the longer scratch paths brought two home-directory paths into a 40-char window); a claude.ai session URL with its tail as [CLAUDE_AI_URL]; a uuid-shaped id as [TRANSCRIPT_ID]. The token is extended both ways to whitespace or a quote, backtick, bracket, brace, angle bracket, backslash, pipe, comma or semicolon; trailing '.' and ':' stay as punctuation. Where classes overlap, the order is SCRATCH_PATH, MACOS_TEMP_PATH, LOCAL_HOME_PATH, CLAUDE_AI_URL, TRANSCRIPT_ID, then the other placeholders. Counts, verdicts, categories, locators and redacted values do not read excerpts and are unchanged by it",
+            "excerpt_release_rules": "round 10, release (2026-10-12), excerpts only, so that this JSON, screened in its turn by the history and licenses scans once committed, adds no value they read as new: (a) on a line that names ssh in any case, the identity-file flag (dash i, either case, at the line start or after whitespace) is masked together with its argument as one [ID_FLAG] span, which absorbs any placeholder inside it; (b) a token is a run of characters other than whitespace, a quote, backtick, bracket, brace, angle bracket, backslash, pipe, comma or semicolon; where the %d-char window cuts a token at either end (not inside a placeholder), the cut part is replaced by [CUT] unless it is ASCII letters only and the whole token has no reference shape (a scheme separator, a www label, a dotted name ending in two letters, a slash next to a name character, an at sign); where the hit lies in the token cut at the left and starts within %d chars of that token, the window starts at the token instead, so the hit stays visible where its token fits the window; where the right end cuts a run (characters other than whitespace, a quote, a backtick, a closing parenthesis or a closing bracket, so tokens joined by angle brackets, braces, opening parentheses or brackets, backslashes, pipes, commas or semicolons), the run's part in the window from its start, or the window's, to the end of its last token with a reference shape is replaced by [CUT] as well; so no excerpt starts or ends inside a token with a host, URL, path or id shape, and none ends inside such a joined run (one can start inside a joined run's later token); an excerpt can exceed the window by at most the placeholder's length at each end; (c) non-printable characters are mapped to spaces before masking, not after the cut. Counts, verdicts, categories, locators, redacted values and the leak guard do not read excerpts and are unchanged by it" % (EXCERPT_MAX, EXCERPT_LEFT_SHIFT_MAX),
             "redacted_form": "first 4 chars + '...' + length + ':' + first 8 hex of sha256(value, utf-8)",
             "email_allowlist": "two addresses (the author's own; Anthropic's noreply) counted under email_allowlisted_counts, never listed as hits",
             "private_context": "confidentiality/private hits immediately preceded by '/' are tagged context=path (e.g. a /private/tmp path); reported, not discounted",
@@ -865,13 +1129,30 @@ def main():
             "annotated_tags": tag_info,
         },
         "objects": files_out,
+        "c2pa_declaration": {
+            "reason": C2PA_REASON, "verdict": "FALSE-POSITIVE", "declared_by": "the PI, 2026-10-10",
+            "pi_words_verbatim": C2PA_PI_WORDS,
+            "implementation_by_code": (
+                "a hit lying wholly inside the text content of a <c2pa:manifest> element of an .svg whose repository "
+                "root path (matched exactly), blob length and blob sha256 match a C2PA_MANIFESTS entry carries "
+                "verdict/reason/context; its value's subtype gains '@c2pa_declared'; the leak guard still covers it; "
+                "the same string elsewhere is screened as before"),
+            "manifests": {k_: {"length": v_[0], "sha256": v_[1]} for k_, v_ in C2PA_MANIFESTS.items()},
+            "objects_with_c2pa_elements": dict(sorted(c2pa_objects.items())),
+            "declared_hits_by_category": dict(sorted(c2pa_hits.items())),
+        },
     }
     # ---- leak guard: no collected raw value (len >= 5; allowlisted identities excepted) may appear in the output ----
     allowed_verbatim = set(EMAIL_ALLOW) | IDENTITY_NAME_ALLOW
     to_check = sorted(v for v in guard_values if len(v) >= 5 and v.lower() not in allowed_verbatim
                       and v not in allowed_verbatim and v not in STANDARD_SSH_FILES)
-    result["leak_guard"] = {"raw_values_checked": len(to_check), "rule": "every collected raw value of length >= 5 (hits and non-allowlisted identity names/emails) asserted absent from the JSON text and the stdout summary before either is written; exempt: the two allowlisted e-mails, the allowlisted identity names, and standard OpenSSH file names %s" % sorted(STANDARD_SSH_FILES)}
+    result["leak_guard"] = {"raw_values_checked": len(to_check), "rule": "every collected raw value of length >= 5 (hits and non-allowlisted identity names/emails) asserted absent from the JSON text and the stdout summary before either is written; exempt: the two allowlisted e-mails, the allowlisted identity names, and standard OpenSSH file names %s" % sorted(STANDARD_SSH_FILES),
+                            "constant_text_not_checked": "round 9: the JSON is checked with this script's own constant text blanked -- the 'patterns' block and every 'method' entry except %s -- because the screened corpus now holds this part's own earlier output, which quotes that text (an infra pattern matched two words of the ssh identity-flag description in the method prose of results/raw/2026-10-08_note-N12-content-screen.json; the words are not quoted here, so this note cannot re-trigger it); every value-derived field is still checked" % list(CONTENT_DERIVED_METHOD_KEYS)}
     js = json.dumps(result, indent=1, ensure_ascii=False, sort_keys=False) + "\n"
+    # round 9: the text the guard reads -- the same JSON with the script's constant method and pattern text blanked
+    js_chk = json.dumps(dict(result, patterns=None,
+                             method={k_: v_ for k_, v_ in result["method"].items() if k_ in CONTENT_DERIVED_METHOD_KEYS}),
+                        indent=1, ensure_ascii=False, sort_keys=False) + "\n"
 
     # ---- stdout summary ----
     summary = []
@@ -908,10 +1189,13 @@ def main():
     P("timezone offsets: %s; commit signatures: %s; annotated tags: %s"
       % (dict(tz), dict(sigs), [(t["ref"], t["signed"]) for t in tag_info]))
     P("hex tokens >= 24 skipped (counted only): %d" % hex_skipped)
+    P("C2PA declaration (round 9; the PI, 2026-10-10): objects with a <c2pa:manifest> element %d (%s); hits inside a "
+      "declared blob, FALSE-POSITIVE: %s" % (len(c2pa_objects), dict(sorted(c2pa_objects.items())) or "none",
+                                            dict(sorted(c2pa_hits.items())) or "none"))
     P("leak guard: %d raw values checked against the JSON and this summary" % len(to_check))
     P("wrote %s" % os.path.relpath(out, ROOT))
     text_out = "\n".join(summary)
-    leaked = [v for v in to_check if v in js or json.dumps(v, ensure_ascii=False)[1:-1] in js or v in text_out]
+    leaked = [v for v in to_check if v in js_chk or json.dumps(v, ensure_ascii=False)[1:-1] in js_chk or v in text_out]
     if leaked:
         sys.exit("LEAK GUARD FIRED: %d raw values would be written (redacted: %s); nothing written"
                  % (len(leaked), [redact(v) for v in leaked[:10]]))
@@ -951,6 +1235,93 @@ def selftest():
     for c in cats:
         for r in hits[c][:3]:
             print("  ", c, r)
+    # round 10: the excerpt path classes, each masked whole, wherever the 40-char window falls on it
+    fake_scr = "/private" + "/tmp/" + "claude-" + "999" + "/-" + "Users-" + "someone-x/" + "abcd1234" + "…/s.txt"
+    fake_tmp = "/private/var/" + "folders/" + "zz/" + "q1w2e3r4" + "/T/f.json"
+    fake_url = "https://" + "claude.ai/" + "code/" + "session_" + "Zz9Yy8"
+    fake_home = "/" + "Users/" + "someone" + "/Documents/x.py"
+    fake_uid = "-".join(["0123abcd", "4567", "89ab", "cdef", "0123456789ab"])
+    pc_lines = [("wrote %s. ok" % fake_scr, "[SCRATCH_PATH]"), ("at `%s` now" % fake_tmp, "[MACOS_TEMP_PATH]"),
+                ("Session: %s" % fake_url, "[CLAUDE_AI_URL]"), ("id %s.jsonl" % fake_uid, "[TRANSCRIPT_ID]"),
+                ("id (%s) x" % fake_uid, "[TRANSCRIPT_ID]"),
+                ("loads %s now" % fake_home, "[LOCAL_HOME_PATH]")]
+    pc_bad = ["claude-999", "Users-", "someone", "abcd1234", "q1w2", "folders/zz", "session_", "Zz9", "0123abcd", "0123456789ab"]
+    pc_fail = 0
+    for ln_, ph_ in pc_lines:
+        for pos_ in range(len(ln_)):
+            ex_ = excerpt(ln_, pos_, set(NAME_ALLOW))
+            if any(b_ in ex_ for b_ in pc_bad):
+                pc_fail += 1
+        if ph_ not in excerpt(ln_, 0, set(NAME_ALLOW)):
+            pc_fail += 1
+    print("selftest path classes: %d lines, %d failures" % (len(pc_lines), pc_fail))
+    ok = ok and pc_fail == 0
+    # round 10, release: at every window position, (a) the history scan's identity-flag pattern finds nothing in the
+    # excerpt as the JSON writes it, (b) every token of the excerpt is a whole token of the masked line, a
+    # plain-word part of a token with no reference shape, or placeholder text (a placeholder fragment only at the
+    # excerpt's own ends), and (c), independently of the rule's own regexes, no excerpt of a cut line ends with a
+    # proper prefix (two characters or more) of a literal host, URL, id or joined path written in it, nor starts with
+    # a proper suffix of a literal host, URL or id
+    sw = "s" + "sh"
+    idf_rx = re.compile("(?i)\\b" + sw + "\\b[^\\n]*?\\s-i\\s+(?P<v>\\S+)")
+    id_lines = [sw + " -p 22 -" + "i ~/." + sw + "/key_one user@box", sw.upper() + " -I keyfile_two remote",
+                "run " + sw + " with\x0b-" + "i\x0bkey3 now", "use " + sw + ": the flag -" + "i /etc/k4, -i k5",
+                "an " + sw + " line\x01-" + "i\x01key6 with a control character"]
+    host = "exa" + "mple" + ".org"
+    cut_lines = ["see https:" + "//raw." + host + "/owner/repo/main/f.py, then sub." + host + "/2025/x/index.html "
+                 "and pkg team/name-1.2 plus 0.15342 confidentiality figures tokenization",
+                 "(the url=https:" + "//docs." + host + "/very/long/path/segment/that/runs/on plus more) fin",
+                 "a.b.c.d.e.f.g.h " * 6,
+                 "a chain ~/.cache/tool/<project>/<session>/files and then more plain words follow here",
+                 "x ~/.cache/tool/<project>/<session>/<another>/<segment>,{third}|[fourth] end"]
+    lit_refs = [   # per cut line: (refs checked at both ends, joined paths checked at the right end only)
+        (["https:" + "//raw." + host + "/owner/repo/main/f.py", "sub." + host + "/2025/x/index.html",
+          "team/name-1.2"], []),
+        (["https:" + "//docs." + host + "/very/long/path/segment/that/runs/on"], []),
+        ([], []),
+        ([], ["~/.cache/tool/<project>/<session>/files"]),
+        ([], ["~/.cache/tool/<project>/<session>/<another>/<segment>,{third}|[fourth]"])]
+    ph_names = ["CUT", "ID_FLAG", "SCRATCH_PATH", "MACOS_TEMP_PATH", "LOCAL_HOME_PATH", "CLAUDE_AI_URL",
+                "TRANSCRIPT_ID", "EMAIL", "PHONE", "ADDR", "IP", "CRED", "ID", "TOK", "NAME", "W"]
+    rel_fail = 0
+    for ln_ in id_lines + cut_lines + [l_ for l_, _ in pc_lines] + lines:
+        v_ = excerpt_view(ln_)
+        mline, cur_ = [], 0
+        for s_, e_, ph_, _ in mask_spans(v_, set(NAME_ALLOW)):
+            mline += [v_[cur_:s_], ph_]
+            cur_ = e_
+        mline = "".join(mline + [v_[cur_:]])
+        mtoks = set(t_ for t_ in EXCERPT_PATH_STOP_RX.split(mline) if t_)
+        for pos_ in range(len(ln_)):
+            ex_ = excerpt(ln_, pos_, set(NAME_ALLOW))
+            if sw in ln_.lower() and idf_rx.search(json.dumps(ex_, ensure_ascii=False)):
+                rel_fail += 1
+            if not ex_.isprintable():
+                rel_fail += 1
+            ex_toks = [t_ for t_ in EXCERPT_PATH_STOP_RX.split(ex_) if t_]
+            for j_, t_ in enumerate(ex_toks):
+                if not (t_ in mtoks or t_ in ph_names
+                        or (j_ == 0 and any(p_.endswith(t_) for p_ in ph_names))
+                        or (j_ == len(ex_toks) - 1 and any(p_.startswith(t_) for p_ in ph_names))
+                        or (EXCERPT_PLAIN_WORD_RX.fullmatch(t_)
+                            and any(t_ in m_ and not EXCERPT_REF_SHAPE_RX.search(m_) for m_ in mtoks))):
+                    rel_fail += 1
+            if ln_ in cut_lines:
+                both_, right_ = lit_refs[cut_lines.index(ln_)]
+                for r_ in both_ + right_:
+                    if any(ex_.endswith(r_[:k_]) for k_ in range(2, len(r_))):
+                        rel_fail += 1
+                for r_ in both_:
+                    if any(ex_.startswith(r_[-k_:]) for k_ in range(2, len(r_))):
+                        rel_fail += 1
+    for ln_ in id_lines:
+        if EXCERPT_ID_FLAG[0] not in excerpt(ln_, 0, set(NAME_ALLOW)):
+            rel_fail += 1
+    sh_line = "see results_" + "x" * 12 + "/confidential_notes and more"   # a hit inside the token the window cuts
+    if "confidential" not in excerpt(sh_line, sh_line.index("confidential"), set(NAME_ALLOW)):
+        rel_fail += 1
+    print("selftest release rules: %d lines, %d failures" % (len(id_lines) + len(cut_lines) + 1, rel_fail))
+    ok = ok and rel_fail == 0
     print("selftest", "PASS" if ok else "FAIL")
     return 0 if ok else 1
 

@@ -70,6 +70,39 @@ commit after the base by its subject; round 4 compares the fourth checker's figu
 sources reachable from the checker's snapshot when the run is at a later HEAD (as round 3 does); R2-9's list of
 the port-class values names the round-5 counts; R2-1's N13 line reports a committed file as committed.
 
+Round 9 (2026-10-10): the Digest seat's three filed 2026-10-10 figure SVGs each carry a C2PA content-credentials
+element (<c2pa:manifest>, base64, inside <metadata>). The PI, 2026-10-10, verbatim: "declare it ahead of the N12
+pre-flip re-scan as a known high-entropy false positive". The declaration covers the element of those three renders
+only; the 2026-10-09 renders they replace are not declared, and their elements are read as undeclared (ordinary
+triage). Code's implementation, not the PI's words: a value lying wholly inside the text content of a declared
+element is FALSE-POSITIVE with the reason C2PA_REASON, and only there. A declared element is bound to its location
+and, because this script keys triage by value, to its exact base64 blob: the file is an .svg whose repository path is
+a C2PA_MANIFESTS key (a root path; the same name in a directory is not declared) and the element's text has that
+entry's length and sha256; in the history scan every path at which the blob occurs must be that key, so a
+byte-identical copy at any other path leaves the blob undeclared at every path. A value anywhere else -- another file
+or directory, another element, the same file outside the element, an edited blob -- keeps its ordinary triage, and an
+occurrence outside every declared blob re-triages a value first seen inside one (c2pa_settle). Explicit triage (a
+TRIAGE16 or MANUAL_TRIAGE entry) wins over the declaration everywhere, inside a declared blob too. It applies to every
+value table of the history scan (precise, in-context and context-free high entropy, the id-shape sweep, the
+identifier classes, the SSH-port lines) and to the pending scan's precise, identifier and port checks. The pending
+scan never clears a known sensitive value: its (a) counts an exact match wherever it lies, inside a declared blob too,
+and a precise-pattern match of one inside a declared blob is listed as ordinarily triaged. A value the declaration
+settles counts as explicit triage for the leak guard.
+
+Release (2026-10-12; the PI's answer of 2026-10-12, verbatim: "Yes to all five; tag it"). (a) Round 9's triage is
+applied: 4 TRIAGE16 entries (three G-PORT line numbers, the scrub script's host fragment), 6 SHAPE_TRIAGE16 entries
+and 3 public hosts (www.apache.org, c2pa.org, purl.org), each re-checked at the release state. (b) The release run
+writes two NEW dated raws, RELEASE_MD / RELEASE_JSON; a tracked (committed) output path is refused, except the two
+2026-10-08 raws under --in-place (the documented in-place regeneration); the release raws are never overwritten once
+committed. (c) The D4 files (D4_EXCLUDE_PATTERNS) are withheld from every working-tree read by name, never opened;
+the run records their count and names only. (d) On the release run only (both outputs at the RELEASE_* names, no
+--pin), when TRUE-SECRET-CANDIDATE is 0 and UNTRIAGED is 0 in every table, the (i) line records the PI's answer to
+Code's item 3 (ruling 4 covers the release run's (i)) verbatim instead of 'STOP pending the PI'; otherwise (i) stays a
+STOP. (e) With gitleaks installed, (i-a) says that gitleaks runs in its own script, not in this one, and trufflehog is
+not run (item 4). (f) Release fix round 3: a SHAPE_TRIAGE16 entry for the final gitleaks script's probe template; the
+release run, made at R2 before the push, states what the origin/main ancestry check finds for refs that are ahead of
+origin/main (not yet pushed) instead of saying their blobs are already in history GitHub accepted.
+
 --pin <commit>: scan the history as of <commit> (refs that descend from it are
 replaced by it; HEAD = <commit>; the fallback runs `git log -p <those refs>`).
 --since <commit> (default: the commit that added the audit block): sources new
@@ -90,9 +123,18 @@ Individual triage of hits that no mechanical rule clears is recorded in
 MANUAL_TRIAGE below, keyed by the first 8 hex of sha256(value) (the redacted form's hash), and (round 5) in
 TRIAGE16 / SHAPE_TRIAGE16, keyed by the first 16 hex -- never by the value itself.
 
-    jlens-qwen36/.venv/bin/python scripts/audit_note_N12_history.py \
+    in-place regeneration of the committed 2026-10-08 raws (release, 2026-10-12: --in-place is required for it;
+    the bare form, with no arguments, refuses):
+    jlens-qwen36/.venv/bin/python -B scripts/audit_note_N12_history.py --in-place \
         [--out results/raw/2026-10-08_note-N12-history.md] \
-        [--json-out results/raw/2026-10-08_note-N12-history.json] [--selftest]
+        [--json-out results/raw/2026-10-08_note-N12-history.json]
+    write nothing (exempt from the tracked-output refusal, so neither needs --in-place):
+    jlens-qwen36/.venv/bin/python -B scripts/audit_note_N12_history.py --selftest
+    jlens-qwen36/.venv/bin/python -B scripts/audit_note_N12_history.py --dump-untriaged [--dump-all]
+    release run (2026-10-12), at the release commit:
+    jlens-qwen36/.venv/bin/python -B scripts/audit_note_N12_history.py \
+        --out results/raw/2026-10-12_note-N12-history-release.md \
+        --json-out results/raw/2026-10-12_note-N12-history-release.json
 """
 import argparse
 import base64
@@ -116,6 +158,67 @@ BLOCK = "AUDIT-note-release-v1_2.md"
 BLOCK_SHA = "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841"
 DEFAULT_MD = "results/raw/2026-10-08_note-N12-history.md"
 DEFAULT_JSON = "results/raw/2026-10-08_note-N12-history.json"
+# Release (2026-10-12): the release run's two NEW dated raws. A committed raw is never overwritten silently: a
+# tracked output path is refused, except the two DEFAULT_* raws under --in-place (the documented in-place
+# regeneration of rounds 1-5); the release pair is never an overwrite target once it is committed.
+RELEASE_MD = "results/raw/2026-10-12_note-N12-history-release.md"
+RELEASE_JSON = "results/raw/2026-10-12_note-N12-history-release.json"
+# Release (2026-10-12): the D4 patterns of Code's housekeeping (not objected by the PI). Every working-tree read of this script (the pending scan's
+# untracked and modified files, the jlens-qwen36 walk) withholds a file whose basename matches one of these
+# patterns, by name, never opened; the run records their count and names only.
+D4_EXCLUDE_PATTERNS = ("HANDOFF-*-design.md", "DESIGN-to-CODE-*.md")
+D4_WITHHELD = set()
+# Release (2026-10-12): the PI's answer to Code's five pre-flip questions, verbatim, and item 3 as Code put it
+# (Code's words, not the PI's). It is recorded on the (i) line of the release run only (both outputs at the
+# RELEASE_* names, no --pin) and only when TRUE-SECRET-CANDIDATE is 0 and UNTRIAGED is 0 in every table;
+# otherwise (i) stays a STOP.
+PI_ANSWER_2026_10_12 = "Yes to all five; tag it"
+PI_ANSWER_ITEM3_CODE_WORDS = ("ruling 4 (the PI's rulings of 2026-10-09, item 4, which resolved N12 (i)) covers "
+                              "the release run's (i) (0 true-secret candidates, 0 untriaged)")
+PI_ANSWER_ITEM4_CODE_WORDS = "gitleaks' default skip of .svg files and trufflehog not run are acceptable"
+
+
+def gitleaks_script_note(which):
+    """Release (2026-10-12): the scanners' state as this run sees it (`which`), for the (i-a) paragraph and the lines
+    that cite it; used only when gitleaks is found."""
+    return ("gitleaks is installed on this machine and runs in its own script (`scripts/audit_note_N12_gitleaks.py`, "
+            "first raw `results/raw/2026-10-09_note-N12-gitleaks.md`, committed at e0fd85c), not in this one; "
+            + ("trufflehog is installed on this machine, and this script does not run it" if which.get("trufflehog")
+               else "trufflehog is not installed and has not been run"))
+
+
+def not_ancestor_text(ancestry, ahead):
+    """Release fix round 3 (2026-10-12): what the origin/main ancestry check finds for each ref that is not an
+    ancestor of origin/main (the (v) sentence and F8 print it)."""
+    parts = []
+    for name, anc in ancestry.items():
+        if anc:
+            continue
+        e = ahead.get(name, {})
+        if not e.get("origin_main_present"):
+            parts.append(f"`{name}` (this clone has no `origin/main` ref to compare with)")
+        elif e["origin_main_is_its_ancestor"]:
+            # check fix (2026-10-12): state what the check found; the fast-forward clause is for main only (a new
+            # tag's push creates a ref, and no fast-forward check applies to it)
+            parts.append(f"`{name}` (`origin/main` is an ancestor of its commit; "
+                         f"{e['commits_not_in_origin_main']} commit(s) not in `origin/main`"
+                         + ("; a push of main would be a fast-forward of `origin/main` as this clone last saw it"
+                            if name == "refs/heads/main" else "") + ")")
+        else:
+            parts.append(f"`{name}` (`origin/main` is not an ancestor of its commit; "
+                         f"{e['commits_not_in_origin_main']} commit(s) not in `origin/main`"
+                         + ("; a push of main would not be a fast-forward of `origin/main` as this clone last saw it"
+                            if name == "refs/heads/main" else "") + ")")
+    return "; ".join(parts)
+
+
+def d4_withheld(path):
+    """True (and recorded by name) when a working-tree path is a D4 file; the file is never opened."""
+    import fnmatch
+    if any(fnmatch.fnmatchcase(path.rsplit("/", 1)[-1], p_) for p_ in D4_EXCLUDE_PATTERNS):
+        D4_WITHHELD.add(path)
+        return True
+    return False
 # The round-2 raw's snapshot (its HEAD line); round 3 names what landed after it.
 R2_HEAD = "bab921ce5229e72c22985d516e8b7ed07ef2cbee"
 
@@ -378,12 +481,79 @@ PUBLIC_HOSTS = {
     "download.pytorch.org", "transformer-circuits.pub", "www.w3.org", "w3.org",
     "allenai.org", "nbviewer.org", "colab.research.google.com", "scholar.google.com",
     "matplotlib.org",
+    # round 9 (Code, mechanical): the Apache-2.0 license text's own URL host (LICENSE:4, added at e0fd85c), and the
+    # XML namespace hosts of the figure SVGs' headers and metadata (xmlns:c2pa, xmlns:dc and dc:type), which are
+    # in history only if the SVGs are committed
+    "www.apache.org", "c2pa.org", "purl.org",
 }
 # What an IDENTIFIER value is doing in a tracked code file at HEAD (read in context by Code).
 CODE_LOCATOR_NOTES = {
     "valence_core/m/resume.py": "the real pod id used as the test value of resume.py's self-test of "
                                 "`pod_id()` reading RUNPOD_POD_ID (a fixture; nothing connects to it)",
 }
+
+# Round 9 (2026-10-10): the PI's declaration, verbatim in C2PA_REASON, made ahead of the N12 pre-flip re-scan (see the
+# docstring). It covers the element of the three filed 2026-10-10 renders only. Keyed by the SVG's repository path (a
+# root path): (length, sha256) of the element's text content, the exact base64 blob. Code decoded the blobs
+# read-only: an Anthropic content-credentials JUMBF manifest (claim generator 'Anthropic Files', signed by an
+# 'Anthropic Claude Content Signing' certificate); no secret, no personal data. The decode is Code's, not the PI's.
+C2PA_PI_WORDS = "declare it ahead of the N12 pre-flip re-scan as a known high-entropy false positive"
+C2PA_REASON = ('the PI, 2026-10-10: "' + C2PA_PI_WORDS + '" (it: the C2PA content-credentials element of each filed '
+               "2026-10-10 render); Code's read-only decode, not the PI's words: a base64 JUMBF content-credentials "
+               "manifest, no secret")
+C2PA_TRIAGE = ("FALSE-POSITIVE", C2PA_REASON, True)
+C2PA_ELEMENT_RE = re.compile(r"<c2pa:manifest>([A-Za-z0-9+/=]*)</c2pa:manifest>")
+C2PA_MANIFESTS = {
+    "2026-10-10_F1a_headline-strip.svg": (7684, "da236ea489a9226b5064a30c19e29c83345451a4e2728ef7641fc908fcba349f"),
+    "2026-10-10_F1b_five-link-panels.svg": (7684, "ee0ea5730fa34810d240782be92da1a4977e41bcb1518c01d7e7a86281c581f5"),
+    "2026-10-10_F2_macar-lineage-roc_post.svg": (7684, "f814df3b308262c8e137b825f3e822dbb5c68357eda406f1d7404bb5186c7c9b"),
+}
+C2PA_STATS = collections.Counter()
+
+
+def c2pa_spans(paths, text):
+    """Round 9: [(start, end)] of the text content of every DECLARED <c2pa:manifest> element in text. paths: the
+    source's repository path, or (history scan) every path at which the blob occurs. Declared: every path is one and
+    the same C2PA_MANIFESTS key (a root .svg path, matched exactly) and the element's text has that entry's length and
+    sha256. Any other element (an undeclared path, a copy of the bytes at another path, an edited blob) is counted and
+    returns no span, so its values keep ordinary triage."""
+    paths = [paths] if isinstance(paths, str) or paths is None else list(paths)
+    if "<c2pa:manifest>" not in text or not any((p or "").endswith(".svg") for p in paths):
+        return []
+    keys = {p or "" for p in paths}   # a key matched exactly is a root .svg path
+    want = C2PA_MANIFESTS.get(next(iter(keys))) if len(keys) == 1 else None
+    out = []
+    for mt in C2PA_ELEMENT_RE.finditer(text):
+        blob = mt.group(1)
+        if want and (len(blob), hashlib.sha256(blob.encode()).hexdigest()) == want:
+            out.append((mt.start(1), mt.end(1)))
+            C2PA_STATS["declared_blobs_seen"] += 1
+        else:
+            C2PA_STATS["undeclared_blobs_seen"] += 1
+    return out
+
+
+def in_c2pa(spans, s, e):
+    """Round 9: True if [s, e) lies wholly inside one declared manifest blob."""
+    return any(a <= s and e <= b for a, b in spans)
+
+
+def c2pa_settle(e, v, inside, triage_fn=None):
+    """Round 9: settle entry e (value v) at one occurrence (called right after add() for it). e["c2pa_only"] is True
+    while every occurrence of the value in this table lies inside a declared blob. With triage_fn (a table triaged at
+    its first occurrence): inside, if e has no triage yet, the value's explicit triage (manual(v): it wins over the
+    declaration) or else the declaration; outside, the ordinary triage triage_fn() if e has none yet or holds only the
+    declaration. triage_fn=None (a table triaged at report time, where explicit triage also wins): the flag only."""
+    e["c2pa_only"] = inside and e.get("c2pa_only", True)
+    if inside:
+        e["c2pa_occ"] = e.get("c2pa_occ", 0) + 1
+    if triage_fn is None:
+        return
+    if inside:
+        if "triage" not in e:
+            e["triage"] = manual(v) or C2PA_TRIAGE
+    elif "triage" not in e or e["triage"] is C2PA_TRIAGE:
+        e["triage"] = triage_fn()
 
 # Individual triage of values no mechanical rule clears, keyed by sha256(value)[:8].
 # Each reason was written after reading the hit in context; the value is never stored.
@@ -547,6 +717,21 @@ TRIAGE16 = {
     # ssh_port, Code's triage (round 5): a number new at 02b6a610
     'f783659d8065aa37': ('FALSE-POSITIVE', 'the pre-flip interim fallback-grep hit-line count, quoted on the same 02b6a610 commit-message line; a count, not a port',
                          True, 'Code, round 5, read in context'),
+    # ssh_port `len4:38f13ba4`, Code's triage (round 9): results/raw/2026-10-10_m-lock-v0.1_review.txt:3040
+    '38f13ba4550b60ae': ('FALSE-POSITIVE', "a RESULTS.md line number on a line that names the G-PORT gate (PROPOSAL-m's gate label; SSH_LINE_RE matches the word PORT in G-PORT); a line number, not a port",
+                         True, 'Code, round 9, read in context'),
+    # ssh_port `len4:c7763971`, Code's triage (round 9): results/raw/2026-10-10_m-lock-v0.1_review.txt:3270
+    'c77639710bd89eea': ('FALSE-POSITIVE', "a RESULTS.md line number on a line that names the G-PORT gate (PROPOSAL-m's gate label; SSH_LINE_RE matches the word PORT in G-PORT); a line number, not a port",
+                         True, 'Code, round 9, read in context'),
+    # ssh_port `len4:ccc6742d`, Code's triage (round 9): results/raw/2026-10-10_m-d2-c9_valuescheck.txt:341
+    'ccc6742d528e7ca2': ('FALSE-POSITIVE', "a RESULTS.md line number on a line that names the G-PORT gate (PROPOSAL-m's gate label; SSH_LINE_RE matches the word PORT in G-PORT); a line number, not a port",
+                         True, 'Code, round 9, read in context'),
+    # url_host `clau...[len 6]#c857d09d`, Code's triage (round 9): scripts/audit_note_N12_scrub.py:1907
+    'c857d09db23e6822': ('FALSE-POSITIVE', "the host fragment of a self-test string that the scrub script builds by concatenation (scheme and host, then the rest of a session-link shape), so no link literal appears in its source; not a host",
+                         True, 'Code, round 9, read in context'),
+    # ssh_port `len4:3e1884b5`, Code's triage (release fix round 3, 2026-10-12): results/raw/2026-10-12_note-N12-history-release.md:657
+    '3e1884b53656e0d4': ('FALSE-POSITIVE', "the length of the three declared C2PA manifests (C2PA_MANIFESTS), printed inside their redacted forms ('[len N]') on the high-entropy line of this script's own release raw, a line SSH_LINE_RE matches; a length, not a port",
+                         True, 'Code, release fix round 3, read in context'),
     # id-shape sweep, Code's triage (round 5): two tokens first committed in 09c3a8c that the pre-flip raw's dump
     # does not print (the dump has no sweep table)
     'a15c50fd9bb3ffdf': ('FALSE-POSITIVE', "a piece of the content script's synthetic self-test fixture (string pieces "
@@ -676,6 +861,8 @@ SHAPE_TRIAGE16 = {
         ('FALSE-POSITIVE', "LLM-token sense: the second label's token, then its probe-AUC range"),
     ('results/raw/2026-10-08_note-tier1_valuescheck.md', 'secret', '46dc943e3424a225'):  # 1 row(s) at 6485da2
         ('FALSE-POSITIVE', "prose ('Informational, not a secret' followed by a path prefix); no value"),
+    ('results/raw/2026-10-12_note-N12-history-release.md', 'token', '8d33f520a3c4cef8'):  # release fix round 3 (2026-10-12), Code's triage, read in context (len1:8d33f520)
+        ('FALSE-POSITIVE', "the same prose [quoting a key spelled with a trailing colon; the captured value is the closing backtick], in this script's release raw"),
     ('scripts/audit_note_N12_history.py', 'token', '8d33f520a3c4cef8'):  # 1 row(s) at 6485da2
         ('FALSE-POSITIVE', "the same prose [quoting a key spelled with a trailing colon; the captured value is the closing backtick], in the script that writes it"),
     ('scripts/audit_note_N13.py', 'cite_token', '97ba63ebc3d84b64'):  # 1 row(s) at 6485da2
@@ -684,6 +871,23 @@ SHAPE_TRIAGE16 = {
         ('FALSE-POSITIVE', "a document:line citation label in N13's trigger table"),
     ('scripts/audit_note_N16.py', 'tokens', '416759ca652721f6'):  # 1 row(s) at 6485da2
         ('FALSE-POSITIVE', 'a decoding-parameters table entry whose value starts with a run label (B2-r)'),
+    ('results/raw/2026-10-10_m-ganl-f0-build_review.txt', 'tokenizer', '983987033f0e1170'):  # round 9, Code's triage, read in context (len2:98398703)
+        ('FALSE-POSITIVE', "a Markdown bold marker closing a bold lead-in that ends in 'tokenizer:' in a G-ANL-F0 build review; not a value"),
+    ('results/raw/2026-10-09_note-N19-cacophony.json', 'token', 'c086c70b46604264'):  # round 9, Code's triage, read in context (len3:c086c70b)
+        ('FALSE-POSITIVE', "a numeral token (a model-size label) in the N19 raw's per-numeral table, under its JSON field named 'token'; not a credential"),
+    ('results/raw/2026-10-09_note-N19-cacophony.json', 'token', 'e50fc197594dc6c9'):  # round 9, Code's triage, read in context (len2:e50fc197)
+        ('FALSE-POSITIVE', "a numeral token (a model-size label) in the N19 raw's per-numeral table, under its JSON field named 'token'; not a credential"),
+    ('results/raw/2026-10-09_note-N19-cacophony.json', 'token', 'c0b088bb163108ca'):  # round 9, Code's triage, read in context (len3:c0b088bb)
+        ('FALSE-POSITIVE', "a numeral token (a model-size label) in the N19 raw's per-numeral table, under its JSON field named 'token'; not a credential"),
+    ('scripts/audit_note_N12_gitleaks.py', 'true-secret', 'efe824ab7c0ef93f'):  # round 9, Code's triage, read in context (len3:efe824ab)
+        ('FALSE-POSITIVE', "a printf placeholder in the gitleaks script's outcome line (a count after the label TRUE-SECRET); not a value"),
+    ('scripts/audit_note_N12_gitleaks.py', 'api_key', 'f684c73cba75b2ba'):  # release fix round 3 (2026-10-12), Code's triage, read in context (len2:f684c73c)
+        ('FALSE-POSITIVE', "a printf string placeholder in the template of the gitleaks script's skip-probe line; the "
+                           "probe's 32-character value is drawn at run time (secrets.choice) and goes only into probe "
+                           "files inside a temporary directory, never into the script, its raw or any tracked file; "
+                           "not a value"),
+    ('results/raw/2026-10-10_m-ganl-f0-followup_review.txt', 'tokenizer', '8d4585083178b99b'):  # round 9, Code's triage, read in context (STR-...[len 12]#8d458508)
+        ('FALSE-POSITIVE', "a check name (the analyzer's no-heavy-imports check) after 'tokenizer:' in a G-ANL-F0 follow-up review; not a value"),
     ('scripts/audit_note_N2.py', 'max_tokens', 'ce7f5d9dffb4a889'):  # 1 row(s) at 6485da2
         ('FALSE-POSITIVE', 'source code (a keyword argument) inside a regular expression of a referent check'),
 }
@@ -1284,21 +1488,25 @@ def is_new_source(m, kind, sha):
     return sha not in m["base_objs"]
 
 
-def cf_scan(text, kind, sha, path, commit, li, table, add_fn, sig_spans=(), b64stats=None):
+def cf_scan(text, kind, sha, path, commit, li, table, add_fn, sig_spans=(), b64stats=None, c2pa=()):
     """Context-free high-entropy scan of one source into table (via add_fn). b64stats (round 2): distinct
     mixed-case runs of 64+ characters and those at or below the 4.3 bar (the bar's blind spot is structured
-    base64 such as wire-format key or signature material)."""
+    base64 such as wire-format key or signature material). c2pa (round 9): the declared C2PA manifest blobs of this
+    source (c2pa_spans); a run wholly inside one is settled by c2pa_settle."""
     if b64stats is not None:
         for mt in B64_STRICT_RE.finditer(text):
             v = mt.group(0)
             if re.search(r"[a-z]", v) and re.search(r"[A-Z]", v) and re.search(r"\d", v):
                 b64stats["runs64"].add(vkey(v))
                 H = entropy(v)
+                ins_ = in_c2pa(c2pa, mt.start(), mt.end())   # round 9
                 if H <= 4.3 and vkey(v) not in b64stats["runs64_below"]:
                     b64stats["runs64_below"][vkey(v)] = {
                         "value": v, "length": len(v), "entropy": round(H, 3),
                         "first": f"{(commit or sha or '?')[:8]} {path}:{li.line_of(mt.start())}",
-                        "line": li.line_text(mt.start())[:300]}
+                        "line": li.line_text(mt.start())[:300], "c2pa": ins_}
+                elif H <= 4.3:
+                    b64stats["runs64_below"][vkey(v)]["c2pa"] = b64stats["runs64_below"][vkey(v)]["c2pa"] and ins_
     for rx_, which in ((CF_MIXED_RE, "mixed"), (CF_LOWER_RE, "lower")):
         for mt in rx_.finditer(text):
             v = mt.group(0)
@@ -1316,8 +1524,7 @@ def cf_scan(text, kind, sha, path, commit, li, table, add_fn, sig_spans=(), b64s
             token = enclosing_token(text, mt.start(), mt.end())
             e = add_fn(table, v, kind, sha, path, commit, li, mt.start(),
                        extra={"entropy": round(entropy(v), 3), "run": which})
-            if "triage" not in e:
-                e["triage"] = triage_cf(v, token, line, in_sig)
+            c2pa_settle(e, v, in_c2pa(c2pa, mt.start(), mt.end()), lambda: triage_cf(v, token, line, in_sig))
 
 
 def scan_history(m, tag_objs):
@@ -1385,12 +1592,15 @@ def scan_history(m, tag_objs):
         else:
             n_messages += 1
         li = LineIndex(text)
+        # round 9: the declared C2PA manifest blobs (bound to every path at which this blob occurs)
+        c2 = c2pa_spans(blob_paths(m, sha) or [path], text) if kind == "blob" else []
         # context-free sweep for RunPod-id-shaped tokens (10 chars = volume shape, 14 = pod shape)
         for mt in SWEEP_RE.finditer(text):
             v = mt.group(1)
             if sum(ch.isdigit() for ch in v) >= 2 and sum(ch.isalpha() for ch in v) >= 3 and \
                     not re.fullmatch(r"[0-9a-f]+", v):
-                add(sweep, v, kind, sha, path, commit, li, mt.start(1))
+                c2pa_settle(add(sweep, v, kind, sha, path, commit, li, mt.start(1)), v,
+                            in_c2pa(c2, mt.start(1), mt.end(1)))
         if kind == "blob" and sha in m["head_blobs"]:
             for hp in m["head_blob_paths"][sha]:
                 cu, cw = text.count("/Users/"), text.count("/workspace/")
@@ -1404,8 +1614,7 @@ def scan_history(m, tag_objs):
                 v = mt.group(grp) if grp else mt.group(0)
                 line = li.line_text(mt.start())
                 e = add(precise[name], v, kind, sha, path, commit, li, mt.start())
-                if "triage" not in e:
-                    e["triage"] = triage_precise(name, v, line, path)
+                c2pa_settle(e, v, in_c2pa(c2, *mt.span(grp or 0)), lambda: triage_precise(name, v, line, path))
         # high entropy in assignment/header context
         for mt in HE_RUN_RE.finditer(text):
             key = he_context(text, mt.start())
@@ -1421,15 +1630,15 @@ def scan_history(m, tag_objs):
             line = li.line_text(mt.start())
             e = add(he, v, kind, sha, path, commit, li, mt.start(), extra={"entropy": round(H, 3),
                                                                "alphabet": alpha, "key": key})
-            if "triage" not in e:
-                e["triage"] = triage_he(v, line, key)
+            c2pa_settle(e, v, in_c2pa(c2, mt.start(), mt.end()), lambda: triage_he(v, line, key))
         # context-free high entropy (no assignment context)
-        cf_scan(text, kind, sha, path, commit, li, cf, add, b64stats=b64stats)
-        # identifiers
+        cf_scan(text, kind, sha, path, commit, li, cf, add, b64stats=b64stats, c2pa=c2)
+        # identifiers (triaged at report time; round 9: the C2PA flag is kept here)
         for name, rx in ID_RE.items():
             if name in ANCHORED:
                 for off, v in ANCHORED[name](text):
-                    add(ids[name], v, kind, sha, path, commit, li, off)
+                    c2pa_settle(add(ids[name], v, kind, sha, path, commit, li, off), v,
+                                in_c2pa(c2, off, off + len(v)))
                 continue
             if rx is None:
                 continue
@@ -1443,7 +1652,8 @@ def scan_history(m, tag_objs):
                             "runpod_endpoint_or_template_id (context)"):
                     if not (re.search(r"\d", v) and len(re.findall(r"[a-z]", v)) >= 2):
                         continue
-                add(ids[name], v, kind, sha, path, commit, li, mt.start(gname))
+                c2pa_settle(add(ids[name], v, kind, sha, path, commit, li, mt.start(gname)), v,
+                            in_c2pa(c2, *mt.span(gname)))
         # ssh ports: numbers on ssh/port/alias lines
         seen_lines = set()
         for sm in SSH_LINE_RE.finditer(text):
@@ -1459,8 +1669,8 @@ def scan_history(m, tag_objs):
                 v = pm.group("v")
                 if re.fullmatch(r"(19|20)\d\d", v):
                     continue
-                add(ids["ssh_port (number in an ssh/port/alias line)"], v, kind, sha, path, commit,
-                    li, a + pm.start())
+                c2pa_settle(add(ids["ssh_port (number in an ssh/port/alias line)"], v, kind, sha, path, commit,
+                                li, a + pm.start()), v, in_c2pa(c2, a + pm.start(), a + pm.end()))
 
     # ---- commit and tag headers (their own tables)
     hdr = {"precise": collections.OrderedDict((n, {}) for n, _, _ in PRECISE), "cf": {},
@@ -2107,8 +2317,9 @@ def pending_scan(known, exclude):
     untracked = [f for f in git("ls-files", "--others", "--exclude-standard", "-z").decode("utf-8", "replace")
                  .split("\0") if f]
     modified = [f for f in git("ls-files", "-m", "-z").decode("utf-8", "replace").split("\0") if f]
-    files = [(f, "untracked") for f in sorted(untracked) if f not in exclude] + \
-            [(f, "modified (tracked)") for f in sorted(set(modified)) if f not in exclude]
+    # release (2026-10-12): the D4 files are withheld by name, never opened (d4_withheld records them)
+    files = [(f, "untracked") for f in sorted(untracked) if f not in exclude and not d4_withheld(f)] + \
+            [(f, "modified (tracked)") for f in sorted(set(modified)) if f not in exclude and not d4_withheld(f)]
     rx = re.compile(r"(?<![A-Za-z0-9])(" + "|".join(re.escape(v) for v in sorted(known, key=len, reverse=True))
                     + r")(?![A-Za-z0-9])") if known else None
     known_keys = {vkey(v) for v in known}
@@ -2119,11 +2330,22 @@ def pending_scan(known, exclude):
             continue
         text = open(fp, "rb").read().decode("utf-8", "replace")
         hits = collections.Counter(mt.group(1) for mt in rx.finditer(text)) if rx else collections.Counter()
+        # round 9: the declared C2PA manifest blobs of this file; a known sensitive value is never cleared by them
+        # (counted under (a) and, if a precise pattern matches it, listed there too), and a value with explicit triage
+        # (manual) keeps it
+        c2 = c2pa_spans(f, text)
+        c2n = collections.Counter()
+        if rx and c2:
+            c2n["known_value_matches_inside (not cleared)"] = sum(1 for mt in rx.finditer(text)
+                                                                  if in_c2pa(c2, mt.start(1), mt.end(1)))
         new = []
         emails = collections.Counter()
         for cls in PENDING_ID_CLASSES:
             if cls in ANCHORED:   # round 4: email_address
-                for _, v in ANCHORED[cls](text):
+                for off_, v in ANCHORED[cls](text):
+                    if in_c2pa(c2, off_, off_ + len(v)) and not manual(v):
+                        c2n["identifier"] += 1
+                        continue
                     if v in PENDING_EMAIL_EXEMPT:
                         emails["service address"] += 1
                         continue
@@ -2142,6 +2364,9 @@ def pending_scan(known, exclude):
                 gname = next((g for g in ("v", "v2", "v3", "v4") if gd.get(g)), None)   # as in scan_history
                 v = gd.get(gname) if gname else None
                 if not v or vkey(v) in known_keys:
+                    continue
+                if in_c2pa(c2, *mt.span(gname)) and not manual(v):
+                    c2n["identifier"] += 1
                     continue
                 if cls in ("runpod_pod_id (context: pod)", "runpod_volume_id (context: volume)") and \
                         not (re.search(r"\d", v) and len(re.findall(r"[a-z]", v)) >= 2):
@@ -2163,6 +2388,9 @@ def pending_scan(known, exclude):
                 v = pm.group("v")
                 if re.fullmatch(r"(19|20)\d\d", v) or vkey(v) in known_keys:
                     continue
+                if in_c2pa(c2, a + pm.start(), a + pm.end()) and not manual(v):
+                    c2n["port"] += 1
+                    continue
                 tri = manual(v) or ("UNTRIAGED", "a 4-5 digit number on an ssh/port/alias line in a pending "
                                     "file; not in history; needs individual triage", True)
                 if tri[0] != "FALSE-POSITIVE":
@@ -2176,6 +2404,9 @@ def pending_scan(known, exclude):
                 # round 4 (fourth checker, finding 3): the match's own line, as in the history scan (it passed "",
                 # so the hex-digest rule could never fire here)
                 tri = triage_precise(name, v, li_.line_text(mt.start()), f)
+                if in_c2pa(c2, *mt.span(grp or 0)) and not manual(v) and vkey(v) not in known_keys:
+                    tri = C2PA_TRIAGE
+                    c2n["precise"] += 1
                 if name in ("quoted_secretish_assignment", "url_secret_query_param") and \
                         re.fullmatch(r"[0-9a-fA-F]+", v):
                     hexq[tri[0]] += 1
@@ -2186,7 +2417,10 @@ def pending_scan(known, exclude):
         rows.append({"file": f, "status": status, "bytes": len(text.encode("utf-8", "replace")), "known": hits,
                      "new": [(c, v, t) for (c, v), t in dedup.items()],
                      "precise": [(n, v, t) for (n, v), t in pdedup.items()],
-                     "emails": emails, "hex_quoted": hexq})
+                     "emails": emails, "hex_quoted": hexq,
+                     "c2pa": ({"elements": text.count("<c2pa:manifest>"), "declared_blobs": len(c2),
+                               **dict(sorted(c2n.items()))} if f.endswith(".svg") and "<c2pa:manifest>" in text
+                              else None)})
     return rows
 
 
@@ -2803,10 +3037,18 @@ def values_check(w, V):
     # F8
     items.append(("F8 (minor) -- the 'every scanned ref is an ancestor ... none could block a push' sentence says "
                   "nothing about refs that exist only on GitHub.",
-                  f"APPLIED as text. Ancestry was re-verified for the {len(V['refs'])} local refs (all "
-                  f"{'yes' if all(V['ancestry'].values()) else 'NOT all'}). The sentence is now scoped to the locally "
+                  f"APPLIED as text. Ancestry was re-verified for the {len(V['refs'])} local refs ("
+                  # release fix round 3 (2026-10-12): say what the check finds when not every ref is an ancestor
+                  + ("all yes" if all(V['ancestry'].values()) else
+                     f"{sum(V['ancestry'].values())} of {len(V['ancestry'])} are ancestors of `origin/main`; not: "
+                     + not_ancestor_text(V['ancestry'], V['ahead']) + "; see (v)")
+                  + "). The sentence is now scoped to the locally "
                   "visible refs. The PI pre-flip steps under (v) add a re-run at the release commit (step 1) and "
-                  "`git ls-remote origin` (step 2). Not run: they need the final HEAD and the network."))
+                  "`git ls-remote origin` (step 2). "
+                  # release fix round 3 (2026-10-12): on the release run, step 1 is this run
+                  + (f"On this release run, step 1 is this run{V['rel_tag']}; step 2 is not run by this script "
+                     "(it needs the network)."
+                     if V.get("rel_early") else "Not run: they need the final HEAD and the network.")))
     # F9
     items.append(("F9 (minor, referent) -- the block names N12's output `results/raw/<stamp>_note-N12-scrub.md` "
                   "(:84).",
@@ -2939,15 +3181,30 @@ def values_check_r2(w, V):
                   "imprecise: block :77 runs the fallback only if the scanners are not installable.",
                   "FIXED (wording and evidence). `which`: "
                   + ", ".join(f"{t_} {'found' if p_ else 'not found'}" for t_, p_ in sa["which"].items())
-                  + f"; Homebrew present (`{sa['brew']}`); its local formula index (`{sa['cache']}`, cached "
-                    f"{sa.get('cache_date')}, read as a file) lists "
-                  + ", ".join(f"{n_} {d_['version']} ({d_['license']}), bottle for `{sa['bottle_tag']}`: "
-                              f"{'yes' if d_['bottle_for_this_platform'] else 'no'}" for n_, d_ in sa["formulae"].items())
-                  + ". So both are installable here and were not installed, because the PI's routing forbids "
-                    "installs without the PI's word. (i-a) now says plainly that the block's primary scanners have "
-                    "NOT been run over this history, that running the fallback instead is a deviation from :77, and "
-                    "that the fallback plus Code's blob-level scans stand in for them; PI pre-flip step 4 gives "
-                    "the scanner commands."))
+                  # release fix round: the round-2 evidence sentence holds only while gitleaks is not found and the
+                  # formula index is cached; otherwise it is replaced, not appended to
+                  + ((f"; Homebrew present (`{sa['brew']}`); its local formula index (`{sa['cache']}`, cached "
+                      f"{sa.get('cache_date')}, read as a file) lists "
+                      + ", ".join(f"{n_} {d_['version']} ({d_['license']}), bottle for `{sa['bottle_tag']}`: "
+                                  f"{'yes' if d_['bottle_for_this_platform'] else 'no'}"
+                                  for n_, d_ in sa["formulae"].items())
+                      # release fix round 3 (2026-10-12): installability is asserted only when `installable`
+                      # established it
+                      + (". So both are installable here and were not installed, because the PI's routing forbids "
+                         "installs without the PI's word." if V.get("installable") else
+                         ". Their installability here is not established (see the JSON, `scanner_availability`); "
+                         "neither was installed, because the PI's routing forbids installs without the PI's word.")
+                      + " (i-a) now says plainly that the block's primary scanners have "
+                        "NOT been run over this history, that running the fallback instead is a deviation from :77, "
+                        "and that the fallback plus Code's blob-level scans stand in for them; PI pre-flip step 4 "
+                        "gives the scanner commands.")
+                     if not sa["which"].get("gitleaks") and sa["cache"] else
+                     (". Release (2026-10-12): "
+                      + (gitleaks_script_note(sa["which"]) if sa["which"].get("gitleaks") else "gitleaks is not found")
+                      + ("; the Homebrew formula index is no longer cached, so the round-2 installability evidence is "
+                         "not re-read" if not sa["cache"] else ""))
+                     + ". The round-2 evidence (both installable, neither installed at the time) is in the round-2 "
+                       "raw; (i-a) states the scanners' state as this run sees it.")))
     jx = V["jidx"]
     items.append(("R2-4 (minor) -- the jlens 'no code, LICENSE or README is tracked' claim rested on a "
                   "working-tree comparison, which cannot see clone-tracked files whose working copies carry "
@@ -3056,14 +3313,22 @@ def values_check_r2(w, V):
                   f"DONE. This run scans HEAD `{head[:10]}` (pinned at start; refs at end "
                   f"{'MOVED' if V['refs_moved'] else 'unchanged'}), which includes the {len(nc)} commit(s) after "
                   f"`{since[:10]}`: " + (", ".join(f"`{c[:10]}`" for c in nc) or "none")
-                  + ". Every table's `new since base` column counts them. The final re-run at the release commit "
-                    "is still required (pre-flip step 1)."))
+                  + ". Every table's `new since base` column counts them. "
+                  # release fix round 3 (2026-10-12): on the release run, this run is the final re-run
+                  + (f"This run is that final re-run (pre-flip step 1, at the release commit){V['rel_tag']}"
+                     # release fix round 3 (2026-10-12): the release run is made before the push
+                     + ("; at this run not every ref is an ancestor of `origin/main` -- (v) names them and says "
+                        "what that means for a run made before the push." if not all(V['ancestry'].values()) else ".")
+                     if V.get("rel_early") else
+                     "The final re-run at the release commit is still required (pre-flip step 1).")))
     for i, (claim, disp) in enumerate(items, 1):
         w(f"{i}. **{claim}** {disp}")
     w("")
     w("Second checker's verdict, unchanged by these fixes: no secret in the history; no pass or STOP line "
       "changes. (i) stays STOP pending the PI on the block's literal text, and now also records that the "
-      "primary scanners were not run; (v) PASS; (iv)-mechanical passes and names the two JSON probe files.")
+      "primary scanners were not run; (v) PASS; (iv)-mechanical passes and names the two JSON probe files."
+      + (" (Release, 2026-10-12, this run: the (i) line now records the PI's answer of 2026-10-12 to Code's item 3.)"
+         if V.get("i_resolved") else ""))
     values_check_r3(w, V)
 
 
@@ -3364,7 +3629,8 @@ def values_check_r3(w, V):
     for i, (claim, disp) in enumerate(items, 1):
         w(f"{i}. **{claim}** {disp}")
     w("")
-    st_i = "STOP pending the PI (literal :77)" if V["grep_lines"] else "no fallback hits"
+    st_i = ("the PI's answer of 2026-10-12 recorded (its item 3; see the (i) line)" if V.get("i_resolved") else
+            "STOP pending the PI (literal :77)" if V["grep_lines"] else "no fallback hits")
     st_v = "PASS" if V["max_blob"] <= 100 * MB else "STOP"
     w(f"Third checker's verdict, re-checked on this run: (i) {st_i}; (v) {st_v}; (iv)-mechanical: jlens paths ever "
       f"tracked {len(V['jlens_hist'])}, npz without an explicit line {len(V['no_line'])}, weight-shaped paths "
@@ -3593,7 +3859,8 @@ def values_check_r4(w, V):
     for i, (claim, disp) in enumerate(items, 1):
         w(f"{i}. **{claim}** {disp}")
     w("")
-    st_i = "STOP pending the PI (literal :77)" if V["grep_lines"] else "no fallback hits"
+    st_i = ("the PI's answer of 2026-10-12 recorded (its item 3; see the (i) line)" if V.get("i_resolved") else
+            "STOP pending the PI (literal :77)" if V["grep_lines"] else "no fallback hits")
     st_v = "PASS" if V["max_blob"] <= 100 * MB else "STOP"
     w(f"Fourth checker's findings, re-checked on this run: (i) {st_i}; (v) {st_v}; TRUE-SECRET-CANDIDATE "
       f"{len(V['true_candidates'])}, UNTRIAGED {len(V['untriaged_precise'])}. No finding changes a pass or STOP "
@@ -3826,8 +4093,14 @@ def values_check_r5(w, C, G):
       "are listed there by locator.")
     values_check_r5_second(w, G)
     w("")
-    w(f"This is an interim snapshot at HEAD `{C['head'][:10]}`; pre-flip step 3 still needs the clean run at the "
-      "release commit.")
+    if C.get("release_run") and C.get("outputs_outside_repo"):   # release fix round: a scratch copy is labelled
+        w(f"This is a rehearsal (outputs outside the repository) at HEAD `{C['head'][:10]}`, with the 2026-10-12 "
+          "release names; it is not the release raw.")
+    elif C.get("release_run"):   # release (2026-10-12)
+        w(f"This is the release run at HEAD `{C['head'][:10]}` (both outputs at the 2026-10-12 release names).")
+    else:
+        w(f"This is an interim snapshot at HEAD `{C['head'][:10]}`; pre-flip step 3 still needs the clean run at the "
+          "release commit.")
 
 
 def values_check_r5_second(w, G):
@@ -3949,14 +4222,33 @@ def main():
     ap.add_argument("--selftest", action="store_true",
                     help="round 5: run the scan and the leak guard's positive controls, print their outcome (booleans "
                          "and counts only) and write nothing; exit 0 only if every control behaves")
+    ap.add_argument("--in-place", action="store_true",
+                    help="release (2026-10-12): the documented in-place kind -- regenerate the committed DEFAULT_* "
+                         "raws (results/raw/2026-10-08_note-N12-history.md/.json) over themselves; without it a "
+                         "tracked output path is refused, and the release raws are never overwritten once committed")
     a = ap.parse_args()
-    for o in (a.out, a.json_out):
+    own = {"md": (DEFAULT_MD, RELEASE_MD), "json": (DEFAULT_JSON, RELEASE_JSON)}
+    for lab_, o in (("md", a.out), ("json", a.json_out)):
         ab = os.path.abspath(os.path.join(ROOT, o))
         inside_repo = ab.startswith(ROOT + os.sep)
         if inside_repo and not ab.startswith(os.path.join(ROOT, "results", "raw") + os.sep):
             raise SystemExit(f"refusing output inside the repository outside results/raw/: {o}")
-        if inside_repo and os.path.basename(ab) not in (os.path.basename(DEFAULT_MD), os.path.basename(DEFAULT_JSON)):
-            raise SystemExit(f"refusing a results/raw/ output other than this part's own two files: {o}")
+        rel_ = os.path.relpath(ab, ROOT) if inside_repo else None
+        if inside_repo and rel_ not in own[lab_]:
+            raise SystemExit(f"refusing a results/raw/ output other than this part's own files "
+                             f"({', '.join(own[lab_])} for --{'out' if lab_ == 'md' else 'json-out'}): {o}")
+        if inside_repo and not (a.selftest or a.dump_untriaged):   # both write no file
+            tracked_ = bool(git("ls-files", "-z", "--", rel_).strip()) or \
+                sh(["git", "cat-file", "-e", f"HEAD:{rel_}"], check=False).returncode == 0
+            if tracked_ and not (a.in_place and rel_ in (DEFAULT_MD, DEFAULT_JSON)):
+                raise SystemExit(f"refusing to overwrite a tracked raw (committed at HEAD or staged): {o}"
+                                 + (" (the release raws are never overwritten once committed)" if rel_ in
+                                    (RELEASE_MD, RELEASE_JSON) else " (pass --in-place for the documented in-place "
+                                    "regeneration of the 2026-10-08 raws)"))
+    if a.in_place and (os.path.relpath(os.path.abspath(os.path.join(ROOT, a.out)), ROOT),
+                       os.path.relpath(os.path.abspath(os.path.join(ROOT, a.json_out)), ROOT)) != (DEFAULT_MD,
+                                                                                                   DEFAULT_JSON):
+        raise SystemExit("refusing --in-place: it names the in-place regeneration of the two 2026-10-08 raws only")
 
     stamp = sh(["date", "-u"]).stdout.decode().strip()
     script_path = os.path.relpath(os.path.abspath(__file__), ROOT)
@@ -4004,6 +4296,23 @@ def main():
         r = sh(["git", "merge-base", "--is-ancestor", f"{sha}^{{commit}}" if typ == "tag" else sha,
                 "refs/remotes/origin/main"], check=False).returncode
         ancestry[name] = (r == 0)
+    # release fix round 3 (2026-10-12): the release run is made at R2 before the push, so the local main and the tag
+    # are expected NOT to be ancestors of origin/main. For each ref that is not, record whether origin/main is an
+    # ancestor of it (it is ahead of origin/main; for main, a push is a fast-forward) and how many of its commits origin/main
+    # lacks -- what the check finds, so the (v) sentence and F8 can say it instead of 'already accepted'.
+    om_ok = sh(["git", "rev-parse", "--verify", "-q", "refs/remotes/origin/main"], check=False).returncode == 0
+    ahead = {}
+    for name, sha, typ in refs:
+        if ancestry[name]:
+            continue
+        c_ = f"{sha}^{{commit}}" if typ == "tag" else sha
+        if not om_ok:
+            ahead[name] = {"origin_main_present": False}
+            continue
+        ff_ = sh(["git", "merge-base", "--is-ancestor", "refs/remotes/origin/main", c_], check=False).returncode == 0
+        n_ = int(git("rev-list", "--count", f"refs/remotes/origin/main..{c_}").decode().strip())
+        ahead[name] = {"origin_main_present": True, "origin_main_is_its_ancestor": ff_,
+                       "commits_not_in_origin_main": n_}
 
     # (i-a) the block's fallback, as written (with --pin: `git log -p <the pinned refs>`, the same commit set)
     logp, g = run_fallback(ref_shas if a.pin else None)
@@ -4172,6 +4481,8 @@ def main():
         dns.sort()
         for fn in sorted(fns):
             fp = os.path.join(dp, fn)
+            if d4_withheld(os.path.relpath(fp, ROOT)):   # release (2026-10-12): by name, never opened
+                continue
             if os.path.islink(fp) or not os.path.isfile(fp):
                 continue
             jl["files"] += 1
@@ -4208,7 +4519,9 @@ def main():
             mod_ = []
             for p_, s_, _, _ in ents:
                 fp_ = os.path.join(jroot, p_)
-                if os.path.isfile(fp_) and not os.path.islink(fp_):
+                if d4_withheld(os.path.relpath(fp_, ROOT)):   # release (2026-10-12): by name, never opened
+                    mod_.append(p_ + " (withheld by name: a D4 file)")
+                elif os.path.isfile(fp_) and not os.path.islink(fp_):
                     with open(fp_, "rb") as fh:
                         b_ = fh.read()
                     if hashlib.sha1(b"blob %d\0" % len(b_) + b_).hexdigest() != s_:
@@ -4246,6 +4559,15 @@ def main():
     refs_moved = (refs_after != refs_live) or (head_after != head_live)
 
     # ------------------------------------------------------------ write md
+    # release fix round 2 (2026-10-12): the release-run state follows from the arguments alone (the same test as
+    # `release_run` below), so the header, the Coverage line, (v) step 1 and the pre-release summary line can say
+    # that this is the release run at the release commit instead of an interim snapshot; any other run keeps the
+    # interim wording
+    rel_early = (not a.pin and os.path.basename(a.out) == os.path.basename(RELEASE_MD)
+                 and os.path.basename(a.json_out) == os.path.basename(RELEASE_JSON))
+    rel_outside = any(not os.path.abspath(os.path.join(ROOT, o_)).startswith(ROOT + os.sep)
+                      for o_ in (a.out, a.json_out))
+    rel_tag = " (here a rehearsal: outputs outside the repository; see the closing line)" if rel_outside else ""
     L = []
     w = L.append
     w("# AUDIT-note-release v1.2 -- N12-history: release scrub over the full history")
@@ -4262,8 +4584,11 @@ def main():
          f"base is the total minus the new-since column." if m.get("base_objs") is not None else
          "This run is at the base: no new-since columns."))
     w("- Referent note: the block names N12's output `results/raw/<stamp>_note-N12-scrub.md` (:84). The "
-      "orchestrator split N12 across three raws -- `2026-10-08_note-N12-history` (this file: (i), (ii), (v) and "
-      "(iv)'s mechanical checks), `2026-10-08_note-N12-content` and `2026-10-08_note-N12-licenses` -- which the "
+      "orchestrator split N12 across three raws -- `2026-10-08_note-N12-history` "
+      + (f"(this part's earlier rounds; this file, `{os.path.splitext(os.path.basename(RELEASE_MD))[0]}`, is its "
+         f"release run at the release commit{rel_tag}: (i), (ii), (v) and (iv)'s mechanical checks)"
+         if rel_early else "(this file: (i), (ii), (v) and (iv)'s mechanical checks)")
+      + ", `2026-10-08_note-N12-content` and `2026-10-08_note-N12-licenses` -- which the "
       "README and the ledger cite together as N12's output.")
     w(f"- Block: `{BLOCK}`, sha256 `{block_sha_wt}` (working tree) / `{block_sha_head}` (HEAD blob); "
       f"routed `{BLOCK_SHA[:8]}...{BLOCK_SHA[-4:]}`: "
@@ -4287,8 +4612,9 @@ def main():
       f"the {len(new_commits)} commit(s) made after `{since[:10]}` "
       + ("(the concurrent PROPOSAL-m session's G-CAL commits: their subjects begin `m package` / `G-CAL`) "
          if from_m and new_commits else "(see the JSON, `since.new_commits`) ")
-      + f"({', '.join('`' + c[:10] + '`' for c in new_commits) or 'none'}). It is still a "
-        "snapshot: the final re-run at the release commit (PI pre-flip step 1, under (v)) is required.")
+      + f"({', '.join('`' + c[:10] + '`' for c in new_commits) or 'none'}). "
+      + (f"This is the release run at the release commit (pre-flip step 1's re-run){rel_tag}." if rel_early else
+         "It is still a snapshot: the final re-run at the release commit (PI pre-flip step 1, under (v)) is required."))
     w("- Redaction form: `xxxx...[len N]#hhhhhhhh` = first 4 characters, the value's length, the "
       "first 8 hex of sha256(value) (the routing's form -- first 4 + length + sha256[:8] -- with the "
       "punctuation the sibling raws and both checkers quote). SSH-port-class values (every 4-5 digit "
@@ -4327,25 +4653,38 @@ def main():
     # ---- (i)
     w("## (i) Secrets over the entire history")
     w("")
-    w("### (i-a) The block's primary scanners (not run) and its fallback, run as written")
+    gl_found = bool(scan_av["which"].get("gitleaks"))
+    w("### (i-a) The block's primary scanners (not run" + (" by this script" if gl_found else "")
+      + ") and its fallback, run as written")
     w("")
     sa = scan_av
     inst = ", ".join(f"`{n_}` {d_['version']} ({d_['license']}; bottle for `{sa['bottle_tag']}`: "
                      f"{'yes' if d_['bottle_for_this_platform'] else 'NO'})" for n_, d_ in sa["formulae"].items())
     installable = len(sa["formulae"]) == 2 and all(d_["bottle_for_this_platform"] for d_ in sa["formulae"].values())
-    w("**The block's primary scanners have NOT been run over this history.** gitleaks and trufflehog are not "
-      "installed on this machine (`which`: "
-      + ", ".join(f"{t_} {'found' if p_ else 'not found'}" for t_, p_ in sa["which"].items())
-      + "). They are installable here via Homebrew"
-      + (f" (`{sa['brew']}` present; Homebrew's local formula index `{sa['cache']}`, cached {sa.get('cache_date')}, "
-         f"read as a file -- no brew command, no network -- lists {inst}; macOS {sa['macos']})"
-         if sa["brew"] and sa["cache"] else " (Homebrew's presence or its local index could not be confirmed)")
-      + (", but were not installed, because the PI's routing for this audit forbids installs without the PI's "
-         "word. Block :77 runs its fallback only if the scanners are not installable; that condition does not "
-         "hold, so running the fallback instead is a deviation from the block, recorded here for the PI. The "
-         "block's fallback below, plus Code's blob-level scans in (i-b), stand in for the scanners; running them "
-         "is PI pre-flip step 4 (under (v))."
-         if installable else ". (Installability not established for both; see the JSON, `scanner_availability`.)"))
+    if gl_found:
+        # release (2026-10-12): the round-2 paragraph below assumed neither scanner was installed
+        w("**This script runs neither of the block's primary scanners.** Release (2026-10-12): "
+          + gitleaks_script_note(sa["which"]) + " (`which`: "
+          + ", ".join(f"{t_} {'found' if p_ else 'not found'}" for t_, p_ in sa["which"].items())
+          + f"). The PI's answer of 2026-10-12, verbatim: \"{PI_ANSWER_2026_10_12}\"; its item 4, as Code put it "
+          f"(Code's words, not the PI's): {PI_ANSWER_ITEM4_CODE_WORDS}. The fallback below and Code's blob-level "
+          "scans in (i-b) are this script's own scans; gitleaks' findings and their triage are in its own raws.")
+    else:
+        w("**The block's primary scanners have NOT been run over this history.** gitleaks and trufflehog are not "
+          "installed on this machine (`which`: "
+          + ", ".join(f"{t_} {'found' if p_ else 'not found'}" for t_, p_ in sa["which"].items())
+          # release fix round 2 (2026-10-12): 'installable' is asserted only when `installable` established it
+          + ("). They are installable here via Homebrew" if installable else
+             "). Their installability here is not established")
+          + (f" (`{sa['brew']}` present; Homebrew's local formula index `{sa['cache']}`, cached {sa.get('cache_date')}, "
+             f"read as a file -- no brew command, no network -- lists {inst}; macOS {sa['macos']})"
+             if sa["brew"] and sa["cache"] else " (Homebrew's presence or its local index could not be confirmed)")
+          + (", but were not installed, because the PI's routing for this audit forbids installs without the PI's "
+             "word. Block :77 runs its fallback only if the scanners are not installable; that condition does not "
+             "hold, so running the fallback instead is a deviation from the block, recorded here for the PI. The "
+             "block's fallback below, plus Code's blob-level scans in (i-b), stand in for the scanners; running them "
+             "is PI pre-flip step 4 (under (v))."
+             if installable else ". (See the JSON, `scanner_availability`.)"))
     w("")
     w("The fallback, as written: `git log -p --all | grep -nEi '" + FALLBACK_PATTERN + "'` with `/usr/bin/grep` "
       "(BSD grep; its exit status read from its own process, not after a pipe).")
@@ -4550,6 +4889,35 @@ def main():
                 true_candidates.append(("context_free", v, e))
 
     cf_table("Context-free high-entropy runs over every text blob and message (no assignment context needed)", cf)
+    # ---- round 9: the C2PA declaration's effect on the history scan
+    c2_hist = dict(C2PA_STATS)
+    c2_tabs = ([("precise", v, e) for t_ in precise.values() for v, e in t_.items()]
+               + [("in-context high entropy", v, e) for v, e in he.items()]
+               + [("context-free high entropy", v, e) for v, e in cf.items()]
+               + [("id-shape sweep", v, e) for v, e in sweep.items()]
+               + [("identifier", v, e) for t_ in ids.values() for v, e in t_.items()])
+    c2_cleared = collections.Counter(lab_ for lab_, v, e in c2_tabs if e.get("c2pa_only") and not manual(v))
+    c2_explicit = collections.Counter(lab_ for lab_, v, e in c2_tabs if e.get("c2pa_only") and manual(v))
+    c2_kept = collections.Counter(lab_ for lab_, v, e in c2_tabs if e.get("c2pa_occ") and not e.get("c2pa_only"))
+    c2_b64 = sum(1 for x in hdr["b64stats"]["runs64_below"].values() if x.get("c2pa"))
+    w(f"**Round 9: the C2PA declaration.** The PI, 2026-10-10, verbatim: \"{C2PA_PI_WORDS}\" (it: the C2PA "
+      f"content-credentials element each of the three filed 2026-10-10 renders carries; the 2026-10-09 renders they "
+      f"replace are not declared). Code's implementation, not the PI's words: a value lying wholly inside the text content of a declared "
+      f"`<c2pa:manifest>` element is FALSE-POSITIVE with the reason: {C2PA_REASON}. Declared: "
+      f"{len(C2PA_MANIFESTS)} blobs, each bound to its repository root path (every path at which the blob occurs in "
+      f"history must be that path), the blob's length and its sha256 (`C2PA_MANIFESTS`); a value anywhere else keeps "
+      f"its ordinary triage, and explicit triage (TRIAGE16 / MANUAL_TRIAGE) wins inside a declared blob too. In this "
+      f"history: declared blob occurrences read {c2_hist.get('declared_blobs_seen', 0)}, undeclared "
+      f"`<c2pa:manifest>` elements read {c2_hist.get('undeclared_blobs_seen', 0)} (their values triaged ordinarily); "
+      f"distinct values cleared by the declaration (every occurrence inside a declared blob, no explicit triage): "
+      + (", ".join(f"{k_} {n_}" for k_, n_ in sorted(c2_cleared.items())) or "none")
+      + "; distinct values inside a declared blob only that keep their explicit triage: "
+      + (", ".join(f"{k_} {n_}" for k_, n_ in sorted(c2_explicit.items())) or "none")
+      + "; distinct values that occur inside a declared blob but also elsewhere, so keep their ordinary triage: "
+      + (", ".join(f"{k_} {n_}" for k_, n_ in sorted(c2_kept.items())) or "none")
+      + "; strict-base64 runs at or below the 4.3 bar that are declared blobs (marked in the sensitivity note "
+        f"below): {c2_b64}.")
+    w("")
 
     # ---- headers
     w("### (i-b) Commit and tag headers")
@@ -4632,6 +5000,8 @@ def main():
         "base64 character, `=`, `_` or `-`; containing an upper, a lower and a digit): "
         f"{len(b64s['runs64'])}, of which at or below 4.3: {len(b64s['runs64_below'])}"
       + (" (" + "; ".join(f"`{red(x['value'])}` entropy {x['entropy']} at {x['first']}"
+                          + (" -- a declared C2PA manifest blob, FALSE-POSITIVE (round 9): " + C2PA_REASON
+                             if x.get("c2pa") else "")
                           for x in b64s["runs64_below"].values()) + ")" if b64s["runs64_below"] else "")
       + ". The case that matters "
         "-- a private-key body pasted without its PEM armor -- is covered by the key-material marker patterns "
@@ -4707,6 +5077,7 @@ def main():
         f"password) is not part of this raw.")
     w("")
     n_fb = len(grep_lines)
+    i_line_idx = len(L)   # release (2026-10-12): replaced after the pending scan when the PI's answer applies
     w("**Pass/STOP line (i):** "
       + (f"STOP -- {len(true_candidates)} TRUE-SECRET-CANDIDATE value(s) in history (history rewriting is "
          f"the PI's decision)." if true_candidates else
@@ -4790,7 +5161,9 @@ def main():
                              sum(len(e["sources"]) for e in tab.values()))
         vd = collections.Counter()
         for v, e in tab.items():
-            if cls == "email_address" and v == "noreply@anthropic.com":
+            if e.get("c2pa_only") and not manual(v):   # round 9: every occurrence inside a declared C2PA blob
+                e["triage"] = C2PA_TRIAGE
+            elif cls == "email_address" and v == "noreply@anthropic.com":
                 e["triage"] = ("PUBLIC", "service attribution address (Co-Authored-By lines)", False)
             elif cls == "email_address" and v in identity_emails:
                 e["triage"] = ("METADATA-ECHO", "a commit identity's email (see the identities table)", True)
@@ -4862,6 +5235,8 @@ def main():
             sw_cls["a JSON \\uXXXX escape fused with the next word (model text)"] += 1
         elif e["paths"] <= {"paper_analysis.ipynb"}:
             sw_cls["a fragment of the notebook's embedded base64 PNG"] += 1
+        elif e.get("c2pa_only") and not manual(v):
+            sw_cls["a fragment of a declared C2PA content-credentials manifest (round 9; the PI, 2026-10-10)"] += 1
         else:
             sw_other.append((v, e))
     w(f"- Context-free id-shape sweep ({SWEEP_DESC}): {len(sweep)} distinct tokens: "
@@ -5102,8 +5477,18 @@ def main():
     w(f"Largest blob anywhere in history: {max_blob:,} bytes = {max_blob / MIB:.3f} MiB "
       f"({'under' if max_blob <= 100 * MIB else 'OVER'} GitHub's 100 MiB refusal limit; "
       f"{'under' if max_blob <= 50 * MIB else 'over'} its 50 MiB warning). Every locally visible ref is an "
-      f"ancestor of `origin/main` as this clone last saw it: {'yes' if all_anc else 'NO'} -- so every blob "
-      f"reachable from them is already in history GitHub accepted on push. Refs that exist only on GitHub "
+      f"ancestor of `origin/main` as this clone last saw it: {'yes' if all_anc else 'NO'} -- "
+      # release fix round 3 (2026-10-12): the 'already accepted' conclusion holds only when every ref is an
+      # ancestor; otherwise say what the check finds and what it means (the release run is made before the push)
+      + ("so every blob reachable from them is already in history GitHub accepted on push. " if all_anc else
+         f"{sum(ancestry.values())} of {len(ancestry)} are; not: {not_ancestor_text(ancestry, ahead)}. The blobs "
+         f"reachable from `origin/main` are in history GitHub accepted on push; for the commits these refs add "
+         f"beyond it, and any blob only they reach, this check shows no push: this run scans and size-checks them "
+         f"with every other ref, and a push would send them to GitHub (public at the visibility flip). "
+         + (f"This is the release run{rel_tag}, made before the push: the release sequence pushes R1, R2 and the tag only "
+            "after the release scans pass, so refs ahead of `origin/main` are expected here. "
+            if rel_early and all(e_.get("origin_main_is_its_ancestor") for e_ in ahead.values()) else ""))
+      + f"Refs that exist only on GitHub "
       f"(branches pushed by other sessions and never fetched, `refs/pull/*`, remote-only tags) are not visible "
       f"in this clone and were not scanned or size-checked; this audit uses no network.")
     w("")
@@ -5155,15 +5540,21 @@ def main():
       f"the pre-release line's CLEAN does not cover them). The commit identities' own "
       f"metadata (the identity emails and the laptop hostname, public in the commit headers) is listed there "
       f"for consistency with this raw's redaction and, as drafted (round 3), does not hold the tag; binding "
-      f"either part is the PI's call. This raw is a snapshot at `{head[:10]}`; commits landing later -- the "
-      f"concurrent PROPOSAL-m session's, and the audit's own end commit -- are not covered by it."
+      f"either part is the PI's call. "
+      + (f"This raw is the release run at the release commit `{head[:10]}` (this run is that re-run){rel_tag}; "
+         f"commits landing after it -- the post-tag commit of the release raws (the commit that adds this raw) and the "
+         f"concurrent PROPOSAL-m session's -- are not covered by it."
+         if rel_early else
+         f"This raw is a snapshot at `{head[:10]}`; commits landing later -- the "
+         f"concurrent PROPOSAL-m session's, and the audit's own end commit -- are not covered by it.")
       + (" Evidence that a snapshot goes stale: after the round-2 run (at `bab921ce52`), "
          + ", ".join(f"`{c_[:10]}`" for c_ in ckpt_after_r2)
          + f" added the first tracked file(s) under `data/m/ckpt/` ({len(ckpt_paths)}: "
          + ", ".join(f"`{p_}`" for p_ in ckpt_paths)
          + "), a `-diff` path whose content `git log -p` does not print, which turned coverage limit (2) under "
            "(i-a) from 'never applied' into 'applies'." if ckpt_after_r2 else "")
-      + " The tag should wait on a clean run.")
+      + (" This run is the re-run at the release commit; its summary lines state whether it is clean."
+         if rel_early else " The tag should wait on a clean run."))
     w("2. `git ls-remote origin` and compare its refs with the refs table under Scope. Any extra branch or tag "
       "gets its own scan (re-run this script after fetching it) or is deleted before the visibility change. "
       "`refs/pull/*` refs cannot be deleted by the owner and become public with the repository.")
@@ -5175,7 +5566,9 @@ def main():
       "`refs/pull/*`); the local evidence above cannot rule that out.")
     w("4. The block's primary scanners, on the PI's word (installing them needs it): `brew install gitleaks "
       "trufflehog`, then `gitleaks detect --source . --log-opts=\"--all\"` and `trufflehog git file://.` over "
-      "the repository at the release commit. Their findings supersede the fallback's for (i).")
+      "the repository at the release commit. Their findings supersede the fallback's for (i)."
+      + (" Release (2026-10-12), this run: " + gitleaks_script_note(scan_av["which"]) + f"; item 4 of the PI's answer of 2026-10-12, "
+         f"as Code put it: {PI_ANSWER_ITEM4_CODE_WORDS}." if gl_found else ""))
     w("")
     w("**Pass/STOP line (v):** " + ("PASS -- nothing over 100 MB untreated (no tracked file at HEAD and no "
                                     "blob anywhere in history exceeds 100 MB or 100 MiB)."
@@ -5338,7 +5731,8 @@ def main():
     for k in sig_groups:
         if k[4]:
             pend_known[k[4]] = ["SSH signing-key fingerprint"]
-    excl = {os.path.relpath(os.path.join(ROOT, o), ROOT) for o in (a.out, a.json_out, DEFAULT_MD, DEFAULT_JSON)}
+    excl = {os.path.relpath(os.path.join(ROOT, o), ROOT) for o in (a.out, a.json_out, DEFAULT_MD, DEFAULT_JSON,
+                                                                    RELEASE_MD, RELEASE_JSON)}
     pend = pending_scan(pend_known, excl)
     pend_stamp = sh(["date", "-u"]).stdout.decode().strip()
 
@@ -5464,6 +5858,23 @@ def main():
               + (", ".join(f"{n_} `{red(v, sensitive=t_[2]) if len(v) > 4 else 'len' + str(len(v))}` {t_[0]}"
                            for n_, v, t_ in r_["precise"]) or "-") + " |")
         w("")
+    w("**Release (2026-10-12), the D4 files:** "
+      + (f"{len(D4_WITHHELD)} file(s) withheld from every working-tree read by name (patterns "
+         + ", ".join(f"`{p_}`" for p_ in D4_EXCLUDE_PATTERNS) + "), never opened: "
+         + ", ".join(f"`{f_}`" for f_ in sorted(D4_WITHHELD)) if D4_WITHHELD else
+         "none present (patterns " + ", ".join(f"`{p_}`" for p_ in D4_EXCLUDE_PATTERNS) + "); nothing withheld")
+      + ". Their content is not scanned here.")
+    w("")
+    c2_pend = [r_ for r_ in pend if r_.get("c2pa")]
+    w("**Round 9, the C2PA declaration in the pending files:** "
+      + ("; ".join(f"`{r_['file']}`: {r_['c2pa']['elements']} `<c2pa:manifest>` element(s), "
+                   f"{r_['c2pa']['declared_blobs']} declared; values cleared inside them: "
+                   f"precise {r_['c2pa'].get('precise', 0)}, identifier {r_['c2pa'].get('identifier', 0)}, "
+                   f"port {r_['c2pa'].get('port', 0)}; exact matches of a known sensitive value inside them (never "
+                   f"cleared) {r_['c2pa'].get('known_value_matches_inside (not cleared)', 0)}" for r_ in c2_pend)
+         or "no pending .svg file holds a `<c2pa:manifest>` element") + ".")
+    w("")
+
     def is_author_identity(v):
         return all(lb_ in AUTHOR_IDENTITY_LABELS for lb_ in pend_known.get(v, ()))
 
@@ -5497,8 +5908,11 @@ def main():
          "CLEAN for the audit's own pending files at this snapshot. Its coverage of third-party personal data is "
          "the email-address class only (round 4): a third party's name, postal address or phone number is not "
          "scanned for.")
-      + " Files of the other groups matter only if they are committed before the flip; the history re-run at "
-        "the release commit (pre-flip step 1) covers whatever is.")
+      + (" Files of the other groups matter only if they are committed before the flip. This release run covers "
+         "what the release commit holds; files committed after it (the post-tag raws) are covered by a re-run of "
+         "this script, outputs outside the repository, before their commit is pushed." if rel_early else
+         " Files of the other groups matter only if they are committed before the flip; the history re-run at "
+         "the release commit (pre-flip step 1) covers whatever is."))
     w("")
     w("**Pre-release line, the commit identities' own metadata** (the identity emails -- the author's and the "
       "Claude Cowork tool identity's -- and the laptop hostname, all public in the commit headers of the history "
@@ -5519,17 +5933,61 @@ def main():
          if any(ident_values(r_) for r_ in audit_hits) else ""))
     w("")
 
+    # release (2026-10-12): the PI's answer to Code's item 3 covers the release run's (i) -- recorded only on the
+    # release run (both outputs at the RELEASE_* basenames, no --pin) and only when every table has
+    # TRUE-SECRET-CANDIDATE 0 and UNTRIAGED 0; otherwise (i) stays a STOP
+    untri_i = {"precise and high-entropy (script)": len(untriaged_precise),
+               "identifiers": sum(1 for _, _, e in id_rows if e["triage"][0] == "UNTRIAGED"),
+               "id-shape sweep": sum(1 for v, _ in sw_other if (manual(v) or ("UNTRIAGED",))[0] == "UNTRIAGED"),
+               "credential-shaped fallback rows": sum(1 for r_ in shape_rows if r_["verdict"] == "UNTRIAGED"),
+               "pending files": sum(1 for r_ in pend for _, _, t_ in list(r_["new"]) + list(r_["precise"])
+                                    if t_[0] == "UNTRIAGED")}
+    release_run = (not a.pin and os.path.basename(a.out) == os.path.basename(RELEASE_MD)
+                   and os.path.basename(a.json_out) == os.path.basename(RELEASE_JSON))
+    i_resolved = release_run and not true_candidates and not any(untri_i.values())
+    i_answer = (f"the PI's answer of 2026-10-12, verbatim: \"{PI_ANSWER_2026_10_12}\" -- the answer to Code's five "
+                f"pre-flip questions; its item 3, as Code put it (Code's words, not the PI's): {PI_ANSWER_ITEM3_CODE_WORDS}")
+    if i_resolved:
+        L[i_line_idx] = (
+            f"**Pass/STOP line (i):** {i_answer}. This release run: TRUE-SECRET-CANDIDATE 0; UNTRIAGED 0 in every "
+            f"table (" + ", ".join(f"{k_} {n_}" for k_, n_ in untri_i.items()) + f"); the fallback returns {n_fb} hit "
+            f"lines (its credential-shaped rows: UNTRIAGED {untri_i['credential-shaped fallback rows']}); "
+            f"{len(pp)} pass-phrase-shaped value(s) reported redacted (above).")
+    # release fix round 2 (2026-10-12): a release run that does not resolve (i) says why on both (i) lines --
+    # which table, which count -- since the summary line's own UNTRIAGED count covers one table only
+    i_cause = ""
+    if release_run and not i_resolved:
+        nz_ = [f"{k_} {n_}" for k_, n_ in untri_i.items() if n_]
+        i_cause = (f"Release run: the PI's answer of 2026-10-12 (its item 3) is not recorded on this line, because "
+                   f"this run has TRUE-SECRET-CANDIDATE {len(true_candidates)} and UNTRIAGED by table ("
+                   + ", ".join(f"{k_} {n_}" for k_, n_ in untri_i.items()) + ")"
+                   + (f"; not zero: {', '.join(nz_)}" if nz_ else "")
+                   + ("; TRUE-SECRET-CANDIDATE not zero" if true_candidates else "") + ".")
+        L[i_line_idx] = L[i_line_idx] + " " + i_cause
     w("## Summary lines")
     w("")
-    w(f"- (i): STOP pending the PI's resolution (literal :77); the block's primary scanners (gitleaks, trufflehog) NOT run "
-      f"(installable, not installed: no install without the PI's word; pre-flip step 4); fallback {len(grep_lines)} hit lines (token {alt_lines['token']}, sk- {alt_lines['sk-[A-Za-z0-9]']}, "
+    w((f"- (i): {i_answer}; " if i_resolved else "- (i): STOP pending the PI's resolution (literal :77); ")
+      # release fix round: the scanner text follows `which` (gl_found) on every branch, resolved or not
+      + (f"this script runs neither primary scanner: {gitleaks_script_note(scan_av['which'])}"
+         + (f" (item 4, as Code put it: {PI_ANSWER_ITEM4_CODE_WORDS})" if i_resolved else "")
+         if gl_found else
+         "the block's primary scanners (gitleaks, trufflehog) not run by this script (`which`: gitleaks not found)"
+         if i_resolved else
+         "the block's primary scanners (gitleaks, trufflehog) NOT run (installable, not installed: no install without "
+         "the PI's word; pre-flip step 4)" if installable else
+         # release fix round 2 (2026-10-12): installability asserted only when `installable` established it
+         "the block's primary scanners (gitleaks, trufflehog) NOT run (not installed; installability not "
+         "established: no install without the PI's word; pre-flip step 4)")
+      + f"; fallback {len(grep_lines)} hit lines (token {alt_lines['token']}, sk- {alt_lines['sk-[A-Za-z0-9]']}, "
       f"secret {alt_lines['secret']}, rp_ {alt_lines['rp_[A-Za-z0-9]']}, password {alt_lines['password']}, "
       f"api_key {alt_lines['api[_-]?key']}, BEGIN {alt_lines['BEGIN (RSA|OPENSSH)']}, AKIA {alt_lines['AKIA[0-9A-Z]{16}']}); "
       f"precise scan ({len(PRECISE)} patterns) {sum(len(t) for t in precise.values())} distinct values in "
       f"blobs/messages, {sum(len(t) for t in hdr['precise'].values())} in headers, {bp_n} in binary string "
       f"content; in-context high-entropy {len(he)} distinct; context-free high-entropy {len(cf)} distinct in "
       f"blobs/messages, {len(hdr['cf'])} in headers, {len(binc['cf'])} in binary content; "
-      f"TRUE-SECRET-CANDIDATE {len(true_candidates)}; UNTRIAGED {len(untriaged_precise)}.")
+      f"TRUE-SECRET-CANDIDATE {len(true_candidates)}; "
+      + (f"UNTRIAGED (precise and high-entropy, the script's own count) {len(untriaged_precise)}. {i_cause}"
+         if i_cause else f"UNTRIAGED {len(untriaged_precise)}."))
     w(f"- (ii): RunPod pod ids {len(ids['runpod_pod_id (context: pod)'])}, network volume ids "
       f"{len(ids['runpod_volume_id (context: volume)'])}, network volume names "
       f"{sum(1 for e in ids[VOLNAME_CLASS].values() if e['triage'][0] == 'IDENTIFIER')}, SSH ports "
@@ -5560,7 +6018,8 @@ def main():
       + f"; audit files carrying only the commit identities' own metadata (public in the commit headers; listed, "
         f"not a blocker as drafted) {len(audit_ident_only)}"
       + (" (" + ", ".join(f"`{r_['file']}`" for r_ in audit_ident_only) + ")" if audit_ident_only else "")
-      + "; the end commit waits on a clean re-run (pre-flip step 1).")
+      + (f"; this is the release run at the release commit (pre-flip step 1's re-run){rel_tag}." if rel_early
+         else "; the end commit waits on a clean re-run (pre-flip step 1)."))
     w("")
     values_check(w, locals())
     md = "\n".join(L) + "\n"
@@ -5582,6 +6041,7 @@ def main():
         "head": head, "script": script_path, "script_sha256": script_sha, "interpreter": sys.executable,
         "python": sys.version.split()[0], "refs": refs, "refs_moved_during_run": refs_moved,
         "ancestor_of_origin_main": ancestry,
+        "not_ancestor_of_origin_main": ahead,   # release fix round 3 (2026-10-12)
         "counts": {"commits": len(m["commits"]), "trees": m["n_trees"], "blobs": len(m["blobs"]), **stats},
         "redaction_form": "first4...[len N]#sha256[:8]; ssh_port class: lenN:sha256[:8]",
         "fallback": {"command": "git log -p --all | /usr/bin/grep -nEi '" + FALLBACK_PATTERN + "'",
@@ -5630,13 +6090,25 @@ def main():
                     "armor_lines_at_or_below_4.3": sum(1 for v in hdr["armor_lines"].values() if v[1] <= 4.3)},
         "structured_base64": {"strict_base64_runs_64plus_blobs_messages": len(hdr["b64stats"]["runs64"]),
                               "at_or_below_4.3": [{"value": red(x["value"]), "entropy": x["entropy"],
-                                                   "first": x["first"]}
+                                                   "first": x["first"],
+                                                   **({"triage": [C2PA_TRIAGE[0], C2PA_REASON]} if x.get("c2pa")
+                                                      else {})}
                                                   for x in hdr["b64stats"]["runs64_below"].values()],
                               "key_material_patterns": {n_: {"blobs_messages": len(precise[n_]),
                                                              "headers": len(hdr["precise"][n_]),
                                                              "binary_content": len(binc["precise"][n_])}
                                                         for n_ in sorted(KEY_MATERIAL_PATTERNS)}},
         "scanner_availability": scan_av,
+        "release_2026_10_12": {
+            "d4_withheld": {"patterns": list(D4_EXCLUDE_PATTERNS), "count": len(D4_WITHHELD),
+                            "names": sorted(D4_WITHHELD), "opened": False},
+            "release_run": release_run,
+            "outputs": [os.path.relpath(os.path.abspath(os.path.join(ROOT, o_)), ROOT)
+                        if os.path.abspath(os.path.join(ROOT, o_)).startswith(ROOT + os.sep)
+                        else "(outside the repository) " + os.path.basename(o_) for o_ in (a.out, a.json_out)],
+            "i_line": {"resolved_by_pi_answer": i_resolved, "pi_answer_verbatim": PI_ANSWER_2026_10_12,
+                       "item3_code_words": PI_ANSWER_ITEM3_CODE_WORDS, "item4_code_words": PI_ANSWER_ITEM4_CODE_WORDS,
+                       "true_secret_candidates": len(true_candidates), "untriaged_by_table": untri_i}},
         "fallback_logp": {"bytes": len(logp), "lines_newline_count": logp_nl, "ends_with_newline": logp_ends_nl},
         "reflogs": reflogs,
         "json_numeric_vectors": {"blobs": jv["blobs"], "parsed": jv["parsed"], "unparsed": jv["unparsed"],
@@ -5663,7 +6135,8 @@ def main():
                                                                           else f"len{len(v)}"),
                                                 "triage": list(t_[:2])} for n_, v, t_ in r_["precise"]],
                        "email_addresses": dict(r_["emails"]),
-                       "hex_only_quoted_values_by_verdict": dict(r_["hex_quoted"])}
+                       "hex_only_quoted_values_by_verdict": dict(r_["hex_quoted"]),
+                       **({"c2pa": r_["c2pa"]} if r_.get("c2pa") else {})}
                       for r_ in pend],
             "audit_files_not_clean": [r_["file"] for r_ in audit_hits],
             "audit_files_not_clean_rule": ("a redaction-rule value (any sensitive label except "
@@ -5698,6 +6171,23 @@ def main():
                   "clone_index": jidx},
         "gitignore_worktree_equals_head": gi_wt_ok, "npz": npz_rows, "weight_shaped_paths": weights,
         "true_secret_candidates": len(true_candidates), "untriaged": len(untriaged_precise),
+        "c2pa_declaration": {"reason": C2PA_REASON, "verdict": C2PA_TRIAGE[0], "declared_by": "the PI, 2026-10-10",
+                             "pi_words_verbatim": C2PA_PI_WORDS,
+                             "implementation_by_code": (
+                                 "a value lying wholly inside the text content of a <c2pa:manifest> element of an .svg "
+                                 "whose repository root path (every path at which the blob occurs, in history) is a "
+                                 "C2PA_MANIFESTS key, the element's text of that entry's length and sha256, is "
+                                 "FALSE-POSITIVE unless explicit triage (TRIAGE16 / MANUAL_TRIAGE) holds it; anywhere "
+                                 "else, ordinary triage; the pending scan never clears a known sensitive value (its (a) "
+                                 "counts it inside a declared blob too, and a precise match of one is listed)"),
+                             "manifests": {k_: {"length": v_[0], "sha256": v_[1]} for k_, v_ in C2PA_MANIFESTS.items()},
+                             "history": {"declared_blob_occurrences": c2_hist.get("declared_blobs_seen", 0),
+                                         "undeclared_elements": c2_hist.get("undeclared_blobs_seen", 0),
+                                         "cleared_distinct": dict(sorted(c2_cleared.items())),
+                                         "inside_only_explicit_triage_kept_distinct": dict(sorted(c2_explicit.items())),
+                                         "inside_but_kept_distinct": dict(sorted(c2_kept.items())),
+                                         "strict_base64_at_or_below_4.3_declared": c2_b64},
+                             "pending": {r_["file"]: r_["c2pa"] for r_ in c2_pend}},
     }
     js = json.dumps(J, indent=1, default=lambda o: sorted(o) if isinstance(o, set) else str(o))
 
@@ -5736,13 +6226,17 @@ def main():
             mt_ = manual(v)
             explicit = bool(mt_ and mt_[0] == verdict)
         R[v].append((src, cls, verdict, explicit, extra))
+
+    def c2x(e):
+        """Round 9: a value settled by the C2PA declaration (location- and blob-hash-keyed) is explicit triage."""
+        return True if (e.get("c2pa_only") and e.get("triage") is C2PA_TRIAGE) else None
     for n_, t_ in precise.items():
         for v, e in t_.items():
-            rec(v, "blob/message", "precise:" + n_, e["triage"][0])
+            rec(v, "blob/message", "precise:" + n_, e["triage"][0], explicit=c2x(e))
     for v, e in he.items():
-        rec(v, "blob/message", "high_entropy", e["triage"][0])
+        rec(v, "blob/message", "high_entropy", e["triage"][0], explicit=c2x(e))
     for v, e in cf.items():
-        rec(v, "blob/message", "context_free", e["triage"][0])
+        rec(v, "blob/message", "context_free", e["triage"][0], explicit=c2x(e))
     for lab_, src_ in (("header", hdr), ("binary", binc)):
         for n_, t_ in src_["precise"].items():
             for v, e in t_.items():
@@ -5754,7 +6248,7 @@ def main():
                 rec(v, lab_, c_, e["triage"][0])
     for c_, t_ in ids.items():
         for v, e in t_.items():
-            rec(v, "blob/message", c_, e["triage"][0])
+            rec(v, "blob/message", c_, e["triage"][0], explicit=c2x(e))
     for v, e in sw_other:
         rec(v, "blob/message", SWEEP_CLASS, (manual(v) or ("UNTRIAGED",))[0])
     for (v, srcl), r_ in zip(shape_raw, shape_rows):
@@ -5777,8 +6271,10 @@ def main():
         "true": len(true_candidates),
         "pending": sum(1 for r_ in pend for _, _, t_ in list(r_["new"]) + list(r_["precise"]) if t_[0] == "UNTRIAGED"),
         "fallback": len(grep_lines)}
-    C5 = {"head": head, "untriaged": untri_counts, "code_users_kinds": dict(code_kinds),
-          "code_users_files": len(code_users)}
+    C5 = {"head": head, "untriaged": untri_counts, "code_users_kinds": dict(code_kinds), "release_run": release_run,
+          "code_users_files": len(code_users),
+          "outputs_outside_repo": any(not os.path.abspath(os.path.join(ROOT, o_)).startswith(ROOT + os.sep)
+                                      for o_ in (a.out, a.json_out))}
     md_base = md
     G = None
     for it_ in range(8):
