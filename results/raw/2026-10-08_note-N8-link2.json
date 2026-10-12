@@ -2,21 +2,21 @@
  "item": "N8",
  "pin": "bbc9ffe",
  "meta": {
-  "stamp_date_u": "Sun Oct 11 05:46:07 UTC 2026",
-  "head_at_start": "e3bef6f09f48e75a4be141483b5700b095da35d4",
+  "stamp_date_u": "Mon Oct 12 06:15:12 UTC 2026",
+  "head_at_start": "fa1b41ea7e1ebd75a983d3ec7cd09f9abe0952a5",
   "pin": "bbc9ffe72fb8a942431c9bf2622a36e581fdf93c",
   "block_sha256_pin": "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841",
   "block_sha256_wt": "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841",
   "script": "scripts/audit_note_N8.py",
-  "script_sha256": "8c8f34b19d951f5d59be705355a9423d6e5f2769f4ce0087858197cf21091efd",
+  "script_sha256": "738b216cce8b956db60b36f09d1fcea2f8a4afa7c17aebdb8c208f99a0f0f0d3",
   "interpreter": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python",
   "python": "3.12.9",
   "numpy": "2.5.1",
   "command": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/audit_note_N8.py",
-  "head_at_end": "e3bef6f09f48e75a4be141483b5700b095da35d4"
+  "head_at_end": "fa1b41ea7e1ebd75a983d3ec7cd09f9abe0952a5"
  },
  "integrity": {
-  "preprint_sha256": "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22",
+  "preprint_sha256": "d9635ca24d32dcba193cd9aade273de2679c99c5c2218787b410e793a42d1fe6",
   "blobs_equal_to_pin": {
    "valence_core/__init__.py": true,
    "valence_core/adapters/__init__.py": true,
@@ -169,6 +169,10 @@
    "results/raw/2026-10-10_m-lock-v0.1_valuescheck.txt",
    "results/raw/2026-10-10_m-steps7-8_build-inputs.md",
    "results/raw/2026-10-10_note-N1-v0_4_valuescheck.md",
+   "results/raw/2026-10-10_note-N1-v0_5-claims-ledger.json",
+   "results/raw/2026-10-10_note-N1-v0_5-claims-ledger.md",
+   "results/raw/2026-10-10_note-N1-v0_5-note-rows.json",
+   "results/raw/2026-10-11_note-N1-v0_5_valuescheck.md",
    "scripts/audit_note_N1.py",
    "scripts/audit_note_N10.py",
    "scripts/audit_note_N11.py",
@@ -204,8 +208,20 @@
    "valence_core/m/stages.py"
   ],
   "tracked_files_differing_from_pin_attribution": {
-   "commits_after_pin": 26,
+   "commits_after_pin": 28,
    "by_commit": [
+    {
+     "commit": "fa1b41e",
+     "date": "2026-10-11",
+     "subject_head": "AUDIT-note-release v1.2, N1 round 9 under the PI's rulings ...",
+     "files": 9
+    },
+    {
+     "commit": "84801cb",
+     "date": "2026-10-11",
+     "subject_head": "AUDIT-note-release v1.2, round 9 Tier 1 (the PI's ruling 9 ...",
+     "files": 17
+    },
     {
      "commit": "e3bef6f",
      "date": "2026-10-11",
@@ -426,8 +442,8 @@
   },
   "preprint_of_record": {
    "ruling": "the PI's ruling 9 of 2026-10-10, as corrected",
-   "sha256": "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22",
-   "measured_sha256": "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22",
+   "sha256": "d9635ca24d32dcba193cd9aade273de2679c99c5c2218787b410e793a42d1fe6",
+   "measured_sha256": "d9635ca24d32dcba193cd9aade273de2679c99c5c2218787b410e793a42d1fe6",
    "match": true,
    "audited_superseded_sha256": "d6431e97d35e5914574ff9884c0e64463a7baf1cf9d279f27ed45a683a6222b8",
    "audited_copy_untracked_not_opened": "archive/PREPRINT-v1_0-draft.pre-patch-v6.md",
@@ -561,6 +577,45 @@
    ],
    "findings_on_the_patch": [],
    "not_found_on_a_text_not_of_record": []
+  },
+  "preprint_round10": {
+   "routing": "the PI's routing of 2026-10-12",
+   "sha256": "d9635ca24d32dcba193cd9aade273de2679c99c5c2218787b410e793a42d1fe6",
+   "measured_sha256": "d9635ca24d32dcba193cd9aade273de2679c99c5c2218787b410e793a42d1fe6",
+   "match": true,
+   "patch_v6_sha256": "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22",
+   "patch_v6_copy_untracked_never_required": "archive/PREPRINT-v1_0-draft.pre-patch-v7.md",
+   "patch_v6_copy_state": "present, sha256 matching, read",
+   "line_counts": {
+    "v6": 454,
+    "v7": 454
+   },
+   "lines_changed_v6_to_v7": {
+    "v6": [
+     1,
+     109,
+     172,
+     182
+    ],
+    "v7": [
+     1,
+     109,
+     172,
+     182
+    ]
+   },
+   "lines_read_by_this_script_v7": [
+    101,
+    135,
+    137,
+    141
+   ],
+   "lines_read_changed_by_v7": [],
+   "round9_findings_source": "84801cb:results/raw/2026-10-08_note-N8-link2.json integrity.preprint_of_record.findings_on_the_patch",
+   "round9_findings_read_error": null,
+   "round9_findings_recorded": 0,
+   "round9_findings_dispositions": [],
+   "new_findings_on_the_patch": []
   }
  },
  "suite": {
@@ -588,7 +643,7 @@
   },
   "pinned_tree_files_extracted": 371,
   "stdout_identical": true,
-  "head_at_wt_run_end": "e3bef6f09f48e75a4be141483b5700b095da35d4",
+  "head_at_wt_run_end": "fa1b41ea7e1ebd75a983d3ec7cd09f9abe0952a5",
   "repo_untracked_ignored_before_after_equal": true,
   "repo_untracked_before_after_equal": true,
   "checks": [
@@ -3153,7 +3208,7 @@
  "figures": [
   {
    "figure": "regression suite 103/103 (block :107)",
-   "value": "154/154 at bbc9ffe (git-archive tree); 154/154 on the working tree at e3bef6f",
+   "value": "154/154 at bbc9ffe (git-archive tree); 154/154 on the working tree at fa1b41e",
    "source": "python -B -m valence_core.regression.analysis (stdout)",
    "status": "discrepant",
    "note": "stale count, not transcription: 103 was the count after the S2 build (RESULTS.md@bbc9ffe:11598); README.md@bbc9ffe still says 103; 0 FAIL"
@@ -3198,7 +3253,7 @@
    "value": "axis_pos 9/12 > 0; axis_neg 10/12 < 0 (over the other 11: 8/11, 9/11 -- computed-new (post-hoc, descriptive))",
    "source": "data/e0/e0_b2_b2b.json per_probe signs",
    "status": "reproduced",
-   "note": "counts are over ALL 12 probes (record: archive/RESULTS-cycles3-4.md@bbc9ffe:1442); the preprint's 'on the remaining probes' (PREPRINT-v1_0-draft.md(working tree, untracked, sha256 0f4ba501...):135) would be 8/11 and 9/11 -- a wording slip; FINDINGS-3's '9/12 and 10/12 elsewhere' (FINDINGS-3.md@bbc9ffe:55) has the same ambiguity"
+   "note": "counts are over ALL 12 probes (record: archive/RESULTS-cycles3-4.md@bbc9ffe:1442); the preprint's 'on the remaining probes' (PREPRINT-v1_0-draft.md(working tree, untracked, sha256 d9635ca2...):135) would be 8/11 and 9/11 -- a wording slip; FINDINGS-3's '9/12 and 10/12 elsewhere' (FINDINGS-3.md@bbc9ffe:55) has the same ambiguity"
   },
   {
    "figure": "G = 0.316",
@@ -3212,7 +3267,7 @@
    "value": "0.8294–0.8747 (L40–L60)",
    "source": "data/e0/e0_axes.npz last_reward vs last_character (V2); e0_axes.meta.json report.last v2_self_residual_frac (3 dp)",
    "status": "reproduced",
-   "note": "PRECISION: the upper end is 0.8747 at L48, computed unrounded from the npz's float32 vectors, stored as 0.875 in the meta report's 3 dp; the unrounded range rounds to 0.83–0.87 at 2 dp, and 0.83–0.88 only via the 3-dp value (double rounding). The record carries '.83–.88' at archive/RESULTS-cycles3-4.md@bbc9ffe:1573, FINDINGS-3.md@bbc9ffe:60 and PREPRINT-v1_0-draft.md(working tree, untracked, sha256 0f4ba501...):137; the note may write 0.83–0.87 or footnote it (N1/PI). The block names 'the purity–potency figures' collectively; these five rows take the numbers from PREPRINT-v1_0-draft.md(working tree, untracked, sha256 0f4ba501...):137 and FINDINGS-3. Span variant beside: 0.505–0.550"
+   "note": "PRECISION: the upper end is 0.8747 at L48, computed unrounded from the npz's float32 vectors, stored as 0.875 in the meta report's 3 dp; the unrounded range rounds to 0.83–0.87 at 2 dp, and 0.83–0.88 only via the 3-dp value (double rounding). The record carries '.83–.88' at archive/RESULTS-cycles3-4.md@bbc9ffe:1573, FINDINGS-3.md@bbc9ffe:60 and PREPRINT-v1_0-draft.md(working tree, untracked, sha256 d9635ca2...):137; the note may write 0.83–0.87 or footnote it (N1/PI). The block names 'the purity–potency figures' collectively; these five rows take the numbers from PREPRINT-v1_0-draft.md(working tree, untracked, sha256 d9635ca2...):137 and FINDINGS-3. Span variant beside: 0.505–0.550"
   },
   {
    "figure": "purity–potency: last-position sentiment cosine 0.11–0.21",
@@ -3247,7 +3302,7 @@
    "value": "0.1568–0.1700 across L40–L60 (L48 0.1622)",
    "source": "data/e0/e0_axes.npz ‖span_reward‖ / e0_axes.meta.json R_per_layer_spanmean",
    "status": "reproduced",
-   "note": "R_l as stored under R_per_layer_spanmean; not an analysis-tier check (the suite checks frac x R_l dose arithmetic, not ‖d‖/R). Wording: the preprint's '≈ 0.16 at every layer' (PREPRINT-v1_0-draft.md(working tree, untracked, sha256 0f4ba501...):101) holds to within about ±0.01 (0.157–0.170; the largest deviation is L52's 0.170033, +0.010033 from 0.16, so a strict ±0.01 is exceeded there by 3.3e-05); at 2 dp, 3 of 6 layers give 0.17 (L40 0.1652, L52 0.1700, L56 0.1662). At one significant figure every layer is 0.2, so '0.16' is a 2-significant-figure claim"
+   "note": "R_l as stored under R_per_layer_spanmean; not an analysis-tier check (the suite checks frac x R_l dose arithmetic, not ‖d‖/R). Wording: the preprint's '≈ 0.16 at every layer' (PREPRINT-v1_0-draft.md(working tree, untracked, sha256 d9635ca2...):101) holds to within about ±0.01 (0.157–0.170; the largest deviation is L52's 0.170033, +0.010033 from 0.16, so a strict ±0.01 is exceeded there by 3.3e-05); at 2 dp, 3 of 6 layers give 0.17 (L40 0.1652, L52 0.1700, L56 0.1662). At one significant figure every layer is 0.2, so '0.16' is a 2-significant-figure claim"
   },
   {
    "figure": "sentiment cosine 0.52",
@@ -3316,10 +3371,10 @@
  "notes": [
   "Suite count: the suite prints 154/154 at bbc9ffe, not 103/103. Every '103' (block :68/:70/:107/:137 -- :137 is §6 README-NOTE item (3), 'how to run the regression suite and what 103/103 covers', where the stale count would reach the release README -- and README.md@bbc9ffe:58) is the post-S2 count of 2026-08-20.",
   "Rule-26 record: `data/regression/oracle_rule26.json` at the pin carries only criterion (iii) (four e2a choice-read rows, 2026-08-18). The B2b exact reproduction (the oracle's hold on Δ+/Δ−/V1) is at 9f3148c and in results/raw/2026-08-12_rule26_b2b_tightened.txt; the kernel-gate rows at db0d177 and in results/raw/2026-08-12_rule26_oracle.txt. The README should say so rather than imply one artifact holds all oracle criteria.",
-  "Wrong referent (preprint §5.2, PREPRINT-v1_0-draft.md(working tree, untracked, sha256 0f4ba501...):135): 'the natural praise–criticism gap on that instrument (G = 0.316)'. G is the battery mean; the film-title instrument's own gap is g_0 = 1.157 and the 'roughly two-fold' is 2.481/1.157 = 2.14x (computed-new (post-hoc, descriptive); the record's own wording is '~2×' against that instrument's gap, archive/RESULTS-cycles3-4.md@bbc9ffe:1445). Suggested wording: '(its own natural gap g = 1.16; battery mean G = 0.316)'.",
+  "Wrong referent (preprint §5.2, PREPRINT-v1_0-draft.md(working tree, untracked, sha256 d9635ca2...):135): 'the natural praise–criticism gap on that instrument (G = 0.316)'. G is the battery mean; the film-title instrument's own gap is g_0 = 1.157 and the 'roughly two-fold' is 2.481/1.157 = 2.14x (computed-new (post-hoc, descriptive); the record's own wording is '~2×' against that instrument's gap, archive/RESULTS-cycles3-4.md@bbc9ffe:1445). Suggested wording: '(its own natural gap g = 1.16; battery mean G = 0.316)'.",
   "Wording: '9/12 and 10/12 on the remaining probes' -- the counts are over all 12 probes; over the 11 remaining after the LOO they are 8/11 and 9/11 (computed-new (post-hoc, descriptive)). FINDINGS-3 carries the same counts as '9/12 and 10/12 elsewhere' (FINDINGS-3.md@bbc9ffe:55), with the same ambiguity.",
-  "Wording (PREPRINT-v1_0-draft.md(working tree, untracked, sha256 0f4ba501...):135): 'a clean overdose regime at f = .40, where both poles read as post-criticism' holds at L44 only (Δ+ L44 -0.1141; L48 +0.3999; L52 +0.5290 at f = .40, recomputed in 2d). The archive's B2a entry states it as 'L44 Δ+ sign flip' (archive/RESULTS-cycles3-4.md@bbc9ffe:1475). A second carrier of the overgeneralization: FINDINGS-3's 'an overdose regime at 4× (all displacement reads as criticism' (FINDINGS-3.md@bbc9ffe:50); at 4× the selected frac 0.10, i.e. f = .40, Δ+ is still positive at L48 and L52 (above).",
-  "Wording (PREPRINT-v1_0-draft.md(working tree, untracked, sha256 0f4ba501...):141): 'coherence degrades monotonically (audit-flagged rounds .000/.023/.047 across 0.10/0.20/0.30)' -- the figures reproduce; 'monotonically' is the values-check's flagged gloss (of the four dose steps only read .10->.20 is resolved, one-sided Fisher p = 0.0112; the R arm degrades at 1.92x M's rate at 0.20). The closure text of record has the hedged form ('ordered', 'a single resolved step', 'not axis-specific').",
+  "Wording (PREPRINT-v1_0-draft.md(working tree, untracked, sha256 d9635ca2...):135): 'a clean overdose regime at f = .40, where both poles read as post-criticism' holds at L44 only (Δ+ L44 -0.1141; L48 +0.3999; L52 +0.5290 at f = .40, recomputed in 2d). The archive's B2a entry states it as 'L44 Δ+ sign flip' (archive/RESULTS-cycles3-4.md@bbc9ffe:1475). A second carrier of the overgeneralization: FINDINGS-3's 'an overdose regime at 4× (all displacement reads as criticism' (FINDINGS-3.md@bbc9ffe:50); at 4× the selected frac 0.10, i.e. f = .40, Δ+ is still positive at L48 and L52 (above).",
+  "Wording (PREPRINT-v1_0-draft.md(working tree, untracked, sha256 d9635ca2...):141): 'coherence degrades monotonically (audit-flagged rounds .000/.023/.047 across 0.10/0.20/0.30)' -- the figures reproduce; 'monotonically' is the values-check's flagged gloss (of the four dose steps only read .10->.20 is resolved, one-sided Fisher p = 0.0112; the R arm degrades at 1.92x M's rate at 0.20). The closure text of record has the hedged form ('ordered', 'a single resolved step', 'not axis-specific').",
   "Beside, same preprint sentence (not in the block's list): 'the marker imprint falls to about a quarter of its short-context value' (ratio recomputed above: 0.253) -- the values-check (RESULTS.md@bbc9ffe:5527) found the arithmetic holds (.103/.408) but the two are different channels (a state-live read vs a no-injection read of generated text); the closure text of record has no 'quarter' (string check: 'quarter' in the blockquote = False).",
   "'≈ 0.51' self-indexed and '≈ 0.85' character cosine are layer-dependent: L48 gives .509 and .861; the six-layer ranges are 0.505–0.550 and 0.835–0.863. Likewise ‖d‖/R is 0.157–0.170: the preprint's '≈ 0.16 at every layer' holds to within about ±0.01 (0.157–0.170; the largest deviation is L52's 0.170033, +0.010033 from 0.16, so a strict ±0.01 is exceeded there by 3.3e-05); at 2 dp, 3 of 6 layers give 0.17 (L40 0.1652, L52 0.1700, L56 0.1662). At one significant figure every layer is 0.2, so '0.16' is a 2-significant-figure claim.",
   "Precision: the last-position self-indexed range '0.83–0.88' is 0.8294–0.8747 unrounded, i.e. 0.83–0.87 at 2 dp; '.88' comes from the meta report's 3-dp 0.875 at L48 rounded again. Not a transcription error; the note may write the unrounded range or footnote it (N1/PI).",
@@ -3468,7 +3523,7 @@
    "severity": "minor (the check's finding 2)",
    "claim": "§0's sentence after the tracked-differing list was fixed text written at the first run's HEAD: at 6485da2 it still called the 84 listed files the concurrent PROPOSAL-m session's commits and the PI's notebook edit, though 63 come from the audit's own commits 09c3a8c and 6485da2, and it called scripts/audit_note_*.py untracked, though 21 are tracked and in the list",
    "disposition": "FIXED",
-   "detail": "Confirmed (`git log --name-only 09c3a8c^..6485da2`). The sentence is now computed from the list at run start: per commit after the pin, the listed files it touches; the files no commit touches; those with uncommitted changes; and which .py files the suite's two structural source scans read (their predicates ported from valence_core/regression/analysis.py at the pin), with the untracked .py files the qwen-helper scan also reads. Here: e3bef6f 7; 9bf36ad 1; c464482 7; b7737ef 3; 97d70bd 3; 185deb0 3; b8aa706 5; 8402174 4; fd2b136 11; ea47e89 2; b4d7f13 4; b62af85 4; f23b444 5; 64df36b 5; d092078 5; 2c50e03 5; e60b633 6; ef5c446 11; e0fd85c 19; 961e90a 3; 02b6a61 8; 6485da2 7; 09c3a8c 56; cf8eb5b 9; bab921c 4; c75d4d8 7 (commits whose subject starts 'AUDIT-note-release': 121 file-touches); no commit 1; uncommitted 17; both scans 4, qwen-helper scan only 29; untracked .py read 0. The claim that only valence_core/m/*.py and scripts/m_sessions.py are visible to the suite is dropped: which other listed files the suite opens is not computed here. The JSON carries integrity.tracked_files_differing_from_pin_attribution."
+   "detail": "Confirmed (`git log --name-only 09c3a8c^..6485da2`). The sentence is now computed from the list at run start: per commit after the pin, the listed files it touches; the files no commit touches; those with uncommitted changes; and which .py files the suite's two structural source scans read (their predicates ported from valence_core/regression/analysis.py at the pin), with the untracked .py files the qwen-helper scan also reads. Here: fa1b41e 9; 84801cb 17; e3bef6f 7; 9bf36ad 1; c464482 7; b7737ef 3; 97d70bd 3; 185deb0 3; b8aa706 5; 8402174 4; fd2b136 11; ea47e89 2; b4d7f13 4; b62af85 4; f23b444 5; 64df36b 5; d092078 5; 2c50e03 5; e60b633 6; ef5c446 11; e0fd85c 19; 961e90a 3; 02b6a61 8; 6485da2 7; 09c3a8c 56; cf8eb5b 9; bab921c 4; c75d4d8 7 (commits whose subject starts 'AUDIT-note-release': 147 file-touches); no commit 1; uncommitted 17; both scans 4, qwen-helper scan only 29; untracked .py read 0. The claim that only valence_core/m/*.py and scripts/m_sessions.py are visible to the suite is dropped: which other listed files the suite opens is not computed here. The JSON carries integrity.tracked_files_differing_from_pin_attribution."
   },
   {
    "finding": "2",
@@ -3488,7 +3543,7 @@
  "stops": [],
  "portability": {
   "fix": "default --scratch: tempfile.mkdtemp(prefix='audit_note_N8_') under tempfile.gettempdir(); was a fixed builder-session path",
-  "work_root": "<tempfile.gettempdir()>/audit_note_N8_y8e34glz",
+  "work_root": "<tempfile.gettempdir()>/audit_note_N8_3ix9xgxw",
   "work_root_made_by_this_run": true,
   "scratch_given_existed_beforehand": null,
   "tree_removed": true,
@@ -3502,7 +3557,7 @@
   "compare_rev_full": "09c3a8cc548079d92cd5f8f05357992583f6ef12",
   "md_lines_compared": {
    "old": 462,
-   "new": 477
+   "new": 481
   },
   "md_differing": [
    {
@@ -3528,7 +3583,7 @@
    {
     "line_new": 15,
     "line_old": 15,
-    "class": "preprint of record re-pointed to the patched text (the PI's ruling 9 of 2026-10-10, as corrected)"
+    "class": "preprint of record re-pointed to the patched text (the PI's ruling 9 of 2026-10-10, as corrected; patch v7 since round 10, the PI's routing of 2026-10-12)"
    },
    {
     "line_new": 33,
@@ -3556,79 +3611,79 @@
     "class": "new in this version (round 9: preprint sentences checked on the patched text)"
    },
    {
+    "line_new": 38,
+    "line_old": null,
+    "class": "new in this version (round 9: preprint sentences checked on the patched text)"
+   },
+   {
+    "line_new": 39,
+    "line_old": null,
+    "class": "new in this version (round 10: patch v7; round 9's findings on the patch disposed of, and new findings on the patch)"
+   },
+   {
+    "line_new": 40,
+    "line_old": null,
+    "class": "new in this version (round 10: patch v7; round 9's findings on the patch disposed of, and new findings on the patch)"
+   },
+   {
     "line_new": 41,
+    "line_old": null,
+    "class": "new in this version (round 10: patch v7; round 9's findings on the patch disposed of, and new findings on the patch)"
+   },
+   {
+    "line_new": 45,
     "line_old": 38,
     "class": "HEAD (the source repository's HEAD moved)"
    },
    {
-    "line_new": 43,
+    "line_new": 47,
     "line_old": 40,
     "class": "working-tree state: counts of untracked / ignored paths (machine state)"
    },
    {
-    "line_new": 47,
+    "line_new": 51,
     "line_old": 44,
     "class": "HEAD (the source repository's HEAD moved)"
    },
    {
-    "line_new": 61,
+    "line_new": 65,
     "line_old": 58,
-    "class": "preprint of record re-pointed to the patched text (the PI's ruling 9 of 2026-10-10, as corrected)"
+    "class": "preprint of record re-pointed to the patched text (the PI's ruling 9 of 2026-10-10, as corrected; patch v7 since round 10, the PI's routing of 2026-10-12)"
    },
    {
-    "line_new": 232,
+    "line_new": 236,
     "line_old": 229,
     "class": "HEAD (the source repository's HEAD moved)"
    },
    {
-    "line_new": 238,
+    "line_new": 242,
     "line_old": 235,
-    "class": "preprint of record re-pointed to the patched text (the PI's ruling 9 of 2026-10-10, as corrected)"
+    "class": "preprint of record re-pointed to the patched text (the PI's ruling 9 of 2026-10-10, as corrected; patch v7 since round 10, the PI's routing of 2026-10-12)"
    },
    {
-    "line_new": 240,
+    "line_new": 244,
     "line_old": 237,
-    "class": "preprint of record re-pointed to the patched text (the PI's ruling 9 of 2026-10-10, as corrected)"
+    "class": "preprint of record re-pointed to the patched text (the PI's ruling 9 of 2026-10-10, as corrected; patch v7 since round 10, the PI's routing of 2026-10-12)"
    },
    {
-    "line_new": 245,
+    "line_new": 249,
     "line_old": 242,
-    "class": "preprint of record re-pointed to the patched text (the PI's ruling 9 of 2026-10-10, as corrected)"
+    "class": "preprint of record re-pointed to the patched text (the PI's ruling 9 of 2026-10-10, as corrected; patch v7 since round 10, the PI's routing of 2026-10-12)"
    },
    {
-    "line_new": 260,
+    "line_new": 264,
     "line_old": 257,
-    "class": "preprint of record re-pointed to the patched text (the PI's ruling 9 of 2026-10-10, as corrected)"
+    "class": "preprint of record re-pointed to the patched text (the PI's ruling 9 of 2026-10-10, as corrected; patch v7 since round 10, the PI's routing of 2026-10-12)"
    },
    {
-    "line_new": 262,
+    "line_new": 266,
     "line_old": 259,
-    "class": "preprint of record re-pointed to the patched text (the PI's ruling 9 of 2026-10-10, as corrected)"
+    "class": "preprint of record re-pointed to the patched text (the PI's ruling 9 of 2026-10-10, as corrected; patch v7 since round 10, the PI's routing of 2026-10-12)"
    },
    {
-    "line_new": 263,
+    "line_new": 267,
     "line_old": 260,
-    "class": "note 6's quote of preprint line 141 now runs through '0.30)' (round 9; it closed a parenthesis the text does not close there); preprint of record re-pointed to the patched text (the PI's ruling 9 of 2026-10-10, as corrected)"
-   },
-   {
-    "line_new": 301,
-    "line_old": null,
-    "class": "new in this version (values-check round 3)"
-   },
-   {
-    "line_new": 302,
-    "line_old": null,
-    "class": "new in this version (values-check round 3)"
-   },
-   {
-    "line_new": 303,
-    "line_old": null,
-    "class": "new in this version (values-check round 3)"
-   },
-   {
-    "line_new": 304,
-    "line_old": null,
-    "class": "new in this version (values-check round 3)"
+    "class": "note 6's quote of preprint line 141 now runs through '0.30)' (round 9; it closed a parenthesis the text does not close there); preprint of record re-pointed to the patched text (the PI's ruling 9 of 2026-10-10, as corrected; patch v7 since round 10, the PI's routing of 2026-10-12)"
    },
    {
     "line_new": 305,
@@ -3671,7 +3726,27 @@
     "class": "new in this version (values-check round 3)"
    },
    {
+    "line_new": 313,
+    "line_old": null,
+    "class": "new in this version (values-check round 3)"
+   },
+   {
     "line_new": 314,
+    "line_old": null,
+    "class": "new in this version (values-check round 3)"
+   },
+   {
+    "line_new": 315,
+    "line_old": null,
+    "class": "new in this version (values-check round 3)"
+   },
+   {
+    "line_new": 316,
+    "line_old": null,
+    "class": "new in this version (values-check round 3)"
+   },
+   {
+    "line_new": 318,
     "line_old": 299,
     "class": "HEAD (the source repository's HEAD moved)"
    }
@@ -3699,7 +3774,7 @@
    },
    {
     "path": "integrity.preprint_sha256",
-    "class": "preprint of record re-pointed to the patched text (the PI's ruling 9 of 2026-10-10, as corrected)"
+    "class": "preprint of record re-pointed to the patched text (the PI's ruling 9 of 2026-10-10, as corrected; patch v7 since round 10, the PI's routing of 2026-10-12)"
    },
    {
     "path": "integrity.tracked_files_differing_from_pin",
@@ -3715,19 +3790,19 @@
    },
    {
     "path": "figures[6].note",
-    "class": "preprint of record re-pointed to the patched text (the PI's ruling 9 of 2026-10-10, as corrected)"
+    "class": "preprint of record re-pointed to the patched text (the PI's ruling 9 of 2026-10-10, as corrected; patch v7 since round 10, the PI's routing of 2026-10-12)"
    },
    {
     "path": "figures[8].note",
-    "class": "preprint of record re-pointed to the patched text (the PI's ruling 9 of 2026-10-10, as corrected)"
+    "class": "preprint of record re-pointed to the patched text (the PI's ruling 9 of 2026-10-10, as corrected; patch v7 since round 10, the PI's routing of 2026-10-12)"
    },
    {
     "path": "figures[13].note",
-    "class": "preprint of record re-pointed to the patched text (the PI's ruling 9 of 2026-10-10, as corrected)"
+    "class": "preprint of record re-pointed to the patched text (the PI's ruling 9 of 2026-10-10, as corrected; patch v7 since round 10, the PI's routing of 2026-10-12)"
    },
    {
     "path": "notes",
-    "class": "note 6's quote of preprint line 141 now runs through '0.30)' (round 9; it closed a parenthesis the text does not close there); preprint of record re-pointed to the patched text (the PI's ruling 9 of 2026-10-10, as corrected)"
+    "class": "note 6's quote of preprint line 141 now runs through '0.30)' (round 9; it closed a parenthesis the text does not close there); preprint of record re-pointed to the patched text (the PI's ruling 9 of 2026-10-10, as corrected; patch v7 since round 10, the PI's routing of 2026-10-12)"
    },
    {
     "path": "integrity.tracked_files_differing_from_pin_attribution.commits_after_pin",
@@ -4150,6 +4225,38 @@
     "class": "new in this version (attribution of the list, values-check round 3)"
    },
    {
+    "path": "integrity.tracked_files_differing_from_pin_attribution.by_commit[26].commit",
+    "class": "new in this version (attribution of the list, values-check round 3)"
+   },
+   {
+    "path": "integrity.tracked_files_differing_from_pin_attribution.by_commit[26].date",
+    "class": "new in this version (attribution of the list, values-check round 3)"
+   },
+   {
+    "path": "integrity.tracked_files_differing_from_pin_attribution.by_commit[26].subject_head",
+    "class": "new in this version (attribution of the list, values-check round 3)"
+   },
+   {
+    "path": "integrity.tracked_files_differing_from_pin_attribution.by_commit[26].files",
+    "class": "new in this version (attribution of the list, values-check round 3)"
+   },
+   {
+    "path": "integrity.tracked_files_differing_from_pin_attribution.by_commit[27].commit",
+    "class": "new in this version (attribution of the list, values-check round 3)"
+   },
+   {
+    "path": "integrity.tracked_files_differing_from_pin_attribution.by_commit[27].date",
+    "class": "new in this version (attribution of the list, values-check round 3)"
+   },
+   {
+    "path": "integrity.tracked_files_differing_from_pin_attribution.by_commit[27].subject_head",
+    "class": "new in this version (attribution of the list, values-check round 3)"
+   },
+   {
+    "path": "integrity.tracked_files_differing_from_pin_attribution.by_commit[27].files",
+    "class": "new in this version (attribution of the list, values-check round 3)"
+   },
+   {
     "path": "integrity.tracked_files_differing_from_pin_attribution.no_commit",
     "class": "new in this version (attribution of the list, values-check round 3)"
    },
@@ -4482,6 +4589,78 @@
     "class": "new in this version (round 9: preprint sentences checked on the patched text)"
    },
    {
+    "path": "integrity.preprint_round10.routing",
+    "class": "new in this version (round 10: patch v7; round 9's findings on the patch disposed of, and new findings on the patch)"
+   },
+   {
+    "path": "integrity.preprint_round10.sha256",
+    "class": "new in this version (round 10: patch v7; round 9's findings on the patch disposed of, and new findings on the patch)"
+   },
+   {
+    "path": "integrity.preprint_round10.measured_sha256",
+    "class": "new in this version (round 10: patch v7; round 9's findings on the patch disposed of, and new findings on the patch)"
+   },
+   {
+    "path": "integrity.preprint_round10.match",
+    "class": "new in this version (round 10: patch v7; round 9's findings on the patch disposed of, and new findings on the patch)"
+   },
+   {
+    "path": "integrity.preprint_round10.patch_v6_sha256",
+    "class": "new in this version (round 10: patch v7; round 9's findings on the patch disposed of, and new findings on the patch)"
+   },
+   {
+    "path": "integrity.preprint_round10.patch_v6_copy_untracked_never_required",
+    "class": "new in this version (round 10: patch v7; round 9's findings on the patch disposed of, and new findings on the patch)"
+   },
+   {
+    "path": "integrity.preprint_round10.patch_v6_copy_state",
+    "class": "new in this version (round 10: patch v7; round 9's findings on the patch disposed of, and new findings on the patch)"
+   },
+   {
+    "path": "integrity.preprint_round10.line_counts.v6",
+    "class": "new in this version (round 10: patch v7; round 9's findings on the patch disposed of, and new findings on the patch)"
+   },
+   {
+    "path": "integrity.preprint_round10.line_counts.v7",
+    "class": "new in this version (round 10: patch v7; round 9's findings on the patch disposed of, and new findings on the patch)"
+   },
+   {
+    "path": "integrity.preprint_round10.lines_changed_v6_to_v7.v6",
+    "class": "new in this version (round 10: patch v7; round 9's findings on the patch disposed of, and new findings on the patch)"
+   },
+   {
+    "path": "integrity.preprint_round10.lines_changed_v6_to_v7.v7",
+    "class": "new in this version (round 10: patch v7; round 9's findings on the patch disposed of, and new findings on the patch)"
+   },
+   {
+    "path": "integrity.preprint_round10.lines_read_by_this_script_v7",
+    "class": "new in this version (round 10: patch v7; round 9's findings on the patch disposed of, and new findings on the patch)"
+   },
+   {
+    "path": "integrity.preprint_round10.lines_read_changed_by_v7",
+    "class": "new in this version (round 10: patch v7; round 9's findings on the patch disposed of, and new findings on the patch)"
+   },
+   {
+    "path": "integrity.preprint_round10.round9_findings_source",
+    "class": "new in this version (round 10: patch v7; round 9's findings on the patch disposed of, and new findings on the patch)"
+   },
+   {
+    "path": "integrity.preprint_round10.round9_findings_read_error",
+    "class": "new in this version (round 10: patch v7; round 9's findings on the patch disposed of, and new findings on the patch)"
+   },
+   {
+    "path": "integrity.preprint_round10.round9_findings_recorded",
+    "class": "new in this version (round 10: patch v7; round 9's findings on the patch disposed of, and new findings on the patch)"
+   },
+   {
+    "path": "integrity.preprint_round10.round9_findings_dispositions",
+    "class": "new in this version (round 10: patch v7; round 9's findings on the patch disposed of, and new findings on the patch)"
+   },
+   {
+    "path": "integrity.preprint_round10.new_findings_on_the_patch",
+    "class": "new in this version (round 10: patch v7; round 9's findings on the patch disposed of, and new findings on the patch)"
+   },
+   {
     "path": "values_check_round3[0].finding",
     "class": "new in this version (values-check round 3)"
    },
@@ -4544,16 +4723,16 @@
   ],
   "tracked_differing": {
    "old": 21,
-   "new": 166,
-   "added": 145,
+   "new": 170,
+   "added": 149,
    "removed": 0,
-   "added_changed_between_heads": 145
+   "added_changed_between_heads": 149
   },
   "heads": {
    "old": "cf8eb5b9dd4e117934627242a3aea5bdf4ae4b55",
-   "new": "e3bef6f09f48e75a4be141483b5700b095da35d4"
+   "new": "fa1b41ea7e1ebd75a983d3ec7cd09f9abe0952a5"
   },
-  "files_changed_between_heads": 148,
+  "files_changed_between_heads": 152,
   "of_which_under_valence_core_scripts_data": 37,
   "added_under_valence_core_scripts_data": 35,
   "gitignore_changed_between_heads": true,

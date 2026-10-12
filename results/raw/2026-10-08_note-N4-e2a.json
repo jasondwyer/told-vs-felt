@@ -3,7 +3,7 @@
  "pin": "bbc9ffe",
  "block_sha256": "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841",
  "script": "scripts/audit_note_N4.py",
- "script_sha256": "109d54e00dc2e55d2e42a7397421fe864efc3aec97e65d9ab6b4361bdb51d670",
+ "script_sha256": "145d7899d6f2bdbc9f5d280c3835bd900e70f5e9de27f0a1a6f2b88819fba666",
  "interpreter": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python",
  "python": "3.12.9",
  "recount": {
@@ -823,8 +823,8 @@
   {
    "figure": "preprint quotation '54 of 101 valid sessions' (the sentence as the block quotes it)",
    "named_in": "N4(i)",
-   "reproduced": "no match in PREPRINT-v1_0-draft.md nor in the pre-patch v2/v3/v4/v6 copies",
-   "source": "grep of PREPRINT-v1_0-draft.md (sha256 0f4ba501d60a9418) and archive/PREPRINT-v1_0-draft.pre-patch-v2.md, archive/PREPRINT-v1_0-draft.pre-patch-v3.md, archive/PREPRINT-v1_0-draft.pre-patch-v4.md, archive/PREPRINT-v1_0-draft.pre-patch-v6.md; PREPRINT-v1_1-draft.md and RESEARCH-NOTE v0.2 absent (results/raw/2026-10-08_note-preflight.md@bbc9ffe:15 (RESEARCH-NOTE v0.2), :20 (v1.1))",
+   "reproduced": "no match in PREPRINT-v1_0-draft.md nor in the pre-patch v2/v3/v4/v6/v7 copies",
+   "source": "grep of PREPRINT-v1_0-draft.md (sha256 d9635ca24d32dcba) and archive/PREPRINT-v1_0-draft.pre-patch-v2.md, archive/PREPRINT-v1_0-draft.pre-patch-v3.md, archive/PREPRINT-v1_0-draft.pre-patch-v4.md, archive/PREPRINT-v1_0-draft.pre-patch-v6.md, archive/PREPRINT-v1_0-draft.pre-patch-v7.md; PREPRINT-v1_1-draft.md and RESEARCH-NOTE v0.2 absent (results/raw/2026-10-08_note-preflight.md@bbc9ffe:15 (RESEARCH-NOTE v0.2), :20 (v1.1))",
    "status": "not found",
    "note": "the quotation only; the figure it carries reproduces (next row); the patched v1.0 has 'valid sessions' on neither figure (finding on the patch PF-1)"
   },
@@ -839,8 +839,8 @@
   {
    "figure": "preprint quotation 'Δ_first is half the difference between the state and sham arms' break rates'",
    "named_in": "N4(i)",
-   "reproduced": "no match for 'half the difference' in PREPRINT-v1_0-draft.md nor in the pre-patch v2/v3/v4/v6 copies",
-   "source": "grep of PREPRINT-v1_0-draft.md and archive/PREPRINT-v1_0-draft.pre-patch-v2.md, archive/PREPRINT-v1_0-draft.pre-patch-v3.md, archive/PREPRINT-v1_0-draft.pre-patch-v4.md, archive/PREPRINT-v1_0-draft.pre-patch-v6.md; v1.1 and RESEARCH-NOTE v0.2 absent (results/raw/2026-10-08_note-preflight.md@bbc9ffe:15 (RESEARCH-NOTE v0.2), :20 (v1.1))",
+   "reproduced": "no match for 'half the difference' in PREPRINT-v1_0-draft.md nor in the pre-patch v2/v3/v4/v6/v7 copies",
+   "source": "grep of PREPRINT-v1_0-draft.md and archive/PREPRINT-v1_0-draft.pre-patch-v2.md, archive/PREPRINT-v1_0-draft.pre-patch-v3.md, archive/PREPRINT-v1_0-draft.pre-patch-v4.md, archive/PREPRINT-v1_0-draft.pre-patch-v6.md, archive/PREPRINT-v1_0-draft.pre-patch-v7.md; v1.1 and RESEARCH-NOTE v0.2 absent (results/raw/2026-10-08_note-preflight.md@bbc9ffe:15 (RESEARCH-NOTE v0.2), :20 (v1.1))",
    "status": "not found",
    "note": "the quotation only; v1.0 :172 states the within-arm decomposition instead (next row)"
   },
@@ -1064,8 +1064,8 @@
  "stops": [],
  "referent_notes": [
   "Design seat's claim 'none [integer] under (approach - avoid)/n' is refuted for reward pooled, sham map A, random1 map B, random2 map A: +0.0392 = (2*53-102)/102. The stored p (0.24422 = P(X>=55|102,1/2), not P(X>=53)=0.38330) and the analyzer's code fix the definition as k/n - 1/2. This is the design seat's arithmetic, not a record figure: under block :3 it is a note, not an (i) discrepancy under :62 (see STOPs).",
-  "'54 of 101 valid sessions' is not in PREPRINT-v1_0-draft.md (sha 0f4ba501...). That file has 54 of 101 at :172 (and 55 of 102 at :174; finding on the patch PF-1) -- the audit-v2 recount (archive/RESULTS-cycles3-4.md@bbc9ffe:3-12, the correction of record), reproduced here by scripts/e2a_recount.py. Not a transcription error. The quotation is also absent from the untracked pre-patch copies archive/PREPRINT-v1_0-draft.pre-patch-v2.md, archive/PREPRINT-v1_0-draft.pre-patch-v3.md, archive/PREPRINT-v1_0-draft.pre-patch-v4.md, archive/PREPRINT-v1_0-draft.pre-patch-v6.md (none carries it). Its source is not on this machine: PREPRINT-v1_1-draft.md (the block's project copy, AUDIT-note-release-v1_2.md@bbc9ffe:21) and RESEARCH-NOTE v0.2 are both absent (results/raw/2026-10-08_note-preflight.md@bbc9ffe:15 (RESEARCH-NOTE v0.2), :20 (v1.1)); either may carry the sentence.",
-  "'Δ_first is half the difference between the state and sham arms' break rates' is not in PREPRINT-v1_0-draft.md nor in the pre-patch v2/v3/v4/v6 copies (no 'half the difference'; PREPRINT-v1_1-draft.md and RESEARCH-NOTE v0.2, where it may live, are absent, results/raw/2026-10-08_note-preflight.md@bbc9ffe:15 (RESEARCH-NOTE v0.2), :20 (v1.1)). The record's identity (valence_core/e2d/habit.py@bbc9ffe:13-25) is WITHIN an arm, split by forced-end pole; ½(b+ − bs) is exact only at forced-end balance (reward 53/49: balanced +0.0528, weighted +0.0392 = measured). The literal between-arm reading gives -0.0297. The record's own short wordings (valence_core/e2d/habit.py@bbc9ffe:31; PROPOSAL-j-dose-escalation.md@bbc9ffe:429-430) state the halved difference without the balance condition; the note should state the weighted form or name the condition.",
+  "'54 of 101 valid sessions' is not in PREPRINT-v1_0-draft.md (sha d9635ca2...). That file has 54 of 101 at :172 (and 55 of 102 at :174; finding on the patch PF-1) -- the audit-v2 recount (archive/RESULTS-cycles3-4.md@bbc9ffe:3-12, the correction of record), reproduced here by scripts/e2a_recount.py. Not a transcription error. The quotation is also absent from the untracked pre-patch copies archive/PREPRINT-v1_0-draft.pre-patch-v2.md, archive/PREPRINT-v1_0-draft.pre-patch-v3.md, archive/PREPRINT-v1_0-draft.pre-patch-v4.md, archive/PREPRINT-v1_0-draft.pre-patch-v6.md, archive/PREPRINT-v1_0-draft.pre-patch-v7.md (none carries it). Its source is not on this machine: PREPRINT-v1_1-draft.md (the block's project copy, AUDIT-note-release-v1_2.md@bbc9ffe:21) and RESEARCH-NOTE v0.2 are both absent (results/raw/2026-10-08_note-preflight.md@bbc9ffe:15 (RESEARCH-NOTE v0.2), :20 (v1.1)); either may carry the sentence.",
+  "'Δ_first is half the difference between the state and sham arms' break rates' is not in PREPRINT-v1_0-draft.md nor in the pre-patch v2/v3/v4/v6/v7 copies (no 'half the difference'; PREPRINT-v1_1-draft.md and RESEARCH-NOTE v0.2, where it may live, are absent, results/raw/2026-10-08_note-preflight.md@bbc9ffe:15 (RESEARCH-NOTE v0.2), :20 (v1.1)). The record's identity (valence_core/e2d/habit.py@bbc9ffe:13-25) is WITHIN an arm, split by forced-end pole; ½(b+ − bs) is exact only at forced-end balance (reward 53/49: balanced +0.0528, weighted +0.0392 = measured). The literal between-arm reading gives -0.0297. The record's own short wordings (valence_core/e2d/habit.py@bbc9ffe:31; PROPOSAL-j-dose-escalation.md@bbc9ffe:429-430) state the halved difference without the balance condition; the note should state the weighted form or name the condition.",
   "The approach-probability interval ≈ [.44, .64] (a record figure, reproduced at 2 dp under Clopper-Pearson and Wald) has no stated method in the record (FINDINGS-3.md@bbc9ffe:95; preprint :172, which no longer carries 'P(approach) ∈ ≈ [.44, .64]' (finding on the patch PF-2, below)). Wilson 95% on 55/102 = [0.4428, 0.6328] -> [0.44, 0.63] (the design seat's guess does not reproduce .64); Clopper-Pearson [0.4377, 0.6384] -> [0.44, 0.64]; Wald [0.4425, 0.6359] -> [0.44, 0.64].",
   "Pre-registration power line (archive/RESULTS-cycles3-4.md@bbc9ffe:1303-1304): 'P(+) = 0.65 vs 0.5 at ~0.85 power, one-sided α = 0.05' at n = 96; exact binomial power is 0.896 (critical count 57). Conservative; method unstated. Descriptive, no action proposed.",
   "Conjunct (1) as coded compares Δ_first with max |pseudo-Δ| (absolute values, jlens-qwen36/scripts/e2a_sessions.py `pseudo = [abs(...)]`); the pre-registered text reads 'Δ > max pseudo-Δ' without absolute values (archive/RESULTS-cycles3-4.md@bbc9ffe:1307-1309). At the realized arms the two readings coincide (max signed +0.1522 = max |.| 0.1522), so the verdict is unaffected. They do not coincide in power: (ii) computes the MDE under both, and the PI or design seat picks the reading the note uses.",
@@ -1196,7 +1196,7 @@
   {
    "finding": "8 (minor) preflight :20 cited for RESEARCH-NOTE; pre-patch copies not searched",
    "disposition": "fixed",
-   "detail": "Cited as results/raw/2026-10-08_note-preflight.md@bbc9ffe:15 (RESEARCH-NOTE v0.2), :20 (v1.1). The 4 untracked pre-patch copies are now grepped by the script; none carries '54 of 101 valid sessions' or 'half the difference': True."
+   "detail": "Cited as results/raw/2026-10-08_note-preflight.md@bbc9ffe:15 (RESEARCH-NOTE v0.2), :20 (v1.1). The 5 untracked pre-patch copies are now grepped by the script; none carries '54 of 101 valid sessions' or 'half the difference': True."
   },
   {
    "finding": "9 (minor) '54 of 101 valid sessions' row mixes statuses",
@@ -1360,6 +1360,18 @@
    "55 of 102": [
     172
    ]
+  },
+  "archive/PREPRINT-v1_0-draft.pre-patch-v7.md": {
+   "sha256_16": "0f4ba501d60a9418",
+   "tracked": false,
+   "54 of 101 valid sessions": [],
+   "half the difference": [],
+   "54 of 101": [
+    172
+   ],
+   "55 of 102": [
+    174
+   ]
   }
  },
  "tstep_index_semantics": {
@@ -1383,9 +1395,9 @@
  },
  "preprint_of_record": {
   "path": "PREPRINT-v1_0-draft.md",
-  "sha256": "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22",
+  "sha256": "d9635ca24d32dcba193cd9aade273de2679c99c5c2218787b410e793a42d1fe6",
   "match": true,
-  "ruling": "the PI's ruling 9 of 2026-10-10, as corrected",
+  "ruling": "patch v7, the PI's routing of 2026-10-12",
   "audited_superseded_sha256": "d6431e97d35e5914574ff9884c0e64463a7baf1cf9d279f27ed45a683a6222b8",
   "audited_archive": "archive/PREPRINT-v1_0-draft.pre-patch-v6.md",
   "audited_archive_status": "present, sha256 MATCH",
@@ -1432,11 +1444,11 @@
    "new": [
     {
      "locator": "PREPRINT-v1_0-draft.md:172",
-     "quote": "The interval on the approach probability is [.44, .63]; at this n the registered test detects a first-choice shift of +0.13 at 80% power and the full pass rule about +0.16 to +0.19."
+     "quote": "The Wilson interval on the approach probability is [.44, .63]; at this n the registered test detects a first-choice shift of +0.13 at 80% power and the full pass rule about +0.16 to +0.19."
     }
    ],
    "record_values_this_run": "95% two-sided intervals, this run's (i-f) table at 2 dp: 55/102 Wilson score [0.44, 0.63]; 55/102 Clopper-Pearson exact [0.44, 0.64]; 55/102 Wald [0.44, 0.64]; 54/101 Wilson score [0.44, 0.63]; 54/101 Clopper-Pearson exact [0.43, 0.63]; 54/101 Wald [0.44, 0.63]; the record figure: FINDINGS-3.md@bbc9ffe:95 ('P(+) interval ≈ .44–.64')",
-   "patched_figures_vs_this_run": "the patched interval [.44, .63] equals at its printed precision: 55/102 Wilson score; 54/101 Wilson score; 54/101 Wald; and does not equal: 55/102 Clopper-Pearson exact; 55/102 Wald; 54/101 Clopper-Pearson exact; the record figure .44–.64 (FINDINGS-3.md@bbc9ffe:95): NOT equal; the committed computed-new Wilson 95% intervals on the share, `data/e2a/analysis.correction-of-record.json`@e60b633 (status in that file: computed-new; cited by the patched text at :174; its raw `results/raw/2026-10-09_note-N4-correction.md`@e60b633 §2(b) at :31): 54/101 (of_record.reward.computed_new.wilson95_share) [0.4379, 0.6289] (raw :37; equal to this run's Wilson on 54/101: YES): the patched interval equals it at its printed precision: YES; 55/102 (as_published.reward.computed_new.wilson95_share) [0.4428, 0.6328] (raw :41; equal to this run's Wilson on 55/102: YES): the patched interval equals it at its printed precision: YES; method named in the patched sentence: none"
+   "patched_figures_vs_this_run": "the patched interval [.44, .63] equals at its printed precision: 55/102 Wilson score; 54/101 Wilson score; 54/101 Wald; and does not equal: 55/102 Clopper-Pearson exact; 55/102 Wald; 54/101 Clopper-Pearson exact; the record figure .44–.64 (FINDINGS-3.md@bbc9ffe:95): NOT equal; the committed computed-new Wilson 95% intervals on the share, `data/e2a/analysis.correction-of-record.json`@e60b633 (status in that file: computed-new; cited by the patched text at :174; its raw `results/raw/2026-10-09_note-N4-correction.md`@e60b633 §2(b) at :31): 54/101 (of_record.reward.computed_new.wilson95_share) [0.4379, 0.6289] (raw :37; equal to this run's Wilson on 54/101: YES): the patched interval equals it at its printed precision: YES; 55/102 (as_published.reward.computed_new.wilson95_share) [0.4428, 0.6328] (raw :41; equal to this run's Wilson on 55/102: YES): the patched interval equals it at its printed precision: YES; method named in the patched sentence: Wilson"
   },
   {
    "id": "PF-3",
@@ -1451,7 +1463,7 @@
    "new": [
     {
      "locator": "PREPRINT-v1_0-draft.md:172",
-     "quote": "The interval on the approach probability is [.44, .63]; at this n the registered test detects a first-choice shift of +0.13 at 80% power and the full pass rule about +0.16 to +0.19."
+     "quote": "The Wilson interval on the approach probability is [.44, .63]; at this n the registered test detects a first-choice shift of +0.13 at 80% power and the full pass rule about +0.16 to +0.19."
     }
    ],
    "record_values_this_run": "registered-test MDE (computed-new, (ii)) at n = 101 δ* = +0.1294, at n = 102 +0.1236; the pass rule jointly at n = 101: signed +0.1645, |·| +0.1919; the record's own statement: FINDINGS-3.md@bbc9ffe:94-95 ('Medium-and-larger effects excluded (P(+) interval ≈ .44–.64)')",
@@ -1470,11 +1482,267 @@
    "new": [
     {
      "locator": "PREPRINT-v1_0-draft.md:109",
-     "quote": "**Insulated choice.** Every free choice is read from a separate, fully vanilla forward pass over the session text (a restricted two-label read), and verified by an identical re-forward of the choice computation: on the Qwen self-administration run, 281 of the 1,115 choice reads (every fourth) were re-forwarded on an untouched model at symmetric KL = 0 exactly against a 10⁻⁶ bound, 311 distinct verified reads counting the two smoke runs."
+     "quote": "**Insulated choice.** Every free choice is read from a separate, fully vanilla forward pass over the session text (a restricted two-label read), and verified by an identical re-forward of the choice computation: on the Qwen self-administration run, 281 of the 1,115 choice reads (every fourth) were re-forwarded with the same weights and no vector — the choice computation compared with itself — at symmetric KL = 0 exactly against a 10⁻⁶ bound, 311 distinct verified reads counting the two smoke runs."
     }
    ],
    "record_values_this_run": "the run verified 281 of its 1,115 choice forwards (every fourth), all at KL = 0.0 against a bar of 1e-6; the ledger holds 311 distinct keys = 281 run + 29 smoke3-only + 1 smoke2-only",
    "patched_figures_vs_this_run": "figures on the patched sentence equal this run's values: YES (281 of the 1,115 choice reads (every fourth) vs 281/1115 verified, cadence (6·s + c) mod 4 = 0 on 1115/1115; KL = 0 vs stored values [0.0]; bound 10⁻⁶ vs `VERIFY_KL_BAR_E2A` = 1e-06; 311 distinct counting the two smoke runs vs 311 ledger keys over 2 smoke runs with keys beyond the run's)"
   }
- ]
+ ],
+ "round10": {
+  "routing": "the PI's routing of 2026-10-12",
+  "preprint_of_record_sha256": "d9635ca24d32dcba193cd9aade273de2679c99c5c2218787b410e793a42d1fe6",
+  "patch_v6": {
+   "sha256": "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22",
+   "archive": "archive/PREPRINT-v1_0-draft.pre-patch-v7.md",
+   "status": "present, sha256 MATCH",
+   "required": false,
+   "in_release": false,
+   "ruling": "the PI's ruling 9 of 2026-10-10, as corrected"
+  },
+  "round9_findings_source": "results/raw/2026-10-08_note-N4-e2a.json@84801cb",
+  "dispositions": [
+   {
+    "round9_id": "PF-1",
+    "check": "N4(i-e): the e2a primary is found by '55 of 102 valid sessions', and footnote 1 (the line carrying '54 of 101') reads '54 of 101, Δ = …, p = …' equal to the audit-v2 recount at its printed precision",
+    "round10_id": "PF-1",
+    "disposition": "unchanged",
+    "lines": [
+     {
+      "v6": {
+       "locator": "PREPRINT-v1_0-draft.md:172",
+       "quote": "Reward Δ, the share of first free choices toward the state label minus ½, is +0.035 (54 of 101 sessions),¹ inside control-arm fluctuation (largest pseudo-Δ = 0.152, from a random-direction arm of 23 sessions; sham 37, second random arm 22), sign not locked across maps, one-sided exact-binomial p = .275: inside the envelope on all three registered conjuncts."
+      },
+      "v6_archive_line_carries_it": true,
+      "v7": {
+       "locator": "PREPRINT-v1_0-draft.md:172",
+       "quote": "Reward Δ, the share of first free choices toward the state label minus ½, is +0.035 (54 of 101 sessions),¹ inside control-arm fluctuation (largest pseudo-Δ = 0.152, from a random-direction arm of 23 sessions; sham 37, second random arm 22), sign not locked across maps, one-sided exact-binomial p = .275: inside the envelope on all three registered conjuncts."
+      },
+      "same": true,
+      "difference": "none"
+     },
+     {
+      "v6": {
+       "locator": "PREPRINT-v1_0-draft.md:174",
+       "quote": "¹ The correction of record. The verdict as published read 55 of 102, Δ = +0.039, p = .244; a later audit excluded one more session on a defect class the frozen audit had missed. The conclusion is unchanged; both figures are in the archive (data/e2a/analysis.json; data/e2a/analysis.correction-of-record.json)."
+      },
+      "v6_archive_line_carries_it": true,
+      "v7": {
+       "locator": "PREPRINT-v1_0-draft.md:174",
+       "quote": "¹ The correction of record. The verdict as published read 55 of 102, Δ = +0.039, p = .244; a later audit excluded one more session on a defect class the frozen audit had missed. The conclusion is unchanged; both figures are in the archive (data/e2a/analysis.json; data/e2a/analysis.correction-of-record.json)."
+      },
+      "same": true,
+      "difference": "none"
+     }
+    ],
+    "figures_statement_vs_round9": "unchanged",
+    "record_values_vs_round9": "unchanged",
+    "audited_wording": "55 of 102 valid sessions",
+    "audited_wording_on_v7": false,
+    "audited_wording_on_v6": false,
+    "v7_statement_holds": true,
+    "v7_statement_check": "Δ and p beside 54 of 101 and beside 55 of 102 equal the record at their printed precision"
+   },
+   {
+    "round9_id": "PF-2",
+    "check": "N4(i-f): the preprint states the approach-probability interval as 'P(approach) ∈ ≈ [.44, .64]'",
+    "round10_id": "PF-2",
+    "disposition": "changed",
+    "lines": [
+     {
+      "v6": {
+       "locator": "PREPRINT-v1_0-draft.md:172",
+       "quote": "The interval on the approach probability is [.44, .63]; at this n the registered test detects a first-choice shift of +0.13 at 80% power and the full pass rule about +0.16 to +0.19."
+      },
+      "v6_archive_line_carries_it": true,
+      "v7": {
+       "locator": "PREPRINT-v1_0-draft.md:172",
+       "quote": "The Wilson interval on the approach probability is [.44, .63]; at this n the registered test detects a first-choice shift of +0.13 at 80% power and the full pass rule about +0.16 to +0.19."
+      },
+      "same": false,
+      "difference": "inserted 'Wilson'"
+     }
+    ],
+    "figures_statement_vs_round9": "replaced 'none' with 'Wilson'",
+    "record_values_vs_round9": "unchanged",
+    "audited_wording": "P(approach) ∈ ≈ [.44, .64]",
+    "audited_wording_on_v7": false,
+    "audited_wording_on_v6": false,
+    "v7_statement_holds": true,
+    "v7_statement_check": "the interval equals the committed computed-new Wilson interval at its printed precision and the method it names is Wilson"
+   },
+   {
+    "round9_id": "PF-3",
+    "check": "N4(ii): the preprint reads 'Power excludes medium-and-larger effects' (the sentence (ii)'s Reading calls a confidence-interval statement)",
+    "round10_id": "PF-3",
+    "disposition": "changed",
+    "lines": [
+     {
+      "v6": {
+       "locator": "PREPRINT-v1_0-draft.md:172",
+       "quote": "The interval on the approach probability is [.44, .63]; at this n the registered test detects a first-choice shift of +0.13 at 80% power and the full pass rule about +0.16 to +0.19."
+      },
+      "v6_archive_line_carries_it": true,
+      "v7": {
+       "locator": "PREPRINT-v1_0-draft.md:172",
+       "quote": "The Wilson interval on the approach probability is [.44, .63]; at this n the registered test detects a first-choice shift of +0.13 at 80% power and the full pass rule about +0.16 to +0.19."
+      },
+      "same": false,
+      "difference": "inserted 'Wilson'"
+     }
+    ],
+    "figures_statement_vs_round9": "unchanged",
+    "record_values_vs_round9": "unchanged",
+    "audited_wording": "Power excludes medium-and-larger effects",
+    "audited_wording_on_v7": false,
+    "audited_wording_on_v6": false,
+    "v7_statement_holds": true,
+    "v7_statement_check": "the power figures equal this run's n = 101 values at their printed precision",
+    "concerned_clause_as_on_v6": true
+   },
+   {
+    "round9_id": "PF-4",
+    "check": "N4(iii): the preprint reads '311 distinct verified forward passes at symmetric KL ≤ 10⁻⁶, one in every four choice reads'",
+    "round10_id": "PF-4",
+    "disposition": "changed",
+    "lines": [
+     {
+      "v6": {
+       "locator": "PREPRINT-v1_0-draft.md:109",
+       "quote": "**Insulated choice.** Every free choice is read from a separate, fully vanilla forward pass over the session text (a restricted two-label read), and verified by an identical re-forward of the choice computation: on the Qwen self-administration run, 281 of the 1,115 choice reads (every fourth) were re-forwarded on an untouched model at symmetric KL = 0 exactly against a 10⁻⁶ bound, 311 distinct verified reads counting the two smoke runs."
+      },
+      "v6_archive_line_carries_it": true,
+      "v7": {
+       "locator": "PREPRINT-v1_0-draft.md:109",
+       "quote": "**Insulated choice.** Every free choice is read from a separate, fully vanilla forward pass over the session text (a restricted two-label read), and verified by an identical re-forward of the choice computation: on the Qwen self-administration run, 281 of the 1,115 choice reads (every fourth) were re-forwarded with the same weights and no vector — the choice computation compared with itself — at symmetric KL = 0 exactly against a 10⁻⁶ bound, 311 distinct verified reads counting the two smoke runs."
+      },
+      "same": false,
+      "difference": "replaced 'on an untouched model' with 'with the same weights and no vector — the choice computation compared with itself —'"
+     }
+    ],
+    "figures_statement_vs_round9": "unchanged",
+    "record_values_vs_round9": "unchanged",
+    "audited_wording": "311 distinct verified forward passes",
+    "audited_wording_on_v7": false,
+    "audited_wording_on_v6": false,
+    "v7_statement_holds": true,
+    "v7_statement_check": "the :109 figures equal this run's values and its re-forward wording matches the record's choice read"
+   }
+  ],
+  "new_findings": [],
+  "v7_lines_changed_vs_v6": [
+   {
+    "v6_line": 1,
+    "v7_line": 1,
+    "anchors": [],
+    "sentences": []
+   },
+   {
+    "v6_line": 109,
+    "v7_line": 109,
+    "anchors": [
+     "311 distinct verified"
+    ],
+    "sentences": [
+     {
+      "v7": "**Insulated choice.** Every free choice is read from a separate, fully vanilla forward pass over the session text (a restricted two-label read), and verified by an identical re-forward of the choice computation: on the Qwen self-administration run, 281 of the 1,115 choice reads (every fourth) were re-forwarded with the same weights and no vector — the choice computation compared with itself — at symmetric KL = 0 exactly against a 10⁻⁶ bound, 311 distinct verified reads counting the two smoke runs.",
+      "difference": "replaced 'on an untouched model' with 'with the same weights and no vector — the choice computation compared with itself —'",
+      "n_v7_sentences": 1,
+      "reads": [
+       {
+        "anchor": "311 distinct verified",
+        "check": "(iii) 281 of 1,115 (every fourth), KL = 0 exactly, the 10⁻⁶ bound and 311 distinct reads over the smoke runs equal this run's values",
+        "holds_on_v7": true,
+        "figures": true
+       },
+       {
+        "anchor": "311 distinct verified",
+        "check": "(iii) the re-forward's wording against the record's choice read, `valence_core/readout.py`@bbc9ffe: the read at :107 `adapter.forward(ids, capture_layers=())` and the verification at :118 `adapter.forward(ids, capture_layers=())`, on the same adapter and token ids (the same call: YES); an injection parameter in `choice_read`'s signature: none; its docstring: 'No injection is live at the choice position' (valence_core/readout.py@bbc9ffe:8), 're-forwards the identical text' ... 'Identical code path' (valence_core/readout.py@bbc9ffe:16-17). The producing code (clone `jlens_qwen/e2a.py`, gitignored, not in the record): `final, _ = model.forward(ids, capture_layers=[])` at :348; `final2, _ = model.forward(ids, capture_layers=[])` at :360 (the same call: YES); an injection or steering parameter in its `choice_read` signature: none. Read against both: the v7 wording 'with the same weights and no vector — the choice computation compared with itself' (on v7 :109)",
+        "holds_on_v7": true,
+        "figures": false
+       }
+      ],
+      "uncovered_figures": []
+     }
+    ]
+   },
+   {
+    "v6_line": 172,
+    "v7_line": 172,
+    "anchors": [
+     "54 of 101",
+     "approach probability",
+     "registered test detects",
+     "break rate",
+     "Appendix "
+    ],
+    "sentences": [
+     {
+      "v7": "The Wilson interval on the approach probability is [.44, .63]; at this n the registered test detects a first-choice shift of +0.13 at 80% power and the full pass rule about +0.16 to +0.19.",
+      "difference": "inserted 'Wilson'",
+      "n_v7_sentences": 1,
+      "reads": [
+       {
+        "anchor": "approach probability",
+        "check": "(i-f) the interval equals the committed computed-new Wilson 95% interval on 54/101 (`data/e2a/analysis.correction-of-record.json`@e60b633, of_record.reward.computed_new.wilson95_share [0.4379, 0.6289], equal to this run's Wilson: YES) at its printed precision and the method it names is Wilson",
+        "holds_on_v7": true,
+        "figures": true
+       },
+       {
+        "anchor": "registered test detects",
+        "check": "(ii) the first-choice shift and the pass-rule range equal this run's n = 101 MDE (δ* = +0.1294) and joint δ* (+0.1645 to +0.1919) at their printed precision",
+        "holds_on_v7": true,
+        "figures": true
+       }
+      ],
+      "uncovered_figures": []
+     }
+    ]
+   },
+   {
+    "v6_line": 182,
+    "v7_line": 182,
+    "anchors": [
+     "valid sessions"
+    ],
+    "sentences": [
+     {
+      "v7": null,
+      "difference": null,
+      "n_v7_sentences": 1,
+      "reads": [],
+      "uncovered_figures": []
+     },
+     {
+      "v7": null,
+      "difference": null,
+      "n_v7_sentences": 2,
+      "reads": [
+       {
+        "anchor": "valid sessions",
+        "check": "(i-e) the phrase attaches to neither e2a figure",
+        "holds_on_v7": true,
+        "figures": false
+       }
+      ],
+      "uncovered_figures": []
+     },
+     {
+      "v7": null,
+      "difference": null,
+      "n_v7_sentences": 2,
+      "reads": [],
+      "uncovered_figures": []
+     }
+    ]
+   }
+  ],
+  "reforward_wording": {
+   "quote": "with the same weights and no vector — the choice computation compared with itself",
+   "on_v7_lines": [
+    109
+   ],
+   "consistent_with_record": true
+  }
+ }
 }

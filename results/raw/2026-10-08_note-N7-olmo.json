@@ -2,8 +2,8 @@
  "item": "N7",
  "title": "OLMo Q1/Q3 and dose ladder",
  "header": {
-  "stamp": "Sun Oct 11 05:45:53 UTC 2026",
-  "head": "e3bef6f09f48e75a4be141483b5700b095da35d4",
+  "stamp": "Mon Oct 12 06:14:56 UTC 2026",
+  "head": "fa1b41ea7e1ebd75a983d3ec7cd09f9abe0952a5",
   "pin": "bbc9ffe72fb8a942431c9bf2622a36e581fdf93c",
   "block_sha256": "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841",
   "block_match": true,
@@ -12,15 +12,15 @@
    104
   ],
   "script": "scripts/audit_note_N7.py",
-  "script_sha256": "f7838b7ee09f48de0aaf8f0b43448f078c0c7cb686c3bba3d670cdd7fe13a98a",
+  "script_sha256": "e082cdf89f4ab391870843f02757949404dd19db3bb47dbdcd540addc90751d3",
   "interpreter": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python",
   "python": "3.12.9",
   "numpy": "2.5.1",
   "command": "cd /Users/jasondwyer/Documents/code/jspace-lab && /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python /Users/jasondwyer/Documents/code/jspace-lab/scripts/audit_note_N7.py",
   "cwd_at_run": "/Users/jasondwyer/Documents/code/jspace-lab",
-  "preprint_sha256": "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22",
+  "preprint_sha256": "d9635ca24d32dcba193cd9aade273de2679c99c5c2218787b410e793a42d1fe6",
   "preprint_tracked": false,
-  "preprint_ruling": "the PI's ruling 9 of 2026-10-10, as corrected",
+  "preprint_ruling": "the PI's routing of 2026-10-12",
   "preprint_sha256_audited_superseded": "d6431e97d35e5914574ff9884c0e64463a7baf1cf9d279f27ed45a683a6222b8",
   "preprint_audited_archived_untracked": "archive/PREPRINT-v1_0-draft.pre-patch-v6.md"
  },
@@ -4006,5 +4006,400 @@
   }
  ],
  "preprint_patch_findings_round9": [],
- "wall_clock_s": 14.422194957733154
+ "preprint_round10": {
+  "preprint_of_record": {
+   "path": "PREPRINT-v1_0-draft.md",
+   "sha256": "d9635ca24d32dcba193cd9aade273de2679c99c5c2218787b410e793a42d1fe6",
+   "patch": "v7",
+   "routing": "the PI's routing of 2026-10-12"
+  },
+  "round9_preprint": {
+   "sha256": "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22",
+   "patch": "v6",
+   "archived_untracked": "archive/PREPRINT-v1_0-draft.pre-patch-v7.md",
+   "present": true,
+   "sha256_matches": true,
+   "read": true
+  },
+  "round9_raw": "84801cb:results/raw/2026-10-08_note-N7-olmo.json",
+  "changed_lines_v6_v7": [
+   {
+    "v6_line": 1,
+    "v7_line": 1,
+    "v7_heading": "before any heading",
+    "checked_sentences_on_v6_line": [],
+    "checked_sentences_on_v7_line": []
+   },
+   {
+    "v6_line": 109,
+    "v7_line": 109,
+    "v7_heading": "under :107 '### 4.4 Readouts'",
+    "checked_sentences_on_v6_line": [],
+    "checked_sentences_on_v7_line": []
+   },
+   {
+    "v6_line": 172,
+    "v7_line": 172,
+    "v7_heading": "under :168 '### 5.5 Link 5 \u2014 Not acted on from experience'",
+    "checked_sentences_on_v6_line": [],
+    "checked_sentences_on_v7_line": []
+   },
+   {
+    "v6_line": 182,
+    "v7_line": 182,
+    "v7_heading": "under :168 '### 5.5 Link 5 \u2014 Not acted on from experience'",
+    "checked_sentences_on_v6_line": [],
+    "checked_sentences_on_v7_line": []
+   }
+  ],
+  "checks": [
+   {
+    "check": "rises across the lineage (+0.78 base",
+    "kind": "located",
+    "v6_lines": [
+     101
+    ],
+    "v6_result": "same line",
+    "v7_lines": [
+     101
+    ],
+    "v7_result": "same line",
+    "on_v7_changed_line": false,
+    "passes_v6": true,
+    "passes_v7": true,
+    "disposition": "passes on v6 and v7; same line(s)"
+   },
+   {
+    "check": "(G_c: +0.78 \u2192 +1.03 \u2192 +1.53 \u2192 +1.56)",
+    "kind": "located",
+    "v6_lines": [
+     129
+    ],
+    "v6_result": "same line",
+    "v7_lines": [
+     129
+    ],
+    "v7_result": "same line",
+    "on_v7_changed_line": false,
+    "passes_v6": true,
+    "passes_v7": true,
+    "disposition": "passes on v6 and v7; same line(s)"
+   },
+   {
+    "check": "the base model passes at layer 60",
+    "kind": "located",
+    "v6_lines": [
+     129
+    ],
+    "v6_result": "same line",
+    "v7_lines": [
+     129
+    ],
+    "v7_result": "same line",
+    "on_v7_changed_line": false,
+    "passes_v6": true,
+    "passes_v7": true,
+    "disposition": "passes on v6 and v7; same line(s)"
+   },
+   {
+    "check": "Sham contrasts are exactly zero at every stage",
+    "kind": "located",
+    "v6_lines": [
+     129
+    ],
+    "v6_result": "same line",
+    "v7_lines": [
+     129
+    ],
+    "v7_result": "same line",
+    "on_v7_changed_line": false,
+    "passes_v6": true,
+    "passes_v7": true,
+    "disposition": "passes on v6 and v7; same line(s)"
+   },
+   {
+    "check": "about five times larger at base",
+    "kind": "located",
+    "v6_lines": [
+     129
+    ],
+    "v6_result": "same line",
+    "v7_lines": [
+     129
+    ],
+    "v7_result": "same line",
+    "on_v7_changed_line": false,
+    "passes_v6": true,
+    "passes_v7": true,
+    "disposition": "passes on v6 and v7; same line(s)"
+   },
+   {
+    "check": "The registered criterion was a conjunction of envelope conditions",
+    "kind": "located",
+    "v6_lines": [
+     127
+    ],
+    "v6_result": "same line",
+    "v7_lines": [
+     127
+    ],
+    "v7_result": "same line",
+    "on_v7_changed_line": false,
+    "passes_v6": true,
+    "passes_v7": true,
+    "disposition": "passes on v6 and v7; same line(s)"
+   },
+   {
+    "check": "Per-stage minimum effective doses qualify at f = 0.05 (base, L60)",
+    "kind": "located",
+    "v6_lines": [
+     139
+    ],
+    "v6_result": "same line",
+    "v7_lines": [
+     139
+    ],
+    "v7_result": "same line",
+    "on_v7_changed_line": false,
+    "passes_v6": true,
+    "passes_v7": true,
+    "disposition": "passes on v6 and v7; same line(s)"
+   },
+   {
+    "check": "[TAB 2: every cell",
+    "kind": "located",
+    "v6_lines": [
+     170
+    ],
+    "v6_result": "same line",
+    "v7_lines": [
+     170
+    ],
+    "v7_result": "same line",
+    "on_v7_changed_line": false,
+    "passes_v6": true,
+    "passes_v7": true,
+    "disposition": "passes on v6 and v7; same line(s)"
+   },
+   {
+    "check": "Four nulls; zero confirmatory triggers",
+    "kind": "located",
+    "v6_lines": [
+     184
+    ],
+    "v6_result": "same line",
+    "v7_lines": [
+     184
+    ],
+    "v7_result": "same line",
+    "on_v7_changed_line": false,
+    "passes_v6": true,
+    "passes_v7": true,
+    "disposition": "passes on v6 and v7; same line(s)"
+   },
+   {
+    "check": "In the OLMo DPO screen one map returned +0.1667",
+    "kind": "located",
+    "v6_lines": [
+     190
+    ],
+    "v6_result": "same line",
+    "v7_lines": [
+     190
+    ],
+    "v7_result": "same line",
+    "on_v7_changed_line": false,
+    "passes_v6": true,
+    "passes_v7": true,
+    "disposition": "passes on v6 and v7; same line(s)"
+   },
+   {
+    "check": "feedback-driven training sharpens the marking of evaluation",
+    "kind": "located",
+    "v6_lines": [
+     244
+    ],
+    "v6_result": "same line",
+    "v7_lines": [
+     244
+    ],
+    "v7_result": "same line",
+    "on_v7_changed_line": false,
+    "passes_v6": true,
+    "passes_v7": true,
+    "disposition": "passes on v6 and v7; same line(s)"
+   },
+   {
+    "check": "in direction units",
+    "kind": "quoted",
+    "v6_lines": [
+     101,
+     129
+    ],
+    "v6_result": "same line(s)",
+    "v7_lines": [
+     101,
+     129
+    ],
+    "v7_result": "same line(s)",
+    "on_v7_changed_line": false,
+    "passes_v6": true,
+    "passes_v7": true,
+    "disposition": "passes on v6 and v7; same line(s)"
+   },
+   {
+    "check": "the direction's separation of praise from criticism contexts",
+    "kind": "quoted",
+    "v6_lines": [
+     127
+    ],
+    "v6_result": "same line(s)",
+    "v7_lines": [
+     127
+    ],
+    "v7_result": "same line(s)",
+    "on_v7_changed_line": false,
+    "passes_v6": true,
+    "passes_v7": true,
+    "disposition": "passes on v6 and v7; same line(s)"
+   },
+   {
+    "check": "sharpens the marking it inherits",
+    "kind": "quoted",
+    "v6_lines": [
+     129
+    ],
+    "v6_result": "same line(s)",
+    "v7_lines": [
+     129
+    ],
+    "v7_result": "same line(s)",
+    "on_v7_changed_line": false,
+    "passes_v6": true,
+    "passes_v7": true,
+    "disposition": "passes on v6 and v7; same line(s)"
+   },
+   {
+    "check": "feedback-driven training sharpens the marking of evaluation (G_c rises monotonically)",
+    "kind": "quoted",
+    "v6_lines": [
+     244
+    ],
+    "v6_result": "same line(s)",
+    "v7_lines": [
+     244
+    ],
+    "v7_result": "same line(s)",
+    "on_v7_changed_line": false,
+    "passes_v6": true,
+    "passes_v7": true,
+    "disposition": "passes on v6 and v7; same line(s)"
+   },
+   {
+    "check": "TAB 2 carries the per-stage figures",
+    "kind": "quoted",
+    "v6_lines": [
+     184
+    ],
+    "v6_result": "found (no round-1 locator)",
+    "v7_lines": [
+     184
+    ],
+    "v7_result": "found (no round-1 locator)",
+    "on_v7_changed_line": false,
+    "passes_v6": true,
+    "passes_v7": true,
+    "disposition": "passes on v6 and v7; same line(s)"
+   },
+   {
+    "check": "ratio of steering displacement to natural contrast",
+    "kind": "label",
+    "v6_lines": [
+     129
+    ],
+    "v6_result": "found (no round-1 locator)",
+    "v7_lines": [
+     129
+    ],
+    "v7_result": "found (no round-1 locator)",
+    "on_v7_changed_line": false,
+    "passes_v6": true,
+    "passes_v7": true,
+    "disposition": "passes on v6 and v7; same line(s)"
+   },
+   {
+    "check": "All four stages pass the conjunction",
+    "kind": "label",
+    "v6_lines": [
+     129
+    ],
+    "v6_result": "found (no round-1 locator)",
+    "v7_lines": [
+     129
+    ],
+    "v7_result": "found (no round-1 locator)",
+    "on_v7_changed_line": false,
+    "passes_v6": true,
+    "passes_v7": true,
+    "disposition": "passes on v6 and v7; same line(s)"
+   },
+   {
+    "check": "doses of 1.0 or below",
+    "kind": "label",
+    "v6_lines": [
+     139
+    ],
+    "v6_result": "found (no round-1 locator)",
+    "v7_lines": [
+     139
+    ],
+    "v7_result": "found (no round-1 locator)",
+    "on_v7_changed_line": false,
+    "passes_v6": true,
+    "passes_v7": true,
+    "disposition": "passes on v6 and v7; same line(s)"
+   },
+   {
+    "check": "written \u00a75.1 (ratio of steering displacement to natural contrast)",
+    "kind": "written number",
+    "v6_lines": ":129 under :125 '### 5.1 Link 1 \u2014 Marked before feedback training'",
+    "v6_result": true,
+    "v7_lines": ":129 under :125 '### 5.1 Link 1 \u2014 Marked before feedback training'",
+    "v7_result": true,
+    "on_v7_changed_line": null,
+    "passes_v6": true,
+    "passes_v7": true,
+    "disposition": "passes on v6 and v7; same line(s)"
+   },
+   {
+    "check": "written :244 (feedback-driven training sharpens the marking of evaluation)",
+    "kind": "written number",
+    "v6_lines": "244",
+    "v6_result": true,
+    "v7_lines": "244",
+    "v7_result": true,
+    "on_v7_changed_line": null,
+    "passes_v6": true,
+    "passes_v7": true,
+    "disposition": "passes on v6 and v7; same line(s)"
+   },
+   {
+    "check": "written :129/:244 (sharpens the marking)",
+    "kind": "written number",
+    "v6_lines": "129, 244",
+    "v6_result": true,
+    "v7_lines": "129, 244",
+    "v7_result": true,
+    "on_v7_changed_line": null,
+    "passes_v6": true,
+    "passes_v7": true,
+    "disposition": "passes on v6 and v7; same line(s)"
+   }
+  ],
+  "round9_findings_on_the_patch": 0,
+  "round9_findings_dispositions": [],
+  "checked_sentences_on_changed_lines": [],
+  "new_findings_on_the_patch": []
+ },
+ "wall_clock_s": 15.108412742614746
 }

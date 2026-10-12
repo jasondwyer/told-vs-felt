@@ -34,6 +34,30 @@ script quotes or characterizes is located by text: the e2a primary and footnote
 1, the 'break rate' habit sentence, the interval, the power sentence (ii), the
 :109 verification sentence and the :262 disclosure. Nothing that does not read
 the preprint is changed.
+
+Round 10 (2026-10-12, Tier 1, before N1's round 10): re-pointed at patch v7
+under the PI's routing of 2026-10-12. The preprint of record is
+PREPRINT-v1_0-draft.md at sha256 d9635ca2...1fe6 (patch v7), asserted in full
+before anything is written: any other text stops the run, as before. Round 9's
+preprint of record, patch v6 (0f4ba501...6c22), is archived untracked at
+archive/PREPRINT-v1_0-draft.pre-patch-v7.md, out of the release: recorded, never
+required, read only if present and sha-matching: to confirm each round-9 quote
+of a v6 line, to compare v6 with v7 line by line and sentence by sentence, and
+as one more earlier copy in (i-e)'s search (a v6 line is quoted from the round-9
+raw, never from the archive). The audited text's
+handling (d6431e97...222b8, archive/...pre-patch-v6.md, the raw of record
+@09c3a8c) is as round 9 left it. Every check of a preprint sentence re-runs on
+v7. Section "Round 10" gives: each finding on the patch that the round-9 raw
+(@84801cb) recorded, with its disposition on v7 (resolved: the check passes on
+v7 | unchanged | changed: v6 and v7 quoted) and, since each of those checks
+passes only where the preprint carries the audited text's wording, whether v7
+carries that wording and whether what v7 states in its place holds against the
+record; every new finding v7 introduces; and,
+for every v7-changed sentence the script reads, its figures re-verified against
+the script's own record sources (:172's Wilson interval against the committed
+correction-of-record artifact @e60b633; :109's re-forward sentence: its figures
+and its wording against the record's choice read). JSON key "round10". Nothing
+that does not read the preprint is changed.
 """
 from __future__ import annotations
 
@@ -42,6 +66,7 @@ sys.dont_write_bytecode = True
 
 import argparse
 import collections
+import difflib
 import hashlib
 import importlib.util
 import io
@@ -58,8 +83,14 @@ PIN = "bbc9ffe"
 BLOCK = "AUDIT-note-release-v1_2.md"
 BLOCK_SHA = "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841"
 PREPRINT = "PREPRINT-v1_0-draft.md"
-# round 9: the preprint of record, patch v6 (the PI's ruling 9 of 2026-10-10, as corrected)
-PREPRINT_SHA = "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22"
+# round 10: the preprint of record, patch v7 (the PI's routing of 2026-10-12)
+PREPRINT_SHA = "d9635ca24d32dcba193cd9aade273de2679c99c5c2218787b410e793a42d1fe6"
+# round 9's preprint of record, patch v6 (the PI's ruling 9 of 2026-10-10, as corrected): archived untracked, out of
+# the release; recorded, never required, read only if present and matching
+PREPRINT_SHA_V6 = "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22"
+PREPRINT_V6_ARCHIVE = "archive/PREPRINT-v1_0-draft.pre-patch-v7.md"
+# the committed round-9 raws (patch v6): round 9's findings on the patch are read from the JSON at this commit
+RAW_R9 = ("84801cb", "results/raw/2026-10-08_note-N4-e2a.md", "results/raw/2026-10-08_note-N4-e2a.json")
 # the block's referent, audited through round 8: superseded; archived untracked, never required
 PREPRINT_SHA_AUDITED = "d6431e97d35e5914574ff9884c0e64463a7baf1cf9d279f27ed45a683a6222b8"
 PREPRINT_AUDITED_ARCHIVE = "archive/PREPRINT-v1_0-draft.pre-patch-v6.md"
@@ -407,16 +438,23 @@ def main() -> None:
     o()
     pre_path = os.path.join(REPO, PREPRINT)
     pre_sha = sha256_file(pre_path)
-    if pre_sha != PREPRINT_SHA:  # round 9: asserted in full, before anything is written (as N5, N7, N17)
+    if pre_sha != PREPRINT_SHA:  # round 9/10: asserted in full, before anything is written (as N5, N7, N17)
         raise SystemExit(f"{PREPRINT} sha256 {pre_sha} != the preprint of record {PREPRINT_SHA} "
-                         f"(the PI's ruling 9 of 2026-10-10, as corrected)")
+                         f"(patch v7, the PI's routing of 2026-10-12)")
     tracked_pre = bool(git("ls-files", "--", PREPRINT).strip())
     aud_fp = os.path.join(REPO, PREPRINT_AUDITED_ARCHIVE)
     aud_st = (("present, sha256 " + ("MATCH" if sha256_file(aud_fp) == PREPRINT_SHA_AUDITED else "MISMATCH"))
               if os.path.exists(aud_fp) else "absent")
+    # round 10: patch v6 (round 9's preprint of record), archived; never required, read only if present and matching
+    v6_fp = os.path.join(REPO, PREPRINT_V6_ARCHIVE)
+    v6_ok = os.path.exists(v6_fp) and sha256_file(v6_fp) == PREPRINT_SHA_V6
+    v6_st = ("present, sha256 MATCH" if v6_ok else
+             "present, sha256 MISMATCH: not read" if os.path.exists(v6_fp) else "absent")
     o(f"- `{PREPRINT}` (root, {'tracked' if tracked_pre else 'UNTRACKED: absent from any clone'}) "
       f"sha256 `{pre_sha}` ({'MATCH' if pre_sha == PREPRINT_SHA else 'MISMATCH'} vs {PREPRINT_SHA[:8]}...{PREPRINT_SHA[-4:]}, the preprint of "
-      f"record: patch v6, the PI's ruling 9 of 2026-10-10, as corrected). The block's "
+      f"record: patch v7, the PI's routing of 2026-10-12). Round 9's preprint of record, patch v6 "
+      f"({PREPRINT_SHA_V6[:8]}...{PREPRINT_SHA_V6[-4:]}, the PI's ruling 9 of 2026-10-10, as corrected), is archived "
+      f"untracked at `{PREPRINT_V6_ARCHIVE}`, out of the release (not required here; {v6_st}). The block's "
       f"{PREPRINT_SHA_AUDITED[:8]}...{PREPRINT_SHA_AUDITED[-5:]} is the audited, "
       f"superseded text, archived untracked at `{PREPRINT_AUDITED_ARCHIVE}` (not required here; {aud_st}); its lines "
       f"are quoted from the raw of record `{RAW_REC[1]}`@{RAW_REC[0]}.")
@@ -707,10 +745,12 @@ def main() -> None:
     pf_rn = loc("results/raw/2026-10-08_note-preflight.md", "| `RESEARCH-NOTE-v0_2-draft.md` | MISSING")
     pf_both = f"{pf_rn.split(':')[0]}:{pf_rn.split(':')[-1]} (RESEARCH-NOTE v0.2), :{pf_loc.split(':')[-1]} (v1.1)"
     # the other preprint copies on this machine (untracked; read only): the pre-patch v2/v3/v4 under archive/, and
-    # (round 9) the pre-patch v6 copy, the audited text, when present
+    # (round 9) the pre-patch v6 copy, the audited text, when present; (round 10) the pre-patch v7 copy, patch v6,
+    # only when present and matching
     prepatch = sorted(os.path.relpath(os.path.join(REPO, "archive", fn), REPO)
                       for fn in os.listdir(os.path.join(REPO, "archive"))
-                      if fn.startswith("PREPRINT-v1_0-draft.pre-patch-") and fn.endswith(".md"))
+                      if fn.startswith("PREPRINT-v1_0-draft.pre-patch-") and fn.endswith(".md")
+                      and (fn != os.path.basename(PREPRINT_V6_ARCHIVE) or v6_ok))
     pp_hits = {}
     for pp in prepatch:
         with open(os.path.join(REPO, pp), encoding="utf-8") as f:
@@ -736,8 +776,9 @@ def main() -> None:
     heads = [i for i, l in enumerate(pl, 1) if l.startswith("#")]
     has_app_heading = any("Appendix" in pl[i - 1] for i in heads)
     o(f"- Scope of this check: of the block's preprint referents only `{PREPRINT}` (root, the preprint of record: "
-      f"patch v6, sha256 {pre_sha[:8]}..., which replaced the block's post-patch-v4 copy {PREPRINT_SHA_AUDITED[:8]}..., "
-      f"the audited text) is on this machine. `PREPRINT-v1_1-draft.md`, the block's 'project copy' ({v11_loc}), is absent "
+      f"patch v7, sha256 {pre_sha[:8]}..., which replaced patch v6 {PREPRINT_SHA_V6[:8]}..., which replaced the "
+      f"block's post-patch-v4 copy {PREPRINT_SHA_AUDITED[:8]}..., the audited text) is on this machine. "
+      f"`PREPRINT-v1_1-draft.md`, the block's 'project copy' ({v11_loc}), is absent "
       f"(files found by that name under the repo, clone and .git excluded: {v11 if v11 else 'none'}), and so is "
       f"RESEARCH-NOTE v0.2 (preflight {pf_both}); a sentence the block attributes to 'the preprint' may live in "
       f"either and cannot be checked here. {('One', 'Two', 'Three', 'Four', 'Five', 'Six')[len(pp_hits) - 1] if 1 <= len(pp_hits) <= 6 else len(pp_hits)} "
@@ -794,13 +835,14 @@ def main() -> None:
                or re.search(re.escape(X) + r"[^Δ]{0,20}Δ = ([+−-]\d*\.\d+)", l_))
         m_p = re.compile(r"\bp = (\d*\.\d+)").search(l_, l_.find(X))
         return (m_d.group(1) if m_d else None), (m_p.group(1) if m_p else None)
-    fig_cmp, fig_all = [], True
+    fig_cmp, fig_all, fig_ok = [], True, {}   # round 10: fig_ok keeps each figure's verdict for the round-10 section
     for X, hs, dv, pv in ((f"{kv} of {nv}", h54, kv / nv - 0.5, rc.binom_p_one_sided(kv, nv)),
                           (f"{rec['reward']['k']} of {rec['reward']['n']}", h55r, A['reward']['delta_first'],
                            A['reward']['binom_p_one_sided'])):
         d_, p_ = fig_at(hs[0], X) if hs else (None, None)
         ok_ = d_ is not None and p_ is not None and eq_printed(d_, dv) and eq_printed(p_, pv)
         fig_all = fig_all and ok_
+        fig_ok[X] = ok_
         fig_cmp.append(f"{X} at :{hs[0] if hs else '?'}: Δ = {d_ or 'NOT PARSED'} vs {dv:+.4f}, p = "
                        f"{p_ or 'NOT PARSED'} vs {pv:.5f} ({'equal' if ok_ else 'NOT equal'})")
     on_fn = lambda hs: bool(hs) and pl[hs[0] - 1].startswith("¹")
@@ -1007,6 +1049,7 @@ def main() -> None:
     # fix round: the interval the patched line prints, parsed and matched against this run's intervals at its precision
     iv_l = sentence_at(pl[h_ivr[0] - 1], "approach probability", 2000) if h_ivr else ""
     iv_m = re.search(r"\[(\d*\.\d+), (\d*\.\d+)\]", iv_l)
+    cor_eq, iv_meth = {}, []   # round 10: per-artifact verdicts and the method named, kept for the round-10 section
     if iv_m:
         iv_eq = [k_ for k_, v_ in ivs.items() if eq_printed(iv_m.group(1), v_[0]) and eq_printed(iv_m.group(2), v_[1])]
         iv_meth = [m_ for m_ in ("Wilson", "Clopper", "Wald", "exact") if m_ in iv_l]
@@ -1027,6 +1070,7 @@ def main() -> None:
             hr_ = lines_with(cor_raw, f"{row_}{k_}/{n_} | [")
             eq_p = eq_printed(iv_m.group(1), w_[0]) and eq_printed(iv_m.group(2), w_[1])
             eq_r = all(abs(a_ - b_) < 1e-12 for a_, b_ in zip(w_, wilson(k_, n_)))
+            cor_eq[key_] = (eq_p, eq_r, w_, (k_, n_))
             cor_cmp.append(f"{k_}/{n_} ({key_}.reward.computed_new.wilson95_share) [{w_[0]:.4f}, {w_[1]:.4f}] "
                            f"(raw :{hr_[0] if hr_ else '?'}; equal to this run's Wilson on {k_}/{n_}: "
                            f"{'YES' if eq_r else 'NO'}): the patched interval equals it at its printed precision: "
@@ -1377,6 +1421,7 @@ def main() -> None:
     pw_m = re.search(r"shift of ([+−-]\d*\.\d+) at (\d+)% power", pw_l)
     pw_r = re.search(r"pass rule about ([+−-]\d*\.\d+) to ([+−-]\d*\.\d+)", pw_l)
     jr_ = sorted((jres["101 signed"]["delta_star"], jres["101 |·|"]["delta_star"]))
+    pw_ok = False   # round 10: kept for the round-10 section
     if pw_m and pw_r:
         pw_ok = (eq_printed(pw_m.group(1), mde[101]["delta_star"]) and int(pw_m.group(2)) == 80
                  and eq_printed(pw_r.group(1), jr_[0]) and eq_printed(pw_r.group(2), jr_[1]))
@@ -1571,6 +1616,7 @@ def main() -> None:
     m_n = re.search(r"(\d[\d,]*) distinct verified reads counting the (\w+) smoke runs", l109)
     n_smk = sum(1 for x_ in (s3only, s2only) if x_)
     WORDN = {"one": 1, "two": 2, "three": 3}
+    ok109 = False   # round 10: kept for the round-10 section
     if m_a and m_k and m_b and m_n:
         ok109 = (int(m_a.group(1).replace(",", "")) == len(full_ver) and int(m_a.group(2).replace(",", "")) == len(full_all)
                  and cadence == len(full_all) and kl_vals == [float(m_k.group(1))]
@@ -2532,6 +2578,317 @@ def main() -> None:
         if pf_["patched_figures_vs_this_run"]:
             o(f"  - {pf_['patched_figures_vs_this_run']}")
     o()
+    # round 10 (the PI's routing of 2026-10-12): patch v7 against round 9's findings on patch v6, and v7's own changes
+    R9 = json.loads(git("show", f"{RAW_R9[0]}:{RAW_R9[2]}").decode("utf-8"))
+    assert R9["preprint_of_record"]["sha256"] == PREPRINT_SHA_V6, R9["preprint_of_record"]["sha256"]
+    r9_pf = R9["patch_findings"]
+    v6l = None
+    if v6_ok:   # read only if present and matching
+        with open(v6_fp, encoding="utf-8") as f:
+            v6l = f.read().split("\n")
+    def wdiff(a_: str, b_: str) -> str:
+        """The word-level difference a_ -> b_ (split on single spaces)."""
+        aw_, bw_ = a_.split(" "), b_.split(" ")
+        r_ = []
+        for t_, i1, i2, j1, j2 in difflib.SequenceMatcher(None, aw_, bw_, autojunk=False).get_opcodes():
+            if t_ == "insert":
+                r_.append(f"inserted '{' '.join(bw_[j1:j2])}'")
+            elif t_ == "delete":
+                r_.append(f"deleted '{' '.join(aw_[i1:i2])}'")
+            elif t_ == "replace":
+                r_.append(f"replaced '{' '.join(aw_[i1:i2])}' with '{' '.join(bw_[j1:j2])}'")
+        return "; ".join(r_) or "none"
+    def ins_spans(a_: str, b_: str) -> list[tuple[int, int]]:
+        """Character spans in b_ of the words b_ inserts or replaces relative to a_ (words split on single spaces)."""
+        aw_, bw_ = a_.split(" "), b_.split(" ")
+        st_ = [0]
+        for w_ in bw_:
+            st_.append(st_[-1] + len(w_) + 1)
+        return [(st_[j1], st_[j2] - 1) for t_, i1, i2, j1, j2 in
+                difflib.SequenceMatcher(None, aw_, bw_, autojunk=False).get_opcodes() if t_ in ("insert", "replace")]
+    # (1) each round-9 finding's disposition on v7: the same check, matched by its text, in this run's PATCH
+    cur10 = {p_["check"]: p_ for p_ in PATCH}
+    disp10 = []
+    for p9 in r9_pf:
+        p10 = cur10.get(p9["check"])
+        d_ = {"round9_id": p9["id"], "check": p9["check"], "round10_id": p10["id"] if p10 else None}
+        if p10 is None:
+            d_["disposition"] = "resolved"
+        else:
+            q9 = [(x_["locator"], x_["quote"]) for x_ in p9["new"]]
+            q10 = [(x_["locator"], x_["quote"]) for x_ in p10["new"]]
+            key_ = lambda q_: [(l_.rsplit(":", 1)[1], t_) for l_, t_ in q_]   # (line number, quote)
+            d_["disposition"] = "unchanged" if key_(q9) == key_(q10) else "changed"
+            rows_ = []
+            for i_ in range(max(len(q9), len(q10))):
+                a_ = q9[i_] if i_ < len(q9) else None
+                b_ = q10[i_] if i_ < len(q10) else None
+                arch_ = (a_[1] in v6l[int(a_[0].rsplit(":", 1)[1]) - 1]) if (a_ and v6l is not None) else None
+                rows_.append({"v6": {"locator": a_[0], "quote": a_[1]} if a_ else None, "v6_archive_line_carries_it": arch_,
+                              "v7": {"locator": b_[0], "quote": b_[1]} if b_ else None,
+                              "same": bool(a_ and b_) and key_([a_]) == key_([b_]),
+                              "difference": ("a line added or removed" if not (a_ and b_) else wdiff(a_[1], b_[1])
+                                             + ("" if a_[0].rsplit(":", 1)[1] == b_[0].rsplit(":", 1)[1] else
+                                                f"; re-anchored :{a_[0].rsplit(':', 1)[1]} -> :{b_[0].rsplit(':', 1)[1]}"))})
+            d_["lines"] = rows_
+            d_["figures_statement_vs_round9"] = (
+                "unchanged" if p9["patched_figures_vs_this_run"] == p10["patched_figures_vs_this_run"]
+                else wdiff(p9["patched_figures_vs_this_run"], p10["patched_figures_vs_this_run"]))
+            d_["record_values_vs_round9"] = (
+                "unchanged" if p9["record_values_this_run"] == p10["record_values_this_run"]
+                else wdiff(p9["record_values_this_run"], p10["record_values_this_run"]))
+        disp10.append(d_)
+    r9_checks = {p_["check"] for p_ in r9_pf}
+    new10 = [{"id": f"NF-{i_}", "kind": "a check that holds on patch v6 fails on patch v7", "detail": f"{p_['id']}: {p_['check']}"}
+             for i_, p_ in enumerate((p_ for p_ in PATCH if p_["check"] not in r9_checks), 1)]
+    # (2) the re-forward the :109 sentence words: the record's choice read (the port, pinned) and the producing code (clone)
+    ro_txt = pinned_text("valence_core/readout.py")
+    ro_fn = ro_txt[ro_txt.index("def choice_read("):ro_txt.index("def assert_construction_stable(")]
+    ro_sig = ro_fn[:ro_fn.index(") -> ChoiceRead:")]
+    ro_a = re.search(r"^\s*res = adapter\.forward\((.*)\)$", ro_fn, re.M)
+    ro_b = re.search(r"^\s*res2 = adapter\.forward\((.*)\)$", ro_fn, re.M)
+    RO_Q = ("No injection is live at the choice position", "re-forwards the identical text", "Identical code path")
+    RF_Q = "with the same weights and no vector — the choice computation compared with itself"
+    cl_fp = os.path.join(REPO, CLONE, "jlens_qwen/e2a.py")
+    cl_txt = ""
+    if os.path.exists(cl_fp):
+        with open(cl_fp, encoding="utf-8") as f:
+            cl_txt = f.read()
+    cl_fn = cl_txt[cl_txt.index("def choice_read("):] if "def choice_read(" in cl_txt else ""
+    cl_sig = cl_fn[:cl_fn.index("):")] if "):" in cl_fn else ""
+    cl_a = re.search(r"^\s*final, _ = model\.forward\((.*)\)$", cl_fn, re.M)
+    cl_b = re.search(r"^\s*final2, _ = model\.forward\((.*)\)$", cl_fn, re.M)
+    rf_ok = bool(RF_Q in l109 and ro_a and ro_b and ro_a.group(1) == ro_b.group(1) and "inject" not in ro_sig
+                 and all(q_ in ro_txt for q_ in RO_Q)
+                 and cl_a and cl_b and cl_a.group(1) == cl_b.group(1) and "inject" not in cl_sig and "steer" not in cl_sig)
+    cl_q = (quote_lines(f"{CLONE}/jlens_qwen/e2a.py", ["final, _ = model.forward(ids", "final2, _ = model.forward(ids"],
+                        clone=True) if cl_txt else [])
+    ro_la = loc("valence_core/readout.py", "    res = adapter.forward(ids, capture_layers=())").split(":")[-1].split(" ")[0]
+    ro_lb = loc("valence_core/readout.py", "res2 = adapter.forward(ids, capture_layers=())").split(":")[-1].split(" ")[0]
+    rf_s = (f"the record's choice read, `valence_core/readout.py`@{PIN}: the read at :{ro_la} "
+            f"`adapter.forward({ro_a.group(1) if ro_a else '?'})` and the verification at :{ro_lb} "
+            f"`adapter.forward({ro_b.group(1) if ro_b else '?'})`, on the same adapter and token ids (the same call: "
+            f"{'YES' if (ro_a and ro_b and ro_a.group(1) == ro_b.group(1)) else 'NO'}); an injection parameter in "
+            f"`choice_read`'s signature: {'PRESENT' if 'inject' in ro_sig else 'none'}; its docstring: '{RO_Q[0]}' "
+            f"({loc('valence_core/readout.py', RO_Q[0])}), '{RO_Q[1]}' ... '{RO_Q[2]}' "
+            f"({loc('valence_core/readout.py', RO_Q[1], RO_Q[2])}). The producing code (clone `jlens_qwen/e2a.py`, "
+            f"gitignored, not in the record): {'; '.join('`' + q_.split(': ', 1)[1].strip() + '` at :' + q_.split(':')[1] for q_ in cl_q) or 'absent'} "
+            f"(the same call: {'YES' if (cl_a and cl_b and cl_a.group(1) == cl_b.group(1)) else 'NO'}); an injection or "
+            f"steering parameter in its `choice_read` signature: "
+            f"{'PRESENT' if ('inject' in cl_sig or 'steer' in cl_sig or not cl_sig) else 'none'}. Read against both: the v7 "
+            f"wording '{RF_Q}' ({'on' if RF_Q in l109 else 'NOT on'} v7 :{','.join(map(str, hp109r)) or '?'})")
+    # (3) every v7 line that differs from patch v6 (read from the archive only if present and matching), and, where this
+    # script reads it, each changed sentence's figures re-verified against this script's record sources
+    iv10 = (bool(iv_m) and "of_record" in cor_eq and cor_eq["of_record"][0] and cor_eq["of_record"][1]
+            and iv_meth == ["Wilson"])
+    attach_ok = not any(("54 of 101" in pl[n_ - 1] or "55 of 102" in pl[n_ - 1]) for n_ in vs_)
+    R109 = [r"(\d[\d,]*) of the (\d[\d,]*) choice reads \(every fourth\)", r"KL = (\d+(?:\.\d+)?) exactly",
+            r"10⁻([⁰¹²³⁴⁵⁶⁷⁸⁹]+) bound", r"(\d[\d,]*) distinct verified reads counting the (\w+) smoke runs"]
+    ANCH = [  # (anchor, what this script checks there, verdict on v7, the regexes whose matches it verifies; None = phrase only)
+        (f"{kv} of {nv}", f"(i-e) Δ and p beside {kv} of {nv} equal the audit-v2 recount at their printed precision",
+         fig_ok.get(f"{kv} of {nv}", False),
+         [r"([+−-]\d*\.\d+) \(" + re.escape(f"{kv} of {nv}"), re.escape(f"{kv} of {nv}") + r"[^Δ]{0,20}Δ = ([+−-]\d*\.\d+)",
+          r"\bp = (\d*\.\d+)"]),
+        (f"{rec['reward']['k']} of {rec['reward']['n']}", f"(i-e) Δ and p beside {rec['reward']['k']} of "
+         f"{rec['reward']['n']} equal data/e2a/analysis.json at their printed precision",
+         fig_ok.get(f"{rec['reward']['k']} of {rec['reward']['n']}", False),
+         [r"([+−-]\d*\.\d+) \(" + re.escape(f"{rec['reward']['k']} of {rec['reward']['n']}"),
+          re.escape(f"{rec['reward']['k']} of {rec['reward']['n']}") + r"[^Δ]{0,20}Δ = ([+−-]\d*\.\d+)", r"\bp = (\d*\.\d+)"]),
+        ("approach probability", f"(i-f) the interval equals the committed computed-new Wilson 95% interval on "
+         f"{kv}/{nv} (`{COR_REC[1]}`@{COR_REC[0]}, of_record.reward.computed_new.wilson95_share"
+         + (f" [{cor_eq['of_record'][2][0]:.4f}, {cor_eq['of_record'][2][1]:.4f}], equal to this run's Wilson: "
+            f"{'YES' if cor_eq['of_record'][1] else 'NO'}" if "of_record" in cor_eq else "") + ") at its printed precision "
+         f"and the method it names is Wilson", iv10, [r"\[(\d*\.\d+), (\d*\.\d+)\]"]),
+        ("registered test detects", f"(ii) the first-choice shift and the pass-rule range equal this run's n = 101 MDE "
+         f"(δ* = {mde[101]['delta_star']:+.4f}) and joint δ* ({jr_[0]:+.4f} to {jr_[1]:+.4f}) at their printed precision",
+         pw_ok, [r"shift of ([+−-]\d*\.\d+) at (\d+)% power", r"pass rule about ([+−-]\d*\.\d+) to ([+−-]\d*\.\d+)"]),
+        ("311 distinct verified", f"(iii) {len(full_ver)} of {len(full_all):,} (every fourth), KL = 0 exactly, the 10⁻⁶ "
+         f"bound and {len(cnt)} distinct reads over the smoke runs equal this run's values", ok109, R109),
+        ("311 distinct verified", "(iii) the re-forward's wording against " + rf_s, rf_ok, None),
+        ("break rate", "(i-e) the within-arm decomposition with its Appendix C pointer", hb_ok, None),
+        ("licensed for first-token identity only", "(iv) the disclosure's scope as worded", ok262, None),
+        ("valid sessions", "(i-e) the phrase attaches to neither e2a figure", attach_ok, None),
+        ("Appendix ", "(i-e) the appendix letters cited (listed above)", None, None),
+    ]
+    # checks whose failure opens a finding on the patch (counted once, by the new-PATCH-entry rule above)
+    PF_BACKED = {"(i-e) the within-arm decomposition with its Appendix C pointer", "(iv) the disclosure's scope as worded"}
+    NUM = re.compile(r"[+−-]?\d[\d,]*(?:\.\d+)?%?|[+−-]?\.\d+%?|[⁰¹²³⁴⁵⁶⁷⁸⁹⁻]+|"
+                     r"\b(?:one|two|three|four|five|six|seven|eight|nine|ten|half|fourth)\b", re.I)
+    def split_s(t_: str) -> list[str]:
+        return re.split(r"(?<=\.) ", t_)   # the sentence boundary sentence_at uses: '. '
+    chg10 = []
+    if v6l is not None:
+        for t_, i1, i2, j1, j2 in difflib.SequenceMatcher(None, v6l, pl, autojunk=False).get_opcodes():
+            if t_ == "equal":
+                continue
+            for k_ in range(max(i2 - i1, j2 - j1)):
+                n6 = i1 + k_ + 1 if i1 + k_ < i2 else None
+                n7 = j1 + k_ + 1 if j1 + k_ < j2 else None
+                l6, l7 = (v6l[n6 - 1] if n6 else ""), (pl[n7 - 1] if n7 else "")
+                row_ = {"v6_line": n6, "v7_line": n7,
+                        "anchors": list(dict.fromkeys(a_[0] for a_ in ANCH if a_[0] in l7 or a_[0] in l6)),
+                        "sentences": []}
+                if row_["anchors"]:
+                    s6, s7 = split_s(l6), split_s(l7)
+                    for u_, a1, a2, b1, b2 in difflib.SequenceMatcher(None, s6, s7, autojunk=False).get_opcodes():
+                        if u_ == "equal":
+                            continue
+                        o6, o7 = " ".join(s6[a1:a2]), " ".join(s7[b1:b2])
+                        anc_ = [a_ for a_ in ANCH if a_[0] in o7 or a_[0] in o6]
+                        sr_ = {"v7": o7, "difference": wdiff(o6, o7), "n_v7_sentences": b2 - b1, "reads": [],
+                               "uncovered_figures": []}
+                        for a_, role_, ok_, rx_ in anc_:
+                            sr_["reads"].append({"anchor": a_, "check": role_,
+                                                 "holds_on_v7": None if ok_ is None else bool(ok_), "figures": rx_ is not None})
+                        fig_rx = [r_ for a_, role_, ok_, rx_ in anc_ if rx_ for r_ in rx_]
+                        if fig_rx:   # a figure the v7 words add that no check of this script reads is listed
+                            spans_ = [m_.span() for r_ in fig_rx for m_ in re.finditer(r_, o7)]
+                            for c1_, c2_ in ins_spans(o6, o7):
+                                for m_ in NUM.finditer(o7, c1_, c2_):
+                                    if not any(a1_ <= m_.start() and m_.end() <= a2_ for a1_, a2_ in spans_):
+                                        sr_["uncovered_figures"].append(m_.group(0))
+                        row_["sentences"].append(sr_)
+                # a line read only for a phrase: its sentences' texts (figures outside this script's scope) are not kept
+                if not any(rd_["figures"] for sr_ in row_["sentences"] for rd_ in sr_["reads"]):
+                    for sr_ in row_["sentences"]:
+                        sr_["v7"] = sr_["difference"] = None
+                chg10.append(row_)
+        for row_ in chg10:
+            for sr_ in row_["sentences"]:
+                for rd_ in sr_["reads"]:
+                    if rd_["holds_on_v7"] is False and rd_["check"] not in PF_BACKED:
+                        new10.append({"id": f"NF-{len(new10) + 1}", "kind": "a v7-changed sentence in this script's scope "
+                                      "fails its check (a figure the record sources do not carry at the precision written, "
+                                      "or a wording the record does not bear)",
+                                      "detail": f":{row_['v7_line']}: {rd_['check']}"})
+                if sr_["uncovered_figures"] and any(rd_["figures"] for rd_ in sr_["reads"]):
+                    new10.append({"id": f"NF-{len(new10) + 1}", "kind": "a figure the v7 words add to a sentence in this "
+                                  "script's scope that no check of this script verifies",
+                                  "detail": f":{row_['v7_line']}: {sr_['uncovered_figures']}"})
+    # (4) reading the dispositions: each round-9 check passes only where the preprint carries the audited text's
+    # wording (the wording round 9 quotes as `old`); per finding, whether v7 carries it, and whether what v7 states
+    # in its place holds against the record (the retained verdicts of the checks above)
+    AUD10 = {i_: (ph_, bool(h_), ok_, wh_) for i_, ph_, h_, ok_, wh_ in (
+        (pf1, "55 of 102 valid sessions", h55, fig_all, f"Δ and p beside {kv} of {nv} and beside "
+         f"{rec['reward']['k']} of {rec['reward']['n']} equal the record at their printed precision"),
+        (pf_iv, IV_Q, h_iv, iv10, "the interval equals the committed computed-new Wilson interval at its printed "
+         "precision and the method it names is Wilson"),
+        (pf_pw, PW_Q, h_pw, pw_ok, "the power figures equal this run's n = 101 values at their printed precision"),
+        (pf_109, "311 distinct verified forward passes", hp109, bool(ok109 and rf_ok),
+         "the :109 figures equal this run's values and its re-forward wording matches the record's choice read"))
+        if i_}
+    for d_ in disp10:
+        a10 = AUD10.get(d_["round10_id"])
+        if a10:
+            d_["audited_wording"], d_["audited_wording_on_v7"] = a10[0], a10[1]
+            d_["audited_wording_on_v6"] = (bool(lines_with("\n".join(v6l), a10[0])) if v6l is not None else None)
+            d_["v7_statement_holds"], d_["v7_statement_check"] = bool(a10[2]), a10[3]
+        if d_["round10_id"] and d_["round10_id"] == pf_pw and d_.get("disposition") == "changed":
+            for r_ in d_["lines"]:   # the clause this check concerns: from 'registered test detects' to the sentence end
+                if r_["v6"] and r_["v7"] and all("registered test detects" in x_["quote"] for x_ in (r_["v6"], r_["v7"])):
+                    c6_, c7_ = (x_["quote"][x_["quote"].index("registered test detects"):] for x_ in (r_["v6"], r_["v7"]))
+                    d_["concerned_clause_as_on_v6"] = c6_ == c7_
+    o("## Round 10: patch v7 against round 9's findings on the patch (the PI's routing of 2026-10-12; for the design "
+      "seat, not STOPs)")
+    o()
+    o(f"The preprint of record is patch v7 (`{PREPRINT}`, sha256 {pre_sha[:8]}...); round 9 ran on patch v6 "
+      f"({PREPRINT_SHA_V6[:8]}..., archived untracked at `{PREPRINT_V6_ARCHIVE}`, out of the release; {v6_st}). Round 9's "
+      f"findings on the patch are read from `{RAW_R9[2]}`@{RAW_R9[0]} (`patch_findings`, {len(r9_pf)} entries; its "
+      f"preprint sha256 {R9['preprint_of_record']['sha256'][:8]}..., asserted equal to patch v6); every check above "
+      f"re-ran on v7. Disposition: resolved (the check passes on v7) | unchanged (it fails on v7 and every line it "
+      f"quotes reads as round 9 quoted it on v6) | changed (it fails on v7 and a line it quotes differs: v6 and v7 "
+      f"quoted, with the word-level difference). A v6 line is quoted as the round-9 raw quotes it, never from the "
+      f"archive. The archived v6 text, when present and matching, is read to confirm it carries each such quote, to "
+      f"compare v6 with v7 line by line and sentence by sentence (next section, which gives the word-level difference "
+      f"from v6, not the v6 text), and as one more earlier copy in (i-e)'s search.")
+    o()
+    aud10 = [d_ for d_ in disp10 if "audited_wording" in d_]
+    if aud10:
+        n_rd = [rd_ for row_ in chg10 for sr_ in row_["sentences"] for rd_ in sr_["reads"] if rd_["holds_on_v7"] is not None]
+        o(f"How to read the dispositions: each of these {len(aud10)} checks tests the audited text's wording, the wording "
+          f"round 9 quotes as `old` from the raw of record, and passes only where the preprint carries it: "
+          + "; ".join(f"{d_['round9_id']} '{d_['audited_wording']}' (on v6: "
+                      f"{'not read' if d_['audited_wording_on_v6'] is None else 'PRESENT' if d_['audited_wording_on_v6'] else 'absent'}"
+                      f"; on v7: {'PRESENT' if d_['audited_wording_on_v7'] else 'absent'})" for d_ in aud10)
+          + f". Round 9 recorded each as failing on patch v6 (`patch_findings`@{RAW_R9[0]}, result: "
+          f"{' | '.join(sorted(set(repr(p_['result']) for p_ in r9_pf)))})"
+          + (", which no longer carries that wording" if all(d_["audited_wording_on_v6"] is False for d_ in aud10) else "")
+          + "; 'resolved' can occur only on a patch that restores the audited wording"
+          + (", which v7 does not, so none of these can be resolved on v7" if
+             not any(d_["audited_wording_on_v7"] for d_ in aud10) else "")
+          + ". What v7 states in its place, checked against the record by this run: "
+          + "; ".join(f"{d_['round9_id']}: {d_['v7_statement_check']}: {'YES' if d_['v7_statement_holds'] else 'NO'}"
+                      for d_ in aud10)
+          + (f". Of the checks of v7-changed sentences in the next section, {sum(1 for rd_ in n_rd if rd_['holds_on_v7'])} "
+             f"of {len(n_rd)} hold on v7" if v6l is not None else
+             f". The checks of v7-changed sentences are not run (the patch-v6 archive is {v6_st})")
+          + f"; the interval's method named on v7: {', '.join(iv_meth) if iv_meth else 'none'}.")
+        o()
+    o("### Dispositions of round 9's findings")
+    o()
+    for d_ in disp10:
+        o(f"- **{d_['round9_id']}** (round 9) → **{d_['disposition']}** on v7"
+          + (f" (now {d_['round10_id']})" if d_["round10_id"] else "") + f". Check: {d_['check']}.")
+        for r_ in d_.get("lines", []):
+            arch_ = ("" if r_["v6_archive_line_carries_it"] is None else
+                     f"; the archived v6 line carries it: {'YES' if r_['v6_archive_line_carries_it'] else 'NO'}")
+            if r_["same"]:
+                o(f"  - {r_['v7']['locator']}: as on v6{arch_}.")
+            else:
+                if r_["v6"]:
+                    o(f"  - v6 ({r_['v6']['locator']} at round 9, as `{RAW_R9[2]}`@{RAW_R9[0]} quotes it{arch_}): "
+                      f"\"{r_['v6']['quote']}\"")
+                if r_["v7"]:
+                    o(f"  - v7 ({r_['v7']['locator']}): \"{r_['v7']['quote']}\"")
+                o(f"  - difference: {r_['difference']}")
+        if "concerned_clause_as_on_v6" in d_:
+            o(f"  - the clause this check concerns, from 'registered test detects' to the sentence end, reads as on v6: "
+              f"{'YES; the difference lies outside it' if d_['concerned_clause_as_on_v6'] else 'NO'}.")
+        if d_["round10_id"]:
+            o(f"  - the figures statement (\"Findings on the patch\", above) against round 9's: "
+              f"{d_['figures_statement_vs_round9']}; record values against round 9's: {d_['record_values_vs_round9']}.")
+    o()
+    o("### v7 lines that differ from patch v6, and what this script reads on them")
+    o()
+    if v6l is None:
+        o(f"- The patch-v6 archive is {v6_st}: the line comparison is not run (the archive is never required); the "
+          f"dispositions above compare round 9's quotes with v7's.")
+    for row_ in chg10:
+        lab_ = f":{row_['v7_line']}" + ("" if row_["v6_line"] == row_["v7_line"] else f" (v6 :{row_['v6_line']})")
+        if not row_["anchors"]:
+            o(f"- {lab_}: no anchor this script reads; outside its scope.")
+            continue
+        fig_reads = [rd_ for sr_ in row_["sentences"] for rd_ in sr_["reads"] if rd_["figures"]]
+        if not fig_reads:
+            o(f"- {lab_}: {sum(sr_['n_v7_sentences'] for sr_ in row_['sentences'])} changed sentence(s); this script reads "
+              + "; ".join(f"'{rd_['anchor']}' for {rd_['check']} (holds on v7: "
+                          f"{'n/a' if rd_['holds_on_v7'] is None else 'YES' if rd_['holds_on_v7'] else 'NO'})"
+                          for rd_ in {(x_['anchor'], x_['check']): x_ for sr_ in row_['sentences'] for x_ in sr_['reads']}.values())
+              + "; the figures of those sentences are not in this script's scope.")
+            continue
+        o(f"- {lab_}: {sum(sr_['n_v7_sentences'] for sr_ in row_['sentences'])} changed sentence(s).")
+        for sr_ in row_["sentences"]:
+            o(f"  - v7: \"{sr_['v7']}\" (difference from v6: {sr_['difference']})")
+            for rd_ in sr_["reads"]:
+                o(f"    - {rd_['check']}: holds on v7: "
+                  f"{'n/a' if rd_['holds_on_v7'] is None else 'YES' if rd_['holds_on_v7'] else 'NO'}")
+            o(f"    - figures in the words v7 adds that no check above reads: "
+              + (f"{sr_['uncovered_figures'] if sr_['uncovered_figures'] else 'none'}"
+                 if any(rd_["figures"] for rd_ in sr_["reads"]) else
+                 "not scanned (the sentence carries no anchor of a figure-reading check of this script)"))
+    o()
+    o("### New findings on patch v7")
+    o()
+    if not new10:
+        o("- None: no check that holds on patch v6 fails on patch v7"
+          + (", every check of a v7-changed sentence in this script's scope holds, and the words v7 adds to a changed "
+             "sentence that a figure-reading check of this script anchors carry no figure those checks do not read "
+             "(a changed sentence carrying no such anchor, or read only for a phrase, is not scanned; see the list "
+             "above)." if v6l is not None else
+             f"; the v7-changed sentences were not compared (the patch-v6 archive is {v6_st})."))
+    for nf_ in new10:
+        o(f"- **{nf_['id']}** {nf_['kind']}: {nf_['detail']}.")
+    o()
     o("## git status (non-audit, non-m changes)  [run metadata: reflects the working tree at run time]")
     o()
     st_ = git("status", "--porcelain").decode().splitlines()
@@ -2601,11 +2958,18 @@ def main() -> None:
          "review_cards": {"card9_handoff": c9_loc, "card9_text_found": c9_ok, "card10_handoff": c10_loc,
                           "card10_text_found": c10_ok, "card8_handoff": c8_h04, "block_lines": [blk54, blk59, blk60]},
          "preprint_of_record": {"path": PREPRINT, "sha256": pre_sha, "match": pre_sha == PREPRINT_SHA,
-                                "ruling": "the PI's ruling 9 of 2026-10-10, as corrected",
+                                "ruling": "patch v7, the PI's routing of 2026-10-12",
                                 "audited_superseded_sha256": PREPRINT_SHA_AUDITED,
                                 "audited_archive": PREPRINT_AUDITED_ARCHIVE, "audited_archive_status": aud_st,
                                 "raw_of_record": f"{RAW_REC[1]}@{RAW_REC[0]}"},
-         "patch_findings": PATCH}
+         "patch_findings": PATCH,
+         "round10": {"routing": "the PI's routing of 2026-10-12", "preprint_of_record_sha256": pre_sha,
+                     "patch_v6": {"sha256": PREPRINT_SHA_V6, "archive": PREPRINT_V6_ARCHIVE, "status": v6_st,
+                                  "required": False, "in_release": False,
+                                  "ruling": "the PI's ruling 9 of 2026-10-10, as corrected"},
+                     "round9_findings_source": f"{RAW_R9[2]}@{RAW_R9[0]}",
+                     "dispositions": disp10, "new_findings": new10, "v7_lines_changed_vs_v6": chg10,
+                     "reforward_wording": {"quote": RF_Q, "on_v7_lines": hp109r, "consistent_with_record": rf_ok}}}
     with open(out_js, "w", encoding="utf-8") as f:
         json.dump(J, f, indent=1, ensure_ascii=False, default=list)
         f.write("\n")

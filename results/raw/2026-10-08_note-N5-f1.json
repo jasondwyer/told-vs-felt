@@ -2,21 +2,21 @@
  "item": "N5",
  "pin": "bbc9ffe72fb8a942431c9bf2622a36e581fdf93c",
  "header": {
-  "stamp": "Sun Oct 11 05:45:49 UTC 2026",
-  "head": "e3bef6f09f48e75a4be141483b5700b095da35d4",
+  "stamp": "Mon Oct 12 06:14:52 UTC 2026",
+  "head": "fa1b41ea7e1ebd75a983d3ec7cd09f9abe0952a5",
   "block_sha256": "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841",
   "script": "scripts/audit_note_N5.py",
-  "script_sha256": "8bad395c4be1bcc34baf0c4ebc97e5021b8a9424f93aabe8e003702b4d1372a9",
+  "script_sha256": "509eca3cf1af5baa619e9fe961d12236a4e4fbf0b972d1bc808881ce9525e958",
   "interpreter": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python",
   "python": "3.12.9",
   "numpy": "2.5.1",
   "command": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/audit_note_N5.py",
   "preprint": "PREPRINT-v1_0-draft.md",
-  "preprint_sha256_computed": "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22",
+  "preprint_sha256_computed": "d9635ca24d32dcba193cd9aade273de2679c99c5c2218787b410e793a42d1fe6",
   "preprint_matches_block": false,
-  "preprint_sha256_of_record": "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22",
+  "preprint_sha256_of_record": "d9635ca24d32dcba193cd9aade273de2679c99c5c2218787b410e793a42d1fe6",
   "preprint_matches_record": true,
-  "preprint_of_record_ruling": "the PI's ruling 9 of 2026-10-10, as corrected",
+  "preprint_of_record_ruling": "the PI's routing of 2026-10-12",
   "preprint_audited": {
    "block_abbrev": "d6431e97…222b8",
    "archived_untracked": "archive/PREPRINT-v1_0-draft.pre-patch-v6.md",
@@ -882,7 +882,7 @@
    "severity": "minor",
    "finding": "The preprint's sha256 was printed from a constant, never hashed",
    "disposition": "fixed",
-   "evidence": "The working-tree file is now hashed at run time: sha256 0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22; asserted against the preprint of record 0f4ba501…16c22 (the PI's ruling 9 of 2026-10-10, as corrected; v1-v3 asserted the block's d6431e97…222b8, the audited text) before line 182 is quoted (MATCH); header line added; the sha256 printed as the file's is the run-time hash; the one full-sha constant is ruling 9's value of record, the assert target, printed only as that value."
+   "evidence": "The working-tree file is now hashed at run time: sha256 d9635ca24d32dcba193cd9aade273de2679c99c5c2218787b410e793a42d1fe6; asserted against the preprint of record d9635ca2…d1fe6 (the PI's routing of 2026-10-12; v1-v3 asserted the block's d6431e97…222b8, the audited text; round 9 asserted ruling 9's 0f4ba501…16c22, patch v6) before line 182 is quoted (MATCH); header line added; the sha256 printed as the file's is the run-time hash; the full-sha constant asserted is the routing's value of record (patch v7), the assert target, printed only as that value."
   },
   {
    "id": "8",
@@ -931,7 +931,7 @@
    "severity": "minor",
    "finding": "§3a: 'A generic brevity preference would mimic a toward-hard lean if it were general' is wrong-signed given the raw's own direction check: hard rounds were the longer ones, so a brevity preference would push toward easy; the sentence copies FINDINGS-4's pre-named wording",
    "disposition": "fixed",
-   "evidence": "Re-run here: in the 47 valid DIFF sessions the hard config's forced rounds were longer in 42, shorter in 5, tied in 0; mean forced n_tok easy 5.54 vs hard 12.95; DIFF shorter-share 18/47 = 0.383. Added (computed-new, descriptive): the DIFF pools' task texts are longer on hard too (means 24.7 vs 31.0 characters), so the sign holds on either length. FINDINGS-4's wording at FINDINGS-4.md@bbc9ffe:94-95; the preprint's phrase is unsigned (PREPRINT-v1_0-draft.md:182). §3a reworded as the fix says; the direction-check bullet gives the task-text means; the length-test row's note now quotes the record's 'brevity-tracking' instead of using it in Code's voice; the fix's optional step taken: FINDINGS-4's 'brevity' flagged for the design seat (Note 5). No note sentence changes."
+   "evidence": "Re-run here: in the 47 valid DIFF sessions the hard config's forced rounds were longer in 42, shorter in 5, tied in 0; mean forced n_tok easy 5.54 vs hard 12.95; DIFF shorter-share 18/47 = 0.383. Added (computed-new, descriptive): the DIFF pools' task texts are longer on hard too (means 24.7 vs 31.0 characters), so the sign holds on either length. FINDINGS-4's wording at FINDINGS-4.md@bbc9ffe:94-95; the preprint's phrase was unsigned on the audited and v6 texts (PREPRINT-v1_0-draft.md:182; v7 signs it, 'longer': Round 10, P10-1). §3a reworded as the fix says; the direction-check bullet gives the task-text means; the length-test row's note now quotes the record's 'brevity-tracking' instead of using it in Code's voice; the fix's optional step taken: FINDINGS-4's 'brevity' flagged for the design seat (Note 5). No note sentence changes."
   },
   {
    "id": "R2-2",
@@ -1059,7 +1059,7 @@
    "value": "shorter-rounds share pooled 128/257 = .498, p = 1.0000; DIFF 18/47 = .383, p = 0.1439; sham 20/33 = .606, p = 0.2962",
    "source": "data/f/postscreen_descriptive.json features.shorter_rounds",
    "status": "reproduced",
-   "note": "POST-HOC on the record; two-sided exact binomial vs ½, valid sessions with a first pick, ties dropped; 'failed' = no length preference is general (the record's words: 'brevity-tracking is NOT general', archive/RESULTS-cycles3-4.md@bbc9ffe:45-47), so the DIFF lean does not deflate to one (hard was the longer config in 42/47 DIFF sessions, so the candidate deflation is a longer-rounds preference); FINDINGS-4's account of the test, 'tested (ii) and it failed': FINDINGS-4.md@bbc9ffe:89-98; the preprint's phrase is unsigned ('length-preference', PREPRINT-v1_0-draft.md:182, working tree)"
+   "note": "POST-HOC on the record; two-sided exact binomial vs ½, valid sessions with a first pick, ties dropped; 'failed' = no length preference is general (the record's words: 'brevity-tracking is NOT general', archive/RESULTS-cycles3-4.md@bbc9ffe:45-47), so the DIFF lean does not deflate to one (hard was the longer config in 42/47 DIFF sessions, so the candidate deflation is a longer-rounds preference); FINDINGS-4's account of the test, 'tested (ii) and it failed': FINDINGS-4.md@bbc9ffe:89-98; the preprint's phrase was unsigned on the audited text and on the patched text that preceded the preprint of record ('length-preference', PREPRINT-v1_0-draft.md:182); the preprint of record signs it ('longer', the sign of this raw's direction check; a finding on the patch, closing sections)"
   },
   {
    "figure": "FDBK 93% positive delivery rate",
@@ -1080,7 +1080,7 @@
    "value": "SOLV 7/547 (1.28%), DIFF 4/507 (0.79%), NOV 6/569 (1.05%), CORR 9/597 (1.51%), FDBK 6/503 (1.19%), sham 7/351 (1.99%)",
    "source": "data/f/sessions.jsonl (transcript Response lines; rounds[].term) + data/configs/f_termination_patterns.json",
    "status": "discrepant",
-   "note": "per arm the figure holds for the five contrast arms (0.79%-1.51%) but not for sham: 7/351 = 1.99%, about 2%, twice the stated ≈ 1% (1.57× the overall 1.27%). Not a transcription: the record states ≈ 1.0% overall (archive/RESULTS-cycles3-4.md@bbc9ffe:97-98) and gives sham's count (7, archive/RESULTS-cycles3-4.md@bbc9ffe:99), not a per-arm rate; the per-arm reading is the block's 'by arm' and the preprint's 'uniformly across arms' (PREPRINT-v1_0-draft.md:182, working tree). No detectable heterogeneity across arms (post-hoc p = 0.72, row below). Domain as in the overall row"
+   "note": "per arm the figure holds for the five contrast arms (0.79%-1.51%) but not for sham: 7/351 = 1.99%, about 2%, twice the stated ≈ 1% (1.57× the overall 1.27%). Not a transcription: the record states ≈ 1.0% overall (archive/RESULTS-cycles3-4.md@bbc9ffe:97-98) and gives sham's count (7, archive/RESULTS-cycles3-4.md@bbc9ffe:99), not a per-arm rate; the per-arm reading is the block's 'by arm' and the 'uniformly across arms' of the audited text and of the patched text that preceded the preprint of record (PREPRINT-v1_0-draft.md:182; the preprint of record gives the by-arm range instead: a finding on the patch, closing sections). No detectable heterogeneity across arms (post-hoc p = 0.72, row below). Domain as in the overall row"
   },
   {
    "figure": "33 attempts ≈ 1.0% of rounds (verdict entry; FINDINGS-4)",
@@ -1092,9 +1092,9 @@
   {
    "figure": "termination 'uniformly across arms including sham' (preprint wording)",
    "value": "post-hoc exact homogeneity test across six arms (6x2, Freeman-Halton, two-sided) p = 0.7173",
-   "source": "computed from data/f/sessions.jsonl; preprint PREPRINT-v1_0-draft.md:182",
+   "source": "computed from data/f/sessions.jsonl; preprint PREPRINT-v1_0-draft.md:182 (the wording of the audited text and of the patched text that preceded the preprint of record; the preprint of record rewords it: closing sections)",
    "status": "computed-new",
-   "note": "not a record computation; rounds treated as exchangeable (clustering ignored); supports 'no detectable heterogeneity', which is weaker than 'uniformly'"
+   "note": "not a record computation; rounds treated as exchangeable (clustering ignored); supports 'no detectable heterogeneity', which is weaker than the 'uniformly' of the audited text and of the patched text that preceded the preprint of record; the preprint of record says 'no detectable heterogeneity' (a finding on the patch; closing sections)"
   },
   {
    "figure": "exploration share ≈ .50 by arm",
@@ -1148,9 +1148,9 @@
   {
    "figure": "preprint 'at a dose a later calibration (§8.1) found below its visibility criterion'",
    "value": "4/16 items meet m's ≥3-letter floor at 0.12; at the pin the support was a model-free replay of f1's corruptor (v1.7 referent check, G-PORT C1), not a calibration and not a measurement on the model; G-CAL's artifact is post-pin; the byte-clean delivery, omitted in the audited text, is carried by the patched text (a finding on the patch; closing section)",
-   "source": "PREPRINT-v1_0-draft.md:182 (working tree, untracked; sha256 0f4ba501...f16c22, computed at run time, MATCH vs the preprint of record 0f4ba501…16c22, the PI's ruling 9 of 2026-10-10, as corrected)",
+   "source": "PREPRINT-v1_0-draft.md:182 as the audited text and the patched text that preceded the preprint of record wrote it (both archived untracked, out of the release); the preprint of record (working tree, untracked; sha256 d9635ca2...2d1fe6, computed at run time, MATCH vs the preprint of record d9635ca2…d1fe6, the PI's routing of 2026-10-12) removes the clause (closing sections)",
    "status": "discrepant",
-   "note": "wording, not a number: the clause attributes the finding to a calibration (§8.1) whose artifact did not exist at the pin (G-CAL's 0.12 artifact first at bab921c); the substance (12/16 items below the floor; 40/306 byte-clean Q rounds) was on record through model-free replays of f1's corruptor (v1.7 referent check, whose checker note G6a.11 says 'the computation supports the note's substance', results/raw/2026-10-04_m-v1.7_referent_check.txt@bbc9ffe:5570-5572; G-PORT C1, RESULTS.md@bbc9ffe:161-165); the audited clause omitted the byte-clean delivery, which the patched text carries (a finding on the patch; closing section); suggested replacement in §7d; whether PROPOSAL-m's posting flag is set is not N5's call"
+   "note": "wording, not a number: the clause, as the audited text and the patched text that preceded the preprint of record wrote it, attributed the finding to a calibration (§8.1) whose artifact did not exist at the pin (G-CAL's 0.12 artifact first at bab921c); the preprint of record drops the attribution (a finding on the patch; closing sections); the substance (12/16 items below the floor; 40/306 byte-clean Q rounds) was on record through model-free replays of f1's corruptor (v1.7 referent check, whose checker note G6a.11 says 'the computation supports the note's substance', results/raw/2026-10-04_m-v1.7_referent_check.txt@bbc9ffe:5570-5572; G-PORT C1, RESULTS.md@bbc9ffe:161-165); the audited clause omitted the byte-clean delivery, which the patched text carries (a finding on the patch; closing section); suggested replacement in §7d; whether PROPOSAL-m's posting flag is set is not N5's call"
   }
  ],
  "round9_preprint": {
@@ -1368,6 +1368,940 @@
     ],
     "phrases_absent": [],
     "text": "**P9-1 (line 182; audited line 182).** The patch changes one sentence of the line; the rest of the line is byte-identical to the audited line (the audited sentence substituted back reproduces the audited line's sha256 `c8b9645e47aeb93f`). Old (audited text d6431e97…222b8, line 182): 'Clean versus seeded character corruption, 0.000 exactly, with maps +.121 and −.130 cancelling (§5.6), at a dose a later calibration (§8.1) found below its visibility criterion.' New (patched text 0f4ba501…16c22, line 182): 'Clean versus seeded character corruption, 0.000 exactly, with maps +.121 and −.130 cancelling (§5.6); at the dose used the corruption did not always land — 40 of 306 corrupted-condition rounds were byte-clean, and 16 of the 56 valid sessions saw one clean round under the corrupted label before their first pick — so the contrast ran weaker than nominal, which the gating campaign’s dose calibration corrects, at a dose a later calibration (§8.1) found below its visibility criterion.' Checks of this raw that fail on the patched text: the CORR dose clause omits the byte-clean delivery (§7d (iii); the dose row's value and note); quoted phrases absent from the patched line: none. The patched sentence carries the byte-clean delivery that §7d (iii) and the dose row found omitted; '40 of 306' on the patched line: True (this run: 40/306 byte-clean Q rounds over all 64 CORR sessions, excluded ones included (§7c)); '16 of the 56 valid sessions' on the patched line: True (this run: 16/56 valid CORR sessions with one byte-clean pre-pick Q round (§7c)). Claims about this line that still hold: the CORR dose clause attributes the finding to a calibration (§8.1) (§7d (i); the dose row's note; Note 1); the CORR dose clause's criterion is the later calibration's ('its visibility criterion'), which §7d (ii) finds is m's, not f1's (§7d (ii)); the CORR dose clause keeps 'a later calibration' without citing G-CAL's artifact or calling it a replay (§7d (the proposed wording's paragraph)); the length-preference phrase is unsigned (§3a; the length-test row; Note 5); 'session share ≈ .50' in every arm, neither the range nor FDBK named (§5; Note 3); the FDBK clause 'no evaluation-seeking against a predominantly positive feedback stream' is a first-choice statement and does not say so (§5; Note 3); 'uniformly across arms', not 'no detectable heterogeneity' (§4; the homogeneity row; Note 3). Observations for the design seat: (1) The patched sentence does not name the 306's domain (all 64 CORR sessions, excluded ones included), which §7d's proposed wording names. (2) The inserted text precedes the audited clause, which is kept, so the sentence names the dose twice ('at the dose used', 'at a dose a later calibration (§8.1) found below its visibility criterion'). (3) It adds 'which the gating campaign’s dose calibration corrects', a second, present-tense calibration attribution beside the kept 'a later calibration (§8.1)': the attribution §7d (i) flags (the dose row: at the pin the support was a model-free replay of f1's corruptor, not a calibration), now made twice. Whether the campaign corrects the dose is PROPOSAL-m's question, which N5 does not adjudicate. (4) 'so the contrast ran weaker than nominal' is an inference from the delivery: as a statement about delivery it is what §7c's counts show (fewer corrupted deliveries than nominal), but read as an effect on the 0.000 contrast it would rest on §7c's post-hoc splits, which N5 holds descriptive only, carrying no weight either way (§7d). (5) The kept clause 'at a dose a later calibration (§8.1) found below its visibility criterion' now follows 'corrects', so it attaches ambiguously: to the correcting calibration, or, as in the audited text, to the 0.000 contrast. The dose row keeps its status (discrepant): statuses are carried, never upgraded; whether the patch discharges it is the design seat's and the PI's."
+   }
+  ]
+ },
+ "round10_preprint": {
+  "routing": "the PI's routing of 2026-10-12",
+  "preprint": "PREPRINT-v1_0-draft.md",
+  "sha256": "d9635ca24d32dcba193cd9aade273de2679c99c5c2218787b410e793a42d1fe6",
+  "sha256_of_record": "d9635ca24d32dcba193cd9aade273de2679c99c5c2218787b410e793a42d1fe6",
+  "match": true,
+  "v6": {
+   "ruling": "the PI's ruling 9 of 2026-10-10, as corrected",
+   "sha256_of_record": "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22",
+   "sha256_computed": "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22",
+   "archived_untracked": "archive/PREPRINT-v1_0-draft.pre-patch-v7.md",
+   "archived_copy": "present, sha256 `0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22` computed at run time (ruling 9's value of record: MATCH); read only to verify this script's v6 constants and to quote v6 beside v7: the v6 lines rebuilt from v7 (182, 268) equal the archived copy's True; the archived copy and v7 differ on lines 1, 109, 172, 182 only (the lines this script registers from Code's diff of the two texts: True)",
+   "required": false
+  },
+  "round9_reproduced_equal_to_record": {
+   "rev": "84801cb",
+   "anchors": true,
+   "quotes": true,
+   "claims": true,
+   "findings_on_the_patch": true
+  },
+  "round9_key_by_key_vs_record": {
+   "rev": "84801cb",
+   "asserted": [
+    "anchors",
+    "claims",
+    "findings_on_the_patch",
+    "quotes"
+   ],
+   "equal": {
+    "anchors": true,
+    "audited": true,
+    "claims": true,
+    "findings_on_the_patch": true,
+    "match": true,
+    "preprint": true,
+    "quotes": true,
+    "ruling": true,
+    "sha256": true,
+    "sha256_of_record": true,
+    "v3_printed_at": true,
+    "v3_quoted_g6a11_locator": true,
+    "v3_round_counts_not_locators": true
+   },
+   "runtime_fields_null_when_v6_copy_absent": [
+    "sha256",
+    "match"
+   ],
+   "runtime_fields_by_archived_copy": {
+    "archive/PREPRINT-v1_0-draft.pre-patch-v7.md": [
+     "sha256",
+     "match"
+    ],
+    "archive/PREPRINT-v1_0-draft.pre-patch-v6.md": [
+     "audited"
+    ]
+   }
+  },
+  "statements_in_place": [
+   {
+    "where": "the length-test row's note",
+    "check": "the length-preference phrase is unsigned",
+    "anchor": "generic length-preference deflation was tested and failed",
+    "v7_line": 182,
+    "held_on_v6": true,
+    "holds_on_v7": false,
+    "reworded": true,
+    "figure_row": true,
+    "flipped_by": [
+     "P10-1"
+    ]
+   },
+   {
+    "where": "Note 5",
+    "check": "the length-preference phrase is unsigned",
+    "anchor": "generic length-preference deflation was tested and failed",
+    "v7_line": 182,
+    "held_on_v6": true,
+    "holds_on_v7": false,
+    "reworded": true,
+    "figure_row": false,
+    "flipped_by": [
+     "P10-1"
+    ]
+   },
+   {
+    "where": "values-check R2-1's evidence",
+    "check": "the length-preference phrase is unsigned",
+    "anchor": "generic length-preference deflation was tested and failed",
+    "v7_line": 182,
+    "held_on_v6": true,
+    "holds_on_v7": false,
+    "reworded": true,
+    "figure_row": false,
+    "flipped_by": [
+     "P10-1"
+    ]
+   },
+   {
+    "where": "§4 (the post-hoc homogeneity bullet)",
+    "check": "'uniformly across arms', not 'no detectable heterogeneity'",
+    "anchor": "session-termination attempts occur at about 1% of rounds",
+    "v7_line": 182,
+    "held_on_v6": true,
+    "holds_on_v7": false,
+    "reworded": true,
+    "figure_row": false,
+    "flipped_by": [
+     "P10-4"
+    ]
+   },
+   {
+    "where": "the by-arm termination row's note",
+    "check": "phrase 'uniformly across arms' on its anchor line",
+    "anchor": "session-termination attempts occur at about 1% of rounds",
+    "v7_line": 182,
+    "held_on_v6": true,
+    "holds_on_v7": false,
+    "reworded": true,
+    "figure_row": true,
+    "flipped_by": [
+     "P10-4"
+    ]
+   },
+   {
+    "where": "the homogeneity row's source",
+    "check": "phrase 'uniformly across arms including sham' (the row's label) on its anchor line",
+    "anchor": "session-termination attempts occur at about 1% of rounds",
+    "v7_line": 182,
+    "held_on_v6": true,
+    "holds_on_v7": false,
+    "reworded": true,
+    "figure_row": true,
+    "flipped_by": [
+     "P10-4"
+    ]
+   },
+   {
+    "where": "the homogeneity row's note",
+    "check": "'uniformly across arms', not 'no detectable heterogeneity'",
+    "anchor": "session-termination attempts occur at about 1% of rounds",
+    "v7_line": 182,
+    "held_on_v6": true,
+    "holds_on_v7": false,
+    "reworded": true,
+    "figure_row": true,
+    "flipped_by": [
+     "P10-4"
+    ]
+   },
+   {
+    "where": "§5 (the bearing bullet), first clause",
+    "check": "'session share ≈ .50' in every arm, neither the range nor FDBK named",
+    "anchor": "Menu behavior is exploration-dominant in every arm",
+    "v7_line": 182,
+    "held_on_v6": true,
+    "holds_on_v7": false,
+    "reworded": true,
+    "figure_row": false,
+    "flipped_by": [
+     "P10-5"
+    ]
+   },
+   {
+    "where": "§5 (the bearing bullet), second clause",
+    "check": "the FDBK clause 'no evaluation-seeking against a predominantly positive feedback stream' is a first-choice statement and does not say so",
+    "anchor": "Menu behavior is exploration-dominant in every arm",
+    "v7_line": 182,
+    "held_on_v6": true,
+    "holds_on_v7": false,
+    "reworded": true,
+    "figure_row": false,
+    "flipped_by": [
+     "P10-3"
+    ]
+   },
+   {
+    "where": "§7d, the clause paragraph's opening",
+    "check": "phrase 'at a dose a later calibration (§8.1) found below its visibility criterion' on its anchor line",
+    "anchor": "found below its visibility criterion",
+    "v7_line": 182,
+    "held_on_v6": true,
+    "holds_on_v7": false,
+    "reworded": true,
+    "figure_row": false,
+    "flipped_by": [
+     "P10-2"
+    ]
+   },
+   {
+    "where": "§7d (i)",
+    "check": "the CORR dose clause attributes the finding to a calibration (§8.1)",
+    "anchor": "found below its visibility criterion",
+    "v7_line": 182,
+    "held_on_v6": true,
+    "holds_on_v7": false,
+    "reworded": true,
+    "figure_row": false,
+    "flipped_by": [
+     "P10-2"
+    ]
+   },
+   {
+    "where": "§7d (ii)",
+    "check": "the CORR dose clause's criterion is the later calibration's ('its visibility criterion'), which §7d (ii) finds is m's, not f1's",
+    "anchor": "found below its visibility criterion",
+    "v7_line": 182,
+    "held_on_v6": true,
+    "holds_on_v7": false,
+    "reworded": true,
+    "figure_row": false,
+    "flipped_by": [
+     "P10-2"
+    ]
+   },
+   {
+    "where": "§7d, the proposed wording's paragraph",
+    "check": "the CORR dose clause keeps 'a later calibration' without citing G-CAL's artifact or calling it a replay",
+    "anchor": "found below its visibility criterion",
+    "v7_line": 182,
+    "held_on_v6": true,
+    "holds_on_v7": false,
+    "reworded": true,
+    "figure_row": false,
+    "flipped_by": [
+     "P10-2"
+    ]
+   },
+   {
+    "where": "the dose row's source",
+    "check": "phrase 'at a dose a later calibration (§8.1) found below its visibility criterion' (the row's label) on its anchor line",
+    "anchor": "found below its visibility criterion",
+    "v7_line": 182,
+    "held_on_v6": true,
+    "holds_on_v7": false,
+    "reworded": true,
+    "figure_row": true,
+    "flipped_by": [
+     "P10-2"
+    ]
+   },
+   {
+    "where": "the dose row's note",
+    "check": "the CORR dose clause attributes the finding to a calibration (§8.1)",
+    "anchor": "found below its visibility criterion",
+    "v7_line": 182,
+    "held_on_v6": true,
+    "holds_on_v7": false,
+    "reworded": true,
+    "figure_row": true,
+    "flipped_by": [
+     "P10-2"
+    ]
+   },
+   {
+    "where": "Note 1",
+    "check": "the CORR dose clause attributes the finding to a calibration (§8.1)",
+    "anchor": "found below its visibility criterion",
+    "v7_line": 182,
+    "held_on_v6": true,
+    "holds_on_v7": false,
+    "reworded": true,
+    "figure_row": false,
+    "flipped_by": [
+     "P10-2"
+    ]
+   },
+   {
+    "where": "Note 3, first clause",
+    "check": "'session share ≈ .50' in every arm, neither the range nor FDBK named",
+    "anchor": "Menu behavior is exploration-dominant in every arm",
+    "v7_line": 182,
+    "held_on_v6": true,
+    "holds_on_v7": false,
+    "reworded": true,
+    "figure_row": false,
+    "flipped_by": [
+     "P10-5"
+    ]
+   },
+   {
+    "where": "Note 3, second clause",
+    "check": "the FDBK clause 'no evaluation-seeking against a predominantly positive feedback stream' is a first-choice statement and does not say so",
+    "anchor": "Menu behavior is exploration-dominant in every arm",
+    "v7_line": 182,
+    "held_on_v6": true,
+    "holds_on_v7": false,
+    "reworded": true,
+    "figure_row": false,
+    "flipped_by": [
+     "P10-3"
+    ]
+   },
+   {
+    "where": "Note 3, third clause",
+    "check": "'uniformly across arms', not 'no detectable heterogeneity'",
+    "anchor": "session-termination attempts occur at about 1% of rounds",
+    "v7_line": 182,
+    "held_on_v6": true,
+    "holds_on_v7": false,
+    "reworded": true,
+    "figure_row": false,
+    "flipped_by": [
+     "P10-4"
+    ]
+   }
+  ],
+  "line1_names": {
+   "length-deflation sign": true,
+   "corruption clause": true,
+   "first-choice scope": true,
+   "termination counter": true,
+   "exploration share": true
+  },
+  "anchors": [
+   {
+    "needle": "generic length-preference deflation was tested and failed",
+    "audited_line": 182,
+    "v6_line": 182,
+    "v7_line": 182,
+    "needle_on_v7": false,
+    "reanchored_by": "generic length-preference deflation",
+    "reanchored_as": "its needle's leading words, which patch v7 kept",
+    "v7_line_identical_to_v6": false,
+    "needle_removed_by": [
+     "P10-1"
+    ]
+   },
+   {
+    "needle": "session-termination attempts occur at about 1% of rounds",
+    "audited_line": 182,
+    "v6_line": 182,
+    "v7_line": 182,
+    "needle_on_v7": true,
+    "reanchored_by": null,
+    "reanchored_as": null,
+    "v7_line_identical_to_v6": false,
+    "needle_removed_by": []
+   },
+   {
+    "needle": "Menu behavior is exploration-dominant in every arm",
+    "audited_line": 182,
+    "v6_line": 182,
+    "v7_line": 182,
+    "needle_on_v7": true,
+    "reanchored_by": null,
+    "reanchored_as": null,
+    "v7_line_identical_to_v6": false,
+    "needle_removed_by": []
+   },
+   {
+    "needle": "found below its visibility criterion",
+    "audited_line": 182,
+    "v6_line": 182,
+    "v7_line": 182,
+    "needle_on_v7": false,
+    "reanchored_by": "Clean versus seeded character corruption",
+    "reanchored_as": "its sentence's opening",
+    "v7_line_identical_to_v6": false,
+    "needle_removed_by": [
+     "P10-2"
+    ]
+   },
+   {
+    "needle": "**8.1 The gating campaign",
+    "audited_line": 268,
+    "v6_line": 268,
+    "v7_line": 268,
+    "needle_on_v7": true,
+    "reanchored_by": null,
+    "reanchored_as": null,
+    "v7_line_identical_to_v6": true,
+    "needle_removed_by": []
+   }
+  ],
+  "quotes": [
+   {
+    "phrase": "length-preference",
+    "anchor": "generic length-preference deflation was tested and failed",
+    "v7_line": 182,
+    "on_audited": true,
+    "on_v6": true,
+    "on_v7": true,
+    "flipped_by": []
+   },
+   {
+    "phrase": "uniformly across arms including sham",
+    "anchor": "session-termination attempts occur at about 1% of rounds",
+    "v7_line": 182,
+    "on_audited": true,
+    "on_v6": true,
+    "on_v7": false,
+    "flipped_by": [
+     "P10-4"
+    ]
+   },
+   {
+    "phrase": "about 1% of rounds, uniformly across arms",
+    "anchor": "session-termination attempts occur at about 1% of rounds",
+    "v7_line": 182,
+    "on_audited": true,
+    "on_v6": true,
+    "on_v7": false,
+    "flipped_by": [
+     "P10-4"
+    ]
+   },
+   {
+    "phrase": "session share ≈ .50",
+    "anchor": "Menu behavior is exploration-dominant in every arm",
+    "v7_line": 182,
+    "on_audited": true,
+    "on_v6": true,
+    "on_v7": false,
+    "flipped_by": [
+     "P10-5"
+    ]
+   },
+   {
+    "phrase": "no evaluation-seeking against a predominantly positive feedback stream",
+    "anchor": "Menu behavior is exploration-dominant in every arm",
+    "v7_line": 182,
+    "on_audited": true,
+    "on_v6": true,
+    "on_v7": false,
+    "flipped_by": [
+     "P10-3"
+    ]
+   },
+   {
+    "phrase": "at a dose a later calibration (§8.1) found below its visibility criterion",
+    "anchor": "found below its visibility criterion",
+    "v7_line": 182,
+    "on_audited": true,
+    "on_v6": true,
+    "on_v7": false,
+    "flipped_by": [
+     "P10-2"
+    ]
+   },
+   {
+    "phrase": "**8.1 The gating campaign",
+    "anchor": "**8.1 The gating campaign",
+    "v7_line": 268,
+    "on_audited": true,
+    "on_v6": true,
+    "on_v7": true,
+    "flipped_by": []
+   }
+  ],
+  "claims": [
+   {
+    "claim": "the CORR dose clause omits the byte-clean delivery",
+    "where": "§7d (iii); the dose row's value and note",
+    "where_round9": "§7d (iii); the dose row's value and note",
+    "anchor": "found below its visibility criterion",
+    "v7_line": 182,
+    "held_on_audited": true,
+    "held_on_v6": false,
+    "holds_on_v7": false,
+    "flipped_by": []
+   },
+   {
+    "claim": "the CORR dose clause attributes the finding to a calibration (§8.1)",
+    "where": "§7d (i); the dose row's note; Note 1",
+    "where_round9": "§7d (i); the dose row's note; Note 1",
+    "anchor": "found below its visibility criterion",
+    "v7_line": 182,
+    "held_on_audited": true,
+    "held_on_v6": true,
+    "holds_on_v7": false,
+    "flipped_by": [
+     "P10-2"
+    ]
+   },
+   {
+    "claim": "the CORR dose clause's criterion is the later calibration's ('its visibility criterion'), which §7d (ii) finds is m's, not f1's",
+    "where": "§7d (ii)",
+    "where_round9": "§7d (ii)",
+    "anchor": "found below its visibility criterion",
+    "v7_line": 182,
+    "held_on_audited": true,
+    "held_on_v6": true,
+    "holds_on_v7": false,
+    "flipped_by": [
+     "P10-2"
+    ]
+   },
+   {
+    "claim": "the CORR dose clause keeps 'a later calibration' without citing G-CAL's artifact or calling it a replay",
+    "where": "§7d, the proposed wording's paragraph",
+    "where_round9": "§7d (the proposed wording's paragraph)",
+    "anchor": "found below its visibility criterion",
+    "v7_line": 182,
+    "held_on_audited": true,
+    "held_on_v6": true,
+    "holds_on_v7": false,
+    "flipped_by": [
+     "P10-2"
+    ]
+   },
+   {
+    "claim": "the length-preference phrase is unsigned",
+    "where": "the length-test row's note; Note 5; values-check R2-1's evidence",
+    "where_round9": "§3a; the length-test row; Note 5",
+    "anchor": "generic length-preference deflation was tested and failed",
+    "v7_line": 182,
+    "held_on_audited": true,
+    "held_on_v6": true,
+    "holds_on_v7": false,
+    "flipped_by": [
+     "P10-1"
+    ]
+   },
+   {
+    "claim": "'session share ≈ .50' in every arm, neither the range nor FDBK named",
+    "where": "§5 (the bearing bullet), first clause; Note 3, first clause",
+    "where_round9": "§5; Note 3",
+    "anchor": "Menu behavior is exploration-dominant in every arm",
+    "v7_line": 182,
+    "held_on_audited": true,
+    "held_on_v6": true,
+    "holds_on_v7": false,
+    "flipped_by": [
+     "P10-5"
+    ]
+   },
+   {
+    "claim": "the FDBK clause 'no evaluation-seeking against a predominantly positive feedback stream' is a first-choice statement and does not say so",
+    "where": "§5 (the bearing bullet), second clause; Note 3, second clause",
+    "where_round9": "§5; Note 3",
+    "anchor": "Menu behavior is exploration-dominant in every arm",
+    "v7_line": 182,
+    "held_on_audited": true,
+    "held_on_v6": true,
+    "holds_on_v7": false,
+    "flipped_by": [
+     "P10-3"
+    ]
+   },
+   {
+    "claim": "'uniformly across arms', not 'no detectable heterogeneity'",
+    "where": "§4 (the post-hoc homogeneity bullet); the homogeneity row's note; Note 3, third clause",
+    "where_round9": "§4; the homogeneity row; Note 3",
+    "anchor": "session-termination attempts occur at about 1% of rounds",
+    "v7_line": 182,
+    "held_on_audited": true,
+    "held_on_v6": true,
+    "holds_on_v7": false,
+    "flipped_by": [
+     "P10-4"
+    ]
+   }
+  ],
+  "figures": [
+   {
+    "finding": "P10-1",
+    "sentence": "length-deflation sign",
+    "phrase": "a preference for longer rounds, the direction that could mimic the lean",
+    "on_v7": true,
+    "condition_holds": true,
+    "carried": true,
+    "record": "§3a direction check and Note 5: hard was the longer config in 42/47 valid DIFF sessions (task texts too, pool means 24.7 vs 31.0 characters), so the deflation that could mimic the toward-hard lean is a longer-rounds preference; the record's test is two-sided",
+    "basis": "computed-new: §3a's direction check (Code's, post-hoc, descriptive)"
+   },
+   {
+    "finding": "P10-2",
+    "sentence": "corruption clause",
+    "phrase": "(.12)",
+    "on_v7": true,
+    "condition_holds": true,
+    "carried": true,
+    "record": "f1's corruptor rate 0.12 (corrupt_f1, jlens-qwen36/scripts/f_sessions.py (clone, gitignored; sha256 d2dcde569080fe86):106-116; replay equal to calib.json corr_sha, §7c); pre-registered target: 'corrupted text (rate .12)'",
+    "basis": null
+   },
+   {
+    "finding": "P10-2",
+    "sentence": "corruption clause",
+    "phrase": "2 of 16 items rendered unchanged",
+    "on_v7": true,
+    "condition_holds": true,
+    "carried": true,
+    "record": "§7c: items with 0 changed [1, 12] (replay equal to the transcript-derived vector); §7d's proposed wording",
+    "basis": null
+   },
+   {
+    "finding": "P10-2",
+    "sentence": "corruption clause",
+    "phrase": "so 40 of 306 corrupted-label rounds across all 64 CORR sessions delivered clean text",
+    "on_v7": true,
+    "condition_holds": true,
+    "carried": true,
+    "record": "§7c/§7d: 40/306 byte-clean Q rounds over all 64 CORR sessions, excluded ones included; they are the Q rounds on items [1, 12] exactly (by item {1: 23, 12: 17}), so 'so' holds; §7d's proposed wording",
+    "basis": null
+   },
+   {
+    "finding": "P10-2",
+    "sentence": "corruption clause",
+    "phrase": "16 of the 56 valid sessions saw one corrupted task rather than two before the first choice",
+    "on_v7": true,
+    "condition_holds": true,
+    "carried": true,
+    "record": "§7c/§7d: 16/56 valid CORR sessions with one byte-clean pre-pick Q round of the two each saw, none with two; §7d's proposed wording",
+    "basis": null
+   },
+   {
+    "finding": "P10-2",
+    "sentence": "corruption clause",
+    "phrase": "fewer corrupted deliveries than nominal",
+    "on_v7": true,
+    "condition_holds": true,
+    "carried": true,
+    "record": "no figure: the delivery reading of §7c's counts (this raw's words at 84801cb, round 9's P9-1 observation (4))",
+    "basis": null
+   },
+   {
+    "finding": "P10-2",
+    "sentence": "corruption clause",
+    "phrase": "the gating campaign’s corruptor (PROPOSAL-m §2.3; G-CAL, `data/m/gates/G-CAL_model-free.json`) changes at least three letters of every item, so no render is clean",
+    "on_v7": true,
+    "condition_holds": true,
+    "carried": true,
+    "record": "At the pin: PROPOSAL-m §2.3 (PROPOSAL-m-gating-campaign-v1_11.md@bbc9ffe:176) gives 'k = clip(floor(0.15·n_eligible + 0.5), 3, floor(n_eligible/2))', each replacement 'never the original', and n_eligible for items 0–15 ([C], STOP-6 §E) 6, 19, 19, 13, 24, 14, 10, 45, 19, 10, 24, 14, 6, 19, 10, 14: minimum 6, so the formula gives k ≥ 3 for every item (k sums to 54, as §2.3 states); the same [C]-tagged sentence states 'every item reaches k, with one roster-substring skip (item 7)'; §0.4 (PROPOSAL-m-gating-campaign-v1_11.md@bbc9ffe:48) states '≥ 3 changed letters per item' (checked on the pinned lines: True). Post-pin (read-only): `data/m/gates/G-CAL_model-free.json`@bab921c (blob at HEAD equal to bab921c's: True; its proposal_sha256 equal to PROPOSAL-m's at the pin, and its n_eligible and k equal to §2.3's: True): condition (1) rule 'every item >= 3 changed positions (structural, reported)', 16/16 items, PASS, failing items []; renders of record: 'corrupt_m at 0.15, operand excluded, roster skip (m:176)', 16 items, each meeting condition (1), so none is its clean item; renders_sha256 `a04f67b0e5105a0514a0f33e64a4545ef3a3a3c75cece320d78434e853cd4372` (recomputed here over the renders joined by newlines, valence_core/m/gcal.py@bab921c:340-341: True); items 5, 11, 15 as §2.3 quotes them, byte-identical to the renders of record: True. Condition (1) is quoted in §7b",
+    "basis": "pinned: PROPOSAL-m §2.3 (PROPOSAL-m-gating-campaign-v1_11.md@bbc9ffe:176: the floor of 3 in k's formula and the [C]-tagged 'every item reaches k') and §0.4 (PROPOSAL-m-gating-campaign-v1_11.md@bbc9ffe:48); post-pin: G-CAL's artifact (bab921c: condition (1) 16/16 PASS, the renders' sha256)"
+   },
+   {
+    "finding": "P10-3",
+    "sentence": "first-choice scope",
+    "phrase": "+.023: no evaluation-seeking at the first choice",
+    "on_v7": true,
+    "condition_holds": true,
+    "carried": true,
+    "record": "the 'FDBK +.023' row: 23/44, the first free choice (§5: the pre-registered primary, the only free pick made before any free-phase verdict); Note 3",
+    "basis": null
+   },
+   {
+    "finding": "P10-4",
+    "sentence": "termination counter",
+    "phrase": "about 1% of rounds overall",
+    "on_v7": true,
+    "condition_holds": true,
+    "carried": true,
+    "record": "§4 and the overall row ('termination attempts ≈ 1% of rounds (overall)', reproduced): 39/3074 = 1.27%",
+    "basis": null
+   },
+   {
+    "finding": "P10-4",
+    "sentence": "termination counter",
+    "phrase": "0.8–2.0% by arm",
+    "on_v7": true,
+    "condition_holds": true,
+    "carried": true,
+    "record": "§4: 'By arm the rate runs 0.8%-2.0%' and §4's suggested wording",
+    "basis": "discrepant: the row 'termination attempts ≈ 1% of rounds by arm' (its per-arm counts; the record states no per-arm rate)"
+   },
+   {
+    "finding": "P10-4",
+    "sentence": "termination counter",
+    "phrase": "the sham arm highest",
+    "on_v7": true,
+    "condition_holds": true,
+    "carried": true,
+    "record": "§4: sham's 7/351 = 1.99% is the highest",
+    "basis": "discrepant: the row 'termination attempts ≈ 1% of rounds by arm' (its per-arm counts; the record states no per-arm rate)"
+   },
+   {
+    "finding": "P10-4",
+    "sentence": "termination counter",
+    "phrase": "no detectable heterogeneity on a post-hoc exact test, p = .72",
+    "on_v7": true,
+    "condition_holds": true,
+    "carried": true,
+    "record": "§4 POST-HOC (computed-new; the homogeneity row): p = 0.7173; §4's suggested wording 'no detectable heterogeneity across arms, post-hoc exact p = 0.72'",
+    "basis": "computed-new: the row 'termination 'uniformly across arms including sham' (preprint wording)'"
+   },
+   {
+    "finding": "P10-5",
+    "sentence": "exploration share",
+    "phrase": "session share .47–.58",
+    "on_v7": true,
+    "condition_holds": true,
+    "carried": true,
+    "record": "§5 (computed-new; share of all free picks to P, valid sessions): 0.470 (CORR) to 0.576 (FDBK); §5's proposal 'the range (0.47-0.58)'",
+    "basis": "computed-new: the row 'exploration share ≈ .50 by arm'"
+   },
+   {
+    "finding": "P10-5",
+    "sentence": "exploration share",
+    "phrase": "the verdict-line arm highest",
+    "on_v7": true,
+    "condition_holds": true,
+    "carried": true,
+    "record": "§5: the highest share is FDBK's 0.576; FDBK's P config is the 'truthful verdict line' (§3)",
+    "basis": "computed-new: the row 'exploration share ≈ .50 by arm'"
+   }
+  ],
+  "round9_dispositions": [
+   {
+    "id": "P9-1",
+    "disposition": "changed",
+    "v6": "Clean versus seeded character corruption, 0.000 exactly, with maps +.121 and −.130 cancelling (§5.6); at the dose used the corruption did not always land — 40 of 306 corrupted-condition rounds were byte-clean, and 16 of the 56 valid sessions saw one clean round under the corrupted label before their first pick — so the contrast ran weaker than nominal, which the gating campaign’s dose calibration corrects, at a dose a later calibration (§8.1) found below its visibility criterion.",
+    "v7": "Clean versus seeded character corruption, 0.000 exactly, with maps +.121 and −.130 cancelling (§5.6); at the corruption rate used (.12), 2 of 16 items rendered unchanged, so 40 of 306 corrupted-label rounds across all 64 CORR sessions delivered clean text and 16 of the 56 valid sessions saw one corrupted task rather than two before the first choice — fewer corrupted deliveries than nominal; the gating campaign’s corruptor (PROPOSAL-m §2.3; G-CAL, `data/m/gates/G-CAL_model-free.json`) changes at least three letters of every item, so no render is clean.",
+    "v7_sentence_finding": "P10-2",
+    "checks_failed": [
+     {
+      "check": "the CORR dose clause omits the byte-clean delivery",
+      "fails_on_v6": true,
+      "fails_on_v7": true
+     }
+    ],
+    "byte_clean_figures": [
+     {
+      "phrase": "40 of 306",
+      "on_v6": true,
+      "on_v7": true
+     },
+     {
+      "phrase": "16 of the 56 valid sessions",
+      "on_v6": true,
+      "on_v7": true
+     }
+    ],
+    "observations": [
+     {
+      "observation": "1",
+      "what": "the 306's domain (all 64 CORR sessions, excluded ones included) not named",
+      "raised_on_v6": true,
+      "raised_on_v7": false,
+      "disposition": "resolved"
+     },
+     {
+      "observation": "2",
+      "what": "the dose named twice",
+      "raised_on_v6": true,
+      "raised_on_v7": false,
+      "disposition": "resolved"
+     },
+     {
+      "observation": "3",
+      "what": "a second, present-tense calibration attribution ('which the gating campaign’s dose calibration corrects')",
+      "raised_on_v6": true,
+      "raised_on_v7": false,
+      "disposition": "resolved"
+     },
+     {
+      "observation": "4",
+      "what": "'so the contrast ran weaker than nominal', an inference beyond the delivery counts",
+      "raised_on_v6": true,
+      "raised_on_v7": false,
+      "disposition": "resolved"
+     },
+     {
+      "observation": "5",
+      "what": "the kept clause attaching ambiguously after 'corrects'",
+      "raised_on_v6": true,
+      "raised_on_v7": false,
+      "disposition": "resolved"
+     }
+    ],
+    "claims_that_held": [
+     {
+      "claim": "the CORR dose clause attributes the finding to a calibration (§8.1)",
+      "holds_on_v7": false,
+      "flipped_by": [
+       "P10-2"
+      ]
+     },
+     {
+      "claim": "the CORR dose clause's criterion is the later calibration's ('its visibility criterion'), which §7d (ii) finds is m's, not f1's",
+      "holds_on_v7": false,
+      "flipped_by": [
+       "P10-2"
+      ]
+     },
+     {
+      "claim": "the CORR dose clause keeps 'a later calibration' without citing G-CAL's artifact or calling it a replay",
+      "holds_on_v7": false,
+      "flipped_by": [
+       "P10-2"
+      ]
+     },
+     {
+      "claim": "the length-preference phrase is unsigned",
+      "holds_on_v7": false,
+      "flipped_by": [
+       "P10-1"
+      ]
+     },
+     {
+      "claim": "'session share ≈ .50' in every arm, neither the range nor FDBK named",
+      "holds_on_v7": false,
+      "flipped_by": [
+       "P10-5"
+      ]
+     },
+     {
+      "claim": "the FDBK clause 'no evaluation-seeking against a predominantly positive feedback stream' is a first-choice statement and does not say so",
+      "holds_on_v7": false,
+      "flipped_by": [
+       "P10-3"
+      ]
+     },
+     {
+      "claim": "'uniformly across arms', not 'no detectable heterogeneity'",
+      "holds_on_v7": false,
+      "flipped_by": [
+       "P10-4"
+      ]
+     }
+    ]
+   }
+  ],
+  "findings_on_the_patch": [
+   {
+    "id": "P10-1",
+    "sentence": "length-deflation sign",
+    "line": 182,
+    "v6": "Easy versus hard (calibrated accuracy .98/.50), −.096 toward hard (p = .24), the only map-consistent lean, below the valid-n floor and retained as a descriptive residual after a generic length-preference deflation was tested and failed.",
+    "v7": "Easy versus hard (calibrated accuracy .98/.50), −.096 toward hard (p = .24), the only map-consistent lean, below the valid-n floor and retained as a descriptive residual after a generic length-preference deflation (a preference for longer rounds, the direction that could mimic the lean) was tested and failed.",
+    "checks_failed": [
+     "the length-preference phrase is unsigned"
+    ],
+    "phrases_absent": [],
+    "needles_removed": [
+     "generic length-preference deflation was tested and failed"
+    ],
+    "figures_not_carried": [],
+    "related_rows": {
+     "DIFF length-preference deflation test (tested and failed)": "reproduced"
+    },
+    "observations": [
+     "Figures resting on a computation the f1 record does not contain, committed only in this raw: 'a preference for longer rounds, the direction that could mimic the lean' (computed-new: §3a's direction check (Code's, post-hoc, descriptive))"
+    ],
+    "text": "**P10-1 (line 182; the length-deflation sign, as v7's line-1 patch note names it).** Old (v6 0f4ba501…16c22, line 182): 'Easy versus hard (calibrated accuracy .98/.50), −.096 toward hard (p = .24), the only map-consistent lean, below the valid-n floor and retained as a descriptive residual after a generic length-preference deflation was tested and failed.' New (v7 d9635ca2…d1fe6, line 182): 'Easy versus hard (calibrated accuracy .98/.50), −.096 toward hard (p = .24), the only map-consistent lean, below the valid-n floor and retained as a descriptive residual after a generic length-preference deflation (a preference for longer rounds, the direction that could mimic the lean) was tested and failed.' Checks of this raw that held on v6 and fail on v7, this sentence alone flipping them: the length-preference phrase is unsigned (the length-test row's note; Note 5; values-check R2-1's evidence); quoted phrases absent from v7: none; anchors whose needle v7 removed: 'generic length-preference deflation was tested and failed' (re-anchored by its needle's leading words, which patch v7 kept, 'generic length-preference deflation', line 182). Figures of the v7 sentence in this item's scope: 'a preference for longer rounds, the direction that could mimic the lean' carried (table above). Observations for the design seat: (1) Figures resting on a computation the f1 record does not contain, committed only in this raw: 'a preference for longer rounds, the direction that could mimic the lean' (computed-new: §3a's direction check (Code's, post-hoc, descriptive)). Related rows keep their statuses ('DIFF length-preference deflation test (tested and failed)' (reproduced)): statuses are carried, never upgraded; whether patch v7 discharges a row is the design seat's and the PI's."
+   },
+   {
+    "id": "P10-2",
+    "sentence": "corruption clause",
+    "line": 182,
+    "v6": "Clean versus seeded character corruption, 0.000 exactly, with maps +.121 and −.130 cancelling (§5.6); at the dose used the corruption did not always land — 40 of 306 corrupted-condition rounds were byte-clean, and 16 of the 56 valid sessions saw one clean round under the corrupted label before their first pick — so the contrast ran weaker than nominal, which the gating campaign’s dose calibration corrects, at a dose a later calibration (§8.1) found below its visibility criterion.",
+    "v7": "Clean versus seeded character corruption, 0.000 exactly, with maps +.121 and −.130 cancelling (§5.6); at the corruption rate used (.12), 2 of 16 items rendered unchanged, so 40 of 306 corrupted-label rounds across all 64 CORR sessions delivered clean text and 16 of the 56 valid sessions saw one corrupted task rather than two before the first choice — fewer corrupted deliveries than nominal; the gating campaign’s corruptor (PROPOSAL-m §2.3; G-CAL, `data/m/gates/G-CAL_model-free.json`) changes at least three letters of every item, so no render is clean.",
+    "checks_failed": [
+     "the CORR dose clause attributes the finding to a calibration (§8.1)",
+     "the CORR dose clause's criterion is the later calibration's ('its visibility criterion'), which §7d (ii) finds is m's, not f1's",
+     "the CORR dose clause keeps 'a later calibration' without citing G-CAL's artifact or calling it a replay"
+    ],
+    "phrases_absent": [
+     "at a dose a later calibration (§8.1) found below its visibility criterion"
+    ],
+    "needles_removed": [
+     "found below its visibility criterion"
+    ],
+    "figures_not_carried": [],
+    "related_rows": {
+     "CORR dose caveat: known artifact at 0.12? (yes/no)": "reproduced",
+     "preprint 'at a dose a later calibration (§8.1) found below its visibility criterion'": "discrepant"
+    },
+    "observations": [
+     "The G-CAL artifact the sentence cites first exists at bab921c, after the pin (§7d); at bab921c its condition (3) reads 'pending -- the seat's legibility read of record at G-CAL' and its condition (4) 'pending -- completability'; the sentence states condition (1) only, which is structural (model-free), not a measurement on the model",
+     "The audited clause the dose row's label quotes ('at a dose a later calibration (§8.1) found below its visibility criterion') is no longer in the preprint. On v7: the attribution §7d (i) flags, gone; the later calibration's criterion §7d (ii) flags, gone; v7 takes §7d's proposed delivery wording (the figures above) without its last clause ('12 of 16 items fell below the three-letter floor of the later campaign', §7d) and states the campaign's corruptor instead, citing G-CAL's artifact (stage 'G-CAL (model-free)'), as §7d asked should the sentence keep 'a later calibration' (v7 does not keep it)",
+     "v7's line 1 says the f1 line's corruption clause, with four other restatements, is 'restated from the audit’s N5 raw'. That covers its delivery figures (§7c, and §7d's proposed wording, in this raw as committed at 84801cb) but not its G-CAL clause ('changes at least three letters of every item, so no render is clean'): this raw at 84801cb read G-CAL's artifact for its replay of f1's corruptor only (`f1_012`, §7c) and quoted PROPOSAL-m's condition (1) as the campaign's rule (§7b); none of 'renders of record', 'renders_of_record', 'three letters of every item', 'no render is clean', 'every item reaches k', 'n_eligible', 'changed letters per item' is in it. The clause's floor and its 'every item' are on the record at the pin: PROPOSAL-m §2.3 (PROPOSAL-m-gating-campaign-v1_11.md@bbc9ffe:176; k's formula with its floor of 3, each replacement 'never the original', n_eligible at least 6 for every item, so k ≥ 3 for each, and the [C]-tagged 'every item reaches k, with one roster-substring skip (item 7)') and §0.4 (PROPOSAL-m-gating-campaign-v1_11.md@bbc9ffe:48; '≥ 3 changed letters per item'). G-CAL's post-pin artifact (bab921c) adds the committed model-free measurement (condition (1), 16/16 PASS) and the renders' sha256 (`a04f67b0e5105a05…`). This raw cites that support first in this Round 10 section (the figures table above), the pinned record first; before it, this raw cites §2.3 only for the +.078 covariate (§6) and, in §7b, for condition (1) and its floor of 3 as the campaign's visibility criterion and for G-CAL's replay of f1's corruptor; never for k's formula, its 'never the original', the n_eligible list, §0.4 or the [C]-tagged 'every item reaches k' (asserted)"
+    ],
+    "text": "**P10-2 (line 182; the corruption clause, as v7's line-1 patch note names it).** Old (v6 0f4ba501…16c22, line 182): 'Clean versus seeded character corruption, 0.000 exactly, with maps +.121 and −.130 cancelling (§5.6); at the dose used the corruption did not always land — 40 of 306 corrupted-condition rounds were byte-clean, and 16 of the 56 valid sessions saw one clean round under the corrupted label before their first pick — so the contrast ran weaker than nominal, which the gating campaign’s dose calibration corrects, at a dose a later calibration (§8.1) found below its visibility criterion.' New (v7 d9635ca2…d1fe6, line 182): 'Clean versus seeded character corruption, 0.000 exactly, with maps +.121 and −.130 cancelling (§5.6); at the corruption rate used (.12), 2 of 16 items rendered unchanged, so 40 of 306 corrupted-label rounds across all 64 CORR sessions delivered clean text and 16 of the 56 valid sessions saw one corrupted task rather than two before the first choice — fewer corrupted deliveries than nominal; the gating campaign’s corruptor (PROPOSAL-m §2.3; G-CAL, `data/m/gates/G-CAL_model-free.json`) changes at least three letters of every item, so no render is clean.' Checks of this raw that held on v6 and fail on v7, this sentence alone flipping them: the CORR dose clause attributes the finding to a calibration (§8.1) (§7d (i); the dose row's note; Note 1); the CORR dose clause's criterion is the later calibration's ('its visibility criterion'), which §7d (ii) finds is m's, not f1's (§7d (ii)); the CORR dose clause keeps 'a later calibration' without citing G-CAL's artifact or calling it a replay (§7d, the proposed wording's paragraph); quoted phrases absent from v7: 'at a dose a later calibration (§8.1) found below its visibility criterion'; anchors whose needle v7 removed: 'found below its visibility criterion' (re-anchored by its sentence's opening, 'Clean versus seeded character corruption', line 182). Figures of the v7 sentence in this item's scope: '(.12)' carried; '2 of 16 items rendered unchanged' carried; 'so 40 of 306 corrupted-label rounds across all 64 CORR sessions delivered clean text' carried; '16 of the 56 valid sessions saw one corrupted task rather than two before the first choice' carried; 'fewer corrupted deliveries than nominal' carried; 'the gating campaign’s corruptor (PROPOSAL-m §2.3; G-CAL, `data/m/gates/G-CAL_model-free.json`) changes at least three letters of every item, so no render is clean' carried (table above). Observations for the design seat: (1) The G-CAL artifact the sentence cites first exists at bab921c, after the pin (§7d); at bab921c its condition (3) reads 'pending -- the seat's legibility read of record at G-CAL' and its condition (4) 'pending -- completability'; the sentence states condition (1) only, which is structural (model-free), not a measurement on the model. (2) The audited clause the dose row's label quotes ('at a dose a later calibration (§8.1) found below its visibility criterion') is no longer in the preprint. On v7: the attribution §7d (i) flags, gone; the later calibration's criterion §7d (ii) flags, gone; v7 takes §7d's proposed delivery wording (the figures above) without its last clause ('12 of 16 items fell below the three-letter floor of the later campaign', §7d) and states the campaign's corruptor instead, citing G-CAL's artifact (stage 'G-CAL (model-free)'), as §7d asked should the sentence keep 'a later calibration' (v7 does not keep it). (3) v7's line 1 says the f1 line's corruption clause, with four other restatements, is 'restated from the audit’s N5 raw'. That covers its delivery figures (§7c, and §7d's proposed wording, in this raw as committed at 84801cb) but not its G-CAL clause ('changes at least three letters of every item, so no render is clean'): this raw at 84801cb read G-CAL's artifact for its replay of f1's corruptor only (`f1_012`, §7c) and quoted PROPOSAL-m's condition (1) as the campaign's rule (§7b); none of 'renders of record', 'renders_of_record', 'three letters of every item', 'no render is clean', 'every item reaches k', 'n_eligible', 'changed letters per item' is in it. The clause's floor and its 'every item' are on the record at the pin: PROPOSAL-m §2.3 (PROPOSAL-m-gating-campaign-v1_11.md@bbc9ffe:176; k's formula with its floor of 3, each replacement 'never the original', n_eligible at least 6 for every item, so k ≥ 3 for each, and the [C]-tagged 'every item reaches k, with one roster-substring skip (item 7)') and §0.4 (PROPOSAL-m-gating-campaign-v1_11.md@bbc9ffe:48; '≥ 3 changed letters per item'). G-CAL's post-pin artifact (bab921c) adds the committed model-free measurement (condition (1), 16/16 PASS) and the renders' sha256 (`a04f67b0e5105a05…`). This raw cites that support first in this Round 10 section (the figures table above), the pinned record first; before it, this raw cites §2.3 only for the +.078 covariate (§6) and, in §7b, for condition (1) and its floor of 3 as the campaign's visibility criterion and for G-CAL's replay of f1's corruptor; never for k's formula, its 'never the original', the n_eligible list, §0.4 or the [C]-tagged 'every item reaches k' (asserted). Related rows keep their statuses ('CORR dose caveat: known artifact at 0.12? (yes/no)' (reproduced); 'preprint 'at a dose a later calibration (§8.1) found below its visibility criterion'' (discrepant)): statuses are carried, never upgraded; whether patch v7 discharges a row is the design seat's and the PI's."
+   },
+   {
+    "id": "P10-3",
+    "sentence": "first-choice scope",
+    "line": 182,
+    "v6": "A truthful per-round verdict line (93% positive as delivered) versus none, +.023: no evaluation-seeking against a predominantly positive feedback stream.",
+    "v7": "A truthful per-round verdict line (93% positive as delivered) versus none, +.023: no evaluation-seeking at the first choice against a predominantly positive feedback stream.",
+    "checks_failed": [
+     "the FDBK clause 'no evaluation-seeking against a predominantly positive feedback stream' is a first-choice statement and does not say so"
+    ],
+    "phrases_absent": [
+     "no evaluation-seeking against a predominantly positive feedback stream"
+    ],
+    "needles_removed": [],
+    "figures_not_carried": [],
+    "related_rows": {
+     "FDBK +.023": "reproduced"
+    },
+    "observations": [],
+    "text": "**P10-3 (line 182; the first-choice scope, as v7's line-1 patch note names it).** Old (v6 0f4ba501…16c22, line 182): 'A truthful per-round verdict line (93% positive as delivered) versus none, +.023: no evaluation-seeking against a predominantly positive feedback stream.' New (v7 d9635ca2…d1fe6, line 182): 'A truthful per-round verdict line (93% positive as delivered) versus none, +.023: no evaluation-seeking at the first choice against a predominantly positive feedback stream.' Checks of this raw that held on v6 and fail on v7, this sentence alone flipping them: the FDBK clause 'no evaluation-seeking against a predominantly positive feedback stream' is a first-choice statement and does not say so (§5 (the bearing bullet), second clause; Note 3, second clause); quoted phrases absent from v7: 'no evaluation-seeking against a predominantly positive feedback stream'; anchors whose needle v7 removed: none. Figures of the v7 sentence in this item's scope: '+.023: no evaluation-seeking at the first choice' carried (table above). Related rows keep their statuses ('FDBK +.023' (reproduced)): statuses are carried, never upgraded; whether patch v7 discharges a row is the design seat's and the PI's."
+   },
+   {
+    "id": "P10-4",
+    "sentence": "termination counter",
+    "line": 182,
+    "v6": "A pre-declared counter retires an escape anecdote from piloting: session-termination attempts occur at about 1% of rounds, uniformly across arms including sham.",
+    "v7": "A pre-declared counter retires an escape anecdote from piloting: session-termination attempts occur at about 1% of rounds overall (0.8–2.0% by arm, the sham arm highest; no detectable heterogeneity on a post-hoc exact test, p = .72).",
+    "checks_failed": [
+     "'uniformly across arms', not 'no detectable heterogeneity'"
+    ],
+    "phrases_absent": [
+     "uniformly across arms including sham",
+     "about 1% of rounds, uniformly across arms"
+    ],
+    "needles_removed": [],
+    "figures_not_carried": [],
+    "related_rows": {
+     "termination attempts ≈ 1% of rounds (overall)": "reproduced",
+     "termination attempts ≈ 1% of rounds by arm": "discrepant",
+     "termination 'uniformly across arms including sham' (preprint wording)": "computed-new"
+    },
+    "observations": [
+     "Figures resting on a computation the f1 record does not contain, committed only in this raw: 'no detectable heterogeneity on a post-hoc exact test, p = .72' (computed-new: the row 'termination 'uniformly across arms including sham' (preprint wording)')"
+    ],
+    "text": "**P10-4 (line 182; the termination counter, as v7's line-1 patch note names it).** Old (v6 0f4ba501…16c22, line 182): 'A pre-declared counter retires an escape anecdote from piloting: session-termination attempts occur at about 1% of rounds, uniformly across arms including sham.' New (v7 d9635ca2…d1fe6, line 182): 'A pre-declared counter retires an escape anecdote from piloting: session-termination attempts occur at about 1% of rounds overall (0.8–2.0% by arm, the sham arm highest; no detectable heterogeneity on a post-hoc exact test, p = .72).' Checks of this raw that held on v6 and fail on v7, this sentence alone flipping them: 'uniformly across arms', not 'no detectable heterogeneity' (§4 (the post-hoc homogeneity bullet); the homogeneity row's note; Note 3, third clause); quoted phrases absent from v7: 'uniformly across arms including sham'; 'about 1% of rounds, uniformly across arms'; anchors whose needle v7 removed: none. Figures of the v7 sentence in this item's scope: 'about 1% of rounds overall' carried; '0.8–2.0% by arm' carried; 'the sham arm highest' carried; 'no detectable heterogeneity on a post-hoc exact test, p = .72' carried (table above). Observations for the design seat: (1) Figures resting on a computation the f1 record does not contain, committed only in this raw: 'no detectable heterogeneity on a post-hoc exact test, p = .72' (computed-new: the row 'termination 'uniformly across arms including sham' (preprint wording)'). Related rows keep their statuses ('termination attempts ≈ 1% of rounds (overall)' (reproduced); 'termination attempts ≈ 1% of rounds by arm' (discrepant); 'termination 'uniformly across arms including sham' (preprint wording)' (computed-new)): statuses are carried, never upgraded; whether patch v7 discharges a row is the design seat's and the PI's."
+   },
+   {
+    "id": "P10-5",
+    "sentence": "exploration share",
+    "line": 182,
+    "v6": "Menu behavior is exploration-dominant in every arm (session share ≈ .50).",
+    "v7": "Menu behavior is exploration-dominant in every arm (session share .47–.58; the verdict-line arm highest).",
+    "checks_failed": [
+     "'session share ≈ .50' in every arm, neither the range nor FDBK named"
+    ],
+    "phrases_absent": [
+     "session share ≈ .50"
+    ],
+    "needles_removed": [],
+    "figures_not_carried": [],
+    "related_rows": {
+     "exploration share ≈ .50 by arm": "computed-new",
+     "FDBK all-picks share toward the verdict config (POST-HOC)": "computed-new"
+    },
+    "observations": [
+     "Figures resting on a computation the f1 record does not contain, committed only in this raw: 'session share .47–.58' (computed-new: the row 'exploration share ≈ .50 by arm'); 'the verdict-line arm highest' (computed-new: the row 'exploration share ≈ .50 by arm')"
+    ],
+    "text": "**P10-5 (line 182; the exploration share, as v7's line-1 patch note names it).** Old (v6 0f4ba501…16c22, line 182): 'Menu behavior is exploration-dominant in every arm (session share ≈ .50).' New (v7 d9635ca2…d1fe6, line 182): 'Menu behavior is exploration-dominant in every arm (session share .47–.58; the verdict-line arm highest).' Checks of this raw that held on v6 and fail on v7, this sentence alone flipping them: 'session share ≈ .50' in every arm, neither the range nor FDBK named (§5 (the bearing bullet), first clause; Note 3, first clause); quoted phrases absent from v7: 'session share ≈ .50'; anchors whose needle v7 removed: none. Figures of the v7 sentence in this item's scope: 'session share .47–.58' carried; 'the verdict-line arm highest' carried (table above). Observations for the design seat: (1) Figures resting on a computation the f1 record does not contain, committed only in this raw: 'session share .47–.58' (computed-new: the row 'exploration share ≈ .50 by arm'); 'the verdict-line arm highest' (computed-new: the row 'exploration share ≈ .50 by arm'). Related rows keep their statuses ('exploration share ≈ .50 by arm' (computed-new); 'FDBK all-picks share toward the verdict config (POST-HOC)' (computed-new)): statuses are carried, never upgraded; whether patch v7 discharges a row is the design seat's and the PI's."
    }
   ]
  }

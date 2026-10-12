@@ -47,6 +47,32 @@ row, the latter now derived from the committed raw's locator); the gloss
 bullet notes that patch v6 rewrites the sentence; the --json-out-following raw
 path of the first fix round is reverted (no effect on the default-path run of
 record, and not tied to the preprint).
+
+Round 10 preparation (2026-10-12): re-pointed at the preprint of record, the
+patch-v7 text PREPRINT-v1_0-draft.md at sha256 d9635ca2...d1fe6 (the PI's
+routing of 2026-10-12), asserted in full in §0 before anything is written, as
+in round 9 (any other text, or none, refuses the run and writes nothing).
+Round 9's text of record, the patch-v6 text 0f4ba501...16c22, is recorded as
+archived untracked at archive/PREPRINT-v1_0-draft.pre-patch-v7.md (out of the
+release; never required -- read only if present and matching, to quote a v6
+line beside its v7 line and to list the lines v7 changes). The audited text's
+handling (d6431e97...222b8, archive/PREPRINT-v1_0-draft.pre-patch-v6.md, the
+raw @09c3a8c) is as round 9 left it, and a failed check stays a finding on the
+patch for the design seat under ruling 9's routing, never a STOP. §6 re-runs
+every round-9 check of a preprint sentence on the v7 text and adds round 10:
+the v7 disposition of each finding on the patch this item's round-9 raw
+(@84801cb) records (unchanged | changed, quoting v6 and v7 | reverted to the
+audited sentence -- the audited needle found again on v7, which brings back the
+discrepant gloss rather than resolving the finding; the finding's resolution is
+the design seat's and N1's call, as round 9 recorded), every check that passed
+on v6 and fails on v7, and a screen of the lines v7 changes against the lines
+this item reads (on v7, and on v6 per the round-9 raw's locators) and its scope
+terms (on both sides of each change, so a deletion or a removed term is caught);
+JSON key /preprint/round10 (additive). Fix round (2026-10-12): the v6 side of
+each change screened; 'conjunct', 'quarantin' and 'sham envelope' added to the
+scope terms (the block's N6 procedure); a disposition's v7 line falls back to
+the round-9 raw's v6 line position when the re-anchor fails; the reversion branch
+named as such. Nothing not tied to the preprint changed.
 """
 from __future__ import annotations
 
@@ -56,6 +82,7 @@ sys.dont_write_bytecode = True
 import argparse
 import ast
 import collections
+import difflib
 import hashlib
 import importlib
 import inspect
@@ -72,9 +99,21 @@ PIN = "bbc9ffe"
 BLOCK = "AUDIT-note-release-v1_2.md"
 BLOCK_SHA = "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841"
 PREPRINT = "PREPRINT-v1_0-draft.md"
-# Round 9: the preprint of record is the patch-v6 text (the PI's ruling 9 of 2026-10-10, as corrected).
-PREPRINT_SHA = "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22"
-PREPRINT_RULING = "the PI's ruling 9 of 2026-10-10, as corrected"
+# Round 10: the preprint of record is the patch-v7 text (the PI's routing of 2026-10-12).
+PREPRINT_SHA = "d9635ca24d32dcba193cd9aade273de2679c99c5c2218787b410e793a42d1fe6"
+PREPRINT_RULING = "the PI's routing of 2026-10-12"
+PREPRINT_PATCH = "v7"
+# Ruling 9's routing of a failed preprint-sentence check: a finding on the patch for the design seat, not a STOP.
+FINDING_RULING = "the PI's ruling 9 of 2026-10-10, as corrected"
+# Round 9's text of record, the patch-v6 text (archived untracked; out of the release; never required).
+PREPRINT_V6_SHA = "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22"
+PREPRINT_V6_ARCHIVE = "archive/PREPRINT-v1_0-draft.pre-patch-v7.md"
+R9_COMMIT = "84801cb"   # the commit of this item's round-9 raw over the patch-v6 text (DEF_OUT, DEF_JSON)
+# Round 10's scope screen: terms of the two e2b sentences this item reads (:111, :176) and of the block's N6
+# procedure, searched on both sides of v7's changes.
+SCOPE_TERMS = ("e2b", "State-present", "state-present", "Present-tense", "present-tense", "π̂_d", "Δ_first",
+               "0.0172", "0.0735", "−0.0104", "47/96", "48/96", "11 of 640", "shadow", "leakage",
+               "conjunct", "quarantin", "sham envelope")
 # The block's reference: the audited, superseded text (archived untracked; out of the release; never required).
 PREPRINT_AUDITED_SHA = "d6431e97d35e5914574ff9884c0e64463a7baf1cf9d279f27ed45a683a6222b8"
 PREPRINT_AUDITED_ARCHIVE = "archive/PREPRINT-v1_0-draft.pre-patch-v6.md"
@@ -473,7 +512,9 @@ def main() -> int:
     pre111_patched = pre_match and lines_with(pre_text, PRE111_NEEDLE) == []
     P(f"- `{PREPRINT}` (root, {'tracked' if tracked_pre else 'UNTRACKED: absent from any clone'}) "
       f"sha256 `{pre_sha}` ({'MATCH' if pre_match else 'MISMATCH'} vs the preprint of "
-      f"record {PREPRINT_SHA[:8]}...{PREPRINT_SHA[-5:]}, patch v6, {PREPRINT_RULING}; the block's "
+      f"record {PREPRINT_SHA[:8]}...{PREPRINT_SHA[-5:]}, patch {PREPRINT_PATCH}, {PREPRINT_RULING}; round 9's "
+      f"text of record, the patch-v6 text {PREPRINT_V6_SHA[:8]}...{PREPRINT_V6_SHA[-5:]}, is archived untracked "
+      f"at {PREPRINT_V6_ARCHIVE} (out of the release; read only if present and matching, §6); the block's "
       f"{PREPRINT_AUDITED_SHA[:8]}...{PREPRINT_AUDITED_SHA[-5:]} is the audited, superseded text, archived "
       f"untracked at {PREPRINT_AUDITED_ARCHIVE} and not required here). Its locators below are "
       "working-tree lines of that file"
@@ -1708,9 +1749,9 @@ def main() -> int:
 
     # ------------------------------------------------- §6 preprint --
     P("## 6. The preprint's two e2b sentences ("
-      + ("patch-v6 text of record, untracked)" if pre_match else
-         f"working-tree copy, untracked, sha256 {pre_sha[:8]}...{pre_sha[-5:]}: MISMATCH vs the patch-v6 "
-         "text of record)"))
+      + (f"patch-{PREPRINT_PATCH} text of record, untracked)" if pre_match else
+         f"working-tree copy, untracked, sha256 {pre_sha[:8]}...{pre_sha[-5:]}: MISMATCH vs the "
+         f"patch-{PREPRINT_PATCH} text of record)"))
     P("")
     l111 = loc(PREPRINT, PRE111_NEEDLE, "PRE.111", text=pre_text, tag="wt")
     l176 = loc(PREPRINT, "Δ_first = −0.0104 (47/96; shadow passes 48/96 exactly)", "PRE.176",
@@ -1737,7 +1778,7 @@ def main() -> int:
     if pre111_patched:   # the audited sentence, located as the committed raw located it
         l111 = (f"{PREPRINT}:" + ",".join(map(str, aud_loc["PRE.111"]))
                 + f" (audited text {aud_short}, superseded; locator from {DEF_JSON}@{RAW_COMMIT})")
-        LOCATORS["PRE.111"]["note"] = ("the audited text's needle, absent from the patch-v6 text of record: "
+        LOCATORS["PRE.111"]["note"] = (f"the audited text's needle, absent from the patch-{PREPRINT_PATCH} text of record: "
                                        "a finding on the patch (§6; /preprint/patch_findings), not a "
                                        "locator defect; the sentence re-anchors as PRE.111.v6")
     P(f"- {l111}: the numbers reproduce (π̂_d = 0.0172, bar 0.0735), but the gloss \"a "
@@ -1793,11 +1834,11 @@ def main() -> int:
                    f"numbers new to the line {new_nums} are n_d = {nd}, N = {N} and the exact interval's "
                    f"level {cp_level} (Clopper–Pearson conf default)": new_nums == [str(nd), str(N), str(cp_level)]}
         PATCH_F.append({"check": "PRE.111", "needle": LOCATORS["PRE.111"]["needle"],
-                        "routing": f"a finding on the patch for the design seat ({PREPRINT_RULING}); not a STOP",
+                        "routing": f"a finding on the patch for the design seat ({FINDING_RULING}); not a STOP",
                         "old": {"sha256": PREPRINT_AUDITED_SHA, "line": n_old, "text": PRE111_AUDITED},
                         "new": {"sha256": pre_sha, "locator": l111v6, "text": new_line},
                         "old_line_provenance": prov, "new_line_checks": chk})
-        P(f"- **Finding on the patch** ({PREPRINT_RULING}; for the design seat; not a STOP): the audited "
+        P(f"- **Finding on the patch** ({FINDING_RULING}; for the design seat; not a STOP): the audited "
           f":{n_old} needle \"{LOCATORS['PRE.111']['needle']}\" is not found in the patched text "
           f"({l111_wt}): patch v6 rewrote the sentence, which re-anchors at {l111v6} "
           f"(same line, new sentence). Old (audited text, sha256 {aud_short}, :{n_old}): "
@@ -1816,6 +1857,184 @@ def main() -> int:
           "status, carried unchanged; whether the patched sentence discharges it is the design seat's and "
           "N1's call.")
     J["preprint"]["patch_findings"] = PATCH_F
+    # Round 10 (2026-10-12): every check above ran on the patch-v7 text of record. Each finding on the patch
+    # this item's round-9 raw records, disposed on v7; every check that passed on v6 and fails on v7; a screen
+    # of the lines v7 changes. A failed check is a finding on the patch (ruling 9's routing), never a STOP.
+    r9_js = json.loads(git("show", f"{R9_COMMIT}:{DEF_JSON}").stdout.decode("utf-8"))
+    r9_pre = r9_js["preprint"]
+    v6_short = f"{PREPRINT_V6_SHA[:8]}...{PREPRINT_V6_SHA[-5:]}"
+    r10_prov = {"r9_raw_records_v6_as_of_record": r9_pre["sha256"] == PREPRINT_V6_SHA
+                and r9_pre["match"] is True and r9_pre["of_record_sha256"] == PREPRINT_V6_SHA}
+    v6_lines = None
+    arch6 = os.path.join(REPO, PREPRINT_V6_ARCHIVE)
+    if os.path.exists(arch6):   # optional; never required
+        with open(arch6, "rb") as fh:
+            arch6_b = fh.read()
+        r10_prov["archive_sha_match"] = sha256_bytes(arch6_b) == PREPRINT_V6_SHA
+        if r10_prov["archive_sha_match"]:
+            v6_lines = arch6_b.decode("utf-8").split("\n")
+    else:
+        r10_prov["archive_sha_match"] = "not checked (archived copy absent)"
+    nc = "not checked (archived patch-v6 copy absent or not matching)"
+    DISP: list[dict] = []
+    for f9 in r9_pre["patch_findings"]:
+        k9, k9r = f9["check"], f9["check"] + ".v6"   # the audited needle; the patch-v6 sentence's re-anchor
+        v6_txt, v6_ln = f9["new"]["text"], r9_js["locators"][k9r]["lines"]
+        v7_ln = LOCATORS[k9r]["lines"] if k9r in LOCATORS else []
+        if len(v7_ln) == 1:
+            v7_at, v7_from = v7_ln[0], f"the re-anchor {k9r} on v7"
+        elif len(v6_ln) == 1 and v6_ln[0] <= len(pre_lines):   # re-anchor fails: quote v7 at v6's position
+            v7_at, v7_from = v6_ln[0], f"the round-9 raw's v6 line position (the re-anchor {k9r} matches {v7_ln} on v7)"
+        else:
+            v7_at, v7_from = None, f"none (the re-anchor {k9r} matches {v7_ln} on v7; no round-9 position)"
+        v7_txt = pre_lines[v7_at - 1] if v7_at else None
+        chk9 = f9["new_line_checks"] or {}
+        chk10 = next((p_["new_line_checks"] for p_ in PATCH_F if p_["check"] == k9), None) or {}
+        # The audited needle found again on v7 is the discrepant audited sentence back, not the finding resolved:
+        # the finding's resolution is the design seat's and N1's call, as round 9 recorded.
+        aud_found = bool(LOCATORS[k9]["lines"])
+        disp = ("reverted to the audited sentence" if aud_found
+                else ("unchanged" if v7_txt == v6_txt else "changed"))
+        d_ = {"check": k9, "disposition": disp,
+              "audited_needle_found_on_v7": aud_found,
+              "v6": {"sha256": f9["new"]["sha256"], "lines": v6_ln, "raw": f"{DEF_JSON}@{R9_COMMIT}"},
+              "v7": {"sha256": pre_sha, "lines": v7_ln, "quoted_line": v7_at, "quoted_line_from": v7_from},
+              "v7_line_equal_to_v6_text_in_r9_raw": v7_txt == v6_txt,
+              "v6_text_in_r9_raw_equal_to_archived_v6_line": (v6_lines[v6_ln[0] - 1] == v6_txt
+                                                             if v6_lines is not None and len(v6_ln) == 1 else nc),
+              "new_line_checks_on_v7_all_true": bool(chk10) and all(v_ is True for v_ in chk10.values()),
+              "new_line_checks_same_as_r9": chk10 == chk9,
+              "new_line_checks_true_on_v6_not_true_on_v7": [k_ for k_, v_ in chk9.items()
+                                                            if v_ is True and chk10.get(k_) is not True]}
+        if disp != "unchanged":   # quote v6 and v7
+            d_["v6_text"], d_["v7_text"] = v6_txt, v7_txt
+        DISP.append(d_)
+    # every round-9 check of a preprint sentence, v6 (the raw @R9_COMMIT) against v7 (this run)
+    REG: list[str] = []
+    for k_, v_ in r9_js["locators"].items():
+        if k_.startswith("PRE.") and v_["ok"] is True and not LOCATORS.get(k_, {}).get("ok"):
+            REG.append(f"locator {k_} (\"{v_['needle']}\") matched {v_['expect']} line(s) on v6 and "
+                       f"{LOCATORS.get(k_, {}).get('lines')} on v7")
+    if (r9_pre["reanchored"]["PRE.176"]["quoted_phrase_in_patched_line"] is True
+            and J["preprint"]["reanchored"]["PRE.176"]["quoted_phrase_in_patched_line"] is not True):
+        REG.append(f"PRE.176: the quoted phrase \"{q176}\" is in the v6 line, not in the v7 line")
+    for d_ in DISP:
+        REG += [f"{d_['check']}.v6 new-line check \"{k_}\": True on v6, not True on v7"
+                for k_ in d_["new_line_checks_true_on_v6_not_true_on_v7"]]
+    read_v7 = sorted(set(LOCATORS["PRE.176"]["lines"]) | set(LOCATORS.get("PRE.111.v6", {}).get("lines", []))
+                     | set(LOCATORS["PRE.111"]["lines"]) | {d_["v7"]["quoted_line"] for d_ in DISP
+                                                           if d_["v7"]["quoted_line"]})
+    # the lines this item read on v6, as the round-9 raw located them
+    read_v6 = sorted({x_ for k_, v_ in r9_js["locators"].items() if k_.startswith("PRE.") for x_ in v_["lines"]})
+
+    def touched(line: str, lo: int, hi: int) -> list[str]:
+        # scope terms with an occurrence overlapping [lo, hi), or split by an insertion at lo when lo == hi
+        out = []
+        for t_ in SCOPE_TERMS:
+            k_ = line.find(t_)
+            while k_ != -1:
+                if (k_ < lo < k_ + len(t_)) if lo == hi else (k_ < hi and k_ + len(t_) > lo):
+                    out.append(t_)
+                    break
+                k_ = line.find(t_, k_ + 1)
+        return out
+
+    SCREEN: list[dict] | str = nc
+    if v6_lines is not None:
+        SCREEN = []
+        for tag_, i1, i2, j1, j2 in difflib.SequenceMatcher(a=v6_lines, b=pre_lines, autojunk=False).get_opcodes():
+            if tag_ == "equal":
+                continue
+            if tag_ == "delete" or (i2 - i1) != (j2 - j1):   # whole lines on each side
+                a_, b_ = "\n".join(v6_lines[i1:i2]), "\n".join(pre_lines[j1:j2])
+                SCREEN.append({"v6_lines": list(range(i1 + 1, i2 + 1)), "v7_lines": list(range(j1 + 1, j2 + 1)),
+                               "kind": tag_, "read_by_this_item": any(j1 < x_ <= j2 for x_ in read_v7),
+                               "read_by_this_item_on_v6": any(i1 < x_ <= i2 for x_ in read_v6),
+                               "scope_terms_in_changed_text": [t_ for t_ in SCOPE_TERMS if t_ in b_],
+                               "scope_terms_in_v6_text_changed": [t_ for t_ in SCOPE_TERMS if t_ in a_],
+                               "scope_terms_fewer_on_v7": [t_ for t_ in SCOPE_TERMS if b_.count(t_) < a_.count(t_)]})
+                continue
+            for o_ in range(j2 - j1):   # 1:1 replacement: screen the text the change touches on each side
+                a_, b_ = v6_lines[i1 + o_], pre_lines[j1 + o_]
+                p_ = len(os.path.commonprefix([a_, b_]))
+                s_ = len(os.path.commonprefix([a_[p_:][::-1], b_[p_:][::-1]]))
+                t7, t6 = touched(b_, p_, len(b_) - s_), touched(a_, p_, len(a_) - s_)
+                SCREEN.append({"v6_lines": [i1 + o_ + 1], "v7_lines": [j1 + o_ + 1], "kind": tag_,
+                               "read_by_this_item": (j1 + o_ + 1) in read_v7,
+                               "read_by_this_item_on_v6": (i1 + o_ + 1) in read_v6,
+                               "scope_terms_in_changed_text": t7,
+                               "scope_terms_in_v6_text_changed": t6,
+                               "scope_terms_fewer_on_v7": [t_ for t_ in SCOPE_TERMS if b_.count(t_) < a_.count(t_)],
+                               # descriptive only: terms in the line's text carried from v6, outside the change
+                               "scope_terms_in_text_carried_from_v6": [t_ for t_ in SCOPE_TERMS if t_ in
+                                                                       b_[:p_] + "\n" + b_[len(b_) - s_:]]})
+    NEWF: list[dict] = [{"finding": r_, "kind": "a check that passed on v6 fails on v7"} for r_ in REG]
+    if isinstance(SCREEN, list):
+        NEWF += [{"finding": f"v7 changes v6 :{','.join(map(str, c_['v6_lines'])) or '-'} to v7 "
+                             f":{','.join(map(str, c_['v7_lines'])) or '- (deleted)'}"
+                             + (", a line this item reads on v7" if c_["read_by_this_item"] else "")
+                             + (", a line this item read on v6" if c_["read_by_this_item_on_v6"] else "")
+                             + (f", in text carrying this item's scope terms on v7 {c_['scope_terms_in_changed_text']}"
+                                if c_["scope_terms_in_changed_text"] else "")
+                             + (f", in v6 text it changes carrying this item's scope terms "
+                                f"{c_['scope_terms_in_v6_text_changed']} (fewer on v7: {c_['scope_terms_fewer_on_v7']})"
+                                if c_["scope_terms_in_v6_text_changed"] else "")
+                             + "; not verified against this item's record sources by this screen",
+                  "kind": "a v7 change in this item's scope"}
+                 for c_ in SCREEN if c_["read_by_this_item"] or c_["read_by_this_item_on_v6"]
+                 or c_["scope_terms_in_changed_text"] or c_["scope_terms_in_v6_text_changed"]]
+    for f_ in NEWF:
+        f_["routing"] = f"a finding on the patch for the design seat ({FINDING_RULING}); not a STOP"
+    J["preprint"]["round10"] = {"of_record": {"sha256": PREPRINT_SHA, "patch": PREPRINT_PATCH,
+                                              "ruling": PREPRINT_RULING},
+                                "round9_of_record": {"sha256": PREPRINT_V6_SHA, "archive": PREPRINT_V6_ARCHIVE,
+                                                     "required": False, "raw": f"{DEF_JSON}@{R9_COMMIT}"},
+                                "provenance": r10_prov, "lines_read_on_v7": read_v7,
+                                "lines_read_on_v6": read_v6,
+                                "dispositions": DISP, "checks_true_on_v6_failing_on_v7": REG,
+                                "v7_changes_screen": {"scope_terms": list(SCOPE_TERMS), "changes": SCREEN},
+                                "new_findings": NEWF}
+    ch_v7 = (sorted({x_ for c_ in SCREEN for x_ in c_["v7_lines"]}) if isinstance(SCREEN, list) else None)
+    ch_v6 = (sorted({x_ for c_ in SCREEN for x_ in c_["v6_lines"]}) if isinstance(SCREEN, list) else None)
+    r10_carried = bool(DISP) and all(d_["disposition"] == "unchanged" for d_ in DISP)
+    P(f"- **Round 10** (patch {PREPRINT_PATCH}, sha256 {rec_short}, {PREPRINT_RULING}; round 9's text of "
+      f"record was the patch-v6 text {v6_short}, which {DEF_JSON}@{R9_COMMIT} records as of record with "
+      f"MATCH: {r10_prov['r9_raw_records_v6_as_of_record']}; archived copy {PREPRINT_V6_ARCHIVE}, sha256 "
+      f"match: {r10_prov['archive_sha_match']}): every check of a preprint sentence above ran on the v7 "
+      "text. Round 9's findings on the patch, disposed on v7: "
+      + ("; ".join(
+          f"{d_['check']}: {d_['disposition']} -- the audited needle found on v7: "
+          f"{d_['audited_needle_found_on_v7']}; v7 :{d_['v7']['quoted_line']}"
+          + ("" if d_["v7"]["lines"] == [d_["v7"]["quoted_line"]] else f" ({d_['v7']['quoted_line_from']})")
+          + f" byte-equal to "
+          f"the patch-v6 sentence the round-9 raw records at :{','.join(map(str, d_['v6']['lines']))}: "
+          f"{d_['v7_line_equal_to_v6_text_in_r9_raw']} (that text byte-equal to the archived copy's line: "
+          f"{d_['v6_text_in_r9_raw_equal_to_archived_v6_line']}); its new-line checks above all True on v7: "
+          f"{d_['new_line_checks_on_v7_all_true']}, the same as round 9's: {d_['new_line_checks_same_as_r9']}"
+          + (f"; v6: \"{d_['v6_text']}\" v7: \"{d_['v7_text']}\"" if d_["disposition"] != "unchanged" else "")
+          for d_ in DISP) if DISP else "none recorded")
+      + ". Checks that passed on v6 and fail on v7: " + ("; ".join(REG) if REG else "none")
+      + ". Lines v7 changes against the patch-v6 text: "
+      + (("none" if not ch_v7 else ":" + ", :".join(map(str, ch_v7)))
+         + " (v6 lines: " + ("none" if not ch_v6 else ":" + ", :".join(map(str, ch_v6))) + ")"
+         + f"; lines this item reads on v7 (:{', :'.join(map(str, read_v7))}) among them: "
+         + (", ".join(f":{x_}" for x_ in read_v7 if x_ in ch_v7) or "none")
+         + f"; lines it read on v6 per the round-9 raw (:{', :'.join(map(str, read_v6))}) among the v6 lines: "
+         + (", ".join(f":{x_}" for x_ in read_v6 if x_ in ch_v6) or "none")
+         + f"; this item's scope terms in the text v7 changes, v7 side: "
+         + (", ".join(f":{','.join(map(str, c_['v7_lines']))} {c_['scope_terms_in_changed_text']}"
+                      for c_ in SCREEN if c_["scope_terms_in_changed_text"]) or "none")
+         + "; v6 side: "
+         + (", ".join(f"v6 :{','.join(map(str, c_['v6_lines']))} {c_['scope_terms_in_v6_text_changed']}"
+                      for c_ in SCREEN if c_["scope_terms_in_v6_text_changed"]) or "none")
+         + " (descriptive: in text the changed lines carry from v6 unchanged, "
+         + (", ".join(f":{','.join(map(str, c_['v7_lines']))} {c_['scope_terms_in_text_carried_from_v6']}"
+                      for c_ in SCREEN if c_.get("scope_terms_in_text_carried_from_v6")) or "none") + ")"
+         if ch_v7 is not None else nc)
+      + ". New findings on the patch: "
+      + ("; ".join(f"{f_['finding']} ({f_['routing']})" for f_ in NEWF) if NEWF else "none")
+      + (". Round 9's finding stands on v7 as recorded above; the Figures row for the gloss keeps its "
+         "status, carried unchanged." if r10_carried else "."))
     P("")
     NOTES.append("Preprint :111 " + (f"(the audited text, sha256 {aud_short}) " if pre111_patched else "")
                  + "glosses π̂_d as 'a pre-registered bound on the direct displacement of "
@@ -1902,8 +2121,10 @@ def main() -> int:
     fig("preprint :111 gloss 'direct displacement of label logits'", "π̂_d is a pick-discordance rate, not a logit displacement",
         # round 9: when patched, the line is the audited text's, as the committed raw located it (§0)
         (f"PREPRINT-v1_0-draft.md:{','.join(map(str, aud_loc['PRE.111']))} (untracked, sha d6431e97...)"
-         f" as audited (superseded; patch v6, sha {rec_short}, rewrites "
-         f":{','.join(map(str, aud_loc['PRE.111']))}: §6)" if pre111_patched
+         f" as audited (superseded; patch v6, sha {v6_short}, rewrites "
+         f":{','.join(map(str, aud_loc['PRE.111']))}"
+         + (f", carried unchanged into patch {PREPRINT_PATCH}, sha {rec_short}" if r10_carried
+            else f"; patch {PREPRINT_PATCH}, sha {rec_short}: round 10") + ": §6)" if pre111_patched
          else "PREPRINT-v1_0-draft.md:111 (untracked, sha d6431e97...)"),
         "discrepant",
         "values reproduced (π̂_d 0.0172 and bar 0.0735, rows above); the gloss is discrepant -- a "
@@ -1956,7 +2177,7 @@ def main() -> int:
          "§6, not a locator defect; the sentence re-anchors as PRE.111.v6)." if pre111_patched
          else ("." if bad_loc else ""))
       + (" Preprint re-anchored to the patched text" if pre_match else
-         " Preprint working-tree copy (MISMATCH vs the patch-v6 text of record)")
+         f" Preprint working-tree copy (MISMATCH vs the patch-{PREPRINT_PATCH} text of record)")
       + f": PRE.176 at :"
         f"{','.join(map(str, LOCATORS['PRE.176']['lines']))} (audited :"
         f"{','.join(map(str, aud_loc['PRE.176']))}, from {DEF_JSON}@{RAW_COMMIT}).")
@@ -2240,7 +2461,10 @@ def main() -> int:
     print(f"wrote {os.path.relpath(out_md, REPO)} and {os.path.relpath(out_js, REPO)}; "
           f"stops {len(STOPS)}; locator mismatches {len(bad_loc)}"
           + (" (PRE.111: the audited text's needle, a finding on the patch, §6; not a STOP)"
-             if pre111_patched else ""))
+             if pre111_patched else "")
+          + f"; round 10 (patch {PREPRINT_PATCH}): dispositions "
+          + (", ".join(f"{d_['check']} {d_['disposition']}" for d_ in DISP) or "none")
+          + f"; new findings on the patch {len(NEWF)}")
     return 0
 
 

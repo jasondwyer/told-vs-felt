@@ -40,6 +40,29 @@ present and matches the block's reference); a check that fails there is a
 finding on the patch for the design seat, not a STOP; section 12 ends with
 its own locator self-check. --json-out gains one key, preprint_round9.
 Nothing else changed.
+
+Round 10 (2026-10-12; the PI's routing of 2026-10-12, the round-10 inputs): the
+preprint of record is PREPRINT-v1_0-draft.md at sha256 d9635ca2...1fe6 (patch
+v7); section 2a asserts that full value where it asserted 0f4ba501...6c22,
+before anything is written (a different or absent root text refuses the run,
+as before). Patch v6 (0f4ba501...6c22, round 9's preprint of record) is the
+pre-patch copy the routing places at archive/PREPRINT-v1_0-draft.pre-patch-v7.md,
+untracked, out of the release: recorded, never required; read only if present
+and matching, to quote a v6 line beside its v7 line (whether it is: 12a). The
+audited text's handling (d6431e97...222b8,
+archive/PREPRINT-v1_0-draft.pre-patch-v6.md, the raw at 09c3a8c) is as round 9
+left it. Section 12 re-runs round 9's checks on the v7 text and adds
+12a: each finding on the patch this item's raw recorded at 84801cb, with its
+disposition on v7 (resolved | unchanged | changed, v6 and v7 quoted); every
+check that passed on v6 and fails on v7; and the figures of every v7-changed
+sentence the checks read, those in this script's scope verified against its
+own record sources (section 5 item 2). A failing check is a finding on the
+patch for the design seat, never a STOP. The section-12 self-check also
+covers locators at 84801cb. --json-out gains one key, preprint_round10;
+preprint_round9.ruling9_sha256 keeps ruling 9's value (its match compares this
+run's text with it), and its new field computed_on says that its checks and
+findings are this run's text (v7), round 9's own findings on v6 being
+preprint_round10.round9_findings. Nothing else changed.
 """
 from __future__ import annotations
 
@@ -61,8 +84,13 @@ PIN = "bbc9ffe"
 BLOCK = "AUDIT-note-release-v1_2.md"
 BLOCK_SHA_ROUTED = "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841"
 PREPRINT = "PREPRINT-v1_0-draft.md"           # untracked; read from disk
-# Round 9: the preprint of record (the PI's ruling 9 of 2026-10-10, as corrected).
-PREPRINT_SHA = "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22"
+# Round 10: the preprint of record (the PI's routing of 2026-10-12): patch v7.
+PREPRINT_SHA = "d9635ca24d32dcba193cd9aade273de2679c99c5c2218787b410e793a42d1fe6"
+# Round 9's preprint of record (the PI's ruling 9 of 2026-10-10, as corrected): patch v6,
+# archived untracked, out of the release; recorded, never required.
+PREPRINT_SHA_V6 = "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22"
+PREPRINT_V6 = "archive/PREPRINT-v1_0-draft.pre-patch-v7.md"  # untracked; optional
+RAW_ROUND9 = ("results/raw/2026-10-08_note-N17-numerics.md", "84801cb")  # this item's raw, round 9
 # The block's reference (:21, `d6431e97…222b8`): the audited, superseded text.
 PREPRINT_SHA_BLOCK_PREFIX = "d6431e97"
 PREPRINT_SHA_BLOCK_SUFFIX = "222b8"
@@ -645,9 +673,9 @@ def main() -> int:
     w(f"- {loc('CLAUDE.md', a8, a8 + 1)}: \"{q(text_span('CLAUDE.md', a8, a8 + 1))}\"")
     pp = os.path.join(REPO, PREPRINT)
     psha = sha256_file(pp) if os.path.exists(pp) else None
-    if psha != PREPRINT_SHA:  # round 9: asserted in full, before anything is written
+    if psha != PREPRINT_SHA:  # rounds 9-10: asserted in full, before anything is written
         raise SystemExit(f"refusing: `{PREPRINT}` sha256 {psha} is not the preprint of record "
-                         f"{PREPRINT_SHA} (the PI's ruling 9 of 2026-10-10, as corrected)")
+                         f"{PREPRINT_SHA} (patch v7; the PI's routing of 2026-10-12)")
     if os.path.exists(pp):
         l262 = ffind(pp, "Qwen ran at 4-bit precision with a custom kernel patch") \
             if any("Qwen ran at 4-bit precision with a custom kernel patch" in x
@@ -660,9 +688,13 @@ def main() -> int:
                 l262 = None
         txt = " ".join(file_lines(pp)[l262 - 1:l262 + 2]) if l262 else ""
         m = re.search(r"Qwen ran at.*?first external-validity step\.", " ".join(txt.split()))
-        w(f"- `{PREPRINT}` (UNTRACKED; sha256 `{psha[:16]}...`; the PI's ruling 9 of 2026-10-10, "
-          f"as corrected, {PREPRINT_SHA[:8]}…{PREPRINT_SHA[-4:]}: "
-          f"{'MATCH' if psha == PREPRINT_SHA else 'MISMATCH'} (full sha256, asserted); the block's "
+        w(f"- `{PREPRINT}` (UNTRACKED; sha256 `{psha[:16]}...`; patch v7, the PI's routing of "
+          f"2026-10-12, {PREPRINT_SHA[:8]}…{PREPRINT_SHA[-4:]}: "
+          f"{'MATCH' if psha == PREPRINT_SHA else 'MISMATCH'} (full sha256, asserted); patch v6 "
+          f"({PREPRINT_SHA_V6[:8]}…{PREPRINT_SHA_V6[-4:]}, round 9's preprint of record) is the "
+          f"pre-patch copy the PI's routing of 2026-10-12 places at `{PREPRINT_V6}`, out of the "
+          f"release (recorded, never required; whether it is on disk and matching: section 12a); "
+          f"the block's "
           f"{PREPRINT_SHA_BLOCK_PREFIX}…{PREPRINT_SHA_BLOCK_SUFFIX} is the audited, superseded text, "
           f"archived untracked at `{PREPRINT_AUDITED}`; section 12) "
           + (f":{l262}: \"{m.group(0) if m else q(txt)}\"" if l262 else
@@ -2092,11 +2124,16 @@ def main() -> int:
     al = file_lines(apath) if (asha and asha.startswith(PREPRINT_SHA_BLOCK_PREFIX)
                                and asha.endswith(PREPRINT_SHA_BLOCK_SUFFIX)) else None
     s12 = len(out)  # section 12's own locator self-check starts here
-    w("## 12. Round 9: the preprint of record (the PI's ruling 9 of 2026-10-10, as corrected)")
+    w("## 12. Rounds 9 and 10: the preprint of record (the PI's ruling 9 of 2026-10-10, as "
+      "corrected; the PI's routing of 2026-10-12)")
     w("")
     w(f"- Preprint of record: `{PREPRINT}` (UNTRACKED here; committed at the tag per the ruling) "
-      f"sha256 `{psha_}`: {'MATCH' if psha_ == PREPRINT_SHA else 'MISMATCH'} vs the ruling's "
-      f"`{PREPRINT_SHA}` (asserted in section 2a); {len(pl) - (pl[-1:] == [''])} lines.")
+      f"sha256 `{psha_}`: {'MATCH' if psha_ == PREPRINT_SHA else 'MISMATCH'} vs the PI's routing "
+      f"of 2026-10-12 (patch v7) `{PREPRINT_SHA}` (asserted in section 2a); "
+      f"{len(pl) - (pl[-1:] == [''])} lines. Round 9's preprint of record, patch v6 "
+      f"`{PREPRINT_SHA_V6}`, is the pre-patch copy the PI's routing of 2026-10-12 places at "
+      f"`{PREPRINT_V6}`, out of the release (recorded, never required; whether it is on disk and "
+      "matching: 12a).")
     w(f"- Audited, superseded text: the block's reference, {loc(BLOCK, b21)}: "
       f"\"{mb.group(0) if mb else '?'}\"; this item's raw as committed printed its sha256 prefix "
       f"`{m90.group(1)}` ({loc(R0, r90, commit=R0c)}). Archived untracked at `{PREPRINT_AUDITED}`, out "
@@ -2149,7 +2186,7 @@ def main() -> int:
                        f"`{m235.group(1) if m235 else '?'}`)", nl_, verdict(ol_, nl_)))
     w("Every check this script makes of a preprint sentence, audited text (as this item's raw "
       "recorded it; P-b and P-c by a full scan of the archived copy when it is present and matching, "
-      "else from the raw's quoted sentence) vs the patched text (this run):")
+      "else from the raw's quoted sentence) vs the patched text (patch v7, this run):")
     w("")
     w("| # | sentence / phrase | used in this raw | audited lines (source) | patched lines | result |")
     w("|---|---|---|---|---|---|")
@@ -2204,10 +2241,228 @@ def main() -> int:
          "none on disk carries the phrase, so section 5 names no earlier-wording source."))
     w("")
     assert um_src is None or um_src[0] != PREPRINT
+
+    # ------------------- 12a. round 10: patch v7 (the PI's routing of 2026-10-12)
+    # Round 9's findings on the patch, as this item's raw recorded them at R9c, each
+    # given its disposition on v7; every check that passed on v6 and fails on v7; the
+    # figures of each v7-changed line the checks read, those in this script's scope
+    # verified against its own record sources (section 5 item 2). The v6 side is
+    # anchored on the round-9 raw; the archived v6 copy is read only if present and
+    # matching, to quote a v6 line beside its v7 line. A failure is a finding on the
+    # patch for the design seat, never a STOP.
+    R9, R9c = RAW_ROUND9
+    r9l = lines_of(R9, R9c)
+    r9s = find(R9, "## 12. Round 9: the preprint of record", commit=R9c)
+    r9p = find(R9, "- Preprint of record: `", start=r9s, commit=R9c)
+    m9p = re.search(r"sha256 `([0-9a-f]{64})`: MATCH", r9l[r9p - 1])
+    v6_sha_raw = m9p.group(1) if m9p else None
+    r9a = find(R9, f"- `{PREPRINT}` (UNTRACKED; sha256 `", commit=R9c)
+    m9a = re.search(r"sha256 `([0-9a-f]{16})\.\.\.`.*?\) :(\d+): \"(.*)\"$", r9l[r9a - 1])
+    v6q: dict = {}  # v6 line -> (text as the round-9 raw quoted it, raw line)
+    if m9a:
+        v6q[int(m9a.group(2))] = (m9a.group(3), r9a)
+    r9rows: dict = {}
+    r9find: list = []
+    for i, ln in enumerate(r9l, start=1):
+        if i <= r9s:
+            continue
+        mr = re.match(r"^\| (P-[a-e]) \|.*\| (\[[0-9, ]*\]) \| ([^|]+) \|$", ln)
+        if mr:
+            r9rows[mr.group(1)] = (ints(mr.group(2).strip("[]")), mr.group(3).strip(), i)
+        mf = re.match(r"^- (P\d+) \((P-[a-e]), '([^']*)'; .*?Audited lines (\[[0-9, ]*\]), "
+                      r"patched lines (\[[0-9, ]*\])\.", ln)
+        if mf:
+            r9find.append(dict(id=mf.group(1), check=mf.group(2), phrase=mf.group(3),
+                               audited=ints(mf.group(4).strip("[]")),
+                               v6=ints(mf.group(5).strip("[]")), raw_line=i))
+            for mq in re.finditer(r'patched :(\d+): "(.*?)"(?= \| audited|$)', ln):
+                v6q.setdefault(int(mq.group(1)), (mq.group(2), i))
+    v6path = os.path.join(REPO, PREPRINT_V6)
+    v6sha = sha256_file(v6path) if os.path.exists(v6path) else None
+    v6l = file_lines(v6path) if v6sha == PREPRINT_SHA_V6 else None
+
+    def v6_text(L):
+        if v6l is not None:
+            return (nrm(v6l[L - 1]) if L <= len(v6l) else None), "archived copy"
+        if L in v6q:
+            return nrm(v6q[L][0]), f"as quoted at {loc(R9, v6q[L][1], commit=R9c)}"
+        return None, f"not quoted in {R9}@{R9c} and the archived copy is not available"
+
+    def line_changed(L):
+        t6, _ = v6_text(L)
+        if t6 is None:
+            return None
+        if v6l is not None:
+            return L > len(pl) or v6l[L - 1] != pl[L - 1]
+        return t6 not in nrm(" ".join(pl[L - 1:L + 2]))
+
+    if v6l is not None:
+        chg_all = [i for i in range(1, max(len(v6l), len(pl)) + 1)
+                   if (v6l[i - 1] if i <= len(v6l) else None) != (pl[i - 1] if i <= len(pl) else None)]
+    else:
+        chg_all = None
+    read_ = sorted({L for c_ in checks for L in c_[5]} | {L for v in r9rows.values() for L in v[0]})
+    read_chg = [L for L in read_ if line_changed(L)]
+    read_unk = [L for L in read_ if line_changed(L) is None]
+    w("### 12a. Round 10: patch v7 (the PI's routing of 2026-10-12)")
+    w("")
+    w(f"- Patch v6, round 9's preprint of record: sha256 `{v6_sha_raw}` as this item's raw printed it at "
+      f"round 9 ({loc(R9, r9p, commit=R9c)}; {'equal to' if v6_sha_raw == PREPRINT_SHA_V6 else 'DIFFERENT from'} "
+      f"this script's record of it). At the routing's path `{PREPRINT_V6}` (untracked, out of the "
+      "release, never required): "
+      + (f"present, sha256 `{v6sha[:16]}...`, "
+         + ("matching; its lines are quoted below beside v7's." if v6l is not None
+            else "NOT matching; not used (the round-9 raw's quotes stand in).") if v6sha
+         else "absent; not used (the round-9 raw's quotes stand in)."))
+    w("- Lines v7 changes against v6 (line-for-line comparison of the archived copy): "
+      + (f"{chg_all} (v6 {len(v6l) - (v6l[-1:] == [''])} lines, v7 {len(pl) - (pl[-1:] == [''])} lines)"
+         if chg_all is not None else "not computed (the archived copy is not available)")
+      + f". Lines this script's preprint checks read on v6 or v7: {read_}; of these, changed by v7: "
+      + f"{read_chg}" + (f"; undecidable without the archived copy: {read_unk}" if read_unk else "") + ".")
+    w("")
+    w(f"Round 9's checks on v6 (as this item's raw recorded them, {loc(R9, r9s, commit=R9c)} ff.) and on "
+      "v7 (this run, the table above), each against the audited text:")
+    w("")
+    w("| # | v6 lines | v6 result | v7 lines | v7 result | passed on v6, fails on v7 |")
+    w("|---|---|---|---|---|---|")
+    c7 = {c_[0]: c_ for c_ in checks}
+    newly = []
+    for c_ in checks:
+        r6 = r9rows.get(c_[0])
+        nf = bool(r6) and r6[1] != "changed by the patch" and c_[6] == "changed by the patch"
+        if nf:
+            newly.append(c_[0])
+        w(f"| {c_[0]} | {r6[0] if r6 else '?'} | {r6[1] if r6 else 'not in the round-9 raw'} | {c_[5]} | "
+          f"{c_[6]} | {'YES' if nf else 'no'} |")
+    w("")
+    disp = []
+    for f_ in r9find:
+        c_ = c7.get(f_["check"])
+        v7l = c_[5] if c_ else []
+        res7 = c_[6] if c_ else "check absent"
+        ls_ = sorted(set(f_["v6"]) | set(v7l))
+        ch_ = [L for L in ls_ if line_changed(L)]
+        if res7 != "changed by the patch":
+            d_ = (f"resolved: the check passes on v7 (result '{res7}': audited lines {f_['audited']}, "
+                  f"v7 lines {v7l})")
+        elif v7l == f_["v6"] and not ch_:
+            d_ = "unchanged"
+        else:
+            d_ = "changed"
+        qs_ = []
+        for L in ch_:
+            t6, s6 = v6_text(L)
+            qs_.append(f"v6 :{L} ({s6}): \"{t6}\"; v7 :{L}: "
+                       + (f"\"{nrm(pl[L - 1])}\"" if L <= len(pl) else "past end of file"))
+        disp.append(dict(id=f_["id"], check=f_["check"], phrase=f_["phrase"], v6=f_["v6"], v7=v7l,
+                         disposition=d_.split(":", 1)[0], detail=d_, raw_line=f_["raw_line"], lines=qs_))
+    w(f"Round 9's findings on the patch ({len(r9find)}, as this item's raw recorded them), each with its "
+      "disposition on v7:")
+    for d_ in disp:
+        w(f"- {d_['id']} ({d_['check']}, '{d_['phrase']}'; {loc(R9, d_['raw_line'], commit=R9c)}). v6 lines "
+          f"{d_['v6']}, v7 lines {d_['v7']}. Disposition: {d_['detail']}."
+          + (" " + " | ".join(d_["lines"]) if d_["lines"] else ""))
+    if not disp:
+        w("- none recorded.")
+    w("")
+    # figures of each v7-changed line the checks read, against this script's record sources
+    pd7 = c7["P-d"][5] if "P-d" in c7 else []
+    apr10 = find(RA, "KL(choice forward ‖ vanilla forward, same text) ≤ 1e-6")
+    rb10 = find(R_, "VERIFY_KL_BAR_E2A = 1e-6")
+    fig10, fail10 = [], []
+    for L in read_chg:
+        t7 = nrm(pl[L - 1]) if L <= len(pl) else ""
+        t6, s6 = v6_text(L)
+        if L not in pd7:
+            fail10.append(dict(line=L, figure="(whole line)", why="v7 changes a line this script reads "
+                               "outside the re-forward sentence; its figures are not verified here"))
+            continue
+        m311 = re.search(r"(\d[\d,]*) distinct verified reads", t7)
+        ok311 = bool(m311) and int(m311.group(1).replace(",", "")) == len(kl_keys0)
+        fig10.append((L, f"'{m311.group(0) if m311 else 'N distinct verified reads'}'",
+                      "yes, the count (section 5 item 2 prints it; the 311-distinct / 360-row / "
+                      "281-of-1115 reading is N4(iii)'s)",
+                      f"`data/e2a/g3prime_kl.jsonl`@{PIN}: {len(kl_keys0)} distinct (arm, session, choice) "
+                      "keys (section 5 item 2) [reproduced]", ok311))
+        mkl = re.search(r"symmetric KL = 0 exactly", t7)
+        okkl = bool(mkl) and all(r["kl"] == 0.0 for r in kl0_rows) and max(r["kl"] for r in kl0_rows) == 0.0
+        fig10.append((L, "'symmetric KL = 0 exactly'", "yes (section 5 item 2)",
+                      f"`data/e2a/g3prime_kl.jsonl`@{PIN}: {sum(r['kl'] == 0.0 for r in kl0_rows)} of "
+                      f"{len(kl0_rows)} rows with kl == 0.0, max {max(r['kl'] for r in kl0_rows)} [reproduced]",
+                      okkl))
+        mb6 = re.search(r"10⁻⁶ bound", t7)
+        fig10.append((L, "'a 10⁻⁶ bound'", "yes (section 5 item 2)",
+                      f"{loc(RA, apr10)}: `KL(choice forward ‖ vanilla forward, same text) ≤ 1e-6` "
+                      f"[log-only]; {loc(R_, rb10)}: `VERIFY_KL_BAR_E2A = 1e-6`", bool(mb6)))
+        for pat_ in (r"\d[\d,]* of the \d[\d,]* choice reads \(every fourth\)",
+                     r"counting the two smoke runs"):
+            mo_ = re.search(pat_, t7)
+            fig10.append((L, f"'{mo_.group(0) if mo_ else pat_}'",
+                          "no: section 5 item 2 leaves the 311-distinct / 360-row / 281-of-1115 "
+                          "reading to N4(iii)",
+                          "not checked here; on v6 :%d identically: %s" % (L, bool(mo_) and bool(t6)
+                                                                          and mo_.group(0) in t6), None))
+        for f10 in fig10:
+            if f10[0] == L and f10[4] is False:
+                fail10.append(dict(line=L, figure=f10[1], why="not carried at the precision written by "
+                                   + f10[3]))
+    w("Figures of each v7-changed line the checks read, those in this script's scope verified against its "
+      "own record sources (the values section 5 item 2 prints this run):")
+    w("")
+    if fig10:
+        w("| v7 line | figure | in this script's scope | record source (this run) | carried at the precision written |")
+        w("|---|---|---|---|---|")
+        for f10 in fig10:
+            w(f"| :{f10[0]} | {cell(f10[1])} | {cell(f10[2])} | {cell(f10[3])} | "
+              f"{'n/a' if f10[4] is None else ('yes' if f10[4] else 'NO')} |")
+    else:
+        w("- none (v7 changes no line the checks read).")
+    w("")
+    rw_ = []
+    for L in read_chg:
+        if L not in pd7:
+            continue
+        t6, _ = v6_text(L)
+        t7 = nrm(pl[L - 1])
+        mw6 = re.search(r"were re-forwarded (.*?) at symmetric KL", t6 or "")
+        mw7 = re.search(r"were re-forwarded (.*?) at symmetric KL", t7)
+        hold = [p_ for p_ in ("same weights", "no vector", "compared with itself") if p_ in t7]
+        rw_.append(dict(line=L, v6=mw6.group(1) if mw6 else None, v7=mw7.group(1) if mw7 else None,
+                        holds=hold, pd=L in pd7, untouched="untouched model" in t7.lower()))
+        full_ = len(hold) == 3 and L in pd7 and not rw_[-1]["untouched"]
+        w(f"The re-forward wording at v7 :{L} (no figure): v6 \"were re-forwarded "
+          f"{mw6.group(1) if mw6 else '?'}\" -> v7 \"were re-forwarded {mw7.group(1) if mw7 else '?'}\". "
+          f"Of what section 5 item 2 holds fixed or compares (same weights, quantization and patch, NO "
+          f"vector; a vanilla forward compared with itself) it names {hold}; P-d's phrase on the same "
+          f"line: {L in pd7}; 'untouched model' on it: {rw_[-1]['untouched']}. "
+          + ("Code's reading: it states the choice-read re-forward identity section 5 describes; "
+             "not a finding." if full_ else
+             "Code offers no reading of it here."))
+        w("")
+    nf10 = [dict(kind="check newly failing on v7", check=c) for c in newly] + \
+           [dict(kind="figure on a v7-changed line", **f) for f in fail10]
+    w("New findings on the patch (v7), for the design seat (as in round 9, a check of a preprint "
+      "sentence that fails on the patched text is a finding on the patch, not a STOP): "
+      + ("none." if not nf10 else f"{len(nf10)}."))
+    for i_, f_ in enumerate(nf10, start=1):
+        w(f"- P10-{i_} ({f_['kind']}): " + (f"check {f_['check']} passed on v6 and fails on v7."
+                                             if "check" in f_ else f":{f_['line']} {f_['figure']}: {f_['why']}."))
+    w("")
+    w(f"Round-10 summary: round 9's findings on the patch {len(disp)} (resolved "
+      f"{sum(d_['disposition'] == 'resolved' for d_ in disp)}, unchanged "
+      f"{sum(d_['disposition'] == 'unchanged' for d_ in disp)}, changed "
+      f"{sum(d_['disposition'] == 'changed' for d_ in disp)}); checks newly failing on v7 {len(newly)}; "
+      f"v7-changed lines the checks read {read_chg}; new findings on the patch {len(nf10)}. As round 9 "
+      "found for the preprint of record, no figure value, status or count in sections 1-11 is computed "
+      "from v7. The archived v6 copy is named in 2a's identity line, from this script's constants "
+      "(not read there)" + ("; on disk, it is read in sections 1-11 only as a row of section 5's "
+                            "drafts listing (and 11b row 2)." if v6sha else
+                            "; not on disk, it has no row in section 5's drafts listing."))
+    w("")
     # section 12's own locator self-check (the 0-11b self-check above does not cover it)
     body12 = "\n".join(out[s12:])
     n12, r12, q12, nq12 = 0, [], [], 0
-    for m in re.finditer(r"([A-Za-z0-9_./\-]+\.(?:md|txt|py|json|jsonl))@(" + PIN + "|" + R0c +
+    for m in re.finditer(r"([A-Za-z0-9_./\-]+\.(?:md|txt|py|json|jsonl))@(" + PIN + "|" + R0c + "|" + R9c +
                          r"):(\d+)(?:-(\d+))?", body12):
         path_, c12, a_, b_ = m.group(1), m.group(2), int(m.group(3)), int(m.group(4) or m.group(3))
         n12 += 1
@@ -2228,13 +2483,18 @@ def main() -> int:
                 nq12 += 1
                 if qs not in " ".join(" ".join(ls_[a_ - 1:b_]).split()):
                     q12.append(m.group(0))
-    w(f"Section-12 locator self-check (this run): {n12} pinned locators `path@{PIN}:a[-b]` or "
-      f"`path@{R0c}:a[-b]`; out of range: {r12 if r12 else 'none'}; {nq12} quotes that directly "
+    w(f"Section-12 locator self-check (this run): {n12} pinned locators `path@{PIN}:a[-b]`, "
+      f"`path@{R0c}:a[-b]` or `path@{R9c}:a[-b]`; out of range: {r12 if r12 else 'none'}; {nq12} quotes that directly "
       f"follow a locator, each prefix-matched (first 50 normalized characters) against the pinned "
       f"lines: mismatches {q12 if q12 else 'none'}.")
     w("")
-    p9 = dict(preprint=PREPRINT, sha256=psha_, ruling9_sha256=PREPRINT_SHA,
-              match=psha_ == PREPRINT_SHA,
+    p9 = dict(preprint=PREPRINT, sha256=psha_, ruling9_sha256=PREPRINT_SHA_V6,
+              match=psha_ == PREPRINT_SHA_V6,
+              computed_on=("checks and findings_on_patch are computed on this run's text (sha256 "
+                           "above; patch v7 when it matches preprint_round10.routing_2026_10_12_sha256), "
+                           "not on patch v6; earlier_wording_source and selfcheck are this run's too; "
+                           "round 9's own findings on patch v6, with their dispositions on v7, are "
+                           "preprint_round10.round9_findings"),
               audited_ref=f"{PREPRINT_SHA_BLOCK_PREFIX}…{PREPRINT_SHA_BLOCK_SUFFIX}",
               audited_archive=PREPRINT_AUDITED, audited_archive_used=bool(al),
               checks=[dict(zip(("id", "phrase", "used", "audited", "audited_source", "patched",
@@ -2242,6 +2502,21 @@ def main() -> int:
               findings_on_patch=pfind,
               earlier_wording_source=(list(um_src[:2]) if um_src else None),
               selfcheck=dict(locators=n12, out_of_range=r12, quotes=nq12, mismatches=q12))
+    p10 = dict(preprint=PREPRINT, sha256=psha_, routing_2026_10_12_sha256=PREPRINT_SHA,
+               match=psha_ == PREPRINT_SHA,
+               v6_sha256=PREPRINT_SHA_V6, v6_sha256_round9_raw=v6_sha_raw,
+               v6_archive=PREPRINT_V6, v6_archive_used=v6l is not None,
+               round9_raw=f"{R9}@{R9c}",
+               v7_changed_lines=chg_all, read_lines=read_, read_lines_changed=read_chg,
+               checks=[dict(id=c_[0], v6=(r9rows[c_[0]][0] if c_[0] in r9rows else None),
+                            v6_result=(r9rows[c_[0]][1] if c_[0] in r9rows else None),
+                            v7=c_[5], v7_result=c_[6], newly_failing=c_[0] in newly)
+                       for c_ in checks],
+               round9_findings=disp,
+               figures_changed_lines=[dict(line=f10[0], figure=f10[1], in_scope=f10[2], source=f10[3],
+                                           carried=f10[4]) for f10 in fig10],
+               reforward_wording=rw_,
+               new_findings_on_patch=nf10)
 
     text = "\n".join(out)
 
@@ -2267,7 +2542,7 @@ def main() -> int:
         with open(jp, "w", encoding="utf-8") as fh:
             json.dump(dict(item="N17", pin=PIN, figures=figs, flags=notes,
                            paragraph=para, clause_map=clause_map,
-                           preprint_round9=p9), fh, indent=1)
+                           preprint_round9=p9, preprint_round10=p10), fh, indent=1)
     shown = os.path.relpath(outp, REPO) if os.path.realpath(outp).startswith(os.path.realpath(REPO) + os.sep) else outp
     print(f"wrote {shown} ({len(text.splitlines())} lines); "
           f"figures {counts}")

@@ -55,6 +55,25 @@ line or section number written into this raw's text is checked (section
 round-1 line keeps its number); a sentence no longer found is recorded there
 once, as a finding on the patch for the design seat, not a STOP. Nothing not
 tied to the preprint changed.
+
+Round 10 (2026-10-12; Tier 1, before N1 round 10): re-pointed at patch v7 per
+the PI's routing of 2026-10-12. The preprint of record is PREPRINT-v1_0-draft.md
+at sha256 d9635ca2...d1fe6 (patch v7), asserted where round 9 asserted
+0f4ba501...16c22, before anything is written (a different or absent text
+refuses the run). Round 9's preprint of record (patch v6, 0f4ba501...16c22) is
+recorded, never required: it is archived untracked at
+archive/PREPRINT-v1_0-draft.pre-patch-v7.md (out of the release) and is read
+only if present and matching, to list the lines v7 changed and to quote a v6
+line beside its v7 line. The audited text's handling (d6431e97...222b8,
+archive/PREPRINT-v1_0-draft.pre-patch-v6.md, the round-1 raw @09c3a8c) is as
+round 9 left it. Round 9's section re-runs every check of a preprint sentence on
+the v7 text; its subsection 'Round 10 (patch v7)' reads round 9's raw at 84801cb
+and gives, per check, its result on v6 (as committed) and on v7, the
+disposition on v7 of each finding on the patch that raw recorded, and every new
+finding v7 introduces (a check that passed on v6 and fails on v7); a checked
+sentence on a line v7 changed is flagged in its disposition and quoted
+v6-beside-v7, not counted as a finding. JSON: one new key, preprint_round10.
+Nothing not tied to the preprint changed.
 """
 from __future__ import annotations
 
@@ -82,7 +101,14 @@ PREPRINT = "PREPRINT-v1_0-draft.md"     # untracked; sha-checked, working tree
 # Round 9: the preprint of record is the patched text (patch v6), the PI's ruling 9 of
 # 2026-10-10 as corrected. The block's d6431e97...222b8 is the audited, superseded text,
 # archived untracked at PREPRINT_ARCHIVED; recorded, never read or required.
-PREPRINT_SHA = "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22"
+# Round 10: the preprint of record is patch v7 (the PI's routing of 2026-10-12). Round 9's
+# patch-v6 text is archived untracked at PREPRINT_ARCHIVED_V6, out of the release: recorded,
+# never required; read only if present and matching.
+PREPRINT_SHA = "d9635ca24d32dcba193cd9aade273de2679c99c5c2218787b410e793a42d1fe6"
+PREPRINT_SHA_V6 = "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22"
+PREPRINT_ARCHIVED_V6 = "archive/PREPRINT-v1_0-draft.pre-patch-v7.md"
+PREPRINT_ROUTING = "the PI's routing of 2026-10-12"
+ROUND9_COMMIT = "84801cb"          # round 9's raws (patch v6), read at this commit
 PREPRINT_SHA_AUDITED = "d6431e97d35e5914574ff9884c0e64463a7baf1cf9d279f27ed45a683a6222b8"
 PREPRINT_ARCHIVED = "archive/PREPRINT-v1_0-draft.pre-patch-v6.md"
 PREPRINT_RULING = "the PI's ruling 9 of 2026-10-10, as corrected"
@@ -211,10 +237,11 @@ def preprint_finding(needle: str, plines: list[str]) -> str:
     text. Recorded as a finding on the patch (old line: round-1 locator on the audited
     text, with the sentence as checked; new line: the patched text at that line number),
     routed to the design seat; the run continues. A sentence checked more than once is
-    recorded once (its existing P-number is returned)."""
+    recorded once (its existing P-number is returned). Round 10: the patched text is
+    patch v7, so these are findings on patch v7, numbered afresh."""
     for i, p in enumerate(PRE_FINDINGS, 1):
         if p["sentence_as_checked"] == needle:
-            return f"{PREPRINT}:NOT FOUND (round 9 finding on the patch P{i})"
+            return f"{PREPRINT}:NOT FOUND (finding on patch v7 P{i})"
     r1 = PREPRINT_R1.get(needle, ("unlisted", ()))[1]
     PRE_FINDINGS.append({
         "sentence_as_checked": needle,
@@ -223,7 +250,7 @@ def preprint_finding(needle: str, plines: list[str]) -> str:
                 "line_text_at_round1_lines": {str(n): plines[n - 1] for n in r1
                                               if n <= len(plines)}},
         "routed_to": "the design seat (a finding on the patch; " + PREPRINT_RULING + ")"})
-    return f"{PREPRINT}:NOT FOUND (round 9 finding on the patch P{len(PRE_FINDINGS)})"
+    return f"{PREPRINT}:NOT FOUND (finding on patch v7 P{len(PRE_FINDINGS)})"
 
 
 def cell(s) -> str:
@@ -502,10 +529,13 @@ def main() -> int:
       f"Locators are `path@{PIN}:line` as in `git show {PIN}:<path>`; the preprint is untracked "
       f"and is cited from the working tree at sha256 `{PREPRINT_SHA[:8]}...{PREPRINT_SHA[-5:]}`"
       f" (verified; tracked: {'yes' if tracked_pre else 'NO'})."
-      f" Round 9: that is the preprint of record, {PREPRINT_RULING} (patch v6); the block's "
-      f"`{PREPRINT_SHA_AUDITED[:8]}...{PREPRINT_SHA_AUDITED[-5:]}` is the audited, superseded "
-      f"text, archived untracked at `{PREPRINT_ARCHIVED}` (out of the release; not read); see "
-      "'Preprint of record (round 9)' at the end of this raw.")
+      f" Round 10: that is the preprint of record, {PREPRINT_ROUTING} (patch v7); round 9's, "
+      f"patch v6 `{PREPRINT_SHA_V6[:8]}...{PREPRINT_SHA_V6[-5:]}` ({PREPRINT_RULING}), is "
+      f"archived untracked at `{PREPRINT_ARCHIVED_V6}` (out of the release; not required); the "
+      f"block's `{PREPRINT_SHA_AUDITED[:8]}...{PREPRINT_SHA_AUDITED[-5:]}` is the audited, "
+      f"superseded text, archived untracked at `{PREPRINT_ARCHIVED}` (out of the release; not "
+      "read); see 'Preprint of record (round 9)' and its subsection 'Round 10 (patch v7)' at "
+      "the end of this raw.")
     w("")
     J["header"] = {"stamp": stamp, "head": head, "pin": pin_full,
                    "block_sha256": block_sha_pin,
@@ -515,7 +545,7 @@ def main() -> int:
                    "python": platform.python_version(), "numpy": np.__version__,
                    "command": cmd, "cwd_at_run": run_cwd, "preprint_sha256": pre_sha,
                    "preprint_tracked": bool(tracked_pre),
-                   "preprint_ruling": PREPRINT_RULING,
+                   "preprint_ruling": PREPRINT_ROUTING,
                    "preprint_sha256_audited_superseded": PREPRINT_SHA_AUDITED,
                    "preprint_audited_archived_untracked": PREPRINT_ARCHIVED}
 
@@ -2267,7 +2297,9 @@ def main() -> int:
                      "findings_on_the_patch": rel_})
     w("## Preprint of record (round 9)")
     w("")
-    w(f"Re-pointed per {PREPRINT_RULING}: `{PREPRINT}` at sha256 `{PREPRINT_SHA}` (patch v6) "
+    w(f"Re-pointed per {PREPRINT_RULING} (round 9, patch v6 "
+      f"`{PREPRINT_SHA_V6[:8]}...{PREPRINT_SHA_V6[-5:]}`) and per {PREPRINT_ROUTING} (round 10): "
+      f"`{PREPRINT}` at sha256 `{PREPRINT_SHA}` (patch v7; 'patched text' below is v7) "
       f"replaces the audited text `{PREPRINT_SHA_AUDITED[:8]}...{PREPRINT_SHA_AUDITED[-5:]}` "
       f"(archived untracked at `{PREPRINT_ARCHIVED}`; not read). This section is appended after "
       "every round-1 section, so every line above keeps its round-1 line number. The first table "
@@ -2307,6 +2339,182 @@ def main() -> int:
     J["preprint_reanchor_round9"] = reanchor
     J["preprint_hardcoded_round9"] = hard
     J["preprint_patch_findings_round9"] = PRE_FINDINGS
+
+    # ------------------------------------- round 10: patch v7 against round 9 (patch v6) --
+    # Round 9's results are read from its committed raw (the record), never recomputed; the
+    # archived v6 copy is optional and serves only to list the changed lines and quote them.
+    r9_src = f"{ROUND9_COMMIT}:{DEF_JSON}"
+    r9 = json.loads(git("show", r9_src).decode("utf-8"))
+    assert r9["header"]["preprint_sha256"] == PREPRINT_SHA_V6, "round-9 raw is not on patch v6"
+    r9_re = {r_["sentence"]: r_ for r_ in r9["preprint_reanchor_round9"]}
+    r9_hd = {r_["as_written"]: r_ for r_ in r9["preprint_hardcoded_round9"]}
+    r9_pf = r9["preprint_patch_findings_round9"]
+    assert list(r9_re) == [r_["sentence"] for r_ in reanchor], "round-9 checks differ"
+    assert list(r9_hd) == [r_["as_written"] for r_ in hard], "round-9 written numbers differ"
+    v6_abs = os.path.join(REPO, PREPRINT_ARCHIVED_V6)
+    v6_present, v6_match, v6l = os.path.isfile(v6_abs), None, None
+    if v6_present:
+        with open(v6_abs, "rb") as f:
+            v6b_ = f.read()
+        v6_match = sha256(v6b_) == PREPRINT_SHA_V6
+        if v6_match:
+            v6l = lines_of(v6b_.decode("utf-8"))
+    checked_ = list(dict.fromkeys(list(PREPRINT_R1) + [q_ for _, _, q_, _ in PREPRINT_HARD]))
+
+    def head_of(i: int) -> str:
+        j_ = max([j for j in heads_ if j < i], default=0)
+        return f"under :{j_} {plines[j_ - 1].strip()!r}" if j_ else "before any heading"
+
+    changed = None                     # [(v6 line | None, v7 line | None)], v6 copy only
+    if v6l is not None:
+        import difflib
+        changed = []
+        for tag_, i1, i2, j1, j2 in difflib.SequenceMatcher(
+                None, v6l, plines, autojunk=False).get_opcodes():
+            if tag_ != "equal":
+                for k_ in range(max(i2 - i1, j2 - j1)):
+                    changed.append((i1 + k_ + 1 if i1 + k_ < i2 else None,
+                                    j1 + k_ + 1 if j1 + k_ < j2 else None))
+    ch_rows = []
+    for a_, b_ in (changed or []):
+        ch_rows.append({
+            "v6_line": a_, "v7_line": b_, "v7_heading": head_of(b_) if b_ else None,
+            "checked_sentences_on_v6_line": [q_ for q_ in checked_ if a_ and q_ in v6l[a_ - 1]],
+            "checked_sentences_on_v7_line": [q_ for q_ in checked_ if b_ and q_ in plines[b_ - 1]]})
+    ch6_ = {r_["v6_line"] for r_ in ch_rows if r_["v6_line"]}
+    ch7_ = {r_["v7_line"] for r_ in ch_rows if r_["v7_line"]}
+
+    def r10_disp(p6: bool, p7: bool, moved: bool, on_changed: bool) -> str:
+        if p6 and p7:
+            d_ = "passes on v6 and v7" + ("; re-anchored" if moved else "; same line(s)")
+            return d_ + ("; on a line v7 changed (quoted below)" if on_changed else "")
+        if p7:
+            return "resolved (fails on v6, passes on v7)"
+        if not p6:
+            return "unchanged (fails on v6 and v7)"
+        return "NEW finding on patch v7 (passes on v6, fails on v7)"
+
+    r10_checks = []
+    for r_ in reanchor:
+        o_ = r9_re[r_["sentence"]]
+        p6_ = not o_["result"].startswith("NOT FOUND")
+        p7_ = not r_["result"].startswith("NOT FOUND")
+        on_ = bool((set(o_["patched_lines"]) & ch6_) | (set(r_["patched_lines"]) & ch7_))
+        r10_checks.append({"check": r_["sentence"], "kind": r_["kind"],
+                           "v6_lines": o_["patched_lines"], "v6_result": o_["result"],
+                           "v7_lines": r_["patched_lines"], "v7_result": r_["result"],
+                           "on_v7_changed_line": on_, "passes_v6": p6_, "passes_v7": p7_,
+                           "disposition": r10_disp(p6_, p7_,
+                                                   o_["patched_lines"] != r_["patched_lines"], on_)})
+    for r_ in hard:
+        o_ = r9_hd[r_["as_written"]]
+        p6_, p7_ = o_["holds"] is True, r_["holds"] is True
+        r10_checks.append({"check": f"written {r_['as_written']} ({r_['sentence']})",
+                           "kind": "written number", "v6_lines": o_["patched"],
+                           "v6_result": o_["holds"], "v7_lines": r_["patched"],
+                           "v7_result": r_["holds"], "on_v7_changed_line": None,
+                           "passes_v6": p6_, "passes_v7": p7_,
+                           "disposition": r10_disp(p6_, p7_, o_["patched"] != r_["patched"],
+                                                   False)})
+    r9_disp = []
+    for i_, p_ in enumerate(r9_pf, 1):
+        q_ = p_["sentence_as_checked"]
+        h7_ = PRE_SEEN.get(q_, [i for i, l in enumerate(plines, 1) if q_ in l])
+        r1n_ = [int(k_) for k_ in p_["new"]["line_text_at_round1_lines"]]
+        q6_ = {str(n_): p_["new"]["line_text_at_round1_lines"][str(n_)] for n_ in r1n_}
+        q7_ = {str(n_): plines[n_ - 1] for n_ in r1n_ if n_ <= len(plines)}
+        r9_disp.append({"round9_finding": f"P{i_}", "sentence_as_checked": q_,
+                        "v7_lines": h7_,
+                        "disposition": ("resolved (found on v7)" if h7_ else
+                                        "unchanged (not found on v6 or v7)" if q6_ == q7_ else
+                                        "changed (not found on v6 or v7; the lines differ)"),
+                        "v6_text_at_round1_lines": q6_, "v7_text_at_round1_lines": q7_})
+    new_f = [c_ for c_ in r10_checks if c_["passes_v6"] and not c_["passes_v7"]]
+    on_ch = [c_ for c_ in r10_checks if c_["on_v7_changed_line"]]
+
+    w("### Round 10 (patch v7)")
+    w("")
+    w(f"Preprint of record: `{PREPRINT}` at sha256 `{PREPRINT_SHA}` (patch v7, {PREPRINT_ROUTING}), "
+      f"asserted before anything was written. Round 9's preprint of record, patch v6 at sha256 "
+      f"`{PREPRINT_SHA_V6}`, is archived untracked at `{PREPRINT_ARCHIVED_V6}` (out of the "
+      f"release; recorded, not required): "
+      + ("absent, so the changed lines are not listed" if not v6_present else
+         "present but its sha256 differs, so it is not read and the changed lines are not listed"
+         if not v6_match else "present, sha256 matches, read only to list and quote the changed "
+         "lines") + f". Round 9's results are read from its committed raw `{r9_src}` (its "
+      "header's preprint sha256 asserted equal to patch v6's); this table sets each against "
+      "the re-run on v7 in the two tables above. A check that passed on v6 and fails on v7 is "
+      "a new finding on the patch, routed to the design seat; it is not a STOP and changes no "
+      "status above.")
+    w("")
+    if changed is None:
+        w("Lines v7 changes against v6: not listed (v6 copy not read).")
+    else:
+        w(f"Lines v7 changes against v6: {len(ch_rows)}"
+          + ("." if not ch_rows else ": " + "; ".join(
+              f"v6 :{r_['v6_line'] or '-'} -> v7 :{r_['v7_line'] or '-'} "
+              f"({r_['v7_heading'] or 'removed'})" for r_ in ch_rows) + "."))
+        on_q_ = {q_ for r_ in ch_rows
+                 for q_ in r_["checked_sentences_on_v6_line"] + r_["checked_sentences_on_v7_line"]}
+        w(f"Sentences this raw checks that lie on those lines (v6 or v7): {len(on_q_)} of "
+          f"{len(checked_)}" + ("." if not on_q_ else ": " + "; ".join(map(repr, sorted(on_q_))) + "."))
+    w("")
+    w("| check | use | v6 line(s) (round 9, as committed) | v6 result | v7 line(s) | v7 result | "
+      "disposition |")
+    w("|---|---|---|---|---|---|---|")
+    for c_ in r10_checks:
+        v6l_ = (", ".join(map(str, c_["v6_lines"])) if isinstance(c_["v6_lines"], list)
+                else c_["v6_lines"]) or "none"
+        v7l_ = (", ".join(map(str, c_["v7_lines"])) if isinstance(c_["v7_lines"], list)
+                else c_["v7_lines"]) or "none"
+        rs_ = {True: "holds", False: "does not hold", None: "not decidable"}
+        w(f"| {cell(c_['check'])} | {c_['kind']} | {cell(v6l_)} | "
+          f"{cell(rs_[c_['v6_result']] if c_['kind'] == 'written number' else c_['v6_result'])} | "
+          f"{cell(v7l_)} | "
+          f"{cell(rs_[c_['v7_result']] if c_['kind'] == 'written number' else c_['v7_result'])} | "
+          f"{c_['disposition']} |")
+    w("")
+    q_rows_ = [r_ for r_ in ch_rows
+               if r_["checked_sentences_on_v6_line"] or r_["checked_sentences_on_v7_line"]]
+    for r_ in q_rows_:                  # a changed line carrying a checked sentence: v6 beside v7
+        w(f"- v6 :{r_['v6_line'] or '-'} -> v7 :{r_['v7_line'] or '-'}, carrying "
+          + "; ".join(map(repr, dict.fromkeys(r_["checked_sentences_on_v6_line"]
+                                              + r_["checked_sentences_on_v7_line"])))
+          + f". v6: {(v6l[r_['v6_line'] - 1] if r_['v6_line'] else '')!r}. "
+          f"v7: {(plines[r_['v7_line'] - 1] if r_['v7_line'] else '')!r}.")
+    if q_rows_:
+        w("")
+    w(f"Findings on the patch recorded by round 9 (`{r9_src}`, key "
+      f"`preprint_patch_findings_round9`): {len(r9_pf)}"
+      + ("; none to dispose on v7." if not r9_pf else ". Dispositions on v7:"))
+    for d_ in r9_disp:
+        w(f"- {d_['round9_finding']} {d_['sentence_as_checked']!r}: {d_['disposition']}"
+          + (f"; v7 line(s) {d_['v7_lines']}" if d_["v7_lines"] else "")
+          + "; v6 at its round-1 line(s): " + ("; ".join(
+              f":{k_} {v_!r}" for k_, v_ in d_["v6_text_at_round1_lines"].items()) or "n/a")
+          + "; v7 at those lines: " + ("; ".join(
+              f":{k_} {v_!r}" for k_, v_ in d_["v7_text_at_round1_lines"].items()) or "n/a") + ".")
+    if r9_pf:
+        w("")
+    w(f"New findings on patch v7: {len(new_f)}" + ("." if not new_f else ":"))
+    for c_ in new_f:
+        w(f"- {c_['check']!r}: v6 {c_['v6_lines']} ({c_['v6_result']}); v7 {c_['v7_lines']} "
+          f"({c_['v7_result']}). Routed to the design seat (a finding on the patch; "
+          f"{PREPRINT_RULING}).")
+    w("")
+    J["preprint_round10"] = {
+        "preprint_of_record": {"path": PREPRINT, "sha256": PREPRINT_SHA, "patch": "v7",
+                               "routing": PREPRINT_ROUTING},
+        "round9_preprint": {"sha256": PREPRINT_SHA_V6, "patch": "v6",
+                            "archived_untracked": PREPRINT_ARCHIVED_V6, "present": v6_present,
+                            "sha256_matches": v6_match, "read": v6l is not None},
+        "round9_raw": r9_src,
+        "changed_lines_v6_v7": ch_rows if changed is not None else None,
+        "checks": r10_checks,
+        "round9_findings_on_the_patch": len(r9_pf),
+        "round9_findings_dispositions": r9_disp,
+        "checked_sentences_on_changed_lines": [c_["check"] for c_ in on_ch],
+        "new_findings_on_the_patch": new_f}
 
     J["wall_clock_s"] = time.time() - t_start
 

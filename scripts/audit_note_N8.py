@@ -19,6 +19,9 @@ READ-ONLY ON THE RECORD. What this script does, in order:
      Before anything is made, the untracked PREPRINT-v1_0-draft.md is looked
      for; if absent (a fresh clone, unless the PI commits it) the script
      prints '[not run: ... absent]' on stderr and exits 2, writing nothing.
+     Since round 10 (below) its sha256 is then asserted in full against the
+     preprint of record, also before anything is made: any other text prints
+     '[refusing: ...]' on stderr and exits 3, writing nothing.
   2. Maps each link-2 figure of the block (N8, block lines 106-107) to the
      suite checks that hold it, by check name, or says that none does.
   3. Recomputes every link-2 figure it can from committed artifacts, read AT
@@ -48,13 +51,42 @@ is never opened or required. Every preprint sentence the script locates or
 quotes is checked on the patched text in §0; a sentence not found there no
 longer stops the run (loc() used to raise): it is recorded as a finding on the
 patch for the design seat (ruling 9), with its line in the audited text and the
-patched text's line of the same number. If the root preprint's sha256 is not the
-preprint of record's, §0's sha line says STOP, the comparison classes the
-preprint lines UNEXPECTED, and the script exits 3 after writing its outputs.
+patched text's line of the same number. If the root preprint's sha256 was not the
+preprint of record's, §0's sha line said STOP, the comparison classed the
+preprint lines UNEXPECTED, and the script exited 3 after writing its outputs
+(retired at round 10: such a text is refused before anything is made, exit 3,
+nothing written).
 Note 6's quote of preprint line 141 now runs through '0.30)' (it closed a
 parenthesis the text does not close there). The closing comparison classes the
 preprint-identity changes, the new §0 lines and note 6's quote. Nothing else
 changed.
+
+Round 10 (2026-10-12): the preprint of record is patch v7, the PI's routing of
+2026-10-12 (the round-10 inputs): PREPRINT-v1_0-draft.md at sha256
+d9635ca2...d1fe6, asserted in full before anything is made (absent: exit 2; a
+different text: '[refusing: ...]' on stderr, exit 3; nothing is made or written
+either way). Round 9 compared 0f4ba501...16c22 in full but, on a different text,
+ran the audit and wrote its outputs before exiting 3 (a finding of round 10's
+review: N8 was the one script of the six that did not refuse before writing); that
+branch is retired: §0's STOP clause, the comparison's UNEXPECTED gate for
+preprint rows (pre_gate) and the not-of-record branches of §0's round-9 lines
+could no longer be reached and are removed, and the JSON key
+integrity.preprint_of_record keeps its fields (its
+not_found_on_a_text_not_of_record is always empty). The patch-v6 text
+(0f4ba501...16c22, round 9's preprint of record) is archived untracked at
+archive/PREPRINT-v1_0-draft.pre-patch-v7.md (out of the release): recorded, never
+required, read only if present and its sha256 matches, to quote a v6 line beside
+its v7 line. The audited text's handling (d6431e97...222b8,
+archive/PREPRINT-v1_0-draft.pre-patch-v6.md, never opened) is round 9's,
+unchanged. §0's round-9 sentence check runs on patch v7; §0's new round-10 lines
+give each finding on the patch the raw committed at 84801cb recorded its
+disposition on v7 (resolved / unchanged / changed, v6 and v7 quoted; a round-9
+locator's line is a patch-v6 line, mapped to its patch-v7 line through the
+v6-to-v7 line alignment, or taken at the same number when the patch-v6 copy is
+not read) and every new finding v7 introduces (a sentence found on v6 and not on v7; a line this
+script reads that v7 changed). The JSON's new key integrity.preprint_round10
+carries the same; the closing comparison classes it and the round-10 lines as
+new, and its preprint class names patch v7. Nothing else changed.
 
 No model is loaded; no inference. Exact tests are stdlib (math.comb). numpy is
 used for array geometry (npz) and is the record's own dependency. Outputs: the
@@ -96,11 +128,19 @@ PIN = "bbc9ffe"
 BLOCK = "AUDIT-note-release-v1_2.md"
 BLOCK_SHA = "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841"
 PREPRINT = "PREPRINT-v1_0-draft.md"          # untracked; sha-pinned below
-# Round 9 (2026-10-10): the preprint of record is the patched text (patch v6),
+# Round 9 (2026-10-10): the preprint of record was the patched text (patch v6),
 # the PI's ruling 9 of 2026-10-10 as corrected. The block's reference is the
 # audited, superseded text, archived untracked (out of the release, D4); never
 # opened or required here.
-PREPRINT_SHA = "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22"
+# Round 10 (2026-10-12): the preprint of record is patch v7, the PI's routing of
+# 2026-10-12. The patch-v6 text, round 9's preprint of record, is archived
+# untracked (out of the release): recorded, never required; read only if present
+# and matching, to quote a v6 line beside its v7 line.
+PREPRINT_SHA = "d9635ca24d32dcba193cd9aade273de2679c99c5c2218787b410e793a42d1fe6"
+PREPRINT_SHA_V6 = "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22"
+PREPRINT_V6_COPY = "archive/PREPRINT-v1_0-draft.pre-patch-v7.md"
+PREPRINT_ROUTING_R10 = "the PI's routing of 2026-10-12"
+R9_RAW_REV = "84801cb"      # the commit whose committed N8 JSON recorded round 9's findings
 PREPRINT_SHA_AUDITED = "d6431e97d35e5914574ff9884c0e64463a7baf1cf9d279f27ed45a683a6222b8"
 PREPRINT_AUDITED_COPY = "archive/PREPRINT-v1_0-draft.pre-patch-v6.md"
 PREPRINT_RULING = "the PI's ruling 9 of 2026-10-10, as corrected"
@@ -473,8 +513,11 @@ def head_norm(s: str, heads: set[str]) -> str:
     return s
 
 
-PRE_CLASS = f"preprint of record re-pointed to the patched text ({PREPRINT_RULING})"
+PRE_CLASS = (f"preprint of record re-pointed to the patched text ({PREPRINT_RULING}; "
+             f"patch v7 since round 10, {PREPRINT_ROUTING_R10})")
 NEW_R9 = "new in this version (round 9: preprint sentences checked on the patched text)"
+NEW_R10 = ("new in this version (round 10: patch v7; round 9's findings on the patch disposed "
+           "of, and new findings on the patch)")
 # round 9: note 6's quote of preprint line 141, before and after it ran through '0.30)'
 NOTE6_OLD = "'coherence degrades monotonically (audit-flagged rounds .000/.023/.047)'"
 NOTE6_NEW = ("'coherence degrades monotonically (audit-flagged rounds .000/.023/.047 across "
@@ -484,8 +527,10 @@ NOTE6_CLASS = ("note 6's quote of preprint line 141 now runs through '0.30)' (ro
 
 
 def pre_norm(s: str) -> str:
-    """The patched and the audited preprint sha (full and 8-character forms) -> <PREPRINT>."""
-    for h in (PREPRINT_SHA, PREPRINT_SHA_AUDITED, PREPRINT_SHA[:8], PREPRINT_SHA_AUDITED[:8]):
+    """The patched (v7; since round 10 also v6) and the audited preprint sha (full and
+    8-character forms) -> <PREPRINT>."""
+    for h in (PREPRINT_SHA, PREPRINT_SHA_V6, PREPRINT_SHA_AUDITED, PREPRINT_SHA[:8],
+              PREPRINT_SHA_V6[:8], PREPRINT_SHA_AUDITED[:8]):
         s = s.replace(h, "<PREPRINT>")
     return s
 
@@ -534,6 +579,7 @@ JSON_NEW_PREFIXES = {
     "values_check_round3": NEW_R3,
     "integrity.tracked_files_differing_from_pin_attribution": NEW_ATTR,
     "integrity.preprint_of_record": NEW_R9,
+    "integrity.preprint_round10": NEW_R10,
 }
 MD_SIDE = ("    repository side effects:",
            "working-tree state: counts of untracked / ignored paths (machine state)")
@@ -550,18 +596,10 @@ JSON_CLASSES = {
 }
 HEAD_CLASS = "HEAD (the source repository's HEAD moved)"
 UNEXPECTED = "UNEXPECTED"
-PRE_UNEXPECTED = (UNEXPECTED + " (would be: " + PRE_CLASS + "; but the root preprint's "
-                  "sha256 is not the preprint of record's)")
-
-
-def pre_gate(rows: list[dict], pre_ok: bool) -> list[dict]:
-    """Round 9: the preprint re-point class holds only when the measured sha256 of
-    the root preprint is the preprint of record's; otherwise the row is UNEXPECTED."""
-    if not pre_ok:
-        for r in rows:
-            if PRE_CLASS in r["class"]:
-                r["class"] = PRE_UNEXPECTED
-    return rows
+# Round 9's pre_gate (a preprint row UNEXPECTED when the root preprint was not the
+# preprint of record) is retired at round 10: such a text is refused before
+# anything is made, so every run that reaches the comparison read the preprint of
+# record.
 
 
 def compare_md(old: list[str], new: list[str], heads: set[str],
@@ -708,6 +746,17 @@ def main() -> int:
               "its wording locators; a fresh clone does not carry it unless it is committed. "
               "Nothing was made or written.", file=sys.stderr)
         return 2
+    # Round 10: the preprint of record is asserted in full here, before anything
+    # is made (as N4, N5, N6, N7, N17); round 9 compared it in §0 and, on any
+    # other text, wrote its outputs before exiting 3.
+    with open(os.path.join(REPO, PREPRINT), "rb") as f:
+        pre_b = f.read()
+    pre_sha = sha256_bytes(pre_b)
+    if pre_sha != PREPRINT_SHA:
+        print(f"[refusing: {PREPRINT} sha256 {pre_sha} is not the preprint of record "
+              f"{PREPRINT_SHA} (patch v7; {PREPRINT_ROUTING_R10}). Nothing was made or "
+              "written.]", file=sys.stderr)
+        return 3
     scratch_made = args.scratch is None
     scratch_existed = (not scratch_made) and os.path.isdir(args.scratch)
     if scratch_made:
@@ -771,24 +820,18 @@ def main() -> int:
     # ------------------------------------------------------------ integrity
     P("## 0. Integrity")
     P("")
-    with open(os.path.join(REPO, PREPRINT), "rb") as f:
-        pre_b = f.read()
-    pre_sha = sha256_bytes(pre_b)
-    pre_match = pre_sha == PREPRINT_SHA
+    pre_match = pre_sha == PREPRINT_SHA     # asserted above, before anything was made
     P(f"- `{PREPRINT}` (untracked) sha256 `{pre_sha}`: "
       f"{'MATCH' if pre_match else 'MISMATCH'} vs the preprint of record "
-      f"{PREPRINT_SHA[:8]}...{PREPRINT_SHA[-5:]}, the patched text (patch v6; {PREPRINT_RULING}). "
+      f"{PREPRINT_SHA[:8]}...{PREPRINT_SHA[-5:]}, the patched text (patch v7; "
+      f"{PREPRINT_ROUTING_R10}; findings on the patch under {PREPRINT_RULING}). "
+      f"The patch-v6 text {PREPRINT_SHA_V6[:8]}...{PREPRINT_SHA_V6[-5:]}, round 9's preprint "
+      f"of record, is archived untracked at `{PREPRINT_V6_COPY}` (out of the release; never "
+      "required; read only if present and matching, see round 10 below). "
       f"The block's {PREPRINT_SHA_AUDITED[:8]}...{PREPRINT_SHA_AUDITED[-5:]} is the audited, "
       f"superseded text, archived untracked at `{PREPRINT_AUDITED_COPY}` (out of the release; "
-      "not opened or required here)" + ("" if pre_match else
-      " -- STOP (integrity): the root preprint is not the preprint of record; this run's "
-      "preprint locators and §0's sentence check read a different text, nothing below is a "
-      "check of patch v6, the comparison classes the preprint lines UNEXPECTED, and the "
-      "script exits 3 after writing its outputs"))
-    if not pre_match:
-        print(f"[STOP: {PREPRINT} sha256 {pre_sha[:8]}... is not the preprint of record "
-              f"{PREPRINT_SHA[:8]}...{PREPRINT_SHA[-5:]}; outputs are written, exit 3]",
-              file=sys.stderr)
+      "not opened or required here). Asserted in full before anything was made: any "
+      "other root text is refused (exit 3, nothing written).")
     imported = ["valence_core/__init__.py", "valence_core/adapters/__init__.py",
                 "valence_core/adapters/base.py", "valence_core/readout.py",
                 "valence_core/regression/__init__.py",
@@ -842,8 +885,8 @@ def main() -> int:
     P("")
     # Round 9 (ruling 9): every preprint sentence this script locates or quotes,
     # checked on the patched text; one not found is a finding on the patch for
-    # the design seat, never a stop (a finding on the patch only when the root
-    # preprint is the preprint of record; otherwise §0's sha line says STOP).
+    # the design seat, never a stop (the root preprint is the preprint of record:
+    # since round 10 any other text is refused before anything is made).
     pre_lines = pre_b.decode("utf-8").split("\n")
     pre_rows, pre_find = [], []
     for s_, old_ln, use in PREPRINT_SENTENCES:
@@ -864,8 +907,10 @@ def main() -> int:
         "audited_superseded_sha256": PREPRINT_SHA_AUDITED,
         "audited_copy_untracked_not_opened": PREPRINT_AUDITED_COPY,
         "sentences": pre_rows,
-        "findings_on_the_patch": pre_find if pre_match else [],
-        "not_found_on_a_text_not_of_record": [] if pre_match else pre_find}
+        "findings_on_the_patch": pre_find,
+        # kept for the key's stability; always empty since round 10 (a text not
+        # of record is refused before anything is made)
+        "not_found_on_a_text_not_of_record": []}
     r9_start = len(L)
     P(f"- Round 9 ({PREPRINT_RULING}): the {len(pre_rows)} preprint sentences this script "
       "locates or quotes, checked on the patched text: " +
@@ -874,23 +919,146 @@ def main() -> int:
       f"{len(pre_find)} not found (" + "; ".join(
           f"'{r['sentence']}' :{r['audited_line']}->" +
           (",".join(map(str, r['patched_lines'])) or "none") for r in pre_rows) + ").")
-    if pre_find and not pre_match:
-        P("  Not found on this text, which is not the preprint of record (not findings on the "
-          "patch; see the STOP on §0's sha line): " + "; ".join(
-            f"'{f_['sentence']}' ({f_['use']}) stood at {f_['old']}; line {f_['new']} reads: "
-            f"'{cell(f_['new_line_text'])}'" for f_ in pre_find) + ".")
-    elif pre_find:
+    if pre_find:
         P("  Findings on the patch, for the design seat (ruling 9; not a STOP): " + "; ".join(
             f"'{f_['sentence']}' ({f_['use']}) stood at {f_['old']} and is not in the patched "
             f"text; its line {f_['new']} now reads: '{cell(f_['new_line_text'])}'"
             for f_ in pre_find) + ".")
-    elif pre_match:
-        P("  Findings on the patch (ruling 9): none.")
     else:
-        P("  Not found on this text: none (it is not the preprint of record; see the STOP on "
-          "§0's sha line).")
+        P("  Findings on the patch (ruling 9): none.")
     P("")
     r9_end = len(L)
+    # Round 10 (the PI's routing of 2026-10-12): the sentence check above ran on
+    # patch v7. The patch-v6 text is read only if present and matching (never
+    # required). Round 9's findings on the patch are read from the raw committed at
+    # R9_RAW_REV, each disposed of on v7 (resolved: found on v7; unchanged: not
+    # found and its line as round 9 quoted it; changed: not found, line quoted v6
+    # and v7). New findings: a sentence round 9 found and v7 does not carry, and a
+    # line this script reads that v7 changed (its figures to be checked against
+    # this script's record sources). The root preprint is the preprint of record
+    # (any other text was refused before anything was made); a finding on the
+    # patch is never a stop (ruling 9).
+    v6_lines, v6_state = None, "absent (not required)"
+    if os.path.isfile(os.path.join(REPO, PREPRINT_V6_COPY)):
+        with open(os.path.join(REPO, PREPRINT_V6_COPY), "rb") as f:
+            v6_b = f.read()
+        if sha256_bytes(v6_b) == PREPRINT_SHA_V6:
+            v6_lines, v6_state = v6_b.decode("utf-8").split("\n"), "present, sha256 matching, read"
+        else:
+            v6_state = (f"present, sha256 {sha256_bytes(v6_b)[:8]}... NOT matching "
+                        f"{PREPRINT_SHA_V6[:8]}...{PREPRINT_SHA_V6[-5:]}, not read")
+    chg_v6, chg_v7, v7_to_v6, v6_to_v7 = [], [], {}, {}
+    if v6_lines is not None:
+        for tag_, i1_, i2_, j1_, j2_ in difflib.SequenceMatcher(
+                None, v6_lines, pre_lines, autojunk=False).get_opcodes():
+            # 1-based line alignment both ways: an equal block maps line for line; a
+            # changed block maps by position within it (None past its shorter side)
+            for i_ in range(i1_, i2_):
+                v6_to_v7[i_ + 1] = (j1_ + (i_ - i1_) + 1
+                                    if j1_ + (i_ - i1_) < j2_ else None)
+            if tag_ != "equal":
+                chg_v6 += list(range(i1_ + 1, i2_ + 1))
+                chg_v7 += list(range(j1_ + 1, j2_ + 1))
+                for j_ in range(j1_, j2_):
+                    v7_to_v6[j_ + 1] = (i1_ + (j_ - j1_) + 1
+                                        if i1_ + (j_ - j1_) < i2_ else None)
+    def nlines(xs):
+        # newline-terminated lines (wc -l): split("\n") leaves '' after the final newline
+        return len(xs) - (1 if xs and xs[-1] == "" else 0)
+    read_v7 = sorted({h for r in pre_rows for h in r["patched_lines"]})
+    read_chg = [ln for ln in read_v7 if ln in chg_v7]
+    r9_src = f"{R9_RAW_REV}:{DEF_JSON}"
+    try:
+        r9_por = json.loads(git("show", r9_src))["integrity"]["preprint_of_record"]
+        r9_find, r9_sent = r9_por["findings_on_the_patch"], r9_por["sentences"]
+        r9_err = None
+    except (subprocess.CalledProcessError, KeyError, ValueError) as e:
+        r9_find, r9_sent, r9_err = [], [], type(e).__name__
+    disp = []
+    for f_ in r9_find:
+        ln = int(f_["new"].rsplit(":", 1)[1])      # a patch-v6 line number
+        v6_l = (v6_lines[ln - 1] if v6_lines is not None and ln <= len(v6_lines)
+                else f_.get("new_line_text"))
+        # its patch-v7 line through the alignment; the same number when v6 is not read
+        ln7 = v6_to_v7.get(ln) if v6_lines is not None else ln
+        v7_l = pre_lines[ln7 - 1] if ln7 and ln7 <= len(pre_lines) else None
+        hits7 = lines_with("\n".join(pre_lines), f_["sentence"])
+        disp.append({"sentence": f_["sentence"], "use": f_["use"], "round9": f_["new"],
+                     "v7_lines": hits7, "v6_line": ln, "v7_line": ln7,
+                     "disposition": ("resolved" if hits7 else
+                                     "unchanged" if v7_l == v6_l else "changed"),
+                     "v6_line_text": v6_l, "v7_line_text": v7_l})
+    r9_found = {r["sentence"] for r in r9_sent if r.get("patched_lines")}
+    new_find = []
+    for r in pre_rows:
+        if not r["patched_lines"] and r["sentence"] in r9_found:
+            new_find.append({"kind": "found on patch v6 (round 9), not found on patch v7",
+                             "sentence": r["sentence"], "use": r["use"],
+                             "v6_lines": next(x["patched_lines"] for x in r9_sent
+                                              if x["sentence"] == r["sentence"])})
+    for ln in read_chg:
+        new_find.append({"kind": "a line this script reads changed from patch v6 to patch v7 "
+                                 "(its figures to be checked against this script's record "
+                                 "sources)",
+                         "line": ln, "sentences": [r["sentence"] for r in pre_rows
+                                                   if ln in r["patched_lines"]],
+                         "v6_line_text": (v6_lines[v7_to_v6[ln] - 1] if v7_to_v6[ln]
+                                          else None),
+                         "v7_line_text": pre_lines[ln - 1]})
+    J["integrity"]["preprint_round10"] = {
+        "routing": PREPRINT_ROUTING_R10, "sha256": PREPRINT_SHA,
+        "measured_sha256": pre_sha, "match": pre_match,
+        "patch_v6_sha256": PREPRINT_SHA_V6,
+        "patch_v6_copy_untracked_never_required": PREPRINT_V6_COPY,
+        "patch_v6_copy_state": v6_state,
+        "line_counts": {"v6": nlines(v6_lines) if v6_lines is not None else None,
+                        "v7": nlines(pre_lines)},
+        "lines_changed_v6_to_v7": ({"v6": chg_v6, "v7": chg_v7} if v6_lines is not None
+                                   else None),
+        "lines_read_by_this_script_v7": read_v7,
+        "lines_read_changed_by_v7": read_chg if v6_lines is not None else None,
+        "round9_findings_source": r9_src + " integrity.preprint_of_record.findings_on_the_patch",
+        "round9_findings_read_error": r9_err,
+        "round9_findings_recorded": len(r9_find),
+        "round9_findings_dispositions": disp,
+        "new_findings_on_the_patch": new_find}
+    r10_start = len(L)
+    r10_here = "patch v7"
+    P(f"- Round 10 ({PREPRINT_ROUTING_R10}): the sentence check above ran on {r10_here} "
+      f"({pre_sha[:8]}...). The patch-v6 text ({PREPRINT_SHA_V6[:8]}...{PREPRINT_SHA_V6[-5:]}) at "
+      f"`{PREPRINT_V6_COPY}`: {v6_state}" +
+      (f"; lines changed from it to {r10_here} ({nlines(v6_lines)} lines there, "
+       f"{nlines(pre_lines)} here): {', '.join(map(str, chg_v7)) or 'none'}"
+       if v6_lines is not None else "") +
+      f". Lines of {r10_here} this script reads (its {len(pre_rows)} sentences): "
+      f"{', '.join(map(str, read_v7)) or 'none'}; of them changed: " +
+      (", ".join(map(str, read_chg)) or "none" if v6_lines is not None else
+       "not computed (the patch-v6 copy was not read)") + ".")
+    P(f"  Round 9's findings on the patch (`git show {r9_src}`, "
+      "integrity.preprint_of_record.findings_on_the_patch): " +
+      (f"NOT READ ({r9_err})" if r9_err else f"{len(r9_find)} recorded") +
+      (": " + "; ".join(
+          f"'{d['sentence']}' ({d['use']}, {d['round9']}): {d['disposition']}" +
+          (f" ({r10_here} :{','.join(map(str, d['v7_lines']))})" if d["v7_lines"] else
+           f"; v6 :{d['v6_line']} read: '{cell(d['v6_line_text'])}'; v7 :{d['v7_line']} "
+           f"reads: '{cell(d['v7_line_text'])}'"
+           if d["disposition"] == "changed" else "")
+          for d in disp) + "." if disp else
+       ("." if r9_err else f", so none to dispose of on {r10_here}.")))
+    if new_find:
+        P(f"  New findings on the patch at round 10, for the design seat ({PREPRINT_RULING}; not "
+          "a STOP): " + "; ".join(
+            f"{x['kind']}: " + (f"'{x['sentence']}' ({x['use']}; patch v6 :"
+                                f"{','.join(map(str, x['v6_lines']))})" if "sentence" in x else
+                                f"line {x['line']} ({'; '.join(repr(s) for s in x['sentences'])}); "
+                                f"v6 read: '{cell(x['v6_line_text'])}'; v7 reads: "
+                                f"'{cell(x['v7_line_text'])}'") for x in new_find) + ".")
+    else:
+        P("  New findings on the patch at round 10: none (no sentence round 9 found is missing "
+          "from patch v7" + ("; no line this script reads changed)." if v6_lines is not None
+                             else "; changed lines not computed, the patch-v6 copy not read)."))
+    P("")
+    r10_end = len(L)
 
     # ------------------------------------------------------------ suite runs
     P("## 1. The model-free regression suite")
@@ -2382,11 +2550,12 @@ def main() -> int:
                   J["suite"].get("head_at_wt_run_end")):
             if isinstance(h, str) and re.fullmatch(r"[0-9a-f]{40}", h):
                 heads |= {h, h[:7]}
-        md_rows = pre_gate(compare_md(old_md, L, heads,
-                                      new_ranges=[(r3_start, r3_end, NEW_R3),
-                                                  (r9_start, r9_end, NEW_R9)]), pre_match)
+        md_rows = compare_md(old_md, L, heads,
+                             new_ranges=[(r3_start, r3_end, NEW_R3),
+                                         (r9_start, r9_end, NEW_R9),
+                                         (r10_start, r10_end, NEW_R10)])
         new_js = json.loads(json.dumps(J, default=float, ensure_ascii=False))
-        js_rows = pre_gate(compare_json(old_js, new_js, heads), pre_match)
+        js_rows = compare_json(old_js, new_js, heads)
         o_tr = old_js.get("integrity", {}).get("tracked_files_differing_from_pin") or []
         n_tr = J["integrity"]["tracked_files_differing_from_pin"]
         added, removed = sorted(set(n_tr) - set(o_tr)), sorted(set(o_tr) - set(n_tr))
@@ -2428,7 +2597,7 @@ def main() -> int:
     sec = []
     S_ = sec.append
     S_("## Portability fix and interim re-run (2026-10-08), with the round-9 preprint "
-       "re-point (2026-10-10)")
+       "re-point (2026-10-10) and round 10's (2026-10-12)")
     S_("")
     S_(f"- Fix: at `{COMPARE_REV}` the `--scratch` default was a fixed path in the builder's "
        "session scratch directory, which exists on one machine only (the committed run passed "
@@ -2445,14 +2614,22 @@ def main() -> int:
        "preprint line, its sentence check and the JSON's integrity.preprint_of_record key "
        "are new or re-worded, and the comparison below classes them; a preprint locator "
        "whose sentence is missing now reads ':NOT FOUND (..., §0)' where it used to stop the "
-       "run; a root preprint whose sha256 is not the preprint of record's makes §0's sha "
+       "run; a root preprint whose sha256 was not the preprint of record's made §0's sha "
        "line say STOP, its preprint lines UNEXPECTED below, and the exit status 3 (after the "
-       "outputs are written); note 6's quote of preprint line 141 runs through '0.30)'.")
+       "outputs were written); note 6's quote of preprint line 141 runs through '0.30)'. "
+       f"Round 10 (2026-10-12): the preprint of record is patch v7 ({PREPRINT_ROUTING_R10}), "
+       "its sha256 asserted in full before anything is made: any other root text is refused "
+       "(exit 3, nothing written), which retires round 9's STOP clause, its UNEXPECTED gate "
+       "for preprint lines and the write before exit 3; §0's sha line names patch v7 and the "
+       f"archived patch-v6 text (`{PREPRINT_V6_COPY}`, never required); §0's round-10 lines "
+       "and the JSON's integrity.preprint_round10 key are new; the comparison's preprint "
+       "class names patch v7 and its sha normalisation covers the patch-v6 sha too.")
     S_(f"- Still needed off this laptop: the untracked `{PREPRINT}` (sha256 "
        f"{PREPRINT_SHA[:8]}...{PREPRINT_SHA[-5:]}) at the repository root, which a fresh clone does "
        "not carry unless the PI commits it (README-NOTE.md's dependency list asks for that); "
        "without it the script exits 2 before making anything, with '[not run: ... absent]' on "
-       "stderr. The suite runs under the interpreter that runs this script, which needs numpy. "
+       "stderr (a root text with any other sha256 is refused the same way: exit 3, "
+       "'[refusing: ...]'). The suite runs under the interpreter that runs this script, which needs numpy. "
        "The round-3 check's run from a scratch clone, with the preprint copied in, exited 0 "
        "and reproduced every figure.")
     S_("- Cleanup, unchanged: the git-archive extraction `<scratch>/tree-" + PIN + "` is deleted "
@@ -2533,7 +2710,7 @@ def main() -> int:
         json.dump(J, f, indent=1, default=float, ensure_ascii=False)
         f.write("\n")
     print(f"wrote {os.path.relpath(out, REPO)} and {os.path.relpath(jout, REPO)}")
-    return 0 if pre_match else 3
+    return 0
 
 
 if __name__ == "__main__":
