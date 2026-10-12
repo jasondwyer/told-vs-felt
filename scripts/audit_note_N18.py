@@ -37,6 +37,14 @@ Patch v6 is applied: the PI's ruling 9 of 2026-10-10 (as corrected) names the pr
 0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22, passed as --preprint-pi-confirmed.
 Each render carries a C2PA content-credentials element; this script hashes the files whole.
 
+Round 4 (2026-10-12, N1 round 10): the note is v0.6, whose full sha256 the PI routed on
+2026-10-12; the three 2026-10-10 renders are unchanged (the same routing). The N1 ledger read is
+round 10's (results/raw/2026-10-12_note-N1-v0_6-claims-ledger.json). Patch v7 is the preprint of
+record: the PI's routing of 2026-10-12 gives its sha256
+d9635ca24d32dcba193cd9aade273de2679c99c5c2218787b410e793a42d1fe6, passed as --preprint-pi-confirmed;
+patch v6 (0f4ba501...6c22) is archived untracked at archive/PREPRINT-v1_0-draft.pre-patch-v7.md,
+out of the release.
+
 Read-only: it reads files and runs read-only git commands (rev-parse, symbolic-ref, ls-tree,
 show, cat-file -e, merge-base --is-ancestor) and `date -u` for the stamp. It writes only its
 two outputs. Exit codes:
@@ -55,8 +63,8 @@ building or rendering writes nothing.
 routed value below needs a full 64-hex --expect, and the manifest records where each
 expected value came from.
 
---preprint-pi-confirmed records, for a re-run after patch v6 arrives, that the PI has
-confirmed the preprint on disk is the post-v6 file. It takes the full sha256, which must
+--preprint-pi-confirmed records, for a re-run after a patch arrives, that the PI has
+confirmed (routed) the preprint on disk as the text of record (round 4: patch v7). It takes the full sha256, which must
 equal the file on disk and must differ from the block's post-patch-v4 reference. The script
 cannot see the confirmation itself: the manifest says the value was supplied on the command
 line as the PI's confirmation, and records the command.
@@ -82,22 +90,25 @@ TAG = "note-2026-10-v1"
 TAG_SOURCE = ("the PI's routing of 2026-10-09, item (7), as routed to Code: tag name note-2026-10-v1, placed on the "
               "final audit commit after N1 and N18; the block leaves the name to the PI and suggests it at "
               "AUDIT-note-release-v1_2.md@bbc9ffe:14")
-NOTE = "RESEARCH-NOTE-v0_5-draft.md"
+NOTE = "RESEARCH-NOTE-v0_6-draft.md"
 SVGS = ["2026-10-10_F1a_headline-strip.svg", "2026-10-10_F1b_five-link-panels.svg",
         "2026-10-10_F2_macar-lineage-roc_post.svg"]
-# Routed values, abbreviated as routed. The note's is the PI's routing to this part ("5a34309f...71"); the
-# SVGs' are the routed values the N1 final ledger records (note_rows_final.files[].routed), checked below.
+# Routed values, full sha256s as routed (round 4: the note's by the PI's message of 2026-10-12, the SVGs' by the
+# PI's message of 2026-10-10); each is also checked against the N1 final ledger's note_rows_final.files[].routed.
 ROUTED = {
-    NOTE: ("4c2810e1f2be012e2a419d9ef3a154c0e1f4abb5dde5caac067d9ec361e4ce5b", "",
-           "the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256"),
+    NOTE: ("2c7e1cf526f6dfe737c6246cf137f1ae9bc18816846e8329de2f9c3c04426fbb", "",
+           "the PI's message of 2026-10-12 routing round 10's inputs, which gives the full sha256"),
     SVGS[0]: ("6ffad6cd971aabdc70d7b684a6408988c9a05e5445125d3ce61a78557405cee6", "",
-              "the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256"),
+              "the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256; unchanged in "
+              "round 10 (the PI's message of 2026-10-12: the SVGs are unchanged)"),
     SVGS[1]: ("6fcb060f6a2cf2c0ce1f5374c3267c5cec67304994a9967e49a2afaffcf6113e", "",
-              "the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256"),
+              "the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256; unchanged in "
+              "round 10 (the PI's message of 2026-10-12: the SVGs are unchanged)"),
     SVGS[2]: ("81b13e805e64e6a9534e65e6dfeb50d6c6a65cf3d8b02b9cb3a1e36852e5ac4e", "",
-              "the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256"),
+              "the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256; unchanged in "
+              "round 10 (the PI's message of 2026-10-12: the SVGs are unchanged)"),
 }
-LEDGER = "results/raw/2026-10-10_note-N1-v0_5-claims-ledger.json"
+LEDGER = "results/raw/2026-10-12_note-N1-v0_6-claims-ledger.json"
 N13_JSON = "results/raw/2026-10-08_note-N13-provenance.json"
 PREPRINT = "PREPRINT-v1_0-draft.md"
 PREPRINT_REF = ("d6431e97", "222b8")  # block :21, "post-patch-v4 copy, sha `d6431e97…222b8`"
@@ -318,7 +329,8 @@ def build(a, stamp):
     # --- preprint ----------------------------------------------------------------------------------
     pconf = a.preprint_pi_confirmed
     pp_routing = ("the PI's routing of 2026-10-09, item (5), as routed to Code: PREPRINT-v1_0-draft.md is committed "
-                  "at the tag after patch v6 is applied")
+                  "at the tag after patch v6 is applied; the text of record is patch v7 (the PI's routing of "
+                  "2026-10-12, which gives its full sha256)")
     if os.path.isfile(abs_(PREPRINT)):
         ps = sha256_file(abs_(PREPRINT))
         bref = "%s…%s (post-patch-v4 copy), AUDIT-note-release-v1_2.md@%s:%d" % (
@@ -332,16 +344,16 @@ def build(a, stamp):
         elif pconf is not None:
             need(pconf == ps, "--preprint-pi-confirmed %s does not equal %s on disk (%s)" % (pconf, PREPRINT, ps))
             preprint = {"path": PREPRINT,
-                        "status": "post-patch-v6, as confirmed by the PI (confirmation supplied to this run with "
-                                  "--preprint-pi-confirmed; see pi_confirmation)",
+                        "status": "the preprint of record, patch v7, as routed by the PI on 2026-10-12 (the routed "
+                                  "sha256 supplied to this run with --preprint-pi-confirmed; see pi_confirmation)",
                         "sha256": ps, "on_disk_matches_block_reference": False, "block_reference": bref,
                         "pi_confirmation": ("the full sha256 was supplied on the command line as the PI's confirmation "
-                                            "that this file is the post-v6 preprint; the script asserted it equals the "
+                                            "that this file is the preprint of record (patch v7); the script asserted it equals the "
                                             "file on disk and cannot see the confirmation itself (the command is "
                                             "recorded in `command`)")}
         else:
             preprint = {"path": PREPRINT, "status": ("differs from the block's post-patch-v4 reference; it is the "
-                                                     "post-v6 file only if the PI confirms (not confirmed to this run)"),
+                                                     "preprint of record only if the PI confirms (not confirmed to this run)"),
                         "sha256": ps, "on_disk_matches_block_reference": False, "block_reference": bref,
                         "pi_confirmation": None}
         preprint["tracked_at_head"] = bool(head_blobs([PREPRINT]))
@@ -350,9 +362,9 @@ def build(a, stamp):
         preprint = {"path": PREPRINT, "status": "pending patch v6 (file not on disk)", "sha256": None,
                     "pi_confirmation": None}
     preprint["routing"] = pp_routing
-    preprint["rerun_trigger"] = ("If patch v6 arrives, or the file otherwise changes, after this run and before the tag "
+    preprint["rerun_trigger"] = ("If the file changes after this run and before the tag "
                                  "commit, N18 must be re-run: this section describes the file as found at this run, and "
-                                 "the tag commit is to hold the post-v6 file.")
+                                 "the tag commit is to hold the preprint of record (patch v7, the PI's routing of 2026-10-12).")
 
     # --- wait check ----------------------------------------------------------------------------------
     today = datetime.date.today().isoformat()
@@ -431,10 +443,11 @@ def build(a, stamp):
             {"trigger": ("the note or any SVG changes (including the [REPO LINK] replacement or a footer added to "
                          "the file)"),
              "rerun": "N1, then N18"},
-            {"trigger": ("patch v6 arrives, or PREPRINT-v1_0-draft.md otherwise changes (the PI's routing of "
-                         "2026-10-09, item (5), as routed to Code, commits the post-v6 file at the tag; this manifest "
+            {"trigger": ("PREPRINT-v1_0-draft.md changes (the PI's routing of 2026-10-09, item (5), as routed to "
+                         "Code, commits the preprint at the tag; its text of record is patch v7, the PI's routing of "
+                         "2026-10-12; this manifest "
                          "records the file as found at this run)"),
-             "rerun": "N18 (with --preprint-pi-confirmed once the PI confirms the post-v6 file)"},
+             "rerun": "N18 (with --preprint-pi-confirmed once the PI routes the new text's sha256)"},
             {"trigger": ("any file in files.list changes, is added under results/raw/*_note-* or scripts/audit_note_*.py, "
                          "or is removed (for example README-NOTE.md when a placeholder is filled, or the N1 final "
                          "ledger when N1 is re-run)"),

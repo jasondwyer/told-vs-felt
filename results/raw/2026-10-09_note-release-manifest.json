@@ -1,8 +1,8 @@
 {
  "item": "N18",
  "title": "release manifest (hashes for the note)",
- "code_stamp_utc": "2026-10-11 10:22:06 UTC",
- "head_at_run": "84801cb5fad5f7bf06b5213fdb8bf9a55e369d6b",
+ "code_stamp_utc": "2026-10-12 11:24:48 UTC",
+ "head_at_run": "d6bb7905855021432cc59e1538e3599a1c8d5d2a",
  "branch_at_run": "main",
  "block": "AUDIT-note-release-v1_2.md",
  "block_sha256": "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841",
@@ -14,10 +14,10 @@
   133
  ],
  "script": "scripts/audit_note_N18.py",
- "script_sha256": "fe504d250c6a5e73d872a9f13fb674fd31704d4d80004b8eb78654b8fb895126",
+ "script_sha256": "d6d5cc01072ada27f7bc982b131298f6fcf5757fcc1dec1a3bb932e7db6917f7",
  "interpreter": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python",
  "python": "3.12.9",
- "command": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/audit_note_N18.py --preprint-pi-confirmed 0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22",
+ "command": "/Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/audit_note_N18.py --preprint-pi-confirmed d9635ca24d32dcba193cd9aade273de2679c99c5c2218787b410e793a42d1fe6",
  "tag": {
   "name": "note-2026-10-v1",
   "source": "the PI's routing of 2026-10-09, item (7), as routed to Code: tag name note-2026-10-v1, placed on the final audit commit after N1 and N18; the block leaves the name to the PI and suggests it at AUDIT-note-release-v1_2.md@bbc9ffe:14",
@@ -27,17 +27,17 @@
   },
   "commit": null,
   "commit_statement": "The tag is placed on the commit that adds this manifest. A commit's hash is computed over a tree that contains this file, so the hash cannot be written inside it (self-reference). It is to be recorded after tagging: in the note's footer (block :133; the footer is the design seat's) and in a post-tag raw (the procedure routed to Code for this part; neither the block nor the PI's routing names that raw).",
-  "expected_parent_note": "HEAD at this run is 84801cb5fad5f7bf06b5213fdb8bf9a55e369d6b; the tag commit descends from it if the manifest is committed on top of it, which this script does not check."
+  "expected_parent_note": "HEAD at this run is d6bb7905855021432cc59e1538e3599a1c8d5d2a; the tag commit descends from it if the manifest is committed on top of it, which this script does not check."
  },
  "note": {
-  "path": "RESEARCH-NOTE-v0_5-draft.md",
+  "path": "RESEARCH-NOTE-v0_6-draft.md",
   "category": "note",
-  "sha256": "4c2810e1f2be012e2a419d9ef3a154c0e1f4abb5dde5caac067d9ec361e4ce5b",
-  "bytes": 62532,
+  "sha256": "2c7e1cf526f6dfe737c6246cf137f1ae9bc18816846e8329de2f9c3c04426fbb",
+  "bytes": 63410,
   "tracked_at_head": false,
   "equal_to_head": null,
-  "expected": "4c2810e1f2be012e2a419d9ef3a154c0e1f4abb5dde5caac067d9ec361e4ce5b",
-  "expected_source": "the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256",
+  "expected": "2c7e1cf526f6dfe737c6246cf137f1ae9bc18816846e8329de2f9c3c04426fbb",
+  "expected_source": "the PI's message of 2026-10-12 routing round 10's inputs, which gives the full sha256",
   "assert": "PASS"
  },
  "svgs": [
@@ -49,7 +49,7 @@
    "tracked_at_head": false,
    "equal_to_head": null,
    "expected": "6ffad6cd971aabdc70d7b684a6408988c9a05e5445125d3ce61a78557405cee6",
-   "expected_source": "the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256",
+   "expected_source": "the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256; unchanged in round 10 (the PI's message of 2026-10-12: the SVGs are unchanged)",
    "assert": "PASS"
   },
   {
@@ -60,7 +60,7 @@
    "tracked_at_head": false,
    "equal_to_head": null,
    "expected": "6fcb060f6a2cf2c0ce1f5374c3267c5cec67304994a9967e49a2afaffcf6113e",
-   "expected_source": "the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256",
+   "expected_source": "the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256; unchanged in round 10 (the PI's message of 2026-10-12: the SVGs are unchanged)",
    "assert": "PASS"
   },
   {
@@ -71,7 +71,7 @@
    "tracked_at_head": false,
    "equal_to_head": null,
    "expected": "81b13e805e64e6a9534e65e6dfeb50d6c6a65cf3d8b02b9cb3a1e36852e5ac4e",
-   "expected_source": "the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256",
+   "expected_source": "the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256; unchanged in round 10 (the PI's message of 2026-10-12: the SVGs are unchanged)",
    "assert": "PASS"
   }
  ],
@@ -82,8 +82,8 @@
    "rerun": "N1, then N18"
   },
   {
-   "trigger": "patch v6 arrives, or PREPRINT-v1_0-draft.md otherwise changes (the PI's routing of 2026-10-09, item (5), as routed to Code, commits the post-v6 file at the tag; this manifest records the file as found at this run)",
-   "rerun": "N18 (with --preprint-pi-confirmed once the PI confirms the post-v6 file)"
+   "trigger": "PREPRINT-v1_0-draft.md changes (the PI's routing of 2026-10-09, item (5), as routed to Code, commits the preprint at the tag; its text of record is patch v7, the PI's routing of 2026-10-12; this manifest records the file as found at this run)",
+   "rerun": "N18 (with --preprint-pi-confirmed once the PI routes the new text's sha256)"
   },
   {
    "trigger": "any file in files.list changes, is added under results/raw/*_note-* or scripts/audit_note_*.py, or is removed (for example README-NOTE.md when a placeholder is filled, or the N1 final ledger when N1 is re-run)",
@@ -92,28 +92,28 @@
  ],
  "footer_note": "The block puts the note's sha256 in the note's footer (:133). A footer inside the hashed file changes that file's sha256, so the footer cannot state the hash of the file that contains it; how the footer and the repository copy relate is the design seat's to settle.",
  "n1": {
-  "ledger_json": "results/raw/2026-10-10_note-N1-v0_5-claims-ledger.json",
-  "ledger_md": "results/raw/2026-10-10_note-N1-v0_5-claims-ledger.md",
-  "ledger_head_at_run": "84801cb5fad5f7bf06b5213fdb8bf9a55e369d6b",
-  "ledger_code_stamp_utc": "Sun Oct 11 09:29:01 UTC 2026",
+  "ledger_json": "results/raw/2026-10-12_note-N1-v0_6-claims-ledger.json",
+  "ledger_md": "results/raw/2026-10-12_note-N1-v0_6-claims-ledger.md",
+  "ledger_head_at_run": "d6bb7905855021432cc59e1538e3599a1c8d5d2a",
+  "ledger_code_stamp_utc": "Mon Oct 12 10:32:53 UTC 2026",
   "provisional": false,
   "covers_note_sha256_of_this_run": true,
   "covers_svg_sha256s_of_this_run": true,
-  "note_rows_file": "results/raw/2026-10-10_note-N1-v0_5-note-rows.json",
-  "note_rows_file_sha256": "0af1e9fe6967553d42338abcd1bbcc69f16f90f11008323f96f967acf548da61",
-  "figures_commit": "fd2b1364dea83a3433791cf4a751f05966f9aaf5",
-  "figures_commit_date": "2026-10-10T10:30:53-04:00",
+  "note_rows_file": "results/raw/2026-10-12_note-N1-v0_6-note-rows.json",
+  "note_rows_file_sha256": "deab5fb40e5d2a153a4b93f7c8611a584a40474a594ff25728f87060dcf3938b",
+  "figures_commit": "fa1b41ea7e1ebd75a983d3ec7cd09f9abe0952a5",
+  "figures_commit_date": "2026-10-11T06:22:45-04:00",
   "figures_commit_set_by_rows": [
-   "S1#236",
-   "S1#237"
+   "S1#407",
+   "S1#408"
   ],
-  "figures_commit_basis": "N1 final, note_rows_final.tag.including_audit_raws (the note carries computed-new figures and figures whose only carrier is an audit raw: N19's, N2 round 6's); stated plainly at results/raw/2026-10-10_note-N1-v0_5-claims-ledger.md:2075 (the file as read at this run)",
+  "figures_commit_basis": "N1 final, note_rows_final.tag.including_audit_raws (the note carries computed-new figures and figures whose only carrier is an audit raw: N19's, N2 round 6's); stated plainly at results/raw/2026-10-12_note-N1-v0_6-claims-ledger.md:2127 (the file as read at this run)",
   "record_sources_only_candidate": "05c4636d0e3f7a177f3a894e0eccdb61623eff71",
   "record_sources_only_candidate_date": "2026-10-06T00:42:09-04:00",
   "figures_commit_is_ancestor_of_head_at_this_run": true,
-  "n1_script": "scripts/audit_note_N1.py",
-  "n1_script_sha256_in_ledger": "0c5a98f04b33221d31b3db1c46a6f3eeae8b69fe425d018acf6e1a145a942400",
-  "n1_script_sha256_now": "0c5a98f04b33221d31b3db1c46a6f3eeae8b69fe425d018acf6e1a145a942400",
+  "n1_script": "/Users/jasondwyer/Documents/code/jspace-lab/scripts/audit_note_N1.py",
+  "n1_script_sha256_in_ledger": "1daefe30844f213c40229100ee6cf36b4e040070fd9b8f880a8d63061dec661f",
+  "n1_script_sha256_now": "1daefe30844f213c40229100ee6cf36b4e040070fd9b8f880a8d63061dec661f",
   "n1_script_unchanged_since_ledger": true
  },
  "n13": {
@@ -494,21 +494,21 @@
  },
  "preprint": {
   "path": "PREPRINT-v1_0-draft.md",
-  "status": "post-patch-v6, as confirmed by the PI (confirmation supplied to this run with --preprint-pi-confirmed; see pi_confirmation)",
-  "sha256": "0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22",
+  "status": "the preprint of record, patch v7, as routed by the PI on 2026-10-12 (the routed sha256 supplied to this run with --preprint-pi-confirmed; see pi_confirmation)",
+  "sha256": "d9635ca24d32dcba193cd9aade273de2679c99c5c2218787b410e793a42d1fe6",
   "on_disk_matches_block_reference": false,
   "block_reference": "d6431e97…222b8 (post-patch-v4 copy), AUDIT-note-release-v1_2.md@bbc9ffe:21",
-  "pi_confirmation": "the full sha256 was supplied on the command line as the PI's confirmation that this file is the post-v6 preprint; the script asserted it equals the file on disk and cannot see the confirmation itself (the command is recorded in `command`)",
+  "pi_confirmation": "the full sha256 was supplied on the command line as the PI's confirmation that this file is the preprint of record (patch v7); the script asserted it equals the file on disk and cannot see the confirmation itself (the command is recorded in `command`)",
   "tracked_at_head": false,
-  "routing": "the PI's routing of 2026-10-09, item (5), as routed to Code: PREPRINT-v1_0-draft.md is committed at the tag after patch v6 is applied",
-  "rerun_trigger": "If patch v6 arrives, or the file otherwise changes, after this run and before the tag commit, N18 must be re-run: this section describes the file as found at this run, and the tag commit is to hold the post-v6 file."
+  "routing": "the PI's routing of 2026-10-09, item (5), as routed to Code: PREPRINT-v1_0-draft.md is committed at the tag after patch v6 is applied; the text of record is patch v7 (the PI's routing of 2026-10-12, which gives its full sha256)",
+  "rerun_trigger": "If the file changes after this run and before the tag commit, N18 must be re-run: this section describes the file as found at this run, and the tag commit is to hold the preprint of record (patch v7, the PI's routing of 2026-10-12)."
  },
  "wait_check": [
   {
    "path": "README-NOTE.md",
-   "mtime_utc": "2026-10-11T10:21:58Z",
-   "mtime_local_date": "2026-10-11",
-   "local_date_at_run": "2026-10-11",
+   "mtime_utc": "2026-10-12T11:24:36Z",
+   "mtime_local_date": "2026-10-12",
+   "local_date_at_run": "2026-10-12",
    "modified_today": true,
    "reading": "modified today; hashed as it stood at this run"
   },
@@ -516,7 +516,7 @@
    "path": "results/raw/2026-10-08_note-N12-scrub.md",
    "mtime_utc": "2026-10-10T14:19:32Z",
    "mtime_local_date": "2026-10-10",
-   "local_date_at_run": "2026-10-11",
+   "local_date_at_run": "2026-10-12",
    "modified_today": false,
    "reading": "not modified today; read as found"
   }
@@ -527,11 +527,11 @@
    "results/raw/2026-10-09_note-release-manifest.json",
    "results/raw/2026-10-09_note-release-manifest.md"
   ],
-  "n_files": 94,
-  "sha256sum_list_sha256": "7e24aee6eba61eed3165b619b6bb55e715ee8fbb4d36a44b6aa54f01605f6217",
+  "n_files": 98,
+  "sha256sum_list_sha256": "091e01a260b7f7b169b8b0d55bd0c480ba241ece2e93b58a9fec6ac5d59e7494",
   "sha256sum_list_recipe": "sha256 of the lines '<sha256>  <path>\\n' over files.list in its order (sorted by path); equal to piping `shasum -a 256 <the paths in that order>` into `shasum -a 256`",
-  "n_tracked_at_head": 90,
-  "n_equal_to_head": 85,
+  "n_tracked_at_head": 94,
+  "n_equal_to_head": 89,
   "list": [
    {
     "path": "LICENSE",
@@ -560,8 +560,8 @@
    {
     "path": "README-NOTE.md",
     "category": "named",
-    "sha256": "603f7294cf31203703d9d6b48e20c245baf100f17bad7d9d511124881e9f6511",
-    "bytes": 99393,
+    "sha256": "5db65e60f20b9318f00bc4b199f37c5a1706cf73b5a49625ac41a66147e44ff4",
+    "bytes": 121215,
     "tracked_at_head": true,
     "equal_to_head": false
    },
@@ -728,8 +728,8 @@
    {
     "path": "results/raw/2026-10-08_note-N17-numerics.md",
     "category": "audit raw",
-    "sha256": "e716491fc162e8699a36e8e05ee191257aaf4a48046ac66b4d68bef4d8850ee8",
-    "bytes": 103503,
+    "sha256": "b20b6e8972a38436c8c30d01f16f1ae8f3d2f1a9f579c4423a08a2fdae17a54b",
+    "bytes": 108119,
     "tracked_at_head": true,
     "equal_to_head": true
    },
@@ -800,80 +800,80 @@
    {
     "path": "results/raw/2026-10-08_note-N4-e2a.json",
     "category": "audit raw",
-    "sha256": "5034109aa55c7dd33bdef9ffbc19a2f94eafcf2f289027140d764cfbca9e560c",
-    "bytes": 70899,
+    "sha256": "aad12ce53f7da9d3e99465ebde3ac94c45143a0bbe6a3862133be29581aac17a",
+    "bytes": 83827,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-08_note-N4-e2a.md",
     "category": "audit raw",
-    "sha256": "4ab5d2d9c001679158d577e57c07c814d689dfeca80c2533fe7822bbc70fa2ce",
-    "bytes": 106490,
+    "sha256": "1c91689c9de9e30277c7273550bc92afb2a22d5570b6603e6b4bd37ff9ac39ae",
+    "bytes": 117450,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-08_note-N5-f1.json",
     "category": "audit raw",
-    "sha256": "7786310fc996f1995a8f5ad2efcb0ceafec2dc4b08defc4315ae03dbfde5338b",
-    "bytes": 54107,
+    "sha256": "789bb5b26872b5227248dd6b5883b10895ea9227593af0a575a2ab4f03e5b311",
+    "bytes": 103846,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-08_note-N5-f1.md",
     "category": "audit raw",
-    "sha256": "2dca65c64da246197b84f91cd1f4ec5366d3f970b7f786a7bb7078a9b4c91d8b",
-    "bytes": 68004,
+    "sha256": "3d70f8efd57ff2fd5210d6d2b340f60cd03604213b1adf1c44df3fe4d10bf953",
+    "bytes": 103228,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-08_note-N6-e2b.json",
     "category": "audit raw",
-    "sha256": "e0f0547672c51dc9a5d9b0fab48b927ad9dfa9b27e3090bc1a1af0c44d5bd99b",
-    "bytes": 64736,
+    "sha256": "a56f41eaceb5c2218c20fcbf81faf96485c54b12b77424fd8908b9972de1ae41",
+    "bytes": 68198,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-08_note-N6-e2b.md",
     "category": "audit raw",
-    "sha256": "325c4d03e3561fe3a4373d5e004ae8e7a748b8f71b512250c32238a9daf9bb8b",
-    "bytes": 79716,
+    "sha256": "090607ee3a71fa319052611e62e3eb527c4969ec84cbb418fc05813bcba66b59",
+    "bytes": 81269,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-08_note-N7-olmo.json",
     "category": "audit raw",
-    "sha256": "1bdb1328208fcbfb49c3c1aab89bec451e8ce9b27d4af1cf10f94e224919082d",
-    "bytes": 139508,
+    "sha256": "5d408bb0959d05b469fb6c5db0f7e7943d64fed3d65b52beb2b1b44a243e7353",
+    "bytes": 149164,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-08_note-N7-olmo.md",
     "category": "audit raw",
-    "sha256": "0c021b6096f269a8ad2670c0cbf2808a6633fd4c6b9719b4457fc1d2a008b17f",
-    "bytes": 76092,
+    "sha256": "61b545718541742defe4b8190cc783961ae717eac1f888fdee8dbee2f2e747b2",
+    "bytes": 81237,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-08_note-N8-link2.json",
     "category": "audit raw",
-    "sha256": "e3a0b88694b662fb7a0739b666ceb0a5a8a2bf1ff8dc6e81540671440be79313",
-    "bytes": 155128,
+    "sha256": "fde6ed31bba4b7d894d57489ffbbe7a546873cd776be6861d54c1edcdb1e365b",
+    "bytes": 163464,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-08_note-N8-link2.md",
     "category": "audit raw",
-    "sha256": "b683e2783228e8f5b6f422ad189f60c9d26c25db7e2f6e1a2bc093ed2fe539aa",
-    "bytes": 107482,
+    "sha256": "53668a4864ee79006fa0807fdb50c8d5f77deb7dc25ced3649b262a912d06e42",
+    "bytes": 110833,
     "tracked_at_head": true,
     "equal_to_head": true
    },
@@ -1031,41 +1031,73 @@
    },
    {
     "path": "results/raw/2026-10-10_note-N1-v0_5-claims-ledger.json",
-    "category": "N1 final ledger",
+    "category": "audit raw",
     "sha256": "6593efeee5eafc52aaa851aa7e79ffc99ba008d6be7a0315c90b9a320b57fe58",
     "bytes": 6828519,
-    "tracked_at_head": false,
-    "equal_to_head": null
+    "tracked_at_head": true,
+    "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-10_note-N1-v0_5-claims-ledger.md",
-    "category": "N1 final ledger",
+    "category": "audit raw",
     "sha256": "b52c78bbd456f3a8ed5f752e87b969c4b4bdc0fbc458462e4a132e3b9983e823",
     "bytes": 1012183,
-    "tracked_at_head": false,
-    "equal_to_head": null
+    "tracked_at_head": true,
+    "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-10_note-N1-v0_5-note-rows.json",
     "category": "audit raw",
     "sha256": "0af1e9fe6967553d42338abcd1bbcc69f16f90f11008323f96f967acf548da61",
     "bytes": 2019965,
-    "tracked_at_head": false,
-    "equal_to_head": null
+    "tracked_at_head": true,
+    "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-11_note-N1-v0_5_valuescheck.md",
     "category": "audit raw",
     "sha256": "bb401e93ea3cd17b3692323f45f701545d97d47386c871d282407dab701d1794",
     "bytes": 7266,
+    "tracked_at_head": true,
+    "equal_to_head": true
+   },
+   {
+    "path": "results/raw/2026-10-12_note-N1-v0_6-claims-ledger.json",
+    "category": "N1 final ledger",
+    "sha256": "e746ecd8aa87c8270a2856139c68b2b5aac4bfcd7010c7cc84de61cc41094b5c",
+    "bytes": 7361975,
+    "tracked_at_head": false,
+    "equal_to_head": null
+   },
+   {
+    "path": "results/raw/2026-10-12_note-N1-v0_6-claims-ledger.md",
+    "category": "N1 final ledger",
+    "sha256": "460c6f71e4dbbc1cd671c4b72b8bb308f7854cb4b5384aa6002de386f0b2da81",
+    "bytes": 1059027,
+    "tracked_at_head": false,
+    "equal_to_head": null
+   },
+   {
+    "path": "results/raw/2026-10-12_note-N1-v0_6-note-rows.json",
+    "category": "audit raw",
+    "sha256": "deab5fb40e5d2a153a4b93f7c8611a584a40474a594ff25728f87060dcf3938b",
+    "bytes": 2372865,
+    "tracked_at_head": false,
+    "equal_to_head": null
+   },
+   {
+    "path": "results/raw/2026-10-12_note-N1-v0_6_valuescheck.md",
+    "category": "audit raw",
+    "sha256": "2719e77924c00de7c8a8c08b286f5ec53716cae01d89a86be264e3d3bcb44e2d",
+    "bytes": 13091,
     "tracked_at_head": false,
     "equal_to_head": null
    },
    {
     "path": "scripts/audit_note_N1.py",
     "category": "audit script",
-    "sha256": "0c5a98f04b33221d31b3db1c46a6f3eeae8b69fe425d018acf6e1a145a942400",
-    "bytes": 1080076,
+    "sha256": "1daefe30844f213c40229100ee6cf36b4e040070fd9b8f880a8d63061dec661f",
+    "bytes": 1336597,
     "tracked_at_head": true,
     "equal_to_head": false
    },
@@ -1168,16 +1200,16 @@
    {
     "path": "scripts/audit_note_N17.py",
     "category": "audit script",
-    "sha256": "42a174413ea8b34bdf09c40f7f944a58a98c54859a8ee4261afdd88c7f99554b",
-    "bytes": 146669,
+    "sha256": "ad1fff1ba140f106f7cf2cae080e5e22d17f03f710bb4148f4a68dfcde7b73bc",
+    "bytes": 164046,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "scripts/audit_note_N18.py",
     "category": "audit script",
-    "sha256": "fe504d250c6a5e73d872a9f13fb674fd31704d4d80004b8eb78654b8fb895126",
-    "bytes": 35926,
+    "sha256": "d6d5cc01072ada27f7bc982b131298f6fcf5757fcc1dec1a3bb932e7db6917f7",
+    "bytes": 37064,
     "tracked_at_head": true,
     "equal_to_head": false
    },
@@ -1224,8 +1256,8 @@
    {
     "path": "scripts/audit_note_N4.py",
     "category": "audit script",
-    "sha256": "109d54e00dc2e55d2e42a7397421fe864efc3aec97e65d9ab6b4361bdb51d670",
-    "bytes": 195033,
+    "sha256": "145d7899d6f2bdbc9f5d280c3835bd900e70f5e9de27f0a1a6f2b88819fba666",
+    "bytes": 223462,
     "tracked_at_head": true,
     "equal_to_head": true
    },
@@ -1240,32 +1272,32 @@
    {
     "path": "scripts/audit_note_N5.py",
     "category": "audit script",
-    "sha256": "8bad395c4be1bcc34baf0c4ebc97e5021b8a9424f93aabe8e003702b4d1372a9",
-    "bytes": 138146,
+    "sha256": "509eca3cf1af5baa619e9fe961d12236a4e4fbf0b972d1bc808881ce9525e958",
+    "bytes": 205837,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "scripts/audit_note_N6.py",
     "category": "audit script",
-    "sha256": "07e933d550b32002964afa81b70b35c126e369353bc54597a5b1ed79a0d85404",
-    "bytes": 151408,
+    "sha256": "ecfdeef214c535b073e7eb4d9d92b4dcb1ce5e16924ed13c61e2bf6c05ebb5b4",
+    "bytes": 168629,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "scripts/audit_note_N7.py",
     "category": "audit script",
-    "sha256": "f7838b7ee09f48de0aaf8f0b43448f078c0c7cb686c3bba3d670cdd7fe13a98a",
-    "bytes": 154655,
+    "sha256": "e082cdf89f4ab391870843f02757949404dd19db3bb47dbdcd540addc90751d3",
+    "bytes": 167556,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "scripts/audit_note_N8.py",
     "category": "audit script",
-    "sha256": "8c8f34b19d951f5d59be705355a9423d6e5f2769f4ce0087858197cf21091efd",
-    "bytes": 155265,
+    "sha256": "738b216cce8b956db60b36f09d1fcea2f8a4afa7c17aebdb8c208f99a0f0f0d3",
+    "bytes": 167228,
     "tracked_at_head": true,
     "equal_to_head": true
    },

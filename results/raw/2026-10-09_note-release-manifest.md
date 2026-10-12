@@ -1,8 +1,8 @@
 # AUDIT-note-release v1.2 -- N18: release manifest (hashes for the note)
 
-- Code stamp: 2026-10-11 10:22:06 UTC (date -u); HEAD at run `84801cb5fad5f7bf06b5213fdb8bf9a55e369d6b` (branch main)
+- Code stamp: 2026-10-12 11:24:48 UTC (date -u); HEAD at run `d6bb7905855021432cc59e1538e3599a1c8d5d2a` (branch main)
 - Block `AUDIT-note-release-v1_2.md` sha256 `8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841` (matches the routed 8cd8a9ac...3841; equal to its committed version at `bbc9ffe`); N18 is block :132-133
-- Script `scripts/audit_note_N18.py` sha256 `fe504d250c6a5e73d872a9f13fb674fd31704d4d80004b8eb78654b8fb895126`; interpreter /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python (Python 3.12.9)
+- Script `scripts/audit_note_N18.py` sha256 `d6d5cc01072ada27f7bc982b131298f6fcf5757fcc1dec1a3bb932e7db6917f7`; interpreter /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python (Python 3.12.9)
 - The JSON beside this file is the manifest; this file summarises it.
 
 ## Tag
@@ -15,23 +15,23 @@
 
 | file | sha256 | asserted against | tracked at HEAD |
 |---|---|---|---|
-| `RESEARCH-NOTE-v0_5-draft.md` | `4c2810e1f2be012e2a419d9ef3a154c0e1f4abb5dde5caac067d9ec361e4ce5b` | 4c2810e1f2be012e2a419d9ef3a154c0e1f4abb5dde5caac067d9ec361e4ce5b (the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256): PASS | no (untracked) |
-| `2026-10-10_F1a_headline-strip.svg` | `6ffad6cd971aabdc70d7b684a6408988c9a05e5445125d3ce61a78557405cee6` | 6ffad6cd971aabdc70d7b684a6408988c9a05e5445125d3ce61a78557405cee6 (the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256): PASS | no (untracked) |
-| `2026-10-10_F1b_five-link-panels.svg` | `6fcb060f6a2cf2c0ce1f5374c3267c5cec67304994a9967e49a2afaffcf6113e` | 6fcb060f6a2cf2c0ce1f5374c3267c5cec67304994a9967e49a2afaffcf6113e (the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256): PASS | no (untracked) |
-| `2026-10-10_F2_macar-lineage-roc_post.svg` | `81b13e805e64e6a9534e65e6dfeb50d6c6a65cf3d8b02b9cb3a1e36852e5ac4e` | 81b13e805e64e6a9534e65e6dfeb50d6c6a65cf3d8b02b9cb3a1e36852e5ac4e (the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256): PASS | no (untracked) |
+| `RESEARCH-NOTE-v0_6-draft.md` | `2c7e1cf526f6dfe737c6246cf137f1ae9bc18816846e8329de2f9c3c04426fbb` | 2c7e1cf526f6dfe737c6246cf137f1ae9bc18816846e8329de2f9c3c04426fbb (the PI's message of 2026-10-12 routing round 10's inputs, which gives the full sha256): PASS | no (untracked) |
+| `2026-10-10_F1a_headline-strip.svg` | `6ffad6cd971aabdc70d7b684a6408988c9a05e5445125d3ce61a78557405cee6` | 6ffad6cd971aabdc70d7b684a6408988c9a05e5445125d3ce61a78557405cee6 (the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256; unchanged in round 10 (the PI's message of 2026-10-12: the SVGs are unchanged)): PASS | no (untracked) |
+| `2026-10-10_F1b_five-link-panels.svg` | `6fcb060f6a2cf2c0ce1f5374c3267c5cec67304994a9967e49a2afaffcf6113e` | 6fcb060f6a2cf2c0ce1f5374c3267c5cec67304994a9967e49a2afaffcf6113e (the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256; unchanged in round 10 (the PI's message of 2026-10-12: the SVGs are unchanged)): PASS | no (untracked) |
+| `2026-10-10_F2_macar-lineage-roc_post.svg` | `81b13e805e64e6a9534e65e6dfeb50d6c6a65cf3d8b02b9cb3a1e36852e5ac4e` | 81b13e805e64e6a9534e65e6dfeb50d6c6a65cf3d8b02b9cb3a1e36852e5ac4e (the PI's message of 2026-10-10 routing round 9's inputs, which gives the full sha256; unchanged in round 10 (the PI's message of 2026-10-12: the SVGs are unchanged)): PASS | no (untracked) |
 
 - Untracked at this run. N1 final's first condition on the tag (§9g) is that the tag commit contains the note and all 3 SVGs.
 - If the note or any SVG changes before the tag commit, N1 and then N18 must be re-run (see "Before the tag commit" below).
 - The block puts the note's sha256 in the note's footer (:133). A footer inside the hashed file changes that file's sha256, so the footer cannot state the hash of the file that contains it; how the footer and the repository copy relate is the design seat's to settle.
-- N1 final (`results/raw/2026-10-10_note-N1-v0_5-claims-ledger.json`, run at HEAD `84801cb5fad5`) covers exactly these three sha256s and is not provisional; its note-rows file `results/raw/2026-10-10_note-N1-v0_5-note-rows.json` is unchanged since (sha256 `0af1e9fe6967553d42338abcd1bbcc69f16f90f11008323f96f967acf548da61`).
-- **Figures commit (N1 final):** `fd2b1364dea83a3433791cf4a751f05966f9aaf5` (2026-10-10T10:30:53-04:00), set by S1#236, S1#237. Basis: N1 final, note_rows_final.tag.including_audit_raws (the note carries computed-new figures and figures whose only carrier is an audit raw: N19's, N2 round 6's); stated plainly at results/raw/2026-10-10_note-N1-v0_5-claims-ledger.md:2075 (the file as read at this run). Ancestor of HEAD at this run: yes. N1's record-sources-only candidate, as N1 states it: `05c4636` (2026-10-06T00:42:09-04:00).
-- The N1 script's sha256 now equals the one the ledger records (`0c5a98f04b33221d`).
+- N1 final (`results/raw/2026-10-12_note-N1-v0_6-claims-ledger.json`, run at HEAD `d6bb79058550`) covers exactly these three sha256s and is not provisional; its note-rows file `results/raw/2026-10-12_note-N1-v0_6-note-rows.json` is unchanged since (sha256 `deab5fb40e5d2a153a4b93f7c8611a584a40474a594ff25728f87060dcf3938b`).
+- **Figures commit (N1 final):** `fa1b41ea7e1ebd75a983d3ec7cd09f9abe0952a5` (2026-10-11T06:22:45-04:00), set by S1#407, S1#408. Basis: N1 final, note_rows_final.tag.including_audit_raws (the note carries computed-new figures and figures whose only carrier is an audit raw: N19's, N2 round 6's); stated plainly at results/raw/2026-10-12_note-N1-v0_6-claims-ledger.md:2127 (the file as read at this run). Ancestor of HEAD at this run: yes. N1's record-sources-only candidate, as N1 states it: `05c4636` (2026-10-06T00:42:09-04:00).
+- The N1 script's sha256 now equals the one the ledger records (`1daefe30844f213c`).
 
 ## Preprint
 
-- `PREPRINT-v1_0-draft.md`: sha256 `0f4ba501d60a94189e6dc83d28c41826debe50591b9af484fa08d05a41f16c22`; post-patch-v6, as confirmed by the PI (confirmation supplied to this run with --preprint-pi-confirmed; see pi_confirmation) (reference d6431e97…222b8 (post-patch-v4 copy), AUDIT-note-release-v1_2.md@bbc9ffe:21).
-- PI confirmation: the full sha256 was supplied on the command line as the PI's confirmation that this file is the post-v6 preprint; the script asserted it equals the file on disk and cannot see the confirmation itself (the command is recorded in `command`).
-- Routing: the PI's routing of 2026-10-09, item (5), as routed to Code: PREPRINT-v1_0-draft.md is committed at the tag after patch v6 is applied. If patch v6 arrives, or the file otherwise changes, after this run and before the tag commit, N18 must be re-run: this section describes the file as found at this run, and the tag commit is to hold the post-v6 file.
+- `PREPRINT-v1_0-draft.md`: sha256 `d9635ca24d32dcba193cd9aade273de2679c99c5c2218787b410e793a42d1fe6`; the preprint of record, patch v7, as routed by the PI on 2026-10-12 (the routed sha256 supplied to this run with --preprint-pi-confirmed; see pi_confirmation) (reference d6431e97…222b8 (post-patch-v4 copy), AUDIT-note-release-v1_2.md@bbc9ffe:21).
+- PI confirmation: the full sha256 was supplied on the command line as the PI's confirmation that this file is the preprint of record (patch v7); the script asserted it equals the file on disk and cannot see the confirmation itself (the command is recorded in `command`).
+- Routing: the PI's routing of 2026-10-09, item (5), as routed to Code: PREPRINT-v1_0-draft.md is committed at the tag after patch v6 is applied; the text of record is patch v7 (the PI's routing of 2026-10-12, which gives its full sha256). If the file changes after this run and before the tag commit, N18 must be re-run: this section describes the file as found at this run, and the tag commit is to hold the preprint of record (patch v7, the PI's routing of 2026-10-12).
 
 ## N13 provenance table: version content sha256 per row
 
@@ -67,11 +67,11 @@ Read from `results/raw/2026-10-08_note-N13-provenance.json@09c3a8c` (sha256 `fad
 
 ## Files at this run
 
-- Wait check: `README-NOTE.md` last modified 2026-10-11T10:21:58Z (local date 2026-10-11; today 2026-10-11): modified today; hashed as it stood at this run.
-- Wait check: `results/raw/2026-10-08_note-N12-scrub.md` last modified 2026-10-10T14:19:32Z (local date 2026-10-10; today 2026-10-11): not modified today; read as found.
-- 94 files (README-NOTE.md, LICENSE, LICENSE-CC-BY-4.0, LICENSING.md, data/e2a/analysis.correction-of-record.json, the N1 final ledger md/json, every results/raw/*_note-* file and every scripts/audit_note_*.py on disk at this run, sorted by path; this script's own two outputs and any results/raw/*_note-release-manifest.json/.md are excluded (a file cannot carry its own hash). tracked_at_head and equal_to_head compare the working file's git blob id with HEAD's.). Excluded: `results/raw/2026-10-09_note-release-manifest.json`, `results/raw/2026-10-09_note-release-manifest.md`.
-- Digest of the list: `7e24aee6eba61eed3165b619b6bb55e715ee8fbb4d36a44b6aa54f01605f6217` (sha256 of the lines '<sha256>  <path>\n' over files.list in its order (sorted by path); equal to piping `shasum -a 256 <the paths in that order>` into `shasum -a 256`).
-- Tracked at HEAD: 90 of 94; equal to HEAD: 85. Files untracked or changed since HEAD are hashed as they stand; any change to a listed file before the tag commit requires a re-run.
+- Wait check: `README-NOTE.md` last modified 2026-10-12T11:24:36Z (local date 2026-10-12; today 2026-10-12): modified today; hashed as it stood at this run.
+- Wait check: `results/raw/2026-10-08_note-N12-scrub.md` last modified 2026-10-10T14:19:32Z (local date 2026-10-10; today 2026-10-12): not modified today; read as found.
+- 98 files (README-NOTE.md, LICENSE, LICENSE-CC-BY-4.0, LICENSING.md, data/e2a/analysis.correction-of-record.json, the N1 final ledger md/json, every results/raw/*_note-* file and every scripts/audit_note_*.py on disk at this run, sorted by path; this script's own two outputs and any results/raw/*_note-release-manifest.json/.md are excluded (a file cannot carry its own hash). tracked_at_head and equal_to_head compare the working file's git blob id with HEAD's.). Excluded: `results/raw/2026-10-09_note-release-manifest.json`, `results/raw/2026-10-09_note-release-manifest.md`.
+- Digest of the list: `091e01a260b7f7b169b8b0d55bd0c480ba241ece2e93b58a9fec6ac5d59e7494` (sha256 of the lines '<sha256>  <path>\n' over files.list in its order (sorted by path); equal to piping `shasum -a 256 <the paths in that order>` into `shasum -a 256`).
+- Tracked at HEAD: 94 of 98; equal to HEAD: 89. Files untracked or changed since HEAD are hashed as they stand; any change to a listed file before the tag commit requires a re-run.
 
 The named files and N1's final outputs, and every listed file that is untracked or differs from HEAD (the full list with sha256s is in the JSON, `files.list`):
 
@@ -80,23 +80,23 @@ The named files and N1's final outputs, and every listed file that is untracked 
 | `LICENSE` | `cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30` | equal |
 | `LICENSE-CC-BY-4.0` | `cce5d01fa4a83b794271bd2c28cffdf99afd43c803e6ddefddae39b591ea7448` | equal |
 | `LICENSING.md` | `6d4d012a04f543c148f909019d79c61ba854100c32a4d1e0893bc955f4a4e441` | equal |
-| `README-NOTE.md` | `603f7294cf31203703d9d6b48e20c245baf100f17bad7d9d511124881e9f6511` | modified |
+| `README-NOTE.md` | `5db65e60f20b9318f00bc4b199f37c5a1706cf73b5a49625ac41a66147e44ff4` | modified |
 | `data/e2a/analysis.correction-of-record.json` | `1c2727f9759d3b477aa86bff0fc580345f1a034543e7cf706edfff874e192bb4` | equal |
 | `results/raw/2026-10-09_note-N1-note-rows.json` | `5f8f76cd5b4e18bff19c9419044734eff3aab22bce86d005438fd56e2e01f6ce` | equal |
-| `results/raw/2026-10-10_note-N1-v0_5-claims-ledger.json` | `6593efeee5eafc52aaa851aa7e79ffc99ba008d6be7a0315c90b9a320b57fe58` | untracked |
-| `results/raw/2026-10-10_note-N1-v0_5-claims-ledger.md` | `b52c78bbd456f3a8ed5f752e87b969c4b4bdc0fbc458462e4a132e3b9983e823` | untracked |
-| `results/raw/2026-10-10_note-N1-v0_5-note-rows.json` | `0af1e9fe6967553d42338abcd1bbcc69f16f90f11008323f96f967acf548da61` | untracked |
-| `results/raw/2026-10-11_note-N1-v0_5_valuescheck.md` | `bb401e93ea3cd17b3692323f45f701545d97d47386c871d282407dab701d1794` | untracked |
-| `scripts/audit_note_N1.py` | `0c5a98f04b33221d31b3db1c46a6f3eeae8b69fe425d018acf6e1a145a942400` | modified |
+| `results/raw/2026-10-12_note-N1-v0_6-claims-ledger.json` | `e746ecd8aa87c8270a2856139c68b2b5aac4bfcd7010c7cc84de61cc41094b5c` | untracked |
+| `results/raw/2026-10-12_note-N1-v0_6-claims-ledger.md` | `460c6f71e4dbbc1cd671c4b72b8bb308f7854cb4b5384aa6002de386f0b2da81` | untracked |
+| `results/raw/2026-10-12_note-N1-v0_6-note-rows.json` | `deab5fb40e5d2a153a4b93f7c8611a584a40474a594ff25728f87060dcf3938b` | untracked |
+| `results/raw/2026-10-12_note-N1-v0_6_valuescheck.md` | `2719e77924c00de7c8a8c08b286f5ec53716cae01d89a86be264e3d3bcb44e2d` | untracked |
+| `scripts/audit_note_N1.py` | `1daefe30844f213c40229100ee6cf36b4e040070fd9b8f880a8d63061dec661f` | modified |
 | `scripts/audit_note_N12_content.py` | `9b11e7101bd6d0f3282a053bbc8a201c83e4eab9a3a2279a0c66059f36e28f05` | modified |
 | `scripts/audit_note_N12_history.py` | `ea7bef25c914e6ba20c74ec64568533b1419db5f580b90797a0d9962a306da59` | modified |
-| `scripts/audit_note_N18.py` | `fe504d250c6a5e73d872a9f13fb674fd31704d4d80004b8eb78654b8fb895126` | modified |
+| `scripts/audit_note_N18.py` | `d6d5cc01072ada27f7bc982b131298f6fcf5757fcc1dec1a3bb932e7db6917f7` | modified |
 
 ## Before the tag commit
 
 This manifest covers only the files as hashed at this run; the tag commit's tree must hold each of them at the sha256 recorded here. If any trigger below fires after this run and before the tag commit, the named items must be re-run, N18 last.
 
 1. If the note or any SVG changes (including the [REPO LINK] replacement or a footer added to the file): re-run N1, then N18.
-2. If patch v6 arrives, or PREPRINT-v1_0-draft.md otherwise changes (the PI's routing of 2026-10-09, item (5), as routed to Code, commits the post-v6 file at the tag; this manifest records the file as found at this run): re-run N18 (with --preprint-pi-confirmed once the PI confirms the post-v6 file).
+2. If PREPRINT-v1_0-draft.md changes (the PI's routing of 2026-10-09, item (5), as routed to Code, commits the preprint at the tag; its text of record is patch v7, the PI's routing of 2026-10-12; this manifest records the file as found at this run): re-run N18 (with --preprint-pi-confirmed once the PI routes the new text's sha256).
 3. If any file in files.list changes, is added under results/raw/*_note-* or scripts/audit_note_*.py, or is removed (for example README-NOTE.md when a placeholder is filled, or the N1 final ledger when N1 is re-run): re-run N18.
 
