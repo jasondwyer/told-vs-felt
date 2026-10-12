@@ -1,6 +1,6 @@
 # AUDIT-note-release v1.2 -- N18: release manifest (hashes for the note)
 
-- Code stamp: 2026-10-12 11:24:48 UTC (date -u); HEAD at run `d6bb7905855021432cc59e1538e3599a1c8d5d2a` (branch main)
+- Code stamp: 2026-10-12 22:08:53 UTC (date -u); HEAD at run `e8fb54dc90bd0766f1686c41b7c2497a79fa5391` (branch main)
 - Block `AUDIT-note-release-v1_2.md` sha256 `8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841` (matches the routed 8cd8a9ac...3841; equal to its committed version at `bbc9ffe`); N18 is block :132-133
 - Script `scripts/audit_note_N18.py` sha256 `d6d5cc01072ada27f7bc982b131298f6fcf5757fcc1dec1a3bb932e7db6917f7`; interpreter /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python (Python 3.12.9)
 - The JSON beside this file is the manifest; this file summarises it.
@@ -67,11 +67,11 @@ Read from `results/raw/2026-10-08_note-N13-provenance.json@09c3a8c` (sha256 `fad
 
 ## Files at this run
 
-- Wait check: `README-NOTE.md` last modified 2026-10-12T11:24:36Z (local date 2026-10-12; today 2026-10-12): modified today; hashed as it stood at this run.
-- Wait check: `results/raw/2026-10-08_note-N12-scrub.md` last modified 2026-10-10T14:19:32Z (local date 2026-10-10; today 2026-10-12): not modified today; read as found.
+- Wait check: `README-NOTE.md` last modified 2026-10-12T19:26:40Z (local date 2026-10-12; today 2026-10-12): modified today; hashed as it stood at this run.
+- Wait check: `results/raw/2026-10-08_note-N12-scrub.md` last modified 2026-10-12T22:08:47Z (local date 2026-10-12; today 2026-10-12): modified today; hashed as it stood at this run.
 - 98 files (README-NOTE.md, LICENSE, LICENSE-CC-BY-4.0, LICENSING.md, data/e2a/analysis.correction-of-record.json, the N1 final ledger md/json, every results/raw/*_note-* file and every scripts/audit_note_*.py on disk at this run, sorted by path; this script's own two outputs and any results/raw/*_note-release-manifest.json/.md are excluded (a file cannot carry its own hash). tracked_at_head and equal_to_head compare the working file's git blob id with HEAD's.). Excluded: `results/raw/2026-10-09_note-release-manifest.json`, `results/raw/2026-10-09_note-release-manifest.md`.
-- Digest of the list: `091e01a260b7f7b169b8b0d55bd0c480ba241ece2e93b58a9fec6ac5d59e7494` (sha256 of the lines '<sha256>  <path>\n' over files.list in its order (sorted by path); equal to piping `shasum -a 256 <the paths in that order>` into `shasum -a 256`).
-- Tracked at HEAD: 94 of 98; equal to HEAD: 89. Files untracked or changed since HEAD are hashed as they stand; any change to a listed file before the tag commit requires a re-run.
+- Digest of the list: `6ef60fd8330414a838da569ebf7a0ac3515fec8192d13b41808cfdb1dd447ca2` (sha256 of the lines '<sha256>  <path>\n' over files.list in its order (sorted by path); equal to piping `shasum -a 256 <the paths in that order>` into `shasum -a 256`).
+- Tracked at HEAD: 98 of 98; equal to HEAD: 96. Files untracked or changed since HEAD are hashed as they stand; any change to a listed file before the tag commit requires a re-run.
 
 The named files and N1's final outputs, and every listed file that is untracked or differs from HEAD (the full list with sha256s is in the JSON, `files.list`):
 
@@ -80,17 +80,12 @@ The named files and N1's final outputs, and every listed file that is untracked 
 | `LICENSE` | `cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30` | equal |
 | `LICENSE-CC-BY-4.0` | `cce5d01fa4a83b794271bd2c28cffdf99afd43c803e6ddefddae39b591ea7448` | equal |
 | `LICENSING.md` | `6d4d012a04f543c148f909019d79c61ba854100c32a4d1e0893bc955f4a4e441` | equal |
-| `README-NOTE.md` | `5db65e60f20b9318f00bc4b199f37c5a1706cf73b5a49625ac41a66147e44ff4` | modified |
+| `README-NOTE.md` | `e03da42ae4813baa7ef911fb3e533b47285bd1e9844d83135b3cd4400d307050` | modified |
 | `data/e2a/analysis.correction-of-record.json` | `1c2727f9759d3b477aa86bff0fc580345f1a034543e7cf706edfff874e192bb4` | equal |
+| `results/raw/2026-10-08_note-N12-scrub.md` | `10b6dbd64f42c75f63acf62173307bb3d1851a4b9feb0d6ba17cb945b1c0c2a2` | modified |
 | `results/raw/2026-10-09_note-N1-note-rows.json` | `5f8f76cd5b4e18bff19c9419044734eff3aab22bce86d005438fd56e2e01f6ce` | equal |
-| `results/raw/2026-10-12_note-N1-v0_6-claims-ledger.json` | `e746ecd8aa87c8270a2856139c68b2b5aac4bfcd7010c7cc84de61cc41094b5c` | untracked |
-| `results/raw/2026-10-12_note-N1-v0_6-claims-ledger.md` | `460c6f71e4dbbc1cd671c4b72b8bb308f7854cb4b5384aa6002de386f0b2da81` | untracked |
-| `results/raw/2026-10-12_note-N1-v0_6-note-rows.json` | `deab5fb40e5d2a153a4b93f7c8611a584a40474a594ff25728f87060dcf3938b` | untracked |
-| `results/raw/2026-10-12_note-N1-v0_6_valuescheck.md` | `2719e77924c00de7c8a8c08b286f5ec53716cae01d89a86be264e3d3bcb44e2d` | untracked |
-| `scripts/audit_note_N1.py` | `1daefe30844f213c40229100ee6cf36b4e040070fd9b8f880a8d63061dec661f` | modified |
-| `scripts/audit_note_N12_content.py` | `9b11e7101bd6d0f3282a053bbc8a201c83e4eab9a3a2279a0c66059f36e28f05` | modified |
-| `scripts/audit_note_N12_history.py` | `ea7bef25c914e6ba20c74ec64568533b1419db5f580b90797a0d9962a306da59` | modified |
-| `scripts/audit_note_N18.py` | `d6d5cc01072ada27f7bc982b131298f6fcf5757fcc1dec1a3bb932e7db6917f7` | modified |
+| `results/raw/2026-10-12_note-N1-v0_6-claims-ledger.json` | `e746ecd8aa87c8270a2856139c68b2b5aac4bfcd7010c7cc84de61cc41094b5c` | equal |
+| `results/raw/2026-10-12_note-N1-v0_6-claims-ledger.md` | `460c6f71e4dbbc1cd671c4b72b8bb308f7854cb4b5384aa6002de386f0b2da81` | equal |
 
 ## Before the tag commit
 

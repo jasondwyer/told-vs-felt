@@ -1,8 +1,8 @@
 {
  "item": "N18",
  "title": "release manifest (hashes for the note)",
- "code_stamp_utc": "2026-10-12 11:24:48 UTC",
- "head_at_run": "d6bb7905855021432cc59e1538e3599a1c8d5d2a",
+ "code_stamp_utc": "2026-10-12 22:08:53 UTC",
+ "head_at_run": "e8fb54dc90bd0766f1686c41b7c2497a79fa5391",
  "branch_at_run": "main",
  "block": "AUDIT-note-release-v1_2.md",
  "block_sha256": "8cd8a9acaa56c0fb7e0ad108afe328cd81bf88a757cbcd21f70616585f023841",
@@ -27,7 +27,7 @@
   },
   "commit": null,
   "commit_statement": "The tag is placed on the commit that adds this manifest. A commit's hash is computed over a tree that contains this file, so the hash cannot be written inside it (self-reference). It is to be recorded after tagging: in the note's footer (block :133; the footer is the design seat's) and in a post-tag raw (the procedure routed to Code for this part; neither the block nor the PI's routing names that raw).",
-  "expected_parent_note": "HEAD at this run is d6bb7905855021432cc59e1538e3599a1c8d5d2a; the tag commit descends from it if the manifest is committed on top of it, which this script does not check."
+  "expected_parent_note": "HEAD at this run is e8fb54dc90bd0766f1686c41b7c2497a79fa5391; the tag commit descends from it if the manifest is committed on top of it, which this script does not check."
  },
  "note": {
   "path": "RESEARCH-NOTE-v0_6-draft.md",
@@ -506,7 +506,7 @@
  "wait_check": [
   {
    "path": "README-NOTE.md",
-   "mtime_utc": "2026-10-12T11:24:36Z",
+   "mtime_utc": "2026-10-12T19:26:40Z",
    "mtime_local_date": "2026-10-12",
    "local_date_at_run": "2026-10-12",
    "modified_today": true,
@@ -514,11 +514,11 @@
   },
   {
    "path": "results/raw/2026-10-08_note-N12-scrub.md",
-   "mtime_utc": "2026-10-10T14:19:32Z",
-   "mtime_local_date": "2026-10-10",
+   "mtime_utc": "2026-10-12T22:08:47Z",
+   "mtime_local_date": "2026-10-12",
    "local_date_at_run": "2026-10-12",
-   "modified_today": false,
-   "reading": "not modified today; read as found"
+   "modified_today": true,
+   "reading": "modified today; hashed as it stood at this run"
   }
  ],
  "files": {
@@ -528,10 +528,10 @@
    "results/raw/2026-10-09_note-release-manifest.md"
   ],
   "n_files": 98,
-  "sha256sum_list_sha256": "091e01a260b7f7b169b8b0d55bd0c480ba241ece2e93b58a9fec6ac5d59e7494",
+  "sha256sum_list_sha256": "6ef60fd8330414a838da569ebf7a0ac3515fec8192d13b41808cfdb1dd447ca2",
   "sha256sum_list_recipe": "sha256 of the lines '<sha256>  <path>\\n' over files.list in its order (sorted by path); equal to piping `shasum -a 256 <the paths in that order>` into `shasum -a 256`",
-  "n_tracked_at_head": 94,
-  "n_equal_to_head": 89,
+  "n_tracked_at_head": 98,
+  "n_equal_to_head": 96,
   "list": [
    {
     "path": "LICENSE",
@@ -560,8 +560,8 @@
    {
     "path": "README-NOTE.md",
     "category": "named",
-    "sha256": "5db65e60f20b9318f00bc4b199f37c5a1706cf73b5a49625ac41a66147e44ff4",
-    "bytes": 121215,
+    "sha256": "e03da42ae4813baa7ef911fb3e533b47285bd1e9844d83135b3cd4400d307050",
+    "bytes": 130956,
     "tracked_at_head": true,
     "equal_to_head": false
    },
@@ -672,10 +672,10 @@
    {
     "path": "results/raw/2026-10-08_note-N12-scrub.md",
     "category": "audit raw",
-    "sha256": "e46425c9d119e3824ccd73bdae8947871fd5d8972116a1a6c04e8f497f84d968",
-    "bytes": 93184,
+    "sha256": "10b6dbd64f42c75f63acf62173307bb3d1851a4b9feb0d6ba17cb945b1c0c2a2",
+    "bytes": 117000,
     "tracked_at_head": true,
-    "equal_to_head": true
+    "equal_to_head": false
    },
    {
     "path": "results/raw/2026-10-08_note-N13-provenance.json",
@@ -1066,32 +1066,32 @@
     "category": "N1 final ledger",
     "sha256": "e746ecd8aa87c8270a2856139c68b2b5aac4bfcd7010c7cc84de61cc41094b5c",
     "bytes": 7361975,
-    "tracked_at_head": false,
-    "equal_to_head": null
+    "tracked_at_head": true,
+    "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-12_note-N1-v0_6-claims-ledger.md",
     "category": "N1 final ledger",
     "sha256": "460c6f71e4dbbc1cd671c4b72b8bb308f7854cb4b5384aa6002de386f0b2da81",
     "bytes": 1059027,
-    "tracked_at_head": false,
-    "equal_to_head": null
+    "tracked_at_head": true,
+    "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-12_note-N1-v0_6-note-rows.json",
     "category": "audit raw",
     "sha256": "deab5fb40e5d2a153a4b93f7c8611a584a40474a594ff25728f87060dcf3938b",
     "bytes": 2372865,
-    "tracked_at_head": false,
-    "equal_to_head": null
+    "tracked_at_head": true,
+    "equal_to_head": true
    },
    {
     "path": "results/raw/2026-10-12_note-N1-v0_6_valuescheck.md",
     "category": "audit raw",
     "sha256": "2719e77924c00de7c8a8c08b286f5ec53716cae01d89a86be264e3d3bcb44e2d",
     "bytes": 13091,
-    "tracked_at_head": false,
-    "equal_to_head": null
+    "tracked_at_head": true,
+    "equal_to_head": true
    },
    {
     "path": "scripts/audit_note_N1.py",
@@ -1099,7 +1099,7 @@
     "sha256": "1daefe30844f213c40229100ee6cf36b4e040070fd9b8f880a8d63061dec661f",
     "bytes": 1336597,
     "tracked_at_head": true,
-    "equal_to_head": false
+    "equal_to_head": true
    },
    {
     "path": "scripts/audit_note_N10.py",
@@ -1120,32 +1120,32 @@
    {
     "path": "scripts/audit_note_N12_content.py",
     "category": "audit script",
-    "sha256": "9b11e7101bd6d0f3282a053bbc8a201c83e4eab9a3a2279a0c66059f36e28f05",
-    "bytes": 55251,
+    "sha256": "0447c86b65dee3bdd514f3ca87b1f5ba669b5c1343c4addbdd3bd210a06d2356",
+    "bytes": 76338,
     "tracked_at_head": true,
-    "equal_to_head": false
+    "equal_to_head": true
    },
    {
     "path": "scripts/audit_note_N12_gitleaks.py",
     "category": "audit script",
-    "sha256": "070b54a47666bac8304216811d6c25bbf3192768a2652b4a0e8924bd678590ab",
-    "bytes": 6958,
+    "sha256": "b73be5dfb474f03ad8e946de5f862bba9a15eb8e05532b3affd7bef32ee27ec2",
+    "bytes": 42517,
     "tracked_at_head": true,
     "equal_to_head": true
    },
    {
     "path": "scripts/audit_note_N12_history.py",
     "category": "audit script",
-    "sha256": "ea7bef25c914e6ba20c74ec64568533b1419db5f580b90797a0d9962a306da59",
-    "bytes": 404575,
+    "sha256": "613598bae666cdbc273a07b8d9261abd9ea5d301fe5c1e95fa3892a13f4f0d4c",
+    "bytes": 432542,
     "tracked_at_head": true,
-    "equal_to_head": false
+    "equal_to_head": true
    },
    {
     "path": "scripts/audit_note_N12_licenses.py",
     "category": "audit script",
-    "sha256": "3e0bacbe0b19803d54cdff24eab08c19ea0ce4bef2c23eb6085069bbd02fc75f",
-    "bytes": 234101,
+    "sha256": "c7c0d40fd7643847454510e04a51694355a2b16048c3c0d0fe3ae8af73b7188d",
+    "bytes": 278410,
     "tracked_at_head": true,
     "equal_to_head": true
    },
@@ -1168,8 +1168,8 @@
    {
     "path": "scripts/audit_note_N12_scrub.py",
     "category": "audit script",
-    "sha256": "bdef4095c4d8e01c5d590497b92c18be39062ce39bf040ee37f6cda408f81744",
-    "bytes": 162152,
+    "sha256": "2f436c1c8b78d3778195ecdef228699be47b9e18db715c07734dd3883fef539a",
+    "bytes": 195306,
     "tracked_at_head": true,
     "equal_to_head": true
    },
@@ -1211,7 +1211,7 @@
     "sha256": "d6d5cc01072ada27f7bc982b131298f6fcf5757fcc1dec1a3bb932e7db6917f7",
     "bytes": 37064,
     "tracked_at_head": true,
-    "equal_to_head": false
+    "equal_to_head": true
    },
    {
     "path": "scripts/audit_note_N19.py",
