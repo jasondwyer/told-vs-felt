@@ -1,0 +1,842 @@
+# The G-TIME-F0 gate's close line (appended to the G-TIME-F0 entry, the seat's step-10 read §4) -- values-check, both passes,
+# before commit. Each pass: a verifier over every atomic claim, a strict refuter on the flagged, a values lens. Read-only agents;
+# no model; data/m/ckpt never opened. The script both passes ran (PASS from args):
+
+export const meta = {
+  name: 'gtime-close-valuescheck',
+  description: 'Values-check the G-TIME-F0 close line appended to RESULTS.md: claim verifier, strict refuter, values lens',
+  phases: [
+    { title: 'Verify', detail: 'every atomic claim of the close line' },
+    { title: 'Refute', detail: 'strict refuter on flagged claims' },
+    { title: 'Values', detail: 'values lens' },
+  ],
+}
+const REPO = '/Users/jasondwyer/Documents/code/jspace-lab'
+const PASS = args && args.pass ? args.pass : 1
+const COMMON = `
+CONTEXT. Repository ${REPO}. Code (the build/run role) has appended a "close line" sub-bullet to the end of RESULTS.md's top entry "2026-10-12 — G-TIME-F0 ..." (the sub-bullet that begins "- **The gate's close (2026-10-13; the seat's read, §4).**" and runs to "this commit, on that word."). It is uncommitted; this is values-check pass ${PASS} before commit. Its sources: the design seat's read results/raw/2026-10-13_m-design-to-code_G-TIME-F0_read.md (untracked; its sha256 must be c2cc448f441bcc32a5ca8aaa2c2dd37c7447f2ef133c031acb41569223a698a7 -- check with shasum); the read's §4 asks Code to "append a close line to the G-TIME-F0 entry naming this file, its sha256 and the commit, and recording Q1–Q7 as answered here with nothing moving a hash"; the PI's routing message, quoted in the close line (treat the quote as given; the PI's original uses curly apostrophes ’). The commit hash cannot be named inside the commit that adds the line ("committed by path with this line" is how it names the commit).
+HARD RULES: read-only; no edits; no git command that writes; never run git inside ${REPO}/jlens-qwen36; no model; never open data/m/ckpt/*.`
+const CLAIMS = { type: 'object', properties: { claims: { type: 'array', items: { type: 'object', properties: {
+  id: { type: 'string' }, text: { type: 'string' }, verdict: { type: 'string', enum: ['VERIFIED', 'FAILS', 'IMPRECISE', 'UNCHECKABLE'] },
+  evidence: { type: 'string' }, correction: { type: 'string' } }, required: ['id', 'text', 'verdict', 'evidence', 'correction'] } } }, required: ['claims'] }
+const REF = { type: 'object', properties: { verdicts: { type: 'array', items: { type: 'object', properties: {
+  id: { type: 'string' }, verdict: { type: 'string', enum: ['CONFIRMED', 'REFUTED', 'PLAUSIBLE'] }, evidence: { type: 'string' }, correction: { type: 'string' } },
+  required: ['id', 'verdict', 'evidence', 'correction'] } } }, required: ['verdicts'] }
+const VALUES = { type: 'object', properties: { findings: { type: 'array', items: { type: 'object', properties: {
+  id: { type: 'string' }, severity: { type: 'string', enum: ['major', 'minor', 'note'] }, finding: { type: 'string' }, suggested_text: { type: 'string' } },
+  required: ['id', 'severity', 'finding', 'suggested_text'] } } }, required: ['findings'] }
+
+phase('Verify')
+const v = await agent(`${COMMON}
+TASK: extract EVERY atomic claim in the close line (each summary of Q1-Q7 and of the read's §1-§2, every hash, path, date, attribution, quote) and check it against the read file and the record with tools. A paraphrase of the seat must not change the seat's meaning or scope (e.g. Q1's truncation applies to the copy of the v0.1 text the amended file carries, not the record; Q4's no-finish-stamp rule is for later stages with contrast sessions; Q5 is for every later Qwen stage of Q-F0). Quotes verbatim. Verdicts VERIFIED / FAILS / IMPRECISE / UNCHECKABLE with evidence and exact corrections.`, { label: 'verify', phase: 'Verify', schema: CLAIMS })
+const flagged = (v && v.claims ? v.claims : []).filter(c => c.verdict === 'FAILS' || c.verdict === 'IMPRECISE')
+let r = null
+if (flagged.length) {
+  r = await agent(`${COMMON}
+TASK (STRICT refuter): for each flagged claim below, re-check independently and try to show the original text is right. CONFIRMED = the text must change (give the minimal exact correction); REFUTED = the text was right; PLAUSIBLE = unsettled.
+FLAGGED:
+${JSON.stringify(flagged, null, 1)}`, { label: 'refute', phase: 'Refute', schema: REF })
+}
+const vals = await agent(`${COMMON}
+TASK (values lens): read the close line whole, as the seat and the PI will, beside the read's §4 and "What Code does now". Does it do what §4 asks (name the file, its sha256 and the commit; record Q1-Q7 as answered with nothing moving a hash)? Any misattribution (the seat's words vs Code's summary), overclaim, omission that matters, or pre-decision of anything the read leaves open? Any wording that would read as Code adjudicating? Suggested replacement text for each finding.`, { label: 'values', phase: 'Values', schema: VALUES })
+return { pass: PASS, claims: v ? v.claims : [], refuted: r ? r.verdicts : [], values: vals ? vals.findings : [] }
+
+
+####################################################################################################
+PASS 1: claims 23 {'VERIFIED': 19, 'IMPRECISE': 4}
+####################################################################################################
+======================================== CODE'S DISPOSITIONS
+Applied: C14 (Q3: "in full", the addendum a separate file whose sha256 v0.2 names), C15 (Q4: the raw carries no finish stamp; the
+commit message restates no stamp; the launch stamp stays), C19 (Q7: A5's clause and its tool-cannot-form escape). C16 REFUTED (the
+refuter: "this raw" parallels the entry's own usage); the values lens's V5(a) on the same antecedent was applied anyway ("the stage's
+raw", linked). Values: V1 (major) -- "In the read's words or close to them" replaced by a label that marks only quoted words as the
+seat's; V2 (§4's sentence and the short form quoted, not stated in Code's voice); V3 (Q2's conditions listed, PIN-S10 not amended,
+the hold on an edited driver released in the seat's words); V4 (Q3 in full, as the value of record); V5 (Q4 complete); V6 (Q5:
+accepted for this stage; the inference; Code's choice); V7 (Q7 with the escape clause); V8 (the commit named by self-reference and
+a pointer to where its hash is named); V9 (Q1 reconciled: nothing truncated at v0.2; the copy, not the record); V10 (Q6 figures and
+the PI's cap); V11 (the tally "reported; no bar" and the seat's byte check); V12 (the values paragraph and §5).
+
+======================================== VERIFIER (agent a70f1b98c6a3f404f), verbatim
+{
+ "claims": [
+  {
+   "id": "C01",
+   "text": "Sub-bullet header: \"The gate's close (2026-10-13; the seat's read, §4).\"",
+   "verdict": "VERIFIED",
+   "evidence": "The read's line 3 is \"Design seat, 2026-10-13\". Its §4 is titled \"The gate's close, and step 12\" and says \"The close is this read\". The session date is 2026-10-13.",
+   "correction": ""
+  },
+  {
+   "id": "C02",
+   "text": "\"The seat's step-10 read is committed by path with this line\". This names the commit, and the read's §4 asks for the same commit.",
+   "verdict": "VERIFIED",
+   "evidence": "Read §4: \"Code commits it by path under `results/raw/` and, in the same commit, appends a close line ... naming this file, its sha256 and the commit\". A commit cannot carry its own hash, so \"committed by path with this line\" is the right way to name it. `git status` shows the read untracked (`??`) and RESULTS.md modified. Note for the commit: `paper_analysis.ipynb` is also modified in the tree and is not part of this change. Commit with pathspecs only: RESULTS.md and the read.",
+   "correction": ""
+  },
+  {
+   "id": "C03",
+   "text": "The link [`_design-to-code_G-TIME-F0_read`](results/raw/2026-10-13_m-design-to-code_G-TIME-F0_read.md): the path, and its link-text form.",
+   "verdict": "VERIFIED",
+   "evidence": "The file exists at that path. The link text follows the entry's own pattern of dropping the `YYYY-MM-DD_m` prefix. Compare `[_code-to-design_G-TIME-F0](results/raw/2026-10-12_m-code-to-design_G-TIME-F0.md)` at RESULTS.md:36 and :256, and `_gtime-f0` and `_gtime-driver_review`.",
+   "correction": ""
+  },
+  {
+   "id": "C04",
+   "text": "sha256 `c2cc448f441bcc32a5ca8aaa2c2dd37c7447f2ef133c031acb41569223a698a7`",
+   "verdict": "VERIFIED",
+   "evidence": "`shasum -a 256 results/raw/2026-10-13_m-design-to-code_G-TIME-F0_read.md` returns c2cc448f441bcc32a5ca8aaa2c2dd37c7447f2ef133c031acb41569223a698a7. This equals the value in the PI's routing.",
+   "correction": ""
+  },
+  {
+   "id": "C05",
+   "text": "\"That commit is the gate's close entry under R1 A4.\"",
+   "verdict": "VERIFIED",
+   "evidence": "Read §4: \"That commit is the gate's close entry under R1 A4\". R1 is results/raw/2026-10-10_m-design-to-code_pre-LOCK-v0.1.md, sha256 b4c69f5d…f125 as the read names it. Its A4 (line 25) gives the going-forward rule: \"a step that follows a gate in m:358 starts after that gate's close entry\".",
+   "correction": ""
+  },
+  {
+   "id": "C06",
+   "text": "\"The read answers Q1–Q7\"",
+   "verdict": "VERIFIED",
+   "evidence": "Read §3 is \"Q1–Q7\" and answers each in turn. §4 asks for the close line to record \"Q1–Q7 as answered here\".",
+   "correction": ""
+  },
+  {
+   "id": "C07",
+   "text": "\"nothing in it moves a hash, edits the analyzer or the package, or re-runs a gate\"",
+   "verdict": "VERIFIED",
+   "evidence": "The read's short form says, verbatim: \"nothing in this read moves a hash, edits the analyzer or the package, or re-runs a gate.\" §4 asks for the line to record \"nothing moving a hash\".",
+   "correction": ""
+  },
+  {
+   "id": "C08",
+   "text": "The framing \"In the read's words or close to them:\", applied to the bullets below it.",
+   "verdict": "VERIFIED",
+   "evidence": "Most bullets reuse the read's own phrasing. The scope departures are flagged one by one under C14, C15, C16 and C19.",
+   "correction": ""
+  },
+  {
+   "id": "C09",
+   "text": "\"the attractor tally on the contrast session's forced rounds is \"0 of 4\"\"",
+   "verdict": "VERIFIED",
+   "evidence": "The read's short form: \"the attractor tally on the contrast session's four forced rounds is **0 of 4**\". §1 says the same: \"Attractor tally: 0 of 4.\" The quoted words are verbatim.",
+   "correction": ""
+  },
+  {
+   "id": "C10",
+   "text": "\"the lock's six new Code items are accepted, and become readings of record at v0.2\"",
+   "verdict": "VERIFIED",
+   "evidence": "Read §2: \"All six are accepted and become readings of record at v0.2, where Code marks each 'accepted by the seat's step-10 read' where it stands.\" The short form also says \"with the notes in §2\". Leaving those notes out is a summary choice, not a change of meaning.",
+   "correction": ""
+  },
+  {
+   "id": "C11",
+   "text": "Q1: \"v0.2 amends `LOCK-m-F0.md` above the v0.1 text, which it keeps verbatim.\"",
+   "verdict": "VERIFIED",
+   "evidence": "Read Q1: \"v0.2 amends `LOCK-m-F0.md` above the v0.1 text, which it keeps verbatim; v1.0 amends above both. At v0.2 ... nothing is truncated.\"",
+   "correction": ""
+  },
+  {
+   "id": "C12",
+   "text": "Q1: \"At the first revision that moves a tested hash (v1.0), the superseded full hashes in the carried copy are truncated, and each truncation is listed\"",
+   "verdict": "VERIFIED",
+   "evidence": "Read Q1: \"At the first revision that moves a tested hash — v1.0 at step 15, where R2 3 moves the analyzer — the superseded full hashes in the record below (...) are truncated to their first 16 hex and '…' ... That edits the copy of the v0.1 text that the amended file carries for reading; it does not edit the record, which is the committed blob at `e3bef6f` ... The revision's header lists each truncation.\" \"In the carried copy\" keeps the scope the seat set: the copy, not the record. Optional, for readers outside the thread: say whose copy it is.",
+   "correction": "Optional wording: \"...the superseded full hashes in the copy of the v0.1 text the file carries are truncated (the record, the v0.1 blob at `e3bef6f`, is not edited), and each truncation is listed;\""
+  },
+  {
+   "id": "C13",
+   "text": "Q2: \"the `time` answer extends to `id`, `qual` and `campaign`, on its conditions\"",
+   "verdict": "VERIFIED",
+   "evidence": "Read Q2 is headed \"the `time` answer extends to `id`, `qual` and `campaign`\" and answers \"Yes.\" Its \"Conditions\" are: no change under `valence_core/m`; the build reviewed as at step 10 with the self-test extended; the new sha256 recorded; the PIN sites declared on C6's extended terms.",
+   "correction": ""
+  },
+  {
+   "id": "C14",
+   "text": "Q3: \"v0.2's §5.2 names the driver's blob at v0.2's tree, with its history (`54fc8a07…`, `5785a26d…036d`, the step-12 blob), plus the PIN-index addendum\"",
+   "verdict": "IMPRECISE",
+   "evidence": "Read Q3 has \"v0.2's §5.2 names in full the driver's blob at v0.2's tree ... as the value of record, and under it the driver's history as a list: `54fc8a07…` at v0.1's tree (as the v0.1 text has it), `5785a26d…036d` in full at step 10 (`0fe65b9` ...), and the step-12 blob in full.\" The read puts the addendum elsewhere: \"The PIN-index addendum is accepted as Code's addition to m:282's list ... a new file under `results/raw/`, its sha256 named in v0.2.\" (1) \"plus the PIN-index addendum\" hangs off \"§5.2 names\", which places the addendum in §5.2. The read makes it a separate file whose sha256 v0.2 names, with no section given. (2) Without \"in full\", the abbreviated forms read as what v0.2 will write. The read writes the step-10 and step-12 blobs in full, and only `54fc8a07…` as the v0.1 text has it. The two abbreviations themselves match the read and the full values at RESULTS.md:66–67.",
+   "correction": "- **Q3:** v0.2's §5.2 names in full the driver's blob at v0.2's tree as the value of record, with the driver's history under it (`54fc8a07…` as the v0.1 text has it; `5785a26d…036d` and the step-12 blob in full). The PIN-index addendum is accepted as Code's addition: a new file under `results/raw/`, its sha256 named in v0.2;"
+  },
+  {
+   "id": "C15",
+   "text": "Q4: \"later stages with contrast sessions carry no finish stamp, and their commit messages restate none\"",
+   "verdict": "IMPRECISE",
+   "evidence": "Read Q4: \"For every later stage with contrast sessions (G-F0m-Qwen's eight; the campaign) the raw carries no finish stamp, and the commit message restates no stamp; the launch stamp stays, since it carries nothing.\" (1) The read's subject is the raw. \"Stages ... carry no finish stamp\" is wider, and an entry's own stamps are among the records the read says remain. (2) \"Restate none\" follows \"no finish stamp\", so it reads as \"restate no finish stamp\". The read's \"restates no stamp\" covers every stamp, the launch stamp included. (3) The line leaves out that the launch stamp stays. G-ID-F0m being sham-only is correctly left out of scope.",
+   "correction": "- **Q4:** for every later stage with contrast sessions (G-F0m-Qwen; the campaign) the raw carries no finish stamp, and the commit message restates no stamp; the launch stamp stays."
+  },
+  {
+   "id": "C16",
+   "text": "Q4: \"this raw and `dac74b7` stand as written\"",
+   "verdict": "IMPRECISE",
+   "evidence": "Read Q4: \"This raw and `dac74b7` stand as written\". In the read, \"this raw\" is G-TIME-F0's stage raw (results/raw/2026-10-12_m-gtime-f0.txt, committed at `dac74b7`). In the close line, the nearest raw named is the read itself, also under results/raw/. So \"this raw\" can be read as the seat's read file. The words are the seat's; only the referent has moved.",
+   "correction": "\"G-TIME-F0's raw (`_gtime-f0`) and `dac74b7` stand as written;\" or \"the stage's raw and `dac74b7` stand as written;\""
+  },
+  {
+   "id": "C17",
+   "text": "Q5: \"every later Qwen stage of Q-F0 loads offline, with the snapshot id in each raw's header and each stage's entry; v0.2 names the snapshot\"",
+   "verdict": "VERIFIED",
+   "evidence": "Read Q5: \"For every later Qwen stage of Q-F0: an offline load, with the snapshot id recorded in each raw's header and in each stage's entry, and v0.2 names the snapshot, with the model id, as Q-F0's weights of record; v1.0 keeps it.\" The scope (every later Qwen stage of Q-F0) is preserved. One thing is left out. The ping's Q5 asked about \"this stage's offline load and later ones\" (RESULTS.md:182), and the read opens with \"Accepted for this stage\". It also accepts G-CAL's same-snapshot resolution only as Code's inference. That is an omission, not an error.",
+   "correction": "Optional addition: \"**Q5:** this stage's offline load is accepted (G-CAL's same snapshot accepted as Code's inference); every later Qwen stage of Q-F0 loads offline, with the snapshot id in each raw's header and each stage's entry; v0.2 names the snapshot, with the model id, as Q-F0's weights of record;\""
+  },
+  {
+   "id": "C18",
+   "text": "Q6: \"§2.4's bases stand, with the measured sham figures beside them\"",
+   "verdict": "VERIFIED",
+   "evidence": "Read Q6: \"v0.2 projects on §2.4's named bases, unchanged — 488 s per uncached session; 65–85 s per cached launch — and reports the measured sham figures beside them, not substituted\". The 488 s basis is in PROPOSAL-m-gating-campaign-v1_11.md line 205 (m:205). The phrase \"§2.4's bases\" matches the read and the entry's own usage at RESULTS.md:274.",
+   "correction": ""
+  },
+  {
+   "id": "C19",
+   "text": "Q7: \"the run stands and the raw stays as written; the checklist's own line binds every later launch\"",
+   "verdict": "IMPRECISE",
+   "evidence": "Read Q7: \"The run stands as obtained and the raw stays as written (`dac74b7`, pushed) ... R1 A5's clause ... binds every later launch as written: the checklist's own line, `nohup caffeinate -is … & disown`, verbatim; where Code's tool cannot form that line, the header says what was run instead, at the time ... No re-run.\" The binding rule is A5's clause, which has two parts: the checklist's line, plus a disclosed departure where the tool cannot form it. \"The checklist's own line binds every later launch\" drops the second part, which makes the rule stricter than the seat's. The PI's quoted routing does carry \"any departure stated in the header at the time\". \"The raw\" also has the same referent ambiguity as C16.",
+   "correction": "- **Q7:** the run stands as obtained and the stage's raw stays as written; no re-run. R1 A5 binds every later launch as written: the checklist's own line, verbatim, and where Code's tool cannot form it, the header says what was run instead, at the time."
+  },
+  {
+   "id": "C20",
+   "text": "Q3 hash abbreviations `54fc8a07…` and `5785a26d…036d` match the record.",
+   "verdict": "VERIFIED",
+   "evidence": "They match the read's Q3 verbatim. They also match the full values in the entry at RESULTS.md:66–67: 54fc8a07be13faa0704e65e453eac42293435be862a1a985f73a32ee9355059f and 5785a26da7dc519ab86746d7dc98bd2d1e951c9a94e85ffe07ddc15a97f2036d.",
+   "correction": ""
+  },
+  {
+   "id": "C21",
+   "text": "\"The PI's routing (chat, 2026-10-13), verbatim: \"Seat’s step-10 read: ... any departure stated in the header at the time.\"\"",
+   "verdict": "VERIFIED",
+   "evidence": "Compared programmatically against the harness-relayed PI message, after joining the markdown line wraps with single spaces. The two strings are identical: 495 characters each, 4 curly apostrophes (U+2019) in both, no straight apostrophes. The hash and path in the quote equal C04's. The date is the session date.",
+   "correction": ""
+  },
+  {
+   "id": "C22",
+   "text": "\"Step 12 starts after this commit, on that word.\"",
+   "verdict": "VERIFIED",
+   "evidence": "Read §4: \"step 12 starts after it on the PI's word. The PI can give the word in the routing that carries this read\". The PI's routing says \"Then go for step 12 on the read’s terms\". This matches R1 A4's rule that a step starts after the gate's close entry.",
+   "correction": ""
+  },
+  {
+   "id": "C23",
+   "text": "Placement: the close line is appended to the end of the 2026-10-12 G-TIME-F0 entry, as §4 directs.",
+   "verdict": "VERIFIED",
+   "evidence": "`git diff RESULTS.md` shows one hunk of 27 added lines, at RESULTS.md:291–317. It sits after the values-check sub-bullet and before the 2026-10-10 LOCK v0.1 entry (now line 319), inside the top entry that starts at line 24. The paragraph after the blank line is indented 4 spaces, which continues the sub-bullet. The entry already uses this pattern at :109, :139 and :147.",
+   "correction": ""
+  }
+ ]
+}
+
+======================================== REFUTER (agent ad315c2d8c6c8a478), verbatim
+{
+ "verdicts": [
+  {
+   "id": "C14",
+   "verdict": "CONFIRMED",
+   "evidence": "The read file's sha256 matches c2cc448f…98a7. The read's Q3 says: \"v0.2's §5.2 names in full the driver's blob at v0.2's tree … and under it the driver's history as a list: `54fc8a07…` at v0.1's tree (as the v0.1 text has it), `5785a26d…036d` in full at step 10 …, and the step-12 blob in full.\" It treats the addendum in a separate sentence: \"The PIN-index addendum is accepted as Code's addition to m:282's list … a new file under `results/raw/`, its sha256 named in v0.2.\" (1) The close line reads \"§5.2 names X, with its history (…), plus the PIN-index addendum\", and the most natural reading is that §5.2 also names the addendum. The read never puts the addendum in §5.2, and it gives the reason the driver hashes go there (\"§5.2 is where the driver is described\"). The line also leaves out that the addendum is accepted as Code's addition. (2) Dropping \"in full\" matters. Q1 of the same read truncates superseded hashes at v1.0, so a reader of the abbreviated parenthetical would assume the history is truncated too. Q3 rules that the step-10 and step-12 driver blobs stand in full (\"Nothing tests a driver hash as a substring, so the full values may stand together\"). The abbreviations themselves are right: they match the full values at RESULTS.md:66–67 (54fc8a07be13…059f; 5785a26da7dc…036d).",
+   "correction": "- **Q3:** v0.2's §5.2 names in full the driver's blob at v0.2's tree, with its history (`54fc8a07…` as the v0.1 text has it; `5785a26d…036d` and the step-12 blob in full); the PIN-index addendum is accepted as Code's addition, a new file under `results/raw/`, its sha256 named in v0.2;"
+  },
+  {
+   "id": "C15",
+   "verdict": "CONFIRMED",
+   "evidence": "The read's Q4 says: \"For every later stage with contrast sessions (G-F0m-Qwen's eight; the campaign) the raw carries no finish stamp, and the commit message restates no stamp; the launch stamp stays, since it carries nothing.\" In the close line, \"restate none\" follows \"no finish stamp\", so by ellipsis it reads \"restate no finish stamp\". That narrows the ruling. The ping (results/raw/2026-10-12_m-code-to-design_G-TIME-F0.md:197) records that dac74b7's message \"restates both stamps\", and the read's \"restates no stamp\" bars both, the launch stamp included. The subject is also too wide. The read's subject is the raw. The entry's own stamps, among them a first-write stamp written after the finish (ping :195), \"remain\" under the read, so \"stages … carry no finish stamp\" says more than was ruled. The line also leaves out that the launch stamp stays.",
+   "correction": "- **Q4:** at later stages with contrast sessions the raw carries no finish stamp and the commit message restates no stamp; the launch stamp stays; this raw and `dac74b7` stand as written;"
+  },
+  {
+   "id": "C16",
+   "verdict": "REFUTED",
+   "evidence": "The text is right as written. The entry already uses \"this raw\" for the stage's raw in the same Q4 context. Its ping summary says Code \"asks what the seat wants for this raw and its commit message\" (RESULTS.md, the ping section's Q4 bullet). The close line's Q4 answers that question in parallel form. Pairing \"this raw\" with `dac74b7`, the commit that added results/raw/2026-10-12_m-gtime-f0.txt, fixes the referent: the seat's read is not in `dac74b7`, and it is being committed now rather than \"standing as written\". The close line calls the seat's file \"the seat's step-10 read\" or \"the read\" throughout, never \"raw\". Q7's \"the raw stays as written\" has the same referent. The phrase is also the read's own (\"This raw and `dac74b7` stand as written\"), under the line's declared frame \"In the read's words or close to them\". A clarifying edit would do no harm, but none is required.",
+   "correction": "None required."
+  },
+  {
+   "id": "C19",
+   "verdict": "CONFIRMED",
+   "evidence": "The read's Q7 says: \"R1 A5's clause was not met at its first use, and it binds every later launch as written: the checklist's own line, `nohup caffeinate -is … & disown`, verbatim; where Code's tool cannot form that line, the header says what was run instead, at the time — that is exactly what A5 asks for. No re-run.\" In the read, what binds is A5's clause: the line, or a disclosed departure. The close line makes \"the checklist's own line\" the thing that binds and drops the disclosure route, so any departure would count as non-compliant. That is stricter than the seat's ruling. It matters right away: the step-10 launch departed because it was run as a background job of Code's shell tool (ping :42), and step 12 runs under this rule. The PI's quote and the entry's own launch-conditions bullet both carry \"any departure stated in the header at the time\", so the close line's Q7 is inconsistent with the record around it. The words \"the run stands and the raw stays as written\" are correct. As in C16, \"the raw\" is the stage's raw; the read's Q7 itself has \"the raw stays as written (`dac74b7`, pushed)\".",
+   "correction": "- **Q7:** the run stands and the raw stays as written; R1 A5 binds every later launch as written: the checklist's own line, and where Code's tool cannot form it, the header says what was run instead, at the time."
+  }
+ ]
+}
+
+======================================== VALUES LENS (agent a113b79c94c1281f0), verbatim
+{
+ "findings": [
+  {
+   "id": "V0",
+   "severity": "note",
+   "finding": "Verified, no change needed. The read's sha256 is c2cc448f441bcc32a5ca8aaa2c2dd37c7447f2ef133c031acb41569223a698a7 (shasum -a 256). After whitespace normalisation, the PI quote matches the routing message byte for byte, including the four curly apostrophes (U+2019) and the section sign. The RESULTS.md diff is a single +27-line hunk that holds only the close line. The link text `_design-to-code_G-TIME-F0_read` follows the entry's own convention of dropping the date-and-m prefix. The close line does what §4 asks in outline: it names the file and its sha256, names the commit by self-reference (\"committed by path with this line\"), says Q1–Q7 are answered and that nothing moves a hash, and places step 12 after the commit on the PI's word. The quote of the PI's routing does not make the close line pre-decide anything the read leaves open: the hour cap, the precheck snapshot print, the truncation-breaks-a-test question at step 15, and Appendix D's adjudication are all left alone.",
+   "suggested_text": "No change."
+  },
+  {
+   "id": "V1",
+   "severity": "major",
+   "finding": "Attribution label. \"In the read's words or close to them:\" presents Code's compressions as near-quotations of the seat, and the reader cannot tell which words are whose. Only \"0 of 4\" is actually quoted. Several bullets use Code's own terms (\"the carried copy\", \"on its conditions\", \"with its history\") or drop the seat's qualifiers: \"in full\" in Q3, \"accepted for this stage\" in Q5, \"the launch stamp stays\" and \"G-ID-F0m is sham-only and unaffected\" in Q4, \"not substituted\" in Q6, and the tool-cannot-form-the-line clause in Q7. That is the misattribution class the seat-citation sweep exists to catch. The bullets are Code's summary and should be labelled as such, with the read as the record.",
+   "suggested_text": "Replace \"In the read's words or close to them:\" with: \"Code's summary, to find each answer by; the read is the record, and only the words in quotation marks are the seat's:\""
+  },
+  {
+   "id": "V2",
+   "severity": "minor",
+   "finding": "Two of the seat's designations are stated in Code's own voice. \"That commit is the gate's close entry under R1 A4\" is §4's sentence verbatim. \"nothing in it moves a hash, edits the analyzer or the package, or re-runs a gate\" is the read's short form, nearly verbatim. Unattributed, the first reads as Code declaring its own commit to be the gate's close, which is the kind of call the entry's header reserves to the seat (\"What else holds it is the seat's to say ... R1 A4's close-entry rule among them\"). Quote both.",
+   "suggested_text": "Replace \"That commit is the gate's close entry under R1 A4. The read answers Q1–Q7, and nothing in it moves a hash, edits the analyzer or the package, or re-runs a gate.\" with: \"In §4's words, \"That commit is the gate's close entry under R1 A4\". The read answers Q1–Q7 (§3); in its short form's words, \"nothing in this read moves a hash, edits the analyzer or the package, or re-runs a gate\".\""
+  },
+  {
+   "id": "V3",
+   "severity": "minor",
+   "finding": "Q2: the antecedent of \"on its conditions\" is wrong. The `time` answer (the PI's step-10 word) listed no conditions; the conditions are the ones Q2 itself lists. These are exactly what step 12 must meet, so they belong in the close. The bullet also leaves out the consequence that releases the hold this entry states twice: \"Code does not launch it on an edited driver until the seat answers Q2\", and step 12's \"launch on an edited driver waits on Q2\". It further omits that PIN-S10 is not amended.",
+   "suggested_text": "\"**Q2:** the `time` answer extends to `id`, `qual` and `campaign`, none re-running G-SHAPE-F0, on the conditions Q2 lists: no change under `valence_core/m`; the build reviewed as at step 10, with the self-test extended; the new blob's sha256 printed by the DRIVER line and recorded in the wired stage's entry and in the next lock revision (v0.2 for `id`, v1.0 for `qual`, the campaign's launch entry for `campaign`); new PIN sites declared on C6's terms as extended. PIN-S10's text is not amended; v0.2 records how it is read. This answers the hold above on an edited driver: Code \"may build, review and, on the PI's word, launch G-ID-F0m on the edited driver\";\""
+  },
+  {
+   "id": "V4",
+   "severity": "minor",
+   "finding": "Q3 drops \"in full\" and \"as the value of record\". The history then appears as `54fc8a07…`, `5785a26d…036d`, all truncated, right after a Q1 bullet about truncation. The read says the v0.2-tree blob is named in full as the value of record, and that `5785a26d…036d` and the step-12 blob go in full (\"Nothing tests a driver hash as a substring, so the full values may stand together\"). Only `54fc8a07…` stands truncated, \"as the v0.1 text has it\". Read beside Q1, the bullet could be drafted into v0.2 wrongly.",
+   "suggested_text": "\"**Q3:** v0.2's §5.2 names in full, as the value of record, the driver's blob at v0.2's tree (the blob G-ID-F0m ran on). Under it goes the driver's history: `54fc8a07…` at v0.1's tree, as the v0.1 text has it; `5785a26d…036d` (step 10, `0fe65b9`) and the step-12 blob, each in full. The five step-10 sites and any step-12 sites are carried on C6's terms as extended. The PIN-index addendum is accepted as Code's addition, its sha256 named in v0.2; the v0.1 index is not edited;\""
+  },
+  {
+   "id": "V5",
+   "severity": "minor",
+   "finding": "Q4 has a dangling antecedent and leaves out binding parts. (a) The close line has just named the seat's read, a file under results/raw/, so \"this raw\" now reads as that file. In the seat's text it meant the stage raw, results/raw/2026-10-12_m-gtime-f0.txt. (b) It says \"stages ... carry no finish stamp\", but the read says the raw carries none. (c) It omits \"the launch stamp stays\", without which both stamps might be dropped. (d) It omits \"G-ID-F0m is sham-only and unaffected\", which bears directly on step 12's raw. (e) It omits the standing commitment that the unavoidable records \"are not computed against each other by anyone before VERDICTS\". That commitment binds Code and resolves the entry's \"pending the seat's answer\".",
+   "suggested_text": "\"**Q4:** for every later stage with contrast sessions (G-F0m-Qwen's eight; the campaign), the raw carries no finish stamp and the commit message restates no stamp; the launch stamp stays. G-ID-F0m is sham-only and unaffected. The unavoidable records (commit times, the report's PROVENANCE start stamp, the entries' own stamps) remain, and are not computed against each other by anyone before VERDICTS. The stage raw ([`_gtime-f0`](results/raw/2026-10-12_m-gtime-f0.txt)) and `dac74b7` stand as written;\""
+  },
+  {
+   "id": "V6",
+   "severity": "minor",
+   "finding": "Q5 omits the direct answer to the question's first half, \"Accepted for this stage\". It also omits the disposition of the item this entry flagged: the read accepts G-CAL's same-snapshot claim \"as an inference\", records that T10-2 states it as fact, and leaves the review raw unedited. The snapshot id is not named, yet the PI's step-12 terms require it in the raw's header and the entry. The precheck-print option should be recorded as the read leaves it, Code's choice, and not as decided.",
+   "suggested_text": "\"**Q5:** this stage's offline load is accepted (`HF_HUB_OFFLINE=1`, snapshot `c000ac2c2057d94be3fa931000c31723aac53282`). That G-CAL's online load resolved the same snapshot is accepted as Code's inference, not as fact; the review raw is not edited. Every later Qwen stage of Q-F0 loads offline, with the snapshot id in each raw's header and each stage's entry. v0.2 names the snapshot, with the model id, as Q-F0's weights of record. Having the precheck print it is \"Code's choice\", a driver edit of Q2's kind;\""
+  },
+  {
+   "id": "V7",
+   "severity": "minor",
+   "finding": "Q7 states the binding (\"the checklist's own line binds every later launch\") without the seat's escape clause, which is the operative part of A5 as the read restates it: \"where Code's tool cannot form that line, the header says what was run instead, at the time\". It also drops \"No re-run\" and the seat's finding that A5's clause \"was not met at its first use\". \"the raw\" carries the same antecedent problem as Q4. Name the line.",
+   "suggested_text": "\"**Q7:** the run stands as obtained, and the stage raw stays as written (`dac74b7`); no re-run. R1 A5's clause was not met at its first use. It binds every later launch as written: m:267's own line, `nohup caffeinate -is … & disown`, verbatim; where Code's tool cannot form that line, the header says what was run instead, at the time.\""
+  },
+  {
+   "id": "V8",
+   "severity": "minor",
+   "finding": "§4 asks the close line to name \"the commit\". The line can only refer to it as \"committed by path with this line\", and it gives no forward pointer, so a reader of the entry must turn to git blame to find the close commit. CLAUDE.md has a precedent for this case (ledger 5(f): \"applied on that commit ..., the hash filled at the following commit\"). A one-clause undertaking names where the hash will appear without self-reference.",
+   "suggested_text": "Replace \"The seat's step-10 read is committed by path with this line:\" with: \"The seat's step-10 read is committed by path in the commit that adds this line (a commit cannot name itself; its hash is named in the G-ID-F0m entry):\""
+  },
+  {
+   "id": "V9",
+   "severity": "note",
+   "finding": "Q1 as compressed looks self-contradictory: v0.2 \"keeps verbatim\" the v0.1 text, and later \"the carried copy\" is truncated. The read reconciles the two explicitly. At v0.2 nothing is truncated. The truncation edits only \"the copy of the v0.1 text that the amended file carries for reading\" and \"does not edit the record, which is the committed blob at `e3bef6f`\". \"the carried copy\" is Code's term.",
+   "suggested_text": "\"**Q1:** v0.2 amends `LOCK-m-F0.md` above the v0.1 text, which it keeps verbatim; nothing is truncated at v0.2. At the first revision that moves a tested hash (v1.0 at step 15, where R2 3 moves the analyzer), the superseded full hashes in the copy of the v0.1 text that the file carries are truncated to 16 hex and \"…\", and the revision's header lists each truncation. The record, the committed blob at `e3bef6f`, is not edited;\""
+  },
+  {
+   "id": "V10",
+   "severity": "note",
+   "finding": "Q6 drops \"not substituted\" and the figures. It also drops the one item the read leaves to the PI, \"The hour cap at step 15 is the PI's, set with both in view\", and the read's mention of G-ID-F0m's sham seconds on both paths, which step 12 will produce.",
+   "suggested_text": "\"**Q6:** v0.2 projects on §2.4's named bases, unchanged (488 s per uncached session; 65–85 s per cached launch). The measured sham figures go beside them, not substituted: G-TIME-F0's A0s at 261.65 s, and G-ID-F0m's sham seconds on both paths when they exist. The hour cap at step 15 is the PI's;\""
+  },
+  {
+   "id": "V11",
+   "severity": "note",
+   "finding": "The attractor-tally bullet omits the seat's \"Reported; no bar (m:271)\", so the tally could be read as a gate figure. It also omits the seat's own byte check: the two corrupted deliveries are G-CAL's renders of record byte for byte.",
+   "suggested_text": "\"the attractor tally on the contrast session's four forced rounds is \"0 of 4\" (reported; no bar, m:271), and the two corrupted deliveries are G-CAL's renders of record byte for byte;\""
+  },
+  {
+   "id": "V12",
+   "severity": "note",
+   "finding": "Two settled items outside Q1–Q7 are not mentioned. Both close items this entry raised, and one bears on step 12. (i) §2's values paragraph takes the `schedule_sha256`/`ban_sha` equality as the consistency check, and keeps the lock's other computed values Code's until a stage's identity carries them; G-ID-F0m's `schedule_sha256` becomes a checked value at step 12. (ii) §5 accepts step 9's partial re-run, which this entry recorded.",
+   "suggested_text": "Add after the six-items bullet: \"beyond Q1–Q7, the read takes the `schedule_sha256` and `ban_sha` equality as the consistency check; the lock's other computed values stay Code's until a stage's identity carries them, G-ID-F0m's `schedule_sha256` at step 12. §5 accepts step 9's partial re-run as recorded above;\""
+  }
+ ]
+}
+
+####################################################################################################
+PASS 2: claims 54 {'VERIFIED': 49, 'UNCHECKABLE': 2, 'IMPRECISE': 3}
+####################################################################################################
+======================================== CODE'S DISPOSITIONS
+Applied: C37 (CONFIRMED: "the entry's own stamps", quoted as the read has it). C09 (REFUTED) and C50 (REFUTED) applied anyway as the
+optional narrowings: the label now scopes the seat's quotes to the list; "the checklist's own line (m:267)". Values: V1 (the label
+scoped to the list); V2 (the commit named mechanically: the read's first commit, `git log --diff-filter=A`; the next RESULTS entry
+names its hash -- not tied to the G-ID-F0m entry, which may not be next); V3 (§4's sentence quoted through "step 12 starts after it
+on the PI's word", the seat's bold kept, and "no item answered here can change step 12's inputs"); V4 (§2's notes on items 1, 3 and
+6, quoted); V5 (Q3 "amended to v0.2's tree"; the addendum's terms quoted); V6 (the seat's "G-TIME-F0's read is clean" and "Nothing
+here bears on the PASS", the byte check attributed); V7 (Q4's list quoted; neither party has computed a bound); V8 (Q1's open case
+quoted; Q5's v1.0 and the deferral of a hashed binding quoted; Q6 "uncached"); V9 (Q7: the seat's characterization quoted); V10
+(Q3's "(as the v0.1 text has it)" quoted, the form left to the seat); V11 (no change: Code folds the snapshot print into the
+step-12 build, so the blob G-ID-F0m runs on is the blob v0.2 names); V12 (no stamp in the close line or the commit message).
+Every quotation in the close line was then checked as a substring of the read (whitespace-normalised), and the PI's quote
+byte-exact (its four curly apostrophes).
+
+======================================== VERIFIER (agent ab7f7db62a913a42f), verbatim
+{
+ "claims": [
+  {
+   "id": "C01",
+   "text": "Header: 'The gate's close (2026-10-13; the seat's read, §4)'",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 3: 'Design seat, 2026-10-13'; read §4 heading '## 4. The gate's close, and step 12' (line 57).",
+   "correction": ""
+  },
+  {
+   "id": "C02",
+   "text": "The seat's step-10 read is committed by path in the commit that adds this line",
+   "verdict": "VERIFIED",
+   "evidence": "Read §4 (line 59): 'Code commits it by path under `results/raw/` and, in the same commit, appends a close line'; PI quote: 'Commit it by path'. File is untracked now (git status '?? results/raw/2026-10-13_m-design-to-code_G-TIME-F0_read.md'), so this is the pending commit's description, as intended.",
+   "correction": ""
+  },
+  {
+   "id": "C03",
+   "text": "Link [`_design-to-code_G-TIME-F0_read`](results/raw/2026-10-13_m-design-to-code_G-TIME-F0_read.md)",
+   "verdict": "VERIFIED",
+   "evidence": "Path exists relative to repo root. The link text follows the entry's existing convention (`_code-to-design_G-TIME-F0` for 2026-10-12_m-code-to-design_G-TIME-F0.md).",
+   "correction": ""
+  },
+  {
+   "id": "C04",
+   "text": "sha256 c2cc448f441bcc32a5ca8aaa2c2dd37c7447f2ef133c031acb41569223a698a7",
+   "verdict": "VERIFIED",
+   "evidence": "`shasum -a 256` on the read file prints c2cc448f441bcc32a5ca8aaa2c2dd37c7447f2ef133c031acb41569223a698a7. It matches the PI's quoted sha256.",
+   "correction": ""
+  },
+  {
+   "id": "C05",
+   "text": "A commit cannot name itself; its hash is named in the G-ID-F0m entry",
+   "verdict": "UNCHECKABLE",
+   "evidence": "This is Code's forward commitment, not a claim about the read. The G-ID-F0m entry does not exist yet. §4 asks the close line to name 'the commit'; describing it as 'the commit that adds this line' is the only possible form.",
+   "correction": "None now. When the G-ID-F0m entry is written, it must carry this commit's hash."
+  },
+  {
+   "id": "C06",
+   "text": "§4 says: \"That commit is the gate's close entry under R1 A4\"",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 59: 'That commit is the gate's close entry under R1 A4, and **step 12 starts after it on the PI's word**.' The quote is verbatim, cut at the comma. The read uses straight apostrophes (0 curly in the file), as the close line does. The antecedent of 'That commit' (the commit that commits the read and appends the close line) is the one the close line names.",
+   "correction": ""
+  },
+  {
+   "id": "C07",
+   "text": "The read answers Q1–Q7 (§3)",
+   "verdict": "VERIFIED",
+   "evidence": "Read '## 3. Q1–Q7' (line 41). The short form: 'Q1–Q7 are answered in §3'.",
+   "correction": ""
+  },
+  {
+   "id": "C08",
+   "text": "Its short form says: \"nothing in this read moves a hash, edits the analyzer or the package, or re-runs a gate\"",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 7, '**The short form.**' paragraph: '...Q1–Q7 are answered in §3; nothing in this read moves a hash, edits the analyzer or the package, or re-runs a gate.' Verbatim substring. Together with C07 this meets §4's 'recording Q1–Q7 as answered here with nothing moving a hash'.",
+   "correction": ""
+  },
+  {
+   "id": "C09",
+   "text": "What follows is Code's summary... The read is the record, and only the words in quotation marks are the seat's.",
+   "verdict": "IMPRECISE",
+   "evidence": "A script check found all 8 double-quoted strings in the summary list verbatim in the read: '0 of 4', '…', 'may build, review and, on the PI's word, ...', 'Code's choice', 'was not met at its first use', 'where Code's tool cannot form that line, ...', plus the two quoted above the scope sentence. But the paragraph after the list ('The PI's routing ..., verbatim: \"Seat’s step-10 read: ...\"') is also in quotation marks and is the PI's, not the seat's. The sentence's scope ('What follows') can be read to cover it. It is low severity, because that paragraph names its source explicitly.",
+   "correction": "Optional: '...and only the words in quotation marks in the list below are the seat's.'"
+  },
+  {
+   "id": "C10",
+   "text": "The forced rounds: attractor tally on the contrast session's four forced rounds is \"0 of 4\" (reported; no bar, m:271)",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 20: '**Attractor tally: 0 of 4.** ... Reported; no bar (m:271).' Line 7: 'the attractor tally on the contrast session's four forced rounds is **0 of 4**'.",
+   "correction": ""
+  },
+  {
+   "id": "C11",
+   "text": "The two corrupted deliveries are G-CAL's renders of record, byte for byte",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 21: 'The two corrupted deliveries are G-CAL's renders of record byte-for-byte'. It is unquoted, so it is correctly presented as Code's paraphrase.",
+   "correction": ""
+  },
+  {
+   "id": "C12",
+   "text": "The lock's six new Code items are accepted, and become readings of record at v0.2",
+   "verdict": "VERIFIED",
+   "evidence": "Read §2 line 30: 'All six are accepted and become readings of record at v0.2'.",
+   "correction": ""
+  },
+  {
+   "id": "C13",
+   "text": "The read takes the schedule_sha256 and ban_sha equality as the consistency check",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 39: G-TIME-F0's `schedule_sha256` `822a2eb1…24ec` and the Qwen `ban_sha` `a934f1ad2b702245` 'equal the lock's values; the seat takes the equality as the consistency check Code calls it.' The schedule_sha256 meant is G-TIME-F0's, which the entry above makes clear.",
+   "correction": ""
+  },
+  {
+   "id": "C14",
+   "text": "The lock's other computed values stay Code's until a stage's identity carries them",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 39: 'The rest (...) stay lock-declared values, Code's, each becoming a checked value when a stage's identity carries it'.",
+   "correction": ""
+  },
+  {
+   "id": "C15",
+   "text": "G-ID-F0m's schedule_sha256 becomes a checked value at step 12",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 39: '— G-ID-F0m's `schedule_sha256` at step 12, G-F0m-Qwen's at step 14, the campaign's at step 16.'",
+   "correction": ""
+  },
+  {
+   "id": "C16",
+   "text": "§5 accepts step 9's partial re-run, as recorded above",
+   "verdict": "VERIFIED",
+   "evidence": "Read §5 line 65: '**Step 9's partial re-run.** Noted and accepted'. Its details match the entry's 'Step 9's post-commit licence check' section: licence_problems [] at e3bef6f, one negative control (24d44a3c…) refused on (d) and (f), and the values check re-derived at dac74b7.",
+   "correction": ""
+  },
+  {
+   "id": "C17",
+   "text": "Q1: v0.2 amends LOCK-m-F0.md above the v0.1 text, which it keeps verbatim",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 43: 'v0.2 amends `LOCK-m-F0.md` above the v0.1 text, which it keeps verbatim; v1.0 amends above both.' Omitting the v1.0 clause is harmless.",
+   "correction": ""
+  },
+  {
+   "id": "C18",
+   "text": "Q1: Nothing is truncated at v0.2",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 43: 'At v0.2 the analyzer and the package are unchanged, so the full hashes in the v0.1 text stay the hashes of record and nothing is truncated.'",
+   "correction": ""
+  },
+  {
+   "id": "C19",
+   "text": "Q1: At the first revision that moves a tested hash (v1.0 at step 15, where R2 3 moves the analyzer), the superseded full hashes in the copy of the v0.1 text that the file carries are truncated to 16 hex and \"…\"",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 43: '**At the first revision that moves a tested hash** — v1.0 at step 15, where R2 3 moves the analyzer — the superseded full hashes in the record below (...) are truncated to their first 16 hex and \"…\" ... That edits the copy of the v0.1 text that the amended file carries for reading; it does not edit the record'. The scope is correct: the copy, not the record. The quoted '…' is U+2026 in both files. 'to 16 hex' stands for the seat's 'their first 16 hex' without loss.",
+   "correction": ""
+  },
+  {
+   "id": "C20",
+   "text": "Q1: the revision's header lists each truncation",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 43: 'The revision's header lists each truncation: the section, the hash's first 16 hex, and where the full value stands'.",
+   "correction": ""
+  },
+  {
+   "id": "C21",
+   "text": "Q1: The record, the committed blob at e3bef6f, is not edited",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 43: 'it does not edit the record, which is the committed blob at `e3bef6f` (sha256 `1a043c28…8b6b`)'. `git show e3bef6f:LOCK-m-F0.md | shasum -a 256` gives 1a043c287da1f01a…02d110dc38b6b. e3bef6f is the 'LOCK-m-F0 v0.1 ... COMMITTED' commit.",
+   "correction": ""
+  },
+  {
+   "id": "C22",
+   "text": "Q2: The time answer extends to id, qual and campaign, none of them re-running G-SHAPE-F0, on the conditions Q2 lists",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 45: '**Q2 — the `time` answer extends to `id`, `qual` and `campaign`.** Yes. ... moves neither `package_sha256` nor the analyzer and does not re-run G-SHAPE-F0'. The answer is conditional on the listed conditions, as the close line says.",
+   "correction": ""
+  },
+  {
+   "id": "C23",
+   "text": "Q2 condition: no change under valence_core/m",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 45: 'no change under `valence_core/m` (an edit there moves the package and is outside this answer)'.",
+   "correction": ""
+  },
+  {
+   "id": "C24",
+   "text": "Q2 condition: the build reviewed as at step 10, with the self-test extended",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 45: 'the build reviewed as the step-10 edit was, with the self-test extended'.",
+   "correction": ""
+  },
+  {
+   "id": "C25",
+   "text": "Q2 condition: the new blob's sha256 printed by the DRIVER line, and recorded in the wired stage's entry and in the next lock revision: v0.2 for id, v1.0 for qual, and the campaign's launch entry for campaign",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 45: 'the new blob's sha256 printed by the DRIVER line and recorded in the entry of the stage it wires and in the next lock revision — v0.2 for `id`, v1.0 for `qual`, and for `campaign`, which follows v1.0, the campaign's launch entry'. The mapping is the same, including that for campaign the launch entry fills the next-lock-revision slot.",
+   "correction": ""
+  },
+  {
+   "id": "C26",
+   "text": "Q2 condition: new PIN sites declared on C6's terms as extended",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 45: 'the new PIN sites declared on C6's terms as extended (item 3)'.",
+   "correction": ""
+  },
+  {
+   "id": "C27",
+   "text": "Q2: PIN-S10's text is not amended; v0.2 records how it is read",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 45: 'PIN-S10's text (\"any difference re-runs G-SHAPE-F0 first\") is not amended — no hash moves — and v0.2 records how it is read'.",
+   "correction": ""
+  },
+  {
+   "id": "C28",
+   "text": "Q2: This answers the hold above on an edited driver: Code \"may build, review and, on the PI's word, launch G-ID-F0m on the edited driver\"",
+   "verdict": "VERIFIED",
+   "evidence": "The quote is a verbatim substring of read line 45. The 'hold above' exists: entry lines 45–48 ('Code does not launch it on an edited driver until the seat answers Q2 or the PI directs otherwise') and the What-follows step-12 bullet.",
+   "correction": ""
+  },
+  {
+   "id": "C29",
+   "text": "Q3: v0.2's §5.2 names in full, as the value of record, the driver's blob at v0.2's tree: the blob G-ID-F0m ran on",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 47: 'v0.2's §5.2 names in full the driver's blob at v0.2's tree — the blob G-ID-F0m ran on — as the value of record'.",
+   "correction": ""
+  },
+  {
+   "id": "C30",
+   "text": "Q3: Under it goes the driver's history: 54fc8a07… at v0.1's tree, as the v0.1 text has it; then 5785a26d…036d (step 10, 0fe65b9) and the step-12 blob, each in full",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 47: '`54fc8a07…` at v0.1's tree (as the v0.1 text has it), `5785a26d…036d` in full at step 10 (`0fe65b9`; ...), and the step-12 blob in full'. Hashes checked: `git show e3bef6f:scripts/m_sessions.py | shasum` gives 54fc8a07be13…9355059f, and `git show 0fe65b9:scripts/m_sessions.py | shasum` gives 5785a26da7dc…97f2036d.",
+   "correction": ""
+  },
+  {
+   "id": "C31",
+   "text": "Q3: The five step-10 PIN sites, and any step-12 sites, are carried on C6's terms as extended",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 47: 'The five step-10 PIN sites (`:393`, `:419`, `:475`, `:492`, `:553` at `0fe65b9`), and any the step-12 edit adds, are carried on C6's terms as extended.'",
+   "correction": ""
+  },
+  {
+   "id": "C32",
+   "text": "Q3: The PIN-index addendum is accepted as Code's addition: a new file under results/raw/, its sha256 named in v0.2",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 47: 'The PIN-index addendum is accepted as Code's addition to m:282's list: ... a new file under `results/raw/`, its sha256 named in v0.2.' The regeneration terms are omitted, which is acceptable for a finding aid.",
+   "correction": ""
+  },
+  {
+   "id": "C33",
+   "text": "Q3: The v0.1 index is not edited",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 47: 'The v0.1 index is not edited; its anchors stay at `9bf36ad`...'.",
+   "correction": ""
+  },
+  {
+   "id": "C34",
+   "text": "Q4: For every later stage with contrast sessions (G-F0m-Qwen's eight; the campaign), the raw carries no finish stamp and the commit message restates no stamp",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 49: 'For every later stage with contrast sessions (G-F0m-Qwen's eight; the campaign) the raw carries no finish stamp, and the commit message restates no stamp'. The scope (later stages with contrast sessions) is kept.",
+   "correction": ""
+  },
+  {
+   "id": "C35",
+   "text": "Q4: The launch stamp stays",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 49: 'the launch stamp stays, since it carries nothing'.",
+   "correction": ""
+  },
+  {
+   "id": "C36",
+   "text": "Q4: G-ID-F0m is sham-only and unaffected",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 49: 'G-ID-F0m is sham-only and unaffected.'",
+   "correction": ""
+  },
+  {
+   "id": "C37",
+   "text": "Q4: The unavoidable records (commit times, the report's PROVENANCE start stamp, the entries' own stamps) remain, and no one computes them against each other before VERDICTS",
+   "verdict": "IMPRECISE",
+   "evidence": "Read line 49: 'The unavoidable records — the commit times, the report's PROVENANCE start stamp, the entry's own stamps, which are no tighter than the commit times — remain, and are not computed against each other by anyone before VERDICTS.' The seat wrote 'the entry's' (singular: the G-TIME-F0 entry, as the ping's 'this entry's own stamps'). The close line's plural 'entries'' widens the seat's list to every entry's stamps.",
+   "correction": "Change 'the entries' own stamps' to 'the entry's own stamps'."
+  },
+  {
+   "id": "C38",
+   "text": "Q4: The stage's raw (_gtime-f0 → results/raw/2026-10-12_m-gtime-f0.txt) and dac74b7 stand as written",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 49: 'This raw and `dac74b7` stand as written'. `git ls-tree dac74b7` shows results/raw/2026-10-12_m-gtime-f0.txt (blob 222d5f5a). The link path exists. The raw's content was not opened.",
+   "correction": ""
+  },
+  {
+   "id": "C39",
+   "text": "Q5: This stage's offline load is accepted (HF_HUB_OFFLINE=1, snapshot c000ac2c2057d94be3fa931000c31723aac53282)",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 51: 'Accepted for this stage: `HF_HUB_OFFLINE=1`, snapshot `c000ac2c2057d94be3fa931000c31723aac53282`'. The id is identical character for character.",
+   "correction": ""
+  },
+  {
+   "id": "C40",
+   "text": "Q5: That G-CAL's online load resolved the same snapshot is accepted as Code's inference, not as fact",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 51: 'That G-CAL's load resolved the same snapshot is Code's inference and is accepted as an inference ... T10-2's disposition at `0fe65b9` states it as fact; this read records that it is an inference'. 'online' matches the seat's own 'last written at G-CAL's online load'.",
+   "correction": ""
+  },
+  {
+   "id": "C41",
+   "text": "Q5: The review raw is not edited",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 51: 'and the review raw is not edited.'",
+   "correction": ""
+  },
+  {
+   "id": "C42",
+   "text": "Q5: Every later Qwen stage of Q-F0 loads offline, with the snapshot id in each raw's header and each stage's entry",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 51: '**For every later Qwen stage of Q-F0: an offline load, with the snapshot id recorded in each raw's header and in each stage's entry**'. The scope is kept: every later Qwen stage of Q-F0.",
+   "correction": ""
+  },
+  {
+   "id": "C43",
+   "text": "Q5: v0.2 names the snapshot, with the model id, as Q-F0's weights of record",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 51: 'v0.2 names the snapshot, with the model id, as Q-F0's weights of record; v1.0 keeps it.'",
+   "correction": ""
+  },
+  {
+   "id": "C44",
+   "text": "Q5: Having the precheck print the snapshot is \"Code's choice\", a driver edit of Q2's kind",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 51: 'Code may have the driver's precheck print the snapshot id (...) as a line of the raw ...; that is a driver edit of Q2's kind, and Code's choice.' The quote is verbatim.",
+   "correction": ""
+  },
+  {
+   "id": "C45",
+   "text": "Q6: v0.2 projects on §2.4's named bases, unchanged: 488 s per uncached session, and 65–85 s per cached launch",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 53: 'v0.2 projects on §2.4's named bases, unchanged — 488 s per uncached session; 65–85 s per cached launch'.",
+   "correction": ""
+  },
+  {
+   "id": "C46",
+   "text": "Q6: The measured sham figures go beside them, not substituted: G-TIME-F0's A0s at 261.65 s, and G-ID-F0m's sham seconds on both paths when they exist",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 53: 'reports the measured sham figures beside them, not substituted: G-TIME-F0's A0s at 261.65 s uncached, and G-ID-F0m's sham seconds on both paths when they exist.' The close line drops 'uncached'. It is still true, since G-TIME-F0 ran path=uncached only.",
+   "correction": "Optional, for parity with the seat: '261.65 s uncached'."
+  },
+  {
+   "id": "C47",
+   "text": "Q6: The hour cap at step 15 is the PI's",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 53: 'The hour cap at step 15 is the PI's, set with both in view.'",
+   "correction": ""
+  },
+  {
+   "id": "C48",
+   "text": "Q7: The run stands as obtained, and the stage's raw stays as written (dac74b7). No re-run.",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 55: 'The run stands as obtained and the raw stays as written (`dac74b7`, pushed) ... No re-run.'",
+   "correction": ""
+  },
+  {
+   "id": "C49",
+   "text": "Q7: R1 A5's clause \"was not met at its first use\"",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 55: 'R1 A5's clause was not met at its first use'. The quote is verbatim.",
+   "correction": ""
+  },
+  {
+   "id": "C50",
+   "text": "Q7: It binds every later launch as written: m:267's own line, `nohup caffeinate -is … & disown`, verbatim",
+   "verdict": "IMPRECISE",
+   "evidence": "Read line 55: 'it binds every later launch as written: the checklist's own line, `nohup caffeinate -is … & disown`, verbatim'. The code span matches the read and the proposal byte for byte (U+2026). But proposal line 267 is the whole §2.7 paragraph, which contains the laptop checklist. So 'm:267's own line' literally denotes that whole line, not the checklist's launch command. The seat (and the PI's 'the checklist’s own launch line') name the checklist's line.",
+   "correction": "Change 'm:267's own line' to 'the checklist's own line (m:267)'."
+  },
+  {
+   "id": "C51",
+   "text": "Q7: \"where Code's tool cannot form that line, the header says what was run instead, at the time\"",
+   "verdict": "VERIFIED",
+   "evidence": "Read line 55: '...; where Code's tool cannot form that line, the header says what was run instead, at the time — that is exactly what A5 asks for.' The quote is verbatim.",
+   "correction": ""
+  },
+  {
+   "id": "C52",
+   "text": "The PI's routing (chat, 2026-10-13), verbatim: \"Seat’s step-10 read: ... any departure stated in the header at the time.\"",
+   "verdict": "UNCHECKABLE",
+   "evidence": "The chat original is not in the record (treated as given, per the task). Typography checked: the quote contains 4 curly apostrophes (Seat’s, read’s, raw’s, checklist’s) and 0 straight ones, consistent with the PI's original. The path and sha256 inside the quote match the file (shasum c2cc448f…698a7). Its content agrees with read §4 (Q2 licenses the id wiring without a re-run; Q5 offline load; Q7 launch line).",
+   "correction": ""
+  },
+  {
+   "id": "C53",
+   "text": "Step 12 starts after this commit, on that word",
+   "verdict": "VERIFIED",
+   "evidence": "Read §4 (line 59): '**step 12 starts after it on the PI's word**. The PI can give the word in the routing that carries this read'. The PI's quoted routing: 'Then go for step 12 on the read’s terms'.",
+   "correction": ""
+  },
+  {
+   "id": "C54",
+   "text": "Overall: the close line meets §4's request (name this file, its sha256 and the commit; record Q1–Q7 as answered here with nothing moving a hash)",
+   "verdict": "VERIFIED",
+   "evidence": "File: linked by path (C03). sha256: given in full and correct (C04). Commit: named as 'the commit that adds this line', with the hash deferred to the G-ID-F0m entry (C05). Q1–Q7 answered (C07). 'nothing in this read moves a hash' quoted (C08). Markdown nesting checked: the 4- and 6-space continuation paragraphs attach to the intended items, matching the entry's existing pattern.",
+   "correction": ""
+  }
+ ]
+}
+
+======================================== REFUTER (agent a620e3e86e926361a), verbatim
+{
+ "verdicts": [
+  {
+   "id": "C09",
+   "verdict": "REFUTED",
+   "evidence": "First I checked the read's hash with shasum: c2cc448f…98a7, which matches. I then extracted every double-quoted string in the close line (RESULTS.md:291–364) after normalising whitespace. All 8 strings attributed to the seat appear verbatim in the read: the 2 above the scope sentence and the 6 in the list. The only other quoted text is the PI's routing paragraph, which is not in the read, as expected. That paragraph is not part of 'Code's summary'. It is a separate paragraph that names its own source ('The PI's routing (chat, 2026-10-13), verbatim:'), so no reader can take it for the seat's words. Read literally, 'only the words in quotation marks are the seat's' says that none of the seat's words appear outside quotation marks. It does not say that every quoted word is the seat's, so the PI quote does not falsify it. The flag itself calls its correction optional. The text is right as it stands.",
+   "correction": "None required. The optional narrowing ('...in the list below...') is harmless if wanted."
+  },
+  {
+   "id": "C37",
+   "verdict": "CONFIRMED",
+   "evidence": "Read line 49 says 'the commit times, the report's PROVENANCE start stamp, the entry's own stamps, which are no tighter than the commit times'. The singular is deliberate. The seat's list repeats the ping's list for this stage (ping lines 194–198: commit times of 0fe65b9/dac74b7; 'the report's PROVENANCE stamp'; 'the G-TIME-F0 entry's own stamps (its idle-check time before the launch; its first-write stamp after the finish)'). It answers the ping's 'The other records above would remain'. The seat's next sentence ('This raw and `dac74b7` stand as written') is also about this stage only. The G-TIME-F0 entry is the single entry that carries those stamps (RESULTS.md:50). One defense is that the sentence follows 'For every later stage...', so it could be read as generic across stages. That defense fails, because the close line itself keeps 'the report's' in the singular in the same parenthesis. Making only 'entries'' plural widens the list the seat named to stamps in other entries, and nothing in the seat's text supports that.",
+   "correction": "In RESULTS.md:337, change \"the entries' own stamps\" to \"the entry's own stamps\"."
+  },
+  {
+   "id": "C50",
+   "verdict": "REFUTED",
+   "evidence": "The code span `nohup caffeinate -is … & disown` matches the read (line 55) and m:267 byte for byte, so the binding command is stated exactly. In this record, 'm:NNN's X' cites a passage, not a physical line of the file. The same entry has 'm:267's checklist' (RESULTS.md:32), and the read has 'm:271's definition' and 'm:271's redaction'. So 'm:267's own line' reads as 'the launch line m:267 itself prescribes', which refers to the same command as the seat's 'the checklist's own line'. The flag's concern is that m:267 also prescribes another 'line' ('the gate line logged'). The seat's phrase 'the checklist's own line' has that same ambiguity, and in both versions the verbatim code span that follows settles it. No reader could mistake which line binds. Changing to 'the checklist's own line (m:267)' would match the read, the ping, RESULTS.md:176 and the PI's 'the checklist’s own launch line', but that is a style choice, not a correction.",
+   "correction": "None required. Optionally, 'the checklist's own line (m:267)' for consistency with the read, the ping and the PI's routing."
+  }
+ ]
+}
+
+======================================== VALUES LENS (agent a1f4e418dbedd10ab), verbatim
+{
+ "findings": [
+  {
+   "id": "V1",
+   "severity": "minor",
+   "finding": "Misattribution by scope (RESULTS.md:299-300). The disclaimer \"What follows is Code's summary ... only the words in quotation marks are the seat's\" covers everything after it in the sub-bullet. That includes the PI's routing paragraph (:358-364), whose quoted words are the PI's, not the seat's. Read literally, the disclaimer gives the PI's quote to the seat. The \"verbatim\" label limits the harm, but the seat and the PI will both read the line closely. Also, \"for finding each answer\" is awkward, and the list holds non-answers too (the forced rounds, the six items, §2 and §5). Checked: all eight quoted strings in the list match the read verbatim once whitespace is normalized, and the file's sha256 is c2cc448f…98a7 as stated.",
+   "suggested_text": "The list below is Code's summary, as a finding aid. The read is the record, and within the list only the words in quotation marks are the seat's."
+  },
+  {
+   "id": "V2",
+   "severity": "minor",
+   "finding": "Naming the commit (RESULTS.md:291-294). §4 asks the close line to name the file, its sha256 and the commit. The file and sha256 are named correctly. The commit is named only as \"the commit that adds this line\", plus \"its hash is named in the G-ID-F0m entry\". That is in the present tense, so it is false when the commit lands and when the seat reads it. It also ties the hash to one particular future entry, which may not be the next one written: a build-review STOP or a NOT-RUN record could come first. A self-reference that can be resolved mechanically, plus a forward pointer that does not depend on which entry comes next, names the commit as fully as a commit can.",
+   "suggested_text": "The seat's step-10 read is committed by path in the commit that adds this line, which is the read's first commit (`git log --diff-filter=A -- results/raw/2026-10-13_m-design-to-code_G-TIME-F0_read.md` names it): [`_design-to-code_G-TIME-F0_read`](results/raw/2026-10-13_m-design-to-code_G-TIME-F0_read.md), sha256 `c2cc448f441bcc32a5ca8aaa2c2dd37c7447f2ef133c031acb41569223a698a7`. A commit cannot name its own hash; the next RESULTS entry will name it in full."
+  },
+  {
+   "id": "V3",
+   "severity": "minor",
+   "finding": "Step 12's start is stated in Code's voice when the seat has its own words for it (RESULTS.md:295 and :364). The §4 quote stops at \"under R1 A4\". The read's sentence continues \"and step 12 starts after it on the PI's word\". The close line then supplies Code's own \"Step 12 starts after this commit, on that word.\" The entry's own hold (:45-48) said \"What else holds it is the seat's to say ... R1 A4's close-entry rule among them\". §4 answers that in the seat's words (\"no item answered here can change step 12's inputs\"), but the close line records only the Q2 half of the hold (:318-319). The final sentence also drops the PI's \"on the read's terms\". Using the seat's and the PI's words keeps Code from appearing to clear its own hold.",
+   "suggested_text": "Replace :295 with: - §4 says: \"That commit is the gate's close entry under R1 A4, and step 12 starts after it on the PI's word\", and that \"no item answered here can change step 12's inputs\".  Replace the last sentence (:363-364) with: Step 12 starts after this commit, on that word and on the read's terms."
+  },
+  {
+   "id": "V4",
+   "severity": "minor",
+   "finding": "The six items are recorded without the read's reservations (RESULTS.md:303). \"The lock's six new Code items are accepted, and become readings of record at v0.2\" is faithful, but it leaves out two notes in §2 that limit what \"accepted\" means. Item 1: C3–C9 are admitted to Appendix D, not adjudicated (\"the seat adjudicates them at the drafting of Appendix D, if at all; the lock adjudicates nothing\"). Item 3: every indexed PIN stays Code's reading, \"strikable until LOCK v1.0\", except the R1 E1 and R2 2 sites. Without these, the line can be read as the seat accepting C3–C9 on their merits and fixing the PINs. It also leaves out the v0.2 marking (\"accepted by the seat's step-10 read\") and that the operand-exclusion sentence becomes the lock's text.",
+   "suggested_text": "- **The lock's six new Code items** are accepted, and become readings of record at v0.2, where Code marks each \"accepted by the seat's step-10 read\". §2's notes go with them. Among them: C3–C9 are admitted to Appendix D, and \"the seat adjudicates them at the drafting of Appendix D, if at all; the lock adjudicates nothing\"; every indexed PIN stays Code's reading, \"strikable until LOCK v1.0 at the cost Code states\", except the readings R1 E1 and R2 2 made the seat's; the operand-exclusion sentence becomes the lock's text at v0.2."
+  },
+  {
+   "id": "V5",
+   "severity": "minor",
+   "finding": "Q3 leaves out that the seat amended Code's proposal, and the conditions it put on the addendum (RESULTS.md:325-332). The read opens Q3 with \"Accept, amended to v0.2's tree\". The value of record moves from the step-10 sha256, which the entry's 'What follows' step 13 (:281-282) still names \"as the PI's word directs\", to the blob at v0.2's tree, with the step-10 sha256 moving into the history. Without the amendment marked, the close line and step 13 above appear to conflict. The addendum's acceptance also carries terms the summary drops: regenerated for the driver alone at v0.2's tree by the v0.1 extraction rules, its header naming the source blob, covering the new sites and the ten v0.1 sites at their new lines, and the v0.1 anchors staying at `9bf36ad`.",
+   "suggested_text": "- **Q3, v0.2's declarations for the driver.** Code's proposal, accepted \"amended to v0.2's tree\":  …(existing three sub-bullets)…  - The PIN-index addendum is accepted as Code's addition to m:282's list, on the read's terms: \"regenerated for the driver alone at v0.2's tree by the v0.1 index's extraction rules, its header naming the driver blob it was extracted from, covering the new sites and the ten v0.1 sites at their new lines\"; a new file under `results/raw/`, its sha256 named in v0.2. The v0.1 index is not edited; its anchors stay at `9bf36ad`."
+  },
+  {
+   "id": "V6",
+   "severity": "minor",
+   "finding": "The forced rounds are recorded in Code's declarative voice, and the seat's headline verdict is missing (RESULTS.md:301-302). The read's short form gives the seat's own verdict, \"G-TIME-F0's read is clean\", and §1 says \"Nothing here bears on the PASS\". The close line records neither. It also states \"The two corrupted deliveries are G-CAL's renders of record, byte for byte\" as a bare fact. The read calls that \"the seat's own check of the bytes it read\", and the entry (:257) says the tally is the seat's. As the gate's close, the line should carry the seat's verdict in the seat's words and attribute the checks to the seat.",
+   "suggested_text": "- **The forced rounds.** The read: \"G-TIME-F0's read is clean\". The seat's attractor tally on the contrast session's four forced rounds is \"0 of 4\" (reported; no bar, m:271). By the seat's check of the bytes, the two corrupted deliveries are G-CAL's renders of record, byte for byte. \"Nothing here bears on the PASS.\""
+  },
+  {
+   "id": "V7",
+   "severity": "note",
+   "finding": "Q4 pluralizes the seat's list (RESULTS.md:337). The read says \"the entry's own stamps, which are no tighter than the commit times\": singular, meaning the G-TIME-F0 entry. \"the entries' own stamps\" stretches that to later entries, which the seat did not say. Separately, the read's list leaves out the ping's fourth record (`git show --stat` on `dac74b7`, the checkpoint's byte size). Only the seat's own abstention covers it (Q4: the seat \"has not run `git show --stat` on `dac74b7`\"). The close line is right not to add it to the \"no one computes\" clause. If Code wants a ruling on that record for Code, that is a question for the seat, not for this line.",
+   "suggested_text": "- The unavoidable records (the commit times, the report's PROVENANCE start stamp, \"the entry's own stamps, which are no tighter than the commit times\") remain, and no one computes them against each other before VERDICTS. Neither Code nor the seat has computed any bound (the read, Q4)."
+  },
+  {
+   "id": "V8",
+   "severity": "note",
+   "finding": "Some of the read's open cases and qualifiers are dropped, so the summary reads as more settled than the read is. Q1 (:308-313): the read leaves one case open at step 15. Q5 (:339-346): the read defers a hashed snapshot binding to a later unit, and \"v1.0 keeps it\". Q6 (:347-349): the read's \"261.65 s uncached\" sits against the 488 s uncached basis, but the close line drops \"uncached\". None of these is pre-decided the other way; restoring them keeps the summary from implying the seat closed them.",
+   "suggested_text": "Q1, add: - The read leaves one case open: \"If at step 15 Code finds a truncation that breaks a test other than check (f) and PIN-14, that is a new question then.\"  Q5, after the v0.2 bullet: v1.0 keeps it. The snapshot is not bound in a hashed record for Q-F0; \"a later unit may add it at its step 4\".  Q6: \"G-TIME-F0's A0s at 261.65 s uncached\"."
+  },
+  {
+   "id": "V9",
+   "severity": "note",
+   "finding": "Q7 records the ruling but not the seat's reason (RESULTS.md:352-356). The departure was Code's, and the read gives its own characterization of why the run stands: \"The departure is one of process — the launch line — not of the stage's inputs or outputs\". Without it, \"The run stands as obtained\" has no stated ground in the close line. The seat's words are the right ground, and Code does not have to characterize its own departure.",
+   "suggested_text": "- The run stands as obtained, and the stage's raw stays as written (`dac74b7`). No re-run. The read: \"The departure is one of process — the launch line — not of the stage's inputs or outputs\"."
+  },
+  {
+   "id": "V10",
+   "severity": "note",
+   "finding": "Q3's `54fc8a07…` \"as the v0.1 text has it\" (RESULTS.md:328-329) is ambiguous in Code's unquoted voice. Lock v0.1's §5.2 carries the full value (LOCK-m-F0.md:825); other v0.1 sites carry `54fc8a07…`. With \"each in full\" applied only to the two later blobs, the close line can be read as Code fixing the first history entry as truncated. The read is itself ambiguous here (\"the full values may stand together\"). Quoting the seat's parenthetical leaves the form to the seat, and to step 13 or a question if it matters.",
+   "suggested_text": "- Under it goes the driver's history: `54fc8a07…` at v0.1's tree \"(as the v0.1 text has it)\"; then `5785a26d…036d` (step 10, `0fe65b9`) and the step-12 blob, each in full."
+  },
+  {
+   "id": "V11",
+   "severity": "note",
+   "finding": "The close line correctly leaves an interaction the read does not address unresolved; this is a flag for Code's next steps, not a text change. The read's Q3 treats the driver's blob at v0.2's tree as the same blob as \"the blob G-ID-F0m ran on\". Q5's optional snapshot-print edit (\"Code's choice\", a driver edit of Q2's kind) would split them if made after G-ID-F0m and before v0.2. The close line mirrors the read faithfully, which is right. Code should either fold the print into the step-12 build or put the split case to the seat, and should not resolve it in the close line.",
+   "suggested_text": "No change to the close line."
+  },
+  {
+   "id": "V12",
+   "severity": "note",
+   "finding": "Stamps. The close line carries no time stamp, only the date 2026-10-13, which fits Q4. Q4's no-restated-stamp rule binds later stages with contrast sessions. This commit closes a stage that had a contrast session, so restating the wrapper stamps or the entry's `date -u` stamps in the commit message would go against the read's intent, and a new `date -u` stamp on the entry adds nothing. Keep both free of times.",
+   "suggested_text": "No change to the close line. The commit message names the read, its sha256 and §4, and restates no stamp."
+  }
+ ]
+}
+

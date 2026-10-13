@@ -288,6 +288,98 @@ applied to CLAUDE.md.
     - Pass 2: 302 claims, 9 confirmed corrections (1 flag refuted), 18 values findings (5 major).
     - Every confirmed correction and every values finding was applied, the entry and the ping alike. Among them
       were the launch departure (pass 1) and its A5 history (pass 2), and Q6 recast to §2.4's named bases.
+  - **The gate's close (2026-10-13; the seat's read, §4).** The seat's step-10 read is committed by path in the
+    commit that adds this line. That commit is the read's first commit, so
+    `git log --diff-filter=A -- results/raw/2026-10-13_m-design-to-code_G-TIME-F0_read.md` names it:
+    [`_design-to-code_G-TIME-F0_read`](results/raw/2026-10-13_m-design-to-code_G-TIME-F0_read.md), sha256
+    `c2cc448f441bcc32a5ca8aaa2c2dd37c7447f2ef133c031acb41569223a698a7`. A commit cannot name its own hash; the next
+    RESULTS entry names it in full.
+    - §4 says: "That commit is the gate's close entry under R1 A4, and **step 12 starts after it on the PI's
+      word**", and "no item answered here can change step 12's inputs".
+    - The read answers Q1–Q7 (§3). Its short form says: "nothing in this read moves a hash, edits the analyzer or
+      the package, or re-runs a gate".
+
+    The list below is Code's summary, as a finding aid. The read is the record, and within the list only the
+    words in quotation marks are the seat's.
+    - **The forced rounds.** The read: "G-TIME-F0's read is clean". The seat's attractor tally on the contrast
+      session's four forced rounds is "0 of 4" (reported; no bar, m:271). By the seat's check of the bytes, the
+      two corrupted deliveries are G-CAL's renders of record, byte for byte. "Nothing here bears on the PASS."
+    - **The lock's six new Code items** are accepted, and become readings of record at v0.2, where Code marks
+      each "accepted by the seat's step-10 read". §2's notes go with them. Among them:
+      - C3–C9 are admitted to Appendix D, and "the seat adjudicates them at the drafting of Appendix D, if at all;
+        the lock adjudicates nothing";
+      - every indexed PIN stays Code's reading, "strikable until LOCK v1.0 at the cost Code states", except the
+        readings R1 E1 and R2 2 made the seat's;
+      - the operand-exclusion sentence "becomes the lock's text at v0.2".
+    - **Beyond Q1–Q7:**
+      - The read takes the `schedule_sha256` and `ban_sha` equality as the consistency check.
+      - The lock's other computed values stay Code's until a stage's identity carries them. G-ID-F0m's
+        `schedule_sha256` becomes a checked value at step 12.
+      - §5 accepts step 9's partial re-run, as recorded above.
+    - **Q1, v0.2's form.**
+      - v0.2 amends `LOCK-m-F0.md` above the v0.1 text, which it keeps verbatim. Nothing is truncated at v0.2.
+      - At the first revision that moves a tested hash (v1.0 at step 15, where R2 3 moves the analyzer), the
+        superseded full hashes in the copy of the v0.1 text that the file carries are truncated to their first
+        16 hex and "…", and the revision's header lists each truncation.
+      - The record, the committed blob at `e3bef6f`, is not edited.
+      - The read leaves one case open: "If at step 15 Code finds a truncation that breaks a test other than check
+        (f) and PIN-14, that is a new question then."
+    - **Q2, `id`, `qual` and `campaign`.** The `time` answer extends to all three, none of them re-running
+      G-SHAPE-F0, on the conditions Q2 lists:
+      - no change under `valence_core/m`;
+      - the build reviewed as at step 10, with the self-test extended;
+      - the new blob's sha256 printed by the DRIVER line, and recorded in the wired stage's entry and in the
+        next lock revision: v0.2 for `id`, v1.0 for `qual`, and the campaign's launch entry for `campaign`;
+      - new PIN sites declared on C6's terms as extended.
+
+      PIN-S10's text is not amended; v0.2 records how it is read. This answers the hold above on an edited
+      driver: Code "may build, review and, on the PI's word, launch G-ID-F0m on the edited driver".
+    - **Q3, v0.2's declarations for the driver.** Code's proposal is accepted "amended to v0.2's tree":
+      - v0.2's §5.2 names in full, as the value of record, the driver's blob at v0.2's tree: the blob G-ID-F0m
+        ran on.
+      - Under it goes the driver's history: `54fc8a07…` at v0.1's tree "(as the v0.1 text has it)"; then
+        `5785a26d…036d` (step 10, `0fe65b9`) and the step-12 blob, each in full.
+      - The five step-10 PIN sites, and any step-12 sites, are carried on C6's terms as extended.
+      - The PIN-index addendum is accepted as Code's addition to m:282's list, on the read's terms: "regenerated
+        for the driver alone at v0.2's tree by the v0.1 index's extraction rules, its header naming the driver
+        blob it was extracted from, covering the new sites and the ten v0.1 sites at their new lines". It is a
+        new file under `results/raw/`, its sha256 named in v0.2. The v0.1 index is not edited.
+    - **Q4, the stamps.**
+      - For every later stage with contrast sessions (G-F0m-Qwen's eight; the campaign), the raw carries no
+        finish stamp and the commit message restates no stamp. The launch stamp stays.
+      - G-ID-F0m is sham-only and unaffected.
+      - The unavoidable records (the commit times, the report's PROVENANCE start stamp, "the entry's own stamps,
+        which are no tighter than the commit times") remain, and no one computes them against each other before
+        VERDICTS. Neither Code nor the seat has computed any bound.
+      - The stage's raw ([`_gtime-f0`](results/raw/2026-10-12_m-gtime-f0.txt)) and `dac74b7` stand as written.
+    - **Q5, the offline load.**
+      - This stage's offline load is accepted (`HF_HUB_OFFLINE=1`, snapshot
+        `c000ac2c2057d94be3fa931000c31723aac53282`).
+      - That G-CAL's online load resolved the same snapshot is accepted as Code's inference, not as fact. The
+        review raw is not edited.
+      - Every later Qwen stage of Q-F0 loads offline, with the snapshot id in each raw's header and each stage's
+        entry.
+      - v0.2 names the snapshot, with the model id, as Q-F0's weights of record, and v1.0 keeps it.
+      - The snapshot is not bound in a hashed record for Q-F0; "a later unit may add it at its step 4".
+      - Having the precheck print the snapshot is "Code's choice", a driver edit of Q2's kind.
+    - **Q6, the projections.** v0.2 projects on §2.4's named bases, unchanged: 488 s per uncached session, and
+      65–85 s per cached launch. The measured sham figures go beside them, not substituted: G-TIME-F0's A0s at
+      261.65 s uncached, and G-ID-F0m's sham seconds on both paths when they exist. The hour cap at step 15 is
+      the PI's.
+    - **Q7, the launch departure.**
+      - The run stands as obtained, and the stage's raw stays as written (`dac74b7`). No re-run.
+      - The read: "The departure is one of process — the launch line — not of the stage's inputs or outputs".
+      - R1 A5's clause "was not met at its first use". It binds every later launch as written: the checklist's own
+        line (m:267), `nohup caffeinate -is … & disown`, verbatim.
+      - "where Code's tool cannot form that line, the header says what was run instead, at the time".
+
+    The PI's routing (chat, 2026-10-13), verbatim: "Seat’s step-10 read:
+    results/raw/2026-10-13_m-design-to-code_G-TIME-F0_read.md, sha256
+    c2cc448f441bcc32a5ca8aaa2c2dd37c7447f2ef133c031acb41569223a698a7. Commit it by path, with the close line
+    appended to the G-TIME-F0 entry as §4 of the read states. Then go for step 12 on the read’s terms: Q2 licenses
+    the id wiring without a G-SHAPE-F0 re-run; offline load with the snapshot id in the raw’s header and the
+    entry; the checklist’s own launch line, any departure stated in the header at the time." Step 12 starts after
+    this commit, on that word and on the read's terms.
 
 - 2026-10-10 — **LOCK-m-F0 v0.1 (PROPOSAL-m v1.11 §8 step 9, m:279; the PI's word, on the design seat's two
   rulings of 2026-10-10): COMMITTED. Q-F0's first lock is `LOCK-m-F0.md` at the root, sha256
