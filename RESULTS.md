@@ -21,6 +21,274 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-10-12 — **G-TIME-F0 (PROPOSAL-m v1.11 §8 step 10, m:280; the PI's word of 2026-10-12, routing the seat's
+  answer to LOCK v0.1's flagged question): PASS. One uncached session per Q-F0 arm ran on Qwen under LOCK-m-F0
+  v0.1, on the committed driver; both sessions are excluded from the campaign and from every DV (m:280). No bar
+  fired and no hair trigger fired. The sham session's binomial bar is silent at 0/10 (critical 3), and both
+  records passed G-VER. The A0s session's first pick was the P-role label (1/1). The A0 session's forced rounds: 4 generated, none excluded. Its free-round events, beyond stdout's
+  phase-only line (m:263), and its picks are withheld to Q-F0's VERDICTS.**
+  - The driver edit that wires `time` moves `scripts/m_sessions.py` to `5785a26d…036d` (in full below). Nothing
+    under `valence_core/m` changed, and G-SHAPE-F0 was not re-run, per the seat's answer.
+  - **One process departure, Code's:** the launch did not follow m:267's checklist as written (no `nohup`, no
+    `& disown`), and the raw's header did not say so at the time, as R1 A5 requires. It is the first Qwen launch
+    since that ruling. Details below; ping Q7 puts it to the seat.
+  - Code's ping to the seat, for the PI to route
+    ([`_code-to-design_G-TIME-F0`](results/raw/2026-10-12_m-code-to-design_G-TIME-F0.md)), sets the forced rounds
+    beside the lock and asks seven questions:
+    - v0.2's form;
+    - whether the answer extends to wiring `id`, `qual` and `campaign`;
+    - v0.2's declarations for the driver;
+    - the raw's wrapper stamps;
+    - the offline load;
+    - the measured timing beside v0.2's projections;
+    - the launch departure.
+  - **G-ID-F0m (step 12) waits on the PI's word. What else holds it is the seat's to say: the ping's short form
+    names the items that may bear on it, R1 A4's close-entry rule among them. Code does not launch it on an
+    edited driver until the seat answers Q2 or the PI directs otherwise. Code proposes to build and review the
+    `id` wiring meanwhile, without launching it (ping Q2).**
+
+  (Stamp: `date -u` → **Tue Oct 13 02:44:31 UTC 2026, first write; Tue Oct 13 03:17:25 UTC 2026, after values-check pass 1; Tue Oct 13 03:52:20 UTC 2026, after pass 2**.)
+
+  - **The word and the seat's answer.** The PI's message (chat, 2026-10-12), verbatim. The review raw (committed
+    at `0fe65b9`) and the ping also carry it in full; the driver commit's message quotes "Go for step 10" and
+    paraphrases the seat's answer:
+    > "Go for step 10. Seat's answer to the lock's flagged question: a post-lock edit to scripts/m_sessions.py
+    > that wires the time command does not re-run G-SHAPE-F0 — the gate tests the scoring stack's scope and its
+    > package hash covers valence_core/m only; record the driver's new sha256 in the G-TIME-F0 entry and in LOCK
+    > v0.2. Ping the seat with the forced rounds and the lock together."
+
+    The lock's flagged question is lock §11, item 1: does a post-lock edit to a file in G-SHAPE-F0's tooling map
+    fall under R1 D3's "any other difference re-runs G-SHAPE-F0 first"?
+  - **The driver** (commit `0fe65b9`; the build is Code's, and its five new PIN sites are marked "declared at LOCK
+    v0.2").
+    - **Its sha256** is recorded here as the PI's word directs, in the sentence that gives the seat's answer. It
+      moves from
+      `54fc8a07be13faa0704e65e453eac42293435be862a1a985f73a32ee9355059f` (lock §5.2's blob, which G-SHAPE-F0's
+      tooling map records) to **`5785a26da7dc519ab86746d7dc98bd2d1e951c9a94e85ffe07ddc15a97f2036d`**. The run's
+      DRIVER line printed the second at HEAD `0fe65b9`.
+    - `package_sha256` (`5f646db6…d771`) and the analyzer (`scripts/m_analyze.py`, `66fb5214…7d5e`, outside the
+      package, lock §5.2) are unchanged, so the licence by file (a)–(f) is unaffected by the edit. That the edit
+      does not re-run G-SHAPE-F0 is the seat's answer.
+    - **What it does.** `time --unit Q-F0` calls `stages.run_gate_stage`, which is unchanged, with
+      `templates_counts` A0 1 and A0s 1. m:280: "One session per Q-F0 arm (2)".
+    - **Its `identity_extra`** carries lock §0's keys:
+      - the lock is pinned to `LOCK-m-F0.md` (lock §0's literal);
+      - beyond lock §0, the driver requires the lock's committed text to name the proposal's sha256 in full (lock
+        §1 binds the proposal; Code's check, PIN at `:419`, added in review round 1);
+      - the proposal's and the lock's sha256 are taken from their committed blobs;
+      - the analyzer's and the package's sha256 and the renders' sha16 are taken as given (the lock's values);
+        the licence and `_renders_of_record` check them;
+      - `locked_path` is `"uncached"`.
+    - **Before the Qwen load** (G-CAL completability's precedent, and F1's "the one-process preflight stays as it
+      is", Code's default as the PI accepted it):
+      - `time_precheck` checks the licence (a)–(f), the run-time known answers, the renders, the schedules, the
+        checkpoint, m:267's checklist items power, one model process and disk, and the gate line and its files;
+      - then the driver itself must be committed;
+      - all of these collect into one refusal (exit 2, nothing loaded);
+      - then a DRIVER line prints the driver's committed sha256.
+    - **What stays after the load**, among others (PIN `:492`): a resume's or re-finish's comparison with the
+      checkpoint, `qwen_startup`'s pins, the counts against the committed files' n, the bars' firing-case
+      completeness, and the stage's own assertions.
+    - **The five sites:** `scripts/m_sessions.py:393`, `:419`, `:475`, `:492` and `:553` at `0fe65b9`. The
+      driver's ten v0.1 sites are unchanged in text but sit at new lines. Ping Q3 proposes how v0.2 declares
+      them.
+    - **Review** ([`_gtime-driver_review`](results/raw/2026-10-12_m-gtime-driver_review.txt): the three rounds'
+      scripts, all 18 agents' returns verbatim, and Code's disposition of every finding). Each round had review
+      lenses and one adversarial refuter per lens, with mutation probes in scratch clones.
+      - Round 1 ran them on the uncommitted driver.
+      - Round 2 ran its mutants on the uncommitted driver. Its baselines, the two state-dependent mutants (n07,
+        n30), and the correctness lens's `driver_problems` and `run_time` checks also ran with the driver
+        committed in the clone.
+      - Round 3 ran every mutant in both states.
+      - Round 1 confirmed several defects. These were fixed:
+        - any committed file could stand in for the lock or the proposal;
+        - nothing bound the driver's own bytes;
+        - the docstrings overclaimed what runs before the load;
+        - nine mutants survived, each a self-test gap.
+
+        Five round-1 findings got no code change:
+        - two confirmed notes: F13's stale step-4 wording, not applied as outside the wiring's scope; and T10-3,
+          which would need a `guard.py` edit;
+        - T10-4 (confirmed), met procedurally by a pre-launch idle check;
+        - F12 (plausible), the "declared at LOCK v0.2" label, kept and disclosed (ping Q3);
+        - T10-2 (plausible), adopted procedurally: the launch set `HF_HUB_OFFLINE=1` (Offline load, below).
+      - Round 2 found that the two driver gates masked each other. They became one gate in `run_time`. It also
+        confirmed further text and test gaps, all fixed.
+      - Round 3 killed every round-2 survivor except mutant 25, which is equivalent on the venv's Python 3.12; its
+        branch is live only on 3.13+. Round 2's equivalent n03 was closed by a new mutant, b4. Round 3's findings
+        were text, except one self-test check that claimed more than it asserted (R3-T4), which now asserts it. A
+        surviving mutant, b1, got a test case for a checkpoint-path loop.
+      - Code's last three mutants on the final bytes were all killed.
+      - Four mutants survive:
+        - 25, equivalent on the venv's Python 3.12;
+        - b5, equivalent in outcome: git's case-sensitive lookup still refuses the case-variant lock before the
+          load, with a different message;
+        - b2b and b2c, test-only controls.
+    - **Self-test:** 759 → 766 checks, 766/766 on the bytes later committed. It ran before the commit, at HEAD
+      `11cc35b` with the driver uncommitted
+      ([`_gtime-driver_selftest`](results/raw/2026-10-12_m-gtime-driver_selftest.txt)).
+  - **Step 9's post-commit licence check.** LOCK v0.1's check raw promised it to this entry: "After the commit
+    Code re-runs (4) unpatched on the committed file (the step-10 entry records it)." It ran at 2026-10-11
+    04:29:27 UTC, HEAD `e3bef6f`, through `stages.licence_problems`, with nothing patched. Its identity_extra
+    named:
+    - the committed lock (`1a043c28…8b6b`);
+    - the proposal (`42ab36ec…6c6b`);
+    - the analyzer `66fb5214…7d5e`;
+    - the package `5f646db6…d771`.
+
+    It printed `licence_problems (unpatched, committed lock): []`. The re-run covered (4)'s licence call and one
+    of its negative controls: the superseded analyzer `24d44a3c…` in place of the analyzer of record. It did
+    not repeat (4)'s other negative controls or its PIN-14 emulation. The control was refused on two problems:
+    - (d): "analyzer scripts/m_analyze.py: sha256 66fb521488db41e7... is not identity_extra's analyzer_sha256
+      24d44a3c61b06dd3...";
+    - (f): "lock LOCK-m-F0.md: its committed text does not name identity_extra's analyzer_sha256
+      24d44a3c61b06dd3... (the package: the seat's D2; the analyzer: Code's, after the analyzer's PIN-14)".
+
+    That output was in Code's session only, and is recorded here. The values check re-derived both outputs
+    read-only at HEAD `dac74b7`, where the lock, analyzer and package are unchanged, with identical results
+    ([`_gtime-f0_valuescheck`](results/raw/2026-10-12_m-gtime-f0_valuescheck.txt)). This stage's LICENCE line
+    made the same check again at its start (below).
+  - **Launch conditions.**
+    - **F1** (Code's default as the PI accepted it, chat, 2026-10-10: "Qwen stages launch only when the audit
+      session is idle"; the operator's condition, which no code checks; the `find` and `pgrep` checks below are
+      Code's session only):
+      - the audit session's last commit was `11cc35b` at 2026-10-12 18:38 -0400, the raws after its release tag
+        `note-2026-10-v1`;
+      - at 02:34:08 UTC, `find` over the repository (excluding `.git`, `data` and `jlens-qwen36`, `-mmin -90`)
+        listed only Code's three files of `0fe65b9`;
+      - `pgrep -ifl python` showed no model process (VS Code's helpers only).
+    - **m:267's checklist and R1 A5 — a departure, Code's.** The checklist reads "`nohup caffeinate -is … &
+      disown`; display sleep only; disk headroom checked". R1 A5 ruled: "For every later launch the checklist is
+      followed as written, and where a launch departs from it the raw's header says so at the time."
+      - Code launched the stage as a background job of its shell tool, as `caffeinate -is /bin/zsh -c '…'`,
+        without `nohup` and without `& disown`.
+      - The raw's header does not say so. It reads "launched under caffeinate -is (m:267's checklist)", which
+        overstates conformity.
+      - This is the first Qwen launch since R1 A5. A5 ruled on G-CAL's launch, `nohup caffeinate -is … &` without
+        `& disown` (the G-CAL entry), accepting Code's reading that "a non-interactive launching shell sends no
+        hangup; nohup ignores one". This launch also dropped `nohup`, so A5's accepted reading does not cover it,
+        and the header clause was not met at its first use.
+      - Power was AC at 140 W. One model process and disk headroom were checked by the precheck and again by the
+        stage's preflight. `caffeinate -is` allows display sleep only. The gate line was logged.
+      - The run completed uninterrupted: exit 0, with the finish stamp written.
+      - Code's default is to leave the raw as written (`dac74b7`, already pushed) and disclose the departure here
+        and in the ping, where Q7 asks the seat to rule.
+      - Code launches every later stage with the checklist's own line, and states any departure in the header at
+        the time.
+    - **Offline load.** The launch set `HF_HUB_OFFLINE=1`, so the weights load from the cached snapshot
+      `c000ac2c2057d94be3fa931000c31723aac53282`. It is the cache's only snapshot (fetched 2026-07-16; refs/main
+      points to it, and refs/main was last written 2026-10-08 01:39 -0400, at G-CAL's online load), so Code infers
+      that G-CAL's online load resolved the same one. T10-2's disposition (committed at `0fe65b9`) states that as
+      fact; it is Code's inference. Ping Q5 asks the seat about this stage's offline load and later ones.
+    - The precheck ran without a model load, with the lock's values, just before the launch, and returned `[]`.
+      `driver_problems` returned `[]` with the committed sha256. This is Code's session only; the scratch script
+      is not committed. The run's own precheck, and its DRIVER line in the raw, repeat both.
+  - **The run** ([`_gtime-f0`](results/raw/2026-10-12_m-gtime-f0.txt)).
+    - Code's wrapper wrote a launch stamp and a finish stamp around the tool's output: the raw's second and last
+      lines, not restated here. Ping Q4 flags them.
+    - The LICENCE line, verbatim: "LICENCE G-TIME-F0: proposal PROPOSAL-m-gating-campaign-v1_11.md
+      42ab36ecc814c9c4, lock LOCK-m-F0.md 1a043c287da1f01a: committed at HEAD
+      0fe65b9716f5bf5185b46d4e7a180d72099a1900, working tree identical; analyzer 66fb521488db41e7 and package
+      5f646db6e82c5561: the hashes identity_extra and the lock name, hashed from the working tree at stage start".
+    - The GATE line logs the same HEAD and CLAUDE.md `955788dec22ee820`.
+    - PROVENANCE: `qwen3.6-27b-4bit-mlx`, MLX 0.31.2, mlx-lm 0.31.3, numpy 2.5.1, Python 3.12.9, macOS 15.6.1.
+      The backend identifier is `a734dadec8f8ce9b`, the same as G-CAL's.
+    - The two session lines, verbatim: `time A0 s=0 excluded:excluded@free` and `time A0s s=0 valid`. The first
+      is m:263's form: "for a contrast-template session's free-round exclusion the phase alone (`excluded@free`),
+      the class withheld to VERDICTS with the other free-round events (§3)".
+    - Then the bar line, the stage line `STAGE G-TIME-F0 PASS path=uncached` and the three output paths. Exit 0.
+    - Code scanned the raw (as a read): no line names a roster word, and both session lines match
+      `readrule._LINE_RX`.
+  - **The identity matches its records.**
+    - Lock, proposal and package: `1a043c28…8b6b`, `42ab36ec…6c6b`, `5f646db6…d771`.
+    - Renders `a04f67b0e5105a05`. Pool `711deec1c2645194` (lock §3.7). Audit `7aa235d25eeb66dc`
+      (`audit.AUDIT_V2_SHA16`).
+    - Two values Code computed for the lock that no record carried before (lock §11, item 1) are now in this
+      stage's identity, equal: `schedule_sha256` `822a2eb12a6bd546…24ec` (lock §6) and `ban_sha`
+      `a934f1ad2b702245` (lock §7). They come from the same package and inputs, so the equality is a consistency
+      check.
+  - **Bars** (m:271, m:280; lock §8).
+    - `round_degeneracy@G-TIME-F0` is evaluated once, at stage end, on the A0s session's realised rounds: 0/10,
+      exact one-sided P = 1, critical 3. Silent. "On Qwen the G-TIME bars bind alone" (m:271).
+    - **The one-session boundary, disclosed as m:280 asks** (m:271, verbatim): "a forced-round claim at rounds 2–4
+      of G-TIME-F0's sham session ends it at a realised n of 2–4, where the critical count is 2 and one claim
+      cannot fire the bar — reported, not fired (a round-1 claim, n = 1, fires it at P = .05 = α)". It was not
+      engaged here: the sham session ran all 10 rounds with no claim.
+    - Hair triggers (`scaffold_absorption`, `template_breakage`, `schedule_mismatch`) were evaluated on both
+      sessions. None fired, as a fire anywhere STOPs the stage. G-VER verified both records before each was
+      written.
+  - **Reported beside** (`Q-F0_time_report.json`).
+    - The A0 session (contrast), in ruling (h)'s two counts (the seat's dispositions of 2026-10-06, applied at
+      `54e41c9`): 4 forced rounds generated; excluded at a forced round, no. Its free rounds are "withheld to the
+      unit's VERDICTS entry or NOT-RUN record (m:271)".
+    - The A0s session (sham): valid, complete, in domain. 10 rounds (4 forced, 6 free); 0 claims of every class
+      (`v2`, echo, content, lexical); 0 advisory; 0 cap hits; no hair trigger.
+    - A0s reads, descriptive only, by Code's application of m:283's qualification treatment: 6 reads, 1 at low
+      label mass, 1 with a top-1 that is not a label.
+  - **The A0s session's first pick** (m:280: "the A0s session's first pick reported in the stage entry"; m:318
+    exception (2)): **the P-role label**, the label in the pair's P role in the committed schedule.
+    `first_pick_P` (first picks of that role) is k 1 of n 1, pair index 0.
+  - **Uncached timing** (m:280: "uncached timing recorded").
+    - The A0s session: 261.65 s (the report, sham only).
+    - The A0 session's seconds are written to the checkpoint by construction (P220); Code has not opened it. The
+      report carries "contrast_seconds": "withheld to
+      the unit's VERDICTS entry (m:318)". This follows Code's PIN P220 (`stages.py:1328`): stage timing "is
+      reported over sham-template sessions only"; a contrast session's seconds "stay in the checkpoint until
+      VERDICTS". It also follows `stages.py`'s module docstring (:99): reports carry "no time that includes a
+      contrast session".
+    - Ping Q4 flags that the raw's wrapper stamps, and more loosely other records (commit times, the report's
+      PROVENANCE stamp, this entry's own stamps, the checkpoint's committed byte size), could bound that time.
+      Code has not computed it, and does not restate the stamps here, pending the seat's answer.
+  - **The A0 session's picks and free-round events** are in the checkpoint. The picks are "reported at Q-F0's
+    VERDICTS" (m:280). The free-round events are "withheld to the unit's VERDICTS entry or NOT-RUN record"
+    (m:271). Code has not opened the checkpoint. It is committed under `.gitattributes`' `-diff` for
+    `data/m/ckpt/**`, Code's mechanism for m:318's rule that no one reads it before VERDICTS; `-diff` hides its
+    content from diffs, not its byte size.
+  - **Outputs** (committed at `dac74b7`; the stage wrote no adjudication excerpt, as nothing fired):
+
+    | File | sha256 |
+    |---|---|
+    | `results/raw/2026-10-12_m-gtime-f0.txt` | `e8ec7fbf9c69a53fadfd8356a9f55685031ee16a57ab4ce178df3006e87a79bd` |
+    | `data/m/reports/Q-F0_time_report.json` | `cef9e0da4da6a3c4a78f7fbcf1637bb16c835c49a096d94f75116ac044741d27` |
+    | `data/m/reports/Q-F0_time_reads.json` | `16e07c07397cb0e2d733496c2f2412b49a075533a3f5544ddfcdc8db0cfa1b51` |
+    | `data/m/ckpt/Q-F0_time.json` (pick-bearing; not opened) | `483f32ea240014404b885cc39a04027b2a31bb16ebc3c9434791769f58e2557a` |
+
+  - **The seat's read and the ping** ([`_code-to-design_G-TIME-F0`](results/raw/2026-10-12_m-code-to-design_G-TIME-F0.md)).
+    - The block carries both transcripts verbatim from the reads:
+      - the A0 session's banner and forced rounds, "the A0 session's forced rounds only" (m:280);
+      - the A0s session with its menus removed and its chosen tag redacted (m:271).
+    - The attractor tally on the contrast forced rounds is the seat's (m:271).
+    - It points to the lock for the seat's read (`LOCK-m-F0.md` at `e3bef6f`, sha256 in full). It lists the six
+      new Code items (lock §0) and the two lock values this stage's identity now carries.
+    - It discloses the launch departure.
+    - It asks seven questions:
+      - **Q1**, v0.2's form (lock §11, item 8).
+      - **Q2**, whether the answer on the `time` wiring extends to `id`, `qual` and `campaign`.
+      - **Q3**, what v0.2 declares for the driver: the step-10 sha256, the five sites, and a regenerated PIN-index
+        addendum, which would be Code's addition; and whether v0.2 also names a later driver, if `id` is wired at
+        step 12.
+      - **Q4**, the wrapper stamps and the other records that bound the stage's time. Code proposes dropping the
+        finish stamp from the raw at later stages with contrast sessions (G-F0m-Qwen and the campaign), and asks
+        what the seat wants for this raw and its commit message.
+      - **Q5**, this stage's offline load and later ones.
+      - **Q6**, the measured timing beside v0.2's projections: by Code's default, §2.4's bases stay, and
+        G-TIME-F0's 261.65 s sham session is reported beside the 488 s uncached basis, not substituted.
+      - **Q7**, the launch departure.
+  - **What follows.**
+    - Step 11: no cap trigger in Q-F0; `STOP_CAP = 60` stands (m:358).
+    - Step 12, G-ID-F0m (m:281), on the PI's word. This stage's persisted PASS is its prior (`PRIOR_STAGE`). Its
+      launch on an edited driver waits on Q2 or the PI's direction. Code proposes to build and review the `id`
+      wiring first.
+    - Step 13, LOCK-m-F0 v0.2 (m:282): path; projections; the driver's step-10 sha256, as the PI's word directs in
+      the sentence that gives the seat's answer; and whatever the seat's answers to Q1–Q7 put there.
+    - The OLMo track still needs the PI's go for a pod start and the runpod MCP re-authorised.
+  - Values-checked in two adversarial passes before commit
+    ([`_gtime-f0_valuescheck`](results/raw/2026-10-12_m-gtime-f0_valuescheck.txt)).
+    - Pass 1: 269 claims, 23 confirmed corrections, 19 values findings (3 major).
+    - Pass 2: 302 claims, 9 confirmed corrections (1 flag refuted), 18 values findings (5 major).
+    - Every confirmed correction and every values finding was applied, the entry and the ping alike. Among them
+      were the launch departure (pass 1) and its A5 history (pass 2), and Q6 recast to §2.4's named bases.
+
 - 2026-10-10 — **LOCK-m-F0 v0.1 (PROPOSAL-m v1.11 §8 step 9, m:279; the PI's word, on the design seat's two
   rulings of 2026-10-10): COMMITTED. Q-F0's first lock is `LOCK-m-F0.md` at the root, sha256
   `1a043c287da1f01a0c72b347f3170e499eeef17a63aea603adc02d110dc38b6b` (1,635 lines). Code drafted it from the
