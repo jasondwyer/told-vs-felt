@@ -1,0 +1,187 @@
+# LOCK-m-F0 v0.2 -- Code's mechanical check of the file before its commit (read-only; no model or tokenizer), as at step 9
+# (results/raw/2026-10-10_m-lock-v0.1_check.txt).
+# Code stamp: Tue Oct 13 16:56:59 UTC 2026 (date -u); HEAD 64f3c7e; the lock LOCK-m-F0.md (sha256 0908b5b7ab7a1fbf58035eb805232a96b732e195dcfe5073fe6d8b362a74945e), uncommitted,
+# byte-identical to the file committed with this raw (the amendment after values-check pass 2, then the v0.1 text).
+# Checks (the script's docstring states them): (1) the tail byte-identical to e3bef6f's blob; (2) check (f)'s separation;
+# (3) every 64-hex string in the amendment recomputed; (4) commit ids resolve; (5) section references resolve; (6) quoted
+# spans found verbatim; (7) stages.licence_problems returns [] for the qualification's identity with stages._committed
+# patched to serve the file (it is not yet committed), and three negative controls are refused; (8) the driver's
+# stage_identity_extra accepts the file for time and id. After the commit Code re-runs (7) unpatched on the committed
+# file; the step-14 entry records it.
+
+=== 1. Script (verbatim; Code's scratchpad step13/check_v02.py, not committed) ===
+#!/usr/bin/env python3
+"""Mechanical checks on the LOCK-m-F0 v0.2 draft (read-only on the repo). Run: <venv python> -I -B check_v02.py DRAFT
+(1) the v0.1 record: the file's tail byte-identical to e3bef6f's blob; (2) neither the analyzer's nor the package's hash
+in full in the amendment, both in the v0.1 text (check (f)'s separation); (3) every 64-hex string in the amendment equals
+a recomputed sha256; (4) commit ids resolve; (5) "lock §N" names a v0.1 heading and "v0.2 §N" a v0.2 heading; (6) quoted
+spans of 25 characters or more found verbatim (bold markers and whitespace aside) in a source, misses reported as notes;
+(7) stages.licence_problems with LOCK-m-F0.md served from the draft returns [] for the qualification's identity, and
+three negative controls are refused; (8) the driver's stage_identity_extra accepts the draft for time and id."""
+import sys
+sys.dont_write_bytecode = True
+import hashlib, json, re, subprocess
+from pathlib import Path
+from unittest import mock
+REPO = Path("/Users/jasondwyer/Documents/code/jspace-lab")
+sys.path.insert(0, str(REPO))
+from valence_core.m import stages  # noqa: E402
+DRAFT = Path(sys.argv[1])
+FAILS, NOTES = [], []
+def fail(m): FAILS.append(m); print("  FAIL:", m)
+def note(m): NOTES.append(m); print("  NOTE:", m)
+def sha(b): return hashlib.sha256(b).hexdigest()
+def git(*a, binary=False):
+    r = subprocess.run(["git", "--no-optional-locks", "-C", str(REPO), *a], capture_output=True)
+    if r.returncode: raise RuntimeError(r.stderr.decode()[:200])
+    return r.stdout if binary else r.stdout.decode()
+db = DRAFT.read_bytes(); text = db.decode("utf-8")
+v01 = git("show", "e3bef6f:LOCK-m-F0.md", binary=True)
+V01SHA = "1a043c287da1f01a0c72b347f3170e499eeef17a63aea603adc02d110dc38b6b"
+ANA = "66fb521488db41e71cc65e844e17c7ee77e0a4a318a55314ef1afb8ffef67d5e"
+PKG = "5f646db6e82c5561ff8a425e91beb5454068a381564894e93d19b9165459d771"
+PROP = "42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b"
+print("(1) the v0.1 record: tail byte-identical to e3bef6f's blob")
+if sha(v01) != V01SHA: fail("v0.1 blob sha")
+if not db.endswith(v01): fail("the draft does not end with the v0.1 blob")
+amend = db[: len(db) - len(v01)].decode("utf-8")
+if text.count("# LOCK-m-F0.md — v0.1 (") != 1: fail("v0.1 title not exactly once")
+if not amend.rstrip().endswith("changes the standing of something in the v0.1 text, the amendment governs."): fail("the separator paragraph is not the amendment's end")
+print(f"  amendment {len(amend.splitlines())} lines; v0.1 {len(v01.splitlines())} lines; ok" if db.endswith(v01) else "")
+print("(2) no analyzer or package hash in full in the amendment (check (f) separation)")
+for nm, h in (("analyzer", ANA), ("package", PKG)):
+    if h in amend: fail(f"{nm} hash in full in the amendment")
+    if h not in v01.decode(): fail(f"{nm} hash not in the v0.1 text")
+print("  ok" if not any("hash in full" in f for f in FAILS) else "")
+print("(3) every 64-hex in the amendment matches a recomputed value")
+known = {}
+def blob_sha(rev, rel): return sha(git("show", f"{rev}:{rel}", binary=True))
+for rel in ["results/raw/2026-10-13_m-design-to-code_G-TIME-F0_read.md", "results/raw/2026-10-13_m-design-to-code_G-ID-F0m_adjudication.md",
+            "results/raw/2026-10-12_m-code-to-design_G-TIME-F0.md", "results/raw/2026-10-13_m-code-to-design_G-ID-F0m.md",
+            "data/m/gates/Q-F0_G-ID.json", "data/m/reports/Q-F0_id_report.json", "data/m/reports/Q-F0_id_reads.json",
+            "results/raw/2026-10-13_m-gid-f0m.txt", "results/raw/2026-10-12_m-gtime-f0.txt", "data/m/reports/Q-F0_time_report.json",
+            "results/raw/2026-10-12_m-gtime-driver_review.txt", "results/raw/2026-10-13_m-gid-driver_review.txt",
+            "results/raw/2026-10-08_note-N17-numerics.md"]:
+    known[blob_sha("HEAD", rel)] = rel
+known[sha((REPO / "results/raw/2026-10-13_m-lock-v0.2_pin-index-addendum.txt").read_bytes())] = "the addendum (working tree)"
+known[blob_sha("8da32f2", "scripts/m_sessions.py")] = "driver @8da32f2"
+known[blob_sha("0fe65b9", "scripts/m_sessions.py")] = "driver @0fe65b9"
+known[V01SHA] = "LOCK v0.1 blob"
+known["f04ca5a3a6a2f11d9fba58fdf1605b349f6039993692c3620d90ba23adbed5af"] = known.get("f04ca5a3a6a2f11d9fba58fdf1605b349f6039993692c3620d90ba23adbed5af", "adjudication (PI quote)")
+gid = json.loads(git("show", "HEAD:data/m/gates/Q-F0_G-ID.json"))
+known[gid["identity"]["schedule_sha256"]] = "G-ID-F0m schedule_sha256 (artifact identity)"
+occ = re.findall(r"(?<![0-9a-f])[0-9a-f]{64}(?![0-9a-f])", amend)
+found = sorted(set(occ))
+print(f"  {len(occ)} occurrences, {len(found)} distinct values")
+for h in found:
+    print(f"  {h[:16]}… -> {known.get(h, 'UNMATCHED')}")
+    if h not in known: fail(f"unmatched 64-hex {h}")
+print("(4) commit ids in the amendment resolve")
+for c in sorted(set(re.findall(r"`([0-9a-f]{7}|[0-9a-f]{40})`", amend))):
+    if c == "c000ac2c2057d94be3fa931000c31723aac53282":
+        continue  # the HF snapshot revision, not a git commit
+    try: git("rev-parse", "--verify", "--quiet", f"{c}^{{commit}}")
+    except RuntimeError: fail(f"unresolvable commit {c}")
+print("  checked", len(set(re.findall(r"`([0-9a-f]{7}|[0-9a-f]{40})`", amend))))
+print("(5) section references")
+v01heads = set(re.findall(r"^#{2,3} (\d+(?:\.\d+)?)[. ]", v01.decode(), re.M))
+v02heads = set(re.findall(r"^## v0\.2 §(\d+)\.", amend, re.M))
+for ref in sorted(set(re.findall(r"lock §§?(\d+(?:\.\d+)?)", amend))):
+    if ref not in v01heads: fail(f"lock §{ref} not a v0.1 heading")
+for ref in sorted(set(re.findall(r"v0\.2 §§?(\d+)", amend))):
+    if ref not in v02heads: fail(f"v0.2 §{ref} not a v0.2 heading")
+print("  v0.1 heads", len(v01heads), "v0.2 heads", sorted(v02heads, key=int))
+print("(6) quoted spans (>= 25 chars) found verbatim in a source")
+srcs = {"step-10 read": git("show", "HEAD:results/raw/2026-10-13_m-design-to-code_G-TIME-F0_read.md"),
+        "adjudication": git("show", "HEAD:results/raw/2026-10-13_m-design-to-code_G-ID-F0m_adjudication.md"),
+        "proposal": git("show", "HEAD:PROPOSAL-m-gating-campaign-v1_11.md"), "lock v0.1": v01.decode(),
+        "stages.py": git("show", "HEAD:valence_core/m/stages.py"), "RESULTS": git("show", "HEAD:RESULTS.md"),
+        "N17": git("show", "HEAD:results/raw/2026-10-08_note-N17-numerics.md"), "runner_qwen": git("show", "HEAD:valence_core/m/runner_qwen.py"),
+        "m_sessions.py": git("show", "HEAD:scripts/m_sessions.py")}
+norm = lambda s: " ".join(s.replace("**", "").split())
+nsrc = {k: norm(v) for k, v in srcs.items()}
+qs = re.findall(r'"([^"\n]*(?:\n[^"\n]*)*?)"', amend)
+miss = 0
+for q in qs:
+    nq = norm(q)
+    if len(nq) < 25: continue
+    hit = [k for k, v in nsrc.items() if nq in v]
+    if not hit:
+        miss += 1; note(f"quote not found verbatim: {nq[:120]}")
+print(f"  {sum(1 for q in qs if len(norm(q))>=25)} long quotes; {miss} not found (reported for review)")
+print("(7) stages.licence_problems with LOCK-m-F0.md served from the draft (the qualification's identity)")
+real = stages._committed
+def run_licence(lock_bytes, **over):
+    def fake(rel, repo=stages.REPO):
+        if rel == "LOCK-m-F0.md": return [], lock_bytes
+        return real(rel, repo)
+    extra = {"proposal_file": "PROPOSAL-m-gating-campaign-v1_11.md", "proposal_sha256": PROP, "lock_file": "LOCK-m-F0.md",
+             "lock_sha256": sha(lock_bytes), "analyzer_sha256": ANA, "package_sha256": PKG}
+    extra.update(over)
+    with mock.patch.object(stages, "_committed", side_effect=fake):
+        return stages.licence_problems(extra)
+pr = run_licence(db); print("  licence_problems(draft) =", pr)
+if pr: fail(f"licence on the draft: {pr}")
+for label, lb, over, want in [("lock_sha256 = v0.1's", db, {"lock_sha256": V01SHA}, "lock LOCK-m-F0.md"),
+                              ("package hash removed from the text", db.replace(PKG.encode(), (PKG[:16] + "…").encode()), {}, "package_sha256"),
+                              ("analyzer hash removed from the text", db.replace(ANA.encode(), (ANA[:16] + "…").encode()), {}, "analyzer_sha256")]:
+    p2 = run_licence(lb, **over); live = any(want in x for x in p2)
+    print(f"  control ({label}): {'refused' if live else 'NOT REFUSED'}")
+    if not live: fail(f"control not refused: {label}")
+print("(8) the driver's lock checks with the draft served (stage_identity_extra, as at step 10/12)")
+import importlib.util
+spec = importlib.util.spec_from_file_location("m_sessions_chk", REPO / "scripts" / "m_sessions.py")
+ms = importlib.util.module_from_spec(spec); spec.loader.exec_module(ms)
+def fake2(rel, repo=stages.REPO):
+    if rel == "LOCK-m-F0.md": return [], db
+    return real(rel, repo)
+with mock.patch.object(stages, "_committed", side_effect=fake2):
+    for st in ("time", "id"):
+        ex, probs = ms.stage_identity_extra(st, "PROPOSAL-m-gating-campaign-v1_11.md", "LOCK-m-F0.md", analyzer_sha256=ANA,
+                                            package_sha256=PKG, renders_sha16="a04f67b0e5105a05")
+        ok = (not probs) and ex and ex["lock_sha256"] == sha(db)
+        print(f"  {st}: problems {probs}; lock_sha256 == draft: {bool(ex) and ex['lock_sha256'] == sha(db)}")
+        if not ok: fail(f"driver identity on the draft ({st}): {probs}")
+print("\nSUMMARY:", "PASS" if not FAILS else f"{len(FAILS)} FAIL", f"; {len(NOTES)} notes; draft sha256 {sha(db)}")
+
+=== 2. Output (jlens-qwen36/.venv/bin/python -I -B check_v02.py LOCK-m-F0.md, run from the repository root) ===
+(1) the v0.1 record: tail byte-identical to e3bef6f's blob
+  amendment 377 lines; v0.1 1635 lines; ok
+(2) no analyzer or package hash in full in the amendment (check (f) separation)
+  ok
+(3) every 64-hex in the amendment matches a recomputed value
+  18 occurrences, 17 distinct values
+  0e5f29e82a2a2a61… -> the addendum (working tree)
+  1219f13fc0cce045… -> results/raw/2026-10-13_m-code-to-design_G-ID-F0m.md
+  1a043c287da1f01a… -> LOCK v0.1 blob
+  44857cc0db3fb55d… -> results/raw/2026-10-13_m-gid-driver_review.txt
+  5785a26da7dc519a… -> driver @0fe65b9
+  63df27b34001fcba… -> results/raw/2026-10-12_m-code-to-design_G-TIME-F0.md
+  64aeacd00201b227… -> results/raw/2026-10-12_m-gtime-driver_review.txt
+  a3b0fbd9231c2a3a… -> results/raw/2026-10-13_m-gid-f0m.txt
+  b20b6e8972a38436… -> results/raw/2026-10-08_note-N17-numerics.md
+  c2cc448f441bcc32… -> results/raw/2026-10-13_m-design-to-code_G-TIME-F0_read.md
+  cef9e0da4da6a3c4… -> data/m/reports/Q-F0_time_report.json
+  db0e32394f2c8758… -> data/m/reports/Q-F0_id_reads.json
+  dd8a1b8cfb8d91e9… -> data/m/gates/Q-F0_G-ID.json
+  e8ec7fbf9c69a53f… -> results/raw/2026-10-12_m-gtime-f0.txt
+  eb6aa7cf167aa8d9… -> driver @8da32f2
+  f04ca5a3a6a2f11d… -> results/raw/2026-10-13_m-design-to-code_G-ID-F0m_adjudication.md
+  ff9d04ef9a09228b… -> data/m/reports/Q-F0_id_report.json
+(4) commit ids in the amendment resolve
+  checked 23
+(5) section references
+  v0.1 heads 41 v0.2 heads ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+(6) quoted spans (>= 25 chars) found verbatim in a source
+  79 long quotes; 0 not found (reported for review)
+(7) stages.licence_problems with LOCK-m-F0.md served from the draft (the qualification's identity)
+  licence_problems(draft) = []
+  control (lock_sha256 = v0.1's): refused
+  control (package hash removed from the text): refused
+  control (analyzer hash removed from the text): refused
+(8) the driver's lock checks with the draft served (stage_identity_extra, as at step 10/12)
+  time: problems []; lock_sha256 == draft: True
+  id: problems []; lock_sha256 == draft: True
+
+SUMMARY: PASS ; 0 notes; draft sha256 0908b5b7ab7a1fbf58035eb805232a96b732e195dcfe5073fe6d8b362a74945e
+EXIT=0

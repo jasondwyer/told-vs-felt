@@ -1,0 +1,432 @@
+# LOCK-m-F0 v0.2 -- its PIN-index addendum: scripts/m_sessions.py alone, at v0.2's tree. Extracted from the driver blob
+#   scripts/m_sessions.py  eb6aa7cf167aa8d955c26fd97a6214ed68a7f1375b51c9f80582c85ed659fd6c
+# (the blob G-ID-F0m ran on, committed at 8da32f2) at HEAD 64f3c7e0b83d9134e6628f9d5ee5fbfb6c8d8428, the parent of v0.2's commit, which changes no code
+# (the driver's blob is the same at v0.2's tree); mechanically, by the v0.1 index's rules
+# (results/raw/2026-10-10_m-lock-v0.1_pin-index.txt, the step-4 build index's rules: file:line and the marked lines as written;
+# a comment block runs until the next marker or a non-comment line; a docstring block until a blank line, the closing quotes or
+# the next marker). As in the v0.1 index (its P263, P264), closing quotes that end a text line do not end a block: such a
+# block runs to the next blank line or marker and can include code. The v0.1 index is not edited; its anchors stay at
+# 9bf36ad and its sha256 stays as lock section 1 names it.
+# Contents (the seat's step-10 read, Q3 and section 2 item 3; the seat's G-ID-F0m adjudication, Q4): the seven sites marked
+# 'PIN (Code, declared at LOCK v0.2' -- the five step-10 sites as amended at step 12, each with its step-10 line (blob
+#   5785a26da7dc519ab86746d7dc98bd2d1e951c9a94e85ffe07ddc15a97f2036d at 0fe65b9), its step-12 line and the
+# text as amended, numbered P314-P318, and the two sites new at step 12, P319-P320 -- then the ten v0.1 sites (P256-P265) at
+# their current lines, each compared with its v0.1 text. The step-10 -> step-12 pairing is Code's, by the function or block
+# each site sits in. Each site is Code's reading on the terms of the seat's C6, as Code extended them to the PIN index (lock
+# section 10) and the seat accepted (the step-10 read, section 2 item 3: strikable until LOCK v1.0 at the cost Code states).
+# 7 v0.2 sites and 10 v0.1 sites.
+
+P314  scripts/m_sessions.py:410  (amended: step-10 line :393 at 0fe65b9; step-12 line :410; the time|id section comment (step 10: the time section); text changed at step 12)
+      # PIN (Code, declared at LOCK v0.2): the `time` subcommand is wired for Q-F0 at §8 step 10, on
+      # the PI's word of 2026-10-12, which gave the seat's answer to LOCK v0.1's flagged question
+      # (lock §11 item 1) as: "a post-lock edit to scripts/m_sessions.py that wires the time command
+      # does not re-run G-SHAPE-F0". The `id` subcommand is wired for Q-F0 at §8 step 12, on the PI's
+      # word of 2026-10-13 ("Q2 licenses the id wiring without a G-SHAPE-F0 re-run"), under the seat's
+      # step-10 read (`results/raw/2026-10-13_m-design-to-code_G-TIME-F0_read.md`, Q2: "the `time`
+      # answer extends to `id`, `qual` and `campaign`. Yes."). The OLMo units keep the step-9 track's
+      # refusal (and `id` its "no G-ID on OLMo") and Q-F3 step 19's (``refusal``). The stages are
+      # stages.run_gate_stage and stages.run_gid_pair, unchanged. This driver builds their
+      # identity_extra in lock §0's form and, before the Qwen load, runs ``stage_precheck``'s
+      # refusals, its own driver check and the snapshot check, as G-CAL completability runs its
+      # precheck: m:267's laptop checklist runs before a model process starts (F1, Code's default as
+      # the PI accepted it: "the one-process preflight stays as it is"; "Qwen stages launch only when
+      # the audit session is idle" is the operator's launch condition, which no code here can see).
+P315  scripts/m_sessions.py:454  (amended: step-10 line :419 at 0fe65b9; step-12 line :454; stage_identity_extra (step 10: time_identity_extra); text changed at step 12)
+      PIN (Code, declared at LOCK v0.2): the proposal's and the lock's sha256 are computed here
+      from their COMMITTED blobs (stages._committed: committed at HEAD, working tree identical;
+      G-CAL completability's precedent for the proposal). The lock is TIME_LOCK_FILE (lock §0),
+      and its committed text must name the proposal's sha256 in full, anywhere in it (lock §1
+      binds the proposal in its table; a committed file the lock names that is not a proposal is
+      refused by the precheck's banner check): the licence's (b) and (c) compare each file with a
+      hash taken from that same file, so these two checks are what tie the run to LOCK-m-F0.md as
+      committed at HEAD (whichever revision that is; the LICENCE line prints its sha16) and that
+      lock to the proposal. The analyzer's and the package's sha256 and the renders' sha16 are the
+      values the command line gives -- the lock's -- and are never derived here from the bytes they
+      are checked against: the licence checks the first two at stage start ((d)-(f)) and
+      _renders_of_record the third. G-TIME-F0 carries locked_path TIME_LOCKED_PATH; G-ID-F0m
+      carries none (m:282: the path is locked at v0.2, after G-ID). prior_proposal_sha256s is
+      omitted (none under LOCK v0.1, lock §0)."""
+      from valence_core.m import stages
+      if stage not in DRIVER_STAGES:
+      raise ValueError(f"stage_identity_extra: {stage!r} is not one of {DRIVER_STAGES}")
+      probs: list[str] = []
+      extra: dict = {}
+      lock_text = ""
+      for key, given in (("proposal", proposal_file), ("lock", lock_file)):
+      p = Path(given)
+      p = p if p.is_absolute() else REPO / p
+      try:
+      rel = p.resolve().relative_to(REPO.resolve()).as_posix()
+      except (ValueError, OSError, RuntimeError):
+      probs.append(f"--{key}-file {given}: lies outside the repository (or does not resolve)")
+      continue
+      if key == "lock" and rel != TIME_LOCK_FILE:
+      probs.append(f"--lock-file {rel}: {stages.stage_name(TIME_UNIT, stage)} cites {TIME_LOCK_FILE} "
+      f"(lock §0)")
+      continue
+      cp, data = stages._committed(rel)
+      if cp or data is None:
+      probs.append(f"--{key}-file {rel}: {cp} (the identity hashes its committed blob)")
+      continue
+      extra[f"{key}_file"] = rel
+      extra[f"{key}_sha256"] = hashlib.sha256(data).hexdigest()
+      if key == "lock":
+      lock_text = data.decode("utf-8", "replace")
+      if probs:
+      return None, probs
+      if extra["proposal_sha256"] not in lock_text:
+      return None, [f"--proposal-file {extra['proposal_file']}: its sha256 "
+      f"{extra['proposal_sha256'][:16]}... is not named in full in {TIME_LOCK_FILE}'s "
+      f"committed text (lock §1 binds the proposal of record)"]
+      extra.update(analyzer_sha256=analyzer_sha256, package_sha256=package_sha256,
+      renders_sha16=renders_sha16)
+      if stage == "time":
+      extra["locked_path"] = TIME_LOCKED_PATH
+      try:
+      stages._extra(extra, stage=stage, sub="qwen", stub=False)
+      except ValueError as e:
+      return None, [str(e)]
+      return extra, []
+P316  scripts/m_sessions.py:521  (amended: step-10 line :475 at 0fe65b9; step-12 line :521; driver_problems; text changed at step 12)
+      PIN (Code, declared at LOCK v0.2): the PI's word of 2026-10-12, in the sentence giving the
+      seat's answer, directs "record the driver's new sha256 in the G-TIME-F0 entry and in LOCK
+      v0.2"; the seat's step-10 read (Q2) makes the like record a condition of every wiring of its
+      kind: "the new blob's sha256 printed by the DRIVER line and recorded in the entry of the stage
+      it wires and in the next lock revision — v0.2 for `id`, v1.0 for `qual`, and for `campaign`,
+      which follows v1.0, the campaign's launch entry". ``_run_stage``'s Qwen path refuses an
+      uncommitted driver and prints the DRIVER line from this one call before the load, so the value
+      recorded is a value the run logged."""
+      from valence_core.m import stages
+      cp, data = stages._committed(DRIVER_REL)
+      if cp or data is None:
+      return list(cp) or [f"{DRIVER_REL}: unreadable"], None
+      return [], hashlib.sha256(data).hexdigest()
+P317  scripts/m_sessions.py:627  (amended: step-10 line :492 at 0fe65b9; step-12 line :627; stage_precheck (step 10: time_precheck); text changed at step 12)
+      PIN (Code, declared at LOCK v0.2): the licence by file ((a)-(f)); the run-time known
+      answers on the proposal the identity names; the renders of record; the committed schedule
+      files; the checkpoint (the path itself; an ENDED one; one on disk without --resume and no
+      end pending); at G-ID-F0m, the prior stage (G-TIME-F0's checkpoint at this out root, as
+      stages.prior_gate reads it, a stub-written one refused) and an existing G-ID artifact (unless
+      this stage's own checkpoint carries an end pending); m:267's laptop checklist (power, one
+      model process, disk); the gate line and its files (CLAUDE.md and the analyzer committed,
+      working tree identical; HEAD known). The failing checks' problems are returned together, one
+      or more per check; ``_run_stage`` adds the driver check's and the snapshot check's and
+      refuses once. NOT made here, so made only by the stage after the load, though several need
+      no model: a resume's or a re-finish's comparison of the checkpoint with this run
+      (resume.load_or_init's identity and readability refusals, stages._record_licence, _pend's
+      END PENDING MISMATCH, G-ID's artifact identity on a re-finish); qwen_startup's pins (the
+      audit artifact's, the frozen ban-list file's and the termination file's sha pins, and the
+      ban list's rebuild against the live tokenizer); the counts against the committed files' n;
+      the bars' firing-case completeness; and the stage's internal assertions. A SystemExit among
+      them is reported by ``_run_stage`` as "STOP: <message>" with exit 4; a ValueError or
+      AssertionError is uncaught (a traceback, exit 1)."""
+      from valence_core.m import guard, resume, stages
+      if stage not in DRIVER_STAGES:
+      raise ValueError(f"stage_precheck: {stage!r} is not one of {DRIVER_STAGES}")
+      name = stages.stage_name(TIME_UNIT, stage)
+      probs = [f"licence: {p}" for p in stages.licence_problems(extra)]
+      proposal = stages._proposal_path(extra)
+      probs += [f"startup: {p}" for p in stages.startup_problems(proposal)]
+      try:
+      stages._renders_of_record(extra, name)
+      except SystemExit as e:
+      probs.append(f"renders: {e}")
+      paths = stages.out_paths(TIME_UNIT, stage, out_root)
+      wanted = ([("time", t) for t, _ in TIME_COUNTS] if stage == "time" else [("id", ID_TEMPLATE)])
+      try:
+      stages.load_committed(TIME_UNIT, wanted, paths["schedules"])
+      except SystemExit as e:
+      probs.append(f"schedules: {e}")
+      cpath = None
+      try:
+      cpath = stages.checkpoint_path(None, paths)
+      resume.refuse_ended(cpath)
+      # is_symlink: checkpoint_path resolve()s non-strictly; on Python 3.13+ a looping link comes
+      # back unresolved (a link on the loop; a dangling link resolves to its absent target on
+      # every version), so the resolved path can still be a link, which only this precheck
+      # refuses; on the venv's 3.12 resolve() raises RuntimeError on the loop (caught below)
+      if (cpath.exists() or cpath.is_symlink()) and not resume_run and not resume.pending_at(cpath):
+      probs.append(f"checkpoint: CHECKPOINT EXISTS at {cpath}; pass --resume to continue it or "
+      f"move it aside (never overwritten)")
+      except SystemExit as e:
+      probs.append(f"checkpoint: {e}")
+      except (RuntimeError, OSError) as e:
+      probs.append(f"checkpoint: the checkpoint path does not resolve ({type(e).__name__})")
+      if stage == "id":
+      prior = stages.out_paths(TIME_UNIT, "time", out_root)["ckpt"]
+      try:
+      stages.prior_gate(TIME_UNIT, "id", prior, proposal_sha256=extra["proposal_sha256"],
+      prior_proposal_sha256s=extra.get("prior_proposal_sha256s") or [],
+      require_real=True)
+      except SystemExit as e:
+      probs.append(f"prior: {e}")
+      gid_path = guard.gid_artifact_path(TIME_UNIT)
+      pending = cpath is not None and resume.pending_at(cpath)
+      if (gid_path.exists() or gid_path.is_symlink()) and not pending:
+      probs.append(f"artifact: G-ID ARTIFACT EXISTS at {gid_path}; it is never overwritten")
+      probs += [f"preflight: {p}" for p in guard.preflight_laptop()]
+      probs += [f"gate line: {p}" for p in stages.gate_line(name, proposal)[1]]
+      for what, path in (("CLAUDE.md", stages.CLAUDE_MD_PATH), ("analyzer", stages.ANALYZER_PATH)):
+      rel = stages._repo_rel(path)
+      probs += ([f"gate line: {what} {path} lies outside the repository"] if rel is None
+      else [f"gate line: {what} {x}" for x in stages._committed(rel)[0]])
+      return probs
+P318  scripts/m_sessions.py:714  (amended: step-10 line :553 at 0fe65b9; step-12 line :714; _run_stage (step 10: run_time); text changed at step 12)
+      PIN (Code, declared at LOCK v0.2): ``adapter_factory`` and ``out_root`` are the selftest's
+      seam (a scripted stub writing a test directory, which stages refuses anywhere under
+      data/m); without the factory the adapter is Qwen through qwen_or_explain, the out root is
+      stages.DEFAULT_OUT (read at call time), a given ``out_root`` is refused before any load,
+      and stage_precheck, the driver check (one driver_problems call) and the snapshot check (one
+      qwen_snapshot call), their problems refused together, then the DRIVER and SNAPSHOT lines,
+      come before the load; after it, the snapshot is read again and the adapter's model_id
+      compared: a re-read that refuses, a moved refs/main or another model id STOPs before a
+      session (SNAPSHOT RE-READ REFUSED / SNAPSHOT MOVED / MODEL ID). G-ID-F0m's prior is
+      G-TIME-F0's checkpoint at the same out root. A STOP, and any exit other than 0 or 2, is
+      escalated to the seat; Code never self-adjudicates."""
+      if stage not in DRIVER_STAGES:
+      raise ValueError(f"_run_stage: {stage!r} is not one of {DRIVER_STAGES}")
+      if unit != TIME_UNIT:
+      print(refusal(stage, unit), file=sys.stderr, flush=True)
+      return 2
+      given = {"proposal_file": proposal_file, "lock_file": lock_file, "analyzer_sha256": analyzer_sha256,
+      "package_sha256": package_sha256, "renders_sha16": renders_sha16}
+      missing = ["--" + k.replace("_", "-") for k in TIME_FLAGS if given[k] is None]
+      if missing:
+      print(f"REFUSED: {stage} --unit {TIME_UNIT} needs {missing}: the lock's values (lock §0, \"How a "
+      f"stage cites this file\"); nothing loaded", file=sys.stderr, flush=True)
+      return 2
+      if out_root is not None and adapter_factory is None:
+      print(f"REFUSED: {stage}: an out root names a test directory; the Qwen run writes data/m only "
+      f"(nothing loaded)", file=sys.stderr, flush=True)
+      return 2
+      from valence_core.m import stages
+      name = stages.stage_name(TIME_UNIT, stage)
+      extra, probs = stage_identity_extra(stage, proposal_file, lock_file, analyzer_sha256=analyzer_sha256,
+      package_sha256=package_sha256, renders_sha16=renders_sha16)
+      if probs:
+      print(f"REFUSED: {name}: {probs}; nothing loaded", file=sys.stderr, flush=True)
+      return 2
+      root = Path(stages.DEFAULT_OUT if out_root is None else out_root)
+      try:
+      if adapter_factory is None:
+      pre = stage_precheck(stage, extra, resume_run=resume_run, out_root=root)
+      dprobs, dsha = driver_problems()
+      sprobs, snap = qwen_snapshot()
+      pre += [f"driver: {p}" for p in dprobs] + [f"snapshot: {p}" for p in sprobs]
+      if pre:
+      print(f"REFUSED: {name}: {pre}; nothing loaded", file=sys.stderr, flush=True)
+      return 2
+      print(f"DRIVER {DRIVER_REL} {dsha}: committed at HEAD {stages._git_head()}, working tree "
+      f"identical", flush=True)
+      print(snapshot_line(snap), flush=True)
+      adapter = _load_qwen()
+      # the snapshot re-read after the load (Code's): a re-read that refuses, a moved refs/main
+      # or another model id STOPs before any session (a SystemExit, exit 4 below). It narrows,
+      # not closes, the window between the precheck's read and the load's: a move and back
+      # between the two reads is not seen
+      sprobs2, snap2 = qwen_snapshot()
+      if sprobs2 or snap2 is None:
+      raise SystemExit(f"SNAPSHOT RE-READ REFUSED ({name}): after the load the snapshot check refuses: "
+      f"{sprobs2} -- no session runs")
+      if snap2["revision"] != snap["revision"]:
+      raise SystemExit(f"SNAPSHOT MOVED ({name}): before the load {snap['revision']}; after it "
+      f"{snap2['revision']} -- no session runs")
+      if getattr(adapter, "model_id", None) != snap["model_id"]:
+      raise SystemExit(f"MODEL ID ({name}): the adapter loaded {getattr(adapter, 'model_id', None)!r}, "
+      f"the snapshot check read {snap['model_id']!r} -- no session runs")
+      print(f"SNAPSHOT re-read after the load: unchanged ({snap['revision']}); adapter model_id "
+      f"{snap['model_id']}", flush=True)
+      else:
+      adapter = adapter_factory()
+      if stage == "time":
+      res = stages.run_gate_stage(adapter, unit=TIME_UNIT, gate="time",
+      templates_counts=list(TIME_COUNTS), resume=resume_run,
+      identity_extra=extra, substrate="qwen", out_root=root)
+      else:
+      res = stages.run_gid_pair(adapter, unit=TIME_UNIT, template=ID_TEMPLATE, resume=resume_run,
+      identity_extra=extra,
+      prior_ckpt=stages.out_paths(TIME_UNIT, "time", root)["ckpt"],
+      out_root=root)
+      except SystemExit as e:
+      print(f"STOP: {e}", file=sys.stderr, flush=True)
+      return 4
+      return stages.EXIT_CODES[res["status"]]
+P319  scripts/m_sessions.py:440  (new at step 12; QWEN_MODEL_ID and MLX_LM_ALLOW_PATTERNS)
+      # PIN (Code, declared at LOCK v0.2): the model id the Qwen path loads -- QwenMLXAdapter's default,
+      # passed explicitly by _load_qwen -- and mlx_lm.utils._download's default allow_patterns (read
+      # from mlx-lm 0.31.3, the installed version at this build), with which the snapshot check resolves
+      # the snapshot as the load does; the self-test asserts both equal their sources.
+P320  scripts/m_sessions.py:540  (new at step 12; qwen_snapshot)
+      PIN (Code, declared at LOCK v0.2): the seat's step-10 read, Q5, rules the load ("For every
+      later Qwen stage of Q-F0: an offline load, with the snapshot id recorded in each raw's header
+      and in each stage's entry") and leaves the print to Code ("Code may have the driver's
+      precheck print the snapshot id (the `refs/main` value and the snapshot directory) as a line
+      of the raw ... Code's choice"). Code takes the print, and its own refusals before the load,
+      each mirroring how the load resolves the weights (jlens_qwen.model.load -> mlx_lm.load ->
+      mlx_lm.utils._download -> huggingface_hub.snapshot_download): HF_HUB_OFFLINE must be exactly
+      "1" (Code's form of Q5's offline load); MLXLM_USE_MODELSCOPE must not be "true" in any case
+      (mlx_lm tests it so, and would take modelscope's downloader); no path or link named like the
+      model id may exist relative to the working directory (mlx_lm loads an existing one before the
+      hub cache; a dangling link is refused conservatively); the hub cache's
+      `refs/main` for QWEN_MODEL_ID must be, as raw file text, a 40-hex revision whose snapshot
+      directory exists and holds config.json, tokenizer.json, model.safetensors.index.json and
+      every weight file the index names (each a plain file name, resolving to a file); and the
+      hub's own offline resolution with mlx_lm's patterns (snapshot_download, local_files_only)
+      must succeed and return that same directory. The cache is huggingface_hub's HF_HUB_CACHE.
+      info: model_id, revision, snapshot_dir, n_snapshots (snapshot directories of the model's
+      cache repo), offline."""
+      env = os.environ if environ is None else environ
+      probs: list[str] = []
+      if env.get(HF_OFFLINE_ENV) != "1":
+      probs.append(f"{HF_OFFLINE_ENV} is {env.get(HF_OFFLINE_ENV)!r}, not '1' (Code's form of the offline load "
+      f"the seat's step-10 read, Q5, rules for every later Qwen stage of Q-F0)")
+      ms = env.get("MLXLM_USE_MODELSCOPE", "False")
+      if str(ms).lower() == "true":
+      probs.append(f"MLXLM_USE_MODELSCOPE is {ms!r} (mlx_lm tests .lower() == 'true'): mlx_lm would load "
+      f"through modelscope, not the hub cache")
+      model_id = QWEN_MODEL_ID if model_id is None else str(model_id)
+      here = Path.cwd() if cwd is None else Path(cwd)
+      if (here / model_id).exists() or (here / model_id).is_symlink():
+      probs.append(f"{here / model_id} exists or is a link: mlx_lm loads a local path named like the model id "
+      f"before the hub cache (a dangling link refused conservatively)")
+      if cache_dir is None:
+      from huggingface_hub import constants as hf_constants
+      cache_dir = hf_constants.HF_HUB_CACHE
+      repo = Path(cache_dir) / ("models--" + model_id.replace("/", "--"))
+      try:
+      rev = (repo / "refs" / "main").read_text(encoding="utf-8")
+      except (OSError, ValueError):
+      return probs + [f"no readable refs/main for {model_id} under {cache_dir}"], None
+      if not re.fullmatch(r"[0-9a-f]{40}", rev):
+      return probs + [f"refs/main for {model_id} is not, as raw text, a 40-hex revision: {rev[:60]!r} (the "
+      f"hub's offline load reads it raw)"], None
+      snap = repo / "snapshots" / rev
+      if not snap.is_dir():
+      return probs + [f"refs/main names {rev}, but no snapshot directory {snap} exists"], None
+      try:
+      n_snap = sum(1 for d in (repo / "snapshots").iterdir() if d.is_dir())
+      index = json.loads((snap / "model.safetensors.index.json").read_text(encoding="utf-8"))
+      weights = sorted(set(index["weight_map"].values()))
+      bad = [w for w in weights if type(w) is not str or not w or "/" in w or "\\" in w or w in (".", "..")]
+      except (OSError, ValueError, KeyError, TypeError, AttributeError) as e:
+      return probs + [f"snapshot {rev}: model.safetensors.index.json unreadable "
+      f"({type(e).__name__})"], None
+      if bad:
+      return probs + [f"snapshot {rev}: the index names a weight that is not a plain file name: {bad[:2]!r}"], None
+      need = ["config.json", "tokenizer.json", "model.safetensors.index.json"] + weights
+      missing = [f for f in need if not (snap / f).is_file()]
+      if missing:
+      probs.append(f"snapshot {rev} is incomplete: {missing[:4]} missing (an offline load would fail)")
+      if not weights:
+      probs.append(f"snapshot {rev}: the index names no weight file")
+      try:
+      from huggingface_hub import snapshot_download
+      got = snapshot_download(model_id, local_files_only=True, allow_patterns=list(MLX_LM_ALLOW_PATTERNS),
+      cache_dir=str(cache_dir))
+      if Path(got).resolve() != snap.resolve():
+      probs.append(f"the hub's offline resolution gives {got}, not refs/main's snapshot {snap}")
+      except Exception as e:                                      # noqa: BLE001 -- any failure refuses
+      probs.append(f"the hub's offline resolution with mlx_lm's patterns refuses: {type(e).__name__}")
+      info = {"model_id": model_id, "revision": rev, "snapshot_dir": str(snap),
+      "n_snapshots": n_snap, "offline": env.get(HF_OFFLINE_ENV)}
+      return probs, (None if probs else info)
+
+The ten v0.1 sites at their current lines (index numbers and v0.1 lines as the v0.1 index has them at 9bf36ad):
+P256  scripts/m_sessions.py:148  (v0.1 line :112; text unchanged)
+      # PIN (Code, declared at LOCK v0.1): the stage subcommands refuse with exit 2 until
+      # their step; the message names the step and quotes its words.
+P257  scripts/m_sessions.py:203  (v0.1 line :167; text unchanged)
+      PIN (Code, declared at LOCK v0.1): with no --out it is guard.GATES_DIR /
+      Q-F0_G-PORT.json (data/m/gates/, beside the G-ID artifact; tracked by .gitignore's
+      data/m/gates allowlist); --out DIR is a test directory and goes through
+      resume.refuse_canonical_out first, so no test run can land under data/m.
+P258  scripts/m_sessions.py:242  (v0.1 line :206; text unchanged)
+      # PIN (Code, declared at LOCK v0.1): a row the replay cannot walk is a mismatch
+      # (the exception's type only is printed and recorded), never a crash or a pass.
+P259  scripts/m_sessions.py:253  (v0.1 line :217; text unchanged)
+      # PIN (Code, declared at LOCK v0.1): PASS iff every CORR row reproduces AND there are
+      # exactly 64 of them (m:275 "64/64 or STOP"); the artifact's keys are exactly these.
+P260  scripts/m_sessions.py:267  (v0.1 line :231; text unchanged)
+      # PIN (Code, declared at LOCK v0.1): an existing G-PORT artifact is never
+      # overwritten; identical bytes are accepted as they are (a re-run changes nothing).
+P261  scripts/m_sessions.py:280  (v0.1 line :244; text unchanged)
+      # PIN (Code, declared at LOCK v0.1): gcal exits 0 on PASS (or a model-free artifact written or
+      # identical), 4 on FAIL or a STOP, 2 on a refusal (nothing generated past it).
+P262  scripts/m_sessions.py:282  (v0.1 line :246; text unchanged)
+      # PIN (Code, declared at LOCK v0.1): after the G-CAL-specific clauses (GcalRefusal -> 2,
+      # GcalStop -> 4), any other SystemExit reaching a gcal driver -- corr.CorrStop (a pool or
+      # roster pin), guard.assert_insulated's (the quarantined module loaded mid-run),
+      # qwen_or_explain's (the loader) -- is a STOP: exit 4, its message on stderr.
+P263  scripts/m_sessions.py:335  (v0.1 line :298; text unchanged)
+      PIN (Code, declared at LOCK v0.1): ``adapter_factory`` is the selftest's seam (a scripted
+      stub); without it the adapter is Qwen through qwen_or_explain, which writes the canonical
+      paths only, so ``--out`` (a test directory) is refused on that path before any load."""
+      from valence_core.m import gcal, resume, stages
+      p = Path(proposal_file)
+      p = p if p.is_absolute() else REPO / p
+      try:
+      rel = p.resolve().relative_to(REPO.resolve()).as_posix()
+      except ValueError:
+      print(f"REFUSED: --proposal-file {proposal_file} lies outside the repository", file=sys.stderr,
+      flush=True)
+      return 2
+      probs, data = stages._committed(rel)
+      if probs or data is None:
+      print(f"REFUSED: --proposal-file {rel}: {probs} (G-CAL's identity is this document's hash, m:267; "
+      f"it must be committed)", file=sys.stderr, flush=True)
+      return 2
+      sha = hashlib.sha256(data).hexdigest()
+      if out is not None and adapter_factory is None:
+      print("REFUSED: gcal completability --out names a test directory; the Qwen run writes "
+      "data/m/gates and data/m/ckpt only (nothing loaded)", file=sys.stderr, flush=True)
+      return 2
+      out_path = None
+      if out is not None:
+      try:
+      out_path = resume.refuse_canonical_out(out) / gcal.COMPLETABILITY_NAME
+      except SystemExit as e:
+      print(f"REFUSED: {e}", file=sys.stderr, flush=True)
+      return 2
+      try:
+      if adapter_factory is None:
+      gcal.precheck(out_path=None, resume=resume_run, proposal_file=rel, proposal_sha256=sha,
+      stub=False)
+      adapter_factory = _load_qwen
+      adapter = adapter_factory()
+      res = gcal.run_completability(adapter, out_path=out_path, resume=resume_run, proposal_file=rel,
+      proposal_sha256=sha)
+      except gcal.GcalRefusal as e:
+      print(f"REFUSED: {e}", file=sys.stderr, flush=True)
+      return 2
+      except gcal.GcalStop as e:
+      print(f"STOP: {e}", file=sys.stderr, flush=True)
+      return 4
+      except SystemExit as e:
+      print(f"STOP: {e}", file=sys.stderr, flush=True)
+      return 4
+      return GCAL_EXIT[res["verdict"]]
+P264  scripts/m_sessions.py:388  (v0.1 line :351; text unchanged)
+      PIN (Code, declared at LOCK v0.1; PIN-S8): GshapeRefusal -> 2 (nothing written); GshapeStop
+      -> 4 (a precondition STOP, no artifact); any other SystemExit reaching the driver -> 4 with its
+      message (gcal's PIN); a STOP verdict is written with its evidence and exits 4 (G-PORT's
+      precedent). Code escalates a STOP to the seat and never self-adjudicates."""
+      from valence_core.m import gshape
+      try:
+      res = gshape.write(out)
+      except gshape.GshapeRefusal as e:
+      print(f"REFUSED: {e}", file=sys.stderr, flush=True)
+      return 2
+      except gshape.GshapeStop as e:
+      print(f"STOP: {e}", file=sys.stderr, flush=True)
+      return 4
+      except SystemExit as e:
+      print(f"STOP: {e}", file=sys.stderr, flush=True)
+      return 4
+      for line in gshape.summary_lines(res):
+      print(line, flush=True)
+      return gshape.EXIT[res["artifact"]["verdict"]]
+P265  scripts/m_sessions.py:897  (v0.1 line :464; text unchanged)
+      # PIN (Code, declared at LOCK v0.1): olmo_startup refuses the stub by design (its
+      # six ban ids cannot match b3's nine-id sha16), so the OLMo stage checks substitute
+      # stages' reference to it with a setup built as runner_olmo's selftest builds one
+      # (testing.olmo_kit), restored in finally. Production code has no seam.

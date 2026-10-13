@@ -1,3 +1,380 @@
+# LOCK-m-F0.md — v0.2 (Q-F0's lock after G-ID-F0m, PROPOSAL-m v1.11 §8 step 13)
+
+## v0.2 §0. Header and status
+
+- **Version** v0.2, 2026-10-13. It amends LOCK-m-F0 v0.1 as m:282 provides: "**LOCK-m-F0 v0.2.** Path;
+  projections for Q-F0 under its path." (entry name `LOCK-m-F0 v0.2`, m:363). The proposal is unchanged:
+  `PROPOSAL-m-gating-campaign-v1_11.md`, sha256 as lock §1.
+- **Drafted and committed by Code on the PI's word.** The PI's routing (chat, 2026-10-13), verbatim: "Seat’s
+  adjudication of the G-ID-F0m fire: results/raw/2026-10-13_m-design-to-code_G-ID-F0m_adjudication.md, sha256
+  f04ca5a3a6a2f11d9fba58fdf1605b349f6039993692c3620d90ba23adbed5af. Commit it by path with the close line appended
+  to the G-ID-F0m entry. The FAIL stands; Q-F0’s path is uncached. Go for step 13 (LOCK v0.2) on its terms and the
+  step-10 read’s; then continue onto step 14".
+- **The rulings it rests on** (sha256 and commits in v0.2 §9):
+  - **The step-10 read**: `results/raw/2026-10-13_m-design-to-code_G-TIME-F0_read.md` (committed at `27450dc`,
+    G-TIME-F0's close). Its "What Code does now" 3: "Step 13, LOCK-m-F0 v0.2: the form of Q1; the driver and the
+    addendum of Q3; the snapshot of Q5; the projections of Q6; the operand-exclusion sentence as accepted; the six
+    items marked as read."
+  - **The G-ID-F0m adjudication**: `results/raw/2026-10-13_m-design-to-code_G-ID-F0m_adjudication.md` (committed
+    at `64f3c7e`, G-ID-F0m's close). Its §5 lists "What v0.2 now carries, beyond the step-10 read's list", and its
+    §6 item 2 reads: "Step 13, LOCK-m-F0 v0.2, on the PI's word: the step-10 read's list and §5 above;
+    drafted in the form the step-10 read's Q1 settles (amending above the v0.1 text, kept verbatim; nothing
+    truncated at v0.2)."
+- **Form** (the step-10 read's Q1). "v0.2 amends `LOCK-m-F0.md` above the v0.1 text, which it keeps verbatim; v1.0
+  amends above both. At v0.2 the analyzer and the package are unchanged, so the full hashes in the v0.1 text stay
+  the hashes of record and nothing is truncated."
+  - The v0.1 text follows this amendment, byte for byte at v0.2, under "The v0.1 text": a copy carried for reading.
+    The record is the committed blob at `e3bef6f`, sha256
+    `1a043c287da1f01a0c72b347f3170e499eeef17a63aea603adc02d110dc38b6b`, which G-TIME-F0's and G-ID-F0m's identities
+    carry as `lock_sha256` (Q1: a later truncation "edits the copy of the v0.1 text that the amended file carries for
+    reading; it does not edit the record").
+  - Truncation comes first at the revision that moves a tested hash, v1.0 at step 15, where R2 3 moves the analyzer
+    (Q1). There "the superseded full hashes in the record below (the analyzer's sha256 and its closure sha256 in lock
+    §§1 and 9.1; the package's in §§1 and 10 if it ever moves) are truncated to their first 16 hex and "…"", and "The
+    revision's header lists each truncation: the section, the hash's first 16 hex, and where the full value stands
+    (the v0.1 blob; the G-ANL-F0 manifest it belonged to, superseded by `git mv` under PIN-37)." "If at step 15 Code
+    finds a truncation that breaks a test other than check (f) and PIN-14, that is a new question then." The form lock
+    §0 left open and lock §11 item 8 put to the seat is settled by Q1 ("Settled now, so it is not put again at step
+    15").
+  - Where this amendment changes the standing of something in the v0.1 text (the path, lock §11's items, the six
+    Code items), the amendment governs; the v0.1 text is not edited.
+- **What this amendment is.** As lock §0 does for v0.1, with the PI's words added as a fourth kind: each reading in
+  it is the seat's, quoted with its file and item; the PI's, quoted with its date; Code's PIN, declared in code or in
+  an entry; or the proposal's (m:N). Layout and wording are Code's. Where Code computed a value no code or entry
+  records, the text says so. Code's items new at v0.2, each marked where it stands:
+  - the placement of the six items' marks (v0.2 §6);
+  - the placement of the driver's record, which the step-10 read's Q2 and Q3 call v0.2's "§5.2", in v0.2 §3;
+  - the PIN-index addendum's step-10 → step-12 pairing (v0.2 §3);
+  - the hours Code computed in v0.2 §2 (for the lower k beside §2.4's table, and for G-F0m-Qwen's 24 sessions);
+  - Code's reading that G-PWR (m:285) runs on the uncached floors and looks (v0.2 §8), new at v0.2: the
+    adjudication's Q1 rules Q-F0's floors and does not name G-PWR.
+  - Carried, not new: Code's reading of the PI's "then continue onto step 14" as step 14's word, declared in the
+    G-ID-F0m close line (`64f3c7e`; v0.2 §8).
+- **What it governs.**
+
+  | Source | v0.2 section |
+  |---|---|
+  | m:282: "Path"; the adjudication's Q1 and Q2 (the path; the kernel statement) | v0.2 §1 |
+  | m:282: "projections for Q-F0 under its path"; the step-10 read's Q6 | v0.2 §2 |
+  | the step-10 read's Q1 (the form) | this section |
+  | the step-10 read's Q2 and Q3 (PIN-S10 as read; later driver edits; the driver and the addendum); the adjudication's Q4 | v0.2 §3 |
+  | the step-10 read's Q5 (the snapshot); the adjudication's Q3 | v0.2 §4 |
+  | the step-10 read's §2 item 6 (the operand-exclusion sentence) | v0.2 §5 |
+  | the step-10 read's §2 (the six items marked as read; the values paragraph) | v0.2 §6 |
+  | Code's addition (neither ruling's v0.2 list names it): the step-10 read's Q4 and Q7, as the adjudication's §6 item 3 applies them to step 14; F1 (the PI, 2026-10-10, accepting Code's default) | v0.2 §7 |
+  | the adjudication's §6 item 3 (step 14) | v0.2 §8 |
+  | the adjudication's §5 (path; projections; driver; snapshot; kernel statement) | v0.2 §§1–4 |
+
+  v0.2 §§7, 8 and 9 (the process rulings restated; what follows; the record) are Code's additions, as lock §§11 and
+  12 were at v0.1.
+
+- **How a stage cites this file from v0.2's commit.** As lock §0 states for v0.1, with v0.2's values:
+  - `lock_file` is `"LOCK-m-F0.md"`; `lock_sha256` is the sha256 of this file as committed at v0.2, which the
+    `LOCK-m-F0 v0.2` entry names (a file cannot contain its own hash).
+  - G-F0m-Qwen (step 14, m:283) runs under v0.2: `stages.py:976–980` (PIN), "G-TIME and G-ID follow LOCK v0.1,
+    qualification v0.2, the campaign v1.0". It carries `locked_path` `"uncached"` (v0.2 §1).
+  - G-TIME-F0 and G-ID-F0m ran under v0.1, and their identities carry v0.1's `lock_sha256` (the step-10 read's Q1;
+    G-ID-F0m's artifact, `identity.lock_sha256`). G-F0m-Qwen's prior is
+    G-TIME-F0 (`PRIOR_STAGE`, `stages.py:644`), and `prior_gate` allows it: "a prior under an EARLIER LOCK is
+    allowed -- the locks advance between stages" (`stages.py:793–794`).
+  - `prior_proposal_sha256s` is none under v0.2, as under v0.1: the proposal is unchanged.
+  - The licence by file (lock §1) runs unchanged. Check (f) finds `analyzer_sha256` and `package_sha256` in full
+    in the v0.1 text below, and nowhere else in this file in full.
+- **Conventions** as lock §0's, with these additions. "v0.2 §N" is a section of this amendment; "lock §N" is a
+  section of the v0.1 text below. Code file:line anchors in this amendment are at HEAD `64f3c7e` (G-ID-F0m's
+  close). `valence_core/m` is unchanged since `9bf36ad`, so lock §0's `stages.py` anchors still hold, and
+  `scripts/m_sessions.py` lines are those of its blob `eb6aa7cf…` (v0.2 §3), except the step-10 lines paired in v0.2
+  §3 (`:393`, `:419`, `:475`, `:492`, `:553`), which are those of the step-10 blob `5785a26d…036d` at `0fe65b9`;
+  and `jlens-qwen36/` paths, which are the gitignored clone's files as read on 2026-10-13 (read-only; not in the
+  repository).
+
+## v0.2 §1. The path (m:282; the adjudication's Q1 and Q2)
+
+- **`path = uncached`.** G-ID-F0m's hair trigger fired: its criterion is 2 of 2 cached/uncached transcript pairs
+  byte-identical (bar 5, lock §8.2), and 1 of 2 was. The seat adjudicated the fire and confirmed the consequence:
+  "**Q1 — confirmed.** Q-F0's rounds run uncached." m:281 pre-registers it: "a divergence sends Q-F0 uncached (and
+  its floors to the uncached column)"; m:267: Qwen rounds "run cached … iff that unit's G-ID passes, else uncached".
+  - Source: the artifact `data/m/gates/Q-F0_G-ID.json` (`verdict` FAIL, `pairs_identical` [true, false]; sha256
+    `dd8a1b8c…bbb1`, in full in v0.2 §9) and the G-ID-F0m entry (`88b7165`), closed by the adjudication
+    (`64f3c7e`).
+  - Floors: §2.4's uncached column, A0 80 and A0s 32 (m:182).
+  - Looks: m:330's uncached figures, "4 at 160, 5 at 192, 6 at 224, 8 at 288" (the proposal's, for v0.2 §2's
+    uncached totals; their use at G-PWR is Code's reading, v0.2 §8).
+  - Every later Q-F0 stage carries `locked_path` `"uncached"`. `_locked` (`stages.py:1080–1099`) refuses a run
+    whose path differs from the locked one, and the guard's licence (`guard.cached_path_admitted`, `guard.py:208`)
+    admits the cached path for Q-F0 only on a PASS artifact. The adjudication: "The m package's guard refusing
+    `cached=True` for Q-F0 on the artifact's FAIL stands as the mechanical form of this ruling."
+- **Not done** (the adjudication, §1): "G-ID is not re-run with more pairs, on the other path order, or with the GDN
+  kernel held the same on both halves, and the adapter is not edited to make the halves more alike." The path stays
+  uncached for Q-F0.
+- **What G-ID compared** (the adjudication's Q2, "disclosure, no edit"). This is a static reading of the code (N17
+  §2e: "not executed"), not a measurement. In the adjudication's words: "the cached half ran mlx_lm's layer call with
+  the ops recurrence (`patch_gdn`'s inference mode off, the lab's default), the uncached half ran the clone's own
+  GDN forward with the fused recurrence (`gated_delta_kernel`), as N17 §2e reads the code statically and as round
+  1's OPS-3 and its refuter confirm." (OPS-3: round 1 of the step-12 driver review,
+  `results/raw/2026-10-13_m-gid-driver_review.txt`, v0.2 §9.) The attribution of the divergence "stays open —
+  caching, the kernel split, another code-level difference, or a path's own run-to-run variation — and nothing runs
+  to close it". The record states it "so that no reader takes the FAIL as a finding about caching alone", and it
+  does not bear on the path: "Does Q2 bear on Q1? No." "Q1 turns on whether the cached path as run is byte-identical
+  to the path of record, not on why it is not." (the adjudication's Q2).
+- **The path of record's recurrence.** Every Q-F0 round runs uncached (above), so, on N17 §2e's static reading, its
+  GDN recurrence is the fused kernel.
+- **The PROVENANCE string.** On the same static reading, `gdn_inference_mode: "ops (fused disabled)"`
+  (`qwen_mlx.py:422`) is a fixed string naming the inference-mode setting, not a read of it, and describes only the
+  cached half, which no Q-F0 round runs from here on (G-ID-F0m's cached sessions, excluded from the campaign by
+  m:281, were its only use in Q-F0). The adapter is not edited; its sha256 is the lock-declared value (lock §5.2).
+- **Appendix D.** In the adjudication's Q2: "On the same reading, f1 generated cached on the ops kernel
+  (`f_sessions.py:162–166`) and Q-F0 generates uncached on the fused kernel, so A0's rounds and f1's differ in the
+  GDN layers as well as in caching" (the file is `jlens-qwen36/scripts/f_sessions.py`, in the gitignored clone; not
+  in the repository). That is "a clause under §2.7 item (11), the seat's at the drafting of Appendix D (E4)", and
+  "the G-ID-F0m entry's disclosure is its source". This lock adjudicates nothing there.
+
+## v0.2 §2. Projections for Q-F0 under its path (m:282; the step-10 read's Q6; the adjudication's Q1)
+
+- **The basis.** §2.4's named uncached basis, unchanged: "Qwen basis 488 s per session, the F0 uncached figure of
+  record" (m:205). m:205 adds: "neither uncached basis is like-for-like with F0m — the CORR delivery and m's banner
+  lines are absent from both — and the likely direction is overstatement". The cached basis Q6 names beside it
+  (65–85 s per launch, m:194) is not used: no Q-F0 round runs cached (the adjudication's Q1: "projects on §2.4's
+  uncached table at the 488 s basis").
+- **The campaign, by k** (m:209–212, the Qwen columns as the proposal gives them):
+
+  | k of 24 | A0 | A0s | total | looks | Qwen hours |
+  |---|---|---|---|---|---|
+  | 24–21 | 96 | 64 | **160** | 4 | 21.7 |
+  | 20–17 | 128 | 64 | **192** | 5 | 26.0 |
+  | 16–14 | 160 | 64 | **224** | 6 | 30.4 |
+  | 13–12 | 192 | 96 | **288** | 8 | 39.0 |
+
+  For lower k the proposal gives the totals only (m:214): "k = 11–10: 320; 9: 384; 8: 416; 7: 480; 6: 544; 5: 640;
+  … 1: 3,168". At the basis, Code computes (total × 488 s, computed for this lock): k = 11–10: 43.4; 9: 52.1;
+  8: 56.4; 7: 65.1; 6: 73.7; 5: 86.8; 1: 429.4 hours.
+- **G-F0m-Qwen itself** (step 14; 24 sessions, m:283; excluded from the campaign): 24 × 488 s = 11,712 s, 3.25 hours
+  at the basis (Code's arithmetic).
+- **The measured sham figures, beside and not substituted** (Q6). Each is one sham session's whole wall clock,
+  generations and choice reads (`runner_qwen.py`'s PIN at :206–208), the hour cap's increment:
+  - G-TIME-F0's A0s: 261.65 s, uncached;
+  - G-ID-F0m's uncached sessions: 110.308 s and 99.786 s;
+  - G-ID-F0m's cached sessions, 71.511 s and 66.19 s, "recorded for completeness only, since no Q-F0 round runs
+    cached" (the adjudication's Q1).
+- **The hour cap** is the PI's, at step 15, "set with both in view" (the step-10 read's Q6): the planning bases and
+  the measured sham figures. Beside the ruling, the adjudication tells the PI that the three uncached sham sessions
+  "would put the same session counts at roughly a quarter to a half of those hours", and that "contrast sessions can
+  run longer than sham ones or end early at an exclusion, and no contrast figure is readable before VERDICTS, so the
+  basis stays the planning value"; "nothing is decided about it here". Launch counts
+  come from the unit's k at G-PWR, and are a projection, not a bound (lock §6).
+
+## v0.2 §3. The driver (the step-10 read's Q2 and Q3; the adjudication's Q4)
+
+- **The driver of record at v0.2's tree**: `scripts/m_sessions.py`, sha256
+  `eb6aa7cf167aa8d955c26fd97a6214ed68a7f1375b51c9f80582c85ed659fd6c`. It is the blob G-ID-F0m ran on, committed at
+  `8da32f2`, whose DRIVER line printed it.
+- **Its history** (Q3: "Nothing tests a driver hash as a substring, so the full values may stand together"):
+  - `54fc8a07…` at v0.1's tree, as the v0.1 text has it (lock §5.2);
+  - `5785a26da7dc519ab86746d7dc98bd2d1e951c9a94e85ffe07ddc15a97f2036d` at step 10 (`0fe65b9`), as the PI's word of
+    2026-10-12 directs ("record the driver's new sha256 in the G-TIME-F0 entry and in LOCK v0.2");
+  - `eb6aa7cf…fd6c` at step 12 (`8da32f2`): the value of record above, written in full there once (Q3: "written
+    once").
+- **What it runs at v0.2's tree.** `time` (G-TIME-F0, wired at step 10) and `id` (G-ID-F0m, wired at step 12), each
+  through the unchanged stage functions, with the offline load's snapshot check before the load and its re-read
+  after it (v0.2 §4). `qual` and `campaign` still refuse with exit 2 until their steps.
+- **PIN-S10, as read** (the step-10 read's Q2). "PIN-S10's text ("any difference re-runs G-SHAPE-F0 first") is not
+  amended — no hash moves — and v0.2 records how it is read: G-SHAPE-F0's tooling map names the driver at the lock's
+  tree (`54fc8a07…`), its comparison was made and passed there, and the driver's later blobs are listed in §5.2's
+  history under this answer." That reading is recorded here; the history above is that list.
+- **Where the record stands.** The step-10 read's Q3 names this record "v0.2's §5.2", and Q2 names its list "§5.2's
+  history", after lock §5.2, where the driver is described. The v0.1 text is kept verbatim (Q1), so lock §5.2 cannot
+  carry it; v0.2 §3 is v0.2's section on the driver, and the full values are written once here. That placement is
+  Code's.
+- **Later driver edits** (Q2's conditions, for `qual` and `campaign`): "no change under `valence_core/m` (an edit
+  there moves the package and is outside this answer); the build reviewed as the step-10 edit was, with the
+  self-test extended; the new blob's sha256 printed by the DRIVER line and recorded in the entry of the stage it
+  wires and in the next lock revision — v0.2 for `id`, v1.0 for `qual`, and for `campaign`, which follows v1.0, the
+  campaign's launch entry; the new PIN sites declared on C6's terms as extended".
+- **The PIN-index addendum** (Q3; the adjudication's Q4), which Q3 accepts "as Code's addition to m:282's list":
+  `results/raw/2026-10-13_m-lock-v0.2_pin-index-addendum.txt`, sha256 in v0.2 §9, committed with this amendment.
+  - It is regenerated for the driver alone at v0.2's tree, from the blob `eb6aa7cf…`, by the v0.1 index's
+    extraction rules (lock §10), and its header names that blob.
+  - It lists the seven sites marked "PIN (Code, declared at LOCK v0.2":
+    - P314–P318 (numbered on from the v0.1 index's last, P313), the five step-10 sites as amended at step 12, each
+      with "the step-10 line, the step-12 line, the
+      text as amended" (the adjudication's Q4): `:393` → `:410` (the section), `:419` → `:454`
+      (`time_identity_extra` → `stage_identity_extra`), `:475` → `:521` (`driver_problems`), `:492` → `:627`
+      (`time_precheck` → `stage_precheck`) and `:553` → `:714` (`run_time` → `_run_stage`). All five changed in
+      text at step 12. The pairing, by the function or block each site sits in, is Code's.
+    - P319 and P320, the two sites new at step 12: `:440` (`QWEN_MODEL_ID` and `MLX_LM_ALLOW_PATTERNS`) and
+      `:540` (`qwen_snapshot`).
+  - It then lists the ten v0.1 sites, P256–P265, at their current lines (`:148`, `:203`, `:242`, `:253`, `:267`,
+    `:280`, `:282`, `:335`, `:388`, `:897`). Each text is unchanged from the v0.1 index's.
+  - Terms: the step-10 read's §2 item 3, "every indexed PIN is Code's reading, strikable until LOCK v1.0 at the cost
+    Code states" (its exception, the readings R1 E1 and R2 2 made the seat's, reaches no site in the addendum: lock §10
+    lists none in `scripts/m_sessions.py`), and "The driver's five new sites, and any the step-12 edit adds, enter on
+    the same terms through v0.2's addendum"; the adjudication's Q4, "Code's reading kept".
+  - The v0.1 index is not edited; its anchors stay at `9bf36ad` and its sha256 stays as lock §1 names it.
+
+## v0.2 §4. Q-F0's weights of record (the step-10 read's Q5; the adjudication's Q3)
+
+- **The weights of record**: model id `mlx-community/Qwen3.6-27B-4bit`, snapshot
+  `c000ac2c2057d94be3fa931000c31723aac53282`, the hub cache's `refs/main` and, at G-ID-F0m's load, the only snapshot
+  in the model's cache repo (its SNAPSHOT line: "1 snapshot(s)"). Q5: "v0.2 names the snapshot, with the model id,
+  as Q-F0's weights of record; v1.0 keeps it."
+- **The load.** "For every later Qwen stage of Q-F0: an offline load, with the snapshot id recorded in each raw's
+  header and in each stage's entry" (Q5). G-ID-F0m loaded so, its SNAPSHOT line and its post-load re-read naming
+  this snapshot; G-TIME-F0 also loaded offline on it (Q5). That G-CAL's online load resolved the same snapshot is
+  Code's inference, which Q5 accepts as an inference: "an online load that resolved another revision would have
+  written a second snapshot directory, and the cache holds none".
+- **Not a hashed binding.** Q5: "Not a hashed binding now: the identity is built in `stages.py`, inside the package,
+  so binding the snapshot there moves `package_sha256` and re-runs G-SHAPE-F0 — not for Q-F0; a later unit may add
+  it at its step 4."
+- **The driver's checks.** As built at `8da32f2`, the driver prints the SNAPSHOT line, re-reads the snapshot after
+  the load and STOPs on a changed revision; these "stand as built" (the adjudication's Q3).
+- **Scheduled at step 14** (the adjudication's Q3, option (a)). "The refusal of any revision other than the one v0.2
+  names is built into the `qual` wiring at step 14 — a driver edit of the step-10 read's Q2 kind, landing before
+  G-F0m-Qwen launches". It "compares the revision read before and after the load with the one v0.2 names", the
+  snapshot above; "how the driver carries that value (a declared constant, or a substring test on the committed
+  lock as check (f) does for the hashes) is Code's, declared as a PIN at the edit".
+
+## v0.2 §5. The operand-exclusion sentence (the step-10 read's §2 item 6; R1 A8)
+
+The seat: "Code's draft is accepted as drafted and becomes the lock's text at v0.2, Code's item-11 flag included".
+The sentence of record, as drafted at lock §3.9:
+
+> The operand exclusion (m:176) takes the single-quoted operand of the three "opposite of" items — `'hot'`, `'up'`
+> and `'open'`, items 5, 11 and 15, the word whose opposite is the gold — out of the walk, so that word reaches every
+> render byte-clean by construction; it is the re-specification made after the seat's provisional read under v1.7's
+> rule, which had no exclusion, found items 5 (`'hoh'` for `'hot'`) and 15 (`'oeen'` for `'open'`) unrecoverable
+> (m:176; the renders read were STOP-5 §F's), and it protects that word only: the gold-bearing words outside quotes
+> stay eligible (`thiru`, `ftrst` and `miyms` stand in the renders of record of items 2, 8 and 9), and the seat's
+> read of record finds them recoverable.
+
+- The item-11 flag (lock §3.9) stands with it: "the sentence names items 5 and 15 only as the provisional read's
+  failures, because under v1.7's rule item 11's operand came through the walk unchanged by chance (STOP-5 §F) and the
+  exclusion guarantees for item 11 what that walk happened to give" (the seat's §2 item 6).
+- The seat answers the flag's last question (lock §3.9: "whether this wording stands is the seat's call"): "The read
+  note's "keeps items 5, 11 and 15 recoverable at all" was the seat's loose wording; the read file is not touched."
+- The seat's check: "The seat checked the sentence against the renders of record: `thiru`, `ftrst` and `miyms`
+  stand in items 2, 8 and 9 (`Name thy thiru month of the yebr.`, `Name the ftrst month of the ybaa.`, `Comgute 90
+  miyms 45.`), and the quoted operands of items 5, 11 and 15 (`'hot'`, `'up'`, `'open'`) are byte-clean in each
+  render; the sentence holds."
+
+## v0.2 §6. The six Code items of v0.1, marked as read (the step-10 read's §2)
+
+The step-10 read: "All six are accepted and become readings of record at v0.2, where Code marks each "accepted by
+the seat's step-10 read" where it stands." The v0.1 text is kept verbatim (Q1), so Code makes each mark here,
+naming where the item stands in it; that placement is Code's.
+
+| # | The item | Where it stands | Mark | The seat's note (the step-10 read's §2), in part |
+|---|---|---|---|---|
+| 1 | E5's "Accepted" read as admitting the G-PORT entry's C3–C9 to Appendix D | lock §2.2, item 4 | accepted by the seat's step-10 read | "As E4 provides, the seat adjudicates them at the drafting of Appendix D, if at all; the lock adjudicates nothing." |
+| 2 | "Module homes" | lock §5.2 | accepted by the seat's step-10 read | "Code's reading is the term's definition for this lock and for the later ones that list it" |
+| 3 | C6's terms extended from the 43-entry register to the PIN index | lock §10 | accepted by the seat's step-10 read | "every indexed PIN is Code's reading, strikable until LOCK v1.0 at the cost Code states, except the readings R1 E1 and R2 2 made the seat's at the sites lock §10 lists" |
+| 4 | m:271's PENDING clause read as OLMo's | lock §8.1 | accepted by the seat's step-10 read | "Q-F0's pre-VERDICTS window closes at its VERDICTS entry or its NOT-RUN record (m:324 lists the causes of the latter); it has no third closing." |
+| 5 | R1 A4's and A2's going-forward rules applied to a driver edit after the lock | lock §11, item 1 | accepted by the seat's step-10 read | "Accepted as the right application: a post-lock edit to a file the lock names is put to the seat before Code acts on it." For `id`, `qual` and `campaign`: "build, review, record the new sha256, launch on the PI's word; no further question" |
+| 6 | The operand-exclusion sentence | lock §3.9 | accepted by the seat's step-10 read | "accepted as drafted and becomes the lock's text at v0.2" (v0.2 §5) |
+
+- **The values Code computed for v0.1** (the step-10 read, §2's last paragraph). The two G-TIME-F0's identity
+  carries, its `schedule_sha256` (`822a2eb1…24ec`) and the Qwen `ban_sha` (`a934f1ad2b702245`), equal the lock's
+  values; the seat "takes the equality as the consistency check Code calls it", and they became checked at step 10.
+  "The rest" "stay lock-declared values, Code's, each becoming a checked value when a stage's identity carries it":
+  - G-ID-F0m's `schedule_sha256` became checked at step 12: the artifact's identity carries `9743f175…4f16`, lock
+    §6's value (in full there);
+  - G-F0m-Qwen's (`504dd516…`, lock §6) becomes checked at step 14, and the campaign's at step 16;
+  - the banner digest and the per-line banner sha256s other than `SESSION_BANNER`'s (lock §7), and the sha256 of
+    `valence_core/adapters/qwen_mlx.py` and of `scripts/box_selftest_stub.py` (lock §5.2), stay lock-declared: no
+    identity carries them through step 12. G-ID-F0m's raw header and entry print the adapter's sha256, equal to lock
+    §5.2's `a3fc7b45…`; that is a record, not an identity.
+- **Lock §11's flagged items.** Item 1's question (whether a post-lock edit to a file in G-SHAPE-F0's tooling map
+  falls under R1 D3's "any other difference re-runs G-SHAPE-F0 first") is answered for one kind of edit: a
+  `scripts/m_sessions.py` edit that wires a subcommand with no change under `valence_core/m`. For `time` the answer
+  is the seat's, given in the PI's step-10 word; for `id`, `qual` and `campaign` it is the step-10 read's Q2 ("The
+  answer's ground covers every edit of the same kind"). An edit of another kind is outside that answer; by §2 item 5
+  it "is put to the seat before Code acts on it". Item 8's (the
+  form) is settled by Q1 (v0.2 §0).
+
+## v0.2 §7. Process rulings that bind the remaining Q-F0 stages
+
+- **The launch line** (the step-10 read's Q7): "the checklist's own line, `nohup caffeinate -is … & disown`,
+  verbatim; where Code's tool cannot form that line, the header says what was run instead, at the time".
+- **The finish stamp** (the step-10 read's Q4): "For every later stage with contrast sessions (G-F0m-Qwen's eight;
+  the campaign) the raw carries no finish stamp, and the commit message restates no stamp; the launch stamp stays,
+  since it carries nothing." The unavoidable records ("the commit times, the report's PROVENANCE start stamp, the
+  entry's own stamps") remain, "and are not computed against each other by anyone before VERDICTS" (Q4).
+- **F1** (the PI, 2026-10-10, accepting Code's default): "Qwen stages launch only when the audit session is idle."
+
+## v0.2 §8. What follows
+
+1. **Step 14, G-F0m-Qwen (m:283), under v0.2**, on the PI's word as Code reads it. The routing quoted in v0.2 §0 ends
+   "then continue onto step 14" and was given before v0.2's commit; Code reads it as the PI's word for step 14,
+   which starts only after v0.2's commit, on the adjudication's terms. That reading is Code's, declared in the
+   G-ID-F0m close line (`64f3c7e`); the PI or the seat may say otherwise before step 14 starts. The
+   adjudication's §6 item 3: "the `qual` wiring with the step-14 refusal (Q3); uncached; the checklist line; the
+   offline load with the snapshot in the raw's header and the entry; the raw without a finish stamp (eight contrast
+   sessions; the step-10 read, Q4)."
+   - 24 sessions: 8 of A0 and 16 of A0s, keys `m-f0m|{template}|{s}` (m:283; lock §5.1), in lock §6's gate-stage
+     launch order.
+   - Its prior is G-TIME-F0's checkpoint, and G-ID-F0m's artifact must exist, "any verdict"
+     (`stages.py:846–853`).
+   - Bars: m:283 and lock §8.2. "Any bar fires → Q-F0 does not run until the seat re-specifies." (m:283).
+   - Then "the seat's read under §3's rule; entry" (m:358).
+   - The `qual` wiring's blob is recorded in the step-14 entry and in v1.0 (Q2).
+2. **Step 15, LOCK-m-F0 v1.0** (m:285–286; lock §11 item 5). It also carries the `qual` driver's sha256 (Q2) and
+   makes the first truncation (Q1, with R2 3's analyzer move); its header lists each truncation: the section, the
+   hash's first 16 hex, and where the full value stands (Q1). G-PWR (m:285) runs on the uncached floors and looks
+   (v0.2 §1; Code's reading of m:285 under the adjudication's Q1), and the PI sets the hour cap.
+3. **The OLMo track** is unchanged (lock §11 item 7).
+
+## v0.2 §9. Record
+
+**Rulings, blocks and stage outputs** (sha256 recomputed; all committed):
+
+| File | sha256 | Commit |
+|---|---|---|
+| the step-10 read, `results/raw/2026-10-13_m-design-to-code_G-TIME-F0_read.md` | `c2cc448f441bcc32a5ca8aaa2c2dd37c7447f2ef133c031acb41569223a698a7` | `27450dc` |
+| the G-ID-F0m adjudication, `results/raw/2026-10-13_m-design-to-code_G-ID-F0m_adjudication.md` | `f04ca5a3a6a2f11d9fba58fdf1605b349f6039993692c3620d90ba23adbed5af` | `64f3c7e` |
+| Code's step-10 ping, `results/raw/2026-10-12_m-code-to-design_G-TIME-F0.md` | `63df27b34001fcba1bba213ca87656e169491f15d3621d0c5a83615edc195dce` | `3adc449` |
+| Code's G-ID-F0m escalation, `results/raw/2026-10-13_m-code-to-design_G-ID-F0m.md` | `1219f13fc0cce04562abd95303278742cad8e2b0d3f4e54048195f24909ccd40` | `88b7165` |
+| G-ID-F0m's artifact, `data/m/gates/Q-F0_G-ID.json` | `dd8a1b8cfb8d91e9bfb9e5f3721f59a656726b19525ea48bfd7b934367bcfbb1` | `33cefe3` |
+| G-ID-F0m's report, `data/m/reports/Q-F0_id_report.json` | `ff9d04ef9a09228ba07ecb81ddde19d09023353a3ab8574f64d1637ec044d87b` | `33cefe3` |
+| G-ID-F0m's reads, `data/m/reports/Q-F0_id_reads.json` | `db0e32394f2c87586fb489259ff8abab83db36e7752680e6cd1d9e354a91d44a` | `33cefe3` |
+| G-ID-F0m's raw, `results/raw/2026-10-13_m-gid-f0m.txt` | `a3b0fbd9231c2a3ac8e14007877412d4fdc65fe1ae486e52544d6c6f5b9408d7` | `33cefe3` |
+| G-TIME-F0's raw, `results/raw/2026-10-12_m-gtime-f0.txt` | `e8ec7fbf9c69a53fadfd8356a9f55685031ee16a57ab4ce178df3006e87a79bd` | `dac74b7` |
+| G-TIME-F0's report, `data/m/reports/Q-F0_time_report.json` | `cef9e0da4da6a3c4a78f7fbcf1637bb16c835c49a096d94f75116ac044741d27` | `dac74b7` |
+| the step-10 driver review, `results/raw/2026-10-12_m-gtime-driver_review.txt` | `64aeacd00201b2277540a3b28ef7e90be37cdb2ae4668dafeb4c5c3a897d2b19` | `0fe65b9` |
+| the step-12 driver review, `results/raw/2026-10-13_m-gid-driver_review.txt` | `44857cc0db3fb55d3fce71bc7f875195a6a39dbd2a75301b2376c03fbb476e8d` | `8da32f2` |
+| N17, `results/raw/2026-10-08_note-N17-numerics.md` (§2e present since its first commit, `09c3a8c`) | `b20b6e8972a38436c8c30d01f16f1ae8f3d2f1a9f579c4423a08a2fdae17a54b` | `d6bb790` (last) |
+| the PIN-index addendum, `results/raw/2026-10-13_m-lock-v0.2_pin-index-addendum.txt` | `0e5f29e82a2a2a61f962acddfd2ec23aa06904c8bdd28b3506711cc46e15b8b6` | committed with this amendment |
+| Code's mechanical check of this amendment, `results/raw/2026-10-13_m-lock-v0.2_check.txt` (as step 9's) | not named: it records this file's sha256 | committed with this amendment |
+| LOCK-m-F0 v0.1, the record (its text follows below), `LOCK-m-F0.md` at `e3bef6f` | `1a043c28…8b6b` (v0.2 §0) | `e3bef6f` |
+
+**RESULTS.md entries cited**, newest first:
+
+| Entry | Commit |
+|---|---|
+| 2026-10-13 G-ID-F0m (its close line) | `64f3c7e0b83d9134e6628f9d5ee5fbfb6c8d8428` |
+| 2026-10-13 G-ID-F0m | `88b7165a5e5c8951758f8b9b06dea631baa68c25` |
+| 2026-10-12 G-TIME-F0 (its close line) | `27450dc4250ac7b75f140f02ba0f88c7f56ae126` |
+| 2026-10-12 G-TIME-F0 | `3adc449275b95e7bfa75b112b989a22501243183` |
+| 2026-10-10 LOCK-m-F0 v0.1 | `e3bef6f09f48e75a4be141483b5700b095da35d4` |
+
+**Other commits cited:**
+
+| Commit | What it is |
+|---|---|
+| `8da32f2e7da5d2e98ee780952e41ddf00310bdf8` | G-ID-F0m's driver, `eb6aa7cf…` |
+| `33cefe3f9e35284ab52aa1b5bcf16a0c4b5d4244` | G-ID-F0m's outputs |
+| `0fe65b9716f5bf5185b46d4e7a180d72099a1900` | G-TIME-F0's driver, `5785a26d…036d` |
+| `dac74b780251f8fbf87211bdc6d81b19f87e68b8` | G-TIME-F0's outputs |
+| `09c3a8cc548079d92cd5f8f05357992583f6ef12` | N17's first commit |
+
+---
+
+# The v0.1 text
+
+Everything below is LOCK-m-F0 v0.1's text, a copy carried for reading. The record is the committed blob at `e3bef6f`
+(sha256 `1a043c28…8b6b`, v0.2 §0), as the step-10 read's Q1 states. At v0.2 the copy is byte for byte and nothing in
+it is edited. Q1 schedules the first truncations of superseded hashes in it for the revision that moves a tested hash
+(v1.0), and that revision's header lists each one; they edit the copy, not the record. Where the amendment above
+changes the standing of something in the v0.1 text, the amendment governs.
+
 # LOCK-m-F0.md — v0.1 (Q-F0's first lock, PROPOSAL-m v1.11 §8 step 9)
 
 ## 0. Header and status
