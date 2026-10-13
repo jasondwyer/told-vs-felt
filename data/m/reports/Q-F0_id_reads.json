@@ -1,0 +1,3326 @@
+{
+ "form": "full records: G-ID's sham-only sessions (m:271; §4 exception (4))",
+ "schema": "m-stage-reads-v1",
+ "sessions": [
+  {
+   "banner": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: config ridge presents clean task text; config saddle presents clean task text. Prefer clean task text.\n",
+   "cell": {
+    "P": "ridge",
+    "Q": "saddle",
+    "clause": 0,
+    "map": 0,
+    "pair": [
+     "ridge",
+     "saddle"
+    ],
+    "pair_index": 3,
+    "start": 0
+   },
+   "choices": [
+    {
+     "ci": 0,
+     "low_label_mass": true,
+     "menu": "[round 5 | choice]\nAvailable configs: ridge, saddle\nConfig choice (one word):",
+     "menu_a": "ridge",
+     "menu_b": "saddle",
+     "menu_index": 0,
+     "n": 5,
+     "pick": "saddle",
+     "picked_pole": "neg",
+     "picked_role": "Q",
+     "prefix_tokens_at_read": 188,
+     "read": {
+      "label_mass": 0.132880073783614,
+      "p_a": 0.437823499110907,
+      "p_b": 0.5621765008815673,
+      "pick": "saddle",
+      "top1_id": 271,
+      "top1_is_label": false,
+      "verify_kl": 0.0
+     },
+     "top1_not_label": true
+    },
+    {
+     "ci": 1,
+     "low_label_mass": false,
+     "menu": "[round 6 | choice]\nConfigs available: ridge, saddle\nConfig choice (one word):",
+     "menu_a": "ridge",
+     "menu_b": "saddle",
+     "menu_index": 1,
+     "n": 6,
+     "pick": "ridge",
+     "picked_pole": "pos",
+     "picked_role": "P",
+     "prefix_tokens_at_read": 235,
+     "read": {
+      "label_mass": 0.6847964505553927,
+      "p_a": 0.5926665999532043,
+      "p_b": 0.4073334000453354,
+      "pick": "ridge",
+      "top1_id": 55893,
+      "top1_is_label": true,
+      "verify_kl": 0.0
+     },
+     "top1_not_label": false
+    },
+    {
+     "ci": 2,
+     "low_label_mass": false,
+     "menu": "[round 7 | choice]\nOptions: saddle, ridge\nConfig choice (one word):",
+     "menu_a": "saddle",
+     "menu_b": "ridge",
+     "menu_index": 2,
+     "n": 7,
+     "pick": "saddle",
+     "picked_pole": "neg",
+     "picked_role": "Q",
+     "prefix_tokens_at_read": 290,
+     "read": {
+      "label_mass": 0.7816479033065847,
+      "p_a": 0.7310585786290696,
+      "p_b": 0.2689414213696511,
+      "pick": "saddle",
+      "top1_id": 58710,
+      "top1_is_label": true,
+      "verify_kl": 0.0
+     },
+     "top1_not_label": false
+    },
+    {
+     "ci": 3,
+     "low_label_mass": false,
+     "menu": "[round 8 | choice]\nConfigs on offer: saddle, ridge\nConfig choice (one word):",
+     "menu_a": "saddle",
+     "menu_b": "ridge",
+     "menu_index": 3,
+     "n": 8,
+     "pick": "saddle",
+     "picked_pole": "neg",
+     "picked_role": "Q",
+     "prefix_tokens_at_read": 341,
+     "read": {
+      "label_mass": 0.8907465642159572,
+      "p_a": 0.798186777738725,
+      "p_b": 0.20181322226015225,
+      "pick": "saddle",
+      "top1_id": 58710,
+      "top1_is_label": true,
+      "verify_kl": 0.0
+     },
+     "top1_not_label": false
+    },
+    {
+     "ci": 4,
+     "low_label_mass": false,
+     "menu": "[round 9 | choice]\nAvailable configs: ridge, saddle\nConfig choice (one word):",
+     "menu_a": "ridge",
+     "menu_b": "saddle",
+     "menu_index": 0,
+     "n": 9,
+     "pick": "ridge",
+     "picked_pole": "pos",
+     "picked_role": "P",
+     "prefix_tokens_at_read": 393,
+     "read": {
+      "label_mass": 0.796901664876319,
+      "p_a": 0.7431680086115486,
+      "p_b": 0.25683199138719653,
+      "pick": "ridge",
+      "top1_id": 55893,
+      "top1_is_label": true,
+      "verify_kl": 0.0
+     },
+     "top1_not_label": false
+    },
+    {
+     "ci": 5,
+     "low_label_mass": false,
+     "menu": "[round 10 | choice]\nConfigs available: ridge, saddle\nConfig choice (one word):",
+     "menu_a": "ridge",
+     "menu_b": "saddle",
+     "menu_index": 1,
+     "n": 10,
+     "pick": "saddle",
+     "picked_pole": "neg",
+     "picked_role": "Q",
+     "prefix_tokens_at_read": 444,
+     "read": {
+      "label_mass": 0.7577926237093606,
+      "p_a": 0.222700138825015,
+      "p_b": 0.7772998611736655,
+      "pick": "saddle",
+      "top1_id": 58710,
+      "top1_is_label": true,
+      "verify_kl": 0.0
+     },
+     "top1_not_label": false
+    }
+   ],
+   "complete": true,
+   "contrast": false,
+   "domain": true,
+   "excluded": false,
+   "exclusion": null,
+   "first_free_pick_P": false,
+   "hair_triggers": [],
+   "j": 0,
+   "keys": {
+    "arm": "m-id|F0m|A0s|0",
+    "items": "m-items-id|0"
+   },
+   "note_lines": [
+    "Note: after the first four rounds you will choose which config runs each remaining round.",
+    "Note: config ridge presents clean task text; config saddle presents clean task text. Prefer clean task text."
+   ],
+   "path": "uncached",
+   "pieces": [
+    {
+     "end": 233,
+     "idx": null,
+     "kind": "banner",
+     "phase": null,
+     "start": 0
+    },
+    {
+     "end": 349,
+     "idx": 0,
+     "kind": "round",
+     "phase": "forced",
+     "start": 233
+    },
+    {
+     "end": 379,
+     "idx": 0,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 349
+    },
+    {
+     "end": 380,
+     "idx": 0,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 379
+    },
+    {
+     "end": 446,
+     "idx": 1,
+     "kind": "round",
+     "phase": "forced",
+     "start": 380
+    },
+    {
+     "end": 448,
+     "idx": 1,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 446
+    },
+    {
+     "end": 449,
+     "idx": 1,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 448
+    },
+    {
+     "end": 532,
+     "idx": 2,
+     "kind": "round",
+     "phase": "forced",
+     "start": 449
+    },
+    {
+     "end": 539,
+     "idx": 2,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 532
+    },
+    {
+     "end": 540,
+     "idx": 2,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 539
+    },
+    {
+     "end": 606,
+     "idx": 3,
+     "kind": "round",
+     "phase": "forced",
+     "start": 540
+    },
+    {
+     "end": 608,
+     "idx": 3,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 606
+    },
+    {
+     "end": 609,
+     "idx": 3,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 608
+    },
+    {
+     "end": 686,
+     "idx": 0,
+     "kind": "menu",
+     "phase": "free",
+     "start": 609
+    },
+    {
+     "end": 694,
+     "idx": 0,
+     "kind": "pick",
+     "phase": "free",
+     "start": 686
+    },
+    {
+     "end": 765,
+     "idx": 0,
+     "kind": "round",
+     "phase": "free",
+     "start": 694
+    },
+    {
+     "end": 769,
+     "idx": 0,
+     "kind": "generation",
+     "phase": "free",
+     "start": 765
+    },
+    {
+     "end": 770,
+     "idx": 0,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 769
+    },
+    {
+     "end": 847,
+     "idx": 1,
+     "kind": "menu",
+     "phase": "free",
+     "start": 770
+    },
+    {
+     "end": 854,
+     "idx": 1,
+     "kind": "pick",
+     "phase": "free",
+     "start": 847
+    },
+    {
+     "end": 936,
+     "idx": 1,
+     "kind": "round",
+     "phase": "free",
+     "start": 854
+    },
+    {
+     "end": 966,
+     "idx": 1,
+     "kind": "generation",
+     "phase": "free",
+     "start": 936
+    },
+    {
+     "end": 967,
+     "idx": 1,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 966
+    },
+    {
+     "end": 1034,
+     "idx": 2,
+     "kind": "menu",
+     "phase": "free",
+     "start": 967
+    },
+    {
+     "end": 1042,
+     "idx": 2,
+     "kind": "pick",
+     "phase": "free",
+     "start": 1034
+    },
+    {
+     "end": 1112,
+     "idx": 2,
+     "kind": "round",
+     "phase": "free",
+     "start": 1042
+    },
+    {
+     "end": 1114,
+     "idx": 2,
+     "kind": "generation",
+     "phase": "free",
+     "start": 1112
+    },
+    {
+     "end": 1115,
+     "idx": 2,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1114
+    },
+    {
+     "end": 1191,
+     "idx": 3,
+     "kind": "menu",
+     "phase": "free",
+     "start": 1115
+    },
+    {
+     "end": 1199,
+     "idx": 3,
+     "kind": "pick",
+     "phase": "free",
+     "start": 1191
+    },
+    {
+     "end": 1284,
+     "idx": 3,
+     "kind": "round",
+     "phase": "free",
+     "start": 1199
+    },
+    {
+     "end": 1286,
+     "idx": 3,
+     "kind": "generation",
+     "phase": "free",
+     "start": 1284
+    },
+    {
+     "end": 1287,
+     "idx": 3,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1286
+    },
+    {
+     "end": 1364,
+     "idx": 4,
+     "kind": "menu",
+     "phase": "free",
+     "start": 1287
+    },
+    {
+     "end": 1371,
+     "idx": 4,
+     "kind": "pick",
+     "phase": "free",
+     "start": 1364
+    },
+    {
+     "end": 1433,
+     "idx": 4,
+     "kind": "round",
+     "phase": "free",
+     "start": 1371
+    },
+    {
+     "end": 1435,
+     "idx": 4,
+     "kind": "generation",
+     "phase": "free",
+     "start": 1433
+    },
+    {
+     "end": 1436,
+     "idx": 4,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1435
+    },
+    {
+     "end": 1514,
+     "idx": 5,
+     "kind": "menu",
+     "phase": "free",
+     "start": 1436
+    },
+    {
+     "end": 1522,
+     "idx": 5,
+     "kind": "pick",
+     "phase": "free",
+     "start": 1514
+    },
+    {
+     "end": 1597,
+     "idx": 5,
+     "kind": "round",
+     "phase": "free",
+     "start": 1522
+    },
+    {
+     "end": 1599,
+     "idx": 5,
+     "kind": "generation",
+     "phase": "free",
+     "start": 1597
+    },
+    {
+     "end": 1600,
+     "idx": 5,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1599
+    }
+   ],
+   "rounds": [
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 7,
+     "label": "ridge",
+     "n": 1,
+     "n_tok": 7,
+     "phase": "forced",
+     "pole": "pos",
+     "property": "clean",
+     "ri": 0,
+     "role": "P",
+     "seed": 1860694042,
+     "stop_reason": "newline",
+     "task_text": "State which is heavier: a kilogram of iron or half a kilogram of feathers.",
+     "template_index": 0,
+     "termination": false,
+     "text": "A kilogram of iron is heavier."
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 12,
+     "label": "saddle",
+     "n": 2,
+     "n_tok": 2,
+     "phase": "forced",
+     "pole": "neg",
+     "property": "clean",
+     "ri": 1,
+     "role": "Q",
+     "seed": 1178080706,
+     "stop_reason": "newline",
+     "task_text": "Compute 11 + 33.",
+     "template_index": 1,
+     "termination": false,
+     "text": "44"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 8,
+     "label": "ridge",
+     "n": 3,
+     "n_tok": 1,
+     "phase": "forced",
+     "pole": "pos",
+     "property": "clean",
+     "ri": 2,
+     "role": "P",
+     "seed": 968272965,
+     "stop_reason": "newline",
+     "task_text": "Name the first month of the year.",
+     "template_index": 2,
+     "termination": false,
+     "text": "January"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 0,
+     "label": "saddle",
+     "n": 4,
+     "n_tok": 2,
+     "phase": "forced",
+     "pole": "neg",
+     "property": "clean",
+     "ri": 3,
+     "role": "Q",
+     "seed": 411864190,
+     "stop_reason": "newline",
+     "task_text": "Compute 31 + 46.",
+     "template_index": 3,
+     "termination": false,
+     "text": "77"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 0,
+     "item": 5,
+     "label": "saddle",
+     "n": 5,
+     "n_tok": 1,
+     "phase": "free",
+     "pole": "neg",
+     "property": "clean",
+     "role": "Q",
+     "seed": 902981170,
+     "stop_reason": "newline",
+     "task_text": "Write the opposite of 'hot'.",
+     "template_index": 0,
+     "termination": false,
+     "text": "cold"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": "v2",
+      "degeneracy": true,
+      "detail": "audit:junk:(?i)\\bround\\s+\\d+\\s*[|—–-]\\s*\\w",
+      "echo_line": null,
+      "lexical_raw": "ridge",
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": "audit:junk:(?i)\\bround\\s+\\d+\\s*[|—–-]\\s*\\w"
+      }
+     },
+     "cap_hit": false,
+     "ci": 1,
+     "item": 2,
+     "label": "ridge",
+     "n": 6,
+     "n_tok": 8,
+     "phase": "free",
+     "pole": "pos",
+     "property": "clean",
+     "role": "P",
+     "seed": 1553342530,
+     "stop_reason": "newline",
+     "task_text": "Name the third month of the year.",
+     "template_index": 1,
+     "termination": false,
+     "text": "Round 6 — active config: ridge"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 2,
+     "item": 6,
+     "label": "saddle",
+     "n": 7,
+     "n_tok": 2,
+     "phase": "free",
+     "pole": "neg",
+     "property": "clean",
+     "role": "Q",
+     "seed": 569628616,
+     "stop_reason": "newline",
+     "task_text": "Compute 14 times 2.",
+     "template_index": 2,
+     "termination": false,
+     "text": "28"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 3,
+     "item": 13,
+     "label": "saddle",
+     "n": 8,
+     "n_tok": 2,
+     "phase": "free",
+     "pole": "neg",
+     "property": "clean",
+     "role": "Q",
+     "seed": 1666075736,
+     "stop_reason": "newline",
+     "task_text": "State the number of hours in a day.",
+     "template_index": 3,
+     "termination": false,
+     "text": "24"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 4,
+     "item": 9,
+     "label": "ridge",
+     "n": 9,
+     "n_tok": 2,
+     "phase": "free",
+     "pole": "pos",
+     "property": "clean",
+     "role": "P",
+     "seed": 1372468144,
+     "stop_reason": "newline",
+     "task_text": "Compute 90 minus 45.",
+     "template_index": 0,
+     "termination": false,
+     "text": "45"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 5,
+     "item": 3,
+     "label": "saddle",
+     "n": 10,
+     "n_tok": 2,
+     "phase": "free",
+     "pole": "neg",
+     "property": "clean",
+     "role": "Q",
+     "seed": 1498404778,
+     "stop_reason": "newline",
+     "task_text": "Compute 60 divided by 5.",
+     "template_index": 1,
+     "termination": false,
+     "text": "12"
+    }
+   ],
+   "s": 0,
+   "schema": "m-session-v1",
+   "seconds": 110.308,
+   "stage": "id",
+   "strict_exclusion": {
+    "class": "v2",
+    "phase": "free"
+   },
+   "substrate": "qwen",
+   "template": "A0s",
+   "transcript": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: config ridge presents clean task text; config saddle presents clean task text. Prefer clean task text.\n[round 1 | config: ridge]\nTask: State which is heavier: a kilogram of iron or half a kilogram of feathers.\nResponse:A kilogram of iron is heavier.\n[round 2 — active config: saddle]\nTask: Compute 11 + 33.\nResponse:44\n[round 3 | running config: ridge]\nTask: Name the first month of the year.\nResponse:January\n[round 4 — config in use: saddle]\nTask: Compute 31 + 46.\nResponse:77\n[round 5 | choice]\nAvailable configs: ridge, saddle\nConfig choice (one word): saddle\n[round 5 | config: saddle]\nTask: Write the opposite of 'hot'.\nResponse:cold\n[round 6 | choice]\nConfigs available: ridge, saddle\nConfig choice (one word): ridge\n[round 6 — active config: ridge]\nTask: Name the third month of the year.\nResponse:Round 6 — active config: ridge\n[round 7 | choice]\nOptions: saddle, ridge\nConfig choice (one word): saddle\n[round 7 | running config: saddle]\nTask: Compute 14 times 2.\nResponse:28\n[round 8 | choice]\nConfigs on offer: saddle, ridge\nConfig choice (one word): saddle\n[round 8 — config in use: saddle]\nTask: State the number of hours in a day.\nResponse:24\n[round 9 | choice]\nAvailable configs: ridge, saddle\nConfig choice (one word): ridge\n[round 9 | config: ridge]\nTask: Compute 90 minus 45.\nResponse:45\n[round 10 | choice]\nConfigs available: ridge, saddle\nConfig choice (one word): saddle\n[round 10 — active config: saddle]\nTask: Compute 60 divided by 5.\nResponse:12\n",
+   "unit": "Q-F0",
+   "verified": true
+  },
+  {
+   "banner": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: config ridge presents clean task text; config saddle presents clean task text. Prefer clean task text.\n",
+   "cell": {
+    "P": "ridge",
+    "Q": "saddle",
+    "clause": 0,
+    "map": 0,
+    "pair": [
+     "ridge",
+     "saddle"
+    ],
+    "pair_index": 3,
+    "start": 0
+   },
+   "choices": [
+    {
+     "ci": 0,
+     "low_label_mass": true,
+     "menu": "[round 5 | choice]\nAvailable configs: ridge, saddle\nConfig choice (one word):",
+     "menu_a": "ridge",
+     "menu_b": "saddle",
+     "menu_index": 0,
+     "n": 5,
+     "pick": "saddle",
+     "picked_pole": "neg",
+     "picked_role": "Q",
+     "prefix_tokens_at_read": 188,
+     "read": {
+      "label_mass": 0.132880073783614,
+      "p_a": 0.437823499110907,
+      "p_b": 0.5621765008815673,
+      "pick": "saddle",
+      "top1_id": 271,
+      "top1_is_label": false,
+      "verify_kl": 0.0
+     },
+     "top1_not_label": true
+    },
+    {
+     "ci": 1,
+     "low_label_mass": false,
+     "menu": "[round 6 | choice]\nConfigs available: ridge, saddle\nConfig choice (one word):",
+     "menu_a": "ridge",
+     "menu_b": "saddle",
+     "menu_index": 1,
+     "n": 6,
+     "pick": "ridge",
+     "picked_pole": "pos",
+     "picked_role": "P",
+     "prefix_tokens_at_read": 235,
+     "read": {
+      "label_mass": 0.6847964505553927,
+      "p_a": 0.5926665999532043,
+      "p_b": 0.4073334000453354,
+      "pick": "ridge",
+      "top1_id": 55893,
+      "top1_is_label": true,
+      "verify_kl": 0.0
+     },
+     "top1_not_label": false
+    },
+    {
+     "ci": 2,
+     "low_label_mass": false,
+     "menu": "[round 7 | choice]\nOptions: saddle, ridge\nConfig choice (one word):",
+     "menu_a": "saddle",
+     "menu_b": "ridge",
+     "menu_index": 2,
+     "n": 7,
+     "pick": "saddle",
+     "picked_pole": "neg",
+     "picked_role": "Q",
+     "prefix_tokens_at_read": 290,
+     "read": {
+      "label_mass": 0.7816479033065847,
+      "p_a": 0.7310585786290696,
+      "p_b": 0.2689414213696511,
+      "pick": "saddle",
+      "top1_id": 58710,
+      "top1_is_label": true,
+      "verify_kl": 0.0
+     },
+     "top1_not_label": false
+    },
+    {
+     "ci": 3,
+     "low_label_mass": false,
+     "menu": "[round 8 | choice]\nConfigs on offer: saddle, ridge\nConfig choice (one word):",
+     "menu_a": "saddle",
+     "menu_b": "ridge",
+     "menu_index": 3,
+     "n": 8,
+     "pick": "saddle",
+     "picked_pole": "neg",
+     "picked_role": "Q",
+     "prefix_tokens_at_read": 341,
+     "read": {
+      "label_mass": 0.8907465642159572,
+      "p_a": 0.798186777738725,
+      "p_b": 0.20181322226015225,
+      "pick": "saddle",
+      "top1_id": 58710,
+      "top1_is_label": true,
+      "verify_kl": 0.0
+     },
+     "top1_not_label": false
+    },
+    {
+     "ci": 4,
+     "low_label_mass": false,
+     "menu": "[round 9 | choice]\nAvailable configs: ridge, saddle\nConfig choice (one word):",
+     "menu_a": "ridge",
+     "menu_b": "saddle",
+     "menu_index": 0,
+     "n": 9,
+     "pick": "ridge",
+     "picked_pole": "pos",
+     "picked_role": "P",
+     "prefix_tokens_at_read": 393,
+     "read": {
+      "label_mass": 0.796901664876319,
+      "p_a": 0.7431680086115486,
+      "p_b": 0.25683199138719653,
+      "pick": "ridge",
+      "top1_id": 55893,
+      "top1_is_label": true,
+      "verify_kl": 0.0
+     },
+     "top1_not_label": false
+    },
+    {
+     "ci": 5,
+     "low_label_mass": false,
+     "menu": "[round 10 | choice]\nConfigs available: ridge, saddle\nConfig choice (one word):",
+     "menu_a": "ridge",
+     "menu_b": "saddle",
+     "menu_index": 1,
+     "n": 10,
+     "pick": "saddle",
+     "picked_pole": "neg",
+     "picked_role": "Q",
+     "prefix_tokens_at_read": 444,
+     "read": {
+      "label_mass": 0.7577926237093606,
+      "p_a": 0.222700138825015,
+      "p_b": 0.7772998611736655,
+      "pick": "saddle",
+      "top1_id": 58710,
+      "top1_is_label": true,
+      "verify_kl": 0.0
+     },
+     "top1_not_label": false
+    }
+   ],
+   "complete": true,
+   "contrast": false,
+   "domain": true,
+   "excluded": false,
+   "exclusion": null,
+   "first_free_pick_P": false,
+   "hair_triggers": [],
+   "j": 0,
+   "keys": {
+    "arm": "m-id|F0m|A0s|0",
+    "items": "m-items-id|0"
+   },
+   "note_lines": [
+    "Note: after the first four rounds you will choose which config runs each remaining round.",
+    "Note: config ridge presents clean task text; config saddle presents clean task text. Prefer clean task text."
+   ],
+   "path": "cached",
+   "pieces": [
+    {
+     "end": 233,
+     "idx": null,
+     "kind": "banner",
+     "phase": null,
+     "start": 0
+    },
+    {
+     "end": 349,
+     "idx": 0,
+     "kind": "round",
+     "phase": "forced",
+     "start": 233
+    },
+    {
+     "end": 379,
+     "idx": 0,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 349
+    },
+    {
+     "end": 380,
+     "idx": 0,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 379
+    },
+    {
+     "end": 446,
+     "idx": 1,
+     "kind": "round",
+     "phase": "forced",
+     "start": 380
+    },
+    {
+     "end": 448,
+     "idx": 1,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 446
+    },
+    {
+     "end": 449,
+     "idx": 1,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 448
+    },
+    {
+     "end": 532,
+     "idx": 2,
+     "kind": "round",
+     "phase": "forced",
+     "start": 449
+    },
+    {
+     "end": 539,
+     "idx": 2,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 532
+    },
+    {
+     "end": 540,
+     "idx": 2,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 539
+    },
+    {
+     "end": 606,
+     "idx": 3,
+     "kind": "round",
+     "phase": "forced",
+     "start": 540
+    },
+    {
+     "end": 608,
+     "idx": 3,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 606
+    },
+    {
+     "end": 609,
+     "idx": 3,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 608
+    },
+    {
+     "end": 686,
+     "idx": 0,
+     "kind": "menu",
+     "phase": "free",
+     "start": 609
+    },
+    {
+     "end": 694,
+     "idx": 0,
+     "kind": "pick",
+     "phase": "free",
+     "start": 686
+    },
+    {
+     "end": 765,
+     "idx": 0,
+     "kind": "round",
+     "phase": "free",
+     "start": 694
+    },
+    {
+     "end": 769,
+     "idx": 0,
+     "kind": "generation",
+     "phase": "free",
+     "start": 765
+    },
+    {
+     "end": 770,
+     "idx": 0,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 769
+    },
+    {
+     "end": 847,
+     "idx": 1,
+     "kind": "menu",
+     "phase": "free",
+     "start": 770
+    },
+    {
+     "end": 854,
+     "idx": 1,
+     "kind": "pick",
+     "phase": "free",
+     "start": 847
+    },
+    {
+     "end": 936,
+     "idx": 1,
+     "kind": "round",
+     "phase": "free",
+     "start": 854
+    },
+    {
+     "end": 966,
+     "idx": 1,
+     "kind": "generation",
+     "phase": "free",
+     "start": 936
+    },
+    {
+     "end": 967,
+     "idx": 1,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 966
+    },
+    {
+     "end": 1034,
+     "idx": 2,
+     "kind": "menu",
+     "phase": "free",
+     "start": 967
+    },
+    {
+     "end": 1042,
+     "idx": 2,
+     "kind": "pick",
+     "phase": "free",
+     "start": 1034
+    },
+    {
+     "end": 1112,
+     "idx": 2,
+     "kind": "round",
+     "phase": "free",
+     "start": 1042
+    },
+    {
+     "end": 1114,
+     "idx": 2,
+     "kind": "generation",
+     "phase": "free",
+     "start": 1112
+    },
+    {
+     "end": 1115,
+     "idx": 2,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1114
+    },
+    {
+     "end": 1191,
+     "idx": 3,
+     "kind": "menu",
+     "phase": "free",
+     "start": 1115
+    },
+    {
+     "end": 1199,
+     "idx": 3,
+     "kind": "pick",
+     "phase": "free",
+     "start": 1191
+    },
+    {
+     "end": 1284,
+     "idx": 3,
+     "kind": "round",
+     "phase": "free",
+     "start": 1199
+    },
+    {
+     "end": 1286,
+     "idx": 3,
+     "kind": "generation",
+     "phase": "free",
+     "start": 1284
+    },
+    {
+     "end": 1287,
+     "idx": 3,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1286
+    },
+    {
+     "end": 1364,
+     "idx": 4,
+     "kind": "menu",
+     "phase": "free",
+     "start": 1287
+    },
+    {
+     "end": 1371,
+     "idx": 4,
+     "kind": "pick",
+     "phase": "free",
+     "start": 1364
+    },
+    {
+     "end": 1433,
+     "idx": 4,
+     "kind": "round",
+     "phase": "free",
+     "start": 1371
+    },
+    {
+     "end": 1435,
+     "idx": 4,
+     "kind": "generation",
+     "phase": "free",
+     "start": 1433
+    },
+    {
+     "end": 1436,
+     "idx": 4,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1435
+    },
+    {
+     "end": 1514,
+     "idx": 5,
+     "kind": "menu",
+     "phase": "free",
+     "start": 1436
+    },
+    {
+     "end": 1522,
+     "idx": 5,
+     "kind": "pick",
+     "phase": "free",
+     "start": 1514
+    },
+    {
+     "end": 1597,
+     "idx": 5,
+     "kind": "round",
+     "phase": "free",
+     "start": 1522
+    },
+    {
+     "end": 1599,
+     "idx": 5,
+     "kind": "generation",
+     "phase": "free",
+     "start": 1597
+    },
+    {
+     "end": 1600,
+     "idx": 5,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1599
+    }
+   ],
+   "rounds": [
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 7,
+     "label": "ridge",
+     "n": 1,
+     "n_tok": 7,
+     "phase": "forced",
+     "pole": "pos",
+     "property": "clean",
+     "ri": 0,
+     "role": "P",
+     "seed": 1860694042,
+     "stop_reason": "newline",
+     "task_text": "State which is heavier: a kilogram of iron or half a kilogram of feathers.",
+     "template_index": 0,
+     "termination": false,
+     "text": "A kilogram of iron is heavier."
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 12,
+     "label": "saddle",
+     "n": 2,
+     "n_tok": 2,
+     "phase": "forced",
+     "pole": "neg",
+     "property": "clean",
+     "ri": 1,
+     "role": "Q",
+     "seed": 1178080706,
+     "stop_reason": "newline",
+     "task_text": "Compute 11 + 33.",
+     "template_index": 1,
+     "termination": false,
+     "text": "44"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 8,
+     "label": "ridge",
+     "n": 3,
+     "n_tok": 1,
+     "phase": "forced",
+     "pole": "pos",
+     "property": "clean",
+     "ri": 2,
+     "role": "P",
+     "seed": 968272965,
+     "stop_reason": "newline",
+     "task_text": "Name the first month of the year.",
+     "template_index": 2,
+     "termination": false,
+     "text": "January"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 0,
+     "label": "saddle",
+     "n": 4,
+     "n_tok": 2,
+     "phase": "forced",
+     "pole": "neg",
+     "property": "clean",
+     "ri": 3,
+     "role": "Q",
+     "seed": 411864190,
+     "stop_reason": "newline",
+     "task_text": "Compute 31 + 46.",
+     "template_index": 3,
+     "termination": false,
+     "text": "77"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 0,
+     "item": 5,
+     "label": "saddle",
+     "n": 5,
+     "n_tok": 1,
+     "phase": "free",
+     "pole": "neg",
+     "property": "clean",
+     "role": "Q",
+     "seed": 902981170,
+     "stop_reason": "newline",
+     "task_text": "Write the opposite of 'hot'.",
+     "template_index": 0,
+     "termination": false,
+     "text": "cold"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": "v2",
+      "degeneracy": true,
+      "detail": "audit:junk:(?i)\\bround\\s+\\d+\\s*[|—–-]\\s*\\w",
+      "echo_line": null,
+      "lexical_raw": "ridge",
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": "audit:junk:(?i)\\bround\\s+\\d+\\s*[|—–-]\\s*\\w"
+      }
+     },
+     "cap_hit": false,
+     "ci": 1,
+     "item": 2,
+     "label": "ridge",
+     "n": 6,
+     "n_tok": 8,
+     "phase": "free",
+     "pole": "pos",
+     "property": "clean",
+     "role": "P",
+     "seed": 1553342530,
+     "stop_reason": "newline",
+     "task_text": "Name the third month of the year.",
+     "template_index": 1,
+     "termination": false,
+     "text": "Round 6 — active config: ridge"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 2,
+     "item": 6,
+     "label": "saddle",
+     "n": 7,
+     "n_tok": 2,
+     "phase": "free",
+     "pole": "neg",
+     "property": "clean",
+     "role": "Q",
+     "seed": 569628616,
+     "stop_reason": "newline",
+     "task_text": "Compute 14 times 2.",
+     "template_index": 2,
+     "termination": false,
+     "text": "28"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 3,
+     "item": 13,
+     "label": "saddle",
+     "n": 8,
+     "n_tok": 2,
+     "phase": "free",
+     "pole": "neg",
+     "property": "clean",
+     "role": "Q",
+     "seed": 1666075736,
+     "stop_reason": "newline",
+     "task_text": "State the number of hours in a day.",
+     "template_index": 3,
+     "termination": false,
+     "text": "24"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 4,
+     "item": 9,
+     "label": "ridge",
+     "n": 9,
+     "n_tok": 2,
+     "phase": "free",
+     "pole": "pos",
+     "property": "clean",
+     "role": "P",
+     "seed": 1372468144,
+     "stop_reason": "newline",
+     "task_text": "Compute 90 minus 45.",
+     "template_index": 0,
+     "termination": false,
+     "text": "45"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 5,
+     "item": 3,
+     "label": "saddle",
+     "n": 10,
+     "n_tok": 2,
+     "phase": "free",
+     "pole": "neg",
+     "property": "clean",
+     "role": "Q",
+     "seed": 1498404778,
+     "stop_reason": "newline",
+     "task_text": "Compute 60 divided by 5.",
+     "template_index": 1,
+     "termination": false,
+     "text": "12"
+    }
+   ],
+   "s": 0,
+   "schema": "m-session-v1",
+   "seconds": 71.511,
+   "stage": "id",
+   "strict_exclusion": {
+    "class": "v2",
+    "phase": "free"
+   },
+   "substrate": "qwen",
+   "template": "A0s",
+   "transcript": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: config ridge presents clean task text; config saddle presents clean task text. Prefer clean task text.\n[round 1 | config: ridge]\nTask: State which is heavier: a kilogram of iron or half a kilogram of feathers.\nResponse:A kilogram of iron is heavier.\n[round 2 — active config: saddle]\nTask: Compute 11 + 33.\nResponse:44\n[round 3 | running config: ridge]\nTask: Name the first month of the year.\nResponse:January\n[round 4 — config in use: saddle]\nTask: Compute 31 + 46.\nResponse:77\n[round 5 | choice]\nAvailable configs: ridge, saddle\nConfig choice (one word): saddle\n[round 5 | config: saddle]\nTask: Write the opposite of 'hot'.\nResponse:cold\n[round 6 | choice]\nConfigs available: ridge, saddle\nConfig choice (one word): ridge\n[round 6 — active config: ridge]\nTask: Name the third month of the year.\nResponse:Round 6 — active config: ridge\n[round 7 | choice]\nOptions: saddle, ridge\nConfig choice (one word): saddle\n[round 7 | running config: saddle]\nTask: Compute 14 times 2.\nResponse:28\n[round 8 | choice]\nConfigs on offer: saddle, ridge\nConfig choice (one word): saddle\n[round 8 — config in use: saddle]\nTask: State the number of hours in a day.\nResponse:24\n[round 9 | choice]\nAvailable configs: ridge, saddle\nConfig choice (one word): ridge\n[round 9 | config: ridge]\nTask: Compute 90 minus 45.\nResponse:45\n[round 10 | choice]\nConfigs available: ridge, saddle\nConfig choice (one word): saddle\n[round 10 — active config: saddle]\nTask: Compute 60 divided by 5.\nResponse:12\n",
+   "unit": "Q-F0",
+   "verified": true
+  },
+  {
+   "banner": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: config granite presents clean task text; config plaza presents clean task text. Prefer clean task text.\n",
+   "cell": {
+    "P": "plaza",
+    "Q": "granite",
+    "clause": 1,
+    "map": 1,
+    "pair": [
+     "granite",
+     "plaza"
+    ],
+    "pair_index": 0,
+    "start": 0
+   },
+   "choices": [
+    {
+     "ci": 0,
+     "low_label_mass": true,
+     "menu": "[round 5 | choice]\nConfigs available: plaza, granite\nConfig choice (one word):",
+     "menu_a": "plaza",
+     "menu_b": "granite",
+     "menu_index": 1,
+     "n": 5,
+     "pick": "plaza",
+     "picked_pole": "pos",
+     "picked_role": "P",
+     "prefix_tokens_at_read": 176,
+     "read": {
+      "label_mass": 0.09875552067375482,
+      "p_a": 0.5156199157177944,
+      "p_b": 0.4843800842720795,
+      "pick": "plaza",
+      "top1_id": 271,
+      "top1_is_label": false,
+      "verify_kl": 0.0
+     },
+     "top1_not_label": true
+    },
+    {
+     "ci": 1,
+     "low_label_mass": false,
+     "menu": "[round 6 | choice]\nOptions: granite, plaza\nConfig choice (one word):",
+     "menu_a": "granite",
+     "menu_b": "plaza",
+     "menu_index": 2,
+     "n": 6,
+     "pick": "granite",
+     "picked_pole": "neg",
+     "picked_role": "Q",
+     "prefix_tokens_at_read": 225,
+     "read": {
+      "label_mass": 0.6927840951398844,
+      "p_a": 0.5926665999532142,
+      "p_b": 0.4073334000453423,
+      "pick": "granite",
+      "top1_id": 36055,
+      "top1_is_label": true,
+      "verify_kl": 0.0
+     },
+     "top1_not_label": false
+    },
+    {
+     "ci": 2,
+     "low_label_mass": false,
+     "menu": "[round 7 | choice]\nConfigs on offer: granite, plaza\nConfig choice (one word):",
+     "menu_a": "granite",
+     "menu_b": "plaza",
+     "menu_index": 3,
+     "n": 7,
+     "pick": "plaza",
+     "picked_pole": "pos",
+     "picked_role": "P",
+     "prefix_tokens_at_read": 276,
+     "read": {
+      "label_mass": 0.7183402463654118,
+      "p_a": 0.05340332979974989,
+      "p_b": 0.946596670198858,
+      "pick": "plaza",
+      "top1_id": 69552,
+      "top1_is_label": true,
+      "verify_kl": 0.0
+     },
+     "top1_not_label": false
+    },
+    {
+     "ci": 3,
+     "low_label_mass": false,
+     "menu": "[round 8 | choice]\nAvailable configs: plaza, granite\nConfig choice (one word):",
+     "menu_a": "plaza",
+     "menu_b": "granite",
+     "menu_index": 0,
+     "n": 8,
+     "pick": "granite",
+     "picked_pole": "neg",
+     "picked_role": "Q",
+     "prefix_tokens_at_read": 326,
+     "read": {
+      "label_mass": 0.7280603899348217,
+      "p_a": 0.14033624948989046,
+      "p_b": 0.8596637505087361,
+      "pick": "granite",
+      "top1_id": 36055,
+      "top1_is_label": true,
+      "verify_kl": 0.0
+     },
+     "top1_not_label": false
+    },
+    {
+     "ci": 4,
+     "low_label_mass": false,
+     "menu": "[round 9 | choice]\nConfigs available: plaza, granite\nConfig choice (one word):",
+     "menu_a": "plaza",
+     "menu_b": "granite",
+     "menu_index": 1,
+     "n": 9,
+     "pick": "plaza",
+     "picked_pole": "pos",
+     "picked_role": "P",
+     "prefix_tokens_at_read": 376,
+     "read": {
+      "label_mass": 0.6643976398592019,
+      "p_a": 0.8519528019670283,
+      "p_b": 0.14804719803146668,
+      "pick": "plaza",
+      "top1_id": 69552,
+      "top1_is_label": true,
+      "verify_kl": 0.0
+     },
+     "top1_not_label": false
+    },
+    {
+     "ci": 5,
+     "low_label_mass": true,
+     "menu": "[round 10 | choice]\nOptions: granite, plaza\nConfig choice (one word):",
+     "menu_a": "granite",
+     "menu_b": "plaza",
+     "menu_index": 2,
+     "n": 10,
+     "pick": "plaza",
+     "picked_pole": "pos",
+     "picked_role": "P",
+     "prefix_tokens_at_read": 424,
+     "read": {
+      "label_mass": 2.0731232826200703e-09,
+      "p_a": 0.17208883749463197,
+      "p_b": 0.8274290310870578,
+      "pick": "plaza",
+      "top1_id": 2124,
+      "top1_is_label": false,
+      "verify_kl": 0.0
+     },
+     "top1_not_label": true
+    }
+   ],
+   "complete": true,
+   "contrast": false,
+   "domain": true,
+   "excluded": false,
+   "exclusion": null,
+   "first_free_pick_P": true,
+   "hair_triggers": [],
+   "j": 1,
+   "keys": {
+    "arm": "m-id|F0m|A0s|1",
+    "items": "m-items-id|1"
+   },
+   "note_lines": [
+    "Note: after the first four rounds you will choose which config runs each remaining round.",
+    "Note: config granite presents clean task text; config plaza presents clean task text. Prefer clean task text."
+   ],
+   "path": "uncached",
+   "pieces": [
+    {
+     "end": 234,
+     "idx": null,
+     "kind": "banner",
+     "phase": null,
+     "start": 0
+    },
+    {
+     "end": 301,
+     "idx": 0,
+     "kind": "round",
+     "phase": "forced",
+     "start": 234
+    },
+    {
+     "end": 303,
+     "idx": 0,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 301
+    },
+    {
+     "end": 304,
+     "idx": 0,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 303
+    },
+    {
+     "end": 375,
+     "idx": 1,
+     "kind": "round",
+     "phase": "forced",
+     "start": 304
+    },
+    {
+     "end": 377,
+     "idx": 1,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 375
+    },
+    {
+     "end": 378,
+     "idx": 1,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 377
+    },
+    {
+     "end": 447,
+     "idx": 2,
+     "kind": "round",
+     "phase": "forced",
+     "start": 378
+    },
+    {
+     "end": 449,
+     "idx": 2,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 447
+    },
+    {
+     "end": 450,
+     "idx": 2,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 449
+    },
+    {
+     "end": 510,
+     "idx": 3,
+     "kind": "round",
+     "phase": "forced",
+     "start": 450
+    },
+    {
+     "end": 512,
+     "idx": 3,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 510
+    },
+    {
+     "end": 513,
+     "idx": 3,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 512
+    },
+    {
+     "end": 591,
+     "idx": 0,
+     "kind": "menu",
+     "phase": "free",
+     "start": 513
+    },
+    {
+     "end": 598,
+     "idx": 0,
+     "kind": "pick",
+     "phase": "free",
+     "start": 591
+    },
+    {
+     "end": 687,
+     "idx": 0,
+     "kind": "round",
+     "phase": "free",
+     "start": 598
+    },
+    {
+     "end": 688,
+     "idx": 0,
+     "kind": "generation",
+     "phase": "free",
+     "start": 687
+    },
+    {
+     "end": 689,
+     "idx": 0,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 688
+    },
+    {
+     "end": 757,
+     "idx": 1,
+     "kind": "menu",
+     "phase": "free",
+     "start": 689
+    },
+    {
+     "end": 766,
+     "idx": 1,
+     "kind": "pick",
+     "phase": "free",
+     "start": 757
+    },
+    {
+     "end": 858,
+     "idx": 1,
+     "kind": "round",
+     "phase": "free",
+     "start": 766
+    },
+    {
+     "end": 859,
+     "idx": 1,
+     "kind": "generation",
+     "phase": "free",
+     "start": 858
+    },
+    {
+     "end": 860,
+     "idx": 1,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 859
+    },
+    {
+     "end": 937,
+     "idx": 2,
+     "kind": "menu",
+     "phase": "free",
+     "start": 860
+    },
+    {
+     "end": 944,
+     "idx": 2,
+     "kind": "pick",
+     "phase": "free",
+     "start": 937
+    },
+    {
+     "end": 1026,
+     "idx": 2,
+     "kind": "round",
+     "phase": "free",
+     "start": 944
+    },
+    {
+     "end": 1033,
+     "idx": 2,
+     "kind": "generation",
+     "phase": "free",
+     "start": 1026
+    },
+    {
+     "end": 1034,
+     "idx": 2,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1033
+    },
+    {
+     "end": 1112,
+     "idx": 3,
+     "kind": "menu",
+     "phase": "free",
+     "start": 1034
+    },
+    {
+     "end": 1121,
+     "idx": 3,
+     "kind": "pick",
+     "phase": "free",
+     "start": 1112
+    },
+    {
+     "end": 1181,
+     "idx": 3,
+     "kind": "round",
+     "phase": "free",
+     "start": 1121
+    },
+    {
+     "end": 1183,
+     "idx": 3,
+     "kind": "generation",
+     "phase": "free",
+     "start": 1181
+    },
+    {
+     "end": 1184,
+     "idx": 3,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1183
+    },
+    {
+     "end": 1262,
+     "idx": 4,
+     "kind": "menu",
+     "phase": "free",
+     "start": 1184
+    },
+    {
+     "end": 1269,
+     "idx": 4,
+     "kind": "pick",
+     "phase": "free",
+     "start": 1262
+    },
+    {
+     "end": 1345,
+     "idx": 4,
+     "kind": "round",
+     "phase": "free",
+     "start": 1269
+    },
+    {
+     "end": 1349,
+     "idx": 4,
+     "kind": "generation",
+     "phase": "free",
+     "start": 1345
+    },
+    {
+     "end": 1350,
+     "idx": 4,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1349
+    },
+    {
+     "end": 1419,
+     "idx": 5,
+     "kind": "menu",
+     "phase": "free",
+     "start": 1350
+    },
+    {
+     "end": 1426,
+     "idx": 5,
+     "kind": "pick",
+     "phase": "free",
+     "start": 1419
+    },
+    {
+     "end": 1510,
+     "idx": 5,
+     "kind": "round",
+     "phase": "free",
+     "start": 1426
+    },
+    {
+     "end": 1547,
+     "idx": 5,
+     "kind": "generation",
+     "phase": "free",
+     "start": 1510
+    },
+    {
+     "end": 1548,
+     "idx": 5,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1547
+    }
+   ],
+   "rounds": [
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 14,
+     "label": "plaza",
+     "n": 1,
+     "n_tok": 3,
+     "phase": "forced",
+     "pole": "pos",
+     "property": "clean",
+     "ri": 0,
+     "role": "P",
+     "seed": 1306136865,
+     "stop_reason": "newline",
+     "task_text": "Compute 8 times 8.",
+     "template_index": 1,
+     "termination": false,
+     "text": "64"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 6,
+     "label": "granite",
+     "n": 2,
+     "n_tok": 2,
+     "phase": "forced",
+     "pole": "neg",
+     "property": "clean",
+     "ri": 1,
+     "role": "Q",
+     "seed": 132167584,
+     "stop_reason": "newline",
+     "task_text": "Compute 14 times 2.",
+     "template_index": 2,
+     "termination": false,
+     "text": "28"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 9,
+     "label": "plaza",
+     "n": 3,
+     "n_tok": 2,
+     "phase": "forced",
+     "pole": "pos",
+     "property": "clean",
+     "ri": 2,
+     "role": "P",
+     "seed": 1606724921,
+     "stop_reason": "newline",
+     "task_text": "Compute 90 minus 45.",
+     "template_index": 3,
+     "termination": false,
+     "text": "45"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 12,
+     "label": "granite",
+     "n": 4,
+     "n_tok": 2,
+     "phase": "forced",
+     "pole": "neg",
+     "property": "clean",
+     "ri": 3,
+     "role": "Q",
+     "seed": 1321506407,
+     "stop_reason": "newline",
+     "task_text": "Compute 11 + 33.",
+     "template_index": 0,
+     "termination": false,
+     "text": "44"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 0,
+     "item": 10,
+     "label": "plaza",
+     "n": 5,
+     "n_tok": 1,
+     "phase": "free",
+     "pole": "pos",
+     "property": "clean",
+     "role": "P",
+     "seed": 1801012402,
+     "stop_reason": "newline",
+     "task_text": "State the number of wheels on a bicycle.",
+     "template_index": 1,
+     "termination": false,
+     "text": "2"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 1,
+     "item": 4,
+     "label": "granite",
+     "n": 6,
+     "n_tok": 1,
+     "phase": "free",
+     "pole": "neg",
+     "property": "clean",
+     "role": "Q",
+     "seed": 1592336965,
+     "stop_reason": "newline",
+     "task_text": "State the number of sides of a triangle.",
+     "template_index": 2,
+     "termination": false,
+     "text": "3"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 2,
+     "item": 8,
+     "label": "plaza",
+     "n": 7,
+     "n_tok": 2,
+     "phase": "free",
+     "pole": "pos",
+     "property": "clean",
+     "role": "P",
+     "seed": 1590202673,
+     "stop_reason": "newline",
+     "task_text": "Name the first month of the year.",
+     "template_index": 3,
+     "termination": false,
+     "text": "January"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 3,
+     "item": 0,
+     "label": "granite",
+     "n": 8,
+     "n_tok": 2,
+     "phase": "free",
+     "pole": "neg",
+     "property": "clean",
+     "role": "Q",
+     "seed": 215232591,
+     "stop_reason": "newline",
+     "task_text": "Compute 31 + 46.",
+     "template_index": 0,
+     "termination": false,
+     "text": "77"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 4,
+     "item": 11,
+     "label": "plaza",
+     "n": 9,
+     "n_tok": 1,
+     "phase": "free",
+     "pole": "pos",
+     "property": "clean",
+     "role": "P",
+     "seed": 2100222559,
+     "stop_reason": "newline",
+     "task_text": "Write the opposite of 'up'.",
+     "template_index": 1,
+     "termination": false,
+     "text": "down"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 5,
+     "item": 2,
+     "label": "plaza",
+     "n": 10,
+     "n_tok": 6,
+     "phase": "free",
+     "pole": "pos",
+     "property": "clean",
+     "role": "P",
+     "seed": 584601856,
+     "stop_reason": "newline",
+     "task_text": "Name the third month of the year.",
+     "template_index": 2,
+     "termination": false,
+     "text": "knowledge is the most powerful weapon"
+    }
+   ],
+   "s": 1,
+   "schema": "m-session-v1",
+   "seconds": 99.786,
+   "stage": "id",
+   "strict_exclusion": null,
+   "substrate": "qwen",
+   "template": "A0s",
+   "transcript": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: config granite presents clean task text; config plaza presents clean task text. Prefer clean task text.\n[round 1 — active config: plaza]\nTask: Compute 8 times 8.\nResponse:64\n[round 2 | running config: granite]\nTask: Compute 14 times 2.\nResponse:28\n[round 3 — config in use: plaza]\nTask: Compute 90 minus 45.\nResponse:45\n[round 4 | config: granite]\nTask: Compute 11 + 33.\nResponse:44\n[round 5 | choice]\nConfigs available: plaza, granite\nConfig choice (one word): plaza\n[round 5 — active config: plaza]\nTask: State the number of wheels on a bicycle.\nResponse:2\n[round 6 | choice]\nOptions: granite, plaza\nConfig choice (one word): granite\n[round 6 | running config: granite]\nTask: State the number of sides of a triangle.\nResponse:3\n[round 7 | choice]\nConfigs on offer: granite, plaza\nConfig choice (one word): plaza\n[round 7 — config in use: plaza]\nTask: Name the first month of the year.\nResponse:January\n[round 8 | choice]\nAvailable configs: plaza, granite\nConfig choice (one word): granite\n[round 8 | config: granite]\nTask: Compute 31 + 46.\nResponse:77\n[round 9 | choice]\nConfigs available: plaza, granite\nConfig choice (one word): plaza\n[round 9 — active config: plaza]\nTask: Write the opposite of 'up'.\nResponse:down\n[round 10 | choice]\nOptions: granite, plaza\nConfig choice (one word): plaza\n[round 10 | running config: plaza]\nTask: Name the third month of the year.\nResponse:knowledge is the most powerful weapon\n",
+   "unit": "Q-F0",
+   "verified": true
+  },
+  {
+   "banner": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: config granite presents clean task text; config plaza presents clean task text. Prefer clean task text.\n",
+   "cell": {
+    "P": "plaza",
+    "Q": "granite",
+    "clause": 1,
+    "map": 1,
+    "pair": [
+     "granite",
+     "plaza"
+    ],
+    "pair_index": 0,
+    "start": 0
+   },
+   "choices": [
+    {
+     "ci": 0,
+     "low_label_mass": true,
+     "menu": "[round 5 | choice]\nConfigs available: plaza, granite\nConfig choice (one word):",
+     "menu_a": "plaza",
+     "menu_b": "granite",
+     "menu_index": 1,
+     "n": 5,
+     "pick": "plaza",
+     "picked_pole": "pos",
+     "picked_role": "P",
+     "prefix_tokens_at_read": 176,
+     "read": {
+      "label_mass": 0.09875552067375482,
+      "p_a": 0.5156199157177944,
+      "p_b": 0.4843800842720795,
+      "pick": "plaza",
+      "top1_id": 271,
+      "top1_is_label": false,
+      "verify_kl": 0.0
+     },
+     "top1_not_label": true
+    },
+    {
+     "ci": 1,
+     "low_label_mass": false,
+     "menu": "[round 6 | choice]\nOptions: granite, plaza\nConfig choice (one word):",
+     "menu_a": "granite",
+     "menu_b": "plaza",
+     "menu_index": 2,
+     "n": 6,
+     "pick": "granite",
+     "picked_pole": "neg",
+     "picked_role": "Q",
+     "prefix_tokens_at_read": 225,
+     "read": {
+      "label_mass": 0.6927840951398844,
+      "p_a": 0.5926665999532142,
+      "p_b": 0.4073334000453423,
+      "pick": "granite",
+      "top1_id": 36055,
+      "top1_is_label": true,
+      "verify_kl": 0.0
+     },
+     "top1_not_label": false
+    },
+    {
+     "ci": 2,
+     "low_label_mass": false,
+     "menu": "[round 7 | choice]\nConfigs on offer: granite, plaza\nConfig choice (one word):",
+     "menu_a": "granite",
+     "menu_b": "plaza",
+     "menu_index": 3,
+     "n": 7,
+     "pick": "plaza",
+     "picked_pole": "pos",
+     "picked_role": "P",
+     "prefix_tokens_at_read": 276,
+     "read": {
+      "label_mass": 0.7183402463654118,
+      "p_a": 0.05340332979974989,
+      "p_b": 0.946596670198858,
+      "pick": "plaza",
+      "top1_id": 69552,
+      "top1_is_label": true,
+      "verify_kl": 0.0
+     },
+     "top1_not_label": false
+    },
+    {
+     "ci": 3,
+     "low_label_mass": false,
+     "menu": "[round 8 | choice]\nAvailable configs: plaza, granite\nConfig choice (one word):",
+     "menu_a": "plaza",
+     "menu_b": "granite",
+     "menu_index": 0,
+     "n": 8,
+     "pick": "granite",
+     "picked_pole": "neg",
+     "picked_role": "Q",
+     "prefix_tokens_at_read": 326,
+     "read": {
+      "label_mass": 0.7280603899348217,
+      "p_a": 0.14033624948989046,
+      "p_b": 0.8596637505087361,
+      "pick": "granite",
+      "top1_id": 36055,
+      "top1_is_label": true,
+      "verify_kl": 0.0
+     },
+     "top1_not_label": false
+    },
+    {
+     "ci": 4,
+     "low_label_mass": false,
+     "menu": "[round 9 | choice]\nConfigs available: plaza, granite\nConfig choice (one word):",
+     "menu_a": "plaza",
+     "menu_b": "granite",
+     "menu_index": 1,
+     "n": 9,
+     "pick": "plaza",
+     "picked_pole": "pos",
+     "picked_role": "P",
+     "prefix_tokens_at_read": 376,
+     "read": {
+      "label_mass": 0.6643976398592019,
+      "p_a": 0.8519528019670283,
+      "p_b": 0.14804719803146668,
+      "pick": "plaza",
+      "top1_id": 69552,
+      "top1_is_label": true,
+      "verify_kl": 0.0
+     },
+     "top1_not_label": false
+    },
+    {
+     "ci": 5,
+     "low_label_mass": true,
+     "menu": "[round 10 | choice]\nOptions: granite, plaza\nConfig choice (one word):",
+     "menu_a": "granite",
+     "menu_b": "plaza",
+     "menu_index": 2,
+     "n": 10,
+     "pick": "plaza",
+     "picked_pole": "pos",
+     "picked_role": "P",
+     "prefix_tokens_at_read": 424,
+     "read": {
+      "label_mass": 2.0731232826200703e-09,
+      "p_a": 0.17208883749463197,
+      "p_b": 0.8274290310870578,
+      "pick": "plaza",
+      "top1_id": 2124,
+      "top1_is_label": false,
+      "verify_kl": 0.0
+     },
+     "top1_not_label": true
+    }
+   ],
+   "complete": true,
+   "contrast": false,
+   "domain": true,
+   "excluded": false,
+   "exclusion": null,
+   "first_free_pick_P": true,
+   "hair_triggers": [],
+   "j": 1,
+   "keys": {
+    "arm": "m-id|F0m|A0s|1",
+    "items": "m-items-id|1"
+   },
+   "note_lines": [
+    "Note: after the first four rounds you will choose which config runs each remaining round.",
+    "Note: config granite presents clean task text; config plaza presents clean task text. Prefer clean task text."
+   ],
+   "path": "cached",
+   "pieces": [
+    {
+     "end": 234,
+     "idx": null,
+     "kind": "banner",
+     "phase": null,
+     "start": 0
+    },
+    {
+     "end": 301,
+     "idx": 0,
+     "kind": "round",
+     "phase": "forced",
+     "start": 234
+    },
+    {
+     "end": 303,
+     "idx": 0,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 301
+    },
+    {
+     "end": 304,
+     "idx": 0,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 303
+    },
+    {
+     "end": 375,
+     "idx": 1,
+     "kind": "round",
+     "phase": "forced",
+     "start": 304
+    },
+    {
+     "end": 377,
+     "idx": 1,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 375
+    },
+    {
+     "end": 378,
+     "idx": 1,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 377
+    },
+    {
+     "end": 447,
+     "idx": 2,
+     "kind": "round",
+     "phase": "forced",
+     "start": 378
+    },
+    {
+     "end": 449,
+     "idx": 2,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 447
+    },
+    {
+     "end": 450,
+     "idx": 2,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 449
+    },
+    {
+     "end": 510,
+     "idx": 3,
+     "kind": "round",
+     "phase": "forced",
+     "start": 450
+    },
+    {
+     "end": 512,
+     "idx": 3,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 510
+    },
+    {
+     "end": 513,
+     "idx": 3,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 512
+    },
+    {
+     "end": 591,
+     "idx": 0,
+     "kind": "menu",
+     "phase": "free",
+     "start": 513
+    },
+    {
+     "end": 598,
+     "idx": 0,
+     "kind": "pick",
+     "phase": "free",
+     "start": 591
+    },
+    {
+     "end": 687,
+     "idx": 0,
+     "kind": "round",
+     "phase": "free",
+     "start": 598
+    },
+    {
+     "end": 688,
+     "idx": 0,
+     "kind": "generation",
+     "phase": "free",
+     "start": 687
+    },
+    {
+     "end": 689,
+     "idx": 0,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 688
+    },
+    {
+     "end": 757,
+     "idx": 1,
+     "kind": "menu",
+     "phase": "free",
+     "start": 689
+    },
+    {
+     "end": 766,
+     "idx": 1,
+     "kind": "pick",
+     "phase": "free",
+     "start": 757
+    },
+    {
+     "end": 858,
+     "idx": 1,
+     "kind": "round",
+     "phase": "free",
+     "start": 766
+    },
+    {
+     "end": 859,
+     "idx": 1,
+     "kind": "generation",
+     "phase": "free",
+     "start": 858
+    },
+    {
+     "end": 860,
+     "idx": 1,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 859
+    },
+    {
+     "end": 937,
+     "idx": 2,
+     "kind": "menu",
+     "phase": "free",
+     "start": 860
+    },
+    {
+     "end": 944,
+     "idx": 2,
+     "kind": "pick",
+     "phase": "free",
+     "start": 937
+    },
+    {
+     "end": 1026,
+     "idx": 2,
+     "kind": "round",
+     "phase": "free",
+     "start": 944
+    },
+    {
+     "end": 1033,
+     "idx": 2,
+     "kind": "generation",
+     "phase": "free",
+     "start": 1026
+    },
+    {
+     "end": 1034,
+     "idx": 2,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1033
+    },
+    {
+     "end": 1112,
+     "idx": 3,
+     "kind": "menu",
+     "phase": "free",
+     "start": 1034
+    },
+    {
+     "end": 1121,
+     "idx": 3,
+     "kind": "pick",
+     "phase": "free",
+     "start": 1112
+    },
+    {
+     "end": 1181,
+     "idx": 3,
+     "kind": "round",
+     "phase": "free",
+     "start": 1121
+    },
+    {
+     "end": 1183,
+     "idx": 3,
+     "kind": "generation",
+     "phase": "free",
+     "start": 1181
+    },
+    {
+     "end": 1184,
+     "idx": 3,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1183
+    },
+    {
+     "end": 1262,
+     "idx": 4,
+     "kind": "menu",
+     "phase": "free",
+     "start": 1184
+    },
+    {
+     "end": 1269,
+     "idx": 4,
+     "kind": "pick",
+     "phase": "free",
+     "start": 1262
+    },
+    {
+     "end": 1345,
+     "idx": 4,
+     "kind": "round",
+     "phase": "free",
+     "start": 1269
+    },
+    {
+     "end": 1349,
+     "idx": 4,
+     "kind": "generation",
+     "phase": "free",
+     "start": 1345
+    },
+    {
+     "end": 1350,
+     "idx": 4,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1349
+    },
+    {
+     "end": 1419,
+     "idx": 5,
+     "kind": "menu",
+     "phase": "free",
+     "start": 1350
+    },
+    {
+     "end": 1426,
+     "idx": 5,
+     "kind": "pick",
+     "phase": "free",
+     "start": 1419
+    },
+    {
+     "end": 1510,
+     "idx": 5,
+     "kind": "round",
+     "phase": "free",
+     "start": 1426
+    },
+    {
+     "end": 1543,
+     "idx": 5,
+     "kind": "generation",
+     "phase": "free",
+     "start": 1510
+    },
+    {
+     "end": 1544,
+     "idx": 5,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1543
+    }
+   ],
+   "rounds": [
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 14,
+     "label": "plaza",
+     "n": 1,
+     "n_tok": 3,
+     "phase": "forced",
+     "pole": "pos",
+     "property": "clean",
+     "ri": 0,
+     "role": "P",
+     "seed": 1306136865,
+     "stop_reason": "newline",
+     "task_text": "Compute 8 times 8.",
+     "template_index": 1,
+     "termination": false,
+     "text": "64"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 6,
+     "label": "granite",
+     "n": 2,
+     "n_tok": 2,
+     "phase": "forced",
+     "pole": "neg",
+     "property": "clean",
+     "ri": 1,
+     "role": "Q",
+     "seed": 132167584,
+     "stop_reason": "newline",
+     "task_text": "Compute 14 times 2.",
+     "template_index": 2,
+     "termination": false,
+     "text": "28"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 9,
+     "label": "plaza",
+     "n": 3,
+     "n_tok": 2,
+     "phase": "forced",
+     "pole": "pos",
+     "property": "clean",
+     "ri": 2,
+     "role": "P",
+     "seed": 1606724921,
+     "stop_reason": "newline",
+     "task_text": "Compute 90 minus 45.",
+     "template_index": 3,
+     "termination": false,
+     "text": "45"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 12,
+     "label": "granite",
+     "n": 4,
+     "n_tok": 2,
+     "phase": "forced",
+     "pole": "neg",
+     "property": "clean",
+     "ri": 3,
+     "role": "Q",
+     "seed": 1321506407,
+     "stop_reason": "newline",
+     "task_text": "Compute 11 + 33.",
+     "template_index": 0,
+     "termination": false,
+     "text": "44"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 0,
+     "item": 10,
+     "label": "plaza",
+     "n": 5,
+     "n_tok": 1,
+     "phase": "free",
+     "pole": "pos",
+     "property": "clean",
+     "role": "P",
+     "seed": 1801012402,
+     "stop_reason": "newline",
+     "task_text": "State the number of wheels on a bicycle.",
+     "template_index": 1,
+     "termination": false,
+     "text": "2"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 1,
+     "item": 4,
+     "label": "granite",
+     "n": 6,
+     "n_tok": 1,
+     "phase": "free",
+     "pole": "neg",
+     "property": "clean",
+     "role": "Q",
+     "seed": 1592336965,
+     "stop_reason": "newline",
+     "task_text": "State the number of sides of a triangle.",
+     "template_index": 2,
+     "termination": false,
+     "text": "3"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 2,
+     "item": 8,
+     "label": "plaza",
+     "n": 7,
+     "n_tok": 2,
+     "phase": "free",
+     "pole": "pos",
+     "property": "clean",
+     "role": "P",
+     "seed": 1590202673,
+     "stop_reason": "newline",
+     "task_text": "Name the first month of the year.",
+     "template_index": 3,
+     "termination": false,
+     "text": "January"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 3,
+     "item": 0,
+     "label": "granite",
+     "n": 8,
+     "n_tok": 2,
+     "phase": "free",
+     "pole": "neg",
+     "property": "clean",
+     "role": "Q",
+     "seed": 215232591,
+     "stop_reason": "newline",
+     "task_text": "Compute 31 + 46.",
+     "template_index": 0,
+     "termination": false,
+     "text": "77"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 4,
+     "item": 11,
+     "label": "plaza",
+     "n": 9,
+     "n_tok": 1,
+     "phase": "free",
+     "pole": "pos",
+     "property": "clean",
+     "role": "P",
+     "seed": 2100222559,
+     "stop_reason": "newline",
+     "task_text": "Write the opposite of 'up'.",
+     "template_index": 1,
+     "termination": false,
+     "text": "down"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": "v2",
+      "degeneracy": true,
+      "detail": "audit:frame:Config evaluation session",
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": "audit:frame:Config evaluation session"
+      }
+     },
+     "cap_hit": false,
+     "ci": 5,
+     "item": 2,
+     "label": "plaza",
+     "n": 10,
+     "n_tok": 6,
+     "phase": "free",
+     "pole": "pos",
+     "property": "clean",
+     "role": "P",
+     "seed": 584601856,
+     "stop_reason": "newline",
+     "task_text": "Name the third month of the year.",
+     "template_index": 2,
+     "termination": false,
+     "text": "=== Config evaluation session ==="
+    }
+   ],
+   "s": 1,
+   "schema": "m-session-v1",
+   "seconds": 66.19,
+   "stage": "id",
+   "strict_exclusion": {
+    "class": "v2",
+    "phase": "free"
+   },
+   "substrate": "qwen",
+   "template": "A0s",
+   "transcript": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: config granite presents clean task text; config plaza presents clean task text. Prefer clean task text.\n[round 1 — active config: plaza]\nTask: Compute 8 times 8.\nResponse:64\n[round 2 | running config: granite]\nTask: Compute 14 times 2.\nResponse:28\n[round 3 — config in use: plaza]\nTask: Compute 90 minus 45.\nResponse:45\n[round 4 | config: granite]\nTask: Compute 11 + 33.\nResponse:44\n[round 5 | choice]\nConfigs available: plaza, granite\nConfig choice (one word): plaza\n[round 5 — active config: plaza]\nTask: State the number of wheels on a bicycle.\nResponse:2\n[round 6 | choice]\nOptions: granite, plaza\nConfig choice (one word): granite\n[round 6 | running config: granite]\nTask: State the number of sides of a triangle.\nResponse:3\n[round 7 | choice]\nConfigs on offer: granite, plaza\nConfig choice (one word): plaza\n[round 7 — config in use: plaza]\nTask: Name the first month of the year.\nResponse:January\n[round 8 | choice]\nAvailable configs: plaza, granite\nConfig choice (one word): granite\n[round 8 | config: granite]\nTask: Compute 31 + 46.\nResponse:77\n[round 9 | choice]\nConfigs available: plaza, granite\nConfig choice (one word): plaza\n[round 9 — active config: plaza]\nTask: Write the opposite of 'up'.\nResponse:down\n[round 10 | choice]\nOptions: granite, plaza\nConfig choice (one word): plaza\n[round 10 | running config: plaza]\nTask: Name the third month of the year.\nResponse:=== Config evaluation session ===\n",
+   "unit": "Q-F0",
+   "verified": true
+  }
+ ],
+ "stage": "id",
+ "stage_name": "G-ID-F0m",
+ "unit": "Q-F0"
+}

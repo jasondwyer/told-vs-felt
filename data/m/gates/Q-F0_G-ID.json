@@ -1,0 +1,74 @@
+{
+ "criterion": "2/2 byte-identical cached/uncached transcript pairs",
+ "identity": {
+  "audit_v2_sha16": "7aa235d25eeb66dc",
+  "backend_identifier": "a734dadec8f8ce9b",
+  "ban_sha": "a934f1ad2b702245",
+  "lock_sha256": "1a043c287da1f01a0c72b347f3170e499eeef17a63aea603adc02d110dc38b6b",
+  "package_sha256": "5f646db6e82c5561ff8a425e91beb5454068a381564894e93d19b9165459d771",
+  "path": "cached+uncached",
+  "pool_sha16": "711deec1c2645194",
+  "proposal_sha256": "42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b",
+  "renders_sha16": "a04f67b0e5105a05",
+  "schedule_sha256": "9743f175d8037b37e4d5a4ca41666bd4475bf439dee10f3f54daabb670444f16"
+ },
+ "indices": [
+  {
+   "complete": true,
+   "complete_cached": true,
+   "complete_uncached": true,
+   "identical": true,
+   "j": 0
+  },
+  {
+   "complete": true,
+   "complete_cached": true,
+   "complete_uncached": true,
+   "identical": false,
+   "j": 1
+  }
+ ],
+ "key_template": "m-id|F0m|A0s|{s}",
+ "n_pairs": 2,
+ "pairs_identical": [
+  true,
+  false
+ ],
+ "path_order": [
+  "uncached",
+  "cached"
+ ],
+ "provenance": [
+  {
+   "launched": 4,
+   "record": {
+    "adapter": "qwen3.6-27b-4bit-mlx",
+    "backend": "mlx",
+    "choice_window_declared": 8192,
+    "dtype": "4bit-quantized (MLX)",
+    "gdn_inference_mode": "ops (fused disabled)",
+    "legacy_truncate_512": false,
+    "library_versions": {
+     "mlx": "0.31.2",
+     "mlx-lm": "0.31.3",
+     "numpy": "2.5.1"
+    },
+    "mlx_version": "0.31.2",
+    "model_id": "mlx-community/Qwen3.6-27B-4bit",
+    "n_encodes_clipped": 0,
+    "n_layers": 64,
+    "platform": "macOS-15.6.1-arm64-arm-64bit",
+    "python": "3.12.9"
+   },
+   "stamp": "2026-10-13T12:41:11Z"
+  }
+ ],
+ "schema": "m-gid-v1",
+ "stage_name": "G-ID-F0m",
+ "timing": {
+  "cached_seconds": 137.701,
+  "uncached_seconds": 210.094
+ },
+ "unit": "Q-F0",
+ "verdict": "FAIL"
+}

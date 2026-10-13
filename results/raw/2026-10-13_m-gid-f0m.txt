@@ -1,0 +1,26 @@
+# G-ID-F0m (PROPOSAL-m v1.11 §8 step 12, m:281) -- the A0s template uncached then cached per index on Qwen, under LOCK-m-F0 v0.1; canonical run on the committed driver.
+# Code stamp: 2026-10-13 12:41:05 UTC (date -u); HEAD 8da32f2; driver scripts/m_sessions.py sha256 eb6aa7cf167aa8d955c26fd97a6214ed68a7f1375b51c9f80582c85ed659fd6c (committed at 8da32f2); offline load (the seat's step-10 read, Q5): HF_HUB_OFFLINE=1, snapshot mlx-community/Qwen3.6-27B-4bit c000ac2c2057d94be3fa931000c31723aac53282 (refs/main; the cache's only snapshot; the dry precheck's SNAPSHOT line on this driver); no mlx-community/ at the repo root.
+# Launched with m:267's checklist line as written, typed in Code's Bash-tool shell (zsh), which returns at once: nohup caffeinate -is /bin/zsh -c 'cd /Users/jasondwyer/Documents/code/jspace-lab && export HF_HUB_OFFLINE=1 && jlens-qwen36/.venv/bin/python scripts/m_sessions.py id --unit Q-F0 --proposal-file PROPOSAL-m-gating-campaign-v1_11.md --lock-file LOCK-m-F0.md --analyzer-sha256 66fb521488db41e71cc65e844e17c7ee77e0a4a318a55314ef1afb8ffef67d5e --package-sha256 5f646db6e82c5561ff8a425e91beb5454068a381564894e93d19b9165459d771 --renders-sha16 a04f67b0e5105a05 2>&1; echo "EXIT=$?"; echo "# finished $(date -u "+%Y-%m-%d %H:%M:%S") UTC"' >> /Users/jasondwyer/Documents/code/jspace-lab/results/raw/2026-10-13_m-gid-f0m.txt 2>&1 & disown
+# Departures from m:267's checklist: none. The checklist at launch: power adapter Wattage = 140W, on AC; pgrep showed no model process (VS Code's Python language servers only) and the dry precheck's one-process preflight passed; display sleep only (caffeinate -is); disk 479 GiB free; the gate line is the run's GATE line. The audit session's last commit 11cc35b (2026-10-12 18:38 -0400); no file in the tree modified in the last 30 min but this session's. macOS 15.6.1 (24G90).
+# The adapter's clone import closure (jlens-qwen36/jlens_qwen, gitignored; read, not edited), sha256: model.py 5da19b3d68296c7fe9f952b100eeb30343004e3fdb5502c2743e3ea581466b0b, patch_gdn.py 77a1a3ec38fa76421fab858913a047dc1d6bab0499def512d32f6cdaf8a77760, custom_gdn_patch.py c47263e66bf6bb130d13ed407c8b232bb8d2aefe5f2f656a7aac78f665e2c85c, custom_gdn_vjp.py 3fe41d735c3b44ae526568f454d58d074d40b807183c77a651260b33844f2ac3, gdn_backward.py a952e79f27dcc9b4540e9925814970455a9193e1ff0bcd7f67e7255b157d1873, conditioning.py 075939bc039b721abe3f116736b11e4cce7a7682f21e5d26d288e76c335b803f, forced_choice.py d30483cf42a416ed7d7d0d5c4239872617b9a9a477b5e7663c89e0ad8b3d3511; valence_core/adapters/qwen_mlx.py a3fc7b45749175239a88bf1cf6ff64190568a72eacf5a2e301a1e04e11d52c6b (committed, identical to HEAD).
+# A finish stamp follows EXIT (G-ID is sham-only; the seat's step-10 read, Q4).
+
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/m_sessions.py id --unit Q-F0 --proposal-file PROPOSAL-m-gating-campaign-v1_11.md --lock-file LOCK-m-F0.md --analyzer-sha256 66fb521488db41e71cc65e844e17c7ee77e0a4a318a55314ef1afb8ffef67d5e --package-sha256 5f646db6e82c5561ff8a425e91beb5454068a381564894e93d19b9165459d771 --renders-sha16 a04f67b0e5105a05
+DRIVER scripts/m_sessions.py eb6aa7cf167aa8d955c26fd97a6214ed68a7f1375b51c9f80582c85ed659fd6c: committed at HEAD 8da32f2e7da5d2e98ee780952e41ddf00310bdf8, working tree identical
+SNAPSHOT mlx-community/Qwen3.6-27B-4bit c000ac2c2057d94be3fa931000c31723aac53282: refs/main; /Users/jasondwyer/.cache/huggingface/hub/models--mlx-community--Qwen3.6-27B-4bit/snapshots/c000ac2c2057d94be3fa931000c31723aac53282; 1 snapshot(s) in the model's cache repo; HF_HUB_OFFLINE=1
+SNAPSHOT re-read after the load: unchanged (c000ac2c2057d94be3fa931000c31723aac53282); adapter model_id mlx-community/Qwen3.6-27B-4bit
+GATE G-ID-F0m: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, CLAUDE.md 955788dec22ee820, analyzer scripts/m_analyze.py 66fb521488db41e7, HEAD 8da32f2e7da5d2e98ee780952e41ddf00310bdf8
+LICENCE G-ID-F0m: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, lock LOCK-m-F0.md 1a043c287da1f01a: committed at HEAD 8da32f2e7da5d2e98ee780952e41ddf00310bdf8, working tree identical; analyzer 66fb521488db41e7 and package 5f646db6e82c5561: the hashes identity_extra and the lock name, hashed from the working tree at stage start
+PROVENANCE: {"record":{"adapter":"qwen3.6-27b-4bit-mlx","backend":"mlx","choice_window_declared":8192,"dtype":"4bit-quantized (MLX)","gdn_inference_mode":"ops (fused disabled)","legacy_truncate_512":false,"library_versions":{"mlx":"0.31.2","mlx-lm":"0.31.3","numpy":"2.5.1"},"mlx_version":"0.31.2","model_id":"mlx-community/Qwen3.6-27B-4bit","n_encodes_clipped":0,"n_layers":64,"platform":"macOS-15.6.1-arm64-arm-64bit","python":"3.12.9"},"stamp":"2026-10-13T12:41:11Z"}
+id A0s s=0 valid
+id A0s s=0 valid
+id A0s s=1 valid
+id A0s s=1 valid
+BAR gid_divergence@G-ID-F0m FIRED template=A0s
+STAGE G-ID-F0m FAIL path=cached+uncached
+CHECKPOINT /Users/jasondwyer/Documents/code/jspace-lab/data/m/ckpt/Q-F0_id.json
+REPORT /Users/jasondwyer/Documents/code/jspace-lab/data/m/reports/Q-F0_id_report.json
+READS /Users/jasondwyer/Documents/code/jspace-lab/data/m/reports/Q-F0_id_reads.json
+G-ID ARTIFACT /Users/jasondwyer/Documents/code/jspace-lab/data/m/gates/Q-F0_G-ID.json
+EXIT=5
+# finished 2026-10-13 12:47:00 UTC

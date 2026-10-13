@@ -1,0 +1,394 @@
+{
+ "bars": [
+  {
+   "binding": true,
+   "crit": 1,
+   "exceeds": true,
+   "fired": true,
+   "k": 1,
+   "message": "BAR gid_divergence@G-ID-F0m FIRED template=A0s",
+   "n": 2,
+   "name": "gid_divergence@G-ID-F0m",
+   "p": null
+  }
+ ],
+ "criterion": "2/2 byte-identical cached/uncached transcript pairs",
+ "files": {
+  "checkpoint": "ckpt/Q-F0_id.json",
+  "reads": "reports/Q-F0_id_reads.json"
+ },
+ "form": "pick-free stage report (m:271, m:281)",
+ "identity": {
+  "audit_v2_sha16": "7aa235d25eeb66dc",
+  "backend_identifier": "a734dadec8f8ce9b",
+  "ban_sha": "a934f1ad2b702245",
+  "lock_sha256": "1a043c287da1f01a0c72b347f3170e499eeef17a63aea603adc02d110dc38b6b",
+  "package_sha256": "5f646db6e82c5561ff8a425e91beb5454068a381564894e93d19b9165459d771",
+  "path": "cached+uncached",
+  "pool_sha16": "711deec1c2645194",
+  "proposal_sha256": "42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b",
+  "renders_sha16": "a04f67b0e5105a05",
+  "schedule_sha256": "9743f175d8037b37e4d5a4ca41666bd4475bf439dee10f3f54daabb670444f16"
+ },
+ "pairs": [
+  {
+   "complete": true,
+   "complete_cached": true,
+   "complete_uncached": true,
+   "identical": true,
+   "j": 0
+  },
+  {
+   "complete": true,
+   "complete_cached": true,
+   "complete_uncached": true,
+   "identical": false,
+   "j": 1
+  }
+ ],
+ "provenance": [
+  {
+   "launched": 4,
+   "record": {
+    "adapter": "qwen3.6-27b-4bit-mlx",
+    "backend": "mlx",
+    "choice_window_declared": 8192,
+    "dtype": "4bit-quantized (MLX)",
+    "gdn_inference_mode": "ops (fused disabled)",
+    "legacy_truncate_512": false,
+    "library_versions": {
+     "mlx": "0.31.2",
+     "mlx-lm": "0.31.3",
+     "numpy": "2.5.1"
+    },
+    "mlx_version": "0.31.2",
+    "model_id": "mlx-community/Qwen3.6-27B-4bit",
+    "n_encodes_clipped": 0,
+    "n_layers": 64,
+    "platform": "macOS-15.6.1-arm64-arm-64bit",
+    "python": "3.12.9"
+   },
+   "stamp": "2026-10-13T12:41:11Z"
+  }
+ ],
+ "schema": "m-stage-report-v1",
+ "stage": "id",
+ "stage_name": "G-ID-F0m",
+ "stage_report": {
+  "cached": {
+   "form": "pick-free stage report (m:271, m:318)",
+   "stage": "id",
+   "substrate": "qwen",
+   "templates": {
+    "A0": {
+     "audit_sessions_forced": 0,
+     "contrast": true,
+     "domain_sessions": 0,
+     "excluded_at_forced": {
+      "audit@forced": 0,
+      "content@forced": 0,
+      "echo@forced": 0,
+      "lexical@forced": 0
+     },
+     "forced": {
+      "advisory_rounds": 0,
+      "audit_categories": {
+       "empty": 0,
+       "frame": 0,
+       "junk": 0,
+       "special": 0,
+       "unparsed": 0
+      },
+      "cap_hit": 0,
+      "claims": {
+       "content": 0,
+       "echo": 0,
+       "lexical": 0,
+       "v2": 0
+      },
+      "degeneracy_rounds": 0,
+      "rounds": 0,
+      "termination": 0
+     },
+     "free_rounds": "withheld to the unit's VERDICTS entry or NOT-RUN record (m:271)",
+     "hair_triggers": [],
+     "sessions": 0,
+     "sessions_excluded_at_forced": 0
+    },
+    "A0s": {
+     "all": {
+      "advisory_rounds": 0,
+      "audit_categories": {
+       "empty": 0,
+       "frame": 1,
+       "junk": 1,
+       "special": 0,
+       "unparsed": 0
+      },
+      "cap_hit": 0,
+      "claims": {
+       "content": 0,
+       "echo": 0,
+       "lexical": 0,
+       "v2": 2
+      },
+      "degeneracy_rounds": 2,
+      "rounds": 20,
+      "termination": 0
+     },
+     "audit_sessions": 2,
+     "complete_sessions": 2,
+     "contrast": false,
+     "domain_sessions": 2,
+     "excluded_sessions": {
+      "audit@forced": 0,
+      "audit@free": 0,
+      "content@forced": 0,
+      "content@free": 0,
+      "echo@forced": 0,
+      "echo@free": 0,
+      "lexical@forced": 0,
+      "lexical@free": 0
+     },
+     "first_pick_P": {
+      "k": 1,
+      "n": 2,
+      "share": "1/2"
+     },
+     "first_pick_P_by_pair": {
+      "0": {
+       "k": 1,
+       "n": 1,
+       "share": "1"
+      },
+      "3": {
+       "k": 0,
+       "n": 1,
+       "share": "0"
+      }
+     },
+     "forced": {
+      "advisory_rounds": 0,
+      "audit_categories": {
+       "empty": 0,
+       "frame": 0,
+       "junk": 0,
+       "special": 0,
+       "unparsed": 0
+      },
+      "cap_hit": 0,
+      "claims": {
+       "content": 0,
+       "echo": 0,
+       "lexical": 0,
+       "v2": 0
+      },
+      "degeneracy_rounds": 0,
+      "rounds": 8,
+      "termination": 0
+     },
+     "free": {
+      "advisory_rounds": 0,
+      "audit_categories": {
+       "empty": 0,
+       "frame": 1,
+       "junk": 1,
+       "special": 0,
+       "unparsed": 0
+      },
+      "cap_hit": 0,
+      "claims": {
+       "content": 0,
+       "echo": 0,
+       "lexical": 0,
+       "v2": 2
+      },
+      "degeneracy_rounds": 2,
+      "rounds": 12,
+      "termination": 0
+     },
+     "hair_triggers": [],
+     "reads": {
+      "low_label_mass": 3,
+      "n": 12,
+      "top1_not_label": 3
+     },
+     "sessions": 2,
+     "strict_excluded_sessions": {
+      "audit@forced": 0,
+      "audit@free": 2,
+      "content@forced": 0,
+      "content@free": 0,
+      "echo@forced": 0,
+      "echo@free": 0,
+      "lexical@forced": 0,
+      "lexical@free": 0
+     },
+     "valid_sessions": 2
+    }
+   },
+   "unit": "Q-F0"
+  },
+  "uncached": {
+   "form": "pick-free stage report (m:271, m:318)",
+   "stage": "id",
+   "substrate": "qwen",
+   "templates": {
+    "A0": {
+     "audit_sessions_forced": 0,
+     "contrast": true,
+     "domain_sessions": 0,
+     "excluded_at_forced": {
+      "audit@forced": 0,
+      "content@forced": 0,
+      "echo@forced": 0,
+      "lexical@forced": 0
+     },
+     "forced": {
+      "advisory_rounds": 0,
+      "audit_categories": {
+       "empty": 0,
+       "frame": 0,
+       "junk": 0,
+       "special": 0,
+       "unparsed": 0
+      },
+      "cap_hit": 0,
+      "claims": {
+       "content": 0,
+       "echo": 0,
+       "lexical": 0,
+       "v2": 0
+      },
+      "degeneracy_rounds": 0,
+      "rounds": 0,
+      "termination": 0
+     },
+     "free_rounds": "withheld to the unit's VERDICTS entry or NOT-RUN record (m:271)",
+     "hair_triggers": [],
+     "sessions": 0,
+     "sessions_excluded_at_forced": 0
+    },
+    "A0s": {
+     "all": {
+      "advisory_rounds": 0,
+      "audit_categories": {
+       "empty": 0,
+       "frame": 0,
+       "junk": 1,
+       "special": 0,
+       "unparsed": 0
+      },
+      "cap_hit": 0,
+      "claims": {
+       "content": 0,
+       "echo": 0,
+       "lexical": 0,
+       "v2": 1
+      },
+      "degeneracy_rounds": 1,
+      "rounds": 20,
+      "termination": 0
+     },
+     "audit_sessions": 1,
+     "complete_sessions": 2,
+     "contrast": false,
+     "domain_sessions": 2,
+     "excluded_sessions": {
+      "audit@forced": 0,
+      "audit@free": 0,
+      "content@forced": 0,
+      "content@free": 0,
+      "echo@forced": 0,
+      "echo@free": 0,
+      "lexical@forced": 0,
+      "lexical@free": 0
+     },
+     "first_pick_P": {
+      "k": 1,
+      "n": 2,
+      "share": "1/2"
+     },
+     "first_pick_P_by_pair": {
+      "0": {
+       "k": 1,
+       "n": 1,
+       "share": "1"
+      },
+      "3": {
+       "k": 0,
+       "n": 1,
+       "share": "0"
+      }
+     },
+     "forced": {
+      "advisory_rounds": 0,
+      "audit_categories": {
+       "empty": 0,
+       "frame": 0,
+       "junk": 0,
+       "special": 0,
+       "unparsed": 0
+      },
+      "cap_hit": 0,
+      "claims": {
+       "content": 0,
+       "echo": 0,
+       "lexical": 0,
+       "v2": 0
+      },
+      "degeneracy_rounds": 0,
+      "rounds": 8,
+      "termination": 0
+     },
+     "free": {
+      "advisory_rounds": 0,
+      "audit_categories": {
+       "empty": 0,
+       "frame": 0,
+       "junk": 1,
+       "special": 0,
+       "unparsed": 0
+      },
+      "cap_hit": 0,
+      "claims": {
+       "content": 0,
+       "echo": 0,
+       "lexical": 0,
+       "v2": 1
+      },
+      "degeneracy_rounds": 1,
+      "rounds": 12,
+      "termination": 0
+     },
+     "hair_triggers": [],
+     "reads": {
+      "low_label_mass": 3,
+      "n": 12,
+      "top1_not_label": 3
+     },
+     "sessions": 2,
+     "strict_excluded_sessions": {
+      "audit@forced": 0,
+      "audit@free": 1,
+      "content@forced": 0,
+      "content@free": 0,
+      "echo@forced": 0,
+      "echo@free": 0,
+      "lexical@forced": 0,
+      "lexical@free": 0
+     },
+     "valid_sessions": 2
+    }
+   },
+   "unit": "Q-F0"
+  }
+ },
+ "status": "FAIL",
+ "stop": null,
+ "timing": {
+  "cached_seconds": 137.701,
+  "uncached_seconds": 210.094
+ },
+ "unit": "Q-F0"
+}
