@@ -298,6 +298,117 @@ applied to CLAUDE.md.
     - Pass 1: 257 claims, 17 confirmed corrections and 1 plausible, 26 values findings (2 major).
     - Pass 2: 275 claims, 5 confirmed corrections, 22 values findings (3 major).
     - Every correction and every values finding was applied.
+  - **The gate's close (2026-10-13; the seat's adjudication, §6).** The seat's adjudication of the fire is committed
+    by path in the commit that adds this line. That commit is the file's first commit, so
+    `git log --diff-filter=A -- results/raw/2026-10-13_m-design-to-code_G-ID-F0m_adjudication.md` names it:
+    [`_design-to-code_G-ID-F0m_adjudication`](results/raw/2026-10-13_m-design-to-code_G-ID-F0m_adjudication.md),
+    sha256 `f04ca5a3a6a2f11d9fba58fdf1605b349f6039993692c3620d90ba23adbed5af`. A commit cannot name its own hash; the
+    next RESULTS entry names it in full.
+    - §6: "The G-ID-F0m entry (`88b7165`) is the stage's entry of record and carries the FAIL"; the close is the
+      adjudication, committed with a close line carrying "the file, its sha256 and the commit; the fire
+      adjudicated, the FAIL standing, Q-F0's path uncached; Q2–Q4 as answered here; nothing moving a hash"
+      ("here" is the adjudication). "That commit is the gate's close entry under R1 A4".
+    - The short form: "The fire stands and the FAIL stands. The pre-registered consequence follows and nothing else
+      does: **Q-F0 runs uncached**, its floors are §2.4's uncached column, and LOCK v0.2 records `path = uncached`
+      and projects on the uncached table." G-ID-F0m "is not re-run — not on more pairs, not with the kernel held
+      fixed — and no code is edited. The kernel split (Q2) is disclosed and does not bear on Q1. Q3 takes Code's
+      default (a); Q4 keeps Code's reading. The gate closes with this adjudication, as the step-10 read closed
+      G-TIME-F0's; step 13 starts after its commit on the PI's word."
+    - §6's "nothing moving a hash", on the adjudication's own grounds: G-ID-F0m is not re-run and "no code is
+      edited"; "The adapter is not edited"; v0.2's tree "keeps the blob G-ID-F0m ran on" (Q3). The step-14 refusal
+      is part of the `qual` wiring, a driver edit that moves the driver's blob at step 14 in any case (the step-10
+      read's Q2: recorded in G-F0m-Qwen's entry and in v1.0), after v0.2.
+
+    The list below is Code's summary, as a finding aid. The adjudication is the record, and within the list only the
+    words in quotation marks are the seat's.
+    - **The fire (§1; m:318's exception (1), m:281).** "The fire is correct on its own terms, and the seat finds
+      nothing that would make it not a fire": the four sessions valid and complete, the identity G-TIME-F0's but
+      for `path` and `schedule_sha256`, the licence run, the committed blob, the launch on the checklist as written,
+      the snapshot of record before and after the load. The seat's own byte comparison of the four sessions in the
+      reads "confirms Code's" (the adjudication's "Read for it" paragraph, above §1). The gate's question was
+      operational (PI decision (1) of 2026-09-26, m:16; m:267): it "does not ask why two computations differ; it asks
+      whether the cheaper path, as the stack runs it, produces the bytes the path of record produces. It does not.
+      The licence for the cached path is not earned". The uncached path is "the path G-TIME-F0 ran and passed on;
+      nothing about Q-F0's design changes except its hours".
+    - **Q1, confirmed.** Q-F0's rounds run uncached; its floors are §2.4's uncached column (A0 80, A0s 32; m:182).
+      v0.2 records the path as `uncached` and projects on §2.4's uncached table at the 488 s basis, the measured sham
+      figures beside and not substituted; the cached ones are "recorded for completeness only, since no Q-F0 round
+      runs cached". The guard's refusal of `cached=True` "stands as the mechanical form of this ruling".
+    - **Not done (§1).** No re-run with more pairs, on the other path order or with the kernel held the same, and no
+      adapter edit: each "changes the comparison after it fired, to recover the cheaper path".
+    - **Q2, the kernel split: "disclosure, no edit."**
+      - The record states what G-ID compared, "so that no reader takes the FAIL as a finding about caching alone":
+        the statement goes in this entry ("it is there") and in v0.2's path statement, "marked as a static reading of
+        the code (N17 §2e: "not executed"), not a measurement". The attribution "stays open — caching, the kernel
+        split, another code-level difference, or a path's own run-to-run variation — and nothing runs to close
+        it".
+      - The path of record's recurrence is, on §2e's reading, the fused kernel; v0.2 glosses the PROVENANCE string
+        `gdn_inference_mode: "ops (fused disabled)"` in one sentence; the adapter is not edited.
+      - Appendix D: on the same reading (N17 §2e, static), f1 generated cached on the ops kernel and Q-F0 generates
+        uncached on the fused kernel, so A0's rounds and f1's differ in the GDN layers as well as in caching. That
+        is "a clause under §2.7 item (11), the seat's at the drafting of Appendix D (E4)", and "the G-ID-F0m entry's
+        disclosure is its source".
+      - "Does Q2 bear on Q1? No." "Q1 turns on whether the cached path as run is byte-identical to the path of
+        record, not on why it is not. A kernel difference that comes with the cached path is part of what the cached
+        path is."
+      - OPS-3 and the launch (§2, beside Q2): "Code launched on the PI's word after the review raised OPS-3, without
+        putting it to the seat first. That was not a departure: OPS-3 was a disclosure about what the gate compares,
+        not a reading that departs from a listed order (R1 A2)"; Code's disposition (no change, the adapter and package
+        pinned, disclosed in the entry and the ping) "was the right one". "Asked before the launch, the seat would
+        have said launch, for the reason just given."
+      - The adjudication read (§2, beside Q2): Code's full read of the four transcripts under exception (4):
+        "Accepted as the right reading: G-ID's
+        sessions are sham-only and read in full by rule (m:271); the adjudication read's confinement exists for
+        sessions that are otherwise blinded."
+    - **The seat's read of the four sessions (§3, descriptive).** Every forced-round response "is a correct task
+      answer, and so is every free-round response but these": pair 0's round 6 (free), identical on both paths,
+      which gave `Round 6 — active config: ridge` for "Name the third month of the year.", "a near-verbatim echo of
+      the round header", which the frozen audit claims `v2` (junk; a strict exclusion; the session valid under
+      m:261); and pair 1's round 10, uncached "a non-sequitur; no claim. It is not a harness line, a label or a
+      banned string, so it is outside the audit's classes by design", cached "the banner's first line verbatim",
+      claimed `v2`. Code's note is "accepted: recorded as read, no counter proposed, no audit change (rules 21 and
+      23)"; the seat "does not reclassify a round by eye". The v2-or-echo class on the path of record: "1 of 20
+      rounds here and 0 of 10 at G-TIME-F0 — 1/30, under the declared tolerance p0 .05, which does not bind at G-ID
+      (no binomial bar; the criterion is identity) and binds at G-F0m-Qwen on 160 sham rounds (critical 14)"; "The
+      seat notes it and draws nothing from it."
+    - **Q3: (a).** The driver's SNAPSHOT line, its post-load re-read and its STOP on a changed revision "stand as
+      built". The refusal of any revision other than the one v0.2 names is built into the `qual` wiring at step 14,
+      "a driver edit of the step-10 read's Q2 kind, landing before G-F0m-Qwen launches", so v0.2's tree keeps the
+      blob G-ID-F0m ran on, `eb6aa7cf…fd6c`. It compares the revision read before and after the load with v0.2's
+      (`c000ac2c2057d94be3fa931000c31723aac53282`, model id `mlx-community/Qwen3.6-27B-4bit`); how the driver
+      carries that value "is Code's, declared as a PIN at the edit".
+    - **Q4: Code's reading kept.** The five amended step-10 sites and the two new ones enter on C6's terms as
+      extended, listed in v0.2's PIN-index addendum as amendments ("the step-10 line, the step-12 line, the text as
+      amended") and as new sites, with the ten v0.1 sites at their current lines; the addendum is regenerated at
+      v0.2's tree from `eb6aa7cf…fd6c`.
+    - **What v0.2 carries beyond the step-10 read's list (§5):** `path = uncached`, with the artifact's sha256 and
+      this entry as its source, and the uncached floors; the uncached projections, the sham figures beside; the
+      driver of record at v0.2's tree, `eb6aa7cf…fd6c` in full, with its history `54fc8a07…` (v0.1's tree) →
+      `5785a26d…036d` (step 10, `0fe65b9`) → `eb6aa7cf…fd6c` (step 12, `8da32f2`), and the addendum; the snapshot
+      and model id as Q-F0's weights of record, and the step-14 refusal scheduled; the kernel statement (what G-ID
+      compared; the path of record's recurrence "on §2e's static reading"; the PROVENANCE string's gloss).
+    - **For the PI, beside the ruling (§6).** "The uncached path is the costlier one: §2.4's planning tables put
+      Q-F0 at 21.7–39.0 Qwen hours uncached against 3.5–7.6 cached, for k from 24 down to 12 (m:198–212), on the
+      488 s basis. The three uncached sham sessions measured so far ran 100–262 s, which would put the same session
+      counts at roughly a quarter to a half of those hours; contrast sessions can run longer than sham ones or end
+      early at an exclusion, and no contrast figure is readable before VERDICTS, so the basis stays the planning
+      value. The hour cap is set at step 15, with both in view; nothing is decided about it here."
+
+    The PI's routing (chat, 2026-10-13), verbatim: "Seat’s adjudication of the G-ID-F0m fire:
+    results/raw/2026-10-13_m-design-to-code_G-ID-F0m_adjudication.md, sha256
+    f04ca5a3a6a2f11d9fba58fdf1605b349f6039993692c3620d90ba23adbed5af. Commit it by path with the close line appended
+    to the G-ID-F0m entry. The FAIL stands; Q-F0’s path is uncached. Go for step 13 (LOCK v0.2) on its terms and the
+    step-10 read’s; then continue onto step 14". Step 13 starts after this commit, on that word and on the
+    adjudication's and the step-10 read's terms. §6 item 2: "Step 13, LOCK-m-F0 v0.2, on the PI's word: the step-10
+    read's list and §5 above; drafted in the form the step-10 read's Q1 settles (amending above the v0.1 text, kept
+    verbatim; nothing truncated at v0.2)".
+
+    The same word goes on to step 14 ("then continue onto step 14"), given before v0.2's commit. Code reads it as
+    the PI's word for step 14, which starts only after v0.2's commit, on §6 item 3's terms: "Step 14, G-F0m-Qwen, on
+    the PI's word after v0.2's commit: the `qual` wiring with the step-14 refusal (Q3); uncached; the checklist line;
+    the offline load with the snapshot in the raw's header and the entry; the raw without a finish stamp (eight
+    contrast sessions; the step-10 read, Q4)"; the `qual` wiring is a driver edit of the step-10 read's Q2 kind, on
+    Q2's conditions. That reading is Code's; the PI or the seat may say otherwise before step 14 starts.
 
 - 2026-10-12 — **G-TIME-F0 (PROPOSAL-m v1.11 §8 step 10, m:280; the PI's word of 2026-10-12, routing the seat's
   answer to LOCK v0.1's flagged question): PASS. One uncached session per Q-F0 arm ran on Qwen under LOCK-m-F0
