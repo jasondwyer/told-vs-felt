@@ -1,0 +1,49 @@
+# G-F0m-Qwen (PROPOSAL-m v1.11 §8 step 14, m:283) -- 8 A0 (contrast) and 16 A0s (sham) sessions, uncached, on Qwen under LOCK-m-F0 v0.2; canonical run on the committed driver.
+# Code stamp (the launch's; Q4 keeps it): 2026-10-13 21:27:18 UTC (date -u); HEAD 4630cfd; driver scripts/m_sessions.py sha256 c0a897f5d07be94dee08d37bab16ed76b9f7cc87d1c4929ed49725d44faef4b2 (committed at 4630cfd; the reviewed, self-tested qual build); LOCK-m-F0.md sha256 0908b5b7ab7a1fbf58035eb805232a96b732e195dcfe5073fe6d8b362a74945e (v0.2, committed at db7d970; no later commit touches it); offline load (the seat's step-10 read, Q5): HF_HUB_OFFLINE=1, snapshot mlx-community/Qwen3.6-27B-4bit c000ac2c2057d94be3fa931000c31723aac53282 (refs/main, read now; the cache repo's only snapshot directory, /Users/jasondwyer/.cache/huggingface/hub/models--mlx-community--Qwen3.6-27B-4bit/snapshots/c000ac2c2057d94be3fa931000c31723aac53282; the revision of record, LOCK-m-F0 v0.2 §4; the dry precheck's DRIVER and SNAPSHOT lines on this driver, asserted); no mlx-community/ at the repo root.
+# Launched with m:267's checklist line as written, typed in Code's Bash-tool shell (zsh), which returns at once, followed in the same call by `; echo "PID=$!"` (the PID the waits use; the checklist line is unchanged): nohup caffeinate -is /bin/zsh -c 'cd /Users/jasondwyer/Documents/code/jspace-lab && export HF_HUB_OFFLINE=1 && /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python /Users/jasondwyer/Documents/code/jspace-lab/scripts/m_sessions.py qual --unit Q-F0 --proposal-file PROPOSAL-m-gating-campaign-v1_11.md --lock-file LOCK-m-F0.md --analyzer-sha256 66fb521488db41e71cc65e844e17c7ee77e0a4a318a55314ef1afb8ffef67d5e --package-sha256 5f646db6e82c5561ff8a425e91beb5454068a381564894e93d19b9165459d771 --renders-sha16 a04f67b0e5105a05 2>&1; echo "EXIT=$?"' >> /Users/jasondwyer/Documents/code/jspace-lab/results/raw/2026-10-13_m-gf0m-qwen.txt 2>&1 & disown; echo "PID=$!"
+# Departures from m:267's checklist: none. The checklist at launch, read by the header's generator: power adapter Wattage = 140 W, 'Now drawing from 'AC Power''; one process -- no jlens, mlx, qwen, ipykernel, m_sessions or self-test python process (pgrep -ifl python), no mutation batch (pgrep), the preflight repeats it at stage start; display sleep only (caffeinate -is); disk 475Gi free of 926Gi; the gate line is the run's GATE line. macOS 15.6.1 (24G90).
+# The audit session (F1: Qwen stages launch only when it is idle): idle: its last commit is 11cc35b (2026-10-12 18:38:49 -0400, AUDIT-note-release v1.2), about 23 h before this launch; no file in the tree modified in the last 30 min but this session's (the driver's review raw, 4630cfd); no notebook kernel running (pgrep).
+# The inputs no check binds (round 1's OPS-6, round 3's O3-8): the adapter's clone import closure (jlens-qwen36/jlens_qwen, gitignored; read, not edited; each equal to G-ID-F0m's header), sha256: model.py 5da19b3d68296c7fe9f952b100eeb30343004e3fdb5502c2743e3ea581466b0b, patch_gdn.py 77a1a3ec38fa76421fab858913a047dc1d6bab0499def512d32f6cdaf8a77760, custom_gdn_patch.py c47263e66bf6bb130d13ed407c8b232bb8d2aefe5f2f656a7aac78f665e2c85c, custom_gdn_vjp.py 3fe41d735c3b44ae526568f454d58d074d40b807183c77a651260b33844f2ac3, gdn_backward.py a952e79f27dcc9b4540e9925814970455a9193e1ff0bcd7f67e7255b157d1873, conditioning.py 075939bc039b721abe3f116736b11e4cce7a7682f21e5d26d288e76c335b803f, forced_choice.py d30483cf42a416ed7d7d0d5c4239872617b9a9a477b5e7663c89e0ad8b3d3511; valence_core/adapters/qwen_mlx.py a3fc7b45749175239a88bf1cf6ff64190568a72eacf5a2e301a1e04e11d52c6b (lock §5.2's value), __init__.py 96d6b48dd41710de8c70ce7d5b28854db4810af6693ff8a96f320f773cafed6a (qwen_or_explain, the loader _load_qwen calls), base.py 626fbddd8dd970717e929b5bcd87be4e0c83ca8cb889b8451fcb49e2cb091cbf (all three committed, identical to HEAD, outside package_sha256).
+# NO FINISH STAMP follows EXIT: 8 contrast sessions (the seat's step-10 read, Q4; the adjudication's §6 item 3); the commit message restates no stamp.
+# While the stage runs (OPS-1, OPS-3, OPS-4, O2-1, O2-2, O2-5, O3-1, O3-2, O3-7): this raw is not read in any form (head, cat, tail, a printing grep, the Read tool -- before the launch included) until the stage has ended; the start is confirmed by the PID's liveness alone; the end is awaited by one background loop on the PID ($!, nohup's, which execs the zsh -c wrapper naming m_sessions.py qual; caffeinate holds its assertions from a child of it) while kill -0 holds and its command matches '[m]_sessions\.py qual', and then `pgrep -fl '[m]_sessions\.py qual'` must be empty before this raw is read; EXIT lines are counted without printing, one per invocation; no streaming, Monitor, stat or listing of this raw, data/m/ckpt or data/m/reports; no jlens-venv python, notebook kernel or workflow; macOS, conda and pip updates off.
+# From v0.2's commit until G-F0m-Qwen's outputs are committed (OPS-2, OPS-6, O2-6, O3-8, O3-9, F3-5): no commit or working-tree edit to LOCK-m-F0.md, the proposal, CLAUDE.md, scripts/m_analyze.py, scripts/m_sessions.py, valence_core/**, data/m/** (the outputs' own commit excepted) or jlens-qwen36/; no add or commit of this raw, or of results/raw/ wholesale, before the end; no checkout, stash, reset, pull or rebase; no hub-cache operation (an online load, an hf or huggingface-cli download or delete-cache).
+# Exits and resumes (O2-6, O3-10, OPS-4, OPS-6, F3-4): EXIT=0 ends the stage; EXIT=2 (refused before the load) is relaunched, once its cause is fixed, by appending here under a '# Relaunch after EXIT=2: <reason>' line carrying its own checklist and typed command (its launch stamp allowed, Q4); any other EXIT, or an ended PID with no EXIT line, goes to the seat through the PI, and a resume runs only on that routing: the same line plus --resume, appended here under a header line with no stamp, its DRIVER and SNAPSHOT lines compared with this one's. Nothing is computed from the PROVENANCE stamps.
+# Until Q-F0's VERDICTS (O2-3, C2-4): no size or time metadata of this raw, data/m/ckpt or data/m/reports (ls -l/-t/-s, stat, du, wc -c, find -newer, git ls-tree -l, git cat-file -s, git --stat); files are verified by name-status, ls-files and shasum; a STOP or REFUSED line naming CHECKPOINT STATE INCONSISTENT is not quoted or computed against and goes to the seat. After the end: the report's identity.lock_sha256 is checked equal to 0908b5b7ab7a1fbf... and schedule_sha256 to 504dd516... (OPS-5, O2-4).
+
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python /Users/jasondwyer/Documents/code/jspace-lab/scripts/m_sessions.py qual --unit Q-F0 --proposal-file PROPOSAL-m-gating-campaign-v1_11.md --lock-file LOCK-m-F0.md --analyzer-sha256 66fb521488db41e71cc65e844e17c7ee77e0a4a318a55314ef1afb8ffef67d5e --package-sha256 5f646db6e82c5561ff8a425e91beb5454068a381564894e93d19b9165459d771 --renders-sha16 a04f67b0e5105a05
+DRIVER scripts/m_sessions.py c0a897f5d07be94dee08d37bab16ed76b9f7cc87d1c4929ed49725d44faef4b2: committed at HEAD 4630cfde054d7c37cdfdcec2dc5b7c2e70cdfa51, working tree identical
+SNAPSHOT mlx-community/Qwen3.6-27B-4bit c000ac2c2057d94be3fa931000c31723aac53282: refs/main; /Users/jasondwyer/.cache/huggingface/hub/models--mlx-community--Qwen3.6-27B-4bit/snapshots/c000ac2c2057d94be3fa931000c31723aac53282; 1 snapshot(s) in the model's cache repo; HF_HUB_OFFLINE=1
+SNAPSHOT re-read after the load: unchanged (c000ac2c2057d94be3fa931000c31723aac53282); adapter model_id mlx-community/Qwen3.6-27B-4bit
+GATE G-F0m-Qwen: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, CLAUDE.md 955788dec22ee820, analyzer scripts/m_analyze.py 66fb521488db41e7, HEAD 4630cfde054d7c37cdfdcec2dc5b7c2e70cdfa51
+LICENCE G-F0m-Qwen: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, lock LOCK-m-F0.md 0908b5b7ab7a1fbf: committed at HEAD 4630cfde054d7c37cdfdcec2dc5b7c2e70cdfa51, working tree identical; analyzer 66fb521488db41e7 and package 5f646db6e82c5561: the hashes identity_extra and the lock name, hashed from the working tree at stage start
+PROVENANCE: {"record":{"adapter":"qwen3.6-27b-4bit-mlx","backend":"mlx","choice_window_declared":8192,"dtype":"4bit-quantized (MLX)","gdn_inference_mode":"ops (fused disabled)","legacy_truncate_512":false,"library_versions":{"mlx":"0.31.2","mlx-lm":"0.31.3","numpy":"2.5.1"},"mlx_version":"0.31.2","model_id":"mlx-community/Qwen3.6-27B-4bit","n_encodes_clipped":0,"n_layers":64,"platform":"macOS-15.6.1-arm64-arm-64bit","python":"3.12.9"},"stamp":"2026-10-13T21:27:36Z"}
+qual A0 s=0 valid
+qual A0s s=0 excluded:lexical@free
+qual A0 s=1 excluded:excluded@free
+qual A0s s=1 valid
+qual A0 s=2 valid
+qual A0s s=2 valid
+qual A0 s=3 valid
+qual A0s s=3 excluded:lexical@free
+qual A0 s=4 valid
+qual A0s s=4 valid
+qual A0 s=5 valid
+qual A0s s=5 excluded:lexical@forced
+qual A0 s=6 valid
+qual A0s s=6 valid
+qual A0 s=7 valid
+qual A0s s=7 valid
+qual A0s s=8 valid
+qual A0s s=9 valid
+qual A0s s=10 valid
+qual A0s s=11 valid
+qual A0s s=12 valid
+qual A0s s=13 valid
+qual A0s s=14 excluded:audit@forced
+qual A0s s=15 excluded:lexical@free
+BAR round_degeneracy@G-F0m-Qwen silent template=A0s 2/136 exact one-sided P=0.9924 > alpha 0.05 vs p0 0.05; critical 12 at n=136
+STAGE G-F0m-Qwen PASS path=uncached
+CHECKPOINT /Users/jasondwyer/Documents/code/jspace-lab/data/m/ckpt/Q-F0_qual.json
+REPORT /Users/jasondwyer/Documents/code/jspace-lab/data/m/reports/Q-F0_qual_report.json
+READS /Users/jasondwyer/Documents/code/jspace-lab/data/m/reports/Q-F0_qual_reads.json
+EXIT=0

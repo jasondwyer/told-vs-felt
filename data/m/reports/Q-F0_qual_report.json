@@ -1,0 +1,248 @@
+{
+ "bars": [
+  {
+   "binding": true,
+   "crit": 12,
+   "exceeds": false,
+   "fired": false,
+   "k": 2,
+   "message": "BAR round_degeneracy@G-F0m-Qwen silent template=A0s 2/136 exact one-sided P=0.9924 > alpha 0.05 vs p0 0.05; critical 12 at n=136",
+   "n": 136,
+   "name": "round_degeneracy@G-F0m-Qwen",
+   "p": "172896878383744996037655666113540158033009748292075988633928998078572006366175573917336328695891393080698915920614377872923759551557311038738305323144736051977829231619088514331/174224571863520493293247799005065324265472000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+  }
+ ],
+ "contrast_first_read_flags": {
+  "A0": {
+   "low_label_mass": 5,
+   "reads": 8,
+   "scope": "first reads of domain sessions",
+   "top1_not_label": 8
+  }
+ },
+ "files": {
+  "checkpoint": "ckpt/Q-F0_qual.json",
+  "reads": "reports/Q-F0_qual_reads.json"
+ },
+ "form": "pick-free stage report (m:271, m:318)",
+ "identity": {
+  "audit_v2_sha16": "7aa235d25eeb66dc",
+  "backend_identifier": "a734dadec8f8ce9b",
+  "ban_sha": "a934f1ad2b702245",
+  "lock_sha256": "0908b5b7ab7a1fbf58035eb805232a96b732e195dcfe5073fe6d8b362a74945e",
+  "package_sha256": "5f646db6e82c5561ff8a425e91beb5454068a381564894e93d19b9165459d771",
+  "path": "uncached",
+  "pool_sha16": "711deec1c2645194",
+  "proposal_sha256": "42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b",
+  "renders_sha16": "a04f67b0e5105a05",
+  "schedule_sha256": "504dd516f35aec91b912af7e93f273166cadb3c47a2cad9cb2fecdc8e9a4e962"
+ },
+ "planned": {
+  "A0": 8,
+  "A0s": 16
+ },
+ "provenance": [
+  {
+   "launched": 24,
+   "record": {
+    "adapter": "qwen3.6-27b-4bit-mlx",
+    "backend": "mlx",
+    "choice_window_declared": 8192,
+    "dtype": "4bit-quantized (MLX)",
+    "gdn_inference_mode": "ops (fused disabled)",
+    "legacy_truncate_512": false,
+    "library_versions": {
+     "mlx": "0.31.2",
+     "mlx-lm": "0.31.3",
+     "numpy": "2.5.1"
+    },
+    "mlx_version": "0.31.2",
+    "model_id": "mlx-community/Qwen3.6-27B-4bit",
+    "n_encodes_clipped": 0,
+    "n_layers": 64,
+    "platform": "macOS-15.6.1-arm64-arm-64bit",
+    "python": "3.12.9"
+   },
+   "stamp": "2026-10-13T21:27:36Z"
+  }
+ ],
+ "recorded": {
+  "A0": 8,
+  "A0s": 16
+ },
+ "schema": "m-stage-report-v1",
+ "stage": "qual",
+ "stage_name": "G-F0m-Qwen",
+ "stage_report": {
+  "form": "pick-free stage report (m:271, m:318)",
+  "stage": "qual",
+  "substrate": "qwen",
+  "templates": {
+   "A0": {
+    "audit_sessions_forced": 0,
+    "contrast": true,
+    "domain_sessions": 8,
+    "excluded_at_forced": {
+     "audit@forced": 0,
+     "content@forced": 0,
+     "echo@forced": 0,
+     "lexical@forced": 0
+    },
+    "forced": {
+     "advisory_rounds": 0,
+     "audit_categories": {
+      "empty": 0,
+      "frame": 0,
+      "junk": 0,
+      "special": 0,
+      "unparsed": 0
+     },
+     "cap_hit": 0,
+     "claims": {
+      "content": 0,
+      "echo": 0,
+      "lexical": 0,
+      "v2": 0
+     },
+     "degeneracy_rounds": 0,
+     "rounds": 32,
+     "termination": 0
+    },
+    "free_rounds": "withheld to the unit's VERDICTS entry or NOT-RUN record (m:271)",
+    "hair_triggers": [],
+    "sessions": 8,
+    "sessions_excluded_at_forced": 0
+   },
+   "A0s": {
+    "all": {
+     "advisory_rounds": 0,
+     "audit_categories": {
+      "empty": 0,
+      "frame": 1,
+      "junk": 1,
+      "special": 0,
+      "unparsed": 0
+     },
+     "cap_hit": 1,
+     "claims": {
+      "content": 3,
+      "echo": 0,
+      "lexical": 4,
+      "v2": 2
+     },
+     "degeneracy_rounds": 2,
+     "rounds": 136,
+     "termination": 0
+    },
+    "audit_sessions": 2,
+    "complete_sessions": 11,
+    "contrast": false,
+    "domain_sessions": 14,
+    "excluded_sessions": {
+     "audit@forced": 1,
+     "audit@free": 0,
+     "content@forced": 0,
+     "content@free": 0,
+     "echo@forced": 0,
+     "echo@free": 0,
+     "lexical@forced": 1,
+     "lexical@free": 3
+    },
+    "first_pick_P": {
+     "k": 7,
+     "n": 14,
+     "share": "1/2"
+    },
+    "first_pick_P_by_pair": {
+     "0": {
+      "k": 1,
+      "n": 3,
+      "share": "1/3"
+     },
+     "1": {
+      "k": 3,
+      "n": 4,
+      "share": "3/4"
+     },
+     "2": {
+      "k": 1,
+      "n": 3,
+      "share": "1/3"
+     },
+     "3": {
+      "k": 2,
+      "n": 4,
+      "share": "1/2"
+     }
+    },
+    "forced": {
+     "advisory_rounds": 0,
+     "audit_categories": {
+      "empty": 0,
+      "frame": 0,
+      "junk": 1,
+      "special": 0,
+      "unparsed": 0
+     },
+     "cap_hit": 1,
+     "claims": {
+      "content": 0,
+      "echo": 0,
+      "lexical": 1,
+      "v2": 1
+     },
+     "degeneracy_rounds": 1,
+     "rounds": 64,
+     "termination": 0
+    },
+    "free": {
+     "advisory_rounds": 0,
+     "audit_categories": {
+      "empty": 0,
+      "frame": 1,
+      "junk": 0,
+      "special": 0,
+      "unparsed": 0
+     },
+     "cap_hit": 0,
+     "claims": {
+      "content": 3,
+      "echo": 0,
+      "lexical": 3,
+      "v2": 1
+     },
+     "degeneracy_rounds": 1,
+     "rounds": 72,
+     "termination": 0
+    },
+    "hair_triggers": [],
+    "reads": {
+     "low_label_mass": 14,
+     "n": 72,
+     "top1_not_label": 23
+    },
+    "sessions": 16,
+    "strict_excluded_sessions": {
+     "audit@forced": 1,
+     "audit@free": 1,
+     "content@forced": 0,
+     "content@free": 2,
+     "echo@forced": 0,
+     "echo@free": 0,
+     "lexical@forced": 1,
+     "lexical@free": 3
+    },
+    "valid_sessions": 11
+   }
+  },
+  "unit": "Q-F0"
+ },
+ "status": "PASS",
+ "stop": null,
+ "timing": {
+  "contrast_seconds": "withheld to the unit's VERDICTS entry (m:318)",
+  "sham_seconds": 1740.697,
+  "sham_sessions": 16
+ },
+ "unit": "Q-F0"
+}
