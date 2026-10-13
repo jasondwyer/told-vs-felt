@@ -21,6 +21,284 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-10-13 — **G-ID-F0m (PROPOSAL-m v1.11 §8 step 12, m:281; the PI's word of 2026-10-13, on the seat's step-10
+  read): FAIL. The A0s template ran uncached, then cached, at indices 0 and 1 on Qwen under LOCK-m-F0 v0.1, on the
+  committed driver, offline on snapshot `c000ac2c2057d94be3fa931000c31723aac53282`. All four sessions are valid and
+  complete. Pair 0 is byte-identical; pair 1's transcripts first differ at the first token of round 10's response,
+  the last free round. The `gid_divergence` hair trigger fired (1 of 2 identical; criterion 2/2), exit 5. m:281: "a
+  divergence sends Q-F0 uncached (and its floors to the uncached column)". Escalated to the seat, whose answer to the
+  ping's Q1 confirms that consequence for step 13 or rules otherwise; Code does not adjudicate.**
+  - The driver edit that wires `id` moves `scripts/m_sessions.py` to `eb6aa7cf…fd6c` (in full below). Nothing under
+    `valence_core/m` changed, and G-SHAPE-F0 was not re-run (the read's Q2).
+  - The launch followed m:267's checklist line as written, and the raw's header says so (the read's Q7).
+  - The two halves differ in more than caching: at least in the GDN layers' forward and the recurrence's kernel.
+    That routing has been on the committed record since 2026-10-08
+    ([`_note-N17-numerics`](results/raw/2026-10-08_note-N17-numerics.md) §2e, a static reading of the clone's code,
+    committed at `09c3a8c`, before LOCK-m-F0 v0.1). The driver review's round 1 raised it for G-ID (OPS-3, confirmed;
+    its refuter cites N17), and Code's disposition was "No change …; disclosed in the entry and the ping". The PI's
+    word predates that review; Code launched on it without putting OPS-3 to the seat or to the PI first. This
+    stage's data do not separate the candidate sources (caching, the kernel split, another code-level difference, a
+    path's own run-to-run variation), and Code does not attribute the divergence.
+  - Code's escalation to the seat, for the PI to route
+    ([`_code-to-design_G-ID-F0m`](results/raw/2026-10-13_m-code-to-design_G-ID-F0m.md)), carries pair 1's
+    transcripts and asks four questions: the FAIL's consequence for step 13 (Q1), the kernel split (Q2), pinning the
+    snapshot revision in the driver (Q3, round 1's F3), and the amended PIN sites (Q4, round 1's RF1).
+  - **Step 13 (LOCK-m-F0 v0.2) waits on the PI's word and the seat's answers.**
+
+  (Stamp: `date -u` → **Tue Oct 13 12:53:17 UTC 2026, first write; Tue Oct 13 13:22:46 UTC 2026, after values-check pass 1; Tue Oct 13 13:53:08 UTC 2026, after pass 2**.)
+
+  - **G-TIME-F0's close commit**, named in full as its close line says the next entry would:
+    `27450dc4250ac7b75f140f02ba0f88c7f56ae126` (the seat's step-10 read, sha256 `c2cc448f…98a7`, committed by
+    path with the close line). Step 12 started after it on the PI's word.
+  - **The word.** The PI's routing of 2026-10-13 (chat), verbatim (curly apostrophes as typed):
+    > "Seat’s step-10 read: results/raw/2026-10-13_m-design-to-code_G-TIME-F0_read.md, sha256
+    > c2cc448f441bcc32a5ca8aaa2c2dd37c7447f2ef133c031acb41569223a698a7. Commit it by path, with the close line
+    > appended to the G-TIME-F0 entry as §4 of the read states. Then go for step 12 on the read’s terms: Q2 licenses
+    > the id wiring without a G-SHAPE-F0 re-run; offline load with the snapshot id in the raw’s header and the
+    > entry; the checklist’s own launch line, any departure stated in the header at the time."
+
+    The read's terms, "What Code does now" 2: "Step 12, G-ID-F0m, on the PI's word: wire `id` (a driver edit of
+    Q2's kind, reviewed as at step 10, its sha256 recorded in the G-ID-F0m entry and in v0.2); launch with the
+    checklist's own line, any departure stated in the header at the time; offline load with the snapshot id in the
+    raw's header and the entry."
+  - **The driver** (commit `8da32f2`; the build is Code's).
+    - **Its sha256**, recorded here as Q2's conditions require: it moves from `5785a26d…036d` (step 10, `0fe65b9`)
+      to **`eb6aa7cf167aa8d955c26fd97a6214ed68a7f1375b51c9f80582c85ed659fd6c`**. The run's DRIVER line printed it
+      at HEAD `8da32f2`. The read's Q3: v0.2's §5.2 names in full "the driver's blob at v0.2's tree — the blob
+      G-ID-F0m ran on" as the value of record, with the history under it. If the driver moves before v0.2 (an option
+      in the ping's Q3), the two differ and this blob enters §5.2's history instead.
+    - Nothing under `valence_core/m` changed: `package_sha256` `5f646db6…d771` and the analyzer `66fb5214…7d5e`
+      are unchanged, and G-SHAPE-F0 was not re-run (Q2: "the `time` answer extends to `id`, `qual` and
+      `campaign`. Yes.").
+    - **What it does.** `id --unit Q-F0` calls `stages.run_gid_pair`, unchanged, on the A0s template (m:281), with
+      G-TIME-F0's checkpoint at the same out root as its prior. Exits: 0 PASS, 5 FAIL, 6 NOT-DETERMINED, 4 STOP, 2
+      refused before the load.
+    - **The step-10 path made stage-generic.** `stage_identity_extra` (was `time_identity_extra`; `locked_path`
+      `"uncached"` at G-TIME only), `stage_precheck` (was `time_precheck`; at G-ID it also checks the prior through
+      `stages.prior_gate` with `require_real`, and refuses an existing G-ID artifact or a link at its path unless
+      G-ID's own checkpoint carries an end pending, a re-finish) and `_run_stage` (was `run_time`). The old names
+      stay as thin wrappers.
+    - **The offline load.** Q5 rules the offline load and the snapshot id's record; the print is Code's choice, as
+      Q5 allows ("a driver edit of Q2's kind"). The refusals and the post-load re-read are Code's; Code reads them as
+      within Q2's kind (part of the edit that wires `id`, with nothing under `valence_core/m`), and the read names
+      only the print as Q2's kind. They apply to `time` as well as `id`: the step-10 `time` command now also refuses
+      without `HF_HUB_OFFLINE=1` and prints the SNAPSHOT lines (RF1). G-TIME-F0 has ended, so no run changes.
+      Before the load, `qwen_snapshot` refuses unless:
+      - `HF_HUB_OFFLINE` is exactly `"1"`;
+      - `MLXLM_USE_MODELSCOPE` is not "true" in any case;
+      - no path or link named like the model id exists in the working directory (mlx_lm would load it first);
+      - the cache's `refs/main` is, as raw text, a 40-hex revision whose snapshot holds `config.json`,
+        `tokenizer.json`, the index and every weight it names;
+      - the hub's own offline resolution with mlx_lm's patterns returns that same directory.
+
+      Its problems are refused together with the precheck's and the driver check's (exit 2, nothing loaded). Then
+      a SNAPSHOT line prints the model id, the revision, the directory, the count of snapshot directories and
+      `HF_HUB_OFFLINE`. After the load the snapshot is read again and the adapter's `model_id` compared: a re-read
+      that refuses, a moved `refs/main` or another model id STOPs before any session. The re-read narrows, and does
+      not close, the window between the precheck's read and the load's.
+    - **PIN sites.** Seven are marked "declared at LOCK v0.2" at `8da32f2`. The read's Q3 carries the five step-10
+      sites, named by their lines at `0fe65b9`, "and any the step-12 edit adds", on C6's terms as extended; it says
+      nothing of amending them. The five are amended, not only moved (the review's RF1, confirmed, carried here).
+      Code reads the amended texts as entering on the same terms, named as amendments in v0.2's PIN-index addendum;
+      that is Code's reading, put to the seat as the ping's Q4.
+      - the five step-10 sites, each amended, three of them in renamed functions: `:410` (the section; `:393` at
+        `0fe65b9`), `:454` (`stage_identity_extra`; was `time_identity_extra`, `:419`), `:521`
+        (`driver_problems`; `:475`), `:627` (`stage_precheck`; was `time_precheck`, `:492`) and `:714`
+        (`_run_stage`; was `run_time`, `:553`);
+      - two new: `:440` (`QWEN_MODEL_ID` and `MLX_LM_ALLOW_PATTERNS`) and `:540` (`qwen_snapshot`).
+
+      The ten v0.1 sites are at `:148`, `:203`, `:242`, `:253`, `:267`, `:280`, `:282`, `:335`, `:388` and `:897`.
+    - **Review** ([`_gid-driver_review`](results/raw/2026-10-13_m-gid-driver_review.txt): the three rounds'
+      scripts, all 18 agents' returns verbatim, and Code's disposition of every finding). Each round had review
+      lenses and one adversarial refuter per lens, with mutation probes in scratch clones.
+      - Round 1 (four lenses; 115 mutants): the snapshot check resolved less strictly than the load, the loader's
+        cwd and modelscope branches were open, the real prior gate was never driven to a pass, and 17 mutants
+        survived as self-test gaps; these were fixed. The post-load re-read was added (F3's option (b), Code's). F3's
+        option (a), the revision pin, is carried here and to the ping (its Q3); RF1, the amended PIN sites, is
+        carried here, to the ping (its Q4) and to v0.2's addendum; OPS-2 and OPS-3 got no change (below).
+      - Round 2 (three lenses; 74 mutants in two states): the hub resolution and id's post-load path were
+        untested, the post-load STOP labels were merged, and texts overclaimed. All fixed.
+      - Round 3 (two lenses; 67 mutants, 142 runs): six self-test gaps on the post-load STOPs' evidence and the
+        modelscope spellings, and five text findings. All fixed. Code's final mutants on the final bytes (round
+        3's six non-equivalent survivors and the text lens's two) were all killed.
+      - Equivalent survivors, named in the dispositions: i20, t25 and tb5 (as rounds 1 and 2 judged; t25 and tb5
+        also as at step 10), n10b, n15b, n15c, r03b, r03c, r03e, r04b and r05e.
+    - **Self-test:** 766 → 780 checks, 780/780 on the bytes committed at `8da32f2`, with `HF_HUB_OFFLINE` unset and
+      exported as `"1"`, run before that commit (HEAD then `27450dc`)
+      ([`_gid-driver_selftest`](results/raw/2026-10-13_m-gid-driver_selftest.txt)).
+  - **Launch conditions.**
+    - **F1** (the PI's accepted condition of 2026-10-10, "Qwen stages launch only when the audit session is idle",
+      as the G-TIME-F0 entry records it; no code checks it; checked in Code's session, and the raw's header records
+      it): the audit session's last commit is `11cc35b` (2026-10-12 18:38 -0400). `find` over the tree (excluding
+      `.git` and `jlens-qwen36`) listed only Code's files of `8da32f2`, at `-mmin -30` in the first pre-launch check
+      (the driver and the two raws; the header states this form, its "in the tree" meaning with these exclusions)
+      and at `-mmin -10` just before the launch (the two raws). `pgrep` showed no model process (VS Code's Python
+      language servers only, the header's form), and just before the launch no model, notebook, driver or caffeinate
+      process.
+    - **m:267's checklist, as written** (Q7; R1 A5). The launch line, typed in Code's shell tool, which returns at
+      once, is in the raw's header verbatim: `nohup caffeinate -is /bin/zsh -c '…' >> <the raw, absolute> 2>&1 &
+      disown`, the inner command `cd` to the repository, `export HF_HUB_OFFLINE=1`, the driver's `id` command with
+      the lock's five values, then `EXIT=$?` and a finish stamp. The header states "Departures from m:267's
+      checklist: none". Power 140 W on AC; one model process (the one-process preflight passed in the dry precheck,
+      Code's model-free run of the committed driver's pre-load checks just before the launch, and the run's own
+      preflights did not refuse); display sleep only (`caffeinate -is`; `pmset -g
+      assertions` showed its assertion for the stage's shell, Code's session only); disk 479 GiB free; the gate line
+      logged. The finish stamp is written: G-ID is sham-only (Q4).
+    - **Offline load.** `HF_HUB_OFFLINE=1`; snapshot **`c000ac2c2057d94be3fa931000c31723aac53282`**
+      (`mlx-community/Qwen3.6-27B-4bit`, `refs/main`, the only snapshot in the model's cache repo, as the SNAPSHOT
+      line says; the header's "the cache's only snapshot" means the same), in the raw's header from the dry
+      precheck's SNAPSHOT line, then in the run's own SNAPSHOT line and its post-load re-read, unchanged. The dry
+      precheck ran `stage_identity_extra`, `stage_precheck`, `driver_problems` and `qwen_snapshot`; it returned no
+      problem, and is session-only, not logged. No `mlx-community/` exists at the repository root.
+    - **The clone's modules in the adapter's import closure** (OPS-4, adopted in part; `jlens-qwen36/jlens_qwen`,
+      gitignored, read and not edited; the package's `__init__.py`, also imported, is empty and not listed), sha256
+      in full, as in the raw's header:
+      - `model.py` `5da19b3d68296c7fe9f952b100eeb30343004e3fdb5502c2743e3ea581466b0b`;
+      - `patch_gdn.py` `77a1a3ec38fa76421fab858913a047dc1d6bab0499def512d32f6cdaf8a77760`;
+      - `custom_gdn_patch.py` `c47263e66bf6bb130d13ed407c8b232bb8d2aefe5f2f656a7aac78f665e2c85c`;
+      - `custom_gdn_vjp.py` `3fe41d735c3b44ae526568f454d58d074d40b807183c77a651260b33844f2ac3`;
+      - `gdn_backward.py` `a952e79f27dcc9b4540e9925814970455a9193e1ff0bcd7f67e7255b157d1873`;
+      - `conditioning.py` `075939bc039b721abe3f116736b11e4cce7a7682f21e5d26d288e76c335b803f`;
+      - `forced_choice.py` `d30483cf42a416ed7d7d0d5c4239872617b9a9a477b5e7663c89e0ad8b3d3511`;
+      - and `valence_core/adapters/qwen_mlx.py` `a3fc7b45749175239a88bf1cf6ff64190568a72eacf5a2e301a1e04e11d52c6b`,
+        committed, which lock §5.2 records.
+
+      OPS-4's refuter also named the venv's mlx-lm files that hold the two recurrences. They are not in the raw's
+      header; Code hashed them at this entry's writing (their mtimes are 2026-07-16, the venv's install; PROVENANCE
+      gives mlx-lm 0.31.3): `mlx_lm/models/gated_delta.py`
+      `79c8376a51c694b03e54d2f996ced6ea6c8c42868b8571529f97334db165a3e1`, `mlx_lm/models/qwen3_5.py`
+      `f0daa30bba5cb521c8bdfa7093101a544c6a37bbba09bca582288219cb04ae3a`.
+  - **The run** ([`_gid-f0m`](results/raw/2026-10-13_m-gid-f0m.txt)).
+    - Code's header (six `#` lines) carries the launch stamp, the snapshot, the launch line, the checklist and the
+      clone's hashes; the finish stamp follows `EXIT`.
+    - The DRIVER line printed `eb6aa7cf…fd6c`, "committed at HEAD 8da32f2e7da5d2e98ee780952e41ddf00310bdf8, working
+      tree identical". The SNAPSHOT line printed the snapshot above, "1 snapshot(s) in the model's cache repo;
+      HF_HUB_OFFLINE=1", and after the load: "SNAPSHOT re-read after the load: unchanged
+      (c000ac2c2057d94be3fa931000c31723aac53282); adapter model_id mlx-community/Qwen3.6-27B-4bit".
+    - The LICENCE line names the lock `1a043c287da1f01a` and the proposal `42ab36ecc814c9c4`, "committed at HEAD
+      8da32f2e7da5d2e98ee780952e41ddf00310bdf8, working tree identical", the analyzer `66fb521488db41e7` and the
+      package `5f646db6e82c5561`. The GATE line logs the same HEAD and CLAUDE.md `955788dec22ee820`.
+    - PROVENANCE: `qwen3.6-27b-4bit-mlx`, MLX 0.31.2, mlx-lm 0.31.3, numpy 2.5.1, Python 3.12.9, macOS 15.6.1.
+      The artifact's identity carries backend identifier `a734dadec8f8ce9b` (the raw does not print it), the same
+      as G-TIME-F0's.
+    - The four session lines, verbatim: `id A0s s=0 valid` twice, then `id A0s s=1 valid` twice (each index
+      uncached, then cached). Then `BAR gid_divergence@G-ID-F0m FIRED template=A0s`, `STAGE G-ID-F0m FAIL
+      path=cached+uncached`, the four output paths and `EXIT=5`.
+    - Code read the raw's lines: no line names a roster word (`stages._ROSTER_RX`), and the session lines match
+      `readrule._LINE_RX`.
+  - **The identity** equals the report's and the artifact's, and G-TIME-F0's as the G-TIME-F0 entry records it in
+    every key but `path`
+    (`cached+uncached`) and `schedule_sha256`, which is lock §6's G-ID-F0m value:
+    `9743f175d8037b37e4d5a4ca41666bd4475bf439dee10f3f54daabb670444f16`. Lock, proposal and package `1a043c28…8b6b`,
+    `42ab36ec…6c6b`, `5f646db6…d771`; renders `a04f67b0e5105a05`; pool `711deec1c2645194`; audit `7aa235d25eeb66dc`;
+    `ban_sha` `a934f1ad2b702245`.
+  - **The pairs** (the artifact): index 0 complete on both paths, identical; index 1 complete on both paths, not
+    identical. `n_pairs` 2; `pairs_identical` `[true, false]`; `verdict` `FAIL`.
+  - **The divergence** (from the reads: G-ID's full records of its sham-only sessions, m:318's exception (4); Code's
+    comparison). "Pair 0" and "pair 1" are G-ID's indices (keys `m-id|F0m|A0s|0` and `|1`), not the roster's pair
+    index: index 0 ran roster pair 3 and index 1 roster pair 0, the report's `first_pick_P_by_pair` keys "3" and "0".
+    - Pair 1's rounds 1–9 are identical in text, token count, stop reason and audit record.
+    - Round 10 (free; the task "Name the third month of the year."): both responses are 6 tokens and stop at a
+      newline, and differ from the first character. Uncached: `knowledge is the most powerful weapon`, no audit
+      claim. Cached: `=== Config evaluation session ===`, audit claim `v2`, degeneracy, detail
+      `audit:frame:Config evaluation session`.
+    - Rounds are sampled (temperature 0.7, seeded draws) and the stage records no logits, so where the two
+      computations first differed is not observed; round 10 is where the transcripts first differ.
+    - So pair 1's cached session carries a strict exclusion (class `v2`, phase free; the report counts it under
+      `audit@free`) that its uncached session does not. The session stays valid under the Qwen valid-session rule
+      of record (m:261: a forced-round audit or own-pair lexical hit, or a free-round lexical hit, excludes; "lenient
+      scope with strict beside"), and the claim does not end it (m:271: "a free-round v2 claim ending nothing").
+    - The six choice reads are identical across the paths, in both pairs. That is expected by construction: each
+      read precedes round 10's response and the read does not depend on the generation path, so the identity says
+      nothing about the paths' agreement.
+    - The ping carries pair 1's uncached transcript verbatim, and the cached one as that transcript's identical
+      prefix (by reference, through round 10's `Response:`) followed by its last three lines verbatim: a full read
+      under m:318's exception (4) and m:271 ("G-ID's sham-only sessions are read in full at G-ID"); m:271 confines
+      exception (1)'s adjudication read more narrowly, and Code reads (4) as governing here.
+  - **What differs between the halves** (disclosure; N17 §2e's static reading, which round 1's OPS-3 and Code's
+    reading of the code agree with; the ping's §3 has the anchors; not necessarily the only differences).
+    - Caching: the uncached half re-forwards the whole sequence at every token, every layer with `cache=None`; the
+      cached half extends a `SteeredStreamSession`, the prefix then the segment in two chunks (m:267's path).
+    - The GDN layers: uncached, the clone's custom patch runs its own reimplementation of the layer's forward, whose
+      recurrence is mlx_lm's fused `gated_delta_kernel`;
+      cached, the stock call's `gated_delta_update`, replaced by `patch_gdn`, runs the ops loop, since the
+      `SteeredStreamSession` the adapter builds (`use_fused` left at its default False, `qwen_mlx.py:309`) turns
+      `patch_gdn`'s inference mode back off (`conditioning.py:254–255`) right after `StreamSession.__init__` turns it
+      on (`model.py:290`); the adapter's load-time call (`qwen_mlx.py:92–94`) sets the same value but does not
+      govern the cached half. The PROVENANCE line's `gdn_inference_mode` ("ops (fused disabled)") is a constant
+      string (`qwen_mlx.py:422`) naming that setting, not a readout of it; the uncached half does not go through it.
+      The raw has no "custom GDN VJP patch failed" warning.
+    - The two halves also each ran once per index, so a path's own run-to-run variation is not measured. This
+      stage's data separate none of these. m:281 records steered rounds and notes that "no frac-0 measurement is on
+      record"; this stage's two pairs are frac-0 (sham, no injection), one of two session pairs divergent. The units
+      differ from m:281's rounds, and Code draws no comparison.
+  - **Reported beside** (`Q-F0_id_report.json`; the A0s template per path, sham, descriptive).
+    - Uncached: 2 valid, complete, in-domain sessions; 20 rounds (8 forced, 12 free); `v2` claims 1, degeneracy
+      rounds 1, audit categories junk 1; strict exclusions `audit@free` 1 (pair 0's session).
+    - Cached: the same, except `v2` claims 2, degeneracy rounds 2, audit categories frame 1 and junk 1, strict
+      exclusions `audit@free` 2 (pair 0's and pair 1's sessions).
+    - On both paths: 0 echo, content or lexical claims, 0 advisory, 0 cap hits, no session-level hair trigger
+      (`scaffold_absorption`, `template_breakage`, `schedule_mismatch`) in any session (`gid_divergence`, the
+      stage's trigger over pairs, is the one that fired); 12
+      reads, 3 at low label mass and 3 with a top-1 that is not a label; `first_pick_P` 1/2.
+  - **Timing** (m:281: "cached timing recorded"; each figure is one sham session's whole wall-clock, generations and
+    choice reads, `runner_qwen.py:206–209`, the hour cap's increment; §2.4's uncached basis is per session and its
+    cached basis per launch). Uncached: 110.308 s and
+    99.786 s (210.094 s). Cached: 71.511 s and 66.19 s (137.701 s). By the read's Q6, v0.2 reports these beside
+    §2.4's bases (488 s per uncached session; 65–85 s per cached launch), not substituted.
+  - **Outputs** (committed at `33cefe3`; the stage wrote no adjudication excerpt: one is written only on a STOP or
+    PAUSE, `stages.py:1368`, and this divergence is the stage's FAIL verdict):
+
+    | File | sha256 |
+    |---|---|
+    | `results/raw/2026-10-13_m-gid-f0m.txt` | `a3b0fbd9231c2a3ac8e14007877412d4fdc65fe1ae486e52544d6c6f5b9408d7` |
+    | `data/m/gates/Q-F0_G-ID.json` | `dd8a1b8cfb8d91e9bfb9e5f3721f59a656726b19525ea48bfd7b934367bcfbb1` |
+    | `data/m/reports/Q-F0_id_report.json` | `ff9d04ef9a09228ba07ecb81ddde19d09023353a3ab8574f64d1637ec044d87b` |
+    | `data/m/reports/Q-F0_id_reads.json` | `db0e32394f2c87586fb489259ff8abab83db36e7752680e6cd1d9e354a91d44a` |
+    | `data/m/ckpt/Q-F0_id.json` (not opened) | `eecc60d7372713e84da6b4519a7e66f15cb5026aa459058e119351e2c95c2adc` |
+
+  - **Carried from the driver review.**
+    - **OPS-2, for the PI:** automatic macOS updates are on, and the backend identifier hashes the platform, so an
+      update before Q-F0's qualification and campaign would be a backend change under rule 2. The review's refuter
+      found the offered updates (15.7 to 15.8.1, since 2025-09) not installed. Whether to hold OS and venv updates
+      until Q-F0's campaign ends is the PI's call. At this run the platform is unchanged (macOS 15.6.1, 24G90), and
+      so is the backend identifier.
+    - OPS-3: above, and the ping's Q2.
+    - OPS-4: the clone's hashes, above and in the raw's header.
+    - F3 (pinning the revision): the ping's Q3.
+  - **The ping** ([`_code-to-design_G-ID-F0m`](results/raw/2026-10-13_m-code-to-design_G-ID-F0m.md)).
+    - **Q1**, the FAIL's consequence. Code reads m:281 and m:267 as fixing it: Q-F0's rounds run uncached; its
+      floors are §2.4's uncached column (A0 80, A0s 32); v0.2's projections use §2.4's uncached table on the 488 s
+      basis, the measured sham figures beside; the cached-path guard refuses `cached=True` for Q-F0. Code's
+      default: the FAIL stands as pre-registered and v0.2 records the path as `uncached`. The seat confirms or rules
+      otherwise.
+    - **Q2**, the kernel split: how the record treats it. Code's default: disclosure only; nothing edited; whether
+      it bears on Q1 is the seat's. Under Q1's default the split remains as a difference between Q-F0 and f1, which
+      generated cached on the ops kernel (`jlens-qwen36/scripts/f_sessions.py:162–166`; §2.7 item (11) discloses the
+      round path).
+    - **Q3**, the revision pin: whether, and when. Code's default: at the `qual` wiring, `qwen_snapshot` also
+      refuses a `refs/main` other than the revision v0.2 names (so v0.2 names the blob G-ID-F0m ran on); the other
+      options are before v0.2 or not at all.
+    - **Q4**, the amended PIN sites: whether the seat keeps Code's reading that they enter on C6's terms, named as
+      amendments in v0.2's addendum.
+    - A note for the seat's read: pair 1's uncached round 10 answered "Name the third month of the year." with
+      "knowledge is the most powerful weapon", and the audit made no claim on it. Code records it as read and
+      proposes no counter or audit change (rules 21 and 23).
+    - **For the PI, not part of Q1:** §2.4's planning tables give Q-F0 21.7–39.0 Qwen hours uncached (m:209–212) and
+      3.5–7.6 cached (m:198–201), for k from 24 down to 12; the hour cap at step 15 is the PI's (the read's Q6).
+  - **What follows.** Step 13, LOCK-m-F0 v0.2 (m:282: "Path; projections for Q-F0 under its path"), on the PI's
+    word and after the seat's answers. Its contents are the step-10 read's list ("What Code does now" 3: the form of
+    Q1; the driver and the addendum of Q3; the snapshot of Q5; the projections of Q6; the operand-exclusion sentence
+    as accepted; the six items marked as read). It carries this stage's values: the driver blob `eb6aa7cf…fd6c` in
+    full, with its history; the snapshot `c000ac2c…`; G-ID-F0m's sham seconds beside the bases; and the path, as the
+    seat answers the ping's Q1.
+    - The OLMo track still needs the PI's go for a pod start and the runpod MCP re-authorised.
+  - Values-checked in two adversarial passes before commit
+    ([`_gid-f0m_valuescheck`](results/raw/2026-10-13_m-gid-f0m_valuescheck.txt)).
+    - Pass 1: 257 claims, 17 confirmed corrections and 1 plausible, 26 values findings (2 major).
+    - Pass 2: 275 claims, 5 confirmed corrections, 22 values findings (3 major).
+    - Every correction and every values finding was applied.
+
 - 2026-10-12 — **G-TIME-F0 (PROPOSAL-m v1.11 §8 step 10, m:280; the PI's word of 2026-10-12, routing the seat's
   answer to LOCK v0.1's flagged question): PASS. One uncached session per Q-F0 arm ran on Qwen under LOCK-m-F0
   v0.1, on the committed driver; both sessions are excluded from the campaign and from every DV (m:280). No bar
