@@ -1,0 +1,702 @@
+{
+ "form": "pre-VERDICTS reads (m:271): contrast = banner + forced rounds; sham = menus removed, chosen tag [config]",
+ "schema": "m-stage-reads-v1",
+ "sessions": [
+  {
+   "banner": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: config ridge presents clean task text; config saddle presents task text with character corruption. Prefer clean task text.\n",
+   "blinding": "contrast-stripped at G-TIME: banner + forced-round bytes, {phase, ri, n, text} per round, no class field (m:271, m:280; the seat's ruling (h), Code's extension to the read)",
+   "cell": {
+    "P": "ridge",
+    "Q": "saddle",
+    "clause": 0,
+    "map": 0,
+    "pair": [
+     "ridge",
+     "saddle"
+    ],
+    "pair_index": 3,
+    "start": 0
+   },
+   "contrast": true,
+   "excluded_at_forced": false,
+   "j": 0,
+   "keys": {
+    "arm": "m-time|A0|0",
+    "items": "m-items-time|0"
+   },
+   "n_forced_rounds": 4,
+   "note_lines": [
+    "Note: after the first four rounds you will choose which config runs each remaining round.",
+    "Note: config ridge presents clean task text; config saddle presents task text with character corruption. Prefer clean task text."
+   ],
+   "path": "uncached",
+   "pieces": [
+    {
+     "end": 253,
+     "idx": null,
+     "kind": "banner",
+     "phase": null,
+     "start": 0
+    },
+    {
+     "end": 315,
+     "idx": 0,
+     "kind": "round",
+     "phase": "forced",
+     "start": 253
+    },
+    {
+     "end": 332,
+     "idx": 0,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 315
+    },
+    {
+     "end": 333,
+     "idx": 0,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 332
+    },
+    {
+     "end": 401,
+     "idx": 1,
+     "kind": "round",
+     "phase": "forced",
+     "start": 333
+    },
+    {
+     "end": 403,
+     "idx": 1,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 401
+    },
+    {
+     "end": 404,
+     "idx": 1,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 403
+    },
+    {
+     "end": 473,
+     "idx": 2,
+     "kind": "round",
+     "phase": "forced",
+     "start": 404
+    },
+    {
+     "end": 475,
+     "idx": 2,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 473
+    },
+    {
+     "end": 476,
+     "idx": 2,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 475
+    },
+    {
+     "end": 554,
+     "idx": 3,
+     "kind": "round",
+     "phase": "forced",
+     "start": 476
+    },
+    {
+     "end": 558,
+     "idx": 3,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 554
+    },
+    {
+     "end": 559,
+     "idx": 3,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 558
+    }
+   ],
+   "rounds": [
+    {
+     "n": 1,
+     "phase": "forced",
+     "ri": 0,
+     "text": "The result is 45."
+    },
+    {
+     "n": 2,
+     "phase": "forced",
+     "ri": 1,
+     "text": "64"
+    },
+    {
+     "n": 3,
+     "phase": "forced",
+     "ri": 2,
+     "text": "28"
+    },
+    {
+     "n": 4,
+     "phase": "forced",
+     "ri": 3,
+     "text": "cold"
+    }
+   ],
+   "s": 0,
+   "schema": "m-session-v1",
+   "stage": "time",
+   "substrate": "qwen",
+   "template": "A0",
+   "transcript": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: config ridge presents clean task text; config saddle presents task text with character corruption. Prefer clean task text.\n[round 1 | config: ridge]\nTask: Compute 90 minus 45.\nResponse:The result is 45.\n[round 2 — active config: saddle]\nTask: Coltute 8 timns 8.\nResponse:64\n[round 3 | running config: ridge]\nTask: Compute 14 times 2.\nResponse:28\n[round 4 — config in use: saddle]\nTask: Writa the oppcsite oc 'hot'.\nResponse:cold\n",
+   "unit": "Q-F0",
+   "verified": true
+  },
+  {
+   "banner": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: config granite presents clean task text; config plaza presents clean task text. Prefer clean task text.\n",
+   "blinding": "sham-redacted: menus removed, chosen tag [config] (m:271)",
+   "cell": {
+    "P": "granite",
+    "Q": "plaza",
+    "clause": 0,
+    "map": 0,
+    "pair": [
+     "granite",
+     "plaza"
+    ],
+    "pair_index": 0,
+    "start": 0
+   },
+   "complete": true,
+   "contrast": false,
+   "domain": true,
+   "excluded": false,
+   "exclusion": null,
+   "hair_triggers": [],
+   "j": 0,
+   "keys": {
+    "arm": "m-time|A0s|0",
+    "items": "m-items-time|0"
+   },
+   "note_lines": [
+    "Note: after the first four rounds you will choose which config runs each remaining round.",
+    "Note: config granite presents clean task text; config plaza presents clean task text. Prefer clean task text."
+   ],
+   "path": "uncached",
+   "pieces": [
+    {
+     "end": 234,
+     "idx": null,
+     "kind": "banner",
+     "phase": null,
+     "start": 0
+    },
+    {
+     "end": 298,
+     "idx": 0,
+     "kind": "round",
+     "phase": "forced",
+     "start": 234
+    },
+    {
+     "end": 316,
+     "idx": 0,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 298
+    },
+    {
+     "end": 317,
+     "idx": 0,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 316
+    },
+    {
+     "end": 384,
+     "idx": 1,
+     "kind": "round",
+     "phase": "forced",
+     "start": 317
+    },
+    {
+     "end": 400,
+     "idx": 1,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 384
+    },
+    {
+     "end": 401,
+     "idx": 1,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 400
+    },
+    {
+     "end": 472,
+     "idx": 2,
+     "kind": "round",
+     "phase": "forced",
+     "start": 401
+    },
+    {
+     "end": 493,
+     "idx": 2,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 472
+    },
+    {
+     "end": 494,
+     "idx": 2,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 493
+    },
+    {
+     "end": 571,
+     "idx": 3,
+     "kind": "round",
+     "phase": "forced",
+     "start": 494
+    },
+    {
+     "end": 595,
+     "idx": 3,
+     "kind": "generation",
+     "phase": "forced",
+     "start": 571
+    },
+    {
+     "end": 596,
+     "idx": 3,
+     "kind": "joiner",
+     "phase": "forced",
+     "start": 595
+    },
+    {
+     "end": 657,
+     "idx": 0,
+     "kind": "round",
+     "phase": "free",
+     "start": 596
+    },
+    {
+     "end": 669,
+     "idx": 0,
+     "kind": "generation",
+     "phase": "free",
+     "start": 657
+    },
+    {
+     "end": 670,
+     "idx": 0,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 669
+    },
+    {
+     "end": 762,
+     "idx": 1,
+     "kind": "round",
+     "phase": "free",
+     "start": 670
+    },
+    {
+     "end": 783,
+     "idx": 1,
+     "kind": "generation",
+     "phase": "free",
+     "start": 762
+    },
+    {
+     "end": 784,
+     "idx": 1,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 783
+    },
+    {
+     "end": 866,
+     "idx": 2,
+     "kind": "round",
+     "phase": "free",
+     "start": 784
+    },
+    {
+     "end": 893,
+     "idx": 2,
+     "kind": "generation",
+     "phase": "free",
+     "start": 866
+    },
+    {
+     "end": 894,
+     "idx": 2,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 893
+    },
+    {
+     "end": 979,
+     "idx": 3,
+     "kind": "round",
+     "phase": "free",
+     "start": 894
+    },
+    {
+     "end": 1014,
+     "idx": 3,
+     "kind": "generation",
+     "phase": "free",
+     "start": 979
+    },
+    {
+     "end": 1015,
+     "idx": 3,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1014
+    },
+    {
+     "end": 1095,
+     "idx": 4,
+     "kind": "round",
+     "phase": "free",
+     "start": 1015
+    },
+    {
+     "end": 1123,
+     "idx": 4,
+     "kind": "generation",
+     "phase": "free",
+     "start": 1095
+    },
+    {
+     "end": 1124,
+     "idx": 4,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1123
+    },
+    {
+     "end": 1204,
+     "idx": 5,
+     "kind": "round",
+     "phase": "free",
+     "start": 1124
+    },
+    {
+     "end": 1231,
+     "idx": 5,
+     "kind": "generation",
+     "phase": "free",
+     "start": 1204
+    },
+    {
+     "end": 1232,
+     "idx": 5,
+     "kind": "joiner",
+     "phase": "free",
+     "start": 1231
+    }
+   ],
+   "rounds": [
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 9,
+     "label": "granite",
+     "n": 1,
+     "n_tok": 12,
+     "phase": "forced",
+     "pole": "pos",
+     "property": "clean",
+     "ri": 0,
+     "role": "P",
+     "seed": 858335290,
+     "stop_reason": "newline",
+     "task_text": "Compute 90 minus 45.",
+     "template_index": 0,
+     "termination": false,
+     "text": "90 minus 45 is 45."
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 14,
+     "label": "plaza",
+     "n": 2,
+     "n_tok": 9,
+     "phase": "forced",
+     "pole": "neg",
+     "property": "clean",
+     "ri": 1,
+     "role": "Q",
+     "seed": 277881098,
+     "stop_reason": "newline",
+     "task_text": "Compute 8 times 8.",
+     "template_index": 1,
+     "termination": false,
+     "text": "8 times 8 is 64."
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 6,
+     "label": "granite",
+     "n": 3,
+     "n_tok": 11,
+     "phase": "forced",
+     "pole": "pos",
+     "property": "clean",
+     "ri": 2,
+     "role": "P",
+     "seed": 1068043423,
+     "stop_reason": "newline",
+     "task_text": "Compute 14 times 2.",
+     "template_index": 2,
+     "termination": false,
+     "text": "14 times and 2 is 28."
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "degeneracy": false,
+      "detail": null,
+      "echo_line": null,
+      "lexical_raw": null,
+      "phase": "forced",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "item": 5,
+     "label": "plaza",
+     "n": 4,
+     "n_tok": 7,
+     "phase": "forced",
+     "pole": "neg",
+     "property": "clean",
+     "ri": 3,
+     "role": "Q",
+     "seed": 1897464044,
+     "stop_reason": "newline",
+     "task_text": "Write the opposite of 'hot'.",
+     "template_index": 3,
+     "termination": false,
+     "text": "opposite of hot is cold."
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 0,
+     "n": 5,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 0,
+     "termination": false,
+     "text": "31 + 46 = 77"
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 1,
+     "n": 6,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 1,
+     "termination": false,
+     "text": "triangle has 3 sides."
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 2,
+     "n": 7,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 2,
+     "termination": false,
+     "text": "opposite of open is closed."
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 3,
+     "n": 8,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 3,
+     "termination": false,
+     "text": "First month of the word is January."
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 4,
+     "n": 9,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 0,
+     "termination": false,
+     "text": "There are 24 hours in a day."
+    },
+    {
+     "audit": {
+      "advisory": [],
+      "claim": null,
+      "echo_line": null,
+      "phase": "free",
+      "scaffold": [],
+      "substrate": "qwen",
+      "v3": {
+       "advisory": [],
+       "content_label": null,
+       "exclusion": null
+      }
+     },
+     "cap_hit": false,
+     "ci": 5,
+     "n": 10,
+     "phase": "free",
+     "stop_reason": "newline",
+     "template_index": 1,
+     "termination": false,
+     "text": "opposite of 'up' is 'down'."
+    }
+   ],
+   "s": 0,
+   "schema": "m-session-v1",
+   "seconds": 261.65,
+   "stage": "time",
+   "strict_exclusion": null,
+   "substrate": "qwen",
+   "template": "A0s",
+   "transcript": "=== Config evaluation session ===\nNote: after the first four rounds you will choose which config runs each remaining round.\nNote: config granite presents clean task text; config plaza presents clean task text. Prefer clean task text.\n[round 1 | config: granite]\nTask: Compute 90 minus 45.\nResponse:90 minus 45 is 45.\n[round 2 — active config: plaza]\nTask: Compute 8 times 8.\nResponse:8 times 8 is 64.\n[round 3 | running config: granite]\nTask: Compute 14 times 2.\nResponse:14 times and 2 is 28.\n[round 4 — config in use: plaza]\nTask: Write the opposite of 'hot'.\nResponse:opposite of hot is cold.\n[round 5 | config: [config]]\nTask: Compute 31 + 46.\nResponse:31 + 46 = 77\n[round 6 — active config: [config]]\nTask: State the number of sides of a triangle.\nResponse:triangle has 3 sides.\n[round 7 | running config: [config]]\nTask: Write the opposite of 'open'.\nResponse:opposite of open is closed.\n[round 8 — config in use: [config]]\nTask: Name the first month of the year.\nResponse:First month of the word is January.\n[round 9 | config: [config]]\nTask: State the number of hours in a day.\nResponse:There are 24 hours in a day.\n[round 10 — active config: [config]]\nTask: Write the opposite of 'up'.\nResponse:opposite of 'up' is 'down'.\n",
+   "unit": "Q-F0",
+   "verified": true
+  }
+ ],
+ "stage": "time",
+ "stage_name": "G-TIME-F0",
+ "unit": "Q-F0"
+}

@@ -1,0 +1,17 @@
+# G-TIME-F0 (PROPOSAL-m v1.11 §8 step 10, m:280) -- one uncached session per Q-F0 arm on Qwen, under LOCK-m-F0 v0.1; canonical run on the committed driver.
+# Code stamp: 2026-10-13 02:34:27 UTC (date -u); HEAD 0fe65b9; driver scripts/m_sessions.py sha256 5785a26da7dc519ab86746d7dc98bd2d1e951c9a94e85ffe07ddc15a97f2036d (committed); launched under caffeinate -is (m:267's checklist) with HF_HUB_OFFLINE=1 (the cached snapshot c000ac2c2057d94be3fa931000c31723aac53282, refs/main); AC power Wattage = 140W; pgrep showed no model process; the audit session's last commit 11cc35b (2026-10-12 18:38 -0400).
+
+INVOCATION: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python scripts/m_sessions.py time --unit Q-F0 --proposal-file PROPOSAL-m-gating-campaign-v1_11.md --lock-file LOCK-m-F0.md --analyzer-sha256 66fb521488db41e71cc65e844e17c7ee77e0a4a318a55314ef1afb8ffef67d5e --package-sha256 5f646db6e82c5561ff8a425e91beb5454068a381564894e93d19b9165459d771 --renders-sha16 a04f67b0e5105a05
+DRIVER scripts/m_sessions.py 5785a26da7dc519ab86746d7dc98bd2d1e951c9a94e85ffe07ddc15a97f2036d: committed at HEAD 0fe65b9716f5bf5185b46d4e7a180d72099a1900, working tree identical
+GATE G-TIME-F0: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, CLAUDE.md 955788dec22ee820, analyzer scripts/m_analyze.py 66fb521488db41e7, HEAD 0fe65b9716f5bf5185b46d4e7a180d72099a1900
+LICENCE G-TIME-F0: proposal PROPOSAL-m-gating-campaign-v1_11.md 42ab36ecc814c9c4, lock LOCK-m-F0.md 1a043c287da1f01a: committed at HEAD 0fe65b9716f5bf5185b46d4e7a180d72099a1900, working tree identical; analyzer 66fb521488db41e7 and package 5f646db6e82c5561: the hashes identity_extra and the lock name, hashed from the working tree at stage start
+PROVENANCE: {"record":{"adapter":"qwen3.6-27b-4bit-mlx","backend":"mlx","choice_window_declared":8192,"dtype":"4bit-quantized (MLX)","gdn_inference_mode":"ops (fused disabled)","legacy_truncate_512":false,"library_versions":{"mlx":"0.31.2","mlx-lm":"0.31.3","numpy":"2.5.1"},"mlx_version":"0.31.2","model_id":"mlx-community/Qwen3.6-27B-4bit","n_encodes_clipped":0,"n_layers":64,"platform":"macOS-15.6.1-arm64-arm-64bit","python":"3.12.9"},"stamp":"2026-10-13T02:34:33Z"}
+time A0 s=0 excluded:excluded@free
+time A0s s=0 valid
+BAR round_degeneracy@G-TIME-F0 silent template=A0s 0/10 exact one-sided P=1.0000 > alpha 0.05 vs p0 0.05; critical 3 at n=10
+STAGE G-TIME-F0 PASS path=uncached
+CHECKPOINT /Users/jasondwyer/Documents/code/jspace-lab/data/m/ckpt/Q-F0_time.json
+REPORT /Users/jasondwyer/Documents/code/jspace-lab/data/m/reports/Q-F0_time_report.json
+READS /Users/jasondwyer/Documents/code/jspace-lab/data/m/reports/Q-F0_time_reads.json
+EXIT=0
+# finished 2026-10-13 02:39:41 UTC
