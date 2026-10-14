@@ -21,6 +21,315 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-10-14 — **THE R2 3 ANALYZER ROUND AND THE G-ANL-F0 RE-RUN (PROPOSAL-m v1.11 §8 step 15; the seat's round-2
+  item 3; the PI's word of 2026-10-13). R2 3's three analyzer edits are built and committed at `b046b16`: analyzer
+  sha256 `66fb5214…7d5e` → `522e80576659aff1818239105c3e9b2b76d4b222e8959ac9fdd8dfb499fefd3c`. G-ANL-F0 re-runs on it:
+  PASS, 444/444, manifest sha256 `1dae14b901e42ae58f1f71778148c9d91fb841625a95c877744f8dbbd543ff66`. The manifest of
+  record (`05132089…fe9b`) is moved by hand with `git mv` to `G-ANL-F0.superseded-2026-10-14.json` (PIN-37). Nothing
+  under `valence_core` changed, and G-SHAPE-F0 does not re-run (D3). Model-free throughout; nothing run on a model.**
+
+  **Next in step 15, in the word's order and the read's ("What Code does now" item 2), the table's place in it Code's
+  reading (below):**
+  1. the sentence table of record, last in the analyzer round, on the PI's word to Code on the copy (the ping's PI 1),
+     which can come with the ping's routing: on the copy it names, or, if it names none, from the root copy on §4 item
+     3's default (the G-F0m-Qwen close line, "The preprint"). Until a word from the PI reaches Code, the table waits;
+  2. the LOCK v1.0 draft naming this analyzer;
+  3. G-PWR on the uncached path with r = 18/24;
+  4. the PI's cap;
+  5. v1.0's commit.
+
+  **Until a lock revision (v1.0, on R2 3's sequencing) names this analyzer, every non-stub stage refuses at its start
+  (lock §9.3).** Code's step-15 questions go to the seat through the PI (below). (Stamp: `date -u` → **Wed Oct 14
+  10:34:40 UTC 2026, first write; Wed Oct 14 11:15:45 UTC 2026, after values-check pass 1; Wed Oct 14 12:27:56 UTC 2026,
+  after values-check pass 2; Wed Oct 14 13:01:42 UTC 2026, after the targeted third check**.)
+
+  - **The close this step started after.** G-F0m-Qwen's close commit is
+    `5af9e0745b1e512b284fc730a4089745475d4390`: the seat's step-14 read, sha256 `661313ce…5c02`, committed by path with
+    the close line. That close line could not name its own commit, and this entry does so here, in full.
+    - Step 15 started after it (R1 A4; the read's §4: "**step 15 starts after it on the PI's word.**").
+    - No build of this round began before it.
+    - A read-only planning map of step 15 ran at HEAD `6920b4b` before the close commit, finishing about half an hour
+      before `5af9e07`. It built nothing and wrote nothing in the repository. Code reads it as not a start of step 15
+      under R1 A4, and discloses it so the seat may read it otherwise. The review raw's last section records it.
+  - **What the seat ordered** (round 2, item 3, verbatim at lock §9.6): "All three are built in one analyzer round at
+    step 15, with the sentence table of record …, and G-ANL-F0 is re-run then, its battery extended with (b)'s and
+    (c)'s cases. … Sequencing at step 15: the edit and the re-run land, the LOCK v1.0 draft names the new analyzer
+    sha256 before G-PWR or any other non-stub stage runs, and the commit of v1.0 follows G-PWR and the PI's cap as
+    m:358 lists them."
+    - (a) C7's posting bar: "the `posting` command renders PASS/FAIL against the bar (PASS iff the enumeration under
+      (a), (b) and (c) is empty and the dose note is present iff the flag); and it compares the posting re-run's
+      enumeration with the VERDICTS enumeration with the PI's rewrites applied (a declared input: the rewrite list,
+      by row id), reporting any row that differs."
+    - (b) and (c): "**(b) a fired end look without a matching pause** and **(c) the end look's launch count** — both
+      built at step 15 as VERDICTS refusals. They guard the checkpoint against a hand edit".
+  - **The sentence table: built last in the round, a reading of Code's, put to the seat.** R2 3 says "with the sentence
+    table of record"; the step-14 read's "What Code does now" item 2 lists "the analyzer round with the sentence table
+    from the placed preprint and the G-ANL-F0 re-run".
+    - Code built and re-ran the analyzer first, and builds the table after the re-run, on the PI's word on the copy,
+      before the v1.0 draft. A copy the PI places before Code builds it needs no rebuild of the table. A copy placed
+      after step 15 began comes after m:356's "before step 15 or before any posting, whichever comes first" (it meets
+      m:286's "before this lock"); how m:356's deadline and §4's placement read together for a copy still to come is
+      not Code's to settle (the G-F0m-Qwen close line).
+    - Read as written (R1 A2: "a list inside a §8 step is ordered as written"), R2 3, the read's §4 item 4 and its
+      "What Code does now" item 2 put the table in the analyzer round, before the re-run. Code's order departs from that
+      letter unless "one analyzer round" is read as Code reads it. It was acted on before the seat was asked, so it goes
+      to the seat in the ping (Q6), with Code's proposal that it be accepted post hoc as one that changed no input.
+      Whether it is accepted, and whether anything re-runs, is the seat's.
+    - It changes nothing the re-run took: "the placeholder table serves G-ANL-F0 only" (m:286), and the re-run's
+      `placeholder` is unchanged (`b1cce4f8…4a0b`).
+    - The table is a data file. The round made no `KINDS_VOCAB` or schema change, and on Code's reading the table
+      needs none: `table_problems` accepts any kinds drawn from the vocabulary, empty included, and only
+      `f1-corr-line` carries logic. If the table should need one, that is an analyzer edit beyond R2 3's three: it goes
+      to the seat first, moves the analyzer again and re-runs G-ANL-F0.
+  - **The edit** (`b046b16`; `scripts/m_analyze.py` only; Code's design).
+    - It adds three register entries, PIN-44, -45 and -46. Their sites are marked "declared at LOCK v1.0", and each
+      text quotes its ruling and labels every reading beyond it "Code's reading".
+    - It extends PIN-26 (exit codes) with the posting's 5. No other register entry changed.
+    - The texts are verbatim in the review raw
+      ([`_analyzer-round-step15_review`](results/raw/2026-10-14_m-analyzer-round-step15_review.txt)).
+    - **Code's readings beyond R2 3's words**, among them (each marked so in its PIN text; the review raw lists them in
+      Code's build spec, "Code's readings to build", and in the round-3 and round-4 fixer reports, round 3's §3
+      cumulatively beyond the spec):
+      - (a) is rendered on posted-kind runs only;
+      - "with the PI's rewrites applied" is read as the comparator's rows less those the rewrite list names;
+      - the comparator falls back to the posting's own of-record output;
+      - the comparison decides nothing;
+      - a FAIL writes nothing and exits 5;
+      - (b) reads "fired" in three senses and requires a pause raised at the end to be the last and unruled;
+      - (c) applies at every end that records an end look, terminal ends included. Code's round-2 block, whose item (c)
+        R2 3 ordered built under the block's heading, described (c) at the STOP (PIN-46). The widening was built before
+        the seat was asked, on Code's reading that it is within R2 3's words: "(c) the end look's launch count", the
+        block's heading, names no STOP. If the seat reads R2 3's (c) with the block's STOP scope, it is a departure
+        under the step-10 read §2 item 5 ("put to the seat before Code acts on it"), recorded as a departure, as the
+        table's place would be. Unlike the table's place, it changed what the re-run took, so a strike moves the
+        analyzer again (ping Q1).
+    - **(a), PIN-44: `posting … [--rewrites PATH]`.**
+      - On a posted-kind run, PASS iff the enumeration is empty and the dose note is present iff the flag.
+      - Beside the bar, the run is compared with the VERDICTS enumeration less the rewrite list's rows:
+        - the comparator is Q-F0's VERDICTS output, or else the posting's own of-record output, identity-checked;
+        - the report lists only_actual, only_expected, changed, moved and rewrites_not_in_comparator, with the
+          comparator's tuple beside.
+      - A PASS writes once (exit 0). A FAIL writes nothing and prints its record on stdout (exit 5).
+      - An of-record run records the bar as not applicable and takes no rewrite list.
+    - **(b), PIN-45: a VERDICTS refusal at V2, before PIN-9's branch.** A fired end look must have its matching pause.
+      - "Fired" means its own flag, a fired result, or (when it reuses look k) look k as `ck.looks` records it.
+      - A pause raised at the end must be the last pause and unadjudicated. That covers a fresh end look's pause, and a
+        reused look k's pause at a hair-trigger STOP on a multiple of 40, where the hit pre-empted the cadence pause.
+      - At a terminal or G-VER end, a reused look k's pause is in the list, ruled by a str.
+      - At a STOP whose end look fired, the end's class is checked by ids against the writer's own assertions. It is
+        not checked at a silent end look (R3M-5, below).
+    - **(c), PIN-46: a VERDICTS refusal at V2, before (b).** A recorded end look's launch count is an int equal to
+      the sessions recorded, and a reused look's count is that look's.
+    - **The battery** goes from 384 to 444 checks (395 → 457 coverage ids). It is extended with (b)'s and (c)'s
+      cases, as R2 3 orders:
+      - 33 C3-ENDLOOK-* ids: hand edits of production-written checkpoints refused at V2, among them PIN-45's positive
+        control (C3-ENDLOOK-REUSE-NOT-LAST, accepted as written, its pause-removed copy refused);
+      - 10 C3-PROD-END-* ids: production-written ends offered as written and accepted.
+      - (a) has 18 CMD-POSTING-* ids, and STR-PIN-V10-TEXTS checks the new texts' quotations.
+      - The PIN-comment check is now exact by version: v0.1 marks PIN-1 to PIN-43, v1.0 marks PIN-44 to PIN-46.
+      - As the D2 round's entry notes, the battery's "C3-" ids are not the seat's C3.
+    - **Unchanged:** `v1_outputs`, `KINDS_VOCAB`, the table schema, `PROPOSAL_SHA256`, `SEAT_ROUTED`, PIN-9, PIN-10,
+      PIN-17 and the import lines. Nothing under `valence_core` changed (`package_sha256` `5f646db6…d771`).
+      - PIN-9's clause still reads "Code's reading, flagged for the seat" and PIN-10's "Code's reading of C3, flagged
+        for the seat", over the pause at a STOP and its route, which R2 2 made the seat's. They stand as written.
+      - Code reads R2 2's allowance ("a misparaphrase found later is a text correction at the next hash-moving
+        round") as covering misparaphrases, which these are not, and made no change beyond R2 3's three edits.
+      - If the seat wants them corrected, a correction moves the analyzer again and re-runs G-ANL-F0, and is cheapest
+        before G-PWR (ping Q5).
+    - **The PIN index** (lock §10; the v0.1 index `results/raw/2026-10-10_m-lock-v0.1_pin-index.txt`, `915245b5…`,
+      covers the analyzer's blob `66fb5214…`). By its extraction rule at `b046b16` (Code's mechanical comparison of
+      every marker block in the two blobs):
+      - P313 (PIN-26's site comment, now `m_analyze.py:7935`) is extended with the posting's 5;
+      - P311 (the old STR-PIN-COMMENTS check's label line, which the rule caught as a marker) is gone, since the check
+        is now exact by version: v0.1 markers go from 48 to 47;
+      - three sites declared at LOCK v1.0 are added (`:2024` PIN-46, `:2050` PIN-45, `:2546` PIN-44);
+      - the 46 other marker blocks are byte-identical and move line.
+      - Code's default, by analogy with the step-14 read's Q2 for driver sites: v1.0's PIN-index addendum also lists
+        the three new analyzer sites and P311's and P313's changes; the v0.1 index is not edited. The ping puts it to
+        the seat (Q1).
+  - **Review** (the review raw, verbatim: every review agent's return, Code's dispositions, the mutants, the batches).
+    - Four rounds:
+      - round 1: a builder, then four lenses (fidelity, the refusals, the posting bar, the battery), each followed
+        by a strict refuter;
+      - rounds 2 and 3: a fixer on Code's dispositions, then lenses and refuters again;
+      - round 4: a texts-and-battery fix, then an independent check.
+    - Code applied the check's four confirmed items as r5.
+    - Every build, probe and mutant ran in scratch clones of HEAD, with the clone's `data/m/ckpt/*.json` removed unread
+      and model imports and outbound sockets blocked. No agent opened `data/m/ckpt/*`, the G-F0m-Qwen stage raw or the
+      Q-F0 report.
+    - A seat-citation sweep inventoried 107 items over the added or changed lines citing the seat, a ruling, the PI,
+      m:N or a stages/resume line: 106 citations, and one scope note for swept lines that cite nothing. One citation
+      was imprecise (a bare "(ii)"), and Code fixed it as r6, a comment only. r6 is the committed blob.
+    - **The final mutation batch** ran on the committed blob: 297 runs of 258 distinct mutants, counted by the mutated
+      file's sha256.
+      - Over the distinct mutants:
+        - 239 killed;
+        - 12 equivalent, each with its reason;
+        - 1 strengthening held for the seat (n:cls-every-stop, R3M-5, below);
+        - 6 accepted gaps of one class (R3-F2): the STR-PIN-V10-TEXTS check tests citation forms, not meaning, and its
+          label says so; the sweep checked the meaning.
+      - By run, as the batch summaries count them: 277 killed, 13 equivalent, 1 strengthening, 6 accepted gaps.
+      - The runs:
+        - the consolidated list, 226 runs: round 3's 212 runnable entries and round 4's 14. They are 209 distinct
+          mutants; 17 runs repeat a mutant already in the list under another reviewer's id;
+        - the round-2 and round-3 lenses' own mutants not in that list by id: 33 runs, of which 7 are the same
+          mutation as one in the 226;
+        - a content sweep of the round's scratch mutant files for (old, new) strings not yet run as written: 38 runs,
+          of which 15 are the same mutation as one already run (re-expressed, or differing only by a trailing newline).
+      - Each repeat gave its mutant's result again.
+      - Not run here, as the review raw lists them:
+        - 12 records that are probes or re-runs, not mutants;
+        - 25 working-file entries whose target no longer exists as written, which the reviewers ran on the builds they
+          were written for.
+    - **Set aside, neither a gate run.** The review raw's header discloses both: the round-3 fixer's partial batch and
+      self-test on an intermediate blob `ffea9498…`; and Code's run f5_1, made on HEAD's blob through a relative path,
+      then re-run on r5.
+  - **The window, disclosed.** It comes from R2 3's sequencing: "the edit and the re-run land, the LOCK v1.0 draft names
+    the new analyzer sha256 before G-PWR or any other non-stub stage runs, and the commit of v1.0 follows G-PWR and the
+    PI's cap". The analyzer moves at `b046b16`, and a lock naming it is committed only at v1.0. Its cost is lock
+    §9.3's: "every non-stub stage refuses at its start until a lock revision names the new one". From `b046b16` until
+    v1.0's commit, the committed lock (v0.2) names the old analyzer.
+    - A non-stub stage refuses at the licence: at check (d) if the command line gives the lock's analyzer sha256 (the
+      bytes no longer hash to it), at check (f) if it gives the new one (the committed lock does not name it).
+    - The driver self-test gives 795/796. The failing check is the `time` refusal check, which covers 31 cases.
+      - One case, "a lock-named non-proposal", passes `--proposal-file scripts/m_analyze.py`, relies on the
+        analyzer's sha256 being named in the lock, and expects the banner check.
+      - The driver's own proposal check (`stage_identity_extra`, `m_sessions.py:542–545`) now refuses first: "its
+        sha256 522e80576659aff1... is not named in full in LOCK-m-F0.md's committed text".
+      - The licence is stubbed in that case, so check (f) does not run there.
+      - The self-test prints only the start of its failing-case dict, so the controls are the evidence that this is
+        the case a lock line clears.
+    - Controls, in scratch clones:
+      - the prior analyzer (`66fb5214…7d5e`, on a clone at `5af9e07`) gives 796/796;
+      - the new analyzer committed with one appended lock line naming its sha256 gives 796/796.
+    - No licensed stage runs in the window.
+      - G-PWR, next, is a model-free computation that passes through no stage's licence (Code's reading).
+      - R2 3 counts it among the non-stub stages before which the v1.0 draft names the new analyzer, and item 2 above
+        does that.
+      - The campaign starts after v1.0 (step 16).
+  - **Corrections to `b046b16`'s records** (git history is not rewritten):
+    - the review raw's window text, "the licence's check (f) now refuses first": the refusal is the driver's own
+      proposal-in-lock check (`stage_identity_extra`, `m_sessions.py:542–545`), and the licence is stubbed in that
+      case. The commit message's window text ("the one case the review raw names; 796/796 once a lock line names the
+      new sha256") names no check and stands;
+    - the review raw quotes lock §9.3 with a "then" that is §9.6's restatement;
+    - both count the batch by runs as mutants (the commit message: "297 mutants run, 277 killed, 13 equivalent"). The
+      297 runs are 258 distinct mutants; the 39 repeat runs are 38 among the killed and one among the equivalents
+      (a-4, run twice);
+    - the review raw's sweep heading and the accepted gaps' reasons say "107 citations". The inventory is 106
+      citations and one scope note;
+    - its "which no consolidation carried" (33) and "not yet run" (38) hold by id and as written only: 7 and 15 of
+      them are mutations already run;
+    - its "(22 as written; 11 re-expressed against r6 by Code, fid_3 as two)": the 33 are 23 as written and 10
+      re-expressed runs (9 mutants, fid_3 as two);
+    - its "no KINDS_VOCAB or schema change was needed or made": none was made. Whether the table needs one is Code's
+      reading until the table is built (ping Q6).
+  - **G-ANL-F0's re-run** ([`_ganl-f0-rerun-step15`](results/raw/2026-10-14_m-ganl-f0-rerun-step15.txt)):
+    - `scripts/m_analyze.py ganl` ran canonically on HEAD `b046b16`, the analyzer committed with an identical working
+      tree (PIN-39).
+    - It ran after the hand `git mv`, on R2 3's "G-ANL-F0 is re-run then" (PIN-37's "on the seat's ruling") and as the
+      step-10 read's Q1 names it ("superseded by `git mv` under PIN-37"). The move was unstaged while this entry was
+      checked, and is committed with it.
+    - PASS, 444/444; written (finished 10:29:47 UTC), then "identical" on a second run (finished 10:30:19 UTC),
+      PIN-37's write-once identity.
+    - Compared with the superseded manifest `05132089…fe9b`:
+      - changed: the analyzer (sha256 and sha16); the battery's `checks_pass`, `checks_total`, `expected_checks`
+        (384 → 444) and `coverage_ids` (395 → 457); and `pins` (PIN-26 extended, PIN-44 to PIN-46 added);
+      - unchanged: `closure` and `closure_sha256` (`a3bc7bb9…b22b`), `package_sha256`, `proposal`, `placeholder`,
+        `flag_of_record` (TRUE), the battery's `outputs_sha256` and tallies, `counters`, `seat_routed`, `spec`,
+        `stage`, `templates` and `verdict`. No other key differs.
+    - No G-ANL-F0 run was set aside (C8).
+  - **D3.** `scripts/m_analyze.py` is in neither of G-SHAPE-F0's maps (`gshape.py`'s `SCORING_STACK_FILES` and
+    `TOOLING_FILES` name no analyzer), so the edit does not re-run G-SHAPE-F0. D3's comparison with the lock's tree is
+    made again at v1.0's commit, and v1.0 states the analyzer diff (D3's "the lock states that diff", applied to the
+    analyzer: Code's).
+  - **Site check** ([`_analyzer-round-step15_sitecheck`](results/raw/2026-10-14_m-analyzer-round-step15_sitecheck.txt)):
+    - run in the main tree at HEAD `b046b16` (the analyzer committed; the working tree identical for the analyzer,
+      `valence_core`, the lock and the driver), each suite gated on its summary line: regression 154/154,
+      format_recon 67/67, k1_stage1 21/21, k1_analyze 20/20, e2d_d2_analyze 46/46, recon_echo 18/18, closure_verify3
+      24/24, the m_analyze battery 444/444;
+    - the driver self-test 795/796, gated on the window case: exactly one failing check, the `time` refusal check,
+      carrying the driver's proposal-in-lock message on its case "a lock-named non-proposal". All gates pass.
+    - The raw is the check's second run (started 11:11:56, finished 11:15:31 UTC). The first (started 10:30:51,
+      finished 10:34:27 UTC; kept in Code's session scratchpad, outside the repository) gave the same gates, but its
+      script labelled the window case's message as check (f)'s; values-check pass 1 found that wrong, and the label was
+      corrected and the check re-run.
+    - The raw's "working tree = HEAD: yes" is the script's `git diff --quiet HEAD` over the analyzer, `valence_core`,
+      the lock and the driver; the header prints it beside the analyzer only.
+  - **For the seat, through the PI** (Code's step-15 ping,
+    [`_code-to-design_step15`](results/raw/2026-10-14_m-code-to-design_step15.md)). Each of the ping's items gives what
+    Code does without an answer.
+    - **The new readings.** PIN-44, -45 and -46, and PIN-26's extension, are declared at LOCK v1.0.
+      - By analogy with the step-14 read's Q2 for driver sites, Code reads them as strikable from `b046b16` until
+        v1.0's commit. Without an answer, they stand as built.
+      - A strike, or an added check (R3M-5), moves the analyzer again, re-runs G-ANL-F0 and redraws the v1.0 draft.
+        After G-PWR has run, it would also fall after R2 3's "names the new analyzer sha256 before G-PWR"; whether
+        G-PWR then re-runs is the seat's to say. So answers are cheapest before G-PWR.
+    - **The table's place in the round** (above).
+    - **R3M-5.** PIN-45's id check on the end's class runs only at a fired end look.
+      - At a silent end look, a one-field hand edit of a hair-trigger STOP (its bar set to a G-VER bar) passes, and
+        PIN-8's PI-stop record is then not required.
+      - Running the check at every STOP would guard PIN-8's input, which is beyond R2 3's three edits. Code did not
+        build it; without an answer it stays unbuilt.
+    - **PIN-45's stated limits** (a note in the ping). No V2 refusal catches these three hand edits (PIN-45):
+      - every fired flag cleared, on a fresh end look or on a reused one together with the look it reuses, which cannot
+        be told from a silent end look without recomputing `campaign_look` from the session records (pick-bearing
+        until V3);
+      - a hair-trigger STOP at a reused look whose stop block is replaced by a terminal PI-STOP, its end pause given a
+        ruling: it has the shape of the PI's stop of a paused look, which ids cannot tell apart;
+      - a hair-trigger STOP relabelled G-VER with its (template, s) moved to an id not recorded (at a reused look, its
+        pause given a ruling): it passes, since V2 checks a G-VER STOP's id only against the record; moved to its arm's
+        next launch, it has the shape of a G-VER STOP there, which ids cannot tell apart.
+      Without an answer, none is guarded, and v1.0 declares them as PIN-45 states them.
+    - **Stale texts** (ping Q5): PIN-9's and PIN-10's "flagged for the seat" clauses (above), and PIN-7's list and
+      PIN-10's statement of the end-look refusal, neither of which names the PIN-45 and PIN-46 refusals. Without an
+      answer, they stand, and v1.0 notes them.
+    - **L2-9** (round 2; its refuter refuted it as outside the round). The `verdicts` branch reads `--adjudication`,
+      `--pi-stop`, `--olmo-states`, `--sentences` and `--flag-source` by truthiness (and `--campaign`, `--time`,
+      `--qual` and `--out` fall back to their defaults), so an empty string reads as absent. It predates this round and
+      is unchanged.
+    - **The step-15 items not yet built**, each with its words in the ping:
+      - the PIN-17 re-verification against the placed preprint (R1 C4);
+      - the re-anchoring of v1.1 references at v1.0 (m:58, m:371);
+      - the decisions block;
+      - G-PWR's methods: the n_j assumption, the guard's false-pause null, "the joint figure".
+    - **The closure sha256** (`a3bc7bb9…b22b`). The step-10 read's Q1 lists it among the full hashes v1.0 truncates:
+      "the analyzer's sha256 and its closure sha256 in lock §§1 and 9.1", and conditions only the package's truncation
+      on a move ("if it ever moves"). The closure did not move, so Code reads "superseded" as conditioning it too and
+      keeps it in full at §§1 and 10 of the v0.1 copy (§9.1 already truncates it). That is Code's reading against the
+      ruling's letter, carried as a note in the ping that the seat may contradict (the step-10 read's Q1 is "Settled
+      now"); v1.0 names it in full for PIN-14 either way. The
+      superseded manifest's full sha256 (lock :522, :1555), which no test reads, stays, marked superseded in v1.0's
+      header (a note in the ping).
+    - **What v1.0's commit follows** (R2 3; the word; the ping's PI 4):
+      - G-PWR, run after the v1.0 draft names this analyzer;
+      - the PI's cap;
+      - the preprint placed (m:286), and the table built, values-checked and hashed from it;
+      - D3's comparison with v1.0's tree (the analyzer is in neither map; the driver's later blobs are read under the
+        step-10 read's Q2; any other difference re-runs G-SHAPE-F0 first);
+      - the seat's answers, if the PI holds the table, G-PWR or v1.0 for them (the ping's PI 4: the PI's call). Code
+        proposes that no answer holds v1.0's commit except one adopting Q4's reading (B), which would hold it under
+        m:355's rule (ping Q4).
+      If v1.0 is not committed with a committer date in UTC on or before Q-F0's Clock date, 2026-10-30 (D1, m:16; R1
+      C7's boundary day), Q-F0 is NOT-RUN (m:324). m:324 also gives the PI that path by declining to commit.
+  - **The preprint stays the PI's** (the G-F0m-Qwen close line).
+    - As that close line reads §4 item 3, the root copy, `PREPRINT-v1_0-draft.md` (`d9635ca2…1fe6`), stands unless
+      the PI places another.
+    - The ping asks the PI for a word to Code on the copy (PI 1), and Code builds the table on it: on the copy the word
+      names, or, if it names none, from the root copy on that default. The word can come with the ping's routing.
+      Until a word from the PI reaches Code, the table waits.
+    - Which copy is of record is the PI's; Code's reading settles nothing on it.
+  - **Committed with this entry:**
+    - the re-run's manifest, and the superseded one (the `git mv`);
+    - the re-run raw;
+    - the site-check raw;
+    - Code's step-15 ping;
+    - the values-check raw
+      ([`_analyzer-round-step15_valuescheck`](results/raw/2026-10-14_m-analyzer-round-step15_valuescheck.txt): two
+      adversarial passes on the entry and two on the ping, then a targeted third check of both, before commit; every
+      finding applied or given a disposition).
+    - The analyzer and the review raw are in `b046b16`.
+
 - 2026-10-13 — **G-F0m-Qwen (PROPOSAL-m v1.11 §8 step 14, m:283; the PI's word of 2026-10-13 as Code reads it, LOCK-m-F0
   v0.2 §8): PASS.**
   - **The run.** 24 sessions ran uncached on Qwen, 8 of A0 (contrast) and 16 of A0s (sham), under LOCK-m-F0 v0.2,
