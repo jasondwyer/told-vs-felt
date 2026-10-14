@@ -24,13 +24,18 @@ generates.
                     no-first-read cause holds.
   not-run --unit U --record PATH [--time P] [--qual P] [--out DIR]
                     a unit NOT-RUN by its Clock or by "dose not completable" -> {U}_NOT-RUN.json.
-  posting --posting v1 --tuple PATH --sentences PATH [--flag-source P] [--verdicts-dir D]
-          [--out DIR]
+  posting --posting v1 --tuple PATH --sentences PATH [--rewrites PATH] [--flag-source P]
+          [--verdicts-dir D] [--out DIR]
                     §7's v1 outputs under a declared tuple -> POSTING-v1_outputs.{of-record,
-                    posted}.json (one per table kind).
+                    posted}.json (one per table kind). On the posted text, C7's posting bar
+                    (PIN-44): PASS / FAIL, and the comparison with the VERDICTS enumeration
+                    with the PI's rewrites applied (--rewrites, the rewrite list by row id:
+                    required there, refused on the table of record); a FAIL writes nothing
+                    and prints its record on stdout.
 
 Exit codes (PIN-26): 0 written or identical (selftest: every check passes); 1 a selftest FAIL;
 2 refused -- decided before any pick-bearing byte is interpreted, or a write-once conflict;
+5 (posting only) FAIL against C7's bar on the posted text, nothing written (PIN-44);
 4 STOP -- a content assertion failed after reading (any other SystemExit maps to 4, as
 m_sessions.py's gcal drivers map theirs).
 
@@ -108,6 +113,7 @@ OLMO_STATES_SCHEMA = "m-olmo-states-v1"
 DECISIONS_SCHEMA = "m-decisions-v1"
 PI_STOP_SCHEMA = "m-pi-stop-record-v1"
 ADJ_SCHEMA = "m-verdicts-adjudication-v1"
+REWRITES_SCHEMA = "m-posting-rewrites-v1"
 
 UNITS = ("Q-F0", "OLMo-sft", "OLMo-dpo", "OLMo-instruct")
 Q5 = ("PASS", "REVERSE", "DEAD", "INDETERMINATE", "NOT-RUN")
@@ -135,6 +141,19 @@ class AnlRefusal(SystemExit):
 
 class AnlStop(SystemExit):
     """STOP (exit 4): a content assertion failed after reading."""
+
+
+class AnlPostingFail(SystemExit):
+    """The posting's FAIL against C7's bar on the posted text (exit 5, PIN-44): nothing written;
+    ``lines`` (stdout, the record of that step: the residue by row id and, row by row, each residue
+    item in full as the enumeration carries it (row_id, loc, clauses, a, b, c, treatments; no
+    sentence text: the table is the reading of record), each comparison set with its rows in full,
+    and the unwritten record's declared tuple (with its reasons and pending), inputs, comparator,
+    flag and binding) and ``bar`` carry the result."""
+
+    def __init__(self, lines: Sequence[str], bar: Mapping) -> None:
+        super().__init__("\n".join(lines))
+        self.lines, self.bar = list(lines), copy.deepcopy(dict(bar))
 
 
 class BothArmsEmpty(ValueError):
@@ -1999,7 +2018,96 @@ def run_verdicts(inp: VerdictInputs, env: Env) -> tuple[str, list[str], list[Pat
         # G-VER STOP at the first launch) there is no look to carry.
         raise AnlRefusal("REFUSED: a STOP-ended campaign records no end look at its STOP (the seat's C9(ii)) -- "
                          "not written by the lock's package")
+    end_look = camp.get("end_look")
+    reused_lk = None
+    if end_look is not None:
+        # PIN (Code, declared at LOCK v1.0): PIN-46 -- the seat's round-2 item 3 (lock §9.6) orders "(c)
+        # the end look's launch count" built "as VERDICTS refusals" that "guard the checkpoint against a
+        # hand edit". Code's reading: wherever campaign.end_look is recorded (STOP and terminal alike), its
+        # at_launches is an int (exact type: a bool or a float is no launch count) equal to len(sessions),
+        # the launches recorded -- never a provenance `launched` sum (a G-VER record is quarantined in the
+        # stop block, never a session); an end look reusing cadence look k (end_is_look k) carries that
+        # look's count too: ck.looks records a look k (its result's look) at the end look's at_launches,
+        # as the writer reuses only the look recorded at n. Checked before PIN-45's refusal and PIN-9's
+        # branch, so each refusal shows its own message.
+        n_rec = len(ck["sessions"])
+        el_n = end_look.get("at_launches") if isinstance(end_look, Mapping) else None
+        if type(el_n) is not int or el_n != n_rec:
+            raise AnlRefusal(f"REFUSED: the end look's launch count ({el_n!r}) is not the launches recorded "
+                             f"({n_rec}) -- not written by the lock's package")
+        if "end_is_look" in end_look:
+            k_el = end_look["end_is_look"]
+            looks_k = [lk_ for lk_ in ck["looks"] if isinstance(lk_, Mapping) and isinstance(lk_.get("result"), Mapping)
+                       and type(lk_["result"].get("look")) is type(k_el) and lk_["result"].get("look") == k_el]
+            reused_lk = next((lk_ for lk_ in looks_k if type(lk_.get("at_launches")) is int
+                              and lk_["at_launches"] == el_n), None)
+            if reused_lk is None:
+                raise AnlRefusal(f"REFUSED: the end look's launch count ({el_n!r}) is not that of the look it reuses "
+                                 f"(look {k_el!r}, recorded at {[lk_.get('at_launches') for lk_ in looks_k]}) -- not "
+                                 f"written by the lock's package")
     pauses = camp.get("pauses") or []
+    if isinstance(end_look, Mapping):
+        # PIN (Code, declared at LOCK v1.0): PIN-45 -- the seat's round-2 item 3 (lock §9.6) orders "(b) a
+        # fired end look without a matching pause" built "as VERDICTS refusals". Code's reading, mirroring
+        # the writer's invariants (stages._campaign_end, _stop_end_look, run_campaign's cadence pause; its
+        # one adjudication write is a resume, and an ended campaign is never resumed): an end look is
+        # fired iff its `fired` or any result's is, or -- reusing look k -- look k's as ck.looks records
+        # it; its bars are its fired results' names in order. A pause raised at the end (a fresh end
+        # look's; a reused look k's at a hair-trigger STOP, which pre-empted the cadence pause) is matched
+        # only by the LAST pause {kind end_look, look 'end' | kind look, look k, at_launches, bars},
+        # unadjudicated (its ruling enters as PIN-9's declared file); a reused look k's at a terminal or
+        # G-VER end by SOME pause {kind look, look k, at_launches, bars} carrying a str adjudication
+        # (ruled before the end, through stages: by the seat's adjudication, or by the PI's stop text
+        # recorded as the pause's ruling (stages.py:2124-2129); a schedule_exhausted pause may follow it
+        # at the same n). kind, look and at_launches compare by value and exact type, as the writer
+        # writes ints and strs. The rule is chosen by the end's class as recorded, and at a STOP that
+        # class is checked by ids against the writer's own assertions (stages._stop_end_look): a
+        # hair-trigger STOP's (template, s) is the last session recorded, a G-VER STOP's none of them (a
+        # relabel that also moves the id off the record passes: PIN-45's limits). Checked before PIN-9's
+        # branch, so a deleted pause is never read as no pause.
+        el_res = end_look.get("results") if isinstance(end_look.get("results"), list) else []
+        el_bars = [r_.get("name") for r_ in el_res if isinstance(r_, Mapping) and r_.get("fired")]
+        lk_res = reused_lk["result"] if reused_lk is not None else {}
+        lk_rs = lk_res.get("results") if isinstance(lk_res.get("results"), list) else []
+        lk_fired = bool(lk_res.get("fired")) or any(isinstance(r_, Mapping) and r_.get("fired") for r_ in lk_rs)
+        if end_look.get("fired") or el_bars or lk_fired:
+            reused = "end_is_look" in end_look
+            want = ({"kind": "look", "look": end_look["end_is_look"]} if reused
+                    else {"kind": "end_look", "look": "end"})
+            want.update(at_launches=end_look.get("at_launches"), bars=el_bars)
+
+            def _matches(p_: Any) -> bool:
+                return (isinstance(p_, Mapping) and isinstance(p_.get("bars"), list) and p_["bars"] == el_bars
+                        and all(type(p_.get(k_)) is type(want[k_]) and p_.get(k_) == want[k_]
+                                for k_ in ("kind", "look", "at_launches")))
+            stop_el = ck.get("stop")
+            if isinstance(stop_el, Mapping):
+                # the class that chooses the rule below, by ids only, against the writer's assertions
+                # (stages._stop_end_look); a stop block is recorded only at a STOP (resume.ended_status), and any
+                # other STOP bar is refused after PIN-8 whichever rule is chosen
+                hit_id = (stop_el.get("template"), stop_el.get("s"))
+                rec_ids = [(r_["template"], r_["s"]) for r_ in ck["sessions"]]
+                if stop_el.get("bar") == HAIR_BAR and rec_ids[-1:] != [hit_id]:
+                    raise AnlRefusal(f"REFUSED: a hair-trigger STOP's session {hit_id!r} is not the last one recorded "
+                                     f"(the last: {rec_ids[-1:]!r}) -- not written by the lock's package")
+                if stop_el.get("bar") in GVER_BARS and hit_id in rec_ids:
+                    raise AnlRefusal(f"REFUSED: a G-VER STOP's quarantined record {hit_id!r} is among the sessions "
+                                     f"recorded -- not written by the lock's package")
+            end_raised = not reused or (ended == "STOP" and (stop_el.get("bar") if isinstance(stop_el, Mapping)
+                                                             else None) not in GVER_BARS)
+            if end_raised:
+                # raised at the end (stages._campaign_end, _stop_end_look; appended by resume.apply_end): the
+                # campaign's last pause, never adjudicated in the checkpoint (an ended campaign is never resumed)
+                ok_pause = bool(pauses) and _matches(pauses[-1]) and pauses[-1].get("adjudication") is None
+            else:
+                # a cadence look's pause, raised before the end and ruled before the end, through stages (the
+                # seat's adjudication, or the PI's stop text recorded as the pause's ruling: stages.py:2124-2129)
+                ok_pause = any(_matches(p_) and isinstance(p_.get("adjudication"), str) for p_ in pauses)
+            if not ok_pause:
+                where = ("the campaign's last pause must be {}, unadjudicated" if end_raised
+                         else "some pause must be {}, adjudicated").format(want)
+                raise AnlRefusal(f"REFUSED: a fired end look records no matching pause ({where}) -- "
+                                 f"not written by the lock's package")
     used_adj = None
     if pauses and pauses[-1].get("adjudication") is None:
         # PIN (Code, declared at LOCK v0.1): PIN-9 -- confirmed by the seat (C3, 2026-10-10): VERDICTS
@@ -2367,10 +2475,160 @@ def posting_out_name(kind: str) -> str:
     return f"POSTING-v1_outputs.{kind}.json"
 
 
+BAR_NOT_APPLICABLE = ("C7's bar is 'The pass bar for the posting's re-run on the posted text'; Code's reading "
+                      "(PIN-44): this run is over the table of record, so the bar does not apply and no rewrite "
+                      "list is taken")
+# the fields of an enumeration item as enumeration() writes them (PIN-21): a comparator item carries exactly these
+ENUM_ITEM_KEYS = ("a", "b", "c", "clauses", "loc", "row_id", "treatments")
+
+
+def rewrite_ids(data: bytes) -> list[str]:
+    """The PI's rewrite list (PIN-44) from its committed bytes: {schema, posting v1, rows}, exact key
+    set, rows distinct non-empty strings (may be empty); AnlRefusal otherwise."""
+    try:
+        doc = json.loads(data.decode("utf-8"))
+    except (UnicodeDecodeError, ValueError) as e:
+        raise AnlRefusal(f"REFUSED: the rewrite list unreadable ({type(e).__name__})")
+    if not isinstance(doc, Mapping) or sorted(doc) != ["posting", "rows", "schema"] \
+            or doc["schema"] != REWRITES_SCHEMA or doc["posting"] != "v1":
+        raise AnlRefusal(f"REFUSED: the rewrite list is {{schema {REWRITES_SCHEMA}, posting v1, rows}} (PIN-44)")
+    rows = doc["rows"]
+    if not isinstance(rows, list) or not all(isinstance(x, str) and x for x in rows):
+        raise AnlRefusal("REFUSED: the rewrite list's rows are a list of row ids, each a non-empty string (PIN-44)")
+    if len(set(rows)) != len(rows):
+        raise AnlRefusal("REFUSED: the rewrite list names a row id more than once (PIN-44)")
+    return list(rows)
+
+
+def posting_comparator(verdicts_dir: Path, out: Path) -> tuple[dict, list[dict]]:
+    """(the comparator's record, its enumeration) for the posted text's re-run (PIN-44): Q-F0's VERDICTS
+    (its stored v1_outputs enumeration); where that file does not exist, the posting's own of-record
+    output (its outputs' enumeration); neither -> AnlRefusal (nothing to compare with). The file must
+    be what it is taken for (a VERDICTS: schema m-verdicts-v1, unit Q-F0; an of-record output: schema
+    m-posting-v1-outputs-v1, table_kind of-record); an item is refused unless it is an object carrying
+    exactly enumeration()'s fields (str row_id, list clauses), and a row id named twice is refused; the
+    record names the comparator's kind, path, sha256 and the tuple it stores (informational)."""
+    vp, op = verdicts_dir / "Q-F0_VERDICTS.json", out / posting_out_name("of-record")
+    if vp.is_file():
+        kind, p, what, blk_key = "verdicts", vp, "Q-F0's VERDICTS", "v1_outputs"
+        ident = {"schema": VERDICTS_SCHEMA, "unit": "Q-F0"}
+    elif op.is_file():
+        kind, p, what, blk_key = "posting-of-record", op, "the posting's of-record output", "outputs"
+        ident = {"schema": POSTING_OUT_SCHEMA, "table_kind": "of-record"}
+    else:
+        raise AnlRefusal("REFUSED: the posted text's re-run has nothing to compare with -- neither Q-F0's VERDICTS "
+                         "(verdicts-dir) nor the posting's of-record output (out) exists (PIN-44)")
+    data = _read_bytes(p, what)
+    try:
+        doc = json.loads(data.decode("utf-8"))
+    except (UnicodeDecodeError, ValueError) as e:
+        raise AnlRefusal(f"REFUSED: {what} unreadable ({type(e).__name__})")
+    if not (isinstance(doc, Mapping) and all(doc.get(k_) == v_ for k_, v_ in ident.items())):
+        raise AnlRefusal(f"REFUSED: {what} is not what it is taken for ("
+                         + ", ".join(f"{k_} {v_}" for k_, v_ in ident.items()) + "; PIN-44)")
+    blk = doc.get(blk_key)
+    en = blk.get("enumeration") if isinstance(blk, Mapping) else None
+    if not (isinstance(en, list) and all(isinstance(it, Mapping) and sorted(it) == list(ENUM_ITEM_KEYS)
+                                         and isinstance(it.get("row_id"), str)
+                                         and isinstance(it.get("clauses"), list) for it in en)):
+        raise AnlRefusal(f"REFUSED: {what} records no v1 enumeration to compare with ({blk_key}.enumeration; PIN-44)")
+    if len({it["row_id"] for it in en}) != len(en):
+        raise AnlRefusal(f"REFUSED: {what} names a row id more than once in its enumeration (PIN-44)")
+    tup = doc.get("tuple")
+    return ({"kind": kind, "path": _repo_rel(p), "sha256": _sha256_bytes(data),
+             "tuple": dict(tup) if isinstance(tup, Mapping) else None}, [dict(it) for it in en])
+
+
+def posting_bar(outputs: Mapping, flag: bool, table: Mapping, comparator: Mapping, expected_from: Sequence[Mapping],
+                rewrites: Sequence[str], tuple_rec: Mapping) -> dict:
+    """C7's bar on the posted text and the comparison with the comparator's enumeration with the PI's
+    rewrites applied (PIN-44). The comparison is reported; it does not decide the verdict."""
+    # PIN (Code, declared at LOCK v1.0): PIN-44 -- the seat's round-2 item 3 (a) (lock §9.6): "the
+    # `posting` command renders PASS/FAIL against the bar (PASS iff the enumeration under (a), (b) and (c)
+    # is empty and the dose note is present iff the flag); and it compares the posting re-run's
+    # enumeration with the VERDICTS enumeration with the PI's rewrites applied (a declared input: the
+    # rewrite list, by row id), reporting any row that differs." Code's readings: the bar is rendered on
+    # a posted-kind run only (C7: "The pass bar for the posting's re-run on the posted text"); the bar's
+    # second conjunct ("the dose note is present iff the flag") is computed from dose_note's own status
+    # (the table carries a dose-note span iff dose_note(True, table) is 'carried'), not only through
+    # clause (c); expected = the comparator's rows less the rewrite
+    # list's; changed = in both, the two enumeration items differing in a field other than loc, moved = in
+    # both, differing in loc alone (informational; differs does not count it); the comparator's stored
+    # tuple is recorded beside this run's (informational); a FAIL writes nothing, prints its record
+    # (posting_fail_lines) and exits 5.
+    enum = [json.loads(json.dumps(it)) for it in outputs["enumeration"]]
+    present = dose_note(True, table)["status"] == "carried"
+    iff = present == flag
+    residue = [it["row_id"] for it in enum]
+    rw = set(rewrites)
+    expected = [it for it in expected_from if it["row_id"] not in rw]
+    exp_by = {it["row_id"]: it for it in expected}
+    act_by = {it["row_id"]: it for it in enum}
+    only_actual = [r for r in residue if r not in exp_by]
+    only_expected = [it["row_id"] for it in expected if it["row_id"] not in act_by]
+    differ = [{"row_id": r, "expected": exp_by[r], "actual": act_by[r]}
+              for r in residue if r in exp_by and exp_by[r] != act_by[r]]
+
+    def sans_loc(it_: Mapping) -> dict:
+        return {k_: v_ for k_, v_ in it_.items() if k_ != "loc"}
+    changed = [d_ for d_ in differ if sans_loc(d_["expected"]) != sans_loc(d_["actual"])]
+    moved = [d_ for d_ in differ if sans_loc(d_["expected"]) == sans_loc(d_["actual"])]
+    in_comp = {it["row_id"] for it in expected_from}
+    comparison = {"comparator": dict(comparator), "same_tuple": comparator.get("tuple") == dict(tuple_rec),
+                  "only_actual": only_actual, "only_expected": only_expected,
+                  "changed": changed, "moved": moved,
+                  "rewrites_not_in_comparator": [r for r in rewrites if r not in in_comp],
+                  "differs": bool(only_actual or only_expected or changed)}
+    return {"applies": True, "verdict": "PASS" if (not enum and iff) else "FAIL", "enumeration_empty": not enum,
+            "dose_note_iff_flag": iff, "residue": residue, "comparison": comparison}
+
+
+def posting_bar_lines(bar: Mapping) -> list[str]:
+    """The bar's stdout lines (PIN-44): the verdict, the residue by row id, the comparison."""
+    cmp_ = bar["comparison"]
+    ch = ", ".join(c["row_id"] for c in cmp_["changed"]) or "none"
+    mv = ", ".join(m_["row_id"] for m_ in cmp_["moved"]) or "none"
+    return [f"POSTING v1: {bar['verdict']} against C7's bar (PIN-44): enumeration empty {bar['enumeration_empty']}, "
+            f"dose note present iff the flag {bar['dose_note_iff_flag']}"
+            + ("; nothing written" if bar["verdict"] == "FAIL" else ""),
+            f"POSTING v1: residue by row id ({len(bar['residue'])}): {', '.join(bar['residue']) or 'none'}",
+            f"POSTING v1: comparison with the {cmp_['comparator']['kind']} enumeration with the PI's rewrites applied "
+            f"(sha256 {cmp_['comparator']['sha256'][:16]}; its tuple this run's {cmp_['same_tuple']}): differs "
+            f"{cmp_['differs']}; only_actual {cmp_['only_actual']}; only_expected {cmp_['only_expected']}; changed "
+            f"{ch}; moved {mv}; rewrites not in the comparator {cmp_['rewrites_not_in_comparator']}"]
+
+
+def posting_fail_lines(bar: Mapping, enum: Sequence[Mapping], expected_from: Sequence[Mapping], inputs: Mapping,
+                       flag: Mapping, binding: Mapping, declared: Mapping) -> list[str]:
+    """A FAIL's record (PIN-44): it writes nothing, so its stdout is the record of that step -- every
+    residue row in full as the enumeration carries it (enumeration()'s fields only: no tag, pick or
+    free-round event is in an item), each comparison set (moved included) with its rows in full, and the
+    unwritten record's declared tuple (with its reasons and pending), inputs (path and sha256 each),
+    comparator, flag and binding. Deterministic (sorted keys)."""
+    def js(x: Any) -> str:
+        return json.dumps(x, sort_keys=True)
+    cmp_ = bar["comparison"]
+    enum_n = [json.loads(json.dumps(it)) for it in enum]
+    act_by = {it["row_id"]: it for it in enum_n}
+    exp_by = {it["row_id"]: it for it in expected_from}
+    out = [f"POSTING v1: residue {i} of {len(enum_n)}, {it['row_id']}: {js(it)}" for i, it in enumerate(enum_n, 1)]
+    out += [f"POSTING v1: comparison only_actual {r}: {js(act_by[r])}" for r in cmp_["only_actual"]]
+    out += [f"POSTING v1: comparison only_expected {r}: {js(exp_by[r])}" for r in cmp_["only_expected"]]
+    out += [f"POSTING v1: comparison changed {c['row_id']}: expected {js(c['expected'])}; actual {js(c['actual'])}"
+            for c in cmp_["changed"]]
+    out += [f"POSTING v1: comparison moved {m_['row_id']}: expected {js(m_['expected'])}; actual "
+            f"{js(m_['actual'])}" for m_ in cmp_["moved"]]
+    out.append(f"POSTING v1: comparison rewrites not in the comparator: {js(cmp_['rewrites_not_in_comparator'])}")
+    out.append(f"POSTING v1: the unwritten record: declared {js(declared)}; inputs {js(inputs)}; comparator "
+               f"{js(cmp_['comparator'])}; flag {js(flag)}; binding {js(binding)}")
+    return out
+
+
 def run_posting(tuple_p: Path, sentences: Path, flag_source: Path, verdicts_dir: Path, out: Path,
-                env: Env) -> tuple[str, list[str], list[Path]]:
+                env: Env, rewrites: Path | None = None) -> tuple[str, list[str], list[Path]]:
     """§7's v1 outputs under the declared tuple, cross-checked against existing unit outputs; it
-    never opens a checkpoint (PIN-23)."""
+    never opens a checkpoint (PIN-23). On the posted text, C7's bar (PIN-44): a FAIL raises
+    AnlPostingFail (exit 5) and writes nothing."""
     # PIN (Code, declared at LOCK v0.1): PIN-23 -- the tuple is an explicit input, computed at Q-F0's
     # VERDICTS and again at the posting under the states then standing; each coordinate is cross-
     # checked against the unit's VERDICTS or NOT-RUN output; each entry records the tuple it used.
@@ -2414,16 +2672,44 @@ def run_posting(tuple_p: Path, sentences: Path, flag_source: Path, verdicts_dir:
         if (rec_sha is not None or qv.name.endswith("_VERDICTS.json")) and rec_sha != _sha256_bytes(sbytes):
             raise AnlRefusal(f"REFUSED: the table of record is not the one Q-F0's {qv.stem[5:]} output read "
                              f"(LOCK-m-F0 v1.0's, m:286; PIN-40)")
+    inputs = {"tuple": _file_rec(tuple_p, tb), "sentences": _file_rec(sentences, sbytes)}
+    posted = table["kind"] == "posted"
+    rw_ids: list[str] = []
+    comp_rec = comp_rows = None
+    if not posted:                       # PIN-44: C7's bar is the posted text's; no rewrite list here
+        if rewrites is not None:
+            raise AnlRefusal("REFUSED: --rewrites is the posted text's input (C7's bar, PIN-44); the run over the "
+                             "table of record takes none")
+    else:
+        if rewrites is None:
+            raise AnlRefusal("REFUSED: the re-run on the posted text needs --rewrites, the PI's rewrite list by row "
+                             "id (C7's bar, PIN-44)")
+        if Path(rewrites).is_dir():              # PIN-44: an empty --rewrites is a given path, read as '.'
+            raise AnlRefusal(f"REFUSED: the rewrite list unreadable (the path {str(rewrites)!r} names a directory, "
+                             f"not a file; an empty --rewrites is read as '.') (PIN-44)")
+        rwp, rwb = env.committed(rewrites)
+        if rwp or rwb is None:
+            raise AnlRefusal(f"REFUSED: the rewrite list is not committed at HEAD: {rwp} (PIN-44)")
+        rw_ids = rewrite_ids(rwb)
+        inputs["rewrites"] = _file_rec(rewrites, rwb)
+        comp_rec, comp_rows = posting_comparator(verdicts_dir, out)
     flag = flag_of_record(flag_source, env.committed)
+    outputs = v1_outputs(t, reasons, bool(flag["value"]), table)
+    bar = (posting_bar(outputs, bool(flag["value"]), table, comp_rec, comp_rows, rw_ids, dict(zip(UNITS, t)))
+           if posted else {"applies": False, "reason": BAR_NOT_APPLICABLE})
     doc_out = {"schema": POSTING_OUT_SCHEMA, "posting": "v1", "tuple": dict(zip(UNITS, t)),
-               "reasons": dict(reasons), "pending": dict(pend), "flag": flag,
-               "inputs": {"tuple": _file_rec(tuple_p, tb), "sentences": _file_rec(sentences, sbytes)},
-               "table_kind": table["kind"], "outputs": v1_outputs(t, reasons, bool(flag["value"]), table),
+               "reasons": dict(reasons), "pending": dict(pend), "flag": flag, "inputs": inputs,
+               "table_kind": table["kind"], "outputs": outputs, "bar": bar,
                "proposal_sha256": PROPOSAL_SHA256, **binding}
+    head = (f"POSTING v1: tuple {t}; ceiling {doc_out['outputs']['ceiling']['name']}; "
+            f"{len(doc_out['outputs']['enumeration'])} enumerated rows")
+    if posted and bar["verdict"] == "FAIL":
+        raise AnlPostingFail([head + " on the posted text"] + posting_bar_lines(bar)
+                             + posting_fail_lines(bar, outputs["enumeration"], comp_rows, inputs, flag, binding,
+                                                  {k_: doc_out[k_] for k_ in ("tuple", "reasons", "pending")}), bar)
     path = out / posting_out_name(table["kind"])
     status = write_texts_once([(path, doc_out)])
-    return status, [f"POSTING v1: tuple {t}; ceiling {doc_out['outputs']['ceiling']['name']}; "
-                    f"{len(doc_out['outputs']['enumeration'])} enumerated rows ({status}: {path.name})"], [path]
+    return status, [f"{head} ({status}: {path.name})"] + (posting_bar_lines(bar) if posted else []), [path]
 
 
 # --- the PIN register (repeated in the G-ANL-F0 entry) --------------------------------------------
@@ -2587,8 +2873,9 @@ PINS = {
     "PIN-26": "Exit codes: --selftest 0/1; ganl 0 written or identical, 2 refused, 4 STOP (a closure that "
               "cannot be computed included -- every SystemExit of ganl maps through the same rule); "
               "verdicts, not-run, posting 0 written or identical, 2 refused (decided before any pick is "
-              "interpreted, write-once or exclusivity, or an input that is not a JSON object), 4 STOP (a "
-              "content assertion after reading; any other SystemExit maps to 4).",
+              "interpreted, write-once or exclusivity, or an input that is not a JSON object); posting also 5: "
+              "FAIL against C7's bar on the posted text's re-run, nothing written (PIN-44; the code is Code's, "
+              "added at LOCK v1.0); 4 STOP (a content assertion after reading; any other SystemExit maps to 4).",
     "PIN-27": "The abstract clause is emitted verbatim even where its host sentence is enumerated under (a); "
               "the entry notes that it can dangle.",
     "PIN-28": "The analyzer runs guard.check_call_sites and the forbidden-literal grep over itself in its "
@@ -2653,6 +2940,96 @@ PINS = {
               "--olmo-states the date is the calendar date of the terminal event that made the NOT-RUN "
               "final -- the PI stop, the G-VER STOP, or the day the cap was reached -- as that unit's entry "
               "records it; where the unit's own output carries no date, the declarer supplies the entry's.",
+    "PIN-44": "Declared at LOCK v1.0, built at step 15 on the seat's round-2 item 3 (a) (lock §9.6): \"the "
+              "`posting` command renders PASS/FAIL against the bar (PASS iff the enumeration under (a), (b) and "
+              "(c) is empty and the dose note is present iff the flag); and it compares the posting re-run's "
+              "enumeration with the VERDICTS enumeration with the PI's rewrites applied (a declared input: the "
+              "rewrite list, by row id), reporting any row that differs.\" The bar reads the posted table's "
+              "declared classification (the seat: \"no analyzer reads prose\"). Code's readings: C7's bar is "
+              "\"The pass bar for the posting's re-run on the posted text\", so it is rendered on a run whose "
+              "table kind is posted; an of-record run records it as not applicable, with that reason, and takes "
+              "no rewrite list (an empty --rewrites is a given path: refused there, and refused as unreadable "
+              "on a posted run). The rewrite list is a declared input, posting --rewrites PATH: {schema "
+              "m-posting-rewrites-v1, posting v1, rows: [row_id, ...]}, exact key set, rows distinct non-empty "
+              "strings (may be empty); required on a posted run and refused on an of-record run (exit 2); "
+              "committed at HEAD with identical working-tree bytes (the sentence table's rule) and read only "
+              "after PIN-42's binding; its path and sha256 recorded in inputs.rewrites. PASS iff (i) this run's "
+              "enumeration is empty and (ii) the dose note is present iff the flag of record, (ii) computed from "
+              "dose_note's own status (present iff dose_note(True, table) is 'carried': the table carries a "
+              "dose-note span), not only through clause (c). The comparator (\"the VERDICTS enumeration\") is "
+              "Q-F0's VERDICTS output in the verdicts directory, its stored v1_outputs enumeration; where that "
+              "file does not exist (Q-F0 NOT-RUN: on its Clock path the table of record is built at the posting, "
+              "m:278, PIN-40; a no-first-read NOT-RUN from `verdicts` records no enumeration either), the "
+              "posting's own of-record output in the out directory, its outputs' enumeration. Refused (exit 2): "
+              "neither; a comparator that is not what it is taken for (a VERDICTS file whose schema is not "
+              "m-verdicts-v1 or whose unit is not Q-F0; an of-record output whose schema is not "
+              "m-posting-v1-outputs-v1 or whose table_kind is not of-record); one recording no enumeration (an "
+              "item that is not an object, or does not carry exactly enumeration()'s fields, a str row_id and a "
+              "list clauses among them, included); one naming a row id twice. Its kind, path, sha256 and stored "
+              "tuple (None where it stores none, or one that is not an object) are recorded, with whether that "
+              "tuple is this run's (same_tuple: informational, it decides nothing). Expected = the comparator's "
+              "rows less those the rewrite list names; actual = this run's enumeration; reported: only_actual, "
+              "only_expected, changed (in both, the two enumeration items differing in a field other than loc), "
+              "moved (in both, the two items differing in loc alone: informational, as a line added or removed "
+              "in the posted text moves every later row), rewrites_not_in_comparator (informational) and "
+              "differs (any of only_actual, only_expected and changed). The comparison is reported; it does not "
+              "decide PASS / FAIL. A PASS writes once (identical on a re-run; exit 0). A FAIL writes nothing, so "
+              "its stdout is the record of that step: the verdict, the residue by row id and, row by row, each "
+              "residue item in full as the enumeration carries it (row_id, loc, clauses, a, b, c, treatments; no "
+              "tag, pick or free-round event is in an item), each comparison set (moved included) with its rows "
+              "in full, and the unwritten record's declared tuple (with its reasons and pending), inputs (path "
+              "and sha256 each), comparator, flag and binding (the analyzer's, package's and closure's sha256), "
+              "in sorted-key JSON; it exits 5 (PIN-26). The output gains `bar` {applies, verdict, "
+              "enumeration_empty, dose_note_iff_flag, residue, comparison}; `outputs` is unchanged.",
+    "PIN-45": "Declared at LOCK v1.0, built at step 15 on the seat's round-2 item 3 (lock §9.6), which orders "
+              "\"(b) a fired end look without a matching pause\" built \"as VERDICTS refusals\" that \"guard the "
+              "checkpoint against a hand edit\". Code's reading, mirroring the writer's invariants in stages "
+              "(_campaign_end, _stop_end_look, run_campaign's cadence-look pause; stages writes a pause's "
+              "adjudication only on a resume, and an ended campaign is never resumed): an end look is fired iff "
+              "its `fired` is true, or any of its results is fired, or -- where it reuses cadence look k "
+              "(end_is_look k) -- look k as ck.looks records it is fired (its result's `fired` or any of its "
+              "results'); a hand edit clearing one of these beside another is still a fired end look. Its bars "
+              "are the names of its fired results, in order. A pause raised at the end -- a fresh end look's (no "
+              "end_is_look; terminal or STOP), or a reused look k's at a hair-trigger STOP on a multiple of 40, "
+              "where the hit pre-empted the cadence pause -- is matched only by the campaign's last pause being "
+              "{kind end_look, look 'end' (fresh) or kind look, look k (reused), at_launches the end look's, bars "
+              "its fired bars} with no adjudication: an ended campaign's end pause is never adjudicated in the "
+              "checkpoint, and its ruling enters only as PIN-9's declared --adjudication file. A reused look k's "
+              "at a terminal or G-VER end is matched by some pause {kind look, look k, at_launches the end "
+              "look's, bars} carrying a str adjudication -- raised before the end and ruled before the end, "
+              "through stages: by the seat's adjudication, or by the PI's stop text recorded as the pause's "
+              "ruling (stages.py:2124-2129); a schedule_exhausted pause may follow it at the same n. kind, look "
+              "and at_launches are compared by value and exact type, as the writer writes ints and strs (a count "
+              "6.0 is not 6). The rule is chosen by the end's class as the checkpoint records it: STOP iff a stop "
+              "block is recorded, else the terminal block's status (resume.ended_status); a STOP's bar G-VER or "
+              "the hair trigger, any other refused after PIN-8 whichever rule is chosen. What no other V2 check "
+              "pins is checked here, for a fired end look at a STOP, by ids only (no pick-bearing field is read), "
+              "against the writer's own assertions (stages._stop_end_look): a hair-trigger STOP's (template, s) "
+              "is the last session recorded, a G-VER STOP's (template, s) none of them (its record is "
+              "quarantined in the stop block). Otherwise a structural refusal at V2 (exit 2; nothing released or "
+              "written), after PIN-46's and before PIN-9's branch, so that a deleted pause is never read as no "
+              "pause. An unfired end look needs no pause; none is checked. Its limits, Code's reading too: an end "
+              "look with every fired flag cleared -- a fresh one, or a reused one together with the look it "
+              "reuses as ck.looks records it -- cannot be told at V2 from a silent one without recomputing "
+              "campaign_look from the session records, which are pick-bearing until V3 (PIN-7's order); and a "
+              "hair-trigger STOP at a reused look whose stop block is replaced by a terminal PI-STOP, its end "
+              "pause given a ruling, has the shape of the PI's stop of a paused look at n, which ids cannot tell "
+              "apart; and a hair-trigger STOP whose stop block is relabelled G-VER with its (template, s) moved to "
+              "an id not recorded (at a reused look, its pause given a ruling) passes, as V2 checks a G-VER STOP's "
+              "id only against the record, as the writer asserts; moved to its arm's next launch (s the count of "
+              "that template's sessions recorded) it has the shape of a G-VER STOP there, which ids cannot tell "
+              "apart. No V2 refusal catches any of the three.",
+    "PIN-46": "Declared at LOCK v1.0, built at step 15 on the seat's round-2 item 3 (lock §9.6), which orders "
+              "\"(c) the end look's launch count\" built \"as VERDICTS refusals\" that \"guard the checkpoint "
+              "against a hand edit\". Code's reading: wherever campaign.end_look is recorded, at every end that "
+              "records one (STOP and terminal alike; Code's round-2 block had scoped it to the STOP), its "
+              "at_launches is an int (exact type: a bool or a float is no launch count) equal to len(sessions), "
+              "the launches recorded (a G-VER record is quarantined in the stop block, never a session); "
+              "provenance `launched` sums are never used. An end look reusing cadence look k (end_is_look k) "
+              "carries that look's launch count too: ck.looks must record a look k (its result's look, by value "
+              "and exact type) whose at_launches is the end look's (an int, by exact type too), as the writer "
+              "reuses only the look recorded at n. Otherwise a structural refusal at V2 (exit 2; nothing released or written), after PIN-10's "
+              "and before PIN-45's, so that each refusal shows its own message on its own case.",
 }
 SEAT_ROUTED = {"PIN-5": "routed before LOCK v0.1; ruled by the seat (C1, 2026-10-10): confirmed -- m:324's "
                         "parenthetical ends 'or any reason'; clock:not-locked:<stage> reads that clause",
@@ -2665,7 +3042,7 @@ SEAT_ROUTED = {"PIN-5": "routed before LOCK v0.1; ruled by the seat (C1, 2026-10
 # =============================================================================================
 # THE BATTERY (m:278). Selftest-only helpers carry the `_bt` prefix.
 # =============================================================================================
-EXPECTED_CHECKS = 384        # the battery's fixed check list (any skip or addition changes it)
+EXPECTED_CHECKS = 444        # the battery's fixed check list (any skip or addition changes it)
 
 # PIN (Code, declared at LOCK v0.1): PIN-24 -- the battery reaches every per-arm outcome per unit, the
 # full 5 x 6^3 product under both flag values (the flag an input, not a coordinate; 'clock:pi-declined'
@@ -2719,6 +3096,18 @@ _REQUIRED += ["C3-CAP-ZERO", "C3-PISTOP-ZERO", "C3-GVER-ZERO", "C3-GVER-DATA", "
               "C3-LASTLOOK-STOP-ENDISLOOK", "C3-COUNTS-INDEPENDENT", "C3-STOP-NO-ENDLOOK-REFUSED",
               "C3-HAIR-ENDLOOK-LABEL", "C3-HAIR-ENDLOOK-PAUSE", "C3-GVER-ENDLOOK-PAUSE", "C3-HAIR-LOOK40-PAUSE",
               "C3-STOP-NO-ENDLOOK-HAIR-REFUSED", "C3-LASTLOOK-STOP-PAST-CADENCE", "C3-PISTOP-DATA-LABEL"]
+_REQUIRED += ["C3-ENDLOOK-COUNT-REUSE", "C3-ENDLOOK-COUNT-TERMINAL", "C3-ENDLOOK-COUNT-STOP",        # PIN-46
+              "C3-ENDLOOK-NOPAUSE-TERMINAL", "C3-ENDLOOK-NOPAUSE-HAIR", "C3-ENDLOOK-NOPAUSE-GVER",      # PIN-45
+              "C3-ENDLOOK-NOPAUSE-REUSE", "C3-ENDLOOK-PAUSE-KIND", "C3-ENDLOOK-PAUSE-COUNT", "C3-ENDLOOK-PAUSE-BARS",
+              "C3-ENDLOOK-PAUSE-NOT-LAST", "C3-ENDLOOK-FIRED-CLEARED", "C3-ENDLOOK-ORDER", "C3-ENDLOOK-REUSE-NOT-LAST"]
+_REQUIRED += ["C3-ENDLOOK-COUNT-REUSED-LOOK", "C3-ENDLOOK-COUNT-BOOL", "C3-ENDLOOK-COUNT-MISSING",           # round 2
+              "C3-ENDLOOK-PAUSE-ADJ-FILLED", "C3-ENDLOOK-REUSE-APPENDED", "C3-ENDLOOK-REUSE-FIRED-LOOK",
+              "C3-ENDLOOK-FIRED-FLAG-ONLY", "C3-ENDLOOK-PAUSE-LOOK", "C3-ENDLOOK-PAUSE-TYPE",
+              "C3-ENDLOOK-REUSE-PAUSE-ALTERED", "C3-ENDLOOK-PAUSE-BARS-ORDER", "C3-ENDLOOK-REUSE-K"]
+_REQUIRED += ["C3-ENDLOOK-PAUSE-ADJ-NOTNONE", "C3-ENDLOOK-PAUSE-LAST-UNRULED",                         # round 3
+              "C3-ENDLOOK-REUSE-FIRED-LOOK-DISJUNCTS", "C3-ENDLOOK-REUSE-ADJ-NONSTR", "C3-ENDLOOK-REUSE-K-TYPE",
+              "C3-ENDLOOK-REUSE-GUARDS", "C3-ENDLOOK-STOP-CLASS"]
+_REQUIRED += [f"C3-PROD-END-P{i}" for i in range(1, 11)]
 _REQUIRED += [f"REF-{x}" for x in ("NOT-ENDED", "END-PENDING", "UNADJUDICATED", "OTHER-UNIT", "STAGE",
                                    "LOCK-SHA", "ANALYZER-NOT-IN-LOCK", "PACKAGE-NOT-IN-LOCK",
                                    "CLOSURE-NOT-IN-LOCK", "TABLE-NOT-IN-LOCK", "PREPRINT-NOT-IN-LOCK",
@@ -2741,12 +3130,18 @@ _REQUIRED += ["CMD-NOTRUN", "CMD-NOTRUN-NOFIRSTREAD-REFUSED", "CMD-POSTING", "CM
               "NR-CMD-GATE-NOT-ENDED", "NR-CMD-GATE-WRONG-STAGE", "NR-CMD-STUB", "NR-CMD-BINDING",
               "NR-CMD-GATE-BEFORE-RELEASE", "NR-CMD-BINDING-FIRST", "NR-CMD-PROPOSAL-SHA",
               "CMD-POSTING-BINDING-FIRST", "CMD-POSTING-PROPOSAL-SHA"]
+_REQUIRED += ["CMD-POSTING-BAR-NA", "CMD-POSTING-BAR-PASS", "CMD-POSTING-CMP-MATCH", "CMD-POSTING-CMP-VERDICTS",  # PIN-44
+              "CMD-POSTING-BAR-FAIL", "CMD-POSTING-EXIT-5", "CMD-POSTING-BAR-DOSE", "CMD-POSTING-CMP-DIFFERS",
+              "CMD-POSTING-CMP-SELECT", "CMD-POSTING-REWRITES-KIND", "CMD-POSTING-REWRITES-FORM",
+              "CMD-POSTING-REWRITES-AFTER-BINDING"]
+_REQUIRED += ["CMD-POSTING-RESIDUE-ORDER", "CMD-POSTING-REWRITES-EMPTY", "CMD-POSTING-CMP-TUPLE"]           # round 2
+_REQUIRED += ["CMD-POSTING-CMP-TUPLE-NONE", "CMD-POSTING-CMP-IDENTITY", "CMD-POSTING-FAIL-RECORD"]       # round 3
 _REQUIRED += ["STR-PROPOSAL-SHA", "STR-CONSTANTS", "STR-CONSTANTS-MUTANT", "STR-OPEN-HOOK",
               "STR-NO-HEAVY", "STR-CALL-SITES", "STR-FORBIDDEN", "STR-NO-CANONICAL-WRITE",
               "STR-DETERMINISM", "STR-CLOSURE", "STR-LAZY-IMPORTS", "STR-PIN-COMMENTS", "STR-INSULATED",
               "STR-STDOUT-HYGIENE", "STR-GANL-COMMITTED", "STR-GANL-EXIT", "STR-GANL-ARTIFACT",
               "STR-GANL-SHA16", "STR-GANL-FLAG", "STR-GANL-REGISTER", "STR-GANL-PLACEHOLDER",
-              "STR-GANL-BATTERY-BLOCK", "STR-GANL-CONTENT-EXIT"]
+              "STR-GANL-BATTERY-BLOCK", "STR-GANL-CONTENT-EXIT", "STR-PIN-V10-TEXTS"]
 REQUIRED_COVERAGE = frozenset(_REQUIRED)
 del _u, _c
 
@@ -5049,6 +5444,624 @@ def _bt_reader(B: _Battery) -> None:
                   and rel_h == [] and not any((base / "out" / "hair-no-end-look").glob("Q-F0_*"))
                   and (ck_h.get("stop") or {}).get("bar") == HAIR_BAR and vh2[0] == "ok",
                   (v_hne[0], v_hne[1][:60], len(rel_h)), cover=["C3-STOP-NO-ENDLOOK-HAIR-REFUSED"])
+            # PIN-46 and PIN-45 (step 15): hand edits of production-written checkpoints, each offered to VERDICTS
+            # with readrule.release_full counted (a refusal at V2 releases nothing) -- (the result, the release
+            # calls, the Q-F0_* files written); a seat input, where given, is bound to the edited copy's sha256
+            def v2_edit(src: Path, name: str, fn, *, adj_pause=None, pis_=False):
+                ck_ = json.loads(Path(src).read_text())
+                fn(ck_)
+                p_ = Path(src).parent / f"{name}.json"
+                p_.write_text(json.dumps(ck_))
+                sha_ = _sha256_bytes(p_.read_bytes())
+                kw_ = {}
+                if adj_pause is not None:
+                    kw_["adjudication"] = seat_variant(adj_doc0, f"adj-{name}", campaign_sha256=sha_, pause=adj_pause)
+                if pis_:
+                    kw_["pi_stop"] = seat_variant(pis_doc0, f"pis-{name}", campaign_sha256=sha_)
+                calls_: list = []
+
+                def count_(recs):
+                    calls_.append(len(recs))
+                    return real_rel_n(recs)
+                with _bt_patched(readrule, "release_full", count_):
+                    r_ = V("Q-F0", p_, name, **kw_)
+                return r_, len(calls_), sorted(x.name for x in (base / "out" / name).glob("Q-F0_*"))
+            MSG_B = "REFUSED: a fired end look records no matching pause ("
+            MSG_C = "REFUSED: the end look's launch count ("
+
+            def v2_refused(res_, needle):
+                return (res_[0][0] == "refused" and res_[0][1].startswith(needle)
+                        and res_[0][1].endswith("-- not written by the lock's package") and res_[1] == 0 and res_[2] == [])
+            # (c) the end look's launch count (PIN-46)
+            ck_lp0 = json.loads(Path(res_lp["checkpoint"]).read_text())
+
+            def reuse_look1(ck_):                # what the D2 review's mutant endislook_any_look writes on this fixture, by hand
+                ck_["campaign"]["end_look"] = {**copy.deepcopy(ck_["looks"][0]["result"]), "end_is_look": 1}
+            c_1 = v2_edit(Path(res_lp["checkpoint"]), "count-reuse-41", reuse_look1)
+            B.chk("refused at V2 (PIN-46): the end look reused at 40 (look 1, end_is_look 1) against 41 sessions recorded "
+                  "-- the closest existing case to the D2 review's endislook_any_look scenario (there a hair-trigger "
+                  "STOP at launch 42, 42 recorded; here the G-VER STOP at launch 42, 41 recorded, past a silent look 1 "
+                  "at 40): 'the end look's launch count (40) is not the launches recorded (41)', release_full not called, "
+                  "nothing written; unedited it is analyzed (C3-LASTLOOK-STOP-PAST-CADENCE)",
+                  v2_refused(c_1, MSG_C) and "(40) is not the launches recorded (41)" in c_1[0][1] and v_lp[0] == "ok"
+                  and len(ck_lp0["sessions"]) == 41 and ck_lp0["looks"][0]["result"]["fired"] is False,
+                  (c_1[0][0], c_1[0][1][:72], c_1[1], c_1[2]), cover=["C3-ENDLOOK-COUNT-REUSE"])
+            c_1n = v2_edit(Path(res_lp["checkpoint"]), "count-reuse-at-41", lambda ck_: ck_["campaign"].__setitem__(
+                "end_look", {**copy.deepcopy(ck_["looks"][0]["result"]), "end_is_look": 1, "at_launches": 41}))
+            B.chk("refused at V2 (PIN-46, the reuse clause): on the same G-VER STOP (41 recorded), the end look recorded "
+                  "as look 1 reused but with at_launches 41 -- its count is the launches recorded, but look 1 is "
+                  "recorded at 40, not 41: 'the end look's launch count (41) is not that of the look it reuses (look 1, "
+                  "recorded at [40])', release_full not called, nothing written",
+                  v2_refused(c_1n, MSG_C) and "(41) is not that of the look it reuses (look 1, recorded at [40])"
+                  in c_1n[0][1], (c_1n[0][0], c_1n[0][1][:90], c_1n[1], c_1n[2]),
+                  cover=["C3-ENDLOOK-COUNT-REUSED-LOOK"])
+            el_n = ck_el["campaign"]["end_look"]["at_launches"]
+            el_pz = {"kind": "end_look", "at_launches": el_n}
+            c_2 = {d_: v2_edit(cp_el, f"count-terminal{d_:+d}", lambda ck_, d_=d_: ck_["campaign"]["end_look"].__setitem__(
+                       "at_launches", el_n + d_), adj_pause=el_pz) for d_ in (1, -1)}
+            B.chk("refused at V2 (PIN-46): the terminal COMPLETE campaign's fired end look with its at_launches +1 and -1, "
+                  "each offered with the seat's adjudication bound to that copy and its pause -- PIN-46's own message, "
+                  "not PIN-45's (the launch count is checked first), release_full not called, nothing written; "
+                  "unedited: refused without --adjudication, analyzed with it (C3-ENDLOOK-PAUSE)",
+                  all(v2_refused(r_, MSG_C) and f"({el_n + d_}) is not the launches recorded ({el_n})" in r_[0][1]
+                      for d_, r_ in c_2.items()) and el_n == len(ck_el["sessions"]) and ve1[0] == "refused"
+                  and ve2[0] == "ok", {d_: (r_[0][0], r_[1], r_[2]) for d_, r_ in c_2.items()},
+                  cover=["C3-ENDLOOK-COUNT-TERMINAL"])
+            c_3 = v2_edit(Path(res_g1["checkpoint"]), "count-stop-1",
+                          lambda ck_: ck_["campaign"]["end_look"].__setitem__("at_launches", 3))
+            c_3f = v2_edit(Path(res_g1["checkpoint"]), "count-stop-float",
+                           lambda ck_: ck_["campaign"]["end_look"].__setitem__("at_launches", 4.0))
+            B.chk("refused at V2 (PIN-46): a STOP's end look (the G-VER STOP at launch 5, end look at 4, 4 recorded) with "
+                  "its at_launches -1 -- 'the end look's launch count (3) is not the launches recorded (4)' -- and as "
+                  "the float 4.0 (a launch count is an int); release_full not called, nothing written; unedited it is "
+                  "analyzed (C3-GVER-DATA)",
+                  v2_refused(c_3, MSG_C) and "(3) is not the launches recorded (4)" in c_3[0][1] and vg1[0] == "ok"
+                  and v2_refused(c_3f, MSG_C) and "(4.0) is not the launches recorded (4)" in c_3f[0][1]
+                  and el1.get("at_launches") == 4, (c_3[0][0], c_3[0][1][:72], c_3[1], c_3[2], c_3f[0][0]),
+                  cover=["C3-ENDLOOK-COUNT-STOP"])
+            # (b) a fired end look without a matching pause (PIN-45)
+            drop_last = lambda ck_: ck_["campaign"]["pauses"].pop()                               # noqa: E731
+            b_1 = v2_edit(cp_el, "nopause-terminal", drop_last)
+            B.chk("refused at V2 (PIN-45): the terminal COMPLETE campaign's fresh fired end look with its end_look pause "
+                  "removed (no pause left, so PIN-9 would ask for no adjudication) -- 'a fired end look records no "
+                  "matching pause', release_full not called, nothing written; unedited: refused without "
+                  "--adjudication, analyzed with it (C3-ENDLOOK-PAUSE)",
+                  v2_refused(b_1, MSG_B) and "the campaign's last pause must be" in b_1[0][1]
+                  and len(ck_el["campaign"]["pauses"]) == 1 and ve1[0] == "refused" and ve2[0] == "ok",
+                  (b_1[0][0], b_1[0][1][:60], b_1[1], b_1[2]), cover=["C3-ENDLOOK-NOPAUSE-TERMINAL"])
+            b_2 = v2_edit(cp_hf, "nopause-hair", drop_last, pis_=True)
+            B.chk("refused at V2 (PIN-45): the hair-trigger STOP at launch 6 whose fresh end look fires, its end_look "
+                  "pause removed, offered with a PI-stop record bound to that copy -- 'a fired end look records no "
+                  "matching pause', release_full not called, nothing written; unedited it is analyzed with both seat "
+                  "inputs (C3-HAIR-ENDLOOK-PAUSE)", v2_refused(b_2, MSG_B) and v_hf["both"][0] == "ok",
+                  (b_2[0][0], b_2[0][1][:60], b_2[1], b_2[2]), cover=["C3-ENDLOOK-NOPAUSE-HAIR"])
+            b_3 = v2_edit(cp_ge, "nopause-gver", drop_last)
+            B.chk("refused at V2 (PIN-45): the G-VER STOP at launch 7 whose end look, evaluated fresh at 6, fires, its "
+                  "end_look pause removed -- 'a fired end look records no matching pause', release_full not called, "
+                  "nothing written; unedited it is analyzed with the seat's adjudication (C3-GVER-ENDLOOK-PAUSE)",
+                  v2_refused(b_3, MSG_B) and v_ge["adjudication"][0] == "ok",
+                  (b_3[0][0], b_3[0][1][:60], b_3[1], b_3[2]), cover=["C3-ENDLOOK-NOPAUSE-GVER"])
+            b_4 = v2_edit(cp_hl, "nopause-reuse", drop_last, pis_=True)
+            B.chk("refused at V2 (PIN-45): the hair-trigger STOP on launch 40 whose end look is look 1 reused (fired), its "
+                  "pause {look, 40} removed, offered with a PI-stop record bound to that copy -- 'a fired end look "
+                  "records no matching pause' (the campaign's last pause must be {kind look, look 1, ...}, unadjudicated: "
+                  "the hit pre-empted the cadence pause, raised at the STOP), release_full not called, nothing "
+                  "written; unedited it is analyzed with both seat inputs (C3-HAIR-LOOK40-PAUSE)",
+                  v2_refused(b_4, MSG_B)
+                  and "(the campaign's last pause must be {'kind': 'look', 'look': 1, 'at_launches': 40" in b_4[0][1]
+                  and v_hl["both"][0] == "ok", (b_4[0][0], b_4[0][1][:60], b_4[1], b_4[2]),
+                  cover=["C3-ENDLOOK-NOPAUSE-REUSE"])
+            el_bars = list(ck_el["campaign"]["pauses"][-1]["bars"])
+            b_5 = v2_edit(cp_el, "pause-kind", lambda ck_: ck_["campaign"]["pauses"][-1].__setitem__("kind", "look"),
+                          adj_pause={"kind": "look", "at_launches": el_n})
+            B.chk("refused at V2 (PIN-45): the terminal campaign's end_look pause with its kind altered to 'look', offered "
+                  "with an adjudication naming the altered pause (which PIN-9 alone would accept) -- 'a fired end look "
+                  "records no matching pause', release_full not called, nothing written",
+                  v2_refused(b_5, MSG_B), (b_5[0][0], b_5[0][1][:60], b_5[1], b_5[2]), cover=["C3-ENDLOOK-PAUSE-KIND"])
+            b_6 = v2_edit(cp_el, "pause-count", lambda ck_: ck_["campaign"]["pauses"][-1].__setitem__("at_launches", el_n - 1),
+                          adj_pause={"kind": "end_look", "at_launches": el_n - 1})
+            B.chk("refused at V2 (PIN-45): the terminal campaign's end_look pause with its at_launches altered (-1; the end "
+                  "look's own count untouched, so PIN-46 holds), offered with an adjudication naming the altered pause "
+                  "-- 'a fired end look records no matching pause', release_full not called, nothing written",
+                  v2_refused(b_6, MSG_B), (b_6[0][0], b_6[0][1][:60], b_6[1], b_6[2]), cover=["C3-ENDLOOK-PAUSE-COUNT"])
+            b_6l = v2_edit(cp_el, "pause-not-last", lambda ck_: ck_["campaign"]["pauses"].append(
+                {"at_launches": el_n, "kind": "schedule_exhausted", "arm": "A0",
+                 "adjudication": "battery: a hand-appended ruled pause (synthetic)"}))
+            B.chk("refused at V2 (PIN-45): the terminal campaign's fresh fired end look whose end_look pause is followed "
+                  "by a hand-appended, adjudicated pause (so PIN-9 would ask for no adjudication) -- a fresh end look's "
+                  "pause is the campaign's last: 'a fired end look records no matching pause', release_full not called, "
+                  "nothing written", v2_refused(b_6l, MSG_B) and "the campaign's last pause must be" in b_6l[0][1],
+                  (b_6l[0][0], b_6l[0][1][:60], b_6l[1], b_6l[2]), cover=["C3-ENDLOOK-PAUSE-NOT-LAST"])
+            b_7 = {k_: v2_edit(cp_el, f"pause-bars-{k_}", lambda ck_, b_=b_: ck_["campaign"]["pauses"][-1].__setitem__(
+                       "bars", b_), adj_pause=el_pz)
+                   for k_, b_ in (("extra", el_bars + ["battery-extra-bar"]), ("empty", []))}
+            B.chk("refused at V2 (PIN-45): the terminal campaign's end_look pause with its bars altered (one appended, "
+                  "emptied; its end look fires one bar -- order: C3-ENDLOOK-PAUSE-BARS-ORDER), each offered with the "
+                  "seat's adjudication -- 'a fired end look records no matching pause', release_full not called, "
+                  "nothing written",
+                  bool(el_bars) and all(v2_refused(r_, MSG_B) for r_ in b_7.values()),
+                  ({k_: (r_[0][0], r_[1]) for k_, r_ in b_7.items()}, el_bars), cover=["C3-ENDLOOK-PAUSE-BARS"])
+            b_8 = v2_edit(cp_el, "fired-cleared", lambda ck_: (ck_["campaign"]["end_look"].__setitem__("fired", False),
+                                                               ck_["campaign"]["pauses"].pop()))
+
+            def el_result_1(ck_):                # the end look's own fired result as 2 alone (a truthy non-bool)
+                el_ = ck_["campaign"]["end_look"]
+                el_["fired"] = False
+                on_ = [r_ for r_ in el_["results"] if r_["fired"]]
+                for r_ in el_["results"]:
+                    r_["fired"] = False
+                on_[0]["fired"] = 2
+                ck_["campaign"]["pauses"].pop()
+            b_8i = v2_edit(cp_el, "fired-result-int", el_result_1)
+
+            def el_flag_2(ck_):                  # the end look's own `fired` as 2 alone (results cleared)
+                el_ = ck_["campaign"]["end_look"]
+                for r_ in el_["results"]:
+                    r_["fired"] = False
+                el_["fired"] = 2
+                ck_["campaign"]["pauses"].pop()
+            b_8f = v2_edit(cp_el, "fired-flag-int", el_flag_2)
+            B.chk("refused at V2 (PIN-45): the terminal campaign's end look with `fired` cleared while its results stay "
+                  "fired, its pause removed; with `fired` cleared and its one fired result's `fired` as 2 alone (a "
+                  "truthy non-bool, read by truth value; the rest cleared), its pause removed; and with its own `fired` "
+                  "as 2 alone (every result cleared), its pause removed -- each still a fired end look (the second's "
+                  "bars its result's name): 'a fired end look records no matching pause', "
+                  "release_full not called, nothing written",
+                  v2_refused(b_8, MSG_B) and ck_el["campaign"]["end_look"]["fired"] is True
+                  and any(r_["fired"] for r_ in ck_el["campaign"]["end_look"]["results"])
+                  and len(el_bars) == 1 and v2_refused(b_8i, MSG_B) and f"'bars': {el_bars!r}" in b_8i[0][1]
+                  and v2_refused(b_8f, MSG_B) and "'bars': []" in b_8f[0][1],
+                  (b_8[0][0], b_8[0][1][:60], b_8[1], b_8[2], b_8i[0][0], b_8i[0][1][:60], b_8f[0][0],
+                   b_8f[0][1][:60]),
+                  cover=["C3-ENDLOOK-FIRED-CLEARED"])
+            b_9 = {"terminal": v2_edit(cp_el, "order-terminal", drop_last, adj_pause=el_pz),
+                   "hair-look40": v2_edit(cp_hl, "order-hair40", drop_last, adj_pause={"kind": "look", "at_launches": 40},
+                                          pis_=True)}
+            B.chk("refusal order (PIN-45 before PIN-9's branch): a removed pause offered with a supplied --adjudication "
+                  "naming it (the terminal campaign; the hair-trigger STOP at 40 with its PI-stop record too) is refused "
+                  "by PIN-45's own message, not accepted and not PIN-9's surplus refusal; release_full not called, "
+                  "nothing written", all(v2_refused(r_, MSG_B) and "--adjudication given" not in r_[0][1]
+                                         for r_ in b_9.values()),
+                  {k_: (r_[0][0], r_[0][1][:40]) for k_, r_ in b_9.items()}, cover=["C3-ENDLOOK-ORDER"])
+            # positive control: a terminal reuse (end_is_look 1 at 40) whose matching cadence pause is NOT the last --
+            # built by the production writers, with only the committed A0s schedule shortened to its first 20 cells
+            # so that it can exhaust: look 1 fires at 40 (PAUSE), the seat's adjudication resumes it, A0s (19 domain
+            # of 20 launched, floor 20) exhausts its schedule at 40 (PAUSE), the PI's stop ends it (PI-STOP at 40)
+            real_lc = stages.load_committed
+
+            def short_a0s(unit_, wanted_, dir_):
+                got_ = real_lc(unit_, wanted_, dir_)
+                return {t_: ({**s_, "n": 20, "cells": s_["cells"][:20]} if t_ == "A0s" else s_) for t_, s_ in got_.items()}
+            r_rn = C.root("reuse-not-last")
+            rule_rn = lambda t, s, n, c: ("Config choice one." if (t == "A0s" and s == 0 and n == 1)    # noqa: E731
+                                          else "Config choice one." if (t == "A0s" and n == 6) else None)
+            fl_rn = {"A0": 20, "A0s": 20}
+            st_rn = []
+            with _bt_patched(stages, "load_committed", short_a0s):
+                for kw_rn in ({}, {"resume": True, "adjudication": "battery: the seat resumes the paused look (synthetic)"},
+                              {"resume": True, "pi_stop": "PI: stop at the exhausted schedule (battery)"}):
+                    res_rn, _ = C.run("Q-F0", r_rn, C.adapter("Q-F0", {"A0": 20, "A0s": 20}, rule_rn), fl_rn, **kw_rn)
+                    st_rn.append((res_rn or {}).get("status"))
+            cp_rn = r_rn / "ckpt" / "Q-F0_campaign.json"
+            ck_rn = json.loads(cp_rn.read_text())
+            el_rn = ck_rn["campaign"]["end_look"] or {}
+            pz_rn = ck_rn["campaign"]["pauses"]
+            v_rn = V("Q-F0", cp_rn, "reuse-not-last")
+            b_10 = v2_edit(cp_rn, "reuse-not-last-dropped", lambda ck_: ck_["campaign"]["pauses"].pop(0))
+            B.chk("accepted (PIN-45's positive control): a terminal reuse whose matching cadence pause is not the last -- "
+                  "production-written under a battery patch that shortens the committed A0s schedule to its first 20 "
+                  "cells (PAUSE at look 1 fired at 40, resumed by the seat; PAUSE schedule_exhausted at 40; PI-STOP at "
+                  "40, the end look look 1 reused, fired): pauses [look 1 at 40, schedule_exhausted at 40], both "
+                  "adjudicated -> analyzed with no seat input; its cadence pause removed it is refused (PIN-45: some "
+                  "pause must be {kind look, look 1, ...}, adjudicated)",
+                  st_rn == ["PAUSE", "PAUSE", "PI-STOP"] and len(ck_rn["sessions"]) == 40
+                  and el_rn.get("end_is_look") == 1 and el_rn.get("at_launches") == 40 and el_rn.get("fired") is True
+                  and [(p_["kind"], p_["at_launches"]) for p_ in pz_rn] == [("look", 40), ("schedule_exhausted", 40)]
+                  and pz_rn[0].get("look") == 1 and all(p_.get("adjudication") for p_ in pz_rn)
+                  and pz_rn[0]["bars"] == [r_["name"] for r_ in el_rn.get("results", []) if r_["fired"]]
+                  and (ck_rn["campaign"]["terminal"] or {}).get("status") == "PI-STOP" and v_rn[0] == "ok"
+                  and v_rn[1] == "written" and v2_refused(b_10, MSG_B)
+                  and "(some pause must be {'kind': 'look', 'look': 1, 'at_launches': 40" in b_10[0][1]
+                  and ", adjudicated)" in b_10[0][1],
+                  (st_rn, [p_.get("kind") for p_ in pz_rn], v_rn[0], b_10[0][0]), cover=["C3-ENDLOOK-REUSE-NOT-LAST"])
+            # production-written ends the round-1 review built (its P1-P10; F5), each offered to VERDICTS as written
+            # (the original bytes; the seat inputs its end needs bound to it): every one is accepted. prod_d is
+            # (sessions, the looks' fired flags, the stop's bar, the terminal status, (end look's look, at_launches,
+            # end_is_look, fired), [(pause kind, at_launches, adjudicated)])
+            def prod_v(name, cp_, adj_pause=None, pis_=False):
+                sha_ = _sha256_bytes(Path(cp_).read_bytes())
+                kw_ = {}
+                if adj_pause is not None:
+                    kw_["adjudication"] = seat_variant(adj_doc0, f"adj-{name}", campaign_sha256=sha_, pause=adj_pause)
+                if pis_:
+                    kw_["pi_stop"] = seat_variant(pis_doc0, f"pis-{name}", campaign_sha256=sha_)
+                return V("Q-F0", Path(cp_), name, **kw_)
+
+            def prod_d(cp_):
+                ck_ = json.loads(Path(cp_).read_text())
+                el_ = ck_["campaign"]["end_look"] or {}
+                return (len(ck_["sessions"]), [lk_["result"]["fired"] for lk_ in ck_["looks"]],
+                        (ck_.get("stop") or {}).get("bar"), (ck_["campaign"]["terminal"] or {}).get("status"),
+                        (el_.get("look"), el_.get("at_launches"), el_.get("end_is_look"), el_.get("fired")),
+                        [(p_["kind"], p_["at_launches"], p_["adjudication"] is not None) for p_ in ck_["campaign"]["pauses"]])
+
+            def prod_run(tag, counts, rule, floors, invocations):
+                r_ = C.root(f"prod-{tag}")
+                st_ = []
+                for kw_, patch_ in invocations:
+                    with (_bt_patched(*patch_) if patch_ else contextlib.nullcontext()):
+                        s_, _ = C.run("Q-F0", r_, C.adapter("Q-F0", counts, rule), floors, **kw_)
+                    st_.append((s_ or {}).get("status"))
+                return r_ / "ckpt" / "Q-F0_campaign.json", st_
+            rule_sd = lambda t, s, n, c: "Config choice one." if (t == "A0s" and n == 6) else None   # noqa: E731
+            adj_p = {"resume": True, "adjudication": "battery: the seat resumes the paused look (synthetic)"}
+            c20, c21, c22 = ({"A0": k_, "A0s": k_} for k_ in (20, 21, 22))
+            prod = {"P1": prod_run("p1", c20, None, c20, [({}, None)]),
+                    "P2": prod_run("p2", c20, rule_sd, c20, [({}, None), (adj_p, None)]),
+                    "P3": prod_run("p3", c21, rule_sd, c21, [({}, None), ({"resume": True, "pi_stop": "PI: stop at the "
+                                                                           "fired look (battery)"}, None)]),
+                    "P4": prod_run("p4", c21, rule_sd, c21, [({}, None), (adj_p, (stages, "run_session_qwen",
+                                                                                  tamper_at("A0", 20)))]),
+                    "P5": prod_run("p5", c21, lambda t, s, n, c: "<|im_end|>" if (t == "A0s" and s == 19 and n == 7)
+                                   else None, c21, [({}, None)]),
+                    "P6": prod_run("p6", c21, rule_sd, c21, [({}, None), (adj_p, None)]),
+                    "P7": prod_run("p7", c22, lambda t, s, n, c: ("<|im_end|>" if (t == "A0" and s == 20 and n == 7)
+                                                                 else rule_sd(t, s, n, c)), c22, [({}, None), (adj_p, None)]),
+                    "P8": prod_run("p8", c22, rule_sd, c22, [({}, None), (adj_p, (stages, "run_session_qwen",
+                                                                                  tamper_at("A0s", 20)))])}
+
+            def short2(unit_, wanted_, dir_):
+                got_ = real_lc(unit_, wanted_, dir_)
+                return {t_: ({**s_, "n": 2, "cells": s_["cells"][:2]} if t_ == "A0s" else s_) for t_, s_ in got_.items()}
+            rule9 = lambda t, s, n, c: ("Config choice one." if (n == 1 and ((t == "A0" and s < 3) or (t == "A0s" and s == 0)))  # noqa: E731
+                                        else None)
+            prod["P9"] = prod_run("p9", {"A0": 4, "A0s": 2}, rule9, {"A0": 1, "A0s": 2},
+                                  [({}, (stages, "load_committed", short2)),
+                                   ({"resume": True, "pi_stop": "PI: stop at the exhausted schedule (battery)"},
+                                    (stages, "load_committed", short2))])
+            with _bt_patched(resume, "hour_cap_exceeded", lambda ck__, cap__: len(ck__["sessions"]) >= 5):
+                prod["P10"] = prod_run("p10", {"A0": 12, "A0s": 12}, lambda t, s, n, c: (
+                    "Config choice one." if (t == "A0" and n == 1 and s < 3) else None), {"A0": 6, "A0s": 6}, [({}, None)])
+            fz_ = lambda cp_: {"kind": prod_d(cp_)[5][-1][0], "at_launches": prod_d(cp_)[5][-1][1]}  # noqa: E731
+            prod_want = {
+                "P1": ("COMPLETE at 40, silent look 1 reused", ["COMPLETE"],
+                       (40, [False], None, "COMPLETE", (1, 40, 1, False), []), {}),
+                "P2": ("COMPLETE at 40, look 1 fired and ruled by the seat, reused", ["PAUSE", "COMPLETE"],
+                       (40, [True], None, "COMPLETE", (1, 40, 1, True), [("look", 40, True)]), {}),
+                "P3": ("PI-STOP of the fired look 1's pause at 40, reused", ["PAUSE", "PI-STOP"],
+                       (40, [True], None, "PI-STOP", (1, 40, 1, True), [("look", 40, True)]), {}),
+                "P4": ("G-VER STOP at launch 41 past a fired, ruled look 1, reused", ["PAUSE", "STOP"],
+                       (40, [True], "template_breakage", None, (1, 40, 1, True), [("look", 40, True)]), {}),
+                "P5": ("hair-trigger STOP at 40, silent look 1 reused", ["STOP"],
+                       (40, [False], HAIR_BAR, None, (1, 40, 1, False), []), {"pis_": True}),
+                "P6": ("COMPLETE at 42 past a ruled look 1, its fresh end look fired", ["PAUSE", "PAUSE"],
+                       (42, [True], None, "COMPLETE", ("end", 42, None, True), [("look", 40, True), ("end_look", 42, False)]),
+                       {"adj": True}),
+                "P7": ("hair-trigger STOP at 41 past a ruled look 1, its fresh end look fired", ["PAUSE", "STOP"],
+                       (41, [True], HAIR_BAR, None, ("end", 41, None, True), [("look", 40, True), ("end_look", 41, False)]),
+                       {"adj": True, "pis_": True}),
+                "P8": ("G-VER STOP at launch 42 (41 recorded) past a ruled look 1, its fresh end look fired",
+                       ["PAUSE", "STOP"], (41, [True], "template_breakage", None, ("end", 41, None, True),
+                                           [("look", 40, True), ("end_look", 41, False)]), {"adj": True}),
+                "P9": ("PI-STOP of an exhausted schedule at 5 (A0s cut to 2 cells by a battery patch), its fresh end "
+                       "look fired", ["PAUSE", "PAUSE"], (5, [], None, "PI-STOP", ("end", 5, None, True),
+                                                          [("schedule_exhausted", 5, True), ("end_look", 5, False)]),
+                       {"adj": True}),
+                "P10": ("CAP at 5 (the hour cap patched to bind at 5 launches), its fresh end look fired", ["PAUSE"],
+                        (5, [], None, "CAP", ("end", 5, None, True), [("end_look", 5, False)]), {"adj": True})}
+            for k_, (what_, st_w, d_w, kw_w) in prod_want.items():
+                cp_k, st_k = prod[k_]
+                v_k = prod_v(f"prod-{k_}", cp_k, adj_pause=fz_(cp_k) if kw_w.get("adj") else None,
+                             pis_=kw_w.get("pis_", False))
+                v_k0 = prod_v(f"prod-{k_}-noadj", cp_k, pis_=kw_w.get("pis_", False)) if kw_w.get("adj") else None
+                B.chk(f"accepted (PIN-45, PIN-46; no false refusal): {k_}, {what_} -- production-written, offered as "
+                      f"written" + (" with the seat's adjudication bound to it (without it PIN-9 asks for it)"
+                                    if kw_w.get("adj") else "") + (" and a PI-stop record" if kw_w.get("pis_") else "")
+                      + " -> analyzed and written",
+                      st_k == st_w and prod_d(cp_k) == d_w and v_k[0] == "ok" and v_k[1] == "written"
+                      and (v_k0 is None or (v_k0[0] == "refused" and "last pause is unadjudicated" in v_k0[1])),
+                      (st_k, prod_d(cp_k), v_k[0], v_k[1][:60]), cover=[f"C3-PROD-END-{k_}"])
+            # hand edits of production-written checkpoints, each conjunct of PIN-45 / PIN-46 alone (the round-1
+            # reviews' h1-h14 and the battery lens's cases): each its refusal's own message, release_full not
+            # called, nothing written
+            def set_last(k__, v__):
+                return lambda ck_: ck_["campaign"]["pauses"][-1].__setitem__(k__, v__)
+            hl_pz = {"kind": "look", "at_launches": 40}
+            h_adj = {"terminal": v2_edit(cp_el, "adj-filled-terminal", set_last("adjudication", "hand: filled in (battery)")),
+                     "hair-40-reuse": v2_edit(cp_hl, "adj-filled-hair40", set_last("adjudication", "hand: filled in (battery)"),
+                                              pis_=True),
+                     "hair-6-fresh": v2_edit(cp_hf, "adj-filled-hair6", set_last("adjudication", "hand: filled in (battery)"),
+                                             pis_=True)}
+            B.chk("refused at V2 (PIN-45): a pause raised at the end with its adjudication filled in by hand -- the terminal "
+                  "campaign's end_look pause (no seat input offered), the hair STOP at 40's look pause and the hair STOP "
+                  "at 6's end_look pause (each with a PI-stop record): stages never adjudicates an ended campaign's "
+                  "pause, so PIN-9 would ask for nothing -- 'the campaign's last pause must be {...}, unadjudicated', "
+                  "release_full not called, nothing written",
+                  all(v2_refused(r_, MSG_B) and "(the campaign's last pause must be {" in r_[0][1]
+                      and ", unadjudicated)" in r_[0][1] for r_ in h_adj.values()),
+                  {k_: (r_[0][0], r_[0][1][:50]) for k_, r_ in h_adj.items()}, cover=["C3-ENDLOOK-PAUSE-ADJ-FILLED"])
+            cp_p2 = prod["P2"][0]
+
+            def unrule_append(ck_):
+                ck_["campaign"]["pauses"][-1]["adjudication"] = None
+                ck_["campaign"]["pauses"].append({"at_launches": 40, "kind": "schedule_exhausted", "arm": "A0s",
+                                                  "adjudication": "hand: a ruled pause appended (battery)"})
+            h_app = {"hair-40": v2_edit(cp_hl, "appended-hair40", lambda ck_: ck_["campaign"]["pauses"].append(
+                         {"at_launches": 40, "kind": "schedule_exhausted", "arm": "A0s",
+                          "adjudication": "hand: a ruled pause appended (battery)"}), pis_=True),
+                     "terminal-40": v2_edit(cp_p2, "appended-p2", unrule_append)}
+            B.chk("refused at V2 (PIN-45): a reused look's pause followed by a hand-appended, adjudicated pause (so PIN-9 "
+                  "would ask for nothing) -- at the hair STOP at 40 (the look pause is the end's: 'the campaign's last "
+                  "pause must be {...}, unadjudicated') and on P2's COMPLETE at 40 with its ruled look pause un-ruled "
+                  "('some pause must be {...}, adjudicated'); release_full not called, nothing written",
+                  v2_refused(h_app["hair-40"], MSG_B) and "(the campaign's last pause must be {'kind': 'look'" in h_app[
+                      "hair-40"][0][1] and v2_refused(h_app["terminal-40"], MSG_B)
+                  and "(some pause must be {'kind': 'look', 'look': 1, 'at_launches': 40" in h_app["terminal-40"][0][1]
+                  and ", adjudicated)" in h_app["terminal-40"][0][1],
+                  {k_: (r_[0][0], r_[0][1][:60]) for k_, r_ in h_app.items()}, cover=["C3-ENDLOOK-REUSE-APPENDED"])
+
+            def clear_el(ck_):
+                el_ = ck_["campaign"]["end_look"]
+                el_["fired"] = False
+                for r_ in el_["results"]:
+                    r_["fired"] = False
+                ck_["campaign"]["pauses"].pop()
+            h_5 = v2_edit(cp_hl, "reuse-flags-cleared", clear_el, pis_=True)
+            B.chk("refused at V2 (PIN-45): the hair STOP at 40's reused end look with `fired` and every result's cleared, "
+                  "its pause removed -- look 1 as ck.looks records it is still fired, so it is a fired end look (bars "
+                  "[]): 'a fired end look records no matching pause', release_full not called, nothing written",
+                  v2_refused(h_5, MSG_B) and "'bars': []" in h_5[0][1] and ck_hl["looks"][0]["result"]["fired"] is True,
+                  (h_5[0][0], h_5[0][1][:60], h_5[1], h_5[2]), cover=["C3-ENDLOOK-REUSE-FIRED-LOOK"])
+
+            def clear_results(ck_):
+                for r_ in ck_["campaign"]["end_look"]["results"]:
+                    r_["fired"] = False
+                ck_["campaign"]["pauses"].pop()
+            h_6 = v2_edit(cp_el, "fired-flag-only", clear_results)
+            B.chk("refused at V2 (PIN-45): the terminal end look with `fired` true but every result's cleared, its pause "
+                  "removed -- still a fired end look (bars []): 'a fired end look records no matching pause', "
+                  "release_full not called, nothing written",
+                  v2_refused(h_6, MSG_B) and "'bars': []" in h_6[0][1], (h_6[0][0], h_6[0][1][:60], h_6[1], h_6[2]),
+                  cover=["C3-ENDLOOK-FIRED-FLAG-ONLY"])
+            h_7 = {"fresh": v2_edit(cp_el, "pause-look-fresh", set_last("look", 1), adj_pause=el_pz),
+                   "reuse": v2_edit(cp_hl, "pause-look-reuse", set_last("look", 2), adj_pause=hl_pz, pis_=True)}
+            B.chk("refused at V2 (PIN-45): the matching pause's look altered (the terminal end_look pause 'end' -> 1; the "
+                  "hair STOP at 40's look pause 1 -> 2), each with the seat inputs naming the altered pause (PIN-9 "
+                  "compares kind and at_launches only) -- 'a fired end look records no matching pause', release_full "
+                  "not called, nothing written", all(v2_refused(r_, MSG_B) for r_ in h_7.values()),
+                  {k_: (r_[0][0], r_[0][1][:40]) for k_, r_ in h_7.items()}, cover=["C3-ENDLOOK-PAUSE-LOOK"])
+            h_8 = {"count-float": v2_edit(cp_el, "pause-count-float", set_last("at_launches", float(el_n)), adj_pause=el_pz),
+                   "look-float": v2_edit(cp_hl, "pause-look-float", set_last("look", 1.0), adj_pause=hl_pz, pis_=True),
+                   "look-bool": v2_edit(cp_hl, "pause-look-bool", set_last("look", True), adj_pause=hl_pz, pis_=True)}
+            B.chk("refused at V2 (PIN-45, compared by value and exact type): the end_look pause's at_launches as the float "
+                  "n.0 (equal by ==, which PIN-9's comparison accepts) and the hair STOP at 40's look pause's look as "
+                  "1.0 or as the bool True (== 1, an int subclass; each with both seat inputs) -- 'a fired end look "
+                  "records no matching pause', release_full not called, nothing written",
+                  all(v2_refused(r_, MSG_B) for r_ in h_8.values()),
+                  {k_: (r_[0][0], r_[0][1][:40]) for k_, r_ in h_8.items()}, cover=["C3-ENDLOOK-PAUSE-TYPE"])
+            h_9 = {"count": v2_edit(cp_hl, "reuse-pause-count", set_last("at_launches", 39),
+                                    adj_pause={"kind": "look", "at_launches": 39}, pis_=True),
+                   "bars": v2_edit(cp_hl, "reuse-pause-bars", lambda ck_: ck_["campaign"]["pauses"][-1]["bars"].append(
+                       "battery-extra-bar"), adj_pause=hl_pz, pis_=True)}
+            B.chk("refused at V2 (PIN-45): the reused look's pause (the hair STOP at 40) with its at_launches altered "
+                  "(39) or a bar appended, each with the seat inputs naming the pause -- 'a fired end look records no "
+                  "matching pause', release_full not called, nothing written",
+                  all(v2_refused(r_, MSG_B) for r_ in h_9.values()),
+                  {k_: (r_[0][0], r_[0][1][:40]) for k_, r_ in h_9.items()}, cover=["C3-ENDLOOK-REUSE-PAUSE-ALTERED"])
+            ge_bars = list(ck_ge["campaign"]["pauses"][-1]["bars"])
+            h_11 = v2_edit(cp_ge, "bars-reversed", set_last("bars", ge_bars[::-1]),
+                           adj_pause={"kind": "end_look", "at_launches": ck_ge["campaign"]["pauses"][-1]["at_launches"]})
+            B.chk("refused at V2 (PIN-45, bars in results order): the G-VER STOP at 7's end_look pause (two fired bars) "
+                  "naming its bars in reverse order, with the seat's adjudication naming the pause -- 'a fired end look "
+                  "records no matching pause', release_full not called, nothing written; in results order (unedited) it "
+                  "is analyzed with that adjudication",
+                  len(ge_bars) == 2 and v2_refused(h_11, MSG_B) and v_ge["adjudication"][0] == "ok",
+                  (ge_bars, h_11[0][0], h_11[0][1][:40]), cover=["C3-ENDLOOK-PAUSE-BARS-ORDER"])
+            ck_c0 = json.loads(Path(res_c["checkpoint"]).read_text())
+            h_12 = v2_edit(Path(res_c["checkpoint"]), "count-bool", lambda ck_: ck_["campaign"]["end_look"].__setitem__(
+                "at_launches", True))
+            B.chk("refused at V2 (PIN-46, an int by exact type): the CAP campaign with one launch recorded (its end look "
+                  "at 1) with at_launches the bool True (== 1, an int subclass) -- 'the end look's launch count (True) "
+                  "is not the launches recorded (1)', release_full not called, nothing written; unedited it is analyzed",
+                  len(ck_c0["sessions"]) == 1 and (ck_c0["campaign"].get("end_look") or {}).get("at_launches") == 1
+                  and v2_refused(h_12, MSG_C) and "(True) is not the launches recorded (1)" in h_12[0][1] and vc[0] == "ok",
+                  (len(ck_c0["sessions"]), h_12[0][0], h_12[0][1][:60]), cover=["C3-ENDLOOK-COUNT-BOOL"])
+
+            def look_k2(ck_):
+                ck_["campaign"]["end_look"]["look"] = 2
+                ck_["campaign"]["pauses"][-1]["look"] = 2
+            h_13 = {"end_is_look": v2_edit(cp_hl, "reuse-k-edited", lambda ck_: ck_["campaign"]["end_look"].__setitem__(
+                        "end_is_look", 2), adj_pause=hl_pz, pis_=True),
+                    "look": v2_edit(cp_hl, "reuse-look-edited", look_k2, adj_pause=hl_pz, pis_=True)}
+            B.chk("refused at V2: the hair STOP at 40's reused end look with end_is_look edited 1 -> 2 alone -- by PIN-46 "
+                  "('the end look's launch count (40) is not that of the look it reuses (look 2, recorded at [])': no "
+                  "look 2 is recorded); with its result's look and its pause's look edited 1 -> 2 instead (end_is_look "
+                  "kept) -- by PIN-45, whose wanted look is end_is_look's ('... must be {kind look, look 1, ...}'); "
+                  "release_full not called, nothing written",
+                  v2_refused(h_13["end_is_look"], MSG_C)
+                  and "(40) is not that of the look it reuses (look 2, recorded at [])" in h_13["end_is_look"][0][1]
+                  and v2_refused(h_13["look"], MSG_B) and "{'kind': 'look', 'look': 1, 'at_launches': 40" in h_13["look"][0][1],
+                  {k_: (r_[0][0], r_[0][1][:60]) for k_, r_ in h_13.items()}, cover=["C3-ENDLOOK-REUSE-K"])
+            h_c4 = {"stop": v2_edit(Path(res_g1["checkpoint"]), "count-missing-stop",
+                                    lambda ck_: ck_["campaign"]["end_look"].pop("at_launches")),
+                    "terminal": v2_edit(cp_el, "count-missing-terminal",
+                                        lambda ck_: ck_["campaign"]["end_look"].pop("at_launches"), adj_pause=el_pz)}
+            B.chk("refused at V2 (PIN-46): the end look's at_launches key deleted (the G-VER STOP at 5, its end look "
+                  "unfired; the terminal campaign) -- 'the end look's launch count (None) is not the launches "
+                  "recorded', release_full not called, nothing written",
+                  all(v2_refused(r_, MSG_C) and "(None) is not the launches recorded" in r_[0][1] for r_ in h_c4.values()),
+                  {k_: (r_[0][0], r_[0][1][:60]) for k_, r_ in h_c4.items()}, cover=["C3-ENDLOOK-COUNT-MISSING"])
+            # round 3 (disp_r2): the end-raised rule by value and type (R2BC-2, L2-3), each disjunct of look k's firing
+            # alone (R2BC-3, L2-2), the reused pause's str ruling (R2BC-4, L2-3), each exact-type and guard conjunct of
+            # PIN-46's reuse clause (R2BC-5, L2-1), and the end's class at a STOP (R2BC-1)
+            k_adj = {k_: v2_edit(cp_el, f"adj-notnone-{k_}", set_last("adjudication", v_))
+                     for k_, v_ in (("empty", ""), ("false", False), ("int", 1))}
+            B.chk("refused at V2 (PIN-45, an end-raised pause carries adjudication None exactly): the terminal end_look "
+                  "pause with its adjudication '', false or 1 (none of them None, so PIN-9 would ask for nothing), no "
+                  "seat input -- 'the campaign's last pause must be {...}, unadjudicated', release_full not called, "
+                  "nothing written",
+                  all(v2_refused(r_, MSG_B) and ", unadjudicated)" in r_[0][1] for r_ in k_adj.values()),
+                  {k_: (r_[0][0], r_[0][1][:50]) for k_, r_ in k_adj.items()}, cover=["C3-ENDLOOK-PAUSE-ADJ-NOTNONE"])
+            k_last = v2_edit(cp_el, "end-then-unruled", lambda ck_: ck_["campaign"]["pauses"].append(
+                {"at_launches": el_n, "kind": "schedule_exhausted", "arm": "A0", "adjudication": None}),
+                adj_pause={"kind": "schedule_exhausted", "at_launches": el_n})
+            B.chk("refused at V2 (PIN-45, an end-raised pause is the LAST pause): the terminal end_look pause followed by "
+                  "a hand-appended unruled pause, offered with an adjudication naming that pause (which PIN-9 alone would "
+                  "accept) -- 'the campaign's last pause must be {...}, unadjudicated', release_full not called, nothing "
+                  "written", v2_refused(k_last, MSG_B) and ", unadjudicated)" in k_last[0][1],
+                  (k_last[0][0], k_last[0][1][:50], k_last[1], k_last[2]), cover=["C3-ENDLOOK-PAUSE-LAST-UNRULED"])
+
+            def lk1_only(which_):
+                def f_(ck_):
+                    clear_el(ck_)
+                    lr_ = ck_["looks"][0]["result"]
+                    if which_ in ("flag", "flag-2"):
+                        for r_ in lr_["results"]:
+                            r_["fired"] = False
+                        if which_ == "flag-2":
+                            lr_["fired"] = 2
+                    elif which_ == "result-2":
+                        lr_["fired"] = False
+                        on_ = [r_ for r_ in lr_["results"] if r_["fired"]]
+                        for r_ in lr_["results"]:
+                            r_["fired"] = False
+                        on_[0]["fired"] = 2
+                    else:
+                        lr_["fired"] = False
+                return f_
+            k_lk = {w_: v2_edit(cp_hl, f"reuse-look1-{w_}-only", lk1_only(w_), pis_=True)
+                    for w_ in ("flag", "results", "flag-2", "result-2")}
+            B.chk("refused at V2 (PIN-45, each disjunct of look k's firing alone): the hair STOP at 40's reused end look "
+                  "cleared and its pause removed, look 1 as ck.looks records it fired by its result's `fired` alone (its "
+                  "results cleared), by its results alone (its `fired` cleared), by its result's `fired` as 2 alone "
+                  "(a truthy non-bool, read by truth value; its results cleared), and by one of its results' `fired` "
+                  "as 2 alone (its `fired` and the rest cleared), a PI-stop record offered -- still a "
+                  "fired end look (bars []): 'the campaign's last pause must be {kind look, look 1, ...}', release_full "
+                  "not called, nothing written",
+                  all(v2_refused(r_, MSG_B) and "(the campaign's last pause must be {'kind': 'look', 'look': 1" in r_[0][1]
+                      and "'bars': []" in r_[0][1] for r_ in k_lk.values())
+                  and ck_hl["looks"][0]["result"]["fired"] is True
+                  and any(r_["fired"] for r_ in ck_hl["looks"][0]["result"]["results"]),
+                  {k_: (r_[0][0], r_[0][1][:50]) for k_, r_ in k_lk.items()},
+                  cover=["C3-ENDLOOK-REUSE-FIRED-LOOK-DISJUNCTS"])
+            k_rs = {k_: v2_edit(cp_p2, f"ruled-nonstr-{k_}", set_last("adjudication", v_))
+                    for k_, v_ in (("true", True), ("int", 1))}
+            k_rs0 = v2_edit(cp_p2, "ruled-empty-str", set_last("adjudication", ""))
+            B.chk("PIN-45, a reused cadence pause is ruled by a str (the writer writes a stripped, non-empty text, "
+                  "stages.py:2028-2030 and 2129; '' is accepted as a str, Code's reading): P2's ruled look pause with "
+                  "its ruling replaced by true or 1 (not a str; PIN-9 reads any non-None as adjudicated) is refused at "
+                  "V2 -- 'some pause must be {...}, adjudicated', release_full not called, nothing written; with its "
+                  "ruling '' it is analyzed with no seat input (written)",
+                  all(v2_refused(r_, MSG_B) and ", adjudicated)" in r_[0][1] for r_ in k_rs.values())
+                  and k_rs0[0][0] == "ok" and k_rs0[0][1] == "written"
+                  and k_rs0[2] == ["Q-F0_VERDICTS.json", "Q-F0_secondary.json"],
+                  ({k_: (r_[0][0], r_[0][1][:50]) for k_, r_ in k_rs.items()}, k_rs0[0][:2]),
+                  cover=["C3-ENDLOOK-REUSE-ADJ-NONSTR"])
+
+            def k_float_both(ck_):
+                ck_["campaign"]["end_look"]["end_is_look"] = 1.0
+                ck_["campaign"]["pauses"][-1]["look"] = 1.0
+            k_kt = {"end_is_look": v2_edit(cp_hl, "reuse-k-float", lambda ck_: ck_["campaign"]["end_look"].__setitem__(
+                        "end_is_look", 1.0), adj_pause=hl_pz, pis_=True),
+                    "both": v2_edit(cp_hl, "reuse-k-float-both", k_float_both, adj_pause=hl_pz, pis_=True),
+                    "look-at": v2_edit(cp_hl, "reuse-look-at-float", lambda ck_: ck_["looks"][0].__setitem__(
+                        "at_launches", 40.0), adj_pause=hl_pz, pis_=True)}
+            B.chk("refused at V2 (PIN-46's reuse clause by exact type, on a fired reuse): the hair STOP at 40's end_is_look "
+                  "as 1.0 (alone, and with its pause's look 1.0 too) -- '(look 1.0, recorded at [])'; look 1's at_launches "
+                  "in ck.looks as 40.0 (read_checkpoint compares by value) -- '(look 1, recorded at [40.0])'; each with "
+                  "both seat inputs, release_full not called, nothing written",
+                  v2_refused(k_kt["end_is_look"], MSG_C) and "(look 1.0, recorded at [])" in k_kt["end_is_look"][0][1]
+                  and v2_refused(k_kt["both"], MSG_C) and "(look 1.0, recorded at [])" in k_kt["both"][0][1]
+                  and v2_refused(k_kt["look-at"], MSG_C) and "(look 1, recorded at [40.0])" in k_kt["look-at"][0][1],
+                  {k_: (r_[0][0], r_[0][1][:50]) for k_, r_ in k_kt.items()}, cover=["C3-ENDLOOK-REUSE-K-TYPE"])
+            cp_p1 = prod["P1"][0]
+
+            def el_set(k__, v__):
+                return lambda ck_: ck_["campaign"]["end_look"].__setitem__(k__, v__)
+            k_g = {"end_is_look 1.0": v2_edit(cp_p1, "silent-eil-float", el_set("end_is_look", 1.0)),
+                   "end_is_look True": v2_edit(cp_p1, "silent-eil-bool", el_set("end_is_look", True)),
+                   "end_is_look null": v2_edit(cp_p1, "silent-eil-null", el_set("end_is_look", None)),
+                   "look 1 at 40.0": v2_edit(cp_p1, "silent-lk-float", lambda ck_: ck_["looks"][0].__setitem__(
+                       "at_launches", 40.0)),
+                   "look 1's result not an object": v2_edit(cp_p1, "silent-lk-res", lambda ck_: ck_["looks"][0].__setitem__(
+                       "result", "x")),
+                   "look 1's result look True": v2_edit(cp_p1, "silent-lk-look-bool",
+                                                        lambda ck_: ck_["looks"][0]["result"].__setitem__("look", True))}
+            k_gn = v2_edit(cp_el, "endlook-not-object", lambda ck_: ck_["campaign"].__setitem__("end_look", "x"))
+            B.chk("refused at V2 (PIN-46's reuse clause, its types and guards, on a SILENT reuse, where PIN-45 cannot "
+                  "stand in): P1's reused end look with end_is_look 1.0, True or null, with look 1 recorded at 40.0, "
+                  "with look 1's result not an object, or with look 1's result's look the bool True (end_is_look 1 "
+                  "kept) -- 'is not that of the look it reuses'; the terminal campaign's end "
+                  "look not an object -- '(None) is not the launches recorded'; release_full not called, nothing written "
+                  "(a refusal, never a crash)",
+                  all(v2_refused(r_, MSG_C) and "is not that of the look it reuses" in r_[0][1] for r_ in k_g.values())
+                  and v2_refused(k_gn, MSG_C) and "(None) is not the launches recorded" in k_gn[0][1],
+                  ({k_: (r_[0][0], r_[0][1][:40]) for k_, r_ in k_g.items()}, k_gn[0][:2]),
+                  cover=["C3-ENDLOOK-REUSE-GUARDS"])
+
+            def stop_set(**kv_):
+                return lambda ck_: ck_["stop"].update(kv_)
+
+            def as_gver_ruled(bar_):
+                def f_(ck_):
+                    ck_["stop"]["bar"] = bar_
+                    ck_["campaign"]["pauses"][-1]["adjudication"] = "hand: filled in (battery)"
+                return f_
+
+            def stop_on(i_):
+                return lambda ck_: ck_["stop"].update(template=ck_["sessions"][i_]["template"], s=ck_["sessions"][i_]["s"])
+            ge_pz = {"kind": "end_look", "at_launches": ck_ge["campaign"]["pauses"][-1]["at_launches"]}
+            hf_pz = {"kind": "end_look", "at_launches": ck_hf["campaign"]["pauses"][-1]["at_launches"]}
+            k_cg = {"hair 40 as template_breakage, ruled": v2_edit(cp_hl, "class-hl-tb", as_gver_ruled("template_breakage")),
+                    "hair 40 as schedule_mismatch, ruled": v2_edit(cp_hl, "class-hl-sm", as_gver_ruled("schedule_mismatch")),
+                    "hair 6 as template_breakage": v2_edit(cp_hf, "class-hf-tb", stop_set(bar="template_breakage"),
+                                                           adj_pause=hf_pz),
+                    "G-VER 7 on the last session's id": v2_edit(cp_ge, "class-ge-last", stop_on(-1), adj_pause=ge_pz),
+                    "G-VER 7 on the first session's id": v2_edit(cp_ge, "class-ge-first", stop_on(0), adj_pause=ge_pz)}
+            k_ch = {"G-VER 7 as the hair bar": v2_edit(cp_ge, "class-ge-hair", stop_set(bar=HAIR_BAR), adj_pause=ge_pz,
+                                                       pis_=True),
+                    "hair 40 on the first session's id": v2_edit(cp_hl, "class-hl-first", stop_on(0), adj_pause=hl_pz,
+                                                                 pis_=True),
+                    "hair 40 at s 18": v2_edit(cp_hl, "class-hl-s18", stop_set(s=18), adj_pause=hl_pz, pis_=True),
+                    "hair 40 as template A0": v2_edit(cp_hl, "class-hl-a0", stop_set(template="A0"), adj_pause=hl_pz,
+                                                      pis_=True)}
+            id_ = lambda x_: (x_["template"], x_["s"])                                        # noqa: E731
+            hl_ids = (id_(ck_hl["stop"]), id_(ck_hl["sessions"][-1]))
+            ge_ids = (id_(ck_ge["sessions"][0]), id_(ck_ge["sessions"][-1]))
+            k_cx = v2_edit(cp_hl, "class-hl-notobj", lambda ck_: ck_.__setitem__("stop", "x"), adj_pause=hl_pz)
+
+            def hair_at_zero(ck_):                 # the G-VER STOP at launch 1 (no session) rewritten as a hair STOP
+                ck_["stop"]["bar"] = HAIR_BAR      # with a fired fresh end look at 0 and its unadjudicated pause
+                ck_["campaign"]["end_look"] = {"look": "end", "at_launches": 0, "fired": True,
+                                               "results": [{"name": "battery-bar", "fired": True}]}
+                ck_["campaign"]["pauses"].append({"at_launches": 0, "kind": "end_look", "look": "end",
+                                                  "bars": ["battery-bar"], "adjudication": None})
+            k_c0 = v2_edit(Path(res_g0["checkpoint"]), "class-hair-zero", hair_at_zero,
+                           adj_pause={"kind": "end_look", "at_launches": 0}, pis_=True)
+            B.chk("refused at V2 (PIN-45, the end's class at a STOP whose end look fires, checked by ids against the "
+                  "writer's assertions in stages._stop_end_look): a hair-trigger STOP rewritten as G-VER (the hair STOP at "
+                  "40 as template_breakage or schedule_mismatch, its reused look's pause given a ruling, no seat input; "
+                  "the hair STOP at 6 as template_breakage, with the adjudication only) or a G-VER STOP's record id set "
+                  "to the last session's or to the first session's (not the last) -- 'a G-VER STOP's quarantined record "
+                  "(...) is among the sessions recorded'; a G-VER STOP rewritten as the hair trigger, or the hair STOP "
+                  "at 40's id set to the first session's, to s 18 (its template kept) or to template A0 (its s kept), "
+                  "the last two each sharing one component with the last session's id (each with both seat inputs) -- "
+                  "'a hair-trigger STOP's "
+                  "session (...) is not the last one recorded'; release_full "
+                  "not called, nothing written; unedited they are analyzed (C3-HAIR-LOOK40-PAUSE, C3-HAIR-ENDLOOK-PAUSE, "
+                  "C3-GVER-ENDLOOK-PAUSE); a stop block that is not an object (adjudication given) is refused as a STOP "
+                  "neither G-VER nor a hair trigger, not a crash; the G-VER STOP at launch 1 (no session) rewritten as a "
+                  "hair STOP with a fired end look at 0 and its pause (both seat inputs) -- '... is not the last one "
+                  "recorded (the last: [])'",
+                  all(v2_refused(r_, "REFUSED: a G-VER STOP's quarantined record (") for r_ in k_cg.values())
+                  and all(v2_refused(r_, "REFUSED: a hair-trigger STOP's session (") for r_ in k_ch.values())
+                  and v_hl["both"][0] == v_hf["both"][0] == v_ge["adjudication"][0] == "ok"
+                  and k_cx[0][0] == "refused" and "is neither G-VER nor a hair trigger" in k_cx[0][1] and k_cx[1:] == (0, [])
+                  and v2_refused(k_c0, "REFUSED: a hair-trigger STOP's session (") and "(the last: [])" in k_c0[0][1]
+                  and hl_ids[0] == hl_ids[1] and hl_ids[0][0] != "A0" and hl_ids[0][1] != 18 and ge_ids[0] != ge_ids[1],
+                  ({k_: (r_[0][0], r_[0][1][:50]) for k_, r_ in {**k_cg, **k_ch}.items()}, k_cx[0][:2], k_c0[0][:2],
+                   hl_ids, ge_ids),
+                  cover=["C3-ENDLOOK-STOP-CLASS"])
             adj_bad = {"sha": {"campaign_sha256": _sha256_bytes(cp.read_bytes())},
                        "pause": {"pause": {**adj_doc0["pause"], "at_launches": (adj_doc0["pause"]["at_launches"] or 0) + 1}},
                        "kind": {"pause": {**adj_doc0["pause"], "kind": "battery-other-kind"}},
@@ -5121,21 +6134,25 @@ def _bt_reader(B: _Battery) -> None:
                       p_.get("adjudication") is None for p_ in (ck_cp.get("campaign") or {}).get("pauses") or [])
                   and v_sadj[0] == "refused" and "--adjudication given" in v_sadj[1] and v_spis[0] == "refused"
                   and "--pi-stop given" in v_spis[1], (v_sadj[1][:50], v_spis[1][:50]), cover=["REF-SURPLUS-SEAT-INPUT"])
-            # a last pause already adjudicated (the ruling recorded with the pause, as stages.py records it on a
-            # resume): analyzed with no --adjudication; one given -- even naming that checkpoint and pause exactly --
-            # is surplus and refused
-            ck_ad = copy.deepcopy(ck_el)
-            for p_ in ck_ad["campaign"]["pauses"][-1:]:
-                p_["adjudication"] = "battery: the seat's ruling, recorded with the pause (synthetic)"
-            cp_ad = cp_el.parent / "endlook-ruled.json"
-            cp_ad.write_text(json.dumps(ck_ad))
-            adj_ad = seat_variant(adj_doc0, "adj-ruled", campaign_sha256=_sha256_bytes(cp_ad.read_bytes()))
+            # a last pause already adjudicated, as stages.py records it on a resume -- production-written: the
+            # reuse-not-last campaign above, whose last pause (schedule_exhausted at 40) stages ruled by the PI's
+            # stop (an end pause is never adjudicated in the checkpoint: PIN-45): analyzed with no --adjudication;
+            # one given -- even naming that checkpoint and pause exactly -- is surplus and refused
+            ck_ad = json.loads(cp_rn.read_text())
+            cp_ad = cp_rn
+            adj_ad = seat_variant(adj_doc0, "adj-ruled", campaign_sha256=_sha256_bytes(cp_ad.read_bytes()),
+                                  pause={"kind": ck_ad["campaign"]["pauses"][-1]["kind"],
+                                         "at_launches": ck_ad["campaign"]["pauses"][-1]["at_launches"]})
             v_ad0 = V("Q-F0", cp_ad, "ruled-none")
             v_ad1 = V("Q-F0", cp_ad, "ruled-surplus", adjudication=adj_ad)
             d_ad = json.loads((base / "out" / "ruled-none" / "Q-F0_VERDICTS.json").read_text()) if v_ad0[0] == "ok" else {}
-            B.chk("a last pause already adjudicated: analyzed with no --adjudication (the pause recorded adjudicated, no "
-                  "seat input recorded); an --adjudication naming that unit, checkpoint and pause exactly is surplus "
-                  "and refused", bool(ck_ad["campaign"]["pauses"]) and v_ad0[0] == "ok"
+            B.chk("a last pause already adjudicated (production-written under the battery patch that shortens the "
+                  "committed A0s schedule to its first 20 cells -- the C3-ENDLOOK-REUSE-NOT-LAST campaign: its ruling "
+                  "recorded with the pause by stages, the PI's stop of an exhausted schedule): analyzed with no "
+                  "--adjudication (the pause recorded "
+                  "adjudicated, no seat input recorded); an --adjudication naming that unit, checkpoint and pause "
+                  "exactly is surplus and refused", bool(ck_ad["campaign"]["pauses"]) and v_ad0[0] == "ok"
+                  and isinstance(ck_ad["campaign"]["pauses"][-1].get("adjudication"), str)
                   and [p_.get("adjudicated") for p_ in d_ad.get("pauses") or []][-1:] == [True]
                   and d_ad.get("adjudication") is None and v_ad1[0] == "refused" and "--adjudication given" in v_ad1[1],
                   (v_ad0[0], v_ad1[1][:50]), cover=["REF-SURPLUS-ADJ-ADJUDICATED"])
@@ -5500,23 +6517,50 @@ def _bt_reader(B: _Battery) -> None:
               "contradicting a VERDICTS is refused; PENDING beside an existing VERDICTS is refused; a VERDICTS "
               "file carries its verdict)", ok_x and ok_y and st4 == "written", msg_x[:60],
               cover=["CMD-POSTING-CROSSCHECK", "PEND-VERDICTS-CARRIES"])
-        # the re-run on the posted text (m:278, m:73) writes its own record beside the table of record's
+        # the re-run on the posted text (m:278, m:73) writes its own record beside the table of record's -- under
+        # C7's bar (PIN-44): a posted copy of the table of record enumerates rows, so it FAILs and writes nothing;
+        # a posted text that enumerates nothing PASSes and writes its record
         tp.write_text(json.dumps(tdoc4))
         posted = base / "table-posted.json"
         pt = json.loads(Path(_BT_STATE["rec_table"]).read_text(encoding="utf-8"))
         pt["kind"] = "posted"
         posted.write_text(resume.json_text(pt, indent=1), encoding="utf-8")
+        posted_min = _bt_posted_min(base, "min", dose=True)
+        rw_d = base / "rewrites"
+        rw_d.mkdir()
+
+        def rw_file(name, ids_, **over):
+            p_ = rw_d / f"{name}.json"
+            p_.write_text(json.dumps({"schema": REWRITES_SCHEMA, "posting": "v1", "rows": list(ids_), **over}))
+            return p_
+        rw_none = rw_file("none", [])
         bk = base / "post-kinds"
         bk.mkdir()
         s_r1, _, p_r1 = run_posting(tp, _BT_STATE["rec_table"], REPO / FLAG_SOURCE_REL, pdir, bk, env_p)
-        s_p, _, p_p = run_posting(tp, posted, REPO / FLAG_SOURCE_REL, pdir, bk, env_p)
+        en_r1 = [it["row_id"] for it in json.loads(p_r1[0].read_text())["outputs"]["enumeration"]]
+        rw_bk = rw_file("post-kinds", en_r1)
+        f_bk = _bt_raises(lambda: run_posting(tp, posted, REPO / FLAG_SOURCE_REL, pdir, bk, env_p, rewrites=rw_none),
+                          (AnlPostingFail,))
+        ls_bk = sorted(x.name for x in bk.iterdir())
         s_r2, _, p_r2 = run_posting(tp, _BT_STATE["rec_table"], REPO / FLAG_SOURCE_REL, pdir, bk, env_p)
-        B.chk("posting: the table of record's run and the posted text's re-run write two records in one directory "
-              "(POSTING-v1_outputs.of-record.json, then .posted.json; the of-record run again is identical)",
-              (s_r1, s_p, s_r2) == ("written", "written", "identical")
+        s_p, _, p_p = run_posting(tp, posted_min, REPO / FLAG_SOURCE_REL, pdir, bk, env_p, rewrites=rw_bk)
+        d_p = json.loads(p_p[0].read_text())
+        B.chk("posting: the table of record's run and the posted text's re-run write two records in one directory -- "
+              "POSTING-v1_outputs.of-record.json; a posted copy of the table of record (it enumerates rows) FAILs "
+              "C7's bar and writes nothing (PIN-44); the of-record run again is identical; a posted text that "
+              "enumerates nothing, its rewrite list naming every row the of-record run enumerated, PASSes and "
+              "writes .posted.json beside it (compared with the posting's own of-record enumeration: Q-F0 is NOT-RUN)",
+              s_r1 == "written" and bool(en_r1) and f_bk[0] and ls_bk == ["POSTING-v1_outputs.of-record.json"]
+              and s_r2 == "identical" and p_r2[0] == p_r1[0] and s_p == "written"
               and (p_r1[0].name, p_p[0].name) == ("POSTING-v1_outputs.of-record.json", "POSTING-v1_outputs.posted.json")
-              and p_r2[0] == p_r1[0] and json.loads(p_p[0].read_text())["table_kind"] == "posted",
-              (s_r1, s_p, s_r2), cover=["CMD-POSTING-BOTH-KINDS"])
+              and d_p["table_kind"] == "posted" and d_p["bar"]["verdict"] == "PASS"
+              and d_p["bar"]["comparison"]["comparator"]["kind"] == "posting-of-record"
+              and d_p["bar"]["comparison"]["comparator"]["path"] == _repo_rel(p_r1[0])
+              and d_p["bar"]["comparison"]["comparator"]["sha256"] == _sha256_bytes(p_r1[0].read_bytes())
+              and d_p["bar"]["comparison"]["comparator"]["tuple"] == json.loads(p_r1[0].read_text())["tuple"]
+              and d_p["bar"]["comparison"]["same_tuple"] is True
+              and d_p["bar"]["comparison"]["differs"] is False,
+              (s_r1, f_bk[0], s_r2, s_p, len(en_r1)), cover=["CMD-POSTING-BOTH-KINDS"])
         p_docs = [po, json.loads(p_r1[0].read_text()), json.loads(p_p[0].read_text())]
         B.chk("posting: POSTING-v1_outputs.*.json records the pinned proposal's sha256 (the table of record's runs and "
               "the posted text's re-run)", all(d_.get("proposal_sha256") == PROPOSAL_SHA256 for d_ in p_docs),
@@ -5596,9 +6640,11 @@ def _bt_reader(B: _Battery) -> None:
         bd = base / "post-bound"
         bd.mkdir()
         tsha = _sha256_bytes(Path(_BT_STATE["rec_table"]).read_bytes())
+        # Q-F0's stub VERDICTS carries an (empty) v1 enumeration: the comparator of PIN-44's posted run below
         for u in UNITS:
             (bd / f"{u}_VERDICTS.json").write_text(json.dumps({"arm": {"state": "PASS"}, "inputs": {
-                "sentences": {"sha256": tsha if u == "Q-F0" else None}}}))
+                "sentences": {"sha256": tsha if u == "Q-F0" else None}},
+                **({"schema": VERDICTS_SCHEMA, "unit": "Q-F0", "v1_outputs": {"enumeration": []}} if u == "Q-F0" else {})}))
         tall = {"schema": TUPLE_SCHEMA, "posting": "v1", "tuple": {u: "PASS" for u in UNITS}, "reasons": {},
                 "pending": {}}
         other = base / "table-of-record-other.json"
@@ -5608,7 +6654,7 @@ def _bt_reader(B: _Battery) -> None:
         ob = base / "post-bound-out"
         ob.mkdir()
         sbo, _, _ = run_posting(tp, _BT_STATE["rec_table"], REPO / FLAG_SOURCE_REL, bd, ob, env_p)
-        spo, _, _ = run_posting(tp, posted, REPO / FLAG_SOURCE_REL, bd, ob, env_p)
+        spo, _, _ = run_posting(tp, posted_min, REPO / FLAG_SOURCE_REL, bd, ob, env_p, rewrites=rw_none)
         bn = base / "post-bound-nr"                        # a locked Q-F0's no-first-read NOT-RUN (from verdicts)
         bn.mkdir()
         for u in UNITS[1:]:
@@ -5624,6 +6670,557 @@ def _bt_reader(B: _Battery) -> None:
               rbo[0] and "not the one Q-F0's VERDICTS output read" in rbo[1] and rbn[0]
               and "not the one Q-F0's NOT-RUN output read" in rbn[1] and sbo == spo == "written",
               (rbo[1][:60], rbn[1][:60], sbo, spo), cover=["CMD-POSTING-TABLE-BOUND"])
+        # C7's posting bar and the comparison (PIN-44), against Q-F0's VERDICTS of the COMPLETE campaign (its v1
+        # outputs over the table of record, under its tuple: its own state and the declared OLMo states)
+        vdir_v = base / "out" / "complete"
+        en_v = [it["row_id"] for it in doc["v1_outputs"]["enumeration"]]
+        sd_v = json.loads(Path(_BT_STATE["olmo_states"]).read_text())["states"]
+        t_v = {"schema": TUPLE_SCHEMA, "posting": "v1", "tuple": dict(doc["tuple"]),
+               "reasons": {"OLMo-dpo": not_run_reason("OLMo-dpo", sd_v["OLMo-dpo"]["cause"], sd_v["OLMo-dpo"]["date"])},
+               "pending": {"OLMo-sft": {k_: v_ for k_, v_ in sd_v["OLMo-sft"].items() if k_ != "state"}}}
+        tp_v, tp_n, tp_all = base / "tuple-verdicts.json", base / "tuple-notrun.json", base / "tuple-all-pass.json"
+        tp_v.write_text(json.dumps(t_v))
+        tp_n.write_text(json.dumps(tdoc4))
+        tp_all.write_text(json.dumps(tall))
+
+        def post_try(name, table, rewrites=None, *, tuple_p=tp_v, vdir=vdir_v, flag=REPO / FLAG_SOURCE_REL, env=None):
+            o_ = base / "post-bar" / name
+            o_.mkdir(parents=True, exist_ok=True)
+            before = {x.name for x in o_.iterdir()}
+            try:
+                st_, ln_, ps_ = run_posting(tuple_p, table, flag, vdir, o_, env or env_p, rewrites=rewrites)
+                res_ = {"r": "ok", "st": st_, "lines": ln_, "doc": json.loads(ps_[0].read_text())}
+            except AnlPostingFail as e:
+                res_ = {"r": "fail", "lines": e.lines, "bar": e.bar, "exit": _exit_of(e)}
+            except AnlRefusal as e:
+                res_ = {"r": "refused", "msg": B.clean(str(e)), "exit": _exit_of(e)}
+            res_["new"] = sorted({x.name for x in o_.iterdir()} - before)
+            return res_
+        B.chk("posting (PIN-44): an of-record run records C7's bar as not applicable, with its reason, and takes no "
+              "rewrite list (its inputs carry none)", po.get("bar") == {"applies": False, "reason": BAR_NOT_APPLICABLE}
+              and "rewrites" not in po.get("inputs", {}) and json.loads(p_r1[0].read_text()).get("bar") == po["bar"]
+              and "'The pass bar for the posting's re-run on the posted text'; Code's reading (PIN-44)"
+              in BAR_NOT_APPLICABLE, po.get("bar", {}).get("applies"), cover=["CMD-POSTING-BAR-NA"])
+        rw_v = rw_file("verdicts-all", en_v)
+        pv1, pv2 = post_try("pass", posted_min, rw_v), post_try("pass", posted_min, rw_v)
+        bv = (pv1.get("doc") or {}).get("bar") or {}
+        cv = bv.get("comparison") or {}
+        qv_p = vdir_v / "Q-F0_VERDICTS.json"
+        t_tab_min = json.loads(posted_min.read_text(encoding="utf-8"))
+        B.chk("posting (C7's bar, PIN-44): PASS on a minimal posted table that enumerates nothing (the flag of record "
+              "TRUE, its dose-note row carried), its rewrite list naming every row Q-F0's VERDICTS enumerated: bar "
+              "{applies, PASS, enumeration empty, dose note iff the flag, residue []}; the comparison with the VERDICTS "
+              "enumeration (kind, path, sha256 and its stored tuple recorded; that tuple this run's) differs in "
+              "nothing; inputs.rewrites recorded; outputs are v1_outputs' own; written (exit 0), identical on a re-run",
+              table_problems(t_tab_min, read_repo_file=env_p.read_repo_file) == [] and bool(en_v)
+              and pv1["r"] == "ok" and pv1["st"] == "written" and pv1["new"] == ["POSTING-v1_outputs.posted.json"]
+              and pv2["r"] == "ok" and pv2["st"] == "identical"
+              and sorted(bv) == ["applies", "comparison", "dose_note_iff_flag", "enumeration_empty", "residue", "verdict"]
+              and bv["applies"] is True and bv["verdict"] == "PASS" and bv["enumeration_empty"] is True
+              and bv["dose_note_iff_flag"] is True and bv["residue"] == []
+              and cv.get("comparator") == {"kind": "verdicts", "path": _repo_rel(qv_p), "sha256": _sha256_bytes(qv_p.read_bytes()),
+                                           "tuple": t_v["tuple"]}
+              and cv.get("same_tuple") is True
+              and cv["differs"] is False and cv["only_actual"] == cv["only_expected"] == cv["changed"] == cv["moved"] == []
+              and cv["rewrites_not_in_comparator"] == []
+              and pv1["doc"]["inputs"].get("rewrites") == _file_rec(rw_v, rw_v.read_bytes())
+              and pv1["doc"]["outputs"] == json.loads(json.dumps(v1_outputs(
+                  tuple(t_v["tuple"][u] for u in UNITS), t_v["reasons"], True, t_tab_min)))
+              and pv1["doc"]["outputs"]["dose_note"]["status"] == "carried" and pv1["doc"]["flag"]["value"] is True,
+              (pv1["r"], pv1.get("st"), pv2.get("st"), bv.get("verdict"), cv.get("differs")),
+              cover=["CMD-POSTING-BAR-PASS", "CMD-POSTING-CMP-MATCH", "CMD-POSTING-CMP-VERDICTS"])
+        pf1 = post_try("fail", posted, rw_none)
+        bf = pf1.get("bar") or {}
+        # the FAIL's stdout is the record of that step (A FAIL writes nothing): every residue row in full, as the
+        # enumeration carries it and in table order (the VERDICTS stored the same items: same table, same tuple),
+        # and the unwritten record's inputs and binding; an item carries enumeration()'s fields only (no tag, pick
+        # or free-round event), and no roster word reaches the lines
+        en_items = doc["v1_outputs"]["enumeration"]
+        want_res = [f"POSTING v1: residue {i_} of {len(en_items)}, {it_['row_id']}: {json.dumps(it_, sort_keys=True)}"
+                    for i_, it_ in enumerate(en_items, 1)]
+        got_res = [ln_ for ln_ in pf1.get("lines") or [] if ln_.startswith("POSTING v1: residue ")
+                   and not ln_.startswith("POSTING v1: residue by row id")]
+        rec_ln = [ln_ for ln_ in pf1.get("lines") or [] if ln_.startswith("POSTING v1: the unwritten record: ")]
+        b_env = analyzer_binding(env_p)
+        js_ = lambda x_: json.dumps(x_, sort_keys=True)                                       # noqa: E731
+        fl_rec = flag_of_record(REPO / FLAG_SOURCE_REL, env_p.committed)
+        cmp_v = {"kind": "verdicts", "path": _repo_rel(qv_p), "sha256": _sha256_bytes(qv_p.read_bytes()),
+                 "tuple": t_v["tuple"]}
+
+        def want_record(table_p_, rw_p_):
+            return ("POSTING v1: the unwritten record: declared "
+                    + js_({"tuple": t_v["tuple"], "reasons": t_v["reasons"], "pending": t_v["pending"]})
+                    + "; inputs " + js_({"tuple": _file_rec(tp_v, tp_v.read_bytes()),
+                                         "sentences": _file_rec(table_p_, table_p_.read_bytes()),
+                                         "rewrites": _file_rec(rw_p_, rw_p_.read_bytes())})
+                    + "; comparator " + js_(cmp_v) + "; flag " + js_(fl_rec) + "; binding " + js_(b_env))
+
+        def item_fields_ok(it_):
+            a_, b_, c_ = it_.get("a"), it_.get("b"), it_.get("c")
+            return (sorted(it_) == list(ENUM_ITEM_KEYS)
+                    and (a_ is None or (sorted(a_) == ["cells"] and all(sorted(x_) == ["cell", "label"] for x_ in a_["cells"])))
+                    and (b_ is None or sorted(b_) == ["ceiling", "thesis"])
+                    and (c_ is None or sorted(c_) == ["flag", "treatment"]))
+        B.chk("posting (C7's bar, PIN-44): FAIL with residue -- a posted copy of the table of record under the VERDICTS "
+              "tuple, its rewrite list empty: AnlPostingFail (exit 5), nothing written, the residue by row id printed "
+              "(every row the VERDICTS enumerated, in table order) with the comparison (no row differs: the same rows "
+              "enumerate); its record on stdout: each residue row in full (sorted-key JSON, enumeration()'s fields "
+              "only), the unwritten record exactly: the declared tuple with its reasons and pending, the inputs (the "
+              "tuple's, the posted table's and the rewrite list's path and sha256), comparator, flag and binding "
+              "(analyzer, package, closure sha256), each in sorted-key JSON; no roster word",
+              pf1["r"] == "fail" and pf1["exit"] == 5 and pf1["new"] == [] and bf.get("verdict") == "FAIL"
+              and bf.get("enumeration_empty") is False and bf.get("dose_note_iff_flag") is True
+              and bf.get("residue") == en_v and (bf.get("comparison") or {}).get("differs") is False
+              and any(ln_.startswith("POSTING v1: residue by row id") and ", ".join(en_v) in ln_ for ln_ in pf1["lines"])
+              and any("FAIL against C7's bar" in ln_ and "nothing written" in ln_ for ln_ in pf1["lines"])
+              and any("comparison with the verdicts enumeration" in ln_ for ln_ in pf1["lines"])
+              and got_res == want_res and all(item_fields_ok(it_) for it_ in en_items)
+              and rec_ln == [want_record(posted, rw_none)] and bf["comparison"]["comparator"] == cmp_v
+              and "POSTING v1: comparison rewrites not in the comparator: []" in pf1["lines"]
+              and not stages._ROSTER_RX.search("\n".join(pf1["lines"])),
+              (pf1["r"], pf1.get("exit"), len(bf.get("residue") or []), len(got_res), len(rec_ln)),
+              cover=["CMD-POSTING-BAR-FAIL"])
+        # the residue is listed in table order, not by id: a posted copy of the table of record whose row ids run
+        # backwards (rows still in loc order), and a minimal posted table P09, P01, P03 (two null-cell rows)
+        pt_rev = copy.deepcopy(pt)
+        for r_, i_ in zip(pt_rev["rows"], [r_["id"] for r_ in pt_rev["rows"]][::-1]):
+            r_["id"] = i_
+        posted_rev = base / "table-posted-ids-reversed.json"
+        posted_rev.write_text(resume.json_text(pt_rev, indent=1), encoding="utf-8")
+        pf_rev = post_try("fail-ids-reversed", posted_rev, rw_none)
+        res_rev = (pf_rev.get("bar") or {}).get("residue") or []
+
+        def posted_rows(name, spec):
+            texts = {rid: f"[posted {rid}] A synthetic posted sentence" + (f"; synthetic dose note {rid}." if d else ".")
+                     for rid, _, _, d in spec}
+            body = "".join(texts[rid] + "\n" for rid, *_ in spec)
+            pre = f"PREPRINT-posted-{name}.md"
+            (base / pre).write_text(body, encoding="utf-8")
+            pb = body.encode("utf-8")
+            rows = [{"id": rid, "loc": {"line": ln, "section": "posted", "sentence": 1}, "text": texts[rid],
+                     "text_sha256": hashlib.sha256(texts[rid].encode("utf-8")).hexdigest(), "null_cells": list(nc),
+                     "thesis": None, "dose_note": d, "dose_note_span": f"synthetic dose note {rid}" if d else None,
+                     "kinds": list(k)} for ln, (rid, nc, k, d) in enumerate(spec, 1)]
+            t = {"schema": TABLE_SCHEMA, "kind": "posted", "posting": "v1", "cells": list(CELLS),
+                 "kinds_vocabulary": list(KINDS_VOCAB), "rows": rows,
+                 "preprint": {"path": pre, "sha256": _sha256_bytes(pb), "bytes": len(pb), "lines": body.count("\n")}}
+            p = base / f"table-posted-{name}.json"
+            p.write_text(resume.json_text(t, indent=1), encoding="utf-8")
+            return p
+        posted_ord = posted_rows("order", [("P09", ["weight"], [], False), ("P01", ["weight"], [], False),
+                                           ("P03", [], ["f1-corr-line", "dose-note"], True)])
+        pf_o = post_try("fail-order", posted_ord, rw_none)
+        B.chk("posting (C7's bar, PIN-44): the residue is listed in table order, not by id -- a posted copy of the "
+              "table of record whose row ids run backwards (rows still in loc order) FAILs with its residue in row "
+              "order; a minimal posted table P09, P01 (each a null on the weight channel), P03 FAILs with residue "
+              "[P09, P01], printed so",
+              pf_rev["r"] == "fail" and len(res_rev) >= 2 and res_rev != sorted(res_rev)
+              and res_rev == [r_["id"] for r_ in pt_rev["rows"] if r_["id"] in set(res_rev)]
+              and pf_o["r"] == "fail" and pf_o["bar"]["residue"] == ["P09", "P01"]
+              and any(ln_.endswith("residue by row id (2): P09, P01") for ln_ in pf_o["lines"]),
+              (pf_rev["r"], res_rev[:4], pf_o["r"], (pf_o.get("bar") or {}).get("residue")),
+              cover=["CMD-POSTING-RESIDUE-ORDER"])
+        me_mod = sys.modules[__name__]
+
+        def via_main(name, table, rewrites):
+            o_ = base / "post-main" / name
+            o_.mkdir(parents=True, exist_ok=True)
+            argv_ = (["posting", "--posting", "v1", "--tuple", str(tp_v), "--sentences", str(table), "--verdicts-dir",
+                      str(vdir_v), "--out", str(o_)] + (["--rewrites", str(rewrites)] if rewrites is not None else []))
+            out_, err_ = io.StringIO(), io.StringIO()
+            with _bt_patched(me_mod, "production_env", lambda: env_p), contextlib.redirect_stdout(out_), \
+                    contextlib.redirect_stderr(err_):
+                try:
+                    rc_ = main(argv_)
+                except SystemExit as e:
+                    rc_ = ("SystemExit", str(e.code)[:40])
+            return rc_, out_.getvalue(), err_.getvalue(), sorted(x.name for x in o_.iterdir())
+        m_fail, m_pass = via_main("fail", posted, rw_none), via_main("pass", posted_min, rw_v)
+        m_rec = via_main("of-record-rewrites", _BT_STATE["rec_table"], rw_none)
+        B.chk("exit codes (PIN-26, PIN-44): through main() (--rewrites), the posted text's FAIL returns 5 with its "
+              "record on stdout (the residue by row id and in full, the unwritten record) and nothing written; its "
+              "PASS returns 0 and writes; --rewrites on the table of record returns 2 (refused, nothing written); "
+              "PIN-26 states the posting's 5 before 'any other SystemExit maps to 4'",
+              m_fail[0] == 5 and "FAIL against C7's bar" in m_fail[1] and ", ".join(en_v) in m_fail[1] and m_fail[3] == []
+              and all(ln_ in m_fail[1] for ln_ in want_res) and "POSTING v1: the unwritten record: declared {" in m_fail[1]
+              and m_pass[0] == 0 and "PASS against C7's bar" in m_pass[1]
+              and m_pass[3] == ["POSTING-v1_outputs.posted.json"] and m_rec[0] == 2
+              and "--rewrites is the posted text's input" in m_rec[2] and m_rec[3] == []
+              and "FAIL against C7's bar" in PINS["PIN-26"] and "posting also 5" in PINS["PIN-26"]
+              and PINS["PIN-26"].index("posting also 5") < PINS["PIN-26"].index("any other SystemExit maps to 4"),
+              (m_fail[0], m_pass[0], m_rec[0]), cover=["CMD-POSTING-EXIT-5"])
+        m_e_rec, m_e_pst = via_main("empty-of-record", _BT_STATE["rec_table"], ""), via_main("empty-posted", posted_min, "")
+        B.chk("posting refused (PIN-44; exit 2, nothing written): an empty --rewrites is a given path, through main() -- "
+              "on the table of record refused as a rewrite list given there; on the posted text refused as unreadable "
+              "(it names no file)",
+              m_e_rec[0] == 2 and "--rewrites is the posted text's input" in m_e_rec[2] and m_e_rec[3] == []
+              and m_e_pst[0] == 2 and "the rewrite list unreadable" in m_e_pst[2] and m_e_pst[3] == [],
+              (m_e_rec[0], m_e_rec[2][-60:], m_e_pst[0], m_e_pst[2][-60:]), cover=["CMD-POSTING-REWRITES-EMPTY"])
+        posted_nodose = _bt_posted_min(base, "nodose", dose=False)
+        pd_t = post_try("dose-true-nodose", posted_nodose, rw_v)
+        pd_f = post_try("dose-false-dose", posted_min, rw_v, flag=fl_abs)
+        pd_c = post_try("dose-false-nodose", posted_nodose, rw_v, flag=fl_abs)
+        # the conjunct is computed on its own (from dose_note's status), not through clause (c): called directly with
+        # an empty enumeration -- unreachable through run_posting, where (c) mirrors it -- it alone FAILs the bar
+        t_nodose = json.loads(posted_nodose.read_text(encoding="utf-8"))
+        pd_x = {fl_: posting_bar({"enumeration": []}, fl_, t_tab_min if not fl_ else t_nodose,
+                                cv.get("comparator") or {"kind": "verdicts", "path": "", "sha256": "", "tuple": None}, [], [],
+                                t_v["tuple"])
+                for fl_ in (True, False)}
+        B.chk("posting (C7's bar, PIN-44): the dose conjunct is false under each flag value -- flag TRUE with no "
+              "dose-note row (carried at P03, the f1 CORR line) and flag FALSE with one (struck at P03) each FAIL with "
+              "dose_note_iff_flag false and residue [P03], nothing written; flag FALSE with no dose-note row PASSes "
+              "(dose_note_iff_flag true); called directly with an empty enumeration, the conjunct alone FAILs the bar "
+              "under each flag value",
+              all(r_["r"] == "fail" and r_["bar"]["dose_note_iff_flag"] is False and r_["bar"]["residue"] == ["P03"]
+                  and r_["new"] == [] for r_ in (pd_t, pd_f))
+              and pd_c["r"] == "ok" and pd_c["doc"]["bar"]["verdict"] == "PASS"
+              and pd_c["doc"]["bar"]["dose_note_iff_flag"] is True and pd_c["doc"]["flag"]["value"] is False
+              and all(x_["verdict"] == "FAIL" and x_["enumeration_empty"] is True and x_["dose_note_iff_flag"] is False
+                      for x_ in pd_x.values()),
+              (pd_t["r"], pd_f["r"], pd_c["r"], {k_: x_["verdict"] for k_, x_ in pd_x.items()}),
+              cover=["CMD-POSTING-BAR-DOSE"])
+        pt_chg = copy.deepcopy(pt)
+        for r_ in pt_chg["rows"]:
+            if r_["id"] == "P17":
+                r_["thesis"] = None
+        posted_chg = base / "table-posted-changed.json"
+        posted_chg.write_text(resume.json_text(pt_chg, indent=1), encoding="utf-8")
+        dx_a = post_try("cmp-only-actual", posted, rw_file("p02", ["P02", "X99"]))
+        dx_e = post_try("cmp-only-expected", posted_min, rw_none)
+        dx_c = post_try("cmp-changed", posted_chg, rw_none)
+        dx_n = post_try("cmp-not-in", posted_min, rw_file("not-in-comparator", en_v + ["P01", "X99"]))
+        pt_a3 = copy.deepcopy(pt)                         # P11 keeps clause (a), on one null cell instead of three
+        for r_ in pt_a3["rows"]:
+            if r_["id"] == "P11":
+                r_["null_cells"] = ["e2b"]
+        posted_a3 = base / "table-posted-same-letters.json"
+        posted_a3.write_text(resume.json_text(pt_a3, indent=1), encoding="utf-8")
+        dx_3 = post_try("cmp-same-letters", posted_a3, rw_none)
+        pt_oe = copy.deepcopy(pt)                         # P02 no longer enumerates: only_expected on a FAIL
+        for r_ in pt_oe["rows"]:
+            if r_["id"] == "P02":
+                r_["null_cells"], r_["thesis"] = [], None
+        posted_oe = base / "table-posted-p02-cleared.json"
+        posted_oe.write_text(resume.json_text(pt_oe, indent=1), encoding="utf-8")
+        dx_o = post_try("cmp-only-expected-fail", posted_oe, rw_none)
+        ca_ = (dx_a.get("bar") or {}).get("comparison") or {}
+        ce_ = ((dx_e.get("doc") or {}).get("bar") or {}).get("comparison") or {}
+        cc_ = (dx_c.get("bar") or {}).get("comparison") or {}
+        cn_ = ((dx_n.get("doc") or {}).get("bar") or {}).get("comparison") or {}
+        c3_ = (dx_3.get("bar") or {}).get("comparison") or {}
+        co_ = (dx_o.get("bar") or {}).get("comparison") or {}
+        ch_c, ch_3 = cc_.get("changed") or [], c3_.get("changed") or []
+        # the whole item is compared: called directly, an item whose treatments differ is changed; one that differs
+        # in loc alone is moved, not changed (informational: differs does not count it); one that moved AND differs
+        # elsewhere is changed; the identical item is neither. A FAIL prints the moved row in full.
+        it0 = json.loads(json.dumps(en_items[0]))
+        moved, treat = copy.deepcopy(it0), copy.deepcopy(it0)
+        moved["loc"]["line"] += 1
+        treat["treatments"] = list(treat["treatments"]) + ["battery-extra-treatment"]
+        both_ = copy.deepcopy(treat)
+        both_["loc"]["line"] += 1
+        bx_d = {k_: posting_bar({"enumeration": [x_]}, True, t_tab_min, cv["comparator"], [it0], [], t_v["tuple"])
+                for k_, x_ in (("same", it0), ("moved", moved), ("treatments", treat), ("moved+treatments", both_))}
+        dx_d = {k_: b_["comparison"]["changed"] for k_, b_ in bx_d.items()}
+        mx_d = {k_: b_["comparison"]["moved"] for k_, b_ in bx_d.items()}
+        mv_lines = posting_fail_lines(bx_d["moved"], [moved], [it0], {}, {}, {}, {})
+
+        def has_line(res_, start_):
+            return any(ln_.startswith(start_) for ln_ in res_.get("lines") or [])
+
+        def line_of(res_, rx_):
+            got_ = [ln_[m_.end():] for ln_ in res_.get("lines") or [] for m_ in [re.match(rx_, ln_)] if m_]
+            return got_[0] if len(got_) == 1 else None
+        js_ = lambda x_: json.dumps(x_, sort_keys=True)                                       # noqa: E731
+        it_by = {it_["row_id"]: it_ for it_ in en_items}
+        B.chk("posting (PIN-44): the comparison reports each kind of difference and does not decide the verdict -- "
+              "only_actual (P02 in the rewrite list yet still enumerated: FAIL); only_expected (nothing rewritten, "
+              "nothing enumerated: every VERDICTS row, yet PASS, written; on a FAIL, P02 cleared on a posted copy); "
+              "changed, the two items differing in a field other than loc (P17's thesis struck: clauses [a, b] -> [a]; "
+              "P11 on one null cell of three: clauses [a] on both sides; called directly, an item with other "
+              "treatments, also when it moved; the identical one not); moved, differing in loc alone (called "
+              "directly: moved, not changed, differs false; a FAIL prints it in full); rewrite ids the VERDICTS never "
+              "enumerated (P01, X99) informational only (PASS, differs false; on a FAIL printed as the JSON list "
+              "[\"X99\"]); on a FAIL each set's rows are printed exactly, in full (only_actual P02 as this run "
+              "enumerates it, only_expected P02 as the VERDICTS stored it, changed P17 with both items, P17's residue "
+              "line with this run's item), and the summary names changed and moved by row id",
+              dx_a["r"] == "fail" and ca_.get("only_actual") == ["P02"] and ca_.get("only_expected") == []
+              and ca_.get("changed") == [] and ca_.get("differs") is True
+              and has_line(dx_a, "POSTING v1: comparison only_actual P02: {")
+              and line_of(dx_a, r"POSTING v1: comparison only_actual P02: ") == js_(it_by["P02"])
+              == line_of(dx_a, r"POSTING v1: residue \d+ of \d+, P02: ")
+              and ca_.get("rewrites_not_in_comparator") == ["X99"]
+              and 'POSTING v1: comparison rewrites not in the comparator: ["X99"]' in dx_a["lines"]
+              and line_of(dx_o, r"POSTING v1: comparison only_expected P02: ") == js_(it_by["P02"])
+              and line_of(dx_c, r"POSTING v1: comparison changed P17: ")
+              == f"expected {js_(ch_c[0]['expected'])}; actual {js_(ch_c[0]['actual'])}"
+              and line_of(dx_c, r"POSTING v1: residue \d+ of \d+, P17: ") == js_(ch_c[0]["actual"])
+              and js_(ch_c[0]["expected"]) == js_(it_by["P17"])
+              and any("; changed P17; moved none; rewrites not in the comparator" in ln_ for ln_ in dx_c["lines"])
+              and dx_e["r"] == "ok" and dx_e["doc"]["bar"]["verdict"] == "PASS" and ce_.get("only_expected") == en_v
+              and ce_.get("only_actual") == [] and ce_.get("differs") is True
+              and dx_c["r"] == "fail" and [c_["row_id"] for c_ in ch_c] == ["P17"]
+              and ch_c[0]["expected"].get("clauses") == ["a", "b"] and ch_c[0]["actual"].get("clauses") == ["a"]
+              and ch_c[0]["actual"].get("b") is None and sorted(ch_c[0]["actual"]) == list(ENUM_ITEM_KEYS)
+              and has_line(dx_c, "POSTING v1: comparison changed P17: expected {")
+              and cc_.get("only_actual") == [] and cc_.get("only_expected") == [] and cc_.get("differs") is True
+              and dx_3["r"] == "fail" and [c_["row_id"] for c_ in ch_3] == ["P11"] and c3_.get("differs") is True
+              and ch_3[0]["expected"].get("clauses") == ch_3[0]["actual"].get("clauses") == ["a"]
+              and len(ch_3[0]["expected"]["a"]["cells"]) == 3 and len(ch_3[0]["actual"]["a"]["cells"]) == 1
+              and dx_o["r"] == "fail" and co_.get("only_expected") == ["P02"] and co_.get("differs") is True
+              and has_line(dx_o, "POSTING v1: comparison only_expected P02: {")
+              and dx_d["same"] == [] and mx_d["same"] == [] and dx_d["moved"] == []
+              and [c_["row_id"] for c_ in mx_d["moved"]] == [it0["row_id"]] and bx_d["moved"]["comparison"]["differs"] is False
+              and [c_["row_id"] for c_ in dx_d["treatments"]] == [it0["row_id"]] and mx_d["treatments"] == []
+              and [c_["row_id"] for c_ in dx_d["moved+treatments"]] == [it0["row_id"]] and mx_d["moved+treatments"] == []
+              and (f"POSTING v1: comparison moved {it0['row_id']}: expected {js_(it0)}; actual {js_(moved)}") in mv_lines
+              and any(f"; changed none; moved {it0['row_id']}; " in ln_ for ln_ in posting_bar_lines(bx_d["moved"]))
+              and dx_n["r"] == "ok" and cn_.get("rewrites_not_in_comparator") == ["P01", "X99"]
+              and cn_.get("differs") is False,
+              (dx_a["r"], dx_e["r"], dx_c["r"], dx_3["r"], dx_o["r"], dx_n["r"], {k_: len(v_) for k_, v_ in dx_d.items()}),
+              cover=["CMD-POSTING-CMP-DIFFERS"])
+        bm = base / "post-cmp-malformed"
+        bm.mkdir()
+        for u in UNITS:
+            (bm / f"{u}_VERDICTS.json").write_text(json.dumps({"arm": {"state": "PASS"}, **(
+                {"schema": VERDICTS_SCHEMA, "unit": "Q-F0"} if u == "Q-F0" else {})}))
+        s_nei = post_try("select-neither", posted_min, rw_none, tuple_p=tp_n, vdir=pdir)
+        s_mal = post_try("select-malformed", posted_min, rw_none, tuple_p=tp_all, vdir=bm)
+        o_mb = base / "post-bar" / "select-malformed-beside"   # the same, beside the posting's own of-record output
+        o_mb.mkdir(parents=True)
+        (o_mb / posting_out_name("of-record")).write_bytes(p_r1[0].read_bytes())
+        s_mb = post_try("select-malformed-beside", posted_min, rw_none, tuple_p=tp_all, vdir=bm)
+        it_full = json.loads(json.dumps(en_items[0]))
+        s_it = {}
+        for k_, en_bad in (("no-clauses", [{"row_id": "P02"}]), ("int-id", [{**it_full, "row_id": 2}]),
+                           ("not-object", [5]), ("no-loc", [{k__: v__ for k__, v__ in it_full.items() if k__ != "loc"}]),
+                           ("clauses-not-list", [{**it_full, "clauses": "a"}]),
+                           ("extra-field", [{**it_full, "battery-extra-field": "x"}])):
+            bm2 = base / f"post-cmp-malformed-items-{k_}"
+            bm2.mkdir()
+            for u in UNITS:
+                (bm2 / f"{u}_VERDICTS.json").write_text(json.dumps({"arm": {"state": "PASS"}, **(
+                    {"schema": VERDICTS_SCHEMA, "unit": "Q-F0", "v1_outputs": {"enumeration": en_bad}}
+                    if u == "Q-F0" else {})}))
+            s_it[k_] = post_try(f"select-malformed-items-{k_}", posted_min, rw_none, tuple_p=tp_all, vdir=bm2)
+        s_bo1, s_bo2 = post_try("select-both", _BT_STATE["rec_table"]), post_try("select-both", posted_min, rw_v)
+        B.chk("posting (PIN-44): the comparator is Q-F0's VERDICTS where it exists (even beside the posting's own "
+              "of-record output); the posting's own of-record output where it does not (Q-F0 NOT-RUN: "
+              "CMD-POSTING-BOTH-KINDS); neither -> refused (exit 2, nothing written); a VERDICTS recording no v1 "
+              "enumeration -> refused, also beside the posting's own of-record output (no fallback); a VERDICTS "
+              "enumeration item without a list clauses, with a non-str row_id (every other field present), not an "
+              "object, lacking only loc, or with an extra field (not exactly enumeration()'s fields) -> refused",
+              s_bo1["r"] == "ok" and s_bo2["r"] == "ok"
+              and s_bo2["doc"]["bar"]["comparison"]["comparator"]["kind"] == "verdicts"
+              and (base / "post-bar" / "select-both" / "POSTING-v1_outputs.of-record.json").is_file()
+              and d_p["bar"]["comparison"]["comparator"]["kind"] == "posting-of-record"
+              and s_nei["r"] == "refused" and s_nei["exit"] == 2 and "nothing to compare with" in s_nei["msg"]
+              and s_nei["new"] == [] and s_mal["r"] == "refused" and "records no v1 enumeration" in s_mal["msg"]
+              and s_mal["new"] == [] and s_mb["r"] == "refused" and "records no v1 enumeration" in s_mb["msg"]
+              and s_mb["new"] == [] and all(r_["r"] == "refused" and "records no v1 enumeration" in r_["msg"]
+                                            and r_["exit"] == 2 and r_["new"] == [] for r_ in s_it.values()),
+              (s_nei.get("msg", "")[:50], s_mal.get("msg", "")[:50], s_mb["r"], {k_: r_["r"] for k_, r_ in s_it.items()}),
+              cover=["CMD-POSTING-CMP-SELECT"])
+        bt_ = base / "post-cmp-tuple"                      # Q-F0's VERDICTS stores another tuple than this posting's
+        bt_.mkdir()
+        t_other = {**tall["tuple"], "OLMo-sft": "DEAD"}
+        for u in UNITS:
+            (bt_ / f"{u}_VERDICTS.json").write_text(json.dumps({"arm": {"state": "PASS"}, **(
+                {"schema": VERDICTS_SCHEMA, "unit": "Q-F0", "tuple": t_other, "v1_outputs": {"enumeration": []}}
+                if u == "Q-F0" else {})}))
+        s_tu = post_try("cmp-other-tuple", posted_min, rw_none, tuple_p=tp_all, vdir=bt_)
+        c_tu = ((s_tu.get("doc") or {}).get("bar") or {}).get("comparison") or {}
+        B.chk("posting (PIN-44): the comparator's stored tuple is recorded beside this run's, informational only -- a "
+              "VERDICTS under another tuple (OLMo-sft DEAD there, PASS here): same_tuple false, its tuple recorded, "
+              "the bar PASS and written (the comparison decides nothing); under the same tuple same_tuple is true "
+              "(CMD-POSTING-BAR-PASS)",
+              s_tu["r"] == "ok" and s_tu["doc"]["bar"]["verdict"] == "PASS" and c_tu.get("same_tuple") is False
+              and (c_tu.get("comparator") or {}).get("tuple") == t_other and c_tu.get("differs") is False
+              and any("its tuple this run's False" in ln_ for ln_ in s_tu.get("lines") or [])
+              and any("its tuple this run's True" in ln_ for ln_ in pv1.get("lines") or [])
+              and cv.get("same_tuple") is True, (s_tu["r"], c_tu.get("same_tuple")), cover=["CMD-POSTING-CMP-TUPLE"])
+        # a comparator storing no tuple, or one that is not an object: recorded None, same_tuple false (L2-5)
+        s_tn = {}
+        for k_, tv_ in (("none", None), ("list", ["PASS"])):
+            bt2 = base / f"post-cmp-tuple-{k_}"
+            bt2.mkdir()
+            for u in UNITS:
+                (bt2 / f"{u}_VERDICTS.json").write_text(json.dumps({"arm": {"state": "PASS"}, **(
+                    {"schema": VERDICTS_SCHEMA, "unit": "Q-F0", "v1_outputs": {"enumeration": []},
+                     **({"tuple": tv_} if tv_ is not None else {})} if u == "Q-F0" else {})}))
+            s_tn[k_] = post_try(f"cmp-tuple-{k_}", posted_min, rw_none, tuple_p=tp_all, vdir=bt2)
+        B.chk("posting (PIN-44): a VERDICTS storing no tuple, or a tuple that is not an object -> its tuple recorded "
+              "None and same_tuple false (informational: the bar PASSes and is written)",
+              all(r_["r"] == "ok" and r_["doc"]["bar"]["verdict"] == "PASS"
+                  and r_["doc"]["bar"]["comparison"]["comparator"]["tuple"] is None
+                  and r_["doc"]["bar"]["comparison"]["same_tuple"] is False for r_ in s_tn.values()),
+              {k_: r_["r"] for k_, r_ in s_tn.items()}, cover=["CMD-POSTING-CMP-TUPLE-NONE"])
+        # the comparator is what it is taken for, and names each row once (RV2A-4): a VERDICTS of another schema,
+        # with none, or of another unit; an of-record output of another schema or table kind; a VERDICTS
+        # enumeration naming a row id twice -- each refused (exit 2, nothing written)
+        s_id = {}
+        it_mv1 = json.loads(json.dumps(en_items[0]))        # the first item again, different: its loc.line + 1
+        it_mv1["loc"]["line"] += 1
+        for k_, over_ in (("verdicts-schema", {"schema": "m-verdicts-v0"}), ("verdicts-no-schema", {"schema": None}),
+                          ("verdicts-unit", {"unit": "OLMo-sft"}),
+                          ("verdicts-dup", {"v1_outputs": {"enumeration": [it_full, it_full]}}),
+                          ("verdicts-dup-apart", {"v1_outputs": {"enumeration": [
+                              it_full, json.loads(json.dumps(en_items[1])), it_mv1]}})):
+            bi_ = base / f"post-cmp-ident-{k_}"
+            bi_.mkdir()
+            for u in UNITS:
+                q_doc = {"arm": {"state": "PASS"}}
+                if u == "Q-F0":
+                    q_doc.update({"schema": VERDICTS_SCHEMA, "unit": "Q-F0", "v1_outputs": {"enumeration": []}}, **over_)
+                    if q_doc["schema"] is None:
+                        q_doc.pop("schema")
+                (bi_ / f"{u}_VERDICTS.json").write_text(json.dumps(q_doc))
+            s_id[k_] = post_try(f"cmp-ident-{k_}", posted_min, rw_none, tuple_p=tp_all, vdir=bi_)
+        for k_, over_ in (("of-record-schema", {"schema": "m-posting-v1-outputs-v0"}),
+                          ("of-record-kind", {"table_kind": "posted"})):
+            oi_ = base / "post-bar" / f"cmp-ident-{k_}"
+            oi_.mkdir(parents=True)
+            (oi_ / posting_out_name("of-record")).write_text(json.dumps({**json.loads(p_r1[0].read_text()), **over_}))
+            s_id[k_] = post_try(f"cmp-ident-{k_}", posted_min, rw_none, tuple_p=tp_n, vdir=pdir)
+        B.chk("posting refused (PIN-44; exit 2, nothing written): a comparator that is not what it is taken for -- a "
+              "VERDICTS of another schema, with no schema, or of another unit; the posting's of-record output of "
+              "another schema or table kind -- and a VERDICTS enumeration naming a row id twice: two identical "
+              "adjacent copies, and two DIFFERENT items not adjacent (the first item, the second, then the first "
+              "again with its loc.line + 1) (each alone; the comparators of CMD-POSTING-BAR-PASS and "
+              "CMD-POSTING-BOTH-KINDS are accepted)",
+              all(s_id[k_]["r"] == "refused" and "is not what it is taken for" in s_id[k_]["msg"]
+                  for k_ in ("verdicts-schema", "verdicts-no-schema", "verdicts-unit", "of-record-schema",
+                             "of-record-kind"))
+              and all(s_id[k_]["r"] == "refused" and "names a row id more than once" in s_id[k_]["msg"]
+                      for k_ in ("verdicts-dup", "verdicts-dup-apart"))
+              and len(en_items) >= 2 and en_items[0]["row_id"] != en_items[1]["row_id"] and it_mv1 != it_full
+              and all(r_["exit"] == 2 and r_["new"] == [] for r_ in s_id.values())
+              and pv1["r"] == "ok" and d_p["bar"]["comparison"]["comparator"]["kind"] == "posting-of-record",
+              {k_: (r_["r"], r_.get("msg", "")[:40]) for k_, r_ in s_id.items()}, cover=["CMD-POSTING-CMP-IDENTITY"])
+        # the FAIL record, every line exactly, on a FAIL whose actual item differs from the comparator's (P17's
+        # thesis struck on a posted copy of the table of record): built here from the table, the tuple, the flag
+        # and the binding, not from the run's own result (RV2A-1, L2-6, RV2A-3)
+        t_c = tuple(t_v["tuple"][u] for u in UNITS)
+        out_c = json.loads(json.dumps(v1_outputs(t_c, t_v["reasons"], bool(fl_rec["value"]), pt_chg)))
+        en_c = out_c["enumeration"]
+        act_c = {it_["row_id"]: it_ for it_ in en_c}
+        iff_c = (dose_note(True, pt_chg)["status"] == "carried") == bool(fl_rec["value"])
+        want_c = ([f"POSTING v1: tuple {t_c}; ceiling {out_c['ceiling']['name']}; {len(en_c)} enumerated rows on the "
+                   f"posted text",
+                   f"POSTING v1: FAIL against C7's bar (PIN-44): enumeration empty False, dose note present iff the flag "
+                   f"{iff_c}; nothing written",
+                   f"POSTING v1: residue by row id ({len(en_c)}): {', '.join(it_['row_id'] for it_ in en_c)}",
+                   f"POSTING v1: comparison with the verdicts enumeration with the PI's rewrites applied (sha256 "
+                   f"{cmp_v['sha256'][:16]}; its tuple this run's True): differs True; only_actual []; only_expected []; "
+                   f"changed P17; moved none; rewrites not in the comparator []"]
+                  + [f"POSTING v1: residue {i_} of {len(en_c)}, {it_['row_id']}: {js_(it_)}" for i_, it_ in enumerate(en_c, 1)]
+                  + [f"POSTING v1: comparison changed P17: expected {js_(it_by['P17'])}; actual {js_(act_c['P17'])}",
+                     "POSTING v1: comparison rewrites not in the comparator: []", want_record(posted_chg, rw_none)])
+        # the same with a changed row AND moved rows (R3M-6): P17's thesis struck as above, and a blank line inserted
+        # in a copy of the preprint before the line of the last enumerated row but one other than P17, so that row
+        # and every later one begin one line down (each item otherwise unchanged; two moved rows at least, so their
+        # order is pinned too); the changed line precedes the moved lines
+        ln_mv = sorted(it_["loc"]["line"] for it_ in en_items if it_["row_id"] != "P17")[-2]
+        pre_rec = pt_chg["preprint"]
+        pre_ln = (base / pre_rec["path"]).read_text(encoding="utf-8").split("\n")
+        body_mv = "\n".join(pre_ln[:ln_mv - 1] + [""] + pre_ln[ln_mv - 1:])
+        (base / "PREPRINT-battery-moved.md").write_text(body_mv, encoding="utf-8")
+        pb_mv = body_mv.encode("utf-8")
+        pt_mv = copy.deepcopy(pt_chg)
+        pt_mv["preprint"] = {"path": "PREPRINT-battery-moved.md", "sha256": _sha256_bytes(pb_mv), "bytes": len(pb_mv),
+                             "lines": body_mv.count("\n")}
+        for r_ in pt_mv["rows"]:
+            if r_["loc"]["line"] >= ln_mv:
+                r_["loc"]["line"] += 1
+        posted_mv = base / "table-posted-changed-moved.json"
+        posted_mv.write_text(resume.json_text(pt_mv, indent=1), encoding="utf-8")
+        dx_m = post_try("cmp-changed-moved", posted_mv, rw_none)
+        out_m = json.loads(json.dumps(v1_outputs(t_c, t_v["reasons"], bool(fl_rec["value"]), pt_mv)))
+        en_m = out_m["enumeration"]
+        act_m = {it_["row_id"]: it_ for it_ in en_m}
+        iff_m = (dose_note(True, pt_mv)["status"] == "carried") == bool(fl_rec["value"])
+        mv_ids = [r_["id"] for r_ in pt_chg["rows"] if r_["loc"]["line"] >= ln_mv and r_["id"] != "P17"
+                  and r_["id"] in act_m and r_["id"] in it_by]
+        sans_ = lambda x_: {k_: v_ for k_, v_ in x_.items() if k_ != "loc"}                    # noqa: E731
+        want_m = ([f"POSTING v1: tuple {t_c}; ceiling {out_m['ceiling']['name']}; {len(en_m)} enumerated rows on the "
+                   f"posted text",
+                   f"POSTING v1: FAIL against C7's bar (PIN-44): enumeration empty False, dose note present iff the flag "
+                   f"{iff_m}; nothing written",
+                   f"POSTING v1: residue by row id ({len(en_m)}): {', '.join(it_['row_id'] for it_ in en_m)}",
+                   f"POSTING v1: comparison with the verdicts enumeration with the PI's rewrites applied (sha256 "
+                   f"{cmp_v['sha256'][:16]}; its tuple this run's True): differs True; only_actual []; only_expected []; "
+                   f"changed P17; moved {', '.join(mv_ids)}; rewrites not in the comparator []"]
+                  + [f"POSTING v1: residue {i_} of {len(en_m)}, {it_['row_id']}: {js_(it_)}" for i_, it_ in enumerate(en_m, 1)]
+                  + [f"POSTING v1: comparison changed P17: expected {js_(it_by['P17'])}; actual {js_(act_m['P17'])}"]
+                  + [f"POSTING v1: comparison moved {r_}: expected {js_(it_by[r_])}; actual {js_(act_m[r_])}"
+                     for r_ in mv_ids]
+                  + ["POSTING v1: comparison rewrites not in the comparator: []", want_record(posted_mv, rw_none)])
+        B.chk("posting (PIN-44): a FAIL's stdout record, every line exactly as built from the posted table, the tuple "
+              "(with its reasons and pending), the flag of record and the binding -- on a FAIL whose actual P17 differs "
+              "from the VERDICTS' P17: the head, the verdict, the residue by row id, the comparison summary (changed "
+              "P17, moved none), each residue item in full, the changed row with both items, the rewrites line, and "
+              "the unwritten record (declared, inputs, comparator, flag, binding); and on a FAIL with a changed row "
+              "AND moved rows (P17's thesis struck, and a blank line inserted in a copy of the preprint before the "
+              "last enumerated row but one other than P17, which moves that row and every later one a line down: two "
+              "moved rows at least): every line exactly, in order -- the summary naming both, the changed line "
+              "before the moved lines, each moved row with both items (differing in loc alone), in table order",
+              dx_c["r"] == "fail" and dx_c["lines"] == want_c and act_c["P17"] != it_by["P17"]
+              and table_problems(pt_mv, read_repo_file=env_p.read_repo_file) == []
+              and dx_m["r"] == "fail" and dx_m["lines"] == want_m and len(mv_ids) >= 2
+              and sans_(act_m["P17"]) != sans_(it_by["P17"])
+              and all(act_m[r_] != it_by[r_] and sans_(act_m[r_]) == sans_(it_by[r_]) for r_ in mv_ids),
+              (len(dx_c.get("lines") or []), len(want_c),
+               next((i_ for i_, (a_, b_) in enumerate(zip(dx_c.get("lines") or [], want_c)) if a_ != b_), None),
+               dx_m["r"], dx_m.get("msg", "")[:80], mv_ids, len(dx_m.get("lines") or []), len(want_m),
+               next((i_ for i_, (a_, b_) in enumerate(zip(dx_m.get("lines") or [], want_m)) if a_ != b_), None)),
+              cover=["CMD-POSTING-FAIL-RECORD"])
+        k_miss = post_try("rw-missing", posted_min, None)
+        k_rec = post_try("rw-of-record", _BT_STATE["rec_table"], rw_none)
+        B.chk("posting refused (PIN-44; exit 2, nothing written): a posted run with no rewrite list; an of-record run "
+              "given one", k_miss["r"] == "refused" and "needs --rewrites" in k_miss["msg"] and k_miss["new"] == []
+              and k_rec["r"] == "refused" and "--rewrites is the posted text's input" in k_rec["msg"]
+              and k_rec["new"] == [] and k_miss["exit"] == k_rec["exit"] == 2,
+              (k_miss.get("msg", "")[:50], k_rec.get("msg", "")[:50]), cover=["CMD-POSTING-REWRITES-KIND"])
+        rw_bad_obj, rw_bad_json = rw_d / "not-object.json", rw_d / "not-json.json"
+        rw_bad_obj.write_text("[]")
+        rw_bad_json.write_text("{")
+        rw_no_rows = rw_d / "no-rows.json"
+        rw_no_rows.write_text(json.dumps({"schema": REWRITES_SCHEMA, "posting": "v1"}))
+        form = {"schema": (rw_file("bad-schema", [], schema="m-posting-rewrites-v0"), "the rewrite list is {schema"),
+                "extra-key": (rw_file("bad-extra", [], note="x"), "the rewrite list is {schema"),
+                "posting": (rw_file("bad-posting", [], posting="v2"), "the rewrite list is {schema"),
+                "no-rows": (rw_no_rows, "the rewrite list is {schema"),
+                "not-object": (rw_bad_obj, "the rewrite list is {schema"),
+                "not-json": (rw_bad_json, "the rewrite list unreadable"),
+                "rows-not-list": (rw_file("bad-rows", [], rows="P02"), "rows are a list of row ids"),
+                "int-id": (rw_file("int-id", ["P02", 7]), "rows are a list of row ids"),
+                "empty-id": (rw_file("empty-id", ["P02", ""]), "rows are a list of row ids"),
+                "duplicate": (rw_file("duplicate", ["P02", "P02"]), "names a row id more than once")}
+        f_res = {k_: post_try(f"rw-form-{k_}", posted_min, p_) for k_, (p_, _) in form.items()}
+        f_unc = post_try("rw-form-uncommitted", posted_min, rw_v, env=_bt_env(base, committed=uncommitted(rw_v)))
+        base_cp = env_p.committed
+        f_prb = post_try("rw-form-problems", posted_min, rw_v, env=_bt_env(base, committed=lambda q: (
+            ["battery double: problems beside bytes"], Path(q).read_bytes()) if Path(q).resolve() == rw_v.resolve()
+            else base_cp(q)))
+        B.chk("posting refused (PIN-44; exit 2, nothing written): a rewrite list not committed at HEAD (also where the "
+              "commit check reports a problem beside bytes); of another schema, with an extra key, of another "
+              "posting, with no rows, not an object, not JSON; rows not a list, a non-string id, an empty id, a "
+              "duplicate id -- each alone",
+              all(r_["r"] == "refused" and form[k_][1] in r_["msg"] and r_["new"] == [] and r_["exit"] == 2
+                  for k_, r_ in f_res.items())
+              and all(r_["r"] == "refused" and "the rewrite list is not committed at HEAD" in r_["msg"]
+                      and r_["new"] == [] for r_ in (f_unc, f_prb)),
+              {k_: r_["r"] for k_, r_ in f_res.items()}, cover=["CMD-POSTING-REWRITES-FORM"])
+        ab_first = post_try("rw-bind-first", posted_min, rw_d / "absent.json",
+                            env=_bt_env(base, committed=uncommitted(Path(__file__))))
+        ab_own = post_try("rw-bind-own", posted_min, rw_d / "absent.json")
+        B.chk("posting (PIN-42, PIN-44): the rewrite list is read only after the binding -- with the analyzer "
+              "uncommitted an absent rewrite list refuses on the analyzer; with it committed, on the rewrite list",
+              ab_first["r"] == "refused" and "analyzer is not committed" in ab_first["msg"]
+              and ab_own["r"] == "refused" and "the rewrite list is not committed at HEAD" in ab_own["msg"]
+              and ab_first["new"] == ab_own["new"] == [], (ab_first.get("msg", "")[:40], ab_own.get("msg", "")[:40]),
+              cover=["CMD-POSTING-REWRITES-AFTER-BINDING"])
 
 
 def _bt_recount(ck_path: Path, unit: str) -> dict:
@@ -5710,6 +7307,32 @@ def _bt_qf0_v10_inputs(base: Path) -> tuple[Path, Path]:
         "OLMo-dpo": {"state": "NOT-RUN", "cause": "dose-not-completable", "date": CLOCK_DATE},
         "OLMo-instruct": {"state": "DEAD"}}}))
     return tp, sp
+
+
+def _bt_posted_min(base: Path, name: str, dose: bool = True) -> Path:
+    """A minimal posted-kind table over its own temp 'preprint', for C7's bar (PIN-44): P01 asserts no
+    null; P03, the f1 CORR line, asserts no null and carries the dose note iff ``dose``. Under any tuple
+    it enumerates nothing when the flag equals ``dose`` (no null cell, no thesis; (c) silent)."""
+    texts = {"P01": "[posted P01] A synthetic posted sentence that asserts no null.",
+             "P03": "[posted P03] A synthetic posted CORR line that asserts no null"
+                    + ("; synthetic dose note P03." if dose else ".")}
+    body = texts["P01"] + "\n" + texts["P03"] + "\n"
+    pre = f"PREPRINT-posted-{name}.md"
+    (base / pre).write_text(body, encoding="utf-8")
+    pb = body.encode("utf-8")
+    rows = []
+    for ln, (rid, kinds) in enumerate((("P01", []), ("P03", ["f1-corr-line"] + (["dose-note"] if dose else []))), 1):
+        d_ = dose and rid == "P03"
+        rows.append({"id": rid, "loc": {"line": ln, "section": "posted", "sentence": 1}, "text": texts[rid],
+                     "text_sha256": hashlib.sha256(texts[rid].encode("utf-8")).hexdigest(), "null_cells": [],
+                     "thesis": None, "dose_note": d_, "dose_note_span": "synthetic dose note P03" if d_ else None,
+                     "kinds": kinds})
+    t = {"schema": TABLE_SCHEMA, "kind": "posted", "posting": "v1", "cells": list(CELLS),
+         "kinds_vocabulary": list(KINDS_VOCAB), "rows": rows,
+         "preprint": {"path": pre, "sha256": _sha256_bytes(pb), "bytes": len(pb), "lines": body.count("\n")}}
+    p = base / f"table-posted-{name}.json"
+    p.write_text(resume.json_text(t, indent=1), encoding="utf-8")
+    return p
 
 
 # --- battery: structure --------------------------------------------------------------------------
@@ -5893,13 +7516,203 @@ def _bt_structure(B: _Battery, lines: Sequence[str], hook: _OpenHook) -> None:
           "and writes nothing; the same battery double with the true manifest writes G-ANL-F0.json (0)",
           outs_g.get("planted-head") == (4, True, []) and outs_g.get("true") == (0, False, [Path(GANL_REL).name]),
           outs_g, cover=["STR-GANL-CONTENT-EXIT"])
-    sites = set(re.findall(r"# PIN \(Code, declared at LOCK v0\.1\): (PIN-\d+)", src))
-    missing = sorted(set(PINS) - sites, key=lambda x: int(x[4:]))
-    extra = sorted(sites - set(PINS))
-    planted = set(PINS) | {"PIN-99"}
-    B.chk("PIN register: every register id has a '# PIN (Code, declared at LOCK v0.1): PIN-n' site comment and "
-          "every site names a register id; a planted id without a site is caught", missing == [] and extra == []
-          and sorted(planted - sites) == ["PIN-99"], (missing, extra), cover=["STR-PIN-COMMENTS"])
+    # PIN sites, exactly (FA-1, FID2-2): the register is the literal set PIN-1 to PIN-46; PIN-1 to PIN-43 (LOCK v0.1's
+    # 43-entry register) carry the v0.1 marker and PIN-44 to PIN-46 (declared at LOCK v1.0: their text begins so)
+    # the v1.0 marker; each site names a register id; no other marker appears anywhere. Each planted control is
+    # caught by its own problem, one plant per direction of each set (L2-7); the plants are built by
+    # concatenation, so none is a marker in this file
+    mk_rx = r"# PIN \(Code, declared at LOCK ([^)\n]*)\)(?:: (PIN-\d+))?"
+    mk_head = "# PIN (Code" + ", declared at LOCK "
+    v01_ = {f"PIN-{i_}" for i_ in range(1, 44)}
+    v10_ = {"PIN-44", "PIN-45", "PIN-46"}
+
+    def marker_problems(src_: str, pins_: Mapping) -> list[str]:
+        by_: dict = {"v0.1": set(), "v1.0": set()}
+        probs_ = []
+        for ver_, id_ in re.findall(mk_rx, src_):
+            if ver_ not in by_:
+                probs_.append(f"a marker of LOCK {ver_!r} ({id_ or 'no id'})")
+            else:
+                by_[ver_].add(id_ or "(no PIN id)")
+        for ver_, want_ in (("v0.1", v01_), ("v1.0", v10_)):
+            if want_ - by_[ver_]:
+                probs_.append(f"{ver_} register ids without their site: {sorted(want_ - by_[ver_])}")
+            if by_[ver_] - want_:
+                probs_.append(f"{ver_} sites naming no {ver_} register id: {sorted(by_[ver_] - want_)}")
+        if (v01_ | v10_) - set(pins_):
+            probs_.append(f"the register lacks {sorted((v01_ | v10_) - set(pins_))}")
+        if set(pins_) - (v01_ | v10_):
+            probs_.append(f"the register has entries beyond PIN-46: {sorted(set(pins_) - (v01_ | v10_))}")
+        decl_ = {p_ for p_, t_ in pins_.items() if t_.startswith("Declared at LOCK v1.0")}
+        if decl_ != v10_:
+            probs_.append(f"the entries declared at LOCK v1.0 are {sorted(decl_)}")
+        return probs_
+
+    def unmark(src_: str, ver_: str, pid_: str) -> str:
+        old_ = mk_head + ver_ + "): " + pid_ + " --"
+        return src_.replace(old_, "# (planted) " + pid_ + " --") if src_.count(old_) == 1 else ""
+    real_mk = marker_problems(src, PINS)
+    plants = {"a v0.2 marker": (src + mk_head + "v0.2): PIN-96 -- battery\n", PINS, "a marker of LOCK 'v0.2'"),
+              "a v2.0 marker": (src + mk_head + "v2.0): PIN-98 -- battery\n", PINS, "a marker of LOCK 'v2.0'"),
+              "a v1.1 marker": (src + mk_head + "v1.1): PIN-97 -- battery\n", PINS, "a marker of LOCK 'v1.1'"),
+              "a v0.1 site removed": (unmark(src, "v0.1", "PIN-27"), PINS,
+                                      "v0.1 register ids without their site: ['PIN-27']"),
+              "a new id under v0.1": (src + mk_head + "v0.1): PIN-44 -- battery\n", PINS,
+                                      "v0.1 sites naming no v0.1 register id: ['PIN-44']"),
+              "a marker naming no id": (src + mk_head + "v0.1): battery\n", PINS,
+                                        "v0.1 sites naming no v0.1 register id: ['(no PIN id)']"),
+              "a v1.0 site removed": (unmark(src, "v1.0", "PIN-45"), PINS,
+                                      "v1.0 register ids without their site: ['PIN-45']"),
+              "an old id under v1.0": (src + mk_head + "v1.0): PIN-9 -- battery\n", PINS,
+                                       "v1.0 sites naming no v1.0 register id: ['PIN-9']"),
+              "a register entry deleted with its site": (unmark(src, "v0.1", "PIN-27"), {
+                  k_: v_ for k_, v_ in PINS.items() if k_ != "PIN-27"}, "the register lacks ['PIN-27']"),
+              "a planted register id": (src, {**PINS, "PIN-99": "planted (battery)"},
+                                        "the register has entries beyond PIN-46: ['PIN-99']"),
+              "a new register id declared at v0.1, with its site": (src + mk_head + "v0.1): PIN-47 -- battery\n", {
+                  **PINS, "PIN-47": "planted (battery)"}, "the register has entries beyond PIN-46: ['PIN-47']"),
+              "a v1.0 entry not declared so": (src, {**PINS, "PIN-45": "Planted: " + PINS.get("PIN-45", "")},
+                                               "the entries declared at LOCK v1.0 are ['PIN-44', 'PIN-46']"),
+              "a v0.1 entry declared at v1.0": (src, {**PINS, "PIN-27": "Declared at LOCK v1.0 (planted): " + PINS.get(
+                  "PIN-27", "")}, "the entries declared at LOCK v1.0 are ['PIN-27', 'PIN-44', 'PIN-45', 'PIN-46']")}
+    caught = {k_: bool(s_) and any(x_.startswith(want_) for x_ in marker_problems(s_, p_))
+              for k_, (s_, p_, want_) in plants.items()}
+    B.chk("PIN register: the register is exactly PIN-1 to PIN-46; PIN-1 to PIN-43 (LOCK v0.1's register) each have "
+          "their site marked as declared at LOCK v0.1 and PIN-44 to PIN-46 (their texts declared at LOCK v1.0) theirs "
+          "at LOCK v1.0; every site names a register id of its version; no other marker anywhere; each planted "
+          "control is caught by its own problem, one per direction of each set (a v0.2 / v2.0 / v1.1 marker; a v0.1 "
+          "site removed; a new id and a marker naming no id under v0.1; a v1.0 site removed; an old id under v1.0; a "
+          "register entry deleted with its site; a planted register id; a new register id declared at v0.1 with its "
+          "site; a v1.0 entry not declared so; a v0.1 entry declared at v1.0)",
+          real_mk == [] and all(caught.values()),
+          (real_mk[:2], [k_ for k_, v_ in caught.items() if not v_]), cover=["STR-PIN-COMMENTS"])
+    # the texts declared at LOCK v1.0 (Code's check; strengthened in round 3, FID2-1): each register text and its
+    # site comment says "Code's reading"; every mention of the seat in them begins one of three declared forms
+    # (seat_forms_ below: 'the seat's round-2 item 3 (', '(the seat: "no analyzer reads prose")', 'the seat's
+    # adjudication'); every quotation in them (a double-quoted fragment; single quotes mark values and names) is
+    # found verbatim in a declared seat source -- the battery's copies below of the seat's words (R2 item 3 (a); R2
+    # item 3 (b) and (c); R1 C7's bar), markdown emphasis removed and checked against the seat's blocks by Code's
+    # scratch quote sweep, as the battery reads nothing under results/raw (PIN-29) -- and each register text quotes
+    # the words of the ruling it builds (PIN-44's site comment the ruling too)
+    seat_src_ = {
+        "R2 item 3 (a)": (
+            "(a) C7's posting bar. Build it as: the `posting` command renders PASS/FAIL against the bar (PASS iff the "
+            "enumeration under (a), (b) and (c) is empty and the dose note is present iff the flag); and it compares the "
+            "posting re-run's enumeration with the VERDICTS enumeration with the PI's rewrites applied (a declared "
+            "input: the rewrite list, by row id), reporting any row that differs. The second gap Code names — that the "
+            "(a)/(b) result rests on the posted table's declared classification rather than a reading of the text — is "
+            "by design: the sentence table, values-checked and hashed where built, is the reading of record (m:278), "
+            "and no analyzer reads prose. Until (a) is built nothing is needed, since the posting is after step 17."),
+        "R2 item 3 (b), (c)": (
+            "(b) a fired end look without a matching pause and (c) the end look's launch count — both built at step 15 "
+            "as VERDICTS refusals. They guard the checkpoint against a hand edit; the campaign (step 16) writes no "
+            "checkpoint before LOCK v1.0's analyzer is of record, so step 15 is early enough."),
+        "R1 C7": (
+            "The pass bar for the posting's re-run on the posted text (m:278, m:349). PASS iff, on the posted text, the "
+            "analyzer's enumeration under (a), (b) and (c) is empty — no sentence asserting a null on a cell not "
+            "Answered, none asserting a thesis above the ceiling obtained — and the dose note is present iff the flag; "
+            "the enumeration of record is the VERDICTS one with the PI's rewrites applied, and any residue is listed by "
+            "sentence and rewritten before posting. Fixed here, before the v1 posting.")}
+    r2_3a = ("the `posting` command renders PASS/FAIL against the bar (PASS iff the enumeration under (a), (b) and (c) "
+             "is empty and the dose note is present iff the flag); and it compares the posting re-run's enumeration "
+             "with the VERDICTS enumeration with the PI's rewrites applied (a declared input: the rewrite list, by row "
+             "id), reporting any row that differs.")
+    quotes_ = {"PIN-44": [r2_3a, "no analyzer reads prose", "The pass bar for the posting's re-run on the posted text",
+                          "the VERDICTS enumeration"],
+               "PIN-45": ["(b) a fired end look without a matching pause", "as VERDICTS refusals",
+                          "guard the checkpoint against a hand edit"],
+               "PIN-46": ["(c) the end look's launch count", "as VERDICTS refusals",
+                          "guard the checkpoint against a hand edit"]}
+    seat_forms_ = ("the seat's round-2 item 3 (", "(the seat: \"no analyzer reads prose\")", "the seat's adjudication")
+
+    def ws_(x_: str) -> str:
+        return re.sub(r"\s+", " ", x_)
+
+    def site_text(src_l_: list, pid_: str) -> str:
+        i_ = next((j_ for j_, l_ in enumerate(src_l_) if (mk_head + "v1.0): " + pid_ + " --") in l_), None)
+        if i_ is None:
+            return ""
+        blk_ = []
+        for l_ in src_l_[i_:]:
+            if not l_.strip().startswith("#"):
+                break
+            blk_.append(l_.strip().lstrip("#").strip())
+        return " ".join(blk_)
+
+    def v10_problems(src_: str, pins_: Mapping) -> list[str]:
+        src_l_ = src_.splitlines()
+        ids_ = sorted((p_ for p_, t_ in pins_.items() if t_.startswith("Declared at LOCK v1.0")), key=lambda x: int(x[4:]))
+        probs_ = [] if ids_ == ["PIN-44", "PIN-45", "PIN-46"] else [f"the v1.0 entries are {ids_}"]
+        for p_ in ids_:
+            for where_, tx_ in (("text", pins_[p_]), ("site", site_text(src_l_, p_))):
+                if "Code's reading" not in tx_:
+                    probs_.append(f"{p_} {where_}: not plainly Code's reading")
+                if tx_.count("seat") != sum(tx_.count(f_) for f_ in seat_forms_):
+                    probs_.append(f"{p_} {where_}: names the seat beyond citing its ruling or its adjudication")
+                for q_ in re.findall(r'"([^"]+)"', tx_):
+                    if not any(ws_(q_) in ws_(s_) for s_ in seat_src_.values()):
+                        probs_.append(f"{p_} {where_}: quotes {q_[:30]!r}, in no declared seat source")
+            probs_ += [f"{p_}: does not quote {q_[:30]!r}" for q_ in quotes_.get(p_, []) if f"\"{q_}\"" not in pins_[p_]]
+        if r2_3a not in site_text(src_l_, "PIN-44"):
+            probs_.append("PIN-44 site: does not quote the ruling")
+        return probs_
+
+    def src_plant(old_: str, new_: str) -> str:
+        return src.replace(old_, new_) if src.count(old_) == 1 else ""
+    real_v10 = v10_problems(src, PINS)
+    q_ = '"'
+    pl_v10 = {"a misquoted ruling in PIN-44": (src, {**PINS, "PIN-44": PINS["PIN-44"].replace(
+                  "reporting any row that differs", "reporting every row that differs")}, "PIN-44 text: quotes"),
+              "a misquoted ruling in PIN-44's site comment": (src_plant(
+                  "# rewrite list, by row id), reporting any row" + " that differs.",
+                  "# rewrite list, by row id), reporting every row" + " that differs."), PINS, "PIN-44 site: quotes"),
+              "a misquoted ruling in PIN-45's site comment": (src_plant(
+                  "# fired end look without a matching" + " pause" + q_ + " built",
+                  "# fired end look with no matching" + " pause" + q_ + " built"), PINS, "PIN-45 site: quotes"),
+              "a quotation in PIN-45 in no seat source": (src, {**PINS, "PIN-45": PINS["PIN-45"] + " (R2: " + q_
+                                                                + "an end pause is never ruled in the checkpoint" + q_
+                                                                + ")"}, "PIN-45 text: quotes"),
+              "a ruling quote unquoted in PIN-45": (src, {**PINS, "PIN-45": PINS["PIN-45"].replace(
+                  q_ + "as VERDICTS refusals" + q_, "as VERDICTS refusals")}, "PIN-45: does not quote"),
+              "PIN-44's site comment quoting a prefix of the ruling": (src_plant(
+                  "reporting any row" + " that differs." + q_ + " Code's readings",
+                  "reporting any row" + q_ + " Code's readings"), PINS, "PIN-44 site: does not quote the ruling"),
+              "the seat credited in PIN-46": (src, {**PINS, "PIN-46": PINS["PIN-46"].replace(
+                  "Code's reading:", "The seat's reading:")}, "PIN-46 text: names the seat"),
+              "the seat's round-2 block credited in PIN-46": (src, {**PINS, "PIN-46": PINS["PIN-46"].replace(
+                  "Code's round-2 block", "the seat's round-2 block")}, "PIN-46 text: names the seat"),
+              "the seat credited beside Code's reading in PIN-45": (src, {**PINS, "PIN-45": PINS["PIN-45"]
+                                                                          + " The seat's reading: (battery)."},
+                                                                    "PIN-45 text: names the seat"),
+              "PIN-45 not plainly Code's reading": (src, {**PINS, "PIN-45": PINS["PIN-45"].replace(
+                  "Code's reading", "A reading")}, "PIN-45 text: not plainly Code's reading"),
+              "PIN-46's site comment not plainly Code's reading": (src_plant(
+                  "# hand edit" + q_ + ". Code's reading: wherever campaign.end_look",
+                  "# hand edit" + q_ + ". A reading: wherever campaign.end_look"), PINS,
+                  "PIN-46 site: not plainly Code's reading"),
+              "PIN-46's site comment crediting the seat": (src_plant(
+                  "# branch, so each refusal" + " shows its own message.",
+                  "# branch, so each refusal" + " shows its own message. The seat's reading (battery)."), PINS,
+                  "PIN-46 site: names the seat")}
+    caught_v10 = {k_: bool(s_) and any(x_.startswith(want_) for x_ in v10_problems(s_, p_))
+                  for k_, (s_, p_, want_) in pl_v10.items()}
+    only_v10 = ("a ruling quote unquoted in PIN-45", "PIN-44's site comment quoting a prefix of the ruling")
+    B.chk("PIN register (Code's check; strengthened in round 3): the texts declared at LOCK v1.0 (PIN-44, -45, -46) and "
+          "their site comments each say \"Code's reading\"; every mention of the seat in them begins one of three "
+          "declared forms ('the seat's round-2 item 3 (', '(the seat: \"no analyzer reads prose\")', 'the seat's "
+          "adjudication'); every quotation in them (a double-quoted fragment) is found verbatim in a declared seat "
+          "source (the battery's copies of R2 item 3 (a), R2 item 3 (b)/(c) and R1 C7's bar, checked against the "
+          "seat's blocks by Code's scratch sweep); each register text quotes the words of the ruling it builds, "
+          "PIN-44's site comment the ruling too; each planted control is caught by its own problem (a misquote in "
+          "PIN-44's text and site comment and in PIN-45's site comment; a quotation in no seat source; a ruling "
+          "quote unquoted in PIN-45 and PIN-44's site comment quoting a prefix of the ruling, each caught only by "
+          "its own problem; the seat credited in PIN-46, with Code's round-2 block, and beside Code's reading in "
+          "PIN-45 and in PIN-46's site comment; \"Code's reading\" removed from PIN-45's text and from PIN-46's site "
+          "comment)",
+          real_v10 == [] and all(caught_v10.values())
+          and all(len(v10_problems(*pl_v10[k_][:2])) == 1 for k_ in only_v10),
+          (real_v10[:2], [k_ for k_, v_ in caught_v10.items() if not v_],
+           {k_: v10_problems(*pl_v10[k_][:2]) for k_ in only_v10}), cover=["STR-PIN-V10-TEXTS"])
     B.chk("insulation: the quarantined state-present module is not in sys.modules",
           not any(m in sys.modules for m in guard.FORBIDDEN_MODULES), cover=["STR-INSULATED"])
 
@@ -6122,10 +7935,13 @@ def _exit_of(e: BaseException) -> int:
     # PIN (Code, declared at LOCK v0.1): PIN-26 -- exit codes: --selftest 0/1; ganl 0 written or
     # identical, 2 refused, 4 STOP (its SystemExits, the closure's AnlStop included, map here);
     # verdicts / not-run / posting 0 written or identical, 2 refused (before any pick is
-    # interpreted, write-once, exclusivity, or an input that is not a JSON object), 4 STOP (and any
-    # other SystemExit).
+    # interpreted, write-once, exclusivity, or an input that is not a JSON object); posting also 5:
+    # FAIL against C7's bar on the posted text's re-run, nothing written (PIN-44; Code's code, added
+    # at LOCK v1.0); 4 STOP (and any other SystemExit).
     if isinstance(e, AnlRefusal):
         return 2
+    if isinstance(e, AnlPostingFail):
+        return 5
     return 4
 
 
@@ -6152,7 +7968,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--posting", required=True, choices=["v1"])
     p.add_argument("--tuple", required=True)
     p.add_argument("--sentences", required=True)
-    for a in ("flag-source", "verdicts-dir", "out"):
+    for a in ("rewrites", "flag-source", "verdicts-dir", "out"):
         p.add_argument(f"--{a}", default=None)
     args = ap.parse_args(argv)
     if args.selftest:
@@ -6192,7 +8008,12 @@ def main(argv: list[str] | None = None) -> int:
             st, lines, _ = run_posting(Path(args.tuple), Path(args.sentences),
                                        Path(args.flag_source or REPO / FLAG_SOURCE_REL),
                                        Path(args.verdicts_dir or REPO / VERDICTS_REL),
-                                       Path(args.out or REPO / VERDICTS_REL), env)
+                                       Path(args.out or REPO / VERDICTS_REL), env,
+                                       rewrites=Path(args.rewrites) if args.rewrites is not None else None)
+    except AnlPostingFail as e:                  # PIN-26 / PIN-44: the FAIL's record on stdout, exit 5
+        for ln in e.lines:
+            print(ln, flush=True)
+        return _exit_of(e)
     except SystemExit as e:
         print(str(e.code if not isinstance(e, (AnlRefusal, AnlStop)) else e), file=sys.stderr, flush=True)
         return _exit_of(e)
