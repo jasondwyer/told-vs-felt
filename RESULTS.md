@@ -307,6 +307,199 @@ applied to CLAUDE.md.
       entry's item for the PI from the step-12 driver review (its OPS-2: "Whether to hold OS and venv updates until
       Q-F0's campaign ends is the PI's call") stays open. At this run the platform (macOS 15.6.1, 24G90) and the
       backend identifier are unchanged.
+  - **The gate's close (2026-10-13; the seat's step-14 read, §4).** The seat's step-14 read is committed by path in
+    the commit that adds this line. That commit is the read's first commit, so
+    `git log --diff-filter=A -- results/raw/2026-10-13_m-design-to-code_G-F0m-Qwen_read.md` names it:
+    [`_design-to-code_G-F0m-Qwen_read`](results/raw/2026-10-13_m-design-to-code_G-F0m-Qwen_read.md), sha256
+    `661313ceeb6808f4aa38e8eeb1968997b824514c3bbeb5cd903cd700184b5c02`. A commit cannot name its own hash; the next
+    RESULTS entry names it in full.
+    - §4: "The G-F0m-Qwen entry is the stage's entry of record; the close is this read, committed by path under
+      `results/raw/` with a close line appended to the entry — the file, its sha256 and the commit; the tally 0 of
+      32; Q1–Q5 as answered here; nothing moving a hash. That commit is the gate's close entry under R1 A4, and
+      **step 15 starts after it on the PI's word.** Q-F0 is qualified: G-F0m-Qwen passed with no bar fired and the
+      valid rate r = 18/24 measured." ("here" is the read.)
+    - The short form: "The stage's read is clean on the quantity the rule puts to the seat: the attractor tally on
+      the contrast sessions' forced rounds is **0 of 32**. No hair trigger fired; the sham bar is silent at 2/136; r =
+      18/24. The sixteen sham sessions, read in full in their redacted form, show a pattern beside the bar that the
+      seat records and draws nothing from (§2). Q1–Q5 are answered in §3; nothing moves a hash."
+    - §4's "nothing moving a hash", as Code reads the read's grounds: Q1, "Not a departure"; Q2 strikes no site, and
+      a strike "is applied to the driver at its next edit (the campaign wiring)"; Q3, "No package revision for
+      Q-F0", the redaction "**scheduled with the campaign wiring**"; Q4, "No re-run"; Q5's sentence goes into v1.0.
+      Step 15's hash moves (the analyzer round, v1.0) come after this commit.
+
+    The list below is Code's summary, as a finding aid. The read is the record, and within the list only the words in
+    quotation marks are the seat's.
+    - **Read for it** (the paragraph above the short form). The ping in full; the reads file, "the eight contrast
+      sessions in their stripped form and the sixteen sham sessions in their redacted form, every round, the seat's
+      own read of the file agreeing with the ping's quotations"; the entry's header, lock v0.2 §§2, 3, 6 and 8, m:261,
+      m:263, m:271, m:283 and m:358, the step-10 read and the G-ID-F0m adjudication. "Not opened, and not to be opened
+      by the seat before Q-F0's VERDICTS": the checkpoint, the stage raw and the report. "No bound on any contrast
+      session's time was computed from any record."
+    - **The forced rounds (§1; m:271, m:283).** The tally is "0 of 32", by the record's definition
+      (RESULTS.md@e186162:2335–2340).
+      - The banners "are fully told, naming both labels and the property each presents, and each pair appears twice
+        with its map reversed", with start and clause orders "balanced across the eight as lock §6 schedules them".
+      - Of the 32 responses, 27 are "plain task answers, all correct but one" (s = 7's round 2). The five that are not
+        plain "carry task content and are noted beside, not counted": s = 1's round 4 ("a correct answer with an
+        intruded fragment"); s = 4's round 3 (a correct answer with "an evaluative prefix that nothing in the banner
+        or the task invites"); s = 5's round 3 ("a partial reproduction of a harness line, with the answer
+        attached"); s = 7's rounds 1 and 3 ("correct answers with a framing word ("LLM", "the model") in the place
+        of the task's noun. Two responses in one session, none elsewhere").
+      - The seat checked all 32 delivered task lines against G-CAL's renders of record: the 16 corrupted deliveries
+        are "byte-identical to the renders of record (ten distinct items)", and the 16 clean deliveries are
+        byte-identical to the clean texts.
+      - "Nothing in the 32 responses names a config, a label, the corruption or the preference line." The report's
+        counts for these rounds "are consistent with what the seat read".
+    - **The sham sessions (§2; m:271; beside, no bar).** The seat read every round of the sixteen in their redacted
+      form and "confirms the classes as the frozen audit placed them, and reclassifies nothing".
+      - It records beside the bar that "**framing intrusion into free-round task responses is common on the sham
+        template.**" Besides the five claimed cases, it lists forms the audit's classes do not reach (s = 1, 5, 8
+        and 12), perseveration (s = 6, which stays valid), an unclaimed template token and an unclaimed header-shaped
+        echo (s = 9), and two verbatim repeats (s = 2).
+      - "Three things follow, none of them an action now":
+        - "**Rules 21 and 23 hold.** The audit is frozen with the analyzer and the package; the seat proposes no new
+          class, no counter and no rule change for Q-F0." The misses are recorded "as the record's §2a declared miss
+          (`config_topic_attractor`) was, for the drafting of Appendix D and for any later unit's step 4".
+        - "**The forced/free asymmetry is the design's.**" Every sham free round follows a menu that "puts the word
+          "config" and both labels immediately before the task". "The 0 of 32 on contrast forced rounds and the
+          intrusions on sham free rounds are not a contrast-versus-sham difference; they are a no-menu-versus-menu
+          difference, and VERDICTS will see the contrast sessions' free rounds under the same menu." The seat flags
+          this "so that no one reads the two counts against each other".
+        - "**Eleven of sixteen valid, with the strict count at eight,** is the figure that reaches the campaign
+          through r. It is lower than f1's CORR archive gave for its sham pool; the sessions that end are ending on
+          the model answering a menu-primed free round with a label name, which is the lexical class doing what it
+          was built to do."
+      - The rest of the ping's §3 "is taken as stated".
+    - **Q1, confirmed.** "[T]he stage entry (`6920b4b`) is the entry of record and carries the PASS". m:358's
+      "entry" after "the seat's read" "is the close, which this read supplies". Code commits the read by path with
+      this close line, and "that commit is the gate's close entry under R1 A4". Committing the stage entry with the
+      ping "did not act ahead of the seat: the entry is no input to the read, and the order "sessions, read, entry"
+      is kept with "entry" read as the close". "Not a departure. Step 15 starts after the close on the PI's word."
+    - **Q2, the v1.0-declared sites.** The seven sites are held on C6's terms as extended, "strikable from the step-14
+      commit until LOCK v1.0's commit". v1.0's PIN-index addendum lists them and the three v0.2 blocks the extraction
+      rule changes; the ten v0.1 sites and the other v0.2 sites are unchanged.
+      - The sentence the seat supplies: "**a strike of a driver site after the stage it gates has run does not re-run
+        the stage.**"
+      - The stage's record "stands as obtained on the blob its entry names". A strike "is applied to the driver at its
+        next edit (the campaign wiring) and named there and in v1.0". "[W]here the struck reading affected what the
+        stage *recorded* rather than what it ran, the entry is corrected by amendment, as for the register."
+      - The campaign wiring's own sites are "strikable until its launch entry". After v1.0 a driver reading is
+        corrected "only as a register entry is, by a disclosed amendment or at a hash-moving round".
+    - **Q3, the package message.** Code's operational rule "is adopted as the seat's". A `CHECKPOINT STATE
+      INCONSISTENT` line is not quoted or computed against before VERDICTS, and goes to the seat in a sealed form,
+      the PI redacting the raw's two figures before any seat read.
+      - The driver-only redaction of the two totals at the driver's STOP and REFUSED prints is "**scheduled with the
+        campaign wiring** (step 16's driver edit)". The seat's word for it: "an edit to the driver's print path that
+        wires no subcommand and changes nothing under `valence_core/m` is of the step-10 read's Q2 kind for this
+        purpose". The ping had asked because, on Code's reading, an edit that wires no subcommand fell outside Q2's
+        kind (ping Q3).
+      - "No package revision for Q-F0"; the message is flagged for the next unit's step 4.
+    - **Q4, the build before v0.2's commit.** "Accepted post hoc as a process departure that changed no input".
+      "No re-run." Going forward: "a build whose checks read a lock's committed text starts after that lock's
+      commit, or states the departure in its review raw at the time".
+    - **Q5, the phase-only form.** The seat: under m:261's lenient scope the only free-round event that excludes on
+      Qwen is a lexical hit, "so on Qwen `excluded@free` implies the class". The seat records that it drew that
+      inference for A0 s = 1, and that the inference "reveals no pick and no position". The ping drew none ("Code
+      draws no inference for any session"), and this line only relays the seat's.
+      - "m:263's form stands unchanged at every Qwen stage". v1.0 states in one sentence that on Qwen the
+        phase-only line "withholds the position and the pick and not the class".
+      - On OLMo the form "withholds the class as m:263 intends".
+    - **The launch line.** "not a departure under R1 A5 or the step-10 read's Q7".
+    - **Not items (§5).**
+      - The step-14 refusal as built: "accepted". `REVISION_STAGES` is "extended to the campaign at the campaign's
+        wiring": "the campaign joins it".
+      - The canary clock: "a candidate for the campaign wiring's review, no more".
+      - "The OLMo track still needs the PI's go for a pod start and the runpod MCP re-authorised (m:358)."
+    - **Step 15 (§4)**, "as the record lists it (lock §11 item 5; v0.2 §8), with the two items that are the PI's":
+      1. G-PWR, from the unit's k and the measured r (m:192), on the uncached path. The launch counts per arm are "a
+         projection, not a bound".
+      2. The hour cap: "the PI's, set with §2.4's uncached bases and the measured sham figures (mean 108.8 s here;
+         261.65 s at G-TIME-F0; 110.3 s and 99.8 s at G-ID-F0m) in view, and with r = .75 raising launches by a
+         third over the planning tables' assumption".
+      3. The preprint of record placed at root before v1.0 (m:286): "the PI's item. The root copy at patch v7 is the
+         tagged one and stands unless the PI places another; the sentence table of record is built from whatever is
+         placed, so the Q-F0 sentences (the e2a and f1 labels, the title clauses) should be final in that copy".
+      4. The three analyzer edits (R2 3; v0.1 §9.6), built in one round with the sentence table. G-ANL-F0 is re-run
+         with its battery extended, and the new analyzer sha256 is named in the v1.0 draft "before G-PWR or any other
+         non-stub stage runs". The superseded analyzer hashes in the v0.1 text are truncated as the step-10 read's Q1
+         settles.
+      5. LOCK v1.0, committed after G-PWR and the cap, carrying the hashes, Q-F0's Clock date (2026-10-30), the
+         decisions block and Q5's sentence.
+
+      Then step 16, the campaign, on the PI's word, "with the campaign wiring (Q3's redaction included) built and
+      reviewed first": "after v1.0, with the Q3 redaction and the campaign's `REVISION_STAGES` entry, reviewed as the
+      `qual` wiring was" ("What Code does now", item 3).
+
+    Code's additions, beside the read; each proposes nothing:
+    - **The scaffold set at s = 9.** The Qwen `scaffold_absorption` set is the e2a ban list's 12 strings (lock §7;
+      m:261; `data/configs/e2a_ban_list.json`; `valence_core/m/audit.py:416`): `<think>`, `</think>` and ten of the
+      form `<|…|>`, such as `<|im_start|>`. The word `assistant` is not among them, and the reads record no scaffold
+      hit at s = 9's forced round 2, which agrees with the seat's "evidently".
+    - **A note for the seat, for the drafting of Appendix D, for the PI to route; nothing waits on it.**
+      - §2 lists s = 5's banner fragments among the forms under "framing intrusion into free-round task responses".
+        The reads show s = 5's four rounds all forced: the fragments are at forced rounds 2 and 4, and the round-4
+        response is the one the lexical class claimed, ending the session (§2: "s = 5 at forced round 4 on a lexical
+        hit").
+      - §2's third item, "the sessions that end are ending on the model answering a menu-primed free round with a
+        label name", describes three of the five endings §2 lists (s = 0, 3 and 15); s = 5's and s = 14's are at
+        forced round 4.
+      - Separately, §1 notes on the contrast template's forced rounds, which carry no menu, s = 7's "framing word
+        ("LLM", "the model")" and s = 1's "intruded fragment ("text:"), plausibly a word of the banner's "task
+        text"".
+      - Code records these beside §2 and draws nothing from them. Whether they bear on §2's readings is the seat's.
+    - **A link the entry above lacks.** The entry cites its values-check raw without a link. That raw is
+      [`_gf0m-qwen_valuescheck`](results/raw/2026-10-13_m-gf0m-qwen_valuescheck.txt).
+
+    The PI's routing (chat, 2026-10-13), verbatim: "Seat’s step-14 read:
+    results/raw/2026-10-13_m-design-to-code_G-F0m-Qwen_read.md, sha256
+    661313ceeb6808f4aa38e8eeb1968997b824514c3bbeb5cd903cd700184b5c02. Commit it by path with the close line appended
+    to the G-F0m-Qwen entry. Then go for step 15 in the read’s §4 order: the analyzer round and G-ANL-F0 re-run first,
+    the v1.0 draft, G-PWR on the uncached path with r = 18/24; v1.0’s commit waits on my cap."
+    - Step 15 starts after this commit, on that word and on the read's terms.
+
+    Code's readings of the word, beside the read; each is Code's:
+    - **The order** is the word's, and the read's "What Code does now" item 2 gives the same: "the analyzer round
+      with the sentence table from the placed preprint and the G-ANL-F0 re-run; the v1.0 draft naming the new
+      analyzer; G-PWR on the uncached path with r = 18/24; the PI's cap; v1.0's commit". §4's list and the read's
+      short form ("step 15 — G-PWR, the PI's cap, LOCK v1.0") name G-PWR first, as m:358 does; §4's item 4 names the
+      new analyzer sha256 in the v1.0 draft "before G-PWR or any other non-stub stage runs" (R2 3; lock §11 item 5).
+      The entry's step-15 sentences above ("It is G-PWR (m:285) …, then the PI sets the hour cap, then LOCK-m-F0
+      v1.0") follow m:358's list and do not name the analyzer round, which comes first on the word and the read.
+    - **The preprint** (§4 item 3, "the PI's item"). The PI's word names no copy. §4 item 3's default is "The root
+      copy at patch v7 is the tagged one and stands unless the PI places another". On it, Code builds the analyzer
+      round's sentence table from the root copy, `PREPRINT-v1_0-draft.md`, sha256
+      `d9635ca24d32dcba193cd9aade273de2679c99c5c2218787b410e793a42d1fe6` (the blob in `note-2026-10-v1`'s tree at
+      `98d07bc`, unchanged since), unless the PI places another before the round builds the table. The reading is
+      Code's, on the word and §4 item 3; it is not a PI decision on the PI's item. §4 item 3 conditions the copy that
+      stands: "the Q-F0 sentences (the e2a and f1 labels, the title clauses) should be final in that copy".
+      - The record also says what the preprint of record is to be. m:58 (v1.11): "The preprint of record for this
+        campaign is the PI's redraft from v1.1, placed at root by the PI before LOCK-m-F0 v1.0 and hashed there; its
+        §8.1/§8.2 and header note name the cells this campaign gates." The PI's routing of 2026-10-04 (v1.7's) lists
+        it as to come: "the preprint of record at root (my redraft from PREPRINT-v1_1-draft.md), before step 15"
+        (RESULTS.md@6920b4b:4541–4542). The PI's v1.8 routing of the same date lists "the preprint of record at root
+        before step 15", naming no source (RESULTS.md@6920b4b:4334).
+      - `PREPRINT-v1_1-draft.md` is not on disk (m:58: "not on disk at STOP-6"; nor is it now), so a redraft from it
+        is the PI's to supply. Patch v5's five items were "applied by the seat to v1.1 on 2026-10-04" (m:58). The
+        root copy went from patch v4 (`d6431e97…`, m:58) to patches v6 and v7 (its first line) and carries none of
+        them:
+        - (1) its e2b label (:176) reads "*Answered.*", where m:338's e2b label is never *Answered*;
+        - (2) item (2) rewrites v1.1's §8.2 trigger wording, replacing the "reasoning block removed" clause (m:58;
+          PROPOSAL-m withdraws the clause at its §7.2 Step 4, m:340); in the root copy the phrase stands at :278, in
+          §8.1's A3 paragraph;
+        - (3) it has no `[thesis-clause]` tag;
+        - (4) §8 names PROPOSAL-m with no version;
+        - (5) its first line is the v1.0 redraft's note (with its patch v6 and v7 sentences), not a header note
+          listing the gated sentences.
+      - The record gives the placement two deadlines: m:356 (and m:58 in the same words), "before step 15 or before
+        any posting, whichever comes first" (the entry above), and m:286, "before this lock", which §4 item 3 and
+        lock §11 item 5 cite. §4 lists the placement inside step 15, under m:286's. On §4 item 3's default the root
+        copy is at root now, before step 15.
+      - Step 15 begins with the analyzer round. A copy placed after it begins comes after m:356's deadline; one placed
+        after the round builds the table also has the table, "built from whatever is placed" (§4 item 3), rebuilt
+        from it. What else that re-opens is not Code's to say here. m:286's deadline, the later of the two, is
+        v1.0's commit, which the word makes wait on the PI's cap.
+      - Which copy is of record is the PI's. How m:356's deadline and §4's placement read together for a copy still
+        to come is not Code's to settle.
 
 - 2026-10-13 — **LOCK-m-F0 v0.2 (PROPOSAL-m v1.11 §8 step 13, m:282; the PI's word of 2026-10-13, on the seat's
   G-ID-F0m adjudication and the seat's step-10 read): COMMITTED. `LOCK-m-F0.md` now opens with the v0.2 amendment, and
