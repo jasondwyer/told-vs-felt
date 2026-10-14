@@ -21,6 +21,293 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-10-13 — **G-F0m-Qwen (PROPOSAL-m v1.11 §8 step 14, m:283; the PI's word of 2026-10-13 as Code reads it, LOCK-m-F0
+  v0.2 §8): PASS.**
+  - **The run.** 24 sessions ran uncached on Qwen, 8 of A0 (contrast) and 16 of A0s (sham), under LOCK-m-F0 v0.2,
+    on the committed `qual` driver (`4630cfd`), offline on the snapshot of record
+    `c000ac2c2057d94be3fa931000c31723aac53282`.
+  - **Bars.** No hair trigger fired. `round_degeneracy`, on the sham sessions' realised task rounds, is silent at
+    2/136, exact one-sided P = .9924, critical 12 at the realised n (m:271: "evaluated once at stage end on the
+    realised n"). m:283's critical 14 is at the planned 160: five sham sessions ended early at an exclusion.
+  - **r for Q-F0's launch rule** is 18/24 (A0 7/8, A0s 11/16).
+  - **Withheld.** The contrast sessions' free-round events and picks (m:271, m:318) are withheld to Q-F0's VERDICTS
+    entry or NOT-RUN record, and their seconds to its VERDICTS entry (Code's PIN at `stages.py:1328`, LOCK v0.1; the
+    report; the step-10 read's Q4 and Q6).
+  - **The driver's sha256**, which the step-10 read's Q2 requires recorded here and in v1.0, moves from `eb6aa7cf…fd6c`
+    to **`c0a897f5d07be94dee08d37bab16ed76b9f7cc87d1c4929ed49725d44faef4b2`**. The run's DRIVER line printed it at
+    HEAD `4630cfd`.
+  - **Code's ping to the seat**, for the PI to route
+    ([`_code-to-design_G-F0m-Qwen`](results/raw/2026-10-13_m-code-to-design_G-F0m-Qwen.md)). It carries the reads in
+    m:271's form:
+    - the 8 contrast sessions' banners and forced rounds, for the seat's read and attractor tally;
+    - the 16 sham sessions, redacted.
+    It also carries the items m:283 reports, and five questions:
+    - Q1, the close, and the order of m:358's step 14;
+    - Q2, the terms of the driver's new PIN sites;
+    - Q3, a package message that can carry contrast-inclusive timing;
+    - Q4, a departure of Code's: the `qual` build began before v0.2's commit (below);
+    - Q5, the phase-only printed form on Qwen.
+  - **Step 15 waits on the PI's word.** It is G-PWR, then the PI sets the Q-F0 cap, then LOCK-m-F0 v1.0. Under R1
+    A4 it starts after this gate's close entry. Which commit that is (Code's reading: the seat's read, committed with
+    a close line here) is the ping's Q1. Code does not start step 15.
+
+  (Stamp: `date -u` → **Tue Oct 13 22:34:05 UTC 2026, first write;
+  Tue Oct 13 23:21:48 UTC 2026, after values-check pass 1;
+  Wed Oct 14 00:23:05 UTC 2026, after values-check pass 2**.)
+
+  - **The word.** The PI's routing of 2026-10-13 (chat), verbatim (curly apostrophes as typed): "Seat’s adjudication
+    of the G-ID-F0m fire: results/raw/2026-10-13_m-design-to-code_G-ID-F0m_adjudication.md, sha256
+    f04ca5a3a6a2f11d9fba58fdf1605b349f6039993692c3620d90ba23adbed5af. Commit it by path with the close line appended
+    to the G-ID-F0m entry. The FAIL stands; Q-F0’s path is uncached. Go for step 13 (LOCK v0.2) on its terms and the
+    step-10 read’s; then continue onto step 14".
+    - Code reads "then continue onto step 14" as the PI's word for step 14. The reading is Code's. It was declared
+      in the G-ID-F0m close line (`64f3c7e`), and v0.2 §8 carries it, with its condition: "the PI or the seat may
+      say otherwise before step 14 starts". Neither has said so to Code.
+    - **A departure, Code's (ping Q4).** On that reading step 14, the `qual` wiring included (the adjudication's §6
+      item 3), was to start after v0.2's commit (`db7d970`), as the v0.2 entry says ("it starts after this commit").
+      In fact the wiring's first build (`eb931421…`), round 1 of its review, and the interim build of round 1's
+      fidelity fixes made during it (r1, `55ec6297…`, the review raw's build list) ran before that commit, on the
+      v0.2 draft committed only in scratch clones (the review raw's round-1 script). The v0.2 entry's sentence was
+      written while they ran. Nothing ran on a model before the commit. The build with all of round 1's fixes (r1b,
+      `4a34487f…`), rounds 2 and 3, the final batch, the self-test of record, the driver commit `4630cfd`, the dry
+      precheck and the launch all followed it, on the committed v0.2. Code's default is no re-run; whether the
+      departure stands is the seat's.
+  - **The terms**, the adjudication's §6 item 3: "Step 14, G-F0m-Qwen, on the PI's word after v0.2's commit: the
+    `qual` wiring with the step-14 refusal (Q3); uncached; the checklist line; the offline load with the snapshot in
+    the raw's header and the entry; the raw without a finish stamp (eight contrast sessions; the step-10 read, Q4)."
+    Each listed term was met. The lead's "after v0.2's commit" was not met by the wiring's first build and round 1
+    of its review (the departure above; ping Q4):
+    - **the wiring and the refusal:** see "The driver" below;
+    - **uncached:** the STAGE line reads `path=uncached`;
+    - **the checklist line:** the header records it as typed;
+    - **the offline load and the snapshot:** HF_HUB_OFFLINE=1 and the snapshot are in the header and the run's
+      SNAPSHOT line (below), and the snapshot id is here in full;
+    - **the finish stamp:** the raw has none, and no commit message restates a stamp.
+  - **The driver** (commit `4630cfd`). The build is Code's. Its seven new PIN sites are marked "declared at LOCK
+    v1.0".
+    - **Its sha256** moves from `eb6aa7cf167aa8d955c26fd97a6214ed68a7f1375b51c9f80582c85ed659fd6c`, the step-12 blob
+      (v0.2 §3), to `c0a897f5…f4b2`.
+      - The step-10 read answers for the `qual` edit at Q2. Its §2 item 5 gives the application: "build, review,
+        record the new sha256, launch on the PI's word; no further question".
+      - Nothing under `valence_core/m` changed. `package_sha256` stays `5f646db6…d771`, and the analyzer stays
+        `66fb5214…7d5e`.
+    - **What it does.** `qual --unit Q-F0` calls `stages.run_gate_stage`, which is unchanged, with A0 8 and A0s 16
+      (m:283).
+      - Its `identity_extra` carries `locked_path` `"uncached"` (v0.2 §1).
+      - The prior is G-TIME-F0's checkpoint. G-ID-F0m's artifact must exist, of any verdict
+        (`stages.py:846–853`).
+    - **The step-14 refusal.** The adjudication's Q3 says its form "is Code's, declared as a PIN at the edit". Code's
+      form uses both forms Q3 names: a declared constant, `QWEN_REVISION`; and a substring test, under which the
+      governing lock's committed text must name it in full, with the model id and `path = uncached`, so v0.1's blob
+      is refused. At the stage, a refs/main other than it is refused before the load, joined with the other
+      pre-load problems, and the step-12 re-read after the load then STOPs on any change from the pre-load read.
+      `REVISION_STAGES` is `("qual",)`, Code's scope. Whether the campaign joins it is decided at the campaign's
+      wiring.
+    - **The PIN sites.** The seven new sites are at `scripts/m_sessions.py:453`, `:464`, `:479`, `:550`, `:736`,
+      `:819` and `:857` in the committed blob.
+      - The step-14 refusal's form is declared at three of them (the adjudication's Q3: "declared as a PIN at the
+        edit"): `:479` (`QWEN_REVISION` and the form), `:550` (the lock-text test in `stage_identity_extra`) and
+        `:819` (the pre-load refusal in `_run_stage`).
+      - All seven are declared on C6's terms as extended (the step-10 read's Q2 condition; its §2 item 3). Those
+        terms make a PIN strikable "until LOCK v1.0", the revision at which these sites are first indexed, so the
+        window is put to the seat (ping Q2; the review's RF-8). Meanwhile they are held on C6's terms, with the
+        window the seat names at v1.0 (Code's default).
+      - The prose of the seven v0.2 sites (P314–P320) is unchanged. By the index's extraction rule three indexed
+        blocks change: P315 (`:500`) and P318 (`:779`) are truncated at the new v1.0 markers, the code edits inside
+        their extent falling past the markers; P317 (`:685`) has its `wanted` line rewritten and is truncated at a
+        new marker.
+      - P314, P316, P319, P320 and the ten v0.1 sites are identical. The review raw carries the listing.
+    - **Review** ([`_gf0m-qwen-driver_review`](results/raw/2026-10-13_m-gf0m-qwen-driver_review.txt): the rounds'
+      scripts, every agent's return verbatim, Code's mutation batches and Code's disposition of every finding).
+      Three rounds, each with lenses and one adversarial refuter per lens that returned (round 1's mutation lens did
+      not), were followed by a final batch on the committed blob.
+      - **Round 1** reviewed `eb931421…`. Its mutation lens did not return: the session's sign-in lapsed while its
+        batch ran. That batch of 77 finished on its own, and Code classified its 16 survivors.
+      - **Round 2** reviewed `4a34487f…`, with Code's batch of 86.
+      - **Round 3** reviewed `e449c041…`, with Code's batch of 113.
+      - **The final batch:** 123 mutants run on `c0a897f5…`: round 1's 77, Code's n01–n10 and n12, and the round-2
+        and round-3 reviewers' mutants the review raw's final-batch list names. 121 were killed. The 2 survivors are
+        the equivalents Code declared in round 1 (q09: TIME_COUNTS and QUAL_COUNTS name the same templates; q11d:
+        REVISION_STAGES is pinned to `("qual",)`).
+      - **A correction to the review raw's and the driver commit's wording.** Both call the final batch "every
+        mutant of every round". It was not: the round-1 correctness lens's and refuters' own probes (cb01–cb14,
+        rc1_*, rc6*, rf7a–c) and round 3's self-test refuter's rf01 were not in it. Code has since run them on the
+        committed blob (the supplementary batch, recorded in the values-check raw): all 22 KILLED, and round 1's
+        two augment-only controls, rc1_fix and rc6c_copy_only, pass 798/798.
+      - Round 3's ops lens found one blocker (O3-1), in the launch procedure, not the driver. Round 2's end-wait, on
+        caffeinate (O2-2), would have ended at once: nohup's PID (`$!`) execs the `zsh -c` wrapper, and caffeinate
+        holds its assertions from a child of it. The rules would then have had the raw read while the first contrast
+        session ran. The fix is in the header: wait while `kill -0` holds and the command matches
+        `[m]_sessions\.py qual`, then confirm `pgrep` empty.
+    - **Self-test:** 780 → 796 checks; 796/796 with HF_HUB_OFFLINE unset and with it set to "1"
+      ([`_gf0m-qwen-driver_selftest`](results/raw/2026-10-13_m-gf0m-qwen-driver_selftest.txt)). The final batch
+      also passed it in four further conditions:
+      - `PYTHONWARNINGS=always`;
+      - TMPDIR under `/7h/`;
+      - TMPDIR under `/2026-10-13/`;
+      - a clone named `2026-10-12`.
+  - **The launch.** The raw's header ([`_gf0m-qwen`](results/raw/2026-10-13_m-gf0m-qwen.txt)) was written before the
+    launch by Code's generator. The generator reads or asserts every hash, revision and path the header states,
+    and the checklist's power, process, disk and macOS readings, except the audit session's line, which is passed
+    in. The session counts, the rule text, three checklist items (departures none; display sleep only, by the typed
+    `caffeinate -is`; the gate line, the run's own GATE line) and the post-run target `504dd516…` are fixed text.
+    - **The command.** m:267's checklist line as written, typed in Code's shell tool, followed in the same call by
+      `; echo "PID=$!"`. The header records the typed command, and it was compared byte for byte with what was run.
+    - **The checklist:**
+      - departures, none, as the header states it: the typed command is the checklist line with `; echo "PID=$!"`
+        after it in the same call, which the header records (O3-6); Code reads that as no departure, the checklist
+        line being unchanged;
+      - AC at 140 W;
+      - no jlens, mlx, qwen, ipykernel, m_sessions or self-test Python process, and no batch;
+      - display sleep only;
+      - 475 GiB of disk free;
+      - the gate line is the run's GATE line;
+      - macOS 15.6.1 (24G90).
+    - **The audit session was idle (F1).** Its last commit is `11cc35b`, 2026-10-12 18:38 -0400. No file in the tree
+      outside `.git/`, `jlens-qwen36/` and `data/m/` (not scanned; `data/m` by O2-3) had been modified in the 30
+      minutes before the launch except this session's.
+    - **The snapshot**, read from the hub cache: refs/main is `c000ac2c…3282`, which is the cache repo's only
+      snapshot directory and LOCK-m-F0 v0.2 §4's revision of record. No `mlx-community/` exists at the repo root.
+    - **The dry precheck on the committed driver**, offline and model-free:
+      - `stage_identity_extra("qual")` → `[]`;
+      - the licence, unpatched → `[]`;
+      - `stage_precheck("qual")` → `[]`;
+      - the DRIVER line → `c0a897f5…`;
+      - the SNAPSHOT line → the revision of record.
+      The generator asserts both lines.
+    - **Inputs no check binds** (the review's OPS-6 and O3-8):
+      - the adapter's clone import closure, seven files, each asserted equal to G-ID-F0m's header;
+      - `valence_core/adapters/qwen_mlx.py` `a3fc7b45…`, lock §5.2's value;
+      - `valence_core/adapters/__init__.py` and `base.py`.
+      The header lists their sha256.
+    - **The operational rules** (the review's OPS-1 to OPS-8, O2-1 to O2-6, O3-1 to O3-10, F3-4, F3-5 and C2-4), in
+      brief; the header states them in full:
+      - the raw was not read in any form until the stage had ended;
+      - the end was awaited on the PID alone: one background loop while `kill -0` held and its command matched
+        `[m]_sessions\.py qual`, then `pgrep` was confirmed empty;
+      - no streaming, Monitor, stat or listing of the raw, `data/m/ckpt` or `data/m/reports`;
+      - while the stage ran, no other jlens-venv Python process, notebook kernel or workflow ran, and macOS, conda
+        and pip updates were off (OPS-4);
+      - from v0.2's commit until the outputs were committed (OPS-2's window, as the header dates it), the driver's
+        own commit `4630cfd` excepted, which OPS-2 places before the launch ("The driver commit itself lands before
+        the launch"): no commit or working-tree edit to the lock, the proposal, `CLAUDE.md`, the analyzer, the
+        driver, `valence_core/**`, `data/m/**` (the outputs' own commit excepted) or `jlens-qwen36/`; no add or
+        commit of the raw before the end; no checkout, stash, reset, pull or rebase; no hub-cache operation;
+      - no total duration quoted and nothing subtracted (OPS-1); until Q-F0's VERDICTS, no size or time metadata of
+        the raw or the outputs, which are verified by name-status, ls-files and shasum;
+      - EXIT lines counted without printing: one invocation and one EXIT line, `EXIT=0`, so the exits-and-resumes
+        rules (O2-6, O3-10, OPS-4, OPS-6, F3-4) were not engaged.
+  - **The run** (raw sha256 `adc6737deceff4a365b323a82cec14305a64a3de0288e87672918fa206411d7f`):
+    - the DRIVER line names `c0a897f5…` at HEAD `4630cfd`, working tree identical;
+    - the SNAPSHOT line names `c000ac2c…3282`, refs/main, 1 snapshot, HF_HUB_OFFLINE=1, and the re-read after the
+      load is unchanged;
+    - the GATE line names proposal `42ab36ecc814c9c4`, CLAUDE.md `955788dec22ee820` and analyzer
+      `66fb521488db41e7`;
+    - the LICENCE line names lock `0908b5b7ab7a1fbf`, analyzer `66fb521488db41e7` and package `5f646db6e82c5561`;
+    - then the PROVENANCE line (its start stamp is one of Q4's unavoidable records; its `gdn_inference_mode` string
+      names the cached half only, v0.2 §1);
+    - 24 session lines follow in m:263's printed form. A0 s = 1 reads `excluded:excluded@free`, the phase alone (ping
+      Q5);
+    - then the BAR line, `STAGE G-F0m-Qwen PASS path=uncached`, the three output paths and `EXIT=0`, the run's only
+      EXIT line.
+    - The 24 sessions are excluded from the campaign (m:283; v0.2 §2). Their keys are `m-f0m|{template}|{s}`
+      with item keys `m-items-qual|{s}`. All 24 records passed G-VER (`verified` true in the reads; no
+      `template_breakage` or `schedule_mismatch`).
+    - **The line-form check** (the review's O2-8 and F3-1) is a property of the self-test's stub runs. The stage's
+      GATE and LICENCE lines print on no stub run, and its PATH and RE-FINISH lines print only where an end is
+      pending, which no wiring run reaches. Read after EXIT, this raw's GATE and LICENCE lines carry no clock field,
+      and it has no PATH or RE-FINISH line.
+  - **The identity** (the report):
+    - `lock_sha256` is v0.2's `0908b5b7…945e`;
+    - `schedule_sha256` is `504dd516f35aec91b912af7e93f273166cadb3c47a2cad9cb2fecdc8e9a4e962`, lock §6's value,
+      which v0.2 §6 scheduled to become checked at step 14;
+    - `path` is `uncached`;
+    - every other key equals G-TIME-F0's identity: `audit_v2_sha16`, `backend_identifier`, `ban_sha`,
+      `package_sha256`, `pool_sha16`, `proposal_sha256` and `renders_sha16`;
+    - no commit touches `LOCK-m-F0.md` between v0.2's commit (`db7d970`) and the launch, or since (OPS-5;
+      `git log db7d970..f319f53 -- LOCK-m-F0.md` is empty), and the self-test and the dry precheck ran on the
+      committed v0.2.
+  - **The licence after v0.2's commit** (the v0.2 entry: "the step-14 entry records it"):
+    - `stages.licence_problems`, unpatched on the committed `LOCK-m-F0.md`, returned `[]` for the qualification's
+      identity at `db7d970`;
+    - a control with `lock_sha256` set to v0.1's was refused;
+    - it returned `[]` again in the dry precheck at `4630cfd`;
+    - the stage's LICENCE line passed at stage start.
+  - **Reported beside** (m:283, descriptive, no bar; the ping's §3 gives each with its source):
+    - **The contrast sessions' forced rounds:**
+      - 32 rounds;
+      - 0 degeneracy rounds, 0 claims, 0 advisory, 0 cap hits;
+      - 0 sessions excluded at a forced round.
+    - **The sham sessions:**
+      - 136 rounds (64 forced, 72 free);
+      - claims: lexical 4, content 3, v2 2, echo 0; 0 advisory;
+      - 1 cap hit (forced);
+      - sessions excluded: lexical@free 3, lexical@forced 1, audit@forced 1, so 11 of 16 valid;
+      - under the report's strict scope, beside: three more sessions excluded by free-round claims that ended nothing
+        (content@free 2, audit@free 1), so 8 of 16 strict-valid.
+    - **Sessions with a v2 claim:** 2 of the 16 sham sessions, a frame claim at a free round and a junk claim at a
+      forced round. The recon's F1 figures, as m:283 gives them: "five v2 claims in 24 sessions, two frame and three
+      junk, in five distinct sessions … four of them at the forced phase". Here the 8 contrast sessions' forced rounds
+      carry none, and their free rounds are withheld.
+    - **Low label mass (< .20) and top-1-not-a-label.** The contrast sessions' first reads (one per domain session,
+      8): 5/8 and 8/8. The sham sessions' 72 reads (every free round's): 14/72 and 23/72. The contrast domain is
+      Code's PIN (`stages.py:1533`, LOCK v0.1): label mass and a non-label top-1 say nothing about which label, and a
+      contrast session's later reads would show where a free-round exclusion fell, so they stay withheld. f1's CORR
+      first reads, as m:283 gives them: "26/58 and 58/58".
+    - **First-pick share for the sham template** (m:271), over the 14 sham sessions with a first pick: P-role 7/14.
+      By pair index: 0 1/3, 1 3/4, 2 1/3, 3 2/4. Descriptive: lock §2.2 (3): "at gate stages each pair is tied to one
+      wording sequence through π (C5), so the per-pair sham shares reported at qualification are descriptive and are
+      not read as free of start or clause order".
+    - **The attractor tally** (m:271, m:283): the seat's, on the ping's §1. Code makes no count.
+    - **Uncached timing, sham only:** 16 sessions, 1,740.697 s (the report's count and total); a mean of 108.8 s
+      (computed) and a range of 25.5–321.4 s (the reads). The contrast seconds are withheld (the report: "withheld to
+      the unit's VERDICTS entry (m:318)"; the step-10 read's Q6). These sit beside v0.2 §2's 488 s planning basis and
+      are not substituted for it. The hour cap is the PI's at step 15 (the step-10 read's Q6).
+  - **Blinding.** The contrast sessions' free rounds, their events beyond the stdout line, and their picks are in the
+    checkpoint `data/m/ckpt/Q-F0_qual.json`.
+    - Code has not opened it. It is withheld to Q-F0's VERDICTS entry or NOT-RUN record (m:271, m:318).
+    - The read rule's departure from rule 25 is m:271's, declared for the pre-VERDICTS window.
+    - Nothing here is computed from the records that remain (the step-10 read's Q4): the launch stamp, the report's
+      PROVENANCE start stamp, the commit times and this entry's own stamps, the first of them written after the
+      outputs' commit (`f319f53`), so none is tighter than the commit times. The sham total above is not subtracted
+      from any span between them (OPS-1).
+    - **The redaction's reach** (recorded; not open). The sham redaction also replaces both own-pair labels in
+      free-round responses, beyond m:271's header-only wording: P123 (`readrule.py:453`), build flag (r), accepted as
+      built by the seat's dispositions (`54e41c9`; lock §8.1). It is applied here as at G-TIME-F0.
+  - **The outputs** (commit `f319f53`), each committed as written, by path:
+    - the raw;
+    - `data/m/reports/Q-F0_qual_report.json`, sha256
+      `243253f744932a229cd488da4b60225d3fe65c9b11ad174e3bbf94e033c17db0`;
+    - `data/m/reports/Q-F0_qual_reads.json`, sha256
+      `ae4dc753fd22a479a9d477f070b81c502522795f46cc0fbcd09b99235d00b866`;
+    - `data/m/ckpt/Q-F0_qual.json`, sha256 `9a187fbc4654aae1801ca9b53e261401d12799d85719c7a3e1d32c3d43ed5148`
+      (hashed, not opened).
+  - **Items carried to the seat or later.**
+    - **The new PIN sites' strike window** (the review's RF-8; ping Q2). C6 as extended makes indexed PINs
+      "strikable until LOCK v1.0", and these sites are first indexed at v1.0.
+    - **A package message** (the review's C2-4; ping Q3). `resume.py`'s CHECKPOINT STATE INCONSISTENT text prints a
+      contrast-inclusive total. It is reachable only on an inconsistent checkpoint, fails closed, and did not occur in
+      this run. It is flagged for a later package revision. Meanwhile it is an operational rule: such a line is not
+      quoted or computed against before VERDICTS, and it goes to the seat.
+    - **A canary clock** in the self-test is a candidate for the campaign wiring's review. Round 2's refuter
+      proposed it, and Code did not adopt it.
+  - **What follows** (m:358's step 14: "G-F0m-Qwen (24 sessions); the seat's read under §3's rule; entry"). Code
+    reads the step as G-TIME-F0's was closed (the step-10 read, §4): this entry is the stage's entry of record,
+    committed before the seat's read; the seat's read, committed by path with a close line appended here, is m:358's
+    "entry" and the gate's close under R1 A4. The reading is Code's. R1 A2 has a reading that departs from a listed
+    order put to the seat "before Code acts on it", and committing this entry before the seat's read acts on Code's
+    reading before Q1 is answered. Code's ground: on its reading nothing departs (the seat's read, committed with its
+    close line, is m:358's "entry", as the step-10 read §4 made its own commit G-TIME-F0's close entry), and this
+    entry is no input to the seat's read, which is of the committed reads file. Whether the order stands is the
+    seat's: ping Q1. The ping carries the reads.
+    - Step 15 follows on the PI's word, with Q1's answer. It is G-PWR (m:285), on the uncached floors and looks
+      (v0.2 §8, Code's reading), then the PI sets the hour cap, then LOCK-m-F0 v1.0.
+    - v1.0 carries the `qual` driver's sha256 (Q2) and makes the first truncation (the step-10 read's Q1).
+    - Before step 15 the PI places the preprint of record at root (m:356; v1.0 hashes it, m:286). The G-ID-F0m
+      entry's item for the PI from the step-12 driver review (its OPS-2: "Whether to hold OS and venv updates until
+      Q-F0's campaign ends is the PI's call") stays open. At this run the platform (macOS 15.6.1, 24G90) and the
+      backend identifier are unchanged.
+
 - 2026-10-13 — **LOCK-m-F0 v0.2 (PROPOSAL-m v1.11 §8 step 13, m:282; the PI's word of 2026-10-13, on the seat's
   G-ID-F0m adjudication and the seat's step-10 read): COMMITTED. `LOCK-m-F0.md` now opens with the v0.2 amendment, and
   the v0.1 text follows byte for byte, a copy of the record (the committed blob at `e3bef6f`). v0.2 records Q-F0's
