@@ -21,6 +21,46 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-10-15 — **THE TABLE OF RECORD HELD FOR THE SEAT'S Q2 (PROPOSAL-m v1.11 §8 step 15; the seat's step-15 answers,
+  item 3; the PI's word of 2026-10-15).**
+  - **The PI's word** (chat, 2026-10-15): the PI chose Code's recommended option, "Hold table, rest proceeds
+    (Recommended)", over "Hold everything" and "Close the strict rule now". The option's description is quoted in the
+    addendum (`results/raw/2026-10-15_m-code-to-design_step15b_addendum.md`).
+  - **The values-check so far:** `results/raw/2026-10-15_m-table-of-record-valuescheck_interim.txt`. It carries both
+    passes verbatim, Code's dispositions, the candidate's rows of record, and the script that builds the versions the
+    addendum measures, with its stdout.
+    - Pass 1's revision is the candidate table of record: 55 rows, sha256
+      `7206d78ba25c1e1631916396f06d1f812608b89cf411ecbdff6799f63a64d0c5`, `table_problems` [].
+    - It is not the table of record. No file under `data/m/gates/` moves.
+  - **The finding:**
+    - Q1's ambiguity rule does not say when a scope is ambiguous. Code's practice (pass 1's T9 and T1) is a candidate
+      stopping rule.
+    - Pass 2's consistency lens applied it to every scope row. It found four rows where applying it consistently would
+      add cells: R248.06, R236.02, R234.04 (if §7.1's "the state" is 232.2's) and R123.01. Three of them, all but
+      R236.02, have an alternative on record that keeps their values with a stated ground. Pass 2 moved none.
+    - The practice leaves four lines open: generic subjects, the reach of paragraph context, a predicate narrowing
+      "the nulls", and the vanilla-read mapping. Code cannot certify that a further pass would find nothing more.
+    - Against the candidate, the enumerated rows of every other version differ at one tuple only, the all-PASS tuple.
+      There, under flag TRUE, the enumeration lists 10 items under (B), 27 under the candidate, 29 with pass 2's
+      findings applied, and 33 with generic subjects ruled ambiguous.
+    - At every tuple, the version decides which cells each rewrite must clear.
+  - **The addendum,** for the PI to route:
+    - It asks the seat to rule on Q2 before the table is hashed, and revises the ping's (A) into named options, (A1)
+      to (A4), beside (B) and (C).
+    - It offers (A2), pass 2's findings applied (R236.02, and Code's reading of three open lines), as an option, not a
+      default. It withdraws the ping's default for Q2, and Code applies none until the ruling.
+    - Q1's default stands except that the table is held; the candidate keeps T1 and T3 until the ruling.
+    - It asks the seat to rule on R186.04's base row under T9, whichever way T8 is ruled.
+  - **Meanwhile, on the PI's word:**
+    - The v1.0 draft (item 4) names the analyzer, the placeholder and the preprint, with the table pending.
+    - G-PWR (item 5) runs.
+    - This departs from the answers' order, which puts item 3 (the table hashed) before items 4 and 5.
+    - Under (C), the draft's analyzer and preprint lines are redone and G-PWR re-runs.
+    - v1.0 is not committed before the ruling (m:286; PIN-40), nor before the PI's cap.
+  - **Values-check of the addendum and this entry:** two adversarial passes and a targeted third check, in
+    `results/raw/2026-10-15_m-table-hold-addendum_valuescheck.txt`.
+  (Stamp: `date -u` → **Thu Oct 15 08:27:59 UTC 2026, at commit**.)
+
 - 2026-10-15 — **STEP 15'S SECOND ANALYZER ROUND, THE TABLE'S DRAFT AND THE G-ANL-F0 RE-RUN (PROPOSAL-m v1.11 §8 step 15;
   the seat's step-15 answers, "The order from here" item 2 and item 3's re-run; the PI's routing and "placed" of
   2026-10-14).**
