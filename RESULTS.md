@@ -21,6 +21,182 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-10-15 — **G-PWR'S PROGRAM, COMMITTED BEFORE ITS RUN, WITH THE LOCK v1.0 DRAFT THAT NAMES THE ANALYZER
+  (PROPOSAL-m v1.11 §8 step 15; the seat's step-15 answers, items 4 and 5, Q4 and Q7; R2 3's order; the PI's word of
+  2026-10-15).**
+  - **The program:** `scripts/m_gpwr.py`, sha256
+    `1d7c0fe3a5997c1e2b7ed34fd4f65112692126c6a784a68ab1900db59363111c`.
+    - It is model-free and exact. It lives outside `valence_core/m` and is not the analyzer, so it moves neither hash.
+      It is not a `stages.py` stage.
+    - It computes m:285's items on Q7's methods:
+      - power at the floors, and PIN-3 re-derived there;
+      - the launch rule from k, and the looks;
+      - round_degeneracy's sequential false-pause probability;
+      - the exclusion guard's figure: its absolute half, its Fisher half with the grid and its maximum, and the union;
+      - the joint figure.
+
+      Its READINGS declare the seat's methods verbatim, and Code's readings within them, strikable until v1.0's
+      commit (Q7).
+    - **Its run of record executes the bytes of one commit and refuses unless all of these hold:**
+      - it runs isolated and reads no cached bytecode;
+      - every repository module it executes, the analyzer and valence_core, is executed from that commit's blobs, each
+        checked against its id;
+      - the script, the analyzer, the package and every other repository module loaded have working-tree bytes equal to
+        that commit's;
+      - HEAD is that commit at the load, at provenance and before the write (and, out of process, at launch and after
+        the run), and the record names it as `head`;
+      - the draft it is given begins "# LOCK-m-F0.md — v1.0" and names the analyzer's sha256 in full (Code's mechanism
+        for R2 3's order);
+      - its self-test passes, in a separate process booted from the same commit's script blob;
+      - its own figures pass the record's checks, the reviewed figures pinned by sha256 among them;
+      - the record's path is free and writable (write-once, atomic and fsynced).
+    - **Around the run, out of process** (Code's wrapper; the raw carries both checks and the verifier's source):
+      - `git fsck` before launch and after the run;
+      - a verifier, under the system's root-owned Python with `-I -S`, that imports nothing from the repository and
+        re-hashes every object it reads. It binds the record to the run's commit; to the program, analyzer, package
+        and closure the committed draft names; to the reviewed figures; and to the printed output and the raw as it
+        stands at its call, byte for byte. The wrapper's lines after it are bound by the sha256 the wrapper prints at
+        its end.
+  - **Its review:** `results/raw/2026-10-15_m-gpwr-program_review.txt`.
+    - **When it began, and two departures for the seat** (the answers' "The not-questions": "its review raw says when
+      it began"). The raw's header gives the order:
+      - a read-only planning map on 2026-10-13 (R1 A4);
+      - then, on 2026-10-15, the PI's hold word; the program's first build; its first dry run, which computed every
+        G-PWR figure on the inputs of record; and, with round 1's lenses begun on the same inputs by then, the v1.0
+        draft's first text naming the analyzer;
+      - the later dry runs, the rounds, and the trials and replays re-run at this entry's values-check, on the same
+        inputs, before the draft's snapshot was committed.
+
+      The departures:
+      - The answers allowed G-PWR's scratch preparation "on synthetic inputs, uncommitted", as Code's step-15 ping had
+        proposed. The dry runs and the rounds used the inputs of record, model-free, reading no campaign data. That is
+        a departure. Code's reading beside it is that R2 3's "before G-PWR … runs" governs the run of record, which
+        reads the draft's committed snapshot, and that the scratch runs are its review.
+      - The program's draft check and its verifier read the draft's text and were built before its snapshot's commit
+        (the step-14 read's Q4). That is stated as a departure. Code's reading beside it is that a draft snapshot under
+        `results/raw/` is not a lock's committed text, and that the run of record follows its commit. Whether a
+        statement in the review raw's first committed text meets Q4's "at the time" is the seat's to say.
+    - Ten rounds, each with a strict refuter. Every agent's return is verbatim, with Code's dispositions and the
+      diffs between thirteen builds and three versions of the wrapper and the verifier, the third amended at this
+      entry's values-check:
+      - round 1 on r1: fidelity, an independent recomputation, mutation probes;
+      - round 2 on r2;
+      - a batch of 214 mutants on r3;
+      - its survivors re-run on r4;
+      - a batch of 96 on r6;
+      - red-teams of the run of record on r9, r11 and r12;
+      - a red-team of r13 with the wrapper and the verifier;
+      - round 9's probes replayed against the second wrapper and verifier, with a fresh attack on them.
+    - **Defects found and fixed:**
+      - the record could not be written (round 1: integer dict keys);
+      - provenance did not bind the repository modules the run loads (round 3's refuter);
+      - the self-test could leak module state into the run's computation, and an untracked module could shadow a
+        standard one (round 5);
+      - cached bytecode, symlinked modules, package-directory shadows and git clean filters reached the run (round 5's
+        refuter);
+      - **execute-before-bind** (round 6): the run executed the analyzer and valence_core from the working tree before
+        provenance hashed them. A module that rewrote itself to HEAD's bytes, or (in the attack's run) a concurrent
+        swap, wrote wrong figures under canonical provenance, and PIN-3's value was unchecked by the self-test. Fixed
+        in r10 and r11 by executing committed blobs only, re-checking the record in process, and pinning the values;
+      - **the commit and the self-test unbound** (round 7's refuter): the recorded `head` could differ from the commit
+        executed, and the self-test child ran the working tree at whatever HEAD it found. With HEAD moved after the
+        check, wrong figures were written under the canonical analyzer's sha256. Committed repository-root modules
+        were executed. Fixed in r12;
+      - **committed code at the run's commit could neuter any check inside the run** (round 8): a committed tamper of
+        the record's serialiser, or of the figures pin, wrote wrong figures with a passing self-test. A forged
+        subtree object could misattribute a record. Bound out of process, with r13, by the wrapper's fsck and the
+        verifier;
+      - **the verifier's first binding was loose** (round 9: the attack's reading, confirmed by the refuter's runs, and
+        the refuter's own find on the record's bytes): an unbound closure, displays matched as substrings, unchecked
+        provenance keys, a suffix-matched draft path, first-match draft rows, duplicate JSON keys, and the record's
+        bytes unbound to the printed WROTE line. Its second version tightens each check;
+      - **the environment reached the tools, and the raw was unbound** (round 10): DEVELOPER_DIR redirected git,
+        PERL5OPT reached shasum, and text written into the raw during the run passed the verifier. The raw, the body's
+        separators, the PROVENANCE line and the record's form were still loose. The third wrapper runs in a scrubbed
+        environment (`env -i`, HOME `/var/empty`, `LC_ALL=C`). The third verifier binds the raw, the printed output
+        and the record byte for byte, and checks the program and closure against values the wrapper pins. Code
+        replayed round 10's routes against them: 11 cases, all as expected. The review stops there. This entry's
+        values-check then amended the third versions: the verifier runs under the system's Python with `-I -S` and
+        reads the record, the printed output and the raw before it prints; the run's raw's header (the wrapper's)
+        quotes the draft's line naming the analyzer, and the launch check requires exactly one such line, carrying
+        the analyzer's sha256. That amendment's diff, and the trials and replay re-run on it, as expected, are in
+        round 10's section. The values-check, not a review round, checked it;
+      - the Fisher half at .20, and several record fields and report lines, were unchecked (rounds 3–5).
+    - **The figures did not change** from r1 to r13. The dry runs on r1, r2, r3 and r5 agree on every figure (r2
+      dropped r1's per-template launch lines; the READINGS texts were revised at r2 and r3). r3's and r5's dry runs,
+      and every lawful run from r9 to r13, have one sha256 without provenance (`a5aaea47…337c`).
+    - **Declared gaps:**
+      - checks of the self-test's own checks, none of which changes the record alone;
+      - the entry script, which Python reads from disk: the wrapper's launch check, provenance and the verifier bracket
+        it;
+      - committed code at the run's commit is executed. The record names that commit and the sha256 of every bound
+        file (the package by its formula), and the verifier binds them to the draft and to the values the wrapper pins;
+      - trusted: the system's root-owned binaries; the program's interpreter (user-writable miniconda) and the
+        jlens-qwen36 environment (user-writable, inside the repository's directory; round 10's refuter showed that a
+        non-hidden .pth runs under -I, on a venv built from the same base interpreter, and passed a wrong record
+        through the verifier as it then ran, under that interpreter); and the scratch copies of the wrapper and the
+        verifier. The verifier now runs under the system's Python with -S, so no .pth reaches it, and the two tools'
+        sha256 are recorded before the run and checked after it;
+      - after the verifier, another process could still change the record or the raw. So could the wrapper's own
+        later lines. The wrapper prints both files' sha256 at its end. Code checks the files against them before the
+        commit, and after it compares the committed blobs (`git cat-file blob <commit>:<path>`) with them.
+    - **A run-path probe battery** (56 checks, run under `-I` in scratch clones) passes on r13. It runs again on the
+      committed blob before the run of record. Its output is its own raw, `results/raw/2026-10-15_m-gpwr-probes.txt`,
+      committed with the run's raw, because the run's raw is bound byte for byte and cannot carry it.
+  - **The v1.0 draft that names the analyzer:** `results/raw/2026-10-15_m-lock-v1.0-draft_pre-gpwr.md`, sha256
+    `c457181825dc69fa24c7f38c532defba2f0701e4cf6da7bdb263755600f9442d`.
+    - It is the amendment's text as it stands before G-PWR runs, and G-PWR's run of record reads it. The file of
+      record is `LOCK-m-F0.md` at v1.0's commit: the amendment, then the v0.2 text with four truncations.
+    - It names the analyzer `655e0f7f…c16f` in full.
+    - It states v1.0's commit conditions: G-PWR's run of record and the PI's cap (R2 3; the step-14 read §4 item 5),
+      and the seat's Q2 ruling with the table's sha256 (the PI's hold, in the addendum's "What proceeds meanwhile";
+      m:286; PIN-40), with a committer date on or before 2026-10-30 (the answers' item 6; D1; v1.0 §5).
+    - It states what would move its lines:
+      - under Q2's (C), G-PWR re-runs and the draft's analyzer lines are redone (the hold);
+      - on Code's reading of the meanwhile order, so does a Q4 strike;
+      - on Code's reading, a strike of a Q7 default needs a new G-PWR build, with its review and pins, and a superseding
+        run of record, and this snapshot is superseded with it (PIN-37).
+    - Its **[PENDING]** items include:
+      - the table (the seat's Q2);
+      - G-PWR's figures;
+      - the cap;
+      - the seat's answers to the step-15b ping;
+      - the PI's word on Code's reading of "placed", which Code asks for with the cap;
+      - the strikes recorded until v1.0's commit;
+      - the commits of the snapshot and its companion files;
+      - Code's mechanical check of the file.
+  - **Committed with it:**
+    - the re-anchoring of v1.1's referents (m:58; m:371; Q4 (A)): a full sweep of the proposal, checked by a strict
+      refuter, with six dated "no counterpart" notes. `results/raw/2026-10-15_m-lock-v1.0_reanchoring.txt`, sha256
+      `87ba4698a2a3936accc1b68ca15423b9f85afa89b1eb6ea12c66698c737460d4`;
+    - the PIN-index addendum, `results/raw/2026-10-15_m-lock-v1.0_pin-index-addendum.txt`, sha256
+      `b6a0de0d6c5c557a14e1bef3d66e1e35082fab9e33da78f93ad80d44ed6acb15`;
+    - the values-check, `results/raw/2026-10-15_m-lock-v1.0-draft_valuescheck.txt`, with every return and Code's
+      dispositions of each, verbatim:
+      - three passes on the draft: two lenses with strict refuters, then a check of pass 2's changes with a refuter;
+      - four passes on this entry, each with a strict refuter. These also check every filled value and the draft's
+        later changes, which the raw shows split by the pass that saw them.
+  - **Next:**
+    1. the probe battery on the committed blob;
+    2. G-PWR's run of record, through the wrapper:
+       - the command is `python -I -B -X pycache_prefix=<a path that does not exist> -X utf8 scripts/m_gpwr.py
+         --lock-draft results/raw/2026-10-15_m-lock-v1.0-draft_pre-gpwr.md --record data/m/gates/Q-F0_G-PWR.json`, in
+         a scrubbed environment, with fsck and the verifier around it;
+       - the run's raw and the battery's keep their 2026-10-15 names whatever the run's date, so the reviewed wrapper
+         runs unchanged; the header's stamp is `date -u`;
+       - the run's raw's header (the wrapper's) quotes the draft's line naming the analyzer (Code's step-15 ping);
+       - the run's entry names the record's head and its `lock_draft.sha256`, and checks the latter against the
+         snapshot's sha256 named above;
+       - the run's entry quotes the wrapper's last two terminal lines (the exits, and the RAW and RECORD sha256), and
+         checks the committed blobs against them;
+       - if WRAPPER EXIT is not 0, Code stops, commits the raw and the record as they stand, and routes them to the
+         seat. A re-run waits on that, with the record and the raw superseded under PIN-37;
+    3. the cap request to the PI.
+  - **Values-check of this entry:** four passes, each with a strict refuter, in the values-check raw above. The check
+    stops at pass 4; its findings are applied and checked mechanically (the quotations, the fills, the widths, and
+    the trials and replay re-run).
+  (Stamp: `date -u` → **Thu Oct 15 20:36:07 UTC 2026, at commit**.)
+
 - 2026-10-15 — **THE TABLE OF RECORD HELD FOR THE SEAT'S Q2 (PROPOSAL-m v1.11 §8 step 15; the seat's step-15 answers,
   item 3; the PI's word of 2026-10-15).**
   - **The PI's word** (chat, 2026-10-15): the PI chose Code's recommended option, "Hold table, rest proceeds

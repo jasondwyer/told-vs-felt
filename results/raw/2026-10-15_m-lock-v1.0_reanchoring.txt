@@ -1,0 +1,1904 @@
+# LOCK-m-F0 v1.0's re-anchoring of the v1.1 referents (PROPOSAL-m v1.11 m:58, m:371; the seat's step-15 answers, Q4,
+# reading (A): "Each reference is re-anchored where a counterpart exists and recorded 'no counterpart' as a dated note where
+# none does, with what it rests on").
+# Code stamp: 2026-10-15 18:16 UTC (date -u). Read-only; model-free; no agent opened data/m/ckpt/* or data/m/reports/*.
+# Texts: the proposal PROPOSAL-m-gating-campaign-v1_11.md, sha256 42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b;
+#   the placed copy of record PREPRINT-v1_0-draft.md (patch v8), sha256 45b67246f2b2bcb40774e95462ad4e3c5f559fdd0358387cceec0155bebe7a41;
+#   the reference PREPRINT-v1_1-draft.md (placed at root by the seat, untracked), sha256 163e5f600c424019dea62161b450f0bff572eecc1959a252850dcf0dca11fa91.
+# Method: a mapper swept the proposal in full for every preprint referent in v1.1's numbering; a strict refuter re-checked
+#   each entry and swept independently for missed referents. Code's dispositions apply the refuter's verdicts and
+#   additions and give the "no counterpart" notes of record. Contents: the workflow's script; the map, verbatim; the
+#   mapper's map.json referents, numbered as the refuter's '#N'; the refuter, verbatim; Code's dispositions. The
+#   refuter's '#N' is the 0-based index of the entry in the mapper's own map.json (its scratch file, not in the
+#   repository; its sha256 in that section's title), whose referents are printed numbered, with their quotes in full,
+#   after the workflow's return; each verdict's id also names its m line and quote.
+# In Code's text (this header and the dispositions), quotations join wrapped lines with one space and render inner
+#   double quotes as single quotes (as LOCK v1.0 §0); the workflow's script, the map, the map.json listing and the
+#   refuter are printed as written.
+
+====================================================================================================
+THE WORKFLOW SCRIPT, verbatim
+====================================================================================================
+
+export const meta = {
+  name: 'v10-reanchoring',
+  description: 'Re-anchor PROPOSAL-m v1.11 references to v1.1 preprint sections onto the placed copy (patch v8), with a strict refuter',
+  phases: [{ title: 'Map' }, { title: 'Refute' }],
+}
+const R = '/Users/jasondwyer/Documents/code/jspace-lab'
+const W = '/private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/lockv1/reanchor'
+const COMMON = `
+CONTEXT. PROPOSAL-m (${R}/PROPOSAL-m-gating-campaign-v1_11.md; cite its lines as m:N) refers to sections of the preprint by v1.1's numbering. m:58: "Until it is placed, every reference to v1.1 sections resolves against the project copy and is re-anchored by Code at LOCK-m-F0 v1.0; §9 scopes those referents there." m:371 scopes "PREPRINT-v1_1-draft.md and the PI's placed redraft" to LOCK-m-F0 v1.0. The seat's ruling (${R}/results/raw/2026-10-14_m-design-to-code_step15_answers.md, Q4, reading (A)): "Each reference is re-anchored where a counterpart exists and recorded 'no counterpart' as a dated note where none does, with what it rests on." The placed copy of record: ${R}/PREPRINT-v1_0-draft.md (patch v8, sha256 45b67246…7a41; cite as v8:N). The v1.1 reference text: ${R}/PREPRINT-v1_1-draft.md (untracked, placed by the seat as the reference; cite as v1.1:N). Code's step-15 ping listed the referents it knew (${R}/results/raw/2026-10-14_m-code-to-design_step15.md, Q4, lines ~212-245): §0.1's §8.2; Step 7's "§8.2 status"; Step 4's "§8.2's screen"; §7.4's "§8.2 stays open"; the v1.1-only items of §7.5's seed list; the §7.6 number of Step 6's rival (m:14 maps the rival to root:248). Q3 of the answers already maps v1.1's §8.2 (A1-A3) to v8 §8.1's A1-A3 paragraphs (:274-:278) and Step 7's "§8.2 status" to those paragraphs. Code's step-15b ping Q5 (${R}/results/raw/2026-10-15_m-code-to-design_step15b.md) re-anchors the table's kinds: s7.4-last -> v8 §7.2's last (:240); s7.5-first -> v8 §7.3's lineage sentence (:244); s7.2-sceptic, s7.7-penultimate and tab2-row have no counterpart.
+HARD RULES. Read-only. Read nothing under data/m/ckpt/ or data/m/reports/; never open results/raw/2026-10-13_m-gf0m-qwen.txt; no git in jlens-qwen36/; no git writes; write only under ${W}/; do not read scripts/audit_note_*, results/raw/*note-*, README-NOTE.md, RESEARCH-NOTE-*, AUDIT-note-*, LICENS*, root *.svg, ADDENDUM-k1.md.`
+const MAP = { type: 'object', properties: {
+  referents: { type: 'array', items: { type: 'object', properties: {
+    m_line: { type: 'string' }, quote: { type: 'string' }, v11_target: { type: 'string' }, v11_evidence: { type: 'string' },
+    v8_counterpart: { type: 'string' }, v8_evidence: { type: 'string' }, status: { type: 'string', enum: ['counterpart', 'no counterpart', 'already v8 / root coordinate', 'not a preprint referent'] },
+    rests_on: { type: 'string' } }, required: ['m_line', 'quote', 'v11_target', 'v11_evidence', 'v8_counterpart', 'v8_evidence', 'status', 'rests_on'] } },
+  sweep_method: { type: 'string' }, notes: { type: 'array', items: { type: 'string' } } }, required: ['referents', 'sweep_method', 'notes'] }
+const VER = { type: 'object', properties: {
+  verdicts: { type: 'array', items: { type: 'object', properties: { m_line: { type: 'string' },
+    verdict: { type: 'string', enum: ['CONFIRMED', 'REFUTED', 'PARTLY'] }, evidence: { type: 'string' }, fix: { type: 'string' } },
+    required: ['m_line', 'verdict', 'evidence', 'fix'] } },
+  missed: { type: 'array', items: { type: 'string' } } }, required: ['verdicts', 'missed'] }
+phase('Map')
+const map = await agent(COMMON + `\n\nTASK. Sweep PROPOSAL-m v1.11 IN FULL (every line) for every reference to a section, paragraph, sentence, table or line of the preprint that is in v1.1's numbering or names v1.1 content (e.g. "§8.2", "§7.5's seed list", "§7.6", "Step 7's §8.2 status", "§0.1", "TAB 2"), as opposed to root:N coordinates (which m:8 fixes to the post-patch-v4 root file) or the proposal's own sections. For each: quote it with its m:N line; find its target in v1.1's text (quote the v1.1 line); find its counterpart in v8 (quote the v8 line) or state 'no counterpart' with what that rests on. Be exhaustive: list also references you judge are the proposal's own sections (status 'not a preprint referent') when they could be confused. Work dir ${W}/map.`, { label: 'reanchor:map', schema: MAP })
+phase('Refute')
+const ref = await agent(COMMON + `\n\nYOU ARE A STRICT REFUTER of this re-anchoring map, verbatim:\n${JSON.stringify(map)}\nFor EACH referent re-check the quote at its m line, the v1.1 target and the v8 counterpart (or the 'no counterpart' claim) against the files, and give CONFIRMED / REFUTED / PARTLY with evidence and the exact fix; default to REFUTED if you cannot reproduce. Then sweep the proposal yourself, independently, for preprint referents the map missed (put each in 'missed' with its m line and your mapping). Work dir ${W}/ref.`, { label: 'reanchor:refute', schema: VER })
+return { map, ref }
+
+====================================================================================================
+THE MAP, verbatim (the workflow's return; its referents in the return's order)
+====================================================================================================
+
+{
+ "referents": [
+  {
+   "m_line": "m:14",
+   "quote": "The verdict labels of the §5.5 cells of the preprint",
+   "v11_target": "v1.1 §5.5 \"Link 5 — Not acted on from experience\" (:181), cell paragraphs :185 (e2a), :187 (e2b), :189 (weight), :191 (S1), :193 (f1), :195 (OLMo Q3)",
+   "v11_evidence": "v1.1:181 \"### 5.5 Link 5 — Not acted on from experience\"",
+   "v8_counterpart": "v8 §5.5 (:168), same cells at :172 (e2a), :176 (e2b), :178 (weight), :180 (S1), :182 (f1), :184 (OLMo Q3)",
+   "v8_evidence": "v8:168 \"### 5.5 Link 5 — Not acted on from experience\"",
+   "status": "counterpart",
+   "rests_on": "Same section number and heading in both, and every cell paragraph is present in both. v8 lines are 13 lower at the heading and e2a, then 11 lower from e2b to the Summary (v1.1:197 -> v8:186), since v8 adds the e2a footnote at :174."
+  },
+  {
+   "m_line": "m:14",
+   "quote": "with their TAB 2 rows",
+   "v11_target": "v1.1 §5.5's TAB 2 slot (:183), plus the Q3 paragraph's pointer (:195); a [TAB] slot, no rows exist",
+   "v11_evidence": "v1.1:183 \"[TAB 2: every cell, with channel, model, dose, n, Δ, control-arm fluctuation, map consistency, p, and verdict label. The label of each Qwen F0 row is *Answered* iff the told positive control at F0 on Qwen passed (§8.1)\"",
+   "v8_counterpart": "none for rows. The slot itself is at v8:170 (pointer at :184); v8 has no rows either, and v1.1's in-slot label rule is gone from v8:170",
+   "v8_evidence": "v8:170 \"[TAB 2: every cell, with channel, model, dose, n, Δ, control-arm fluctuation, map consistency, p, and verdict label.]\"",
+   "status": "no counterpart",
+   "rests_on": "TAB 2 is a slot in both texts (\"[FIG]/[TAB] mark slots\", v1.1:1 and v8:1), so neither carries a row to re-anchor. Agrees with Code's step-15b Q5 (\"tab2-row has none (TAB 2 is a slot)\"). The slot re-anchors v1.1:183 -> v8:170."
+  },
+  {
+   "m_line": "m:14",
+   "quote": "the abstract's fifth-stage sentence and its OLMo clause",
+   "v11_target": "v1.1 abstract (:13), the fifth-stage sentence and its OLMo clause",
+   "v11_evidence": "v1.1:13 \"And no choice moves toward or away from the state: not through the transcript, not for five natural task properties, and not at the SFT, DPO or instruct stage of the OLMo lineage (5) **[A0-gated; A0-OLMo-gated]**\"",
+   "v8_counterpart": "v8 abstract (:13), the same sentence, verbatim",
+   "v8_evidence": "v8:13 \"And no choice moves toward or away from the state: not through the transcript, not for five natural task properties, and not at the SFT, DPO or instruct stage of the OLMo lineage (5) **[A0-gated; A0-OLMo-gated]**\"",
+   "status": "counterpart",
+   "rests_on": "Verbatim string match on the same line number."
+  },
+  {
+   "m_line": "m:14",
+   "quote": "the sentences that assert the thesis of the main title",
+   "v11_target": "v1.1 §7.1's [thesis-clause] sentence (:248). v1.1's own title is Fallback-1 (:3), so in v1.1 the main title's thesis appears only at §7.1 (heading :244, sentence :248)",
+   "v11_evidence": "v1.1:248 \"On this reading the state is functional for the character and not for the network: it is what the story is about, not what the system is for **[thesis-clause]**.\"",
+   "v8_counterpart": "v8 §7.1 :234 (tagged). v8 also asserts the thesis at the title (:3), the §7.1 heading (:230) and an untagged abstract sentence (:13); v1.1 has no abstract counterpart",
+   "v8_evidence": "v8:234 \"The state is functional for the character and not for the network. It is what the story is about, not what the system is for **[thesis-clause]**.\" / v8:13 \"We conclude that such states are functional for the character a model voices rather than for the network that voices it\"",
+   "status": "counterpart",
+   "rests_on": "The [thesis-clause] tag (patch v5 item 3, v8:1) carries v1.1:248 to v8:234. The extra v8 sites, the title and abstract :13, are not tagged and have no v1.1 counterpart. They are listed so the sentence table's clause-(b) rows are built from v8, not from v1.1's tags."
+  },
+  {
+   "m_line": "m:14",
+   "quote": "the cannot-learn/does-not-care rival (root:248; v1.1 §7.6)",
+   "v11_target": "v1.1 §7.6 \"Alternatives stated, not defeated\" (:278), first paragraph (:280)",
+   "v11_evidence": "v1.1:280 \"**Cannot learn versus does not care.** The strongest rival to our reading is that language models cannot use experienced contingencies at all\"",
+   "v8_counterpart": "v8 §7.4 \"Alternatives stated, not defeated\" (:246), first paragraph :248 (= root:248, unchanged line position)",
+   "v8_evidence": "v8:248 \"**Cannot learn versus does not care.** The strongest rival to our reading is that language models cannot use experienced contingencies at all\"",
+   "status": "counterpart",
+   "rests_on": "Same heading, renumbered §7.6 -> §7.4 because v1.1 §7.2 and §7.3 have no v8 counterpart. v8's header note renumbers v1.1:512's \"§7.6's first alternative\" as \"§7.4's first alternative\" (v8:466). root:248 = v8:248, since the root -> v8 diff changes lines and inserts none before :454."
+  },
+  {
+   "m_line": "m:14",
+   "quote": "§8.1 and §8.2 of the preprint",
+   "v11_target": "v1.1 §8.1 \"Told positive controls\" (:300), the A0 and A0-OLMo controls",
+   "v11_evidence": "v1.1:300 \"**8.1 Told positive controls.** The self-administration apparatus with one natural reinforcer\"",
+   "v8_counterpart": "v8 §8.1 (:268): the A0 (:270) and A0-OLMo (:272) paragraphs, with the shared intro (:268) and the outcome-rules paragraph (:280)",
+   "v8_evidence": "v8:270 \"*A0 — told positive control at the format of §5.5 (Qwen).*\" / v8:272 \"*A0-OLMo — the same control on the OLMo lineage.*\"",
+   "status": "counterpart",
+   "rests_on": "The seat's answers, Q3 (step15_answers:25): \"the `s8.1-status` rows of the table are A0 and A0-OLMo, as Code maps them\". Also text comparison: v1.1:300's Qwen-F0 and OLMo SFT/DPO/instruct controls are v8:270/:272. Same number, narrower scope: v8 §8.1 also holds v1.1's §8.2."
+  },
+  {
+   "m_line": "m:14",
+   "quote": "§8.1 and §8.2 of the preprint",
+   "v11_target": "v1.1 §8.2 \"Capacity, then the felt cell, at scaffolding\" (:302): A1 (told control at F3), A2 (objective told), A3 (uninstructed)",
+   "v11_evidence": "v1.1:302 \"**8.2 Capacity, then the felt cell, at scaffolding.** A second unit of the same pre-registration\"",
+   "v8_counterpart": "v8 §8.1's A1–A3 paragraphs (:274, :276, :278). v8 §8.2 (:282, the Tagliabue arms) is NOT the counterpart",
+   "v8_evidence": "v8:274 \"*A1 — told positive control at the new format.*\" / v8:276 \"*A2 — objective told, mapping felt.*\" / v8:278 \"*A3 — the felt cell at the same scaffolding.*\"",
+   "status": "counterpart",
+   "rests_on": "The seat's answers, Q3 (step15_answers:23, :25): \"§8.1 holds A0, A0-OLMo, A1, A2, A3; §8.2 is the Tagliabue arms\"; \"A1 belongs to §8.1's A1–A3 paragraphs (v1.1's §8.2)\". v8's header note: \"§8.1's A1–A3 paragraphs stand as written\" (v8:466), against v1.1:512 \"§8.2 stands as written\"."
+  },
+  {
+   "m_line": "m:14",
+   "quote": "Not gated: S1 (*Answered, as recognition*",
+   "v11_target": "v1.1 §5.5 text channel (S1) paragraph (:191), its label",
+   "v11_evidence": "v1.1:191 \"*Answered, as recognition.*\"",
+   "v8_counterpart": "v8 §5.5 S1 paragraph (:180), same label",
+   "v8_evidence": "v8:180 \"*Answered, as recognition.*\"",
+   "status": "counterpart",
+   "rests_on": "Verbatim label match."
+  },
+  {
+   "m_line": "m:14",
+   "quote": "the weight channel (*concluded, not answered*)",
+   "v11_target": "v1.1 §5.5 weight-channel paragraph (:189), its label",
+   "v11_evidence": "v1.1:189 \"*Concluded, not answered.* This cell asserts no null and never will\"",
+   "v8_counterpart": "v8 §5.5 weight-channel paragraph (:178), same label; v1.1's trailing sentence is dropped",
+   "v8_evidence": "v8:178 \"The channel is installable, verified, and structurally unreadable at a token choice. *Concluded, not answered.*\"",
+   "status": "counterpart",
+   "rests_on": "Label matches. v1.1's \"This cell asserts no null and never will …\" sentence has no v8 counterpart, and no proposal referent depends on it."
+  },
+  {
+   "m_line": "m:14",
+   "quote": "the OLMo base row (*concluded, not answered — told control not run at base, by decision (7′)*)",
+   "v11_target": "v1.1 §5.5 OLMo Q3 paragraph's base sentence (:195); the label wording is in v1.1's TAB 2 slot (:183)",
+   "v11_evidence": "v1.1:195 \"At base, where a model that does not follow instructions can be given no told control, the cell is *concluded, not answered*\" / v1.1:183 \"*concluded, not answered — told control not applicable at base (no instruction-following)*\"",
+   "v8_counterpart": "v8 §5.5 OLMo Q3 paragraph, base label (:184)",
+   "v8_evidence": "v8:184 \"*Base: concluded, not answered — told control not applicable at base (no instruction-following).*\"",
+   "status": "counterpart",
+   "rests_on": "The base label exists in both. Its wording is \"told control not applicable at base (no instruction-following)\" in both v1.1:183 and v8:184, not m's \"told control not run at base, by decision (7′)\" (m:14, m:338). That wording difference predates v8."
+  },
+  {
+   "m_line": "m:14",
+   "quote": "**e2b** (*concluded, not answered — no told control at a state-present read; leakage certification π̂_d = 0.0172, exact 95% CI [0.0086, 0.0305], against the 0.0735 bar reported beside*",
+   "v11_target": "v1.1 §5.5 present-tense (e2b) paragraph (:187), its label (patch v5 item 1)",
+   "v11_evidence": "v1.1:187 \"*concluded, not answered — no told control at a state-present read; leakage certification π̂_d = 0.0172 against a 0.0735 bar reported beside*\"",
+   "v8_counterpart": "v8 §5.5 e2b paragraph (:176), same label",
+   "v8_evidence": "v8:176 \"*concluded, not answered — no told control at a state-present read; leakage certification π̂_d = 0.0172 against a 0.0735 bar reported beside*\"",
+   "status": "counterpart",
+   "rests_on": "Verbatim match between v1.1 and v8. Neither carries m's \"exact 95% CI [0.0086, 0.0305]\" (\"0.0086\" occurs in neither file), and both read \"against a\", not \"against the\"."
+  },
+  {
+   "m_line": "m:19",
+   "quote": "the preprint's e2a paragraph paired 54/101 with 55/102's Δ and p",
+   "v11_target": "v1.1 §5.5 e2a paragraph (:185), which still carries the slip",
+   "v11_evidence": "v1.1:185 \"Reward Δ = +0.039 (54 of 101 valid sessions)\" … \"exact-binomial p = 0.244\"",
+   "v8_counterpart": "v8 §5.5 e2a paragraph (:172) with the correction-of-record footnote (:174)",
+   "v8_evidence": "v8:172 \"is +0.035 (54 of 101 sessions),¹\" / v8:174 \"¹ The correction of record. The verdict as published read 55 of 102, Δ = +0.039, p = .244\"",
+   "status": "counterpart",
+   "rests_on": "Same paragraph. v1.1 still pairs 54/101 with +0.039 and p = 0.244; v8 pairs 54/101 with +0.035 and p = .275 and footnotes the 55/102 figures (patch v6/v7, v8:1)."
+  },
+  {
+   "m_line": "m:58",
+   "quote": "its §8.1/§8.2 and header note name the cells this campaign gates",
+   "v11_target": "v1.1 §8.1 (:300) and §8.2 (:302), and the header note (:504–:514)",
+   "v11_evidence": "v1.1:298 \"Experiments 8.1 and 8.2 are the two Qwen units and the OLMo units of the program's PROPOSAL-m (v1.8, 2026-10-04)\" / v1.1:504 \"## Header note for the PI: what moves at posting\"",
+   "v8_counterpart": "v8 §8.1 alone (:268–:280) names all seven cells; header note :458–:468. v8 §8.2 (:282) names none",
+   "v8_evidence": "v8:268 \"**8.1 The gating campaign (PROPOSAL-m v1.11, pre-registered).** Seven cells\" / v8:458 \"## Header note for the PI: what moves at posting\"",
+   "status": "counterpart",
+   "rests_on": "The seat's answers, Q3/Q4 (step15_answers:23, :34): \"With patch v8 in place most referents resolve directly: the header note names the gated sentences and the never-*Answered* cells, §8.1 names the cells\". In v8 coordinates read \"§8.1/§8.2\" as \"§8.1\"."
+  },
+  {
+   "m_line": "m:58",
+   "quote": "(1) e2b's label",
+   "v11_target": "v1.1 §5.5 e2b label (:187)",
+   "v11_evidence": "v1.1:187 \"so the cell is *concluded, not answered — no told control at a state-present read\"",
+   "v8_counterpart": "v8 §5.5 e2b label (:176); also removed from the abstract's and §8.1's null lists (v8:1, patch v8)",
+   "v8_evidence": "v8:176 \"so the cell is *concluded, not answered — no told control at a state-present read\"",
+   "status": "counterpart",
+   "rests_on": "Verbatim match. v8:1 records patch v8 applying patch v5's item as \"e2b labeled *concluded, not answered* in every outcome\"."
+  },
+  {
+   "m_line": "m:58",
+   "quote": "(2) §8.2's trigger wording — \"a positive or reverse result under the screen tier's full rule\" withholds v2 pending a confirmatory pre-registration carrying its own told control at its own format",
+   "v11_target": "v1.1 §8.2's trigger sentence (:302)",
+   "v11_evidence": "v1.1:302 \"A positive or reverse result in the uninstructed cell under the screen tier's full rule withholds the second version pending a confirmatory pre-registration that carries its own told control at its own format\"",
+   "v8_counterpart": "v8 §8.1's A3 paragraph (:278), with welfare \"fires on a positive\" at :280",
+   "v8_evidence": "v8:278 \"A positive or reverse result under the screen tier's full rule withholds the version that reports it pending a confirmatory pre-registration carrying its own told control at its own format\" / v8:280 \"a welfare pre-commitment that fires on a positive in the felt cell\"",
+   "status": "counterpart",
+   "rests_on": "Wording match. v8:1 records patch v8 item \"the A3 trigger restated under the screen tier's full rule with welfare firing on a positive\". The replaced \"reasoning block removed\" clause (root:278) is absent from both v1.1 and v8."
+  },
+  {
+   "m_line": "m:58",
+   "quote": "(3) the thesis sentences of §7.1 tagged [thesis-clause]",
+   "v11_target": "v1.1 §7.1 (:244), tagged sentence :248",
+   "v11_evidence": "v1.1:248 \"not what the system is for **[thesis-clause]**.\"",
+   "v8_counterpart": "v8 §7.1 (:230), tagged sentence :234",
+   "v8_evidence": "v8:234 \"not what the system is for **[thesis-clause]**.\"",
+   "status": "counterpart",
+   "rests_on": "Same section number and tag. v8:1: \"the §7.1 thesis sentence tagged **[thesis-clause]**\"."
+  },
+  {
+   "m_line": "m:58",
+   "quote": "(4) §8 pointed at v1.8, to be re-pointed at the committed version in the PI's redraft",
+   "v11_target": "v1.1 §8's intro paragraph (:298)",
+   "v11_evidence": "v1.1:298 \"PROPOSAL-m (v1.8, 2026-10-04)\"",
+   "v8_counterpart": "v8 §8.1's heading (:268); v8's §8 intro (:266) no longer names the proposal",
+   "v8_evidence": "v8:268 \"**8.1 The gating campaign (PROPOSAL-m v1.11, pre-registered).**\"",
+   "status": "counterpart",
+   "rests_on": "v8:1 records it as \"§8.1 pointed at v1.11\"."
+  },
+  {
+   "m_line": "m:58",
+   "quote": "(5) the header note listing the gated sentences and the never-*Answered* cells",
+   "v11_target": "v1.1 header note (:504–:514)",
+   "v11_evidence": "v1.1:508 \"**Never *Answered* in any outcome, and asserted as nulls nowhere in this draft:**\"",
+   "v8_counterpart": "v8 header note (:458–:468)",
+   "v8_evidence": "v8:462 \"**Never *Answered* in any outcome, and asserted as nulls nowhere in this draft:**\"",
+   "status": "counterpart",
+   "rests_on": "Same structure: five paragraphs in each (v1.1:506–:514, v8:460–:468)."
+  },
+  {
+   "m_line": "m:58",
+   "quote": "differs at exactly root:13, :30, :184, :186, :272, :278, :280",
+   "v11_target": "n/a (root coordinates, post-patch-v4 root, m:8)",
+   "v11_evidence": "n/a",
+   "v8_counterpart": "v8:13, :30, :184, :186, :272, :278, :280 (same line positions)",
+   "v8_evidence": "diff of archive/PREPRINT-v1_0-draft.pre-patch-v6.md (sha d6431e97…222b8, the root of m:8) against v8: only same-range \"c\" hunks up to :453, no insertions or deletions",
+   "status": "already v8 / root coordinate",
+   "rests_on": "m:8 fixes root:N to the post-patch-v4 file, archived byte-identical as pre-patch-v6.md. The positional diff shows line N = v8 line N for N ≤ 453; the content at :13, :30, :184, :186, :278 and :280 has since changed (patches v6–v8)."
+  },
+  {
+   "m_line": "m:61",
+   "quote": "widened to the thesis sentences of the main title, §8.2 and the abstract's fifth-stage sentence",
+   "v11_target": "v1.1 §7.1 thesis sentence (:248), §8.2 (:302), abstract fifth stage (:13)",
+   "v11_evidence": "v1.1:302 \"**8.2 Capacity, then the felt cell, at scaffolding.**\"",
+   "v8_counterpart": "v8:234 (thesis), v8 §8.1's A1–A3 paragraphs :274–:278 (for §8.2), v8:13 (fifth stage)",
+   "v8_evidence": "v8:274 \"*A1 — told positive control at the new format.*\"",
+   "status": "counterpart",
+   "rests_on": "As the m:14 entries: §8.2 -> v8 §8.1 A1–A3 (seat Q3); thesis -> v8:234 (+ untagged :3, :13); fifth stage -> v8:13."
+  },
+  {
+   "m_line": "m:65",
+   "quote": "under A3\\* = CONFIRMED the thesis sentences are rewritten to state the confirmed result",
+   "v11_target": "v1.1's [thesis-clause] sentence (:248)",
+   "v11_evidence": "v1.1:248 \"**[thesis-clause]**\"",
+   "v8_counterpart": "v8:234 (tagged); also v8:3 title, v8:13 abstract and v8:230 heading (untagged)",
+   "v8_evidence": "v8:234 \"**[thesis-clause]**\"",
+   "status": "counterpart",
+   "rests_on": "As m:14's thesis entry."
+  },
+  {
+   "m_line": "m:73",
+   "quote": "its assertions include the abstract OLMo clause, the dose-note text",
+   "v11_target": "v1.1 abstract OLMo clause (:13); f1 dose-note slot (:193)",
+   "v11_evidence": "v1.1:13 \"and not at the SFT, DPO or instruct stage of the OLMo lineage\" / v1.1:193 \"**[dose note attached iff G-CAL's 0.12 artifact exists; PROPOSAL-m §2.3]**\"",
+   "v8_counterpart": "v8:13 (verbatim clause); v8:182 (the dose note in text)",
+   "v8_evidence": "v8:13 \"and not at the SFT, DPO or instruct stage of the OLMo lineage\" / v8:182 \"at the corruption rate used (.12), 2 of 16 items rendered unchanged\"",
+   "status": "counterpart",
+   "rests_on": "The clause matches verbatim. The dose note is a conditional placeholder in v1.1 and attached text in v8 (see m:349 clause (c))."
+  },
+  {
+   "m_line": "m:76",
+   "quote": "the abstract clause \"one or two\"; §8.1's status sentences updated at each posting",
+   "v11_target": "v1.1 abstract OLMo clause (:13); v1.1 §8.1 (:300), whose consequence sentences carry the controls' status",
+   "v11_evidence": "v1.1:300 \"If a control does not pass or is not run by its date, the corresponding nulls are reported as *concluded, not answered*\"",
+   "v8_counterpart": "v8:13; v8 §8.1's A0 (:270) and A0-OLMo (:272) paragraphs",
+   "v8_evidence": "v8:270 \"Unless it passes, those two cells' verdict labels become *concluded, not answered*\" / v8:272 \"Unless a stage's control passes, that stage's row becomes *concluded, not answered*\"",
+   "status": "counterpart",
+   "rests_on": "The seat's answers, Q3: the s8.1-status rows are A0 (:270) and A0-OLMo (:272)."
+  },
+  {
+   "m_line": "m:78",
+   "quote": "the f1 dose note a declared third item of the enumeration",
+   "v11_target": "v1.1:193 dose-note slot",
+   "v11_evidence": "v1.1:193 \"[dose note attached iff G-CAL's 0.12 artifact exists\"",
+   "v8_counterpart": "v8:182 dose clause",
+   "v8_evidence": "v8:182 \"so no render is clean\"",
+   "status": "counterpart",
+   "rests_on": "As m:176 / m:349 (c)."
+  },
+  {
+   "m_line": "m:86",
+   "quote": "disclosures for the paper (the fourteen-item F0m-vs-f1 list, the generation window and chunking included)",
+   "v11_target": "the paper's Appendix D, as m:267",
+   "v11_evidence": "v1.1:294 \"the disclosure is in Appendix D.\"",
+   "v8_counterpart": "v8's Appendix D (pointer at :262)",
+   "v8_evidence": "v8:262 \"the disclosure is in Appendix D.\"",
+   "status": "counterpart",
+   "rests_on": "As m:267. The appendix body is in neither file."
+  },
+  {
+   "m_line": "m:96",
+   "quote": "A4 thesis still posts under Fallback",
+   "v11_target": "the thesis sentences: v1.1 §7.1 [thesis-clause] (:248), tagged by patch v5",
+   "v11_evidence": "v1.1:248 \"**[thesis-clause]**\"",
+   "v8_counterpart": "v8:234 (tagged); plus untagged v8:3 and v8:13",
+   "v8_evidence": "v8:234 \"**[thesis-clause]**\"",
+   "status": "counterpart",
+   "rests_on": "A STOP-4 item label. Its subject is the thesis sentences, mapped as in m:14."
+  },
+  {
+   "m_line": "m:105",
+   "quote": "A13 patch v4's A3 trigger",
+   "v11_target": "the A3 trigger: root:278's \"reasoning block removed\" clause; in v1.1 the trigger sits in §8.2 (:302), rewritten by patch v5",
+   "v11_evidence": "v1.1:302 \"A positive or reverse result in the uninstructed cell under the screen tier's full rule\"",
+   "v8_counterpart": "v8 §8.1 A3 paragraph (:278)",
+   "v8_evidence": "v8:278 \"A positive or reverse result under the screen tier's full rule\"",
+   "status": "counterpart",
+   "rests_on": "A STOP-4 item label whose substance is the preprint's A3 trigger: root:278 -> v1.1 §8.2 (:302) -> v8:278."
+  },
+  {
+   "m_line": "m:107",
+   "quote": "C15 abstract clause",
+   "v11_target": "the abstract's OLMo clause (v1.1:13)",
+   "v11_evidence": "v1.1:13 \"not at the SFT, DPO or instruct stage of the OLMo lineage\"",
+   "v8_counterpart": "v8:13",
+   "v8_evidence": "v8:13 \"not at the SFT, DPO or instruct stage of the OLMo lineage\"",
+   "status": "counterpart",
+   "rests_on": "A STOP-5 item label, disposed at m's §7.2 Step 2; the clause matches verbatim."
+  },
+  {
+   "m_line": "m:122",
+   "quote": "C30 §8.1 updates",
+   "v11_target": "v1.1 §8.1 (:300)",
+   "v11_evidence": "v1.1:300 \"**8.1 Told positive controls.**\"",
+   "v8_counterpart": "v8 §8.1 A0 (:270) and A0-OLMo (:272) paragraphs",
+   "v8_evidence": "v8:270 \"*A0 — told positive control at the format of §5.5 (Qwen).*\"",
+   "status": "counterpart",
+   "rests_on": "A STOP-5 item label disposed at m's §7.2 Step 7; maps as m:343's \"§8.1's sentences\" (seat Q3)."
+  },
+  {
+   "m_line": "m:129",
+   "quote": "C18 abstract clause",
+   "v11_target": "the abstract's OLMo clause (v1.1:13)",
+   "v11_evidence": "v1.1:13 \"not at the SFT, DPO or instruct stage of the OLMo lineage\"",
+   "v8_counterpart": "v8:13",
+   "v8_evidence": "v8:13 \"not at the SFT, DPO or instruct stage of the OLMo lineage\"",
+   "status": "counterpart",
+   "rests_on": "A STOP-4 item label; as m:107."
+  },
+  {
+   "m_line": "m:139",
+   "quote": "root:30",
+   "v11_target": "n/a (root coordinate)",
+   "v11_evidence": "n/a",
+   "v8_counterpart": "v8:30 (contribution 2, same line position)",
+   "v8_evidence": "v8:30 \"2. **Five linked results on one state (§5).**\"",
+   "status": "already v8 / root coordinate",
+   "rests_on": "m:8 root coordinate; the positional diff gives root:30 = v8:30."
+  },
+  {
+   "m_line": "m:176",
+   "quote": "the record behind the preprint's f1 CORR dose note, which the posting rule attaches only if this artifact exists (§7.5)",
+   "v11_target": "v1.1 §5.5 f1 paragraph's conditional dose-note slot (:193)",
+   "v11_evidence": "v1.1:193 \"**[dose note attached iff G-CAL's 0.12 artifact exists; PROPOSAL-m §2.3]**\"",
+   "v8_counterpart": "v8 §5.5 f1 paragraph (:182), the dose clause from \"at the corruption rate used (.12)\" to \"so no render is clean\"",
+   "v8_evidence": "v8:182 \"at the corruption rate used (.12), 2 of 16 items rendered unchanged\" … \"the gating campaign’s corruptor (PROPOSAL-m §2.3; G-CAL, `data/m/gates/G-CAL_model-free.json`) changes at least three letters of every item, so no render is clean\"",
+   "status": "counterpart",
+   "rests_on": "Same paragraph and the same G-CAL artifact. v8 carries the note as text, not as a conditional slot. data/m/gates/G-CAL_model-free.json is on disk and tracked (existence checked; not read). \"(§7.5)\" here is m's own posting rule."
+  },
+  {
+   "m_line": "m:267",
+   "quote": "**Disclosures for the paper (Appendix D)",
+   "v11_target": "v1.1's Appendix D, cited at :130 and :294; its body is not in the file",
+   "v11_evidence": "v1.1:294 \"the choice reads are unaffected, and the disclosure is in Appendix D.\"",
+   "v8_counterpart": "v8's Appendix D, cited at :119 and :262; its body is not in the file either",
+   "v8_evidence": "v8:262 \"the choice reads are unaffected, and the disclosure is in Appendix D.\"",
+   "status": "counterpart",
+   "rests_on": "Same letter and the same pointer sentences in both. Neither file holds an appendix body (no Appendix heading in either; the references run to the header note), so the counterpart is the designation, not a line of text."
+  },
+  {
+   "m_line": "m:278",
+   "quote": "one abstract OLMo clause",
+   "v11_target": "v1.1 abstract OLMo clause (:13)",
+   "v11_evidence": "v1.1:13 \"and not at the SFT, DPO or instruct stage of the OLMo lineage\"",
+   "v8_counterpart": "v8:13",
+   "v8_evidence": "v8:13 \"and not at the SFT, DPO or instruct stage of the OLMo lineage\"",
+   "status": "counterpart",
+   "rests_on": "Verbatim."
+  },
+  {
+   "m_line": "m:278",
+   "quote": "(§7.2 Step 2's three-way)",
+   "v11_target": "PROPOSAL-m's own §7.2 Step 2 (m:338), not v1.1 §7.2 \"In the hierarchy's vocabulary\" (v1.1:252)",
+   "v11_evidence": "n/a",
+   "v8_counterpart": "n/a",
+   "v8_evidence": "n/a",
+   "status": "not a preprint referent",
+   "rests_on": "m's §7 has Steps under 7.2 (m:336–:343); a preprint §7.2 has no steps. Listed because v1.1 §7.2 and v8 §7.2 (:238) are different sections that share the number."
+  },
+  {
+   "m_line": "m:278",
+   "quote": "one §8.1 status text",
+   "v11_target": "v1.1 §8.1 (:300)",
+   "v11_evidence": "v1.1:300 \"**8.1 Told positive controls.**\"",
+   "v8_counterpart": "v8 §8.1 A0 (:270) and A0-OLMo (:272)",
+   "v8_evidence": "v8:272 \"*A0-OLMo — the same control on the OLMo lineage.*\"",
+   "status": "counterpart",
+   "rests_on": "Seat Q3; Code's s8.1-status mapping."
+  },
+  {
+   "m_line": "m:278",
+   "quote": "Step-7 status \"open\"",
+   "v11_target": "v1.1 §8.2 (:302): Step 7's \"§8.2 status\" (m:343)",
+   "v11_evidence": "v1.1:302 \"**8.2 Capacity, then the felt cell, at scaffolding.**\"",
+   "v8_counterpart": "v8 §8.1 A1–A3 paragraphs (:274–:278)",
+   "v8_evidence": "v8:278 \"*A3 — the felt cell at the same scaffolding.*\"",
+   "status": "counterpart",
+   "rests_on": "Seat Q3: \"Step 7's '§8.2 status' reads the A1–A3 paragraphs.\""
+  },
+  {
+   "m_line": "m:278",
+   "quote": "the f1 dose-note text conditioned on the **0.12-artifact-existence input flag**",
+   "v11_target": "v1.1:193 dose-note slot",
+   "v11_evidence": "v1.1:193 \"[dose note attached iff G-CAL's 0.12 artifact exists\"",
+   "v8_counterpart": "v8:182 dose clause",
+   "v8_evidence": "v8:182 \"so no render is clean\"",
+   "status": "counterpart",
+   "rests_on": "As m:176."
+  },
+  {
+   "m_line": "m:291",
+   "quote": "one §8.1/§8.2 status text",
+   "v11_target": "v1.1 §8.1 (:300) and §8.2 (:302)",
+   "v11_evidence": "v1.1:302 \"**8.2 Capacity, then the felt cell, at scaffolding.**\"",
+   "v8_counterpart": "v8 §8.1: A0/A0-OLMo (:270, :272) for \"§8.1\"; A1–A3 (:274–:278) for \"§8.2\"",
+   "v8_evidence": "v8:276 \"*A2 — objective told, mapping felt.*\"",
+   "status": "counterpart",
+   "rests_on": "Seat Q3. In v8 both status texts live under one section number."
+  },
+  {
+   "m_line": "m:291",
+   "quote": "one abstract OLMo clause (Step 2's three-way, re-run at v2), one dose-note text",
+   "v11_target": "v1.1:13 OLMo clause; v1.1:193 dose-note slot",
+   "v11_evidence": "v1.1:13 \"and not at the SFT, DPO or instruct stage of the OLMo lineage\"",
+   "v8_counterpart": "v8:13; v8:182",
+   "v8_evidence": "v8:13 \"and not at the SFT, DPO or instruct stage of the OLMo lineage\"",
+   "status": "counterpart",
+   "rests_on": "As m:73."
+  },
+  {
+   "m_line": "m:326",
+   "quote": "the label-artifact class captured live three times in the program (root:184)",
+   "v11_target": "n/a (root coordinate)",
+   "v11_evidence": "n/a",
+   "v8_counterpart": "v8:184 (OLMo Q3 paragraph; same line position)",
+   "v8_evidence": "v8:184 \"is the third live capture of the label-artifact class (§5.6)\"",
+   "status": "already v8 / root coordinate",
+   "rests_on": "m:8 root coordinate; root:184 = v8:184 positionally (paragraph content revised by patch v8). The v1.1 counterpart, for reference, is v1.1:195."
+  },
+  {
+   "m_line": "m:334",
+   "quote": "Main: *Functional for the Character, Not for the Network*",
+   "v11_target": "the preprint's title line: v1.1:3 carries Fallback-1; the main title appears only as v1.1 §7.1's heading (:244) and in §8.2 (:302)",
+   "v11_evidence": "v1.1:3 \"# Marked, Expressed, Remembered, Not Acted On\"",
+   "v8_counterpart": "v8:3 carries Main",
+   "v8_evidence": "v8:3 \"# Functional for the Character, Not for the Network\"",
+   "status": "counterpart",
+   "rests_on": "The title line exists in both, with different ladder rungs. m:341 makes Main unreachable at v1, and v8's own header note says the main title is not used in this version (v8:466). The posting rewrites the title under the ceiling obtained (m:349 clause (b)), so this matters to the sentence table, not to re-anchoring."
+  },
+  {
+   "m_line": "m:338",
+   "quote": "e2a and f1: *Answered* iff L0, else *concluded, not answered — the told control at F0 on this substrate",
+   "v11_target": "v1.1 §5.5 e2a label (:185) and f1 label (:193)",
+   "v11_evidence": "v1.1:185 \"*Answered* **[A0-gated]**\" / v1.1:193 \"*Answered, at screen power* **[A0-gated]**\"",
+   "v8_counterpart": "v8 §5.5 e2a label (:172) and f1 label (:182)",
+   "v8_evidence": "v8:172 \"*Answered* **[A0-gated]**\" / v8:182 \"*Answered, at screen power* **[A0-gated]**\"",
+   "status": "counterpart",
+   "rests_on": "Verbatim labels and tags."
+  },
+  {
+   "m_line": "m:338",
+   "quote": "**e2b: *concluded, not answered — no told control at a state-present read; leakage certification π̂_d = 0.0172, exact 95% CI [0.0086, 0.0305], against the 0.0735 bar reported beside*",
+   "v11_target": "v1.1:187 e2b label",
+   "v11_evidence": "v1.1:187 \"leakage certification π̂_d = 0.0172 against a 0.0735 bar reported beside*\"",
+   "v8_counterpart": "v8:176 e2b label",
+   "v8_evidence": "v8:176 \"leakage certification π̂_d = 0.0172 against a 0.0735 bar reported beside*\"",
+   "status": "counterpart",
+   "rests_on": "As m:14. The posting label (m) carries a CI that neither preprint label has."
+  },
+  {
+   "m_line": "m:338",
+   "quote": "OLMo Q3, per post-training row: *Answered* iff its own L0-OLMo-c",
+   "v11_target": "v1.1 §5.5 OLMo Q3 paragraph (:195), per-row label",
+   "v11_evidence": "v1.1:195 \"*Answered, at screen power* **[A0-OLMo-gated, per row]**\"",
+   "v8_counterpart": "v8 §5.5 OLMo Q3 paragraph (:184)",
+   "v8_evidence": "v8:184 \"*SFT, DPO, instruct: Answered, at screen power* **[A0-OLMo-gated, per row]**\"",
+   "status": "counterpart",
+   "rests_on": "Same paragraph and tag; v8 names the rows."
+  },
+  {
+   "m_line": "m:338",
+   "quote": "**base: *concluded, not answered — told control not run at base, by decision (7′)***",
+   "v11_target": "v1.1:195 base sentence; v1.1:183 base label wording",
+   "v11_evidence": "v1.1:183 \"told control not applicable at base (no instruction-following)\"",
+   "v8_counterpart": "v8:184 base label",
+   "v8_evidence": "v8:184 \"*Base: concluded, not answered — told control not applicable at base (no instruction-following).*\"",
+   "status": "counterpart",
+   "rests_on": "As m:14. The wording differs from m's label in both texts."
+  },
+  {
+   "m_line": "m:338",
+   "quote": "f1's CORR line carries its dose note iff G-CAL's 0.12 artifact exists (input flag)",
+   "v11_target": "v1.1:193 dose-note slot",
+   "v11_evidence": "v1.1:193 \"**[dose note attached iff G-CAL's 0.12 artifact exists; PROPOSAL-m §2.3]**\"",
+   "v8_counterpart": "v8:182 dose clause",
+   "v8_evidence": "v8:182 \"at the corruption rate used (.12)\"",
+   "status": "counterpart",
+   "rests_on": "As m:176."
+  },
+  {
+   "m_line": "m:338",
+   "quote": "**The abstract's OLMo clause:** iff all three pass, \"and not at the SFT, DPO or instruct stage of the OLMo lineage\"",
+   "v11_target": "v1.1:13",
+   "v11_evidence": "v1.1:13 \"and not at the SFT, DPO or instruct stage of the OLMo lineage (5)\"",
+   "v8_counterpart": "v8:13",
+   "v8_evidence": "v8:13 \"and not at the SFT, DPO or instruct stage of the OLMo lineage (5)\"",
+   "status": "counterpart",
+   "rests_on": "Verbatim; the all-pass text equals the current clause in both."
+  },
+  {
+   "m_line": "m:338",
+   "quote": "the OLMo lineage's post-training nulls are reported as concluded, not answered (§5.5)",
+   "v11_target": "v1.1 §5.5 (:181), the OLMo Q3 paragraph (:195), as the pointer target of this pre-written abstract text",
+   "v11_evidence": "v1.1:195 \"**Across training stages (OLMo, Q3).**\"",
+   "v8_counterpart": "v8 §5.5 (:168), OLMo Q3 paragraph (:184)",
+   "v8_evidence": "v8:184 \"**Across training stages (OLMo, Q3).**\"",
+   "status": "counterpart",
+   "rests_on": "The pre-written abstract text's internal pointer resolves unchanged: §5.5 is the same section in v8."
+  },
+  {
+   "m_line": "m:338",
+   "quote": "S1 and the weight channel untouched",
+   "v11_target": "v1.1:191 (S1), v1.1:189 (weight)",
+   "v11_evidence": "v1.1:191 \"**Text channel (Qwen, S1).**\"",
+   "v8_counterpart": "v8:180 (S1), v8:178 (weight)",
+   "v8_evidence": "v8:180 \"**Text channel (Qwen, S1).**\" / v8:178 \"**Weight channel (Qwen, conditioned trace).**\"",
+   "status": "counterpart",
+   "rests_on": "As m:14."
+  },
+  {
+   "m_line": "m:340",
+   "quote": "under POSITIVE as §7.3's welfare clause",
+   "v11_target": "PROPOSAL-m's own §7.3 Welfare pre-commitment (m:345)",
+   "v11_evidence": "n/a",
+   "v8_counterpart": "n/a",
+   "v8_evidence": "n/a",
+   "status": "not a preprint referent",
+   "rests_on": "m's §7.3 (m:345). Not v1.1 §7.3 (indicator, :264), v8 §7.3 (Reward chisels, :242), or the preprint's welfare section (v1.1 §7.7 :288 / v8 §7.5 :256)."
+  },
+  {
+   "m_line": "m:340",
+   "quote": "the \"reasoning block removed\" clause of earlier versions is withdrawn",
+   "v11_target": "earlier PROPOSAL-m versions' Step 4 clause. Its preprint copy was root:278, which v1.1 replaced by patch v5",
+   "v11_evidence": "v1.1: absent (\"reasoning block\" occurs 0 times)",
+   "v8_counterpart": "n/a",
+   "v8_evidence": "v8: absent (\"reasoning block\" occurs 0 times); present only in archive pre-patch-v6.md:278 and pre-patch-v8.md:278",
+   "status": "not a preprint referent",
+   "rests_on": "\"Earlier versions\" are this proposal's, so this is not a preprint section referent. The clause's preprint copy (root:278) is gone from both v1.1 and v8 (patch v5 / patch v8)."
+  },
+  {
+   "m_line": "m:340",
+   "quote": "a dated note to the v1 record stating that §8.2's screen returned a hit under confirmation",
+   "v11_target": "v1.1 §8.2's uninstructed (screen-tier) cell (:302)",
+   "v11_evidence": "v1.1:302 \"and the same cell uninstructed\"",
+   "v8_counterpart": "v8 §8.1 A3 paragraph (:278)",
+   "v8_evidence": "v8:278 \"is a screen hit under the screen-and-confirm tiers of the natural-reinforcer screen's pre-registration (PROPOSAL-f)\"",
+   "status": "counterpart",
+   "rests_on": "Seat Q3 (§8.2 = v8 §8.1's A1–A3). The screen cell is A3. Code's step-15 ping Q4 lists this one."
+  },
+  {
+   "m_line": "m:340",
+   "quote": "in §8.2's status text",
+   "v11_target": "v1.1 §8.2 (:302); v1.1 puts the status at posting in the header note (:298)",
+   "v11_evidence": "v1.1:298 \"The status of each at posting is stated in the header note.\"",
+   "v8_counterpart": "v8 §8.1's A1–A3 paragraphs (:274–:278); v8:266 drops v1.1:298's status sentence; v8's header note says they \"stand as written\" (:466)",
+   "v8_evidence": "v8:466 \"§8.1's A1–A3 paragraphs stand as written\"",
+   "status": "counterpart",
+   "rests_on": "Seat Q3. Analyzer kind s8.1-a1-a3 (step-15b ping, Q6)."
+  },
+  {
+   "m_line": "m:342",
+   "quote": "PASS: the §7.6 rival is retired",
+   "v11_target": "v1.1 §7.6 rival paragraph (:280); also v1.1 §8.2 \"the rival of §7.6 is retired\" (:302)",
+   "v11_evidence": "v1.1:302 \"the rival of §7.6 is retired\"",
+   "v8_counterpart": "v8 §7.4 rival paragraph (:248); v8's A2 paragraph (:276) cites it as §7.4",
+   "v8_evidence": "v8:276 \"the rival of §7.4 is stated as unsettled\"",
+   "status": "counterpart",
+   "rests_on": "Same rival as m:14 (renumbered §7.6 -> §7.4). Code's step-15 ping Q4 lists it. v8:276 states only the FAIL consequence for §7.4; v1.1:302's PASS clause \"the rival of §7.6 is retired\" has no v8 wording, but Step 6 writes that text at v2."
+  },
+  {
+   "m_line": "m:342",
+   "quote": "the new §5.7 reads *the lever moves when told at F3*",
+   "v11_target": "none: §5.7 is created at v2 by Step 6. v1.1's §5 ends at §5.6 (:199)",
+   "v11_evidence": "v1.1:199 \"### 5.6 What the shields caught, and other hazards quantified\" (last §5 subsection)",
+   "v8_counterpart": "none: v8's §5 also ends at §5.6 (:188), so the number §5.7 stays free",
+   "v8_evidence": "v8:188 \"### 5.6 What the shields caught, and other hazards quantified\" (last §5 subsection; §6 at :202)",
+   "status": "no counterpart",
+   "rests_on": "A prospective section that exists in neither text, not a v1.1 section v8 lost. Re-anchoring needs nothing, because the next free number is §5.7 in both."
+  },
+  {
+   "m_line": "m:343",
+   "quote": "**Step 7 — §8.1 and §8.2 status.** At each posting §8.1's sentences state each control's outcome",
+   "v11_target": "v1.1 §8.1 (:300): A0 and A0-OLMo-{sft,dpo,instruct}",
+   "v11_evidence": "v1.1:300 \"run on Qwen at the F0 format of the archived cells and on the OLMo lineage at SFT, DPO and instruct\"",
+   "v8_counterpart": "v8 §8.1's A0 (:270) and A0-OLMo (:272) paragraphs",
+   "v8_evidence": "v8:270 \"*A0 — told positive control at the format of §5.5 (Qwen).*\"",
+   "status": "counterpart",
+   "rests_on": "Seat Q3: s8.1-status rows = A0, A0-OLMo. Caution: v8 §8.1 also holds A1 (:274), a control whose status v1.1 puts under §8.2."
+  },
+  {
+   "m_line": "m:343",
+   "quote": "and §8.2's state whether its cells ran; §8.2 is closed into §5.7",
+   "v11_target": "v1.1 §8.2 (:302); §5.7 prospective",
+   "v11_evidence": "v1.1:302 \"**8.2 Capacity, then the felt cell, at scaffolding.**\"",
+   "v8_counterpart": "v8 §8.1's A1–A3 paragraphs (:274–:278); §5.7 prospective (see m:342)",
+   "v8_evidence": "v8:274 \"*A1 — told positive control at the new format.*\"",
+   "status": "counterpart",
+   "rests_on": "Seat Q3: Step 7's §8.2 status reads the A1–A3 paragraphs. Code's step-15 ping Q4 lists \"Step 7's §8.2 status\"."
+  },
+  {
+   "m_line": "m:345",
+   "quote": "the paper's ethics section is revised",
+   "v11_target": "v1.1 §9 Ethics statement (:314, text :316)",
+   "v11_evidence": "v1.1:316 \"this statement will be revisited if a positive arrives\"",
+   "v8_counterpart": "v8 §9 Ethics statement (:290, text :292)",
+   "v8_evidence": "v8:292 \"this statement will be revisited if a positive arrives\"",
+   "status": "counterpart",
+   "rests_on": "Same section number. v1.1:316's sentences about the §8.1/§8.2 experiments and the felt-cell pre-commitment (\"is armed for §8.2\") are absent from v8:292."
+  },
+  {
+   "m_line": "m:345",
+   "quote": "**7.3 Welfare pre-commitment (Code quotes verbatim in the step-3 entry).**",
+   "v11_target": "PROPOSAL-m's own §7.3",
+   "v11_evidence": "n/a",
+   "v8_counterpart": "n/a",
+   "v8_evidence": "n/a",
+   "status": "not a preprint referent",
+   "rests_on": "m's own section. Shares its number with v1.1 §7.3 (indicator) and v8 §7.3 (Reward chisels); the preprint's welfare section is v1.1 §7.7 / v8 §7.5."
+  },
+  {
+   "m_line": "m:347",
+   "quote": "v2's ceiling is then Fallback-1 iff L0, and §8.2 stays open",
+   "v11_target": "v1.1 §8.2 (:302)",
+   "v11_evidence": "v1.1:302 \"scheduled after this version posts, with its own clock date\"",
+   "v8_counterpart": "v8 §8.1's A1–A3 paragraphs (:274–:278)",
+   "v8_evidence": "v8:278 \"*A3 — the felt cell at the same scaffolding.*\"",
+   "status": "counterpart",
+   "rests_on": "Seat Q3. Code's step-15 ping Q4 lists \"§7.4's '§8.2 stays open'\"."
+  },
+  {
+   "m_line": "m:347",
+   "quote": "its row and the abstract clause change, not the title",
+   "v11_target": "v1.1 §5.5 OLMo Q3 row (:195), the abstract OLMo clause (:13), the title (:3)",
+   "v11_evidence": "v1.1:510 \"that row's label and the abstract's OLMo clause change\"",
+   "v8_counterpart": "v8:184, v8:13, v8:3; header note v8:464",
+   "v8_evidence": "v8:464 \"that row's label and the abstract's OLMo clause change\"",
+   "status": "counterpart",
+   "rests_on": "Both header notes state the same rule."
+  },
+  {
+   "m_line": "m:347",
+   "quote": "v1 posts under Fallback-2 with e2a and f1 *concluded, not answered*",
+   "v11_target": "v1.1 title (:3); e2a (:185), f1 (:193) labels",
+   "v11_evidence": "v1.1:506 \"The title becomes Fallback-2, *Marked, expressed, remembered*\"",
+   "v8_counterpart": "v8:3 title; e2a (:172), f1 (:182) labels; header note v8:460",
+   "v8_evidence": "v8:460 \"The title becomes Fallback-2, *Marked, expressed, remembered*\"",
+   "status": "counterpart",
+   "rests_on": "Both header notes state it."
+  },
+  {
+   "m_line": "m:347",
+   "quote": "v2 posts after D2 (§7.5)",
+   "v11_target": "PROPOSAL-m's own §7.5 posting rule (m:349)",
+   "v11_evidence": "n/a",
+   "v8_counterpart": "n/a",
+   "v8_evidence": "n/a",
+   "status": "not a preprint referent",
+   "rests_on": "m's own section. Shares its number with v1.1 §7.5 (Reward chisels, :274) and v8 §7.5 (welfare, :256)."
+  },
+  {
+   "m_line": "m:349",
+   "quote": "**7.5 Posting rule.**",
+   "v11_target": "PROPOSAL-m's own §7.5",
+   "v11_evidence": "n/a",
+   "v8_counterpart": "n/a",
+   "v8_evidence": "n/a",
+   "status": "not a preprint referent",
+   "rests_on": "m's own section heading. The \"§7.5's first sentence\" later in this line is the preprint's (v1.1 §7.5)."
+  },
+  {
+   "m_line": "m:349",
+   "quote": "*(b) No sentence of the posted paper asserts the thesis of a title above the ceiling obtained* (under Fallback-1 or Fallback-2, \"functional for the character, not for the network\" and its paraphrases are stated as a reading proposed, not a result; under Fallback-2 \"not acted on\" and its paraphrases likewise",
+   "v11_target": "v1.1: \"functional for the character\" at :244 (heading) and :248 (tagged); \"not acted on\" at :3 (title), :32 (contribution 2(v)), :181 (§5.5 heading)",
+   "v11_evidence": "v1.1:32 \"and (v) not acted on through the transcript\"",
+   "v8_counterpart": "v8: \"functional for the character\" at :3 (title), :13 (abstract), :230 (heading), :234 (tagged); \"not acted on\" at :30 (contribution 2(v)) and :168 (§5.5 heading)",
+   "v8_evidence": "v8:30 \"and (v) not acted on through the transcript\"",
+   "status": "counterpart",
+   "rests_on": "String search in both files. v8 adds two thesis sites with no v1.1 counterpart, the title (:3) and the abstract's \"We conclude…\" (:13), both untagged. v8 loses v1.1's title-line \"Not Acted On\" (:3)."
+  },
+  {
+   "m_line": "m:349",
+   "quote": "*(c) The f1 CORR dose note is carried iff G-CAL's 0.12 artifact exists*",
+   "v11_target": "v1.1:193 dose-note slot",
+   "v11_evidence": "v1.1:193 \"**[dose note attached iff G-CAL's 0.12 artifact exists; PROPOSAL-m §2.3]**\"",
+   "v8_counterpart": "v8:182 dose clause (attached as text, citing the G-CAL artifact)",
+   "v8_evidence": "v8:182 \"(PROPOSAL-m §2.3; G-CAL, `data/m/gates/G-CAL_model-free.json`)\"",
+   "status": "counterpart",
+   "rests_on": "As m:176. The artifact file exists and is tracked, so the flag would be true; v8 already carries the note unconditionally."
+  },
+  {
+   "m_line": "m:349",
+   "quote": "**The list in the v1.1 header note and the following are illustrative, not the enumeration:**",
+   "v11_target": "v1.1 header note gated-sentence lists (:506, :510)",
+   "v11_evidence": "v1.1:506 \"The sentences carrying **[A0-gated]** are: the abstract's fifth-stage sentence; contribution 2(v); §5.5 e2a and f1 labels and the §5.5 Summary\"",
+   "v8_counterpart": "v8 header note lists (:460, :464), rewritten in v8 coordinates",
+   "v8_evidence": "v8:460 \"The sentences carrying **[A0-gated]** are: the abstract's fifth-stage sentence; contribution 2(v); the §5.5 e2a and f1 labels and the §5.5 Summary\"",
+   "status": "counterpart",
+   "rests_on": "Same notes. v8's A0 list drops v1.1's sceptic and §7.7 items and renames §7.4's last sentence \"§7.2's closing sentence\". v8's OLMo list renames §7.5's first sentence \"§7.3's lineage sentence\" (v8:464)."
+  },
+  {
+   "m_line": "m:349",
+   "quote": "the abstract's fifth-stage sentence and OLMo clause",
+   "v11_target": "v1.1:13",
+   "v11_evidence": "v1.1:13 \"And no choice moves toward or away from the state\"",
+   "v8_counterpart": "v8:13",
+   "v8_evidence": "v8:13 \"And no choice moves toward or away from the state\"",
+   "status": "counterpart",
+   "rests_on": "Verbatim."
+  },
+  {
+   "m_line": "m:349",
+   "quote": "the subtitle's second clause",
+   "v11_target": "v1.1 subtitle (:5), second clause",
+   "v11_evidence": "v1.1:5 \"but do not act on it when its consequences must be learned rather than read\"",
+   "v8_counterpart": "v8 subtitle (:5)",
+   "v8_evidence": "v8:5 \"but do not act on it when its consequences must be learned rather than read\"",
+   "status": "counterpart",
+   "rests_on": "Verbatim subtitle."
+  },
+  {
+   "m_line": "m:349",
+   "quote": "contribution 2(v)",
+   "v11_target": "v1.1 contribution 2 (:32), item (v)",
+   "v11_evidence": "v1.1:32 \"and (v) not acted on through the transcript, for five natural reinforcers, and at the SFT, DPO and instruct stages **[A0-gated; A0-OLMo-gated]**\"",
+   "v8_counterpart": "v8 contribution 2 (:30), item (v)",
+   "v8_evidence": "v8:30 \"and (v) not acted on through the transcript, for five natural reinforcers, and at the SFT, DPO and instruct stages **[A0-gated; A0-OLMo-gated]**\"",
+   "status": "counterpart",
+   "rests_on": "Verbatim clause (= root:30)."
+  },
+  {
+   "m_line": "m:349",
+   "quote": "§5.5's e2a, e2b and f1 labels",
+   "v11_target": "v1.1:185 (e2a), :187 (e2b), :193 (f1)",
+   "v11_evidence": "v1.1:187 \"*concluded, not answered — no told control at a state-present read\"",
+   "v8_counterpart": "v8:172 (e2a), :176 (e2b), :182 (f1)",
+   "v8_evidence": "v8:176 \"*concluded, not answered — no told control at a state-present read\"",
+   "status": "counterpart",
+   "rests_on": "Same paragraphs and labels; see the m:338 entries."
+  },
+  {
+   "m_line": "m:349",
+   "quote": "Q3 paragraph",
+   "v11_target": "v1.1 §5.5 OLMo Q3 paragraph (:195)",
+   "v11_evidence": "v1.1:195 \"**Across training stages (OLMo, Q3).**\"",
+   "v8_counterpart": "v8:184",
+   "v8_evidence": "v8:184 \"**Across training stages (OLMo, Q3).**\"",
+   "status": "counterpart",
+   "rests_on": "Same paragraph (= root:184)."
+  },
+  {
+   "m_line": "m:349",
+   "quote": "and Summary",
+   "v11_target": "v1.1 §5.5 Summary (:197)",
+   "v11_evidence": "v1.1:197 \"the choice does not move **[A0-gated]**\"",
+   "v8_counterpart": "v8 §5.5 Summary (:186)",
+   "v8_evidence": "v8:186 \"the choice does not move **[A0-gated]**\"",
+   "status": "counterpart",
+   "rests_on": "Same paragraph (= root:186)."
+  },
+  {
+   "m_line": "m:349",
+   "quote": "§6's \"This paper\" row",
+   "v11_target": "v1.1 §6 table row (:232)",
+   "v11_evidence": "v1.1:232 \"| This paper | non-content direction; natural properties | felt only |\"",
+   "v8_counterpart": "v8 §6 table row (:220)",
+   "v8_evidence": "v8:220 \"| This paper | non-content direction; natural properties | felt only |\"",
+   "status": "counterpart",
+   "rests_on": "Identical row text."
+  },
+  {
+   "m_line": "m:349",
+   "quote": "§7.1's title sentences",
+   "v11_target": "v1.1 §7.1's [thesis-clause] sentence (:248); the header note's A0-gated \"§7.1 first paragraph\" is :246",
+   "v11_evidence": "v1.1:248 \"On this reading the state is functional for the character and not for the network\"",
+   "v8_counterpart": "v8 §7.1 :234 (tagged; two sentences in v8) and first paragraph :232",
+   "v8_evidence": "v8:234 \"The state is functional for the character and not for the network.\"",
+   "status": "counterpart",
+   "rests_on": "Same section number; tag carried (patch v8)."
+  },
+  {
+   "m_line": "m:349",
+   "quote": "§7.2's \"what we establish for the sceptic\"",
+   "v11_target": "v1.1 §7.2 \"In the hierarchy's vocabulary\" (:252), paragraph :258 and its A0-gated sentence",
+   "v11_evidence": "v1.1:258 \"*What we establish for the sceptic.*\" … \"The state does not couple to choice on the routes a told control can license **[A0-gated]**\"",
+   "v8_counterpart": "none",
+   "v8_evidence": "v8's §7 headings: 7.1 (:230), 7.2 \"Why a want…\" (:238), 7.3 (:242), 7.4 (:246), 7.5 (:256), 7.6 (:260); \"sceptic\" occurs 0 times in v8; v8's A0-gated list (:460) has no such item",
+   "status": "no counterpart",
+   "rests_on": "v1.1 §7.2 (with §7.3) is absent from v8, and v8 §7.2 is v1.1 §7.4. Agrees with Code's step-15b Q5 (s7.2-sceptic: no counterpart). Its A0-gated null sentence has no v8 equivalent to rewrite."
+  },
+  {
+   "m_line": "m:349",
+   "quote": "§7.4's last sentence",
+   "v11_target": "v1.1 §7.4 \"Why a want would have shown up uninvited\" (:270), last sentence of :272",
+   "v11_evidence": "v1.1:272 \"on these lineages, at these stakes, the evaluative state is not a reinforcer **[A0-gated]**.\"",
+   "v8_counterpart": "v8 §7.2 (:238), last sentence of :240 (\"§7.2's closing sentence\" in v8's header note :460)",
+   "v8_evidence": "v8:240 \"on these lineages, at these stakes, the evaluative state is not a reinforcer **[A0-gated]**.\"",
+   "status": "counterpart",
+   "rests_on": "Verbatim, renumbered §7.4 -> §7.2. Agrees with Code's step-15b Q5 (s7.4-last -> v8 §7.2's last, :240). Trap: \"§7.2\" in v8 coordinates means this sentence's section, not v1.1 §7.2."
+  },
+  {
+   "m_line": "m:349",
+   "quote": "§7.5's first sentence",
+   "v11_target": "v1.1 §7.5 \"Reward chisels marking; it does not install seeking\" (:274). The first sentence of :276 is the Turner sentence; the gated (lineage) sentence is the second",
+   "v11_evidence": "v1.1:276 \"Turner (2022) argued that a reward signal shapes a policy without becoming its objective. Our lineage result is an empirical case:\" … \"**[A0-OLMo-gated]**\"",
+   "v8_counterpart": "v8 §7.3 (:242), lineage sentence (second sentence of :244), \"§7.3's lineage sentence\" in v8's header note (:464)",
+   "v8_evidence": "v8:244 \"Our lineage result is an empirical case:\" … \"at the SFT, DPO or instruct stage **[A0-OLMo-gated]**\"",
+   "status": "counterpart",
+   "rests_on": "Renumbered §7.5 -> §7.3. Agrees with Code's step-15b Q5 reading (s7.5-first -> :244, the header note's gating deciding rather than the ordinal). v1.1:510's \"§7.5's first sentence\" is the [A0-OLMo-gated] one, which is the second sentence."
+  },
+  {
+   "m_line": "m:349",
+   "quote": "§7.7's penultimate sentence",
+   "v11_target": "v1.1 §7.7 \"What this does and does not say about welfare\" (:288), penultimate sentence of :290",
+   "v11_evidence": "v1.1:290 \"On the channels we can read, at the stakes we can set, they do not **[A0-gated]**.\"",
+   "v8_counterpart": "none: v8 §7.5 (:256, the welfare section) omits this sentence and the one before it; :258's penultimate sentence is \"Both facts are stated without flinching.\"",
+   "v8_evidence": "v8:258 \"Both facts are stated without flinching. We note in the same spirit\"",
+   "status": "no counterpart",
+   "rests_on": "Section counterpart v1.1 §7.7 -> v8 §7.5 exists, but the sentence does not; v8's A0-gated list (:460) has no §7.5 item. Agrees with Code's step-15b Q5 (s7.7-penultimate: no counterpart)."
+  },
+  {
+   "m_line": "m:349",
+   "quote": "The never-*Answered* cells — the weight channel, the OLMo base row and e2b",
+   "v11_target": "v1.1:189, :195, :187; listed in v1.1 header note :508",
+   "v11_evidence": "v1.1:508 \"the weight channel, the OLMo base row, and, since patch v5, e2b\"",
+   "v8_counterpart": "v8:178, :184, :176; v8 header note :462",
+   "v8_evidence": "v8:462 \"the weight channel, the OLMo base row, and, since patch v5, e2b\"",
+   "status": "counterpart",
+   "rests_on": "Same list in both header notes."
+  },
+  {
+   "m_line": "m:358",
+   "quote": "§8.1 status text",
+   "v11_target": "v1.1 §8.1 (:300)",
+   "v11_evidence": "v1.1:300 \"**8.1 Told positive controls.**\"",
+   "v8_counterpart": "v8 §8.1 A0 (:270) and A0-OLMo (:272)",
+   "v8_evidence": "v8:270 \"*A0 — told positive control at the format of §5.5 (Qwen).*\"",
+   "status": "counterpart",
+   "rests_on": "Step 17's VERDICTS output; seat Q3."
+  },
+  {
+   "m_line": "m:361",
+   "quote": "Step-7 status and the §7.5 enumeration",
+   "v11_target": "Step 7 = \"§8.1 and §8.2 status\" (m:343), v1.1 §8.1 (:300) / §8.2 (:302)",
+   "v11_evidence": "v1.1:302 \"**8.2 Capacity, then the felt cell, at scaffolding.**\"",
+   "v8_counterpart": "v8 §8.1 A0/A0-OLMo (:270, :272) and A1–A3 (:274–:278)",
+   "v8_evidence": "v8:274 \"*A1 — told positive control at the new format.*\"",
+   "status": "counterpart",
+   "rests_on": "The v2 VERDICTS output (and, on the hit path, POSTING v2). Mapped as m:343. \"§7.5 enumeration\" is m's own."
+  },
+  {
+   "m_line": "m:371",
+   "quote": "`PREPRINT-v1_0-draft.md` (post-patch-v4 sha in §0.9) root lines :13, :30, :184, :186, :248, :272, :278, :280",
+   "v11_target": "n/a (root coordinates)",
+   "v11_evidence": "n/a",
+   "v8_counterpart": "v8 same line numbers",
+   "v8_evidence": "positional diff root -> v8: line-for-line to :453",
+   "status": "already v8 / root coordinate",
+   "rests_on": "As m:58. root:248 = v8:248 (rival), root:272 = v8:272 (A0-OLMo, unchanged), root:278 = v8:278 (A3, rewritten)."
+  },
+  {
+   "m_line": "m:124",
+   "quote": "C32 v1.1 provenance wording",
+   "v11_target": "m:58's sentence on how PREPRINT-v1_1-draft.md was built (document level, no section)",
+   "v11_evidence": "v1.1:1 \"Rebuilt from PREPRINT-v1_0-draft.md (project copy, 2026-09-27) with the intent of patch v4 applied by hand\"",
+   "v8_counterpart": "n/a",
+   "v8_evidence": "n/a",
+   "status": "not a preprint referent",
+   "rests_on": "Names the v1.1 file's provenance, not a section. v1.1:1 corroborates m:58's account."
+  },
+  {
+   "m_line": "m:4",
+   "quote": "(v1.1 pre-read)",
+   "v11_target": "PROPOSAL-m v1.1 (Code's 2026-09-25 pre-read block), not PREPRINT-v1_1",
+   "v11_evidence": "n/a",
+   "v8_counterpart": "n/a",
+   "v8_evidence": "n/a",
+   "status": "not a preprint referent",
+   "rests_on": "The proposal's own version lineage (v1.1…v1.11); the date precedes PREPRINT v1.1 (2026-10-01, v1.1:1)."
+  },
+  {
+   "m_line": "m:22",
+   "quote": "v1.1's outcome branches overlapped",
+   "v11_target": "PROPOSAL-m v1.1 (ledger slip-10 class), not PREPRINT-v1_1",
+   "v11_evidence": "n/a",
+   "v8_counterpart": "n/a",
+   "v8_evidence": "n/a",
+   "status": "not a preprint referent",
+   "rests_on": "Ledger (22) names the proposal's v1.1; its fix is in m's §7.2."
+  },
+  {
+   "m_line": "m:4",
+   "quote": "STOPPED on one item by Code at §8 step 2",
+   "v11_target": "PROPOSAL-m's own §8 (Code's block, steps)",
+   "v11_evidence": "n/a",
+   "v8_counterpart": "n/a",
+   "v8_evidence": "n/a",
+   "status": "not a preprint referent",
+   "rests_on": "m's §8 has numbered steps (m:353–:363); the preprint's §8 has no steps. Same for every \"§8 step N\" in m."
+  },
+  {
+   "m_line": "m:8",
+   "quote": "from the block §9 names",
+   "v11_target": "PROPOSAL-m's own §9 (Referents)",
+   "v11_evidence": "n/a",
+   "v8_counterpart": "n/a",
+   "v8_evidence": "n/a",
+   "status": "not a preprint referent",
+   "rests_on": "m's §9 (m:365). Not the preprint's §9 Ethics. Same for m:58's and m:69's \"§9 scopes\"."
+  },
+  {
+   "m_line": "m:16",
+   "quote": ":102, Welfare, is consistent with §7.3 and stays unmarked",
+   "v11_target": "PROPOSAL-m's own §7.3",
+   "v11_evidence": "n/a",
+   "v8_counterpart": "n/a",
+   "v8_evidence": "n/a",
+   "status": "not a preprint referent",
+   "rests_on": "m's welfare text (m:345). Same for this line's \"the §7.3 italic\" and m:63's \"§7.3's italic\"."
+  },
+  {
+   "m_line": "m:16",
+   "quote": "a Q-F3 Clock miss gives v2 \"Fallback-1 iff L0\" (§7.4)",
+   "v11_target": "PROPOSAL-m's own §7.4 (the Clock)",
+   "v11_evidence": "n/a",
+   "v8_counterpart": "n/a",
+   "v8_evidence": "n/a",
+   "status": "not a preprint referent",
+   "rests_on": "m:347; not v1.1 §7.4 / v8 §7.4."
+  },
+  {
+   "m_line": "m:16",
+   "quote": "§5's unit grain",
+   "v11_target": "PROPOSAL-m's own §5",
+   "v11_evidence": "n/a",
+   "v8_counterpart": "n/a",
+   "v8_evidence": "n/a",
+   "status": "not a preprint referent",
+   "rests_on": "m:322–:326; not the preprint's §5 Results."
+  },
+  {
+   "m_line": "m:44",
+   "quote": "every edit to §7.2 that moves a ceiling",
+   "v11_target": "PROPOSAL-m's own §7.2 (Procedure)",
+   "v11_evidence": "n/a",
+   "v8_counterpart": "n/a",
+   "v8_evidence": "n/a",
+   "status": "not a preprint referent",
+   "rests_on": "m:336."
+  },
+  {
+   "m_line": "m:56",
+   "quote": "the posting rule of §7.5",
+   "v11_target": "PROPOSAL-m's own §7.5",
+   "v11_evidence": "n/a",
+   "v8_counterpart": "n/a",
+   "v8_evidence": "n/a",
+   "status": "not a preprint referent",
+   "rests_on": "m:349; also m:69's \"§7.5 sentence table\" and every \"§7.5 enumeration\"."
+  },
+  {
+   "m_line": "m:58",
+   "quote": "which replaces the \"reasoning block removed\" clause (§7.2 Step 4)",
+   "v11_target": "PROPOSAL-m's own §7.2 Step 4, inside patch v5's list of preprint edits",
+   "v11_evidence": "n/a",
+   "v8_counterpart": "n/a",
+   "v8_evidence": "n/a",
+   "status": "not a preprint referent",
+   "rests_on": "The clause replaced in the preprint is v1.1 §8.2's trigger (see the m:58 item-(2) entry). \"§7.2 Step 4\" is where m carries it."
+  },
+  {
+   "m_line": "m:159",
+   "quote": "f1's CORR contrast (PROPOSAL-f §2)",
+   "v11_target": "PROPOSAL-f §2",
+   "v11_evidence": "n/a",
+   "v8_counterpart": "n/a",
+   "v8_evidence": "n/a",
+   "status": "not a preprint referent",
+   "rests_on": "Another document; also m:367."
+  },
+  {
+   "m_line": "m:155",
+   "quote": "f1 CORR's map artifact, archive:83",
+   "v11_target": "archive/RESULTS-cycles3-4.md:83 (m:367), not archive/PREPRINT-*",
+   "v11_evidence": "n/a",
+   "v8_counterpart": "n/a",
+   "v8_evidence": "n/a",
+   "status": "not a preprint referent",
+   "rests_on": "\"archive:N\" is the archived RESULTS log (m:367). Same for archive:82, :91–93, :139–140, :142, :400–404."
+  },
+  {
+   "m_line": "m:58",
+   "quote": "(Code confirmed at STOP-5 §0)",
+   "v11_target": "a STOP block's own section",
+   "v11_evidence": "n/a",
+   "v8_counterpart": "n/a",
+   "v8_evidence": "n/a",
+   "status": "not a preprint referent",
+   "rests_on": "Likewise STOP-x §C/§D/§E/§F (m:4, :48, :58, :62, :176, :205, :271)."
+  },
+  {
+   "m_line": "m:367",
+   "quote": "behind §1 item 2",
+   "v11_target": "PROPOSAL-m's own §1 (questions)",
+   "v11_evidence": "n/a",
+   "v8_counterpart": "n/a",
+   "v8_evidence": "n/a",
+   "status": "not a preprint referent",
+   "rests_on": "m:150."
+  },
+  {
+   "m_line": "m:371",
+   "quote": "the three archived preprint versions",
+   "v11_target": "archive/PREPRINT-v1_0-draft.pre-patch-v2/-v3/-v4.md (document-level, at step 1)",
+   "v11_evidence": "n/a",
+   "v8_counterpart": "n/a",
+   "v8_evidence": "archive/ now also holds pre-patch-v6/-v7/-v8; all six are untracked",
+   "status": "not a preprint referent",
+   "rests_on": "Document-level, no section. The count \"three\" was true at HEAD 9510af7 (m:354); archive/ now has six."
+  }
+ ],
+ "sweep_method": "1. Read PROPOSAL-m v1.11 (sha256 42ab36ec…6b) in full, m:1–:372, in chunks.\n2. Listed every section-sign token by script: 642 numeric tokens and 36 letter tokens (STOP-block §C/§D/§E/§F/§0). Each was classified in context, with 332 non-§0/§2.x/§3.x contexts reviewed one by one.\n   - m's own sections are §0.1–§0.14, §1–§9, §2.1–§2.7, §3.1–§3.3 and §7.1–§7.5 (m has no §5.x, §7.6+ or §8.x).\n   - Any §5.5, §5.7, §7.6, §7.7, §8.1 or §8.2 is therefore the preprint's. A §6, §7.x or §8 counts as the preprint's only where the context says so: m:58 patch v5, m:349's seed list, m:345's \"the paper's ethics section\".\n3. A second scripted sweep found 216 hits for content words naming preprint text: preprint, paper, abstract, subtitle, title, header note, Appendix, TAB 2, Table, contribution, Summary, ethics, dose note, v1.1, root:, This paper, thesis-clause, S1, Fallback. All were reviewed to catch referents that carry no § number.\n4. Read the targets in both preprints:\n   - Headings of both.\n   - Header lines :1, title :3, subtitle :5, abstract :13, contributions, §5.5 cell by cell, §6's \"This paper\" row, all of §7, all of §8, §9, and the header notes (v1.1:504–:514; v8:458–:468).\n5. Confirmed the root:N coordinates (m:8) against archive/PREPRINT-v1_0-draft.pre-patch-v6.md, whose sha256 d6431e97…222b8 equals m:8's root. A positional diff root -> v8 shows only same-range change hunks up to :453, so root:N = v8:N.\n6. Built the map with a script, build_map.py. It checks every quoted m, v1.1, v8 and root string as an exact substring of the cited line: 100 entries, 0 failed checks. Output is map.json.\n7. Reconciled the result against Code's step-15 ping Q4 list, the seat's step-15 answers Q3/Q4, and Code's step-15b Q5 kinds.\n\nRead-only throughout:\n- Wrote only under scratchpad/lockv1/reanchor/map/.\n- Opened nothing under data/m/ckpt/ or data/m/reports/, none of the excluded files, and no git in jlens-qwen36/.\n- data/m/gates/G-CAL_model-free.json was existence-checked with ls only.",
+ "notes": [
+  "Inputs and outputs. Files: PROPOSAL-m v1.11 = 42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b; PREPRINT-v1_1-draft.md (reference, untracked) = 163e5f600c424019dea62161b450f0bff572eecc1959a252850dcf0dca11fa91; PREPRINT-v1_0-draft.md (placed copy of record, patch v8) = 45b67246f2b2bcb40774e95462ad4e3c5f559fdd0358387cceec0155bebe7a41, matching 1523cce; root (m:8) = archive/PREPRINT-v1_0-draft.pre-patch-v6.md = d6431e97…222b8. The map, its builder and its verification are at /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/lockv1/reanchor/map/map.json and build_map.py; the sweep contexts are sec_contexts.txt and kw_contexts.txt.",
+  "Tally: 100 entries. 70 counterpart, 4 no counterpart, 4 already v8 / root coordinate, 22 not a preprint referent.",
+  "The four no-counterpart items: (i) m:14 TAB 2 rows. TAB 2 is a slot in both texts and neither has rows; the slot itself re-anchors v1.1:183 -> v8:170. (ii) m:342 'the new §5.7'. This is a prospective section that exists in neither text; the number stays free in v8. (iii) m:349 §7.2's 'what we establish for the sceptic' (v1.1:258). (iv) m:349 §7.7's penultimate sentence (v1.1:290). Items (i), (iii) and (iv) agree with Code's step-15b Q5.",
+  "Code's step-15 ping Q4 list, all resolved:\n- §0.1's §8.2 -> v8 §8.1 A1–A3 (:274–:278).\n- Step 7's '§8.2 status' -> the same paragraphs.\n- Step 4's '§8.2's screen' -> v8:278 (A3).\n- §7.4's '§8.2 stays open' -> :274–:278.\n- The §7.5 seed list's v1.1-only items: §7.2 sceptic and §7.7 penultimate have no counterpart; §7.4's last -> v8:240; §7.5's first -> v8:244.\n- Step 6's '§7.6 rival' -> v8 §7.4 :246/:248 (= root:248).",
+  "Referents the ping did not list, found by the sweep:\n- m:14: §5.5 cells, TAB 2 rows, §8.1 (-> v8:270/:272), S1, weight and base labels.\n- m:19: the ledger's 'preprint's e2a paragraph'.\n- m:58: '§8.1/§8.2 and header note' and patch v5's items (§8.2 trigger -> v8:278/:280; §7.1 tag -> v8:234; '§8 pointed at v1.8' -> v8:268; header note -> v8:458–:468).\n- §8.1 status text at m:61, m:76, m:122, m:278, m:291, m:358, m:361.\n- m:340: '§8.2's status text'.\n- m:345: 'the paper's ethics section' -> v8 §9 :290/:292.\n- m:267 and m:86: Appendix D. A pointer exists in both texts; the body is in neither.\n- m:338: the '(§5.5)' pointer inside the pre-written abstract text.\n- m:349: 'the v1.1 header note'.\n- m:334/:341: the title line.",
+  "Section translation v1.1 -> v8:\n- §1–§6 and §9: same numbers.\n- §7.1 -> §7.1. §7.2 and §7.3 -> none. §7.4 -> §7.2. §7.5 -> §7.3. §7.6 -> §7.4. §7.7 -> §7.5. §7.8 -> §7.6.\n- §8.1 + §8.2 -> v8 §8.1 (A0/A0-OLMo :270/:272; A1–A3 :274–:278). §8.3–§8.6 -> §8.2–§8.5. §8.7 -> none.\nTrap: PROPOSAL-m's own §7.1–§7.5 share these numbers with both preprints, and m:349 mixes them on one line ('7.5 Posting rule' vs '§7.5's first sentence'). In v8 coordinates '§7.2' means v1.1 §7.4.",
+  "root:N coordinates (m:14 root:248, m:58, m:139 root:30, m:326 root:184, m:371) resolve to v8 lines with the same numbers. The root -> v8 diff has only same-range 'c' hunks through :453. Content changed at :1, :13, :30–31, :184, :186, :248, :278, :280 and others; :272 is unchanged.",
+  "Flagged, not adjudicated: e2b label. m:14/m:338's posting label carries 'exact 95% CI [0.0086, 0.0305], against the 0.0735 bar'. Both v1.1:187 and v8:176 read 'π̂_d = 0.0172 against a 0.0735 bar reported beside' with no CI; '0.0086' occurs in neither file.",
+  "Flagged, not adjudicated: base label. m:14/m:338 read 'told control not run at base, by decision (7′)'. v1.1:183 and v8:184 (and v8:272) read 'told control not applicable at base (no instruction-following)'. The difference predates v8.",
+  "Flagged, not adjudicated: titles and thesis sentences.\n- v8:3 carries the Main title, but m:341 makes Main unreachable at v1, and v8's own header note says 'the main title of PROPOSAL-m v1.11 §7.1 is not used in this version' (v8:466).\n- v8:13 asserts the thesis untagged ('We conclude that such states are functional for the character a model voices…'). v1.1 has neither site; its title :3 is Fallback-1.\n- Clause (b)'s enumeration is by rule, not by tag, so the sentence table built from v8 should reach :3, :13, :230 and :234, not only the [thesis-clause] sentence.",
+  "Flagged, not adjudicated: dose note.\n- v1.1:193 holds a conditional slot; v8:182 carries the f1 CORR dose note as text, citing data/m/gates/G-CAL_model-free.json.\n- That file exists and is tracked; I checked existence only and did not read it.\n- Clause (c) and the analyzer's 0.12-artifact flag still govern its carriage at posting.",
+  "Flagged, not adjudicated: patch v5's item list.\n- v1.1:1 lists '§7.2's locked-in answer moved to the echo reconnaissance' (v1.1:262, no v8 counterpart) and has no header-note item.\n- m:58's list of record, and v8:1's patch-v8 account, have the header note as item (5).\n- So m:58 and v1.1's own header disagree by one item. m:58 governs as the 'one list of record'.",
+  "Flagged, not adjudicated: Step 7's wording. Step 7 (m:343) says '§8.1's sentences state each control's outcome'. Read in v8 coordinates, v8 §8.1 also holds A1 (:274), a control. The seat's Q3 nonetheless maps s8.1-status to A0/A0-OLMo only and gives A1–A3 their own kind (s8.1-a1-a3). The result is consistent, but the phrase is wider in v8 coordinates.",
+  "Flagged, not adjudicated: '§7.5's first sentence'. v1.1:510 means the [A0-OLMo-gated] lineage sentence, which is the second sentence of v1.1:276. This matches Code's step-15b reading that the gating decides, not the ordinal.",
+  "Flagged, not adjudicated: ethics section. v1.1's ethics text (:316) names the §8.1/§8.2 experiments and 'is armed for §8.2'. v8's (:292) has neither. This bears on m:345's 'ethics section is revised' only descriptively.",
+  "Flagged, not adjudicated: m:371/m:354's 'three archived preprint versions'. archive/ now holds six pre-patch copies (v2, v3, v4, v6, v7, v8), all untracked.",
+  "Not listed per occurrence:\n- Document-level preprint mentions with no section, paragraph or sentence: m:16 decision (9), m:20, m:58's placement and hashing sentences, m:69, m:84, m:98, m:100, m:117, m:155, m:286, m:298, m:302, m:349 'preprint of record', m:354, m:356, m:358 steps 15 and 18, m:371's v1.1/redraft scope.\n- Campaign-cell name mentions (e2a, f1, e2b, OLMo rows) at m:16 (12), m:52, m:149–150 and m:155. Their preprint homes are the §5.5 lines in the m:14/m:338 entries.\n- The proposal's own §0.x/§2.x/§3.x/§4–§6/§7.x/§9/'§8 step N'/'Step N' references beyond the representative confusables listed."
+ ]
+}
+
+====================================================================================================
+THE MAPPER'S OWN map.json referents, numbered 0-based as the refuter's '#N' (sha256 ccf580927180388a944f7812e9ecc00d97a1b61eff271776436e71c47dfd47ac)
+====================================================================================================
+
+#0 m:14 | counterpart | The verdict labels of the §5.5 cells of the preprint
+#1 m:14 | no counterpart | with their TAB 2 rows
+#2 m:14 | counterpart | the abstract's fifth-stage sentence and its OLMo clause
+#3 m:14 | counterpart | the sentences that assert the thesis of the main title
+#4 m:14 | counterpart | the cannot-learn/does-not-care rival (root:248; v1.1 §7.6)
+#5 m:14 | counterpart | §8.1 and §8.2 of the preprint
+#6 m:14 | counterpart | §8.1 and §8.2 of the preprint
+#7 m:14 | counterpart | Not gated: S1 (*Answered, as recognition*
+#8 m:14 | counterpart | the weight channel (*concluded, not answered*)
+#9 m:14 | counterpart | the OLMo base row (*concluded, not answered — told control not run at base, by decision (7′)*)
+#10 m:14 | counterpart | **e2b** (*concluded, not answered — no told control at a state-present read; leakage certification π̂_d = 0.0172, exact 95% CI [0.0086, 0.0305], against the 0.0735 bar reported beside*
+#11 m:19 | counterpart | the preprint's e2a paragraph paired 54/101 with 55/102's Δ and p
+#12 m:58 | counterpart | its §8.1/§8.2 and header note name the cells this campaign gates
+#13 m:58 | counterpart | (1) e2b's label
+#14 m:58 | counterpart | (2) §8.2's trigger wording — "a positive or reverse result under the screen tier's full rule" withholds v2 pending a confirmatory pre-registration carrying its own told control at its own format
+#15 m:58 | counterpart | (3) the thesis sentences of §7.1 tagged [thesis-clause]
+#16 m:58 | counterpart | (4) §8 pointed at v1.8, to be re-pointed at the committed version in the PI's redraft
+#17 m:58 | counterpart | (5) the header note listing the gated sentences and the never-*Answered* cells
+#18 m:58 | already v8 / root coordinate | differs at exactly root:13, :30, :184, :186, :272, :278, :280
+#19 m:61 | counterpart | widened to the thesis sentences of the main title, §8.2 and the abstract's fifth-stage sentence
+#20 m:65 | counterpart | under A3\* = CONFIRMED the thesis sentences are rewritten to state the confirmed result
+#21 m:73 | counterpart | its assertions include the abstract OLMo clause, the dose-note text
+#22 m:76 | counterpart | the abstract clause "one or two"; §8.1's status sentences updated at each posting
+#23 m:105 | counterpart | A13 patch v4's A3 trigger
+#24 m:107 | counterpart | C15 abstract clause
+#25 m:122 | counterpart | C30 §8.1 updates
+#26 m:139 | already v8 / root coordinate | root:30
+#27 m:176 | counterpart | the record behind the preprint's f1 CORR dose note, which the posting rule attaches only if this artifact exists (§7.5)
+#28 m:267 | counterpart | **Disclosures for the paper (Appendix D)
+#29 m:278 | counterpart | one abstract OLMo clause
+#30 m:278 | not a preprint referent | (§7.2 Step 2's three-way)
+#31 m:278 | counterpart | one §8.1 status text
+#32 m:278 | counterpart | Step-7 status "open"
+#33 m:278 | counterpart | the f1 dose-note text conditioned on the **0.12-artifact-existence input flag**
+#34 m:291 | counterpart | one §8.1/§8.2 status text
+#35 m:291 | counterpart | one abstract OLMo clause (Step 2's three-way, re-run at v2), one dose-note text
+#36 m:326 | already v8 / root coordinate | the label-artifact class captured live three times in the program (root:184)
+#37 m:334 | counterpart | Main: *Functional for the Character, Not for the Network*
+#38 m:338 | counterpart | e2a and f1: *Answered* iff L0, else *concluded, not answered — the told control at F0 on this substrate
+#39 m:338 | counterpart | **e2b: *concluded, not answered — no told control at a state-present read; leakage certification π̂_d = 0.0172, exact 95% CI [0.0086, 0.0305], against the 0.0735 bar reported beside*
+#40 m:338 | counterpart | OLMo Q3, per post-training row: *Answered* iff its own L0-OLMo-c
+#41 m:338 | counterpart | **base: *concluded, not answered — told control not run at base, by decision (7′)***
+#42 m:338 | counterpart | f1's CORR line carries its dose note iff G-CAL's 0.12 artifact exists (input flag)
+#43 m:338 | counterpart | **The abstract's OLMo clause:** iff all three pass, "and not at the SFT, DPO or instruct stage of the OLMo lineage"
+#44 m:338 | counterpart | the OLMo lineage's post-training nulls are reported as concluded, not answered (§5.5)
+#45 m:338 | counterpart | S1 and the weight channel untouched
+#46 m:340 | not a preprint referent | under POSITIVE as §7.3's welfare clause
+#47 m:340 | not a preprint referent | the "reasoning block removed" clause of earlier versions is withdrawn
+#48 m:340 | counterpart | a dated note to the v1 record stating that §8.2's screen returned a hit under confirmation
+#49 m:340 | counterpart | in §8.2's status text
+#50 m:342 | counterpart | PASS: the §7.6 rival is retired
+#51 m:342 | no counterpart | the new §5.7 reads *the lever moves when told at F3*
+#52 m:343 | counterpart | **Step 7 — §8.1 and §8.2 status.** At each posting §8.1's sentences state each control's outcome
+#53 m:343 | counterpart | and §8.2's state whether its cells ran; §8.2 is closed into §5.7
+#54 m:345 | counterpart | the paper's ethics section is revised
+#55 m:345 | not a preprint referent | **7.3 Welfare pre-commitment (Code quotes verbatim in the step-3 entry).**
+#56 m:347 | counterpart | v2's ceiling is then Fallback-1 iff L0, and §8.2 stays open
+#57 m:347 | counterpart | its row and the abstract clause change, not the title
+#58 m:347 | counterpart | v1 posts under Fallback-2 with e2a and f1 *concluded, not answered*
+#59 m:347 | not a preprint referent | v2 posts after D2 (§7.5)
+#60 m:349 | not a preprint referent | **7.5 Posting rule.**
+#61 m:349 | counterpart | *(b) No sentence of the posted paper asserts the thesis of a title above the ceiling obtained* (under Fallback-1 or Fallback-2, "functional for the character, not for the network" and its paraphrases are stated as a reading proposed, not a result; under Fallback-2 "not acted on" and its paraphrases likewise
+#62 m:349 | counterpart | *(c) The f1 CORR dose note is carried iff G-CAL's 0.12 artifact exists*
+#63 m:349 | counterpart | **The list in the v1.1 header note and the following are illustrative, not the enumeration:**
+#64 m:349 | counterpart | the abstract's fifth-stage sentence and OLMo clause
+#65 m:349 | counterpart | the subtitle's second clause
+#66 m:349 | counterpart | contribution 2(v)
+#67 m:349 | counterpart | §5.5's e2a, e2b and f1 labels
+#68 m:349 | counterpart | Q3 paragraph
+#69 m:349 | counterpart | and Summary
+#70 m:349 | counterpart | §6's "This paper" row
+#71 m:349 | counterpart | §7.1's title sentences
+#72 m:349 | no counterpart | §7.2's "what we establish for the sceptic"
+#73 m:349 | counterpart | §7.4's last sentence
+#74 m:349 | counterpart | §7.5's first sentence
+#75 m:349 | no counterpart | §7.7's penultimate sentence
+#76 m:349 | counterpart | The never-*Answered* cells — the weight channel, the OLMo base row and e2b
+#77 m:358 | counterpart | §8.1 status text
+#78 m:371 | already v8 / root coordinate | `PREPRINT-v1_0-draft.md` (post-patch-v4 sha in §0.9) root lines :13, :30, :184, :186, :248, :272, :278, :280
+#79 m:78 | counterpart | the f1 dose note a declared third item of the enumeration
+#80 m:86 | counterpart | disclosures for the paper (the fourteen-item F0m-vs-f1 list, the generation window and chunking included)
+#81 m:96 | counterpart | A4 thesis still posts under Fallback
+#82 m:129 | counterpart | C18 abstract clause
+#83 m:361 | counterpart | Step-7 status and the §7.5 enumeration
+#84 m:124 | not a preprint referent | C32 v1.1 provenance wording
+#85 m:4 | not a preprint referent | (v1.1 pre-read)
+#86 m:22 | not a preprint referent | v1.1's outcome branches overlapped
+#87 m:4 | not a preprint referent | STOPPED on one item by Code at §8 step 2
+#88 m:8 | not a preprint referent | from the block §9 names
+#89 m:16 | not a preprint referent | :102, Welfare, is consistent with §7.3 and stays unmarked
+#90 m:16 | not a preprint referent | a Q-F3 Clock miss gives v2 "Fallback-1 iff L0" (§7.4)
+#91 m:16 | not a preprint referent | §5's unit grain
+#92 m:44 | not a preprint referent | every edit to §7.2 that moves a ceiling
+#93 m:56 | not a preprint referent | the posting rule of §7.5
+#94 m:58 | not a preprint referent | which replaces the "reasoning block removed" clause (§7.2 Step 4)
+#95 m:159 | not a preprint referent | f1's CORR contrast (PROPOSAL-f §2)
+#96 m:155 | not a preprint referent | f1 CORR's map artifact, archive:83
+#97 m:58 | not a preprint referent | (Code confirmed at STOP-5 §0)
+#98 m:367 | not a preprint referent | behind §1 item 2
+#99 m:371 | not a preprint referent | the three archived preprint versions
+
+====================================================================================================
+THE STRICT REFUTER, verbatim
+====================================================================================================
+
+{
+ "verdicts": [
+  {
+   "m_line": "m:14 #0 The verdict labels of the §5.5 cells",
+   "verdict": "CONFIRMED",
+   "evidence": "The quote is at m:14. v1.1:181 and v8:168 carry the identical heading. The cell paragraphs' bold leads match: v1.1:185/187/189/191/193/195 and v8:172/176/178/180/182/184. The offsets are right: 13 lines at :181/:185, then 11 from e2b to the Summary (v1.1:197 -> v8:186), because v8's footnote at :174 has no v1.1 equivalent.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:14 #1 with their TAB 2 rows",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:183 and v8:170 are both '[TAB 2: …]' slots. 'mark slots' appears at v1.1:1 and v8:1. Neither file has rows. v1.1's in-slot label rule is absent from v8:170. Agrees with step15b.md:211-212 (\"tab2-row has none (TAB 2 is a slot)\").",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:14 #2 the abstract's fifth-stage sentence and its OLMo clause",
+   "verdict": "CONFIRMED",
+   "evidence": "The whole sentence, tag included, is byte-identical at v1.1:13 and v8:13.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:14 #3 the sentences that assert the thesis of the main title",
+   "verdict": "PARTLY",
+   "evidence": "The tag carry v1.1:248 -> v8:234 holds, and so do the extra v8 sites :3, :13 and :230. Two claims are too narrow. (i) 'in v1.1 the main title's thesis appears only at … sentence :248' misses v1.1:250's last sentence: \"The unit for which the state is functional is the thread-level character …; the unit for which it is not is the network.\" It is an untagged thesis assertion, and v8:236 drops it, so it has no v8 counterpart. (ii) 'v1.1 has no abstract counterpart': v1.1:13's conclusion sentence (\"The state is therefore a computational-level analogue … that fails the motivational condition the framework makes criterial\") sits in the same slot, after the same 'Re-reading the published positives…' sentence, as v8:13's \"We conclude that such states are functional for the character…\".",
+   "fix": "Add v1.1:250 (last sentence) as a thesis site with status 'no counterpart (dropped at v8:236)', with its own dated note. Replace 'v1.1 has no abstract counterpart' with 'v1.1:13's untagged conclusion sentence (framework wording) -> v8:13's \"We conclude…\" sentence (rewritten, untagged)'."
+  },
+  {
+   "m_line": "m:14 #4 the cannot-learn/does-not-care rival (root:248; v1.1 §7.6)",
+   "verdict": "CONFIRMED",
+   "evidence": "Headings: v1.1:278 and v8:246. The paragraph opening is verbatim at v1.1:280 and v8:248. Root pre-patch-v6.md:248 opens with the same bold lead. The diff root->v8 has no insertions before :454. v8:466 reads \"§7.4's first alternative\".",
+   "fix": "none. Optionally note that v8:248's closing sentences now point to the §8 campaign, not to \"§8.2 is the cell that decides\" (v1.1:280)."
+  },
+  {
+   "m_line": "m:14 #5 §8.1 and §8.2 of the preprint (v1.1 §8.1)",
+   "verdict": "CONFIRMED",
+   "evidence": "step15_answers.md:23 and :25 read as quoted. The v1.1:300 and v8:270/:272 quotes are verbatim. v1.1:300's state-present sentence maps into v8:270's e2b clause.",
+   "fix": "Reword 'Same number, narrower scope' to 'v8 §8.1 is wider: it also holds v1.1's §8.2 (A1–A3)'."
+  },
+  {
+   "m_line": "m:14 #6 §8.1 and §8.2 of the preprint (v1.1 §8.2)",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:302 is verbatim. v8:274/:276/:278 are verbatim. v8:282 is the Tagliabue arms. The seat's text is verified at step15_answers.md:23 and :25. v8:466 reads \"§8.1's A1–A3 paragraphs stand as written\".",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:14 #7 Not gated: S1",
+   "verdict": "CONFIRMED",
+   "evidence": "'*Answered, as recognition.*' appears at v1.1:191 and v8:180.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:14 #8 the weight channel (*concluded, not answered*)",
+   "verdict": "CONFIRMED",
+   "evidence": "The label is at v1.1:189 and v8:178. v1.1's trailing 'This cell asserts no null and never will…' is absent at v8:178.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:14 #9 the OLMo base row",
+   "verdict": "CONFIRMED",
+   "evidence": "The v1.1:183, v1.1:195 and v8:184 quotes are verbatim. 'told control not run at base, by decision (7′)' occurs in neither file.",
+   "fix": "Add v8:272 as a second v8 site carrying the same base wording ('told control not applicable at base (no instruction-following)')."
+  },
+  {
+   "m_line": "m:14 #10 e2b label",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:187 and v8:176 are identical ('π̂_d = 0.0172 against a 0.0735 bar reported beside'). '0.0086' has 0 hits in both files.",
+   "fix": "none (the flag stands)"
+  },
+  {
+   "m_line": "m:19 #11 the preprint's e2a paragraph paired 54/101 with 55/102's Δ and p",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:185 reads '+0.039 (54 of 101 valid sessions)' and 'p = 0.244'. v8:172 reads '+0.035 (54 of 101 sessions),¹', p = .275, with the footnote at v8:174. Root pre-patch-v6.md:172 read 55/102 with its own footnote, and pre-patch-v7.md:172 already reads +0.035, so patch v6 made the change.",
+   "fix": "Optional: say 'v8 adds the footnote relative to v1.1'. The root already had a different footnote at :174."
+  },
+  {
+   "m_line": "m:58 #12 its §8.1/§8.2 and header note name the cells this campaign gates",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:298, v1.1:504, v8:268 ('Seven cells') and v8:458 are verbatim. v8:282 (§8.2) names no campaign cell. step15_answers.md:34 reads as quoted.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:58 #13 (1) e2b's label",
+   "verdict": "CONFIRMED",
+   "evidence": "Identical at v1.1:187 and v8:176. v8:1 records the patch-v8 item.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:58 #14 (2) §8.2's trigger wording",
+   "verdict": "CONFIRMED",
+   "evidence": "The v1.1:302, v8:278 and v8:280 ('fires on a positive') quotes are verbatim. 'reasoning block' has 0 hits in v1.1 and v8. Root:278 has '…runs at the same scaffolding with the reasoning block removed'.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:58 #15 (3) the thesis sentences of §7.1 tagged [thesis-clause]",
+   "verdict": "CONFIRMED",
+   "evidence": "The tag is at v1.1:248 and v8:234. v8:1 reads 'the §7.1 thesis sentence tagged'.",
+   "fix": "none (see #3 for the untagged v1.1:250 sentence)"
+  },
+  {
+   "m_line": "m:58 #16 (4) §8 pointed at v1.8",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:298 reads 'PROPOSAL-m (v1.8, 2026-10-04)'. v8:268 reads '(PROPOSAL-m v1.11, pre-registered)'. v8:266 names no proposal. v8:1 reads '§8.1 pointed at v1.11'.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:58 #17 (5) the header note",
+   "verdict": "CONFIRMED",
+   "evidence": "Five paragraphs in each: v1.1:506–514 and v8:460–468. The :508 and :462 quotes are verbatim.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:58 #18 differs at exactly root:13, :30, :184, :186, :272, :278, :280",
+   "verdict": "CONFIRMED",
+   "evidence": "The archive/…pre-patch-v6.md sha256 equals m:58's full sha, with 77,357 bytes and 454 lines. The diff root->v8 gives hunks 1c1, 13c13, 30,31c30,31 … 296c296, and 454c454,468 is the only range change. :272 does not appear (unchanged). :13, :30, :184, :186, :278 and :280 changed.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:61 #19 widened to the thesis sentences of the main title, §8.2 and the abstract's fifth-stage sentence",
+   "verdict": "PARTLY",
+   "evidence": "The §8.2 and fifth-stage mappings hold. The thesis part inherits #3's omission (v1.1:250's last sentence, which has no v8 counterpart).",
+   "fix": "Apply #3's fix to the thesis part."
+  },
+  {
+   "m_line": "m:65 #20 under A3\\* = CONFIRMED the thesis sentences are rewritten",
+   "verdict": "PARTLY",
+   "evidence": "The quote is verified. The site list is #3's and inherits the v1.1:250 omission.",
+   "fix": "As #3."
+  },
+  {
+   "m_line": "m:73 #21 its assertions include the abstract OLMo clause, the dose-note text",
+   "verdict": "CONFIRMED",
+   "evidence": "The clause is verbatim at v1.1:13 and v8:13. v1.1:193 has the slot; v8:182 has the attached clause.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:76 #22 the abstract clause \"one or two\"; §8.1's status sentences",
+   "verdict": "CONFIRMED",
+   "evidence": "The v1.1:300 and v8:270/:272 quotes are verbatim. The seat's Q3 mapping is at step15_answers.md:25.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:105 #23 A13 patch v4's A3 trigger",
+   "verdict": "CONFIRMED",
+   "evidence": "m:105 is in STOP-4's left column. Chain: root:278 -> v1.1:302 -> v8:278. The quotes are verbatim.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:107 #24 C15 abstract clause",
+   "verdict": "CONFIRMED",
+   "evidence": "STOP-5's right column reads '→ §7.2 Step 2'. v1.1:13 = v8:13.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:122 #25 C30 §8.1 updates",
+   "verdict": "CONFIRMED",
+   "evidence": "STOP-5's right column reads '→ §7.2 Step 7'. Mapped to v8:270/:272 per Q3.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:139 #26 root:30",
+   "verdict": "CONFIRMED",
+   "evidence": "STOP-4 C28. Root:30 = v8:30 positionally (30,31c30,31). v8:30 opens '2. **Five linked results on one state (§5).**'.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:176 #27 the record behind the preprint's f1 CORR dose note",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:193's slot and v8:182's clause are verbatim. 'ls' and 'git ls-files --error-unmatch' confirm data/m/gates/G-CAL_model-free.json exists and is tracked (not read).",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:267 #28 **Disclosures for the paper (Appendix D)",
+   "verdict": "PARTLY",
+   "evidence": "The pointers v1.1:130/:294 -> v8:119/:262 hold. Two problems. (i) The entry omits that both files declare Appendix D in an 'Appendices (planned)' paragraph: v1.1:500 and v8:454, with an identical D item ('D. Apparatus hazard catalog, monitoring framework, and the cached-generation disclosure.'). (ii) 'the references run to the header note' is false: that paragraph sits between References and the header note (v1.1:500 before :504; v8:454 before :458).",
+   "fix": "Add the planned-appendix D item, v1.1:500 -> v8:454 (verbatim D), as the designation's anchor. Strike 'the references run to the header note'."
+  },
+  {
+   "m_line": "m:278 #29 one abstract OLMo clause",
+   "verdict": "CONFIRMED",
+   "evidence": "Verbatim at v1.1:13 and v8:13.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:278 #30 (§7.2 Step 2's three-way)",
+   "verdict": "CONFIRMED",
+   "evidence": "This is m's own Step 2 (m:338). v1.1 §7.2 (:252) and v8 §7.2 (:238) have no steps.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:278 #31 one §8.1 status text",
+   "verdict": "CONFIRMED",
+   "evidence": "Seat Q3 (step15_answers.md:25) maps it to A0 :270 and A0-OLMo :272.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:278 #32 Step-7 status \"open\"",
+   "verdict": "CONFIRMED",
+   "evidence": "step15_answers.md:25: \"Step 7's '§8.2 status' reads the A1–A3 paragraphs\". v8:274/:276/:278.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:278 #33 the f1 dose-note text conditioned on the 0.12-artifact-existence input flag",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:193 slot -> v8:182 clause (verbatim substrings).",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:291 #34 one §8.1/§8.2 status text",
+   "verdict": "CONFIRMED",
+   "evidence": "v8:270/:272 for '§8.1' and v8:274–:278 for '§8.2', per seat Q3. The quotes are verified.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:291 #35 one abstract OLMo clause …, one dose-note text",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:13 = v8:13; v1.1:193 -> v8:182.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:326 #36 the label-artifact class captured live three times (root:184)",
+   "verdict": "CONFIRMED",
+   "evidence": "Root:184 = v8:184 positionally; the content changed (184c184). v8:184 reads 'is the third live capture of the label-artifact class (§5.6)'. v1.1:195 carries the same phrase.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:334 #37 Main: *Functional for the Character, Not for the Network*",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:3 reads '# Marked, Expressed, Remembered, Not Acted On' (Fallback-1, per v1.1:1). v8:3 is Main. Case-insensitive search finds the title text in v1.1 only at :244 and :302. m:341 reads 'At v1: Main unreachable'. v8:466 reads 'the main title of PROPOSAL-m v1.11 §7.1 is not used in this version'.",
+   "fix": "Nit: the title line is set by the Step 5 ceiling and posted 'under the ceiling obtained' (m:341; m:358 step 18). Clause (b) governs thesis sentences. Cite those instead of 'm:349 clause (b)'."
+  },
+  {
+   "m_line": "m:338 #38 e2a and f1: *Answered* iff L0",
+   "verdict": "CONFIRMED",
+   "evidence": "The labels and tags are verbatim at v1.1:185/:193 and v8:172/:182.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:338 #39 e2b posting label",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:187 = v8:176. The CI is absent from both ('0.0086': 0 hits).",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:338 #40 OLMo Q3, per post-training row",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:195 has '*Answered, at screen power* **[A0-OLMo-gated, per row]**'. v8:184 has '*SFT, DPO, instruct: Answered, at screen power* …'.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:338 #41 base: told control not run at base, by decision (7′)",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:183 and v8:184 both read 'not applicable at base (no instruction-following)'. m's wording is in neither.",
+   "fix": "Add v8:272 as a site (as #9)."
+  },
+  {
+   "m_line": "m:338 #42 f1's CORR line carries its dose note iff …",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:193 -> v8:182.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:338 #43 The abstract's OLMo clause: iff all three pass",
+   "verdict": "CONFIRMED",
+   "evidence": "'and not at the SFT, DPO or instruct stage of the OLMo lineage (5)' is verbatim at v1.1:13 and v8:13.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:338 #44 … concluded, not answered (§5.5)",
+   "verdict": "CONFIRMED",
+   "evidence": "§5.5 is the same section (v1.1:181 / v8:168). The Q3 paragraph is at v1.1:195 / v8:184.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:338 #45 S1 and the weight channel untouched",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:191/:189 -> v8:180/:178. The bold leads are verbatim.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:340 #46 under POSITIVE as §7.3's welfare clause",
+   "verdict": "CONFIRMED",
+   "evidence": "m's §7.3 is at m:345. The preprint's §7.3 is a different section in each version (v1.1:264 indicator; v8:242 Reward chisels).",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:340 #47 the \"reasoning block removed\" clause of earlier versions is withdrawn",
+   "verdict": "PARTLY",
+   "evidence": "The classification is defensible: 'earlier versions' are m's own. The evidence is false, though. grep finds 'reasoning block' at :278 in archive pre-patch-v6.md, pre-patch-v7.md AND pre-patch-v8.md, and in none of pre-patch-v2/-v3/-v4, v1.1 or v8. The map says 'present only in archive pre-patch-v6.md:278 and pre-patch-v8.md:278'.",
+   "fix": "Change to: 'present at :278 in pre-patch-v6 (root), -v7 and -v8; absent from pre-patch-v2/-v3/-v4, v1.1 and v8'."
+  },
+  {
+   "m_line": "m:340 #48 dated note … §8.2's screen returned a hit",
+   "verdict": "CONFIRMED",
+   "evidence": "The v1.1:302 and v8:278 ('is a screen hit under the screen-and-confirm tiers…') quotes are verbatim. Listed in step15.md Q4.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:340 #49 in §8.2's status text",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:298 reads 'The status of each at posting is stated in the header note.'. v8:266 lacks it. v8:466 reads 'stand as written'.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:342 #50 PASS: the §7.6 rival is retired",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:302 reads 'the rival of §7.6 is retired'. v8:276 reads 'the rival of §7.4 is stated as unsettled' (FAIL only). The rival is at v8:248.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:342 #51 the new §5.7",
+   "verdict": "CONFIRMED",
+   "evidence": "The last §5 subsection is v1.1:199 (§5.6), with §6 at :213. In v8 it is :188 (§5.6), with §6 at :202. No §5.7 exists in either.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:343 #52 Step 7 — §8.1 and §8.2 status. … §8.1's sentences",
+   "verdict": "CONFIRMED",
+   "evidence": "Seat Q3: s8.1-status = A0 :270 and A0-OLMo :272. The caution about A1 at :274 is accurate.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:343 #53 §8.2's state whether its cells ran; §8.2 is closed into §5.7",
+   "verdict": "CONFIRMED",
+   "evidence": "A1–A3 at v8:274–:278; §5.7 is prospective.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:345 #54 the paper's ethics section is revised",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:314/:316 -> v8:290/:292. 'this statement will be revisited if a positive arrives' is in both. v1.1:316's '§8.1 and §8.2 administer…' and 'is armed for §8.2' are absent at v8:292.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:345 #55 7.3 Welfare pre-commitment",
+   "verdict": "CONFIRMED",
+   "evidence": "This is m's own heading. The preprint's welfare sections are v1.1 §7.7 :288 and v8 §7.5 :256.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:347 #56 §8.2 stays open",
+   "verdict": "CONFIRMED",
+   "evidence": "The v1.1:302 quote is verbatim. Maps to v8:274–:278 per seat Q3.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:347 #57 its row and the abstract clause change, not the title",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:510 and v8:464 both read 'that row's label and the abstract's OLMo clause change'.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:347 #58 v1 posts under Fallback-2 with e2a and f1 concluded",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:506 and v8:460 both read 'The title becomes Fallback-2, *Marked, expressed, remembered*'.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:347 #59 v2 posts after D2 (§7.5)",
+   "verdict": "CONFIRMED",
+   "evidence": "m's own §7.5 (m:349).",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:349 #60 7.5 Posting rule",
+   "verdict": "CONFIRMED",
+   "evidence": "This is m's own heading. Later in the line, '§7.5's first sentence' is the preprint's.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:349 #61 (b) No sentence … asserts the thesis of a title above the ceiling",
+   "verdict": "PARTLY",
+   "evidence": "The quote is verified. The site list claims to come from a string search but is incomplete. (i) A case-insensitive search for 'functional for the character' also hits v1.1:302 ('*Functional for the character, not for the network*', a conditional naming); this entry omits it, though #37 cites it. (ii) Clause (b) also reaches 'its paraphrases', and none of these are listed: v1.1:250's last sentence (thesis paraphrase, dropped at v8:236); the v1.1:13/v8:13 abstract conclusion sentences (see #3); for 'not acted on', subtitle v1.1:5 = v8:5 ('do not act on it when…'), v8:13 ('they do not act as reinforcers when their consequences must be learned'), and v1.1:272 = v8:240 ('the evaluative state is not a reinforcer').",
+   "fix": "Add v1.1:302 to the v1.1 'functional for the character' sites, marked a conditional (non-asserting) naming. List the paraphrase sites above, each with its v8 counterpart or 'no counterpart' (v1.1:250-last). Drop the claim that the list is the result of a string search."
+  },
+  {
+   "m_line": "m:349 #62 (c) The f1 CORR dose note is carried iff …",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:193 slot -> v8:182 clause, which cites `data/m/gates/G-CAL_model-free.json` (tracked).",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:349 #63 The list in the v1.1 header note … illustrative",
+   "verdict": "CONFIRMED",
+   "evidence": "The v1.1:506 and v8:460 quotes are verbatim. The described drops and renames are accurate: v8:460 has no sceptic or §7.7 item and names '§7.2's closing sentence'; v8:464 names '§7.3's lineage sentence'.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:349 #64 the abstract's fifth-stage sentence and OLMo clause",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:13 = v8:13 (verbatim sentence).",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:349 #65 the subtitle's second clause",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:5 = v8:5, byte-identical.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:349 #66 contribution 2(v)",
+   "verdict": "CONFIRMED",
+   "evidence": "The (v) clause through the tag is identical at v1.1:32 and v8:30. The tails after it differ.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:349 #67 §5.5's e2a, e2b and f1 labels",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:185/:187/:193 -> v8:172/:176/:182; the labels are verbatim.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:349 #68 Q3 paragraph",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:195 -> v8:184 (same bold lead).",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:349 #69 and Summary",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:197 = v8:186, identical text.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:349 #70 §6's \"This paper\" row",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:232 and v8:220 are identical full rows.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:349 #71 §7.1's title sentences",
+   "verdict": "PARTLY",
+   "evidence": "The v1.1:248 -> v8:234 and v1.1:246 -> v8:232 mappings hold. v1.1 §7.1 also asserts the title at :250's last sentence ('The unit for which the state is functional is the thread-level character…; the unit for which it is not is the network'), and v8:236 drops that sentence.",
+   "fix": "Add v1.1:250 (last sentence) with status 'no counterpart', as #3."
+  },
+  {
+   "m_line": "m:349 #72 §7.2's \"what we establish for the sceptic\"",
+   "verdict": "CONFIRMED",
+   "evidence": "In v8, 'sceptic' has 0 hits and 'couple' has 0 hits. v8's §7 headings are :230/:238/:242/:246/:256/:260. The v8:460 A0 list has no such item.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:349 #73 §7.4's last sentence",
+   "verdict": "CONFIRMED",
+   "evidence": "The last sentence of v1.1:272 = the last sentence of v8:240, verbatim with its tag. The v8:460 name is '§7.2's closing sentence'.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:349 #74 §7.5's first sentence",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:276's first sentence is the Turner sentence; the tagged one is second. v8:244 has the same structure. v8:464 reads '§7.3's lineage sentence'.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:349 #75 §7.7's penultimate sentence",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:290's penultimate sentence is 'On the channels we can read, at the stakes we can set, they do not **[A0-gated]**.'. v8:258 lacks it and the sentence before it. v8:258's penultimate sentence is 'Both facts are stated without flinching.'.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:349 #76 The never-*Answered* cells",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:508 and v8:462 list the same three cells.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:358 #77 §8.1 status text",
+   "verdict": "CONFIRMED",
+   "evidence": "Step 17's output list. Mapped per Q3.",
+   "fix": "none (see the missed items for the same line's 'labels, ceiling, abstract clause')"
+  },
+  {
+   "m_line": "m:371 #78 root lines :13, :30, :184, :186, :248, :272, :278, :280",
+   "verdict": "CONFIRMED",
+   "evidence": "The diff is positional; :272 is unchanged and :248/:278 changed.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:78 #79 the f1 dose note a declared third item",
+   "verdict": "CONFIRMED",
+   "evidence": "v1.1:193 -> v8:182.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:86 #80 disclosures for the paper",
+   "verdict": "PARTLY",
+   "evidence": "The pointer at v8:262 holds. The entry's rests_on is 'As m:267', which carries #28's omission (the planned D item at v1.1:500 / v8:454) and its false 'references run to the header note' clause.",
+   "fix": "Apply #28's fix."
+  },
+  {
+   "m_line": "m:96 #81 A4 thesis still posts under Fallback",
+   "verdict": "PARTLY",
+   "evidence": "STOP-4's left column is verified. The thesis site set inherits #3's v1.1:250 omission.",
+   "fix": "As #3."
+  },
+  {
+   "m_line": "m:129 #82 C18 abstract clause",
+   "verdict": "CONFIRMED",
+   "evidence": "STOP-4's left column; v1.1:13 = v8:13.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:361 #83 Step-7 status and the §7.5 enumeration",
+   "verdict": "CONFIRMED",
+   "evidence": "Mapped as #52/#53.",
+   "fix": "none (see the missed items for the same line's 'labels', 'ceiling' and 'Step-6 text')"
+  },
+  {
+   "m_line": "m:124 #84 C32 v1.1 provenance wording",
+   "verdict": "CONFIRMED",
+   "evidence": "STOP-5 C32 '→ §0.9'. Its subject is PREPRINT-v1_1-draft.md's provenance (m:58), and v1.1:1 corroborates. It has no section to re-anchor.",
+   "fix": "Optional relabel to 'document-level preprint mention'. It is a preprint referent, just not a section referent."
+  },
+  {
+   "m_line": "m:4 #85 (v1.1 pre-read)",
+   "verdict": "CONFIRMED",
+   "evidence": "The block is stamped 2026-09-25 05:36:23. v1.1:1 dates the preprint redraft 2026-10-01.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:22 #86 v1.1's outcome branches overlapped",
+   "verdict": "CONFIRMED",
+   "evidence": "Ledger (22): 'Fix: ordered per-arm evaluation; total outcome logic', which is m's §7.2.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:4 #87 §8 step 2",
+   "verdict": "CONFIRMED",
+   "evidence": "m's steps are at m:353–:363.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:8 #88 the block §9 names",
+   "verdict": "CONFIRMED",
+   "evidence": "m's §9 is at m:365.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:16 #89 §7.3 (Welfare)",
+   "verdict": "CONFIRMED",
+   "evidence": "m:345.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:16 #90 (§7.4)",
+   "verdict": "CONFIRMED",
+   "evidence": "m:347 (Clock).",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:16 #91 §5's unit grain",
+   "verdict": "CONFIRMED",
+   "evidence": "m:324.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:44 #92 every edit to §7.2",
+   "verdict": "CONFIRMED",
+   "evidence": "m:336.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:56 #93 the posting rule of §7.5",
+   "verdict": "CONFIRMED",
+   "evidence": "m:349.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:58 #94 which replaces the \"reasoning block removed\" clause (§7.2 Step 4)",
+   "verdict": "PARTLY",
+   "evidence": "Only '(§7.2 Step 4)' is m's own. The clause itself is preprint text: patch v5 is a list of preprint edits, and its item (2) replaces root:278's 'so the confirmation runs at the same scaffolding with the reasoning block removed' (archive pre-patch-v6.md:278). The rests_on also inverts the relation: v1.1 §8.2's trigger is the replacement, not the replaced clause.",
+   "fix": "Status 'root coordinate, replaced'. Root:278's clause is absent from v1.1 and v8. The replacement wording is at v1.1:302 -> v8:278 (as #14). Keep '(§7.2 Step 4)' as m-own."
+  },
+  {
+   "m_line": "m:159 #95 PROPOSAL-f §2",
+   "verdict": "CONFIRMED",
+   "evidence": "Another document.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:155 #96 archive:83",
+   "verdict": "CONFIRMED",
+   "evidence": "m:367 lists archive/RESULTS-cycles3-4.md :82, :83, :91–93, :139–140, :142 and :400–404.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:58 #97 (Code confirmed at STOP-5 §0)",
+   "verdict": "CONFIRMED",
+   "evidence": "A STOP-block section.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:367 #98 behind §1 item 2",
+   "verdict": "CONFIRMED",
+   "evidence": "m:150.",
+   "fix": "none"
+  },
+  {
+   "m_line": "m:371 #99 the three archived preprint versions",
+   "verdict": "CONFIRMED",
+   "evidence": "pre-patch-v2/-v3/-v4 mtimes are Sep 27–28. -v6/-v7/-v8 are Oct 10/12/14. 9510af7 is dated Oct 5. 'git ls-files archive' shows no preprint copy (all untracked).",
+   "fix": "Optional relabel to 'document-level preprint mention'."
+  }
+ ],
+ "missed": [
+  "m:119 \"C8 dose-note striker\" (STOP-4 C8, '→ §7.5 (third item; every posting)'). The f1 CORR dose note: v1.1:193 slot -> v8:182 dose clause. Counterpart. The map lists the like-kind STOP labels C15/C18/C30 but not this one.",
+  "m:136 \"C25 disclosures\" (STOP-4 C25, '→ §2.7 (the fourteen-item list…)'). The paper's Appendix D: v1.1 pointers :130/:294 and planned item :500 -> v8 :119/:262 and planned item :454. Counterpart (designation), as m:86/m:267.",
+  "m:107 (left column) \"A15 A0 does not reach e2b\". e2b's label: v1.1:187 -> v8:176. Counterpart.",
+  "m:124 (left column) \"C13 base row as decision\" ('→ PI (14); → §0.1'). The OLMo base-row label: v1.1:183/:195 -> v8:184 (also v8:272). Counterpart. This is the STOP item behind the flagged wording gap: m's 'by decision (7′)' against 'not applicable at base (no instruction-following)' in both texts.",
+  "m:62 \"v1.6–v1.8 would have posted \\\"not acted on\\\" beside a confirmed hit\". This is the Fallback-1 title phrase. v1.1:3 '…, Not Acted On' -> v8:3 carries Main (no counterpart for the title-line phrase). The phrase survives at v8:30 (2(v)) and v8:168 (§5.5 heading).",
+  "m:341 Step 5 \"bars \\\"not acted on\\\"\". As above: v1.1:3 title phrase -> none in v8:3; the phrase is at v8:30 and :168.",
+  "m:278 \"one label set (e2a, f1; e2b fixed; the four OLMo rows)\" -> v1.1:185/:193/:187/:195 -> v8:172/:182/:176/:184. On the same line, \"one ceiling ∈ {Fallback-1, Fallback-2}\" -> title line v1.1:3 -> v8:3. Counterparts.",
+  "m:291 \"one label set\" and \"one ceiling ∈ {Main, Fallback-1, Fallback-2}\" map as m:278. \"one Step-7 status\" -> v8 §8.1 A0/A0-OLMo (:270/:272) and A1–A3 (:274–:278), as m:343. \"one Step-6 text\" -> the new §5.7 (no counterpart, prospective) plus the rival v1.1:280 -> v8:248.",
+  "m:358 step 17 \"§7's v1 outputs — L0, labels, ceiling, abstract clause\". Labels -> v8:172/:182/:176/:184. Ceiling -> title line v1.1:3 -> v8:3. Abstract clause -> v1.1:13 = v8:13 (verbatim). The map took only this line's '§8.1 status text'.",
+  "m:361 \"labels\", \"ceiling, Step-6 text, Step-7 status\" (Q-F3 VERDICTS, and POSTING v2 on the hit path). Map as m:291. The map took only 'Step-7 status and the §7.5 enumeration'.",
+  "m:342 \"FAIL: the rival stated unsettled, scoped *at this scaffolding and stimulus strength*\" -> v1.1:302 ('If it fails, the paper's claim narrows to … at this scaffolding') and v1.1 §7.6 :280 -> v8:276 ('a fail is scoped: at this scaffolding and stimulus strength … the rival of §7.4 is stated as unsettled'). Counterpart: v8 already carries the FAIL wording.",
+  "m:342 \"INDETERMINATE / REVERSE: cell A2 named open\". The A2 (objective-told) cell: v1.1:302 -> v8:276. Counterpart.",
+  "m:76 \"Step 2's NOT-RUN text \\\"was not run: [reason]\\\"\". The §5.5 row-label wording: v1.1:185/:193/:195 -> v8:172/:182/:184. v8:280 also has 'with the told control recorded as not run and the reason stated' (v1.1:300: 'is not run by its date'). Counterpart.",
+  "m:347 \"at posting each row carries its state (§5)\" -> OLMo rows v1.1:195 -> v8:184 ('§5' is m's own). On the same line, \"only the title consequence is Q-F0's\" -> title line v1.1:3 -> v8:3.",
+  "m:155 \"3–5 decide the v2 posting and the main title\" -> title line v1.1:3 (Fallback-1) -> v8:3 (Main). Counterpart. The map's notes class this line as document-level.",
+  "m:16 decision (9) \"OLMo units entering as their rows stand\" -> v8:184. Decisions (6), (6′) and (13) name the Fallback titles -> title line v8:3. Low weight; the map's notes class this line as document-level.",
+  "m:326 \"in f1's register — *the property does not drive choice beyond exploration policy at these stakes, this scaffolding, and this power*\". If 'f1's register' means the paper's f1 verdict, it maps v1.1:193 -> v8:182 ('no natural task property among five candidates drives choice beyond exploration policy at these stakes and this power'). Low weight; it may mean the RESULTS verdict.",
+  "Thesis site absent from every map entry: v1.1:250's last sentence, 'The unit for which the state is functional is the thread-level character …; the unit for which it is not is the network.' It is an untagged §7.1 thesis paraphrase, dropped at v8:236, so it has no counterpart. Under reading (A) it needs its own dated 'no counterpart' note. It bears on m:14, m:61, m:65, m:96 and m:349 (b) and §7.1.",
+  "The map's note 'Section translation v1.1 -> v8: §1–§6 and §9: same numbers' is false below the top level. v1.1 §2.1 (Indicator frameworks, :42) has no v8 counterpart. v1.1 §2.2–§2.8 become v8 §2.1–§2.7. v1.1 §3.5 (Present is not used, :100) has no v8 counterpart. The preprint's own pointers show the shift: v1.1:284 'question of §2.5' / '§8.4' -> v8:252 '§2.4' / '§8.3'. No m referent lands there, but the table would misroute any such citation."
+ ]
+}
+
+====================================================================================================
+CODE'S DISPOSITIONS (disp_reanchor.md), verbatim
+====================================================================================================
+
+# Code's dispositions of the re-anchoring map and its strict refuter (m:58; m:371; the seat's step-15 answers, Q4 (A))
+
+The map swept PROPOSAL-m v1.11 in full: 100 entries (70 counterparts, 4 "no counterpart", 4 already root or v8
+coordinates, 22 not preprint referents). The refuter confirmed 90 and confirmed 10 in part, and added referents the
+map did not list. All are taken, in the refuter's form, except four optional notes (below); none changes a counterpart
+the map gives except where stated.
+The map itself is carried unfixed in the raw; these dispositions are its corrections.
+
+## The PARTLY verdicts, applied
+
+- **v1.1:250's last sentence** ("The unit for which the state is functional is the thread-level character …; the
+  unit for which it is not is the network") is an untagged §7.1 thesis paraphrase that v8:236 drops. It is a thesis
+  site with **no counterpart**, dated note 2026-10-15. It bears on m:14's "the sentences that assert the thesis of the
+  main title", m:61, m:65, m:96, m:349's clause (b) and its "§7.1's title sentences" (the refuter's #3, #19, #20, #61,
+  #71, #81). v1.1's untagged conclusion at :13 maps to v8:13's "We conclude …" sentence (rewritten, untagged); v1.1:302
+  is a conditional naming of the main title, not an assertion.
+- **The paraphrase sites clause (b) reaches** (#61): beside the tagged and titled sites, the "not acted on" paraphrases
+  re-anchor v1.1:5 → v8:5 (the subtitle), v1.1:272 → v8:240, and v1.1:13's slot → v8:13's "they do not act as
+  reinforcers …"; the site list is the refuter's and the map's together, not a string search's result.
+- **Appendix D** (m:267, m:86): its designation re-anchors by the planned-appendix item, v1.1:500 → v8:454 (verbatim
+  D item), beside the pointers v1.1:130/:294 → v8:119/:262. "the references run to the header note" is struck.
+- **"reasoning block removed", m:340 (#47):** "earlier versions" are m's own, as the map has it; its evidence is
+  corrected: the phrase is at :278 in the pre-patch-v6, -v7 and -v8 archives, and absent from pre-patch-v2, -v3 and -v4,
+  from v1.1 and from v8.
+- **The same clause, m:58 (#94):** root coordinate, replaced. It is preprint text at root:278, replaced by patch v5's
+  item (2); the replacement re-anchors v1.1:302 → v8:278. "(§7.2 Step 4)" is m's own.
+
+## CONFIRMED verdicts that carry a fix, applied
+
+- #5: v8 §8.1 is wider than v1.1 §8.1 (it also holds v1.1's §8.2), not narrower.
+- #9 and #41: the base-row label has a second v8 site, :272, beside :184.
+- #37: the title line is reached through m:341 and m:358 step 18, not m:349's clause (b).
+
+## Optional notes, not taken
+
+- #4, #11, #84, #99: the refuter's optional notes and relabels (#4: v8:248's closing sentences now point to the §8
+  campaign; #11: v8 adds the footnote relative to v1.1; #84, #99: "document-level preprint mention"), not taken; no
+  counterpart changes.
+
+## The refuter's further referents, added (each a counterpart unless stated)
+
+- m:119 (STOP-4 C8, the dose-note striker): the f1 CORR dose note, v1.1:193 slot → v8:182.
+- m:136 (STOP-4 C25, disclosures): Appendix D, as m:267.
+- m:107 (A15, A0 does not reach e2b): e2b's label, v1.1:187 → v8:176.
+- m:124 (C13, base row as decision): the base-row label, v1.1:183/:195 → v8:184 (and :272).
+- m:62 and m:341 ("not acted on"): the Fallback-1 title phrase at v1.1:3 has **no counterpart** at v8:3, which carries
+  Main; the phrase stands at v8:30 and :168 (a dated note, below).
+- m:278, m:291 (label sets; ceilings; Step-7 status; Step-6 text): labels v1.1:185/:193/:187/:195 → v8:172/:182/:176/
+  :184; the title line v1.1:3 → v8:3; Step 7 → v8 §8.1 (:270/:272; :274–:278); Step 6 → the prospective §5.7 (no
+  counterpart) and the rival v1.1:280 → v8:248.
+- m:358 step 17 and m:361 (v1 and v2 outputs): labels, ceiling and abstract clause as m:278 (the abstract clause
+  verbatim at v1.1:13 and v8:13); m:361's Step-6 text → the prospective §5.7 (no counterpart).
+- m:342 (FAIL and INDETERMINATE/REVERSE branches): v1.1:302 and :280 → v8:276 (v8 already carries the FAIL wording).
+- m:76 (Step 2's NOT-RUN text): the §5.5 row labels, v1.1:185/:193/:195 → v8:172/:182/:184; v8:280.
+- m:347 (each row carries its state; the title consequence): v1.1:195 → v8:184; the title line v1.1:3 → v8:3.
+- m:155, m:16 (9) and the title decisions: the title line and v8:184 (low weight; document-level).
+- m:326 ("in f1's register"): if the paper's f1 verdict is meant, v1.1:193 → v8:182 (low weight).
+
+## The section translation, corrected
+
+v1.1 → v8: §1–§6 and §9 keep their numbers at the top level; below it, v1.1 §2.1 (Indicator frameworks, :42) has
+no counterpart and v1.1 §2.2–§2.8 become v8 §2.1–§2.7, and v1.1 §3.5 (:100) has no counterpart; §7.1 → §7.1, §7.2 and
+§7.3 → none, §7.4–§7.8 → §7.2–§7.6; §8.1 + §8.2 → v8 §8.1, §8.3–§8.6 → §8.2–§8.5, §8.7 → none. No m referent lands in
+§2 or §3.5.
+
+## The "no counterpart" notes of record (dated 2026-10-15; each with what it rests on)
+
+1. m:14 "with their TAB 2 rows": TAB 2 is a slot in both texts and carries no rows; the slot re-anchors v1.1:183 →
+   v8:170 (the table's `tab2-row` kind, step-15b ping Q5).
+2. m:342 "the new §5.7" (and m:291's and m:361's Step-6 text): a prospective section in neither text; v8's §5 ends at
+   §5.6, so §5.7 stays free.
+3. m:349 "§7.2's 'what we establish for the sceptic'" (v1.1:258): v1.1 §7.2 has no v8 counterpart (`s7.2-sceptic`).
+4. m:349 "§7.7's penultimate sentence" (v1.1:290): v8 §7.5 omits it (`s7.7-penultimate`).
+5. v1.1:250's last sentence, a §7.1 thesis paraphrase dropped at v8:236 (above).
+6. m:62's and m:341's "not acted on" as the title-line phrase: v1.1:3's Fallback-1 title has no counterpart at v8:3
+   (Main); the phrase stands at v8:30 and v8:168.
+
+## Flagged by the map, not adjudicated here (carried to v1.0 §2 as notes)
+
+The e2b and base-row label wordings against m:338 (Code's step-15b ping Q2 already puts both); v8:3 carries the Main
+title, which m:341 makes unreachable at v1 and v8's header note says is not used in this version; v8:13's untagged
+thesis sentence; Step 7's "§8.1's sentences" reading wider in v8 coordinates, consistent with Q3's kinds; v1.1's own
+patch-v5 item list against m:58's (m:58 governs); the ethics section's §8.1/§8.2 wording dropped at v8:292; archive/
+holds six pre-patch copies, where m:371/m:354 count three; "§7.5's first sentence" is v1.1's tagged lineage sentence,
+§7.5's second (covered by the kind s7.5-first); the table built from v8 reaches :3, :13, :230 and :234 by rule (covered
+by the table raw's rows); v8:182 carries f1's dose note as text, governed at posting by
+clause (c) and the flag.
