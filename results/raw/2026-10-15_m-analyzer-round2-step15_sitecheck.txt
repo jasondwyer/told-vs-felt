@@ -1,0 +1,56 @@
+# Site check after step 15's second analyzer round's commit: the eight suites of record plus the m_analyze battery, in the main tree. 
+# Code stamp: 2026-10-15 04:08:51 UTC (date -u)
+# HEAD: ed8e886; analyzer 655e0f7f6743d0bf (working tree = HEAD: yes); uncommitted: G-ANL-F0's re-run outputs under data/m/gates (committed with the entry).
+# Gated on each suite's SUMMARY LINE, not on $? (trap 12).
+# Interpreter: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python
+
+=== regression ===
+  [PASS] e2d: resume reproduces the run and refuses a different one   expected identical transcripts + refusal got identical True, reads True, refused True   (incident 2026-09-02 (D2 died at 9/64 with nothing on disk))
+------------------------------------------------------------------------------
+  154/154 reproduced through valence_core
+GATE regression: PASS (summary line matched; exit 0)
+=== format_recon ===
+  [PASS] anchors carry both domains: e2a all 157/187 & 32/188; valid 154/184 & 30/184   
+------------------------------------------------------------------------------
+  67/67 selftest checks pass
+GATE format_recon: PASS (summary line matched; exit 0)
+=== k1_stage1 ===
+  [PASS] startup hygiene (rule 18 / 28c) runs on the roster vs the 64 paraphrases and the wrapper 
+------------------------------------------------------------------------------
+  21/21 Stage 1 selftest checks pass
+GATE k1_stage1: PASS (summary line matched; exit 0)
+=== k1_analyze ===
+  [PASS] select_sentence is disjunction-complete: G3 FAIL dominates, then G1 FAIL, then G2's three 
+------------------------------------------------------------------------------
+  20/20 analyzer battery checks pass (14s)
+GATE k1_analyze: PASS (summary line matched; exit 0)
+=== e2d_d2_analyze ===
+  [PASS] empty inputs STOP rather than passing vacuously            got     'STOP, SCOPED'  want 'STOP, SCOPED'
+------------------------------------------------------------------------------
+  46/46 branches verified (every criterion, both directions, plus the sign-flip and g2r branches)
+GATE e2d_d2_analyze: PASS (summary line matched; exit 0)
+=== recon_echo ===
+  [PASS] stage A roster: 24 sessions, 12/12 by map  first 24 were 14/10; took the first 12 of each map
+
+  18/18 selftest checks pass
+GATE recon_echo: PASS (summary line matched; exit 0)
+=== closure_verify3 ===
+  PASS  R7-R15 no old or struck clause survives in the quoted text         got []                           want []  
+----------------------------------------------------------------------------------------------------
+  24/24 third-pass checks pass
+GATE closure_verify3: PASS (summary line matched; exit 0)
+=== m_sessions ===
+  [PASS] m_sessions: no forbidden literal in valence_core/m/*.py or this driver; the grep fires on a planted copy []
+  [PASS] m_sessions: the quarantined state-present module is not in sys.modules after the selftest
+  795/796 m selftest checks pass
+GATE m_sessions: PASS (summary line matched; exit 1)
+  window case: [FAIL] lines 1; of them the time refusal check 1; the driver's proposal-in-lock message (stage_identity_extra) on its case 'a lock-named non-proposal' 1
+  [FAIL] m_sessions: time --unit Q-F0 on the Qwen path (main, no factory) refuses with exit 2 before the loader and the DRIVER and SNAPSHOT lines, no file under the test root created, removed or rewritten, naming its problem, in 31 cases: a
+GATE m_sessions-window: PASS (the one expected failure, lock s9.3)
+=== m_analyze ===
+  [PASS] coverage: every one of the 461 required ids reached []
+  [PASS] check count 448 == EXPECTED_CHECKS 448 (a skipped assertion is a failure) 448
+  448/448 m_analyze battery checks pass
+GATE m_analyze: PASS (summary line matched; exit 0)
+
+SITECHECK_DONE 2026-10-15 04:12:33 UTC -- gates failed: 0

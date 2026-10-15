@@ -1,0 +1,1346 @@
+{
+ "analyzer": {
+  "path": "scripts/m_analyze.py",
+  "sha16": "522e80576659aff1",
+  "sha256": "522e80576659aff1818239105c3e9b2b76d4b222e8959ac9fdd8dfb499fefd3c"
+ },
+ "battery": {
+  "checks_pass": 444,
+  "checks_total": 444,
+  "coverage_ids": [
+   "ARM-BOTHEMPTY-RAISES",
+   "BND-DEAD-80",
+   "BND-DEAD-96",
+   "BND-DEAD-CP-AGREE",
+   "BND-DELTA-EQ-E",
+   "BND-KN-NOTDEAD",
+   "BND-PASS-INDET-80",
+   "BND-PASS-INDET-96",
+   "BND-PLEALPHA-213",
+   "BND-PLEALPHA-80",
+   "BND-PLEALPHA-96",
+   "BND-REV-80",
+   "BND-REV-96",
+   "BND-REV-DELTA-EQ-E",
+   "BND-REV-EMPTYMAP",
+   "BND-REV-SHARE-HALF",
+   "BND-SHARE-HALF",
+   "C3-CAP-SHAM-ONLY",
+   "C3-CAP-ZERO",
+   "C3-COMPLETE",
+   "C3-COMPLETE-BELOW-FLOOR",
+   "C3-COMPLETE-EMPTY",
+   "C3-COUNTS-INDEPENDENT",
+   "C3-ENDLOOK-COUNT-BOOL",
+   "C3-ENDLOOK-COUNT-MISSING",
+   "C3-ENDLOOK-COUNT-REUSE",
+   "C3-ENDLOOK-COUNT-REUSED-LOOK",
+   "C3-ENDLOOK-COUNT-STOP",
+   "C3-ENDLOOK-COUNT-TERMINAL",
+   "C3-ENDLOOK-FIRED-CLEARED",
+   "C3-ENDLOOK-FIRED-FLAG-ONLY",
+   "C3-ENDLOOK-NOPAUSE-GVER",
+   "C3-ENDLOOK-NOPAUSE-HAIR",
+   "C3-ENDLOOK-NOPAUSE-REUSE",
+   "C3-ENDLOOK-NOPAUSE-TERMINAL",
+   "C3-ENDLOOK-ORDER",
+   "C3-ENDLOOK-PAUSE",
+   "C3-ENDLOOK-PAUSE-ADJ-FILLED",
+   "C3-ENDLOOK-PAUSE-ADJ-NOTNONE",
+   "C3-ENDLOOK-PAUSE-BARS",
+   "C3-ENDLOOK-PAUSE-BARS-ORDER",
+   "C3-ENDLOOK-PAUSE-COUNT",
+   "C3-ENDLOOK-PAUSE-KIND",
+   "C3-ENDLOOK-PAUSE-LAST-UNRULED",
+   "C3-ENDLOOK-PAUSE-LOOK",
+   "C3-ENDLOOK-PAUSE-NOT-LAST",
+   "C3-ENDLOOK-PAUSE-TYPE",
+   "C3-ENDLOOK-REUSE-ADJ-NONSTR",
+   "C3-ENDLOOK-REUSE-APPENDED",
+   "C3-ENDLOOK-REUSE-FIRED-LOOK",
+   "C3-ENDLOOK-REUSE-FIRED-LOOK-DISJUNCTS",
+   "C3-ENDLOOK-REUSE-GUARDS",
+   "C3-ENDLOOK-REUSE-K",
+   "C3-ENDLOOK-REUSE-K-TYPE",
+   "C3-ENDLOOK-REUSE-NOT-LAST",
+   "C3-ENDLOOK-REUSE-PAUSE-ALTERED",
+   "C3-ENDLOOK-STOP-CLASS",
+   "C3-GVER-DATA",
+   "C3-GVER-ENDLOOK-PAUSE",
+   "C3-GVER-ZERO",
+   "C3-HAIR-DISP",
+   "C3-HAIR-ENDLOOK-LABEL",
+   "C3-HAIR-ENDLOOK-PAUSE",
+   "C3-HAIR-LOOK40-PAUSE",
+   "C3-HAIR-NODISP",
+   "C3-LASTLOOK-END-WINS",
+   "C3-LASTLOOK-STOP-ENDISLOOK",
+   "C3-LASTLOOK-STOP-PAST-CADENCE",
+   "C3-OLMO-COMPLETE",
+   "C3-PISTOP-DATA-LABEL",
+   "C3-PISTOP-ZERO",
+   "C3-PROD-END-P1",
+   "C3-PROD-END-P10",
+   "C3-PROD-END-P2",
+   "C3-PROD-END-P3",
+   "C3-PROD-END-P4",
+   "C3-PROD-END-P5",
+   "C3-PROD-END-P6",
+   "C3-PROD-END-P7",
+   "C3-PROD-END-P8",
+   "C3-PROD-END-P9",
+   "C3-STOP-NO-ENDLOOK-HAIR-REFUSED",
+   "C3-STOP-NO-ENDLOOK-REFUSED",
+   "CMD-EXCLUSIVE-WRITE",
+   "CMD-NOTRUN",
+   "CMD-NOTRUN-DECISIONS",
+   "CMD-NOTRUN-NOFIRSTREAD-REFUSED",
+   "CMD-POSTING",
+   "CMD-POSTING-BAR-DOSE",
+   "CMD-POSTING-BAR-FAIL",
+   "CMD-POSTING-BAR-NA",
+   "CMD-POSTING-BAR-PASS",
+   "CMD-POSTING-BINDING",
+   "CMD-POSTING-BINDING-FIRST",
+   "CMD-POSTING-BOTH-KINDS",
+   "CMD-POSTING-BOTH-OUTPUTS",
+   "CMD-POSTING-CMP-DIFFERS",
+   "CMD-POSTING-CMP-IDENTITY",
+   "CMD-POSTING-CMP-MATCH",
+   "CMD-POSTING-CMP-SELECT",
+   "CMD-POSTING-CMP-TUPLE",
+   "CMD-POSTING-CMP-TUPLE-NONE",
+   "CMD-POSTING-CMP-VERDICTS",
+   "CMD-POSTING-CROSSCHECK",
+   "CMD-POSTING-EXIT-5",
+   "CMD-POSTING-FAIL-RECORD",
+   "CMD-POSTING-FLAG-FALSE",
+   "CMD-POSTING-KEYSET",
+   "CMD-POSTING-MALFORMED",
+   "CMD-POSTING-PROPOSAL-SHA",
+   "CMD-POSTING-REASON-MISMATCH",
+   "CMD-POSTING-RESIDUE-ORDER",
+   "CMD-POSTING-REWRITES-AFTER-BINDING",
+   "CMD-POSTING-REWRITES-EMPTY",
+   "CMD-POSTING-REWRITES-FORM",
+   "CMD-POSTING-REWRITES-KIND",
+   "CMD-POSTING-TABLE-BOUND",
+   "CMD-POSTING-TABLE-REFUSALS",
+   "CMD-POSTING-TUPLE",
+   "CMD-SECONDARY-HABIT",
+   "CMD-VERDICTS-BINDING",
+   "CMD-VERDICTS-DECISIONS",
+   "CMD-VERDICTS-IDENTICAL",
+   "CMD-VERDICTS-NR-DECISIONS",
+   "CMD-VERDICTS-OLMO-CROSSCHECK",
+   "CMD-VERDICTS-QF0-FLAG-FALSE",
+   "CMD-VERDICTS-QF0-TABLE-REFUSALS",
+   "CMD-VERDICTS-QF0-V1",
+   "CMD-VERDICTS-RATES",
+   "CNT-COUNTS-CRAFTED",
+   "CNT-DECL-AUDIT",
+   "CNT-DECL-M314",
+   "CNT-DENOMINATORS",
+   "CNT-EXCLROUND-STOP",
+   "CNT-EXCLUDED-TABULATED",
+   "CNT-FIRE-SILENT",
+   "CNT-GATE-RELEASE",
+   "CNT-PER-PROPERTY",
+   "CNT-PREPICK-RATES",
+   "CNT-PREPICK-STAGES",
+   "CNT-PROPERTY-EXACT",
+   "CNT-PROPERTY-KEYS",
+   "CNT-REASONING-STOP",
+   "CNT-TALLY-EQUAL",
+   "CNT-UNDECLARED-RAISES",
+   "DATE-ISO-REAL",
+   "DEC-CARRIED",
+   "DEC-DATE-TRAILING",
+   "DEC-MISSING-REFUSED",
+   "DEC-QF3-PENDING",
+   "DEC-UNIT-DATE",
+   "ENUM-NODOSE-F",
+   "ENUM-NODOSE-T",
+   "ENUM-P01-F",
+   "ENUM-P01-T",
+   "ENUM-P02-F",
+   "ENUM-P02-T",
+   "ENUM-P03-F",
+   "ENUM-P03-T",
+   "ENUM-P04-F",
+   "ENUM-P04-T",
+   "ENUM-P05-F",
+   "ENUM-P05-T",
+   "ENUM-P06-F",
+   "ENUM-P06-T",
+   "ENUM-P07-F",
+   "ENUM-P07-T",
+   "ENUM-P08-F",
+   "ENUM-P08-T",
+   "ENUM-P09-F",
+   "ENUM-P09-T",
+   "ENUM-P10-F",
+   "ENUM-P10-T",
+   "ENUM-P11-F",
+   "ENUM-P11-T",
+   "ENUM-P12-F",
+   "ENUM-P12-T",
+   "ENUM-P13-F",
+   "ENUM-P13-T",
+   "ENUM-P14-F",
+   "ENUM-P14-T",
+   "ENUM-P15-F",
+   "ENUM-P15-T",
+   "ENUM-P16-F",
+   "ENUM-P16-T",
+   "ENUM-P17-F",
+   "ENUM-P17-T",
+   "ENUM-P18-F",
+   "ENUM-P18-T",
+   "ENUM-P19-F",
+   "ENUM-P19-T",
+   "ENUM-P20-F",
+   "ENUM-P20-T",
+   "ENUM-P21-F",
+   "ENUM-P21-T",
+   "ENUM-PLACEHOLDER-FILE",
+   "ENUM-REF-01",
+   "ENUM-REF-02",
+   "ENUM-REF-03",
+   "ENUM-REF-04",
+   "ENUM-REF-05",
+   "ENUM-REF-06",
+   "ENUM-REF-07",
+   "ENUM-REF-08",
+   "ENUM-REF-09",
+   "ENUM-REF-10",
+   "ENUM-REF-11",
+   "ENUM-REF-12",
+   "ENUM-REF-13",
+   "ENUM-REF-14",
+   "ENUM-REF-15",
+   "ENUM-REF-16",
+   "ENUM-REF-17",
+   "ENUM-REF-18",
+   "ENUM-REF-19",
+   "ENUM-REF-20",
+   "ENUM-REF-21",
+   "ENUM-SAMELINE",
+   "FLAG-FALSE-absent",
+   "FLAG-FALSE-f1_012",
+   "FLAG-FALSE-schema",
+   "FLAG-FALSE-uncommitted",
+   "FLAG-OF-RECORD-TRUE",
+   "FLAG-RENDERS-BESIDE",
+   "NR-CMD-BINDING",
+   "NR-CMD-BINDING-FIRST",
+   "NR-CMD-GATE-BEFORE-RELEASE",
+   "NR-CMD-GATE-NOT-ENDED",
+   "NR-CMD-GATE-WRONG-STAGE",
+   "NR-CMD-PROPOSAL-SHA",
+   "NR-CMD-STUB",
+   "NR-GATE-STOPPED-GCAL-OLMO",
+   "NR-GATE-STOPPED-GID-Q-F0",
+   "NR-RECORD-DATE",
+   "NR-REFUSE-dose-Q-F0",
+   "NR-REFUSE-no-box-Q-F0",
+   "NR-REFUSE-unknown-stage",
+   "NR-REFUSE-v2-at-v1",
+   "NR-STOP-ROUTING",
+   "NR-clock:gate-stopped-OLMo-dpo",
+   "NR-clock:gate-stopped-OLMo-instruct",
+   "NR-clock:gate-stopped-OLMo-sft",
+   "NR-clock:gate-stopped-Q-F0",
+   "NR-clock:k-zero-OLMo-dpo",
+   "NR-clock:k-zero-OLMo-instruct",
+   "NR-clock:k-zero-OLMo-sft",
+   "NR-clock:k-zero-Q-F0",
+   "NR-clock:no-box-OLMo-dpo",
+   "NR-clock:no-box-OLMo-instruct",
+   "NR-clock:no-box-OLMo-sft",
+   "NR-clock:not-locked-OLMo-dpo",
+   "NR-clock:not-locked-OLMo-instruct",
+   "NR-clock:not-locked-OLMo-sft",
+   "NR-clock:not-locked-Q-F0",
+   "NR-clock:pi-declined-OLMo-dpo",
+   "NR-clock:pi-declined-OLMo-instruct",
+   "NR-clock:pi-declined-OLMo-sft",
+   "NR-clock:pi-declined-Q-F0",
+   "NR-dose-not-completable-OLMo-dpo",
+   "NR-dose-not-completable-OLMo-instruct",
+   "NR-dose-not-completable-OLMo-sft",
+   "NR-no-first-read:cap-OLMo-dpo",
+   "NR-no-first-read:cap-OLMo-instruct",
+   "NR-no-first-read:cap-OLMo-sft",
+   "NR-no-first-read:cap-Q-F0",
+   "NR-no-first-read:gver-stop-OLMo-dpo",
+   "NR-no-first-read:gver-stop-OLMo-instruct",
+   "NR-no-first-read:gver-stop-OLMo-sft",
+   "NR-no-first-read:gver-stop-Q-F0",
+   "NR-no-first-read:pi-stop-OLMo-dpo",
+   "NR-no-first-read:pi-stop-OLMo-instruct",
+   "NR-no-first-read:pi-stop-OLMo-sft",
+   "NR-no-first-read:pi-stop-Q-F0",
+   "NR-pending-closed-at-v2-OLMo-dpo",
+   "NR-pending-closed-at-v2-OLMo-instruct",
+   "NR-pending-closed-at-v2-OLMo-sft",
+   "OLMO-STATES-DATE",
+   "ORD-NOREAD-FIRST",
+   "ORD-PASS-OVER-DEAD",
+   "ORD-REV-OVER-DEAD",
+   "ORD-UNIT-FIRST",
+   "OUT-DEAD-OLMo-dpo",
+   "OUT-DEAD-OLMo-instruct",
+   "OUT-DEAD-OLMo-sft",
+   "OUT-DEAD-Q-F0",
+   "OUT-INDET-E-half-OLMo-dpo",
+   "OUT-INDET-E-half-OLMo-instruct",
+   "OUT-INDET-E-half-OLMo-sft",
+   "OUT-INDET-E-half-Q-F0",
+   "OUT-INDET-i-equal-OLMo-dpo",
+   "OUT-INDET-i-equal-OLMo-instruct",
+   "OUT-INDET-i-equal-OLMo-sft",
+   "OUT-INDET-i-equal-Q-F0",
+   "OUT-INDET-ii-emptymap-OLMo-dpo",
+   "OUT-INDET-ii-emptymap-OLMo-instruct",
+   "OUT-INDET-ii-emptymap-OLMo-sft",
+   "OUT-INDET-ii-emptymap-Q-F0",
+   "OUT-INDET-ii-share-OLMo-dpo",
+   "OUT-INDET-ii-share-OLMo-instruct",
+   "OUT-INDET-ii-share-OLMo-sft",
+   "OUT-INDET-ii-share-Q-F0",
+   "OUT-INDET-iii-OLMo-dpo",
+   "OUT-INDET-iii-OLMo-instruct",
+   "OUT-INDET-iii-OLMo-sft",
+   "OUT-INDET-iii-Q-F0",
+   "OUT-NOREAD-contrast-empty-OLMo-dpo",
+   "OUT-NOREAD-contrast-empty-OLMo-instruct",
+   "OUT-NOREAD-contrast-empty-OLMo-sft",
+   "OUT-NOREAD-contrast-empty-Q-F0",
+   "OUT-NOREAD-sham-empty-OLMo-dpo",
+   "OUT-NOREAD-sham-empty-OLMo-instruct",
+   "OUT-NOREAD-sham-empty-OLMo-sft",
+   "OUT-NOREAD-sham-empty-Q-F0",
+   "OUT-PASS-OLMo-dpo",
+   "OUT-PASS-OLMo-instruct",
+   "OUT-PASS-OLMo-sft",
+   "OUT-PASS-Q-F0",
+   "OUT-REVERSE-OLMo-dpo",
+   "OUT-REVERSE-OLMo-instruct",
+   "OUT-REVERSE-OLMo-sft",
+   "OUT-REVERSE-Q-F0",
+   "PEND-CLOCK-REFUSED",
+   "PEND-DATE",
+   "PEND-DATE-CLOCK-FALSE",
+   "PEND-DATE-RECORDED",
+   "PEND-DATE-TRAILING",
+   "PEND-EXTRA-KEYS",
+   "PEND-NOTRUN-REFUSED",
+   "PEND-QF0-REFUSED",
+   "PEND-VERDICTS-CARRIES",
+   "PEND-VERDICTS-REFUSED",
+   "PEND-awaiting-verdicts-session-OLMo-dpo",
+   "PEND-awaiting-verdicts-session-OLMo-instruct",
+   "PEND-awaiting-verdicts-session-OLMo-sft",
+   "PEND-locked-running-OLMo-dpo",
+   "PEND-locked-running-OLMo-instruct",
+   "PEND-locked-running-OLMo-sft",
+   "PEND-restarting-after-box-change-OLMo-dpo",
+   "PEND-restarting-after-box-change-OLMo-instruct",
+   "PEND-restarting-after-box-change-OLMo-sft",
+   "PEND-unlocked-before-D_O-OLMo-dpo",
+   "PEND-unlocked-before-D_O-OLMo-instruct",
+   "PEND-unlocked-before-D_O-OLMo-sft",
+   "PWR-878",
+   "PWR-916",
+   "PWR-BRUTE",
+   "PWR-ODD-N",
+   "PWR-RECORD-VS-REALISED",
+   "PWR-ZERO-EMPTYMAP",
+   "REF-ADJ-BINDING",
+   "REF-ADJ-SCHEMA",
+   "REF-ADJ-TEXT",
+   "REF-ANALYZER-NOT-IN-LOCK",
+   "REF-ANALYZER-UNCOMMITTED",
+   "REF-BACKEND-SPLICE",
+   "REF-CANONICAL-OUT",
+   "REF-CELL-STOP",
+   "REF-CLOSURE-NOT-IN-LOCK",
+   "REF-DOMAIN-STOP",
+   "REF-END-PENDING",
+   "REF-EXCLROUND-STOP",
+   "REF-FFP-OUTSIDE-STOP",
+   "REF-FIRSTPICK-STOP",
+   "REF-FIXTURE-S0",
+   "REF-FLOORS-NEGATIVE",
+   "REF-GATE-NOT-ENDED",
+   "REF-GATE-WRONG-STAGE",
+   "REF-LOCK-SHA",
+   "REF-LOCK-UNCOMMITTED",
+   "REF-NO-FLOORS",
+   "REF-NO-FLOORS-BEFORE-V3",
+   "REF-NO-FLOORS-BEFORE-V4",
+   "REF-NOT-ENDED",
+   "REF-OTHER-UNIT",
+   "REF-PACKAGE-NOT-IN-LOCK",
+   "REF-PISTOP-BINDING",
+   "REF-PISTOP-SCHEMA",
+   "REF-PISTOP-TEXT",
+   "REF-POD",
+   "REF-PREPRINT-NOT-IN-LOCK",
+   "REF-PROPOSAL-SHA",
+   "REF-STAGE",
+   "REF-STUB",
+   "REF-STUB-CAMPAIGN-ONLY",
+   "REF-STUB-GATE-ONLY",
+   "REF-SURPLUS-ADJ-ADJUDICATED",
+   "REF-SURPLUS-PISTOP-TERMINAL",
+   "REF-SURPLUS-SEAT-INPUT",
+   "REF-TABLE-NOT-IN-LOCK",
+   "REF-UNADJUDICATED",
+   "REF-UNVERIFIED",
+   "REF-WRITE-ONCE",
+   "ROWS-EQ-LABELSET",
+   "SEC-B-CONTRAST-ONLY",
+   "SEC-D-SHAM-COUNT-ONLY",
+   "SEC-FLOOR-19-20",
+   "SEC-HABIT-IDENTITY",
+   "SEC-VALID-THROUGH",
+   "SEC-VALUES",
+   "SENT-DEAD",
+   "SENT-FLOOR-ABSENT",
+   "SENT-FLOOR-PRESENT",
+   "SENT-GUARD-OLMO-REPORTED",
+   "SENT-GUARD-QWEN-BINDING",
+   "SENT-INDET",
+   "SENT-NOLOOK",
+   "SENT-NOREAD-CONTRAST",
+   "SENT-NOREAD-SHAM",
+   "SENT-PASS",
+   "SENT-PREPICK",
+   "SENT-REVERSE",
+   "SIGN-DISPLAY",
+   "STR-CALL-SITES",
+   "STR-CLOSURE",
+   "STR-CONSTANTS",
+   "STR-CONSTANTS-MUTANT",
+   "STR-DETERMINISM",
+   "STR-FORBIDDEN",
+   "STR-GANL-ARTIFACT",
+   "STR-GANL-BATTERY-BLOCK",
+   "STR-GANL-COMMITTED",
+   "STR-GANL-CONTENT-EXIT",
+   "STR-GANL-EXIT",
+   "STR-GANL-FLAG",
+   "STR-GANL-PLACEHOLDER",
+   "STR-GANL-REGISTER",
+   "STR-GANL-SHA16",
+   "STR-INSULATED",
+   "STR-LAZY-IMPORTS",
+   "STR-NO-CANONICAL-WRITE",
+   "STR-NO-HEAVY",
+   "STR-OPEN-HOOK",
+   "STR-PIN-COMMENTS",
+   "STR-PIN-V10-TEXTS",
+   "STR-PROPOSAL-SHA",
+   "STR-STDOUT-HYGIENE",
+   "TUP-REASONS-DISTINCT",
+   "TUP-T1-F",
+   "TUP-T1-T",
+   "TUP-T10-F",
+   "TUP-T10-T",
+   "TUP-T2-F",
+   "TUP-T2-T",
+   "TUP-T3-F",
+   "TUP-T3-T",
+   "TUP-T4-F",
+   "TUP-T4-T",
+   "TUP-T5-F",
+   "TUP-T5-T",
+   "TUP-T6-F",
+   "TUP-T6-T",
+   "TUP-T7-F",
+   "TUP-T7-T",
+   "TUP-T8-F",
+   "TUP-T8-T",
+   "TUP-T9-F",
+   "TUP-T9-T"
+  ],
+  "evaluations": 2160,
+  "expected_checks": 444,
+  "outputs_form": "sha256 over the lines json.dumps({t, flag, outputs}, sort_keys, ensure_ascii False, compact) + newline, flag True then False, t in itertools.product(Q5, O6, O6, O6) order; regenerable byte-identically (not committed)",
+  "outputs_sha256": "83df98b12a27be8e4cd6abee6db7145599774d68ed7bb9b2675fa674de3b813c",
+  "tallies": {
+   "L0_OLMo_c_true": {
+    "dpo": 180,
+    "instruct": 180,
+    "sft": 180
+   },
+   "L0_true": 216,
+   "abstract": {
+    "all": 5,
+    "none": 625,
+    "one": 375,
+    "two": 75
+   },
+   "abstract_texts": 8,
+   "assertions": 19440,
+   "ceiling": {
+    "Fallback-1": 216,
+    "Fallback-2": 864
+   },
+   "e2a_f1_branches": {
+    "Answered": 216,
+    "DEAD": 216,
+    "INDETERMINATE": 216,
+    "NOT-RUN": 216,
+    "REVERSE": 216
+   },
+   "evaluations": 2160,
+   "licensing_vectors": 16,
+   "olmo_row_branches": {
+    "dpo": {
+     "Answered": 180,
+     "did-not-pass": 540,
+     "not-run": 180,
+     "pending": 180
+    },
+    "instruct": {
+     "Answered": 180,
+     "did-not-pass": 540,
+     "not-run": 180,
+     "pending": 180
+    },
+    "sft": {
+     "Answered": 180,
+     "did-not-pass": 540,
+     "not-run": 180,
+     "pending": 180
+    }
+   },
+   "per_flag": "each flag's tallies asserted on its own outputs (equal)",
+   "placeholder_fires": {
+    "P01": {
+     "F": [
+      0,
+      0,
+      0
+     ],
+     "T": [
+      0,
+      0,
+      0
+     ]
+    },
+    "P02": {
+     "F": [
+      864,
+      0,
+      0
+     ],
+     "T": [
+      864,
+      0,
+      0
+     ]
+    },
+    "P03": {
+     "F": [
+      864,
+      0,
+      1080
+     ],
+     "T": [
+      864,
+      0,
+      0
+     ]
+    },
+    "P04": {
+     "F": [
+      1080,
+      0,
+      0
+     ],
+     "T": [
+      1080,
+      0,
+      0
+     ]
+    },
+    "P05": {
+     "F": [
+      1080,
+      0,
+      0
+     ],
+     "T": [
+      1080,
+      0,
+      0
+     ]
+    },
+    "P06": {
+     "F": [
+      1080,
+      0,
+      0
+     ],
+     "T": [
+      1080,
+      0,
+      0
+     ]
+    },
+    "P07": {
+     "F": [
+      900,
+      0,
+      0
+     ],
+     "T": [
+      900,
+      0,
+      0
+     ]
+    },
+    "P08": {
+     "F": [
+      900,
+      0,
+      0
+     ],
+     "T": [
+      900,
+      0,
+      0
+     ]
+    },
+    "P09": {
+     "F": [
+      900,
+      0,
+      0
+     ],
+     "T": [
+      900,
+      0,
+      0
+     ]
+    },
+    "P10": {
+     "F": [
+      0,
+      0,
+      0
+     ],
+     "T": [
+      0,
+      0,
+      0
+     ]
+    },
+    "P11": {
+     "F": [
+      1080,
+      0,
+      0
+     ],
+     "T": [
+      1080,
+      0,
+      0
+     ]
+    },
+    "P12": {
+     "F": [
+      1075,
+      0,
+      0
+     ],
+     "T": [
+      1075,
+      0,
+      0
+     ]
+    },
+    "P13": {
+     "F": [
+      1044,
+      0,
+      0
+     ],
+     "T": [
+      1044,
+      0,
+      0
+     ]
+    },
+    "P14": {
+     "F": [
+      0,
+      1080,
+      0
+     ],
+     "T": [
+      0,
+      1080,
+      0
+     ]
+    },
+    "P15": {
+     "F": [
+      0,
+      864,
+      0
+     ],
+     "T": [
+      0,
+      864,
+      0
+     ]
+    },
+    "P16": {
+     "F": [
+      0,
+      0,
+      0
+     ],
+     "T": [
+      0,
+      0,
+      0
+     ]
+    },
+    "P17": {
+     "F": [
+      864,
+      864,
+      0
+     ],
+     "T": [
+      864,
+      864,
+      0
+     ]
+    },
+    "P18": {
+     "F": [
+      0,
+      0,
+      1080
+     ],
+     "T": [
+      0,
+      0,
+      0
+     ]
+    },
+    "P19": {
+     "F": [
+      864,
+      0,
+      0
+     ],
+     "T": [
+      864,
+      0,
+      0
+     ]
+    },
+    "P20": {
+     "F": [
+      0,
+      0,
+      0
+     ],
+     "T": [
+      0,
+      0,
+      0
+     ]
+    },
+    "P21": {
+     "F": [
+      900,
+      864,
+      0
+     ],
+     "T": [
+      900,
+      864,
+      0
+     ]
+    }
+   },
+   "s81_texts": 1080,
+   "step7_open": 1080,
+   "tuples_per_flag": 1080
+  },
+  "tuples_per_flag": 1080
+ },
+ "closure": {
+  "data": {
+   "data/olmo/a1_repair_roster.json": "c82c6653e4f48375bac0beec124a0774d0a5fe353f2612ada339d9fecde3cfdc"
+  },
+  "modules": {
+   "valence_core/__init__.py": "620ad380f023dc8c173ee4e164a160c0b1da2a0c0b99fb6c9717be0b8c78b604",
+   "valence_core/adapters/__init__.py": "96d6b48dd41710de8c70ce7d5b28854db4810af6693ff8a96f320f773cafed6a",
+   "valence_core/adapters/base.py": "626fbddd8dd970717e929b5bcd87be4e0c83ca8cb889b8451fcb49e2cb091cbf",
+   "valence_core/e2d/__init__.py": "3269faeccf97f55c104e1485ecb9d3d5079d3d5b4ea6c9abda8e761e636a6213",
+   "valence_core/e2d/audit_v3.py": "e4af91e4199154158504361bcc04229456bb9051e4d1ebe661e655c130ea4f02",
+   "valence_core/e2d/config.py": "9e4a9a412122f037b05bb00354f1c5c6ef6a87d769c267d42fa05063c584cb6a",
+   "valence_core/e2d/contentclass.py": "71c73ebefc5c62c5396b6cb3e4462af3c3165c2d8236c7a85a2d9f8ef4155b70",
+   "valence_core/e2d/contentclass_v4.py": "72a8423aeb697c2bcdb7b97d1840107f52052c1e3e3fc0503c73aaa52f9e6cae",
+   "valence_core/e2d/contentclass_v5.py": "5d07eb391f209f0c926a106ccc5a9774753a02e180176e746f91dcb572bf9598",
+   "valence_core/e2d/habit.py": "2d042d98eb0a02bcacd1afddf7aedefe15fb5c601e84b92131aedcdbb66f2ceb",
+   "valence_core/e2d/runner.py": "e784da8593cab45b2d77e9967f2f7ed0c8595c5ddc0d456f4fd591dd3083c2ed",
+   "valence_core/readout.py": "774e5ca359c5671cafd6f7a2d645d040d8eecb9e67944964c0ba074c22483136",
+   "valence_core/session.py": "39a2240a451434b584d89946c634bc6087b51989b9af7b0a9b8e319b087e6397",
+   "valence_core/session_e2a.py": "f1e53db2e9089ed3869e75693474fa6f36eccf667d1f2a4fbe52b4ba1fe73c71",
+   "valence_core/stats.py": "956a650c603b0772ad85db8a3f82c310b9a67bba2e4440ab128ec9ee1e396d8f"
+  }
+ },
+ "closure_sha256": "a3bc7bb9df3d8361bfa803238e61a61a7eef76a6d839540413e53cd7919cb22b",
+ "counters": {
+  "olmo": [
+   {
+    "denominator": "rounds generated",
+    "keys_verdicts": [
+     "arm",
+     "phase",
+     "property"
+    ],
+    "name": "cap_hit",
+    "numerator": "round.cap_hit",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "cap_hit",
+    "unit": "round"
+   },
+   {
+    "denominator": "rounds generated",
+    "keys_verdicts": [
+     "arm",
+     "phase",
+     "category",
+     "property"
+    ],
+    "name": "audit_degenerate",
+    "numerator": "audit.claim == 'audit'",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "audit_degenerate (b3's `AuditSpec`)",
+    "unit": "round"
+   },
+   {
+    "denominator": "rounds generated",
+    "keys_verdicts": [
+     "arm",
+     "phase",
+     "property"
+    ],
+    "name": "harness_echo",
+    "numerator": "audit.claim == 'echo'",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "harness_echo",
+    "unit": "round"
+   },
+   {
+    "denominator": "rounds generated",
+    "keys_verdicts": [
+     "arm",
+     "phase",
+     "property"
+    ],
+    "name": "lexical",
+    "numerator": "audit.claim == 'lexical'",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "lexical",
+    "unit": "round"
+   },
+   {
+    "denominator": "reads taken",
+    "keys_verdicts": [
+     "arm",
+     "read position"
+    ],
+    "name": "low_label_mass",
+    "numerator": "choice.low_label_mass",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "low_label_mass",
+    "unit": "read"
+   },
+   {
+    "denominator": "reads taken",
+    "keys_verdicts": [
+     "arm",
+     "read position"
+    ],
+    "name": "top1_not_label",
+    "numerator": "choice.top1_not_label",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "top1_not_label",
+    "unit": "read"
+   },
+   {
+    "denominator": "rounds generated",
+    "keys_verdicts": [
+     "arm",
+     "phase",
+     "property"
+    ],
+    "name": "termination",
+    "numerator": "round.termination (f's patterns, raw; not a claim)",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "termination",
+    "unit": "round"
+   },
+   {
+    "denominator": "sessions launched",
+    "keys_verdicts": [
+     "arm",
+     "property of the excluding forced round"
+    ],
+    "name": "pre_pick_exclusion",
+    "numerator": "exclusion.phase == 'forced'",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "pre-pick exclusions",
+    "unit": "session"
+   }
+  ],
+  "qwen": [
+   {
+    "denominator": "rounds generated",
+    "keys_verdicts": [
+     "arm",
+     "phase",
+     "property"
+    ],
+    "name": "cap_hit",
+    "numerator": "round.cap_hit",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "cap_hit",
+    "unit": "round"
+   },
+   {
+    "denominator": "rounds generated",
+    "keys_verdicts": [
+     "arm",
+     "phase",
+     "category",
+     "property"
+    ],
+    "name": "audit_degenerate",
+    "numerator": "audit.claim == 'v2'",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "audit_degenerate (v2)",
+    "unit": "round"
+   },
+   {
+    "denominator": "rounds generated",
+    "keys_verdicts": [
+     "arm",
+     "phase",
+     "property"
+    ],
+    "name": "harness_echo",
+    "numerator": "audit.claim == 'echo'",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "harness_echo",
+    "unit": "round"
+   },
+   {
+    "denominator": "rounds generated",
+    "keys_verdicts": [
+     "arm",
+     "phase",
+     "class",
+     "property"
+    ],
+    "name": "content_exclusion",
+    "numerator": "audit.claim == 'content'",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "content_exclusion (v3/v4)",
+    "unit": "round"
+   },
+   {
+    "denominator": "rounds generated",
+    "keys_verdicts": [
+     "arm",
+     "phase",
+     "class",
+     "property"
+    ],
+    "name": "content_advisory",
+    "numerator": "each entry of audit.advisory (v5 advisory classes)",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "content_advisory (v5)",
+    "unit": "round"
+   },
+   {
+    "denominator": "rounds generated",
+    "keys_verdicts": [
+     "arm",
+     "phase",
+     "property"
+    ],
+    "name": "lexical",
+    "numerator": "audit.claim == 'lexical'",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "lexical",
+    "unit": "round"
+   },
+   {
+    "denominator": "free rounds generated",
+    "keys_verdicts": [
+     "arm",
+     "claim",
+     "property"
+    ],
+    "name": "post_choice_degeneracy",
+    "numerator": "free round with audit.claim in {v2, echo, content} (audit.tally's PIN)",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "post_choice_degeneracy",
+    "unit": "round"
+   },
+   {
+    "denominator": "reads taken",
+    "keys_verdicts": [
+     "arm",
+     "read position"
+    ],
+    "name": "low_label_mass",
+    "numerator": "choice.low_label_mass",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "low_label_mass",
+    "unit": "read"
+   },
+   {
+    "denominator": "reads taken",
+    "keys_verdicts": [
+     "arm",
+     "read position"
+    ],
+    "name": "top1_not_label",
+    "numerator": "choice.top1_not_label",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "top1_not_label",
+    "unit": "read"
+   },
+   {
+    "denominator": "rounds generated",
+    "keys_verdicts": [
+     "arm",
+     "phase",
+     "property"
+    ],
+    "name": "termination",
+    "numerator": "round.termination (f's patterns, raw; not a claim)",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "termination",
+    "unit": "round"
+   },
+   {
+    "denominator": "reasoning lines generated",
+    "keys_verdicts": [],
+    "name": "reasoning_line_defect",
+    "numerator": "not tabulated at Q-F0: Q-F3's runner and scorer (G-ANL-F3, step 19)",
+    "q_f3_only": true,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "reasoning-line defects by class [Q-F3]",
+    "unit": "line"
+   },
+   {
+    "denominator": "sessions launched",
+    "keys_verdicts": [
+     "arm",
+     "property of the excluding forced round"
+    ],
+    "name": "pre_pick_exclusion",
+    "numerator": "exclusion.phase == 'forced'",
+    "q_f3_only": false,
+    "scope": "all campaign sessions, excluded included",
+    "spec_name": "pre-pick exclusions",
+    "unit": "session"
+   }
+  ]
+ },
+ "decisions_other_states": {
+  "Q-F3": {
+   "A1": [
+    "PASS",
+    "REVERSE",
+    "DEAD",
+    "INDETERMINATE"
+   ],
+   "A2": [
+    "PASS",
+    "REVERSE",
+    "FAIL",
+    "INDETERMINATE"
+   ],
+   "A3": [
+    "NO-READ",
+    "REVERSE",
+    "POSITIVE",
+    "NULL-x↑",
+    "NULL-x↓",
+    "NULL"
+   ],
+   "A3*": [
+    "NO-READ",
+    "REVERSE",
+    "POSITIVE",
+    "NULL-x↑",
+    "NULL-x↓",
+    "NULL",
+    "CONFIRMED",
+    "DISCORDANT",
+    "UNLICENSED"
+   ]
+  },
+  "built_units": [
+   "PASS",
+   "REVERSE",
+   "DEAD",
+   "INDETERMINATE",
+   "NOT-RUN"
+  ],
+  "other_units": [
+   "Q-F0",
+   "OLMo-sft",
+   "OLMo-dpo",
+   "OLMo-instruct",
+   "Q-F3"
+  ]
+ },
+ "flag_of_record": {
+  "introduced_at": "bab921c",
+  "path": "data/m/gates/G-CAL_model-free.json",
+  "renders_sha_matches_calib": true,
+  "sha256": "aad8096a6aa90ebb6e4bd476e47a9cb40d50e666c1801270031b899abc1834af",
+  "value": true
+ },
+ "gate_stop_stages": {
+  "OLMo-dpo": [
+   "G-CAL",
+   "G-SHAPE-F0",
+   "G-ANL-F0",
+   "G-TIME-OLMo-dpo",
+   "G-F0m-OLMo-dpo"
+  ],
+  "OLMo-instruct": [
+   "G-CAL",
+   "G-SHAPE-F0",
+   "G-ANL-F0",
+   "G-TIME-OLMo-instruct",
+   "G-F0m-OLMo-instruct"
+  ],
+  "OLMo-sft": [
+   "G-CAL",
+   "G-SHAPE-F0",
+   "G-ANL-F0",
+   "G-TIME-OLMo-sft",
+   "G-F0m-OLMo-sft"
+  ],
+  "Q-F0": [
+   "G-PORT",
+   "G-CAL",
+   "G-SHAPE-F0",
+   "G-ANL-F0",
+   "G-TIME-F0",
+   "G-ID-F0m",
+   "G-F0m-Qwen"
+  ]
+ },
+ "not_run_vocabulary": {
+  "clock:gate-stopped": {
+   "cite": "m:324 a gate STOPPED and no re-specification was locked; m:271 a hair-trigger fire anywhere stops the stage; m:275, m:276, m:280, m:281, m:283, m:284, m:302, m:176, m:358",
+   "param": "stage",
+   "phrase": "{stage} stopped and no re-specification was locked by its Clock date ({date})",
+   "units": "both"
+  },
+  "clock:k-zero": {
+   "cite": "m:192 At k = 0 ... the unit is NOT-RUN by its Clock",
+   "phrase": "no valid qualification session (k = 0), so no launch count and no LOCK v1.0 by its Clock date ({date})",
+   "units": "both"
+  },
+  "clock:no-box": {
+   "cite": "m:324 (no box; ...)",
+   "phrase": "no box before its Clock date ({date})",
+   "units": "olmo"
+  },
+  "clock:not-locked": {
+   "cite": "m:347 A Q-F0 not locked by D1 / a checkpoint not locked by D_O is NOT-RUN; m:302 a pause -> the seat's adjudication (residual: the blocking stage had not reached its end; m:324's 'or any reason', the seat's C1)",
+   "param": "stage",
+   "phrase": "{stage} had not reached its end and no LOCK v1.0 was committed by its Clock date ({date})",
+   "units": "both"
+  },
+  "clock:pi-declined": {
+   "cite": "m:324 the PI declined to commit v1.0, for projected hours or any reason",
+   "phrase": "the PI declined to commit its LOCK v1.0 by its Clock date ({date})",
+   "units": "both"
+  },
+  "dose-not-completable": {
+   "cite": "m:324, m:302 NOT-RUN \"dose not completable\"",
+   "phrase": "dose not completable",
+   "units": "olmo"
+  },
+  "no-first-read:cap": {
+   "cite": "m:324 or its cap",
+   "phrase": "no session reached a first read before its hour cap",
+   "units": "both"
+  },
+  "no-first-read:gver-stop": {
+   "cite": "m:324, m:284 a G-VER STOP",
+   "phrase": "no session reached a first read before a G-VER STOP",
+   "units": "both"
+  },
+  "no-first-read:pi-stop": {
+   "cite": "m:324 before a PI stop",
+   "phrase": "no session reached a first read before a PI stop",
+   "units": "both"
+  },
+  "pending-closed-at-v2": {
+   "cite": "m:324 closed there ... else NOT-RUN with the reason recorded",
+   "phrase": "still pending at the v2 posting, with no session",
+   "units": "olmo",
+   "v2_only": true
+  }
+ },
+ "package_sha256": "5f646db6e82c5561ff8a425e91beb5454068a381564894e93d19b9165459d771",
+ "pending_substates": [
+  "unlocked-before-D_O",
+  "locked-running",
+  "restarting-after-box-change",
+  "awaiting-verdicts-session"
+ ],
+ "pins": {
+  "PIN-1": "The analyzer of m:278 is the single file scripts/m_analyze.py: every outcome, unit-state, sentence, counter, secondary and posting computation lives in it. The analyzer's sha256, package_sha256 and the import closure outside the package together bind the verdict logic: the closure is computed mechanically in a fresh interpreter that imports this file and the declared lazy verdict-path module (valence_core.m.stages) -- sha256 of __file__ of every loaded valence_core.* module outside valence_core/m, plus every repository data file opened during those imports -- recorded in G-ANL-F0.json with its sha256; a VERDICTS run whose closure sha256 is not named in its lock is refused (exit 2). stages is imported lazily on the verdict path; guard, testing, corr, scaffold and schedule in the battery only. The gate-line files (the proposal, CLAUDE.md, this file) are logged by stages.gate_line, not bound by the closure. Step 8 edits nothing under valence_core/.",
+  "PIN-10": "The seat's C9(ii) (2026-10-10; m:330's 'at the end' includes an end by STOP): 'the unit's last look' = campaign.end_look, which stages evaluates and records at COMPLETE, CAP, PI-STOP and at the STOP point alike; at a STOP the sentence names it as the STOP's ('the end look at the STOP (at N launches)', or 'look k at N launches, the end look at the STOP' where the end look is the cadence look recorded at N). A STOP-ended campaign with a launch recorded and no end look is a structural refusal at V2, before V3 releases anything (not written by the lock's package); with no launch recorded, 'no look reached'. A fired end look at a STOP is a pause (m:330's 'A fired bar pauses', Code's application) and takes PIN-9's path (Code's reading of C3, flagged for the seat; see PIN-9). Guard results are selected by the unit's declared guard bars. No end-of-data guard is recomputed in the analyzer. Neither moves a verdict (m:316).",
+  "PIN-11": "Counters are declared as m:314's two lists in full (verified verbatim against m:314 and against audit.DECLARED_COUNTERS_* plus the [Q-F3] entry); the [Q-F3] counter is declared, scoped to Q-F3, not tabulated at Q-F0. The counters of record are over the unit's campaign sessions, excluded included, mirroring audit.tally's claim logic (summed over property they equal audit.tally); G-TIME and qualification sessions are tabulated separately as m:271's release.",
+  "PIN-12": "Property keys: round counters by round.property; session counters by the excluding round's property; read counters by arm and read position (no property). Settled by the seat (C7, 2026-10-10; G-PORT A5), where the interim text had named sessions_excluded_any_phase the like-for-like column: f1's 7-vs-1 refers to the per-property table's pre-pick column (sessions excluded before the first read, by property); sessions_excluded_any_phase is reported beside it -- fixed, no longer interim. Whole-session validity: lenient = complete, no exclusion, no hair trigger; strict adds no claim in any round.",
+  "PIN-13": "Secondaries (a), (b), (d) and (e) are built now (m:312, pre-registered), in a separate {unit}_secondary.json, with the 20-event floor and count-only below it. 'Valid through position p' = the choice at p was made and no exclusion-bearing event preceded it. (d)'s habit identity is habit.break_rates(<the arm's domain sessions>) (no `arm` key; frame()'s e2d powered-effect block omitted), b+, bs and the weighted form recomputed in Fractions; the weighted form + 1/2 equals the arm's P exactly.",
+  "PIN-14": "The analyzer of record for a unit is the blob hashed in that unit's LOCK v1.0; the lock names the analyzer's sha256, package_sha256 and the closure sha256, each asserted. When HEAD's three equal the lock's, VERDICTS runs at HEAD with no worktree; otherwise from a worktree of the lock commit with every data input and output passed as an absolute path into the main tree, and only on the PI's word for the worktree (not implemented at step 8). G-ANL-F3's versioning (m:291) is deferred by the seat to before step 19 (C7, 2026-10-10).",
+  "PIN-15": "Label slots: the outcome as the §5 state word; the reason as the PIN-5 phrase; one bracket alternative, plain text.",
+  "PIN-16": "'[passing stages]' = 'the {A} stage' or 'the {A} or {B} stage', in lineage order, with names as m:338 spells them (SFT, DPO, instruct).",
+  "PIN-17": "Confirmed by the seat (C4, 2026-10-10): §8.1 text = one clause per control with a v1 coordinate (A0, A0-OLMo-sft/-dpo/-instruct) with m:343's tokens; A1 belongs to §8.2, 'open' at v1; re-verified against the placed preprint at LOCK v1.0.",
+  "PIN-18": "The ceiling output is its name and its m:334 title, verbatim.",
+  "PIN-19": "Flag of record TRUE iff data/m/gates/G-CAL_model-free.json is committed at HEAD and identical in the working tree, has schema m-gcal-model-free-v1, and carries an f1_012 block; existence-keyed; renders_sha_matches_calib recorded beside, not part of the flag. The battery runs both values.",
+  "PIN-2": "Every decision is exact (Fraction); floats are refused. (iii) is P <= alpha, which equals P < alpha because a dyadic P never equals 1/100 (asserted at n = 80, 96, 213). DEAD iff k < n and P(Bin(n, 13/20) <= k) < 1/40, the exact form of 'CI upper bound on Delta_c < +0.15' (strict; k = n is never DEAD). Displayed Clopper-Pearson bounds are exact bisection on Fractions to width < 1e-8, printed half-up to 4 places, and never decide.",
+  "PIN-20": "Sentence table schema m-posting-sentences-v1, paths and placeholder as PLACEHOLDER_SPEC / PLACEHOLDER_LOC; validation as table_problems (the roster-word refusal dropped, the forbidden-literal check kept). One row per sentence: loc = {line, sentence, section}, sentence the 1-based ordinal of the sentence on its preprint line, so two sentences of one line are two rows; rows in strictly increasing (line, sentence) order; on an of-record or posted table each row's text begins on its declared preprint line (it may run on) and rows sharing a line occur there in sentence order. The table of record's classification is Code's, outcome-blind at LOCK v1.0, values-checked.",
+  "PIN-21": "The enumeration procedure of enumeration(); (c) is two-sided on m:349's own 'iff': strike when the flag is false, carry when the flag is true and no dose-note row exists.",
+  "PIN-22": "S1 ('Answered, as recognition') counts as Answered under clause (a).",
+  "PIN-23": "The tuple is an explicit input, computed at Q-F0 VERDICTS and again at the posting; each entry records the tuple it used. Each coordinate is cross-checked against the unit's own outputs (at Q-F0 VERDICTS for the declared OLMo states, and at the posting): PENDING only with neither output, NOT-RUN only with a NOT-RUN output of the same reason, an outcome state only with a VERDICTS output saying it. The posting never opens a checkpoint.",
+  "PIN-24": "The battery reaches every per-arm outcome per unit, the full 5 x 6^3 product under both flag values (the flag an input, not a coordinate), and a reader-path subset built by the production writers on the stub. The 1,080-tuple pass uses 'clock:pi-declined' for every NOT-RUN coordinate; every other code is exercised in the NR group, and a further pass over the 1,080 tuples gives each unit a distinct reason (per-unit routing against the oracle). Each flag value's T10 tallies are taken from that flag's own outputs. A coverage registry and a fixed check count make any skip a failure.",
+  "PIN-25": "Outputs: data/m/gates/G-ANL-F0.json (step 8; the 2,160-row output table is not committed -- its sha256 is recorded and it regenerates byte-identically); data/m/verdicts/{unit}_VERDICTS.json, _secondary.json, _NOT-RUN.json, and the posting's POSTING-v1_outputs.of-record.json (the enumeration over the table of record) and POSTING-v1_outputs.posted.json (its re-run on the posted text, m:278, m:73) -- named by the table kind, so both records of one posting are written. The .gitignore admit block (and any -diff) for data/m/verdicts/ is deferred to the commit that first writes there. All write-once, timestamp-free, json_text(indent=1).",
+  "PIN-26": "Exit codes: --selftest 0/1; ganl 0 written or identical, 2 refused, 4 STOP (a closure that cannot be computed included -- every SystemExit of ganl maps through the same rule); verdicts, not-run, posting 0 written or identical, 2 refused (decided before any pick is interpreted, write-once or exclusivity, or an input that is not a JSON object); posting also 5: FAIL against C7's bar on the posted text's re-run, nothing written (PIN-44; the code is Code's, added at LOCK v1.0); 4 STOP (a content assertion after reading; any other SystemExit maps to 4).",
+  "PIN-27": "The abstract clause is emitted verbatim even where its host sentence is enumerated under (a); the entry notes that it can dangle.",
+  "PIN-28": "The analyzer runs guard.check_call_sites and the forbidden-literal grep over itself in its battery, both directions.",
+  "PIN-29": "During --selftest and ganl, an open hook (builtins.open, io.open, Path.open/read_bytes/read_text) refuses any path under data/m/ckpt, data/m/reports, data/m/verdicts or results/raw; the no-canonical-write snapshot hashes data/m files outside those directories and takes only os.stat of files inside them (never their bytes).",
+  "PIN-3": "Attained power of record = P(PASS under (i)-(iii) at alpha .01), enumerated exactly at m:190's base case at the realised n: the arm's realised domain n split floor(n/2) on map 0 and ceil(n/2) on map 1 at clean share .70, the sham pooled at its realised domain m at .5. The figure at the realised map split is reported beside, labelled. Both are 0 when a map or the sham is empty. Descriptive only. Accepted by the seat (C6, 2026-10-10) as the declared base-case computation, re-derived at G-PWR (step 15) with the planned floors, where the realised-n figure becomes the figure of record (m:190).",
+  "PIN-30": "STUB_MARK provenance is accepted only by the battery's internal path. The CLI refuses it.",
+  "PIN-31": "The proposal sha256 is pinned in the analyzer. Every m-verbatim constant is verified against the proposal file at run time.",
+  "PIN-32": "VERDICTS and NOT-RUN outputs carry the G-TIME and qualification contrast first picks (by role) and the released free-round events from {unit}_time.json and {unit}_qual.json, tabulated beside, never merged into the counters of record. G-ID sessions are not re-reported.",
+  "PIN-33": "Pre-pick exclusion rate = sessions excluded at the forced phase (stages._prepick's definition, asserted equal both directions) / campaign session records of the arm (launched) -- the guard's own denominator; a G-VER-quarantined record is reported beside, not counted.",
+  "PIN-34": "A record whose domain disagrees with its forced rounds, or whose first_free_pick_P disagrees with its first choice, is a STOP (exit 4), not a refusal.",
+  "PIN-35": "m:318's decisions taken with another unit's outcome known are a required declared input (the not-run record's key; verdicts' --decisions file), [{decision, date, other_unit, other_state}] (may be empty), carried verbatim into {U}_VERDICTS.json / {U}_NOT-RUN.json; a missing key is refused. other_unit is any other unit of m:324 (Q-F0, an OLMo checkpoint or Q-F3); other_state its known outcome -- a built unit's §5 state word or NOT-RUN, Q-F3's 'NOT-RUN' or {A1, A2, A3[, A3*]} in m:326's and m:340's words; PENDING is refused (no VERDICTS exist, m:318).",
+  "PIN-36": "Signed values print as an ASCII sign ('+' for zero) then bars._dec of the magnitude, half-up on the magnitude: -1/20 -> '-0.0500', +1/20 -> '+0.0500'.",
+  "PIN-37": "Write-once supersession: an artifact that must be replaced (a seat strike of a PIN, a re-specified input) is moved aside by hand with `git mv` to a dated superseded name on the seat's ruling, recorded in an entry; a re-run on unchanged inputs is byte-identical.",
+  "PIN-38": "`not-run` takes the Clock causes and 'dose not completable'; no-first-read causes come from the campaign checkpoint through `verdicts`; pending-closed-at-v2 is refused at v1 (v2's, G-ANL-F3). Its refusals (a gate stage's unit / stage, end and stub provenance included) are decided before any gate record is released or read.",
+  "PIN-39": "The canonical `ganl` run writes G-ANL-F0.json against committed blobs only (rule 27): the analyzer, the placeholder, the proposal, every valence_core/m/*.py and every closure file must be committed at HEAD with identical working-tree bytes, else exit 2 before the battery; a --out test directory is exempt.",
+  "PIN-4": "The verdict sentence is the clauses of SENTENCE_TEMPLATES in order (state or 'no read obtained' with its sub-reason; counts per map; P, Delta_c, CP CI; E and P_arm - P_sham; both one-sided p's; REVERSE's phrase; pre-pick rates of arm and sham; the guard at the unit's last look; shortfall and attained power -- the figure of record, the realised-split figure beside -- only when an arm is below its floor, m:247). Attained power is always in the VERDICTS output (m:190). The absolute guard prints 'fired / not fired (binding)' on Qwen and 'P <= alpha / P > alpha (reported only)' on OLMo.",
+  "PIN-40": "LOCK-m-F0 v1.0 hashes the sentence table of record and the preprint of record (m:286): Q-F0's VERDICTS refuses unless the lock text names the table's sha256 and its preprint's sha256. The posting's of-record table, when a Q-F0 output of `verdicts` records one (its VERDICTS, or a locked unit's no-first-read NOT-RUN), must be that table (and so the lock's); on Q-F0's Clock NOT-RUN path the table of record is built at the posting (m:278, m:286) and no lock binds it; a posted-kind table (the re-run on the posted text) is hashed by no lock.",
+  "PIN-41": "m:324's exclusivity is enforced at write time: `verdicts` never writes {U}_VERDICTS.json beside an existing {U}_NOT-RUN.json nor {U}_NOT-RUN.json beside an existing {U}_VERDICTS.json / _secondary.json, and `not-run` never writes beside an existing {U}_VERDICTS.json (exit 2, nothing written); the posting refuses a unit carrying both.",
+  "PIN-42": "`not-run` and `posting` bind their outputs as `verdicts` does short of a lock (neither has one): each refuses (exit 2, before any input is read) unless the proposal is the pinned v1.11 and this file is committed at HEAD with identical working-tree bytes, and records analyzer_sha256, package_sha256 and closure_sha256 in {U}_NOT-RUN.json / POSTING-v1_outputs.*.json (rule 27). Code-added at step 8 (a binding the spec does not state); confirmed by the seat (C5, 2026-10-10).",
+  "PIN-43": "every declared date (a NOT-RUN record's, a declared OLMo NOT-RUN state's, a PENDING declaration's Clock comparison, a decision's) is an ASCII YYYY-MM-DD that is a real calendar date (non-ASCII digits, the basic and week forms and impossible days refuse); a NOT-RUN record's and a declared NOT-RUN state's date are checked whatever the cause. Confirmed by the seat (C5, 2026-10-10), Code's fixes ratified. For a no-first-read NOT-RUN declared in --olmo-states the date is the calendar date of the terminal event that made the NOT-RUN final -- the PI stop, the G-VER STOP, or the day the cap was reached -- as that unit's entry records it; where the unit's own output carries no date, the declarer supplies the entry's.",
+  "PIN-44": "Declared at LOCK v1.0, built at step 15 on the seat's round-2 item 3 (a) (lock §9.6): \"the `posting` command renders PASS/FAIL against the bar (PASS iff the enumeration under (a), (b) and (c) is empty and the dose note is present iff the flag); and it compares the posting re-run's enumeration with the VERDICTS enumeration with the PI's rewrites applied (a declared input: the rewrite list, by row id), reporting any row that differs.\" The bar reads the posted table's declared classification (the seat: \"no analyzer reads prose\"). Code's readings: C7's bar is \"The pass bar for the posting's re-run on the posted text\", so it is rendered on a run whose table kind is posted; an of-record run records it as not applicable, with that reason, and takes no rewrite list (an empty --rewrites is a given path: refused there, and refused as unreadable on a posted run). The rewrite list is a declared input, posting --rewrites PATH: {schema m-posting-rewrites-v1, posting v1, rows: [row_id, ...]}, exact key set, rows distinct non-empty strings (may be empty); required on a posted run and refused on an of-record run (exit 2); committed at HEAD with identical working-tree bytes (the sentence table's rule) and read only after PIN-42's binding; its path and sha256 recorded in inputs.rewrites. PASS iff (i) this run's enumeration is empty and (ii) the dose note is present iff the flag of record, (ii) computed from dose_note's own status (present iff dose_note(True, table) is 'carried': the table carries a dose-note span), not only through clause (c). The comparator (\"the VERDICTS enumeration\") is Q-F0's VERDICTS output in the verdicts directory, its stored v1_outputs enumeration; where that file does not exist (Q-F0 NOT-RUN: on its Clock path the table of record is built at the posting, m:278, PIN-40; a no-first-read NOT-RUN from `verdicts` records no enumeration either), the posting's own of-record output in the out directory, its outputs' enumeration. Refused (exit 2): neither; a comparator that is not what it is taken for (a VERDICTS file whose schema is not m-verdicts-v1 or whose unit is not Q-F0; an of-record output whose schema is not m-posting-v1-outputs-v1 or whose table_kind is not of-record); one recording no enumeration (an item that is not an object, or does not carry exactly enumeration()'s fields, a str row_id and a list clauses among them, included); one naming a row id twice. Its kind, path, sha256 and stored tuple (None where it stores none, or one that is not an object) are recorded, with whether that tuple is this run's (same_tuple: informational, it decides nothing). Expected = the comparator's rows less those the rewrite list names; actual = this run's enumeration; reported: only_actual, only_expected, changed (in both, the two enumeration items differing in a field other than loc), moved (in both, the two items differing in loc alone: informational, as a line added or removed in the posted text moves every later row), rewrites_not_in_comparator (informational) and differs (any of only_actual, only_expected and changed). The comparison is reported; it does not decide PASS / FAIL. A PASS writes once (identical on a re-run; exit 0). A FAIL writes nothing, so its stdout is the record of that step: the verdict, the residue by row id and, row by row, each residue item in full as the enumeration carries it (row_id, loc, clauses, a, b, c, treatments; no tag, pick or free-round event is in an item), each comparison set (moved included) with its rows in full, and the unwritten record's declared tuple (with its reasons and pending), inputs (path and sha256 each), comparator, flag and binding (the analyzer's, package's and closure's sha256), in sorted-key JSON; it exits 5 (PIN-26). The output gains `bar` {applies, verdict, enumeration_empty, dose_note_iff_flag, residue, comparison}; `outputs` is unchanged.",
+  "PIN-45": "Declared at LOCK v1.0, built at step 15 on the seat's round-2 item 3 (lock §9.6), which orders \"(b) a fired end look without a matching pause\" built \"as VERDICTS refusals\" that \"guard the checkpoint against a hand edit\". Code's reading, mirroring the writer's invariants in stages (_campaign_end, _stop_end_look, run_campaign's cadence-look pause; stages writes a pause's adjudication only on a resume, and an ended campaign is never resumed): an end look is fired iff its `fired` is true, or any of its results is fired, or -- where it reuses cadence look k (end_is_look k) -- look k as ck.looks records it is fired (its result's `fired` or any of its results'); a hand edit clearing one of these beside another is still a fired end look. Its bars are the names of its fired results, in order. A pause raised at the end -- a fresh end look's (no end_is_look; terminal or STOP), or a reused look k's at a hair-trigger STOP on a multiple of 40, where the hit pre-empted the cadence pause -- is matched only by the campaign's last pause being {kind end_look, look 'end' (fresh) or kind look, look k (reused), at_launches the end look's, bars its fired bars} with no adjudication: an ended campaign's end pause is never adjudicated in the checkpoint, and its ruling enters only as PIN-9's declared --adjudication file. A reused look k's at a terminal or G-VER end is matched by some pause {kind look, look k, at_launches the end look's, bars} carrying a str adjudication -- raised before the end and ruled before the end, through stages: by the seat's adjudication, or by the PI's stop text recorded as the pause's ruling (stages.py:2124-2129); a schedule_exhausted pause may follow it at the same n. kind, look and at_launches are compared by value and exact type, as the writer writes ints and strs (a count 6.0 is not 6). The rule is chosen by the end's class as the checkpoint records it: STOP iff a stop block is recorded, else the terminal block's status (resume.ended_status); a STOP's bar G-VER or the hair trigger, any other refused after PIN-8 whichever rule is chosen. What no other V2 check pins is checked here, for a fired end look at a STOP, by ids only (no pick-bearing field is read), against the writer's own assertions (stages._stop_end_look): a hair-trigger STOP's (template, s) is the last session recorded, a G-VER STOP's (template, s) none of them (its record is quarantined in the stop block). Otherwise a structural refusal at V2 (exit 2; nothing released or written), after PIN-46's and before PIN-9's branch, so that a deleted pause is never read as no pause. An unfired end look needs no pause; none is checked. Its limits, Code's reading too: an end look with every fired flag cleared -- a fresh one, or a reused one together with the look it reuses as ck.looks records it -- cannot be told at V2 from a silent one without recomputing campaign_look from the session records, which are pick-bearing until V3 (PIN-7's order); and a hair-trigger STOP at a reused look whose stop block is replaced by a terminal PI-STOP, its end pause given a ruling, has the shape of the PI's stop of a paused look at n, which ids cannot tell apart; and a hair-trigger STOP whose stop block is relabelled G-VER with its (template, s) moved to an id not recorded (at a reused look, its pause given a ruling) passes, as V2 checks a G-VER STOP's id only against the record, as the writer asserts; moved to its arm's next launch (s the count of that template's sessions recorded) it has the shape of a G-VER STOP there, which ids cannot tell apart. No V2 refusal catches any of the three.",
+  "PIN-46": "Declared at LOCK v1.0, built at step 15 on the seat's round-2 item 3 (lock §9.6), which orders \"(c) the end look's launch count\" built \"as VERDICTS refusals\" that \"guard the checkpoint against a hand edit\". Code's reading: wherever campaign.end_look is recorded, at every end that records one (STOP and terminal alike; Code's round-2 block had scoped it to the STOP), its at_launches is an int (exact type: a bool or a float is no launch count) equal to len(sessions), the launches recorded (a G-VER record is quarantined in the stop block, never a session); provenance `launched` sums are never used. An end look reusing cadence look k (end_is_look k) carries that look's launch count too: ck.looks must record a look k (its result's look, by value and exact type) whose at_launches is the end look's (an int, by exact type too), as the writer reuses only the look recorded at n. Otherwise a structural refusal at V2 (exit 2; nothing released or written), after PIN-10's and before PIN-45's, so that each refusal shows its own message on its own case.",
+  "PIN-5": "NOT-RUN cause codes and reason phrases as NOT_RUN_CAUSES tables them (Code-authored, accepted with their precedence by the seat, C6, 2026-10-10; the PI rewrites at posting). The record names one primary cause (the earliest) and lists the others in `also`; the label prints the primary. The <stage> of clock:gate-stopped and clock:not-locked is one of gate_stop_stages(unit): Q-F0 G-PORT, G-CAL, G-SHAPE-F0, G-ANL-F0, G-TIME-F0, G-ID-F0m, G-F0m-Qwen (G-ID-F0m's divergence only sends Q-F0 uncached, m:281, but a hair-trigger fire or a G-VER failure stops it, m:271, m:284); OLMo-c G-CAL (it serves all units, m:176, m:276; the OLMo track starts at step 9, m:300, m:358), G-SHAPE-F0, G-ANL-F0, G-TIME-OLMo-c, G-F0m-OLMo-c. clock:not-locked is the residual Clock cause (m:347 is unconditional): the blocking stage had not reached its end (a pause awaiting the seat's adjudication, m:302; a gate still open) -- confirmed by the seat (C1, 2026-10-10): m:324's parenthetical ends 'or any reason', so its list is not exhaustive by its own words; clock:not-locked:<stage> is a reading of that clause, not an addition to it.",
+  "PIN-6": "PENDING is a declared input {state, substate, clock_passed, date}, substate in {unlocked-before-D_O, locked-running, restarting-after-box-change, awaiting-verdicts-session}; refused for Q-F0, refused with clock_passed for unlocked-before-D_O, refused where a VERDICTS or NOT-RUN output exists. clock_passed and the date the comparison was made on (YYYY-MM-DD) are recorded as given -- in the posting output's pending block and in Q-F0's VERDICTS (olmo_states_declared). The boundary-day comparison is settled by the seat (C7, 2026-10-10): a unit's LOCK v1.0 is 'committed by its Clock date' iff the commit's committer date, in UTC, falls on or before the Clock date (the day inclusive, to 23:59:59 UTC); it remains a declared input.",
+  "PIN-7": "VERDICTS reads one unit's declared campaign, G-TIME and qualification checkpoints after refusals decided before any pick is read (unit; pinned proposal; this file and the lock committed at HEAD; analyzer, package and closure sha256s named in the lock; the decisions input; Q-F0's table of record and OLMo states), then on structure (ended, no end pending, an adjudicated last pause, a G-VER or PI-stop-disposed STOP, the lock's sha, floors recorded for both arms, one backend identifier across launching invocations, an OLMo identity carrying its pod id -- a pod splice is refused at write time by resume -- and no stub provenance). It calls readrule.release_full, writes once, and prints after writing. A unit NOT-RUN by §5's no-first-read cause gets {U}_NOT-RUN.json from this command.",
+  "PIN-8": "Confirmed by the seat (C2, 2026-10-10; m:316's path -- an adjudication 'may end in a PI stop (terminal, analyzed as obtained)' -- applied to the hair triggers): a campaign ended by a scaffold_absorption hair-trigger STOP is refused unless a declared PI-stop record (m-pi-stop-record-v1 naming the unit and the campaign checkpoint's sha256; path and sha256 recorded) is supplied; with it, m:324's PI-stop rule applies (no first read: NOT-RUN no-first-read:pi-stop; otherwise analyzed as obtained). Whether an adjudicated fire may instead resume is for the adjudication, if one arises; nothing is built for it. A G-VER STOP is a PI stop by m:284.",
+  "PIN-9": "Confirmed by the seat (C3, 2026-10-10): VERDICTS refuses while the campaign's last pause is unadjudicated; the seat's adjudication enters as a declared --adjudication file (m-verdicts-adjudication-v1 naming the unit, the checkpoint's sha256 and the pause's kind and launch count), its path and sha256 recorded. Code never self-adjudicates. The seat's C9(i): the adjudication of a fired end look on a terminal campaign enters as that declared --adjudication file; stages.py need not record it. Code's reading, flagged for the seat: a pause raised at a STOP (when the end look the seat's C9(ii) orders there fires; the pause is Code's application of m:330) is the campaign's last pause, so C3's route covers it too."
+ },
+ "placeholder": {
+  "path": "data/m/gates/m_posting_sentences.placeholder.json",
+  "sha256": "b1cce4f844f78e45ab2a8465699fb70a96321a21415abd66f6bad6fd1dae4a0b"
+ },
+ "proposal": {
+  "path": "PROPOSAL-m-gating-campaign-v1_11.md",
+  "sha256": "42ab36ecc814c9c43d4e7a6e12a4b1c0c006c3881f88ae1458524b9d9fc96c6b"
+ },
+ "schema": "m-ganl-f0-v1",
+ "seat_routed": {
+  "PIN-17": "routed before LOCK v0.1; ruled by the seat (C4, 2026-10-10): confirmed",
+  "PIN-5": "routed before LOCK v0.1; ruled by the seat (C1, 2026-10-10): confirmed -- m:324's parenthetical ends 'or any reason'; clock:not-locked:<stage> reads that clause",
+  "PIN-8": "routed before LOCK v0.1; ruled by the seat (C2, 2026-10-10): confirmed",
+  "PIN-9": "routed before LOCK v0.1; ruled by the seat (C3, 2026-10-10): confirmed; C9(i) for a fired end look's adjudication on a terminal campaign"
+ },
+ "spec": "PROPOSAL-m v1.11 §3.1 m:278; §8 step 8 m:358",
+ "stage": "G-ANL-F0",
+ "templates": {
+  "abstract": {
+   "all": "and not at the SFT, DPO or instruct stage of the OLMo lineage",
+   "none": "; the OLMo lineage's post-training nulls are reported as concluded, not answered (§5.5)",
+   "some": "and, on the OLMo lineage, not at the [passing stages]"
+  },
+  "label_prefixes": {
+   "f0": "concluded, not answered — the told control at F0 on this substrate ",
+   "olmo": "concluded, not answered — the told control at this stage "
+  },
+  "labels": {
+   "S1": "Answered, as recognition",
+   "e2b": "concluded, not answered — no told control at a state-present read; leakage certification π̂_d = 0.0172, exact 95% CI [0.0086, 0.0305], against the 0.0735 bar reported beside",
+   "olmo-base": "concluded, not answered — told control not run at base, by decision (7′)",
+   "weight": "concluded, not answered"
+  },
+  "s81_tokens": {
+   "DEAD": "DEAD",
+   "INDETERMINATE": "INDETERMINATE",
+   "NOT-RUN": "not run",
+   "PASS": "PASS",
+   "PENDING": "pending",
+   "REVERSE": "REVERSE"
+  },
+  "sentence": {
+   "E": "E = {E} from {sham} ({j}/{mS} domain sessions, P_sham = {PS}); P_arm − P_sham = {diff}",
+   "P": "P = {k}/{n} = {P}; Δ_c = {delta}, two-sided Clopper–Pearson 95% CI [{lo}, {hi}]",
+   "counts": "n = {n} domain sessions of {launched} launched (map 0: {k0}/{n0}, map 1: {k1}/{n1} on the clean-role label)",
+   "floor": "below floor: {arm} {n}/{fc}, shortfall {x}; {sham} {mS}/{fsh}, shortfall {y}; attained power {pw} at the realised n (m:190's base case: n/2 per map at P = .70, the sham pooled at .5, α .01); {pwr} at the realised map split",
+   "guard": "the guard at the unit's last look ({label}): Fisher one-sided vs {sham} p = {pf}, {ff} (binding); absolute vs .20 p = {pa}, {fa} ({ab})",
+   "head": "{arm} ({unit}): {state}",
+   "noguard": "the guard at the unit's last look: no look reached",
+   "noread": "{arm} ({unit}): INDETERMINATE, no read obtained ({why})",
+   "noread_contrast": "the arm has no domain session",
+   "noread_sham": "its sham {sham} has no domain session, so E is undefined",
+   "prepick": "pre-pick exclusion rate {a}/{A} = {r} beside {sham}'s {b}/{B} = {rs}",
+   "reverse": "instruction inversion; reported; not-PASS for licensing",
+   "tests": "exact one-sided binomial vs 0.5: p = {pu} toward clean, p = {pd} toward corrupted, α = .01"
+  },
+  "titles": {
+   "Fallback-1": "Marked, expressed, remembered, not acted on",
+   "Fallback-2": "Marked, expressed, remembered",
+   "Main": "Functional for the Character, Not for the Network"
+  }
+ },
+ "verdict": "PASS"
+}

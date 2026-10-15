@@ -21,6 +21,183 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-10-15 — **STEP 15'S SECOND ANALYZER ROUND, THE TABLE'S DRAFT AND THE G-ANL-F0 RE-RUN (PROPOSAL-m v1.11 §8 step 15;
+  the seat's step-15 answers, "The order from here" item 2 and item 3's re-run; the PI's routing and "placed" of
+  2026-10-14).**
+  - **The round:** committed at `ed8e886`.
+    - The analyzer: sha256 `522e8057…fd3c` →
+      `655e0f7f6743d0bf497f5ba97ce37f7febf9fcf6a45e068b5385ee945c5dc16f`.
+    - The placeholder table: `b1cce4f8…4a0b` → `44f1a2d42064fd1bb295b5988082619316fb3db8a200792147f5e4e854db0af9`.
+  - **G-ANL-F0 re-runs on it:** PASS, 448/448, manifest sha256
+    `2ad451752167a1fe7da8c3d3d1d801f8cfcfda4e263deb60b36a2c0305aecf7a`. The manifest of record `1dae14b9…ff66` was moved
+    by hand with `git mv` to `data/m/gates/G-ANL-F0.superseded-2026-10-15.json`, then unstaged, and is committed with
+    this entry (PIN-37).
+  - **The preprint of record,** patch v8 (`45b67246…7a41`), placed by the PI, is committed by path at `1523cce`.
+  - **Unchanged:** nothing under `valence_core` changed; G-SHAPE-F0 does not re-run (D3). Model-free throughout.
+
+  **Next, in the answers' order:**
+  1. the table of record, values-checked and hashed (item 3);
+  2. the v1.0 draft naming `655e0f7f…c16f` and the table (item 4);
+  3. G-PWR on the uncached path with r = 18/24, on Q7's methods (item 5);
+  4. the PI's cap and v1.0's commit, its committer date on or before 2026-10-30 (item 6).
+
+  Code's step-15b questions go to the seat through the PI (below). None holds an item, except as the ping's Q2 and Q4
+  state for a patch v9 or a strike. **Until a lock revision (v1.0, on R2 3's sequencing) names `655e0f7f…c16f`, every
+  non-stub stage refuses at its start (lock §9.3).** (Stamp: `date -u` → **Thu Oct 15 04:13:56 UTC 2026, first write; Thu Oct 15 04:51:11 UTC 2026, after values-check pass 1; Thu Oct 15
+  05:24:54 UTC 2026, after pass 2; Thu Oct 15 05:54:22 UTC 2026, after the targeted third check**.)
+
+  - **The words.**
+    - The PI's routing of the seat's answers (2026-10-14, verbatim): "PI 1: patch v8 of the root copy is coming from the
+      seat today; hold the table until I say “placed.” PI 2: PREPRINT-v1_1-draft.md is at root, untracked, as the
+      reference. PI 3: commit the decisions block. PI 4: proceed in the answers’ order; v1.0’s commit waits on my cap."
+      The answers and the decisions block are committed at `5dca58b`; that commit's message renders the routing with
+      straight quotes, and the text here is the PI's.
+    - The PI's "placed" (2026-10-14, verbatim): "the preprint of record is placed — PREPRINT-v1_0-draft.md at root, patch
+      v8, sha256 45b67246f2b2bcb40774e95462ad4e3c5f559fdd0358387cceec0155bebe7a41 (patch v5’s five items on the audited
+      v7 copy; its header note lists the gated sentences). Build the table from it, inside the analyzer round the seat’s
+      answers order; PIN-17 re-verified against it there."
+    - The seat's order (the short form): "(i) R3M-5's ids-only class check at every STOP (Q2), (ii) the stale PIN texts
+      corrected (Q5), (iii) PIN-45's text stating the stop→terminal route's wider scope, and (iv) PIN-17's anchor
+      re-verified against the placed copy (Q3) if the PI places it before the round closes. Nothing else enters the
+      analyzer". Q6: the table's draft and `table_problems` "before the round this file orders commits".
+  - **The round's edits** (scripts/m_analyze.py; the review raw lists the builds of record, base and r1–r7, with their
+    sha256s):
+    - (i) PIN-45's class check runs at every STOP whose stop block is an object, after PIN-46's refusal and before the
+      pause rule, with or without an end look. It refuses no checkpoint the writer writes.
+    - (ii) PIN-9's and PIN-10's clauses credit the reading to the seat in Q5's words, "the seat's by R2 2 (2026-10-10)"
+      (PIN-9's sentence opens "The seat's"). PIN-7 and PIN-10 name PIN-46 and PIN-45.
+    - (iii) PIN-45's stop→terminal limit is stated at a silent end look, at a fresh fired one given the seat's
+      adjudication, and at a reused look.
+    - (iv) PIN-17 is re-verified against v8, its anchor corrected in Q3's words; SEAT_ROUTED's PIN-17 entry names Q3.
+    - The table's one need: the kind `s8.1-a1-a3` (Q3: "A1–A3 take their own kind").
+    - Code's additions beyond the order's letter are put to the seat (the ping's Q4).
+    - Battery 444 → 448 checks, coverage ids 457 → 461: C3-STOP-CLASS-EVERY, C3-STOP-CLASS-ORDER,
+      C3-STOP-CLASS-OTHER-BAR and STR-PIN-STEP15-TEXTS. STR-PIN-V10-TEXTS is extended to the answers' Q2.
+  - **The placeholder.**
+    - The new kind is in its `kinds_vocabulary`, so its sha256 moves by that one line.
+    - It is committed with the analyzer, since the battery and PIN-39 need it.
+    - LOCK-m-F0.md :523 and :1556 (in its v0.1 text) name `b1cce4f8…4a0b`. The re-run names `44f1a2d4…0af9`, and v1.0
+      is to name it (the ping's Q3).
+    - The step-15 entry's reading "on Code's reading the table needs none" (below) is superseded by this kind, on Q3 and
+      Q6. Its "The round made no `KINDS_VOCAB` or schema change" stays true of `b046b16`.
+  - **PIN-17's re-verification (Q3).** The substance holds; the anchor is corrected; nothing re-opens C4.
+    - v8 §8.1 (:268–:280) holds A0 (:270), A0-OLMo at SFT, DPO and instruct (:272), and A1, A2, A3 (:274–:278).
+    - §8.2 (:282) is the Tagliabue arms.
+    - s81_text's four clauses match the four v1 controls.
+    - Step 7 is "open" at v1 (m:343's §5.7 is v2's).
+  - **The table's draft** (`results/raw/2026-10-15_m-table-draft-step15.txt`; the draft v2, sha256 `4ddcc640…86b3`):
+    - **What it is:** 56 rows from the 730 sentences of v8, under Code's spec. Its rules were declared before the
+      classification of record (between the stopped first run and it, Code corrected the spec's unit citations, as
+      the review raw's SET ASIDE records). Its kinds map was edited afterwards, on the final review's FIN-FID-9
+      (the exact row lists, with s7.1-title's description narrowed to the main thesis, the adjudicator's reading;
+      s7.5-first's mapping stated as Code's reading; s8.1-a1-a3's placed-copy coordinates noted), and the segmenter's
+      §8.1 section labels were corrected (F6). No row's fires changed, and Code's dispositions record no rule change.
+    - **How it was made:** three independent classifiers, an adjudicator and two critics. Code's assembly is logged in
+      the review raw: 61.3 added from the completeness critic, and e2b, or e2b and the base row, added to seven rows on
+      the classification critic's challenge.
+    - **The check:** `table_problems` on the committed analyzer returns []. No further KINDS_VOCAB or schema need.
+    - **The finding:** 16 rows fire clause (a) in every tuple, through e2b or the OLMo base row, against v8's header
+      note; seven of them only through Code's assembly (30.2, 33.2, 186.2, 236.1, 248.2, 254.2, 276.5). The ping's Q1
+      and Q2 put the rule and the finding to the seat.
+    - **Not the table of record (Q6):** that is values-checked and hashed after this re-run. Its values-check is to
+      assert what the schema does not: ids from their loc, texts equal to their units, no duplicate kinds or cells, int
+      bytes and lines, the exact path.
+  - **Review** (the review raw, verbatim):
+    - **Round 1** on r1: three lenses (fidelity, refusals probed, battery and mutation), each with a strict refuter.
+    - **Round 2:** an independent check of r3 against Code's dispositions, with a refuter.
+    - **Round 3:** the final review of r6, each lens with a refuter: whole-round fidelity, including PIN-17 on v8; and
+      battery, placeholder and draft.
+    - **Dispositions and sweep:** Code's dispositions of every finding, and a seat-citation sweep of every added
+      citation (one loose attribution, fixed).
+    - **The final batch** on the committed blob covered last round's whole list, every mutant this round wrote, and
+      re-expressions where a later round moved the target. 492 runs, 404 distinct mutated files (403 mutants and one
+      print-only probe). Of the 403:
+      - 362 killed;
+      - 15 equivalent, each with its reason;
+      - 26 accepted gaps of three declared classes: 6 of last round's R3-F2, 3 battery-internal, and 17 review-only
+        texts (PIN register texts among them, which the manifest's `pins` records and no check holds).
+
+      No non-equivalent mutant of the analyzer's logic survives. The 15 equivalents are equivalent, each with its
+      reason (the same outcome on every input the analyzer can reach, or a redundant battery assertion); the 26
+      accepted gaps edit texts or the battery's own inputs and assertions, and a PIN register text among them changes
+      only what the manifest's `pins` records.
+    - **Where it ran:** every analyzer build, probe and mutant ran in scratch clones of HEAD, with `data/m/ckpt/*.json`
+      removed unread, under step 12's net. The table's builder (model-free) ran on the main tree's placed copy. No agent
+      opened data/m/ckpt/*, data/m/reports/* or the G-F0m-Qwen stage raw.
+    - **Disclosed:**
+      - The first table workflow was stopped a few minutes in. Its spec cited units by a segmentation that an
+        abbreviation fix had since renumbered, so Code corrected the spec's citations and relaunched it fresh, with no
+        cached result reused and nothing of the stopped run used.
+      - The draft's first build (v1, `3a529f05…711b`) ran the builder with -I, which drops the net; a netted rebuild
+        reproduced it byte for byte (the final review's battery refuter). v2, the netted build on r7, differs from v1
+        only in seven rows' §8.1 section label (F6), and the two reports are byte-identical.
+      - Battery runs r2a, r2b and r7a failed on Code's own label text.
+      - The batch's clones are of `5dca58b` (the baseline and 66 runs) or `1523cce` (426 runs): the preprint's commit
+        landed mid-batch. The battery reads no root preprint.
+  - **Corrections to the committed records of `ed8e886`** (its message and raws cannot be edited):
+    - The review raw's "fixed before any review" is loose. r2a and r2b ran on drafts of r2 (round 1's dispositions),
+      after round 1's review and before round 2's; r7a ran on a draft of r7, after the final review. Each was fixed
+      before its passing run (r2c, r7b).
+    - The review raw's "5dca58b (67 runs)" counts the baseline.
+    - The review raw's "No mutant of analyzer behaviour survives" (:68; the commit message's lowercase "no mutant of
+      analyzer behaviour survives") is to be read as "no non-equivalent mutant of the analyzer's logic survives": the
+      26 accepted gaps edit texts (PIN register texts among them, which change only what the manifest's `pins` records)
+      or the battery, and the 15 equivalents are equivalent, each with its reason.
+    - The review raw's "Every build, probe and mutant ran in scratch … copies of HEAD" (:17) is of the analyzer's
+      builds; the table's builder ran on the main tree, its first build without the net. Its "the critics' seven
+      additions of e2b or the base row" (:54) are all the classification critic's. Its "the two reports are identical
+      but for the §8.1 section labels" (:100): the reports are byte-identical, and the two tables differ in seven rows'
+      labels.
+    - The commit message's 'clauses read "the seat's by R2 2 (2026-10-10)"': PIN-9's sentence opens "The seat's". Its
+      "Until a lock line names this analyzer … (lock s9.3)" cites §9.3, whose words are "until a lock revision names the
+      new one" (the seat's "The window" says "when a lock line names the new analyzer").
+    - disp_final's "(:1599, :1917)" (in the review raw) is :1599 and :1636.
+    - In the table raw:
+      - the rationales of the eight rows Code's assembly changed predate the assembly. Those of 30.2, 33.2, 186.2,
+        236.1, 248.2, 254.2 and 276.5 (the adjudicator's) still argue the narrower cells. 61.3's (the completeness
+        critic's) argues thesis fallback-1, which the assembly set to none, and gives its null-thesis reading as "900
+        tuples", where the row fires (a) in 1,075. The critics' challenges are in the review raw's critic sections
+        (critic:completeness, critic:classification), and Code's reasons in its assembly log; the table of record's
+        values-check is to carry Code's rationale for each;
+      - its header's "under the spec below, declared before any unit was classified" holds for the rules; the printed
+        spec's kinds map was edited afterwards (FIN-FID-9);
+      - its findings section's "(1,079 or 1,075)" (:22) is 1,079 for each of the 16 rows;
+      - its list of scope words, and of v8's label differences ("against a" for m:338's "against the" at :176; the base
+        label also at :272), are completed in the ping's Q2.
+  - **The re-run.** `ganl` at `ed8e886` (canonical; PIN-39: committed blobs). The raw:
+    `results/raw/2026-10-15_m-ganl-f0-rerun-step15b.txt`.
+    - PASS, 448/448, written (`2ad45175…cf7a`), then `identical` on a second run on unchanged inputs (PIN-37).
+    - Against the superseded manifest, only these changed: `analyzer`, `battery` (448 checks, and 461 coverage ids with
+      the four new ones), `pins` (PIN-7, -9, -10, -17, -45), `placeholder` (`44f1a2d4…0af9`) and `seat_routed` (PIN-17).
+    - The closure `a3bc7bb9…b22b`, the package `5f646db6…d771`, the flag of record and `outputs_sha256`
+      `83df98b1…813c` are unchanged.
+  - **The site check** (`results/raw/2026-10-15_m-analyzer-round2-step15_sitecheck.txt`): all ten gates pass ("gates
+    failed: 0").
+    - The nine suites pass on their summary lines, the driver's at 795/796.
+    - The window gate passes on the driver's one expected failure. The time refusal check's case 'a lock-named
+      non-proposal' gets the driver's proposal-in-lock refusal (m_sessions.py:542–545; the case passes
+      scripts/m_analyze.py as the proposal file, :3584, so the message names `655e0f7f6743d0bf...`); the gate counts it
+      once (the raw records the count, not the text).
+    - On the seat's "The window" and the step-15 entry's control on `522e8057…fd3c`, it returns to 796/796 when a lock
+      line names the analyzer. No such control was run on `655e0f7f…c16f`.
+  - **The PIN index** (lock §10): from `522e8057…fd3c` to `655e0f7f…c16f`, four marker blocks change (PIN-17's site,
+    PIN-10's V2 site, PIN-45's site, PIN-9's site). The other 46 are byte-identical; v0.1 markers stay 47 and v1.0
+    markers 3. v1.0's addendum is to list them with the first round's three sites and P311's and P313's changes.
+  - **To the seat** (`results/raw/2026-10-15_m-code-to-design_step15b.md`, sha256 `0c1e8244b99e656bc6356b446d195b0506c314377e32a66c071c3a31fdca3875`, for the PI to route):
+    - Q1: the table's classification rules;
+    - Q2: the findings against v8's header note, and v8's labels against m:338's;
+    - Q3: the placeholder's move;
+    - Q4: Code's additions, to strike or keep;
+    - Q5: the kinds' re-anchoring;
+    - and the declared limits and noted texts for v1.0.
+
+    Code's default throughout: its readings stand, strikable until v1.0's commit. A Q4 strike, or a patch v9, moves
+    the analyzer's sha256.
+  - **Values-check:** two adversarial passes, each of three lenses (the entry's facts; the ping's; the two side by side with
+    the committed raws and commit messages), each lens with a strict refuter, and a targeted third check of the last
+    revision, with its refuter. Every finding is applied or given a disposition (one refuted). The raw:
+    `results/raw/2026-10-15_m-analyzer-round2-step15_valuescheck.txt`.
+
 - 2026-10-14 — **THE R2 3 ANALYZER ROUND AND THE G-ANL-F0 RE-RUN (PROPOSAL-m v1.11 §8 step 15; the seat's round-2
   item 3; the PI's word of 2026-10-13). R2 3's three analyzer edits are built and committed at `b046b16`: analyzer
   sha256 `66fb5214…7d5e` → `522e80576659aff1818239105c3e9b2b76d4b222e8959ac9fdd8dfb499fefd3c`. G-ANL-F0 re-runs on it:
