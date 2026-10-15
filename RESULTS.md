@@ -21,6 +21,91 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-10-15 — **G-PWR FOR Q-F0, RUN OF RECORD (PROPOSAL-m v1.11 §8 step 15, m:285; the seat's step-15 answers,
+  item 5 and Q7; the PI's word of 2026-10-15).** Model-free and exact; no model process.
+  - **The run:**
+    - Through the wrapper the program's entry describes, on HEAD `78f5602`, which committed the program
+      (`1d7c0fe3…111c`) and the draft snapshot.
+    - The raw is `results/raw/2026-10-15_m-gpwr-qf0.txt`, sha256
+      `3c35a36f2e01c35c0b7e9a1bc545a7d92179715f16e90f32415001728e00d145`.
+    - The record is `data/m/gates/Q-F0_G-PWR.json`, sha256
+      `b5331ba132f358a1426b9e6c480b44910303eadffe35022b147aeb415e593a68`.
+  - **The wrapper's last two terminal lines, verbatim:**
+
+    ```
+    EXIT 0; fsck rc 0; VERIFY EXIT 0; WRAPPER EXIT 0
+    RAW sha256 3c35a36f2e01c35c0b7e9a1bc545a7d92179715f16e90f32415001728e00d145; RECORD sha256 b5331ba132f358a1426b9e6c480b44910303eadffe35022b147aeb415e593a68
+    ```
+
+    Before this commit, the two files' sha256 equal them.
+  - **What the raw shows:**
+    - the launch check passed: fsck clean, no fsck.*, core.fsmonitor or core.hooksPath config, the bound paths and the
+      draft clean, the script's working-tree blob equal to HEAD's;
+    - its header quotes the draft's one line naming the analyzer, `655e0f7f…c16f`;
+    - the self-test passed, 0 failed (the program runs it in a separate process booted from the commit's script
+      blob, as the program's entry states);
+    - the verifier, under the system's Python with `-I -S`, passed every check;
+    - after the run, fsck was clean and the wrapper and the verifier were unchanged.
+  - **Provenance:**
+    - the record's head is `78f5602`;
+    - its `lock_draft.sha256` is `c4571818…442d`, the snapshot's sha256 the program's entry names;
+    - its script `1d7c0fe3…111c`, analyzer `655e0f7f…c16f` and package `5f646db6…d771` are those the draft names;
+    - its closure is the 13 modules whose digest the draft names.
+  - **The battery on the committed program** (that entry's "Next" item 1), run before the run of record: 56 checks, 0
+    failed. Its raw is `results/raw/2026-10-15_m-gpwr-probes.txt`, sha256
+    `11e7ee2c5203c21ed9c4c86556cac8c8e8b3cbec966705e215d8ff1d71639bd3`.
+  - **The figures** (the record; its exact fractions in the record):
+    - **Inputs:** the uncached path (v0.2 §1); k = 18 of 24, r = 3/4 (A0 7/8, A0s 11/16 beside; the G-F0m-Qwen
+      entry); the floors A0 80, A0s 32 (v0.2 §1, §2.4's uncached column).
+    - **Power at the floors** (A0 80, A0s 32): 0.878 (0.8784) ≥ .85; no n raised. **PIN-3** re-derived at the floors:
+      0.878, split [40, 40], mS 32.
+    - **Launch counts** (m:192): A0 L 128 (floor 80; ⌈1.15·floor⌉ 92; N₉₀ 114; up to the balance unit 32), A0s L 64
+      (floor 32; 37; N₉₀ 48; up to 32); total 192; 5 looks. The same row holds at k = 17 to 20. These equal Q7's
+      planning row.
+    - **round_degeneracy's sequential false-pause probability** (p0 .05, α .05 per look, on the sham's rounds):
+
+      | Case | False pause |
+      |---|---|
+      | the projection | 0.0976 |
+      | the sham at its floor at r (A0s 43) | 0.0797 |
+      | the sham at its floor at the fewest launches (A0s 32) | 0.0593 |
+      | the sham at G-F0m-Qwen's 136 of 160 realised rounds (17/2 per launch) | 0.0890 |
+    - **The exclusion guard at the common rate .20** (the absolute half, the Fisher half, their union):
+
+      | Case | Absolute | Fisher | Union |
+      |---|---|---|---|
+      | the projection | 0.1086 | 0.0766 | 0.1496 |
+      | the sham at its floor at r | 0.1073 | 0.0669 | 0.1461 |
+      | the sham at its floor at the fewest launches | 0.0999 | 0.0579 | 0.1343 |
+
+      On the projection, the Fisher half's grid maximum is 0.0836 at 1/2, refined to 0.0836 at 251/500. The union's
+      grid maximum over common rates p ≤ .20 (j/100) is 0.1496, at 1/5.
+    - **The joint figure** (Q7 (c)): round_degeneracy's own, 0.0976, with the guard's union 0.1496 beside. The joint
+      over the two is not computed, and the record gives the one-sentence reason.
+    - The hair triggers and the lexical bar carry no figure (m:271; m:330).
+    - **These are design figures and issue no verdict** (m:330: pauses are not verdicts). No campaign data enters
+      them. m:190's raise reads the power at the floors and is not triggered. Q7's methods and Code's readings within
+      them stay strikable until v1.0's commit.
+  - **Next:**
+    1. After this commit, Code compares the committed blobs of the raw and the record with the wrapper's printed
+       sha256; its result goes into the next entry, and to the PI with the cap request.
+    2. v1.0's text (`LOCK-m-F0.md` at v1.0's commit; the committed snapshot stays as G-PWR read it) takes these
+       figures in §§3 and 4, with the launch counts as the line form `launch counts = A0 128, A0s 64`, and the record's
+       sha256 in §6's output row. What would move them (the snapshot's v1.0 §1, "What would move these lines"):
+       - under the seat's ruling on the step-15b ping's Q2, if (C), or a strike of an item of the ping's Q4 (Code's
+         reading), G-PWR re-runs on the new analyzer and these lines are redone;
+       - on Code's reading, a strike of a Q7 default, or of Code's reading within it, needs a new G-PWR build and a
+         run of record that supersedes this one, with the snapshot (PIN-37).
+    3. The cap request to the PI. It carries the launch counts beside the planning bases and the measured sham
+       figures (v0.2 §2; the step-14 read's §4 item 2), and asks for the PI's word on Code's reading of "placed".
+    4. The two departures the program's entry declares go to the seat with the PI's routing.
+    5. v1.0's commit waits on the cap and on the seat's Q2 ruling with the table's sha256, with a committer date on or
+       before 2026-10-30.
+  - **Values-check of this entry:** two passes, each with a strict refuter,
+    `results/raw/2026-10-15_m-gpwr-qf0_valuescheck.txt`. The check stops at pass 2; its findings are applied and
+    checked mechanically (the quotations, the sha256, the widths).
+  (Stamp: `date -u` → **Thu Oct 15 21:31:36 UTC 2026, at commit**.)
+
 - 2026-10-15 — **G-PWR'S PROGRAM, COMMITTED BEFORE ITS RUN, WITH THE LOCK v1.0 DRAFT THAT NAMES THE ANALYZER
   (PROPOSAL-m v1.11 §8 step 15; the seat's step-15 answers, items 4 and 5, Q4 and Q7; R2 3's order; the PI's word of
   2026-10-15).**

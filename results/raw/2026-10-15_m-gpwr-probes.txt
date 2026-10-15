@@ -1,0 +1,68 @@
+# G-PWR's run-path probe battery on the committed program (PROPOSAL-m v1.11 §8 step 15; the RESULTS entry of
+#   2026-10-15 committing the program, "Next" item 1). Code stamp: 2026-10-15 (date -u). Model-free; every
+#   probe runs in a scratch clone (git clone --shared) of HEAD; nothing is written in the repository.
+# HEAD 78f56023012bcd8d08e674a29efb56190ccbb7a4; scripts/m_gpwr.py sha256 1d7c0fe3a5997c1e2b7ed34fd4f65112692126c6a784a68ab1900db59363111c.
+# run_probes.py sha256 c9e56737ca399c24d8dc285a47515ac5a882a1b81567a2e66c441e6381fc313e; its source is verbatim in
+#   results/raw/2026-10-15_m-gpwr-program_review.txt.
+# The command: /Users/jasondwyer/Documents/code/jspace-lab/jlens-qwen36/.venv/bin/python -I -B run_probes.py <a scratch work directory> (no GPWR_SRC: the
+#   committed program).
+
+HEAD 78f56023012bcd8d08e674a29efb56190ccbb7a4; scripts/m_gpwr.py sha256 1d7c0fe3a5997c1e2b7ed34fd4f65112692126c6a784a68ab1900db59363111c (committed); analyzer 655e0f7f6743d0bf497f5ba97ce37f7febf9fcf6a45e068b5385ee945c5dc16f
+PASS  P01_ok: expect written; rc 0; 
+PASS  P01_provenance: head, script, analyzer, package, draft and closure sha256, the python version and the WROTE line equal values computed independently in the clone
+PASS  P16_again: expect refused; rc 1; REFUSED: /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/gpwr/probes_committed/records/ok.js
+PASS  P02_nosha: expect refused; rc 1; REFUSED: the LOCK v1.0 draft does not name the analyzer's sha256 in full (R2 3)
+PASS  P03_nohead: expect refused; rc 1; REFUSED: the --lock-draft file does not begin '# LOCK-m-F0.md — v1.0': it is not the LOCK v1.0 draft (R2 3)
+PASS  P04_prefix: expect refused; rc 1; REFUSED: the LOCK v1.0 draft does not name the analyzer's sha256 in full (R2 3)
+PASS  P05_laterhead: expect refused; rc 1; REFUSED: the --lock-draft file does not begin '# LOCK-m-F0.md — v1.0': it is not the LOCK v1.0 draft (R2 3)
+PASS  P06_v03: expect refused; rc 1; REFUSED: the --lock-draft file does not begin '# LOCK-m-F0.md — v1.0': it is not the LOCK v1.0 draft (R2 3)
+PASS  P07_scriptsha: expect refused; rc 1; REFUSED: the LOCK v1.0 draft does not name the analyzer's sha256 in full (R2 3)
+PASS  P08_exists: expect refused; rc 1; REFUSED: /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/gpwr/probes_committed/records/exist
+PASS  P09_symlink: expect refused; rc 1; REFUSED: /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/gpwr/probes_committed/records/dangl
+PASS  P10_norecord: expect refused; rc 2; usage: m_gpwr.py [-h] [--selftest] [--lock-draft LOCK_DRAFT] [--record RECORD]
+PASS  P10b_nodraft: expect refused; rc 2; usage: m_gpwr.py [-h] [--selftest] [--lock-draft LOCK_DRAFT] [--record RECORD]
+PASS  P10e_parent_is_file: expect refused; rc 1; REFUSED: /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/gpwr/probes_committed/records/a_fil
+PASS  P17_bare_head: expect written; rc 0; 
+PASS  P18_dash_suffix: expect written; rc 0; 
+PASS  P19_leading_blank: expect refused; rc 1; REFUSED: the --lock-draft file does not begin '# LOCK-m-F0.md — v1.0': it is not the LOCK v1.0 draft (R2 3)
+PASS  P20_stale_tmp: expect written; rc 0; 
+PASS  P10d_readonly: expect refused; rc 1; REFUSED: /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/gpwr/probes_committed/records/reado
+PASS  P05b_v101: expect refused; rc 1; REFUSED: the --lock-draft file does not begin '# LOCK-m-F0.md — v1.0': it is not the LOCK v1.0 draft (R2 3)
+PASS  P10c_noparent: expect refused; rc 1; REFUSED: /private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/gpwr/probes_committed/records/missi
+PASS  P11_dirty_an: expect refused; rc 1; REFUSED: G-PWR of record binds committed blobs only:
+PASS  P14_staged_an: expect refused; rc 1; REFUSED: G-PWR of record binds committed blobs only:
+PASS  P12_dirty_pkg: expect refused; rc 1; REFUSED: G-PWR of record binds committed blobs only:
+PASS  P13_extra_pkg: expect refused; rc 1; REFUSED: G-PWR of record binds committed blobs only:
+PASS  P13b_missing_pkg: expect refused; rc 1; REFUSED: G-PWR of record binds committed blobs only:
+PASS  P22_closure_dirty: expect refused; rc 1; REFUSED: G-PWR of record binds committed blobs only:
+PASS  P23_pythonpath: expect refused; rc 1; REFUSED: G-PWR of record binds committed blobs only:
+PASS  P25_not_isolated: expect refused; rc 1; REFUSED: a run of record runs in isolated mode (python -I): no script directory, user site or environment path enters the import path
+PASS  P27_no_pycache_prefix: expect refused; rc 1; REFUSED: a run of record reads no cached bytecode: run with -X pycache_prefix=<a path that does not exist>, so every module is compiled from the bytes provenanc
+PASS  P28_symlinked_module: expect refused; rc 1; REFUSED: G-PWR of record binds committed blobs only:
+PASS  P29_package_dir_shadow: expect refused; rc 1; REFUSED: valence_core/m/resume/__init__.py is not in HEAD's tree: a run executes committed bytes only
+PASS  P30_clean_filter: expect refused; rc 1; REFUSED: G-PWR of record binds committed blobs only:
+PASS  P26_shadow_unloaded: expect written; rc 0; 
+PASS  P26b_shadow_marker: a scripts/fractions.py shadow never loads under -I
+PASS  P24_long_name: expect refused; rc 1; REFUSED: the record's name is too long for its temporary file (limit 255 bytes)
+PASS  P15_dirty_script: expect refused; rc 1; REFUSED: G-PWR of record binds committed blobs only:
+PASS  P31_selfheal_analyzer: expect refused; rc 1; REFUSED: G-PWR of record binds committed blobs only:
+PASS  P31_selfheal_analyzer_never_ran: scripts/m_analyze.py was never executed (no marker; the planted bytes stay)
+PASS  P32_selfheal_bars: expect refused; rc 1; REFUSED: G-PWR of record binds committed blobs only:
+PASS  P32_selfheal_bars_never_ran: valence_core/m/bars.py was never executed (no marker; the planted bytes stay)
+PASS  P33_selfheal_closure: expect refused; rc 1; REFUSED: G-PWR of record binds committed blobs only:
+PASS  P33_selfheal_closure_never_ran: valence_core/stats.py was never executed (no marker; the planted bytes stay)
+PASS  P34_replace_ref: expect written; rc 0; 
+PASS  P34_figures: the record under a replace ref carries P01's figures
+PASS  P35_pin3_tamper: expect refused-at-gate; rc 1; REFUSED: the self-test failed
+PASS  P36_git_dir_env: expect written; rc 0; 
+PASS  P36_figures: under GIT_DIR, the record carries P01's figures and the clone's HEAD
+PASS  P37_so_shadow: expect refused; rc 1; REFUSED: valence_core.m.resume resolves to valence_core/m/resume.cpython-312-darwin.so in the repository, not a .py source: refused
+PASS  P37_refusal: the extension file is refused as not a .py source
+PASS  P38_forged_object: expect refused; rc 1; REFUSED: scripts/m_analyze.py: the bytes read do not hash to HEAD's blob 4ef8fff49ccc5f399bccec90b1bf971202c28a37
+PASS  P38_refusal: git served the forged bytes, and the run refused them as not hashing to the blob
+PASS  P39_root_modules: expect written; rc 0; 
+PASS  P39_never_ran: committed root modules were never executed, and the record carries P01's figures
+PASS  P21a_selftest_fails: --selftest rc 1
+PASS  P21b_gate: expect refused-at-gate; rc 1; REFUSED: the self-test failed
+clone status after: clean
+probes: 56; failed 0

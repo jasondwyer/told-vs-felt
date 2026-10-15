@@ -1,0 +1,582 @@
+# The values-check of the RESULTS entry for G-PWR's run of record (PROPOSAL-m v1.11 §8 step 15; m:285). Code stamp:
+# 2026-10-15 21:31 UTC (date -u). Read-only checks; no agent opened data/m/ckpt/* or data/m/reports/*; no stage duration computed
+# or quoted. Two passes, each with a strict refuter: each pass's workflow script, every return verbatim, and Code's
+# dispositions; then the entry's changes by pass.
+
+====================================================================================================
+PASS 1
+====================================================================================================
+
+---- THE WORKFLOW SCRIPT, verbatim
+export const meta = {
+  name: 'entry-gpwr-run-vc1',
+  description: 'Values-check pass 1 of the RESULTS entry for G-PWR\'s run of record, with a strict refuter',
+  phases: [{ title: 'Check' }, { title: 'Refute' }],
+}
+const R = '/Users/jasondwyer/Documents/code/jspace-lab'
+const S = '/private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/gpwr'
+const COMMON = `
+CONTEXT. Code will commit (repo ${R}, HEAD 78f5602): results/raw/2026-10-15_m-gpwr-qf0.txt (G-PWR's run raw), data/m/gates/Q-F0_G-PWR.json (its record), results/raw/2026-10-15_m-gpwr-probes.txt (the battery on the committed program), and a RESULTS.md entry, ${S}/entry_run.md ('@@STAMP@@' filled at commit; its values-check raw path is where this check's returns will go). Sources: the files above; the committed program scripts/m_gpwr.py; the committed draft snapshot results/raw/2026-10-15_m-lock-v1.0-draft_pre-gpwr.md; RESULTS.md (the entry of 2026-10-15 committing the program, at the top of the log); the wrapper ${S}/run_record.sh and the verifier ${S}/verify_record.py (as they ran; their sha256 are in the raw's header); the wrapper's terminal output ${S}/run_of_record_terminal.txt; PROPOSAL-m-gating-campaign-v1_11.md (m:N); results/raw/2026-10-14_m-design-to-code_step15_answers.md (Q7); LOCK-m-F0.md (v0.2 §2); results/raw/2026-10-13_m-design-to-code_G-F0m-Qwen_read.md (§4).
+HARD RULES. Read-only; no git writes (read-only git only, with --no-optional-locks); read nothing under data/m/ckpt/ or data/m/reports/; never open results/raw/2026-10-13_m-gf0m-qwen.txt; no git in jlens-qwen36/; write only under ${S}/evc_run/; do not read scripts/audit_note_*, results/raw/*note-*, README-NOTE.md, RESEARCH-NOTE-*, AUDIT-note-*, LICENS*, root *.svg, ADDENDUM-k1.md. Never compute or quote stage durations.`
+const SCHEMA = { type: 'object', properties: {
+  findings: { type: 'array', items: { type: 'object', properties: {
+    id: { type: 'string' }, where: { type: 'string' }, severity: { type: 'string', enum: ['error', 'imprecise', 'note'] },
+    finding: { type: 'string' }, evidence: { type: 'string' }, fix: { type: 'string' } },
+    required: ['id', 'where', 'severity', 'finding', 'evidence', 'fix'] } },
+  verified: { type: 'array', items: { type: 'string' } } }, required: ['findings', 'verified'] }
+const VER = { type: 'object', properties: {
+  verdicts: { type: 'array', items: { type: 'object', properties: { id: { type: 'string' },
+    verdict: { type: 'string', enum: ['CONFIRMED', 'REFUTED', 'PARTLY'] }, evidence: { type: 'string' }, fix: { type: 'string' } },
+    required: ['id', 'verdict', 'evidence', 'fix'] } },
+  missed: { type: 'array', items: { type: 'string' } } }, required: ['verdicts', 'missed'] }
+phase('Check')
+const rep = await agent(COMMON + `\n\nTASK. Check EVERY statement in the entry against its source: each sha256 (recompute from the files), each figure and its display (against the record's exact fractions and the raw's report), each case's label against the record's case definitions and the program's READINGS, the launch counts and their derivation, the claim that they equal Q7's planning row (quote Q7), each quotation of the wrapper's terminal lines (byte-exact against ${S}/run_of_record_terminal.txt), each claim about what the raw shows (read the raw in full), the provenance claims (against the record, the committed draft and the program's entry), the battery claim (against the battery raw), and the 'Next' items against the program's entry and the draft (v1.0 §§3, 4, 6). Is anything stated as a verdict or as settled that is not? Work dir ${S}/evc_run/p1.`, { label: 'evcrun:p1', phase: 'Check', schema: SCHEMA })
+phase('Refute')
+const ref = await agent(COMMON + `\n\nYOU ARE A STRICT REFUTER of this values-check report, verbatim:\n${JSON.stringify(rep)}\nFor EACH finding reproduce it and give CONFIRMED / REFUTED / PARTLY with evidence and the exact fix; default to REFUTED if you cannot reproduce. Re-verify 3 'verified' items. Add to 'missed' anything wrong in the entry the report did not find. Work dir ${S}/evc_run/r1.`, { label: 'evcrun:r1', phase: 'Refute', schema: VER })
+return { report: rep, refute: ref }
+---- THE CHECK (pass 1), verbatim
+{
+ "findings": [
+  {
+   "id": "F1",
+   "where": "entry_run.md, 'What the raw shows', bullet 3 ('the self-test passed, 0 failed, in a process booted from the commit's blob')",
+   "severity": "imprecise",
+   "finding": "The raw does not show where the self-test was booted from. All it shows is 'selftest: PASS (0 failed)'. The boot from the commit's script blob is how the program works and is a claim of the program's entry. The raw shows neither.",
+   "evidence": "Raw: the header's command runs the working-tree path `scripts/m_gpwr.py`. The self-test block ends 'selftest: PASS (0 failed)' (78 PASS lines, 0 FAIL). No raw line names a child process or the script's blob. The nearest line, 'this process executed every repository module it loaded from HEAD's blobs', is about the modules the script imports, not the script. The boot is in scripts/m_gpwr.py: _CHILD_BOOT at :1636-1651 (cat-file of `<commit>:scripts/m_gpwr.py`, checked against its blob id), run at :1697. The program's entry says 'its self-test passes, in a separate process booted from the same commit's script blob'.",
+   "fix": "Move the boot clause out of the raw list and attribute it to the program, e.g. '…the self-test passed, 0 failed (the program boots it from the commit's script blob, m_gpwr.py's _CHILD_BOOT; the program's entry)'. Or drop the clause from 'What the raw shows'."
+  },
+  {
+   "id": "F2",
+   "where": "entry_run.md, the guard figures, last sentence ('The union's maximum over common rates p ≤ .20 is 0.1496, at 1/5.')",
+   "severity": "imprecise",
+   "finding": "The entry calls this the union's maximum over all common rates p ≤ .20. It was computed only on the grid j/100 for j = 1..20. The record, the raw and READINGS all call it a grid maximum. The Fisher half's sentence just before it correctly says 'grid maximum'.",
+   "evidence": "Record key `cases.projection.guard.union_grid_max_p_le_p0` (p 1/5, display 0.1496). Raw: 'union grid max over p <= 1/5: 0.1496 at p 1/5'. READINGS: 'The union is also reported at its grid maximum over common rates p <= .20'. Program :375: `grid_max(regions, (\"abs\", \"fisher\"), [p for p in GRID if p <= GUARD_ABS_P0])`. The value itself checks out: my float DP gives 0.149608 at j = 20.",
+   "fix": "Change it to 'The union's grid maximum over common rates p ≤ .20 is 0.1496, at 1/5.'"
+  },
+  {
+   "id": "F3",
+   "where": "entry_run.md, 'These are design figures…' and 'Next' item 2",
+   "severity": "imprecise",
+   "finding": "The entry gives only one way these figures could change: a strike of Q7's methods or Code's readings. Next item 2 then says, with no condition, that v1.0 §§3 and 4 take these figures. The committed draft, which this run read, also has G-PWR re-run under the seat's Q2 (C) ruling and, on Code's reading, on a Q4 strike. It also says a Q7 strike supersedes this run of record and the snapshot. So the figures' entry into v1.0 is less settled than the entry says.",
+   "evidence": "Draft (results/raw/2026-10-15_m-lock-v1.0-draft_pre-gpwr.md) v1.0 §1 'What would move these lines': 'Under Q2's (C) … G-PWR re-runs on the new analyzer'; 'A strike of a Q4 item moves the analyzer too … and G-PWR re-runs (Code's reading of the meanwhile order)'; 'Under (A) or (B), with no Q4 item struck, … G-PWR is not re-run'; a Q7 strike 'needs a new G-PWR build … and a run of record that supersedes this one (PIN-37)'. v1.0 §3: 'When it re-runs: v1.0 §1, \"What would move these lines\"'. The program's entry repeats all three conditions.",
+   "fix": "Make the condition explicit. In Next 2, for example: 'v1.0 §§3 and 4 take these figures … unless the seat's Q2 ruling is (C) or a Q4 item is struck, when G-PWR re-runs (v1.0 §1), or a Q7 default is struck, when this run of record is superseded (PIN-37).'"
+  },
+  {
+   "id": "F4",
+   "where": "entry_run.md, 'These are design figures. No campaign data enters them, and they decide nothing'",
+   "severity": "note",
+   "finding": "'They decide nothing' says a little too much. The power figure at the floors is exactly what m:190's raise rule reads, and the entry itself reports the outcome ('no n raised'). The launch counts also become v1.0 §4's line form, which the campaign wiring tests. 'No campaign data' is literally true, but G-F0m-Qwen's qualification measurements do enter the figures (k = 18 of 24, and 136 of 160 realised sham rounds).",
+   "evidence": "m:190: 'an arm below its floor has its n raised in whole units … before the unit runs'. Record: power.n_raised false; inputs.k 18, inputs['sham_rounds_realised_at_G-F0m-Qwen'] [136, 160]. Draft v1.0 §4: the line form 'for the campaign wiring to test as substrings'. m:330: 'pauses are not verdicts'.",
+   "fix": "For example: 'These are design figures and issue no verdict. Their inputs are G-F0m-Qwen's k and realised rounds; no campaign data enters them. The one rule they feed, m:190's raise, is not triggered.'"
+  },
+  {
+   "id": "F5",
+   "where": "entry_run.md, 'Launch counts (m:192): A0 L 128 (floor 80; ⌈1.15·floor⌉ 92; N₉₀ 114), A0s L 64 (floor 32; 37; N₉₀ 48)'",
+   "severity": "note",
+   "finding": "The derivation leaves out one step of m:192's rule: rounding up to the balance unit. As written, the step from max(92, 114) = 114 to 128, and from 48 to 64, is not explained.",
+   "evidence": "m:192: 'L = ceil_unit( max( ⌈1.15 · floor⌉, N₉₀(r) ) ), ceil_unit to the arm's balance unit'. Record inputs.balance_unit 32. Recomputed independently: N₉₀(80, 3/4) = 114 and N₉₀(32, 3/4) = 48, so ceil_32(114) = 128 and ceil_32(48) = 64.",
+   "fix": "Add the step, e.g. '(floor 80; ⌈1.15·floor⌉ 92; N₉₀ 114; up to the balance unit 32 → 128)', and likewise for A0s."
+  },
+  {
+   "id": "F6",
+   "where": "entry_run.md, 'The wrapper's last two terminal lines, verbatim', second quotation",
+   "severity": "note",
+   "finding": "In the entry's source bytes, the second quotation is hard-wrapped across two line breaks with 4-space indentation, so the source is not byte-identical to the terminal line. Rendered as Markdown it reads the same. The first quotation is byte-exact.",
+   "evidence": "run_of_record_terminal.txt line 2: 'RAW sha256 3c35a36f…d145; RECORD sha256 b5331ba1…3a68' on one line. In the entry the quote is 'RAW\\n    sha256 3c35…d145; RECORD sha256\\n    b5331…3a68'. It matches once whitespace runs are collapsed, but not raw-exact.",
+   "fix": "If byte-exactness of the source matters, put the quotation on one source line, or in a fenced code block, or in backticks on its own line."
+  },
+  {
+   "id": "F7",
+   "where": "entry_run.md, 'What the raw shows', bullet 1 ('no fsck or hook config')",
+   "severity": "note",
+   "finding": "The paraphrase drops core.fsmonitor, which the raw's launch-check line lists.",
+   "evidence": "Raw header: 'no fsck.*, core.fsmonitor or core.hooksPath in git config'. The wrapper's regexp is '^(fsck\\.|core\\.fsmonitor|core\\.hookspath)' and it requires rc 1 (none set).",
+   "fix": "Change it to 'no fsck.*, core.fsmonitor or core.hooksPath config'."
+  },
+  {
+   "id": "F8",
+   "where": "entry_run.md, round_degeneracy table, row 'the sham at G-F0m-Qwen's 17/2 rounds per launch'",
+   "severity": "note",
+   "finding": "The label credits 17/2 to G-F0m-Qwen. G-F0m-Qwen measured 136 of 160 realised sham rounds, which is how Q7 (a) names the case. 17/2 = 136/16 is Code's conversion, given in READINGS.",
+   "evidence": "Q7 (a): 'the sham arm at G-F0m-Qwen's measured 136 of 160 realised rounds'. READINGS: 'at 136/16 = 17/2 rounds per sham launch'. Record case sham_realised_rounds: rounds_per_sham_launch '17/2', stop A0 128 / A0s 64, round_degeneracy 0.0890.",
+   "fix": "For example: 'the sham at G-F0m-Qwen's 136 of 160 realised rounds (17/2 per launch)'."
+  },
+  {
+   "id": "F9",
+   "where": "entry_run.md, 'Before this commit, the two files' sha256 equal them' and 'Next' item 1",
+   "severity": "note",
+   "finding": "The program's entry, in its Next item 2, said the run's entry 'checks the committed blobs against them'. This entry instead checks the working-tree files before the commit and leaves the committed-blob comparison as Next 1. That matches the program entry's declared gaps and is not stated as done, but the check is still owed after the commit.",
+   "evidence": "Program entry, Next 2: 'the run's entry quotes the wrapper's last two terminal lines … and checks the committed blobs against them'. Its declared gaps: 'Code checks the files against them before the commit, and after it compares the committed blobs (`git cat-file blob <commit>:<path>`) with them.' The working-tree sha256 recomputed now: raw 3c35a36f…d145, record b5331ba1…3a68, both equal the terminal line.",
+   "fix": "No change needed to the text. Run Next 1 (`git cat-file blob <commit>:<path> | shasum -a 256` for both files) after the commit."
+  },
+  {
+   "id": "F10",
+   "where": "entry_run.md, 'Values-check of this entry: two passes, each with a strict refuter, results/raw/2026-10-15_m-gpwr-qf0_valuescheck.txt'",
+   "severity": "note",
+   "finding": "This line describes work that is not finished: the values-check raw does not exist yet, so 'two passes' cannot be checked now.",
+   "evidence": "`ls results/raw/2026-10-15_m-gpwr-qf0_valuescheck.txt`: No such file or directory.",
+   "fix": "Before the commit, make sure the raw exists and holds two passes, each with a strict refuter. Otherwise change the count."
+  }
+ ],
+ "verified": [
+  "sha256, recomputed from the files: raw 3c35a36f2e01c35c0b7e9a1bc545a7d92179715f16e90f32415001728e00d145; record b5331ba132f358a1426b9e6c480b44910303eadffe35022b147aeb415e593a68; battery raw 11e7ee2c5203c21ed9c4c86556cac8c8e8b3cbec966705e215d8ff1d71639bd3; scripts/m_gpwr.py 1d7c0fe3…111c (working tree and HEAD blob); draft snapshot c457181825dc…f9442d (working tree and HEAD blob); analyzer 655e0f7f…c16f (HEAD blob); package 5f646db6…d771, recomputed by the package formula over HEAD's 18 valence_core/m/*.py; closure digest fa543713…5e22 over 13 modules, each module equal to its HEAD blob; figures without provenance a5aaea47…337c (= the wrapper's FIGS and the program entry's value); wrapper 22ecb5aa…fb75 and verifier 822ea68e…ca0c, equal to the raw header's and to the trial runs in the committed review raw (lines 11583-11584, 11982-11983).",
+  "Terminal quote 1, 'EXIT 0; fsck rc 0; VERIFY EXIT 0; WRAPPER EXIT 0', is byte-exact with line 1 of run_of_record_terminal.txt. Quote 2 matches once whitespace is collapsed (see F6). These are the only two lines in the terminal file, and on success the wrapper prints only these two echo lines.",
+  "HEAD is 78f5602 (78f56023012b…cbb7a4). It committed scripts/m_gpwr.py and the draft snapshot. The record's provenance.head equals it, and the raw header's HEAD equals it.",
+  "Provenance: lock_draft.sha256 c4571818…442d equals the snapshot sha256 named in the program's RESULTS entry (top of the log). The draft names the analyzer 655e0f7f… once (v1.0 §1), the package 5f646db6… (§1), the program 1d7c0fe3… and the closure digest fa543713… of 13 files (§6), and has exactly one '| **the analyzer** (' line.",
+  "What the raw shows, read in full (398 lines): the launch-check header (fsck rc 0, no output; no fsck.*/core.fsmonitor/core.hooksPath config; status empty over the script, the analyzer, valence_core/ and the draft; script blob 6d05c8e6… = HEAD's); the header quotes the analyzer line; selftest 78 PASS, 'selftest: PASS (0 failed)'; WROTE line with the record's sha256; EXIT 0; after the run, 'git fsck --no-dangling rc 0' with no output and 'the wrapper and the verifier are unchanged'; verifier under '/usr/bin/python3 -I -S -X utf8', 25 PASS, 'verify_record: PASS (0 failed)', VERIFY EXIT 0; the verifier's source verbatim; 'WRAPPER EXIT 0'. I checked the wrapper's logic: the literal launch-check header text is written only after every condition passes, and otherwise the wrapper exits 2 before writing the raw.",
+  "Every figure and its display matches the record's exact fraction rounded half-up (4 places; power 3): power 0.878 (0.8784; exact ≈ 0.878428578) ≥ 17/20, n_raised false; PIN-3 0.878 at n 80, split [40, 40], mS 32; round_degeneracy 0.0976 / 0.0797 / 0.0593 / 0.0890; guard abs/Fisher/union 0.1086/0.0766/0.1496, 0.1073/0.0669/0.1461, 0.0999/0.0579/0.1343; Fisher grid max 0.0836 at 1/2, refined 0.0836 at 251/500; union grid max 0.1496 at 1/5; joint 0.0976 with 0.1496 beside.",
+  "An independent recomputation, outside the program (float DP; exact Fisher comparisons over integers), reproduces every round_degeneracy figure and crit_j (e.g. projection 0.097603, crits 16/28/40/42/42; realised 0.089017, crits 14/25/35/37/37), every abs half (0.108551 / 0.107330 / 0.099929, crits as recorded), every Fisher half and union at .20 (0.076553/0.149608, 0.066875/0.146140, 0.057911/0.134318), Fisher at p = .5 (0.0836309) and at .502 (0.0836319), and the union's grid maximum at j = 20.",
+  "Case labels against the record and READINGS: the projection = stop 128/64, 10 rounds, 5 looks; 'at its floor at r (A0s 43)' = sham_at_floor_r, ceil(32/(3/4)) = 43, 5 looks; 'at the fewest launches (A0s 32)' = sham_at_floor_min, 4 looks; '17/2 rounds per launch' = sham_realised_rounds, 136/16, round_degeneracy only (no guard in the record, as READINGS says).",
+  "Launch counts recomputed independently: N₉₀(80, 3/4) = 114, N₉₀(32, 3/4) = 48, ⌈1.15·80⌉ = 92, ⌈1.15·32⌉ = 37, so L = 128 / 64 after ceil to 32, total 192, ⌈192/40⌉ = 5 looks. The same row holds at k = 17..20 (k = 21-24 give 160; k = 14-16 give 224). This equals the record's launch block and k_with_this_row [17, 18, 19, 20], and m:210 ('| 20–17 | 128 | 64 | **192** | 5 |').",
+  "Q7's planning row, quoted: \"The planning row stands as the input (m:210: k = 18 of 24 uncached → L = 128 and 64, total 192, 5 looks; power at the floors .878 ≥ .85, no n raised), recomputed at G-PWR with PIN-3's base case re-derived at the planned floors (R1 C6).\" The entry's launch counts, looks, power and 'no n raised' equal it.",
+  "Q7's strike terms, quoted: \"Code's defaults are the seat's, declared at G-PWR on Q1's terms (strikable until v1.0's commit; a strike recomputes figures only)\". This supports 'Q7's methods and Code's readings within them stay strikable until v1.0's commit'.",
+  "Joint and not-figured: the record's joint is round_degeneracy's own on the projection, with the guard's union beside, and not_computed is one sentence. The hair triggers carry no p0 (m:271) and the lexical bar has no domain in Q-F0 (m:330), as the record's not_figured says.",
+  "Battery raw: HEAD 78f5602, the committed m_gpwr.py 1d7c0fe3…, 'probes: 56; failed 0', 'clone status after: clean'. The program entry's Next item 1 is 'the probe battery on the committed blob'. The battery raw was created before the run raw (checked by file order only).",
+  "Header citations: m:285 is the G-PWR item; m:358 is in '§8 Code's block' and is step 15; the answers' item 5 is 'G-PWR on the uncached path with r = 18/24, on Q7's methods.'",
+  "Next items: (2) draft v1.0 §4's line form is `launch counts = A0 <L_A0>, A0s <L_A0s>`, §6's 'G-PWR's output' row is [PENDING], and §3 takes the figures from the record and the raw; (3) draft §4 and v0.2 §2 (the planning bases and the measured sham figures), with the step-14 read §4 item 2 beside ('mean 108.8 s here; 261.65 s at G-TIME-F0; 110.3 s and 99.8 s at G-ID-F0m … r = .75 raising launches by a third'), and draft §0 (the PI's word on 'placed', asked with the cap); (4) the program's entry and draft §3 declare two departures for the seat; (5) the draft header says the commit waits on G-PWR's run, the PI's cap and the seat's Q2 ruling with the table's sha256, committer date on or before 2026-10-30.",
+  "Wrapper provenance: the program's entry describes this wrapper (scrubbed env -i, HOME /var/empty, LC_ALL=C, fsck around the run, out-of-process verifier). Its command matches the raw header's command."
+ ]
+}
+---- THE STRICT REFUTER (pass 1), verbatim
+{
+ "verdicts": [
+  {
+   "id": "F1",
+   "verdict": "CONFIRMED",
+   "evidence": "The raw (398 lines, read in full) shows only 78 PASS lines followed by 'selftest: PASS (0 failed)' (raw:17-95), printed between the PROVENANCE line and the report. No line names a child process, a boot, or the script's blob. Raw:65 ('this process executed every repository module it loaded from HEAD's blobs') is about the modules that process loads, not about where the script came from. Raw:3 shows the working-tree path `scripts/m_gpwr.py` as the command. The boot is in the program: _CHILD_BOOT at m_gpwr.py:1636-1651 does rev-parse `<commit>:scripts/m_gpwr.py`, then cat-file, then a hash check against the oid; subprocess.run at :1697. The claim comes from the program's entry ('in a separate process booted from the same commit's script blob'), not from the raw.",
+   "fix": "Bullet 3 of 'What the raw shows' becomes: 'the self-test passed, 0 failed (the program runs it in a separate process booted from the commit's script blob, as the program's entry states)'. Or drop the boot clause from the raw list."
+  },
+  {
+   "id": "F2",
+   "verdict": "CONFIRMED",
+   "evidence": "Program m_gpwr.py:380 (not :375 as the finding cites) reads `umax, up = grid_max(regions, (\"abs\", \"fisher\"), [p for p in GRID if p <= GUARD_ABS_P0])`. GRID = j/100 for j = 1..99 (:179). The record key is `union_grid_max_p_le_p0`, raw:114 reads 'union grid max over p <= 1/5', and READINGS say 'at its grid maximum'. The record's exact union_grid_max equals the exact union at 1/5 (0.1496078875…), so the value is right. Only 'maximum over common rates' overstates what was computed: the program never shows that the union is monotone on (0, .20].",
+   "fix": "'The union's grid maximum over common rates p ≤ .20 (j/100) is 0.1496, at 1/5.'"
+  },
+  {
+   "id": "F3",
+   "verdict": "PARTLY",
+   "evidence": "The omission is real. Draft v1.0 §1 'What would move these lines' has G-PWR re-run under Q2's (C) and, on Code's reading, on a Q4 strike. It also says a Q7 strike needs a new build and a run of record that supersedes this one, with the snapshot superseded too (PIN-37). §3 says 'When it re-runs: v1.0 §1'. The entry names only the Q7 strike window. Nothing in the entry is false, though. Next 2 is the step Code takes now in v1.0's working text whatever the ruling. Under (C) or a Q4 strike those lines are redone later from a superseding record, not withheld. The finding's 'unless' framing therefore misdescribes the order. The figures are model-free, so a (C) re-run would likely move the record's provenance and sha256 (§6) rather than the figures. Severity is a note, not 'imprecise'.",
+   "fix": "Keep Next 2 as the present step and add one sentence after it: 'Under the seat's Q2 (C), or a Q4 strike (Code's reading), G-PWR re-runs on the new analyzer and these lines are redone; a strike of a Q7 default needs a new G-PWR build and a run of record that supersedes this one, with the snapshot (PIN-37) (v1.0 §1, \"What would move these lines\").'"
+  },
+  {
+   "id": "F4",
+   "verdict": "CONFIRMED",
+   "evidence": "m:190 reads: 'G-PWR … re-derives with the planned floors; an arm below its floor has its n raised … before the unit runs'. The power at the floors is the figure that rule reads, and the record's power.n_raised false (raw:97, READINGS raw:153 'm:190's raise is not triggered') is that rule's outcome. The launch counts also enter v1.0 §4's line form for the campaign wiring. So 'they decide nothing' is too strong. 'No campaign data enters them' holds: k = 18 of 24 and [136, 160] come from the G-F0m-Qwen qualification stage. The finding's suggested fix adds two new overclaims. 'Their inputs are G-F0m-Qwen's k and realised rounds' leaves out the floors (v0.2 §1), the bars (lock §8.2) and the planning row. 'The one rule they feed' leaves out the launch counts, which feed v1.0 §4.",
+   "fix": "'These are design figures and issue no verdict (m:330: pauses are not verdicts); no campaign data enters them. m:190's raise reads the power at the floors and is not triggered. Q7's methods and Code's readings within them stay strikable until v1.0's commit.'"
+  },
+  {
+   "id": "F5",
+   "verdict": "CONFIRMED",
+   "evidence": "m:192: 'L = ceil_unit( max( ⌈1.15 · floor⌉, N₉₀(r) ) ), ceil_unit to the arm's balance unit'. The record has inputs.balance_unit 32. I recomputed independently (exact N₉₀ at r = 18/24): floor 80 gives ⌈1.15·80⌉ 92 and N₉₀ 114, so L = ceil_32(114) = 128; floor 32 gives 37 and N₉₀ 48, so L = 64. Rows k = 14..24 give 224/192/160 with 6/5/4 looks, and the row holds at k = 17..20 (evc_run/r1/recompute.out). The entry, like raw:99-100, jumps from max(92, 114) to 128 without naming the unit.",
+   "fix": "'A0 L 128 (floor 80; ⌈1.15·floor⌉ 92; N₉₀ 114; up to the balance unit 32), A0s L 64 (floor 32; 37; N₉₀ 48; up to 32)'."
+  },
+  {
+   "id": "F6",
+   "verdict": "PARTLY",
+   "evidence": "Correct as fact. entry_run.md:10-12 hard-wrap the second quote ('\"RAW\\n    sha256 …; RECORD sha256\\n    b5331…\"'), while run_of_record_terminal.txt:2 is one line. It renders identically: Markdown collapses the wrap to single spaces, and the terminal line has single spaces. This is the log's standing convention, not a defect. The committed draft wraps Q7's verbatim quote across lines (§3), and the entries keep a 120-character width (the entry's longest line is 118 characters). The finding's first fix, one source line, would make a line of about 160 characters and break that width.",
+   "fix": "No change needed under the log's convention. If source-byte exactness is wanted, put the two lines in a fenced code block rather than on one long source line."
+  },
+  {
+   "id": "F7",
+   "verdict": "PARTLY",
+   "evidence": "Raw:6-7 reads 'no fsck.*, core.fsmonitor or core.hooksPath in git config'. The wrapper (:29) requires rc 1 for '^(fsck\\.|core\\.fsmonitor|core\\.hookspath)'. The entry's 'no fsck or hook config' compresses this. Git documents a path-valued core.fsmonitor as 'the fsmonitor hook command', so 'hook config' partly covers it. But the wrapper refused any core.fsmonitor value, including the builtin daemon's `true`, which is not a hook. Naming all three is the faithful paraphrase.",
+   "fix": "'no fsck.*, core.fsmonitor or core.hooksPath config'."
+  },
+  {
+   "id": "F8",
+   "verdict": "REFUTED",
+   "evidence": "G-F0m-Qwen's sham domain is 160 rounds (m:271), that is 16 sham sessions of 10 rounds. It measured 136 realised rounds, so its mean per sham session (one launch each) is 136/16 = 17/2. READINGS (raw:149) state the conversion. The record's case sham_realised_rounds has rounds_per_sham_launch '17/2', and n_j [170, 340, 510, 544, 544] = 17/2 × A0s launches. Calling 17/2 rounds per launch G-F0m-Qwen's is a faithful restatement of its measurement in per-launch units, not a misattribution.",
+   "fix": "No change needed. Optionally: 'G-F0m-Qwen's 136 of 160 realised rounds (17/2 per launch)'."
+  },
+  {
+   "id": "F9",
+   "verdict": "CONFIRMED",
+   "evidence": "The program entry's Next 2 says the run's entry 'checks the committed blobs against them', and its declared gaps say 'Code checks the files against them before the commit, and after it compares the committed blobs (`git cat-file blob <commit>:<path>`)'. The entry does the first and leaves the second as Next 1, because the committed blobs cannot be checked inside the commit that adds them. Working-tree sha256 recomputed now: raw 3c35a36f…d145, record b5331ba1…3a68, both equal to run_of_record_terminal.txt:2.",
+   "fix": "No text change. After the commit, run `git cat-file blob <commit>:results/raw/2026-10-15_m-gpwr-qf0.txt | shasum -a 256` and the same for data/m/gates/Q-F0_G-PWR.json, and record the result where the next entry or the values-check raw can cite it."
+  },
+  {
+   "id": "F10",
+   "verdict": "CONFIRMED",
+   "evidence": "`ls results/raw/2026-10-15_m-gpwr-qf0_valuescheck.txt` gives 'No such file or directory'. The check is in progress: this return is for evc_run/p1 → r1. The count 'two passes, each with a strict refuter' cannot be verified until the raw is assembled.",
+   "fix": "Before the commit, assemble the raw with every pass's return, each refuter's, and Code's dispositions. Set the count in the entry line to the passes actually run."
+  }
+ ],
+ "missed": [
+  "Re-verified 3 of the 'verified' items independently. (1) sha256 of the raw, record, battery raw, HEAD blobs of scripts/m_gpwr.py, m_analyze.py and the draft snapshot, the wrapper and the verifier, the closure digest fa543713… over 13 modules each equal to its HEAD blob, and the figures hash a5aaea47…: all as stated. (2) Launch counts at r = 18/24 recomputed exactly: 128/64, 192, 5 looks; same row at k = 17..20, 224 at 14..16, 160 at 21..24. (3) round_degeneracy recomputed with exact crits and a float DP: 0.09760 / 0.07973 / 0.05928 / 0.08902 with crits 16/28/40/42/42, 16/28/30/30/30, 16/24/24/24, 14/25/35/37/37. Guard abs halves: 0.10855 / 0.10733 / 0.09993 with crits as recorded (evc_run/r1/recompute.py and recompute.out). PASS counts in the raw are 78 + 25 = 103, and the battery has 56 PASS and 0 FAIL.",
+  "The finding F2 cites program ':375' for the union's grid_max call. The line is m_gpwr.py:380.",
+  "The entry never states the run's input: k = 18 of 24, r = 3/4. Nor does it give the per-template rates (A0 7/8, A0s 11/16), which m:192 requires 'reported per template beside' and which the record and raw:96 carry. The table label 'the sham at its floor at r (A0s 43)' then uses r without defining it. Suggested: open 'The figures' with 'Inputs: k = 18 of 24, r = 3/4 (A0 7/8, A0s 11/16 beside; the G-F0m-Qwen entry); floors A0 80, A0s 32 (v0.2 §1)'.",
+  "Next 2, 'v1.0 §§3 and 4 take these figures in the draft', is ambiguous between v1.0's working text and the committed snapshot results/raw/2026-10-15_m-lock-v1.0-draft_pre-gpwr.md. The snapshot must stay as G-PWR read it, because the record's lock_draft.sha256 c4571818…442d and the verifier bind it. Suggested: 'v1.0's text (LOCK-m-F0.md at v1.0's commit; the committed snapshot stays as G-PWR read it) takes these figures in §§3 and 4 …'. Relatedly, v1.0 §6's 'G-PWR's output' row takes the record's sha256, not 'figures'."
+ ]
+}
+---- CODE'S DISPOSITIONS OF PASS 1 (disp_run_vc1.md), verbatim
+# Code's dispositions of the run entry's values-check, pass 1 (one checker, with a strict refuter)
+
+The refuter confirmed six findings (F1, F2, F4, F5, F9, F10), confirmed three in part (F3, F6, F7), refuted F8, and
+added four misses. It re-verified the figures independently: the launch counts, the round_degeneracy and the guard's
+absolute halves.
+
+- **F1:** the self-test's boot is attributed to the program ("as the program's entry states"). It is not among what the
+  raw shows.
+- **F2:** the union's figure is its "grid maximum over common rates p ≤ .20 (j/100)".
+- **F3 (PARTLY, the refuter's form):** "Next" item 2 keeps the present step and adds the conditions from the draft's
+  v1.0 §1. Under Q2's (C) or a Q4 strike (Code's reading), G-PWR re-runs. A Q7 strike supersedes this run of record
+  and the snapshot (PIN-37).
+- **F4:** "design figures and issue no verdict (m:330)". m:190's raise reads the power at the floors and is not
+  triggered.
+- **F5:** the launch counts name the step up to the balance unit 32.
+- **F6 (PARTLY):** the two terminal lines are in a fenced block, byte for byte.
+- **F7:** the config check names fsck.*, core.fsmonitor and core.hooksPath.
+- **F8 (REFUTED):** the label now gives both forms: "136 of 160 realised rounds (17/2 per launch)".
+- **F9:** the committed-blob comparison is "Next" item 1, after the commit, as the program's entry declared. Its result
+  goes to the PI with the cap request and into the next entry.
+- **F10:** this raw holds both passes and their refuters, and the entry's count is the passes run.
+- **Misses:**
+  - the inputs line: k = 18 of 24, r = 3/4, the per-template rates beside, and the floors;
+  - "Next" item 2 names v1.0's text and says the snapshot stays as G-PWR read it. §6 takes the record's sha256;
+  - F2's line cite is :380, noted;
+  - the re-verifications need no change.
+
+====================================================================================================
+PASS 2
+====================================================================================================
+
+---- THE WORKFLOW SCRIPT, verbatim
+export const meta = {
+  name: 'entry-gpwr-run-vc2',
+  description: 'Values-check pass 2 of the RESULTS entry for G-PWR\'s run of record (after pass 1 applied), with a strict refuter',
+  phases: [{ title: 'Check' }, { title: 'Refute' }],
+}
+const R = '/Users/jasondwyer/Documents/code/jspace-lab'
+const S = '/private/tmp/claude-501/-Users-jasondwyer-Documents-code-jspace-lab/adb70afc-5886-490b-a675-abb30f8c425f/scratchpad/gpwr'
+const COMMON = `
+CONTEXT. Code will commit (repo ${R}, HEAD 78f5602): results/raw/2026-10-15_m-gpwr-qf0.txt (G-PWR's run raw), data/m/gates/Q-F0_G-PWR.json (its record), results/raw/2026-10-15_m-gpwr-probes.txt (the battery on the committed program), results/raw/2026-10-15_m-gpwr-qf0_valuescheck.txt (this check's returns, assembled after this pass), and a RESULTS.md entry, ${S}/entry_run.md ('@@STAMP@@' filled at commit). Pass 1: ${S}/run_vc1.json; Code's dispositions: ${S}/disp_run_vc1.md; the text pass 1 saw: ${S}/entry_run.pre-vc1.md. Sources: the files above; scripts/m_gpwr.py (committed); the committed draft snapshot results/raw/2026-10-15_m-lock-v1.0-draft_pre-gpwr.md; RESULTS.md (the entry committing the program, at the top of the log); ${S}/run_record.sh; ${S}/verify_record.py; ${S}/run_of_record_terminal.txt; PROPOSAL-m-gating-campaign-v1_11.md (m:N); results/raw/2026-10-14_m-design-to-code_step15_answers.md (Q7); LOCK-m-F0.md (v0.2 §§1, 2); results/raw/2026-10-13_m-design-to-code_G-F0m-Qwen_read.md (§4); the G-F0m-Qwen entry in RESULTS.md.
+HARD RULES. Read-only; no git writes (read-only git only, with --no-optional-locks); read nothing under data/m/ckpt/ or data/m/reports/; never open results/raw/2026-10-13_m-gf0m-qwen.txt; no git in jlens-qwen36/; write only under ${S}/evc_run/; do not read scripts/audit_note_*, results/raw/*note-*, README-NOTE.md, RESEARCH-NOTE-*, AUDIT-note-*, LICENS*, root *.svg, ADDENDUM-k1.md. Never compute or quote stage durations.`
+const SCHEMA = { type: 'object', properties: {
+  pass1_applied: { type: 'array', items: { type: 'object', properties: { id: { type: 'string' }, applied: { type: 'string', enum: ['YES', 'NO', 'PARTLY'] }, evidence: { type: 'string' } }, required: ['id', 'applied', 'evidence'] } },
+  findings: { type: 'array', items: { type: 'object', properties: {
+    id: { type: 'string' }, where: { type: 'string' }, severity: { type: 'string', enum: ['error', 'imprecise', 'note'] },
+    finding: { type: 'string' }, evidence: { type: 'string' }, fix: { type: 'string' } },
+    required: ['id', 'where', 'severity', 'finding', 'evidence', 'fix'] } },
+  verified: { type: 'array', items: { type: 'string' } } }, required: ['pass1_applied', 'findings', 'verified'] }
+const VER = { type: 'object', properties: {
+  verdicts: { type: 'array', items: { type: 'object', properties: { id: { type: 'string' },
+    verdict: { type: 'string', enum: ['CONFIRMED', 'REFUTED', 'PARTLY'] }, evidence: { type: 'string' }, fix: { type: 'string' } },
+    required: ['id', 'verdict', 'evidence', 'fix'] } },
+  missed: { type: 'array', items: { type: 'string' } } }, required: ['verdicts', 'missed'] }
+phase('Check')
+const rep = await agent(COMMON + `\n\nTASK (pass 2). First check each pass-1 disposition landed (pass1_applied). Then check the entry afresh as the design seat would read it: every figure and sha256 (recompute), every attribution (the seat's, the PI's, Code's), any claim stronger than its evidence, the inputs line against its sources (quote them), whether 'Next' agrees with the program's entry and the draft. Report only what is wrong; an empty findings list is a valid result. Work dir ${S}/evc_run/p2.`, { label: 'evcrun:p2', phase: 'Check', schema: SCHEMA })
+phase('Refute')
+const ref = await agent(COMMON + `\n\nYOU ARE A STRICT REFUTER of this values-check report (pass 2), verbatim:\n${JSON.stringify(rep)}\nFor EACH finding and each pass1_applied entry that is not YES, reproduce it and give CONFIRMED / REFUTED / PARTLY with evidence and the exact fix; default to REFUTED if you cannot reproduce. Re-verify 3 'verified' items. Add to 'missed' anything wrong in the entry the report did not find. Work dir ${S}/evc_run/r2.`, { label: 'evcrun:r2', phase: 'Refute', schema: VER })
+return { report: rep, refute: ref }
+---- THE CHECK (pass 2), verbatim
+{
+ "pass1_applied": [
+  {
+   "id": "F1",
+   "applied": "YES",
+   "evidence": "entry_run.md:22-23 now reads 'the self-test passed, 0 failed (the program runs it in a separate process booted from the commit's script blob, as the program's entry states)'. The program's entry (RESULTS.md:47) says 'its self-test passes, in a separate process booted from the same commit's script blob'. The raw shows only 'selftest: PASS (0 failed)'."
+  },
+  {
+   "id": "F2",
+   "applied": "YES",
+   "evidence": "entry_run.md:58-59: 'The union's grid maximum over common rates p ≤ .20 (j/100) is 0.1496, at 1/5.' The raw (:114) has 'union grid max over p <= 1/5: 0.1496 at p 1/5', and the record key is union_grid_max_p_le_p0."
+  },
+  {
+   "id": "F3",
+   "applied": "PARTLY",
+   "evidence": "Next 2 (:71-73) carries the refuter's sentence on Q2 (C), the Q4 strike and the Q7 strike, but drops the refuter's closing cite '(v1.0 §1, \"What would move these lines\")'. The Q7-strike clause also has no 'Code's reading' attribution, although the draft and the program's entry both give one (see N1)."
+  },
+  {
+   "id": "F4",
+   "applied": "YES",
+   "evidence": ":63-65: 'These are design figures and issue no verdict (m:330: pauses are not verdicts). No campaign data enters them. m:190's raise reads the power at the floors and is not triggered. Q7's methods and Code's readings within them stay strikable until v1.0's commit.' This is the refuter's form."
+  },
+  {
+   "id": "F5",
+   "applied": "YES",
+   "evidence": ":39-40: 'A0 L 128 (floor 80; ⌈1.15·floor⌉ 92; N₉₀ 114; up to the balance unit 32), A0s L 64 (floor 32; 37; N₉₀ 48; up to 32)'. The record has inputs.balance_unit 32."
+  },
+  {
+   "id": "F6",
+   "applied": "YES",
+   "evidence": "The two lines are now in a fenced block (:12-15). With the 4-space list indent removed they are byte-identical to lines 1-2 of run_of_record_terminal.txt (checked by script)."
+  },
+  {
+   "id": "F7",
+   "applied": "YES",
+   "evidence": ":19 reads 'no fsck.*, core.fsmonitor or core.hooksPath config', matching raw:6-7."
+  },
+  {
+   "id": "F8",
+   "applied": "YES",
+   "evidence": "The refuter refuted F8, but its optional wording was applied anyway (:49): 'the sham at G-F0m-Qwen's 136 of 160 realised rounds (17/2 per launch)'."
+  },
+  {
+   "id": "F9",
+   "applied": "PARTLY",
+   "evidence": "As the refuter required, the text is unchanged: Next 1 (:67-68) defers the committed-blob comparison. The disposition adds 'Its result goes to the PI with the cap request and into the next entry', but that destination is not in the entry. Next 1 says the comparison is made, not where its result is recorded (see N4)."
+  },
+  {
+   "id": "F10",
+   "applied": "YES",
+   "evidence": "The count is unchanged ('two passes, each with a strict refuter'). This is pass 2, and the raw does not exist yet (ls: No such file). The count holds only if pass 2 gets a refuter and the assembled raw holds both passes, the refuters and the dispositions. Re-check at assembly."
+  },
+  {
+   "id": "Miss-inputs",
+   "applied": "YES",
+   "evidence": ":35-36 adds 'Inputs: k = 18 of 24, r = 3/4 (A0 7/8, A0s 11/16 beside; the G-F0m-Qwen entry); the floors A0 80, A0s 32 (v0.2 §1)'. It does not state the path (see N2)."
+  },
+  {
+   "id": "Miss-Next2",
+   "applied": "YES",
+   "evidence": ":69-71: 'v1.0's text (`LOCK-m-F0.md` at v1.0's commit; the committed snapshot stays as G-PWR read it) … and the record's sha256 in §6's output row.'"
+  },
+  {
+   "id": "Miss-F2cite",
+   "applied": "YES",
+   "evidence": "No entry text is involved. Confirmed that m_gpwr.py:380 is the union's grid_max call over p ≤ GUARD_ABS_P0, with GRID at :179."
+  }
+ ],
+ "findings": [
+  {
+   "id": "N1",
+   "where": "entry_run.md:71-73, 'Next' item 2: 'Under the seat's Q2 (C), or a Q4 strike (Code's reading), … A strike of a Q7 default needs a new G-PWR build and a run of record that supersedes this one, with the snapshot (PIN-37).'",
+   "severity": "imprecise",
+   "finding": "The consequence of a Q7 strike is stated as settled, with no attribution. It is Code's reading, and it goes beyond the seat's own words: Q7 says a strike 'recomputes figures only'. The neighbouring sentence marks only the Q4 strike '(Code's reading)', so the seat would read the Q7 sentence as not being Code's reading.",
+   "evidence": "Program's entry, RESULTS.md:157: 'on Code's reading, a strike of a Q7 default needs a new G-PWR build, with its review and pins, and a superseding run of record, and this snapshot is superseded with it (PIN-37)'. Draft snapshot :190-192: '… a run of record that supersedes this one (PIN-37). The program row this snapshot names changes with it, so this snapshot is superseded too (PIN-37; Code's reading).' Step-15 answers, Q7 (:46): '(strikable until v1.0's commit; a strike recomputes figures only)'.",
+   "fix": "'On Code's reading, a strike of a Q7 default needs a new G-PWR build and a run of record that supersedes this one, with the snapshot (PIN-37; v1.0 §1, \"What would move these lines\").'"
+  },
+  {
+   "id": "N2",
+   "where": "entry_run.md:35-36, the Inputs line",
+   "severity": "note",
+   "finding": "The Inputs line, and the whole entry, never names the path. The header cites the seat's item 5, which orders G-PWR 'on the uncached path with r = 18/24'. The floors are the uncached column's (cached A0 would be 96). The draft's own inputs line, the raw and the record all carry the path.",
+   "evidence": "The sources match the entry's values. G-F0m-Qwen entry, RESULTS.md:734: '**r for Q-F0's launch rule** is 18/24 (A0 7/8, A0s 11/16).' v0.2 §1, LOCK-m-F0.md:100: 'Floors: §2.4's uncached column, A0 80 and A0s 32 (m:182).' But the answers' item 5 (:69) reads 'G-PWR on the uncached path with r = 18/24, on Q7's methods.' The draft §3 (:299) reads 'Its inputs: k = 18 of n_q = 24 on the uncached path …'. Raw:96 reads 'G-PWR Q-F0 (uncached); k = 18 of 24, r = 3/4 …'. The record has path \"uncached\". `grep uncached entry_run.md` finds nothing.",
+   "fix": "'Inputs: the uncached path (v0.2 §1); k = 18 of 24, r = 3/4 (A0 7/8, A0s 11/16 beside; the G-F0m-Qwen entry); the floors A0 80, A0s 32 (v0.2 §1, the uncached column).'"
+  },
+  {
+   "id": "N3",
+   "where": "entry_run.md:71, 'Under the seat's Q2 (C), or a Q4 strike'",
+   "severity": "note",
+   "finding": "The entry does not say which Q2 or Q4 it means. Its header cites the seat's step-15 answers, whose own Q2 (R3M-5) has no option (C) and whose Q4 is the re-anchoring ruling (reading (A)). The program's entry also cites 'the step-14 read's Q4'. The draft says which ones it means: the ruling on the step-15b ping's Q2, and the ping's Q4.",
+   "evidence": "Draft :180-185: 'What would move these lines (the addendum …; the step-15b ping, Q4)' and 'A strike of a Q4 item moves the analyzer too (the ping's Q4; …)'. Step-15 answers: '## Q2 — R3M-5, and what stays open' and '## Q4 — the re-anchoring: reading (A)'.",
+   "fix": "'Under the seat's ruling on the step-15b ping's Q2, if (C), or a strike of an item of the ping's Q4 (Code's reading), …'"
+  },
+  {
+   "id": "N4",
+   "where": "entry_run.md:67-68, 'Next' item 1",
+   "severity": "note",
+   "finding": "The program's entry promised that the run's entry would check the committed blobs. This entry correctly defers that check to after the commit, but does not say where its result will be recorded. Code's F9 disposition names a destination ('Its result goes to the PI with the cap request and into the next entry'), but that sentence did not reach the entry.",
+   "evidence": "Program's entry, Next 2: 'the run's entry quotes the wrapper's last two terminal lines …, and checks the committed blobs against them'. Its declared gaps: '…after it compares the committed blobs (`git cat-file blob <commit>:<path>`) with them.' disp_run_vc1.md, F9: 'Its result goes to the PI with the cap request and into the next entry.' Entry :67-68 has no destination.",
+   "fix": "Append to Next 1: '; the result goes to the PI with the cap request and into the next entry.'"
+  }
+ ],
+ "verified": [
+  "sha256, recomputed now from the working tree: the raw 3c35a36f2e01c35c0b7e9a1bc545a7d92179715f16e90f32415001728e00d145, the record b5331ba132f358a1426b9e6c480b44910303eadffe35022b147aeb415e593a68 and the battery raw 11e7ee2c5203c21ed9c4c86556cac8c8e8b3cbec966705e215d8ff1d71639bd3, each equal to the entry. The raw and record values equal run_of_record_terminal.txt line 2. scripts/m_gpwr.py is 1d7c0fe3…111c and the snapshot c457181825dc…f9442d. The analyzer is 655e0f7f…c16f in both the working tree and HEAD's blob. The package is 5f646db6…d771, recomputed with resume.package_sha256_of's formula over HEAD's 18 valence_core/m/*.py blobs. The closure digest fa543713…5e22 is sha256(json.dumps(closure, sort_keys=True)) over 13 modules, each equal to its HEAD blob and working-tree file. The wrapper (22ecb5aa…fb75) and the verifier (822ea68e…ca0c) are unchanged now and equal the raw header and the committed review raw (:11583-11584).",
+  "HEAD is 78f56023012b…cbb7a4. `git show --stat HEAD` lists scripts/m_gpwr.py and the draft snapshot. The record's provenance.head and the raw header's HEAD both equal it. The record's lock_draft.sha256 equals the snapshot sha256 in the program's entry (RESULTS.md:142-143). The draft names the analyzer (:133), the package (:134), the program (:342) and the closure, 13 files (:343).",
+  "The raw (398 lines) was read for the launch check (raw:6-8, which names fsck.*, core.fsmonitor and core.hooksPath), the analyzer line (raw:10) and the self-test: 78 PASS, 'selftest: PASS (0 failed)'. Also read: the WROTE line with the record's sha256, EXIT 0, the after-run fsck at rc 0 with no output suffix, and 'the wrapper and the verifier are unchanged'. The verifier ran under '/usr/bin/python3 -I -S -X utf8': 25 PASS, 'verify_record: PASS (0 failed)', VERIFY EXIT 0, and the raw ends 'WRAPPER EXIT 0'. In run_record.sh, the header text is written only after every launch condition passes.",
+  "Every exact fraction in the record rounds half-up to its display, 4 places, or 3 for power (evc_run/p2/disp.py). The entry's figures equal the record's displays: power 0.878 (0.8784) ≥ 17/20, n_raised false; PIN-3 0.878 at [40, 40], mS 32; round_degeneracy 0.0976/0.0797/0.0593/0.0890; guard 0.1086/0.0766/0.1496, 0.1073/0.0669/0.1461 and 0.0999/0.0579/0.1343; Fisher grid max 0.0836 at 1/2, refined 0.0836 at 251/500; union grid max 0.1496 at 1/5; joint 0.0976 with 0.1496 beside.",
+  "An independent recomputation outside the program (evc_run/p2/recomp.py and recomp.out; exact critical counts and Fisher decisions in integers, float DP) reproduces every figure. round_degeneracy: 0.097603 (crits 16/28/40/42/42), 0.079733, 0.059280 and 0.089017 (crits 14/25/35/37/37). Guard abs/Fisher/union: 0.108551/0.076553/0.149608, 0.107330/0.066875/0.146140 and 0.099929/0.057911/0.134318, with abs crits as recorded. Fisher on the projection: 0.0836309 at 1/2 and 0.0836319 at 251/500. The union's maximum over j/100 ≤ .20 is at j = 20, 0.149608.",
+  "Launch counts recomputed: ⌈1.15·80⌉ = 92, N₉₀(80, 3/4) = 114 → 128; ⌈1.15·32⌉ = 37, N₉₀(32, 3/4) = 48 → 64 (unit 32); total 192, 5 looks. The same row holds at k = 17–20 (160 at 21–24, 224 at 14–16) and ⌈32/r⌉ = 43. This equals m:210 ('| 20–17 | 128 | 64 | **192** | 5 |') and Q7's planning row, quoted: 'The planning row stands as the input (m:210: k = 18 of 24 uncached → L = 128 and 64, total 192, 5 looks; power at the floors .878 ≥ .85, no n raised) …'.",
+  "Inputs line against its sources: the G-F0m-Qwen entry (RESULTS.md:734): '**r for Q-F0's launch rule** is 18/24 (A0 7/8, A0s 11/16).' v0.2 §1 (LOCK-m-F0.md:100): 'Floors: §2.4's uncached column, A0 80 and A0s 32 (m:182).' m:192: 'reported per template beside'. The values agree; for the path, see N2.",
+  "Citations: m:285 is G-PWR's item. m:190: 'an arm below its floor has its n raised'. m:330: 'pauses are not verdicts' and 'in Q-F0 … the lexical bar has no domain there'. m:271 is the hair triggers. m:316: the guard's 'false-pause figure is reported at G-PWR'. The answers' item 5: 'G-PWR on the uncached path with r = 18/24, on Q7's methods.' Q7 (a)-(c) and the strike terms are as the entry paraphrases them. The PI's word of 2026-10-15 is the hold, which the draft quotes: 'Meanwhile I draft v1.0 and run G-PWR'.",
+  "Battery: the raw's header shows HEAD 78f5602 and the committed m_gpwr.py 1d7c0fe3…; it reports 'probes: 56; failed 0' and 'clone status after: clean'. Its body equals probes_committed.out, and run_probes.py (c9e56737…) is verbatim in the committed review raw. File creation order puts the battery raw before the run raw, so 'run before the run of record' holds. The program's entry Next 1 is 'the probe battery on the committed blob'.",
+  "Next, against the program's entry and the draft. Item 1 matches the program's declared gap. Item 2 matches draft §3 ('entered here from its output'), the §4 line form `launch counts = A0 <L_A0>, A0s <L_A0s>` and the §6 'G-PWR's output' row [PENDING]. Item 3 matches draft §4 ('with both in view': v0.2 §2 and the step-14 read's §4 item 2, quoted: 'The hour cap — the PI's, set with §2.4's uncached bases and the measured sham figures … in view') and §0/§2 ([PENDING the PI] 'placed'). Item 4 matches the program's two declared departures. Item 5 matches the draft header ('The commit itself waits on G-PWR's run of record and the PI's cap …, and on the seat's Q2 ruling with the table of record's sha256 …, with a committer date on or before 2026-10-30')."
+ ]
+}
+---- THE STRICT REFUTER (pass 2), verbatim
+{
+ "verdicts": [
+  {
+   "id": "N1",
+   "verdict": "CONFIRMED",
+   "evidence": "entry_run.md:72-73 reads 'A strike of a Q7 default needs a new G-PWR build and a run of record that supersedes this one, with the snapshot (PIN-37).' It carries no attribution, while the clause just before it on :71 marks the Q4 strike '(Code's reading)'. Sources: the program's entry (RESULTS.md:157) says '- on Code's reading, a strike of a Q7 default needs a new G-PWR build, with its review and pins, and a superseding run of record, and this snapshot is superseded with it (PIN-37)'. The draft snapshot (:190-192) says 'A strike of a Q7 default changes no analyzer line (it \"recomputes figures only\", v1.0 §3). In this build it needs a new G-PWR build … (PIN-37). … so this snapshot is superseded too (PIN-37; Code's reading).' The step-15 answers' Q7 (:46) says '(strikable until v1.0's commit; a strike recomputes figures only)'. So the new-build consequence is Code's, and comes from how this build is made: the figures pin at m_gpwr.py:670-672 is a sha256 over every non-provenance key. The seat's own text says only 'recomputes figures only'.",
+   "fix": "Make the change together with the F3 cite and N3. 'On Code's reading, a strike of a Q7 default needs a new G-PWR build and a run of record that supersedes this one, with the snapshot (PIN-37).' The cite '(the snapshot's v1.0 §1, \"What would move these lines\")' then covers all three conditions; see the missed item with the combined text."
+  },
+  {
+   "id": "N2",
+   "verdict": "CONFIRMED",
+   "evidence": "`grep -c uncached entry_run.md` gives 0. Every source names the path. The answers' item 5 (:69) says 'G-PWR on the uncached path with r = 18/24, on Q7's methods.' The step-14 read §4 item 1 says 'G-PWR, computed from the unit's k and the measured r … on the uncached path', and its 'What Code does now' 2 says 'G-PWR on the uncached path with r = 18/24'. Draft §3 (:299) says 'k = 18 of n_q = 24 on the uncached path'. Raw:96 says 'G-PWR Q-F0 (uncached); k = 18 of 24, r = 3/4 …', and the record has top-level `path` \"uncached\". LOCK-m-F0.md v0.2 §1 is titled 'The path' and opens '`path = uncached`'. Its :100 reads 'Floors: §2.4's uncached column, A0 80 and A0s 32'. The entry's values (18/24, 7/8, 11/16, 80, 32) are right; only the path is missing.",
+   "fix": "'**Inputs:** the uncached path (v0.2 §1); k = 18 of 24, r = 3/4 (A0 7/8, A0s 11/16 beside; the G-F0m-Qwen entry); the floors A0 80, A0s 32 (v0.2 §1, §2.4's uncached column).'"
+  },
+  {
+   "id": "N3",
+   "verdict": "CONFIRMED",
+   "evidence": "Every other Qn in the entry is the step-15 answers' Q7: the header at :2 ('the seat's step-15 answers, item 5 and Q7'), and :40, :60, :64 and :72. The answers' own Q2 is '## Q2 — R3M-5, and what stays open', which has no (C), and their Q4 is '## Q4 — the re-anchoring: reading (A)', which has no items to strike. The (C) and the strikable items belong to Code's step-15b ping: '**Q2 — what the rules find in the placed copy …**' (:116), with (A)/(B)/(C) at :136-141, and '**Q4 — Code's additions beyond the order's letter, to strike or keep**' (:178). The draft names them: ':180-181 (… the step-15b ping, Q4)', ':185 (the ping's Q4; …)'. The ping itself uses both Q4s side by side (:207 'the answers' Q4 reading (A)'), so a reader can confuse them. Mitigation, so this is a note: 'the seat's Q2' is the log's standing name for the pending ruling. It appears in commit 2186659's subject, in the entry's own Next 5, and in the program's entry ('Under Q2's (C)', 'a Q4 strike', unqualified). The Q4 half is the sharper ambiguity.",
+   "fix": "'Under the seat's ruling on the step-15b ping's Q2, if (C), or a strike of an item of the ping's Q4 (Code's reading), G-PWR re-runs on the new analyzer and these lines are redone.' Next 5's 'the seat's Q2 ruling' can then stay as it is."
+  },
+  {
+   "id": "N4",
+   "verdict": "CONFIRMED",
+   "evidence": "entry_run.md:67-68 reads '1. After this commit, Code compares the committed blobs of the raw and the record with the wrapper's printed sha256.' It names no destination. The program's entry, Next 2, says 'the run's entry quotes the wrapper's last two terminal lines … and checks the committed blobs against them'. Its declared gaps say '…after it compares the committed blobs (`git cat-file blob <commit>:<path>`) with them.' disp_run_vc1.md, F9, says 'Its result goes to the PI with the cap request and into the next entry.' That sentence is not in the entry. Under rule 27 the check's result must reach committed text, and the entry the program promised would carry it now defers it without saying where it will land. Severity: note.",
+   "fix": "Append to Next 1: '; its result goes into the next entry, and to the PI with the cap request.'"
+  },
+  {
+   "id": "F3 (pass1_applied PARTLY)",
+   "verdict": "CONFIRMED",
+   "evidence": "The pass-1 refuter's form ended '… with the snapshot (PIN-37) (v1.0 §1, \"What would move these lines\").' entry_run.md:71-73 ends '… with the snapshot (PIN-37).' and the cite is gone: 'What would move' appears nowhere in the entry. The rest of the refuter's sentence is there word for word. The report's second point, the missing 'Code's reading' on the Q7 strike, does not count against F3's application, because the refuter's own form also lacked it. That is N1, a new finding.",
+   "fix": "Restore the cite once, covering all three conditions: '(the snapshot's v1.0 §1, \"What would move these lines\")'. See the combined Next 2 text under missed."
+  },
+  {
+   "id": "F9 (pass1_applied PARTLY)",
+   "verdict": "PARTLY",
+   "evidence": "The fact holds: the disposition's sentence 'Its result goes to the PI with the cap request and into the next entry' is not in the entry. But F9 was confirmed with 'No text change', the committed-blob check run after the commit and recorded where it can be cited. The disposition's sentence states what Code will do next, not an edit to the entry. Next 1 (:67-68) carries the deferred comparison as the refuter required. So F9 is applied in full (YES). The missing destination is a new note, N4, not a partial application.",
+   "fix": "Mark F9 as applied: YES, and carry the destination under N4 (append '; its result goes into the next entry, and to the PI with the cap request.' to Next 1)."
+  }
+ ],
+ "missed": [
+  "Three of the report's 'verified' items re-checked independently, and all hold. (1) sha256 recomputed now: the raw is 3c35a36f…d145, the record b5331ba1…3a68 and the battery raw 11e7ee2c…9bd3, each equal to the entry and to run_of_record_terminal.txt:2. The working tree equals HEAD's blob for scripts/m_gpwr.py (1d7c0fe3…111c), the snapshot (c4571818…442d) and m_analyze.py (655e0f7f…c16f). HEAD is 78f56023…cbb7a4. The closure digest is sha256(json.dumps(closure, sort_keys=True)) = fa543713…5e22 over 13 modules, each equal to its HEAD blob and present once in the draft. The wrapper (22ecb5aa…fb75) and the verifier (822ea68e…ca0c) are unchanged. The fenced lines :13-14, with the indent removed, are byte-equal to the terminal file. (2) An independent recomputation (evc_run/r2/seq.py, seq.out: exact critical counts, float sequential DP) gives the following. round_degeneracy: 0.097603, 0.079733, 0.059280 and 0.089017, with crits 16/28/40/42/42, 16/28/30/30/30, 16/24/24/24 and 14/25/35/37/37. The guard's absolute half: 0.108551, 0.107330 and 0.099929, with crits as recorded. The crits confirm the entry's 'α .05 per look', as m:330 says ('α .05 per look'). Launch counts: N₉₀ 114 and 48, ⌈1.15·floor⌉ 92 and 37, L 128 and 64, total 192, 5 looks. The same row holds at k = 17–20, with 224 at 14–16 and 160 at 21–24, and ⌈32/r⌉ = 43. (3) Every record exact value rounds half-up to its display, all 118 (evc_run/r2/disp.py, disp.out). The Fisher grid's exact maximum is 1/2 (0.0836309), against 51/100 (0.0836181), and the refined value is 0.0836319. The battery raw has 56 PASS and 0 FAIL, reads 'probes: 56; failed 0', and names HEAD 78f5602. By creation order the battery raw comes before the run raw and the record. The wrapper (run_record.sh:63-64) would append ', output: …' to the after-run fsck line and fail the run, so the raw's bare 'rc 0' supports 'fsck was clean'.",
+  "Next 2's Q7-strike clause covers 'a strike of a Q7 default' only. But :64-65 says 'Q7's methods and Code's readings within them stay strikable until v1.0's commit', and the program's entry says the same: 'Its READINGS declare the seat's methods verbatim, and Code's readings within them, strikable'. The record's figures pin is m_gpwr.py:670-672, a sha256 over every non-provenance key; recomputed now it is a5aaea47…337c. It covers `readings`, which carry 'Code's reading inside Q7 (a)' and '(b)' verbatim. So a strike of one of Code's readings within Q7 also needs a new build and a superseding run of record. The draft (:190) has the same narrower scope, so this is a note. Suggested: '… a strike of a Q7 default, or of Code's reading within it, needs a new G-PWR build …', marked as Code's reading.",
+  "Combined text for Next 2's tail, so that the F3 cite, N1 and N3 fixes do not collide: 'What would move them (the snapshot's v1.0 §1, \"What would move these lines\"): under the seat's ruling on the step-15b ping's Q2, if (C), or a strike of an item of the ping's Q4 (Code's reading), G-PWR re-runs on the new analyzer and these lines are redone; on Code's reading, a strike of a Q7 default needs a new G-PWR build and a run of record that supersedes this one, with the snapshot (PIN-37).' Keep the lines within the log's 120-character width; the program's entry maxes at 120, and the entry now has :70 at 119.",
+  "The values-check line (:79-80) says 'two passes, each with a strict refuter'. If pass 2's findings (N1–N4 and the above) are applied without a pass 3, the final text was never seen by a refuter. The program's entry gives the precedent form: 'The check stops at pass 4; its findings are applied and checked mechanically (the quotations, the fills, the widths …)'. Suggested, if no pass 3 runs: 'two passes, each with a strict refuter, `results/raw/2026-10-15_m-gpwr-qf0_valuescheck.txt`; the check stops at pass 2, and its findings are applied and checked mechanically.' The raw still does not exist (ls: No such file), so F10's re-check at assembly stands."
+ ]
+}
+---- CODE'S DISPOSITIONS OF PASS 2 (disp_run_vc2.md), verbatim
+# Code's dispositions of the run entry's values-check, pass 2 (one checker, with a strict refuter)
+
+The checker found pass 1's dispositions applied, F3 and F9 in part. The refuter confirmed N1 to N4 and F3's residue.
+It gave F9 in part: applied, with the destination carried under N4. It added three misses and re-verified the sha256,
+the figures and the tools. All are applied in the refuter's form, using its combined text for "Next" item 2. The check
+stops at pass 2. Its findings are applied and checked mechanically: the quotations against their sources, the sha256
+recomputed, the widths.
+
+- **N1, N3 and F3's cite:** "Next" item 2 takes the refuter's combined text:
+  - the cite to the snapshot's v1.0 §1;
+  - "the seat's ruling on the step-15b ping's Q2, if (C)", and "an item of the ping's Q4";
+  - the Q7 consequence marked "on Code's reading".
+- **N2:** the inputs line names the uncached path, and the floors as §2.4's uncached column.
+- **N4 and F9:** "Next" item 1 says where the committed-blob comparison goes: into the next entry, and to the PI with
+  the cap request.
+- **Misses:**
+  - a strike of Code's reading within Q7 is named beside a strike of a Q7 default, since the figures pin covers the
+    readings;
+  - the values-check line says the check stops at pass 2 and how its findings were checked;
+  - the re-verifications need no change.
+
+====================================================================================================
+THE ENTRY'S CHANGES BY PASS
+====================================================================================================
+
+---- pass 1's dispositions applied (pass 2 checked these)
+--- entry_run.pre-vc1.md
++++ entry_run.pre-vc2.md
+@@ -7,15 +7,20 @@
+       `3c35a36f2e01c35c0b7e9a1bc545a7d92179715f16e90f32415001728e00d145`.
+     - The record is `data/m/gates/Q-F0_G-PWR.json`, sha256
+       `b5331ba132f358a1426b9e6c480b44910303eadffe35022b147aeb415e593a68`.
+-  - **The wrapper's last two terminal lines, verbatim:** "EXIT 0; fsck rc 0; VERIFY EXIT 0; WRAPPER EXIT 0" and "RAW
+-    sha256 3c35a36f2e01c35c0b7e9a1bc545a7d92179715f16e90f32415001728e00d145; RECORD sha256
+-    b5331ba132f358a1426b9e6c480b44910303eadffe35022b147aeb415e593a68". Before this commit, the two files' sha256 equal
+-    them.
++  - **The wrapper's last two terminal lines, verbatim:**
++
++    ```
++    EXIT 0; fsck rc 0; VERIFY EXIT 0; WRAPPER EXIT 0
++    RAW sha256 3c35a36f2e01c35c0b7e9a1bc545a7d92179715f16e90f32415001728e00d145; RECORD sha256 b5331ba132f358a1426b9e6c480b44910303eadffe35022b147aeb415e593a68
++    ```
++
++    Before this commit, the two files' sha256 equal them.
+   - **What the raw shows:**
+-    - the launch check passed: fsck clean, no fsck or hook config, the bound paths and the draft clean, the script's
+-      working-tree blob equal to HEAD's;
++    - the launch check passed: fsck clean, no fsck.*, core.fsmonitor or core.hooksPath config, the bound paths and the
++      draft clean, the script's working-tree blob equal to HEAD's;
+     - its header quotes the draft's one line naming the analyzer, `655e0f7f…c16f`;
+-    - the self-test passed, 0 failed, in a process booted from the commit's blob;
++    - the self-test passed, 0 failed (the program runs it in a separate process booted from the commit's script
++      blob, as the program's entry states);
+     - the verifier, under the system's Python with `-I -S`, passed every check;
+     - after the run, fsck was clean and the wrapper and the verifier were unchanged.
+   - **Provenance:**
+@@ -27,10 +32,13 @@
+     failed. Its raw is `results/raw/2026-10-15_m-gpwr-probes.txt`, sha256
+     `11e7ee2c5203c21ed9c4c86556cac8c8e8b3cbec966705e215d8ff1d71639bd3`.
+   - **The figures** (the record; its exact fractions in the record):
++    - **Inputs:** k = 18 of 24, r = 3/4 (A0 7/8, A0s 11/16 beside; the G-F0m-Qwen entry); the floors A0 80, A0s 32
++      (v0.2 §1).
+     - **Power at the floors** (A0 80, A0s 32): 0.878 (0.8784) ≥ .85; no n raised. **PIN-3** re-derived at the floors:
+       0.878, split [40, 40], mS 32.
+-    - **Launch counts** (m:192): A0 L 128 (floor 80; ⌈1.15·floor⌉ 92; N₉₀ 114), A0s L 64 (floor 32; 37; N₉₀ 48); total
+-      192; 5 looks. The same row holds at k = 17 to 20. These equal Q7's planning row.
++    - **Launch counts** (m:192): A0 L 128 (floor 80; ⌈1.15·floor⌉ 92; N₉₀ 114; up to the balance unit 32), A0s L 64
++      (floor 32; 37; N₉₀ 48; up to 32); total 192; 5 looks. The same row holds at k = 17 to 20. These equal Q7's
++      planning row.
+     - **round_degeneracy's sequential false-pause probability** (p0 .05, α .05 per look, on the sham's rounds):
+ 
+       | Case | False pause |
+@@ -38,7 +46,7 @@
+       | the projection | 0.0976 |
+       | the sham at its floor at r (A0s 43) | 0.0797 |
+       | the sham at its floor at the fewest launches (A0s 32) | 0.0593 |
+-      | the sham at G-F0m-Qwen's 17/2 rounds per launch | 0.0890 |
++      | the sham at G-F0m-Qwen's 136 of 160 realised rounds (17/2 per launch) | 0.0890 |
+     - **The exclusion guard at the common rate .20** (the absolute half, the Fisher half, their union):
+ 
+       | Case | Absolute | Fisher | Union |
+@@ -48,17 +56,21 @@
+       | the sham at its floor at the fewest launches | 0.0999 | 0.0579 | 0.1343 |
+ 
+       On the projection, the Fisher half's grid maximum is 0.0836 at 1/2, refined to 0.0836 at 251/500. The union's
+-      maximum over common rates p ≤ .20 is 0.1496, at 1/5.
++      grid maximum over common rates p ≤ .20 (j/100) is 0.1496, at 1/5.
+     - **The joint figure** (Q7 (c)): round_degeneracy's own, 0.0976, with the guard's union 0.1496 beside. The joint
+       over the two is not computed, and the record gives the one-sentence reason.
+     - The hair triggers and the lexical bar carry no figure (m:271; m:330).
+-    - **These are design figures.** No campaign data enters them, and they decide nothing: Q7's methods and Code's
+-      readings within them stay strikable until v1.0's commit.
++    - **These are design figures and issue no verdict** (m:330: pauses are not verdicts). No campaign data enters
++      them. m:190's raise reads the power at the floors and is not triggered. Q7's methods and Code's readings within
++      them stay strikable until v1.0's commit.
+   - **Next:**
+     1. After this commit, Code compares the committed blobs of the raw and the record with the wrapper's printed
+        sha256.
+-    2. v1.0 §§3 and 4 take these figures in the draft: the launch counts as the line form `launch counts = A0 128,
+-       A0s 64`, and G-PWR's output row in v1.0 §6.
++    2. v1.0's text (`LOCK-m-F0.md` at v1.0's commit; the committed snapshot stays as G-PWR read it) takes these
++       figures in §§3 and 4, with the launch counts as the line form `launch counts = A0 128, A0s 64`, and the record's
++       sha256 in §6's output row. Under the seat's Q2 (C), or a Q4 strike (Code's reading), G-PWR re-runs on the new
++       analyzer and these lines are redone. A strike of a Q7 default needs a new G-PWR build and a run of record that
++       supersedes this one, with the snapshot (PIN-37).
+     3. The cap request to the PI. It carries the launch counts beside the planning bases and the measured sham
+        figures (v0.2 §2; the step-14 read's §4 item 2), and asks for the PI's word on Code's reading of "placed".
+     4. The two departures the program's entry declares go to the seat with the PI's routing.
+---- pass 2's dispositions applied
+--- entry_run.pre-vc2.md
++++ entry_run.md
+@@ -32,8 +32,8 @@
+     failed. Its raw is `results/raw/2026-10-15_m-gpwr-probes.txt`, sha256
+     `11e7ee2c5203c21ed9c4c86556cac8c8e8b3cbec966705e215d8ff1d71639bd3`.
+   - **The figures** (the record; its exact fractions in the record):
+-    - **Inputs:** k = 18 of 24, r = 3/4 (A0 7/8, A0s 11/16 beside; the G-F0m-Qwen entry); the floors A0 80, A0s 32
+-      (v0.2 §1).
++    - **Inputs:** the uncached path (v0.2 §1); k = 18 of 24, r = 3/4 (A0 7/8, A0s 11/16 beside; the G-F0m-Qwen
++      entry); the floors A0 80, A0s 32 (v0.2 §1, §2.4's uncached column).
+     - **Power at the floors** (A0 80, A0s 32): 0.878 (0.8784) ≥ .85; no n raised. **PIN-3** re-derived at the floors:
+       0.878, split [40, 40], mS 32.
+     - **Launch counts** (m:192): A0 L 128 (floor 80; ⌈1.15·floor⌉ 92; N₉₀ 114; up to the balance unit 32), A0s L 64
+@@ -65,17 +65,20 @@
+       them stay strikable until v1.0's commit.
+   - **Next:**
+     1. After this commit, Code compares the committed blobs of the raw and the record with the wrapper's printed
+-       sha256.
++       sha256; its result goes into the next entry, and to the PI with the cap request.
+     2. v1.0's text (`LOCK-m-F0.md` at v1.0's commit; the committed snapshot stays as G-PWR read it) takes these
+        figures in §§3 and 4, with the launch counts as the line form `launch counts = A0 128, A0s 64`, and the record's
+-       sha256 in §6's output row. Under the seat's Q2 (C), or a Q4 strike (Code's reading), G-PWR re-runs on the new
+-       analyzer and these lines are redone. A strike of a Q7 default needs a new G-PWR build and a run of record that
+-       supersedes this one, with the snapshot (PIN-37).
++       sha256 in §6's output row. What would move them (the snapshot's v1.0 §1, "What would move these lines"):
++       - under the seat's ruling on the step-15b ping's Q2, if (C), or a strike of an item of the ping's Q4 (Code's
++         reading), G-PWR re-runs on the new analyzer and these lines are redone;
++       - on Code's reading, a strike of a Q7 default, or of Code's reading within it, needs a new G-PWR build and a
++         run of record that supersedes this one, with the snapshot (PIN-37).
+     3. The cap request to the PI. It carries the launch counts beside the planning bases and the measured sham
+        figures (v0.2 §2; the step-14 read's §4 item 2), and asks for the PI's word on Code's reading of "placed".
+     4. The two departures the program's entry declares go to the seat with the PI's routing.
+     5. v1.0's commit waits on the cap and on the seat's Q2 ruling with the table's sha256, with a committer date on or
+        before 2026-10-30.
+   - **Values-check of this entry:** two passes, each with a strict refuter,
+-    `results/raw/2026-10-15_m-gpwr-qf0_valuescheck.txt`.
++    `results/raw/2026-10-15_m-gpwr-qf0_valuescheck.txt`. The check stops at pass 2; its findings are applied and
++    checked mechanically (the quotations, the sha256, the widths).
+   (Stamp: `date -u` → **@@STAMP@@, at commit**.)
