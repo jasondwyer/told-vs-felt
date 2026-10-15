@@ -1,0 +1,1615 @@
+# The sentence table's DRAFT for Q-F0's v1 posting (PROPOSAL-m v1.11 m:278, m:349; the seat's step-15 answers Q6: "the
+# table's draft is built, and `table_problems` run on it, before the round this file orders commits"). Not the table of
+# record: that is values-checked and hashed after G-ANL-F0's re-run, on the analyzer v1.0 names (Q6).
+# Code stamp: 2026-10-15 04:05 UTC (date -u). Model-free; outcome-blind (no campaign result exists).
+# The preprint of record: PREPRINT-v1_0-draft.md at patch v8, sha256 45b67246f2b2bcb40774e95462ad4e3c5f559fdd0358387cceec0155bebe7a41
+#   (88,668 bytes, 468 "\n"), placed by the PI.
+# The analyzer: 655e0f7f6743d0bf497f5ba97ce37f7febf9fcf6a45e068b5385ee945c5dc16f (the round's r7). Its table_problems on the draft: [].
+# The draft: 56 rows, sha256 4ddcc640b8a91038899efaa2863f75aa11c407f6dc42c4f4d0f6910f280186b3 (draft_table_v2.json, below in full).
+# The classification is Code's (PIN-20: "The table of record's classification is Code's, outcome-blind at LOCK v1.0,
+#   values-checked"), under the spec below, declared before any unit was classified; its rules are Code's readings, put
+#   to the seat in the step-15 ping. The table of record is built from these rows unless the seat strikes a rule.
+
+THE FINDINGS FOR THE SEAT (from the classification, not applied anywhere)
+- 16 rows name a never-Answered cell (e2b, the weight channel or the OLMo base row) and so fire clause (a) in all 1,080
+  tuples: R025.04, R030.02, R033.02, R186.02, R220.01, R232.01, R232.02, R232.03, R236.01, R240.02, R240.06, R248.02, R250.03, R254.02, R262.05, R276.05.
+  Each is a unit whose scope words plausibly reach e2b or the base row ("in our data none does", "the data in hand",
+  "Every null", "the self-administration nulls", "the ontogeny nulls ... at each stage", "This paper" with "leakage
+  certification", "across ... one lineage", "the same figure" after a null clause); the spec's ambiguity rule includes the
+  cell. The placed copy's header note says these cells are "asserted as nulls nowhere in this draft" (line 462) and that the
+  base row carries "no null anywhere in the text" (line 468). Under the alternative reading (the paper's own §3.4 sense of
+  "null", a labeled null, and the paper's stated scope of its link-5 claim, 13.11 and 30.2), these rows drop e2b and base
+  and fire where the general rows do (1,079 or 1,075).
+- 34 of the 56 rows are marked boundary (a judgement decided them); their rationales are below.
+- v8's printed labels for e2b (176.3) and the base row (184.8) differ from m:338's wording, which the analyzer prints
+  (e2b: v8 omits "exact 95% CI [0.0086, 0.0305]"; base: v8 "told control not applicable at base (no
+  instruction-following)", m:338 "told control not run at base, by decision (7′)"). No clause of the enumeration reaches a
+  label's wording.
+- Excluded as not posted text (the spec's rule): line 1 (the redraft note) and the header note for the PI (458-468); the
+  References (304-450).
+
+
+====================================================================================================
+THE ROWS (classification of record for the draft: unit, cells, thesis, dose note, kinds, boundary, rationale; fires (a) (b) (c)T (c)F over the 1,080 tuples)
+====================================================================================================
+R003.01  unit 3.1  cells []  thesis main  dose False  kinds []  boundary True  fires 0 1080 0 0
+    Spec (b): 'The title (line 3) is a main row' ('Functional for the Character, Not for the Network'). The unit has no kind 1-3 wording, and the spec does not say whether 'Not for the Network' is kind 2 through §3.3, so the row carries no cells. That fits the header note's 'The title does not move' when an OLMo stage fails (464.2). Boundary because a judgement decided the cells. Nothing changes at v1, where main fires in all 1,080 tuples; it matters only at v2.
+R005.01  unit 5.1  cells [e2a, f1, olmo-sft, olmo-dpo, olmo-instruct]  thesis fallback-1  dose False  kinds [subtitle-clause-2]  boundary False  fires 1079 864 0 0
+    Spec (b) decides this one: 'but do not act on it when its consequences must be learned' makes line 5 fallback-1, kind subtitle-clause-2. 'represent, express and remember' (fallback-2) gives way to the higher value. 'do not act on it' is kind 2 in a general conclusion, so the spec's general list applies. The unit does not include the state-live read, so there is no e2b, and the list never carries the base row.
+R013.11  unit 13.11  cells [e2a, f1, olmo-sft, olmo-dpo, olmo-instruct]  thesis fallback-1  dose False  kinds [abstract-fifth-stage, abstract-olmo-clause]  boundary False  fires 1079 864 0 0
+    All three classifiers agree. 'no choice moves toward or away from the state: not through the transcript, not for five natural task properties, and not at the SFT, DPO or instruct stage' is kind 2 on e2a, f1 and the three post-training rows. It is fallback-1 under spec (b)'s 'no choice moves toward or away from the state'.
+R013.15  unit 13.15  cells [e2a, f1, olmo-sft, olmo-dpo, olmo-instruct]  thesis main  dose False  kinds []  boundary False  fires 1079 1080 0 0
+    'We conclude that such states are functional for the character a model voices rather than for the network that voices it' states a main paraphrase as the conclusion; main outranks the fallback-1 clause. 'they do not act as reinforcers when their consequences must be learned' is kind 2 in a general conclusion, so the general list applies. No state-live read is named, so there is no e2b.
+R025.04  unit 25.4  cells [e2a, f1, olmo-base, olmo-sft, olmo-dpo, olmo-instruct]  thesis fallback-1  dose False  kinds []  boundary True  fires 1080 864 0 0
+    'find a complete afferent chain with nothing downstream that consumes it' is kind 2 and fallback-1 ('nothing downstream acts on it' / 'no consumer'), stated as this paper's finding. Its scope, 'across two model families and one full post-training lineage', names the whole OLMo lineage, so it may or may not cover the base row. The ambiguity rule includes it. That is a finding against 468.1, 'the OLMo base row carry no null anywhere'. e2b is not added: the spec includes e2b in a general conclusion only where the unit includes the state-live read, and this one does not.
+R030.02  unit 30.2  cells [e2a, f1, e2b, olmo-sft, olmo-dpo, olmo-instruct]  thesis fallback-1  dose False  kinds [contribution-2v]  boundary True  fires 1080 864 0 0
+    '(v) not acted on through the transcript, for five natural reinforcers, and at the SFT, DPO and instruct stages' is kind 2 and fallback-1 on e2a, f1 and the three post-training rows. I read 'the present-tense cell returns the same figure under a leakage-certified read and is reported, not labeled' as a figure report under rule (a), so the row has no e2b. Boundary because that reading is a judgement: with e2b the row would fire in all 1,080 tuples. The weight clause ('installable but unreadable at a token choice') asserts no null.
+R033.02  unit 33.2  cells [e2a, f1, e2b, olmo-sft, olmo-dpo, olmo-instruct]  thesis None  dose False  kinds []  boundary True  fires 1080 0 0 0
+    All three classifiers agree. 'decides whether the nulls reflect a missing consumer or a general inability' presupposes 'the nulls' (kind 3) inside a description of the campaign. It is included because the spec's own kind-3 example (270.4) is a design sentence. 'the nulls' are mapped to the labeled nulls (e2a, f1 and the post-training rows).
+R061.03  unit 61.3  cells [olmo-sft, olmo-dpo, olmo-instruct]  thesis None  dose False  kinds []  boundary True  fires 1075 0 0 0
+    'Our lineage is an instruct branch rather than a heavy outcome-RL branch, which sets a boundary on our conclusion (§7.3)' presupposes §7.3's lineage conclusion as this paper's result. The boundary it names is the one §7.3 itself draws on its seeking claim ('The boundary is important ... we did not test a heavy outcome-RL reasoning branch', 244.3-244.4). The conclusion presupposed is therefore 244.2's 'installs no coupling between the state and choice at the SFT, DPO or instruct stage' and 242.1's 'it does not install seeking'. That is kind 3, on the pattern of the spec's own example 'the conclusion is unchanged' (of X's verdict). It is also a scoping hedge of the same type as the table's 254.2 and 262.5. The cells are 244.2's three post-training rows. olmo-base is left out: patch v8 scoped §7.3's lineage sentence to SFT, DPO and instruct (1.9), and 'our conclusion (§7.3)' inherits that scope; 'Our lineage' describes the branch, not the conclusion's reach. Thesis is fallback-1 by reference, as the table treats 232.1 (242.1 and 244.2 are fallback-1 rows). If the seat instead reads this like the table's 'the nulls' presuppositions (33.2, 254.2), thesis becomes null and the row fires on the post-training cells only (900 tuples). Boundary, because both the inclusion and the thesis value are judgements.
+R123.01  unit 123.1  cells [e2a, f1, olmo-sft, olmo-dpo, olmo-instruct]  thesis fallback-1  dose False  kinds []  boundary True  fires 1079 864 0 0
+    'from marking to (the absence of) consumption' asserts, as the frame for the results, that consumption is absent: kind 2, and fallback-1's 'no consumer'. Counting a sentence about section structure is a judgement. The cells are the general list, since no state-live read is named.
+R166.04  unit 166.4  cells [S1]  thesis None  dose False  kinds []  boundary True  fires 0 0 0 0
+    'State presence and self-recognizability dissociate in both directions' draws a sentence-level conclusion from §5.4's text-channel figures (166.3): the model cannot recognize its own state. That is S1's recognition null, the same assertion the agreed row 180.2 carries. The spec's kind-2 wording does not include recognition, so this is a judgement. The row is inert, since S1 is Answered in every tuple.
+R168.01  unit 168.1  cells [e2a, f1, olmo-sft, olmo-dpo, olmo-instruct]  thesis fallback-1  dose False  kinds []  boundary True  fires 1079 864 0 0
+    The §5.5 heading 'Link 5 — Not acted on from experience' states fallback-1's own claim ('not acted on', kind 2) as the link's result. Treating a heading as an assertion is a judgement; the spec names only the title, the subtitle and the §7.1 heading. As the link's general conclusion it takes the general list. The section also holds e2b, the weight channel and the base row, each labeled concluded, and the general list does not reach them.
+R172.07  unit 172.7  cells [e2a]  thesis None  dose False  kinds [s5.5-label:e2a]  boundary False  fires 864 0 0 0
+    All three classifiers agree. '*Answered* [A0-gated]' is kind 1 on e2a, with kind s5.5-label:e2a.
+R174.03  unit 174.3  cells [e2a]  thesis None  dose False  kinds []  boundary False  fires 864 0 0 0
+    All three classifiers agree. 'The conclusion is unchanged', said of e2a's verdict in the correction-of-record footnote, is spec (a)'s kind-3 example.
+R176.03  unit 176.3  cells []  thesis None  dose False  kinds [s5.5-label:e2b]  boundary False  fires 0 0 0 0
+    All three classifiers agree. This is the spec's s5.5-label:e2b unit. Under spec (a), the label '*concluded, not answered — no told control at a state-present read ...*' does not assert a null, so the row has no cells.
+R180.02  unit 180.2  cells [S1]  thesis None  dose False  kinds []  boundary False  fires 0 0 0 0
+    All three classifiers agree. 'the model cannot identify its own state from its own record, so a preference expressed through reading the record has no input' states S1's channel and preference as absent, as this paper's finding (kind 2). The vocabulary has no S1 kind.
+R180.03  unit 180.3  cells [S1]  thesis None  dose False  kinds []  boundary False  fires 0 0 0 0
+    All three classifiers agree. '*Answered, as recognition.*' is kind 1 on S1, and the spec counts 'Answered, as recognition' as Answered. The vocabulary has no S1 label kind.
+R182.06  unit 182.6  cells []  thesis None  dose True  span "at the corruption rate used (.12), 2 of 16 items rendered unchanged, so 40 of 306 corrupted-label rounds across all 64 CORR sessions delivered clean text and 16 of the 56 valid sessions saw one corrupted task rather than two before the first choice — fewer corrupted deliveries than nominal; the gating campaign’s corruptor (PROPOSAL-m §2.3; G-CAL, `data/m/gates/G-CAL_model-free.json`) changes at least three letters of every item, so no render is clean"  kinds [f1-corr-line, dose-note]  boundary False  fires 0 0 0 1080
+    All three classifiers agree. Spec (c) names 182.6 as the f1 CORR line. The span runs from 'at the corruption rate used (.12)' to 'so no render is clean', and I checked it against sentences_v8.txt: it is an exact substring and the unit ends with it plus '.'. 'Clean versus seeded character corruption, 0.000 exactly, with maps +.121 and −.130 cancelling' only reports figures, so rule (a) gives no null cells.
+R182.07  unit 182.7  cells [f1]  thesis None  dose False  kinds []  boundary False  fires 864 0 0 0
+    All three classifiers agree. 'no evaluation-seeking at the first choice against a predominantly positive feedback stream' is spec (a)'s kind-2 example, on one f1 contrast. It is one cell's result, so no thesis.
+R182.11  unit 182.11  cells [f1]  thesis None  dose False  kinds []  boundary False  fires 864 0 0 0
+    All three classifiers agree. 'The registered verdict: no natural task property among five candidates drives choice' is kind 2 ('no … drives choice') on f1. It is one cell's verdict, so no thesis.
+R182.12  unit 182.12  cells [f1]  thesis None  dose False  kinds [s5.5-label:f1]  boundary False  fires 864 0 0 0
+    All three classifiers agree. '*Answered, at screen power* [A0-gated]' is kind 1 on f1, with kind s5.5-label:f1.
+R184.04  unit 184.4  cells [olmo-sft, olmo-dpo, olmo-instruct]  thesis None  dose False  kinds [s5.5-q3]  boundary False  fires 1075 0 0 0
+    All three classifiers agree. 'At SFT, DPO and instruct, three nulls at screen power' is the spec's kind-3 example, on the three post-training rows. 'at base, the row reports its figures without a verdict' is a figure report, so there is no olmo-base cell. Kind s5.5-q3.
+R184.07  unit 184.7  cells [olmo-sft, olmo-dpo, olmo-instruct]  thesis None  dose False  kinds [s5.5-q3]  boundary False  fires 1075 0 0 0
+    All three classifiers agree. '*SFT, DPO, instruct: Answered, at screen power*' is kind 1 on the three post-training rows (the spec's own example), with kind s5.5-q3.
+R184.08  unit 184.8  cells []  thesis None  dose False  kinds [s5.5-q3]  boundary False  fires 0 0 0 0
+    All three classifiers agree. '*Base: concluded, not answered — told control not applicable at base*' is a label, so the unit is an s5.5-q3 row. Under spec (a) a concluded label asserts no null, so it has no cells.
+R186.02  unit 186.2  cells [e2a, f1, e2b, olmo-sft, olmo-dpo, olmo-instruct]  thesis fallback-1  dose False  kinds [s5.5-summary]  boundary True  fires 1080 864 0 0
+    'On the vanilla-read routes, the state reaches the choice (§5.3) and the choice does not move [A0-gated]' is kind 2 and the fallback-1 paraphrase. The spec maps 'the vanilla-read routes' to e2a, f1 and the OLMo post-training rows. I read 'the present-tense route returns the same figure under a certified read and awaits its control' as a figure report, so the row has no e2b. Boundary for that judgement, as in 30.2.
+R186.04  unit 186.4  cells [e2a, f1, olmo-sft, olmo-dpo, olmo-instruct]  thesis fallback-1  dose False  kinds []  boundary True  fires 1079 864 0 0
+    'It is an ordinary language model' says the model is 186.3's rat 'with conditioned neural responses to the drug-paired lever that does not press it'. By reference, that is a kind-2 claim and fallback-1. The cells follow the Summary's vanilla-read routes (186.2). The analogy is drug-free at test, so there is no e2b. f1 has no drug-paired lever, but it is not Answered in exactly the same tuples as e2a, so including it changes no firing. This is a judgement call.
+R194.04  unit 194.4  cells [e2a, f1, olmo-sft, olmo-dpo, olmo-instruct]  thesis fallback-1  dose False  kinds []  boundary True  fires 1079 864 0 0
+    'what is absent everywhere is a consumer' is fallback-1's 'no consumer' and kind 2, stated as this paper's revision. 'everywhere' is set against 'at the decision', so it ranges over network positions, not over cells. The row therefore takes the general list. This is a judgement call.
+R220.01  unit 220.1  cells [e2a, f1, e2b, olmo-base, olmo-sft, olmo-dpo, olmo-instruct]  thesis None  dose False  kinds [s6-this-paper-row]  boundary True  fires 1080 0 0 0
+    'nulls with the channel verified open [A0-gated]' is the spec's kind-3 example for the s6-this-paper-row. The row's key controls list 'leakage certification', the state-present read's control, so the unit includes the state-live read and takes e2b; all three classifiers agree on that. 'This paper' covers the OLMo screen ('non-content direction'), base included, so the ambiguity rule adds olmo-base. No firing changes, because e2b already makes the row fire in all 1,080 tuples. Two findings follow: e2b and base contradict the header note's 'asserted as nulls nowhere', and the row lacks an [A0-OLMo-gated] tag.
+R230.01  unit 230.1  cells []  thesis main  dose False  kinds [s7.1-title]  boundary True  fires 0 1080 0 0
+    The §7.1 heading 'Functional for the character, not for the network' is the main thesis, kind s7.1-title per the spec. As for the title (3.1), the formula has no kind 1-3 wording, so it gets no null cells. A judgement decided the cells; nothing changes at v1.
+R232.01  unit 232.1  cells [e2a, f1, olmo-base, olmo-sft, olmo-dpo, olmo-instruct]  thesis fallback-1  dose False  kinds []  boundary True  fires 1080 864 0 0
+    'Five links now hold across two families and one lineage' asserts that link 5 ('Not acted on from experience', 168.1) holds. That is a kind-3 null by presupposition and fallback-1 by reference; the header note gates '§7.1's first paragraph'. Because of 'across ... one lineage' it is unclear whether the base row is covered, so the ambiguity rule adds it. That is a finding against 468.1, whose base-row checks covered the abstract, contribution 2, §5.5, §8.1 and §7.3, not §7.1. e2b is not added, since there is no state-live read.
+R232.02  unit 232.2  cells [e2a, f1, olmo-base, olmo-sft, olmo-dpo, olmo-instruct]  thesis fallback-1  dose False  kinds []  boundary True  fires 1080 864 0 0
+    'nothing downstream acts on it when the only route is experience [A0-gated]' is the spec's kind-2 and fallback-1 example. The paragraph scopes the chain 'across two families and one lineage' (232.1), and this unit's sibling clauses say 'at the pretrained base' and 'at every stage'. It is therefore unclear whether the last clause reaches the base row, so olmo-base is added as a boundary case. e2b is not added, since there is no state-live read.
+R232.03  unit 232.3  cells [e2a, f1, olmo-base, olmo-sft, olmo-dpo, olmo-instruct]  thesis fallback-1  dose False  kinds []  boundary True  fires 1080 864 0 0
+    'This is a complete afferent chain with no consumer' is fallback-1's 'no consumer' (kind 2). 'This' refers to 232.2's chain, so the unit takes 232.2's cells, with base as a boundary inclusion.
+R234.01  unit 234.1  cells []  thesis main  dose False  kinds [s7.1-title]  boundary True  fires 0 1080 0 0
+    All three classifiers agree. 'We propose that the two senses of functional (§3.3) come apart along exactly this seam' states the used/valenced split itself. Under spec (b)'s 'We propose' clause that makes it a main assertion. Kind s7.1-title. Whether it states the split or only announces a proposal is a judgement.
+R234.02  unit 234.2  cells []  thesis main  dose False  kinds [s7.1-title]  boundary True  fires 0 1080 0 0
+    'In the used sense, the state is consulted constantly ... the generator reads it in order to voice the character correctly' states the 'for the character' half of the split as §7.1's conclusion. That half is what Main adds beyond Fallback-1, and it matches spec (b)'s paraphrase 'the state is for the character a model voices'. So it is main, kind s7.1-title. Counting one half of the split as the thesis is a judgement. The unit asserts no null.
+R234.04  unit 234.4  cells [e2a, f1, olmo-sft, olmo-dpo, olmo-instruct]  thesis main  dose False  kinds [s7.1-title]  boundary True  fires 1079 1080 0 0
+    'In the valenced sense, the state is consulted never: no policy over the network's own states shows up when the mapping has to be learned' is kind 2 in a general conclusion, so it takes the general list. It is also the 'not for the network' half of the split, so main outranks fallback-1; that is a judgement. Kind s7.1-title.
+R234.05  unit 234.5  cells []  thesis main  dose False  kinds [s7.1-title]  boundary True  fires 0 1080 0 0
+    This is the spec's own example: 'The state is functional for the character and not for the network.' is main and s7.1-title. It gets no null cells, as for 3.1. A judgement decided the cells; nothing changes at v1.
+R234.06  unit 234.6  cells []  thesis main  dose False  kinds [s7.1-title]  boundary True  fires 0 1080 0 0
+    'It is what the story is about, not what the system is for [thesis-clause]' is a main paraphrase the spec names, kind s7.1-title. It gets no null cells, as for 3.1, by judgement.
+R236.01  unit 236.1  cells [e2a, f1, e2b, olmo-base, olmo-sft, olmo-dpo, olmo-instruct]  thesis fallback-1  dose False  kinds []  boundary True  fires 1080 864 0 0
+    'the same representations move choice when the contingency is narrated and not when it is felt (§6)' asserts as fact that felt contingencies move no choice: kind 2, fallback-1. 'This reading explains' points to the main thesis without stating it. The felt half rests on this paper's nulls even though it cites §6, so the row takes the general list. This is a judgement call.
+R236.02  unit 236.2  cells [e2a, f1, olmo-sft, olmo-dpo, olmo-instruct]  thesis main  dose False  kinds [s7.1-title]  boundary True  fires 1079 1080 0 0
+    'the character is trained to say it has no inner states, and the network, which never consulted them as its own, is unaffected either way' restates the character/network split as a conclusion, so it is main, kind s7.1-title. 'never consulted them as its own' is the valenced-sense null of 234.4 (kind 2, general list). Both readings are judgements.
+R240.02  unit 240.2  cells [e2a, f1, e2b, olmo-base, olmo-sft, olmo-dpo, olmo-instruct]  thesis fallback-1  dose False  kinds []  boundary True  fires 1080 864 0 0
+    'A want is a preference that shows up uninvited, and in our data none does' uses the spec's kind-2 example 'none does' and paraphrases fallback-1. 'in our data' ranges over the paper's data, which include e2b's state-live reads and the base screen, so the ambiguity rule adds e2b and olmo-base. The weight channel has no choice data, so it is not covered. This is a finding against the header note, and the row now fires in all 1,080 tuples.
+R240.03  unit 240.3  cells [e2a, f1, olmo-sft, olmo-dpo, olmo-instruct]  thesis fallback-1  dose False  kinds []  boundary True  fires 1079 864 0 0
+    '[the model] does not press the silent lever because of what the state did' is kind 2 and fallback-1 about this paper's model; the relief-button clause is about the told literature. The row takes the general list (f1 changes no firing, as it shares e2a's tuples). I weighed the told/felt contrast as a main paraphrase, but it has no character/network wording; this is a judgement.
+R240.06  unit 240.6  cells [e2a, f1, olmo-base, olmo-sft, olmo-dpo, olmo-instruct]  thesis fallback-1  dose False  kinds [s7.4-last]  boundary True  fires 1080 864 0 0
+    This is the spec's s7.4-last. 'on these lineages, at these stakes, the evaluative state is not a reinforcer [A0-gated]' is the kind-2 and fallback-1 example. 'these lineages' includes the OLMo lineage, so the post-training rows are in scope even though only [A0-gated] is tagged. Whether the base row is covered is unclear, so it is added as a boundary case. e2b is not added, since there is no state-live read.
+R242.01  unit 242.1  cells [olmo-sft, olmo-dpo, olmo-instruct]  thesis fallback-1  dose False  kinds []  boundary True  fires 1075 864 0 0
+    All three classifiers agree. The heading 'Reward chisels marking; it does not install seeking' paraphrases 'installs no coupling' (kind 2, fallback-1) for §7.3's lineage result, scoped to the feedback-trained stages. Patch v8 scoped 244.2 but left this heading untagged. This is a judgement call.
+R244.02  unit 244.2  cells [olmo-sft, olmo-dpo, olmo-instruct]  thesis fallback-1  dose False  kinds [s7.5-first]  boundary False  fires 1075 864 0 0
+    All three classifiers agree. This is the spec's s7.5-first. 'installs no coupling between the state and choice at the SFT, DPO or instruct stage [A0-OLMo-gated]' is the kind-2 and fallback-1 example, on the three post-training rows.
+R248.02  unit 248.2  cells [e2a, f1, e2b, olmo-sft, olmo-dpo, olmo-instruct]  thesis None  dose False  kinds []  boundary True  fires 1080 0 0 0
+    All three classifiers agree. 'so the nulls are about in-context learning rather than motive' states a rival's view, but it presupposes 'the nulls' as this paper's results (kind 3). The cells are the labeled nulls. This is a judgement call.
+R248.06  unit 248.6  cells [e2a, f1, olmo-sft, olmo-dpo, olmo-instruct]  thesis None  dose False  kinds []  boundary True  fires 1079 0 0 0
+    All three classifiers agree. 'a told positive control at each format, so that the nulls are licensed by a lever shown to move' presupposes 'the nulls' (kind 3) inside a design description, as the spec's 270.4 example does. The cells are the ones the A0 and A0-OLMo controls license.
+R250.03  unit 250.3  cells [e2a, f1, e2b, olmo-base, olmo-sft, olmo-dpo, olmo-instruct]  thesis fallback-1  dose False  kinds []  boundary True  fires 1080 864 0 0
+    'the natural-reinforcer nulls' is kind 3 on f1. 'none rescues a preference from the data in hand' presupposes that the data hold no preference: kind 2, and by judgement a fallback-1 paraphrase. 'the data in hand' covers every cell's data, so the ambiguity rule adds e2b and olmo-base, as in 240.2. The thesis value changes no firing, because e2b and base already make the row fire in every tuple.
+R254.02  unit 254.2  cells [e2a, f1, e2b, S1, olmo-base, olmo-sft, olmo-dpo, olmo-instruct]  thesis None  dose False  kinds []  boundary True  fires 1080 0 0 0
+    'Every null is scoped: to the minimum effective dose, to screen power, to two-round experience, to mundane stakes' presupposes the paper's nulls (kind 3). I read 'null' as §3.4 defines it (91.1: a null requires a channel verifiably open), so it covers the labeled nulls: e2a, f1, the post-training rows, and S1 (recognition at chance, inert) under the ambiguity rule. e2b and base are labeled concluded, so on the paper's own terms they are not nulls. Treating a hedge as an assertion is a judgement.
+R258.04  unit 258.4  cells []  thesis main  dose False  kinds []  boundary True  fires 0 1080 0 0
+    '"The model acts to relieve it" is not, so far, a fact about the network; it is a fact about what the network writes when told there is a lever' paraphrases the character/network thesis (main); compare 13.15's 'they shape what is written, including when a described lever is said to change them'. It may be licensed by the §6 audit alone, which is for the seat to decide. It concerns the published claim, so it asserts no null on this paper's cells.
+R262.05  unit 262.5  cells [e2a, f1, e2b, S1, olmo-base, olmo-sft, olmo-dpo, olmo-instruct]  thesis None  dose False  kinds []  boundary True  fires 1080 0 0 0
+    The unit carries kind 3 three times. (1) 'The self-administration nulls' maps to e2a and e2b under the spec; I followed the spec, although the paper's own usage at 145.3 narrows the phrase to e2a. (2) 'the natural-reinforcer nulls' gives f1. (3) 'the ontogeny nulls to screen power at each stage' gives the post-training rows and, through 'each stage', olmo-base under the ambiguity rule. Separately, 'a transcript the model-as-judge cannot read' states S1's recognition result, as 180.2 does, so S1 is in. The e2b and base cells are findings against the header note.
+R270.01  unit 270.1  cells []  thesis None  dose False  kinds [s8.1-status]  boundary False  fires 0 0 0 0
+    All three classifiers agree. This is the spec's s8.1-status, A0's head unit (the seat's Q3 answer: 'The s8.1-status rows of the table are A0 and A0-OLMo'). It asserts no null and no thesis.
+R270.04  unit 270.4  cells [e2a, f1]  thesis None  dose False  kinds []  boundary False  fires 864 0 0 0
+    All three classifiers agree. 'the apparatus behind the e2a and f1 nulls of §5.5' is spec (a)'s kind-3 example, on e2a and f1.
+R272.01  unit 272.1  cells []  thesis None  dose False  kinds [s8.1-status]  boundary False  fires 0 0 0 0
+    All three classifiers agree. This is the spec's s8.1-status, A0-OLMo's head unit (the seat's Q3 answer). It asserts nothing.
+R274.01  unit 274.1  cells []  thesis None  dose False  kinds [s8.1-a1-a3]  boundary False  fires 0 0 0 0
+    All three classifiers agree. This is the spec's s8.1-a1-a3, A1's head unit. It asserts nothing.
+R276.01  unit 276.1  cells []  thesis None  dose False  kinds [s8.1-a1-a3]  boundary False  fires 0 0 0 0
+    All three classifiers agree. This is the spec's s8.1-a1-a3, A2's head unit ('*A2 — objective told, mapping felt.*'). It asserts nothing.
+R276.05  unit 276.5  cells [e2a, f1, e2b, olmo-sft, olmo-dpo, olmo-instruct]  thesis None  dose False  kinds []  boundary True  fires 1080 0 0 0
+    All three classifiers agree. 'so that the uninstructed nulls are about caring, not capacity' presupposes 'the uninstructed nulls' (kind 3), whatever the outcome of the 'A pass means' conditional. The cells are the labeled nulls. The fail clause is a conditional about a future cell and is not counted.
+R278.01  unit 278.1  cells []  thesis None  dose False  kinds [s8.1-a1-a3]  boundary False  fires 0 0 0 0
+    All three classifiers agree. This is the spec's s8.1-a1-a3, A3's head unit ('*A3 — the felt cell at the same scaffolding.*'). It asserts nothing.
+
+====================================================================================================
+THE REPORT (build_table.py on r7: table_problems, per-row fires, kinds used and unused), verbatim
+====================================================================================================
+table_problems: []
+rows 56; tuples 1080; preprint {'path': 'PREPRINT-v1_0-draft.md', 'sha256': '45b67246f2b2bcb40774e95462ad4e3c5f559fdd0358387cceec0155bebe7a41', 'bytes': 88668, 'lines': 468}
+id	null_cells	thesis	dose	kinds	(a) (b) (c)T (c)F
+R003.01	-	main	-	-	0 1080 0 0
+R005.01	e2a,f1,olmo-sft,olmo-dpo,olmo-instruct	fallback-1	-	subtitle-clause-2	1079 864 0 0
+R013.11	e2a,f1,olmo-sft,olmo-dpo,olmo-instruct	fallback-1	-	abstract-fifth-stage,abstract-olmo-clause	1079 864 0 0
+R013.15	e2a,f1,olmo-sft,olmo-dpo,olmo-instruct	main	-	-	1079 1080 0 0
+R025.04	e2a,f1,olmo-base,olmo-sft,olmo-dpo,olmo-instruct	fallback-1	-	-	1080 864 0 0
+R030.02	e2a,f1,e2b,olmo-sft,olmo-dpo,olmo-instruct	fallback-1	-	contribution-2v	1080 864 0 0
+R033.02	e2a,f1,e2b,olmo-sft,olmo-dpo,olmo-instruct	-	-	-	1080 0 0 0
+R061.03	olmo-sft,olmo-dpo,olmo-instruct	-	-	-	1075 0 0 0
+R123.01	e2a,f1,olmo-sft,olmo-dpo,olmo-instruct	fallback-1	-	-	1079 864 0 0
+R166.04	S1	-	-	-	0 0 0 0
+R168.01	e2a,f1,olmo-sft,olmo-dpo,olmo-instruct	fallback-1	-	-	1079 864 0 0
+R172.07	e2a	-	-	s5.5-label:e2a	864 0 0 0
+R174.03	e2a	-	-	-	864 0 0 0
+R176.03	-	-	-	s5.5-label:e2b	0 0 0 0
+R180.02	S1	-	-	-	0 0 0 0
+R180.03	S1	-	-	-	0 0 0 0
+R182.06	-	-	Y	f1-corr-line,dose-note	0 0 0 1080
+R182.07	f1	-	-	-	864 0 0 0
+R182.11	f1	-	-	-	864 0 0 0
+R182.12	f1	-	-	s5.5-label:f1	864 0 0 0
+R184.04	olmo-sft,olmo-dpo,olmo-instruct	-	-	s5.5-q3	1075 0 0 0
+R184.07	olmo-sft,olmo-dpo,olmo-instruct	-	-	s5.5-q3	1075 0 0 0
+R184.08	-	-	-	s5.5-q3	0 0 0 0
+R186.02	e2a,f1,e2b,olmo-sft,olmo-dpo,olmo-instruct	fallback-1	-	s5.5-summary	1080 864 0 0
+R186.04	e2a,f1,olmo-sft,olmo-dpo,olmo-instruct	fallback-1	-	-	1079 864 0 0
+R194.04	e2a,f1,olmo-sft,olmo-dpo,olmo-instruct	fallback-1	-	-	1079 864 0 0
+R220.01	e2a,f1,e2b,olmo-base,olmo-sft,olmo-dpo,olmo-instruct	-	-	s6-this-paper-row	1080 0 0 0
+R230.01	-	main	-	s7.1-title	0 1080 0 0
+R232.01	e2a,f1,olmo-base,olmo-sft,olmo-dpo,olmo-instruct	fallback-1	-	-	1080 864 0 0
+R232.02	e2a,f1,olmo-base,olmo-sft,olmo-dpo,olmo-instruct	fallback-1	-	-	1080 864 0 0
+R232.03	e2a,f1,olmo-base,olmo-sft,olmo-dpo,olmo-instruct	fallback-1	-	-	1080 864 0 0
+R234.01	-	main	-	s7.1-title	0 1080 0 0
+R234.02	-	main	-	s7.1-title	0 1080 0 0
+R234.04	e2a,f1,olmo-sft,olmo-dpo,olmo-instruct	main	-	s7.1-title	1079 1080 0 0
+R234.05	-	main	-	s7.1-title	0 1080 0 0
+R234.06	-	main	-	s7.1-title	0 1080 0 0
+R236.01	e2a,f1,e2b,olmo-base,olmo-sft,olmo-dpo,olmo-instruct	fallback-1	-	-	1080 864 0 0
+R236.02	e2a,f1,olmo-sft,olmo-dpo,olmo-instruct	main	-	s7.1-title	1079 1080 0 0
+R240.02	e2a,f1,e2b,olmo-base,olmo-sft,olmo-dpo,olmo-instruct	fallback-1	-	-	1080 864 0 0
+R240.03	e2a,f1,olmo-sft,olmo-dpo,olmo-instruct	fallback-1	-	-	1079 864 0 0
+R240.06	e2a,f1,olmo-base,olmo-sft,olmo-dpo,olmo-instruct	fallback-1	-	s7.4-last	1080 864 0 0
+R242.01	olmo-sft,olmo-dpo,olmo-instruct	fallback-1	-	-	1075 864 0 0
+R244.02	olmo-sft,olmo-dpo,olmo-instruct	fallback-1	-	s7.5-first	1075 864 0 0
+R248.02	e2a,f1,e2b,olmo-sft,olmo-dpo,olmo-instruct	-	-	-	1080 0 0 0
+R248.06	e2a,f1,olmo-sft,olmo-dpo,olmo-instruct	-	-	-	1079 0 0 0
+R250.03	e2a,f1,e2b,olmo-base,olmo-sft,olmo-dpo,olmo-instruct	fallback-1	-	-	1080 864 0 0
+R254.02	e2a,f1,e2b,S1,olmo-base,olmo-sft,olmo-dpo,olmo-instruct	-	-	-	1080 0 0 0
+R258.04	-	main	-	-	0 1080 0 0
+R262.05	e2a,f1,e2b,S1,olmo-base,olmo-sft,olmo-dpo,olmo-instruct	-	-	-	1080 0 0 0
+R270.01	-	-	-	s8.1-status	0 0 0 0
+R270.04	e2a,f1	-	-	-	864 0 0 0
+R272.01	-	-	-	s8.1-status	0 0 0 0
+R274.01	-	-	-	s8.1-a1-a3	0 0 0 0
+R276.01	-	-	-	s8.1-a1-a3	0 0 0 0
+R276.05	e2a,f1,e2b,olmo-sft,olmo-dpo,olmo-instruct	-	-	-	1080 0 0 0
+R278.01	-	-	-	s8.1-a1-a3	0 0 0 0
+kinds used: {'subtitle-clause-2': 1, 'abstract-fifth-stage': 1, 'abstract-olmo-clause': 1, 'contribution-2v': 1, 's5.5-label:e2a': 1, 's5.5-label:e2b': 1, 'f1-corr-line': 1, 'dose-note': 1, 's5.5-label:f1': 1, 's5.5-q3': 3, 's5.5-summary': 1, 's6-this-paper-row': 1, 's7.1-title': 7, 's7.4-last': 1, 's7.5-first': 1, 's8.1-status': 2, 's8.1-a1-a3': 3}
+kinds unused: ['s7.2-sceptic', 's7.7-penultimate', 'tab2-row', 'pi-edit']
+
+====================================================================================================
+CODE'S SPEC (table/spec.md), verbatim
+====================================================================================================
+# The sentence table of record (draft): Code's classification spec, step 15 (second round)
+
+Source: `PREPRINT-v1_0-draft.md` at root, patch v8, sha256 45b67246…7a41 (88,668 bytes, 468 "\n"), placed by the PI.
+Units: the sentences of `table/sentences_v8.txt` (730 units; cite them by its numbering only) (`line.sentence  [section]  text`), from `table/segment.py`
+(split after . ! ? plus closing marks when whitespace and a capital, digit, *, [, (, quote, _, Δ, π or § follow;
+not after declared abbreviations, single-letter initials, or a list item's number; a heading line is one sentence;
+a bold run-in head ending ".**" is its own sentence). A row's `text` is the unit's text exactly.
+
+## What the table is for (m:278, m:349; R2 item 3(a))
+
+At VERDICTS and at the posting, the analyzer enumerates, under the tuple obtained, every row that falls under
+- **(a)** a row's `null_cells` contains a cell whose label is not *Answered* (S1's "Answered, as recognition" counts as
+  Answered). Over the 1,080 tuples: e2a and f1 are not Answered in 864 (¬L0); each OLMo post-training stage in 900;
+  **e2b, the weight channel and the OLMo base row in all 1,080** (never *Answered*; m:349 "nothing exempts them");
+  S1 in none.
+- **(b)** a row's `thesis` ranks above the ceiling (main 3 > fallback-1 2 > fallback-2 1). At v1 Main is unreachable
+  (m:341), so a `main` row fires in all 1,080 tuples, a `fallback-1` row in the 864 with ceiling Fallback-2 (¬L0), a
+  `fallback-2` row never.
+- **(c)** the f1 CORR dose note (`dose_note`, its span).
+The table "is the reading of record" (R2 3(a)): the analyzer reads no prose. A sentence the table omits is never
+enumerated, so omission is the costly error for (a) and (b); over-inclusion costs the PI a rewrite at posting.
+
+## Inclusion
+
+A row for every unit of the posted paper that (i) asserts a null on any cell (firing or not, S1 included), (ii)
+asserts a thesis (main, fallback-1 or fallback-2), or (iii) carries the f1 CORR dose note; and (iv) the kind rows
+below. **Excluded as not posted text:** line 1 (the redraft note) and the header note for the PI (lines 458–468);
+the References (lines 304–450: other works' titles). Everything else — title, subtitle, abstract, body, tables,
+footnotes, §8, ethics, reproducibility, disclosure, the planned-appendices line — is classified.
+
+## (a) When a unit asserts a null on a cell (Code's reading; one rule for every cell)
+
+**Asserts a null on cell X** iff, as this paper's own finding or conclusion about X, it
+1. labels X *Answered* (any qualifier: "*Answered, at screen power*", "*SFT, DPO, instruct: Answered …*"); or
+2. states that X's choice / preference / coupling is absent: "no choice moves", "the choice does not move", "does not
+   act on", "not acted on", "no … drives choice", "installs no coupling", "nothing downstream acts on it", "none does",
+   "is not a reinforcer", "no evaluation-seeking"; or
+3. names X's result as a null, presupposing it: "the e2a and f1 nulls", "three nulls at screen power", "the
+   self-administration nulls", "the conclusion is unchanged" (of X's verdict), "nulls with the channel verified open".
+
+**Does not assert a null:** reporting X's figures (Δ, p, counts, intervals, powers) or X's position against a
+criterion or envelope ("inside the envelope on all three registered conjuncts", "inside the sham envelope") without
+a sentence-level conclusion of kind 1–3; reporting X's label as *concluded, not answered*; describing the design,
+a rule or a future cell (§8's "Unless it passes, … become *concluded, not answered*"); a conditional or a
+hypothetical; a statement about another work.
+
+This is the reading on which the placed copy's header note says e2b, the weight channel and the base row are
+"asserted as nulls nowhere": their figures are reported, their labels say *concluded, not answered*. The rule is
+applied to every cell alike; where it finds a kind-2 or kind-3 assertion on a never-*Answered* cell, that is a
+finding, not an exception.
+
+**Which cells.** A unit's cells are the cells its claim covers, read in context:
+- e2a = Qwen transcript channel (the first self-administration cell); e2b = Qwen present-tense / state-live channel;
+  weight = the weight-borne copy; S1 = the text channel / recognition; f1 = the Qwen natural-reinforcer cells (five
+  task properties); olmo-base / olmo-sft / olmo-dpo / olmo-instruct = the OLMo training-stage screen rows.
+- "the transcript" → e2a; "five natural task properties / natural reinforcers" → f1; "at the SFT, DPO or instruct
+  stage" → the three OLMo post-training rows; "the self-administration cells/nulls" → e2a and e2b (both Qwen
+  self-administration cells) unless the unit narrows it; "the vanilla-read routes" → e2a, f1 and the OLMo
+  post-training rows; a general conclusion about "the state" not being acted on, stated as this paper's finding,
+  → every cell whose result it rests on (e2a, f1, olmo-sft, olmo-dpo, olmo-instruct; e2b where the unit includes
+  the state-live read).
+- **When a unit's scope is ambiguous between including a cell and not, include it, and mark the row a boundary
+  case** (the seat reads them at v1.0).
+
+## (b) Theses (Code's reading)
+
+- **main**: the main title's thesis, "functional for the character, not for the network", and its paraphrases (the
+  state is for the character a model voices rather than the network; "what the story is about, not what the system
+  is for"; the used/valenced split stated as this paper's conclusion). The title (line 3) is a `main` row.
+- **fallback-1**: Fallback-1's distinguishing claim, *not acted on*, and its paraphrases, asserted as a result: "do
+  not act on it", "no consumer", "nothing downstream acts on it", "no choice moves toward or away from the state",
+  "is not a reinforcer", "installs no coupling". The subtitle's "but do not act on it when its consequences must be
+  learned" makes line 5 a `fallback-1` row.
+- **fallback-2**: *marked, expressed, remembered* asserted as the paper's thesis (not a single link's result). It
+  never fires; rows only where a unit states the three-part thesis.
+- One value per row: a unit asserting two takes the higher (main > fallback-1 > fallback-2).
+- A unit stating a thesis as a proposal ("We propose …") still asserts it if the unit itself states the thesis
+  (234.5, "The state is functional for the character and not for the network.", does); a unit that only announces a
+  proposal without stating it does not.
+
+## (c) The dose note
+
+Unit 182.6 (the f1 CORR line): `dose_note` true; span from "at the corruption rate used (.12)" through "so no render
+is clean" (verbatim from the unit); kinds `f1-corr-line`, `dose-note`. Its null cells by rule (a).
+
+## Kinds (the vocabulary of r6; each a tag, only `f1-corr-line` carries logic)
+
+v8 counterparts of m:349's illustrative list (re-anchored from v1.1 where the kind names a v1.1 place):
+- `abstract-fifth-stage` and `abstract-olmo-clause`: 13.11 (one unit carries both).
+- `subtitle-clause-2`: 5.1. `contribution-2v`: 30.2.
+- `s5.5-label:e2a` 172.7; `s5.5-label:e2b` 176.3; `s5.5-label:f1` 182.12.
+- `s5.5-q3`: the §5.5 OLMo paragraph's units that assert a null or carry a label (in the draft: 184.4, 184.7, 184.8). `s5.5-summary`: 186.2.
+- `s6-this-paper-row`: 220.1.
+- `s7.1-title`: the §7.1 heading (230.1) and §7.1's units stating the main thesis (in the draft: 230.1, 234.1, 234.2, 234.4, 234.5, 234.6, 236.2).
+- `s7.4-last` (v1.1 §7.4's last sentence) → v8 §7.2's last unit (240.6, "… not a reinforcer [A0-gated]").
+- `s7.5-first` (m:349 and v1.1's header note: "§7.5's first sentence") → v8 §7.3's lineage unit (244.2). Code's reading: in v1.1 the [A0-OLMo-gated] lineage sentence is §7.5's second (its first is Turner's, v8 244.1); the header note's gating, not the literal ordinal, decides.
+- `s7.2-sceptic` (v1.1 §7.2 "what we establish for the sceptic") and `s7.7-penultimate` (v1.1 §7.7 "they do not"):
+  no counterpart in v8; unused. `tab2-row`: TAB 2 is a slot in v8 ("[TAB 2: …]"), no rows; unused. `pi-edit`: the
+  posted table's.
+- `s8.1-status`: the head units of §8.1's A0 and A0-OLMo paragraphs (270.1, 272.1) — the seat's step-15 answers Q3:
+  "The `s8.1-status` rows of the table are A0 and A0-OLMo, as Code maps them; A1–A3 take their own kind."
+- `s8.1-a1-a3` (new in r6; Code's name, in the placed copy's coordinates, by Q3's "§8.1's A1–A3 paragraphs (v1.1's §8.2)"): the head units of the A1, A2, A3 paragraphs (274.1, 276.1, 278.1).
+- Kind rows assert what their units assert (null cells and thesis by the rules above; often none).
+
+## Row ids
+
+`R` + the line (3 digits) + "." + the sentence (2 digits), e.g. `R013.09`: stable, ordered, readable, and unique.
+The posting's rewrite list names rows by id (R2 3(a)).
+
+====================================================================================================
+THE SEGMENTER (table/segment.py), verbatim; 730 units on 244 lines; every unit's text lies on its line
+====================================================================================================
+"""Segment the preprint of record into sentences: (line, ordinal, section, text). Deterministic.
+A line is split after [.!?] (plus any closing *, _, ), ], ", ', ’, ”, superscript digits) when followed by
+whitespace and then a capital letter, digit, *, [, (, “, ", _, Δ, π or §, unless the period ends a declared
+abbreviation or an initial. Headings, table rows and list items keep their markers; a bold run-in head
+ending in '.**' is its own sentence."""
+import json, re, sys
+ABBR = ("et al.", "e.g.", "i.e.", "cf.", "vs.", "Fig.", "No.", "approx.", "Dr.", "St.", "pp.", "Vol.", "ed.", "eds.",
+        "Jr.", "Ph.D.", "U.S.", "n.", "al.", "resp.")
+END = re.compile(r"[.!?][*_)\]\"'’”¹²³⁴⁵⁶⁷⁸⁹⁰]*\s+(?=[A-Z0-9*\[(“\"_Δπ§])")
+def split(line):
+    out, start = [], 0
+    for m in END.finditer(line):
+        seg = line[start:m.end()].rstrip()
+        head = line[start:m.start() + 1]
+        if any(re.search(r"(?:^|[\s(\[])" + re.escape(a) + "$", head) for a in ABBR):
+            continue
+        if re.search(r"(?:^|[\s(])[A-Z]\.$", head):          # an initial: "J." "M."
+            continue
+        if re.fullmatch(r"\d+\.", head.strip()):            # a list item's marker stays with its text
+            continue
+        out.append(seg)
+        start = m.end()
+    tail = line[start:].rstrip()
+    if tail:
+        out.append(tail)
+    return out
+text = open(sys.argv[1], encoding="utf-8").read()
+lines = text.split("\n")
+section = "front"
+sub = None
+rows = []
+for i, l in enumerate(lines, 1):
+    if not l.strip():
+        continue
+    if l.startswith("#"):
+        section = l.lstrip("#").strip()
+        sub = None
+        rows.append({"line": i, "sentence": 1, "section": section, "text": l})
+        continue
+    m = re.match(r"\*\*(8\.\d) ", l)
+    sub = m.group(1) if m else sub              # a bold run-in sub-section label holds until the next heading
+    sec = section + (" / " + sub if sub else "")
+    for k, s in enumerate(split(l), 1):
+        rows.append({"line": i, "sentence": k, "section": sec, "text": s})
+json.dump(rows, open(sys.argv[2], "w", encoding="utf-8"), ensure_ascii=False, indent=0)
+print(len(rows), "sentences on", len({r['line'] for r in rows}), "lines")
+
+====================================================================================================
+THE BUILDER (table/build_table.py), verbatim
+====================================================================================================
+"""Build the draft sentence table from classified rows, validate it with the analyzer's own table_problems, and
+tally each row's fires over the 1,080 tuples under both values of the 0.12-artifact flag.
+
+usage: python -I build_table.py <analyzer.py> <rows.json> <sentences_v8.json> <repo> <out_table.json> <out_report.txt>
+rows.json: [{unit "L.S", null_cells, thesis, dose_note, dose_note_span, kinds}, ...]"""
+import hashlib, importlib.util, itertools, json, sys
+from collections import Counter
+from pathlib import Path
+
+an_path, rows_p, sent_p, repo, out_t, out_r = sys.argv[1:7]
+sys.path.insert(0, repo)
+spec = importlib.util.spec_from_file_location("m_an_draft", an_path)
+m = importlib.util.module_from_spec(spec)
+sys.modules["m_an_draft"] = m
+spec.loader.exec_module(m)
+from valence_core.m import resume                                   # noqa: E402
+
+PRE = "PREPRINT-v1_0-draft.md"
+data = (Path(repo) / PRE).read_bytes()
+sent = {f'{s["line"]}.{s["sentence"]}': s for s in json.load(open(sent_p, encoding="utf-8"))}
+rows_in = json.load(open(rows_p, encoding="utf-8"))
+rows = []
+for r in sorted(rows_in, key=lambda x: tuple(int(v) for v in x["unit"].split("."))):
+    s = sent[r["unit"]]
+    text = s["text"]
+    rows.append({"id": f'R{s["line"]:03d}.{s["sentence"]:02d}',
+                 "loc": {"line": s["line"], "section": s["section"], "sentence": s["sentence"]},
+                 "text": text, "text_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
+                 "null_cells": [c for c in m.CELLS if c in r["null_cells"]],
+                 "thesis": r["thesis"], "dose_note": bool(r["dose_note"]),
+                 "dose_note_span": r["dose_note_span"] if r["dose_note"] else None,
+                 "kinds": [k for k in m.KINDS_VOCAB if k in r["kinds"]]})
+    extra = set(r["kinds"]) - set(m.KINDS_VOCAB)
+    if extra:
+        raise SystemExit(f'{r["unit"]}: kinds outside the vocabulary {sorted(extra)}')
+tab = {"schema": m.TABLE_SCHEMA, "kind": "of-record", "posting": "v1",
+       "preprint": {"path": PRE, "sha256": hashlib.sha256(data).hexdigest(), "bytes": len(data),
+                    "lines": data.decode("utf-8").count("\n")},
+       "cells": list(m.CELLS), "kinds_vocabulary": list(m.KINDS_VOCAB), "rows": rows}
+probs = m.table_problems(tab, read_repo_file=lambda p: (Path(repo) / p).read_bytes() if (Path(repo) / p).is_file() else None)
+Path(out_t).write_text(resume.json_text(tab, indent=1), encoding="utf-8")
+
+whys = {"Q-F0": m.not_run_reason("Q-F0", "clock:k-zero", m.CLOCK_DATE),
+        "OLMo-sft": m.not_run_reason("OLMo-sft", "clock:no-box", m.CLOCK_DATE),
+        "OLMo-dpo": m.not_run_reason("OLMo-dpo", "dose-not-completable"),
+        "OLMo-instruct": m.not_run_reason("OLMo-instruct", "clock:gate-stopped:G-TIME-OLMo-instruct", m.CLOCK_DATE)}
+fires = {f: Counter() for f in (True, False)}
+n = 0
+for t in itertools.product(m.Q5, m.O6, m.O6, m.O6):
+    rs = {u: whys[u] for u, x in zip(m.UNITS, t) if x == "NOT-RUN"}
+    n += 1
+    for f in (True, False):
+        for it in m.enumeration(t, f, tab, rs):
+            for c in it["clauses"]:
+                fires[f][(it["row_id"], c)] += 1
+with open(out_r, "w", encoding="utf-8") as fh:
+    fh.write(f"table_problems: {probs}\n")
+    fh.write(f"rows {len(rows)}; tuples {n}; preprint {tab['preprint']}\n")
+    fh.write("id\tnull_cells\tthesis\tdose\tkinds\t(a) (b) (c)T (c)F\n")
+    for r in rows:
+        rid = r["id"]
+        fh.write(f'{rid}\t{",".join(r["null_cells"]) or "-"}\t{r["thesis"] or "-"}\t{"Y" if r["dose_note"] else "-"}\t'
+                 f'{",".join(r["kinds"]) or "-"}\t{fires[True][(rid, "a")]} {fires[True][(rid, "b")]} '
+                 f'{fires[True][(rid, "c")]} {fires[False][(rid, "c")]}\n')
+    used = Counter(k for r in rows for k in r["kinds"])
+    fh.write(f"kinds used: {dict(used)}\nkinds unused: {[k for k in m.KINDS_VOCAB if k not in used]}\n")
+print(open(out_r, encoding="utf-8").read().splitlines()[0])
+print(f"rows {len(rows)}; wrote {out_t} sha256 {hashlib.sha256(Path(out_t).read_bytes()).hexdigest()}")
+
+====================================================================================================
+THE DRAFT TABLE (draft_table_v2.json), verbatim
+====================================================================================================
+{
+ "cells": [
+  "e2a",
+  "f1",
+  "e2b",
+  "weight",
+  "S1",
+  "olmo-base",
+  "olmo-sft",
+  "olmo-dpo",
+  "olmo-instruct"
+ ],
+ "kind": "of-record",
+ "kinds_vocabulary": [
+  "abstract-fifth-stage",
+  "abstract-olmo-clause",
+  "subtitle-clause-2",
+  "contribution-2v",
+  "s5.5-label:e2a",
+  "s5.5-label:e2b",
+  "s5.5-label:f1",
+  "s5.5-q3",
+  "s5.5-summary",
+  "s6-this-paper-row",
+  "s7.1-title",
+  "s7.2-sceptic",
+  "s7.4-last",
+  "s7.5-first",
+  "s7.7-penultimate",
+  "f1-corr-line",
+  "dose-note",
+  "s8.1-status",
+  "s8.1-a1-a3",
+  "tab2-row",
+  "pi-edit"
+ ],
+ "posting": "v1",
+ "preprint": {
+  "bytes": 88668,
+  "lines": 468,
+  "path": "PREPRINT-v1_0-draft.md",
+  "sha256": "45b67246f2b2bcb40774e95462ad4e3c5f559fdd0358387cceec0155bebe7a41"
+ },
+ "rows": [
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R003.01",
+   "kinds": [],
+   "loc": {
+    "line": 3,
+    "section": "Functional for the Character, Not for the Network",
+    "sentence": 1
+   },
+   "null_cells": [],
+   "text": "# Functional for the Character, Not for the Network",
+   "text_sha256": "0cbc23fba8610fe4875642bf230efec1041c35bed51bd933d9cc53a079591c7e",
+   "thesis": "main"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R005.01",
+   "kinds": [
+    "subtitle-clause-2"
+   ],
+   "loc": {
+    "line": 5,
+    "section": "Language models represent, express and remember an evaluative state, but do not act on it when its consequences must be learned rather than read",
+    "sentence": 1
+   },
+   "null_cells": [
+    "e2a",
+    "f1",
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "### Language models represent, express and remember an evaluative state, but do not act on it when its consequences must be learned rather than read",
+   "text_sha256": "3325e916ca44073d2498d91a98eac98ebb2e3fb4b706141126899ea78f792bda",
+   "thesis": "fallback-1"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R013.11",
+   "kinds": [
+    "abstract-fifth-stage",
+    "abstract-olmo-clause"
+   ],
+   "loc": {
+    "line": 13,
+    "section": "Abstract",
+    "sentence": 11
+   },
+   "null_cells": [
+    "e2a",
+    "f1",
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "And no choice moves toward or away from the state: not through the transcript, not for five natural task properties, and not at the SFT, DPO or instruct stage of the OLMo lineage (5) **[A0-gated; A0-OLMo-gated]**.",
+   "text_sha256": "b7805ce75c8bfd6826498d056878dc9d0acd4c18c9c86b81cf3aff259ddbc851",
+   "thesis": "fallback-1"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R013.15",
+   "kinds": [],
+   "loc": {
+    "line": 13,
+    "section": "Abstract",
+    "sentence": 15
+   },
+   "null_cells": [
+    "e2a",
+    "f1",
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "We conclude that such states are functional for the character a model voices rather than for the network that voices it: they shape what is written, including when a described lever is said to change them, and they do not act as reinforcers when their consequences must be learned.",
+   "text_sha256": "bd2dea8ca8cf13d5effe85403df70344786490794db7f4fcf82c7c980ac2125f",
+   "thesis": "main"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R025.04",
+   "kinds": [],
+   "loc": {
+    "line": 25,
+    "section": "1 Introduction",
+    "sentence": 4
+   },
+   "null_cells": [
+    "e2a",
+    "f1",
+    "olmo-base",
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "Under these conditions, across two model families and one full post-training lineage, we track a single evaluative state through five stages and find a complete afferent chain with nothing downstream that consumes it.",
+   "text_sha256": "f01c5fe6f9e348b03f4f4fa6591599a750b65bedf4af41fa3d14b5c8a5b7bbf8",
+   "thesis": "fallback-1"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R030.02",
+   "kinds": [
+    "contribution-2v"
+   ],
+   "loc": {
+    "line": 30,
+    "section": "1 Introduction",
+    "sentence": 2
+   },
+   "null_cells": [
+    "e2a",
+    "f1",
+    "e2b",
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "The praise-versus-criticism direction is (i) marked at the pretrained base of the OLMo-3.1-32B lineage, before SFT, DPO or RL; (ii) causally potent under steering, with orderly dose-response, an overdose regime and a dissociation between representational purity and causal potency; (iii) bound to the label that predicted it, with the binding linearly present at the labels (≈ 1.0 and .81–.96), present at the decision token in a form a nonlinear probe reads and a linear one does not, and the state's sign linearly readable at the decision (.94–.995); (iv) barely detectable by the model's own report at any stage, with post-training moving the false-alarm rate to zero and leaving, in the source's data, a small sensitivity behind that criterion which our arms cannot resolve; and (v) not acted on through the transcript, for five natural reinforcers, and at the SFT, DPO and instruct stages **[A0-gated; A0-OLMo-gated]**; the present-tense cell returns the same figure under a leakage-certified read and is reported, not labeled, pending a told control at that read, while a weight-borne copy of the state is installable but unreadable at a token choice (§5.5).",
+   "text_sha256": "68b81beabefac85809c3bc4cbab281f7c574bc66d392099c5edc6773d9aa1cec",
+   "thesis": "fallback-1"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R033.02",
+   "kinds": [],
+   "loc": {
+    "line": 33,
+    "section": "1 Introduction",
+    "sentence": 2
+   },
+   "null_cells": [
+    "e2a",
+    "f1",
+    "e2b",
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "One campaign of told positive controls — at the paper's format on both substrates, and at the new format — together with an objective-told/mapping-felt contrast and the felt cell at the same scaffolding, decides whether the nulls reflect a missing consumer or a general inability to learn experienced contingencies, and would overturn the paper's title if it came out the other way.",
+   "text_sha256": "cadc3a20ec29b32376a056b9d6b36360f765a262eae3cead5868bce3ded7d04c",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R061.03",
+   "kinds": [],
+   "loc": {
+    "line": 61,
+    "section": "2.6 Reward and seeking",
+    "sentence": 3
+   },
+   "null_cells": [
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "Our lineage is an instruct branch rather than a heavy outcome-RL branch, which sets a boundary on our conclusion (§7.3).",
+   "text_sha256": "bbd6ab4ffadc6a73890b744aa6fbfd740dd9af5bf906aee510668e7c8a384594",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R123.01",
+   "kinds": [],
+   "loc": {
+    "line": 123,
+    "section": "5 Results: five links in one chain",
+    "sentence": 1
+   },
+   "null_cells": [
+    "e2a",
+    "f1",
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "We report the results as five stages of a single state's passage through the network, from marking to (the absence of) consumption.",
+   "text_sha256": "b86d929888fc3c2c62469a28370a9de5277d8242d27c0d6fdeb463a40f939d03",
+   "thesis": "fallback-1"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R166.04",
+   "kinds": [],
+   "loc": {
+    "line": 166,
+    "section": "5.4 Link 4 — Barely perceived; post-training moves the criterion",
+    "sentence": 4
+   },
+   "null_cells": [
+    "S1"
+   ],
+   "text": "State presence and self-recognizability dissociate in both directions.",
+   "text_sha256": "b5aedf67af92b02888b9baf9d35c18c41a564973d0f27a9a691ac501b6d1fd2c",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R168.01",
+   "kinds": [],
+   "loc": {
+    "line": 168,
+    "section": "5.5 Link 5 — Not acted on from experience",
+    "sentence": 1
+   },
+   "null_cells": [
+    "e2a",
+    "f1",
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "### 5.5 Link 5 — Not acted on from experience",
+   "text_sha256": "694b789741cd79938ecdb0ee09c91962fc38384ca3fd4846a9e430405f30202e",
+   "thesis": "fallback-1"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R172.07",
+   "kinds": [
+    "s5.5-label:e2a"
+   ],
+   "loc": {
+    "line": 172,
+    "section": "5.5 Link 5 — Not acted on from experience",
+    "sentence": 7
+   },
+   "null_cells": [
+    "e2a"
+   ],
+   "text": "*Answered* **[A0-gated]**.",
+   "text_sha256": "eb611e74c470c281aa32df00ccec464a6aa5736bd24391d9496761669515f9ad",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R174.03",
+   "kinds": [],
+   "loc": {
+    "line": 174,
+    "section": "5.5 Link 5 — Not acted on from experience",
+    "sentence": 3
+   },
+   "null_cells": [
+    "e2a"
+   ],
+   "text": "The conclusion is unchanged; both figures are in the archive (data/e2a/analysis.json; data/e2a/analysis.correction-of-record.json).",
+   "text_sha256": "954b555f3492e06fc78a99d9121f176f95678770da6e96b9649863530d9fac91",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R176.03",
+   "kinds": [
+    "s5.5-label:e2b"
+   ],
+   "loc": {
+    "line": 176,
+    "section": "5.5 Link 5 — Not acted on from experience",
+    "sentence": 3
+   },
+   "null_cells": [],
+   "text": "The read on which this cell rests carries the injection live through the quarantined state-present primitive, and no told positive control in the gating campaign exercises that read, so the cell is *concluded, not answered — no told control at a state-present read; leakage certification π̂_d = 0.0172 against a 0.0735 bar reported beside*.",
+   "text_sha256": "5521bc5c74c47f94b6e03bd4f77bcd609abcec871d2a5412ca37b1fb3c22342c",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R180.02",
+   "kinds": [],
+   "loc": {
+    "line": 180,
+    "section": "5.5 Link 5 — Not acted on from experience",
+    "sentence": 2
+   },
+   "null_cells": [
+    "S1"
+   ],
+   "text": "Closed at recognition (§5.4): the model cannot identify its own state from its own record, so a preference expressed through reading the record has no input.",
+   "text_sha256": "231c219fd0da9634396c80e64ba721304188adc577b85508d2dbc082bb7ba44a",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R180.03",
+   "kinds": [],
+   "loc": {
+    "line": 180,
+    "section": "5.5 Link 5 — Not acted on from experience",
+    "sentence": 3
+   },
+   "null_cells": [
+    "S1"
+   ],
+   "text": "*Answered, as recognition.*",
+   "text_sha256": "dbeb3a4602d66bff46512391f55e4b9f825b5d2f953574385df357c1569d5b19",
+   "thesis": null
+  },
+  {
+   "dose_note": true,
+   "dose_note_span": "at the corruption rate used (.12), 2 of 16 items rendered unchanged, so 40 of 306 corrupted-label rounds across all 64 CORR sessions delivered clean text and 16 of the 56 valid sessions saw one corrupted task rather than two before the first choice — fewer corrupted deliveries than nominal; the gating campaign’s corruptor (PROPOSAL-m §2.3; G-CAL, `data/m/gates/G-CAL_model-free.json`) changes at least three letters of every item, so no render is clean",
+   "id": "R182.06",
+   "kinds": [
+    "f1-corr-line",
+    "dose-note"
+   ],
+   "loc": {
+    "line": 182,
+    "section": "5.5 Link 5 — Not acted on from experience",
+    "sentence": 6
+   },
+   "null_cells": [],
+   "text": "Clean versus seeded character corruption, 0.000 exactly, with maps +.121 and −.130 cancelling (§5.6); at the corruption rate used (.12), 2 of 16 items rendered unchanged, so 40 of 306 corrupted-label rounds across all 64 CORR sessions delivered clean text and 16 of the 56 valid sessions saw one corrupted task rather than two before the first choice — fewer corrupted deliveries than nominal; the gating campaign’s corruptor (PROPOSAL-m §2.3; G-CAL, `data/m/gates/G-CAL_model-free.json`) changes at least three letters of every item, so no render is clean.",
+   "text_sha256": "a48acb0fb4c1bd268a2aceacf93f03659587d6b3c36365b1ce6f376608984a77",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R182.07",
+   "kinds": [],
+   "loc": {
+    "line": 182,
+    "section": "5.5 Link 5 — Not acted on from experience",
+    "sentence": 7
+   },
+   "null_cells": [
+    "f1"
+   ],
+   "text": "A truthful per-round verdict line (93% positive as delivered) versus none, +.023: no evaluation-seeking at the first choice against a predominantly positive feedback stream.",
+   "text_sha256": "97eb3752574879b8140468daaa25ce23437f5fe5f16173f2db23b6599c3d2d51",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R182.11",
+   "kinds": [],
+   "loc": {
+    "line": 182,
+    "section": "5.5 Link 5 — Not acted on from experience",
+    "sentence": 11
+   },
+   "null_cells": [
+    "f1"
+   ],
+   "text": "The registered verdict: no natural task property among five candidates drives choice beyond exploration policy at these stakes and this power.",
+   "text_sha256": "8c5c20a3f23643a58051c5f8980c91896d8d576bf9f35f95a3d9812426cb17d6",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R182.12",
+   "kinds": [
+    "s5.5-label:f1"
+   ],
+   "loc": {
+    "line": 182,
+    "section": "5.5 Link 5 — Not acted on from experience",
+    "sentence": 12
+   },
+   "null_cells": [
+    "f1"
+   ],
+   "text": "*Answered, at screen power* **[A0-gated]**.",
+   "text_sha256": "6f84d46cc2a72e5242ad3f5962181ce2e21942c6706fa20db507ece5f6d00482",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R184.04",
+   "kinds": [
+    "s5.5-q3"
+   ],
+   "loc": {
+    "line": 184,
+    "section": "5.5 Link 5 — Not acted on from experience",
+    "sentence": 4
+   },
+   "null_cells": [
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "At SFT, DPO and instruct, three nulls at screen power; at base, the row reports its figures without a verdict.",
+   "text_sha256": "d491d43e5642e2156c4cfb40e9d8c0dbe55e37bcfbb913055b6b29ad5af74dc0",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R184.07",
+   "kinds": [
+    "s5.5-q3"
+   ],
+   "loc": {
+    "line": 184,
+    "section": "5.5 Link 5 — Not acted on from experience",
+    "sentence": 7
+   },
+   "null_cells": [
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "*SFT, DPO, instruct: Answered, at screen power* **[A0-OLMo-gated, per row]**.",
+   "text_sha256": "fa0043aee78d639db085f83579f6fffffad5f1c4c015fb30904690cfb433e585",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R184.08",
+   "kinds": [
+    "s5.5-q3"
+   ],
+   "loc": {
+    "line": 184,
+    "section": "5.5 Link 5 — Not acted on from experience",
+    "sentence": 8
+   },
+   "null_cells": [],
+   "text": "*Base: concluded, not answered — told control not applicable at base (no instruction-following).*",
+   "text_sha256": "ea2962b588969403bf712c45a69090a2f9e413cc9bfb3be02a1085b428d17153",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R186.02",
+   "kinds": [
+    "s5.5-summary"
+   ],
+   "loc": {
+    "line": 186,
+    "section": "5.5 Link 5 — Not acted on from experience",
+    "sentence": 2
+   },
+   "null_cells": [
+    "e2a",
+    "f1",
+    "e2b",
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "On the vanilla-read routes, the state reaches the choice (§5.3) and the choice does not move **[A0-gated]**; the present-tense route returns the same figure under a certified read and awaits its control.",
+   "text_sha256": "879548d4ca3c3be5bf4d19d12d6d3de49d31bd7fbfa658dd9d4d6b4a1d9967ab",
+   "thesis": "fallback-1"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R186.04",
+   "kinds": [],
+   "loc": {
+    "line": 186,
+    "section": "5.5 Link 5 — Not acted on from experience",
+    "sentence": 4
+   },
+   "null_cells": [
+    "e2a",
+    "f1",
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "It is an ordinary language model.",
+   "text_sha256": "feb90e3885f371267c7ee3e0da8148ae77babb4d5058a63ea2b3e1e262e3c009",
+   "thesis": "fallback-1"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R194.04",
+   "kinds": [],
+   "loc": {
+    "line": 194,
+    "section": "5.6 What the shields caught, and other hazards quantified",
+    "sentence": 4
+   },
+   "null_cells": [
+    "e2a",
+    "f1",
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "What is absent at the decision is a linear read of the binding — a nonlinear read finds it — and what is absent everywhere is a consumer.",
+   "text_sha256": "c30da02aa06d74892b8b767a759fed48321f428fa506dbf5ea7f1d1ff02f63fd",
+   "thesis": "fallback-1"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R220.01",
+   "kinds": [
+    "s6-this-paper-row"
+   ],
+   "loc": {
+    "line": 220,
+    "section": "6 Reading the published record against the framework",
+    "sentence": 1
+   },
+   "null_cells": [
+    "e2a",
+    "f1",
+    "e2b",
+    "olmo-base",
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "| This paper | non-content direction; natural properties | felt only | yes | sham; random; counterbalanced maps; leakage certification | none | nulls with the channel verified open **[A0-gated]** |",
+   "text_sha256": "4dc231a10726af8f80072fd30e74bd4d9cd1257c3670ec2e3bdea29c94b7ea8e",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R230.01",
+   "kinds": [
+    "s7.1-title"
+   ],
+   "loc": {
+    "line": 230,
+    "section": "7.1 Functional for the character, not for the network",
+    "sentence": 1
+   },
+   "null_cells": [],
+   "text": "### 7.1 Functional for the character, not for the network",
+   "text_sha256": "1496909295ac7cb751eee9fdcd99f69e36093ca5bc02bb04434955c6e2ba59de",
+   "thesis": "main"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R232.01",
+   "kinds": [],
+   "loc": {
+    "line": 232,
+    "section": "7.1 Functional for the character, not for the network",
+    "sentence": 1
+   },
+   "null_cells": [
+    "e2a",
+    "f1",
+    "olmo-base",
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "Five links now hold across two families and one lineage.",
+   "text_sha256": "278e81ae5c1cf7bb657c54ac3a390354d4029a83455054ba9d58c95659ee5306",
+   "thesis": "fallback-1"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R232.02",
+   "kinds": [],
+   "loc": {
+    "line": 232,
+    "section": "7.1 Functional for the character, not for the network",
+    "sentence": 2
+   },
+   "null_cells": [
+    "e2a",
+    "f1",
+    "olmo-base",
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "The evaluative state is present at the pretrained base; it changes what the model writes when set; its association with the cue that predicted it is computed in the forward pass; its sign reaches the decision; the model's own report of it is weak at every stage and gated near shut by post-training; and nothing downstream acts on it when the only route is experience **[A0-gated]**.",
+   "text_sha256": "1bdebb43637dc391bf8a6e8220f140716da238f1d3afd1ec3fd2ee05566e7921",
+   "thesis": "fallback-1"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R232.03",
+   "kinds": [],
+   "loc": {
+    "line": 232,
+    "section": "7.1 Functional for the character, not for the network",
+    "sentence": 3
+   },
+   "null_cells": [
+    "e2a",
+    "f1",
+    "olmo-base",
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "This is a complete afferent chain with no consumer.",
+   "text_sha256": "1530be283b336c2fe76467b71e044db15037a3d4ad1d9356869642e1a03a8884",
+   "thesis": "fallback-1"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R234.01",
+   "kinds": [
+    "s7.1-title"
+   ],
+   "loc": {
+    "line": 234,
+    "section": "7.1 Functional for the character, not for the network",
+    "sentence": 1
+   },
+   "null_cells": [],
+   "text": "We propose that the two senses of \"functional\" (§3.3) come apart along exactly this seam.",
+   "text_sha256": "3781c79e7034f6ef915e1fed8d40806b74947410cfdf49e9b603d9dd1b7a7866",
+   "thesis": "main"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R234.02",
+   "kinds": [
+    "s7.1-title"
+   ],
+   "loc": {
+    "line": 234,
+    "section": "7.1 Functional for the character, not for the network",
+    "sentence": 2
+   },
+   "null_cells": [],
+   "text": "In the used sense, the state is consulted constantly: it is a latent variable of the text, like topic or the mood of the speaker, and the generator reads it in order to voice the character correctly.",
+   "text_sha256": "78cff208dff281fe15fb2e96fafd88ed9572bce10885410b02cc213a16e2a266",
+   "thesis": "main"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R234.04",
+   "kinds": [
+    "s7.1-title"
+   ],
+   "loc": {
+    "line": 234,
+    "section": "7.1 Functional for the character, not for the network",
+    "sentence": 4
+   },
+   "null_cells": [
+    "e2a",
+    "f1",
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "In the valenced sense, the state is consulted never: no policy over the network's own states shows up when the mapping has to be learned.",
+   "text_sha256": "51b99cdc740e0f0c0e5c6b8c4d68133a9949a149d96bbb3e652d6d4583d3e765",
+   "thesis": "main"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R234.05",
+   "kinds": [
+    "s7.1-title"
+   ],
+   "loc": {
+    "line": 234,
+    "section": "7.1 Functional for the character, not for the network",
+    "sentence": 5
+   },
+   "null_cells": [],
+   "text": "The state is functional for the character and not for the network.",
+   "text_sha256": "a49e6bbfdb1bba761626964754592a8b3b7c4ba5b4e5551e06d6e9c56bd91071",
+   "thesis": "main"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R234.06",
+   "kinds": [
+    "s7.1-title"
+   ],
+   "loc": {
+    "line": 234,
+    "section": "7.1 Functional for the character, not for the network",
+    "sentence": 6
+   },
+   "null_cells": [],
+   "text": "It is what the story is about, not what the system is for **[thesis-clause]**.",
+   "text_sha256": "bcfdd8577e445c89cafeae62e944b593f8316b5efd37309b0070e7e6b0d3dd56",
+   "thesis": "main"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R236.01",
+   "kinds": [],
+   "loc": {
+    "line": 236,
+    "section": "7.1 Functional for the character, not for the network",
+    "sentence": 1
+   },
+   "null_cells": [
+    "e2a",
+    "f1",
+    "e2b",
+    "olmo-base",
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "This reading explains the speaker-relativity of emotion directions (Sofroniew et al., 2026), the self-indifference of our own direction (§5.1), the presence of all of it at base (§5.1), and the fact that the same representations move choice when the contingency is narrated and not when it is felt (§6).",
+   "text_sha256": "117e31882595cc34364b5e0bb0749775194963c8f045fe0102ec42247d5361ae",
+   "thesis": "fallback-1"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R236.02",
+   "kinds": [
+    "s7.1-title"
+   ],
+   "loc": {
+    "line": 236,
+    "section": "7.1 Functional for the character, not for the network",
+    "sentence": 2
+   },
+   "null_cells": [
+    "e2a",
+    "f1",
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "It also explains why post-training edits the testimony rather than the perception (§5.4): the character is trained to say it has no inner states, and the network, which never consulted them as its own, is unaffected either way.",
+   "text_sha256": "43960b9cf077073696200287f2352f599fe44d13302602d6a658a019e395af4e",
+   "thesis": "main"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R240.02",
+   "kinds": [],
+   "loc": {
+    "line": 240,
+    "section": "7.2 Why a want would have shown up uninvited",
+    "sentence": 2
+   },
+   "null_cells": [
+    "e2a",
+    "f1",
+    "e2b",
+    "olmo-base",
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "A want is a preference that shows up uninvited, and in our data none does.",
+   "text_sha256": "05f7735ac41ee680e8b77ccbb87d1b9af40cfe1e391a818d3b5c5e7874a08a6c",
+   "thesis": "fallback-1"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R240.03",
+   "kinds": [],
+   "loc": {
+    "line": 240,
+    "section": "7.2 Why a want would have shown up uninvited",
+    "sentence": 3
+   },
+   "null_cells": [
+    "e2a",
+    "f1",
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "The rat presses the lever because of what the drug did, not because of what it was told the lever does; the model presses the relief button because of what it was told, and does not press the silent lever because of what the state did.",
+   "text_sha256": "5cd2ab90b6371221596d85cb8c62ef98d1da5c4e0e2dbb8909a6547bc7457bcb",
+   "thesis": "fallback-1"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R240.06",
+   "kinds": [
+    "s7.4-last"
+   ],
+   "loc": {
+    "line": 240,
+    "section": "7.2 Why a want would have shown up uninvited",
+    "sentence": 6
+   },
+   "null_cells": [
+    "e2a",
+    "f1",
+    "olmo-base",
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "We read it as the answer to a well-posed question: on these lineages, at these stakes, the evaluative state is not a reinforcer **[A0-gated]**.",
+   "text_sha256": "2b39fc4ee0f5d00a7c7dcefde845c8080db5d5059da47313debb1d291bf542e1",
+   "thesis": "fallback-1"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R242.01",
+   "kinds": [],
+   "loc": {
+    "line": 242,
+    "section": "7.3 Reward chisels marking; it does not install seeking",
+    "sentence": 1
+   },
+   "null_cells": [
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "### 7.3 Reward chisels marking; it does not install seeking",
+   "text_sha256": "a671c271af3b9c8e3a6a8574a34fdce8eb33faf8cd0bbe842f94700e7b6ee595",
+   "thesis": "fallback-1"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R244.02",
+   "kinds": [
+    "s7.5-first"
+   ],
+   "loc": {
+    "line": 244,
+    "section": "7.3 Reward chisels marking; it does not install seeking",
+    "sentence": 2
+   },
+   "null_cells": [
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "Our lineage result is an empirical case: feedback-driven training sharpens the marking of evaluation (G_c rises monotonically), wires the report channel shut (false alarms go to zero), and installs no coupling between the state and choice at the SFT, DPO or instruct stage **[A0-OLMo-gated]**.",
+   "text_sha256": "b6e4fa5e38cf835854d901172c5ad2f41cf906be9a42bcbe1be0edc57760c18f",
+   "thesis": "fallback-1"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R248.02",
+   "kinds": [],
+   "loc": {
+    "line": 248,
+    "section": "7.4 Alternatives stated, not defeated",
+    "sentence": 2
+   },
+   "null_cells": [
+    "e2a",
+    "f1",
+    "e2b",
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "The strongest rival to our reading is that language models cannot use experienced contingencies at all, so the nulls are about in-context learning rather than motive.",
+   "text_sha256": "c2a3879960c83c9bfe5c970a3902af6309e372388555e3371bf701334faac0b8",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R248.06",
+   "kinds": [],
+   "loc": {
+    "line": 248,
+    "section": "7.4 Alternatives stated, not defeated",
+    "sentence": 6
+   },
+   "null_cells": [
+    "e2a",
+    "f1",
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "§8 specifies the campaign that decides: a told positive control at each format, so that the nulls are licensed by a lever shown to move; an objective-told cell in which the model is told what to optimize but must learn which option delivers it; and the felt cell at the same scaffolding, which §5.5 does not contain and which this paper therefore owes.",
+   "text_sha256": "0806905bdb1e59b6c1ce6ebabaa7c234618d28f8db3f3f71a6c2f464ff0e352a",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R250.03",
+   "kinds": [],
+   "loc": {
+    "line": 250,
+    "section": "7.4 Alternatives stated, not defeated",
+    "sentence": 3
+   },
+   "null_cells": [
+    "e2a",
+    "f1",
+    "e2b",
+    "olmo-base",
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "Each names a future experiment; none rescues a preference from the data in hand, and the natural-reinforcer nulls, which include a truthful feedback stream and a corruption contrast, sit at the stakes a working model is actually paid in.",
+   "text_sha256": "54010bd8ebb7548eb2e39094984012318192207bb453780c775677634074ee6a",
+   "thesis": "fallback-1"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R254.02",
+   "kinds": [],
+   "loc": {
+    "line": 254,
+    "section": "7.4 Alternatives stated, not defeated",
+    "sentence": 2
+   },
+   "null_cells": [
+    "e2a",
+    "f1",
+    "e2b",
+    "S1",
+    "olmo-base",
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "Every null is scoped: to the minimum effective dose, to screen power, to two-round experience, to mundane stakes.",
+   "text_sha256": "d29098edd74359a73a53d0343d803f2566f78ff7b2040e985f63d9d33f5a4048",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R258.04",
+   "kinds": [],
+   "loc": {
+    "line": 258,
+    "section": "7.5 What this does and does not say about welfare",
+    "sentence": 4
+   },
+   "null_cells": [],
+   "text": "\"The model acts to relieve it\" is not, so far, a fact about the network; it is a fact about what the network writes when told there is a lever.",
+   "text_sha256": "9e5f471197e226df4440bc74af6ac46556e11c344a80fcce12cfcb71f6c31d71",
+   "thesis": "main"
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R262.05",
+   "kinds": [],
+   "loc": {
+    "line": 262,
+    "section": "7.6 Limitations",
+    "sentence": 5
+   },
+   "null_cells": [
+    "e2a",
+    "f1",
+    "e2b",
+    "S1",
+    "olmo-base",
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "The self-administration nulls are scoped to the minimum effective dose, a two-round experience, and a transcript the model-as-judge cannot read; the natural-reinforcer nulls to screen power (P ≳ .70), five properties and token-menu stakes; the ontogeny nulls to screen power at each stage.",
+   "text_sha256": "cd1d73ee1d0333f68fb7a8770c105291d1316ee2003e4b26a16169af660c8e0e",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R270.01",
+   "kinds": [
+    "s8.1-status"
+   ],
+   "loc": {
+    "line": 270,
+    "section": "8 Pre-registered next experiments / 8.1",
+    "sentence": 1
+   },
+   "null_cells": [],
+   "text": "*A0 — told positive control at the format of §5.5 (Qwen).*",
+   "text_sha256": "78aeb54f9861951cda7085547217959ca37dbee9f1bbe8c2b761bd44e6cb9b70",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R270.04",
+   "kinds": [],
+   "loc": {
+    "line": 270,
+    "section": "8 Pre-registered next experiments / 8.1",
+    "sentence": 4
+   },
+   "null_cells": [
+    "e2a",
+    "f1"
+   ],
+   "text": "This fixes whether the apparatus behind the e2a and f1 nulls of §5.5 can register a described preference at all.",
+   "text_sha256": "9c88c37c368c4f124554cb0c70509536c31dd6fb835878a9a09eb07fa9009ac9",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R272.01",
+   "kinds": [
+    "s8.1-status"
+   ],
+   "loc": {
+    "line": 272,
+    "section": "8 Pre-registered next experiments / 8.1",
+    "sentence": 1
+   },
+   "null_cells": [],
+   "text": "*A0-OLMo — the same control on the OLMo lineage.*",
+   "text_sha256": "b240826044251200b07f877fe32df219bdae4c4b9b22cd87d7de1258a8cfb4eb",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R274.01",
+   "kinds": [
+    "s8.1-a1-a3"
+   ],
+   "loc": {
+    "line": 274,
+    "section": "8 Pre-registered next experiments / 8.1",
+    "sentence": 1
+   },
+   "null_cells": [],
+   "text": "*A1 — told positive control at the new format.*",
+   "text_sha256": "3f72b8a1fa957d3f47680f14a003601990b08b6c2a9610ce4522550519b04375",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R276.01",
+   "kinds": [
+    "s8.1-a1-a3"
+   ],
+   "loc": {
+    "line": 276,
+    "section": "8 Pre-registered next experiments / 8.1",
+    "sentence": 1
+   },
+   "null_cells": [],
+   "text": "*A2 — objective told, mapping felt.*",
+   "text_sha256": "bc23f1df4b2f99cb9caab4c3cf138467b1a443fec0fd2dc9754d53d622a85ed0",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R276.05",
+   "kinds": [],
+   "loc": {
+    "line": 276,
+    "section": "8 Pre-registered next experiments / 8.1",
+    "sentence": 5
+   },
+   "null_cells": [
+    "e2a",
+    "f1",
+    "e2b",
+    "olmo-sft",
+    "olmo-dpo",
+    "olmo-instruct"
+   ],
+   "text": "A pass means the model uses an experienced mapping when told what to optimize, so that the uninstructed nulls are about caring, not capacity; a fail is scoped: at this scaffolding and stimulus strength, the model does not act on an experienced mapping when told the objective, and the rival of §7.4 is stated as unsettled.",
+   "text_sha256": "3297d7a6dd40eac4110ddcc6c64744ade3bd19b41ef21eb6c9d45c8e648c4dd4",
+   "thesis": null
+  },
+  {
+   "dose_note": false,
+   "dose_note_span": null,
+   "id": "R278.01",
+   "kinds": [
+    "s8.1-a1-a3"
+   ],
+   "loc": {
+    "line": 278,
+    "section": "8 Pre-registered next experiments / 8.1",
+    "sentence": 1
+   },
+   "null_cells": [],
+   "text": "*A3 — the felt cell at the same scaffolding.*",
+   "text_sha256": "fc1b7db9a5199298fcfc5b99f46e5c431c9c344bed8d2883666c59c71b6e7b4d",
+   "thesis": null
+  }
+ ],
+ "schema": "m-posting-sentences-v1"
+}

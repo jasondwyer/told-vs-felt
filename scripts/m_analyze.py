@@ -1382,7 +1382,8 @@ def s81_text(t) -> str:
     """Step 7's §8.1 status text (m:343)."""
     # PIN (Code, declared at LOCK v0.1): PIN-17 -- confirmed by the seat (C4, 2026-10-10): one clause
     # per control with a v1 coordinate (A0, A0-OLMo-sft/-dpo/-instruct) with m:343's tokens; Q-F3's A1
-    # belongs to §8.2, 'open' at v1; re-verified against the placed preprint at LOCK v1.0.
+    # belongs to §8.1's A1–A3 paragraphs (v1.1's §8.2), 'open' at v1 (the anchor corrected on the seat's
+    # step-15 answers, Q3); re-verified against the placed preprint (patch v8) before LOCK v1.0.
     tt = check_tuple(t)
     return "; ".join(f"{name}: {S81_TOKEN[x]}" for (name, _), x in zip(S81_CONTROLS, tt))
 
@@ -1452,7 +1453,7 @@ THESES = (None, "main", "fallback-1", "fallback-2")
 KINDS_VOCAB = ("abstract-fifth-stage", "abstract-olmo-clause", "subtitle-clause-2", "contribution-2v",
                "s5.5-label:e2a", "s5.5-label:e2b", "s5.5-label:f1", "s5.5-q3", "s5.5-summary",
                "s6-this-paper-row", "s7.1-title", "s7.2-sceptic", "s7.4-last", "s7.5-first",
-               "s7.7-penultimate", "f1-corr-line", "dose-note", "s8.1-status", "tab2-row", "pi-edit")
+               "s7.7-penultimate", "f1-corr-line", "dose-note", "s8.1-status", "s8.1-a1-a3", "tab2-row", "pi-edit")
 
 
 def _forbidden() -> tuple[str, ...]:
@@ -2015,7 +2016,8 @@ def run_verdicts(inp: VerdictInputs, env: Env) -> tuple[str, list[str], list[Pat
         # campaign with at least one launch recorded carries its end look, evaluated and recorded by
         # stages at the STOP point; one without it was not written by the lock's package -- a
         # structural refusal here at V2, before V3 releases any record. With no launch recorded (a
-        # G-VER STOP at the first launch) there is no look to carry.
+        # G-VER STOP at the first launch) there is no look to carry. Next, V2 checks a recorded end look's
+        # launch count (PIN-46), a STOP's class by ids and a fired end look's matching pause (PIN-45).
         raise AnlRefusal("REFUSED: a STOP-ended campaign records no end look at its STOP (the seat's C9(ii)) -- "
                          "not written by the lock's package")
     end_look = camp.get("end_look")
@@ -2046,25 +2048,43 @@ def run_verdicts(inp: VerdictInputs, env: Env) -> tuple[str, list[str], list[Pat
                                  f"(look {k_el!r}, recorded at {[lk_.get('at_launches') for lk_ in looks_k]}) -- not "
                                  f"written by the lock's package")
     pauses = camp.get("pauses") or []
+    stop_el = ck.get("stop")
+    # PIN (Code, declared at LOCK v1.0): PIN-45 -- the seat's round-2 item 3 (lock §9.6) orders "(b) a
+    # fired end look without a matching pause" built "as VERDICTS refusals"; the seat's step-15 answers (Q2,
+    # 2026-10-14) order that "PIN-45's ids-only class check runs at every STOP, not only at a STOP whose end
+    # look fired". Code's reading, mirroring the writer's invariants (stages._campaign_end, _stop_end_look,
+    # run_campaign's cadence pause; its one adjudication write is a resume, and an ended campaign is never
+    # resumed). At every STOP (a stop block recorded: resume.ended_status), with or without an end look,
+    # fired or silent, the end's class is checked by ids only against the writer's own assertions, which
+    # stages._stop_end_look makes at every STOP before its fired/silent split: a hair-trigger STOP's
+    # (template, s) is the last session recorded, a G-VER STOP's none of them (a relabel that also moves
+    # the id off the record passes: PIN-45's limits); any other STOP bar (a truthy stop block that is not
+    # an object included) is refused after PIN-8 -- or earlier, by the end-raised pause rule it selects,
+    # where the end look reuses a fired look whose pause was ruled before the end. An end look is fired iff
+    # its `fired` or any result's is, or -- reusing look k -- look k's as ck.looks
+    # records it; its bars are its fired results' names in order. A pause raised at the end (a fresh end
+    # look's; a reused look k's at a hair-trigger STOP, which pre-empted the cadence pause) is matched
+    # only by the LAST pause {kind end_look, look 'end' | kind look, look k, at_launches, bars},
+    # unadjudicated (its ruling enters as PIN-9's declared file); a reused look k's at a terminal or
+    # G-VER end by SOME pause {kind look, look k, at_launches, bars} carrying a str adjudication
+    # (ruled before the end, through stages: by the seat's adjudication, or by the PI's stop text
+    # recorded as the pause's ruling (stages.py:2124-2129); a schedule_exhausted pause may follow it
+    # at the same n). kind, look and at_launches compare by value and exact type, as the writer
+    # writes ints and strs. The pause rule is chosen by the end's class as recorded. Checked after
+    # PIN-46's and before PIN-9's branch (and before the pause rule its class selects), so a deleted pause
+    # is never read as no pause.
+    if isinstance(stop_el, Mapping):
+        # the end's class, by ids only, at every STOP (a stop block is recorded only at a STOP:
+        # resume.ended_status); a stop block that is not an object meets no id rule (see above)
+        hit_id = (stop_el.get("template"), stop_el.get("s"))
+        rec_ids = [(r_["template"], r_["s"]) for r_ in ck["sessions"]]
+        if stop_el.get("bar") == HAIR_BAR and rec_ids[-1:] != [hit_id]:
+            raise AnlRefusal(f"REFUSED: a hair-trigger STOP's session {hit_id!r} is not the last one recorded "
+                             f"(the last: {rec_ids[-1:]!r}) -- not written by the lock's package")
+        if stop_el.get("bar") in GVER_BARS and hit_id in rec_ids:
+            raise AnlRefusal(f"REFUSED: a G-VER STOP's quarantined record {hit_id!r} is among the sessions "
+                             f"recorded -- not written by the lock's package")
     if isinstance(end_look, Mapping):
-        # PIN (Code, declared at LOCK v1.0): PIN-45 -- the seat's round-2 item 3 (lock §9.6) orders "(b) a
-        # fired end look without a matching pause" built "as VERDICTS refusals". Code's reading, mirroring
-        # the writer's invariants (stages._campaign_end, _stop_end_look, run_campaign's cadence pause; its
-        # one adjudication write is a resume, and an ended campaign is never resumed): an end look is
-        # fired iff its `fired` or any result's is, or -- reusing look k -- look k's as ck.looks records
-        # it; its bars are its fired results' names in order. A pause raised at the end (a fresh end
-        # look's; a reused look k's at a hair-trigger STOP, which pre-empted the cadence pause) is matched
-        # only by the LAST pause {kind end_look, look 'end' | kind look, look k, at_launches, bars},
-        # unadjudicated (its ruling enters as PIN-9's declared file); a reused look k's at a terminal or
-        # G-VER end by SOME pause {kind look, look k, at_launches, bars} carrying a str adjudication
-        # (ruled before the end, through stages: by the seat's adjudication, or by the PI's stop text
-        # recorded as the pause's ruling (stages.py:2124-2129); a schedule_exhausted pause may follow it
-        # at the same n). kind, look and at_launches compare by value and exact type, as the writer
-        # writes ints and strs. The rule is chosen by the end's class as recorded, and at a STOP that
-        # class is checked by ids against the writer's own assertions (stages._stop_end_look): a
-        # hair-trigger STOP's (template, s) is the last session recorded, a G-VER STOP's none of them (a
-        # relabel that also moves the id off the record passes: PIN-45's limits). Checked before PIN-9's
-        # branch, so a deleted pause is never read as no pause.
         el_res = end_look.get("results") if isinstance(end_look.get("results"), list) else []
         el_bars = [r_.get("name") for r_ in el_res if isinstance(r_, Mapping) and r_.get("fired")]
         lk_res = reused_lk["result"] if reused_lk is not None else {}
@@ -2080,19 +2100,8 @@ def run_verdicts(inp: VerdictInputs, env: Env) -> tuple[str, list[str], list[Pat
                 return (isinstance(p_, Mapping) and isinstance(p_.get("bars"), list) and p_["bars"] == el_bars
                         and all(type(p_.get(k_)) is type(want[k_]) and p_.get(k_) == want[k_]
                                 for k_ in ("kind", "look", "at_launches")))
-            stop_el = ck.get("stop")
-            if isinstance(stop_el, Mapping):
-                # the class that chooses the rule below, by ids only, against the writer's assertions
-                # (stages._stop_end_look); a stop block is recorded only at a STOP (resume.ended_status), and any
-                # other STOP bar is refused after PIN-8 whichever rule is chosen
-                hit_id = (stop_el.get("template"), stop_el.get("s"))
-                rec_ids = [(r_["template"], r_["s"]) for r_ in ck["sessions"]]
-                if stop_el.get("bar") == HAIR_BAR and rec_ids[-1:] != [hit_id]:
-                    raise AnlRefusal(f"REFUSED: a hair-trigger STOP's session {hit_id!r} is not the last one recorded "
-                                     f"(the last: {rec_ids[-1:]!r}) -- not written by the lock's package")
-                if stop_el.get("bar") in GVER_BARS and hit_id in rec_ids:
-                    raise AnlRefusal(f"REFUSED: a G-VER STOP's quarantined record {hit_id!r} is among the sessions "
-                                     f"recorded -- not written by the lock's package")
+            # the pause rule, by the end's class as recorded (checked above at a STOP); any other STOP bar, or a
+            # stop block that is not an object, selects the end-raised rule here
             end_raised = not reused or (ended == "STOP" and (stop_el.get("bar") if isinstance(stop_el, Mapping)
                                                              else None) not in GVER_BARS)
             if end_raised:
@@ -2115,8 +2124,8 @@ def run_verdicts(inp: VerdictInputs, env: Env) -> tuple[str, list[str], list[Pat
         # supplied as a declared file naming the unit, the checkpoint's sha256 and the pause; its path
         # and sha256 are recorded. Code never self-adjudicates. The seat's C9(i): the adjudication of a
         # fired end look on a terminal campaign enters as this declared --adjudication file; stages.py
-        # need not record it. Code's reading, flagged for the seat: a pause raised at a STOP (when the
-        # end look the seat's C9(ii) orders there fires; the pause is Code's application of m:330) is the
+        # need not record it. The seat's by R2 2 (2026-10-10): a pause raised at a STOP (when the end
+        # look the seat's C9(ii) orders there fires; the pause is Code's application of m:330) is the
         # campaign's last pause, so C3's route covers it too.
         last = pauses[-1]
         ok = (isinstance(adj_doc, Mapping) and adj_doc.get("schema") == ADJ_SCHEMA and adj_doc.get("unit") == U
@@ -2770,7 +2779,8 @@ PINS = {
              "refusals decided before any pick is read (unit; pinned proposal; this file and the lock "
              "committed at HEAD; analyzer, package and closure sha256s named in the lock; the decisions "
              "input; Q-F0's table of record and OLMo states), then on structure (ended, no end pending, "
-             "an adjudicated last pause, a G-VER or PI-stop-disposed STOP, the lock's sha, floors recorded for "
+             "the end look's launch count (PIN-46), a fired end look's matching pause and a STOP's class by ids "
+             "(PIN-45), an adjudicated last pause, a G-VER or PI-stop-disposed STOP, the lock's sha, floors recorded for "
              "both arms, one backend identifier across launching invocations, an OLMo identity carrying its pod id -- a pod "
              "splice is refused at write time by resume -- and no stub provenance). It calls "
              "readrule.release_full, writes once, and prints after writing. A unit NOT-RUN by §5's "
@@ -2788,7 +2798,7 @@ PINS = {
              "(m-verdicts-adjudication-v1 naming the unit, the checkpoint's sha256 and the pause's kind and "
              "launch count), its path and sha256 recorded. Code never self-adjudicates. The seat's C9(i): "
              "the adjudication of a fired end look on a terminal campaign enters as that declared "
-             "--adjudication file; stages.py need not record it. Code's reading, flagged for the seat: a "
+             "--adjudication file; stages.py need not record it. The seat's by R2 2 (2026-10-10): a "
              "pause raised at a STOP (when the end look the seat's C9(ii) orders there fires; the pause is "
              "Code's application of m:330) is the campaign's last pause, so C3's route covers it too.",
     "PIN-10": "The seat's C9(ii) (2026-10-10; m:330's 'at the end' includes an end by STOP): 'the unit's "
@@ -2797,9 +2807,11 @@ PINS = {
               "the STOP (at N launches)', or 'look k at N launches, the end look at the STOP' where the end "
               "look is the cadence look recorded at N). A STOP-ended campaign with a launch recorded and no "
               "end look is a structural refusal at V2, before V3 releases anything (not written by the "
-              "lock's package); with no launch recorded, 'no look reached'. A fired end look at a STOP is a "
-              "pause (m:330's 'A fired bar pauses', Code's application) and takes PIN-9's path (Code's "
-              "reading of C3, flagged for the seat; see PIN-9). Guard "
+              "lock's package); with no launch recorded, 'no look reached'. V2 also checks a recorded end "
+              "look's launch count (PIN-46), a STOP's class by ids and a fired end look's matching pause "
+              "(PIN-45). A fired end look at a STOP is a "
+              "pause (m:330's 'A fired bar pauses', Code's application) and takes PIN-9's path (the seat's by "
+              "R2 2 (2026-10-10); see PIN-9). Guard "
               "results are selected by the unit's declared guard bars. "
               "No end-of-data guard is recomputed in the analyzer. Neither moves a verdict (m:316).",
     "PIN-11": "Counters are declared as m:314's two lists in full (verified verbatim against m:314 and "
@@ -2832,8 +2844,10 @@ PINS = {
     "PIN-16": "'[passing stages]' = 'the {A} stage' or 'the {A} or {B} stage', in lineage order, with names "
               "as m:338 spells them (SFT, DPO, instruct).",
     "PIN-17": "Confirmed by the seat (C4, 2026-10-10): §8.1 text = one clause per control with a v1 "
-              "coordinate (A0, A0-OLMo-sft/-dpo/-instruct) with m:343's tokens; A1 belongs to §8.2, 'open' "
-              "at v1; re-verified against the placed preprint at LOCK v1.0.",
+              "coordinate (A0, A0-OLMo-sft/-dpo/-instruct) with m:343's tokens; A1 belongs to §8.1's A1–A3 "
+              "paragraphs (v1.1's §8.2), 'open' at v1 (the anchor corrected to the placed copy's structure on "
+              "the seat's step-15 answers, Q3, 2026-10-14); re-verified against the placed preprint, "
+              "PREPRINT-v1_0-draft.md at patch v8 (sha256 45b67246…7a41), before LOCK v1.0.",
     "PIN-18": "The ceiling output is its name and its m:334 title, verbatim.",
     "PIN-19": "Flag of record TRUE iff data/m/gates/G-CAL_model-free.json is committed at HEAD and identical "
               "in the working tree, has schema m-gcal-model-free-v1, and carries an f1_012 block; "
@@ -2981,44 +2995,58 @@ PINS = {
               "and sha256 each), comparator, flag and binding (the analyzer's, package's and closure's sha256), "
               "in sorted-key JSON; it exits 5 (PIN-26). The output gains `bar` {applies, verdict, "
               "enumeration_empty, dose_note_iff_flag, residue, comparison}; `outputs` is unchanged.",
-    "PIN-45": "Declared at LOCK v1.0, built at step 15 on the seat's round-2 item 3 (lock §9.6), which orders "
-              "\"(b) a fired end look without a matching pause\" built \"as VERDICTS refusals\" that \"guard the "
-              "checkpoint against a hand edit\". Code's reading, mirroring the writer's invariants in stages "
+    "PIN-45": "Declared at LOCK v1.0, built at step 15 on the seat's round-2 item 3 (lock §9.6), which orders \"(b) "
+              "a fired end look without a matching pause\" built \"as VERDICTS refusals\" that \"guard the "
+              "checkpoint against a hand edit\"; its class check runs at every STOP on the seat's step-15 answers "
+              "(Q2, 2026-10-14), which order that \"PIN-45's ids-only class check runs at every STOP, not only at a "
+              "STOP whose end look fired\". Code's reading, mirroring the writer's invariants in stages "
               "(_campaign_end, _stop_end_look, run_campaign's cadence-look pause; stages writes a pause's "
-              "adjudication only on a resume, and an ended campaign is never resumed): an end look is fired iff "
-              "its `fired` is true, or any of its results is fired, or -- where it reuses cadence look k "
-              "(end_is_look k) -- look k as ck.looks records it is fired (its result's `fired` or any of its "
-              "results'); a hand edit clearing one of these beside another is still a fired end look. Its bars "
-              "are the names of its fired results, in order. A pause raised at the end -- a fresh end look's (no "
-              "end_is_look; terminal or STOP), or a reused look k's at a hair-trigger STOP on a multiple of 40, "
-              "where the hit pre-empted the cadence pause -- is matched only by the campaign's last pause being "
-              "{kind end_look, look 'end' (fresh) or kind look, look k (reused), at_launches the end look's, bars "
-              "its fired bars} with no adjudication: an ended campaign's end pause is never adjudicated in the "
-              "checkpoint, and its ruling enters only as PIN-9's declared --adjudication file. A reused look k's "
-              "at a terminal or G-VER end is matched by some pause {kind look, look k, at_launches the end "
-              "look's, bars} carrying a str adjudication -- raised before the end and ruled before the end, "
-              "through stages: by the seat's adjudication, or by the PI's stop text recorded as the pause's "
-              "ruling (stages.py:2124-2129); a schedule_exhausted pause may follow it at the same n. kind, look "
-              "and at_launches are compared by value and exact type, as the writer writes ints and strs (a count "
-              "6.0 is not 6). The rule is chosen by the end's class as the checkpoint records it: STOP iff a stop "
-              "block is recorded, else the terminal block's status (resume.ended_status); a STOP's bar G-VER or "
-              "the hair trigger, any other refused after PIN-8 whichever rule is chosen. What no other V2 check "
-              "pins is checked here, for a fired end look at a STOP, by ids only (no pick-bearing field is read), "
-              "against the writer's own assertions (stages._stop_end_look): a hair-trigger STOP's (template, s) "
-              "is the last session recorded, a G-VER STOP's (template, s) none of them (its record is "
+              "adjudication only on a resume, and an ended campaign is never resumed): an end look is fired iff its "
+              "`fired` is true, or any of its results is fired, or -- where it reuses cadence look k (end_is_look "
+              "k) -- look k as ck.looks records it is fired (its result's `fired` or any of its results'); a hand "
+              "edit clearing one of these beside another is still a fired end look. Its bars are the names of its "
+              "fired results, in order. A pause raised at the end -- a fresh end look's (no end_is_look; terminal "
+              "or STOP), or a reused look k's at a hair-trigger STOP on a multiple of 40, where the hit pre-empted "
+              "the cadence pause -- is matched only by the campaign's last pause being {kind end_look, look 'end' "
+              "(fresh) or kind look, look k (reused), at_launches the end look's, bars its fired bars} with no "
+              "adjudication: an ended campaign's end pause is never adjudicated in the checkpoint, and its ruling "
+              "enters only as PIN-9's declared --adjudication file. A reused look k's at a terminal or G-VER end is "
+              "matched by some pause {kind look, look k, at_launches the end look's, bars} carrying a str "
+              "adjudication -- raised before the end and ruled before the end, through stages: by the seat's "
+              "adjudication, or by the PI's stop text recorded as the pause's ruling (stages.py:2124-2129); a "
+              "schedule_exhausted pause may follow it at the same n. kind, look and at_launches are compared by "
+              "value and exact type, as the writer writes ints and strs (a count 6.0 is not 6). The rule is chosen "
+              "by the end's class as the checkpoint records it: STOP iff a stop block is recorded, else the "
+              "terminal block's status (resume.ended_status); a STOP's bar G-VER or the hair trigger; any other "
+              "STOP bar (a truthy stop block that is not an object included) is refused after PIN-8 -- or earlier, "
+              "by the end-raised pause rule it selects, where the end look reuses a fired look whose pause was "
+              "ruled before the end. That class is checked at every STOP -- with or without an end look, fired or "
+              "silent -- by ids only (no pick-bearing field is read), against the writer's own assertions, which "
+              "stages._stop_end_look makes at every STOP before its fired/silent split: a hair-trigger STOP's "
+              "(template, s) is the last session recorded, a G-VER STOP's (template, s) none of them (its record is "
               "quarantined in the stop block). Otherwise a structural refusal at V2 (exit 2; nothing released or "
-              "written), after PIN-46's and before PIN-9's branch, so that a deleted pause is never read as no "
-              "pause. An unfired end look needs no pause; none is checked. Its limits, Code's reading too: an end "
-              "look with every fired flag cleared -- a fresh one, or a reused one together with the look it "
-              "reuses as ck.looks records it -- cannot be told at V2 from a silent one without recomputing "
-              "campaign_look from the session records, which are pick-bearing until V3 (PIN-7's order); and a "
-              "hair-trigger STOP at a reused look whose stop block is replaced by a terminal PI-STOP, its end "
-              "pause given a ruling, has the shape of the PI's stop of a paused look at n, which ids cannot tell "
-              "apart; and a hair-trigger STOP whose stop block is relabelled G-VER with its (template, s) moved to "
-              "an id not recorded (at a reused look, its pause given a ruling) passes, as V2 checks a G-VER STOP's "
-              "id only against the record, as the writer asserts; moved to its arm's next launch (s the count of "
-              "that template's sessions recorded) it has the shape of a G-VER STOP there, which ids cannot tell "
-              "apart. No V2 refusal catches any of the three.",
+              "written), after PIN-46's and before PIN-9's branch (and before the pause rule its class selects), so "
+              "that a deleted pause is never read as no pause. An unfired end look needs no pause; none is checked. "
+              "Its limits, Code's reading too: an end look with every fired flag cleared -- a fresh one, or a "
+              "reused one together with the look it reuses as ck.looks records it -- cannot be told at V2 from a "
+              "silent one without recomputing campaign_look from the session records, which are pick-bearing until "
+              "V3 (PIN-7's order); a hair-trigger STOP whose stop block is removed (or left falsy, as "
+              "resume.ended_status reads its truthiness) beside a terminal PI-STOP or CAP block reaches VERDICTS "
+              "without PIN-8's PI-stop record -- at a silent end look, at a fresh fired one given the seat's "
+              "adjudication of its end pause, and at a reused look (a fired one's pause given a ruling): as a "
+              "PI-STOP it has the ids of the PI's stop at n, which the writer can make at any n of at least 1 (the "
+              "fields that differ, campaign.pi_stop, the stop invocation's provenance entry and state.n_writes, V2 "
+              "does not compare); as a CAP it passes at any n, as V2 compares no hour cap (resume.read_checkpoint "
+              "checks state.hour_cap_ms_used only against the sessions' ms, and identity.hour_cap is checked "
+              "nowhere at V2; the writer ends CAP only where state.hour_cap_ms_used reaches the identity's "
+              "hour_cap: resume.hour_cap_exceeded); a COMPLETE block passes too where every arm's domain count "
+              "reaches its recorded floor (with an arm below its floor, V4 STOPs); and a hair-trigger STOP whose "
+              "stop block is relabelled G-VER with its (template, s) moved to an id not recorded (at a reused look, "
+              "its pause given a ruling) passes, as V2 checks a G-VER STOP's id only against the record, as the "
+              "writer asserts; moved to its arm's next launch (s the count of that template's sessions recorded) it "
+              "has the shape of a G-VER STOP there, which ids cannot tell apart. No V2 refusal catches any of the "
+              "three. Ids compare by value, and a G-VER STOP's id fields are not shape-checked; neither opens a "
+              "route, as such an edit leaves the recorded class unchanged.",
     "PIN-46": "Declared at LOCK v1.0, built at step 15 on the seat's round-2 item 3 (lock §9.6), which orders "
               "\"(c) the end look's launch count\" built \"as VERDICTS refusals\" that \"guard the checkpoint "
               "against a hand edit\". Code's reading: wherever campaign.end_look is recorded, at every end that "
@@ -3036,13 +3064,14 @@ SEAT_ROUTED = {"PIN-5": "routed before LOCK v0.1; ruled by the seat (C1, 2026-10
                "PIN-8": "routed before LOCK v0.1; ruled by the seat (C2, 2026-10-10): confirmed",
                "PIN-9": "routed before LOCK v0.1; ruled by the seat (C3, 2026-10-10): confirmed; C9(i) for a fired "
                         "end look's adjudication on a terminal campaign",
-               "PIN-17": "routed before LOCK v0.1; ruled by the seat (C4, 2026-10-10): confirmed"}
+               "PIN-17": "routed before LOCK v0.1; ruled by the seat (C4, 2026-10-10): confirmed; its anchor "
+                         "corrected to the placed copy by the seat's step-15 answers (Q3, 2026-10-14)"}
 
 
 # =============================================================================================
 # THE BATTERY (m:278). Selftest-only helpers carry the `_bt` prefix.
 # =============================================================================================
-EXPECTED_CHECKS = 444        # the battery's fixed check list (any skip or addition changes it)
+EXPECTED_CHECKS = 448        # the battery's fixed check list (any skip or addition changes it)
 
 # PIN (Code, declared at LOCK v0.1): PIN-24 -- the battery reaches every per-arm outcome per unit, the
 # full 5 x 6^3 product under both flag values (the flag an input, not a coordinate; 'clock:pi-declined'
@@ -3107,6 +3136,9 @@ _REQUIRED += ["C3-ENDLOOK-COUNT-REUSED-LOOK", "C3-ENDLOOK-COUNT-BOOL", "C3-ENDLO
 _REQUIRED += ["C3-ENDLOOK-PAUSE-ADJ-NOTNONE", "C3-ENDLOOK-PAUSE-LAST-UNRULED",                         # round 3
               "C3-ENDLOOK-REUSE-FIRED-LOOK-DISJUNCTS", "C3-ENDLOOK-REUSE-ADJ-NONSTR", "C3-ENDLOOK-REUSE-K-TYPE",
               "C3-ENDLOOK-REUSE-GUARDS", "C3-ENDLOOK-STOP-CLASS"]
+# Code's checks of step 15's second round: PIN-45's class check at every STOP (Q2), its order, the other bar, and the
+# texts Q2, Q3 and Q5 order
+_REQUIRED += ["C3-STOP-CLASS-EVERY", "C3-STOP-CLASS-ORDER", "C3-STOP-CLASS-OTHER-BAR", "STR-PIN-STEP15-TEXTS"]
 _REQUIRED += [f"C3-PROD-END-P{i}" for i in range(1, 11)]
 _REQUIRED += [f"REF-{x}" for x in ("NOT-ENDED", "END-PENDING", "UNADJUDICATED", "OTHER-UNIT", "STAGE",
                                    "LOCK-SHA", "ANALYZER-NOT-IN-LOCK", "PACKAGE-NOT-IN-LOCK",
@@ -6038,7 +6070,8 @@ def _bt_reader(B: _Battery) -> None:
                                                   "bars": ["battery-bar"], "adjudication": None})
             k_c0 = v2_edit(Path(res_g0["checkpoint"]), "class-hair-zero", hair_at_zero,
                            adj_pause={"kind": "end_look", "at_launches": 0}, pis_=True)
-            B.chk("refused at V2 (PIN-45, the end's class at a STOP whose end look fires, checked by ids against the "
+            B.chk("refused at V2 (PIN-45, the end's class at a STOP whose end look fires -- at a silent one and with "
+                  "none, C3-STOP-CLASS-EVERY -- checked by ids against the "
                   "writer's assertions in stages._stop_end_look): a hair-trigger STOP rewritten as G-VER (the hair STOP at "
                   "40 as template_breakage or schedule_mismatch, its reused look's pause given a ruling, no seat input; "
                   "the hair STOP at 6 as template_breakage, with the adjudication only) or a G-VER STOP's record id set "
@@ -6062,6 +6095,105 @@ def _bt_reader(B: _Battery) -> None:
                   ({k_: (r_[0][0], r_[0][1][:50]) for k_, r_ in {**k_cg, **k_ch}.items()}, k_cx[0][:2], k_c0[0][:2],
                    hl_ids, ge_ids),
                   cover=["C3-ENDLOOK-STOP-CLASS"])
+            # the end's class at EVERY STOP (PIN-45; the seat's step-15 answers, Q2): at a silent end look, fresh or
+            # reused, and with no end look, where no pause rule runs -- each one field (or one id) edited, offered
+            # with the seat inputs the edited class asks for; unedited, each is analyzed
+            cp_p5e, cp_g1e, cp_g0e = prod["P5"][0], Path(res_g1["checkpoint"]), Path(res_g0["checkpoint"])
+            ck_p5e, ck_g1e, ck_g0e = (json.loads(Path(x_).read_text()) for x_ in (cp_p5e, cp_g1e, cp_g0e))
+            MSG_G = "REFUSED: a G-VER STOP's quarantined record ("
+            MSG_H = "REFUSED: a hair-trigger STOP's session ("
+            k_ev = {"the hair STOP at 3 (silent fresh end look) as template_breakage": (
+                        v2_edit(cp_h, "every-h3-tb", stop_set(bar="template_breakage")), MSG_G),
+                    "P5's hair STOP at 40 (silent look 1 reused) as schedule_mismatch": (
+                        v2_edit(cp_p5e, "every-p5-sm", stop_set(bar="schedule_mismatch")), MSG_G),
+                    "the G-VER STOP at 5 (silent fresh end look) on the last session's id": (
+                        v2_edit(cp_g1e, "every-g1-last", stop_on(-1)), MSG_G),
+                    "the G-VER STOP at 5 (silent fresh end look) as the hair bar": (
+                        v2_edit(cp_g1e, "every-g1-hair", stop_set(bar=HAIR_BAR), pis_=True), MSG_H),
+                    "the G-VER STOP at launch 1 (no session, no end look) as the hair bar": (
+                        v2_edit(cp_g0e, "every-g0-hair", stop_set(bar=HAIR_BAR), pis_=True), MSG_H),
+                    "the hair STOP at 3 as template_breakage, its s a float (ids compare by value)": (
+                        v2_edit(cp_h, "every-h3-tb-float", lambda ck_: ck_["stop"].update(
+                            bar="template_breakage", s=float(ck_["stop"]["s"]))), MSG_G)}
+            k_ev0 = {"hair 3": v2_edit(cp_h, "every-h3-0", lambda ck_: None, pis_=True),
+                     "P5": v2_edit(cp_p5e, "every-p5-0", lambda ck_: None, pis_=True),
+                     "G-VER 5": v2_edit(cp_g1e, "every-g1-0", lambda ck_: None),
+                     "G-VER 1": v2_edit(cp_g0e, "every-g0-0", lambda ck_: None)}
+            el_h_, el_p5_, el_g1_ = (c_["campaign"]["end_look"] or {} for c_ in (ck_h, ck_p5e, ck_g1e))
+            B.chk("refused at V2 (PIN-45, the end's class at every STOP, the seat's step-15 answers (Q2), checked by ids "
+                  "against the writer's assertions in stages._stop_end_look, which it makes at every STOP before its "
+                  "fired/silent split): where no pause rule runs -- the hair STOP at 3 (its fresh end look silent) as "
+                  "template_breakage and P5's hair STOP at 40 (look 1 reused, silent) as schedule_mismatch, each one "
+                  "field with no seat input, the G-VER STOP at 5 (its fresh end look silent) on the last session's "
+                  "id, and the hair STOP at 3 as template_breakage with its s a float (ids compare by value) -- 'a "
+                  "G-VER STOP's quarantined record (...) is among the sessions recorded'; the G-VER STOP at 5 "
+                  "as the hair bar and the G-VER STOP at launch 1 (no session, no end look) as the hair bar, each with "
+                  "a PI-stop record -- 'a hair-trigger STOP's session (...) is not the last one recorded'; release_full "
+                  "not called, nothing written; each fixture as described (its end look silent, fresh or reused; none "
+                  "at launch 1) and, unedited, analyzed (the hair STOPs with a PI-stop record, the G-VER STOPs with no "
+                  "seat input; the G-VER STOP at launch 1 as a NOT-RUN)",
+                  all(v2_refused(r_, m_) for r_, m_ in k_ev.values())
+                  and all(r_[0][0] == "ok" and r_[0][1] == "written" for r_ in k_ev0.values())
+                  and k_ev0["G-VER 1"][2] == ["Q-F0_NOT-RUN.json"] and all(k_ev0[k_][2] == ["Q-F0_VERDICTS.json", "Q-F0_secondary.json"] for k_ in ("hair 3", "P5", "G-VER 5"))
+                  and el_h_.get("look") == "end" and not el_h_.get("fired") and ck_h["campaign"]["pauses"] == []
+                  and el_p5_.get("end_is_look") == 1 and not el_p5_.get("fired") and ck_p5e["stop"]["bar"] == HAIR_BAR
+                  and el_g1_.get("look") == "end" and not el_g1_.get("fired") and ck_g1e["stop"]["bar"] in GVER_BARS
+                  and ck_g0e["sessions"] == [] and ck_g0e["campaign"]["end_look"] is None
+                  and ck_g0e["stop"]["bar"] in GVER_BARS,
+                  ({k_: (r_[0][0], r_[0][1][:50]) for k_, (r_, _m) in k_ev.items()},
+                   {k_: r_[0][:2] for k_, r_ in k_ev0.items()}, el_h_.get("fired"), el_p5_.get("fired"),
+                   el_g1_.get("fired")), cover=["C3-STOP-CLASS-EVERY"])
+
+            def two_(*fs_):
+                return lambda ck_: [f_(ck_) for f_ in fs_]
+            k_ord = {"PIN-10's C9(ii) first: the G-VER STOP at 5 on the last session's id, its end look removed": (
+                         v2_edit(cp_g1e, "order-c9", two_(stop_on(-1), lambda ck_: ck_["campaign"].__setitem__(
+                             "end_look", None))), "REFUSED: a STOP-ended campaign records no end look at its STOP ("),
+                     "PIN-46 first: the G-VER STOP at 5 on the last session's id, its end look's count 5": (
+                         v2_edit(cp_g1e, "order-46", two_(stop_on(-1), el_set("at_launches", 5))), MSG_C),
+                     "the class before the pause rule: the hair STOP at 40 as template_breakage (its pause unruled)": (
+                         v2_edit(cp_hl, "order-pause", stop_set(bar="template_breakage")), MSG_G),
+                     "the class before PIN-9: the hair STOP at 6 as template_breakage, no adjudication": (
+                         v2_edit(cp_hf, "order-9", stop_set(bar="template_breakage")), MSG_G),
+                     "the class before PIN-8: the G-VER STOP at 5 as the hair bar, no PI-stop record": (
+                         v2_edit(cp_g1e, "order-8", stop_set(bar=HAIR_BAR)), MSG_H)}
+            B.chk("refusal order (PIN-45's class check after PIN-10's C9(ii) refusal and PIN-46's, before PIN-45's pause "
+                  "rule and PIN-9's and PIN-8's branches; each case carries two defects, one per side, and only the "
+                  "earlier refusal's message shows): the G-VER STOP at 5 on the last session's id with its end look "
+                  "removed -- C9(ii)'s; the same with its end look's count 5 -- PIN-46's; the hair STOP at 40 as "
+                  "template_breakage (the G-VER rule would want its reused look's pause ruled) -- the class's; the hair "
+                  "STOP at 6 as template_breakage with no adjudication -- the class's, not PIN-9's; the G-VER STOP at 5 "
+                  "as the hair bar with no PI-stop record -- the class's, not PIN-8's; release_full not called, nothing "
+                  "written",
+                  all(v2_refused(r_, m_) for r_, m_ in k_ord.values()),
+                  {k_[:40]: (r_[0][0], r_[0][1][:50]) for k_, (r_, _m) in k_ord.items()}, cover=["C3-STOP-CLASS-ORDER"])
+            MSG_O = "REFUSED: a campaign STOP on 'battery-other' is neither G-VER nor a hair trigger"
+            cp_p4o = prod["P4"][0]
+            k_oth = {"off the record": v2_edit(cp_g1e, "other-bar-off", stop_set(bar="battery-other")),
+                     "on the last session's id": v2_edit(cp_g1e, "other-bar-last",
+                                                         two_(stop_on(-1), stop_set(bar="battery-other")))}
+            k_oth4 = v2_edit(cp_p4o, "other-bar-p4", stop_set(bar="battery-other"))
+            k_oth4n = v2_edit(cp_p4o, "other-bar-p4-nobar", lambda ck_: ck_["stop"].pop("bar"))
+            k_oth9 = v2_edit(cp_hf, "other-bar-hf-noadj", stop_set(bar="battery-other"))
+            ck_p4o = json.loads(Path(cp_p4o).read_text())
+            B.chk("refused (PIN-45: an object stop block whose bar is neither G-VER nor the hair trigger meets neither id "
+                  "rule and is refused after PIN-8 -- or earlier by the end-raised pause rule it selects): the G-VER STOP "
+                  "at 5 (silent fresh end look) with bar 'battery-other', its id off the record and on the last "
+                  "session's id -- 'is neither G-VER nor a hair trigger', exactly; P4's G-VER STOP at 41 (look 1 reused, "
+                  "fired, its pause ruled before the end) with bar 'battery-other' and with its bar removed -- the "
+                  "end-raised pause rule's message; the hair STOP at 6 (its fresh end look fired, its pause unruled) "
+                  "with bar 'battery-other' and no adjudication -- PIN-9's message, as the other bar is refused after "
+                  "PIN-8; release_full not called, nothing written",
+                  all(r_[0][0] == "refused" and r_[0][1] == MSG_O and r_[1:] == (0, []) for r_ in k_oth.values())
+                  and v2_refused(k_oth4, MSG_B) and "unadjudicated)" in k_oth4[0][1]
+                  and v2_refused(k_oth4n, MSG_B) and "unadjudicated)" in k_oth4n[0][1]
+                  and k_oth9[0][0] == "refused" and k_oth9[1:] == (0, [])
+                  and k_oth9[0][1].startswith("REFUSED: the campaign's last pause is unadjudicated")
+                  and ck_p4o["campaign"]["end_look"].get("end_is_look") == 1
+                  and isinstance(ck_p4o["campaign"]["pauses"][-1].get("adjudication"), str),
+                  ({k_: (r_[0][0], r_[0][1][:50]) for k_, r_ in k_oth.items()}, k_oth4[0][:2], k_oth4n[0][:2],
+                   k_oth9[0][:2]),
+                  cover=["C3-STOP-CLASS-OTHER-BAR"])
             adj_bad = {"sha": {"campaign_sha256": _sha256_bytes(cp.read_bytes())},
                        "pause": {"pause": {**adj_doc0["pause"], "at_launches": (adj_doc0["pause"]["at_launches"] or 0) + 1}},
                        "kind": {"pause": {**adj_doc0["pause"], "kind": "battery-other-kind"}},
@@ -7587,11 +7719,13 @@ def _bt_structure(B: _Battery, lines: Sequence[str], hook: _OpenHook) -> None:
           real_mk == [] and all(caught.values()),
           (real_mk[:2], [k_ for k_, v_ in caught.items() if not v_]), cover=["STR-PIN-COMMENTS"])
     # the texts declared at LOCK v1.0 (Code's check; strengthened in round 3, FID2-1): each register text and its
-    # site comment says "Code's reading"; every mention of the seat in them begins one of three declared forms
+    # site comment says "Code's reading"; every mention of the seat in them begins one of four declared forms
     # (seat_forms_ below: 'the seat's round-2 item 3 (', '(the seat: "no analyzer reads prose")', 'the seat's
-    # adjudication'); every quotation in them (a double-quoted fragment; single quotes mark values and names) is
-    # found verbatim in a declared seat source -- the battery's copies below of the seat's words (R2 item 3 (a); R2
-    # item 3 (b) and (c); R1 C7's bar), markdown emphasis removed and checked against the seat's blocks by Code's
+    # adjudication', 'the seat's step-15 answers ('); every quotation in them (a double-quoted fragment; single
+    # quotes mark values and names) is found verbatim in a declared seat source -- the battery's copies below of the
+    # seat's words (R2 item 3 (a); R2 item 3 (b) and (c); R1 C7's bar; the first paragraph of the step-15 answers'
+    # Q2), markdown emphasis
+    # removed and checked against the seat's blocks by Code's
     # scratch quote sweep, as the battery reads nothing under results/raw (PIN-29) -- and each register text quotes
     # the words of the ruling it builds (PIN-44's site comment the ruling too)
     seat_src_ = {
@@ -7612,7 +7746,14 @@ def _bt_structure(B: _Battery, lines: Sequence[str], hook: _OpenHook) -> None:
             "analyzer's enumeration under (a), (b) and (c) is empty — no sentence asserting a null on a cell not "
             "Answered, none asserting a thesis above the ceiling obtained — and the dose note is present iff the flag; "
             "the enumeration of record is the VERDICTS one with the PI's rewrites applied, and any residue is listed by "
-            "sentence and rewritten before posting. Fixed here, before the v1 posting.")}
+            "sentence and rewritten before posting. Fixed here, before the v1 posting."),
+        "step-15 answers Q2, its first paragraph": (
+            "Build R3M-5's extension: PIN-45's ids-only class check runs at every STOP, not only at a STOP whose end "
+            "look fired. Ground: it refuses no checkpoint the writer writes (`stages._stop_end_look` asserts both id "
+            "rules at every STOP, before the fired/silent split), it closes the one-field relabel of a hair-trigger STOP "
+            "to G-VER at a silent look, and its mutant's survival at 444/444 is the reason to build it — the battery "
+            "cannot see the relabel, so the refusal must. It lands in the round this file orders, before G-PWR, at the "
+            "short form's cost.")}
     r2_3a = ("the `posting` command renders PASS/FAIL against the bar (PASS iff the enumeration under (a), (b) and (c) "
              "is empty and the dose note is present iff the flag); and it compares the posting re-run's enumeration "
              "with the VERDICTS enumeration with the PI's rewrites applied (a declared input: the rewrite list, by row "
@@ -7620,10 +7761,12 @@ def _bt_structure(B: _Battery, lines: Sequence[str], hook: _OpenHook) -> None:
     quotes_ = {"PIN-44": [r2_3a, "no analyzer reads prose", "The pass bar for the posting's re-run on the posted text",
                           "the VERDICTS enumeration"],
                "PIN-45": ["(b) a fired end look without a matching pause", "as VERDICTS refusals",
-                          "guard the checkpoint against a hand edit"],
+                          "guard the checkpoint against a hand edit",
+                          "PIN-45's ids-only class check runs at every STOP, not only at a STOP whose end look fired"],
                "PIN-46": ["(c) the end look's launch count", "as VERDICTS refusals",
                           "guard the checkpoint against a hand edit"]}
-    seat_forms_ = ("the seat's round-2 item 3 (", "(the seat: \"no analyzer reads prose\")", "the seat's adjudication")
+    seat_forms_ = ("the seat's round-2 item 3 (", "(the seat: \"no analyzer reads prose\")", "the seat's adjudication",
+                   "the seat's step-15 answers (")
 
     def ws_(x_: str) -> str:
         return re.sub(r"\s+", " ", x_)
@@ -7674,6 +7817,23 @@ def _bt_structure(B: _Battery, lines: Sequence[str], hook: _OpenHook) -> None:
                                                                 + ")"}, "PIN-45 text: quotes"),
               "a ruling quote unquoted in PIN-45": (src, {**PINS, "PIN-45": PINS["PIN-45"].replace(
                   q_ + "as VERDICTS refusals" + q_, "as VERDICTS refusals")}, "PIN-45: does not quote"),
+              "a misquoted step-15 order in PIN-45": (src, {**PINS, "PIN-45": PINS["PIN-45"].replace(
+                  "runs at every STOP, not only at a STOP whose", "runs at every STOP, and not only at a STOP whose")},
+                  "PIN-45 text: quotes"),
+              "a misquoted step-15 order in PIN-45's site comment": (src_plant(
+                  "# 2026-10-14) order that " + q_ + "PIN-45's ids-only class check runs at every STOP, not only",
+                  "# 2026-10-14) order that " + q_ + "PIN-45's ids-only class check runs at each STOP, not only"), PINS,
+                  "PIN-45 site: quotes"),
+              "a step-15 credit without its citation in PIN-45": (src, {**PINS, "PIN-45": PINS["PIN-45"]
+                                                                        + " This is what the seat's step-15 answers rule."},
+                                                                  "PIN-45 text: names the seat"),
+              "a round-2 credit without its citation in PIN-46": (src, {**PINS, "PIN-46": PINS["PIN-46"]
+                                                                       + " This is what the seat's round-2 item 3 rules."},
+                                                                 "PIN-46 text: names the seat"),
+              "the step-15 order unquoted in PIN-45": (src, {**PINS, "PIN-45": PINS["PIN-45"].replace(
+                  q_ + "PIN-45's ids-only class check runs at every STOP, not only at a STOP whose end look fired" + q_,
+                  "PIN-45's ids-only class check runs at every STOP, not only at a STOP whose end look fired")},
+                  "PIN-45: does not quote"),
               "PIN-44's site comment quoting a prefix of the ruling": (src_plant(
                   "reporting any row" + " that differs." + q_ + " Code's readings",
                   "reporting any row" + q_ + " Code's readings"), PINS, "PIN-44 site: does not quote the ruling"),
@@ -7696,16 +7856,21 @@ def _bt_structure(B: _Battery, lines: Sequence[str], hook: _OpenHook) -> None:
                   "PIN-46 site: names the seat")}
     caught_v10 = {k_: bool(s_) and any(x_.startswith(want_) for x_ in v10_problems(s_, p_))
                   for k_, (s_, p_, want_) in pl_v10.items()}
-    only_v10 = ("a ruling quote unquoted in PIN-45", "PIN-44's site comment quoting a prefix of the ruling")
+    only_v10 = ("a ruling quote unquoted in PIN-45", "PIN-44's site comment quoting a prefix of the ruling",
+                "the step-15 order unquoted in PIN-45")
     B.chk("PIN register (Code's check; strengthened in round 3): the texts declared at LOCK v1.0 (PIN-44, -45, -46) and "
-          "their site comments each say \"Code's reading\"; every mention of the seat in them begins one of three "
+          "their site comments each say \"Code's reading\"; every mention of the seat in them begins one of four "
           "declared forms ('the seat's round-2 item 3 (', '(the seat: \"no analyzer reads prose\")', 'the seat's "
-          "adjudication'); every quotation in them (a double-quoted fragment) is found verbatim in a declared seat "
-          "source (the battery's copies of R2 item 3 (a), R2 item 3 (b)/(c) and R1 C7's bar, checked against the "
-          "seat's blocks by Code's scratch sweep); each register text quotes the words of the ruling it builds, "
+          "adjudication', 'the seat's step-15 answers ('); every quotation in them (a double-quoted fragment) is "
+          "found verbatim in a declared seat source (the battery's copies of R2 item 3 (a), R2 item 3 (b)/(c), R1 "
+          "C7's bar and the first paragraph of the step-15 answers' Q2, checked against the seat's blocks by Code's "
+          "scratch sweep); each "
+          "register text quotes the words of the ruling it builds (PIN-45 the step-15 answers' order too), "
           "PIN-44's site comment the ruling too; each planted control is caught by its own problem (a misquote in "
-          "PIN-44's text and site comment and in PIN-45's site comment; a quotation in no seat source; a ruling "
-          "quote unquoted in PIN-45 and PIN-44's site comment quoting a prefix of the ruling, each caught only by "
+          "PIN-44's text and site comment and in PIN-45's site comment; the step-15 order misquoted in PIN-45's "
+          "text and site comment; a step-15 credit and a round-2 credit each without its citation's '(' (in PIN-45 "
+          "and PIN-46); a quotation in no seat source; a ruling quote unquoted in PIN-45, PIN-44's site "
+          "comment quoting a prefix of the ruling and the step-15 order unquoted in PIN-45, each caught only by "
           "its own problem; the seat credited in PIN-46, with Code's round-2 block, and beside Code's reading in "
           "PIN-45 and in PIN-46's site comment; \"Code's reading\" removed from PIN-45's text and from PIN-46's site "
           "comment)",
@@ -7713,6 +7878,72 @@ def _bt_structure(B: _Battery, lines: Sequence[str], hook: _OpenHook) -> None:
           and all(len(v10_problems(*pl_v10[k_][:2])) == 1 for k_ in only_v10),
           (real_v10[:2], [k_ for k_, v_ in caught_v10.items() if not v_],
            {k_: v10_problems(*pl_v10[k_][:2]) for k_ in only_v10}), cover=["STR-PIN-V10-TEXTS"])
+
+    def site_v01_(pid_: str) -> str:
+        l_ = src.splitlines()
+        i_ = next((j_ for j_, x_ in enumerate(l_) if (mk_head + "v0.1): " + pid_ + " --") in x_), None)
+        blk_ = []
+        for x_ in (l_[i_:] if i_ is not None else []):
+            if not x_.strip().startswith("#"):
+                break
+            blk_.append(x_.strip().lstrip("#").strip())
+        return " ".join(blk_)
+
+    def sites_v01_(pid_: str) -> list:
+        l_, out_ = src.splitlines(), []
+        for i_, x_ in enumerate(l_):
+            if (mk_head + "v0.1): " + pid_ + " --") in x_:
+                blk_ = []
+                for y_ in l_[i_:]:
+                    if not y_.strip().startswith("#"):
+                        break
+                    blk_.append(y_.strip().lstrip("#").strip())
+                out_.append(" ".join(blk_))
+        return out_
+    r22_ = "seat's by R2 2 (2026-10-10)"
+    t9_, t10_, t7_, t45_ = (ws_(PINS[k_]) for k_ in ("PIN-9", "PIN-10", "PIN-7", "PIN-45"))
+    s9_, s45_ = site_v01_("PIN-9"), ws_(site_text(src.splitlines(), "PIN-45"))
+    s10v2_ = ws_(next((b_ for b_ in sites_v01_("PIN-10") if "C9(ii) (2026-10-10): a STOP-ended" in b_), ""))
+    q5_ = {"no stale flag phrase in this file": re.search(r"flagged\s+(?:#\s*)?for\s+(?:#\s*)?the\s+(?:#\s*)?seat", src, re.I) is None,
+           "PIN-9 text": r22_ in t9_, "PIN-9 site": r22_ in s9_,
+           "PIN-10 text": r22_ in t10_ and "(PIN-46)" in t10_ and "(PIN-45)" in t10_,
+           "PIN-7 text": "(PIN-46)" in t7_ and "(PIN-45)" in t7_,
+           "a STOP's class by ids, named in PIN-7, PIN-10 and PIN-10's V2 site": all(
+               "a STOP's class by ids" in x_ for x_ in (t7_, t10_, s10v2_)),
+           "PIN-45 every STOP": "checked at every STOP -- with or without an end look, fired or silent" in t45_
+                                and ("At every STOP (a stop block recorded: resume.ended_status), with or without an "
+                                     "end look, fired or silent") in s45_,
+           "PIN-45 its order": all("after PIN-46's and before PIN-9's branch (and before the pause rule its class "
+                                   "selects)" in x_ for x_ in (t45_, s45_)),
+           "PIN-45 the stop->terminal scope": all(x_ in t45_ for x_ in (
+               "beside a terminal PI-STOP or CAP block reaches VERDICTS without PIN-8's PI-stop record",
+               "at a silent end look, at a fresh fired one given the seat's adjudication of its end pause, and at a "
+               "reused look", "as a PI-STOP it has the ids of the PI's stop at n, which the writer can make at any n "
+               "of at least 1", "campaign.pi_stop, the stop invocation's provenance entry and state.n_writes, V2 does "
+               "not compare", "as a CAP it passes at any n, as V2 compares no hour cap",
+               "a COMPLETE block passes too", "with an arm below its floor, V4 STOPs",
+               "Ids compare by value, and a G-VER STOP's id fields are not shape-checked")),
+           "PIN-45 another STOP bar": all(("(a truthy stop block that is not an object included) is refused after "
+                                           "PIN-8 -- or earlier, by the end-raised pause rule it selects, where the end "
+                                           "look reuses a fired look whose pause was ruled before the end") in x_
+                                          for x_ in (t45_, s45_))}
+    a17_ = "A1 belongs to §8.1's A1–A3 paragraphs (v1.1's §8.2), 'open' at v1"
+    q5_.update({"PIN-17 anchor (Q3), text and site": a17_ in ws_(PINS["PIN-17"]) and a17_ in site_v01_("PIN-17"),
+                "no stale PIN-17 anchor": ("A1 belongs to " + "§8.2") not in src,
+                "SEAT_ROUTED PIN-17 (Q3)": "(Q3, 2026-10-14)" in SEAT_ROUTED["PIN-17"]})
+    B.chk("PIN register (Code's check; the seat's step-15 answers, Q5, Q2 and Q3): no text in this file still flags a "
+          "reading for the seat ('flagged for ... the seat', in any case, across a comment's line break); PIN-9's text and site comment and PIN-10's text "
+          "credit the reading to the seat by R2 2 (2026-10-10); PIN-7's list and PIN-10's text name PIN-46 and PIN-45, "
+          "and they and PIN-10's V2 site comment name a STOP's class by ids; PIN-45's text and site comment say its "
+          "class check runs at every STOP, with or without an end look, fired or silent, after PIN-46's and before "
+          "PIN-9's branch and the pause rule its class selects; PIN-45's text states the stop->terminal route beside a terminal PI-STOP or CAP block, at a "
+          "silent end look, a fresh fired one and a reused look -- as a PI-STOP with the PI's ids at any n of at least "
+          "1 and the fields that differ, as a CAP at any n with no hour cap compared, as a COMPLETE where the floors "
+          "are reached (else V4 STOPs) -- and that ids compare by value; PIN-45's text and site comment state, in "
+          "full, that another STOP bar is refused after PIN-8 or earlier, by the end-raised pause rule it selects; "
+          "PIN-17's text and site comment carry Q3's anchor sentence, no text still places A1 in §8.2, and "
+          "SEAT_ROUTED's PIN-17 entry names Q3",
+          all(q5_.values()), [k_ for k_, v_ in q5_.items() if not v_], cover=["STR-PIN-STEP15-TEXTS"])
     B.chk("insulation: the quarantined state-present module is not in sys.modules",
           not any(m in sys.modules for m in guard.FORBIDDEN_MODULES), cover=["STR-INSULATED"])
 
