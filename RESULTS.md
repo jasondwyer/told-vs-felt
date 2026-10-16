@@ -21,6 +21,69 @@ applied to CLAUDE.md.
 
 ## Log — Phase 2
 
+- 2026-10-16 — **THE SENTENCE TABLE OF RECORD, r6: THE SEAT'S STRIKE ON R262.05 (PROPOSAL-m v1.11 m:286, §8 step 15;
+  the seat's step-15c read, `results/raw/2026-10-16_m-design-to-code_step15c_answers.md`, sha256 `a8d07909…dd7f`,
+  committed at `3c7f8c7`; the PI's word of 2026-10-16: "Apply as r6: R262.05 −e2b, rows only; rebuild, re-hash,
+  table_problems, one values-check pass. The five rows stand; the variant is declined.").** Model-free; outcome-blind.
+  No file under `data/m/gates/` moves. The cloud clone was fetched and fast-forwarded to main (`3c7f8c7`) before any work.
+  - **The table of record (r6):** 55 rows, sha256
+    `af5cb81622f4af74d57c4b708d6ede82d5895cd7dd6a623f6b4bccbaebd1f902`. `table_problems` returns `[]` on the analyzer
+    `655e0f7f…c16f` reading the preprint `45b67246…7a41`. Its rows of record are
+    `882f0ca717bd175f27fabb5d2b589e3ae5bfe244f9e8e450056fdf7beaebdc7b`.
+    - The raw is `results/raw/2026-10-16_m-table-of-record-r6_valuescheck.txt`, sha256
+      `f2d19ae18976f039b7dbfa59eec14062dfd004da9f923b630e97342618fe9580`. The table rebuilds byte for byte from the
+      raw's rows text.
+    - The table's bytes equal r2's superseded table (the r5 raw records it as `af5cb816…f902`). r2 had these cells: the
+      five rows with e2b and R262.05 without it. r2 and r6 differ in rationales only, which the builder does not read.
+    - **Superseded:** the r5 table `74781b90…f907` (entry below) and the seat-enumeration variant `29a878cf…5490`,
+      which the seat declined.
+  - **The change r5 → r6:**
+    - **One cell.** R262.05's e2b is struck, leaving e2a, f1, olmo-base, olmo-sft, olmo-dpo and olmo-instruct
+      (step 15c §2).
+    - **Rationales.** R262.05 states tests 3 and 1 for its first clause and test 5, in its precise form, for its third.
+      It also states §2's rule: a row the ruling names under a test takes that test's result for the clause named.
+    - R254.02 states the seat's correction of test 3's enumeration to include S1.
+    - R242.01 states that a heading takes its section's scope by context; the flag is closed.
+    - The five rows (25.04, 232.01–232.03, 240.06) state §1's ground: the ruling's text governs, and they range over
+      the data.
+    - R194.04 is neither data-wide nor lineage-wide.
+    - No other field moves.
+    - The correction to S1 is applied on R254.02 as ordered and is inert on the other test-3 rows: they exclude S1 on
+      their own grounds, and S1 is *Answered* in every tuple.
+  - **The firing counts, unchanged from r5 as the seat said** (asserted from the report and `readings2.py`):
+    - 14 rows fire clause (a) in all 1,080 tuples, the same 14. R262.05 still fires through the base row.
+    - Distinct (a) counts: 1080 ×14, 1079 ×13, 1075 ×5, 864 ×6, 0 ×17.
+    - At the all-PASS tuple: 23 items under the flag of record (14 by (a) and 10 by (b), with R236.02 counted under
+      both) and 24 under the other (R182.06 by (c)).
+    - The pass's own loop confirms flag invariance, and that r6 differs from r5 in enumeration only in R262.05's (a)
+      cell list.
+  - **The values-check:** one pass, as ordered: two lenses, rows and mechanics, each with a strict refuter, on r6 as
+    first built (rows `8c197953…373e`).
+    - **No failures.** Every cell is as step 15c orders. Re-deriving every test-5 row under the precise form changes no
+      row but R262.05. r6 reproduces byte for byte.
+    - **Its two imprecise findings were applied.** R262.05 now says why test 3 does not strip the base row. R242.01 now
+      says why 168.01 takes test 4 by name.
+    - **Its notes were applied** in rationales and script comments only (R025.04, R232.02, R240.06, R194.04).
+    - Code alone checked these last edits, asserting that no field but rationale moved. The raw gives the six
+      rationales as the pass read them.
+  - **Reads:** nothing under `data/` was opened, and the stage raw was neither opened nor searched. The pass's agents
+    were confined to the files they named. Code's `git status` runs walked directory entries under `data/`, printing
+    nothing there.
+  - **Next:**
+    1. **The cap request to the PI, with r6's hash** (`af5cb81622f4af74d57c4b708d6ede82d5895cd7dd6a623f6b4bccbaebd1f902`)
+       and G-PWR's figures:
+       - launch counts A0 128, A0s 64, 192 in all, over 5 looks;
+       - ≈26.0 Qwen hours at v0.2 §2.4's 488 s per uncached session;
+       - ≈5.3–14.0 hours at the three measured uncached sham sessions (100–262 s);
+       - the seat's note: a STOP, so above the honest projection, 40 h.
+    2. Before v1.0's commit, this clone's git identity is set to match the PI's laptop commits (the PI's word,
+       2026-10-16). Because the Clock reads the committer date as recorded, v1.0's commit is made with `TZ` set to the
+       PI's zone, or on or before 2026-10-29 EDT (step 15c §5.3).
+    3. v1.0 on the PI's cap: the table placed at `data/m/gates/m_posting_sentences.json` in v1.0's commit, its sha256
+       beside the preprint's (PIN-40). v1.0's text states the all-PASS enumeration from the table of record (step 15c
+       C3). The committer date is on or before 2026-10-30.
+    4. Step 16, the campaign wiring, after v1.0.
+
 - 2026-10-16 — **THE SENTENCE TABLE OF RECORD: THE SEAT'S A4 RULING APPLIED TO EVERY SCOPE ROW, VALUES-CHECKED, AND
   HASHED (PROPOSAL-m v1.11 m:286, §8 step 15; the seat's step-15b answers, "What follows" item 1; the PI's word with
   the routing, 2026-10-15).** Model-free; outcome-blind (no campaign result exists). No file under `data/m/gates/`
